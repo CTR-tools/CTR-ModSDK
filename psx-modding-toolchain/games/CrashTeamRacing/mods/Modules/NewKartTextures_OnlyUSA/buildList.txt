@@ -1,0 +1,9 @@
+common, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, src/hook_GAMEPROG.s
+common, exe, LOAD_VramFile, -0x8, src/hook_VRAM.s
+
+// Compile texture replacements to kernel
+common, iso, 0x8000A000, 0x0, src/KARTTEX1.c, KARTTEX1.BIN
+common, iso, 0x8000E400, 0x0, src/KARTTEX2.c, KARTTEX2.BIN
+
+// Compile code to empty spaces in RDATA
+common, exe, rdata_free, 0x0, src/main.c

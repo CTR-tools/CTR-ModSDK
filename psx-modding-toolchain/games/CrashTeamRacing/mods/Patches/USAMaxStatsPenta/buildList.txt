@@ -1,0 +1,5 @@
+// Inject compiled code for Penta's stats into the executable
+926, exe, 0x80088A0C, 0x0, assets/stats.bin
+
+// Compile modified Driver_SetConsts
+926, exe, Driver_SetConsts, 0x0, src/USAMaxStatsPenta.c

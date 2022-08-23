@@ -1,0 +1,1 @@
+This is only for Sep3 and USA, because those are the only builds that did not remove the unused voicelines from the disc

@@ -1,0 +1,7 @@
+926, 230, 0x800afa3c, 0x0, src/ES_hook230.s
+926, 230, 0x800af5e0, 0x0, src/ES_nop230.s
+926, 230, 0x800af6a4, 0x0, src/ES_JALhook230.s
+926, 233, 0x800b8544, 0x0, src/ES_hook233.s
+926, 233, 0x800b7ae4, 0x0, src/ES_JALhook233.s
+common, 230, MM_EndOfFile, 0x0, src/ES_230.c
+common, 233, CS_EndOfFile, 0x0, src/ES_233.c

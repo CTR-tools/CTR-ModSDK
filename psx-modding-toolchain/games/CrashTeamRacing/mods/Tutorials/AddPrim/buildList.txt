@@ -1,0 +1,17 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Include DisableHUD
+903, exe, 0x8001b60c, 0x0, ../../Patches/DisableHUD/src/disable.s
+926, exe, 0x8001B038, 0x0, ../../Patches/DisableHUD/src/disable.s
+1006, exe, 0x8001C488, 0x0, ../../Patches/DisableHUD/src/disable.s
+1020, exe, 0x8001B054, 0x0, ../../Patches/DisableHUD/src/disable.s
+1111, exe, 0x8001C4D4, 0x0, ../../Patches/DisableHUD/src/disable.s
+
+// Hook
+common, exe, BOTS_SetRotation, -0x8, src/AddPrim_hookUpdate.s
+
+// Compile main code to empty spaces in RDATA
+common, exe, rdata_free, 0x0, src/AddPrim_main.c

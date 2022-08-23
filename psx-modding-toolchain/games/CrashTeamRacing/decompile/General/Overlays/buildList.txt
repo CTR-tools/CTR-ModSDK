@@ -1,0 +1,25 @@
+// 230 overlay (Main Menu)
+common, 230, MM_Cheat_MaxWumpa, 0x0, src/MM_Cheat_MaxWumpa.c
+common, 230, MM_Cheat_UnlockRoo, 0x0, src/MM_Cheat_UnlockRoo.c
+common, 230, MM_Cheat_UnlockPapu, 0x0, src/MM_Cheat_UnlockPapu.c
+common, 230, MM_Cheat_UnlockJoe, 0x0, src/MM_Cheat_UnlockJoe.c
+common, 230, MM_Cheat_UnlockPinstripe, 0x0, src/MM_Cheat_UnlockPinstripe.c
+common, 230, MM_Cheat_UnlockFakeCrash, 0x0, src/MM_Cheat_UnlockFakeCrash.c
+common, 230, MM_Cheat_UnlockPenta, 0x0, src/MM_Cheat_UnlockPenta.c
+common, 230, MM_Cheat_UnlockTropy, 0x0, src/MM_Cheat_UnlockTropy.c
+common, 230, MM_Cheat_UnlockScrapbook, 0x0, src/MM_Cheat_UnlockScrapbook.c
+common, 230, MM_Cheat_UnlockTracks, 0x0, src/MM_Cheat_UnlockTracks.c
+common, 230, MM_Cheat_InfiniteMasks, 0x0, src/MM_Cheat_InfiniteMasks.c
+common, 230, MM_Cheat_MaxTurbos, 0x0, src/MM_Cheat_MaxTurbos.c
+common, 230, MM_Cheat_MaxInvisibility, 0x0, src/MM_Cheat_MaxInvisibility.c
+common, 230, MM_Cheat_MaxEngine, 0x0, src/MM_Cheat_MaxEngine.c
+common, 230, MM_Cheat_MaxBombs, 0x0, src/MM_Cheat_MaxBombs.c
+common, 230, MM_Cheat_AdvDifficulty, 0x0, src/MM_Cheat_AdvDifficulty.c
+common, 230, MM_Cheat_SuperHard, 0x0, src/MM_Cheat_SuperHard.c
+common, 230, MM_Cheat_IcyTracks, 0x0, src/MM_Cheat_IcyTracks.c
+common, 230, MM_Cheat_SuperTurboPads, 0x0, src/MM_Cheat_SuperTurboPads.c
+common, 230, MM_Cheat_OneLap, 0x0, src/MM_Cheat_OneLap.c
+common, 230, MM_Cheat_TurboCounter, 0x0, src/MM_Cheat_TurboCounter.c
+
+// 233 overlay (Cutscene)
+common, 233, CS_Podium_FullScene_Init, 0x0, src/CS_Podium_FullScene_Init.c

@@ -1,0 +1,1 @@
+python ../../../../tools/png2vram/main.py logo 4

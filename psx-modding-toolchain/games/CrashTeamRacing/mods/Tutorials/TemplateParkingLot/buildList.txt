@@ -1,0 +1,19 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Hooks
+903, exe, 0x8003b340, 0x0, src/flagHook.s
+926, exe, 0x8003c644, 0x0, src/flagHook.s
+1006, exe, 0x8003db34, 0x0, src/flagHook.s
+1020, exe, 0x8003c34c, 0x0, src/flagHook.s
+1111, exe, 0x8003DBEC, 0x0, src/flagHook.s
+903, exe, 0x8003b528, 0x0, src/levID.s
+926, exe, 0x8003c834, 0x0, src/levID.s
+1006, exe, 0x8003DD24, 0x0, src/levID.s
+1020, exe, 0x8003C544, 0x0, src/levID.s
+1111, exe, 0x8003DDE4, 0x0, src/levID.s
+
+// Compile main code to empty spaces in RDATA
+common, exe, rdata_free, 0x0, src/flagFunc.c

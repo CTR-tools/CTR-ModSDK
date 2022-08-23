@@ -1,0 +1,1 @@
+Draws a "Hello World!" line of text on the bottom left corner of the screen, along with the version of CTR. Supports all versions.

@@ -1,0 +1,24 @@
+
+(partial fix with inst hook)
+Animations are half-working, half-fix
+
+LOADING... is too fast
+player icons flashing colors (red/green) are too fast
+vertex color animation in roo's tubes is too fast
+Demo Mode only lasts half-time (even though it "should" be fixed???)
+UI highlight (red/yellow) in menus if too fast
+Demo Mode / End-Of-Race cameras sometimes are too fast
+Adv Garage camera is too fast
+Cortex Castle spiders are too fast
+Adv Hub Warppad electric field
+Lots of flashing text is flashing too fast
+At end of Time Trial / Relic, high scores disappear halfway offscreen
+Main menu videos play too fast (tracks)
+Adv Pause menu, stuff spins too fast ( I think? forget if it was fixed? )
+AI acceleration from starting line
+7 frames of exhaust fire (separate models)
+save/load scanline
+driving on grass (vertex explosion, odd-framed particle init)
+screen fade transitions (fade to black, fade to white, etc)
+red potion (fix disabled, freezes game)
+Broken water animation (uses 1cec as param, easy fix)

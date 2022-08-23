@@ -1,0 +1,12 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Compile the code in the empty space in RDATA
+common, exe, rdata_free, 0x0, src/VRAMReplacement.c
+
+// Compile the ASM injection that will load our code
+// ASM injections for loading modded functions, or "hooks", are typically done at the "jr ra" or "return" instruction of a function, which is 8 bytes away from the start of the function that follows it
+// Hooked at the end of LOAD_VramFileCallback
+common, exe, LOAD_VramFile, -0x8, src/VRAMReplacementHook.s

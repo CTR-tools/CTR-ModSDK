@@ -1,0 +1,31 @@
+80080ef8 "data" struct made by Naughty Dog
+80086e84 character IDs, last known data before "gp"
+8008CF6C "sdata" struct at "gp" register
+
+This means lib variables are supposed to be
+inside our "data", compiler throws them on the end
+
+--------------------------------------
+
+These come before "sdata" struct
+
+
+8008c41C CD_cbsync
+8008c420 CD_cbready
+8008c424 CD_debug
+8008c428 CD_status
+8008c42C CD_status1
+8008c430 CD_nopen
+8008c434 CD_pos
+8008c438 CD_mode
+8008c439 CD_com
+8008c43c DS_active
+8008c440 CD_comstr
+
+8008CF6C "sdata" struct at "gp" register
+
+8009ec28 StRingIdx1
+8009ec2c StRingIdx2
+
+8008ad58 funcPtr
+8008ad7c funcPtr to Printf (always equals 8007C820)

@@ -1,0 +1,18 @@
+
+	incsym "../../syms/syms926.sym"
+
+	org	$00000000
+
+text    group
+bss     group bss
+
+    section .text,text
+	section .rdata,text
+    section .ctors,text
+    section .dtors,text
+    section .data,text
+    section .sdata,text
+    section .sbss,bss
+    section .bss,bss
+
+	include	"fileNames.obj"

@@ -1,0 +1,60 @@
+0x00e2 (green stoplight with param_6 set to 0, as in normal gameplay)
+ 00000000 11100010
+15				 0
+Bits 0-3 - X base: 0010 (128)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 11 (Mode 3, no blending)
+Bits 7-8 - Texpage colors: 01 (8-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x00e3 (red stoplight with param_6 set to 0, as in normal gameplay)
+ 00000000 11100011
+15				 0
+Bits 0-3 - X base: 0011 (192)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 11 (Mode 3, no blending)
+Bits 7-8 - Texpage colors: 01 (8-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x0082 (green stoplight with param_6 set to 1)
+ 00000000 10000010
+15               0
+Bits 0-3 - X base: 0010 (128)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 00 (Mode 0, 50% opacity)
+Bits 7-8 - Texpage colors: 01 (8-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x0083 (red stoplight with param_6 set to 1)
+ 00000000 10000011
+15               0
+Bits 0-3 - X base: 0011 (192)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 00 (Mode 0, 50% opacity)
+Bits 7-8 - Texpage colors: 01 (8-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+ 00000000 01100011 (wumpaposter as in normal gameplay)
+15               0
+Bits 0-3 - X base: 0011 (192)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 11 (Mode 3, no blending)
+Bits 7-8 - Texpage colors: 00 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+ 00000000 00000011 (wumpaposter with param_6 set to 1)
+15               0
+Bits 0-3 - X base: 0011 (192)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 00 (Mode 0, 50% opacity)
+Bits 7-8 - Texpage colors: 00 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x0168 (movie1)
+ 00000001 01101000
+15               0
+Bits 0-3 - X base: 1000 (512)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 11 (Mode 3, no blending)
+Bits 7-8 - Texpage colors: 10 (15-bit!)
+Bit 11 - Texture disable: 0 (normal)

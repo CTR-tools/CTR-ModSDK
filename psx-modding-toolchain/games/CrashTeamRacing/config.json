@@ -1,0 +1,69 @@
+{
+	"compiler":
+	{
+		"function_sections": 1,
+		"reorder_functions": 0,
+		"optimization": 4,
+		"debug": 1,
+		"psyq": 0,
+		"8mb": 1
+	},
+	"versions":
+	[
+		{
+			"ntsc-u":
+			{
+				"name": "ctr-u.bin",
+				"symbols":
+				[
+					"gcc-syms926.txt"
+				],
+				"build_id": 926
+			}
+		},
+		{
+			"pal":
+			{
+				"name": "ctr-pal.bin",
+				"symbols":
+				[
+					"gcc-syms1020.txt"
+				],
+				"build_id": 1020
+			}
+		},
+		{
+			"ntsc-j":
+			{
+				"name": "ctr-j.bin",
+				"symbols":
+				[
+					"gcc-syms1111.txt"
+				],
+				"build_id": 1111
+			}
+		},
+		{
+			"proto-sep3":
+			{
+				"name": "ctr-903.bin",
+				"symbols":
+				[
+					"gcc-syms903.txt"
+				],
+				"build_id": 903
+			}
+		},
+		{
+			"ntsc-j-trial":
+			{
+				"name": "ctr-j-trial.bin",
+				"symbols":
+				[
+					"gcc-syms1006.txt"
+				],
+				"build_id": 1006
+			}
+		}
+	]
+}

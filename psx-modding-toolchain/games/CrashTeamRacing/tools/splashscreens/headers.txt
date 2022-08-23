@@ -1,0 +1,6 @@
+For splashscreens, put these headers in the TIMs
+
+tim1: 10 00 00 00 02 00 00 00 0C 00 04 00 00 02 00 01 00 02 00 01
+tim2: 10 00 00 00 02 00 00 00 0C 00 04 00 00 02 00 01 00 02 00 01
+
+yes, they're the same

@@ -1,0 +1,1 @@
+As it says on the tin, it's OxideFix combined with CharacterRandomizer, so you can play as Oxide and also have all the unlockable characters in races, just like in Nitro-Fueled.

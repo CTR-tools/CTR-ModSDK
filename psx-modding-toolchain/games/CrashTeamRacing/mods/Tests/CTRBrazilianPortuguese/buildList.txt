@@ -1,0 +1,12 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+common, exe, rdata_free, 0x0, src/drawlinestrlenedit.c src/DecalHUD_DrawPolyGT4_Expanded.c src/getlinewidthstrlenedit.c
+
+common, exe, DecalFont_DrawLineStrlen, 0x0, ../../Modules/ExpandedFont/src/drawlinehook.s
+common, exe, DecalFont_GetLineWidthStrlen, 0x0, src/getlinehook.s
+
+// Inject compiled code for changing L1 L2 L3 to V1 V2 V3
+926, exe, 0x8008D50C, 0x0, assets/volta.bin

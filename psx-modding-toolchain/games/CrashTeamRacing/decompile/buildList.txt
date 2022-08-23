@@ -1,0 +1,96 @@
+// BOTS
+common, exe, BOTS_SetGlobalNavData, 0x0, General/BOTS_SetGlobalNavData.c
+common, exe, BOTS_InitNavPath, 0x0, General/BOTS_InitNavPath.c
+common, exe, BOTS_Adv_NumTimesLostEvent, 0x0, General/BOTS_Adv_NumTimesLostEvent.c
+
+// CAM
+common, exe, CAM_Init, 0x0, General/CAM_Init.c
+common, exe, CAM_SetDesiredPosRot, 0x0, General/CAM_SetDesiredPosRot.c
+
+// CTR
+common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
+
+// DecalFont
+common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthStrlen.c
+common, exe, DecalFont_GetLineWidth, 0x0, General/DecalFont_GetLineWidth.c
+common, exe, DecalFont_DrawLineStrlen, 0x0, General/DecalFont_DrawLineStrlen.c
+common, exe, DecalFont_DrawLine, 0x0, General/DecalFont_DrawLine.c
+common, exe, DecalFont_DrawLineOT, 0x0, General/DecalFont_DrawLineOT.c
+common, exe, DecalFont_DrawMultiLineStrlen, 0x0, General/DecalFont_DrawMultiLineStrlen.c
+common, exe, DecalFont_DrawMultiLine, 0x0, General/DecalFont_DrawMultiLine.c
+
+// DecalHUD
+common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD_DrawPolyFT4.c
+common, exe, DecalHUD_DrawWeapon, 0x0, General/DecalHUD_DrawWeapon.c
+common, exe, DecalHUD_DrawPolyGT4, 0x0, General/DecalHUD_DrawPolyGT4.c
+common, exe, DecalHUD_Arrow2D, 0x0, General/DecalHUD_Arrow2D.c
+
+// AllocPool comes between CAM and LIST, it is right after INSTANCE alphabetically
+common, exe, AllocPool_Clear, 0x0, General/AllocPool_Clear.c
+common, exe, AllocPool_Init, 0x0, General/AllocPool_Init.c
+common, exe, AllocPool_Add, 0x0, General/AllocPool_Add.c
+common, exe, AllocPool_Remove, 0x0, General/AllocPool_Remove.c
+
+// LIST
+common, exe, LIST_Clear, 0x0, General/LIST_Clear.c
+common, exe, LIST_AddFront, 0x0, General/LIST_AddFront.c
+common, exe, LIST_AddBack, 0x0, General/LIST_AddBack.c
+common, exe, LIST_GetNextItem, 0x0, General/LIST_GetNextItem.c
+common, exe, LIST_GetFirstItem, 0x0, General/LIST_GetFirstItem.c
+common, exe, LIST_RemoveMember, 0x0, General/LIST_RemoveMember.c
+common, exe, LIST_RemoveFront, 0x0, General/LIST_RemoveFront.c
+common, exe, LIST_RemoveBack, 0x0, General/LIST_RemoveBack.c
+common, exe, LIST_Init, 0x0, General/LIST_Init.c
+
+// LOAD
+common, exe, LOAD_DriverMPK, 0x0, General/LOAD_DriverMPK.c
+common, exe, LOAD_ReadFile, 0x0, General/LOAD_ReadFile.c
+
+// MATH
+common, exe, MATH_Sin, 0x0, General/MATH_Sin.c
+common, exe, MATH_Cos, 0x0, General/MATH_Cos.c
+
+// MEMPACK
+common, exe, MEMPACK_Init, 0x0, General/MEMPACK_Init.c
+common, exe, MEMPACK_SwapPacks, 0x0, General/MEMPACK_SwapPacks.c
+common, exe, MEMPACK_NewPack_StartEnd, 0x0, General/MEMPACK_NewPack_StartEnd.c
+common, exe, MEMPACK_GetFreeBytes, 0x0, General/MEMPACK_GetFreeBytes.c
+common, exe, MEMPACK_AllocMem, 0x0, General/MEMPACK_AllocMem.c
+common, exe, MEMPACK_AllocHighMem, 0x0, General/MEMPACK_AllocHighMem.c
+common, exe, MEMPACK_ClearHighMem, 0x0, General/MEMPACK_ClearHighMem.c
+common, exe, MEMPACK_ReallocMem, 0x0, General/MEMPACK_ReallocMem.c
+common, exe, MEMPACK_PushState, 0x0, General/MEMPACK_PushState.c
+common, exe, MEMPACK_ClearLowMem, 0x0, General/MEMPACK_ClearLowMem.c
+common, exe, MEMPACK_PopState, 0x0, General/MEMPACK_PopState.c
+
+// Camera110
+common, exe, Camera110_InitStructs, 0x0, General/Camera110_InitStructs.c
+common, exe, Camera110_SetViewMatrix, 0x0, General/Camera110_SetViewMatrix.c
+common, exe, Camera110_InitPsyqGeom, 0x0, General/Camera110_InitPsyqGeom.c
+common, exe, Camera110_FadeAllWindows, 0x0, General/Camera110_FadeAllWindows.c
+
+// Uncategorized
+common, exe, RNG_Scramble, 0x0, General/RNG_Scramble.c
+common, exe, RacingWheel_Config_DrawArrows, 0x0, General/RacingWheel_Config_DrawArrows.c
+common, exe, Map_DrawMap, 0x0, General/Map_DrawMap.c
+common, exe, DrawCharacterIcon, 0x0, General/DrawCharacterIcon.c
+common, exe, SetDriverItem, 0x0, General/SetDriverItem.c
+common, exe, ConvertTimeToString, 0x0, General/ConvertTimeToString.c
+common, exe, DrawCountdownClock, 0x0, General/DrawCountdownClock.c
+common, exe, SaveLapTime, 0x0, General/SaveLapTime.c
+common, exe, DrawRaceClock, 0x0, General/DrawRaceClock.c
+common, exe, InterpolatePosition2D_Angular, 0x0, General/InterpolatePosition2D_Angular.c
+common, exe, InterpolatePosition2D_HUD, 0x0, General/InterpolatePosition2D_HUD.c
+common, exe, InterpolatePosition2D_Linear, 0x0, General/InterpolatePosition2D_Linear.c
+common, exe, DrawJumpMeter, 0x0, General/DrawJumpMeter.c
+common, exe, DrawPowerslideMeter, 0x0, General/DrawPowerslideMeter.c
+common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
+common, exe, Turbo_FuncPerFrame, 0x0, General/Turbo_FuncPerFrame.c
+
+// Japan
+
+1006, exe, DecalFont_SetJfontDimensions, 0x0, General/Japan/DecalFont_SetJfontDimensions.c
+1111, exe, DecalFont_SetJfontDimensions, 0x0, General/Japan/DecalFont_SetJfontDimensions.c
+
+/// Retail
+1111, exe, DecalFont_boolRacingWheel, 0x0, General/Japan/Retail/DecalFont_boolRacingWheel.c

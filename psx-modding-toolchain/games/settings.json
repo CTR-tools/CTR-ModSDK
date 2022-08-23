@@ -1,0 +1,10 @@
+{
+    "redux": {
+        "port": 8080,
+        "path": "C:/Path/to/redux"
+    },
+    "nops": {
+        "comport": "COM5",
+        "mode": "fast"
+    }
+}

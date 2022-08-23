@@ -1,0 +1,26 @@
+Change ND Box to Main Menu
+8003C834 = 0x27 -- one byte
+
+Change FlagOff to FlagOn
+8003c644 = 0x0B -- one byte
+
+Fix Main Menu MPK (Arcade -> Adv)
+80032918 = 34422000 ori v0, v0, 0x2000
+8003291c = 00821024 = and v0, a0, v0
+80032920 = 14400009 bne v0, 0, 0x80032948 (watch for offset, 0xA -> 0x9)
+80032924 = 00000000 nop
+
+NOP load SCEA
+8003C8CC
+
+NOP XA "Start Your Engines..."
+8003c928
+
+NOP CseqMusic_Start
+8003c914
+
+NOP load Copyright
+800336f8
+
+Set P1 to Penta (fast load mpk)
+80086e84 to 0xD

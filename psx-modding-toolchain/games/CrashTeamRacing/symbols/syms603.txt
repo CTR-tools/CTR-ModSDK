@@ -1,0 +1,70 @@
+
+// This demo is not a supported build for modding,
+// symbols are only for comparison
+
+// all functions before BOTS are for "entry"
+
+8001b9b8 BOTS_SetGlobalNavData
+// 8001ba18 -- load from file (debug?)
+8001ba60 BOTS_InitNavPath
+// no counting how many times AI lost
+8001bdec BOTS_Adv_AdjustDifficulty // except no Adv, just difficulty
+8001c2d8 BOTS_UpdateGlobals
+8001c388 BOTS_SetRotation
+8001c4f4 BOTS_ExecuteFuncOnApproach
+8001c638 BOTS_PerFrame_EngineRevving
+8001c73c BOTS_MaskGrab
+8001c950 BOTS_Killplane
+8001caf8 BOTS_PerFrame_Drive
+8001ee30 BOTS_ChangeState
+// missing BOTS_CollideWithOtherAI
+8001f080 BOTS_GotoStartingLine
+8001f1b4 BOTS_Driver_Init
+8001f378 BOTS_Driver_Convert
+
+// start of CAM
+8001f5a0 CAM_SkyboxGlow
+800203b0 CAM_ClearScreen
+8002061c CAM_Init
+// 800206d4 -- camera data from file (debug?)
+// another new function,
+// yet another new function
+80020a8c CAM_FindClosestQuadblock
+// missing CAM_Path_GetNumPoints
+// missing CAM_Path_Move
+80020ce4 CAM_StartOfRace
+80020d48 CAM_EndOfRace_Battle
+// missing CAM_EndOfRace
+80020dd8 CAM_StartLine_FlyIn_FixY
+// missing CAM_ProcessTransition
+// missing CAM_FollowDriver_AngleAxis (probably inlined somewhere)
+80020f04 CAM_StartLine_FlyIn
+80021334 CAM_FollowDriver_TrackPath // only follows TrackPath, not driver
+80021798 CAM_LookAtPosition
+80021874 CAM_FollowDriver_Spin360
+// missing CAM_SetDesiredPosRot
+// missing CAM_FollowDriver_Normal
+800219bc CAM_MapRange_PosPoints
+80021a9c CAM_PerFrame
+
+// [few more in between]
+8002414c CDSYS_Init
+// no CDSYS_SetXAToLang,
+// no IRQs
+
+800244b8 COLL_GetThreadMeta
+
+// [skipping COLL cause who cares]
+
+// order a bit different from retail
+80029f48 RCNT_GetTime_Total_Precise // cut in retail
+80029f98 RCNT_GetTime_Total
+8002a018 RCNT_GetTime_Elapsed
+8002a0bc RCNT_Init
+8002a164 RCNT_Destroy
+8002a1a4 EmptyFunc
+8002a304 Debug_PrimMem_ZoomOut
+
+
+
+8004149c Driver_TeleportSelf

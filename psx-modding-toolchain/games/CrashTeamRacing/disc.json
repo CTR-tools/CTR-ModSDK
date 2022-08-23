@@ -1,0 +1,5377 @@
+{
+	"ntsc-u":
+	[
+		{
+			"SCUS_944.26":
+			[
+				{
+					"name": "header",
+					"address": "0x8000B070",
+					"offset": "0x0"
+				},
+				{
+					"name":   "exe",
+					"address":   "0x80010000",
+					"offset":   "0x800"
+				}
+			],
+			"bigfile/overlays/221_EndRaceMenu_CrystalChallenge.bin":
+			[
+				{
+					"name": "221",
+					"address": "0x8009f6fc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/222_EndRaceMenu_ArcadeAdventure.bin":
+			[
+				{
+					"name": "222",
+					"address": "0x8009f6fc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/223_EndRaceMenu_Relic.bin":
+			[
+				{
+					"name": "223",
+					"address": "0x8009f6fc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/224_EndRaceMenu_TimeTrial.bin":
+			[
+				{
+					"name": "224",
+					"address": "0x8009f6fc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/225_EndRaceMenu_BattleVS.bin":
+			[
+				{
+					"name": "225",
+					"address": "0x8009f6fc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/226_Quadblock_1P.bin":
+			[
+				{
+					"name": "226",
+					"address": "0x800a0cb8",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/227_Quadblock_2P.bin":
+			[
+				{
+					"name": "227",
+					"address": "0x800a0cb8",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/228_Quadblock_3P.bin":
+			[
+				{
+					"name": "228",
+					"address": "0x800a0cb8",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/229_Quadblock_4P.bin":
+			[
+				{
+					"name": "229",
+					"address": "0x800a0cb8",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/230_Threads_MainMenu.bin":
+			[
+				{
+					"name": "230",
+					"address": "0x800ab9f0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/231_Threads_Racing.bin":
+			[
+				{
+					"name": "231",
+					"address": "0x800ab9f0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/232_Threads_AdvHub.bin":
+			[
+				{
+					"name": "232",
+					"address": "0x800ab9f0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/233_Threads_Cutscene.bin":
+			[
+				{
+					"name": "233",
+					"address": "0x800ab9f0",
+					"offset": "0x0"
+				}
+			]
+		}
+	],
+	"pal":
+	[
+		{
+			"SCES_021.05":
+			[
+				{
+					"name": "header",
+					"address": "0x8000B070",
+					"offset": "0x0"
+				},
+				{
+					"name"      :   "exe",
+					"address"   :   "0x80010000",
+					"offset"    :   "0x800"
+				}
+			],
+			"bigfile/overlays/221_EndRaceMenu_CrystalChallenge.bin":
+			[
+				{
+					"name": "221",
+					"address": "0x8009fac4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/222_EndRaceMenu_ArcadeAdventure.bin":
+			[
+				{
+					"name": "222",
+					"address": "0x8009fac4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/223_EndRaceMenu_Relic.bin":
+			[
+				{
+					"name": "223",
+					"address": "0x8009fac4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/224_EndRaceMenu_TimeTrial.bin":
+			[
+				{
+					"name": "224",
+					"address": "0x8009fac4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/225_EndRaceMenu_BattleVS.bin":
+			[
+				{
+					"name": "225",
+					"address": "0x8009fac4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/226_Quadblock_1P.bin":
+			[
+				{
+					"name": "226",
+					"address": "0x800a10cc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/227_Quadblock_2P.bin":
+			[
+				{
+					"name": "227",
+					"address": "0x800a10cc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/228_Quadblock_3P.bin":
+			[
+				{
+					"name": "228",
+					"address": "0x800a10cc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/229_Quadblock_4P.bin":
+			[
+				{
+					"name": "229",
+					"address": "0x800a10cc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/230_Threads_MainMenu.bin":
+			[
+				{
+					"name": "230",
+					"address": "0x800abe04",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/231_Threads_Racing.bin":
+			[
+				{
+					"name": "231",
+					"address": "0x800abe04",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/232_Threads_AdvHub.bin":
+			[
+				{
+					"name": "232",
+					"address": "0x800abe04",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/233_Threads_Cutscene.bin":
+			[
+				{
+					"name": "233",
+					"address": "0x800abe04",
+					"offset": "0x0"
+				}
+			]
+		}
+	],
+	"ntsc-j":
+	[
+		{
+			"SCPS_101.18":
+			[
+				{
+					"name": "header",
+					"address": "0x8000B070",
+					"offset": "0x0"
+				},
+				{
+					"name"      :   "exe",
+					"address"   :   "0x80010000",
+					"offset"    :   "0x800"
+				}
+			],
+			"bigfile/overlays/221_EndRaceMenu_CrystalChallenge.bin":
+			[
+				{
+					"name": "221",
+					"address": "0x800a2bec",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/222_EndRaceMenu_ArcadeAdventure.bin":
+			[
+				{
+					"name": "222",
+					"address": "0x800a2bec",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/223_EndRaceMenu_Relic.bin":
+			[
+				{
+					"name": "223",
+					"address": "0x800a2bec",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/224_EndRaceMenu_TimeTrial.bin":
+			[
+				{
+					"name": "224",
+					"address": "0x800a2bec",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/225_EndRaceMenu_BattleVS.bin":
+			[
+				{
+					"name": "225",
+					"address": "0x800a2bec",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/226_Quadblock_1P.bin":
+			[
+				{
+					"name": "226",
+					"address": "0x800a41f4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/227_Quadblock_2P.bin":
+			[
+				{
+					"name": "227",
+					"address": "0x800a41f4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/228_Quadblock_3P.bin":
+			[
+				{
+					"name": "228",
+					"address": "0x800a41f4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/229_Quadblock_4P.bin":
+			[
+				{
+					"name": "229",
+					"address": "0x800a41f4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/230_Threads_MainMenu.bin":
+			[
+				{
+					"name": "230",
+					"address": "0x800aef2c",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/231_Threads_Racing.bin":
+			[
+				{
+					"name": "231",
+					"address": "0x800aef2c",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/232_Threads_AdvHub.bin":
+			[
+				{
+					"name": "232",
+					"address": "0x800aef2c",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/233_Threads_Cutscene.bin":
+			[
+				{
+					"name": "233",
+					"address": "0x800aef2c",
+					"offset": "0x0"
+				}
+			]
+		}
+	],
+	"proto-sep3":
+	[
+		{
+			"PSX.EXE":
+			[
+				{
+					"name": "header",
+					"address": "0x8000B070",
+					"offset": "0x0"
+				},
+				{
+					"name"      :   "exe",
+					"address"   :   "0x80010000",
+					"offset"    :   "0x800"
+				}
+			],
+			"bigfile/overlays/221_EndRaceMenu_CrystalChallenge.bin":
+			[
+				{
+					"name": "221",
+					"address": "0x8009e280",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/222_EndRaceMenu_ArcadeAdventure.bin":
+			[
+				{
+					"name": "222",
+					"address": "0x8009e280",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/223_EndRaceMenu_Relic.bin":
+			[
+				{
+					"name": "223",
+					"address": "0x8009e280",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/224_EndRaceMenu_TimeTrial.bin":
+			[
+				{
+					"name": "224",
+					"address": "0x8009e280",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/225_EndRaceMenu_BattleVS.bin":
+			[
+				{
+					"name": "225",
+					"address": "0x8009e280",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/226_Quadblock_1P.bin":
+			[
+				{
+					"name": "226",
+					"address": "0x8009f9bc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/227_Quadblock_2P.bin":
+			[
+				{
+					"name": "227",
+					"address": "0x8009f9bc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/228_Quadblock_3P.bin":
+			[
+				{
+					"name": "228",
+					"address": "0x8009f9bc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/229_Quadblock_4P.bin":
+			[
+				{
+					"name": "229",
+					"address": "0x8009f9bc",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/230_Threads_MainMenu.bin":
+			[
+				{
+					"name": "230",
+					"address": "0x800aa6ac",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/231_Threads_Racing.bin":
+			[
+				{
+					"name": "231",
+					"address": "0x800aa6ac",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/232_Threads_AdvHub.bin":
+			[
+				{
+					"name": "232",
+					"address": "0x800aa6ac",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/233_Threads_Cutscene.bin":
+			[
+				{
+					"name": "233",
+					"address": "0x800aa6ac",
+					"offset": "0x0"
+				}
+			]
+		}
+	],
+	"ntsc-j-trial":
+	[
+		{
+			"PCPX_961.83":
+			[
+				{
+					"name": "header",
+					"address": "0x8000B070",
+					"offset": "0x0"
+				},
+				{
+					"name"      :   "exe",
+					"address"   :   "0x80010000",
+					"offset"    :   "0x800"
+				}
+			],
+			"bigfile/overlays/221_EndRaceMenu_CrystalChallenge.bin":
+			[
+				{
+					"name": "221",
+					"address": "0x8009e6b0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/222_EndRaceMenu_ArcadeAdventure.bin":
+			[
+				{
+					"name": "222",
+					"address": "0x8009e6b0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/223_EndRaceMenu_Relic.bin":
+			[
+				{
+					"name": "223",
+					"address": "0x8009e6b0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/224_EndRaceMenu_TimeTrial.bin":
+			[
+				{
+					"name": "224",
+					"address": "0x8009e6b0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/225_EndRaceMenu_BattleVS.bin":
+			[
+				{
+					"name": "225",
+					"address": "0x8009e6b0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/226_Quadblock_1P.bin":
+			[
+				{
+					"name": "226",
+					"address": "0x8009fc6c",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/227_Quadblock_2P.bin":
+			[
+				{
+					"name": "227",
+					"address": "0x8009fc6c",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/228_Quadblock_3P.bin":
+			[
+				{
+					"name": "228",
+					"address": "0x8009fc6c",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/229_Quadblock_4P.bin":
+			[
+				{
+					"name": "229",
+					"address": "0x8009fc6c",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/230_Threads_MainMenu.bin":
+			[
+				{
+					"name": "230",
+					"address": "0x800aa9a4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/231_Threads_Racing.bin":
+			[
+				{
+					"name": "231",
+					"address": "0x800aa9a4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/232_Threads_AdvHub.bin":
+			[
+				{
+					"name": "232",
+					"address": "0x800aa9a4",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/overlays/233_Threads_Cutscene.bin":
+			[
+				{
+					"name": "233",
+					"address": "0x800aa9a4",
+					"offset": "0x0"
+				}
+			]
+		}
+	],
+	"common":
+	[
+		{
+			"bigfile/levels/tracks/proto8/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksproto81Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto8/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksproto81Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto8/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksproto82Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto8/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksproto82Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto8/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksproto84Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto8/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksproto84Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto8/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksproto8relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto8/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksproto8relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto9/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksproto91Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto9/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksproto91Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto9/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksproto92Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto9/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksproto92Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto9/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksproto94Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto9/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksproto94Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto9/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksproto9relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/proto9/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksproto9relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/desert2/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksdesert21Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/desert2/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksdesert21Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/desert2/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksdesert22Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/desert2/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksdesert22Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/desert2/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksdesert24Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/desert2/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksdesert24Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/desert2/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksdesert2relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/desert2/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksdesert2relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/island1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksisland11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/island1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksisland11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/island1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksisland12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/island1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksisland12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/island1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksisland14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/island1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksisland14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/island1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksisland1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/island1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksisland1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstemple11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstemple11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstemple12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstemple12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstemple14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstemple14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstemple1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstemple1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple2/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstemple21Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple2/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstemple21Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple2/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstemple22Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple2/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstemple22Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple2/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstemple24Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple2/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstemple24Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple2/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstemple2relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/temple2/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstemple2relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/tube1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstube11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/tube1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstube11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/tube1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstube12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/tube1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstube12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/tube1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstube14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/tube1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstube14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/tube1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackstube1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/tube1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackstube1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/blimp1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksblimp11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/blimp1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksblimp11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/blimp1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksblimp12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/blimp1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksblimp12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/blimp1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksblimp14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/blimp1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksblimp14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/blimp1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksblimp1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/blimp1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksblimp1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/sewer1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssewer11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/sewer1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssewer11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/sewer1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssewer12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/sewer1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssewer12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/sewer1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssewer14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/sewer1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssewer14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/sewer1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssewer1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/sewer1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssewer1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/cave1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscave11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/cave1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscave11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/cave1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscave12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/cave1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscave12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/cave1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscave14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/cave1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscave14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/cave1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscave1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/cave1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscave1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/castle1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscastle11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/castle1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscastle11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/castle1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscastle12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/castle1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscastle12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/castle1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscastle14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/castle1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscastle14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/castle1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscastle1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/castle1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscastle1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/labs1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackslabs11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/labs1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackslabs11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/labs1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackslabs12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/labs1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackslabs12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/labs1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackslabs14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/labs1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackslabs14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/labs1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackslabs1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/labs1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackslabs1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/ice1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksice11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/ice1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksice11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/ice1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksice12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/ice1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksice12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/ice1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksice14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/ice1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksice14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/ice1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksice1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/ice1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksice1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/space/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksspace1Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/space/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksspace1Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/space/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksspace2Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/space/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksspace2Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/space/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksspace4Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/space/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksspace4Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/space/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksspacerelicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/space/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksspacerelicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/coco1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscoco11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/coco1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscoco11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/coco1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscoco12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/coco1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscoco12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/coco1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscoco14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/coco1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscoco14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/coco1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackscoco1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/coco1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackscoco1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/arena2/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksarena21Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/arena2/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksarena21Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/arena2/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksarena22Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/arena2/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksarena22Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/arena2/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksarena24Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/arena2/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksarena24Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/arena2/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstracksarena2relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/arena2/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstracksarena2relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret1/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssecret11Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret1/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssecret11Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret1/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssecret12Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret1/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssecret12Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret1/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssecret14Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret1/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssecret14Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret1/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssecret1relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret1/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssecret1relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret2/1P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssecret21Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret2/1P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssecret21Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret2/2P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssecret22Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret2/2P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssecret22Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret2/4P/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssecret24Pdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret2/4P/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssecret24Pdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret2/relic/data.vrm":
+			[
+				{
+					"name": "bigfilelevelstrackssecret2relicdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/tracks/secret2/relic/data.lev":
+			[
+				{
+					"name": "bigfilelevelstrackssecret2relicdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/nitro_court/1/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlenitro_court1datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/nitro_court/1/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlenitro_court1datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/nitro_court/2/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlenitro_court2datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/nitro_court/2/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlenitro_court2datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/nitro_court/3/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlenitro_court3datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/nitro_court/3/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlenitro_court3datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/nitro_court/4/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlenitro_court4datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/nitro_court/4/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlenitro_court4datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rampage_ruins/1/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlerampage_ruins1datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rampage_ruins/1/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlerampage_ruins1datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rampage_ruins/2/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlerampage_ruins2datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rampage_ruins/2/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlerampage_ruins2datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rampage_ruins/3/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlerampage_ruins3datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rampage_ruins/3/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlerampage_ruins3datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rampage_ruins/4/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlerampage_ruins4datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rampage_ruins/4/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlerampage_ruins4datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/parking_lot/1/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattleparking_lot1datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/parking_lot/1/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattleparking_lot1datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/parking_lot/2/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattleparking_lot2datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/parking_lot/2/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattleparking_lot2datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/parking_lot/3/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattleparking_lot3datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/parking_lot/3/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattleparking_lot3datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/parking_lot/4/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattleparking_lot4datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/parking_lot/4/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattleparking_lot4datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/skull_rock/1/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattleskull_rock1datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/skull_rock/1/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattleskull_rock1datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/skull_rock/2/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattleskull_rock2datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/skull_rock/2/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattleskull_rock2datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/skull_rock/3/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattleskull_rock3datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/skull_rock/3/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattleskull_rock3datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/skull_rock/4/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattleskull_rock4datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/skull_rock/4/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattleskull_rock4datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/north_bowl/1/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlenorth_bowl1datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/north_bowl/1/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlenorth_bowl1datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/north_bowl/2/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlenorth_bowl2datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/north_bowl/2/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlenorth_bowl2datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/north_bowl/3/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlenorth_bowl3datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/north_bowl/3/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlenorth_bowl3datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/north_bowl/4/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlenorth_bowl4datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/north_bowl/4/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlenorth_bowl4datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rocky_road/1/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlerocky_road1datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rocky_road/1/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlerocky_road1datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rocky_road/2/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlerocky_road2datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rocky_road/2/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlerocky_road2datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rocky_road/3/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlerocky_road3datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rocky_road/3/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlerocky_road3datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rocky_road/4/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlerocky_road4datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/rocky_road/4/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlerocky_road4datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/lab_basement/1/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlelab_basement1datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/lab_basement/1/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlelab_basement1datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/lab_basement/2/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlelab_basement2datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/lab_basement/2/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlelab_basement2datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/lab_basement/3/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlelab_basement3datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/lab_basement/3/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlelab_basement3datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/lab_basement/4/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsbattlelab_basement4datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/battle/lab_basement/4/data.lev":
+			[
+				{
+					"name": "bigfilelevelsbattlelab_basement4datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/gem_valley/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsadventuregem_valleydatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/gem_valley/data.lev":
+			[
+				{
+					"name": "bigfilelevelsadventuregem_valleydatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/gem_valley/data.ptr":
+			[
+				{
+					"name": "bigfilelevelsadventuregem_valleydataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/nsanity_beach/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsadventurensanity_beachdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/nsanity_beach/data.lev":
+			[
+				{
+					"name": "bigfilelevelsadventurensanity_beachdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/nsanity_beach/data.ptr":
+			[
+				{
+					"name": "bigfilelevelsadventurensanity_beachdataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/lost_ruins/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsadventurelost_ruinsdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/lost_ruins/data.lev":
+			[
+				{
+					"name": "bigfilelevelsadventurelost_ruinsdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/lost_ruins/data.ptr":
+			[
+				{
+					"name": "bigfilelevelsadventurelost_ruinsdataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/glacier_park/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsadventureglacier_parkdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/glacier_park/data.lev":
+			[
+				{
+					"name": "bigfilelevelsadventureglacier_parkdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/glacier_park/data.ptr":
+			[
+				{
+					"name": "bigfilelevelsadventureglacier_parkdataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/citadel_city/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsadventurecitadel_citydatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/citadel_city/data.lev":
+			[
+				{
+					"name": "bigfilelevelsadventurecitadel_citydatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adventure/citadel_city/data.ptr":
+			[
+				{
+					"name": "bigfilelevelsadventurecitadel_citydataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/menu_models/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsmenu_modelsdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/menu_models/data.lev":
+			[
+				{
+					"name": "bigfilelevelsmenu_modelsdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adv_player_select/data.vrm":
+			[
+				{
+					"name": "bigfilelevelsadv_player_selectdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/levels/adv_player_select/data.lev":
+			[
+				{
+					"name": "bigfilelevelsadv_player_selectdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/japfont.vrm":
+			[
+				{
+					"name": "bigfilepacksjapfontvrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/japfont.mpk":
+			[
+				{
+					"name": "bigfilepacksjapfontmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/lang/ja.lng":
+			[
+				{
+					"name": "bigfilelangjalng",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/lang/en.lng":
+			[
+				{
+					"name": "bigfilelangenlng",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/lang/uk.lng":
+			[
+				{
+					"name": "bigfilelanguklng",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/lang/fr.lng":
+			[
+				{
+					"name": "bigfilelangfrlng",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/lang/de.lng":
+			[
+				{
+					"name": "bigfilelangdelng",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/lang/it.lng":
+			[
+				{
+					"name": "bigfilelangitlng",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/lang/es.lng":
+			[
+				{
+					"name": "bigfilelangeslng",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/lang/ne.lng":
+			[
+				{
+					"name": "bigfilelangnelng",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/crash.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershicrashctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/cortex.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershicortexctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/tiny.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershitinyctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/coco.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershicococtr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/ngin.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershinginctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/dingo.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershidingoctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/polar.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershipolarctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/pura.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershipuractr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/pinstripe.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershipinstripectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/papu.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershipapuctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/roo.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershirooctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/joe.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershijoectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/ntropy.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershintropyctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/pen.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershipenctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/fake.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershifakectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/hi/oxide.ctr":
+			[
+				{
+					"name": "bigfilemodelsracershioxidectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/shared.vrm":
+			[
+				{
+					"name": "bigfilepackssharedvrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/shared.mpk":
+			[
+				{
+					"name": "bigfilepackssharedmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/crash.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadecrashmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/cortex.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadecortexmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/tiny.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadetinympk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/coco.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadecocompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/ngin.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadenginmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/dingo.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadedingompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/polar.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadepolarmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/pura.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadepurampk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/pinstripe.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadepinstripempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/papu.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadepapumpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/roo.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcaderoompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/joe.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadejoempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/ntropy.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadentropympk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/pen.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadepenmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/fake.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadefakempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_arcade/oxide.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_arcadeoxidempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/crash.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurecrashmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/cortex.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurecortexmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/tiny.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventuretinympk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/coco.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurecocompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/ngin.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurenginmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/dingo.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventuredingompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/polar.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurepolarmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/pura.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurepurampk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/pinstripe.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurepinstripempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/papu.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurepapumpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/roo.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventureroompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/joe.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurejoempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/ntropy.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurentropympk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/pen.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurepenmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/fake.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventurefakempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_adventure/oxide.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_adventureoxidempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/crash.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialcrashmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/cortex.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialcortexmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/tiny.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialtinympk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/coco.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialcocompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/ngin.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialnginmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/dingo.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialdingompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/polar.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialpolarmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/pura.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialpurampk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/pinstripe.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialpinstripempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/papu.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialpapumpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/roo.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialroompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/joe.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialjoempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/ntropy.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialntropympk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/pen.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialpenmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/fake.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialfakempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/1P_timetrial/oxide.mpk":
+			[
+				{
+					"name": "bigfilepacks1P_timetrialoxidempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/crash.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedcrashctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/cortex.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedcortexctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/tiny.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedtinyctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/coco.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedcococtr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/ngin.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmednginctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/dingo.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmeddingoctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/polar.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedpolarctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/pura.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedpuractr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/pinstripe.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedpinstripectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/papu.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedpapuctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/roo.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedrooctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/joe.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedjoectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/ntropy.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedntropyctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/pen.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedpenctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/fake.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedfakectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/med/oxide.ctr":
+			[
+				{
+					"name": "bigfilemodelsracersmedoxidectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/2P/bots1.mpk":
+			[
+				{
+					"name": "bigfilepacks2Pbots1mpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/2P/bots2.mpk":
+			[
+				{
+					"name": "bigfilepacks2Pbots2mpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/2P/bots3.mpk":
+			[
+				{
+					"name": "bigfilepacks2Pbots3mpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/2P/bots4.mpk":
+			[
+				{
+					"name": "bigfilepacks2Pbots4mpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/2P/bots5.mpk":
+			[
+				{
+					"name": "bigfilepacks2Pbots5mpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/2P/bots6.mpk":
+			[
+				{
+					"name": "bigfilepacks2Pbots6mpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/2P/bots7.mpk":
+			[
+				{
+					"name": "bigfilepacks2Pbots7mpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/gem_bosses.mpk":
+			[
+				{
+					"name": "bigfilepacksgem_bossesmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/crash.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowcrashctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/cortex.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowcortexctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/tiny.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowtinyctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/coco.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowcococtr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/ngin.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslownginctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/dingo.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowdingoctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/polar.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowpolarctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/pura.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowpuractr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/pinstripe.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowpinstripectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/papu.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowpapuctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/roo.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowrooctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/joe.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowjoectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/ntropy.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowntropyctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/pen.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowpenctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/fake.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowfakectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/racers/low/oxide.ctr":
+			[
+				{
+					"name": "bigfilemodelsracerslowoxidectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/crash.mpk":
+			[
+				{
+					"name": "bigfilepacks4Pcrashmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/cortex.mpk":
+			[
+				{
+					"name": "bigfilepacks4Pcortexmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/tiny.mpk":
+			[
+				{
+					"name": "bigfilepacks4Ptinympk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/coco.mpk":
+			[
+				{
+					"name": "bigfilepacks4Pcocompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/ngin.mpk":
+			[
+				{
+					"name": "bigfilepacks4Pnginmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/dingo.mpk":
+			[
+				{
+					"name": "bigfilepacks4Pdingompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/polar.mpk":
+			[
+				{
+					"name": "bigfilepacks4Ppolarmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/pura.mpk":
+			[
+				{
+					"name": "bigfilepacks4Ppurampk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/pinstripe.mpk":
+			[
+				{
+					"name": "bigfilepacks4Ppinstripempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/papu.mpk":
+			[
+				{
+					"name": "bigfilepacks4Ppapumpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/roo.mpk":
+			[
+				{
+					"name": "bigfilepacks4Proompk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/joe.mpk":
+			[
+				{
+					"name": "bigfilepacks4Pjoempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/ntropy.mpk":
+			[
+				{
+					"name": "bigfilepacks4Pntropympk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/pen.mpk":
+			[
+				{
+					"name": "bigfilepacks4Ppenmpk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/fake.mpk":
+			[
+				{
+					"name": "bigfilepacks4Pfakempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/packs/4P/oxide.mpk":
+			[
+				{
+					"name": "bigfilepacks4Poxidempk",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/cutscenes1.vrm":
+			[
+				{
+					"name": "bigfilemodelscutscenes1vrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/cutscenes2.vrm":
+			[
+				{
+					"name": "bigfilemodelscutscenes2vrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/crashdance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_wincrashdancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/crashdance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_wincrashdance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/cortexdance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_wincortexdancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/cortexdance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_wincortexdance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/tinydance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_wintinydancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/tinydance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_wintinydance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/cocodance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_wincocodancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/cocodance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_wincocodance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/ngindance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winngindancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/ngindance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winngindance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/dingodance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_windingodancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/dingodance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_windingodance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/polardance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winpolardancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/polardance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winpolardance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/puradance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winpuradancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/puradance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winpuradance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/pinstripedance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winpinstripedancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/pinstripedance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winpinstripedance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/papudance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winpapudancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/papudance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winpapudance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/roodance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winroodancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/roodance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winroodance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/joedance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winjoedancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/joedance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winjoedance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/ntropydance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winntropydancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/ntropydance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winntropydance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/pendance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winpendancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/pendance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winpendance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/fakedance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winfakedancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/fakedance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winfakedance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/oxidedance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winoxidedancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_win/oxidedance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_winoxidedance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/crashlose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losecrashlosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/crashlose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losecrashlose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/cortexlose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losecortexlosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/cortexlose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losecortexlose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/tinylose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losetinylosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/tinylose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losetinylose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/cocolose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losecocolosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/cocolose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losecocolose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/nginlose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losenginlosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/nginlose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losenginlose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/dingolose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losedingolosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/dingolose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losedingolose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/polarlose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losepolarlosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/polarlose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losepolarlose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/puralose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losepuralosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/puralose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losepuralose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/pinstripelose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losepinstripelosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/pinstripelose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losepinstripelose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/papulose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losepapulosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/papulose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losepapulose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/roolose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_loseroolosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/roolose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_loseroolose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/joelose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losejoelosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/joelose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losejoelose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/ntropylose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losentropylosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/ntropylose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losentropylose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/penlose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losepenlosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/penlose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losepenlose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/fakelose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losefakelosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/fakelose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_losefakelose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/oxidelose.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_loseoxidelosectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_lose/oxidelose2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_loseoxidelose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_girl/tawna1dance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_girltawna1dancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_girl/tawna1dance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_girltawna1dance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_girl/tawna2dance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_girltawna2dancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_girl/tawna2dance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_girltawna2dance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_girl/tawna3dance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_girltawna3dancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_girl/tawna3dance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_girltawna3dance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_girl/tawna4dance.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_girltawna4dancectr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/trophy_girl/tawna4dance2.ctr":
+			[
+				{
+					"name": "bigfilemodelstrophy_girltawna4dance2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/uka1.vrm":
+			[
+				{
+					"name": "bigfilemodelsmiscuka1vrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/uka1.ctr":
+			[
+				{
+					"name": "bigfilemodelsmiscuka1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/uka2.vrm":
+			[
+				{
+					"name": "bigfilemodelsmiscuka2vrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/uka2.ctr":
+			[
+				{
+					"name": "bigfilemodelsmiscuka2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/aku1.vrm":
+			[
+				{
+					"name": "bigfilemodelsmiscaku1vrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/aku1.ctr":
+			[
+				{
+					"name": "bigfilemodelsmiscaku1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/aku2.vrm":
+			[
+				{
+					"name": "bigfilemodelsmiscaku2vrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/aku2.ctr":
+			[
+				{
+					"name": "bigfilemodelsmiscaku2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/dingofire1.ctr":
+			[
+				{
+					"name": "bigfilemodelsmiscdingofire1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/dingofire2.ctr":
+			[
+				{
+					"name": "bigfilemodelsmiscdingofire2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/podium1.ctr":
+			[
+				{
+					"name": "bigfilemodelsmiscpodium1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/misc/podium2.ctr":
+			[
+				{
+					"name": "bigfilemodelsmiscpodium2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_head/roohead1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headroohead1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_head/roohead2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headroohead2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_head/joehead1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headjoehead1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_head/joehead2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headjoehead2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_head/pinstripehead1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headpinstripehead1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_head/pinstripehead2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headpinstripehead2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_head/papuhead1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headpapuhead1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_head/papuhead2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headpapuhead2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_head/noxidehead1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headnoxidehead1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_head/noxidehead2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headnoxidehead2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_headlose/rooheadlose1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headloserooheadlose1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_headlose/rooheadlose2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headloserooheadlose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_headlose/joeheadlose1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headlosejoeheadlose1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_headlose/joeheadlose2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headlosejoeheadlose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_headlose/pinstripeheadlose1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headlosepinstripeheadlose1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_headlose/pinstripeheadlose2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headlosepinstripeheadlose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_headlose/papuheadlose1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headlosepapuheadlose1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_headlose/papuheadlose2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headlosepapuheadlose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_headlose/noxideheadlose1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headlosenoxideheadlose1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_headlose/noxideheadlose2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_headlosenoxideheadlose2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_body/roobody1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_bodyroobody1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_body/roobody2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_bodyroobody2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_body/joebody1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_bodyjoebody1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_body/joebody2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_bodyjoebody2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_body/pinstripebody1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_bodypinstripebody1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_body/pinstripebody2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_bodypinstripebody2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_body/papubody1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_bodypapubody1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_body/papubody2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_bodypapubody2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_body/noxidebody1.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_bodynoxidebody1ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/models/boss_body/noxidebody2.ctr":
+			[
+				{
+					"name": "bigfilemodelsboss_bodynoxidebody2ctr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/VlcTable.bin":
+			[
+				{
+					"name": "bigfileVlcTablebin",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/proto8.str":
+			[
+				{
+					"name": "bigfilethumbsproto8str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/proto9.str":
+			[
+				{
+					"name": "bigfilethumbsproto9str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/desert2.str":
+			[
+				{
+					"name": "bigfilethumbsdesert2str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/island1.str":
+			[
+				{
+					"name": "bigfilethumbsisland1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/temple1.str":
+			[
+				{
+					"name": "bigfilethumbstemple1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/temple2.str":
+			[
+				{
+					"name": "bigfilethumbstemple2str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/blimp1.str":
+			[
+				{
+					"name": "bigfilethumbsblimp1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/sewer1.str":
+			[
+				{
+					"name": "bigfilethumbssewer1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/cave1.str":
+			[
+				{
+					"name": "bigfilethumbscave1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/castle1.str":
+			[
+				{
+					"name": "bigfilethumbscastle1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/labs1.str":
+			[
+				{
+					"name": "bigfilethumbslabs1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/ice1.str":
+			[
+				{
+					"name": "bigfilethumbsice1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/space.str":
+			[
+				{
+					"name": "bigfilethumbsspacestr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/coco1.str":
+			[
+				{
+					"name": "bigfilethumbscoco1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/arena2.str":
+			[
+				{
+					"name": "bigfilethumbsarena2str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/secret1.str":
+			[
+				{
+					"name": "bigfilethumbssecret1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/secret2.str":
+			[
+				{
+					"name": "bigfilethumbssecret2str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/battle1.str":
+			[
+				{
+					"name": "bigfilethumbsbattle1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/battle2.str":
+			[
+				{
+					"name": "bigfilethumbsbattle2str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/battle3.str":
+			[
+				{
+					"name": "bigfilethumbsbattle3str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/battle4.str":
+			[
+				{
+					"name": "bigfilethumbsbattle4str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/battle5.str":
+			[
+				{
+					"name": "bigfilethumbsbattle5str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/battle6.str":
+			[
+				{
+					"name": "bigfilethumbsbattle6str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/battle7.str":
+			[
+				{
+					"name": "bigfilethumbsbattle7str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/null.str":
+			[
+				{
+					"name": "bigfilethumbsnullstr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/thumbs/tube1.str":
+			[
+				{
+					"name": "bigfilethumbstube1str",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/screen/title01_jap.tim":
+			[
+				{
+					"name": "bigfilescreentitle01_japtim",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/screen/title01_pal.tim":
+			[
+				{
+					"name": "bigfilescreentitle01_paltim",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/screen/title01_usa.tim":
+			[
+				{
+					"name": "bigfilescreentitle01_usatim",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/screen/title02_usa.tim":
+			[
+				{
+					"name": "bigfilescreentitle02_usatim",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/screen/title02_pal.tim":
+			[
+				{
+					"name": "bigfilescreentitle02_paltim",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/screen/title02_jap.tim":
+			[
+				{
+					"name": "bigfilescreentitle02_japtim",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/intro_box/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenesintro_boxdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/intro_box/data.lev":
+			[
+				{
+					"name": "bigfilecutscenesintro_boxdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/race_today/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenesrace_todaydatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/race_today/data.lev":
+			[
+				{
+					"name": "bigfilecutscenesrace_todaydatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/race_today/data.ptr":
+			[
+				{
+					"name": "bigfilecutscenesrace_todaydataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/canyon_coco/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenescanyon_cocodatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/canyon_coco/data.lev":
+			[
+				{
+					"name": "bigfilecutscenescanyon_cocodatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/canyon_coco/data.ptr":
+			[
+				{
+					"name": "bigfilecutscenescanyon_cocodataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/pass_tiny/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenespass_tinydatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/pass_tiny/data.lev":
+			[
+				{
+					"name": "bigfilecutscenespass_tinydatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/pass_tiny/data.ptr":
+			[
+				{
+					"name": "bigfilecutscenespass_tinydataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/temple_polar/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenestemple_polardatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/temple_polar/data.lev":
+			[
+				{
+					"name": "bigfilecutscenestemple_polardatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/temple_polar/data.ptr":
+			[
+				{
+					"name": "bigfilecutscenestemple_polardataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/skyway_dingodile/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenesskyway_dingodiledatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/skyway_dingodile/data.lev":
+			[
+				{
+					"name": "bigfilecutscenesskyway_dingodiledatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/skyway_dingodile/data.ptr":
+			[
+				{
+					"name": "bigfilecutscenesskyway_dingodiledataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/sewer_cortex/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenessewer_cortexdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/sewer_cortex/data.lev":
+			[
+				{
+					"name": "bigfilecutscenessewer_cortexdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/sewer_cortex/data.ptr":
+			[
+				{
+					"name": "bigfilecutscenessewer_cortexdataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/oxide/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenesoxidedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/oxide/data.lev":
+			[
+				{
+					"name": "bigfilecutscenesoxidedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/oxide/data.ptr":
+			[
+				{
+					"name": "bigfilecutscenesoxidedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/sleeping_crash/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenessleeping_crashdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/sleeping_crash/data.lev":
+			[
+				{
+					"name": "bigfilecutscenessleeping_crashdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/sleeping_crash/data.ptr":
+			[
+				{
+					"name": "bigfilecutscenessleeping_crashdataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/last_oxide_intro/data.vrm":
+			[
+				{
+					"name": "bigfilecutsceneslast_oxide_introdatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/last_oxide_intro/data.lev":
+			[
+				{
+					"name": "bigfilecutsceneslast_oxide_introdatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/last_oxide_intro/data.ptr":
+			[
+				{
+					"name": "bigfilecutsceneslast_oxide_introdataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/oxide01/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenesoxide01datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/oxide01/data.lev":
+			[
+				{
+					"name": "bigfilecutscenesoxide01datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/oxide02/data.vrm":
+			[
+				{
+					"name": "bigfilecutscenesoxide02datavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/cutscenes/oxide02/data.lev":
+			[
+				{
+					"name": "bigfilecutscenesoxide02datalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/crashdance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditscrashdancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/crashdance/data.lev":
+			[
+				{
+					"name": "bigfilecreditscrashdancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/crashdance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditscrashdancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/cortexdance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditscortexdancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/cortexdance/data.lev":
+			[
+				{
+					"name": "bigfilecreditscortexdancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/cortexdance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditscortexdancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tinydance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditstinydancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tinydance/data.lev":
+			[
+				{
+					"name": "bigfilecreditstinydancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tinydance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditstinydancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/cocodance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditscocodancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/cocodance/data.lev":
+			[
+				{
+					"name": "bigfilecreditscocodancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/cocodance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditscocodancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/ngindance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditsngindancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/ngindance/data.lev":
+			[
+				{
+					"name": "bigfilecreditsngindancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/ngindance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditsngindancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/dingodance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditsdingodancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/dingodance/data.lev":
+			[
+				{
+					"name": "bigfilecreditsdingodancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/dingodance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditsdingodancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/polardance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditspolardancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/polardance/data.lev":
+			[
+				{
+					"name": "bigfilecreditspolardancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/polardance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditspolardancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/puradance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditspuradancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/puradance/data.lev":
+			[
+				{
+					"name": "bigfilecreditspuradancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/puradance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditspuradancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/pinstripedance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditspinstripedancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/pinstripedance/data.lev":
+			[
+				{
+					"name": "bigfilecreditspinstripedancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/pinstripedance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditspinstripedancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/papudance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditspapudancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/papudance/data.lev":
+			[
+				{
+					"name": "bigfilecreditspapudancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/papudance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditspapudancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/roodance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditsroodancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/roodance/data.lev":
+			[
+				{
+					"name": "bigfilecreditsroodancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/roodance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditsroodancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/joedance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditsjoedancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/joedance/data.lev":
+			[
+				{
+					"name": "bigfilecreditsjoedancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/joedance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditsjoedancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/ntropydance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditsntropydancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/ntropydance/data.lev":
+			[
+				{
+					"name": "bigfilecreditsntropydancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/ntropydance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditsntropydancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/pendance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditspendancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/pendance/data.lev":
+			[
+				{
+					"name": "bigfilecreditspendancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/pendance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditspendancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/fakedance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditsfakedancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/fakedance/data.lev":
+			[
+				{
+					"name": "bigfilecreditsfakedancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/fakedance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditsfakedancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/oxidelose/data.vrm":
+			[
+				{
+					"name": "bigfilecreditsoxidelosedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/oxidelose/data.lev":
+			[
+				{
+					"name": "bigfilecreditsoxidelosedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/oxidelose/data.ptr":
+			[
+				{
+					"name": "bigfilecreditsoxidelosedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna1dance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditstawna1dancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna1dance/data.lev":
+			[
+				{
+					"name": "bigfilecreditstawna1dancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna1dance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditstawna1dancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna2dance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditstawna2dancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna2dance/data.lev":
+			[
+				{
+					"name": "bigfilecreditstawna2dancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna2dance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditstawna2dancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna3dance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditstawna3dancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna3dance/data.lev":
+			[
+				{
+					"name": "bigfilecreditstawna3dancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna3dance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditstawna3dancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna4dance/data.vrm":
+			[
+				{
+					"name": "bigfilecreditstawna4dancedatavrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna4dance/data.lev":
+			[
+				{
+					"name": "bigfilecreditstawna4dancedatalev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/credits/tawna4dance/data.ptr":
+			[
+				{
+					"name": "bigfilecreditstawna4dancedataptr",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/null.vrm":
+			[
+				{
+					"name": "bigfilenullvrm",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			],
+			"bigfile/null.lev":
+			[
+				{
+					"name": "bigfilenulllev",
+					"address": "0x0",
+					"offset": "0x0"
+				}
+			]
+		}
+	]
+}

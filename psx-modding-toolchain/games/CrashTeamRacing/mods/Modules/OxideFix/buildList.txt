@@ -1,0 +1,27 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Import SaveRAM
+common, exe, LOAD_DriverMPK, 0x0, ../../../decompile/General/LOAD_DriverMPK.c
+common, exe, AllocateAllPools, 0x0, ../../Patches/SaveRAM/src/Mem_AllocateAllPools.c
+common, exe, Camera110_InitStructs, 0x0, ../../../decompile/General/Camera110_InitStructs.c ../../Patches/SaveRAM/src/Mem_DriverPool.c, Mem_DriverPool.bin
+common, exe, ClearAllMemPools, 0x0, ../../Patches/SaveRAM/src/Mem_hookClearAllPools.s
+common, exe, DrawRaceClock, 0x0, ../../../decompile/General/DrawRaceClock.c ../../Patches/SaveRAM/src/Mem_ThreadPool.c, Mem_ThreadPool.bin
+
+// Custom version of AdvBosses
+common, 233, CS_Garage_GetMenuBox, -0x8, src/AdvBosses_hook233.s
+common, 233, CS_EndOfFile, 0x0, src/AdvBosses_main.c
+
+// Modify the Main Menu to show Oxide
+common, exe, LOAD_Callback_Overlay_231, -0x8, src/MM_hookCallback230.s
+common, 230, MM_Characters_GetModelByName, 0x0, src/MM_NewModelSearch.c
+common, 230, MM_EndOfFile, 0x0, src/MM_End230_IconArrays.c src/MM_End230_OxideModel.c src/MM_End230_Callback230.c, MM_End230.bin
+
+// Fix Podium
+common, exe, LOAD_CDRequestCallback, -0x8, src/PodiumFix_hookAppendQueue.s
+926,  exe, 0x80011380, 0x0, src/PodiumFix_AppendQueue.c
+1006, exe, 0x80011468, 0x0, src/PodiumFix_AppendQueue.c
+1020, exe, 0x80011380, 0x0, src/PodiumFix_AppendQueue.c
+1111, exe, 0x80011468, 0x0, src/PodiumFix_AppendQueue.c

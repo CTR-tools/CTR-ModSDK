@@ -1,0 +1,1775 @@
+80010000 rdata
+80080EE0 data
+8008cf6c sdata
+8008d668 bss
+
+// start of BOTS
+800123e0 BOTS_SetGlobalNavData
+80012440 BOTS_InitNavPath
+80012560 BOTS_EmptyFunc
+80012568 BOTS_Adv_NumTimesLostEvent
+80012598 BOTS_Adv_AdjustDifficulty
+80013374 BOTS_UpdateGlobals
+80013444 BOTS_SetRotation
+800135d8 BOTS_ExecuteFuncOnApproach
+8001372c BOTS_PerFrame_EngineRevving
+80013838 BOTS_MaskGrab
+80013a70 BOTS_Killplane
+80013c18 BOTS_PerFrame_Drive
+80016b00 BOTS_ChangeState
+80016ec8 BOTS_CollideWithOtherAI
+8001702c BOTS_GotoStartingLine
+80017164 BOTS_Driver_Init
+80017318 BOTS_Driver_Convert
+
+// start of CAM
+800175cc CAM_SkyboxGlow
+8001861c CAM_ClearScreen
+80018818 CAM_Init
+800188a8 CAM_FindClosestQuadblock
+80018b18 CAM_Path_GetNumPoints
+80018ba0 CAM_Path_Move
+80018d20 CAM_StartOfRace
+80018d9c CAM_EndOfRace_Battle
+80018e38 CAM_EndOfRace
+80018ec0 CAM_StartLine_FlyIn_FixY
+80018fec CAM_ProcessTransition
+80019128 CAM_FollowDriver_AngleAxis
+800194c8 CAM_StartLine_FlyIn
+800198f8 CAM_FollowDriver_TrackPath
+80019e7c CAM_LookAtPosition
+80019f58 CAM_FollowDriver_Spin360
+8001a054 CAM_SetDesiredPosRot
+8001a0bc CAM_FollowDriver_Normal
+8001b254 CAM_MapRange_PosPoints
+8001b334 CAM_PerFrame
+
+// start of CDSYS
+8001c360 CDSYS_Init
+8001c420 CDSYS_GetFilePosInt
+8001c470 CDSYS_SetMode_StreamData
+8001c4f4 CDSYS_SetMode_StreamAudio
+8001c56c CDSYS_SetXAToLang			// real ND name
+8001c7a4 CDSYS_CdSyncCallback
+8001c7fc CDSYS_CdReadyCallback
+8001c8e4 CDSYS_IRQ_Callback
+8001c984 CDSYS_Transfer_Callback
+8001c9e4 CDSYS_IRQ_Enable
+8001ca64 CDSYS_IRQ_Disable
+8001ca98 CDSYS_ParseSpuData
+8001cbe0 CDSYS_XAGetNumTracks
+8001cc18 CDSYS_XASeek				// real ND name
+8001cd20 CDSYS_XAGetTrackLength
+8001cdb4 CDSYS_XAPlay				// real ND name
+8001cf98 CDSYS_XAPauseRequest
+8001cfec CDSYS_XAPauseForce
+8001d06c CDSYS_XAPauseAtEnd
+
+8001d094 COLL_ThreadMeta
+8001d0c4 COLL_Instance
+8001d610 COLL_SearchCallback_Instances
+8001d77c COLL_CheckDriver_AI
+8001d944 COLL_CheckDriver_Player
+8001eb0c COLL_SearchTree_NoCallback
+8001ebec COLL_SearchTree_WithCallback
+
+// unknown 8001ede4
+// unknown 8001ef1c -- tiny function
+// unknown 8001ef50 -- collision related
+// 1ef74 is not a real function
+// unknown 8001f2dc
+
+8001f41c COLL_Quadblock_Graphics
+8001f5f0 COLL_SearchCallback_QuadBlocks_Graphics
+
+// unknown 8001f67c
+// unknown 8001f6f0
+// unknown 8001f7f0
+// unknown 8001f928 -- collision related
+// unknown 8001fb8c -- register swapping
+// unknown 8001fbd4 -- register swapping
+// unknown 8001fc10 -- register swapping
+// unknown 8001fc40
+
+80020064 COLL_Quadblock_Physics
+800202a8 COLL_SearchCallback_QuadBlocks_Physics
+
+// unknown 80020334 -- nop to make driver jump
+// unknown 80020410 -- Driver FuncPtr maybe OnPhysics? calls Scrub?
+
+80020c58 COLL_Scrub
+
+80021500 CTR_Box_DrawWirePrims
+80021594 CTR_Box_DrawWireBox
+8002177c CTR_Box_DrawClearBox
+80021894 CTR_Box_DrawSolidBox
+80021984 CTR_CycleTex_LEV
+80021a20 CTR_CycleTex_Model
+80021ac0 CTR_CycleTex_AllModels
+80021b94 CTR_CycleTex_2p3p4pWumpaHUD
+80021bbc CTR_ClearRenderLists_1P2P
+80021c2c CTR_ClearRenderLists_3P4P
+80021c8c CTR_EmptyFunc_StartNewFrame
+80021c94 CTR_ErrorScreen
+
+// CTR_Frustum_UpdateVisMem
+// unknown 80021da0
+// unknown 80021e1c
+// unknown 80021ea8
+
+80021edc CTR_MatrixToRot
+80022234 CTR_ScrambleGhostString
+
+800222e0 DebugFont_Init
+80022318 DebugFont_DrawNumbers
+
+800223f4 DecalFont_GetLineWidthStrlen
+800224d0 DecalFont_GetLineWidth
+800224fc DecalFont_DrawLineStrlen
+80022878 DecalFont_DrawLine
+800228c4 DecalFont_DrawLineOT
+80022930 DecalFont_DrawMultiLineStrlen
+80022b34 DecalFont_DrawMultiLine
+
+80022b94 DecalGlobal_EmptyFunc_StartNewFrame
+80022b9c DecalGlobal_Clear
+80022bdc DecalGlobal_Store
+80022c88 DecalGlobal_Find1
+80022d2c DecalGlobal_Find2
+
+80022db0 DecalHUD_DrawPolyFT4
+80022ec4 DecalHUD_DrawWeapon
+80023054 DecalHUD_DrawPolyGT4
+80023190 DecalHUD_Arrow2D
+
+80023488 DecalMP_01
+80023640 DecalMP_02
+80023784 DecalMP_03
+
+80023a40 DISPLAY_Blur_SubFunc
+80023d4c DISPLAY_Blur_Main
+// in 903+926+1006, removed in 1020+1111
+80023ffc DISPLAY_Swap
+
+8002406c DotLights_Video
+800242b8 DotLights_AudioAndVideo
+
+80024464 EffectSfxRain_MakeSound
+8002451c EffectSfxRain_Reset
+
+80024524 ElimBG_SaveScreenshot_Chunk
+8002459c ElimBG_SaveScreenshot_Full
+8002481c ElimBG_Activate
+80024840 ElimBG_ToggleInstance
+800248bc ElimBG_ToggleAllInstances
+80024974 ElimBG_HandleState
+80024c08 ElimBG_Deactivate
+
+// Does not exist prior to 926
+80024c4c FLARE_PerFrame
+80025138 FLARE_Init
+
+800251ac GAMEPAD_Init
+80025208 GAMEPAD_SetMainMode
+800252a0 GAMEPAD_ProcessState
+80025410 GAMEPAD_CheckUnplugged
+800255b4 GAMEPAD_GetNumConnected
+// extra appears here in Sep3
+80025718 GAMEPAD_ProcessHold
+80025854 GAMEPAD_ProcessSticks
+80025d10 GAMEPAD_ProcessTapRelease
+80025e18 GAMEPAD_ProcessForceFeedback
+800262d0 GAMEPAD_UpdateAll
+
+800263a0 GAMEPAD_Vib_1
+800263fc GAMEPAD_Vib_2
+80026440 GAMEPAD_Vib_3
+800264c0 GAMEPAD_Vib_4
+80026540 GAMEPAD_Vib_5
+
+800265c0 GAMEPROG_AdvPercent
+8002689c GAMEPROG_ResetHighScores
+80026ae4 GAMEPROG_CheckGhostsBeaten
+80026bf0 GAMEPROG_NewProfile_OutsideAdv
+80026c24 GAMEPROG_InitFullMemcard
+80026cb8 GAMEPROG_NewProfile_InsideAdv
+80026cf4 GAMEPROG_SaveCupProgress
+80026d7c GAMEPROG_SaveTimeTrialProgress
+80026e48 GAMEPROG_NewGame_OnBoot
+80026e80 GAMEPROG_GetPtrHighScoreTrack
+
+80026ed8 GhostBuffer_PerFrame
+80027838 GhostBuffer_InitMemory
+80027b88 GhostBuffer_InitDriver
+80027df4 GhostBuffer_InitRecording
+80027e90 GhostBuffer_EndRecording
+80027f20 GhostBuffer_RecordStats
+8002838c GhostBuffer_RecordBoosts
+80028410 GhostBuffer_Destroy
+
+// === Everything below "Ghost" is "Howl"
+
+8002843c CountSounds
+
+// all SFXs except engine
+80028468 OtherFX_Play
+80028494 OtherFX_Play_Echo
+800284d0 OtherFX_Play_LowLevel
+80028690 OtherFX_Modify
+80028808 OtherFX_Stop1
+80028844 OtherFX_Stop2
+
+80028880 EngineAudio_InitOnce
+800289b0 EngineAudio_Recalculate
+80028b54 EngineAudio_Stop
+
+80028bbc SetReverbMode
+
+80028c78 CseqMusic_Start
+80028d64 CseqMusic_Pause
+80028de0 CseqMusic_Resume
+80028e5c CseqMusic_ChangeVolume
+80028f34 CseqMusic_Restart
+80029008 CseqMusic_ChangeTempo
+800290cc CseqMusic_AdvHubSwap
+800291a0 CseqMusic_Stop
+80029258 CseqMusic_StopAll
+
+// official name might be "SampleBlock"
+800292e0 Bank_ResetAllocator
+800292fc Bank_Alloc
+800293b8 Bank_AssignSpuAddrs
+800296c4 Bank_Destroy
+80029730 Bank_ClearInRange
+800297a0 Bank_Load
+80029824 Bank_DestroyLast
+80029870 Bank_DestroyUntilIndex
+800298e4 Bank_DestroyAll
+
+8002991c howl_InstrumentPitch
+80029988 howl_InitGlobals
+80029a50 howl_ParseHeader
+80029ab4 howl_ParseCesqHeader
+80029b2c howl_LoadHeader
+80029c40 howl_SetSong
+80029ca4 howl_LoadSong
+80029dc0 howl_ErasePtrCesqHeader
+80029dcc howl_ReadTimeDelta
+80029e18 cseq_opcode01_noteoff
+80029f24 cseq_opcode03
+80029f80 howl_InitChannelAttr_Music
+8002a170 cseq_opcode_from06and07
+8002a28c cseq_opcode05_noteon
+8002a3a8 cseq_opcode06
+8002a3d4 cseq_opcode07
+8002a400 cseq_opcode08
+8002a494 cseq_opcode09
+8002a4a8 cseq_opcode0a
+
+8002a63c SongPool_FindFreeChannel
+8002a678 SongPool_CalculateTempo
+8002a6cc SongPool_ChangeTempo
+8002a730 SongPool_Start
+8002a9d8 SongPool_Volume
+8002a9f0 SongPool_AdvHub1
+8002aa44 SongPool_AdvHub2
+8002ab18 SongPool_StopCseq
+8002ac0c SongPool_StopAllCseq
+
+8002ac94 howl_Disable
+
+8002acb8 UpdateChannelVol_EngineFX
+8002ad04 UpdateChannelVol_OtherFX
+8002ad70 UpdateChannelVol_Music
+8002ae64 UpdateChannelVol_EngineFX_All
+8002af6c UpdateChannelVol_Music_All
+8002b030 UpdateChannelVol_OtherFX_All
+
+8002b0e0 howl_VolumeGet				// real ND name
+8002b130 howl_VolumeSet				// real ND name
+8002b1f0 howl_ModeGet
+8002b1fc howl_ModeSet
+
+8002b208 OptionsMenu_TestSound
+
+8002b4d0 Smart_EnterCriticalSection
+8002b508 Smart_ExitCriticalSection
+
+8002b540 Channel_SetVolume
+8002b5b4 Channel_FindDuplicateSound
+8002b608 Channel_AllocSlot_CheckDups
+8002b7d0 Channel_AllocSlot
+8002b898 Channel_SearchFX_EditAttr
+8002b9b8 Channel_SearchFX_Destroy
+8002ba90 Channel_DestroyAll_LowLevel
+8002bbac Channel_ParseSongToChannels
+8002be9c Channel_UpdateChannels
+
+// not in sep3
+8002c18c Cutscene_VolumeBackup
+8002c1d0 Cutscene_VolumeRestore
+
+8002c208 howl_PlayAudio_PerFrame
+8002c34c howl_InitChannelAttr_EngineFX
+8002c424 howl_InitChannelAttr_OtherFX
+8002c510 howl_PauseAudio
+8002c64c howl_UnPauseChannel
+8002c784 howl_UnPauseAudio
+8002c8a8 howl_StopAudio
+
+// touches many pools, not just voiceline
+8002c918 Voiceline_PoolInit
+
+8002caa8 Voiceline_ClearTimeStamp
+8002cae0 Voiceline_PoolClear
+8002cb44 Voiceline_StopAll
+8002cbb4 Voiceline_ToggleEnable
+8002cbe8 Voiceline_TriggerDriver
+8002cf28 Voiceline_TriggerBoss
+8002d0f8 Voiceline_WrongWay
+8002d2a8 Voiceline_EmptyFunc
+8002d2b0 Voiceline_SetDefaults
+
+8002d2f4 Audio_SetState
+8002d4cc Audio_SetState_Safe
+8002d50c Audio_AdvHub_SwapSong
+8002d554 Audio_SetMaskSong
+8002d67c Audio_PerFrame
+8002dc4c Audio_SetDefaults
+8002dcac Audio_SetReverbMode
+
+// no intro music in sep3, extra func in japanRetail
+8002dd24 Music_SetIntro // "start your engines..."
+8002dd74 Music_LoadBanks
+8002de48 Music_AsyncParseBanks
+8002e338 Music_SetDefaults
+8002e350 Music_Adjust
+8002e418 Music_LowerVolume
+8002e46c Music_RaiseVolume
+8002e4c0 Music_Restart
+8002e4ec Music_Stop
+8002e524 Music_Start // missing in sep3
+8002e53c Music_End
+8002e550 Music_GetHighestSongPlayIndex
+
+8002e55c GTE_AudioLR_Inst 
+8002e5cc GTE_AudioLR_Driver 
+8002e658 GTE_GetSquaredLength
+
+8002e690 OtherFX_DriverTurbo
+8002e724 OtherFX_Stop_Safe
+8002e760 OtherFX_DriverCrashing
+8002e7bc GTE_GetSquaredDistance
+
+8002e84c CalculateVolumeFromDistance
+8002e994 PlayWarppadSound
+8002e9c0 Level_SoundLoop1
+8002ea44 Level_SoundLoop2
+8002eab8 Level_RandomFX
+8002ebe4 Level_AmbientSound
+
+8002f0dc PlaySound3D
+8002f31c PlaySound3D_Flags
+
+8002f5f4 EngineSound_Player
+8002fc28 EngineSound_VolumeAdjust // also for talking masks
+8002fc64 EngineSound_AI
+8002ff28 EngineSound_NearestAIs
+
+// Garage is not in Sep3
+80030208 Garage_Init
+80030264 Garage_Enter
+80030404 Garage_Idle1
+800304b8 Garage_Idle2
+80030694 Garage_MoveLR
+8003074c Garage_Leave
+
+// === Everything above "Instance" is "howl"
+
+80030778 INSTANCE_Birth
+8003086c INSTANCE_Birth3D
+800308e4 INSTANCE_Birth2D
+800309a4 INSTANCE_BirthWithThread // real ND name
+80030a50 INSTANCE_BirthWithThread_Desc
+80030aa8 INSTANCE_Death
+
+80030ad4 INSTANCE_LEVEL_InitAll
+80030ed4 INSTANCE_LEVEL_RebuildThreads
+80030f58 INSTANCE_GetNumAnimFrames
+
+80030fdc AllocPool_Clear
+8003105c AllocPool_Init
+800310d4 AllocPool_Add
+8003112c AllocPool_Remove
+
+8003116c INSTANCE_LEVEL_DefToInst
+80031268 INSTANCE_LEVEL_InstToDef // also kill Inst Threads
+800313c8 INSTANCE_ParentInstance
+
+8003147c INSTANCE_ModelGlobal_Store
+800314c0 INSTANCE_ModelGlobal_Clear
+
+800314e0 INSTANCE_CollBucket_Radius
+800315ac INSTANCE_CollBucket_Hitbox_Desc
+80031608 INSTANCE_CollBucket_Hitbox
+
+80031734 LIST_Clear
+80031744 LIST_AddFront
+80031788 LIST_AddBack
+800317cc LIST_GetNextItem
+800317d8 LIST_GetFirstItem
+800317e4 LIST_RemoveMember
+8003186c LIST_RemoveFront
+800318ec LIST_RemoveBack
+8003197c LIST_Init
+
+800319e8 LOAD_Callback_Overlay_Generic
+800319f4 LOAD_Callback_Overlay_230
+80031a08 LOAD_Callback_Overlay_231
+80031a20 LOAD_Callback_Overlay_232
+80031a38 LOAD_Callback_Overlay_233
+80031a50 LOAD_Callback_MaskHints3D
+80031a64 LOAD_Callback_Podiums
+80031a78 LOAD_Callback_LEV
+80031aa4 LOAD_Callback_LEV_Adv		// from TenStage
+80031b00 LOAD_Callback_DriverModels
+
+80031b14 LOAD_HubCallback			// real ND name (for async hubs)
+
+80031b50 LOAD_GlobalModelPtrs_MPK
+80031bdc LOAD_HubSwapPtrs
+80031c1c LOAD_StringToUpper
+80031c58 LOAD_InitCD
+80031c78 LOAD_ReadDirectory			// real ND name
+80031d30 LOAD_DramFileCallback // async or no?
+80031e00 LOAD_DramFile					
+80031ee4 LOAD_VramFileCallback // async or no?
+80031fdc LOAD_VramFile				
+80032110 LOAD_ReadFileASyncCallback	// real ND name
+800321b4 LOAD_ReadFile				// real ND name
+80032344 LOAD_ReadFile_NoCallback
+80032438 LOAD_FindFile
+
+80032498 howl_readSectorSync
+8003254c howl_cdReadCallback
+80032594 howl_loadDataFromCd
+8003266c howl_loadDataFromCd_RetryOnError
+
+800326b4 LOAD_RunPtrMap
+80032700 LOAD_Robots2P
+800327dc LOAD_Robots1P
+8003282c LOAD_DriverMPK
+80032b50 LOAD_LangFile
+80032c24 LOAD_GetBigfileIndex
+80032d30 LOAD_AppendQueue
+80032d8c LOAD_CDRequestCallback		// real ND name
+80032dc0 LOAD_NextQueuedFile
+80032ffc LOAD_Hub_ReadFile
+80033108 LOAD_Hub_SwapNow
+80033318 LOAD_Hub_Main
+80033474 LOAD_OvrLOD
+800334f4 LOAD_OvrEndRace
+80033570 LOAD_OvrThreads
+800335dc LOAD_GetAdvPackIndex
+80033610 LOAD_TenStages
+800347d0 LOAD_TalkingMask
+80034874 LOAD_LevelFile
+800348e8 LOAD_IsOpen_RacingOrBattle
+80034908 LOAD_IsOpen_MainMenu
+80034920 LOAD_IsOpen_AdvHub
+80034940 LOAD_IsOpen_Podiums
+
+// End of LOAD_ 	^^^^		???
+
+// Start of MAIN_ 	vvvv		???
+
+80034960 GetClipBufferSize
+800349c4 Alloc_PrimMem
+80034a28 Alloc_OTMem
+
+80034a80 DrawSyncCallbackFunc
+80034aa4 VsyncCallbackFunc
+
+80034b48 howl_TogglePause
+80034bbc StartNewFrame
+80034d54 GameplayUpdateLoop
+
+// VisMem (not important)
+// unknown 80035684
+
+800357b8 VisMem_FullFrame
+80035d30 VideoSTR_Init
+80035d70 CheckMissingControllers
+
+80035e20 RequestMaskHint
+80035e70 RenderFrame
+
+800379f4 RacingWheel_Config_DrawNPC105
+80037bc0 RacingWheel_Config_DrawArrows
+80037da0 RacingWheel_Config
+
+80038b5c MenuBoxFuncPtr_Options
+80039908 MenuBoxFuncPtr_Quit
+
+800399fc AdvPause_SafeDestroy
+
+80039A44 PauseGame_MenuBoxFuncPtr
+80039dcc PauseGame_Get_MenuBox
+80039e98 PauseGame_WhenPressingStart
+
+80039fa8 EndOfRace_TimeTrial_Relic_CalculateReward
+8003a2b4 EndOfRace_TimeTrial_Relic_SaveHighScore
+8003a3fc ToggleGameState_EndOfRace
+8003aee8 ToggleGameState_StartOfRace
+8003af84 VisMem_Clear1
+8003b008 RainBufferInit
+
+8003b0f0 SetPrimMemSize
+8003b2d4 ClearAllMemPools
+8003b334 SetOTMemSize
+8003b43c AllocateAllPools
+8003b6d0 AllocAllDrivers
+8003b934 InitThreadBuckets
+8003c1d4 StringToLevID
+
+8003c248 VRAM_ClearToBlack
+8003c310 UpdateIntroScreen
+8003c41c EndGame
+
+// no "prepare", just one large "launch"
+8003c480 LaunchSpyro2
+
+8003c508 LoadVlcTable_Callback
+8003c518 LoadVlcTable // whatever that is
+8003c58c main
+
+8003cf7c Level_StartLoading
+8003cfc0 Level_RequestNewLEV
+
+8003d024 ClearStandings_BattleVS
+8003d068 RestartRace_IncrementLossCount
+
+// End of MAIN ^^^
+
+// Start of MATH vvv
+
+8003d184 MATH_Sin
+8003d1c0 MATH_Cos
+8003d214 MATH_FastSqrt
+8003d264 MATH_HitboxMatrix
+8003d328 MATH_VectorLength
+8003d378 MATH_VectorNormalize
+8003d460 MATH_MatrixMul
+
+// End of MATH ^^^
+
+// Start of MEMCARD vvv
+
+8003d4e4 MEMCARD_SetIcon
+// Extra function in sep3, name scramble?
+8003d540 MEMCARD_CRC16
+8003d584 MEMCARD_ChecksumSave
+8003d618 MEMCARD_ChecksumLoad
+8003d6e8 MEMCARD_StringInit
+8003d730 MEMCARD_StringSet
+8003d7d8 MEMCARD_InitCard
+8003d95c MEMCARD_CloseCard
+8003d9ec MEMCARD_GetNextSlot1Event
+8003da68 MEMCARD_GetNextSlot2Event
+8003dae4 MEMCARD_WaitForSlot1Event
+8003db54 MEMCARD_SkipEvents
+8003db98 MEMCARD_NewTask
+8003dbf8 MEMCARD_CloseFile
+8003dc30 MEMCARD_ReadFile
+8003dc9c MEMCARD_WriteFile
+8003dd10 MEMCARD_GetFreeBytes
+// Extra in Japan Retail (card_clear)
+// unknown 8003ddac
+8003e238 MEMCARD_GetInfo
+8003e29c MEMCARD_Load
+8003e344 MEMCARD_Save
+8003e51c MEMCARD_Format
+// unknown 8003e59c
+8003e600 MEMCARD_FindFirstGhost
+8003e678 MEMCARD_FindNextGhost
+8003e6d4 MEMCARD_EraseFile
+
+// End of MEMCARD
+
+// Start of MEMPACK
+
+8003e740 MEMPACK_Init				// real ND name
+8003e80c MEMPACK_SwapPacks
+8003e830 MEMPACK_NewPack_StartEnd
+8003e85c MEMPACK_GetFreeBytes
+8003e874 MEMPACK_AllocMem			// real ND name
+8003e8e8 MEMPACK_AllocHighMem		// real ND name
+8003e938 MEMPACK_ClearHighMem
+8003e94c MEMPACK_ReallocMem			// real ND name
+8003e978 MEMPACK_PushState			// real ND name
+8003e9b8 MEMPACK_ClearLowMem
+8003e9d0 MEMPACK_PopState			// real ND name
+8003ea08 MEMPACK_PopToState			// real ND name
+
+8003ea28 RNG_Scramble
+8003ea6c RNG_Particles
+8003eaac RNG_GetValue
+
+8003eae0 Particle_FuncPtr_PotionShatter
+8003ec18 Particle_FuncPtr_SpitTire
+8003ee20 Particle_FuncPtr_ExhaustUnderwater
+8003eeb0 Particle_OnDestroy
+// extra here in sep3
+8003eefc Particle_UpdateList
+8003f434 Particle_UpdateAllParticles
+8003f48c Particle_BitwiseClampByte
+8003f4c4 Particle_SetColors
+8003f590 Particle_RenderList
+80040308 Particle_CreateInstance
+
+80040850 RivalWeapons_Init
+800408b8 RivalWeapons_PerFrame
+800414f4 StartLine_PerFrame
+80041c84 Tawna_Init
+
+80041dc0 THREAD_DestroyTracker
+80041dfc THREAD_DestroyInstance
+80041e20 THREAD_DestroyObject
+80041e9c THREAD_DestroySelf
+80041f04 THREAD_DestroyBloodline
+80041f58 THREAD_CheckBloodlineForDead
+80041ff4 THREAD_CheckAllForDead
+8004205c THREAD_BirthWithObject
+8004228c THREAD_CollidePointWithSelf
+80042348 THREAD_CollidePointWithBucket
+80042394 THREAD_SearchForModel
+
+800423fc Weapon_SearchCallback
+80042544 Weapon_MakeHitbox_SearchBSP
+800425d4 Weapon_CollideThreadBucket
+
+800426f8 Camera110_InitStructs
+80042910 Camera110_InitPsyqGeom
+80042974 Camera110_LinkOT_DecalMP
+80042a8c Camera110_LinkOT_Normal
+80042c04 Camera110_SetViewMatrix
+80042e50 Camera110_SetFrustumPlane
+800430f0 Camera110_UpdateFrustum
+80043928 Camera110_FadeOneWindow
+80043ab8 Camera110_FadeAllWindows
+
+80043b30 loadNonAdvTrack_MenuBoxFuncPtr
+80043c04 loadNonAdvTrack_Get_MenuBox
+
+// missing in sep3
+80043c10 LoadGameOptions
+80043d24 SaveGameOptions
+
+80043e34 CheckeredFlag_MoveModels
+80043f1c CheckeredFlag_IsFullyOnScreen
+80043f28 CheckeredFlag_IsFullyOffScreen
+80043f44 CheckeredFlag_IsTransitioning
+80043f8c CheckeredFlag_SetDrawOrder
+80043fb0 CheckeredFlag_BeginTransition
+8004402c CheckeredFlag_SetFullyOnScreen
+80044058 CheckeredFlag_SetFullyOffScreen
+80044088 CheckeredFlag_SetCanDraw
+80044094 CheckeredFlag_GetCanDraw
+800440a0 CheckeredFlag_PerFrame_GetOT
+80044290 CheckeredFlag_ResetTextAnim
+800442a0 CheckeredFlag_DrawLoadingString
+800444e8 CheckeredFlag_DrawSelf
+
+80044ef8 DecalHUD_DrawPolyGT4_Safe
+80044f90 DrawRectangle
+80044ff8 ConvertTimeToString
+80045134 BackgroundBlueRect_Subset
+80045254 BackgroundBlueRect
+800453e8 DrawTriangle
+80045534 DrawBoxOutline_LowLevel
+80045650 DrawBoxOutline_HighLevel
+8004568c DrawPlayerComment
+800457b0 DrawTextBackground
+
+800459ec MenuBox_Background_Draw
+80045b1c MenuBox_Background_GetHeight
+80045c50 MenuBox_Background_GetWidth
+80045db0 MenuBox_Draw
+80046404 MenuBox_ClearInput
+80046458 MenuBox_CollectInput
+80046534 MenuBox_ProcessInput
+8004680c MenuBox_ProcessState
+80046990 MenuBox_Show
+800469c8 MenuBox_Hide
+800469dc MenuBox_BoolHidden
+
+800469f0 GhostData_NumGhostsForLEV
+// unknown 80046a74
+// unknown 80046a90
+80046b1c LoadSave_NextMemcardAction // DCxDemo says it uses SLOTS, not just ghost
+
+80046b60 GhostData_Encode
+80046bc0 GhostData_Decode
+80046c30 GhostData_SaveProfile
+80047034 GhostData_LoadProfile
+
+80047198 LoadSave_StartMemcardAction // (not in japan trial)
+800471ac LoadSave_StopMemcardAction
+
+// unknown 800471c4
+// unknown 800471e8
+
+80047224 GhostData_ResetNumGhosts
+80047230 LoadFromCard_GameProgressAndOptions
+
+// unknown 800472d0 -- related to memcard
+// unknown 80047a58 -- related to memcard
+// these two ^^ are exclusively called by below \/
+
+// this one \/ calls the other two ^^
+// unknown 80047d64 -- related to memcard
+
+80047da8 LoadSave_LoadProfileFromHub_MenuBoxFuncPtr
+80047dfc LoadSave_PerFrame
+80047f20 LoadSave_PrintInteger
+80047fb8 LoadSave_UI_ConvertX
+80047fd8 LoadSave_UI_ConvertY
+80047ff8 LoadSave_DrawAdvProfile
+800485a8 LoadSave_GetTrackID
+800485cc LoadSave_Init
+800488e0 LoadSave_Destroy
+80048960 LoadSave_OneProfile_MenuBoxFuncPtr
+80048a30 LoadSave_DrawGhostProfile
+
+80048da0 LoadSave_MuteCursors
+80048de4 LoadSave_UnMuteCursors
+
+80048e2c LoadSave_ToggleMode
+80048edc LoadSave_InitAndDestroy
+80048f0c LoadSave_InputLogic
+800490c4 LoadSave_AllProfiles_MenuBoxFuncPtr
+
+8004aa08 OSK_RestoreName
+8004aa60 OSK_DrawMenu
+8004b144 OSK_MenuBoxFuncPtr
+
+8004b230 PrixSaveBox_Activate
+8004b258 PrixSaveBox_MenuBoxFuncPtr
+
+8004b31c RCNT_Init
+8004b370 RCNT_Destroy
+8004b3a4 RCNT_GetTime_Total
+8004b41c RCNT_GetTime_Elapsed
+
+8004b470 DrawHeat_Main
+8004b914 DrawHeat_Subset1
+8004b94c DrawHeat_Subset2
+8004b9cc DrawHeat_Subset3
+8004ba4c DrawHeat_Subset4
+8004bbe8 DrawHeat_Subset5
+8004bd84 DrawHeat_Subset6
+8004bf20 DrawHeat_Subset7
+8004c134 DrawHeat_Subset8
+8004c348 DrawHeat_Subset9
+
+// ======== Start of UI ===========
+
+8004c55c SaveLapTime
+// extra func in japan retail
+
+8004c718 PerFrame_FruitDisp_and_TimeBox
+8004c850 PerFrame_Hud_Object3D
+8004c914 PerFrame_CtrLetters
+8004ca04 PerFrame_big1
+
+8004caa8 UI_ConvertX_2
+8004cac8 UI_ConvertY_2
+
+8004cae8 HUD_INSTANCE_BirthWithThread
+8004cec4 HUD_INSTANCE_InitAll
+
+8004d614 Map_DrawMap
+8004d8b4 Map_GetIconDimensions
+8004dbac Map_DrawAdvPlayer
+8004dc44 Map_DrawRawIcon
+8004dd5c Map_DrawDrivers
+8004dee8 Map_DrawGhosts
+8004dffc Map_DrawTracking // warpballs
+
+8004e0e0 WeaponBackground_AnimateShine
+8004e37c WeaponBackground_DrawShine
+8004e660 DrawTrackerTargetBackground
+
+8004e8d8 DrawCharacterIcon
+
+8004eaa8 InterpolatePosition2D_Angular
+8004ec18 InterpolatePosition2D_HUD
+8004ecd4 InterpolatePosition2D_Linear
+
+8004edac DrawRaceClock
+8004f894 DrawCountdownClock
+
+8004f9d8 Battle_DrawArrowsOverHeads
+8004fd34 UpdateTrackerTargets
+8005045c DrawPlacmentSuffix
+80050528 DrawLapCounter
+80050654 DrawBattleScores
+
+800507e0 DrawWeapon
+80050af8 DrawWeaponBackground
+
+80050c20 DrawNumWumpa
+80050e6c DrawNumTimebox
+80050f18 DrawNumRelic
+80050fc4 DrawNumKey
+80051070 DrawNumTrophy
+8005111c DrawNumCrystal
+
+800511c0 DrawSpeedometerNeedle
+800516ac DrawSpeedometerBackground
+80051c64 ProcessPlayerJumpBoosts
+80051e24 DrawJumpMeter
+80052250 DrawPowerslideMeter
+
+800524c4 DrawHUD_DriverIcons
+// no DrawHUD_TurboCounter (inlined elsewhere)
+// one extra function, 1111 (left-hand turbo counter?)
+80052f98 DrawHUD_Racing
+80054298 DrawHUD_AdvStrings
+8005435c DrawHUD_CrystalChallenge
+8005465c DrawHUD_Wumpa3D_2P3P4P
+
+80054a08 EndOfRace_GetDriverQuipData
+80054a78 EndOfRace_AssignOneComment
+80054bfc EndOfRace_AssignAllComments
+800550f4 EndOfRace_DrawAllComments
+800552a4 EndOfRace_Battle
+
+8005572c Driver_Finalize_RaceClock
+80055840 DrawIntroRaceText_1P
+80055c90 MenuBoxFuncPtr_GenericEndOfRace
+
+8005607c CupStandings_FinalizeCupRanks
+80056220 CupStandings_UpdateCupRanks
+800562fc CupStandings_InputAndDraw
+
+// ======== End of UI ===========
+
+800572d0 SpecularLight_Spinning2D
+8005741c SpecularLight_Spinning3D
+800576b8 SpecularLight_Motionless3D
+
+80057884 BakeMathGTE
+80057c44 GetPtr_MetaData_Surface
+80057c68 GetPtr_MetaData_Terrain
+
+80057c8c Driver_TeleportSelf
+80058898 Driver_TeleportAll
+80058948 Driver_GetModelByName
+80058a60 Driver_SetConsts
+
+80058ba4 Init_EngineAudio_AllPlayers
+80058c4c Init_TireSprites
+80058d2c Init_NonGhost_Driver
+80058ec0 Init_Player
+
+80058f54 InterpBySpeed
+80058f9c MapToRange
+8005900c Player_GetRateOfSteering
+80059070 FastSqrt
+
+80059100 SpawnParticle_Exhaust
+80059344 SpawnParticle_Sparks_Ground
+80059558 SpawnParticle_Terrain_Ground
+80059780 SpawnParticle_Sparks_Wall
+80059a18 SpawnParticle_DriverMain
+
+8005ab24 Turbo_Audio
+8005abfc Turbo_Increment
+8005b0c4 Instance_GetStartFrame
+8005b0f4 Instance_GetNumAnimFrames
+
+8005b178 OnAnimate_Driving
+8005b510 OnAnimate_Spinning
+8005b5fc OnAnimate_LastSpin
+
+8005b6b8 DrawShadows_Subset1
+8005b720 DrawShadows_Main 
+8005c120 DrawSkidMarks_Subset1
+8005c278 DrawSkidMarks_Subset2
+8005c354 DrawSkidMarks_Main
+
+8005ca24 Driver_UpdateLapProgress
+
+// unknown 8005cd1c
+8005cf64 DriverCrash_BounceSelf
+8005d0d0 DriverCrash_AI
+8005d218 DriverCrash_HumanToHuman
+8005d404 DriverCrash_AnyTwoCars
+
+// unknown 8005e104 -- OnAccelerationForce?
+8005e214 OnGravity
+8005ea60 OnApplyForces
+8005ebac OnCollide
+8005ee34 OnRender
+8005f89c Rot_AxisAngle
+
+// unknown 8005fb4c
+
+8005fc8c Player_Driving_Interpolate
+80060458 Player_Driving_LerpQuarterStrength
+80060488 Player_Driving_LerpToForwards
+800605a0 Player_Jump_GetVelY
+80060630 Player_JumpAndFriction
+
+80060f0c SetDriverItem
+80061488 GetDriverBaseSpeed
+
+// Player_Steer, way different in Sep3?
+8006163c Player_Steer_ReturnToRest
+800616b0 Player_Steer_AnalogStrength
+800617cc Player_Steer_AbsoluteStrength
+
+8006181c Player_Driving_Input
+80062a2c Player_Driving_Audio
+80062a4c Player_Driving_Update
+80062b74 Player_Driving_Init
+
+80062ca8 Player_Freeze_Input
+80062d04 Player_Freeze_Init
+
+80062db0 Player_State9_Update
+80062e04 Player_State9_ReverseOneFrame
+80062e94 Player_State9_Init
+
+80062f4c Player_Drifting_Interpolate
+80063634 Player_Drifting_Finalize
+8006364c Player_Drifting_Update
+800638d4 Player_Drifting_Input
+80063920 Player_Drifting_InitSetUpdate
+80063934 Player_Drifting_Init
+
+80063a44 Player_Crashing_Interpolate
+80063af8 Player_Crashing_Update
+80063b00 Player_Crashing_Input
+80063b2c Player_Crashing_Animate
+80063bd4 Player_Crashing_Init
+
+80063cf4 Player_Spinning_Update
+80063d44 Player_Spinning_Input
+80063dc8 Player_Spinning_Interpolate
+80063eac Player_Spinning_InitSetUpdate
+80063ec0 Player_Spinning_Init
+
+8006402c Player_LastSpin_Update
+8006406c Player_LastSpin_Input
+800640a4 Player_LastSpin_Interpolate
+80064254 Player_LastSpin_Init
+
+800642ec Player_EndSpinning_Update
+800642f4 Player_EndSpinning_Input
+80064320 Player_EndSpinning_Interpolate
+800643d4 Player_EndSpinning_Animate
+800644d0 Player_EndSpinning_Init
+
+80064568 Player_ChangeState
+
+80064be4 Weapon_Mask_boolGoodGuy
+80064c38 Weapon_Mask_UseWeapon
+80064f94 Weapon_Missile_GetTargetDriver
+800652c8 Weapon_Potion_Throw
+8006540c Weapon_Shoot_Now
+800666e4 Weapon_Shoot_OnCirclePress
+
+8006677c Player_MaskGrab_FindDestPos
+80066cb0 Player_MaskGrab_Particles
+80066d4c Player_MaskGrab_Update
+80066e3c Player_MaskGrab_Input
+80066e8c Player_MaskGrab_Animate
+800671b0 Player_MaskGrab_Init
+
+8006749c Player_MaskRespawn_Update
+80067554 Player_MaskRespawn_Input
+800675c0 Player_MaskRespawn_Animate
+800677d0 Player_MaskRespawn_Init
+
+80067930 Player_Dead_Init // (tombstone sep3)
+
+80067960 Player_EngineRevving_Update
+80067a74 Player_EngineRevving_Input
+80067b7c Player_EngineRevving_Animate
+80067f4c Player_EngineRevving_Init
+
+8006809c Player_Blasted_Update
+800680d0 Player_Blasted_Input
+80068150 Player_Blasted_Interpolate
+80068244 Player_Blasted_Animate
+800682a4 Player_Blasted_Init
+
+800683f4 Player_Warp_MoveDustPuff
+800685b0 Player_Warp_AddDustPuff1
+80068644 Player_Warp_AddDustPuff2
+// extra here in Sep3
+80068be8 Player_Warp_Interpolate
+80068e04 Player_Warp_Init
+
+// extra here in sep3 (tombstone vibrate)
+
+80068f90 TalkingMask_FuncPerFrame
+80069178 TalkingMask_Init
+800691e4 TalkingMask_PlayXA
+8006924c TalkingMask_boolNotTalking
+8006925c TalkingMask_End
+
+80069284 Turbo_ProcessBucket
+80069370 Turbo_OnDestroy
+800693c8 Turbo_FuncPerFrame
+
+80069bb0 DrawSky_Full
+80069cc4 DrawSky_Piece
+
+80069e70 AnimateQuad
+80069f0c AnimateQuadVertex
+80069f94 TRIG_AngleSinCos_r19r17r18
+
+80069ffc DrawConfetti
+8006a4c4 TRIG_AngleSinCos_r15r16r17
+
+// hole: definitely functions between these
+8006a52c RenderBucket_DrawFunc_Normal
+8006a8e0 RenderBucket_UncompressAnimationFrame
+8006aaa8 RenderBucket_Execute
+8006ad6c RenderBucket_DrawInstPrim_Normal
+8006ae74 RenderBucket_InitDepthGTE
+8006ae90 RenderBucket_DrawInstPrim_KeyRelicToken
+8006b030 RenderBucket_DrawFunc_Split
+8006b24c Draw_KartCloseToCamera
+8006bad0 Draw_KartFlames
+8006bf30 Draw_KartInWaterMud
+
+// == 40 more functions, only stubbed in 926 ==
+
+// some render function? can set 8xx6a52c to jmp here
+// unknown 8006bbc0
+
+// everything below \/ is matrix math
+8006c124 ConvertRotToMatrix_InverseTranspose_NoRotY
+8006c1d0 ConvertRotToMatrix_InverseTranspose
+8006c2a4 ConvertRotToMatrix
+8006c378 ConvertRotToMatrix_Transpose
+
+// definitely a matrix function
+// unknown 8006c3b0
+
+8006c430 TRIG_AngleSinCos_r16r17r18_duplicate
+
+// unknown 8006c49c
+// unknown 8006c540
+// unknown 8006c558
+// unknown 8006c600
+
+// everything above ^^ is matrix math
+
+8006c618 SquareRoot0_stub
+
+// unknown 8006c684 -- RNG (psyq name?)
+// unknown 8006c6c8
+
+// hole: several unstubbed functions after this
+8006c6f0 ApplyMatrixLV_stub
+
+8006c9c4 Draw_KartBodyReflection
+8006c984 Draw_KartGhost
+
+// called in Polar Intro (polar flickers without it),
+// also called in normal races sometimes (definitely in demo mode)
+// unknown 8006cdec
+
+// hole: several unstubbed functions after this
+// unknown 8006d5b8 
+
+8006d670 RenderBucket_DrawInstPrim_Ghost
+
+8006d79c AnimateWater1P
+8006d864 AnimateWater2P
+8006d948 AnimateWater3P
+8006da50 AnimateWater4P
+8006db7c AnimateWaterVertex
+8006dc30 RedBeaker_RenderRain
+8006e26c RenderStars
+8006e588 DrawTires_Solid
+
+8006ef30 TRIG_AngleSinCos_r9r8r10
+// unknown 8006ef98
+8006f004 DrawTires_Reflection
+
+
+8006f9a8 RenderWeather
+8006fe08 TRIG_AngleSinCos_r16r17r18
+
+
+8006fe70 CreateRenderLists_1P2P
+
+
+// all related to VisData...
+// unknown 80070284
+// unknown 80070290
+// unknown 800702d4 -- called before every FindLevVisData
+// 8 more jmp pointers here...
+
+
+80070388 CreateRenderLists_3P4P
+
+
+80070720 RenderBucket_QueueLevInstances
+8007084c RenderBucket_QueueNonLevInstances
+80070950 RenderBucket_QueueDraw
+
+// unknown 80071524
+// unknown 80071590
+
+800715e8 UpdateAllThreadsInBucket
+80071694 HalfwayThroughUpdateAllThreadsInBucket
+800716ec SetPerFrame_AndExec
+80071704 SetPerFrame
+
+// libs in the exe
+// ==============================
+
+8007170c RotTrans
+8007173c ratan2
+800718bc memset
+800718cc strcmp
+800718dc SetTransMatrix
+800718fc SetRotMatrix
+// printf moved here in sep3
+8007192c strncpy
+8007193c SpuSetTransferMode
+8007196c CdStatus
+8007197c CdMode
+8007198c CdComstr
+8007199c CdLastPos
+800719a8 __builtin_vec_delete
+800719c8 CdSetDebug
+800719dc CdReady
+800719fc CdSyncCallback
+80071a10 CdReadyCallback
+80071a24 CdControl
+80071b60 CdControlF 
+80071c94 CdControlB 
+80071de0 CdGetSector
+80071e00 CdGetSector2
+80071e20 CdDataCallback
+80071e44 CdDataSync
+80071e64 CdIntToPos
+80071f68 CdPosToInt
+80071fe8 CdInit
+
+// unknown 80072078 ------ (called by CdInit)
+// unknown 800720b4 ------ (funcPtr in CdInit)
+// unknown 800720dc ------ (funcPtr in CdInit)
+// unknown 80072104 ------ (funcPtr in CdInit)
+
+80072138 SpuSetIRQ
+80072278 SpuSetIRQCallback
+800722b8 CdSearchFile
+
+// unknown 80072590 ------ (called by CdSearchFile)
+// unknown 800725b0 ------ (called by lib func, debug strings suggest "CD_newmedia" but can't find that func
+// unknown 80072874 ------ (called by lib func)
+// unknown 80072918 ------ (called by lib func, debug strings say "CD_cachefile" but can't find that func
+// unknown 80072bb4 ------ (called by lib func)
+
+80072c28 SpuSetTransferCallback
+80072c58 SpuSetIRQAddr
+80072c98 SpuSetCommonCDVolume
+80072cb8 SpuReadDecodedData
+// AddPrim is here in sep3 for some reason
+80072d28 ResetGraph
+80072e9c SetGraphDebug
+80072ef8 DrawSyncCallback
+80072f58 SetDispMask
+80072ff0 DrawSync
+// unknown 80073058 ------ Not the same as "ClearImage" in EuroDemo53
+80073174 LoadImage
+800731d4 StoreImage
+80073234 MoveImage
+800732ec ClearOTagR
+80073398 DrawOTag
+80073408 PutDrawEnv
+800734c8 PutDispEnv
+800739c0 SetDrawEnv
+// unknown 80073bb8 ------ called by PutDrawEnv
+// unknown 80073e28 ------ called by SetDrawEnv
+// unknown 80073e48 ------ called by lib funcs
+// unknown 80073ee0 ------ called by lib funcs
+// unknown 80073f78 ------ called by lib funcs
+// unknown 80073f94 ------ called by lib funcs
+// unknown 8007402c ------ called by lib funcs
+// unknown 8007410c ------ not called by EXE (maybe overlays)
+// unknown 8007433c ------ called by lib funcs
+// unknown 80074578 ------ called by lib funcs
+// unknown 800747f8 ------ called by lib funcs
+// unknown 80074870 ------ called by lib funcs
+// unknown 800748b8 ------ called by lib funcs
+// unknown 800748e8 ------ not called by EXE (maybe overlays)
+// unknown 8007490c ------ called by lib funcs
+// unknown 80074bbc ------ called by lib funcs
+// unknown 80074e1c ------ called by lib funcs
+// unknown 80075f6c ------ called by lib funcs
+// unknown 800750a8 ------ called by lib funcs
+// unknown 800750dc ------ called by lib funcs
+// unknown 80075220 ------ called by lib funcs, has string "GPU Timeout"
+// unknown 800752c0 ------ not called by EXE (maybe overlays)
+// unknown 800752e8 ------ called by lib funcs
+80075310 AddPrim
+80075350 VSync
+// unknown 800754c8 ------ called by lib funcs, involves VSync timeout
+80075560 SetLightMatrix
+80075590 PadGetState
+80075660 PadInitMtap
+800757c0 PadStartCom
+8007588c PadStopCom
+800758d0 _padSetActAlign
+// unknown 8007594c ------ called by lib funcs
+80075a40 _padSetMainMode
+// unknown 80075adc ------ called by lib funcs
+// unknown 80075b34 ------ called by lib funcs
+80075ba0 _padSetAct
+80075be0 PadInfoAct
+80075cc0 strcpy
+80075cd0 SpuSetReverbModeParam
+800761b0 SpuSetReverbModeDepth
+800761e0 SpuSetReverb
+800762b0 SpuSetTransferStartAddr
+80076310 SpuRead
+80076370 SpuIsTransferCompleted
+80076420 SpuSetVoiceADSRAttr
+80076560 SpuSetVoicePitch
+800765d0 SpuSetCommonCDMix
+80076610 SpuSetKey
+800767d0 ExitCriticalSection
+800767e0 SpuSetCommonMasterVolume
+80076800 SpuSetCommonCDReverb
+80076840 SpuSetReverbVoice
+80076870 SpuInit
+80076890 SpuSetVoiceVolume
+80076910 SpuSetVoiceStartAddr
+80076990 EnterCriticalSection
+800769a0 strncmp
+// unknown 800769e4 ------ called by lib funcs
+// unknown 80076c58 ------ called by lib funcs
+// unknown 80076d28 ------ called by lib funcs
+80076f10 CdRead
+800770ac CdReadSync
+800771b0 CheckCallback // <-- this is probably CdReadCallback. checkCallback doesn't have any args.
+800771c4 ResetCallback
+800771f4 InterruptCallback
+80077224 DMACallback
+80077254 VSyncCallback
+// unknown 80077288 ------ 
+// unknown 800772b8 ------ 
+// unknown 800772c8 ------ called by lib funcs
+// unknown 800772e0 ------ called by lib funcs
+// unknown 800773b8 ------ called by lib funcs
+// unknown 80077588 ------ called by lib funcs
+// unknown 800776d0 ------ called by lib funcs
+// unknown 80077770 ------ not called by EXE (maybe overlay)
+// unknown 800777e8 ------ called by lib funcs
+8007780c LoadExec
+8007781c SetGeomScreen
+8007782c SetGeomOffset
+80077854 InitGeom // ignore two instructions before it
+800778dc SetDrawMove
+8007793c start
+800779e4 __main // ignore "break" before it
+80077a54 BreakDraw
+// unknown 80077ae8 ------
+80077b48 SetRCnt
+80077be4 GetRCnt
+80077c1c StartRCnt
+80077c4c StopRCnt
+80077c80 ResetRCnt
+80077cb8 memcpy
+80077cc8 strlen
+// extra GTE function here in sep3
+80077cd8 SetVideoMode
+80077cec GetVideoMode //or GsGetWorkBase
+// -------- After this function is a lib signature -------------
+80077d10 _96_remove
+80077d28 _96_init
+80077d38 SetDefDrawEnv
+80077df8 SetDefDispEnv
+80077e38 memmove
+80077ea8 _card_info
+80077eb8 erase
+80077ec8 lseek
+80077ed8 close
+80077ee8 InitCARD
+80077f54 StartCARD
+80077f8c StopCARD
+80077fb8 write
+80077fc8 EnableEvent
+80077fd8 _bu_init
+80077fe8 nextfile
+80077ff8 _card_clear
+80078038 format
+80078048 OpenEvent
+80078058 read
+80078068 TestEvent
+80078078 open
+80078088 firstfile
+// unknown 80078224 ------ called by firstfile
+80078328 CloseEvent
+80078338 _card_load
+80078348 sprintf
+80078bd8 strcat
+80078be8 rand
+// unknown 80078bf8 ------
+80078d34 StCdInterrupt
+// unknown 80079650 ------ called by lib funcs
+// unknown 8007967c ------ called by lib funcs
+80079824 StClearRing
+80079884 DecDCTReset
+// unknown 800798b8 ------
+800798c4 DecDCTin
+80079940 DecDCTout			// These are all MDEC
+80079960 DecDCToutCallback 
+// unknown 80079a74 ------ not called by exe
+// unknown 80079b04 ------ called by lib funcs
+// unknown 80079b90 ------ called by lib funcs
+// unknown 80079c24 ------ called by lib funcs
+// unknown 80079cd0 ------ called by lib funcs
+80079d54 CdRead2
+// unknown 80079dd8 ------ called by lib funcs
+80079e04 DecDCTvlcSize2
+80079e34 DecDCTvlc2
+8007a184 StSetStream
+8007a214 StSetMask
+8007a234 StSetRing
+8007a264 StGetNext
+8007a324 data_ready_callback
+8007a3b0 StGetBackloc
+8007a414 StFreeRing
+8007a4c4 StRingStatus
+8007a594 _SpuInit // --- not "SpuInit", notice the underscore
+8007a67c SpuStart
+8007a6f4 _spu_init
+// unknown 8007a974 ------
+8007aa74 CD_datasync
+8007ab34 _spu_FiDMA
+8007abf0 _spu_Fr_
+8007ac98 _spu_t
+8007af18 _spu_Fr
+8007af9c _spu_FsetRXX
+8007afe0 _spu_FsetRXXa
+// unknown 8007b0dc ------
+// unknown 8007b12c ------
+// unknown 8007b194 ------
+// unknown 8007b6f0 ------
+// unknown 8007b970 ------
+// unknown 8007bc38 ------
+8007c044 __builtin_delete
+8007c118 LOAD_InitCDvol
+8007c208 LOAD_InitCD
+// unknown 8007c650 ------ called by lib func
+// unknown 8007c748 ------ called by lib func
+8007C820 printf // -- only called by lib funcs
+8007c830 DeliverEvent
+8007c840 _SpuCallback
+8007c870 GPU_cw
+8007d554 _padSetCmd
+8007d564 _padSendAtLoadInfo
+8007d5e8 _padRecvAtLoadInfo
+8007d858 _padGetActSize
+8007d890 _padLoadActInfo
+8007de04 _padCmdParaMode
+8007f47c _mtapFailAuto
+8007f880 SysDeqIntRP
+8007f890 SysEnqIntRP
+8007f8a0 _SpuIsInAllocateArea_
+8007f930 _spu_setReverbAttr
+8007fe00 SpuClearReverbWorkArea
+8007ffa0 _SpuSetAnyVoice
+80080260 setjmp
+80080270 HookEntryInt
+80080280 startIntrDMA
+80080520 ReturnFromException
+80080530 ResetEntryInt
+80080540 _patch_gte
+8008060c InitHeap
+80080630 ReadInitPadFlag
+80080640 InitCARD2
+800806dc _patch_card
+8008077c _patch_card2
+800807ec _copy_memcard_patch
+80080820 StartCARD2
+80080830 StopCARD2
+80080840 _ExitCard
+800808c0 _new_card
+800808d0 _card_write
+800808e0 firstfile2
+800808f0 memchr
+80080900 init_ring_status
+80080940 _SpuDataCallback
+80080970 bzero
+80080980 WaitEvent
+80080990 FlushCache
+
+// ======== Overlays ==============
+
+8009f6fc OVR_Region1
+
+// 221 (Crystal Challenge)
+8009f710 CC_EndEvent_DrawMenu
+
+// 222 (Arcade + Adv)
+8009f704 AA_EndEvent_DrawMenu
+800a06f8 AA_EndEvent_DisplayTime
+
+// 223 (Relic Race)
+8009f71c RR_EndEvent_UnlockAward
+8009fcd0 RR_EndEvent_DrawHighScore
+800a01d8 RR_EndEvent_DrawMenu
+
+// 224 (Time Trial)
+8009f704 TT_EndEvent_DisplayTime
+8009f8c0 TT_EndEvent_DrawHighScore
+8009fdc8 TT_EndEvent_DrawMenu
+
+// 225 (VS Battle)
+8009f718 VB_EndEvent_DrawMenu
+
+800a0cb8 OVR_Region2
+
+// (226, 227, 228, 229, all same)
+800a0cbc DrawLevelPrims_EntryFunc
+
+800ab9f0 OVR_Region3
+
+// 230 (Main Menu)
+800abaa8 MM_Battle_DrawIcon_Character
+800abaf0 MM_TransitionInOut
+800abcac MM_Title_MenuUpdate
+800ac178 MM_Title_SetTrophyDPP // empty in japan builds
+800ac1f0 MM_Title_CameraMove
+800ac350 MM_Title_Thread_PerFrame
+800ac6dc MM_Title_Thread_Init
+800ac92c MM_Title_CameraReset
+800ac94c MM_Title_KillThread
+800ac9fc MM_Cheat_MaxWumpa
+800aca34 MM_Cheat_UnlockRoo
+800aca6c MM_Cheat_UnlockPapu
+800acaa4 MM_Cheat_UnlockJoe
+800acadc MM_Cheat_UnlockPinstripe
+800acb14 MM_Cheat_UnlockFakeCrash
+800acb4c MM_Cheat_UnlockPenta
+800acb84 MM_Cheat_UnlockTropy
+800acbbc MM_Cheat_UnlockScrapbook
+800acbf4 MM_Cheat_UnlockTracks
+800acc2c MM_Cheat_InfiniteMasks
+800acc64 MM_Cheat_MaxTurbos
+800acc9c MM_Cheat_MaxInvisibility
+800accd4 MM_Cheat_MaxEngine
+800acd10 MM_Cheat_MaxBombs
+800acd4c MM_Cheat_AdvDifficulty
+800acd88 MM_Cheat_SuperHard
+800acdc4 MM_Cheat_IcyTracks
+800ace00 MM_Cheat_SuperTurboPads
+800ace3c MM_Cheat_OneLap
+800ace78 MM_Cheat_TurboCounter
+800aceb4 MM_ParseCheatCodes
+800acff4 MM_MenuBox_Main
+800ad448 MM_ToggleRows_PlayerCount // not in sep3
+800ad560 MM_MenuBox_1p2p
+800ad5E8 MM_MenuBox_2p3p4p
+800ad678 MM_ToggleRows_Difficulty
+800ad7a4 MM_MenuBox_Difficulty
+800ad828 MM_MenuBox_SingleCup
+// MM_MenuBox_Language only in europe
+800ad8f0 MM_MenuBox_NewLoad
+800ad980 MM_AdvNewLoad_GetMenuBox
+800ad98c MM_Characters_AnimateColors
+800ada4c MM_Characters_GetNextDriver
+800adae4 MM_Characters_boolIsInvalid // not in sep3
+800adb64 MM_Characters_GetModelByName
+800adc0c MM_Characters_DrawWindows
+800ae0bc MM_Characters_SetMenuLayout
+800ae274 MM_Characters_BackupIDs
+800ae2c0 MM_Characters_ClearInactivePlayers
+800ae464 MM_Characters_RestoreIDs
+800ae6b0 MM_Characters_HideDrivers
+800ae74c MM_Characters_MenuBox
+800afa44 MM_TrackSelect_Video_SetDefaults
+800afa94 MM_TrackSelect_Video_State
+800afaf0 MM_TrackSelect_Video_Draw
+800aff58 MM_TrackSelect_boolTrackOpen
+800affd0 MM_TrackSelect_Init
+800b00d4 MM_TrackSelect_MenuBox
+800b0eac MM_TrackSelect_GetMenuBox
+800b0eb8 MM_CupSelect_Init
+800b0eec MM_CupSelect_MenuBox
+800b164c MM_Battle_CloseSubMenu
+800b1660 MM_Battle_DrawIcon_Weapon
+800b1830 MM_Battle_Init
+800b1848 MM_Battle_MenuBox
+800b2f0c MM_HighScore_Text3D
+800b2fbc MM_HighScore_Draw
+800b3914 MM_HighScore_Init
+800b3954 MM_HighScore_MenuBox
+800b3fe4 MM_Scrapbook_Init
+800b4014 MM_Scrapbook_PlayMovie
+800b42b0 MM_ResetAllMenus
+800b4334 MM_JumpTo_Title_Returning
+800b4364 MM_JumpTo_Title_FirstTime
+800b43f4 MM_JumpTo_BattleSetup
+800b4430 MM_JumpTo_TrackSelect
+800b446c MM_JumpTo_Characters
+800b44a8 MM_JumpTo_Scrapbook
+800b5a64 MM_Video_DecDCToutCallbackFunc
+800b5b7c MM_Video_KickCD
+800b5c8c MM_Video_VLC_Decode
+800b615c MM_Video_StartStream
+800b6260 MM_Video_StopStream
+800b62d8 MM_Video_AllocMem
+800b64d4 MM_Video_ClearMem
+800b64f4 MM_Video_DecodeFrame
+800b6674 MM_Video_CheckIfFinished
+
+// 231 (Race + Battle)
+800abab0 RB_MakeInstanceReflective
+800abbb4 RB_Player_KillPlayer
+800abefc RB_Player_ModifyWumpa
+800abfec RB_MinePool_Init
+800ac0e4 RB_MinePool_Remove
+800ac13c RB_MinePool_Add
+800ac1b0 RB_Hazard_HurtDriver
+800ac220 RB_Hazard_CollideWithDrivers
+800ac350 RB_Hazard_CollideWithBucket
+800ac3f8 RB_Hazard_OnCollide_Generic_Alt
+800ac42c RB_Hazard_OnCollide_Missile
+800ac4b8 RB_Hazard_OnCollide_Generic
+800ac5e8 RB_Potion_OpenTeeth
+800ac638 RB_Potion_CheckTeethCollision
+800ac6b4 RB_Potion_PerFrame_InAir
+800aca50 RB_Nitro_Init_LevInst
+800acb60 RB_GenericMine_PerFrame
+800ad250 RB_GenericMine_OnDestroy
+800ad310 RB_TNT_ThrowOffHead
+800ad44c RB_TNT_OnHead
+800ad710 RB_TNT_ThrowOnHead
+800ad92c RB_Explosion_PerFrame
+800ad9ac RB_Hazard_OnApproach_Mine
+800ada90 RB_Hazard_InterpolateValue
+800adb50 RB_MovingExplosive_PerFrame
+800ae478 RB_MovingExplosive_Explode
+800ae524 RB_Warpball_FadeAway
+800ae604 RB_Warpball_Death
+800ae668 RB_Warpball_NewPathNode
+800ae778 RB_Warpball_Start
+800ae7dc RB_Warpball_GetDriverTarget
+800aeaac RB_Warpball_SetTargetDriver
+800aece0 RB_Warpball_SeekDriver
+800aede0 RB_Warpball_TurnAround
+800aef9c RB_Warpball_PerFrame
+800afb70 RB_MaskWeapon_FadeAway
+800afdbc RB_MaskWeapon_PerFrame
+800b0278 RB_ShieldDark_Pop
+800b0454 RB_ShieldDark_PerFrame
+800b0dbc RB_Player_ToggleInvisible
+800b0e68 RB_Player_ToggleFlicker
+800b0f1c RB_RainCloud_FadeAway
+800b1000 RB_RainCloud_PerFrame
+800b1220 RB_RainCloud_Init
+800b1458 RB_Explosion_InitPotion
+800b1630 RB_Explosion_InitGeneric
+800b1714 RB_Blowup_ProcessBucket
+800b17f0 RB_Blowup_PerFrame
+800b18f8 RB_Blowup_Init
+800b1bd8 RB_Burst_ProcessBucket
+800b1d2c RB_Burst_PerFrame
+800b1e90 RB_Burst_CollideInst_NonLev
+800b20a4 RB_Burst_CollideInst_Lev
+800b2154 RB_Burst_Init
+800b25b8 RB_Burst_DrawAll
+800b28c0 RB_GetThread_ClosestTracker
+800b3120 RB_Baron_PerFrame
+800b37d4 RB_Baron_Init
+800b38e4 RB_Blade_PerFrame
+800b3978 RB_Blade_Init
+800b39dc RB_Bubbles_RoosTubes
+800b3d04 RB_Crate_PerFrame_Explode
+800b3d7c RB_Crate_PerFrame_Normal
+800b3e7c RB_Crate_Weapon_OnCollide
+800b4278 RB_Crate_Weapon_OnApproach
+800b432c RB_Crate_Fruit_OnCollide
+800b471c RB_Crate_Fruit_OnApproach
+800b47d0 RB_Crate_Time_OnCollide
+800b4ba8 RB_Crate_Time_OnApproach
+800b4c5c RB_Crystal_OnCollide
+800b4dd8 RB_Crystal_PerFrame
+800b4e7c RB_Crystal_OnApproach
+800b4f48 RB_Crystal_OnInit
+800b4fe4 RB_SearchQuadblock_ToggleReflection
+800b5090 RB_CtrLetter_OnCollide
+800b5210 RB_CtrLetter_OnApproach
+800b52dc RB_CtrLetter_PerFrame
+800b5334 RB_CtrLetter_Init
+800b53e0 RB_Banner_Animate_Init
+800b56c4 RB_Banner_Animate_Play
+800b57b4 RB_Banner_PerFrame
+800b57f8 RB_Banner_Init
+800b5984 RB_Armadillo_PerFrame_TurnAround
+800b5b74 RB_Armadillo_PerFrame_Rolling
+800b5dbc RB_Armadillo_OnCollide
+800b5dd0 RB_Armadillo_Init
+800b5f50 RB_Fireball_PerFrame
+800b625c RB_Fireball_OnCollide
+800b6270 RB_Fireball_Init
+800b64c0 RB_FlameJet_Particles
+800b6728 RB_FlameJet_PerFrame
+800b6938 RB_FlameJet_Init
+800b6d58 RB_Follower_ProcessBucket
+800b6e10 RB_Follower_PerFrame
+800b6f00 RB_Follower_Init
+800b706c RB_Fruit_PerFrame_AndDestroy
+800b722c RB_Fruit_Init
+800b7260 RB_Fruit_OnApproach
+800b7338 RB_Minecart_PerFrame
+800b7814 RB_Minecart_Init
+800b7b8c RB_Orca_PerFrame
+800b7eb8 RB_Orca_OnCollide
+800b7ecc RB_Orca_Init
+800b81e8 RB_Plant_PerFrame_Eat
+800b84f0 RB_Plant_PerFrame_Transition_HungryToEat
+800b8650 RB_Plant_PerFrame_Transition_HungryToRest
+800b86b4 RB_Plant_PerFrame_Hungry
+800b88a8 RB_Plant_PerFrame_Rest
+800b89a4 RB_Plant_Init
+800b8c00 RB_Seal_PerFrame_TurnAround
+800b8e1c RB_Seal_PerFrame_Move
+800b90d8 RB_Seal_OnCollide
+800b90ec RB_Seal_Init
+800b92ac RB_Snowball_PerFrame
+800b950c RB_Snowball_Init
+800b95fc RB_Spider_DrawWebs
+800b9848 RB_Spider_PerFrame
+800b9bc0 RB_Spider_OnCollide
+800b9bd4 RB_Spider_Init
+800b9dd8 RB_StartText_ProcessBucket
+800b9de0 RB_StartText_Init
+800b9df0 RB_Teeth_Init_TimeTrial_Relic
+800b9e44 RB_Teeth_BSP_Callback
+800b9f0c RB_Teeth_PerFrame
+800ba0c8 RB_Teeth_Init_Normal
+800ba220 RB_Teeth_OpenDoor
+800ba2c0 RB_Turtle_PerFrame
+800ba420 RB_Turtle_OnCollide
+800ba470 RB_Turtle_Init
+
+// 232 (AdvHub)
+800abafc AH_WarpPad_GetSpawnPosRot
+800abbdc AH_WarpPad_AllWarppadNum
+800abd80 AH_WarpPad_MenuBoxFuncPtr
+800abdfc AH_WarpPad_SpinRewards
+800abf48 AH_WarpPad_PerFrame
+800ad2c8 AH_WarpPad_OnDestroy
+800ad3ec AH_WarpPad_OnInit
+800ae8a0 AH_Garage_OnDestroy
+800ae8e0 AH_Garage_Open
+800ae988 AH_Garage_PerFrame
+800af070 AH_Garage_Init
+800af3a4 AH_SaveObj_Destroy
+800af3e4 AH_SaveObj_PerFrame
+800af7f0 AH_SaveObj_Init
+800af9f8 AH_Door_OnDestroy
+800afa60 AH_Door_PerFrame
+800b072c AH_Door_OnInit
+800b0b98 AH_Map_LoadSave_Prim
+800b0ce0 AH_Map_LoadSave_Full
+800b0f18 AH_Map_HubArrow
+800b1150 AH_Map_HubArrowOutter
+800b14f4 AH_Map_HubItems
+800b1a18 AH_Map_Warppads
+800b1c90 AH_Map_Main
+800b1ef8 AH_Pause_Destroy
+800b1f78 AH_Pause_Draw
+800b3144 AH_Pause_PerFrame
+800b344c AH_HintMenu_FiveArrows
+800b351c AH_HintMenu_MaskPosRot
+800b3594 AH_HintMenu_MenuBoxFuncPtr
+800b3dd8 AH_MaskHint_Start
+800b3f88 AH_MaskHint_boolCanSpawn
+800b3f98 AH_MaskHint_EnterAnim
+800b42b4 AH_MaskHint_SpawnParticles
+800b43cc AH_MaskHint_End
+800b4470 AH_MaskHint_PerFrame
+800b4c80 AH_Sign_OnInit // not in sep3
+
+// 233 (Cutscene)
+800abdd4 CS_Thread_Particles
+// ScriptCmd system is entirely removed in sep3
+800abf70 CS_ScriptCmd_ReadOpcode_GetShort
+800abf9c CS_ScriptCmd_ReadOpcode_GetInt
+800abfd8 CS_ScriptCmd_ReadOpcode_GetInt_dup
+800ac014 CS_ScriptCmd_ReadOpcode_Main
+800ac1c0 CS_ScriptCmd_OpcodeNext
+800ac1ec CS_ScriptCmd_OpcodeAt
+800ac214 CS_Instance_InitMatrix
+800ac320 CS_Instance_GetFrameData
+800ac5a4 CS_Instance_GetNumAnimFrames
+800ac638 CS_Instance_SafeCheckAnimFrame
+800ac694 CS_Instance_BoolPlaySound
+800ac714 CS_DestroyPodium_StartDriving
+800ac840 CS_Thread_UseOpcode
+800ade8c CS_Thread_MoveOnPath
+800ae2b8 CS_Thread_AnimateScale
+800ae318 CS_Thread_InterpolateFramesMS
+800ae54c CS_Thread_PerFrame
+// small func here?
+800ae834 CS_Boss_Init
+800ae9a8 CS_Boss_PerFrame
+800aed48 CS_Boss_BoolShouldStart
+800aedf8 CS_Podium_Camera_PerFrame
+800af328 CS_Thread_Init
+800af7c0 CS_Podium_Prize_Spin
+800af994 CS_Podium_Prize_PerFrame3
+800afbc8 CS_Podium_Prize_PerFrame2
+800afcc4 CS_Podium_Prize_PerFrame1
+800afe58 CS_Podium_Prize_OnDestroy // not in sep3
+800afe90 CS_Podium_Prize_Init
+800b0248 CS_Podium_Stand_Init
+800b0300 CS_Podium_FullScene_Init
+800b06ac CS_LevThread_OnInit
+800b087c CS_LevCamera_OnInit
+800b0b38 CS_BoxScene_InstanceSplitLines
+800b7784 CS_Garage_ZoomOut
+800b7834 CS_Garage_MenuBoxFuncPtr
+800b854c CS_Garage_GetMenuBox
+800b8558 CS_Garage_Init
+800b8668 CS_Credits_AnimateCreditGhost
+800b8810 CS_Credits_GetNextString
+800b885c CS_Credits_DestroyCreditGhost
+800b88c8 CS_Credits_DrawNames
+800b8bd0 CS_Credits_DrawEpilogue
+800b8dc8 CS_Credits_PerFrame
+800b8f8c CS_Credits_Init
+800b92a0 CS_Credits_IsTextValid
+800b92cc CS_Credits_NewDancer
+800b9398 CS_Credits_NewCreditGhosts
+800b93f4 CS_Credits_End
+
+// Injection points
+8009fc2c CC_EndOfFile
+800a0bb0 AA_EndOfFile
+800a0cb8 RR_EndOfFile
+800a04d4 TT_EndOfFile
+800a0208 VB_EndOfFile
+800ab970 X1_EndOfFile
+800ab9f0 X2_EndOfFile
+800a9258 X3_EndOfFile
+800a930c X4_EndOfFile
+800b6834 MM_EndOfFile
+800ba548 RB_EndOfFile
+800b5674 AH_EndOfFile
+800b97fc CS_EndOfFile

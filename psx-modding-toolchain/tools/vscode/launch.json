@@ -1,0 +1,23 @@
+{
+    "configurations": [
+    {
+        "type": "gdb",
+        "request": "attach",
+        "name": "(gdb) Debug Mod",
+        "target": "localhost:3333",
+        "remote": true,
+        "stopAtConnect": true,
+        "executable": "./games/Example_CrashTeamRacing/mods/HelloWorld/debug/mod.elf",
+        "gdbpath": "/usr/bin/gdb-multiarch",
+        "windows": {
+            "gdbpath": "C:/gdb-multiarch-12.1/bin/gdb.exe",
+        },
+        "cwd": "${workspaceRoot}",
+        "autorun": [
+            "set confirm off",
+            "set substitute-path /project .",
+        ],
+        "valuesFormatting": "parseText"
+    }
+    ]
+}

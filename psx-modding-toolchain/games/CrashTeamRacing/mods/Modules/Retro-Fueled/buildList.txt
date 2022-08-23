@@ -1,0 +1,25 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Hooks
+926, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, src/hookNewGame.s
+1020, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, src/hookNewGame.s
+common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
+926, exe, LOAD_VramFile, -0x8, src/hookVRAM.s
+1020, exe, LOAD_VramFile, -0x8, src/hookVRAM.s
+common, exe, __main, 0x68, src/hookEntry.s
+
+// Compile texture replacements to kernel
+926, iso, 0x8000A000, 0x0, src/logo.c, logo.bin
+926, iso, 0x8000C400, 0x0, src/banner.c, banner.bin
+926, iso, 0x8000E400, 0x0, src/banner_p.c, banner_p.bin
+1020, iso, 0x8000A000, 0x0, src/logo.c, logo.bin
+1020, iso, 0x8000C400, 0x0, src/banner.c, banner.bin
+1020, iso, 0x8000E400, 0x0, src/banner_p.c, banner_p.bin
+
+// Modify Turbo_Increment function to allow for USF stacking
+common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_AllowUSFStacking.c
+
+// Compile code to empty spaces in RDATA
+common, exe, rdata_free, 0x0, src/main.c

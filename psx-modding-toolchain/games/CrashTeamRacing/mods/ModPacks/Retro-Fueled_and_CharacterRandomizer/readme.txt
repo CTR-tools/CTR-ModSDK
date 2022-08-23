@@ -1,0 +1,1 @@
+As it says on the tin, it's Redhot's Retro-Fueled combined with Niko's CharacterRandomizer, so you can have all the unlockable characters in Retro-Fueled races.

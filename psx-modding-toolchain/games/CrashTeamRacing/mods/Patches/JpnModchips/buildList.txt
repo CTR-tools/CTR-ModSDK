@@ -1,0 +1,2 @@
+1006, exe, 0x80012534, 0x0, src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, src/jpnModchips.s
