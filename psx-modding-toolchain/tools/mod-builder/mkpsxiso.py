@@ -215,7 +215,8 @@ class Mkpsxiso:
     def xdelta(self) -> None:
         gv = self.ask_user_for_version()
         original_game = ISO_PATH + gv.rom_name
-        modded_game = ISO_PATH + gv.rom_name.split(".")[0] + "_" + MOD_NAME + ".bin"
+        mod_name = gv.rom_name.split(".")[0] + "_" + MOD_NAME
+        modded_game = ISO_PATH + mod_name + ".bin"
         if not os.path.isfile(original_game):
             print("\n[ISO-py] ERROR: couldn't find " + original_game)
             print("Make sure to put your original game in the " + ISO_PATH + " folder.\n")
@@ -229,7 +230,7 @@ class Mkpsxiso:
         if not os.path.isfile(command):
             print("\n[ISO-py] ERROR: xdelta not found. Make sure to download xdelta https://github.com/jmacd/xdelta-gpl/releases/tag/v3.0.11")
             print("rename it to xdelta3, then place it in tools/xdelta.\n")
-        output = ISO_PATH + MOD_NAME + ".xdelta"
+        output = ISO_PATH + mod_name + ".xdelta"
         delete_file(output)
         flags = " -S none -s " + original_game + " " + modded_game + " " + output
         os.system(command + flags)
@@ -244,6 +245,7 @@ class Mkpsxiso:
             build_cue = build_files_folder + ".cue"
             build_bin = build_files_folder + ".bin"
             build_xml = build_files_folder + ".xml"
+            build_xdelta = build_files_folder + ".xdelta"
             if all:
                 extract_folder = ISO_PATH + rom_name
                 extract_xml = extract_folder + ".xml"
@@ -253,6 +255,7 @@ class Mkpsxiso:
             delete_file(build_bin)
             delete_file(build_cue)
             delete_file(build_xml)
+            delete_file(build_xdelta)
 
     def extract_iso(self) -> None:
         self.build(only_extract=True)
