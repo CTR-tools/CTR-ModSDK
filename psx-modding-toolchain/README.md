@@ -10,6 +10,7 @@ Watch the demo:
 * Test your changes in game during runtime;
 * Replace game textures using custom images;
 * Automatic rebuild a PSX iso with your own modifications.
+* Generate xdelta patches to easily distribute your ROM hacks. You can apply xdelta patches using this [web application](https://hack64.net/tools/patcher.php)
 
 To discuss PSX development, hacking, and reverse engineering in general, please join the PSXDev Network Discord server: [![Discord](https://img.shields.io/discord/642647820683444236)](https://discord.gg/QByKPpH)
 
