@@ -6,7 +6,7 @@ include - The project's includes: all the structs and globals in CTR and psn00bs
 mods - Finished code modifications for CTR
 ├── ModPacks - Combinations of other mods
 ├── Modules - Mods that you can combine with other mods
-├── Patches - Small assembly code tweaks that can be included in any mod without risk of overlap
+├── Patches - Original code modifications that can be included in any mod with relatively no risk of overlap
 ├── Standalones - Mods that are designed to be played without other mods
 ├── Tests - Programming tests and other miscellaneous mods
 └── common.h - All of the structs and globals in CTR

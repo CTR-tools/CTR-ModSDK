@@ -1,1 +1,1 @@
-A rudimentary recreation of Crash Team Racing Nitro-Fueled's Ring Rally mode in Nitro-Fueled. As of writing it replaces regular Time Trial races and only supports Coco Park.
+A rudimentary recreation of Crash Team Racing Nitro-Fueled's Ring Rally mode in Nitro-Fueled. As of writing it replaces regular Time Trial races and only supports Coco Park. Made by Niko.

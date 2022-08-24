@@ -1,0 +1,1 @@
+A ROM hack designed to practice CTR Time Trials. Use save states, engine swap, enhanced HUD, flying and infinite fire cheat. Made by TheRedhotbr.

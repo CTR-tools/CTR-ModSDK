@@ -5,8 +5,8 @@ framing of the karts feature the gold or silver accents as they do in promo
 renders of CTR. Made by Superstarxalien.
 
 Penta Penguin's pipe framing in this mod is silver as in Nitro-Fueled, but
-it should really be changed to gold since we have a render of Penta with gold
-pipe framing. Shucks.
+it should really be changed to gold since we have a render of Penta from the
+original game with gold pipe framing. Shucks.
 
 Only works in the NTSC-U (926) version of the game.
 
