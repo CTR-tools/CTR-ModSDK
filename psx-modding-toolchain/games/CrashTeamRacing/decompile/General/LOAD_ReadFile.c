@@ -1,8 +1,6 @@
 #include <common.h>
 
 void CDSYS_SetMode_StreamData();
-void* MEMPACK_AllocMem(int allocSize, char *fileString);
-void* MEMPACK_ReallocMem(int allocSize);
 void LOAD_ReadFileASyncCallback();
 
 u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, u_long *destination, int *size, void * callback)
