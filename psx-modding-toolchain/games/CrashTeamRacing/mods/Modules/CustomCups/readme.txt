@@ -1,3 +1,6 @@
+Adds a menu for setting up a Trophy Race cup that you can
+customize.
+
 Supports all builds
 
 The mod installer could not inject code directly into overlays
@@ -10,3 +13,5 @@ equivalent of common.h for overlays
 
 This hook is overwriting a function pointer
 and not overwriting a JAL or JMP
+
+Made by Niko.

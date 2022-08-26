@@ -4,3 +4,5 @@ Disable HUD
 Addresses are hardcoded in compileList, but they're
 all the same offset from that function, except for Sep3,
 which is same function but different address
+
+Made by Niko (?)

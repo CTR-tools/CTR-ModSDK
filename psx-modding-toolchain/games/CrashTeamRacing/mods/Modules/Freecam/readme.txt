@@ -13,3 +13,5 @@ The mod makes the driver invisible, then moves the driver, which
 automatically updates the frustum, when a quadblock is under the
 driver that contains visibility information. Might make a smarter
 solution later
+
+Made by Niko (?)

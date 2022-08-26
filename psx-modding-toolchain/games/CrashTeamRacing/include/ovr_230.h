@@ -240,7 +240,7 @@ extern struct
 	
 	// 800b50B4
 	// wouldn't need this if icons were stored by order of characterID
-	short IconPerCharacter[0x10];
+	short characterIcon[0x10];
 	
 	// 800b50D4
 	char filler2BC[0x2BC];
@@ -274,10 +274,32 @@ extern struct
 	// 800b5540
 	// MM_TransitionInOut meta data of some sort
 
-	#if 0
+	char fill_trackselectmetabattletracks_temporary[0x4A4];
+
+	// 800b59e4
+	int movingToTrackMenu;
+
+	// 800b59e8
+	char fill_movingtotrackmenu[0x28];
+
+	// 800b5a10
+	int characterSelectNumScreens;
+
+	char fill_characterSelectNumScreens[0xC];
+
 	// 800b5a20
 	// 0 = transitioning in, 1 = in focus/still, 2 = transitioning out
 	int isMenuTransitioning;
-	#endif
+
+	int fill_isMenuTransitioning1;
+
+	// 800b5a2c
+	int isRosterExpanded;
+
+	// 800b5a24
+	char fill_isMenuTransitioning2[0x20];
+
+	// 800b5a44
+	short transitionFrames;
 	
 } OVR_230;

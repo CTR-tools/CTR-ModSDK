@@ -26,7 +26,7 @@ Tiny Tiger
 Coco Bandicoot
 	1. Japanese CTR icon
 	2. June 3 build (Pizza Hut Test Drive / Spyro 2 demo) icon
-	3. Custom icon #1 by Avery
+	3. Custom icon #1 by Avery (@TheMagicJam)
 
 N. Gin
 	1. June 3 build (Pizza Hut Test Drive / Spyro 2 demo) icon
