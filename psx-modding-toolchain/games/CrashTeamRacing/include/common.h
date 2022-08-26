@@ -9795,7 +9795,9 @@ struct BSS
 		void* prev;
 
 		// 0x8
-		char voiceParams[0x4];
+		short voiceID; // param_1
+		char characterID_1; // param_2
+		char characterID_2; // param_3
 
 		// 0xC
 		int startFrame;

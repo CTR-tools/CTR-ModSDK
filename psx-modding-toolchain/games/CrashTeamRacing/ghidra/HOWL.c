@@ -5283,7 +5283,7 @@ LAB_8002ce00:
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// Voiceline_TriggerBoss
+// Voiceline_StartPlay
 void FUN_8002cf28(undefined4 *param_1)
 
 {
@@ -5356,7 +5356,11 @@ FUN_8006fbac("CDSYS_XAPlay( CDSYS_XA_TYPE_GAME, %d ) Failed\n",
 	  // try again in 30 frames (1 second)
       DAT_8008d7ee = 0x1e;
     }
-    else {
+
+    // if audio can play
+    else 
+    {
+      // CDSYS_XAGetTrackLength
       iVar2 = FUN_8001cd20(2,(uint)*(ushort *)(iVar5 + *piVar4));
 			= (short)(iVar2 / 5) + 0x1e;
     }
@@ -5364,7 +5368,7 @@ FUN_8006fbac("CDSYS_XAPlay( CDSYS_XA_TYPE_GAME, %d ) Failed\n",
   return;
 }
 
-// Voiceline_WrongWay
+// Voiceline_PerFrame
 void FUN_8002d0f8(void)
 
 {
@@ -5487,7 +5491,7 @@ LAB_8002d268:
 	// LIST_AddBack free
     FUN_80031788(&DAT_800961a4,iVar4);
 
-	// Voiceline_TriggerBoss
+	// Voiceline_StartPlay
     FUN_8002cf28(iVar4);
   }
 
@@ -5890,7 +5894,7 @@ void FUN_8002d67c(void)
 
     } while (iVar5 < 8);
 
-	// Voiceline_WrongWay
+	// Voiceline_PerFrame
     FUN_8002d0f8();
 
 	// Level_AmbientSound
@@ -6020,7 +6024,7 @@ void FUN_8002d67c(void)
       iVar3 = iVar7;
     } while (iVar5 < 8);
 
-	// Voiceline_WrongWay
+	// Voiceline_PerFrame
     FUN_8002d0f8();
 
 	// Level_AmbientSound
