@@ -47,7 +47,7 @@ void DECOMP_DrawHUD_Racing()
 	u_char **ppuVar5;
 	u_char *pbVar6;
 	int i;
-	struct Camera110 *playerCamera110Ptr;
+	struct Camera110 *cam110;
 	u_int partTimeVariable5;
 	struct Icon* iconPtr;
 	u_long *primMemCurr;
@@ -217,7 +217,7 @@ void DECOMP_DrawHUD_Racing()
 				{
 					// Player / AI structure + 0x4a shows driver index (0-7)
 					// This is a pointer to each player's camera110 buffer
-					playerCamera110Ptr = &sdata.gGT->camera110[playerStruct->driverID];
+					cam110 = &sdata.gGT->camera110[playerStruct->driverID];
 
 					// if "Time on clock" last 0xXX u_char is greater than 0x80 and less than 0xFF
 					if ((sdata.gGT->elapsedEventTime & 0x80) != 0)
@@ -228,10 +228,10 @@ void DECOMP_DrawHUD_Racing()
 							sdata.lngStrings[0x74],
 
 							// Midpoint between Start X and Size X
-							(int)(((u_int)playerCamera110Ptr->windowStartX + ((int)((u_int)playerCamera110Ptr->windowSizeX << 0x10) >> 0x11)) * 0x10000) >> 0x10,
+							(int)(((u_int)cam110->rect.x + ((int)((u_int)cam110->rect.w << 0x10) >> 0x11)) * 0x10000) >> 0x10,
 
 						 	// Midpoint between Start Y and Size Y, except 0x1e higher
-						 	(int)(((u_int)playerCamera110Ptr->windowStartY + ((int)((u_int)playerCamera110Ptr->windowSizeY << 0x10) >> 0x11) + -0x1e) * 0x10000) >> 0x10,
+						 	(int)(((u_int)cam110->rect.y + ((int)((u_int)cam110->rect.h << 0x10) >> 0x11) + -0x1e) * 0x10000) >> 0x10,
 
 							1, 0xffff8000
 						);
@@ -1112,7 +1112,7 @@ void DECOMP_DrawHUD_Racing()
 			playerStruct = sdata.gGT->drivers[i];
 
 			// pointer to each player's camera110 buffer
-			playerCamera110Ptr = &sdata.gGT->camera110[playerStruct->driverID];
+			cam110 = &sdata.gGT->camera110[playerStruct->driverID];
 
 			if
 			(
@@ -1152,10 +1152,10 @@ void DECOMP_DrawHUD_Racing()
 					// Position is the same regardless of win or lose
 
 					// Midpoint between camera110 Start X and End X
-					partTimeVariable3 = (u_int)playerCamera110Ptr->windowStartX + ((int)((u_int)playerCamera110Ptr->windowSizeX << 0x10) >> 0x11);
+					partTimeVariable3 = (u_int)cam110->rect.x + ((int)((u_int)cam110->rect.w << 0x10) >> 0x11);
 
 					// Midpoint between camera110 Start Y and End Y
-					partTimeVariable5 = (u_int)playerCamera110Ptr->windowStartY + ((int)((u_int)playerCamera110Ptr->windowSizeY << 0x10) >> 0x11);
+					partTimeVariable5 = (u_int)cam110->rect.y + ((int)((u_int)cam110->rect.h << 0x10) >> 0x11);
 
 					// FINISHED!
 					pbVar6 = sdata.lngStrings[0x78];
@@ -1167,10 +1167,10 @@ void DECOMP_DrawHUD_Racing()
 					// Position is the same regardless of win or lose
 
 					// Midpoint between camera110 Start X and End X
-					partTimeVariable3 = (u_int)playerCamera110Ptr->windowStartX + ((int)((u_int)playerCamera110Ptr->windowSizeX << 0x10) >> 0x11);
+					partTimeVariable3 = (u_int)cam110->rect.x + ((int)((u_int)cam110->rect.w << 0x10) >> 0x11);
 
 					// Midpoint between camera110 Start Y and End Y
-					partTimeVariable5 = (u_int)playerCamera110Ptr->windowStartY + ((int)((u_int)playerCamera110Ptr->windowSizeY << 0x10) >> 0x11);
+					partTimeVariable5 = (u_int)cam110->rect.y + ((int)((u_int)cam110->rect.h << 0x10) >> 0x11);
 
 					// LOSER!
 					pbVar6 = sdata.lngStrings[0x50c];

@@ -26,11 +26,11 @@ void DECOMP_Camera110_InitStructs(struct Camera110* c110, int id, int total)
 		c110->distanceToScreen_PREV = 0x80;
 		c110->distanceToScreen_CURR = 0x80;
 
-		c110->windowSizeX = 0xfd;
-		c110->windowSizeY = SIZEY_TOP;
+		c110->rect.w = 0xfd;
+		c110->rect.h = SIZEY_TOP;
 
-		c110->windowStartX = (id&1) * 0x103;
-		c110->windowStartY = (id>>1) * SIZEY_TOP+4;
+		c110->rect.x = (id&1) * 0x103;
+		c110->rect.y = (id>>1) * SIZEY_TOP+4;
 
 		return;
 	}
@@ -39,11 +39,11 @@ void DECOMP_Camera110_InitStructs(struct Camera110* c110, int id, int total)
 	c110->distanceToScreen_PREV = 0x100;
 	c110->distanceToScreen_CURR = 0x100;
 
-	c110->windowSizeX = 0x200;
-	c110->windowSizeY = (total == 1) ? SIZEY_1P : SIZEY_TOP;
+	c110->rect.w = 0x200;
+	c110->rect.h = (total == 1) ? SIZEY_1P : SIZEY_TOP;
 
-	c110->windowStartX = 0;
-	c110->windowStartY = (id == 0) ? 0 : SIZEY_TOP+4;
+	c110->rect.x = 0;
+	c110->rect.y = (id == 0) ? 0 : SIZEY_TOP+4;
 
 	return;
 }

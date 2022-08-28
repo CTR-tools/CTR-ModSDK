@@ -2843,24 +2843,9 @@ struct Camera110
 	// 256 in 1P, 128 in 4P
 	int distanceToScreen_PREV;
 
-
-
-	// To do: This should be RECT type
-
 	// 0x1c
-	short windowStartX;
-
-	// 0x1e
-	short windowStartY;
-
-	// 0x20
-	short windowSizeX;
-
-	// 0x22
-	short windowSizeY;
-
-
-
+	// position and dimensions
+	RECT rect;
 
 	// 0x24
 	short aspectX;

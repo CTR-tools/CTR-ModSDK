@@ -18,11 +18,11 @@ void Camera110_InitStructs(struct Camera110* c110, int id, int total)
 		c110->distanceToScreen_PREV = 0x80;
 		c110->distanceToScreen_CURR = 0x80;
 
-		c110->windowSizeX = 0xfd;
-		c110->windowSizeY = 0x6a;
+		c110->rect.w = 0xfd;
+		c110->rect.h = 0x6a;
 
-		c110->windowStartX = (id&1) * 0x103;
-		c110->windowStartY = (id>>1) * 0x6e;
+		c110->rect.x = (id&1) * 0x103;
+		c110->rect.y = (id>>1) * 0x6e;
 
 		return;
 	}
@@ -34,11 +34,11 @@ void Camera110_InitStructs(struct Camera110* c110, int id, int total)
 	c110->distanceToScreen_PREV = 0x100;
 	c110->distanceToScreen_CURR = 0x100;
 
-	c110->windowSizeX = (total == 1) ? 0x200 : 0xfd;
-	c110->windowSizeY = 0xd8;
+	c110->rect.w = (total == 1) ? 0x200 : 0xfd;
+	c110->rect.h = 0xd8;
 
-	c110->windowStartX = (id&1) * 0x103;
-	c110->windowStartY = 0;
+	c110->rect.x = (id&1) * 0x103;
+	c110->rect.y = 0;
 
 	// There's 400 bytes here, so may as well store this here
 

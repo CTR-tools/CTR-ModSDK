@@ -100,12 +100,12 @@ DrawLights:
 
 	  // posX of first light
 	  // (window sizeX/2) - (light sizeX*2)
-	  newPosX = (c110->windowSizeX + sizeX * -4) / 2;
+	  newPosX = (c110->rect.w + sizeX * -4) / 2;
 
 	  // posY
 	  newPosY =
 				// screen sizeY is used to scale original posY
-				((((int)(c110->windowSizeY) / 3) * 0x10000 >> 0x10) * sortaPosY >> 0xc) -
+				((((int)(c110->rect.h) / 3) * 0x10000 >> 0x10) * sortaPosY >> 0xc) -
 
 			    // adjusted icon sizeY,
 				(

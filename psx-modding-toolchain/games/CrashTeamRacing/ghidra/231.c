@@ -7000,13 +7000,13 @@ code_r0x800b4024:
       
 	  sStack32 = (short)uVar1;
 	  
-	  // Camera110_WindowStartX
+	  // Camera110_rect.x
       *(short *)(iVar6 + 0x4b4) =					// camera110 variable
            sStack32 + *(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x184);
       
 	  sStack30 = (short)((uint)uVar1 >> 0x10);
       
-	  // Camera110_WindowStartY
+	  // Camera110_rect.y
 	  *(short *)(iVar6 + 0x4b6) =					// camera110 variable
            sStack30 + *(short *)(puVar2 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x186);
       return 1;
@@ -7633,14 +7633,14 @@ LAB_800b4974:
   // screen posX
   local_28 = (short)uVar2;
   
-  // driver->PickupHUD.startX = screen posX + camera110 windowStartX
+  // driver->PickupHUD.startX = screen posX + camera110 rect.x
   *(short *)(iVar6 + 0x4b4) =
        local_28 + *(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x184);
   
   // screen posY
   sStack38 = (short)((uint)uVar2 >> 0x10);
   
-  // driver->PickupHUD.startY = screen posY + camera110 windowStartY
+  // driver->PickupHUD.startY = screen posY + camera110 rect.y
   *(short *)(iVar6 + 0x4b6) =
        sStack38 + *(short *)(puVar9 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x186);
 	   
@@ -8072,19 +8072,19 @@ bool FUN_800b5090(int param_1,int param_2,undefined4 param_3,int param_4)
 		 // &r0_00 + 0x0 (screen posX)
          *(short *)(puVar9 + 0x18) +
 		 
-		 // gGT->camera110[driver->driverID].WindowStartX
+		 // gGT->camera110[driver->driverID].rect.x
          *(short *)(iVar6 + (uint)*(byte *)(iVar7 + 0x4a) * 0x110 + 0x168 + 0x1c);
     
 	// &r0_00 + 0x2 (screen posY)
 	sVar2 = *(short *)((int)r0_00 + 2);
 	
-	// gGT->camera110[driver->driverID].WindowStartY
+	// gGT->camera110[driver->driverID].rect.y
     sVar3 = *(short *)(iVar6 + (uint)*(byte *)(iVar7 + 0x4a) * 0x110 + 0x168 + 0x1e);
     
 	// should last 10 frames
 	*(undefined2 *)(iVar7 + 0x4c4) = 10;
     
-	// driver->letterHUD.startY = screenPosY + WindowStartY - 0x14
+	// driver->letterHUD.startY = screenPosY + rect.y - 0x14
 	*(short *)(iVar7 + 0x4ca) = sVar2 + sVar3 + -0x14;
     
 	// modelID

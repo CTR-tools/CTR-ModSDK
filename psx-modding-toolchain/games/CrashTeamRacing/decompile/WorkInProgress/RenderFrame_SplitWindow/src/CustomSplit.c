@@ -34,7 +34,7 @@ void CustomSplit()
 			DrawBoxOutline_LowLevel(
 
 				// dimensions, thickness
-				&c110->windowStartX,4,2,
+				&c110->rect,4,2,
 
 				// color data, 0x18 is enum offset of BLUE
 				data.ptrColor[sdata.gGT->drivers[i]->BattleHUD.teamID + 0x18],
