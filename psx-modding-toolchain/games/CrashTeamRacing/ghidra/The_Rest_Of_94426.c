@@ -22884,7 +22884,7 @@ void FUN_800453e8(undefined2 *param_1,undefined *param_2,void *param_3,int param
 
 
 // Draw a 2D box made of four rectangles
-// param1 is a pointer to window (camera110) dimensions
+// param1 is a pointer RECT
 // param2 is x offset from edge
 // param3 is y offset from edge
 // DrawBoxOutline_LowLevel
