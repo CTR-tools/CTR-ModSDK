@@ -1,0 +1,450 @@
+icongroup info
+all info is taken from the us version unless noted otherwise
+
+icongroup 0: tireAnim
+num icons: 17
+0. tire00   Total width: 31 Total height: 31   x0: 0 x1: 31 x2: 0 x3: 31 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x40c0 Tpage: 0x0007
+1. tire01   Total width: 31 Total height: 31   x0: 32 x1: 63 x2: 32 x3: 63 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4001 Tpage: 0x0007
+2. tire02   Total width: 31 Total height: 31   x0: 64 x1: 95 x2: 64 x3: 95 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4041 Tpage: 0x0007
+3. tire03   Total width: 31 Total height: 31   x0: 96 x1: 127 x2: 96 x3: 127 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4081 Tpage: 0x0007
+4. tire04   Total width: 31 Total height: 31   x0: -128 x1: -97 x2: -128 x3: -97 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x40c1 Tpage: 0x0007
+5. tire05   Total width: 31 Total height: 31   x0: -96 x1: -65 x2: -96 x3: -65 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4002 Tpage: 0x0007
+6. tire06   Total width: 31 Total height: 31   x0: -64 x1: -33 x2: -64 x3: -33 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4042 Tpage: 0x0007
+7. tire07   Total width: 31 Total height: 31   x0: -32 x1: -1 x2: -32 x3: -1 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4082 Tpage: 0x0007
+8. tire08   Total width: 31 Total height: 31   x0: 0 x1: 31 x2: 0 x3: 31 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x40c2 Tpage: 0x0006
+9. tire09   Total width: 31 Total height: 31   x0: 32 x1: 63 x2: 32 x3: 63 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4003 Tpage: 0x0006
+10. tire10   Total width: 31 Total height: 31   x0: 64 x1: 95 x2: 64 x3: 95 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4043 Tpage: 0x0006
+11. tire11   Total width: 31 Total height: 31   x0: 96 x1: 127 x2: 96 x3: 127 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4083 Tpage: 0x0006
+12. tire12   Total width: 31 Total height: 31   x0: -128 x1: -97 x2: -128 x3: -97 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x40c3 Tpage: 0x0006
+13. tire13   Total width: 31 Total height: 31   x0: -96 x1: -65 x2: -96 x3: -65 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4012 Tpage: 0x0006
+14. tire14   Total width: 31 Total height: 31   x0: -64 x1: -33 x2: -64 x3: -33 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4052 Tpage: 0x0006
+15. tire15   Total width: 31 Total height: 31   x0: -32 x1: -1 x2: -32 x3: -1 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4092 Tpage: 0x0006
+16. tire16   Total width: 31 Total height: 31   x0: 0 x1: 31 x2: 0 x3: 31 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x40d2 Tpage: 0x0005
+
+icongroup 1: dustpuff
+num icons: 5
+0. dustpuff00   Total width: 31 Total height: 31   x0: 32 x1: 63 x2: 32 x3: 63 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3f80 Tpage: 0x0065
+1. dustpuff01   Total width: 31 Total height: 31   x0: 64 x1: 95 x2: 64 x3: 95 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3fc0 Tpage: 0x0065
+2. dustpuff02   Total width: 31 Total height: 31   x0: 96 x1: 127 x2: 96 x3: 127 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3e01 Tpage: 0x0065
+3. dustpuff03   Total width: 31 Total height: 31   x0: -128 x1: -97 x2: -128 x3: -97 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3e41 Tpage: 0x0065
+4. dustpuff04   Total width: 31 Total height: 31   x0: -96 x1: -65 x2: -96 x3: -65 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3e81 Tpage: 0x0065
+
+icongroup 2: sparkle
+num icons: 1
+0. sparkle   Total width: 31 Total height: 31   x0: -64 x1: -33 x2: -64 x3: -33 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3f40 Tpage: 0x0061
+
+icongroup 3: smokering
+num icons: 1
+0. smokering   Total width: 31 Total height: 31   x0: -64 x1: -33 x2: -64 x3: -33 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3f40 Tpage: 0x0061
+
+icongroup 4: largefont
+num icons: 57
+0. 0   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+1. 1   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+2. 2   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+3. 3   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+4. 4   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+5. 5   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+6. 6   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+7. 7   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+8. 8   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+9. 9   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+10. a   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+11. b   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+12. c   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+13. d   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+14. e   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+15. f   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+16. g   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+17. h   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+18. i   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+19. j   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+20. k   Total width: 15 Total height: 15   x0: -80 x1: -65 x2: -80 x3: -65 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+21. l   Total width: 15 Total height: 15   x0: -80 x1: -65 x2: -80 x3: -65 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+22. m   Total width: 15 Total height: 15   x0: -64 x1: -49 x2: -64 x3: -49 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+23. n   Total width: 15 Total height: 15   x0: -64 x1: -49 x2: -64 x3: -49 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+24. o   Total width: 15 Total height: 15   x0: -48 x1: -33 x2: -48 x3: -33 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+25. p   Total width: 15 Total height: 15   x0: -48 x1: -33 x2: -48 x3: -33 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+26. q   Total width: 15 Total height: 15   x0: -32 x1: -17 x2: -32 x3: -17 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+27. r   Total width: 15 Total height: 15   x0: -32 x1: -17 x2: -32 x3: -17 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+28. s   Total width: 15 Total height: 15   x0: -16 x1: -1 x2: -16 x3: -1 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3e84 Tpage: 0x006f
+29. t   Total width: 15 Total height: 15   x0: -16 x1: -1 x2: -16 x3: -1 y0: -80 y1: -80 y2: -65 y3: -65   CLUT: 0x3ec4 Tpage: 0x006f
+30. u   Total width: 15 Total height: 15   x0: 0 x1: 15 x2: 0 x3: 15 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3e84 Tpage: 0x006f
+31. v   Total width: 15 Total height: 15   x0: 0 x1: 15 x2: 0 x3: 15 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3ec4 Tpage: 0x006f
+32. w   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3e84 Tpage: 0x006f
+33. x   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3ec4 Tpage: 0x006f
+34. y   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3e84 Tpage: 0x006f
+35. z   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3ec4 Tpage: 0x006f
+36. apostrophe   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3e84 Tpage: 0x006f
+37. bang   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3ec4 Tpage: 0x006f
+38. colon   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3e84 Tpage: 0x006f
+39. comma   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3ec4 Tpage: 0x006f
+40. delete   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3e84 Tpage: 0x006f
+41. equal   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3ec4 Tpage: 0x006f
+42. hyphen   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3e84 Tpage: 0x006f
+43. percent   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3ec4 Tpage: 0x006f
+44. period   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3e84 Tpage: 0x006f
+45. plus   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3ec4 Tpage: 0x006f
+46. question   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3e84 Tpage: 0x006f
+47. underscore   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3ec4 Tpage: 0x006f
+48. slash   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3e84 Tpage: 0x006f
+49. circlebutton   Total width: 31 Total height: 15   x0: 96 x1: 127 x2: 96 x3: 127 y0: 80 y1: 80 y2: 95 y3: 95   CLUT: 0x409d Tpage: 0x006f
+50. circlebutton   Total width: 31 Total height: 15   x0: 96 x1: 127 x2: 96 x3: 127 y0: 80 y1: 80 y2: 95 y3: 95   CLUT: 0x409d Tpage: 0x006f
+51. circlebutton   Total width: 31 Total height: 15   x0: 96 x1: 127 x2: 96 x3: 127 y0: 80 y1: 80 y2: 95 y3: 95   CLUT: 0x409d Tpage: 0x006f
+52. crossbutton   Total width: 31 Total height: 15   x0: -128 x1: -97 x2: -128 x3: -97 y0: 80 y1: 80 y2: 95 y3: 95   CLUT: 0x40dd Tpage: 0x006f
+53. squarebutton   Total width: 31 Total height: 15   x0: -96 x1: -65 x2: -96 x3: -65 y0: 80 y1: 80 y2: 95 y3: 95   CLUT: 0x411d Tpage: 0x006f
+54. trianglebutton   Total width: 31 Total height: 15   x0: -64 x1: -33 x2: -64 x3: -33 y0: 80 y1: 80 y2: 95 y3: 95   CLUT: 0x415d Tpage: 0x006f
+55. star   Total width: 11 Total height: 9   x0: 80 x1: 91 x2: 80 x3: 91 y0: -12 y1: -12 y2: -3 y3: -3   CLUT: 0x3d93 Tpage: 0x006e
+56. arrow   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: -64 y1: -64 y2: -49 y3: -49   CLUT: 0x3ec4 Tpage: 0x006f
+
+icongroup 5: middlefont
+num icons: 57
+0. small0   Total width: 11 Total height: 7   x0: -12 x1: -1 x2: -12 x3: -1 y0: 40 y1: 40 y2: 47 y3: 47   CLUT: 0x3e84 Tpage: 0x006f
+1. small1   Total width: 11 Total height: 7   x0: -12 x1: -1 x2: -12 x3: -1 y0: 40 y1: 40 y2: 47 y3: 47   CLUT: 0x3ec4 Tpage: 0x006f
+2. small2   Total width: 11 Total height: 7   x0: 112 x1: 123 x2: 112 x3: 123 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+3. small3   Total width: 11 Total height: 7   x0: 112 x1: 123 x2: 112 x3: 123 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+4. small4   Total width: -245 Total height: 7   x0: 124 x1: -121 x2: 124 x3: -121 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+5. small5   Total width: -245 Total height: 7   x0: 124 x1: -121 x2: 124 x3: -121 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+6. small6   Total width: 11 Total height: 7   x0: -120 x1: -109 x2: -120 x3: -109 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+7. small7   Total width: 11 Total height: 7   x0: -120 x1: -109 x2: -120 x3: -109 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+8. small8   Total width: 11 Total height: 7   x0: -108 x1: -97 x2: -108 x3: -97 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+9. small9   Total width: 11 Total height: 7   x0: -108 x1: -97 x2: -108 x3: -97 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+10. smalla   Total width: 11 Total height: 7   x0: -96 x1: -85 x2: -96 x3: -85 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+11. smallb   Total width: 11 Total height: 7   x0: -96 x1: -85 x2: -96 x3: -85 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+12. smallc   Total width: 11 Total height: 7   x0: -84 x1: -73 x2: -84 x3: -73 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+13. smalld   Total width: 11 Total height: 7   x0: -84 x1: -73 x2: -84 x3: -73 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+14. smalle   Total width: 11 Total height: 7   x0: -72 x1: -61 x2: -72 x3: -61 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+15. smallf   Total width: 11 Total height: 7   x0: -72 x1: -61 x2: -72 x3: -61 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+16. smallg   Total width: 11 Total height: 7   x0: -60 x1: -49 x2: -60 x3: -49 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+17. smallh   Total width: 11 Total height: 7   x0: -60 x1: -49 x2: -60 x3: -49 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+18. smalli   Total width: 11 Total height: 7   x0: -48 x1: -37 x2: -48 x3: -37 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+19. smallj   Total width: 11 Total height: 7   x0: -48 x1: -37 x2: -48 x3: -37 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+20. smallk   Total width: 11 Total height: 7   x0: -36 x1: -25 x2: -36 x3: -25 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+21. smalll   Total width: 11 Total height: 7   x0: -36 x1: -25 x2: -36 x3: -25 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+22. smallm   Total width: 11 Total height: 7   x0: -24 x1: -13 x2: -24 x3: -13 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+23. smalln   Total width: 11 Total height: 7   x0: -24 x1: -13 x2: -24 x3: -13 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+24. smallo   Total width: 11 Total height: 7   x0: -12 x1: -1 x2: -12 x3: -1 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0066
+25. smallp   Total width: 11 Total height: 7   x0: -12 x1: -1 x2: -12 x3: -1 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0066
+26. smallq   Total width: 11 Total height: 7   x0: 0 x1: 11 x2: 0 x3: 11 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+27. smallr   Total width: 11 Total height: 7   x0: 0 x1: 11 x2: 0 x3: 11 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+28. smalls   Total width: 11 Total height: 7   x0: 12 x1: 23 x2: 12 x3: 23 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+29. smallt   Total width: 11 Total height: 7   x0: 12 x1: 23 x2: 12 x3: 23 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+30. smallu   Total width: 11 Total height: 7   x0: 24 x1: 35 x2: 24 x3: 35 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+31. smallv   Total width: 11 Total height: 7   x0: 24 x1: 35 x2: 24 x3: 35 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+32. smallw   Total width: 11 Total height: 7   x0: 36 x1: 47 x2: 36 x3: 47 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+33. smallx   Total width: 11 Total height: 7   x0: 36 x1: 47 x2: 36 x3: 47 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+34. smally   Total width: 11 Total height: 7   x0: 48 x1: 59 x2: 48 x3: 59 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+35. smallz   Total width: 11 Total height: 7   x0: 48 x1: 59 x2: 48 x3: 59 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+36. smallapostrophe   Total width: 11 Total height: 7   x0: 60 x1: 71 x2: 60 x3: 71 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+37. smallbang   Total width: 11 Total height: 7   x0: 60 x1: 71 x2: 60 x3: 71 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+38. smallcolon   Total width: 11 Total height: 7   x0: 72 x1: 83 x2: 72 x3: 83 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+39. smallcomma   Total width: 11 Total height: 7   x0: 72 x1: 83 x2: 72 x3: 83 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+40. smalldelete   Total width: 11 Total height: 7   x0: 84 x1: 95 x2: 84 x3: 95 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+41. smallequal   Total width: 11 Total height: 7   x0: 84 x1: 95 x2: 84 x3: 95 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+42. smallhyphen   Total width: 11 Total height: 7   x0: 96 x1: 107 x2: 96 x3: 107 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+43. smallpercent   Total width: 11 Total height: 7   x0: 96 x1: 107 x2: 96 x3: 107 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+44. smallperiod   Total width: 11 Total height: 7   x0: 108 x1: 119 x2: 108 x3: 119 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+45. smallplus   Total width: 11 Total height: 7   x0: 108 x1: 119 x2: 108 x3: 119 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+46. smallquestion   Total width: -245 Total height: 7   x0: 120 x1: -125 x2: 120 x3: -125 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+47. smallunderscore   Total width: -245 Total height: 7   x0: 120 x1: -125 x2: 120 x3: -125 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+48. smallslash   Total width: 11 Total height: 7   x0: -100 x1: -89 x2: -100 x3: -89 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3e84 Tpage: 0x0067
+49. smalldot   Total width: 11 Total height: 7   x0: -124 x1: -113 x2: -124 x3: -113 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ffc Tpage: 0x0067
+50. smalldotbig   Total width: 11 Total height: 7   x0: -112 x1: -101 x2: -112 x3: -101 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x383d Tpage: 0x0067
+51. small_circlebtn   Total width: 15 Total height: 9   x0: -20 x1: -5 x2: -20 x3: -5 y0: -24 y1: -24 y2: -15 y3: -15   CLUT: 0x3c93 Tpage: 0x0065
+52. small_crossbtn   Total width: 15 Total height: 9   x0: 32 x1: 47 x2: 32 x3: 47 y0: -12 y1: -12 y2: -3 y3: -3   CLUT: 0x3cd3 Tpage: 0x006e
+53. small_squarebtn   Total width: 15 Total height: 9   x0: 48 x1: 63 x2: 48 x3: 63 y0: -12 y1: -12 y2: -3 y3: -3   CLUT: 0x3d13 Tpage: 0x006e
+54. small_triangleb   Total width: 15 Total height: 9   x0: 64 x1: 79 x2: 64 x3: 79 y0: -12 y1: -12 y2: -3 y3: -3   CLUT: 0x3d53 Tpage: 0x006e
+55. star   Total width: 11 Total height: 9   x0: 80 x1: 91 x2: 80 x3: 91 y0: -12 y1: -12 y2: -3 y3: -3   CLUT: 0x3d93 Tpage: 0x006e
+56. smallarrow   Total width: 11 Total height: 7   x0: -100 x1: -89 x2: -100 x3: -89 y0: -8 y1: -8 y2: -1 y3: -1   CLUT: 0x3ec4 Tpage: 0x0067
+
+icongroup 7: bubble
+num icons: 1
+0. bubble   Total width: 31 Total height: 31   x0: -64 x1: -33 x2: -64 x3: -33 y0: 64 y1: 64 y2: 95 y3: 95   CLUT: 0x5070 Tpage: 0x007e
+
+icongroup 8: bubblepop
+num icons: 1
+0. bubblepop   Total width: 19 Total height: 19   x0: 20 x1: 39 x2: 20 x3: 39 y0: -20 y1: -20 y2: -1 y3: -1   CLUT: 0x5af0 Tpage: 0x007a
+
+icongroup 9: drop
+num icons: 1
+0. drop   Total width: 7 Total height: 7   x0: -56 x1: -49 x2: -56 x3: -49 y0: -16 y1: -16 y2: -9 y3: -9   CLUT: 0x7b31 Tpage: 0x006a
+
+icongroup 10: flame
+num icons: 1
+0. flame   Total width: 63 Total height: 63   x0: 64 x1: 127 x2: 64 x3: 127 y0: 0 y1: 0 y2: 63 y3: 63   CLUT: 0x683c Tpage: 0x007a
+
+icongroup 11: wumpaposter
+num icons: 1
+0. wumpaposter   Total width: 47 Total height: 31   x0: -64 x1: -17 x2: -64 x3: -17 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x408b Tpage: 0x0063
+
+icongroup 12: trtireAnim
+num icons: 17
+0. trtire00   Total width: 31 Total height: 31   x0: 0 x1: 31 x2: 0 x3: 31 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4112 Tpage: 0x0007
+1. trtire01   Total width: 31 Total height: 31   x0: 32 x1: 63 x2: 32 x3: 63 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4152 Tpage: 0x0007
+2. trtire02   Total width: 31 Total height: 31   x0: 64 x1: 95 x2: 64 x3: 95 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4192 Tpage: 0x0007
+3. trtire03   Total width: 31 Total height: 31   x0: 96 x1: 127 x2: 96 x3: 127 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x41d2 Tpage: 0x0007
+4. trtire04   Total width: 31 Total height: 31   x0: -128 x1: -97 x2: -128 x3: -97 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4013 Tpage: 0x0007
+5. trtire05   Total width: 31 Total height: 31   x0: -96 x1: -65 x2: -96 x3: -65 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4053 Tpage: 0x0007
+6. trtire06   Total width: 31 Total height: 31   x0: -64 x1: -33 x2: -64 x3: -33 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4093 Tpage: 0x0007
+7. trtire07   Total width: 31 Total height: 31   x0: -32 x1: -1 x2: -32 x3: -1 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x40d3 Tpage: 0x0007
+8. trtire08   Total width: 31 Total height: 31   x0: 0 x1: 31 x2: 0 x3: 31 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4113 Tpage: 0x0006
+9. trtire09   Total width: 31 Total height: 31   x0: 32 x1: 63 x2: 32 x3: 63 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4153 Tpage: 0x0006
+10. trtire10   Total width: 31 Total height: 31   x0: 64 x1: 95 x2: 64 x3: 95 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x4193 Tpage: 0x0006
+11. trtire11   Total width: 31 Total height: 31   x0: 96 x1: 127 x2: 96 x3: 127 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x41d3 Tpage: 0x0006
+12. trtire12   Total width: 31 Total height: 31   x0: -128 x1: -97 x2: -128 x3: -97 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3e00 Tpage: 0x0006
+13. trtire13   Total width: 31 Total height: 31   x0: -96 x1: -65 x2: -96 x3: -65 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3e40 Tpage: 0x0006
+14. trtire14   Total width: 31 Total height: 31   x0: -64 x1: -33 x2: -64 x3: -33 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3e80 Tpage: 0x0006
+15. trtire15   Total width: 31 Total height: 31   x0: -32 x1: -1 x2: -32 x3: -1 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3ec0 Tpage: 0x0006
+16. trtire16   Total width: 31 Total height: 31   x0: 0 x1: 31 x2: 0 x3: 31 y0: -40 y1: -40 y2: -9 y3: -9   CLUT: 0x3f00 Tpage: 0x0005
+
+icongroup 13: mud
+num icons: 1
+0. mudnugget   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: -16 y1: -16 y2: -1 y3: -1   CLUT: 0x10a2 Tpage: 0x007a
+
+
+
+These two icon groups are only found in Japanese builds, as they are used for the extra Japanese font characters.
+Their data is loaded exactly once into memory, copied onto some other part of the memory, and then unloaded never to be seen again.
+See DecalFont_SetJfontDimensions for more info.
+
+icongroup 14: jfontBigAnim
+num icons: 118
+0. 00-hbig   Total width: 15 Total height: 15   x0: 0 x1: 15 x2: 0 x3: 15 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+1. 01-hbig   Total width: 15 Total height: 15   x0: 0 x1: 15 x2: 0 x3: 15 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+2. 02-hbig   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+3. 03-hbig   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+4. 04-hbig   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+5. 05-hbig   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+6. 06-hbig   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+7. 07-hbig   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+8. 08-hbig   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+9. 09-hbig   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+10. 0a-hbig   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+11. 0b-hbig   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+12. 0c-hbig   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+13. 0d-hbig   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+14. 0e-hbig   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+15. 0f-hbig   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+16. 10-hbig   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+17. 11-hbig   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+18. 12-hbig   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+19. 13-hbig   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+20. 14-hbig   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+21. 15-hbig   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+22. 16-hbig   Total width: 15 Total height: 15   x0: -80 x1: -65 x2: -80 x3: -65 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+23. 17-hbig   Total width: 15 Total height: 15   x0: -80 x1: -65 x2: -80 x3: -65 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+24. 18-hbig   Total width: 15 Total height: 15   x0: -64 x1: -49 x2: -64 x3: -49 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+25. 19-hbig   Total width: 15 Total height: 15   x0: -64 x1: -49 x2: -64 x3: -49 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+26. 1a-hbig   Total width: 15 Total height: 15   x0: -48 x1: -33 x2: -48 x3: -33 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+27. 1b-hbig   Total width: 15 Total height: 15   x0: -48 x1: -33 x2: -48 x3: -33 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+28. 1c-hbig   Total width: 15 Total height: 15   x0: -32 x1: -17 x2: -32 x3: -17 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+29. 1d-hbig   Total width: 15 Total height: 15   x0: -32 x1: -17 x2: -32 x3: -17 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+30. 1e-hbig   Total width: 15 Total height: 15   x0: -16 x1: -1 x2: -16 x3: -1 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0074
+31. 1f-hbig   Total width: 15 Total height: 15   x0: -16 x1: -1 x2: -16 x3: -1 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0074
+32. 20-hbig   Total width: 15 Total height: 15   x0: 0 x1: 15 x2: 0 x3: 15 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+33. 21-hbig   Total width: 15 Total height: 15   x0: 0 x1: 15 x2: 0 x3: 15 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+34. 22-hbig   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+35. 23-hbig   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+36. 24-hbig   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+37. 25-hbig   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+38. 26-hbig   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+39. 27-hbig   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+40. 28-hbig   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+41. 29-hbig   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+42. 2a-hbig   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+43. 2b-hbig   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+44. 2c-hbig   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+45. 2d-hbig   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+46. 2e-hbig   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+47. 2f-hbig   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+48. 30-hbig   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+49. 31-hbig   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+50. 32-hbig   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+51. 33-hbig   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+52. 34-hbig   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+53. 35-hbig   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+54. 36-hbig   Total width: 15 Total height: 15   x0: -80 x1: -65 x2: -80 x3: -65 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+55. 00-kbig   Total width: 15 Total height: 15   x0: -80 x1: -65 x2: -80 x3: -65 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+56. 01-kbig   Total width: 15 Total height: 15   x0: -64 x1: -49 x2: -64 x3: -49 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+57. 02-kbig   Total width: 15 Total height: 15   x0: -64 x1: -49 x2: -64 x3: -49 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+58. 03-kbig   Total width: 15 Total height: 15   x0: -48 x1: -33 x2: -48 x3: -33 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+59. 04-kbig   Total width: 15 Total height: 15   x0: -48 x1: -33 x2: -48 x3: -33 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+60. 05-kbig   Total width: 15 Total height: 15   x0: -32 x1: -17 x2: -32 x3: -17 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+61. 06-kbig   Total width: 15 Total height: 15   x0: -32 x1: -17 x2: -32 x3: -17 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+62. 07-kbig   Total width: 15 Total height: 15   x0: -16 x1: -1 x2: -16 x3: -1 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0074
+63. 08-kbig   Total width: 15 Total height: 15   x0: -16 x1: -1 x2: -16 x3: -1 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0074
+64. 09-kbig   Total width: 15 Total height: 15   x0: 0 x1: 15 x2: 0 x3: 15 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+65. 0a-kbig   Total width: 15 Total height: 15   x0: 0 x1: 15 x2: 0 x3: 15 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+66. 0b-kbig   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+67. 0c-kbig   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+68. 0d-kbig   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+69. 0e-kbig   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+70. 0f-kbig   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+71. 10-kbig   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+72. 11-kbig   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+73. 12-kbig   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+74. 13-kbig   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+75. 14-kbig   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+76. 15-kbig   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+77. 16-kbig   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+78. 17-kbig   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+79. 18-kbig   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+80. 19-kbig   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+81. 1a-kbig   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+82. 1b-kbig   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+83. 1c-kbig   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+84. 1d-kbig   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+85. 1e-kbig   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+86. 1f-kbig   Total width: 15 Total height: 15   x0: -80 x1: -65 x2: -80 x3: -65 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+87. 20-kbig   Total width: 15 Total height: 15   x0: -80 x1: -65 x2: -80 x3: -65 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+88. 21-kbig   Total width: 15 Total height: 15   x0: -64 x1: -49 x2: -64 x3: -49 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+89. 22-kbig   Total width: 15 Total height: 15   x0: -64 x1: -49 x2: -64 x3: -49 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+90. 23-kbig   Total width: 15 Total height: 15   x0: -48 x1: -33 x2: -48 x3: -33 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+91. 24-kbig   Total width: 15 Total height: 15   x0: -48 x1: -33 x2: -48 x3: -33 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+92. 25-kbig   Total width: 15 Total height: 15   x0: -32 x1: -17 x2: -32 x3: -17 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+93. 26-kbig   Total width: 15 Total height: 15   x0: -32 x1: -17 x2: -32 x3: -17 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+94. 27-kbig   Total width: 15 Total height: 15   x0: -16 x1: -1 x2: -16 x3: -1 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0075
+95. 28-kbig   Total width: 15 Total height: 15   x0: -16 x1: -1 x2: -16 x3: -1 y0: 8 y1: 8 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0075
+96. 29-kbig   Total width: 15 Total height: 15   x0: 0 x1: 15 x2: 0 x3: 15 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+97. 2a-kbig   Total width: 15 Total height: 15   x0: 0 x1: 15 x2: 0 x3: 15 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+98. 2b-kbig   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+99. 2c-kbig   Total width: 15 Total height: 15   x0: 16 x1: 31 x2: 16 x3: 31 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+100. 2d-kbig   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+101. 2e-kbig   Total width: 15 Total height: 15   x0: 32 x1: 47 x2: 32 x3: 47 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+102. 2f-kbig   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+103. 30-kbig   Total width: 15 Total height: 15   x0: 48 x1: 63 x2: 48 x3: 63 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+104. 31-kbig   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+105. 32-kbig   Total width: 15 Total height: 15   x0: 64 x1: 79 x2: 64 x3: 79 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+106. 33-kbig   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+107. 34-kbig   Total width: 15 Total height: 15   x0: 80 x1: 95 x2: 80 x3: 95 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+108. 35-kbig   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+109. 36-kbig   Total width: 15 Total height: 15   x0: 96 x1: 111 x2: 96 x3: 111 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+110. b7-big   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+111. b8-big   Total width: 15 Total height: 15   x0: 112 x1: 127 x2: 112 x3: 127 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+112. b9-big   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+113. ba-big   Total width: 15 Total height: 15   x0: -128 x1: -113 x2: -128 x3: -113 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+114. bb-big   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+115. bc-big   Total width: 15 Total height: 15   x0: -112 x1: -97 x2: -112 x3: -97 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+116. bd-big   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+117. be-big   Total width: 15 Total height: 15   x0: -96 x1: -81 x2: -96 x3: -81 y0: 24 y1: 24 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+
+icongroup 15: jfontSmallAnim
+num icons: 118
+0. 00-hsmall   Total width: 11 Total height: 7   x0: -80 x1: -69 x2: -80 x3: -69 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0075
+1. 01-hsmall   Total width: 11 Total height: 7   x0: -80 x1: -69 x2: -80 x3: -69 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0075
+2. 02-hsmall   Total width: 11 Total height: 7   x0: -68 x1: -57 x2: -68 x3: -57 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0075
+3. 03-hsmall   Total width: 11 Total height: 7   x0: -68 x1: -57 x2: -68 x3: -57 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0075
+4. 04-hsmall   Total width: 11 Total height: 7   x0: -56 x1: -45 x2: -56 x3: -45 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0075
+5. 05-hsmall   Total width: 11 Total height: 7   x0: -56 x1: -45 x2: -56 x3: -45 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0075
+6. 06-hsmall   Total width: 11 Total height: 7   x0: -44 x1: -33 x2: -44 x3: -33 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0075
+7. 07-hsmall   Total width: 11 Total height: 7   x0: -44 x1: -33 x2: -44 x3: -33 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0075
+8. 08-hsmall   Total width: 11 Total height: 7   x0: -32 x1: -21 x2: -32 x3: -21 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0075
+9. 09-hsmall   Total width: 11 Total height: 7   x0: -32 x1: -21 x2: -32 x3: -21 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0075
+10. 0a-hsmall   Total width: 11 Total height: 7   x0: -20 x1: -9 x2: -20 x3: -9 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0075
+11. 0b-hsmall   Total width: 11 Total height: 7   x0: -20 x1: -9 x2: -20 x3: -9 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0075
+12. 0c-hsmall   Total width: 11 Total height: 7   x0: -80 x1: -69 x2: -80 x3: -69 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+13. 0d-hsmall   Total width: 11 Total height: 7   x0: -80 x1: -69 x2: -80 x3: -69 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+14. 0e-hsmall   Total width: 11 Total height: 7   x0: -68 x1: -57 x2: -68 x3: -57 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+15. 0f-hsmall   Total width: 11 Total height: 7   x0: -68 x1: -57 x2: -68 x3: -57 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+16. 10-hsmall   Total width: 11 Total height: 7   x0: -56 x1: -45 x2: -56 x3: -45 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+17. 11-hsmall   Total width: 11 Total height: 7   x0: -56 x1: -45 x2: -56 x3: -45 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+18. 12-hsmall   Total width: 11 Total height: 7   x0: -44 x1: -33 x2: -44 x3: -33 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+19. 13-hsmall   Total width: 11 Total height: 7   x0: -44 x1: -33 x2: -44 x3: -33 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+20. 14-hsmall   Total width: 11 Total height: 7   x0: -32 x1: -21 x2: -32 x3: -21 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+21. 15-hsmall   Total width: 11 Total height: 7   x0: -32 x1: -21 x2: -32 x3: -21 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+22. 16-hsmall   Total width: 11 Total height: 7   x0: -20 x1: -9 x2: -20 x3: -9 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x460d Tpage: 0x0075
+23. 17-hsmall   Total width: 11 Total height: 7   x0: -20 x1: -9 x2: -20 x3: -9 y0: 32 y1: 32 y2: 39 y3: 39   CLUT: 0x464d Tpage: 0x0075
+24. 18-hsmall   Total width: 11 Total height: 7   x0: 0 x1: 11 x2: 0 x3: 11 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+25. 19-hsmall   Total width: 11 Total height: 7   x0: 0 x1: 11 x2: 0 x3: 11 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+26. 1a-hsmall   Total width: 11 Total height: 7   x0: 12 x1: 23 x2: 12 x3: 23 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+27. 1b-hsmall   Total width: 11 Total height: 7   x0: 12 x1: 23 x2: 12 x3: 23 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+28. 1c-hsmall   Total width: 11 Total height: 7   x0: 24 x1: 35 x2: 24 x3: 35 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+29. 1d-hsmall   Total width: 11 Total height: 7   x0: 24 x1: 35 x2: 24 x3: 35 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+30. 1e-hsmall   Total width: 11 Total height: 7   x0: 36 x1: 47 x2: 36 x3: 47 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+31. 1f-hsmall   Total width: 11 Total height: 7   x0: 36 x1: 47 x2: 36 x3: 47 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+32. 20-hsmall   Total width: 11 Total height: 7   x0: 48 x1: 59 x2: 48 x3: 59 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+33. 21-hsmall   Total width: 11 Total height: 7   x0: 48 x1: 59 x2: 48 x3: 59 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+34. 22-hsmall   Total width: 11 Total height: 7   x0: 60 x1: 71 x2: 60 x3: 71 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+35. 23-hsmall   Total width: 11 Total height: 7   x0: 60 x1: 71 x2: 60 x3: 71 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+36. 24-hsmall   Total width: 11 Total height: 7   x0: 72 x1: 83 x2: 72 x3: 83 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+37. 25-hsmall   Total width: 11 Total height: 7   x0: 72 x1: 83 x2: 72 x3: 83 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+38. 26-hsmall   Total width: 11 Total height: 7   x0: 84 x1: 95 x2: 84 x3: 95 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+39. 27-hsmall   Total width: 11 Total height: 7   x0: 84 x1: 95 x2: 84 x3: 95 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+40. 28-hsmall   Total width: 11 Total height: 7   x0: 96 x1: 107 x2: 96 x3: 107 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+41. 29-hsmall   Total width: 11 Total height: 7   x0: 96 x1: 107 x2: 96 x3: 107 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+42. 2a-hsmall   Total width: 11 Total height: 7   x0: 108 x1: 119 x2: 108 x3: 119 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+43. 2b-hsmall   Total width: 11 Total height: 7   x0: 108 x1: 119 x2: 108 x3: 119 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+44. 2c-hsmall   Total width: -245 Total height: 7   x0: 120 x1: -125 x2: 120 x3: -125 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+45. 2d-hsmall   Total width: -245 Total height: 7   x0: 120 x1: -125 x2: 120 x3: -125 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+46. 2e-hsmall   Total width: 11 Total height: 7   x0: -124 x1: -113 x2: -124 x3: -113 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+47. 2f-hsmall   Total width: 11 Total height: 7   x0: -124 x1: -113 x2: -124 x3: -113 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+48. 30-hsmall   Total width: 11 Total height: 7   x0: -112 x1: -101 x2: -112 x3: -101 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+49. 31-hsmall   Total width: 11 Total height: 7   x0: -112 x1: -101 x2: -112 x3: -101 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+50. 32-hsmall   Total width: 11 Total height: 7   x0: -100 x1: -89 x2: -100 x3: -89 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+51. 33-hsmall   Total width: 11 Total height: 7   x0: -100 x1: -89 x2: -100 x3: -89 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+52. 34-hsmall   Total width: 11 Total height: 7   x0: -88 x1: -77 x2: -88 x3: -77 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+53. 35-hsmall   Total width: 11 Total height: 7   x0: -88 x1: -77 x2: -88 x3: -77 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+54. 36-hsmall   Total width: 11 Total height: 7   x0: -76 x1: -65 x2: -76 x3: -65 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+55. 00-ksmall   Total width: 11 Total height: 7   x0: -76 x1: -65 x2: -76 x3: -65 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+56. 01-ksmall   Total width: 11 Total height: 7   x0: -64 x1: -53 x2: -64 x3: -53 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+57. 02-ksmall   Total width: 11 Total height: 7   x0: -64 x1: -53 x2: -64 x3: -53 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+58. 03-ksmall   Total width: 11 Total height: 7   x0: -52 x1: -41 x2: -52 x3: -41 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+59. 04-ksmall   Total width: 11 Total height: 7   x0: -52 x1: -41 x2: -52 x3: -41 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+60. 05-ksmall   Total width: 11 Total height: 7   x0: -40 x1: -29 x2: -40 x3: -29 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+61. 06-ksmall   Total width: 11 Total height: 7   x0: -40 x1: -29 x2: -40 x3: -29 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+62. 07-ksmall   Total width: 11 Total height: 7   x0: -28 x1: -17 x2: -28 x3: -17 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+63. 08-ksmall   Total width: 11 Total height: 7   x0: -28 x1: -17 x2: -28 x3: -17 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+64. 09-ksmall   Total width: 11 Total height: 7   x0: -16 x1: -5 x2: -16 x3: -5 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x460d Tpage: 0x0073
+65. 0a-ksmall   Total width: 11 Total height: 7   x0: -16 x1: -5 x2: -16 x3: -5 y0: 8 y1: 8 y2: 15 y3: 15   CLUT: 0x464d Tpage: 0x0073
+66. 0b-ksmall   Total width: 11 Total height: 7   x0: 0 x1: 11 x2: 0 x3: 11 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+67. 0c-ksmall   Total width: 11 Total height: 7   x0: 0 x1: 11 x2: 0 x3: 11 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+68. 0d-ksmall   Total width: 11 Total height: 7   x0: 12 x1: 23 x2: 12 x3: 23 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+69. 0e-ksmall   Total width: 11 Total height: 7   x0: 12 x1: 23 x2: 12 x3: 23 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+70. 0f-ksmall   Total width: 11 Total height: 7   x0: 24 x1: 35 x2: 24 x3: 35 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+71. 10-ksmall   Total width: 11 Total height: 7   x0: 24 x1: 35 x2: 24 x3: 35 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+72. 11-ksmall   Total width: 11 Total height: 7   x0: 36 x1: 47 x2: 36 x3: 47 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+73. 12-ksmall   Total width: 11 Total height: 7   x0: 36 x1: 47 x2: 36 x3: 47 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+74. 13-ksmall   Total width: 11 Total height: 7   x0: 48 x1: 59 x2: 48 x3: 59 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+75. 14-ksmall   Total width: 11 Total height: 7   x0: 48 x1: 59 x2: 48 x3: 59 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+76. 15-ksmall   Total width: 11 Total height: 7   x0: 60 x1: 71 x2: 60 x3: 71 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+77. 16-ksmall   Total width: 11 Total height: 7   x0: 60 x1: 71 x2: 60 x3: 71 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+78. 17-ksmall   Total width: 11 Total height: 7   x0: 72 x1: 83 x2: 72 x3: 83 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+79. 18-ksmall   Total width: 11 Total height: 7   x0: 72 x1: 83 x2: 72 x3: 83 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+80. 19-ksmall   Total width: 11 Total height: 7   x0: 84 x1: 95 x2: 84 x3: 95 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+81. 1a-ksmall   Total width: 11 Total height: 7   x0: 84 x1: 95 x2: 84 x3: 95 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+82. 1b-ksmall   Total width: 11 Total height: 7   x0: 96 x1: 107 x2: 96 x3: 107 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+83. 1c-ksmall   Total width: 11 Total height: 7   x0: 96 x1: 107 x2: 96 x3: 107 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+84. 1d-ksmall   Total width: 11 Total height: 7   x0: 108 x1: 119 x2: 108 x3: 119 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+85. 1e-ksmall   Total width: 11 Total height: 7   x0: 108 x1: 119 x2: 108 x3: 119 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+86. 1f-ksmall   Total width: -245 Total height: 7   x0: 120 x1: -125 x2: 120 x3: -125 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+87. 20-ksmall   Total width: -245 Total height: 7   x0: 120 x1: -125 x2: 120 x3: -125 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+88. 21-ksmall   Total width: 11 Total height: 7   x0: -124 x1: -113 x2: -124 x3: -113 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+89. 22-ksmall   Total width: 11 Total height: 7   x0: -124 x1: -113 x2: -124 x3: -113 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+90. 23-ksmall   Total width: 11 Total height: 7   x0: -112 x1: -101 x2: -112 x3: -101 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+91. 24-ksmall   Total width: 11 Total height: 7   x0: -112 x1: -101 x2: -112 x3: -101 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+92. 25-ksmall   Total width: 11 Total height: 7   x0: -100 x1: -89 x2: -100 x3: -89 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+93. 26-ksmall   Total width: 11 Total height: 7   x0: -100 x1: -89 x2: -100 x3: -89 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+94. 27-ksmall   Total width: 11 Total height: 7   x0: -88 x1: -77 x2: -88 x3: -77 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+95. 28-ksmall   Total width: 11 Total height: 7   x0: -88 x1: -77 x2: -88 x3: -77 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+96. 29-ksmall   Total width: 11 Total height: 7   x0: -76 x1: -65 x2: -76 x3: -65 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+97. 2a-ksmall   Total width: 11 Total height: 7   x0: -76 x1: -65 x2: -76 x3: -65 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+98. 2b-ksmall   Total width: 11 Total height: 7   x0: -64 x1: -53 x2: -64 x3: -53 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+99. 2c-ksmall   Total width: 11 Total height: 7   x0: -64 x1: -53 x2: -64 x3: -53 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+100. 2d-ksmall   Total width: 11 Total height: 7   x0: -52 x1: -41 x2: -52 x3: -41 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+101. 2e-ksmall   Total width: 11 Total height: 7   x0: -52 x1: -41 x2: -52 x3: -41 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+102. 2f-ksmall   Total width: 11 Total height: 7   x0: -40 x1: -29 x2: -40 x3: -29 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+103. 30-ksmall   Total width: 11 Total height: 7   x0: -40 x1: -29 x2: -40 x3: -29 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+104. 31-ksmall   Total width: 11 Total height: 7   x0: -28 x1: -17 x2: -28 x3: -17 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+105. 32-ksmall   Total width: 11 Total height: 7   x0: -28 x1: -17 x2: -28 x3: -17 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+106. 33-ksmall   Total width: 11 Total height: 7   x0: -16 x1: -5 x2: -16 x3: -5 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x460d Tpage: 0x0073
+107. 34-ksmall   Total width: 11 Total height: 7   x0: -16 x1: -5 x2: -16 x3: -5 y0: 16 y1: 16 y2: 23 y3: 23   CLUT: 0x464d Tpage: 0x0073
+108. 35-ksmall   Total width: 11 Total height: 7   x0: 0 x1: 11 x2: 0 x3: 11 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0073
+109. 36-ksmall   Total width: 11 Total height: 7   x0: 0 x1: 11 x2: 0 x3: 11 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0073
+110. b7-small   Total width: 11 Total height: 7   x0: 12 x1: 23 x2: 12 x3: 23 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0073
+111. b8-small   Total width: 11 Total height: 7   x0: 12 x1: 23 x2: 12 x3: 23 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0073
+112. b9-small   Total width: 11 Total height: 7   x0: 24 x1: 35 x2: 24 x3: 35 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0073
+113. ba-small   Total width: 11 Total height: 7   x0: 24 x1: 35 x2: 24 x3: 35 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0073
+114. bb-small   Total width: 11 Total height: 7   x0: 36 x1: 47 x2: 36 x3: 47 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0073
+115. bc-small   Total width: 11 Total height: 7   x0: 36 x1: 47 x2: 36 x3: 47 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0073
+116. bd-small   Total width: 11 Total height: 7   x0: 48 x1: 59 x2: 48 x3: 59 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x460d Tpage: 0x0073
+117. be-small   Total width: 11 Total height: 7   x0: 48 x1: 59 x2: 48 x3: 59 y0: 24 y1: 24 y2: 31 y3: 31   CLUT: 0x464d Tpage: 0x0073

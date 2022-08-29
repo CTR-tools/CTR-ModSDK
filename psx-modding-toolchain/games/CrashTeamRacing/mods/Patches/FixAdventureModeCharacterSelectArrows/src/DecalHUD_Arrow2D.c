@@ -119,7 +119,7 @@ LAB_800232d8:
 	#if BUILD == EurRetail
 		if((rot & 0x800) == 0x800 && !isEurDrawLineStrlenIcon)
 	#else
-		if(rot & 0x800 == 0x800)
+		if((rot & 0x800) == 0x800)
 	#endif
 	{
 		*(int*)&p->r0 = color4 & 0xffffff | code;

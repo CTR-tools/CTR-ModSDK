@@ -4420,7 +4420,7 @@ struct GameTracker
   // 0x02 - sparkle
   // 0x03 - smokering
   // 0x04 - largefont
-  // 0x05 - mediumfont (called "middlefont" in JpnTrial)
+  // 0x05 - middlefont
 
   // 0x06 - ???
 
@@ -4433,8 +4433,8 @@ struct GameTracker
   // 0x0C - trtireAnim
   // 0x0D - mud (in Tiny Arena only)
 
-  // 0x0E - map-hub-02 in UsaRetail, jfontBigAnim in JpnTrial (0x76 icons)
-  // 0x0F - hub-dust-puff in UsaRetail, jfontSmallAnim in JpnTrial (0x76 icons)
+  // 0x0E - map-hub-02 in UsaRetail, jfontBigAnim in Japanese builds (118 icons)
+  // 0x0F - hub-dust-puff in UsaRetail, jfontSmallAnim in Japanese builds (118 icons)
   // 0x10 - hubdustpuff (doesn't exist in 1006?)
 
   // ----------------------------------------------

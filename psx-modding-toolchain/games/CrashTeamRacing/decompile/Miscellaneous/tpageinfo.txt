@@ -1,3 +1,5 @@
+these are tpages of certain icons
+
 0x00e2 (green stoplight with param_6 set to 0, as in normal gameplay)
  00000000 11100010
 15				 0
