@@ -60,3 +60,171 @@ Bit 4 - Y base: 0
 Bits 5-6 - Semi-transparency: 11 (Mode 3, no blending)
 Bits 7-8 - Texpage colors: 10 (15-bit!)
 Bit 11 - Texture disable: 0 (normal)
+
+WHITE MINIMAP TEXPAGES
+
+0x003a (Crash Cove, Dingo Canyon, Cortex Castle)
+ 00000000 00111010
+15               0
+Bits 0-3 - X base: 1010 (640)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x003f (Roo's Tubes)
+ 00000000 00111111
+15               0
+Bits 0-3 - X base: 1111 (960)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x003d (Tiger Temple, Dragon Mines)
+ 00000000 00111101
+15               0
+Bits 0-3 - X base: 1101 (832)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x002b (Coco Park, Tiny Arena)
+ 00000000 00101011
+15               0
+Bits 0-3 - X base: 1011 (704)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x003c (Mystery Caves)
+ 00000000 00111100
+15               0
+Bits 0-3 - X base: 1100 (768)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x003b (Blizzard Bluff, Papu's Pyramid, Polar Pass)
+ 00000000 00111011
+15               0
+Bits 0-3 - X base: 1011 (704)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x002d (Sewer Speedway, Turbo Track)
+ 00000000 00101101
+15               0
+Bits 0-3 - X base: 1101 (832)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x0029 (Hot Air Skyway)
+ 00000000 00101001
+15               0
+Bits 0-3 - X base: 1001 (576)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x003e (N. Gin Labs)
+ 00000000 00111110
+15               0
+Bits 0-3 - X base: 1110 (896)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x0038 (Oxide Station)
+ 00000000 00111000
+15               0
+Bits 0-3 - X base: 1000 (512)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x0039 (Slide Coliseum)
+ 00000000 00111001
+15               0
+Bits 0-3 - X base: 1001 (576)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 01 (Mode 1)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+BLACK AND BLUE MINIMAP TEXPAGES
+
+0x006d (Crash Cove, Coco Park, Hot Air Skyway)
+ 00000000 01101101
+15               0
+Bits 0-3 - X base: 1101 (832)
+Bit 4 - Y base: 0
+Bits 5-6 - Semi-transparency: 11 (Mode 3)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x0078 (Roo's Tubes, Sewer Speedway, Papu's Pyramid)
+ 00000000 01111000
+15               0
+Bits 0-3 - X base: 1000 (512)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 11 (Mode 3)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x0079 (Tiger Temple, Cortex Castle, Turbo Track)
+ 00000000 01111001
+15               0
+Bits 0-3 - X base: 1001 (576)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 11 (Mode 3)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x007e (Mystery Caves, N. Gin Labs)
+ 00000000 01111110
+15               0
+Bits 0-3 - X base: 1110 (896)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 11 (Mode 3)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x007f (Blizzard Bluff, Dingo Canyon, Polar Pass)
+ 00000000 01111111
+15               0
+Bits 0-3 - X base: 1111 (960)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 11 (Mode 3)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x007d (Dragon Mines, Tiny Arena)
+ 00000000 01111101
+15               0
+Bits 0-3 - X base: 1101 (832)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 11 (Mode 3)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+0x007c (Oxide Station, Slide Coliseum)
+ 00000000 01111100
+15               0
+Bits 0-3 - X base: 1100 (768)
+Bit 4 - Y base: 1 (256)
+Bits 5-6 - Semi-transparency: 11 (Mode 3)
+Bits 7-8 - Texpage colors: 0 (4-bit)
+Bit 11 - Texture disable: 0 (normal)
+
+crash cove uses 0x7a for its white minimap without special modification so all of these are maybe just for the black minimap
