@@ -10,4 +10,4 @@ this is because of instance->0x22, we'll fix that later
 
 KNOWN ISSUE: Your non-ghost driver will still be present.
 
-Made by Niko (?)
+Made by Niko.
