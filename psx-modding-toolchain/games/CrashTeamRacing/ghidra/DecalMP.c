@@ -115,7 +115,7 @@ void FUN_80023488(void)
             *(undefined2 *)(piVar3 + 5) = *(undefined2 *)(puVar4 + -0x104);
 			
 			// camera110->0x108-0xEC
-			// camera110->windowStartX
+			// camera110->rect.x
 			// startX, startY, sizeX, sizeY
             *(undefined2 *)(piVar3 + 0xb) = *(undefined2 *)(puVar4 + -0xec);
             *(undefined2 *)((int)piVar3 + 0x2e) = *(undefined2 *)(puVar4 + -0xea);

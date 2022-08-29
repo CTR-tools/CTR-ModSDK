@@ -20693,22 +20693,22 @@ void FUN_80042a8c(void *param_1,int param_2,undefined4 *param_3,short *param_4,u
   // always zero?
   if (param_4 == (short *)0x0)
   {
-	// XXX + camera110->windowStartX
+	// XXX + camera110->rect.x
     local_70._0_2_ = (short)local_70 + *(short *)(param_2 + 0x1c);
 
-	// XXX + camera110->windowStartY
+	// XXX + camera110->rect.y
     local_70._2_2_ = local_70._2_2_ + *(short *)(param_2 + 0x1e);
 
-	// camera110->windowSizeX
+	// camera110->rect.w
     local_6c = *(short *)(param_2 + 0x20);
 
-	// camera110->windowSizeY
+	// camera110->rect.h
     sStack106 = *(short *)(param_2 + 0x22);
 
-	// XXX + camera110->windowStartX
+	// XXX + camera110->rect.x
     local_68 = local_68 + *(short *)(param_2 + 0x1c);
 
-	// XXX + camera110->windowStartY
+	// XXX + camera110->rect.y
     sStack102 = sStack102 + *(short *)(param_2 + 0x1e);
   }
 
@@ -21046,10 +21046,10 @@ void FUN_800430f0(short *param_1)
   sVar3 = param_1[2];
   iVar26 = (int)sVar3;
 
-  // iVar7 = windowSizeX
+  // iVar7 = rect.w
   iVar7 = (int)((uint)(ushort)param_1[0x10] << 0x10) >> 0x10;
   
-  // uVar6 = windowSizeX/2
+  // uVar6 = rect.w/2
   uVar6 = iVar7 - ((int)((uint)(ushort)param_1[0x10] << 0x10) >> 0x1f) >> 1 & 0xffff;
   
   iVar4 = (((int)param_1[0x11] * 0x600000) / 0x360 >> 0xc) << 0x10;
@@ -21070,7 +21070,7 @@ void FUN_800430f0(short *param_1)
   // number of times to loop
   iVar20 = 3;
   
-  // -1 * windowSizeX/2
+  // -1 * rect.w/2
   uVar8 = -iVar7 / 2 & 0xffff;
   
   iVar9 = -iVar9;
@@ -22884,7 +22884,7 @@ void FUN_800453e8(undefined2 *param_1,undefined *param_2,void *param_3,int param
 
 
 // Draw a 2D box made of four rectangles
-// param1 is a pointer to window (camera110) dimensions
+// param1 is a pointer RECT
 // param2 is x offset from edge
 // param3 is y offset from edge
 // DrawBoxOutline_LowLevel
@@ -35669,7 +35669,7 @@ void FUN_8005465c(int param_1)
 						// wumpaHudPosX
 						*(short *)(puVar5 + 0x18) +
 
-						// Camera110 windowStartX
+						// Camera110 rect.x
 						*(short *)(DAT_8008d4b4 + 0x1c)
 				  ) -
                   ((short)*(ushort *)(puVar9 + 1) >> 1);
@@ -35678,7 +35678,7 @@ void FUN_8005465c(int param_1)
 						// wumpaHudPosY
 						*(short *)(puVar5 + 0x1a) +
 
-						// Camera110 windowStartY
+						// Camera110 rect.y
 						*(short *)(DAT_8008d4b4 + 0x1e)
 				  ) -
                   ((short)*(ushort *)((int)puVar9 + 6) >> 1);
@@ -50797,7 +50797,7 @@ int FUN_80064f94(int param_1)
 				(
 					(int)*(short *)(puVar9 + 0x60) <
 
-					// camera110[driverID]->0x20 (windowSizeX)
+					// camera110[driverID]->0x20 (rect.w)
 					*(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0x110 + 0x188) + -0x1e &&
 
 					(
@@ -50808,7 +50808,7 @@ int FUN_80064f94(int param_1)
 								(
 									(int)*(short *)((int)r0 + 2) <
 
-									// camera110[driverID]->0x22 (windowSizeY)
+									// camera110[driverID]->0x22 (rect.h)
 									*(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0x110 + 0x18a) + -0x14
 								)
 							) &&

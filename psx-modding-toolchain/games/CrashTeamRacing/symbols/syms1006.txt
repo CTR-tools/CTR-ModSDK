@@ -341,9 +341,9 @@
 8002dff0 Voiceline_PoolClear
 8002e054 Voiceline_StopAll
 8002e0c4 Voiceline_ToggleEnable
-8002e0f8 Voiceline_TriggerDriver
-8002e444 Voiceline_TriggerBoss
-8002e6b8 Voiceline_WrongWay
+8002e0f8 Voiceline_RequestPlay
+8002e444 Voiceline_StartPlay
+8002e6b8 Voiceline_PerFrame
 8002e868 Voiceline_EmptyFunc
 8002e870 Voiceline_SetDefaults
 

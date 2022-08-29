@@ -2165,7 +2165,7 @@ void FUN_800adc0c(int param_1)
 	  // camera110
       puVar12 = (undefined2 *)(PTR_DAT_8008d2ac + iVar10 * 0x110 + 0x168);
       
-	  // windowStartX
+	  // rect.x
 	  puVar12[0xe] = *psVar11 + *(short *)(iVar6 + 0xa6);
 	  
 	  // window width
@@ -2174,7 +2174,7 @@ void FUN_800adc0c(int param_1)
 	  // window height
       uVar2 = DAT_800b59dc;
 	  
-	  // windowStartY
+	  // rect.y
       puVar12[0xf] = psVar11[1] + *(short *)(iVar6 + 0xa8);
 	  
 	  // windowSize (X and Y)

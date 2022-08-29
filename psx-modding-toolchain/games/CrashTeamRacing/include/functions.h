@@ -47,11 +47,18 @@ void CAM_PerFrame(struct Thread* t);
 
 // unorganized
 
-int AllocPool_Add(struct AllocPool* AP);
-void LIST_AddFront(struct LinkedList* L, struct Item* I);
-struct Item* LIST_RemoveMember(struct LinkedList* L, struct Item* I);
 void AllocPool_Clear(struct AllocPool* AP);
-void LIST_Clear(struct LinkedList* L);
 void AllocPool_Init(struct AllocPool* AP, int maxItems, int itemSize, char* name);
-void* MEMPACK_AllocMem(int allocSize);
+int AllocPool_Add(struct AllocPool* AP);
 void AllocPool_Remove(struct AllocPool* AP, struct Item* item);
+
+void LIST_Clear(struct LinkedList* L);
+void LIST_AddFront(struct LinkedList* L, struct Item* I);
+void LIST_AddBack(struct LinkedList* L, struct Item* I);
+// two more
+struct Item* LIST_RemoveMember(struct LinkedList* L, struct Item* I);
+struct Item* LIST_RemoveFront(struct LinkedList* L);
+struct Item* LIST_RemoveBack(struct LinkedList* L);
+
+void* MEMPACK_AllocMem(int allocSize, char* name);
+void* MEMPACK_ReallocMem(int allocSize);

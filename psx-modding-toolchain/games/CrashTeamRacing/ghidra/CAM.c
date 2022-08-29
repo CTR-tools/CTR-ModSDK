@@ -54,7 +54,7 @@ void FUN_800175cc(short *param_1,int param_2,int param_3,uint *param_4)
     iVar8 = iVar8 + 0x3ff;
   }
 
-  // windowSizeY
+  // rect.h
   iVar2 = (uint)*(ushort *)(param_2 + 0x22) << 0x10;
   DAT_1f800014 = (iVar8 >> 10) + ((iVar2 >> 0x10) - (iVar2 >> 0x1f) >> 1);
 
@@ -68,11 +68,11 @@ void FUN_800175cc(short *param_1,int param_2,int param_3,uint *param_4)
     iVar2 = iVar2 + 0x3ff;
   }
 
-  // windowSizeY
+  // rect.h
   iVar3 = (uint)*(ushort *)(param_2 + 0x22) << 0x10;
   DAT_1f800018 = (iVar2 >> 10) + ((iVar3 >> 0x10) - (iVar3 >> 0x1f) >> 1);
 
-  // windowSizeX
+  // rect.w
   uVar14 = SEXT24(*(short *)(param_2 + 0x20));
   uVar13 = uVar14 & 0xffff;
 

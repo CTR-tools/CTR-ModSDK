@@ -2,8 +2,6 @@
 
 void LOAD_StringToUpper(u_char *param_1);
 void CDSYS_SetMode_StreamData();
-void* MEMPACK_AllocMem(int allocSize, char *fileString);
-void* MEMPACK_ReallocMem(int allocSize);
 
 // Read file on disc, store in buffer
 u_long * DECOMP_LOAD_ReadFile_NoCallback(char *fileString, u_long *bufAddress, u_long *fileSize)

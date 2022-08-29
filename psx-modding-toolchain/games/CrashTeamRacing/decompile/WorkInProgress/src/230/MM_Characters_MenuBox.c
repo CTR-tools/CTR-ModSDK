@@ -35,17 +35,23 @@ void MM_Characters_MenuBox()
 	undefined2 local_7c;
 	undefined2 local_7a;
 	undefined auStack120 [8];
-	u_char local_70;
-	u_char local_6f;
-	u_char local_6e;
+	
+	// really just "int"
+	u_char colorR;
+	u_char colorG;
+	u_char colorB;
+	u_char colorA;
+	
 	undefined2 local_68;
 	u_short local_66;
 	undefined2 local_64;
 	undefined2 local_62;
+	
 	undefined4 local_60;
 	undefined4 local_5c;
 	undefined4 local_58;
 	undefined4 local_54;
+	
 	short local_50;
 	short *local_30;
 
@@ -646,15 +652,16 @@ void MM_Characters_MenuBox()
 			{
 				MM_Characters_AnimateColors
 				(
-					&local_70,uVar25,
+					&colorR,uVar25,
 					
 					// flags of which characters are selected
 					(int)(short)(sdata.characterSelectFlags & (u_short)(1 << (uVar25 & 0x1f)))
 				);
 					
-				local_70 = (u_char)((int)((u_int)local_70 << 2) / 5);
-				local_6f = (u_char)((int)((u_int)local_6f << 2) / 5);
-				local_6e = (u_char)((int)((u_int)local_6e << 2) / 5);
+				colorR = (u_char)((int)((u_int)colorR << 2) / 5);
+				colorG = (u_char)((int)((u_int)colorG << 2) / 5);
+				colorB = (u_char)((int)((u_int)colorB << 2) / 5);
+				
 				iVar8 = (int)sVar6 * 10 + DAT_800b5a3c;
 				local_80 = *(short *)(iVar8 + 6) + *psVar22 + 3;
 				local_7c = 0x2e;
@@ -664,7 +671,7 @@ void MM_Characters_MenuBox()
 				// this draws the flashing blue square that appears when you highlight a character in the character select screen
 				CTR_Box_DrawSolidBox
 				(
-					&local_80, &local_70,
+					&local_80, &colorR,
 					*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0),
 										 
 					// pointer to PrimMem struct

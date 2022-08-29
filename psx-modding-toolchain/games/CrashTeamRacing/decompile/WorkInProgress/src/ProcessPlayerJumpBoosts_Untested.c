@@ -1,7 +1,7 @@
 #include <common.h>
 
 void Turbo_Increment(int param_1, int param_2, u_int param_3, int param_4);
-void Voiceline_TriggerDriver(u_int param_1, u_int param_2, u_int param_3);
+void Voiceline_RequestPlay(u_int param_1, u_int param_2, u_int param_3);
 
 void DECOMP_ProcessPlayerJumpBoosts(struct Driver* driver)
 {
@@ -100,7 +100,7 @@ void DECOMP_ProcessPlayerJumpBoosts(struct Driver* driver)
 			//Jump meter related operation
 
 			// Make driver talk
-			Voiceline_TriggerDriver(7, (int)data.characterIDs[driver->driverID], 0x10);
+			Voiceline_RequestPlay(7, (int)data.characterIDs[driver->driverID], 0x10);
 		}
 
 		//Jump meter = 0x3FC
