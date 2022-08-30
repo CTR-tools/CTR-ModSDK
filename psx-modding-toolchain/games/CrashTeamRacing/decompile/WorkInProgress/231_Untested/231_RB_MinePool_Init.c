@@ -1,5 +1,9 @@
 #include <common.h>
 
+// LinkedList, and MinePool data,
+// comes between last RB Weapon func (ClosestTracker),
+// and first RB Hazard func (Baron_PerFrame)
+
 void DECOMP_RB_MinePool_Init(void)
 {
 	int i;
