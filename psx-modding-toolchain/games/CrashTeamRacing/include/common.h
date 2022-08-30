@@ -2416,6 +2416,18 @@ struct Shield
 	u_short shieldshot;
 };
 
+struct MineWeapon;
+
+struct WeaponSlot231
+{
+	// 0x0
+	struct WeaponSlot231* next;
+	struct WeaponSlot231* prev;
+	
+	// 0x8
+	struct MineWeapon* mineWeapon;
+};
+
 // Tnt, Nitro, Beaker
 struct MineWeapon
 {
@@ -2441,14 +2453,16 @@ struct MineWeapon
 	short posY;
 
 	// 0x14
-	short unk4; // causes explosion != 0???
+	// causes explosion if != 0,
+	// this is how mine pool destroys oldest mine
+	short boolDestroyed;
 
 	// 0x16
 	// animation frame (on head)
 	short numFramesOnHead;
 
 	// 0x18
-	int unk5;
+	struct WeaponSlot231* weaponSlot231;
 
 	// 0x1C
 	// relative to driver
