@@ -527,7 +527,7 @@ void MM_Characters_MenuBox()
 			}
 		
 			// DrawBoxOutline_HighLevel (solid)
-			DrawBoxOutline_HighLevel(&local_80,puVar12,0,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
+			DrawBoxOutline_HighLevel(&local_80,puVar12,0,sdata.gGT->backBuffer->otMem.startPlusFour);
 			
 		// increment loop counter
 		iu = iu + 1;
@@ -672,7 +672,7 @@ void MM_Characters_MenuBox()
 				CTR_Box_DrawSolidBox
 				(
 					&local_80, &colorR,
-					*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0),
+					sdata.gGT->backBuffer->otMem.startPlusFour,
 										 
 					// pointer to PrimMem struct
 					*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74
@@ -761,7 +761,7 @@ void MM_Characters_MenuBox()
 			local_66 = *(short *)(iVar8 + 8) + *psVar18;
 		
 			// Draw 2D Menu rectangle background
-			DrawTextBackground(&local_68,0,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
+			DrawTextBackground(&local_68, 0, sdata.gGT->backBuffer->otMem.startPlusFour);
 		}
 	
 		// increment loop counter
@@ -789,15 +789,15 @@ void MM_Characters_MenuBox()
 			iVar8 = uVar25 * 10 + DAT_800b5a3c;
 			
 			// store window width and height in one 4-byte variable
-			local_5c = CONCAT22(DAT_800b59dc,DAT_800b5a30);
+			local_5c = CONCAT22(DAT_800b59dc, DAT_800b5a30);
 		
 			local_60 = CONCAT22(*(short *)(iVar8 + 0xa8) + psVar22[1], *(short *)(iVar8 + 0xa6) + *psVar22);
 			
 			// MM_Characters_AnimateColors
-			MM_Characters_AnimateColors(&local_68,uVar25, ((int)(short)sdata.characterSelectFlags >> (uVar25 & 0x1f) ^ 1U) & 1);
+			MM_Characters_AnimateColors(&local_68, uVar25, ((int)(short)sdata.characterSelectFlags >> (uVar25 & 0x1f) ^ 1U) & 1);
 			
 			// DrawBoxOutline_HighLevel (solid)
-			DrawBoxOutline_HighLevel(&local_60,&local_68,0,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
+			DrawBoxOutline_HighLevel(&local_60, &local_68, 0, sdata.gGT->backBuffer->otMem.startPlusFour);
 			
 			iVar8 = 0;
 		
@@ -814,7 +814,7 @@ void MM_Characters_MenuBox()
 					local_66 = local_66 & 0xff00 | (u_short)(u_char)((int)((u_int)(u_char)local_66 << 2) / 5);
 					
 					// DrawBoxOutline_HighLevel (solid)
-					DrawBoxOutline_HighLevel(&local_58, &local_68, 0, *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
+					DrawBoxOutline_HighLevel(&local_58, &local_68, 0, sdata.gGT->backBuffer->otMem.startPlusFour);
 					
 					iVar8 = iVar8 + 1;
 				} while (iVar8 * 0x10000 >> 0x10 < 2);
@@ -822,17 +822,14 @@ void MM_Characters_MenuBox()
 			psVar22 = psVar22 + 2;
 		
 			// Draw 2D Menu rectangle background
-			DrawTextBackground(&local_60, 9, *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0) + 0xc);
+			DrawTextBackground(&local_60, 9, ((struct OTMem*)sdata.gGT->backBuffer->otMem.startPlusFour)->curr);
 			
 			local_60 = 0;
 		
 			BackgroundBlueRect
 			(
 				&local_60, &DAT_800b5398,
-				*(int *)(PTR_DAT_8008d2ac + (int)(short)i * 0x110 + 0x25c) + 0xffc,
-					 
-				// pointer to PrimMem struct
-				*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74
+				sdata.gGT->camera110[i].ptrOT + 0xffc, sdata.gGT->backBuffer->primMem
 			);
 					 
 			// increment loop counter
