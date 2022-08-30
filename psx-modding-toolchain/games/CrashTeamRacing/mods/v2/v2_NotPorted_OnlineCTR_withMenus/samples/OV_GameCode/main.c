@@ -324,8 +324,11 @@ void MenuBoxMain(struct MenuBox* b)
 			semiGlobal.Loading.OnComplete.AddBitsConfig0 = 0x400000;
 		}
 		
-		// load new LEV
-		Level_RequestNewLEV(levelID);
+		// load new LEV without checkered flag,
+		// warning, this will not unpause game for you
+		sdata.gGT->levelID = levelID;
+		sdata.gGT->gameMode1 |= 0x40000000;
+		*(int*)0x8008d0f8 = 0; // loading stage
 		
 		// next state
 		NextInit = MINIMIZE;

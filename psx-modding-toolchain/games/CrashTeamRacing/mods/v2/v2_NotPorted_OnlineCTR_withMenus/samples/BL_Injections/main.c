@@ -68,58 +68,15 @@ void entry()
 	// Disable SCEA page
 	*(unsigned int*)0x8003c8cc = 0;
 	
-	// Disable set intro song
-	*(unsigned int*)0x8003c8f4 = 0;
-	
-	// Disable "Start Your Engines"
-	*(unsigned int*)0x8003c928 = 0;
+	// Disable intro song, "start your engines", 
+	// and IRQ waiting: JMP to 8003c960,
+	*(unsigned int*)0x8003c8fc = 0x0800F258;
 	
 	// Disable copyright page
 	*(unsigned int*)0x800336f0 = 0;
 	
-
-
-
-
-
-	// ======== Checkered Flag =========
-	
-	// Works on 1st load, crashes on 2nd load.
-	// Also, setting to #if 0, makes testing
-	// sync load easier to see (frame stutter)
-	
-	// If you pick N Gin on Tiger Temple,
-	// let race start, and then pick Crash Bandicoot
-	// on Dingo Canyon, it will not freeze the game.
-	// Why?
-	
-	#if 0
-	
-	// dont wait for checkered flag to cover
-	// screen, just start loading immediately
-	*(unsigned int*)0x8003cbd0 = 0;
-	
-	// disable to prevent checkered flag from
-	// ever drawing. Works in OnlineCTR, will
-	// still draw in retail CTR due to Main Menu
-	*(unsigned int*)0x80043fb0 = 0x3E00008; // jr $ra
-	*(unsigned int*)0x80043fb4 = 0x0; // nop	
-	
-	#else if 0
-
-	// since removing flag breaks stuff,
-	// skip transitions instead
-	
-	// nop bne and jmp (wont work)
-	// transition off-screen
-	*(unsigned int*)0x8004420c = 0;
-	*(unsigned int*)0x80044240 = 0;
-	
-	// nop beq (works)
-	// transition on-screen
-	*(unsigned int*)0x8004410c = 0;
-	
-	#endif
+	// skip rendering frame while loading, removes vsync overhead
+	// 0x8003cca0 to "bne v0, v1, 0x8003cf3c"
 	
 	
 	

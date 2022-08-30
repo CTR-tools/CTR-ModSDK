@@ -10859,13 +10859,13 @@ void FUN_80039a44(int param_1)
 
 	// if you are not showing a ghost during a race
     if (DAT_8008d958 == 0) {
-      DAT_8008d0f8 = 0xfffffffb;
+      DAT_8008d0f8 = -5;
       return;
     }
 
 	// If the ghost playing buffer is nullptr
     if (DAT_8008d754 == 0) {
-      DAT_8008d0f8 = 0xfffffffb;
+      DAT_8008d0f8 = -5;
       return;
     }
 
@@ -10876,7 +10876,7 @@ void FUN_80039a44(int param_1)
 	// header of the ghost that you will see in the race
     DAT_80086e86 = *(undefined2 *)(DAT_8008d754 + 6);
 
-	DAT_8008d0f8 = 0xfffffffb;
+	DAT_8008d0f8 = -5;
     return;
   case 1:
 
@@ -14244,12 +14244,14 @@ LAB_8003ca68:
 		// if something is being loaded
         else
 		{
-		  // if loading lev (specific meaning)?
+		  // if not waiting for checkered flag to cover screen
           if (iVar8 != -4)
 		  {
+			// if loading VLC
             if (iVar8 == -6) 
 			{
-			  // if VLC is not loaded
+			  // if VLC is not loaded, quit.
+			  // we know when it's done from a load callback
               if (DAT_8008d400 != 1) break;
             }
 			
@@ -14257,7 +14259,14 @@ LAB_8003ca68:
 			{
 			  // DAT_8008d86c is the Pointer to "cd position of bigfile"
               DAT_8008d0f8 = FUN_80033610(puVar11,iVar8,DAT_8008d86c);
+			  
+			  // if did not just complete loading stage 9, skip logic to 
+			  // load VLC, skip logic to end loading, skip logic if "if == -4",
+			  // goto rendering. We can skip rendering by changing BNE on 
+			  // 0x8003cca0 to "bne v0, v1, 8003cf3c"
               if (DAT_8008d0f8 != -2) goto LAB_8003ccf8;
+
+			  // if stage 9 of loading was just finished
 
               if (
 					// If Level ID is 39
@@ -14276,7 +14285,11 @@ LAB_8003ca68:
 				// LoadVlcTable
                 FUN_8003c518();
 
+				// start loading VLC (scroll up to iVar8 == -6)
                 DAT_8008d0f8 = -6;
+				
+				// go back to start of main() loop
+				// "j LAB_8003cf3c"
                 break;
               }
             }
@@ -14288,9 +14301,15 @@ LAB_8003ca68:
 			// as well as initialize all pools
             DAT_8008d0f4 = 1;
 
+			// remove "Loading..." flag from gGT
 			*puVar11 = *puVar11 & 0xbfffffff;
+			
+			// go back to start of main() loop,
+			// "j LAB_8003cf3c"
             break;
           }
+		  
+		  // if == -4, if waiting for checkered flag
 
 		  // CheckeredFlag_IsFullyOnScreen
           iVar8 = FUN_80043f1c();
@@ -14598,8 +14617,8 @@ void FUN_8003cfc0(short param_1)
   // CheckeredFlag_ResetTextAnim
   FUN_80044290();
 
-  // loading stage
-  DAT_8008d0f8 = 0xfffffffc;
+  // loading stage = -4 (waiting for checkered flag)
+  DAT_8008d0f8 = -4;
 
   // set LEV to load
   _DAT_8008d0fc = (int)param_1;
@@ -36991,8 +37010,7 @@ void FUN_80055c90(int param_1)
               FUN_80043fb0(1);
             }
 
-			// -5
-            DAT_8008d0f8 = 0xfffffffb;
+            DAT_8008d0f8 = -5;
 
 			// howl_StopAudio
 			// clear backup,
