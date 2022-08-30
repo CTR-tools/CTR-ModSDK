@@ -2295,13 +2295,13 @@ struct Title
 struct TrackerWeapon
 {
 	// 0x0
-	struct Driver* driverChasing;
+	struct Driver* driverTarget; // being chased
 
 	// 0x4
-	struct Driver* driverWhoShotMe;
+	struct Driver* driverParent; // who shot me
 
 	// 0x8
-	struct Instance* instWhoShotMe;
+	struct Instance* instParent; // of driver who shot me
 
 	// 0xC
 	void* ptrParticle;
@@ -2432,10 +2432,10 @@ struct WeaponSlot231
 struct MineWeapon
 {
 	// 0x0
-	struct Driver* driverWhoHitMe;
+	struct Driver* driverTarget; // who hit me
 
 	// 0x4
-	struct Instance* driverWhoPlacedMe;
+	struct Instance* instParent; // of driver who placed me
 
 	// 0x8
 	int unk1;
