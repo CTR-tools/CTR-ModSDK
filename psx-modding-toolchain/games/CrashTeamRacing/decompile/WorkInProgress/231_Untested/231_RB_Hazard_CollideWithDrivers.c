@@ -1,6 +1,9 @@
 #include <common.h>
 
-struct Instance* RB_Hazard_CollideWithDrivers(struct Instance* weaponInst, bool canHitParent, int hitRadius, struct Instance* mineDriverInst)
+struct Instance* RB_Hazard_CollideWithDrivers(
+	struct Instance* weaponInst, 
+	bool canHitParent, int hitRadius, struct Instance* mineDriverInst
+)
 {
 	int i;
 	int j;
