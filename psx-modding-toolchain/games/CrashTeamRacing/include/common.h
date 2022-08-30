@@ -648,8 +648,8 @@ struct GameOptions
 
 
 	// 8008fb9c
-	// backup of gameMode flag
-	int gameMode_0xf00;
+	// backup of gameMode1 flag
+	int gameMode1_0xf00;
 
 #if BUILD >= UsaRetail
 	// 8008fba0
@@ -2104,7 +2104,7 @@ struct Driver
 	short driverRankItemValue;
 
 	// 0x50C
-	char unk_50C_514[8];
+	char numTimesAttackingPlayer[8];
 
 	// 0x514
 	int timeElapsedInRace;
@@ -2167,22 +2167,28 @@ struct Driver
 	char numTimesUsingClock;
 
 	// 0x559
-	// one-byte quip
-	char unk559;
+	char numTimesAttacking;
 
 	// 0x55a
 	short unk55a;
 
 	// 0x55c
 	int numMissilesLaunched;
+	
+	// 0x560
+	char numTimesAttackedByPlayer[8];
+
+	// 0x568
+	char numTimesHitWeaponBox;
 
 	// 0x569
-	// amount of wumpa for AI,
-	// can go less than zero and more than 100,
-	// probably just for debugging
+	char numTimesWumpa;
 
 	// 0x56a
-	// mask grab count
+	char numTimesMaskGrab;
+	
+	// 0x56b
+	char unk_filler_0x56b;
 
 	// 0x56c + 0x570
 	// end-of-race comments
@@ -2410,6 +2416,18 @@ struct Shield
 	u_short shieldshot;
 };
 
+struct MineWeapon;
+
+struct WeaponSlot231
+{
+	// 0x0
+	struct WeaponSlot231* next;
+	struct WeaponSlot231* prev;
+	
+	// 0x8
+	struct MineWeapon* mineWeapon;
+};
+
 // Tnt, Nitro, Beaker
 struct MineWeapon
 {
@@ -2435,14 +2453,16 @@ struct MineWeapon
 	short posY;
 
 	// 0x14
-	short unk4; // causes explosion != 0???
+	// causes explosion if != 0,
+	// this is how mine pool destroys oldest mine
+	short boolDestroyed;
 
 	// 0x16
 	// animation frame (on head)
 	short numFramesOnHead;
 
 	// 0x18
-	int unk5;
+	struct WeaponSlot231* weaponSlot231;
 
 	// 0x1C
 	// relative to driver
@@ -3621,18 +3641,35 @@ struct Level
 	void* visMem;
 };
 
-// yeah I'm gonna have this here, why not
-enum gameModes {
+enum GameMode1 
+{
+	PAUSE_1				= 0x1,
+	PAUSE_2				= 0x2,	// unused, debug
+	PAUSE_3				= 0x4,	// unused, debug
+	PAUSE_4				= 0x8,	// unused, debug
+	PAUSE_THREADS		= 0x10,
     BATTLE_MODE         = 0x20,
     RACE_INTRO_CUTSCENE = 0x40,
+	// 0x80?
+	P1_VIBRATE			= 0x100,
+	P2_VIBRATE			= 0x200,
+	P3_VIBRATE			= 0x400,
+	P4_VIBRATE			= 0x800,
     WARPBALL_HELD       = 0x1000,
     MAIN_MENU           = 0x2000,
+	POINT_LIMIT			= 0x4000,
+	LIFE_LIMIT			= 0x8000,
+	TIME_LIMIT			= 0x10000,
     TIME_TRIAL          = 0x20000,
+	// 0x40000?
     ADVENTURE_MODE      = 0x80000,
     ADVENTURE_HUB       = 0x100000,
     RACE_OUTRO_CUTSCENE = 0x200000,
     ARCADE_MODE         = 0x400000,
     ROLLING_ITEM        = 0x800000,
+	AKU_SONG			= 0x1000000,
+	AKU_SONG			= 0x2000000,
+	RELIC_RACE			= 0x4000000,
     CRYSTAL_CHALLENGE   = 0x8000000,
     ADVENTURE_CUP       = 0x10000000,
     GAME_INTRO          = 0x20000000,
@@ -3640,37 +3677,52 @@ enum gameModes {
     ADVENTURE_BOSS      = 0x80000000
 };
 
+enum GameMode2
+{
+  // & 1 - spawn outside boss door
+  // & 4 - can't move (see Player_Driving_Input)
+  // & 8 - token race
+  // & 0x10 - Arcade cup
+  // & 0x20 - lev swap
+  // & 0x80 - CREDITS
+  // & 0x100 - ENABLE_LEV_INSTANCES
+	
+	CHEAT_WUMPA 	= 0x200,
+	CHEAT_MASK 		= 0x400,
+	CHEAT_TURBO		= 0x800,
+	
+  // & 0x1000 - FIRST_TIME_WIN_CUP
+  // & 0x2000 - FIRST_TIME_UNLOCK_BATTLE_MAP
+  // & 0x4000 - can't move (see Player_Driving_Input)
+  
+	CHEAT_INVISIBLE	= 0x8000,
+	CHEAT_ENGINE	= 0x10000,
+	// & 0x20000 - GARAGE_OSK
+	CHEAT_ADV		= 0x40000,
+	CHEAT_ICY		= 0x80000,
+	CHEAT_TURBOPAD	= 0x100000,
+	CHEAT_SUPERHARD	= 0x200000,
+	CHEAT_BOMBS		= 0x400000,
+	CHEAT_ONELAP	= 0x800000,
+	
+  // & 0x1000000 - INC_RELIC
+  // & 0x2000000 - INC_KEY
+  // & 0x4000000 - INC_TROPHY
+  
+	CHEAT_TURBOCOUNT = 0x8000000
+};
+
 // real ND name
 struct GameTracker
 {
-  //        0x0
-  //       0x20 - Battle Mode
-  //       0x40 - Race intro cutscene
-  //     0x1000 - Warpball held/instanced
-  //     0x2000 - Main Menu
-  //    0x20000 - Time Trial
-  //    0x80000 - Adventure Mode
-  //   0x100000 - Adventure hub
-  //   0x200000 - Race outro cutscene
-  //   0x400000 - Arcade Mode
-  //   0x800000 - Rolling item
-  //  0x8000000 - Crystal Challenge
-  // 0x10000000 - Adventure cup
-  // 0x20000000 - Game Intro
-  // 0x40000000 - Loading
-  // 0x80000000 - Adventure Boss
-  int gameMode;
+  // 0x0
+  int gameMode1;
 
   // 0x4
-  int cheats;
+  int gameMode1_prevFrame;
 
   // 0x8
-  // & 1 - spawn outside boss door
-  // & 4 - can't move (see Player_Driving_Input)
-  // & 0x10 - Arcade cup (yes, Arcade, in "advFlags")
-  // & 0x20 - lev swap
-  // & 0x4000 - can't move (see Player_Driving_Input)
-  int advFlags;
+  int gameMode2;
 
   // 0xC
   int swapchainIndex; // 0 or 1
@@ -6477,7 +6529,7 @@ struct Data
 		// most pointers go to 231 overlay
 		char* name;
 
-		// used by seal, can be disabled with gameMode flag
+		// used by seal, can be disabled with gameMode1 flag
 		// called with pointer to instance, that's it
 		void* funcOnInit;
 
@@ -7048,7 +7100,7 @@ struct Data
 	// related to namco controller
 
 	// 8008430c -- UsaRetail
-	int gGT_gameModeFlags_Vibration_PerPlayer[4];
+	int gGT_gameMode1_Vibration_PerPlayer[4];
 
 	// 8008431c
 	// Controller 1, 2, 1A, 1B, 1C, 1D

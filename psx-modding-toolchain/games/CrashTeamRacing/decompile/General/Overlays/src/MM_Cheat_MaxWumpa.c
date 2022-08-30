@@ -5,7 +5,7 @@ void OtherFX_Play(int sfxID, int flag);
 void MM_Cheat_MaxWumpa()
 {
 	// enable infinite wumpa seeds cheat
-	sdata.gGT->advFlags |= 0x200;
+	sdata.gGT->gameMode2 |= 0x200;
 	
 	// play cheat sound
 	OtherFX_Play(0x67, 1);

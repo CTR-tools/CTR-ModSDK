@@ -428,9 +428,9 @@ void RunUpdateHook()
 {
     char kartState;
     int i;
-	int gameMode;
+	int gameMode1;
 
-	gameMode = sdata.gameTracker.gameMode;
+	gameMode1 = sdata.gameTracker.gameMode1;
 
 	if (sdata.gameTracker.trafficLightsTimer > 0)
 	{
@@ -438,7 +438,7 @@ void RunUpdateHook()
 		// sdata.gGT->cameraDC[0].flags |= 9;
 
 		// skip race intros
-		sdata.gGT->gameMode &= 0xffffffbf;
+		sdata.gGT->gameMode1 &= 0xffffffbf;
 		sdata.gGT->hudFlags |= 0x21;
 	}
 
@@ -450,7 +450,7 @@ void RunUpdateHook()
 
         kartState = sdata.gameTracker.drivers[0]->kartState;
         // if you're not loading, end of race, race countdown, adv mask speech or adv warping
-        if ((!igt->stopIncrementing) && (!((gameMode & (LOADING | RACE_OUTRO_CUTSCENE)) || (kartState == 4) || (kartState == 10) || (kartState == 11))))
+        if ((!igt->stopIncrementing) && (!((gameMode1 & (LOADING | RACE_OUTRO_CUTSCENE)) || (kartState == 4) || (kartState == 10) || (kartState == 11))))
             IncrementIGT();
     }
     else
@@ -491,7 +491,7 @@ void RunUpdateHook()
         }
 
 	// if game is not loading
-    if (!(gameMode & LOADING))
+    if (!(gameMode1 & LOADING))
     {
 		// that check ^^ is useless because
 		// the hook doesn't run during loading.
@@ -552,7 +552,7 @@ void RunInitHook()
 	int size222;
 
 	// Skip flag that doesn't let you move when teleporting to a hub door
-	sdata.gGT->advFlags &= 0xffffbfff;
+	sdata.gGT->gameMode2 &= 0xffffbfff;
 
 	// if bottom of AA_EndEvent_DrawMenu is JR RA,
 	// (also, if this is the right overlay)

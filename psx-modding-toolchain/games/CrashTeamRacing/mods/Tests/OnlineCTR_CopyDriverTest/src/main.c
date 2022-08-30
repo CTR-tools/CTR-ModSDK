@@ -27,10 +27,10 @@ void RunUpdateHook()
 	int buttons = sdata.gamepadSystem.controller[0].buttonsHeldCurrFrame;
 
 	// no time trial, just spawn player on their own
-	if(sdata.gGT->gameMode & TIME_TRIAL)
+	if(sdata.gGT->gameMode1 & TIME_TRIAL)
 	{
-		sdata.gGT->gameMode =
-		sdata.gGT->gameMode & 0xfffdffff;
+		sdata.gGT->gameMode1 =
+		sdata.gGT->gameMode1 & 0xfffdffff;
 	}
 
 	if(buttons & BTN_R2)

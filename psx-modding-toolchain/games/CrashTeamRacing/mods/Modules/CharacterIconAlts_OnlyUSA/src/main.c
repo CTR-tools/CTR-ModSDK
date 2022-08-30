@@ -308,7 +308,7 @@ void ChangeCharacterIcon(char character, int buttonTap)
 //Hooked at the very end of BOTS_UpdateGlobals, which makes this function run every frame
 void MainMenuLoop()
 {
-	if(sdata.gGT->gameMode != MAIN_MENU)
+	if(sdata.gGT->gameMode1 != MAIN_MENU)
 	{
 		wasLoadedYet = 0;
 		return;

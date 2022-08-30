@@ -28,10 +28,10 @@ void ChRand_SetCharacters()
 	// if in a cup
 	if
 	(
-		(sdata.gGT->gameMode & ADVENTURE_CUP) ||
+		(sdata.gGT->gameMode1 & ADVENTURE_CUP) ||
 
-		// arcade cup (need to change "advFlags" name)
-		((sdata.gGT->advFlags & 0x10) != 0)
+		// arcade cup (need to change "gameMode2" name)
+		((sdata.gGT->gameMode2 & 0x10) != 0)
 	)
 	{
 		// if this is not the first track of a cup,

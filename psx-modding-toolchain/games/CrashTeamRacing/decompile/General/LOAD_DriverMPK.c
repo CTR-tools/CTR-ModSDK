@@ -7,7 +7,7 @@ void LOAD_Robots2P(int bigfile, int p1, int p2, int callback);
 void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 {
 	int i;
-	int gameMode;
+	int gameMode1;
 
 	#if BUILD == SepReview
 	int base = 0x110;
@@ -15,7 +15,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	int base = 0xf2;
 	#endif
 
-	gameMode = sdata.gGT->gameMode;
+	gameMode1 = sdata.gGT->gameMode1;
 
 	// 3P/4P
 	if(levelLOD - 3U < 2)
@@ -40,11 +40,11 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	if(
 		// 2 is for cutscene
 		// 1 is for If you're in Adventure Arena
-		((gameMode & 0x20102000) != 0)
+		((gameMode1 & 0x20102000) != 0)
 		||
 
 		// credits
-		((sdata.gGT->advFlags & 0x80) != 0)
+		((sdata.gGT->gameMode2 & 0x80) != 0)
 	  )
 	{
 		// adv mpk
@@ -56,7 +56,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	}
 
 	// if loading into time trial level, or boss race
-	if((sdata.gGT->gameMode & 0x84020000) != 0)
+	if((sdata.gGT->gameMode1 & 0x84020000) != 0)
 	{
 		// high lod model
 		LOAD_AppendQueue(param_1,2,
@@ -73,7 +73,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 
 	if(
 			// If you are in Adventure cup
-			((gameMode & 0x10000000) != 0) &&
+			((gameMode1 & 0x10000000) != 0) &&
 
 			// purple gem cup
 			(sdata.gGT->cup.cupID == 4)

@@ -26,7 +26,7 @@ void DECOMP_DrawCountdownClock(short posX, short posY, short fontType)
 		gGT = sdata.gGT;
 
 		// If you're not in End-Of-Race menu
-		if ((sdata.gGT->gameMode & 0x200000) == 0)
+		if ((sdata.gGT->gameMode1 & 0x200000) == 0)
 		{
 			// dont check if numPlayers != 0,
 			// when would that ever be false

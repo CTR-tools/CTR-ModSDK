@@ -19,7 +19,7 @@ void CustomSplit()
     if (
 		(
 			// If you're in Battle Mode
-			(sdata.gGT->gameMode & BATTLE_MODE) &&
+			(sdata.gGT->gameMode1 & BATTLE_MODE) &&
 
 			// if number of screens is more than 2
 			(2 < numPlayers)

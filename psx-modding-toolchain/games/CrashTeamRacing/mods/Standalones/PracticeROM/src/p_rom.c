@@ -320,7 +320,7 @@ void RunUpdateHook()
 	DrawLag();
 
 	// if the player is menuing
-	if (gp->gameTracker.gameMode & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
+	if (gp->gameTracker.gameMode1 & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
 	{
 		ResetControlVariables();
 		return;
@@ -329,7 +329,7 @@ void RunUpdateHook()
 	countdown = gp->trafficLightsTimer_prevFrame;
 
 	// if you're in time trial mode
-	if (gp->gameTracker.gameMode == TIME_TRIAL)
+	if (gp->gameTracker.gameMode1 == TIME_TRIAL)
 	{
 		// Disable mask, since loading a state with a mask can give you the powerup in time trial
 		DisableMask();
@@ -392,7 +392,7 @@ void RunUpdateHook()
 		{
 			// if the countdown to the race is over OR
 			// you're in the adventure hub
-			if ((countdown == -0x3C0) || (gp->gameTracker.gameMode == ADVENTURE_HUB))
+			if ((countdown == -0x3C0) || (gp->gameTracker.gameMode1 == ADVENTURE_HUB))
 			{
 				gp->gameTracker.drivers[0]->reserves = saffi;
 				SetSlotString(s_infiniteReserves, 0);

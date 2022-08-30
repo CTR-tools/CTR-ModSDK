@@ -237,14 +237,14 @@ void FUN_800abbb4(int param_1,int param_2)
       return;
     }
 	
-	// if this is not a point-limit game
+	// if this is a time-limit game
     if ((*(uint *)PTR_DAT_8008d2ac & 0x10000) != 0) 
 	{
 	  // quit
       return;
     }
 	
-	// if this is a point-limit game,
+	// if this is not a time-limit game,
 	// and the last kill has been made,
 	// then end the game
 	
@@ -301,8 +301,7 @@ void FUN_800abefc(int param_1,int param_2)
   {
     
 	if (
-			// if wumpa added is not zero,
-			// we already know it's more than -1 or we wouldn't be here
+			// if wumpa is increasing
 			(0 < param_2) && 
 			
 			// if this driver is not an AI
@@ -319,7 +318,7 @@ void FUN_800abefc(int param_1,int param_2)
 	// store the new value into current number of wumpa fruit
     *(undefined *)(param_1 + 0x30) = (char)param_2;
 	
-	// If you're trying to somehow add 80 wumpa,
+	// If total wumpa is negative
     if (param_2 * 0x1000000 < 0) 
 	{
 	  // reset wumpa fruit to zero
@@ -428,24 +427,28 @@ void FUN_800abfec(void)
 }
 
 // RB_MinePool_Remove
+// param_1 = struct MineWeapon
 void FUN_800ac0e4(int param_1)
-
 {
   if (*(int *)(param_1 + 0x18) != 0) 
   {
 	// LIST_RemoveMember taken list
-    FUN_800317e4(&DAT_800b2e9c);
+    FUN_800317e4(&DAT_800b2e9c,*(undefined4 *)(param_1 + 0x18));
 	
 	// LIST_AddFront free list
     FUN_80031744(&DAT_800b2ea8,*(undefined4 *)(param_1 + 0x18));
     
+	// MineWeapon is now destroyed
 	*(undefined2 *)(param_1 + 0x14) = 1;
+	
+	// MineWeapon has no WeaponSlot231 pointer anymore
     *(undefined4 *)(param_1 + 0x18) = 0;
   }
   return;
 }
 
 // RB_MinePool_Add
+// param_1 = struct MineWeapon
 void FUN_800ac13c(int param_1)
 
 {
@@ -458,13 +461,18 @@ void FUN_800ac13c(int param_1)
 	// remove oldest mine
 	
 	// RB_MinePool_Remove
+	// (800b2e9c + 4 = 800b2ea0) (taken->last)
+	// (*(int*)800b2ea0 + 8) (taken->last->mineWeapon)
     FUN_800ac0e4(*(undefined4 *)(DAT_800b2ea0 + 8));
   }
   
   // LIST_RemoveBack free list
   iVar1 = FUN_800318ec(&DAT_800b2ea8);
   
+  // weaponSlot231->MineWeapon = param_1 (mineWeapon)
   *(int *)(iVar1 + 8) = param_1;
+  
+  // mineWeapon->weaponSlot231 = weaponSlot231
   *(int *)(param_1 + 0x18) = iVar1;
   
   // LIST_AddFront taken list
