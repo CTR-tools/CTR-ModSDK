@@ -461,6 +461,8 @@ void FUN_800ac13c(int param_1)
 	// remove oldest mine
 	
 	// RB_MinePool_Remove
+	// (800b2e9c + 4 = 800b2ea0) (taken->last)
+	// (*(int*)800b2ea0 + 8) (taken->last->mineWeapon)
     FUN_800ac0e4(*(undefined4 *)(DAT_800b2ea0 + 8));
   }
   
