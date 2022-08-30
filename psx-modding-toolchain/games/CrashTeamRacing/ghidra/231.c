@@ -815,7 +815,7 @@ void FUN_800ac638(int param_1)
   DAT_1f80010c = *(undefined2 *)(param_1 + 0x4c);
   
   DAT_1f80010e = 0x140;
-  _DAT_1f800110 = 0x19000;
+  DAT_1f800110 = 0x19000;
   
   // thread
   DAT_1f800120 = *(undefined4 *)(param_1 + 0x6c);

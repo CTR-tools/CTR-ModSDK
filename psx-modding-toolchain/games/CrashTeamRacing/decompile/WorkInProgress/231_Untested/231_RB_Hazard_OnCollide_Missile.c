@@ -4,11 +4,13 @@ int RB_Hazard_OnCollide_Missile(struct Thread* thread)
 {
 	struct TrackerWeapon* tw;
 	struct Driver* driver;
+	struct Instance* inst;
 	
 	tw = thread->object;
+	inst = thread->inst;
 	
 	// could I also just do thread->modelID?
-	if (thread->inst->model->modelID == 0x29)
+	if (inst->model->modelID == 0x29)
 	{
 		driver = tw->driverTarget;
 		
@@ -19,7 +21,7 @@ int RB_Hazard_OnCollide_Missile(struct Thread* thread)
 		}
 		
 		// play audio of explosion
-		PlaySound3D(0x4c);
+		PlaySound3D(0x4c, inst);
 		
 		// stop audio of moving
 		OtherFX_Stop_Safe(tw->audioPtr);
