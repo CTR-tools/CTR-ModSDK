@@ -197,7 +197,7 @@ void LoadCustomTexVRAM_MainMenu()
 	if (sdata.gameTracker.levelID < 18 && sdata.gameTracker.levelID != 16)
 	{
 		// if player is in time trial mode, load banner textures for time trial .lev
-		if (sdata.gGT->gameMode & TIME_TRIAL)
+		if (sdata.gGT->gameMode1 & TIME_TRIAL)
 		{
 			LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID + 18].C), (u_long *)(bannerTex[0].C));
 			LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID + 18].T), (u_long *)(bannerTex[0].T));
@@ -272,7 +272,7 @@ void HookReserveCancelation()
 void RunUpdateHook()
 {
 	// if the player is not racing
-	if (sdata.gameTracker.gameMode & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
+	if (sdata.gameTracker.gameMode1 & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
 		return;
 
 	if (sdata.gameTracker.drivers[0]->reserves)

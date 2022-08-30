@@ -249,7 +249,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	}
 
 	// If Super Engine Cheat is not enabled
-	if (!(sdata.gGT->advFlags & 0x10000))
+	if (!(sdata.gGT->gameMode2 & 0x10000))
 	{
 		// Next 7 lines are repetitive, this time for Super Engine Timer (0x38)
 		// Make "desired" amount by subtracting elapsed time from "current" amount,
@@ -547,7 +547,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 				(
 					(
 						(
-							(sdata.gGT->gameMode & 0x20) == 0 &&
+							(sdata.gGT->gameMode1 & 0x20) == 0 &&
 
 							// your weapon is 3 missiles
 							(driver->heldItemID == 0xB)
@@ -596,7 +596,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		(driver->invisibleTimer != 0) &&
 
 		// If Permanent Invisibility Cheat is Disabled
-		(!(sdata.gGT->advFlags & 0x8000))
+		(!(sdata.gGT->gameMode2 & 0x8000))
 	)
 	{
 		// decrease invisibility timer, can not go below zero
@@ -636,7 +636,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	// ??? --Super
 	specialFlag = actionflags & 0x7f1f83d5;
 	
-	if ((sdata.gGT->advFlags & 0x4004) != 0) goto setActionsFlagSetToSomething;
+	if ((sdata.gGT->gameMode2 & 0x4004) != 0) goto setActionsFlagSetToSomething;
 	trueVectorID = *(u_char*)&driver->normalVecID + 1;
 	
 	// what --Super
@@ -686,7 +686,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	buttonHeld = 0;
 
 	// If you're not in End-Of-Race menu
-	if (!(sdata.gGT->gameMode & 0x200000))
+	if (!(sdata.gGT->gameMode1 & 0x200000))
 	{
 		// Get which button is held
 		buttonHeld = ptrgamepad->buttonsHeldCurrFrame;
@@ -696,7 +696,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	buttonsTapped = 0;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata.gGT->gameMode & 0x200000) == 0)
+	if ((sdata.gGT->gameMode1 & 0x200000) == 0)
 	{
 		// Get which button is tapped
 		buttonsTapped = ptrgamepad->buttonsTapped;
@@ -789,7 +789,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 						}
 						else
 						{
-							jumpCooldown = sdata.gGT->advFlags & 0x400c00;
+							jumpCooldown = sdata.gGT->gameMode2 & 0x400c00;
 							YouUsedTheSpring:
 							if (jumpCooldown == 0) driver->numHeldItems--;
 						}
@@ -914,7 +914,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	steeringDirectionOrSmth = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata.gGT->gameMode & 0x200000) == 0)
+	if ((sdata.gGT->gameMode1 & 0x200000) == 0)
 	{
 		// gamepadBuffer -> stickRY (for gas or reverse)
 		steeringDirectionOrSmth = (int)ptrgamepad->stickRY;
@@ -966,7 +966,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driverTimer = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata.gGT->gameMode & 0x200000) == 0) driverTimer = (int)ptrgamepad->stickLY;
+	if ((sdata.gGT->gameMode1 & 0x200000) == 0) driverTimer = (int)ptrgamepad->stickLY;
 
 	if
 	(
@@ -1211,7 +1211,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driverSpeedOrSmth = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata.gGT->gameMode & 0x200000) == 0)
+	if ((sdata.gGT->gameMode1 & 0x200000) == 0)
 	{
 		// gamepadBuffer -> stickLX
 		driverSpeedOrSmth = (int)ptrgamepad->stickLX;

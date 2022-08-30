@@ -454,7 +454,7 @@ void NewCallback233()
 void UpdateParticles30fps()
 {
 	// if PauseAllThreads is diabled
-	if ((sdata.gGT->gameMode & 0x10) == 0x10) return;
+	if ((sdata.gGT->gameMode1 & 0x10) == 0x10) return;
 
 	// specific to mod,
 	// only run on alternating frames

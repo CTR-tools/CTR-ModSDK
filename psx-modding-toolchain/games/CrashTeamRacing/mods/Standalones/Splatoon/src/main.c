@@ -199,7 +199,7 @@ void RunInitHook()
 	// only continue if this is the camera for P1
 
 	// reset game mode
-	sdata.gGT->gameMode = 0;
+	sdata.gGT->gameMode1 = 0;
 
 	// MEMPACK_AllocMem
 	sdata.gGT->level2 = (void*)MEMPACK_AllocMem(sizeof(struct MainGameStruct),mgs_name);

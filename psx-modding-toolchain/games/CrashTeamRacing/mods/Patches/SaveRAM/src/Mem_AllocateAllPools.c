@@ -79,7 +79,7 @@ void AllocateAllPools_New(struct GameTracker* gGT)
 	MEMPACK_PopState();
   }
 
-  uVar3 = gGT->gameMode;
+  uVar3 = gGT->gameMode1;
 
   // This happens if you're in Adventure Arena
   uVar7 = 0x800;

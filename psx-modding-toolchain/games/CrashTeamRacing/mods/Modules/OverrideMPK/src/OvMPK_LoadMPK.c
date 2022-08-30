@@ -20,13 +20,13 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 	boolNeedWeapons = 1;
 
 	// boss race
-	if (gGT->gameMode & ADVENTURE_BOSS)
+	if (gGT->gameMode1 & ADVENTURE_BOSS)
 	{
 		numDrivers = 2;
 	}
 
 	// crystal challenge
-	else if (gGT->gameMode & CRYSTAL_CHALLENGE)
+	else if (gGT->gameMode1 & CRYSTAL_CHALLENGE)
 	{
 		numDrivers = 1;
 	}
@@ -47,7 +47,7 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 			(levelLOD == 2) &&
 
 			// Arcade
-			(gGT->gameMode & ARCADE_MODE)
+			(gGT->gameMode1 & ARCADE_MODE)
 		)
 	{
 		numDrivers = 6;
@@ -63,13 +63,13 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 	// main menu, cutscene, advArena, or credits
 	else if(
 			// main menu
-			(gGT->gameMode & MAIN_MENU) ||
+			(gGT->gameMode1 & MAIN_MENU) ||
 
 			// if in cutscene, and in adv arena
-			(gGT->gameMode & (GAME_INTRO | ADVENTURE_HUB)) ||
+			(gGT->gameMode1 & (GAME_INTRO | ADVENTURE_HUB)) ||
 
 			// if in credits
-			((gGT->advFlags & 0x80) != 0)
+			((gGT->gameMode2 & 0x80) != 0)
 		)
 	{
 		numDrivers = 1;

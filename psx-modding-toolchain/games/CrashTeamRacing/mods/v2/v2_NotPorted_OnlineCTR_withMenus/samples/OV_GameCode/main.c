@@ -445,7 +445,7 @@ void BOTS_PerFrame_Drive_custom(struct Thread* th)
 	#endif
 	
 	// if arcade mode
-	if(semiGlobal.gGT->gameMode & 0x400000)
+	if(semiGlobal.gGT->gameMode1 & 0x400000)
 	{
 		// if traffic lights are not done
 		if(semiGlobal.gGT->trafficLightsTimer > 0) 

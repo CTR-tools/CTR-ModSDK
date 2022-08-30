@@ -10526,7 +10526,7 @@ switchD_80038f90_caseD_9:
                      ((int)(short)iVar15 * 10 + iVar6 + 100) * 0x10000 >> 0x10,2,local_b8);
 
 		// if vibration is enabled,
-		// gGT->gameMode & 0x0000X000
+		// gGT->gameMode1 & 0x0000X000
 		if ((*(uint *)PTR_DAT_8008d2ac & *(uint *)(&DAT_8008430c + ((int)(uVar14 << 0x10) >> 0xe)))
 
 			// == 0 means enabled,
@@ -19412,6 +19412,8 @@ LAB_80041910:
 				// Player_ChangeState
                 FUN_80064568(iVar9,2,iVar9,0);
 
+				// reduce counter for AttackingPlayer on yourself, 
+				// and AttackedByPlayer, on yourself, following ChangeState Blasted
                 iVar13 = iVar9 + (uint)*(byte *)(iVar9 + 0x4a);
                 *(char *)(iVar13 + 0x560) = *(char *)(iVar13 + 0x560) + -1;
                 iVar9 = iVar9 + (uint)*(byte *)(iVar9 + 0x4a);
@@ -47863,26 +47865,38 @@ LAB_80061cf8:
             uVar22 = uVar22 | 0x8000;
 
 			// If "held item quantity" is zero
-            if (*(char *)(param_2 + 0x37) == '\0') {
+            if (*(char *)(param_2 + 0x37) == '\0') 
+			{
               *(undefined2 *)(param_2 + 0x3c) = 0x1e;
               goto LAB_800621cc;
             }
 
 			// If you have the Spring weapon
-            if (cVar2 == '\x05') {
+            if (cVar2 == '\x05') 
+			{
               if (*(short *)(param_2 + 0x3f4) != 0) {
                 uVar9 = SEXT24(*(short *)(param_2 + 0x3f2));
                 goto LAB_80062188;
               }
             }
-            else {
+            
+			// any other weapon
+			else 
+			{
+			  // CHEAT_MASK, CHEAT_TURBO, or CHEAT_BOMBS
               uVar9 = *(uint *)(PTR_DAT_8008d2ac + 8) & 0x400c00;
 LAB_80062188:
-              if (uVar9 == 0) {
+			  // if cheats aren't enabled
+              if (uVar9 == 0) 
+			  {
+				// reduce number of items held
                 *(char *)(param_2 + 0x37) = *(char *)(param_2 + 0x37) + -1;
               }
             }
+			
+			// 5-frame cooldown before next weapon
             *(undefined2 *)(param_2 + 0x3c) = 5;
+			
             goto LAB_800621cc;
           }
           sVar3 = *(short *)(param_2 + 0x3a);
@@ -48189,7 +48203,9 @@ LAB_80062548:
     //iVar21 = Racer's Base Speed
     iVar21 = iVar23;
   }
-  if ((uVar20 & 0x20000) == 0) {
+  
+  if ((uVar20 & 0x20000) == 0) 
+  {
     uVar22 = uVar20 & 8;
     if (*(short *)(param_2 + 0x38) != 0) {
       //if Racer is moving
@@ -50349,6 +50365,7 @@ LAB_800647d8:
     } while (iVar7 < 1);
 
     if (
+			// if attacked yourself
 			(param_3 == param_1) &&
 
 			// If you have a point limit (battle)
@@ -50366,7 +50383,9 @@ LAB_800647d8:
         *(undefined4 *)(param_1 + 0x4dc) = 0xffffffff;
       }
     }
-    else
+    
+	// did not attack self
+	else
 	{
       if (*(int *)(param_3 + 0x4d0) == 5)
 	  {
@@ -50380,12 +50399,27 @@ LAB_800647d8:
         *(undefined4 *)(param_3 + 0x4dc) = 1;
       }
     }
+	
+	// cooldown
     *(undefined4 *)(param_3 + 0x4d0) = 5;
-    iVar7 = param_1 + (uint)*(byte *)(param_3 + 0x4a);
+	
+	// param_3 is attacker,
+	// param_1 is attacked
+    
+	// count number of times attacked by this player
+	// param_1->0x560[param_3->driverID]++
+	iVar7 = param_1 + (uint)*(byte *)(param_3 + 0x4a);
     *(char *)(iVar7 + 0x560) = *(char *)(iVar7 + 0x560) + '\x01';
+	
+	// count number of times attacking this player
+	// param_1->0x50c[param_3->driverID]++
     iVar7 = param_3 + (uint)*(byte *)(param_1 + 0x4a);
     *(char *)(iVar7 + 0x50c) = *(char *)(iVar7 + 0x50c) + '\x01';
-    if (param_3 != param_1) {
+    
+	// if did not attack yourself
+	if (param_3 != param_1) 
+	{
+	  // count number of times attacking
       *(char *)(param_3 + 0x559) = *(char *)(param_3 + 0x559) + '\x01';
     }
   }

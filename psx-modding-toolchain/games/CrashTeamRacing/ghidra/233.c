@@ -4929,9 +4929,18 @@ LAB_800b821c:
   }
   
   sVar4 = DAT_800b863e;
-  if (((DAT_800b8640 == 1) && (DAT_800b863a == 0)) &&
-     ((0x3b < DAT_800b863e ||
-      (sVar4 = DAT_800b863e + 1, (*(uint *)(PTR_DAT_8008d2ac + 8) & 0x20000) != 0)))) 
+  if (
+		((DAT_800b8640 == 1) && (DAT_800b863a == 0)) &&
+     
+		((
+			0x3b < DAT_800b863e ||
+			(
+				sVar4 = DAT_800b863e + 1, 
+		
+				(*(uint *)(PTR_DAT_8008d2ac + 8) & 0x20000) != 0
+			)
+		))
+	  ) 
   {
 	// set desiredMenuBox to OSK (on-screen keyboard)
     DAT_8008d924 = &DAT_80085c0c;

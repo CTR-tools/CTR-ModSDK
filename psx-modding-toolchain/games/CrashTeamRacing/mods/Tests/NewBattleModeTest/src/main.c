@@ -122,7 +122,7 @@ void RunInitHook()
 	// battle mode,
 	// warning, battle End-Of-Race overlay is not loaded,
 	// this will be solved when battle is loaded from main menu (in future build)
-	sdata.gGT->gameMode = BATTLE_MODE;
+	sdata.gGT->gameMode1 = BATTLE_MODE;
 
 	// this is for tokens down below
 	rot[0] = 0x400;

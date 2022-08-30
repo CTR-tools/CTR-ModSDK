@@ -84,7 +84,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	// Draw Confetti
 	sdata.gGT->renderFlags |= 4;
 	
-	sdata.gGT->advFlags |= 4;
+	sdata.gGT->gameMode2 |= 4;
 	
 	struct PosRot
 	{

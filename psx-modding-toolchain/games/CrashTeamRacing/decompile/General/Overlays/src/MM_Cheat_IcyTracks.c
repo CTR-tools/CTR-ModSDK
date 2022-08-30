@@ -5,7 +5,7 @@ void OtherFX_Play(int sfxID, int flag);
 void MM_Cheat_IcyTracks()
 {
 	// Icy Tracks cheat
-	sdata.gGT->advFlags |= 0x80000;
+	sdata.gGT->gameMode2 |= 0x80000;
 	
 	// play cheat sound
 	OtherFX_Play(0x67, 1);
