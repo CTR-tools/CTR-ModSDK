@@ -62,9 +62,6 @@ void entry()
 	// so MEMPACK wont overwrite BL or OV
 	*(unsigned char*)0x8003c638 = 0x60;
 	
-	// Disable Box Scene
-	*(unsigned int*)0x8003c19c = 0;
-	
 	// Disable SCEA page
 	*(unsigned int*)0x8003c8cc = 0;
 	

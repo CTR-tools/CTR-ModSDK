@@ -33,4 +33,4 @@ common, exe, rdata_free, 0x0, ../../Tutorials/TemplateParkingLot/src/flagFunc.c
 common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
 common, exe, StringToLevID, -0x8, src/hookInit.s
 common, exe, CAM_FindClosestQuadblock, -0x8, src/hookCamera.s
-common, exe, __main,0x68, src/hookEntry.s
+common, exe, __main, 0x68, src/hookEntry.s
