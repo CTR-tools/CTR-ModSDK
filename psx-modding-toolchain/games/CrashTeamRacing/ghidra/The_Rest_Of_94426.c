@@ -4755,8 +4755,8 @@ LAB_80033ccc:
 	  // '2' means dram
       FUN_80032d30(param_3,2,uVar16,0,&FUN_80031a78);
 
-	  // get [what kind???] of subfile from BIGFILE
-	  // last param 0 for vram, 1 for lev, 2 for ???
+	  // get .ptr subfile from BIGFILE
+	  // last param 0 for vram, 1 for lev, 2 for .ptr
       uVar6 = FUN_80032c24(
 
 			// Level ID you want to load
