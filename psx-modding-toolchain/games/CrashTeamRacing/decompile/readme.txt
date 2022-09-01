@@ -14,8 +14,10 @@ Functions:
 -DecalHUD_Arrow2D
 -DecalHUD_DrawPolyFT4
 -DecalHUD_DrawPolyGT4
+-DrawBoxOutline_LowLevel
 -DrawJumpMeter
 -DrawPowerslideMeter
+-DrawRectangle
 -Driver_SetConsts
 -InterpolatePosition2D_Angular
 -InterpolatePosition2D_HUD

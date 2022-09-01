@@ -596,15 +596,12 @@ void MM_Characters_MenuBox()
 			// DecalHUD_DrawPolyGT4_Safe
 			DecalHUD_DrawPolyGT4_Safe
 			(
-				*(undefined4 *)(PTR_DAT_8008d2ac + (int)*(short *)(&DAT_80086d8c + (int)psVar18[3] * 0x10) * 4 + 0x1eec),
+				sdata.gGT->ptrIcons[data.MetaDataCharacters[(int)psVar18[3]].iconID],
 				(int)*(short *)(iVar8 + 6) + (int)*psVar22 + 6,
 				(int)*(short *)(iVar8 + 8) + (int)*psVar18 + 4,
-					 
-				// pointer to PrimMem struct
-				*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
-					 
-				// pointer to OT mem
-				*(undefined4 *)(PTR_DAT_8008d2ac + 0x147c),
+
+				&sdata.gGT->backBuffer->primMem,
+				sdata.gGT->camera110_UI.ptrOT,
 					 
 				*puVar15, *puVar15, *puVar15, *puVar15, 1, 0x1000
 			);
@@ -673,9 +670,7 @@ void MM_Characters_MenuBox()
 				(
 					&local_80, &colorR,
 					sdata.gGT->backBuffer->otMem.startPlusFour,
-										 
-					// pointer to PrimMem struct
-					*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74
+					&sdata.gGT->backBuffer->primMem
 				);
 			}
 			if
