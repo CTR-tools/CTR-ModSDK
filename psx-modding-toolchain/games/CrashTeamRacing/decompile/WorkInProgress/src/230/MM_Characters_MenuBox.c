@@ -1,63 +1,62 @@
+#include <ovr_230.h>
+
 // character selection menu, 
 // MenuBox_FuncPtr for menuBox: 0x800b46b4;
 
 void MM_Characters_MenuBox()
 {
 	u_char bVar1;
-	char bVar2;
-	char bVar3;
-	u_short uVar4;
-	short *psVar5;
+	bool bVar2;
+	bool bVar3;
+	u_short first5Bits;
+	short* psVar5;
 	short sVar6;
 	short sVar7;
 	int iVar8;
 	u_int uVar9;
 	short sVar10;
 	int iVar11;
-	undefined *puVar12;
+	undefined* puVar12;
 	undefined4 characterSelectType;
 	undefined4 uVar14;
-	undefined4 *puVar15;
+	undefined4* puVar15;
 	u_int uVar16;
 	int iVar17;
-	short *psVar18;
+	short* psVar18;
 	int iVar19;
 	u_short uVar20;
 	u_int uVar21;
-	short *psVar22;
-	u_short *puVar23;
+	short* psVar22;
+	u_short* puVar23;
 	int iVar24;
 	u_int uVar25;
-	u_short *puVar26;
+	u_short* puVar26;
 	short globalIconPerPlayer [4];
 	short local_80;
 	short local_7e;
 	undefined2 local_7c;
 	undefined2 local_7a;
 	undefined auStack120 [8];
-	
-	// really just "int"
+
 	u_char colorR;
 	u_char colorG;
 	u_char colorB;
-	u_char colorA;
-	
+
 	undefined2 local_68;
 	u_short local_66;
 	undefined2 local_64;
 	undefined2 local_62;
-	
+
 	undefined4 local_60;
 	undefined4 local_5c;
 	undefined4 local_58;
 	undefined4 local_54;
-	
+
 	short local_50;
-	short *local_30;
+	short* local_30;
 
 	int i;
 	u_int characterSelectString;
-	u_int iu;
 	
 	// loop counter
 	i = 0;
@@ -148,6 +147,7 @@ void MM_Characters_MenuBox()
 		}
 	}
 	OVR_230.transitionFrames = sVar6;
+
 	switch(OVR_230.characterSelectNumScreens)
 	{
 		default:
@@ -156,10 +156,9 @@ void MM_Characters_MenuBox()
 		// 3P character selection
 		case 2:
 	
-			// If you have a lot of characters unlocked,
-			// do not draw SELECT CHARACTER
+			// If you have a lot of characters unlocked, do not draw SELECT CHARACTER
 			if (OVR_230.isRosterExpanded) goto dontDrawSelectCharacter;
-		
+	
 			// SELECT
 			DecalFont_DrawLine
 			(
@@ -176,10 +175,10 @@ void MM_Characters_MenuBox()
 			iVar24 = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0x9c) * 0x10000) >> 0x10;
 			sVar6 = *(short *)(DAT_800b5a3c + 0x9e) + 0x26;
 			break;
-	
+		
 		// 4P character selection
 		case 3:
-	
+		
 			// If Fake Crash is unlocked, do not draw "Select Character"
 			if (sdata.gameProgress.Unlocks.characters_tracks & 0x800) goto dontDrawSelectCharacter;
 		
@@ -199,16 +198,16 @@ void MM_Characters_MenuBox()
 			iVar24 = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10;
 			sVar6 = *(short *)(DAT_800b5a3c + 0x9e) + 0x18;
 			break;
-	
+		
 		// If you are in 1P or 2P character selection,
 		// when you do NOT have a lot of characters selected
 		case 4:
 		case 5:
 			characterSelectType = 1;
-	
+		
 			// SELECT CHARACTER
 			characterSelectString = sdata.lngStrings[96];
-	
+		
 			iVar24 = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10;
 			sVar6 = *(short *)(DAT_800b5a3c + 0x9e) + 10;
 	}
@@ -219,32 +218,34 @@ void MM_Characters_MenuBox()
 	dontDrawSelectCharacter:
 
 	// loop counter
-	iu = 0;
+	uVar25 = 0;
 	
 	// if number of players is not zero
 	if (sdata.gGT->numScreens)
 	{
 		local_30 = globalIconPerPlayer;
 	
-		for (iu = 0; iu < numPlayers; iu++)
+		// for uVar25 = 0; uVar25 < numPlayers; uVar25++
+		do 
 		{
 			// copy the loop counter
-			sVar6 = (short)iu;
+			sVar6 = (short)uVar25;
 		
 			// copy it again
 			uVar16 = SEXT24(sVar6);
 		
-			uVar4 = (u_short)(1 << (uVar16 & 0x1f));
+			first5Bits = (u_short)(1 << (uVar16 & 0x1f));
 			uVar20 = local_30[uVar16];
 			uVar21 = (u_int)uVar20;
 		
-			MM_Characters_AnimateColors(auStack120, uVar16, (int)(short)(sdata.characterSelectFlags & uVar4));
+			
+			MM_Characters_AnimateColors(auStack120, uVar16, (int)(short)(sdata.characterSelectFlags & first5Bits));
 			
 			puVar26 = (u_short *)(DAT_800b5a18 + (int)(short)uVar20 * 6);
 			
 			if
 			(
-				(OVR_230.isMenuTransitioning == 1) &&
+				(OVR_230.isMenuTransitioning == 1) && 
 				(
 					// get input from this player
 					uVar9 = sdata.buttonTapPerPlayer[uVar16], 
@@ -262,7 +263,7 @@ void MM_Characters_MenuBox()
 					if ((uVar9 & 0xf) != 0) 
 					{
 						local_50 = 0;
-			
+				
 						// If you do not press Up
 						if ((uVar9 & 1) == 0) 
 						{	
@@ -272,18 +273,18 @@ void MM_Characters_MenuBox()
 								// This must be if you press Left,
 								// because the variable will change
 								// if it is anything that isn't Left
-								
+									
 								// Left
 								iVar24 = 2;
-				
+					
 								// If you press Left
 								if ((uVar9 & 4) != 0) goto LAB_800aec08;
-				
+					
 								// At this point, you must have pressed Right
-				
+					
 								// Right
 								iVar24 = 3;
-				
+					
 								// Move down character selection list
 								(&DAT_800b59e8)[uVar16] = 1;
 							}
@@ -327,23 +328,24 @@ void MM_Characters_MenuBox()
 								iVar17 = (int)sVar7;
 								uVar21 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5384)[iVar24], iVar17);
 								iVar11 = (int)(short)uVar21;
+
 								if
 								(
 									(((iVar11 == iVar19) || (iVar17 == iVar19)) || (iVar17 == iVar11)) ||
 									(uVar9 = MM_Characters_boolIsInvalid(local_30, iVar11, iVar8), (uVar9 & 0xffff) != 0)
-								) 
+								)
 								{
 									sVar7 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5384)[iVar24], (int)(short)*puVar23);
 									iVar11 = (int)sVar7;
 									uVar21 = MM_Characters_GetNextDriver(iVar24, iVar11);
 									iVar19 = (int)(short)uVar21;
-					
-					
+
 									if
 									(
 										((iVar19 == (int)sVar10) || (iVar11 == (int)sVar10)) ||
 										(
-											(iVar11 == iVar19 || (uVar9 = MM_Characters_boolIsInvalid(local_30, iVar19, iVar8), (uVar9 & 0xffff) != 0))
+											(iVar11 == iVar19 ||
+											(uVar9 = MM_Characters_boolIsInvalid(local_30, iVar19, iVar8), (uVar9 & 0xffff) != 0))
 										)
 									)
 									{
@@ -351,6 +353,7 @@ void MM_Characters_MenuBox()
 										iVar11 = (int)sVar7;
 										uVar21 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5388)[iVar24], iVar11);
 										iVar19 = (int)(short)uVar21;
+
 										if
 										(
 											((iVar19 == (int)sVar10) || (iVar11 == (int)sVar10)) ||
@@ -362,12 +365,11 @@ void MM_Characters_MenuBox()
 											)
 										) 
 										{
-						
 											sVar7 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5388)[iVar24], (int)(short)*puVar23);
 											iVar11 = (int)sVar7;
 											uVar21 = MM_Characters_GetNextDriver(iVar24, iVar11);
 											iVar19 = (int)(short)uVar21;
-						
+
 											if
 											(
 												(((iVar19 == (int)sVar10) || (iVar11 == (int)sVar10)) || (iVar11 == iVar19)) ||
@@ -383,32 +385,32 @@ void MM_Characters_MenuBox()
 							bVar2 = false;
 				
 							// loop counter
-							i = 0;
+							iVar19 = 0;
 				
 							// If number of players is not zero
 							if (sdata.gGT->numScreens) 
 							{
 								iVar11 = 0;
 				
-								// for i = 0; i < numPlayers; i++
+								// for iVar19 = 0; iVar19 < numPlayers; iVar19++
 								do 
 								{
-									if ((iVar11 >> 0x10 != iVar8) && ((short)uVar21 == local_30[iVar11 >> 0x10]))
+									if((iVar11 >> 0x10 != iVar8) && ((short)uVar21 == local_30[iVar11 >> 0x10]))
 									{
 										bVar2 = true;
 										break;
 									}
 					
 									// increment loop counter
-									i = i + 1;
+									iVar19 = iVar19 + 1;
 					
-									iVar11 = i * 0x10000;
-								} while (i * 0x10000 >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+									iVar11 = iVar19 * 0x10000;
+								} while (iVar19 * 0x10000 >> 0x10 < sdata.gGT->numScreens);
 							}
 							if (uVar16 << 0x10 != uVar21 << 0x10) 
 							{
 								// Play sound
-								OtherFX_Play(0,1);
+								OtherFX_Play(0, 1);
 							}
 							if (local_50 != 0)
 							{
@@ -423,14 +425,14 @@ void MM_Characters_MenuBox()
 					uVar20 = (u_short)uVar21;
 			
 					// loop counter
-					i = 0;
+					iVar24 = 0;
 			
 					// if number of players is not zero
 					if (sdata.gGT->numScreens) 
 					{
 						iVar8 = 0;
 			
-						// for i = 0; i < numPlayers; i++
+						// for iVar24 = 0; iVar24 < numPlayers; iVar24++
 						do
 						{
 							if ((iVar8 >> 0x10 != (int)sVar6) && ((short)uVar21 == local_30[iVar8 >> 0x10]))
@@ -440,14 +442,14 @@ void MM_Characters_MenuBox()
 							uVar20 = (u_short)uVar21;
 				
 							// increment loop counter
-							i = i + 1;
+							iVar24 = iVar24 + 1;
 				
-							iVar8 = i * 0x10000;
-						} while (i * 0x10000 >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+							iVar8 = iVar24 * 0x10000;
+						} while (iVar24 * 0x10000 >> 0x10 < sdata.gGT->numScreens);
 					}
 			
 					// If this player pressed Cross or Circle
-					if (((&sdata.buttonTapPerPlayer[0])[(int)sVar6] & 0x50) != 0) 
+					if (((sdata.buttonTapPerPlayer)[(int)sVar6] & 0x50) != 0) 
 					{
 						// this player has now selected a character
 						sdata.characterSelectFlags = sdata.characterSelectFlags | (u_short)(1 << ((int)sVar6 & 0x1fU));
@@ -469,7 +471,7 @@ void MM_Characters_MenuBox()
 					if
 					(
 						// if this is the first iteration of the loop
-						((iu & 0xffff) == 0) && 
+						((uVar25 & 0xffff) == 0) && 
 				
 						// if you press Square or Triangle
 						((sdata.buttonTapPerPlayer[0] & 0x40020) != 0)
@@ -492,12 +494,12 @@ void MM_Characters_MenuBox()
 						OtherFX_Play(2, 1);
 			
 						// this player has de-selected their character
-						sdata.characterSelectFlags = sdata.characterSelectFlags & ~uVar4;
+						sdata.characterSelectFlags = sdata.characterSelectFlags & ~first5Bits;
 					}
 				}
 		
 				// clear input
-				sdata.buttonTapPerPlayer[iu] = 0;
+				*(undefined4 *)((int)sdata.buttonTapPerPlayer + ((int)(uVar25 << 0x10) >> 0xe)) = 0;
 			}
 			uVar21 = SEXT24(sVar6);
 			local_30[uVar21] = uVar20;
@@ -516,8 +518,8 @@ void MM_Characters_MenuBox()
 				(
 					(&PTR_DAT_800aba28_800b5374)[uVar21],
 					(int)(((u_int)*(u_short *)(iVar24 + 6) + (u_int)*puVar26 + -6) * 0x10000) >> 0x10,
-					(int)(((u_int)*(u_short *)(iVar24 + 8) + (u_int)puVar26[1] + -3) * 0x10000) >>
-					0x10, 1, 4
+					(int)(((u_int)*(u_short *)(iVar24 + 8) + (u_int)puVar26[1] + -3) * 0x10000) >> 0x10,
+					1, 4
 				);
 				puVar12 = auStack120;
 			}
@@ -526,16 +528,15 @@ void MM_Characters_MenuBox()
 				puVar12 = &DAT_800b538c;
 			}
 		
-			// DrawBoxOutline_HighLevel (solid)
-			DrawBoxOutline_HighLevel(&local_80,puVar12,0,sdata.gGT->backBuffer->otMem.startPlusFour);
+			DrawBoxOutline_HighLevel(&local_80, puVar12, 0, sdata.gGT->backBuffer->otMem.startPlusFour);
 			
-		// increment loop counter
-		iu = iu + 1;
-		} while ((int)(iu * 0x10000) >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+			// increment loop counter
+			uVar25 = uVar25 + 1;
+		} while ((int)(uVar25 * 0x10000) >> 0x10 < sdata.gGT->numScreens);
 	}
 	
 	// loop counter
-	i = 0;
+	iVar24 = 0;
 	
 	MM_Characters_ClearInactivePlayers();
 	
@@ -544,7 +545,7 @@ void MM_Characters_MenuBox()
 	
 	// loop through character icons
 	
-	// for i = 0; i < 0xf; i++
+	// for iVar24 = 0; iVar24 < 0xf; iVar24++
 	do 
 	{
 		iVar8 = (u_int)(u_short)psVar18[4] << 0x10;
@@ -556,7 +557,7 @@ void MM_Characters_MenuBox()
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
 			// also the variable written by cheats
-			(((u_int)(&DAT_8008e6ec)[iVar8 >> 0x15] >> (psVar18[4] & 0x1fU) & 1) != 0)
+			(((u_int)(&sdata.gameProgress.Unlocks.characters_tracks)[iVar8 >> 0x15] >> (psVar18[4] & 0x1fU) & 1) != 0)
 		) 
 		{
 			puVar15 = &DAT_800b5390;
@@ -574,10 +575,10 @@ void MM_Characters_MenuBox()
 				{
 					if
 					(
-						((short)i == globalIconPerPlayer[iVar19 >> 0x10]) &&
+						((short)iVar24 == globalIconPerPlayer[iVar19 >> 0x10]) &&
 			
 						// if player selected a character
-						(((int)(short)sdata.characterSelectFlags >> (iVar19 >> 0x10 & 0x1fU) & 1U) != 0)
+						 (((int)(short)sdata.characterSelectFlags >> (iVar19 >> 0x10 & 0x1fU) & 1U) != 0)
 					)
 					{
 						puVar15 = &DAT_800b5394;
@@ -587,13 +588,12 @@ void MM_Characters_MenuBox()
 					iVar8 = iVar8 + 1;
 			
 					iVar19 = iVar8 * 0x10000;
-				} while (iVar8 * 0x10000 >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+				} while (iVar8 * 0x10000 >> 0x10 < sdata.gGT->numScreens);
 			}
 		
-			iVar8 = (int)(short)i * 10 + DAT_800b5a3c;
+			iVar8 = (int)(short)iVar24 * 10 + DAT_800b5a3c;
 			
 			// Draw Character Icon
-			// DecalHUD_DrawPolyGT4_Safe
 			DecalHUD_DrawPolyGT4_Safe
 			(
 				sdata.gGT->ptrIcons[data.MetaDataCharacters[(int)psVar18[3]].iconID],
@@ -602,42 +602,42 @@ void MM_Characters_MenuBox()
 
 				&sdata.gGT->backBuffer->primMem,
 				sdata.gGT->camera110_UI.ptrOT,
-					 
+
 				*puVar15, *puVar15, *puVar15, *puVar15, 1, 0x1000
 			);
 		}
 		psVar5 = DAT_800b5a18;
 	
 		// increment loop counter
-		i = i + 1;
+		iVar24 = iVar24 + 1;
 	
 		psVar18 = psVar18 + 6;
 		psVar22 = psVar22 + 6;
-	} while (i * 0x10000 >> 0x10 < 0xf);
+	} while (iVar24 * 0x10000 >> 0x10 < 0xf);
 	
 	// loop counter
-	i = 0;
+	iVar24 = 0;
 	
-	// for i = 0; i < 4; i++
+	// for iVar24 = 0; iVar24 < 4; iVar24++
 	do 
 	{
-		iVar8 = (i << 0x10) >> 0xf;
+		iVar8 = (iVar24 << 0x10) >> 0xf;
 		
 		// increment loop counter
-		i = i + 1;
+		iVar24 = iVar24 + 1;
 		
 		*(short *)((int)&DAT_80086e84 + iVar8) = psVar5[(int)*(short *)((int)globalIconPerPlayer + iVar8) * 6 + 4];
-	} while (i * 0x10000 >> 0x10 < 4);
+	} while (iVar24 * 0x10000 >> 0x10 < 4);
 	
 	// loop counter
-	i = 0;
+	iVar24 = 0;
 	
 	// if number of players is not zero
 	if (sdata.gGT->numScreens) 
 	{
 		iVar8 = 0;
 	
-		// for i = 0; i < numPlayers; i++
+		// for iVar24 = 0; iVar24 < numPlayers; iVar24++
 		do 
 		{
 			uVar25 = iVar8 >> 0x10;
@@ -649,8 +649,8 @@ void MM_Characters_MenuBox()
 			{
 				MM_Characters_AnimateColors
 				(
-					&colorR,uVar25,
-					
+					&colorR, uVar25,
+						
 					// flags of which characters are selected
 					(int)(short)(sdata.characterSelectFlags & (u_short)(1 << (uVar25 & 0x1f)))
 				);
@@ -658,17 +658,17 @@ void MM_Characters_MenuBox()
 				colorR = (u_char)((int)((u_int)colorR << 2) / 5);
 				colorG = (u_char)((int)((u_int)colorG << 2) / 5);
 				colorB = (u_char)((int)((u_int)colorB << 2) / 5);
-				
+
 				iVar8 = (int)sVar6 * 10 + DAT_800b5a3c;
 				local_80 = *(short *)(iVar8 + 6) + *psVar22 + 3;
 				local_7c = 0x2e;
 				local_7a = 0x1d;
 				local_7e = *(short *)(iVar8 + 8) + psVar22[1] + 2;
-		
+	
 				// this draws the flashing blue square that appears when you highlight a character in the character select screen
 				CTR_Box_DrawSolidBox
 				(
-					&local_80, &colorR,
+					&local_80,&colorR,
 					sdata.gGT->backBuffer->otMem.startPlusFour,
 					&sdata.gGT->backBuffer->primMem
 				);
@@ -713,27 +713,27 @@ void MM_Characters_MenuBox()
 			}
 			
 			// rotation of each driver, 90 degrees difference
-			psVar22 = (short *)((int)&DAT_800b5a00 + ((i << 0x10) >> 0xf));
+			psVar22 = (short *)((int)&DAT_800b5a00 + ((iVar24 << 0x10) >> 0xf));
 		
 			// increment loop counter
-			i = i + 1;
+			iVar24 = iVar24 + 1;
 		
 			// spin driver each frame
 			*psVar22 = *psVar22 + 0x40;
 		
-			iVar8 = i * 0x10000;
-		} while (i * 0x10000 >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+			iVar8 = iVar24 * 0x10000;
+		} while (iVar24 * 0x10000 >> 0x10 < sdata.gGT->numScreens);
 	}
 	
 	// loop counter
-	i = 0;
+	iVar24 = 0;
 	
 	psVar18 = DAT_800b5a18 + 1;
 	psVar22 = DAT_800b5a18;
 	
 	// loop through all icons
 	
-	// for i = 0; i < 0xf; i++
+	// for iVar24 = 0; iVar24 < 0xf; iVar24++
 	do 
 	{
 		iVar8 = (u_int)(u_short)psVar18[4] << 0x10;
@@ -746,10 +746,10 @@ void MM_Characters_MenuBox()
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
 			// also the variable written by cheats
-			(((u_int)(&DAT_8008e6ec)[iVar8 >> 0x15] >> (psVar18[4] & 0x1fU) & 1) != 0)
+			(((u_int)(&sdata.gameProgress.Unlocks.characters_tracks)[iVar8 >> 0x15] >> (psVar18[4] & 0x1fU) & 1) != 0)
 		) 
 		{
-			iVar8 = (int)(short)i * 10 + DAT_800b5a3c;
+			iVar8 = (int)(short)iVar24 * 10 + DAT_800b5a3c;
 			local_68 = *(short *)(iVar8 + 6) + *psVar22;
 			local_64 = 0x34;
 			local_62 = 0x21;
@@ -760,27 +760,27 @@ void MM_Characters_MenuBox()
 		}
 	
 		// increment loop counter
-		i = i + 1;
+		iVar24 = iVar24 + 1;
 	
 		// advence both short* arrays by 6 shorts,
 		// which is 12 (0xc) bytes, size of
 		// character icon buffer
 		psVar18 = psVar18 + 6;
 		psVar22 = psVar22 + 6;
-	} while (i * 0x10000 >> 0x10 < 0xf);
+	} while (iVar24 * 0x10000 >> 0x10 < 0xf);
 	
 	// loop counter
-	i = 0;
+	iVar24 = 0;
 	
 	// if number of players is not zero
-	if (sdata.gGT->numScreens) 
+	if (sdata.gGT->numScreens != 0) 
 	{
 		psVar22 = DAT_800b5a0c;
 	
-		// for i = 0; i < numPlayers; i++
+		// for iVar24 = 0; iVar24 < numPlayers; iVar24++
 		do
 		{
-			uVar25 = SEXT24((short)i);
+			uVar25 = SEXT24((short)iVar24);
 			iVar8 = uVar25 * 10 + DAT_800b5a3c;
 			
 			// store window width and height in one 4-byte variable
@@ -788,10 +788,8 @@ void MM_Characters_MenuBox()
 		
 			local_60 = CONCAT22(*(short *)(iVar8 + 0xa8) + psVar22[1], *(short *)(iVar8 + 0xa6) + *psVar22);
 			
-			// MM_Characters_AnimateColors
 			MM_Characters_AnimateColors(&local_68, uVar25, ((int)(short)sdata.characterSelectFlags >> (uVar25 & 0x1f) ^ 1U) & 1);
 			
-			// DrawBoxOutline_HighLevel (solid)
 			DrawBoxOutline_HighLevel(&local_60, &local_68, 0, sdata.gGT->backBuffer->otMem.startPlusFour);
 			
 			iVar8 = 0;
@@ -808,7 +806,6 @@ void MM_Characters_MenuBox()
 					local_54 = CONCAT22((short)((u_int)local_54 >> 0x10) + -4, (short)local_54 + -6);
 					local_66 = local_66 & 0xff00 | (u_short)(u_char)((int)((u_int)(u_char)local_66 << 2) / 5);
 					
-					// DrawBoxOutline_HighLevel (solid)
 					DrawBoxOutline_HighLevel(&local_58, &local_68, 0, sdata.gGT->backBuffer->otMem.startPlusFour);
 					
 					iVar8 = iVar8 + 1;
@@ -828,9 +825,9 @@ void MM_Characters_MenuBox()
 			);
 					 
 			// increment loop counter
-			i = i + 1;
+			iVar24 = iVar24 + 1;
 		
-		} while (i * 0x10000 >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+		} while (iVar24 * 0x10000 >> 0x10 < sdata.gGT->numScreens);
 	}
 	return;
 }
