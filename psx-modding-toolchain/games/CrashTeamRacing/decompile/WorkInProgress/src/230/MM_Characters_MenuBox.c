@@ -69,7 +69,7 @@ void MM_Characters_MenuBox()
 	
 	for (i = 0; i < 4; i++)
 	{
-		globalIconPerPlayer[i] =  OVR_230.characterIcon[data.characterIDs[i]];
+		globalIconPerPlayer[i] = OVR_230.characterIcon[data.characterIDs[i]];
 	}
 	
 	// if menu is in focus
@@ -560,8 +560,8 @@ void MM_Characters_MenuBox()
 		}
 		psVar5 = DAT_800b5a18;
 
-		psVar18 = psVar18 + 6;
-		psVar22 = psVar22 + 6;
+		psVar18 += 6;
+		psVar22 += 6;
 	}
 	
 	for (i = 0; i < 4; i++)
@@ -641,7 +641,7 @@ void MM_Characters_MenuBox()
 				// draw string
 				DecalFont_DrawLine
 				(
-					*(u_int *)((int)*(short *)(&DAT_80086d88 + (int)psVar22[4] * 0x10) * 4 + DAT_8008d878),
+					sdata.lngStrings[data.MetaDataCharacters[(int)psVar22[4]].name_LNG_long],
 					(int)(((u_int)*(u_short *)(iVar8 + 0xa6) + (u_int)(u_short)DAT_800b5a0c[j * 2] + (((int)((u_int)DAT_800b5a30 << 0x10) >> 0x10) - ((int)((u_int)DAT_800b5a30 << 0x10) >> 0x1f) >> 1)) * 0x10000) >> 0x10,
 					(int)sVar6, fontType, 0xffff8000
 				);
