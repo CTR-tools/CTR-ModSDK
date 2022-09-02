@@ -20,6 +20,7 @@ common, 230, MM_Cheat_IcyTracks, 0x0, src/MM_Cheat_IcyTracks.c
 common, 230, MM_Cheat_SuperTurboPads, 0x0, src/MM_Cheat_SuperTurboPads.c
 common, 230, MM_Cheat_OneLap, 0x0, src/MM_Cheat_OneLap.c
 common, 230, MM_Cheat_TurboCounter, 0x0, src/MM_Cheat_TurboCounter.c
+common, 230, MM_Characters_boolIsInvalid, 0x0, src/MM_Characters_boolIsInvalid.c
 
 // 233 overlay (Cutscene)
 common, 233, CS_Podium_FullScene_Init, 0x0, src/CS_Podium_FullScene_Init.c

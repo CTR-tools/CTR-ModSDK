@@ -1,70 +1,75 @@
+#include <ovr_230.h>
+
 // character selection menu, 
 // MenuBox_FuncPtr for menuBox: 0x800b46b4;
 
 void MM_Characters_MenuBox()
 {
-	u_char bVar1;
-	char bVar2;
-	char bVar3;
-	u_short uVar4;
-	short *psVar5;
+	u_char numScreens;
+	int bVar2;
+	int bVar3;
+	u_short characterSelectFlags5bit;
+	short* psVar5;
 	short sVar6;
-	short sVar7;
+	short nextDriver;
 	int iVar8;
-	u_int uVar9;
+	u_int button;
 	short sVar10;
-	int iVar11;
-	undefined *puVar12;
-	undefined4 characterSelectType;
-	undefined4 uVar14;
-	undefined4 *puVar15;
-	u_int uVar16;
-	int iVar17;
-	short *psVar18;
-	int iVar19;
-	u_short uVar20;
-	u_int uVar21;
-	short *psVar22;
-	u_short *puVar23;
+	int globalIconPerPlayerCopy5;
+	u_char* puVar12;
+	u_int characterSelectType;
+	u_int fontType;
+	u_int* iconColor;
+	u_int globalIconPerPlayerCopy3;
+	int nextDriverCopy;
+	short* psVar18;
+	int globalIconPerPlayerCopy4;
+	u_short globalIconPerPlayerCopy;
+	u_int globalIconPerPlayerCopy2;
+	short* psVar22;
+	u_short* globalIconPerPlayerPtr2;
 	int iVar24;
-	u_int uVar25;
-	u_short *puVar26;
-	short globalIconPerPlayer [4];
+	u_int k;
+	u_short* puVar26;
+	short globalIconPerPlayer[4];
 	short local_80;
 	short local_7e;
-	undefined2 local_7c;
-	undefined2 local_7a;
-	undefined auStack120 [8];
-	
-	// really just "int"
+	u_short local_7c;
+	u_short local_7a;
+	u_char auStack120[8];
+
 	u_char colorR;
 	u_char colorG;
 	u_char colorB;
-	u_char colorA;
-	
-	undefined2 local_68;
+
+	u_short local_68;
 	u_short local_66;
-	undefined2 local_64;
-	undefined2 local_62;
-	
-	undefined4 local_60;
-	undefined4 local_5c;
-	undefined4 local_58;
-	undefined4 local_54;
-	
+	u_short local_64;
+	u_short local_62;
+
+	u_int local_60;
+	u_int local_5c;
+	u_int local_58;
+	u_int local_54;
+
 	short local_50;
-	short *local_30;
+	short* globalIconPerPlayerPtr;
 
 	int i;
+	int j;
+	short transitionFrames;
+	int posX;
+	int posY;
 	u_int characterSelectString;
-	u_int iu;
+	short playerIcon;
+	int direction;
 	
 	// loop counter
 	i = 0;
 	
 	for (i = 0; i < 4; i++)
 	{
-		globalIconPerPlayer[i] =  OVR_230.characterIcon[data.characterIDs[i]];
+		globalIconPerPlayer[i] = OVR_230.characterIcon[data.characterIDs[i]];
 	}
 	
 	// if menu is in focus
@@ -72,13 +77,13 @@ void MM_Characters_MenuBox()
 	{
 		MM_Characters_SetMenuLayout();
 		MM_Characters_DrawWindows(1);
-		sVar6 = OVR_230.transitionFrames;
+		transitionFrames = OVR_230.transitionFrames;
 	}
 	
 	// if transitioning (in or out)
 	else
 	{
-		sVar6 = OVR_230.transitionFrames;
+		transitionFrames = OVR_230.transitionFrames;
 		if (OVR_230.isMenuTransitioning < 2) 
 		{
 			// if transitioning in
@@ -89,14 +94,14 @@ void MM_Characters_MenuBox()
 				MM_Characters_DrawWindows(1);
 		
 				// subtract frame
-				sVar6 = OVR_230.transitionFrames--;
+				transitionFrames = OVR_230.transitionFrames--;
 		
 				// if no more frames
 				if (OVR_230.transitionFrames == 0) 
 				{
 					// menu is now in focus
 					OVR_230.isMenuTransitioning = 1;
-					sVar6 = OVR_230.transitionFrames;
+					transitionFrames = OVR_230.transitionFrames;
 				}
 			}
 		}
@@ -111,7 +116,7 @@ void MM_Characters_MenuBox()
 		
 				// increase frame
 				OVR_230.transitionFrames++;
-				sVar6 = OVR_230.transitionFrames;
+				transitionFrames = OVR_230.transitionFrames;
 				
 				// if more than 12 frames
 				if (OVR_230.transitionFrames > 12) 
@@ -147,7 +152,8 @@ void MM_Characters_MenuBox()
 			}
 		}
 	}
-	OVR_230.transitionFrames = sVar6;
+	OVR_230.transitionFrames = transitionFrames;
+
 	switch(OVR_230.characterSelectNumScreens)
 	{
 		default:
@@ -156,10 +162,9 @@ void MM_Characters_MenuBox()
 		// 3P character selection
 		case 2:
 	
-			// If you have a lot of characters unlocked,
-			// do not draw SELECT CHARACTER
+			// If you have a lot of characters unlocked, do not draw SELECT CHARACTER
 			if (OVR_230.isRosterExpanded) goto dontDrawSelectCharacter;
-		
+	
 			// SELECT
 			DecalFont_DrawLine
 			(
@@ -173,13 +178,13 @@ void MM_Characters_MenuBox()
 			// CHARACTER
 			characterSelectString = sdata.lngStrings[98];
 			
-			iVar24 = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0x9c) * 0x10000) >> 0x10;
-			sVar6 = *(short *)(DAT_800b5a3c + 0x9e) + 0x26;
+			posX = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0x9c) * 0x10000) >> 0x10;
+			posY = *(short *)(DAT_800b5a3c + 0x9e) + 0x26;
 			break;
-	
+		
 		// 4P character selection
 		case 3:
-	
+		
 			// If Fake Crash is unlocked, do not draw "Select Character"
 			if (sdata.gameProgress.Unlocks.characters_tracks & 0x800) goto dontDrawSelectCharacter;
 		
@@ -196,106 +201,96 @@ void MM_Characters_MenuBox()
 			// CHARACTER
 			characterSelectString = sdata.lngStrings[98];
 		
-			iVar24 = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10;
-			sVar6 = *(short *)(DAT_800b5a3c + 0x9e) + 0x18;
+			posX = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10;
+			posY = *(short *)(DAT_800b5a3c + 0x9e) + 0x18;
 			break;
-	
+		
 		// If you are in 1P or 2P character selection,
 		// when you do NOT have a lot of characters selected
 		case 4:
 		case 5:
 			characterSelectType = 1;
-	
+		
 			// SELECT CHARACTER
 			characterSelectString = sdata.lngStrings[96];
-	
-			iVar24 = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10;
-			sVar6 = *(short *)(DAT_800b5a3c + 0x9e) + 10;
+		
+			posX = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10;
+			posY = *(short *)(DAT_800b5a3c + 0x9e) + 10;
 	}
 	
 	// Draw String
-	DecalFont_DrawLine(characterSelectString, iVar24, (int)sVar6, characterSelectType, 0xffff8000);
+	DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, 0xffff8000);
 	
 	dontDrawSelectCharacter:
 
-	// loop counter
-	iu = 0;
-	
 	// if number of players is not zero
 	if (sdata.gGT->numScreens)
 	{
-		local_30 = globalIconPerPlayer;
-	
-		for (iu = 0; iu < numPlayers; iu++)
+		globalIconPerPlayerPtr = &globalIconPerPlayer[0];
+
+		for (i = 0; i < sdata.gGT->numScreens; i++)
 		{
-			// copy the loop counter
-			sVar6 = (short)iu;
+			characterSelectFlags5bit = (u_short)(1 << (i & 0x1f));
+			globalIconPerPlayerCopy = globalIconPerPlayerPtr[i];
+			globalIconPerPlayerCopy2 = globalIconPerPlayerCopy;
 		
-			// copy it again
-			uVar16 = SEXT24(sVar6);
-		
-			uVar4 = (u_short)(1 << (uVar16 & 0x1f));
-			uVar20 = local_30[uVar16];
-			uVar21 = (u_int)uVar20;
-		
-			MM_Characters_AnimateColors(auStack120, uVar16, (int)(short)(sdata.characterSelectFlags & uVar4));
+			MM_Characters_AnimateColors(auStack120, i, (int)(short)(sdata.characterSelectFlags & characterSelectFlags5bit));
 			
-			puVar26 = (u_short *)(DAT_800b5a18 + (int)(short)uVar20 * 6);
+			puVar26 = (u_short *)(DAT_800b5a18 + (int)(short)globalIconPerPlayerCopy * 6);
 			
 			if
 			(
-				(OVR_230.isMenuTransitioning == 1) &&
+				(OVR_230.isMenuTransitioning == 1) && 
 				(
 					// get input from this player
-					uVar9 = sdata.buttonTapPerPlayer[uVar16], 
+					button = sdata.buttonTapPerPlayer[i], 
 				
 					// If you press the D-Pad, or Cross, Square, Triangle, Circle
-					uVar9 & 0x4007f
+					button & 0x4007f
 				)
 			)
 			{
 				// if character has not been selected by this player
-				if (((int)(short)sdata.characterSelectFlags >> (uVar16 & 0x1f) & 1U) == 0)
+				if (((int)(short)sdata.characterSelectFlags >> (i & 0x1f) & 1U) == 0)
 				{
-					
 					// If you pressed any of the D-pad buttons
-					if ((uVar9 & 0xf) != 0) 
+					if ((button & 0xf) != 0) 
 					{
 						local_50 = 0;
-			
+				
 						// If you do not press Up
-						if ((uVar9 & 1) == 0) 
+						if ((button & 1) == 0) 
 						{	
 							// If you do not press Down
-							if ((uVar9 & 2) == 0) 
+							if ((button & 2) == 0) 
 							{
 								// This must be if you press Left,
 								// because the variable will change
 								// if it is anything that isn't Left
-								
+									
 								// Left
-								iVar24 = 2;
-				
+								direction = 2;
+					
 								// If you press Left
-								if ((uVar9 & 4) != 0) goto LAB_800aec08;
-				
+								if ((button & 4) != 0) goto LAB_800aec08;
+					
 								// At this point, you must have pressed Right
-				
+					
 								// Right
-								iVar24 = 3;
-				
+								direction = 3;
+					
 								// Move down character selection list
-								(&DAT_800b59e8)[uVar16] = 1;
+								(&DAT_800b59e8)[i] = 1;
 							}
 				
 							// If you pressed Down
 							else 
 							{
 								// Down
-								iVar24 = 1;
+								direction = 1;
 				
 								// Move down character selection list
-								(&DAT_800b59e8)[uVar16] = 1;
+								(&DAT_800b59e8)[i] = 1;
 							}
 						}
 			
@@ -303,78 +298,78 @@ void MM_Characters_MenuBox()
 						else 
 						{
 							// Up
-							iVar24 = 0;
+							direction = 0;
 							LAB_800aec08:
 							// If you press Up or Left
 				
 							// Move up character selection list
-							(&DAT_800b59e8)[uVar16] = 0xffff;
+							(&DAT_800b59e8)[i] = 0xffff;
 						}
 			
-						iVar8 = (int)sVar6;
-						puVar23 = (u_short *)(local_30 + iVar8);
-						uVar16 = uVar21;
+						j = i;
+						globalIconPerPlayerPtr2 = &globalIconPerPlayerPtr[j];
+						globalIconPerPlayerCopy3 = globalIconPerPlayerCopy2;
 						do
 						{
-							sVar10 = (short)uVar16;
-							uVar21 = MM_Characters_GetNextDriver(iVar24, (int)sVar10);
-							iVar19 = (int)(uVar21 << 0x10) >> 0x10;
+							globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy3);
+							globalIconPerPlayerCopy4 = globalIconPerPlayerCopy2;
 							
-							if (uVar21 << 0x10 == uVar16 << 0x10) 
+							if (globalIconPerPlayerCopy2 == globalIconPerPlayerCopy3) 
 							{
 								local_50 = 1;
-								sVar7 = MM_Characters_GetNextDriver(iVar24, (int)(short)*puVar23);
-								iVar17 = (int)sVar7;
-								uVar21 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5384)[iVar24], iVar17);
-								iVar11 = (int)(short)uVar21;
+								nextDriver = MM_Characters_GetNextDriver(direction, (int)(short)*globalIconPerPlayerPtr2);
+								nextDriverCopy = (int)nextDriver;
+								globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5384)[direction], nextDriverCopy);
+								globalIconPerPlayerCopy5 = (int)(short)globalIconPerPlayerCopy2;
+
 								if
 								(
-									(((iVar11 == iVar19) || (iVar17 == iVar19)) || (iVar17 == iVar11)) ||
-									(uVar9 = MM_Characters_boolIsInvalid(local_30, iVar11, iVar8), (uVar9 & 0xffff) != 0)
-								) 
+									(((globalIconPerPlayerCopy5 == globalIconPerPlayerCopy4) || (nextDriverCopy == globalIconPerPlayerCopy4)) || (nextDriverCopy == globalIconPerPlayerCopy5)) ||
+									(button = MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy5, j), (button & 0xffff) != 0)
+								)
 								{
-									sVar7 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5384)[iVar24], (int)(short)*puVar23);
-									iVar11 = (int)sVar7;
-									uVar21 = MM_Characters_GetNextDriver(iVar24, iVar11);
-									iVar19 = (int)(short)uVar21;
-					
-					
+									nextDriver = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5384)[direction], (int)(short)*globalIconPerPlayerPtr2);
+									globalIconPerPlayerCopy5 = (int)nextDriver;
+									globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy5);
+									globalIconPerPlayerCopy4 = (int)(short)globalIconPerPlayerCopy2;
+
 									if
 									(
-										((iVar19 == (int)sVar10) || (iVar11 == (int)sVar10)) ||
+										((globalIconPerPlayerCopy4 == globalIconPerPlayerCopy3) || (globalIconPerPlayerCopy5 == globalIconPerPlayerCopy3)) ||
 										(
-											(iVar11 == iVar19 || (uVar9 = MM_Characters_boolIsInvalid(local_30, iVar19, iVar8), (uVar9 & 0xffff) != 0))
+											(globalIconPerPlayerCopy5 == globalIconPerPlayerCopy4 ||
+											(button = MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy4, j), (button & 0xffff) != 0))
 										)
 									)
 									{
-										sVar7 = MM_Characters_GetNextDriver(iVar24, (int)(short)*puVar23);
-										iVar11 = (int)sVar7;
-										uVar21 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5388)[iVar24], iVar11);
-										iVar19 = (int)(short)uVar21;
+										nextDriver = MM_Characters_GetNextDriver(direction, (int)(short)*globalIconPerPlayerPtr2);
+										globalIconPerPlayerCopy5 = (int)nextDriver;
+										globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5388)[direction], globalIconPerPlayerCopy5);
+										globalIconPerPlayerCopy4 = (int)(short)globalIconPerPlayerCopy2;
+
 										if
 										(
-											((iVar19 == (int)sVar10) || (iVar11 == (int)sVar10)) ||
+											((globalIconPerPlayerCopy4 == globalIconPerPlayerCopy3) || (globalIconPerPlayerCopy5 == globalIconPerPlayerCopy3)) ||
 											(
 												(
-													iVar11 == iVar19 ||
-													(uVar9 = MM_Characters_boolIsInvalid(local_30, iVar19, iVar8), (uVar9 & 0xffff) != 0)
+													globalIconPerPlayerCopy5 == globalIconPerPlayerCopy4 ||
+													(button = MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy4, j), (button & 0xffff) != 0)
 												)
 											)
 										) 
 										{
-						
-											sVar7 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5388)[iVar24], (int)(short)*puVar23);
-											iVar11 = (int)sVar7;
-											uVar21 = MM_Characters_GetNextDriver(iVar24, iVar11);
-											iVar19 = (int)(short)uVar21;
-						
+											nextDriver = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5388)[direction], (int)(short)*globalIconPerPlayerPtr2);
+											globalIconPerPlayerCopy5 = (int)nextDriver;
+											globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy5);
+											globalIconPerPlayerCopy4 = (int)(short)globalIconPerPlayerCopy2;
+
 											if
 											(
-												(((iVar19 == (int)sVar10) || (iVar11 == (int)sVar10)) || (iVar11 == iVar19)) ||
-												(uVar9 = MM_Characters_boolIsInvalid(local_30, iVar19, iVar8), (uVar9 & 0xffff) != 0)
+												(((globalIconPerPlayerCopy4 == globalIconPerPlayerCopy3) || (globalIconPerPlayerCopy5 == globalIconPerPlayerCopy3)) || (globalIconPerPlayerCopy5 == globalIconPerPlayerCopy4)) ||
+												(button = MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy4, j), (button & 0xffff) != 0)
 											)
 											{
-												uVar21 = (u_int)*puVar23;
+												globalIconPerPlayerCopy2 = (u_int)*globalIconPerPlayerPtr2;
 											}
 										}
 									}
@@ -382,83 +377,61 @@ void MM_Characters_MenuBox()
 							}
 							bVar2 = false;
 				
-							// loop counter
-							i = 0;
-				
 							// If number of players is not zero
 							if (sdata.gGT->numScreens) 
 							{
-								iVar11 = 0;
-				
-								// for i = 0; i < numPlayers; i++
-								do 
+								for (k = 0; k < sdata.gGT->numScreens; k++)
 								{
-									if ((iVar11 >> 0x10 != iVar8) && ((short)uVar21 == local_30[iVar11 >> 0x10]))
+									if((k != j) && ((short)globalIconPerPlayerCopy2 == globalIconPerPlayerPtr[k]))
 									{
 										bVar2 = true;
 										break;
 									}
-					
-									// increment loop counter
-									i = i + 1;
-					
-									iVar11 = i * 0x10000;
-								} while (i * 0x10000 >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+								}
 							}
-							if (uVar16 << 0x10 != uVar21 << 0x10) 
+							if (globalIconPerPlayerCopy3 << 0x10 != globalIconPerPlayerCopy2 << 0x10) 
 							{
 								// Play sound
-								OtherFX_Play(0,1);
+								OtherFX_Play(0, 1);
 							}
 							if (local_50 != 0)
 							{
 								bVar3 = !bVar2;
 								bVar2 = false;
 								if (bVar3) break;
-								uVar21 = (u_int)*puVar23;
+								globalIconPerPlayerCopy2 = (u_int)*globalIconPerPlayerPtr2;
 							}
-							uVar16 = uVar21;
+							globalIconPerPlayerCopy3 = globalIconPerPlayerCopy2;
 						} while (bVar2);
 					}
-					uVar20 = (u_short)uVar21;
-			
-					// loop counter
-					i = 0;
+					globalIconPerPlayerCopy = (u_short)globalIconPerPlayerCopy2;
 			
 					// if number of players is not zero
 					if (sdata.gGT->numScreens) 
 					{
-						iVar8 = 0;
-			
-						// for i = 0; i < numPlayers; i++
-						do
+						for (j = 0; j < sdata.gGT->numScreens; j++)
 						{
-							if ((iVar8 >> 0x10 != (int)sVar6) && ((short)uVar21 == local_30[iVar8 >> 0x10]))
+							if ((j != i) && ((short)globalIconPerPlayerCopy2 == globalIconPerPlayerPtr[j]))
 							{
-								uVar21 = (u_int)(u_short)local_30[(int)sVar6];
+								globalIconPerPlayerCopy2 = (u_int)(u_short)globalIconPerPlayerPtr[i];
 							}
-							uVar20 = (u_short)uVar21;
-				
-							// increment loop counter
-							i = i + 1;
-				
-							iVar8 = i * 0x10000;
-						} while (i * 0x10000 >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+							globalIconPerPlayerCopy = (u_short)globalIconPerPlayerCopy2;
+						}
 					}
 			
 					// If this player pressed Cross or Circle
-					if (((&sdata.buttonTapPerPlayer[0])[(int)sVar6] & 0x50) != 0) 
+					if (((sdata.buttonTapPerPlayer)[i] & 0x50) != 0) 
 					{
 						// this player has now selected a character
-						sdata.characterSelectFlags = sdata.characterSelectFlags | (u_short)(1 << ((int)sVar6 & 0x1fU));
+						sdata.characterSelectFlags = sdata.characterSelectFlags | (u_short)(1 << (i & 0x1fU));
 			
-						bVar1 = sdata.gGT->numScreens;
+						numScreens = sdata.gGT->numScreens;
 			
 						// Play sound
 						OtherFX_Play();
 			
 						// if all players have selected their characters
-						if ((int)(short)sdata.characterSelectFlags == ((0xff << ((u_int)bVar1 & 0x1f) ^ 0xffU) & 0xff)) 
+						if ((int)(short)sdata.characterSelectFlags == ((0xff << ((u_int)numScreens & 0x1f) ^ 0xffU) & 0xff)) 
 						{
 							// move to track selection
 							OVR_230.movingToTrackMenu = 1;
@@ -469,7 +442,7 @@ void MM_Characters_MenuBox()
 					if
 					(
 						// if this is the first iteration of the loop
-						((iu & 0xffff) == 0) && 
+						((i & 0xffff) == 0) && 
 				
 						// if you press Square or Triangle
 						((sdata.buttonTapPerPlayer[0] & 0x40020) != 0)
@@ -486,38 +459,37 @@ void MM_Characters_MenuBox()
 				else 
 				{
 					// if you press Square or Triangle
-					if ((uVar9 & 0x40020) != 0) 
+					if ((button & 0x40020) != 0) 
 					{
 						// Play sound
 						OtherFX_Play(2, 1);
 			
 						// this player has de-selected their character
-						sdata.characterSelectFlags = sdata.characterSelectFlags & ~uVar4;
+						sdata.characterSelectFlags = sdata.characterSelectFlags & ~characterSelectFlags5bit;
 					}
 				}
 		
 				// clear input
-				sdata.buttonTapPerPlayer[iu] = 0;
+				sdata.buttonTapPerPlayer[i] = 0;
 			}
-			uVar21 = SEXT24(sVar6);
-			local_30[uVar21] = uVar20;
-			iVar24 = (int)(short)uVar20 * 10 + DAT_800b5a3c;
+			globalIconPerPlayerPtr[i] = globalIconPerPlayerCopy;
+			iVar24 = (int)(short)globalIconPerPlayerCopy * 10 + DAT_800b5a3c;
 			local_80 = *(short *)(iVar24 + 6) + *puVar26;
 			local_7c = 0x34;
 			local_7a = 0x21;
 			local_7e = *(short *)(iVar24 + 8) + puVar26[1];
 		
 			// if player has not selected a character
-			if (((int)(short)sdata.characterSelectFlags >> (uVar21 & 0x1f) & 1U) == 0) 
+			if (((int)(short)sdata.characterSelectFlags >> (i & 0x1f) & 1U) == 0) 
 			{
 				// draw string
 				// "1", "2", "3", "4", above the character icon
 				DecalFont_DrawLine
 				(
-					(&PTR_DAT_800aba28_800b5374)[uVar21],
+					(&PTR_DAT_800aba28_800b5374)[i],
 					(int)(((u_int)*(u_short *)(iVar24 + 6) + (u_int)*puVar26 + -6) * 0x10000) >> 0x10,
-					(int)(((u_int)*(u_short *)(iVar24 + 8) + (u_int)puVar26[1] + -3) * 0x10000) >>
-					0x10, 1, 4
+					(int)(((u_int)*(u_short *)(iVar24 + 8) + (u_int)puVar26[1] + -3) * 0x10000) >> 0x10,
+					1, 4
 				);
 				puVar12 = auStack120;
 			}
@@ -526,16 +498,9 @@ void MM_Characters_MenuBox()
 				puVar12 = &DAT_800b538c;
 			}
 		
-			// DrawBoxOutline_HighLevel (solid)
-			DrawBoxOutline_HighLevel(&local_80,puVar12,0,sdata.gGT->backBuffer->otMem.startPlusFour);
-			
-		// increment loop counter
-		iu = iu + 1;
-		} while ((int)(iu * 0x10000) >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+			DrawBoxOutline_HighLevel(&local_80, puVar12, 0, sdata.gGT->backBuffer->otMem.startPlusFour);
+		}
 	}
-	
-	// loop counter
-	i = 0;
 	
 	MM_Characters_ClearInactivePlayers();
 	
@@ -543,57 +508,44 @@ void MM_Characters_MenuBox()
 	psVar22 = DAT_800b5a18;
 	
 	// loop through character icons
-	
-	// for i = 0; i < 0xf; i++
-	do 
+
+	for (i = 0; i < 0xf; i++)
 	{
-		iVar8 = (u_int)(u_short)psVar18[4] << 0x10;
+		iVar8 = psVar18[4];
 		if
 		(
 			// If Icon is unlocked (from array of icons)
-			(iVar8 >> 0x10 == -1) ||
+			(iVar8 == -1) ||
 			
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
 			// also the variable written by cheats
-			(((u_int)(&DAT_8008e6ec)[iVar8 >> 0x15] >> (psVar18[4] & 0x1fU) & 1) != 0)
+			(((u_int)(&sdata.gameProgress.Unlocks.characters_tracks)[iVar8] >> (psVar18[4] & 0x1fU) & 1) != 0)
 		) 
 		{
-			puVar15 = &DAT_800b5390;
-		
-			// loop counter
-			iVar8 = 0;
+			iconColor = &OVR_230.characterSelect_NeutralColor;
 		
 			// if number of players is not zero
 			if (sdata.gGT->numScreens != 0) 
 			{
-				iVar19 = 0;
-		
-				// for iVar8 = 0; iVar8 < numPlayers; iVar8++
-				do 
+				for (j = 0; j < sdata.gGT->numScreens; j++)
 				{
 					if
 					(
-						((short)i == globalIconPerPlayer[iVar19 >> 0x10]) &&
+						((short)i == globalIconPerPlayer[j]) &&
 			
 						// if player selected a character
-						(((int)(short)sdata.characterSelectFlags >> (iVar19 >> 0x10 & 0x1fU) & 1U) != 0)
+						 (((int)(short)sdata.characterSelectFlags >> (j & 0x1fU) & 1U) != 0)
 					)
 					{
-						puVar15 = &DAT_800b5394;
+						iconColor = &OVR_230.characterSelect_ChosenColor;
 					}
-			
-					// increment loop counter
-					iVar8 = iVar8 + 1;
-			
-					iVar19 = iVar8 * 0x10000;
-				} while (iVar8 * 0x10000 >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+				}
 			}
 		
 			iVar8 = (int)(short)i * 10 + DAT_800b5a3c;
 			
 			// Draw Character Icon
-			// DecalHUD_DrawPolyGT4_Safe
 			DecalHUD_DrawPolyGT4_Safe
 			(
 				sdata.gGT->ptrIcons[data.MetaDataCharacters[(int)psVar18[3]].iconID],
@@ -602,69 +554,51 @@ void MM_Characters_MenuBox()
 
 				&sdata.gGT->backBuffer->primMem,
 				sdata.gGT->camera110_UI.ptrOT,
-					 
-				*puVar15, *puVar15, *puVar15, *puVar15, 1, 0x1000
+
+				*iconColor, *iconColor, *iconColor, *iconColor, 1, 0x1000
 			);
 		}
 		psVar5 = DAT_800b5a18;
+
+		psVar18 += 6;
+		psVar22 += 6;
+	}
 	
-		// increment loop counter
-		i = i + 1;
-	
-		psVar18 = psVar18 + 6;
-		psVar22 = psVar22 + 6;
-	} while (i * 0x10000 >> 0x10 < 0xf);
-	
-	// loop counter
-	i = 0;
-	
-	// for i = 0; i < 4; i++
-	do 
+	for (i = 0; i < 4; i++)
 	{
-		iVar8 = (i << 0x10) >> 0xf;
-		
-		// increment loop counter
-		i = i + 1;
-		
-		*(short *)((int)&DAT_80086e84 + iVar8) = psVar5[(int)*(short *)((int)globalIconPerPlayer + iVar8) * 6 + 4];
-	} while (i * 0x10000 >> 0x10 < 4);
-	
-	// loop counter
-	i = 0;
+		data.characterIDs[i] = psVar5[(int)globalIconPerPlayer[i] * 6 + 4];
+	}
 	
 	// if number of players is not zero
 	if (sdata.gGT->numScreens) 
 	{
-		iVar8 = 0;
-	
-		// for i = 0; i < numPlayers; i++
-		do 
+		for (i = 0; i < sdata.gGT->numScreens; i++)
 		{
-			uVar25 = iVar8 >> 0x10;
-			sVar6 = globalIconPerPlayer[uVar25];
-			psVar22 = DAT_800b5a18 + (int)sVar6 * 6;
+			j = i;
+			playerIcon = globalIconPerPlayer[j];
+			psVar22 = DAT_800b5a18 + (int)playerIcon * 6;
 		
 			// if player has not selected a character
-			if (((int)(short)sdata.characterSelectFlags >> (uVar25 & 0x1f) & 1U) == 0) 
+			if (((int)(short)sdata.characterSelectFlags >> (j & 0x1f) & 1U) == 0) 
 			{
 				MM_Characters_AnimateColors
 				(
-					&colorR,uVar25,
-					
+					&colorR, j,
+						
 					// flags of which characters are selected
-					(int)(short)(sdata.characterSelectFlags & (u_short)(1 << (uVar25 & 0x1f)))
+					(int)(short)(sdata.characterSelectFlags & (u_short)(1 << (j & 0x1f)))
 				);
 					
 				colorR = (u_char)((int)((u_int)colorR << 2) / 5);
 				colorG = (u_char)((int)((u_int)colorG << 2) / 5);
 				colorB = (u_char)((int)((u_int)colorB << 2) / 5);
-				
-				iVar8 = (int)sVar6 * 10 + DAT_800b5a3c;
+
+				iVar8 = (int)playerIcon * 10 + DAT_800b5a3c;
 				local_80 = *(short *)(iVar8 + 6) + *psVar22 + 3;
 				local_7c = 0x2e;
 				local_7a = 0x1d;
 				local_7e = *(short *)(iVar8 + 8) + psVar22[1] + 2;
-		
+
 				// this draws the flashing blue square that appears when you highlight a character in the character select screen
 				CTR_Box_DrawSolidBox
 				(
@@ -675,28 +609,29 @@ void MM_Characters_MenuBox()
 			}
 			if
 			(
-				((&DAT_800b5a24)[uVar25] == 0) &&
-				((&DAT_800b59f8)[uVar25] == (&DAT_80086e84)[uVar25])
+				((&DAT_800b5a24)[j] == 0) &&
+				((&DAT_800b59f8)[j] == (&DAT_80086e84)[j])
 			) 
 			{
 				// get number of players
-				bVar1 = sdata.gGT->numScreens;
+				numScreens = sdata.gGT->numScreens;
 		
 				// if number of players is 1 or 2
-				uVar14 = 3;
+				fontType = 3;
 		
 				// if number of players is 3 or 4
-				if (bVar1 >= 3)
+				if (numScreens >= 3)
 				{
-					uVar14 = 2;
+					fontType = 2;
 				}
 		
-				iVar8 = uVar25 * 10 + DAT_800b5a3c;
-				sVar10 = *(short *)(iVar8 + 0xa8) + (DAT_800b5a0c + uVar25 * 2)[1];
-				sVar6 = (short)((((u_int)(bVar1 < 3) ^ 1) << 0x12) >> 0x10);
-				if ((bVar1 == 4) && (1 < (int)uVar25))
+				iVar8 = j * 10 + DAT_800b5a3c;
+				sVar10 = *(short *)(iVar8 + 0xa8) + (DAT_800b5a0c + j * 2)[1];
+				sVar6 = (short)((((u_int)(numScreens < 3) ^ 1) << 0x12) >> 0x10);
+
+				if ((numScreens == 4) && (1 < (int)j))
 				{
-					sVar6 = sVar10 + sVar6 + -6;
+					sVar6 = sVar10 + sVar6 - 6;
 				}
 				else
 				{
@@ -706,35 +641,26 @@ void MM_Characters_MenuBox()
 				// draw string
 				DecalFont_DrawLine
 				(
-					*(undefined4 *)((int)*(short *)(&DAT_80086d88 + (int)psVar22[4] * 0x10) * 4 + DAT_8008d878),
-					(int)(((u_int)*(u_short *)(iVar8 + 0xa6) + (u_int)(u_short)DAT_800b5a0c[uVar25 * 2] + (((int)((u_int)DAT_800b5a30 << 0x10) >> 0x10) - ((int)((u_int)DAT_800b5a30 << 0x10) >> 0x1f) >> 1)) * 0x10000) >> 0x10,
-					(int)sVar6, uVar14, 0xffff8000
+					sdata.lngStrings[data.MetaDataCharacters[(int)psVar22[4]].name_LNG_long],
+					(int)(((u_int)*(u_short *)(iVar8 + 0xa6) + (u_int)(u_short)DAT_800b5a0c[j * 2] + (((int)((u_int)DAT_800b5a30 << 0x10) >> 0x10) - ((int)((u_int)DAT_800b5a30 << 0x10) >> 0x1f) >> 1)) * 0x10000) >> 0x10,
+					(int)sVar6, fontType, 0xffff8000
 				);
 			}
 			
 			// rotation of each driver, 90 degrees difference
-			psVar22 = (short *)((int)&DAT_800b5a00 + ((i << 0x10) >> 0xf));
-		
-			// increment loop counter
-			i = i + 1;
+			psVar22 = (short *)((int)&DAT_800b5a00 + i * 2);
 		
 			// spin driver each frame
-			*psVar22 = *psVar22 + 0x40;
-		
-			iVar8 = i * 0x10000;
-		} while (i * 0x10000 >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+			*psVar22 += 0x40;
+		}
 	}
-	
-	// loop counter
-	i = 0;
 	
 	psVar18 = DAT_800b5a18 + 1;
 	psVar22 = DAT_800b5a18;
 	
 	// loop through all icons
-	
-	// for i = 0; i < 0xf; i++
-	do 
+
+	for (i = 0; i < 0xf; i++)
 	{
 		iVar8 = (u_int)(u_short)psVar18[4] << 0x10;
 		
@@ -746,7 +672,7 @@ void MM_Characters_MenuBox()
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
 			// also the variable written by cheats
-			(((u_int)(&DAT_8008e6ec)[iVar8 >> 0x15] >> (psVar18[4] & 0x1fU) & 1) != 0)
+			(((u_int)(&sdata.gameProgress.Unlocks.characters_tracks)[iVar8 >> 0x15] >> (psVar18[4] & 0x1fU) & 1) != 0)
 		) 
 		{
 			iVar8 = (int)(short)i * 10 + DAT_800b5a3c;
@@ -758,61 +684,47 @@ void MM_Characters_MenuBox()
 			// Draw 2D Menu rectangle background
 			DrawTextBackground(&local_68, 0, sdata.gGT->backBuffer->otMem.startPlusFour);
 		}
-	
-		// increment loop counter
-		i = i + 1;
-	
+
 		// advence both short* arrays by 6 shorts,
 		// which is 12 (0xc) bytes, size of
 		// character icon buffer
-		psVar18 = psVar18 + 6;
-		psVar22 = psVar22 + 6;
-	} while (i * 0x10000 >> 0x10 < 0xf);
-	
-	// loop counter
-	i = 0;
+		psVar18 += 6;
+		psVar22 += 6;
+	}
 	
 	// if number of players is not zero
-	if (sdata.gGT->numScreens) 
+	if (sdata.gGT->numScreens != 0) 
 	{
 		psVar22 = DAT_800b5a0c;
-	
-		// for i = 0; i < numPlayers; i++
-		do
+
+		for (i = 0; i < sdata.gGT->numScreens; i++)
 		{
-			uVar25 = SEXT24((short)i);
-			iVar8 = uVar25 * 10 + DAT_800b5a3c;
+			j = i;
+			iVar8 = j * 10 + DAT_800b5a3c;
 			
 			// store window width and height in one 4-byte variable
 			local_5c = CONCAT22(DAT_800b59dc, DAT_800b5a30);
 		
 			local_60 = CONCAT22(*(short *)(iVar8 + 0xa8) + psVar22[1], *(short *)(iVar8 + 0xa6) + *psVar22);
 			
-			// MM_Characters_AnimateColors
-			MM_Characters_AnimateColors(&local_68, uVar25, ((int)(short)sdata.characterSelectFlags >> (uVar25 & 0x1f) ^ 1U) & 1);
+			MM_Characters_AnimateColors(&local_68, j, ((int)(short)sdata.characterSelectFlags >> (j & 0x1f) ^ 1U) & 1);
 			
-			// DrawBoxOutline_HighLevel (solid)
 			DrawBoxOutline_HighLevel(&local_60, &local_68, 0, sdata.gGT->backBuffer->otMem.startPlusFour);
 			
-			iVar8 = 0;
-		
 			// if player selected a character
-			if (((int)(short)sdata.characterSelectFlags >> (uVar25 & 0x1f) & 1U) != 0) 
+			if (((int)(short)sdata.characterSelectFlags >> (j & 0x1f) & 1U) != 0) 
 			{
 				local_58 = local_60;
 				local_54 = local_5c;
-				do
+				for (iVar8 = 0; iVar8 < 2; iVar8++)
 				{
 					local_58 = CONCAT22((short)((u_int)local_58 >> 0x10) + 2, (short)local_58 + 3);
 					local_68 = CONCAT11((char)((int)((u_int)local_68._1_1_ << 2) / 5), (char)((int)((u_int)(u_char)local_68 << 2) / 5));
 					local_54 = CONCAT22((short)((u_int)local_54 >> 0x10) + -4, (short)local_54 + -6);
 					local_66 = local_66 & 0xff00 | (u_short)(u_char)((int)((u_int)(u_char)local_66 << 2) / 5);
 					
-					// DrawBoxOutline_HighLevel (solid)
 					DrawBoxOutline_HighLevel(&local_58, &local_68, 0, sdata.gGT->backBuffer->otMem.startPlusFour);
-					
-					iVar8 = iVar8 + 1;
-				} while (iVar8 * 0x10000 >> 0x10 < 2);
+				}
 			}
 			psVar22 = psVar22 + 2;
 		
@@ -826,11 +738,8 @@ void MM_Characters_MenuBox()
 				&local_60, &DAT_800b5398,
 				sdata.gGT->camera110[i].ptrOT + 0xffc, sdata.gGT->backBuffer->primMem
 			);
-					 
-			// increment loop counter
-			i = i + 1;
 		
-		} while (i * 0x10000 >> 0x10 < (int)(u_int)(u_char)sdata.gGT->numScreens);
+		}
 	}
 	return;
 }
