@@ -498,7 +498,7 @@ void BOTS_Driver_Init_custom(int slot)
 	struct Driver* dr;
 	int i;
 	
-	th = (struct Thread*)INSTANCE_BirthWithThread(
+	th = (struct Thread*)THREAD_BirthWithObject(
 			0x62c0101,BOTS_PerFrame_Drive_custom,"robotcar",0);
 	
 	dr = (struct Driver*)th->object;

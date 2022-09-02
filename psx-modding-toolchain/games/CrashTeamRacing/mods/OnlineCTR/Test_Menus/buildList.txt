@@ -1,0 +1,24 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Compile main code to empty spaces in RDATA
+common, exe, rdata_free, 0x0, src/main.c src/menu.c src/driverLoadAsync.c, rdata.bin
+
+// hooks
+common, exe, __main, 0x68, src/hookEntry.s
+common, exe, StringToLevID, -0x8, src/hookInit.s
+
+// modified from OvMPK
+common, exe, Driver_GetModelByName, 0x0, src/OvMPK_StringSearch.c
+common, exe, LOAD_DriverMPK, 0x0, src/OvMPK_LoadMPK.c
+
+// new spawning
+common, exe, AllocAllDrivers, 0x0, src/SpawnDrivers.c
+
+// appended load queue
+common, exe, LOAD_AppendQueue, 0x0, src/AppendQueue.c
+
+// BOT init
+common, exe, BOTS_Driver_Init, 0x0, src/BOTS_Init.c
