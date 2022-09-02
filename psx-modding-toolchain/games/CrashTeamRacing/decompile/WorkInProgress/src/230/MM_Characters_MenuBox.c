@@ -5,13 +5,13 @@
 
 void MM_Characters_MenuBox()
 {
-	u_char bVar1;
+	u_char numScreens;
 	bool bVar2;
 	bool bVar3;
-	u_short first5Bits;
+	u_short characterSelectFlags5bit;
 	short* psVar5;
 	short sVar6;
-	short sVar7;
+	short nextDriver;
 	int iVar8;
 	u_int uVar9;
 	short sVar10;
@@ -31,12 +31,12 @@ void MM_Characters_MenuBox()
 	int iVar24;
 	u_int uVar25;
 	u_short* puVar26;
-	short globalIconPerPlayer [4];
+	short globalIconPerPlayer[4];
 	short local_80;
 	short local_7e;
 	undefined2 local_7c;
 	undefined2 local_7a;
-	undefined auStack120 [8];
+	undefined auStack120[8];
 
 	u_char colorR;
 	u_char colorG;
@@ -56,7 +56,11 @@ void MM_Characters_MenuBox()
 	short* local_30;
 
 	int i;
+	short transitionFrames;
+	int posX;
+	int posY;
 	u_int characterSelectString;
+	short playerIcon;
 	
 	// loop counter
 	i = 0;
@@ -71,13 +75,13 @@ void MM_Characters_MenuBox()
 	{
 		MM_Characters_SetMenuLayout();
 		MM_Characters_DrawWindows(1);
-		sVar6 = OVR_230.transitionFrames;
+		transitionFrames = OVR_230.transitionFrames;
 	}
 	
 	// if transitioning (in or out)
 	else
 	{
-		sVar6 = OVR_230.transitionFrames;
+		transitionFrames = OVR_230.transitionFrames;
 		if (OVR_230.isMenuTransitioning < 2) 
 		{
 			// if transitioning in
@@ -88,14 +92,14 @@ void MM_Characters_MenuBox()
 				MM_Characters_DrawWindows(1);
 		
 				// subtract frame
-				sVar6 = OVR_230.transitionFrames--;
+				transitionFrames = OVR_230.transitionFrames--;
 		
 				// if no more frames
 				if (OVR_230.transitionFrames == 0) 
 				{
 					// menu is now in focus
 					OVR_230.isMenuTransitioning = 1;
-					sVar6 = OVR_230.transitionFrames;
+					transitionFrames = OVR_230.transitionFrames;
 				}
 			}
 		}
@@ -110,7 +114,7 @@ void MM_Characters_MenuBox()
 		
 				// increase frame
 				OVR_230.transitionFrames++;
-				sVar6 = OVR_230.transitionFrames;
+				transitionFrames = OVR_230.transitionFrames;
 				
 				// if more than 12 frames
 				if (OVR_230.transitionFrames > 12) 
@@ -146,7 +150,7 @@ void MM_Characters_MenuBox()
 			}
 		}
 	}
-	OVR_230.transitionFrames = sVar6;
+	OVR_230.transitionFrames = transitionFrames;
 
 	switch(OVR_230.characterSelectNumScreens)
 	{
@@ -172,8 +176,8 @@ void MM_Characters_MenuBox()
 			// CHARACTER
 			characterSelectString = sdata.lngStrings[98];
 			
-			iVar24 = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0x9c) * 0x10000) >> 0x10;
-			sVar6 = *(short *)(DAT_800b5a3c + 0x9e) + 0x26;
+			posX = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0x9c) * 0x10000) >> 0x10;
+			posY = *(short *)(DAT_800b5a3c + 0x9e) + 0x26;
 			break;
 		
 		// 4P character selection
@@ -195,8 +199,8 @@ void MM_Characters_MenuBox()
 			// CHARACTER
 			characterSelectString = sdata.lngStrings[98];
 		
-			iVar24 = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10;
-			sVar6 = *(short *)(DAT_800b5a3c + 0x9e) + 0x18;
+			posX = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10;
+			posY = *(short *)(DAT_800b5a3c + 0x9e) + 0x18;
 			break;
 		
 		// If you are in 1P or 2P character selection,
@@ -208,12 +212,12 @@ void MM_Characters_MenuBox()
 			// SELECT CHARACTER
 			characterSelectString = sdata.lngStrings[96];
 		
-			iVar24 = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10;
-			sVar6 = *(short *)(DAT_800b5a3c + 0x9e) + 10;
+			posX = (int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10;
+			posY = *(short *)(DAT_800b5a3c + 0x9e) + 10;
 	}
 	
 	// Draw String
-	DecalFont_DrawLine(characterSelectString, iVar24, (int)sVar6, characterSelectType, 0xffff8000);
+	DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, 0xffff8000);
 	
 	dontDrawSelectCharacter:
 
@@ -234,12 +238,11 @@ void MM_Characters_MenuBox()
 			// copy it again
 			uVar16 = SEXT24(sVar6);
 		
-			first5Bits = (u_short)(1 << (uVar16 & 0x1f));
+			characterSelectFlags5bit = (u_short)(1 << (uVar16 & 0x1f));
 			uVar20 = local_30[uVar16];
 			uVar21 = (u_int)uVar20;
 		
-			
-			MM_Characters_AnimateColors(auStack120, uVar16, (int)(short)(sdata.characterSelectFlags & first5Bits));
+			MM_Characters_AnimateColors(auStack120, uVar16, (int)(short)(sdata.characterSelectFlags & characterSelectFlags5bit));
 			
 			puVar26 = (u_short *)(DAT_800b5a18 + (int)(short)uVar20 * 6);
 			
@@ -258,7 +261,6 @@ void MM_Characters_MenuBox()
 				// if character has not been selected by this player
 				if (((int)(short)sdata.characterSelectFlags >> (uVar16 & 0x1f) & 1U) == 0)
 				{
-					
 					// If you pressed any of the D-pad buttons
 					if ((uVar9 & 0xf) != 0) 
 					{
@@ -324,8 +326,8 @@ void MM_Characters_MenuBox()
 							if (uVar21 << 0x10 == uVar16 << 0x10) 
 							{
 								local_50 = 1;
-								sVar7 = MM_Characters_GetNextDriver(iVar24, (int)(short)*puVar23);
-								iVar17 = (int)sVar7;
+								nextDriver = MM_Characters_GetNextDriver(iVar24, (int)(short)*puVar23);
+								iVar17 = (int)nextDriver;
 								uVar21 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5384)[iVar24], iVar17);
 								iVar11 = (int)(short)uVar21;
 
@@ -335,8 +337,8 @@ void MM_Characters_MenuBox()
 									(uVar9 = MM_Characters_boolIsInvalid(local_30, iVar11, iVar8), (uVar9 & 0xffff) != 0)
 								)
 								{
-									sVar7 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5384)[iVar24], (int)(short)*puVar23);
-									iVar11 = (int)sVar7;
+									nextDriver = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5384)[iVar24], (int)(short)*puVar23);
+									iVar11 = (int)nextDriver;
 									uVar21 = MM_Characters_GetNextDriver(iVar24, iVar11);
 									iVar19 = (int)(short)uVar21;
 
@@ -349,8 +351,8 @@ void MM_Characters_MenuBox()
 										)
 									)
 									{
-										sVar7 = MM_Characters_GetNextDriver(iVar24, (int)(short)*puVar23);
-										iVar11 = (int)sVar7;
+										nextDriver = MM_Characters_GetNextDriver(iVar24, (int)(short)*puVar23);
+										iVar11 = (int)nextDriver;
 										uVar21 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5388)[iVar24], iVar11);
 										iVar19 = (int)(short)uVar21;
 
@@ -365,8 +367,8 @@ void MM_Characters_MenuBox()
 											)
 										) 
 										{
-											sVar7 = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5388)[iVar24], (int)(short)*puVar23);
-											iVar11 = (int)sVar7;
+											nextDriver = MM_Characters_GetNextDriver((u_int)(u_char)(&DAT_800b5388)[iVar24], (int)(short)*puVar23);
+											iVar11 = (int)nextDriver;
 											uVar21 = MM_Characters_GetNextDriver(iVar24, iVar11);
 											iVar19 = (int)(short)uVar21;
 
@@ -454,13 +456,13 @@ void MM_Characters_MenuBox()
 						// this player has now selected a character
 						sdata.characterSelectFlags = sdata.characterSelectFlags | (u_short)(1 << ((int)sVar6 & 0x1fU));
 			
-						bVar1 = sdata.gGT->numScreens;
+						numScreens = sdata.gGT->numScreens;
 			
 						// Play sound
 						OtherFX_Play();
 			
 						// if all players have selected their characters
-						if ((int)(short)sdata.characterSelectFlags == ((0xff << ((u_int)bVar1 & 0x1f) ^ 0xffU) & 0xff)) 
+						if ((int)(short)sdata.characterSelectFlags == ((0xff << ((u_int)numScreens & 0x1f) ^ 0xffU) & 0xff)) 
 						{
 							// move to track selection
 							OVR_230.movingToTrackMenu = 1;
@@ -494,7 +496,7 @@ void MM_Characters_MenuBox()
 						OtherFX_Play(2, 1);
 			
 						// this player has de-selected their character
-						sdata.characterSelectFlags = sdata.characterSelectFlags & ~first5Bits;
+						sdata.characterSelectFlags = sdata.characterSelectFlags & ~characterSelectFlags5bit;
 					}
 				}
 		
@@ -641,8 +643,8 @@ void MM_Characters_MenuBox()
 		do 
 		{
 			uVar25 = iVar8 >> 0x10;
-			sVar6 = globalIconPerPlayer[uVar25];
-			psVar22 = DAT_800b5a18 + (int)sVar6 * 6;
+			playerIcon = globalIconPerPlayer[uVar25];
+			psVar22 = DAT_800b5a18 + (int)playerIcon * 6;
 		
 			// if player has not selected a character
 			if (((int)(short)sdata.characterSelectFlags >> (uVar25 & 0x1f) & 1U) == 0) 
@@ -659,7 +661,7 @@ void MM_Characters_MenuBox()
 				colorG = (u_char)((int)((u_int)colorG << 2) / 5);
 				colorB = (u_char)((int)((u_int)colorB << 2) / 5);
 
-				iVar8 = (int)sVar6 * 10 + DAT_800b5a3c;
+				iVar8 = (int)playerIcon * 10 + DAT_800b5a3c;
 				local_80 = *(short *)(iVar8 + 6) + *psVar22 + 3;
 				local_7c = 0x2e;
 				local_7a = 0x1d;
@@ -668,7 +670,7 @@ void MM_Characters_MenuBox()
 				// this draws the flashing blue square that appears when you highlight a character in the character select screen
 				CTR_Box_DrawSolidBox
 				(
-					&local_80,&colorR,
+					&local_80, &colorR,
 					sdata.gGT->backBuffer->otMem.startPlusFour,
 					&sdata.gGT->backBuffer->primMem
 				);
@@ -680,21 +682,21 @@ void MM_Characters_MenuBox()
 			) 
 			{
 				// get number of players
-				bVar1 = sdata.gGT->numScreens;
+				numScreens = sdata.gGT->numScreens;
 		
 				// if number of players is 1 or 2
 				uVar14 = 3;
 		
 				// if number of players is 3 or 4
-				if (bVar1 >= 3)
+				if (numScreens >= 3)
 				{
 					uVar14 = 2;
 				}
 		
 				iVar8 = uVar25 * 10 + DAT_800b5a3c;
 				sVar10 = *(short *)(iVar8 + 0xa8) + (DAT_800b5a0c + uVar25 * 2)[1];
-				sVar6 = (short)((((u_int)(bVar1 < 3) ^ 1) << 0x12) >> 0x10);
-				if ((bVar1 == 4) && (1 < (int)uVar25))
+				sVar6 = (short)((((u_int)(numScreens < 3) ^ 1) << 0x12) >> 0x10);
+				if ((numScreens == 4) && (1 < (int)uVar25))
 				{
 					sVar6 = sVar10 + sVar6 + -6;
 				}
