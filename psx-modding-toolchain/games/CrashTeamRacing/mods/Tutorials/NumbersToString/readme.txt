@@ -1,0 +1,1 @@
+Converts integers to strings which can be displayed in-game using DecalFont_DrawLine. Stolen from Redhot's PracticeMod with some edits by Superstarxalien.
