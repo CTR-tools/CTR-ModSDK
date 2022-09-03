@@ -20,7 +20,13 @@ struct OnlineCTR
 	int funcs[3];
 };
 
+// set zero to fix DuckStation,
+// is it needed on console?
+#define USE_K1 0
+
+#if USE_K1 == 1
 register struct OnlineCTR* octr asm("k1");
+#endif
 
 // my functions
 void CameraHook_CameraCreation(struct Thread* t);

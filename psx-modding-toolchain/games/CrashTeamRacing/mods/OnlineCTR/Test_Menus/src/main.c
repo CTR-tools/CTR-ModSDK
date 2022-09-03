@@ -41,24 +41,38 @@ void RunEntryHook()
 	// Cancel BOTS_GotoStartingLine, cause it's done manually in BOTS_Init
 	*(int*)0x8001702C = 0x3E00008;
 	*(int*)0x80017030 = 0;
+	
+	// ======== Globals ============
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#else
+	octr = 0x8000C000;
+	#endif
+	
+	// default for first LEV, before gameplay
+	octr->DriverID = 0;
+	octr->NumDrivers = 8;
+
+	// FSM for menus
+	octr->funcs[0] = (int)CameraHook_BootGame;
+	octr->funcs[1] = (int)CameraHook_OpenMenu;
+	octr->funcs[2] = (int)CameraHook_Minimize;
 }
 
 void Thread_FSM(struct Thread* t)
 {
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#endif
+	
 	SetPerFrame_AndExec(t, octr->funcs[octr->NextInit]);
 }
 
 // this runs after the end of InitThreadBuckets,
 // which is also after the end of camera initialization
 void RunInitHook()
-{
-	octr = 0x8000C000;
-	
-	// FSM for menus
-	octr->funcs[0] = (int)CameraHook_BootGame;
-	octr->funcs[1] = (int)CameraHook_OpenMenu;
-	octr->funcs[2] = (int)CameraHook_Minimize;
-	
+{	
 	// small stack pool, pause thread (those threads can't pause)
 	THREAD_BirthWithObject(0x310, Thread_FSM, 0, 0);
 }

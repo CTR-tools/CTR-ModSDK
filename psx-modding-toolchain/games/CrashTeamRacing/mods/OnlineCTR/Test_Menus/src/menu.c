@@ -87,11 +87,13 @@ void CameraHook_BootGame(struct Thread* t)
 	// starting at index 381 (0x17d) is
 	// dialogue for adventure hints
 	
-	char* string = "OnlineCTR";
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#endif
 	
 	// initialize string pointer,
 	// this works cause "OnlineCTR" is stored in RDATA
-	sdata.lngStrings[0x17d] = &string[0];
+	sdata.lngStrings[0x17d] = "OnlineCTR";
 	
 	// unlock everything
 	sdata.advProgress.rewards[0] = 0xffffffff;
@@ -101,10 +103,11 @@ void CameraHook_BootGame(struct Thread* t)
 	sdata.advProgress.rewards[4] = 0xffffffff;
 	sdata.advProgress.rewards[5] = 0xffffffff;
 	
-	// default for first LEV, before gameplay
-	octr->DriverID = 0;
-	octr->NumDrivers = 2;
-	
+	// 8mb RAM expansion, for emulators that support it.
+	// Needed for 3 or more players on Adv Hub
+	sdata.mempack[0].lastFreeByte = 0x807ff800;
+	sdata.mempack[0].endOfAllocator = 0x807ff800;
+
 	// change camera state
 	SetPerFrame_AndExec(t, octr->funcs[OPEN_MENU]);
 }
@@ -112,6 +115,11 @@ void CameraHook_BootGame(struct Thread* t)
 void SetNames_Characters()
 {
 	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#endif
+	
 	for(i = 0; i < 4; i++)
 	{
 		menuRows221[i].stringIndex = 
@@ -122,6 +130,11 @@ void SetNames_Characters()
 void SetNames_Tracks()
 {
 	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#endif
+	
 	for(i = 0; i < 4; i++)
 	{
 		menuRows221[i].stringIndex = 
@@ -134,6 +147,10 @@ void CameraHook_OpenMenu(struct Thread* t)
 	// these can share same register with optimization
 	int buttons;
 	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#endif
 	
 	if(sdata.ptrActiveMenuBox != &menuBox221)
 	{
@@ -201,6 +218,10 @@ void CameraHook_Minimize(struct Thread* t)
 {
 	int buttons;
 	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#endif
 
 	DecalFont_DrawLine("Press Select to Open",0x0,0xd0,2,0);
 	
@@ -225,8 +246,14 @@ void CameraHook_Minimize(struct Thread* t)
 
 void MenuBoxMain(struct MenuBox* b)
 {	
-	int levelID = 4*octr->PageNumber+b->rowSelected;
+	int levelID;
 	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#endif
+	
+	levelID = 4*octr->PageNumber+b->rowSelected;
 	
 	if(octr->CountPressX == 0)
 	{

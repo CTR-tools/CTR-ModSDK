@@ -2,12 +2,14 @@
 
 // replace AllocAllDrivers
 void SpawnDrivers(struct GameTracker* gGT)
-{
-	printf("SpawnDrivers Start\n");
-	
-	int flag;
-	
+{	
 	int i;
+	int flag;
+
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#endif
+
 	for(i = 0; i < 8; i++)
 	{
 		gGT->drivers[i] = 0;
@@ -53,6 +55,4 @@ void SpawnDrivers(struct GameTracker* gGT)
 	{
 		sdata.gGT->drivers[i] = BOTS_Driver_Init(i);
 	}
-	
-	printf("SpawnDrivers End\n");
 }

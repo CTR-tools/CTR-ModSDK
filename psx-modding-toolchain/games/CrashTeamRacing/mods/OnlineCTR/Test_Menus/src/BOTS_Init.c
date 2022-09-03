@@ -8,6 +8,10 @@ struct Driver* BOTS_Driver_Init_custom(int slot)
 	struct Driver* dr;
 	int i;
 	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#endif
+	
 	th = (struct Thread*)THREAD_BirthWithObject(
 			0x62c0101,BOTS_PerFrame_Drive_custom,"robotcar",0);
 	

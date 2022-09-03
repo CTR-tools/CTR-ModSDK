@@ -9,6 +9,10 @@ int* newSearchFunc(int* str)
 	// pointer to "int array",
 	// where int array is string inside model
 	int* m;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = 0x8000C000;
+	#endif
 
 	// check every highLOD-model loaded
 	for(i = 0; i < octr->NumDrivers; i++)
