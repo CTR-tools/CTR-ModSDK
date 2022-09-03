@@ -187,10 +187,7 @@ void CameraHook_OpenMenu(struct Thread* t)
 		DecalFont_DrawLine("Press Select to Close",0x0,0xd0,2,0);
 				
 		if(buttons & BTN_SELECT)
-		{
-			// Dont use this "tap" twice
-			MenuBox_ClearInput();
-			
+		{	
 			// activate menubox
 			MenuBox_Hide(&menuBox221);
 		
@@ -204,11 +201,6 @@ void CameraHook_Minimize(struct Thread* t)
 {
 	int buttons;
 	int i;
-	
-	if(sdata.ptrActiveMenuBox == &menuBox221)
-	{
-		MenuBox_Hide(&menuBox221);
-	}
 
 	DecalFont_DrawLine("Press Select to Open",0x0,0xd0,2,0);
 	
@@ -222,9 +214,6 @@ void CameraHook_Minimize(struct Thread* t)
 		
 		// reset
 		SetNames_Characters();
-		
-		// Dont use this "tap" twice
-		MenuBox_ClearInput();
 		
 		// activate menubox
 		MenuBox_Show(&menuBox221);
