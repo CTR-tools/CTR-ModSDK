@@ -21,7 +21,7 @@ void RunEntryHook()
 	*(unsigned int*)0x8003C828 = 0x34020032; // level 0x32
 	*(unsigned int*)0x8003c82c = 0xac621a10; // store gGT->1a10
 	*(unsigned int*)0x8003c830 = 0x34020010; // gameMode 0x10 (pause threads)
-	*(unsigned int*)0x8003c834 = 0xac620000; // store gGT->0x0800F258
+	*(unsigned int*)0x8003c834 = 0xac620000; // store gGT->0x0
 	*(unsigned int*)0x8003c838 = 0; // nop
 
 	// ======== Gameplay ============
@@ -58,8 +58,6 @@ void RunInitHook()
 	octr->funcs[0] = (int)CameraHook_BootGame;
 	octr->funcs[1] = (int)CameraHook_OpenMenu;
 	octr->funcs[2] = (int)CameraHook_Minimize;
-	
-	//if(sdata.gGT->level1->ptr_restart_points == 0)
 	
 	// small stack pool, pause thread (those threads can't pause)
 	THREAD_BirthWithObject(0x310, Thread_FSM, 0, 0);
