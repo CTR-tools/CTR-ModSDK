@@ -27,18 +27,14 @@ int* newSearchFunc(int* str)
 		if(CheckString(m,str)) return m;
 	}
 
-	// if in initial lobby, or adv hub
-	if(sdata.gGT->levelID == 0x32)
-	{	
-		// check PLYROBJECTLIST for the model loaded
-		// in the MPK, which is for P1's model
-		for(i = 0; /**/; i++)
-		{
-			m = sdata.PLYROBJECTLIST[i];
-			if(m == 0) break;
+	// check PLYROBJECTLIST for the model loaded
+	// in the MPK, which is for P1's model
+	for(i = 0; /**/; i++)
+	{
+		m = sdata.PLYROBJECTLIST[i];
+		if(m == 0) break;
 	
-			if(CheckString(m,str)) return m;
-		}
+		if(CheckString(m,str)) return m;
 	}
 
 	return 0;

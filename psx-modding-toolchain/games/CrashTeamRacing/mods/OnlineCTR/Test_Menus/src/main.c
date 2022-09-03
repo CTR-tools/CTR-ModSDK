@@ -41,6 +41,10 @@ void RunEntryHook()
 	// Cancel BOTS_GotoStartingLine, cause it's done manually in BOTS_Init
 	*(int*)0x8001702C = 0x3E00008;
 	*(int*)0x80017030 = 0;
+	
+	// To do: use SaveRAM to make 8 drivers, instead of asm patch
+	*(unsigned int*)0x8003b560 = 0; // remove "beq" instruction
+	*(unsigned char*)0x8003b56c = 8; // number of drivers
 }
 
 void Thread_FSM(struct Thread* t)
