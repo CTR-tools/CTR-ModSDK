@@ -23,6 +23,16 @@ struct Driver* BOTS_Driver_Init_custom(int slot)
 	
 	sdata.gGT->numRobotcars++;
 	
+	if(slot <= octr->DriverID)
+	{
+		dr->driverID = slot-1;
+	}
+	
+	else
+	{
+		dr->driverID = slot;
+	}
+		
 	Driver_TeleportSelf(dr,3,0);
 	
 	// convert pos data to render data

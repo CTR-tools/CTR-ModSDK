@@ -43,19 +43,15 @@ void SpawnDrivers(struct GameTracker* gGT)
 	for(i = 0; i < octr->DriverID; i++)
 	{
 		sdata.gGT->drivers[i+1] = BOTS_Driver_Init(i+1);
-		sdata.gGT->drivers[i+1]->driverID = i+1;
-		sdata.kartSpawnOrderArray[i] = i+1;
 	}
 	
 	sdata.gGT->drivers[0] = Init_Player(0);
 	sdata.gGT->drivers[0]->driverID = 0;
-	sdata.kartSpawnOrderArray[i] = 0;
+	sdata.kartSpawnOrderArray[0] = i;
 	
 	for(i = i+1; i < octr->NumDrivers; i++)
 	{
 		sdata.gGT->drivers[i] = BOTS_Driver_Init(i);
-		sdata.gGT->drivers[i]->driverID = i;
-		sdata.kartSpawnOrderArray[i] = i;
 	}
 	
 	printf("SpawnDrivers End\n");
