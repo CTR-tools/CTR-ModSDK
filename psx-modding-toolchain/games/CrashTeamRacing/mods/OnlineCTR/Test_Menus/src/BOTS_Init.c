@@ -13,14 +13,7 @@ struct Driver* BOTS_Driver_Init_custom(int slot)
 	
 	dr = (struct Driver*)th->object;
 	
-	printf("Thread: %08x\n", th);
-	printf("Driver: %08x\n", dr);
-	
 	Init_NonGhost_Driver(th, slot);
-	
-	#if 0
-	semiGlobal.gGT->drivers[slot] = dr;
-	#endif
 
 	// tag this thread as an AI
 	th->modelIndex = 0x3f;
@@ -30,7 +23,7 @@ struct Driver* BOTS_Driver_Init_custom(int slot)
 	
 	sdata.gGT->numRobotcars++;
 	
-	BOTS_GotoStartingLine(dr);
+	Driver_TeleportSelf(dr,3,0);
 	
 	// convert pos data to render data
 	for(i = 0; i < 3; i++)
@@ -44,6 +37,9 @@ struct Driver* BOTS_Driver_Init_custom(int slot)
 		&dr->instSelf->matrix, 
 		&dr->rotCurr[0]
 	);
+	
+	printf("Thread: %08x\n", th);
+	printf("Driver: %08x\n", dr);
 	
 	return dr;
 }

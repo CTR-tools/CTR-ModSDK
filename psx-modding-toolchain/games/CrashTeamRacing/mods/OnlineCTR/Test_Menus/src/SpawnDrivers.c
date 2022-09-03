@@ -3,6 +3,8 @@
 // replace AllocAllDrivers
 void SpawnDrivers(struct GameTracker* gGT)
 {
+	printf("SpawnDrivers Start\n");
+	
 	int flag;
 	
 	int i;
@@ -55,4 +57,6 @@ void SpawnDrivers(struct GameTracker* gGT)
 		sdata.gGT->drivers[i]->driverID = i;
 		sdata.kartSpawnOrderArray[i] = i;
 	}
+	
+	printf("SpawnDrivers End\n");
 }

@@ -9,27 +9,9 @@ int* newSearchFunc(int* str)
 	// pointer to "int array",
 	// where int array is string inside model
 	int* m;
-	
-	int searchNum = octr->NumDrivers;
-
-	// if in initial lobby, or adv hub
-	if(sdata.gGT->levelID >= 0x19)
-	{
-		searchNum--;
-		
-		// check PLYROBJECTLIST for the model loaded
-		// in the MPK, which is for P1's model
-		for(i = 0; /**/; i++)
-		{
-			m = sdata.PLYROBJECTLIST[i];
-			if(m == 0) break;
-	
-			if(CheckString(m,str)) return m;
-		}
-	}
 
 	// check every highLOD-model loaded
-	for(i = 0; i < searchNum; i++)
+	for(i = 0; i < octr->NumDrivers; i++)
 	{
 		m = ((int**)&data.driverModel_lowLOD)[i];
 		if (m == 0) continue;
@@ -43,6 +25,20 @@ int* newSearchFunc(int* str)
 		}
 
 		if(CheckString(m,str)) return m;
+	}
+
+	// if in initial lobby, or adv hub
+	if(sdata.gGT->levelID == 0x32)
+	{	
+		// check PLYROBJECTLIST for the model loaded
+		// in the MPK, which is for P1's model
+		for(i = 0; /**/; i++)
+		{
+			m = sdata.PLYROBJECTLIST[i];
+			if(m == 0) break;
+	
+			if(CheckString(m,str)) return m;
+		}
 	}
 
 	return 0;

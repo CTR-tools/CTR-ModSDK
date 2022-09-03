@@ -24,12 +24,23 @@ void RunEntryHook()
 	*(unsigned int*)0x8003c834 = 0xac620000; // store gGT->0x0800F258
 	*(unsigned int*)0x8003c838 = 0; // nop
 
-	// AdvHub, replace default spawn with unused
-	// start-line spawn, turn BEQ to JMP
-	*(char*)0x80058072 = 0;
+	// ======== Gameplay ============
 	
 	// Disable collision
 	*(unsigned int*)0x80042368 = 0;
+	
+	// AdvHub, replace default spawn with unused
+	// start-line spawn, turn BEQ to JMP
+	*(char*)0x80058072 = 0;
+
+	// disable icon colors,
+	// skipping jumps will set color to 0x808080
+	*(unsigned int*)0x800526cc = 0;
+	*(unsigned int*)0x80052734 = 0;
+	
+	// Cancel BOTS_GotoStartingLine, cause it's done manually in BOTS_Init
+	*(int*)0x8001702C = 0x3E00008;
+	*(int*)0x80017030 = 0;
 }
 
 void Thread_FSM(struct Thread* t)
@@ -47,6 +58,8 @@ void RunInitHook()
 	octr->funcs[0] = (int)CameraHook_BootGame;
 	octr->funcs[1] = (int)CameraHook_OpenMenu;
 	octr->funcs[2] = (int)CameraHook_Minimize;
+	
+	//if(sdata.gGT->level1->ptr_restart_points == 0)
 	
 	// small stack pool, pause thread (those threads can't pause)
 	THREAD_BirthWithObject(0x310, Thread_FSM, 0, 0);
