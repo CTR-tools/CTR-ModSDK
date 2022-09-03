@@ -1,7 +1,0 @@
-!Currently it only works on NTSC-U version
-Name=Custom boot
-Description=First Menu Test
-Author=CTR Modding Community
-Version=v1.0
-ModLoaderVersion=v1.1.0
-Game=CrashTR

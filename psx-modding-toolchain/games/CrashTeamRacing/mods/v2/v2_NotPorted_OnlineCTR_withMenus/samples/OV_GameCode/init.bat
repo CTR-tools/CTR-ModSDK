@@ -1,1 +1,0 @@
-copy "..\..\templateOV\*.bat" "%cd%"
