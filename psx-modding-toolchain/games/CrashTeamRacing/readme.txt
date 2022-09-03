@@ -6,6 +6,7 @@ include - The project's includes: all the structs and globals in CTR and psn00bs
 mods - Finished code modifications for CTR
 ├── ModPacks - Combinations of other mods
 ├── Modules - Mods that you can combine with other mods
+├── OnlineCTR - Stuff made for Niko's OnlineCTR
 ├── Patches - Original code modifications that can be included in any mod with relatively no risk of overlap
 ├── Standalones - Mods that are designed to be played without other mods
 ├── Tests - Programming tests and other miscellaneous mods
