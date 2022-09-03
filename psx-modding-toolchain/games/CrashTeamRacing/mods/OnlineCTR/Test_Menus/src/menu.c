@@ -93,6 +93,14 @@ void CameraHook_BootGame(struct Thread* t)
 	// this works cause "OnlineCTR" is stored in RDATA
 	sdata.lngStrings[0x17d] = &string[0];
 	
+	// unlock everything
+	sdata.advProgress.rewards[0] = 0xffffffff;
+	sdata.advProgress.rewards[1] = 0xffffffff;
+	sdata.advProgress.rewards[2] = 0xffffffff;
+	sdata.advProgress.rewards[3] = 0xffffffff;
+	sdata.advProgress.rewards[4] = 0xffffffff;
+	sdata.advProgress.rewards[5] = 0xffffffff;
+	
 	// default for first LEV, before gameplay
 	octr->DriverID = 0;
 	octr->NumDrivers = 2;
@@ -252,24 +260,7 @@ void MenuBoxMain(struct MenuBox* b)
 		sdata.gGT->gameMode1 = 0x40000000;
 		sdata.gGT->gameMode2 = 0;
 		
-		if(levelID >= 0x19)
-		{
-			// adv hub
-			sdata.gGT->gameMode1 |= 0x180000;
-			
-			// spawn on podium
-			sdata.gGT->prevLEV = -1;
-		
-			// unlock everything
-			sdata.advProgress.rewards[0] = 0xffffffff;
-			sdata.advProgress.rewards[1] = 0xffffffff;
-			sdata.advProgress.rewards[2] = 0xffffffff;
-			sdata.advProgress.rewards[3] = 0xffffffff;
-			sdata.advProgress.rewards[4] = 0xffffffff;
-			sdata.advProgress.rewards[5] = 0xffffffff;
-		}
-		
-		else
+		if(levelID < 0x19)
 		{	
 			// Arcade
 			sdata.gGT->gameMode1 |= 0x400000;
