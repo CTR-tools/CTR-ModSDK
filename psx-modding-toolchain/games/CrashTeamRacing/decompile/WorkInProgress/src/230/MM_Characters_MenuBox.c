@@ -620,23 +620,14 @@ void MM_Characters_MenuBox()
 				fontType = 3;
 		
 				// if number of players is 3 or 4
-				if (numScreens >= 3)
-				{
-					fontType = 2;
-				}
+				if (numScreens >= 3) fontType = 2;
 		
 				iVar8 = j * 10 + DAT_800b5a3c;
 				sVar10 = *(short *)(iVar8 + 0xa8) + (DAT_800b5a0c + j * 2)[1];
 				sVar6 = (short)((((u_int)(numScreens < 3) ^ 1) << 0x12) >> 0x10);
 
-				if ((numScreens == 4) && (1 < (int)j))
-				{
-					sVar6 = sVar10 + sVar6 - 6;
-				}
-				else
-				{
-					sVar6 = sVar10 + DAT_800b5a38 + sVar6;
-				}
+				if ((numScreens == 4) && (j > 1)) sVar6 = sVar10 + sVar6 - 6;
+				else							  sVar6 = sVar10 + DAT_800b5a38 + sVar6;
 		
 				// draw string
 				DecalFont_DrawLine

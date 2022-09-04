@@ -10,6 +10,7 @@ mods - Finished code modifications for CTR
 ├── Patches - Original code modifications that can be included in any mod with relatively no risk of overlap
 ├── Standalones - Mods that are designed to be played without other mods
 ├── Tests - Programming tests and other miscellaneous mods
+├── v2 - Early CTR mods
 └── common.h - All of the structs and globals in CTR
 plugins - Third-party programs and extensions added to the modding toolchain.
 syms - Symbol tables for all game regions
