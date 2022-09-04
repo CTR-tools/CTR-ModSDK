@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Offline.cpp">
+    <ClCompile Include="SV_main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
