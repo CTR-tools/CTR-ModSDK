@@ -123,7 +123,20 @@ void ActivateMenu(struct Thread* t)
 	SetPerFrame(t, octr->funcs[OPEN_MENU]);
 }
 
-void MenuState1_BootGame(struct Thread* t)
+void MenuState_EnterPID(struct Thread* t)
+{
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
+	DecalFont_DrawLine("Attach Windows Client To Continue",0x0,0xd0,2,0);
+
+	// When the windows client is attached, the windows code will
+	// change NextInit to BootGame automatically	
+	SetPerFrame(t, octr->funcs[octr->NextInit]);
+}
+
+void MenuState_BootGame(struct Thread* t)
 {
 	// starting at index 381 (0x17d) is
 	// dialogue for adventure hints
@@ -152,7 +165,7 @@ void MenuState1_BootGame(struct Thread* t)
 	ActivateMenu(t);
 }
 
-void MenuState2_Navigate(struct Thread* t)
+void MenuState_Navigate(struct Thread* t)
 {
 	// these can share same register with optimization
 	int buttons;
@@ -202,7 +215,7 @@ void MenuState2_Navigate(struct Thread* t)
 	}
 }
 
-void MenuState3_Minimize(struct Thread* t)
+void MenuState_Minimize(struct Thread* t)
 {
 	int buttons;
 	int i;

@@ -2,6 +2,7 @@
 
 enum State
 {
+	ENTER_PID,
 	BOOT_GAME,
 	OPEN_MENU,
 	MINIMIZE
@@ -17,7 +18,7 @@ struct OnlineCTR
 	
 	// 0x10
 	int DriverID;
-	int funcs[3];
+	int funcs[4];
 };
 
 // set zero to fix DuckStation,
@@ -29,7 +30,8 @@ register struct OnlineCTR* octr asm("k1");
 #endif
 
 // my functions
-void MenuState1_BootGame(struct Thread* t);
-void MenuState2_Navigate(struct Thread* t);
-void MenuState3_Minimize(struct Thread* t);
+void MenuState_EnterPID(struct Thread* t);
+void MenuState_BootGame(struct Thread* t);
+void MenuState_Navigate(struct Thread* t);
+void MenuState_Minimize(struct Thread* t);
 void MenuBox_OnPressX(struct MenuBox* b);

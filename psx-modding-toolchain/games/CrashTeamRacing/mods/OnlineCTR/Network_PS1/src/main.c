@@ -56,9 +56,10 @@ void RunEntryHook()
 	octr->NumDrivers = 8;
 
 	// FSM for menus
-	octr->funcs[0] = (int)MenuState1_BootGame;
-	octr->funcs[1] = (int)MenuState2_Navigate;
-	octr->funcs[2] = (int)MenuState3_Minimize;
+	octr->funcs[ENTER_PID] = (int)MenuState_EnterPID;
+	octr->funcs[BOOT_GAME] = (int)MenuState_BootGame;
+	octr->funcs[OPEN_MENU] = (int)MenuState_Navigate;
+	octr->funcs[MINIMIZE] = (int)MenuState_Minimize;
 }
 
 // this runs after the end of InitThreadBuckets,
