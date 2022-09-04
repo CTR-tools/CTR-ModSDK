@@ -54,9 +54,12 @@ void RunEntryHook()
 	// default for first LEV, before gameplay
 	octr->DriverID = 0;
 	octr->NumDrivers = 8;
+	octr->IsBootedPS1 = 1;
 
 	// FSM for menus
 	octr->funcs[ENTER_PID] = MenuState_EnterPID;
+	octr->funcs[ENTER_IP] = MenuState_EnterIP;
+	octr->funcs[ENTER_PORT] = MenuState_EnterPort;
 	octr->funcs[BOOT_GAME] = MenuState_BootGame;
 	octr->funcs[OPEN_MENU] = MenuState_Navigate;
 	octr->funcs[MINIMIZE] = MenuState_Minimize;

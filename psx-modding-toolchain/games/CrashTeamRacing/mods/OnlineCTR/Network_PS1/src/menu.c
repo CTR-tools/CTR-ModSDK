@@ -109,7 +109,7 @@ void SetNames_Tracks()
 	}
 }
 
-void ActivateMenu(struct Thread* t)
+void ActivateMenu()
 {
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
@@ -123,12 +123,24 @@ void ActivateMenu(struct Thread* t)
 	octr->CurrState = OPEN_MENU;
 }
 
-void MenuState_EnterPID(struct Thread* t)
+void MenuState_EnterPID()
 {	
 	DecalFont_DrawLine("Attach Windows Client To Continue",0x0,0xd0,2,0);
 }
 
-void MenuState_BootGame(struct Thread* t)
+void MenuState_EnterIP()
+{	
+	DecalFont_DrawLine("Client Attached",0x0,0xc0,2,0x1A);
+	DecalFont_DrawLine("Enter IP Address",0x0,0xd0,2,0);
+}
+
+void MenuState_EnterPort()
+{
+	DecalFont_DrawLine("Client Attached",0x0,0xc0,2,0x1A);
+	DecalFont_DrawLine("Enter Port",0x0,0xd0,2,0);
+}
+
+void MenuState_BootGame()
 {
 	// starting at index 381 (0x17d) is
 	// dialogue for adventure hints
@@ -154,10 +166,10 @@ void MenuState_BootGame(struct Thread* t)
 	sdata.mempack[0].lastFreeByte = 0x807ff800;
 	sdata.mempack[0].endOfAllocator = 0x807ff800;
 
-	ActivateMenu(t);
+	ActivateMenu();
 }
 
-void MenuState_Navigate(struct Thread* t)
+void MenuState_Navigate()
 {
 	// these can share same register with optimization
 	int buttons;
@@ -207,7 +219,7 @@ void MenuState_Navigate(struct Thread* t)
 	}
 }
 
-void MenuState_Minimize(struct Thread* t)
+void MenuState_Minimize()
 {
 	int buttons;
 	int i;
@@ -222,7 +234,7 @@ void MenuState_Minimize(struct Thread* t)
 	
 	if(buttons & BTN_SELECT)
 	{	
-		ActivateMenu(t);
+		ActivateMenu();
 	}
 }
 

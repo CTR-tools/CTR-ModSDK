@@ -6,6 +6,8 @@
 enum State
 {
 	ENTER_PID,
+	ENTER_IP,
+	ENTER_PORT,
 	BOOT_GAME,
 	OPEN_MENU,
 	MINIMIZE
@@ -17,14 +19,15 @@ struct OnlineCTR
 {
 	// 0x0
 	int CurrState;
+	int IsBootedPS1;
 	int PageNumber;
 	int CountPressX;
-	int NumDrivers;
 	
 	// 0x10
+	int NumDrivers;
 	int DriverID;
 	
-	// 0x14
+	// 0x18
 	// function pointers MUST come last,
 	// cause windows thinks pointers are 
 	// 8 bytes, while PSX thinks 4 bytes
@@ -43,6 +46,8 @@ register struct OnlineCTR* octr asm("k1");
 
 // my functions
 void MenuState_EnterPID();
+void MenuState_EnterIP();
+void MenuState_EnterPort();
 void MenuState_BootGame();
 void MenuState_Navigate();
 void MenuState_Minimize();

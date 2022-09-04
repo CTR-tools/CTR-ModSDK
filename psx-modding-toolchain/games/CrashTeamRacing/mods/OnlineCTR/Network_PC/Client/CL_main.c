@@ -7,10 +7,31 @@
 
 char* pBuf;
 struct OnlineCTR* octr;
+char ip[100];
+char port[100];
 
 void ClientState_EnterPID()
 {
-	// allow game to pass the prompt screen
+	// if client connected to DuckStation
+	// before game booted, wait for boot
+	if (octr->IsBootedPS1)
+	{
+		octr->CurrState = ENTER_IP;
+	}
+}
+
+void ClientState_EnterIP()
+{
+	printf("\n");
+	printf("Enter IP Address: ");
+	scanf_s("%s", ip, sizeof(ip));
+	octr->CurrState = ENTER_PORT;
+}
+
+void ClientState_EnterPort()
+{
+	printf("Enter Port: ");
+	scanf_s("%s", port, sizeof(port));
 	octr->CurrState = BOOT_GAME;
 }
 
@@ -32,6 +53,8 @@ void ClientState_Minimize()
 void (*ClientState[]) () =
 {
 	ClientState_EnterPID,
+	ClientState_EnterIP,
+	ClientState_EnterPort,
 	ClientState_BootGame,
 	ClientState_Navigate,
 	ClientState_Minimize
@@ -60,9 +83,6 @@ int main()
 		system("pause");
 		return;
 	}
-
-	system("cls");
-	printf("Connected to Client\n");
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
 
