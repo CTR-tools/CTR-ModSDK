@@ -1,4 +1,7 @@
+
+#ifndef WINDOWS_INCLUDE
 #include <common.h>
+#endif
 
 enum State
 {
@@ -21,6 +24,8 @@ struct OnlineCTR
 	int funcs[4];
 };
 
+#ifndef WINDOWS_INCLUDE
+
 // set zero to fix DuckStation,
 // is it needed on console?
 #define USE_K1 0
@@ -35,3 +40,5 @@ void MenuState_BootGame(struct Thread* t);
 void MenuState_Navigate(struct Thread* t);
 void MenuState_Minimize(struct Thread* t);
 void MenuBox_OnPressX(struct MenuBox* b);
+
+#endif

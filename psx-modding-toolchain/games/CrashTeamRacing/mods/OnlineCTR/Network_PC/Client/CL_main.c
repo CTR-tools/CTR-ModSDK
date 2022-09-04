@@ -1,29 +1,41 @@
-// To do: Make this share the header
-
-enum State
-{
-	ENTER_PID,
-	BOOT_GAME,
-	OPEN_MENU,
-	MINIMIZE
-};
-
-struct OnlineCTR
-{
-	// 0x10
-	int NextInit;
-	int PageNumber;
-	int CountPressX;
-	int NumDrivers;
-
-	// 0x10
-	int DriverID;
-	int funcs[4];
-};
-
 #include <Windows.h>
 #include <stdio.h>
 #include <tchar.h>
+
+#define WINDOWS_INCLUDE
+#include "../../Network_PS1/src/global.h"
+
+char* pBuf;
+struct OnlineCTR* octr;
+
+void ClientState_EnterPID()
+{
+	// allow game to pass the prompt screen
+	octr->NextInit = BOOT_GAME;
+}
+
+void ClientState_BootGame()
+{
+	// do nothing, this lasts one frame on PS1-side
+}
+
+void ClientState_Navigate()
+{
+	// do nothing, this is when track and car are selected
+}
+
+void ClientState_Minimize()
+{
+	// this is gameplay, should send and recv position
+}
+
+void (*ClientState[]) () =
+{
+	ClientState_EnterPID,
+	ClientState_BootGame,
+	ClientState_Navigate,
+	ClientState_Minimize
+};
 
 int main()
 {
@@ -40,7 +52,7 @@ int main()
 	// 8mb RAM
 	const unsigned int size = 0x800000;
 	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
-	char* pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
+	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
 
 	// read/write sample
 #if 0
@@ -50,7 +62,12 @@ int main()
 	printf("%08x\n", *(int*)&pBuf[0x600000]);
 #endif
 
-	((struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff])->NextInit = BOOT_GAME;
+	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
+
+	while (1)
+	{
+		ClientState[octr->NextInit]();
+	}
 
 	system("pause");
 }
