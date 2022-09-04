@@ -134,10 +134,10 @@ void MenuState_EnterIP()
 	DecalFont_DrawLine("Enter IP Address",0x0,0xd0,2,0);
 }
 
-void MenuState_EnterPort()
+void MenuState_ConnectFailed()
 {
-	DecalFont_DrawLine("Client Attached",0x0,0xc0,2,0x1A);
-	DecalFont_DrawLine("Enter Port",0x0,0xd0,2,0);
+	DecalFont_DrawLine("Server Not Found",0x0,0xc0,2,0x19);
+	DecalFont_DrawLine("Please Try Again",0x0,0xd0,2,0);
 }
 
 void MenuState_BootGame()
@@ -178,6 +178,14 @@ void MenuState_Navigate()
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
+	
+	char message[32];
+	
+	sprintf(message, "ClientID: %d", octr->DriverID);
+	DecalFont_DrawLine(message,0x0,0x20,2,0);
+	
+	sprintf(message, "NumTotal: %d", octr->NumDrivers);
+	DecalFont_DrawLine(message,0x0,0x30,2,0);
 	
 	buttons = sdata.gamepadSystem.controller[0].buttonsTapped;
 	
