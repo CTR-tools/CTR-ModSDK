@@ -2,14 +2,13 @@
 
 void BOTS_PerFrame_Drive_custom(struct Thread* th);
 
-struct Driver* BOTS_Driver_Init_custom(int slot)
+struct Driver* BOTS_Driver_Init_custom(int slot, int bitFlag)
 {
 	struct Thread* th;
 	struct Driver* dr;
-	int i;
 	
 	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
 	th = (struct Thread*)THREAD_BirthWithObject(
@@ -27,17 +26,13 @@ struct Driver* BOTS_Driver_Init_custom(int slot)
 	
 	sdata.gGT->numRobotcars++;
 	
-	if(slot <= octr->DriverID)
-	{
-		dr->driverID = slot-1;
-	}
-	
-	else
-	{
-		dr->driverID = slot;
-	}
-		
-	Driver_TeleportSelf(dr,3,0);
+	return dr;
+}
+
+void BOTS_PerFrame_Drive_custom(struct Thread* th)
+{
+	int i;
+	struct Driver* dr = th->object;
 	
 	// convert pos data to render data
 	for(i = 0; i < 3; i++)
@@ -52,13 +47,5 @@ struct Driver* BOTS_Driver_Init_custom(int slot)
 		&dr->rotCurr[0]
 	);
 	
-	printf("Thread: %08x\n", th);
-	printf("Driver: %08x\n", dr);
-	
-	return dr;
-}
-
-void BOTS_PerFrame_Drive_custom(struct Thread* th)
-{
 	return;
 }

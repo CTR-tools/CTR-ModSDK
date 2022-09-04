@@ -11,7 +11,7 @@ int* newSearchFunc(int* str)
 	int* m;
 	
 	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 
 	// check every highLOD-model loaded

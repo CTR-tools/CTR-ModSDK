@@ -8,7 +8,7 @@ void LOAD_DriverMPK_Hook(unsigned int param_1,int param_2,unsigned int param_3)
 	int i;
 	
 	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
 	// load penta on the spawn lev

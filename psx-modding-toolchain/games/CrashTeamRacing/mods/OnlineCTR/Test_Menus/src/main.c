@@ -38,14 +38,15 @@ void RunEntryHook()
 	*(unsigned int*)0x800526cc = 0;
 	*(unsigned int*)0x80052734 = 0;
 	
-	// Cancel BOTS_GotoStartingLine, cause it's done manually in BOTS_Init
-	*(int*)0x8001702C = 0x3E00008;
-	*(int*)0x80017030 = 0;
+	// Cancel Driver_TeleportAll, cause it's done manually.
+	// Manual spawn is required for battle map fixes
+	*(int*)0x80058898 = 0x3E00008;
+	*(int*)0x8005889C = 0;
 	
 	// ======== Globals ============
 	
 	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#else
 	octr = 0x8000C000;
 	#endif
@@ -55,24 +56,19 @@ void RunEntryHook()
 	octr->NumDrivers = 8;
 
 	// FSM for menus
-	octr->funcs[0] = (int)CameraHook_BootGame;
-	octr->funcs[1] = (int)CameraHook_OpenMenu;
-	octr->funcs[2] = (int)CameraHook_Minimize;
-}
-
-void Thread_FSM(struct Thread* t)
-{
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
-	#endif
-	
-	SetPerFrame_AndExec(t, octr->funcs[octr->NextInit]);
+	octr->funcs[0] = (int)MenuState1_BootGame;
+	octr->funcs[1] = (int)MenuState2_Navigate;
+	octr->funcs[2] = (int)MenuState3_Minimize;
 }
 
 // this runs after the end of InitThreadBuckets,
 // which is also after the end of camera initialization
 void RunInitHook()
-{	
+{
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
 	// small stack pool, pause thread (those threads can't pause)
-	THREAD_BirthWithObject(0x310, Thread_FSM, 0, 0);
+	THREAD_BirthWithObject(0x310, octr->funcs[octr->NextInit], 0, 0);
 }

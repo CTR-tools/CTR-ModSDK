@@ -1,6 +1,6 @@
 #include "global.h"
 
-struct MenuRow menuRows221[5] =
+struct MenuRow menuRows[5] =
 {	
 	{
 		.stringIndex = 0,
@@ -44,7 +44,7 @@ struct MenuRow menuRows221[5] =
 	}
 };
 	
-struct MenuBox menuBox221 =
+struct MenuBox menuBox =
 {
 	// custom string made myself
 	.index1 = 0x17d, 
@@ -57,12 +57,9 @@ struct MenuBox menuBox221 =
 	// 0b11, 2 centers X, 1 centers Y, 0x80 for tiny text
 	.state = 3,
 
-	// drawinig state, 0x10 means invisible
-	//.state = 8,
+	.rows = menuRows,
 
-	.rows = menuRows221,
-
-	.funcPtr = &MenuBoxMain,
+	.funcPtr = MenuBox_OnPressX,
 
 	.drawStyle = 0x4,	// 0xF0 looks like load/save
 	
@@ -82,13 +79,57 @@ struct MenuBox menuBox221 =
 	.ptrPrevMenuBox_InHierarchy = 0,
 };
 
-void CameraHook_BootGame(struct Thread* t)
+void SetNames_Characters()
+{
+	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
+	for(i = 0; i < 4; i++)
+	{
+		menuRows[i].stringIndex = 
+			data.MetaDataCharacters[4*octr->PageNumber+i].name_LNG_long;
+	}
+}
+
+void SetNames_Tracks()
+{
+	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
+	for(i = 0; i < 4; i++)
+	{
+		menuRows[i].stringIndex = 
+			data.MetaDataLEV[4*octr->PageNumber+i].name_LNG;
+	}
+}
+
+void ActivateMenu(struct Thread* t)
+{
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
+	// open menu, set defaults
+	octr->PageNumber = 0;
+	octr->CountPressX = 0;
+	SetNames_Characters();
+	MenuBox_Show(&menuBox);
+	SetPerFrame(t, octr->funcs[OPEN_MENU]);
+}
+
+void MenuState1_BootGame(struct Thread* t)
 {
 	// starting at index 381 (0x17d) is
 	// dialogue for adventure hints
 	
 	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
 	// initialize string pointer,
@@ -108,93 +149,42 @@ void CameraHook_BootGame(struct Thread* t)
 	sdata.mempack[0].lastFreeByte = 0x807ff800;
 	sdata.mempack[0].endOfAllocator = 0x807ff800;
 
-	// change camera state
-	SetPerFrame_AndExec(t, octr->funcs[OPEN_MENU]);
+	ActivateMenu(t);
 }
 
-void SetNames_Characters()
-{
-	int i;
-	
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
-	#endif
-	
-	for(i = 0; i < 4; i++)
-	{
-		menuRows221[i].stringIndex = 
-			data.MetaDataCharacters[4*octr->PageNumber+i].name_LNG_long;
-	}
-}
-
-void SetNames_Tracks()
-{
-	int i;
-	
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
-	#endif
-	
-	for(i = 0; i < 4; i++)
-	{
-		menuRows221[i].stringIndex = 
-			data.MetaDataLEV[4*octr->PageNumber+i].name_LNG;
-	}
-}
-
-void CameraHook_OpenMenu(struct Thread* t)
+void MenuState2_Navigate(struct Thread* t)
 {
 	// these can share same register with optimization
 	int buttons;
 	int i;
 	
 	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
-	
-	if(sdata.ptrActiveMenuBox != &menuBox221)
-	{
-		MenuBox_Show(&menuBox221);
-		
-		SetNames_Characters();
-	}
 	
 	buttons = sdata.gamepadSystem.controller[0].buttonsTapped;
 	
-	// character select
-	if(octr->CountPressX == 0)
+	// BTN_LEFT = 0x4
+	// BTN_RIGHT = 0x8
+	// some crazy math to optimize this
+	
+	if(buttons & 0xC)
 	{
-		// BTN_LEFT = 0x4
-		// BTN_RIGHT = 0x8
-		
-		// some crazy math to optimize this
-		
-		if(buttons & 0xC)
+		octr->PageNumber += (buttons-6)/2;
+	
+		// character select
+		if(octr->CountPressX == 0)
 		{
-			octr->PageNumber += (buttons-6)/2;
-			
 			if (octr->PageNumber < 0) octr->PageNumber = 0;
 			if (octr->PageNumber > 3) octr->PageNumber = 3;
-			
 			SetNames_Characters();
 		}
-	}
-	
-	// track select
-	else
-	{
-		// BTN_LEFT = 0x4
-		// BTN_RIGHT = 0x8
 		
-		// some crazy math to optimize this
-		
-		if(buttons & 0xC)
+		// track select
+		else
 		{
-			octr->PageNumber += (buttons-6)/2;
-			
 			if (octr->PageNumber < 0) octr->PageNumber = 0;
 			if (octr->PageNumber > 7) octr->PageNumber = 7;
-			
 			SetNames_Tracks();
 		}
 	}
@@ -205,22 +195,20 @@ void CameraHook_OpenMenu(struct Thread* t)
 				
 		if(buttons & BTN_SELECT)
 		{	
-			// activate menubox
-			MenuBox_Hide(&menuBox221);
-		
-			// reset original function
+			// hide menubox
+			MenuBox_Hide(&menuBox);
 			SetPerFrame(t, octr->funcs[MINIMIZE]);
 		}
 	}
 }
 
-void CameraHook_Minimize(struct Thread* t)
+void MenuState3_Minimize(struct Thread* t)
 {
 	int buttons;
 	int i;
 	
 	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 
 	DecalFont_DrawLine("Press Select to Open",0x0,0xd0,2,0);
@@ -229,65 +217,44 @@ void CameraHook_Minimize(struct Thread* t)
 	
 	if(buttons & BTN_SELECT)
 	{	
-		// reset
-		octr->PageNumber = 0;
-		octr->CountPressX = 0;
-		
-		// reset
-		SetNames_Characters();
-		
-		// activate menubox
-		MenuBox_Show(&menuBox221);
-	
-		// reset original function
-		SetPerFrame(t, octr->funcs[OPEN_MENU]);
+		ActivateMenu(t);
 	}
 }
 
-void MenuBoxMain(struct MenuBox* b)
+void MenuBox_OnPressX(struct MenuBox* b)
 {	
 	int levelID;
 	int i;
 	
 	#if USE_K1 == 0
-	struct OnlineCTR* octr = 0x8000C000;
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
 	levelID = 4*octr->PageNumber+b->rowSelected;
 	
+	// if pressed X in character selector
 	if(octr->CountPressX == 0)
 	{
+		// save results, transition to track selector
 		octr->CountPressX++;
-		
-		data.characterIDs[octr->DriverID] = levelID;
-		
+		data.characterIDs[0] = levelID;
 		octr->PageNumber = 0;
-		
 		SetNames_Tracks();
-		
-		return;
 	}
 	
+	// if pressed X in track selector
 	else
 	{	
+		// close menu, stop music, 
+		// stop "most FX", let menu FX ring
 		MenuBox_Hide(b);
+		Music_Stop();
+		howl_StopAudio(1,1,0);
 		
-		// loading flag, and null flag
+		// load next level
 		sdata.gGT->gameMode1 = 0x40000000;
-		sdata.gGT->gameMode2 = 0;
-		
-		if(levelID < 0x19)
-		{	
-			// Arcade
-			sdata.gGT->gameMode1 |= 0x400000;
-		}
-		
-		// load new LEV without checkered flag,
-		// warning, this will not unpause game for you
 		sdata.gGT->levelID = levelID;
 		sdata.Loading.stage = 0;
-		
-		// next state
 		octr->NextInit = MINIMIZE;
 	}
 }
