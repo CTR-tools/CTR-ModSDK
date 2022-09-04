@@ -11,9 +11,11 @@ enum State
 	MINIMIZE
 };
 
+// This can be 0x400 bytes max:
+// 0x8000C000 at 0x8000C400
 struct OnlineCTR
 {
-	// 0x10
+	// 0x0
 	int CurrState;
 	int PageNumber;
 	int CountPressX;

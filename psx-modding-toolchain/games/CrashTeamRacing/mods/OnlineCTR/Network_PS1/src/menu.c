@@ -124,11 +124,7 @@ void ActivateMenu(struct Thread* t)
 }
 
 void MenuState_EnterPID(struct Thread* t)
-{
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
-	#endif
-	
+{	
 	DecalFont_DrawLine("Attach Windows Client To Continue",0x0,0xd0,2,0);
 }
 
