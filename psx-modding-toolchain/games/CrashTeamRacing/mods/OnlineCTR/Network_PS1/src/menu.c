@@ -120,7 +120,7 @@ void ActivateMenu(struct Thread* t)
 	octr->CountPressX = 0;
 	SetNames_Characters();
 	MenuBox_Show(&menuBox);
-	SetPerFrame(t, octr->funcs[OPEN_MENU]);
+	octr->CurrState = OPEN_MENU;
 }
 
 void MenuState_EnterPID(struct Thread* t)
@@ -130,10 +130,6 @@ void MenuState_EnterPID(struct Thread* t)
 	#endif
 	
 	DecalFont_DrawLine("Attach Windows Client To Continue",0x0,0xd0,2,0);
-
-	// When the windows client is attached, the windows code will
-	// change NextInit to BootGame automatically	
-	SetPerFrame(t, octr->funcs[octr->NextInit]);
 }
 
 void MenuState_BootGame(struct Thread* t)
@@ -210,7 +206,7 @@ void MenuState_Navigate(struct Thread* t)
 		{	
 			// hide menubox
 			MenuBox_Hide(&menuBox);
-			SetPerFrame(t, octr->funcs[MINIMIZE]);
+			octr->CurrState = MINIMIZE;
 		}
 	}
 }
@@ -268,6 +264,6 @@ void MenuBox_OnPressX(struct MenuBox* b)
 		sdata.gGT->gameMode1 = 0x40000000;
 		sdata.gGT->levelID = levelID;
 		sdata.Loading.stage = 0;
-		octr->NextInit = MINIMIZE;
+		octr->CurrState = MINIMIZE;
 	}
 }

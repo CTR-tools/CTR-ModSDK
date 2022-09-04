@@ -11,7 +11,7 @@ struct OnlineCTR* octr;
 void ClientState_EnterPID()
 {
 	// allow game to pass the prompt screen
-	octr->NextInit = BOOT_GAME;
+	octr->CurrState = BOOT_GAME;
 }
 
 void ClientState_BootGame()
@@ -54,19 +54,21 @@ int main()
 	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
 	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
 
-	// read/write sample
-#if 0
-	printf("%d\n", *(short*)&pBuf[0x86e84]);
-	*(short*)&pBuf[0x86e84] = 13;
+	if (pBuf == 0)
+	{
+		printf("Error\n");
+		system("pause");
+		return;
+	}
 
-	printf("%08x\n", *(int*)&pBuf[0x600000]);
-#endif
+	system("cls");
+	printf("Connected to Client\n");
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
 
 	while (1)
 	{
-		ClientState[octr->NextInit]();
+		ClientState[octr->CurrState]();
 	}
 
 	system("pause");

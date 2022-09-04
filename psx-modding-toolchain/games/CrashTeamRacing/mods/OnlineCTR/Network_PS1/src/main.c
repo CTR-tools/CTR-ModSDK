@@ -56,10 +56,19 @@ void RunEntryHook()
 	octr->NumDrivers = 8;
 
 	// FSM for menus
-	octr->funcs[ENTER_PID] = (int)MenuState_EnterPID;
-	octr->funcs[BOOT_GAME] = (int)MenuState_BootGame;
-	octr->funcs[OPEN_MENU] = (int)MenuState_Navigate;
-	octr->funcs[MINIMIZE] = (int)MenuState_Minimize;
+	octr->funcs[ENTER_PID] = MenuState_EnterPID;
+	octr->funcs[BOOT_GAME] = MenuState_BootGame;
+	octr->funcs[OPEN_MENU] = MenuState_Navigate;
+	octr->funcs[MINIMIZE] = MenuState_Minimize;
+}
+
+void ThreadFunc()
+{
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
+	octr->funcs[octr->CurrState]();
 }
 
 // this runs after the end of InitThreadBuckets,
@@ -71,5 +80,5 @@ void RunInitHook()
 	#endif
 	
 	// small stack pool, pause thread (those threads can't pause)
-	THREAD_BirthWithObject(0x310, octr->funcs[octr->NextInit], 0, 0);
+	THREAD_BirthWithObject(0x310, ThreadFunc, 0, 0);
 }
