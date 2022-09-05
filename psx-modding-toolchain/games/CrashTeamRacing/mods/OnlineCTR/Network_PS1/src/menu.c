@@ -34,7 +34,7 @@ struct MenuRow menuRows[5] =
 		.rowOnPressRight = 3,
 	},
 	
-	// NULL, end of mwnu
+	// NULL, end of menu
 	{
 		.stringIndex = 0xFFFF,
 		.rowOnPressUp = 0,
@@ -49,7 +49,7 @@ struct MenuBox menuBox =
 	// custom string made myself
 	.index1 = 0x17d, 
 	
-	.posX_curr = 0x100, // X position
+	.posX_curr = 0x160, // X position
 	.posY_curr = 0x74,  // Y position
 	
 	.unk1 = 0,
@@ -116,13 +116,13 @@ void StatePS1_Launch_EnterPID()
 
 void StatePS1_Launch_EnterIP()
 {	
-	DecalFont_DrawLine("Client Attached",0x0,0xc0,2,0x1A);
+	DecalFont_DrawLine("Client Attached",0x0,0xc8,2,0x1A);
 	DecalFont_DrawLine("Enter IP Address",0x0,0xd0,2,0);
 }
 
 void StatePS1_Launch_ConnectFailed()
 {
-	DecalFont_DrawLine("Server Not Found",0x0,0xc0,2,0x19);
+	DecalFont_DrawLine("Server Not Found",0x0,0xc8,2,0x19);
 	DecalFont_DrawLine("Please Try Again",0x0,0xd0,2,0);
 }
 
@@ -168,7 +168,7 @@ void StatePS1_Launch_FirstInit()
 	}
 }
 
-void DrawStats()
+void DrawClientCountStats()
 {
 	char message[32];
 	
@@ -180,7 +180,7 @@ void DrawStats()
 	DecalFont_DrawLine(message,0x0,0x20,2,0);
 	
 	sprintf(message, "NumTotal: %d", octr->NumDrivers);
-	DecalFont_DrawLine(message,0x0,0x30,2,0);
+	DecalFont_DrawLine(message,0x0,0x28,2,0);
 }
 
 void MenuBox_OnPressX_Track(struct MenuBox* b)
@@ -193,6 +193,8 @@ void MenuBox_OnPressX_Track(struct MenuBox* b)
 	#endif
 	
 	MenuBox_Hide(b);
+	
+	// is this right? Active or Desired?
 	sdata.ptrActiveMenuBox = 0;
 	
 	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
@@ -207,6 +209,8 @@ void StatePS1_Lobby_HostTrackPick()
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
+	
+	DrawClientCountStats();
 	
 	// open menu, set defaults
 	if(sdata.ptrActiveMenuBox != &menuBox)
@@ -236,7 +240,15 @@ void StatePS1_Lobby_HostTrackPick()
 
 void StatePS1_Lobby_GuestTrackWait()
 {
+	DrawClientCountStats();
+	
 	DecalFont_DrawLine("Waiting for Host to Pick Track",0x0,0xd0,2,0);
+}
+
+void DrawCharacterStats()
+{
+	// loop through and draw each character name,
+	// change color to green if character is "lockedIn"
 }
 
 void MenuBox_OnPressX_Character(struct MenuBox* b)
@@ -263,6 +275,9 @@ void StatePS1_Lobby_CharacterPick()
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
+	
+	DrawClientCountStats();
+	DrawCharacterStats();
 	
 	// open menu, set defaults
 	if(sdata.ptrActiveMenuBox != &menuBox)
