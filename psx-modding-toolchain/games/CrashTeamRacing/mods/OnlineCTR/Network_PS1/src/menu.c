@@ -79,6 +79,21 @@ struct MenuBox menuBox =
 	.ptrPrevMenuBox_InHierarchy = 0,
 };
 
+void SetNames_Tracks()
+{
+	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
+	for(i = 0; i < 4; i++)
+	{
+		menuRows[i].stringIndex = 
+			data.MetaDataLEV[4*octr->PageNumber+i].name_LNG;
+	}
+}
+
 void SetNames_Characters()
 {
 	int i;
@@ -94,20 +109,6 @@ void SetNames_Characters()
 	}
 }
 
-void SetNames_Tracks()
-{
-	int i;
-	
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
-	#endif
-	
-	for(i = 0; i < 4; i++)
-	{
-		menuRows[i].stringIndex = 
-			data.MetaDataLEV[4*octr->PageNumber+i].name_LNG;
-	}
-}
 
 void StatePS1_Launch_EnterPID()
 {	
@@ -233,8 +234,8 @@ void StatePS1_Lobby_HostTrackPick()
 		octr->PageNumber += (buttons-6)/2;
 	
 		if (octr->PageNumber < 0) octr->PageNumber = 0;
-		if (octr->PageNumber > 3) octr->PageNumber = 3;
-		SetNames_Characters();
+		if (octr->PageNumber > 7) octr->PageNumber = 7;
+		SetNames_Tracks();
 	}
 }
 
@@ -300,8 +301,8 @@ void StatePS1_Lobby_CharacterPick()
 		octr->PageNumber += (buttons-6)/2;
 	
 		if (octr->PageNumber < 0) octr->PageNumber = 0;
-		if (octr->PageNumber > 7) octr->PageNumber = 7;
-		SetNames_Tracks();
+		if (octr->PageNumber > 3) octr->PageNumber = 3;
+		SetNames_Characters();
 	}
 }
 

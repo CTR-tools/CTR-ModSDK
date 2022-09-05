@@ -286,6 +286,7 @@ int main()
 	{
 		printf("Error: Failed to open DuckStation\nTry again\n");
 		system("pause");
+		system("cls");
 		main();
 	}
 
