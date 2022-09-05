@@ -98,6 +98,7 @@ void ParseMessage()
 
 			// set sdata.gGT->trackID
 			*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = trackID;
+			octr->CurrState = LOBBY_CHARACTER_PICK;
 		default:
 			break;
 		}
@@ -126,7 +127,7 @@ void StatePC_Launch_EnterIP()
 	struct hostent* hostinfo;
 
 	socketIn.sin_family = AF_INET;
-	socketIn.sin_port = htons(27000);
+	socketIn.sin_port = htons(1234);
 
 	hostinfo = gethostbyname(ip);
 
@@ -211,21 +212,31 @@ void StatePC_Lobby_HostTrackPick()
 void StatePC_Lobby_GuestTrackWait()
 {
 	ParseMessage();
-
-	if (!octr->boolLockedInTrack) return;
-
-	octr->CurrState = LOBBY_CHARACTER_PICK;
 }
 
 void StatePC_Lobby_CharacterPick()
 {
 	ParseMessage();
 
-	// send character to server
-
 	if (!octr->boolLockedInCharacter) return;
 
-	// change state to WAIT_FOR_START
+	// should be able to send character on "changed"
+	// as well as on "lockedIn"
+
+#if 0
+	struct CG_MessageCharacter mc;
+	mc.type = CG_CHARACTER;
+	mc.size = sizeof(struct CG_MessageCharacter);
+	mc.boolLastMessage = 1;
+
+	// data.characterIDs[0]
+	mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
+
+	// send a message to the client
+	send(CtrMain.socket, &mc, mc.size, 0);
+
+	octr->CurrState = LOBBY_CHARACTER_PICK;
+#endif
 }
 
 void StatePC_Lobby_WaitForLoading()

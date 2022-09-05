@@ -25,7 +25,7 @@ struct SocketCtr
 
 struct SocketCtr CtrMain;
 short characterIDs[8];
-#define MAX_CLIENTS 4
+#define MAX_CLIENTS 8
 
 unsigned char clientCount = 0;
 struct SocketCtr CtrClient[MAX_CLIENTS];
@@ -56,16 +56,16 @@ void ServerState_Boot()
 		system("pause");
 	}
 
-	// TCP, port 27000 (call of duty uses it), 
+	// TCP, port 1234 (call of duty uses 27000), 
 	// accept from any (INADDR_ANY) address
 	struct sockaddr_in socketIn;
 	socketIn.sin_family = AF_INET;
-	socketIn.sin_port = htons(27000);
+	socketIn.sin_port = htons(1234);
 	socketIn.sin_addr.S_un.S_addr = INADDR_ANY;
 	CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	bind(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
 	listen(CtrMain.socket, SOMAXCONN);
-	printf("NodeServer ready on port 27000\n\n");
+	printf("NodeServer ready on port 1234\n\n");
 
 	// set LISTENING socket to non-blocking
 	unsigned long nonBlocking = 1;

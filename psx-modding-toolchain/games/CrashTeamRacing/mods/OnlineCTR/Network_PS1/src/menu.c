@@ -247,6 +247,19 @@ void StatePS1_Lobby_GuestTrackWait()
 	DecalFont_DrawLine("Waiting for Host to Pick Track",0x0,0xd0,2,0);
 }
 
+void DrawRecvTrack()
+{
+	char message[32];
+	sprintf(message, "Track: %s", 
+				sdata.lngStrings
+				[
+					data.MetaDataLEV[sdata.gGT->levelID].name_LNG
+				]
+			);
+	
+	DecalFont_DrawLine(message,0x0,0x10,2,0x18);
+}
+
 void DrawCharacterStats()
 {
 	// loop through and draw each character name,
@@ -284,6 +297,7 @@ void StatePS1_Lobby_CharacterPick()
 	
 	DrawClientCountStats();
 	DrawCharacterStats();
+	DrawRecvTrack();
 	
 	// open menu, set defaults
 	if(sdata.ptrActiveMenuBox != &menuBox)

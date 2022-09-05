@@ -57,15 +57,15 @@ enum ServerGiveMessageType
 struct SG_Header
 {
 	// max of 16 message types
-	char type : 4;
+	unsigned char type : 4;
 	
 	// max of 16 byte message
-	char size : 4;
+	unsigned char size : 4;
 	
 	// is this the last message or not?
-	char boolLastMessage : 1;
+	unsigned char boolLastMessage : 1;
 
-	char junk : 7;
+	unsigned char junk : 7;
 	
 	// 16 bits total (2 bytes)
 };
@@ -74,19 +74,19 @@ struct SG_Header
 struct SG_MessageWelcome
 {
 	// max of 16 message types
-	char type : 4;
+	unsigned char type : 4;
 	
 	// max of 16 byte message
-	char size : 4;
+	unsigned char size : 4;
 	
 	// is this the last message or not?
-	char boolLastMessage : 1;
+	unsigned char boolLastMessage : 1;
 	
 	// index 0 - 7
-	char clientID : 3;
+	unsigned char clientID : 3;
 	
 	// 1-8
-	char numClientsTotal : 4;
+	unsigned char numClientsTotal : 4;
 	
 	// 16 bits total (2 bytes)
 };
@@ -97,21 +97,21 @@ struct SG_MessageWelcome
 struct SG_MessageCharacter
 {
 	// max of 16 message types
-	char type : 4;
+	unsigned char type : 4;
 	
 	// max of 16 byte message
-	char size : 4;
+	unsigned char size : 4;
 	
 	// is this the last message or not?
-	char boolLastMessage : 1;
+	unsigned char boolLastMessage : 1;
 	
 	// character 0 - 15
-	char characterID : 4;
+	unsigned char characterID : 4;
 	
-	char boolLockedIn : 1;
+	unsigned char boolLockedIn : 1;
 	
 	// extra junk
-	char padding : 2;
+	unsigned char padding : 2;
 	
 	// 16 bits total (2 bytes)
 };
@@ -120,16 +120,16 @@ struct SG_MessageCharacter
 struct SG_MessageTrack
 {
 	// max of 16 message types
-	char type : 4;
+	unsigned char type : 4;
 	
 	// max of 16 byte message
-	char size : 4;
+	unsigned char size : 4;
 	
 	// is this the last message or not?
-	char boolLastMessage : 1;
+	unsigned char boolLastMessage : 1;
 	
 	// track ID
-	char trackID : 7;
+	unsigned char trackID : 7;
 	
 	// 16 bits total (2 bytes)
 };
@@ -147,15 +147,15 @@ enum ClientGiveMessageType
 struct CG_Header
 {
 	// max of 16 message types
-	char type : 4;
+	unsigned char type : 4;
 	
 	// max of 16 byte message
-	char size : 4;
+	unsigned char size : 4;
 	
 	// is this the last message or not?
-	char boolLastMessage : 1;
+	unsigned char boolLastMessage : 1;
 
-	char junk : 7;
+	unsigned char junk : 7;
 	
 	// 16 bits total (2 bytes)
 };
@@ -164,20 +164,20 @@ struct CG_Header
 struct CG_MessageCharacter
 {
 	// max of 16 message types
-	char type : 4;
+	unsigned char type : 4;
 	
 	// max of 16 byte message
-	char size : 4;
+	unsigned char size : 4;
 	
 	// is this the last message or not?
-	char boolLastMessage : 1;
+	unsigned char boolLastMessage : 1;
 	
 	// index 0 - 7
 	// unused
-	char clientID : 3;
+	unsigned char clientID : 3;
 	
 	// character 0 - 15
-	char characterID : 4;
+	unsigned char characterID : 4;
 	
 	// 16 bits total (2 bytes)
 };
@@ -186,16 +186,16 @@ struct CG_MessageCharacter
 struct CG_MessageTrack
 {
 	// max of 16 message types
-	char type : 4;
+	unsigned char type : 4;
 	
 	// max of 16 byte message
-	char size : 4;
+	unsigned char size : 4;
 	
 	// is this the last message or not?
-	char boolLastMessage : 1;
+	unsigned char boolLastMessage : 1;
 	
 	// track ID
-	char trackID : 7;
+	unsigned char trackID : 7;
 	
 	// 16 bits total (2 bytes)
 };
