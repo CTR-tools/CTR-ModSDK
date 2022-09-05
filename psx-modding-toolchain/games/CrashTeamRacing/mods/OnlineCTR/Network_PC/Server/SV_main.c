@@ -41,6 +41,11 @@ enum ServerState
 
 void ServerState_Boot()
 {
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r); //stores the console's current dimensions
+	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
+
 	WSADATA wsaData;
 	int iResult;
 

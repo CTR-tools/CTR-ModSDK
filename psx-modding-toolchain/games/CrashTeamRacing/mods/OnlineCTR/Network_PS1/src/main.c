@@ -57,12 +57,17 @@ void RunEntryHook()
 	octr->IsBootedPS1 = 1;
 
 	// FSM for menus
-	octr->funcs[ENTER_PID] = MenuState_EnterPID;
-	octr->funcs[ENTER_IP] = MenuState_EnterIP;
-	octr->funcs[CONNECT_FAILED] = MenuState_ConnectFailed;
-	octr->funcs[BOOT_GAME] = MenuState_BootGame;
-	octr->funcs[OPEN_MENU] = MenuState_Navigate;
-	octr->funcs[MINIMIZE] = MenuState_Minimize;
+	octr->funcs[LAUNCH_ENTER_PID] = StatePS1_Launch_EnterPID;
+	octr->funcs[LAUNCH_ENTER_IP] = StatePS1_Launch_EnterIP;
+	octr->funcs[LAUNCH_CONNECT_FAILED] = StatePS1_Launch_ConnectFailed;
+	octr->funcs[LAUNCH_FIRST_INIT] = StatePS1_Launch_FirstInit;
+	octr->funcs[LOBBY_HOST_TRACK_PICK] = StatePS1_Lobby_HostTrackPick;
+	octr->funcs[LOBBY_GUEST_TRACK_WAIT] = StatePS1_Lobby_GuestTrackWait;
+	octr->funcs[LOBBY_CHARACTER_PICK] = StatePS1_Lobby_CharacterPick;
+	octr->funcs[LOBBY_WAIT_FOR_LOADING] = StatePS1_Lobby_WaitForLoading;
+	octr->funcs[LOBBY_START_LOADING] = StatePS1_Lobby_StartLoading;
+	octr->funcs[GAME_WAIT_FOR_RACE] = StatePS1_Game_WaitForRace;
+	octr->funcs[GAME_START_RACE] = StatePS1_Game_StartRace;
 }
 
 void ThreadFunc()

@@ -3,14 +3,19 @@
 #include <common.h>
 #endif
 
-enum State
+enum ClientState
 {
-	ENTER_PID,
-	ENTER_IP,
-	CONNECT_FAILED,
-	BOOT_GAME,
-	OPEN_MENU,
-	MINIMIZE
+	LAUNCH_ENTER_PID,
+	LAUNCH_ENTER_IP,
+	LAUNCH_CONNECT_FAILED,
+	LAUNCH_FIRST_INIT,
+	LOBBY_HOST_TRACK_PICK,
+	LOBBY_GUEST_TRACK_WAIT,
+	LOBBY_CHARACTER_PICK,
+	LOBBY_WAIT_FOR_LOADING,
+	LOBBY_START_LOADING,
+	GAME_WAIT_FOR_RACE,
+	GAME_START_RACE
 };
 
 // This can be 0x400 bytes max:
@@ -26,8 +31,10 @@ struct OnlineCTR
 	// 0x10
 	int NumDrivers;
 	int DriverID;
+	int boolLockedInTrack;
+	int boolLockedInCharacter;
 	
-	// 0x18
+	// 0x20
 	// function pointers MUST come last,
 	// cause windows thinks pointers are 
 	// 8 bytes, while PSX thinks 4 bytes
@@ -98,11 +105,13 @@ struct SG_MessageCharacter
 	// is this the last message or not?
 	char boolLastMessage : 1;
 	
-	// index 0 - 7
-	char clientID : 3;
-	
 	// character 0 - 15
 	char characterID : 4;
+	
+	char boolLockedIn : 1;
+	
+	// extra junk
+	char padding : 2;
 	
 	// 16 bits total (2 bytes)
 };
@@ -172,6 +181,19 @@ struct CG_MessageTrack
 	// 16 bits total (2 bytes)
 };
 
+// my functions
+void StatePC_Launch_EnterPID();
+void StatePC_Launch_EnterIP();
+void StatePC_Launch_ConnectFailed();
+void StatePC_Launch_FirstInit();
+void StatePC_Lobby_HostTrackPick();
+void StatePC_Lobby_GuestTrackWait();
+void StatePC_Lobby_CharacterPick();
+void StatePC_Lobby_WaitForLoading();
+void StatePC_Lobby_StartLoading();
+void StatePC_Game_WaitForRace();
+void StatePC_Game_StartRace();
+
 #endif
 
 #ifndef WINDOWS_INCLUDE
@@ -185,13 +207,16 @@ register struct OnlineCTR* octr asm("k1");
 #endif
 
 // my functions
-void MenuState_EnterPID();
-void MenuState_EnterIP();
-void MenuState_ConnectFailed();
-void MenuState_BootGame();
-void MenuState_Navigate();
-void MenuState_Minimize();
-
-void MenuBox_OnPressX(struct MenuBox* b);
+void StatePS1_Launch_EnterPID();
+void StatePS1_Launch_EnterIP();
+void StatePS1_Launch_ConnectFailed();
+void StatePS1_Launch_FirstInit();
+void StatePS1_Lobby_HostTrackPick();
+void StatePS1_Lobby_GuestTrackWait();
+void StatePS1_Lobby_CharacterPick();
+void StatePS1_Lobby_WaitForLoading();
+void StatePS1_Lobby_StartLoading();
+void StatePS1_Game_WaitForRace();
+void StatePS1_Game_StartRace();
 
 #endif

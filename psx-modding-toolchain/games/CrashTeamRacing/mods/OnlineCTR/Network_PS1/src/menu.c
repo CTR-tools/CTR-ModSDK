@@ -59,7 +59,7 @@ struct MenuBox menuBox =
 
 	.rows = menuRows,
 
-	.funcPtr = MenuBox_OnPressX,
+	.funcPtr = 0,
 
 	.drawStyle = 0x4,	// 0xF0 looks like load/save
 	
@@ -109,38 +109,24 @@ void SetNames_Tracks()
 	}
 }
 
-void ActivateMenu()
-{
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
-	#endif
-	
-	// open menu, set defaults
-	octr->PageNumber = 0;
-	octr->CountPressX = 0;
-	SetNames_Characters();
-	MenuBox_Show(&menuBox);
-	octr->CurrState = OPEN_MENU;
-}
-
-void MenuState_EnterPID()
+void StatePS1_Launch_EnterPID()
 {	
 	DecalFont_DrawLine("Attach Windows Client To Continue",0x0,0xd0,2,0);
 }
 
-void MenuState_EnterIP()
+void StatePS1_Launch_EnterIP()
 {	
 	DecalFont_DrawLine("Client Attached",0x0,0xc0,2,0x1A);
 	DecalFont_DrawLine("Enter IP Address",0x0,0xd0,2,0);
 }
 
-void MenuState_ConnectFailed()
+void StatePS1_Launch_ConnectFailed()
 {
 	DecalFont_DrawLine("Server Not Found",0x0,0xc0,2,0x19);
 	DecalFont_DrawLine("Please Try Again",0x0,0xd0,2,0);
 }
 
-void MenuState_BootGame()
+void StatePS1_Launch_FirstInit()
 {
 	// starting at index 381 (0x17d) is
 	// dialogue for adventure hints
@@ -166,10 +152,53 @@ void MenuState_BootGame()
 	sdata.mempack[0].lastFreeByte = 0x807ff800;
 	sdata.mempack[0].endOfAllocator = 0x807ff800;
 
-	ActivateMenu();
+	sdata.ptrActiveMenuBox = 0;
+
+	// keep running till the client gets a result,
+	// DriverID is set to -1 on windows-side before this.
+
+	if(octr->DriverID == 0)
+	{
+		octr->CurrState = LOBBY_HOST_TRACK_PICK;
+	}
+	
+	else if (octr->DriverID > 0)
+	{
+		octr->CurrState = LOBBY_GUEST_TRACK_WAIT;
+	}
 }
 
-void MenuState_Navigate()
+void DrawStats()
+{
+	char message[32];
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
+	sprintf(message, "ClientID: %d", octr->DriverID);
+	DecalFont_DrawLine(message,0x0,0x20,2,0);
+	
+	sprintf(message, "NumTotal: %d", octr->NumDrivers);
+	DecalFont_DrawLine(message,0x0,0x30,2,0);
+}
+
+void MenuBox_OnPressX_Track(struct MenuBox* b)
+{	
+	int levelID;
+	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
+	MenuBox_Hide(b);
+	sdata.ptrActiveMenuBox = 0;
+	
+	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
+}
+
+void StatePS1_Lobby_HostTrackPick()
 {
 	// these can share same register with optimization
 	int buttons;
@@ -179,13 +208,15 @@ void MenuState_Navigate()
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
-	char message[32];
-	
-	sprintf(message, "ClientID: %d", octr->DriverID);
-	DecalFont_DrawLine(message,0x0,0x20,2,0);
-	
-	sprintf(message, "NumTotal: %d", octr->NumDrivers);
-	DecalFont_DrawLine(message,0x0,0x30,2,0);
+	// open menu, set defaults
+	if(sdata.ptrActiveMenuBox != &menuBox)
+	{
+		octr->PageNumber = 0;
+		menuBox.rowSelected = 0;
+		menuBox.funcPtr = MenuBox_OnPressX_Track;
+		SetNames_Tracks();
+		MenuBox_Show(&menuBox);
+	}
 	
 	buttons = sdata.gamepadSystem.controller[0].buttonsTapped;
 	
@@ -197,56 +228,18 @@ void MenuState_Navigate()
 	{
 		octr->PageNumber += (buttons-6)/2;
 	
-		// character select
-		if(octr->CountPressX == 0)
-		{
-			if (octr->PageNumber < 0) octr->PageNumber = 0;
-			if (octr->PageNumber > 3) octr->PageNumber = 3;
-			SetNames_Characters();
-		}
-		
-		// track select
-		else
-		{
-			if (octr->PageNumber < 0) octr->PageNumber = 0;
-			if (octr->PageNumber > 7) octr->PageNumber = 7;
-			SetNames_Tracks();
-		}
-	}
-	
-	if(sdata.gGT->levelID != 0x32)
-	{
-		DecalFont_DrawLine("Press Select to Close",0x0,0xd0,2,0);
-				
-		if(buttons & BTN_SELECT)
-		{	
-			// hide menubox
-			MenuBox_Hide(&menuBox);
-			octr->CurrState = MINIMIZE;
-		}
+		if (octr->PageNumber < 0) octr->PageNumber = 0;
+		if (octr->PageNumber > 3) octr->PageNumber = 3;
+		SetNames_Characters();
 	}
 }
 
-void MenuState_Minimize()
+void StatePS1_Lobby_GuestTrackWait()
 {
-	int buttons;
-	int i;
-	
-	#if USE_K1 == 0
-	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
-	#endif
-
-	DecalFont_DrawLine("Press Select to Open",0x0,0xd0,2,0);
-	
-	buttons = sdata.gamepadSystem.controller[0].buttonsTapped;
-	
-	if(buttons & BTN_SELECT)
-	{	
-		ActivateMenu();
-	}
+	DecalFont_DrawLine("Waiting for Host to Pick Track",0x0,0xd0,2,0);
 }
 
-void MenuBox_OnPressX(struct MenuBox* b)
+void MenuBox_OnPressX_Character(struct MenuBox* b)
 {	
 	int levelID;
 	int i;
@@ -255,31 +248,77 @@ void MenuBox_OnPressX(struct MenuBox* b)
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
-	levelID = 4*octr->PageNumber+b->rowSelected;
+	MenuBox_Hide(b);
+	sdata.ptrActiveMenuBox = 0;
 	
-	// if pressed X in character selector
-	if(octr->CountPressX == 0)
+	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
+}
+
+void StatePS1_Lobby_CharacterPick()
+{
+	// these can share same register with optimization
+	int buttons;
+	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
+	// open menu, set defaults
+	if(sdata.ptrActiveMenuBox != &menuBox)
 	{
-		// save results, transition to track selector
-		octr->CountPressX++;
-		data.characterIDs[0] = levelID;
 		octr->PageNumber = 0;
+		menuBox.rowSelected = 0;
+		menuBox.funcPtr = MenuBox_OnPressX_Character;
+		SetNames_Characters();
+		MenuBox_Show(&menuBox);
+	}
+	
+	buttons = sdata.gamepadSystem.controller[0].buttonsTapped;
+	
+	// BTN_LEFT = 0x4
+	// BTN_RIGHT = 0x8
+	// some crazy math to optimize this
+	
+	if(buttons & 0xC)
+	{
+		octr->PageNumber += (buttons-6)/2;
+	
+		if (octr->PageNumber < 0) octr->PageNumber = 0;
+		if (octr->PageNumber > 7) octr->PageNumber = 7;
 		SetNames_Tracks();
 	}
+}
+
+void StatePS1_Lobby_WaitForLoading()
+{
+	DecalFont_DrawLine("Waiting for All Characters",0x0,0xd0,2,0);
+}
+
+void StatePS1_Lobby_StartLoading()
+{
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
 	
-	// if pressed X in track selector
-	else
-	{	
-		// close menu, stop music, 
-		// stop "most FX", let menu FX ring
-		MenuBox_Hide(b);
-		Music_Stop();
-		howl_StopAudio(1,1,0);
-		
-		// load next level
-		sdata.gGT->gameMode1 = 0x40000000;
-		sdata.gGT->levelID = levelID;
-		sdata.Loading.stage = 0;
-		octr->CurrState = MINIMIZE;
-	}
+	// stop music, 
+	// stop "most FX", let menu FX ring
+	Music_Stop();
+	howl_StopAudio(1,1,0);
+	
+	// load next level
+	sdata.gGT->gameMode1 = 0x40000000;
+	sdata.Loading.stage = 0;
+	octr->CurrState = GAME_WAIT_FOR_RACE;
+}
+
+void StatePS1_Game_WaitForRace()
+{
+	// lock traffic lights off-screen,
+	// put message on-screen
+}
+
+void StatePS1_Game_StartRace()
+{
+	// deal with weapons
 }
