@@ -22,6 +22,11 @@ int characterIndex[0xF] = {0,1,2,3,4,5,6,7,8,9,0xA,0xB,0xC,0xD,0xE};
 
 char wasLoadedYet;
 
+// 15 kart colors currently
+// start of PAINTK: +0
+// start of PAINTP_M: +3
+// start of PAINTP_R: +18
+
 //Load custom textures to available heap space in main menu (which is 0x801CE000)
 void LoadFile_CustomTexturesMempack()
 {
@@ -29,6 +34,15 @@ void LoadFile_CustomTexturesMempack()
 
 	//load in mempack
 	PAINTALL = (struct Texture*)LOAD_ReadFile_NoCallback("\\PAINTALL.BIN;1", (void*)0x801CE000, 0);
+
+	LoadImage((RECT *)PAINTALL[16].front, (u_long *)PAINTALL[15].front);
+	LoadImage((RECT *)PAINTALL[16].back, (u_long *)PAINTALL[15].back);
+	LoadImage((RECT *)PAINTALL[16].floor, (u_long *)PAINTALL[15].floor);
+	LoadImage((RECT *)PAINTALL[16].brown, (u_long *)PAINTALL[15].brown);
+	LoadImage((RECT *)PAINTALL[16].motorside, (u_long *)PAINTALL[15].motorside);
+	LoadImage((RECT *)PAINTALL[16].motortop, (u_long *)PAINTALL[15].motortop);
+	LoadImage((RECT *)PAINTALL[16].bridge, (u_long *)PAINTALL[15].bridge);
+	LoadImage((RECT *)PAINTALL[16].exhaust, (u_long *)PAINTALL[15].exhaust);
 
 	LoadImage((RECT *)PAINTALL[17].front, (u_long *)PAINTALL[15].front);
 	LoadImage((RECT *)PAINTALL[17].back, (u_long *)PAINTALL[15].back);
@@ -49,6 +63,15 @@ void LoadFile_CustomTexturesMempack()
 		LoadImage((RECT *)PAINTALL[i + 18].motortop, (u_long *)PAINTALL[characterIndex[i]].motortop);
 		LoadImage((RECT *)PAINTALL[i + 18].bridge, (u_long *)PAINTALL[characterIndex[i]].bridge);
 		LoadImage((RECT *)PAINTALL[i + 18].exhaust, (u_long *)PAINTALL[characterIndex[i]].exhaust);
+
+		LoadImage((RECT *)PAINTALL[i + 33].front, (u_long *)PAINTALL[characterIndex[i]].front);
+		LoadImage((RECT *)PAINTALL[i + 33].back, (u_long *)PAINTALL[characterIndex[i]].back);
+		LoadImage((RECT *)PAINTALL[i + 33].floor, (u_long *)PAINTALL[characterIndex[i]].floor);
+		LoadImage((RECT *)PAINTALL[i + 33].brown, (u_long *)PAINTALL[characterIndex[i]].brown);
+		LoadImage((RECT *)PAINTALL[i + 33].motorside, (u_long *)PAINTALL[characterIndex[i]].motorside);
+		LoadImage((RECT *)PAINTALL[i + 33].motortop, (u_long *)PAINTALL[characterIndex[i]].motortop);
+		LoadImage((RECT *)PAINTALL[i + 33].bridge, (u_long *)PAINTALL[characterIndex[i]].bridge);
+		LoadImage((RECT *)PAINTALL[i + 33].exhaust, (u_long *)PAINTALL[characterIndex[i]].exhaust);
 	}
 
 	wasLoadedYet = 1;
@@ -86,6 +109,15 @@ void ChangePaintJob(char character, int buttonTap)
 	LoadImage((RECT *)PAINTALL[character + 18].motortop, (u_long *)PAINTALL[characterIndex[character]].motortop);
 	LoadImage((RECT *)PAINTALL[character + 18].bridge, (u_long *)PAINTALL[characterIndex[character]].bridge);
 	LoadImage((RECT *)PAINTALL[character + 18].exhaust, (u_long *)PAINTALL[characterIndex[character]].exhaust);
+
+	LoadImage((RECT *)PAINTALL[character + 33].front, (u_long *)PAINTALL[characterIndex[character]].front);
+	LoadImage((RECT *)PAINTALL[character + 33].back, (u_long *)PAINTALL[characterIndex[character]].back);
+	LoadImage((RECT *)PAINTALL[character + 33].floor, (u_long *)PAINTALL[characterIndex[character]].floor);
+	LoadImage((RECT *)PAINTALL[character + 33].brown, (u_long *)PAINTALL[characterIndex[character]].brown);
+	LoadImage((RECT *)PAINTALL[character + 33].motorside, (u_long *)PAINTALL[characterIndex[character]].motorside);
+	LoadImage((RECT *)PAINTALL[character + 33].motortop, (u_long *)PAINTALL[characterIndex[character]].motortop);
+	LoadImage((RECT *)PAINTALL[character + 33].bridge, (u_long *)PAINTALL[characterIndex[character]].bridge);
+	LoadImage((RECT *)PAINTALL[character + 33].exhaust, (u_long *)PAINTALL[characterIndex[character]].exhaust);
 }
 
 //Hooked at the very end of MM_Characters_MenuBox, which makes this function run only while you're in the character menu
