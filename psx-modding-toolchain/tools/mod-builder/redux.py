@@ -1,6 +1,6 @@
 from syms import Syms
 from compile_list import CompileList, free_sections
-from common import COMPILE_LIST, ISO_PATH, REDUX_MAP_FILE, SETTINGS_PATH, OUTPUT_FOLDER, BACKUP_FOLDER, TEXTURES_OUTPUT_FOLDER, request_user_input, get_build_id, check_compile_list
+from common import COMPILE_LIST, ISO_PATH, REDUX_MAP_FILE, SETTINGS_PATH, OUTPUT_FOLDER, BACKUP_FOLDER, TEXTURES_OUTPUT_FOLDER, MOD_NAME, request_user_input, get_build_id, check_compile_list
 from image import get_image_list
 from clut import get_clut_list
 from game_options import game_options
@@ -36,10 +36,16 @@ class Redux:
 
     def start_emulation(self) -> None:
         curr_dir = os.getcwd() + "/"
-        game_path = curr_dir + ISO_PATH + self.get_game_name()
+        game_name = self.get_game_name()
+        mod_name = game_name.split(".")[0] + "_" + MOD_NAME + ".bin"
+        generic_path = curr_dir + ISO_PATH
+        game_path = generic_path + mod_name
         if not os.path.isfile(game_path):
-            print("\n[Redux-py] WARNING: game file not found at " + game_path)
-            print("PCSX-Redux will start without booting the iso.")
+            # if modded game not found, fallback to original game
+            game_path = generic_path + game_name
+            if not os.path.isfile(game_path):
+                print("\n[Redux-py] WARNING: game file not found at " + game_path)
+                print("PCSX-Redux will start without booting the iso.")
         os.chdir(self.path)
         Popen(self.command + " -run -loadiso " + game_path, shell=True, start_new_session=True)
         os.chdir(curr_dir)

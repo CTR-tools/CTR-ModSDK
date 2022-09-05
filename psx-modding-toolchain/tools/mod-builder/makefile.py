@@ -68,30 +68,33 @@ class Makefile:
             buffer += " " * 8 + "{" + "\n"
             if addr > self.base_addr:
                 buffer += " " * 12 + ". = . + " + hex(offset) + ";\n"
+            text, rodata, sdata, data, sbss, bss, ctors, psyq = [], [], [], [], [], [], [], []
+            sections = [text, rodata, sdata, data, sbss, bss, ctors, psyq]
             for src in source:
                 full_source = src.rsplit(".", 1)
                 src = full_source[0]
                 is_c = False
                 if len(full_source) == 2 and full_source[1] != "s":
                     is_c = True
-                buffer += " " * 12 + "KEEP(" + src + ".o(.text))\n"
-                buffer += " " * 12 + "KEEP(" + src + ".o(.text.startup._GLOBAL__*))\n"
-                buffer += " " * 12 + "KEEP(" + src + ".o(.text.*))\n"
-                buffer += " " * 12 + "KEEP(" + src + ".o(.rodata*))\n"
-                buffer += " " * 12 + "KEEP(" + src + ".o(.sdata*))\n"
-                buffer += " " * 12 + "KEEP(" + src + ".o(.data*))\n"
-                buffer += " " * 12 + "KEEP(" + src + ".o(.sbss*))\n"
-                buffer += " " * 12 + "KEEP(" + src + ".o(.bss*))\n"
-                buffer += " " * 12 + "KEEP(" + src + ".o(.ctors))\n"
+                text.append(" " * 12 + "KEEP(" + src + ".o(.text*))\n")
+                rodata.append(" " * 12 + "KEEP(" + src + ".o(.rodata*))\n")
+                sdata.append(" " * 12 + "KEEP(" + src + ".o(.sdata*))\n")
+                data.append(" " * 12 + "KEEP(" + src + ".o(.data*))\n")
+                sbss.append(" " * 12 + "KEEP(" + src + ".o(.sbss*))\n")
+                bss.append(" " * 12 + "KEEP(" + src + ".o(.bss*))\n")
+                ctors.append(" " * 12 + "KEEP(" + src + ".o(.ctors))\n")
                 if add_psyq and self.use_psyq and is_c:
                     add_psyq = False
-                    buffer += " " * 12 + "KEEP(*(.psyqtext))\n"
-                    buffer += " " * 12 + "KEEP(*(.psyqtext.*))\n"
-                    buffer += " " * 12 + "KEEP(*(.psyqrdata*))\n"
-                    buffer += " " * 12 + "KEEP(*(.psyqsdata*))\n"
-                    buffer += " " * 12 + "KEEP(*(.psyqdata*))\n"
-                    buffer += " " * 12 + "KEEP(*(.psyqsbss*))\n"
-                    buffer += " " * 12 + "KEEP(*(.psyqbss*))\n"
+                    psyq.append(" " * 12 + "KEEP(*(.psyqtext))\n")
+                    psyq.append(" " * 12 + "KEEP(*(.psyqtext.*))\n")
+                    psyq.append(" " * 12 + "KEEP(*(.psyqrdata*))\n")
+                    psyq.append(" " * 12 + "KEEP(*(.psyqsdata*))\n")
+                    psyq.append(" " * 12 + "KEEP(*(.psyqdata*))\n")
+                    psyq.append(" " * 12 + "KEEP(*(.psyqsbss*))\n")
+                    psyq.append(" " * 12 + "KEEP(*(.psyqbss*))\n")
+            for section in sections:
+                for line in section:
+                    buffer += line
             buffer += " " * 12 + "\n"
             buffer += " " * 12 + ". = ALIGN(4);\n"
             buffer += " " * 12 + "__ovr_end = .;\n"
