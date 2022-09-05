@@ -159,7 +159,7 @@ void StatePS1_Launch_FirstInit()
 	// DriverID is set to -1 on windows-side before this.
 
 	if(octr->DriverID == 0)
-	{
+	{		
 		octr->CurrState = LOBBY_HOST_TRACK_PICK;
 	}
 	
@@ -185,8 +185,7 @@ void DrawClientCountStats()
 }
 
 void MenuBox_OnPressX_Track(struct MenuBox* b)
-{	
-	int levelID;
+{
 	int i;
 	
 	#if USE_K1 == 0
@@ -194,11 +193,11 @@ void MenuBox_OnPressX_Track(struct MenuBox* b)
 	#endif
 	
 	MenuBox_Hide(b);
+	sdata.ptrDesiredMenuBox = 0;
 	
-	// is this right? Active or Desired?
-	sdata.ptrActiveMenuBox = 0;
+	sdata.gGT->levelID = (4 * octr->PageNumber) + b->rowSelected;
 	
-	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
+	octr->boolLockedInTrack = 1;
 }
 
 void StatePS1_Lobby_HostTrackPick()
@@ -210,6 +209,9 @@ void StatePS1_Lobby_HostTrackPick()
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
+	
+	// quit, if a choice has already been made
+	if(octr->boolLockedInTrack) return;
 	
 	DrawClientCountStats();
 	
@@ -253,8 +255,7 @@ void DrawCharacterStats()
 }
 
 void MenuBox_OnPressX_Character(struct MenuBox* b)
-{	
-	int levelID;
+{
 	int i;
 	
 	#if USE_K1 == 0
@@ -262,9 +263,11 @@ void MenuBox_OnPressX_Character(struct MenuBox* b)
 	#endif
 	
 	MenuBox_Hide(b);
-	sdata.ptrActiveMenuBox = 0;
+	sdata.ptrDesiredMenuBox = 0;
 	
 	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
+	
+	octr->boolLockedInCharacter = 1;
 }
 
 void StatePS1_Lobby_CharacterPick()
@@ -276,6 +279,9 @@ void StatePS1_Lobby_CharacterPick()
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
+	
+	// quit, if a choice has already been made
+	if(octr->boolLockedInCharacter) return;
 	
 	DrawClientCountStats();
 	DrawCharacterStats();

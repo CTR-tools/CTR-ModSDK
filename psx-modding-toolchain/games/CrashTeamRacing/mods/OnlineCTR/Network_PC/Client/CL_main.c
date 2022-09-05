@@ -185,6 +185,7 @@ void StatePC_Lobby_HostTrackPick()
 
 	if (!octr->boolLockedInTrack) return;
 
+	printf("Should send to server now\n");
 	// send to server
 	// change state to pick character
 }
@@ -193,7 +194,7 @@ void StatePC_Lobby_GuestTrackWait()
 {
 	ParseMessage();
 
-	if (!octr->boolLockedInCharacter) return;
+	if (!octr->boolLockedInTrack) return;
 
 	// change state to pick character
 }
@@ -204,7 +205,7 @@ void StatePC_Lobby_CharacterPick()
 
 	// send character to server
 
-	if (!octr->boolLockedInTrack) return;
+	if (!octr->boolLockedInCharacter) return;
 
 	// change state to WAIT_FOR_START
 }
