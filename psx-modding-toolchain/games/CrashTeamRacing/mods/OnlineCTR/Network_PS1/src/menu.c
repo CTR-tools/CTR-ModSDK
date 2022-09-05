@@ -204,7 +204,6 @@ void StatePS1_Lobby_HostTrackPick()
 {
 	// these can share same register with optimization
 	int buttons;
-	int i;
 	
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;

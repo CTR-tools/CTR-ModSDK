@@ -91,6 +91,13 @@ void ParseMessage()
 			octr->DriverID = ((struct SG_MessageWelcome*)recvBuf)->clientID;
 			octr->NumDrivers = ((struct SG_MessageWelcome*)recvBuf)->numClientsTotal;
 			break;
+		case SG_TRACK:
+			octr->boolLockedInTrack = 1;
+			int trackID = ((struct SG_MessageTrack*)recvBuf)->trackID;
+			printf("Got Track: %d\n", trackID);
+
+			// set sdata.gGT->trackID
+			*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = trackID;
 		default:
 			break;
 		}
@@ -185,9 +192,20 @@ void StatePC_Lobby_HostTrackPick()
 
 	if (!octr->boolLockedInTrack) return;
 
-	printf("Should send to server now\n");
-	// send to server
-	// change state to pick character
+	printf("Sending Track to Server\n");
+
+	struct CG_MessageTrack mt;
+	mt.type = CG_TRACK;
+	mt.size = sizeof(struct CG_MessageTrack);
+	mt.boolLastMessage = 1;
+
+	// sdata.gGT->levelID
+	mt.trackID = *(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
+
+	// send a message to the client
+	send(CtrMain.socket, &mt, mt.size, 0);
+
+	octr->CurrState = LOBBY_CHARACTER_PICK;
 }
 
 void StatePC_Lobby_GuestTrackWait()
@@ -196,7 +214,7 @@ void StatePC_Lobby_GuestTrackWait()
 
 	if (!octr->boolLockedInTrack) return;
 
-	// change state to pick character
+	octr->CurrState = LOBBY_CHARACTER_PICK;
 }
 
 void StatePC_Lobby_CharacterPick()

@@ -85,7 +85,7 @@ void ServerState_Boot()
 	state = SERVER_LOBBY;
 }
 
-void ServerState_Lobby()
+void CheckNewClients()
 {
 	fd_set copy = master;
 
@@ -139,6 +139,107 @@ void ServerState_Lobby()
 			}
 
 			printf("ClientCount: %d\n", clientCount);
+		}
+	}
+}
+
+void ParseMessage(int i)
+{
+	char recvBuf[8];
+	memset(recvBuf, 0xFF, 8);
+
+	int recvByteCount;
+	recvByteCount = recv(CtrClient[i].socket, recvBuf, 8, 0);
+
+	// This happens when the server uses closesocket(),
+	// either because you connected to a full server, or
+	// a client disconnected so the server reset
+	if (recvByteCount == 0)
+	{
+		//Disconnect();
+		return;
+	}
+
+	// check for errors
+	if (recvByteCount == -1)
+	{
+		int err = WSAGetLastError();
+
+		// This happens due to nonblock, ignore it
+		if (err != WSAEWOULDBLOCK)
+		{
+			// if server is closed disconnected
+			if (err == WSAECONNRESET)
+			{
+				//Disconnect();
+			}
+
+			// client closed connection
+			if (err == WSAENOTCONN)
+			{
+
+			}
+
+			return;
+		}
+	}
+
+	if (recvByteCount != ((struct CG_Header*)recvBuf)->size)
+	{
+		//printf("Bug! -- Tag: %d, recvBuf.size: %d, recvCount: %d\n",
+		//	recvBuf.type, recvBuf.size, receivedByteCount);
+
+		// dont disconnect, just try again next cycle
+	}
+
+	// if recvSize is equal to expected, and if type is valid
+	else if (((struct CG_Header*)recvBuf)->type < CG_COUNT)
+	{
+		// switch will compile into a jmp table, no funcPtrs needed
+		switch (((struct CG_Header*)recvBuf)->type)
+		{
+		case CG_TRACK:
+
+			printf("Got Track from %d\n", i);
+
+			int trackID = ((struct CG_MessageTrack*)recvBuf)->trackID;
+			
+			struct SG_MessageTrack mt;
+			mt.type = SG_TRACK;
+			mt.size = sizeof(struct CG_MessageTrack);
+			mt.boolLastMessage = 1;
+			mt.trackID = trackID;
+
+			// send a message all other clients
+			for (int j = 0; j < 8; j++)
+			{
+				if (
+						// skip empty sockets, skip self
+						(CtrClient[j].socket != 0) &&
+						(i != j)
+					)
+				{
+					printf("Give Track to %d\n", j);
+					send(CtrClient[j].socket, &mt, mt.size, 0);
+				}
+			}
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void ServerState_Lobby()
+{
+	CheckNewClients();
+
+	// check messages in sockets
+	for (int i = 0; i < 8; i++)
+	{
+		if (CtrClient[i].socket != 0)
+		{
+			ParseMessage(i);
 		}
 	}
 }

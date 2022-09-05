@@ -138,7 +138,26 @@ enum ClientGiveMessageType
 {
 	CG_CHARACTER,
 	CG_TRACK,
-	CG_POSITION
+	CG_POSITION,
+	
+	CG_COUNT
+};
+
+// sent to each user when someone connects
+struct CG_Header
+{
+	// max of 16 message types
+	char type : 4;
+	
+	// max of 16 byte message
+	char size : 4;
+	
+	// is this the last message or not?
+	char boolLastMessage : 1;
+
+	char junk : 7;
+	
+	// 16 bits total (2 bytes)
 };
 
 // character message
