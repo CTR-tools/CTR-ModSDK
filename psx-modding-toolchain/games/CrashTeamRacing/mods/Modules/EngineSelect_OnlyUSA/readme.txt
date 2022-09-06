@@ -1,0 +1,1 @@
+A Nitro-Fueled style engine class select! Press L2 and R2 on the character select screen (in Arcade or Adventure) to change classes. Made by Faradise.
