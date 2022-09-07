@@ -9,7 +9,7 @@ void DECOMP_Driver_SetConsts(struct Driver * driver)
 
 	d = (u_char *)driver;
 
-	for(i = 0; i < 0x41; i++)
+	for(i = 0; i < 65; i++)
 	{
 		metaPhys = &data.metaPhys[i];
 

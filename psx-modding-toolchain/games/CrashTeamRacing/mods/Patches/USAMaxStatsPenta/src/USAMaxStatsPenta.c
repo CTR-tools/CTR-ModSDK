@@ -30,13 +30,13 @@ void USAMaxStatsPenta_Driver_SetConsts(struct Driver * driver)
 		switch(metaPhysSize)
 		{
 			case 1:
-				*(u_char *)&d[metaPhys->unk - 4] = *(u_char *)(int)&metaPhys->size + data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID;
+				*(u_char *)&d[metaPhys->unk - 4] = *(u_char *)((int)&metaPhys->size + data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID * 4);
 				break;
 			case 2:
-				*(u_short *)&d[metaPhys->unk - 4] = *(u_short *)(int)&metaPhys->size + data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID;
+				*(u_short *)&d[metaPhys->unk - 4] = *(u_short *)((int)&metaPhys->size + data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID * 4);
 				break;
 			case 4:
-				*(u_int *)&d[metaPhys->unk - 4] = *(u_int *)(int)&metaPhys->size + data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID;
+				*(u_int *)&d[metaPhys->unk - 4] = *(u_int *)((int)&metaPhys->size + data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID * 4);
 				break;
 		}
 	}

@@ -5347,7 +5347,7 @@ enum PhysType
 	// Driver offset 0x484
 	PROTOTYPE_KEY = 0x40,
 
-	NUM_PHYS_TYPES = 0x41
+	NUM_PHYS_TYPES = 65
 
 	// ...
 	// 65 (0x41) exist
