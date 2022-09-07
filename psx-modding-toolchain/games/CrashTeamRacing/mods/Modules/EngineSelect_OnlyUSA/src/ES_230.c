@@ -8,8 +8,8 @@ static char bal[] = "Balanced";
 static char acc[] = "Acceleration";
 static char trn[] = "Turning";
 static char spd[] = "Speed";
-// static char pen[] = "Penta";
-static char * engineText[4] = {bal,acc,spd,trn};
+static char pen[] = "Penta";
+static char * engineText[5] = {bal,acc,spd,trn,pen};
 
 void hook_CharacterSelect()
 {
@@ -33,7 +33,7 @@ void hook_CharacterSelect()
 		if((buttonTap & BTN_L1) == BTN_L1)
 		{
 			//decrease
-			engineID = (engineID + 3) % 4;
+			engineID = (engineID + 4) % 5;
 			// Play sound
 			OtherFX_Play(0, 1);
 		}
@@ -42,7 +42,7 @@ void hook_CharacterSelect()
 		else if((buttonTap & BTN_R1) == BTN_R1)
 		{
 			// increase
-			engineID = (engineID + 1) % 4;
+			engineID = (engineID + 1) % 5;
 			
 			OtherFX_Play(0, 1);
 		}

@@ -274,7 +274,7 @@ extern struct
 	// 800b5540
 	// MM_TransitionInOut meta data of some sort
 
-	char fill_trackselectmetabattletracks_temporary[0x4A4];
+	char fill_trackselectmetabattletracks_temporary[0x494];
 
 	// 800b59e4
 	int movingToTrackMenu;

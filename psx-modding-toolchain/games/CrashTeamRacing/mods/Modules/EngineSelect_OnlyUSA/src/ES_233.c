@@ -9,8 +9,8 @@ static char bal[] = "Balanced";
 static char acc[] = "Acceleration";
 static char trn[] = "Turning";
 static char spd[] = "Speed";
-// static char pen[] = "Penta";
-static char * engineText[4] = {bal,acc,spd,trn};
+static char pen[] = "Penta";
+static char * engineText[5] = {bal,acc,spd,trn,pen};
 static int charID;
 
 void hook_AdventureSelect()
@@ -66,7 +66,7 @@ void hook_AdventureSelect()
 	if((buttonTap & BTN_L2) == BTN_L2)
 	{
 		// decrease
-		engineID = (engineID + 3) % 4;
+		engineID = (engineID + 4) % 5;
 
 		OtherFX_Play(0, 1);
 	}
@@ -75,7 +75,7 @@ void hook_AdventureSelect()
 	else if((buttonTap & BTN_R2) == BTN_R2)
 	{
 		// increase
-		engineID = (engineID + 1) % 4;
+		engineID = (engineID + 1) % 5;
 
 		OtherFX_Play(0, 1);
 	}
