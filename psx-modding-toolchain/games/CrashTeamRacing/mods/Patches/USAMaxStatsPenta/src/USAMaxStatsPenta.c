@@ -11,10 +11,6 @@ void USAMaxStatsPenta_Driver_SetConsts(struct Driver * driver)
 
 	d = (u_char *)driver;
 
-	// "patch penta right here, cause I'm lazy" --Niko
-	// and so am I --Super
-	data.MetaDataCharacters[0xD].engineID = 4;
-
 	for(i = 0; i < 0x41; i++)
 	{
 		metaPhys = &data.metaPhys[i];

@@ -1,1 +1,1 @@
-A Nitro-Fueled style engine class select! Press L2 and R2 on the character select screen (in Arcade or Adventure) to change classes. Made by Faradise.
+A Nitro-Fueled style engine class select! Press L2 and R2 on the character select screen (in Arcade or Adventure) to change classes. This also incorporates the USAMaxStatsPenta mod so you can select Penta's stats from the European and Japanese releases of CTR. Made by Faradise.
