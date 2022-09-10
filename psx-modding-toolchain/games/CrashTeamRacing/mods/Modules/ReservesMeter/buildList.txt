@@ -1,0 +1,17 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Compile the code in the empty space in RDATA
+//common, exe, rdata_free, 0x0, src/main.c src/bluefire.c src/Turbo_Increment.c
+common, exe, rdata_free, 0x0, src/main.c src/Turbo_Increment.c
+
+// Compile the ASM injection that will load our code
+903, exe, DrawHUD_CrystalChallenge, -0x8, src/reserveshook.s
+926, exe, DrawHUD_AdvStrings, -0x8, src/reserveshook.s
+1006, exe, DrawHUD_AdvStrings, -0x8, src/reserveshook.s
+1020, exe, DrawHUD_AdvStrings, -0x8, src/reserveshook.s
+1111, exe, DrawHUD_AdvStrings, -0x8, src/reserveshook.s
+common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_Hook.s
+//common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
