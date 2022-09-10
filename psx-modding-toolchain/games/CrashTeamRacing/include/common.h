@@ -1109,7 +1109,7 @@ struct InstDef
 	short scale[4];
 
 	// 0x1c (0x24 - 8)
-	int colorRGBA;
+	int colorRGB;
 
 	// 0x20 (0x28 - 8)
 	int flags;
@@ -1191,7 +1191,7 @@ struct Instance
 	short alphaScale;
 
 	// 0x24
-	int colorRGBA;
+	int colorRGB;
 
 	// 0x28
 	// & 0x1 = draw instance
@@ -1237,7 +1237,7 @@ struct Instance
 
 	// 0x58
 	// on ice
-	int reflectionRGBA;
+	int reflectionRGB;
 
 	// instance->0x5C
 	// instance->0x60 (funcPtr for individual prims)
@@ -1500,6 +1500,8 @@ struct Driver
 	short itemRollTimer;
 	// 0x3C
 	short noItemTimer;
+	// 0x3E
+	short unknown_noitemtimer_laptime;
 	// 0x40
 	int lapTime;
 	// 0x44
@@ -3339,7 +3341,7 @@ struct SCVert
 	struct LevVertex* v;
 	int offset_pos_xy;
 	int offset_pos_zw;
-	int offset_color_rgba;
+	int offset_color_rgb;
 };
 
 // ocean vertex
@@ -3378,8 +3380,8 @@ struct RainBuffer
   short unk_22;
 
   // 0x20
-  int colorRGBA_top;
-  int colorRGBA_bottom;
+  int colorRGB_top;
+  int colorRGB_bottom;
 
   // 0x28
   int renderMode[2];
@@ -3525,7 +3527,7 @@ struct Level
 		short pointFrom;
 		short pointTo;
 
-		// RGBA
+		// RGB
 		int colorFrom;
 		int colorTo;
 
@@ -3543,7 +3545,7 @@ struct Level
 
 	// 0xD8
 	// for fullscreen clears
-	int clearColorRGBA;
+	int clearColorRGB;
 
 	// 0xDC
 	// & 2 = mask grab when underwater
@@ -7262,11 +7264,11 @@ struct Data
 		char data38[0x38];
 		#endif
 
-		// Something changed in JAP
+		// Something changed in JPN
 		// After menuBox_arcadeRace
 		// Before s_BASCUS_94426G_Question
 		#if BUILD == JpnRetail
-		char fillerJap[0x18];
+		char fillerJpn[0x18];
 		#endif
 	#endif
 
@@ -7402,7 +7404,7 @@ struct Data
 		char r;
 		char g;
 		char b;
-		char a;
+		char unknown;
 
 		// 0xE - size of struct
 
@@ -7445,7 +7447,7 @@ struct Data
 	// 26 letters, 10 numbers, period, underscore, arrow, nullptr
 	short unicodeAscii[40];
 	#elif BUILD == JpnRetail
-	short unicodeAscii[40 + 94]; // extra Jap characters
+	short unicodeAscii[40 + 94]; // extra Jpn characters
 	#else
 			// this does not exist in JpnTrial
 	#endif
