@@ -102,7 +102,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		if (driver->japanTurboUnknown == 0)
 		{
 			driver->numTurbos = 1;
-			if ((driver->numTurbosBackup < 1) && ((sdata.gGT->gameMode & 0x200000) == 0))
+			if ((driver->numTurbosBackup < 1) && ((sdata.gGT->gameMode1 & 0x200000) == 0))
 			{
 				driver->numTurbosBackup = 1;
 			}
@@ -110,7 +110,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		else
 		{
 			driver->numTurbos++;
-			if ((driver->numTurbosBackup < driver->numTurbos) && ((sdata.gGT->gameMode & 0x200000) == 0))
+			if ((driver->numTurbosBackup < driver->numTurbos) && ((sdata.gGT->gameMode1 & 0x200000) == 0))
 			{
 				driver->numTurbosBackup = driver->numTurbos;
 			}
@@ -210,7 +210,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 				
 				#if BUILD == JpnRetail
 				// probably some sort of overflow safety check
-				if (driver->numTurbosBackup < driver->numTurbos && (sdata.gGT->gameMode & 0x200000) == 0) driver->numTurbosBackup = driver->numTurbos;
+				if (driver->numTurbosBackup < driver->numTurbos && (sdata.gGT->gameMode1 & 0x200000) == 0) driver->numTurbosBackup = driver->numTurbos;
 				#endif
 			}
 		}
@@ -230,7 +230,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			driver->numTurbos++;
 			#if BUILD == JpnRetail
 			// probably some sort of overflow safety check
-			if (driver->numTurbosBackup < driver->numTurbos && (sdata.gGT->gameMode & 0x200000) == 0) driver->numTurbosBackup = driver->numTurbos;
+			if (driver->numTurbosBackup < driver->numTurbos && (sdata.gGT->gameMode1 & 0x200000) == 0) driver->numTurbosBackup = driver->numTurbos;
 			#endif
 		}
 	
