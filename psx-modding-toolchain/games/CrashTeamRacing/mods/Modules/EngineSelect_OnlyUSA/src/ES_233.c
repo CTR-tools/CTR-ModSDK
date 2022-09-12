@@ -9,7 +9,7 @@ static char bal[] = "Balanced";
 static char acc[] = "Acceleration";
 static char trn[] = "Turning";
 static char spd[] = "Speed";
-static char pen[] = "Penta";
+static char pen[] = "Unlimited";
 static char * engineText[5] = {bal,acc,spd,trn,pen};
 static int charID;
 

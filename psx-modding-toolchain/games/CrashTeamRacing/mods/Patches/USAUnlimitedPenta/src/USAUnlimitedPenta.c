@@ -2,7 +2,7 @@
 
 // "currently only for UsaRetail, can potentially work in Sep3 too" --Niko
 
-void USAMaxStatsPenta_Driver_SetConsts(struct Driver * driver)
+void USAUnlimitedPenta_Driver_SetConsts(struct Driver * driver)
 {
 	u_int metaPhysSize;
 	u_int i;

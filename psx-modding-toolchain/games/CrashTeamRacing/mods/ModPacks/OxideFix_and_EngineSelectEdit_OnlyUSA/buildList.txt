@@ -24,13 +24,13 @@ common, exe, LOAD_CDRequestCallback, -0x8, ../../Modules/OxideFix/src/PodiumFix_
 1020, exe, 0x80011380, 0x0, ../../Modules/OxideFix/src/PodiumFix_AppendQueue.c
 1111, exe, 0x80011468, 0x0, ../../Modules/OxideFix/src/PodiumFix_AppendQueue.c
 
-// USAMaxStatsPenta //
+// USAUnlimitedPenta //
 
 // Inject compiled code for Penta's stats into the executable
-926, exe, 0x80088A0C, 0x0, ../../Patches/USAMaxStatsPenta/assets/stats.bin
+926, exe, 0x80088A0C, 0x0, ../../Patches/USAUnlimitedPenta/assets/stats.bin
 
 // Compile modified Driver_SetConsts
-926, exe, Driver_SetConsts, 0x0, ../../Patches/USAMaxStatsPenta/src/USAMaxStatsPenta.c
+926, exe, Driver_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
 
 // FixAdventureModeCharacterSelectArrows //
 // the same bug is also present here of course
