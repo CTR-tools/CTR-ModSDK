@@ -45,6 +45,7 @@ GAME_INCLUDE_PATH = FOLDER_DISTANCE + "include/"
 MAKEFILE = "Makefile"
 COMPILATION_RESIDUES = ["overlay.ld", MAKEFILE, "offset.txt", "comport.txt"]
 COMPILE_LIST = "buildList.txt"
+SRC_FOLDER = "src/"
 OUTPUT_FOLDER = "output/"
 BACKUP_FOLDER = "backup/"
 DEBUG_FOLDER = "debug/"

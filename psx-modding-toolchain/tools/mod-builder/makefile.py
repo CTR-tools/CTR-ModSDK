@@ -1,5 +1,5 @@
 from compile_list import CompileList
-from common import create_directory, request_user_input, rename_psyq_sections, COMP_SOURCE, GAME_INCLUDE_PATH, FOLDER_DISTANCE, DEBUG_FOLDER, OUTPUT_FOLDER, BACKUP_FOLDER, OBJ_FOLDER, DEP_FOLDER, GCC_MAP_FILE, REDUX_MAP_FILE, CONFIG_PATH, PSYQ_RENAME_CONFIRM_FILE
+from common import create_directory, request_user_input, rename_psyq_sections, COMP_SOURCE, GAME_INCLUDE_PATH, FOLDER_DISTANCE, SRC_FOLDER, DEBUG_FOLDER, OUTPUT_FOLDER, BACKUP_FOLDER, OBJ_FOLDER, DEP_FOLDER, GCC_MAP_FILE, REDUX_MAP_FILE, CONFIG_PATH, PSYQ_RENAME_CONFIRM_FILE
 
 import re
 import json
@@ -140,6 +140,7 @@ class Makefile:
         buffer += "OVR_START_ADDR = " + hex(self.base_addr) + "\n"
         buffer += "OVERLAYSCRIPT = " + self.build_linker_script() + "\n"
         buffer += "BUILDDIR = $(MODDIR)" + OUTPUT_FOLDER + "\n"
+        buffer += "SRCINCLUDEDIR = $(MODDIR)" + SRC_FOLDER + "\n"
         buffer += "GAMEINCLUDEDIR = $(MODDIR)" + GAME_INCLUDE_PATH + "\n"
         buffer += "EXTRA_CC_FLAGS = " + self.compiler_flags + "\n"
         buffer += "\n"
