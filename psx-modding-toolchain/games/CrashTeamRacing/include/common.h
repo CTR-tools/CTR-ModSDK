@@ -1413,34 +1413,23 @@ struct Particle
 	// 0x20
 	// driver Inst (if needed)
 
+	/*
+		0x24: axisX
+		0x2C: axisY
+		0x34: axisZ
+		0x3C: ???
+		0x44: ???
+		0x4C: ???
+		0x54: ???
+		0x5C: colorR
+		0x64: colorG
+		0x6C: colorB
+		0x74: colorA
+	*/
+
 	// 0x24
-	// struct ParticleAxis axisX;
+	struct ParticleAxis axis[0xB];
 	
-	// 0x2C
-	// struct ParticleAxis axisY;
-
-	// 0x34
-	// struct ParticleAxis axisZ;
-
-
-	// 0x4C - 0x58
-	// heat particles, flamejet code
-
-
-	// 0x5C
-	// also used for alpha
-	// struct ParticleAxis colorR;
-	
-	// 0x64
-	// struct ParticleAxis colorG;
-	
-	// 0x6C
-	// struct ParticleAxis colorB;
-
-	// front face and back face?
-	// 0x74 - color+alpha flagset
-	// 0x78 - color+alpha flagset
-
 	// 0x7C bytes each
 };
 
