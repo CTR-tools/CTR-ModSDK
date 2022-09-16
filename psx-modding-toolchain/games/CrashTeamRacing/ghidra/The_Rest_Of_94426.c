@@ -16746,7 +16746,8 @@ void FUN_8003eefc(int **param_1,int **param_2)
   if (param_2 != (int **)0x0) {
     do
 	{
-	  // get frames remaining in particle life
+	  // get frames remaining in particle life,
+	  // offset 0x10
       sVar3 = *(short *)(param_2 + 4);
 
 	  // particle->next
@@ -17741,17 +17742,21 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
           uVar16 = (uint)*(byte *)(puVar15 + -8);
 
 		  // emitterChunk offset 0x12-0x10 (0x2)
+		  // used for exhaust particles, unknown what it means
           if (*(byte *)(puVar15 + -8) == 0xc)
 		  {
             if ((uVar1 & 0xc0) == 0)
 			{
 			  // emitterChunk offset 0x12-0xE (0x4)
+			  // function pointer to animate particle (can be nullptr)
               puVar5[7] = *(undefined4 *)(puVar15 + -7);
 
 			  // emitterChunk offset 0x12-0xA (0x8)
+			  // flags, passed to SetColors
               *(ushort *)((int)puVar5 + 0x12) = puVar15[-5];
 
 			  // emitterChunk offset 0x12-0x8 (0xA)
+			  // number of frames in particle life
               *(ushort *)(puVar5 + 4) = puVar15[-4];
 
               uVar17 = uVar17 | 0x1000;
@@ -17762,6 +17767,7 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
             }
           }
 
+		  // if not exhaust particles (unknown what else
           else {
             if ((uVar1 & 0x80) == 0)
 			{

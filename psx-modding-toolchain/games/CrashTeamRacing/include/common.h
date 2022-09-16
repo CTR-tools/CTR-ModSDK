@@ -1431,8 +1431,22 @@ struct Particle
 
 struct ParticleEmitter
 {
+	// 0x0
+	int unk1;
+	
+	// 0x4
+	void* particle_funcPtr;
+	
+	// 0x8
+	// flags, passed to SetColors
+	short particle_colorFlags;
+	
+	// 0xA
+	short particle_lifespan;
+	
 	// 0xC
-	// int particleType (ordinary, or heatWarp)
+	 //(ordinary, or heatWarp)
+	int particle_Type;
 
 	// 0x24 bytes each
 	char data[0x24];
