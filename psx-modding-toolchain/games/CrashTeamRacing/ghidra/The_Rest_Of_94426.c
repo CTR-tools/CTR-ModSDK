@@ -17756,11 +17756,11 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
 
         do
 		{
-		  // emitterChunk offset 0x12-0x10 (0x2)
+		  // emitterChunk offset 0x12-0x10 (0x2),
+		  // used as an offset for writing particle
           uVar16 = (uint)*(byte *)(puVar15 + -8);
 
-		  // emitterChunk offset 0x12-0x10 (0x2)
-		  // used for exhaust particles, unknown what it means
+		  // if invalid, assume color/funcPtr initializer
           if (*(byte *)(puVar15 + -8) == 0xc)
 		  {
 			// if not an AxisInit or (other?),
@@ -17787,7 +17787,7 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
             }
           }
 
-		  // if not exhaust particles (unknown what else)
+		  // if not color/funcPtr initializer
           else {
             if ((uVar1 & 0x80) == 0)
 			{
@@ -17817,8 +17817,12 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
                   iVar7 = FUN_8003ea6c(*(undefined4 *)(puVar15 + -3));
                   iVar14 = iVar14 + iVar7;
                 }
-
+				
+				
+				// particle + offset * 2
+				// determines which axis is initialized
                 puVar6 = puVar5 + uVar16 * 2;
+				
 				
 				// 0x24 - position
                 puVar6[9] = iVar14;

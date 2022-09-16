@@ -1427,9 +1427,15 @@ struct Particle
 	// heat particles, flamejet code
 
 
-	// 0x5C - colorR (8 byte)
-	// 0x64 - colorG (8 byte)
-	// 0x6C - colorB (8 byte)
+	// 0x5C
+	// also used for alpha
+	// struct ParticleAxis colorR;
+	
+	// 0x64
+	// struct ParticleAxis colorG;
+	
+	// 0x6C
+	// struct ParticleAxis colorB;
 
 	// front face and back face?
 	// 0x74 - color+alpha flagset
@@ -1445,7 +1451,8 @@ struct ParticleEmitter
 	short flags;
 	
 	// 0x2
-	short initType;
+	// determines which axis is initialized
+	short initOffset;
 	
 	union
 	{
@@ -7882,7 +7889,15 @@ struct Data
 	// 80089128, nullify to remove Player bubble exhaust underwater in 1P mode
 	struct ParticleEmitter emSet_Exhaust_Water[7];
 
-	// 80089224, nullify to remove Player exhaust in 1P mode
+	// 80089224
+	// [0] - color
+	// [1] - off=0 (posX)
+	// [2] - off=1 (posY)
+	// [3] - off=2 (posZ)
+	// [4] - off=5
+	// [5] - off=7 (colorR, which is also alpha)
+	// [6] - off=4
+	// [7] - null
 	struct ParticleEmitter emSet_Exhaust_High[8];
 
 	// 80089344, nullify to remove Player exhaust in 2P mode
