@@ -1441,24 +1441,53 @@ struct Particle
 struct ParticleEmitter
 {
 	// 0x0
-	int unk1;
+	// flags = 0 for last emitter
+	short flags;
 	
-	// 0x4
-	void* particle_funcPtr;
+	// 0x2
+	short initType;
 	
-	// 0x8
-	// flags, passed to SetColors
-	short particle_colorFlags;
+	union
+	{
+		struct
+		{
+			// 0x4
+			void* particle_funcPtr;
 	
-	// 0xA
-	short particle_lifespan;
+			// 0x8
+			// flags, passed to SetColors
+			short particle_colorFlags;
 	
-	// 0xC
-	 //(ordinary, or heatWarp)
-	int particle_Type;
-
-	// 0x10
-	char data[0x14];
+			// 0xA
+			short particle_lifespan;
+	
+			// 0xC
+			//(ordinary, or heatWarp)
+			int particle_Type;
+			
+			// 0x10
+			int emptyFiller;
+			
+			// 0x14
+		} FuncInit;
+	
+		struct
+		{
+			// 0x4
+			ParticleAxis baseValue;
+			
+			// 0xC
+			ParticleAxis rngSeed;
+		
+			// 0x14
+		} AxisInit;
+	
+	} InitTypes;
+	
+	// 0x14
+	// this gets memcpy'd into particle,
+	// & 0x40 == 1
+	char data[0x10];
 	
 	// 0x24 bytes each
 };

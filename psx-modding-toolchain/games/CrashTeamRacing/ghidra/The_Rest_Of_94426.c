@@ -16807,7 +16807,9 @@ LAB_8003f2dc:
           ppiVar9 = param_2 + 10;
 
 		  // loop through each axis of animation (x, y, z)
-          do {
+          do 
+		  {
+			// if axis is disabled, check next
             if (((uint)piVar10 & 1) == 0) goto LAB_8003f1f4;
 			
 			// pos = pos + vel
@@ -16817,7 +16819,9 @@ LAB_8003f2dc:
             sVar3 = *(short *)ppiVar9 + *(short *)((int)ppiVar9 + 2);
             *(short *)ppiVar9 = sVar3;
 			
+			// if axis is disabled, check next
             if ((((int)piVar10 >> 0x10 & 1U) == 0) || (ppiVar8 == (int **)0x0)) goto LAB_8003f1f4;
+			
             if ((*(ushort *)(ppiVar8 + 2) & 8) == 0) {
               if ((*(ushort *)(ppiVar8 + 2) & 0x10) == 0) {
                 *ppiVar11 = (int *)((int)*ppiVar11 - (int)*(short *)((int)ppiVar8 + 10));
@@ -16896,10 +16900,13 @@ switchD_8003f074_caseD_7:
             }
             *(short *)((int)ppiVar8 + 10) = (short)iVar4;
             ppiVar8 = (int **)*ppiVar8;
+			
+			// next axis to animate
 LAB_8003f1f4:
             ppiVar9 = ppiVar9 + 2;
             piVar10 = (int *)((int)((uint)piVar10 & 0xfffeffff) >> 1);
             ppiVar11 = ppiVar11 + 2;
+			
           } while (piVar10 != (int *)0x0);
         }
 		
@@ -17756,6 +17763,8 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
 		  // used for exhaust particles, unknown what it means
           if (*(byte *)(puVar15 + -8) == 0xc)
 		  {
+			// if not an AxisInit or (other?),
+			// then assume this is a FuncInit
             if ((uVar1 & 0xc0) == 0)
 			{
 			  // emitterChunk offset 0x12-0xE (0x4)
@@ -17778,14 +17787,23 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
             }
           }
 
-		  // if not exhaust particles (unknown what else
+		  // if not exhaust particles (unknown what else)
           else {
             if ((uVar1 & 0x80) == 0)
 			{
+			  // if this is not a memcpy Init
               if ((uVar1 & 0x40) == 0)
 			  {
+				// assume AxisInit emitter
+				  
+				  
+				// === pos init ===
+				
+				
+				// value
                 iVar14 = 0;
-
+				
+				// if base value exists
                 if ((uVar1 & 1) != 0)
 				{
 				  // emitterChunk offset 0x12-0xE (0x4)
@@ -17801,9 +17819,18 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
                 }
 
                 puVar6 = puVar5 + uVar16 * 2;
+				
+				// 0x24 - position
                 puVar6[9] = iVar14;
+				
+				
+				// === vel init ===
+				
+				
+				// velocity
                 uVar13 = 0;
 
+				// if base vel exists
 				if ((uVar1 & 2) != 0)
 				{
 				  // emitterChunk offset 0x12-0xA (0x8)
@@ -17818,11 +17845,17 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
                   uVar13 = uVar13 + sVar4;
                 }
 
-				// offset 0x28 (velX, bottom 2 bytes)
+				// 0x28 - velocity
                 *(ushort *)(puVar6 + 10) = uVar13;
 				
+				
+				// === accel init ===
+				
+				
+				// acceleration
                 uVar13 = 0;
 
+				// if base accel exists
 				if ((uVar1 & 4) != 0)
 				{
 				  // emitterChunk offset 0x12-0x8 (0xA)
@@ -17837,7 +17870,9 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
                   uVar13 = uVar13 + sVar4;
                 }
 
+				// 0x2A - acceleration
                 *(ushort *)((int)puVar6 + 0x2a) = uVar13;
+				
                 uVar17 = uVar17 | 1 << (uVar16 & 0x1f);
               }
 
