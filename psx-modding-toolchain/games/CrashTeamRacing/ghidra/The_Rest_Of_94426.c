@@ -16806,11 +16806,17 @@ LAB_8003f2dc:
 		  // particle offset 0x28
           ppiVar9 = param_2 + 10;
 
+		  // loop through each axis of animation (x, y, z)
           do {
             if (((uint)piVar10 & 1) == 0) goto LAB_8003f1f4;
+			
+			// pos = pos + vel
             *ppiVar11 = (int *)((int)*ppiVar11 + (int)*(short *)ppiVar9);
+			
+			// vel = vel + accel
             sVar3 = *(short *)ppiVar9 + *(short *)((int)ppiVar9 + 2);
             *(short *)ppiVar9 = sVar3;
+			
             if ((((int)piVar10 >> 0x10 & 1U) == 0) || (ppiVar8 == (int **)0x0)) goto LAB_8003f1f4;
             if ((*(ushort *)(ppiVar8 + 2) & 8) == 0) {
               if ((*(ushort *)(ppiVar8 + 2) & 0x10) == 0) {
@@ -16896,9 +16902,14 @@ LAB_8003f1f4:
             ppiVar11 = ppiVar11 + 2;
           } while (piVar10 != (int *)0x0);
         }
-        if (param_2[7] != (int *)0x0) {
+		
+		// if particle has function pointer (offset 0x1C)
+        if (param_2[7] != (int *)0x0) 
+		{
+		  // execute function for this particle
           (*(code *)param_2[7])(param_2);
         }
+		
         uVar2 = *(ushort *)(param_2 + 5);
         if (((uVar1 & 1) != 0) &&
            ((((uVar2 & 0x20) != 0 && ((int)param_2[0x13] < 1)) ||
@@ -17807,7 +17818,9 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
                   uVar13 = uVar13 + sVar4;
                 }
 
+				// offset 0x28 (velX, bottom 2 bytes)
                 *(ushort *)(puVar6 + 10) = uVar13;
+				
                 uVar13 = 0;
 
 				if ((uVar1 & 4) != 0)

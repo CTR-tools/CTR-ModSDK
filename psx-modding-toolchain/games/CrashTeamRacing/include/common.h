@@ -1366,6 +1366,13 @@ struct IconGroup
 	// struct Icon icons[numIcons];
 };
 
+struct ParticleAxis
+{
+	int pos;
+	short vel;
+	short accel;
+};
+
 struct Particle
 {
 	// 0x0
@@ -1388,7 +1395,9 @@ struct Particle
 	// 0x12 (short)
 	// flags, passed to SetColors
 
-	// 0x14 ???
+	// 0x14
+	// flags for animation, controls
+	// which axis moves (x, y, z)
 
 	// ---
 
@@ -1404,14 +1413,14 @@ struct Particle
 	// 0x20
 	// driver Inst (if needed)
 
-	// 0x24 - posX
-	// 0x28 - velX
+	// 0x24
+	// struct ParticleAxis axisX;
+	
+	// 0x2C
+	// struct ParticleAxis axisY;
 
-	// 0x2C - posY
-	// 0x30 - velY
-
-	// 0x34 - posZ
-	// 0x38 - velZ
+	// 0x34
+	// struct ParticleAxis axisZ;
 
 
 	// 0x4C - 0x58
@@ -1448,8 +1457,10 @@ struct ParticleEmitter
 	 //(ordinary, or heatWarp)
 	int particle_Type;
 
+	// 0x10
+	char data[0x14];
+	
 	// 0x24 bytes each
-	char data[0x24];
 };
 
 // for Players, AIs and Ghosts
