@@ -7934,6 +7934,9 @@ struct Data
 	// 80089c04, nullify to remove warpball particles
 	struct ParticleEmitter emSet_Warpball[0xB];
 
+	// 80089eb0 and 8008a018 are mystery effects,
+	// maybe the removed sep3 warppad effects, dont know
+
 	// 80089d90, nullify to remove maskgrab particles (similar to "drop", not the same)
 	struct ParticleEmitter emSet_Maskgrab[0x1C];
 
