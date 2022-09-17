@@ -4,7 +4,6 @@ Animations are half-working, half-fix
 
 LOADING... is too fast
 player icons flashing colors (red/green) are too fast
-vertex color animation in roo's tubes is too fast
 Demo Mode only lasts half-time (even though it "should" be fixed???)
 UI highlight (red/yellow) in menus if too fast
 Demo Mode / End-Of-Race cameras sometimes are too fast

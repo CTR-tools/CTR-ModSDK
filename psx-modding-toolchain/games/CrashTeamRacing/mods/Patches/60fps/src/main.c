@@ -11,6 +11,7 @@ void LOAD_Callback_Overlay_233();
 u_int LOAD_IsOpen_Podiums();
 void INSTANCE_Birth(struct Instance* i, struct Model* m, char* name, struct Thread* t, int flags);
 void INSTANCE_LEVEL_InitAll(struct InstDef* instDef, int num);
+int PatchPE(struct ParticleEmitter* pe);
 
 struct TrophyAnimSound
 {
@@ -101,6 +102,18 @@ void NewCallback230()
 
 void NewCallback231()
 {
+	// roo's tubes bubbles, only one of many 231 PEs that need patching,
+	// could also just patch Particle_UpdateList
+	struct ParticleEmitter* pe = (struct ParticleEmitter*)0x800b3bc0;
+	
+	// loop through all PEs until 
+	// null PE is found at end of array
+	while(PatchPE(pe) != 0)
+	{
+		// next PE
+		pe++;
+	}
+	
 	// Armadillo
 	{
 		// VelX and VelZ, adjust bitshift for
@@ -603,18 +616,18 @@ void INSTANCE_LEVEL_InitAll_Hook(struct InstDef* instDef, int num)
 	}
 }
 
-void PatchPE(struct ParticleEmitter* pe)
+int PatchPE(struct ParticleEmitter* pe)
 {
 	// skip null PE
-	if(pe->flags == 0) return;
+	if(pe->flags == 0) return 0;
 	
 	// skip unknown "special" PEs
-	if((pe->flags & 0xC0) != 0) return;
+	if((pe->flags & 0xC0) != 0) return 1;
 	
 	if(pe->initOffset == 0xC)
 	{
 		pe->InitTypes.FuncInit.particle_lifespan *= 2;
-		return;
+		return 1;
 	}
 	
 	// any other type,
@@ -624,6 +637,8 @@ void PatchPE(struct ParticleEmitter* pe)
 	pe->InitTypes.AxisInit.baseValue.accel /= 2;
 	pe->InitTypes.AxisInit.rngSeed.vel /= 2;
 	pe->InitTypes.AxisInit.rngSeed.accel /= 2;
+	
+	return 1;
 }
 
 struct Particle* NewParticleCreateInstance(int param_1)
@@ -912,6 +927,11 @@ void RunEntryHook()
 		*(unsigned int*)0x8006998C = 0x30420007;	// andi v0, v0, 0x7
 		*(unsigned int*)0x80069990 = 0xA6020008;	// sh v0, 0x8(s0)
 		*(unsigned int*)0x80069994 = 0x279c9000;	// gp -= 0x7000
+	}
+	
+	// roo's tubes SCVert
+	{
+		*(unsigned int*)0x80036E04 = 0x42180;
 	}
 	
 	#if 1
