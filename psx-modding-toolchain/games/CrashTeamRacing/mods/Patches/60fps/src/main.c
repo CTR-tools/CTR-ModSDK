@@ -2,6 +2,16 @@
 
 #define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
 
+u_int MM_Video_DecodeFrame();
+void* LIST_RemoveFront(int L);
+void LOAD_Callback_Overlay_230();
+void LOAD_Callback_Overlay_231();
+void LOAD_Callback_Overlay_232();
+void LOAD_Callback_Overlay_233();
+u_int LOAD_IsOpen_Podiums();
+void INSTANCE_Birth(struct Instance* i, struct Model* m, char* name, struct Thread* t, int flags);
+void INSTANCE_LEVEL_InitAll(struct InstDef* instDef, int num);
+
 struct TrophyAnimSound
 {
 	short frameID;
@@ -649,7 +659,7 @@ void PatchParticles()
 // Crash Team Racing exe boots
 void RunEntryHook()
 {
-	int i;
+	u_int i;
 
 	// Enable 60fps
 	*(unsigned char*)0x80037930 = 1;
