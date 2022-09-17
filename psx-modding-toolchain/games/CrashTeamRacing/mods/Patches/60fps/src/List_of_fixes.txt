@@ -27,6 +27,8 @@ Missile beeping
 "FINAL LAP!" fly-in / fly-out text
 HUD linear interoplation (grabbing wumpa fruit, crystal, etc)
 Wumpa crate does not spam you the wumpa
+7 frames of fire
+main menu track videos
 
 Things somewhat fixed, need work:
 Particles run at 30fps

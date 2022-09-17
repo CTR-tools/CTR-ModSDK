@@ -1,1 +1,0 @@
-copy "..\..\templateBL\*.bat" "%cd%"

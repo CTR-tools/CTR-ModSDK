@@ -704,11 +704,7 @@ void RunEntryHook()
 		*(unsigned short*)0x8001AF90 = 0x12C;
 
 		// Engine Revving (filling bar)
-		*(unsigned short*)0x80067be4 = 2501;
-		*(unsigned short*)0x80067bec = 128;
-		*(unsigned short*)0x80067bf0 = 2500;
-		*(unsigned short*)0x80067bf4 = 128;
-		*(unsigned short*)0x80067c00 = 128;
+		*(unsigned int*)0x80067be0 = 0x22883;
 
 		// Engine Revving (draining bar)
 		*(unsigned int*)0x80067d3c = 0x52883;
@@ -870,8 +866,6 @@ void RunEntryHook()
 
 	// animation speeds
 	{
-		// This worked in ModSDKv2, now broken?
-		#if 1
 		// patch every INSTANCE_Birth for 3D instances,
 		// do not patch the 2D instances, that's just BigNum
 		*(unsigned int*)0x80027d70 = JAL(INSTANCE_Birth_Hook);
@@ -880,7 +874,26 @@ void RunEntryHook()
 		// patch every time LEV instances are made
 		*(unsigned int*)0x80033234 = JAL(INSTANCE_LEVEL_InitAll_Hook);
 		*(unsigned int*)0x8003be50 = JAL(INSTANCE_LEVEL_InitAll_Hook);
-		#endif
+	}
+	
+	// turbo fire
+	{
+		// only increment on odd frames
+		
+		// skip on bad frames
+		*(unsigned int*)0x80069974 = 0x279c7000;	// gp += 0x7000
+		*(unsigned int*)0x80069978 = 0x8F8348A0; 	// lw v1, 0x48A0(gp) -- same as gGT->1cec
+		*(unsigned int*)0x8006997C = 0;				// nop
+		*(unsigned int*)0x80069980 = 0x30630001;	// andi v1, v1, 0x1
+		*(unsigned int*)0x80069984 = 0x10600003;	// beq v1, zero, 0x80069994 (restore gp)
+		
+		// dont worry about nop hole, v0 and v1 are both overwritten anyway
+		
+		// write on good frames
+		*(unsigned int*)0x80069988 = 0x24420001;	// addiu v0, v0, 0x1
+		*(unsigned int*)0x8006998C = 0x30420007;	// andi v0, v0, 0x7
+		*(unsigned int*)0x80069990 = 0xA6020008;	// sh v0, 0x8(s0)
+		*(unsigned int*)0x80069994 = 0x279c9000;	// gp -= 0x7000
 	}
 	
 	#if 1
