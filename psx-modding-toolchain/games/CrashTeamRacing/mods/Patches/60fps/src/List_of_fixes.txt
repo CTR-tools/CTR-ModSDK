@@ -31,7 +31,7 @@ Wumpa crate does not spam you the wumpa
 main menu track videos
 
 Things somewhat fixed, need work:
-Particles run at 30fps
+Particles are patched emitter-by-emitter, 231 emitters unpatched, should patch Particles_UpdateLists
 Texture scrolling (turbo, waterfall, etc) run at 30fps
 Bosses dont constantly spam weapons, but it's still not right
 When opening Adv Hub door with key, zoom out should take 2 sec, not 1 sec
