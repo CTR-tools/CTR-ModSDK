@@ -464,7 +464,7 @@ void PatchModel(struct Model* m, struct Thread* t)
 	if(m == 0) return;
 
 	// ignore ND box, intro models, oxide intro, podiums, etc
-	if(LOAD_Callback_Overlay_233()) return;
+	if(LOAD_IsOpen_Podiums()) return;
 
 	// dont touch crash in main menu (regression)
 	if(m->id >= 0x66)
@@ -603,9 +603,18 @@ void PatchPE(struct ParticleEmitter* pe)
 	pe->InitTypes.AxisInit.rngSeed.accel /= 2;
 }
 
+struct Particle* NewParticleCreateInstance(int param_1)
+{
+	if(sdata.gGT->timer & 1) return 0;
+	
+	return (struct Particle*)LIST_RemoveFront(param_1);
+}
+
 void PatchParticles()
 {
 	struct ParticleEmitter* pe;
+	
+	*(unsigned int*)0x80040348 = JAL(NewParticleCreateInstance);
 	
 	for(pe = &data.emSet_Terrain[0]; pe < &data.emSet_Terrain[0x21]; pe++)
 	{
@@ -849,7 +858,7 @@ void RunEntryHook()
 	// animation speeds
 	{
 		// This worked in ModSDKv2, now broken?
-		#if 0
+		#if 1
 		// patch every INSTANCE_Birth for 3D instances,
 		// do not patch the 2D instances, that's just BigNum
 		*(unsigned int*)0x80027d70 = JAL(INSTANCE_Birth_Hook);
@@ -861,7 +870,7 @@ void RunEntryHook()
 		#endif
 	}
 	
-	#if 0
+	#if 1
 	// patch particles, doubles life cycle,
 	// halfs vel and accel, but doesn't fix 
 	// rate of spawn, which is doubled by 60fps

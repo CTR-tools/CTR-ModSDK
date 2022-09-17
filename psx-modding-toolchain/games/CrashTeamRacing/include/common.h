@@ -4019,7 +4019,7 @@ struct GameTracker
   int frameTimer_notPaused;
 
   // 1cec
-  // counts update iterations (not frames) since boot
+  // counts frames since boot
   int timer;
 
   // 1cf0
