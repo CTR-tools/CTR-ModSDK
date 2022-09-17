@@ -63,3 +63,4 @@ SCVert is fixed on Roo's Tubes
 OVert is fixed on Crash Cove (1P only)
 particle changes (mentioned in "need work"
 improve PatchModel so cutscenes dont break
+waving checkered flag and "loading..." text

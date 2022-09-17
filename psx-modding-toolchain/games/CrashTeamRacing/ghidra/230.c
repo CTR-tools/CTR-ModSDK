@@ -4266,6 +4266,7 @@ LAB_800b04b0:
 		
         DAT_800b59aa = -1;
 LAB_800b0424:
+		// 3 frames of moving track list
         DAT_800b59a4 = 3;
         DAT_800b59a8 = uVar6;
       }
@@ -4337,6 +4338,8 @@ LAB_800b04b8:
   }
   
 LAB_800b05b8:
+
+  // decrease frame from track list motion
   iVar9 = DAT_800b59a4 + -1;
   if ((0 < DAT_800b59a4) && (DAT_800b59a4 = iVar9, iVar9 == 0)) {
     *(ushort *)(local_38 + 0x1a) = DAT_800b59a8;
@@ -4383,7 +4386,12 @@ LAB_800b05b8:
   } while (iVar18 * 0x10000 >> 0x10 < 4);
   iVar18 = 0;
   iVar9 = 0;
-  do {
+  
+  // loop through tracks in track list
+  do 
+  {
+	// This part actually "moves" the rows,
+	// when pressing the Up and Down buttons on D-Pad
     uVar15 = ((iVar9 >> 0x10) + -4) * 0x73;
     if (0 < DAT_800b59a4) {
       uVar15 = uVar15 + (((3 - DAT_800b59a4) * 0x73) / 3) * (int)DAT_800b59aa;
@@ -4414,10 +4422,18 @@ LAB_800b0774:
     }
     local_54 = 0x100;
     local_52 = 0x19;
+	
+	// posX of track list
+	// 800b5546 is for transition in and out
     iVar11 = (uint)DAT_800b5546 + (iVar11 * 0x19 >> 9) + -0xb4;
+	
     sVar13 = (short)iVar11;
-    iVar9 = (uint)DAT_800b5548 + (iVar17 * 200 >> 0xc);
-    sVar7 = (short)iVar9 + 0x60;
+    
+	// posY of track list
+	// 800b5548 is for transition in and out
+	iVar9 = (uint)DAT_800b5548 + (iVar17 * 200 >> 0xc);
+    
+	sVar7 = (short)iVar9 + 0x60;
     iVar17 = 0;
     local_58 = sVar13;
     local_56 = sVar7;

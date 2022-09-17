@@ -2,7 +2,6 @@
 (partial fix with inst hook)
 Animations are half-working, half-fix
 
-LOADING... is too fast
 player icons flashing colors (red/green) are too fast
 Demo Mode only lasts half-time (even though it "should" be fixed???)
 UI highlight (red/yellow) in menus if too fast
@@ -15,6 +14,5 @@ At end of Time Trial / Relic, high scores disappear halfway offscreen
 Adv Pause menu, stuff spins too fast ( I think? forget if it was fixed? )
 AI acceleration from starting line
 save/load scanline
-driving on grass (vertex explosion, odd-framed particle init)
 screen fade transitions (fade to black, fade to white, etc)
 red potion (fix disabled, freezes game)
