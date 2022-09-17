@@ -670,6 +670,14 @@ void RunEntryHook()
 	// Mask Grab
 	*(unsigned int*)0x80067B58 = 0x2442FF00;
 
+	// Emulate 30fps on 60fps
+	// (temporary)
+	{	
+		// bitshift frame parameter for texture scrolling
+		// (turbo pads, water, lava, etc)
+		*(unsigned int*)0x8002198c = 0x52843;
+	}
+
 	// HUD objects
 	{
 		// spinning 3D objects (Key, Trophy, Relic, adv hud etc)
