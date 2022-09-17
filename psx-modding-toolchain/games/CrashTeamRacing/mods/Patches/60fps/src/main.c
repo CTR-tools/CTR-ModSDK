@@ -934,6 +934,16 @@ void RunEntryHook()
 		*(unsigned int*)0x80036E04 = 0x42180;
 	}
 	
+	// crash cove OVert
+	{
+		*(unsigned int*)0x80036DE0 = 0x42043; // 1P
+		
+		// to do: 2P, 3P, 4P,
+		// they'll be the same "SRA a0, 1" in the 
+		// nop hole of a JAL, but multiplayer wont
+		// work in 60fps right now anyway
+	}
+	
 	#if 1
 	// still a little off, dont know why
 	PatchParticles();
