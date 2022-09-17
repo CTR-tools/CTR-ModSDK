@@ -1376,42 +1376,40 @@ struct ParticleAxis
 struct Particle
 {
 	// 0x0
-	// ptrNext
+	struct Particle* next;
 
 	// 0x4
-	// used in Particle_UpdateLists, undocumented structure,
-	// used in Particle_OnDestroy too
-	// ptrUnknown
+	struct Particle* prev;
 
 	// 0x8
-	// ptrIconArray
+	void* ptrIconArray;
 
 	// 0xC
-	// ptrIconGroup
+	void* ptrIconGroup;
 
 	// 0x10 (short)
-	// particle life frames
+	short framesLeftInLife;
 
 	// 0x12 (short)
-	// flags, passed to SetColors
+	short flagsSetColor;
 
 	// 0x14
-	// flags for animation, controls
-	// which axis moves (x, y, z)
+	short flagsAxis; // old notes???
 
 	// ---
 
 	// 0x18
 	// char[2], short[1] (0, 0xff, 0x0400)
+	int unk1;
 
 	// 0x19
 	// driverID (if needed)
 
 	// 0x1C
-	// function pointer to animate particle
+	void* funcPtr;
 
 	// 0x20
-	// driver Inst (if needed)
+	struct Instance* driverInst;
 
 	/*
 		0x24: axisX
@@ -1470,10 +1468,10 @@ struct ParticleEmitter
 		struct
 		{
 			// 0x4
-			ParticleAxis baseValue;
+			struct ParticleAxis baseValue;
 			
 			// 0xC
-			ParticleAxis rngSeed;
+			struct ParticleAxis rngSeed;
 		
 			// 0x14
 		} AxisInit;

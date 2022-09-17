@@ -451,22 +451,6 @@ void NewCallback233()
 	LOAD_Callback_Overlay_233();
 }
 
-void UpdateParticles30fps()
-{
-	// if PauseAllThreads is diabled
-	if ((sdata.gGT->gameMode1 & 0x10) == 0x10) return;
-
-	// specific to mod,
-	// only run on alternating frames
-	if (sdata.gGT->timer & 1) return;
-
-	#define ORDINARY sdata.gGT->particleList_ordinary
-	#define HEATWARP sdata.gGT->particleList_heatWarp
-
-	Particle_UpdateList(&ORDINARY,ORDINARY);
-	Particle_UpdateList(&HEATWARP,HEATWARP);
-}
-
 void PatchModel(struct Model* m, struct Thread* t)
 {
 	struct ModelHeader* h;
@@ -475,6 +459,9 @@ void PatchModel(struct Model* m, struct Thread* t)
 	int j;
 	int loopNum;
 	struct Thread* search;
+
+	// error check (yes, needed)
+	if(m == 0) return;
 
 	// ignore ND box, intro models, oxide intro, podiums, etc
 	if(LOAD_Callback_Overlay_233()) return;
@@ -593,6 +580,49 @@ void INSTANCE_LEVEL_InitAll_Hook(struct InstDef* instDef, int num)
 	}
 }
 
+void PatchPE(struct ParticleEmitter* pe)
+{
+	// skip null PE
+	if(pe->flags == 0) return;
+	
+	// skip unknown "special" PEs
+	if((pe->flags & 0xC0) != 0) return;
+	
+	if(pe->initOffset == 0xC)
+	{
+		pe->InitTypes.FuncInit.particle_lifespan *= 2;
+		return;
+	}
+	
+	// any other type,
+	// assuming they're all AxisInit (I hope),
+	// unless there's more that we haven't researched yet
+	pe->InitTypes.AxisInit.baseValue.vel /= 2;
+	pe->InitTypes.AxisInit.baseValue.accel /= 2;
+	pe->InitTypes.AxisInit.rngSeed.vel /= 2;
+	pe->InitTypes.AxisInit.rngSeed.accel /= 2;
+}
+
+void PatchParticles()
+{
+	struct ParticleEmitter* pe;
+	
+	for(pe = &data.emSet_Terrain[0]; pe < &data.emSet_Terrain[0x21]; pe++)
+	{
+		PatchPE(pe);
+	}
+	
+	for(pe = &data.emSet_Exhaust_Water[0]; pe < &data.emSet_Falling[5]; pe++)
+	{
+		PatchPE(pe);
+	}
+	
+	for(pe = &data.emSet_Warpball[0]; pe < &data.emSet_Warppad[7]; pe++)
+	{
+		PatchPE(pe);
+	}
+}
+
 // This executes one time, before the
 // Crash Team Racing exe boots
 void RunEntryHook()
@@ -607,19 +637,6 @@ void RunEntryHook()
 
 	// Mask Grab
 	*(unsigned int*)0x80067B58 = 0x2442FF00;
-
-#if 0
-	// Emulate 30fps on 60fps
-	// (temporary)
-	{
-		// bitshift frame parameter for texture scrolling
-		// (turbo pads, water, lava, etc)
-		*(unsigned int*)0x8002198c = 0x52843;
-
-		// Replace particle update system
-		*(unsigned int*)0x80035248 = JAL(UpdateParticles30fps);
-	}
-#endif
 
 	// HUD objects
 	{
@@ -831,6 +848,8 @@ void RunEntryHook()
 
 	// animation speeds
 	{
+		// This worked in ModSDKv2, now broken?
+		#if 0
 		// patch every INSTANCE_Birth for 3D instances,
 		// do not patch the 2D instances, that's just BigNum
 		*(unsigned int*)0x80027d70 = JAL(INSTANCE_Birth_Hook);
@@ -839,7 +858,15 @@ void RunEntryHook()
 		// patch every time LEV instances are made
 		*(unsigned int*)0x80033234 = JAL(INSTANCE_LEVEL_InitAll_Hook);
 		*(unsigned int*)0x8003be50 = JAL(INSTANCE_LEVEL_InitAll_Hook);
+		#endif
 	}
+	
+	#if 0
+	// patch particles, doubles life cycle,
+	// halfs vel and accel, but doesn't fix 
+	// rate of spawn, which is doubled by 60fps
+	PatchParticles();
+	#endif
 
 	// Inject new hooks
 	data.overlayCallbackFuncs[0] = NewCallback230;
