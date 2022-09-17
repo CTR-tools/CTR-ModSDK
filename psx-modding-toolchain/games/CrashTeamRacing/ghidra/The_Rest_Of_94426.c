@@ -16553,6 +16553,7 @@ void FUN_8003ea28(void)
 
 
 // RNG_Particles
+// gets number between zero and param_1
 int FUN_8003ea6c(int param_1)
 
 {
