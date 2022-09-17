@@ -18,6 +18,16 @@ struct TrophyAnimModel
 	// 0x10 each
 };
 
+int NewDecode()
+{
+	if(sdata.gGT->timer & 1)
+	{
+		return MM_Video_DecodeFrame();
+	}
+	
+	return 0;
+}
+
 void NewCallback230()
 {
 	int i;
@@ -25,6 +35,9 @@ void NewCallback230()
 
 	struct TrophyAnimSound* s = (struct TrophyAnimSound*)0x800b48c4;
 	struct TrophyAnimModel* m = (struct TrophyAnimModel*)0x800b4800;
+
+	// patch video
+	*(unsigned int*)0x800afc8c = JAL(NewDecode);
 
 	// Double all Menu Transitions,
 	// use NOP hole to bitshift parameter
@@ -871,9 +884,7 @@ void RunEntryHook()
 	}
 	
 	#if 1
-	// patch particles, doubles life cycle,
-	// halfs vel and accel, but doesn't fix 
-	// rate of spawn, which is doubled by 60fps
+	// still a little off, dont know why
 	PatchParticles();
 	#endif
 
