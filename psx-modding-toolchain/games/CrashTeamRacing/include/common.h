@@ -1419,7 +1419,7 @@ struct Particle
 		0x34: axisZ
 		0x3C: ???
 		0x44: ???
-		0x4C: ???
+		0x4C: scale?
 		0x54: ???
 		0x5C: colorR
 		0x64: colorG
@@ -7883,7 +7883,7 @@ struct Data
 	// [1] - off=0 (posX)
 	// [2] - off=1 (posY)
 	// [3] - off=2 (posZ)
-	// [4] - off=5
+	// [4] - off=5 (scale)
 	// [5] - off=7 (colorR, which is also alpha)
 	// [6] - off=4
 	// [7] - null
