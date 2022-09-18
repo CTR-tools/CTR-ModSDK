@@ -658,7 +658,7 @@ uint FUN_800ac350(int param_1)
 	
   } while (uVar5 < 6);
   
-  // MM_Title_Camera
+  // MM_Title_CameraMove
   FUN_800ac1f0(piVar9,(int)sVar3);
   
   // increment frame counter
@@ -814,7 +814,7 @@ void FUN_800ac6dc(void)
       uVar7 = uVar7 + 1;
     } while (uVar7 < 6);
 	
-	// MM_Title_Camera
+	// MM_Title_CameraMove
     FUN_800ac1f0(piVar9,0);
   }
   return;

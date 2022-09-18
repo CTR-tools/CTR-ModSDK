@@ -2,6 +2,7 @@
 
 #define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
 
+void MM_Title_CameraMove(int a, int b);
 u_int MM_Video_DecodeFrame();
 void* LIST_RemoveFront(int L);
 void LOAD_Callback_Overlay_230();
@@ -39,6 +40,24 @@ int NewDecode()
 	return 0;
 }
 
+void NewTitleCamera(int a, int b)
+{
+  MM_Title_CameraMove(a,(int)b);
+
+  #define TITLE_FRAME *(int*)0x800b5a14
+  
+  if(TITLE_FRAME == 0) return;
+  
+  if(sdata.gGT->timer & 1) return;
+  
+  // if title frame is not zero,
+  // then every odd frame, subtract,
+  // then game increments, cancelling,
+  // turning 60fps into 30fps
+  
+  TITLE_FRAME = TITLE_FRAME - 1;
+}
+
 void NewCallback230()
 {
 	int i;
@@ -67,9 +86,10 @@ void NewCallback230()
 	*(unsigned short*)0x800ad10c = 900*2;
 
 	// not ready
-	#if 0
+	#if 1
 	// trophy anim
 	{
+#if 0
 		// start
 		*(unsigned short*)0x800ac3bc = 0xe6*2 + 1;
 		*(unsigned short*)0x800ac3c8 = 0xe6*2;
@@ -83,6 +103,10 @@ void NewCallback230()
 		// end
 		*(unsigned short*)0x800ac674 = 0xf6*2;
 
+		// determine when menu flies in
+		*(unsigned short*)0x800abd10 = 0xe6*2;
+
+
 		for(i = 0; i < 8; i++)
 			s[i].frameID =
 			s[i].frameID << 1;
@@ -91,12 +115,18 @@ void NewCallback230()
 			for(j = 0; j < 1; j++)
 				m[i].frameIDs[j] =
 				m[i].frameIDs[j] << 1;
+#endif
+	
+	// can I just patch 800b5a14 to take odd frames?
+	*(unsigned int*)0x800AC660 = JAL(NewTitleCamera);
 
-		// camera
+#if 0
+		// part of MM_Title_Camera
 		// s0 = a1 >> 1
 		// xxx2 = srl
 		// xxx3 = sra
 		*(unsigned int*)0x800ac200 = 0x58002;
+#endif
 	}
 	#endif
 
