@@ -85,50 +85,8 @@ void NewCallback230()
 	// Demo Mode Timer 2
 	*(unsigned short*)0x800ad10c = 900*2;
 
-	// not ready
-	#if 1
-	// trophy anim
-	{
-#if 0
-		// start
-		*(unsigned short*)0x800ac3bc = 0xe6*2 + 1;
-		*(unsigned short*)0x800ac3c8 = 0xe6*2;
-
-		// middle
-		*(unsigned short*)0x800ac4a8 = -(0x8a*2);
-		*(unsigned short*)0x800ac4ac = 0x3c*2;
-		*(unsigned short*)0x800ac4d0 = 0xc8*2;
-		*(unsigned short*)0x800ac4dc = -(0xc8*2);
-
-		// end
-		*(unsigned short*)0x800ac674 = 0xf6*2;
-
-		// determine when menu flies in
-		*(unsigned short*)0x800abd10 = 0xe6*2;
-
-
-		for(i = 0; i < 8; i++)
-			s[i].frameID =
-			s[i].frameID << 1;
-
-		for(i = 0; i < 6; i++)
-			for(j = 0; j < 1; j++)
-				m[i].frameIDs[j] =
-				m[i].frameIDs[j] << 1;
-#endif
-	
-	// can I just patch 800b5a14 to take odd frames?
+	// intro trophy animation
 	*(unsigned int*)0x800AC660 = JAL(NewTitleCamera);
-
-#if 0
-		// part of MM_Title_Camera
-		// s0 = a1 >> 1
-		// xxx2 = srl
-		// xxx3 = sra
-		*(unsigned int*)0x800ac200 = 0x58002;
-#endif
-	}
-	#endif
 
 	LOAD_Callback_Overlay_230();
 }
@@ -503,6 +461,12 @@ void NewCallback232()
 		// check every instance of
 		// 800b566c and 800b5218,
 		// two mask frame timers
+	}
+	
+	// AdvPause
+	{
+		// fix spin rate
+		*(unsigned int*)0x800b3100 = 0x21140;
 	}
 
 	LOAD_Callback_Overlay_232();

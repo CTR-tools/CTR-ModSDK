@@ -11,7 +11,6 @@ Cortex Castle spiders are too fast
 Adv Hub Warppad electric field
 Lots of flashing text is flashing too fast
 At end of Time Trial / Relic, high scores disappear halfway offscreen
-Adv Pause menu, stuff spins too fast ( I think? forget if it was fixed? )
 AI acceleration from starting line
 save/load scanline
 screen fade transitions (fade to black, fade to white, etc)

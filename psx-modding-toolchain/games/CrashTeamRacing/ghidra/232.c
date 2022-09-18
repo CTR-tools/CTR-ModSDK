@@ -5231,8 +5231,10 @@ void FUN_800b1f78(int param_1,ushort param_2)
   local_68 = param_2;
   
   // draw string
-  FUN_80022878(*(undefined4 *)(iVar7 + DAT_8008d878),(int)(short)(param_2 + 0x100),0xf,1,0xffff8000)
-  ;
+  FUN_80022878(
+		*(undefined4 *)(iVar7 + DAT_8008d878),
+		(int)(short)(param_2 + 0x100),0xf,1,0xffff8000);
+  
   iVar11 = 0;
   if ((DAT_8008d970 & 4) == 0) {
     iVar11 = 3;
@@ -5292,7 +5294,7 @@ void FUN_800b1f78(int param_1,ushort param_2)
   puVar8 = (ushort *)(DAT_800b5578 + 1);
   psVar16 = DAT_800b5578;
   
-  // loop through 14 instances, make them all spin
+  // loop through 14 instances, reset flags
   do 
   {
 	// increment loop counter
@@ -5377,6 +5379,7 @@ void FUN_800b1f78(int param_1,ushort param_2)
     iVar7 = 0;
     psVar16 = DAT_800b5578;
 	
+	// loop through 5 CTR Tokens
 	// for uVar6 = 0; uVar6 < 5; uVar6++
     do {
       *psVar16 = (short)uVar6 + 9;
@@ -5395,8 +5398,12 @@ void FUN_800b1f78(int param_1,ushort param_2)
       *(undefined4 *)(iVar9 + 0x48) = uVar4;
 	  
       piVar14 = piVar14 + 4;
-      FUN_80047f20((int)local_e0[iVar7 >> 0x10],(iVar11 + 0x36) * 0x10000 >> 0x10,iVar10 + 0x3a,0,0)
-      ;
+      
+	  // LoadSave_PrintInteger
+	  FUN_80047f20(
+		(int)local_e0[iVar7 >> 0x10],
+		(iVar11 + 0x36) * 0x10000 >> 0x10,
+		iVar10 + 0x3a,0,0);
 	  
 	  // draw a string "X"
       FUN_80022878(&DAT_800abac0,(iVar11 + 0x24) * 0x10000 >> 0x10,iVar10 + 0x3e,2,0);
@@ -5642,7 +5649,8 @@ void FUN_800b1f78(int param_1,ushort param_2)
         }
       }
     }
-    else {
+    else 
+	{
       if (sVar2 == 2) 
 	  {
 		// loop counter
@@ -5869,6 +5877,7 @@ void FUN_800b1f78(int param_1,ushort param_2)
 	
     psVar16 = psVar16 + 8;
 	
+	// rotation of each item, spin rate 0x40 per frame
     *psVar15 = (short)*(undefined4 *)(*(int *)(psVar15 + 3) + 0x44) * 0x10 +
                (short)*(undefined4 *)(*(int *)(psVar15 + 3) + 0x48) * 0x20 + DAT_8008d970 * 0x40;
     
