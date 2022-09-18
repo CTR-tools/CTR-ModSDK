@@ -1,0 +1,42 @@
+/*************************************************************************************
+ \file      OVR_Version.h
+ \brief     This header provides LibOVR version identification.
+ \copyright Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.
+ *************************************************************************************/
+
+#ifndef OVR_Version_h
+#define OVR_Version_h
+
+
+/// Conventional string-ification macro.
+#if !defined(OVR_STRINGIZE)
+#define OVR_STRINGIZEIMPL(x) #x
+#define OVR_STRINGIZE(x) OVR_STRINGIZEIMPL(x)
+#endif
+
+// Master version numbers
+#define OVR_PRODUCT_VERSION 1 // Product version doesn't participate in semantic versioning.
+#define OVR_MAJOR_VERSION 1 // If you change these values then you need to also make sure to change
+// LibOVR/Projects/Windows/LibOVR.props in parallel.
+#define OVR_MINOR_VERSION 64 //
+#define OVR_PATCH_VERSION 0
+
+// This is the ((product * 100) + major) version of the service that the DLL is compatible with.
+// When we backport changes to old versions of the DLL we update the old DLLs
+// to move this version number up to the latest version.
+// The DLL is responsible for checking that the service is the version it supports
+// and returning an appropriate error message if it has not been made compatible.
+#define OVR_DLL_COMPATIBLE_VERSION 101
+
+// This is the minor version representing the minimum version an application can query with this
+// SDK. Calls ovr_Initialize will fail if the application requests a version that is less than this.
+#define OVR_MIN_REQUESTABLE_MINOR_VERSION 17
+
+#define OVR_FEATURE_VERSION 0
+
+/// "Major.Minor.Patch"
+#if !defined(OVR_VERSION_STRING)
+#define OVR_VERSION_STRING OVR_STRINGIZE(OVR_MAJOR_VERSION.OVR_MINOR_VERSION.OVR_PATCH_VERSION)
+#endif
+
+#endif // OVR_Version_h

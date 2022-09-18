@@ -1,0 +1,25 @@
+Recommended to play with 60fps patches,
+after patching your rom, must make a hex change:
+search 80 1f 11 3c d4 03 31 36
+replace 00 80 11 3c 00 c0 31 36
+
+Must have DuckStation open with the game running,
+and Quest 2 running in "Quest Link" mode, before
+startin this windows program
+
+After running the mod, and entering the DuckStation PID,
+put on the headset, you should see "Oculus Test" appear.
+Press the Oculus Home button on your right hand, then 
+with your Quest Link taskbar, select view desktop monitor.
+Press L2 to make the monitor centered to your view in Quest Link
+Press Select to center the headset view in CTR itself
+
+You can not "lock" the quest link monitor to your head,
+so turning around 180 degrees will make you not see anything.
+We just need to wait for Oculus to implement the feature "eventually".
+You can view several degrees left, right, up, and down though.
+
+Do NOT attempt this in the $19.99 app Virtual Desktop, while
+that does have a desireable "lock to head" option, the VR mod
+can not connect to the headset, cause you are not in Quest Link
+if you are running that app.
