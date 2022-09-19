@@ -1,6 +1,7 @@
 #include <common.h>
 
 void* LOAD_ReadFile_NoCallback(const char* file, void* addr, int unk);
+void OnCollide();
 
 // This is the jump and link MIPS instruction. When used, $pc jumps to the desired address, and register $ra is updated
 #define J(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
@@ -143,28 +144,24 @@ asm(".section .text					\n"
 // Crash Team Racing exe boots
 void hookEntry()
 {
-	
-	#if BUILD == UsaRetail
-		*(char *)(0x8005EC65) = 0x08; // Change turbo speed of normal turbo pads to that of super turbo pads, while retaining their reserves increase of 1 second
-		*(short *)(0x8005EC50) = 0x03c0; // Set reserves increase of original super turbo pads from 0.12 seconds to 1 second as with normal turbo pads
-	#elif BUILD == EurRetail
-		*(char *)(0x8005ED7D) = 0x08; // Turbo pad to STP
-		*(short *)(0x8005ED68) = 0x03c0; // Standardize turbo pad reserves
-	#elif BUILD == JpnRetail
-		*(char *)(0x80061B0D) = 0x08; // Turbo pad to STP
-		*(short *)(0x80061AF8) = 0x03c0; // Standardize turbo pad reserves
-	#endif
+	// Turbo pad to STP
+	*(char *)((int)OnCollide + 0xB9) = 0x08;
+		
+	// Standardize turbo pad reserves
+	*(short *)((int)OnCollide + 0xA4) = 0x03c0;
 
+	// Player_Driving_Input + offset
+	// USA: 0xA30, PAL: 0xA30, JPN: 0xA4C
 	// Erasing the original reserve cancelation if, so that we can run our own code
 	#if BUILD == UsaRetail
-		*(int *)(0x8006224C) = J(&ReserveCancelation); // nop
-		*(int *)(0x80062254) = 0x00000000; // nop
+		*(int *)(0x8006224C) = J(&ReserveCancelation);
+		*(int *)(0x80062254) = 0x00000000;
 	#elif BUILD == EurRetail
-		*(int *)(0x80062364) = J(&ReserveCancelation); // nop
-		*(int *)(0x8006236C) = 0x00000000; // nop
+		*(int *)(0x80062364) = J(&ReserveCancelation);
+		*(int *)(0x8006236C) = 0x00000000;
 	#elif BUILD == JpnRetail
-		*(int *)(0x80065110) = J(&ReserveCancelation); // nop
-		*(int *)(0x80065118) = 0x00000000; // nop
+		*(int *)(0x80065110) = J(&ReserveCancelation);
+		*(int *)(0x80065118) = 0x00000000;
 	#endif
 
 	return;
