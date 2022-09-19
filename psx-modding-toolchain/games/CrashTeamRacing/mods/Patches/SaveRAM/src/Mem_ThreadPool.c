@@ -8,65 +8,83 @@ void LIST_AddFront(struct LinkedList* L, void* item);
 void PadInitMtap();
 void howl_InitGlobals(); // 80029988
 void BakeMathGTE(); // 80057884
+void StringToLevID();
+void MEMCARD_InitCard();
+void MEMPACK_Init();
 
-// room for 2 threads
-struct Thread threads[2];
+// room for 3 threads
+struct Thread threads[3];
 
 void ClearThreadPool(struct AllocPool* p)
 {
 	int loop;
+	int loop2;
+	unsigned int arr[14];
+	
 	LIST_Clear(&p->free);
 	LIST_Clear(&p->taken);
+		
+	// RDATA #1
+	// 10 threads starting at "none" string above "CdInit: Init failled"
+	#if BUILD == UsaRetail
+	#define RDATA_1 0x80011A30
+	#elif BUILD == JpnTrial
+	#define RDATA_1 0x80011DB8
+	#elif BUILD == EurRetail
+	#define RDATA_1 0x80011A50
+	#elif BUILD == JpnRetail
+	#define RDATA_1 0x80011DF4
+	#endif
+	
+	// RDATA #2
+	// 9 threads starting at "Command Error:"
+	#if BUILD == UsaRetail
+	#define RDATA_2 0x80012070
+	#elif BUILD == JpnTrial
+	#define RDATA_2 0x80012158
+	#elif BUILD == EurRetail
+	#define RDATA_2 0x80012090
+	#elif BUILD == JpnRetail
+	#define RDATA_2 0x80012194
+	#endif
+	
+	// 2 + 3 + 4 + 5 + 6 + 8 + 9 + 13 + 3 = 53
+	
+	// [2-1] = xxx: allocate 2 threads here
+	// [3-1] = xxx: allocate 3 threads here
+	// and so on...
+	
+	arr[1-1] = 0;
+	arr[2-1] = (unsigned int)MEMPACK_Init;
+	arr[3-1] = (unsigned int)&data.memcardIcon_PsyqHand[0];
+	arr[4-1] = (unsigned int)howl_InitGlobals;
+	arr[5-1] = (unsigned int)MEMCARD_InitCard;
+	arr[6-1] = (unsigned int)RDATA_1; // can be 11, but must skip index 7
+	arr[7-1] = 0;//(unsigned int)StringToLevID; // can be 8 [NOT WORKING]
+	arr[8-1] = (unsigned int)PadInitMtap;
+	arr[9-1] = (unsigned int)RDATA_2;
+	arr[10-1] = 0;
+	arr[11-1] = 0;
+	arr[12-1] = 0;
+	arr[13-1] = (unsigned int)BakeMathGTE;
+	arr[14-1] = 0;
 
 	// By the time this function is called, all overwritten functions
 	// will have finished their purposes, so they are save to steal
 
-	// 46: 8+4+2+13+10+9
-	// game never uses more than 48, 46 is probably fine
-	for(loop = 0; loop < 13; loop++)
+	for(loop = 0; loop < 14; loop++)
 	{
-		// PadInitMtap, and next two functions
-		if(loop < 8) LIST_AddFront(&p->free, PadInitMtap+(loop*0x48));
-
-		// howl_InitGlobals, and next function
-		if(loop < 4) LIST_AddFront(&p->free, howl_InitGlobals+(loop*0x48));
-
-		// 2: in this file
-		if(loop < 2) LIST_AddFront(&p->free, &threads[loop]);
-
-		// 13: 0x3B8 in BakeMathGTE
-		LIST_AddFront(&p->free, BakeMathGTE+(loop*0x48));
-		
-		#if 1
-		// RDATA #1
-		// 10 threads starting at "none" string above "CdInit: Init failled"
-		#if BUILD == UsaRetail
-		#define RDATA_1 0x80011A30
-		#elif BUILD == JpnTrial
-		#define RDATA_1 0x80011DB8
-		#elif BUILD == EurRetail
-		#define RDATA_1 0x80011A50
-		#elif BUILD == JpnRetail
-		#define RDATA_1 0x80011DF4
-		#endif
-		
-		// 10: RDATA #1
-		if ( (loop < 11) && (loop != 7) ) LIST_AddFront(&p->free, (void*)(RDATA_1+(loop*0x48)));
-		#endif
-		
-		// RDATA #2
-		// 9 threads starting at "Command Error:"
-		#if BUILD == UsaRetail
-		#define RDATA_2 0x80012070
-		#elif BUILD == JpnTrial
-		#define RDATA_2 0x80012158
-		#elif BUILD == EurRetail
-		#define RDATA_2 0x80012090
-		#elif BUILD == JpnRetail
-		#define RDATA_2 0x80012194
-		#endif
-		
-		// 9: RDATA #2
-		if (loop < 9) LIST_AddFront(&p->free, (void*)(RDATA_2+(loop*0x48)));
+		for(loop2 = loop; loop2 < 14; loop2++)
+		{
+			if(arr[loop2] != 0)
+			{
+				LIST_AddFront(&p->free, (void*)(arr[loop2]+(loop*0x48)));
+			}
+		}
+	}
+	
+	for(loop = 0; loop < 3; loop++)
+	{
+		LIST_AddFront(&p->free, &threads[loop]);
 	}
 }

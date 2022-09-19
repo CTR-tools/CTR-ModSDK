@@ -100,21 +100,24 @@ void AllocateAllPools_New(struct GameTracker* gGT)
   // =============
 
   // This happens if you're in Adventure Arena
-  uVar9 = 60;
+  uVar9 = 64;
 
   // If you're not in Adventure Arena
   if ((uVar3 & 0x100000) == 0)
   {
 	// If you're not in main menu
-    if ((uVar3 & 0x2000) == 0) {
-      
-	  uVar9 = 90;
+    if ((uVar3 & 0x2000) == 0) 
+	{  
+	  // 90 is too few for Dingo Canyon Arcade near start-line.
+	  // Must have 90, plus 10 missiles, plus 7 mines, plus extra.
+	  // Settled with 120, which is better than 128
+	  uVar9 = 120;
     }
 
 	// If you're in main menu
     else
 	{
-      uVar9 = 30;
+      uVar9 = 32;
     }
   }
   

@@ -15,7 +15,6 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 	struct GameTracker* gGT;
 	int numDrivers;
 	int boolNeedWeapons;
-	int arcadeModelIndex;
 
 	gGT = sdata.gGT;
 	boolNeedWeapons = 1;
@@ -118,26 +117,11 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 	bigfileIndex_mpk4pVS = bigfileIndex_modelHigh + 0x6A;
 
 	for(i = 1; i < numDrivers; i++)
-	{
-		arcadeModelIndex = data.characterIDs[i] + bigfileIndex_modelHigh;
-		
-		// if 2P Arcade
-		if(numDrivers == 6)
-		{
-			// if this is a bot, not a player
-			if(i != 1)
-			{
-				// drop high LOD to low LOD (ram limitation, cups hot air skyway),
-				// this is cause of loading 4P penta MPK instead of 2P bots MPK,
-				// this is the only graphics "downgrade" in the mod, can it be fixed?
-				arcadeModelIndex += 0x5a;
-			}
-		}
-		
+	{	
 		// load High LOD for one driver each
 		// add to load queue from range 242=models\racers\*_hi.ctr
 		LOAD_AppendQueue(param_1,2,
-			arcadeModelIndex,
+			data.characterIDs[i] + bigfileIndex_modelHigh,
 			&data.driverModel_lowLOD[i],0xfffffffe);
 	}
 

@@ -13916,7 +13916,7 @@ undefined4 main(void)
       DAT_8008d3f8 = DrawSyncCallback(&FUN_80034a80);
 	  ExitCriticalSection();
 
-	  // MEMCARD_StringSet
+	  // MEMCARD_InitCard
       FUN_8003d7d8();
 
 	  VSync(0);
