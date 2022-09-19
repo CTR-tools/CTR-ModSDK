@@ -1,5 +1,6 @@
 #include <common.h>
 
+#define JMP(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
 #define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
 
 void MM_Title_CameraMove(int a, int b);
@@ -10,6 +11,7 @@ void LOAD_Callback_Overlay_231();
 void LOAD_Callback_Overlay_232();
 void LOAD_Callback_Overlay_233();
 u_int LOAD_IsOpen_Podiums();
+u_int LOAD_IsOpen_MainMenu();
 void INSTANCE_Birth(struct Instance* i, struct Model* m, char* name, struct Thread* t, int flags);
 void INSTANCE_LEVEL_InitAll(struct InstDef* instDef, int num);
 int PatchPE(struct ParticleEmitter* pe);
@@ -30,6 +32,7 @@ struct TrophyAnimModel
 	// 0x10 each
 };
 
+// jal hook, call og function if needed
 int NewDecode()
 {
 	if(sdata.gGT->timer & 1)
@@ -38,6 +41,28 @@ int NewDecode()
 	}
 	
 	return 0;
+}
+
+// jmp hook
+void SaveObj_PerFrame_Hook()
+{
+	register int animFrame asm("v0");
+	register struct Instance* inst asm("v1");
+	
+	// on only one frame of the 16-frame cycle,
+	// v0 is not animFrame, and v1 is not instance,
+	// skip this frame
+	if((animFrame & 0xfffffff0) != 0) return;
+	
+	// make 60fps animation run at 30fps
+	
+	if(inst->animFrame != 0)
+	{
+		if(sdata.gGT->timer & 1)
+		{
+			inst->animFrame--;
+		}
+	}
 }
 
 void NewTitleCamera(int a, int b)
@@ -369,9 +394,28 @@ void NewCallback231()
 		// run thread at 30fps, in 60fps gameplay
 	}
 
-	// vertex color anim (roo tubes) -- no fix
-	// CortexCastleSpider -- with inst hook: somewhat improved, somewhat worse
-	// loadsave -- made worse with instance hook
+	// spider
+	{
+		// spawn cooldowns
+		*(unsigned char*)0x800b9c84 = 0x5B*2;
+		*(unsigned char*)0x800b9c98 = 0x45*2;
+		
+		// animation logic
+		*(unsigned char*)0x800b9a40 = 0xb*2;
+		*(unsigned int*)0x800b9a54 = 0x512c0;
+		*(unsigned int*)0x800b9a80 = 0x512c0;
+		
+		// remove v0<<1 with v0&0xfe,
+		// already increasing twice as fast
+		*(unsigned int*)0x800b9a28 = 0x304200fe;
+		
+		// play animations 2x as many times,
+		// can't do frame interpolation cause it's already used
+		*(unsigned char*)0x800b98a0 = 0x4*2+1;
+		*(unsigned char*)0x800b98c4 = 0x4*2+1;
+		*(unsigned char*)0x800b994c = 0x4*2+1;
+		*(unsigned char*)0x800b9970 = 0x4*2+1;
+	}
 
 	LOAD_Callback_Overlay_231();
 }
@@ -478,6 +522,12 @@ void NewCallback232()
 		// fix spin rate
 		*(unsigned int*)0x800b3100 = 0x21140;
 	}
+	
+	// saveload
+	{
+		// fix scanline
+		*(unsigned int*)0x800af7e8 = JMP(SaveObj_PerFrame_Hook);
+	}
 
 	LOAD_Callback_Overlay_232();
 }
@@ -508,24 +558,15 @@ void PatchModel(struct Model* m, struct Thread* t)
 
 	// ignore ND box, intro models, oxide intro, podiums, etc
 	if(LOAD_IsOpen_Podiums()) return;
-
-	// dont touch crash in main menu (regression)
-	if(m->id >= 0x66)
-		if(m->id <= 0x6b)
-			return;
-
-	// dont touch spider (regression)
-	if(m->id >= 0x52)
-		if(m->id <= 0x53)
-			return;
-
-	// dont touch loadsave (regression)
-	if(m->id == 0x78) return;
-
+	
+	// ignore main menu models, such as Crash throwing his trophy
+	if(LOAD_IsOpen_MainMenu()) return;
+	
 	// if this is a driver model
 	if(m->id == -1)
 	{
-		// only patch if this is not a human
+		// only patch if this is not a human,
+		// otherwise steering breaks on starting line
 
 		// bool found = false
 		i = 0;
@@ -574,19 +615,21 @@ void PatchModel(struct Model* m, struct Thread* t)
 
 	// loop through headers
 	for(i = 0; i < m->numHeaders; i++)
-	{
+	{		
 		// pointer to array of pointers
 		a = h[i].ptrAnimations;
 
 		// number of animations
 		loopNum = h[i].numAnimations;
 
-		// if this is a driver, only patch first anim
-		if(m->id == -1) loopNum = 1;
-
 		// loop through all animations
 		for(j = 0; j < loopNum; j++)
 		{
+			// skip doubling, if interpolation already happens,
+			// known to happen in spiders, and drivers for
+			// low LOD anims, and high LOD crashing + reversing
+			if(a[j]->numFrames & 0x8000) continue;
+			
 			// multiply by 2
 			a[j]->numFrames =
 			a[j]->numFrames << 1;

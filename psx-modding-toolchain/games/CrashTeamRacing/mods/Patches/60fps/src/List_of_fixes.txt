@@ -41,7 +41,7 @@ Entering warp pad sometimes works right, and sometimes throws player upward
 Blinking map UI, partly fixed and partly abandoned
 AI animations
 Player reverse, crash, jump animation
-Armadillo cycle is a bit off
+Spiders have a slightly-off cycle
 
 Nov 2021 changes
 Steering animation is fixed for players
@@ -61,8 +61,11 @@ Sep 2022 changes
 main menu track videos
 SCVert is fixed on Roo's Tubes
 OVert is fixed on Crash Cove (1P only)
-particle changes (mentioned in "need work"
+particle changes (mentioned in "need work")
 improve PatchModel so cutscenes dont break
 waving checkered flag and "loading..." text
 Intro animation of crash throwing trophy
 AdvPause spin rate of items
+armadillo spawn cooldown
+spiders are "improved", not fully fixed
+save/load scaline "improved", not perfect

@@ -12195,7 +12195,7 @@ void FUN_800b9848(int param_1)
 		// INSTANCE_GetNumAnimFrames
 		sVar2 = FUN_80030f58(iVar5,0);
 		
-		// set animatino frame to last frame
+		// set animation frame to last frame
         *(short *)(iVar5 + 0x54) = sVar2 + -1;
       }
       goto LAB_800b9aa8;

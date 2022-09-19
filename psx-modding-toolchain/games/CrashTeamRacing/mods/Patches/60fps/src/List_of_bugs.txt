@@ -7,11 +7,9 @@ Demo Mode only lasts half-time (even though it "should" be fixed???)
 UI highlight (red/yellow) in menus if too fast
 Demo Mode / End-Of-Race cameras sometimes are too fast
 Adv Garage camera is too fast
-Cortex Castle spiders are too fast
 Adv Hub Warppad electric field
 Lots of flashing text is flashing too fast
 At end of Time Trial / Relic, high scores disappear halfway offscreen
 AI acceleration from starting line
-save/load scanline
 screen fade transitions (fade to black, fade to white, etc)
 red potion (fix disabled, freezes game)

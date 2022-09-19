@@ -3052,7 +3052,6 @@ void FUN_800af3e4(int param_1)
 			)
 	   ) 
 	{
-	  // scanline animation
 	  uVar2 = *(short *)((int)piVar10 + 6) - 1;
       *(ushort *)((int)piVar10 + 6) = uVar2;
       
@@ -3161,7 +3160,6 @@ void FUN_800af3e4(int param_1)
     *(undefined2 *)(piVar10 + 1) = 0;
   }
   
-  // reset scanline to frame 15
   *(undefined2 *)((int)piVar10 + 6) = 0xf;
   
 LAB_800af72c:
