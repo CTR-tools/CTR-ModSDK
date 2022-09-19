@@ -115,6 +115,16 @@ void NewCallback231()
 		// ms timer, change 32ms to 16ms,
 		// to fix travel disatnce
 		*(unsigned char*)0x800b5bd4 = 0x10;
+		
+		// fix cooldown timer, overwrite "fireball"
+		// string to append armadillo function
+		
+		*(unsigned int*)0x800b5f38 = 0x21040; // sll v0, 1
+		*(unsigned int*)0x800b5f3c = 0xA602001C; // sh v0, 0x1c(s0)
+		*(unsigned int*)0x800b5f40 = 0;
+		*(unsigned int*)0x800b5f44 = 0x8FB00018; // LW s0, 0x18(sp)
+		*(unsigned int*)0x800b5f48 = 0x3E00008; // JR RA
+		*(unsigned int*)0x800b5f4c = 0x27bd0028; // sp += 0x28
 	}
 
 	// Seal
