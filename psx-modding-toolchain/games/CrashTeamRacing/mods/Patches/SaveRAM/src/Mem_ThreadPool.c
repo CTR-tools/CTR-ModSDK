@@ -21,8 +21,8 @@ void ClearThreadPool(struct AllocPool* p)
 	// By the time this function is called, all overwritten functions
 	// will have finished their purposes, so they are save to steal
 
-	// 47: 8+4+2+13+11+9
-	// game never uses more than 48
+	// 46: 8+4+2+13+10+9
+	// game never uses more than 48, 46 is probably fine
 	for(loop = 0; loop < 13; loop++)
 	{
 		// PadInitMtap, and next two functions
@@ -37,8 +37,9 @@ void ClearThreadPool(struct AllocPool* p)
 		// 13: 0x3B8 in BakeMathGTE
 		LIST_AddFront(&p->free, BakeMathGTE+(loop*0x48));
 		
+		#if 1
 		// RDATA #1
-		// 15 threads starting at "none" string above "CdInit: Init failled"
+		// 10 threads starting at "none" string above "CdInit: Init failled"
 		#if BUILD == UsaRetail
 		#define RDATA_1 0x80011A30
 		#elif BUILD == JpnTrial
@@ -49,8 +50,9 @@ void ClearThreadPool(struct AllocPool* p)
 		#define RDATA_1 0x80011DF4
 		#endif
 		
-		// 11: RDATA #1
-		if (loop < 11) LIST_AddFront(&p->free, (void*)(RDATA_1+(loop*0x48)));
+		// 10: RDATA #1
+		if ( (loop < 11) && (loop != 7) ) LIST_AddFront(&p->free, (void*)(RDATA_1+(loop*0x48)));
+		#endif
 		
 		// RDATA #2
 		// 9 threads starting at "Command Error:"

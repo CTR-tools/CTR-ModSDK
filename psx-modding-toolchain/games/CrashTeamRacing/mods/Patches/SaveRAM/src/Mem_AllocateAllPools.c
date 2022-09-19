@@ -33,6 +33,7 @@ void AllocateAllPools_New(struct GameTracker* gGT)
   int uVar9;
   int numDrivers;
   int i_0x1000;
+  int medStackCount;
 
   // relocation
   {
@@ -64,15 +65,6 @@ void AllocateAllPools_New(struct GameTracker* gGT)
 	// half in 0x8000C400 region
 	// "Clear" is same as "Init" for this specific case
 	ClearDriverPool(&gGT->AllocPools.largeStack);
-
-	// Japan builds relocate medium stack pool
-	#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
-	// overwrite anti-modchip functions, +8 to skip JR RA
-	// 0x1100 for medium stack
-	// 0x1000>>7 = 32
-	sdata.mempack[0].firstFreeByte = (ANTICHIP_CheckFraud_Entry + 0x10);
-	AllocPool_Init(&gGT->AllocPools.mediumStack, 32,0x88); // 0x1000>>7 = 32
-	#endif
 
 	// fix mempack, so it doesn't point
 	// to kernel memory anymore
@@ -108,39 +100,21 @@ void AllocateAllPools_New(struct GameTracker* gGT)
   // =============
 
   // This happens if you're in Adventure Arena
-  uVar9 = 64;
+  uVar9 = 60;
 
   // If you're not in Adventure Arena
   if ((uVar3 & 0x100000) == 0)
   {
 	// If you're not in main menu
     if ((uVar3 & 0x2000) == 0) {
-      uVar9 = 128;
+      
+	  uVar9 = 90;
     }
 
 	// If you're in main menu
     else
 	{
-	  // only in japan builds
-	  #if (BUILD == JpnTrial) || (BUILD == JpnRetail)
-
- 	  // only do this during initialization of main menu,
-	  // so this doesn't interfere with end-side allocation.
-	  // Still needed even if every pool were relocated off heap
-
-	  // save another 0x300 bytes to save Hot Air Skyway in 1P Arcade,
-	  // increase sp min-addr from 801ff800 to 801ffb00
-	  sdata.mempack[0].lastFreeByte = (void*)0x801ffb00;
-
-	  #endif
-
-
-      uVar9 = 32;
-
-	  // 0x28(40) (AdvGarage)
-      if (gGT->levelID == 0x28) {
-        uVar9 = 64;
-      }
+      uVar9 = 30;
     }
   }
   
@@ -154,12 +128,17 @@ void AllocateAllPools_New(struct GameTracker* gGT)
 
   AllocPool_Init(&gGT->AllocPools.instance, uVar9, 0x74 + (0x88 * gGT->numPlayers));
 
-  // USA and PAL dont need to relocate
-  #if (BUILD == UsaRetail) || (BUILD == EurRetail)
-  // 0x1100
-  AllocPool_Init(&gGT->AllocPools.mediumStack,
-  	uVar7 >> 7,0x88);
-  #endif
+  // everywhere else (main menu, race, adv hub, podiums)
+  medStackCount = 12;
+
+  // ND Box, oxide intro
+  if((sdata.gGT->gameMode1 & 0x20000000) != 0)
+  {
+	  medStackCount = 24;
+  }
+
+  // 0x660
+  AllocPool_Init(&gGT->AllocPools.mediumStack,medStackCount,0x88);
 
   // 0x3e00
   AllocPool_Init(&gGT->AllocPools.particle,
