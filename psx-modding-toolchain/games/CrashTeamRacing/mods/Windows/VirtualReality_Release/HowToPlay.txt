@@ -1,0 +1,35 @@
+Step 1/9:
+Apply ctr-u_60fps_VR.xdelta to CTR USA rom (in .bin format)
+Recommended to use the following patcher:
+https://hack64.net/tools/patcher.php
+
+Step 2/9: 
+Drag all files from geo-11 folder into DuckStation directory,
+so the files are next to the DuckStation exe file
+
+Step 3/9:
+Open DuckStation, and boot the modified CTR rom (in .bin format)
+If you see black screens after "Sony Presents", dont worry, it's normal.
+Also the top/bottom dispaly on your monitor is normal.
+
+Step 4/9:
+Turn on Oculus Quest, go into Oculus Link mode,
+then take headset off
+
+Step 5/9:
+Start OculusTest.exe, and enter DuckStation PID
+You can get PID from windows task manager.
+After entering PID, dont close the window, you can minimize though
+
+Step 6/9:
+Start vr-screen-cap-CTR.exe
+
+Step 7/9:
+Put on the headset, center your head, and press 
+PS1 Select button on your controller
+
+Step 8/9:
+Put on some headphones, cause there's no audio support in headset yet
+
+Step 9/9:
+Play the game!
