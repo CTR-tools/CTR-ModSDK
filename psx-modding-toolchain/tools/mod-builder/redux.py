@@ -49,6 +49,7 @@ class Redux:
         os.chdir(self.path)
         Popen(self.command + " -run -loadiso " + game_path, shell=True, start_new_session=True)
         os.chdir(curr_dir)
+        self.load_map(warnings=False)
 
     def flush_cache(self) -> None:
         response = r.post(self.url + "/api/v1/cpu/cache?function=flush")
@@ -87,10 +88,11 @@ class Redux:
         else:
             print("\n[Redux - Web Server] error resetting the map file.\n")
 
-    def load_map(self) -> None:
+    def load_map(self, warnings=True) -> None:
         self.reset_map()
         if not os.path.isfile(REDUX_MAP_FILE):
-            print("\n[Redux-py] ERROR: No map file found. Make sure you have compiled your mod before trying to hot reload.\n")
+            if warnings:
+                print("\n[Redux-py] ERROR: No map file found. Make sure you have compiled your mod before trying to hot reload.\n")
             return
         file = open(REDUX_MAP_FILE, "rb")
         files = {"file": file}
