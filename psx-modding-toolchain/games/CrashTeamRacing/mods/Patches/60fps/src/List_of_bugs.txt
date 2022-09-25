@@ -13,3 +13,5 @@ At end of Time Trial / Relic, high scores disappear halfway offscreen
 AI acceleration from starting line
 screen fade transitions (fade to black, fade to white, etc)
 red potion (fix disabled, freezes game)
+bubble particles fail to be culled by water surface (hits the top of the screen)
+still can't skip weapon roulette by pressing circle
