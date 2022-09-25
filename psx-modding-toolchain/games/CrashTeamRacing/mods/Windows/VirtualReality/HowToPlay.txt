@@ -1,3 +1,5 @@
+[standalone directions, without geo-11 or VrScreenCap]
+
 Recommended to play with 60fps patches,
 after patching your rom, must make a hex change:
 search 80 1f 11 3c d4 03 31 36
@@ -7,8 +9,18 @@ Must have DuckStation open with the game running,
 and Quest 2 running in "Quest Link" mode, before
 startin this windows program
 
-After running the mod, and entering the DuckStation PID,
-put on the headset, you should see "Oculus Test" appear.
+Start OculusTest, pick a number (1, 2, or 3).
+3rd-person is the least motion-sickening of all options.
+1st-person (kart head) will rotate the camera based on
+the head rotation of the kart character, hitting a potion
+will make your head spin in circles, potentially sickening.
+1st-person (velocity) will rotate the camera based on
+the direction the kart is moving in, not sickening.
+Both first-person modes have been hidden in CTR since 
+the game shipped, they were both designed by Naughty Dog.
+
+After picking a mode, then enter the DuckStation PID,
+then put on the headset, you should see "Oculus Test" appear.
 Press the Oculus Home button on your right hand, then 
 with your Quest Link taskbar, select view desktop monitor.
 Press L2 to make the monitor centered to your view in Quest Link

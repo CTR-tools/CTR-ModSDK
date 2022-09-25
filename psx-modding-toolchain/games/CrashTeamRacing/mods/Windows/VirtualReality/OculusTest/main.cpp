@@ -7,6 +7,7 @@
 #include <glm/gtx/quaternion.hpp>
 
 char* pBuf;
+int mode = 0;
 
 void initializeEmu()
 {
@@ -14,6 +15,14 @@ void initializeEmu()
 	RECT r;
 	GetWindowRect(console, &r); //stores the console's current dimensions
 	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
+
+	printf("1: 3rd-person (normal)\n");
+	printf("2: 1st-person (kart head)\n");
+	printf("3: 1st-person (velocity)\n");
+	printf("Enter Mode: ");
+	scanf_s("%d", &mode, 4);
+	system("cls");
+
 
 	char pid[16];
 	printf("Enter DuckStation PID: ");
@@ -82,6 +91,17 @@ int main()
 	// Main loop...
 	while (1)
 	{
+		if ((mode == 2) || (mode == 3))
+		{
+			// dont run during loading, cutscene, or intro-race camera
+			if ((*(int*)&pBuf[0x80096b20 & 0xfffffff] & 0x60000040) == 0)
+			{
+				// 0xF = first-person mode 1
+				// 0x10 = first-person mode 2
+				*(char*)&pBuf[(0x80096b20 + 0x1498 + 0x9a) & 0xfffffff] = (mode - 2) + 0xF;
+			}
+		}
+
 		// posX, posY, posZ, rotX, rotY, rotZ
 		short variables[6] = {};
 
