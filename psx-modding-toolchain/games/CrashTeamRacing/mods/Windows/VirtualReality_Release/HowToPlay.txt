@@ -14,15 +14,26 @@ Drag all files from geo-11 folder into DuckStation directory,
 so the files are next to the DuckStation exe file
 
 Step 3/10:
-Open DuckStation, and boot the modified CTR rom (in .bin format)
+Open DuckStation
+Go to Settings -> Console Settings, check "Enable Clock Speed Control", slide to 400%
+Go to Settings -> Display Settings, choose Renderer D3D11
+Go to Settings -> Enhancement Settings, Resolution Scale, choose any high resolution
+
+Step 4/10:
+In DuckStation, choose Start File, and boot the modified CTR rom (.bin)
 If you see black screens after "Sony Presents", dont worry, it's normal.
 Also the top/bottom dispaly on your monitor is normal.
 
-Step 4/10:
+Step 5/10:
+When the game reaches the main menu, choose a game mode,
+this prevents the game from playing a cutscene while
+you turn on the headset
+
+Step 6/10:
 Turn on Oculus Quest, go into Oculus Link mode,
 then take headset off
 
-Step 5/10:
+Step 7/10:
 Start OculusTest.exe, pick a number (1, 2, or 3).
 3rd-person is the least motion-sickening of all options.
 1st-person (kart head) will rotate the camera based on
@@ -33,20 +44,18 @@ the direction the kart is moving in, not sickening.
 Both first-person modes have been hidden in CTR since 
 the game shipped, they were both designed by Naughty Dog.
 
-Step 6/10:
+Step 8/10:
 After picking mode, enter DuckStation PID
 You can get PID from windows task manager.
 After entering PID, dont close the window, you can minimize though
 
-Step 7/10:
+Step 9/10:
 Start vr-screen-cap-CTR.exe
 
-Step 8/10:
-Put on the headset, center your head, and press 
-PS1 Select button on your controller to calibrate
-
-Step 9/10:
-Put on some headphones, cause there's no audio support in headset yet
-
 Step 10/10:
-Play the game!
+Put on the headset, center your head, and press 
+PS1 Select button on your controller to calibrate,
+then put on some headphones cause there's no audio 
+streaming to the headset through VrScreenCap yet.
+
+Enjoy the game!
