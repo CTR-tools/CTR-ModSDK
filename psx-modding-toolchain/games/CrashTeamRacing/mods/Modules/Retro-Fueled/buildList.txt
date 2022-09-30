@@ -8,7 +8,22 @@
 common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
 926, exe, LOAD_VramFile, -0x8, src/hookVRAM.s
 1020, exe, LOAD_VramFile, -0x8, src/hookVRAM.s
-common, exe, __main, 0x68, src/hookEntry.s
+
+// Player_Driving_Input + offset
+// USA: 0xA30, PAL: 0xA30, JPN: 0xA4C
+// Erasing the original reserve cancelation if, so that we can run our own code
+926, exe, 0x8006224C, 0x0, src/hookReserveCancelation.s
+926, exe, 0x8006224C, 0x8, ../../../nop.s
+1020, exe, 0x80062364, 0x0, src/hookReserveCancelation.s
+1020, exe, 0x80062364, 0x8, ../../../nop.s
+1111, exe, 0x80065110, 0x0, src/hookReserveCancelation.s
+1111, exe, 0x80065110, 0x8, ../../../nop.s
+
+// Binary edits
+// Turbo pad to STP
+common, exe, OnCollide, 0xB9, assets/TurboPadToSTP.bin
+// Standardize turbo pad reserves
+common, exe, OnCollide, 0xA4, assets/StandardizeTurboPadReserves.bin
 
 // Compile texture replacements to kernel
 926, iso, 0x8000A000, 0x0, src/logo.c, logo.bin
@@ -22,4 +37,4 @@ common, exe, __main, 0x68, src/hookEntry.s
 common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_AllowUSFStacking.c
 
 // Compile code to empty spaces in RDATA
-common, exe, rdata_free, 0x0, src/main.c
+common, exe, rdata_free, 0x0, src/main.c src/texturereplacements.c
