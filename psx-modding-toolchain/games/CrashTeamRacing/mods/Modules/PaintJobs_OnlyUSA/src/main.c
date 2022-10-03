@@ -1,8 +1,8 @@
-// 15 Paint Jobs
+// 19 Paint Jobs
 // start of PAINTK: +0
 // start of PAINTP_M: +3
 // start of PAINTP_R: +18
-#define PaintJobCount 15
+#define PaintJobCount 19
 
 #include <common.h>
 
@@ -24,7 +24,7 @@ struct Texture
 
 struct Texture * PAINTALL;
 
-int characterIndex[0xF] = {0,1,2,3,4,5,6,7,8,9,0xA,0xB,0xC,0xD,0xE};
+int characterIndex[19] = {0,1,2,3,4,5,6,7,8,9,0xA,0xB,0xC,0xD,0xE,15,16,17,18};
 
 char wasLoadedYet;
 

@@ -1,4 +1,4 @@
-common, iso, 0x801CE000, 0x0, src/PAINT1.c src/PAINT2.c src/PAINT3.c src/PAINT4.c src/PAINT5.c src/PAINT6.c src/PAINT7.c src/PAINT8.c src/PAINT12.c src/PAINT10.c src/PAINT9.c src/PAINT11.c src/PAINT13.c src/PAINT15.c src/PAINT14.c src/PAINTK.c src/PAINTP_M.c src/PAINTP_R.c, PAINTALL.bin
+common, iso, 0x801CE000, 0x0, src/PAINT1.c src/PAINT2.c src/PAINT3.c src/PAINT4.c src/PAINT5.c src/PAINT6.c src/PAINT7.c src/PAINT8.c src/PAINT12.c src/PAINT10.c src/PAINT9.c src/PAINT11.c src/PAINT13.c src/PAINT15.c src/PAINT14.c src/PAINT16.c src/PAINT17.c src/PAINT18.c src/PAINT19.c src/PAINTK.c src/PAINTP_M.c src/PAINTP_R.c, PAINTALL.bin
 
 common, exe, BOTS_SetRotation, -0x8, src/hook_GAMEPROG.s
 common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, src/hook_CharacterMenu.s
