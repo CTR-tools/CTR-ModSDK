@@ -2103,9 +2103,9 @@ void FUN_8001f41c(int param_1,int param_2)
 		
 		// call FUN_8001ef50 two times, one per triangle
 		  
-        FUN_8001ef50();
+        FUN_8001ef50(0x1f800108, 0x1f8001f8, 0x1f80020c, 0x1f800220); // 0,1,2
         if (*(uint *)(param_1 + 4) >> 0x10 != (*(uint *)(param_1 + 4) & 0xffff)) {
-          FUN_8001ef50();
+          FUN_8001ef50(0x1f800108, 0x1f80020c, 0x1f800234, 0x1f800220); // 1,3,2
         }
       }
       else {
@@ -2117,15 +2117,17 @@ void FUN_8001f41c(int param_1,int param_2)
 		
 		// call FUN_8001ef50 eight times, one per triangle
 		
-        FUN_8001ef50();
-        FUN_8001ef50();
-        FUN_8001ef50();
-        FUN_8001ef50();
+		// all values are offset 0x10 from what they should be, for some reason?
+		
+        FUN_8001ef50(0x1f800118, 0x1f8002a8, 0x1f800280, 0x1f800294); // 8, 6, 7
+        FUN_8001ef50(0x1f800118, 0x1f800294, 0x1f800244, 0x1f8002a8); // 7, 3, 8
+        FUN_8001ef50(0x1f800118, 0x1f80021c, 0x1f800294, 0x1f800280); // 1, 7, 6
+        FUN_8001ef50(0x1f800118, 0x1f800230, 0x1f800280, 0x1f8002a8); // 2, 6, 8
         if (*(uint *)(param_1 + 4) >> 0x10 != (*(uint *)(param_1 + 4) & 0xffff)) {
-          FUN_8001ef50();
-          FUN_8001ef50();
-          FUN_8001ef50();
-          FUN_8001ef50();
+          FUN_8001ef50(0x1f800118, 0x1f800208, 0x1f800258, 0x1f80026c); // 0, 4, 5
+          FUN_8001ef50(0x1f800118, 0x1f800258, 0x1f800280, 0x1f80026c); // 4, 6, 5
+          FUN_8001ef50(0x1f800118, 0x1f800280, 0x1f800258, 0x1f80021c); // 6, 4, 1
+          FUN_8001ef50(0x1f800118, 0x1f80026c, 0x1f800280, 0x1f800230); // 5, 6, 2
           return;
         }
       }
