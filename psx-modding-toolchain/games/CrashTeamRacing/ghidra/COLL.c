@@ -2741,11 +2741,11 @@ void FUN_80020064(int param_1,int param_2)
 		// call FUN_8001fc40 two times, one per triangle
 		
         *(undefined *)(param_2 + 99) = 0;
-        FUN_8001fc40();
+        FUN_8001fc40(0x1f800108, 0x1f8001f8, 0x1f80020c, 0x1f800220); // 0, 1, 2
         uVar1 = *(uint *)(param_1 + 4);
         *(undefined *)(param_2 + 99) = 1;
         if (uVar1 >> 0x10 != (uVar1 & 0xffff)) {
-          FUN_8001fc40();
+          FUN_8001fc40(0x1f800108, 0x1f80020c, 0x1f800234, 0x1f800220); // 1, 3, 2
         }
       }
       else {
@@ -2758,22 +2758,22 @@ void FUN_80020064(int param_1,int param_2)
 		// call FUN_8001fc40 eight times, one per triangle
 		
         *(undefined *)(param_2 + 99) = 2;
-        FUN_8001fc40(0x1f800108, 0x1f8001f8, 0x1f800248, 0x1f80025c);
-        *(undefined *)(param_2 + 99) = 3;
-        FUN_8001fc40(0x1f800108, 0x1f800248, 0x1f800270, 0x1f80025c);
-        *(undefined *)(param_2 + 99) = 4;
-        FUN_8001fc40(0x1f800108, 0x1f800270, 0x1f800248, 0x1f80020c);
-        FUN_8001fc40(0x1f800108, 0x1f80025c, 0x1f800270, 0x1f800220);
+        FUN_8001fc40(0x1f800108, 0x1f8001f8, 0x1f800248, 0x1f80025c); // 0, 4, 5
+        *(undefined *)(param_2 + 99) = 3;                             
+        FUN_8001fc40(0x1f800108, 0x1f800248, 0x1f800270, 0x1f80025c); // 4, 6, 5
+        *(undefined *)(param_2 + 99) = 4;                             
+        FUN_8001fc40(0x1f800108, 0x1f800270, 0x1f800248, 0x1f80020c); // 6, 4, 1
+        FUN_8001fc40(0x1f800108, 0x1f80025c, 0x1f800270, 0x1f800220); // 5, 6, 2
         uVar1 = *(uint *)(param_1 + 4);
         *(undefined *)(param_2 + 99) = 6;
         if (uVar1 >> 0x10 != (uVar1 & 0xffff)) {
-          FUN_8001fc40(0x1f800108, 0x1f800298, 0x1f800270, 0x1f800284);
-          *(undefined *)(param_2 + 99) = 7;
-          FUN_8001fc40(0x1f800108, 0x1f800284, 0x1f800234, 0x1f800298);
-          *(undefined *)(param_2 + 99) = 8;
-          FUN_8001fc40(0x1f800108, 0x1f80020c, 0x1f800284, 0x1f800270);
+          FUN_8001fc40(0x1f800108, 0x1f800298, 0x1f800270, 0x1f800284); // 8, 6, 7
+          *(undefined *)(param_2 + 99) = 7;                             
+          FUN_8001fc40(0x1f800108, 0x1f800284, 0x1f800234, 0x1f800298); // 7, 3, 8
+          *(undefined *)(param_2 + 99) = 8;                             
+          FUN_8001fc40(0x1f800108, 0x1f80020c, 0x1f800284, 0x1f800270); // 1, 7, 6
           *(undefined *)(param_2 + 99) = 9;
-          FUN_8001fc40(0x1f800108, 0x1f800220, 0x1f800270, 0x1f800298);
+          FUN_8001fc40(0x1f800108, 0x1f800220, 0x1f800270, 0x1f800298); // 2, 6, 8
           return;
         }
       }
