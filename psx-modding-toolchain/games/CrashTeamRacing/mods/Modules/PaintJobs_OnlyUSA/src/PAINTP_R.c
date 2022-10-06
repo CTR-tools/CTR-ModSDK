@@ -1,3 +1,5 @@
+// CLUT pos
+
 #include <common.h>
 
 struct Texture

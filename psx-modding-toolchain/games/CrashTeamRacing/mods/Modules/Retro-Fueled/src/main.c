@@ -1,14 +1,5 @@
 #include <common.h>
 
-void* LOAD_ReadFile_NoCallback(const char* file, void* addr, int unk);
-void OnCollide();
-
-// This is the jump and link MIPS instruction. When used, $pc jumps to the desired address, and register $ra is updated
-#define J(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
-#if BUILD != JpnRetail
-	#define mainMenuTex_Count 12
-#endif
-
 u_long redFlames_clut[8] __attribute__ ((section (".data"))) = {0x80DA809A, 0x805A80BA, 0x811A803A, 0x819A81DA, 0x813A817A, 0x829A821A, 0x835A839A, 0x82DA831A};
 u_long blueFlames_clut[8] __attribute__ ((section (".data"))) = {0xFF25FF65, 0xFFA5FF45, 0xFEE5FFC5, 0xFE65FE25, 0xFEC5FE85, 0xFD65FDE5, 0xFCA5FC65, 0xFD25FCE5};
 
@@ -49,30 +40,6 @@ RECT plumes_pos __attribute__ ((section (".data"))) = {
 
 #endif
 
-struct Textures
-{
-    char * image;
-    RECT * pos;
-};
-
-struct Banner
-{
-    const char * C;
-	const char * T;
-	const char * R;
-	const char * ribbon;
-	const char * clutC;
-	const char * clutT;
-	const char * clutR;
-	const char * clutribbon;
-};
-
-#if BUILD != JpnRetail
-	register struct Textures * mainMenuTex asm("k1");
-	struct Banner * bannerTex;
-	struct Banner * bannerTexPos;
-#endif
-
 char blueFire = 0;
 #if BUILD == UsaRetail
 	char * holdingX_withReserves = (char *) 0x80062314;
@@ -83,9 +50,6 @@ char blueFire = 0;
 #endif
 
 // forward declaration of our functions
-void RenderHook(int gameTracker, int gamepadSystem);
-void LoadFile_CustomTextures();
-void LoadCustomTexVRAM_MainMenu();
 void HookReserveCancelation();
 extern void ReserveCancelation();
 void MainUpdateLoop();
@@ -139,87 +103,6 @@ asm(".section .text					\n"
 	"j 		0x80065138				\n"
 	#endif
 	"addiu 	$29, $29, 0x88			\n");
-
-// This executes one time, before the
-// Crash Team Racing exe boots
-void hookEntry()
-{
-	// Turbo pad to STP
-	*(char *)((int)OnCollide + 0xB9) = 0x08;
-		
-	// Standardize turbo pad reserves
-	*(short *)((int)OnCollide + 0xA4) = 0x03c0;
-
-	// Player_Driving_Input + offset
-	// USA: 0xA30, PAL: 0xA30, JPN: 0xA4C
-	// Erasing the original reserve cancelation if, so that we can run our own code
-	#if BUILD == UsaRetail
-		*(int *)(0x8006224C) = J(&ReserveCancelation);
-		*(int *)(0x80062254) = 0x00000000;
-	#elif BUILD == EurRetail
-		*(int *)(0x80062364) = J(&ReserveCancelation);
-		*(int *)(0x8006236C) = 0x00000000;
-	#elif BUILD == JpnRetail
-		*(int *)(0x80065110) = J(&ReserveCancelation);
-		*(int *)(0x80065118) = 0x00000000;
-	#endif
-
-	return;
-}
-
-#if BUILD != JpnRetail
-
-// Loading custom textures to the kernel
-// Hooked at the very end of GAMEPROG_NewGame_OnBoot, which gets executed once at the end of a .lev load.
-void LoadFile_CustomTextures()
-{
-	mainMenuTex = (struct Textures *) LOAD_ReadFile_NoCallback("\\LOGO.BIN;1", (void*)0x8000A000, 0);
-	bannerTex = (struct Banner *) LOAD_ReadFile_NoCallback("\\BANNER.BIN;1", (void*)0x8000C400, 0);
-	bannerTexPos = (struct Banner *) LOAD_ReadFile_NoCallback("\\BANNER_P.BIN;1", (void*)0x8000E400, 0);
-}
-
-// Hooked at the very end of LOAD_VramFileCallback.
-void LoadCustomTexVRAM_MainMenu()
-{
-	int i;
-
-	// if the current level ID is the main menu
-	if (sdata.gameTracker.levelID == 0x27)
-	{
-		for (i = 0; i < mainMenuTex_Count; i++)
-			LoadImage((RECT *)(mainMenuTex[i].pos), (u_long *)(mainMenuTex[i].image));
-	}
-
-	// if player is in a racetrack and the racetrack isn't slide coliseum (because it has no turbo pads, therefore no blue fire)
-	if (sdata.gameTracker.levelID < 18 && sdata.gameTracker.levelID != 16)
-	{
-		// if player is in time trial mode, load banner textures for time trial .lev
-		if (sdata.gGT->gameMode1 & TIME_TRIAL)
-		{
-			LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID + 18].C), (u_long *)(bannerTex[0].C));
-			LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID + 18].T), (u_long *)(bannerTex[0].T));
-			LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID + 18].R), (u_long *)(bannerTex[0].R));
-			LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID + 18].ribbon), (u_long *)(bannerTex[0].ribbon));
-			LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID + 18].clutC), (u_long *)(bannerTex[0].clutC));
-			LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID + 18].clutT), (u_long *)(bannerTex[0].clutT));
-			LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID + 18].clutR), (u_long *)(bannerTex[0].clutR));
-			LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID + 18].clutribbon), (u_long *)(bannerTex[0].clutribbon));
-			return;
-		}
-
-		// load banner textures for arcade 1p .lev
-		LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID].C), (u_long *)(bannerTex[0].C));
-		LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID].T), (u_long *)(bannerTex[0].T));
-		LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID].R), (u_long *)(bannerTex[0].R));
-		LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID].ribbon), (u_long *)(bannerTex[0].ribbon));
-		LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID].clutC), (u_long *)(bannerTex[0].clutC));
-		LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID].clutT), (u_long *)(bannerTex[0].clutT));
-		LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID].clutR), (u_long *)(bannerTex[0].clutR));
-		LoadImage((RECT *)(bannerTexPos[sdata.gameTracker.levelID].clutribbon), (u_long *)(bannerTex[0].clutribbon));
-	}
-}
-
-#endif
 
 void InjectBlueFire()
 {

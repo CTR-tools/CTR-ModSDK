@@ -76,14 +76,28 @@ common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelectE
 // Retro-Fueled //
 
 // Hooks
+// Disable texture replacements as OxideFix will need the kernel space instead
 // 926, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, ../../Modules/Retro-Fueled/src/hookNewGame.s
 // 1020, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, ../../Modules/Retro-Fueled/src/hookNewGame.s
-// Disable texture replacements as OxideFix will need the kernel space instead
-common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
 // 926, exe, LOAD_VramFile, -0x8, ../../Modules/Retro-Fueled/src/hookVRAM.s
 // 1020, exe, LOAD_VramFile, -0x8, ../../Modules/Retro-Fueled/src/hookVRAM.s
-// Disable texture replacements as OxideFix will need the kernel space instead
-common, exe, __main, 0x68, ../../Modules/Retro-Fueled/src/hookEntry.s
+common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
+
+// Player_Driving_Input + offset
+// USA: 0xA30, PAL: 0xA30, JPN: 0xA4C
+// Erasing the original reserve cancelation if, so that we can run our own code
+926, exe, 0x8006224C, 0x0, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+926, exe, 0x8006224C, 0x8, ../../../nop.s
+1020, exe, 0x80062364, 0x0, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1020, exe, 0x80062364, 0x8, ../../../nop.s
+1111, exe, 0x80065110, 0x0, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1111, exe, 0x80065110, 0x8, ../../../nop.s
+
+// Binary edits
+// Turbo pad to STP
+common, exe, OnCollide, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
+// Standardize turbo pad reserves
+common, exe, OnCollide, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
 
 // Don't compile texture replacements for reasons stated above
 
