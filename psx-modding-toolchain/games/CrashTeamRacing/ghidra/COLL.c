@@ -2248,6 +2248,9 @@ void FUN_8001f7f0(int param_1)
   undefined4 uVar1;
   undefined4 *in_t8;
 
+  // t8 is address of first quadblock in level,
+  // how this initializes 9 vertices of a specific quadblock? idk?
+
   // [0]
   uVar1 = in_t8[1];
   *(undefined4 *)(param_1 + 0xf0) = *in_t8;
