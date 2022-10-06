@@ -225,6 +225,7 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
               param_1[0xe] = param_1[8] + (short)iVar11;
 			  
 			  // set normal vector of quadblock
+			  // 0x1F800178, 0x1F80017A, 0x1F80017C
               param_1[0x38] = (short)iVar16;
               param_1[0x39] = (short)iVar14;
               param_1[0x3a] = (short)iVar4;
@@ -260,6 +261,7 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
     uVar3 = 6;
     param_1[0x38] = 0;
     param_1[0x3a] = 0;
+	
     *(undefined *)(param_1 + 0x3f) = 6;
     *(undefined4 *)(param_1 + 0x42) = 0;
     *(byte **)(param_1 + 0x24) = param_2;
@@ -2176,7 +2178,7 @@ void FUN_8001f67c(int param_1,int param_2)
 {
   undefined uVar1;
 
-  FUN_8001f7f0();
+  FUN_8001f7f0(0x1f800108);
   
   // quadblock offset 0x3f
   uVar1 = *(undefined *)(param_2 + 0x3f);
@@ -2188,10 +2190,10 @@ void FUN_8001f67c(int param_1,int param_2)
   
   if (*(short *)(param_1 + 0xec) != *(short *)(param_1 + 0xee)) {
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x5a);
-    FUN_8001f2dc();
+    FUN_8001f2dc(0x1f800108, 0x1f80020c, 0x1f800234, 0x1f800220); // 1, 3, 2
   }
   *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x58);
-  FUN_8001f2dc();
+  FUN_8001f2dc(0x1f800108, 0x1f8001f8, 0x1f80020c, 0x1f800220); // 0, 1, 2
   return;
 }
 
@@ -2202,7 +2204,7 @@ void FUN_8001f6f0(int param_1,int param_2)
 {
   undefined uVar1;
 
-  FUN_8001f7f0();
+  FUN_8001f7f0(0x1f800108);
   
   // quadblock offset 0x3f
   uVar1 = *(undefined *)(param_2 + 0x3f);
@@ -2214,22 +2216,22 @@ void FUN_8001f6f0(int param_1,int param_2)
   
   if (*(short *)(param_1 + 0xec) != *(short *)(param_1 + 0xee)) {  // Do we hit two quads? if then, check two quads.
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x50); // quads vert 0
-    FUN_8001f2dc();
+    FUN_8001f2dc(0x1f800108, 0x1f800298, 0x1f800270, 0x1f800284); // 8, 6, 7
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x52); // quads vert 1
-    FUN_8001f2dc();
+    FUN_8001f2dc(0x1f800108, 0x1f800284, 0x1f800234, 0x1f800298); // 7, 3, 8
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x54); // quads vert 2
-    FUN_8001f2dc();
+    FUN_8001f2dc(0x1f800108, 0x1f80020c, 0x1f800284, 0x1f800270); // 1, 7, 6
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x56); // quads vert 3
-    FUN_8001f2dc();
+    FUN_8001f2dc(0x1f800108, 0x1f800220, 0x1f800270, 0x1f800298); // 2, 6, 8
   }
   *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x48); // quads vert 0
-  FUN_8001f2dc();
+  FUN_8001f2dc(0x1f800108, 0x1f8001f8, 0x1f800248, 0x1f80025c); // 0, 4, 5
   *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x4a); // quads vert 1
-  FUN_8001f2dc();
+  FUN_8001f2dc(0x1f800108, 0x1f800248, 0x1f800270, 0x1f80025c); // 4, 6, 5
   *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x4c); // quads vert 2
-  FUN_8001f2dc();
+  FUN_8001f2dc(0x1f800108, 0x1f800270, 0x1f800248, 0x1f80020c); // 6, 4, 1
   *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x4e); // quads vert 3
-  FUN_8001f2dc();
+  FUN_8001f2dc(0x1f800108, 0x1f80025c, 0x1f800270, 0x1f800220); // 5, 6, 2
   return;
 }
 
@@ -2737,22 +2739,22 @@ void FUN_80020064(int param_1,int param_2)
 		// call FUN_8001fc40 eight times, one per triangle
 		
         *(undefined *)(param_2 + 99) = 2;
-        FUN_8001fc40();
+        FUN_8001fc40(0x1f800108, 0x1f8001f8, 0x1f800248, 0x1f80025c);
         *(undefined *)(param_2 + 99) = 3;
-        FUN_8001fc40();
+        FUN_8001fc40(0x1f800108, 0x1f800248, 0x1f800270, 0x1f80025c);
         *(undefined *)(param_2 + 99) = 4;
-        FUN_8001fc40();
-        FUN_8001fc40();
+        FUN_8001fc40(0x1f800108, 0x1f800270, 0x1f800248, 0x1f80020c);
+        FUN_8001fc40(0x1f800108, 0x1f80025c, 0x1f800270, 0x1f800220);
         uVar1 = *(uint *)(param_1 + 4);
         *(undefined *)(param_2 + 99) = 6;
         if (uVar1 >> 0x10 != (uVar1 & 0xffff)) {
-          FUN_8001fc40();
+          FUN_8001fc40(0x1f800108, 0x1f800298, 0x1f800270, 0x1f800284);
           *(undefined *)(param_2 + 99) = 7;
-          FUN_8001fc40();
+          FUN_8001fc40(0x1f800108, 0x1f800284, 0x1f800234, 0x1f800298);
           *(undefined *)(param_2 + 99) = 8;
-          FUN_8001fc40();
+          FUN_8001fc40(0x1f800108, 0x1f80020c, 0x1f800284, 0x1f800270);
           *(undefined *)(param_2 + 99) = 9;
-          FUN_8001fc40();
+          FUN_8001fc40(0x1f800108, 0x1f800220, 0x1f800270, 0x1f800298);
           return;
         }
       }
