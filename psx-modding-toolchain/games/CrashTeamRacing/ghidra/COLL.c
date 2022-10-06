@@ -2248,39 +2248,56 @@ void FUN_8001f7f0(int param_1)
   undefined4 uVar1;
   undefined4 *in_t8;
 
+  // [0]
   uVar1 = in_t8[1];
   *(undefined4 *)(param_1 + 0xf0) = *in_t8;
   *(undefined4 *)(param_1 + 0xf4) = uVar1;
   *(undefined4 **)(param_1 + 0xf8) = in_t8;
+  
+  // [1]
   uVar1 = in_t8[0x23ca1];
   *(undefined4 *)(param_1 + 0x104) = in_t8[0x23ca0];
   *(undefined4 *)(param_1 + 0x108) = uVar1;
   *(undefined4 **)(param_1 + 0x10c) = in_t8 + 0x23ca0;
   *(undefined4 *)(param_1 + 0xec) = 0x8f290004;
+  
+  // [2]
   uVar1 = in_t8[0x11];
   *(undefined4 *)(param_1 + 0x118) = in_t8[0x10];
   *(undefined4 *)(param_1 + 0x11c) = uVar1;
   *(undefined4 **)(param_1 + 0x120) = in_t8 + 0x10;
+  
+  // [3]
   uVar1 = in_t8[0x23ca5];
   *(undefined4 *)(param_1 + 300) = in_t8[0x23ca4];
   *(undefined4 *)(param_1 + 0x130) = uVar1;
   *(undefined4 **)(param_1 + 0x134) = in_t8 + 0x23ca4;
+  
+  // [4]
   uVar1 = in_t8[0x3fffd];
   *(undefined4 *)(param_1 + 0x140) = in_t8[0x3fffc];
   *(undefined4 *)(param_1 + 0x144) = uVar1;
   *(undefined4 **)(param_1 + 0x148) = in_t8 + 0x3fffc;
+  
+  // [5]
   uVar1 = in_t8[0xc40d];
   *(undefined4 *)(param_1 + 0x154) = in_t8[0xc40c];
   *(undefined4 *)(param_1 + 0x158) = uVar1;
   *(undefined4 **)(param_1 + 0x15c) = in_t8 + 0xc40c;
+  
+  // [6]
   uVar1 = in_t8[0x6401];
   *(undefined4 *)(param_1 + 0x168) = in_t8[0x6400];
   *(undefined4 *)(param_1 + 0x16c) = uVar1;
   *(undefined4 **)(param_1 + 0x170) = in_t8 + 0x6400;
+  
+  // [7]
   uVar1 = in_t8[0xd];
   *(undefined4 *)(param_1 + 0x17c) = in_t8[0xc];
   *(undefined4 *)(param_1 + 0x180) = uVar1;
   *(undefined4 **)(param_1 + 0x184) = in_t8 + 0xc;
+  
+  // [8]
   uVar1 = in_t8[0x6085];
   *(undefined4 *)(param_1 + 400) = in_t8[0x6084];
   *(undefined4 *)(param_1 + 0x194) = uVar1;
