@@ -221,7 +221,9 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
 			  iVar4 = iVar15 * iVar10 >> 0xc;
               *(int *)(param_1 + 0xfe) = iVar4;
               
+			  // length?
 			  iVar15 = (int)*(short *)(param_2 + 0x16);
+			  
               param_1[0xe] = param_1[8] + (short)iVar11;
 			  
 			  // set normal vector of quadblock
@@ -233,12 +235,15 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
               param_1[0x10] = param_1[10] + (short)iVar17;
               param_1[0xf] = param_1[9] + (short)iVar9;
               *(undefined *)(param_1 + 0x3f) = 6;
+			  
+			  // normalVec * length
               iVar12 = iVar16 * iVar15 >> 0xc;
               *(int *)(param_1 + 0x100) = iVar12;
               iVar14 = iVar14 * iVar15 >> 0xc;
               *(int *)(param_1 + 0x102) = iVar14;
               iVar15 = iVar4 * iVar15 >> 0xc;
               *(int *)(param_1 + 0x104) = iVar15;
+			  
               sVar2 = *(short *)(param_2 + 0x10) + (short)iVar12;
               param_1[0x3c] = sVar2;
               param_1[0x34] = sVar2;
