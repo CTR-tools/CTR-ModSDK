@@ -695,15 +695,15 @@ struct NavHeader
 struct BspSearchVertex
 {
 	// 0x0
-	int pos[3];
+	short pos[4];
 	
-	// 0xC
-	short normalVec[4];
+	// 0x8
+	short normalVec[3];
 	
-	// 0x14
-	short normalVec_scaled[4];
+	// 0xE
+	short normalVec_scaled[3];
 	
-	// 0x1C large
+	// 0x14 large
 };
 
 // can be stored in normal RAM
@@ -715,8 +715,8 @@ struct BspSearchData
 	// 0xf0
 	struct BspSearchVertex bspSearchVert[9];
 
-	// 0x1ec
-	char dataOutput[0x20];
+	// 0x1a4
+	char dataOutput[0x68];
 	
 	// 0x20C -- size of struct
 };
