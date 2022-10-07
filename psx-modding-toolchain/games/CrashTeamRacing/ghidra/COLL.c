@@ -2673,6 +2673,7 @@ LAB_8001ff14:
           *(short *)(param_1 + 8) = *(short *)(param_1 + 5) + (short)uVar5;
         }
 		
+		// 1F800146
         *(short *)((int)param_1 + 0x3e) = *(short *)((int)param_1 + 0x3e) + 1;
       }
       else 
@@ -2700,6 +2701,8 @@ LAB_8001ff14:
 
 
 // COLL_Quadblock_Physics
+// param_1 - quadblock
+// param_2 - 1f800108
 void FUN_80020064(int param_1,int param_2)
 
 {
@@ -2779,7 +2782,8 @@ void FUN_80020064(int param_1,int param_2)
         FUN_8001fc40(0x1f800108, 0x1f800248, 0x1f800270, 0x1f80025c); // 4, 6, 5
         *(undefined *)(param_2 + 99) = 4;                             
         FUN_8001fc40(0x1f800108, 0x1f800270, 0x1f800248, 0x1f80020c); // 6, 4, 1
-        FUN_8001fc40(0x1f800108, 0x1f80025c, 0x1f800270, 0x1f800220); // 5, 6, 2
+        *(undefined *)(param_2 + 99) = 5;
+		FUN_8001fc40(0x1f800108, 0x1f80025c, 0x1f800270, 0x1f800220); // 5, 6, 2
         uVar1 = *(uint *)(param_1 + 4);
         *(undefined *)(param_2 + 99) = 6;
         if (uVar1 >> 0x10 != (uVar1 & 0xffff)) {

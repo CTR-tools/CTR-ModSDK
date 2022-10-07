@@ -73,29 +73,25 @@
 8001eb0c COLL_SearchTree_NoCallback
 8001ebec COLL_SearchTree_WithCallback
 
-// unknown 8001ede4
-// unknown 8001ef1c -- tiny function
-// unknown 8001ef50 -- collision related
-// 1ef74 is not a real function
-// unknown 8001f2dc
+// unknown 8001ede4 -- part of 8001f928 (only physics)
+// unknown 8001ef1c -- tiny function, not used
+// unknown 8001ef50 -- [triangle] (only in graphics)
+// unknown 8001f2dc -- [triangle] (only in 2-tri and 8-tri)
 
 8001f41c COLL_Quadblock_Graphics
 8001f5f0 COLL_SearchCallback_QuadBlocks_Graphics
 
-// unknown 8001f67c
-// unknown 8001f6f0
-// unknown 8001f7f0
-// unknown 8001f928 -- collision related
-// unknown 8001fb8c -- register swapping
-// unknown 8001fbd4 -- register swapping
-// unknown 8001fc10 -- register swapping
-// unknown 8001fc40
+// unknown 8001f67c -- 2 triangles (graphics and physics)
+// unknown 8001f6f0 -- 8 triangles (graphics and physics)
+// unknown 8001f7f0 -- clears meta data (graphics and physics)
+// unknown 8001f928 -- part of 8001fc40 (only physics)
+// unknown 8001fc40 -- [triangle] (only physics)
 
 80020064 COLL_Quadblock_Physics
 800202a8 COLL_SearchCallback_QuadBlocks_Physics
 
-// unknown 80020334 -- nop to make driver jump
-// unknown 80020410 -- Driver FuncPtr maybe OnPhysics? calls Scrub?
+// unknown 80020334 -- checks quadblock and triangle, called from OnPhysics
+// unknown 80020410 -- Driver FuncPtr OnPhysics
 
 80020c58 COLL_Scrub
 
