@@ -2866,11 +2866,14 @@ void FUN_80020334(int param_1,int param_2,int param_3)
   }
 
   iVar3 = *(int *)(param_3 + 0x2c0) + -1;
+  
   if (-1 < iVar3) {
     
 	// array of 0xC-byte struct
 	iVar5 = iVar3 * 0xc + 0x20c;
     
+	// if any are found with less than 4 frames,
+	// then trigger scrub effect with 1f800116
 	do 
 	{
       piVar4 = (int *)(param_3 + iVar5);
@@ -2901,6 +2904,10 @@ void FUN_80020334(int param_1,int param_2,int param_3)
       iVar5 = iVar5 + -0xc;
     } while (-1 < iVar3);
   }
+  
+  // if none are found with less than 4 frames,
+  // store parameters and increase count (why?)
+  
   piVar4 = (int *)(param_3 + *(int *)(param_3 + 0x2c0) * 0xc + 0x20c);
   *piVar4 = param_1;
   piVar4[1] = param_2;
