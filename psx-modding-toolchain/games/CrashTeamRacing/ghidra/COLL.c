@@ -2849,7 +2849,8 @@ void FUN_80020334(int param_1,int param_2,int param_3)
 
   uVar1 = *(ushort *)(param_3 + 0x22);
 
-  // if no quadblock given
+  // if no quadblock given,
+  // first call before this function gets 15 more calls
   if (param_1 == 0)
   {
 	// if param_1 is rigged nullptr,
@@ -2864,6 +2865,9 @@ void FUN_80020334(int param_1,int param_2,int param_3)
 	
     return;
   }
+
+  // if this function is being called from the 
+  // loop of 15 calls, from OnPhysics
 
   iVar3 = *(int *)(param_3 + 0x2c0) + -1;
   
@@ -2919,6 +2923,7 @@ void FUN_80020334(int param_1,int param_2,int param_3)
   // 1f800116 (no scrub)
   *(undefined2 *)(param_3 + 0xe) = 0;
   
+  // without this, you're stuck until you jump
   *(int *)(param_3 + 0x2c0) = *(int *)(param_3 + 0x2c0) + 1;
 
   return;
@@ -2976,9 +2981,11 @@ void FUN_80020410(undefined4 param_1,int param_2)
   DAT_1f800114 = 0x18;
   DAT_1f8002ac = 0;
   FUN_80020334(0,0,&DAT_1f800108);
+  
+  // loop executes 0xF times
   iVar14 = 0xf;
-  do {
-
+  do 
+  {
     // x
     // iVar5 = ((driver.coordSpeed[0] * (elapsed milliseconds per frame, ~32) >> 5) * iVar13) >> 0xC
     iVar5 = (*(int *)(param_2 + 0x88) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5) * iVar13 >> 0xc;
