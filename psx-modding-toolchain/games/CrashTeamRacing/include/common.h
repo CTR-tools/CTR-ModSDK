@@ -706,6 +706,7 @@ struct BspSearchVertex
 	// 0x1C large
 };
 
+// can be stored in normal RAM
 struct BspSearchData
 {
 	// 0x0
@@ -716,6 +717,24 @@ struct BspSearchData
 
 	// 0x1ec
 	char dataOutput[0x20];
+	
+	// 0x20C -- size of struct
+};
+
+// only stored in Scratchpad
+// FUN_80020334
+struct BspSearchDataExtended
+{
+	struct BspSearchData bspSearchData;
+	
+	// 0x20C
+	struct
+	{
+		char data[0xc];
+	} unk[0xF];
+	
+	// 0x2c0
+	int count;
 };
 
 // each mempack is 0x18*4 (0x60) bytes large

@@ -2642,6 +2642,7 @@ LAB_8001ff14:
         param_1[0x20] = iVar10;
 		
 		// triangle ID (0-9)
+		// 0x1f800187
         *(undefined *)((int)param_1 + 0x7f) = *(undefined *)((int)param_1 + 99);
 		
         *(char *)((int)param_1 + 0x7e) = (char)iVar9;
@@ -2794,6 +2795,7 @@ void FUN_80020064(int param_1,int param_2)
 
 // COLL_SearchCallback_QuadBlocks_Physics
 // param_1 is VisData node
+// param_2 is 0x1f800108
 void FUN_800202a8(uint *param_1,int param_2)
 
 {
@@ -2834,7 +2836,7 @@ void FUN_800202a8(uint *param_1,int param_2)
 
 // NOPing this function makes your character constantly jump
 // param_1 = ptrQuadblock
-//
+// param_2 = triangleID
 // param_3 = 0x1F800108
 void FUN_80020334(int param_1,int param_2,int param_3)
 
@@ -2854,26 +2856,46 @@ void FUN_80020334(int param_1,int param_2,int param_3)
 	// driver gets stuck, but doesn't bounce
 
     *(ushort *)(param_3 + 0x22) = uVar1 & 0xffdf;
+	
+	// 1f800116 (no scrub)
     *(undefined2 *)(param_3 + 0xe) = 0;
+	
     *(undefined4 *)(param_3 + 0x2c0) = 0;
+	
     return;
   }
 
   iVar3 = *(int *)(param_3 + 0x2c0) + -1;
   if (-1 < iVar3) {
-    iVar5 = iVar3 * 0xc + 0x20c;
-    do {
+    
+	// array of 0xC-byte struct
+	iVar5 = iVar3 * 0xc + 0x20c;
+    
+	do 
+	{
       piVar4 = (int *)(param_3 + iVar5);
-      if ((*piVar4 == param_1) && (piVar4[1] == param_2)) {
+      
+	  // if quadblock and triangleID match
+	  if ((*piVar4 == param_1) && (piVar4[1] == param_2)) 
+	  {
+		// frame timer?
         iVar3 = piVar4[2];
         uVar2 = (undefined2)iVar3;
-        if (iVar3 < 0x401) {
+        
+		// if less than 4 frames
+		if (iVar3 < 0x401) 
+		{
+		  // increment?
           uVar2 = (undefined2)(iVar3 + 0x100);
           piVar4[2] = iVar3 + 0x100;
         }
-        *(ushort *)(param_3 + 0x22) = uVar1 | 0x20;
+        
+		*(ushort *)(param_3 + 0x22) = uVar1 | 0x20;
+		
+		// 1f800116
         *(undefined2 *)(param_3 + 0xe) = uVar2;
-        return;
+        
+		return;
       }
       iVar3 = iVar3 + -1;
       iVar5 = iVar5 + -0xc;
@@ -2886,7 +2908,10 @@ void FUN_80020334(int param_1,int param_2,int param_3)
 
   // similar to if-statement body
   *(ushort *)(param_3 + 0x22) = uVar1 & 0xffdf;
+  
+  // 1f800116 (no scrub)
   *(undefined2 *)(param_3 + 0xe) = 0;
+  
   *(int *)(param_3 + 0x2c0) = *(int *)(param_3 + 0x2c0) + 1;
 
   return;
@@ -3063,6 +3088,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
         *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 1;
       }
 
+	  // quadblock, triangleID, search data
       FUN_80020334(DAT_1f800188,(uint)DAT_1f800187,&DAT_1f800108);
 
 	  // get quadblock flag
@@ -3186,10 +3212,14 @@ LAB_800209b0:
         *(byte **)(&DAT_1f800190 + DAT_1f8001cc) = DAT_1f800150;
         DAT_1f8001cc = DAT_1f8001cc + 1;
       }
-      else {
+      else 
+	  {
         FUN_80020334(DAT_1f800150,0,&DAT_1f800108);
-        DAT_1f800116 = DAT_1f800116 + 0x200;
-        iVar5 = 0;
+        
+		// exaggerate scrub effect?
+		DAT_1f800116 = DAT_1f800116 + 0x200;
+        
+		iVar5 = 0;
 
 		// scrub meta
         uVar8 = FUN_80057c44((uint)DAT_1f800150[1]);
@@ -3320,7 +3350,10 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
     //turn on 8th bit of Actions Flag set (means ?)
     *(uint *)(param_1 + 0x2c8) = *(uint *)(param_1 + 0x2c8) | 0x80;
   }
+  
+  // 1f800116
   iVar3 = iVar3 - *(short *)(param_3 + 0xe);
+  
   uVar4 = 0;
   if (iVar3 < 0)
   {
