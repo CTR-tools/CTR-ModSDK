@@ -2052,6 +2052,7 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
 
 // COLL_Quadblock_Graphics
 // param1 - ptrQuadblock
+// param2 - BSP Search Result: either 0x1f800108, 0x1f800118, 8008db1c
 void FUN_8001f41c(int param_1,int param_2)
 
 {

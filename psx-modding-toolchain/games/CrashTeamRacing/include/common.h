@@ -692,6 +692,32 @@ struct NavHeader
 	struct NavFrame frame[1];
 };
 
+struct BspSearchVertex
+{
+	// 0x0
+	int pos[3];
+	
+	// 0xC
+	short normalVec[4];
+	
+	// 0x14
+	short normalVec_scaled[4];
+	
+	// 0x1C large
+};
+
+struct BspSearchData
+{
+	// 0x0
+	char dataInput[0xf0];
+	
+	// 0xf0
+	struct BspSearchVertex bspSearchVert[9];
+
+	// 0x1ec
+	char dataOutput[0x20];
+};
+
 // each mempack is 0x18*4 (0x60) bytes large
 struct Mempack
 {
@@ -9616,14 +9642,11 @@ struct BSS
 	// 80090f5c -- JpnRetail
 	struct NavHeader* NavPath_ptrHeader[3];
 
-	// 8008daf8 - next?
-	unsigned char data2E0[0x230];
+	// 8008daf8
+	struct LinkedList unk_NavRelated[3];
 
-
-	// 8008daf8 - three linkedList structs? for what?
-	// LinkedList[3]
-
-	// 8008DB1C - BSP Search Result (how big?)
+	// 8008DB1C - BSP Search Result
+	struct BspSearchData bspSearchData;
 		// 8008db40: search flags
 		// 8008db48: lev -> mesh_info
 
