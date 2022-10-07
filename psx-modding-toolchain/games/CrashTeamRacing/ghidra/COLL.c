@@ -3171,6 +3171,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
 	  // COLL_Scrub
       iVar5 = FUN_80020c58(param_2,param_1,&DAT_1f800108,uVar12,param_2 + 0x88);
 
+	  // if driver is "crashing" from COLL_Scrub
 	  if (iVar5 == 2) {
         return;
       }
@@ -3252,6 +3253,8 @@ LAB_800209b0:
 		  *(byte **)(&DAT_1f800190 + DAT_1f8001cc) = DAT_1f800150;
           DAT_1f8001cc = DAT_1f8001cc + 1;
         }
+		
+		// if driver is "crashing" from COLL_Scrub
         if (iVar5 == 2) {
           return;
         }
