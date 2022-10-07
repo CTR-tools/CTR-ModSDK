@@ -9889,6 +9889,10 @@ struct BSS
 
 	// ==================================
 
+	// 80096194
+	// part of voices, see FUN_8002cf28, FUN_8002dc4c
+	char data_80096194[0x150];
+
 #if 0
 	// 80096194 -- next variable
 	int backupParams_FUN_8002cf28[4];
@@ -9935,22 +9939,18 @@ struct BSS
 	// 800962c4
 	// 800962d4
 
+#endif
+
+// garage pool added after sep3
+
+
+#if BUILD >= UsaRetail
 	// 800962E4
 	// eight members, each 0xc
 	struct
 	{
 		char data[0xC];
 	} garageSoundPool[8];
-
-	// no hole between that ^^ and queueSlots
-
-#endif
-
-	// 80096194
-#if BUILD == SepReview
-	char data6378[0x150];
-#elif BUILD >= UsaRetail
-	char data6378[0x1B0];
 #endif
 
 	// 800962E4 to 80096338 ^^ from FUN_8003074c
