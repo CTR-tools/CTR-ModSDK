@@ -1683,7 +1683,7 @@ struct Driver
 	// 0xC4
 	// 0x010 per tire,
 	// 0x040 per frame (4 tires)
-	// 0x2000 total (8 frames)
+	// 0x200 total (8 frames)
 	char skidmarks[0x200];
 
 	// 0x2C4
