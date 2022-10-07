@@ -2144,7 +2144,8 @@ void FUN_8001f41c(int param_1,int param_2)
 
 
 // COLL_SearchCallback_QuadBlocks_Graphics
-// param_1 - VisData
+// param_1 is VisData node
+// param_2 is 0x1f800108
 void FUN_8001f5f0(uint *param_1,int param_2)
 
 {
@@ -2162,13 +2163,18 @@ void FUN_8001f5f0(uint *param_1,int param_2)
   // pointer to quadblocks
   uVar2 = param_1[7];
 
+  // loop through all quadblocks
   do
   {
 	// COLL_Quadblock_Graphics
     FUN_8001f41c(uVar2,param_2);
 
+	// reduce count
 	uVar1 = uVar1 - 1;
+	
+	// next quadblock
     uVar2 = uVar2 + 0x5c;
+	
   } while (0 < (int)uVar1);
 
   if ((*(ushort *)(param_2 + 0x22) & 1) != 0)
@@ -2814,7 +2820,9 @@ void FUN_800202a8(uint *param_1,int param_2)
   uVar2 = param_1[7];
 
   // loop through all quadblocks
-  do {
+  do 
+  {
+	// COLL_Quadblock_Physics
     FUN_80020064(uVar2,param_2);
 
 	// reduce count
