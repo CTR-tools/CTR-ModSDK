@@ -706,6 +706,13 @@ struct BspSearchVertex
 	// 0x14 large
 };
 
+struct BspSearchTriangle
+{
+	struct QuadBlock* quadblock;
+	int triangleID;
+	int numCollision;
+};
+
 // can be stored in normal RAM
 struct BspSearchData
 {
@@ -728,13 +735,10 @@ struct BspSearchDataExtended
 	struct BspSearchData bspSearchData;
 	
 	// 0x20C
-	struct
-	{
-		char data[0xc];
-	} unk[0xF];
+	struct BspSearchTriangle bspSearchTriangle[0xF];
 	
 	// 0x2c0
-	int count;
+	int numTriangles;
 };
 
 // each mempack is 0x18*4 (0x60) bytes large

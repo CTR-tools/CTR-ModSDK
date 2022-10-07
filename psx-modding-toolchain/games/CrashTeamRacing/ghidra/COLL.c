@@ -2869,6 +2869,8 @@ void FUN_80020334(int param_1,int param_2,int param_3)
   // if this function is being called from the 
   // loop of 15 calls, from OnPhysics
 
+  // since start of OnPhysics, check all existing
+  // records of quadblock and triangle, so far
   iVar3 = *(int *)(param_3 + 0x2c0) + -1;
   
   if (-1 < iVar3) {
@@ -2882,17 +2884,18 @@ void FUN_80020334(int param_1,int param_2,int param_3)
 	{
       piVar4 = (int *)(param_3 + iVar5);
       
-	  // if quadblock and triangleID match
+	  // if quadblock and triangleID match,
+	  // meaning we've already found collision with this triangle on this frame
 	  if ((*piVar4 == param_1) && (piVar4[1] == param_2)) 
 	  {
 		// frame timer?
         iVar3 = piVar4[2];
         uVar2 = (undefined2)iVar3;
         
-		// if less than 4 frames
+		// if collision is found less than 4 frames
 		if (iVar3 < 0x401) 
 		{
-		  // increment?
+		  // increment
           uVar2 = (undefined2)(iVar3 + 0x100);
           piVar4[2] = iVar3 + 0x100;
         }
@@ -2909,10 +2912,13 @@ void FUN_80020334(int param_1,int param_2,int param_3)
     } while (-1 < iVar3);
   }
   
-  // if none are found with less than 4 frames,
-  // store parameters and increase count (why?)
+  // if collision was not found yet this frame,
+  // with this quadblock and triangle
   
+  // set a slot for a new record
   piVar4 = (int *)(param_3 + *(int *)(param_3 + 0x2c0) * 0xc + 0x20c);
+  
+  // record quadblock, triangle, and set counter to zero
   *piVar4 = param_1;
   piVar4[1] = param_2;
   piVar4[2] = 0;
@@ -2923,7 +2929,7 @@ void FUN_80020334(int param_1,int param_2,int param_3)
   // 1f800116 (no scrub)
   *(undefined2 *)(param_3 + 0xe) = 0;
   
-  // without this, you're stuck until you jump
+  // write to next slot, next time a new triangle is found
   *(int *)(param_3 + 0x2c0) = *(int *)(param_3 + 0x2c0) + 1;
 
   return;
