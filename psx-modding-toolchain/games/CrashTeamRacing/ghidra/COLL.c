@@ -1989,11 +1989,15 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
       iVar2 = *(int *)(param_1 + 100);
       if ((-1 < iVar14) && (iVar14 + iVar13 + -0x1000 < 1))
 	  {
-		// quadblock flags & TriggerScript
+		// quadblock flags & TriggerScript,
+		// if collision is disabled
         if ((*(ushort *)(iVar2 + 0x12) & 0x40) != 0) {
           *(uint *)(param_1 + 0x1a4) = *(uint *)(param_1 + 0x1a4) | (uint)*(byte *)(iVar2 + 0x38);
           return;
         }
+		
+		// if collision is not disabled, record the detection
+		
         *(int *)(param_1 + 0x80) = iVar2;
         *(short *)(param_1 + 200) = (short)iVar14;
         *(short *)(param_1 + 0xca) = (short)iVar13;
@@ -2364,8 +2368,9 @@ void FUN_8001f7f0(int param_1)
 
 
 // part of triangle collision in the function below
-undefined4
-FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
+// param_1 - 1f800154,
+// other parameters are the vertices
+undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 *param_4)
 
 {
   short sVar1;
@@ -2627,7 +2632,10 @@ LAB_8001fd38:
   param_1[0x36] = param_2;
   param_1[0x37] = param_3;
   param_1[0x38] = param_4;
-  iVar9 = FUN_8001f928(param_1 + 0x13);
+  
+  // always passes 1f800154
+  iVar9 = FUN_8001f928(param_1 + 0x13,param_2,param_3,param_4);
+  
   if (iVar9 < 0) {
     return;
   }
@@ -2670,12 +2678,16 @@ LAB_8001ff14:
     if (iVar8 != 0) {
       iVar8 = 0x1000 - ((*(short *)((int)param_1 + 6) - iVar7) * 0x1000) / iVar8;
     }
+	
+	// if distance from player to triangle, is less than shortest distance
     if (iVar8 - param_1[0x21] < 0) 
 	{
 	  // if not out of bounds
       if ((uVar2 & 0x10) == 0) 
 	  {
+		// set new shortest distance
         param_1[0x21] = iVar8;
+		
         uVar5 = *(undefined4 *)(param_1[0x37] + 8);
         uVar6 = *(undefined4 *)(param_1[0x38] + 8);
         param_1[0x33] = *(undefined4 *)(param_1[0x36] + 8);

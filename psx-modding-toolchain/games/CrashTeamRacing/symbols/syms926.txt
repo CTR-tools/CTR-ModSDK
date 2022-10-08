@@ -66,34 +66,34 @@
 8001d06c CDSYS_XAPauseAtEnd
 
 8001d094 COLL_ThreadMeta
-8001d0c4 COLL_Instance										// PerInstance_CollResponse
+8001d0c4 COLL_Instance										// GetImpact_Instance
 8001d610 COLL_SearchCallback_Instances						// PerVisData_CheckInstances
 8001d77c COLL_CheckDriver_AI								// StartSearch_AI
 8001d944 COLL_CheckDriver_Player							// StartSearch_Player
-8001eb0c COLL_SearchTree_NoCallback							// SearchTree_FindQuadblock (graphics)
+8001eb0c COLL_SearchTree_NoCallback							// SearchTree_FindQuadblock_Touching
 8001ebec COLL_SearchTree_WithCallback						// SearchTree_FindX
 
-// unknown 8001ede4 -- part of 8001f928 (only physics)		// TestTriangle1
+// unknown 8001ede4 -- part of 8001f928 (only NearPlayer)	// TestTriangle_FindClosest_Subfunction2
 // unknown 8001ef1c -- tiny function, not used				// TestTriangle_Unused
-// unknown 8001ef50 -- [triangle] (only in graphics)		// TestTriangle2
-// unknown 8001f2dc -- [triangle] (only in 2-tri and 8-tri)	// TestTriangle3
+// unknown 8001ef50 -- [triangle] (only in Touching)		// TestTriangle_FindAny
+// unknown 8001f2dc -- [triangle] (only in 2-tri and 8-tri)	// TestTriangle_WithQuadblockFooter
 
-8001f41c COLL_Quadblock_Graphics							// PerQuadblock_CheckTriangles_Normal
-8001f5f0 COLL_SearchCallback_QuadBlocks_Graphics			// PerVisData_CheckQuadblocks_Normal
+8001f41c COLL_Quadblock_Graphics							// PerQuadblock_CheckTriangles_Touching
+8001f5f0 COLL_SearchCallback_QuadBlocks_Graphics			// PerVisData_CheckQuadblocks_Touching
 
-// unknown 8001f67c -- 2 triangles (graphics and physics)	// TestQuadblock_TwoTris
-// unknown 8001f6f0 -- 8 triangles (graphics and physics)	// TestQuadblock_EightTris
+// unknown 8001f67c -- 2 triangles (Touching and NearPlayer)// TestQuadblock_TwoTris
+// unknown 8001f6f0 -- 8 triangles (Touching and NearPlayer)// TestQuadblock_EightTris
 // unknown 8001f7f0 -- clears meta data						// ResetScratchpadCache
-// unknown 8001f928 -- part of 8001fc40 (only physics)		// TestTriangle4
-// unknown 8001fc40 -- [triangle] (only physics)			// TestTriangle5
+// unknown 8001f928 -- part of 8001fc40 (only NearPlayer)	// TestTriangle_FindClosest_Subfunction1
+// unknown 8001fc40 -- [triangle] (only NearPlayer)			// TestTriangle_FindClosest
 
 80020064 COLL_Quadblock_Physics								// PerQuadblock_CheckTriangles_NearPlayer
 800202a8 COLL_SearchCallback_QuadBlocks_Physics				// PerVisData_CheckQuadblocks_NearPlayer
 
-// unknown 80020334 										// TestTriangle_NearPlayer
+// unknown 80020334 										// TestTriangle_WithClosest
 // unknown 80020410 										// StartSearch_NearPlayer
 
-80020c58 COLL_Scrub // called from OnPhysics (StartSearch_NearPlayer)
+80020c58 COLL_Scrub // GetImpact_Player
 
 80021500 CTR_Box_DrawWirePrims
 80021594 CTR_Box_DrawWireBox
