@@ -15,8 +15,8 @@ undefined ** FUN_8001d094(uint param_1)
 
 // WARNING: Removing unreachable block (ram,0x8001d4e0)
 
-// Static Instance collision (part of function after this one)
-// Get normal, calculate reflection/bounce(?)
+// param_1 - 0x1f800108
+// param_2 - LevHitboxInstance
 uint FUN_8001d0c4(short *param_1,byte *param_2)
 
 {
@@ -38,7 +38,7 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
   int iVar16;
   int iVar17;
 
-  // number of vertices is four and not three
+  // if this is an instance you can drive through
   if (param_2[1] == 4) 
   {  
 	*(byte **)(param_1 + 0x24) = param_2;
@@ -47,7 +47,7 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
     param_1[0x21] = param_1[0x21] + 1;
   }
   
-  // no collision flag is zero i.e. it has collision (this check the upper byte only?)
+  // if instance is on the track? (not floating in air)
   if ((param_1[0x11] & 0x40U) == 0) 
   { 
     *(undefined4 *)(param_1 + 0xe4) = 0;
@@ -259,6 +259,8 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
       }
     }
   }
+  
+  // if instance is floating in air
   else 
   {
 	// normal vector is {0, 0x1000, 0}
@@ -281,6 +283,7 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
 
 // COLL_SearchCallback_Instances
 // param1 - VisData node
+// param2 - 1f800108
 void FUN_8001d610(int param_1,int param_2)
 
 {
@@ -289,33 +292,72 @@ void FUN_8001d610(int param_1,int param_2)
   int *piVar3;
   int *piVar4;
 
+  // LevHitboxInstance
   piVar3 = *(int **)(param_1 + 0x14);
-  if (piVar3 != (int *)0x0) {
+  
+  // if there are instances in this VisData
+  if (piVar3 != (int *)0x0) 
+  {
+	// check for null flag
     iVar1 = *piVar3;
+	
     piVar4 = piVar3 + 2;
-    //iterate through all quadblocks withing visdata
-    while (iVar1 != 0) {
-      iVar1 = *(int *)(param_2 + 0xc4) + -1;
+	
+    // check every instance hitbox until 
+	// end of list (null flag) is found
+    while (iVar1 != 0) 
+	{
+      // 1F8001CC
+	  iVar1 = *(int *)(param_2 + 0xc4) + -1;
       if (-1 < iVar1) {
-        iVar2 = iVar1 * 4 + param_2; // four vertices
-        do {
-          iVar1 = iVar1 + -1; // substract from counter, one quadblock checked
+        iVar2 = iVar1 * 4 + param_2;
+        do 
+		{
+          iVar1 = iVar1 + -1;
+		  
+		  // look for member in 1F800190 array
           if (piVar3 == *(int **)(iVar2 + 0x88)) goto LAB_8001d750;
+		  
           iVar2 = iVar2 + -4;
-        } while (-1 < iVar1);
+        
+		} while (-1 < iVar1);
       }
-      // closest to this specific quadblock(s?)
-      if (((((((*(byte *)piVar3 & 0x80) == 0) || (piVar4[5] == 0)) ||
-            ((*(uint *)(*(int *)(piVar4[5] + 0x2c) + 0x28) & 0xf) != 0)) &&
-           ((*(short *)(param_2 + 0x30) <= *(short *)((int)piVar4 + 2) &&
-            (*(short *)(piVar4 + -1) <= *(short *)(param_2 + 0x36))))) &&
-          ((*(short *)(param_2 + 0x32) <= *(short *)(piVar4 + 1) &&
-           ((*(short *)((int)piVar4 + -2) <= *(short *)(param_2 + 0x38) &&
-            (*(short *)(param_2 + 0x34) <= *(short *)((int)piVar4 + 6))))))) &&
-         (*(short *)piVar4 <= *(short *)(param_2 + 0x3a))) {
+	  
+      if (
+			(
+				(
+					(
+						// if data is invalid
+						(
+							// if collision for instance is disabled
+							((*(byte *)piVar3 & 0x80) == 0) || 
+						
+							// if VisData_InstStuff.InstDef doesn't exist
+							(piVar4[5] == 0)
+						) ||
+						
+						// if data is valid
+						
+						// VisData_InstStuff.InstDef->Instance->flags, allows drawing
+						((*(uint *)(*(int *)(piVar4[5] + 0x2c) + 0x28) & 0xf) != 0)
+					) &&
+			
+				// hitbox data?
+				((*(short *)(param_2 + 0x30) <= *(short *)((int)piVar4 + 2) &&
+				(*(short *)(piVar4 + -1) <= *(short *)(param_2 + 0x36))))) &&
+				((*(short *)(param_2 + 0x32) <= *(short *)(piVar4 + 1) &&
+				((*(short *)((int)piVar4 + -2) <= *(short *)(param_2 + 0x38) &&
+				(*(short *)(param_2 + 0x34) <= *(short *)((int)piVar4 + 6))))))
+			) &&
+			
+			(*(short *)piVar4 <= *(short *)(param_2 + 0x3a))
+		 ) 
+	  {
         FUN_8001d0c4(param_2,piVar3); 
       }
 LAB_8001d750:
+
+	  // go to next in list, and check for null flag
       piVar3 = piVar3 + 8;
       iVar1 = *piVar3;
       piVar4 = piVar4 + 8;
@@ -3241,7 +3283,8 @@ LAB_800209b0:
           }
         }
       }
-      if ((iVar5 == 2) || (DAT_1f800150[1] == 4)) {
+      if ((iVar5 == 2) || (DAT_1f800150[1] == 4)) 
+	  {
         *(byte **)(&DAT_1f800190 + DAT_1f8001cc) = DAT_1f800150;
         DAT_1f8001cc = DAT_1f8001cc + 1;
       }
