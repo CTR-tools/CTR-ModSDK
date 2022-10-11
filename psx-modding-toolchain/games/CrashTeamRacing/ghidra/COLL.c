@@ -369,8 +369,9 @@ LAB_8001d750:
 
 
 // COLL_CheckDriver_AI
-// param1 is driver pos,
-// param2 is driver rot
+// param1 is driver posCurr,
+// param2 is driver posPrev
+// param3 is 1f800108
 void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
 
 {
@@ -379,49 +380,79 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
 
   iVar2 = (int)param_3[3] * (int)param_3[3];
   *(int *)(param_3 + 4) = iVar2;
+  
+  // posCurr
   *param_3 = *param_1;
   param_3[1] = param_1[1];
   sVar1 = param_1[2];
   param_3[2] = sVar1;
+  
+  // posCurr (again)
   param_3[0xf] = param_3[1];
   param_3[0xe] = *param_3;
   *(int *)(param_3 + 0xc) = iVar2;
   param_3[0x10] = sVar1;
+  
   param_3[0xb] = param_3[3];
+  
+  // posPrev
   param_3[8] = *param_2;
   param_3[9] = param_2[1];
   param_3[10] = param_2[2];
+  
+  // 1f800138 = boundingbox
+  
+  // minX = posPrevX - deltaPrevX
   sVar1 = (short)((int)param_3[8] - (int)param_3[0xb]);
-  if ((int)*param_3 - (int)param_3[3] < (int)param_3[8] - (int)param_3[0xb]) {
+  
+  // if posCurrX - deltaCurrX is less than prev frame's minX
+  if ((int)*param_3 - (int)param_3[3] < (int)param_3[8] - (int)param_3[0xb]) 
+  {
+	// use current frame minX
     sVar1 = (short)((int)*param_3 - (int)param_3[3]);
   }
   param_3[0x18] = sVar1;
+  
+  // all boundingbox variables check
+  // current frame values and prev frame,
+  // to make bounding box as big as possible
+  
+  // boundingbox minY
   sVar1 = (short)((int)param_3[9] - (int)param_3[0xb]);
   if ((int)param_3[1] - (int)param_3[3] < (int)param_3[9] - (int)param_3[0xb]) {
     sVar1 = (short)((int)param_3[1] - (int)param_3[3]);
   }
   param_3[0x19] = sVar1;
+  
+  // boundingbox minZ
   sVar1 = (short)((int)param_3[10] - (int)param_3[0xb]);
   if ((int)param_3[2] - (int)param_3[3] < (int)param_3[10] - (int)param_3[0xb]) {
     sVar1 = (short)((int)param_3[2] - (int)param_3[3]);
   }
   param_3[0x1a] = sVar1;
+  
+  // boundingbox maxX
   sVar1 = (short)((int)param_3[8] + (int)param_3[0xb]);
   if ((int)param_3[8] + (int)param_3[0xb] < (int)*param_3 + (int)param_3[3]) {
     sVar1 = (short)((int)*param_3 + (int)param_3[3]);
   }
   param_3[0x1b] = sVar1;
+  
+  // boundingbox maxY
   sVar1 = (short)((int)param_3[9] + (int)param_3[0xb]);
   if ((int)param_3[9] + (int)param_3[0xb] < (int)param_3[1] + (int)param_3[3]) {
     sVar1 = (short)((int)param_3[1] + (int)param_3[3]);
   }
   param_3[0x1c] = sVar1;
+  
+  // boundingbox maxZ
   sVar1 = (short)((int)param_3[10] + (int)param_3[0xb]);
   if ((int)param_3[10] + (int)param_3[0xb] < (int)param_3[2] + (int)param_3[3]) {
     sVar1 = (short)((int)param_3[2] + (int)param_3[3]);
   }
   *(undefined4 *)(param_3 + 0x42) = 0x1000;
   param_3[0x1d] = sVar1;
+  
   param_3[0x21] = 0;
   param_3[0x1e] = 0;
   *(undefined4 *)(param_3 + 0xd2) = 0;
@@ -465,14 +496,21 @@ void FUN_8001d944(int param_1,int param_2)
   //turn off 17th flag of Actions Flag set (means ?)
   *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) & 0xfffeffff;
 
+  // not really a "box", more of a straight line,
+  // possibly for a cylinder?
+
+  // posPrev (which isn't really previous, just a second point of reference)
   DAT_1f800118._0_2_ = (short)((uint)*(undefined4 *)(param_2 + 0x2d4) >> 8);
   iVar13 = (*(int *)(param_2 + 0x2d8) >> 8) + 0x80;
   DAT_1f800118._2_2_ = (short)iVar13;
   DAT_1f80011c._0_2_ = (short)((uint)*(undefined4 *)(param_2 + 0x2dc) >> 8);
+  
+  // posCurr
   DAT_1f800108 = (short)((uint)*(undefined4 *)(param_2 + 0x2d4) >> 8);
   iVar9 = (*(int *)(param_2 + 0x2d8) >> 8) + -0x100;
   DAT_1f80010a = (short)iVar9;
   DAT_1f80010c = (short)((uint)*(undefined4 *)(param_2 + 0x2dc) >> 8);
+  
   DAT_1f800134 = **(int **)(PTR_DAT_8008d2ac + 0x160);
   DAT_1f800130 = 0x10;
 
@@ -492,32 +530,47 @@ void FUN_8001d944(int param_1,int param_2)
 
   DAT_1f800146 = 0;
   DAT_1f800144 = 0;
+  
+  // boundingbox minX
   DAT_1f800138 = (short)DAT_1f800118;
   if (DAT_1f800108 < (short)DAT_1f800118) {
     DAT_1f800138 = DAT_1f800108;
   }
+  
   iVar13 = iVar13 * 0x10000 >> 0x10;
   iVar9 = iVar9 * 0x10000 >> 0x10;
+  
+  // boundingbox minY
   DAT_1f80013a = DAT_1f800118._2_2_;
   if (iVar9 < iVar13) {
     DAT_1f80013a = DAT_1f80010a;
   }
+  
+  // boundingbox minZ
   DAT_1f80013c = (short)DAT_1f80011c;
   if (DAT_1f80010c < (short)DAT_1f80011c) {
     DAT_1f80013c = DAT_1f80010c;
   }
+  
+  // boundingbox maxX
   DAT_1f80013e = (short)DAT_1f800118;
   if ((short)DAT_1f800118 < DAT_1f800108) {
     DAT_1f80013e = DAT_1f800108;
   }
+  
+  // boundingbox maxY
   DAT_1f800140 = DAT_1f800118._2_2_;
   if (iVar13 < iVar9) {
     DAT_1f800140 = DAT_1f80010a;
   }
+  
+  // boundingbox maxZ
   DAT_1f800142 = (short)DAT_1f80011c;
   if ((short)DAT_1f80011c < DAT_1f80010c) {
     DAT_1f800142 = DAT_1f80010c;
   }
+  
+  // position
   DAT_1f800124._0_2_ = DAT_1f800108;
   DAT_1f800124._2_2_ = DAT_1f80010a;
   DAT_1f800128 = DAT_1f80010c;
@@ -1538,8 +1591,9 @@ void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,in
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
 // param1, pointer to visData
-// param2, pointer to hitbox (min + max of x,y,z)
+// param2, pointer to boundingbox
 // param3, callback if item collides with anything
+// param4, 1f800108
 // COLL_SearchTree_WithCallback
 void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
 

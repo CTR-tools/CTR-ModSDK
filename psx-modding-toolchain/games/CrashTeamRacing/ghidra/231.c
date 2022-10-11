@@ -885,12 +885,16 @@ void FUN_800ac6b4(int param_1)
     *(undefined2 *)(iVar7 + 0x2a) = 0;
   }
   
+  // posBottom
   local_28 = *(undefined2 *)(iVar6 + 0x44);
   local_26 = *(short *)(iVar6 + 0x48) + -0x40;
   local_24 = *(undefined2 *)(iVar6 + 0x4c);
+  
+  // posTop
   local_20 = *(undefined2 *)(iVar6 + 0x44);
   local_1e = *(short *)(iVar6 + 0x48) + 0x100;
   local_1c = *(undefined2 *)(iVar6 + 0x4c);
+  
   DAT_1f80012c = 0x1040;
   DAT_1f800130 = 0;
   DAT_1f80012a = 0x41;
@@ -957,7 +961,7 @@ void FUN_800ac6b4(int param_1)
       return;
     }
 	
-	// hitbox
+	// posBottom
     local_28 = *(undefined2 *)(iVar6 + 0x44);
     local_26 = *(short *)(iVar6 + 0x48) + -0x900;
     local_24 = *(undefined2 *)(iVar6 + 0x4c);

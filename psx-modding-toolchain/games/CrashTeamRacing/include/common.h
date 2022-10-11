@@ -719,6 +719,25 @@ struct BspSearchData
 	// 0x0
 	char dataInput[0xf0];
 	
+	// 0x0
+	// posCurr
+	
+	// 0x6
+	// deltaCurr
+	
+	// 0xC
+	
+	// 0x10
+	// posPrev
+	
+	// 0x16
+	// deltaCurr
+	
+	// 0x1C
+	
+	// 0x30
+	// boundingbox
+	
 	// 0xf0
 	struct BspSearchVertex bspSearchVert[9];
 

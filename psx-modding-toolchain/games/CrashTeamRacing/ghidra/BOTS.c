@@ -884,7 +884,7 @@ void FUN_800135d8(int param_1)
   local_14 = (undefined2)((uint)*(undefined4 *)(iVar2 + 0x2e8) >> 8);
 
   // COLL_CheckDriver_AI
-  // pass driver pos and rot, check collision with (what?)
+  // pass driver posCurr and posPrev, check collision with (what?)
   FUN_8001d77c(&local_20,&local_18,&DAT_1f800108);
 
   if (DAT_1f80014a != 0) {

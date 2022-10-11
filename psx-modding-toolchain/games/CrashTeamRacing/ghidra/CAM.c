@@ -810,9 +810,10 @@ void FUN_80018818(undefined4 *param_1,undefined4 param_2,undefined4 param_3,unde
 
 
 // CAM_FindClosestQuadblock
-// param1 = scratchpad (BSP stuff)
+// param1 = 1f800108
 // param2 = cameraDC
 // param3 = driver object
+// param4 = 1f800348
 // NOP, and instances wont draw
 void FUN_800188a8(short *param_1,int param_2,undefined4 param_3,short *param_4)
 
@@ -823,10 +824,14 @@ void FUN_800188a8(short *param_1,int param_2,undefined4 param_3,short *param_4)
   int iVar4;
   short sVar5;
 
+  // make short[3] from int[3],
+  // posCurr
   sVar5 = *param_4;
   param_1[8] = sVar5;
   param_1[9] = param_4[2];
   param_1[10] = param_4[4];
+  
+  // posPrev, with Y - 0x800
   *param_1 = *param_4;
   sVar1 = param_4[2];
   param_1[1] = sVar1;
@@ -837,36 +842,50 @@ void FUN_800188a8(short *param_1,int param_2,undefined4 param_3,short *param_4)
   param_1[9] = param_1[9] + 0x100;
   param_1[0xf] = param_1[1];
   param_1[0x10] = sVar2;
+  
+  // boundingbox minX
   if (*param_1 < param_1[8]) {
     sVar5 = *param_1;
   }
   param_1[0x18] = sVar5;
+  
+  // boundingbox minY
   sVar5 = param_1[9];
   if (param_1[1] < param_1[9]) {
     sVar5 = param_1[1];
   }
   param_1[0x19] = sVar5;
+  
+  // boundingbox minZ
   sVar5 = param_1[10];
   if (param_1[2] < param_1[10]) {
     sVar5 = param_1[2];
   }
   param_1[0x1a] = sVar5;
+  
+  // boundingbox maxX
   sVar5 = param_1[8];
   if (param_1[8] < *param_1) {
     sVar5 = *param_1;
   }
   param_1[0x1b] = sVar5;
+  
+  // boundingbox maxY
   sVar5 = param_1[9];
   if (param_1[9] < param_1[1]) {
     sVar5 = param_1[1];
   }
   param_1[0x1c] = sVar5;
+  
   puVar3 = PTR_DAT_8008d2ac;
+  
+  // boundingbox maxZ
   sVar5 = param_1[10];
   if (param_1[10] < param_1[2]) {
     sVar5 = param_1[2];
   }
   param_1[0x1d] = sVar5;
+  
   *(undefined4 *)(param_1 + 0x12) = 0x800;
   *(undefined4 *)(param_1 + 0x14) = 0;
   param_1[0x1f] = 0;
