@@ -3363,30 +3363,6 @@ struct QuadBlock
 	// full struct is 0x5c bytes large
 };
 
-// the code keeps looping through the 
-// array until it finds a 4-byte 0x00000000
-// to determine end of list
-struct LevHitboxInstance
-{
-	// 0x0
-	char flags1;
-	
-	// if & 4, you can drive through
-	char flags2;
-	
-	char flags3;
-	
-	char flags4;
-	
-	// 0x4
-	char data[0x18];
-	
-	// 0x1c
-	struct InstDef* instDef;
-	
-	// 0x20 -- size
-};
-
 // BSP box that contains geometry
 struct VisData
 {
@@ -3429,7 +3405,10 @@ struct VisData
 			int unk1;
 			
 			// 0x14
-			struct LevHitboxInstance* ptrLevHitboxInstance;
+			// the code keeps looping through the 
+			// array until it finds a 4-byte 0x00000000
+			// to determine end of list
+			struct VisData* ptrVisDataArray_InstHitboxes;
 
 			// 0x18
 			int numQuads;
