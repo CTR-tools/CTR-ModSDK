@@ -51,8 +51,12 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
   if ((param_1[0x11] & 0x40U) == 0) 
   { 
     *(undefined4 *)(param_1 + 0xe4) = 0;
-    uVar5 = (int)*param_1 - (int)param_1[8];
+    
+	// subtract two points
+	uVar5 = (int)*param_1 - (int)param_1[8];
     uVar7 = (int)param_1[2] - (int)param_1[10]; 
+	
+	// box size?
     *(uint *)(param_1 + 0xe2) = uVar5;
     *(uint *)(param_1 + 0xe6) = uVar7;
 	
@@ -62,8 +66,10 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
     iVar14 = (int)sVar2 - (int)param_1[8];
     *(int *)(param_1 + 0xe8) = iVar14;
     iVar12 = 0;
+	
     iVar15 = (int)*(short *)(param_2 + 0x14) - (int)param_1[10];
     *(int *)(param_1 + 0xec) = iVar15;
+	
     uVar13 = 0;
     if ((*param_2 & 0x40) != 0) {
       iVar12 = (int)param_1[1] - (int)param_1[9];

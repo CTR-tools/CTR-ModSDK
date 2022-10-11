@@ -738,6 +738,20 @@ struct BspSearchData
 	// 0x30
 	// boundingbox
 	
+	// --------
+	
+	// vec3, subtract positions (FUN_8001d0c4)
+	// 0xe2
+	// 0xe4
+	// 0xe6
+	
+	// vec3, visData->0x10 - position (FUN_8001d0c4)
+	// 0xe8
+	// 0xea
+	// 0xec
+	
+	// 0xee - padding
+	
 	// 0xf0
 	struct BspSearchVertex bspSearchVert[9];
 
