@@ -292,7 +292,7 @@ void FUN_8001d610(int param_1,int param_2)
   int *piVar3;
   int *piVar4;
 
-  // LevHitboxInstance
+  // VisData node, used for instance hitbox
   piVar3 = *(int **)(param_1 + 0x14);
   
   // if there are instances in this VisData
@@ -301,6 +301,7 @@ void FUN_8001d610(int param_1,int param_2)
 	// check for null flag
     iVar1 = *piVar3;
 	
+	// pointer to boundingbox
     piVar4 = piVar3 + 2;
 	
     // check every instance hitbox until 
@@ -342,7 +343,7 @@ void FUN_8001d610(int param_1,int param_2)
 						((*(uint *)(*(int *)(piVar4[5] + 0x2c) + 0x28) & 0xf) != 0)
 					) &&
 			
-				// hitbox data?
+				// compare visdata boundingbox to scratchpad boundingbox
 				((*(short *)(param_2 + 0x30) <= *(short *)((int)piVar4 + 2) &&
 				(*(short *)(piVar4 + -1) <= *(short *)(param_2 + 0x36))))) &&
 				((*(short *)(param_2 + 0x32) <= *(short *)(piVar4 + 1) &&

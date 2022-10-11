@@ -3373,10 +3373,7 @@ struct VisData
 	short id;
 
 	// 0x4
-	short minPos[3];
-
-	// 0xA
-	short maxPos[3];
+	struct BoundingBox box;
 
 	// 0x10
 
