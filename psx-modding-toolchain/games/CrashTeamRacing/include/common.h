@@ -3432,6 +3432,17 @@ struct VisData
 			// 0x1C
 			struct QuadBlock* ptrQuadBlockArray;
 		} leaf;
+		
+		#if 0
+		// 0x10
+		{
+			// 0x10
+			// see FUN_8001d0c4
+			
+			// 0x1C
+			// struct Instance* inst;
+		}
+		#endif
 
 	} data;
 

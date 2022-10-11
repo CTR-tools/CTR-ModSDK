@@ -16,7 +16,7 @@ undefined ** FUN_8001d094(uint param_1)
 // WARNING: Removing unreachable block (ram,0x8001d4e0)
 
 // param_1 - 0x1f800108
-// param_2 - LevHitboxInstance
+// param_2 - struct VisData* instanceHitbox
 uint FUN_8001d0c4(short *param_1,byte *param_2)
 
 {
@@ -55,6 +55,8 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
     uVar7 = (int)param_1[2] - (int)param_1[10]; 
     *(uint *)(param_1 + 0xe2) = uVar5;
     *(uint *)(param_1 + 0xe6) = uVar7;
+	
+	// visdata->0x10
     sVar2 = *(short *)(param_2 + 0x10);
     *(undefined4 *)(param_1 + 0xea) = 0;
     iVar14 = (int)sVar2 - (int)param_1[8];
@@ -1425,9 +1427,10 @@ code_r0x8001e96c:
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// Similar to other search, this time rigged
-// for graphics, but NOP-ing will also break collision for AI and shot Items, why?
 // COLL_SearchTree_NoCallback
+// param1 - posTop
+// param2 - posBottom
+// param3 - 1f800108
 void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,int param_4)
 
 {
@@ -3306,7 +3309,9 @@ void FUN_80020410(undefined4 param_1,int param_2)
       *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) & 0xfffd;
       iVar5 = 1;
       if ((*DAT_1f800150 & 0x80) == 0) {
-        if (((*DAT_1f800150 & 0x10) != 0) && (iVar6 = *(int *)(DAT_1f800150 + 0x1c), iVar6 != 0)) {
+        if (((*DAT_1f800150 & 0x10) != 0) && (iVar6 = *(int *)(DAT_1f800150 + 0x1c), iVar6 != 0)) 
+		{
+		  // instance->model->modelID
           sVar3 = *(short *)(*(int *)(iVar6 + 0x18) + 0x10);
           goto LAB_800209b0;
         }
