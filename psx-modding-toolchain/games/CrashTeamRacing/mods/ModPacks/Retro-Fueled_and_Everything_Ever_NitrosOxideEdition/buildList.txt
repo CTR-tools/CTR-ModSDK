@@ -1,0 +1,103 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J //
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// OxideFix //
+
+// Import SaveRAM
+// common, exe, LOAD_DriverMPK, 0x0, ../../../decompile/General/LOAD_DriverMPK.c
+// ^ Commented out as OverrideMPK's modification of the LOAD_DriverMPK function will be used instead
+common, exe, AllocateAllPools, 0x0, ../../Patches/SaveRAM/src/Mem_AllocateAllPools.c
+common, exe, Camera110_InitStructs, 0x0, ../../../decompile/General/Camera110_InitStructs.c ../../Patches/SaveRAM/src/Mem_DriverPool.c, Mem_DriverPool.bin
+common, exe, ClearAllMemPools, 0x0, ../../Patches/SaveRAM/src/Mem_hookClearAllPools.s
+common, exe, DrawRaceClock, 0x0, ../../../decompile/General/DrawRaceClock.c ../../Patches/SaveRAM/src/Mem_ThreadPool.c, Mem_ThreadPool.bin
+
+// Modify the Main Menu to show Oxide
+common, exe, LOAD_Callback_Overlay_231, -0x8, ../../Modules/OxideFix/src/MM_hookCallback230.s
+common, 230, MM_Characters_GetModelByName, 0x0, ../../Modules/OxideFix/src/MM_NewModelSearch.c
+common, 230, MM_EndOfFile, 0x0, ../../Modules/OxideFix/src/MM_End230_IconArrays.c ../../Modules/OxideFix/src/MM_End230_OxideModel.c ../../Modules/OxideFix/src/MM_End230_Callback230.c ../../Modules/EngineSelectEdit_OnlyUSA/src/ES_main.c, MM_End230.bin
+
+// Fix Podium
+common, exe, LOAD_CDRequestCallback, -0x8, ../../Modules/OxideFix/src/PodiumFix_hookAppendQueue.s
+926,  exe, 0x80011380, 0x0, ../../Modules/OxideFix/src/PodiumFix_AppendQueue.c
+1006, exe, 0x80011468, 0x0, ../../Modules/OxideFix/src/PodiumFix_AppendQueue.c
+1020, exe, 0x80011380, 0x0, ../../Modules/OxideFix/src/PodiumFix_AppendQueue.c
+1111, exe, 0x80011468, 0x0, ../../Modules/OxideFix/src/PodiumFix_AppendQueue.c
+
+// CharacterRandomizer //
+
+// Include OverrideMPK
+926, exe, 0x80033f3c, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s
+1006, exe, 0x80035520, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s
+1020, exe, 0x800342f8, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s
+1111, exe, 0x80035b5C, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s
+common, exe, LOAD_AppendQueue, 0x8, ../../Modules/OverrideMPK/src/numDriversPlusOne.s
+common, exe, Driver_GetModelByName, 0x0, ../../Modules/OverrideMPK/src/OvMPK_StringSearch.c
+common, exe, LOAD_DriverMPK, 0x0, ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.c
+
+common, exe, LOAD_Robots1P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_hook1P.s
+common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_hook2P.s
+
+// ReservesMeter //
+
+// Compile the ASM injection that will load our code
+926, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+1006, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+1020, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+1111, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+
+// USAUnlimitedPenta //
+
+// Inject compiled code for Penta's stats into the executable
+926, exe, 0x80088A0C, 0x0, ../../Patches/USAUnlimitedPenta/assets/stats.bin
+
+// Compile modified Driver_SetConsts
+926, exe, Driver_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
+
+// FixAdventureModeCharacterSelectArrows //
+// the same bug is also present here of course
+
+// Replace the DecalHUD_Arrow2D function
+common, exe, DecalHUD_Arrow2D, 0x0, ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.c
+
+// AdvEngineSelect //
+
+926, 233, 0x800b7ae4, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+1020, 233, 0x800b831c, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+1111, 233, 0x800bb2c4, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+926, 233, 0x800b8298, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+1020, 233, 0x800b8aa8, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+1111, 233, 0x800bba50, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+common, 233, CS_Garage_GetMenuBox, -0x8, ../../Modules/EngineSelect/src/ES_hook233.s
+common, 233, CS_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_233_OxideFix.c
+
+// EngineSelect //
+
+926, 230, 0x800aefe4, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+926, 230, 0x800af6a8, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+1020, 230, 0x800af4c4, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+1020, 230, 0x800afb88, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+1111, 230, 0x800b2710, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+1111, 230, 0x800b2da4, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelect/src/ES_hook230.s
+common, 230, MM_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_230.c
+
+// Retro-Fueled //
+
+// Hooks
+// 926, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, ../../Modules/Retro-Fueled/src/hookNewGame.s
+// 1020, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, ../../Modules/Retro-Fueled/src/hookNewGame.s
+// Disable texture replacements as OxideFix will need the kernel space instead
+common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
+// 926, exe, LOAD_VramFile, -0x8, ../../Modules/Retro-Fueled/src/hookVRAM.s
+// 1020, exe, LOAD_VramFile, -0x8, ../../Modules/Retro-Fueled/src/hookVRAM.s
+// Disable texture replacements as OxideFix will need the kernel space instead
+common, exe, __main, 0x68, ../../Modules/Retro-Fueled/src/hookEntry.s
+
+// Don't compile texture replacements for reasons stated above
+
+// Modify Turbo_Increment function to allow for USF stacking
+common, exe, Turbo_Increment, 0x0, ../../Modules/Retro-Fueled/src/Turbo_Increment_AllowUSFStacking.c
+
+common, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c
