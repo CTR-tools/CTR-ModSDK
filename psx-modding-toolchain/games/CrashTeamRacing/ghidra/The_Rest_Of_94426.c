@@ -22487,13 +22487,19 @@ LAB_80044568:
   iVar22 = *(int *)(puVar25 + 0x48);
   *(undefined **)(puVar25 + 0x50) = puVar25 + 0x48;
   *(undefined **)(puVar25 + 0x5c) = puVar25 + 0x10;
+  
+  // screen dimensions
   iVar26 = 0xd80200;
+  
   *(uint *)(puVar25 + 0x28) = DAT_80085ae0;
   *(int *)(puVar25 + 0x2c) = DAT_80085ae4;
   *(uint *)(puVar25 + 0x30) = DAT_80085ae8;
   *(int *)(puVar25 + 0x34) = DAT_80085aec;
   *(uint *)(puVar25 + 0x38) = DAT_80085af0;
-  do {
+  
+  // vertical strips
+  do 
+  {
     puVar19 = (uint *)(uVar23 * 0x78 + 0x1f7ffffc);
     uVar23 = uVar23 ^ 1;
     puVar21 = (uint *)(uVar23 * 0x78 + 0x1f800000);
@@ -22507,6 +22513,8 @@ LAB_80044568:
 	{
       uVar12 = (int)(uVar16 & 0x1ffff) >> 5;
       *(uint *)(puVar25 + 0x38) = uVar16 & 0x1ffff;
+	  
+	  // increment 0x200
       uVar16 = *(int *)(puVar25 + 0x28) + 0x200;
       *(uint *)(puVar25 + 0x28) = uVar16;
 	  
@@ -22600,6 +22608,8 @@ LAB_80044568:
 	
     iVar13 = 0;
     iVar7 = 1;
+	
+	// horizontal strips
     do 
 	{
       if (iVar7 < 0xb) 
@@ -22646,8 +22656,13 @@ LAB_80044568:
         puVar19 = puVar19 + 1;
       }
       uVar16 = (uint)(iVar13 == 0);
+	  
+	  // color of black tile
       *(int *)(puVar25 + 0x58) = iVar22 * 0x69 + (0x2000 - iVar22) * 0xa0 >> 0xd;
-      do {
+      
+	  // loop 3 times
+	  do 
+	  {
         if (((*puVar21 & puVar21[1] & uVar14 & uVar14 & *puVar19 & uVar14 & puVar19[1]) == 0) &&
            ((iVar26 - *puVar21 & iVar26 - puVar21[1] & uVar14 & uVar14 & iVar26 - *puVar19 & uVar14
             & iVar26 - puVar19[1]) == 0)) 
@@ -22669,14 +22684,29 @@ LAB_80044568:
           if (puVar18 == (uint *)0x0) {
             return;
           }
-          if (((iVar5 >> 2) + (iVar13 >> 2) & 1U) == 0) {
+          
+		  // white tile
+		  if (((iVar5 >> 2) + (iVar13 >> 2) & 1U) == 0) 
+		  {
+			// RGB 1 and 3
             puVar25[0x40] = (char)(iVar22 * 0x82 + (0x2000 - iVar22) * 0xff >> 0xd);
+			
+			// RGB 0 and 2
             uVar4 = (undefined)(*(int *)(puVar25 + 0x48) * -0x7d + 0x1fe000 >> 0xd);
           }
-          else {
+		  
+		  // black tile
+          else 
+		  {
+			// RGB 1 and 3
             uVar4 = (undefined)(*(int *)(puVar25 + 0x48) * -0x37 + 0x140000 >> 0xd);
+			
+			// RGB 0 and 2
+			// color black = iVar22 * 0x69 + (0x2000 - iVar22) * 0xa0 >> 0xd;
             puVar25[0x40] = puVar25[0x58];
           }
+		  
+		  // RGB 0 and 2
           puVar25[0x41] = uVar4;
 		  
 		  // x0, y0
@@ -22720,12 +22750,20 @@ LAB_80044568:
         uVar16 = uVar16 + 1;
         iVar13 = iVar13 + 1;
       } while ((int)uVar16 < 3);
+	  
+	  // count horizontal strips,
+	  // stop at 10
       bVar1 = iVar7 < 10;
       iVar7 = iVar7 + 1;
+	  
     } while (bVar1);
-    iVar22 = *(int *)(puVar25 + 0x48);
+    
+	iVar22 = *(int *)(puVar25 + 0x48);
+	
+	// count vertical strips
     iVar5 = iVar5 + 1;
     
+	// stop vertical strips at 0x23 (35)
 	if (0x22 < iVar5) 
 	{	
 		// 8008d458
