@@ -5132,7 +5132,7 @@ switchD_80033660_caseD_a:
   return param_2;
 }
 
-
+// LOAD_TalkingMask
 // param1 is mempack index
 // param2 is aku or uka
 void FUN_800347d0(int param_1,int param_2)

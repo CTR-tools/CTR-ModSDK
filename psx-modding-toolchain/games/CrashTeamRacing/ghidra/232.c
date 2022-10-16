@@ -6543,7 +6543,7 @@ void FUN_800b3dd8(short param_1,uint param_2)
 	// Weapon_Mask_boolGoodGuy
     uVar4 = FUN_80064be4(iVar5);
     
-	// load aku or uka 3D mask for hints
+	// LOAD_TalkingMask
 	FUN_800347d0(uVar2,(uint)((uVar4 & 0xffff) == 0));
 	
 	// Take 90 frames to spawn (3 seconds)
