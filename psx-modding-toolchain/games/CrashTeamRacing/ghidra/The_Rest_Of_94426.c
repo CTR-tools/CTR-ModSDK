@@ -22433,9 +22433,11 @@ LAB_80044568:
   // sVar3 = -0xBBE - CheckeredFlag_Position
   sVar2 = -0xbbe - sVar2;
   
+  // flag position
   *(short *)(puVar25 + 0x10) = sVar2;
   *(short *)(puVar25 + 0x18) = sVar2;
   *(short *)(puVar25 + 0x20) = sVar2;
+  
   iVar26 = (iVar26 >> 0xd) + 0x280;
   
   // for iVar22 = 0; iVar22 < 10; iVar22++
@@ -22576,10 +22578,13 @@ LAB_80044568:
     *(undefined2 *)(puVar25 + 0x12) = 0xfc72;
     *(undefined2 *)(puVar25 + 0x1a) = 0xfcd0;
     *(undefined2 *)(puVar25 + 0x22) = 0xfd2e;
+	
+	// move to next position to draw
     *(short *)(puVar25 + 0x10) = *(short *)(puVar25 + 0x10) + 100;
     *(short *)(puVar25 + 0x18) = *(short *)(puVar25 + 0x18) + 100;
     *(short *)(puVar25 + 0x20) = *(short *)(puVar25 + 0x20) + 100;
-    iVar6 = ((iVar6 + 0xfff) * *(int *)(puVar25 + 0x2c) >> 0xd) + 0x280;
+    
+	iVar6 = ((iVar6 + 0xfff) * *(int *)(puVar25 + 0x2c) >> 0xd) + 0x280;
 	
 	// for iVar13 = 0; iVar13 < 3; iVar3++
     do 
