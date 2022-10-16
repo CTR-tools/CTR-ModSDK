@@ -22495,9 +22495,9 @@ LAB_80044568:
   
   *(uint *)(puVar25 + 0x28) = DAT_80085ae0;
   *(int *)(puVar25 + 0x2c) = DAT_80085ae4;
-  *(uint *)(puVar25 + 0x30) = DAT_80085ae8;
-  *(int *)(puVar25 + 0x34) = DAT_80085aec;
-  *(uint *)(puVar25 + 0x38) = DAT_80085af0;
+  *(uint *)(puVar25 + 0x30) = DAT_80085ae8; // angle of wave effect
+  *(int *)(puVar25 + 0x34) = DAT_80085aec; // set zero makes all light dark
+  *(uint *)(puVar25 + 0x38) = DAT_80085af0; // set zero makes all light bright
   
   // vertical strips
   do 
