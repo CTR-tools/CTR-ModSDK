@@ -148,23 +148,29 @@ void FUN_800abbb4(int param_1,int param_2)
 		  // array index is the team that the player was on
           local_18[*(int *)(*(int *)(puVar5 + 0x24ec) + 0x4e8)] = 1;
         }
-        else {
+		
+		// if race is over for this player
+        else 
+		{
+		  // keep count
           iVar7 = iVar7 + 1;
         }
         iVar3 = iVar3 + 1;
         puVar5 = puVar5 + 4;
       } while (iVar3 < (int)(uint)(byte)puVar1[0x1ca8]);
     }
+	
     uVar2 = *(uint *)(param_2 + 0x4e8);
     if (((*(uint *)(PTR_DAT_8008d2ac + 0x1dd8) & 1 << (uVar2 & 0x1f)) != 0) &&
-       (local_18[uVar2] == 0)) {
-      if ((int)((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7) < 3) {
-        *(int *)(PTR_DAT_8008d2ac + (uVar2 * 3 + ((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7)) * 4
-                + 0x1e80) =
-             *(int *)(PTR_DAT_8008d2ac +
-                      (uVar2 * 3 + ((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7)) * 4 + 0x1e80) + 1
-        ;
+       (local_18[uVar2] == 0)) 
+	{
+      if ((int)((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7) < 3) 
+	  {
+		// increment by one
+        *(int *)(PTR_DAT_8008d2ac + (uVar2 * 3 + ((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7)) * 4 + 0x1e80) =
+        *(int *)(PTR_DAT_8008d2ac + (uVar2 * 3 + ((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7)) * 4 + 0x1e80) + 1;
       }
+	  
       *(uint *)(PTR_DAT_8008d2ac + *(int *)(param_2 + 0x4e8) * 4 + 0x1da8) =
            (uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7;
     }
