@@ -1,0 +1,66 @@
+// Retro-Fueled //
+
+// Hook
+common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
+
+// Player_Driving_Input + offset
+// USA: 0xA30, PAL: 0xA30, JPN: 0xA4C
+// Erasing the original reserve cancelation if, so that we can run our own code
+// 926, exe, 0x8006224C, 0x0, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+// 926, exe, 0x8006224C, 0x8, ../../../nop.s
+1020, exe, 0x80062364, 0x0, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1020, exe, 0x80062364, 0x8, ../../../nop.s
+1111, exe, 0x80065110, 0x0, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1111, exe, 0x80065110, 0x8, ../../../nop.s
+
+// Binary edits
+// Turbo pad to STP
+common, exe, OnCollide, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
+// Standardize turbo pad reserves
+common, exe, OnCollide, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
+
+// Modify Turbo_Increment function to allow for USF stacking
+926, exe, 0x8005AF76, 0x0, ../../../8bitnop.bin
+
+// USAUnlimitedPenta //
+
+// Inject compiled code for Penta's stats into the executable
+926, exe, 0x80088A0C, 0x0, ../../Patches/USAUnlimitedPenta/assets/stats.bin
+
+// Compile modified Driver_SetConsts
+926, exe, Driver_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
+
+// FixAdventureModeCharacterSelectArrows //
+// the same bug is also present here of course
+
+// Replace the DecalHUD_Arrow2D function
+common, exe, DecalHUD_Arrow2D, 0x0, ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.c
+
+// AdvEngineSelect //
+
+926, 233, 0x800b7ae4, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+1020, 233, 0x800b831c, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+1111, 233, 0x800bb2c4, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+926, 233, 0x800b8298, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+1020, 233, 0x800b8aa8, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+1111, 233, 0x800bba50, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+common, 233, CS_Garage_GetMenuBox, -0x8, ../../Modules/EngineSelect/src/ES_hook233.s
+common, 233, CS_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_233.c
+
+// EngineSelect //
+
+926, 230, 0x800aefe4, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+926, 230, 0x800af6a8, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+1020, 230, 0x800af4c4, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+1020, 230, 0x800afb88, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+1111, 230, 0x800b2710, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+1111, 230, 0x800b2da4, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelect/src/ES_hook230.s
+common, 230, MM_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_230.c
+
+// 60fps //
+
+common, exe, __main, 0x68, ../../Modules/60fps_OnlyUSA/src/hookEntry.s
+
+// Compile code to empty spaces in RDATA //
+common, exe, rdata_free, 0x0, ../../Modules/60fps_OnlyUSA/src/main.c 
