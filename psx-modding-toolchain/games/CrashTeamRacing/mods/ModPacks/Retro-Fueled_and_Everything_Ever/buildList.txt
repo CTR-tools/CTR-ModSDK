@@ -58,6 +58,14 @@ common, exe, OnCollide, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bi
 // Standardize turbo pad reserves
 common, exe, OnCollide, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
 
+// Compile texture replacements to kernel for US and PAL versions
+926, iso, 0x8000A000, 0x0, ../../Modules/Retro-Fueled/src/logo.c, logo.bin
+926, iso, 0x8000C400, 0x0, ../../Modules/Retro-Fueled/src/banner.c, banner.bin
+926, iso, 0x8000E400, 0x0, ../../Modules/Retro-Fueled/src/banner_p.c, banner_p.bin
+1020, iso, 0x8000A000, 0x0, ../../Modules/Retro-Fueled/src/logo.c, logo.bin
+1020, iso, 0x8000C400, 0x0, ../../Modules/Retro-Fueled/src/banner.c, banner.bin
+1020, iso, 0x8000E400, 0x0, ../../Modules/Retro-Fueled/src/banner_p.c, banner_p.bin
+
 // Modify Turbo_Increment function to allow for USF stacking, and also fix red fire
 common, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.c
 
@@ -98,4 +106,4 @@ common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelect/
 common, 230, MM_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_230.c
 
 // Compile code to empty spaces in RDATA //
-common, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c
+common, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c ../../Modules/Retro-Fueled/src/texturereplacements.c ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c
