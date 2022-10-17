@@ -92,7 +92,6 @@ common, 230, MM_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_230.c
 common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
 // 926, exe, LOAD_VramFile, -0x8, ../../Modules/Retro-Fueled/src/hookVRAM.s
 // 1020, exe, LOAD_VramFile, -0x8, ../../Modules/Retro-Fueled/src/hookVRAM.s
-// Disable texture replacements as OxideFix will need the kernel space instead
 
 // Player_Driving_Input + offset
 // USA: 0xA30, PAL: 0xA30, JPN: 0xA4C
