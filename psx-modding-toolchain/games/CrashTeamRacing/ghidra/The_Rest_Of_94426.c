@@ -39318,7 +39318,7 @@ LAB_80058158:
           *(ushort *)(param_1 + 0x2ee) = uVar13 & 0xfff;
         }
 LAB_80058438:
-        *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xfffffffc;
+        *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *) & 0xfffffffc;
       }
 
 	  // if not outside boss door
@@ -50472,7 +50472,7 @@ LAB_800647d8:
       FUN_800abbb4(param_3,param_1);
 
 	  // If you're in End-Of-Race menu
-      if ((*(uint *)PTR_DAT_8008d2ac & 0x200000) != 0) 
+      if ((*(uint *)PTR_DAT_8008d2ac & 0) != 0) 
 	  {
 		// save something in the player that got the kill,
 		// and the player that got killed
@@ -50715,7 +50715,7 @@ LAB_80064d4c:
          1 < (uint)*(byte *)(param_1 + 0x376) - 4))
 	  {
 		// Start playing uka uka mask song
-        *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xfeffffff | 0x2000000;
+        *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xfeffffff | 
       }
 
 	  // get thread
@@ -56663,7 +56663,7 @@ uint * FUN_8006ae90(void)
   uVar10 = 0x600000;
   uVar4 = 0x24000000;
   if (((uVar5 & 0x600000) == 0) && (-1 < (int)uVar11)) {
-    uVar10 = 0x200000;
+    uVar10 = 
     uVar4 = 0x26000000;
   }
 
@@ -58960,7 +58960,7 @@ u_long * FUN_8006d670(void)
     gte_stSXY1();
     gte_stSXY2();
     in_v0[9] = *puVar1;
-    in_v0[0xc] = uVar3 & 0xff9fffff | 0x200000;
+    in_v0[0xc] = uVar3 & 0xff9fffff | 
     in_v0[0xf] = uVar7;
     uVar3 = gte_stRGB0();
     in_v0[7] = uVar3 | 0x36000000;

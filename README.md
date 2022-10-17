@@ -12,6 +12,10 @@
 
 This repository also houses an effort to fully decompile and reverse-engineer [CTR in C.](https://github.com/CTR-tools/CTR-ModSDK#CTR-in-C)
 
+This SDK uses:
+- [psx-modding-tools](https://github.com/mateusfavarin/psx-modding-toolchain) by [mateusfavarin](https://github.com/mateusfavarin) for injecting and testing code
+- [CTR-Tools](https://github.com/CTR-tools/CTR-Tools) by [DCxDemo](https://github.com/DCxDemo) for parsing and extracting the game files
+
 # 📃 Features
 
 - Extract and build ISO in few steps
