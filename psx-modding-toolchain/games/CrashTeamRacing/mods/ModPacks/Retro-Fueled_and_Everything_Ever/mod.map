@@ -1,0 +1,2485 @@
+
+Discarded input sections
+
+ .reginfo       0x0000000000000000       0x18 ../../../decompile/General/LOAD_DriverMPK.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../../decompile/General/LOAD_DriverMPK.o
+ .pdr           0x0000000000000000       0x20 ../../../decompile/General/LOAD_DriverMPK.o
+ .reginfo       0x0000000000000000       0x18 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .pdr           0x0000000000000000       0x20 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .reginfo       0x0000000000000000       0x18 ../../../decompile/General/Camera110_InitStructs.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../../decompile/General/Camera110_InitStructs.o
+ .pdr           0x0000000000000000       0x20 ../../../decompile/General/Camera110_InitStructs.o
+ .reginfo       0x0000000000000000       0x18 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .pdr           0x0000000000000000       0x40 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .reginfo       0x0000000000000000       0x18 ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o
+ .reginfo       0x0000000000000000       0x18 ../../../decompile/General/DrawRaceClock.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../../decompile/General/DrawRaceClock.o
+ .pdr           0x0000000000000000       0x20 ../../../decompile/General/DrawRaceClock.o
+ .reginfo       0x0000000000000000       0x18 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .pdr           0x0000000000000000       0x20 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/OverrideMPK/src/numDrivers.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/OverrideMPK/src/numDrivers.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/OverrideMPK/src/numDriversPlusOne.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/OverrideMPK/src/numDriversPlusOne.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .pdr           0x0000000000000000       0x40 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .pdr           0x0000000000000000       0x20 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/ReservesMeter/src/reserveshook.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/ReservesMeter/src/reserveshook.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/Retro-Fueled/src/hookUpdate.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/Retro-Fueled/src/hookUpdate.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/Retro-Fueled/src/hookEntry.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/Retro-Fueled/src/hookEntry.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/Retro-Fueled/src/hookReserveCancelation.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/Retro-Fueled/src/hookReserveCancelation.o
+ .reginfo       0x0000000000000000       0x18 ../../../nop.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../../nop.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .pdr           0x0000000000000000       0x20 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .reginfo       0x0000000000000000       0x18 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .pdr           0x0000000000000000       0x20 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_hookClassName.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_hookClassName.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_nop233.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_nop233.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_hook233.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_hook233.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_233.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_233.o
+ .pdr           0x0000000000000000       0x80 ../../Modules/EngineSelect/src/ES_233.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_nop230.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_nop230.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_hookCharacterName.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_hookCharacterName.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_hook230.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_hook230.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_230.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/EngineSelect/src/ES_230.o
+ .pdr           0x0000000000000000       0x60 ../../Modules/EngineSelect/src/ES_230.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/Retro-Fueled/src/main.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/Retro-Fueled/src/main.o
+ .pdr           0x0000000000000000       0x80 ../../Modules/Retro-Fueled/src/main.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .pdr           0x0000000000000000       0x40 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .pdr           0x0000000000000000       0x40 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .reginfo       0x0000000000000000       0x18 ../../Modules/ReservesMeter/src/main.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Modules/ReservesMeter/src/main.o
+ .pdr           0x0000000000000000       0x40 ../../Modules/ReservesMeter/src/main.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD ../../Patches/JpnModchips/src/jpnModchips.o
+LOAD ../../../decompile/General/LOAD_DriverMPK.o
+LOAD ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+LOAD ../../../decompile/General/Camera110_InitStructs.o
+LOAD ../../Patches/SaveRAM/src/Mem_DriverPool.o
+LOAD ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o
+LOAD ../../../decompile/General/DrawRaceClock.o
+LOAD ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+LOAD ../../Modules/OverrideMPK/src/numDrivers.o
+LOAD ../../Modules/OverrideMPK/src/numDriversPlusOne.o
+LOAD ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+LOAD ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+LOAD ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o
+LOAD ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o
+LOAD ../../Modules/ReservesMeter/src/reserveshook.o
+LOAD ../../Modules/Retro-Fueled/src/hookUpdate.o
+LOAD ../../Modules/Retro-Fueled/src/hookEntry.o
+LOAD ../../Modules/Retro-Fueled/src/hookReserveCancelation.o
+LOAD ../../../nop.o
+LOAD ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+LOAD ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+LOAD ../../Modules/EngineSelect/src/ES_hookClassName.o
+LOAD ../../Modules/EngineSelect/src/ES_nop233.o
+LOAD ../../Modules/EngineSelect/src/ES_hook233.o
+LOAD ../../Modules/EngineSelect/src/ES_233.o
+LOAD ../../Modules/EngineSelect/src/ES_nop230.o
+LOAD ../../Modules/EngineSelect/src/ES_hookCharacterName.o
+LOAD ../../Modules/EngineSelect/src/ES_hook230.o
+LOAD ../../Modules/EngineSelect/src/ES_230.o
+LOAD ../../Modules/Retro-Fueled/src/main.o
+LOAD ../../Modules/Retro-Fueled/src/texturereplacements.o
+LOAD ../../Modules/CharacterRandomizer/src/ChRand_main.o
+LOAD ../../Modules/ReservesMeter/src/main.o
+                0x00000000800101bc                OVR_START_ADDR = 0x800101bc
+                0x0000000080010be8                __heap_base = __ovr_end
+                0x00000000800101bc                __ovr_start = 0x800101bc
+
+.MIPS.abiflags  0x0000000000000000       0x18
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ../../Patches/JpnModchips/src/jpnModchips.o
+
+.PatchesJpnModchipssrcjpnModchipss
+                0x00000000800101bc     0x23c0
+                0x0000000080012570                . = (. + 0x23b4)
+ *fill*         0x00000000800101bc     0x23b4 
+ ../../Patches/JpnModchips/src/jpnModchips.o(.text)
+ .text          0x0000000080012570        0xc ../../Patches/JpnModchips/src/jpnModchips.o
+ ../../Patches/JpnModchips/src/jpnModchips.o(.text.startup._GLOBAL__*)
+ ../../Patches/JpnModchips/src/jpnModchips.o(.text.*)
+ ../../Patches/JpnModchips/src/jpnModchips.o(.rodata*)
+ ../../Patches/JpnModchips/src/jpnModchips.o(.sdata*)
+ ../../Patches/JpnModchips/src/jpnModchips.o(.data*)
+ .data          0x000000008001257c        0x0 ../../Patches/JpnModchips/src/jpnModchips.o
+ ../../Patches/JpnModchips/src/jpnModchips.o(.sbss*)
+ ../../Patches/JpnModchips/src/jpnModchips.o(.bss*)
+ .bss           0x000000008001257c        0x0 ../../Patches/JpnModchips/src/jpnModchips.o
+ ../../Patches/JpnModchips/src/jpnModchips.o(.ctors)
+                0x000000008001257c                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_PatchesJpnModchipssrcjpnModchipss = LOADADDR (.PatchesJpnModchipssrcjpnModchipss))
+                [!provide]                        PROVIDE (__load_stop_PatchesJpnModchipssrcjpnModchipss = (LOADADDR (.PatchesJpnModchipssrcjpnModchipss) + SIZEOF (.PatchesJpnModchipssrcjpnModchipss)))
+
+.decompileGeneralLOAD_DriverMPKc
+                0x00000000800101bc    0x24504 load address 0x000000008001257c
+                0x000000008003442c                . = (. + 0x24270)
+ *fill*         0x00000000800101bc    0x24270 
+ ../../../decompile/General/LOAD_DriverMPK.o(.text)
+ .text          0x000000008003442c        0x0 ../../../decompile/General/LOAD_DriverMPK.o
+ ../../../decompile/General/LOAD_DriverMPK.o(.text.startup._GLOBAL__*)
+ ../../../decompile/General/LOAD_DriverMPK.o(.text.*)
+ .text.DECOMP_LOAD_DriverMPK
+                0x000000008003442c      0x294 ../../../decompile/General/LOAD_DriverMPK.o
+                0x000000008003442c                DECOMP_LOAD_DriverMPK
+ ../../../decompile/General/LOAD_DriverMPK.o(.rodata*)
+ ../../../decompile/General/LOAD_DriverMPK.o(.sdata*)
+ ../../../decompile/General/LOAD_DriverMPK.o(.data*)
+ .data          0x00000000800346c0        0x0 ../../../decompile/General/LOAD_DriverMPK.o
+ ../../../decompile/General/LOAD_DriverMPK.o(.sbss*)
+ ../../../decompile/General/LOAD_DriverMPK.o(.bss*)
+ .bss           0x00000000800346c0        0x0 ../../../decompile/General/LOAD_DriverMPK.o
+ ../../../decompile/General/LOAD_DriverMPK.o(.ctors)
+                0x00000000800346c0                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_decompileGeneralLOAD_DriverMPKc = LOADADDR (.decompileGeneralLOAD_DriverMPKc))
+                [!provide]                        PROVIDE (__load_stop_decompileGeneralLOAD_DriverMPKc = (LOADADDR (.decompileGeneralLOAD_DriverMPKc) + SIZEOF (.decompileGeneralLOAD_DriverMPKc)))
+
+.PatchesSaveRAMsrcMem_AllocateAllPoolsc
+                0x00000000800101bc    0x2c9d8 load address 0x0000000080036a80
+                0x000000008003c9c4                . = (. + 0x2c808)
+ *fill*         0x00000000800101bc    0x2c808 
+ ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o(.text)
+ .text          0x000000008003c9c4        0x0 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o(.text.startup._GLOBAL__*)
+ ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o(.text.*)
+ .text.AllocateAllPools_New
+                0x000000008003c9c4      0x1d0 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+                0x000000008003c9c4                AllocateAllPools_New
+ ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o(.rodata*)
+ ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o(.sdata*)
+ ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o(.data*)
+ .data          0x000000008003cb94        0x0 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o(.sbss*)
+ ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o(.bss*)
+ .bss           0x000000008003cb94        0x0 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o(.ctors)
+                0x000000008003cb94                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_PatchesSaveRAMsrcMem_AllocateAllPoolsc = LOADADDR (.PatchesSaveRAMsrcMem_AllocateAllPoolsc))
+                [!provide]                        PROVIDE (__load_stop_PatchesSaveRAMsrcMem_AllocateAllPoolsc = (LOADADDR (.PatchesSaveRAMsrcMem_AllocateAllPoolsc) + SIZEOF (.PatchesSaveRAMsrcMem_AllocateAllPoolsc)))
+
+.Mem_DriverPool
+                0x00000000800101bc    0x34088 load address 0x0000000080063458
+                0x00000000800440d4                . = (. + 0x33f18)
+ *fill*         0x00000000800101bc    0x33f18 
+ ../../../decompile/General/Camera110_InitStructs.o(.text)
+ .text          0x00000000800440d4        0x0 ../../../decompile/General/Camera110_InitStructs.o
+ ../../../decompile/General/Camera110_InitStructs.o(.text.startup._GLOBAL__*)
+ ../../../decompile/General/Camera110_InitStructs.o(.text.*)
+ .text.DECOMP_Camera110_InitStructs
+                0x00000000800440d4       0xa8 ../../../decompile/General/Camera110_InitStructs.o
+                0x00000000800440d4                DECOMP_Camera110_InitStructs
+ ../../../decompile/General/Camera110_InitStructs.o(.rodata*)
+ ../../../decompile/General/Camera110_InitStructs.o(.sdata*)
+ ../../../decompile/General/Camera110_InitStructs.o(.data*)
+ .data          0x000000008004417c        0x0 ../../../decompile/General/Camera110_InitStructs.o
+ ../../../decompile/General/Camera110_InitStructs.o(.sbss*)
+ ../../../decompile/General/Camera110_InitStructs.o(.bss*)
+ .bss           0x000000008004417c        0x0 ../../../decompile/General/Camera110_InitStructs.o
+ ../../../decompile/General/Camera110_InitStructs.o(.ctors)
+ ../../Patches/SaveRAM/src/Mem_DriverPool.o(.text)
+ .text          0x000000008004417c        0x0 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ ../../Patches/SaveRAM/src/Mem_DriverPool.o(.text.startup._GLOBAL__*)
+ ../../Patches/SaveRAM/src/Mem_DriverPool.o(.text.*)
+ .text.ClearDriverPool
+                0x000000008004417c       0x6c ../../Patches/SaveRAM/src/Mem_DriverPool.o
+                0x000000008004417c                ClearDriverPool
+ .text.New_ClearAllMemPools
+                0x00000000800441e8       0x5c ../../Patches/SaveRAM/src/Mem_DriverPool.o
+                0x00000000800441e8                New_ClearAllMemPools
+ ../../Patches/SaveRAM/src/Mem_DriverPool.o(.rodata*)
+ ../../Patches/SaveRAM/src/Mem_DriverPool.o(.sdata*)
+ ../../Patches/SaveRAM/src/Mem_DriverPool.o(.data*)
+ .data          0x0000000080044244        0x0 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ ../../Patches/SaveRAM/src/Mem_DriverPool.o(.sbss*)
+ ../../Patches/SaveRAM/src/Mem_DriverPool.o(.bss*)
+ .bss           0x0000000080044244        0x0 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ ../../Patches/SaveRAM/src/Mem_DriverPool.o(.ctors)
+                0x0000000080044244                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_Mem_DriverPool = LOADADDR (.Mem_DriverPool))
+                [!provide]                        PROVIDE (__load_stop_Mem_DriverPool = (LOADADDR (.Mem_DriverPool) + SIZEOF (.Mem_DriverPool)))
+
+.PatchesSaveRAMsrcMem_hookClearAllPoolss
+                0x00000000800101bc    0x2c6a8 load address 0x00000000800974e0
+                0x000000008003c85c                . = (. + 0x2c6a0)
+ *fill*         0x00000000800101bc    0x2c6a0 
+ ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o(.text)
+ .text          0x000000008003c85c        0x8 ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o
+ ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o(.text.startup._GLOBAL__*)
+ ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o(.text.*)
+ ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o(.rodata*)
+ ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o(.sdata*)
+ ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o(.data*)
+ .data          0x000000008003c864        0x0 ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o
+ ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o(.sbss*)
+ ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o(.bss*)
+ .bss           0x000000008003c864        0x0 ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o
+ ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o(.ctors)
+                0x000000008003c864                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_PatchesSaveRAMsrcMem_hookClearAllPoolss = LOADADDR (.PatchesSaveRAMsrcMem_hookClearAllPoolss))
+                [!provide]                        PROVIDE (__load_stop_PatchesSaveRAMsrcMem_hookClearAllPoolss = (LOADADDR (.PatchesSaveRAMsrcMem_hookClearAllPoolss) + SIZEOF (.PatchesSaveRAMsrcMem_hookClearAllPoolss)))
+
+.Mem_ThreadPool
+                0x00000000800101bc    0x41ea8 load address 0x00000000800c3b88
+                0x00000000800515ac                . = (. + 0x413f0)
+ *fill*         0x00000000800101bc    0x413f0 
+ ../../../decompile/General/DrawRaceClock.o(.text)
+ .text          0x00000000800515ac        0x0 ../../../decompile/General/DrawRaceClock.o
+ ../../../decompile/General/DrawRaceClock.o(.text.startup._GLOBAL__*)
+ ../../../decompile/General/DrawRaceClock.o(.text.*)
+ .text.DECOMP_DrawRaceClock
+                0x00000000800515ac      0x8a0 ../../../decompile/General/DrawRaceClock.o
+                0x00000000800515ac                DECOMP_DrawRaceClock
+ ../../../decompile/General/DrawRaceClock.o(.rodata*)
+ ../../../decompile/General/DrawRaceClock.o(.sdata*)
+ ../../../decompile/General/DrawRaceClock.o(.data*)
+ .data          0x0000000080051e4c        0x0 ../../../decompile/General/DrawRaceClock.o
+ ../../../decompile/General/DrawRaceClock.o(.sbss*)
+ ../../../decompile/General/DrawRaceClock.o(.bss*)
+ .bss           0x0000000080051e4c        0x0 ../../../decompile/General/DrawRaceClock.o
+ ../../../decompile/General/DrawRaceClock.o(.ctors)
+ ../../Patches/SaveRAM/src/Mem_ThreadPool.o(.text)
+ .text          0x0000000080051e4c        0x0 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ ../../Patches/SaveRAM/src/Mem_ThreadPool.o(.text.startup._GLOBAL__*)
+ ../../Patches/SaveRAM/src/Mem_ThreadPool.o(.text.*)
+ .text.ClearThreadPool
+                0x0000000080051e4c      0x140 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+                0x0000000080051e4c                ClearThreadPool
+ ../../Patches/SaveRAM/src/Mem_ThreadPool.o(.rodata*)
+ ../../Patches/SaveRAM/src/Mem_ThreadPool.o(.sdata*)
+ ../../Patches/SaveRAM/src/Mem_ThreadPool.o(.data*)
+ .data          0x0000000080051f8c        0x0 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ ../../Patches/SaveRAM/src/Mem_ThreadPool.o(.sbss*)
+ ../../Patches/SaveRAM/src/Mem_ThreadPool.o(.bss*)
+ .bss           0x0000000080051f8c       0xd8 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+                0x0000000080051f8c                threads
+ ../../Patches/SaveRAM/src/Mem_ThreadPool.o(.ctors)
+                0x0000000080052064                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_Mem_ThreadPool = LOADADDR (.Mem_ThreadPool))
+                [!provide]                        PROVIDE (__load_stop_Mem_ThreadPool = (LOADADDR (.Mem_ThreadPool) + SIZEOF (.Mem_ThreadPool)))
+
+.ModulesOverrideMPKsrcnumDriverss
+                0x00000000800101bc    0x259a4 load address 0x0000000080105a30
+                0x0000000080035b5c                . = (. + 0x259a0)
+ *fill*         0x00000000800101bc    0x259a0 
+ ../../Modules/OverrideMPK/src/numDrivers.o(.text)
+ .text          0x0000000080035b5c        0x4 ../../Modules/OverrideMPK/src/numDrivers.o
+ ../../Modules/OverrideMPK/src/numDrivers.o(.text.startup._GLOBAL__*)
+ ../../Modules/OverrideMPK/src/numDrivers.o(.text.*)
+ ../../Modules/OverrideMPK/src/numDrivers.o(.rodata*)
+ ../../Modules/OverrideMPK/src/numDrivers.o(.sdata*)
+ ../../Modules/OverrideMPK/src/numDrivers.o(.data*)
+ .data          0x0000000080035b60        0x0 ../../Modules/OverrideMPK/src/numDrivers.o
+ ../../Modules/OverrideMPK/src/numDrivers.o(.sbss*)
+ ../../Modules/OverrideMPK/src/numDrivers.o(.bss*)
+ .bss           0x0000000080035b60        0x0 ../../Modules/OverrideMPK/src/numDrivers.o
+ ../../Modules/OverrideMPK/src/numDrivers.o(.ctors)
+                0x0000000080035b60                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesOverrideMPKsrcnumDriverss = LOADADDR (.ModulesOverrideMPKsrcnumDriverss))
+                [!provide]                        PROVIDE (__load_stop_ModulesOverrideMPKsrcnumDriverss = (LOADADDR (.ModulesOverrideMPKsrcnumDriverss) + SIZEOF (.ModulesOverrideMPKsrcnumDriverss)))
+
+.ModulesOverrideMPKsrcnumDriversPlusOnes
+                0x00000000800101bc    0x2474c load address 0x000000008012b3d4
+                0x0000000080034904                . = (. + 0x24748)
+ *fill*         0x00000000800101bc    0x24748 
+ ../../Modules/OverrideMPK/src/numDriversPlusOne.o(.text)
+ .text          0x0000000080034904        0x4 ../../Modules/OverrideMPK/src/numDriversPlusOne.o
+ ../../Modules/OverrideMPK/src/numDriversPlusOne.o(.text.startup._GLOBAL__*)
+ ../../Modules/OverrideMPK/src/numDriversPlusOne.o(.text.*)
+ ../../Modules/OverrideMPK/src/numDriversPlusOne.o(.rodata*)
+ ../../Modules/OverrideMPK/src/numDriversPlusOne.o(.sdata*)
+ ../../Modules/OverrideMPK/src/numDriversPlusOne.o(.data*)
+ .data          0x0000000080034908        0x0 ../../Modules/OverrideMPK/src/numDriversPlusOne.o
+ ../../Modules/OverrideMPK/src/numDriversPlusOne.o(.sbss*)
+ ../../Modules/OverrideMPK/src/numDriversPlusOne.o(.bss*)
+ .bss           0x0000000080034908        0x0 ../../Modules/OverrideMPK/src/numDriversPlusOne.o
+ ../../Modules/OverrideMPK/src/numDriversPlusOne.o(.ctors)
+                0x0000000080034908                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesOverrideMPKsrcnumDriversPlusOnes = LOADADDR (.ModulesOverrideMPKsrcnumDriversPlusOnes))
+                [!provide]                        PROVIDE (__load_stop_ModulesOverrideMPKsrcnumDriversPlusOnes = (LOADADDR (.ModulesOverrideMPKsrcnumDriversPlusOnes) + SIZEOF (.ModulesOverrideMPKsrcnumDriversPlusOnes)))
+
+.ModulesOverrideMPKsrcOvMPK_StringSearchc
+                0x00000000800101bc    0x4b5c8 load address 0x000000008014fb20
+                0x000000008005b6b8                . = (. + 0x4b4fc)
+ *fill*         0x00000000800101bc    0x4b4fc 
+ ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o(.text)
+ .text          0x000000008005b6b8        0x0 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o(.text.startup._GLOBAL__*)
+ ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o(.text.*)
+ .text.newSearchFunc
+                0x000000008005b6b8       0x9c ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+                0x000000008005b6b8                newSearchFunc
+ .text.CheckString
+                0x000000008005b754       0x30 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+                0x000000008005b754                CheckString
+ ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o(.rodata*)
+ ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o(.sdata*)
+ ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o(.data*)
+ .data          0x000000008005b784        0x0 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o(.sbss*)
+ ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o(.bss*)
+ .bss           0x000000008005b784        0x0 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o(.ctors)
+                0x000000008005b784                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesOverrideMPKsrcOvMPK_StringSearchc = LOADADDR (.ModulesOverrideMPKsrcOvMPK_StringSearchc))
+                [!provide]                        PROVIDE (__load_stop_ModulesOverrideMPKsrcOvMPK_StringSearchc = (LOADADDR (.ModulesOverrideMPKsrcOvMPK_StringSearchc) + SIZEOF (.ModulesOverrideMPKsrcOvMPK_StringSearchc)))
+
+.ModulesOverrideMPKsrcOvMPK_LoadMPKc
+                0x00000000800101bc    0x24494 load address 0x000000008019b0e8
+                0x000000008003442c                . = (. + 0x24270)
+ *fill*         0x00000000800101bc    0x24270 
+ ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o(.text)
+ .text          0x000000008003442c        0x0 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o(.text.startup._GLOBAL__*)
+ ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o(.text.*)
+ .text.New_LOAD_DriverMPK
+                0x000000008003442c      0x224 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+                0x000000008003442c                New_LOAD_DriverMPK
+ ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o(.rodata*)
+ ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o(.sdata*)
+ ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o(.data*)
+ .data          0x0000000080034650        0x0 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o(.sbss*)
+ ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o(.bss*)
+ .bss           0x0000000080034650        0x0 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o(.ctors)
+                0x0000000080034650                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesOverrideMPKsrcOvMPK_LoadMPKc = LOADADDR (.ModulesOverrideMPKsrcOvMPK_LoadMPKc))
+                [!provide]                        PROVIDE (__load_stop_ModulesOverrideMPKsrcOvMPK_LoadMPKc = (LOADADDR (.ModulesOverrideMPKsrcOvMPK_LoadMPKc) + SIZEOF (.ModulesOverrideMPKsrcOvMPK_LoadMPKc)))
+
+.ModulesCharacterRandomizersrcChRand_hook1Ps
+                0x00000000800101bc    0x24224 load address 0x00000000801bf57c
+                0x00000000800343dc                . = (. + 0x24220)
+ *fill*         0x00000000800101bc    0x24220 
+ ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o(.text)
+ .text          0x00000000800343dc        0x4 ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o
+ ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o(.text.startup._GLOBAL__*)
+ ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o(.text.*)
+ ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o(.rodata*)
+ ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o(.sdata*)
+ ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o(.data*)
+ .data          0x00000000800343e0        0x0 ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o
+ ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o(.sbss*)
+ ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o(.bss*)
+ .bss           0x00000000800343e0        0x0 ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o
+ ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o(.ctors)
+                0x00000000800343e0                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesCharacterRandomizersrcChRand_hook1Ps = LOADADDR (.ModulesCharacterRandomizersrcChRand_hook1Ps))
+                [!provide]                        PROVIDE (__load_stop_ModulesCharacterRandomizersrcChRand_hook1Ps = (LOADADDR (.ModulesCharacterRandomizersrcChRand_hook1Ps) + SIZEOF (.ModulesCharacterRandomizersrcChRand_hook1Ps)))
+
+.ModulesCharacterRandomizersrcChRand_hook2Ps
+                0x00000000800101bc    0x24148 load address 0x00000000801e37a0
+                0x0000000080034300                . = (. + 0x24144)
+ *fill*         0x00000000800101bc    0x24144 
+ ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o(.text)
+ .text          0x0000000080034300        0x4 ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o
+ ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o(.text.startup._GLOBAL__*)
+ ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o(.text.*)
+ ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o(.rodata*)
+ ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o(.sdata*)
+ ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o(.data*)
+ .data          0x0000000080034304        0x0 ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o
+ ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o(.sbss*)
+ ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o(.bss*)
+ .bss           0x0000000080034304        0x0 ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o
+ ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o(.ctors)
+                0x0000000080034304                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesCharacterRandomizersrcChRand_hook2Ps = LOADADDR (.ModulesCharacterRandomizersrcChRand_hook2Ps))
+                [!provide]                        PROVIDE (__load_stop_ModulesCharacterRandomizersrcChRand_hook2Ps = (LOADADDR (.ModulesCharacterRandomizersrcChRand_hook2Ps) + SIZEOF (.ModulesCharacterRandomizersrcChRand_hook2Ps)))
+
+.ModulesReservesMetersrcreserveshooks
+                0x00000000800101bc    0x46d3c load address 0x00000000802078e8
+                0x0000000080056ef4                . = (. + 0x46d38)
+ *fill*         0x00000000800101bc    0x46d38 
+ ../../Modules/ReservesMeter/src/reserveshook.o(.text)
+ .text          0x0000000080056ef4        0x4 ../../Modules/ReservesMeter/src/reserveshook.o
+ ../../Modules/ReservesMeter/src/reserveshook.o(.text.startup._GLOBAL__*)
+ ../../Modules/ReservesMeter/src/reserveshook.o(.text.*)
+ ../../Modules/ReservesMeter/src/reserveshook.o(.rodata*)
+ ../../Modules/ReservesMeter/src/reserveshook.o(.sdata*)
+ ../../Modules/ReservesMeter/src/reserveshook.o(.data*)
+ .data          0x0000000080056ef8        0x0 ../../Modules/ReservesMeter/src/reserveshook.o
+ ../../Modules/ReservesMeter/src/reserveshook.o(.sbss*)
+ ../../Modules/ReservesMeter/src/reserveshook.o(.bss*)
+ .bss           0x0000000080056ef8        0x0 ../../Modules/ReservesMeter/src/reserveshook.o
+ ../../Modules/ReservesMeter/src/reserveshook.o(.ctors)
+                0x0000000080056ef8                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesReservesMetersrcreserveshooks = LOADADDR (.ModulesReservesMetersrcreserveshooks))
+                [!provide]                        PROVIDE (__load_stop_ModulesReservesMetersrcreserveshooks = (LOADADDR (.ModulesReservesMetersrcreserveshooks) + SIZEOF (.ModulesReservesMetersrcreserveshooks)))
+
+.ModulesRetro_FueledsrchookUpdates
+                0x00000000800101bc     0x4724 load address 0x000000008024e624
+                0x00000000800148dc                . = (. + 0x4720)
+ *fill*         0x00000000800101bc     0x4720 
+ ../../Modules/Retro-Fueled/src/hookUpdate.o(.text)
+ .text          0x00000000800148dc        0x4 ../../Modules/Retro-Fueled/src/hookUpdate.o
+ ../../Modules/Retro-Fueled/src/hookUpdate.o(.text.startup._GLOBAL__*)
+ ../../Modules/Retro-Fueled/src/hookUpdate.o(.text.*)
+ ../../Modules/Retro-Fueled/src/hookUpdate.o(.rodata*)
+ ../../Modules/Retro-Fueled/src/hookUpdate.o(.sdata*)
+ ../../Modules/Retro-Fueled/src/hookUpdate.o(.data*)
+ .data          0x00000000800148e0        0x0 ../../Modules/Retro-Fueled/src/hookUpdate.o
+ ../../Modules/Retro-Fueled/src/hookUpdate.o(.sbss*)
+ ../../Modules/Retro-Fueled/src/hookUpdate.o(.bss*)
+ .bss           0x00000000800148e0        0x0 ../../Modules/Retro-Fueled/src/hookUpdate.o
+ ../../Modules/Retro-Fueled/src/hookUpdate.o(.ctors)
+                0x00000000800148e0                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesRetro_FueledsrchookUpdates = LOADADDR (.ModulesRetro_FueledsrchookUpdates))
+                [!provide]                        PROVIDE (__load_stop_ModulesRetro_FueledsrchookUpdates = (LOADADDR (.ModulesRetro_FueledsrchookUpdates) + SIZEOF (.ModulesRetro_FueledsrchookUpdates)))
+
+.ModulesRetro_FueledsrchookEntrys
+                0x00000000800101bc    0x6a9f8 load address 0x0000000080252d48
+                0x000000008007abb0                . = (. + 0x6a9f4)
+ *fill*         0x00000000800101bc    0x6a9f4 
+ ../../Modules/Retro-Fueled/src/hookEntry.o(.text)
+ .text          0x000000008007abb0        0x4 ../../Modules/Retro-Fueled/src/hookEntry.o
+ ../../Modules/Retro-Fueled/src/hookEntry.o(.text.startup._GLOBAL__*)
+ ../../Modules/Retro-Fueled/src/hookEntry.o(.text.*)
+ ../../Modules/Retro-Fueled/src/hookEntry.o(.rodata*)
+ ../../Modules/Retro-Fueled/src/hookEntry.o(.sdata*)
+ ../../Modules/Retro-Fueled/src/hookEntry.o(.data*)
+ .data          0x000000008007abb4        0x0 ../../Modules/Retro-Fueled/src/hookEntry.o
+ ../../Modules/Retro-Fueled/src/hookEntry.o(.sbss*)
+ ../../Modules/Retro-Fueled/src/hookEntry.o(.bss*)
+ .bss           0x000000008007abb4        0x0 ../../Modules/Retro-Fueled/src/hookEntry.o
+ ../../Modules/Retro-Fueled/src/hookEntry.o(.ctors)
+                0x000000008007abb4                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesRetro_FueledsrchookEntrys = LOADADDR (.ModulesRetro_FueledsrchookEntrys))
+                [!provide]                        PROVIDE (__load_stop_ModulesRetro_FueledsrchookEntrys = (LOADADDR (.ModulesRetro_FueledsrchookEntrys) + SIZEOF (.ModulesRetro_FueledsrchookEntrys)))
+
+.ModulesRetro_FueledsrchookReserveCancelations
+                0x00000000800101bc    0x54f58 load address 0x00000000802bd740
+                0x0000000080065110                . = (. + 0x54f54)
+ *fill*         0x00000000800101bc    0x54f54 
+ ../../Modules/Retro-Fueled/src/hookReserveCancelation.o(.text)
+ .text          0x0000000080065110        0x4 ../../Modules/Retro-Fueled/src/hookReserveCancelation.o
+ ../../Modules/Retro-Fueled/src/hookReserveCancelation.o(.text.startup._GLOBAL__*)
+ ../../Modules/Retro-Fueled/src/hookReserveCancelation.o(.text.*)
+ ../../Modules/Retro-Fueled/src/hookReserveCancelation.o(.rodata*)
+ ../../Modules/Retro-Fueled/src/hookReserveCancelation.o(.sdata*)
+ ../../Modules/Retro-Fueled/src/hookReserveCancelation.o(.data*)
+ .data          0x0000000080065114        0x0 ../../Modules/Retro-Fueled/src/hookReserveCancelation.o
+ ../../Modules/Retro-Fueled/src/hookReserveCancelation.o(.sbss*)
+ ../../Modules/Retro-Fueled/src/hookReserveCancelation.o(.bss*)
+ .bss           0x0000000080065114        0x0 ../../Modules/Retro-Fueled/src/hookReserveCancelation.o
+ ../../Modules/Retro-Fueled/src/hookReserveCancelation.o(.ctors)
+                0x0000000080065114                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesRetro_FueledsrchookReserveCancelations = LOADADDR (.ModulesRetro_FueledsrchookReserveCancelations))
+                [!provide]                        PROVIDE (__load_stop_ModulesRetro_FueledsrchookReserveCancelations = (LOADADDR (.ModulesRetro_FueledsrchookReserveCancelations) + SIZEOF (.ModulesRetro_FueledsrchookReserveCancelations)))
+
+.nops           0x00000000800101bc    0x54f60 load address 0x0000000080312698
+                0x0000000080065118                . = (. + 0x54f5c)
+ *fill*         0x00000000800101bc    0x54f5c 
+ ../../../nop.o(.text)
+ .text          0x0000000080065118        0x4 ../../../nop.o
+ ../../../nop.o(.text.startup._GLOBAL__*)
+ ../../../nop.o(.text.*)
+ ../../../nop.o(.rodata*)
+ ../../../nop.o(.sdata*)
+ ../../../nop.o(.data*)
+ .data          0x000000008006511c        0x0 ../../../nop.o
+ ../../../nop.o(.sbss*)
+ ../../../nop.o(.bss*)
+ .bss           0x000000008006511c        0x0 ../../../nop.o
+ ../../../nop.o(.ctors)
+                0x000000008006511c                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_nops = LOADADDR (.nops))
+                [!provide]                        PROVIDE (__load_stop_nops = (LOADADDR (.nops) + SIZEOF (.nops)))
+
+.ModulesReservesMetersrcTurbo_Increment_Retro_Fueledc
+                0x00000000800101bc    0x4dd68 load address 0x00000000803675f8
+                0x000000008005d984                . = (. + 0x4d7c8)
+ *fill*         0x00000000800101bc    0x4d7c8 
+ ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o(.text)
+ .text          0x000000008005d984        0x0 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o(.text.startup._GLOBAL__*)
+ ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o(.text.*)
+ .text.DECOMP_Turbo_Increment
+                0x000000008005d984      0x5a0 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+                0x000000008005d984                DECOMP_Turbo_Increment
+ ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o(.rodata*)
+ ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o(.sdata*)
+ ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o(.data*)
+ .data          0x000000008005df24        0x0 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o(.sbss*)
+ ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o(.bss*)
+ .bss           0x000000008005df24        0x0 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o(.ctors)
+                0x000000008005df24                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesReservesMetersrcTurbo_Increment_Retro_Fueledc = LOADADDR (.ModulesReservesMetersrcTurbo_Increment_Retro_Fueledc))
+                [!provide]                        PROVIDE (__load_stop_ModulesReservesMetersrcTurbo_Increment_Retro_Fueledc = (LOADADDR (.ModulesReservesMetersrcTurbo_Increment_Retro_Fueledc) + SIZEOF (.ModulesReservesMetersrcTurbo_Increment_Retro_Fueledc)))
+
+.PatchesFixAdventureModeCharacterSelectArrowssrcDecalHUD_Arrow2Dc
+                0x00000000800101bc    0x14be4 load address 0x00000000803b5360
+                0x0000000080024b18                . = (. + 0x1495c)
+ *fill*         0x00000000800101bc    0x1495c 
+ ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o(.text)
+ .text          0x0000000080024b18        0x0 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o(.text.startup._GLOBAL__*)
+ ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o(.text.*)
+ .text.DecalHUD_Arrow2D_ButItsFixed
+                0x0000000080024b18      0x288 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+                0x0000000080024b18                DecalHUD_Arrow2D_ButItsFixed
+ ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o(.rodata*)
+ ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o(.sdata*)
+ ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o(.data*)
+ .data          0x0000000080024da0        0x0 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o(.sbss*)
+ ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o(.bss*)
+ .bss           0x0000000080024da0        0x0 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o(.ctors)
+                0x0000000080024da0                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_PatchesFixAdventureModeCharacterSelectArrowssrcDecalHUD_Arrow2Dc = LOADADDR (.PatchesFixAdventureModeCharacterSelectArrowssrcDecalHUD_Arrow2Dc))
+                [!provide]                        PROVIDE (__load_stop_PatchesFixAdventureModeCharacterSelectArrowssrcDecalHUD_Arrow2Dc = (LOADADDR (.PatchesFixAdventureModeCharacterSelectArrowssrcDecalHUD_Arrow2Dc) + SIZEOF (.PatchesFixAdventureModeCharacterSelectArrowssrcDecalHUD_Arrow2Dc)))
+
+.ModulesEngineSelectsrcES_hookClassNames
+                0x00000000800101bc    0xab10c load address 0x00000000803c9f44
+                0x00000000800bb2c4                . = (. + 0xab108)
+ *fill*         0x00000000800101bc    0xab108 
+ ../../Modules/EngineSelect/src/ES_hookClassName.o(.text)
+ .text          0x00000000800bb2c4        0x4 ../../Modules/EngineSelect/src/ES_hookClassName.o
+ ../../Modules/EngineSelect/src/ES_hookClassName.o(.text.startup._GLOBAL__*)
+ ../../Modules/EngineSelect/src/ES_hookClassName.o(.text.*)
+ ../../Modules/EngineSelect/src/ES_hookClassName.o(.rodata*)
+ ../../Modules/EngineSelect/src/ES_hookClassName.o(.sdata*)
+ ../../Modules/EngineSelect/src/ES_hookClassName.o(.data*)
+ .data          0x00000000800bb2c8        0x0 ../../Modules/EngineSelect/src/ES_hookClassName.o
+ ../../Modules/EngineSelect/src/ES_hookClassName.o(.sbss*)
+ ../../Modules/EngineSelect/src/ES_hookClassName.o(.bss*)
+ .bss           0x00000000800bb2c8        0x0 ../../Modules/EngineSelect/src/ES_hookClassName.o
+ ../../Modules/EngineSelect/src/ES_hookClassName.o(.ctors)
+                0x00000000800bb2c8                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesEngineSelectsrcES_hookClassNames = LOADADDR (.ModulesEngineSelectsrcES_hookClassNames))
+                [!provide]                        PROVIDE (__load_stop_ModulesEngineSelectsrcES_hookClassNames = (LOADADDR (.ModulesEngineSelectsrcES_hookClassNames) + SIZEOF (.ModulesEngineSelectsrcES_hookClassNames)))
+
+.ModulesEngineSelectsrcES_nop233s
+                0x00000000800101bc    0xab898 load address 0x0000000080475050
+                0x00000000800bba50                . = (. + 0xab894)
+ *fill*         0x00000000800101bc    0xab894 
+ ../../Modules/EngineSelect/src/ES_nop233.o(.text)
+ .text          0x00000000800bba50        0x4 ../../Modules/EngineSelect/src/ES_nop233.o
+ ../../Modules/EngineSelect/src/ES_nop233.o(.text.startup._GLOBAL__*)
+ ../../Modules/EngineSelect/src/ES_nop233.o(.text.*)
+ ../../Modules/EngineSelect/src/ES_nop233.o(.rodata*)
+ ../../Modules/EngineSelect/src/ES_nop233.o(.sdata*)
+ ../../Modules/EngineSelect/src/ES_nop233.o(.data*)
+ .data          0x00000000800bba54        0x0 ../../Modules/EngineSelect/src/ES_nop233.o
+ ../../Modules/EngineSelect/src/ES_nop233.o(.sbss*)
+ ../../Modules/EngineSelect/src/ES_nop233.o(.bss*)
+ .bss           0x00000000800bba54        0x0 ../../Modules/EngineSelect/src/ES_nop233.o
+ ../../Modules/EngineSelect/src/ES_nop233.o(.ctors)
+                0x00000000800bba54                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesEngineSelectsrcES_nop233s = LOADADDR (.ModulesEngineSelectsrcES_nop233s))
+                [!provide]                        PROVIDE (__load_stop_ModulesEngineSelectsrcES_nop233s = (LOADADDR (.ModulesEngineSelectsrcES_nop233s) + SIZEOF (.ModulesEngineSelectsrcES_nop233s)))
+
+.ModulesEngineSelectsrcES_hook233s
+                0x00000000800101bc    0xabb44 load address 0x00000000805208e8
+                0x00000000800bbcfc                . = (. + 0xabb40)
+ *fill*         0x00000000800101bc    0xabb40 
+ ../../Modules/EngineSelect/src/ES_hook233.o(.text)
+ .text          0x00000000800bbcfc        0x4 ../../Modules/EngineSelect/src/ES_hook233.o
+ ../../Modules/EngineSelect/src/ES_hook233.o(.text.startup._GLOBAL__*)
+ ../../Modules/EngineSelect/src/ES_hook233.o(.text.*)
+ ../../Modules/EngineSelect/src/ES_hook233.o(.rodata*)
+ ../../Modules/EngineSelect/src/ES_hook233.o(.sdata*)
+ ../../Modules/EngineSelect/src/ES_hook233.o(.data*)
+ .data          0x00000000800bbd00        0x0 ../../Modules/EngineSelect/src/ES_hook233.o
+ ../../Modules/EngineSelect/src/ES_hook233.o(.sbss*)
+ ../../Modules/EngineSelect/src/ES_hook233.o(.bss*)
+ .bss           0x00000000800bbd00        0x0 ../../Modules/EngineSelect/src/ES_hook233.o
+ ../../Modules/EngineSelect/src/ES_hook233.o(.ctors)
+                0x00000000800bbd00                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesEngineSelectsrcES_hook233s = LOADADDR (.ModulesEngineSelectsrcES_hook233s))
+                [!provide]                        PROVIDE (__load_stop_ModulesEngineSelectsrcES_hook233s = (LOADADDR (.ModulesEngineSelectsrcES_hook233s) + SIZEOF (.ModulesEngineSelectsrcES_hook233s)))
+
+.ModulesEngineSelectsrcES_233c
+                0x00000000800101bc    0xad154 load address 0x00000000805cc42c
+                0x00000000800bd00c                . = (. + 0xace50)
+ *fill*         0x00000000800101bc    0xace50 
+ ../../Modules/EngineSelect/src/ES_233.o(.text)
+ .text          0x00000000800bd00c        0x0 ../../Modules/EngineSelect/src/ES_233.o
+ ../../Modules/EngineSelect/src/ES_233.o(.text.startup._GLOBAL__*)
+ ../../Modules/EngineSelect/src/ES_233.o(.text.*)
+ .text.AdvBoss  0x00000000800bd00c       0xd8 ../../Modules/EngineSelect/src/ES_233.o
+                0x00000000800bd00c                AdvBoss
+ .text.AdvEngine
+                0x00000000800bd0e4      0x114 ../../Modules/EngineSelect/src/ES_233.o
+                0x00000000800bd0e4                AdvEngine
+ .text.CS_DrawEngine
+                0x00000000800bd1f8       0x38 ../../Modules/EngineSelect/src/ES_233.o
+                0x00000000800bd1f8                CS_DrawEngine
+ .text.AdvSelectUpdateLoop
+                0x00000000800bd230       0x48 ../../Modules/EngineSelect/src/ES_233.o
+                0x00000000800bd230                AdvSelectUpdateLoop
+ ../../Modules/EngineSelect/src/ES_233.o(.rodata*)
+ .rodata.str1.4
+                0x00000000800bd278       0x44 ../../Modules/EngineSelect/src/ES_233.o
+ ../../Modules/EngineSelect/src/ES_233.o(.sdata*)
+ ../../Modules/EngineSelect/src/ES_233.o(.data*)
+ .data          0x00000000800bd2bc       0x50 ../../Modules/EngineSelect/src/ES_233.o
+ ../../Modules/EngineSelect/src/ES_233.o(.sbss*)
+ .sbss          0x00000000800bd30c        0x4 ../../Modules/EngineSelect/src/ES_233.o
+ ../../Modules/EngineSelect/src/ES_233.o(.bss*)
+ .bss           0x00000000800bd310        0x0 ../../Modules/EngineSelect/src/ES_233.o
+ ../../Modules/EngineSelect/src/ES_233.o(.ctors)
+                0x00000000800bd310                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesEngineSelectsrcES_233c = LOADADDR (.ModulesEngineSelectsrcES_233c))
+                [!provide]                        PROVIDE (__load_stop_ModulesEngineSelectsrcES_233c = (LOADADDR (.ModulesEngineSelectsrcES_233c) + SIZEOF (.ModulesEngineSelectsrcES_233c)))
+
+.ModulesEngineSelectsrcES_nop230s
+                0x00000000800101bc    0xa2558 load address 0x0000000080679580
+                0x00000000800b2710                . = (. + 0xa2554)
+ *fill*         0x00000000800101bc    0xa2554 
+ ../../Modules/EngineSelect/src/ES_nop230.o(.text)
+ .text          0x00000000800b2710        0x4 ../../Modules/EngineSelect/src/ES_nop230.o
+ ../../Modules/EngineSelect/src/ES_nop230.o(.text.startup._GLOBAL__*)
+ ../../Modules/EngineSelect/src/ES_nop230.o(.text.*)
+ ../../Modules/EngineSelect/src/ES_nop230.o(.rodata*)
+ ../../Modules/EngineSelect/src/ES_nop230.o(.sdata*)
+ ../../Modules/EngineSelect/src/ES_nop230.o(.data*)
+ .data          0x00000000800b2714        0x0 ../../Modules/EngineSelect/src/ES_nop230.o
+ ../../Modules/EngineSelect/src/ES_nop230.o(.sbss*)
+ ../../Modules/EngineSelect/src/ES_nop230.o(.bss*)
+ .bss           0x00000000800b2714        0x0 ../../Modules/EngineSelect/src/ES_nop230.o
+ ../../Modules/EngineSelect/src/ES_nop230.o(.ctors)
+                0x00000000800b2714                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesEngineSelectsrcES_nop230s = LOADADDR (.ModulesEngineSelectsrcES_nop230s))
+                [!provide]                        PROVIDE (__load_stop_ModulesEngineSelectsrcES_nop230s = (LOADADDR (.ModulesEngineSelectsrcES_nop230s) + SIZEOF (.ModulesEngineSelectsrcES_nop230s)))
+
+.ModulesEngineSelectsrcES_hookCharacterNames
+                0x00000000800101bc    0xa2bec load address 0x000000008071bad8
+                0x00000000800b2da4                . = (. + 0xa2be8)
+ *fill*         0x00000000800101bc    0xa2be8 
+ ../../Modules/EngineSelect/src/ES_hookCharacterName.o(.text)
+ .text          0x00000000800b2da4        0x4 ../../Modules/EngineSelect/src/ES_hookCharacterName.o
+ ../../Modules/EngineSelect/src/ES_hookCharacterName.o(.text.startup._GLOBAL__*)
+ ../../Modules/EngineSelect/src/ES_hookCharacterName.o(.text.*)
+ ../../Modules/EngineSelect/src/ES_hookCharacterName.o(.rodata*)
+ ../../Modules/EngineSelect/src/ES_hookCharacterName.o(.sdata*)
+ ../../Modules/EngineSelect/src/ES_hookCharacterName.o(.data*)
+ .data          0x00000000800b2da8        0x0 ../../Modules/EngineSelect/src/ES_hookCharacterName.o
+ ../../Modules/EngineSelect/src/ES_hookCharacterName.o(.sbss*)
+ ../../Modules/EngineSelect/src/ES_hookCharacterName.o(.bss*)
+ .bss           0x00000000800b2da8        0x0 ../../Modules/EngineSelect/src/ES_hookCharacterName.o
+ ../../Modules/EngineSelect/src/ES_hookCharacterName.o(.ctors)
+                0x00000000800b2da8                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesEngineSelectsrcES_hookCharacterNames = LOADADDR (.ModulesEngineSelectsrcES_hookCharacterNames))
+                [!provide]                        PROVIDE (__load_stop_ModulesEngineSelectsrcES_hookCharacterNames = (LOADADDR (.ModulesEngineSelectsrcES_hookCharacterNames) + SIZEOF (.ModulesEngineSelectsrcES_hookCharacterNames)))
+
+.ModulesEngineSelectsrcES_hook230s
+                0x00000000800101bc    0xa2f80 load address 0x00000000807be6c4
+                0x00000000800b3138                . = (. + 0xa2f7c)
+ *fill*         0x00000000800101bc    0xa2f7c 
+ ../../Modules/EngineSelect/src/ES_hook230.o(.text)
+ .text          0x00000000800b3138        0x4 ../../Modules/EngineSelect/src/ES_hook230.o
+ ../../Modules/EngineSelect/src/ES_hook230.o(.text.startup._GLOBAL__*)
+ ../../Modules/EngineSelect/src/ES_hook230.o(.text.*)
+ ../../Modules/EngineSelect/src/ES_hook230.o(.rodata*)
+ ../../Modules/EngineSelect/src/ES_hook230.o(.sdata*)
+ ../../Modules/EngineSelect/src/ES_hook230.o(.data*)
+ .data          0x00000000800b313c        0x0 ../../Modules/EngineSelect/src/ES_hook230.o
+ ../../Modules/EngineSelect/src/ES_hook230.o(.sbss*)
+ ../../Modules/EngineSelect/src/ES_hook230.o(.bss*)
+ .bss           0x00000000800b313c        0x0 ../../Modules/EngineSelect/src/ES_hook230.o
+ ../../Modules/EngineSelect/src/ES_hook230.o(.ctors)
+                0x00000000800b313c                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesEngineSelectsrcES_hook230s = LOADADDR (.ModulesEngineSelectsrcES_hook230s))
+                [!provide]                        PROVIDE (__load_stop_ModulesEngineSelectsrcES_hook230s = (LOADADDR (.ModulesEngineSelectsrcES_hook230s) + SIZEOF (.ModulesEngineSelectsrcES_hook230s)))
+
+.ModulesEngineSelectsrcES_230c
+                0x00000000800101bc    0xaab1c load address 0x0000000080861644
+                0x00000000800ba8e0                . = (. + 0xaa724)
+ *fill*         0x00000000800101bc    0xaa724 
+ ../../Modules/EngineSelect/src/ES_230.o(.text)
+ .text          0x00000000800ba8e0        0x0 ../../Modules/EngineSelect/src/ES_230.o
+ ../../Modules/EngineSelect/src/ES_230.o(.text.startup._GLOBAL__*)
+ ../../Modules/EngineSelect/src/ES_230.o(.text.*)
+ .text.MainCharacterSelect
+                0x00000000800ba8e0      0x128 ../../Modules/EngineSelect/src/ES_230.o
+                0x00000000800ba8e0                MainCharacterSelect
+ .text.NewCharacterNameString
+                0x00000000800baa08      0x194 ../../Modules/EngineSelect/src/ES_230.o
+                0x00000000800baa08                NewCharacterNameString
+ .text.EngineSelectUpdateLoop
+                0x00000000800bab9c       0x9c ../../Modules/EngineSelect/src/ES_230.o
+                0x00000000800bab9c                EngineSelectUpdateLoop
+ ../../Modules/EngineSelect/src/ES_230.o(.rodata*)
+ ../../Modules/EngineSelect/src/ES_230.o(.sdata*)
+ ../../Modules/EngineSelect/src/ES_230.o(.data*)
+ .data          0x00000000800bac38       0xa0 ../../Modules/EngineSelect/src/ES_230.o
+ ../../Modules/EngineSelect/src/ES_230.o(.sbss*)
+ ../../Modules/EngineSelect/src/ES_230.o(.bss*)
+ .bss           0x00000000800bacd8        0x0 ../../Modules/EngineSelect/src/ES_230.o
+ ../../Modules/EngineSelect/src/ES_230.o(.ctors)
+                0x00000000800bacd8                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesEngineSelectsrcES_230c = LOADADDR (.ModulesEngineSelectsrcES_230c))
+                [!provide]                        PROVIDE (__load_stop_ModulesEngineSelectsrcES_230c = (LOADADDR (.ModulesEngineSelectsrcES_230c) + SIZEOF (.ModulesEngineSelectsrcES_230c)))
+
+.ModulesRetro_Fueledsrcmainc
+                0x00000000800101bc      0xa2c load address 0x000000008090c160
+ ../../Modules/Retro-Fueled/src/main.o(.text)
+ .text          0x00000000800101bc       0x98 ../../Modules/Retro-Fueled/src/main.o
+                0x00000000800101bc                ReserveCancelation
+ ../../Modules/Retro-Fueled/src/main.o(.text.startup._GLOBAL__*)
+ ../../Modules/Retro-Fueled/src/main.o(.text.*)
+ .text.InjectBlueFire
+                0x0000000080010254       0x5c ../../Modules/Retro-Fueled/src/main.o
+                0x0000000080010254                InjectBlueFire
+ .text.InjectRedFire
+                0x00000000800102b0       0x58 ../../Modules/Retro-Fueled/src/main.o
+                0x00000000800102b0                InjectRedFire
+ .text.HookReserveCancelation
+                0x0000000080010308       0x84 ../../Modules/Retro-Fueled/src/main.o
+                0x0000000080010308                HookReserveCancelation
+ .text.RunUpdateHook
+                0x000000008001038c       0x60 ../../Modules/Retro-Fueled/src/main.o
+                0x000000008001038c                RunUpdateHook
+ ../../Modules/Retro-Fueled/src/main.o(.rodata*)
+ ../../Modules/Retro-Fueled/src/main.o(.sdata*)
+ .sdata         0x00000000800103ec        0x4 ../../Modules/Retro-Fueled/src/main.o
+                0x00000000800103ec                holdingX_withReserves
+ ../../Modules/Retro-Fueled/src/main.o(.data*)
+ .data          0x00000000800103f0       0x90 ../../Modules/Retro-Fueled/src/main.o
+                0x00000000800103f0                redFlames_clut
+                0x0000000080010410                blueFlames_clut
+                0x0000000080010430                redPlumes_clut
+                0x0000000080010450                bluePlumes_clut
+                0x0000000080010470                flames_pos
+                0x0000000080010478                plumes_pos
+ ../../Modules/Retro-Fueled/src/main.o(.sbss*)
+ .sbss          0x0000000080010480        0x1 ../../Modules/Retro-Fueled/src/main.o
+                0x0000000080010480                blueFire
+ ../../Modules/Retro-Fueled/src/main.o(.bss*)
+ *fill*         0x0000000080010481        0x3 
+ .bss           0x0000000080010484        0x0 ../../Modules/Retro-Fueled/src/main.o
+ ../../Modules/Retro-Fueled/src/main.o(.ctors)
+ ../../Modules/Retro-Fueled/src/texturereplacements.o(.text)
+ .text          0x0000000080010484        0x0 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ ../../Modules/Retro-Fueled/src/texturereplacements.o(.text.startup._GLOBAL__*)
+ ../../Modules/Retro-Fueled/src/texturereplacements.o(.text.*)
+ .text.LoadFile_CustomTextures
+                0x0000000080010484       0x70 ../../Modules/Retro-Fueled/src/texturereplacements.o
+                0x0000000080010484                LoadFile_CustomTextures
+ .text.LoadCustomTexVRAM_MainMenu
+                0x00000000800104f4      0x304 ../../Modules/Retro-Fueled/src/texturereplacements.o
+                0x00000000800104f4                LoadCustomTexVRAM_MainMenu
+ ../../Modules/Retro-Fueled/src/texturereplacements.o(.rodata*)
+ .rodata.str1.4
+                0x00000000800107f8       0x2c ../../Modules/Retro-Fueled/src/texturereplacements.o
+ ../../Modules/Retro-Fueled/src/texturereplacements.o(.sdata*)
+ ../../Modules/Retro-Fueled/src/texturereplacements.o(.data*)
+ .data          0x0000000080010824        0x0 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ ../../Modules/Retro-Fueled/src/texturereplacements.o(.sbss*)
+ .sbss          0x0000000080010824        0x8 ../../Modules/Retro-Fueled/src/texturereplacements.o
+                0x0000000080010824                bannerTex
+                0x0000000080010828                bannerTexPos
+ ../../Modules/Retro-Fueled/src/texturereplacements.o(.bss*)
+ .bss           0x000000008001082c        0x0 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ ../../Modules/Retro-Fueled/src/texturereplacements.o(.ctors)
+ ../../Modules/CharacterRandomizer/src/ChRand_main.o(.text)
+ .text          0x000000008001082c        0x0 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ ../../Modules/CharacterRandomizer/src/ChRand_main.o(.text.startup._GLOBAL__*)
+ ../../Modules/CharacterRandomizer/src/ChRand_main.o(.text.*)
+ .text.ChRand_Repeat
+                0x000000008001082c       0x40 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+                0x000000008001082c                ChRand_Repeat
+ .text.ChRand_SetCharacters
+                0x000000008001086c       0xe4 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+                0x000000008001086c                ChRand_SetCharacters
+ ../../Modules/CharacterRandomizer/src/ChRand_main.o(.rodata*)
+ ../../Modules/CharacterRandomizer/src/ChRand_main.o(.sdata*)
+ ../../Modules/CharacterRandomizer/src/ChRand_main.o(.data*)
+ .data          0x0000000080010950        0x0 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ ../../Modules/CharacterRandomizer/src/ChRand_main.o(.sbss*)
+ ../../Modules/CharacterRandomizer/src/ChRand_main.o(.bss*)
+ .bss           0x0000000080010950        0x0 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ ../../Modules/CharacterRandomizer/src/ChRand_main.o(.ctors)
+ ../../Modules/ReservesMeter/src/main.o(.text)
+ .text          0x0000000080010950        0x0 ../../Modules/ReservesMeter/src/main.o
+ ../../Modules/ReservesMeter/src/main.o(.text.startup._GLOBAL__*)
+ ../../Modules/ReservesMeter/src/main.o(.text.*)
+ .text.DrawReservesMeter
+                0x0000000080010950      0x24c ../../Modules/ReservesMeter/src/main.o
+                0x0000000080010950                DrawReservesMeter
+ .text.ICantBelieveItTookNearly23YearsToMakeThis
+                0x0000000080010b9c       0x4c ../../Modules/ReservesMeter/src/main.o
+                0x0000000080010b9c                ICantBelieveItTookNearly23YearsToMakeThis
+ ../../Modules/ReservesMeter/src/main.o(.rodata*)
+ ../../Modules/ReservesMeter/src/main.o(.sdata*)
+ ../../Modules/ReservesMeter/src/main.o(.data*)
+ .data          0x0000000080010be8        0x0 ../../Modules/ReservesMeter/src/main.o
+ ../../Modules/ReservesMeter/src/main.o(.sbss*)
+ ../../Modules/ReservesMeter/src/main.o(.bss*)
+ .bss           0x0000000080010be8        0x0 ../../Modules/ReservesMeter/src/main.o
+ ../../Modules/ReservesMeter/src/main.o(.ctors)
+                0x0000000080010be8                . = ALIGN (0x4)
+                0x0000000080010be8                __ovr_end = .
+                [!provide]                        PROVIDE (__load_start_ModulesRetro_Fueledsrcmainc = LOADADDR (.ModulesRetro_Fueledsrcmainc))
+                [!provide]                        PROVIDE (__load_stop_ModulesRetro_Fueledsrcmainc = (LOADADDR (.ModulesRetro_Fueledsrcmainc) + SIZEOF (.ModulesRetro_Fueledsrcmainc)))
+                0x0000000080010000                rdata = 0x80010000
+                0x00000000800101bc                rdata_free = 0x800101bc
+                0x0000000080012504                ANTICHIP_GetConsoleRegion = 0x80012504
+                0x0000000080012570                ANTICHIP_CheckFraud_Entry = 0x80012570
+                0x0000000080012ea8                ANTICHIP_CheckFraud_CdromRegs1 = 0x80012ea8
+                0x000000008001307c                ANTICHIP_CheckFraud_CdromRegs2 = 0x8001307c
+                0x000000008001316c                ANTICHIP_TerminateGame = 0x8001316c
+                0x00000000800132d8                ANTICHIP_DrawFrame = 0x800132d8
+                0x000000008001344c                ANTICHIP_DrawCharacter = 0x8001344c
+                0x0000000080013600                ANTICHIP_GetStringPixelLength = 0x80013600
+                0x0000000080013694                ANTICHIP_DrawRedIcon = 0x80013694
+                0x0000000080013824                BOTS_SetGlobalNavData = 0x80013824
+                0x0000000080013884                BOTS_InitNavPath = 0x80013884
+                0x00000000800139a4                BOTS_EmptyFunc = 0x800139a4
+                0x00000000800139ac                BOTS_Adv_NumTimesLostEvent = 0x800139ac
+                0x00000000800139dc                BOTS_Adv_AdjustDifficulty = 0x800139dc
+                0x0000000080014814                BOTS_UpdateGlobals = 0x80014814
+                0x00000000800148e4                BOTS_SetRotation = 0x800148e4
+                0x0000000080014a80                BOTS_ExecuteFuncOnApproach = 0x80014a80
+                0x0000000080014bd4                BOTS_PerFrame_EngineRevving = 0x80014bd4
+                0x0000000080014ce0                BOTS_MaskGrab = 0x80014ce0
+                0x0000000080014f18                BOTS_Killplane = 0x80014f18
+                0x00000000800150c0                BOTS_PerFrame_Drive = 0x800150c0
+                0x0000000080017f9c                BOTS_ChangeState = 0x80017f9c
+                0x0000000080018364                BOTS_CollideWithOtherAI = 0x80018364
+                0x00000000800184c8                BOTS_GotoStartingLine = 0x800184c8
+                0x0000000080018600                BOTS_Driver_Init = 0x80018600
+                0x00000000800187b4                BOTS_Driver_Convert = 0x800187b4
+                0x0000000080018a68                CAM_SkyboxGlow = 0x80018a68
+                0x0000000080019ab8                CAM_ClearScreen = 0x80019ab8
+                0x0000000080019cb4                CAM_Init = 0x80019cb4
+                0x0000000080019d44                CAM_FindClosestQuadblock = 0x80019d44
+                0x0000000080019fb4                CAM_Path_GetNumPoints = 0x80019fb4
+                0x000000008001a03c                CAM_Path_Move = 0x8001a03c
+                0x000000008001a1bc                CAM_StartOfRace = 0x8001a1bc
+                0x000000008001a238                CAM_EndOfRace_Battle = 0x8001a238
+                0x000000008001a2d4                CAM_EndOfRace = 0x8001a2d4
+                0x000000008001a35c                CAM_StartLine_FlyIn_FixY = 0x8001a35c
+                0x000000008001a488                CAM_ProcessTransition = 0x8001a488
+                0x000000008001a5c4                CAM_FollowDriver_AngleAxis = 0x8001a5c4
+                0x000000008001a964                CAM_StartLine_FlyIn = 0x8001a964
+                0x000000008001ad94                CAM_FollowDriver_TrackPath = 0x8001ad94
+                0x000000008001b318                CAM_LookAtPosition = 0x8001b318
+                0x000000008001b3f4                CAM_FollowDriver_Spin360 = 0x8001b3f4
+                0x000000008001b4f0                CAM_SetDesiredPosRot = 0x8001b4f0
+                0x000000008001b558                CAM_FollowDriver_Normal = 0x8001b558
+                0x000000008001c6f0                CAM_MapRange_PosPoints = 0x8001c6f0
+                0x000000008001c7d0                CAM_PerFrame = 0x8001c7d0
+                0x000000008001d7fc                CDSYS_Init = 0x8001d7fc
+                0x000000008001d8bc                CDSYS_GetFilePosInt = 0x8001d8bc
+                0x000000008001d90c                CDSYS_SetMode_StreamData = 0x8001d90c
+                0x000000008001d990                CDSYS_SetMode_StreamAudio = 0x8001d990
+                0x000000008001da08                CDSYS_SetXAToLang = 0x8001da08
+                0x000000008001dc40                CDSYS_CdSyncCallback = 0x8001dc40
+                0x000000008001dc98                CDSYS_CdReadyCallback = 0x8001dc98
+                0x000000008001dd80                CDSYS_IRQ_Callback = 0x8001dd80
+                0x000000008001de20                CDSYS_Transfer_Callback = 0x8001de20
+                0x000000008001de80                CDSYS_IRQ_Enable = 0x8001de80
+                0x000000008001df00                CDSYS_IRQ_Disable = 0x8001df00
+                0x000000008001df34                CDSYS_ParseSpuData = 0x8001df34
+                0x000000008001e07c                CDSYS_XAGetNumTracks = 0x8001e07c
+                0x000000008001e0b4                CDSYS_XASeek = 0x8001e0b4
+                0x000000008001e1bc                CDSYS_XAGetTrackLength = 0x8001e1bc
+                0x000000008001e250                CDSYS_XAPlay = 0x8001e250
+                0x000000008001e454                CDSYS_XAPauseRequest = 0x8001e454
+                0x000000008001e4a8                CDSYS_XAPauseForce = 0x8001e4a8
+                0x000000008001e528                CDSYS_XAPauseAtEnd = 0x8001e528
+                0x000000008001e550                COLL_ThreadMeta = 0x8001e550
+                0x000000008001e580                COLL_Instance = 0x8001e580
+                0x000000008001eacc                COLL_SearchCallback_Instances = 0x8001eacc
+                0x000000008001ec38                COLL_CheckDriver_AI = 0x8001ec38
+                0x000000008001ee00                COLL_CheckDriver_Player = 0x8001ee00
+                0x000000008001ffc8                COLL_SearchTree_NoCallback = 0x8001ffc8
+                0x00000000800200a8                COLL_SearchTree_WithCallback = 0x800200a8
+                0x00000000800208d8                COLL_Quadblock_Graphics = 0x800208d8
+                0x0000000080020aac                COLL_SearchCallback_QuadBlocks_Graphics = 0x80020aac
+                0x0000000080021520                COLL_Quadblock_Physics = 0x80021520
+                0x0000000080021764                COLL_SearchCallback_QuadBlocks_Physics = 0x80021764
+                0x0000000080022114                COLL_Scrub = 0x80022114
+                0x00000000800229bc                CTR_Box_DrawWirePrims = 0x800229bc
+                0x0000000080022a50                CTR_Box_DrawWireBox = 0x80022a50
+                0x0000000080022c38                CTR_Box_DrawClearBox = 0x80022c38
+                0x0000000080022d50                CTR_Box_DrawSolidBox = 0x80022d50
+                0x0000000080022e40                CTR_CycleTex_LEV = 0x80022e40
+                0x0000000080022edc                CTR_CycleTex_Model = 0x80022edc
+                0x0000000080022f7c                CTR_CycleTex_AllModels = 0x80022f7c
+                0x0000000080023050                CTR_CycleTex_2p3p4pWumpaHUD = 0x80023050
+                0x0000000080023078                CTR_ClearRenderLists_1P2P = 0x80023078
+                0x00000000800230e8                CTR_ClearRenderLists_3P4P = 0x800230e8
+                0x0000000080023148                CTR_EmptyFunc_StartNewFrame = 0x80023148
+                0x0000000080023150                CTR_ErrorScreen = 0x80023150
+                0x000000008002336c                CTR_MatrixToRot = 0x8002336c
+                0x00000000800236c4                CTR_ScrambleGhostString = 0x800236c4
+                0x0000000080023770                DebugFont_Init = 0x80023770
+                0x00000000800237a8                DebugFont_DrawNumbers = 0x800237a8
+                0x0000000080023884                DecalFont_boolRacingWheel = 0x80023884
+                0x000000008002392c                DecalFont_GetLineWidthStrlen = 0x8002392c
+                0x0000000080023a40                DISPLAY_Blur_SubFunc = 0x80023a40
+                0x0000000080023a6c                DecalFont_GetLineWidth = 0x80023a6c
+                0x0000000080023a98                DecalFont_SetJfontDimensions = 0x80023a98
+                0x0000000080023b78                DecalFont_DrawLineStrlen = 0x80023b78
+                0x0000000080023d4c                DISPLAY_Blur_Main = 0x80023d4c
+                0x0000000080023ffc                DISPLAY_Swap = 0x80023ffc
+                0x00000000800241f0                DecalFont_DrawLine = 0x800241f0
+                0x000000008002423c                DecalFont_DrawLineOT = 0x8002423c
+                0x00000000800242a8                DecalFont_DrawMultiLineStrlen = 0x800242a8
+                0x00000000800244bc                DecalFont_DrawMultiLine = 0x800244bc
+                0x000000008002451c                DecalGlobal_EmptyFunc_StartNewFrame = 0x8002451c
+                0x0000000080024524                DecalGlobal_Clear = 0x80024524
+                0x0000000080024564                DecalGlobal_Store = 0x80024564
+                0x0000000080024610                DecalGlobal_Find1 = 0x80024610
+                0x00000000800246b4                DecalGlobal_Find2 = 0x800246b4
+                0x0000000080024738                DecalHUD_DrawPolyFT4 = 0x80024738
+                0x000000008002484c                DecalHUD_DrawWeapon = 0x8002484c
+                0x00000000800249dc                DecalHUD_DrawPolyGT4 = 0x800249dc
+                0x0000000080024b18                DecalHUD_Arrow2D = 0x80024b18
+                0x0000000080024e10                DecalMP_01 = 0x80024e10
+                0x0000000080024fc8                DecalMP_02 = 0x80024fc8
+                0x000000008002510c                DecalMP_03 = 0x8002510c
+                0x0000000080025984                DotLights_Video = 0x80025984
+                0x0000000080025bd0                DotLights_AudioAndVideo = 0x80025bd0
+                0x0000000080025d7c                EffectSfxRain_MakeSound = 0x80025d7c
+                0x0000000080025e34                EffectSfxRain_Reset = 0x80025e34
+                0x0000000080025e3c                ElimBG_SaveScreenshot_Chunk = 0x80025e3c
+                0x0000000080025eb4                ElimBG_SaveScreenshot_Full = 0x80025eb4
+                0x0000000080026134                ElimBG_Activate = 0x80026134
+                0x0000000080026158                ElimBG_ToggleInstance = 0x80026158
+                0x00000000800261d4                ElimBG_ToggleAllInstances = 0x800261d4
+                0x000000008002628c                ElimBG_HandleState = 0x8002628c
+                0x0000000080026520                ElimBG_Deactivate = 0x80026520
+                0x0000000080026564                FLARE_PerFrame = 0x80026564
+                0x0000000080026a50                FLARE_Init = 0x80026a50
+                0x0000000080026ac4                GAMEPAD_Init = 0x80026ac4
+                0x0000000080026b28                GAMEPAD_SetMainMode = 0x80026b28
+                0x0000000080026bc0                GAMEPAD_ProcessState = 0x80026bc0
+                0x0000000080026d30                GAMEPAD_CheckUnplugged = 0x80026d30
+                0x0000000080026f08                GAMEPAD_GetNumConnected = 0x80026f08
+                0x0000000080027074                GAMEPAD_ProcessHold = 0x80027074
+                0x00000000800271b0                GAMEPAD_ProcessSticks = 0x800271b0
+                0x0000000080027580                GAMEPAD_ProcessTapRelease = 0x80027580
+                0x0000000080027688                GAMEPAD_ProcessForceFeedback = 0x80027688
+                0x0000000080027a0c                GAMEPAD_UpdateAll = 0x80027a0c
+                0x0000000080027adc                GAMEPAD_Vib_1 = 0x80027adc
+                0x0000000080027b38                GAMEPAD_Vib_2 = 0x80027b38
+                0x0000000080027b7c                GAMEPAD_Vib_3 = 0x80027b7c
+                0x0000000080027bfc                GAMEPAD_Vib_4 = 0x80027bfc
+                0x0000000080027c7c                GAMEPAD_Vib_5 = 0x80027c7c
+                0x0000000080027cfc                GAMEPROG_AdvPercent = 0x80027cfc
+                0x0000000080027fd8                GAMEPROG_ResetHighScores = 0x80027fd8
+                0x00000000800282c8                GAMEPROG_CheckGhostsBeaten = 0x800282c8
+                0x00000000800283d4                GAMEPROG_NewProfile_OutsideAdv = 0x800283d4
+                0x0000000080028408                GAMEPROG_InitFullMemcard = 0x80028408
+                0x000000008002849c                GAMEPROG_NewProfile_InsideAdv = 0x8002849c
+                0x00000000800284d8                GAMEPROG_SaveCupProgress = 0x800284d8
+                0x0000000080028560                GAMEPROG_SaveTimeTrialProgress = 0x80028560
+                0x000000008002862c                GAMEPROG_NewGame_OnBoot = 0x8002862c
+                0x0000000080028664                GAMEPROG_GetPtrHighScoreTrack = 0x80028664
+                0x00000000800286bc                GhostBuffer_PerFrame = 0x800286bc
+                0x000000008002901c                GhostBuffer_InitMemory = 0x8002901c
+                0x000000008002936c                GhostBuffer_InitDriver = 0x8002936c
+                0x00000000800295d8                GhostBuffer_InitRecording = 0x800295d8
+                0x0000000080029674                GhostBuffer_EndRecording = 0x80029674
+                0x0000000080029704                GhostBuffer_RecordStats = 0x80029704
+                0x0000000080029b70                GhostBuffer_RecordBoosts = 0x80029b70
+                0x0000000080029bf4                GhostBuffer_Destroy = 0x80029bf4
+                0x0000000080029c20                CountSounds = 0x80029c20
+                0x0000000080029c4c                OtherFX_Play = 0x80029c4c
+                0x0000000080029c78                OtherFX_Play_Echo = 0x80029c78
+                0x0000000080029cb4                OtherFX_Play_LowLevel = 0x80029cb4
+                0x0000000080029e74                OtherFX_Modify = 0x80029e74
+                0x0000000080029fec                OtherFX_Stop1 = 0x80029fec
+                0x000000008002a028                OtherFX_Stop2 = 0x8002a028
+                0x000000008002a064                EngineAudio_InitOnce = 0x8002a064
+                0x000000008002a194                EngineAudio_Recalculate = 0x8002a194
+                0x000000008002a338                EngineAudio_Stop = 0x8002a338
+                0x000000008002a3a0                SetReverbMode = 0x8002a3a0
+                0x000000008002a494                CseqMusic_Start = 0x8002a494
+                0x000000008002a580                CseqMusic_Pause = 0x8002a580
+                0x000000008002a5fc                CseqMusic_Resume = 0x8002a5fc
+                0x000000008002a678                CseqMusic_ChangeVolume = 0x8002a678
+                0x000000008002a750                CseqMusic_Restart = 0x8002a750
+                0x000000008002a824                CseqMusic_ChangeTempo = 0x8002a824
+                0x000000008002a8e8                CseqMusic_AdvHubSwap = 0x8002a8e8
+                0x000000008002a9bc                CseqMusic_Stop = 0x8002a9bc
+                0x000000008002aa74                CseqMusic_StopAll = 0x8002aa74
+                0x000000008002aafc                Bank_ResetAllocator = 0x8002aafc
+                0x000000008002ab18                Bank_Alloc = 0x8002ab18
+                0x000000008002abd4                Bank_AssignSpuAddrs = 0x8002abd4
+                0x000000008002aee0                Bank_Destroy = 0x8002aee0
+                0x000000008002af4c                Bank_ClearInRange = 0x8002af4c
+                0x000000008002afbc                Bank_Load = 0x8002afbc
+                0x000000008002b040                Bank_DestroyLast = 0x8002b040
+                0x000000008002b08c                Bank_DestroyUntilIndex = 0x8002b08c
+                0x000000008002b100                Bank_DestroyAll = 0x8002b100
+                0x000000008002b138                howl_InstrumentPitch = 0x8002b138
+                0x000000008002b1a4                howl_InitGlobals = 0x8002b1a4
+                0x000000008002b26c                howl_ParseHeader = 0x8002b26c
+                0x000000008002b2d0                howl_ParseCesqHeader = 0x8002b2d0
+                0x000000008002b348                howl_LoadHeader = 0x8002b348
+                0x000000008002b45c                howl_SetSong = 0x8002b45c
+                0x000000008002b4c0                howl_LoadSong = 0x8002b4c0
+                0x000000008002b5dc                howl_ErasePtrCesqHeader = 0x8002b5dc
+                0x000000008002b5e8                howl_ReadTimeDelta = 0x8002b5e8
+                0x000000008002b634                cseq_opcode01_noteoff = 0x8002b634
+                0x000000008002b740                cseq_opcode03 = 0x8002b740
+                0x000000008002b79c                howl_InitChannelAttr_Music = 0x8002b79c
+                0x000000008002baf0                cseq_opcode_from06and07 = 0x8002baf0
+                0x000000008002bd28                cseq_opcode06 = 0x8002bd28
+                0x000000008002bda8                cseq_opcode07 = 0x8002bda8
+                0x000000008002be7c                cseq_opcode0a = 0x8002be7c
+                0x000000008002c010                SongPool_FindFreeChannel = 0x8002c010
+                0x000000008002c04c                SongPool_CalculateTempo = 0x8002c04c
+                0x000000008002c0a0                SongPool_ChangeTempo = 0x8002c0a0
+                0x000000008002c104                SongPool_Start = 0x8002c104
+                0x000000008002c3dc                SongPool_Volume = 0x8002c3dc
+                0x000000008002c3f4                SongPool_AdvHub1 = 0x8002c3f4
+                0x000000008002c448                SongPool_AdvHub2 = 0x8002c448
+                0x000000008002c51c                SongPool_StopCseq = 0x8002c51c
+                0x000000008002c610                SongPool_StopAllCseq = 0x8002c610
+                0x000000008002c698                howl_Disable = 0x8002c698
+                0x000000008002c6bc                UpdateChannelVol_EngineFX = 0x8002c6bc
+                0x000000008002c708                UpdateChannelVol_OtherFX = 0x8002c708
+                0x000000008002c774                UpdateChannelVol_Music = 0x8002c774
+                0x000000008002c868                UpdateChannelVol_EngineFX_All = 0x8002c868
+                0x000000008002c970                UpdateChannelVol_Music_All = 0x8002c970
+                0x000000008002ca34                UpdateChannelVol_OtherFX_All = 0x8002ca34
+                0x000000008002cae4                howl_VolumeGet = 0x8002cae4
+                0x000000008002cb34                howl_VolumeSet = 0x8002cb34
+                0x000000008002cbf4                howl_ModeGet = 0x8002cbf4
+                0x000000008002cc00                howl_ModeSet = 0x8002cc00
+                0x000000008002cc0c                OptionsMenu_TestSound = 0x8002cc0c
+                0x000000008002ced4                Smart_EnterCriticalSection = 0x8002ced4
+                0x000000008002cf04                Smart_ExitCriticalSection = 0x8002cf04
+                0x000000008002cf3c                Channel_SetVolume = 0x8002cf3c
+                0x000000008002cfb0                Channel_FindDuplicateSound = 0x8002cfb0
+                0x000000008002d004                Channel_AllocSlot_CheckDups = 0x8002d004
+                0x000000008002d1cc                Channel_AllocSlot = 0x8002d1cc
+                0x000000008002d294                Channel_SearchFX_EditAttr = 0x8002d294
+                0x000000008002d3b4                Channel_SearchFX_Destroy = 0x8002d3b4
+                0x000000008002d48c                Channel_DestroyAll_LowLevel = 0x8002d48c
+                0x000000008002d5a8                Channel_ParseSongToChannels = 0x8002d5a8
+                0x000000008002d898                Channel_UpdateChannels = 0x8002d898
+                0x000000008002db88                Cutscene_VolumeBackup = 0x8002db88
+                0x000000008002dbcc                Cutscene_VolumeRestore = 0x8002dbcc
+                0x000000008002dc04                howl_PlayAudio_PerFrame = 0x8002dc04
+                0x000000008002dd48                howl_InitChannelAttr_EngineFX = 0x8002dd48
+                0x000000008002de20                howl_InitChannelAttr_OtherFX = 0x8002de20
+                0x000000008002df0c                howl_PauseAudio = 0x8002df0c
+                0x000000008002e048                howl_UnPauseChannel = 0x8002e048
+                0x000000008002e180                howl_UnPauseAudio = 0x8002e180
+                0x000000008002e2a4                howl_StopAudio = 0x8002e2a4
+                0x000000008002e314                Voiceline_PoolInit = 0x8002e314
+                0x000000008002e4a4                Voiceline_ClearTimeStamp = 0x8002e4a4
+                0x000000008002e4dc                Voiceline_PoolClear = 0x8002e4dc
+                0x000000008002e540                Voiceline_StopAll = 0x8002e540
+                0x000000008002e5b0                Voiceline_ToggleEnable = 0x8002e5b0
+                0x000000008002e5e4                Voiceline_RequestPlay = 0x8002e5e4
+                0x000000008002e940                Voiceline_StartPlay = 0x8002e940
+                0x000000008002ebb4                Voiceline_PerFrame = 0x8002ebb4
+                0x000000008002ed64                Voiceline_EmptyFunc = 0x8002ed64
+                0x000000008002ed6c                Voiceline_SetDefaults = 0x8002ed6c
+                0x000000008002edb0                Audio_SetState = 0x8002edb0
+                0x000000008002ef8c                Audio_SetState_Safe = 0x8002ef8c
+                0x000000008002efcc                Audio_AdvHub_SwapSong = 0x8002efcc
+                0x000000008002f014                Audio_SetMaskSong = 0x8002f014
+                0x000000008002f14c                Audio_PerFrame = 0x8002f14c
+                0x000000008002f750                Audio_SetDefaults = 0x8002f750
+                0x000000008002f7b0                Audio_SetReverbMode = 0x8002f7b0
+                0x000000008002f8b8                Music_SetIntro = 0x8002f8b8
+                0x000000008002f908                Music_LoadBanks = 0x8002f908
+                0x000000008002f9dc                Music_AsyncParseBanks = 0x8002f9dc
+                0x000000008002ff1c                Music_SetDefaults = 0x8002ff1c
+                0x000000008002ff34                Music_Adjust = 0x8002ff34
+                0x000000008002fffc                Music_LowerVolume = 0x8002fffc
+                0x0000000080030050                Music_RaiseVolume = 0x80030050
+                0x00000000800300a4                Music_Restart = 0x800300a4
+                0x00000000800300d0                Music_Stop = 0x800300d0
+                0x0000000080030108                Music_Start = 0x80030108
+                0x0000000080030120                Music_End = 0x80030120
+                0x0000000080030134                Music_GetHighestSongPlayIndex = 0x80030134
+                0x0000000080030140                GTE_AudioLR_Inst = 0x80030140
+                0x00000000800301b0                GTE_AudioLR_Driver = 0x800301b0
+                0x000000008003023c                GTE_GetSquaredLength = 0x8003023c
+                0x0000000080030274                OtherFX_DriverTurbo = 0x80030274
+                0x0000000080030308                OtherFX_Stop_Safe = 0x80030308
+                0x0000000080030344                OtherFX_DriverCrashing = 0x80030344
+                0x00000000800303a0                GTE_GetSquaredDistance = 0x800303a0
+                0x0000000080030430                CalculateVolumeFromDistance = 0x80030430
+                0x0000000080030578                PlayWarppadSound = 0x80030578
+                0x00000000800305a4                Level_SoundLoop1 = 0x800305a4
+                0x0000000080030628                Level_SoundLoop2 = 0x80030628
+                0x000000008003069c                Level_RandomFX = 0x8003069c
+                0x00000000800307c8                Level_AmbientSound = 0x800307c8
+                0x0000000080030cc0                PlaySound3D = 0x80030cc0
+                0x0000000080030f00                PlaySound3D_Flags = 0x80030f00
+                0x00000000800311d8                EngineSound_Player = 0x800311d8
+                0x0000000080031828                EngineSound_VolumeAdjust = 0x80031828
+                0x0000000080031864                EngineSound_AI = 0x80031864
+                0x0000000080031b28                EngineSound_NearestAIs = 0x80031b28
+                0x0000000080031e08                Garage_Init = 0x80031e08
+                0x0000000080031e64                Garage_Enter = 0x80031e64
+                0x0000000080032004                Garage_Idle1 = 0x80032004
+                0x00000000800320b8                Garage_Idle2 = 0x800320b8
+                0x000000008003234c                Garage_Leave = 0x8003234c
+                0x0000000080032378                INSTANCE_Birth = 0x80032378
+                0x000000008003246c                INSTANCE_Birth3D = 0x8003246c
+                0x00000000800324e4                INSTANCE_Birth2D = 0x800324e4
+                0x00000000800325a4                INSTANCE_BirthWithThread = 0x800325a4
+                0x0000000080032650                INSTANCE_BirthWithThread_Desc = 0x80032650
+                0x00000000800326a8                INSTANCE_Death = 0x800326a8
+                0x00000000800326d4                INSTANCE_LEVEL_InitAll = 0x800326d4
+                0x0000000080032ad4                INSTANCE_LEVEL_RebuildThreads = 0x80032ad4
+                0x0000000080032bdc                AllocPool_Clear = 0x80032bdc
+                0x0000000080032c5c                AllocPool_Init = 0x80032c5c
+                0x0000000080032cd4                AllocPool_Add = 0x80032cd4
+                0x0000000080032d2c                AllocPool_Remove = 0x80032d2c
+                0x0000000080032d6c                INSTANCE_LEVEL_DefToInst = 0x80032d6c
+                0x0000000080032e68                INSTANCE_LEVEL_InstToDef = 0x80032e68
+                0x0000000080032fc8                INSTANCE_ParentInstance = 0x80032fc8
+                0x000000008003307c                INSTANCE_ModelGlobal_Store = 0x8003307c
+                0x00000000800330c0                INSTANCE_ModelGlobal_Clear = 0x800330c0
+                0x00000000800331ac                INSTANCE_CollBucket_Hitbox_Desc = 0x800331ac
+                0x0000000080033208                INSTANCE_CollBucket_Hitbox = 0x80033208
+                0x0000000080033334                LIST_Clear = 0x80033334
+                0x0000000080033344                LIST_AddFront = 0x80033344
+                0x0000000080033388                LIST_AddBack = 0x80033388
+                0x00000000800333cc                LIST_GetNextItem = 0x800333cc
+                0x00000000800333d8                LIST_GetFirstItem = 0x800333d8
+                0x00000000800333e4                LIST_RemoveMember = 0x800333e4
+                0x000000008003346c                LIST_RemoveFront = 0x8003346c
+                0x000000008003357c                LIST_Init = 0x8003357c
+                0x00000000800335e8                LOAD_Callback_Overlay_Generic = 0x800335e8
+                0x00000000800335f4                LOAD_Callback_Overlay_230 = 0x800335f4
+                0x0000000080033608                LOAD_Callback_Overlay_231 = 0x80033608
+                0x0000000080033620                LOAD_Callback_Overlay_232 = 0x80033620
+                0x0000000080033638                LOAD_Callback_Overlay_233 = 0x80033638
+                0x0000000080033650                LOAD_Callback_MaskHints3D = 0x80033650
+                0x0000000080033664                LOAD_Callback_Podiums = 0x80033664
+                0x0000000080033678                LOAD_Callback_LEV = 0x80033678
+                0x00000000800336a4                LOAD_Callback_LEV_Adv = 0x800336a4
+                0x0000000080033700                LOAD_Callback_DriverModels = 0x80033700
+                0x0000000080033714                LOAD_HubCallback = 0x80033714
+                0x0000000080033750                LOAD_GlobalModelPtrs_MPK = 0x80033750
+                0x00000000800337dc                LOAD_HubSwapPtrs = 0x800337dc
+                0x000000008003381c                LOAD_StringToUpper = 0x8003381c
+                0x0000000080033858                LOAD_InitCD = 0x80033858
+                0x0000000080033878                LOAD_ReadDirectory = 0x80033878
+                0x0000000080033930                LOAD_DramFileCallback = 0x80033930
+                0x0000000080033a00                LOAD_DramFile = 0x80033a00
+                0x0000000080033ae4                LOAD_VramFileCallback = 0x80033ae4
+                0x0000000080033bdc                LOAD_VramFile = 0x80033bdc
+                0x0000000080033d10                LOAD_ReadFileASyncCallback = 0x80033d10
+                0x0000000080033db4                LOAD_ReadFile = 0x80033db4
+                0x0000000080033f44                LOAD_ReadFile_NoCallback = 0x80033f44
+                0x0000000080034038                LOAD_FindFile = 0x80034038
+                0x0000000080034098                howl_readSectorSync = 0x80034098
+                0x000000008003414c                howl_cdReadCallback = 0x8003414c
+                0x0000000080034194                howl_loadDataFromCd = 0x80034194
+                0x000000008003426c                howl_loadDataFromCd_RetryOnError = 0x8003426c
+                0x00000000800342b4                LOAD_RunPtrMap = 0x800342b4
+                0x0000000080034300                LOAD_Robots2P = 0x80034300
+                0x00000000800343dc                LOAD_Robots1P = 0x800343dc
+                0x000000008003442c                LOAD_DriverMPK = 0x8003442c
+                0x0000000080034750                LOAD_LangFile = 0x80034750
+                0x00000000800347f0                LOAD_GetBigfileIndex = 0x800347f0
+                0x00000000800348fc                LOAD_AppendQueue = 0x800348fc
+                0x0000000080034958                LOAD_CDRequestCallback = 0x80034958
+                0x000000008003498c                LOAD_NextQueuedFile = 0x8003498c
+                0x0000000080034bc8                LOAD_Hub_ReadFile = 0x80034bc8
+                0x0000000080034cd4                LOAD_Hub_SwapNow = 0x80034cd4
+                0x0000000080034ee4                LOAD_Hub_Main = 0x80034ee4
+                0x0000000080035080                LOAD_OvrLOD = 0x80035080
+                0x0000000080035100                LOAD_OvrEndRace = 0x80035100
+                0x000000008003517c                LOAD_OvrThreads = 0x8003517c
+                0x00000000800351e8                LOAD_GetAdvPackIndex = 0x800351e8
+                0x000000008003521c                LOAD_TenStages = 0x8003521c
+                0x0000000080036438                LOAD_TalkingMask = 0x80036438
+                0x00000000800364dc                LOAD_LevelFile = 0x800364dc
+                0x0000000080036550                LOAD_IsOpen_RacingOrBattle = 0x80036550
+                0x0000000080036570                LOAD_IsOpen_MainMenu = 0x80036570
+                0x0000000080036588                LOAD_IsOpen_AdvHub = 0x80036588
+                0x00000000800365a8                LOAD_IsOpen_Podiums = 0x800365a8
+                0x00000000800365c8                GetClipBufferSize = 0x800365c8
+                0x0000000080036634                Alloc_PrimMem = 0x80036634
+                0x0000000080036698                Alloc_OTMem = 0x80036698
+                0x00000000800366f0                DrawSyncCallbackFunc = 0x800366f0
+                0x0000000080036714                VsyncCallbackFunc = 0x80036714
+                0x00000000800367b8                howl_TogglePause = 0x800367b8
+                0x000000008003682c                StartNewFrame = 0x8003682c
+                0x00000000800369c4                GameplayUpdateLoop = 0x800369c4
+                0x0000000080037674                VisMem_FullFrame = 0x80037674
+                0x0000000080037c2c                CheckMissingControllers = 0x80037c2c
+                0x0000000080037cdc                RequestMaskHint = 0x80037cdc
+                0x0000000080037d2c                RenderFrame = 0x80037d2c
+                0x00000000800396b4                RacingWheel_Config_DrawArrows = 0x800396b4
+                0x0000000080039894                RacingWheel_Config = 0x80039894
+                0x000000008003a08c                MenuBoxFuncPtr_Options = 0x8003a08c
+                0x000000008003adec                MenuBoxFuncPtr_Quit = 0x8003adec
+                0x000000008003aee0                AdvPause_SafeDestroy = 0x8003aee0
+                0x000000008003af28                PauseGame_MenuBoxFuncPtr = 0x8003af28
+                0x000000008003b2b0                PauseGame_Get_MenuBox = 0x8003b2b0
+                0x000000008003b37c                PauseGame_WhenPressingStart = 0x8003b37c
+                0x000000008003b48c                EndOfRace_TimeTrial_Relic_CalculateReward = 0x8003b48c
+                0x000000008003b7bc                EndOfRace_TimeTrial_Relic_SaveHighScore = 0x8003b7bc
+                0x000000008003b904                ToggleGameState_EndOfRace = 0x8003b904
+                0x000000008003c474                ToggleGameState_StartOfRace = 0x8003c474
+                0x000000008003c510                VisMem_Clear1 = 0x8003c510
+                0x000000008003c594                RainBufferInit = 0x8003c594
+                0x000000008003c67c                SetPrimMemSize = 0x8003c67c
+                0x000000008003c85c                ClearAllMemPools = 0x8003c85c
+                0x000000008003c8bc                SetOTMemSize = 0x8003c8bc
+                0x000000008003c9c4                AllocateAllPools = 0x8003c9c4
+                0x000000008003cc58                AllocAllDrivers = 0x8003cc58
+                0x000000008003cebc                InitThreadBuckets = 0x8003cebc
+                0x000000008003d75c                StringToLevID = 0x8003d75c
+                0x000000008003d7d0                VRAM_ClearToBlack = 0x8003d7d0
+                0x000000008003d898                UpdateIntroScreen = 0x8003d898
+                0x000000008003d9a4                EndGame = 0x8003d9a4
+                0x000000008003da10                PrepareSpyro2 = 0x8003da10
+                0x000000008003da80                LaunchSpyro2 = 0x8003da80
+                0x000000008003dab8                LoadVlcTable_Callback = 0x8003dab8
+                0x000000008003dac8                LoadVlcTable = 0x8003dac8
+                0x000000008003db3c                main = 0x8003db3c
+                0x000000008003e714                Level_StartLoading = 0x8003e714
+                0x000000008003e758                Level_RequestNewLEV = 0x8003e758
+                0x000000008003e800                RestartRace_IncrementLossCount = 0x8003e800
+                0x000000008003e91c                MATH_Sin = 0x8003e91c
+                0x000000008003e958                MATH_Cos = 0x8003e958
+                0x000000008003e9ac                MATH_FastSqrt = 0x8003e9ac
+                0x000000008003e9fc                MATH_HitboxMatrix = 0x8003e9fc
+                0x000000008003eac0                MATH_VectorLength = 0x8003eac0
+                0x000000008003eb10                MATH_VectorNormalize = 0x8003eb10
+                0x000000008003ebf8                MATH_MatrixMul = 0x8003ebf8
+                0x000000008003ec7c                MEMCARD_SetIcon = 0x8003ec7c
+                0x000000008003ecd8                MEMCARD_CRC16 = 0x8003ecd8
+                0x000000008003ed1c                MEMCARD_ChecksumSave = 0x8003ed1c
+                0x000000008003edb0                MEMCARD_ChecksumLoad = 0x8003edb0
+                0x000000008003ee80                MEMCARD_StringInit = 0x8003ee80
+                0x000000008003eec8                MEMCARD_StringSet = 0x8003eec8
+                0x000000008003ef70                MEMCARD_InitCard = 0x8003ef70
+                0x000000008003f0f4                MEMCARD_CloseCard = 0x8003f0f4
+                0x000000008003f184                MEMCARD_GetNextSlot1Event = 0x8003f184
+                0x000000008003f200                MEMCARD_WaitForSlot1Event = 0x8003f200
+                0x000000008003f270                MEMCARD_GetNextSlot2Event = 0x8003f270
+                0x000000008003f2ec                MEMCARD_WaitForSlot2Event = 0x8003f2ec
+                0x000000008003f35c                MEMCARD_SkipEvents = 0x8003f35c
+                0x000000008003f3a0                MEMCARD_NewTask = 0x8003f3a0
+                0x000000008003f400                MEMCARD_CloseFile = 0x8003f400
+                0x000000008003f438                MEMCARD_ReadFile = 0x8003f438
+                0x000000008003f4a4                MEMCARD_WriteFile = 0x8003f4a4
+                0x000000008003f518                MEMCARD_GetFreeBytes = 0x8003f518
+                0x000000008003fc14                MEMCARD_GetInfo = 0x8003fc14
+                0x000000008003fc88                MEMCARD_Load = 0x8003fc88
+                0x000000008003fd3c                MEMCARD_Save = 0x8003fd3c
+                0x000000008003ff20                MEMCARD_Format = 0x8003ff20
+                0x000000008004001c                MEMCARD_FindFirstGhost = 0x8004001c
+                0x0000000080040094                MEMCARD_FindNextGhost = 0x80040094
+                0x00000000800400f0                MEMCARD_EraseFile = 0x800400f0
+                0x000000008004015c                MEMPACK_Init = 0x8004015c
+                0x0000000080040228                MEMPACK_SwapPacks = 0x80040228
+                0x000000008004024c                MEMPACK_NewPack_StartEnd = 0x8004024c
+                0x0000000080040278                MEMPACK_GetFreeBytes = 0x80040278
+                0x0000000080040290                MEMPACK_AllocMem = 0x80040290
+                0x0000000080040304                MEMPACK_AllocHighMem = 0x80040304
+                0x0000000080040354                MEMPACK_ClearHighMem = 0x80040354
+                0x0000000080040368                MEMPACK_ReallocMem = 0x80040368
+                0x0000000080040394                MEMPACK_PushState = 0x80040394
+                0x00000000800403d4                MEMPACK_ClearLowMem = 0x800403d4
+                0x00000000800403ec                MEMPACK_PopState = 0x800403ec
+                0x0000000080040424                MEMPACK_PopToState = 0x80040424
+                0x0000000080040444                RNG_Scramble = 0x80040444
+                0x0000000080040488                RNG_Particles = 0x80040488
+                0x00000000800404c8                RNG_GetValue = 0x800404c8
+                0x00000000800404fc                Particle_FuncPtr_PotionShatter = 0x800404fc
+                0x0000000080040634                Particle_FuncPtr_SpitTire = 0x80040634
+                0x000000008004083c                Particle_FuncPtr_ExhaustUnderwater = 0x8004083c
+                0x00000000800408cc                Particle_OnDestroy = 0x800408cc
+                0x0000000080040918                Particle_UpdateList = 0x80040918
+                0x0000000080040e50                Particle_UpdateAllParticles = 0x80040e50
+                0x0000000080040ea8                Particle_BitwiseClampByte = 0x80040ea8
+                0x0000000080040ee0                Particle_SetColors = 0x80040ee0
+                0x0000000080040fac                Particle_RenderList = 0x80040fac
+                0x0000000080041d24                Particle_CreateInstance = 0x80041d24
+                0x000000008004226c                RivalWeapons_Init = 0x8004226c
+                0x00000000800422d4                RivalWeapons_PerFrame = 0x800422d4
+                0x0000000080042ea8                StartLine_PerFrame = 0x80042ea8
+                0x0000000080043660                Tawna_Init = 0x80043660
+                0x000000008004379c                THREAD_DestroyTracker = 0x8004379c
+                0x00000000800437d8                THREAD_DestroyInstance = 0x800437d8
+                0x00000000800437fc                THREAD_DestroyObject = 0x800437fc
+                0x0000000080043878                THREAD_DestroySelf = 0x80043878
+                0x00000000800438e0                THREAD_DestroyBloodline = 0x800438e0
+                0x0000000080043934                THREAD_CheckBloodlineForDead = 0x80043934
+                0x00000000800439d0                THREAD_CheckAllForDead = 0x800439d0
+                0x0000000080043a38                THREAD_BirthWithObject = 0x80043a38
+                0x0000000080043c68                THREAD_CollidePointWithSelf = 0x80043c68
+                0x0000000080043d24                THREAD_CollidePointWithBucket = 0x80043d24
+                0x0000000080043d70                THREAD_SearchForModel = 0x80043d70
+                0x0000000080043dd8                Weapon_SearchCallback = 0x80043dd8
+                0x0000000080043f20                Weapon_MakeHitbox_SearchBSP = 0x80043f20
+                0x0000000080043fb0                Weapon_CollideThreadBucket = 0x80043fb0
+                0x00000000800440d4                Camera110_InitStructs = 0x800440d4
+                0x00000000800442ec                Camera110_InitPsyqGeom = 0x800442ec
+                0x0000000080044350                Camera110_LinkOT_DecalMP = 0x80044350
+                0x0000000080044468                Camera110_LinkOT_Normal = 0x80044468
+                0x00000000800445e0                Camera110_SetViewMatrix = 0x800445e0
+                0x000000008004482c                Camera110_SetFrustumPlane = 0x8004482c
+                0x0000000080044acc                Camera110_UpdateFrustum = 0x80044acc
+                0x0000000080045304                Camera110_FadeOneWindow = 0x80045304
+                0x0000000080045494                Camera110_FadeAllWindows = 0x80045494
+                0x000000008004550c                loadNonAdvTrack_MenuBoxFuncPtr = 0x8004550c
+                0x00000000800455e0                loadNonAdvTrack_Get_MenuBox = 0x800455e0
+                0x00000000800455ec                LoadGameOptions = 0x800455ec
+                0x0000000080045700                SaveGameOptions = 0x80045700
+                0x0000000080045810                CheckeredFlag_MoveModels = 0x80045810
+                0x00000000800458f8                CheckeredFlag_IsFullyOnScreen = 0x800458f8
+                0x0000000080045904                CheckeredFlag_IsFullyOffScreen = 0x80045904
+                0x0000000080045920                CheckeredFlag_IsTransitioning = 0x80045920
+                0x0000000080045968                CheckeredFlag_SetDrawOrder = 0x80045968
+                0x000000008004598c                CheckeredFlag_BeginTransition = 0x8004598c
+                0x0000000080045a08                CheckeredFlag_SetFullyOnScreen = 0x80045a08
+                0x0000000080045a34                CheckeredFlag_SetFullyOffScreen = 0x80045a34
+                0x0000000080045a64                CheckeredFlag_SetCanDraw = 0x80045a64
+                0x0000000080045a70                CheckeredFlag_GetCanDraw = 0x80045a70
+                0x0000000080045a7c                CheckeredFlag_PerFrame_GetOT = 0x80045a7c
+                0x0000000080045c6c                CheckeredFlag_ResetTextAnim = 0x80045c6c
+                0x0000000080045c7c                CheckeredFlag_DrawLoadingString = 0x80045c7c
+                0x0000000080045ec4                CheckeredFlag_DrawSelf = 0x80045ec4
+                0x00000000800468d4                DecalHUD_DrawPolyGT4_Safe = 0x800468d4
+                0x000000008004696c                DrawRectangle = 0x8004696c
+                0x00000000800469d4                ConvertTimeToString = 0x800469d4
+                0x0000000080046b10                BackgroundBlueRect_Subset = 0x80046b10
+                0x0000000080046c30                BackgroundBlueRect = 0x80046c30
+                0x0000000080046dc4                DrawTriangle = 0x80046dc4
+                0x0000000080046f10                DrawBoxOutline_LowLevel = 0x80046f10
+                0x000000008004702c                DrawBoxOutline_HighLevel = 0x8004702c
+                0x0000000080047068                DrawPlayerComment = 0x80047068
+                0x000000008004718c                DrawTextBackground = 0x8004718c
+                0x00000000800473c8                MenuBox_Background_Draw = 0x800473c8
+                0x00000000800474d0                MenuBox_Background_GetHeight = 0x800474d0
+                0x0000000080047600                MenuBox_Background_GetWidth = 0x80047600
+                0x0000000080047760                MenuBox_Draw = 0x80047760
+                0x0000000080047d80                MenuBox_ClearInput = 0x80047d80
+                0x0000000080047df0                MenuBox_CollectInput = 0x80047df0
+                0x0000000080047f30                MenuBox_ProcessInput = 0x80047f30
+                0x0000000080048218                MenuBox_ProcessState = 0x80048218
+                0x000000008004839c                MenuBox_Show = 0x8004839c
+                0x00000000800483d4                MenuBox_Hide = 0x800483d4
+                0x00000000800483e8                MenuBox_BoolHidden = 0x800483e8
+                0x00000000800483fc                GhostData_NumGhostsForLEV = 0x800483fc
+                0x0000000080048528                LoadSave_NextMemcardAction = 0x80048528
+                0x000000008004856c                GhostData_Encode = 0x8004856c
+                0x00000000800485cc                GhostData_Decode = 0x800485cc
+                0x000000008004863c                GhostData_SaveProfile = 0x8004863c
+                0x0000000080048a40                GhostData_LoadProfile = 0x80048a40
+                0x0000000080048ba4                LoadSave_StartMemcardAction = 0x80048ba4
+                0x0000000080048bb8                LoadSave_StopMemcardAction = 0x80048bb8
+                0x0000000080048c30                GhostData_ResetNumGhosts = 0x80048c30
+                0x0000000080048c3c                LoadFromCard_GameProgressAndOptions = 0x80048c3c
+                0x0000000080049824                LoadSave_LoadProfileFromHub_MenuBoxFuncPtr = 0x80049824
+                0x0000000080049878                LoadSave_PerFrame = 0x80049878
+                0x000000008004999c                LoadSave_PrintInteger = 0x8004999c
+                0x0000000080049a34                LoadSave_UI_ConvertX = 0x80049a34
+                0x0000000080049a54                LoadSave_UI_ConvertY = 0x80049a54
+                0x0000000080049a74                LoadSave_DrawAdvProfile = 0x80049a74
+                0x000000008004a024                LoadSave_GetTrackID = 0x8004a024
+                0x000000008004a048                LoadSave_Init = 0x8004a048
+                0x000000008004a35c                LoadSave_Destroy = 0x8004a35c
+                0x000000008004a3dc                LoadSave_OneProfile_MenuBoxFuncPtr = 0x8004a3dc
+                0x000000008004a4ac                LoadSave_DrawGhostProfile = 0x8004a4ac
+                0x000000008004a81c                LoadSave_MuteCursors = 0x8004a81c
+                0x000000008004a860                LoadSave_UnMuteCursors = 0x8004a860
+                0x000000008004a8a8                LoadSave_ToggleMode = 0x8004a8a8
+                0x000000008004a978                LoadSave_InitAndDestroy = 0x8004a978
+                0x000000008004a9a8                LoadSave_InputLogic = 0x8004a9a8
+                0x000000008004ab74                LoadSave_AllProfiles_MenuBoxFuncPtr = 0x8004ab74
+                0x000000008004c820                OSK_RestoreName = 0x8004c820
+                0x000000008004c878                OSK_DrawMenu = 0x8004c878
+                0x000000008004d1a4                OSK_MenuBoxFuncPtr = 0x8004d1a4
+                0x000000008004d290                PrixSaveBox_Activate = 0x8004d290
+                0x000000008004d2b8                PrixSaveBox_MenuBoxFuncPtr = 0x8004d2b8
+                0x000000008004d37c                RCNT_Init = 0x8004d37c
+                0x000000008004d3d0                RCNT_Destroy = 0x8004d3d0
+                0x000000008004d404                RCNT_GetTime_Total = 0x8004d404
+                0x000000008004d47c                RCNT_GetTime_Elapsed = 0x8004d47c
+                0x000000008004d4d0                DrawHeat_Main = 0x8004d4d0
+                0x000000008004d974                DrawHeat_Subset1 = 0x8004d974
+                0x000000008004d9ac                DrawHeat_Subset2 = 0x8004d9ac
+                0x000000008004da2c                DrawHeat_Subset3 = 0x8004da2c
+                0x000000008004daac                DrawHeat_Subset4 = 0x8004daac
+                0x000000008004dc48                DrawHeat_Subset5 = 0x8004dc48
+                0x000000008004dde4                DrawHeat_Subset6 = 0x8004dde4
+                0x000000008004df80                DrawHeat_Subset7 = 0x8004df80
+                0x000000008004e194                DrawHeat_Subset8 = 0x8004e194
+                0x000000008004e3a8                DrawHeat_Subset9 = 0x8004e3a8
+                0x000000008004e5bc                SaveLapTime = 0x8004e5bc
+                0x000000008004ef18                PerFrame_FruitDisp_and_TimeBox = 0x8004ef18
+                0x000000008004f050                PerFrame_Hud_Object3D = 0x8004f050
+                0x000000008004f114                PerFrame_CtrLetters = 0x8004f114
+                0x000000008004f204                PerFrame_big1 = 0x8004f204
+                0x000000008004f2a8                UI_ConvertX_2 = 0x8004f2a8
+                0x000000008004f2c8                UI_ConvertY_2 = 0x8004f2c8
+                0x000000008004f2e8                HUD_INSTANCE_BirthWithThread = 0x8004f2e8
+                0x000000008004f6c4                HUD_INSTANCE_InitAll = 0x8004f6c4
+                0x000000008004fe14                Map_DrawMap = 0x8004fe14
+                0x00000000800500b4                Map_GetIconDimensions = 0x800500b4
+                0x00000000800503ac                Map_DrawAdvPlayer = 0x800503ac
+                0x0000000080050444                Map_DrawRawIcon = 0x80050444
+                0x000000008005055c                Map_DrawDrivers = 0x8005055c
+                0x00000000800506e8                Map_DrawGhosts = 0x800506e8
+                0x00000000800507fc                Map_DrawTracking = 0x800507fc
+                0x00000000800508e0                WeaponBackground_AnimateShine = 0x800508e0
+                0x0000000080050b7c                WeaponBackground_DrawShine = 0x80050b7c
+                0x0000000080050e60                DrawTrackerTargetBackground = 0x80050e60
+                0x00000000800510d8                DrawCharacterIcon = 0x800510d8
+                0x00000000800512a8                InterpolatePosition2D_Angular = 0x800512a8
+                0x0000000080051418                InterpolatePosition2D_HUD = 0x80051418
+                0x00000000800514d4                InterpolatePosition2D_Linear = 0x800514d4
+                0x00000000800515ac                DrawRaceClock = 0x800515ac
+                0x00000000800522a8                DrawCountdownClock = 0x800522a8
+                0x0000000080052404                Battle_DrawArrowsOverHeads = 0x80052404
+                0x0000000080052760                UpdateTrackerTargets = 0x80052760
+                0x0000000080052e88                DrawPlacmentSuffix = 0x80052e88
+                0x0000000080052f54                DrawLapCounter = 0x80052f54
+                0x0000000080053080                DrawBattleScores = 0x80053080
+                0x000000008005320c                DrawWeapon = 0x8005320c
+                0x000000008005352c                DrawWeaponBackground = 0x8005352c
+                0x0000000080053654                DrawNumWumpa = 0x80053654
+                0x00000000800538a0                DrawNumTimebox = 0x800538a0
+                0x000000008005394c                DrawNumRelic = 0x8005394c
+                0x00000000800539f8                DrawNumKey = 0x800539f8
+                0x0000000080053aa4                DrawNumTrophy = 0x80053aa4
+                0x0000000080053b50                DrawNumCrystal = 0x80053b50
+                0x0000000080053bf4                DrawSpeedometerNeedle = 0x80053bf4
+                0x00000000800540e0                DrawSpeedometerBackground = 0x800540e0
+                0x0000000080054698                ProcessPlayerJumpBoosts = 0x80054698
+                0x0000000080054858                DrawJumpMeter = 0x80054858
+                0x0000000080054c84                DrawPowerslideMeter = 0x80054c84
+                0x0000000080054ef8                DrawHUD_DriverIcons = 0x80054ef8
+                0x00000000800559cc                DrawHUD_TurboCounter = 0x800559cc
+                0x0000000080055ed4                DrawHUD_Racing = 0x80055ed4
+                0x0000000080056efc                DrawHUD_AdvStrings = 0x80056efc
+                0x0000000080056fc0                DrawHUD_CrystalChallenge = 0x80056fc0
+                0x00000000800572c0                DrawHUD_Wumpa3D_2P3P4P = 0x800572c0
+                0x000000008005766c                EndOfRace_GetDriverQuipData = 0x8005766c
+                0x00000000800576dc                EndOfRace_AssignOneComment = 0x800576dc
+                0x0000000080057860                EndOfRace_AssignAllComments = 0x80057860
+                0x0000000080057d58                EndOfRace_DrawAllComments = 0x80057d58
+                0x0000000080057ee8                EndOfRace_Battle = 0x80057ee8
+                0x0000000080058370                Driver_Finalize_RaceClock = 0x80058370
+                0x0000000080058484                DrawIntroRaceText_1P = 0x80058484
+                0x00000000800588d8                MenuBoxFuncPtr_GenericEndOfRace = 0x800588d8
+                0x0000000080058cc4                CupStandings_FinalizeCupRanks = 0x80058cc4
+                0x0000000080058e68                CupStandings_UpdateCupRanks = 0x80058e68
+                0x0000000080058f44                CupStandings_InputAndDraw = 0x80058f44
+                0x000000008005a03c                SpecularLight_Spinning2D = 0x8005a03c
+                0x000000008005a188                SpecularLight_Spinning3D = 0x8005a188
+                0x000000008005a424                SpecularLight_Motionless3D = 0x8005a424
+                0x000000008005a5f0                BakeMathGTE = 0x8005a5f0
+                0x000000008005a9b0                GetPtr_MetaData_Surface = 0x8005a9b0
+                0x000000008005a9d4                GetPtr_MetaData_Terrain = 0x8005a9d4
+                0x000000008005a9f8                Driver_TeleportSelf = 0x8005a9f8
+                0x000000008005b608                Driver_TeleportAll = 0x8005b608
+                0x000000008005b6b8                Driver_GetModelByName = 0x8005b6b8
+                0x000000008005b7d0                Driver_SetConsts = 0x8005b7d0
+                0x000000008005b914                Init_EngineAudio_AllPlayers = 0x8005b914
+                0x000000008005b9d4                Init_TireSprites = 0x8005b9d4
+                0x000000008005bab4                Init_NonGhost_Driver = 0x8005bab4
+                0x000000008005bc48                Init_Player = 0x8005bc48
+                0x000000008005bcdc                InterpBySpeed = 0x8005bcdc
+                0x000000008005bd24                MapToRange = 0x8005bd24
+                0x000000008005bd94                Player_GetRateOfSteering = 0x8005bd94
+                0x000000008005bdf8                FastSqrt = 0x8005bdf8
+                0x000000008005be88                SpawnParticle_Exhaust = 0x8005be88
+                0x000000008005c0cc                SpawnParticle_Sparks_Ground = 0x8005c0cc
+                0x000000008005c2e0                SpawnParticle_Terrain_Ground = 0x8005c2e0
+                0x000000008005c508                SpawnParticle_Sparks_Wall = 0x8005c508
+                0x000000008005c7a0                SpawnParticle_DriverMain = 0x8005c7a0
+                0x000000008005d8ac                Turbo_Audio = 0x8005d8ac
+                0x000000008005d984                Turbo_Increment = 0x8005d984
+                0x000000008005df4c                Instance_GetStartFrame = 0x8005df4c
+                0x000000008005df7c                Instance_GetNumAnimFrames = 0x8005df7c
+                0x000000008005e000                OnAnimate_Driving = 0x8005e000
+                0x000000008005e398                OnAnimate_Spinning = 0x8005e398
+                0x000000008005e484                OnAnimate_LastSpin = 0x8005e484
+                0x000000008005e540                DrawShadows_Subset1 = 0x8005e540
+                0x000000008005e5a8                DrawShadows_Main = 0x8005e5a8
+                0x000000008005efa8                DrawSkidMarks_Subset1 = 0x8005efa8
+                0x000000008005f100                DrawSkidMarks_Subset2 = 0x8005f100
+                0x000000008005f1dc                DrawSkidMarks_Main = 0x8005f1dc
+                0x000000008005f8ac                Driver_UpdateLapProgress = 0x8005f8ac
+                0x000000008005fe0c                DriverCrash_BounceSelf = 0x8005fe0c
+                0x000000008005ff78                DriverCrash_AI = 0x8005ff78
+                0x00000000800600c0                DriverCrash_HumanToHuman = 0x800600c0
+                0x00000000800602ac                DriverCrash_AnyTwoCars = 0x800602ac
+                0x00000000800610bc                OnGravity = 0x800610bc
+                0x0000000080061908                OnApplyForces = 0x80061908
+                0x0000000080061a54                OnCollide = 0x80061a54
+                0x0000000080061cdc                OnRender = 0x80061cdc
+                0x0000000080062744                Rot_AxisAngle = 0x80062744
+                0x0000000080062b34                Player_Driving_Interpolate = 0x80062b34
+                0x0000000080063300                Player_Driving_LerpQuarterStrength = 0x80063300
+                0x0000000080063330                Player_Driving_LerpToForwards = 0x80063330
+                0x0000000080063448                Player_Jump_GetVelY = 0x80063448
+                0x00000000800634d8                Player_JumpAndFriction = 0x800634d8
+                0x0000000080063db4                SetDriverItem = 0x80063db4
+                0x0000000080064330                GetDriverBaseSpeed = 0x80064330
+                0x00000000800644e4                Player_Steer_ReturnToRest = 0x800644e4
+                0x0000000080064558                Player_Steer_AnalogStrength = 0x80064558
+                0x0000000080064674                Player_Steer_AbsoluteStrength = 0x80064674
+                0x00000000800646c4                Player_Driving_Input = 0x800646c4
+                0x00000000800658f0                Player_Driving_Audio = 0x800658f0
+                0x0000000080065910                Player_Driving_Update = 0x80065910
+                0x0000000080065a38                Player_Driving_Init = 0x80065a38
+                0x0000000080065b6c                Player_Freeze_Input = 0x80065b6c
+                0x0000000080065bc8                Player_Freeze_Init = 0x80065bc8
+                0x0000000080065c74                Player_State9_Update = 0x80065c74
+                0x0000000080065cc8                Player_State9_ReverseOneFrame = 0x80065cc8
+                0x0000000080065d58                Player_State9_Init = 0x80065d58
+                0x0000000080065e10                Player_Drifting_Interpolate = 0x80065e10
+                0x00000000800664f8                Player_Drifting_Finalize = 0x800664f8
+                0x0000000080066510                Player_Drifting_Update = 0x80066510
+                0x0000000080066820                Player_Drifting_Input = 0x80066820
+                0x000000008006686c                Player_Drifting_InitSetUpdate = 0x8006686c
+                0x0000000080066880                Player_Drifting_Init = 0x80066880
+                0x0000000080066990                Player_Crashing_Interpolate = 0x80066990
+                0x0000000080066a44                Player_Crashing_Update = 0x80066a44
+                0x0000000080066a4c                Player_Crashing_Input = 0x80066a4c
+                0x0000000080066a78                Player_Crashing_Animate = 0x80066a78
+                0x0000000080066b20                Player_Crashing_Init = 0x80066b20
+                0x0000000080066c40                Player_Spinning_Update = 0x80066c40
+                0x0000000080066c90                Player_Spinning_Input = 0x80066c90
+                0x0000000080066d14                Player_Spinning_Interpolate = 0x80066d14
+                0x0000000080066df8                Player_Spinning_InitSetUpdate = 0x80066df8
+                0x0000000080066e0c                Player_Spinning_Init = 0x80066e0c
+                0x0000000080066f78                Player_LastSpin_Update = 0x80066f78
+                0x0000000080066fb8                Player_LastSpin_Input = 0x80066fb8
+                0x0000000080066ff0                Player_LastSpin_Interpolate = 0x80066ff0
+                0x00000000800671a0                Player_LastSpin_Init = 0x800671a0
+                0x0000000080067238                Player_EndSpinning_Update = 0x80067238
+                0x0000000080067240                Player_EndSpinning_Input = 0x80067240
+                0x000000008006726c                Player_EndSpinning_Interpolate = 0x8006726c
+                0x0000000080067320                Player_EndSpinning_Animate = 0x80067320
+                0x000000008006741c                Player_EndSpinning_Init = 0x8006741c
+                0x00000000800674b4                Player_ChangeState = 0x800674b4
+                0x0000000080067b40                Weapon_Mask_boolGoodGuy = 0x80067b40
+                0x0000000080067b94                Weapon_Mask_UseWeapon = 0x80067b94
+                0x0000000080067f6c                Weapon_Missile_GetTargetDriver = 0x80067f6c
+                0x00000000800682a0                Weapon_Potion_Throw = 0x800682a0
+                0x00000000800683e4                Weapon_Shoot_Now = 0x800683e4
+                0x00000000800696bc                Weapon_Shoot_OnCirclePress = 0x800696bc
+                0x0000000080069754                Player_MaskGrab_FindDestPos = 0x80069754
+                0x0000000080069c88                Player_MaskGrab_Particles = 0x80069c88
+                0x0000000080069d24                Player_MaskGrab_Update = 0x80069d24
+                0x0000000080069e14                Player_MaskGrab_Input = 0x80069e14
+                0x0000000080069e64                Player_MaskGrab_Animate = 0x80069e64
+                0x000000008006a188                Player_MaskGrab_Init = 0x8006a188
+                0x000000008006a474                Player_MaskRespawn_Update = 0x8006a474
+                0x000000008006a52c                Player_MaskRespawn_Input = 0x8006a52c
+                0x000000008006a598                Player_MaskRespawn_Animate = 0x8006a598
+                0x000000008006a7a8                Player_MaskRespawn_Init = 0x8006a7a8
+                0x000000008006a908                Player_Dead_Init = 0x8006a908
+                0x000000008006a938                Player_EngineRevving_Update = 0x8006a938
+                0x000000008006aa4c                Player_EngineRevving_Input = 0x8006aa4c
+                0x000000008006ab54                Player_EngineRevving_Animate = 0x8006ab54
+                0x000000008006af24                Player_EngineRevving_Init = 0x8006af24
+                0x000000008006b074                Player_Blasted_Update = 0x8006b074
+                0x000000008006b0a8                Player_Blasted_Input = 0x8006b0a8
+                0x000000008006b128                Player_Blasted_Interpolate = 0x8006b128
+                0x000000008006b21c                Player_Blasted_Animate = 0x8006b21c
+                0x000000008006b27c                Player_Blasted_Init = 0x8006b27c
+                0x000000008006b3cc                Player_Warp_MoveDustPuff = 0x8006b3cc
+                0x000000008006b588                Player_Warp_AddDustPuff1 = 0x8006b588
+                0x000000008006b61c                Player_Warp_AddDustPuff2 = 0x8006b61c
+                0x000000008006bbc0                Player_Warp_Interpolate = 0x8006bbc0
+                0x000000008006bddc                Player_Warp_Init = 0x8006bddc
+                0x000000008006bf68                AdvHub_TalkingMask_FuncPerFrame = 0x8006bf68
+                0x000000008006c150                AdvHub_TalkingMask_Init = 0x8006c150
+                0x000000008006c1bc                AdvHub_TalkingMask_PlayXA = 0x8006c1bc
+                0x000000008006c224                AdvHub_TalkingMask_boolNotTalking = 0x8006c224
+                0x000000008006c234                AdvHub_TalkingMask_End = 0x8006c234
+                0x000000008006c25c                Turbo_ProcessBucket = 0x8006c25c
+                0x000000008006c348                Turbo_OnDestroy = 0x8006c348
+                0x000000008006c3a0                Turbo_FuncPerFrame = 0x8006c3a0
+                0x000000008006cb88                DrawSky_Full = 0x8006cb88
+                0x000000008006cc9c                DrawSky_Piece = 0x8006cc9c
+                0x000000008006ce48                AnimateQuad = 0x8006ce48
+                0x000000008006cee4                AnimateQuadVertex = 0x8006cee4
+                0x000000008006cf6c                TRIG_AngleSinCos_r19r17r18 = 0x8006cf6c
+                0x000000008006cfd4                DrawConfetti = 0x8006cfd4
+                0x000000008006d49c                TRIG_AngleSinCos_r15r16r17 = 0x8006d49c
+                0x000000008006d504                RenderBucket_DrawFunc_Normal = 0x8006d504
+                0x000000008006d8b8                RenderBucket_UncompressAnimationFrame = 0x8006d8b8
+                0x000000008006da80                RenderBucket_Execute = 0x8006da80
+                0x000000008006dd44                RenderBucket_DrawInstPrim_Normal = 0x8006dd44
+                0x000000008006de4c                RenderBucket_InitDepthGTE = 0x8006de4c
+                0x000000008006de68                RenderBucket_DrawInstPrim_KeyRelicToken = 0x8006de68
+                0x000000008006e008                RenderBucket_DrawFunc_Split = 0x8006e008
+                0x000000008006e224                Draw_KartCloseToCamera = 0x8006e224
+                0x000000008006eaa8                Draw_KartFlames = 0x8006eaa8
+                0x000000008006f27c                ConvertRotToMatrix = 0x8006f27c
+                0x000000008006f350                ConvertRotToMatrix_Transpose = 0x8006f350
+                0x000000008006f5f0                SquareRoot0_stub = 0x8006f5f0
+                0x000000008006f6c8                ApplyMatrixLV_stub = 0x8006f6c8
+                0x0000000080072e48                CreateRenderLists_1P2P = 0x80072e48
+                0x000000008007466c                HalfwayThroughUpdateAllThreadsInBucket = 0x8007466c
+                0x00000000800746c4                SetPerFrame_AndExec = 0x800746c4
+                0x00000000800746dc                SetPerFrame = 0x800746dc
+                0x0000000080074d40                LoadImage = 0x80074d40
+                0x0000000080074fc0                DrawOTag = 0x80074fc0
+                0x00000000800750f0                PutDrawEnv = 0x800750f0
+                0x00000000800755e8                SetDrawEnv = 0x800755e8
+                0x0000000080076f38                ResetCallback = 0x80076f38
+                0x0000000080076f68                InterruptCallback = 0x80076f68
+                0x0000000080076f98                DMACallback = 0x80076f98
+                0x0000000080076fc8                VSyncCallback = 0x80076fc8
+                0x00000000800776b0                RotTrans = 0x800776b0
+                0x00000000800776e0                ratan2 = 0x800776e0
+                0x0000000080077860                memset = 0x80077860
+                0x0000000080077870                strcmp = 0x80077870
+                0x0000000080077880                SetTransMatrix = 0x80077880
+                0x00000000800778a0                SetRotMatrix = 0x800778a0
+                0x00000000800778d0                strncpy = 0x800778d0
+                0x00000000800778e0                SpuSetTransferMode = 0x800778e0
+                0x0000000080077910                CdStatus = 0x80077910
+                0x0000000080077920                CdMode = 0x80077920
+                0x0000000080077930                CdComstr = 0x80077930
+                0x0000000080077940                CdLastPos = 0x80077940
+                0x000000008007794c                __builtin_vec_delete = 0x8007794c
+                0x000000008007796c                CdSetDebug = 0x8007796c
+                0x0000000080077980                CdReady = 0x80077980
+                0x00000000800779a0                CdSyncCallback = 0x800779a0
+                0x00000000800779b4                CdReadyCallback = 0x800779b4
+                0x00000000800779c8                CdControl = 0x800779c8
+                0x0000000080077b04                CdControlF = 0x80077b04
+                0x0000000080077c38                CdControlB = 0x80077c38
+                0x0000000080077d84                CdGetSector = 0x80077d84
+                0x0000000080077da4                CdGetSector2 = 0x80077da4
+                0x0000000080077dc4                CdDataCallback = 0x80077dc4
+                0x0000000080077de8                CdDataSync = 0x80077de8
+                0x0000000080077e08                CdIntToPos = 0x80077e08
+                0x0000000080077f0c                CdPosToInt = 0x80077f0c
+                0x0000000080077f8c                CdInit = 0x80077f8c
+                0x00000000800780dc                SpuSetIRQ = 0x800780dc
+                0x000000008007821c                SpuSetIRQCallback = 0x8007821c
+                0x000000008007825c                CdSearchFile = 0x8007825c
+                0x0000000080078bcc                SpuSetTransferCallback = 0x80078bcc
+                0x0000000080078bfc                SpuSetIRQAddr = 0x80078bfc
+                0x0000000080078c3c                SpuSetCommonCDVolume = 0x80078c3c
+                0x0000000080078c5c                SpuReadDecodedData = 0x80078c5c
+                0x0000000080078ccc                AddPrim = 0x80078ccc
+                0x0000000080078d0c                SetLightMatrix = 0x80078d0c
+                0x0000000080078d3c                PadGetState = 0x80078d3c
+                0x0000000080078e0c                PadInitMtap = 0x80078e0c
+                0x0000000080078f6c                PadStartCom = 0x80078f6c
+                0x0000000080079038                PadStopCom = 0x80079038
+                0x000000008007907c                _padSetActAlign = 0x8007907c
+                0x00000000800791ec                _padSetMainMode = 0x800791ec
+                0x000000008007934c                _padSetAct = 0x8007934c
+                0x000000008007938c                PadInfoAct = 0x8007938c
+                0x000000008007946c                strcpy = 0x8007946c
+                0x000000008007947c                SpuSetReverbModeParam = 0x8007947c
+                0x000000008007995c                SpuSetReverbModeDepth = 0x8007995c
+                0x000000008007998c                SpuSetReverb = 0x8007998c
+                0x0000000080079a5c                SpuSetTransferStartAddr = 0x80079a5c
+                0x0000000080079abc                SpuRead = 0x80079abc
+                0x0000000080079b1c                SpuIsTransferCompleted = 0x80079b1c
+                0x0000000080079bcc                SpuSetVoiceADSRAttr = 0x80079bcc
+                0x0000000080079d0c                SpuSetVoicePitch = 0x80079d0c
+                0x0000000080079d7c                SpuSetCommonCDMix = 0x80079d7c
+                0x0000000080079dbc                SpuSetKey = 0x80079dbc
+                0x0000000080079f7c                ExitCriticalSection = 0x80079f7c
+                0x0000000080079f8c                SpuSetCommonMasterVolume = 0x80079f8c
+                0x0000000080079fac                SpuSetCommonCDReverb = 0x80079fac
+                0x0000000080079fec                SpuSetReverbVoice = 0x80079fec
+                0x000000008007a01c                SpuInit = 0x8007a01c
+                0x000000008007a03c                SpuSetVoiceVolume = 0x8007a03c
+                0x000000008007a0bc                SpuSetVoiceStartAddr = 0x8007a0bc
+                0x000000008007a13c                strncmp = 0x8007a13c
+                0x000000008007a6bc                CdRead = 0x8007a6bc
+                0x000000008007a858                CdReadSync = 0x8007a858
+                0x000000008007a95c                CdReadCallback = 0x8007a95c
+                0x000000008007a980                SetGeomScreen = 0x8007a980
+                0x000000008007a990                SetGeomOffset = 0x8007a990
+                0x000000008007a9b8                InitGeom = 0x8007a9b8
+                0x000000008007aa40                SetDrawMove = 0x8007aa40
+                0x000000008007aaa0                start = 0x8007aaa0
+                0x000000008007ab48                __main = 0x8007ab48
+                0x000000008007abb8                BreakDraw = 0x8007abb8
+                0x000000008007acac                SetRCnt = 0x8007acac
+                0x000000008007ad48                GetRCnt = 0x8007ad48
+                0x000000008007ad80                StartRCnt = 0x8007ad80
+                0x000000008007adb0                StopRCnt = 0x8007adb0
+                0x000000008007ade4                ResetRCnt = 0x8007ade4
+                0x000000008007ae1c                memcpy = 0x8007ae1c
+                0x000000008007ae2c                SetVideoMode = 0x8007ae2c
+                0x000000008007aecc                GetVideoMode = 0x8007aecc
+                0x000000008007b39c                sprintf = 0x8007b39c
+                0x000000008007d748                printf = 0x8007d748
+                0x0000000080084254                data = 0x80084254
+                0x0000000080090370                sdata = 0x80090370
+                0x0000000080090a90                bss = 0x80090a90
+                0x00000000800a2bec                OVR_Region1 = 0x800a2bec
+                0x00000000800a2bf8                AA_EndEvent_DrawMenu = 0x800a2bf8
+                0x00000000800a2bf8                TT_EndEvent_DisplayTime = 0x800a2bf8
+                0x00000000800a2c00                CC_EndEvent_DrawMenu = 0x800a2c00
+                0x00000000800a2c08                VB_EndEvent_DrawMenu = 0x800a2c08
+                0x00000000800a2c0c                RR_EndEvent_UnlockAward = 0x800a2c0c
+                0x00000000800a2e00                TT_EndEvent_DrawHighScore = 0x800a2e00
+                0x00000000800a311c                CC_EndOfFile = 0x800a311c
+                0x00000000800a31c0                RR_EndEvent_DrawHighScore = 0x800a31c0
+                0x00000000800a3354                TT_EndEvent_DrawMenu = 0x800a3354
+                0x00000000800a3714                RR_EndEvent_DrawMenu = 0x800a3714
+                0x00000000800a3798                VB_EndOfFile = 0x800a3798
+                0x00000000800a3ab8                TT_EndOfFile = 0x800a3ab8
+                0x00000000800a3c60                AA_EndEvent_DisplayTime = 0x800a3c60
+                0x00000000800a4190                AA_EndOfFile = 0x800a4190
+                0x00000000800a41f4                OVR_Region2 = 0x800a41f4
+                0x00000000800a41f4                RR_EndOfFile = 0x800a41f4
+                0x00000000800a41f8                DrawLevelPrims_EntryFunc = 0x800a41f8
+                0x00000000800ac794                X3_EndOfFile = 0x800ac794
+                0x00000000800ac848                X4_EndOfFile = 0x800ac848
+                0x00000000800aeeac                X1_EndOfFile = 0x800aeeac
+                0x00000000800aef2c                OVR_Region3 = 0x800aef2c
+                0x00000000800aef2c                OVR_230 = 0x800aef2c
+                0x00000000800aef2c                OVR_231 = 0x800aef2c
+                0x00000000800aef2c                OVR_232 = 0x800aef2c
+                0x00000000800aef2c                OVR_233 = 0x800aef2c
+                0x00000000800aef2c                X2_EndOfFile = 0x800aef2c
+                0x00000000800aefe4                MM_Battle_DrawIcon_Character = 0x800aefe4
+                0x00000000800aefec                RB_MakeInstanceReflective = 0x800aefec
+                0x00000000800af02c                MM_TransitionInOut = 0x800af02c
+                0x00000000800af038                AH_WarpPad_GetSpawnPosRot = 0x800af038
+                0x00000000800af0f0                RB_Player_KillPlayer = 0x800af0f0
+                0x00000000800af110                AH_WarpPad_AllWarppadNum = 0x800af110
+                0x00000000800af1e8                MM_Title_MenuUpdate = 0x800af1e8
+                0x00000000800af2b4                AH_WarpPad_MenuBoxFuncPtr = 0x800af2b4
+                0x00000000800af320                CS_AntiModchip = 0x800af320
+                0x00000000800af330                AH_WarpPad_SpinRewards = 0x800af330
+                0x00000000800af368                CS_Thread_Particles = 0x800af368
+                0x00000000800af440                RB_Player_ModifyWumpa = 0x800af440
+                0x00000000800af47c                AH_WarpPad_PerFrame = 0x800af47c
+                0x00000000800af504                CS_ScriptCmd_ReadOpcode_GetShort = 0x800af504
+                0x00000000800af530                CS_ScriptCmd_ReadOpcode_GetInt = 0x800af530
+                0x00000000800af530                RB_MinePool_Init = 0x800af530
+                0x00000000800af56c                CS_ScriptCmd_ReadOpcode_GetInt_dup = 0x800af56c
+                0x00000000800af5a8                CS_ScriptCmd_ReadOpcode_Main = 0x800af5a8
+                0x00000000800af628                RB_MinePool_Remove = 0x800af628
+                0x00000000800af680                RB_MinePool_Add = 0x800af680
+                0x00000000800af6e8                MM_Title_SetTrophyDPP = 0x800af6e8
+                0x00000000800af6f0                MM_Title_CameraMove = 0x800af6f0
+                0x00000000800af6f4                RB_Hazard_HurtDriver = 0x800af6f4
+                0x00000000800af754                CS_ScriptCmd_OpcodeNext = 0x800af754
+                0x00000000800af764                RB_Hazard_CollideWithDrivers = 0x800af764
+                0x00000000800af780                CS_ScriptCmd_OpcodeAt = 0x800af780
+                0x00000000800af7a8                CS_Instance_InitMatrix = 0x800af7a8
+                0x00000000800af890                MM_Title_Thread_PerFrame = 0x800af890
+                0x00000000800af894                RB_Hazard_CollideWithBucket = 0x800af894
+                0x00000000800af8b4                CS_Instance_GetFrameData = 0x800af8b4
+                0x00000000800af93c                RB_Hazard_OnCollide_Generic_Alt = 0x800af93c
+                0x00000000800af970                RB_Hazard_OnCollide_Missile = 0x800af970
+                0x00000000800af9fc                RB_Hazard_OnCollide_Generic = 0x800af9fc
+                0x00000000800afb38                CS_Instance_GetNumAnimFrames = 0x800afb38
+                0x00000000800afb58                RB_Potion_OpenTeeth = 0x800afb58
+                0x00000000800afba8                RB_Potion_CheckTeethCollision = 0x800afba8
+                0x00000000800afbcc                CS_Instance_SafeCheckAnimFrame = 0x800afbcc
+                0x00000000800afc24                RB_Potion_PerFrame_InAir = 0x800afc24
+                0x00000000800afc28                CS_Instance_BoolPlaySound = 0x800afc28
+                0x00000000800afca8                CS_DestroyPodium_StartDriving = 0x800afca8
+                0x00000000800afd9c                MM_Title_Thread_Init = 0x800afd9c
+                0x00000000800afdd4                CS_Thread_UseOpcode = 0x800afdd4
+                0x00000000800affc0                RB_Nitro_Init_LevInst = 0x800affc0
+                0x00000000800b0008                MM_Title_CameraReset = 0x800b0008
+                0x00000000800b0028                MM_Title_KillThread = 0x800b0028
+                0x00000000800b00d0                RB_GenericMine_PerFrame = 0x800b00d0
+                0x00000000800b00d8                MM_Cheat_MaxWumpa = 0x800b00d8
+                0x00000000800b0110                MM_Cheat_UnlockRoo = 0x800b0110
+                0x00000000800b0148                MM_Cheat_UnlockPapu = 0x800b0148
+                0x00000000800b0180                MM_Cheat_UnlockJoe = 0x800b0180
+                0x00000000800b01b8                MM_Cheat_UnlockPinstripe = 0x800b01b8
+                0x00000000800b01f0                MM_Cheat_UnlockFakeCrash = 0x800b01f0
+                0x00000000800b0228                MM_Cheat_UnlockPenta = 0x800b0228
+                0x00000000800b0260                MM_Cheat_UnlockTropy = 0x800b0260
+                0x00000000800b0298                MM_Cheat_UnlockScrapbook = 0x800b0298
+                0x00000000800b02d0                MM_Cheat_UnlockTracks = 0x800b02d0
+                0x00000000800b0308                MM_Cheat_InfiniteMasks = 0x800b0308
+                0x00000000800b0340                MM_Cheat_MaxTurbos = 0x800b0340
+                0x00000000800b0378                MM_Cheat_MaxInvisibility = 0x800b0378
+                0x00000000800b03b0                MM_Cheat_MaxEngine = 0x800b03b0
+                0x00000000800b03ec                MM_Cheat_MaxBombs = 0x800b03ec
+                0x00000000800b0428                MM_Cheat_AdvDifficulty = 0x800b0428
+                0x00000000800b0464                MM_Cheat_SuperHard = 0x800b0464
+                0x00000000800b04a0                MM_Cheat_IcyTracks = 0x800b04a0
+                0x00000000800b04a8                MM_Cheat_SuperTurboPads = 0x800b04a8
+                0x00000000800b04e4                MM_Cheat_OneLap = 0x800b04e4
+                0x00000000800b0520                MM_Cheat_TurboCounter = 0x800b0520
+                0x00000000800b055c                MM_ParseCheatCodes = 0x800b055c
+                0x00000000800b0708                MM_MenuBox_Main = 0x800b0708
+                0x00000000800b07d4                RB_GenericMine_OnDestroy = 0x800b07d4
+                0x00000000800b087c                AH_WarpPad_OnDestroy = 0x800b087c
+                0x00000000800b0894                RB_TNT_ThrowOffHead = 0x800b0894
+                0x00000000800b09a0                AH_WarpPad_OnInit = 0x800b09a0
+                0x00000000800b09d0                RB_TNT_OnHead = 0x800b09d0
+                0x00000000800b0b74                MM_ToggleRows_PlayerCount = 0x800b0b74
+                0x00000000800b0c8c                MM_MenuBox_1p2p = 0x800b0c8c
+                0x00000000800b0c94                RB_TNT_ThrowOnHead = 0x800b0c94
+                0x00000000800b0d14                MM_MenuBox_2p3p4p = 0x800b0d14
+                0x00000000800b0d6c                MM_ToggleRows_Difficulty = 0x800b0d6c
+                0x00000000800b0eb0                RB_Explosion_PerFrame = 0x800b0eb0
+                0x00000000800b0ed0                MM_MenuBox_Difficulty = 0x800b0ed0
+                0x00000000800b0f30                RB_Hazard_OnApproach_Mine = 0x800b0f30
+                0x00000000800b0f54                MM_MenuBox_SingleCup = 0x800b0f54
+                0x00000000800b1014                RB_Hazard_InterpolateValue = 0x800b1014
+                0x00000000800b101c                MM_MenuBox_NewLoad = 0x800b101c
+                0x00000000800b10ac                MM_AdvNewLoad_GetMenuBox = 0x800b10ac
+                0x00000000800b10b8                MM_Characters_AnimateColors = 0x800b10b8
+                0x00000000800b10d4                RB_MovingExplosive_PerFrame = 0x800b10d4
+                0x00000000800b1178                MM_Characters_GetNextDriver = 0x800b1178
+                0x00000000800b1210                MM_Characters_boolIsInvalid = 0x800b1210
+                0x00000000800b1290                MM_Characters_GetModelByName = 0x800b1290
+                0x00000000800b1338                MM_Characters_DrawWindows = 0x800b1338
+                0x00000000800b14c8                CS_Thread_MoveOnPath = 0x800b14c8
+                0x00000000800b17e8                MM_Characters_SetMenuLayout = 0x800b17e8
+                0x00000000800b18f4                CS_Thread_AnimateScale = 0x800b18f4
+                0x00000000800b1954                CS_Thread_InterpolateFramesMS = 0x800b1954
+                0x00000000800b19a0                MM_Characters_BackupIDs = 0x800b19a0
+                0x00000000800b19ec                MM_Characters_ClearInactivePlayers = 0x800b19ec
+                0x00000000800b19fc                RB_MovingExplosive_Explode = 0x800b19fc
+                0x00000000800b1aa8                RB_Warpball_FadeAway = 0x800b1aa8
+                0x00000000800b1b88                CS_Thread_PerFrame = 0x800b1b88
+                0x00000000800b1b88                RB_Warpball_Death = 0x800b1b88
+                0x00000000800b1b90                MM_Characters_RestoreIDs = 0x800b1b90
+                0x00000000800b1bec                RB_Warpball_NewPathNode = 0x800b1bec
+                0x00000000800b1cfc                AH_Garage_OnDestroy = 0x800b1cfc
+                0x00000000800b1cfc                RB_Warpball_Start = 0x800b1cfc
+                0x00000000800b1d3c                AH_Garage_Open = 0x800b1d3c
+                0x00000000800b1d60                RB_Warpball_GetDriverTarget = 0x800b1d60
+                0x00000000800b1ddc                MM_Characters_HideDrivers = 0x800b1ddc
+                0x00000000800b1de4                AH_Garage_PerFrame = 0x800b1de4
+                0x00000000800b1e78                MM_Characters_MenuBox = 0x800b1e78
+                0x00000000800b1e80                CS_Boss_Init = 0x800b1e80
+                0x00000000800b1ff8                CS_Boss_PerFrame = 0x800b1ff8
+                0x00000000800b2030                RB_Warpball_SetTargetDriver = 0x800b2030
+                0x00000000800b2264                RB_Warpball_SeekDriver = 0x800b2264
+                0x00000000800b2364                RB_Warpball_TurnAround = 0x800b2364
+                0x00000000800b2398                CS_Boss_BoolShouldStart = 0x800b2398
+                0x00000000800b2448                CS_Podium_Camera_PerFrame = 0x800b2448
+                0x00000000800b24cc                AH_Garage_Init = 0x800b24cc
+                0x00000000800b2520                RB_Warpball_PerFrame = 0x800b2520
+                0x00000000800b2800                AH_SaveObj_Destroy = 0x800b2800
+                0x00000000800b2840                AH_SaveObj_PerFrame = 0x800b2840
+                0x00000000800b2978                CS_Thread_Init = 0x800b2978
+                0x00000000800b2c4c                AH_SaveObj_Init = 0x800b2c4c
+                0x00000000800b2e10                CS_Podium_Prize_Spin = 0x800b2e10
+                0x00000000800b2e54                AH_Door_OnDestroy = 0x800b2e54
+                0x00000000800b2ebc                AH_Door_PerFrame = 0x800b2ebc
+                0x00000000800b2fe4                CS_Podium_Prize_PerFrame3 = 0x800b2fe4
+                0x00000000800b30f4                RB_MaskWeapon_FadeAway = 0x800b30f4
+                0x00000000800b3140                MM_TrackSelect_Video_SetDefaults = 0x800b3140
+                0x00000000800b3190                MM_TrackSelect_Video_State = 0x800b3190
+                0x00000000800b31b0                MM_TrackSelect_Video_Draw = 0x800b31b0
+                0x00000000800b3218                CS_Podium_Prize_PerFrame2 = 0x800b3218
+                0x00000000800b3314                CS_Podium_Prize_PerFrame1 = 0x800b3314
+                0x00000000800b3340                RB_MaskWeapon_PerFrame = 0x800b3340
+                0x00000000800b34a8                CS_Podium_Prize_OnDestroy = 0x800b34a8
+                0x00000000800b34e0                CS_Podium_Prize_Init = 0x800b34e0
+                0x00000000800b366c                MM_TrackSelect_boolTrackOpen = 0x800b366c
+                0x00000000800b36e4                MM_TrackSelect_Init = 0x800b36e4
+                0x00000000800b37f0                MM_TrackSelect_MenuBox = 0x800b37f0
+                0x00000000800b37fc                RB_ShieldDark_Pop = 0x800b37fc
+                0x00000000800b3898                CS_Podium_Stand_Init = 0x800b3898
+                0x00000000800b3950                CS_Podium_FullScene_Init = 0x800b3950
+                0x00000000800b39d8                RB_ShieldDark_PerFrame = 0x800b39d8
+                0x00000000800b3b88                AH_Door_OnInit = 0x800b3b88
+                0x00000000800b3d0c                CS_LevThread_OnInit = 0x800b3d0c
+                0x00000000800b3edc                CS_LevCamera_OnInit = 0x800b3edc
+                0x00000000800b3ff4                AH_Map_LoadSave_Prim = 0x800b3ff4
+                0x00000000800b413c                AH_Map_LoadSave_Full = 0x800b413c
+                0x00000000800b4198                CS_BoxScene_InstanceSplitLines = 0x800b4198
+                0x00000000800b4340                RB_Player_ToggleInvisible = 0x800b4340
+                0x00000000800b4374                AH_Map_HubArrow = 0x800b4374
+                0x00000000800b43ec                RB_Player_ToggleFlicker = 0x800b43ec
+                0x00000000800b44a0                RB_RainCloud_FadeAway = 0x800b44a0
+                0x00000000800b4584                RB_RainCloud_PerFrame = 0x800b4584
+                0x00000000800b45ac                AH_Map_HubArrowOutter = 0x800b45ac
+                0x00000000800b47a4                RB_RainCloud_Init = 0x800b47a4
+                0x00000000800b48bc                MM_TrackSelect_GetMenuBox = 0x800b48bc
+                0x00000000800b48c8                MM_CupSelect_Init = 0x800b48c8
+                0x00000000800b48fc                MM_CupSelect_MenuBox = 0x800b48fc
+                0x00000000800b4950                AH_Map_HubItems = 0x800b4950
+                0x00000000800b49dc                RB_Explosion_InitPotion = 0x800b49dc
+                0x00000000800b4bb4                RB_Explosion_InitGeneric = 0x800b4bb4
+                0x00000000800b4c98                RB_Blowup_ProcessBucket = 0x800b4c98
+                0x00000000800b4d74                RB_Blowup_PerFrame = 0x800b4d74
+                0x00000000800b4e74                AH_Map_Warppads = 0x800b4e74
+                0x00000000800b4e7c                RB_Blowup_Init = 0x800b4e7c
+                0x00000000800b505c                MM_Battle_CloseSubMenu = 0x800b505c
+                0x00000000800b5070                MM_Battle_DrawIcon_Weapon = 0x800b5070
+                0x00000000800b50ec                AH_Map_Main = 0x800b50ec
+                0x00000000800b515c                RB_Burst_ProcessBucket = 0x800b515c
+                0x00000000800b5240                MM_Battle_Init = 0x800b5240
+                0x00000000800b5258                MM_Battle_MenuBox = 0x800b5258
+                0x00000000800b52b0                RB_Burst_PerFrame = 0x800b52b0
+                0x00000000800b5354                AH_Pause_Destroy = 0x800b5354
+                0x00000000800b53d4                AH_Pause_Draw = 0x800b53d4
+                0x00000000800b5414                RB_Burst_CollideInst_NonLev = 0x800b5414
+                0x00000000800b5628                RB_Burst_CollideInst_Lev = 0x800b5628
+                0x00000000800b56d8                RB_Burst_Init = 0x800b56d8
+                0x00000000800b5b3c                RB_Burst_DrawAll = 0x800b5b3c
+                0x00000000800b5e44                RB_GetThread_ClosestTracker = 0x800b5e44
+                0x00000000800b65a0                AH_Pause_PerFrame = 0x800b65a0
+                0x00000000800b66e0                RB_Baron_PerFrame = 0x800b66e0
+                0x00000000800b68a8                AH_HintMenu_FiveArrows = 0x800b68a8
+                0x00000000800b691c                MM_HighScore_Text3D = 0x800b691c
+                0x00000000800b6978                AH_HintMenu_MaskPosRot = 0x800b6978
+                0x00000000800b69cc                MM_HighScore_Draw = 0x800b69cc
+                0x00000000800b69f0                AH_HintMenu_MenuBoxFuncPtr = 0x800b69f0
+                0x00000000800b6d94                RB_Baron_Init = 0x800b6d94
+                0x00000000800b6ea4                RB_Blade_PerFrame = 0x800b6ea4
+                0x00000000800b6f38                RB_Blade_Init = 0x800b6f38
+                0x00000000800b6f9c                RB_Bubbles_RoosTubes = 0x800b6f9c
+                0x00000000800b72c4                RB_Crate_PerFrame_Explode = 0x800b72c4
+                0x00000000800b72ec                AH_MaskHint_Start = 0x800b72ec
+                0x00000000800b733c                RB_Crate_PerFrame_Normal = 0x800b733c
+                0x00000000800b7348                MM_HighScore_Init = 0x800b7348
+                0x00000000800b7388                MM_HighScore_MenuBox = 0x800b7388
+                0x00000000800b743c                RB_Crate_Weapon_OnCollide = 0x800b743c
+                0x00000000800b749c                AH_MaskHint_boolCanSpawn = 0x800b749c
+                0x00000000800b74ac                AH_MaskHint_EnterAnim = 0x800b74ac
+                0x00000000800b77c8                AH_MaskHint_SpawnParticles = 0x800b77c8
+                0x00000000800b7838                RB_Crate_Weapon_OnApproach = 0x800b7838
+                0x00000000800b78e0                AH_MaskHint_End = 0x800b78e0
+                0x00000000800b78ec                RB_Crate_Fruit_OnCollide = 0x800b78ec
+                0x00000000800b7984                AH_MaskHint_PerFrame = 0x800b7984
+                0x00000000800b7a38                MM_Scrapbook_Init = 0x800b7a38
+                0x00000000800b7a68                MM_Scrapbook_PlayMovie = 0x800b7a68
+                0x00000000800b7cdc                RB_Crate_Fruit_OnApproach = 0x800b7cdc
+                0x00000000800b7d04                MM_ResetAllMenus = 0x800b7d04
+                0x00000000800b7d88                MM_JumpTo_Title_Returning = 0x800b7d88
+                0x00000000800b7d90                RB_Crate_Time_OnCollide = 0x800b7d90
+                0x00000000800b7db8                MM_JumpTo_Title_FirstTime = 0x800b7db8
+                0x00000000800b7e48                MM_JumpTo_BattleSetup = 0x800b7e48
+                0x00000000800b7e90                MM_JumpTo_TrackSelect = 0x800b7e90
+                0x00000000800b7ed8                MM_JumpTo_Characters = 0x800b7ed8
+                0x00000000800b7f20                MM_JumpTo_Scrapbook = 0x800b7f20
+                0x00000000800b8168                RB_Crate_Time_OnApproach = 0x800b8168
+                0x00000000800b8194                AH_Sign_OnInit = 0x800b8194
+                0x00000000800b821c                RB_Crystal_OnCollide = 0x800b821c
+                0x00000000800b8398                RB_Crystal_PerFrame = 0x800b8398
+                0x00000000800b843c                RB_Crystal_OnApproach = 0x800b843c
+                0x00000000800b8508                RB_Crystal_OnInit = 0x800b8508
+                0x00000000800b85a4                RB_SearchQuadblock_ToggleReflection = 0x800b85a4
+                0x00000000800b8650                RB_CtrLetter_OnCollide = 0x800b8650
+                0x00000000800b87d0                RB_CtrLetter_OnApproach = 0x800b87d0
+                0x00000000800b889c                RB_CtrLetter_PerFrame = 0x800b889c
+                0x00000000800b88f4                RB_CtrLetter_Init = 0x800b88f4
+                0x00000000800b89a0                RB_Banner_Animate_Init = 0x800b89a0
+                0x00000000800b8b8c                AH_EndOfFile = 0x800b8b8c
+                0x00000000800b8c84                RB_Banner_Animate_Play = 0x800b8c84
+                0x00000000800b8d74                RB_Banner_PerFrame = 0x800b8d74
+                0x00000000800b8db8                RB_Banner_Init = 0x800b8db8
+                0x00000000800b8f44                RB_Armadillo_PerFrame_TurnAround = 0x800b8f44
+                0x00000000800b9134                RB_Armadillo_PerFrame_Rolling = 0x800b9134
+                0x00000000800b937c                RB_Armadillo_OnCollide = 0x800b937c
+                0x00000000800b9390                RB_Armadillo_Init = 0x800b9390
+                0x00000000800b9510                RB_Fireball_PerFrame = 0x800b9510
+                0x00000000800b981c                RB_Fireball_OnCollide = 0x800b981c
+                0x00000000800b9830                RB_Fireball_Init = 0x800b9830
+                0x00000000800b9a80                RB_FlameJet_Particles = 0x800b9a80
+                0x00000000800b9b10                MM_Video_DecDCToutCallbackFunc = 0x800b9b10
+                0x00000000800b9c28                MM_Video_KickCD = 0x800b9c28
+                0x00000000800b9ce8                RB_FlameJet_PerFrame = 0x800b9ce8
+                0x00000000800b9d38                MM_Video_VLC_Decode = 0x800b9d38
+                0x00000000800b9ef8                RB_FlameJet_Init = 0x800b9ef8
+                0x00000000800ba208                MM_Video_StartStream = 0x800ba208
+                0x00000000800ba30c                MM_Video_StopStream = 0x800ba30c
+                0x00000000800ba318                RB_Follower_ProcessBucket = 0x800ba318
+                0x00000000800ba384                MM_Video_AllocMem = 0x800ba384
+                0x00000000800ba3d0                RB_Follower_PerFrame = 0x800ba3d0
+                0x00000000800ba4c0                RB_Follower_Init = 0x800ba4c0
+                0x00000000800ba580                MM_Video_ClearMem = 0x800ba580
+                0x00000000800ba5a0                MM_Video_DecodeFrame = 0x800ba5a0
+                0x00000000800ba62c                RB_Fruit_PerFrame_AndDestroy = 0x800ba62c
+                0x00000000800ba720                MM_Video_CheckIfFinished = 0x800ba720
+                0x00000000800ba7ec                RB_Fruit_Init = 0x800ba7ec
+                0x00000000800ba820                RB_Fruit_OnApproach = 0x800ba820
+                0x00000000800ba8e0                MM_EndOfFile = 0x800ba8e0
+                0x00000000800ba8f8                RB_Minecart_PerFrame = 0x800ba8f8
+                0x00000000800bad40                CS_Garage_ZoomOut = 0x800bad40
+                0x00000000800badd4                RB_Minecart_Init = 0x800badd4
+                0x00000000800bade8                CS_Garage_MenuBoxFuncPtr = 0x800bade8
+                0x00000000800bb14c                RB_Orca_PerFrame = 0x800bb14c
+                0x00000000800bb478                RB_Orca_OnCollide = 0x800bb478
+                0x00000000800bb48c                RB_Orca_Init = 0x800bb48c
+                0x00000000800bb7a8                RB_Plant_PerFrame_Eat = 0x800bb7a8
+                0x00000000800bbab0                RB_Plant_PerFrame_Transition_HungryToEat = 0x800bbab0
+                0x00000000800bbc10                RB_Plant_PerFrame_Transition_HungryToRest = 0x800bbc10
+                0x00000000800bbc74                RB_Plant_PerFrame_Hungry = 0x800bbc74
+                0x00000000800bbd04                CS_Garage_GetMenuBox = 0x800bbd04
+                0x00000000800bbd10                CS_Garage_Init = 0x800bbd10
+                0x00000000800bbe28                CS_Credits_AnimateCreditGhost = 0x800bbe28
+                0x00000000800bbe68                RB_Plant_PerFrame_Rest = 0x800bbe68
+                0x00000000800bbf64                RB_Plant_Init = 0x800bbf64
+                0x00000000800bbfd0                CS_Credits_GetNextString = 0x800bbfd0
+                0x00000000800bc01c                CS_Credits_DestroyCreditGhost = 0x800bc01c
+                0x00000000800bc088                CS_Credits_DrawNames = 0x800bc088
+                0x00000000800bc1c0                RB_Seal_PerFrame_TurnAround = 0x800bc1c0
+                0x00000000800bc390                CS_Credits_DrawEpilogue = 0x800bc390
+                0x00000000800bc3dc                RB_Seal_PerFrame_Move = 0x800bc3dc
+                0x00000000800bc588                CS_Credits_PerFrame = 0x800bc588
+                0x00000000800bc698                RB_Seal_OnCollide = 0x800bc698
+                0x00000000800bc6ac                RB_Seal_Init = 0x800bc6ac
+                0x00000000800bc74c                CS_Credits_Init = 0x800bc74c
+                0x00000000800bc86c                RB_Snowball_PerFrame = 0x800bc86c
+                0x00000000800bca60                CS_Credits_IsTextValid = 0x800bca60
+                0x00000000800bca8c                CS_Credits_NewDancer = 0x800bca8c
+                0x00000000800bcacc                RB_Snowball_Init = 0x800bcacc
+                0x00000000800bcba8                CS_Credits_NewCreditGhosts = 0x800bcba8
+                0x00000000800bcbbc                RB_Spider_DrawWebs = 0x800bcbbc
+                0x00000000800bcc04                CS_Credits_End = 0x800bcc04
+                0x00000000800bce08                RB_Spider_PerFrame = 0x800bce08
+                0x00000000800bd00c                CS_EndOfFile = 0x800bd00c
+                0x00000000800bd180                RB_Spider_OnCollide = 0x800bd180
+                0x00000000800bd194                RB_Spider_Init = 0x800bd194
+                0x00000000800bd398                RB_StartText_ProcessBucket = 0x800bd398
+                0x00000000800bd3a0                RB_StartText_Init = 0x800bd3a0
+                0x00000000800bd3b0                RB_Teeth_Init_TimeTrial_Relic = 0x800bd3b0
+                0x00000000800bd404                RB_Teeth_BSP_Callback = 0x800bd404
+                0x00000000800bd4cc                RB_Teeth_PerFrame = 0x800bd4cc
+                0x00000000800bd688                RB_Teeth_Init_Normal = 0x800bd688
+                0x00000000800bd7e0                RB_Teeth_OpenDoor = 0x800bd7e0
+                0x00000000800bd880                RB_Turtle_PerFrame = 0x800bd880
+                0x00000000800bd9e0                RB_Turtle_OnCollide = 0x800bd9e0
+                0x00000000800bda30                RB_Turtle_Init = 0x800bda30
+                0x00000000800bdb08                RB_EndOfFile = 0x800bdb08
+OUTPUT(mod.elf elf32-littlemips)
+
+.reginfo        0x0000000000000000       0x18
+ .reginfo       0x0000000000000000       0x18 ../../Patches/JpnModchips/src/jpnModchips.o
+
+.pdr            0x0000000000000000        0x0
+ .pdr           0x0000000000000000        0x0 ../../Patches/JpnModchips/src/jpnModchips.o
+ .pdr           0x0000000000000000        0x0 ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/OverrideMPK/src/numDrivers.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/OverrideMPK/src/numDriversPlusOne.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/ReservesMeter/src/reserveshook.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/Retro-Fueled/src/hookUpdate.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/Retro-Fueled/src/hookEntry.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/Retro-Fueled/src/hookReserveCancelation.o
+ .pdr           0x0000000000000000        0x0 ../../../nop.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/EngineSelect/src/ES_hookClassName.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/EngineSelect/src/ES_nop233.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/EngineSelect/src/ES_hook233.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/EngineSelect/src/ES_nop230.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/EngineSelect/src/ES_hookCharacterName.o
+ .pdr           0x0000000000000000        0x0 ../../Modules/EngineSelect/src/ES_hook230.o
+
+.gnu.attributes
+                0x0000000000000000       0x10
+ .gnu.attributes
+                0x0000000000000000       0x10 ../../Patches/JpnModchips/src/jpnModchips.o
+ .gnu.attributes
+                0x0000000000000010       0x10 ../../../decompile/General/LOAD_DriverMPK.o
+ .gnu.attributes
+                0x0000000000000020       0x10 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .gnu.attributes
+                0x0000000000000030       0x10 ../../../decompile/General/Camera110_InitStructs.o
+ .gnu.attributes
+                0x0000000000000040       0x10 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .gnu.attributes
+                0x0000000000000050       0x10 ../../Patches/SaveRAM/src/Mem_hookClearAllPools.o
+ .gnu.attributes
+                0x0000000000000060       0x10 ../../../decompile/General/DrawRaceClock.o
+ .gnu.attributes
+                0x0000000000000070       0x10 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .gnu.attributes
+                0x0000000000000080       0x10 ../../Modules/OverrideMPK/src/numDrivers.o
+ .gnu.attributes
+                0x0000000000000090       0x10 ../../Modules/OverrideMPK/src/numDriversPlusOne.o
+ .gnu.attributes
+                0x00000000000000a0       0x10 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .gnu.attributes
+                0x00000000000000b0       0x10 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .gnu.attributes
+                0x00000000000000c0       0x10 ../../Modules/CharacterRandomizer/src/ChRand_hook1P.o
+ .gnu.attributes
+                0x00000000000000d0       0x10 ../../Modules/CharacterRandomizer/src/ChRand_hook2P.o
+ .gnu.attributes
+                0x00000000000000e0       0x10 ../../Modules/ReservesMeter/src/reserveshook.o
+ .gnu.attributes
+                0x00000000000000f0       0x10 ../../Modules/Retro-Fueled/src/hookUpdate.o
+ .gnu.attributes
+                0x0000000000000100       0x10 ../../Modules/Retro-Fueled/src/hookEntry.o
+ .gnu.attributes
+                0x0000000000000110       0x10 ../../Modules/Retro-Fueled/src/hookReserveCancelation.o
+ .gnu.attributes
+                0x0000000000000120       0x10 ../../../nop.o
+ .gnu.attributes
+                0x0000000000000130       0x10 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .gnu.attributes
+                0x0000000000000140       0x10 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .gnu.attributes
+                0x0000000000000150       0x10 ../../Modules/EngineSelect/src/ES_hookClassName.o
+ .gnu.attributes
+                0x0000000000000160       0x10 ../../Modules/EngineSelect/src/ES_nop233.o
+ .gnu.attributes
+                0x0000000000000170       0x10 ../../Modules/EngineSelect/src/ES_hook233.o
+ .gnu.attributes
+                0x0000000000000180       0x10 ../../Modules/EngineSelect/src/ES_233.o
+ .gnu.attributes
+                0x0000000000000190       0x10 ../../Modules/EngineSelect/src/ES_nop230.o
+ .gnu.attributes
+                0x00000000000001a0       0x10 ../../Modules/EngineSelect/src/ES_hookCharacterName.o
+ .gnu.attributes
+                0x00000000000001b0       0x10 ../../Modules/EngineSelect/src/ES_hook230.o
+ .gnu.attributes
+                0x00000000000001c0       0x10 ../../Modules/EngineSelect/src/ES_230.o
+ .gnu.attributes
+                0x00000000000001d0       0x10 ../../Modules/Retro-Fueled/src/main.o
+ .gnu.attributes
+                0x00000000000001e0       0x10 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .gnu.attributes
+                0x00000000000001f0       0x10 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .gnu.attributes
+                0x0000000000000200       0x10 ../../Modules/ReservesMeter/src/main.o
+
+.mdebug.abi32   0x0000000000000000        0x0
+ .mdebug.abi32  0x0000000000000000        0x0 ../../../decompile/General/LOAD_DriverMPK.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../../decompile/General/Camera110_InitStructs.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../../decompile/General/DrawRaceClock.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Modules/EngineSelect/src/ES_233.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Modules/EngineSelect/src/ES_230.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Modules/Retro-Fueled/src/main.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .mdebug.abi32  0x0000000000000000        0x0 ../../Modules/ReservesMeter/src/main.o
+
+.comment        0x0000000000000000       0x12
+ .comment       0x0000000000000000       0x12 ../../../decompile/General/LOAD_DriverMPK.o
+                                         0x13 (size before relaxing)
+ .comment       0x0000000000000012       0x13 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .comment       0x0000000000000012       0x13 ../../../decompile/General/Camera110_InitStructs.o
+ .comment       0x0000000000000012       0x13 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .comment       0x0000000000000012       0x13 ../../../decompile/General/DrawRaceClock.o
+ .comment       0x0000000000000012       0x13 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .comment       0x0000000000000012       0x13 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .comment       0x0000000000000012       0x13 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .comment       0x0000000000000012       0x13 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .comment       0x0000000000000012       0x13 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .comment       0x0000000000000012       0x13 ../../Modules/EngineSelect/src/ES_233.o
+ .comment       0x0000000000000012       0x13 ../../Modules/EngineSelect/src/ES_230.o
+ .comment       0x0000000000000012       0x13 ../../Modules/Retro-Fueled/src/main.o
+ .comment       0x0000000000000012       0x13 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .comment       0x0000000000000012       0x13 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .comment       0x0000000000000012       0x13 ../../Modules/ReservesMeter/src/main.o
+
+.debug_info     0x0000000000000000    0x5bcb7
+ .debug_info    0x0000000000000000     0x7205 ../../../decompile/General/LOAD_DriverMPK.o
+ .debug_info    0x0000000000007205     0x72af ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .debug_info    0x000000000000e4b4      0x2a6 ../../../decompile/General/Camera110_InitStructs.o
+ .debug_info    0x000000000000e75a     0x305e ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .debug_info    0x00000000000117b8     0x8726 ../../../decompile/General/DrawRaceClock.o
+ .debug_info    0x0000000000019ede     0x219b ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .debug_info    0x000000000001c079     0x70e4 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .debug_info    0x000000000002315d     0x729b ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .debug_info    0x000000000002a3f8     0x5eaa ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .debug_info    0x00000000000302a2     0x1ef6 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .debug_info    0x0000000000032198     0x781a ../../Modules/EngineSelect/src/ES_233.o
+ .debug_info    0x00000000000399b2     0x7f7c ../../Modules/EngineSelect/src/ES_230.o
+ .debug_info    0x000000000004192e     0x5f95 ../../Modules/Retro-Fueled/src/main.o
+ .debug_info    0x00000000000478c3     0x5f77 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .debug_info    0x000000000004d83a     0x71f2 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .debug_info    0x0000000000054a2c     0x728b ../../Modules/ReservesMeter/src/main.o
+
+.debug_abbrev   0x0000000000000000     0x2848
+ .debug_abbrev  0x0000000000000000      0x264 ../../../decompile/General/LOAD_DriverMPK.o
+ .debug_abbrev  0x0000000000000264      0x291 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .debug_abbrev  0x00000000000004f5      0x131 ../../../decompile/General/Camera110_InitStructs.o
+ .debug_abbrev  0x0000000000000626      0x211 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .debug_abbrev  0x0000000000000837      0x2b4 ../../../decompile/General/DrawRaceClock.o
+ .debug_abbrev  0x0000000000000aeb      0x285 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .debug_abbrev  0x0000000000000d70      0x24d ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .debug_abbrev  0x0000000000000fbd      0x283 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .debug_abbrev  0x0000000000001240      0x28b ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .debug_abbrev  0x00000000000014cb      0x20c ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .debug_abbrev  0x00000000000016d7      0x376 ../../Modules/EngineSelect/src/ES_233.o
+ .debug_abbrev  0x0000000000001a4d      0x345 ../../Modules/EngineSelect/src/ES_230.o
+ .debug_abbrev  0x0000000000001d92      0x2cf ../../Modules/Retro-Fueled/src/main.o
+ .debug_abbrev  0x0000000000002061      0x2b9 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .debug_abbrev  0x000000000000231a      0x291 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .debug_abbrev  0x00000000000025ab      0x29d ../../Modules/ReservesMeter/src/main.o
+
+.debug_loclists
+                0x0000000000000000     0x18bd
+ .debug_loclists
+                0x0000000000000000      0x1c8 ../../../decompile/General/LOAD_DriverMPK.o
+ .debug_loclists
+                0x00000000000001c8       0xf1 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .debug_loclists
+                0x00000000000002b9       0x59 ../../../decompile/General/Camera110_InitStructs.o
+ .debug_loclists
+                0x0000000000000312       0x7a ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .debug_loclists
+                0x000000000000038c      0x651 ../../../decompile/General/DrawRaceClock.o
+ .debug_loclists
+                0x00000000000009dd       0x7a ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .debug_loclists
+                0x0000000000000a57       0x4d ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .debug_loclists
+                0x0000000000000aa4      0x23d ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .debug_loclists
+                0x0000000000000ce1      0x337 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .debug_loclists
+                0x0000000000001018      0x36d ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .debug_loclists
+                0x0000000000001385       0xfd ../../Modules/EngineSelect/src/ES_233.o
+ .debug_loclists
+                0x0000000000001482      0x267 ../../Modules/EngineSelect/src/ES_230.o
+ .debug_loclists
+                0x00000000000016e9       0x52 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .debug_loclists
+                0x000000000000173b      0x182 ../../Modules/ReservesMeter/src/main.o
+
+.debug_aranges  0x0000000000000000      0x268
+ .debug_aranges
+                0x0000000000000000       0x20 ../../../decompile/General/LOAD_DriverMPK.o
+ .debug_aranges
+                0x0000000000000020       0x20 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .debug_aranges
+                0x0000000000000040       0x20 ../../../decompile/General/Camera110_InitStructs.o
+ .debug_aranges
+                0x0000000000000060       0x28 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .debug_aranges
+                0x0000000000000088       0x20 ../../../decompile/General/DrawRaceClock.o
+ .debug_aranges
+                0x00000000000000a8       0x20 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .debug_aranges
+                0x00000000000000c8       0x28 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .debug_aranges
+                0x00000000000000f0       0x20 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .debug_aranges
+                0x0000000000000110       0x20 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .debug_aranges
+                0x0000000000000130       0x20 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .debug_aranges
+                0x0000000000000150       0x38 ../../Modules/EngineSelect/src/ES_233.o
+ .debug_aranges
+                0x0000000000000188       0x30 ../../Modules/EngineSelect/src/ES_230.o
+ .debug_aranges
+                0x00000000000001b8       0x38 ../../Modules/Retro-Fueled/src/main.o
+ .debug_aranges
+                0x00000000000001f0       0x28 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .debug_aranges
+                0x0000000000000218       0x28 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .debug_aranges
+                0x0000000000000240       0x28 ../../Modules/ReservesMeter/src/main.o
+
+.debug_rnglists
+                0x0000000000000000      0x190
+ .debug_rnglists
+                0x0000000000000000       0x14 ../../../decompile/General/LOAD_DriverMPK.o
+ .debug_rnglists
+                0x0000000000000014       0x14 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .debug_rnglists
+                0x0000000000000028       0x14 ../../../decompile/General/Camera110_InitStructs.o
+ .debug_rnglists
+                0x000000000000003c       0x19 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .debug_rnglists
+                0x0000000000000055       0x14 ../../../decompile/General/DrawRaceClock.o
+ .debug_rnglists
+                0x0000000000000069       0x14 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .debug_rnglists
+                0x000000000000007d       0x1a ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .debug_rnglists
+                0x0000000000000097       0x14 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .debug_rnglists
+                0x00000000000000ab       0x14 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .debug_rnglists
+                0x00000000000000bf       0x14 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .debug_rnglists
+                0x00000000000000d3       0x27 ../../Modules/EngineSelect/src/ES_233.o
+ .debug_rnglists
+                0x00000000000000fa       0x22 ../../Modules/EngineSelect/src/ES_230.o
+ .debug_rnglists
+                0x000000000000011c       0x26 ../../Modules/Retro-Fueled/src/main.o
+ .debug_rnglists
+                0x0000000000000142       0x1a ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .debug_rnglists
+                0x000000000000015c       0x1a ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .debug_rnglists
+                0x0000000000000176       0x1a ../../Modules/ReservesMeter/src/main.o
+
+.debug_line     0x0000000000000000     0x361f
+ .debug_line    0x0000000000000000      0x312 ../../../decompile/General/LOAD_DriverMPK.o
+ .debug_line    0x0000000000000312      0x310 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .debug_line    0x0000000000000622      0x227 ../../../decompile/General/Camera110_InitStructs.o
+ .debug_line    0x0000000000000849      0x20f ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .debug_line    0x0000000000000a58      0x72e ../../../decompile/General/DrawRaceClock.o
+ .debug_line    0x0000000000001186      0x272 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .debug_line    0x00000000000013f8      0x23a ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .debug_line    0x0000000000001632      0x2e8 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .debug_line    0x000000000000191a      0x5a0 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .debug_line    0x0000000000001eba      0x42f ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .debug_line    0x00000000000022e9      0x351 ../../Modules/EngineSelect/src/ES_233.o
+ .debug_line    0x000000000000263a      0x37e ../../Modules/EngineSelect/src/ES_230.o
+ .debug_line    0x00000000000029b8      0x293 ../../Modules/Retro-Fueled/src/main.o
+ .debug_line    0x0000000000002c4b      0x3a9 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .debug_line    0x0000000000002ff4      0x274 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .debug_line    0x0000000000003268      0x3b7 ../../Modules/ReservesMeter/src/main.o
+
+.debug_str      0x0000000000000000     0x84e3
+ .debug_str     0x0000000000000000     0x57e5 ../../../decompile/General/LOAD_DriverMPK.o
+                                       0x59f7 (size before relaxing)
+ .debug_str     0x00000000000057e5      0x104 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+                                       0x5a6e (size before relaxing)
+ .debug_str     0x00000000000058e9       0x55 ../../../decompile/General/Camera110_InitStructs.o
+                                        0x328 (size before relaxing)
+ .debug_str     0x000000000000593e       0x69 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+                                       0x24ac (size before relaxing)
+ .debug_str     0x00000000000059a7     0x1719 ../../../decompile/General/DrawRaceClock.o
+                                       0x70a0 (size before relaxing)
+ .debug_str     0x00000000000070c0      0x157 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+                                       0x19ad (size before relaxing)
+ .debug_str     0x0000000000007217       0x4d ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+                                       0x59b7 (size before relaxing)
+ .debug_str     0x0000000000007264      0x203 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+                                       0x5bb0 (size before relaxing)
+ .debug_str     0x0000000000007467      0x18d ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+                                       0x4b1a (size before relaxing)
+ .debug_str     0x00000000000075f4      0x159 ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+                                       0x1607 (size before relaxing)
+ .debug_str     0x000000000000774d      0x3f2 ../../Modules/EngineSelect/src/ES_233.o
+                                       0x5ee1 (size before relaxing)
+ .debug_str     0x0000000000007b3f      0x696 ../../Modules/EngineSelect/src/ES_230.o
+                                       0x62c2 (size before relaxing)
+ .debug_str     0x00000000000081d5       0xe5 ../../Modules/Retro-Fueled/src/main.o
+                                       0x4d80 (size before relaxing)
+ .debug_str     0x00000000000082ba       0xce ../../Modules/Retro-Fueled/src/texturereplacements.o
+                                       0x4c9c (size before relaxing)
+ .debug_str     0x0000000000008388       0x81 ../../Modules/CharacterRandomizer/src/ChRand_main.o
+                                       0x5b5d (size before relaxing)
+ .debug_str     0x0000000000008409       0xda ../../Modules/ReservesMeter/src/main.o
+                                       0x5a62 (size before relaxing)
+
+.debug_frame    0x0000000000000000      0x578
+ .debug_frame   0x0000000000000000       0x54 ../../../decompile/General/LOAD_DriverMPK.o
+ .debug_frame   0x0000000000000054       0x40 ../../Patches/SaveRAM/src/Mem_AllocateAllPools.o
+ .debug_frame   0x0000000000000094       0x20 ../../../decompile/General/Camera110_InitStructs.o
+ .debug_frame   0x00000000000000b4       0x58 ../../Patches/SaveRAM/src/Mem_DriverPool.o
+ .debug_frame   0x000000000000010c       0x4c ../../../decompile/General/DrawRaceClock.o
+ .debug_frame   0x0000000000000158       0x40 ../../Patches/SaveRAM/src/Mem_ThreadPool.o
+ .debug_frame   0x0000000000000198       0x48 ../../Modules/OverrideMPK/src/OvMPK_StringSearch.o
+ .debug_frame   0x00000000000001e0       0x48 ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.o
+ .debug_frame   0x0000000000000228       0x58 ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.o
+ .debug_frame   0x0000000000000280       0x3c ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.o
+ .debug_frame   0x00000000000002bc       0x90 ../../Modules/EngineSelect/src/ES_233.o
+ .debug_frame   0x000000000000034c       0xb0 ../../Modules/EngineSelect/src/ES_230.o
+ .debug_frame   0x00000000000003fc       0x70 ../../Modules/Retro-Fueled/src/main.o
+ .debug_frame   0x000000000000046c       0x68 ../../Modules/Retro-Fueled/src/texturereplacements.o
+ .debug_frame   0x00000000000004d4       0x4c ../../Modules/CharacterRandomizer/src/ChRand_main.o
+ .debug_frame   0x0000000000000520       0x58 ../../Modules/ReservesMeter/src/main.o
