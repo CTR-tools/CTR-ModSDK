@@ -1,4 +1,4 @@
-#include <common.h>
+#include <ovr_233.h>
 
 void DecalFont_DrawLine(char*, int, int, int, int);
 void RacingWheel_Config_DrawArrows(int posX, int posY, char* str);
@@ -12,10 +12,12 @@ static char spd[] = "Speed";
 static char pen[] = "Unlimited";
 static char * engineText[5] = {bal,acc,spd,trn,pen};
 static int charID;
+static int hasSelectedClass = true;
 
-void hook_AdventureSelect()
+#define AdvID *(char*)(CS_Garage_Init + 0x80)
+
+void AdvBoss()
 {
-	int engineID;
 	int buttonTap;
 
 	// get input and char ID from current garage character
@@ -25,67 +27,81 @@ void hook_AdventureSelect()
 	// Code from AdvBosses
 	if(sdata.advCharSelectIndex_curr == 0)
 	{
-		#define AdvID *(char*)(CS_Garage_Init + 0x80)
-
-		if((buttonTap & BTN_L1) == BTN_L1)
+		switch(buttonTap)
 		{
-			// decrease
-			AdvID = (AdvID - 1) & 0xf;
-
-			// block oxide for now
-			if(AdvID == 0xf) AdvID = 0xe;
+			case BTN_L1:
+				// decrease
+				AdvID = (AdvID - 1) & 0xf;
+				// block Oxide
+				if (AdvID == 0xf) AdvID = 0xe;
+				break;
+			case BTN_R1:
+				// increase
+				AdvID = (AdvID + 1) & 0xf;
+				// block Oxide
+				if (AdvID == 0xf) AdvID = 0;
 		}
 
-		// right
-		else if((buttonTap & BTN_R1) == BTN_R1)
-		{
-			// increase
-			AdvID = (AdvID + 1) & 0xf;
-
-			// block oxide for now
-			if(AdvID == 0xf) AdvID = 0;
-		}
-
-		// The only code needed to make AdvBosses work with ES
-		// Maybe can put this inside if (AdvBosses installed)?
-		charID = (int) AdvID;
-
-		DecalFont_DrawLine("PRESS L1 OR R1 TO SWAP",
+		DecalFont_DrawLine("PRESS L1 OR R1 TO SWAP CHARACTER",
 
 			0x100, // midpoint,
 			0xc8,  // near bottom
 			2,	   // small text
 			0xffff8000	// center
 		);
+		charID = (int) AdvID;
 	}
+}
+
+void AdvEngine()
+{
+	int engineID;
+	int buttonTap;
 
 	// get curr engine from characterID
 	engineID = data.MetaDataCharacters[charID].engineID;
 
-	// left
-	if((buttonTap & BTN_L2) == BTN_L2)
+	buttonTap = sdata.PtrGamepadSystem->controller[0].buttonsTapped;
+	
+	switch(buttonTap)
 	{
+	// left
+		case BTN_DOWN:
 		// decrease
 		engineID = (engineID + 4) % 5;
-
 		OtherFX_Play(0, 1);
-	}
-
+		break;
 	// right
-	else if((buttonTap & BTN_R2) == BTN_R2)
-	{
+		case BTN_UP:
 		// increase
 		engineID = (engineID + 1) % 5;
-
 		OtherFX_Play(0, 1);
+		break;
+	// Choose class by pressing Cross
+		case BTN_CROSS:
+		if(!hasSelectedClass)
+			{
+				OtherFX_Play(1, 1);
+				sdata.ptrDesiredMenuBox = &data.menuBox_OSK;
+				hasSelectedClass = true;
+			}
+		hasSelectedClass = false;
 	}
 
 	// write back to meta
 	data.MetaDataCharacters[charID].engineID = engineID;
+
+	DecalFont_DrawLine("PRESS UP OR DOWN TO SWAP ENGINE",
+
+			0x100, // midpoint,
+			0xc8,  // near bottom
+			2,	   // small text
+			0xffff8000	// center
+	);
 }
 
-// currently JAL hooked into 0x800b7ae4 where 
-// CS_Garage_MenuBoxFuncPtr draw class name, replacing it.
+// JAL hook to replace function call
+// which draws class name, replacing it with ours.
 void CS_DrawEngine(char* string, int x, int y, int fontsize, int flag) 
 {	
 	// Draw engine text
@@ -96,11 +112,15 @@ void CS_DrawEngine(char* string, int x, int y, int fontsize, int flag)
 		fontsize,
 		flag
 	);
-	
-	// Draw arrows around the text
-	RacingWheel_Config_DrawArrows(
-		x,
-		y,
-		engineText[data.MetaDataCharacters[charID].engineID]
-	);
+}
+
+void AdvSelectUpdateLoop()
+{
+	if (OVR_233.hasSelectedChar) 
+	{
+		AdvEngine();
+	} else {
+		AdvBoss();
+		hasSelectedClass = true;
+	}		
 }

@@ -16,7 +16,7 @@ static char trn_s[] = "Turnin";
 static char spd_s[] = "Spee";
 static char pen_s[] = "Unlimite";
 static char * engineText_s[5] = {bal_s,acc_s,spd_s,trn_s,pen_s};
-int hasSelectedClass[4] = {true, true, true, true};
+static int hasSelectedClass[4] = {true, true, true, true};
 
 void MainCharacterSelect(int player)
 {	

@@ -7521,6 +7521,8 @@ struct Data
 
 	// 80083ebc -- SepReview
 	// 80085c0c -- UsaRetail
+	// 80085ea8 -- EurRetail
+	// 80088e70 -- JpnRetail
 	// menuBox for "Please Enter Your Name"
 	struct MenuBox menuBox_OSK; // on-screen keyboard
 

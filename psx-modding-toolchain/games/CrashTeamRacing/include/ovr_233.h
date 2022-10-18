@@ -95,4 +95,17 @@ extern struct
 	int PodiumInitUnk3;
 	// 800b7774
 	int cutsceneState;
+	
+	#if BUILD == UsaRetail
+	char prefill_hasSelectedChar[0xec8];
+	#elif BUILD == EurRetail
+	char prefill_hasSelectedChar[0x12cc];
+	#elif BUILD == JpnRetail
+	char prefill_hasSelectedChar[0x114c];
+	#endif
+
+	// 0x800b8640 -- UsaRetail
+	// 0x8008be58 -- EurRetail
+	// 0x800bbe00 -- JpnRetail
+	u_char hasSelectedChar;
 } OVR_233;
