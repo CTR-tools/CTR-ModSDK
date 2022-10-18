@@ -16,7 +16,7 @@ common, exe, DrawRaceClock, 0x0, ../../../decompile/General/DrawRaceClock.c ../.
 // Modify the Main Menu to show Oxide
 common, exe, LOAD_Callback_Overlay_231, -0x8, ../../Modules/OxideFix/src/MM_hookCallback230.s
 common, 230, MM_Characters_GetModelByName, 0x0, ../../Modules/OxideFix/src/MM_NewModelSearch.c
-common, 230, MM_EndOfFile, 0x0, ../../Modules/OxideFix/src/MM_End230_IconArrays.c ../../Modules/OxideFix/src/MM_End230_OxideModel.c ../../Modules/OxideFix/src/MM_End230_Callback230.c ../../Modules/EngineSelectEdit_OnlyUSA/src/ES_main.c, MM_End230.bin
+common, 230, MM_EndOfFile, 0x0, ../../Modules/OxideFix/src/MM_End230_IconArrays.c ../../Modules/OxideFix/src/MM_End230_OxideModel.c ../../Modules/OxideFix/src/MM_End230_Callback230.c ../../Modules/EngineSelect/src/ES_230.c, MM_End230.bin
 
 // Fix Podium
 common, exe, LOAD_CDRequestCallback, -0x8, ../../Modules/OxideFix/src/PodiumFix_hookAppendQueue.s
