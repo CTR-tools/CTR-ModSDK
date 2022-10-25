@@ -1,1 +1,0 @@
-An edit of Faradise's EngineSelect mod that allows for the engine class to be selected with the D-Pad upon selecting a character. The Adventure Mode selection remains the same, however. Multiplayer engine selection works but is a bit awkward. by superstarxalien

@@ -82,18 +82,27 @@ common, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increme
 // Replace the DecalHUD_Arrow2D function
 common, exe, DecalHUD_Arrow2D, 0x0, ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.c
 
+// AdvEngineSelect //
+
+926, 233, 0x800b7ae4, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+1020, 233, 0x800b831c, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+1111, 233, 0x800bb2c4, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+926, 233, 0x800b8298, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+1020, 233, 0x800b8aa8, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+1111, 233, 0x800bba50, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+common, 233, CS_Garage_GetMenuBox, -0x8, ../../Modules/EngineSelect/src/ES_hook233.s
+common, 233, CS_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_233.c
+
 // EngineSelect //
 
-926, 233, 0x800b8544, 0x0, ../../Modules/EngineSelect_OnlyUSA/src/ES_hook233.s
-926, 233, 0x800b7ae4, 0x0, ../../Modules/EngineSelect_OnlyUSA/src/ES_JALhook233.s
-common, 233, CS_EndOfFile, 0x0, ../../Modules/EngineSelect_OnlyUSA/src/ES_233.c
-
-// EngineSelectEdit //
-
-common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelectEdit_OnlyUSA/src/ES_hook230.s
-926, 230, 0x800aefe4, 0x0, ../../Modules/EngineSelectEdit_OnlyUSA/src/ES_nop.s
-926, 230, 0x800af6a8, 0x0, ../../Modules/EngineSelectEdit_OnlyUSA/src/ES_hookCharacterName.s
-common, 230, MM_EndOfFile, 0x0, ../../Modules/EngineSelectEdit_OnlyUSA/src/ES_main.c
+926, 230, 0x800aefe4, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+926, 230, 0x800af6a8, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+1020, 230, 0x800af4c4, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+1020, 230, 0x800afb88, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+1111, 230, 0x800b2710, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+1111, 230, 0x800b2da4, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelect/src/ES_hook230.s
+common, 230, MM_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_230.c
 
 // Compile code to empty spaces in RDATA //
 common, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c ../../Modules/Retro-Fueled/src/texturereplacements.c ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c

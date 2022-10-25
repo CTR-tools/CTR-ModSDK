@@ -276,9 +276,17 @@ extern struct
 
 	char fill_trackselectmetabattletracks_temporary[0x494];
 
-	// 800b59e4
-	int movingToTrackMenu;
+	#if BUILD == EurRetail
+	char prefill_movingToTrackmenu[0x490];
+	#elif BUILD == JpnRetail
+	char prefill_movingToTrackmenu[0xb70];
+	#endif
 
+	// 0x800b59e4 -- UsaRetail
+	// 0x800b6288 -- EurRetail
+	// 0x800b9a90 -- JpnRetail
+	int movingToTrackMenu;
+	
 	// 800b59e8
 	char fill_movingtotrackmenu[0x28];
 
@@ -287,7 +295,9 @@ extern struct
 
 	char fill_characterSelectNumScreens[0xC];
 
-	// 800b5a20
+	// 0x800b5a20 -- UsaRetail
+	// 0x800b62c4 -- EurRetail
+	// 0x800b9acc -- JpnRetail
 	// 0 = transitioning in, 1 = in focus/still, 2 = transitioning out
 	int isMenuTransitioning;
 

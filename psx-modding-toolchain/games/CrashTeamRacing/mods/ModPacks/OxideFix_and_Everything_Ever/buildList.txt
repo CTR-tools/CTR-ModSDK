@@ -16,7 +16,7 @@ common, exe, DrawRaceClock, 0x0, ../../../decompile/General/DrawRaceClock.c ../.
 // Modify the Main Menu to show Oxide
 common, exe, LOAD_Callback_Overlay_231, -0x8, ../../Modules/OxideFix/src/MM_hookCallback230.s
 common, 230, MM_Characters_GetModelByName, 0x0, ../../Modules/OxideFix/src/MM_NewModelSearch.c
-common, 230, MM_EndOfFile, 0x0, ../../Modules/OxideFix/src/MM_End230_IconArrays.c ../../Modules/OxideFix/src/MM_End230_OxideModel.c ../../Modules/OxideFix/src/MM_End230_Callback230.c ../../Modules/EngineSelectEdit_OnlyUSA/src/ES_main.c, MM_End230.bin
+common, 230, MM_EndOfFile, 0x0, ../../Modules/OxideFix/src/MM_End230_IconArrays.c ../../Modules/OxideFix/src/MM_End230_OxideModel.c ../../Modules/OxideFix/src/MM_End230_Callback230.c ../../Modules/EngineSelect/src/ES_230.c, MM_End230.bin
 
 // Fix Podium
 common, exe, LOAD_CDRequestCallback, -0x8, ../../Modules/OxideFix/src/PodiumFix_hookAppendQueue.s
@@ -46,6 +46,7 @@ common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_ho
 1006, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
 1020, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
 1111, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+common, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
 
 // USAUnlimitedPenta //
 
@@ -61,47 +62,25 @@ common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_ho
 // Replace the DecalHUD_Arrow2D function
 common, exe, DecalHUD_Arrow2D, 0x0, ../../Patches/FixAdventureModeCharacterSelectArrows/src/DecalHUD_Arrow2D.c
 
+// AdvEngineSelect //
+
+926, 233, 0x800b7ae4, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+1020, 233, 0x800b831c, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+1111, 233, 0x800bb2c4, 0x0, ../../Modules/EngineSelect/src/ES_hookClassName.s
+926, 233, 0x800b8298, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+1020, 233, 0x800b8aa8, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+1111, 233, 0x800bba50, 0x0, ../../Modules/EngineSelect/src/ES_nop233.s
+common, 233, CS_Garage_GetMenuBox, -0x8, ../../Modules/EngineSelect/src/ES_hook233.s
+common, 233, CS_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_233_OxideFix.c
+
 // EngineSelect //
 
-926, 233, 0x800b8544, 0x0, ../../Modules/EngineSelect_OnlyUSA/src/ES_hook233.s
-926, 233, 0x800b7ae4, 0x0, ../../Modules/EngineSelect_OnlyUSA/src/ES_JALhook233.s
-common, 233, CS_EndOfFile, 0x0, ../../Modules/EngineSelect_OnlyUSA/src/ES_233.c
+926, 230, 0x800aefe4, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+926, 230, 0x800af6a8, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+1020, 230, 0x800af4c4, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+1020, 230, 0x800afb88, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+1111, 230, 0x800b2710, 0x0, ../../Modules/EngineSelect/src/ES_nop230.s
+1111, 230, 0x800b2da4, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
+common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelect/src/ES_hook230.s
 
-// EngineSelectEdit //
-
-common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelectEdit_OnlyUSA/src/ES_hook230.s
-926, 230, 0x800aefe4, 0x0, ../../Modules/EngineSelectEdit_OnlyUSA/src/ES_nop.s
-926, 230, 0x800af6a8, 0x0, ../../Modules/EngineSelectEdit_OnlyUSA/src/ES_hookCharacterName.s
-
-// Retro-Fueled //
-
-// Hooks
-// Disable texture replacements as OxideFix will need the kernel space instead
-// 926, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, ../../Modules/Retro-Fueled/src/hookNewGame.s
-// 1020, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, ../../Modules/Retro-Fueled/src/hookNewGame.s
-// 926, exe, LOAD_VramFile, -0x8, ../../Modules/Retro-Fueled/src/hookVRAM.s
-// 1020, exe, LOAD_VramFile, -0x8, ../../Modules/Retro-Fueled/src/hookVRAM.s
-common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
-
-// Player_Driving_Input + offset
-// USA: 0xA30, PAL: 0xA30, JPN: 0xA4C
-// Erasing the original reserve cancelation if, so that we can run our own code
-926, exe, 0x8006224C, 0x0, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-926, exe, 0x8006224C, 0x8, ../../../nop.s
-1020, exe, 0x80062364, 0x0, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1020, exe, 0x80062364, 0x8, ../../../nop.s
-1111, exe, 0x80065110, 0x0, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1111, exe, 0x80065110, 0x8, ../../../nop.s
-
-// Binary edits
-// Turbo pad to STP
-common, exe, OnCollide, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
-// Standardize turbo pad reserves
-common, exe, OnCollide, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
-
-// Don't compile texture replacements for reasons stated above
-
-// Modify Turbo_Increment function to allow for USF stacking
-common, exe, Turbo_Increment, 0x0, ../../Modules/Retro-Fueled/src/Turbo_Increment_AllowUSFStacking.c
-
-common, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c
+common, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c
