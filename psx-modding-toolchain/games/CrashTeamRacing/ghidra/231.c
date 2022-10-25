@@ -6759,6 +6759,7 @@ void FUN_800b3d7c(int param_1)
 
 // RB_Crate_Weapon_OnCollide
 // param_1 is the box thread
+// param_4 is 1f800108
 undefined4 FUN_800b3e7c(int param_1,int param_2,undefined4 param_3,int param_4)
 {
   undefined4 uVar1;

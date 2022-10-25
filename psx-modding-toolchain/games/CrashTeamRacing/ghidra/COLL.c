@@ -3356,7 +3356,7 @@ LAB_800209b0:
 				(*(code **)(iVar7 + 8) != (code *)0x0)
 			  )
 		  {
-			// initialize a thread for this instance
+			// call OnApproach
             iVar5 = (**(code **)(iVar7 + 8))(iVar6,param_1,&DAT_1f800108);
           }
         }
