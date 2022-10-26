@@ -6666,24 +6666,56 @@ struct Data
 	struct AudioMeta audioData[3];
 
 	// 80081088
-	// indices of this array are the
-	// same indices used by the array
-	// of 0xe2 global models pointers
+	// modelID (0-0xe2) is used to access array
 	struct
 	{
 		// most pointers go to 231 overlay
 		char* name;
 
-		// used by seal, can be disabled with gameMode1 flag
-		// called with pointer to instance, that's it
-		void* funcOnInit;
+		// This system was initially designed for wumpa and weapon 
+		// boxes, and was only "really" useful for that. Intended
+		// usage is to initialize an unthreaded instance when the
+		// level starts, then create a thread upon collision to 
+		// break the weapon box, and that thread stays alive until
+		// the weapon box can grow back to normal size, then the 
+		// thread dies, the instance is unthreaded until next collision
+		
+		// Another intended usage, unused, could be an invisible hitbox
+		// that triggers a decorative thread in the background, such as
+		// bubbles in roo's tubes, but that doesn't use threads anyway
+		
+		// How this usually works, instead, is the Crystal Challenge
+		// crystals initializing a thread during instance creation,
+		// so the crystals can spin, which bloats the thread pool,
+		// and then the thread creation function just becomes a wrapper 
+		// for the thread's OnCollide, resulting immediately: 
+		// 		- thread birth if no thread exists
+		//			which is useless cause the thread for crystal exists
+		//		- OnCollide
+		//		- thread death
+		
+		// This is only for LevInstances, not for NonLevInstances,
+		// that's why the slot for PU_MISSILE is blank. However. 
+		// LevInstances for TNTs and Nitros in Crystal Challenge do not
+		// use this system, because they're hard-coded to build a thread
+		// on birth, and that thread checks for collisions with drivers
+		// every frame, and tracker items (bomb, missile, warpball) check
+		// for collision with every mine every frame, with no BSP usage,
+		// this is because dynamically-placed objects can't be added to 
+		// the BSP, array of hitbox in BSP is a fixed-sized array.
+		// Crystal Challenge could've had a workaround hard-coded,
+		// but the developers had a time budget and this did not fit.
 
-		// used by most other objects, can't be disabled
-		// called with pointer to instance, pointer to driver, and more
-		void* funcOnApproach;
+		// used for initializing level instances, 
+		// in last stage of level loading.
+		void* funcLevInstDefBirth;
+
+		// used for initializing threads upon
+		// hitbox collision in level BSP tree
+		void* funcLevThreadsBirth;
 
 	// Number of elements changes...
-	} MetaDataThreads
+	} MetaDataModels
 
 	// June 1999 - 0x5a
 
