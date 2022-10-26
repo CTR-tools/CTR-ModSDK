@@ -22,7 +22,7 @@
 800139a0 BOTS_Adv_AdjustDifficulty
 800147c8 BOTS_UpdateGlobals
 80014898 BOTS_SetRotation
-80014a34 BOTS_ExecuteFuncOnApproach
+80014a34 BOTS_LevInstColl
 80014b88 BOTS_PerFrame_EngineRevving
 80014c94 BOTS_MaskGrab
 80014ecc BOTS_Killplane
@@ -1352,7 +1352,7 @@
 800ac448 RB_TNT_OnHead
 800ac70c RB_TNT_ThrowOnHead
 800ac928 RB_Explosion_PerFrame
-800ac9a8 RB_Hazard_OnApproach_Mine
+800ac9a8 RB_Hazard_LevInstColl
 800aca8c RB_Hazard_InterpolateValue
 800acb4c RB_MovingExplosive_PerFrame
 800ad474 RB_MovingExplosive_Explode
@@ -1381,8 +1381,8 @@
 800b08f4 RB_Blowup_Init
 800b0bd4 RB_Burst_ProcessBucket
 800b0d28 RB_Burst_PerFrame
-800b0e8c RB_Burst_CollideInst_NonLev
-800b10a0 RB_Burst_CollideInst_Lev
+800b0e8c RB_Burst_ThBucketColl
+800b10a0 RB_Burst_LevInstColl
 800b1150 RB_Burst_Init
 800b15b4 RB_Burst_DrawAll
 800b18bc RB_GetThread_ClosestTracker
@@ -1403,7 +1403,7 @@
 800b3dd4 RB_Crystal_PerFrame
 800b3e78 RB_Crystal_OnApproach
 800b3f44 RB_Crystal_OnInit
-800b3fe0 RB_SearchQuadblock_ToggleReflection
+800b3fe0 RB_LevInstDefBirth_Default
 800b408c RB_CtrLetter_OnCollide
 800b420c RB_CtrLetter_OnApproach
 800b42d8 RB_CtrLetter_PerFrame

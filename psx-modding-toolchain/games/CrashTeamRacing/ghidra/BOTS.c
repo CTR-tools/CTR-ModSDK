@@ -851,7 +851,7 @@ void FUN_80013444(int param_1,short param_2)
   return;
 }
 
-// BOTS_ExecuteFuncOnApproach
+// BOTS_LevInstColl
 void FUN_800135d8(int param_1)
 
 {
@@ -908,11 +908,12 @@ void FUN_800135d8(int param_1)
 			)
 		  ) &&
 
-		  // if funcOnApproach is not nullptr
+		  // if funcLevThreadsBirth is not nullptr
 		  (*(code **)(iVar1 + 8) != (code *)0x0)
 		 )
 	  {
-		// execute funcOnApproach, make thread for this instance
+		// execute funcLevThreadsBirth, make thread for this instance
+		// upon collision with the instance, let it run thread->OnCollide
         (**(code **)(iVar1 + 8))(iVar2,param_1,&DAT_1f800108);
       }
     }
@@ -948,6 +949,7 @@ void FUN_8001372c(int param_1)
       *(undefined2 *)(iVar1 + 0x10) = (short)((uint)*(undefined4 *)(iVar2 + 0x2dc) >> 8);
     }
 
+	// OnRender
     FUN_8005ee34(param_1,iVar2);
 
 	// OnAnimate_Driving
@@ -3369,13 +3371,20 @@ LAB_800167fc:
   }
   //increase Hazard Timer by 1 if it's even
   *(ushort *)(iVar17 + 0xe) = *(ushort *)(iVar17 + 0xe) | 1;
+
 LAB_8001686c:
-  if (((local_40 & 0x40) != 0) || ((*(uint *)(iVar17 + 0x5b0) & 9) != 0)) {
+  
+  if (((local_40 & 0x40) != 0) || ((*(uint *)(iVar17 + 0x5b0) & 9) != 0)) 
+  {
+	// BOTS_LevInstColl
     FUN_800135d8(param_1);
   }
+  
   if ((local_44 & 0x8000) != 0) {
     *(uint *)(iVar22 + 0x28) = *(uint *)(iVar22 + 0x28) | 0x2000;
   }
+  
+  // OnRender
   FUN_8005ee34(param_1,iVar17);
 
   // Rot_AxisAngle

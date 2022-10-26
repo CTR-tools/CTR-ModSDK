@@ -11,7 +11,7 @@ int BOTS_Adv_NumTimesLostEvent(int index);
 void BOTS_Adv_AdjustDifficulty();
 void BOTS_UpdateGlobals();
 void BOTS_SetRotation(int param_1, int param_2);
-void BOTS_ExecuteFuncOnApproach(int param_1);
+void BOTS_LevInstColl(int param_1);
 void BOTS_PerFrame_EngineRevving(int param_1);
 void BOTS_MaskGrab(int param_1);
 void BOTS_Killplane(int param_1);

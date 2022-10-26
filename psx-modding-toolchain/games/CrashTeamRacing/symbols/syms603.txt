@@ -11,7 +11,7 @@
 8001bdec BOTS_Adv_AdjustDifficulty // except no Adv, just difficulty
 8001c2d8 BOTS_UpdateGlobals
 8001c388 BOTS_SetRotation
-8001c4f4 BOTS_ExecuteFuncOnApproach
+8001c4f4 BOTS_LevInstColl
 8001c638 BOTS_PerFrame_EngineRevving
 8001c73c BOTS_MaskGrab
 8001c950 BOTS_Killplane

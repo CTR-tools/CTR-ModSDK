@@ -51622,7 +51622,7 @@ LAB_800659ec:
     else {
       DAT_1f800114 = *(ushort *)(*(int *)(iVar5 + 0x18) + 0x10) | 0x8000;
 
-	  // RB_Hazard_OnApproach_Mine
+	  // RB_Hazard_LevInstColl
       FUN_800ad9ac(&DAT_1f800108,*(undefined4 *)(iVar5 + 0x6c));
 
 	  sVar2 = *(short *)(*(int *)(DAT_1f800150 + 0x1c) + 0x3c);
@@ -51846,7 +51846,7 @@ LAB_800659ec:
       else {
         DAT_1f800114 = *(ushort *)(*(int *)(iVar5 + 0x18) + 0x10);
 
-		// RB_Hazard_OnApproach_Mine
+		// RB_Hazard_LevInstColl
         FUN_800ad9ac(&DAT_1f800108,*(undefined4 *)(iVar5 + 0x6c));
 
 		sVar2 = *(short *)(*(int *)(DAT_1f800150 + 0x1c) + 0x3c);

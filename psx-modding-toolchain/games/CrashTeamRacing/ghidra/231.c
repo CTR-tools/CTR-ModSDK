@@ -1016,7 +1016,7 @@ void FUN_800aca50(int param_1)
   int iVar2;
   undefined4 *puVar3;
   
-  // RB_SearchQuadblock_ToggleReflection
+  // RB_LevInstDefBirth_Default
   FUN_800b4fe4(param_1);
   
   if (
@@ -1944,7 +1944,7 @@ void FUN_800ad92c(int param_1)
   return;
 }
 
-// RB_Hazard_OnApproach_Mine
+// RB_Hazard_LevInstColl (tnt, potion, warpball, etc) (not hazard? moving explosive?)
 // param_1 - BSP result
 // param_2 - thread
 undefined4 FUN_800ad9ac(int param_1,undefined4 param_2)
@@ -1967,10 +1967,11 @@ undefined4 FUN_800ad9ac(int param_1,undefined4 param_2)
 	// ThreadMeta
     iVar1 = FUN_8001d094(iVar3);
 	
-	// if exists and all valid
+	// if funcLevThreadsBirth is not nullptr
     if ((iVar1 != 0) && (*(code **)(iVar1 + 8) != (code *)0x0)) 
-	{
-	  // funcOnApproach
+	{		
+	  // execute funcLevThreadsBirth, make thread for this instance
+	  // upon collision with the instance, let it run thread->OnCollide
       uVar2 = (**(code **)(iVar1 + 8))(iVar4,param_2,param_1);
 	  
 	  // if not PU_WUMPA_FRUIT
@@ -1994,6 +1995,9 @@ undefined4 FUN_800ad9ac(int param_1,undefined4 param_2)
       return 0;
     }
   }
+  
+  // make potion open teeth,
+  // or make warpball turn around
   return 1;
 }
 
@@ -2444,7 +2448,7 @@ LAB_800add14:
 	// if instance -> model -> modelID
     DAT_1f800114 = *(undefined2 *)(*(int *)(iVar10 + 0x18) + 0x10);
 	
-	// RB_Hazard_OnApproach_Mine
+	// RB_Hazard_LevInstColl
     iVar8 = FUN_800ad9ac(&DAT_1f800108,param_1);
     
 	if (iVar8 == 1) {
@@ -3480,7 +3484,7 @@ LAB_800af34c:
   if (DAT_1f80014a != 0) {
     DAT_1f800114 = 0x36;
 	
-	// RB_Hazard_OnApproach_Mine
+	// RB_Hazard_LevInstColl
     iVar6 = FUN_800ad9ac(&DAT_1f800108,param_1);
     
 	if (iVar6 == 1) 
@@ -5327,7 +5331,7 @@ void FUN_800b18f8(int param_1)
     _DAT_1f800110 = 0x19000;
   }
   
-  // RB_Burst_CollideInst_NonLev
+  // RB_Burst_ThBucketColl
   DAT_1f800130 = FUN_800b1e90;
   
   // instance -> thread
@@ -5366,7 +5370,7 @@ void FUN_800b18f8(int param_1)
   // check collision with player threads
   FUN_800425d4(uVar3,&DAT_1f800108,0);
   
-  // RB_Burst_CollideInst_Lev
+  // RB_Burst_LevInstColl
   DAT_1f800130 = FUN_800b20a4;
   return;
 }
@@ -5523,7 +5527,8 @@ void FUN_800b1d2c(int param_1)
   return;
 }
 
-// RB_Burst_CollideInst_NonLev
+// RB_Burst_ThBucketColl
+// callback when searching thread buckets
 void FUN_800b1e90(int param_1,int param_2)
 
 {
@@ -5635,8 +5640,7 @@ void FUN_800b1e90(int param_1,int param_2)
   return;
 }
 
-// open door
-// RB_Burst_CollideInst_Lev
+// RB_Burst_LevInstColl (bsp callback)
 void FUN_800b20a4(int param_1,int param_2)
 
 {
@@ -5667,10 +5671,11 @@ void FUN_800b20a4(int param_1,int param_2)
 		// ThreadMeta
         iVar2 = FUN_8001d094();
 		
-		// if all valid
+		// if funcLevThreadsBirth is not nullptr
         if ((iVar2 != 0) && (*(code **)(iVar2 + 8) != (code *)0x0)) 
 		{
-		  // funcOnApproach
+		  // execute funcLevThreadsBirth, make thread for this instance
+		  // upon collision with the instance, let it run thread->OnCollide
           (**(code **)(iVar2 + 8))(iVar3,*(undefined4 *)(param_1 + 0x18),param_1);
         }
       }
@@ -5874,7 +5879,7 @@ void FUN_800b2154(int param_1)
     }
   }
   
-  // RB_Burst_CollideInst_NonLev
+  // RB_Burst_ThBucketColl (callback for threadbucket collision)
   DAT_1f800130 = FUN_800b1e90;
   
   // instance -> thread
@@ -5897,7 +5902,7 @@ void FUN_800b2154(int param_1)
   // check collision with all Tracking thread
   FUN_800425d4(*(undefined4 *)(PTR_DAT_8008d2ac + 0x1ba4),&DAT_1f800108,0);
   
-  // RB_Burst_CollideInst_Lev
+  // RB_Burst_LevInstColl (callback for BSP collision)
   DAT_1f800130 = FUN_800b20a4;
   
   // Weapon_MakeHitboxAndSearchBSP
@@ -7983,13 +7988,15 @@ void FUN_800b4f48(int param_1)
     *(uint *)(param_1 + 0x28) = *(uint *)(param_1 + 0x28) | 0x20000;
   }
   
-  // RB_SearchQuadblock_ToggleReflection
+  // RB_LevInstDefBirth_Default
   FUN_800b4fe4(param_1);
   
   return;
 }
 
-// RB_SearchQuadblock_ToggleReflection
+// RB_LevInstDefBirth_Default
+// used by wumpabox, weaponbox, timebox, as funcptr,
+// or called directly from other LevInstDefBirth funcptrs
 void FUN_800b4fe4(int param_1)
 {
   _DAT_1f80013c = 0x3000;
@@ -8298,7 +8305,7 @@ void FUN_800b5334(int param_1)
     *(uint *)(param_1 + 0x28) = *(uint *)(param_1 + 0x28) | 0x30000;
   }
   
-  // RB_SearchQuadblock_ToggleReflection
+  // RB_LevInstDefBirth_Default
   FUN_800b4fe4(param_1);
   return;
 }
@@ -9870,7 +9877,7 @@ void FUN_800b706c(int param_1)
 // RB_Fruit_Init (permanent)
 void FUN_800b722c(int param_1)
 {
-  // RB_SearchQuadblock_ToggleReflection
+  // RB_LevInstDefBirth_Default
   FUN_800b4fe4(param_1);
   
   *(undefined *)(param_1 + 0x52) = 0;
@@ -12678,6 +12685,7 @@ LAB_800b9ff8:
   _DAT_1f800110 = 0x90000;
   
   // RB_Teeth_BSP_Callback
+  // not a BSP callback, ThreadBucket collision callback
   DAT_1f800130 = &FUN_800b9e44;
   
   DAT_1f800114 = 0x70;

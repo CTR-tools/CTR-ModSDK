@@ -3352,11 +3352,12 @@ LAB_800209b0:
 				// if it is not nullptr
 				(iVar7 != 0) &&
 
-				// If funcOnApproach is not nullptr
+				// If funcLevThreadsBirth is not nullptr
 				(*(code **)(iVar7 + 8) != (code *)0x0)
 			  )
 		  {
-			// call OnApproach
+			// execute funcLevThreadsBirth, make thread for this instance
+			// upon collision with the instance, let it run thread->OnCollide
             iVar5 = (**(code **)(iVar7 + 8))(iVar6,param_1,&DAT_1f800108);
           }
         }
