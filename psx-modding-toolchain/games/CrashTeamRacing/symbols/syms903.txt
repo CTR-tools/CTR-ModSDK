@@ -1427,7 +1427,7 @@
 800b566c RB_Follower_ProcessBucket
 800b5724 RB_Follower_PerFrame
 800b5814 RB_Follower_Init
-800b596c RB_Fruit_PerFrame_AndDestroy
+800b596c RB_Fruit_PerFrame
 800b5b2c RB_Fruit_LInB
 800b5b60 RB_Fruit_LThB
 800b5c38 RB_Minecart_PerFrame

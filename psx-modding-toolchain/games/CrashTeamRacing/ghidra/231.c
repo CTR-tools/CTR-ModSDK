@@ -1,5 +1,5 @@
 
-// 231: 129/129
+// 231: 130/130
 
 // RB_MakeInstanceReflective
 // param_1 is BSP result
@@ -7781,6 +7781,8 @@ undefined4 FUN_800b4c5c(int param_1,int param_2,undefined4 param_3,int param_4)
 	{
       local_18 = CONCAT22(*(undefined2 *)(iVar6 + 0x48),*(undefined2 *)(iVar6 + 0x44));
       local_14 = local_14 & 0xffff0000 | (uint)*(ushort *)(iVar6 + 0x4c);
+	  
+	  // camera110 -> 0x28 (matrix)
       puVar4 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar5 + 0x4a) * 0x110;
       setCopControlWord(2,0,*(undefined4 *)(puVar4 + 400));
       setCopControlWord(2,0x800,*(undefined4 *)(puVar4 + 0x194));
@@ -9849,9 +9851,9 @@ void FUN_800b6f00(int param_1,int param_2)
   return;
 }
 
-// RB_Fruit_PerFrame_AndDestroy
-// Spawns fruit for one frame then destroys,
-// why not just do this on OnCollide? 800b432c?
+// RB_Fruit_PerFrame
+// This is useless, both thread death and pointer erasing
+// happen inside RB_Fruit_OnCollide anyway
 void FUN_800b706c(int param_1)
 {
   int iVar1;
@@ -9873,6 +9875,87 @@ void FUN_800b706c(int param_1)
 	// erase (instance -> thread)
     *(undefined4 *)(iVar1 + 0x6c) = 0;
   } while( true );
+}
+
+// RB_Fruit_OnCollide
+void FUN_800b70a8(int param_1,int param_2,undefined4 param_3,int param_4)
+
+{
+  short sVar1;
+  short sVar2;
+  undefined4 uVar3;
+  MATRIX *r0;
+  int iVar5;
+  long *r0_00;
+  int iVar6;
+  int iVar7;
+  int *piVar8;
+  undefined *puVar9;
+  undefined auStack40 [16];
+  undefined2 uStack24;
+  undefined2 uStack22;
+  undefined2 uStack20;
+  
+  puVar9 = auStack40;
+  piVar8 = *(int **)(param_1 + 0x30);
+  sVar1 = *(short *)(param_4 + 0xc);
+  iVar7 = *(int *)(param_1 + 0x34);
+  
+  if ((sVar1 == 0x18) || (uVar3 = 0, sVar1 == 0x3f)) 
+  {
+    iVar6 = *(int *)(param_2 + 0x30);
+    if (sVar1 == 0x18) {
+      
+	  // position 3D
+	  uStack24 = *(undefined2 *)(iVar7 + 0x44);
+      uStack22 = *(undefined2 *)(iVar7 + 0x48);
+      uStack20 = *(undefined2 *)(iVar7 + 0x4c);
+      
+	  // camera110 -> 0x28 (matrix)
+	  r0 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 400);
+      gte_SetRotMatrix(r0);
+      gte_SetTransMatrix(r0);
+      gte_ldv0((SVECTOR *)(puVar9 + 0x10));
+      gte_rtps();
+      r0_00 = (long *)(puVar9 + 0x18);
+      gte_stsxy(r0_00);
+	  
+	  // gGT
+      iVar5 = PTR_DAT_8008d2ac;
+      
+	  // same 2D camera effect as crystal
+	  // will comment thoroughly when eyes are better (Niko)
+	  
+	  *(short *)(iVar6 + 0x4bc) =
+           *(short *)(puVar9 + 0x18) +
+           *(short *)(iVar5 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x184);
+      sVar1 = *(short *)((int)r0_00 + 2);
+      sVar2 = *(short *)(iVar5 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x186);
+      *(undefined4 *)(iVar6 + 0x4b8) = 5;
+      *(int *)(iVar6 + 0x4c0) = *(int *)(iVar6 + 0x4c0) + 1;
+      *(short *)(iVar6 + 0x4be) = sVar1 + sVar2 + -0x14;
+    }
+	
+    *piVar8 = iVar6;
+	
+	// set scale to 0,0,0
+    *(undefined2 *)(iVar7 + 0x1c) = 0;
+    *(undefined2 *)(iVar7 + 0x1e) = 0;
+    *(undefined2 *)(iVar7 + 0x20) = 0;
+	
+	// erase instance->thread
+    *(undefined4 *)(iVar7 + 0x6c) = 0;
+	
+	// play sound
+    FUN_8002f0dc(0x43,iVar7);
+    
+	// return 1
+	uVar3 = 1;
+	
+	// kill thread
+    *(uint *)(param_1 + 0x1c) = *(uint *)(param_1 + 0x1c) | 0x800;
+  }
+  return uVar3;
 }
 
 // RB_Fruit_LInB
