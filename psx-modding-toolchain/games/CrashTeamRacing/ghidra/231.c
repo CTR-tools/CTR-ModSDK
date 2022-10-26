@@ -1005,7 +1005,7 @@ void FUN_800ac6b4(int param_1)
   return;
 }
 
-// RB_Nitro_Init_LevInst
+// RB_GenericMine_LInB
 void FUN_800aca50(int param_1)
 {
   // This is for Nitro crates
@@ -1016,7 +1016,7 @@ void FUN_800aca50(int param_1)
   int iVar2;
   undefined4 *puVar3;
   
-  // RB_LevInstDefBirth_Default
+  // RB_Default_LInB
   FUN_800b4fe4(param_1);
   
   if (
@@ -6383,7 +6383,7 @@ void FUN_800b3120(int param_1)
   return;
 }
 
-// RB_Baron_Init
+// RB_Baron_LInB
 void FUN_800b37d4(int param_1)
 {
   // N Gin Labs Barrel
@@ -6494,7 +6494,7 @@ void FUN_800b38e4(int param_1)
   } while( true );
 }
 
-// RB_Blade_Init
+// RB_Blade_LInB
 void FUN_800b3978(int param_1)
 {
   // These "blades" are on hot air skyway blimps.
@@ -7040,7 +7040,7 @@ code_r0x800b4024:
   return 1;
 }
 
-// RB_Crate_Weapon_OnApproach
+// RB_Crate_Weapon_LThB
 undefined4 FUN_800b4278(int param_1,undefined4 param_2,undefined4 param_3)
 {
   code *pcVar1;
@@ -7324,7 +7324,7 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
   return 0;
 }
 
-// RB_Crate_Fruit_OnApproach
+// RB_Crate_Fruit_LThB
 undefined4 FUN_800b471c(int param_1,undefined4 param_2,undefined4 param_3)
 {
   code *pcVar1;
@@ -7673,7 +7673,7 @@ LAB_800b4b2c:
   return 1;
 }
 
-// RB_Crate_Time_OnApproach
+// RB_Crate_Time_LThB
 undefined4 FUN_800b4ba8(int param_1,undefined4 param_2,undefined4 param_3)
 {
   code *pcVar1;
@@ -7868,7 +7868,7 @@ void FUN_800b4dd8(int param_1)
   return;
 }
 
-// RB_Crystal_OnApproach
+// RB_Crystal_LThB
 undefined4 FUN_800b4e7c(int param_1,undefined4 param_2,undefined4 param_3)
 
 {
@@ -7941,7 +7941,7 @@ undefined4 FUN_800b4e7c(int param_1,undefined4 param_2,undefined4 param_3)
   return uVar1;
 }
 
-// RB_Crystal_OnInit
+// RB_Crystal_LInB
 void FUN_800b4f48(int param_1)
 {
   int iVar1;
@@ -7988,13 +7988,13 @@ void FUN_800b4f48(int param_1)
     *(uint *)(param_1 + 0x28) = *(uint *)(param_1 + 0x28) | 0x20000;
   }
   
-  // RB_LevInstDefBirth_Default
+  // RB_Default_LInB
   FUN_800b4fe4(param_1);
   
   return;
 }
 
-// RB_LevInstDefBirth_Default
+// RB_Default_LInB
 // used by wumpabox, weaponbox, timebox, as funcptr,
 // or called directly from other LevInstDefBirth funcptrs
 void FUN_800b4fe4(int param_1)
@@ -8142,7 +8142,7 @@ bool FUN_800b5090(int param_1,int param_2,undefined4 param_3,int param_4)
   return bVar1;
 }
 
-// RB_CtrLetter_OnApproach
+// RB_CtrLetter_LThB
 undefined4 FUN_800b5210(int param_1,undefined4 param_2,undefined4 param_3)
 {
   undefined4 uVar1;
@@ -8250,7 +8250,7 @@ void FUN_800b52dc(int param_1)
   return;
 }
 
-// RB_CtrLetter_Init
+// RB_CtrLetter_LInB
 void FUN_800b5334(int param_1)
 {
   int iVar1;
@@ -8305,7 +8305,7 @@ void FUN_800b5334(int param_1)
     *(uint *)(param_1 + 0x28) = *(uint *)(param_1 + 0x28) | 0x30000;
   }
   
-  // RB_LevInstDefBirth_Default
+  // RB_Default_LInB
   FUN_800b4fe4(param_1);
   return;
 }
@@ -8494,7 +8494,7 @@ void FUN_800b57b4(int param_1)
   return;
 }
 
-// RB_Banner_Init
+// RB_Banner_LInB
 void FUN_800b57f8(int param_1)
 {
   undefined *puVar1;
@@ -8939,7 +8939,7 @@ void FUN_800b5dbc(int param1, int param_2, int param_3, int param_4)
   return (uint)(*(short *)(param_4 + 0xc) == 0x18);
 }
 
-// RB_Armadillo_Init
+// RB_Armadillo_LInB
 void FUN_800b5dd0(int param_1)
 {
   undefined2 uVar1;
@@ -9255,7 +9255,7 @@ void FUN_800b625c(int param1, int param_2, int param_3, int param_4)
   return (uint)(*(short *)(param_4 + 0xc) == 0x18);
 }
 
-// RB_Fireball_Init
+// RB_Fireball_LInB
 void FUN_800b6270(int param_1)
 {
   int iVar1;
@@ -9560,7 +9560,7 @@ LAB_800b6908:
   } while( true );
 }
 
-// RB_FlameJet_Init
+// RB_FlameJet_LInB
 void FUN_800b6938(int param_1)
 {
   short sVar1;
@@ -9850,7 +9850,8 @@ void FUN_800b6f00(int param_1,int param_2)
 }
 
 // RB_Fruit_PerFrame_AndDestroy
-// Spawns fruit for one frame then destroys
+// Spawns fruit for one frame then destroys,
+// why not just do this on OnCollide? 800b432c?
 void FUN_800b706c(int param_1)
 {
   int iVar1;
@@ -9874,10 +9875,10 @@ void FUN_800b706c(int param_1)
   } while( true );
 }
 
-// RB_Fruit_Init (permanent)
+// RB_Fruit_LInB
 void FUN_800b722c(int param_1)
 {
-  // RB_LevInstDefBirth_Default
+  // RB_Default_LInB
   FUN_800b4fe4(param_1);
   
   *(undefined *)(param_1 + 0x52) = 0;
@@ -9885,7 +9886,7 @@ void FUN_800b722c(int param_1)
   return;
 }
 
-// RB_Fruit_OnApproach
+// RB_Fruit_LThB
 // spawns for one frame then destroys
 undefined4 FUN_800b7260(int param_1,undefined4 param_2,undefined4 param_3)
 {
@@ -10166,7 +10167,7 @@ void FUN_800b7338(int param_1)
   return;
 }
 
-// RB_Minecart_Init
+// RB_Minecart_LInB
 void FUN_800b7814(int param_1)
 {
   undefined *puVar1;
@@ -10517,7 +10518,7 @@ void FUN_800b7eb8(int param1, int param_2, int param_3, int param_4)
   return (uint)(*(short *)(param_4 + 0xc) == 0x18);
 }
 
-// RB_Orca_Init
+// RB_Orca_LInB
 // This was the beta Whale on Polar Pass
 void FUN_800b7ecc(int param_1)
 {
@@ -11231,7 +11232,7 @@ DAT_800b8968:
   } while( true );
 }
 
-// RB_Plant_Init
+// RB_Plant_LInB
 void FUN_800b89a4(int param_1)
 {
   int iVar1;

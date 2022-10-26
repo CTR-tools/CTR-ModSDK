@@ -4877,8 +4877,8 @@ struct GameTracker
   // 0xc8 - NDI_KART7
 
   // 0xc9 - NDI_BOX_LIDB
-  // 0xca - NDI_BOX_LIBC
-  // 0xcb - NDI_BOX_LIBD
+  // 0xca - NDI_BOX_LIDC
+  // 0xcb - NDI_BOX_LIDD
 
   // 0xcc - STATIC_INTRO_FLASH
   // 0xcd - STATIC_INTRODOORS
@@ -6706,13 +6706,13 @@ struct Data
 		// Crystal Challenge could've had a workaround hard-coded,
 		// but the developers had a time budget and this did not fit.
 
-		// used for initializing level instances, 
-		// in last stage of level loading.
-		void* funcLevInstDefBirth;
+		// callback after conversion of InstDef to Instance,
+		// part of the birth process for level instances
+		void* funcLevInstDefBirth; // LInB
 
 		// used for initializing threads upon
 		// hitbox collision in level BSP tree
-		void* funcLevThreadsBirth;
+		void* funcLevThreadsBirth; // LThB
 
 	// Number of elements changes...
 	} MetaDataModels
