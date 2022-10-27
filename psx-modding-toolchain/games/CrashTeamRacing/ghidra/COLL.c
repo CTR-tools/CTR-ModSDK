@@ -289,7 +289,7 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
 }
 
 
-// COLL_SearchCallback_Instances
+// PerVisData_CheckInstances
 // param1 - VisData node
 // param2 - 1f800108
 void FUN_8001d610(int param_1,int param_2)
@@ -362,6 +362,8 @@ void FUN_8001d610(int param_1,int param_2)
 			(*(short *)piVar4 <= *(short *)(param_2 + 0x3a))
 		 ) 
 	  {
+		// COLL_Instance
+		// check with collision for this instance
         FUN_8001d0c4(param_2,piVar3); 
       }
 LAB_8001d750:
@@ -467,6 +469,7 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
   *(undefined4 *)(param_3 + 0x62) = 0;
 
   // Search BSP, check collision with LEV instances
+  // COLL_SearchTree_WithCallback, PerVisData_CheckInstances
   FUN_8001ebec(*(undefined4 *)(*(int *)(param_3 + 0x16) + 0x18),param_3 + 0x18,FUN_8001d610,param_3)
   ;
   return;
@@ -2289,7 +2292,7 @@ void FUN_8001f5f0(uint *param_1,int param_2)
 
   if ((*(ushort *)(param_2 + 0x22) & 1) != 0)
   {
-	// check collision with VisData instances
+	// PerVisData_CheckInstances
     FUN_8001d610(param_1,param_2);
   }
   return;
@@ -2957,7 +2960,7 @@ void FUN_800202a8(uint *param_1,int param_2)
 
   if ((*(ushort *)(param_2 + 0x22) & 1) != 0)
   {
-	// check collision with VisData instances
+	// PerVisData_CheckInstances
     FUN_8001d610(param_1,param_2);
   }
   return;
