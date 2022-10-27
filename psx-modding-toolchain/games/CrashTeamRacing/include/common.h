@@ -8394,7 +8394,7 @@ struct sData
 			unsigned int RemBitsConfig0;
 			unsigned int AddBitsConfig8;
 			unsigned int RemBitsConfig8;
-		} OnComplete;
+		} OnBegin;
 
 	} Loading;
 

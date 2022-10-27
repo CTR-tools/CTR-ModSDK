@@ -13765,18 +13765,42 @@ void FUN_8003c518(void)
 undefined4 main(void)
 
 {
+  // clockEffect
   ushort *puVar1;
+  
+  // AddBitsConfig0
   uint uVar2;
+  
+  // RemBitsConfig0
   uint uVar3;
+  
+  // AddBitsConfig8
   uint uVar4;
+  
+  // RemBitsConfig8
   uint uVar5;
+  
+  // gGT
   undefined *puVar6;
+  
+  // gGT or ControllerSystem
   undefined *puVar7;
+  
+  // checkered flag or loading stage or levID or time
   int iVar8;
+  
+  // gGT Config0
   uint uVar9;
+  
+  // gGT Config8
   uint uVar10;
+  
+  // gGT (duplicate)
   uint *puVar11;
+  
+  // audio mode, or LNG
   undefined4 uVar12;
+  
   undefined auStack40 [8];
 
   __main();
@@ -14316,20 +14340,20 @@ LAB_8003ca68:
 		  // Get address of GameTracker
           puVar6 = PTR_DAT_8008d2ac;
 
-		  // when loading is done, remove this
-		  // from gGT + 8
+		  // before loading starts,
+		  // remove this from gGT + 8
           uVar5 = DAT_8008d10c;
 
-		  // when loading is done, add this
-		  // from gGT + 8
+		  // before loading starts,
+		  // add this from gGT + 8
           uVar4 = DAT_8008d108;
 
-		  // when loading is done, remove this
-		  // from gGT + 0
+		  // before loading starts, 
+		  // remove this from gGT + 0
           uVar3 = DAT_8008d104;
 
-		  // when loading is done, add this
-		  // from gGT + 0
+		  // before loading starts, 
+		  // add this from gGT + 0
           uVar2 = DAT_8008d100;
 
 		  // wait for flag to be fully on-screen
