@@ -5172,9 +5172,8 @@ void FUN_800347d0(int param_1,int param_2)
   return;
 }
 
-
+// LOAD_LevelFile
 // param1 is lev ID being loaded
-// start loading level
 void FUN_80034874(undefined4 param_1)
 
 {
@@ -14587,7 +14586,7 @@ void FUN_8003cf7c(short param_1)
   // deactivate pause
   FUN_80024c08(PTR_DAT_8008d2ac);
 
-  // start loading level
+  // LOAD_LevelFile
   FUN_80034874((int)param_1);
   return;
 }
