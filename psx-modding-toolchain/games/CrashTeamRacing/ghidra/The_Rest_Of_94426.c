@@ -466,7 +466,7 @@ FUN_800309a4(int param_1,undefined4 param_2,uint param_3,uint param_4,undefined4
 }
 
 
-// INSTANCE_BirthWithThread_Desc
+// INSTANCE_BirthWithThread_Stack
 void FUN_80030a50(undefined4 *param_1)
 
 {

@@ -389,7 +389,7 @@
 8002fac8 INSTANCE_Birth3D
 8002fb40 INSTANCE_Birth2D
 8002fc00 INSTANCE_BirthWithThread
-8002fcac INSTANCE_BirthWithThread_Desc
+8002fcac INSTANCE_BirthWithThread_Stack
 8002fd04 INSTANCE_Death
 
 8002fd30 INSTANCE_LevInitAll
