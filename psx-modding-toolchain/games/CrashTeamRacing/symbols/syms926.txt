@@ -65,8 +65,8 @@
 8001cfec CDSYS_XAPauseForce
 8001d06c CDSYS_XAPauseAtEnd
 
-8001d094 COLL_ThreadMeta
-8001d0c4 COLL_Instance										// GetImpact_Instance
+8001d094 COLL_LevModelMeta
+8001d0c4 COLL_Instance										
 8001d610 COLL_SearchCallback_Instances						// PerVisData_CheckInstances
 8001d77c COLL_CheckDriver_AI								// StartSearch_AI
 8001d944 COLL_CheckDriver_Player							// StartSearch_Player

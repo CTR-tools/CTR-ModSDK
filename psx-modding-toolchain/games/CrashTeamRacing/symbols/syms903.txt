@@ -65,7 +65,7 @@
 8001d62c CDSYS_XAPauseForce
 8001d694 CDSYS_XAPauseAtEnd
 
-8001d6bc COLL_ThreadMeta
+8001d6bc COLL_LevModelMeta
 8001d6ec COLL_Instance
 // extra function here in sep3?
 8001dd40 COLL_SearchCallback_Instances
