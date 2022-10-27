@@ -1440,6 +1440,7 @@ code_r0x8001e96c:
 // param1 - posTop
 // param2 - posBottom
 // param3 - 1f800108
+// param4 - always zero except Camera_FixY(0x280) and TNT/Nitro/Beaker(0x40)
 void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,int param_4)
 
 {
