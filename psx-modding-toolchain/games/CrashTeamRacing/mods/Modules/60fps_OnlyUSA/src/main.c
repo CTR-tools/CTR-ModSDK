@@ -13,7 +13,7 @@ void LOAD_Callback_Overlay_233();
 u_int LOAD_IsOpen_Podiums();
 u_int LOAD_IsOpen_MainMenu();
 void INSTANCE_Birth(struct Instance* i, struct Model* m, char* name, struct Thread* t, int flags);
-void INSTANCE_LEVEL_InitAll(struct InstDef* instDef, int num);
+void INSTANCE_LevInitAll(struct InstDef* instDef, int num);
 int PatchPE(struct ParticleEmitter* pe);
 
 struct TrophyAnimSound
@@ -654,11 +654,11 @@ void INSTANCE_Birth_Hook(struct Instance* i, struct Model* m, char* name, struct
 	return;
 }
 
-void INSTANCE_LEVEL_InitAll_Hook(struct InstDef* instDef, int num)
+void INSTANCE_LevInitAll_Hook(struct InstDef* instDef, int num)
 {
 	int i;
 
-	INSTANCE_LEVEL_InitAll(instDef, num);
+	INSTANCE_LevInitAll(instDef, num);
 
 	for(i = 0; i < num; i++)
 	{
@@ -955,8 +955,8 @@ void RunEntryHook()
 		*(unsigned int*)0x800308bc = JAL(INSTANCE_Birth_Hook);
 
 		// patch every time LEV instances are made
-		*(unsigned int*)0x80033234 = JAL(INSTANCE_LEVEL_InitAll_Hook);
-		*(unsigned int*)0x8003be50 = JAL(INSTANCE_LEVEL_InitAll_Hook);
+		*(unsigned int*)0x80033234 = JAL(INSTANCE_LevInitAll_Hook);
+		*(unsigned int*)0x8003be50 = JAL(INSTANCE_LevInitAll_Hook);
 	}
 	
 	// turbo fire

@@ -488,7 +488,7 @@ void FUN_80030aa8(undefined4 param_1)
 }
 
 
-// INSTANCE_LEVEL_InitAll
+// INSTANCE_LevInitAll
 // copy InstDef to InstancePool
 // param1 - pointer to Instance Descriptions
 // param2 - number of instances
@@ -662,11 +662,11 @@ void FUN_80030ad4(undefined4 *param_1,int param_2)
 			)
 		  ) &&
 
-		  // If funcOnInit
+		  // If funcLevInstDefBirth
           (*(code **)(iVar13 + 4) != (code *)0x0)
 		 )
 	  {
-		// call funcOnInit, make thread for this instance
+		// call funcLevInstDefBirth, make thread for this instance
         (**(code **)(iVar13 + 4))(iVar6);
       }
 
@@ -819,7 +819,7 @@ LAB_80030e18:
   return;
 }
 
-// INSTANCE_LEVEL_RebuildThreads
+// INSTANCE_LevRestartLInBs
 // only for lev swap, or podium->driving (233->232)
 void FUN_80030ed4(int param_1,int param_2)
 
@@ -847,10 +847,10 @@ void FUN_80030ed4(int param_1,int param_2)
 			// if pointer is not nullptr
 			(iVar1 != 0) &&
 
-			// if funcOnInit
+			// if funcLevInstDefBirth
 			(*(code **)(iVar1 + 4) != (code *)0x0))
 	  {
-		// execute funcOnInit, make thread for this instance
+		// execute funcLevInstDefBirth, make thread for this instance
         (**(code **)(iVar1 + 4))(*puVar2);
       }
 
@@ -1031,7 +1031,7 @@ void FUN_8003112c(int param_1,undefined4 param_2)
 }
 
 
-// INSTANCE_LEVEL_DefToInst
+// INSTANCE_LevInstancesStart
 void FUN_8003116c(int *param_1)
 
 {
@@ -1102,7 +1102,7 @@ void FUN_8003116c(int *param_1)
 }
 
 
-// INSTANCE_LEVEL_InstToDef
+// INSTANCE_LevInstancesStop
 void FUN_80031268(int *param_1,int param_2)
 
 {
@@ -3618,7 +3618,7 @@ void FUN_80033108(void)
   // FUN_8006fbac("gGT->level2 = 0x%08x\n",*(undefined4 *)(PTR_DAT_8008d2ac + 0x164));
   // FUN_8006fbac("SWAPPING 1...\n");
 
-  // INSTANCE_LEVEL_InstToDef
+  // INSTANCE_LevInstancesStop
   // also erase any threads attached to instances
   FUN_80031268(**(undefined4 **)(PTR_DAT_8008d2ac + 0x160),1);
 
@@ -3684,12 +3684,12 @@ void FUN_80033108(void)
 	// store array of model pointers in GameTracker
     FUN_8003147c(PTR_DAT_8008d2ac,*(undefined4 *)(iVar2 + 0x14),*(undefined4 *)(iVar2 + 0x18));
 
-	// INSTANCE_LEVEL_InitAll
+	// INSTANCE_LevInitAll
 	// copy InstDef to InstancePool
 	FUN_80030ad4(*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x10),
                  *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0xc));
 
-	// INSTANCE_LEVEL_DefToInst
+	// INSTANCE_LevInstancesStart
 	FUN_8003116c(**(undefined4 **)(PTR_DAT_8008d2ac + 0x160));
 
 	// DecalGlobal_Store
@@ -7582,7 +7582,7 @@ LAB_800367d4:
 		  // if this is first frame of 232 loaded
           if (PTR_DAT_8008d2ac[0x2579] != '\0')
 		  {
-			// INSTANCE_LEVEL_RebuildThreads
+			// INSTANCE_LevRestartLInBs
             FUN_80030ed4(*(undefined4 *)(param_1[0x58] + 0x10),
 				*(undefined4 *)(param_1[0x58] + 0xc));
 
@@ -13329,7 +13329,7 @@ void FUN_8003b934(uint *param_1)
     *(undefined4 *)(PTR_DAT_8008d2ac + 0x1edc) = 900;
   }
 
-  // INSTANCE_LEVEL_InitAll
+  // INSTANCE_LevInitAll
   // copy InstDef to InstancePool
   FUN_80030ad4(*(undefined4 *)(param_1[0x58] + 0x10),*(undefined4 *)(param_1[0x58] + 0xc));
 
@@ -13414,7 +13414,7 @@ void FUN_8003b934(uint *param_1)
 		(*(int *)param_1[0x58] != 0)
 	 )
   {
-	// INSTANCE_LEVEL_DefToInst
+	// INSTANCE_LevInstancesStart
     FUN_8003116c();
   }
 
@@ -14173,7 +14173,7 @@ LAB_8003ca68:
 	  // MEMPACK_PopState
       FUN_8003e9d0();
 
-	  // INSTANCE_LEVEL_InstToDef
+	  // INSTANCE_LevInstancesStop
 	  // ignore threads, because we PopState,
 	  // so the threadpool will reset anyway
       FUN_80031268(**(undefined4 **)(PTR_DAT_8008d2ac + 0x160),0);

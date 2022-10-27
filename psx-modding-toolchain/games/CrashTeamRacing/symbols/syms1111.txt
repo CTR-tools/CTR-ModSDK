@@ -412,8 +412,8 @@
 80032650 INSTANCE_BirthWithThread_Desc
 800326a8 INSTANCE_Death
 
-800326d4 INSTANCE_LEVEL_InitAll
-80032ad4 INSTANCE_LEVEL_RebuildThreads
+800326d4 INSTANCE_LevInitAll
+80032ad4 INSTANCE_LevRestartLInBs
 // INSTANCE_GetNumAnimFrames
 
 80032bdc AllocPool_Clear
@@ -421,8 +421,8 @@
 80032cd4 AllocPool_Add
 80032d2c AllocPool_Remove
 
-80032d6c INSTANCE_LEVEL_DefToInst
-80032e68 INSTANCE_LEVEL_InstToDef
+80032d6c INSTANCE_LevInstancesStart
+80032e68 INSTANCE_LevInstancesStop
 80032fc8 INSTANCE_ParentInstance
 
 8003307c INSTANCE_ModelGlobal_Store
