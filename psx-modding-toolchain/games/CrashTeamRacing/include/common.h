@@ -738,6 +738,12 @@ struct BspSearchData
 	// 0x30
 	// boundingbox
 	
+	// 0x3C...
+	// 0x42 (number collisions?)
+	// 0x48 instanceHitbox
+	
+	// 0x70 short normalVec[3]
+	
 	// --------
 	
 	// vec3, subtract positions (FUN_8001d0c4)
