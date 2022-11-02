@@ -3343,7 +3343,7 @@ struct QuadBlock
 	char terrain_type;
 	char weather_intensity;
 	char weather_type;
-	char unk;
+	char speedImpact;
 
 	// 0x3C
 	short blockID;
