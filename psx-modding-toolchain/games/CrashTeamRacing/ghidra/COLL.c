@@ -2137,14 +2137,18 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   iVar6 = (iVar6 >> (uVar1 & 0x1f)) * iVar4 >> (uVar3 & 0x1f);
   iVar4 = (iVar7 >> (uVar1 & 0x1f)) * iVar4 >> (uVar3 & 0x1f);
   
+  // load normal vector onto GTE
   gte_ldsv_(iVar5,iVar6,iVar4);
   
   *(short *)(param_2 + 3) = (short)iVar5;
   *(short *)((int)param_2 + 0xe) = (short)iVar6;
+  
   gte_rtir_b();
+  
   iVar7 = gte_stMAC1();
   *(short *)(param_2 + 4) = (short)iVar4;
   *(short *)((int)param_2 + 0x12) = (short)(iVar7 >> 1);
+  
   if (iVar5 < 0) { // absolute x
     iVar5 = -iVar5;
   }
@@ -2154,6 +2158,7 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   if (iVar4 < 0) { // absolute z
     iVar4 = -iVar4;
   }
+  
   sVar2 = 1;
   if (iVar5 - iVar6 < 0) {
     sVar2 = 1;
