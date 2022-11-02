@@ -2166,15 +2166,10 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   
   *(short *)((int)param_2 + 0x12) = (short)(iVar7 >> 1);
   
-  if (iVar5 < 0) { // absolute x
-    iVar5 = -iVar5;
-  }
-  if (iVar6 < 0) { // absolute y 
-    iVar6 = -iVar6;
-  }
-  if (iVar4 < 0) { // absolute z
-    iVar4 = -iVar4;
-  }
+  // absolute value
+  if (iVar5 < 0) iVar5 = -iVar5;
+  if (iVar6 < 0) iVar6 = -iVar6;
+  if (iVar4 < 0) iVar4 = -iVar4;
   
   sVar2 = 1;
   if (iVar5 - iVar6 < 0) {
@@ -2183,10 +2178,12 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
       sVar2 = 3;
     }
   }
-  else if (-1 < iVar5 - iVar4) { //if z > x
+  else if (-1 < iVar5 - iVar4) {
     sVar2 = 2;
   }
+  
   *(short *)((int)param_2 + 6) = sVar2;
+  
   return;
 }
 
