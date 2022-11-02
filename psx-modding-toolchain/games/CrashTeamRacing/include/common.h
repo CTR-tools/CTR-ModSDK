@@ -3343,7 +3343,7 @@ struct QuadBlock
 	char terrain_type;
 	char weather_intensity;
 	char weather_type;
-	char unk;
+	char triNormalVecBitShift;
 
 	// 0x3C
 	short blockID;
@@ -3365,37 +3365,8 @@ struct QuadBlock
 	// converts back and forth, Inst to InstDef
 
 	// 0x48
-	// values on parking lot:
-	// 0x1C71 for flat quadblock,
-	// 0x1971 for ramp quadblock
-	short footerData_0x48[10];
-
-	/*
-
-	// offset 0x48 (0xA)
-	// one footerData per triangle
-	// triangle has vertex IDs 0-8
-
-	Subdivided Quadblock:
-		0: 0,5,4
-		1: 4,5,6
-		2: 6,1,4
-		3: 5,2,6
-		4: 8,7,6
-		5: 7,8,3
-		6: 1,6,7
-		7: 2,8,6
-
-	Low LOD Quadblock:
-		Two more trangles:
-		8: [whatever]
-		9: [whatever]
-
-	10 entries for 10 triangles
-
-	(n * footerData_0x48[tri_index]) << unk2_offset0x3F = 0x1000
-
-	*/
+	// explained in FUN_8001f2dc
+	short triNormalVecDividend[10];
 
 	// full struct is 0x5c bytes large
 };
