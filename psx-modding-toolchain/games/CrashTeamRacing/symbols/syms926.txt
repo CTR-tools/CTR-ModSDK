@@ -76,7 +76,7 @@
 // unknown 8001ede4 -- part of 8001f928 (only NearPlayer)	// TestTriangle_FindClosest_Subfunction2
 // unknown 8001ef1c -- tiny function, not used				// TestTriangle_Unused
 // unknown 8001ef50 -- [triangle] (only in Touching)		// TestTriangle_FindAny
-// unknown 8001f2dc -- [triangle] (only in 2-tri and 8-tri)	// TestTriangle_WithQuadblockFooter
+// unknown 8001f2dc -- [triangle] (only in 2-tri and 8-tri)	// TestTriangle_GetNormalVector
 
 8001f41c COLL_Quadblock_Graphics							// PerQuadblock_CheckTriangles_Touching
 8001f5f0 COLL_SearchCallback_QuadBlocks_Graphics			// PerVisData_CheckQuadblocks_Touching
