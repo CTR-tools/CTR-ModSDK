@@ -2101,11 +2101,13 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   int iVar7;
 
   // vector param_4 minus param_2
+  // flip param_2 axes, so normal is oriented with Y facing up
   gte_ldR11R12((int)*param_4 - (int)*(short *)param_2 & 0xffff);
   gte_ldR22R23((int)param_4[1] - (int)*(short *)((int)param_2 + 2) & 0xffff);
   gte_ldR33((int)param_4[2] - (int)*(short *)(param_2 + 1) & 0xffff);
   
   // vector param_3 minus param_2
+  // flip param_2 axes, so normal is oriented with Y facing up
   gte_ldsv_((int)*param_3 - (int)*(short *)param_2,
             (int)param_3[1] - (int)*(short *)((int)param_2 + 2),
             (int)param_3[2] - (int)*(short *)(param_2 + 1));
@@ -2124,7 +2126,8 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   // data from quadblock 0x48 - 0x5c
   iVar4 = (int)*(short *)(param_1 + 0x1a8);
   
-  // result of cross product (normal)
+  // result of cross product,
+  // this is an un-normalized normal vector
   iVar5 = gte_stMAC1();
   iVar6 = gte_stMAC2();
   iVar7 = gte_stMAC3();
@@ -2137,18 +2140,21 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   iVar6 = (iVar6 >> (uVar1 & 0x1f)) * iVar4 >> (uVar3 & 0x1f);
   iVar4 = (iVar7 >> (uVar1 & 0x1f)) * iVar4 >> (uVar3 & 0x1f);
   
-  // load normal vector onto GTE,
-  // 100% certain this is the normal,
+  // load normalized normal vector onto GTE,
   // checked with t3,t4,t5 at 8001f3a4 with debugger
   gte_ldsv_(iVar5,iVar6,iVar4);
   
+  // normal vector X and Y
   *(short *)(param_2 + 3) = (short)iVar5;
   *(short *)((int)param_2 + 0xe) = (short)iVar6;
   
   gte_rtir_b();
   
   iVar7 = gte_stMAC1();
+  
+  // normal vector Z
   *(short *)(param_2 + 4) = (short)iVar4;
+  
   *(short *)((int)param_2 + 0x12) = (short)(iVar7 >> 1);
   
   if (iVar5 < 0) { // absolute x
