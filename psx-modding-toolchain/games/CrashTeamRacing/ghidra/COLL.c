@@ -2139,6 +2139,7 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   // breakpoint 8001f37c, (GTE result >> poly-level)
   // can be seen in registers t3, t4, t5
   
+  // [footer]
   // tool math to generate footer, assuming quadblock3F
   // is always 0x12: normalize scaled vector, then:
   // footer = (normalizedVec << 12)/scaledVec
