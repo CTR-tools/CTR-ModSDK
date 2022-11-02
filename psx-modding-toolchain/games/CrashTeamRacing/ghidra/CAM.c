@@ -926,7 +926,8 @@ void FUN_800188a8(short *param_1,int param_2,undefined4 param_3,short *param_4)
     if (
 			(param_1[0x1f] == 0) &&
 			(
-				// Search full BSP tree for COLL_SearchCallback_QuadBlocks_Graphics
+				// COLL_SearchTree_FindX, callback
+				// COLL_PerVisData_CheckQuadblocks_Touching
 				FUN_8001ebec(*(undefined4 *)(*(int *)(param_1 + 0x16) + 0x18),param_1 + 0x18,FUN_8001f5f0,
 						param_1), param_1[0x1f] == 0
 			)
@@ -1220,7 +1221,7 @@ undefined * FUN_80018ec0(undefined2 *param_1)
     local_18 = local_20;
     local_14 = local_1c;
 
-	// search BSP
+	// COLL_SearchTree_FindQuadblock_Touching
     FUN_8001eb0c(&local_20,&local_18,&DAT_8008db1c,0,local_20,local_1c);
 
 	iVar2 = iVar2 + 1;

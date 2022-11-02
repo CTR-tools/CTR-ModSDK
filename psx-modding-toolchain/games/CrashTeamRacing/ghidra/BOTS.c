@@ -883,7 +883,7 @@ void FUN_800135d8(int param_1)
   local_16 = (short)((uint)*(undefined4 *)(iVar2 + 0x2e4) >> 8) + 0x19;
   local_14 = (undefined2)((uint)*(undefined4 *)(iVar2 + 0x2e8) >> 8);
 
-  // COLL_CheckDriver_AI
+  // COLL_StartSearch_AI
   // pass driver posCurr and posPrev, check collision with (what?)
   FUN_8001d77c(&local_20,&local_18,&DAT_1f800108);
 
@@ -2610,7 +2610,7 @@ LAB_800156b0:
 	// high-LOD collision (8 triangles)
     DAT_1f80012a = 2;
 
-	// search BSP
+	// COLL_SearchTree_FindQuadblock_Touching
     FUN_8001eb0c(&local_98,&local_90,&DAT_1f800108,0);
 
 	// if quadblock was found
@@ -3470,7 +3470,7 @@ LAB_8001686c:
     local_50 = local_58;
     local_4c = local_54;
 
-	// search BSP
+	// COLL_SearchTree_FindQuadblock_Touching
     FUN_8001eb0c(&local_58,&local_50,&DAT_1f800108,0);
 
 	// if quadblock was found

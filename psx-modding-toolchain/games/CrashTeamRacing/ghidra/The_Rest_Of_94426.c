@@ -1,10 +1,10 @@
 // This project began March 30, 2020
 
-// exe: 825/872
+// exe: 837/869
 
 // all:
-// (824+10+86+130+37+49)/(871+10+86+130+37+49)
-// 96.02%
+// (837+10+86+130+37+49)/(869+10+86+130+37+49)
+// 97.29%
 
 typedef unsigned char   undefined;
 
@@ -20279,7 +20279,7 @@ void FUN_80042544(short *param_1)
   puVar2 = PTR_DAT_8008d2ac;
   param_1[0x13] = param_1[2] + sVar1;
 
-  // COLL_SearchTree_WithCallback, callback is Weapon_SearchCallback
+  // COLL_SearchTree_FindX, callback is Weapon_SearchCallback
   FUN_8001ebec(*(undefined4 *)(**(int **)(puVar2 + 0x160) + 0x18),param_1 + 0xe,FUN_800423fc);
   return;
 }
@@ -39226,7 +39226,7 @@ LAB_80058158:
   local_3c = local_34;
   local_3e = local_36 + -0x100;
 
-  // search BSP
+  // COLL_SearchTree_FindQuadblock_Touching
   FUN_8001eb0c(&local_40,&local_38,&DAT_1f800108,0);
 
   // if collision was not found
@@ -51636,7 +51636,7 @@ LAB_800659ec:
 
     DAT_1f800134 = **(undefined4 **)(PTR_DAT_8008d2ac + 0x160);
 
-	// check for collision in BSP
+	// COLL_SearchTree_FindQuadblock_Touching
     FUN_8001eb0c(&local_40,&local_38,&DAT_1f800108,0x40);
 
 	if (DAT_1f80014a == 0) {
@@ -51662,7 +51662,7 @@ LAB_800659ec:
 	  // low-LOD collision (2 triangles)
       DAT_1f80012a = 0;
 
-	  // check for collision in BSP
+	  // COLL_SearchTree_FindQuadblock_Touching
       FUN_8001eb0c(&local_40,&local_38,&DAT_1f800108,0);
     }
 
@@ -51860,7 +51860,7 @@ LAB_800659ec:
 
       DAT_1f800134 = **(undefined4 **)(PTR_DAT_8008d2ac + 0x160);
 
-	  // COLL_SearchTree_NoCallback
+	  // COLL_SearchTree_FindQuadblock_Touching
 	  FUN_8001eb0c(&local_30,&local_28,&DAT_1f800108,0x40);
 
       if (DAT_1f80014a == 0) {
@@ -51885,7 +51885,7 @@ LAB_800659ec:
 		// low-LOD collision (2 triangles)
         DAT_1f80012a = 0;
 
-		// COLL_SearchTree_NoCallback
+		// COLL_SearchTree_FindQuadblock_Touching
         FUN_8001eb0c(&local_30,&local_28,&DAT_1f800108,0);
       }
 
@@ -52567,7 +52567,8 @@ void FUN_8006677c(int param_1,short *param_2)
         DAT_1f800124._2_2_ = DAT_1f80010a;
         DAT_1f800128 = DAT_1f80010c;
 
-		// Search full BSP tree for COLL_SearchCallback_QuadBlocks_Graphics
+		// COLL_SearchTree_FindX, callback for touching quadblocks,
+		// COLL_PerVisData_CheckQuadblocks_Touching
         FUN_8001ebec(*(undefined4 *)(DAT_1f800134 + 0x18),&DAT_1f800138,FUN_8001f5f0,&DAT_1f800108);
 
 		// cur respawn = next respawn

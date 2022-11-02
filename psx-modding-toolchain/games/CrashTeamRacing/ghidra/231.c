@@ -912,7 +912,7 @@ void FUN_800ac6b4(int param_1)
   
   DAT_1f800134 = **(undefined4 **)(PTR_DAT_8008d2ac + 0x160);
   
-  // search BSP
+  // COLL_SearchTree_FindQuadblock_Touching
   FUN_8001eb0c(&local_28,&local_20,&DAT_1f800108,0);
   
   // RB_MakeInstanceReflective
@@ -972,7 +972,7 @@ void FUN_800ac6b4(int param_1)
     local_26 = *(short *)(iVar6 + 0x48) + -0x900;
     local_24 = *(undefined2 *)(iVar6 + 0x4c);
     
-	// search BSP
+	// COLL_SearchTree_FindQuadblock_Touching
 	FUN_8001eb0c(&local_28,&local_20,&DAT_1f800108,0);
 	
     if (DAT_1f800146 != 0) {
@@ -2367,7 +2367,7 @@ LAB_800add14:
   
   DAT_1f800134 = **(undefined4 **)(PTR_DAT_8008d2ac + 0x160);
   
-  // search BSP
+  // COLL_SearchTree_FindQuadblock_Touching
   FUN_8001eb0c(&local_30,&local_28,&DAT_1f800108,0);
   
   // RB_MakeInstanceReflective
@@ -2409,7 +2409,7 @@ LAB_800add14:
       local_2e = *(short *)(iVar10 + 0x48) + -0x900;
       local_2c = *(undefined2 *)(iVar10 + 0x4c);
 	  
-	  // search BSP
+	  // COLL_SearchTree_FindQuadblock_Touching
       FUN_8001eb0c(&local_30,&local_28,&DAT_1f800108,0);
 	  
       if (DAT_1f800146 == 0) goto LAB_800ae42c;
@@ -3469,7 +3469,7 @@ LAB_800af34c:
   
   DAT_1f800134 = **(undefined4 **)(PTR_DAT_8008d2ac + 0x160);
   
-  // search BSP
+  // COLL_SearchTree_FindQuadblock_Touching
   FUN_8001eb0c(&local_48,&local_40,&DAT_1f800108,0);
   
   // RB_MakeInstanceReflective
@@ -3500,7 +3500,7 @@ LAB_800af34c:
     local_46 = *(short *)(iVar17 + 0x48) + -0x900;
     local_44 = *(undefined2 *)(iVar17 + 0x4c);
 	
-	// search BSP
+	// COLL_SearchTree_FindQuadblock_Touching
     FUN_8001eb0c(&local_48,&local_40,&DAT_1f800108,0);
 	
     if (DAT_1f800146 != 0) {
@@ -8018,7 +8018,7 @@ void FUN_800b4fe4(int param_1)
   DAT_1f800110 = DAT_1f800108;
   DAT_1f800114 = DAT_1f80010c;
   
-  // search BSP
+  // COLL_SearchTree_FindQuadblock_Touching
   FUN_8001eb0c(&DAT_1f800108,&DAT_1f800110,&DAT_1f800118,0);
   
   // depending on quadblock found in BSP search,

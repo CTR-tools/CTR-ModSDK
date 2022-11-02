@@ -7178,7 +7178,7 @@ void FUN_800b4c80(int param_1)
   DAT_1f80010c = *(short *)(param_1 + 0x4c) + (ushort)DAT_1f80011c * 2;
   DAT_1f800114 = DAT_1f80010c + (ushort)DAT_1f80011c * -4;
   
-  // search
+  // COLL_SearchTree_FindQuadblock_Touching
   FUN_8001eb0c(&DAT_1f800108,&DAT_1f800110,&DAT_1f800120,0);
   
   if (DAT_1f80015e != 0) {

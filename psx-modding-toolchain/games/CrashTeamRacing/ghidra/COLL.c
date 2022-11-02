@@ -13,8 +13,8 @@ undefined ** FUN_8001d094(uint param_1)
 
 
 
-// WARNING: Removing unreachable block (ram,0x8001d4e0)
 
+// COLL_Instance
 // param_1 - 0x1f800108
 // param_2 - struct VisData* instanceHitbox
 uint FUN_8001d0c4(short *param_1,byte *param_2)
@@ -378,7 +378,7 @@ LAB_8001d750:
 }
 
 
-// COLL_CheckDriver_AI
+// COLL_StartSearch_AI
 // param1 is driver posCurr,
 // param2 is driver posPrev
 // param3 is 1f800108
@@ -468,8 +468,8 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
   *(undefined4 *)(param_3 + 0xd2) = 0;
   *(undefined4 *)(param_3 + 0x62) = 0;
 
-  // Search BSP, check collision with LEV instances
-  // COLL_SearchTree_WithCallback, PerVisData_CheckInstances
+  // COLL_SearchTree_FindX, callback
+  // PerVisData_CheckInstances
   FUN_8001ebec(*(undefined4 *)(*(int *)(param_3 + 0x16) + 0x18),param_3 + 0x18,FUN_8001d610,param_3)
   ;
   return;
@@ -477,9 +477,7 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
 
 
 
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
-// COLL_CheckDriver_Player
+// COLL_StartSearch_Player
 // check collisions with all quadblocks (no instances)
 void FUN_8001d944(int param_1,int param_2)
 // param_1 = thread
@@ -595,7 +593,8 @@ void FUN_8001d944(int param_1,int param_2)
 
   if (((DAT_1f800146 == 0) && (DAT_1f800134 != 0)) && (*(int *)(DAT_1f800134 + 0x18) != 0))
   {
-	// Search full BSP tree for COLL_SearchCallback_QuadBlocks_Graphics
+	// COLL_SearchTree_FindX, callback
+	// COLL_PerVisData_CheckQuadblocks_Touching
     FUN_8001ebec(*(int *)(DAT_1f800134 + 0x18),&DAT_1f800138,FUN_8001f5f0,&DAT_1f800108);
   }
 
@@ -1436,7 +1435,7 @@ code_r0x8001e96c:
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// COLL_SearchTree_NoCallback
+// COLL_SearchTree_FindQuadblock_Touching
 // param1 - posTop
 // param2 - posBottom
 // param3 - 1f800108
@@ -1600,14 +1599,11 @@ void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,in
 }
 
 
-
-// WARNING: Globals starting with '_' overlap smaller symbols at the same address
-
+// COLL_SearchTree_FindX
 // param1, pointer to visData
 // param2, pointer to boundingbox
 // param3, callback if item collides with anything
 // param4, 1f800108
-// COLL_SearchTree_WithCallback
 void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
 
 {
@@ -1873,11 +1869,9 @@ uint FUN_8001ede4(undefined2 *param_1,short *param_2,short *param_3,short *param
 }
 
 
-
-// hand-written assembly,
-// stores $s0, $s1, and $s2
-// then restores registers, and saves t2
-// into $a0->58
+// COLL_TestTriangle_Unused
+// hand-written assembly, stores $s0, $s1, and $s2
+// then restores registers, and saves t2 into $a0->58
 void FUN_8001ef1c(void)
 {
 		// does a breakpoint at 8001ef1c ever hit anyway?
@@ -1901,7 +1895,7 @@ void FUN_8001ef1c(void)
 }
 
 
-// called once per triangle on a quadblock (graphics COLL)
+// COLL_TestTriangle_FindAny
 void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 
 {
@@ -2242,7 +2236,7 @@ void FUN_8001f41c(int param_1,int param_2)
 	  // then use low-LOD quadblock collision (two triangles)
       if ((*(ushort *)(param_2 + 0x22) & 2) == 0) 
 	  {
-		// 2 triangles on a low-poly quadblock
+		// COLL_TestQuadblock_TwoTris
         FUN_8001f67c(param_2,param_1);
 		
 		// call FUN_8001ef50 two times, one per triangle
@@ -2255,7 +2249,7 @@ void FUN_8001f41c(int param_1,int param_2)
       else {
         if ((*(ushort *)(param_2 + 0x22) & 8) == 0) 
 		{
-		  // 8 triangles on a low-poly quadblock
+		  // COLL_TestQuadblock_EightTris
           FUN_8001f6f0(param_2,param_1);
         }
 		
@@ -2324,12 +2318,13 @@ void FUN_8001f5f0(uint *param_1,int param_2)
 }
 
 
-// 2 triangles on a low-poly quadblock (physics coll)
+// COLL_TestQuadblock_TwoTris
 void FUN_8001f67c(int param_1,int param_2)
 
 {
   undefined uVar1;
 
+  // COLL_ResetScratchpadCache
   FUN_8001f7f0(0x1f800108);
   
   // quadblock offset 0x3f
@@ -2339,6 +2334,9 @@ void FUN_8001f67c(int param_1,int param_2)
   *(undefined *)(param_1 + 0x1ab) = 2;
   
   *(undefined *)(param_1 + 0x1aa) = uVar1;
+  
+  // calculate normal vectors for two triangles,
+  // no collision detection here
   
   if (*(short *)(param_1 + 0xec) != *(short *)(param_1 + 0xee)) {
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x5a);
@@ -2350,12 +2348,13 @@ void FUN_8001f67c(int param_1,int param_2)
 }
 
 
-// 8 triangles on a high-poly quadblock (physics coll)
+// COLL_TestQuadblock_EightTris
 void FUN_8001f6f0(int param_1,int param_2)
 
 {
   undefined uVar1;
 
+  // COLL_ResetScratchpadCache
   FUN_8001f7f0(0x1f800108);
   
   // quadblock offset 0x3f
@@ -2365,6 +2364,9 @@ void FUN_8001f6f0(int param_1,int param_2)
   *(undefined *)(param_1 + 0x1ab) = 0;
   
   *(undefined *)(param_1 + 0x1aa) = uVar1;
+  
+  // calculate normal vectors for eight triangles,
+  // no collision detection here
   
   if (*(short *)(param_1 + 0xec) != *(short *)(param_1 + 0xee)) {  // Do we hit two quads? if then, check two quads.
     *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x50); // triangle 4
@@ -2391,7 +2393,7 @@ void FUN_8001f6f0(int param_1,int param_2)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// called once per quadblock, before triangle collision
+// COLL_ResetScratchpadCache
 void FUN_8001f7f0(int param_1)
 
 {
@@ -2614,8 +2616,7 @@ undefined4 FUN_8001f928(undefined4 *param_1,undefined4 *param_2,undefined4 *para
 // WARNING: Instruction at (ram,0x8001fefc) overlaps instruction at (ram,0x8001fef8)
 //
 
-// called once per triangle (why?)
-// TigerTempleTeeth, AdvHubDoors, killplane, out of bounds, plus a lot more
+// COLL_TestTriangle_FindClosest
 void FUN_8001fc40(undefined4 *param_1,int param_2,undefined4 param_3,undefined4 param_4)
 
 {
@@ -2846,7 +2847,7 @@ LAB_8001ff14:
 }
 
 
-// COLL_Quadblock_Physics
+// COLL_PerQuadblock_CheckTriangles_NearPlayer
 // param_1 - quadblock
 // param_2 - 1f800108
 void FUN_80020064(int param_1,int param_2)
@@ -2900,7 +2901,7 @@ void FUN_80020064(int param_1,int param_2)
 	  // then use low-LOD quadblock collision (two triangles)
       if ((*(ushort *)(param_2 + 0x22) & 2) == 0) 
 	  {
-		// 2 triangles on a low-poly quadblock
+		// COLL_TestQuadblock_TwoTris
         FUN_8001f67c(param_2,param_1);
 		
 		// call FUN_8001fc40 two times, one per triangle
@@ -2916,7 +2917,7 @@ void FUN_80020064(int param_1,int param_2)
       else {
         if ((*(ushort *)(param_2 + 0x22) & 8) == 0) 
 		{
-		  // 8 triangles on high-poly quadblock
+		  // COLL_TestQuadblock_EightTris
           FUN_8001f6f0(param_2,param_1);
         }
 		
@@ -2949,7 +2950,7 @@ void FUN_80020064(int param_1,int param_2)
 }
 
 
-// COLL_SearchCallback_QuadBlocks_Physics
+// COLL_PerVisData_CheckQuadblocks_NearPlayer
 // param_1 is VisData node
 // param_2 is 0x1f800108
 void FUN_800202a8(uint *param_1,int param_2)
@@ -2972,7 +2973,7 @@ void FUN_800202a8(uint *param_1,int param_2)
   // loop through all quadblocks
   do 
   {
-	// COLL_Quadblock_Physics
+	// COLL_PerQuadblock_CheckTriangles_NearPlayer
     FUN_80020064(uVar2,param_2);
 
 	// reduce count
@@ -3097,7 +3098,7 @@ void FUN_80020334(int param_1,int param_2,int param_3)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// OnPhysics
+// COLL_StartSearch_NearPlayer
 // param_1 = driver thread
 // param_2 = driver ptr
 void FUN_80020410(undefined4 param_1,int param_2)
@@ -3144,6 +3145,9 @@ void FUN_80020410(undefined4 param_1,int param_2)
   DAT_1f8001cc = 0;
   DAT_1f800114 = 0x18;
   DAT_1f8002ac = 0;
+  
+  // COLL_TestTriangle_WithClosest
+  // quadblock, triangleID, search data
   FUN_80020334(0,0,&DAT_1f800108);
   
   // loop executes 0xF times
@@ -3225,9 +3229,8 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		(iVar11 = *(int *)(iVar11 + 0x18), iVar11 != 0)
 	   )
 	{
-	  // search entire BSP tree (VisData),
-	  // pass COLL_SearchCallback_QuadBlocks_Physics as parameter,
-	  // this is for player collision
+	  // COLL_SearchTree_FindX, callback 
+	  // COLL_PerVisData_CheckQuadblocks_NearPlayer
       FUN_8001ebec(iVar11,&DAT_1f800138,FUN_800202a8,&DAT_1f800108);
     }
 
@@ -3266,6 +3269,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
         *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 1;
       }
 
+	  // COLL_TestTriangle_WithClosest
 	  // quadblock, triangleID, search data
       FUN_80020334(DAT_1f800188,(uint)DAT_1f800187,&DAT_1f800108);
 
@@ -3397,6 +3401,8 @@ LAB_800209b0:
       }
       else 
 	  {
+		// COLL_TestTriangle_WithClosest
+		// quadblock, triangleID, search data
         FUN_80020334(DAT_1f800150,0,&DAT_1f800108);
         
 		// exaggerate scrub effect?
