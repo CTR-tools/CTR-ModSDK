@@ -2128,13 +2128,15 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   
   // result of cross product,
   // this is an un-normalized normal vector,
-  // breakpoint 8001f354, 8001f358, and 8001f36c to see
   iVar5 = gte_stMAC1();
   iVar6 = gte_stMAC2();
   iVar7 = gte_stMAC3();
   
   gte_ldR11R12(*param_2);
   gte_ldR13R21((uint)*(ushort *)(param_2 + 1));
+  
+  // breakpoint 8001f37c, (GTE result >> poly-level)
+  // can be seen in registers t3, t4, t5
   
   // (GTE result >> poly-level) * (footer >> quadblock3F)
   iVar5 = (iVar5 >> (uVar1 & 0x1f)) * iVar4 >> (uVar3 & 0x1f);
