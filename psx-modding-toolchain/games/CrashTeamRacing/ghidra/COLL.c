@@ -2137,7 +2137,9 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   iVar6 = (iVar6 >> (uVar1 & 0x1f)) * iVar4 >> (uVar3 & 0x1f);
   iVar4 = (iVar7 >> (uVar1 & 0x1f)) * iVar4 >> (uVar3 & 0x1f);
   
-  // load normal vector onto GTE
+  // load normal vector onto GTE,
+  // 100% certain this is the normal,
+  // checked with t3,t4,t5 at 8001f3a4 with debugger
   gte_ldsv_(iVar5,iVar6,iVar4);
   
   *(short *)(param_2 + 3) = (short)iVar5;
