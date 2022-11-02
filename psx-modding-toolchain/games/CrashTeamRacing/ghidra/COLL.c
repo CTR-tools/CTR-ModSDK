@@ -2116,11 +2116,15 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   // quadblock offset 0x3f
   uVar3 = (uint)*(byte *)(param_1 + 0x1aa);
   
+  // cross product of two vectors on the triangle,
+  //	param_4 - param_2 (v3-v1)
+  //	param_3 - param_2 (v2-v1)
   gte_op0_b(0);
   
   // data from quadblock 0x48 - 0x5c
   iVar4 = (int)*(short *)(param_1 + 0x1a8);
   
+  // result of cross product (normal)
   iVar5 = gte_stMAC1();
   iVar6 = gte_stMAC2();
   iVar7 = gte_stMAC3();
