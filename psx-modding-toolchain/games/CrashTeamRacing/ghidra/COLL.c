@@ -2127,7 +2127,8 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   iVar4 = (int)*(short *)(param_1 + 0x1a8);
   
   // result of cross product,
-  // this is an un-normalized normal vector
+  // this is an un-normalized normal vector,
+  // breakpoint 8001f354, 8001f358, and 8001f36c to see
   iVar5 = gte_stMAC1();
   iVar6 = gte_stMAC2();
   iVar7 = gte_stMAC3();
