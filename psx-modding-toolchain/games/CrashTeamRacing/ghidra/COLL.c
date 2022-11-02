@@ -2128,6 +2128,7 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
   gte_ldR11R12(*param_2);
   gte_ldR13R21((uint)*(ushort *)(param_2 + 1));
   
+  // (GTE result >> poly-level) * (footer >> quadblock3F)
   iVar5 = (iVar5 >> (uVar1 & 0x1f)) * iVar4 >> (uVar3 & 0x1f);
   iVar6 = (iVar6 >> (uVar1 & 0x1f)) * iVar4 >> (uVar3 & 0x1f);
   iVar4 = (iVar7 >> (uVar1 & 0x1f)) * iVar4 >> (uVar3 & 0x1f);
@@ -2343,22 +2344,22 @@ void FUN_8001f6f0(int param_1,int param_2)
   *(undefined *)(param_1 + 0x1aa) = uVar1;
   
   if (*(short *)(param_1 + 0xec) != *(short *)(param_1 + 0xee)) {  // Do we hit two quads? if then, check two quads.
-    *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x50); // quads vert 0
+    *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x50); // triangle 4
     FUN_8001f2dc(0x1f800108, 0x1f800298, 0x1f800270, 0x1f800284); // 8, 6, 7
-    *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x52); // quads vert 1
+    *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x52); // triangle 5
     FUN_8001f2dc(0x1f800108, 0x1f800284, 0x1f800234, 0x1f800298); // 7, 3, 8
-    *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x54); // quads vert 2
+    *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x54); // triangle 6
     FUN_8001f2dc(0x1f800108, 0x1f80020c, 0x1f800284, 0x1f800270); // 1, 7, 6
-    *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x56); // quads vert 3
+    *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x56); // triangle 7
     FUN_8001f2dc(0x1f800108, 0x1f800220, 0x1f800270, 0x1f800298); // 2, 6, 8
   }
-  *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x48); // quads vert 0
+  *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x48); // triangle 0
   FUN_8001f2dc(0x1f800108, 0x1f8001f8, 0x1f800248, 0x1f80025c); // 0, 4, 5
-  *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x4a); // quads vert 1
+  *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x4a); // triangle 1
   FUN_8001f2dc(0x1f800108, 0x1f800248, 0x1f800270, 0x1f80025c); // 4, 6, 5
-  *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x4c); // quads vert 2
+  *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x4c); // triangle 2
   FUN_8001f2dc(0x1f800108, 0x1f800270, 0x1f800248, 0x1f80020c); // 6, 4, 1
-  *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x4e); // quads vert 3
+  *(undefined2 *)(param_1 + 0x1a8) = *(undefined2 *)(param_2 + 0x4e); // triangle 3
   FUN_8001f2dc(0x1f800108, 0x1f80025c, 0x1f800270, 0x1f800220); // 5, 6, 2
   return;
 }

@@ -3373,12 +3373,10 @@ struct QuadBlock
 	/*
 
 	// offset 0x48 (0xA)
-
-	Each quadblock has 9 vertices 0-8,
+	// one footerData per triangle
+	// triangle has vertex IDs 0-8
 
 	Subdivided Quadblock:
-		Each quadblock has 8 triangles 0-7,
-		Each triangle has 3 vertices:
 		0: 0,5,4
 		1: 4,5,6
 		2: 6,1,4
