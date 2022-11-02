@@ -3343,17 +3343,12 @@ struct QuadBlock
 	char terrain_type;
 	char weather_intensity;
 	char weather_type;
-	char triNormalVecBitShift;
+	char unk;
 
 	// 0x3C
 	short blockID;
-
-	// 0x3E
-	// mask grab
 	char respawnIndex;
-
-	// 0x3F
-	char unk2_offset0x3F;
+	char triNormalVecBitShift;
 
 	// 0x40
 	void* ptr_texture_low;
