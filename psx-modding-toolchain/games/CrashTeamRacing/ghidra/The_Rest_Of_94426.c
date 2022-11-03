@@ -62746,13 +62746,13 @@ void FUN_800715e8(undefined4 param_1)
           DAT_1f8000e0 = iVar3;
 
 		  // execute PerFrame funcPtr
-		  (**(code **)(iVar3 + 0x2c))();
+		  (**(code **)(iVar3 + 0x2c))(iVar3);
 
 // SetPerFrame_AndExec, called from PerFrame,
 // cancels the previous PerFrame, and goes here
 
 // or if you did an ordinary JR RA from a PerFrame,
-// like TNT thread
+// like TNT thread does
 LAB_80071678:
 
 		  iVar3 = DAT_1f8000e0;
