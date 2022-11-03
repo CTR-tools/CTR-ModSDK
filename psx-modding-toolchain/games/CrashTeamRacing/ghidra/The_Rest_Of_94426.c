@@ -62613,7 +62613,7 @@ void FUN_80071524(void)
 }
 
 
-
+// copies data to scratchpad
 void FUN_80071590(void)
 
 {

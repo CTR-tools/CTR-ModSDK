@@ -1096,10 +1096,8 @@
 // unknown 8006ef98
 8006f004 DrawTires_Reflection
 
-
 8006f9a8 RenderWeather
 8006fe08 TRIG_AngleSinCos_r16r17r18
-
 
 8006fe70 CreateRenderLists_1P2P
 
