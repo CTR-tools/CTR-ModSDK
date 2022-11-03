@@ -62745,7 +62745,10 @@ void FUN_800715e8(undefined4 param_1)
 		{
           DAT_1f8000e0 = iVar3;
 
-		  // execute PerFrame funcPtr
+		  // execute PerFrame funcPtr,
+		  // most of these can't JR RA back, cause $RA
+		  // is not backed up on stack memory, so the
+		  // threads JAL back to one of two labels...
 		  (**(code **)(iVar3 + 0x2c))(iVar3);
 
 // SetPerFrame_AndExec, called from PerFrame,
