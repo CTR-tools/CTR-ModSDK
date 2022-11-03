@@ -62749,16 +62749,22 @@ void FUN_800715e8(undefined4 param_1)
 		  (**(code **)(iVar3 + 0x2c))(iVar3);
 
 // SetPerFrame_AndExec, called from PerFrame,
-// cancels the previous PerFrame, and goes here
-
+// cancels the previous PerFrame, and goes here,
 // or if you did an ordinary JR RA from a PerFrame,
 // like TNT thread does
 LAB_80071678:
 
+		  // return here, only if you can't 
+		  // call JAL 80071694 with thread 
+		  // as a1, cause then thread has
+		  // to be pulled off scratchpad
 		  iVar3 = DAT_1f8000e0;
         }
 
-// where threads JAL in an infinite loop
+// where threads JAL in an infinite loop,
+// iVar3 is set to what it was before PerFrame
+// ran, because PerFrame passed thread as 
+// paramter to this JAL
 LAB_80071694:
 
 		// child thread
