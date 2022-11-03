@@ -309,9 +309,8 @@ void DECOMP_Turbo_FuncPerFrame(struct Thread* turboThread)
 			turboThread->flags |= 0x800;
 		}
 
-		// halfway through 800715e8 UpdateAllThreadsInBucket
-		// FUN_80071694(turboThread);
-		// UpdateAllThreadsInBucket(turboThread);
+		// same as JR $RA, but skipping some instructions,
+		// would have been more optimal to JMP 80071694
 		HalfwayThroughUpdateAllThreadsInBucket(turboThread);
 
 	} while( 1 );

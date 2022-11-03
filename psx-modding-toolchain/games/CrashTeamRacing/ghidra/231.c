@@ -1636,8 +1636,9 @@ void FUN_800ad310(int param_1)
   if (iVar1 * 0x10000 >> 0x10 < -0x60) {
     *(undefined2 *)((int)piVar2 + 0xe) = 0xffa0;
   }
-  
-  // halfway through 800715e8 UpdateAllThreadsInBucket
+  	
+  // same as JR $RA, but skipping some instructions,
+  // would have been more optimal to JMP 80071694
   FUN_80071694(param_1);
   
   return;
@@ -1692,8 +1693,9 @@ LAB_800ad4ec:
 	
 	// tnt->driver->tntRecv = 0
     *(undefined4 *)(*piVar5 + 0x18) = 0;
-	
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+		
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
   }
   else 
@@ -1789,7 +1791,8 @@ LAB_800ad5f8:
 	// tnt->driver->tntRecv = 0
     *(undefined4 *)(*piVar5 + 0x18) = 0;
 	
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
   }
   
@@ -1938,7 +1941,8 @@ void FUN_800ad92c(int param_1)
     *(uint *)(param_1 + 0x1c) = *(uint *)(param_1 + 0x1c) | 0x800;
   }
   
-  // halfway through 800715e8 UpdateAllThreadsInBucket
+  // same as JR $RA, but skipping some instructions,
+  // would have been more optimal to JMP 80071694
   FUN_80071694(param_1);
   
   return;
@@ -5181,7 +5185,8 @@ void FUN_800b17f0(int param_1)
       *(uint *)(param_1 + 0x1c) = *(uint *)(param_1 + 0x1c) | 0x800;
     }
 	
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
 	
   } while( true );
@@ -6488,7 +6493,8 @@ void FUN_800b38e4(int param_1)
     *(undefined2 *)(iVar1 + 0x1e) = 0x1000;
     *(undefined2 *)(iVar1 + 0x1c) = 0x1000;
 	
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
 	
   } while( true );
@@ -6682,7 +6688,8 @@ void FUN_800b3d04(int param_1)
       FUN_80030aa8(iVar3);
     }
 	
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
 	
   } while( true );
@@ -6756,7 +6763,8 @@ void FUN_800b3d7c(int param_1)
       }
     }
     
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
 	FUN_80071694(param_1);
 	
   } while( true );
@@ -8747,7 +8755,8 @@ LAB_800b5a08:
       }
     }
 	
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
 	
   } while( true );
@@ -8926,7 +8935,8 @@ void FUN_800b5b74(int param_1)
       puVar6[0xe] = puVar6[0xe] + -1;
     }
 	
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
   
   } while( true );
@@ -9462,7 +9472,8 @@ void FUN_800b6728(int param_1)
 	// reduce cooldown
     *(short *)((int)piVar2 + 0xe) = *(short *)((int)piVar2 + 0xe) + -1;
 	
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
   }
   
@@ -9556,7 +9567,8 @@ LAB_800b6908:
 	// instance, inst->instDef->rot[3], specLightDir
     FUN_800576b8(iVar3,*(int *)(iVar3 + 0x2c) + 0x36,&local_48);
 	
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
 	
   } while( true );
@@ -9869,7 +9881,8 @@ void FUN_800b706c(int param_1)
 	// This thread is now dead
     *(uint *)(param_1 + 0x1c) = *(uint *)(param_1 + 0x1c) | 0x800;
     
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
 	FUN_80071694(param_1);
 	
 	// erase (instance -> thread)
@@ -10916,7 +10929,8 @@ DAT_800b82bc:
       }
     }
     
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
 	FUN_80071694(param_1);
 	
   } while( true );
@@ -11025,7 +11039,8 @@ DAT_800b8638:
       }
     }
     
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
 	FUN_80071694(param_1);
 	
   } while( true );
@@ -11061,7 +11076,8 @@ void FUN_800b8650(int param_1)
       *(short *)(iVar1 + 0x54) = *(short *)(iVar1 + 0x54) + -1;
     }
     
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
 	FUN_80071694(param_1);
 	
   } while( true );
@@ -11213,7 +11229,8 @@ DAT_800b8890:
       }
     }
     
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
 	FUN_80071694(param_1);
 	
   } while( true );
@@ -11309,7 +11326,8 @@ DAT_800b8968:
       psVar4[1] = psVar4[1] + -1;
     }
     
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
 	FUN_80071694(param_1);
 	
   } while( true );
@@ -11927,7 +11945,8 @@ DAT_800b9328:
 	// get next position index
     *(undefined2 *)(iVar6 + 6) = (short)(iVar3 % iVar5);
 	
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
 	
   } while( true );

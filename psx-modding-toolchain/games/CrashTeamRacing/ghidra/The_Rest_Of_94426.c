@@ -55203,7 +55203,8 @@ LAB_80069b50:
       *(uint *)(param_1 + 0x1c) = *(uint *)(param_1 + 0x1c) | 0x800;
     }
 
-	// halfway through 800715e8 UpdateAllThreadsInBucket
+	// same as JR $RA, but skipping some instructions,
+	// would have been more optimal to JMP 80071694
     FUN_80071694(param_1);
 
   } while( true );
