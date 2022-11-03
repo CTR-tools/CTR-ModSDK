@@ -1069,6 +1069,8 @@
 // hole: several unstubbed functions after this
 8006c6f0 ApplyMatrixLV_stub
 
+// unknown 8006c778 - rain related
+
 8006c9c4 Draw_KartBodyReflection
 8006c984 Draw_KartGhost
 
