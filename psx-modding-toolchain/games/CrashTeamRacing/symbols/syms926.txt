@@ -1055,7 +1055,7 @@
 8006c430 TRIG_AngleSinCos_r16r17r18_duplicate
 
 // unknown 8006c49c
-// unknown 8006c540
+8006c540 MATRIX_SET_r11r12r13r14r15 // only stubbed in 926
 // unknown 8006c558
 // unknown 8006c600
 

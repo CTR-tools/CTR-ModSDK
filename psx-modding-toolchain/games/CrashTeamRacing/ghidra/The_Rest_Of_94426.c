@@ -57674,6 +57674,8 @@ void FUN_8006c124(uint *param_1,short *param_2)
   uVar2 = unaff_s1 * -0x10000 | unaff_s2;
   uVar3 = unaff_s1 << 0x10;
   uVar4 = unaff_s2;
+  
+  // MATRIX_SET_r11r12r13r14r15
   FUN_8006c540();
 
   if (sVar1 != 0) {
@@ -57735,7 +57737,10 @@ void FUN_8006c1d0(uint *param_1,short *param_2)
   uVar3 = unaff_s1 * -0x10000 | unaff_s2;
   uVar4 = unaff_s1 << 0x10;
   uVar5 = unaff_s2;
+  
+  // MATRIX_SET_r11r12r13r14r15
   FUN_8006c540();
+  
   if (sVar1 != 0) {
     uVar3 = 0x1000;
 
@@ -57806,7 +57811,10 @@ void FUN_8006c2a4(uint *param_1,short *param_2)
   uVar3 = unaff_s2;
   uVar4 = unaff_s1;
   uVar7 = unaff_s2;
+  
+  // MATRIX_SET_r11r12r13r14r15
   FUN_8006c540();
+  
   if (sVar1 != 0) {
     uVar3 = 0x1000;
 
@@ -57884,7 +57892,10 @@ void FUN_8006c378(uint *param_1,short *param_2)
   uVar3 = unaff_s1 * -0x10000 | unaff_s2;
   uVar4 = unaff_s1 << 0x10;
   uVar5 = unaff_s2;
+  
+  // MATRIX_SET_r11r12r13r14r15
   FUN_8006c540();
+  
   if (sVar1 != 0) {
     uVar3 = 0x1000;
 
@@ -57918,7 +57929,9 @@ void FUN_8006c378(uint *param_1,short *param_2)
 }
 
 
-
+// param_1 - output
+// param_2 - input
+// param_3 - input
 void FUN_8006c3b0(undefined4 *param_1,undefined4 param_2,undefined4 *param_3)
 
 {
@@ -57940,7 +57953,10 @@ void FUN_8006c3b0(undefined4 *param_1,undefined4 param_2,undefined4 *param_3)
   DAT_1f80000c = unaff_s3;
   DAT_1f800010 = unaff_s4;
   DAT_1f80002c = unaff_retaddr;
+  
+  // MATRIX_SET_r11r12r13r14r15
   FUN_8006c540();
+  
   uVar1 = *param_3;
   uVar2 = param_3[1];
   uVar3 = param_3[2];
@@ -58042,7 +58058,7 @@ void FUN_8006c49c(void)
   return;
 }
 
-
+// MATRIX_SET_r11r12r13r14r15
 void FUN_8006c540(void)
 
 {
@@ -62023,7 +62039,9 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
 		// store which LOD index gets rendered
 		*(int *)(unaff_s8 + 0xd8) = iVar3;
 
+		// MATRIX_SET_r11r12r13r14r15
         FUN_8006c540();
+		
         uVar15 = -iVar19 + 0x12;
         
 		gte_ldLR1LR2((*(uint *)(iVar26 + 0x18) << 0x10) >> (uVar15 & 0x1f));
@@ -62209,6 +62227,8 @@ LAB_80070f70:
             *(uint *)(unaff_s8 + 0x80) = uVar23;
             *(uint *)(unaff_s8 + 0x84) = uVar24;
             *(uint *)(unaff_s8 + 0x88) = uVar25;
+			
+			// MATRIX_SET_r11r12r13r14r15
             FUN_8006c540();
           }
           else {
@@ -62300,8 +62320,11 @@ code_r0x80070e84:
           uVar18 = gte_stL33();
 		  
 		  *(undefined4 *)(unaff_s8 + 0x84) = uVar13;
+		  
+		  // MATRIX_SET_r11r12r13r14r15
           FUN_8006c540();
-          *(undefined4 *)(unaff_s8 + 0x88) = uVar18;
+          
+		  *(undefined4 *)(unaff_s8 + 0x88) = uVar18;
         }
         iVar9 = (uVar10 & 0x3ffe3fff) * 4;
         iVar3 = iVar3 << 2;
