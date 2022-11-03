@@ -62665,7 +62665,10 @@ void FUN_800715e8(undefined4 param_1)
 {
   undefined4 *puVar1;
   int iVar2;
+ 
+  // this must be $a0 to work
   int iVar3;
+  
   int iVar4;
   undefined4 unaff_s0;
   undefined4 unaff_s1;
