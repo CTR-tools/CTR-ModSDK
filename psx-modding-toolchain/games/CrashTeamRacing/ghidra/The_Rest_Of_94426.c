@@ -5961,7 +5961,7 @@ LAB_80035098:
     if (param_1[0x711] != 0)
 	{
 	  // execute all thread update functions
-      FUN_800715e8();
+      FUN_800715e8(param_1[0x711]);
     }
   }
 
@@ -62659,6 +62659,7 @@ void FUN_80071590(void)
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
 // execute all thread update functions
+// in one thread bucket
 void FUN_800715e8(undefined4 param_1)
 
 {
@@ -62679,7 +62680,10 @@ void FUN_800715e8(undefined4 param_1)
   undefined auStackX0 [16];
 
   _DAT_1f8000d0 = &_gp_4;
+  
+  // start of thread hierarchy stack
   DAT_1f8000e4 = &DAT_1f800004;
+  
   _DAT_1f8000b0 = unaff_s0;
   DAT_1f8000b4 = unaff_s1;
   DAT_1f8000b8 = unaff_s2;
@@ -62690,11 +62694,16 @@ void FUN_800715e8(undefined4 param_1)
   DAT_1f8000cc = unaff_s7;
   DAT_1f8000d4 = (undefined *)register0x00000074;
   _DAT_1f8000d8 = unaff_s8;
+  
+  // backup $ra manually
   DAT_1f8000dc = unaff_retaddr;
+  
+  // first thread to execute in thread bucket
   _DAT_1f8000e8 = param_1;
+  
   while( true )
   {
-	// get thread
+	// get thread on stack
     iVar3 = DAT_1f8000e4[0x39];
 
 	// check if we go out of range
@@ -62706,13 +62715,22 @@ void FUN_800715e8(undefined4 param_1)
 	// cooldown
     iVar4 = *(int *)(iVar3 + 0x18);
 
-	// get next thread
+	// set next thread to sibling
     DAT_1f8000e4[0x39] = iVar2;
 
+	// shift stack back, go back to parent,
+	// if this thread has no more siblings,
+	// and if this was a child thread
     puVar1 = DAT_1f8000e4 + -1;
-    if (iVar2 != 0) {
+	
+	// or if there is a sibling
+    if (iVar2 != 0) 
+	{
+	  // continue with sibling
       puVar1 = DAT_1f8000e4;
     }
+	
+	// next thread
     DAT_1f8000e4 = puVar1;
 
 	// if cooldown is not negative
@@ -62729,14 +62747,26 @@ void FUN_800715e8(undefined4 param_1)
 		  // execute PerFrame funcPtr
 		  (**(code **)(iVar3 + 0x2c))();
 
+// where SetPerFrame_AndExec returns to
+LAB_80071678:
+
 		  iVar3 = DAT_1f8000e0;
         }
 
+// where threads JAL in an infinite loop
+LAB_80071694:
+
 		// child thread
         iVar3 = *(int *)(iVar3 + 0x14);
+		
+		// set child thread as next hierarchy in the stack
         DAT_1f8000e4[0x3a] = iVar3;
 
-		if (iVar3 != 0) {
+		if (iVar3 != 0) 
+		{
+		  // advance stack, treat child as current,
+		  // and continue advancing the stack for 
+		  // further hierarchal children
           DAT_1f8000e4 = DAT_1f8000e4 + 1;
         }
       }
@@ -62749,7 +62779,12 @@ void FUN_800715e8(undefined4 param_1)
       }
     }
   }
+  
+  // go back a generation
   DAT_1f8000e4 = DAT_1f8000e4 + -1;
+  
+  // $ra resets to value at 1f8000dc,
+  // then function returns
   return;
 }
 
@@ -62762,8 +62797,11 @@ void FUN_800716ec(int param_1,code *UNRECOVERED_JUMPTABLE)
   *(code **)(param_1 + 0x2c) = UNRECOVERED_JUMPTABLE;
 
   // Execute the weapon's function pointer
+  // with JR $a1
   (*UNRECOVERED_JUMPTABLE)();
-  return;
+  
+  // $ra is set to 80071678 and executes
+  // when the thread is finished
 }
 
 
