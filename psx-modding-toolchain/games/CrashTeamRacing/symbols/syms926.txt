@@ -898,7 +898,7 @@
 8005d218 DriverCrash_HumanToHuman
 8005d404 DriverCrash_AnyTwoCars
 
-// unknown 8005e104 -- OnAccelerationForce?
+8005e104 OnCoordSpeed
 8005e214 OnGravity
 8005ea60 OnApplyForces
 8005ebac OnCollide

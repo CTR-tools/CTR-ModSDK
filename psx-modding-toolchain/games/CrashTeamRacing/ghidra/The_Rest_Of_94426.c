@@ -44224,9 +44224,10 @@ LAB_8005e15c:
     }
   }
 
-  // driver.coordSpeed[y] = (driver.speed * ???) >> 0xC
+  // coordSpeed[y] = (driver.speed * ???) >> 0xC
   param_2[1] = *(short *)(param_1 + 0x38c) * iVar2 >> 0xc;
 
+  // angle = axisRotationX
   uVar6 = SEXT24(*(short *)(param_1 + 0x396));
   iVar2 = *(short *)(param_1 + 0x38c) * iVar5 >> 0xc;
 
@@ -44249,7 +44250,10 @@ LAB_8005e15c:
   }
   iVar3 = -iVar3;
   iVar5 = iVar4;
+
 LAB_8005e1e8:
+  
+  // coordSpeed[x] and coordSpeed[z]
   *param_2 = iVar2 * iVar3 >> 0xc;
   param_2[2] = iVar2 * iVar5 >> 0xc;
   return;
