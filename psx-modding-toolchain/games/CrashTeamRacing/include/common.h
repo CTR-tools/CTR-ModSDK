@@ -2232,10 +2232,20 @@ struct Driver
 	struct Instance* wakeInst;
 
 	// 0x4fc
-	int wakeScale;
+	short wakeScale;
+	
+	// 0x4fe
+	// 0, 1, 2, depending on rev level
+	char engineRevState;
 
+	// 0x4ff
+	char ChangeState_param2;
+	
 	// 0x500
-	char unk_500[0x8];
+	int ChangeState_param3;
+	
+	// 0x504
+	int ChangeState_param4;
 
 	// 0x508
 	// backup of alpha, used for turbo fire
