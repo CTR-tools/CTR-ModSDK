@@ -2229,10 +2229,13 @@ struct Driver
 	char unk_4F0_4F6[8];
 
 	// 0x4f8
-	void* ptrInstanceWake;
+	struct Instance* wakeInst;
 
 	// 0x4fc
-	char unk_4FC_508[0xC];
+	int wakeScale;
+
+	// 0x500
+	char unk_500[0x8];
 
 	// 0x508
 	// backup of alpha, used for turbo fire

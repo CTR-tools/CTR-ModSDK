@@ -45185,7 +45185,7 @@ code_r0x8005f834:
       *(uint *)(iVar14 + 0x28) = *(uint *)(iVar14 + 0x28) & 0xffffdfff;
     }
 	
-	// ptrInstanceWake
+	// wakeInst
     iVar14 = *(int *)(param_2 + 0x4f8);
     
 	// if valid
@@ -45194,6 +45194,7 @@ code_r0x8005f834:
 	  // make invisible
       *(uint *)(iVar14 + 0x28) = *(uint *)(iVar14 + 0x28) | 0x80;
 	  
+	  // clear driver->wakeScale, and wakeInst->scale
       *(undefined2 *)(param_2 + 0x4fc) = 0;
       *(undefined2 *)(iVar14 + 0x1c) = 0;
       *(undefined2 *)(iVar14 + 0x20) = *(undefined2 *)(param_2 + 0x4fc);
@@ -45266,7 +45267,12 @@ LAB_8005f6a4:
   
   puVar2 = PTR_DAT_8008d2ac;
   
-  if (*(short *)(param_2 + 0x4fc) == 0) {
+  // if wake is not visible,
+  // then do this for first frame of wake,
+  // which sets scale, and makes a splash
+  if (*(short *)(param_2 + 0x4fc) == 0) 
+  {
+	// wake is now visible (set scale)
     *(undefined2 *)(param_2 + 0x4fc) = 0x1000;
 	
 	// if less than 2 screens
