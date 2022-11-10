@@ -2267,8 +2267,7 @@ struct Driver
 	int timeSpentWithHighSpeed;
 
 	// 0x520
-	// ???
-	int unk520;
+	int timeSpentReversing;
 
 	// 0x524
 	int timeSpentInMud;

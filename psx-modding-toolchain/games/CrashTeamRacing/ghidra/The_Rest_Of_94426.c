@@ -48389,7 +48389,8 @@ LAB_80062548:
 
   else
   {
-	// Increase [uknown] by elapsed time
+	// Increase amount of time reversing,
+	// counts whenever holding "down" on d-pad
     *(int *)(param_2 + 0x520) = *(int *)(param_2 + 0x520) + iVar14;
 code_r0x80062644:
     uVar22 = uVar20 & 8;
