@@ -6801,7 +6801,17 @@ undefined4 FUN_800b3e7c(int param_1,int param_2,undefined4 param_3,int param_4)
   // get instance from thread
   iVar10 = *(int *)(param_1 + 0x34);
   
-  if ((*piVar9 != 0) || ((*(short *)(iVar10 + 0x1c) != 0 && (*(short *)(iVar10 + 0x1c) != 0x1000))))
+  if (
+		// if frame timer is running
+		(*piVar9 != 0) || 
+		(
+			// scale is not zero, and not 0x1000
+			(
+				*(short *)(iVar10 + 0x1c) != 0 && 
+				(*(short *)(iVar10 + 0x1c) != 0x1000)
+			)
+		)
+	 )
   {
 LAB_800b420c:
     uVar3 = *(ushort *)(param_4 + 0xc) & 0x7fff;
@@ -6832,6 +6842,8 @@ LAB_800b420c:
     }
     return 0;
   }
+  
+  // At this point, this the first frame of collision
   
   // 30-frame timer
   *piVar9 = 0x1e;
