@@ -1,0 +1,14 @@
+Lectures
+
+Please read the "Speaker Notes" section of each slide to understand the lectures.
+These lectures dont teach the entire codebase, but all the essentials
+
+Presentation 1 - https://docs.google.com/presentation/d/15lQk0dGcZLHM13YvCyflH9hW-WerrcJjAWRYjBnYBtY/edit#slide=id.p
+Presentation 2 - https://docs.google.com/presentation/d/1Q-hIQRoD8obBxpphIkBbwmjSCVUZyWALcAfiiroL9sg/edit
+Presentation 3 - https://docs.google.com/presentation/d/1SAG1FDxSjHzcJYjJCeCAdPSCyGO04JC6W3Jf96SxC3U/edit
+Presentation 4 - https://docs.google.com/presentation/d/1V3gqqps_-evsbLTrwoQJxXfcztra0KHgoXL1nTo1z_8/edit?usp=sharing
+
+Quick correction: the Crash Cove arrow-sign is lev geometry, not an "instance",
+	the Cortex Castle arrow-sign is the "instance"
+	
+4th presentation is not finished, but still useful as-is
