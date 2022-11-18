@@ -40756,6 +40756,7 @@ LAB_80059818:
   setCopControlWord(2,0x5000,uVar4 & 0xffff | uVar5 << 0x10);
   
   // ldv0 vec3(driver->0x384) - vec3(driver->posCurr)
+  // direction from driver to the point of collision with wall
   setCopReg(2,0,(int)*(short *)(param_1 + 900) * 0x100 - *(int *)(param_1 + 0x2d4) & 0xffffU |
                 ((int)*(short *)(param_1 + 0x386) * 0x100 - *(int *)(param_1 + 0x2d8)) * 0x10000);
   setCopReg(2,0x800,(int)*(short *)(param_1 + 0x388) * 0x100 - *(int *)(param_1 + 0x2dc));

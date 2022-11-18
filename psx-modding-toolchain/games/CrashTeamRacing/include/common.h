@@ -1823,11 +1823,12 @@ struct Driver
 	short buttonUsedToStartDrift;
 
 	// 0x384
-	// used in particles, wall sparks
-	char unk_0x384[8];
+	short posWallColl[3];
+	short scrubMeta8;
 
 	// 0x38C
 	short speed;
+	
 	// 0x38E
 	short speedApprox;
 

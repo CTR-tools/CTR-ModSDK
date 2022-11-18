@@ -3589,6 +3589,8 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
 	  // millisecond timer since touching wall
       *(undefined2 *)(param_1 + 0x3fe) = 0xf0;
 
+	  // driver 0x384,
+	  // save the 3D position of the wall collided, and scrubMeta
       *(undefined2 *)(param_1 + 0x38a) = (short)iVar5;
       *(undefined4 *)(param_1 + 900) = *(undefined4 *)(param_3 + 0x68);
       *(undefined2 *)(param_1 + 0x388) = *(undefined2 *)(param_3 + 0x6c);
