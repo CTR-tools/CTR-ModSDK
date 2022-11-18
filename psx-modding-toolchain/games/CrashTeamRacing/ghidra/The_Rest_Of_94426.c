@@ -36426,7 +36426,9 @@ void FUN_800550f4(void)
 			// original end-of-race comment
 			*(char **)((uint)*puVar5 * 4 + DAT_8008d878),
 
-			// second part of comment
+			// second part of comment,
+			// lngIndex of driver,
+			// for stuff like "hit by Crash Bandicoot" or something
                   *(undefined4 *)
                    ((int)*(short *)(&DAT_80086d88 + *(int *)(iVar7 + 0x570) * 0x10) * 4 +
                    DAT_8008d878));

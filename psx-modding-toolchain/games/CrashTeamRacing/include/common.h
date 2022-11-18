@@ -2357,8 +2357,15 @@ struct Driver
 	// 0x56b
 	char unk_filler_0x56b;
 
-	// 0x56c + 0x570
-	// end-of-race comments
+	// example, is this ever used btw?
+	// lngIndex "Hit Most By..."
+	// characterID "Crash Bandicoot"
+
+	// 0x56c
+	int EndOfRaceComment_lngIndex;
+
+	// 0x570
+	int EndOfRaceComment_characterID;
 
 	// 0x582
 	// Drift Boost Timer
