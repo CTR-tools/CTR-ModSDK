@@ -50461,7 +50461,8 @@ LAB_800647d8:
     }
     break;
 	
-  // unknown [unused?]
+  // 5 and 6 set with offset 0x504 in 8005d218
+  
   case 5:
     if ((param_3 != 0) && (param_3 != param_1)) {
       *(char *)(param_3 + 0x55b) = *(char *)(param_3 + 0x55b) + '\x01';

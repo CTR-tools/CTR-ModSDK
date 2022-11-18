@@ -2319,8 +2319,7 @@ struct Driver
 	char numTimesMissileHitYou;
 
 	// 0x558
-	// amount of times using clock weapon
-	char numTimesUsingClock;
+	char numTimesClockWeaponUsed;
 
 	// 0x559
 	char numTimesAttacking;
@@ -2356,7 +2355,8 @@ struct Driver
 	char numTimesMaskGrab;
 	
 	// 0x56b
-	char unk_filler_0x56b;
+	// padding for the next int
+	char unused_alignment_56b;
 
 	// example, is this ever used btw?
 	// lngIndex "Hit Most By..."
