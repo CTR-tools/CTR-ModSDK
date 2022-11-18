@@ -50417,28 +50417,48 @@ LAB_800647c8:
 LAB_800647d8:
   switch(param_4) {
   case 1:
+  
+	// number of times your bomb hit someone
     *(char *)(param_1 + 0x55e) = *(char *)(param_1 + 0x55e) + '\x01';
-    if ((param_3 != 0) && (param_3 != param_1)) {
-      *(char *)(param_3 + 0x55a) = *(char *)(param_3 + 0x55a) + '\x01';
+	
+    if ((param_3 != 0) && (param_3 != param_1)) 
+	{
+      // number of times hit by bomb
+	  *(char *)(param_3 + 0x55a) = *(char *)(param_3 + 0x55a) + '\x01';
       *(ushort *)(param_3 + 0x4f6) = *(ushort *)(param_3 + 0x4f6) | 1;
     }
     break;
+	
+  // hit by motionless potion
   case 2:
     *(char *)(param_1 + 0x55f) = *(char *)(param_1 + 0x55f) + '\x01';
     break;
+  
   case 3:
-    *(char *)(param_1 + 0x55d) = *(char *)(param_1 + 0x55d) + '\x01';
-    if ((param_3 != 0) && (param_3 != param_1)) {
-      *(char *)(param_3 + 0x557) = *(char *)(param_3 + 0x557) + '\x01';
-      *(ushort *)(param_3 + 0x4f6) = *(ushort *)(param_3 + 0x4f6) | 2;
+    
+	// number of times your missile hit someone
+	*(char *)(param_1 + 0x55d) = *(char *)(param_1 + 0x55d) + '\x01';
+    
+	if ((param_3 != 0) && (param_3 != param_1)) {
+      
+	  // number of times someone else's missile hit you
+	  *(char *)(param_3 + 0x557) = *(char *)(param_3 + 0x557) + '\x01';
+      
+	  *(ushort *)(param_3 + 0x4f6) = *(ushort *)(param_3 + 0x4f6) | 2;
     }
     break;
+	
+  // hit by moving potion
   case 4:
-    if ((param_3 != 0) && (param_3 != param_1)) {
+    if ((param_3 != 0) && (param_3 != param_1)) 
+	{
+	  // number of times hit by potion moving potion
       *(char *)(param_3 + 0x556) = *(char *)(param_3 + 0x556) + '\x01';
       *(ushort *)(param_3 + 0x4f6) = *(ushort *)(param_3 + 0x4f6) | 4;
     }
     break;
+	
+  // unknown [unused?]
   case 5:
     if ((param_3 != 0) && (param_3 != param_1)) {
       *(char *)(param_3 + 0x55b) = *(char *)(param_3 + 0x55b) + '\x01';

@@ -2302,15 +2302,20 @@ struct Driver
 	// 0x54c
 	int timeSpentBurnt;
 
-	// 0x550
+	// 0x550 (not an int)
 	int highestJump;
+	
+	// 0x552
+	// set in 231
 
 	// 0x554
-	int numberOfJumps;
+	short numberOfJumps;
+
+	// 0x556
+	char numTimesMovingPotionHitYou;
 
 	// 0x557
-	// one-byte quip
-	char unk557;
+	char numTimesMissileHitYou;
 
 	// 0x558
 	// amount of times using clock weapon
@@ -2320,10 +2325,22 @@ struct Driver
 	char numTimesAttacking;
 
 	// 0x55a
-	short unk55a;
+	char numTimesBombsHitSomeone;
+
+	// 0x55b
+	char unk_55b;
 
 	// 0x55c
-	int numMissilesLaunched;
+	char numTimesMissileLaunched;
+	
+	// 0x55d
+	char numTimesMissileHitSomeone;
+	
+	// 0x55e
+	char numTimesBombHitYou;
+	
+	// 0x55f
+	char numTimesMotionlessPotionHitYou;
 	
 	// 0x560
 	char numTimesAttackedByPlayer[8];
@@ -2628,7 +2645,7 @@ struct MineWeapon
 	// 0x28
 	// bool redBeaker; (0 for green, 1 for red)
 
-	// 0x2c bytes large
+	// 0x4C bytes large (at least)
 };
 
 struct Baron

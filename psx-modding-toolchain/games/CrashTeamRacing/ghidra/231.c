@@ -491,14 +491,14 @@ void FUN_800ac13c(int param_1)
 // or level instance (spider, armadillo, etc)
 
 // RB_Hazard_HurtDriver
-void FUN_800ac1b0(int param_1,undefined4 param_2)
+void FUN_800ac1b0(int param_1,undefined4 param_2, param_3, param_4)
 
 {
   // if this driver is not an AI
   if ((*(uint *)(param_1 + 0x2c8) & 0x100000) == 0) 
   {
 	// Player_ChangeState
-    FUN_80064568(param_1,param_2);
+    FUN_80064568(param_1,param_2,param_3,param_4);
   }
   
   // If driver is an AI
@@ -1226,9 +1226,14 @@ void FUN_800acb60(int param_1)
   // red beaker or green beaker
   if ((uint)uVar2 - 0x46 < 2) 
   {
+	// count times hit by motionless potion
     uVar8 = 2;
+	
+	// if fly-forward timer is still active
     if (*(short *)((int)piVar13 + 0x2a) != 0) {
-      uVar8 = 4;
+      
+	  // moving potion
+	  uVar8 = 4;
     }
 	
 	// RB_Hazard_HurtDriver (spin out)
@@ -5569,7 +5574,7 @@ void FUN_800b1e90(int param_1,int param_2)
         uVar5 = 3;
       }
 	  
-	  // not missile
+	  // bomb
       else {
         uVar4 = *(undefined4 *)(param_2 + 0x30);
         uVar5 = 1;

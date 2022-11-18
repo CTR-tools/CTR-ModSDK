@@ -89,5 +89,6 @@ struct x y[] =
 	TEST16(OFFSETOF(struct GameTracker, camera110_UI)),
 	TEST16(OFFSETOF(struct Driver, BattleHUD.teamID)),
 	TEST16(OFFSETOF(struct Driver, reserves)),
+	TEST16(OFFSETOF(struct Driver, numTimesMaskGrab)),
 	TEST16(OFFSETOF(struct Turbo, fireVisibilityCooldown))
 };
