@@ -895,7 +895,7 @@
 // unknown 8005cd1c
 8005cf64 DriverCrash_BounceSelf
 8005d0d0 DriverCrash_AI
-8005d218 DriverCrash_HumanToHuman
+8005d218 DriverCrash_Attack
 8005d404 DriverCrash_AnyTwoCars
 
 8005e104 OnCoordSpeed

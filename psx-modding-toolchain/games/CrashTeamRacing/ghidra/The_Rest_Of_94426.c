@@ -43668,7 +43668,7 @@ void FUN_8005d0d0(int param_1,int *param_2)
   return;
 }
 
-// DriverCrash_HumanToHuman
+// DriverCrash_Attack
 //param_1 = driver pointer
 //param_2 = driver pointer
 int FUN_8005d218(int param_1,int param_2,int param_3,int param_4)
@@ -44063,7 +44063,7 @@ void FUN_8005d404(int param_1,int param_2,int *param_3)
         *(uint *)(iVar8 + 0x2c8) = *(uint *)(iVar8 + 0x2c8) | 0x10000000;
       }
 	  
-	  // DriverCrash_HumanToHuman
+	  // DriverCrash_Attack
       uVar9 = FUN_8005d218(iVar5,iVar8,uVar10,0);
       FUN_8005d218(iVar8,iVar5,uVar9,1);
     }

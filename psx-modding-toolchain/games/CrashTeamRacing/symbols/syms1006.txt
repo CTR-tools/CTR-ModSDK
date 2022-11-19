@@ -924,7 +924,7 @@
 // unknown 8005bb24
 8005bd6c DriverCrash_BounceSelf
 8005bed8 DriverCrash_AI
-8005c020 DriverCrash_HumanToHuman
+8005c020 DriverCrash_Attack
 8005c20c DriverCrash_AnyTwoCars
 
 // unknown 8005cf0c -- OnAccelerationForce?
