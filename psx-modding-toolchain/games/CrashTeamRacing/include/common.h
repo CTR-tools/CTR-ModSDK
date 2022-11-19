@@ -2262,7 +2262,7 @@ struct Driver
 	int timeElapsedInRace;
 
 	// 0x518
-	int distanceTravelledInRace;
+	int distanceDriven;
 
 	// 0x51c
 	int timeSpentWithHighSpeed;

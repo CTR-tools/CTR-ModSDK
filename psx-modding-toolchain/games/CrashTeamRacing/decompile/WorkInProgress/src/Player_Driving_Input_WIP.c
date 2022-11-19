@@ -79,7 +79,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	)
 	{
 		// increment timer by (speed * time)
-		driver->distanceTravelledInRace += (driver->speedApprox * msPerFrame >> 8);
+		driver->distanceDriven += (driver->speedApprox * msPerFrame >> 8);
 	}
 
 	// Next 7 lines are repetitive, this time for Reserves (0x3e2)
