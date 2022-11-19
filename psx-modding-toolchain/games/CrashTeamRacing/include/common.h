@@ -2313,10 +2313,10 @@ struct Driver
 	short numberOfJumps;
 
 	// 0x556
-	char numTimesMovingPotionHitYou;
+	char numTimesMovingPotionHitSomeone;
 
 	// 0x557
-	char numTimesMissileHitYou;
+	char numTimesMissileHitSomeone;
 
 	// 0x558
 	char numTimesClockWeaponUsed;
@@ -2328,13 +2328,13 @@ struct Driver
 	char numTimesBombsHitSomeone;
 
 	// 0x55b
-	char unk_55b;
+	char numTimesSquishedSomeone;
 
 	// 0x55c
 	char numTimesMissileLaunched;
 	
 	// 0x55d
-	char numTimesMissileHitSomeone;
+	char numTimesMissileHitYou;
 	
 	// 0x55e
 	char numTimesBombHitYou;

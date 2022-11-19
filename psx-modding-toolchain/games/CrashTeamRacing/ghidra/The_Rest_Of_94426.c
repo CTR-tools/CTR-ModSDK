@@ -42101,7 +42101,7 @@ LAB_8005af38:
 
   if ((param_3 & 8) != 0)
   {
-    //turn on 14th bit of Actions Flag set (means racer is driving against a wall)
+	// driver is using turbo weapon
     *(uint *)(param_1 + 0x2c8) = *(uint *)(param_1 + 0x2c8) | 0x200;
   }
 
@@ -43668,7 +43668,7 @@ void FUN_8005d0d0(int param_1,int *param_2)
   return;
 }
 
-
+// DriverCrash_HumanToHuman
 //param_1 = driver pointer
 //param_2 = driver pointer
 int FUN_8005d218(int param_1,int param_2,int param_3,int param_4)
@@ -43681,6 +43681,7 @@ int FUN_8005d218(int param_1,int param_2,int param_3,int param_4)
 	//if driver (2) is using mask weapon
     if ((*(uint *)(param_2 + 0x2c8) & 0x800000) != 0)
 	{
+	  // param_1 was hit with a mask weapon
       *(undefined *)(param_1 + 0x4ff) = 2;
       *(undefined *)(param_1 + 0x504) = 6;
       *(int *)(param_1 + 0x500) = param_2;
@@ -43751,11 +43752,30 @@ int FUN_8005d218(int param_1,int param_2,int param_3,int param_4)
       }
     }
 
-	//if (?) and racer (2) is not out of Reserves and
-    if ((((0xa00 < DAT_8008d9f4) && (*(short *)(param_2 + 0x3e2) != 0)) &&
-      //10th bit of Actions Flag set is on (means ?) and racer (1) is out of reserves
-      ((*(uint *)(param_2 + 0x2c8) & 0x200) != 0)) && (*(short *)(param_1 + 0x3e2) == 0)) {
+	// if one driver squished the other with turbo
+    if (
+		(
+			(
+				// force that the drivers collided is high
+				(0xa00 < DAT_8008d9f4) && 
+				
+				// attacking driver has reserves
+				(*(short *)(param_2 + 0x3e2) != 0)
+			) &&
+      
+			// attacking driver is using turbo weapon
+			((*(uint *)(param_2 + 0x2c8) & 0x200) != 0)
+		) && 
+		
+		// attacked driver has no reserves
+		(*(short *)(param_1 + 0x3e2) == 0)
+	  ) 
+	{
+	  // set forcedJump_trampoline on attacking driver
       *(undefined *)(param_2 + 0x366) = 2;
+	  
+	  // attacked driver has been squished by attacking driver,
+	  // this happens when one driver uses turbo weapon on another
       *(undefined *)(param_1 + 0x4ff) = 3;
       *(undefined *)(param_1 + 0x504) = 5;
       *(int *)(param_1 + 0x500) = param_2;
@@ -44042,6 +44062,8 @@ void FUN_8005d404(int param_1,int param_2,int *param_3)
         *(uint *)(iVar5 + 0x2c8) = *(uint *)(iVar5 + 0x2c8) | 0x10000000;
         *(uint *)(iVar8 + 0x2c8) = *(uint *)(iVar8 + 0x2c8) | 0x10000000;
       }
+	  
+	  // DriverCrash_HumanToHuman
       uVar9 = FUN_8005d218(iVar5,iVar8,uVar10,0);
       FUN_8005d218(iVar8,iVar5,uVar9,1);
     }
@@ -50421,12 +50443,12 @@ LAB_800647d8:
   switch(param_4) {
   case 1:
   
-	// number of times your bomb hit someone
+	// number of times bomb hit you
     *(char *)(param_1 + 0x55e) = *(char *)(param_1 + 0x55e) + '\x01';
 	
     if ((param_3 != 0) && (param_3 != param_1)) 
 	{
-      // number of times hit by bomb
+      // number of times your bomb hit someone
 	  *(char *)(param_3 + 0x55a) = *(char *)(param_3 + 0x55a) + '\x01';
       *(ushort *)(param_3 + 0x4f6) = *(ushort *)(param_3 + 0x4f6) | 1;
     }
@@ -50434,19 +50456,19 @@ LAB_800647d8:
 	
   // hit by motionless potion
   case 2:
+	// number of times motionless potion hit you
     *(char *)(param_1 + 0x55f) = *(char *)(param_1 + 0x55f) + '\x01';
     break;
   
   case 3:
     
-	// number of times your missile hit someone
+	// number of times missile hit you
 	*(char *)(param_1 + 0x55d) = *(char *)(param_1 + 0x55d) + '\x01';
     
 	if ((param_3 != 0) && (param_3 != param_1)) {
       
-	  // number of times someone else's missile hit you
+	  // number of times you hit someone with missile
 	  *(char *)(param_3 + 0x557) = *(char *)(param_3 + 0x557) + '\x01';
-      
 	  *(ushort *)(param_3 + 0x4f6) = *(ushort *)(param_3 + 0x4f6) | 2;
     }
     break;
@@ -50455,21 +50477,26 @@ LAB_800647d8:
   case 4:
     if ((param_3 != 0) && (param_3 != param_1)) 
 	{
-	  // number of times hit by potion moving potion
+	  // number of times you hit someone with potion moving potion
       *(char *)(param_3 + 0x556) = *(char *)(param_3 + 0x556) + '\x01';
       *(ushort *)(param_3 + 0x4f6) = *(ushort *)(param_3 + 0x4f6) | 4;
     }
     break;
 	
-  // 5 and 6 set with offset 0x504 in 8005d218
-  
+  // squished by other driver's turbo
   case 5:
-    if ((param_3 != 0) && (param_3 != param_1)) {
+    if ((param_3 != 0) && (param_3 != param_1)) 
+	{
+	  // number of times you squished someone
       *(char *)(param_3 + 0x55b) = *(char *)(param_3 + 0x55b) + '\x01';
     }
     break;
+	
+  // hit by a mask weapon
   case 6:
-    if ((param_3 != 0) && (param_3 != param_1)) {
+    if ((param_3 != 0) && (param_3 != param_1)) 
+	{
+	  // set flag to the driver that did the attacking with mask weapon
       *(ushort *)(param_3 + 0x4f6) = *(ushort *)(param_3 + 0x4f6) | 8;
     }
   }
