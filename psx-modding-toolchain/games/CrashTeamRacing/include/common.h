@@ -2367,6 +2367,18 @@ struct Driver
 
 	// 0x570
 	int EndOfRaceComment_characterID;
+	
+	// 0x574
+	int NumMissilesComparedToNumAttacks
+
+	// 0x578
+	// probably for "comeback kid!" comment
+	int TimeWinningDriverSpentLastPlace;
+	
+	// 0x57c
+	int numTimesAttacked;
+
+	// 0x580
 
 	// 0x582
 	// Drift Boost Timer

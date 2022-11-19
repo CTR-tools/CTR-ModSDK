@@ -36758,45 +36758,61 @@ void FUN_8005572c(int param_1)
   // If race timer is not supposed to stop for this racer
   if ((*(uint *)(param_1 + 0x2c8) & 0x40000) == 0)
   {
+	// time elapsed in race
     iVar3 = *(int *)(param_1 + 0x514);
 
     // Stop time for this racer
     *(uint *)(param_1 + 0x2c8) = *(uint *)(param_1 + 0x2c8) | 0x40000;
 
-	if (iVar3 != 0) {
+	if (iVar3 != 0) 
+	{
+	  // get average speed over time (assumed)
+	  
       iVar2 = *(int *)(param_1 + 0x518) * 100;
-      if (iVar3 == 0) {
-        trap(0x1c00);
-      }
-      if ((iVar3 == -1) && (iVar2 == -0x80000000)) {
-        trap(0x1800);
-      }
-      *(int *)(param_1 + 0x518) = iVar2 / iVar3;
+	  
+      if (iVar3 == 0) { trap(0x1c00); }
+      if ((iVar3 == -1) && (iVar2 == -0x80000000)) { trap(0x1800); }
+      
+	  *(int *)(param_1 + 0x518) = iVar2 / iVar3;
     }
-    if (*(byte *)(param_1 + 0x55c) < 4) {
+	
+	// if missiles launched is less than 4
+    if (*(byte *)(param_1 + 0x55c) < 4) 
+	{
       *(undefined4 *)(param_1 + 0x574) = 0xffffffff;
     }
-    else {
-      bVar1 = *(byte *)(param_1 + 0x55c);
-      if (bVar1 == 0) {
-        trap(0x1c00);
-      }
-      if (((uint)bVar1 == 0xffffffff) && ((uint)*(byte *)(param_1 + 0x559) == 0x80000)) {
-        trap(0x1800);
-      }
+    
+	// if missiles launched is more than 4
+	else 
+	{
+      // number of missiles launched
+	  bVar1 = *(byte *)(param_1 + 0x55c);
+      
+	  if (bVar1 == 0) { trap(0x1c00); }
+      if (((uint)bVar1 == 0xffffffff) && ((uint)*(byte *)(param_1 + 0x559) == 0x80000)) { trap(0x1800); }
+	  
+	  // compare number of missiles to number of attacks
       *(int *)(param_1 + 0x574) = (int)((uint)*(byte *)(param_1 + 0x559) << 0xc) / (int)(uint)bVar1;
     }
+	
     iVar4 = 0;
     iVar2 = 0;
     iVar3 = param_1;
-    do {
+    
+	// count number of times you were attacked in race
+	do {
       iVar2 = iVar2 + 1;
       iVar4 = iVar4 + (uint)*(byte *)(iVar3 + 0x560);
       iVar3 = param_1 + iVar2;
     } while (iVar2 < 8);
-    *(int *)(param_1 + 0x57c) = iVar4;
-    if (*(short *)(param_1 + 0x482) == 0) {
-    	//*(undefined4 *)(param_1 + 0x578) = time racer has been in last place
+    
+	// number of times attacked
+	*(int *)(param_1 + 0x57c) = iVar4;
+    
+	// if driver is in first place
+	if (*(short *)(param_1 + 0x482) == 0) {
+    
+	  // duplicate amount of time spent in last place
       *(undefined4 *)(param_1 + 0x578) = *(undefined4 *)(param_1 + 0x528);
     }
   }
