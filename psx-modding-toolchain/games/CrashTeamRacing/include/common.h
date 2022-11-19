@@ -1670,13 +1670,11 @@ struct Driver
 	unsigned short timeAgainstWall; // allocated in Sep3, does not function
 	#endif
 
-	#if BUILD >= AugReview && BUILD <= JpnTrial
-	// 0x52
-	short mysteryShortInAllVersions;
-	#endif
+	// There is no "short" on 0x52,
+	// there is padding for the next
+	// 4-byte void* that is unused
 
-	// 0x54
-
+	// These names are outdated, check syms
 	// 0x54 - OnInit, First function for spawn, drifting, damage, etc
 	// 0x58 - OnUpdate, updates per frame for any generic purpose
 	// 0x5C - OnInput, convert controller presses into physics variables
