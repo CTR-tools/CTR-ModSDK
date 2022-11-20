@@ -65,9 +65,9 @@ Decompiling the assembly assisted by Ghidra, researching how it works and adding
 Rewriting Ghidra output to human-readable C Code and testing if it matches.
 Most of the source code are shared between versions.
 
-- ![](https://progress-bar.dev/92/?scale=1171&width=300&title=USA&suffix=%20functions%20out%20of%201171*)
+- ![](https://progress-bar.dev/93/?scale=1171&width=300&title=USA&suffix=%20functions%20out%20of%201171*)
 - ![](https://progress-bar.dev/22/?scale=1171&width=300&title=PAL&suffix=%20functions%20out%20of%201200*)
-- ![](https://progress-bar.dev/94/?scale=1171&width=300&title=JPN&suffix=%20functions%20out%20of%201200*)
+- ![](https://progress-bar.dev/95/?scale=1171&width=300&title=JPN&suffix=%20functions%20out%20of%201200*)
 
 \* These are not accurate numbers and subject to change.
 

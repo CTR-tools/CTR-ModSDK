@@ -2367,7 +2367,7 @@ struct Driver
 	int EndOfRaceComment_characterID;
 	
 	// 0x574
-	int NumMissilesComparedToNumAttacks
+	int NumMissilesComparedToNumAttacks;
 
 	// 0x578
 	// probably for "comeback kid!" comment
