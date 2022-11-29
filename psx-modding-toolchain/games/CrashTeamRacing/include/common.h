@@ -723,7 +723,7 @@ struct BspSearchData
 	// posCurr
 	
 	// 0x6
-	// deltaCurr
+	// deltaCurr (size?)
 	
 	// 0xC
 	
