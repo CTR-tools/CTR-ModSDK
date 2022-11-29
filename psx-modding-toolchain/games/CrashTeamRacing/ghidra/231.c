@@ -879,7 +879,7 @@ void FUN_800ac638(int param_1)
   DAT_1f80010a = *(undefined2 *)(param_1 + 0x48);
   DAT_1f80010c = *(undefined2 *)(param_1 + 0x4c);
   
-  // pos2 (size?)
+  // hitRadius and hitRadiusSquared
   DAT_1f80010e = 0x140;
   DAT_1f800110 = 0x19000;
   
@@ -5410,13 +5410,17 @@ void FUN_800b18f8(int param_1)
   DAT_1f80010c = *(undefined2 *)(param_1 + 0x4c);
   
   // if you're in boss mode
-  if (*(int *)PTR_DAT_8008d2ac < 0) {
+  if (*(int *)PTR_DAT_8008d2ac < 0) 
+  {
+	// hitRadius and hitRadiusSquared
     DAT_1f80010e = 0x100;
     _DAT_1f800110 = 0x10000;
   }
   
   // if you're not in boss mode
-  else {
+  else 
+  {
+	// hitRadius and hitRadiusSquared
     DAT_1f80010e = 0x140;
     _DAT_1f800110 = 0x19000;
   }
@@ -5449,7 +5453,7 @@ void FUN_800b18f8(int param_1)
   // if not TNT
   else 
   {
-	// change radius?
+	// hitRadius and hitRadiusSquared
     DAT_1f80010e = 0x80;
     _DAT_1f800110 = 0x4000;
 	
@@ -5952,18 +5956,24 @@ void FUN_800b2154(int param_1)
   DAT_1f80010c = *(undefined2 *)(param_1 + 0x4c);
   
   // instance -> model -> modelID == missile
-  if (*(short *)(*(int *)(param_1 + 0x18) + 0x10) == 0x29) {
+  if (*(short *)(*(int *)(param_1 + 0x18) + 0x10) == 0x29) 
+  {
+	// hitRadius and hitRadiusSquared
     DAT_1f80010e = 0x80;
     _DAT_1f800110 = 0x4000;
   }
   else 
   {
 									// instance -> thread -> object
-    if ((*(ushort *)(*(int *)(*(int *)(param_1 + 0x6c) + 0x30) + 0x16) & 1) == 0) {
+    if ((*(ushort *)(*(int *)(*(int *)(param_1 + 0x6c) + 0x30) + 0x16) & 1) == 0) 
+	{
+	  // hitRadius and hitRadiusSquared
       DAT_1f80010e = 0x140;
       _DAT_1f800110 = 0x19000;
     }
-    else {
+    else 
+	{
+	  // hitRadius and hitRadiusSquared
       DAT_1f80010e = 0x200;
       _DAT_1f800110 = 0x40000;
     }
@@ -12755,12 +12765,20 @@ void FUN_800b9e44(short *param_1,int param_2)
       }
     }
   }
+  
+  // thread on WeaponSearchCallback
   iVar2 = *(int *)(param_1 + 0xc);
+  
+  // another instance
   iVar3 = *(int *)(param_2 + 0x34);
+  
+  // thread instance
   iVar4 = *(int *)(iVar2 + 0x34);
+  
   if ((iVar3 != 0) && (iVar4 != 0)) {
-    iVar2 = ((int)*param_1 - *(int *)(iVar3 + 0x44)) * (int)*(short *)(iVar4 + 0x34) +
+    iVar2 = ((int)param_1[0] - *(int *)(iVar3 + 0x44)) * (int)*(short *)(iVar4 + 0x34) +
             ((int)param_1[2] - *(int *)(iVar3 + 0x4c)) * (int)*(short *)(iVar4 + 0x40);
+			
     if (iVar2 < 0) {
       iVar2 = -iVar2;
     }
@@ -12871,6 +12889,8 @@ LAB_800b9ff8:
   DAT_1f800108 = *(undefined2 *)(iVar4 + 0x44);
   DAT_1f80010a = *(undefined2 *)(iVar4 + 0x48);
   DAT_1f80010c = *(undefined2 *)(iVar4 + 0x4c);
+  
+  // hitRadius and hitRadiusSquared
   DAT_1f80010e = 0x300;
   _DAT_1f800110 = 0x90000;
   

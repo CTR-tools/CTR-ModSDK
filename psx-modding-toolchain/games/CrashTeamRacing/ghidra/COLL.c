@@ -3118,8 +3118,11 @@ void FUN_80020410(undefined4 param_1,int param_2)
   int iVar13;
   int iVar14;
 
+  // hitRadius and hitRadiusSquared
   DAT_1f80010e = 0x19;
   _DAT_1f800110 = 0x271;
+  
+  // hitRadius and hitRadiusSquared
   DAT_1f80011c._2_2_ = 0x19;
   DAT_1f800120 = 0x271;
 

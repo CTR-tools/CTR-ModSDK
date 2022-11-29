@@ -713,7 +713,8 @@ struct BspSearchTriangle
 	int numCollision;
 };
 
-// can be stored in normal RAM
+// can be stored in normal RAM,
+// usually 1f800108
 struct BspSearchData
 {
 	// 0x0
@@ -732,9 +733,6 @@ struct BspSearchData
 	
 	// 0x16
 	// deltaCurr
-	
-	// 0x1C
-	// ptrInstDef
 	
 	// 0x30
 	// boundingbox
@@ -767,6 +765,34 @@ struct BspSearchData
 	
 	// 0x20C -- size of struct
 };
+
+// 1f800108
+struct WeaponSearchCallback
+{
+	// 0x0
+	short pos[3];
+	short hitRadius;
+	int hitRadiusSquared;
+	
+	// 0xC
+	int modelID;
+	
+	// 0x10
+	short distance[3];
+	short unk;
+	
+	// 0x18
+	struct Thread* th;
+	
+	// 0x1C
+	struct InstDef* instDef;
+	
+	// 0x20
+	int unk20[2];
+	
+	// 0x28
+	void* funcCallback;
+}
 
 // only stored in Scratchpad
 // FUN_80020334
