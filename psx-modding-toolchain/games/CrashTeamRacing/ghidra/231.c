@@ -991,9 +991,12 @@ void FUN_800ac6b4(int param_1)
 		// reset cooldown (3.84s)
 		*(undefined2 *)(iVar7 + 0x2a) = 0xf00;
 		
+		// clear velocity
         *(undefined2 *)(iVar7 + 0xc) = 0;
         *(undefined2 *)(iVar7 + 0xe) = 0;
         *(undefined2 *)(iVar7 + 0x10) = 0;
+		
+		// max height
         *(short *)(iVar7 + 0x12) = sVar2;
         
 		// remove flag "| 2"
@@ -1479,17 +1482,22 @@ LAB_800ad174:
 		// Get object from thread
         piVar11 = *(int **)(*(int *)(iVar6 + 0x6c) + 0x30);
 		
+		// mineWeapon->instParent
         piVar11[1] = *(int *)(iVar5 + 0x1c);
+		
         *(undefined2 *)(piVar11 + 9) = 10;
         *(undefined2 *)(piVar11 + 5) = 0;
         *(undefined2 *)((int)piVar11 + 0x26) = 0;
         piVar11[2] = 0;
         *(undefined2 *)(piVar11 + 10) = 0;
+		
+		// get posY
         uVar3 = *(undefined2 *)(iVar12 + 0x48);
         
-		// give driver to tnt object
+		// give driver to tnt object (mineWeapon)
 		*piVar11 = iVar5;
 		
+		// set mineWeapon posY
         *(undefined2 *)((int)piVar11 + 0x12) = uVar3;
 		
 		// driver -> instTntRecv

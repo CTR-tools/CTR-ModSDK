@@ -51849,7 +51849,7 @@ LAB_800659ec:
 
 	  // 0x300 flag = SmallStackPool
 	  // 4 = "mine" thread bucket
-      iVar5 = FUN_800309a4(0x46,s_beaker1_8008d654,0x300,4,&DAT_800acb60,0x2c,0);
+      iVar5 = FUN_800309a4(0x46,s_beaker1_8008d654,0x300,4,&FUN_800acb60,0x2c,0);
 
 	  // instance->thread->object
       iVar8 = *(int *)(*(int *)(iVar5 + 0x6c) + 0x30);
