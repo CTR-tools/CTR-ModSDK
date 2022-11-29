@@ -51761,7 +51761,9 @@ LAB_800659ec:
 
 	  sVar2 = *(short *)(*(int *)(DAT_1f800150 + 0x1c) + 0x3c);
 
-	  if ((sVar2 == 7) || (sVar2 == 8)) {
+	  if ((sVar2 == 7) || (sVar2 == 8)) 
+	  {
+		// store threaded instance in mineWeapon offset 0x8
         puVar16[2] = *(undefined4 *)(*(int *)(DAT_1f800150 + 0x1c) + 0x2c);
       }
       else
