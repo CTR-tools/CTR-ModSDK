@@ -2521,6 +2521,8 @@ struct TrackerWeapon
 
 	// 0x44 - path index Start
 	// 0x45 - path index End
+	
+	// 0x48 - time spent alive?
 
 	// 0x52 - turnAround count
 

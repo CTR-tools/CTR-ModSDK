@@ -1259,6 +1259,7 @@ void FUN_800acb60(int param_1)
   // RB_Hazard_CollideWithDrivers
   iVar5 = FUN_800ac220(iVar12,(int)*(short *)(piVar13 + 9),uVar8,piVar13[1]);
   
+  // if no collision
   if (iVar5 == 0) goto LAB_800ad17c;
   
   // get driver who hit tnt (or nitro) 
@@ -1289,6 +1290,7 @@ void FUN_800acb60(int param_1)
 	// RB_Hazard_HurtDriver (spin out)
     iVar6 = FUN_800ac1b0(iVar5,1,*(undefined4 *)(*(int *)(piVar13[1] + 0x6c) + 0x30),uVar8);
     
+	// if collision, and if this was a red potion
 	if ((iVar6 != 0) && ((*(ushort *)(piVar13 + 10) & 1) != 0)) 
 	{
 	  // RB_RainCloud_Init
@@ -1528,6 +1530,8 @@ LAB_800ad17c:
   if (*(short *)(piVar13 + 9) != 0) {
     *(short *)(piVar13 + 9) = *(short *)(piVar13 + 9) + -1;
   }
+  
+  // if mineWeapon->boolIsDestroyed == 0
   if (*(short *)(piVar13 + 5) == 0) {
     return;
   }
@@ -2177,6 +2181,8 @@ LAB_800adc00:
     FUN_8002f31c(piVar9 + 9,uVar7,iVar10);
   }
 LAB_800adc08:
+
+  // driver -> invisibleTimer
   if (*(int *)(*piVar9 + 0x28) == 0) 
   {
     if (
@@ -2189,7 +2195,12 @@ LAB_800adc08:
       piVar9[0x15] = 10;
     }
   }
-  else {
+  
+  // if driver is invisible
+  else 
+  {
+	// erase pointer to driver,
+	// cause tracker can't find invisible driver
     *piVar9 = 0;
   }
   
