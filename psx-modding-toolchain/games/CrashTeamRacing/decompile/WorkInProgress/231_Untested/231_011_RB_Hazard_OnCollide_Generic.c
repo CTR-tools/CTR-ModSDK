@@ -32,13 +32,13 @@ int RB_Hazard_OnCollide_Generic(struct Thread* thread)
 		}
 	}
 	
-	modelID = inst->model->modelID;
+	modelID = inst->model->id;
 	
 	// if red beaker or green beaker
 	if ((unsigned int)(modelID - 0x46) < 2)
 	{
 		PlaySound3D(0x3f, inst);
-		RB_MinePool_Remove(mw)
+		RB_MinePool_Remove(mw);
 	}
 	
 	else
