@@ -2627,13 +2627,7 @@ struct MineWeapon
 	int unk1;
 
 	// 0xc
-	int unk2;
-
-	// 0xe
-	// time until TNT lands on head
-
-	// 0x10
-	short un3;
+	short velocity[3];
 
 	// 0x12
 	short posY;
