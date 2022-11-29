@@ -51759,11 +51759,14 @@ LAB_800659ec:
 	  // RB_Hazard_LevInstColl
       FUN_800ad9ac(&DAT_1f800108,*(undefined4 *)(iVar5 + 0x6c));
 
+	  // InstDef -> modelID
 	  sVar2 = *(short *)(*(int *)(DAT_1f800150 + 0x1c) + 0x3c);
 
+	  // fruit crate or weapon crate
 	  if ((sVar2 == 7) || (sVar2 == 8)) 
 	  {
-		// store threaded instance in mineWeapon offset 0x8
+		// save mineWeapon->crateInst as...
+		// InstDef -> ptrInstance
         puVar16[2] = *(undefined4 *)(*(int *)(DAT_1f800150 + 0x1c) + 0x2c);
       }
       else

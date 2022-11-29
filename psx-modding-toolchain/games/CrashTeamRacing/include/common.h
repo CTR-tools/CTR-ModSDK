@@ -2679,6 +2679,9 @@ struct Blade
 
 struct Crate
 {
+	int cooldown;
+	int boolPauseCooldown;
+	
 	// 0x8 bytes large
 };
 

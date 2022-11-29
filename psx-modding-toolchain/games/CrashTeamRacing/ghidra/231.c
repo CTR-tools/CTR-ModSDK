@@ -759,7 +759,7 @@ undefined4 FUN_800ac4b8(int param_1)
   
   if (
 		(
-			// if instance is valid
+			// if mineWeapon->crateInst
 			(piVar5[2] != 0) && 
 			
 			// instance -> thread
@@ -770,7 +770,7 @@ undefined4 FUN_800ac4b8(int param_1)
 		(iVar2 = *(int *)(iVar2 + 0x30), iVar2 != 0)
 	  ) 
   {
-	// object -> 0x4
+	// unpause cooldown (boolPauseCooldown)
     *(undefined2 *)(iVar2 + 4) = 0;
   }
   
@@ -1269,8 +1269,11 @@ void FUN_800acb60(int param_1)
   // from the object attached to thread
   iVar5 = *(int *)(*(int *)(iVar5 + 0x6c) + 0x30);
   
+  // if mineWeapon->crateInst, if inst->thread, if thread->object
   if (((piVar13[2] != 0) && (iVar6 = *(int *)(piVar13[2] + 0x6c), iVar6 != 0)) &&
-     (iVar6 = *(int *)(iVar6 + 0x30), iVar6 != 0)) {
+     (iVar6 = *(int *)(iVar6 + 0x30), iVar6 != 0)) 
+  {
+	// unpause cooldown (boolPauseCooldown)
     *(undefined2 *)(iVar6 + 4) = 0;
   }
   
@@ -6823,6 +6826,7 @@ void FUN_800b3d7c(int param_1)
 	// if cooldown timer is not done
     else 
 	{
+	  // if cooldown is not paused (boolPauseCooldown)
       if (*(short *)(piVar3 + 1) == 0) 
 	  {
 		// reduce cooldown
@@ -6912,6 +6916,9 @@ LAB_800b420c:
 	  {
         return 0;
       }
+	  
+	  // if modelID is a mine of any kind,
+	  // offset4 = 1, prevent crate from growing back
       *(undefined2 *)(piVar9 + 1) = 1;
     }
     return 0;
