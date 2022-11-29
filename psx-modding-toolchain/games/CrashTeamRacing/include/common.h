@@ -734,6 +734,7 @@ struct BspSearchData
 	// deltaCurr
 	
 	// 0x1C
+	// ptrInstDef
 	
 	// 0x30
 	// boundingbox

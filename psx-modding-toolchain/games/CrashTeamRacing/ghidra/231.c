@@ -850,8 +850,20 @@ void FUN_800ac5e8(undefined4 param_1,int param_2)
 {
   int iVar1;
   
+  // BspCallback->InstDef
   iVar1 = *(int *)(param_2 + 0x1c);
-  if (((iVar1 != 0) && (*(int *)(iVar1 + 0x2c) != 0)) && (*(short *)(iVar1 + 0x3c) == 0x70)) 
+  
+  if (
+		(
+			// if InstDef exists
+			(iVar1 != 0) && 
+			
+			(*(int *)(iVar1 + 0x2c) != 0)
+		) && 
+		
+		// modelID == STATIC_TEETH
+		(*(short *)(iVar1 + 0x3c) == 0x70)
+	) 
   {
 	// RB_Teeth_OpenDoor
     FUN_800ba220(*(int *)(iVar1 + 0x2c));

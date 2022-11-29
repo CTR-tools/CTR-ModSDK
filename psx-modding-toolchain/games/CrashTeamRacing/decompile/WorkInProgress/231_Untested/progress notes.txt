@@ -1,3 +1,2 @@
-Did not do top two functions of 231 (MakeInstanceReflective or KillPlayer)
-Did not finish OnCollide_Generic, requires more Weapon object research
-Did not do Potion_OpenTeeth, need more research on parameter
+Did not do top two functions of 231 (MakeInstanceReflective or KillPlayer),
+Potion_OpenTeeth wont compile cause we dont have BSD struct
