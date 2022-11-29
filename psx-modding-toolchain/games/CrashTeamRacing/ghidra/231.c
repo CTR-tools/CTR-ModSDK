@@ -695,6 +695,7 @@ int FUN_800ac350
 void FUN_800ac3f8(undefined4 *param_1)
 {
   // RB_Hazard_OnCollide_Generic
+  // only really uses *param_1 for thread
   FUN_800ac4b8(*param_1,param_1[1],param_1[2],param_1[3]);
   return;
 }
@@ -738,6 +739,10 @@ undefined4 FUN_800ac42c(int param_1)
 }
 
 // RB_Hazard_OnCollide_Generic
+// param_1 - thread
+// param_2 - thread (again? unused)
+// param_3 - funcOnCollide (unused)
+// param_4 - unknown, unused
 undefined4 FUN_800ac4b8(int param_1)
 {
   ushort uVar1;
@@ -746,10 +751,10 @@ undefined4 FUN_800ac4b8(int param_1)
   int iVar4;
   int *piVar5;
   
-  // get instance from thread
+  // thread->instance
   iVar4 = *(int *)(param_1 + 0x34);
   
-  // get object from thread from instance
+  // instance->thread->object
   piVar5 = *(int **)(*(int *)(iVar4 + 0x6c) + 0x30);
   
   if (
@@ -798,9 +803,18 @@ undefined4 FUN_800ac4b8(int param_1)
         return 1;
       }
 	  
-      if (*piVar5 != 0) {
+	  // at this point, it must be TNT
+	  
+	  // if driver hit the TNT
+      if (*piVar5 != 0) 
+	  {
+		// quit, explosion is handled
+		// by TNT thread instead
         return 1;
       }
+	  
+	  // if no driver hit TNT,
+	  // handle explosion here
 	  
 	  // play sound of tnt explosion
       uVar3 = 0x3d;
