@@ -2625,8 +2625,7 @@ struct MineWeapon
 	struct Instance* instParent; // of driver who placed me
 
 	// 0x8
-	// should be a threaded inst, but always nullptr
-	int unk1;
+	struct Instance* crateInst; // if colliding with one
 
 	// 0xc
 	short velocity[3];
