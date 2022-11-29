@@ -1640,12 +1640,14 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
   // inside scratchpad
   iVar6 = 0x1f800000;
 
+  // hitbox
   sVar2 = *param_2;
   sVar3 = param_2[1];
   sVar4 = param_2[2];
   sVar5 = param_2[3];
   iVar10 = (int)param_2[4];
   iVar11 = (int)param_2[5];
+  
   iVar9 = param_1;
   DAT_1f800030 = unaff_s0;
   DAT_1f800034 = unaff_s1;

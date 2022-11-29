@@ -843,7 +843,7 @@ undefined4 FUN_800ac4b8(int param_1)
   return 1;
 }
 
-// RB_Potion_OpenTeeth
+// RB_Potion_OpenTeeth (bugged? never called)
 // param_2 InstDef
 void FUN_800ac5e8(undefined4 param_1,int param_2)
 

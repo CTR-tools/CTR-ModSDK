@@ -784,11 +784,11 @@ struct WeaponSearchData
 	// 0x18
 	struct Thread* th;
 	
-	// 0x1C
-	struct InstDef* instDef;
+	// 0x1C isn't ptrInstDef?
 	
-	// 0x20
-	int unk20[2];
+	// 0x1c
+	short min[3];
+	short max[3];
 	
 	// 0x28
 	void* funcCallback;
