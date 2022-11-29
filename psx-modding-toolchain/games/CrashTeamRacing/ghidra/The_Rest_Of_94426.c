@@ -11654,8 +11654,12 @@ void FUN_8003a3fc(void)
     }
 
 	// if in battle mode
-	else {
-      if ((uVar9 & 0x4000) == 0) {
+	else 
+	{
+	  // if not point limit
+      if ((uVar9 & 0x4000) == 0) 
+	  {
+		// if time limit
         if ((uVar9 & 0x8000) != 0) {
           local_38 = DAT_8008d2f4;
           local_34 = DAT_8008d2f8;
@@ -11728,17 +11732,12 @@ void FUN_8003a3fc(void)
               do {
                 puVar13 = PTR_DAT_8008d2ac;
 
+				// based on battle team, increment gGT Standing Points by 1,
+				// determine how many times driver finished with each rank (1st 2nd 3rd 4th)
 				*(int *)(PTR_DAT_8008d2ac + iVar17 * 4 + *(int *)(*(int *)(PTR_DAT_8008d2ac +
-
-					// Battle Team the player is on
-					(int)*(short *)puVar7 * 4 + 0x24ec) +0x4e8) *
-						0xc + 0x1e80) =
-
+					(int)*(short *)puVar7 * 4 + 0x24ec) + 0x4e8) * 0xc + 0x1e80) =
                 *(int *)(PTR_DAT_8008d2ac + iVar17 * 4 + *(int *)(*(int *)(PTR_DAT_8008d2ac +
-
-					// Battle Team the player is on
-					(int)*(short *)puVar7 * 4 + 0x24ec) + 0x4e8) *
-						0xc + 0x1e80) + 1;
+					(int)*(short *)puVar7 * 4 + 0x24ec) + 0x4e8) * 0xc + 0x1e80) + 1;
 
                 if (
 						(iVar17 == 0) &&
@@ -11788,6 +11787,7 @@ void FUN_8003a3fc(void)
                 *(undefined2 *)(PTR_DAT_8008d2ac + 0x1b04) = 0xfa;
                 *(undefined2 *)(puVar13 + 0x1b06) = 0xfa;
 
+				// save the rank that the driver (or team) finished this event
                 *(int *)(puVar13 + (int)*(short *)puVar7 * 4 + 0x1da8) = iVar17;
 
 				// number of screens
@@ -11828,6 +11828,8 @@ void FUN_8003a3fc(void)
           } while (iVar17 < 4);
         }
       }
+	  
+	  // if point limit
       else {
         uVar9 = 0;
         iVar17 = 0;
@@ -11838,19 +11840,35 @@ void FUN_8003a3fc(void)
           iVar12 = 0;
           uVar14 = 3;
           puVar13 = puVar10 + 0xc;
-          do {
+          do 
+		  {
+			// if points on battle team == highest num points
             if ((*(int *)(puVar13 + 0x1d90) == (int)sVar5) &&
-               (((int)(uVar9 & 0xff) >> (uVar14 & 0x1f) & 1U) == 0)) {
+               (((int)(uVar9 & 0xff) >> (uVar14 & 0x1f) & 1U) == 0)) 
+			{
+			  // there is a tie
+				
               iVar12 = iVar12 + 1;
               *(undefined2 *)((int)&local_38 + (iVar12 * 0x10000 >> 0xf)) = (short)uVar14;
 LAB_8003a71c:
               uVar9 = uVar9 | 1 << (uVar14 & 0x1f);
             }
-            else {
+            
+			// if not equal
+			else 
+			{
+			  // points on team is more than highest score
               if (((int)sVar5 <= *(int *)(puVar13 + 0x1d90)) &&
-                 (((int)(uVar9 & 0xff) >> (uVar14 & 0x1f) & 1U) == 0)) {
+                 (((int)(uVar9 & 0xff) >> (uVar14 & 0x1f) & 1U) == 0)) 
+			  {
+				// set new highest score
                 sVar5 = *(short *)(puVar13 + 0x1d90);
+				
+				// set number of winners (more than 1 if a tie)
                 iVar12 = (int)(short)iVar12 + 1;
+				
+				// clear previous list of winners,
+				// since we have someone with higher scores
                 iVar11 = 0;
                 puVar7 = &local_38;
                 if (0 < iVar12) {
@@ -11862,14 +11880,20 @@ LAB_8003a71c:
                     puVar7 = (undefined4 *)((int)puVar7 + 2);
                   } while (iVar11 < iVar12);
                 }
-                iVar12 = 0;
-                local_38 = local_38 & 0xffff0000 | uVar14 & 0xffff;
+                
+				// reset counter
+				iVar12 = 0;
+                
+				// new list of winners
+				local_38 = local_38 & 0xffff0000 | uVar14 & 0xffff;
+				
                 goto LAB_8003a71c;
               }
             }
             uVar14 = uVar14 - 1;
             puVar13 = puVar13 + -4;
           } while (-1 < (int)uVar14);
+		  
           if ((short)local_38 != -1) {
             iVar11 = (int)(short)iVar12 + 1;
             iVar8 = 0;
@@ -11877,8 +11901,11 @@ LAB_8003a71c:
             if (0 < iVar11) {
               do {
                 iVar8 = iVar8 + 1;
+				
+				// save the rank that the player (or team) finished in this event
                 *(int *)(puVar10 + (int)*(short *)puVar7 * 4 + 0x1da8) = iVar17;
-                puVar7 = (undefined4 *)((int)puVar7 + 2);
+                
+				puVar7 = (undefined4 *)((int)puVar7 + 2);
               } while (iVar8 < iVar11);
             }
           }
@@ -12018,8 +12045,13 @@ LAB_8003a71c:
       do {
         if ((((int)sVar5 <= *(int *)(puVar10 + 0x1de0)) &&
             (((int)(uVar9 & 0xff) >> (uVar16 & 0x1f) & 1U) == 0)) &&
+			
+			// if team exists
            (((*(uint *)(puVar4 + 0x1dd8) & 1 << (uVar16 & 0x1f)) != 0 ||
-            ((*(uint *)puVar4 & 0x20) == 0)))) {
+		   
+		    // not in battle mode
+            ((*(uint *)puVar4 & 0x20) == 0)))) 
+		{
           sVar5 = *(short *)(puVar10 + 0x1de0);
           if ((int)(short)uVar14 != 0xffffffff) {
             uVar9 = uVar9 & ~(1 << ((int)(short)uVar14 & 0x1fU));
@@ -12030,6 +12062,7 @@ LAB_8003a71c:
         uVar16 = uVar16 - 1;
         puVar10 = puVar10 + -4;
       } while (-1 < (int)uVar16);
+	  
       *(int *)(puVar13 + 0x1dc8) = (int)(short)uVar14;
 
 	  // increment loop counter
@@ -32272,7 +32305,7 @@ void FUN_8005045c(short param_1,short param_2,int param_3,short param_4)
   // If you are in Battle Mode
   else
   {
-							// Battle Team of Player
+	// get the rank that the battle team is in
     iVar1 = *(int *)(PTR_DAT_8008d2ac + *(int *)(param_3 + 0x4e8) * 4 + 0x1da8);
   }
 

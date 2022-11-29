@@ -75,18 +75,18 @@ void FUN_800abbb4(int param_1,int param_2)
   undefined *puVar5;
   short sVar6;
   int iVar7;
+  
+  // boolIsTeamAlive
   short local_18 [4];
   
   uVar2 = *(uint *)PTR_DAT_8008d2ac;
-  if ((uVar2 & 0x20) == 0) {
-    return;
-  }
-  if (param_1 == 0) {
-    return;
-  }
-  if (param_2 == 0) {
-    return;
-  }
+  
+  // quit if not in battle mode, or if 
+  // either driver is nullptr
+  
+  if ((uVar2 & 0x20) == 0) return;
+  if (param_1 == 0) return;
+  if (param_2 == 0) return;
   
   // If you dont have a Point Limit (battle)
   if ((uVar2 & 0x4000) == 0) {
@@ -98,9 +98,7 @@ void FUN_800abbb4(int param_1,int param_2)
       return;
     }
 	
-	// If you are here, you must have a point limit,
-	// or a life limit, that ends the race for 
-	// individual players
+	// If you are here, this is LIFE limit
 	
 	// subtract a life from player
     iVar3 = *(int *)(param_2 + 0x4e4) + -1;
@@ -119,7 +117,9 @@ void FUN_800abbb4(int param_1,int param_2)
 	
 	// if you get here, then player is out of lives
 	
+	// array of boolIsTeamAlive
     memset(local_18,0,8);
+	
     sVar6 = 0;
 	
 	// Player_Dead_Init
@@ -145,14 +145,14 @@ void FUN_800abbb4(int param_1,int param_2)
 		// If the race is not over for this driver
         if ((*(uint *)(*(int *)(puVar5 + 0x24ec) + 0x2c8) & 0x2000000) == 0) 
 		{
-		  // array index is the team that the player was on
+		  // array[driver->teamID] = 1
           local_18[*(int *)(*(int *)(puVar5 + 0x24ec) + 0x4e8)] = 1;
         }
 		
 		// if race is over for this player
         else 
 		{
-		  // keep count
+		  // keep count of drivers dead
           iVar7 = iVar7 + 1;
         }
         iVar3 = iVar3 + 1;
@@ -160,33 +160,63 @@ void FUN_800abbb4(int param_1,int param_2)
       } while (iVar3 < (int)(uint)(byte)puVar1[0x1ca8]);
     }
 	
+	// dead driver -> battleHUD.teamID
     uVar2 = *(uint *)(param_2 + 0x4e8);
-    if (((*(uint *)(PTR_DAT_8008d2ac + 0x1dd8) & 1 << (uVar2 & 0x1f)) != 0) &&
-       (local_18[uVar2] == 0)) 
+	
+    if (
+			// if driver team exists
+			((*(uint *)(PTR_DAT_8008d2ac + 0x1dd8) & 1 << (uVar2 & 0x1f)) != 0) &&
+			
+			// if no remaining players alive on team
+			(local_18[uVar2] == 0)
+		) 
 	{
       if ((int)((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7) < 3) 
 	  {
-		// increment by one
+		// increment gGT Standing Points by 1,
+		// record how many times players finished in each rank
         *(int *)(PTR_DAT_8008d2ac + (uVar2 * 3 + ((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7)) * 4 + 0x1e80) =
         *(int *)(PTR_DAT_8008d2ac + (uVar2 * 3 + ((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7)) * 4 + 0x1e80) + 1;
       }
 	  
+	  // save the rank that each team finished
       *(uint *)(PTR_DAT_8008d2ac + *(int *)(param_2 + 0x4e8) * 4 + 0x1da8) =
            (uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - iVar7;
     }
+	
+	// count all living teams
     puVar1 = PTR_DAT_8008d2ac;
     uVar2 = 0;
     psVar4 = local_18;
-    do {
-      if (((*(uint *)(PTR_DAT_8008d2ac + 0x1dd8) & 1 << (uVar2 & 0x1f)) != 0) && (*psVar4 != 0)) {
+	
+	// loop through all teams
+    do 
+	{
+      if (
+			// if team exists
+			((*(uint *)(PTR_DAT_8008d2ac + 0x1dd8) & 1 << (uVar2 & 0x1f)) != 0) && 
+			
+			// if someone is alive on this team
+			(*psVar4 != 0)
+		 ) 
+	  {
+		// count living teams
         sVar6 = sVar6 + 1;
       }
       uVar2 = uVar2 + 1;
       psVar4 = psVar4 + 1;
     } while ((int)uVar2 < 4);
-    if (sVar6 != 1) {
+	
+	// if there is not only one team alive
+    if (sVar6 != 1) 
+	{
+	  // no winner found yet
       return;
     }
+	
+	// at this point, a winner is found,
+	// end the game for all drivers
+	
     iVar3 = 0;
     puVar5 = PTR_DAT_8008d2ac;
     
@@ -205,6 +235,8 @@ void FUN_800abbb4(int param_1,int param_2)
       } while (iVar3 < (int)(uint)(byte)puVar1[0x1ca8]);
     }
   }
+  
+  // if Point Limit
   else {
     
 	// if driver hit themself

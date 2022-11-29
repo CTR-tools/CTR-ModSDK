@@ -4305,12 +4305,14 @@ struct GameTracker
 	// 1da4
 	char teamOfEachPlayer[4];
 
-	// 1da8 - some array
-	char data30[0x20];
+	// 1da8
+	int finishedRankOfEachTeam[4];
+	
+	// 1db8
+	int unk1DB8[4];
 
 	// 1dc8
-	// 0,1,2,3
-	int teamID[4];
+	int unk1dc8;
 
 	// 1dd8
 	// 0b0001 for everyone on team 1
