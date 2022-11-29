@@ -2631,7 +2631,7 @@ struct MineWeapon
 
 	// 0x12
 	// used by tnt, and potion_inAir
-	short posY;
+	short maxHeight;
 
 	// 0x14
 	// causes explosion if != 0,
@@ -2658,7 +2658,9 @@ struct MineWeapon
 	// int numParticles? set to 10 by potion
 
 	// 0x28
-	// bool redBeaker; (0 for green, 1 for red)
+	// 1 - red beaker
+	// 2 - thrown (papu or komodo joe) (tnt/potion)
+	//int extraFlags;
 };
 
 struct Baron

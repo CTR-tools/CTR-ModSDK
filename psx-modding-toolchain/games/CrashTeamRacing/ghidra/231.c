@@ -1154,7 +1154,8 @@ void FUN_800acb60(int param_1)
   // instance -> thread -> object
   piVar13 = *(int **)(*(int *)(iVar12 + 0x6c) + 0x30);
   
-  // if weapon is "thrown" like Komodo Joe
+  // if weapon is "thrown" like Komodo Joe,
+  // this is offset 0x28
   if ((*(ushort *)(piVar13 + 10) & 2) != 0) 
   {
 	// instance -> model -> modelID == TNT
@@ -1212,16 +1213,17 @@ void FUN_800acb60(int param_1)
     *(undefined2 *)(iVar12 + 0x54) = 0;
   }
   
-  // increment by time
+  // increment posY by velY * time
   iVar5 = *(int *)(iVar12 + 0x48) +
           ((int)*(short *)((int)piVar13 + 0xe) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5);
   *(int *)(iVar12 + 0x48) = iVar5;
   
+  // if height is higher than max height
   if (iVar5 < (int)*(short *)((int)piVar13 + 0x12)) {
     *(int *)(iVar12 + 0x48) = (int)*(short *)((int)piVar13 + 0x12);
   }
   
-  // increment by time (or decrement)
+  // decrease velocity by time, this is artificial gravity (negative acceleration)
   iVar5 = (uint)*(ushort *)((int)piVar13 + 0xe) - ((*(int *)(PTR_DAT_8008d2ac + 0x1d04) << 2) >> 5);
   *(undefined2 *)((int)piVar13 + 0xe) = (short)iVar5;
   
