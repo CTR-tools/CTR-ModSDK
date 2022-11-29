@@ -852,6 +852,7 @@ void FUN_800ac638(int param_1)
   DAT_1f80010a = *(undefined2 *)(param_1 + 0x48);
   DAT_1f80010c = *(undefined2 *)(param_1 + 0x4c);
   
+  // pos2 (size?)
   DAT_1f80010e = 0x140;
   DAT_1f800110 = 0x19000;
   
