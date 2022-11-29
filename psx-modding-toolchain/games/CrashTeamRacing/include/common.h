@@ -767,7 +767,7 @@ struct BspSearchData
 };
 
 // 1f800108
-struct WeaponSearchCallback
+struct WeaponSearchData
 {
 	// 0x0
 	short pos[3];

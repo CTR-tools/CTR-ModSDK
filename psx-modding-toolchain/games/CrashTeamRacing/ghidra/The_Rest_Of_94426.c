@@ -20320,7 +20320,7 @@ void FUN_80042544(short *param_1)
 
 // weapon collision
 // param1 is thread checked for collision
-// param2 is weapon thread
+// param2 is WeaponSearchData
 // param3 is person who used weapon
 void FUN_800425d4(int param_1,short *param_2,int param_3)
 

@@ -12766,7 +12766,7 @@ void FUN_800b9e44(short *param_1,int param_2)
     }
   }
   
-  // thread on WeaponSearchCallback
+  // thread on WeaponSearchData
   iVar2 = *(int *)(param_1 + 0xc);
   
   // another instance
@@ -12785,6 +12785,8 @@ void FUN_800b9e44(short *param_1,int param_2)
     if (0x100 < iVar2 >> 0xc) {
       return;
     }
+	
+	// thread (again)
     iVar2 = *(int *)(param_1 + 0xc);
   }
   
