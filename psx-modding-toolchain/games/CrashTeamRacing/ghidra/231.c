@@ -844,6 +844,7 @@ undefined4 FUN_800ac4b8(int param_1)
 }
 
 // RB_Potion_OpenTeeth
+// param_2 InstDef
 void FUN_800ac5e8(undefined4 param_1,int param_2)
 
 {
@@ -853,7 +854,7 @@ void FUN_800ac5e8(undefined4 param_1,int param_2)
   if (((iVar1 != 0) && (*(int *)(iVar1 + 0x2c) != 0)) && (*(short *)(iVar1 + 0x3c) == 0x70)) 
   {
 	// RB_Teeth_OpenDoor
-    FUN_800ba220();
+    FUN_800ba220(*(int *)(iVar1 + 0x2c));
   }
   return;
 }
