@@ -2630,6 +2630,7 @@ struct MineWeapon
 	short velocity[3];
 
 	// 0x12
+	// used by tnt, and potion_inAir
 	short posY;
 
 	// 0x14
