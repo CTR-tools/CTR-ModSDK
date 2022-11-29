@@ -2623,6 +2623,7 @@ struct MineWeapon
 	struct Instance* instParent; // of driver who placed me
 
 	// 0x8
+	// should be a threaded inst, but always nullptr
 	int unk1;
 
 	// 0xc
@@ -2659,11 +2660,10 @@ struct MineWeapon
 	short jumpsRemaining;
 
 	// 0x24
+	// int numParticles? set to 10 by potion
 
 	// 0x28
 	// bool redBeaker; (0 for green, 1 for red)
-
-	// 0x4C bytes large (at least)
 };
 
 struct Baron

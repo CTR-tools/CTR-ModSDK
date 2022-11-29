@@ -1122,6 +1122,7 @@ void FUN_800aca50(int param_1)
 	  // RB_MinePool_Add
 	  FUN_800ac13c(puVar3);
 	  
+	  // mineWeapon->posY = instance->posY
       *(undefined2 *)((int)puVar3 + 0x12) = *(undefined2 *)(param_1 + 0x48);
     }
   }
