@@ -1,5 +1,8 @@
 #include <common.h>
 
+// This is broken even in retail CTR,
+// cause teeth collision is detected 
+// by Potion_InAir, so this can be scrapped
 int RB_Potion_OpenTeeth(int unk, struct VisData* vd)
 {
 	struct Instance* teethInst;
