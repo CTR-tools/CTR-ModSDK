@@ -843,14 +843,14 @@ undefined4 FUN_800ac4b8(int param_1)
   return 1;
 }
 
-// RB_Potion_OpenTeeth (bugged? never called)
-// param_2 InstDef
+// RB_Potion_OpenTeeth
+// param_2 Lev Hitbox (VisData)
 void FUN_800ac5e8(undefined4 param_1,int param_2)
 
 {
   int iVar1;
   
-  // BspCallback->InstDef
+  // VisData->hitbox.ptrInstDef
   iVar1 = *(int *)(param_2 + 0x1c);
   
   if (
@@ -2029,7 +2029,7 @@ void FUN_800ad92c(int param_1)
 
 // RB_Hazard_LevInstColl (tnt, potion, warpball, etc) (not hazard? moving explosive?)
 // param_1 - BSP result
-// param_2 - thread
+// param_2 - VisData (hitbox)
 undefined4 FUN_800ad9ac(int param_1,undefined4 param_2)
 
 {
@@ -5735,6 +5735,8 @@ void FUN_800b1e90(int param_1,int param_2)
 }
 
 // RB_Burst_LevInstColl (bsp callback)
+// param_1 - 1f800108
+// param_2 - VisData (hitbox)
 void FUN_800b20a4(int param_1,int param_2)
 
 {
@@ -5742,6 +5744,7 @@ void FUN_800b20a4(int param_1,int param_2)
   int iVar2;
   int iVar3;
   
+  // VisData->hitbox.ptrInstDef
   iVar2 = *(int *)(param_2 + 0x1c);
   
   if (

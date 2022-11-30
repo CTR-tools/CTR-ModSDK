@@ -784,8 +784,6 @@ struct WeaponSearchData
 	// 0x18
 	struct Thread* th;
 	
-	// 0x1C isn't ptrInstDef?
-	
 	// 0x1c
 	short min[3];
 	short max[3];
@@ -3492,16 +3490,16 @@ struct VisData
 			struct QuadBlock* ptrQuadBlockArray;
 		} leaf;
 		
-		#if 0
 		// 0x10
+		struct
 		{
 			// 0x10
+			int unk[3];
 			// see FUN_8001d0c4
 			
 			// 0x1C
-			// struct Instance* inst;
-		}
-		#endif
+			struct InstDef* instDef;
+		} hitbox;
 
 	} data;
 
