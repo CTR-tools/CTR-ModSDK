@@ -2682,15 +2682,15 @@ struct MineWeapon
 
 	// 0x24
 	// int numParticles? set to 10 by potion
+	int unk24;
 
 	// 0x28
 	// 1 - red beaker
 	// 2 - thrown (papu or komodo joe) (tnt/potion)
-	// short extraFlags;
+	short extraFlags;
 	
 	// 0x2a
-	// cooldown for what? potion_inAir
-	// short cooldown; 
+	short cooldown; 
 };
 
 struct Baron
