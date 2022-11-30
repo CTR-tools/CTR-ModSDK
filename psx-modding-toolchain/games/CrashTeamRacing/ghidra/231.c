@@ -936,8 +936,11 @@ void FUN_800ac6b4(int param_1)
   *(int *)(iVar6 + 0x4c) =
        *(int *)(iVar6 + 0x4c) + ((int)*(short *)(iVar7 + 0x10) * *(int *)(puVar3 + 0x1d04) >> 5);
   
+  // gravity, decrease velocity over time
   iVar4 = (uint)*(ushort *)(iVar7 + 0xe) - ((*(int *)(puVar3 + 0x1d04) << 2) >> 5);
   *(undefined2 *)(iVar7 + 0xe) = (short)iVar4;
+  
+  // terminal velocity
   if (iVar4 * 0x10000 >> 0x10 < -0x60) {
     *(undefined2 *)(iVar7 + 0xe) = 0xffa0;
   }
