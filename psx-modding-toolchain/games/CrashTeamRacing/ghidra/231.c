@@ -1005,6 +1005,10 @@ void FUN_800ac6b4(int param_1)
         sVar2 = DAT_1f800124._2_2_;
         
 		// reset cooldown (3.84s)
+		// if potion hits ground, and hit within 3.84s,
+		// then it counts in EndOfRace comments as hit by moving potion,
+		// but will count as motionless potion if hit after 3.84s of
+		// hitting the ground (after initially being Potion_InAir)
 		*(undefined2 *)(iVar7 + 0x2a) = 0xf00;
 		
 		// clear velocity
@@ -1023,6 +1027,7 @@ void FUN_800ac6b4(int param_1)
 		
         return;
       }
+	  
       if (iVar5 <= iVar4) {
         *(int *)(iVar6 + 0x48) = iVar4;
       }
