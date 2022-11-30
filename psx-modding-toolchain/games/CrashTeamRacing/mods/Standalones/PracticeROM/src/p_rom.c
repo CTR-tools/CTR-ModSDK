@@ -134,7 +134,7 @@ void ResetLag()
 
 void DrawLag()
 {
-	unsigned short ms = gp->gameTracker.elapsedMillisecondsTime;
+	unsigned short ms = gp->gameTracker.elapsedTimeMS;
 	NumbersToString(s_ms, ms, 3);
 
 	if (ms > msFrame)

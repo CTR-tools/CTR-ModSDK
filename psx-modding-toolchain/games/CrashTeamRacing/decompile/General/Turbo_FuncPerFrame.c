@@ -142,7 +142,7 @@ void DECOMP_Turbo_FuncPerFrame(struct Thread* turboThread)
 		gte_stlvl((VECTOR *)&turbo->inst->matrix.t[0]);
 
 		// decrease turbo visibility cooldown by elapsed milliseconds per frame, ~32
-		elapsedTime = turbo->fireVisibilityCooldown - sdata.gGT->elapsedMillisecondsTime;
+		elapsedTime = turbo->fireVisibilityCooldown - sdata.gGT->elapsedTimeMS;
 		turbo->fireVisibilityCooldown = elapsedTime;
 		
 		// don't allow negatives

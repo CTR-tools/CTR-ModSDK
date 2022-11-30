@@ -297,7 +297,7 @@ u_int main()
 
 					// elapsed milliseconds per frame, locked 32 here
 					// impacts speed of flag wave during "loading...", but does not impact speed of flying text
-					sdata.gGT->elapsedMillisecondsTime = 32;
+					sdata.gGT->elapsedTimeMS = 32;
 					
 					// if loading is finished, but still in "loading mode", and if pools dont need to be reset (maybe for credits?)
 					if (iVar8 == -5)
@@ -410,7 +410,7 @@ u_int main()
 					) &&
 					(
 						// amount of milliseconds on Traffic Lights - elapsed milliseconds per frame, ~32
-						iVar8 = sdata.gGT->trafficLightsTimer - sdata.gGT->elapsedMillisecondsTime,
+						iVar8 = sdata.gGT->trafficLightsTimer - sdata.gGT->elapsedTimeMS,
 						// decrease amount of time on Traffic Lights
 						sdata.gGT->trafficLightsTimer = iVar8,
 						// if countdown has gone down far enough for traffic lights to go off-screen

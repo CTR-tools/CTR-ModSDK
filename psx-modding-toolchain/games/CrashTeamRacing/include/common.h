@@ -4178,7 +4178,7 @@ struct GameTracker
 
   // 1d04
   // milliseconds per frame
-  int elapsedMillisecondsTime;
+  int elapsedTimeMS;
 
   // 1d08
   // microseconds per frame?

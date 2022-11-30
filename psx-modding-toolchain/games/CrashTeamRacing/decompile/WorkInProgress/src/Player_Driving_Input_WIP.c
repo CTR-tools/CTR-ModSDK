@@ -64,7 +64,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	}
 
 	// elapsed milliseconds per frame, ~32
-	msPerFrame = sdata.gGT->elapsedMillisecondsTime;
+	msPerFrame = sdata.gGT->elapsedTimeMS;
 
 	// negative elapsed milliseconds per frame
 	negativeMsPerFrame = -msPerFrame;
@@ -578,7 +578,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	(
 		(driver->invincibleTimer != 0) &&
 		(
-			driverTimer2 = driver->invincibleTimer - sdata.gGT->elapsedMillisecondsTime,
+			driverTimer2 = driver->invincibleTimer - sdata.gGT->elapsedTimeMS,
 			driver->invincibleTimer = driverTimer2, driverTimer2 < 0
 		)
 	)
@@ -600,7 +600,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	)
 	{
 		// decrease invisibility timer, can not go below zero
-		driverTimer2 = driver->invisibleTimer - sdata.gGT->elapsedMillisecondsTime;
+		driverTimer2 = driver->invisibleTimer - sdata.gGT->elapsedTimeMS;
 		driver->invisibleTimer = driverTimer2;
 		if (driverTimer2 < 0) driver->invisibleTimer = 0;
 

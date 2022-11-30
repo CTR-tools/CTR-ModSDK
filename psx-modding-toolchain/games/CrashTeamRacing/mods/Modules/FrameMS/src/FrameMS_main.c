@@ -12,7 +12,7 @@ void FrameMS_RunUpdateHook()
 	*(unsigned char*)0x80037930 = 0;
 
 	string = (char*)0x8000FFF8;
-	timer = sdata.gGT->elapsedMillisecondsTime;
+	timer = sdata.gGT->elapsedTimeMS;
 
 	// at some point, upgrade this to use RCNT (more precise)
 	// units, which are harder to get, but they're somewhere

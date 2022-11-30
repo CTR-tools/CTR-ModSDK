@@ -222,7 +222,7 @@ struct Instance* INSTANCE_Birth_Hook()
 
 void IncrementIGT()
 {
-    igt->totalTime += sdata.gameTracker.elapsedMillisecondsTime;
+    igt->totalTime += sdata.gameTracker.elapsedTimeMS;
     TimeToString(s_totalTime, igt->totalTime);
 }
 
