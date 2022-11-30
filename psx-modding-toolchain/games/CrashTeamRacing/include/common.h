@@ -782,7 +782,7 @@ struct WeaponSearchData
 	short unk;
 	
 	// 0x18
-	struct Thread* th;
+	struct Thread* thread;
 	
 	// 0x1c
 	short min[3];
