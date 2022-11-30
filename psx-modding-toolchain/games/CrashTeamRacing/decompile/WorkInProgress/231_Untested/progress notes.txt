@@ -1,2 +1,1 @@
 Did not do top two functions of 231 (MakeInstanceReflective or KillPlayer),
-Potion_OpenTeeth wont compile cause we dont have BSD struct
