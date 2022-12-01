@@ -49298,8 +49298,8 @@ LAB_800632cc:
        *(short *)(param_2 + 0x39a) + (short)((iVar9 + iVar13) * *(int *)(puVar4 + 0x1d04) >> 0xd) &
        0xfff;
   
-  if (*(short *)(param_2 + 0x582) != 0) {
-    
+  if (*(short *)(param_2 + 0x582) != 0) 
+  {  
 	// decrease by elpased time
 	iVar13 = (uint)*(ushort *)(param_2 + 0x582) - (uint)*(ushort *)(puVar4 + 0x1d04);
     *(undefined2 *)(param_2 + 0x582) = (short)iVar13;
