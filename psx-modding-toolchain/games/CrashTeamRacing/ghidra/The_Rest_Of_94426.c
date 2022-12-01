@@ -49297,20 +49297,27 @@ LAB_800632cc:
   *(ushort *)(param_2 + 0x39a) =
        *(short *)(param_2 + 0x39a) + (short)((iVar9 + iVar13) * *(int *)(puVar4 + 0x1d04) >> 0xd) &
        0xfff;
+  
   if (*(short *)(param_2 + 0x582) != 0) {
-    iVar13 = (uint)*(ushort *)(param_2 + 0x582) - (uint)*(ushort *)(puVar4 + 0x1d04);
+    
+	// decrease by elpased time
+	iVar13 = (uint)*(ushort *)(param_2 + 0x582) - (uint)*(ushort *)(puVar4 + 0x1d04);
     *(undefined2 *)(param_2 + 0x582) = (short)iVar13;
     if (iVar13 * 0x10000 < 0) {
       *(undefined2 *)(param_2 + 0x582) = 0;
     }
-															// elapsed milliseconds per frame, ~32
-    sVar5 = (short)((int)((uint)*(byte *)(param_2 + 0x47a) * *(int *)(PTR_DAT_8008d2ac + 0x1d04)) >>
-                   5);
+															
+    sVar5 = (short)((int)((uint)*(byte *)(param_2 + 0x47a) * 
+				
+				// elapsed milliseconds per frame, ~32
+				*(int *)(PTR_DAT_8008d2ac + 0x1d04)) >> 5);
+				
     if (*(short *)(param_2 + 0x3c6) < 0) {
       sVar5 = -sVar5;
     }
     *(ushort *)(param_2 + 0x396) = *(short *)(param_2 + 0x396) + sVar5 & 0xfff;
   }
+  
   puVar4 = PTR_DAT_8008d2ac;
   *(short *)(param_2 + 0x2ee) =
        *(short *)(param_2 + 0x3d4) + *(short *)(param_2 + 0x39a) + *(short *)(param_2 + 0x3c6);
@@ -49407,6 +49414,7 @@ void FUN_8006364c(undefined4 param_1,int param_2)
 	// If turbo meter is not empty
 	if (iVar4 != 0) {
 
+	  // const_turboLowRoomWarning
 	  // get length where turbo turns from green to red
       iVar5 = (uint)*(byte *)(param_2 + 0x477) << 5;
 
@@ -49418,8 +49426,8 @@ void FUN_8006364c(undefined4 param_1,int param_2)
 	  {
 		// reserves_gain = map from old range to new range,
 		// the more room remaining to fill, the less boost you get
-		// old minMax: [zero, to, distance remaining in bar]
-		// new minMax: [constant, to, zero]
+		// old minMax: [zero -> const_turboLowRoomWarning]
+		// new minMax: [const_turboFullBarReserveGain, -> zero]
         uVar3 = FUN_80058f9c(iVar4,0,iVar5,(uint)*(byte *)(param_2 + 0x478) << 5,0);
 
 		// Turbo_Increment
@@ -49448,6 +49456,7 @@ void FUN_8006364c(undefined4 param_1,int param_2)
           *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x80;
         }
 
+		// drift boost meter = constant
         *(short *)(param_2 + 0x582) = (ushort)*(byte *)(param_2 + 0x479) << 5;
       }
 

@@ -2125,7 +2125,10 @@ struct Driver
 	char const_turboLowRoomWarning;
 
 	// 0x478
-	char moreConsts_AfterTurbo[0xA];
+	char const_turboFullBarReserveGain;
+	
+	// 0x479
+	char moreConsts_AfterTurbo[0x9];
 
 	// 0x484 - last of "main" constants,
 	// skip over 482, which is non-const
