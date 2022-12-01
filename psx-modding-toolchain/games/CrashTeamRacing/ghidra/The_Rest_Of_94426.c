@@ -44976,7 +44976,10 @@ void FUN_8005ee34(int param_1,int param_2)
       *(short *)(iVar14 + 0x1c) = (short)iVar6;
       *(short *)(iVar14 + 0x20) = (short)iVar6;
     }
-    else {
+	
+	// on ground, or mid-air without a mask-grab
+    else 
+	{
       sVar5 = *(short *)(param_2 + 0x390);
       iVar8 = (int)sVar5;
       iVar6 = -800;

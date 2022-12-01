@@ -2023,7 +2023,10 @@ struct Driver
 	short unknownTraction;
 
 	// 0x40C
-	char filler[0x8];
+	// when jumping and when hitting ground
+	int jumpSquishStretch;
+	
+	int filler410;
 	short filler_short;
 
 	/* Constant table - Metaphysics */
