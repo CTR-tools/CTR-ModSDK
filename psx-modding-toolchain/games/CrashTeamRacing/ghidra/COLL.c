@@ -3170,16 +3170,13 @@ void FUN_80020410(undefined4 param_1,int param_2)
     DAT_1f800148 = 0;
     DAT_1f80018c = 0x1000;
 
-	// normalVec at offset 0x94
-	// has magnitude of driver size (0x19)
-
-	// normalVec + driverPos
+	// kartCenter = vec3_originToCenter + driverPos (origin of model is bottom-center)
 	sVar9 = *(short *)(param_2 + 0x94) + (short)((uint)*(undefined4 *)(param_2 + 0x2d4) >> 8);
     sVar10 = *(short *)(param_2 + 0x98) + (short)((uint)*(undefined4 *)(param_2 + 0x2d8) >> 8);
     DAT_1f800118 = CONCAT22(sVar10,sVar9);
     DAT_1f80011c._0_2_ = *(short *)(param_2 + 0x9c) + (short)((uint)*(undefined4 *)(param_2 + 0x2dc) >> 8);
 	
-	// normalVec + driverPos + velocity
+	// kartCenter + velocity
     sVar3 = *(short *)(param_2 + 0x94) + (short)((uint)(*(int *)(param_2 + 0x2d4) + iVar5) >> 8);
     sVar4 = *(short *)(param_2 + 0x98) + (short)((uint)(*(int *)(param_2 + 0x2d8) + iVar6) >> 8);
     _DAT_1f800108 = CONCAT22(sVar4,sVar3);
@@ -3202,8 +3199,8 @@ void FUN_80020410(undefined4 param_1,int param_2)
 	}
 	
 	// stretch hitbox to the edges of two positions,
-	//	1: normalVec + driverPos
-	//	2: normalVec + driverPos + velocity
+	//	1: kartCenter
+	//	2: kartCenter + velocity
 	   
 	// hitbox minX
     DAT_1f800138 = (short)((int)sVar9 - (int)DAT_1f80011c._2_2_);

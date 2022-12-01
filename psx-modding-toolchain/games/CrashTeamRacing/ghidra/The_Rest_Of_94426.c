@@ -44727,8 +44727,11 @@ void FUN_8005ea60(undefined4 param_1,int param_2)
     *(undefined2 *)(param_2 + 0x38c) = 0x6400;
   }
 
-  // normal vector of driver, with magnitude of 
-  // driver size (0x19), used in quadblock collisions
+  // vec3_originToCenter
+  // origin of driver model is center-bottom of kart,
+  // 0x19 is the half-radius of the model,
+  // calculate normalVec with magnitude 0x19 of driver,
+  // then we can find the "true center" of the model
   gte_SetColorMatrix((MATRIX *)(param_2 + 0x330));
   gte_ldVXY0(0x190000);
   gte_ldVZ0(0);

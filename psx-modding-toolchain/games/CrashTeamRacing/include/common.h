@@ -1719,8 +1719,7 @@ struct Driver
 	int coordSpeed[3];
 
 	// 0x94
-	// see FUN_8005ea60
-	int vec3_unknown[3];
+	int vec3_originToCenter[3];
 
 	// 0xA0 - quadblock currently touched,
 	// it is zero while airborne
