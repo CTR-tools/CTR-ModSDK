@@ -2065,7 +2065,7 @@ struct Driver
 	short const_Accel_ClassStat; // OK
 
 	// 0x42A - 10
-	short const_ReserveSpeed; // OK
+	short const_Accel_Reserves; // OK
 
 	// 0x42C - 11
 	short const_Speed_ClassStat; // OK
