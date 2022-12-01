@@ -44727,6 +44727,8 @@ void FUN_8005ea60(undefined4 param_1,int param_2)
     *(undefined2 *)(param_2 + 0x38c) = 0x6400;
   }
 
+  // normal vector of driver, with magnitude of 
+  // driver size (0x19), used in quadblock collisions
   gte_SetColorMatrix((MATRIX *)(param_2 + 0x330));
   gte_ldVXY0(0x190000);
   gte_ldVZ0(0);
