@@ -2128,7 +2128,16 @@ struct Driver
 	char const_turboFullBarReserveGain;
 	
 	// 0x479
-	char moreConsts_AfterTurbo[0x9];
+	short const_unk_impacts582;
+	
+	// 0x47A
+	short const_unk_usedWith582;
+	
+	// 0x47C
+	int const_unk47C;
+
+	// 0x480
+	short const_unk480;
 
 	// 0x484 - last of "main" constants,
 	// skip over 482, which is non-const
