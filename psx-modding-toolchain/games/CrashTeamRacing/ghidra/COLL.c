@@ -3159,13 +3159,10 @@ void FUN_80020410(undefined4 param_1,int param_2)
   iVar14 = 0xf;
   do 
   {
-    // x
-    // iVar5 = ((driver.coordSpeed[0] * (elapsed milliseconds per frame, ~32) >> 5) * iVar13) >> 0xC
+    // Calculate velocity in X, Y, and Z components, with driver->coordSpeed
     iVar5 = (*(int *)(param_2 + 0x88) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5) * iVar13 >> 0xc;
-
-    // y
-	// ((driver.coordSpeed[1] * (elapsed milliseconds per frame, ~32) >> 5) * iVar13) >> 0xC
 	iVar6 = (*(int *)(param_2 + 0x8c) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5) * iVar13 >> 0xc;
+    iVar7 = (*(int *)(param_2 + 0x90) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5) * iVar13 >> 0xc;
 
     DAT_1f800146 = 0;
     DAT_1f800144 = 0;
@@ -3173,49 +3170,72 @@ void FUN_80020410(undefined4 param_1,int param_2)
     DAT_1f800148 = 0;
     DAT_1f80018c = 0x1000;
 
-    // z
-	// ((driver.coordSpeed[2] * (elapsed milliseconds per frame, ~32) >> 5) * iVar13) >> 0xC
-    iVar7 = (*(int *)(param_2 + 0x90) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5) * iVar13 >> 0xc;
-
+	// normalVec + driverPos
 	sVar9 = *(short *)(param_2 + 0x94) + (short)((uint)*(undefined4 *)(param_2 + 0x2d4) >> 8);
     sVar10 = *(short *)(param_2 + 0x98) + (short)((uint)*(undefined4 *)(param_2 + 0x2d8) >> 8);
-
     DAT_1f800118 = CONCAT22(sVar10,sVar9);
     DAT_1f80011c._0_2_ = *(short *)(param_2 + 0x9c) + (short)((uint)*(undefined4 *)(param_2 + 0x2dc) >> 8);
+	
+	// normalVec + driverPos + velocity
     sVar3 = *(short *)(param_2 + 0x94) + (short)((uint)(*(int *)(param_2 + 0x2d4) + iVar5) >> 8);
     sVar4 = *(short *)(param_2 + 0x98) + (short)((uint)(*(int *)(param_2 + 0x2d8) + iVar6) >> 8);
-
     _DAT_1f800108 = CONCAT22(sVar4,sVar3);
     iVar11 = (uint)*(ushort *)(param_2 + 0x9c) + (*(int *)(param_2 + 0x2dc) + iVar7 >> 8);
     DAT_1f80010c = (short)iVar11;
-    if ((_DAT_1f800108 == DAT_1f800118) &&
-       (uVar1 = DAT_1f80012a | 1, iVar11 * 0x10000 == (uint)(ushort)DAT_1f80011c << 0x10)) break;
+	
+    if (
+			// if not moving in X or Y
+			(_DAT_1f800108 == DAT_1f800118) &&
+			(
+				uVar1 = DAT_1f80012a | 1,
+
+				// if not moving in Z
+				iVar11 * 0x10000 == (uint)(ushort)DAT_1f80011c << 0x10
+			)
+		) 
+	{
+		// dont check for quadblock collision
+		break;
+	}
+	   
+	// hitbox minX
     DAT_1f800138 = (short)((int)sVar9 - (int)DAT_1f80011c._2_2_);
     if ((int)sVar3 - (int)DAT_1f80010e < (int)sVar9 - (int)DAT_1f80011c._2_2_) {
       DAT_1f800138 = (short)((int)sVar3 - (int)DAT_1f80010e);
     }
-    DAT_1f80013a = (short)((int)sVar10 - (int)DAT_1f80011c._2_2_);
+    
+	// hitbox minY
+	DAT_1f80013a = (short)((int)sVar10 - (int)DAT_1f80011c._2_2_);
     if ((int)sVar4 - (int)DAT_1f80010e < (int)sVar10 - (int)DAT_1f80011c._2_2_) {
       DAT_1f80013a = (short)((int)sVar4 - (int)DAT_1f80010e);
     }
+	
+	// hitbox minZ
     DAT_1f80013c = (short)((int)(short)(ushort)DAT_1f80011c - (int)DAT_1f80011c._2_2_);
     if ((int)DAT_1f80010c - (int)DAT_1f80010e <
         (int)(short)(ushort)DAT_1f80011c - (int)DAT_1f80011c._2_2_) {
       DAT_1f80013c = (short)((int)DAT_1f80010c - (int)DAT_1f80010e);
     }
+	
+	// hitbox maxX
     DAT_1f80013e = (short)((int)sVar9 + (int)DAT_1f80011c._2_2_);
     if ((int)sVar9 + (int)DAT_1f80011c._2_2_ < (int)sVar3 + (int)DAT_1f80010e) {
       DAT_1f80013e = (short)((int)sVar3 + (int)DAT_1f80010e);
     }
+	
+	// hitbox maxY
     DAT_1f800140 = (short)((int)sVar10 + (int)DAT_1f80011c._2_2_);
     if ((int)sVar10 + (int)DAT_1f80011c._2_2_ < (int)sVar4 + (int)DAT_1f80010e) {
       DAT_1f800140 = (short)((int)sVar4 + (int)DAT_1f80010e);
     }
+	
+	// hitbox maxZ
     DAT_1f800142 = (short)((int)(short)(ushort)DAT_1f80011c + (int)DAT_1f80011c._2_2_);
     if ((int)(short)(ushort)DAT_1f80011c + (int)DAT_1f80011c._2_2_ <
         (int)DAT_1f80010c + (int)DAT_1f80010e) {
       DAT_1f800142 = (short)((int)DAT_1f80010c + (int)DAT_1f80010e);
     }
+	
     DAT_1f80012a = DAT_1f80012a & 0xfff7 | 1;
     DAT_1f800124._0_2_ = sVar3;
     DAT_1f800124._2_2_ = sVar4;
@@ -3245,18 +3265,11 @@ void FUN_80020410(undefined4 param_1,int param_2)
       *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) | 4;
     }
 
-    if (0 < DAT_1f80018c) {
-
-      // x
-      // driver.posCurr[0] += ??? * ??? >> 0xC
+    if (0 < DAT_1f80018c) 
+	{
+      // increase position by velocity
       *(int *)(param_2 + 0x2d4) = *(int *)(param_2 + 0x2d4) + (iVar5 * DAT_1f80018c >> 0xc);
-
-      // y
-      // driver.posCurr[1] += ??? * ??? >> 0xC
       *(int *)(param_2 + 0x2d8) = *(int *)(param_2 + 0x2d8) + (iVar6 * DAT_1f80018c >> 0xc);
-
-      // z
-      // driver.posCurr[2] += ??? * ??? >> 0xC
       *(int *)(param_2 + 0x2dc) = *(int *)(param_2 + 0x2dc) + (iVar7 * DAT_1f80018c >> 0xc);
     }
 	
@@ -3342,12 +3355,22 @@ void FUN_80020410(undefined4 param_1,int param_2)
 	  if (iVar5 == 2) {
         return;
       }
-      if ((0 < DAT_1f80018c) &&
-         (iVar13 = iVar13 - (iVar13 * DAT_1f80018c >> 0xc), uVar1 = DAT_1f80012a, iVar13 < 100))
+      
+	  if (
+			(0 < DAT_1f80018c) &&
+			(
+				iVar13 = iVar13 - (iVar13 * DAT_1f80018c >> 0xc), 
+				uVar1 = DAT_1f80012a, 
+				iVar13 < 100
+			)
+		 )
       break;
+	  
       DAT_1f80012a = DAT_1f80012a | 8;
     }
-    else {
+    
+	else 
+	{
       DAT_1f80012a = DAT_1f80012a & 0xfff7;
       *(ushort *)(param_2 + 0xaa) = *(ushort *)(param_2 + 0xaa) & 0xfffd;
       iVar5 = 1;
