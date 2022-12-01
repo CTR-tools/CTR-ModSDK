@@ -2026,7 +2026,10 @@ struct Driver
 	// when jumping and when hitting ground
 	int jumpSquishStretch;
 	
-	int filler410;
+	// 0x410
+	// used to calculate the other ^^
+	int jumpSquishStretch2;
+	
 	short filler_short;
 
 	/* Constant table - Metaphysics */
