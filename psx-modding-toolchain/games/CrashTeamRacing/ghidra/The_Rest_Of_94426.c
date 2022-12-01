@@ -49416,9 +49416,10 @@ void FUN_8006364c(undefined4 param_1,int param_2)
 	  // If meter is in the red
 	  if (iVar4 < iVar5)
 	  {
-		// reserves_gain = map from old range to new range
-		// [distance remaining in bar, to, zero]
-		// [bit shift green-to-red meter const, to bit shift 0x478]
+		// reserves_gain = map from old range to new range,
+		// the more room remaining to fill, the less boost you get
+		// old minMax: [zero, to, distance remaining in bar]
+		// new minMax: [constant, to, zero]
         uVar3 = FUN_80058f9c(iVar4,0,iVar5,(uint)*(byte *)(param_2 + 0x478) << 5,0);
 
 		// Turbo_Increment
