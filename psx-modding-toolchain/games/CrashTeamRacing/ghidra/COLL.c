@@ -3170,6 +3170,9 @@ void FUN_80020410(undefined4 param_1,int param_2)
     DAT_1f800148 = 0;
     DAT_1f80018c = 0x1000;
 
+	// normalVec at offset 0x94
+	// has magnitude of driver size (0x19)
+
 	// normalVec + driverPos
 	sVar9 = *(short *)(param_2 + 0x94) + (short)((uint)*(undefined4 *)(param_2 + 0x2d4) >> 8);
     sVar10 = *(short *)(param_2 + 0x98) + (short)((uint)*(undefined4 *)(param_2 + 0x2d8) >> 8);
@@ -3197,6 +3200,10 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		// dont check for quadblock collision
 		break;
 	}
+	
+	// stretch hitbox to the edges of two positions,
+	//	1: normalVec + driverPos
+	//	2: normalVec + driverPos + velocity
 	   
 	// hitbox minX
     DAT_1f800138 = (short)((int)sVar9 - (int)DAT_1f80011c._2_2_);
