@@ -46071,8 +46071,11 @@ LAB_8005fee4:
   
   iVar18 = iVar19 >> 8;
   iVar16 = iVar6 >> 8;
-  if ((local_38 & 0x20) != 0) {
+  
+  if ((local_38 & 0x20) != 0) 
+  {
     iVar18 = iVar19 >> 9;
+	
     if (0x300 < iVar14)
 	{
 	  // driver is leaving skids
