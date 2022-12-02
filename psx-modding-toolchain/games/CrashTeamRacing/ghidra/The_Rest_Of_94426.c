@@ -46004,30 +46004,35 @@ LAB_8005fee4:
 
   //turningAcceleration = turningAccelerationS16;
   iVar9 = (int)sVar4;
+  
   // driver.turningAcceleration = turningAccelerationS16
   *(short *)(param_2 + 0x3b4) = sVar4;
 
-  if (iVar5 != 0) {
-    //int deltaTime = (timeUntilDriftSpinout - elapsedTimeInMS);
+  if (iVar5 != 0) 
+  {  
+	//int deltaTime = (timeUntilDriftSpinout - elapsedTimeInMS);
     uVar3 = (undefined2)(iVar5 - iVar8);
 
     // Map value from [oldMin, oldMax] to [newMin, newMax]
     // inverting newMin and newMax will give an inverse range mapping
     // deltaRotation = Misc.MapToRange(timeUntilDriftSpinout,0,0x140,0,previousFrameMultDrift);
     iVar6 = FUN_80058f9c(iVar5,0,0x140,0,(int)*(short *)(param_2 + 0x3ea));
-    // turningAcceleration = turningAcceleration + deltaRotation;
+    
+	// turningAcceleration = turningAcceleration + deltaRotation;
     iVar9 = iVar9 + iVar6;
-    // if (deltaTime < 0)
+    
+	// if (deltaTime < 0)
     if (iVar5 - iVar8 < 0) {
       uVar3 = 0;
     }
     // timeUntilDriftSpinout = 
     *(undefined2 *)(param_2 + 0x3ec) = uVar3;
   }
-  // iVar11 = character_Speed << 10;
+  
+  // character_Speed
   iVar11 = (uint)*(ushort *)(param_2 + 0x42c) << 0x10;
-  // iVar6 = iVar11 >> 10; back to, kind of unoptimized haha
   iVar6 = iVar11 >> 0x10;
+  
   // not sure?
   iVar19 = (uint)*(byte *)(param_2 + 0x45d) * iVar6;
   
@@ -46075,6 +46080,7 @@ LAB_8005fee4:
   // Map value from [oldMin, oldMax] to [newMin, newMax]
   // inverting newMin and newMax will give an inverse range mapping
   iVar11 = FUN_80058f9c(iVar6,iVar16,iVar18,iVar19,0);
+  
   iVar6 = 0;
   if (iVar16 <= iVar14) {
     iVar15 = iVar9;
@@ -46105,8 +46111,8 @@ LAB_8005fee4:
 
   // Player_Driving_LerpToForwards
   sVar4 = FUN_80060488(param_2,(int)sVar13,(int)sVar4,iVar6);
-
   *(short *)(param_2 + 0x3d2) = sVar4;
+  
   iVar6 = (int)sVar4;
   if (*(int *)(iVar12 + 0x24) != 0x100) {
     iVar6 = *(int *)(iVar12 + 0x24) * iVar6 >> 8;
@@ -46273,20 +46279,18 @@ LAB_80060284:
 int FUN_80060458(int param_1,int param_2)
 
 {
-  if (
-		// if desired != 0
-		(param_2 != 0) &&
-		(
-			// desired /= 4
-			param_2 = param_2 >> 2,
+  // desired != 0
+  if (param_2 != 0)
+  {	
+	// desired /= 4
+	param_2 = param_2 >> 2,
 
-			// if desired == 0
-			param_2 == 0
-		)
-	 )
-  {
-	// desired = 1
-    param_2 = 1;
+	// if desired == 0
+	if (param_2 == 0)
+	{
+		// desired = 1
+		param_2 = 1;
+	}
   }
 
   // if current >= desired/4
@@ -49700,14 +49704,19 @@ void FUN_80063934(undefined4 param_1,int param_2)
 //seems to handle start of drifts
 {
   short sVar1;
+  
   //kart is drifting
   *(undefined *)(param_2 + 0x376) = 2;
+  
   //sVar1 = Character's Drift stat + ((Turning multiplier? << 2) / 5)
   sVar1 = (short)*(char *)(param_2 + 0x460) + (short)(((int)*(char *)(param_2 + 0x34) << 2) / 5);
+  
   //Multiplied drift = sVar1 * 100
   *(short *)(param_2 + 0x3da) = sVar1 * 0x100;
+  
   //if simplified turning state is negative (means you're turning right)
-  if (*(char *)(param_2 + 0x4b) < '\0') {
+  if (*(char *)(param_2 + 0x4b) < '\0') 
+  {
     //also make Multiplied drift negative
     *(short *)(param_2 + 0x3da) = sVar1 * -0x100;
   }
@@ -54134,8 +54143,10 @@ void FUN_80068150(undefined4 param_1,int param_2)
   puVar1 = PTR_DAT_8008d2ac;
   *(undefined2 *)(param_2 + 0x3e6) = 10000;
   *(short *)(param_2 + 0x3b4) = *(short *)(param_2 + 0x3b4) - (*(short *)(param_2 + 0x3b4) >> 3);
+  
   sVar4 = *(short *)(param_2 + 0x3d2) - (*(short *)(param_2 + 0x3d2) >> 3);
   *(short *)(param_2 + 0x3d2) = sVar4;
+  
   *(short *)(param_2 + 0xc0) = *(short *)(param_2 + 0x3b4);
   *(short *)(param_2 + 0x3c6) = (*(short *)(param_2 + 0x3c6) + sVar4 + 0x800U & 0xfff) - 0x800;
   *(short *)(param_2 + 0x3d4) = *(short *)(param_2 + 0x3d4) - (*(short *)(param_2 + 0x3d4) >> 3);
