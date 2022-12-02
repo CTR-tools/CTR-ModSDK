@@ -2109,6 +2109,9 @@ struct Driver
 
 	// 0x444
 	char moreConsts_444[0xE];
+	
+	// 0x44a
+	// max steer strength
 
 	// 0x452
 	short const_ModelRotationSpeed; // OK
