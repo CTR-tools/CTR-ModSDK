@@ -46000,10 +46000,15 @@ LAB_8005fee4:
   iVar6 = iVar11 >> 0x10;
   // not sure?
   iVar19 = (uint)*(byte *)(param_2 + 0x45d) * iVar6;
+  
   // kartTurnAnimation = MetaPhys.kartTurnAnimation * iVar6
   iVar6 = (uint)*(byte *)(param_2 + 0x45c) * iVar6;
+  
   sVar4 = *(short *)(param_2 + 0x3d2);
+  
+  // const_ModelRotationSpeed
   iVar5 = (int)*(short *)(param_2 + 0x452);
+  
   iVar18 = iVar19 >> 8;
   iVar16 = iVar6 >> 8;
   if ((local_38 & 0x20) != 0) {
@@ -46028,7 +46033,10 @@ LAB_8005fee4:
       iVar5 = FUN_80058f9c(iVar6,0x300,iVar11 >> 0x11,(int)*(short *)(param_2 + 0x454),iVar5);
     }
   }
+  
+  // speed
   iVar6 = (int)*(short *)(param_2 + 0x38c);
+  
   if (iVar6 < 0) {
     iVar6 = -iVar6;
   }
@@ -46043,7 +46051,9 @@ LAB_8005fee4:
     if (iVar9 < 0) {
       iVar15 = -iVar9;
     }
-    if (iVar11 < iVar15) {
+    if (iVar11 < iVar15) 
+	{
+	  // fire speed
       iVar6 = (int)*(short *)(param_2 + 0x39e);
       if (iVar6 < 0) {
         iVar6 = -iVar6;
