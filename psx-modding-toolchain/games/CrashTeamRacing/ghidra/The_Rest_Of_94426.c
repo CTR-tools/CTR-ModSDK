@@ -44758,7 +44758,13 @@ LAB_8005e8d8:
   // if driver is not in air
   if ((uVar10 & 0x80000) == 0) 
   {
-    if ((*(char *)(param_1 + 0x449) != '\0') && (uVar8 != 0)) {
+    if (
+			// firstFrameSinceEngineRevving
+			(*(char *)(param_1 + 0x449) != '\0') && 
+			
+			(uVar8 != 0)
+		) 
+	{
       uVar2 = 1;
       if ((int)uVar8 < 0) {
         uVar2 = 0xffff;
@@ -44767,7 +44773,9 @@ LAB_8005e8d8:
 	  // turnSign (0x3e8)
       *(undefined2 *)(param_1 + 1000) = uVar2;
 	  
+	  // firstFrameSinceEngineRevving
       *(undefined *)(param_1 + 0x449) = 0;
+	  
       goto LAB_8005e9d8;
     }
     if (*(int *)(puVar14 + 0x10) < 0) {
@@ -54044,6 +54052,8 @@ void FUN_80067f4c(undefined4 param_1,int param_2)
     *(uint *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_2 + 0x4a) * 0xdc + 0x1508) =
          *(uint *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_2 + 0x4a) * 0xdc + 0x1508) | 8;
   }
+  
+  // firstFrameSinceEngineRevving
   *(undefined *)(param_2 + 0x449) = 1;
 
   // Player_EngineRevving_Update

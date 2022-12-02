@@ -2120,7 +2120,7 @@ struct Driver
 	char const_SteerAccel_Stage2_FrameLength;
 	
 	// 0x449
-	char unk_NOT_const;
+	bool firstFrameSinceEngineRevving;
 	
 	// 0x44a
 	short const_SteerAccel_Stage1_MaxSteer;
