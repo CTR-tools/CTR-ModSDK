@@ -2134,7 +2134,10 @@ struct Driver
 	short const_unk_usedWith582;
 	
 	// 0x47C
-	int const_unk47C;
+	short const_unk47C;
+	
+	// 0x47E
+	short const_unk47E;
 
 	// 0x480
 	short const_unk480;

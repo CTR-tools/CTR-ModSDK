@@ -44423,7 +44423,7 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
   uVar10 = *(uint *)(param_1 + 0x2c8);
   
   iVar3 = (int)*(short *)(param_1 + 0x38e);     // speed approximate magnitude
-  uVar9 = (uint)*(short *)(param_1 + 0x39c);	// character rotation maybe?
+  uVar9 = (uint)*(short *)(param_1 + 0x39c);	// baseSpeed
   
   if ((((uVar10 & 8) != 0) || ((0 < (int)uVar9 && (iVar3 < 0)))) ||
      (((int)uVar9 < 0 && (0 < iVar3)))) {
@@ -44440,8 +44440,12 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
   if (((int)uVar8 < (int)uVar11) && (uVar8 = unaff_s3, (int)uVar11 < (int)unaff_s3)) {
     uVar8 = uVar11;
   }
+  
   uVar12 = (uint)*(short *)(param_1 + 0x480);
+  
+  // terrainMeta1
   uVar4 = *(uint *)(*(int *)(param_1 + 0x358) + 4);
+  
   uVar11 = unaff_s5 + uVar7;
   if (((int)(unaff_s5 + uVar7) <= (int)uVar12) ||
      (uVar11 = uVar12, uVar7 = unaff_s5, (int)unaff_s5 < (int)uVar12)) {
@@ -44451,7 +44455,10 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
   if (((int)uVar7 < (int)uVar12) && (uVar7 = unaff_s5, (int)uVar12 < (int)unaff_s5)) {
     uVar7 = uVar12;
   }
+  
+  // const_FallRate
   iVar6 = (int)*(short *)(param_1 + 0x442);
+  
   if (((iVar15 < 0) && ((uVar4 & 0x80) != 0)) && (iVar6 = 0x100, unaff_s8 < -0x100)) {
     unaff_s8 = -0x100;
   }
@@ -44483,37 +44490,77 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
 			(
 				(
 					*(short *)(param_1 + 0x3c4) < *(short *)(param_1 + 0x38e) &&
+					
+					// terrainMeta2
 					(*(int *)(*(int *)(param_1 + 0x35c) + 8) < 0x100)
 				)
 			)
 		  ) 
   {
-    if ((uVar10 & 8) == 0) {
-      if (uVar9 == 0) {
+	// 2c8 & 8
+	// not in accel-prevention,
+	// not holding square, etc...
+    if ((uVar10 & 8) == 0) 
+	{
+	  // current baseSpeed is zero,
+	  // which includes kart rolling on hill
+	  // without gas pedal or reserves
+      if (uVar9 == 0) 
+	  {
+		// const_NoPedalFriction_Perpendicular
         iVar15 = (int)*(short *)(param_1 + 0x41e);
+		
+		// const_NoPedalFriction_Forward
         iVar6 = (int)*(short *)(param_1 + 0x420);
-        if (*(short *)(param_1 + 0x50a) == 5) {
+		
+		// driverRankItemValue
+        if (*(short *)(param_1 + 0x50a) == 5) 
+		{
+		  // const_BrakeFriction
           iVar15 = (int)*(short *)(param_1 + 0x422) << 4;
           iVar6 = iVar15;
         }
       }
+	  
+	  // baseSpeed > 0,
+	  // driving in some way
       else {
         iVar6 = iVar3;
         if (iVar3 < 0) {
           iVar6 = -iVar3;
         }
-        if ((iVar6 < 0x301) ||
-           ((((int)uVar9 < 1 || (-1 < iVar3)) && ((-1 < (int)uVar9 || (iVar3 < 1)))))) {
-          if (cVar1 == '\x02') {
+        if (
+				(iVar6 < 0x301) ||
+				(
+					(
+						((int)uVar9 < 1 || (-1 < iVar3)) && 
+						((-1 < (int)uVar9 || (iVar3 < 1)))
+					)
+				)
+			) 
+		{
+		  // kartState drifting
+          if (cVar1 == '\x02') 
+		  {
+			// const_DriftCurve
             iVar15 = (int)*(short *)(param_1 + 0x424);
+			
+			// const_DriftFriction
             iVar6 = (int)*(short *)(param_1 + 0x426);
           }
+		  
+		  // driving straight
           else {
             if (iVar3 < 0) {
               iVar3 = -iVar3;
             }
+			
+			// const_PedalFriction_Perpendicular
             iVar15 = (int)*(short *)(param_1 + 0x41a);
+			
+			// const_PedalFriction_Forward
             iVar6 = (int)*(short *)(param_1 + 0x41c);
+			
             if (0x300 < iVar3) {
               uVar11 = uVar9;
               if ((int)uVar9 < 0) {
@@ -44529,48 +44576,71 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
           if (iVar3 < 0) {
             iVar3 = -iVar3;
           }
+		  
+		  // const_PedalFriction_Perpendicular
           iVar15 = (int)*(short *)(param_1 + 0x41a);
+		  
+		  // const_BrakeFriction
           iVar6 = (int)*(short *)(param_1 + 0x422);
+		  
           if (0x300 < iVar3) {
             uVar10 = uVar10 | 0x800;
           }
         }
       }
     }
-    else {
+    
+	// if in accel-prevention
+	else {
       if (iVar3 < 0) {
         iVar3 = -iVar3;
       }
       if (0x300 < iVar3) {
         uVar10 = uVar10 | 0x800;
       }
+	  
+	  // const_BrakeFriction
       iVar3 = (uint)*(ushort *)(param_1 + 0x422) << 0x10;
+	  
       iVar15 = iVar3 >> 0x10;
+	  
+	  // driverRankItemValue
       if (*(short *)(param_1 + 0x50a) == 5) {
         iVar15 = iVar15 << 4;
         iVar6 = iVar15;
       }
+	  
+	  // blasted kartState
       else if (cVar1 == '\x06') {
         iVar15 = iVar15 * 3 >> 2;
         iVar6 = iVar15;
       }
+	  
       else {
         iVar6 = iVar15;
+		
+		// If you're spinning: if you hit a glass 
+		// or spun out from drifting
         if (cVar1 == '\x03') {
           iVar15 = iVar3 >> 0x11;
           iVar6 = iVar15;
         }
       }
     }
+	
+	// terrainMeta1
     iVar13 = *(int *)(*(int *)(param_1 + 0x358) + 0x20);
+	
     iVar3 = iVar15 * iVar5 >> 5;
     iVar6 = iVar6 * iVar5 >> 5;
     if (iVar13 != 0x100) {
       iVar3 = iVar13 * iVar3 >> 8;
       iVar6 = iVar13 * iVar6 >> 8;
     }
-    iVar15 = (int)*(short *)(param_1 + 0x414);
-    if (iVar15 < 0) {
+    
+	iVar15 = (int)*(short *)(param_1 + 0x414);
+    
+	if (iVar15 < 0) {
       uVar11 = uVar7;
       if (iVar15 == -0x140) {
         if ((int)uVar7 < 0) {
@@ -44663,18 +44733,25 @@ LAB_8005e8d8:
       if ((int)uVar8 < 0) {
         uVar2 = 0xffff;
       }
+	  
+	  // turnSign (0x3e8)
       *(undefined2 *)(param_1 + 1000) = uVar2;
+	  
       *(undefined *)(param_1 + 0x449) = 0;
       goto LAB_8005e9d8;
     }
     if (*(int *)(puVar14 + 0x10) < 0) {
 LAB_8005e9cc:
-      if (-1 < (int)uVar8) {
+      if (-1 < (int)uVar8) 
+	  {
+		// turnSign (0x3e8)
         *(undefined2 *)(param_1 + 1000) = 1;
       }
       goto LAB_8005e9d8;
     }
-    if ((int)uVar8 < 0) {
+    if ((int)uVar8 < 0) 
+	{
+	  // turnSign (0x3e8)
       *(undefined2 *)(param_1 + 1000) = 0xffff;
     }
     if (*(int *)(puVar14 + 0x10) < 1) goto LAB_8005e9cc;
