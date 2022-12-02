@@ -1367,10 +1367,8 @@ code_r0x8001e96c:
       }
     }
 
-	//bVar4 = Visual Offset from Ground - 4;
+	// Screen_OffsetY -= 4 
     bVar4 = *(char *)(param_2 + 0x377) - 4;
-
-    //Visual Offset from Ground -= 4
     *(byte *)(param_2 + 0x377) = bVar4;
 
     //if Visual Offset from Ground is negative
@@ -1381,8 +1379,12 @@ code_r0x8001e96c:
   }
 
   // if you're not close to the ground
-  else {
+  else 
+  {
+	// distanceFromGround++
     *(short *)(param_2 + 0x3ee) = *(short *)(param_2 + 0x3ee) + -1;
+	
+	// Screen_OffsetY += 3
     *(char *)(param_2 + 0x377) = *(char *)(param_2 + 0x377) + '\x03';
   }
 
