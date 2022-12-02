@@ -885,7 +885,7 @@
 
 800570ec InterpBySpeed
 80057134 MapToRange
-800571a4 Player_GetRateOfSteering
+800571a4 Player_SteerAccel
 80057208 FastSqrt
 
 80057298 SpawnParticle_Exhaust

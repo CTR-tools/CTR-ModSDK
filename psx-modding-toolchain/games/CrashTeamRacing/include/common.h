@@ -2108,10 +2108,31 @@ struct Driver
 	short const_FallRate; // OK
 
 	// 0x444
-	char moreConsts_444[0xE];
+	short const_unk444;
+	
+	// 0x446
+	char const_SteerAccel_Stage4_FirstFrame;
+	
+	// 0x447
+	char const_SteerAccel_Stage2_FirstFrame;
+	
+	// 0x448
+	char const_SteerAccel_Stage2_FrameLength;
+	
+	// 0x449
+	char unk_NOT_const;
 	
 	// 0x44a
-	// max steer strength
+	short const_SteerAccel_Stage1_MaxSteer;
+	
+	// 0x44c
+	short const_SteerAccel_Stage1_MinSteer;
+
+	// 0x44e
+	short unk44e;
+	
+	// 0x450
+	short unk450;
 
 	// 0x452
 	short const_ModelRotationSpeed; // OK

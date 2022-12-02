@@ -40306,27 +40306,57 @@ int FUN_80058f9c(int param_1,int param_2,int param_3,int param_4,int param_5)
 }
 
 
-// Player_Steer_GetAngularVelocity
+// Player_SteerAccel
 undefined4
 FUN_8005900c(int param_1,int param_2,int param_3,undefined4 param_4,undefined4 param_5,
             undefined4 param_6)
 
 {
-  if (param_1 < param_2) {
+  // Crash Bandicoot:
+  // param_2: 0x4	SteerAccel_Stage2_FirstFrame
+  // param_3: 0x8	SteerAccel_Stage2_FrameLength
+  // param_4: 0x40	SteerAccel_Stage4_FirstFrame
+  // param_5: 0x800	SteerAccel_Stage1_MinSteer
+  // param_6: 0xC00	SteerAccel_Stage1_MaxSteer
+	
+  // Steering Stage 1,
+  // if first 4 frames of steering
+  // increase steer acceleration as time passes
+  if (param_1 < param_2) 
+  {
+
+	// map "frame" from [0,4] -> [0x800,0xC00]
 
     // Map value from [oldMin, oldMax] to [newMin, newMax]
     // inverting newMin and newMax will give an inverse range mapping
-    param_6 = FUN_80058f9c(param_1,0,param_2,param_5,param_6);
+    param_6 = FUN_80058f9c(param_1, 0,param_2, param_5,param_6);
   }
-  else {
-    if (param_2 + param_3 < param_1) {
+  
+  else 
+  {
+	// Steering Stage 3
+	// frames 12+
+	// decrease steer acceleration as time passes
+    if (param_2 + param_3 < param_1) 
+	{
+	  // map "frame" from [12,64] -> [0xC00,0]
 
       // Map value from [oldMin, oldMax] to [newMin, newMax]
       // inverting newMin and newMax will give an inverse range mapping
-      param_6 = FUN_80058f9c(param_1,param_2 + param_3,param_4,param_6,0);
+      param_6 = FUN_80058f9c(param_1, param_2 + param_3,param_4, param_6,0);
     }
   }
+  
+  // Steering Stage 2,
+  // next 0x8 frames (frame 4 to 12)
+  // max steer accel of 0xC00
   return param_6;
+  
+  // Steering Stage 4,
+  // part of Stage 3's mapping,
+  // for all steering after frame 64,
+  // steer acceleration is zero, so 
+  // angular velocity is constant
 }
 
 
@@ -46089,21 +46119,26 @@ LAB_8005fee4:
 	// number of frames spent steering
     sVar4 = *(short *)(param_2 + 0x3e6);
 
-	// Player_Steer_GetAngularVelocity
+	// Player_SteerAccel
 	// all these offsets are MetaPhys, and each one is only used here
     iVar18 = FUN_8005900c(
 
 		// frames spent steering
 		(int)sVar4,
 
+		// SteerAccel_Stage2_FirstFrame
 		(int)*(char *)(param_2 + 0x447),
+		
+		// SteerAccel_Stage2_FrameLength
 		(int)*(char *)(param_2 + 0x448),
+		
+		// SteerAccel_Stage4_FirstFrame
 		(int)*(char *)(param_2 + 0x446),
 
-
+		// SteerAccel_Stage1_MinSteer
 		(int)*(short *)(param_2 + 0x44c),
 
-		// max steer strength (0xc00)
+		// SteerAccel_Stage1_MaxSteer
         (int)*(short *)(param_2 + 0x44a)
 	);
 
