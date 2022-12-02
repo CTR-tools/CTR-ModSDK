@@ -1872,8 +1872,10 @@ struct Driver
 
 	// 0x39A
 	short angle;
+	
 	// 0x39C
 	short baseSpeed;
+	
 	// 0x39E
 	short fireSpeed;
 
@@ -1894,6 +1896,7 @@ struct Driver
 	short unkVectorZ;
 	// 0x3B2
 	short unk_offset3B2;
+	
 	// 0x3B4
 	int turningAcceleration;
 
