@@ -45961,10 +45961,13 @@ LAB_8005fd74:
     // inverting newMin and newMax will give an inverse range mapping
     iVar5 = FUN_80058f9c(iVar14,0x10,0x300,0,iVar5);
   }
+  
   //terrainMeta1
   iVar12 = *(int *)(param_2 + 0x358);
+  
   // turningAcceleration = driver.turningAcceleration;
   iVar9 = (int)*(short *)(param_2 + 0x3b4);
+  
   if (iVar5 == 0)
   {
 	// Interpolate rotation by speed
