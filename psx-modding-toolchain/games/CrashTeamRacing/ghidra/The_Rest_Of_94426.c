@@ -45910,18 +45910,32 @@ void FUN_8005fc8c(undefined4 param_1,int param_2)
 
   // speedApprox
   iVar14 = (int)*(short *)(param_2 + 0x38e);
+  
   // int simpTurnState256 = simpTurnState * 0x100
   iVar5 = (int)*(char *)(param_2 + 0x4b) * 0x100;
-  if (iVar14 < 1) {
-    if (*(short *)(param_2 + 0x39c) < 0) {
+  
+  // if speedApprox is negative
+  if (iVar14 < 1) 
+  {
+	// baseSpeed is negative
+    if (*(short *)(param_2 + 0x39c) < 0) 
+	{
+	  // turnSign (0x3e8)
       sVar4 = -1;
       *(undefined2 *)(param_2 + 1000) = 0xffff; // -1
     }
     if (-1 < iVar14) goto LAB_8005fd74;
   }
+  
+  // if speedApprox is positive
   else {
+	  
 LAB_8005fd74:
-    if (-1 < *(short *)(param_2 + 0x39c)) {
+    
+	// baseSpeed is positive
+	if (-1 < *(short *)(param_2 + 0x39c)) 
+	{
+	  // turnSign (0x3e8)
       sVar4 = 1;
       *(undefined2 *)(param_2 + 1000) = 1;
     }
