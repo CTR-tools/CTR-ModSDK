@@ -44439,9 +44439,14 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
     iVar3 = iVar6 - iVar3;
   }
   
+  // vector = {0, gravity*elapsedMS, 0}
+  // matrix = driver orientation (driver->0x310)
   gte_ldVXY0((iVar3 * iVar5 >> 5) << 0x10);
   gte_ldVZ0(0);
   gte_llv0();
+  
+  // gravity is a vector, not straight down,
+  // this causes road grip, and halfpipe physics
   read_mt(uVar7,uVar8,iVar6);
   
   if (((iVar6 < 0) && (0 < *(short *)(param_1 + 0x3b2))) ||
