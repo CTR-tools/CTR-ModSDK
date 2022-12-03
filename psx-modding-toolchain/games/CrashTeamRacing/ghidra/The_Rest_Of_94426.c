@@ -46459,6 +46459,7 @@ void FUN_80060630(undefined4 param_1,int param_2)
 			((*(uint *)(param_2 + 0x2c8) & 0x800000) == 0)
 		) &&
 
+		// no reserves
 		(*(short *)(param_2 + 0x3e2) == 0)
 	 )
   {
@@ -46500,7 +46501,7 @@ void FUN_80060630(undefined4 param_1,int param_2)
   uVar13 = 0;
   iVar7 = 0;
 
-  // if driver is not on quadblock
+  // if driver is not on quadblock, or if not forced to jump (via GOTO)
   if ((*(uint *)(param_2 + 0x2c8) & 1) == 0) {
 LAB_80060ab0:
 
@@ -46515,6 +46516,7 @@ LAB_80060ab0:
 		// Remove the request to fire a weapon, since we will use it now
       *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) & 0xffff7fff;
 
+	  // if coyoteTimerMS has not expired, and cooldownMS is over
       if ((*(short *)(param_2 + 0x3f4) != 0) && (*(short *)(param_2 + 0x3f2) == 0))
 	  {
 		// driver is now forced to jump
@@ -46550,10 +46552,11 @@ LAB_80060ab0:
 				// if driver left quadblock more than 0.16s ago
 				(*(short *)(param_2 + 0x3f4) == 0) ||
 
-				// jump buffer is zero
+				// if haven't jumped in last 10 frames
 				(*(short *)(param_2 + 0x3f0) == 0)
 			) ||
 
+			// jump_CooldownMS not over (so can't jump again)
 			(*(short *)(param_2 + 0x3f2) != 0)
 		 )
 	  {
@@ -46589,12 +46592,18 @@ LAB_80060ab0:
         }
         goto LAB_80060e1c;
       }
-      *(undefined2 *)(param_2 + 0x3f6) = 0xa0;
+      
+	  // implied "else",
+	  // if (jump_cooldownMS is over) &&
+	  // 	(haven't left quadblock || no jump in over 10 frames)
 	  
-	  // increment jump counter (all jumps? what kind of jump?)
+	  // force driver to jump
+	  *(undefined2 *)(param_2 + 0x3f6) = 0xa0;
+	  
+	  // increment jump counter
       *(short *)(param_2 + 0x554) = *(short *)(param_2 + 0x554) + 1;
 
-	  // const_Jump
+	  // jump_VelY = const_Jump
       *(undefined2 *)(param_2 + 0x3f8) = *(undefined2 *)(param_2 + 0x418);
 
 	  // OtherFX_Play_Echo
@@ -46752,6 +46761,7 @@ LAB_800608fc:
       uVar13 = uVar11;
     }
 
+	// if not on quadblock, or if not forced to jump
     if (((*(uint *)(param_2 + 0x2c8) & 1) == 0) || (*(short *)(param_2 + 0x3f6) == 0))
     goto LAB_80060ab0;
 
@@ -48346,6 +48356,7 @@ LAB_800621cc:
   if (
 		//if you're not pressing L1 or R1
 		(uVar15 == 0) ||
+		
 		// or you are sliding
 		(*(char *)(param_2 + 0x376) == '\x02')
 	)
