@@ -46904,15 +46904,21 @@ LAB_80060c30:
 							// param_2
 							8);
 
+  // zero in all arcade maps, idk Adv Battle Cutscene or Credits
   uVar11 = (uint)*(byte *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x18c) << 8;
-  if (*(byte *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x18c) == 0) {
+  
+  if (*(byte *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x18c) == 0) 
+  {
     uVar11 = 0x3700;
   }
-  else {
-    if (0x5000 < uVar11) {
+  else 
+  {
+    if (0x5000 < uVar11) 
+	{
       uVar11 = 0x5000;
     }
   }
+  
   uVar12 = iVar2 - iVar7;
   if ((int)uVar11 < iVar2 - iVar7) {
     uVar12 = uVar11;
