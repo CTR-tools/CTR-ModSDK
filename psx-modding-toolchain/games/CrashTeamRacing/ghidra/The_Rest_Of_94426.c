@@ -43637,9 +43637,11 @@ void FUN_8005cd1c(int param_1,int *param_2)
   // Z speed
   x = ratan2(*param_2,param_2[2]);
   *(undefined2 *)(param_1 + 0x396) = (short)x;
+  
   iVar4 = *param_2 * (int)*(short *)(param_1 + 0x312) +
           param_2[1] * (int)*(short *)(param_1 + 0x318) +
           param_2[2] * (int)*(short *)(param_1 + 0x31e) >> 0xc;
+		  
   iVar1 = (int)*(short *)(param_1 + 0x312) * iVar4 >> 0xc;
   iVar2 = (int)*(short *)(param_1 + 0x318) * iVar4 >> 0xc;
   iVar3 = (int)*(short *)(param_1 + 0x31e) * iVar4 >> 0xc;
