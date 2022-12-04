@@ -43615,9 +43615,11 @@ void FUN_8005cd1c(int param_1,int *param_2)
   int iVar3;
   int iVar4;
 
+  // 2D movement
   // x = sqrt(x2+z2 << 0x10)
   x = FUN_80059070(*param_2 * *param_2 + param_2[2] * param_2[2], 0x10);
 
+  // 3D movement
   // sqrt(x2+y2+z2 << 0x10)
   FUN_80059070(*param_2 * *param_2 + param_2[1] * param_2[1] + param_2[2] * param_2[2],0x10);
 
@@ -43625,9 +43627,14 @@ void FUN_8005cd1c(int param_1,int *param_2)
   // extraout_var = FUN_80059070(*param_2 * *param_2 + param_2[1] * param_2[1] + param_2[2] * param_2[2],0x10);
   // extraout_var = extraout_var << 0x8;
 
+  // 3D speed
   *(undefined2 *)(param_1 + 0x38c) = extraout_var;
+  
+  // X speed
   x = ratan2(param_2[1] << 8,x);
   *(undefined2 *)(param_1 + 0x394) = (short)x;
+  
+  // Z speed
   x = ratan2(*param_2,param_2[2]);
   *(undefined2 *)(param_1 + 0x396) = (short)x;
   iVar4 = *param_2 * (int)*(short *)(param_1 + 0x312) +
