@@ -46883,9 +46883,16 @@ LAB_80060c30:
     iVar7 = iVar10;
   }
 
-  // iVar2 = sqrt(param_1 * 2 ^ param_2)
-  iVar2 = FUN_80059070(iVar3 + (int)*(short *)(param_2 + 0x3f8) * (int)*(short *)(param_2 + 0x3f8)
-                       >> 8);
+  // this JAL is at 80060CFC
+  // iVar2 = sqrt(param_1 * 2 ^ param_2),
+  iVar2 = FUN_80059070(
+							// param_1
+							iVar3 + 
+							(int)*(short *)(param_2 + 0x3f8) * 
+							(int)*(short *)(param_2 + 0x3f8) >> 8,
+							
+							// param_2
+							8);
 
   uVar11 = (uint)*(byte *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x18c) << 8;
   if (*(byte *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x18c) == 0) {
