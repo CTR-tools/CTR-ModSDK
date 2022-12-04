@@ -44503,7 +44503,8 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
 			// if falling
 			(iVar15 < 0) && 
 			
-			// terrain?
+			// terrain = zero-gravity
+			// in oxide station
 			((uVar4 & 0x80) != 0)
 			
 		) && 
@@ -44526,13 +44527,21 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
 		(iVar15 <= iVar6) || 
 		
 		(
+			// copy of terminalVelocity
 			iVar15 = iVar6, 
+			
+			// movementY
 			iVar16 = unaff_s8, 
+			
+			// movementY is less than terminalVelocity
 			unaff_s8 < iVar6
 		)
-	) {
+	) 
+  {
+	// movementY = terminalVelocity
     iVar16 = iVar15;
   }
+  
   iVar6 = -iVar6;
   if ((iVar16 < iVar6) && (iVar16 = unaff_s8, iVar6 < unaff_s8)) {
     iVar16 = iVar6;
