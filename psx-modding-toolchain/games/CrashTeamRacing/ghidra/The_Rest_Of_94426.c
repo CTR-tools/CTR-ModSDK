@@ -46448,7 +46448,7 @@ int FUN_80060488(int param_1,int param_2,int param_3,int param_4)
 
 
 // Driver_Jump_GetVelY
-// param_1: AxisAngle4_normalVec (driver 0x378)
+// param_1: normalVec (driver 0x360, 0x368, 0x378)
 // param_2: speedCoord (driver 0x88)
 // if "return 0;" then you jump off a ramp and get no height
 int FUN_800605a0(short *param_1,int *param_2)
