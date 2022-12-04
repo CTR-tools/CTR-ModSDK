@@ -46692,7 +46692,7 @@ LAB_80060ab0:
 	  // if small force jump (turtles)
       else
 	  {
-		// const_Jump * 1.5
+		// jump_VelY = const_Jump * 1.5
         *(undefined2 *)(param_2 + 0x3f8) = (short)(((int)*(short *)(param_2 + 0x418) * 3) / 2);
       }
 
