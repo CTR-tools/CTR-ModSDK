@@ -700,7 +700,7 @@ void FUN_8001d944(int param_1,int param_2)
     iVar14 = (int)*(short *)(param_2 + 0x372) * 5 + (int)DAT_1f80017a * 3;
     iVar13 = (int)*(short *)(param_2 + 0x374) * 5 + (int)(short)DAT_1f80017c * 3;
 
-    // uVar6 = sqrt(param_1 * 2 ^ param_2), get distance or length of something
+    // uVar6 = sqrt(x2+y2+z2 << 0x18)
     uVar6 = FUN_80059070(iVar15 * iVar15 + iVar14 * iVar14 + iVar13 * iVar13,0x18);
 
     uVar6 = uVar6 >> 0xc;
@@ -1205,7 +1205,7 @@ LAB_8001e680:
     local_28 = local_28 + iVar13;
   }
 
-  // uVar6 = sqrt(param_1 * 2 ^ param_2)
+  // uVar6 = sqrt(x2+y2+z2 << 0x18)
   uVar6 = FUN_80059070(local_30 * local_30 + local_2c * local_2c + local_28 * local_28,0x18);
 
   uVar6 = uVar6 >> 0xc;
@@ -3540,7 +3540,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
         uVar9 = (*(int *)(param_1 + 0x2d8) >> 8) - (int)*(short *)(param_3 + 0x6a);
         if ((uVar10 | uVar9 | uVar12) != 0) {
 
-          // iVar3 = sqrt(param_1 * 2 ^ param_2)
+          // iVar3 = sqrt(x2+y2+z2 << 0)
           iVar3 = FUN_80059070(uVar10 * uVar10 + uVar9 * uVar9 + uVar12 * uVar12,0);
 
           if (iVar3 == 0) {
@@ -3694,7 +3694,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
 
 		// some other approximation of speed?
 
-        // uVar10 = sqrt(param_1 * 2 ^ param_2)
+        // uVar10 = sqrt(x2+y2+z2 << 0x10)
         uVar10 = FUN_80059070(iVar15 * iVar15 + iVar11 * iVar11 + iVar13 * iVar13,0x10);
 
         uVar10 = uVar10 >> 8;

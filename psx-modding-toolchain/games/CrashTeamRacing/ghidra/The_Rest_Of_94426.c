@@ -32049,7 +32049,7 @@ LAB_8004fe8c:
   {
 	// get distance between missile and player
 
-    // uVar8 = sqrt(param_1 * 2 ^ param_2)
+    // uVar8 = sqrt(driver->4a4->30->28 << 0)
     uVar8 = FUN_80059070(*(undefined4 *)(*(int *)(*(int *)(param_1 + 0x4a4) + 0x30) + 0x28),0);
 
     uVar8 = uVar8 / 0x32;
@@ -40363,7 +40363,7 @@ FUN_8005900c(int param_1,int param_2,int param_3,undefined4 param_4,undefined4 p
 // if you're interested in learning about the algorithm:
 // https://en.wikipedia.org/wiki/Integer_square_root#Digit-by-digit_algorithm
 
-// f(n, i) = sqrt(n * 2^i)
+// f(n, i) = sqrt(n<<i)
 // FastSqrt(n, i)
 uint FUN_80059070(uint param_1,uint param_2)
 /*
@@ -40408,7 +40408,6 @@ uint FUN_80059070(uint param_1,uint param_2)
     uVar3 = uVar3 << 2;
   }
 
-  // uVar1 = 2 ^ x
   uVar1 = 1 << (uVar4 + (param_2 - 1) & 0x1f);
 
   // while 4^x != 0
@@ -43616,10 +43615,10 @@ void FUN_8005cd1c(int param_1,int *param_2)
   int iVar3;
   int iVar4;
 
-  // x = sqrt(param_1 * 2 ^ param_2)
+  // x = sqrt(x2+z2 << 0x10)
   x = FUN_80059070(*param_2 * *param_2 + param_2[2] * param_2[2], 0x10);
 
-  // sqrt(param_1 * 2 ^ param_2)
+  // sqrt(x2+y2+z2 << 0x10)
   FUN_80059070(*param_2 * *param_2 + param_2[1] * param_2[1] + param_2[2] * param_2[2],0x10);
 
   // Ghidra missed this!
@@ -43638,7 +43637,7 @@ void FUN_8005cd1c(int param_1,int *param_2)
   iVar2 = (int)*(short *)(param_1 + 0x318) * iVar4 >> 0xc;
   iVar3 = (int)*(short *)(param_1 + 0x31e) * iVar4 >> 0xc;
 
-  // sqrt(param_1 * 2 ^ param_2)
+  // sqrt(x2+y2+z2 << 0x10)
   FUN_80059070(iVar1 * iVar1 + iVar2 * iVar2 + iVar3 * iVar3,0x10);
 
   // Ghidra missed this!
@@ -43653,7 +43652,7 @@ void FUN_8005cd1c(int param_1,int *param_2)
   iVar2 = param_2[1] - iVar2;
   iVar3 = param_2[2] - iVar3;
 
-  // sqrt(param_1 * 2 ^ param_2)
+  // sqrt(x2+y2+z2 << 0x10)
   FUN_80059070(iVar1 * iVar1 + iVar2 * iVar2 + iVar3 * iVar3,0x10);
 
   // Ghidra missed this!
@@ -46798,7 +46797,7 @@ LAB_800608fc:
     local_24 = local_24 + iVar10;
     local_28 = local_28 + iVar7;
 
-    // uVar13 = sqrt(param_1 * 2 ^ param_2)
+    // uVar13 = sqrt(x2+y2+z2 << 0x10)
     uVar13 = FUN_80059070(local_28 * local_28 + local_24 * local_24 + local_20 * local_20,0x10);
 
     iVar7 = (int)*(short *)(param_2 + 0x39c);
@@ -46886,7 +46885,7 @@ LAB_80060c30:
   }
 
   // this JAL is at 80060CFC
-  // iVar2 = sqrt(param_1 * 2 ^ param_2),
+  // iVar2 = sqrt( (iVar3+jump*jump>>8) << 8),
   iVar2 = FUN_80059070(
 							// param_1
 							iVar3 + 
