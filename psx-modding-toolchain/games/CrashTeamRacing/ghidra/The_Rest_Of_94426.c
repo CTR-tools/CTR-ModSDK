@@ -46909,6 +46909,8 @@ LAB_80060c30:
   if ((int)uVar11 < iVar2 - iVar7) {
     uVar12 = uVar11;
   }
+  
+  // min value for movementY (on stack)
   if ((int)local_24 < (int)uVar12) {
     local_24 = uVar12;
   }
