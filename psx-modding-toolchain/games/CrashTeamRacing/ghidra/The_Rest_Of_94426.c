@@ -46584,6 +46584,7 @@ LAB_80060ab0:
           iVar7 = iVar7 + 3;
         }
 
+		// jump_VelY = big jump from spring
         *(undefined2 *)(param_2 + 0x3f8) = (short)(iVar7 >> 2);
 
 		// OtherFX_Play_Echo
@@ -46671,6 +46672,7 @@ LAB_80060ab0:
 			// if not currently airborne from forced jump
 			(*(short *)(param_2 + 0x3f6) == 0) ||
 
+		 // if jump_VelY was just now set to const_jump
          (*(short *)(param_2 + 0x3f8) == *(short *)(param_2 + 0x418)))
 	  {
 		// OtherFX_Play
@@ -46910,6 +46912,8 @@ LAB_80060c30:
   if ((int)local_24 < (int)uVar12) {
     local_24 = uVar12;
   }
+  
+// skip here if not jumping
 LAB_80060e1c:
   FUN_8005cd1c(param_2,&local_28,0);
   iVar7 = *(ushort *)(param_2 + 0x38c) - uVar13;
