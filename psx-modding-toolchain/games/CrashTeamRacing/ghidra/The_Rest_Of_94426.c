@@ -44503,18 +44503,26 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
 			// if falling
 			(iVar15 < 0) && 
 			
+			// terrain?
 			((uVar4 & 0x80) != 0)
 			
 		) && 
 		
-		(iVar6 = 0x100, unaff_s8 < -0x100)
+		(
+			// terminalVelocity
+			iVar6 = 0x100, 
+			
+			// if movementY is less
+			unaff_s8 < -0x100)
 	 ) 
   {
+	// dont let movementY go 
+	// below terminalVelocity
     unaff_s8 = -0x100;
   }
   
   if (
-		// if totalY is less than terminal velocity?
+		// if totalY is less than terminalVelocity
 		(iVar15 <= iVar6) || 
 		
 		(
