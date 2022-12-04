@@ -46911,7 +46911,10 @@ LAB_80060c30:
   }
   
   // min value for movementY (on stack)
-  if ((int)local_24 < (int)uVar12) {
+  if ((int)local_24 < (int)uVar12) 
+  {
+	// set movementY to the speed that 
+	// you should have, on first frame of jump
     local_24 = uVar12;
   }
   
