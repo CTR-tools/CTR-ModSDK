@@ -44542,6 +44542,9 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
     iVar16 = iVar15;
   }
   
+  // negate terminal velocity and check again,
+  // just in case gravity is upside down (scrapped feature)?
+  // that or just make sure you dont go upward too fast
   iVar6 = -iVar6;
   if ((iVar16 < iVar6) && (iVar16 = unaff_s8, iVar6 < unaff_s8)) {
     iVar16 = iVar6;
