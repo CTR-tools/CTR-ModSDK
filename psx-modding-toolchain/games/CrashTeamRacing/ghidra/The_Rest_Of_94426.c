@@ -44417,9 +44417,10 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
   // load vector from param_2
   gte_ldVXY0((uint)*(ushort *)&param_2->vx | param_2->vy << 0x10);
   gte_ldVZ0(param_2->vz);
-  
   gte_llv0();
   
+  // these registers hold movement vector,
+  // but why does that need driver matrix?
   read_mt(unaff_s5,unaff_s8,unaff_s3);
   
   // driver gravity constant
@@ -44465,7 +44466,10 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
     uVar7 = 0;
     iVar6 = 0;
   }
+  
+  // movementY + gravityY
   iVar15 = unaff_s8 + uVar8;
+  
   uVar11 = (int)*(short *)(param_1 + 0x39e) + (int)*(short *)(param_1 + 0x47e);
   uVar8 = unaff_s3 + iVar6;
   if (((int)uVar11 < (int)(unaff_s3 + iVar6)) && (uVar8 = unaff_s3, (int)unaff_s3 < (int)uVar11)) {
@@ -44491,13 +44495,34 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
     uVar7 = uVar12;
   }
   
-  // const_FallRate
+  // const_TerminalVelocity
   iVar6 = (int)*(short *)(param_1 + 0x442);
   
-  if (((iVar15 < 0) && ((uVar4 & 0x80) != 0)) && (iVar6 = 0x100, unaff_s8 < -0x100)) {
+  if (
+		(
+			// if falling
+			(iVar15 < 0) && 
+			
+			((uVar4 & 0x80) != 0)
+			
+		) && 
+		
+		(iVar6 = 0x100, unaff_s8 < -0x100)
+	 ) 
+  {
     unaff_s8 = -0x100;
   }
-  if ((iVar15 <= iVar6) || (iVar15 = iVar6, iVar16 = unaff_s8, unaff_s8 < iVar6)) {
+  
+  if (
+		// if totalY is less than terminal velocity?
+		(iVar15 <= iVar6) || 
+		
+		(
+			iVar15 = iVar6, 
+			iVar16 = unaff_s8, 
+			unaff_s8 < iVar6
+		)
+	) {
     iVar16 = iVar15;
   }
   iVar6 = -iVar6;
@@ -46390,6 +46415,8 @@ int FUN_80060488(int param_1,int param_2,int param_3,int param_4)
 
 
 // Driver_Jump_GetVelY
+// param_1: AxisAngle4_normalVec (driver 0x378)
+// param_2: speedCoord (driver 0x88)
 // if "return 0;" then you jump off a ramp and get no height
 int FUN_800605a0(short *param_1,int *param_2)
 
@@ -54171,7 +54198,10 @@ void FUN_800680d0(undefined4 param_1,int param_2)
   *(undefined2 *)(param_2 + 0x39e) = 0;
 
   *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x5808;
+  
+  // jump_VelY to throw driver in air
   *(short *)(param_2 + 0x3f8) = *(short *)(param_2 + 0x400) * 2 + 6000;
+  
   return;
 }
 

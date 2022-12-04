@@ -2108,7 +2108,7 @@ struct Driver
 	short const_unk440;
 
 	// 0x442 - 23
-	short const_FallRate; // OK
+	short const_TerminalVelocity; // OK
 
 	// 0x444
 	short const_unk444;
