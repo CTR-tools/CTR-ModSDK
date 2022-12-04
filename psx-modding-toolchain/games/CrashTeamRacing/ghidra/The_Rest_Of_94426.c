@@ -46917,10 +46917,14 @@ LAB_80060c30:
 	// you should have, on first frame of jump
     local_24 = uVar12;
   }
+
+// [end of the first frame of jump]
   
 // skip here if not jumping
 LAB_80060e1c:
+  
   FUN_8005cd1c(param_2,&local_28,0);
+  
   iVar7 = *(ushort *)(param_2 + 0x38c) - uVar13;
   *(undefined2 *)(param_2 + 0x38c) = (short)iVar7;
   if (iVar7 * 0x10000 < 0) {
