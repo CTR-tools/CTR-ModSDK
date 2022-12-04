@@ -46895,6 +46895,7 @@ LAB_80060c30:
 
   // this JAL is at 80060CFC
   // iVar2 = sqrt( (iVar3+jump*jump>>8) << 8),
+  // iVar2 = sqrt( "basically" iVar3 + jump*jump )
   iVar2 = FUN_80059070(
 							// param_1
 							iVar3 + 
@@ -46904,7 +46905,7 @@ LAB_80060c30:
 							// param_2
 							8);
 
-  // zero in all arcade maps, idk Adv Battle Cutscene or Credits
+  // zero in all arcade maps, idk adv, battle, cutscene, or credits
   uVar11 = (uint)*(byte *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x18c) << 8;
   
   if (*(byte *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x18c) == 0) 
