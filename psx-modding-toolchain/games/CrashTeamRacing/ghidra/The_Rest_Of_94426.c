@@ -46584,7 +46584,7 @@ LAB_80060ab0:
           iVar7 = iVar7 + 3;
         }
 
-		// jump_VelY = big jump from spring
+		// jump_InitialVelY = big jump from spring
         *(undefined2 *)(param_2 + 0x3f8) = (short)(iVar7 >> 2);
 
 		// OtherFX_Play_Echo
@@ -46656,7 +46656,7 @@ LAB_80060ab0:
 	  // increment jump counter
       *(short *)(param_2 + 0x554) = *(short *)(param_2 + 0x554) + 1;
 
-	  // jump_VelY = const_Jump
+	  // jump_InitialVelY = const_Jump
       *(undefined2 *)(param_2 + 0x3f8) = *(undefined2 *)(param_2 + 0x418);
 
 	  // OtherFX_Play_Echo
@@ -46672,7 +46672,7 @@ LAB_80060ab0:
 			// if not currently airborne from forced jump
 			(*(short *)(param_2 + 0x3f6) == 0) ||
 
-		 // if jump_VelY was just now set to const_jump
+		 // if jump_InitialVelY was just now set to const_jump
          (*(short *)(param_2 + 0x3f8) == *(short *)(param_2 + 0x418)))
 	  {
 		// OtherFX_Play
@@ -46694,7 +46694,7 @@ LAB_80060ab0:
 	  // if small force jump (turtles)
       else
 	  {
-		// jump_VelY = const_Jump * 1.5
+		// jump_InitialVelY = const_Jump * 1.5
         *(undefined2 *)(param_2 + 0x3f8) = (short)(((int)*(short *)(param_2 + 0x418) * 3) / 2);
       }
 
@@ -54244,7 +54244,7 @@ void FUN_800680d0(undefined4 param_1,int param_2)
 
   *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x5808;
   
-  // jump_VelY to throw driver in air
+  // jump_InitialVelY to throw driver in air
   *(short *)(param_2 + 0x3f8) = *(short *)(param_2 + 0x400) * 2 + 6000;
   
   return;

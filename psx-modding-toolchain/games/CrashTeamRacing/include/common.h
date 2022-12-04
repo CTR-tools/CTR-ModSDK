@@ -1996,7 +1996,7 @@ struct Driver
 	short jump_ForcedMS;
 
 	// 0x3F8
-	short jump_VelY;
+	short jump_InitialVelY;
 
 	// 0x3FA
 	short unknownJump3;
