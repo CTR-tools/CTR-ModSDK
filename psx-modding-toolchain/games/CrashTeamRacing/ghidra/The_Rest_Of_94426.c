@@ -46447,7 +46447,7 @@ int FUN_80060488(int param_1,int param_2,int param_3,int param_4)
 }
 
 
-// Driver_Jump_GetVelY
+// Driver_RampVelY
 // param_1: normalVec (driver 0x360, 0x368, 0x378)
 // param_2: speedCoord (driver 0x88)
 // if "return 0;" then you jump off a ramp and get no height
@@ -46457,7 +46457,7 @@ int FUN_800605a0(short *param_1,int *param_2)
   int iVar1;
   int iVar2;
 
-  // y1
+  // y1 (normal vector Y)
   iVar2 = (int)param_1[1];
 
   iVar1 = iVar2;
@@ -46467,6 +46467,14 @@ int FUN_800605a0(short *param_1,int *param_2)
 
   if (0x14 < iVar1)
   {
+	// this determines if you fly off a ramp or not,
+	// regardless if you press L1 or R1
+	
+	// if quadblock is flat, normalvec x and z are zero,
+	// causing the multiply product to also be zero (no fly)
+	
+	// if X points up, and you drive along the X,
+	// then you get a high number to fly off the ramp
 
     iVar1 =
 
@@ -46853,7 +46861,7 @@ LAB_80060c30:
   iVar2 = iVar7;
   do
   {
-	// Driver_Jump_GetVelY
+	// Driver_RampVelY
     iVar3 = FUN_800605a0(param_2 + iVar10,&local_28);
 
     iVar5 = iVar3;
@@ -46876,7 +46884,7 @@ LAB_80060c30:
     iVar2 = param_2 + 0x368;
   }
 
-  // Driver_Jump_GetVelY
+  // Driver_RampVelY
   iVar10 = FUN_800605a0(iVar2,&local_28);
 
   iVar2 = iVar10;
