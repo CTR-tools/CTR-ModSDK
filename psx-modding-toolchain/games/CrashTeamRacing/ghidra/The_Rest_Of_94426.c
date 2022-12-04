@@ -46901,9 +46901,12 @@ LAB_80060c30:
     iVar7 = iVar10;
   }
 
-  // this JAL is at 80060CFC
-  // iVar2 = sqrt( (iVar3+jump*jump>>8) << 8),
-  // iVar2 = sqrt( "basically" iVar3 + jump*jump )
+  // iVar2 = sqrt( (ramp+jump*jump>>8) << 8),
+  // iVar2 = sqrt( "basically" ramp+jump*jump )
+  // last byte is cleared cause only 3 bytes in driver->0x2D4
+  // are rendered, and the last byte is sub-pixel percision
+  
+  // iVar2 = sqrt(ramp+jump*jump)
   iVar2 = FUN_80059070(
 							// param_1
 							iVar3 + 
