@@ -44546,7 +44546,9 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
   // just in case gravity is upside down (scrapped feature)?
   // that or just make sure you dont go upward too fast
   iVar6 = -iVar6;
-  if ((iVar16 < iVar6) && (iVar16 = unaff_s8, iVar6 < unaff_s8)) {
+  if ((iVar16 < iVar6) && (iVar16 = unaff_s8, iVar6 < unaff_s8)) 
+  {
+	// movementY = max upward terminalVelocity
     iVar16 = iVar6;
   }
   
@@ -44797,9 +44799,12 @@ LAB_8005e8d8:
     uVar8 = FUN_80058f54(uVar8,iVar6,0);
   }
   
+  // load new movement vector
   gte_ldVXY0(uVar7 & 0xffff | iVar16 << 0x10);
   gte_ldVZ0(uVar8);
   gte_rtv0();
+  
+  // save new movement vector
   gte_stlvnl(param_2);
   
   // set flag
