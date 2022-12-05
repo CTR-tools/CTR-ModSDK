@@ -2,6 +2,7 @@
 
 void DecalFont_DrawLine(char*, int, int, int, int);
 void DrawTextBackground(RECT* r, int flag, void* ot);
+void EndOfRace_DrawAllComments();
 
 RECT window1 = {0, 0, 400, 130};
 char options[14] = "\0";
@@ -41,6 +42,12 @@ void RunUpdateHook()
 	
 	// do nothing else unless in main menu
 	if(sdata.gGT->levelID != 0x27) return;
+	else
+	{
+		// NOP function
+		*(int*)((int)EndOfRace_DrawAllComments + 0) = 0x3E00008;
+		*(int*)((int)EndOfRace_DrawAllComments + 4) = 0;
+	}
 	
 	tap = sdata.PtrGamepadSystem->controller[0].buttonsTapped;
 	
