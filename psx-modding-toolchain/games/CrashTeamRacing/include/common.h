@@ -790,7 +790,7 @@ struct WeaponSearchData
 	
 	// 0x28
 	void* funcCallback;
-}
+};
 
 // only stored in Scratchpad
 // FUN_80020334
@@ -2123,7 +2123,7 @@ struct Driver
 	char const_SteerAccel_Stage2_FrameLength;
 	
 	// 0x449
-	bool firstFrameSinceEngineRevving;
+	char boolFirstFrameSinceEngineRevving;
 	
 	// 0x44a
 	short const_SteerAccel_Stage1_MaxSteer;
