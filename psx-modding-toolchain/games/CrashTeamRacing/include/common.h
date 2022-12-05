@@ -8063,8 +8063,11 @@ struct Data
 		int slowUntilSpeed;
 
 		// 0x10
-		char unk8[0x8];
-
+		// unless on "ice" or "none", then it's zero
+		int const_0x100;
+		
+		int unk14;
+		
 		// 0x18
 		// both pointers in 80088004 area,
 		// spawns particles driving over grass
