@@ -45850,9 +45850,11 @@ uint FUN_8005fb4c(int param_1)
 				&&
 				(
 					// driver -> terrain meta -> ???
+					// 0x100 for everything except:
+					// 0x000 for "ice" and "none"
 					uVar2 = *(uint *)(*(int *)(param_1 + 0x358) + 0x10),
 
-					// if valid ???
+					// if not on ice
 					uVar2 != 0
 				)
 			)
