@@ -1771,11 +1771,23 @@ struct Driver
 	// This is render rotation, not velocity direction,
 	// these are the variables that get turned into
 	// instance matrix
-	short rotCurr[4];
+	struct
+	{
+		short x;
+		short y;
+		short z;
+		short w;
+	} rotCurr;
 
 	// 0x2F4
 	// used for velocity in 231
-	short rotPrev[4];
+	struct
+	{
+		short x;
+		short y;
+		short z;
+		short w;
+	} rotPrev;
 
 	// 0x2FC
 	int unk_turboRelated;
