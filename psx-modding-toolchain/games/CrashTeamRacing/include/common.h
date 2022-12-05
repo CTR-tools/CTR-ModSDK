@@ -4390,7 +4390,7 @@ struct GameTracker
 	int unk1DB8[4];
 
 	// 1dc8
-	int unk1dc8;
+	int unk1dc8[4];
 
 	// 1dd8
 	// 0b0001 for everyone on team 1
