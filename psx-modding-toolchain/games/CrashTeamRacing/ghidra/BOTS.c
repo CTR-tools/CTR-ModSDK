@@ -2031,7 +2031,7 @@ LAB_80014a98:
 	  if ((*(ushort *)(iVar15 + 0x36) & 0x80) == 0) {
 LAB_80014b34:
 
-		// AI speed less than < 
+		// AI speed less than < ???
         if (*(int *)(iVar17 + 0x5d4) < iVar4) {
 LAB_80014b48:
 		  // if driver is out of Reserves
@@ -2066,9 +2066,17 @@ LAB_80014b48:
           *(int *)(iVar17 + 0x5d4) = *(int *)(iVar17 + 0x5d4) + iVar3;
         }
       }
-      else {
+      else 
+	  {
+		// half speed
         iVar3 = *(int *)(iVar17 + 0x5d4) >> 1;
+		
+		// AI speed less than < ???
         if (*(int *)(iVar17 + 0x5d4) < iVar4) goto LAB_80014b48;
+		
+		// else
+		
+		// half speed
         *(int *)(iVar17 + 0x5d4) = iVar3;
         if (iVar3 < iVar4) {
           *(int *)(iVar17 + 0x5d4) = iVar4;
