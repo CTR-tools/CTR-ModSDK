@@ -8102,11 +8102,14 @@ struct Data
 		// 0x30 ?
 		short unk_0x30;
 
-		// 0x32 sound?
-		short sound;
+		// 0x32
+		short soundID_road;
 
-		// 0x34 ?
-		int unk_0x34[2];
+		// 0x34
+		int soundID_surroundings;
+		
+		// 0x38
+		int unk34;
 
 		// 0x3C
 		// (old korky comments ???)

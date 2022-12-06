@@ -7484,7 +7484,13 @@ void FUN_8002ebe4(void)
 
 		  // driver -> terrain -> 0x34?
           sVar2 = *(short *)(*(int *)(*(int *)(puVar8 + 0x24ec) + 0x35c) + 0x34);
-          if ((sVar2 != -1) && (sVar2 == 0x87)) {
+          
+		  // dont call the Fade function here,
+		  // or else it fades 2x speed in 2P mode
+		  
+		  // if soundID
+		  if ((sVar2 != -1) && (sVar2 == 0x87)) 
+		  {
             bVar4 = true;
           }
 
@@ -7547,10 +7553,19 @@ void FUN_8002ebe4(void)
 			// driver -> terrain -> 0x34?
             sVar2 = *(short *)(*(int *)(*(int *)(puVar8 + 0x24ec) + 0x35c) + 0x34);
             if (sVar2 != -1) {
-              if (sVar2 == 0x88) {
+              
+			  // dont call the Fade function here,
+			  // or else it fades 2x speed in 2P mode
+			  
+			  // if soundID
+			  if (sVar2 == 0x88) 
+			  {
                 bVar3 = true;
               }
-              if (sVar2 == 0x8b) {
+              
+			  // if soundID
+			  if (sVar2 == 0x8b) 
+			  {
                 bVar4 = true;
               }
             }
