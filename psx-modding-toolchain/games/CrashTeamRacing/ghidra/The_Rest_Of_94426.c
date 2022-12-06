@@ -45851,10 +45851,10 @@ uint FUN_8005fb4c(int param_1)
 				(
 					// driver -> terrain meta -> ???
 					// 0x100 for everything except:
-					// 0x000 for "ice" and "none"
+					// 0x000 for "ice" and "none" (mid-air)
 					uVar2 = *(uint *)(*(int *)(param_1 + 0x358) + 0x10),
 
-					// if not on ice
+					// not on ice, not mid-air
 					uVar2 != 0
 				)
 			)
