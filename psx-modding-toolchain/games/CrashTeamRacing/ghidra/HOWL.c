@@ -7486,7 +7486,7 @@ void FUN_8002ebe4(void)
             bVar3 = true;
           }
 
-		  // driver -> terrain -> 0x34?
+		  // driver -> terrain -> sound
           sVar2 = *(short *)(*(int *)(*(int *)(puVar8 + 0x24ec) + 0x35c) + 0x34);
           
 		  // dont call the Fade function here,
@@ -7554,7 +7554,7 @@ void FUN_8002ebe4(void)
 		  // for(int iVar16 = 0; iVar16 < numScreens; iVar16++)
 		  do
 		  {
-			// driver -> terrain -> 0x34?
+			// driver -> terrain -> sound
             sVar2 = *(short *)(*(int *)(*(int *)(puVar8 + 0x24ec) + 0x35c) + 0x34);
             if (sVar2 != -1) {
               
