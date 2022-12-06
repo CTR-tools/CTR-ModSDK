@@ -7278,29 +7278,58 @@ void FUN_8002e9c0(int *param_1,uint param_2,uint param_3)
 
 // Level_SoundLoop2
 // running water in sewer speedway
+// param_3 is desired volume
+// param_4 is fade rate
 void FUN_8002ea44(int param_1,undefined4 param_2,int param_3,int param_4)
 
 {
   bool bVar1;
   int iVar2;
 
+  // current volume
   iVar2 = *(int *)(param_1 + 8);
-  if (iVar2 == param_3) {
+  
+  // if current volume = desired
+  if (iVar2 == param_3) 
+  {
+	// quit, leave audio loop alone,
+	// regardless if lerping to 0x0, or 0xFF
     return;
   }
+  
+  // desired volume
   *(int *)(param_1 + 4) = param_3;
-  if (iVar2 < param_3) {
+  
+  // if current < desired
+  if (iVar2 < param_3) 
+  {
+	// increase at desired rate [param_4]
     *(int *)(param_1 + 8) = iVar2 + param_4;
+	
+	// if increased too far...
     bVar1 = param_3 < iVar2 + param_4;
   }
-  else {
+  
+  // if current > desired
+  else 
+  {
+	// if equal, skip
     if (iVar2 <= param_3) goto LAB_8002ea9c;
+	
+	// decrease at desired rate [param_4]
     *(int *)(param_1 + 8) = iVar2 - param_4;
+	
+	// if decreased too far...
     bVar1 = iVar2 - param_4 < param_3;
   }
-  if (bVar1) {
+  
+  // gone to far...
+  if (bVar1) 
+  {
+	// set current to desired
     *(int *)(param_1 + 8) = param_3;
   }
+  
 LAB_8002ea9c:
 
   // Level_SoundLoop1
@@ -7311,7 +7340,7 @@ LAB_8002ea9c:
 		// sound ID
 		param_2,
 
-		// volume
+		// current volume
 		*(undefined4 *)(param_1 + 8)
 	);
 
@@ -7435,7 +7464,7 @@ void FUN_8002ebe4(void)
 		// for(int iVar16 = 0; iVar16 < numScreens; iVar16++)
 		do {
 
-						// structure of each player + offset of 0xc2
+		  // driver->0xc2 (current terrain)
           cVar1 = *(char *)(*(int *)(puVar8 + 0x24ec) + 0xc2);
 
           if (cVar1 == '\0') {
@@ -7448,7 +7477,7 @@ void FUN_8002ebe4(void)
             bVar3 = true;
           }
 
-											// structure of each player + offsets
+		  // driver -> terrain -> 0x34?
           sVar2 = *(short *)(*(int *)(*(int *)(puVar8 + 0x24ec) + 0x35c) + 0x34);
           if ((sVar2 != -1) && (sVar2 == 0x87)) {
             bVar4 = true;
@@ -7465,13 +7494,17 @@ void FUN_8002ebe4(void)
       }
       if (bVar3)
 	  {
-		// Level_RandomFX
+		// Level_RandomFX (water drops)
         FUN_8002eab8(&DAT_800962c4,0x86,6,0x5a,0xff);
       }
-      if (bVar4) {
+      if (bVar4) 
+	  {
+		// enable loop of water moving
         uVar6 = 0xff;
       }
-      else {
+      else 
+	  {
+		// disable loop of water moving
         uVar6 = 0;
       }
 
@@ -7499,7 +7532,7 @@ void FUN_8002ebe4(void)
 		  // for(int iVar16 = 0; iVar16 < numScreens; iVar16++)
 		  do
 		  {
-										// structure of each player + offests
+			// driver -> terrain -> 0x34?
             sVar2 = *(short *)(*(int *)(*(int *)(puVar8 + 0x24ec) + 0x35c) + 0x34);
             if (sVar2 != -1) {
               if (sVar2 == 0x88) {
@@ -7563,8 +7596,11 @@ void FUN_8002ebe4(void)
 		// for iVar16 = 0; iVar16 < 2; iVar16++
         do {
           piVar7 = local_38;
+		  
+		  // levAmbientSound
           local_58[5] = (uint)(byte)(&DAT_8008398c)[iVar16 + local_40 * 2];
           if ((&DAT_8008398c)[iVar16 + local_40 * 2] == 0) goto LAB_8002f088;
+		  
           iVar19 = iVar16 + 5;
 
 		  // iVar19 < cnt_spawn_arrays2

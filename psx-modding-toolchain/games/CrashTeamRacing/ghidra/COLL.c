@@ -828,9 +828,11 @@ void FUN_8001d944(int param_1,int param_2)
       }
     }
   }
+  
+  // if driver is high above the quadblock
   if (*(int *)(param_2 + 0x2d0) + 0x8000 < *(int *)(param_2 + 0x2d8))
   {
-	// terrain meta
+	// terrain meta of "none" (air)
     uVar7 = FUN_80057c68(10);
     *(undefined4 *)(param_2 + 0x35c) = uVar7;
   }
@@ -891,11 +893,11 @@ LAB_8001e4d0:
       *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x40;
     }
 
-	// terrain data (of air?), this could be the YEEHAW!-trigger / SKR%
+	// terrain data of "none" (mid-air)
 	uVar7 = FUN_80057c68(10);
     *(undefined4 *)(param_2 + 0x358) = uVar7;
 
-	// terrainID (nothing)
+	// terrainID "none" (mid-air)
     *(undefined *)(param_2 + 0xc2) = 10;
 
 	puVar3 = PTR_DAT_8008d2ac;

@@ -8063,7 +8063,7 @@ struct Data
 		int slowUntilSpeed;
 
 		// 0x10
-		// unless on "ice" or "none", then it's zero
+		// unless on "ice" or "none" (mid-air), then it's zero
 		int const_0x100;
 		
 		int unk14;
