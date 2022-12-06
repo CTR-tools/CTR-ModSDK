@@ -10168,15 +10168,14 @@ struct BSS
 	// 80096244
 	// 80096284
 
-	// each is char[0x10]
-	// 800962c4
-	// 800962d4
-	#if 0
-	// int unk
-	// int desiredVol
-	// int currentVol
-	// int soundID|soundCount (return from channel)
-	#endif
+	// 800962c4 and 800962d4
+	struct
+	{
+		int unk;
+		int desiredVolume;
+		int currentVolume;
+		int soundID_soundCount;
+	} SoundFadeInput[2];
 
 #endif
 

@@ -6209,6 +6209,8 @@ void FUN_8002dc4c(void)
   DAT_8008d830 = 0;
   DAT_8008d834 = 0;
   DAT_8008d838 = 0;
+  
+  // erase both SoundFadeInput
   DAT_800962c4 = 0;
   DAT_800962c8 = 0;
   DAT_800962cc = 0;
@@ -6217,6 +6219,7 @@ void FUN_8002dc4c(void)
   DAT_800962d8 = 0;
   DAT_800962dc = 0;
   DAT_800962e0 = 0;
+  
   return;
 }
 
