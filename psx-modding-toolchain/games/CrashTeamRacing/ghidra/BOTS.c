@@ -2023,11 +2023,15 @@ LAB_80014a98:
       if (0x6900 < iVar3) {
         iVar3 = 0x6900;
       }
-      iVar4 = iVar3 * *(short *)(iVar15 + 0x38) >> 8;
-      if ((*(ushort *)(iVar15 + 0x36) & 0x80) == 0) {
+      
+	  // terrain->0x38
+	  iVar4 = iVar3 * *(short *)(iVar15 + 0x38) >> 8;
+      
+	  // terrain->0x36
+	  if ((*(ushort *)(iVar15 + 0x36) & 0x80) == 0) {
 LAB_80014b34:
 
-		// AI speed less than ???
+		// AI speed less than < 
         if (*(int *)(iVar17 + 0x5d4) < iVar4) {
 LAB_80014b48:
 		  // if driver is out of Reserves

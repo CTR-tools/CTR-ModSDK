@@ -8106,10 +8106,15 @@ struct Data
 		short soundID_road;
 
 		// 0x34
-		int soundID_surroundings;
+		short soundID_surroundings;
 		
-		// 0x38
-		int unk34;
+		// 36 and 38 both in BOTS
+		
+		// 0x36
+		short unk36;
+		
+		// 0x38;
+		int unk38;
 
 		// 0x3C
 		// (old korky comments ???)
