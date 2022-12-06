@@ -10171,6 +10171,12 @@ struct BSS
 	// each is char[0x10]
 	// 800962c4
 	// 800962d4
+	#if 0
+	// int unk
+	// int desiredVol
+	// int currentVol
+	// int soundID|soundCount (return from channel)
+	#endif
 
 #endif
 

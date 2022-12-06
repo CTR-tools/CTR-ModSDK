@@ -7247,7 +7247,7 @@ void FUN_8002e9c0(int *param_1,uint param_2,uint param_3)
     if (*param_1 != 0)
 	{
 	  // OtherFX_Stop1
-      FUN_80028808();
+      FUN_80028808(*param_1);
       *param_1 = 0;
     }
   }
@@ -7267,6 +7267,7 @@ void FUN_8002e9c0(int *param_1,uint param_2,uint param_3)
 				0x8080
 			);
 
+	  // save soundID with soundCount
       *param_1 = iVar1;
     }
     else
