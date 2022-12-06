@@ -7497,32 +7497,39 @@ void FUN_8002ebe4(void)
 		  //                  number of screens
         } while (iVar16 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
       }
+	  
       if (bVar3)
 	  {
 		// Level_RandomFX (water drops)
         FUN_8002eab8(&DAT_800962c4,0x86,6,0x5a,0xff);
       }
+	  
       if (bVar4) 
 	  {
-		// enable loop of water moving
+		// fade to 100% volume
         uVar6 = 0xff;
       }
+	  
       else 
 	  {
-		// disable loop of water moving
+		// fade to 0% volume
         uVar6 = 0;
       }
 
 	  // Level_SoundLoopFade
       FUN_8002ea44(&DAT_800962d4,0x87,uVar6,8);
     }
-    else {
+	
+	// not roo's tubes
+    else 
+	{
       iVar16 = 0;
 
 	  // if levID is sewer speedway
 	  // play sfx connected to the level
 	  // (flowing water, etc)
-      if (local_40 == 8) {
+      if (local_40 == 8) 
+	  {
         bVar3 = false;
         bVar4 = false;
 
@@ -7557,20 +7564,31 @@ void FUN_8002ebe4(void)
 								// number of screens
           } while (iVar16 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
         }
-        if (bVar3) {
+        
+		if (bVar3) 
+		{
+		  // fade to 100% volume
           uVar6 = 0xff;
         }
-        else {
+		
+        else 
+		{
+		  // fade to 0% volume
           uVar6 = 0;
         }
 
 		// Level_SoundLoopFade
         FUN_8002ea44(&DAT_800962c4,0x88,uVar6,8);
 
-        if (bVar4) {
+        if (bVar4) 
+		{
+		  // fade to 100% volume
           uVar6 = 0xff;
         }
-        else {
+		
+        else 
+		{
+		  // fade to 0% volume
           uVar6 = 0;
         }
 
