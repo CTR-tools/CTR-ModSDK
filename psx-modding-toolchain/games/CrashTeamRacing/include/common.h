@@ -8108,7 +8108,8 @@ struct Data
 		// 0x34
 		short soundID_surroundings;
 		
-		// 36 and 38 both in BOTS
+		// 36 and 38 both in BOTS,
+		// 36,38,3C, all impact physics
 		
 		// 0x36
 		short unk36;
