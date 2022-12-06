@@ -7234,7 +7234,10 @@ void FUN_8002e994(undefined4 param_1)
 }
 
 
-// Level_SoundLoop1
+// Level_SoundLoopSet
+// param_1 - slot
+// param_2 - soundID
+// param_3 - currVolume
 void FUN_8002e9c0(int *param_1,uint param_2,uint param_3)
 
 {
@@ -7276,8 +7279,10 @@ void FUN_8002e9c0(int *param_1,uint param_2,uint param_3)
 }
 
 
-// Level_SoundLoop2
+// Level_SoundLoopFade
 // running water in sewer speedway
+// param_1 is slot
+// param_2 is soundID
 // param_3 is desired volume
 // param_4 is fade rate
 void FUN_8002ea44(int param_1,undefined4 param_2,int param_3,int param_4)
@@ -7332,7 +7337,7 @@ void FUN_8002ea44(int param_1,undefined4 param_2,int param_3,int param_4)
   
 LAB_8002ea9c:
 
-  // Level_SoundLoop1
+  // Level_SoundLoopSet
   FUN_8002e9c0(
 
 		param_1 + 0xc,
@@ -7508,7 +7513,7 @@ void FUN_8002ebe4(void)
         uVar6 = 0;
       }
 
-	  // Level_SoundLoop2
+	  // Level_SoundLoopFade
       FUN_8002ea44(&DAT_800962d4,0x87,uVar6,8);
     }
     else {
@@ -7559,7 +7564,7 @@ void FUN_8002ebe4(void)
           uVar6 = 0;
         }
 
-		// Level_SoundLoop2
+		// Level_SoundLoopFade
         FUN_8002ea44(&DAT_800962c4,0x88,uVar6,8);
 
         if (bVar4) {
@@ -7569,7 +7574,7 @@ void FUN_8002ebe4(void)
           uVar6 = 0;
         }
 
-		// Level_SoundLoop2
+		// Level_SoundLoopFade
         FUN_8002ea44(&DAT_800962d4,0x8b,uVar6,4);
       }
       else {

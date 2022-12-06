@@ -368,8 +368,8 @@
 
 8002e018 CalculateVolumeFromDistance
 8002e160 PlayWarppadSound
-8002e18c Level_SoundLoop1
-8002e210 Level_SoundLoop2
+8002e18c Level_SoundLoopSet
+8002e210 Level_SoundLoopFade
 8002e284 Level_RandomFX
 8002e3b0 Level_AmbientSound
 
