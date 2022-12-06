@@ -7595,7 +7595,10 @@ void FUN_8002ebe4(void)
 		// Level_SoundLoopFade
         FUN_8002ea44(&DAT_800962d4,0x8b,uVar6,4);
       }
-      else {
+	  
+	  // if not roo's tubes or sewer speedway
+      else 
+	  {
         piVar9 = local_58 + 2;
         piVar7 = local_58;
 
