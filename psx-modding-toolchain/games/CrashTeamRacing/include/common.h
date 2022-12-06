@@ -2153,7 +2153,19 @@ struct Driver
 	short const_ModelRotationSpeed; // OK
 
 	// 0x454
-	char moreConsts_454[0x22];
+	short unk454;
+
+	// 0x456
+	char moreConsts_456[6];
+
+	// 0x45c
+	char const_kartTurnAnimation;
+
+	// 0x45d
+	char unk45d;
+
+	// 0x45e
+	char moreConsts_45e[0x18];
 
 	// 0x476
 	// point where turbo meter is empty
