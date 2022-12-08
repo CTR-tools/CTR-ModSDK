@@ -4,6 +4,7 @@ void DecalFont_DrawLine(char*, int, int, int, int);
 void DrawTextBackground(RECT* r, int flag, void* ot);
 void EndOfRace_DrawAllComments();
 void MM_JumpTo_Scrapbook();
+void Level_RequestNewLEV(int level);
 
 RECT window1 = {0, 0, 400, 130};
 char options[14] = "\0";
@@ -66,13 +67,48 @@ char* linePlayer[4] =
 #error HookCups needs a macro for addresses
 #endif
 
+// first frame after spawning is complete
+void RunTrafficLightHook()
+{	
+	// BORDER
+	if(data.characterIDs[5] == 1)
+		sdata.gGT->gameMode1 |= 0x20;
+}
+
 void RunUpdateHook()
 {
-	int i;
-	
 	struct GamepadBuffer* gpb;
 	short* cIDs;
 	int tap;
+	
+	int i = 0;
+	
+	
+	
+	// === Initial Essentials ===
+	
+	
+	
+	// if 1P or 2P arcade,
+	// characterIDs for AIs are overwritten
+	// after we start the loading anyway
+	#define PLAYER1 	cIDs[0]
+	#define PLAYER2 	cIDs[1]
+	#define PLAYER3 	cIDs[2]
+	#define PLAYER4 	cIDs[3]
+	#define TRACK		cIDs[4]
+	#define BORDER		cIDs[5]
+	#define PLAYERS		cIDs[6]
+	#define ROW			cIDs[7]
+	
+	// saves instructions by sharing pointer
+	cIDs = &data.characterIDs[0];
+	
+	// arcade mode (ignored in 3P/4P)
+	sdata.gGT->gameMode1 |= 0x400000;
+	
+	// prevent error message for controllers
+	sdata.gGT->numScreens = 1;
 	
 	// lock, dont decrease,
 	// prevents main menu from leaving,
@@ -86,29 +122,27 @@ void RunUpdateHook()
 		// NOP function
 		*(int*)((int)EndOfRace_DrawAllComments + 0) = 0x3E00008;
 		*(int*)((int)EndOfRace_DrawAllComments + 4) = 0;
+		
+		// remove battle mode
+		sdata.gGT->gameMode1 &= 0xFFFFFFDF;
 	}
 	
 	tap = sdata.PtrGamepadSystem->controller[0].buttonsTapped;
 	
-	// saves instructions by sharing pointer
-	cIDs = &data.characterIDs[0];
+	// shut any menu
+	sdata.ptrActiveMenuBox = 0;
 	
-	// if 1P or 2P arcade,
-	// characterIDs for AIs are overwritten
-	// after we start the loading anyway
-	#define PLAYER1 	cIDs[0]
-	#define PLAYER2 	cIDs[1]
-	#define PLAYER3 	cIDs[2]
-	#define PLAYER4 	cIDs[3]
-	#define TRACK		cIDs[4]
-	#define BORDER		cIDs[5]
-	#define PLAYERS		cIDs[6]
 	
+	
+	// ==== Menu Logic and Input ====
+	
+	
+		
 	// from custom cups
 	#define SIN_TRACK() *(char*)(SIN_ADDR + SIN_SIZE*TRACK + 0)
 	
 	// defaults
-	if(cIDs[7] == 7)
+	if(ROW == 7)
 	{
 		PLAYER1 = 0;
 		PLAYER2 = 1;
@@ -117,14 +151,43 @@ void RunUpdateHook()
 		TRACK = 0;
 		BORDER = 0;
 		PLAYERS = 4;
-		
-		cIDs[7] = 0;
+		ROW = 0;
 	}
+	
+	if(tap == BTN_RIGHT)
+	{
+		if(ROW == 0) TRACK++;
+		if(ROW == 1) BORDER++;
+		if(ROW == 2) PLAYERS++;
+
+		for(i < 0; i < 4; i++)
+		{
+			if(ROW == 3+i) cIDs[i]++;
+		}
+	}
+	
+	if(tap == BTN_LEFT)
+	{
+		if(ROW == 0) TRACK--;
+		if(ROW == 1) BORDER--;
+		if(ROW == 2) PLAYERS--;
+
+		for(i < 0; i < 4; i++)
+		{
+			if(ROW == 3+i) cIDs[i]--;
+		}
+	}
+	
+	if(tap == BTN_UP) ROW--;
+	if(tap == BTN_DOWN) ROW++;
+	
+	if(ROW < 0) ROW = 0;
+	if(ROW > 2+PLAYERS) ROW = 2+PLAYERS;
 	
 	for(i < 0; i < 4; i++)
 	{
 		if(cIDs[i] < 0) cIDs[i] = 0;
-		if(cIDs[i] > 8) cIDs[i] = 8;
+		if(cIDs[i] > 0xF) cIDs[i] = 0xF;
 	}
 	
 	if(TRACK < 0) TRACK = 0;
@@ -133,14 +196,17 @@ void RunUpdateHook()
 	if(BORDER < 0) BORDER = 0;
 	if(BORDER > 1) BORDER = 1;
 	
-	if(PLAYERS < 0) PLAYERS = 0;
+	if(PLAYERS < 1) PLAYERS = 1;
 	if(PLAYERS > 4) PLAYERS = 4;
+
 	
-	// shut any menu
-	sdata.ptrActiveMenuBox = 0;
+		
+	// ==== Draw Menu ====
 	
-	// draw custom menu
-	DecalFont_DrawLine(arrowText, 20, 10, 2, 0);
+	
+	
+	if(ROW <= 2) 	DecalFont_DrawLine(arrowText, 20, 10 + ROW * 10, 2, 0);
+	else			DecalFont_DrawLine(arrowText, 20, 20 + ROW * 10, 2, 0);
 
 	// TRACK
 	DecalFont_DrawLine(line0, 40, 10, 2, 14);
@@ -177,6 +243,11 @@ void RunUpdateHook()
 	
 	// These background boxes are the same used in Battle/VS End-Of-Race comments
 	DrawTextBackground(&window1,1,sdata.gGT->backBuffer->otMem.startPlusFour);
+	
+	
+	
+	// === Starting Demo Mode ===
+	
 	
 	// input
 	if((tap & BTN_START) != 0)
