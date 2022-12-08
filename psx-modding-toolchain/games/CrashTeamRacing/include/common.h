@@ -1813,10 +1813,10 @@ struct Driver
 
 	// 0x358
 	// is it ice, gravel, or what?
-	int terrainMeta1;
+	struct Terrain* terrainMeta1;
 
 	// 0x35C
-	int terrainMeta2;
+	struct Terrain* terrainMeta2;
 
 	// each normalVec is 8 bytes apart,
 	// used as an array of vec4s, with
@@ -5650,6 +5650,61 @@ struct ZoomData
 	short vertDistance;
 };
 
+struct Terrain
+{
+	// 0
+	char* name;
+
+	// 4
+	// & 0x20 - play sound
+	int flags;
+
+	// 0x8
+	int unk_0x8;
+
+	// 0xC
+	// if 0, driver will slow down until completely stuck
+	int slowUntilSpeed;
+
+	// 0x10
+	// unless on "ice" or "none", then it's zero
+	int const_0x100;
+	
+	int unk14;
+	
+	// 0x18
+	// both pointers in 80088004 area,
+	// spawns particles driving over grass
+	struct ParticleEmitter* em_OddFrame;
+
+	// 0x1C
+	struct ParticleEmitter* em_EvenFrame;
+
+	// 0x20
+	int unk_0x20[2];
+
+	// 0x28
+	// if zero, like life, can't change steering at all,
+	// thank goodness I took college physics
+	int friction;
+
+	// 0x2c - 0x2f - vibration?
+	char vibrationData[4];
+
+	// 0x30 ?
+	short unk_0x30;
+
+	// 0x32 sound?
+	short sound;
+
+	// 0x34 ?
+	int unk_0x34[2];
+
+	// 0x3C
+	// (old korky comments ???)
+	int accel_impact;
+};
+
 // always starts at address 0x80010000,
 // which is 0x800 bytes into the EXE file
 struct rData
@@ -8058,71 +8113,7 @@ struct Data
 	struct ParticleEmitter emSet_Terrain[0x22];
 
 	// 0x800884CC
-	struct
-	{
-		// 0
-		char* name;
-
-		// 4
-		// & 0x20 - play sound
-		int flags;
-
-		// 0x8
-		int unk_0x8;
-
-		// 0xC
-		// if 0, driver will slow down until completely stuck
-		int slowUntilSpeed;
-
-		// 0x10
-		// unless on "ice" or "none" (mid-air), then it's zero
-		int const_0x100;
-		
-		int unk14;
-		
-		// 0x18
-		// both pointers in 80088004 area,
-		// spawns particles driving over grass
-		struct ParticleEmitter* em_OddFrame;
-
-		// 0x1C
-		struct ParticleEmitter* em_EvenFrame;
-
-		// 0x20
-		int unk_0x20[2];
-
-		// 0x28
-		// if zero, like life, can't change steering at all,
-		// thank goodness I took college physics
-		int friction;
-
-		// 0x2c - 0x2f - vibration?
-		char vibrationData[4];
-
-		// 0x30 ?
-		short unk_0x30;
-
-		// 0x32
-		short soundID_road;
-
-		// 0x34
-		short soundID_surroundings;
-		
-		// 36 and 38 both in BOTS,
-		// 36,38,3C, all impact physics
-		
-		// 0x36
-		short unk36;
-		
-		// 0x38;
-		int unk38;
-
-		// 0x3C
-		// (old korky comments ???)
-		int accel_impact;
-
-		// last valid index is 0x14, so 0x15 elements
-	} MetaDataTerrain[0x15];
+	struct Terrain MetaDataTerrain[0x15];
 
 	// 0x80086f18 -- SepReview
 	// 0x80088A0C -- UsaRetail
