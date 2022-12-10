@@ -2193,7 +2193,13 @@ struct Driver
 	short const_modelRotVelMin;
 
 	// 0x456
-	char moreConsts_456[6];
+	char unk456;
+	
+	// all related to Player_Driving_LerpToForwards
+	char unk457;
+	char unk458;
+	char unk459;
+	short unk45a;
 
 	// 0x45c
 	char const_turnResistMin;
