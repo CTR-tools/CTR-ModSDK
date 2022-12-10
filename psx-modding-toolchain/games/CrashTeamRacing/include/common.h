@@ -698,6 +698,7 @@ struct BspSearchVertex
 	short pos[3];
 	
 	// 0x6
+	// FUN_8001ef50
 	short flags;
 	
 	// 0x8
@@ -3593,9 +3594,12 @@ struct VisData
 
 struct LevVertex
 {
-	// fourth is always null
 	// 0x0
-	short pos[4];
+	short pos[3];
+	
+	// 0x6
+	// FUN_8001ef50
+	short flags;
 
 	// 0x8
 	unsigned char color_hi[4];
