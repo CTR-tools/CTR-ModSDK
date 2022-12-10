@@ -46170,8 +46170,10 @@ LAB_8005fee4:
   }
   iVar19 = ((uint)*(byte *)(param_2 + 0x43a) + ((int)*(char *)(param_2 + 0x34) << 1) / 5) * 0x100;
 
-  // Map value from [oldMin, oldMax] to [newMin, newMax]
-  // inverting newMin and newMax will give an inverse range mapping
+  // Map "speed" from 
+  //	- [kartTurnMin*iVar6>>8(or9), kartTurnMax*iVar6>>8(or9)] 
+  //	to 
+  //	- [kartTurnMax*iVar6, 0]
   iVar11 = FUN_80058f9c(iVar6,iVar16,iVar18,iVar19,0);
   
   iVar6 = 0;
