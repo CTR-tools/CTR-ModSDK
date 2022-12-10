@@ -46123,10 +46123,10 @@ LAB_8005fee4:
   iVar11 = (uint)*(ushort *)(param_2 + 0x42c) << 0x10;
   iVar6 = iVar11 >> 0x10;
   
-  // not sure?
+  // kartTurnMax = MetaPhys.kartTurnMax * iVar6
   iVar19 = (uint)*(byte *)(param_2 + 0x45d) * iVar6;
   
-  // kartTurnAnimation = MetaPhys.kartTurnAnimation * iVar6
+  // kartTurnMin = MetaPhys.kartTurnMin * iVar6
   iVar6 = (uint)*(byte *)(param_2 + 0x45c) * iVar6;
   
   sVar4 = *(short *)(param_2 + 0x3d2);
