@@ -838,6 +838,8 @@ struct BspSearchDataExtended
 	
 	// 0x2f4 - 1f8003fc
 	int unk3;
+	
+	// 1f800400 end of memory
 };
 
 // each mempack is 0x18*4 (0x60) bytes large
