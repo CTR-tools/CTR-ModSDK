@@ -46123,10 +46123,10 @@ LAB_8005fee4:
   iVar11 = (uint)*(ushort *)(param_2 + 0x42c) << 0x10;
   iVar6 = iVar11 >> 0x10;
   
-  // kartTurnMax = MetaPhys.kartTurnMax * iVar6
+  // turnResistMax = MetaPhys.turnResistMax * iVar6
   iVar19 = (uint)*(byte *)(param_2 + 0x45d) * iVar6;
   
-  // kartTurnMin = MetaPhys.kartTurnMin * iVar6
+  // turnResistMin = MetaPhys.turnResistMin * iVar6
   iVar6 = (uint)*(byte *)(param_2 + 0x45c) * iVar6;
   
   sVar4 = *(short *)(param_2 + 0x3d2);
@@ -46171,9 +46171,15 @@ LAB_8005fee4:
   iVar19 = ((uint)*(byte *)(param_2 + 0x43a) + ((int)*(char *)(param_2 + 0x34) << 1) / 5) * 0x100;
 
   // Map "speed" from 
-  //	- [kartTurnMin*iVar6>>8(or9), kartTurnMax*iVar6>>8(or9)] 
+  //	- [turnResistMin*iVar6>>8(or9), turnResistMax*iVar6>>8(or9)] 
   //	to 
-  //	- [kartTurnMax*iVar6, 0]
+  //	- [turnResistMax*iVar6, 0]
+  
+  // if iVar11 is zero, no turn-resist
+  // if iVar11 is 0x7FFF, high turn-resist
+  // this prevents you from steering sharp at low speeds
+  
+  // get turn resistance, given speed, and range maps
   iVar11 = FUN_80058f9c(iVar6,iVar16,iVar18,iVar19,0);
   
   iVar6 = 0;

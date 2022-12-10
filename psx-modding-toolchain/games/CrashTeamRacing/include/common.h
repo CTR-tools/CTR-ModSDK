@@ -2196,10 +2196,10 @@ struct Driver
 	char moreConsts_456[6];
 
 	// 0x45c
-	char const_kartTurnMin;
+	char const_turnResistMin;
 
 	// 0x45d
-	char const_kartTurnMax;
+	char const_turnResistMax;
 
 	// 0x45e
 	char moreConsts_45e[0x18];
