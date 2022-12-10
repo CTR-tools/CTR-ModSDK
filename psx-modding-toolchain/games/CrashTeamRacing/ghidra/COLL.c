@@ -1902,6 +1902,8 @@ void FUN_8001ef1c(void)
 
 
 // COLL_TestTriangle_FindAny
+// param1 - 1f800108
+// param2,3,4, triangle points
 void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 
 {

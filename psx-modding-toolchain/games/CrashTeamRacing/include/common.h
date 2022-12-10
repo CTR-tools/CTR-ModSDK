@@ -695,7 +695,10 @@ struct NavHeader
 struct BspSearchVertex
 {
 	// 0x0
-	short pos[4];
+	short pos[3];
+	
+	// 0x6
+	short flags;
 	
 	// 0x8
 	short normalVec[3];
@@ -734,6 +737,8 @@ struct BspSearchData
 	// 0x16
 	// deltaCurr
 	
+	// 0xC
+	
 	// 0x30
 	// boundingbox
 	
@@ -742,6 +747,10 @@ struct BspSearchData
 	// 0x48 instanceHitbox
 	
 	// 0x70 short normalVec[3]
+	
+	// 0x88 - array of pointer,
+	// size of array at offset 0xc4,
+	// can only be size 1?
 	
 	// --------
 	
