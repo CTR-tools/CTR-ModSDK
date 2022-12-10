@@ -2207,8 +2207,22 @@ struct Driver
 	// 0x45d
 	char const_turnResistMax;
 
-	// 0x45e
-	char moreConsts_45e[0x18];
+	// all Player_Drifting_Interpolate
+	// or Player_Drifting_Finalize
+	char unk45e;
+	char unk45f;
+	char unk461;
+	char unk462;
+	char unk463;
+	short unk464;
+	short unk466;
+	short unk468;
+	char unk46a;
+	char unk46b;
+	int unk46c;
+	short unk470;
+	short unk472;
+	short unk474;
 
 	// 0x476
 	// point where turbo meter is empty
