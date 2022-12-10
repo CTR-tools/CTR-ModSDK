@@ -1982,15 +1982,19 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         iVar9 = param_3[2] - iVar2;
         iVar7 = param_4[2] - iVar2;
         iVar2 = iVar14 - iVar2;
-        iVar5 = iVar9;
-		
+        
+		// absolute value
+		iVar5 = iVar9;
         if (iVar9 < 0) {
           iVar5 = -iVar9;
         }
+		
+		// absolute value
         iVar14 = iVar7;
         if (iVar7 < 0) {
           iVar14 = -iVar7;
         }
+		
         iVar10 = iVar9;
         if (iVar5 - iVar14 < 0) {
           psVar3 = param_4;
@@ -2018,15 +2022,19 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
           iVar14 = *param_3 - iVar2;
           iVar7 = *param_4 - iVar2;
           iVar2 = iVar11 - iVar2;
-          iVar5 = iVar14;
-		  
+          
+		  // absolute value
+		  iVar5 = iVar14;
           if (iVar14 < 0) {
             iVar5 = -iVar14;
           }
+		  
+		  // absolute value
           iVar11 = iVar7;
           if (iVar7 < 0) {
             iVar11 = -iVar7;
           }
+		  
           iVar10 = iVar14;
           if (iVar5 - iVar11 < 0) {
             psVar3 = param_4;
@@ -2050,15 +2058,19 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
           iVar11 = param_3[1] - iVar2;
           iVar7 = param_4[1] - iVar2;
           iVar2 = uVar12 - iVar2;
-          iVar5 = iVar11;
 		  
+		  // absolute value
+          iVar5 = iVar11;
           if (iVar11 < 0) {
             iVar5 = -iVar11;
           }
+		  
+		  // absolute value
           iVar9 = iVar7;
           if (iVar7 < 0) {
             iVar9 = -iVar7;
           }
+		  
           iVar10 = iVar11;
           if (iVar5 - iVar9 < 0) {
             psVar3 = param_4;
