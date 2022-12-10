@@ -2187,10 +2187,10 @@ struct Driver
 	short unk450;
 
 	// 0x452
-	short const_ModelRotationSpeed; // OK
+	short const_modelRotVelMax; // OK
 
 	// 0x454
-	short unk454;
+	short const_modelRotVelMin;
 
 	// 0x456
 	char moreConsts_456[6];

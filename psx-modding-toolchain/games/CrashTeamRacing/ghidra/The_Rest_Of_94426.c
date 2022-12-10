@@ -46150,14 +46150,22 @@ LAB_8005fee4:
     if (*(short *)(param_2 + 0x39c) == 0) {
       iVar5 = (int)*(short *)(param_2 + 0x454);
     }
-    else {
+    else 
+	{
+	  // speed
       iVar6 = (int)*(short *)(param_2 + 0x38c);
-      if (iVar6 < 0) {
+      
+	  if (iVar6 < 0) {
         iVar6 = -iVar6;
       }
 
-      // Map value from [oldMin, oldMax] to [newMin, newMax]
-      // inverting newMin and newMax will give an inverse range mapping
+      // Map "speed" from 
+	  //	- [0x300, characterSpeed] 
+	  //	to 
+	  //	- [const_modelRotVelMin, const_modelRotVelMax]
+	  
+	  // Rotating the model to exaggerate the steering animation,
+	  // only do this if driver speed is more than 0x300
       iVar5 = FUN_80058f9c(iVar6,0x300,iVar11 >> 0x11,(int)*(short *)(param_2 + 0x454),iVar5);
     }
   }
