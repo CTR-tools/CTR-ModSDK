@@ -773,7 +773,7 @@ struct BspSearchData
 	// 0xf0
 	struct BspSearchVertex bspSearchVert[9];
 
-	// 0x1a4
+	// 0x1a4 - quadblock action flags
 	// 0x1a8 - fastmath normalization
 	char dataOutput[0x68];
 	
