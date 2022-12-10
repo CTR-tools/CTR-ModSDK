@@ -2186,10 +2186,9 @@ struct Driver
 	// 0x450
 	short unk450;
 
-	// 0x452
+	// 0x452, 0x454
+	// exaggerate model rotation while steering
 	short const_modelRotVelMax; // OK
-
-	// 0x454
 	short const_modelRotVelMin;
 
 	// 0x456
@@ -2214,6 +2213,7 @@ struct Driver
 	
 	// all Player_Drifting_Interpolate
 	// or Player_Drifting_Finalize
+	char unk460;
 	char unk461;
 	char unk462;
 	char unk463;
