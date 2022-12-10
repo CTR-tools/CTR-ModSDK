@@ -49372,7 +49372,9 @@ void FUN_80062f4c(undefined4 param_1,int param_2)
   // turning acceleration
   iVar12 = (int)*(short *)(param_2 + 0x3b4);
   
+  // drift direction
   iVar15 = (int)*(short *)(param_2 + 0x3da);
+  
   bVar3 = false;
 
   // set new rotation variable
@@ -49383,27 +49385,49 @@ void FUN_80062f4c(undefined4 param_1,int param_2)
   
   iVar13 = iVar9 * 0x100;
   
-  if (iVar15 < 0) {
-    if (iVar13 < 1) {
+  // if drifting to the right
+  if (iVar15 < 0) 
+  {
+	// if steering to the right
+    if (iVar13 < 1) 
+	{
       iVar13 = iVar9 * -0x100;
+	  
+	  // const_SteerVel_DriftStandard
       iVar9 = -(int)*(char *)(param_2 + 0x45f);
     }
-    else {
+	
+	// if steering to the left
+    else 
+	{
+	  // const_SteerVel_DriftSwitchWay
       iVar9 = -(int)*(char *)(param_2 + 0x45e);
     }
   }
-  else {
-    if (iVar13 < 0) {
+  
+  // if drifting to the left
+  else 
+  {
+	// if steering to the right
+    if (iVar13 < 0) 
+	{
       iVar13 = iVar9 * -0x100;
-      cVar1 = *(char *)(param_2 + 0x45e);
+      
+	  // const_SteerVel_DriftSwitchWay
+	  cVar1 = *(char *)(param_2 + 0x45e);
     }
-    else {
+	
+	// if steering to the left
+    else 
+	{
+	  // const_SteerVel_DriftStandard
       cVar1 = *(char *)(param_2 + 0x45f);
     }
+	
     iVar9 = (int)cVar1;
   }
 
-  // Map "simpTurnState" from [0, unk43a] to [0, {multiple}]
+  // Map "simpTurnState" from [0, const_TurnRate] to [0, driftDirection]
   iVar13 = FUN_80058f9c(iVar13,0,((uint)*(byte *)(param_2 + 0x43a) +
                                  ((int)*(char *)(param_2 + 0x34) << 1) / 5) * 0x100,0,iVar9 << 8);
 								 
