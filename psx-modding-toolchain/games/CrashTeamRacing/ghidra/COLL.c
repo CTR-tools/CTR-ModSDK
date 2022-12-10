@@ -2139,8 +2139,10 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
       if ((-1 < iVar14) && (iVar14 + iVar13 + -0x1000 < 1))
 	  {
 		// quadblock flags & TriggerScript,
-		// such as turbo pad
-        if ((*(ushort *)(iVar2 + 0x12) & 0x40) != 0) {
+		// such as turbo pad, and hub loading
+        if ((*(ushort *)(iVar2 + 0x12) & 0x40) != 0) 
+		{
+		  // append bits, these get copied to driver->0xBC
           *(uint *)(param_1 + 0x1a4) = *(uint *)(param_1 + 0x1a4) | (uint)*(byte *)(iVar2 + 0x38);
           return;
         }
@@ -3559,6 +3561,8 @@ LAB_800209b0:
   } while (iVar14 != 0);
 
   DAT_1f80012a = uVar1;
+  
+  // driver->0xBC = scratchpad->0x1A4
   *(undefined4 *)(param_2 + 0xbc) = DAT_1f8002ac;
   return;
 }
