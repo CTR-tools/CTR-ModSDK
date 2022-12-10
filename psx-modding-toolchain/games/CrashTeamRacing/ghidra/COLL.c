@@ -1932,11 +1932,14 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
   *(short *)(param_1 + 0x52) = sVar1;
   *(undefined4 *)(param_1 + 0x54) = uVar6;
   *(int *)(param_1 + 0x58) = iVar7;
+  
+  // hitbox data (center of hitbox?)
   uVar8 = (uint)*(short *)(param_1 + 0x14);
   gte_ldR11R12(*(undefined4 *)(param_1 + 0x10));
   iVar11 = (int)*(short *)(param_1 + 0x1c) - (int)*(short *)(param_1 + 0x10);
   uVar12 = (int)*(short *)(param_1 + 0x1e) - (int)*(short *)(param_1 + 0x12);
   iVar14 = (int)*(short *)(param_1 + 0x20) - uVar8;
+  
   gte_ldR13R21(iVar11 * 0x10000 | uVar8 & 0xffff);
   gte_ldR22R23(uVar12 & 0xffff | iVar14 * 0x10000);
   gte_ldVXY0(param_1 + 0x54);
@@ -1960,18 +1963,24 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 	{
       gte_gpl12_b();
       read_mt(iVar11,uVar12,iVar14);
-      *(short *)(param_1 + 0x4c) = (short)iVar11;
+      
+	  // position x,y,z
+	  *(short *)(param_1 + 0x4c) = (short)iVar11;
       *(short *)(param_1 + 0x4e) = (short)uVar12;
       *(short *)(param_1 + 0x50) = (short)iVar14;
-      psVar3 = param_3;
+      
+	  psVar3 = param_3;
 	  
 	  // flag == 3
-      if (*(short *)(param_1 + 0x52) == 3) {
+      if (*(short *)(param_1 + 0x52) == 3) 
+	  {
+		// Z length vectors
         iVar2 = (int)param_2[2];
         iVar9 = param_3[2] - iVar2;
         iVar7 = param_4[2] - iVar2;
         iVar2 = iVar14 - iVar2;
         iVar5 = iVar9;
+		
         if (iVar9 < 0) {
           iVar5 = -iVar9;
         }
@@ -1986,7 +1995,9 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
           iVar10 = iVar7;
           iVar7 = iVar9;
         }
-        iVar14 = (int)*param_2;
+        
+		// X length vectors
+		iVar14 = (int)*param_2;
         iVar5 = *psVar3 - iVar14;
         iVar9 = *param_4 - iVar14;
         iVar11 = iVar11 - iVar14;
@@ -1998,11 +2009,14 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         iVar2 = (int)*param_2;
 		
 		// flag == 1
-        if (*(short *)(param_1 + 0x52) == 1) {
+        if (*(short *)(param_1 + 0x52) == 1) 
+		{
+		  // X length vectors
           iVar14 = *param_3 - iVar2;
           iVar7 = *param_4 - iVar2;
           iVar2 = iVar11 - iVar2;
           iVar5 = iVar14;
+		  
           if (iVar14 < 0) {
             iVar5 = -iVar14;
           }
@@ -2017,19 +2031,24 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
             iVar10 = iVar7;
             iVar7 = iVar14;
           }
-          iVar11 = (int)param_2[1];
+          
+		  // Y length vectors
+		  iVar11 = (int)param_2[1];
           iVar5 = psVar3[1] - iVar11;
           iVar9 = param_4[1] - iVar11;
           iVar11 = uVar12 - iVar11;
         }
         
 		// != 1
-		else {
+		else 
+		{
+		  // Y length vectors
           iVar2 = (int)param_2[1];
           iVar11 = param_3[1] - iVar2;
           iVar7 = param_4[1] - iVar2;
           iVar2 = uVar12 - iVar2;
           iVar5 = iVar11;
+		  
           if (iVar11 < 0) {
             iVar5 = -iVar11;
           }
@@ -2044,6 +2063,8 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
             iVar10 = iVar7;
             iVar7 = iVar11;
           }
+		  
+		  // Z length vectors
           iVar11 = (int)param_2[2];
           iVar5 = psVar3[2] - iVar11;
           iVar9 = param_4[2] - iVar11;
