@@ -821,16 +821,16 @@ struct BspSearchDataExtended
 	int numTriangles;
 	
 	// 0x2c4 - 1f8003cc
-	int unk1;
+	int unk1[2];
 	
 	
 	// --- the rest is for camera110 funcs ---
 	
 	
-	// 0x2c8 - 1f8003d4
+	// 0x2cc - 1f8003d4
 	MATRIX cameraMatrix;
 	
-	// 0x2e8 - 1f8003f4
+	// 0x2ec - 1f8003f4
 	short cameraRot[3];
 	
 	// 0x2f2 - 1f8003fa
