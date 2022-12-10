@@ -1944,20 +1944,28 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
   gte_mvmva_b(0,0,0,3,0);
   iVar5 = gte_stMAC2();
   iVar2 = gte_stMAC1();
-  if (iVar5 < 0) {
+  
+  // quit function if this fails
+  if (iVar5 < 0) 
+  {
     iVar2 = -(iVar2 + (iVar7 >> 0x10) * -0x2000) / (iVar5 >> 0xc);
     gte_ldMAC1((int)*(short *)(param_1 + 0x10));
     gte_ldMAC2((int)*(short *)(param_1 + 0x12));
     gte_ldMAC3(uVar8);
     gte_ldsv_(iVar11,uVar12,iVar14);
     gte_ldIR0(iVar2);
-    if ((-1 < iVar2) && (iVar2 + -0x1000 < 1)) {
+	
+	// quit function if this fails
+    if ((-1 < iVar2) && (iVar2 + -0x1000 < 1)) 
+	{
       gte_gpl12_b();
       read_mt(iVar11,uVar12,iVar14);
       *(short *)(param_1 + 0x4c) = (short)iVar11;
       *(short *)(param_1 + 0x4e) = (short)uVar12;
       *(short *)(param_1 + 0x50) = (short)iVar14;
       psVar3 = param_3;
+	  
+	  // flag == 3
       if (*(short *)(param_1 + 0x52) == 3) {
         iVar2 = (int)param_2[2];
         iVar9 = param_3[2] - iVar2;
@@ -1983,8 +1991,13 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
         iVar9 = *param_4 - iVar14;
         iVar11 = iVar11 - iVar14;
       }
-      else {
+      
+	  // != 3
+	  else 
+	  {
         iVar2 = (int)*param_2;
+		
+		// flag == 1
         if (*(short *)(param_1 + 0x52) == 1) {
           iVar14 = *param_3 - iVar2;
           iVar7 = *param_4 - iVar2;
@@ -2009,7 +2022,9 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
           iVar9 = param_4[1] - iVar11;
           iVar11 = uVar12 - iVar11;
         }
-        else {
+        
+		// != 1
+		else {
           iVar2 = (int)param_2[1];
           iVar11 = param_3[1] - iVar2;
           iVar7 = param_4[1] - iVar2;
@@ -2035,6 +2050,8 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
           iVar11 = iVar14 - iVar11;
         }
       }
+	  
+	  
       iVar14 = -0x1000;
       iVar13 = -0x1000;
       if (iVar10 == 0) {
