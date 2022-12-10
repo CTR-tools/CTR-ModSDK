@@ -774,6 +774,7 @@ struct BspSearchData
 	struct BspSearchVertex bspSearchVert[9];
 
 	// 0x1a4
+	// 0x1a8 - fastmath normalization
 	char dataOutput[0x68];
 	
 	// 0x20C -- size of struct
