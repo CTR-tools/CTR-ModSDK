@@ -1925,7 +1925,10 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
   // FUN_8001ef74 is this same function, except skipping
   // the first 9 instructions
 
+  // LevVertex offset 6 (in scratchpad)
+  // collision flag
   sVar1 = param_2[3];
+  
   uVar6 = *(undefined4 *)(param_2 + 6);
   iVar7 = *(int *)(param_2 + 8);
   *(short *)(param_1 + 0x3c) = *(short *)(param_1 + 0x3c) + 1;
