@@ -3715,6 +3715,8 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
 	  
       if ((((*(short *)(param_3 + 0x3e) != 0) && ((*(ushort *)(param_3 + 0x22) & 0x10) == 0)) &&
           ((*(uint *)(param_1 + 0x2cc) & 1) == 0)) &&
+		  
+		  // if quadblock is ground
          ((*(ushort *)(*(int *)(param_3 + 0x80) + 0x12) & 0x1000) != 0)) 
 		 
 	  {
