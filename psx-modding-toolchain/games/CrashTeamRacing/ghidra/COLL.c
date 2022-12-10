@@ -2132,6 +2132,10 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 	  // quadblock
 	  iVar2 = *(int *)(param_1 + 100);
 	  
+	  // if iVar14 or iVar13 is -0x1000,
+	  // then the function quits
+	  
+	  // if neither of these are -0x1000
       if ((-1 < iVar14) && (iVar14 + iVar13 + -0x1000 < 1))
 	  {
 		// quadblock flags & TriggerScript,
