@@ -2097,11 +2097,14 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
           }
         }
       }
-      iVar2 = *(int *)(param_1 + 100);
+      
+	  // quadblock
+	  iVar2 = *(int *)(param_1 + 100);
+	  
       if ((-1 < iVar14) && (iVar14 + iVar13 + -0x1000 < 1))
 	  {
 		// quadblock flags & TriggerScript,
-		// if collision is disabled
+		// such as turbo pad
         if ((*(ushort *)(iVar2 + 0x12) & 0x40) != 0) {
           *(uint *)(param_1 + 0x1a4) = *(uint *)(param_1 + 0x1a4) | (uint)*(byte *)(iVar2 + 0x38);
           return;
@@ -2721,14 +2724,24 @@ void FUN_8001fc40(undefined4 *param_1,int param_2,undefined4 param_3,undefined4 
 
   iVar7 = iVar7 + (int)*(short *)((int)param_1 + 0x5a) * -2;
   iVar8 = iVar8 + (int)*(short *)((int)param_1 + 0x5a) * -2;
-  if (iVar8 < 0) {
-    if ((*(ushort *)(iVar9 + 0x12) & 0x40) == 0) {
+  
+  if (iVar8 < 0) 
+  {
+    // quadblock->flags & TriggerScript (like turbo pad),
+	
+	// if NOT TriggerScript
+	if ((*(ushort *)(iVar9 + 0x12) & 0x40) == 0) 
+	{
       sVar1 = *(short *)(param_1 + 0x15);
       if (-1 < *(int *)(iVar9 + 0x14)) goto LAB_8001fd38;
     }
-    else {
+    
+	// if TriggerScript
+	else 
+	{
       sVar1 = *(short *)(param_1 + 0x15);
     }
+	
     iVar7 = -iVar7;
     iVar8 = -iVar8;
     *(short *)(param_1 + 0x15) = -sVar1;

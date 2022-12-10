@@ -747,6 +747,9 @@ struct BspSearchData
 	// 0x42 (number collisions?)
 	// 0x48 instanceHitbox
 	
+	// 0x64
+	// ptrQuadblock
+	
 	// 0x70 short normalVec[3]
 	
 	// 0x88 - array of pointer,
