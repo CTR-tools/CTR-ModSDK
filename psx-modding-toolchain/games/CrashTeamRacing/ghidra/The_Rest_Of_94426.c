@@ -49398,8 +49398,7 @@ void FUN_80062f4c(undefined4 param_1,int param_2)
     iVar9 = (int)cVar1;
   }
 
-  // Map value from [oldMin, oldMax] to [newMin, newMax]
-  // inverting newMin and newMax will give an inverse range mapping
+  // Map value from [0, unk43a] to [0, {multiple}]
   iVar13 = FUN_80058f9c(iVar13,0,((uint)*(byte *)(param_2 + 0x43a) +
                                  ((int)*(char *)(param_2 + 0x34) << 1) / 5) * 0x100,0,iVar9 << 8);
   if ((iVar13 < 0) || ((bVar2 = iVar13 < iVar12, iVar13 == 0 && (iVar12 < 0)))) {
