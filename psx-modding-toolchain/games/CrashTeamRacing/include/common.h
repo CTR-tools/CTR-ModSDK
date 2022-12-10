@@ -2201,16 +2201,19 @@ struct Driver
 	char unk459;
 	short unk45a;
 
-	// 0x45c
+	// 0x45c, 0x45d
+	// resist turning at low speed
 	char const_turnResistMin;
-
-	// 0x45d
 	char const_turnResistMax;
-
+	
+	// 0x45e, 0x45f
+	// hold drift in direction it started,
+	// compared to switching direction "SwitchWay"
+	char const_SteerVel_DriftSwitchWay;
+	char const_SteerVel_DriftStandard;
+	
 	// all Player_Drifting_Interpolate
 	// or Player_Drifting_Finalize
-	char unk45e;
-	char unk45f;
 	char unk461;
 	char unk462;
 	char unk463;

@@ -49369,15 +49369,20 @@ void FUN_80062f4c(undefined4 param_1,int param_2)
   uVar6 = FUN_80058f54((int)*(short *)(param_2 + 0x2f2),(int)sVar5 * *(int *)(puVar4 + 0x1d04) >> 5,
                        iVar13);
 
+  // turning acceleration
   iVar12 = (int)*(short *)(param_2 + 0x3b4);
+  
   iVar15 = (int)*(short *)(param_2 + 0x3da);
   bVar3 = false;
 
   // set new rotation variable
   *(undefined2 *)(param_2 + 0x2f2) = uVar6;
 
+  // simpTurningState
   iVar9 = (int)*(char *)(param_2 + 0x4b);
+  
   iVar13 = iVar9 * 0x100;
+  
   if (iVar15 < 0) {
     if (iVar13 < 1) {
       iVar13 = iVar9 * -0x100;
@@ -49398,9 +49403,10 @@ void FUN_80062f4c(undefined4 param_1,int param_2)
     iVar9 = (int)cVar1;
   }
 
-  // Map value from [0, unk43a] to [0, {multiple}]
+  // Map "simpTurnState" from [0, unk43a] to [0, {multiple}]
   iVar13 = FUN_80058f9c(iVar13,0,((uint)*(byte *)(param_2 + 0x43a) +
                                  ((int)*(char *)(param_2 + 0x34) << 1) / 5) * 0x100,0,iVar9 << 8);
+								 
   if ((iVar13 < 0) || ((bVar2 = iVar13 < iVar12, iVar13 == 0 && (iVar12 < 0)))) {
     bVar3 = true;
     iVar13 = -iVar13;
