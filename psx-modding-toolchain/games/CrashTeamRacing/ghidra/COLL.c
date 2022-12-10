@@ -1995,6 +1995,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
           iVar14 = -iVar7;
         }
 		
+		// flip if needed
         iVar10 = iVar9;
         if (iVar5 - iVar14 < 0) {
           psVar3 = param_4;
@@ -2035,6 +2036,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
             iVar11 = -iVar7;
           }
 		  
+		  // flip if needed
           iVar10 = iVar14;
           if (iVar5 - iVar11 < 0) {
             psVar3 = param_4;
@@ -2071,6 +2073,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
             iVar9 = -iVar7;
           }
 		  
+		  // flip if needed
           iVar10 = iVar11;
           if (iVar5 - iVar9 < 0) {
             psVar3 = param_4;
@@ -2090,21 +2093,37 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 	  
       iVar14 = -0x1000;
       iVar13 = -0x1000;
-      if (iVar10 == 0) {
+	  
+	  // if one length is zero
+      if (iVar10 == 0) 
+	  {
         iVar14 = -0x1000;
-        if (iVar7 == 0) {
+        
+		// if other length is zero
+		if (iVar7 == 0) 
+		{
+		  // no collision
           return;
         }
+		
         iVar13 = (iVar2 << 0xc) / iVar7;
-        if ((-1 < iVar13) && (iVar13 + -0x1000 < 1)) {
+		
+        if ((-1 < iVar13) && (iVar13 + -0x1000 < 1)) 
+		{
           iVar14 = (iVar11 * 0x1000 - iVar13 * iVar9) / iVar5;
         }
       }
-      else {
+      
+	  else 
+	  {
         iVar9 = iVar9 * iVar10 - iVar7 * iVar5 >> 6;
-        if (iVar9 != 0) {
+        
+		if (iVar9 != 0) 
+		{
           iVar13 = ((iVar11 * iVar10 - iVar2 * iVar5) * 0x40) / iVar9;
-          if ((-1 < iVar13) && (iVar13 + -0x1000 < 1)) {
+          
+		  if ((-1 < iVar13) && (iVar13 + -0x1000 < 1)) 
+		  {
             iVar14 = (iVar2 * 0x1000 - iVar13 * iVar7) / iVar10;
           }
         }
