@@ -810,6 +810,8 @@ struct WeaponSearchData
 // FUN_80020334
 struct BspSearchDataExtended
 {
+	// --- top half is for COLL ---
+	
 	struct BspSearchData bspSearchData;
 	
 	// 0x20C
@@ -817,6 +819,25 @@ struct BspSearchDataExtended
 	
 	// 0x2c0
 	int numTriangles;
+	
+	// 0x2c4 - 1f8003cc
+	int unk1;
+	
+	
+	// --- the rest is for camera110 funcs ---
+	
+	
+	// 0x2c8 - 1f8003d4
+	MATRIX cameraMatrix;
+	
+	// 0x2e8 - 1f8003f4
+	short cameraRot[3];
+	
+	// 0x2f2 - 1f8003fa
+	short unk2;
+	
+	// 0x2f4 - 1f8003fc
+	int unk3;
 };
 
 // each mempack is 0x18*4 (0x60) bytes large
