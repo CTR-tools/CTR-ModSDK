@@ -2221,8 +2221,10 @@ struct Driver
 	// 0x463
 	char const_NumFramesDrift_Spinout;
 	
+	// impact turning?
 	short unk464;
 	short unk466;
+	
 	short unk468;
 	char unk46a;
 	char unk46b;

@@ -49433,13 +49433,26 @@ void FUN_80062f4c(undefined4 param_1,int param_2)
   iVar13 = FUN_80058f9c(iVar13,0,((uint)*(byte *)(param_2 + 0x43a) +
                                  ((int)*(char *)(param_2 + 0x34) << 1) / 5) * 0x100,0,iVar9 << 8);
 								 
-  if ((iVar13 < 0) || ((bVar2 = iVar13 < iVar12, iVar13 == 0 && (iVar12 < 0)))) {
+  if (
+		(iVar13 < 0) || 
+		(
+			(
+				// compare two turning rates
+				bVar2 = iVar13 < iVar12,
+				
+				iVar13 == 0 && (iVar12 < 0)
+			)
+		)
+	) 
+  {
     bVar3 = true;
     iVar13 = -iVar13;
     iVar12 = -iVar12;
     iVar15 = -iVar15;
     bVar2 = iVar13 < iVar12;
   }
+
+  // 0x464 and 0x466 impact turning somehow
 
   if (bVar2)
   {
@@ -49453,6 +49466,7 @@ void FUN_80062f4c(undefined4 param_1,int param_2)
     iVar12 = iVar12 + ((int)*(short *)(param_2 + 0x464) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5);
     bVar2 = iVar13 < iVar12;
   }
+  
   if (bVar2) {
     iVar12 = iVar13;
   }
