@@ -2629,7 +2629,7 @@ struct Driver
 		// state 10
 		struct
 		{
-			int TwoSecondCount;
+			int timer;
 		} Warp;
 		
 	} KartStates;

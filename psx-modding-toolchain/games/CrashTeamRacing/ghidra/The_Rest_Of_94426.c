@@ -55091,7 +55091,7 @@ void FUN_80068be8(undefined4 param_1,int param_2)
   *(int *)(param_2 + 0x2d8) = iVar4;
 LAB_80068db0:
 
-  // alter drift angle
+  // drift angle = ((drift angle + warp timer + 0x800) & 0xfff) - 0x800
   sVar2 = (*(short *)(param_2 + 0x3c6) + *(short *)piVar5 + 0x800U & 0xfff) - 0x800;
   *(short *)(param_2 + 0x3c6) = sVar2;
   
