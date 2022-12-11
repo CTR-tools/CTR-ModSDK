@@ -53793,14 +53793,17 @@ void FUN_800675c0(undefined4 param_1,int param_2)
 			// if plant is eating me
 			(iVar3 != 0) && 
 			
+			// if not initialized
 			(*(char *)(param_2 + 0x580) == '\0')
 		) &&
 		
+		// if more than 0.5s since player death
 		(*(short *)(param_2 + 0x400) < 0xb40))
   {
 	// get instance from thread
     iVar4 = *(int *)(iVar3 + 0x34);
 
+	// initialized, player eaten
     *(undefined *)(param_2 + 0x580) = 1;
 	
     local_38.vx = -0xfa;
@@ -53882,8 +53885,13 @@ void FUN_800677d0(int param_1,int param_2)
   int iVar2;
 
   iVar2 = *(int *)(param_1 + 0x34);
+  
+  // set state to mask grab, so nobody hits you with weapon
   *(undefined *)(param_2 + 0x376) = 5;
+  
+  // boolInited = false
   *(undefined *)(param_2 + 0x580) = 0;
+  
   *(undefined2 *)(param_2 + 0x3dc) = 0;
   *(undefined2 *)(param_2 + 0x3e2) = 0;
   *(undefined2 *)(param_2 + 0x3de) = 0;

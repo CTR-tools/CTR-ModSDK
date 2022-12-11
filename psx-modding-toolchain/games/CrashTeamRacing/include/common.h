@@ -2545,6 +2545,8 @@ struct Driver
 			// 0x584
 			int driftTotalTimeMS;
 			
+			// more?
+			
 		} Drifting;
 		
 		struct
@@ -2595,10 +2597,22 @@ struct Driver
 		struct
 		{
 			// 0x580
+			char boolInited;
+			
+			// that's it
+			
+		} EatenByPlant;
+		
+		struct
+		{
+			// 0x580
 			short spinRate;
 			
 			// 0x582
 			short spinDir;
+			
+			// more?
+			
 		} Spinning;
 		
 	} KartStates;
