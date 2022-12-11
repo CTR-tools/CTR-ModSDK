@@ -49539,11 +49539,17 @@ LAB_800632cc:
       if (iVar9 < 0) {
         iVar15 = -iVar9;
       }
+	  
+	  // const_SteerVel_DriftStandard
       iVar11 = (int)*(char *)(param_2 + 0x45f) << 8;
+	  
       iVar8 = -(int)*(short *)(param_2 + 0x470);
     }
-    else {
+    else 
+	{
+	  // const_SteerVel_DriftSwitchWay
       iVar11 = (int)*(char *)(param_2 + 0x45e) << 8;
+	  
       iVar8 = -(int)*(short *)(param_2 + 0x472);
     }
   }
