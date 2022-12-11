@@ -49454,25 +49454,45 @@ void FUN_80062f4c(undefined4 param_1,int param_2)
   if (bVar2) {
     iVar12 = iVar13;
   }
-  if (iVar13 == 0) {
+  
+  // if not steering,
+  // then interpolate to "neutral" drift
+  if (iVar13 == 0) 
+  {
 LAB_80063244:
 
-	// Interpolate rotation by speed
+	// Interpolate by 1 unit, until zero
     uVar6 = FUN_80058f54((int)*(short *)(param_2 + 0x580),1,0);
     *(undefined2 *)(param_2 + 0x580) = uVar6;
   }
-  else {
-    if (iVar15 < 1) {
+  
+  // if steering
+  else 
+  {
+	// if drifting right
+    if (iVar15 < 1) 
+	{
+	  // if less than zero, reset to zero
       if (-1 < iVar15) goto LAB_80063244;
+	  
+	  // decrease positive number
       uVar7 = *(short *)(param_2 + 0x580) - 1;
       *(ushort *)(param_2 + 0x580) = uVar7;
+	  
+	  // skip to zero if already positive
       if (0 < (int)((uint)uVar7 << 0x10)) {
         *(undefined2 *)(param_2 + 0x580) = 0;
       }
     }
-    else {
+    
+	// if drifting left
+	else 
+	{
+	  // increase number
       uVar7 = *(short *)(param_2 + 0x580) + 1;
       *(ushort *)(param_2 + 0x580) = uVar7;
+	  
+	  // skip to zero if already negative
       if ((int)((uint)uVar7 << 0x10) < 0) {
         *(undefined2 *)(param_2 + 0x580) = 0;
       }
