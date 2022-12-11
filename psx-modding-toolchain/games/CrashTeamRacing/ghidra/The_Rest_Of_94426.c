@@ -48972,7 +48972,8 @@ void FUN_80062a4c(undefined4 param_1,int param_2)
   int iVar1;
 
   //if racer touched the ground in this frame
-  if ((*(uint *)(param_2 + 0x2c8) & 2) != 0) {
+  if ((*(uint *)(param_2 + 0x2c8) & 2) != 0) 
+  {
     //iVar1 = Simplified Turning state
     iVar1 = (int)*(char *)(param_2 + 0x4b);
 
@@ -48981,15 +48982,16 @@ void FUN_80062a4c(undefined4 param_1,int param_2)
       iVar1 = -iVar1;
     }
 
-    //driftStart:
-    //this first condition happens when drifting?
-    //if ((Character's Turn stat + (Turning multiplier? << 1) / 5) >> 1) < Simplified turning state and
     if (
 		(
 			(
+				// if steering hard enough to start a drift
 				(
+					// (Character's Turn stat + (Turning multiplier? << 1) / 5) >> 1)
 					(int)((uint)*(byte *)(param_2 + 0x43a) +
 					((int)*(char *)(param_2 + 0x34) << 1) / 5) >> 1
+					
+					// < Simplified turning state
 					< iVar1
 				) &&
 
