@@ -46089,7 +46089,7 @@ LAB_8005fee4:
       sVar4 = -sVar4;
     }
   }
-  // timeUntilDriftSpinout spin out timer.
+  
   iVar5 = (int)*(short *)(param_2 + 0x3ec);
 
   //turningAcceleration = turningAccelerationS16;
@@ -46100,7 +46100,6 @@ LAB_8005fee4:
 
   if (iVar5 != 0) 
   {  
-	//int deltaTime = (timeUntilDriftSpinout - elapsedTimeInMS);
     uVar3 = (undefined2)(iVar5 - iVar8);
 
     // Map value from [oldMin, oldMax] to [newMin, newMax]
@@ -46115,7 +46114,7 @@ LAB_8005fee4:
     if (iVar5 - iVar8 < 0) {
       uVar3 = 0;
     }
-    // timeUntilDriftSpinout = 
+	
     *(undefined2 *)(param_2 + 0x3ec) = uVar3;
   }
   
@@ -49338,10 +49337,15 @@ void FUN_80062f4c(undefined4 param_1,int param_2)
 
 	*(ushort *)(param_2 + 0x396) = *(short *)(param_2 + 0x396) - sVar5 & 0xfff;
   }
-  if (*(short *)(param_2 + 0x3da) < 0) {
+  
+  if (*(short *)(param_2 + 0x3da) < 0) 
+  {
+	// negative cam spin rate
     iVar13 = -(int)*(short *)(param_2 + 0x468);
   }
-  else {
+  else 
+  {
+	// positive cam spin rate
     iVar13 = (int)*(short *)(param_2 + 0x468);
   }
 

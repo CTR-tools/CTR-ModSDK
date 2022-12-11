@@ -1992,6 +1992,7 @@ struct Driver
 	char fill_coordSpeedSubtract[0xA];
 
 	// 0x3DA
+	// also drift direction
 	short multDrift;
 
 	// 0x3DC
@@ -2021,7 +2022,7 @@ struct Driver
 	short previousFrameMultDrift; //previous frame or just repeat?
 
 	// 0x3ec
-	short timeUntilDriftSpinout;
+	short unk3EC;
 
 	// 0x3ee
 	short distanceFromGround;
@@ -2219,13 +2220,14 @@ struct Driver
 	char unk462;
 	
 	// 0x463
-	char const_NumFramesDrift_Spinout;
+	char const_Drifting_FramesTillSpinout;
 	
 	// impact turning?
 	short unk464;
 	short unk466;
 	
-	short unk468;
+	// 0x468
+	short const_Drifting_CameraSpinRate;
 	char unk46a;
 	char unk46b;
 	int unk46c;
