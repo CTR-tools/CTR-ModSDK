@@ -2563,10 +2563,8 @@ struct Driver
 			char boolWhistle;
 			
 			// 0x590
-			int unk590;
-			
-			// 0x594
-			int boolEngineRevMaskGrab;			
+			char unused[8];
+						
 		} MaskGrab;
 		
 		struct
@@ -2575,14 +2573,22 @@ struct Driver
 			// object connected to thread
 			void* maskObj;
 			
-			// 0x584
-			int engineRevAmount;
+			// == Needs More Research ==
 			
-			// == other EngineRev variables ==
+			// 0x584
+			int engineRevBoostMeter;
+			
+			// 0x588
+			int engineRevFire;
+			
+			// 0x58c
+			int engineRevMS;
+			
+			// 0x590
+			char unk[4];
 			
 			// 0x594
-			// if 1 then respawn, if 0 then engineRev
-			// char boolMaskRespawn;
+			int boolEngineRevMaskGrab;
 			
 		} MaskRespawn;
 		
