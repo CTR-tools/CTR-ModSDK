@@ -49532,10 +49532,15 @@ LAB_800632cc:
   iVar12 = FUN_80058f9c(iVar12,0,(int)*(char *)(param_2 + 0x460) +
                                  ((int)*(char *)(param_2 + 0x34) << 2) / 5,0,
                         (int)*(short *)(param_2 + 0x474));
+  
   iVar15 = iVar9;
-  if (iVar13 < 0) {
+  
+  if (iVar13 < 0) 
+  {
     iVar12 = -iVar12;
-    if (iVar9 < 0) {
+    
+	if (iVar9 < 0) 
+	{
       if (iVar9 < 0) {
         iVar15 = -iVar9;
       }
@@ -49545,6 +49550,7 @@ LAB_800632cc:
 	  
       iVar8 = -(int)*(short *)(param_2 + 0x470);
     }
+	
     else 
 	{
 	  // const_SteerVel_DriftSwitchWay
@@ -49553,16 +49559,27 @@ LAB_800632cc:
       iVar8 = -(int)*(short *)(param_2 + 0x472);
     }
   }
-  else {
-    if (iVar9 < 0) {
-      if (iVar9 < 0) {
+  
+  else 
+  {
+    if (iVar9 < 0) 
+	{
+      if (iVar9 < 0) 
+	  {
         iVar15 = -iVar9;
       }
+	  
+	  // const_SteerVel_DriftSwitchWay
       cVar1 = *(char *)(param_2 + 0x45e);
+	  
       sVar5 = *(short *)(param_2 + 0x472);
     }
-    else {
+    
+	else 
+	{
+	  // const_SteerVel_DriftStandard
       cVar1 = *(char *)(param_2 + 0x45f);
+	  
       sVar5 = *(short *)(param_2 + 0x470);
     }
     iVar8 = (int)sVar5;
