@@ -2082,6 +2082,7 @@ struct Driver
 	// used to calculate the other ^^
 	int jumpSquishStretch2;
 	
+	// 0x414 (physics/terrain related)
 	short filler_short;
 
 	/* Constant table - Metaphysics */
