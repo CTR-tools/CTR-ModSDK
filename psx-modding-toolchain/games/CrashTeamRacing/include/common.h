@@ -2216,7 +2216,10 @@ struct Driver
 	char unk460;
 	char unk461;
 	char unk462;
-	char unk463;
+	
+	// 0x463
+	char const_NumFramesDrift_Spinout;
+	
 	short unk464;
 	short unk466;
 	short unk468;
@@ -2239,19 +2242,11 @@ struct Driver
 	char const_turboFullBarReserveGain;
 	
 	// 0x479
-	short const_unk_impacts582;
-	
-	// 0x47A
-	short const_unk_usedWith582;
-	
-	// 0x47C
-	short const_unk47C;
-	
-	// 0x47E
-	short const_unk47E;
-
-	// 0x480
-	short const_unk480;
+	char unk479; // 582 related
+	short unk47A; // 582 related
+	short unk47C;
+	short unk47E;
+	short unk480;
 
 	// 0x484 - last of "main" constants,
 	// skip over 482, which is non-const
@@ -2532,11 +2527,18 @@ struct Driver
 	
 	// 0x57c
 	int numTimesAttacked;
+	
+	// ==== End of Quip Data ====
+
+	// This is a union,
+	// addresses share purposes
 
 	// 0x580
+	// used to determine spinout
+	short numFramesDrifting;
 
 	// 0x582
-	// Drift Boost Timer
+	short driftBoostTimeMS;
 
 	// 0x584
 	// AngleAxis_NormalVec
