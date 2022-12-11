@@ -2553,9 +2553,42 @@ struct Driver
 			void* maskObj;
 			
 			// 0x584
-			int engineRevAmount;
+			short AngleAxis_NormalVec[4];
+	
+			// 0x58c
+			char boolParticlesSpawned;
+			char boolStillFalling;
+			char unk58e;
+			char boolWhistle;
+
+	// 0x58d
+	// bool stillFalling (mask grab)
+
+	// 0x58f
+	// bool whistle (mask grab)
+
+	// 0x594
+	// bool engineRevMaskGrab (mask grab)
+			
 			
 		} MaskGrab;
+		
+		struct
+		{
+			// 0x580
+			// object connected to thread
+			void* maskObj;
+			
+			// 0x584
+			int engineRevAmount;
+			
+			// == other EngineRev variables ==
+			
+			// 0x594
+			// if 1 then respawn, if 0 then engineRev
+			// char boolMaskRespawn;
+			
+		} MaskRespawn;
 		
 		struct
 		{
@@ -2568,27 +2601,7 @@ struct Driver
 		
 	} KartStates;
 
-	// 0x584
-	// AngleAxis_NormalVec
 
-	// 0x586
-	// boost (or AngleAxis_NormalVec?)
-
-	// 0x587
-	// boost (or AngleAxis_NormalVec?)
-
-	// 0x58c
-	// except it's not a bool, it uses elapsed time?
-	// bool particlesSpawned (mask grab)
-
-	// 0x58d
-	// bool stillFalling (mask grab)
-
-	// 0x58f
-	// bool whistle (mask grab)
-
-	// 0x594
-	// bool engineRevMaskGrab (mask grab)
 
 	// ==========================
 
