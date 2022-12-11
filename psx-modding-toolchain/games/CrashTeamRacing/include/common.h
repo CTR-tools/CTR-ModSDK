@@ -2530,6 +2530,7 @@ struct Driver
 	
 	// ==== End of Quip Data ====
 
+	// 0x580 - 0x598
 	union
 	{
 		struct
@@ -2560,17 +2561,12 @@ struct Driver
 			char boolStillFalling;
 			char unk58e;
 			char boolWhistle;
-
-	// 0x58d
-	// bool stillFalling (mask grab)
-
-	// 0x58f
-	// bool whistle (mask grab)
-
-	// 0x594
-	// bool engineRevMaskGrab (mask grab)
 			
+			// 0x590
+			int unk590;
 			
+			// 0x594
+			int boolEngineRevMaskGrab;			
 		} MaskGrab;
 		
 		struct
@@ -2601,12 +2597,11 @@ struct Driver
 		
 	} KartStates;
 
+	// 0x598
+	// === Robotcar and Ghost ===
 
-
-	// ==========================
-
-	// 0x598 and beyond are
-	// reserved Robotcar + Ghost
+	// 0x598
+	// unknown
 
 	// 0x5a4
 	// pointer to NavFrame
