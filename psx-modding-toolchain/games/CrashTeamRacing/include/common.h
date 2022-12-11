@@ -2551,7 +2551,7 @@ struct Driver
 		{
 			// 0x580
 			// object connected to thread
-			void* maskObj;
+			struct MaskHeadWeapon* maskObj;
 			
 			// 0x584
 			short AngleAxis_NormalVec[4];
@@ -2559,7 +2559,7 @@ struct Driver
 			// 0x58c
 			char boolParticlesSpawned;
 			char boolStillFalling;
-			char unk58e;
+			char boolLiftingPlayer;
 			char boolWhistle;
 			
 			// 0x590
@@ -2571,7 +2571,7 @@ struct Driver
 		{
 			// 0x580
 			// object connected to thread
-			void* maskObj;
+			struct MaskHeadWeapon* maskObj;
 			
 			// == Needs More Research ==
 			
@@ -2590,7 +2590,7 @@ struct Driver
 			// 0x594
 			int boolEngineRevMaskGrab;
 			
-		} MaskRespawn;
+		} EngineRevving;
 		
 		struct
 		{

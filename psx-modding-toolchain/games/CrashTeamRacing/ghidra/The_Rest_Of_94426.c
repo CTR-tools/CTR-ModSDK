@@ -49969,14 +49969,13 @@ void FUN_80063934(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // OnRender -- move position to instance matrix
   *(undefined4 *)(param_2 + 0x80) = 0x8005b178; // OnAnimate_Driving
 
-  //Drifting Timer = 0
+  // erase union in driver struct
   *(undefined2 *)(param_2 + 0x580) = 0;
   *(undefined2 *)(param_2 + 0x584) = 0;
   *(undefined2 *)(param_2 + 0x582) = 0;
-  //Boost attempts = 0
   *(undefined *)(param_2 + 0x586) = 0;
-  //Successful boost attempts = 0
   *(undefined *)(param_2 + 0x587) = 0;
+  
   *(undefined2 *)(param_2 + 0x3b4) = 0;
   *(undefined2 *)(param_2 + 0x3d2) = 0;
   *(undefined2 *)(param_2 + 0x3ec) = 0;
@@ -50003,6 +50002,8 @@ void FUN_80063a44(undefined4 param_1,int param_2)
           (short)((int)*(short *)(param_2 + 0xc0) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 0xd) &
           0xfff;
   *(ushort *)(param_2 + 0x39a) = uVar2;
+  
+  // cameraRotY = ??? + kart angle + drift angle
   *(short *)(param_2 + 0x2ee) = *(short *)(param_2 + 0x3d4) + uVar2 + *(short *)(param_2 + 0x3c6);
 
   // Interpolate rotation by speed
@@ -50255,19 +50256,19 @@ void FUN_80063dc8(undefined4 param_1,int param_2)
   *(short *)(param_2 + 0x3b4) = *(short *)(param_2 + 0x3b4) - (*(short *)(param_2 + 0x3b4) >> 3);
   puVar1 = PTR_DAT_8008d2ac;
 
-  // Drift angle += (drift angle rate of change + 180 degrees ???) & 0xfff - 180 degrees
+  // Drift angle = (Drift angle + spinRate + 180 degrees) & 0xfff - 180 degrees
   *(short *)(param_2 + 0x3c6) =
        (*(short *)(param_2 + 0x3c6) + *(short *)(param_2 + 0x580) + 0x800U & 0xfff) - 0x800;
 
   *(short *)(param_2 + 0xc0) = *(short *)(param_2 + 0x3b4);
   *(short *)(param_2 + 0x3d4) = *(short *)(param_2 + 0x3d4) - (*(short *)(param_2 + 0x3d4) >> 3);
 
-  // angle change = angle + (??? * time lapsed between frames) & 0xFFF
+  // kart angle = (kart angle + (turningAccel * time lapsed between frames)) & 0xFFF
   uVar2 = *(short *)(param_2 + 0x39a) +
           (short)((int)*(short *)(param_2 + 0x3b4) * *(int *)(puVar1 + 0x1d04) >> 0xd) & 0xfff;
-
-  // angle = angle change
   *(ushort *)(param_2 + 0x39a) = uVar2;
+  
+  // cameraRotY = ??? + kart angle + drift angle
   *(short *)(param_2 + 0x2ee) = *(short *)(param_2 + 0x3d4) + uVar2 + *(short *)(param_2 + 0x3c6);
 
   // Interpolate rotation by speed
@@ -50443,41 +50444,101 @@ void FUN_800640a4(undefined4 param_1,int param_2)
   *(short *)(param_2 + 0x3b4) = sVar4;
   *(short *)(param_2 + 0x3d4) = *(short *)(param_2 + 0x3d4) - (*(short *)(param_2 + 0x3d4) >> 3);
   *(short *)(param_2 + 0xc0) = sVar4;
-  if (iVar5 < 1) {
-    if (iVar5 < 0) {
-      if (((0 < *(short *)(param_2 + 0x580)) && (-400 < iVar5)) &&
-         (iVar5 = iVar5 * -4 >> 3, *(undefined2 *)(param_2 + 0x580) = (short)iVar5, iVar5 < 0x20)) {
+  
+  if (iVar5 < 1) 
+  {
+	// drifting right,
+	// spinning out clockwise
+    if (iVar5 < 0) 
+	{
+      if (
+			(
+				// if spinning hasn't stopped
+				(0 < *(short *)(param_2 + 0x580)) && 
+				(-400 < iVar5)
+			) &&
+			(
+				// decrease spin rate
+				iVar5 = iVar5 * -4 >> 3, 
+				*(undefined2 *)(param_2 + 0x580) = (short)iVar5, 
+				
+				// if spin rate is too low
+				iVar5 < 0x20
+			)
+		  ) 
+	  {
+		// set minimum spin rate if drops below minimum
         *(undefined2 *)(param_2 + 0x580) = 0x20;
       }
 
-	  // Drift angle += (drift angle rate of change + 180 degrees ???) & 0xfff - 180 degrees
+	  // Drift angle = (drift angle + spin rate + 180 degrees) & 0xfff - 180 degrees
       uVar2 = (*(short *)(param_2 + 0x3c6) + *(short *)(param_2 + 0x580) + 0x800U & 0xfff) - 0x800;
-
-	  // set drift angle
 	  *(ushort *)(param_2 + 0x3c6) = uVar2;
 
-      if ((0 < *(short *)(param_2 + 0x580)) && (0 < (int)((uint)uVar2 << 0x10))) {
+	  // if you're almost facing forward while spinning at a slow rate
+      if ((0 < *(short *)(param_2 + 0x580)) && (0 < (int)((uint)uVar2 << 0x10))) 
+	  {
+		// reset drift angle (but still spin until EndSpinning)
         *(undefined2 *)(param_2 + 0x3c6) = 0;
       }
     }
   }
-  else {
-    if (((*(short *)(param_2 + 0x580) < 0) && (iVar5 < 400)) &&
-       (iVar5 = iVar5 * -4 >> 3, *(undefined2 *)(param_2 + 0x580) = (short)iVar5, -0x20 < iVar5)) {
+  
+  // spinning the other way
+  else 
+  {
+    if (
+			(
+				// if spinning hasn't stopped
+				(*(short *)(param_2 + 0x580) < 0) && 
+				(iVar5 < 400)
+			) &&
+       
+			(
+				// decrease spin rate
+				iVar5 = iVar5 * -4 >> 3, 
+				*(undefined2 *)(param_2 + 0x580) = (short)iVar5,
+				
+				// if spin rate is too low
+				-0x20 < iVar5
+			)
+		) 
+	{
+	  // set minimum spin rate if drops below minimum (-0x20)
       *(undefined2 *)(param_2 + 0x580) = 0xffe0;
     }
+	
+	// Drift angle = (drift angle + spin rate + 180 degrees) & 0xfff - 180 degrees
     uVar2 = (*(short *)(param_2 + 0x3c6) + *(short *)(param_2 + 0x580) + 0x800U & 0xfff) - 0x800;
     *(ushort *)(param_2 + 0x3c6) = uVar2;
-    if ((*(short *)(param_2 + 0x580) < 0) && ((int)((uint)uVar2 << 0x10) < 0)) {
+	
+	// if you're almost facing forward while spinning at a slow rate
+    if ((*(short *)(param_2 + 0x580) < 0) && ((int)((uint)uVar2 << 0x10) < 0)) 
+	{
+		// reset drift angle (but still spin until EndSpinning)
       *(undefined2 *)(param_2 + 0x3c6) = 0;
     }
   }
+  
   puVar1 = PTR_DAT_8008d2ac;
+  
+  // kart angle = (kart angle + 
   uVar2 = *(short *)(param_2 + 0x39a) +
-													// elapsed milliseconds per frame, ~32
-          (short)((int)*(short *)(param_2 + 0xc0) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 0xd) &
-          0xfff;
+			(short)
+			(
+				// ampTurnState
+				(int)*(short *)(param_2 + 0xc0) * 
+				
+				// elapsed milliseconds per frame, ~32
+			*(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 0xd
+			
+			// clamp to [0x000-0xfff]
+			) & 0xfff;
+
+  // save
   *(ushort *)(param_2 + 0x39a) = uVar2;
+  
+  // cameraRotY = ??? + kart angle + drift angle
   *(short *)(param_2 + 0x2ee) = *(short *)(param_2 + 0x3d4) + uVar2 + *(short *)(param_2 + 0x3c6);
 
   // Interpolate rotation by speed
@@ -50560,6 +50621,8 @@ void FUN_80064320(undefined4 param_1,int param_2)
           0xfff;
 
   *(ushort *)(param_2 + 0x39a) = uVar2;
+  
+  // cameraRotY = ??? + kart angle + drift angle
   *(short *)(param_2 + 0x2ee) = *(short *)(param_2 + 0x3d4) + uVar2 + *(short *)(param_2 + 0x3c6);
 
   // Interpolate rotation by speed
@@ -50851,7 +50914,7 @@ LAB_800646f0:
 		// NoInput set to 3.36 seconds
         *(undefined2 *)(param_1 + 0x400) = 0xd20;
 
-		// Player_MaskRespawn_Init
+		// Player_EatenByPlant_Init
         *(undefined4 *)(param_1 + 0x54) = 0x800677d0;
 
         bVar2 = *(byte *)(param_1 + 0x4a);
@@ -53178,13 +53241,20 @@ void FUN_80066d4c(undefined4 param_1,int param_2)
     *(undefined2 *)(param_2 + 0x400) = 0;
   }
 
-  // when input is allowed
+  // when input is allowed,
+  // which is when driver is spawned back over track
   if (*(short *)(param_2 + 0x400) == 0)
   {
+	// maskObj
     iVar1 = *(int *)(param_2 + 0x580);
-    if (iVar1 != 0) {
+    
+	if (iVar1 != 0) 
+	{
+	  // mask rotY
       *(ushort *)(iVar1 + 4) = *(ushort *)(iVar1 + 4) & 0xfffe;
-      *(undefined2 *)(*(int *)(param_2 + 0x580) + 0x12) = 0x1000;
+      
+	  // scale = 100%
+	  *(undefined2 *)(*(int *)(param_2 + 0x580) + 0x12) = 0x1000;
     }
 
 	// CameraDC flag
@@ -53360,42 +53430,78 @@ void FUN_80066e8c(int param_1,int param_2)
       *(undefined4 *)(param_2 + 0x2dc) = *(undefined4 *)(param_2 + 0x2e8);
     }
   }
-  if (*(int *)(param_2 + 0x580) != 0) {
+  
+  // if maskObj
+  if (*(int *)(param_2 + 0x580) != 0) 
+  {
+	// set mask duration
     *(undefined2 *)(*(int *)(param_2 + 0x580) + 6) = 0x1e00;
+	
+	// if more than 0.5s after player fell
     if (*(short *)(param_2 + 0x400) < 0x3c1) {
-      if (*(char *)(param_2 + 0x58e) == '\0') {
+      
+	  // if not lifting player
+	  if (*(char *)(param_2 + 0x58e) == '\0') 
+	  {
+		// decrease mask posY by elapsed time
         *(short *)(*(int *)(param_2 + 0x580) + 0xe) =
-														// elapsed milliseconds per frame, ~32
-             *(short *)(*(int *)(param_2 + 0x580) + 0xe) - *(short *)(PTR_DAT_8008d2ac + 0x1d04);
+		*(short *)(*(int *)(param_2 + 0x580) + 0xe) - *(short *)(PTR_DAT_8008d2ac + 0x1d04);
       }
+	  
+	  // if lifting player (if driver isn't falling infinitely)
       else
 	  {
-				// elapsed milliseconds per frame, ~32
+		// elapsed milliseconds per frame, ~32
         iVar6 = *(int *)(PTR_DAT_8008d2ac + 0x1d04);
 
+		// speed = 0
         *(undefined2 *)(param_2 + 0x38c) = 0;
+		
+		// increase driver height, both posCurr and posPrev
         iVar6 = *(int *)(param_2 + 0x2d8) + iVar6 * 0x80;
         *(int *)(param_2 + 0x2d8) = iVar6;
-        *(int *)(param_2 + 0x2e4) = iVar6;
+		*(int *)(param_2 + 0x2e4) = iVar6;
       }
+	  
+	  // set mask posZ
       *(undefined2 *)(*(int *)(param_2 + 0x580) + 0x10) =
            (short)((uint)*(undefined4 *)(param_2 + 0x2dc) >> 8);
-      if ((int)*(short *)(*(int *)(param_2 + 0x580) + 0xe) < *(int *)(param_2 + 0x2d8) >> 8) {
+		   
+	  // if mask posY < driver posY
+      if ((int)*(short *)(*(int *)(param_2 + 0x580) + 0xe) < *(int *)(param_2 + 0x2d8) >> 8) 
+	  {
+		// mask posY = driver posY
         *(undefined2 *)(*(int *)(param_2 + 0x580) + 0xe) =
              (short)((uint)*(int *)(param_2 + 0x2d8) >> 8);
+			 
+		// boolLiftingPlayer = 1
         *(undefined *)(param_2 + 0x58e) = 1;
       }
+	  
+	  // maskPosX = driverPosX
       *(undefined2 *)(*(int *)(param_2 + 0x580) + 0xc) =
            (short)((uint)*(undefined4 *)(param_2 + 0x2d4) >> 8);
-      if ((int)*(short *)(param_2 + 0x400) < 0x2d1) {
+	
+	  // if more than halfway through mask pickup
+      if ((int)*(short *)(param_2 + 0x400) < 0x2d1) 
+	  {
+		// scale = 100%
         *(undefined2 *)(*(int *)(param_2 + 0x580) + 0x12) = 0x1000;
       }
-      else {
+      
+	  // if less than half
+	  else 
+	  {
+		// interpolate scale
         *(undefined2 *)(*(int *)(param_2 + 0x580) + 0x12) =
              (short)(((0x3c0 - (int)*(short *)(param_2 + 0x400)) * 0x1000) / 0xf0);
       }
     }
-    else {
+    
+	// less than 0.5s after player fell
+	else 
+	{
+	  // scale = 0%
       *(undefined2 *)(*(int *)(param_2 + 0x580) + 0x12) = 0;
     }
   }
@@ -53435,7 +53541,7 @@ void FUN_800671b0(int param_1,int param_2)
   // Weapon_Mask_UseWeapon
   uVar1 = FUN_80064c38(param_2,1);
 
-  // Mask Object (580?)
+  // Mask Object
   *(undefined4 *)(param_2 + 0x580) = uVar1;
 
   *(undefined2 *)(param_2 + 0x3dc) = 0;
@@ -53444,7 +53550,7 @@ void FUN_800671b0(int param_1,int param_2)
   *(undefined *)(param_2 + 0x4c) = 0;
   *(undefined *)(param_2 + 0x4d) = 0;
 
-  // NoInput timer to 1.44s
+  // 1.44s until spawned back over track
   *(undefined2 *)(param_2 + 0x400) = 0x5a0;
 
   *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) & 0xfff7ffbf;
@@ -53541,12 +53647,20 @@ void FUN_800671b0(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x2e0) = *(undefined4 *)(param_2 + 0x2d4);
   *(undefined4 *)(param_2 + 0x2e8) = *(undefined4 *)(param_2 + 0x2dc);
   
-  if (iVar2 != 0) {
+  // if maskObj
+  if (iVar2 != 0) 
+  {
     *(ushort *)(iVar2 + 4) = *(ushort *)(iVar2 + 4) | 1;
+	
+	// maskX = driverX
     *(undefined2 *)(*(int *)(param_2 + 0x580) + 0xc) =
          (short)((uint)*(undefined4 *)(param_2 + 0x2d4) >> 8);
+		 
+	// maskY = driverY
     *(short *)(*(int *)(param_2 + 0x580) + 0xe) =
          (short)((uint)*(undefined4 *)(param_2 + 0x2d8) >> 8) + 0x140;
+		 
+	// maskZ = driverZ
     *(undefined2 *)(*(int *)(param_2 + 0x580) + 0x10) =
          (short)((uint)*(undefined4 *)(param_2 + 0x2dc) >> 8);
   }
@@ -53578,7 +53692,7 @@ void FUN_800671b0(int param_1,int param_2)
 }
 
 
-// Player_MaskRespawn_Update
+// Player_EatenByPlant_Update
 void FUN_8006749c(int param_1,int param_2)
 
 {
@@ -53623,7 +53737,7 @@ void FUN_8006749c(int param_1,int param_2)
 }
 
 
-// Player_MaskRespawn_Input
+// Player_EatenByPlant_Input
 void FUN_80067554(undefined4 param_1,int param_2)
 
 {
@@ -53656,7 +53770,7 @@ void FUN_80067554(undefined4 param_1,int param_2)
 
 // WARNING: Could not reconcile some variable overlaps
 
-// Player_MaskRespawn_Animate
+// Player_EatenByPlant_Animate
 // param1 = thread, param2 = driver
 void FUN_800675c0(undefined4 param_1,int param_2)
 
@@ -53671,14 +53785,24 @@ void FUN_800675c0(undefined4 param_1,int param_2)
   int local_28;
   long alStack32 [2];
 
+  // plantEatingMe
   iVar3 = *(int *)(param_2 + 0x4a8);
-  if (((iVar3 != 0) && (*(char *)(param_2 + 0x580) == '\0')) &&
-     (*(short *)(param_2 + 0x400) < 0xb40))
+  
+  if (
+		(
+			// if plant is eating me
+			(iVar3 != 0) && 
+			
+			(*(char *)(param_2 + 0x580) == '\0')
+		) &&
+		
+		(*(short *)(param_2 + 0x400) < 0xb40))
   {
 	// get instance from thread
     iVar4 = *(int *)(iVar3 + 0x34);
 
     *(undefined *)(param_2 + 0x580) = 1;
+	
     local_38.vx = -0xfa;
     if (*(short *)(*(int *)(iVar3 + 0x30) + 4) == 0) {
       local_38.vx = 0xfa;
@@ -53746,7 +53870,7 @@ void FUN_800675c0(undefined4 param_1,int param_2)
 }
 
 
-// Player_MaskRespawn_Init
+// Player_EatenByPlant_Init
 // when eaten by plant on papu pyramid
 // param1 = thread, param2 = driver
 void FUN_800677d0(int param_1,int param_2)
@@ -53807,10 +53931,10 @@ void FUN_800677d0(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x308) = 0;
   FUN_80028808(*(undefined4 *)(param_2 + 0x300));
 
-  // Player_MaskRespawn_Update
+  // Player_EatenByPlant_Update
   *(undefined4 *)(param_2 + 0x58) = 0x8006749c;
 
-  // Player_MaskRespawn_Input
+  // Player_EatenByPlant_Input
   *(undefined4 *)(param_2 + 0x5c) = 0x80067554;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -53824,7 +53948,7 @@ void FUN_800677d0(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x78) = 0; // cant move anymore
   *(undefined4 *)(param_2 + 0x7c) = 0;
 
-  // Player_MaskRespawn_Animate
+  // Player_EatenByPlant_Animate
   *(undefined4 *)(param_2 + 0x80) = 0x800675c0;
 
   // no particles
@@ -53836,7 +53960,7 @@ void FUN_800677d0(int param_1,int param_2)
 // param1 = thread, param2 = driver
 void FUN_80067930(undefined4 param_1,int param_2)
 {
-  // Player_MaskRespawn_Init
+  // Player_EatenByPlant_Init
   FUN_800677d0(param_1, param_2);
 
   // erase OnUpdate
@@ -54267,7 +54391,7 @@ void FUN_80067f4c(undefined4 param_1,int param_2)
 	// Weapon_Mask_UseWeapon
     uVar1 = FUN_80064c38(param_2,0);
 
-	// Mask Object (580?)
+	// Mask Object
     *(undefined4 *)(param_2 + 0x580) = uVar1;
 
 	// Driver flag
@@ -54395,6 +54519,8 @@ void FUN_80068150(undefined4 param_1,int param_2)
 
   // angle = angle change
   *(ushort *)(param_2 + 0x39a) = uVar2;
+  
+  // cameraRotY = ??? + kart angle + drift angle
   *(short *)(param_2 + 0x2ee) = *(short *)(param_2 + 0x3d4) + uVar2 + *(short *)(param_2 + 0x3c6);
 
   // Interpolate rotation by speed
@@ -54950,8 +55076,12 @@ void FUN_80068be8(undefined4 param_1,int param_2)
   }
   *(int *)(param_2 + 0x2d8) = iVar4;
 LAB_80068db0:
+
+  // alter drift angle
   sVar2 = (*(short *)(param_2 + 0x3c6) + *(short *)piVar5 + 0x800U & 0xfff) - 0x800;
   *(short *)(param_2 + 0x3c6) = sVar2;
+  
+  // cameraRotY = ??? + kart angle + drift angle
   *(short *)(param_2 + 0x2ee) = *(short *)(param_2 + 0x3d4) + *(short *)(param_2 + 0x39a) + sVar2;
 
   // driver is warping

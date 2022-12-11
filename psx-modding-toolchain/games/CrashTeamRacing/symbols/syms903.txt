@@ -999,10 +999,10 @@
 80064e5c Player_MaskGrab_Animate
 80065180 Player_MaskGrab_Init
 
-8006546c Player_MaskRespawn_Update
-80065524 Player_MaskRespawn_Input
-80065590 Player_MaskRespawn_Animate
-800657a0 Player_MaskRespawn_Init
+8006546c Player_EatenByPlant_Update
+80065524 Player_EatenByPlant_Input
+80065590 Player_EatenByPlant_Animate
+800657a0 Player_EatenByPlant_Init
 
 800658d4 Player_Dead_Init // (tombstone sep3)
 
