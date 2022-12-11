@@ -50329,18 +50329,19 @@ void FUN_80063ec0(undefined4 param_1,int param_2)
   // Make driver talk
   FUN_8002cbe8(3,(int)(short)(&DAT_80086e84)[*(byte *)(param_2 + 0x4a)],0x10);
 
+  // spin left
   *(undefined2 *)(param_2 + 0x582) = 1;
 
-  // Assume you are spinning left...
-
-  // drift angle rate of change = 300
+  // spin rate = 300
   *(undefined2 *)(param_2 + 0x580) = 300;
 
   // if you're spinning to the right
   if (*(short *)(param_2 + 0xc0) < 0)
   {
-	// drift angle rate of change = -300
+	// spin rate = -300
     *(undefined2 *)(param_2 + 0x580) = 0xfed4;
+	
+	// spin right (-1)
     *(undefined2 *)(param_2 + 0x582) = 0xffff;
   }
 

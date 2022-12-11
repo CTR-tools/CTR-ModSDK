@@ -2530,15 +2530,43 @@ struct Driver
 	
 	// ==== End of Quip Data ====
 
-	// This is a union,
-	// addresses share purposes
+	union
+	{
+		struct
+		{
+			// 0x580
+			// used to determine spinout
+			short numFramesDrifting;
 
-	// 0x580
-	// used to determine spinout
-	short numFramesDrifting;
-
-	// 0x582
-	short driftBoostTimeMS;
+			// 0x582
+			short driftBoostTimeMS;
+			
+			// 0x584
+			int driftTotalTimeMS;
+			
+		} Drifting;
+		
+		struct
+		{
+			// 0x580
+			// object connected to thread
+			void* maskObj;
+			
+			// 0x584
+			int engineRevAmount;
+			
+		} MaskGrab;
+		
+		struct
+		{
+			// 0x580
+			short spinRate;
+			
+			// 0x582
+			short spinDir;
+		} Spinning;
+		
+	} KartStates;
 
 	// 0x584
 	// AngleAxis_NormalVec
