@@ -54025,11 +54025,11 @@ void FUN_80067960(undefined4 param_1,int param_2)
 		// if reason for revving is mask grab
 		(*(char *)(param_2 + 0x594) != '\0') &&
 
-		// mask object?
+		// if maskObj exists
 		(*(int *)(param_2 + 0x580) != 0)
 	  )
   {
-	// mask object duration ?
+	// end duration
     *(undefined2 *)(*(int *)(param_2 + 0x580) + 6) = 0;
   }
 
@@ -54108,7 +54108,11 @@ void FUN_80067a74(undefined4 param_1,int param_2)
 
     // Y pos -= 0x200
     *(int *)(param_2 + 0x2d8) = *(int *)(param_2 + 0x2d8) + -0x200;
-    if (*(int *)(param_2 + 0x580) != 0) {
+    
+	// if maskObj exists
+	if (*(int *)(param_2 + 0x580) != 0) 
+	{
+	  // set mask duration
       *(undefined2 *)(*(int *)(param_2 + 0x580) + 6) = 0x1e00;
     }
   }
@@ -54388,6 +54392,7 @@ void FUN_80067f4c(undefined4 param_1,int param_2)
   // assume reason for revving is: start of race
   *(undefined *)(param_2 + 0x594) = 0;
 
+  // clear maskObj
   *(undefined4 *)(param_2 + 0x580) = 0;
 
   // if this is a mask grab
@@ -54622,6 +54627,7 @@ void FUN_800682a4(undefined4 param_1,int param_2)
   // Get random number
   bVar1 = FUN_8003ea28();
 
+  // randomly play blasted backwards
   *(byte *)(param_2 + 0x580) = bVar1 & 4;
 
   // Player_Blasted_Update

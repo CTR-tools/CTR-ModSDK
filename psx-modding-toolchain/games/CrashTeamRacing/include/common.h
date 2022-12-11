@@ -2533,6 +2533,7 @@ struct Driver
 	// 0x580 - 0x598
 	union
 	{
+		// state 2
 		struct
 		{
 			// 0x580
@@ -2549,26 +2550,20 @@ struct Driver
 			
 		} Drifting;
 		
+		// state 2
 		struct
 		{
 			// 0x580
-			// object connected to thread
-			struct MaskHeadWeapon* maskObj;
+			short spinRate;
 			
-			// 0x584
-			short AngleAxis_NormalVec[4];
-	
-			// 0x58c
-			char boolParticlesSpawned;
-			char boolStillFalling;
-			char boolLiftingPlayer;
-			char boolWhistle;
+			// 0x582
+			short spinDir;
 			
-			// 0x590
-			char unused[8];
-						
-		} MaskGrab;
+			// more?
+			
+		} Spinning;
 		
+		// state 4
 		struct
 		{
 			// 0x580
@@ -2594,6 +2589,28 @@ struct Driver
 			
 		} EngineRevving;
 		
+		// state 5
+		struct
+		{
+			// 0x580
+			// object connected to thread
+			struct MaskHeadWeapon* maskObj;
+			
+			// 0x584
+			short AngleAxis_NormalVec[4];
+	
+			// 0x58c
+			char boolParticlesSpawned;
+			char boolStillFalling;
+			char boolLiftingPlayer;
+			char boolWhistle;
+			
+			// 0x590
+			char unused[8];
+						
+		} MaskGrab;
+		
+		// state 5
 		struct
 		{
 			// 0x580
@@ -2603,17 +2620,17 @@ struct Driver
 			
 		} EatenByPlant;
 		
+		// state 6
 		struct
 		{
-			// 0x580
-			short spinRate;
-			
-			// 0x582
-			short spinDir;
-			
-			// more?
-			
-		} Spinning;
+			char boolPlayBackwards;
+		} Blasted;
+		
+		// state 10
+		struct
+		{
+			int TwoSecondCount;
+		} Warp;
 		
 	} KartStates;
 
