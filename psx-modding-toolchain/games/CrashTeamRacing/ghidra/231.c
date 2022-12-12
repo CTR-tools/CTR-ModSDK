@@ -1805,7 +1805,9 @@ LAB_800ad4ec:
   // if this driver is not an AI
   if ((*(uint *)(*piVar5 + 0x2c8) & 0x100000) == 0) 
   {
+	// if player did not start jumping this frame
     if ((*(uint *)(*piVar5 + 0x2c8) & 0x400) == 0) goto LAB_800ad5f8;
+	
     if (*(short *)((int)piVar5 + 0x22) != 0) {
       *(short *)((int)piVar5 + 0x22) = *(short *)((int)piVar5 + 0x22) + -1;
       goto LAB_800ad5f8;

@@ -31986,6 +31986,7 @@ void FUN_8004fd34(int param_1)
     goto LAB_8004fe8c;
     sVar18 = 0xc;
   }
+  
   else {
     if (
 			(
@@ -41986,10 +41987,10 @@ LAB_8005ad6c:
 			(*(short *)(*(int *)(*(int *)(param_1 + 0x1c) + 0x6c) + 0x44) == 0x18) &&
 			(
 				(
-					//if racer is not getting an Outside turbo
+					//if racer is not getting a new boost this frame
 					(*(uint *)(param_1 + 0x2c8) & 0x200000) == 0 ||
 
-					//racer was not getting an Outside turbo previous frame
+					//racer was not getting a new boost previous frame
 					((*(uint *)(param_1 + 0x2cc) & 0x200000) == 0)
 				)
 			)
@@ -45166,7 +45167,10 @@ void FUN_8005ee34(int param_1,int param_2)
       sVar5 = *(short *)(param_2 + 0x390);
       iVar8 = (int)sVar5;
       iVar6 = -800;
-      if ((*(uint *)(param_2 + 0x2c8) & 0x400) == 0) {
+	  
+	  // if player did not start jumping this frame
+      if ((*(uint *)(param_2 + 0x2c8) & 0x400) == 0) 
+	  {
         iVar11 = (int)*(short *)(param_2 + 0x410) -
                  (*(short *)(param_2 + 0x410) * 9 + iVar8 * 7 >> 4);
         iVar6 = iVar11 * 4;
@@ -45290,9 +45294,15 @@ LAB_8005ef64:
   // Rot_AxisAngle
   FUN_8005f89c(param_2 + 0x330,param_2 + 0x368,(int)*(short *)(param_2 + 0x2ee));
   
-  if (((*(short *)(param_2 + 0x3e2) == 0) ||
-      (*(short *)(param_2 + 0x39e) < *(short *)(param_2 + 0x42c))) ||
-     ((*(uint *)(param_2 + 0x2c8) & 0x80) != 0)) {
+  if (
+		(
+			(*(short *)(param_2 + 0x3e2) == 0) ||
+			(*(short *)(param_2 + 0x39e) < *(short *)(param_2 + 0x42c))
+		) ||
+     
+		((*(uint *)(param_2 + 0x2c8) & 0x80) != 0)
+	 ) 
+  {
     bVar3 = *(byte *)(param_2 + 0x4c);
     if (bVar3 != 0) {
       if (bVar3 == 2) {
@@ -52287,7 +52297,9 @@ LAB_800659ec:
 	// with driver rotation, and quadblock rotation
     FUN_8005f89c(iVar5 + 0x30,puVar11,(int)sVar2);
 
+	// instTntSend
 	*(int *)(param_1 + 0x20) = iVar5;
+	
     *(uint *)(param_1 + 0x2c8) = *(uint *)(param_1 + 0x2c8) | 0x80000000;
 
 	if (param_3 == 0)

@@ -1790,10 +1790,39 @@ struct Driver
 	int skidmarkEnableFlags;
 
 	// actions:
-	// 0x0001 - touching quadblock
-	// 0x0002 - started touching quadblock this frame
-	// 0x0004
-	// 0x0008 - accel prevention (holding square)
+	// 0x00000001 - touching quadblock
+	// 0x00000002 - started touching quadblock this frame
+	// 0x00000004 - holding L1 or R1
+	// 0x00000008 - accel prevention (holding square)
+	// 0x00000010 - ?
+	// 0x00000020 - ?
+	// 0x00000040 - ? COLL-related
+	// 0x00000080 - ? OnRender-related, turbo-related
+	// 0x00000100 - driving wrong way
+	// 0x00000200 - using turbo weapon
+	// 0x00000400 - started jump this frame
+	// 0x00000800 - front wheel skid
+	// 0x00001000 - back wheel skid
+	// 0x00002000 - driving against wall
+	// 0x00004000 - warping
+	// 0x00008000 - want to fire weapon
+	// 0x00010000 - echo engine
+	// 0x00020000 - ?
+	// 0x00040000 - race timer frozen
+	// 0x00080000 - airborne
+	// 0x00100000 - driver is an AI
+	// 0x00200000 - new boost this frame
+	// 0x00400000 - ?
+	// 0x00800000 - using mask weapon
+	// 0x01000000 - behind start line
+	// 0x02000000 - race finished for this driver
+	// 0x04000000 - tracker chasing you
+	// 0x08000000 - ? respawnIndex-related
+	// 0x10000000 - human-human collision
+	// ?
+	// ?
+	// 0x80000000 - dropping mine
+	
 
 	// 0x2C8
 	unsigned int actionsFlagSet;
