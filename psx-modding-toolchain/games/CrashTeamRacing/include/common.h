@@ -1754,7 +1754,7 @@ struct Driver
 	void* funcPtrs[0xD];
 
 	// 0x88
-	int coordSpeed[3];
+	int velocityXYZ[3];
 
 	// 0x94
 	int vec3_originToCenter[3];
@@ -1987,10 +1987,10 @@ struct Driver
 
 	// 0x3CC
 	// from OnCollide_Drivers
-	short coordSpeedSubtract[3];
+	short accelXYZ[3];
 
 	// 0x3D0
-	char fill_coordSpeedSubtract[0xA];
+	char fill_accelXYZ[0xA];
 
 	// 0x3DA
 	// also drift direction

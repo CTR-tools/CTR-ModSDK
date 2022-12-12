@@ -20,10 +20,10 @@ void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)
 	int distance;
 	short driverHitRadius;
 
-	driver->coordSpeed[1] -= driver->coordSpeedSubtract[1];
-	driver->coordSpeed[0] -= driver->coordSpeedSubtract[0];
+	driver->velocityXYZ[1] -= driver->accelXYZ[1];
+	driver->velocityXYZ[0] -= driver->accelXYZ[0];
 	stepFlagSet = driver->stepFlagSet;
-	driver->coordSpeed[2] -= driver->coordSpeedSubtract[2];
+	driver->velocityXYZ[2] -= driver->accelXYZ[2];
 
 	if (stepFlagSet & 0x4000)
 	{
@@ -127,7 +127,7 @@ LAB_8005ec70:
 		)
 		{
 			// pass the thread, collision data, and driver->88 is velocity?
-			DriverCrash_AnyTwoCars(bread, &posX, &driver->coordSpeed[0]);
+			DriverCrash_AnyTwoCars(bread, &posX, &driver->velocityXYZ[0]);
 		}
 	}
 	if (*(u_short*)&driver->fill18_postQuadBlock[6] & 2) 
@@ -145,9 +145,9 @@ LAB_8005ec70:
 		) 
 		{
 			// calculate speed vector
-			driver->coordSpeed[0] += iVar3 * 0x40;
-			driver->coordSpeed[1] += ((driver->posCurr[1] >> 8) - *(short *)&driver->fill18_postQuadBlock[0xA]) * 0x40;
-			driver->coordSpeed[2] += driverHitRadius * 0x40;
+			driver->velocityXYZ[0] += iVar3 * 0x40;
+			driver->velocityXYZ[1] += ((driver->posCurr[1] >> 8) - *(short *)&driver->fill18_postQuadBlock[0xA]) * 0x40;
+			driver->velocityXYZ[2] += driverHitRadius * 0x40;
 		}
 	}
 	return;

@@ -43602,7 +43602,7 @@ void FUN_8005ca24(int param_1)
 
 
 // param_1: &driver
-// param_2: coordSpeeds
+// param_2: velocityXYZs
 void FUN_8005cd1c(int param_1,int *param_2)
 
 {
@@ -43872,7 +43872,7 @@ int FUN_8005d218(int param_1,int param_2,int param_3,int param_4)
 }
 
 // DriverCrash_AnyTwoCars
-// pass the thread, collision data, and driver->88 coordSpeed[] (x, y, z)
+// pass the thread, collision data, and driver->88 velocityXYZ[] (x, y, z)
 // calls Crash_AI and Crash_HumanToHuman
 void FUN_8005d404(int param_1,int param_2,int *param_3)
 
@@ -44296,7 +44296,7 @@ void FUN_8005d404(int param_1,int param_2,int *param_3)
 
 // hint : disabling this function stops player from moving, but you can still turn
 // param_1 = &driver
-// param_2 = &driver.coordSpeed
+// param_2 = &driver.velocityXYZ
 void FUN_8005e104(int param_1,int *param_2)
 
 {
@@ -44336,7 +44336,7 @@ LAB_8005e15c:
     }
   }
 
-  // coordSpeed[y] = (driver.speed * ???) >> 0xC
+  // velocityXYZ[y] = (driver.speed * ???) >> 0xC
   param_2[1] = *(short *)(param_1 + 0x38c) * iVar2 >> 0xc;
 
   // angle = axisRotationX
@@ -44365,7 +44365,7 @@ LAB_8005e15c:
 
 LAB_8005e1e8:
   
-  // coordSpeed[x] and coordSpeed[z]
+  // velocityXYZ[x] and velocityXYZ[z]
   *param_2 = iVar2 * iVar3 >> 0xc;
   param_2[2] = iVar2 * iVar5 >> 0xc;
   return;
@@ -44373,7 +44373,7 @@ LAB_8005e1e8:
 
 
 // OnGravity (for humans only)
-// param1 - driver, param2 - coordSpeed
+// param1 - driver, param2 - velocityXYZ
 void FUN_8005e214(int param_1,VECTOR *param_2)
 
 {
@@ -44955,9 +44955,11 @@ void FUN_8005ea60(undefined4 param_1,int param_2)
   *(undefined2 *)(param_2 + 0x364) = 0;
   *(undefined2 *)(param_2 + 0xaa) = 0;
 
+  // increase velocity by acceleration
   *(int *)(param_2 + 0x88) = *(int *)(param_2 + 0x88) + (int)*(short *)(param_2 + 0x3cc);
   *(int *)(param_2 + 0x90) = *(int *)(param_2 + 0x90) + (int)*(short *)(param_2 + 0x3d0);
   *(int *)(param_2 + 0x8c) = *(int *)(param_2 + 0x8c) + (int)*(short *)(param_2 + 0x3ce);
+  
   return;
 }
 
@@ -44977,6 +44979,7 @@ void FUN_8005ebac(int param_1,int param_2)
   int local_38;
   int local_34;
 
+  // decrease velocity by acceleration
   *(int *)(param_2 + 0x8c) = *(int *)(param_2 + 0x8c) - (int)*(short *)(param_2 + 0x3ce);
   *(int *)(param_2 + 0x88) = *(int *)(param_2 + 0x88) - (int)*(short *)(param_2 + 0x3cc);
   uVar5 = *(uint *)(param_2 + 0xbc);
@@ -45806,8 +45809,10 @@ uint FUN_8005fb4c(int param_1)
   // speed
   iVar1 = (int)*(short *)(param_1 + 0x38e);
 
+  // erase accel X,Y
   *(undefined2 *)(param_1 + 0x3cc) = 0;
   *(undefined2 *)(param_1 + 0x3ce) = 0;
+  
   if (iVar1 < 0) {
     iVar1 = -iVar1;
   }
@@ -45815,6 +45820,7 @@ uint FUN_8005fb4c(int param_1)
   // low speed (useless? shoould just be '= 0;')
   uVar2 = (uint)(iVar1 < 0x301);
 
+  // erase accel Z
   *(undefined2 *)(param_1 + 0x3d0) = 0;
 
   if (
@@ -45892,6 +45898,9 @@ uint FUN_8005fb4c(int param_1)
       gte_ldVXY0(uVar2);
       gte_ldVZ0(0);
       gte_rtv0();
+	  
+	  // new acceleration vector
+	  
       uVar5 = gte_stMAC1();
       *(short *)(param_1 + 0x3cc) = (short)uVar5;
       uVar5 = gte_stMAC2();

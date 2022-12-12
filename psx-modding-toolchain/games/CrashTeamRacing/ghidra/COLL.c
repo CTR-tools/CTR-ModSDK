@@ -3255,7 +3255,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
   iVar14 = 0xf;
   do 
   {
-    // Calculate velocity in X, Y, and Z components, with driver->coordSpeed
+    // Calculate velocity in X, Y, and Z components, with driver->velocityXYZ
     iVar5 = (*(int *)(param_2 + 0x88) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5) * iVar13 >> 0xc;
 	iVar6 = (*(int *)(param_2 + 0x8c) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5) * iVar13 >> 0xc;
     iVar7 = (*(int *)(param_2 + 0x90) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5) * iVar13 >> 0xc;
