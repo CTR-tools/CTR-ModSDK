@@ -53802,6 +53802,9 @@ void FUN_80067554(undefined4 param_1,int param_2)
 
   *(undefined *)(param_2 + 0x4b) = 0;
   puVar1 = PTR_DAT_8008d2ac;
+  
+  // acceleration prevention,
+  // drop bits for jump button, 0x20?, reversing engine
   *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) & 0xfffdffdb | 8;
   
   // increment time spent in mask grab
