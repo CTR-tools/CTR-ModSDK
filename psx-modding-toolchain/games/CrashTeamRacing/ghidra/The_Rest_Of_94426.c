@@ -50258,7 +50258,7 @@ void FUN_80063cf4(undefined4 param_1,int param_2)
   // If you have slown down enough
 
   // Player_LastSpin_Init
-  FUN_80064254();
+  FUN_80064254(param_1, param_2);
   return;
 }
 
