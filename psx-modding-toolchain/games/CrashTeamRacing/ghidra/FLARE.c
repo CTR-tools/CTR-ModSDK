@@ -281,7 +281,7 @@ void FUN_80025138(undefined4 *param_1)
 	// Get the pointer to flare, attached to the thread
     puVar2 = *(undefined4 **)(iVar1 + 0x30);
 
-	// initialize data within flare
+	// frameCount = 0
     *puVar2 = 0;
 	
 	// store vec3 position
