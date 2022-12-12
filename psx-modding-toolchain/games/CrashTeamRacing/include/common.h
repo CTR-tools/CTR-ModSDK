@@ -2631,6 +2631,8 @@ struct Driver
 			// 0x594
 			int boolEngineRevMaskGrab;
 			
+			// == end ==
+			
 		} EngineRevving;
 		
 		// state 5
