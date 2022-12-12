@@ -2024,8 +2024,8 @@ struct Driver
 	// from OnCollide_Drivers
 	short accelXYZ[3];
 
-	// 0x3D0
-	char fill_accelXYZ[0xA];
+	// 0x3D2
+	char fill_accelXYZ[0x8];
 
 	// 0x3DA
 	// also drift direction
@@ -5879,7 +5879,6 @@ struct Terrain
 	// unless on "ice" or "none", then it's zero
 	int const_0x100;
 	
-	// 0x14
 	int unk14;
 	
 	// 0x18
@@ -5891,10 +5890,7 @@ struct Terrain
 	struct ParticleEmitter* em_EvenFrame;
 
 	// 0x20
-	int unk_0x20;
-
-	// 0x24
-	int unk_0x24;
+	int unk_0x20[2];
 
 	// 0x28
 	// if zero, like life, can't change steering at all,
