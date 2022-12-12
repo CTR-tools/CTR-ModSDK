@@ -3124,9 +3124,9 @@ void FUN_80020334(int param_1,int param_2,int param_3)
   }
 
   // if this function is being called from the 
-  // loop of 15 calls, from OnPhysics
+  // loop of 15 calls, from OnCollide_QuadblockNear
 
-  // since start of OnPhysics, check all existing
+  // since start of OnCollide_QuadblockNear, check all existing
   // records of quadblock and triangle, so far
   iVar3 = *(int *)(param_3 + 0x2c0) + -1;
   
