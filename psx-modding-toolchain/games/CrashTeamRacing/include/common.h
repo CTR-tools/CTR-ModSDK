@@ -2025,7 +2025,10 @@ struct Driver
 	short accelXYZ[3];
 
 	// 0x3D2
-	char fill_accelXYZ[0x8];
+	short unk_LerpToForwards;
+	
+	// 0x3d4
+	short unk3D4[3];
 
 	// 0x3DA
 	// also drift direction
