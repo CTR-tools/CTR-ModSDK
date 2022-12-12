@@ -8345,7 +8345,7 @@ undefined4 FUN_800b5210(int param_1,undefined4 param_2,undefined4 param_3)
 	// and therefore the object is drawn
     else 
 	{
-	  // Execute OnCollide pointer
+	  // Execute th->OnCollide pointer
       uVar1 = (*pcVar2)(iVar3,param_2,pcVar2,param_3);
     }
   }
@@ -11104,10 +11104,10 @@ void FUN_800b84f0(int param_1)
 		// if collision
 		if (iVar2 != 0) 
 		{
-		  // instance -> thread
+		  // instance->thread
           uStack32 = *(undefined4 *)(iVar2 + 0x6c);
 		  
-		  // instance -> thread -> OnCollide
+		  // instance->thread->OnCollide
           uStack24 = *(undefined4 *)(*(int *)(iVar2 + 0x6c) + 0x28);
           
 		  // RB_Hazard_OnCollide_Generic_Alt

@@ -1986,7 +1986,7 @@ struct Driver
 	short unknownDimension2Prev;
 
 	// 0x3CC
-	// in OnCollide
+	// from OnCollide_Drivers
 	short coordSpeedSubtract[3];
 
 	// 0x3D0
@@ -7008,7 +7008,7 @@ struct Data
 		// crystals initializing a thread during instance creation,
 		// so the crystals can spin, which bloats the thread pool,
 		// and then the thread creation function just becomes a wrapper 
-		// for the thread's OnCollide, resulting immediately: 
+		// for the thread's funcOnCollide, resulting immediately: 
 		// 		- thread birth if no thread exists
 		//			which is useless cause the thread for crystal exists
 		//		- OnCollide

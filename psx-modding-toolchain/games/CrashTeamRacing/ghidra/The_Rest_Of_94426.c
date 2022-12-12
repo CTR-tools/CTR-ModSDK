@@ -52148,7 +52148,7 @@ LAB_800659ec:
 	// set funcOnDestroy to remove instance from instance pool
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x24) = 0x80041dfc
 
-	// set onCollide function
+	// set funcOnCollide function
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x28) = 0x800ac4b8;
 
 	// Play potion sound,
