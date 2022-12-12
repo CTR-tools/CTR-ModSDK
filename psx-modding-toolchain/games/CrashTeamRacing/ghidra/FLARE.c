@@ -282,6 +282,8 @@ void FUN_80025138(undefined4 *param_1)
 
 	// initialize data within flare
     *puVar2 = 0;
+	
+	// store vec3 position
     uVar3 = param_1[1];
     puVar2[1] = *param_1;
     puVar2[2] = uVar3;

@@ -55120,11 +55120,15 @@ void FUN_80068be8(undefined4 param_1,int param_2)
     if (*(short *)(iVar4 + 0x1c) == 0)
 	{
 	  // if car is visible
-      if ((*(uint *)(iVar4 + 0x28) & 0x80) == 0) {
+      if ((*(uint *)(iVar4 + 0x28) & 0x80) == 0) 
+	  {
+		// position above kart
         local_18 = (undefined2)((uint)*(undefined4 *)(param_2 + 0x2d4) >> 8);
         local_16 = (short)((uint)*(undefined4 *)(param_2 + 0x588) >> 8) + 0x40;
         local_14 = (undefined2)((uint)*(undefined4 *)(param_2 + 0x2dc) >> 8);
-        FUN_80025138(&local_18);
+        
+		// FLARE_Init
+		FUN_80025138(&local_18);
       }
 
 	  // make invisible
