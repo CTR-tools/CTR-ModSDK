@@ -50685,7 +50685,8 @@ void FUN_80064320(undefined4 param_1,int param_2)
 
   *(ushort *)(param_2 + 0x39a) = uVar2;
   
-  // cameraRotY = ??? + kart angle + drift angle
+  // cameraRotY = spinRate + kart angle + drift angle,
+  // spin rate is added so you're one frame ahead
   *(short *)(param_2 + 0x2ee) = *(short *)(param_2 + 0x3d4) + uVar2 + *(short *)(param_2 + 0x3c6);
 
   // Interpolate rotation by speed
