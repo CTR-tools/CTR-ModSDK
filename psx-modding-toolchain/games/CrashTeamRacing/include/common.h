@@ -1983,7 +1983,7 @@ struct Driver
 	short unk_offset3B2;
 	
 	// 0x3B4
-	int turningAcceleration;
+	int rotationSpinRate; // again?
 
 	// 0x3B8
 	char fill_turningAccel[2];
@@ -2598,7 +2598,7 @@ struct Driver
 		struct
 		{
 			// 0x580
-			short spinRate;
+			short driftSpinRate;
 			
 			// 0x582
 			short spinDir;

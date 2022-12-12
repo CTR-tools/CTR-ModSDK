@@ -46065,7 +46065,7 @@ LAB_8005fd74:
   //terrainMeta1
   iVar12 = *(int *)(param_2 + 0x358);
   
-  // turningAcceleration = driver.turningAcceleration;
+  // rotationSpinRate = driver.rotationSpinRate;
   iVar9 = (int)*(short *)(param_2 + 0x3b4);
   
   if (iVar5 == 0)
@@ -46083,17 +46083,17 @@ LAB_8005fd74:
       iVar9 = -iVar9;
     }
     sVar4 = (short)iVar9;
-    //if (turningAcceleration < simpTurnState256) {
+    //if (rotationSpinRate < simpTurnState256) {
     if (iVar9 < iVar5) {
-      //turningAcceleration = turningAcceleration + ((TurningInputResponseStat + TurnConst * 100) * (terrainMeta1 + 0x28) >> 8);
+      //rotationSpinRate = rotationSpinRate + ((TurningInputResponseStat + TurnConst * 100) * (terrainMeta1 + 0x28) >> 8);
         // 100%
       iVar9 = iVar9 + (((int)*(short *)(param_2 + 0x43e) + (int)*(char *)(param_2 + 0x34) * 100) *
                        *(int *)(iVar12 + 0x28) >> 8);
-      //turningAccelerationS16 = (short)turningAcceleration;
+      //rotationSpinRateS16 = (short)rotationSpinRate;
       sVar4 = (short)iVar9;
 
-      /*if (simpTurnState256 < turningAcceleration) {
-         turningAccelerationS16 = (short)simpTurnState256;
+      /*if (simpTurnState256 < rotationSpinRate) {
+         rotationSpinRateS16 = (short)simpTurnState256;
       }*/
       bVar2 = iVar5 < iVar9;
 LAB_8005fee4:
@@ -46102,17 +46102,17 @@ LAB_8005fee4:
       }
     }
     else {
-      //if (simpTurnState256 < turningAcceleration)
+      //if (simpTurnState256 < rotationSpinRate)
       if (iVar5 < iVar9) {
-        //turningAcceleration = turningAcceleration - ((TurningInputResponseStat + TurnConst * 0x32) * (terrainMeta1 + 0x28) >> 8)
+        //rotationSpinRate = rotationSpinRate - ((TurningInputResponseStat + TurnConst * 0x32) * (terrainMeta1 + 0x28) >> 8)
         // 50%
         iVar9 = iVar9 - (((int)*(short *)(param_2 + 0x43e) + (int)*(char *)(param_2 + 0x34) * 0x32)
                          * *(int *)(iVar12 + 0x28) >> 8);
-        //turningAccelerationS16 = (short)turningAcceleration;
+        //rotationSpinRateS16 = (short)rotationSpinRate;
         sVar4 = (short)iVar9;
 
-        /*if (turningAcceleration < simpTurnState256) {
-            turningAccelerationS16 = (short)simpTurnState256;
+        /*if (rotationSpinRate < simpTurnState256) {
+            rotationSpinRateS16 = (short)simpTurnState256;
         }*/
         bVar2 = iVar9 < iVar5;
         goto LAB_8005fee4;
@@ -46120,17 +46120,17 @@ LAB_8005fee4:
     }
     //if (isTurnSignNegative)
     if (bVar1) {
-        //turningAccelerationS16 = -turningAccelerationS16
+        //rotationSpinRateS16 = -rotationSpinRateS16
       sVar4 = -sVar4;
     }
   }
   
   iVar5 = (int)*(short *)(param_2 + 0x3ec);
 
-  //turningAcceleration = turningAccelerationS16;
+  //rotationSpinRate = rotationSpinRateS16;
   iVar9 = (int)sVar4;
   
-  // driver.turningAcceleration = turningAccelerationS16
+  // driver.rotationSpinRate = rotationSpinRateS16
   *(short *)(param_2 + 0x3b4) = sVar4;
 
   if (iVar5 != 0) 
@@ -46142,7 +46142,7 @@ LAB_8005fee4:
     // deltaRotation = Misc.MapToRange(timeUntilDriftSpinout,0,0x140,0,previousFrameMultDrift);
     iVar6 = FUN_80058f9c(iVar5,0,0x140,0,(int)*(short *)(param_2 + 0x3ea));
     
-	// turningAcceleration = turningAcceleration + deltaRotation;
+	// rotationSpinRate = rotationSpinRate + deltaRotation;
     iVar9 = iVar9 + iVar6;
     
 	// if (deltaTime < 0)
@@ -49410,7 +49410,7 @@ void FUN_80062f4c(undefined4 param_1,int param_2)
   uVar6 = FUN_80058f54((int)*(short *)(param_2 + 0x2f2),(int)sVar5 * *(int *)(puVar4 + 0x1d04) >> 5,
                        iVar13);
 
-  // turning acceleration
+  // turning rate
   iVar12 = (int)*(short *)(param_2 + 0x3b4);
   
   // drift direction
@@ -50309,7 +50309,10 @@ void FUN_80063dc8(undefined4 param_1,int param_2)
   undefined2 uVar3;
 
   *(undefined2 *)(param_2 + 0x3e6) = 10000;
+  
+  // decrease turn rate by 1/8 of itself
   *(short *)(param_2 + 0x3b4) = *(short *)(param_2 + 0x3b4) - (*(short *)(param_2 + 0x3b4) >> 3);
+  
   puVar1 = PTR_DAT_8008d2ac;
 
   // Drift angle = (Drift angle + spinRate + 180 degrees) & 0xfff - 180 degrees
@@ -50319,7 +50322,7 @@ void FUN_80063dc8(undefined4 param_1,int param_2)
   *(short *)(param_2 + 0xc0) = *(short *)(param_2 + 0x3b4);
   *(short *)(param_2 + 0x3d4) = *(short *)(param_2 + 0x3d4) - (*(short *)(param_2 + 0x3d4) >> 3);
 
-  // kart angle = (kart angle + (turningAccel * time lapsed between frames)) & 0xFFF
+  // kart angle = (kart angle + (rotationSpinRate * time lapsed between frames)) & 0xFFF
   uVar2 = *(short *)(param_2 + 0x39a) +
           (short)((int)*(short *)(param_2 + 0x3b4) * *(int *)(puVar1 + 0x1d04) >> 0xd) & 0xfff;
   *(ushort *)(param_2 + 0x39a) = uVar2;
@@ -50496,9 +50499,13 @@ void FUN_800640a4(undefined4 param_1,int param_2)
   // Set drift angle (temporarily)
   *(undefined2 *)(param_2 + 0x3e6) = 10000;
 
+  // decrease rotationSpinRate by 1/8 of itself
   sVar4 = *(short *)(param_2 + 0x3b4) - (*(short *)(param_2 + 0x3b4) >> 3);
   *(short *)(param_2 + 0x3b4) = sVar4;
+  
+  // decrease [what]?
   *(short *)(param_2 + 0x3d4) = *(short *)(param_2 + 0x3d4) - (*(short *)(param_2 + 0x3d4) >> 3);
+  
   *(short *)(param_2 + 0xc0) = sVar4;
   
   if (iVar5 < 1) 
@@ -54581,6 +54588,8 @@ void FUN_80068150(undefined4 param_1,int param_2)
 
   puVar1 = PTR_DAT_8008d2ac;
   *(undefined2 *)(param_2 + 0x3e6) = 10000;
+  
+  // decrease turn rate by 1/8 of itself
   *(short *)(param_2 + 0x3b4) = *(short *)(param_2 + 0x3b4) - (*(short *)(param_2 + 0x3b4) >> 3);
   
   sVar4 = *(short *)(param_2 + 0x3d2) - (*(short *)(param_2 + 0x3d2) >> 3);
@@ -54590,7 +54599,7 @@ void FUN_80068150(undefined4 param_1,int param_2)
   *(short *)(param_2 + 0x3c6) = (*(short *)(param_2 + 0x3c6) + sVar4 + 0x800U & 0xfff) - 0x800;
   *(short *)(param_2 + 0x3d4) = *(short *)(param_2 + 0x3d4) - (*(short *)(param_2 + 0x3d4) >> 3);
 
-  // angle change = angle + (??? * time lapsed between frames) & 0xFFF
+  // angle change = angle + (spinRate * time lapsed between frames) & 0xFFF
   uVar2 = *(short *)(param_2 + 0x39a) +
           (short)((int)*(short *)(param_2 + 0x3b4) * *(int *)(puVar1 + 0x1d04) >> 0xd) & 0xfff;
 
