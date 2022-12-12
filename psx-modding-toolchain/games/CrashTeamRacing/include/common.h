@@ -7011,7 +7011,7 @@ struct Data
 		// for the thread's funcOnCollide, resulting immediately: 
 		// 		- thread birth if no thread exists
 		//			which is useless cause the thread for crystal exists
-		//		- OnCollide
+		//		- funcOnCollide
 		//		- thread death
 		
 		// This is only for LevInstances, not for NonLevInstances,
