@@ -50726,27 +50726,41 @@ void FUN_800643d4(int param_1,int param_2)
   // if there are frames
   if (0 < iVar3)
   {
-	// if you are spinning left???
-    if (*(short *)(param_2 + 0x582) == -1) {
+	// if you are spinning left
+    if (*(short *)(param_2 + 0x582) == -1) 
+	{
+	  // return steer anim to right
       sVar2 = *(short *)(iVar4 + 0x54) + 5;
       *(short *)(iVar4 + 0x54) = sVar2;
       if (sVar2 < iVar3) {
         return;
       }
+	  
+	  // last frame
       *(short *)(iVar4 + 0x54) = (short)iVar3 + -1;
-      *(undefined2 *)(param_2 + 0x582) = 0;
-      return;
+      
+	  // no spinDir anymore
+	  *(undefined2 *)(param_2 + 0x582) = 0;
+      
+	  return;
     }
 
-	// if you are spinning right???
-    if (*(short *)(param_2 + 0x582) == 1) {
+	// if you are spinning right
+    if (*(short *)(param_2 + 0x582) == 1) 
+	{
+	  // return steer anim to left
       uVar1 = *(short *)(iVar4 + 0x54) - 5;
       *(ushort *)(iVar4 + 0x54) = uVar1;
       if (-1 < (int)((uint)uVar1 << 0x10)) {
         return;
       }
+	  
+	  // first frame
       *(undefined2 *)(iVar4 + 0x54) = 0;
+	  
+	  // no spinDir anymore
       *(undefined2 *)(param_2 + 0x582) = 0;
+	  
       return;
     }
 
