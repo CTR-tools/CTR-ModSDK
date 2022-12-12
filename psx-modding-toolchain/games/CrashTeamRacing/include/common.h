@@ -5879,6 +5879,7 @@ struct Terrain
 	// unless on "ice" or "none", then it's zero
 	int const_0x100;
 	
+	// 0x14
 	int unk14;
 	
 	// 0x18
@@ -5890,7 +5891,10 @@ struct Terrain
 	struct ParticleEmitter* em_EvenFrame;
 
 	// 0x20
-	int unk_0x20[2];
+	int unk_0x20;
+
+	// 0x24
+	int unk_0x24;
 
 	// 0x28
 	// if zero, like life, can't change steering at all,
