@@ -2665,7 +2665,7 @@ struct Driver
 			// 0x580
 			char boolInited;
 			
-			// that's it
+			// == end ==
 			
 		} EatenByPlant;
 		
