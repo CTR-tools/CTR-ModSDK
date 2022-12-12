@@ -50430,7 +50430,7 @@ void FUN_8006402c(undefined4 param_1,int param_2)
   {
 	// Change all funcPtrs to transition
 	// from LastSpin to Driving
-	// Player_EndSpinning_Init
+	// Player_StopSpin_Init
     FUN_800644d0();
   }
   return;
@@ -50507,7 +50507,7 @@ void FUN_800640a4(undefined4 param_1,int param_2)
 	  // if you're almost facing forward while spinning at a slow rate
       if ((0 < *(short *)(param_2 + 0x580)) && (0 < (int)((uint)uVar2 << 0x10))) 
 	  {
-		// reset drift angle (but still spin until EndSpinning)
+		// reset drift angle (but still spin until StopSpin)
         *(undefined2 *)(param_2 + 0x3c6) = 0;
       }
     }
@@ -50544,7 +50544,7 @@ void FUN_800640a4(undefined4 param_1,int param_2)
 	// if you're almost facing forward while spinning at a slow rate
     if ((*(short *)(param_2 + 0x580) < 0) && ((int)((uint)uVar2 << 0x10) < 0)) 
 	{
-		// reset drift angle (but still spin until EndSpinning)
+		// reset drift angle (but still spin until StopSpin)
       *(undefined2 *)(param_2 + 0x3c6) = 0;
     }
   }
@@ -50614,13 +50614,13 @@ void FUN_80064254(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_EndSpinning_Update
+// Player_StopSpin_Update
 void FUN_800642ec(void)
 {
   return;
 }
 
-// Player_EndSpinning_Input
+// Player_StopSpin_Input
 // param1 = thread, param2 = driver
 void FUN_800642f4(undefined4 param_1,int param_2)
 {
@@ -50634,7 +50634,7 @@ void FUN_800642f4(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_EndSpinning_Interpolate
+// Player_StopSpin_Interpolate
 // param1 = thread, param2 = driver
 void FUN_80064320(undefined4 param_1,int param_2)
 {
@@ -50673,7 +50673,7 @@ void FUN_80064320(undefined4 param_1,int param_2)
 
 
 // param1 = thread, param2 = driver
-// Player_EndSpinning_Animate
+// Player_StopSpin_Animate
 void FUN_800643d4(int param_1,int param_2)
 
 {
@@ -50739,18 +50739,18 @@ void FUN_800643d4(int param_1,int param_2)
 }
 
 // param1 = thread, param2 = driver
-// Player_EndSpinning_Init
+// Player_StopSpin_Init
 void FUN_800644d0(undefined4 param_1,int param_2)
 
 {
   // Transition from
   // LastSpin to Driving
 
-  // Player_EndSpinning_Update,
+  // Player_StopSpin_Update,
   // "updating" happens in OnAnimate
   *(undefined4 *)(param_2 + 0x58) = 0x800642ec;
 
-  // Player_EndSpinning_Input
+  // Player_StopSpin_Input
   *(undefined4 *)(param_2 + 0x5c) = 0x800642f4;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -50762,7 +50762,7 @@ void FUN_800644d0(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // OnRender -- move position to instance matrix
 
-  // Player_EndSpinning_Animate, calls Player_Driving_Init
+  // Player_StopSpin_Animate, calls Player_Driving_Init
   *(undefined4 *)(param_2 + 0x80) = 0x800643d4;
 
   *(undefined4 *)(param_2 + 0x54) = 0;

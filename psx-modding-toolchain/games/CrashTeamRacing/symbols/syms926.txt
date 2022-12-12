@@ -956,11 +956,11 @@
 800640a4 Player_LastSpin_Interpolate
 80064254 Player_LastSpin_Init
 
-800642ec Player_EndSpinning_Update
-800642f4 Player_EndSpinning_Input
-80064320 Player_EndSpinning_Interpolate
-800643d4 Player_EndSpinning_Animate
-800644d0 Player_EndSpinning_Init
+800642ec Player_StopSpin_Update
+800642f4 Player_StopSpin_Input
+80064320 Player_StopSpin_Interpolate
+800643d4 Player_StopSpin_Animate
+800644d0 Player_StopSpin_Init
 
 80064568 Player_ChangeState
 
