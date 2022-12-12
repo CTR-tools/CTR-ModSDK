@@ -49894,19 +49894,20 @@ void FUN_8006364c(undefined4 param_1,int param_2)
   // if you aren't spinning out
   else {
 
-	// If your drift counter is less than the constant that makes you "spin out" from too much drift
     if (
+			// If your drift counter is less than the constant that makes you "spin out" from too much drift
 			((int)*(short *)(param_2 + 0x580) < (int)-(uint)*(byte *)(param_2 + 0x463)) ||
 
 			((
-				((int)*(short *)(param_2 + 0x38c) <
-				(int)((uint)*(ushort *)(param_2 + 0x42c) << 0x10) >> 0x11 ||
+				// speed is less than half the driver's speed classStat
+				((int)*(short *)(param_2 + 0x38c) < (int)((uint)*(ushort *)(param_2 + 0x42c) << 0x10) >> 0x11 ||
+				
 				((*(uint *)(param_2 + 0x2c8) & 0x2028) != 0)) ||
 
 				// If the controller input is...
 				((*(uint *)(PTR_DAT_8008d2b0 + (uint)*(byte *)(param_2 + 0x4a) * 0x50 + 0x10) &
 
-				// not the jump button that you used to start drifting
+				// does not include the jump button that you used to start drifting
 				(int)*(short *)(param_2 + 0x382)) == 0)
 			))
 		)
