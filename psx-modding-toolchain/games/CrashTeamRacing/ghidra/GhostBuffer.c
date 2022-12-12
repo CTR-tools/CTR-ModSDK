@@ -682,7 +682,7 @@ void FUN_80027838(void)
 	  // pointer to TrTire, for transparent tires
 	  iVar6 = *(int *)(PTR_DAT_8008d2ac + 0x2144);
 
-	  // driver flags 0x2c8
+	  // driver is an AI (0x2c8)
 	  piVar7[0xb2] = piVar7[0xb2] | 0x100000;
 
 	  *piVar7 = iVar6 + 0x14;

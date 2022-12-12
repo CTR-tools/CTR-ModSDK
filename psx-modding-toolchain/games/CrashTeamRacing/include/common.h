@@ -1796,7 +1796,7 @@ struct Driver
 	// 0x00000008 - accel prevention (holding square)
 	// 0x00000010 - ?
 	// 0x00000020 - ?
-	// 0x00000040 - ? COLL-related
+	// 0x00000040 - ? COLL-related (ghost)
 	// 0x00000080 - ? OnRender-related, turbo-related
 	// 0x00000100 - driving wrong way
 	// 0x00000200 - using turbo weapon
@@ -1807,7 +1807,7 @@ struct Driver
 	// 0x00004000 - warping
 	// 0x00008000 - want to fire weapon
 	// 0x00010000 - echo engine
-	// 0x00020000 - ?
+	// 0x00020000 - reversing engine
 	// 0x00040000 - race timer frozen
 	// 0x00080000 - airborne
 	// 0x00100000 - driver is an AI

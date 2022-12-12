@@ -2667,7 +2667,9 @@ void FUN_800ae478(int param_1,int param_2,int *param_3)
   {
     iVar2 = *param_3;
     
-	if (iVar2 != 0) {
+	if (iVar2 != 0) 
+	{
+	  // remove 2D square-target being drawn on the player's screen 
       *(uint *)(iVar2 + 0x2c8) = *(uint *)(iVar2 + 0x2c8) & 0xfbffffff;
     }
     
@@ -2708,9 +2710,14 @@ void FUN_800ae524(int param_1)
   if (5 < (uint)piVar3[0xc]) 
   {
     iVar4 = *piVar3;
-    if (iVar4 != 0) {
+    
+	if (iVar4 != 0) 
+	{
+	  // remove 2D square-target being drawn on the player's screen 
       *(uint *)(iVar4 + 0x2c8) = *(uint *)(iVar4 + 0x2c8) & 0xfbffffff;
     }
+	
+	// remove active wrapball flag
     *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xffffefff;
 	
 	// This thread is now dead
