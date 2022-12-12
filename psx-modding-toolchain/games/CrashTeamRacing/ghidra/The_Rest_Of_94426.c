@@ -5886,25 +5886,25 @@ LAB_80035098:
 		  // loop iteration counter
           iVar8 = 0;
 
-		  // execute every function in the array of function
-		  // pointers that is within the player struct,
-		  // 0xD (13) function pointers
-
+		  // execute all 0xD (13) funcPtrs in Driver struct
 		  // for iVar8 = 0; iVar8 < 0xd; iVar8++
           do
 		  {
 			// pointer to first Player thread
             iVar4 = *(int *)(PTR_DAT_8008d2ac + iVar6 + 0x1b2c);
-            if (iVar4 != 0) {
-              do {
+            
+			// if valid
+			if (iVar4 != 0) 
+			{
+              do 
+			  {
+				// if no funcPerFrame (when would that change?)
                 if ((*(int *)(iVar4 + 0x2c) == 0) &&
 
-					// iVar4 + 0x30 = pointer to player struct
-					// 0x54 is the offset of first function pointer,
-					// iVar8 * 4, becuase each function pointer is 4 bytes
+					// playerThread->driver->funcPtr[iVar8]
                    (pcVar3 = *(code **)(*(int *)(iVar4 + 0x30) + iVar8 * 4 + 0x54),
 
-				   // If this pointer is not nullptr
+				   // if valid
                    pcVar3 != (code *)0x0))
 				{
 				  // execute the function pointer
