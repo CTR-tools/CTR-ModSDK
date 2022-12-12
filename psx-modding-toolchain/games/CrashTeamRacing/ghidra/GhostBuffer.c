@@ -685,7 +685,9 @@ void FUN_80027838(void)
 	  // driver is an AI (0x2c8)
 	  piVar7[0xb2] = piVar7[0xb2] | 0x100000;
 
+	  // pointer to wheelSprites
 	  *piVar7 = iVar6 + 0x14;
+	  
     } while (iVar8 * 0x10000 >> 0x10 < 2);
   }
   return;
