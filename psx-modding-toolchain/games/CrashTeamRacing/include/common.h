@@ -1722,6 +1722,7 @@ struct Driver
 	#if BUILD >= EurRetail
 	short compilerPadding_0x4E;
 	
+	// 0x50
 	// see Turbo_Increment in 1111
 	int numTurbosBackup;
 	#endif
