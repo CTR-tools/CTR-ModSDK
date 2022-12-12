@@ -1741,12 +1741,12 @@ struct Driver
 	// 0x58 - OnUpdate, updates per frame for any generic purpose
 	// 0x5C - OnInput, convert controller presses into physics variables
 	// 0x60 - OnAudio, engine sounds (always same)
-	// 0x64 ----------- changes from state to state
-	// 0x68 ----------- always same, or zero
-	// 0x6C - OnPhysics
-	// 0x70 - OnCollide (turbo pads and AIs)
-	// 0x74 ----------- always same, or zero
-	// 0x78 - OnWeapon
+	// 0x64 - OnInterpolate ???
+	// 0x68 - OnApplyForces
+	// 0x6C - OnCollide_QuadblockTouch
+	// 0x70 - OnCollide_Drivers
+	// 0x74 - OnCollide_QuadblockNear
+	// 0x78 - OnWeapon (jump related?)
 	// 0x7C - OnRender, convert position + rotation into instance matrix
 	// 0x80 - OnAnimate
 	// 0x84 ---------- always same, or zero

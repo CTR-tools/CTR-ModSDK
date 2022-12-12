@@ -49878,7 +49878,7 @@ void FUN_8006364c(undefined4 param_1,int param_2)
 	// Set amount of NoInput
     *(undefined2 *)(param_2 + 0x400) = uVar2;
 
-	// Start spinning out
+	// Player_Spinning_Init
     FUN_80063ec0(param_1,param_2);
   }
 
@@ -54476,7 +54476,7 @@ void FUN_80067f4c(undefined4 param_1,int param_2)
 void FUN_8006809c(undefined4 param_1,int param_2)
 
 {
-  // if you are done being blasted, or done spinning out
+  // if you are done being blasted, NoInput ended
   if (*(short *)(param_2 + 0x400) == 0) {
     *(undefined *)(param_2 + 0x4c) = 0;
     *(undefined *)(param_2 + 0x4d) = 0;
