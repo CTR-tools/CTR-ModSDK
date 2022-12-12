@@ -42564,7 +42564,7 @@ void FUN_8005b510(int param_1,int param_2)
   // get instance from thread
   iVar4 = *(int *)(param_1 + 0x34);
 
-  // get number of frames in animation
+  // Instance_GetNumAnimFrames(instance, animIndex)
   iVar2 = FUN_8005b0f4(iVar4,(uint)*(byte *)(iVar4 + 0x52));
 
   // if there are no frames
@@ -50136,6 +50136,7 @@ void FUN_80063b2c(int param_1,int param_2)
 	  // reset animation
       *(undefined *)(iVar4 + 0x52) = 0;
 
+	  // Instance_GetStartFrame(midpoint, numFrames)
       uVar2 = FUN_8005b0c4(0,iVar3);
 
 	  // set animation
@@ -50726,12 +50727,15 @@ void FUN_800643d4(int param_1,int param_2)
   // if there are frames
   if (0 < iVar3)
   {
-	// if you are spinning left
+	// if you are spinning right
     if (*(short *)(param_2 + 0x582) == -1) 
 	{
-	  // return steer anim to right
+	  // steer from left to right, to exaggerate
+	  // the force when steering stops abruptly
       sVar2 = *(short *)(iVar4 + 0x54) + 5;
       *(short *)(iVar4 + 0x54) = sVar2;
+	  
+	  // if not finished, quit function
       if (sVar2 < iVar3) {
         return;
       }
@@ -50745,12 +50749,15 @@ void FUN_800643d4(int param_1,int param_2)
 	  return;
     }
 
-	// if you are spinning right
+	// if you are spinning left
     if (*(short *)(param_2 + 0x582) == 1) 
 	{
-	  // return steer anim to left
+	  // steer from right to left, to exaggerate
+	  // the force when steering stops abruptly
       uVar1 = *(short *)(iVar4 + 0x54) - 5;
       *(ushort *)(iVar4 + 0x54) = uVar1;
+	  
+	  // if not finished, quit function
       if (-1 < (int)((uint)uVar1 << 0x10)) {
         return;
       }
@@ -50764,6 +50771,12 @@ void FUN_800643d4(int param_1,int param_2)
       return;
     }
 
+	// === spinning has stopped ===
+	
+	// return driver to center steering 
+	// animation frame
+
+	// Instance_GetStartFrame(midpoint, numFrames)
     iVar3 = FUN_8005b0c4(0,iVar3);
 
 	// Interpolate rotation by speed
@@ -53407,9 +53420,10 @@ void FUN_80066e8c(int param_1,int param_2)
 	// set animation
     *(undefined *)(iVar6 + 0x52) = 0;
 
-	// get number of frames in animation
+	// Instance_GetNumAnimFrames(instance, anim#0)
     uVar5 = FUN_8005b0f4(iVar6,0);
 
+	// Instance_GetStartFrame(midpoint, numFrames)
     uVar4 = FUN_8005b0c4(0,uVar5);
 
     *(undefined2 *)(iVar6 + 0x54) = uVar4;
@@ -54703,10 +54717,10 @@ void FUN_800682a4(undefined4 param_1,int param_2)
   // set animation to zero
   *(undefined *)(*(int *)(param_2 + 0x1c) + 0x52) = 0;
 
-  // get number of frames in animation
+  // Instance_GetNumAnimFrames(instance, anim#0)
   uVar4 = FUN_8005b0f4(*(undefined4 *)(param_2 + 0x1c),0);
 
-  // Instance_GetStartFrame
+  // Instance_GetStartFrame(midpoint, numFrames)
   uVar2 = FUN_8005b0c4(0,uVar4);
 
   // set animation frame
