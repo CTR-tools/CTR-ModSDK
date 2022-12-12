@@ -1804,7 +1804,7 @@ struct Driver
 	// 0x00000800 - front wheel skid
 	// 0x00001000 - back wheel skid
 	// 0x00002000 - driving against wall
-	// 0x00004000 - warping
+	// 0x00004000 - warping (or blasted too?)
 	// 0x00008000 - want to fire weapon
 	// 0x00010000 - echo engine
 	// 0x00020000 - reversing engine

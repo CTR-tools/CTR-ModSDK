@@ -2862,8 +2862,7 @@ LAB_80015b98:
       *(int *)(iVar17 + 0x5a8) = (iVar4 * psVar19[6]) / iVar3 << 8;
     }
 
-	// turn off 1st flag and turn on 20th flag of actions flag set
-	// means player is not on the ground (1) and in the air (20)
+	// driver is now airborne and not touching quadblock
     *(uint *)(iVar17 + 0x2c8) = *(uint *)(iVar17 + 0x2c8) & 0xfffffffe | 0x80000;
 
 	*(short *)(iVar17 + 0x3fc) = *(short *)(iVar17 + 0x3fc) + (short)local_34;
@@ -4152,8 +4151,7 @@ LAB_800173e4:
       //uVar6 = actions flag set
       uVar6 = *(uint *)(param_1 + 0x2c8);
 
-      //turn off 3rd and 4th and turn on 21st flags of actions flag set,
-      //means player becomes an AI
+      // player becomes AI, drop bits for button holding
       *(uint *)(param_1 + 0x2c8) = uVar6 & 0xfffffff3 | 0x100000;
 
 	  //if previous value of actions flag set had 26th flag on (means racer finished the race)
