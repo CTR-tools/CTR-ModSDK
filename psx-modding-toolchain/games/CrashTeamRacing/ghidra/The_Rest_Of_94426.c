@@ -46172,8 +46172,7 @@ LAB_8005fee4:
   {  
     uVar3 = (undefined2)(iVar5 - iVar8);
 
-    // Map value from [oldMin, oldMax] to [newMin, newMax]
-    // inverting newMin and newMax will give an inverse range mapping
+    // map [0-0x140] to [0-???]
     // deltaRotation = Misc.MapToRange(timeUntilDriftSpinout,0,0x140,0,previousFrameMultDrift);
     iVar6 = FUN_80058f9c(iVar5,0,0x140,0,(int)*(short *)(param_2 + 0x3ea));
     
@@ -46273,8 +46272,12 @@ LAB_8005fee4:
         iVar6 = -iVar6;
       }
 
-      // Map value from [oldMin, oldMax] to [newMin, newMax]
-      // inverting newMin and newMax will give an inverse range mapping
+	  // same input-range as the previous map
+
+	  // Map "fire speed" from 
+	  //	- [turnResistMin*iVar6>>8(or9), turnResistMax*iVar6>>8(or9)] 
+	  //	to 
+	  //	- [0, ???]
       uVar7 = FUN_80058f9c(iVar6,iVar16,iVar18,0,iVar5);
 
       // Map value from [oldMin, oldMax] to [newMin, newMax]
