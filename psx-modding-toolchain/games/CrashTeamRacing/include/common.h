@@ -1720,8 +1720,9 @@ struct Driver
 	unsigned char animationFrame; // copy from Instance
 
 	#if BUILD >= EurRetail
-	short newShort1;
-	// numTurbos backup? see Turbo_Increment in 1111
+	short compilerPadding_0x4E;
+	
+	// see Turbo_Increment in 1111
 	int numTurbosBackup;
 	#endif
 
@@ -1736,7 +1737,6 @@ struct Driver
 	// there is padding for the next
 	// 4-byte void* that is unused
 
-	// These names are outdated, check syms
 	// 0x54 - OnInit, First function for spawn, drifting, damage, etc
 	// 0x58 - OnUpdate, updates per frame for any generic purpose
 	// 0x5C - OnInput, convert controller presses into physics variables
