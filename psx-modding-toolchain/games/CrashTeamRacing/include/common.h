@@ -2697,6 +2697,28 @@ struct Driver
 	// 0x5bc
 	// incline rotXZ
 	// probably only for AIs
+	
+	// 0x60c
+	// short estimatePos[3]
+	
+	// 0x612
+	// char estimateRotNav[3]
+	// char estimateRotCurrY;
+
+	// 0x616
+	// short distToNextNavXYZ
+	
+	// 0x618
+	// short distToNextNavXZ
+	
+	// 0x61A
+	// ???
+	
+	// 0x620
+	// MaskHeadWeapon* maskObj;
+	
+	// 0x624
+	// short weaponCooldown
 
 	// ===========================================
 

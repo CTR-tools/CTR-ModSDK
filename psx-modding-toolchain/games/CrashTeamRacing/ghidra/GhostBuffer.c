@@ -41,6 +41,7 @@ void FUN_80026ed8(int param_1)
   // get driver object from thread
   iVar22 = *(int *)(param_1 + 0x30);
 
+  // pointer to tape
   piVar20 = *(int **)(iVar22 + 0x62c);
 
   // get instance from driver object
