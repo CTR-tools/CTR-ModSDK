@@ -44961,7 +44961,7 @@ void FUN_8005ea60(undefined4 param_1,int param_2)
   return;
 }
 
-// OnCollide
+// OnCollide_Drivers
 // handle collision with turbo pads and robotcars
 void FUN_8005ebac(int param_1,int param_2)
 

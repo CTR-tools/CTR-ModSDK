@@ -79,7 +79,7 @@ void EndCrystalChallenge(void)
 
 // Declarations for RF
 void Turbo_Increment(int param_1,int param_2,unsigned int param_3,int param_4);
-void OnCollide(int param_1,int param_2);
+void OnCollide_Drivers(int param_1,int param_2);
 void Player_Driving_Input(int param_1,int param_2);
 
 // To do: Make the new RF with blue fire,
@@ -91,7 +91,7 @@ void InjectRetroFueled()
 	*(unsigned char*)(Turbo_Increment + 0x37A) = 0;
 
 	// Set pads to USF
-	*(unsigned char*)(OnCollide + 0xB9) = 8;
+	*(unsigned char*)(OnCollide_Drivers + 0xB9) = 8;
 
 	*(unsigned int* )(Player_Driving_Input + 0xA30) = 0x8200040D;
 	*(unsigned int* )(Player_Driving_Input + 0xA34) = 0x30B80002;

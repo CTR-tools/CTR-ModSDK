@@ -15,9 +15,9 @@ common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
 
 // Binary edits
 // Turbo pad to STP
-common, exe, OnCollide, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
+common, exe, OnCollide_Drivers, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
 // Standardize turbo pad reserves
-common, exe, OnCollide, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
+common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
 
 // Modify Turbo_Increment function to allow for USF stacking
 926, exe, 0x8005AF76, 0x0, ../../../8bitnop.bin

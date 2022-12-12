@@ -8,13 +8,13 @@
 #define NOP   0x00000000
 
 // Functions
-void DECOMP_OnCollide(struct Thread* bread, struct Driver* driver);
-void OnCollide(struct Thread* bread, struct Driver* driver);
+void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver);
+void OnCollide_Drivers(struct Thread* bread, struct Driver* driver);
 void GameplayUpdateLoop();
 
 typedef void (*func)(struct Thread* bread, struct Driver* driver);
-func newFunc = (func) &DECOMP_OnCollide;
-func oldFunc = (func) &OnCollide;
+func newFunc = (func) &DECOMP_OnCollide_Drivers;
+func oldFunc = (func) &OnCollide_Drivers;
 
 unsigned int * hookAddress = (unsigned int *) (&GameplayUpdateLoop - 8);
 unsigned int instructions[4];
