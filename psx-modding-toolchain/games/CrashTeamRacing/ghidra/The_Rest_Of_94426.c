@@ -42350,15 +42350,25 @@ void FUN_8005b178(int param_1,int param_2)
         iVar5 = FUN_8005b0c4((uint)bVar1,iVar5);
       }
 
-	  if ((int)*(short *)(iVar10 + 0x54) != iVar5) {
+	  // if animation frame has changed
+	  if ((int)*(short *)(iVar10 + 0x54) != iVar5) 
+	  {
+		// if steering animation
         if (*(char *)(iVar10 + 0x52) == '\0') {
           uVar8 = 6;
         }
-        else {
+		
+        else 
+		{
+		  // jump or reverse?
           uVar8 = 2;
-          if (*(char *)(iVar10 + 0x52) == '\x02') {
+          
+		  // crashing
+		  if (*(char *)(iVar10 + 0x52) == '\x02') 
+		  {
             uVar8 = 1;
-            //kart emote frame = *(uchar *)(iVar10 + 0x54)
+            
+			//kart emote frame = *(uchar *)(iVar10 + 0x54)
             *(undefined *)(param_2 + 0x4d) = *(undefined *)(iVar10 + 0x54);
           }
         }
@@ -42412,6 +42422,7 @@ void FUN_8005b178(int param_1,int param_2)
     //puVar2 = 0x96B20
     puVar2 = PTR_DAT_8008d2ac;
 
+	// steering animation
 	if (uVar11 == 0)
 	{
       iVar9 = iVar5 >> 1;
@@ -42476,7 +42487,10 @@ void FUN_8005b178(int param_1,int param_2)
       }
       sVar6 = *(short *)(iVar10 + 0x54);
     }
-    else {
+    
+	else 
+	{
+	  // jump animation
       if (uVar11 == 3)
 	  {
 		// Interpolate animation frame by speed
