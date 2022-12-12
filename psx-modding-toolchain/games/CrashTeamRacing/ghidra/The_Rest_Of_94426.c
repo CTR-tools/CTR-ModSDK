@@ -53942,6 +53942,8 @@ void FUN_800677d0(int param_1,int param_2)
   *(undefined2 *)(param_2 + 0x3dc) = 0;
   *(undefined2 *)(param_2 + 0x3e2) = 0;
   *(undefined2 *)(param_2 + 0x3de) = 0;
+  
+  // drop bits for airborne (and another?)
   *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) & 0xfff7ffbf;
 
   // "cloud" is the raincloud after hitting red potion
@@ -54543,6 +54545,7 @@ void FUN_800680d0(undefined4 param_1,int param_2)
   *(undefined2 *)(param_2 + 0x39c) = 0;
   *(undefined2 *)(param_2 + 0x39e) = 0;
 
+  // wheels skidding, blasted, accel prevention
   *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x5808;
   
   // jump_InitialVelY to throw driver in air
