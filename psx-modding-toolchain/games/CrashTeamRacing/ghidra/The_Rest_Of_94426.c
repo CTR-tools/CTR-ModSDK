@@ -50678,8 +50678,8 @@ void FUN_80064320(undefined4 param_1,int param_2)
 
   puVar1 = PTR_DAT_8008d2ac;
 
+  // increase spin by (lastFrameSpinRate * elapsedTime)
   uVar2 = *(short *)(param_2 + 0x39a) +
-													// elapsed milliseconds per frame, ~32
           (short)((int)*(short *)(param_2 + 0xc0) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 0xd) &
           0xfff;
 
