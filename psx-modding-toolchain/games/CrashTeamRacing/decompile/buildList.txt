@@ -74,7 +74,7 @@ common, exe, RNG_Scramble, 0x0, General/RNG_Scramble.c
 common, exe, RacingWheel_Config_DrawArrows, 0x0, General/RacingWheel_Config_DrawArrows.c
 common, exe, Map_DrawMap, 0x0, General/Map_DrawMap.c
 common, exe, DrawCharacterIcon, 0x0, General/DrawCharacterIcon.c
-common, exe, SetDriverItem, 0x0, General/SetDriverItem.c
+common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
 common, exe, ConvertTimeToString, 0x0, General/ConvertTimeToString.c
 common, exe, DrawCountdownClock, 0x0, General/DrawCountdownClock.c
 common, exe, SaveLapTime, 0x0, General/SaveLapTime.c

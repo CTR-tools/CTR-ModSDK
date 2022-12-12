@@ -930,9 +930,8 @@
 800605a0 Player_Driving_LerpToForwards
 800606b8 Player_Jump_GetVelY
 80060748 Player_JumpAndFriction
-
-80061024 SetDriverItem
-800615a0 GetDriverBaseSpeed
+80061024 Player_SetHeldItem
+800615a0 Player_GetBaseSpeed
 
 // Player_Steer, way different in Sep3?
 80061754 Player_Steer_ReturnToRest

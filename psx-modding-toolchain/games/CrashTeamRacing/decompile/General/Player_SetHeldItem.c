@@ -23,7 +23,7 @@ extern char numWeapons[7];
 
 // Itemset infographic (outdated):
 // https://discord.com/channels/330945093416779787/550106151887568906/734368526294450267
-void DECOMP_SetDriverItem(struct Driver* driver) {
+void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	u_int rng;
 	int itemSet;
 	char item;

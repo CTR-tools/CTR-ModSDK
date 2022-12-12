@@ -1,10 +1,10 @@
 #include <common.h>
 
 void GAMEPAD_Vib_4(struct Driver* driver, u_int param_2, int param_3);
-void SetDriverItem(struct Driver* driver);
+void Player_SetHeldItem(struct Driver* driver);
 void OtherFX_Play(int sfxID, int flag);
 int Player_Steer_ReturnToRest(int param_1, u_int param_2, struct RacingWheelData* param_3);
-int GetDriverBaseSpeed(struct Driver* driver);
+int Player_GetBaseSpeed(struct Driver* driver);
 void Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
 int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
 int Player_Steer_AbsoluteStrength(int param_1, u_int param_2, struct RacingWheelData* param_3);
@@ -502,7 +502,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		if (driver->itemRollTimer == 0)
 		{
 			// Select a random weapon for driver
-			SetDriverItem(driver);
+			Player_SetHeldItem(driver);
 
 			// if 9 < number of wumpa
 			// if wumpa is 10
@@ -987,7 +987,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	}
 	approximateSpeed2 = 0;
 	// Racer's Base Speed (4s)
-	driverBaseSpeed = GetDriverBaseSpeed(driver);
+	driverBaseSpeed = Player_GetBaseSpeed(driver);
 	// Racer's Base Speed (2u)
 	driverBaseSpeedUshort = (u_short)driverBaseSpeed;
 

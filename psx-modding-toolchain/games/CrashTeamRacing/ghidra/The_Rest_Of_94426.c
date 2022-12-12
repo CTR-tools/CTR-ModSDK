@@ -46994,7 +46994,7 @@ LAB_80060e1c:
 }
 
 
-// SetDriverItem
+// Player_SetHeldItem
 void FUN_80060f0c(int param_1)
 //Select a random Item for driver
 //param_1 = Driver struct
