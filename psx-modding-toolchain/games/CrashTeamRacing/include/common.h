@@ -2587,7 +2587,10 @@ struct Driver
 			// 0x584
 			int driftTotalTimeMS;
 			
-			// more?
+			// 0x586
+			short numBoostsAttempted;
+			
+			// == end ==
 			
 		} Drifting;
 		
@@ -2638,7 +2641,10 @@ struct Driver
 			struct MaskHeadWeapon* maskObj;
 			
 			// 0x584
-			short AngleAxis_NormalVec[4];
+			short AngleAxis_NormalVec[3];
+	
+			// 0x58a
+			short unk58a;
 	
 			// 0x58c
 			char boolParticlesSpawned;
