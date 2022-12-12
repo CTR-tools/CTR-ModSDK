@@ -38780,12 +38780,15 @@ void FUN_80057884(undefined *param_1)
   uint uVar12;
   undefined *puVar13;
   undefined auStack128 [16];
+  
+  // another local matrix
   uint local_70;
   undefined4 local_6c;
   uint local_68;
   undefined4 local_64;
   undefined2 local_60;
-  undefined auStack80 [32];
+  
+  MATRIX localMatrix;
   VECTOR local_30;
 
   puVar13 = auStack128;
@@ -38838,13 +38841,14 @@ void FUN_80057884(undefined *param_1)
 
         iVar1 = FUN_8003d184(iVar6 / DAT_80087f28);
         *(short *)(puVar2 + iVar11 * 0x20 + 0x14) = (short)((iVar1 * 6) / 0x28) + 0x1000;
-        param_1 = (undefined *)(iVar6 / DAT_80087f28);
+        iVar_a0 = (undefined *)(iVar6 / DAT_80087f28);
 
 		// fail-safe to alert debugger
         if (DAT_80087f28 == 0) trap(0x1c00);
         if ((DAT_80087f28 == -1) && (iVar6 == -0x80000000)) trap(0x1800);
 
-        iVar6 = FUN_8003d184(param_1);
+		// MATH_Sin
+        iVar6 = FUN_8003d184(iVar_a0);
 
         if (iVar6 < 0) {
           iVar6 = iVar6 + 3;
@@ -38865,54 +38869,85 @@ void FUN_80057884(undefined *param_1)
 	// start of pointer table
 	piVar10 = &DAT_80087ef4;
 
+	// another local matrix
     local_70 = 0;
     local_6c = 0;
     local_68 = 0;
     local_64 = 0;
     local_60 = 0;
-    do {
-      if (((piVar10[1] != 0) && (*piVar10 != 0)) && (iVar11 = 0, 0 < piVar10[1])) {
-        do {
+	
+    do 
+	{
+      if (((piVar10[1] != 0) && (*piVar10 != 0)) && (iVar11 = 0, 0 < piVar10[1])) 
+	  {
+        do 
+		{
+		  // &matrix[loopIndex]
           iVar9 = *piVar10 + iVar11 * 0x20;
 
 		   // convert 3 rotation shorts into rotation matrix
-          FUN_8006c2a4(auStack80,iVar9 + 8);
+          FUN_8006c2a4(&localMatrix,iVar9 + 8);
 
+		  // another local matrix
           local_70 = local_70 & 0xffff0000 | (uint)*(ushort *)(iVar9 + 0x10);
           local_68 = local_68 & 0xffff0000 | (uint)*(ushort *)(iVar9 + 0x12);
           local_60 = *(undefined2 *)(iVar9 + 0x14);
-          FUN_8006c3b0(iVar9 + 8,&local_70,auStack80);
+		  
+		  // write result [3] [4] and [5]
+          FUN_8006c3b0(iVar9 + 8,&local_70,&localMatrix);
+		  
+		  // loop index
           iVar11 = iVar11 + 1;
-          param_1 = auStack80;
+          
+		  param_1 = &localMatrix;
         } while (iVar11 < piVar10[1]);
       }
       uVar12 = uVar12 + 1;
       piVar10 = piVar10 + 2;
     } while (uVar12 < 0x14);
+	
+	// pointer to matrix array
     ppuVar7 = &PTR_DAT_80087f24;
+	
+	// loop index
     iVar11 = 0;
-    if (0 < DAT_80087f28) {
+	
+    if (0 < DAT_80087f28) 
+	{
       uVar5 = 0x2000;
       r0_00 = &local_30;
       uVar4 = 0xe0000000;
       uVar3 = 0;
-      do {
-        puVar2 = *ppuVar7;
+      
+	  do 
+	  {  
+		// first byte in matrix array,
+		// 80087510
+		puVar2 = *ppuVar7;
+		
         *(undefined4 *)(puVar13 + 0x50) = 0;
         *(undefined4 *)(puVar13 + 0x54) = uVar5;
         *(undefined4 *)(puVar13 + 0x58) = 0;
+		
+		// &matrix[loopIndex]
         puVar8 = (undefined2 *)(puVar2 + iVar11 * 0x20);
-        r0 = (MATRIX *)(puVar8 + 4);
+        
+		r0 = (MATRIX *)(puVar8 + 4);
         gte_SetRotMatrix(r0);
         gte_SetTransVector(r0_00);
         gte_ldVXY0(uVar4);
         gte_ldVZ0(uVar3);
         gte_rt();
         read_mt(r0,puVar2,param_1);
+		
+		// write result [0] [1] and [2]
         *puVar8 = (short)r0;
         puVar8[1] = (short)puVar2;
         puVar8[2] = (short)param_1;
-        iVar11 = iVar11 + 1;
+        
+		// loop index
+		iVar11 = iVar11 + 1;
+		
       } while (iVar11 < (int)ppuVar7[1]);
     }
   }
