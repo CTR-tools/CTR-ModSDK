@@ -46280,9 +46280,14 @@ LAB_8005fee4:
 	  //	- [0, ???]
       uVar7 = FUN_80058f9c(iVar6,iVar16,iVar18,0,iVar5);
 
-      // Map value from [oldMin, oldMax] to [newMin, newMax]
-      // inverting newMin and newMax will give an inverse range mapping
+      // Map "rotation rate" from
+	  //	- [unk to unk]
+	  //	to
+	  //	- [0, mappedFireSpeed]
       iVar6 = FUN_80058f9c(iVar15,iVar11,iVar19,0,uVar7);
+	  
+	  // absolute value,
+	  // then use this for LerpToForwards
       if (iVar9 < 0) {
         iVar6 = -iVar6;
       }
