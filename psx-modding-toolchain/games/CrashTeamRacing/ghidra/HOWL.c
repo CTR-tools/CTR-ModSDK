@@ -8290,6 +8290,7 @@ void FUN_8002f5f4(int param_1)
       // Map value from [oldMin, oldMax] to [newMin, newMax]
       // inverting newMin and newMax will give an inverse range mapping
       uVar6 = FUN_80058f9c((int)sVar4,0,(int)sVar2,0x82,uVar9);
+	  
       //if racer is not drifting and not in accel prevention
       if ((*(char *)(param_1 + 0x376) != '\x02') && ((*(uint *)(param_1 + 0x2c8) & 8) == 0)) {
         uVar6 = uVar6 + (iVar8 >> 3);

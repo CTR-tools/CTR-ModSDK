@@ -41876,6 +41876,7 @@ void FUN_8005abfc(int param_1,int param_2,uint param_3,int param_4)
   if (
 		//if pointer is not null and
 		((param_3 & 4) != 0) &&
+		
 		//racer is in accel prevention
 		((*(uint *)(param_1 + 0x2c8) & 8) != 0)
 	)
@@ -42427,7 +42428,8 @@ void FUN_8005b178(int param_1,int param_2)
           iVar9 = -0x40;
 
 		  //if you're not in accel prevention
-          if ((*(uint *)(param_2 + 0x2c8) & 8) == 0) {
+          if ((*(uint *)(param_2 + 0x2c8) & 8) == 0) 
+		  {
             //iVar7 = simplified turning state
             iVar7 = (int)*(char *)(param_2 + 0x4b);
 

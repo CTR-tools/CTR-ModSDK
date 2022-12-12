@@ -1789,6 +1789,12 @@ struct Driver
 	// 0x2C4
 	int skidmarkEnableFlags;
 
+	// actions:
+	// 0x0001 - touching quadblock
+	// 0x0002 - started touching quadblock this frame
+	// 0x0004
+	// 0x0008 - accel prevention (holding square)
+
 	// 0x2C8
 	unsigned int actionsFlagSet;
 
