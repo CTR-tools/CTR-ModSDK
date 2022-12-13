@@ -22411,10 +22411,12 @@ LAB_80044568:
   // some kind of elapsed time in CheckeredFlag,
   // 8008d458
   uVar16 = *(int *)(puVar24 + 0x4ec) >> 5;
-  
   *(uint *)(puVar25 + 0x4c) = uVar16;
+
   DAT_80085af0 = DAT_80085af0 + iVar26;
   uVar14 = (int)DAT_80085af0 >> 5;
+  
+  // if more than 360 degrees (0xfff)
   if (0xfff < uVar14) 
   {
     DAT_80085af0 = DAT_80085af0 & 0x1ffff;
