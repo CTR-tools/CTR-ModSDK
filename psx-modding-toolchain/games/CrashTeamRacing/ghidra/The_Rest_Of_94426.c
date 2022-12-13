@@ -16133,6 +16133,7 @@ undefined4 FUN_8003e51c(long param_1)
 	  // slotIndex
       DAT_8008d8b8 = param_1;
 
+	  // MEMCARD_SkipEvents
       FUN_8003db54();
 
       do {
