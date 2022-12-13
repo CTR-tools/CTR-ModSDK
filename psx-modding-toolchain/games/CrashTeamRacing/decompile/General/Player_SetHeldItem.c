@@ -245,7 +245,7 @@ char* charPtr[7] =
 	&data.RNG_itemSetRace3[0],
 	&data.RNG_itemSetRace4[0],
 	&data.RNG_itemSetBattleDefault[0],
-	(char *)&sdata->gGT->battleSetup.RNG_itemSetCustom[0],
+	(char *)&sdata_static.gameTracker.battleSetup.RNG_itemSetCustom[0],
 	&data.RNG_itemSetBossrace[0]
 };
 

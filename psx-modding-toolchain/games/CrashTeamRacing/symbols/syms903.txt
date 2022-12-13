@@ -1,6 +1,6 @@
 80010000 rdata
 8007F0D0 data
-8008b3d0 sdata
+8008b3d0 sdata_static
 8008bab0 bss
 
 // start of BOTS

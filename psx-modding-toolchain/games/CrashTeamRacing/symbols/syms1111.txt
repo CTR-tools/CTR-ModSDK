@@ -1,6 +1,6 @@
 80010000 rdata
 80084254 data
-80090370 sdata
+80090370 sdata_static
 80090a90 bss
 
 // only in jpn builds

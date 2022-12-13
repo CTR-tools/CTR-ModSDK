@@ -10615,12 +10615,15 @@ extern struct Data data;
 // ".sdata", "$gp" register
 // ram:8008cf6c-ram:0x8008d667 (aligned to 8008d7ff)
 // non-object globals (int, pointer, etc)
-register struct sData* sdata asm("$gp");
+extern struct sData sdata_static;
 
 // BSS is not a part of the EXE file,
 // it is allocated into RAM at startup
 // 0x8008d668 - 0x8009f6fc
 extern struct BSS bss;
+
+// optimal use for modding
+register struct sData* sdata asm("$gp");
 
 // OVR1
 // 8009f6fc - 800a0cb8
