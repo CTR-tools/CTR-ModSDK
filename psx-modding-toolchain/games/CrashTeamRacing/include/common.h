@@ -6954,6 +6954,9 @@ struct rData
 // 80084254 -- JpnRetail
 struct Data
 {
+	// this actually starts at 800809a0,
+	// more arrays for AdvDifficulty
+	
 	// 8007f0d0 -- SepReview
 	// 80080ee0 -- UsaRetail
 	// 8007ff44 -- JpnTrial
