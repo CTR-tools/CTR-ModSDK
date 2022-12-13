@@ -1368,6 +1368,8 @@
 8007c830 DeliverEvent
 8007c840 _SpuCallback
 8007c870 GPU_cw
+8007c9c0 ChangeClearPAD
+8007c9d0 ChangeClearRCnt
 8007d554 _padSetCmd
 8007d564 _padSendAtLoadInfo
 8007d5e8 _padRecvAtLoadInfo
