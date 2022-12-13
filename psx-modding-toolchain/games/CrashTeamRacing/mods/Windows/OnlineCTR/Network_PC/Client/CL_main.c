@@ -96,7 +96,7 @@ void ParseMessage()
 			int trackID = ((struct SG_MessageTrack*)recvBuf)->trackID;
 			printf("Got Track: %d\n", trackID);
 
-			// set sdata.gGT->trackID
+			// set sdata->gGT->trackID
 			*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = trackID;
 			octr->CurrState = LOBBY_CHARACTER_PICK;
 		default:
@@ -200,7 +200,7 @@ void StatePC_Lobby_HostTrackPick()
 	mt.size = sizeof(struct CG_MessageTrack);
 	mt.boolLastMessage = 1;
 
-	// sdata.gGT->levelID
+	// sdata->gGT->levelID
 	mt.trackID = *(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff];
 
 	// send a message to the client

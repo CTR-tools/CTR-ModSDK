@@ -543,7 +543,7 @@ void FUN_80027838(void)
         if (iVar6 == 1) {
 
 		  // If you have not beaten N Tropy
-		  // if sdata.gameTracker.GameProgress.highScoreTracks[levelID].flags
+		  // if sdata->gGT->GameProgress.highScoreTracks[levelID].flags
           if ((*(uint *)(&DAT_8008e814 + *(int *)(PTR_DAT_8008d2ac + 0x1a10) * 0x124) & 2) == 0)
 		  {
 			// assign n tropy ghost

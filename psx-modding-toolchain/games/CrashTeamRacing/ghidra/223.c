@@ -879,7 +879,7 @@ LAB_800a0b58:
 	// If you press Cross or Circle
     if ((DAT_8008d950 & 0x50) != 0) 
 	{
-	  // clear controller input (for menus)
+	  // clear gamepad input (for menus)
       FUN_80046404();
 	  
 	  // Draw end of race menu (see 221 and 222)

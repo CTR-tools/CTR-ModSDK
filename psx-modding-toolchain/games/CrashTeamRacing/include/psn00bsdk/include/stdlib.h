@@ -1,54 +1,59 @@
 /*
- * stdlib.h
- *
- * Standard library functions
- *
- * Inherited from PSXSDK
+ * PSn00bSDK standard library
+ * (C) 2019-2022 PSXSDK authors, Lameguy64, spicyjpeg - MPL licensed
  */
 
-#ifndef _STDLIB_H
-#define _STDLIB_H
+#ifndef __STDLIB_H
+#define __STDLIB_H
 
-#define RAND_MAX	0x7fff
+#include <stddef.h>
 
-/* Conversion functions (not yet implemented) */
+/* Definitions */
 
-/*
-extern int atoi(char *s);
-extern long atol(char *s);
-extern char atob(char *s); // Is this right?
-*/
+#define RAND_MAX 0x7fff
 
-// Quick sort (not yet implemented)
+/* Structure definitions */
 
-//void qsort(void *base , int nel , int width , int (*cmp)(const void *,const void *));
+typedef struct _HeapUsage {
+	size_t total;		// Total size of heap + stack
+	size_t heap;		// Amount of memory currently reserved for heap
+	size_t stack;		// Amount of memory currently reserved for stack
+	size_t alloc;		// Amount of memory currently allocated
+	size_t alloc_max;	// Maximum amount of memory ever allocated
+} HeapUsage;
+
+/* API */
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern int __argc;
-extern const char **__argv;
+extern int			__argc;
+extern const char	**__argv;
 
-int rand();
-void srand(unsigned long seed);
+void abort(void);
+
+int rand(void);
+void srand(int seed);
 
 int abs(int j);
 long labs(long i);
-long long strtoll(const char *nptr, char **endptr, int base);
+
 long strtol(const char *nptr, char **endptr, int base);
+long long strtoll(const char *nptr, char **endptr, int base);
+float strtof(const char *nptr, char **endptr);
+double strtod(const char *nptr, char **endptr);
 long double strtold(const char *nptr, char **endptr);
 
-// Note: these use floats internally!
-double strtod(const char *nptr, char **endptr);
-float strtof(const char *nptr, char **endptr);
+void InitHeap(void *addr, size_t size);
+void *sbrk(ptrdiff_t incr);
 
-// Memory allocation functions
-void _mem_init(int ram_size, int stack_max_size);
-void InitHeap(unsigned int *addr, int size);
-int SetHeapSize(int size);
-void *malloc(int size);
-void *calloc(int number, int size);
+void TrackHeapUsage(ptrdiff_t alloc_incr);
+void GetHeapUsage(HeapUsage *usage);
+
+void *malloc(size_t size);
+void *calloc(size_t num, size_t size);
+void *realloc(void *ptr, size_t size);
 void free(void *ptr);
 
 #ifdef __cplusplus
@@ -56,4 +61,3 @@ void free(void *ptr);
 #endif
 
 #endif
-

@@ -139,17 +139,17 @@ void EndOfRace_Hook()
 	int unlockDoors;
 
 	// backup podium
-	igt->podiumRewardID = sdata.gGT->podiumRewardID;
+	igt->podiumRewardID = sdata->gGT->podiumRewardID;
 
 	// skip podium
-	sdata.gGT->podiumRewardID = 0;
+	sdata->gGT->podiumRewardID = 0;
 
 	// unlock doors
 	unlockDoors=0;
-	if(sdata.advProgress.rewards[2] & 0x40000000) unlockDoors = 0x10;
-	if(sdata.advProgress.rewards[2] & 0x80000000) unlockDoors = 0xE0;
-	if(sdata.advProgress.rewards[3] & 0x1) unlockDoors = 0x100;
-	sdata.advProgress.rewards[3] |= unlockDoors;
+	if(sdata->advProgress.rewards[2] & 0x40000000) unlockDoors = 0x10;
+	if(sdata->advProgress.rewards[2] & 0x80000000) unlockDoors = 0xE0;
+	if(sdata->advProgress.rewards[3] & 0x1) unlockDoors = 0x100;
+	sdata->advProgress.rewards[3] |= unlockDoors;
 
     if (!igt->stopIncrementing && !igt->splitFadeTimer)
     {
@@ -222,7 +222,7 @@ struct Instance* INSTANCE_Birth_Hook()
 
 void IncrementIGT()
 {
-    igt->totalTime += sdata.gameTracker.elapsedTimeMS;
+    igt->totalTime += sdata->gGT->elapsedTimeMS;
     TimeToString(s_totalTime, igt->totalTime);
 }
 
@@ -246,9 +246,9 @@ void DrawIGT()
 
   // dont need to be this strict,
   // just a design choice
-  if (sdata.Loading.stage >= 1) return;
+  if (sdata->Loading.stage >= 1) return;
 
-  gGT = sdata.gGT;
+  gGT = sdata->gGT;
   backupOT = gGT->camera110_UI.ptrOT;
   gGT->camera110_UI.ptrOT = gGT->ot[gGT->swapchainIndex];
 
@@ -278,7 +278,7 @@ void SerializeSplits(char deserialize)
 
     for (i = 0; i < 6; i++)
     {
-        buffer = (int *) &sdata.gameProgress.highScoreTracks[i].scoreEntry[6];
+        buffer = (int *) &sdata->gameProgress.highScoreTracks[i].scoreEntry[6];
         for (j = 0; j < 4; j++)
         {
             if (deserialize)
@@ -297,10 +297,10 @@ void SaveGameProgressToMemcardBuffer()
     int * progressBuffer;
     int * memoryCardBuffer;
 
-    progressBuffer = &sdata.gameProgress.unknown;
-    memoryCardBuffer = (int *)(&sdata.memcardBytes[0] + 0x144);
+    progressBuffer = &sdata->gameProgress.unknown;
+    memoryCardBuffer = (int *)(&sdata->memcardBytes[0] + 0x144);
 
-    while (progressBuffer != (int *) &sdata.advProgress)
+    while (progressBuffer != (int *) &sdata->advProgress)
         *(memoryCardBuffer++) = *(progressBuffer++);
 }
 
@@ -313,10 +313,10 @@ void DrawMenu()
 	// japan builds
 	#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
 	// if main menu
-	if(sdata.gGT->levelID == 0x27)
+	if(sdata->gGT->levelID == 0x27)
 	{
 		// disable checkered flag
-		sdata.gGT->renderFlags &= 0xffffefff;
+		sdata->gGT->renderFlags &= 0xffffefff;
 	}
 	#endif
 
@@ -324,17 +324,17 @@ void DrawMenu()
     {
         if (igt->framesHoldingUp < 10)
         {
-            if (sdata.gamepadSystem.controller[0].buttonsHeldCurrFrame & (BTN_UP | BTN_RIGHT))
+            if (sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame & (BTN_UP | BTN_RIGHT))
                 igt->framesHoldingUp++;
             else
                 igt->framesHoldingUp = 0;
 
-            if (sdata.gamepadSystem.controller[0].buttonsTapped & (BTN_UP | BTN_RIGHT))
+            if (sdata->gGamepads->gamepad[0].buttonsTapped & (BTN_UP | BTN_RIGHT))
                 splits[igt->menuRow] += 1;
         }
         else
         {
-            if (sdata.gamepadSystem.controller[0].buttonsHeldCurrFrame & (BTN_UP | BTN_RIGHT))
+            if (sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame & (BTN_UP | BTN_RIGHT))
                 splits[igt->menuRow] += 10;
             else
                 igt->framesHoldingUp = 0;
@@ -342,17 +342,17 @@ void DrawMenu()
 
         if (igt->framesHoldingDown < 10)
         {
-            if (sdata.gamepadSystem.controller[0].buttonsHeldCurrFrame & (BTN_DOWN | BTN_LEFT))
+            if (sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame & (BTN_DOWN | BTN_LEFT))
                 igt->framesHoldingDown++;
             else
                 igt->framesHoldingDown = 0;
 
-            if (sdata.gamepadSystem.controller[0].buttonsTapped & (BTN_DOWN | BTN_LEFT))
+            if (sdata->gGamepads->gamepad[0].buttonsTapped & (BTN_DOWN | BTN_LEFT))
                 splits[igt->menuRow] -= 1;
         }
         else
         {
-            if (sdata.gamepadSystem.controller[0].buttonsHeldCurrFrame & (BTN_DOWN | BTN_LEFT))
+            if (sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame & (BTN_DOWN | BTN_LEFT))
                 splits[igt->menuRow] -= 10;
             else
                 igt->framesHoldingDown = 0;
@@ -362,36 +362,36 @@ void DrawMenu()
     }
     else
     {
-        if (sdata.gamepadSystem.controller[0].buttonsTapped & BTN_UP)
+        if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_UP)
         {
             igt->menuRow--;
             if (igt->menuRow == -1)
                 igt->menuRow = numLevels - 1;
         }
 
-        if (sdata.gamepadSystem.controller[0].buttonsTapped & BTN_DOWN)
+        if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_DOWN)
             igt->menuRow = (igt->menuRow + 1) % numLevels;
     }
 
-    if (sdata.gamepadSystem.controller[0].buttonsTapped & BTN_CROSS)
+    if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_CROSS)
         igt->selectedRow ^= 1;
 
 
 	// no save/load support in japan kiosk trial
 	#if BUILD != JpnTrial
-    if (sdata.gamepadSystem.controller[0].buttonsTapped & BTN_SQUARE)
+    if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_SQUARE)
     {
         SaveSplits();
         igt->onMenu = 0;
-        sdata.gamepadSystem.controller[0].buttonsTapped = 0;
+        sdata->gGamepads->gamepad[0].buttonsTapped = 0;
         return;
     }
 
-    if (sdata.gamepadSystem.controller[0].buttonsTapped & BTN_TRIANGLE)
+    if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_TRIANGLE)
         SerializeSplits(1);
 	#endif
 
-    sdata.gamepadSystem.controller[0].buttonsTapped = 0;
+    sdata->gGamepads->gamepad[0].buttonsTapped = 0;
 
     for (i = 0; i < numLevels; i++)
     {
@@ -407,12 +407,12 @@ void DrawMenu()
 			// if !selectedRow
             if (!igt->selectedRow)
             {
-                if (sdata.gameTracker.timer & 1)
+                if (sdata->gGT->timer & 1)
                     rowColor = ND_Orange;
             }
         }
 
-        DecalFont_DrawLine(sdata.lngStrings[trackNamesLNG[i]], 20, 18 + 9 * i, 2, rowColor);
+        DecalFont_DrawLine(sdata->lngStrings[trackNamesLNG[i]], 20, 18 + 9 * i, 2, rowColor);
         TimeToString(s_editorTime, splits[i]);
         if (s_editorTime[0] == ' ')
             DecalFont_DrawLine(&s_editorTime[2], 390, 18 + 9 * i, 2, rowColor);
@@ -420,7 +420,7 @@ void DrawMenu()
             DecalFont_DrawLine(s_editorTime, 370, 18 + 9 * i, 2, rowColor);
     }
     DecalFont_DrawLine(s_saveSplits, 254, 207, 2, ND_Orange | 0x8000);
-    DrawTextBackground(&menuWindow, 1, sdata.gameTracker.backBuffer->otMem.startPlusFour);
+    DrawTextBackground(&menuWindow, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 }
 
 // Our mod begins here
@@ -430,25 +430,25 @@ void RunUpdateHook()
     int i;
 	int gameMode1;
 
-	gameMode1 = sdata.gameTracker.gameMode1;
+	gameMode1 = sdata->gGT->gameMode1;
 
-	if (sdata.gameTracker.trafficLightsTimer > 0)
+	if (sdata->gGT->trafficLightsTimer > 0)
 	{
 		// needed?
-		// sdata.gGT->cameraDC[0].flags |= 9;
+		// sdata->gGT->cameraDC[0].flags |= 9;
 
 		// skip race intros
-		sdata.gGT->gameMode1 &= 0xffffffbf;
-		sdata.gGT->hudFlags |= 0x21;
+		sdata->gGT->gameMode1 &= 0xffffffbf;
+		sdata->gGT->hudFlags |= 0x21;
 	}
 
     if (igt->isSpeedrunning)
     {
         // if you went back to the main menu
-        if (sdata.gameTracker.levelID == 0x27)
+        if (sdata->gGT->levelID == 0x27)
             ResetIGT();
 
-        kartState = sdata.gameTracker.drivers[0]->kartState;
+        kartState = sdata->gGT->drivers[0]->kartState;
         // if you're not loading, end of race, race countdown, adv mask speech or adv warping
         if ((!igt->stopIncrementing) && (!((gameMode1 & (LOADING | RACE_OUTRO_CUTSCENE)) || (kartState == 4) || (kartState == 10) || (kartState == 11))))
             IncrementIGT();
@@ -456,7 +456,7 @@ void RunUpdateHook()
     else
     {
         // if you accessed hub 1
-        if (sdata.gameTracker.levelID == 0x1A)
+        if (sdata->gGT->levelID == 0x1A)
         {
             for (i = 0; i < numLevels; i++)
                 splitsComparing[i] = splits[i];
@@ -469,8 +469,8 @@ void RunUpdateHook()
     }
 
     // if you're not on the naughty dog box screen and you're not running
-    if ((sdata.gameTracker.levelID != 41) && (!(igt->isSpeedrunning && !igt->stopIncrementing)))
-        if (sdata.gamepadSystem.controller[0].buttonsTapped & BTN_SELECT)
+    if ((sdata->gGT->levelID != 41) && (!(igt->isSpeedrunning && !igt->stopIncrementing)))
+        if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_SELECT)
         {
             igt->onMenu ^= 1;
             igt->menuRow = 0;
@@ -482,10 +482,10 @@ void RunUpdateHook()
 			#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
 			// if in main menu, turn checkered flag "back" on,
 			// it will be disabled in DrawMenu
-			if(sdata.gGT->levelID == 0x27)
+			if(sdata->gGT->levelID == 0x27)
 			{
 				// enable flag by default
-				sdata.gGT->renderFlags |= 0x1000;
+				sdata->gGT->renderFlags |= 0x1000;
 			}
 			#endif
         }
@@ -503,10 +503,10 @@ void RunUpdateHook()
 
 	#if 0
 	// temporary debug
-	if (sdata.gamepadSystem.controller[0].buttonsTapped & BTN_UP)
+	if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_UP)
 	{
-		sdata.gGT->drivers[0]->lapIndex = 2;
-		sdata.gGT->drivers[0]->actionsFlagSet &= 0xfeffffff;
+		sdata->gGT->drivers[0]->lapIndex = 2;
+		sdata->gGT->drivers[0]->actionsFlagSet &= 0xfeffffff;
 	}
 	#endif
 }
@@ -522,7 +522,7 @@ void AllocDriversHook_BeforeTeleport()
 {
 	// restore the reward, so TeleportSelf knows
 	// where to put the driver
-	sdata.gGT->podiumRewardID = igt->podiumRewardID;
+	sdata->gGT->podiumRewardID = igt->podiumRewardID;
 
 	// clear
 	igt->podiumRewardID = 0;
@@ -531,17 +531,17 @@ void AllocDriversHook_BeforeTeleport()
 void TeleportSelfHook_AfterTeleport()
 {
 	// clear reward
-	sdata.gGT->podiumRewardID = 0;
+	sdata->gGT->podiumRewardID = 0;
 }
 
 // happens halfway through the end-of-race menu
 void AA_DisplayTime_Hook()
 {
 	// fake the passing of time
-	sdata.framesSinceRaceEnded = 900;
+	sdata->framesSinceRaceEnded = 900;
 
-	// fake a controller tap
-	sdata.AnyPlayerTap = 0x50;
+	// fake a gamepad tap
+	sdata->AnyPlayerTap = 0x50;
 }
 
 // currently hooks threadbuckets
@@ -552,7 +552,7 @@ void RunInitHook()
 	int size222;
 
 	// Skip flag that doesn't let you move when teleporting to a hub door
-	sdata.gGT->gameMode2 &= 0xffffbfff;
+	sdata->gGT->gameMode2 &= 0xffffbfff;
 
 	// if bottom of AA_EndEvent_DrawMenu is JR RA,
 	// (also, if this is the right overlay)

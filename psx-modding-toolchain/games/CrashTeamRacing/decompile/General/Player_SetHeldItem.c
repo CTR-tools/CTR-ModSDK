@@ -34,19 +34,19 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	itemSet = ITEMSET_BattleCustom;
 
 	// 5th Itemset (Battle Mode Default Itemset, 0x34de)
-	if (sdata.gGT->battleSetup.enabledWeapons == 0x34de) itemSet = ITEMSET_BattleDefault;
+	if (sdata->gGT->battleSetup.enabledWeapons == 0x34de) itemSet = ITEMSET_BattleDefault;
 
 	// Not in Battle Mode
-	if (!(sdata.gGT->gameMode1 & 0x20))
+	if (!(sdata->gGT->gameMode1 & 0x20))
 	{
 		// 7th Itemset (Crystal Challenge)
 		itemSet = ITEMSET_CrystalChallenge;
 
 		// Not in Crystal Challenge
-		if (!(sdata.gGT->gameMode1 & 0x8000000))
+		if (!(sdata->gGT->gameMode1 & 0x8000000))
 		{
 			// Choose Itemset based on number of Drivers
-			switch(sdata.gGT->numPlayers + sdata.gGT->numRobotcars)
+			switch(sdata->gGT->numPlayers + sdata->gGT->numRobotcars)
 			{
 				// if boss race
 				case 2:
@@ -144,7 +144,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	rng = (RNG_Scramble() >> 0x3) % 0xc8;
 
 	// number of weapons for RNG
-	numWeapons[ITEMSET_BattleCustom] = sdata.gGT->battleSetup.numWeapons;
+	numWeapons[ITEMSET_BattleCustom] = sdata->gGT->battleSetup.numWeapons;
 
 	switch(itemSet)
 	{
@@ -162,7 +162,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 			// Item is bomb at Rocky Road, Nitro Court
 			// Item is turbo at Skull Rock and Rampage Ruins
 			item = 0x1;
-			if (sdata.gGT->levelID != 0x15 && sdata.gGT->levelID != 0x13) goto SetItem;
+			if (sdata->gGT->levelID != 0x15 && sdata->gGT->levelID != 0x13) goto SetItem;
 			driver->heldItemID = 0x0;
 			break;
 
@@ -175,9 +175,9 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	}
 
 	// In Boss race
-	if (sdata.gGT->gameMode1 & 0x80000000)
+	if (sdata->gGT->gameMode1 & 0x80000000)
 	{
-		bossFails = sdata.advProgress.timesLostBossRace[sdata.gGT->bossID];
+		bossFails = sdata->advProgress.timesLostBossRace[sdata->gGT->bossID];
 
 		if (bossFails < 0x3)
 		{
@@ -198,7 +198,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 		}
 
 		// Replace 3 Missiles with 1 Missile if racing Komodo Joe
-		if (sdata.gGT->levelID == 0x1 && driver->heldItemID == 0xb) driver->heldItemID = 0x2;
+		if (sdata->gGT->levelID == 0x1 && driver->heldItemID == 0xb) driver->heldItemID = 0x2;
 	}
 
 	// Replace unused Spring item with Turbo
@@ -208,7 +208,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	if (driver->heldItemID == 0x9)
 	{
 		// if nobody has warpball, then set flag that somebody has it
-		if (!(sdata.gGT->gameMode1 & 0x1000)) sdata.gGT->gameMode1 |= 0x1000;
+		if (!(sdata->gGT->gameMode1 & 0x1000)) sdata->gGT->gameMode1 |= 0x1000;
 
 		// if somebody has warpball already, then give 3 missiles
 		else driver->heldItemID = 0xb;
@@ -219,14 +219,14 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 			driver->heldItemID == 0xb &&
 
 			// if more than 2 players
-			sdata.gGT->numPlayers > 2 &&
+			sdata->gGT->numPlayers > 2 &&
 
 			// if not in battle mode
-			!(sdata.gGT->gameMode1 & 0x20)
+			!(sdata->gGT->gameMode1 & 0x20)
 		)
 	{
 		// if less than 2 drivers have 3 missiles, then increase number of drivers that have it
-		if (sdata.gGT->numPlayersWith3Missiles < 2)	sdata.gGT->numPlayersWith3Missiles++;
+		if (sdata->gGT->numPlayersWith3Missiles < 2)	sdata->gGT->numPlayersWith3Missiles++;
 
 		// if 2 drivers already have 3 missiles, now you have 1 missile
 		else driver->heldItemID = 0x2;
@@ -245,7 +245,7 @@ char* charPtr[7] =
 	&data.RNG_itemSetRace3[0],
 	&data.RNG_itemSetRace4[0],
 	&data.RNG_itemSetBattleDefault[0],
-	(char *)&sdata.gameTracker.battleSetup.RNG_itemSetCustom[0],
+	(char *)&sdata->gGT->battleSetup.RNG_itemSetCustom[0],
 	&data.RNG_itemSetBossrace[0]
 };
 

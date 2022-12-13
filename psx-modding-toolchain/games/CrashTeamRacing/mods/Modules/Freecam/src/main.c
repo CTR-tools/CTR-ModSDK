@@ -7,7 +7,7 @@ void RunInitHook()
 {
 	int loop;
 	struct GameTracker* gGT;
-	gGT = sdata.gGT;
+	gGT = sdata->gGT;
 
 	// make a module
 	#if 0
@@ -48,7 +48,7 @@ void RunUpdateHook()
 	MATRIX matrix;
 
 	struct GameTracker* gGT;
-	gGT = sdata.gGT;
+	gGT = sdata->gGT;
 
 	// wait till race starts, to give the camera a place to spawn
 	if(gGT->trafficLightsTimer > 10)
@@ -64,7 +64,7 @@ void RunUpdateHook()
 	speed = 3 * (speed / 2);
 
 	// get buttons held by P1
-	buttons = sdata.PtrGamepadSystem->controller[0].buttonsHeldCurrFrame;
+	buttons = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
 
 	// speed boost
 	if(buttons & BTN_SELECT) speed *= 3;

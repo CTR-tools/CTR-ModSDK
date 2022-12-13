@@ -1791,7 +1791,7 @@ void FUN_800319e8(void)
 
 {
   // gp -> 0x138
-  // sdata.load_inProgress = 0;
+  // sdata->load_inProgress = 0;
   uGp00000138 = 0;
 
   return;
@@ -1805,7 +1805,7 @@ void FUN_800319f4(void)
   PTR_DAT_8008d2ac[0x2541] = 0;
 
   // gp -> 0x138
-  // sdata.load_inProgress = 0;
+  // sdata->load_inProgress = 0;
   uGp00000138 = 0;
 
   return;
@@ -1819,7 +1819,7 @@ void FUN_80031a08(void)
   PTR_DAT_8008d2ac[0x2541] = 1;
 
   // gp -> 0x138
-  // sdata.load_inProgress = 0;
+  // sdata->load_inProgress = 0;
   uGp00000138 = 0;
 
   return;
@@ -1833,7 +1833,7 @@ void FUN_80031a20(void)
   PTR_DAT_8008d2ac[0x2541] = 2;
 
   // gp -> 0x138
-  // sdata.load_inProgress = 0;
+  // sdata->load_inProgress = 0;
   uGp00000138 = 0;
 
   return;
@@ -1847,7 +1847,7 @@ void FUN_80031a38(void)
   PTR_DAT_8008d2ac[0x2541] = 3;
 
   // gp -> 0x138
-  // sdata.load_inProgress = 0;
+  // sdata->load_inProgress = 0;
   uGp00000138 = 0;
 
   return;
@@ -1859,11 +1859,11 @@ void FUN_80031a50(int param_1)
 
 {
   // gp -> 0x138
-  // sdata.load_inProgress = 0;
+  // sdata->load_inProgress = 0;
   uGp00000138 = 0;
 
   // gp->184
-  // sdata.modelMaskHints3D modelptr
+  // sdata->modelMaskHints3D modelptr
 
   // param_1 -> 0xC
   // LoadQueueSlot -> ptrDestination
@@ -1881,7 +1881,7 @@ void FUN_80031a64(int param_1)
   DAT_80083a38 = *(undefined4 *)(param_1 + 0xc);
 
   // gp -> 0x138
-  // sdata.load_inProgress = 0;
+  // sdata->load_inProgress = 0;
   uGp00000138 = 0;
 
   return;
@@ -1896,7 +1896,7 @@ void FUN_80031a78(int param_1)
   if ((*(ushort *)(param_1 + 4) & 2) == 0)
   {
     // gp -> 0x138
-    // sdata.load_inProgress = 0;
+    // sdata->load_inProgress = 0;
     uGp00000138 = 0;
   }
 
@@ -1944,7 +1944,7 @@ void FUN_80031b00(int param_1)
   uGp0000011c = *(undefined4 *)(param_1 + 0xc);
 
   // gp -> 0x138
-  // sdata.load_inProgress = 0;
+  // sdata->load_inProgress = 0;
   uGp00000138 = 0;
   return;
 }
@@ -5407,7 +5407,7 @@ void FUN_80034aa4(void)
   // howl_PlayAudio_PerFrame
   FUN_8002c208();
 
-  // check for unplugged controllers
+  // check for unplugged gamepads
   FUN_80025410(PTR_DAT_8008d2b0);
 
   return;
@@ -5580,7 +5580,7 @@ void FUN_80034bbc(int param_1)
 
 // GameplayUpdateLoop
 // param1 = 8008d2ac - main game struct
-// param2 = 8008d2b0 - controller struct
+// param2 = 8008d2b0 - gamepad struct
 void FUN_80034d54(uint *param_1,int param_2)
 
 {
@@ -5998,7 +5998,7 @@ LAB_80035098:
   puVar9 = PTR_DAT_8008d2b0;
   param_1[1] = *param_1;
 
-  // Check for change in the amount of controllers connected
+  // Check for change in the amount of gamepads connected
   iVar10 = FUN_800255b4(puVar9);
 
 
@@ -6036,7 +6036,7 @@ LAB_80035098:
 			((DAT_8008d950 & 0x1000) != 0)
 		   )
 		{
-		  // clear controller input (for menus)
+		  // clear gamepad input (for menus)
           FUN_80046404();
 
 		  // Unpause game
@@ -6112,14 +6112,14 @@ LAB_80035098:
 				(
 					(
 						// if there is a change in the number
-						// of controllers that are connected
+						// of gamepads that are connected
 						(iVar10 != 0) &&
 						(
 							(
-								// check for missing controllers, depending on numPlayers
+								// check for missing gamepads, depending on numPlayers
 								uVar5 = FUN_80035d70((uint)(byte)PTR_DAT_8008d2ac[0x1ca9]),
 
-								// if a controller is missing that is needed
+								// if a gamepad is missing that is needed
 								(uVar5 & 0xffff) == 0
 
 								// If the game is not paused
@@ -6724,7 +6724,7 @@ void FUN_80035d30
   return;
 }
 
-// CheckMissingControllers
+// CheckMissingGamepads
 int FUN_80035d70(short param_1)
 
 {
@@ -6746,7 +6746,7 @@ int FUN_80035d70(short param_1)
 	// if there are no players (cutscene)
 	if (iVar2 == 0)
 	{
-	  // return 0 means controller is missing
+	  // return 0 means gamepad is missing
       sVar3 = 0;
     }
 
@@ -6760,25 +6760,25 @@ int FUN_80035d70(short param_1)
       if (0 < iVar2)
 	  {
 		// loop through all players and make sure
-		// all their controllers are connected
+		// all their gamepads are connected
 
 		// iVar5 = 0; iVar5 < numPlayers; iVar5++
         do
 		{
-		  // only continue checking controllers if
-		  // all previous controllers are connected
+		  // only continue checking gamepads if
+		  // all previous gamepads are connected
           bVar1 = uVar4 != 0;
 
           uVar4 = 0;
           if (
-				// if there are no other controllers unplugged (so far)
+				// if there are no other gamepads unplugged (so far)
 				(bVar1) &&
 
-				// if this controller is plugged in
+				// if this gamepad is plugged in
 				(*(char **)(PTR_DAT_8008d2b0 + (int)(short)iVar5 * 0x50 + 0x20) != (char *)0x0)
 			 )
 		  {
-			// Check if controller is compatible with game (not a gun or mouse)
+			// Check if gamepad is compatible with game (not a gun or mouse)
 			uVar4 = (uint)(**(char **)(PTR_DAT_8008d2b0 + (int)(short)iVar5 * 0x50 + 0x20) == '\0');
           }
 
@@ -6792,7 +6792,7 @@ int FUN_80035d70(short param_1)
       }
     }
 
-	// return 0 only if a controller is missing
+	// return 0 only if a gamepad is missing
 	// that is currently needed in the game
     return (int)sVar3;
   }
@@ -6912,11 +6912,11 @@ void FUN_80035e70(uint *param_1)
 	 )
   {
 	// is main menu at highest level of hierarchy?
-	// if so, dont give missing controllers error
+	// if so, dont give missing gamepads error
     bVar4 = (uRam800b4548 & 0x10) == 0;
   }
 
-  // Missing Controllers error dialog
+  // Missing Gamepads error dialog
   if (
 		(
 			(
@@ -6951,7 +6951,7 @@ void FUN_80035e70(uint *param_1)
 			(PTR_DAT_8008d2b0[0x2d1] == -0x80) ||
 
 			(
-				// pointer goes to "controller 1" or "controller 2"
+				// pointer goes to "gamepad 1" or "gamepad 2"
 				sVar10 = 0,
 
 				// if number of players is more than 2
@@ -6969,7 +6969,7 @@ void FUN_80035e70(uint *param_1)
 	// if Number of Players is not zero
     if (PTR_DAT_8008d2ac[0x1ca9] != '\0')
 	{
-	  // offset into main controller buffer for all players.
+	  // offset into main gamepad buffer for all players.
 	  // 0 for p1, 0x30 for p2, etc
       iVar19 = 0;
 
@@ -6979,14 +6979,14 @@ void FUN_80035e70(uint *param_1)
 
       do
 	  {
-		// check each player's controller buffer
+		// check each player's gamepad buffer
         if ((*(char **)(PTR_DAT_8008d2b0 + iVar19 + 0x20) == (char *)0x0) ||
            (**(char **)(PTR_DAT_8008d2b0 + iVar19 + 0x20) != '\0')) {
           iVar13 = (int)sVar17;
           local_3a = local_3a + 8;
           sVar17 = sVar17 + 8;
 
-		  // One of 6 strings for "Controller x is Unplugged
+		  // One of 6 strings for "Gamepad x is Unplugged
           FUN_80022878(*(undefined4 *)			//  -0x7ff7bdbc should be 80084244
                         ((int)*(short *)((iVar6 + sVar10) * 2 + -0x7ff7bdbc) * 4 + DAT_8008d878),
                        0x100,iVar13,2,0xffff8000);
@@ -6995,7 +6995,7 @@ void FUN_80035e70(uint *param_1)
 		// increment loop counter
         iVar6 = iVar6 + 1;
 
-		// increment offest to next player's controller buffer
+		// increment offest to next player's gamepad buffer
         iVar19 = iVar19 + 0x50;
 
 						// Number of Players
@@ -9310,7 +9310,7 @@ void FUN_80037da0(void)
     return;
   }
 
-  // Get controller ID from whoever opened
+  // Get gamepad ID from whoever opened
   // the configuration menu (0, 1, 2, 3)
   iVar11 = (int)DAT_8008d87c;
 
@@ -9330,7 +9330,7 @@ void FUN_80037da0(void)
     return;
   }
 
-  // If this is NPC-105 controller
+  // If this is NPC-105 gamepad
   bVar1 = pcVar6[1] == -0x1d;
 
   // make a copy
@@ -9340,7 +9340,7 @@ void FUN_80037da0(void)
   // If you're selecting Dead Zone
   if (DAT_8008d898 == 1)
   {
-	// Get controller input from
+	// Get gamepad input from
     uVar3 = (&DAT_8009a990)[iVar11];
 
 	// If you dont press Up or Left
@@ -9444,7 +9444,7 @@ void FUN_80037da0(void)
         FUN_80022b34(*(undefined4 *)(DAT_8008d878 + 0x888),0x100,
                      (int)*(short *)(&DAT_8008d2e0 + uVar8 * 4),0x1cc,1,0xffff8000);
 
-		// Get controller ID from whoever opened
+		// Get gamepad ID from whoever opened
 		// the configuration menu (0, 1, 2, 3)
         iVar11 = (int)DAT_8008d87c;
 
@@ -9454,19 +9454,19 @@ void FUN_80037da0(void)
 		  // Move to 2nd stage of configuration
           DAT_8008d898 = DAT_8008d898 + 1;
 
-		  // If this is NPC-105 controller
+		  // If this is NPC-105 gamepad
           if (bVar1) {
             PTR_DAT_8008d2b0[iVar11 * 0x50 + 0x44] = 4;
             *(undefined2 *)((int)&DAT_800841fc + (int)DAT_8008d87c * 6) = 0x80;
           }
 
-		  // If this is not NPC-105 controller
+		  // If this is not NPC-105 gamepad
           else {
             *(ushort *)((int)&DAT_800841fc + iVar11 * 6) =
                  (ushort)*(byte *)(*(int *)(PTR_DAT_8008d2b0 + iVar11 * 0x50 + 0x20) + 4);
           }
 
-		  // clear controller input (for menus)
+		  // clear gamepad input (for menus)
           FUN_80046404();
         }
         DAT_8008d2f0 = 0;
@@ -9480,7 +9480,7 @@ void FUN_80037da0(void)
 	  // Select Range configuration
       if (DAT_8008d898 == 2)
 	  {
-		// get controller input
+		// get gamepad input
         uVar3 = (&DAT_8009a990)[iVar11];
 
 		// If you dont press Up or Left
@@ -9499,7 +9499,7 @@ void FUN_80037da0(void)
 			  // Save "Range" value
               (&DAT_80084200)[iVar11 * 3] = (&DAT_80084274)[(int)(short)DAT_8008d894 * 3];
 
-			  // clear controller input (for menus)
+			  // clear gamepad input (for menus)
 			  FUN_80046404();
             }
           }
@@ -9577,7 +9577,7 @@ void FUN_80037da0(void)
   uVar8 = DAT_8008d2f0;
   iVar11 = 0;
 
-  // If this is not NPC-105 controller
+  // If this is not NPC-105 gamepad
   if (!bVar1)
   {
 	// loop counter
@@ -9964,7 +9964,7 @@ void FUN_80038b5c(int param_1)
   // number of racing wheels
   ushort local_58;
 
-  // number of analog controllers
+  // number of analog gamepads
   ushort local_50;
 
   ushort local_48;
@@ -9976,7 +9976,7 @@ void FUN_80038b5c(int param_1)
   // zero racing wheels by default
   local_58 = 0;
 
-  // controller buffer
+  // gamepad buffer
   local_48 = (ushort)(PTR_DAT_8008d2b0[0x2d1] == -0x80) << 1;
 
   local_78 = param_1;
@@ -9986,7 +9986,7 @@ void FUN_80038b5c(int param_1)
 
   iVar12 = 0;
 
-  // zero analog controllers by default
+  // zero analog gamepads by default
   local_50 = 0;
 
   // If you are in the racing wheel configuration
@@ -10013,14 +10013,14 @@ void FUN_80038b5c(int param_1)
 	{
       pcVar8 = *(char **)(PTR_DAT_8008d2b0 + (iVar6 >> 0x10) * 0x50 + 0x20);
 
-	  // If this controller is not a racing wheel
+	  // If this gamepad is not a racing wheel
       if (
 			((pcVar8 == (char *)0x0) || (*pcVar8 != '\0')) ||
 
 			(
 
 				(
-					// If this is not NPC-105 controller
+					// If this is not NPC-105 gamepad
 					pcVar8[1] != -0x1d &&
 
 					// If this is not madcatz racing wheel
@@ -10031,7 +10031,7 @@ void FUN_80038b5c(int param_1)
 	  {
         uVar14 = (uint)local_58;
 
-		// increment number of analog controllers
+		// increment number of analog gamepads
         local_58 = local_58 + 1;
 
         *(undefined2 *)((int)local_a8 + ((int)(uVar14 << 0x10) >> 0xf)) = (short)iVar13;
@@ -10061,7 +10061,7 @@ void FUN_80038b5c(int param_1)
   // 1 for racing wheels
   uVar5 = 0;
 
-  // if there are any analog controllers
+  // if there are any analog gamepads
   if (local_58 != 0)
   {
 	// check to see if there are any racing wheels
@@ -10072,12 +10072,12 @@ void FUN_80038b5c(int param_1)
   sVar7 = (4 - uVar5) - (ushort)(byte)PTR_DAT_8008d2ac[0x1ca8];
   uVar5 = sVar7 * 10;
 
-  // if there are no analog controllers
+  // if there are no analog gamepads
   if (local_58 == 0) {
     local_60 = 0;
   }
 
-  // if there are analog controllers
+  // if there are analog gamepads
   else {
     local_60 = (local_58 + 1) * 10;
   }
@@ -10088,7 +10088,7 @@ void FUN_80038b5c(int param_1)
   // loop counter
   iVar13 = 0;
 
-  // if there are analog controllers
+  // if there are analog gamepads
   if (0 < (int)(short)local_58)
   {
 	// loop counter
@@ -10122,7 +10122,7 @@ void FUN_80038b5c(int param_1)
       uVar10 = 0;
       sVar7 = (short)iVar13;
 
-	  // if there are analog controllers
+	  // if there are analog gamepads
       if ((int)(short)local_58 != 0) {
         uVar10 = (ushort)(iVar9 != 0);
       }
@@ -10254,11 +10254,11 @@ void FUN_80038b5c(int param_1)
 		  // OtherFX_Play
           FUN_80028468(1,1);
 
-		  // row selected - 4, controller ID
+		  // row selected - 4, gamepad ID
           iVar13 = (int)(((uint)uVar10 - 4) * 0x10000) >> 0x10;
 
 		  // If the row you've selected is for configuring
-		  // an analog controller
+		  // an analog gamepad
 		  // (row - 4) < numAnalog
           if (iVar13 < (short)local_58) {
             *(uint *)PTR_DAT_8008d2ac =
@@ -10266,7 +10266,7 @@ void FUN_80038b5c(int param_1)
                  *(uint *)(&DAT_8008430c + (int)(short)local_a8[iVar13] * 4);
           }
 
-		  // if the row selected is for a racing wheel controller
+		  // if the row selected is for a racing wheel gamepad
           else
 		  {
 			// set the racing wheel ID to configure
@@ -10477,7 +10477,7 @@ switchD_80038f90_caseD_9:
 	// DUAL SHOCK:
     FUN_80022878(*(undefined4 *)(DAT_8008d878 + 0x528),0x4c,(iVar6 + 0x5a) * 0x10000 >> 0x10,2,0);
 
-	// Controller 1A
+	// Gamepad 1A
 	// DecalFont_GetLineWidth
 	iVar13 = FUN_800224d0(*(undefined4 *)((int)DAT_80084320 * 4 + DAT_8008d878),2);
 
@@ -10518,7 +10518,7 @@ switchD_80038f90_caseD_9:
         }
 
 		// might be printing string for
-		// "Controller 1", "Controller 2", 1A 1B 1C 1D, etc
+		// "Gamepad 1", "Gamepad 2", 1A 1B 1C 1D, etc
         FUN_80022878(*(undefined4 *)
                       ((int)*(short *)(&DAT_8008431c + ((int)((uVar14 + local_48) * 0x10000) >> 0xf)
                                       ) * 4 + DAT_8008d878),iVar12 * 0x10000 >> 0x10,
@@ -10641,7 +10641,7 @@ switchD_80038f90_caseD_9:
 	// disable OptionsMenu_TestSound
     FUN_8002b208(0,0);
 
-	// clear controller input (for menus)
+	// clear gamepad input (for menus)
     FUN_80046404();
 
 	// set desired MenuBox to pause MenuBox
@@ -13816,7 +13816,7 @@ undefined4 main(void)
   // gGT
   undefined *puVar6;
   
-  // gGT or ControllerSystem
+  // gGT or GamepadSystem
   undefined *puVar7;
   
   // checkered flag or loading stage or levID or time
@@ -13977,12 +13977,12 @@ undefined4 main(void)
 
 	  VSync(0);
 
-	  // initialize controller systems
+	  // initialize gamepad systems
       FUN_800251ac(PTR_DAT_8008d2b0);
 
       VSync(0);
 
-	  // check number of controllers connected
+	  // check number of gamepads connected
 	  FUN_800255b4(PTR_DAT_8008d2b0);
 
 	  // Get CD Position fo BIGFILE
@@ -14179,7 +14179,7 @@ LAB_8003ca68:
 	  // initialize all threadBuckets
       FUN_8003b934(PTR_DAT_8008d2ac);
 
-	  // get number of controllers connected
+	  // get number of gamepads connected
       FUN_800255b4(PTR_DAT_8008d2b0);
 
 	  // set sound to unpaused
@@ -14463,7 +14463,7 @@ LAB_8003ccf8:
 	  // frame counter
       DAT_8008d970 = DAT_8008d970 + 1;
 
-	  // Process all controller input
+	  // Process all gamepad input
       FUN_800262d0(PTR_DAT_8008d2b0);
 
 	  // Start new frame (ClearOTagR)
@@ -14559,7 +14559,7 @@ LAB_8003ce08:
         PTR_DAT_8008d2ac[0x1d31] = PTR_DAT_8008d2ac[0x1d31] & 0xfe;
       }
 
-	  // controller input structure
+	  // gamepad input structure
       puVar7 = PTR_DAT_8008d2b0;
 
 	  // game state structure
@@ -14612,7 +14612,7 @@ LAB_8003ce08:
       FUN_8002ac94();
 
 	  // GAMEPAD_SetMainMode,
-	  // param1 is PtrGamepadSystem
+	  // param1 is gGamepads
       FUN_80025208(PTR_DAT_8008d2b0);
 
 	  // Set vsync to 2 FPS
@@ -23198,7 +23198,7 @@ void FUN_8004568c(undefined4 param_1,short param_2,int param_3,uint param_4,shor
 // param1 is a pointer to RECT (x,y,w,h)
 // param2 is type of camera110
 	// 0: transparent, like main menu
-	// 1: Black, like "controller unplugged"
+	// 1: Black, like "gamepad unplugged"
 void FUN_800457b0(undefined4 *param_1,ushort param_2,undefined4 param_3)
 
 {
@@ -23884,7 +23884,7 @@ void FUN_80046404(void)
 
 	iVar1 = iVar1 >> 0xe;
 
-	// clear all controller input for all players
+	// clear all gamepad input for all players
     *(undefined4 *)((int)&DAT_8009a990 + iVar1) = 0;
     *(undefined4 *)((int)&DAT_8009a964 + iVar1) = 0;
 
@@ -23903,7 +23903,7 @@ void FUN_80046458(void)
   int iVar3;
   int iVar4;
 
-  // pointer to controller input for all players
+  // pointer to gamepad input for all players
   puVar1 = PTR_DAT_8008d2b0;
 
   // Reset button input
@@ -23931,7 +23931,7 @@ void FUN_80046458(void)
       iVar4 = iVar4 + 1;
       iVar3 = iVar3 >> 0x10;
 
-	  // save input each controller into variables that can be re-used
+	  // save input each gamepad into variables that can be re-used
 
 	  // Detect buttons "tapped" which only show on the first frame they are pressed
       (&DAT_8009a990)[iVar3] = *(uint *)(puVar1 + iVar3 * 0x50 + 0x14);
@@ -24008,7 +24008,7 @@ int FUN_80046534(int param_1)
 			)
 		)
 	{
-	  // clear controller input (for menus)
+	  // clear gamepad input (for menus)
       FUN_80046404();
     }
 
@@ -24017,7 +24017,7 @@ int FUN_80046534(int param_1)
 
     if ((*(uint *)(param_1 + 8) & 0x8000) == 0) {
 
-		// controller input of P1
+		// gamepad input of P1
 		uVar2 = DAT_8009a990;
     }
 
@@ -24106,7 +24106,7 @@ int FUN_80046534(int param_1)
 			// if you have not reached the bottom of the submenu
             if (*(int *)(param_1 + 0x10) != 0)
 			{
-			  // clear controller input (for menus)
+			  // clear gamepad input (for menus)
               FUN_80046404();
 
 			  // call the function this menu has,
@@ -24149,7 +24149,7 @@ int FUN_80046534(int param_1)
 			// if you have not reached the bottom of the submenu
             if (*(int *)(param_1 + 0x10) != 0)
 			{
-			  // clear controller input (for menus)
+			  // clear gamepad input (for menus)
               FUN_80046404();
 
 			  // call the function this menu has,
@@ -24160,7 +24160,7 @@ int FUN_80046534(int param_1)
           }
 
 		  // if you cant enter this submenu,
-		  // like 4P VS with 2 controllers
+		  // like 4P VS with 2 gamepads
           else
 		  {
             if ((*(uint *)(param_1 + 8) & 0x800000) == 0)
@@ -24171,7 +24171,7 @@ int FUN_80046534(int param_1)
           }
         }
 
-		// clear controller input (for menus)
+		// clear gamepad input (for menus)
         FUN_80046404();
       }
 
@@ -24300,7 +24300,7 @@ void FUN_8004680c(void)
 void FUN_80046990(int param_1)
 
 {
-  // clear controller input (for menus)
+  // clear gamepad input (for menus)
   FUN_80046404();
 
   // save the pointer to the menu buffer
@@ -26398,7 +26398,7 @@ uint FUN_80048f0c(int param_1,short param_2,uint param_3)
       }
     }
 
-	// clear controller input (for menus)
+	// clear gamepad input (for menus)
     FUN_80046404();
   }
   return uVar5;
@@ -26537,7 +26537,7 @@ void FUN_800490c4(int param_1)
         }
       }
 
-	  // clear controller input (for menus)
+	  // clear gamepad input (for menus)
       FUN_80046404();
 
 	  DAT_80085d76 = DAT_80085d4a;
@@ -26646,7 +26646,7 @@ LAB_800495ac:
           FUN_8003a2b4();
         }
 
-		// clear controller input (for menus)
+		// clear gamepad input (for menus)
         FUN_80046404();
 
         DAT_8008d8fa = 1;
@@ -26662,7 +26662,7 @@ LAB_800495ac:
 	  // If you press Circle
       if ((DAT_8009a990 & 0x40) != 0)
 	  {
-		// clear controller input (for menus)
+		// clear gamepad input (for menus)
         FUN_80046404();
 
 		// OtherFX_Play
@@ -28021,7 +28021,7 @@ int FUN_8004aa60(ushort param_1)
                 local_38 = -1;
               }
 
-			  // clear controller input (for menus)
+			  // clear gamepad input (for menus)
               FUN_80046404();
             }
           }
@@ -37698,7 +37698,7 @@ void FUN_800562fc(void)
 	//               number of screens                 +         number of AIs
     DAT_8008d570 = (ushort)(byte)PTR_DAT_8008d2ac[0x1ca8] + (ushort)(byte)PTR_DAT_8008d2ac[0x1cab];
 
-	// clear controller input (for menus)
+	// clear gamepad input (for menus)
 	FUN_80046404();
   }
   if ((DAT_8008d4bc & 4) == 0) {
@@ -38019,7 +38019,7 @@ LAB_800568d8:
 	  // where you see how many points each driver has overall
       DAT_8008d4bc = DAT_8008d4bc | 8;
 
-	  // clear controller input (for menus)
+	  // clear gamepad input (for menus)
       FUN_80046404();
     }
   }
@@ -40822,7 +40822,7 @@ LAB_800597d0:
 	// if time against wall is less than 15 seconds
     if (*(short *)(param_1 + 0x50) < 0x1c2)
 	{
-	  // both controller vibration
+	  // both gamepad vibration
       FUN_80026440(param_1,8,0);
       FUN_800264c0(param_1,8,0x7f);
 
@@ -41030,7 +41030,7 @@ void FUN_80059a18(int param_1,int param_2)
 	  // if speed high enough
       if (0x200 < iVar20)
 	  {
-		// both controller vibration
+		// both gamepad vibration
         FUN_80026440(param_2,(uint)*(byte *)(iVar22 + 0x2c),(uint)*(byte *)(iVar22 + 0x2d));
         FUN_80026540(param_2,(uint)*(byte *)(iVar22 + 0x2e),(uint)*(byte *)(iVar22 + 0x2f));
       }
@@ -41044,7 +41044,7 @@ void FUN_80059a18(int param_1,int param_2)
 
         if (0x1600 < iVar20)
 		{
-		  // controller vibration
+		  // gamepad vibration
           FUN_800264c0(param_2,3,0xff);
         }
       }
@@ -42255,7 +42255,7 @@ LAB_8005af38:
     *(uint *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0xdc + 0x1508) =
          *(uint *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0xdc + 0x1508) | 0x80;
 
-	// controller vibration
+	// gamepad vibration
     FUN_800264c0(param_1,8,0x7f);
   }
   return;
@@ -44196,7 +44196,7 @@ void FUN_8005d404(int param_1,int param_2,int *param_3)
           uVar9 = 0x29;
         }
 
-		// controller vibration
+		// gamepad vibration
         FUN_800263a0(iVar5,uVar9,0x60);
 
 		// flag used in 80062e04
@@ -44805,7 +44805,7 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
       if (0 < (int)uVar11) {
         uVar10 = uVar10 | 0x1800;
 		
-		  // controller vibration
+		  // gamepad vibration
         FUN_800264c0(param_1,4,0x7f);
         FUN_80026440(param_1,4,0);
       }
@@ -46940,7 +46940,7 @@ LAB_800608fc:
 	// If you're "blasted", flipping around after hit by missile, bomb, etc
     if (*(char *)(param_2 + 0x376) == '\x06')
 	{
-	  // controller vibration
+	  // gamepad vibration
       FUN_80026440(param_2,8,0);
       FUN_800264c0(param_2,8,0x7f);
     }
@@ -48196,7 +48196,7 @@ LAB_80061cf8:
           iVar21 = 0x20;
         }
 
-		// controller vibration
+		// gamepad vibration
 		FUN_800264c0(param_2,4,iVar19 + (iVar8 >> 5) + iVar21 + 0x18);
 
         uVar6 = uVar18 | 1;
@@ -48388,7 +48388,7 @@ LAB_80061cf8:
     iVar8 = *(int *)(iVar8 + 0x10);
   }
 
-  // pointer to controller input of current player (param_2)
+  // pointer to gamepad input of current player (param_2)
   puVar24 = PTR_DAT_8008d2b0 + (uint)*(byte *)(param_2 + 0x4a) * 0x50;
 
   // by default, hold no buttons
@@ -49976,7 +49976,7 @@ void FUN_8006364c(undefined4 param_1,int param_2)
 				
 				((*(uint *)(param_2 + 0x2c8) & 0x2028) != 0)) ||
 
-				// If the controller input is...
+				// If the gamepad input is...
 				((*(uint *)(PTR_DAT_8008d2b0 + (uint)*(byte *)(param_2 + 0x4a) * 0x50 + 0x10) &
 
 				// does not include the jump button that you used to start drifting
@@ -50479,7 +50479,7 @@ void FUN_80063ec0(undefined4 param_1,int param_2)
     uVar2 = 0x29;
   }
 
-  // controller vibration
+  // gamepad vibration
   FUN_800263a0(param_2,uVar2,0x60);
 
   return;
@@ -51137,7 +51137,7 @@ LAB_800647d8:
   *(undefined *)(param_1 + 0x4c) = 0;
   *(undefined *)(param_1 + 0x4d) = 0;
 
-  // controller vibration
+  // gamepad vibration
   FUN_80026440(param_1,8,0);
   FUN_800264c0(param_1,8,0x7f);
 
@@ -51872,7 +51872,7 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
 	// increment number of missiles that are on screen
     *(int *)(PTR_DAT_8008d2ac + 0x1ec0) = *(int *)(PTR_DAT_8008d2ac + 0x1ec0) + 1;
 
-	// both controller vibration
+	// both gamepad vibration
     FUN_80026440(param_1,8,0);
     FUN_800264c0(param_1,8,0x7f);
 
@@ -52796,7 +52796,7 @@ LAB_800659ec:
   // if weapon ID is warp ball
   case 9:
 
-    // both controller vibration
+    // both gamepad vibration
     FUN_80026440(param_1,8,0);
     FUN_800264c0(param_1,8,0x7f);
 
@@ -54809,7 +54809,7 @@ void FUN_800682a4(undefined4 param_1,int param_2)
     uVar4 = 0x29;
   }
 
-  // controller vibration
+  // gamepad vibration
   FUN_800263a0(param_2,uVar4,0x60);
 
   return;
@@ -55867,7 +55867,7 @@ void FUN_800693c8(int param_1)
 
 	if (*(ushort *)(iVar11 + 0x22) < 0x9c4)
 	{
-	  // controller vibration
+	  // gamepad vibration
       FUN_80026440(iVar12,4,4);
     }
 

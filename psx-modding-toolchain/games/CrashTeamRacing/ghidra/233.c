@@ -3319,7 +3319,7 @@ void FUN_800af7c0(int param_1,int param_2)
    // convert 3 rotation shorts into rotation matrix
   FUN_8006c2a4(param_1 + 0x30,param_2 + 8);
   
-  // controller buffer
+  // gamepad buffer
   puVar1 = PTR_DAT_8008d2b0;
   
   // if no specular lighting, quit
@@ -4914,7 +4914,7 @@ LAB_800b8084:
     *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xfffdffff;
   }
   
-  // clear controller input (for menus)
+  // clear gamepad input (for menus)
   FUN_80046404();
   
   sVar4 = DAT_800b8638;

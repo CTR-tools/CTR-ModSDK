@@ -72,7 +72,7 @@ extern struct Model_Custom m;
 
 void RunInitHook()
 {
-	sdata.gGT->drivers[0]->instSelf->model = (struct Model*)&m;
+	sdata->gGT->drivers[0]->instSelf->model = (struct Model*)&m;
 
 	// initialize model
 	m.ptrHeaders += (unsigned int)&m;

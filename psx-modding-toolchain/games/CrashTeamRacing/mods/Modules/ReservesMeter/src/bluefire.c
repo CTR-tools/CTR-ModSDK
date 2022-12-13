@@ -48,13 +48,13 @@ void InjectRedFire()
 void RunUpdateHook()
 {
 	// if the player is not racing
-	if (sdata.gameTracker.gameMode & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
+	if (sdata->gGT->gameMode & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
 		return;
 
-	if (sdata.gameTracker.drivers[0]->reserves)
+	if (sdata->gGT->drivers[0]->reserves)
 	{
 		// if the player has USF fire speed cap
-		if (sdata.gameTracker.drivers[0]->fireSpeedCap == 0x4800)
+		if (sdata->gGT->drivers[0]->fireSpeedCap == 0x4800)
 			InjectBlueFire();
 		else
 			InjectRedFire();

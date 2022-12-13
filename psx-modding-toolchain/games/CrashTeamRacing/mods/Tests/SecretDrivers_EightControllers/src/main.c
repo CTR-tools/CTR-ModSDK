@@ -10,7 +10,7 @@ void RunInitHook()
 	int i;
 
 	struct Driver** drivers;
-	drivers = sdata.gGT->drivers;
+	drivers = sdata->gGT->drivers;
 
 	// move drivers that are not P1
 	for(i = 1; i < NUM_PLAYERS; i++)
@@ -27,7 +27,7 @@ void RunInitHook()
 	drivers[7]->driverID = 3;
 
 	// send to start line (corrects driver animations)
-	Driver_TeleportAll(sdata.gGT, 2);
+	Driver_TeleportAll(sdata->gGT, 2);
 
 	// and change it back
 	drivers[4]->driverID = 4;

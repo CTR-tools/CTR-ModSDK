@@ -134,20 +134,20 @@ void MenuState1_BootGame(struct Thread* t)
 	
 	// initialize string pointer,
 	// this works cause "OnlineCTR" is stored in RDATA
-	sdata.lngStrings[0x17d] = "OnlineCTR";
+	sdata->lngStrings[0x17d] = "OnlineCTR";
 	
 	// unlock everything
-	sdata.advProgress.rewards[0] = 0xffffffff;
-	sdata.advProgress.rewards[1] = 0xffffffff;
-	sdata.advProgress.rewards[2] = 0xffffffff;
-	sdata.advProgress.rewards[3] = 0xffffffff;
-	sdata.advProgress.rewards[4] = 0xffffffff;
-	sdata.advProgress.rewards[5] = 0xffffffff;
+	sdata->advProgress.rewards[0] = 0xffffffff;
+	sdata->advProgress.rewards[1] = 0xffffffff;
+	sdata->advProgress.rewards[2] = 0xffffffff;
+	sdata->advProgress.rewards[3] = 0xffffffff;
+	sdata->advProgress.rewards[4] = 0xffffffff;
+	sdata->advProgress.rewards[5] = 0xffffffff;
 	
 	// 8mb RAM expansion, for emulators that support it.
 	// Needed for 3 or more players on Adv Hub
-	sdata.mempack[0].lastFreeByte = 0x807ff800;
-	sdata.mempack[0].endOfAllocator = 0x807ff800;
+	sdata->mempack[0].lastFreeByte = 0x807ff800;
+	sdata->mempack[0].endOfAllocator = 0x807ff800;
 
 	ActivateMenu(t);
 }
@@ -162,7 +162,7 @@ void MenuState2_Navigate(struct Thread* t)
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
-	buttons = sdata.gamepadSystem.controller[0].buttonsTapped;
+	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
 	
 	// BTN_LEFT = 0x4
 	// BTN_RIGHT = 0x8
@@ -189,7 +189,7 @@ void MenuState2_Navigate(struct Thread* t)
 		}
 	}
 	
-	if(sdata.gGT->levelID != 0x32)
+	if(sdata->gGT->levelID != 0x32)
 	{
 		DecalFont_DrawLine("Press Select to Close",0x0,0xd0,2,0);
 				
@@ -213,7 +213,7 @@ void MenuState3_Minimize(struct Thread* t)
 
 	DecalFont_DrawLine("Press Select to Open",0x0,0xd0,2,0);
 	
-	buttons = sdata.gamepadSystem.controller[0].buttonsTapped;
+	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
 	
 	if(buttons & BTN_SELECT)
 	{	
@@ -252,9 +252,9 @@ void MenuBox_OnPressX(struct MenuBox* b)
 		howl_StopAudio(1,1,0);
 		
 		// load next level
-		sdata.gGT->gameMode1 = 0x40000000;
-		sdata.gGT->levelID = levelID;
-		sdata.Loading.stage = 0;
+		sdata->gGT->gameMode1 = 0x40000000;
+		sdata->gGT->levelID = levelID;
+		sdata->Loading.stage = 0;
 		octr->NextInit = MINIMIZE;
 	}
 }

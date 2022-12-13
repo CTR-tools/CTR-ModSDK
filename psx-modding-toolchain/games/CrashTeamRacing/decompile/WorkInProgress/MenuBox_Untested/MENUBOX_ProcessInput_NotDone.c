@@ -24,7 +24,7 @@ void DECOMP_MENUBOX_ProcessInput(struct MenuBox* m)
 	  
 	  currMenuRow = m->rows[oldRow];
 	  
-	  if(sdata.activeSubMenu != m)
+	  if(sdata->activeSubMenu != m)
 	  {
 	    activeSubMenu = m;
 	    
@@ -36,17 +36,17 @@ void DECOMP_MENUBOX_ProcessInput(struct MenuBox* m)
 	  }
 	  
 	  // button from any player
-	  button = sdata.AnyPlayerTap;
+	  button = sdata->AnyPlayerTap;
 	  
 	  // if only P1 can use menu
 	  if ((*(uint *)(param_1 + 8) & 0x8000) == 0) 
 	  {
 	    // get button from P1
-	    button = sdata.buttonTapPerPlayer[0];
+	    button = sdata->buttonTapPerPlayer[0];
 	  }
 	  
 	  // if P1 is not holding L1 or R1
-	  if((sdata.buttonHeldPerPlayer[0] & 0xc00) != 0) goto AfterButtons;
+	  if((sdata->buttonHeldPerPlayer[0] & 0xc00) != 0) goto AfterButtons;
 	  
 	  // If nobody pressed D-Pad, Cross, Square, Triangle, Circle
 	  if ((button & 0x4007f) == 0) goto AfterButtons;

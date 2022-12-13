@@ -16,7 +16,7 @@ u_char* DECOMP_ConvertTimeToString(int milliseconds)
 	sprintf(
 
 		// where string will be stored
-		&sdata.fillerAfterMempack[0x60],
+		&sdata->fillerAfterMempack[0x60],
 
 		// Format
 		// Minute:Seconds:Milliseconds
@@ -39,5 +39,5 @@ u_char* DECOMP_ConvertTimeToString(int milliseconds)
 	  );
 
 	// return the string
-	return &sdata.fillerAfterMempack[0x60];
+	return &sdata->fillerAfterMempack[0x60];
 }

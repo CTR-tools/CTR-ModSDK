@@ -5,7 +5,7 @@ void OtherFX_Play(int sfxID, int flag);
 void MM_Cheat_SuperHard()
 {
 	// enable super hard mode cheat
-	sdata.gGT->gameMode2 |= 0x200000;
+	sdata->gGT->gameMode2 |= 0x200000;
 	
 	// play cheat sound
 	OtherFX_Play(0x67, 1);

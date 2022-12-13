@@ -529,7 +529,7 @@ LAB_OVR1__8009ff60:
 	
 	// If you are here, it means you pressed X to continue
 	
-	// clear controller input
+	// clear gamepad input
     FUN_80046404();
 	
     DAT_8008d4bc = 0;
@@ -600,7 +600,7 @@ LAB_OVR1__800a03b8:
 	  
 	  // If you have pressed X to continue...
 	  
-	  // clear controller input
+	  // clear gamepad input
       FUN_80046404();
 	  
       puVar6 = PTR_DAT_8008d2ac;
@@ -745,7 +745,7 @@ LAB_OVR1__800a03b8:
 		// If you "Press X to continue"
 		(DAT_8008d950 & 0x50) != 0)) {
     
-	// clear controller input
+	// clear gamepad input
 	FUN_80046404();
 	
 	// pass pointer to menu buffer that shows Retry / Exit To Map,
@@ -848,7 +848,7 @@ void FUN_800a06f8(ushort param_1,short param_2)
 	// Number of drivers =   number of screens  +    number of AIs
     DAT_8008d570 = (ushort)(byte)puVar5[0x1ca8] + (ushort)(byte)puVar5[0x1cab];
 	
-	// clear controller input (for menus)
+	// clear gamepad input (for menus)
     FUN_80046404();
   }
   

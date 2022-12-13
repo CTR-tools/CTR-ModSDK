@@ -26,14 +26,14 @@ void RunInitHook()
 	struct PortalTest* pt;
 
 	struct GameTracker* gGT;
-	gGT = sdata.gGT;
+	gGT = sdata->gGT;
 
 	// This can definitely be global, not using old OV anymore
 	gGT->level2 = (void*)MEMPACK_AllocMem(sizeof(struct PortalTest),pt_name);
 	pt = (struct PortalTest*)gGT->level2;
 
 	// Get pointer of CTR Token
-	modelPtr = sdata.gGT->modelPtr[0x7d];
+	modelPtr = sdata->gGT->modelPtr[0x7d];
 
 	// instance flags will be 0xf by default
 	pt->p_enter = INSTANCE_Birth3D(modelPtr, pEnter, 0);
@@ -80,7 +80,7 @@ void RunUpdateHook()
 	struct PortalTest* pt;
 
 	struct GameTracker* gGT;
-	gGT = sdata.gGT;
+	gGT = sdata->gGT;
 
 	// This can definitely be global, not using old OV anymore
 	pt = (struct PortalTest*)gGT->level2;
@@ -123,7 +123,7 @@ void RunUpdateHook()
 
 		// We dont have a struct variable for this yet, cause we don't fully understand it.
 		// It gets set to 3 when the camera detaches from player, and zero when it follows player
-		*(unsigned char*) ( (char*)&sdata.gGT->cameraDC[0] + 0x9A ) = 0;
+		*(unsigned char*) ( (char*)&sdata->gGT->cameraDC[0] + 0x9A ) = 0;
 
 		// fix driver scale
 		driver->instSelf->scale[0] = 0xccc;

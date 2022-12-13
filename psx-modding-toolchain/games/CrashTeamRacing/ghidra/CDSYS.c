@@ -295,7 +295,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
 		  // byte - digit char indices to swap (00)
 		  // short - null
 
-		  // &sdata.audioData[0]
+		  // &sdata->audioData[0]
           pbVar7 = &DAT_80081070;
 
 		  // pointer to actual XA entries (big array of uint (byte[4])),

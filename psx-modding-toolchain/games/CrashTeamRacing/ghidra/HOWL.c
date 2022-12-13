@@ -28,7 +28,7 @@ uint FUN_8002843c(void)
 // 0x03 - Erase Character
 
 // 0x04 - old weapon roulette sound, or old "erase character" sound from demo
-// 0x05 - Can't "Go Forward", like entering 3P mode with 2 controllers
+// 0x05 - Can't "Go Forward", like entering 3P mode with 2 gamepads
 
 // 0x06 - Crash into wall
 // 0x07 - Land on ground after jump

@@ -87,7 +87,7 @@ char CollideWeapon(int driverIndex, int weaponIndex)
 	int playerY;
 	int playerZ;
 
-	driver = sdata.gGT->drivers[driverIndex];
+	driver = sdata->gGT->drivers[driverIndex];
 
 	radius = (int)bg->weaponInst[weaponIndex]->scale[0];
 
@@ -122,14 +122,14 @@ void RunInitHook()
 	// battle mode,
 	// warning, battle End-Of-Race overlay is not loaded,
 	// this will be solved when battle is loaded from main menu (in future build)
-	sdata.gGT->gameMode1 = BATTLE_MODE;
+	sdata->gGT->gameMode1 = BATTLE_MODE;
 
 	// this is for tokens down below
 	rot[0] = 0x400;
 	rot[1] = 0; // no Y rotation
 	rot[2] = 0; // no Z rotation
 
-	th = sdata.gGT->threadBuckets[STATIC].thread;
+	th = sdata->gGT->threadBuckets[STATIC].thread;
 	while(th!=0)
 	{
 		def = (struct InstDef*)th->inst->ptrInstDef;
@@ -152,7 +152,7 @@ void RunInitHook()
 		// Spawn tokens before weapons, so that draw order is correct
 
 		// Make instances
-		bg->tokenInst[loop] = INSTANCE_Birth3D(sdata.gGT->modelPtr[0x7d],0,0);
+		bg->tokenInst[loop] = INSTANCE_Birth3D(sdata->gGT->modelPtr[0x7d],0,0);
 
 		// same scale for all
 		bg->tokenInst[loop]->scale[0] = 0x2000;
@@ -179,7 +179,7 @@ void RunInitHook()
 
 		// Make instances
 		bg->weaponInst[loop] = (struct Instance*)INSTANCE_Birth3D(
-			sdata.gGT->modelPtr[weaponData[loop].modelIndex],
+			sdata->gGT->modelPtr[weaponData[loop].modelIndex],
 			0,0
 		);
 
@@ -209,7 +209,7 @@ void RunUpdateHook()
 	short rot[3];
 
 	// Loop through all drivers
-	for(loop = 0; loop < (unsigned int)sdata.gGT->numScreens; loop++)
+	for(loop = 0; loop < (unsigned int)sdata->gGT->numScreens; loop++)
 	{
 		// Loop through all weapons
 		for(loop2 = 0; loop2 < NUM_WEAPONS; loop2++)
@@ -218,7 +218,7 @@ void RunUpdateHook()
 			if(CollideWeapon(loop, loop2))
 			{
 				// give that weapon to the player
-				sdata.gGT->drivers[loop]->heldItemID =
+				sdata->gGT->drivers[loop]->heldItemID =
 					weaponData[loop2].weaponID;
 			}
 		}
@@ -226,7 +226,7 @@ void RunUpdateHook()
 
 	rot[0] = 0; // no X rotation
 	rot[2] = 0; // no Z rotation
-	rot[1] = sdata.gGT->elapsedEventTime & 0xfff;
+	rot[1] = sdata->gGT->elapsedEventTime & 0xfff;
 
 	// Loop through all weapons,
 	// there should be some more-optimal way

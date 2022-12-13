@@ -142,7 +142,7 @@ void DECOMP_Turbo_FuncPerFrame(struct Thread* turboThread)
 		gte_stlvl((VECTOR *)&turbo->inst->matrix.t[0]);
 
 		// decrease turbo visibility cooldown by elapsed milliseconds per frame, ~32
-		elapsedTime = turbo->fireVisibilityCooldown - sdata.gGT->elapsedTimeMS;
+		elapsedTime = turbo->fireVisibilityCooldown - sdata->gGT->elapsedTimeMS;
 		turbo->fireVisibilityCooldown = elapsedTime;
 		
 		// don't allow negatives
@@ -160,15 +160,15 @@ void DECOMP_Turbo_FuncPerFrame(struct Thread* turboThread)
 
 		if (instance->alphaScale < 0x9c4)
 		{
-			// controller vibration
+			// gamepad vibration
 			GAMEPAD_Vib_3(driver, 4, 4);
 		}
 
 		// set new model pointer, one of seven
-		instance->model = sdata.gGT->modelPtr[(int)turbo->fireAnimIndex + 0x2c];
+		instance->model = sdata->gGT->modelPtr[(int)turbo->fireAnimIndex + 0x2c];
 
 		// set new model pointer, one of seven
-		turbo->inst->model = sdata.gGT->modelPtr[((int)turbo->fireAnimIndex + 3U & 7) + 0x2c];
+		turbo->inst->model = sdata->gGT->modelPtr[((int)turbo->fireAnimIndex + 3U & 7) + 0x2c];
 
 		// increment frame index
 		frameIndex = turbo->fireAnimIndex;

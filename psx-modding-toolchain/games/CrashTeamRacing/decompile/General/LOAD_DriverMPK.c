@@ -15,7 +15,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	int base = 0xf2;
 	#endif
 
-	gameMode1 = sdata.gGT->gameMode1;
+	gameMode1 = sdata->gGT->gameMode1;
 
 	// 3P/4P
 	if(levelLOD - 3U < 2)
@@ -44,7 +44,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		||
 
 		// credits
-		((sdata.gGT->gameMode2 & 0x80) != 0)
+		((sdata->gGT->gameMode2 & 0x80) != 0)
 	  )
 	{
 		// adv mpk
@@ -56,7 +56,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	}
 
 	// if loading into time trial level, or boss race
-	if((sdata.gGT->gameMode1 & 0x84020000) != 0)
+	if((sdata->gGT->gameMode1 & 0x84020000) != 0)
 	{
 		// high lod model
 		LOAD_AppendQueue(param_1,2,
@@ -76,7 +76,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 			((gameMode1 & 0x10000000) != 0) &&
 
 			// purple gem cup
-			(sdata.gGT->cup.cupID == 4)
+			(sdata->gGT->cup.cupID == 4)
 		)
 	{
 		// high lod model

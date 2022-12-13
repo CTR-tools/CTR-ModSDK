@@ -611,7 +611,7 @@ struct AdvProgress
 struct RacingWheelData
 {
 	// 0x0
-	short controllerCenter;
+	short gamepadCenter;
 
 	// 0x2
 	short deadZone;
@@ -955,7 +955,7 @@ struct MainMenu_LevelRow
 struct MenuRow
 {
 	// can have values above 0xFF,
-	// such as 0x155 for "Controller 1C",
+	// such as 0x155 for "Gamepad 1C",
 	// sometimes the top bit 0x8000 is used,
 	// like VS 2P,3P,4P in main menu, to
 	// determine if the row is "locked"
@@ -1740,7 +1740,7 @@ struct Driver
 
 	// 0x54 - OnInit, First function for spawn, drifting, damage, etc
 	// 0x58 - OnUpdate, updates per frame for any generic purpose
-	// 0x5C - OnInput, convert controller presses into physics variables
+	// 0x5C - OnInput, convert gamepad presses into physics variables
 	// 0x60 - OnAudio, engine sounds (always same)
 	// 0x64 - OnInterpolate ???
 	// 0x68 - OnApplyForces
@@ -5494,12 +5494,12 @@ struct GamepadBuffer
 	short* ptrRawInput;
 
 	// 0x24
-	short controllerID; // 0 - 7
+	short gamepadID; // 0 - 7
 
 	// 0x26
 	// 0 - no analog sticks
 	// 2 - dual analog, or dualshock
-	short controllerType;
+	short gamepadType;
 
 	// 0x28
 	short framesSinceLastInput;
@@ -5539,17 +5539,17 @@ struct GamepadSystem
 {
 	// 0
 	// We need to rename this to "gamepad[8]"
-	struct GamepadBuffer controller[8];
+	struct GamepadBuffer gamepad[8];
 
 	// 0x280
 	short unk;
 
 	// no clue if this is right, but it fixes Sep3 padding for now,
-	// the only important part of the struct is the controller[8] anyway,
+	// the only important part of the struct is the gamepad[8] anyway,
 	// I should come back to investigate Sep3 GamepadSystem later
 	#if BUILD >= UsaRetail
 		// 0x282
-		char unk_8_bytes_per_controller[8*8];
+		char unk_8_bytes_per_gamepad[8*8];
 
 		// what's 0x282?
 
@@ -5575,25 +5575,25 @@ struct GamepadSystem
 
 	// 0x22 =
 		// 0x2 for meta (pad or multitap)
-		// 0x8 per controller port in multitap (4*0x8 = 0x20)
+		// 0x8 per gamepad port in multitap (4*0x8 = 0x20)
 	unsigned char padbuff[2][0x22];
 
 	// 0x2cc -- Sep3, which is 0x314 - 64 - 8
 	// 0x314 -- all others
-	int numControllersConnected;
+	int numGamepadsConnected;
 
 	// 0x318
-	unsigned int controllersConnectedByFlag;
+	unsigned int gamepadsConnectedByFlag;
 
 	// 0x31C
-	// end of controller system
+	// end of gamepad system
 
 	// Eur and Japan
 	#if BUILD >= EurRetail
 	// 0x31C
 	// GAMEPAD_GetNumConnected:
 	// 1 by default, becomes 0 after
-	// finding a multitap in controller slot[0]
+	// finding a multitap in gamepad slot[0]
 	int unk_multitap_detected;
 	#endif
 };
@@ -7354,7 +7354,7 @@ struct Data
 	char PauseImageData[0x20];
 
 	// 800824a8 -- UsaRetail
-	char unk_controllerData[0xA0];
+	char unk_gamepadData[0xA0];
 
 	// 80080744 -- SepReview	7C4
 	// 80082548 -- UsaRetail	74C
@@ -7627,7 +7627,7 @@ struct Data
 	short lngIndex_unused_multiplayerDirections[6];
 
 	// 80084244
-	short lngIndex_controllerUnplugged[6];
+	short lngIndex_gamepadUnplugged[6];
 
 	// 80084250
 	#if BUILD == SepReview
@@ -7645,7 +7645,7 @@ struct Data
 
 	#if 0
 	// 80084250 (start of hole)
-	// heights that "controller unplugged can be at
+	// heights that "gamepad unplugged can be at
 	short errorPosY[4];
 
 	// 80084258
@@ -7665,14 +7665,14 @@ struct Data
 	char raceConfig_blueRect_height;
 
 	// 800842D0
-	// related to namco controller
+	// related to namco gamepad
 
 	// 8008430c -- UsaRetail
 	int gGT_gameMode1_Vibration_PerPlayer[4];
 
 	// 8008431c
-	// Controller 1, 2, 1A, 1B, 1C, 1D
-	short Options_StringIDs_Controllers[6];
+	// Gamepad 1, 2, 1A, 1B, 1C, 1D
+	short Options_StringIDs_Gamepads[6];
 
 	// 80084328
 	// FX, MUSIC, VOIEC
@@ -8825,7 +8825,7 @@ struct sData
 
 	// 8008d2b0 -- UsaRetail
 	// 800906bc -- JpnRetail
-	struct GamepadSystem* PtrGamepadSystem;
+	struct GamepadSystem* gGamepads;
 
 	// draw the same frame twice in a row
 	// making 60fps look like 30fps
@@ -9658,11 +9658,11 @@ struct BSS
 
 	// 8008d87c -- UsaRetail
 	// 8008dc2c -- EurRetail
-	int controller_ID_ThatOpenedRaceWheelConfig;
+	int gamepad_ID_ThatOpenedRaceWheelConfig;
 
 	#if BUILD == EurRetail
 	// 8008dc30 -- EurRetail
-	int unkHole_between_controllerID_vramRect;
+	int unkHole_between_gamepadID_vramRect;
 	#endif
 
 	// 8008bcb8 -- SepReview
@@ -10615,7 +10615,7 @@ extern struct Data data;
 // ".sdata", "$gp" register
 // ram:8008cf6c-ram:0x8008d667 (aligned to 8008d7ff)
 // non-object globals (int, pointer, etc)
-extern struct sData sdata;
+register struct sData* sdata asm("$gp");
 
 // BSS is not a part of the EXE file,
 // it is allocated into RAM at startup

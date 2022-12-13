@@ -22,7 +22,7 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 	meterHeight = 7;
 
 	// if number of screens is more than 2 (3P or 4P)
-	if (2 < sdata.gGT->numPlayers)
+	if (2 < sdata->gGT->numPlayers)
 	{
 		// Make the bar shorter
 		meterHeight = 3;
@@ -58,9 +58,9 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 	box.h = meterHeight;
 	memset(auStack40, 0, 4);
 
-	CTR_Box_DrawWireBox(&box, auStack40, sdata.gGT->camera110_UI.ptrOT, &sdata.gGT->backBuffer->primMem);
+	CTR_Box_DrawWireBox(&box, auStack40, sdata->gGT->camera110_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
 
-	backDB = sdata.gGT->backBuffer;
+	backDB = sdata->gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
 	p = 0;
 
@@ -92,7 +92,7 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 		}
 
 		*(u_int *)&p->r0 = colorAndCode;
-		gGT = sdata.gGT;
+		gGT = sdata->gGT;
 		meterHeight = posY - meterHeight;
 		p->x0 = posX - meterLength;
 		p->y0 = meterHeight;
@@ -109,7 +109,7 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
 
-		backDB = sdata.gGT->backBuffer;
+		backDB = sdata->gGT->backBuffer;
 		primmemCurr = backDB->primMem.curr;
 		p = 0;
 		if (primmemCurr <= (u_long *)backDB->primMem.endMin100)
@@ -120,7 +120,7 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 		if (p != 0)
 		{
 			*(u_int *)&p->r0 = 0x28808080;
-			gGT = sdata.gGT;
+			gGT = sdata->gGT;
 			p->x0 = posX - 0x31;
 			p->y0 = meterHeight;
 			p->x1 = posX;

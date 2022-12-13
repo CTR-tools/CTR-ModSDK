@@ -41,9 +41,9 @@ void DECOMP_DrawJumpMeter(short posX, short posY, struct Driver* driver)
 	box.y = jumpMeter;
 	memset(auStack64, 0, 4);
 
-	CTR_Box_DrawWireBox(&box, auStack64, sdata.gGT->camera110_UI.ptrOT, &sdata.gGT->backBuffer->primMem);
+	CTR_Box_DrawWireBox(&box, auStack64, sdata->gGT->camera110_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
 
-	backDB = sdata.gGT->backBuffer;
+	backDB = sdata->gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
 	p = 0;
 
@@ -58,7 +58,7 @@ void DECOMP_DrawJumpMeter(short posX, short posY, struct Driver* driver)
 	if (p != 0)
 	{
 		*(u_int *)&p->r0 = 0x28ffffff;
-		gGT = sdata.gGT;
+		gGT = sdata->gGT;
 		p->x1 = posX + 0xe;
 		p->x3 = posX + 0xe;
 		p->x0 = sVar9;
@@ -69,7 +69,7 @@ void DECOMP_DrawJumpMeter(short posX, short posY, struct Driver* driver)
 		p->y3 = posY - 0x23;
 
 		// pointer to OT memory
-		primmemCurr = sdata.gGT->camera110_UI.ptrOT;
+		primmemCurr = sdata->gGT->camera110_UI.ptrOT;
 
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
@@ -80,9 +80,9 @@ void DECOMP_DrawJumpMeter(short posX, short posY, struct Driver* driver)
 		box2.x = posX;
 		memset(auStack48, 0, 4);
 
-		CTR_Box_DrawWireBox(&box2, auStack48, sdata.gGT->camera110_UI.ptrOT, &sdata.gGT->backBuffer->primMem);
+		CTR_Box_DrawWireBox(&box2, auStack48, sdata->gGT->camera110_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
 
-		backDB = sdata.gGT->backBuffer;
+		backDB = sdata->gGT->backBuffer;
 		primmemCurr = backDB->primMem.curr;
 		p = 0;
 
@@ -124,7 +124,7 @@ void DECOMP_DrawJumpMeter(short posX, short posY, struct Driver* driver)
 			p->y2 = posY;
 			p->x3 = sVar9;
 			p->y3 = posY;
-			gGT = sdata.gGT;
+			gGT = sdata->gGT;
 			jumpMeter = posY - ((short)(jumpMeterHeight / 0x960) - (short)(jumpMeterHeight / 0x80000000));
 			p->y0 = jumpMeter;
 			p->y1 = jumpMeter;
@@ -134,7 +134,7 @@ void DECOMP_DrawJumpMeter(short posX, short posY, struct Driver* driver)
 			*(int*)p = *primmemCurr | 0x5000000;
 			*primmemCurr = (u_int)p & 0xffffff;
 
-			backDB = sdata.gGT->backBuffer;
+			backDB = sdata->gGT->backBuffer;
 			primmemCurr = backDB->primMem.curr;
 			p = 0;
 
@@ -149,7 +149,7 @@ void DECOMP_DrawJumpMeter(short posX, short posY, struct Driver* driver)
 			if (p != 0)
 			{
 				*(u_int *)&p->r0 = 0x28808080;
-				gGT = sdata.gGT;
+				gGT = sdata->gGT;
 				p->x0 = posX;
 				p->y0 = posY - 0x26;
 				p->x1 = sVar9;

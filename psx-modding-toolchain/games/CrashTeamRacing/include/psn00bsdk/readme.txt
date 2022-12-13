@@ -142,9 +142,9 @@ LibPSn00b Library to-do list:
 	libraries have been considered but not yet developed. The following
 	lists a number of libraries that are not yet in development.
 
-	psxpad	 - Pad/tap/gun library for better controller support. May support
-			   PS2 controllers natively. Should provide functions for directly
-			   controlling the controller/memory card interfaces to cater to
+	psxpad	 - Pad/tap/gun library for better gamepad support. May support
+			   PS2 gamepads natively. Should provide functions for directly
+			   controlling the gamepad/memory card interfaces to cater to
 			   the development of custom peripherals.
 
 	psxmcrd  - Better and faster memory card library with provisions for

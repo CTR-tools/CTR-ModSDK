@@ -60,11 +60,11 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	if ((driver->actionsFlagSet & 0x40000) == 0)
 	{
 		// set racer's timer to the time on the clock
-		driver->timeElapsedInRace = sdata.gGT->elapsedEventTime;
+		driver->timeElapsedInRace = sdata->gGT->elapsedEventTime;
 	}
 
 	// elapsed milliseconds per frame, ~32
-	msPerFrame = sdata.gGT->elapsedTimeMS;
+	msPerFrame = sdata->gGT->elapsedTimeMS;
 
 	// negative elapsed milliseconds per frame
 	negativeMsPerFrame = -msPerFrame;
@@ -72,7 +72,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	if
 	(
 		// time on the clock
-		(sdata.gGT->elapsedEventTime < 0x8ca00) &&
+		(sdata->gGT->elapsedEventTime < 0x8ca00) &&
 
 		// race timer is not frozen for this player
 		((driver->actionsFlagSet & 0x40000) == 0)
@@ -249,7 +249,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	}
 
 	// If Super Engine Cheat is not enabled
-	if (!(sdata.gGT->gameMode2 & 0x10000))
+	if (!(sdata->gGT->gameMode2 & 0x10000))
 	{
 		// Next 7 lines are repetitive, this time for Super Engine Timer (0x38)
 		// Make "desired" amount by subtracting elapsed time from "current" amount,
@@ -317,7 +317,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					(driverRankItemValue == 7) &&
 
 					// If number of screens is 1
-					(sdata.gGT->numPlayers == 1)
+					(sdata->gGT->numPlayers == 1)
 				) ||
 				(
 					(
@@ -325,7 +325,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 						driverRankItemValue == 5 &&
 
 						// if number of screens is 2
-						(sdata.gGT->numPlayers == 2)
+						(sdata->gGT->numPlayers == 2)
 					)
 				)
 			) ||
@@ -335,7 +335,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					driverRankItemValue == 3 &&
 
 					// if number of screens is more than 2
-					(2 < (u_char)sdata.gGT->numPlayers)
+					(2 < (u_char)sdata->gGT->numPlayers)
 				)
 			)
 		) &&
@@ -386,7 +386,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 				driverRankItemValue != 0 ||
 				(
 					// if time on the clock is zero
-					driverTimer = sdata.gGT->elapsedEventTime,
+					driverTimer = sdata->gGT->elapsedEventTime,
 					driverTimer == 0
 				)
 			)
@@ -484,7 +484,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 
 				if (approximateSpeed2 > 0x20) approximateSpeed2 = 0x20;
 
-				// controller vibration
+				// gamepad vibration
 				GAMEPAD_Vib_4(driver, 4, driverTimer + (driverTimer2 >> 5) + approximateSpeed2 + 0x18);
 
 				driverTimerUnk = driverTimerShort | 1;
@@ -541,26 +541,26 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			// if number of screens is > 2
 			if
 			(
-				(2 < (u_char)sdata.gGT->numPlayers) &&
+				(2 < (u_char)sdata->gGT->numPlayers) &&
 
 				// If you're not in Battle Mode
 				(
 					(
 						(
-							(sdata.gGT->gameMode1 & 0x20) == 0 &&
+							(sdata->gGT->gameMode1 & 0x20) == 0 &&
 
 							// your weapon is 3 missiles
 							(driver->heldItemID == 0xB)
 		 				) &&
 
 						// If there are racers that had 3 missiles
-						(sdata.gGT->numPlayersWith3Missiles > 0)
+						(sdata->gGT->numPlayersWith3Missiles > 0)
 					)
 				)
 			)
 			{
 				// decrement the number of players that had 3 missiles
-				sdata.gGT->numPlayersWith3Missiles--;
+				sdata->gGT->numPlayersWith3Missiles--;
 			}
 
 			// take away weapon
@@ -578,7 +578,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	(
 		(driver->invincibleTimer != 0) &&
 		(
-			driverTimer2 = driver->invincibleTimer - sdata.gGT->elapsedTimeMS,
+			driverTimer2 = driver->invincibleTimer - sdata->gGT->elapsedTimeMS,
 			driver->invincibleTimer = driverTimer2, driverTimer2 < 0
 		)
 	)
@@ -596,11 +596,11 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		(driver->invisibleTimer != 0) &&
 
 		// If Permanent Invisibility Cheat is Disabled
-		(!(sdata.gGT->gameMode2 & 0x8000))
+		(!(sdata->gGT->gameMode2 & 0x8000))
 	)
 	{
 		// decrease invisibility timer, can not go below zero
-		driverTimer2 = driver->invisibleTimer - sdata.gGT->elapsedTimeMS;
+		driverTimer2 = driver->invisibleTimer - sdata->gGT->elapsedTimeMS;
 		driver->invisibleTimer = driverTimer2;
 		if (driverTimer2 < 0) driver->invisibleTimer = 0;
 
@@ -636,7 +636,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	// ??? --Super
 	specialFlag = actionflags & 0x7f1f83d5;
 	
-	if ((sdata.gGT->gameMode2 & 0x4004) != 0) goto setActionsFlagSetToSomething;
+	if ((sdata->gGT->gameMode2 & 0x4004) != 0) goto setActionsFlagSetToSomething;
 	trueVectorID = *(u_char*)&driver->normalVecID + 1;
 	
 	// what --Super
@@ -679,14 +679,14 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		driverItemThread = driverItemThread->siblingThread;
 	}
 
-	// pointer to controller input of current player (driver)
-	ptrgamepad = &sdata.PtrGamepadSystem->controller[(u_int)driver->driverID];
+	// pointer to gamepad input of current player (driver)
+	ptrgamepad = &sdata->gGamepads->gamepad[(u_int)driver->driverID];
 
 	// by default, hold no buttons
 	buttonHeld = 0;
 
 	// If you're not in End-Of-Race menu
-	if (!(sdata.gGT->gameMode1 & 0x200000))
+	if (!(sdata->gGT->gameMode1 & 0x200000))
 	{
 		// Get which button is held
 		buttonHeld = ptrgamepad->buttonsHeldCurrFrame;
@@ -696,7 +696,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	buttonsTapped = 0;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata.gGT->gameMode1 & 0x200000) == 0)
+	if ((sdata->gGT->gameMode1 & 0x200000) == 0)
 	{
 		// Get which button is tapped
 		buttonsTapped = ptrgamepad->buttonsTapped;
@@ -789,7 +789,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 						}
 						else
 						{
-							jumpCooldown = sdata.gGT->gameMode2 & 0x400c00;
+							jumpCooldown = sdata->gGT->gameMode2 & 0x400c00;
 							YouUsedTheSpring:
 							if (jumpCooldown == 0) driver->numHeldItems--;
 						}
@@ -914,7 +914,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	steeringDirectionOrSmth = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata.gGT->gameMode1 & 0x200000) == 0)
+	if ((sdata->gGT->gameMode1 & 0x200000) == 0)
 	{
 		// gamepadBuffer -> stickRY (for gas or reverse)
 		steeringDirectionOrSmth = (int)ptrgamepad->stickRY;
@@ -966,7 +966,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driverTimer = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata.gGT->gameMode1 & 0x200000) == 0) driverTimer = (int)ptrgamepad->stickLY;
+	if ((sdata->gGT->gameMode1 & 0x200000) == 0) driverTimer = (int)ptrgamepad->stickLY;
 
 	if
 	(
@@ -1211,7 +1211,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driverSpeedOrSmth = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata.gGT->gameMode1 & 0x200000) == 0)
+	if ((sdata->gGT->gameMode1 & 0x200000) == 0)
 	{
 		// gamepadBuffer -> stickLX
 		driverSpeedOrSmth = (int)ptrgamepad->stickLX;

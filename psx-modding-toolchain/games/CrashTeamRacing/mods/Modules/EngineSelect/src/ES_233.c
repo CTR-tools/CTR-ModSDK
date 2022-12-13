@@ -21,11 +21,11 @@ void AdvBoss()
 	int buttonTap;
 
 	// get input and char ID from current garage character
-	buttonTap = sdata.PtrGamepadSystem->controller[0].buttonsTapped;
-	charID = sdata.advCharSelectIndex_curr;
+	buttonTap = sdata->gGamepads->gamepad[0].buttonsTapped;
+	charID = sdata->advCharSelectIndex_curr;
 
 	// Code from AdvBosses
-	if(sdata.advCharSelectIndex_curr == 0)
+	if(sdata->advCharSelectIndex_curr == 0)
 	{
 		switch(buttonTap)
 		{
@@ -61,7 +61,7 @@ void AdvEngine()
 	// get curr engine from characterID
 	engineID = data.MetaDataCharacters[charID].engineID;
 
-	buttonTap = sdata.PtrGamepadSystem->controller[0].buttonsTapped;
+	buttonTap = sdata->gGamepads->gamepad[0].buttonsTapped;
 	
 	switch(buttonTap)
 	{
@@ -82,7 +82,7 @@ void AdvEngine()
 		if(!hasSelectedClass)
 			{
 				OtherFX_Play(1, 1);
-				sdata.ptrDesiredMenuBox = &data.menuBox_OSK;
+				sdata->ptrDesiredMenuBox = &data.menuBox_OSK;
 				hasSelectedClass = true;
 			}
 		hasSelectedClass = false;

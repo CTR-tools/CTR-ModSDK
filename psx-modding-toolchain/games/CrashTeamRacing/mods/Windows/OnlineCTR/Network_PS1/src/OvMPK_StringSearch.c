@@ -35,7 +35,7 @@ int* newSearchFunc(int* str)
 	// in the MPK, which is for P1's model
 	for(i = 0; /**/; i++)
 	{
-		m = sdata.PLYROBJECTLIST[i];
+		m = sdata->PLYROBJECTLIST[i];
 		if(m == 0) break;
 	
 		if(CheckString(m,str)) return m;

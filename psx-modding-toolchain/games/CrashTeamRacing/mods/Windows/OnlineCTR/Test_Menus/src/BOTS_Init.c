@@ -24,7 +24,7 @@ struct Driver* BOTS_Driver_Init_custom(int slot, int bitFlag)
 	// set AI flag, for drawing on map
 	dr->actionsFlagSet = dr->actionsFlagSet | 0x100000;
 	
-	sdata.gGT->numRobotcars++;
+	sdata->gGT->numRobotcars++;
 	
 	return dr;
 }

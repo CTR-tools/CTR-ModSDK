@@ -16,17 +16,17 @@ void DECOMP_DrawCountdownClock(short posX, short posY, short fontType)
 
 	// amount of time event should last, minus, time elapsed in the event.
 	// basically, time remaining in the event
-	timeRemaining = sdata.gGT->originalEventTime - sdata.gGT->elapsedEventTime;
+	timeRemaining = sdata->gGT->originalEventTime - sdata->gGT->elapsedEventTime;
 
 	// if you run out of time
 	if (timeRemaining < 0)
 	{
 		// Make a time string with zero milliseconds on the clock
 		str = ConvertTimeToString(0);
-		gGT = sdata.gGT;
+		gGT = sdata->gGT;
 
 		// If you're not in End-Of-Race menu
-		if ((sdata.gGT->gameMode1 & 0x200000) == 0)
+		if ((sdata->gGT->gameMode1 & 0x200000) == 0)
 		{
 			// dont check if numPlayers != 0,
 			// when would that ever be false
@@ -61,7 +61,7 @@ void DECOMP_DrawCountdownClock(short posX, short posY, short fontType)
 		(timeRemaining < 0x3840) &&
 
 		// if number of frames is an even number
-		((sdata.gGT->timer & 1) == 0)
+		((sdata->gGT->timer & 1) == 0)
 	)
 	{
 		// set color to white

@@ -6195,7 +6195,7 @@ void FUN_800b3594(int param_1)
 	  // not viewing hint anymore
       DAT_800b5660 = 0;
       
-	  // clear controller input (for menus)
+	  // clear gamepad input (for menus)
 	  FUN_80046404();
 	  
 	  // TalkingMask_End
@@ -6370,7 +6370,7 @@ LAB_800b38c0:
     }
   }
   
-  // clear controller input (for menus)
+  // clear gamepad input (for menus)
   FUN_80046404();
   
 LAB_800b38cc:
@@ -6481,7 +6481,7 @@ LAB_800b38cc:
 		((DAT_8009a990 & 0x41020) != 0)
 	 ) 
   {
-	// clear controller input (for menus)
+	// clear gamepad input (for menus)
     FUN_80046404();
 	
 	// set desired MenuBox to pause MenuBox

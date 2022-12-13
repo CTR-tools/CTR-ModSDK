@@ -510,7 +510,7 @@
 
 80034b58 VisMem_FullFrame
 // VideoSTR_Init
-// CheckMissingControllers
+// CheckMissingGamepads
 
 80035124 RequestMaskHint
 80035174 RenderFrame

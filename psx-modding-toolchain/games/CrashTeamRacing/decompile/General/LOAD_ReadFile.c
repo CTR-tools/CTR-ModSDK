@@ -39,7 +39,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 		data.currSlot.flags = data.currSlot.flags | 1;
 
 		// MEMPACK_AllocMem
-		buf = (u_long *)MEMPACK_AllocMem(*size + 0x7ffU & 0xfffff800, &sdata.s_FILE[0]);
+		buf = (u_long *)MEMPACK_AllocMem(*size + 0x7ffU & 0xfffff800, &sdata->s_FILE[0]);
 
 		// if allocation failed
 		if (buf == (u_long *)0x0)
@@ -66,7 +66,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 		if (callback == 0)
 		{
 			// Set function pointers to nullptr
-			sdata.ReadFileAsyncCallbackFuncPtr = 0;
+			sdata->ReadFileAsyncCallbackFuncPtr = 0;
 		}
 
 		// If you want a callback function pointer
@@ -74,7 +74,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 		else
 		{
 			// Save the function pointer address
-			sdata.ReadFileAsyncCallbackFuncPtr = callback;
+			sdata->ReadFileAsyncCallbackFuncPtr = callback;
 			pcVar4 = (CdlCB)&LOAD_ReadFileASyncCallback;
 		}
 

@@ -9,7 +9,7 @@ void MM_Cheat_AdvDifficulty()
 	
 	// actually involves difficulty somehow
 	
-	sdata.gGT->gameMode2 |= 0x40000;
+	sdata->gGT->gameMode2 |= 0x40000;
  
 	// play cheat sound
 	OtherFX_Play(0x67, 1);

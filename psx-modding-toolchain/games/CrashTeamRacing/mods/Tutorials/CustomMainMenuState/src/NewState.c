@@ -30,15 +30,15 @@ void MyMenuBoxFuncPtr(struct MenuBox* m)
 
 	DecalFont_DrawLine("Press X", 100, 100, 1, 0);
 
-	gb = &sdata.PtrGamepadSystem->controller[0];
+	gb = &sdata->gGamepads->gamepad[0];
 
 	if ((gb->buttonsTapped & BTN_CROSS) == 0) return;
 
 	// if you are in a cup
-	if ((sdata.gGT->gameMode2 & 0x10) != 0)
+	if ((sdata->gGT->gameMode2 & 0x10) != 0)
 	{
 		// change desiredMenuBox to Cup race selection
-		sdata.ptrDesiredMenuBox = (struct MenuBox*)0x800b472c;
+		sdata->ptrDesiredMenuBox = (struct MenuBox*)0x800b472c;
 
 		MM_CupSelect_Init();
 
@@ -48,7 +48,7 @@ void MyMenuBoxFuncPtr(struct MenuBox* m)
 	// if going to track selection
 
 	// change desiredMenuBox to Single race selection
-	sdata.ptrDesiredMenuBox = (struct MenuBox*)0x800b46e0;
+	sdata->ptrDesiredMenuBox = (struct MenuBox*)0x800b46e0;
 
 	MM_TrackSelect_Init();
 
@@ -59,7 +59,7 @@ void MyMenuBoxFuncPtr(struct MenuBox* m)
 void GoToNewState()
 {
 	// set our new main menu state
-	sdata.ptrDesiredMenuBox = &myBox;
+	sdata->ptrDesiredMenuBox = &myBox;
 
 	// quit the function
 	return;

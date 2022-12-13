@@ -30,15 +30,15 @@ void RunUpdateHook()
 	struct MyData* ptrDest = (struct MyData*)0x8000FFF0;
 
 	// camera110 offset 0x28
-	m = &sdata.gGT->camera110[0].matrix_ViewProj;
+	m = &sdata->gGT->camera110[0].matrix_ViewProj;
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
 
 	for(i = 0; i < 3; i++)
 	{
-		ptrDest->World_posX = (short)sdata.gGT->drivers[i+1]->instSelf->matrix.t[0];
-		ptrDest->World_posY = (short)sdata.gGT->drivers[i+1]->instSelf->matrix.t[1];
-		ptrDest->World_posZ = (short)sdata.gGT->drivers[i+1]->instSelf->matrix.t[2];
+		ptrDest->World_posX = (short)sdata->gGT->drivers[i+1]->instSelf->matrix.t[0];
+		ptrDest->World_posY = (short)sdata->gGT->drivers[i+1]->instSelf->matrix.t[1];
+		ptrDest->World_posZ = (short)sdata->gGT->drivers[i+1]->instSelf->matrix.t[2];
 		ptrDest->World_posW = 0;
 
 		// load position of driver
@@ -74,7 +74,7 @@ void RunInitHook()
 	int i;
 
 	struct Driver** drivers;
-	drivers = sdata.gGT->drivers;
+	drivers = sdata->gGT->drivers;
 
 	// move drivers that are not P1
 	for(i = 1; i < NUM_PLAYERS; i++)
@@ -84,7 +84,7 @@ void RunInitHook()
 	}
 
 	// send to start line (corrects driver animations)
-	Driver_TeleportAll(sdata.gGT, 2);
+	Driver_TeleportAll(sdata->gGT, 2);
 
 	// move drivers that are not P1
 	for(i = 1; i < NUM_PLAYERS; i++)

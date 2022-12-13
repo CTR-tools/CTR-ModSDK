@@ -9,7 +9,7 @@ void DECOMP_RB_Potion_PerFrame_InAir(struct Thread* t)
 	short posBottom[3];
 	short posTop[3];
 	
-	gGT = sdata.gGT;
+	gGT = sdata->gGT;
 	inst = t->inst;
 	mw = t->object;
 	

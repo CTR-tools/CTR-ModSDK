@@ -24,10 +24,10 @@ void DECOMP_CTR_ErrorScreen(char r, char g, char b)
 		// this is the first, and last, primitive
 		p.tag = 0x3ffffff;
 
-		p.x0 = sdata.gGT->frontBuffer->drawEnv.clip.x;
-		p.y0 = sdata.gGT->frontBuffer->drawEnv.clip.y;
-		p.w = sdata.gGT->frontBuffer->drawEnv.clip.w;
-		p.h = sdata.gGT->frontBuffer->drawEnv.clip.h;
+		p.x0 = sdata->gGT->frontBuffer->drawEnv.clip.x;
+		p.y0 = sdata->gGT->frontBuffer->drawEnv.clip.y;
+		p.w = sdata->gGT->frontBuffer->drawEnv.clip.w;
+		p.h = sdata->gGT->frontBuffer->drawEnv.clip.h;
 
 		p.r0 = r;
 		p.g0 = g;

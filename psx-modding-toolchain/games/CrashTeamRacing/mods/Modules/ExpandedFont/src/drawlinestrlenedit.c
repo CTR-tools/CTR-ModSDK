@@ -341,7 +341,7 @@ LAB_80022598:
 						iconGroupID = japaneseIconGroupID;
 						
 						// icon struct, see common.h
-						iconStruct = &sdata.font_icon;
+						iconStruct = &sdata->font_icon;
 						finalIconID = iconIDBackup & 0xffff;
 
 						if (japaneseIconGroupID == 0xe)
@@ -349,91 +349,91 @@ LAB_80022598:
 							// yeah this is pretty scuffed
 							// naughty dog gets the paletteXY from an array of ints containing 4 bytes of the icon struct data of the first icons in the japanese font icon groups, and the 0x18th in the small group as well, starting at the X data of the first three vertices in the icon
 							// which is why I need to do pointer arithmetic here because they didn't just copy the paletteXY instead
-							sdata.font_icon.paletteXY = *(short*)((int)&sdata.font_jfontBigIconData[0] + 2);
+							sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontBigIconData[0] + 2);
 
 							if (iconIDBackup & 1)
 							{
-								sdata.font_icon.paletteXY = *(short*)((int)&sdata.font_jfontBigIconData[0] + 2) + 0x40;
+								sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontBigIconData[0] + 2) + 0x40;
 							}
 
-							sdata.font_icon.X1 = (u_char)iconIDBackup * '\b' & 0xf0;
-							sdata.font_icon.X2 = sdata.font_icon.X1 + 0xf;
+							sdata->font_icon.X1 = (u_char)iconIDBackup * '\b' & 0xf0;
+							sdata->font_icon.X2 = sdata->font_icon.X1 + 0xf;
 
 							unknownY = (u_char)(iconIDBackup >> 1) & 0x10;
 
-							sdata.font_icon.Y1 = unknownY + 8;
-							sdata.font_icon.Y3 = unknownY + 0x17;
+							sdata->font_icon.Y1 = unknownY + 8;
+							sdata->font_icon.Y3 = unknownY + 0x17;
 
-							sdata.font_icon.pageXY = *(short*)((int)&sdata.font_jfontBigIconData[1] + 2) + ((u_short)((iconIDBackup & 0xffff) < 0x40) ^ 1);
+							sdata->font_icon.pageXY = *(short*)((int)&sdata->font_jfontBigIconData[1] + 2) + ((u_short)((iconIDBackup & 0xffff) < 0x40) ^ 1);
 
-							sdata.font_icon.Y2 = sdata.font_icon.Y1;
-							sdata.font_icon.X3 = sdata.font_icon.X1;
-							sdata.font_icon.X4 = sdata.font_icon.X2;
-							sdata.font_icon.Y4 = sdata.font_icon.Y3;
+							sdata->font_icon.Y2 = sdata->font_icon.Y1;
+							sdata->font_icon.X3 = sdata->font_icon.X1;
+							sdata->font_icon.X4 = sdata->font_icon.X2;
+							sdata->font_icon.Y4 = sdata->font_icon.Y3;
 						}
 						else
 						{
 							if (finalIconID < 0x18)
 							{
-								sdata.font_icon.paletteXY = *(short*)((int)&sdata.font_jfontSmallIconData[0] + 2);
+								sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontSmallIconData[0] + 2);
 
 								if (iconIDBackup & 1)
 								{
-									sdata.font_icon.paletteXY = *(short*)((int)&sdata.font_jfontSmallIconData[0] + 2) + 0x40;
+									sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontSmallIconData[0] + 2) + 0x40;
 								}
 
-								sdata.font_icon.pageXY = *(short*)((int)&sdata.font_jfontSmallIconData[1] + 2);
+								sdata->font_icon.pageXY = *(short*)((int)&sdata->font_jfontSmallIconData[1] + 2);
 
 								cVar5 = (((u_char)iconIDBackup & 0xfe) + (char)(finalIconID >> 1)) * '\x04';
 
 								if (finalIconID < 0xc)
 								{
-									sdata.font_icon.X1 = cVar5 + 0xb0;
+									sdata->font_icon.X1 = cVar5 + 0xb0;
 								}
 								else
 								{
-									sdata.font_icon.X1 = cVar5 + 0x68;
+									sdata->font_icon.X1 = cVar5 + 0x68;
 								}
 
-								sdata.font_icon.X2 = sdata.font_icon.X1 + 0xb;
+								sdata->font_icon.X2 = sdata->font_icon.X1 + 0xb;
 
 								if ((iconIDBackup & 0xffff) < 0xc)
 								{
-									sdata.font_icon.Y1 = '\x18';
+									sdata->font_icon.Y1 = '\x18';
 								}
 								else
 								{
-									sdata.font_icon.Y1 = ' ';
+									sdata->font_icon.Y1 = ' ';
 								}
 
-								sdata.font_icon.Y3 = sdata.font_icon.Y1 + '\a';
-								sdata.font_icon.Y2 = sdata.font_icon.Y1;
-								sdata.font_icon.X3 = sdata.font_icon.X1;
-								sdata.font_icon.X4 = sdata.font_icon.X2;
-								sdata.font_icon.Y4 = sdata.font_icon.Y3;
+								sdata->font_icon.Y3 = sdata->font_icon.Y1 + '\a';
+								sdata->font_icon.Y2 = sdata->font_icon.Y1;
+								sdata->font_icon.X3 = sdata->font_icon.X1;
+								sdata->font_icon.X4 = sdata->font_icon.X2;
+								sdata->font_icon.Y4 = sdata->font_icon.Y3;
 							}
 							else
 							{
 								iconIDBackup = iconID - 0x98;
-								sdata.font_icon.paletteXY = *(short*)((int)&sdata.font_jfontSmall0x18IconData[0] + 2);
+								sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontSmall0x18IconData[0] + 2);
 
 								if ((iconIDBackup & 1) != 0)
 								{
-									sdata.font_icon.paletteXY = *(short*)((int)&sdata.font_jfontSmall0x18IconData[0] + 2) + 0x40;
+									sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontSmall0x18IconData[0] + 2) + 0x40;
 								}
 
-								sdata.font_icon.pageXY = *(short*)((int)&sdata.font_jfontSmall0x18IconData[1] + 2);
+								sdata->font_icon.pageXY = *(short*)((int)&sdata->font_jfontSmall0x18IconData[1] + 2);
 
-								sdata.font_icon.X1 = ((u_char)data.font_X1Y1data[((iconIDBackup & 0xffff) * 2) + 1] >> 1) * '\f';
-								sdata.font_icon.X2 = sdata.font_icon.X1 + 0xb;
+								sdata->font_icon.X1 = ((u_char)data.font_X1Y1data[((iconIDBackup & 0xffff) * 2) + 1] >> 1) * '\f';
+								sdata->font_icon.X2 = sdata->font_icon.X1 + 0xb;
 
-								sdata.font_icon.Y1 = data.font_X1Y1data[(iconIDBackup & 0xffff) * 2] * '\b' + '\b';
-								sdata.font_icon.Y3 = data.font_X1Y1data[(iconIDBackup & 0xffff) * 2] * '\b' + '\x0f';
+								sdata->font_icon.Y1 = data.font_X1Y1data[(iconIDBackup & 0xffff) * 2] * '\b' + '\b';
+								sdata->font_icon.Y3 = data.font_X1Y1data[(iconIDBackup & 0xffff) * 2] * '\b' + '\x0f';
 
-								sdata.font_icon.Y2 = sdata.font_icon.Y1;
-								sdata.font_icon.X3 = sdata.font_icon.X1;
-								sdata.font_icon.X4 = sdata.font_icon.X2;
-								sdata.font_icon.Y4 = sdata.font_icon.Y3;
+								sdata->font_icon.Y2 = sdata->font_icon.Y1;
+								sdata->font_icon.X3 = sdata->font_icon.X1;
+								sdata->font_icon.X4 = sdata->font_icon.X2;
+								sdata->font_icon.Y4 = sdata->font_icon.Y3;
 							}
 						}
 					}
@@ -448,9 +448,9 @@ LAB_80022598:
 					// if icon struct somehow doesn't exist then use fallback
 					if (!iconStruct)
 					{
-						if (iconID < sdata.gGT->iconGroup[iconGroupID]->numIcons)
+						if (iconID < sdata->gGT->iconGroup[iconGroupID]->numIcons)
 						{
-							iconStruct = sdata.gGT->iconGroup[iconGroupID]->icons[iconID];
+							iconStruct = sdata->gGT->iconGroup[iconGroupID]->icons[iconID];
 						}
 					}
 					if (iconStruct)
@@ -467,8 +467,8 @@ LAB_80022598:
 									posX + pixWidthExtra,
 									posY + pixHeightExtra,
 
-									&sdata.gGT->backBuffer->primMem,
-									sdata.gGT->camera110_UI.ptrOT,
+									&sdata->gGT->backBuffer->primMem,
+									sdata->gGT->camera110_UI.ptrOT,
 
 									ptrColor[2],
 									ptrColor[3],
@@ -488,8 +488,8 @@ LAB_80022598:
 									posX + pixWidthExtra,
 									posY + pixHeightExtra,
 
-									&sdata.gGT->backBuffer->primMem,
-									sdata.gGT->camera110_UI.ptrOT,
+									&sdata->gGT->backBuffer->primMem,
+									sdata->gGT->camera110_UI.ptrOT,
 
 									ptrColor[0],
 									ptrColor[1],

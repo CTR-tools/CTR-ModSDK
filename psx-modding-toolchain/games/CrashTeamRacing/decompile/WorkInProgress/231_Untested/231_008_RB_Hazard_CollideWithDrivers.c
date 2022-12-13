@@ -17,7 +17,7 @@ struct Instance* RB_Hazard_CollideWithDrivers(
 	
 	for(int i = 0; i < 8; i++)
 	{
-		driver = sdata.gGT->drivers[i];
+		driver = sdata->gGT->drivers[i];
 		
 		// skip invalid drivers
 		if(driver == 0) continue;

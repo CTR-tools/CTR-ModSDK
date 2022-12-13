@@ -5,7 +5,7 @@ void DECOMP_RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta)
 	char numWumpaOriginal = driver->numWumpas;
 	
 	// if using unlimited wumpa, quit
-	if((sdata.gGT->gameMode2 & CHEAT_WUMPA) != 0) return;
+	if((sdata->gGT->gameMode2 & CHEAT_WUMPA) != 0) return;
 
 	if (
 			// if wumpa is being subtracted

@@ -31,7 +31,7 @@ void Freecam()
 	MATRIX matrix;
 
 	struct GameTracker* gGT;
-	gGT = sdata.gGT;
+	gGT = sdata->gGT;
 
 	// wait till race starts, to give the camera a place to spawn
 	if(gGT->trafficLightsTimer > 10)
@@ -54,7 +54,7 @@ void Freecam()
 	speed = 3 * (speed / 2);
 
 	// get buttons held by P1
-	buttons = sdata.PtrGamepadSystem->controller[0].buttonsHeldCurrFrame;
+	buttons = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
 
 	// speed boost
 	if(buttons & BTN_SELECT) speed *= 3;
@@ -142,7 +142,7 @@ void QuadblockNumbers()
 	struct mesh_info* mi;
 
 	// get level
-	mi = sdata.gGT->level1->ptr_mesh_info;
+	mi = sdata->gGT->level1->ptr_mesh_info;
 
 	//for(i = 0; i < mi->numVertex; i++)
 	for(i = 0; i < mi->numQuadBlock; i++)
@@ -166,7 +166,7 @@ void VertexNumbers()
 	struct mesh_info* mi;
 
 	// get level
-	mi = sdata.gGT->level1->ptr_mesh_info;
+	mi = sdata->gGT->level1->ptr_mesh_info;
 
 	for(i = 0; i < 9; i++)
 	{
@@ -194,19 +194,19 @@ void RunUpdateHook()
 	// This should really be a different button,
 	// since circle is used for camera rotation
 	#if 0
-	if(sdata.PtrGamepadSystem->controller[0].buttonsTapped & BTN_CIRCLE)
+	if(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_CIRCLE)
 	{
 		RunInitHook();
 	}
 	#endif
 
-	if(sdata.PtrGamepadSystem->controller[0].buttonsTapped & BTN_SELECT)
+	if(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_SELECT)
 	{
 		if(k1->freecam_enable == 1)
 		{
 			k1->freecam_enable = 0;
-			sdata.gGT->cameraDC[0].cam110 = &sdata.gGT->camera110[0];
-			Player_Driving_Init(0, sdata.gGT->drivers[0]);
+			sdata->gGT->cameraDC[0].cam110 = &sdata->gGT->camera110[0];
+			Player_Driving_Init(0, sdata->gGT->drivers[0]);
 		}
 
 		else
@@ -216,7 +216,7 @@ void RunUpdateHook()
 	}
 
 	// camera110 offset 0x28
-	m = &sdata.gGT->camera110[0].matrix_ViewProj;
+	m = &sdata->gGT->camera110[0].matrix_ViewProj;
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
 
@@ -230,11 +230,11 @@ void RunUpdateHook()
 	}
 
 	// mask-grab on death
-	if(sdata.gGT->drivers[0]->posCurr[1] < -(0x200<<8))
+	if(sdata->gGT->drivers[0]->posCurr[1] < -(0x200<<8))
 	{
-		if(sdata.gGT->drivers[0]->kartState != 5)
+		if(sdata->gGT->drivers[0]->kartState != 5)
 		{
-			Player_MaskGrab_Init(sdata.gGT->drivers[0]->instSelf->thread, sdata.gGT->drivers[0]);
+			Player_MaskGrab_Init(sdata->gGT->drivers[0]->instSelf->thread, sdata->gGT->drivers[0]);
 		}
 	}
 }
@@ -250,10 +250,10 @@ void FindBSP()
 	int numQuadBlockInNode;
 	struct QuadBlock* ptrQuadBlockArray;
 
-	numVisData = sdata.gGT->level1->ptr_mesh_info->numVisData;
-	ptrVisDataArray = sdata.gGT->level1->ptr_mesh_info->ptrVisDataArray;
+	numVisData = sdata->gGT->level1->ptr_mesh_info->numVisData;
+	ptrVisDataArray = sdata->gGT->level1->ptr_mesh_info->ptrVisDataArray;
 
-	ptrQuadBlockArray = sdata.gGT->level1->ptr_mesh_info->ptrQuadBlockArray;
+	ptrQuadBlockArray = sdata->gGT->level1->ptr_mesh_info->ptrQuadBlockArray;
 
 	for(loop1 = 0; loop1 < numVisData; loop1++)
 	{
@@ -288,9 +288,9 @@ void RunInitHook()
 	struct LevVertex* ptrVertexArray;
 	struct VisData* ptrVisDataArray;
 
-	ptrQuadBlockArray = sdata.gGT->level1->ptr_mesh_info->ptrQuadBlockArray;
-	ptrVertexArray = sdata.gGT->level1->ptr_mesh_info->ptrVertexArray;
-	ptrVisDataArray = sdata.gGT->level1->ptr_mesh_info->ptrVisDataArray;
+	ptrQuadBlockArray = sdata->gGT->level1->ptr_mesh_info->ptrQuadBlockArray;
+	ptrVertexArray = sdata->gGT->level1->ptr_mesh_info->ptrVertexArray;
+	ptrVisDataArray = sdata->gGT->level1->ptr_mesh_info->ptrVisDataArray;
 
 	k1 = (struct MyData*)0x8000FFF0;
 
@@ -353,7 +353,7 @@ void RunInitHook()
 
 	// set flag to mask-grab when "underwater",
 	// which means you fell in the hole
-	sdata.gGT->level1->configFlags |= 2;
+	sdata->gGT->level1->configFlags |= 2;
 
 
 	#define SIZE 0x220

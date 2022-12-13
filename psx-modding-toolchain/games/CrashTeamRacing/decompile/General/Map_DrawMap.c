@@ -29,9 +29,9 @@ void DECOMP_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX,
 		color = 0x402000;
 	}
 
-	if (sdata.gGT->level1->ptr_trial_data != 0)
+	if (sdata->gGT->level1->ptr_trial_data != 0)
 	{
-		iVar9 = sdata.gGT->level1->ptr_trial_data[1];
+		iVar9 = sdata->gGT->level1->ptr_trial_data[1];
 	}
 
 	// position of the bottom margin of the primitive for the bottom half of the minimap
@@ -44,7 +44,7 @@ void DECOMP_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX,
 		((iVar9 != 0) && (*(short *)(iVar9 + 0x12) == 0)) ||
 
 		// if in main menu (character selection, track selection, any part of it)
-		((sdata.gGT->gameMode1 & 0x2000) != 0)
+		((sdata->gGT->gameMode1 & 0x2000) != 0)
 	)
 	{
 		// draw top half of minimap

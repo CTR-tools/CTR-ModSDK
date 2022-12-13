@@ -290,9 +290,9 @@ LAB_80022598:
 					// if icon struct somehow doesn't exist then use fallback
 					if (!iconStruct)
 					{
-						if (iconID < sdata.gGT->iconGroup[iconGroupID]->numIcons)
+						if (iconID < sdata->gGT->iconGroup[iconGroupID]->numIcons)
 						{
-							iconStruct = sdata.gGT->iconGroup[iconGroupID]->icons[iconID];
+							iconStruct = sdata->gGT->iconGroup[iconGroupID]->icons[iconID];
 						}
 					}
 					if (iconStruct)
@@ -339,7 +339,7 @@ LAB_80022598:
 								if (*character == ')') scaleOffsetY = 2;
 								if (*character == '')
 								{
-									iconStruct = sdata.gGT->iconGroup[5]->icons[0x1f];
+									iconStruct = sdata->gGT->iconGroup[5]->icons[0x1f];
 									scaleOffsetY = 2;
 								}
 							}
@@ -358,8 +358,8 @@ LAB_80022598:
 								posX + pixWidthExtra,
 								posY + pixHeightExtra,
 
-								&sdata.gGT->backBuffer->primMem,
-								sdata.gGT->camera110_UI.ptrOT,
+								&sdata->gGT->backBuffer->primMem,
+								sdata->gGT->camera110_UI.ptrOT,
 
 								ptrColor[0],
 								ptrColor[1],

@@ -44,10 +44,10 @@ struct INSTANCE* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t)
 void KillCrystals()
 {
 	// make crystals invisible
-	sdata.ptrHudCrystal->flags =
-	sdata.ptrHudCrystal->flags | 0x80;
-	sdata.ptrEndRaceMenuCrystal->flags =
-	sdata.ptrEndRaceMenuCrystal->flags | 0x80;
+	sdata->ptrHudCrystal->flags =
+	sdata->ptrHudCrystal->flags | 0x80;
+	sdata->ptrEndRaceMenuCrystal->flags =
+	sdata->ptrEndRaceMenuCrystal->flags | 0x80;
 }
 
 // dont store in 221,
@@ -55,7 +55,7 @@ void KillCrystals()
 void EndCrystalChallenge(void)
 {
 	// freeze driver
-	sdata.gGT->drivers[0]->funcPtrs[0] = Player_Freeze_Init;
+	sdata->gGT->drivers[0]->funcPtrs[0] = Player_Freeze_Init;
 
 	// make invisible
 	KillCrystals();
@@ -70,10 +70,10 @@ void EndCrystalChallenge(void)
 	DecalFont_DrawLine(s_endString, 0x100, 0xa0, 2, 0xffff8000);
 
 	// If you press Cross or Circle
-	if(sdata.AnyPlayerTap & 0x50)
+	if(sdata->AnyPlayerTap & 0x50)
 	{
 		// restart race
-		sdata.mainGameState = 2;
+		sdata->mainGameState = 2;
 	}
 }
 
@@ -121,7 +121,7 @@ char CollideRing(int loop)
 
 	ringRadius = (int)rrg->ring[loop]->scale[0];
 
-	driver = sdata.gGT->drivers[0];
+	driver = sdata->gGT->drivers[0];
 
 	playerX = driver->posCurr[0];
 	playerY = driver->posCurr[1];
@@ -191,7 +191,7 @@ void RunInitHook()
 
 
 	// only run if this is a race track
-	if(sdata.gGT->levelID > 0x11) return;
+	if(sdata->gGT->levelID > 0x11) return;
 
 
 
@@ -199,15 +199,15 @@ void RunInitHook()
 
 
 	// 10 seconds in event
-	sdata.gGT->originalEventTime = 10 * 30 * 32;
+	sdata->gGT->originalEventTime = 10 * 30 * 32;
 
 	// event has not started
-	sdata.gGT->elapsedEventTime = 0;
+	sdata->gGT->elapsedEventTime = 0;
 
 	// the game treats wumpa fruit as crystals,
 	// make sure the game doesn't end by collecting them.
 	// Wumpa crates dont count, just fruit on ground
-	sdata.gGT->numCrystalsInLEV = 100;
+	sdata->gGT->numCrystalsInLEV = 100;
 
 	// Disable default HUD, then we draw HUD
 	// anyway, so we can remove extra crystal
@@ -248,7 +248,7 @@ void RunInitHook()
 	for(loop = 0; loop < rrg->numRingsOnTrack; loop++)
 	{
 		// get model pointer
-		modelPtr = sdata.gGT->modelPtr[rrg->ringData[loop].modelIndex+0x3e];
+		modelPtr = sdata->gGT->modelPtr[rrg->ringData[loop].modelIndex+0x3e];
 
 		// instance flags will be 0xf by default
 		rrg->ring[loop] = (struct Instance*)INSTANCE_Birth3D(modelPtr, ring_inst_name, 0);
@@ -284,28 +284,28 @@ void RunUpdateHook()
 	char boolCollide;
 
 	// only run if this is a race track
-	if(sdata.gGT->levelID > 0x11) return;
+	if(sdata->gGT->levelID > 0x11) return;
 
 	// if you are right about to run out of time
 	if(
-		sdata.gGT->originalEventTime -
-		sdata.gGT->elapsedEventTime < 40
+		sdata->gGT->originalEventTime -
+		sdata->gGT->elapsedEventTime < 40
 	  )
 	{
 		// put HUD back, or EndCrystalChallenge wont execute
-		sdata.gGT->hudFlags =
-		sdata.gGT->hudFlags | 1;
+		sdata->gGT->hudFlags =
+		sdata->gGT->hudFlags | 1;
 
 		return;
 	}
 
 	// remove HUD
-	sdata.gGT->hudFlags =
-	sdata.gGT->hudFlags & 0xfe;
+	sdata->gGT->hudFlags =
+	sdata->gGT->hudFlags & 0xfe;
 
 	// If intro anim cutscene ended,
 	// and traffic lights either started, or finished
-	if(sdata.gGT->trafficLightsTimer < 3840)
+	if(sdata->gGT->trafficLightsTimer < 3840)
 	{
 		// Draw crystal challenge HUD
 		DrawHUD_CrystalChallenge();
@@ -329,10 +329,10 @@ void RunUpdateHook()
 			rrg->numRingsCollected++;
 
 			// add 3 seconds to the clock
-			sdata.gGT->originalEventTime += 3 * 30 * 32;
+			sdata->gGT->originalEventTime += 3 * 30 * 32;
 
 			// subtract half a second
-			sdata.gGT->originalEventTime -= 15 * 32;
+			sdata->gGT->originalEventTime -= 15 * 32;
 
 			// set the counter string
 			ringsStr[7] =  '0' + (rrg->numRingsCollected / 100000) % 10;
@@ -361,9 +361,9 @@ void RunUpdateHook()
 		}
 	}
 
-	if(sdata.gGT->drivers[0]->lapIndex == 1)
+	if(sdata->gGT->drivers[0]->lapIndex == 1)
 	{
-		sdata.gGT->drivers[0]->lapIndex = 0;
+		sdata->gGT->drivers[0]->lapIndex = 0;
 
 		rrg->laps++;
 

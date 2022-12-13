@@ -10,7 +10,7 @@ void DECOMP_Turbo_ProcessBucket(struct Thread* turboThread)
 	struct Instance* objectInstance;
 	int i;
 
-	puVar2 = sdata.gGT;
+	puVar2 = sdata->gGT;
 
 	// if first thread is valid
 	if (turboThread != 0)
@@ -18,7 +18,7 @@ void DECOMP_Turbo_ProcessBucket(struct Thread* turboThread)
 		// loop through all threads
 		do
 		{
-			puVar3 = sdata.gGT;
+			puVar3 = sdata->gGT;
 
 			// get instance from thread
 			threadInstance = turboThread->inst;

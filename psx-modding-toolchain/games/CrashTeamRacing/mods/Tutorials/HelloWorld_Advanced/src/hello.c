@@ -13,17 +13,17 @@ void PrintText()
 
 	// In Sep3, font is wiped in stage 5,
 	// and not restored until the end
-	if (sdata.Loading.stage >= 5) return;
+	if (sdata->Loading.stage >= 5) return;
 
 	#elif BUILD >= UsaRetail
 
 	// In all further builds, font is wiped in 5,
 	// and restored before the end of 5
-	if(sdata.Loading.stage == 5) return;
+	if(sdata->Loading.stage == 5) return;
 
 	#endif
 
-	gGT = sdata.gGT;
+	gGT = sdata->gGT;
 
 	// backup
 	backup = gGT->camera110_UI.ptrOT;

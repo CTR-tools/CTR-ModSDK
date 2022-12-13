@@ -63,7 +63,7 @@ void RunUpdateHook()
 	struct Particle* p;
 	struct Driver* d;
 	
-	if(sdata.gamepadSystem.controller[0].buttonsTapped & BTN_R1)
+	if(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_R1)
 	{
 		frameCount = 0;
 	}
@@ -73,9 +73,9 @@ void RunUpdateHook()
 		frameCount = frameCount + 1;
 		
 		// start with one per frame
-		p = Particle_CreateInstance(0,sdata.gGT->iconGroup[0], emSet);
+		p = Particle_CreateInstance(0,sdata->gGT->iconGroup[0], emSet);
 	
-		d = sdata.gGT->drivers[0];
+		d = sdata->gGT->drivers[0];
 		
 		p->unk1 = d->instSelf->unk2;
 		p->driverInst = d->instSelf;

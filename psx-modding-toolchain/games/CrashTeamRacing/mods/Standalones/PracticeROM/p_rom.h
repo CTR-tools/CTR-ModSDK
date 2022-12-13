@@ -124,5 +124,4 @@ char * slotString;
 #define y_total 26
 #define y_lag 26
 
-register struct sData* gp asm("gp");
 register struct P_ROM* p_rom asm("k1");

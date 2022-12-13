@@ -33,7 +33,7 @@ void DotLights(struct GameTracker* gGT)
   // green light (1,1,1,1)
   if (iVar1 < 1)
   {
-    if (0 < sdata.trafficLightsTimer_prevFrame)
+    if (0 < sdata->trafficLightsTimer_prevFrame)
 	{
 	  // Play "green light" Sound
       OtherFX_Play(0x46,0);
@@ -56,7 +56,7 @@ void DotLights(struct GameTracker* gGT)
   {
 	  if(iVar1 < (0x3c0*lightIndex)+1)
 	  {
-		  if(sdata.trafficLightsTimer_prevFrame > (0x3c0*lightIndex))
+		  if(sdata->trafficLightsTimer_prevFrame > (0x3c0*lightIndex))
 		  {
 			// Play "red light" Sound
 			OtherFX_Play(0x45,0);
@@ -147,6 +147,6 @@ DrawLights:
 SkipLights:
 
   // keep record of previous frame's countdown timer
-  sdata.trafficLightsTimer_prevFrame = gGT->trafficLightsTimer;
+  sdata->trafficLightsTimer_prevFrame = gGT->trafficLightsTimer;
   return;
 }

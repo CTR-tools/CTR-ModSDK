@@ -23,20 +23,20 @@ void ChRand_SetCharacters()
 
 	// this randomizes non-players, but if you want
 	// all drivers randomized, then set 'i' to zero here
-	int i = sdata.gGT->numPlayers;
+	int i = sdata->gGT->numPlayers;
 
 	// if in a cup
 	if
 	(
-		(sdata.gGT->gameMode1 & ADVENTURE_CUP) ||
+		(sdata->gGT->gameMode1 & ADVENTURE_CUP) ||
 
 		// arcade cup (need to change "gameMode2" name)
-		((sdata.gGT->gameMode2 & 0x10) != 0)
+		((sdata->gGT->gameMode2 & 0x10) != 0)
 	)
 	{
 		// if this is not the first track of a cup,
 		// then dont randomize. Keep characters from first track
-		if(sdata.gGT->cup.trackIndex != 0) return;
+		if(sdata->gGT->cup.trackIndex != 0) return;
 	}
 
 	// loop through drivers
@@ -52,7 +52,7 @@ void ChRand_SetCharacters()
 				+
 
 				// from RNG
-				(sdata.randomNumber >> 8)
+				(sdata->randomNumber >> 8)
 
 			 ) % 15; // 15 characters
 

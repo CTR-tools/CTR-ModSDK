@@ -101,7 +101,7 @@ void HookCups(int* param_1)
                  0x4,
 				 2,0xffff8000);
 
-	buttonTap = sdata.gamepadSystem.controller[0].buttonsTapped;
+	buttonTap = sdata->gGamepads->gamepad[0].buttonsTapped;
 
 	if(buttonTap & BTN_SELECT) cc->boolOpen = !cc->boolOpen;
 
@@ -137,7 +137,7 @@ void HookCups(int* param_1)
 						+
 
 						// from RNG
-						(sdata.randomNumber >> 8)
+						(sdata->randomNumber >> 8)
 
 					  ) % 18; // 18 tracks
 
@@ -167,7 +167,7 @@ void HookCups(int* param_1)
 			CUP_ICON(i) = SIN_ICON(i);
 
 			// Draw name of track
-			DecalFont_DrawLine(sdata.lngStrings[CUP_TRACK(i) + 0x6e],
+			DecalFont_DrawLine(sdata->lngStrings[CUP_TRACK(i) + 0x6e],
 				0x118,
 				0x30 + 0x10*i,
 				2,
@@ -190,8 +190,8 @@ void HookCups(int* param_1)
 				 2,0xffff8001);
 
 		// Draw background box ========================
-		DrawTextBackground(&window1,1,sdata.gGT->backBuffer->otMem.startPlusFour);
-		DrawTextBackground(&window2,1,sdata.gGT->backBuffer->otMem.startPlusFour);
+		DrawTextBackground(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
+		DrawTextBackground(&window2,1,sdata->gGT->backBuffer->otMem.startPlusFour);
 	}
 
 	// things drawn last are put underneath

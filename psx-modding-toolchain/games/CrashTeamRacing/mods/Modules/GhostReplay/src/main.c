@@ -57,23 +57,26 @@ void RunUpdateHook()
 	int tempPosZ;
 	struct Thread* ghostTh;
 	struct Driver* driver_Looping;
+	struct GameTracker* gGT;
+	
+	gGT = sdata->gGT;
 
 	// wait till race starts, to give the camera a place to spawn
-	if(sdata.gGT->trafficLightsTimer > 0)
+	if(gGT->trafficLightsTimer > 0)
 		return;
 
 	// dont activate in main menu, or ND box
-	if(sdata.gGT->levelID > 18)
+	if(gGT->levelID > 18)
 		return;
 
 	// need to do it like this, cause drivers[1] and drivers[2] are nullptr,
 	// even though the driver structures totally exist
-	driver = (struct Driver*) ((char*)sdata.gGT->drivers[0] + 0x670 * mgs->driverIndex);
+	driver = (struct Driver*) ((char*)gGT->drivers[0] + 0x670 * mgs->driverIndex);
 
 	// set camera to driver position, then change later
-	sdata.gGT->camera110[0].pos[0] = driver->posCurr[0] >> 8;
-	sdata.gGT->camera110[0].pos[1] = driver->posCurr[1] >> 8;
-	sdata.gGT->camera110[0].pos[2] = driver->posCurr[2] >> 8;
+	gGT->camera110[0].pos[0] = driver->posCurr[0] >> 8;
+	gGT->camera110[0].pos[1] = driver->posCurr[1] >> 8;
+	gGT->camera110[0].pos[2] = driver->posCurr[2] >> 8;
 
 	// erase function pointers (0xd)
 	for(loop = 0; loop < 0xd; loop++)
@@ -83,17 +86,17 @@ void RunUpdateHook()
 	}
 
 	// erase cam110 pointer from camDC, so we can move cam110 ourselves
-	sdata.gGT->cameraDC[0].cam110 = 0;
+	gGT->cameraDC[0].cam110 = 0;
 
 	// set camera to handle frustum culling based on position of ghost driver
-	sdata.gGT->cameraDC[0].driverToFollow = driver;
+	gGT->cameraDC[0].driverToFollow = driver;
 
-	// Get controller input
-	buttonsHold = sdata.gamepadSystem.controller[0].buttonsHeldCurrFrame;
-	buttonsTap =  sdata.gamepadSystem.controller[0].buttonsTapped;
+	// Get gamepad input
+	buttonsHold = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
+	buttonsTap =  sdata->gGamepads->gamepad[0].buttonsTapped;
 
 	// get elapsed time
-	speed = sdata.gGT->variousTimers[5];
+	speed = gGT->variousTimers[5];
 
 	// adjust zoom based on input, and elapsed time
 	if(buttonsHold & BTN_UP) 	mgs->zoom -= speed >> 2;
@@ -121,7 +124,7 @@ void RunUpdateHook()
 	if(buttonsTap & BTN_L1)
 	{
 		// get linked list of all ghosts
-		ghostTh = sdata.gGT->threadBuckets[GHOST].thread;
+		ghostTh = gGT->threadBuckets[GHOST].thread;
 
 		// if transparency is disabled
 		if (*(char*)(GhostBuffer_PerFrame + 0x1B8) == 0)
@@ -137,7 +140,7 @@ void RunUpdateHook()
 				driver_Looping = (struct Driver*)ghostTh->object;
 
 				// set tires to trtireAnim, which means "transparent"
-				driver_Looping->wheelSprites = &sdata.gGT->iconGroup[0xC]->icons[0];
+				driver_Looping->wheelSprites = &gGT->iconGroup[0xC]->icons[0];
 
 				// change instance to transparent
 				ghostTh->inst->flags =
@@ -161,7 +164,7 @@ void RunUpdateHook()
 				driver_Looping = (struct Driver*)ghostTh->object;
 
 				// make them solid
-				driver_Looping->wheelSprites = &sdata.gGT->iconGroup[0]->icons[0];
+				driver_Looping->wheelSprites = &gGT->iconGroup[0]->icons[0];
 
 				// change instance to solid
 				ghostTh->inst->flags =
@@ -180,7 +183,7 @@ void RunUpdateHook()
 	if(buttonsTap & BTN_R1)
 	{
 		// get linked list of all ghosts
-		ghostTh = sdata.gGT->threadBuckets[GHOST].thread;
+		ghostTh = gGT->threadBuckets[GHOST].thread;
 
 		// loop until you get nullptr
 		while(ghostTh != 0)
@@ -215,12 +218,12 @@ void RunUpdateHook()
 	if(mgs->zoom < 0x20) mgs->zoom = 0x20;
 
 	// default rotation
-	sdata.gGT->camera110[0].rot[0] = 0;
-	sdata.gGT->camera110[0].rot[1] = mgs->rotY;
-	sdata.gGT->camera110[0].rot[2] = 0x800;
+	gGT->camera110[0].rot[0] = 0;
+	gGT->camera110[0].rot[1] = mgs->rotY;
+	gGT->camera110[0].rot[2] = 0x800;
 
 	// get the direction the camera faces, so we can move in that direction
-	ConvertRotToMatrix(&matrix, sdata.gGT->camera110[0].rot);
+	ConvertRotToMatrix(&matrix, gGT->camera110[0].rot);
 
 	// use 4-byte int for the shifting, also this is Vel, not Pos
 	tempPosX = 0x4 * mgs->zoom * matrix.m[2][0];
@@ -234,16 +237,16 @@ void RunUpdateHook()
 	// adjust camera height, and make it look down,
 	// this is intentionally separate from the X and Z
 	tempPosY = 0x2 * mgs->zoom;
-	sdata.gGT->camera110[0].rot[0] = 0x80;
+	gGT->camera110[0].rot[0] = 0x80;
 
 	// apply the change
-	sdata.gGT->camera110[0].pos[0] -= tempPosX;
-	sdata.gGT->camera110[0].pos[1] += tempPosY;
-	sdata.gGT->camera110[0].pos[2] -= tempPosZ;
+	gGT->camera110[0].pos[0] -= tempPosX;
+	gGT->camera110[0].pos[1] += tempPosY;
+	gGT->camera110[0].pos[2] -= tempPosZ;
 
 	// make crystal challenge event last forever
-	sdata.gGT->originalEventTime =
-	sdata.gGT->elapsedEventTime + 0x100000;
+	gGT->originalEventTime =
+	gGT->elapsedEventTime + 0x100000;
 
 	// always draw how to enable text
 	DecalFont_DrawLine(str5, 10, 200, 2, 0xffff0000);

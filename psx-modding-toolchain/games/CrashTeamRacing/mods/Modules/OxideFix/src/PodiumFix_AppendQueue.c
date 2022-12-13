@@ -11,11 +11,11 @@ void HookAppendLoadingQueue()
 	int packIndex = LOAD_GetAdvPackIndex();
 
 	// set pointers
-	lqs_curr = &sdata.queueSlots[sdata.queueLength-1];
+	lqs_curr = &sdata->queueSlots[sdata->queueLength-1];
 	lqs_next = &lqs_curr[1];
 
 	// only continue if you tried to load oxide in 1st place
-	if(sdata.gGT->podium_modelIndex_First != 0x8D) return;
+	if(sdata->gGT->podium_modelIndex_First != 0x8D) return;
 
 	// quit if not this condition
 	if(lqs_curr->callback.funcPtr != LOAD_Callback_Podiums) return;
@@ -36,5 +36,5 @@ void HookAppendLoadingQueue()
 	lqs_curr->callback.flags = 0xfffffffe;
 
 	// increase size
-	sdata.queueLength++;
+	sdata->queueLength++;
 }

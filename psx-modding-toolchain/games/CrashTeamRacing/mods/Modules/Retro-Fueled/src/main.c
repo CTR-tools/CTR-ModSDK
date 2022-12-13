@@ -126,14 +126,20 @@ void InjectRedFire()
 
 void HookReserveCancelation()
 {
+	struct GamepadBuffer* gamepad;
+	struct GameTracker* gGT = sdata->gGT;
+	struct Driver* driver;
+	gamepad = &sdata->gGamepads->gamepad[0];
+	driver = gGT->drivers[0];
+	
 	*holdingX_withReserves = 0x10; // assume that I'm holding X
 
-	if (sdata.gamepadSystem.controller[0].buttonsHeldCurrFrame & BTN_SQUARE)
+	if (gamepad->buttonsHeldCurrFrame & BTN_SQUARE)
 	{
-		if ((sdata.gamepadSystem.controller[0].buttonsHeldCurrFrame & BTN_DOWN) ||
-			(sdata.gameTracker.drivers[0]->jump_LandingBoost))
+		if ((gamepad->buttonsHeldCurrFrame & BTN_DOWN) ||
+			(driver->jump_LandingBoost))
 		{
-			if (!(sdata.gamepadSystem.controller[0].buttonsHeldCurrFrame & BTN_CROSS))
+			if (!(gamepad->buttonsHeldCurrFrame & BTN_CROSS))
 			{
 				*holdingX_withReserves = 0x00; // don't assume that I'm holding X
 				return;
@@ -141,24 +147,29 @@ void HookReserveCancelation()
 			return;
 		}
 
-		if (sdata.gameTracker.drivers[0]->stepFlagSet & 0x3)
+		if (driver->stepFlagSet & 0x3)
 			return;
 
-		sdata.gameTracker.drivers[0]->reserves = 0;
+		driver->reserves = 0;
 	}
 }
 
 // Hooked at the very end of BOTS_UpdateGlobals, which makes this function run every frame
 void RunUpdateHook()
 {
+	struct GameTracker* gGT;
+	struct Driver* driver;
+	gGT = sdata->gGT;
+	driver = gGT->drivers[0];
+	
 	// if the player is not racing
-	if (sdata.gameTracker.gameMode1 & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
+	if (gGT->gameMode1 & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
 		return;
 
-	if (sdata.gameTracker.drivers[0]->reserves)
+	if (driver->reserves)
 	{
 		// if the player has USF fire speed cap
-		if (sdata.gameTracker.drivers[0]->fireSpeedCap == 0x4800)
+		if (driver->fireSpeedCap == 0x4800)
 			InjectBlueFire();
 		else
 			InjectRedFire();

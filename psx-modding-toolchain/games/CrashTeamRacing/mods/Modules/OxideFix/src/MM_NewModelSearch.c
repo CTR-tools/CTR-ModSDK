@@ -21,10 +21,10 @@ int * FUN_800adb64(int *param_1)
 		// if lev -> model array exists,
 		(
 			// if LEV is valid
-			(sdata.gGT->level1 != 0) &&
+			(sdata->gGT->level1 != 0) &&
 			(
 				// pointer to array of every single model pointer
-				ppiVar1 = (int **)(sdata.gGT->level1->ptrModelsPtrArray),
+				ppiVar1 = (int **)(sdata->gGT->level1->ptrModelsPtrArray),
 				ppiVar1!= (int **)0x0
 			)
 		) &&
@@ -72,10 +72,10 @@ int * FUN_800adb64(int *param_1)
   int *piVar3;
   struct Model* m;
 
-  if((int)sdata.gGT->level1 == (int)0) return (int*) 0;
+  if((int)sdata->gGT->level1 == (int)0) return (int*) 0;
 
   // pointer to array of every single model pointer
-  ppiVar1 = (int **)(sdata.gGT->level1->ptrModelsPtrArray);
+  ppiVar1 = (int **)(sdata->gGT->level1->ptrModelsPtrArray);
 
   // piVar2 = address of first modelptr
   piVar2 = *ppiVar1,

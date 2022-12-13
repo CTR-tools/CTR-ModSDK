@@ -34,7 +34,7 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 	local_30 = 0;
 	
 	// pointer to player structure (8009900C)
-	driver = sdata.gGT->drivers[0];
+	driver = sdata->gGT->drivers[0];
 	
 	// loop counter
 	loop = 0;
@@ -42,18 +42,18 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 	// 8008e6f4 is where all high scores are saved
 	// 0x49*4 = 0x124, size of each HighScoreTrack
 	// 0x24*4 = sizeof(highScoreEntry)*6, which changes from Time Trial to Relic
-	trackHighScore = &sdata.gameProgress->highScoreTracks[0] + (int)param_3 * 0x24 + sdata.gGT->levelID * 0x49;
+	trackHighScore = &sdata->gameProgress->highScoreTracks[0] + (int)param_3 * 0x24 + sdata->gGT->levelID * 0x49;
 	
 	local_58 = param_1;
 	local_50 = param_3;
 	
 	// Fly-in Interpolation
-	InterpolatePosition2D_Linear(&local_68, (int)param_1, (int)sVar1, (int)param_1, (int)sVar1, sdata.framesSinceRaceEnded, 0x14);
+	InterpolatePosition2D_Linear(&local_68, (int)param_1, (int)sVar1, (int)param_1, (int)sVar1, sdata->framesSinceRaceEnded, 0x14);
 	
 	bestTimeIndex = 1;
 	
 	// "BEST TIMES"
-	DrawRaceClock(sdata.lngStrings[0x5c4], (int)local_68, (int)local_66, 1, 0xffff8000);
+	DrawRaceClock(sdata->lngStrings[0x5c4], (int)local_68, (int)local_66, 1, 0xffff8000);
 	
 	local_38 = local_88 * 0x10000 >> 0x10;
 	local_34 = (int)(short)(param_1 - 0x1f);
@@ -68,20 +68,20 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 		trackTime = &trackHighScore->scoreEntry[bestTimeIndex];
 	
 		// If this loop index is a new high score
-		if ((int)sdata.gGT->newHighScoreIndex == loop) 
+		if ((int)sdata->gGT->newHighScoreIndex == loop) 
 		{
 			// make name color flash every odd frame
 			DrawRaceClockFlags = 4;
 		
 			// if timer on clock is an even number
-			if ((sdata.gGT->timer & 2) == 0) 
+			if ((sdata->gGT->timer & 2) == 0) 
 			{
 				// use default color
 				DrawRaceClockFlags = *(short *)((int)trackTime + 0x16) + 5;
 			}
 		
 			// flash color of time
-			DrawRaceClockFlagsAgain = (short)((sdata.gGT->timer & 2) << 1);
+			DrawRaceClockFlagsAgain = (short)((sdata->gGT->timer & 2) << 1);
 		}
 	
 		// If your current time is not on "best times" list
@@ -104,7 +104,7 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 		DrawRaceClock(&DAT_8009f700, (int)(((u_int)local_40 + 0x20) * 0x10000) >> 0x10, (iVar3 - 1) * 0x10000 >> 0x10, 2, 4);
 				 
 		// Draw Character Icon
-		DecalHUD_DrawPolyGT4_Safe(sdata.gGT + (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)trackTime + 0x16) * 0x10) * 4 +
+		DecalHUD_DrawPolyGT4_Safe(sdata->gGT + (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)trackTime + 0x16) * 0x10) * 4 +
 									0x1eec),(int)(short)local_40, local_38 + (short)local_30,
 					
 					// pointer to PrimMem struct

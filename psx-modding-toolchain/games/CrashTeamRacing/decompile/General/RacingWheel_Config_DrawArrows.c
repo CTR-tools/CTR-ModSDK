@@ -13,7 +13,7 @@ void DECOMP_RacingWheel_Config_DrawArrows(short offsetX, short offsetY, char* st
 	// orange color
 	color = 0;
 
-	if ((sdata.data18_aaa[0x14] & 4) == 0)
+	if ((sdata->data18_aaa[0x14] & 4) == 0)
 	{
 		// red color
 		color = 3;
@@ -31,15 +31,15 @@ void DECOMP_RacingWheel_Config_DrawArrows(short offsetX, short offsetY, char* st
 	DecalHUD_Arrow2D
 	(
 		// largeFont
-		sdata.gGT->iconGroup[4]->icons[0x38],
+		sdata->gGT->iconGroup[4]->icons[0x38],
 
 		(offsetX - lineWidth) - 0x14, (int)offsetY + 7,
 
 		// pointer to PrimMem struct
-		&sdata.gGT->backBuffer->primMem,
+		&sdata->gGT->backBuffer->primMem,
 
 		// pointer to OT memory
-		sdata.gGT->camera110_UI.ptrOT,
+		sdata->gGT->camera110_UI.ptrOT,
 
 		// color data
 		*colorPtr[0],
@@ -54,15 +54,15 @@ void DECOMP_RacingWheel_Config_DrawArrows(short offsetX, short offsetY, char* st
 	DecalHUD_Arrow2D
 	(
 		// largeFont
-		sdata.gGT->iconGroup[4]->icons[0x38],
+		sdata->gGT->iconGroup[4]->icons[0x38],
 
 		(offsetX + lineWidth) + 0x12 , (int)offsetY + 7,
 
 		// pointer to PrimMem struct
-		&sdata.gGT->backBuffer->primMem,
+		&sdata->gGT->backBuffer->primMem,
 
 		// pointer to OT memory
-		sdata.gGT->camera110_UI.ptrOT,
+		sdata->gGT->camera110_UI.ptrOT,
 
 		// color data
 		*colorPtr[0],

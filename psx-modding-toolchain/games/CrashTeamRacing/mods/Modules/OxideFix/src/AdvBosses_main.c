@@ -12,11 +12,11 @@ void AdvBosses_HookGarageUI()
 	#define CharID *(char*)(CS_Garage_Init + 0x80)
 
 	// if Crash selected
-	if(sdata.advCharSelectIndex_curr == 0)
+	if(sdata->advCharSelectIndex_curr == 0)
 	{
 		// button
-		buttonTap = sdata.PtrGamepadSystem->
-						controller[0].buttonsTapped;
+		buttonTap = sdata->gGamepads->
+						gamepad[0].buttonsTapped;
 
 		// left
 		if((buttonTap & BTN_L1) == BTN_L1)

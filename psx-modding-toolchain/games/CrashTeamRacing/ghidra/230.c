@@ -502,7 +502,7 @@ uint FUN_800ac350(int param_1)
   // If you press Cross, Circle, Triangle, or Square
   if ((DAT_8009a990 & 0x40070) != 0) 
   {
-	// clear controller input (for menus)
+	// clear gamepad input (for menus)
     FUN_80046404();
 	
 	// set frame to 1000, skip the animation
@@ -1618,12 +1618,12 @@ void FUN_800ad448(void)
 	// set value to the string index
 	*puVar3 = *puVar3 & 0x7fff;
     
-	// check for controller
+	// check for gamepad
 	// P1 -> iVar5 = 1
 	// P2 -> iVar5 = 2, etc
 	uVar1 = FUN_80035d70(iVar5);
 	
-	// if controller is not connected
+	// if gamepad is not connected
     if ((uVar1 & 0xffff) == 0) 
 	{
 	  // set value to LOCKED
@@ -1647,12 +1647,12 @@ void FUN_800ad448(void)
 	// set value to the string index
     *puVar3 = *puVar3 & 0x7fff;
     
-	// check for controller
+	// check for gamepad
 	// P1 -> iVar5 = 1
 	// P2 -> iVar5 = 2, (row 0 + 2 = 2), etc
 	uVar1 = FUN_80035d70((iVar2 + 2) * 0x10000 >> 0x10);
 	
-	// if controller is not connected
+	// if gamepad is not connected
     if ((uVar1 & 0xffff) == 0) 
 	{
 	  // set value to LOCKED
@@ -4272,7 +4272,7 @@ LAB_800b0424:
       }
 LAB_800b04b8:
 
-	  // clear controller input (for menus)
+	  // clear gamepad input (for menus)
       FUN_80046404();
       goto LAB_800b05b8;
     }
@@ -5327,7 +5327,7 @@ void FUN_800b1848(void)
             (PTR_DAT_8008d2ac + iVar7)[0x1da4] = (PTR_DAT_8008d2ac + iVar7)[0x1da4] + -1;
           }
 		  
-		  // clear the controller input so that it
+		  // clear the gamepad input so that it
 		  // does not use this frame's input on the next frame
           (&DAT_8009a990)[iVar7] = 0;
         }
@@ -5349,7 +5349,7 @@ void FUN_800b1848(void)
             (PTR_DAT_8008d2ac + iVar7)[0x1da4] = (PTR_DAT_8008d2ac + iVar7)[0x1da4] + '\x01';
           }
 		  
-		  // clear the controller input so that it
+		  // clear the gamepad input so that it
 		  // does not use this frame's input on the next frame
           (&DAT_8009a990)[iVar7] = 0;
         }
@@ -5689,7 +5689,7 @@ LAB_800b1d7c:
       }
     }
 	
-	// clear controller input (for menus)
+	// clear gamepad input (for menus)
     FUN_80046404();
   }
   
@@ -6748,7 +6748,7 @@ void FUN_800b3fe4(void)
   // change checkered flag
   FUN_80043f8c(1);
   
-  // clear controller input (for menus)
+  // clear gamepad input (for menus)
   FUN_80046404();
   return;
 }

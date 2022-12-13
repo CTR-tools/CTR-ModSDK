@@ -47,11 +47,11 @@ int randomNumber(int min, int max)
 {
 	int result8003ea28;
 
-	sdata.randomNumber =
-	sdata.randomNumber
+	sdata->randomNumber =
+	sdata->randomNumber
 	* 0x6255 + 0x3619 & 0xffff;
 
-	result8003ea28 = sdata.randomNumber;
+	result8003ea28 = sdata->randomNumber;
 
 	// Shift everything, or else the RNG will always give you odd numbers
 	return (result8003ea28 % ((max << 2) - (min << 2)) + (min << 2)) >> 2;
@@ -115,7 +115,7 @@ void SpawnBall()
 	// the pointer itself, not index of array
 
 	// Get pointer of blue shield
-	struct Model* modelPtr = sdata.gGT->modelPtr[0x56];
+	struct Model* modelPtr = sdata->gGT->modelPtr[0x56];
 
 	// balls should always face the camera
 	rot[0] = 0;
@@ -140,10 +140,10 @@ void DrawObjective()
 	int buttons;
 
 	// lock traffic lights
-	sdata.gGT->trafficLightsTimer = 6000;
+	sdata->gGT->trafficLightsTimer = 6000;
 
 	// PRESS * TO CONTINUE
-	DecalFont_DrawLine(sdata.lngStrings[0xC9],			0x100, 0xbe,	1, 0xffff8000);
+	DecalFont_DrawLine(sdata->lngStrings[0xC9],			0x100, 0xbe,	1, 0xffff8000);
 	DecalFont_DrawLine("objective", 					0x100, 0x48, 	1, 0xffff8000+14);
 	DecalFont_DrawLine("use your ship to deflect the",	0x100, 0x60, 	2, 0xffff8000);
 	DecalFont_DrawLine("balls away from your goal", 	0x100, 0x60+10,	2, 0xffff8000);
@@ -151,9 +151,9 @@ void DrawObjective()
 	DecalFont_DrawLine("player standing", 				0x100, 0x60+40,	2, 0xffff8000);
 
 	// Draw background box ========================
-	DrawTextBackground(&window1,0,sdata.gGT->backBuffer->otMem.startPlusFour);
+	DrawTextBackground(&window1,0,sdata->gGT->backBuffer->otMem.startPlusFour);
 
-	buttons = sdata.gamepadSystem.controller[0].buttonsHeldCurrFrame;
+	buttons = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
 
 	// If you tap Cross or Circle
     if (buttons & BTN_CROSS)
@@ -162,10 +162,10 @@ void DrawObjective()
 		MenuBox_ClearInput();
 
 		// set traffic lights to drop
-		sdata.gGT->trafficLightsTimer = 3840;
+		sdata->gGT->trafficLightsTimer = 3840;
 
 		// seed the RNG
-		sdata.randomNumber = sdata.gGT->timer;
+		sdata->randomNumber = sdata->gGT->timer;
 
 		// record that you have pressed X to continue
 		cbg->boolDrawObjective = 0;
@@ -213,7 +213,7 @@ void DrawHUD()
 
 	struct Driver** drivers;
 
-	drivers = sdata.gGT->drivers;
+	drivers = sdata->gGT->drivers;
 
 	// initialize all players
 	for(loop1 = 0; loop1 < 4; loop1++)
@@ -237,15 +237,15 @@ void DrawHUD()
 		DrawCharacterIcon(
 
 			// pointer to icon
-			sdata.gGT->ptrIcons[iconID],
+			sdata->gGT->ptrIcons[iconID],
 
 			// x and y
 			0x60 + 0x60 * loop1, 0x08,
 
 			// pointer to PrimMem struct
-			&sdata.gGT->backBuffer->primMem,
+			&sdata->gGT->backBuffer->primMem,
 
-			sdata.gGT->camera110_UI.ptrOT,
+			sdata->gGT->camera110_UI.ptrOT,
 
 			1,0x1000,0x808080
 		);
@@ -258,18 +258,18 @@ void DrawHUD()
 void SetCamera()
 {
 	// Do not move the camera, based on player
-	sdata.gGT->cameraDC[0].cam110 = 0;
+	sdata->gGT->cameraDC[0].cam110 = 0;
 
 	// set posx, posy, posz, rotx, roty, rotz
-	sdata.gGT->camera110[0].pos[0] = -0x880;
-	sdata.gGT->camera110[0].pos[1] = 0x730;
-	sdata.gGT->camera110[0].pos[2] = 0x0;
-	sdata.gGT->camera110[0].rot[0] = 0x60A;
-	sdata.gGT->camera110[0].rot[1] = -0x2400;
-	sdata.gGT->camera110[0].rot[2] = 0x0;
+	sdata->gGT->camera110[0].pos[0] = -0x880;
+	sdata->gGT->camera110[0].pos[1] = 0x730;
+	sdata->gGT->camera110[0].pos[2] = 0x0;
+	sdata->gGT->camera110[0].rot[0] = 0x60A;
+	sdata->gGT->camera110[0].rot[1] = -0x2400;
+	sdata->gGT->camera110[0].rot[2] = 0x0;
 }
 
-void HandleControllers()
+void HandleGamepads()
 {
 	int speed;
 	int buttons;
@@ -282,14 +282,14 @@ void HandleControllers()
 	for(loop = 0; loop < 2; loop++)
 	{
 		// Player 1 and 2
-		buttons = sdata.gamepadSystem.controller[0+loop].buttonsHeldCurrFrame;
+		buttons = sdata->gGamepads->gamepad[0+loop].buttonsHeldCurrFrame;
 		if(buttons & BTN_LEFT) 						cbg->posOffset[0+loop] -= speed;
 		if(buttons & BTN_RIGHT) 					cbg->posOffset[0+loop] += speed;
 		if(cbg->posOffset[0+loop] > maxOffset) 		cbg->posOffset[0+loop] = maxOffset;
 		if(cbg->posOffset[0+loop] < -maxOffset) 	cbg->posOffset[0+loop] = -maxOffset;
 
 		// Player 3 and 4
-		buttons = sdata.gamepadSystem.controller[2+loop].buttonsHeldCurrFrame;
+		buttons = sdata->gGamepads->gamepad[2+loop].buttonsHeldCurrFrame;
 		if(buttons & BTN_UP) 						cbg->posOffset[2+loop] += speed;
 		if(buttons & BTN_DOWN) 						cbg->posOffset[2+loop] -= speed;
 		if(cbg->posOffset[2+loop] > maxOffset) 		cbg->posOffset[2+loop] = maxOffset;
@@ -300,7 +300,7 @@ void HandleControllers()
 
 void HandleBallCreation()
 {
-	if((sdata.gGT->elapsedEventTime >> 11) > cbg->numBalls)
+	if((sdata->gGT->elapsedEventTime >> 11) > cbg->numBalls)
 	{
 		#define MAX_BALLS 4
 
@@ -318,7 +318,7 @@ void CheckWin()
 	struct Driver** drivers;
 
 	numAlive = 0;
-	drivers = sdata.gGT->drivers;
+	drivers = sdata->gGT->drivers;
 
 	// check four drivers
 	for(i = 0; i < 4; i++)
@@ -363,7 +363,7 @@ void ScoreGoal(int index)
 
 	struct Driver** drivers;
 
-	drivers = sdata.gGT->drivers;
+	drivers = sdata->gGT->drivers;
 
 	// reduce score in goal
 	cbg->scoreNum[index]--;
@@ -387,7 +387,7 @@ void ScoreGoal(int index)
 	drivers[index]->instSelf->flags | 0x80;
 
 	// Get pointer of wumpa box
-	modelPtr = sdata.gGT->modelPtr[0x7];
+	modelPtr = sdata->gGT->modelPtr[0x7];
 
 	// spawn four walls
 	for(loop2 = 0; loop2 < 4; loop2++)
@@ -461,13 +461,13 @@ void RunInitHook()
 	cbg->boolDrawObjective = 1;
 	cbg->numBalls = 0;
 	cbg->boolGameOver = 0;
-	sdata.gGT->elapsedEventTime = 0;
+	sdata->gGT->elapsedEventTime = 0;
 
 	// set camera position and rotation
 	SetCamera();
 
 	// spawn extra players
-	drivers = sdata.gGT->drivers;
+	drivers = sdata->gGT->drivers;
 
 	// player[0] already exists
 	drivers[1] = Init_Player(1);
@@ -475,7 +475,7 @@ void RunInitHook()
 	drivers[3] = Init_Player(3);
 
 	// send to start line (corrects driver animations)
-	Driver_TeleportAll(sdata.gGT, 2);
+	Driver_TeleportAll(sdata->gGT, 2);
 
 	// set where we want drivers, on the game grid
 	for(i = 0; i < 4; i++)
@@ -557,15 +557,15 @@ void RunUpdateHook()
 	}
 
 	// quit early, if game has not started
-	if(sdata.gGT->trafficLightsTimer > 0)
+	if(sdata->gGT->trafficLightsTimer > 0)
 	{
 		return;
 	}
 
-	HandleControllers();
+	HandleGamepads();
 
 	// update player positions
-	drivers = sdata.gGT->drivers;
+	drivers = sdata->gGT->drivers;
 	SetPos(drivers[0], -0x600, 0, cbg->posOffset[0]);
 	SetPos(drivers[1], 0x600, 0, cbg->posOffset[1]);
 	SetPos(drivers[2], cbg->posOffset[2], 0, -0x600);

@@ -308,7 +308,7 @@ void ChangeCharacterIcon(char character, int buttonTap)
 //Hooked at the very end of BOTS_UpdateGlobals, which makes this function run every frame
 void MainMenuLoop()
 {
-	if(sdata.gGT->gameMode1 != MAIN_MENU)
+	if(sdata->gGT->gameMode1 != MAIN_MENU)
 	{
 		wasLoadedYet = 0;
 		return;
@@ -323,14 +323,18 @@ void MainMenuLoop()
 //Hooked at the very end of MM_Characters_MenuBox, which makes this function run only while you're in the character menu
 void CharacterMenuLoop()
 {
-	if((sdata.buttonTapPerPlayer[0] & BTN_L2) == BTN_L2 && chr[data.characterIDs[0]].maxIndex != 0)
+	int button;
+	int characterID = data.characterIDs[0];
+	button = sdata->buttonTapPerPlayer[0];
+	
+	if((button & BTN_L2) == BTN_L2 && chr[characterID].maxIndex != 0)
 	{
-		ChangeCharacterIcon(data.characterIDs[0], BTN_L2);
+		ChangeCharacterIcon(characterID, BTN_L2);
 		OtherFX_Play(0x6a, 0);
 	}
-	if((sdata.buttonTapPerPlayer[0] & BTN_R2) == BTN_R2 && chr[data.characterIDs[0]].maxIndex != 0)
+	if((button & BTN_R2) == BTN_R2 && chr[characterID].maxIndex != 0)
 	{
-		ChangeCharacterIcon(data.characterIDs[0], BTN_R2);
+		ChangeCharacterIcon(characterID, BTN_R2);
 		OtherFX_Play(0x6a, 0);
 	}
 	return;

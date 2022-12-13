@@ -3848,7 +3848,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
             uVar4 = 0x2f;
           }
 
-		  // controller vibration
+		  // gamepad vibration
           FUN_800263a0(param_1,uVar4,0x60);
         }
 
@@ -3897,7 +3897,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
 		  // Make driver talk
           FUN_8002cbe8(6,(int)(short)(&DAT_80086e84)[*(byte *)(param_1 + 0x4a)],0x10);
 
-		  // both controller vibration
+		  // both gamepad vibration
 		  FUN_80026440(param_1,8,0);
           FUN_800264c0(param_1,8,0x7f);
 

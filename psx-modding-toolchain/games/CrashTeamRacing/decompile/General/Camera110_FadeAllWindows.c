@@ -6,7 +6,7 @@ void DECOMP_Camera110_FadeAllWindows()
 {
 	int i;
 	struct GameTracker* gGT;
-	gGT = sdata.gGT;
+	gGT = sdata->gGT;
 
 	i=0;
 	for(i=0; i < gGT->numPlayers; i++)

@@ -55,7 +55,7 @@ void RunInitHook()
 	for(loop = 0; loop < rrg->numRingsOnTrack; loop++)
 	{
 		// get model pointer
-		modelPtr = sdata.gGT->modelPtr[ringData[loop].modelIndex];
+		modelPtr = sdata->gGT->modelPtr[ringData[loop].modelIndex];
 
 		// instance flags will be 0xf by default
 		rrg->ring[loop] = (struct Instance*)INSTANCE_Birth3D(modelPtr, "ring", 0);
@@ -98,7 +98,7 @@ char CollideRing(int loop)
 
 	ringRadius = (int)rrg->ring[loop]->scale[0];
 
-	driver = sdata.gGT->drivers[0];
+	driver = sdata->gGT->drivers[0];
 
 	// distance vectors
 	distX = ringData[loop].pos[0] - driver->posCurr[0];
@@ -166,13 +166,13 @@ void RunUpdateHook()
 		if(CollideRing(loop))
 		{
 			// turn into Aku
-			rrg->ring[loop]->model = sdata.gGT->modelPtr[0x3e];
+			rrg->ring[loop]->model = sdata->gGT->modelPtr[0x3e];
 		}
 
 		else
 		{
 			// turn into Uka
-			rrg->ring[loop]->model = sdata.gGT->modelPtr[0x40];
+			rrg->ring[loop]->model = sdata->gGT->modelPtr[0x40];
 		}
 	}
 

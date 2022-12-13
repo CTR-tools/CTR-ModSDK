@@ -8,9 +8,9 @@ u_int DECOMP_DecalFont_boolRacingWheel()
 	u_int result;
 	
 	/*
-	ptrRawInput = sdata.PtrGamepadSystem->controller[0]->ptrRawInput;
+	ptrRawInput = sdata->gGamepads->gamepad[0]->ptrRawInput;
 	result = 0;
-	// check if raw input pointers for other controllers don't exist
+	// check if raw input pointers for other gamepads don't exist
 	if
 	(
 		(
@@ -19,13 +19,13 @@ u_int DECOMP_DecalFont_boolRacingWheel()
 				(ptrRawInput[1] == '#') &&
 				(
 					(
-						sdata.PtrGamepadSystem->controller[1]->ptrRawInput == 0 || sdata.PtrGamepadSystem->controller[1]->ptrRawInput[0] != '\0'
+						sdata->gGamepads->gamepad[1]->ptrRawInput == 0 || sdata->gGamepads->gamepad[1]->ptrRawInput[0] != '\0'
 					)
 				)
 			) &&
 			(
 				(
-					sdata.PtrGamepadSystem->controller[2]->ptrRawInput == 0 || sdata.PtrGamepadSystem->controller[2]->ptrRawInput[0] != '\0'
+					sdata->gGamepads->gamepad[2]->ptrRawInput == 0 || sdata->gGamepads->gamepad[2]->ptrRawInput[0] != '\0'
 				)
 			)
 		) &&
@@ -33,7 +33,7 @@ u_int DECOMP_DecalFont_boolRacingWheel()
 			(
 				(
 					(
-						sdata.PtrGamepadSystem->controller[3]->ptrRawInput == 0 || sdata.PtrGamepadSystem->controller[3]->ptrRawInput[0] != '\0'
+						sdata->gGamepads->gamepad[3]->ptrRawInput == 0 || sdata->gGamepads->gamepad[3]->ptrRawInput[0] != '\0'
 					) && (ptrRawInput != 0)
 				) && (ptrRawInput[0] == '\0')
 			)

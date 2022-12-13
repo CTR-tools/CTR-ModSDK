@@ -45,14 +45,14 @@ void AllocateAllPools_New(struct GameTracker* gGT)
 	// 0xc00 for oscillator
 	// 0x140 for rain
 	// 0x1000>>5 = 128, 0x1000>>9 = 8,
-	sdata.mempack[0].firstFreeByte = (void*)0x800091C0;
+	sdata->mempack[0].firstFreeByte = (void*)0x800091C0;
 	AllocPool_Init(&gGT->AllocPools.oscillator,128,0x18);
 	AllocPool_Init(&gGT->AllocPools.rain,8,0x28);
 
 	// 0x8000E3E0 - 0x80010000
 	// 0x1c20 for small stack
 	// 0x1000 * 0x19 >> 10 = 100 (dec 100 = 0x64 hex)
-	sdata.mempack[0].firstFreeByte = (void*)0x8000E3E0;
+	sdata->mempack[0].firstFreeByte = (void*)0x8000E3E0;
 	AllocPool_Init(&gGT->AllocPools.smallStack, 100, 0x48);
 
 	// 0x1B00 shaved off heap
@@ -135,7 +135,7 @@ void AllocateAllPools_New(struct GameTracker* gGT)
   medStackCount = 12;
 
   // ND Box, oxide intro
-  if((sdata.gGT->gameMode1 & 0x20000000) != 0)
+  if((sdata->gGT->gameMode1 & 0x20000000) != 0)
   {
 	  medStackCount = 24;
   }

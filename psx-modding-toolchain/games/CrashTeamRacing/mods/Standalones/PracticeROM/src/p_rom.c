@@ -91,7 +91,7 @@ void RunInitHook()
 	p_rom->engine = 4;
 	p_rom->currEngine = &engineStrings[p_rom->engine][8];
 	data.MetaDataCharacters[data.characterIDs[0]].engineID = p_rom->engine;
-	Driver_SetConsts(gp->gameTracker.drivers[0]);
+	Driver_SetConsts(sdata->gGT->drivers[0]);
 
 	BackupInstructions();
 
@@ -134,7 +134,7 @@ void ResetLag()
 
 void DrawLag()
 {
-	unsigned short ms = gp->gameTracker.elapsedTimeMS;
+	unsigned short ms = sdata->gGT->elapsedTimeMS;
 	NumbersToString(s_ms, ms, 3);
 
 	if (ms > msFrame)
@@ -174,11 +174,14 @@ void DrawDebugString()
 	int progress;
 	int checkpoint;
 	int i;
+	struct GameTracker* gGT;
 	int speedColor = silver;
-	xSpeed = gp->gameTracker.drivers[0]->xSpeed;
-	zSpeed = gp->gameTracker.drivers[0]->zSpeed;
-	progress = gp->gameTracker.drivers[0]->distanceToFinish_curr;
-	checkpoint = gp->gameTracker.drivers[0]->distanceToFinish_checkpoint;
+	
+	gGT = sdata->gGT;
+	xSpeed = gGT->drivers[0]->xSpeed;
+	zSpeed = gGT->drivers[0]->zSpeed;
+	progress = gGT->drivers[0]->distanceToFinish_curr;
+	checkpoint = gGT->drivers[0]->distanceToFinish_checkpoint;
 	speed = MATH_FastSqrt((xSpeed * xSpeed) + (zSpeed * zSpeed), 0);
 
 	for (i = 0; i < numSpeedColor; i++)
@@ -194,7 +197,7 @@ void DrawDebugString()
 	DecalFont_DrawLine(s_checkpointStr, x_checkpointStr, y_checkpointStr, 2, white);
 	DecalFont_DrawLine(p_rom->currEngine, x_engine, y_engine, 2, white);
 
-	NumbersToString(s_numbers, gp->gameTracker.drivers[0]->reserves / 10, 4);
+	NumbersToString(s_numbers, gGT->drivers[0]->reserves / 10, 4);
 	DecalFont_DrawLine(s_numbers, x_reserves, y_reserves, 2, lime);
 	
 	NumbersToString(s_numbers, speed / 10, 4);
@@ -210,8 +213,8 @@ void DrawDebugString()
 
 void TemporarilyMuteFX()
 {
-	p_rom->fxVol = gp->vol_FX;
-	gp->vol_FX = 0;
+	p_rom->fxVol = sdata->vol_FX;
+	sdata->vol_FX = 0;
 	p_rom->waitFrame = 1;
 }
 
@@ -234,23 +237,25 @@ void Instance_Ghostify(struct Instance* inst, char isDriver, char becomeGhost)
 			inst->flags |= 0x10000;
 		else
 			inst->flags &= ~0x10000;
-		if (gp->gameTracker.drivers[0]->reserves)
+		if (sdata->gGT->drivers[0]->reserves)
 			inst->alphaScale = 0x600;
 	}
 }
 
 void Ghostify(char becomeGhost)
 {
-	struct Turbo * turboObj;
-	struct Thread * fireThread;
+	struct Turbo* turboObj;
+	struct Thread* fireThread;
+	struct GameTracker* gGT = sdata->gGT;
+	
 	if (becomeGhost)
-		gp->gameTracker.drivers[0]->wheelSprites = &gp->gameTracker.iconGroup[0xC]->icons[0];
+		gGT->drivers[0]->wheelSprites = &gGT->iconGroup[0xC]->icons[0];
 	else
-		gp->gameTracker.drivers[0]->wheelSprites = &gp->gameTracker.iconGroup[0x0]->icons[0];
+		gGT->drivers[0]->wheelSprites = &gGT->iconGroup[0x0]->icons[0];
 
-	Instance_Ghostify(gp->gameTracker.drivers[0]->instSelf, 1, becomeGhost);
+	Instance_Ghostify(gGT->drivers[0]->instSelf, 1, becomeGhost);
 
-	fireThread = gp->gameTracker.threadBuckets[0x9].thread;
+	fireThread = gGT->threadBuckets[0x9].thread;
 	if (!fireThread)
 		return;
 
@@ -264,7 +269,7 @@ void ResetControlVariables()
 	int i;
 
 	// Saving fx volume
-	p_rom->fxVol = gp->vol_FX;
+	p_rom->fxVol = sdata->vol_FX;
 
 	// Reset flying cheat
 	p_rom->isFlying = 0;
@@ -276,10 +281,10 @@ void ResetControlVariables()
 	p_rom->slot = 0;
 
 	// Restore prefered camera zoom
-	gp->gameTracker.cameraDC[0].data40[6] = 1;
+	sdata->gGT->cameraDC[0].data40[6] = 1;
 
 	// Hardcoding the speed-o-meter
-	gp->HudAndDebugFlags |= 8;
+	sdata->HudAndDebugFlags |= 8;
 
 	// Reset cheat string drawing
 	p_rom->drawDuration = 0;
@@ -294,25 +299,26 @@ void RunUpdateHook()
 	int countdown;
 	int i;
 	int j;
+	struct GameTracker* gGT = sdata->gGT;
 
 	// if you went from a level to main menu
 	// or you went from the main menu to a level
 	if (
-		((p_rom->currlevel != levelMainMenu) && (gp->gameTracker.levelID == levelMainMenu)) ||
-		((p_rom->currlevel == levelMainMenu) && (gp->gameTracker.levelID != levelMainMenu))
+		((p_rom->currlevel != levelMainMenu) && (gGT->levelID == levelMainMenu)) ||
+		((p_rom->currlevel == levelMainMenu) && (gGT->levelID != levelMainMenu))
 	   )
 	{
 		ResetLag();
 	}
 
-	p_rom->currlevel = gp->gameTracker.levelID;
+	p_rom->currlevel = gGT->levelID;
 
 	// if the last frame did not draw a checkered flag, and the current frame does, then you must be in a loading screen
 	// reset lag
-	if ((!p_rom->flagFrame) && (gp->gameTracker.renderFlags & 0x1000))
+	if ((!p_rom->flagFrame) && (gGT->renderFlags & 0x1000))
 		ResetLag();
 
-	if (gp->gameTracker.renderFlags & 0x1000)
+	if (gGT->renderFlags & 0x1000)
 		p_rom->flagFrame = 1;
 	else
 		p_rom->flagFrame = 0;
@@ -320,33 +326,33 @@ void RunUpdateHook()
 	DrawLag();
 
 	// if the player is menuing
-	if (gp->gameTracker.gameMode1 & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
+	if (gGT->gameMode1 & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
 	{
 		ResetControlVariables();
 		return;
 	}
 
-	countdown = gp->trafficLightsTimer_prevFrame;
+	countdown = sdata->trafficLightsTimer_prevFrame;
 
 	// if you're in time trial mode
-	if (gp->gameTracker.gameMode1 == TIME_TRIAL)
+	if (gGT->gameMode1 == TIME_TRIAL)
 	{
 		// Disable mask, since loading a state with a mask can give you the powerup in time trial
 		DisableMask();
 
 		// if the save state slots aren't initialized
-		if (!gp->gameTracker.drivers[1])
+		if (!gGT->drivers[1])
 		{
 			// Initializing memory to save instances
-			p_rom->firstInstance = (int *) gp->mempack[0].firstFreeByte;
+			p_rom->firstInstance = (int *) sdata->mempack[0].firstFreeByte;
 			p_rom->firstSound = p_rom->firstInstance + (instanceSize * numSlots);
 
 			for (i = 0; i < numSlots; i++)
 			{
 				// initialize the other 5 empty drivers remaining
-				gp->gameTracker.drivers[i + 1] = (struct Driver *) LIST_RemoveFront(&gp->gameTracker.AllocPools.largeStack.free);
+				gGT->drivers[i + 1] = (struct Driver *) LIST_RemoveFront(&gGT->AllocPools.largeStack.free);
 				// clearing the 5 drivers to avoid silly side effects
-				driver = (int *) gp->gameTracker.drivers[i + 1];
+				driver = (int *) gGT->drivers[i + 1];
 				for (j = 0; j < driverSize; j++)
 					driver[j] = 0;
 
@@ -355,7 +361,7 @@ void RunUpdateHook()
 		}
 
 		// Save State Cheat
-		if (gp->gamepadSystem.controller[0].buttonsTapped & BTN_CIRCLE)
+		if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_CIRCLE)
 		{
 			TemporarilyMuteFX();
 			SaveState();
@@ -364,7 +370,7 @@ void RunUpdateHook()
 		}
 
 		// Load State Cheat
-		if ((p_rom->hasSaved[p_rom->slot]) && (gp->gamepadSystem.controller[0].buttonsTapped & BTN_SELECT))
+		if ((p_rom->hasSaved[p_rom->slot]) && (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_SELECT))
 		{
 			TemporarilyMuteFX();
 			LoadState();
@@ -372,12 +378,12 @@ void RunUpdateHook()
 		}
 
 		// Select Slot Cheat
-		if ((countdown == -0x3C0) && (gp->gamepadSystem.controller[0].buttonsTapped & BTN_L2))
+		if ((countdown == -0x3C0) && (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_L2))
 		{
 			p_rom->slot = (p_rom->slot + 1) % numSlots;
 			SetSlotString(s_slotSelected, 1);
 
-			gp->gamepadSystem.controller[0].buttonsTapped ^= BTN_L2;
+			sdata->gGamepads->gamepad[0].buttonsTapped ^= BTN_L2;
 		}
 	}
 	else
@@ -385,27 +391,27 @@ void RunUpdateHook()
 		EnableMask();
 	}
 
-	if (!gp->boolDraw3D_AdvMask)
+	if (!sdata->boolDraw3D_AdvMask)
 	{
 		// Saffi Fire Cheat
-		if (gp->gamepadSystem.controller[0].buttonsTapped & BTN_TRIANGLE)
+		if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_TRIANGLE)
 		{
 			// if the countdown to the race is over OR
 			// you're in the adventure hub
-			if ((countdown == -0x3C0) || (gp->gameTracker.gameMode1 == ADVENTURE_HUB))
+			if ((countdown == -0x3C0) || (gGT->gameMode1 == ADVENTURE_HUB))
 			{
-				gp->gameTracker.drivers[0]->reserves = saffi;
+				gGT->drivers[0]->reserves = saffi;
 				SetSlotString(s_infiniteReserves, 0);
 			}
-			gp->gamepadSystem.controller[0].buttonsTapped ^= BTN_TRIANGLE;
+			sdata->gGamepads->gamepad[0].buttonsTapped ^= BTN_TRIANGLE;
 		}
 
 		// Flying Cheat
 		if (
-			(gp->gamepadSystem.controller[0].buttonsTapped & BTN_L3) ||
+			(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_L3) ||
 			(
-			((gp->gamepadSystem.controller[0].buttonsHeldPrevFrame & BTN_FLY) != BTN_FLY) &&
-				((gp->gamepadSystem.controller[0].buttonsHeldCurrFrame & BTN_FLY) == BTN_FLY)
+			((sdata->gGamepads->gamepad[0].buttonsHeldPrevFrame & BTN_FLY) != BTN_FLY) &&
+				((sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame & BTN_FLY) == BTN_FLY)
 			)
 		)
 		{
@@ -413,12 +419,12 @@ void RunUpdateHook()
 			{
 				flyingStr = s_flyingCheatOff;
 				p_rom->isFlying = 0;
-				gp->gameTracker.drivers[0]->const_JumpForce = p_rom->jumpBackup;
+				gGT->drivers[0]->const_JumpForce = p_rom->jumpBackup;
 			}
 			else
 			{
-				p_rom->jumpBackup = gp->gameTracker.drivers[0]->const_JumpForce;
-				gp->gameTracker.drivers[0]->const_JumpForce = jump;
+				p_rom->jumpBackup = gGT->drivers[0]->const_JumpForce;
+				gGT->drivers[0]->const_JumpForce = jump;
 				flyingStr = s_flyingCheatOn;
 				p_rom->isFlying = 1;
 			}
@@ -427,8 +433,8 @@ void RunUpdateHook()
 
 		// Engine Swap cheat
 		if (
-			((gp->gamepadSystem.controller[0].buttonsHeldPrevFrame & BTN_ENGINE_SWAP) != BTN_ENGINE_SWAP) &&
-				((gp->gamepadSystem.controller[0].buttonsHeldCurrFrame & BTN_ENGINE_SWAP) == BTN_ENGINE_SWAP)
+			((sdata->gGamepads->gamepad[0].buttonsHeldPrevFrame & BTN_ENGINE_SWAP) != BTN_ENGINE_SWAP) &&
+				((sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame & BTN_ENGINE_SWAP) == BTN_ENGINE_SWAP)
 			)
 		{
 			p_rom->engine = (p_rom->engine + 1) % numEngines;
@@ -441,20 +447,20 @@ void RunUpdateHook()
 			data.MetaDataCharacters[data.characterIDs[0]].engineID = p_rom->engine;
 			
 			// initialize
-			Driver_SetConsts(gp->gameTracker.drivers[0]);
+			Driver_SetConsts(gGT->drivers[0]);
 		}
 
 		// Change Camera Cheat
-		if (gp->gamepadSystem.controller[0].buttonsTapped & BTN_R3)
+		if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_R3)
 		{
 			// invert self
-			gp->gameTracker.cameraDC[0].data40[6] = !gp->gameTracker.cameraDC[0].data40[6];
+			gGT->cameraDC[0].data40[6] = !gGT->cameraDC[0].data40[6];
 		}
 
 		// Ghost cheat
 		if (
-			((gp->gamepadSystem.controller[0].buttonsHeldPrevFrame & BTN_SHOULDERS) != BTN_SHOULDERS) &&
-				((gp->gamepadSystem.controller[0].buttonsHeldCurrFrame & BTN_SHOULDERS) == BTN_SHOULDERS)
+			((sdata->gGamepads->gamepad[0].buttonsHeldPrevFrame & BTN_SHOULDERS) != BTN_SHOULDERS) &&
+				((sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame & BTN_SHOULDERS) == BTN_SHOULDERS)
 			)
 		{
 			p_rom->isGhost ^= 1;
@@ -467,8 +473,8 @@ void RunUpdateHook()
 
 		if (p_rom->isFlying)
 		{
-			gp->gameTracker.drivers[0]->jump_CooldownMS = 0;
-			gp->gameTracker.drivers[0]->jump_CoyoteTimerMS = 0xA0;
+			gGT->drivers[0]->jump_CooldownMS = 0;
+			gGT->drivers[0]->jump_CoyoteTimerMS = 0xA0;
 		}
 
 		if (p_rom->isGhost)
@@ -486,7 +492,7 @@ void RunUpdateHook()
 	if (p_rom->waitFrame)
 		p_rom->waitFrame--;
 	else
-		gp->vol_FX = p_rom->fxVol;
+		sdata->vol_FX = p_rom->fxVol;
 
 	DrawDebugString();
 }

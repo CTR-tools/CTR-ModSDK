@@ -81,7 +81,7 @@ void LoadFile_CustomTexturesMempack()
 //Hooked at the very end of BOTS_UpdateGlobals, which makes this function run every frame
 void MainMenuLoop()
 {
-	if(!(sdata.gGT->gameMode1 & MAIN_MENU))
+	if(!(sdata->gGT->gameMode1 & MAIN_MENU))
 	{
 		wasLoadedYet = 0;
 		return;
@@ -124,12 +124,12 @@ void ChangePaintJob(char character, int buttonTap)
 //Hooked at the very end of MM_Characters_MenuBox, which makes this function run only while you're in the character menu
 void CharacterMenuLoop()
 {
-	if((sdata.buttonTapPerPlayer[0] & BTN_L2) == BTN_L2)
+	if((sdata->buttonTapPerPlayer[0] & BTN_L2) == BTN_L2)
 	{
 		ChangePaintJob(data.characterIDs[0], BTN_L2);
 		OtherFX_Play(0x6a, 0);
 	}
-	if((sdata.buttonTapPerPlayer[0] & BTN_R2) == BTN_R2)
+	if((sdata->buttonTapPerPlayer[0] & BTN_R2) == BTN_R2)
 	{
 		ChangePaintJob(data.characterIDs[0], BTN_R2);
 		OtherFX_Play(0x6a, 0);

@@ -16,7 +16,7 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 	int numDrivers;
 	int boolNeedWeapons;
 
-	gGT = sdata.gGT;
+	gGT = sdata->gGT;
 	boolNeedWeapons = 1;
 
 	// boss race

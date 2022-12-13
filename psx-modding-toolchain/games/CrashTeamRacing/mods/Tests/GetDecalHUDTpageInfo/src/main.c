@@ -91,83 +91,83 @@ void NewDrawPolyFT4(struct Icon* icon, u_int posX, int posY, struct PrimMem* pri
 
 void KeepDrawingIcon()
 {
-	NewDrawPolyFT4(sdata.gGT->ptrIcons[0x0],0x54,0x22,
+	NewDrawPolyFT4(sdata->gGT->ptrIcons[0x0],0x54,0x22,
 
 	// gGT->backBuffer->primMem
-	&sdata.gGT->backBuffer->primMem,
+	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata.gGT->camera110_UI.ptrOT,
+	sdata->gGT->camera110_UI.ptrOT,
 
 	1, 0x1000);
 
-	NewDrawPolyFT4(sdata.gGT->ptrIcons[0x1],0x54,0x44,
+	NewDrawPolyFT4(sdata->gGT->ptrIcons[0x1],0x54,0x44,
 
 	// gGT->backBuffer->primMem
-	&sdata.gGT->backBuffer->primMem,
+	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata.gGT->camera110_UI.ptrOT,
+	sdata->gGT->camera110_UI.ptrOT,
 
 	1, 0x1000);/*
 
-	NewDrawPolyFT4(sdata.gGT->ptrIcons[0x18],0xa8,0x22,
+	NewDrawPolyFT4(sdata->gGT->ptrIcons[0x18],0xa8,0x22,
 
 	// gGT->backBuffer->primMem
-	&sdata.gGT->backBuffer->primMem,
+	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata.gGT->camera110_UI.ptrOT,
+	sdata->gGT->camera110_UI.ptrOT,
 
 	0, 0x1000);
 
-	NewDrawPolyFT4(sdata.gGT->ptrIcons[0x1d],0xa8,0x44,
+	NewDrawPolyFT4(sdata->gGT->ptrIcons[0x1d],0xa8,0x44,
 
 	// gGT->backBuffer->primMem
-	&sdata.gGT->backBuffer->primMem,
+	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata.gGT->camera110_UI.ptrOT,
+	sdata->gGT->camera110_UI.ptrOT,
 
 	0, 0x1000);
 
-	NewDrawPolyFT4(sdata.gGT->ptrIcons[0x1e],0x102,0x22,
+	NewDrawPolyFT4(sdata->gGT->ptrIcons[0x1e],0x102,0x22,
 
 	// gGT->backBuffer->primMem
-	&sdata.gGT->backBuffer->primMem,
+	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata.gGT->camera110_UI.ptrOT,
+	sdata->gGT->camera110_UI.ptrOT,
 
 	0, 0x1000);
 
-	NewDrawPolyFT4(sdata.gGT->ptrIcons[0x1f],0x102,0x44,
+	NewDrawPolyFT4(sdata->gGT->ptrIcons[0x1f],0x102,0x44,
 
 	// gGT->backBuffer->primMem
-	&sdata.gGT->backBuffer->primMem,
+	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata.gGT->camera110_UI.ptrOT,
+	sdata->gGT->camera110_UI.ptrOT,
 
 	0, 0x1000);
 
-	NewDrawPolyFT4(sdata.gGT->ptrIcons[0x2e],0x154,0x22,
+	NewDrawPolyFT4(sdata->gGT->ptrIcons[0x2e],0x154,0x22,
 
 	// gGT->backBuffer->primMem
-	&sdata.gGT->backBuffer->primMem,
+	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata.gGT->camera110_UI.ptrOT,
+	sdata->gGT->camera110_UI.ptrOT,
 
 	0, 0x1000);
 
-	NewDrawPolyFT4(sdata.gGT->ptrIcons[0x30],0x154,0x44,
+	NewDrawPolyFT4(sdata->gGT->ptrIcons[0x30],0x154,0x44,
 
 	// gGT->backBuffer->primMem
-	&sdata.gGT->backBuffer->primMem,
+	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata.gGT->camera110_UI.ptrOT,
+	sdata->gGT->camera110_UI.ptrOT,
 
 	0, 0x1000);*/
 

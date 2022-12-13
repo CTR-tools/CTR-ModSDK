@@ -16,7 +16,7 @@ void DrawHeat_Main()
 void MEMPACK_Init_new(int size)
 {
   // structure of memory allocation system
-  struct Mempack* mp = sdata.PtrMempack;
+  struct Mempack* mp = sdata->PtrMempack;
 
   // start of memory allocation system
   mp->start = (void*)0x800ba9f0;
@@ -59,7 +59,7 @@ void* MEMPACK_AllocMem_new(int size, char* name)
   int sizeAlign;
 
   // pointer to memory managment structure
-  struct Mempack* mp = sdata.PtrMempack;
+  struct Mempack* mp = sdata->PtrMempack;
 
   // basically, if there is no room to allocate [size] amount of bytes
   if (mp->lastFreeByte - mp->firstFreeByte < size) {
@@ -113,7 +113,7 @@ void* MEMPACK_AllocHighMem_new(int size, char* name)
   int sizeAlign;
 
   // pointer to memory managment structure
-  struct Mempack* mp = sdata.PtrMempack;
+  struct Mempack* mp = sdata->PtrMempack;
 
   // basically, if there is no room to allocate [size] amount of bytes
   if (mp->lastFreeByte - mp->firstFreeByte < size)
@@ -165,7 +165,7 @@ void* MEMPACK_ReallocMem_new(int size, char* name)
   int sizePrevAlloc;
 
   // pointer to memory managment structure
-  struct Mempack* mp = sdata.PtrMempack;
+  struct Mempack* mp = sdata->PtrMempack;
 
   // Save the pointer to the end of currently-allocated memory
   ret = mp->firstFreeByte;
@@ -198,7 +198,7 @@ int MEMPACK_PushState_new(void)
   int numBookmarks;
 
   // pointer to memory managment structure
-  struct Mempack* mp = sdata.PtrMempack;
+  struct Mempack* mp = sdata->PtrMempack;
 
   // get current number of bookmarks
   numBookmarks = mp->numBookmarks;
@@ -232,7 +232,7 @@ void MEMPACK_PopState_new(void)
   int numBookmarks;
 
   // pointer to memory managment structure
-  struct Mempack* mp = sdata.PtrMempack;
+  struct Mempack* mp = sdata->PtrMempack;
 
   // check how many bookmarks we have
   numBookmarks = mp->numBookmarks + -1;
@@ -263,7 +263,7 @@ void MEMPACK_PopToState_new(int bookmarkID)
 
 {
   // pointer to memory managment structure
-  struct Mempack* mp = sdata.PtrMempack;
+  struct Mempack* mp = sdata->PtrMempack;
 
   // set current bookmark
   mp->numBookmarks = bookmarkID;

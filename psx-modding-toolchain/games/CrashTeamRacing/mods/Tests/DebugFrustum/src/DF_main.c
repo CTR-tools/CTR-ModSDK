@@ -11,12 +11,12 @@ void DF_PrintText()
   u_long* backup;
 
   #if BUILD == SepReview
-  if (sdata.Loading.stage >= 5) return;
+  if (sdata->Loading.stage >= 5) return;
   #elif BUILD >= UsaRetail
-  if(sdata.Loading.stage == 5) return;
+  if(sdata->Loading.stage == 5) return;
   #endif
 
-  gGT = sdata.gGT;
+  gGT = sdata->gGT;
   backup = gGT->camera110_UI.ptrOT;
   gGT->camera110_UI.ptrOT = gGT->ot[gGT->swapchainIndex];
   DecalFont_DrawLine("Debug View: R1+Select", 10, 208, 2, 0xffff0000);
@@ -38,8 +38,8 @@ void DF_DrawBox()
 
   CTR_Box_DrawWireBox(
 	&r,local_30,
-	sdata.gGT->camera110_UI.ptrOT,
-	&sdata.gGT->backBuffer->primMem);
+	sdata->gGT->camera110_UI.ptrOT,
+	&sdata->gGT->backBuffer->primMem);
 }
 
 void DF_ParseOT(u_long* param_1)
@@ -214,11 +214,11 @@ void DF_DrawOTag(u_long* ot)
 
 	#define R1_SELECT (BTN_R1 | BTN_SELECT)
 
-	int buttonHoldCurr = sdata.PtrGamepadSystem->
-							controller[0].buttonsHeldCurrFrame;
+	int buttonHoldCurr = sdata->gGamepads->
+							gamepad[0].buttonsHeldCurrFrame;
 
-	int buttonHoldPrev = sdata.PtrGamepadSystem->
-							controller[0].buttonsHeldPrevFrame;
+	int buttonHoldPrev = sdata->gGamepads->
+							gamepad[0].buttonsHeldPrevFrame;
 
 	if(
 		// if held this frame, and not previous

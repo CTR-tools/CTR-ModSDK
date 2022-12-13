@@ -4,7 +4,7 @@ void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags
 
 int Hello_Main()
 {
-	if (!(sdata.gGT->gameMode1 & LOADING))
+	if (!(sdata->gGT->gameMode1 & LOADING))
 	{
 		/*
 			BUILD is a variable assigned during compilation time.

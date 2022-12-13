@@ -36,7 +36,7 @@ void RunInitHook()
 	THREAD_BirthWithObject(0x310, ThreadFunc, 0, 0);
 }
 
-void RunUpdateHook(struct GameTracker* gGT, struct ControllerSystem* cs)
+void RunUpdateHook(struct GameTracker* gGT, struct GamepadSystem* cs)
 {
 	
 }

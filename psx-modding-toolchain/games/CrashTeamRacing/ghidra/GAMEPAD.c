@@ -31,7 +31,7 @@ void FUN_800251ac(int param_1)
 	// increment loop counter
     iVar2 = iVar2 + 1;
 
-	// increment 0x50 bytes to next controller
+	// increment 0x50 bytes to next gamepad
     iVar1 = iVar1 + 0x50;
 
   } while (iVar2 < 8);
@@ -59,7 +59,7 @@ void FUN_80025208(void)
 
 // param1 is gamepadBuffer
 // param2 is PadGetState
-// param3 is controllerID
+// param3 is gamepadID
 
 // GAMEPAD_ProcessState
 void FUN_800252a0(int param_1,int param_2,undefined4 param_3)
@@ -106,7 +106,7 @@ void FUN_800252a0(int param_1,int param_2,undefined4 param_3)
               iVar2 = iVar2 + 1;
             }
 
-			// controller rumble
+			// gamepad rumble
             _padSetAct(param_3,param_1 + 0x2e,2);
 
 			iVar2 = _padSetActAlign(param_3,&DAT_8008d038);
@@ -123,7 +123,7 @@ void FUN_800252a0(int param_1,int param_2,undefined4 param_3)
 }
 
 
-// check for unplugged controllers in VsyncCallback
+// check for unplugged gamepads in VsyncCallback
 
 // GAMEPAD_CheckUnplugged
 void FUN_80025410(int param_1)
@@ -145,36 +145,36 @@ void FUN_80025410(int param_1)
   iVar7 = 0;
 
   // number of ports that gameplay cares about,
-  // 2 by default, no multitaps, 2 controllers
+  // 2 by default, no multitaps, 2 gamepads
   local_40 = 2;
 
-  // number of controllers per controller port,
+  // number of gamepads per gamepad port,
   // set to 1 if there is no multitap (default)
   local_3c = 1;
 
   // If there is a multitap present
   if ((*(char *)(param_1 + 0x2d0) == '\0') && (*(char *)(param_1 + 0x2d1) == -0x80))
   {
-	// Gameplay now only cares about one controller port,
-	// Port 1, which has the multitap. However, the controller
+	// Gameplay now only cares about one gamepad port,
+	// Port 1, which has the multitap. However, the gamepad
 	// system still processes input for port 2, Gameshark can
-	// be programmed with button input from all 8 controllers
+	// be programmed with button input from all 8 gamepads
     local_40 = 1;
 
-	// There can now be 4 controllers in one port
+	// There can now be 4 gamepads in one port
     local_3c = 4;
   }
 
   // loop counter
   iVar9 = 0;
 
-  // If there are controller ports that
+  // If there are gamepad ports that
   // gameplay cares about (always > 0)
   if (local_40 != 0)
   {
     iVar10 = 0x2d0;
 
-	// loop through all controller ports
+	// loop through all gamepad ports
 	// that gameplay cares about. Either
 	// 1 or 2, main ports on console
 	do
@@ -182,17 +182,17 @@ void FUN_80025410(int param_1)
 	  // loop counter
       uVar5 = 0;
 
-	  // if max number of controller ports is not zero,
+	  // if max number of gamepad ports is not zero,
 	  // which will always be true no matter what
       if (local_3c != 0)
 	  {
         iVar8 = 2;
 
-		// Get byte-offset of each controller within structure
+		// Get byte-offset of each gamepad within structure
         iVar6 = iVar7 * 0x50 + param_1;
 
-        // loop through all controllers that can connect
-		// to this controller port. 1 for no mtap, 4 for mtap
+        // loop through all gamepads that can connect
+		// to this gamepad port. 1 for no mtap, 4 for mtap
         do
 		{
           // padBuff
@@ -233,10 +233,10 @@ void FUN_80025410(int param_1)
             FUN_800252a0(iVar6,uVar2,uVar4);
           }
 
-		  // increment offset to next controller
+		  // increment offset to next gamepad
           iVar6 = iVar6 + 0x50;
 
-		  // increment controller counter
+		  // increment gamepad counter
           iVar7 = iVar7 + 1;
 
 		  // increment loop counter
@@ -252,14 +252,14 @@ void FUN_80025410(int param_1)
     } while (iVar9 < local_40);
   }
 
-  // if there are less than 8 controllers connected,
-  // write to buffers of all Unplugged controllers
+  // if there are less than 8 gamepads connected,
+  // write to buffers of all Unplugged gamepads
   if (iVar7 < 8)
   {
-    // Get byte-offset of each controller within structure
+    // Get byte-offset of each gamepad within structure
     param_1 = iVar7 * 0x50 + param_1;
 
-	// iVar7 = lastController; iVar7 < 8; iVar7++
+	// iVar7 = lastGamepad; iVar7 < 8; iVar7++
 	do
 	{
 	  // no analog sticks found
@@ -268,7 +268,7 @@ void FUN_80025410(int param_1)
 	  // increment loop counter
       iVar7 = iVar7 + 1;
 
-	  // increment offset to next controller
+	  // increment offset to next gamepad
       param_1 = param_1 + 0x50;
 
     } while (iVar7 < 8);
@@ -277,7 +277,7 @@ void FUN_80025410(int param_1)
 }
 
 
-// get number of controllers connected
+// get number of gamepads connected
 
 // GAMEPAD_GetNumConnected
 uint FUN_800255b4(int param_1)
@@ -296,47 +296,47 @@ uint FUN_800255b4(int param_1)
   int iVar11;
   int iVar12;
 
-  // controllers connected (by flags)
+  // gamepads connected (by flags)
   uVar9 = 0;
 
-  // number of controllers connected
+  // number of gamepads connected
   iVar6 = 0;
 
   // number of ports that gameplay cares about,
-  // 2 by default, no multitaps, 2 controllers
+  // 2 by default, no multitaps, 2 gamepads
   iVar12 = 2;
 
-  // number of controllers per controller port,
+  // number of gamepads per gamepad port,
   // set to 1 if there is no multitap (default)
   iVar11 = 1;
 
-  // Set number of controllers plugged to zero,
+  // Set number of gamepads plugged to zero,
   // we will recount the current amount soon
   *(undefined4 *)(param_1 + 0x314) = 0;
 
   // If there is a multitap present
   if ((*(char *)(param_1 + 0x2d0) == '\0') && (*(char *)(param_1 + 0x2d1) == -0x80))
   {
-	// Gameplay now only cares about one controller port,
-	// Port 1, which has the multitap. However, the controller
+	// Gameplay now only cares about one gamepad port,
+	// Port 1, which has the multitap. However, the gamepad
 	// system still processes input for port 2, Gameshark can
-	// be programmed with button input from all 8 controllers
+	// be programmed with button input from all 8 gamepads
     iVar12 = 1;
 
-	// There can now be 4 controllers in one port
+	// There can now be 4 gamepads in one port
     iVar11 = 4;
   }
 
   // loop counter
   iVar8 = 0;
 
-  // If there are controller ports that
+  // If there are gamepad ports that
   // gameplay cares about (always > 0)
   if (iVar12 != 0)
   {
     iVar10 = 0x2d0;
 
-	// loop through all controller ports
+	// loop through all gamepad ports
 	// that gameplay cares about. Either
 	// 1 or 2, main ports on console
     do
@@ -344,24 +344,24 @@ uint FUN_800255b4(int param_1)
 	  // loop counter
       iVar4 = 0;
 
-	  // if max number of controller ports is not zero,
+	  // if max number of gamepad ports is not zero,
 	  // which will always be true no matter what
       if (iVar11 != 0)
 	  {
 		// byte offset into padBuff
         iVar7 = 2;
 
-		// Get byte-offset of each controller within structure
+		// Get byte-offset of each gamepad within structure
         iVar5 = iVar6 * 0x50 + param_1;
 
-		// loop through all controllers that can connect
-		// to this controller port. 1 for no mtap, 4 for mtap
+		// loop through all gamepads that can connect
+		// to this gamepad port. 1 for no mtap, 4 for mtap
         do
 		{
 		  // pointer to padBuff for this port
           pcVar2 = (char *)(param_1 + iVar10);
 
-		  // if controller is connected
+		  // if gamepad is connected
           if (
 				(
 					// if this is not a multitap,
@@ -378,10 +378,10 @@ uint FUN_800255b4(int param_1)
 				(*pcVar2 == '\0')
 			 )
 		 {
-			// write flag that shows which controller is connected
+			// write flag that shows which gamepad is connected
             uVar9 = uVar9 | 1 << (iVar8 * 4 + iVar4 & 0x1fU);
 
-			// set the "current" number of connected controllers,
+			// set the "current" number of connected gamepads,
 			// this will continue to overwrite until loop finishes,
 			// so "current" will be the total amount in the end
             *(int *)(param_1 + 0x314) = iVar6 + 1;
@@ -390,10 +390,10 @@ uint FUN_800255b4(int param_1)
             *(short *)(iVar5 + 0x24) = (short)iVar8 * 0x10 + (short)iVar4;
           }
 
-		  // increment offset to next controller
+		  // increment offset to next gamepad
           iVar5 = iVar5 + 0x50;
 
-		  // increment controller counter
+		  // increment gamepad counter
           iVar6 = iVar6 + 1;
 
 		  // increment loop counter
@@ -409,46 +409,46 @@ uint FUN_800255b4(int param_1)
     } while (iVar8 < iVar12);
   }
 
-  // write to buffers of all Unplugged controllers
+  // write to buffers of all Unplugged gamepads
 
-  // if there are less than 8 controllers connected
+  // if there are less than 8 gamepads connected
   if (iVar6 < 8)
   {
-	// Get byte-offset of each controller within structure
+	// Get byte-offset of each gamepad within structure
     iVar11 = iVar6 * 0x50 + param_1;
 
-	// iVar6 = lastController; iVar6 < 8; iVar6++
+	// iVar6 = lastGamepad; iVar6 < 8; iVar6++
     do
 	{
-	  // This controller is now Unplugged
+	  // This gamepad is now Unplugged
       *(undefined4 *)(iVar11 + 0x20) = 0;
 
 	  // increment loop counter
       iVar6 = iVar6 + 1;
 
-	  // increment offset to next controller
+	  // increment offset to next gamepad
       iVar11 = iVar11 + 0x50;
 
     } while (iVar6 < 8);
   }
 
-  // get the number of controllers from last frame
+  // get the number of gamepads from last frame
   uVar3 = *(uint *)(param_1 + 0x318);
 
   // if this is the first time this function has run
   if (uVar3 == 0xffffffff)
   {
-	// set the number of controllers found in this function
+	// set the number of gamepads found in this function
     *(uint *)(param_1 + 0x318) = uVar9;
   }
 
   // if this function has executed before
   else
   {
-	// if the number of controllers changed since last frame
+	// if the number of gamepads changed since last frame
     if (uVar9 != uVar3)
 	{
-	  // set the number of controllers found in this function
+	  // set the number of gamepads found in this function
       *(uint *)(param_1 + 0x318) = uVar9;
 
 	  // return the change
@@ -456,7 +456,7 @@ uint FUN_800255b4(int param_1)
     }
   }
 
-  // assume no change in amount of controllers connected
+  // assume no change in amount of gamepads connected
   return 0;
 }
 
@@ -523,7 +523,7 @@ uint FUN_80025718(int param_1)
 		{
 		  // If this is ANAJ
 		  // could be different from NPC-105
-		  // could just be different sensitivity, or controller signal
+		  // could just be different sensitivity, or gamepad signal
           if (pcVar3[1] == 'S') {
             uVar4 = uVar4 << 0x10;
           }
@@ -877,7 +877,7 @@ LAB_80025be4:
 	// loop counter
 	iVar10 = iVar10 + 1;
 
-	// next controller buffer
+	// next gamepad buffer
     param_1 = param_1 + 0x50;
 
 	if (7 < iVar10) {
@@ -887,7 +887,7 @@ LAB_80025be4:
 }
 
 
-// Writes all controller variables
+// Writes all gamepad variables
 // for Tap and Release, based on Hold,
 // also maps joysticks onto buttons
 
@@ -991,7 +991,7 @@ void FUN_80025e18(int param_1)
   iVar8 = 0;
   iVar5 = param_1;
 
-  // if controllers are connected
+  // if gamepads are connected
   if (0 < *(int *)(param_1 + 0x314)) {
     do {
       if (
@@ -1009,7 +1009,7 @@ void FUN_80025e18(int param_1)
         iVar2 = FUN_80043f44();
         if (iVar2 != 0) goto LAB_80026074;
 
-		// If this is not NPC-105 controller
+		// If this is not NPC-105 gamepad
         if (*(char *)(*(int *)(iVar5 + 0x20) + 1) == -0x1d)
 		{
           bVar1 = 0x40;
@@ -1058,7 +1058,7 @@ LAB_80026030:
           *(undefined *)(iVar5 + 0x2b) = 0;
         }
 
-		// If this is NPC-105 controller
+		// If this is NPC-105 gamepad
 		else {
           if (*(int *)(iVar5 + 0x30) == 0) {
             *(undefined *)(iVar5 + 0x2a) = 0;
@@ -1098,7 +1098,7 @@ LAB_80026074:
 				(
 					(*(int *)(iVar5 + 0x20) == 0) ||
 
-					// If this is not NPC-105 controller
+					// If this is not NPC-105 gamepad
 					(*(char *)(*(int *)(iVar5 + 0x20) + 1) != -0x1d)
 				) ||
 				(*(char *)(iVar5 + 0x44) == '\0')
@@ -1132,7 +1132,7 @@ LAB_800260ac:
   iVar2 = 0;
   iVar5 = param_1;
 
-  // if controllers are connected
+  // if gamepads are connected
   if (0 < *(int *)(param_1 + 0x314)) {
     do {
       if (*(char *)(iVar5 + 0x2a) != '\0') {
@@ -1148,11 +1148,11 @@ LAB_800260ac:
 
   if (0x3c < iVar8)
   {
-	// number of controllers connected
+	// number of gamepads connected
     uVar6 = *(uint *)(param_1 + 0x314);
 
-	// process random controller based on frame-based clock,
-	// could be alternating controllers each frame
+	// process random gamepad based on frame-based clock,
+	// could be alternating gamepads each frame
     uVar10 = *(uint *)(PTR_DAT_8008d2ac + 0x1cec) % uVar6;
 
     if (uVar6 == 0) {
@@ -1204,7 +1204,7 @@ LAB_800260ac:
   iVar8 = 0;
   iVar5 = param_1;
 
-  // if there are controllers
+  // if there are gamepads
   if (0 < *(int *)(param_1 + 0x314)) {
     do
 	{
@@ -1215,7 +1215,7 @@ LAB_800260ac:
       *(undefined *)(iVar5 + 0x2e) = *(undefined *)(iVar5 + 0x2a);
       *(undefined *)(iVar5 + 0x2f) = *(undefined *)(iVar5 + 0x2b);
 
-	  // next controller
+	  // next gamepad
 	  iVar5 = iVar5 + 0x50;
 
 	} while (iVar8 < *(int *)(param_1 + 0x314));
@@ -1241,7 +1241,7 @@ uint FUN_800262d0(int param_1)
   // analog stick values onto each other
   FUN_80025854(param_1);
 
-  // Writes all controller variables
+  // Writes all gamepad variables
   // for Tap and Release, based on Hold
   uVar2 = FUN_80025d10(param_1);
 
@@ -1258,31 +1258,31 @@ uint FUN_800262d0(int param_1)
   *(undefined4 *)(param_1 + 0x298) = 0;
   *(undefined4 *)(param_1 + 0x29c) = 0;
 
-  // controller system structure
+  // gamepad system structure
   iVar3 = param_1;
 
-  // if controllers are connected
+  // if gamepads are connected
   if (0 < *(int *)(param_1 + 0x314))
   {
-	// loop through controllers and add their inputs together
+	// loop through gamepads and add their inputs together
 
-	// for iVar4 = 0; iVar4 < numControllers; iVar4++
+	// for iVar4 = 0; iVar4 < numGamepads; iVar4++
     do
 	{
-	  // Add all controller "holds"
+	  // Add all gamepad "holds"
       *(uint *)(param_1 + 0x290) = *(uint *)(param_1 + 0x290) | *(uint *)(iVar3 + 0x10);
 
-	  // Add all controller "taps"
+	  // Add all gamepad "taps"
       *(uint *)(param_1 + 0x294) = *(uint *)(param_1 + 0x294) | *(uint *)(iVar3 + 0x14);
 
 	  // increment loop counter
 	  iVar4 = iVar4 + 1;
 
-	  // Add all controller "releases" and "heldPrevFrame's"
+	  // Add all gamepad "releases" and "heldPrevFrame's"
       *(uint *)(param_1 + 0x298) = *(uint *)(param_1 + 0x298) | *(uint *)(iVar3 + 0x18);
       *(uint *)(param_1 + 0x29c) = *(uint *)(param_1 + 0x29c) | *(uint *)(iVar3 + 0x1c);
 
-	  // increment offset to next controller buffer
+	  // increment offset to next gamepad buffer
 	  iVar3 = iVar3 + 0x50;
 
     } while (iVar4 < *(int *)(param_1 + 0x314));
@@ -1300,7 +1300,7 @@ void FUN_800263a0(int param_1,byte param_2,undefined2 param_3)
   // If this is human and not AI
   if (((*(uint *)(param_1 + 0x2c8) & 0x100000) == 0) &&
      (
-		// Get pointer to this player's 0x50-byte controller buffer
+		// Get pointer to this player's 0x50-byte gamepad buffer
 		puVar1 = PTR_DAT_8008d2b0 + (uint)*(byte *)(param_1 + 0x4a) * 0x50,
 
 		(puVar1[0x45] & 0xf) <= (param_2 & 0xf))
@@ -1322,7 +1322,7 @@ void FUN_800263fc(int param_1,undefined param_2,undefined2 param_3)
   // If this is human and not AI
   if ((*(uint *)(param_1 + 0x2c8) & 0x100000) == 0)
   {
-	// Get pointer to this player's 0x50-byte controller buffer
+	// Get pointer to this player's 0x50-byte gamepad buffer
     puVar1 = PTR_DAT_8008d2b0 + (uint)*(byte *)(param_1 + 0x4a) * 0x50;
 
     puVar1[0x42] = param_2;
@@ -1346,7 +1346,7 @@ void FUN_80026440(int param_1,int param_2,undefined4 param_3)
 				((*(uint *)PTR_DAT_8008d2ac & 0x100 << ((uint)*(byte *)(param_1 + 0x4a) & 0x1f)) == 0)
 			) &&
 			(
-				// Get pointer to this player's 0x50-byte controller buffer
+				// Get pointer to this player's 0x50-byte gamepad buffer
 				puVar1 = PTR_DAT_8008d2b0 + (uint)*(byte *)(param_1 + 0x4a) * 0x50,
 
 				*(ushort *)(puVar1 + 0x28) < 0x385
@@ -1377,7 +1377,7 @@ void FUN_800264c0(int param_1,undefined4 param_2,int param_3)
 				((*(uint *)PTR_DAT_8008d2ac & 0x100 << ((uint)*(byte *)(param_1 + 0x4a) & 0x1f)) == 0)
 			) &&
 			(
-				// Get pointer to this player's 0x50-byte controller buffer
+				// Get pointer to this player's 0x50-byte gamepad buffer
 				puVar1 = PTR_DAT_8008d2b0 + (uint)*(byte *)(param_1 + 0x4a) * 0x50,
 
 				*(ushort *)(puVar1 + 0x28) < 0x385
@@ -1408,7 +1408,7 @@ void FUN_80026540(int param_1,undefined4 param_2,int param_3)
 				((*(uint *)PTR_DAT_8008d2ac & 0x100 << ((uint)*(byte *)(param_1 + 0x4a) & 0x1f)) == 0)
 			) &&
 			(
-				// Get pointer to this player's 0x50-byte controller buffer
+				// Get pointer to this player's 0x50-byte gamepad buffer
 				puVar1 = PTR_DAT_8008d2b0 + (uint)*(byte *)(param_1 + 0x4a) * 0x50,
 
 				*(ushort *)(puVar1 + 0x28) < 0x385

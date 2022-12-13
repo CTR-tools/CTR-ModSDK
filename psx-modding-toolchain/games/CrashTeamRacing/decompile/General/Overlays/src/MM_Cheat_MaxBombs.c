@@ -5,7 +5,7 @@ void OtherFX_Play(int sfxID, int flag);
 void MM_Cheat_MaxBombs()
 {
 	// enable infinite bowling bombs cheat
-	sdata.gGT->gameMode2 |= 0x400000;
+	sdata->gGT->gameMode2 |= 0x400000;
 	
 	// play cheat sound
 	OtherFX_Play(0x67, 1);

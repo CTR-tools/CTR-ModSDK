@@ -108,7 +108,7 @@ LAB_800232d8:
 
 	// if icon is an exclamation or question mark, that most likely means it's used by the DrawLineStrlen function in the European version of the game
 	// in that function the icons already have their color gradients fixed so let's set a flag to ignore the fix
-	if(icon == sdata.gGT->iconGroup[4]->icons[0x25] || icon == sdata.gGT->iconGroup[5]->icons[0x25] || icon == sdata.gGT->iconGroup[4]->icons[0x2e] || icon == sdata.gGT->iconGroup[5]->icons[0x2e])
+	if(icon == sdata->gGT->iconGroup[4]->icons[0x25] || icon == sdata->gGT->iconGroup[5]->icons[0x25] || icon == sdata->gGT->iconGroup[4]->icons[0x2e] || icon == sdata->gGT->iconGroup[5]->icons[0x2e])
 	{
 		isEurDrawLineStrlenIcon = 1;
 	}

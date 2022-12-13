@@ -21,19 +21,19 @@ void DECOMP_MENUBOX_ProcessState()
 	RECT r;
 	
 	// check for curr box
-	currMenuBox = sdata.ptrDesiredMenuBox;
+	currMenuBox = sdata->ptrDesiredMenuBox;
 	
 	// unused
-	if(sdata.framesRemainingInMenu != 0)
-		sdata.framesRemainingInMenu--;
+	if(sdata->framesRemainingInMenu != 0)
+		sdata->framesRemainingInMenu--;
 	
 	// if you want to change the MenuBox
 	if(currMenuBox != 0)
 	{
-		sdata.ptrDesiredMenuBox = 0;
+		sdata->ptrDesiredMenuBox = 0;
 		
 		// show menubox
-		sdata.ptrActiveMenuBox = currMenuBox;
+		sdata->ptrActiveMenuBox = currMenuBox;
 		currMenuBox->state &= ~(0x1000);
 		
 		// get menubox at end of hierarchy, if there is hierarchy
@@ -47,7 +47,7 @@ void DECOMP_MENUBOX_ProcessState()
 		currMenuBox->state &= ~(0x4);
 	}
 	
-	currMenuBox = sdata.ptrActiveMenuBox;
+	currMenuBox = sdata->ptrActiveMenuBox;
 	
 	// run funcPtr if it exists
 	if((currMenuBox->state & 0x420) != 0)
@@ -82,13 +82,13 @@ void DECOMP_MENUBOX_ProcessState()
 			CheckeredFlag_SetCanDraw(1);
 		}
 		
-		sdata.gGT->renderFlags |= 0x20;
+		sdata->gGT->renderFlags |= 0x20;
 	}
 	
 	// if menubox needs to close
 	if((currMenuBox->state & 0x1000) != 0)
 	{
 		// deactivate
-		sdata.ptrActiveMenuBox = 0;
+		sdata->ptrActiveMenuBox = 0;
 	}
 }

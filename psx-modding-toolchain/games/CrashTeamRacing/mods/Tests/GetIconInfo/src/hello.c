@@ -5,12 +5,12 @@
 int Hello_Main()
 {
 	int num = 14;
-	struct IconGroup* ig = sdata.gGT->iconGroup[num];
+	struct IconGroup* ig = sdata->gGT->iconGroup[num];
 	struct Icon* icon;
 	int i;
-	//struct Icon* icom = sdata.gGT->iconGroup[4]->icons[51];
+	//struct Icon* icom = sdata->gGT->iconGroup[4]->icons[51];
 
-	if(sdata.PtrGamepadSystem->controller[0].buttonsTapped & BTN_R2)
+	if(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_R2)
 	{
 		if(ig->numIcons > 0)
 		{
@@ -34,8 +34,8 @@ int Hello_Main()
 		10,
 		170,
 
-		&sdata.gGT->backBuffer->primMem,
-		sdata.gGT->camera110_UI.ptrOT,
+		&sdata->gGT->backBuffer->primMem,
+		sdata->gGT->camera110_UI.ptrOT,
 
 		data.ptrColor[0x17][0],
 		data.ptrColor[0x17][1],

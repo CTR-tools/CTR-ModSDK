@@ -17,7 +17,7 @@ void DECOMP_RB_MinePool_Init(void)
 	// clear free
 	LIST_Clear(0x800b2ea8);
 	
-	gameMode = sdata.gGT->gameMode;
+	gameMode = sdata->gGT->gameMode;
 	
 	// default
 	numMines = 10;
@@ -34,8 +34,8 @@ void DECOMP_RB_MinePool_Init(void)
 	{
 		// 1: dragon mines
 		// 6: roo's tubes
-		if (sdata.gGT->levelID == 1) numMines = 3;
-		if (sdata.gGT->levelID == 6) numMines = 7;
+		if (sdata->gGT->levelID == 1) numMines = 3;
+		if (sdata->gGT->levelID == 6) numMines = 7;
 	}
 	
 	// empty buffer of 50(dec) * 0xC

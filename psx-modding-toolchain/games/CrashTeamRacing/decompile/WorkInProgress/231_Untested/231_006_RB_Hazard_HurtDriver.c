@@ -15,10 +15,10 @@ void RB_Hazard_HurtDriver(struct Driver* d, int newState)
 	#if 1
 	
 	// if boss mode
-	if ((sdata.gGT->gameMode1 & ADVENTURE_BOSS) != 0)
+	if ((sdata->gGT->gameMode1 & ADVENTURE_BOSS) != 0)
 	{
 		// if oxide station
-		if(sdata.gGT->levelID == 0xd)
+		if(sdata->gGT->levelID == 0xd)
 		{
 			// override to spin out
 			newState = 1;
@@ -30,7 +30,7 @@ void RB_Hazard_HurtDriver(struct Driver* d, int newState)
 	
 	// if bossID is oxide's challenge (4), 
 	// or oxide's final challenge (5)
-	if ((sdata.gGT->bossID & 4) != 0)
+	if ((sdata->gGT->bossID & 4) != 0)
 	{
 		// override to spin out
 		newState = 1;

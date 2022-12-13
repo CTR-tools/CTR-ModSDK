@@ -72,7 +72,7 @@ void RunTrafficLightHook()
 {	
 	// BORDER
 	if(data.characterIDs[5] == 1)
-		sdata.gGT->gameMode1 |= 0x20;
+		sdata->gGT->gameMode1 |= 0x20;
 }
 
 void RunUpdateHook()
@@ -105,18 +105,18 @@ void RunUpdateHook()
 	cIDs = &data.characterIDs[0];
 	
 	// arcade mode (ignored in 3P/4P)
-	sdata.gGT->gameMode1 |= 0x400000;
+	sdata->gGT->gameMode1 |= 0x400000;
 	
-	// prevent error message for controllers
-	sdata.gGT->numScreens = 1;
+	// prevent error message for gamepads
+	sdata->gGT->numScreens = 1;
 	
 	// lock, dont decrease,
 	// prevents main menu from leaving,
 	// prevents demo mode from leaving
-	sdata.gGT->demoCountdownTimer = 9999;
+	sdata->gGT->demoCountdownTimer = 9999;
 	
 	// do nothing else unless in main menu
-	if(sdata.gGT->levelID != 0x27) return;
+	if(sdata->gGT->levelID != 0x27) return;
 	else
 	{
 		// NOP function
@@ -124,13 +124,13 @@ void RunUpdateHook()
 		*(int*)((int)EndOfRace_DrawAllComments + 4) = 0;
 		
 		// remove battle mode
-		sdata.gGT->gameMode1 &= 0xFFFFFFDF;
+		sdata->gGT->gameMode1 &= 0xFFFFFFDF;
 	}
 	
-	tap = sdata.PtrGamepadSystem->controller[0].buttonsTapped;
+	tap = sdata->gGamepads->gamepad[0].buttonsTapped;
 	
 	// shut any menu
-	sdata.ptrActiveMenuBox = 0;
+	sdata->ptrActiveMenuBox = 0;
 	
 	
 	
@@ -210,7 +210,7 @@ void RunUpdateHook()
 
 	// TRACK
 	DecalFont_DrawLine(line0, 40, 10, 2, 14);
-	DecalFont_DrawLine(sdata.lngStrings[SIN_TRACK() + 0x6e],
+	DecalFont_DrawLine(sdata->lngStrings[SIN_TRACK() + 0x6e],
 		160, 10, 2, 14);
 	
 	// BORDER
@@ -232,7 +232,7 @@ void RunUpdateHook()
 		// print character IDs
 		DecalFont_DrawLine(
 		
-		sdata.lngStrings[
+		sdata->lngStrings[
 			data.MetaDataCharacters[
 				cIDs[i]
 			].name_LNG_long
@@ -242,7 +242,7 @@ void RunUpdateHook()
 	}
 	
 	// These background boxes are the same used in Battle/VS End-Of-Race comments
-	DrawTextBackground(&window1,1,sdata.gGT->backBuffer->otMem.startPlusFour);
+	DrawTextBackground(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
 	
 	
 	
@@ -252,9 +252,9 @@ void RunUpdateHook()
 	// input
 	if((tap & BTN_START) != 0)
 	{
-		sdata.gGT->boolDemoMode = 1;
-		sdata.gGT->numPlayers = PLAYERS;
-		sdata.gGT->numScreens = PLAYERS;
+		sdata->gGT->boolDemoMode = 1;
+		sdata->gGT->numPlayers = PLAYERS;
+		sdata->gGT->numScreens = PLAYERS;
 		Level_RequestNewLEV(SIN_TRACK());
 	}
 }

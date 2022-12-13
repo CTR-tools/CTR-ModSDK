@@ -35,7 +35,7 @@ struct TrophyAnimModel
 // jal hook, call og function if needed
 int NewDecode()
 {
-	if(sdata.gGT->timer & 1)
+	if(sdata->gGT->timer & 1)
 	{
 		return MM_Video_DecodeFrame();
 	}
@@ -58,7 +58,7 @@ void SaveObj_PerFrame_Hook()
 	
 	if(inst->animFrame != 0)
 	{
-		if(sdata.gGT->timer & 1)
+		if(sdata->gGT->timer & 1)
 		{
 			inst->animFrame--;
 		}
@@ -73,7 +73,7 @@ void NewTitleCamera(int a, int b)
   
   if(TITLE_FRAME == 0) return;
   
-  if(sdata.gGT->timer & 1) return;
+  if(sdata->gGT->timer & 1) return;
   
   // if title frame is not zero,
   // then every odd frame, subtract,
@@ -572,7 +572,7 @@ void PatchModel(struct Model* m, struct Thread* t)
 		i = 0;
 
 		// first player thread
-		search = sdata.gGT->threadBuckets[PLAYER].thread;
+		search = sdata->gGT->threadBuckets[PLAYER].thread;
 
 		// check all players
 		do
@@ -693,7 +693,7 @@ int PatchPE(struct ParticleEmitter* pe)
 
 struct Particle* NewParticleCreateInstance(int param_1)
 {
-	if(sdata.gGT->timer & 1) return 0;
+	if(sdata->gGT->timer & 1) return 0;
 	
 	return (struct Particle*)LIST_RemoveFront(param_1);
 }

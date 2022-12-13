@@ -1,7 +1,7 @@
 #ifndef _TYPES_H
 #define _TYPES_H
 
-//#warning "<psn00bsdk/include/sys/types.h> and u_* types are deprecated, include <stdint.h> instead"
+//#warning "<sys/types.h> and u_* types are deprecated, include <stdint.h> instead"
 
 //#include <stdint.h>
 

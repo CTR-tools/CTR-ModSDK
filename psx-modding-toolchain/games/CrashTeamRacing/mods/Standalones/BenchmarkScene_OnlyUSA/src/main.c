@@ -104,7 +104,7 @@ void Patch30fps()
 	*(char*)0x8004c87c = 64;
 
 	// fix spinout timer
-	*(char*)((char*)sdata.gGT->drivers[0] + 0x463) = 60;
+	*(char*)((char*)sdata->gGT->drivers[0] + 0x463) = 60;
 
 	// fix angular velocity while spinning out
 	*(unsigned int*)0x80063F48 = 0x2402012C;
@@ -141,7 +141,7 @@ void Patch60fps()
 	*(char*)0x8004c87c = 32;
 
 	// fix spinout timer
-	*(char*)((char*)sdata.gGT->drivers[0] + 0x463) = 120;
+	*(char*)((char*)sdata->gGT->drivers[0] + 0x463) = 120;
 
 	// fix angular velocity while spinning out
 	*(unsigned int*)0x80063F48 = 0x24020096;
@@ -168,7 +168,7 @@ void SpawnTNT()
 	// the pointer itself, not index of array
 
 	// Get pointer of TNT model
-	struct Model* modelPtr = sdata.gGT->modelPtr[0x27];
+	struct Model* modelPtr = sdata->gGT->modelPtr[0x27];
 
 	// balls should always face the camera
 	rot[0] = 0;
@@ -206,7 +206,7 @@ void RunInitHook()
 	{
 		LIST_AddFront(
 		
-			&sdata.gGT->AllocPools.instance.free,
+			&sdata->gGT->AllocPools.instance.free,
 			(void*)((int)buffer + 0xFC*i)
 		);
 	}
@@ -221,20 +221,20 @@ void RunInitHook()
 	// max instance, max thread, prim size, ot size
 
 	// cause of SaveRAM patches, hard-code 47
-	maxThreads = 47; //sdata.gGT->AllocPools.thread.maxItems;
+	maxThreads = 47; //sdata->gGT->AllocPools.thread.maxItems;
 	str4[18] = '0' + (maxThreads / 1000) % 10;
 	str4[19] = '0' + (maxThreads / 100) % 10;
 	str4[20] = '0' + (maxThreads / 10) % 10;
 	str4[21] = '0' + maxThreads % 10;
 
 	// cause of manual List_AddFront, hard-code number
-	maxInstances = 600+128; //sdata.gGT->AllocPools.instance.maxItems;
+	maxInstances = 600+128; //sdata->gGT->AllocPools.instance.maxItems;
 	str5[18] = '0' + (maxInstances / 1000) % 10;
 	str5[19] = '0' + (maxInstances / 100) % 10;
 	str5[20] = '0' + (maxInstances / 10) % 10;
 	str5[21] = '0' + maxInstances % 10;
 
-	primMemSize = sdata.gGT->db[0].primMem.size;
+	primMemSize = sdata->gGT->db[0].primMem.size;
 	str6[10] = '0' + (primMemSize / 100000) % 10;
 	str6[11] = '0' + (primMemSize / 10000) % 10;
 	str6[12] = '0' + (primMemSize / 1000) % 10;
@@ -242,7 +242,7 @@ void RunInitHook()
 	str6[14] = '0' + (primMemSize / 10) % 10;
 	str6[15] = '0' + primMemSize % 10;
 
-	otMemSize = sdata.gGT->db[0].otMem.size;
+	otMemSize = sdata->gGT->db[0].otMem.size;
 	str7[10] = '0' + (otMemSize / 100000) % 10;
 	str7[11] = '0' + (otMemSize / 10000) % 10;
 	str7[12] = '0' + (otMemSize / 1000) % 10;
@@ -262,7 +262,7 @@ void RunUpdateHook()
 	int loop1;
 	struct Instance* currTnt;
 
-	if((sdata.gGT->elapsedEventTime >> 5) > bm->numTNTs)
+	if((sdata->gGT->elapsedEventTime >> 5) > bm->numTNTs)
 	{
 		if (bm->numTNTs < 10*10*HUNDRED_TNT)
 		{
@@ -271,7 +271,7 @@ void RunUpdateHook()
 	}
 
 	// amount of milliseconds per frame
-	ms = sdata.gGT->variousTimers[5];
+	ms = sdata->gGT->variousTimers[5];
 	str2[4] = '0' + (ms / 100) % 10;
 	str2[5] = '0' + (ms / 10) % 10;
 	str2[6] = '0' + ms % 10;
@@ -292,7 +292,7 @@ void RunUpdateHook()
 	// not every "taken" member is counted in "taken.count"
 	curThreads =
 		47 // cause of saveRAM patches, hard-code, dont use maxItems
-		- sdata.gGT->AllocPools.thread.free.count;
+		- sdata->gGT->AllocPools.thread.free.count;
 	str4[10] = '0' + (curThreads / 1000) % 10;
 	str4[11] = '0' + (curThreads / 100) % 10;
 	str4[12] = '0' + (curThreads / 10) % 10;
@@ -302,7 +302,7 @@ void RunUpdateHook()
 	// not every "taken" member is counted in "taken.count"
 	curInstances =
 		600+128 // cause of saveRAM patches, hard-code, dont use maxItems
-		- sdata.gGT->AllocPools.instance.free.count;
+		- sdata->gGT->AllocPools.instance.free.count;
 	str5[10] = '0' + (curInstances / 1000) % 10;
 	str5[11] = '0' + (curInstances / 100) % 10;
 	str5[12] = '0' + (curInstances / 10) % 10;
@@ -310,8 +310,8 @@ void RunUpdateHook()
 
 	// amount of bytes free in memory allocation system
 	freeBytes =
-		(unsigned int)sdata.mempack[0].lastFreeByte -
-		(unsigned int)sdata.mempack[0].firstFreeByte;
+		(unsigned int)sdata->mempack[0].lastFreeByte -
+		(unsigned int)sdata->mempack[0].firstFreeByte;
 
 	str8[12] = '0' + (freeBytes / 1000000) % 10;
 	str8[13] = '0' + (freeBytes / 100000) % 10;
@@ -332,11 +332,11 @@ void RunUpdateHook()
 
 	// If you tap select
 	// (see all buttons in CrashBall sample)
-	if(sdata.gamepadSystem.controller[0].buttonsTapped & 0x2000)
+	if(sdata->gGamepads->gamepad[0].buttonsTapped & 0x2000)
 	{
 		// Clear it
-		sdata.gamepadSystem.controller[0].buttonsTapped =
-		sdata.gamepadSystem.controller[0].buttonsTapped & 0xffffdfff;
+		sdata->gGamepads->gamepad[0].buttonsTapped =
+		sdata->gGamepads->gamepad[0].buttonsTapped & 0xffffdfff;
 
 		bm->mode = (bm->mode + 1) % 3;
 

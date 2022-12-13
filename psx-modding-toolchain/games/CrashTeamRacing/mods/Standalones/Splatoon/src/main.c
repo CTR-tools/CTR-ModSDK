@@ -147,8 +147,8 @@ RECT window1 = {0, 0, 400, 50};
 // while keeping select held
 void EndCrystalChallenge(void)
 {
-	// P1 controller
-	int tap = sdata.gamepadSystem.controller[0].buttonsTapped;
+	// P1 gamepad
+	int tap = sdata->gGamepads->gamepad[0].buttonsTapped;
 
 	// draw the text
 	DecalFont_DrawLine(line0, 40, 10, 2, 14);
@@ -156,7 +156,7 @@ void EndCrystalChallenge(void)
 	DecalFont_DrawLine(line2, 40, 30, 2, 14);
 
 	// draw box
-	DrawTextBackground(&window1,1,sdata.gGT->backBuffer->otMem.startPlusFour);
+	DrawTextBackground(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
 
 	// you can only press Cross, Circle, or Square
 	if(!(tap & 0x70)) return;
@@ -164,7 +164,7 @@ void EndCrystalChallenge(void)
 	// cross  = 0x10, 0x10 >> 4 = 1
 	// square = 0x20, 0x20 >> 4 = 2
 	// circle = 0x40, 0x40 >> 4 = 4
-	sdata.gGT->numScreens = tap >> 4;
+	sdata->gGT->numScreens = tap >> 4;
 
 	// Add Parking Lot to Queue
 	Level_RequestNewLEV(20);
@@ -194,60 +194,60 @@ void RunInitHook()
 
 	// Normally this is where Adv Hub stores the LEV that you are about to enter,
 	// and this is a hacky way to allocate memory, but I know this wont be overwritten
-	struct MainGameStruct* mgs = (struct MainGameStruct*)sdata.gGT->level2;
+	struct MainGameStruct* mgs = (struct MainGameStruct*)sdata->gGT->level2;
 
 	// only continue if this is the camera for P1
 
 	// reset game mode
-	sdata.gGT->gameMode1 = 0;
+	sdata->gGT->gameMode1 = 0;
 
 	// MEMPACK_AllocMem
-	sdata.gGT->level2 = (void*)MEMPACK_AllocMem(sizeof(struct MainGameStruct),mgs_name);
+	sdata->gGT->level2 = (void*)MEMPACK_AllocMem(sizeof(struct MainGameStruct),mgs_name);
 
 	// update mgs
 	// forgetting this makes real PS1 freeze
-	mgs = (struct MainGameStruct*)sdata.gGT->level2;
+	mgs = (struct MainGameStruct*)sdata->gGT->level2;
 
 	// initialize level counter
 	mgs->numVerticesPainted = 0;
-	mgs->mInfo = sdata.gGT->level1->ptr_mesh_info;
+	mgs->mInfo = sdata->gGT->level1->ptr_mesh_info;
 	mgs->numVerticesTotal = mgs->mInfo->numVertex;
 
 	// initialize each player
-	for(playerIndex = 0; playerIndex < sdata.gGT->numScreens; playerIndex++)
+	for(playerIndex = 0; playerIndex < sdata->gGT->numScreens; playerIndex++)
 	{
 		// initialize camera
 		mgs->playerVars[playerIndex].zoom = 0x40;
-		mgs->playerVars[playerIndex].rotY = sdata.gGT->drivers[playerIndex]->angle; // 0x39a
+		mgs->playerVars[playerIndex].rotY = sdata->gGT->drivers[playerIndex]->angle; // 0x39a
 
 		// default speed (highest value is slowest speed)
 		mgs->playerVars[playerIndex].speedVar = 9;
 
 		// default rotation
-		sdata.gGT->camera110[playerIndex].rot[0] = 0;
-		sdata.gGT->camera110[playerIndex].rot[1] = mgs->playerVars[playerIndex].rotY;
-		sdata.gGT->camera110[playerIndex].rot[2] = 0x800;
+		sdata->gGT->camera110[playerIndex].rot[0] = 0;
+		sdata->gGT->camera110[playerIndex].rot[1] = mgs->playerVars[playerIndex].rotY;
+		sdata->gGT->camera110[playerIndex].rot[2] = 0x800;
 
 		// initialize jump
 		mgs->playerVars[playerIndex].jumpOffset = 0;
 
 		// set drivers
-		sdata.gGT->drivers[playerIndex]->const_turboLowRoomWarning = 0;
-		sdata.gGT->drivers[playerIndex]->turboMeterLeft = 1;
+		sdata->gGT->drivers[playerIndex]->const_turboLowRoomWarning = 0;
+		sdata->gGT->drivers[playerIndex]->turboMeterLeft = 1;
 
 		// erase cam110 pointer from camDC, so we can move cam110 ourselves
-		sdata.gGT->cameraDC[playerIndex].cam110 = 0;
+		sdata->gGT->cameraDC[playerIndex].cam110 = 0;
 
 		// give model to player
-		sdata.gGT->drivers[playerIndex]->instSelf->model = (struct Model*)&m.mgti[playerIndex];
+		sdata->gGT->drivers[playerIndex]->instSelf->model = (struct Model*)&m.mgti[playerIndex];
 	}
 
 	// if this is 2P mode
-	if(sdata.gGT->numScreens == 2)
+	if(sdata->gGT->numScreens == 2)
 	{
 		// initialize model
 		// make player 2 into the first player of team 2
-		sdata.gGT->drivers[1]->instSelf->model = (struct Model*)&m.mgti[2];
+		sdata->gGT->drivers[1]->instSelf->model = (struct Model*)&m.mgti[2];
 	}
 }
 
@@ -268,7 +268,7 @@ void CameraPerFrameHook(struct Thread* t)
 	driver = camDC->driverToFollow;
 
 	// get pointer to hud positions for each driver
-	hud = data.hudStructPtr[(sdata.gGT->numScreens-1)];
+	hud = data.hudStructPtr[(sdata->gGT->numScreens-1)];
 	hud = (short*)((char*)hud + 0xA0*driver->driverID);
 
 	DrawPowerslideMeter((int)hud[0x20],(int)hud[0x21],driver);
@@ -279,7 +279,7 @@ void CameraPerFrameHook(struct Thread* t)
 
 void CameraInitHook()
 {
-	struct Thread* t = sdata.gGT->threadBuckets[CAMERA].thread;
+	struct Thread* t = sdata->gGT->threadBuckets[CAMERA].thread;
 
 	while(t != 0)
 	{
@@ -298,7 +298,7 @@ void PaintLEV()
 
 	// Normally this is where Adv Hub stores the LEV that you are about to enter,
 	// and this is a hacky way to allocate memory, but I know this wont be overwritten
-	struct MainGameStruct* mgs = (struct MainGameStruct*)sdata.gGT->level2;
+	struct MainGameStruct* mgs = (struct MainGameStruct*)sdata->gGT->level2;
 
 	// get number of vertices
 	numVertices = mgs->numVerticesTotal;
@@ -357,7 +357,7 @@ struct LevVertex* GetClosestVertex(struct Driver* driver)
 
 	// Normally this is where Adv Hub stores the LEV that you are about to enter,
 	// and this is a hacky way to allocate memory, but I know this wont be overwritten
-	struct MainGameStruct* mgs = (struct MainGameStruct*)sdata.gGT->level2;
+	struct MainGameStruct* mgs = (struct MainGameStruct*)sdata->gGT->level2;
 
 	// use matrix so that we dont
 	// need to bitshift position ourselves
@@ -450,16 +450,16 @@ void RunUpdateHook()
 
 	// Normally this is where Adv Hub stores the LEV that you are about to enter,
 	// and this is a hacky way to allocate memory, but I know this wont be overwritten
-	struct MainGameStruct* mgs = (struct MainGameStruct*)sdata.gGT->level2;
+	struct MainGameStruct* mgs = (struct MainGameStruct*)sdata->gGT->level2;
 
 	// do not do any of this until traffic lights are gone
-	if(sdata.gGT->trafficLightsTimer < 0)
+	if(sdata->gGT->trafficLightsTimer < 0)
 	{
 
-		for(playerIndex = 0; playerIndex < sdata.gGT->numScreens; playerIndex++)
+		for(playerIndex = 0; playerIndex < sdata->gGT->numScreens; playerIndex++)
 		{
 			// driver struct
-			driver = sdata.gGT->drivers[playerIndex];
+			driver = sdata->gGT->drivers[playerIndex];
 
 			// model from driver
 			// dont use m.mgti[playerIndex] or else 2P breaks
@@ -481,8 +481,8 @@ void RunUpdateHook()
 
 			// =========== get buttons =============
 
-			// P1 controller
-			cb = &sdata.gamepadSystem.controller[playerIndex];
+			// P1 gamepad
+			cb = &sdata->gGamepads->gamepad[playerIndex];
 
 			// get buttons
 			buttonsHeld = cb->buttonsHeldCurrFrame;
@@ -542,7 +542,7 @@ void RunUpdateHook()
 
 			if(buttonsTap & BTN_SQUARE)
 			{
-				mgs->playerVars[playerIndex].rotY = sdata.gGT->drivers[playerIndex]->angle;
+				mgs->playerVars[playerIndex].rotY = sdata->gGT->drivers[playerIndex]->angle;
 			}
 
 			// ========== Jump =============
@@ -702,7 +702,7 @@ void RunUpdateHook()
 				}
 
 				// change angle of player based on direction
-				sdata.gGT->drivers[playerIndex]->angle = forwardDir;
+				sdata->gGT->drivers[playerIndex]->angle = forwardDir;
 			}
 
 			// ========== Camera ==============
@@ -721,7 +721,7 @@ void RunUpdateHook()
 
 	// ============= Camera Position =================
 
-	for(playerIndex = 0; playerIndex < sdata.gGT->numScreens; playerIndex++)
+	for(playerIndex = 0; playerIndex < sdata->gGT->numScreens; playerIndex++)
 	{
 		// zoom doesn't change, leave this out till it's needed
 
@@ -731,20 +731,20 @@ void RunUpdateHook()
 		#endif
 
 		// get driver
-		driver = sdata.gGT->drivers[playerIndex];
+		driver = sdata->gGT->drivers[playerIndex];
 
 		// set camera to driver position, then change later
-		sdata.gGT->camera110[playerIndex].pos[0] = driver->posCurr[0] >> 8;
-		sdata.gGT->camera110[playerIndex].pos[1] = driver->posCurr[1] >> 8;
-		sdata.gGT->camera110[playerIndex].pos[2] = driver->posCurr[2] >> 8;
+		sdata->gGT->camera110[playerIndex].pos[0] = driver->posCurr[0] >> 8;
+		sdata->gGT->camera110[playerIndex].pos[1] = driver->posCurr[1] >> 8;
+		sdata->gGT->camera110[playerIndex].pos[2] = driver->posCurr[2] >> 8;
 
 		// default rotation
-		sdata.gGT->camera110[playerIndex].rot[0] = 0;
-		sdata.gGT->camera110[playerIndex].rot[1] = mgs->playerVars[playerIndex].rotY;
-		sdata.gGT->camera110[playerIndex].rot[2] = 0x800;
+		sdata->gGT->camera110[playerIndex].rot[0] = 0;
+		sdata->gGT->camera110[playerIndex].rot[1] = mgs->playerVars[playerIndex].rotY;
+		sdata->gGT->camera110[playerIndex].rot[2] = 0x800;
 
 		// get the direction the camera faces, so we can move in that direction
-		ConvertRotToMatrix(&matrix, sdata.gGT->camera110[playerIndex].rot);
+		ConvertRotToMatrix(&matrix, sdata->gGT->camera110[playerIndex].rot);
 
 		// use 4-byte int for the shifting, also this is Vel, not Pos
 		tempPosX = mgs->playerVars[playerIndex].zoom * matrix.m[2][0];
@@ -759,12 +759,12 @@ void RunUpdateHook()
 
 		// adjust camera height, and make it look down,
 		// this is intentionally separate from the X and Z
-		sdata.gGT->camera110[playerIndex].rot[0] = 0x80;
+		sdata->gGT->camera110[playerIndex].rot[0] = 0x80;
 
 		// apply the change
-		sdata.gGT->camera110[playerIndex].pos[0] -= tempPosX;
-		sdata.gGT->camera110[playerIndex].pos[1] += tempPosY;
-		sdata.gGT->camera110[playerIndex].pos[2] -= tempPosZ;
+		sdata->gGT->camera110[playerIndex].pos[0] -= tempPosX;
+		sdata->gGT->camera110[playerIndex].pos[1] += tempPosY;
+		sdata->gGT->camera110[playerIndex].pos[2] -= tempPosZ;
 	}
 }
 

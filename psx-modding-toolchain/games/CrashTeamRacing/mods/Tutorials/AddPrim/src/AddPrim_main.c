@@ -6,7 +6,7 @@ void AddPrim_RunUpdateHook()
 	// This is how CTR draws dividing
 	// lines in multiplayer
 
-	POLY_F4* p = (POLY_F4*)sdata.gGT->backBuffer->primMem.curr;
+	POLY_F4* p = (POLY_F4*)sdata->gGT->backBuffer->primMem.curr;
 
 	// set size at offset 3
 	// set code at offset 7,
@@ -32,8 +32,8 @@ void AddPrim_RunUpdateHook()
 
 	// Draw a bar from left to right,
 	// dividing the screen in half on top and bottom
-    AddPrim(&sdata.gGT->camera110_UI.ptrOT[3], p);
+    AddPrim(&sdata->gGT->camera110_UI.ptrOT[3], p);
 
 	// advance the primitive buffer
-    sdata.gGT->backBuffer->primMem.curr = p + 1;
+    sdata->gGT->backBuffer->primMem.curr = p + 1;
 }

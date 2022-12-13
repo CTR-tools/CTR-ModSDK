@@ -490,7 +490,7 @@
 
 800357b8 VisMem_FullFrame
 80035d30 VideoSTR_Init
-80035d70 CheckMissingControllers
+80035d70 CheckMissingGamepads
 
 80035e20 RequestMaskHint
 80035e70 RenderFrame
@@ -1101,7 +1101,7 @@
 8006fe70 CreateRenderLists_1P2P
 
 
-// all related to VisData...
+// all related to Visdata->..
 // unknown 80070284
 // unknown 80070290
 // unknown 800702d4 -- called before every FindLevVisData

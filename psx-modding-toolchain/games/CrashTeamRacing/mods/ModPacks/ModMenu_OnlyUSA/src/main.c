@@ -64,7 +64,7 @@ void RunUpdateHook(void)
 	struct GamepadBuffer* c;
 	int tap;
 
-	c = &sdata.PtrGamepadSystem->controller[0];
+	c = &sdata->gGamepads->gamepad[0];
 	tap = c->buttonsTapped;
 
 	if (tap & BTN_SELECT)
@@ -425,8 +425,8 @@ void RunUpdateHook(void)
 	// No "if options[8]" for characterID
 
 	// These background boxes are the same used in Battle/VS End-Of-Race comments
-	DrawTextBackground(&window1,1,sdata.gGT->backBuffer->otMem.startPlusFour);
-	DrawTextBackground(&window2,1,sdata.gGT->backBuffer->otMem.startPlusFour);
+	DrawTextBackground(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
+	DrawTextBackground(&window2,1,sdata->gGT->backBuffer->otMem.startPlusFour);
 }
 
 

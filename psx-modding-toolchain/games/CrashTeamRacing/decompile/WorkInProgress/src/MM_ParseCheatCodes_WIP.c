@@ -12,12 +12,12 @@ void MM_ParseCheatCodes()
 	// If you are "holding" L1 + R1 at the same time
 	if
 	(
-		((sdata.PtrGamepadSystem->controller[0].buttonsHeldCurrFrame & 0xc00) == 0xc00) &&
+		((sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame & 0xc00) == 0xc00) &&
 		(
 			arrayIndex = 9, 
 		
 			// if you are "tapping" something other than L1 or R1
-			sdata.PtrGamepadSystem->controller[0].buttonsTapped != 0
+			sdata->gGamepads->gamepad[0].buttonsTapped != 0
 		)
 	) 
 	{
@@ -52,7 +52,7 @@ void MM_ParseCheatCodes()
 		cheatPointer = &DAT_800b48e4;
 	
 		// save the button you tapped into the array
-		DAT_800b4d04 = sdata.PtrGamepadSystem->controller[0].buttonsTapped;
+		DAT_800b4d04 = sdata->gGamepads->gamepad[0].buttonsTapped;
 	
 		// offset of bytes into array of cheats
 		// (cheat index * 0x30)

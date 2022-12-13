@@ -24,7 +24,7 @@ void MainCharacterSelect(int player)
 	int engineID;
 
 	// clear button inputs then get them
-	buttonTap = sdata.PtrGamepadSystem->controller[player].buttonsTapped;
+	buttonTap = sdata->gGamepads->gamepad[player].buttonsTapped;
 		
 	// get engine from currently selected character
 	engineID = data.MetaDataCharacters[data.characterIDs[player]].engineID;
@@ -61,15 +61,15 @@ void NewCharacterNameString(char* str, int posX, int posY, short fontType, int f
 {
 	int i;
 
-	for(i = 0; i < sdata.gGT->numScreens; i++)
+	for(i = 0; i < sdata->gGT->numScreens; i++)
 	{
 		//extremely scuffed way of checking player
-		if(str == sdata.lngStrings[data.MetaDataCharacters[data.characterIDs[i]].name_LNG_long] && sdata.characterSelectFlags & (1 << i))
+		if(str == sdata->lngStrings[data.MetaDataCharacters[data.characterIDs[i]].name_LNG_long] && sdata->characterSelectFlags & (1 << i))
 		{
 			DecalFont_DrawLine(engineText[data.MetaDataCharacters[data.characterIDs[i]].engineID], posX, posY, fontType, flags);
 
 			// Only draw arrows for EngineText when players < 3
-			if (sdata.gGT->numScreens > 2) return;
+			if (sdata->gGT->numScreens > 2) return;
 			RacingWheel_Config_DrawArrows
 			(
 				posX, posY,
@@ -87,9 +87,9 @@ void EngineSelectUpdateLoop()
 {
 	int i;
 
-	for(i = 0; i < sdata.gGT->numScreens; i++)
+	for(i = 0; i < sdata->gGT->numScreens; i++)
 	{
-		if(sdata.characterSelectFlags & (1 << i))
+		if(sdata->characterSelectFlags & (1 << i))
 		{
 			MainCharacterSelect(i);
 		}

@@ -16,7 +16,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 
 	reservesMeter = posY - 0x2d;
 
-	backDB = sdata.gGT->backBuffer;
+	backDB = sdata->gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
 	p = 0;
 
@@ -36,7 +36,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 		box2.x = posX - 0x31;
 		memset(auStack48, 0, 4);
 
-		CTR_Box_DrawWireBox(&box2, auStack48, sdata.gGT->camera110_UI.ptrOT, &sdata.gGT->backBuffer->primMem);
+		CTR_Box_DrawWireBox(&box2, auStack48, sdata->gGT->camera110_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
 
 		colorAndCode = 0x280000ff; // red
 		if (driver->reserves > 1600)
@@ -69,12 +69,12 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 		p->x0 = reservesMeter;
 		p->x2 = reservesMeter;
 
-		primmemCurr = sdata.gGT->camera110_UI.ptrOT;
+		primmemCurr = sdata->gGT->camera110_UI.ptrOT;
 
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
 
-		backDB = sdata.gGT->backBuffer;
+		backDB = sdata->gGT->backBuffer;
 		primmemCurr = backDB->primMem.curr;
 		p = 0;
 
@@ -99,7 +99,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 			p->x2 = posX - 0x31;
 
 			// pointer to OT memory
-			primmemCurr = sdata.gGT->camera110_UI.ptrOT;
+			primmemCurr = sdata->gGT->camera110_UI.ptrOT;
 
 			*(int*)p = *primmemCurr | 0x5000000;
 			*primmemCurr = (u_int)p & 0xffffff;
@@ -111,9 +111,9 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 
 void ICantBelieveItTookNearly23YearsToMakeThis()
 {
-	if(sdata.gGT->numPlayers == 1)
+	if(sdata->gGT->numPlayers == 1)
 	{
-		DrawReservesMeter(data.hud_1P_P1[0x10].x, data.hud_1P_P1[0x10].y + 5, (struct Driver*)sdata.gGT->threadBuckets[0].thread->object);
+		DrawReservesMeter(data.hud_1P_P1[0x10].x, data.hud_1P_P1[0x10].y + 5, (struct Driver*)sdata->gGT->threadBuckets[0].thread->object);
 	}
 }
 
@@ -136,7 +136,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 	sVar9 = posX - 0x14;
 	reservesMeter = posY - 0x2d;
 
-	backDB = sdata.gGT->backBuffer;
+	backDB = sdata->gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
 	p = 0;
 
@@ -156,7 +156,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 		box2.x = posX;
 		memset(auStack48, 0, 4);
 
-		CTR_Box_DrawWireBox(&box2, auStack48, sdata.gGT->camera110_UI.ptrOT, &sdata.gGT->backBuffer->primMem);
+		CTR_Box_DrawWireBox(&box2, auStack48, sdata->gGT->camera110_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
 
 		reservesMeter = driver->reserves;
 		sVar9 = driver->reserves;
@@ -199,12 +199,12 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 		p->y0 = reservesMeter;
 		p->y1 = reservesMeter;
 
-		primmemCurr = sdata.gGT->camera110_UI.ptrOT;
+		primmemCurr = sdata->gGT->camera110_UI.ptrOT;
 
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
 
-		backDB = sdata.gGT->backBuffer;
+		backDB = sdata->gGT->backBuffer;
 		primmemCurr = backDB->primMem.curr;
 		p = 0;
 
@@ -229,7 +229,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 			p->y3 = posY;
 
 			// pointer to OT memory
-			primmemCurr = sdata.gGT->camera110_UI.ptrOT;
+			primmemCurr = sdata->gGT->camera110_UI.ptrOT;
 
 			*(int*)p = *primmemCurr | 0x5000000;
 			*primmemCurr = (u_int)p & 0xffffff;

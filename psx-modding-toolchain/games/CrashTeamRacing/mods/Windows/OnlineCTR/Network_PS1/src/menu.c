@@ -138,22 +138,22 @@ void StatePS1_Launch_FirstInit()
 	
 	// initialize string pointer,
 	// this works cause "OnlineCTR" is stored in RDATA
-	sdata.lngStrings[0x17d] = "OnlineCTR";
+	sdata->lngStrings[0x17d] = "OnlineCTR";
 	
 	// unlock everything
-	sdata.advProgress.rewards[0] = 0xffffffff;
-	sdata.advProgress.rewards[1] = 0xffffffff;
-	sdata.advProgress.rewards[2] = 0xffffffff;
-	sdata.advProgress.rewards[3] = 0xffffffff;
-	sdata.advProgress.rewards[4] = 0xffffffff;
-	sdata.advProgress.rewards[5] = 0xffffffff;
+	sdata->advProgress.rewards[0] = 0xffffffff;
+	sdata->advProgress.rewards[1] = 0xffffffff;
+	sdata->advProgress.rewards[2] = 0xffffffff;
+	sdata->advProgress.rewards[3] = 0xffffffff;
+	sdata->advProgress.rewards[4] = 0xffffffff;
+	sdata->advProgress.rewards[5] = 0xffffffff;
 	
 	// 8mb RAM expansion, for emulators that support it.
 	// Needed for 3 or more players on Adv Hub
-	sdata.mempack[0].lastFreeByte = 0x807ff800;
-	sdata.mempack[0].endOfAllocator = 0x807ff800;
+	sdata->mempack[0].lastFreeByte = 0x807ff800;
+	sdata->mempack[0].endOfAllocator = 0x807ff800;
 
-	sdata.ptrActiveMenuBox = 0;
+	sdata->ptrActiveMenuBox = 0;
 
 	// keep running till the client gets a result,
 	// DriverID is set to -1 on windows-side before this.
@@ -193,9 +193,9 @@ void MenuBox_OnPressX_Track(struct MenuBox* b)
 	#endif
 	
 	MenuBox_Hide(b);
-	sdata.ptrDesiredMenuBox = 0;
+	sdata->ptrDesiredMenuBox = 0;
 	
-	sdata.gGT->levelID = (4 * octr->PageNumber) + b->rowSelected;
+	sdata->gGT->levelID = (4 * octr->PageNumber) + b->rowSelected;
 	
 	octr->boolLockedInTrack = 1;
 }
@@ -215,7 +215,7 @@ void StatePS1_Lobby_HostTrackPick()
 	DrawClientCountStats();
 	
 	// open menu, set defaults
-	if(sdata.ptrActiveMenuBox != &menuBox)
+	if(sdata->ptrActiveMenuBox != &menuBox)
 	{
 		octr->PageNumber = 0;
 		menuBox.rowSelected = 0;
@@ -224,7 +224,7 @@ void StatePS1_Lobby_HostTrackPick()
 		MenuBox_Show(&menuBox);
 	}
 	
-	buttons = sdata.gamepadSystem.controller[0].buttonsTapped;
+	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
 	
 	// BTN_LEFT = 0x4
 	// BTN_RIGHT = 0x8
@@ -251,9 +251,9 @@ void DrawRecvTrack()
 {
 	char message[32];
 	sprintf(message, "Track: %s", 
-				sdata.lngStrings
+				sdata->lngStrings
 				[
-					data.MetaDataLEV[sdata.gGT->levelID].name_LNG
+					data.MetaDataLEV[sdata->gGT->levelID].name_LNG
 				]
 			);
 	
@@ -275,7 +275,7 @@ void MenuBox_OnPressX_Character(struct MenuBox* b)
 	#endif
 	
 	MenuBox_Hide(b);
-	sdata.ptrDesiredMenuBox = 0;
+	sdata->ptrDesiredMenuBox = 0;
 	
 	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
 	
@@ -300,7 +300,7 @@ void StatePS1_Lobby_CharacterPick()
 	DrawRecvTrack();
 	
 	// open menu, set defaults
-	if(sdata.ptrActiveMenuBox != &menuBox)
+	if(sdata->ptrActiveMenuBox != &menuBox)
 	{
 		octr->PageNumber = 0;
 		menuBox.rowSelected = 0;
@@ -309,7 +309,7 @@ void StatePS1_Lobby_CharacterPick()
 		MenuBox_Show(&menuBox);
 	}
 	
-	buttons = sdata.gamepadSystem.controller[0].buttonsTapped;
+	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
 	
 	// BTN_LEFT = 0x4
 	// BTN_RIGHT = 0x8
@@ -342,8 +342,8 @@ void StatePS1_Lobby_StartLoading()
 	howl_StopAudio(1,1,0);
 	
 	// load next level
-	sdata.gGT->gameMode1 = 0x40000000;
-	sdata.Loading.stage = 0;
+	sdata->gGT->gameMode1 = 0x40000000;
+	sdata->Loading.stage = 0;
 	octr->CurrState = GAME_WAIT_FOR_RACE;
 }
 

@@ -24,7 +24,7 @@ void DECOMP_ProcessPlayerJumpBoosts(struct Driver* driver)
 			//if Jump meter Timer is not done
 			else
 			{
-				jumpMeterMinus32ms = (u_int)driver->jumpMeterTimer - (u_int)*(u_short *)sdata.gGT->elapsedTimeMS;
+				jumpMeterMinus32ms = (u_int)driver->jumpMeterTimer - (u_int)*(u_short *)sdata->gGT->elapsedTimeMS;
 				
 				//reduce Jump meter Timer by ~32ms
 				driver->jumpMeterTimer = (short)jumpMeterMinus32ms;

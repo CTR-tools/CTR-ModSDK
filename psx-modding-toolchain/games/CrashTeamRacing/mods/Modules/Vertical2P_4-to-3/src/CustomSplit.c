@@ -11,15 +11,15 @@ void CustomSplit()
 	POLY_F4* p;
 	int numPlayers;
 
-	numPlayers = sdata.gGT->numPlayers;
+	numPlayers = sdata->gGT->numPlayers;
 
 	// JMP to CustomSplit happens right after this, in RenderFrame
-	//if ((sdata.gGT->renderFlags & 0x8000) != 0)
+	//if ((sdata->gGT->renderFlags & 0x8000) != 0)
 
     if (
 		(
 			// If you're in Battle Mode
-			(sdata.gGT->gameMode1 & BATTLE_MODE) &&
+			(sdata->gGT->gameMode1 & BATTLE_MODE) &&
 
 			// if number of screens is more than 2
 			(2 < numPlayers)
@@ -28,7 +28,7 @@ void CustomSplit()
 	{
 		for(i = 0; i < numPlayers; i++)
 		{
-			c110 = &sdata.gGT->camera110[i];
+			c110 = &sdata->gGT->camera110[i];
 
 			// Draw a 2D box made of four rectangles
 			DrawBoxOutline_LowLevel(
@@ -37,12 +37,12 @@ void CustomSplit()
 				(RECT*)&c110->rect.x,4,2,
 
 				// color data, 0x18 is enum offset of BLUE
-				data.ptrColor[sdata.gGT->drivers[i]->BattleHUD.teamID + 0x18],
+				data.ptrColor[sdata->gGT->drivers[i]->BattleHUD.teamID + 0x18],
 
 				0,
 
 				// camera110_UI = 0x1388
-				&sdata.gGT->camera110_UI.ptrOT[3]);
+				&sdata->gGT->camera110_UI.ptrOT[3]);
 		}
     }
 
@@ -52,7 +52,7 @@ void CustomSplit()
 
     if (numPlayers > 2)
 	{
-		p = (POLY_F4*)sdata.gGT->backBuffer->primMem.curr;
+		p = (POLY_F4*)sdata->gGT->backBuffer->primMem.curr;
 
 		// set R, G, B, CODE, all to zero,
 		// this makes black color, and invalid CODE
@@ -74,10 +74,10 @@ void CustomSplit()
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim(&sdata.gGT->camera110_UI.ptrOT[3],p);
+		AddPrim(&sdata->gGT->camera110_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
-		sdata.gGT->backBuffer->primMem.curr = (void*)(p + 1);
+		sdata->gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
 
 	// changed in this mod:
@@ -86,7 +86,7 @@ void CustomSplit()
 
 	if (numPlayers > 1)
 	{
-		p = sdata.gGT->backBuffer->primMem.curr;
+		p = sdata->gGT->backBuffer->primMem.curr;
 
 		// set R, G, B, CODE, all to zero,
 		// this makes black color, and invalid CODE
@@ -108,10 +108,10 @@ void CustomSplit()
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim(&sdata.gGT->camera110_UI.ptrOT[3],p);
+		AddPrim(&sdata->gGT->camera110_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
-		sdata.gGT->backBuffer->primMem.curr = (void*)(p + 1);
+		sdata->gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
 
 	// if number of screens is 3
@@ -121,7 +121,7 @@ void CustomSplit()
 		// to black anyway, even without this block,
 		// at least it does it Crash Cove, does it always?
 
-		p = sdata.gGT->backBuffer->primMem.curr;
+		p = sdata->gGT->backBuffer->primMem.curr;
 
 		// set R, G, B, CODE, all to zero,
 		// this makes black color, and invalid CODE
@@ -142,9 +142,9 @@ void CustomSplit()
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim(&sdata.gGT->camera110_UI.ptrOT[3],p);
+		AddPrim(&sdata->gGT->camera110_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
-		sdata.gGT->backBuffer->primMem.curr = (void*)(p + 1);
+		sdata->gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
 }
