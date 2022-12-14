@@ -15,6 +15,8 @@ void DECOMP_MEMPACK_PopState()
 	{
 		// go to bookmark address, go back one bookmark
 		ptrMempack->firstFreeByte =
-			ptrMempack->bookmarks[--ptrMempack->numBookmarks];
+			ptrMempack->bookmarks[ptrMempack->numBookmarks];
+			
+		ptrMempack->numBookmarks--;
 	}
 }

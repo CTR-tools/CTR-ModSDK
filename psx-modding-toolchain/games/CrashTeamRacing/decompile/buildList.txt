@@ -62,6 +62,7 @@ common, exe, MEMPACK_ReallocMem, 0x0, General/MEMPACK_ReallocMem.c
 common, exe, MEMPACK_PushState, 0x0, General/MEMPACK_PushState.c
 common, exe, MEMPACK_ClearLowMem, 0x0, General/MEMPACK_ClearLowMem.c
 common, exe, MEMPACK_PopState, 0x0, General/MEMPACK_PopState.c
+common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK_PopToState.c
 
 // Camera110
 common, exe, Camera110_InitStructs, 0x0, General/Camera110_InitStructs.c

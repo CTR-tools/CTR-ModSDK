@@ -10,9 +10,9 @@ void DECOMP_MEMPACK_PopToState(int id)
 	// Get the pointer to the memory allocation system
 	ptrMempack = sdata->PtrMempack;
 
-	// upate count
-	ptrMempack->numBookmarks = id;
-
 	// go to bookmark address
 	ptrMempack->firstFreeByte = ptrMempack->bookmarks[id];
+
+	// upate count
+	ptrMempack->numBookmarks = id;
 }

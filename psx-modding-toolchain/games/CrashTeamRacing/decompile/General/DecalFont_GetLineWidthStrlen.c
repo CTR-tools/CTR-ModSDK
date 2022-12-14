@@ -1,10 +1,16 @@
 #include <common.h>
 
-int DECOMP_DecalFont_GetLineWidthStrlen(char* str, short len, short fontType)
+int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 {
-	char* character;
-	int pixLength = 0;
-	character = str;
+	short font_charPixWidth;
+	short font_buttonPixWidth;
+	short font_puncPixWidth;
+	int pixLength;
+	
+	font_charPixWidth = data.font_charPixWidth[fontType];
+	font_buttonPixWidth = data.font_buttonPixWidth[fontType];
+	font_puncPixWidth = data.font_puncPixWidth[fontType];
+	pixLength = 0;
 
 	while((*character != 0) && (len != 0))
 	{
@@ -17,13 +23,13 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* str, short len, short fontType)
 			case '^':
 			case '*':
 				// character width, plus extra spacing for button
-				pixLength += data.font_charPixWidth[fontType] + data.font_buttonPixWidth[fontType];
+				pixLength += font_charPixWidth + font_buttonPixWidth;
 				break;
 			// colon or periodt
 			case ':':
 			case '.':
 				// punctuation spacing
-				pixLength += data.font_puncPixWidth[fontType];
+				pixLength += font_puncPixWidth;
 				break;
 
 			#if BUILD > UsaRetail
@@ -44,7 +50,7 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* str, short len, short fontType)
 				#endif
 				{
 					// normal character spacing
-					pixLength += data.font_charPixWidth[fontType];
+					pixLength += font_charPixWidth;
 				}
 		}
 
