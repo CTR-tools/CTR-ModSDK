@@ -7,8 +7,10 @@ void DECOMP_RB_MinePool_Remove(struct MineWeapon* mw)
 	mw->boolDestroyed = 1;
 	mw->weaponSlot231 = 0;
 	
+	#if 0
 	// useless check?
 	if(ws == 0) return;
+	#endif
 	
 	// remove from taken, add to free
 	LIST_RemoveMember(0x800b2e9c, ws);
