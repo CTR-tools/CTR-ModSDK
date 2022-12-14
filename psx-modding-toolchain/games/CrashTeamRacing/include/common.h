@@ -2019,6 +2019,9 @@ struct Driver
 	// 0x3C8
 	// in Player_Driving_Input
 	short unknownDimension2Prev;
+	
+	// 0x3CA
+	short unk3CA;
 
 	// 0x3CC
 	// from OnCollide_Drivers
