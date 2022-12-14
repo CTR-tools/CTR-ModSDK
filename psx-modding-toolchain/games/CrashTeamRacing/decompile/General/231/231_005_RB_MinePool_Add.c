@@ -16,12 +16,13 @@ void DECOMP_RB_MinePool_Add(struct MineWeapon* mw)
 		RB_MinePool_Remove(*(int*)(*(int*)0x800b2ea0 + 8));
 	}
 	
-	// LIST_RemoveBack free list, AddFront to taken list
+	// LIST_RemoveBack free list
 	ws = LIST_RemoveBack(0x800b2ea8);
-	LIST_AddFront(0x800b2e9c, ws);
-	
+
 	// link together
 	ws->mineWeapon = mw;
 	mw->weaponSlot231 = ws;
 
+	// LIST_AddFront to taken list
+	LIST_AddFront(0x800b2e9c, ws);
 }
