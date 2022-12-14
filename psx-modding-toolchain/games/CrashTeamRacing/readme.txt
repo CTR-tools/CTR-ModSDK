@@ -15,8 +15,10 @@ mods - Finished code modifications for CTR
 plugins - Third-party programs and extensions added to the modding toolchain.
 syms - Symbol tables for all game regions
 tools - Miscellaneous tools for making mods
+8bitnop.bin
 config.json
 disc.json
+nop.s
 readme.txt - You're here!
 
 Code names for supported builds:
