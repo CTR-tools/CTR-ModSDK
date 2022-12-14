@@ -34,8 +34,8 @@ common, 231, RB_MinePool_Init, 0x0, General/231/231_003_RB_MinePool_Init.c
 common, 231, RB_MinePool_Remove, 0x0, General/231/231_004_RB_MinePool_Remove.c
 common, 231, RB_MinePool_Add, 0x0, General/231/231_005_RB_MinePool_Add.c
 common, 231, RB_Hazard_HurtDriver, 0x0, General/231/231_006_RB_Hazard_HurtDriver.c
-common, 231, RB_Hazard_CollideWithBucket, 0x0, General/231/231_007_RB_Hazard_CollideWithDrivers.c
-common, 231, RB_Hazard_CollideWithDrivers, 0x0, General/231/231_008_RB_Hazard_CollideWithBucket.c
+common, 231, RB_Hazard_CollideWithDrivers, 0x0, General/231/231_007_RB_Hazard_CollideWithDrivers.c
+common, 231, RB_Hazard_CollideWithBucket, 0x0, General/231/231_008_RB_Hazard_CollideWithBucket.c
 common, 231, RB_Hazard_OnCollide_Generic_Alt, 0x0, General/231/231_009_RB_Hazard_OnCollide_Generic_Alt.c
 common, 231, RB_Hazard_OnCollide_Missile, 0x0, General/231/231_010_RB_Hazard_OnCollide_Missile.c
 common, 231, RB_Hazard_OnCollide_Generic, 0x0, General/231/231_011_RB_Hazard_OnCollide_Generic.c
