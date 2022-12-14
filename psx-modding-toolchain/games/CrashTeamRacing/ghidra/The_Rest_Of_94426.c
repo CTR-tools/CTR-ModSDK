@@ -32652,6 +32652,7 @@ LAB_800508ec:
   param_2 = local_1e;
 LAB_80050abc:
 
+  // DecalHUD_DrawWeapon
   FUN_80022ec4(
 				// pointer to icon, from array of icon pointers
 				*(undefined4 *)(PTR_DAT_8008d2ac + iVar4 + 0x1eec),
@@ -34373,6 +34374,8 @@ LAB_80052b00:
           if ((iVar15 == -1) && (iVar12 == -0x80000000)) {
             trap(0x1800);
           }
+		  
+		  // DecalHUD_DrawWeapon
           FUN_80022ec4(
 						// warpball icon
 						*(undefined4 *)(PTR_DAT_8008d2ac + 0x1f24),
