@@ -1,3 +1,8 @@
+// functions bigger than their originals
+common, exe, rdata_free, 0x0, General/MATH_Sin.c General/DecalFont_GetLineWidthStrlen.c, rdata.bin
+common, exe, MATH_Sin, 0x0, General/MATH_Sin_hook.s
+common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthStrlen_hook.s
+
 // BOTS
 common, exe, BOTS_SetGlobalNavData, 0x0, General/BOTS_SetGlobalNavData.c
 common, exe, BOTS_InitNavPath, 0x0, General/BOTS_InitNavPath.c
@@ -11,7 +16,7 @@ common, exe, CAM_SetDesiredPosRot, 0x0, General/CAM_SetDesiredPosRot.c
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
 
 // DecalFont
-common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthStrlen.c
+// DecalFont_DrawMultiLineStrlen relocated to RDATA
 common, exe, DecalFont_GetLineWidth, 0x0, General/DecalFont_GetLineWidth.c
 common, exe, DecalFont_DrawLineStrlen, 0x0, General/DecalFont_DrawLineStrlen.c
 common, exe, DecalFont_DrawLine, 0x0, General/DecalFont_DrawLine.c
@@ -47,7 +52,7 @@ common, exe, LOAD_DriverMPK, 0x0, General/LOAD_DriverMPK.c
 common, exe, LOAD_ReadFile, 0x0, General/LOAD_ReadFile.c
 
 // MATH
-common, exe, MATH_Sin, 0x0, General/MATH_Sin.c
+// MATH_Sin relocated to RDATA
 common, exe, MATH_Cos, 0x0, General/MATH_Cos.c
 
 // MEMPACK
