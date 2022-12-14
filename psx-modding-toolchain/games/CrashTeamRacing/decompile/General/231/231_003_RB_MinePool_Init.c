@@ -17,7 +17,7 @@ void DECOMP_RB_MinePool_Init(void)
 	// clear free
 	LIST_Clear(0x800b2ea8);
 	
-	gameMode = sdata->gGT->gameMode;
+	gameMode = sdata->gGT->gameMode1;
 	
 	// default
 	numMines = 10;

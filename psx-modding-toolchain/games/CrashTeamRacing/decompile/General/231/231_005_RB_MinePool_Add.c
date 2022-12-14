@@ -13,7 +13,7 @@ void DECOMP_RB_MinePool_Add(struct MineWeapon* mw)
 		// RB_MinePool_Remove
 		// (800b2e9c + 4 = 800b2ea0) (taken->last)
 		// (*(int*)800b2ea0 + 8) (taken->last->mineWeapon)
-		RB_MinePool_Remove(*(int*)(*(int*)0x800b2ea0 + 8)
+		RB_MinePool_Remove(*(int*)(*(int*)0x800b2ea0 + 8));
 	}
 	
 	// LIST_RemoveBack free list, AddFront to taken list

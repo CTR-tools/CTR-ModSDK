@@ -10,7 +10,7 @@ int RB_Hazard_OnCollide_Missile(struct Thread* thread)
 	inst = thread->inst;
 	
 	// could I also just do thread->modelID?
-	if (inst->model->modelID == 0x29)
+	if (inst->model->id == 0x29)
 	{
 		driver = tw->driverTarget;
 		

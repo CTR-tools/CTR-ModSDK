@@ -3,7 +3,7 @@
 void RB_Hazard_HurtDriver(struct Driver* d, int newState)
 {
 	// if not an AI
-	if ((driver->actionsFlagSet & 0x100000) == 0)
+	if ((d->actionsFlagSet & 0x100000) == 0)
 	{
 		Player_ChangeState(d, newState);
 		return;

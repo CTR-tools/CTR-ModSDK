@@ -1,5 +1,7 @@
 #include <common.h>
 
+int RB_Potion_OpenTeeth(int unk, struct VisData* vd);
+
 // This is broken even in retail CTR,
 // cause teeth collision is detected 
 // by Potion_InAir, so this can be scrapped
@@ -13,9 +15,9 @@ void DECOMP_RB_Potion_CheckTeethCollision(struct Instance* inst)
 	WSD->pos[2] = (short)inst->matrix.t[2];
 	WSD->hitRadius = 0x140;
 	WSD->hitRadiusSquared = 0x19000;
-	WSD->modelID = inst->model->modelID;
+	WSD->modelID = inst->model->id;
 	WSD->thread = inst->thread;
 	WSD->funcCallback = RB_Potion_OpenTeeth;
 	
-	Weapon_MakeHitboxAndSearchBSP(WSD);
+	Weapon_MakeHitbox_SearchBSP(WSD);
 }

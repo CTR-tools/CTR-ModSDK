@@ -5,16 +5,17 @@
 // by Potion_InAir, so this can be scrapped
 int RB_Potion_OpenTeeth(int unk, struct VisData* vd)
 {
+	struct InstDef* instDef;
 	struct Instance* teethInst;
-	struct InstDef* instDef = vd->hitbox.instDef;
-	
+
+	instDef = vd->data.hitbox.instDef;
 	if(instDef == 0) return;
 	
 	teethInst = instDef->ptrInstance;
 	if(teethInst == 0) return;
 	
 	// STATIC_TEETH
-	if(teethInst->id != 0x70) return;
+	if(instDef->modelID != 0x70) return;
 
 	RB_Teeth_OpenDoor(teethInst);
 }

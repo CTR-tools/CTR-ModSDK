@@ -892,7 +892,7 @@ void FUN_800ac638(int param_1)
   // RB_Potion_OpenTeeth
   DAT_1f800130 = FUN_800ac5e8;
   
-  // Weapon_MakeHitboxAndSearchBSP
+  // Weapon_MakeHitbox_SearchBSP
   FUN_80042544(&DAT_1f800108);
   
   return;
@@ -5451,7 +5451,7 @@ void FUN_800b18f8(int param_1)
   // thread -> model -> modelID
   DAT_1f800114 = *(undefined2 *)(*(int *)(param_1 + 0x18) + 0x10);
   
-  // Weapon_MakeHitboxAndSearchBSP
+  // Weapon_MakeHitbox_SearchBSP
   FUN_80042544(&DAT_1f800108);
   
   // check collision with all robotcar thread
@@ -6025,7 +6025,7 @@ void FUN_800b2154(int param_1)
   // RB_Burst_LevInstColl (callback for BSP collision)
   DAT_1f800130 = FUN_800b20a4;
   
-  // Weapon_MakeHitboxAndSearchBSP
+  // Weapon_MakeHitbox_SearchBSP
   FUN_80042544(&DAT_1f800108);
   return;
 }

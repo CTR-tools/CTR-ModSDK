@@ -20287,7 +20287,7 @@ void FUN_800423fc(int param_1,short *param_2)
 }
 
 
-// Weapon_MakeHitboxAndSearchBSP
+// Weapon_MakeHitbox_SearchBSP
 void FUN_80042544(short *param_1)
 
 {

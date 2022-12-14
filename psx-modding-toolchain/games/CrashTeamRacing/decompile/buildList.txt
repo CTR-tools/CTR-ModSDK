@@ -3,6 +3,46 @@ common, exe, rdata_free, 0x0, General/MATH_Sin.c General/DecalFont_GetLineWidthS
 common, exe, MATH_Sin, 0x0, General/MATH_Sin_hook.s
 common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthStrlen_hook.s
 
+// 230 (incomplete)
+common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/MM_Characters_boolIsInvalid.c
+common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/MM_Cheat_MaxWumpa.c
+common, 230, MM_Cheat_UnlockRoo, 0x0, General/230/MM_Cheat_UnlockRoo.c
+common, 230, MM_Cheat_UnlockPapu, 0x0, General/230/MM_Cheat_UnlockPapu.c
+common, 230, MM_Cheat_UnlockJoe, 0x0, General/230/MM_Cheat_UnlockJoe.c
+common, 230, MM_Cheat_UnlockPinstripe, 0x0, General/230/MM_Cheat_UnlockPinstripe.c
+common, 230, MM_Cheat_UnlockFakeCrash, 0x0, General/230/MM_Cheat_UnlockFakeCrash.c
+common, 230, MM_Cheat_UnlockPenta, 0x0, General/230/MM_Cheat_UnlockPenta.c
+common, 230, MM_Cheat_UnlockTropy, 0x0, General/230/MM_Cheat_UnlockTropy.c
+common, 230, MM_Cheat_UnlockScrapbook, 0x0, General/230/MM_Cheat_UnlockScrapbook.c
+common, 230, MM_Cheat_UnlockTracks, 0x0, General/230/MM_Cheat_UnlockTracks.c
+common, 230, MM_Cheat_InfiniteMasks, 0x0, General/230/MM_Cheat_InfiniteMasks.c
+common, 230, MM_Cheat_MaxTurbos, 0x0, General/230/MM_Cheat_MaxTurbos.c
+common, 230, MM_Cheat_MaxInvisibility, 0x0, General/230/MM_Cheat_MaxInvisibility.c
+common, 230, MM_Cheat_MaxEngine, 0x0, General/230/MM_Cheat_MaxEngine.c
+common, 230, MM_Cheat_MaxBombs, 0x0, General/230/MM_Cheat_MaxBombs.c
+common, 230, MM_Cheat_AdvDifficulty, 0x0, General/230/MM_Cheat_AdvDifficulty.c
+common, 230, MM_Cheat_SuperHard, 0x0, General/230/MM_Cheat_SuperHard.c
+common, 230, MM_Cheat_IcyTracks, 0x0, General/230/MM_Cheat_IcyTracks.c
+common, 230, MM_Cheat_SuperTurboPads, 0x0, General/230/MM_Cheat_SuperTurboPads.c
+common, 230, MM_Cheat_OneLap, 0x0, General/230/MM_Cheat_OneLap.c
+common, 230, MM_Cheat_TurboCounter, 0x0, General/230/MM_Cheat_TurboCounter.c
+
+// 231 (incomplete)
+// skip first two
+common, 231, RB_Player_ModifyWumpa, 0x0, General/231/231_002_RB_ModifyWumpa.c
+common, 231, RB_MinePool_Init, 0x0, General/231/231_003_RB_MinePool_Init.c
+common, 231, RB_MinePool_Remove, 0x0, General/231/231_004_RB_MinePool_Remove.c
+common, 231, RB_MinePool_Add, 0x0, General/231/231_005_RB_MinePool_Add.c
+common, 231, RB_Hazard_HurtDriver, 0x0, General/231/231_006_RB_Hazard_HurtDriver.c
+common, 231, RB_Hazard_CollideWithDrivers, 0x0, General/231/231_007_RB_Hazard_CollideWithBucket.c
+common, 231, RB_Hazard_CollideWithBucket, 0x0, General/231/231_008_RB_Hazard_CollideWithDrivers.c
+common, 231, RB_Hazard_OnCollide_Generic_Alt, 0x0, General/231/231_009_RB_Hazard_OnCollide_Generic_Alt.c
+common, 231, RB_Hazard_OnCollide_Missile, 0x0, General/231/231_010_RB_Hazard_OnCollide_Missile.c
+common, 231, RB_Hazard_OnCollide_Generic, 0x0, General/231/231_011_RB_Hazard_OnCollide_Generic.c
+common, 231, RB_Potion_OpenTeeth, 0x0, General/231/231_012_RB_Potion_OpenTeeth.c
+common, 231, RB_Potion_CheckTeethCollision, 0x0, General/231/231_013_RB_Potion_CheckTeethCollision.c
+
+
 // BOTS
 common, exe, BOTS_SetGlobalNavData, 0x0, General/BOTS_SetGlobalNavData.c
 common, exe, BOTS_InitNavPath, 0x0, General/BOTS_InitNavPath.c

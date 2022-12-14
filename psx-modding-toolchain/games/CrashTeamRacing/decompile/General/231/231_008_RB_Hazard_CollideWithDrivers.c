@@ -2,13 +2,13 @@
 
 struct Instance* RB_Hazard_CollideWithDrivers(
 	struct Instance* weaponInst, 
-	bool canHitParent, int hitRadius, struct Instance* mineDriverInst
+	char boolCanHitParent, int hitRadius, struct Instance* mineDriverInst
 )
 {
 	int i;
 	int j;
 	struct Driver* driver;
-	struct Driver* driverInst;
+	struct Instance* driverInst;
 	
 	int dist[3];
 	int modelID;
@@ -30,7 +30,7 @@ struct Instance* RB_Hazard_CollideWithDrivers(
 		if (
 		
 			// if mine can not hit parent
-			(canHitParent == 0) &&
+			(boolCanHitParent == 0) &&
 			
 			// then do not check parent
 			(driverInst == mineDriverInst)
@@ -45,7 +45,7 @@ struct Instance* RB_Hazard_CollideWithDrivers(
 			dist[j] *= dist[j];
 		}
 		
-		modelID = weaponInst->modelID;
+		modelID = weaponInst->model->id;
 		
 		// 2D collision (barrel, warpball)
 		distCheck = dist[0] + dist[2];
@@ -66,7 +66,7 @@ struct Instance* RB_Hazard_CollideWithDrivers(
 		{
 			// wasted check for 3D sphere,
 			// also upgrades 2D collision to 3D cylinder
-			if( distY < ( hitRadius << 2 ) )
+			if( dist[1] < ( hitRadius << 2 ) )
 			{
 				return driverInst;
 			}
