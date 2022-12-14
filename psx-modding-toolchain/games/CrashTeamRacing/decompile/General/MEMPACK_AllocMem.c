@@ -31,7 +31,7 @@ void* DECOMP_MEMPACK_AllocMem(int allocSize)
 	ptrMempack->sizeOfPrevAllocation = newAllocSize;
 
 	// get the first byte in RAM that can be used by CTR
-	firstFreeByte = *(int*)ptrMempack->firstFreeByte;
+	firstFreeByte = (int)ptrMempack->firstFreeByte;
 
 	// append allocator for next allocation
 	ptrMempack->firstFreeByte = (void *)(firstFreeByte + newAllocSize);

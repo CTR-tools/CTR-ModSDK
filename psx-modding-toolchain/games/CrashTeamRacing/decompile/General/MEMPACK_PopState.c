@@ -9,14 +9,17 @@ void DECOMP_MEMPACK_PopState()
 
 	// Get the pointer to the memory allocation system
 	ptrMempack = sdata->PtrMempack;
+	numBookmarks = ptrMempack->numBookmarks;
 
 	// if valid
-	if(ptrMempack->numBookmarks > 0)
+	if(numBookmarks != 0)
 	{
+		numBookmarks--;
+		
 		// go to bookmark address, go back one bookmark
 		ptrMempack->firstFreeByte =
-			ptrMempack->bookmarks[ptrMempack->numBookmarks];
+			ptrMempack->bookmarks[numBookmarks];
 			
-		ptrMempack->numBookmarks--;
+		ptrMempack->numBookmarks = numBookmarks;
 	}
 }
