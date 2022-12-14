@@ -25,7 +25,8 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 				// character width, plus extra spacing for button
 				pixLength += font_charPixWidth + font_buttonPixWidth;
 				break;
-			// colon or periodt
+				
+			// colon or period
 			case ':':
 			case '.':
 				// punctuation spacing
