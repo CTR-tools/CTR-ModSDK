@@ -1467,8 +1467,8 @@ struct Icon
 
 	// 0x14
 	// top left corner
-	char X1;
-	char Y1;
+	unsigned char X1;
+	unsigned char Y1;
 
 	// 0x16
 	// holds X and Y with bit shifting
@@ -1476,8 +1476,8 @@ struct Icon
 
 	// 0x18
 	// top right corner
-	char X2;
-	char Y2;
+	unsigned char X2;
+	unsigned char Y2;
 
 	// 0x1a
 	// holds X and Y with bit shifting
@@ -1485,13 +1485,13 @@ struct Icon
 
 	// 0x1c
 	// bottom left corner
-	char X3;
-	char Y3;
+	unsigned char X3;
+	unsigned char Y3;
 
 	// 0x1e
 	// bottom right corner
-	char X4;
-	char Y4;
+	unsigned char X4;
+	unsigned char Y4;
 
 	// 0x20 bytes large
 };

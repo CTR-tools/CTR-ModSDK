@@ -88,7 +88,7 @@ void Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short emp
 
 	// width of the primitive
 	// leftX is the left margin of the primitive, posX is the right
-	leftX = posX - ((u_short)icon->X2 - (u_short)icon->X1);
+	leftX = posX - (short)(icon->X2 - icon->X1);
 	p->x0 = leftX;
 	p->x1 = posX;
 	p->x2 = leftX;
