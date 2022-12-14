@@ -33,12 +33,10 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 				break;
 
 			#if BUILD > UsaRetail
-
 			case '~':
 				character += 2;
 				len += 2;
 				break;
-
 			#endif
 
 			default:
@@ -52,6 +50,7 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 					// normal character spacing
 					pixLength += font_charPixWidth;
 				}
+				break;
 		}
 
 		character++;
