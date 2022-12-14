@@ -2,9 +2,9 @@ Decompile progress
 
 Functions:
 
--USA Retail (September 26): 93* out of ???
--Japan Taikenban Demo (October 6): 94* out of ???
--Japan Retail (November 11): 95* out of ???
+-USA Retail (September 26): 94* out of ???
+-Japan Taikenban Demo (October 6): 95* out of ???
+-Japan Retail (November 11): 96* out of ???
 
 *Most of these functions were tested prior to the creation of the unit tester tool, as a result these may not function exactly as in the original game. The following functions were, however, tested:
 -BOTS_InitNavPath
@@ -26,6 +26,7 @@ Functions:
 -Turbo_FuncPerFrame
 -Turbo_Increment
 -MM_Characters_boolIsInvalid
+-RB_MinePool_Remove
 -DecalFont_SetJfontDimensions
 
 Some functions have been decompiled for all the 5 builds of CTR that we cater to:
