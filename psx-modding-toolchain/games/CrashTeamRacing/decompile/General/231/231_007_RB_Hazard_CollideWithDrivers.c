@@ -2,7 +2,7 @@
 
 struct Instance* RB_Hazard_CollideWithDrivers(
 	struct Instance* weaponInst, 
-	char boolCanHitParent, int hitRadius, struct Instance* mineDriverInst
+	char boolCanSkipParent, int hitRadius, struct Instance* mineDriverInst
 )
 {
 	int i;
@@ -29,8 +29,8 @@ struct Instance* RB_Hazard_CollideWithDrivers(
 		
 		if (
 		
-			// if mine can not hit parent
-			(boolCanHitParent == 0) &&
+			// if mine can skip parent
+			(boolCanSkipParent != 0) &&
 			
 			// then do not check parent
 			(driverInst == mineDriverInst)
@@ -52,7 +52,7 @@ struct Instance* RB_Hazard_CollideWithDrivers(
 		
 		// to be more optimal, just do weaponInst->thread->funcPerFrame == Mine_Generic_PerFrame
 		if (
-				((unsigned int)(modelID - 0x46) < 2) ||	// red or green potion
+				((unsigned int)modelID - 0x46 < 2) ||	// red or green potion
 				(modelID == 6) ||						// Nitro
 				(modelID == 0x27) 						// TNT
 			)

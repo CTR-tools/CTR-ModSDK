@@ -556,7 +556,7 @@ void FUN_800ac1b0(int param_1,undefined4 param_2, param_3, param_4)
 
 // RB_Hazard_CollideWithDrivers
 // param_1 weapon instance
-// param_2 boolCanHitParent
+// param_2 boolCanSkipParent
 // param_3 collision radius
 // param_4 mineParent_driverInst
 int FUN_800ac220(int param_1,short param_2,uint param_3,int param_4)
@@ -646,7 +646,7 @@ int FUN_800ac220(int param_1,short param_2,uint param_3,int param_4)
 // param_1 - mine Inst,
 // param_2 - mine Thread (unused)
 // param_3 - bucket
-// param_4 - boolCanHitParent
+// param_4 - boolCanSkipParent
 // param_5 - radius
 // param_6 - mineParent_driverInst
 int FUN_800ac350

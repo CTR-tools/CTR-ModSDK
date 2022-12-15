@@ -3,7 +3,7 @@
 struct Instance* RB_Hazard_CollideWithBucket(
 	struct Instance* weaponInst, 
 	struct Thread* weaponTh, struct Thread* bucket, 
-	char boolCanHitParent, int hitRadius, struct Instance* mineDriverInst
+	char boolCanSkipParent, int hitRadius, struct Instance* mineDriverInst
 )
 {
 	int j;
@@ -18,8 +18,8 @@ struct Instance* RB_Hazard_CollideWithBucket(
 		
 		if (
 		
-			// if mine can not hit parent
-			(boolCanHitParent == 0) &&
+			// if mine can skip parent
+			(boolCanSkipParent != 0) &&
 			
 			// then do not check parent
 			(threadInst == mineDriverInst)
