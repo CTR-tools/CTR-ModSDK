@@ -5540,8 +5540,7 @@ struct GamepadBuffer
 
 struct GamepadSystem
 {
-	// 0
-	// We need to rename this to "gamepad[8]"
+	// 0x0
 	struct GamepadBuffer gamepad[8];
 
 	// 0x280

@@ -44,12 +44,6 @@ void DECOMP_Camera110_InitStructs(struct Camera110* c110, int id, int total)
 
 	c110->rect.x = 0;
 	c110->rect.y = (id == 0) ? 0 : SIZEY_TOP+4;
-
-	// there's extra room in Camera110_InitStructs, 
-	// so store this code here, strings go to BIN footer
-	#if 1
-	sprintf(sdata->lngStrings[0x231], "c110: %s %s", __DATE__, __TIME__);
-	#endif
-
+	
 	return;
 }

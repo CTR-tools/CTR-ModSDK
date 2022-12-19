@@ -1187,7 +1187,7 @@ void FUN_800aceb4(void)
 		)
 	 ) 
   {
-	// for int i = 9; i < 0; i--
+	// for int i = 9; i > 0; i--
     do 
 	{
 	  // reduce index you are reading from
@@ -1196,7 +1196,7 @@ void FUN_800aceb4(void)
 	  // DAT_800b4d04 holds the array of button pressed
 	  // that are used to determine if cheat codes are entered
 	  
-	  // move each byte in an array, by one index
+	  // move each int in an array, by one index
       (&DAT_800b4d04)[iVar2] = (&DAT_800b4d04)[iVar1];
 	  
 	  // reduce index you are writing to
