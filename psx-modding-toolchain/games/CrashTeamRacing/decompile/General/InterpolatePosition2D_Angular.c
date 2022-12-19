@@ -60,7 +60,7 @@ void DECOMP_InterpolatePosition2D_Angular(short* ptrPos, short drawnPosition, sh
 			* (int)frameCounter) * 4)
 			
 			// divide distance down
-			/ 10
+			/ 20
 		);
 	
 	return;
