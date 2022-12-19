@@ -13,9 +13,7 @@ void DECOMP_InterpolatePosition2D_Angular(short* ptrPos, short drawnPosition, sh
 	int angle;
 	int drawnPositionInt;
 	int absolutePositionInt;
-	short bitshiftDrawnPosition;
 
-	// all rotations are counter-clockwise, frameCounter * 0x1b * x is used to make the circular motion (x,y) positive or negative, to change the radius and side of rotation.
 	// Moving up moves icon to the right
 	// Moving down moves icon to the left
 	// 0x1b is a constant for base radius
@@ -31,13 +29,7 @@ void DECOMP_InterpolatePosition2D_Angular(short* ptrPos, short drawnPosition, sh
 	{
 		// Sine(angle)
 		angle = MATH_Sin(((int)frameCounter << 0xb) / 5);
-
-		// absolutePositionInt - drawnPositionInt is a negative number
-		drawnPositionInt = (int)frameCounter * 0x1b * (absolutePositionInt - drawnPositionInt);
-
-		bitshiftDrawnPosition = (short)((u_int)drawnPositionInt >> 0x10);
-		drawnPositionInt = (int)(drawnPositionInt / 20);
-		*ptrPos = (short)(angle * 0x14 >> 0xc) + 0x14;
+		ptrPos[0] = (short)(angle * 0x14 >> 0xc) + 0x14;
 	}
 
 	// if driver "was" passed by another driver
@@ -45,14 +37,31 @@ void DECOMP_InterpolatePosition2D_Angular(short* ptrPos, short drawnPosition, sh
 	{
 		// Sine(angle)
 		angle = MATH_Sin(((int)frameCounter << 0xb) / 5);
-
-		// absolutePositionInt - drawnPositionInt is a positive number
-		drawnPositionInt = (int)frameCounter * 0x1b * (absolutePositionInt - drawnPositionInt);
-
-		bitshiftDrawnPosition = (short)((u_int)drawnPositionInt >> 0x10);
-		drawnPositionInt = (int)(drawnPositionInt / 20);
-		*ptrPos = 0x14 - (short)(angle * 0x14 >> 0xc);
+		ptrPos[0] = 0x14 - (short)(angle * 0x14 >> 0xc);
 	}
-	ptrPos[1] = drawnPosition * 0x1b + ((short)(drawnPositionInt >> 1) - (bitshiftDrawnPosition >> 0xf)) + 0x39;
+	
+	// absolutePositionInt - drawnPositionInt is either -1 or +1
+	// 0x1b is vertical size of the icon
+	
+	ptrPos[1] = 
+		
+		// Y value where all icons start
+		0x39 + 
+		
+		// start Y before transition
+		(drawnPosition * 0x1b) + 
+		
+		// transition per frame
+		(
+			// distance to travel
+			((((absolutePositionInt - drawnPositionInt) * 0x1b)
+			
+			// move more each frame
+			* (int)frameCounter) * 4)
+			
+			// divide distance down
+			/ 10
+		);
+	
 	return;
 }
