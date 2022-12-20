@@ -1058,6 +1058,9 @@ struct MenuBox
 
 struct Instance;
 
+#define SIZE_RELATIVE_POOL_BUCKET(a,b,c,d) \
+	(a << 16) | b | c | d
+
 struct Thread
 {
 	// 0x0
@@ -1364,7 +1367,7 @@ struct Instance
 
 	// 0x2c
 	// comes from LEVs
-	int ptrInstDef;
+	struct InstDef* instDef;
 
 	// 0x30
 	// Rendering matrix (position + rotation)
@@ -3562,6 +3565,19 @@ struct CameraDC
 	// 0xDC bytes large in usaRetail
 };
 
+enum STACK_POOL
+{
+	LARGE=0x100,
+	MEDIUM=0x200,
+	SMALL=0x300
+};
+
+enum THREAD_RELATIVE
+{
+	NONE=0,
+	RELATIVE=0x400,
+	PARENT=0x2000
+};
 
 enum THREAD_BUCKET
 {

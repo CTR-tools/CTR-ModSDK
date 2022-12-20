@@ -850,7 +850,7 @@ void FUN_800ac5e8(undefined4 param_1,int param_2)
 {
   int iVar1;
   
-  // VisData->hitbox.ptrInstDef
+  // VisData->hitbox.instDef
   iVar1 = *(int *)(param_2 + 0x1c);
   
   if (
@@ -4625,12 +4625,14 @@ void FUN_800b0dbc(void)
 		) 
 	{
       iVar5 = 0;
+	  
+	  // loop through InstanceDrawPerPlayer
       do 
 	  {
 		// if this is not the screen of the invisible driver
         if (uVar4 != (uint)*(byte *)(iVar6 + 0x4a)) 
 		{
-		  // make driver invisible [somehow?]
+		  // make driver instance invisible on this screen
           iVar3 = *(int *)(iVar6 + 0x1c) + iVar5;
           *(uint *)(iVar3 + 0xb8) = *(uint *)(iVar3 + 0xb8) & 0xffffffbf;
         }
@@ -5761,7 +5763,7 @@ void FUN_800b20a4(int param_1,int param_2)
   int iVar2;
   int iVar3;
   
-  // VisData->hitbox.ptrInstDef
+  // VisData->hitbox.instDef
   iVar2 = *(int *)(param_2 + 0x1c);
   
   if (
@@ -6586,7 +6588,7 @@ void FUN_800b38e4(int param_1)
   
   do 
   {
-	// get rotation data from Instance->ptrInstDef (from LEV)
+	// get rotation data from Instance->instDef (from LEV)
 	  
 	// rotX
     uStack32 = *(undefined2 *)(*(int *)(iVar1 + 0x2c) + 0x36);

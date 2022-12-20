@@ -582,7 +582,7 @@ void FUN_80030ad4(undefined4 *param_1,int param_2)
       *(undefined *)(iVar6 + 0x52) = 0;
       *(undefined2 *)(iVar6 + 0x54) = 0;
 
-	  // instace -> ptrInstDef
+	  // instace -> instDef
 	  // the two are now linked on both ends
       *(undefined4 **)(iVar6 + 0x2c) = param_1;
 

@@ -22,6 +22,9 @@ common, 231, RB_Hazard_OnCollide_Missile, 0x0, General/231/231_010_RB_Hazard_OnC
 common, 231, RB_Hazard_OnCollide_Generic, 0x0, General/231/231_011_RB_Hazard_OnCollide_Generic.c
 common, 231, RB_Potion_OpenTeeth, 0x0, General/231/231_012_RB_Potion_OpenTeeth.c
 common, 231, RB_Potion_CheckTeethCollision, 0x0, General/231/231_013_RB_Potion_CheckTeethCollision.c
+// skip a bunch
+common, 231, RB_Blade_PerFrame, 0x0, General/231/231_056_RB_Blade_PerFrame.c
+common, 231, RB_Blade_LInB, 0x0, General/231/231_057_RB_Blade_LinB.c
 
 
 // BOTS

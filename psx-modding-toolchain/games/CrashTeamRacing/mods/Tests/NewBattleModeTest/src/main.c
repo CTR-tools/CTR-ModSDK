@@ -132,7 +132,7 @@ void RunInitHook()
 	th = sdata->gGT->threadBuckets[STATIC].thread;
 	while(th!=0)
 	{
-		def = (struct InstDef*)th->inst->ptrInstDef;
+		def = (struct InstDef*)th->inst->instDef;
 
 		if(def->modelID == 0x8)
 		{
