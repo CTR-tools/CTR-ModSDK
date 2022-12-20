@@ -25,6 +25,8 @@ common, 231, RB_Potion_CheckTeethCollision, 0x0, General/231/231_013_RB_Potion_C
 // skip a bunch
 common, 231, RB_Blade_PerFrame, 0x0, General/231/231_056_RB_Blade_PerFrame.c
 common, 231, RB_Blade_LInB, 0x0, General/231/231_057_RB_Blade_LinB.c
+// skip a bunch
+common, 231, RB_Crystal_PerFrame, 0x0, General/231/231_068_RB_Crystal_PerFrame.c
 
 
 // BOTS
