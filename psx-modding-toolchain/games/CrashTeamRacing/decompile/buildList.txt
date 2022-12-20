@@ -28,6 +28,8 @@ common, 231, RB_Blade_LInB, 0x0, General/231/231_057_RB_Blade_LinB.c
 // skip a bunch
 common, 231, RB_Crystal_PerFrame, 0x0, General/231/231_068_RB_Crystal_PerFrame.c
 
+// exe globals
+926, exe, 0x80081088, 0x0, General/zGlobal_MetaDataModels.c
 
 // BOTS
 common, exe, BOTS_SetGlobalNavData, 0x0, General/BOTS_SetGlobalNavData.c

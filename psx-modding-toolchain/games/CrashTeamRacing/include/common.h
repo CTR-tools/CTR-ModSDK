@@ -7078,50 +7078,30 @@ struct Data
 	// modelID (0-0xe2) is used to access array
 	struct
 	{
+		// comments in Decomp MetaDataModels.c
+		// explain the full system for these variables
+		
 		// most pointers go to 231 overlay
 		char* name;
 
-		// This system was initially designed for wumpa and weapon 
-		// boxes, and was only "really" useful for that. Intended
-		// usage is to initialize an unthreaded instance when the
-		// level starts, then create a thread upon collision to 
-		// break the weapon box, and that thread stays alive until
-		// the weapon box can grow back to normal size, then the 
-		// thread dies, the instance is unthreaded until next collision
+		// This system was initially designed for wumpa box and weapon 
+		// box, and was only "really" useful for that. Intended usage 
+		// is to initialize an unthreaded instance when the level starts, 
+		// then create a thread upon BSP collision to break the boxes,
+		// which then regrows the box, then thread dies, and instance
+		// is unthreaded until the next collision
 		
-		// Another intended usage, unused, could be an invisible hitbox
-		// that triggers a decorative thread in the background, such as
-		// bubbles in roo's tubes, but that doesn't use threads anyway
-		
-		// How this usually works, instead, is the Crystal Challenge
-		// crystals initializing a thread during instance creation,
-		// so the crystals can spin, which bloats the thread pool,
-		// and then the thread creation function just becomes a wrapper 
-		// for the thread's funcOnCollide, resulting immediately: 
-		// 		- thread birth if no thread exists
-		//			which is useless cause the thread for crystal exists
-		//		- funcOnCollide
-		//		- thread death
-		
-		// This is only for LevInstances, not for NonLevInstances,
-		// that's why the slot for PU_MISSILE is blank. However. 
-		// LevInstances for TNTs and Nitros in Crystal Challenge do not
-		// use this system, because they're hard-coded to build a thread
-		// on birth, and that thread checks for collisions with drivers
-		// every frame, and tracker items (bomb, missile, warpball) check
-		// for collision with every mine every frame, with no BSP usage,
-		// this is because dynamically-placed objects can't be added to 
-		// the BSP, array of hitbox in BSP is a fixed-sized array.
-		// Crystal Challenge could've had a workaround hard-coded,
-		// but the developers had a time budget and this did not fit.
+		// Unintended usage is Crystal Challenge crystals, which build
+		// a thread on level start, so crystals can spin, defeating
+		// the point. Then LThB has needless thread creation, which
+		// then calls funcOnCollide, which kills thread immediately.
+		// The thread should die in LThB that was born on level start.
 
 		// callback after conversion of InstDef to Instance,
 		// part of the birth process for level instances
-		void* funcLevInstDefBirth; // LInB
+		void* funcLInB;
 
-		// used for initializing threads upon
-		// hitbox collision in level BSP tree
-		void* funcLevThreadsBirth; // LThB
+		void* funcLThB;
 
 	// Number of elements changes...
 	} MetaDataModels
