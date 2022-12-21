@@ -44,21 +44,14 @@ void RunUpdateHook()
 		// load position of driver
 		gte_ldv0(&ptrDest->World_posX);
 
-
-		// broken header inline_c.h?
-		// emits nop,nop,0x7f? that's wrong
-		//gte_rtps();
-
-
-// copied off 231.c WorldLetterCTR_OnCollide,
-// 231.c, address 800B514C
-#define gte_rtps_NikoVersion() __asm__ volatile (				\
+// inline_c.h gte_rtps() is broken? swap for mine:
+// copied from 231.c, address 800B514C, CTR Letter World->HUD
+#define gte_rtps_NikoVersion() __asm__ volatile ( \
 	"nop;"							\
 	"nop;"							\
 	".word 0x4A180001" )
 
-
-		// this one works
+		// perspective projection
 		gte_rtps_NikoVersion();
 
 		// get result

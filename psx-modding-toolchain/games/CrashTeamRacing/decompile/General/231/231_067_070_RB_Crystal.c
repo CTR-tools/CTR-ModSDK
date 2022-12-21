@@ -64,12 +64,78 @@ void DECOMP_RB_Crystal_LInB(struct Instance* inst)
 	RB_Default_LInB(inst);
 }
 
-void DECOMP_RB_Crystal_LInC(
-	struct Instance* cystalInst, 
-	struct Thread* crystalTh,
+int DECOMP_RB_Crystal_LInC(
+	struct Thread* crystalTh, 
+	struct Thread* driverTh,
 	struct WeaponSearchData* info)
 {
-	int modelID = info->modelID;
+	short posWorld[4];
+	short posScreen[2];
+	MATRIX* m;
+	struct Instance* crystalInst;
+	struct Driver* driver;
+	struct Camera110* c110;
+	int driverID;
+	int modelID;
+
+	modelID = info->modelID;
 	
-	if ((modelID != 0x18) 
+	// if crystal did not collide with 
+	// DYNAMIC_PLAYER or DYNAMIC_ROBOT_CAR,
+	// quit function
+	if (!((modelID == 0x18) || (modelID == 0x3f))) return 0;
+	
+	// kill thread
+	crystalTh->flags |= 0x800;
+	
+	// get driver object
+	driver = driverTh->object;
+	driverID = driver->driverID;
+	
+	// load camera matrix
+	c110 = &sdata->gGT->camera110[driverID];
+	m = &c110->matrix_ViewProj;
+    gte_SetRotMatrix(m);
+    gte_SetTransMatrix(m);
+	
+	// get instance, disappear, remove thread
+	crystalInst = crystalTh->inst;
+	crystalInst->flags |= 0x80;
+	crystalInst->thread = 0;
+	
+	// load input vector
+	posWorld[0] = *(short*)crystalInst->matrix.t[0];
+	posWorld[1] = *(short*)crystalInst->matrix.t[1];
+	posWorld[2] = *(short*)crystalInst->matrix.t[2];
+	posWorld[3] = 0;
+	gte_ldv0(&posWorld[0]);
+	
+// inline_c.h gte_rtps() is broken? swap for mine:
+// copied from 231.c, address 800B514C, CTR Letter World->HUD
+#define gte_rtps_NikoVersion() __asm__ volatile ( \
+	"nop;"							\
+	"nop;"							\
+	".word 0x4A180001" )
+
+	// perspective projection
+	gte_rtps_NikoVersion();
+	
+	// get result
+	gte_stsxy(&posScreen[0]);
+	
+	// screenPosX
+	driver->PickupWumpaHUD.startX = 
+		c110->rect.x + posScreen[0];
+		
+	// screenPosY
+	driver->PickupWumpaHUD.startY = 
+		c110->rect.y + posScreen[1] - 0x14;
+	
+	// transition should last 5 frames
+	driver->PickupWumpaHUD.cooldown = 5;
+	
+	// increment number of items in hud
+	driver->PickupWumpaHUD.numCollected++;
+	
+	return 1;
 }

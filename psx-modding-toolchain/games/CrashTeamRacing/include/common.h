@@ -7,6 +7,7 @@
 #include <psn00bsdk/include/psxapi.h>
 #include <psn00bsdk/include/stdio.h>
 #include <psn00bsdk/include/string.h>
+#include <psn00bsdk/include/inline_c.h>
 
 // Version = MDD of release, all 1999
 // For example, May 7 would be 507
@@ -2347,28 +2348,29 @@ struct Driver
 	// 0x4ac
 	int unk_FrameTimer_relatedToTnt;
 
-	// 0x4b0
-	int TensDiscountFromRelicRace;
-
 	struct
 	{
+		// 0x4b0
+		int cooldown;
+		
 		// 0x4b4
 		short startX;
 		short startY;
-
-		// 0x4b8
-		int cooldown;
-
+		
 	} PickupTimeboxHUD;
 
 	struct
 	{
+		// 0x4b8
+		int cooldown;
+		
 		// 0x4bc
 		short startX;
 		short startY;
 
 		// 0x4c0
-		int remaining;
+		int numCollected;
+		
 	} PickupWumpaHUD;
 
 	struct

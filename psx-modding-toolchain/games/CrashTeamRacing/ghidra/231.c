@@ -7889,7 +7889,7 @@ undefined4 FUN_800b4c5c(int param_1,int param_2,undefined4 param_3,int param_4)
   puVar2 = PTR_DAT_8008d2ac;
   sVar1 = *(short *)(param_4 + 0xc);
   
-  // get instance from thread
+  // get crystal instance from thread
   iVar6 = *(int *)(param_1 + 0x34);
   
   if (
