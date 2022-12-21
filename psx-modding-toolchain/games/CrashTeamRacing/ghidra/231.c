@@ -7773,24 +7773,16 @@ LAB_800b4974:
   puVar7 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110;
   
   // camera110 -> 0x28 (matrix)
-  setCopControlWord(2,0,*(undefined4 *)(puVar7 + 400));
-  setCopControlWord(2,0x800,*(undefined4 *)(puVar7 + 0x194));
-  setCopControlWord(2,0x1000,*(undefined4 *)(puVar7 + 0x198));
-  setCopControlWord(2,0x1800,*(undefined4 *)(puVar7 + 0x19c));
-  setCopControlWord(2,0x2000,*(undefined4 *)(puVar7 + 0x1a0));
-  setCopControlWord(2,0x2800,*(undefined4 *)(puVar7 + 0x1a4));
-  setCopControlWord(2,0x3000,*(undefined4 *)(puVar7 + 0x1a8));
-  setCopControlWord(2,0x3800,*(undefined4 *)(puVar7 + 0x1ac));
+  r0 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 400);
+  gte_SetRotMatrix(r0);
+  gte_SetTransMatrix(r0);
   
-  // load driver position into GTE
-  setCopReg(2,in_zero,local_30);
-  setCopReg(2,in_at,local_2c);
+  // 3D position
+  gte_ldv0(&local_30);
+  gte_rtps();
   
-  // Perspective Transformation (Single)
-  copFunction(2,0x180001);
-  
-  // get screenspace position of driver
-  uVar2 = getCopReg(2,0xe);
+  // 2D position
+  gte_stsxy(&uVar2);
   
   // screen posX
   local_28 = (short)uVar2;
@@ -7922,25 +7914,24 @@ undefined4 FUN_800b4c5c(int param_1,int param_2,undefined4 param_3,int param_4)
 	  
 	  // camera110 -> 0x28 (matrix)
       puVar4 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar5 + 0x4a) * 0x110;
-      setCopControlWord(2,0,*(undefined4 *)(puVar4 + 400));
-      setCopControlWord(2,0x800,*(undefined4 *)(puVar4 + 0x194));
-      setCopControlWord(2,0x1000,*(undefined4 *)(puVar4 + 0x198));
-      setCopControlWord(2,0x1800,*(undefined4 *)(puVar4 + 0x19c));
-      setCopControlWord(2,0x2000,*(undefined4 *)(puVar4 + 0x1a0));
-      setCopControlWord(2,0x2800,*(undefined4 *)(puVar4 + 0x1a4));
-      setCopControlWord(2,0x3000,*(undefined4 *)(puVar4 + 0x1a8));
-      setCopControlWord(2,0x3800,*(undefined4 *)(puVar4 + 0x1ac));
-      setCopReg(2,in_zero,local_18);
-      setCopReg(2,in_at,local_14);
-      
-	  // Perspective Transformation (Single)
-	  copFunction(2,0x180001);
+	  r0 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 400);
+      gte_SetRotMatrix(r0);
+      gte_SetTransMatrix(r0);
 	  
-      uVar3 = getCopReg(2,0xe);
+	  // driver position
+      gte_ldv0(&local_18);
+      gte_rtps();
+	  
+	  // get screen position
+      gte_stsxy(&uVar3);
+	  
+	  // screenX
       local_10 = (short)uVar3;
       *(short *)(iVar5 + 0x4bc) =
            local_10 + *(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar5 + 0x4a) * 0x110 + 0x184);
-      sStack14 = (short)((uint)uVar3 >> 0x10);
+      
+	  // screenY
+	  sStack14 = (short)((uint)uVar3 >> 0x10);
       sVar1 = *(short *)(puVar2 + (uint)*(byte *)(iVar5 + 0x4a) * 0x110 + 0x186);
       
 	  // 5 frame cooldown between getting each wumpa
@@ -10053,24 +10044,33 @@ void FUN_800b70a8(int param_1,int param_2,undefined4 param_3,int param_4)
 	  r0 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 400);
       gte_SetRotMatrix(r0);
       gte_SetTransMatrix(r0);
-      gte_ldv0((SVECTOR *)(puVar9 + 0x10));
+	  
+	  // position 3D
+      gte_ldv0(&uStack24);
       gte_rtps();
-      r0_00 = (long *)(puVar9 + 0x18);
+	  
+	  // screen 2D result
       gte_stsxy(r0_00);
 	  
 	  // gGT
       iVar5 = PTR_DAT_8008d2ac;
       
-	  // same 2D camera effect as crystal
-	  // will comment thoroughly when eyes are better (Niko)
-	  
+	  // screenX
 	  *(short *)(iVar6 + 0x4bc) =
            *(short *)(puVar9 + 0x18) +
            *(short *)(iVar5 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x184);
-      sVar1 = *(short *)((int)r0_00 + 2);
+      
+	  // screenY
+	  sVar1 = *(short *)((int)r0_00 + 2);
       sVar2 = *(short *)(iVar5 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x186);
-      *(undefined4 *)(iVar6 + 0x4b8) = 5;
+      
+	  // frames
+	  *(undefined4 *)(iVar6 + 0x4b8) = 5;
+	  
+	  // remaining HUD elements
       *(int *)(iVar6 + 0x4c0) = *(int *)(iVar6 + 0x4c0) + 1;
+	  
+	  // screenY
       *(short *)(iVar6 + 0x4be) = sVar1 + sVar2 + -0x14;
     }
 	

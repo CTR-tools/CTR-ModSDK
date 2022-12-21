@@ -781,6 +781,9 @@ struct BspSearchData
 };
 
 // 1f800108
+// used in LInC functions, 
+// rename from Weapon Search
+// to something else?
 struct WeaponSearchData
 {
 	// 0x0
@@ -3003,8 +3006,9 @@ struct Crate
 struct Crystal
 {
 	short rot[3];
+	short padding;
 
-	// 0x6 bytes large
+	// 0x8 bytes large
 };
 
 struct CtrLetter

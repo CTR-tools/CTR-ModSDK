@@ -25,7 +25,7 @@ common, 231, RB_Potion_CheckTeethCollision, 0x0, General/231/231_013_RB_Potion_C
 // skip a bunch
 common, 231, RB_Blade_ThTick, 0x0, General/231/231_056_057_RB_Blade.c
 // skip a bunch
-common, 231, RB_Crystal_ThTick, 0x0, General/231/231_068_RB_Crystal_ThTick.c
+common, 231, RB_Crystal_ThTick, 0x0, General/231/231_067_070_RB_Crystal.c
 
 // exe globals
 926, exe, 0x80081088, 0x0, General/zGlobal_MetaDataModels.c
