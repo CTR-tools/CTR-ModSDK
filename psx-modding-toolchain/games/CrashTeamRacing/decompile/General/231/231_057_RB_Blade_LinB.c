@@ -2,7 +2,7 @@
 
 void RB_Blade_PerFrame();
 
-void DECOMP_RB_Blade_LinB(struct Instance* inst)
+void DECOMP_RB_Blade_LInB(struct Instance* inst)
 {
   // Four "blades" from two blimps, Hot Air Skyway
   // One "blade" is a group of three fins,

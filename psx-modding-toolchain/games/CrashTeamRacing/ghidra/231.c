@@ -12738,7 +12738,7 @@ void FUN_800b9de0()
 	return;
 }
 
-// RB_Teeth_Init_TimeTrial_Relic
+// RB_Teeth_LInB
 void FUN_800b9df0(undefined4 param_1,int param_2)
 {
   // Do not make a thread for time trial, or relic.
@@ -12958,7 +12958,7 @@ LAB_800ba084:
   return;
 }
 
-// RB_Teeth_Init_Normal
+// RB_Teeth_LThB
 undefined4 FUN_800ba0c8(int param_1,int param_2,short *param_3)
 {
   int iVar1;

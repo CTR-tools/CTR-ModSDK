@@ -29,8 +29,8 @@ void RB_CtrLetter_LThB();
 void RB_Crystal_LInB();
 void RB_Crystal_LThB();
 void RB_StartText_Init();
-void RB_Teeth_Init_TimeTrial_Relic();
-void RB_Teeth_Init_Normal();
+void RB_Teeth_LInB();
+void RB_Teeth_LThB();
 
 void AH_Door_OnInit();
 void AH_Sign_OnInit();
@@ -419,7 +419,7 @@ struct MetaDataModel mdm[0xe2] =
 	
 	// 0x70 - STATIC_TEETH
 	// special exception
-	{ .name = 0, .LInB = RB_Teeth_Init_TimeTrial_Relic, .LThB = RB_Teeth_Init_Normal },
+	{ .name = 0, .LInB = RB_Teeth_LInB, .LThB = RB_Teeth_LThB },
 	
 	// 0x71 - STATIC_STARTTEXT
 	{ .name = 0, .LInB = RB_StartText_Init, .LThB = 0 },

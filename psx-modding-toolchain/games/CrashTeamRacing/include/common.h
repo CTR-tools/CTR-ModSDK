@@ -7078,30 +7078,16 @@ struct Data
 	// modelID (0-0xe2) is used to access array
 	struct
 	{
-		// comments in Decomp MetaDataModels.c
-		// explain the full system for these variables
-		
-		// most pointers go to 231 overlay
+		// debug
 		char* name;
-
-		// This system was initially designed for wumpa box and weapon 
-		// box, and was only "really" useful for that. Intended usage 
-		// is to initialize an unthreaded instance when the level starts, 
-		// then create a thread upon BSP collision to break the boxes,
-		// which then regrows the box, then thread dies, and instance
-		// is unthreaded until the next collision
 		
-		// Unintended usage is Crystal Challenge crystals, which build
-		// a thread on level start, so crystals can spin, defeating
-		// the point. Then LThB has needless thread creation, which
-		// then calls funcOnCollide, which kills thread immediately.
-		// The thread should die in LThB that was born on level start.
-
-		// callback after conversion of InstDef to Instance,
-		// part of the birth process for level instances
-		void* funcLInB;
-
-		void* funcLThB;
+		// callback after converting
+		// Lev InstDef to Lev Instance
+		void* LInB;
+		
+		// callback after detecting
+		// Lev BSP hitbox collision
+		void* LThB;
 
 	// Number of elements changes...
 	} MetaDataModels

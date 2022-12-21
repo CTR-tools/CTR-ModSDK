@@ -1476,10 +1476,10 @@
 800BA030 RB_Spider_Init
 800BA234 RB_StartText_ProcessBucket
 800BA23C RB_StartText_Init
-800BA24C RB_Teeth_Init_TimeTrial_Relic
+800BA24C RB_Teeth_LInB
 800BA2A0 RB_Teeth_BSP_Callback
 800BA368 RB_Teeth_PerFrame
-800BA524 RB_Teeth_Init_Normal
+800BA524 RB_Teeth_LThB
 800BA67C RB_Teeth_OpenDoor
 800BA71C RB_Turtle_PerFrame
 800BA87C RB_Turtle_OnCollide

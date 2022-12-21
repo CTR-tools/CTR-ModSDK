@@ -1,4 +1,4 @@
 Did not do top two functions of 231 (MakeInstanceReflective or KillPlayer),
 PerFrame_InAir needs BspSearchData struct
 
-Then skipped to LinB/LthB
+Then skipped to LInB/LthB
