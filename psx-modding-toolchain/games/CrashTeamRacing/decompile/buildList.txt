@@ -23,8 +23,7 @@ common, 231, RB_Hazard_ThCollide_Generic, 0x0, General/231/231_011_RB_Hazard_ThC
 common, 231, RB_Potion_OpenTeeth, 0x0, General/231/231_012_RB_Potion_OpenTeeth.c
 common, 231, RB_Potion_CheckTeethCollision, 0x0, General/231/231_013_RB_Potion_CheckTeethCollision.c
 // skip a bunch
-common, 231, RB_Blade_ThTick, 0x0, General/231/231_056_RB_Blade_ThTick.c
-common, 231, RB_Blade_LInB, 0x0, General/231/231_057_RB_Blade_LInB.c
+common, 231, RB_Blade_ThTick, 0x0, General/231/231_056_057_RB_Blade.c
 // skip a bunch
 common, 231, RB_Crystal_ThTick, 0x0, General/231/231_068_RB_Crystal_ThTick.c
 

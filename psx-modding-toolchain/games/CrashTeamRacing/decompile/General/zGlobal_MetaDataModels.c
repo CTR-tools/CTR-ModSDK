@@ -14,7 +14,7 @@ void RB_Plant_LInB();
 void RB_Minecart_LInB();
 void RB_Snowball_LInB();
 void RB_Armadillo_LInB();
-void RB_Blade_LInB();
+void DECOMP_RB_Blade_LInB();
 void RB_Seal_LInB();
 void RB_Orca_LInB();
 void RB_Baron_LInB();
@@ -36,6 +36,7 @@ void AH_Door_LInB();
 void AH_Sign_LInB();
 void AH_Garage_LInB();
 void AH_SaveObj_LInB();
+void AH_WarpPad_LInB();
 
 void CS_LevThread_LInB();
 
@@ -186,7 +187,7 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,RB_Armadillo_LInB,0),
 	
 	// 0x25 - BLADE
-	SET_MDM(0,RB_Blade_LInB,0),
+	SET_MDM(0,DECOMP_RB_Blade_LInB,0),
 	
 	// 0x26 - STATIC_CRATE_EXPLOSION
 	SET_MDM(0,0,0),
