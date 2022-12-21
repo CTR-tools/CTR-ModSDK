@@ -6770,7 +6770,7 @@ void FUN_800b39dc(void)
   return;
 }
 
-// RB_Crate_PerFrame_Explode
+// RB_Crate_ThTick_Explode
 void FUN_800b3d04(int param_1)
 {
   short sVar1;
@@ -6810,7 +6810,7 @@ void FUN_800b3d04(int param_1)
   } while( true );
 }
 
-// RB_Crate_PerFrame_Normal
+// RB_Crate_ThTick_Normal
 void FUN_800b3d7c(int param_1)
 {
   short sVar1;
@@ -6885,7 +6885,7 @@ void FUN_800b3d7c(int param_1)
   } while( true );
 }
 
-// RB_Crate_Weapon_OnCollide
+// RB_Crate_Weapon_ThCollide
 // param_1 is the box thread
 // param_4 is 1f800108
 undefined4 FUN_800b3e7c(int param_1,int param_2,undefined4 param_3,int param_4)
@@ -6995,7 +6995,7 @@ LAB_800b420c:
   // "other" thread bucket
   uStack100 = 0xd;
   
-  // RB_Crate_PerFrame_Explode
+  // RB_Crate_ThTick_Explode
   puStack96 = &FUN_800b3d04;
   
   uStack92 = 0;
@@ -7215,7 +7215,7 @@ undefined4 FUN_800b4278(int param_1,undefined4 param_2,undefined4 param_3)
 	// give instance to thread
     *(int *)(iVar4 + 0x34) = param_1;
 	
-	// RB_Crate_Weapon_OnCollide. smash crate when hit
+	// RB_Crate_Weapon_ThCollide. smash crate when hit
     *(undefined4 *)(iVar4 + 0x28) = 0x800b3e7c;
 	
 	// initialize crate object
@@ -7242,7 +7242,7 @@ undefined4 FUN_800b4278(int param_1,undefined4 param_2,undefined4 param_3)
   return uVar2;
 }
 
-// RB_Crate_Fruit_OnCollide
+// RB_Crate_Fruit_ThCollide
 undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
 {
   short sVar1;
@@ -7308,7 +7308,7 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
       local_40 = 0x300;
       local_3c = 0xd;
 	  
-	  // RB_Crate_PerFrame_Explode
+	  // RB_Crate_ThTick_Explode
       local_38 = &FUN_800b3d04;
       
 	  local_34 = 0;
@@ -7499,7 +7499,7 @@ undefined4 FUN_800b471c(int param_1,undefined4 param_2,undefined4 param_3)
 	// give Instance to thread
     *(int *)(iVar4 + 0x34) = param_1;
 	
-	// RB_Crate_Fruit_OnCollide
+	// RB_Crate_Fruit_ThCollide
     *(undefined4 *)(iVar4 + 0x28) = 0x800b432c;
 	
 	// initialize crate object
@@ -7530,7 +7530,7 @@ undefined4 FUN_800b471c(int param_1,undefined4 param_2,undefined4 param_3)
   return uVar2;
 }
 
-// RB_Crate_Time_OnCollide
+// RB_Crate_Time_ThCollide
 undefined4 FUN_800b47d0(int param_1,int param_2,undefined4 param_3,int param_4)
 {
   // is param2 is PTR_DAT_8008d2ac + 0x1b2c
@@ -7621,7 +7621,7 @@ LAB_800b4b38:
   local_70 = 0x300;
   local_6c = 0xd;
   
-  // RB_Crate_PerFrame_Explode
+  // RB_Crate_ThTick_Explode
   local_68 = &FUN_800b3d04;
   
   local_64 = 0;
@@ -7851,7 +7851,7 @@ undefined4 FUN_800b4ba8(int param_1,undefined4 param_2,undefined4 param_3)
 	// give instance to thread
     *(int *)(iVar4 + 0x34) = param_1;
 	
-	// RB_Crate_Time_OnCollide, smash crate
+	// RB_Crate_Time_ThCollide, smash crate
     *(undefined4 *)(iVar4 + 0x28) = 0x800b47d0;
 	
 	// initialize object
@@ -7878,7 +7878,7 @@ undefined4 FUN_800b4ba8(int param_1,undefined4 param_2,undefined4 param_3)
   return uVar2;
 }
 
-// RB_Crystal_OnCollide
+// RB_Crystal_ThCollide
 undefined4 FUN_800b4c5c(int param_1,int param_2,undefined4 param_3,int param_4)
 {
   short sVar1;
@@ -7971,7 +7971,7 @@ undefined4 FUN_800b4c5c(int param_1,int param_2,undefined4 param_3,int param_4)
   return uVar3;
 }
 
-// RB_Crystal_PerFrame
+// RB_Crystal_ThTick
 void FUN_800b4dd8(int param_1)
 {
   int iVar1;
@@ -8042,7 +8042,7 @@ undefined4 FUN_800b4e7c(int param_1,undefined4 param_2,undefined4 param_3)
 	// Give instance to thread
     *(int *)(iVar3 + 0x34) = param_1;
 	
-	// RB_Crystal_OnCollide, collect crystal
+	// RB_Crystal_ThCollide, collect crystal
     *(undefined4 *)(iVar3 + 0x28) = 0x800b4c5c;
 	
 	// Get thread from instance
@@ -8113,7 +8113,7 @@ void FUN_800b4f48(int param_1)
 	// give instance to thread
     *(int *)(iVar1 + 0x34) = param_1;
 	
-	// RB_Crystal_OnCollide, collect crystal
+	// RB_Crystal_ThCollide, collect crystal
     *(undefined4 *)(iVar1 + 0x28) = 0x800b4c5c;
 	
 	// set rotX, rotY, and rotZ to zero

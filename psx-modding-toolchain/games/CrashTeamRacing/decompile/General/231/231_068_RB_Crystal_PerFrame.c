@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_RB_Crystal_PerFrame(struct Thread* t)
+void DECOMP_RB_Crystal_ThTick(struct Thread* t)
 {
 	int sine;
 	struct Instance* crystalInst;
