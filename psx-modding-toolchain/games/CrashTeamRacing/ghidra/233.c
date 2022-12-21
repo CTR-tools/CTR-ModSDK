@@ -4151,7 +4151,7 @@ void FUN_800b0300(void)
 }
 
 
-// CS_LevThread_OnInit
+// CS_LevThread_LInB
 // for all cutscene threads
 void FUN_800b06ac(int param_1)
 

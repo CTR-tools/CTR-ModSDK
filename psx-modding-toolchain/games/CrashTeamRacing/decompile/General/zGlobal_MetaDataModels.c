@@ -12,58 +12,48 @@ void RB_Crate_Time_LThB();
 void RB_FlameJet_LInB();
 void RB_Plant_LInB();
 void RB_Minecart_LInB();
-void RB_Snowball_Init();
+void RB_Snowball_LInB();
 void RB_Armadillo_LInB();
 void RB_Blade_LInB();
-void RB_Seal_Init();
+void RB_Seal_LInB();
 void RB_Orca_LInB();
 void RB_Baron_LInB();
-void RB_Turtle_Init();
+void RB_Turtle_LInB();
 void RB_Turtle_OnCollide(); // LevColl, not ThColl
-void RB_Spider_Init();
+void RB_Spider_LInB();
 void RB_Fireball_LInB();
-void RB_StartText_Init();
+void RB_StartText_LInB();
 void RB_Banner_LInB();
 void RB_CtrLetter_LInB();
 void RB_CtrLetter_LThB();
 void RB_Crystal_LInB();
 void RB_Crystal_LThB();
-void RB_StartText_Init();
+void RB_StartText_LInB();
 void RB_Teeth_LInB();
 void RB_Teeth_LThB();
 
-void AH_Door_OnInit();
-void AH_Sign_OnInit();
-void AH_Garage_Init();
-void AH_SaveObj_Init();
+void AH_Door_LInB();
+void AH_Sign_LInB();
+void AH_Garage_LInB();
+void AH_SaveObj_LInB();
 
-void CS_LevThread_OnInit();
+void CS_LevThread_LInB();
 
 struct MetaDataModel
 {
 	// debug
 	char* name;
 	
+	// Level Instance Birth
 	// callback after converting
 	// Lev InstDef to Lev Instance
 	void* LInB;
 	
+	// Level Instance Collision
 	// callback after detecting
 	// Lev BSP hitbox collision
 	void* LThB;
 };
-
-// intended use of the system is to birth 
-// an unthreaded instance, then LInB always
-// does a BSP check for reflective quadblocks
-
-// LThB "should" birth a thread on BSP hitbox collide,
-// which can smash and regrow a crate, then thread 
-// dies until the next crate collision
-
-// only "constantly alive" instances are justified to 
-// birth a thread in LInB, not LThB, like FlameJet,
-// Blade, etc
 
 // comments below explain unintended use of the system,
 // and how the decomp will optimize the code
@@ -179,7 +169,7 @@ struct MetaDataModel mdm[0xe2] =
 	{ .name = 0, .LInB = RB_Minecart_LInB, .LThB = 0 },
 	
 	// 0x22 - TEMP_SNOWBALL (blizzard bluff boulder)
-	{ .name = 0, .LInB = RB_Snowball_Init, .LThB = 0 },
+	{ .name = 0, .LInB = RB_Snowball_LInB, .LThB = 0 },
 	
 	// 0x23 - FINISH_LINE
 	{ .name = 0, .LInB = 0, .LThB = 0 },
@@ -308,13 +298,13 @@ struct MetaDataModel mdm[0xe2] =
 	{ .name = 0, .LInB = 0, .LThB = 0 },
 	
 	// 0x4c - DYNAMIC_SEAL (polar pass)
-	{ .name = 0, .LInB = RB_Seal_Init, .LThB = 0 },
+	{ .name = 0, .LInB = RB_Seal_LInB, .LThB = 0 },
 	
 	// 0x4d - DYNAMIC_ORCA
 	{ .name = 0, .LInB = RB_Orca_LInB, .LThB = 0 },
 	
 	// 0x4e - DYNAMIC_BARREL (sewer speedway)
-	{ .name = 0, .LInB = RB_Snowball_Init, .LThB = 0 },
+	{ .name = 0, .LInB = RB_Snowball_LInB, .LThB = 0 },
 	
 	// 0x4f - DYNAMIC_VONLABASS (unused, hot air skyway)
 	{ .name = 0, .LInB = RB_Baron_LInB, .LThB = 0 },
@@ -323,10 +313,10 @@ struct MetaDataModel mdm[0xe2] =
 	{ .name = 0, .LInB = RB_Minecart_LInB, .LThB = 0 },
 	
 	// 0x51 - DYNAMIC_TURTLE (mystery caves)
-	{ .name = 0, .LInB = RB_Turtle_Init, .LThB = RB_Turtle_OnCollide },
+	{ .name = 0, .LInB = RB_Turtle_LInB, .LThB = RB_Turtle_OnCollide },
 	
 	// 0x52 - DYNAMIC_SPIDER (cortex castle)
-	{ .name = 0, .LInB = RB_Spider_Init, .LThB = 0 },
+	{ .name = 0, .LInB = RB_Spider_LInB, .LThB = 0 },
 	
 	// 0x53 - DYNAMIC_SPIDERSHADOW
 	{ .name = 0, .LInB = 0, .LThB = 0 },
@@ -422,25 +412,25 @@ struct MetaDataModel mdm[0xe2] =
 	{ .name = 0, .LInB = RB_Teeth_LInB, .LThB = RB_Teeth_LThB },
 	
 	// 0x71 - STATIC_STARTTEXT
-	{ .name = 0, .LInB = RB_StartText_Init, .LThB = 0 },
+	{ .name = 0, .LInB = RB_StartText_LInB, .LThB = 0 },
 	
 	// 0x72 - STATIC_SAVEOBJ
-	{ .name = 0, .LInB = AH_SaveObj_Init, .LThB = 0 },
+	{ .name = 0, .LInB = AH_SaveObj_LInB, .LThB = 0 },
 	
 	// 0x73 - STATIC_PINGARAGE
-	{ .name = 0, .LInB = AH_Garage_Init, .LThB = 0 },
+	{ .name = 0, .LInB = AH_Garage_LInB, .LThB = 0 },
 	
 	// 0x74 - STATIC_PAPUGARAGE
-	{ .name = 0, .LInB = AH_Garage_Init, .LThB = 0 },
+	{ .name = 0, .LInB = AH_Garage_LInB, .LThB = 0 },
 	
 	// 0x75 - STATIC_ROOGARAGE
-	{ .name = 0, .LInB = AH_Garage_Init, .LThB = 0 },
+	{ .name = 0, .LInB = AH_Garage_LInB, .LThB = 0 },
 	
 	// 0x76 - STATIC_JOEGARAGE
-	{ .name = 0, .LInB = AH_Garage_Init, .LThB = 0 },
+	{ .name = 0, .LInB = AH_Garage_LInB, .LThB = 0 },
 	
 	// 0x77 - STATIC_OXIDEGARAGE
-	{ .name = 0, .LInB = AH_Garage_Init, .LThB = 0 },
+	{ .name = 0, .LInB = AH_Garage_LInB, .LThB = 0 },
 	
 	// 0x78 - STATIC_SCAN (load/save screen)
 	{ .name = 0, .LInB = 0, .LThB = 0 },
@@ -449,7 +439,7 @@ struct MetaDataModel mdm[0xe2] =
 	{ .name = 0, .LInB = 0, .LThB = 0 },
 	
 	// 0x7a - STATIC_DOOR
-	{ .name = 0, .LInB = AH_Door_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = AH_Door_LInB, .LThB = 0 },
 	
 	// 0x7b - STATIC_BEAM (warppad vortex)
 	{ .name = 0, .LInB = 0, .LThB = 0 },
@@ -539,52 +529,52 @@ struct MetaDataModel mdm[0xe2] =
 	{ .name = 0, .LInB = RB_CtrLetter_LInB, .LThB = RB_CtrLetter_LThB },
 	
 	// 0x96 - STATIC_CRASHINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0x97 - STATIC_COCOINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0x98 - STATIC_CORTEXINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0x99 - STATIC_TINYINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0x9A - STATIC_POLARINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0x9B - STATIC_DINGOINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0x9C - STATIC_OXIDEINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0x9D - STATIC_SIMPLEKARTINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0x9E - STATIC_TINYKARTINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0x9F - STATIC_DINGOKARTINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xA0 - STATIC_SIMPLEOBJINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xA1 - STATIC_PPOINTTHINGINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xA2 - STATIC_PRTHINGINTRO
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xA3 - STATIC_OXIDELILSHIP
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xA4 - STATIC_INTROOXIDECAM
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xA5 - STATIC_INTROOXIDEBODY
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xa6 - STATIC_STARTBANNERWAVE
 	{ .name = 0, .LInB = RB_Banner_LInB, .LThB = 0 },
@@ -701,68 +691,68 @@ struct MetaDataModel mdm[0xe2] =
 	{ .name = 0, .LInB = 0, .LThB = 0 },
 	
 	// 0xcc - STATIC_INTRO_FLASH
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xcd - STATIC_INTRODOORS
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xce - STATIC_CRASHSELECT
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xcf - STATIC_CORTEXSELECT
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xd0 - STATIC_TINYSELECT
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xd1 - STATIC_COCOSELECT
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xd2 - STATIC_NGINSELECT
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xd3 - STATIC_DINGOSELECT
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xd4 - STATIC_POLARSELECT
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xd5 - STATIC_PURASELECT
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xd6 - STATIC_ENDDOORS
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xd7 - STATIC_ENDFLASH
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xd8 - STATIC_ENDINGOXIDE
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xd9 - STATIC_ENDIGNOXIDE_02 (mispelled in-game)
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xda - STATIC_ENDOXIDEBIGSHIP
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xdb - STATIC_ENDOXIDELILSHIP
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xdc - STATIC_OXIDECAMEND
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xdd - STATIC_OXIDECAMEND02
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xde - STATIC_JLOGO_FLAG
 	{ .name = 0, .LInB = 0, .LThB = 0 },
 	
 	// 0xdf - STATIC_OXIDESPEAKER
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xe0 - STATIC_INTROSPARKS
-	{ .name = 0, .LInB = CS_LevThread_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = CS_LevThread_LInB, .LThB = 0 },
 	
 	// 0xe1 - STATIC_GNORMALZ
-	{ .name = 0, .LInB = AH_Sign_OnInit, .LThB = 0 },
+	{ .name = 0, .LInB = AH_Sign_LInB, .LThB = 0 },
 };

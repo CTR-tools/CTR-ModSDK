@@ -11833,7 +11833,7 @@ void FUN_800b90d8(int param1, int param_2, int param_3, int param_4)
   return (uint)(*(short *)(param_4 + 0xc) == 0x18);
 }
 
-// RB_Seal_Init
+// RB_Seal_LInB
 void FUN_800b90ec(int param_1)
 {
   short sVar1;
@@ -12071,7 +12071,7 @@ DAT_800b9328:
   } while( true );
 }
 
-// RB_Snowball_Init
+// RB_Snowball_LInB
 void FUN_800b950c(int param_1)
 {
   short sVar1;
@@ -12601,7 +12601,7 @@ void FUN_800b9bc0(int param1, int param_2, int param_3, int param_4)
   return (uint)(*(short *)(param_4 + 0xc) == 0x18);
 }
 
-// RB_Spider_Init
+// RB_Spider_LInB
 void FUN_800b9bd4(int param_1)
 {
   int iVar1;
@@ -12730,7 +12730,7 @@ void FUN_800b9dd8()
 	return;
 }
 
-// RB_StartText_Init
+// RB_StartText_LInB
 void FUN_800b9de0()
 {
 	// intentionally empty
@@ -13244,7 +13244,7 @@ undefined4 FUN_800ba420(int param_1,int param_2)
   return 1;
 }
 
-// RB_Turtle_Init
+// RB_Turtle_LInB
 void FUN_800ba470(int param_1)
 {
   undefined2 uVar1;

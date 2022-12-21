@@ -1441,15 +1441,15 @@
 800b7bfc RB_Seal_PerFrame_TurnAround
 800b7e18 RB_Seal_PerFrame_Move
 800b80d4 RB_Seal_OnCollide
-800b80e8 RB_Seal_Init
+800b80e8 RB_Seal_LInB
 800b82a8 RB_Snowball_PerFrame
-800b8508 RB_Snowball_Init
+800b8508 RB_Snowball_LInB
 800b85f8 RB_Spider_DrawWebs
 800b8844 RB_Spider_PerFrame
 800b8bbc RB_Spider_OnCollide
-800b8bd0 RB_Spider_Init
+800b8bd0 RB_Spider_LInB
 800b8dd4 RB_StartText_ProcessBucket
-800b8ddc RB_StartText_Init
+800b8ddc RB_StartText_LInB
 800b8dec RB_Teeth_LInB
 800b8e40 RB_Teeth_BSP_Callback
 800b8f08 RB_Teeth_PerFrame
@@ -1457,7 +1457,7 @@
 800b921c RB_Teeth_OpenDoor
 800b92bc RB_Turtle_PerFrame
 800b941c RB_Turtle_OnCollide
-800b946c RB_Turtle_Init
+800b946c RB_Turtle_LInB
 
 // 232 (AdvHub)
 800aaab0 AH_WarpPad_GetSpawnPosRot
@@ -1470,13 +1470,13 @@
 800ad774 AH_Garage_OnDestroy
 800ad7b4 AH_Garage_Open
 800ad85c AH_Garage_PerFrame
-800adf44 AH_Garage_Init
+800adf44 AH_Garage_LInB
 800ae278 AH_SaveObj_Destroy
 800ae2b8 AH_SaveObj_PerFrame
-800ae6c4 AH_SaveObj_Init
+800ae6c4 AH_SaveObj_LInB
 800ae8cc AH_Door_OnDestroy
 800ae934 AH_Door_PerFrame
-800af600 AH_Door_OnInit
+800af600 AH_Door_LInB
 800afa6c AH_Map_LoadSave_Prim
 800afbb4 AH_Map_LoadSave_Full
 800afdec AH_Map_HubArrow
@@ -1496,7 +1496,7 @@
 800b3240 AH_MaskHint_SpawnParticles
 800b3358 AH_MaskHint_End
 800b33fc AH_MaskHint_PerFrame
-800b3c0c AH_Sign_OnInit // not in sep3
+800b3c0c AH_Sign_LInB // not in sep3
 
 // 233 (Cutscene)
 800aad88 CS_Thread_Particles
@@ -1532,7 +1532,7 @@
 800aee44 CS_Podium_Prize_Init
 800af1fc CS_Podium_Stand_Init
 800af2b4 CS_Podium_FullScene_Init
-800af660 CS_LevThread_OnInit
+800af660 CS_LevThread_LInB
 800af830 CS_LevCamera_OnInit
 800afaec CS_BoxScene_InstanceSplitLines
 800b6690 CS_Garage_ZoomOut

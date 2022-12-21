@@ -7081,10 +7081,12 @@ struct Data
 		// debug
 		char* name;
 		
+		// Level Instance Birth
 		// callback after converting
 		// Lev InstDef to Lev Instance
 		void* LInB;
 		
+		// Level Instance Collision
 		// callback after detecting
 		// Lev BSP hitbox collision
 		void* LThB;

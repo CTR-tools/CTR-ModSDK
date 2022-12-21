@@ -2729,7 +2729,7 @@ LAB_800aede8:
 }
 
 
-// AH_Garage_Init
+// AH_Garage_LInB
 void FUN_800af070(int param_1)
 
 {
@@ -3219,7 +3219,7 @@ LAB_800af72c:
 }
 
 
-// AH_SaveObj_Init
+// AH_SaveObj_LInB
 void FUN_800af7f0(int param_1)
 
 {
@@ -4089,7 +4089,7 @@ LAB_800b0404:
 }
 
 
-// AH_Door_OnInit
+// AH_Door_LInB
 void FUN_800b072c(int param_1)
 
 {
@@ -7151,7 +7151,7 @@ LAB_800b4b64:
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// AH_Sign_OnInit
+// AH_Sign_LInB
 // hangs above wooden doors
 void FUN_800b4c80(int param_1)
 
