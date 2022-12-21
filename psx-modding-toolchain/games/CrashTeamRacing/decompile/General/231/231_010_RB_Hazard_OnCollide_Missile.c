@@ -1,6 +1,6 @@
 #include <common.h>
 
-int RB_Hazard_OnCollide_Missile(struct Thread* thread)
+int RB_Hazard_ThCollide_Missile(struct Thread* thread)
 {
 	struct TrackerWeapon* tw;
 	struct Driver* driver;

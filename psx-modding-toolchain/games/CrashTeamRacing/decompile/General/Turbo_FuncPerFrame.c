@@ -3,7 +3,7 @@
 
 void GAMEPAD_Vib_3(struct Driver* driver, u_int param_2, int param_3);
 void OtherFX_DriverTurbo(void*, int, int);
-void HalfwayThroughUpdateAllThreadsInBucket(struct Thread*);
+void ThreadBucketFastRET(struct Thread*);
 
 // Turbo_FuncPerFrame
 void DECOMP_Turbo_FuncPerFrame(struct Thread* turboThread)

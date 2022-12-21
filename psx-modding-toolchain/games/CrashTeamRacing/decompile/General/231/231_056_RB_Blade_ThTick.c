@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_RB_Blade_PerFrame(struct Thread* t)
+void DECOMP_RB_Blade_ThTick(struct Thread* t)
 {
 	struct Blade* bladeObj;
 	struct Instance* bladeInst;

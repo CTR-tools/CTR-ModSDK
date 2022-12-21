@@ -1,6 +1,6 @@
 #include <common.h>
 
-int RB_Hazard_OnCollide_Generic(struct Thread* thread)
+int RB_Hazard_ThCollide_Generic(struct Thread* thread)
 {
 	struct Instance* inst;
 	struct MineWeapon* mw;

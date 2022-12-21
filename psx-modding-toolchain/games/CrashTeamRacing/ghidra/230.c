@@ -464,7 +464,7 @@ void FUN_800ac1f0(int param_1,short param_2)
 }
 
 
-// MM_Title_Thread_PerFrame
+// MM_Title_ThTick
 uint FUN_800ac350(int param_1)
 
 {
@@ -684,7 +684,7 @@ uint FUN_800ac350(int param_1)
 }
 
 
-// MM_Title_Thread_Init
+// MM_Title_Init
 void FUN_800ac6dc(void)
 
 {
@@ -1409,7 +1409,7 @@ void FUN_800acff4(int param_1)
     }
   }
   
-  // MM_Title_Thread_Init
+  // MM_Title_Init
   FUN_800ac6dc();
   
   // if you are in Arcade or VS cup

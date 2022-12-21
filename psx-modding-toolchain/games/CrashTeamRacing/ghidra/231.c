@@ -691,16 +691,16 @@ int FUN_800ac350
   return 0;
 }
 
-// RB_Hazard_OnCollide_Generic_Alt
+// RB_Hazard_ThCollide_Generic_Alt
 void FUN_800ac3f8(undefined4 *param_1)
 {
-  // RB_Hazard_OnCollide_Generic
+  // RB_Hazard_ThCollide_Generic
   // only really uses *param_1 for thread
   FUN_800ac4b8(*param_1,param_1[1],param_1[2],param_1[3]);
   return;
 }
 
-// RB_Hazard_OnCollide_Missile
+// RB_Hazard_ThCollide_Missile
 // removes 2D target from player
 undefined4 FUN_800ac42c(int param_1)
 {
@@ -738,7 +738,7 @@ undefined4 FUN_800ac42c(int param_1)
   return 1;
 }
 
-// RB_Hazard_OnCollide_Generic
+// RB_Hazard_ThCollide_Generic
 // param_1 - thread
 // param_2 - thread (again? unused)
 // param_3 - funcOnCollide (unused)
@@ -898,7 +898,7 @@ void FUN_800ac638(int param_1)
   return;
 }
 
-// RB_Potion_PerFrame_InAir
+// RB_Potion_ThTick_InAir
 void FUN_800ac6b4(int param_1)
 {
   bool bVar1;
@@ -983,7 +983,7 @@ void FUN_800ac6b4(int param_1)
   
   if ((DAT_1f8002ac & 4) != 0) 
   {
-	// RB_GenericMine_OnDestroy
+	// RB_GenericMine_ThDestroy
     FUN_800ad250(param_1,iVar6,iVar7);
   }
   if (DAT_1f80014a == 0) {
@@ -1022,7 +1022,7 @@ void FUN_800ac6b4(int param_1)
 		// remove flag "| 2"
 		*(ushort *)(iVar7 + 0x28) = *(ushort *)(iVar7 + 0x28) & 0xfffd;
 		
-		// SetPerFrame_AndExec(self, RB_GenericMine_PerFrame)
+		// SetThTick_AndExec(self, RB_GenericMine_ThTick)
         FUN_800716ec(param_1,FUN_800acb60);
 		
         return;
@@ -1071,7 +1071,7 @@ void FUN_800ac6b4(int param_1)
     }
   }
   
-  // RB_GenericMine_OnDestroy
+  // RB_GenericMine_ThDestroy
   FUN_800ad250(param_1,iVar6,iVar7);
   return;
 }
@@ -1153,7 +1153,7 @@ void FUN_800aca50(int param_1)
   return;
 }
 
-// RB_GenericMine_PerFrame
+// RB_GenericMine_ThTick
 // TNT, Nitro, Potion
 void FUN_800acb60(int param_1)
 
@@ -1200,11 +1200,11 @@ void FUN_800acb60(int param_1)
 	  // cooldown of 0.24s
       *(undefined2 *)((int)piVar13 + 0x2a) = 0xf0;
 	  
-	  // RB_Potion_PerFrame_InAir
+	  // RB_Potion_ThTick_InAir
       pcVar7 = FUN_800ac6b4;
     }
 	
-	// SetPerFrame_AndExec
+	// SetThTick_AndExec
     FUN_800716ec(param_1,pcVar7);
   }
   
@@ -1360,7 +1360,7 @@ LAB_800ace88:
 	
 LAB_800ad174:
 
-	// RB_GenericMine_OnDestroy
+	// RB_GenericMine_ThDestroy
     FUN_800ad250(param_1,iVar12,piVar13);
   }
   else {
@@ -1459,7 +1459,7 @@ LAB_800ad174:
         *(undefined2 *)(piVar13 + 8) = 0;
         *(undefined2 *)((int)piVar13 + 0x12) = 0x3fff;
 		
-		// SetPerFrame_AndExec RB_TNT_ThrowOnHead
+		// SetThTick_AndExec RB_TNT_ThrowOnHead
         FUN_800716ec(param_1,FUN_800ad710);
       }
 	  
@@ -1617,7 +1617,7 @@ LAB_800ad21c:
   return;
 }
 
-// RB_GenericMine_OnDestroy
+// RB_GenericMine_ThDestroy
 void FUN_800ad250(int param_1,int param_2,undefined4 param_3)
 
 {
@@ -2000,7 +2000,7 @@ void FUN_800ad710(int param_1)
   return;
 }
 
-// RB_Explosion_PerFrame,
+// RB_Explosion_ThTick,
 // shatter or explosion
 void FUN_800ad92c(int param_1)
 {
@@ -2037,7 +2037,7 @@ void FUN_800ad92c(int param_1)
   return;
 }
 
-// RB_Hazard_LevInstColl (tnt, potion, warpball, etc) (not hazard? moving explosive?)
+// RB_Hazard_CollLevInst (tnt, potion, warpball, etc) (not hazard? moving explosive?)
 // param_1 - BSP result
 // param_2 - VisData (hitbox)
 undefined4 FUN_800ad9ac(int param_1,undefined4 param_2)
@@ -2153,7 +2153,7 @@ LAB_800adb44:
   return (int)(short)uVar4;
 }
 
-// RB_MovingExplosive_PerFrame
+// RB_MovingExplosive_ThTick
 // function for moving bomb, shiledbomb, or missile
 void FUN_800adb50(int param_1)
 {
@@ -2548,7 +2548,7 @@ LAB_800add14:
 	// if instance -> model -> modelID
     DAT_1f800114 = *(undefined2 *)(*(int *)(iVar10 + 0x18) + 0x10);
 	
-	// RB_Hazard_LevInstColl
+	// RB_Hazard_CollLevInst
     iVar8 = FUN_800ad9ac(&DAT_1f800108,param_1);
     
 	if (iVar8 == 1) {
@@ -2761,7 +2761,7 @@ void FUN_800ae604(int param_1)
   // stop audio of moving
   FUN_8002e724(iVar1 + 0x24);
   
-  // SetPerFrame_AndExec RB_Warpball_FadeAway
+  // SetThTick_AndExec RB_Warpball_FadeAway
   FUN_800716ec(param_1,&FUN_800ae524);
   return;
 }
@@ -3232,7 +3232,7 @@ void FUN_800aede0(int param_1)
   return;
 }
 
-// RB_Warpball_PerFrame
+// RB_Warpball_ThTick
 void FUN_800aef9c(int param_1)
 
 {
@@ -3591,7 +3591,7 @@ LAB_800af34c:
   if (DAT_1f80014a != 0) {
     DAT_1f800114 = 0x36;
 	
-	// RB_Hazard_LevInstColl
+	// RB_Hazard_CollLevInst
     iVar6 = FUN_800ad9ac(&DAT_1f800108,param_1);
     
 	if (iVar6 == 1) 
@@ -3897,7 +3897,7 @@ void FUN_800afb70(int param_1)
   return;
 }
 
-// RB_MaskWeapon_PerFrame
+// RB_MaskWeapon_ThTick
 void FUN_800afdbc(int param_1)
 
 {
@@ -4097,7 +4097,7 @@ void FUN_800afdbc(int param_1)
 	// end duration
     *(undefined2 *)(iVar9 + 6) = 0;
 	
-	// SetPerFrame_AndExec RB_MaskWeapon_FadeAway
+	// SetThTick_AndExec RB_MaskWeapon_FadeAway
     FUN_800716ec(param_1,FUN_800afb70);
   }
   
@@ -4213,7 +4213,7 @@ void FUN_800b0278(int param_1)
   return;
 }
 
-// RB_ShieldDark_PerFrame
+// RB_ShieldDark_ThTick
 void FUN_800b0454(int param_1)
 
 {
@@ -4755,7 +4755,7 @@ void FUN_800b0f1c(int param_1)
   return;
 }
 
-// RB_RainCloud_PerFrame
+// RB_RainCloud_ThTick
 void FUN_800b1000(int param_1)
 
 {
@@ -4883,7 +4883,7 @@ void FUN_800b1000(int param_1)
     *(undefined4 *)(iVar4 + 0x4a0) = 0;
   }
   
-  // SetPerFrame_AndExec RB_RainCloud_FadeAway
+  // SetThTick_AndExec RB_RainCloud_FadeAway
   FUN_800716ec(param_1,FUN_800b0f1c);
   return;
 }
@@ -5027,7 +5027,7 @@ void FUN_800b1458(int param_1)
   // 0xd = "other" thread bucket
   local_34 = 0xd;
   
-  // RB_Explosion_PerFrame
+  // RB_Explosion_ThTick
   local_30 = FUN_800ad92c;
   
   local_2c = 0;
@@ -5128,7 +5128,7 @@ void FUN_800b1630(int param_1)
   // 0xd = "other" thread bucket
   local_1c = 0xd;
   
-  // RB_Explosion_PerFrame
+  // RB_Explosion_ThTick
   local_18 = FUN_800ad92c;
   
   local_14 = 0;
@@ -5215,7 +5215,7 @@ void FUN_800b1714(int param_1)
   return;
 }
 
-// RB_Blowup_PerFrame
+// RB_Blowup_ThTick
 void FUN_800b17f0(int param_1)
 
 {
@@ -5326,7 +5326,7 @@ void FUN_800b18f8(int param_1)
   // 8 = "blowup" thread bucket
   local_24 = 8;
   
-  // RB_Blowup_PerFrame
+  // RB_Blowup_ThTick
   local_20 = FUN_800b17f0;
   
   local_1c = 0xc;
@@ -5444,7 +5444,7 @@ void FUN_800b18f8(int param_1)
     _DAT_1f800110 = 0x19000;
   }
   
-  // RB_Burst_ThBucketColl
+  // RB_Burst_CollThBucket
   DAT_1f800130 = FUN_800b1e90;
   
   // instance -> thread
@@ -5483,7 +5483,7 @@ void FUN_800b18f8(int param_1)
   // check collision with player threads
   FUN_800425d4(uVar3,&DAT_1f800108,0);
   
-  // RB_Burst_LevInstColl
+  // RB_Burst_CollLevInst
   DAT_1f800130 = FUN_800b20a4;
   return;
 }
@@ -5536,7 +5536,7 @@ void FUN_800b1bd8(int param_1)
   return;
 }
 
-// RB_Burst_PerFrame
+// RB_Burst_ThTick
 void FUN_800b1d2c(int param_1)
 
 {
@@ -5640,7 +5640,7 @@ void FUN_800b1d2c(int param_1)
   return;
 }
 
-// RB_Burst_ThBucketColl
+// RB_Burst_CollThBucket
 // callback when searching thread buckets
 void FUN_800b1e90(int param_1,int param_2)
 
@@ -5753,7 +5753,7 @@ void FUN_800b1e90(int param_1,int param_2)
   return;
 }
 
-// RB_Burst_LevInstColl (bsp callback)
+// RB_Burst_CollLevInst (bsp callback)
 // param_1 - 1f800108
 // param_2 - VisData (hitbox)
 void FUN_800b20a4(int param_1,int param_2)
@@ -5841,7 +5841,7 @@ void FUN_800b2154(int param_1)
   // 7 = "burst" thread bucket
   local_34 = 7;
   
-  // RB_Burst_PerFrame
+  // RB_Burst_ThTick
   local_30 = FUN_800b1d2c;
   
   local_2c = 0xc;
@@ -6001,7 +6001,7 @@ void FUN_800b2154(int param_1)
     }
   }
   
-  // RB_Burst_ThBucketColl (callback for threadbucket collision)
+  // RB_Burst_CollThBucket (callback for threadbucket collision)
   DAT_1f800130 = FUN_800b1e90;
   
   // instance -> thread
@@ -6024,7 +6024,7 @@ void FUN_800b2154(int param_1)
   // check collision with all Tracking thread
   FUN_800425d4(*(undefined4 *)(PTR_DAT_8008d2ac + 0x1ba4),&DAT_1f800108,0);
   
-  // RB_Burst_LevInstColl (callback for BSP collision)
+  // RB_Burst_CollLevInst (callback for BSP collision)
   DAT_1f800130 = FUN_800b20a4;
   
   // Weapon_MakeHitbox_SearchBSP
@@ -6245,7 +6245,7 @@ int FUN_800b28c0(int param_1)
 // 800b3114 char drumbuddy[0xC]
 // 800b3120 next function
 
-// RB_Baron_PerFrame
+// RB_Baron_ThTick
 void FUN_800b3120(int param_1)
 {
   undefined *puVar1;
@@ -6569,7 +6569,7 @@ void FUN_800b37d4(int param_1)
   return;
 }
 
-// RB_Blade_PerFrame
+// RB_Blade_ThTick
 void FUN_800b38e4(int param_1)
 {
   int iVar1;
@@ -6770,7 +6770,7 @@ void FUN_800b39dc(void)
   return;
 }
 
-// RB_Crate_ThTick_Explode
+// RB_CrateAny_ThTick_Explode
 void FUN_800b3d04(int param_1)
 {
   short sVar1;
@@ -6810,7 +6810,7 @@ void FUN_800b3d04(int param_1)
   } while( true );
 }
 
-// RB_Crate_ThTick_Normal
+// RB_CrateAny_ThTick_Grow
 void FUN_800b3d7c(int param_1)
 {
   short sVar1;
@@ -6885,7 +6885,7 @@ void FUN_800b3d7c(int param_1)
   } while( true );
 }
 
-// RB_Crate_Weapon_ThCollide
+// RB_CrateWeapon_ThCollide
 // param_1 is the box thread
 // param_4 is 1f800108
 undefined4 FUN_800b3e7c(int param_1,int param_2,undefined4 param_3,int param_4)
@@ -6995,7 +6995,7 @@ LAB_800b420c:
   // "other" thread bucket
   uStack100 = 0xd;
   
-  // RB_Crate_ThTick_Explode
+  // RB_CrateAny_ThTick_Explode
   puStack96 = &FUN_800b3d04;
   
   uStack92 = 0;
@@ -7178,7 +7178,7 @@ code_r0x800b4024:
   return 1;
 }
 
-// RB_Crate_Weapon_LInC
+// RB_CrateWeapon_LInC
 undefined4 FUN_800b4278(int param_1,undefined4 param_2,undefined4 param_3)
 {
   code *pcVar1;
@@ -7215,7 +7215,7 @@ undefined4 FUN_800b4278(int param_1,undefined4 param_2,undefined4 param_3)
 	// give instance to thread
     *(int *)(iVar4 + 0x34) = param_1;
 	
-	// RB_Crate_Weapon_ThCollide. smash crate when hit
+	// RB_CrateWeapon_ThCollide. smash crate when hit
     *(undefined4 *)(iVar4 + 0x28) = 0x800b3e7c;
 	
 	// initialize crate object
@@ -7242,7 +7242,7 @@ undefined4 FUN_800b4278(int param_1,undefined4 param_2,undefined4 param_3)
   return uVar2;
 }
 
-// RB_Crate_Fruit_ThCollide
+// RB_CrateFruit_ThCollide
 undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
 {
   short sVar1;
@@ -7308,7 +7308,7 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
       local_40 = 0x300;
       local_3c = 0xd;
 	  
-	  // RB_Crate_ThTick_Explode
+	  // RB_CrateAny_ThTick_Explode
       local_38 = &FUN_800b3d04;
       
 	  local_34 = 0;
@@ -7462,7 +7462,7 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
   return 0;
 }
 
-// RB_Crate_Fruit_LInC
+// RB_CrateFruit_LInC
 undefined4 FUN_800b471c(int param_1,undefined4 param_2,undefined4 param_3)
 {
   code *pcVar1;
@@ -7499,7 +7499,7 @@ undefined4 FUN_800b471c(int param_1,undefined4 param_2,undefined4 param_3)
 	// give Instance to thread
     *(int *)(iVar4 + 0x34) = param_1;
 	
-	// RB_Crate_Fruit_ThCollide
+	// RB_CrateFruit_ThCollide
     *(undefined4 *)(iVar4 + 0x28) = 0x800b432c;
 	
 	// initialize crate object
@@ -7530,7 +7530,7 @@ undefined4 FUN_800b471c(int param_1,undefined4 param_2,undefined4 param_3)
   return uVar2;
 }
 
-// RB_Crate_Time_ThCollide
+// RB_CrateTime_ThCollide
 undefined4 FUN_800b47d0(int param_1,int param_2,undefined4 param_3,int param_4)
 {
   // is param2 is PTR_DAT_8008d2ac + 0x1b2c
@@ -7621,7 +7621,7 @@ LAB_800b4b38:
   local_70 = 0x300;
   local_6c = 0xd;
   
-  // RB_Crate_ThTick_Explode
+  // RB_CrateAny_ThTick_Explode
   local_68 = &FUN_800b3d04;
   
   local_64 = 0;
@@ -7811,7 +7811,7 @@ LAB_800b4b2c:
   return 1;
 }
 
-// RB_Crate_Time_LInC
+// RB_CrateTime_LInC
 undefined4 FUN_800b4ba8(int param_1,undefined4 param_2,undefined4 param_3)
 {
   code *pcVar1;
@@ -7851,7 +7851,7 @@ undefined4 FUN_800b4ba8(int param_1,undefined4 param_2,undefined4 param_3)
 	// give instance to thread
     *(int *)(iVar4 + 0x34) = param_1;
 	
-	// RB_Crate_Time_ThCollide, smash crate
+	// RB_CrateTime_ThCollide, smash crate
     *(undefined4 *)(iVar4 + 0x28) = 0x800b47d0;
 	
 	// initialize object
@@ -9655,7 +9655,7 @@ void FUN_800b6728(int param_1)
 			// instance -> thread -> funcOnCollide
             local_20 = *(undefined4 *)(*(int *)(iVar1 + 0x6c) + 0x28);
 			
-			// RB_Hazard_OnCollide_Generic_Alt
+			// RB_Hazard_ThCollide_Generic_Alt
             FUN_800ac3f8(&local_28);
           }
           goto LAB_800b6908;
@@ -11123,7 +11123,7 @@ void FUN_800b84f0(int param_1)
 		  // instance->thread->OnCollide
           uStack24 = *(undefined4 *)(*(int *)(iVar2 + 0x6c) + 0x28);
           
-		  // RB_Hazard_OnCollide_Generic_Alt
+		  // RB_Hazard_ThCollide_Generic_Alt
 		  FUN_800ac3f8(&uStack32);
         }
       }
@@ -11583,7 +11583,7 @@ void FUN_800b8c00(int param_1)
 	// make a matrix
 	FUN_8006c2a4(iVar7 + 0x30,iVar6 + 0x10);
 	
-	// SetPerFrame_AndExec RB_Seal_ThTick_Move
+	// SetThTick_AndExec RB_Seal_ThTick_Move
     FUN_800716ec(param_1,FUN_800b8e1c);
   }
   
@@ -11766,7 +11766,7 @@ void FUN_800b8e1c(int param_1)
   }
   psVar6[0x11] = (short)iVar5 + (short)(iVar3 >> 0xc) * -0x1000;
   
-  // SetPerFrame_AndExec RB_Seal_ThTick_TurnAround
+  // SetThTick_AndExec RB_Seal_ThTick_TurnAround
   FUN_800716ec(param_1,&FUN_800b8c00);
   
 LAB_800b8fdc:

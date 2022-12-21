@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_RB_Potion_PerFrame_InAir(struct Thread* t)
+void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 {
 	struct GameTracker* gGT;
 	struct Instance* inst;

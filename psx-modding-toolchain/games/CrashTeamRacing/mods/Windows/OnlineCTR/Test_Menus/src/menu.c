@@ -120,7 +120,7 @@ void ActivateMenu(struct Thread* t)
 	octr->CountPressX = 0;
 	SetNames_Characters();
 	MenuBox_Show(&menuBox);
-	SetPerFrame(t, octr->funcs[OPEN_MENU]);
+	SetThTick(t, octr->funcs[OPEN_MENU]);
 }
 
 void MenuState1_BootGame(struct Thread* t)
@@ -197,7 +197,7 @@ void MenuState2_Navigate(struct Thread* t)
 		{	
 			// hide menubox
 			MenuBox_Hide(&menuBox);
-			SetPerFrame(t, octr->funcs[MINIMIZE]);
+			SetThTick(t, octr->funcs[MINIMIZE]);
 		}
 	}
 }

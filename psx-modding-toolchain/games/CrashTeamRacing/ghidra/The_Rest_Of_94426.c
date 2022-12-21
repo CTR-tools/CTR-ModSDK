@@ -51348,7 +51348,7 @@ undefined2 * FUN_80064c38(int param_1,int param_2)
 	  // if thread->modelIndex is Aku or Uka
       if ((uint)*(ushort *)(iVar2 + 0x44) - 0x39 < 2)
 	  {
-		// RB_MaskWeapon_PerFrame
+		// RB_MaskWeapon_ThTick
         *(undefined4 *)(iVar2 + 0x2c) = 0x800afdbc;
 
 		// short duration
@@ -52051,7 +52051,7 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
 	// decrease number of missiles,
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x24) = 0x80041dc0;
 
-	// RB_Hazard_OnCollide_Missile, remove 2D target being drawn on them
+	// RB_Hazard_ThCollide_Missile, remove 2D target being drawn on them
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x28) = 0x800ac42c;
 
 	// instance -> thread -> object
@@ -52101,7 +52101,7 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
 	// if weapon is missile (should be every time)
     else
 	{
-	  // RB_Hazard_OnCollide_Missile, remove 2D target being drawn on them
+	  // RB_Hazard_ThCollide_Missile, remove 2D target being drawn on them
       *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x28) = 0x800ac42c;
 
 	  // if missile does not have a target
@@ -52341,7 +52341,7 @@ LAB_800659ec:
     else {
       DAT_1f800114 = *(ushort *)(*(int *)(iVar5 + 0x18) + 0x10) | 0x8000;
 
-	  // RB_Hazard_LevInstColl
+	  // RB_Hazard_CollLevInst
       FUN_800ad9ac(&DAT_1f800108,*(undefined4 *)(iVar5 + 0x6c));
 
 	  // InstDef -> modelID
@@ -52356,7 +52356,7 @@ LAB_800659ec:
       }
       else
 	  {
-		// RB_GenericMine_OnDestroy
+		// RB_GenericMine_ThDestroy
         FUN_800ad250(*(undefined4 *)(iVar5 + 0x6c),iVar5,puVar16);
       }
 	  
@@ -52572,7 +52572,7 @@ LAB_800659ec:
       else {
         DAT_1f800114 = *(ushort *)(*(int *)(iVar5 + 0x18) + 0x10);
 
-		// RB_Hazard_LevInstColl
+		// RB_Hazard_CollLevInst
         FUN_800ad9ac(&DAT_1f800108,*(undefined4 *)(iVar5 + 0x6c));
 
 		sVar2 = *(short *)(*(int *)(DAT_1f800150 + 0x1c) + 0x3c);
@@ -52581,7 +52581,7 @@ LAB_800659ec:
         }
         else
 		{
-		  // RB_GenericMine_OnDestroy
+		  // RB_GenericMine_ThDestroy
           FUN_800ad250(*(undefined4 *)(iVar5 + 0x6c),iVar5,iVar8);
         }
 		
@@ -63557,7 +63557,7 @@ void FUN_800715e8(undefined4 param_1)
 		  // threads JAL back to one of two labels...
 		  (**(code **)(iVar3 + 0x2c))(iVar3);
 
-// SetPerFrame_AndExec, called from PerFrame,
+// SetThTick_AndExec, called from PerFrame,
 // cancels the previous PerFrame, and goes here,
 // or if you did an ordinary JR RA from a PerFrame,
 // like TNT thread does
@@ -63609,7 +63609,7 @@ LAB_80071694:
 }
 
 
-// SetPerFrame_AndExec
+// SetThTick_AndExec
 void FUN_800716ec(int param_1,code *UNRECOVERED_JUMPTABLE)
 
 {
@@ -63625,7 +63625,7 @@ void FUN_800716ec(int param_1,code *UNRECOVERED_JUMPTABLE)
 }
 
 
-// SetPerFrame
+// SetThTick
 void FUN_80071704(int param_1,undefined4 param_2)
 
 {

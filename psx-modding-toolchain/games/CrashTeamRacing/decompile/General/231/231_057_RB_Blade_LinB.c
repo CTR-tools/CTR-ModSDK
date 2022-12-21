@@ -1,6 +1,6 @@
 #include <common.h>
 
-void RB_Blade_PerFrame();
+void RB_Blade_ThTick();
 
 void DECOMP_RB_Blade_LInB(struct Instance* inst)
 {
@@ -19,7 +19,7 @@ void DECOMP_RB_Blade_LInB(struct Instance* inst)
 			STATIC
 		), 
 		
-		RB_Blade_PerFrame,	// behavior
+		RB_Blade_ThTick,	// behavior
 		0,					// debug name
 		0					// thread relative
 	  );
