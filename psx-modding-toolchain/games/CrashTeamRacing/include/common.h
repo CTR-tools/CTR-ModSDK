@@ -1111,13 +1111,13 @@ struct Thread
 	int timesDestroyed;
 
 	// 0x24
-	void* funcOnDestroy;
+	void* funcThDestroy;
 
 	// 0x28
-	void* funcOnCollide;
+	void* funcThCollide;
 
 	// 0x2c
-	void* funcPerFrame;
+	void* funcThTick;
 
 	// This would be 9900C for players, or a pointer
 	// to a camera, etc
@@ -2863,7 +2863,7 @@ struct Turbo
    short fireSize;
 
    // 0xC
-   // Value that decreases every time Turbo_FuncPerFrame gets called
+   // Value that decreases every time Turbo_ThTick gets called
    // If it reaches 0 it makes the fire start disappearing
    char fireDisappearCountdown;
 

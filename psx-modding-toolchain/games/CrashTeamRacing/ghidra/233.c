@@ -698,7 +698,7 @@ void FUN_800ac714(void)
   // loop through all threads
   while (iVar3 != 0) 
   {
-	// check if funcOnDestroy != CS_Podium_Prize_ThDestroy
+	// check if funcThDestroy != CS_Podium_Prize_ThDestroy
     if (*(code **)(iVar3 + 0x24) != FUN_800afe58) 
 	{
 	  // This thread is now dead
@@ -2941,7 +2941,7 @@ void FUN_800aedf8(int param_1)
 	  // At this point, there must be a boss cutscene,
 	  // or else the function would return by now
 	  
-	  // Change PerFrame function, CS_Boss_ThTick
+	  // Change ThTick function, CS_Boss_ThTick
       *(undefined4 *)(param_1 + 0x2c) = 0x800ae9a8;
 	  
 	  // If you are not at the podium for winning a relic
@@ -3065,7 +3065,7 @@ int FUN_800af328
 	// get the thread
     iVar1 = *(int *)(iVar9 + 0x6c);
 	
-	// set funcOnDestroy to remove instance from instance pool
+	// set funcThDestroy to remove instance from instance pool
     *(undefined4 *)(iVar1 + 0x24) = 0x80041dfc;
   }
   
@@ -3755,7 +3755,7 @@ void FUN_800afe90(undefined4 param_1,undefined4 param_2,short *param_3)
   // get object from thread
   psVar11 = *(short **)(*(int *)(iVar3 + 0x6c) + 0x30);
   
-  // instance -> thread -> funcOnDestroy
+  // instance -> thread -> funcThDestroy
   *(undefined4 *)(*(int *)(iVar3 + 0x6c) + 0x24) = 0x800afe58;
   
   psVar11[0x11] = 0x40;
@@ -3922,7 +3922,7 @@ void FUN_800b0248(short *param_1)
   // if the instance was built
   if (iVar2 != 0) 
   {
-	// set funcOnDestroy to remove instance from instance pool
+	// set funcThDestroy to remove instance from instance pool
     *(undefined4 *)(*(int *)(iVar2 + 0x6c) + 0x24) = 0x80041dfc;
 	
 	// set X and Y positions for podium

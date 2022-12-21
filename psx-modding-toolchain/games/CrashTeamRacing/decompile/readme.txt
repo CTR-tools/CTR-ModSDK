@@ -23,7 +23,7 @@ Functions:
 -InterpolatePosition2D_HUD
 -InterpolatePosition2D_Linear
 -Map_DrawMap
--Turbo_FuncPerFrame
+-Turbo_ThTick
 -Turbo_Increment
 -MM_Characters_boolIsInvalid
 -RB_MinePool_Remove
@@ -51,5 +51,5 @@ Some functions have been decompiled for all the 5 builds of CTR that we cater to
 -DecalFont_DrawMultiLineStrlen
 -InterpBySpeed
 -LOAD_ReadFile
--Turbo_FuncPerFrame
+-Turbo_ThTick
 -Turbo_Increment

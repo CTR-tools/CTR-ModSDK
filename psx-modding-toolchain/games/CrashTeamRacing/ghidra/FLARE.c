@@ -1,7 +1,7 @@
 
 // called "FLARE" for "lensflare" string
 
-// FLARE_PerFrame
+// FLARE_ThTick
 void FUN_80024c4c(int param_1)
 
 {

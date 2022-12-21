@@ -3,8 +3,8 @@
 void GhostBuffer_RecordBoosts(int reserves, u_char type, int fireLevel);
 void Turbo_Audio(struct Driver* driver, int param_2);
 struct Instance* INSTANCE_BirthWithThread(int m, char* name, u_int param_3, u_int param_4, void* func, u_int param_6, struct Thread* t);
-void Turbo_FuncPerFrame(int param_1);
-void Turbo_OnDestroy();
+void Turbo_ThTick(int param_1);
+void Turbo_ThDestroy();
 struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
 void GAMEPAD_Vib_4(struct Driver* driver, u_int param_2, int param_3);
 
@@ -123,7 +123,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			&sdata->s_turbo1[0],	// name
 			0x300, 				// SmallStackPool
 			TURBO, 				// ThreadBucket
-			Turbo_FuncPerFrame,	// func
+			Turbo_ThTick,	// func
 			0x10, 				// object size
 			0					// no parent thread
 		);
@@ -135,7 +135,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// get thread, ignore all collisions
 			turboThread = turboInst1->thread;
 			turboThread->flags |= 0x1000;
-			turboThread->funcOnDestroy = Turbo_OnDestroy;
+			turboThread->funcThDestroy = Turbo_ThDestroy;
 			
 			// turbo #2
 			turboInst2 = INSTANCE_Birth3D(

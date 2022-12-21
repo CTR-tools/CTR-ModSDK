@@ -2,7 +2,7 @@
 
 void DecalFont_DrawLine(char*, int, int, int, int);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
-void GhostBuffer_PerFrame();
+void GhostBuffer_ThTick();
 void* MEMPACK_AllocMem(int size, char* name);
 
 struct MainGameStruct
@@ -127,11 +127,11 @@ void RunUpdateHook()
 		ghostTh = gGT->threadBuckets[GHOST].thread;
 
 		// if transparency is disabled
-		if (*(char*)(GhostBuffer_PerFrame + 0x1B8) == 0)
+		if (*(char*)(GhostBuffer_ThTick + 0x1B8) == 0)
 		{
 			// set "lui" to set 6,
 			// so that flag added is 0x60000
-			*(char*)(GhostBuffer_PerFrame + 0x1B8) = 6;
+			*(char*)(GhostBuffer_ThTick + 0x1B8) = 6;
 
 			// loop until you get nullptr
 			while(ghostTh != 0)
@@ -155,7 +155,7 @@ void RunUpdateHook()
 		else
 		{
 			// Remove it
-			*(char*)(GhostBuffer_PerFrame + 0x1B8) = 0;
+			*(char*)(GhostBuffer_ThTick + 0x1B8) = 0;
 
 			// loop until you get nullptr
 			while(ghostTh != 0)
@@ -189,12 +189,12 @@ void RunUpdateHook()
 		while(ghostTh != 0)
 		{
 			// if ghost is paused, then resume
-			if(ghostTh->funcPerFrame == 0)
-				ghostTh->funcPerFrame = GhostBuffer_PerFrame;
+			if(ghostTh->funcThTick == 0)
+				ghostTh->funcThTick = GhostBuffer_ThTick;
 
 			// if ghost is running, then pause
-			else if(ghostTh->funcPerFrame == GhostBuffer_PerFrame)
-				ghostTh->funcPerFrame = 0;
+			else if(ghostTh->funcThTick == GhostBuffer_ThTick)
+				ghostTh->funcThTick = 0;
 
 			// if this is a "robotcar", which is caused
 			// by the ghost finishing a race

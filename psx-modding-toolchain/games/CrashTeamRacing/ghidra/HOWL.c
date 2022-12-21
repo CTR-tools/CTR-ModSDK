@@ -4363,7 +4363,7 @@ void FUN_8002c1d0(void)
 }
 
 
-// howl_PlayAudio_PerFrame
+// howl_PlayAudio_Update
 void FUN_8002c208(void)
 {
   // plays all non-xa audio
@@ -5368,7 +5368,7 @@ FUN_8006fbac("CDSYS_XAPlay( CDSYS_XA_TYPE_GAME, %d ) Failed\n",
   return;
 }
 
-// Voiceline_PerFrame
+// Voiceline_Update
 void FUN_8002d0f8(void)
 
 {
@@ -5809,7 +5809,7 @@ void FUN_8002d554(undefined4 param_1)
 }
 
 
-// Audio_PerFrame
+// Audio_Update1
 void FUN_8002d67c(void)
 
 {
@@ -5894,7 +5894,7 @@ void FUN_8002d67c(void)
 
     } while (iVar5 < 8);
 
-	// Voiceline_PerFrame
+	// Voiceline_Update
     FUN_8002d0f8();
 
 	// Level_AmbientSound
@@ -6024,7 +6024,7 @@ void FUN_8002d67c(void)
       iVar3 = iVar7;
     } while (iVar5 < 8);
 
-	// Voiceline_PerFrame
+	// Voiceline_Update
     FUN_8002d0f8();
 
 	// Level_AmbientSound

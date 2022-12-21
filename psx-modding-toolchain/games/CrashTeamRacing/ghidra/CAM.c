@@ -2613,7 +2613,7 @@ int FUN_8001b254(short *param_1,short *param_2,short *param_3)
   return iVar1 >> 0xc;
 }
 
-// CAM_PerFrame
+// CAM_ThTick
 void FUN_8001b334(int param_1)
 
 {
@@ -2669,7 +2669,7 @@ void FUN_8001b334(int param_1)
 				// and if not drawing intro-race cutscene
 				((*(uint *)PTR_DAT_8008d2ac & 0x2000204f) == 0) &&
 
-				// driver -> instance -> thread -> funcPerFrame == 0
+				// driver -> instance -> thread -> funcThTick == 0
 				(*(int *)(*(int *)(*(int *)(iVar22 + 0x1c) + 0x6c) + 0x2c) == 0)
 			) &&
 		// If this is human and not AI

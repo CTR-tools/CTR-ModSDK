@@ -23,10 +23,10 @@
 800147c8 BOTS_UpdateGlobals
 80014898 BOTS_SetRotation
 80014a34 BOTS_LevInstColl
-80014b88 BOTS_PerFrame_EngineRevving
+80014b88 BOTS_ThTick_EngineRevving
 80014c94 BOTS_MaskGrab
 80014ecc BOTS_Killplane
-80015074 BOTS_PerFrame_Drive
+80015074 BOTS_ThTick_Drive
 80017f50 BOTS_ChangeState
 80018318 BOTS_CollideWithOtherAI
 8001847c BOTS_GotoStartingLine
@@ -53,7 +53,7 @@
 8001B4A4 CAM_SetDesiredPosRot
 8001b50c CAM_FollowDriver_Normal
 8001c6a4 CAM_MapRange_PosPoints
-8001c784 CAM_PerFrame
+8001c784 CAM_ThTick
 
 // start of CDSYS
 8001d7b0 CDSYS_Init
@@ -180,7 +180,7 @@
 800262e4 ElimBG_Deactivate
 
 // Does not exist prior to 926
-80026328 FLARE_PerFrame
+80026328 FLARE_ThTick
 80026814 FLARE_Init
 
 80026888 GAMEPAD_Init
@@ -215,7 +215,7 @@
 80028360 GAMEPROG_NewGame_OnBoot
 80028398 GAMEPROG_GetPtrHighScoreTrack
 
-800283f0 GhostBuffer_PerFrame
+800283f0 GhostBuffer_ThTick
 80028d50 GhostBuffer_InitMemory
 800290a0 GhostBuffer_InitDriver
 8002930c GhostBuffer_InitRecording
@@ -326,7 +326,7 @@
 8002d69c Cutscene_VolumeBackup
 8002d6e0 Cutscene_VolumeRestore
 
-8002d718 howl_PlayAudio_PerFrame
+8002d718 howl_PlayAudio_Update
 8002d85c howl_InitChannelAttr_EngineFX
 8002d934 howl_InitChannelAttr_OtherFX
 8002da20 howl_PauseAudio
@@ -343,7 +343,7 @@
 8002e0c4 Voiceline_ToggleEnable
 8002e0f8 Voiceline_RequestPlay
 8002e444 Voiceline_StartPlay
-8002e6b8 Voiceline_PerFrame
+8002e6b8 Voiceline_Update
 8002e868 Voiceline_EmptyFunc
 8002e870 Voiceline_SetDefaults
 
@@ -351,7 +351,7 @@
 8002ea90 Audio_SetState_Safe
 8002ead0 Audio_AdvHub_SwapSong
 8002eb18 Audio_SetMaskSong
-8002ec40 Audio_PerFrame
+8002ec40 Audio_Update
 8002f218 Audio_SetDefaults
 8002f278 Audio_SetReverbMode
 
@@ -651,8 +651,8 @@
 80041864 Particle_CreateInstance
 
 80041dac RivalWeapons_Init
-80041e14 RivalWeapons_PerFrame
-80042a50 StartLine_PerFrame
+80041e14 RivalWeapons_Update
+80042a50 StartLine_Update
 800431e0 Tawna_Init
 
 8004331c THREAD_DestroyTracker
@@ -698,7 +698,7 @@
 800454a4 CheckeredFlag_SetFullyOffScreen
 800454d4 CheckeredFlag_SetCanDraw
 800454e0 CheckeredFlag_GetCanDraw
-800454ec CheckeredFlag_PerFrame_GetOT
+800454ec CheckeredFlag_GetOT
 800456dc CheckeredFlag_ResetTextAnim
 800456ec CheckeredFlag_DrawLoadingString
 80045934 CheckeredFlag_DrawSelf
@@ -750,7 +750,7 @@
 // unknown 80048cd8
 
 80048d1c LoadSave_LoadProfileFromHub_MenuBoxFuncPtr
-80048d70 LoadSave_PerFrame
+80048d70 LoadSave_ThTick
 80048e94 LoadSave_PrintInteger
 80048f2c LoadSave_UI_ConvertX
 80048f4c LoadSave_UI_ConvertY
@@ -797,10 +797,10 @@
 8004b280 SaveLapTime
 // extra func in japan retail
 
-8004b43c PerFrame_FruitDisp_and_TimeBox
-8004b574 PerFrame_Hud_Object3D
-8004b638 PerFrame_CtrLetters
-8004b728 PerFrame_big1
+8004b43c ThTick_FruitDisp_and_TimeBox
+8004b574 ThTick_Hud_Object3D
+8004b638 ThTick_CtrLetters
+8004b728 ThTick_big1
 
 8004b7cc UI_ConvertX_2
 8004b7ec UI_ConvertY_2
@@ -1034,15 +1034,15 @@
 
 // extra here in sep3 (tombstone vibrate)
 
-80067d98 AdvHub_TalkingMask_FuncPerFrame
+80067d98 AdvHub_TalkingMask_ThTick
 80067f80 AdvHub_TalkingMask_Init
 80067fec AdvHub_TalkingMask_PlayXA
 80068054 AdvHub_TalkingMask_boolNotTalking
 80068064 AdvHub_TalkingMask_End
 
 8006808c Turbo_ProcessBucket
-80068178 Turbo_OnDestroy
-800681d0 Turbo_FuncPerFrame
+80068178 Turbo_ThDestroy
+800681d0 Turbo_ThTick
 
 800689b8 DrawSky_Full
 80068acc DrawSky_Piece

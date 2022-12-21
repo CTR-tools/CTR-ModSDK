@@ -1346,7 +1346,7 @@ void FUN_800ad3ec(int param_1)
   // Give Instance to Thread
   *(int *)(iVar4 + 0x34) = param_1;
   
-  // set funcOnDestroy, AH_WarpPad_ThDestroy
+  // set funcThDestroy, AH_WarpPad_ThDestroy
   *(undefined4 *)(iVar4 + 0x24) = 0x800ad2c8;
   
   // set modelID to zero ??
@@ -3080,7 +3080,7 @@ void FUN_800af3e4(int param_1)
 		// 0x80058c44 is an empty function that does nothing
 		*(undefined4 *)
 		
-		  // driver->instance->thread->funcPerFrame = 0x80058c44
+		  // driver->instance->thread->funcThTick = 0x80058c44
          (*(int *)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x24ec) + 0x1c) + 0x6c) + 0x2c) = 0x80058c44;
 		 
 		// Set CameraDC's desired position and rotation,
@@ -3109,7 +3109,7 @@ void FUN_800af3e4(int param_1)
       if (((*(uint *)(PTR_DAT_8008d2ac + 0x1508) & 0x200) == 0) &&
          ((*(ushort *)(piVar10 + 1) & 4) == 0)) 
 	  {
-		// instance -> thread -> funcPerFrame = 0
+		// instance -> thread -> funcThTick = 0
         *(undefined4 *)(*(int *)(iVar8 + 0x6c) + 0x2c) = 0;
         
 		*(ushort *)(piVar10 + 1) = *(ushort *)(piVar10 + 1) | 4;

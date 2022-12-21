@@ -44,7 +44,7 @@ void RunUpdateHook()
 			BOTS_Driver_Init(1);
 
 			// disable AI function, so all variables are free to edit
-			sdata->gGT->threadBuckets[ROBOT].thread->funcPerFrame = 0;
+			sdata->gGT->threadBuckets[ROBOT].thread->funcThTick = 0;
 
 			// set scale to default value
 			for(i = 0; i < 3; i++)

@@ -39,7 +39,7 @@ void* MEMPACK_AllocMem(int size, char* name);
 void Level_RequestNewLEV(int levID);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void DrawTextBackground(RECT* r, int flag, void* ot);
-void CAM_PerFrame(struct Thread* t);
+void CAM_ThTick(struct Thread* t);
 void DrawPowerslideMeter(int x, int y, struct Driver* d);
 int MATH_Cos(int angle);
 int MATH_Sin(int angle);
@@ -274,7 +274,7 @@ void CameraPerFrameHook(struct Thread* t)
 	DrawPowerslideMeter((int)hud[0x20],(int)hud[0x21],driver);
 
 	// call original function
-	CAM_PerFrame(t);
+	CAM_ThTick(t);
 }
 
 void CameraInitHook()
@@ -283,7 +283,7 @@ void CameraInitHook()
 
 	while(t != 0)
 	{
-		t->funcPerFrame = CameraPerFrameHook;
+		t->funcThTick = CameraPerFrameHook;
 		t = t->siblingThread;
 	}
 }

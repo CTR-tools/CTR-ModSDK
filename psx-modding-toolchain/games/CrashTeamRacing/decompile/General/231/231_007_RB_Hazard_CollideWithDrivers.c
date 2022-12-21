@@ -50,7 +50,7 @@ struct Instance* RB_Hazard_CollideWithDrivers(
 		// 2D collision (barrel, warpball)
 		distCheck = dist[0] + dist[2];
 		
-		// to be more optimal, just do weaponInst->thread->funcPerFrame == Mine_Generic_PerFrame
+		// to be more optimal, just do weaponInst->thread->funcThTick == GenericMine_ThTick
 		if (
 				((unsigned int)modelID - 0x46 < 2) ||	// red or green potion
 				(modelID == 6) ||						// Nitro

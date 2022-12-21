@@ -66,9 +66,9 @@ void WeaponBox_OnCollide(struct Thread* boxTh, struct Thread* carTh)
 	d->heldItemID = 12;
 
 	// clear the function pointers
-	boxTh->funcOnDestroy = 0;
-	boxTh->funcOnCollide = 0;
-	boxTh->funcPerFrame = 0;
+	boxTh->funcThDestroy = 0;
+	boxTh->funcThCollide = 0;
+	boxTh->funcThTick = 0;
 
 	// stop drawing the object
 	boxTh->inst->scale[0] = 0;
@@ -140,8 +140,8 @@ void RunInitHook()
 			// could kill all the threads if this
 			// idea doesn't work out in gameplay
 
-			// set new funcOnCollide
-			th->funcOnCollide = WeaponBox_OnCollide;
+			// set new funcThCollide
+			th->funcThCollide = WeaponBox_OnCollide;
 		}
 
 		th = th->siblingThread;

@@ -2,7 +2,7 @@
 // because of other "ghost"-related functions
 // elsewhere in the game
 
-// GhostBuffer_PerFrame
+// GhostBuffer_ThTick
 void FUN_80026ed8(int param_1)
 
 {
@@ -169,7 +169,7 @@ void FUN_80026ed8(int param_1)
 		  // Turn Ghost into Robotcar
           FUN_80017318(iVar22);
 
-		  // BOTS_PerFrame_Drive
+		  // BOTS_ThTick_Drive
           FUN_80013c18(param_1);
 
           //turn on 26th bit of Actions Flag set (means racer finished the race)

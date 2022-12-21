@@ -119,7 +119,7 @@ common, exe, InterpolatePosition2D_Linear, 0x0, General/InterpolatePosition2D_Li
 common, exe, DrawJumpMeter, 0x0, General/DrawJumpMeter.c
 common, exe, DrawPowerslideMeter, 0x0, General/DrawPowerslideMeter.c
 common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
-common, exe, Turbo_FuncPerFrame, 0x0, General/Turbo_FuncPerFrame.c
+common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
 common, exe, DrawRectangle, 0x0, General/DrawRectangle.c
 common, exe, DrawBoxOutline_LowLevel, 0x0, General/DrawBoxOutline_LowLevel.c
 

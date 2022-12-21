@@ -814,7 +814,7 @@ void FUN_80013444(int param_1,short param_2)
 
   *(undefined4 *)(param_1 + 0x5a8) = 0;
 
-  // if BOTS_PerFrame_Drive or BOTS_Driver_Convert
+  // if BOTS_ThTick_Drive or BOTS_Driver_Convert
   if (param_2 == 0)
   {
 	// set rotX from nav data
@@ -913,7 +913,7 @@ void FUN_800135d8(int param_1)
 		 )
 	  {
 		// execute funcLevThreadsBirth, make thread for this instance
-		// upon collision with the instance, let it run thread->OnCollide
+		// upon collision with the instance, let it run thread->funcThCollide
         (**(code **)(iVar1 + 8))(iVar2,param_1,&DAT_1f800108);
       }
     }
@@ -921,7 +921,7 @@ void FUN_800135d8(int param_1)
   return;
 }
 
-// BOTS_PerFrame_EngineRevving
+// BOTS_ThTick_EngineRevving
 void FUN_8001372c(int param_1)
 {
   int iVar1;
@@ -983,7 +983,7 @@ void FUN_8001372c(int param_1)
 	// squish timer
     *(undefined2 *)(iVar2 + 0x404) = 0;
 
-	// execute, then assign BOTS_PerFrame_Drive
+	// execute, then assign BOTS_ThTick_Drive
     FUN_800716ec(param_1,FUN_80013c18);
   }
   return;
@@ -1108,7 +1108,7 @@ void FUN_80013838(int param_1)
     *(ushort *)(iVar4 + 4) = *(ushort *)(iVar4 + 4) | 1;
   }
 
-  // execute, then assign per-frame to BOTS_PerFrame_EngineRevving
+  // execute, then assign per-frame to BOTS_ThTick_EngineRevving
   FUN_800716ec(param_1,FUN_8001372c);
 
   return;
@@ -1212,7 +1212,7 @@ void FUN_80013a70(int param_1)
 // Handles drawing AI
 // Position, rotation, animation, etc
 
-// BOTS_PerFrame_Drive
+// BOTS_ThTick_Drive
 void FUN_80013c18(int param_1)
 {
   bool bVar1;
@@ -3989,7 +3989,7 @@ LAB_80017218:
 	// 0 = no relation to param4
 	// 0x100 = LargeStackPool
 	// 0x1 = robotcar thread bucket
-	// BOTS_PerFrame_Drive
+	// BOTS_ThTick_Drive
     iVar3 = FUN_8004205c(0x62c0101,FUN_80013c18,"robotcar",0);
 
 	// Grab the pointer to the AI attached to the thread
@@ -4124,7 +4124,7 @@ LAB_800173e4:
 	  // current navFrame
 	  *(undefined4 *)(param_1 + 0x5a4) = uVar5;
 
-	  // driver -> instance -> thread -> funcPerFrame = BOTS_PerFrame_Drive
+	  // driver -> instance -> thread -> funcThTick = BOTS_ThTick_Drive
       *(undefined4 *)(*(int *)(*(int *)(param_1 + 0x1c) + 0x6c) + 0x2c) = 0x80013c18;
 
 	  // if you are in battle mode

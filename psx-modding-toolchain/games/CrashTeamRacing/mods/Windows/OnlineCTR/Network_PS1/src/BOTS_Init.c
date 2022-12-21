@@ -1,6 +1,6 @@
 #include "global.h"
 
-void BOTS_PerFrame_Drive_custom(struct Thread* th);
+void BOTS_ThTick_Drive_custom(struct Thread* th);
 
 struct Driver* BOTS_Driver_Init_custom(int slot, int bitFlag)
 {
@@ -12,7 +12,7 @@ struct Driver* BOTS_Driver_Init_custom(int slot, int bitFlag)
 	#endif
 	
 	th = (struct Thread*)THREAD_BirthWithObject(
-			0x62c0101,BOTS_PerFrame_Drive_custom,"robotcar",0);
+			0x62c0101,BOTS_ThTick_Drive_custom,"robotcar",0);
 	
 	dr = (struct Driver*)th->object;
 	
@@ -29,7 +29,7 @@ struct Driver* BOTS_Driver_Init_custom(int slot, int bitFlag)
 	return dr;
 }
 
-void BOTS_PerFrame_Drive_custom(struct Thread* th)
+void BOTS_ThTick_Drive_custom(struct Thread* th)
 {
 	int i;
 	struct Driver* dr = th->object;

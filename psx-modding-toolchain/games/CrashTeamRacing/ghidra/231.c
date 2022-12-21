@@ -741,7 +741,7 @@ undefined4 FUN_800ac42c(int param_1)
 // RB_Hazard_ThCollide_Generic
 // param_1 - thread
 // param_2 - thread (again? unused)
-// param_3 - funcOnCollide (unused)
+// param_3 - funcThCollide (unused)
 // param_4 - unknown, unused
 undefined4 FUN_800ac4b8(int param_1)
 {
@@ -945,7 +945,7 @@ void FUN_800ac6b4(int param_1)
     *(undefined2 *)(iVar7 + 0xe) = 0xffa0;
   }
   
-  // reduce cooldown time, set from GenericMine_PerFrame
+  // reduce cooldown time, set from GenericMine_ThTick
   iVar4 = (uint)*(ushort *)(iVar7 + 0x2a) - (uint)*(ushort *)(PTR_DAT_8008d2ac + 0x1d04);
   *(undefined2 *)(iVar7 + 0x2a) = (short)iVar4;
   
@@ -1116,7 +1116,7 @@ void FUN_800aca50(int param_1)
 	  
       puVar1 = PTR_DAT_8008d2ac;
       
-	  // Instance->thread->funcOnCollide
+	  // Instance->thread->funcThCollide
 	  *(undefined4 *)(*(int *)(param_1 + 0x6c) + 0x28) = 0x800ac4b8;
 	  
 	  // Instance->thread->playerthread = Player->Instance->thread
@@ -1497,10 +1497,10 @@ LAB_800ad174:
         *(undefined4 *)(iVar6 + 0x48) = uVar10;
         *(undefined4 *)(iVar6 + 0x4c) = uVar8;
 		
-		// set funcOnDestroy to remove instance from instance pool
+		// set funcThDestroy to remove instance from instance pool
         *(undefined4 *)(*(int *)(iVar6 + 0x6c) + 0x24) = 0x80041dfc;
 		
-		// set funcOnCollide
+		// set funcThCollide
         *(undefined4 *)(*(int *)(iVar6 + 0x6c) + 0x28) = 0x800ac4b8;
 		
 		// Get object from thread
@@ -2064,7 +2064,7 @@ undefined4 FUN_800ad9ac(int param_1,undefined4 param_2)
     if ((iVar1 != 0) && (*(code **)(iVar1 + 8) != (code *)0x0)) 
 	{		
 	  // execute funcLevThreadsBirth, make thread for this instance
-	  // upon collision with the instance, let it run thread->OnCollide
+	  // upon collision with the instance, let it run thread->funcThCollide
       uVar2 = (**(code **)(iVar1 + 8))(iVar4,param_2,param_1);
 	  
 	  // if not PU_WUMPA_FRUIT
@@ -2608,10 +2608,10 @@ LAB_800ae440:
 		
 		// this must be a missile
 		
-		// instance -> thread -> funcOnCollide
+		// instance -> thread -> funcThCollide
         pcVar4 = *(code **)(*(int *)(iVar8 + 0x6c) + 0x28);
 		
-		// execute funcOnCollide
+		// execute funcThCollide
         (*pcVar4)(*(int *)(iVar8 + 0x6c),param_1,pcVar4,0);
       }
     }
@@ -2619,10 +2619,10 @@ LAB_800ae440:
 	// if mine was hit
 	else 
 	{
-	  // instance -> thread -> funcOnCollide
+	  // instance -> thread -> funcThCollide
       pcVar4 = *(code **)(*(int *)(iVar8 + 0x6c) + 0x28);
 	  
-	  // execute funcOnCollide
+	  // execute funcThCollide
       (*pcVar4)(*(int *)(iVar8 + 0x6c),param_1,pcVar4,0);
     }
   }
@@ -4545,7 +4545,7 @@ void FUN_800b0454(int param_1)
   *(undefined4 *)(iVar10 + 0x48) = uVar14;
   *(undefined4 *)(iVar10 + 0x4c) = uVar7;
   
-  // set funcOnDestroy to remove instance from instance pool
+  // set funcThDestroy to remove instance from instance pool
   *(undefined4 *)(*(int *)(iVar10 + 0x6c) + 0x24) = 0x80041dfc;
   
   // set scale (x, y, z)
@@ -4908,7 +4908,7 @@ void FUN_800b1220(int param_1)
 						// driver -> instance -> thread
                          *(undefined4 *)(*(int *)(param_1 + 0x1c) + 0x6c));
 	
-	// set funcOnDestroy to remove instance from instance pool	
+	// set funcThDestroy to remove instance from instance pool	
     *(undefined4 *)(*(int *)(iVar1 + 0x6c) + 0x24) = 0x80041dfc;
 	
 	// Set rotation, 5 direction vectors
@@ -5055,7 +5055,7 @@ void FUN_800b1458(int param_1)
   *(undefined4 *)(iVar1 + 0x48) = uVar4;
   *(undefined4 *)(iVar1 + 0x4c) = uVar5;
   
-  // set funcOnDestroy to remove instance from instance pool
+  // set funcThDestroy to remove instance from instance pool
   *(undefined4 *)(*(int *)(iVar1 + 0x6c) + 0x24) = 0x80041dfc;
   
   // set scale
@@ -5173,7 +5173,7 @@ void FUN_800b1630(int param_1)
   // set scale
   *(undefined2 *)(iVar1 + 0x22) = 0x1000;
   
-  // set funcOnDestroy to remove instance from instance pool
+  // set funcThDestroy to remove instance from instance pool
   *(undefined4 *)(*(int *)(iVar1 + 0x6c) + 0x24) = 0x80041dfc;
   return;
 }
@@ -5741,13 +5741,13 @@ void FUN_800b1e90(int param_1,int param_2)
     }
   }
   
-  // get funcOnCollide
+  // get funcThCollide
   pcVar2 = *(code **)(param_2 + 0x28);
   
   // if function pointer is valid
   if (pcVar2 != (code *)0x0) 
   {
-	// execute funcOnCollide
+	// execute funcThCollide
     (*pcVar2)(param_2,*(undefined4 *)(param_1 + 0x18),pcVar2,3);
   }
   return;
@@ -5791,7 +5791,7 @@ void FUN_800b20a4(int param_1,int param_2)
         if ((iVar2 != 0) && (*(code **)(iVar2 + 8) != (code *)0x0)) 
 		{
 		  // execute funcLevThreadsBirth, make thread for this instance
-		  // upon collision with the instance, let it run thread->OnCollide
+		  // upon collision with the instance, let it run thread->funcThCollide
           (**(code **)(iVar2 + 8))(iVar3,*(undefined4 *)(param_1 + 0x18),param_1);
         }
       }
@@ -7223,7 +7223,7 @@ undefined4 FUN_800b4278(int param_1,undefined4 param_2,undefined4 param_3)
     *(undefined2 *)(puVar3 + 1) = 0;
   }
   
-  // Get instance's funcOnCollide
+  // Get instance's funcThCollide
   pcVar1 = *(code **)(iVar4 + 0x28);
   
   // if there is no pointer
@@ -7511,7 +7511,7 @@ undefined4 FUN_800b471c(int param_1,undefined4 param_2,undefined4 param_3)
     *(undefined2 *)(puVar3 + 1) = 0;
   }
   
-  // get the funcOnCollide
+  // get the funcThCollide
   pcVar1 = *(code **)(iVar4 + 0x28);
   
   // if there is no function
@@ -7859,7 +7859,7 @@ undefined4 FUN_800b4ba8(int param_1,undefined4 param_2,undefined4 param_3)
     *(undefined2 *)(puVar3 + 1) = 0;
   }
   
-  // get thread's funcOnCollide
+  // get thread's funcThCollide
   pcVar1 = *(code **)(iVar4 + 0x28);
   
   // if the funcPtr does not exist
@@ -8055,7 +8055,7 @@ undefined4 FUN_800b4e7c(int param_1,undefined4 param_2,undefined4 param_3)
 		// if there is a thread
 		(iVar3 != 0) && 
 		(
-			// get the funcOnCollide
+			// get the funcThCollide
 			pcVar2 = *(code **)(iVar3 + 0x28),
 			
 			// if there is a function pointer
@@ -8337,7 +8337,7 @@ undefined4 FUN_800b5210(int param_1,undefined4 param_2,undefined4 param_3)
 		(iVar3 != 0) && 
 		
 		(
-			// get funcOnCollide
+			// get funcThCollide
 			pcVar2 = *(code **)(iVar3 + 0x28), 
 		
 			// If this is a valid funcPtr
@@ -8356,7 +8356,7 @@ undefined4 FUN_800b5210(int param_1,undefined4 param_2,undefined4 param_3)
 	// and therefore the object is drawn
     else 
 	{
-	  // Execute th->OnCollide pointer
+	  // Execute th->funcThCollide pointer
       uVar1 = (*pcVar2)(iVar3,param_2,pcVar2,param_3);
     }
   }
@@ -8811,7 +8811,7 @@ void FUN_800b5984(int param_1)
 	  // reset animation frame
       *(undefined2 *)(iVar7 + 0x54) = 0;
 	  
-	  // Change PerFrame to RB_Armadillo_ThTick_Rolling
+	  // Change ThTick to RB_Armadillo_ThTick_Rolling
       FUN_800716ec(param_1,&FUN_800b5b74);
     }
     else 
@@ -8848,10 +8848,10 @@ LAB_800b5a08:
 		// if there is a collision
         if (iVar4 != 0) 
 		{
-		  // instance -> thread -> funcOnCollide
+		  // instance -> thread -> funcThCollide
           pcVar5 = *(code **)(*(int *)(iVar4 + 0x6c) + 0x28);
 		  
-		  // execute funcOnCollide
+		  // execute funcThCollide
           (*pcVar5)(*(int *)(iVar4 + 0x6c),param_1,pcVar5,0);
         }
       }
@@ -8985,10 +8985,10 @@ void FUN_800b5b74(int param_1)
 			// if there is a collision
 			if (iVar3 != 0) 
 			{
-			  // funcOnCollide
+			  // funcThCollide
               pcVar4 = *(code **)(*(int *)(iVar3 + 0x6c) + 0x28);
 			  
-			  // execute funcOnCollide
+			  // execute funcThCollide
               (*pcVar4)(*(int *)(iVar3 + 0x6c),param_1,pcVar4,0);
             }
           }
@@ -9116,7 +9116,7 @@ void FUN_800b5dd0(int param_1)
 	  // give instance to thread
       *(int *)(iVar3 + 0x34) = param_1;
 	  
-	  // set funcOnCollide to hurt the player
+	  // set funcThCollide to hurt the player
       *(undefined4 *)(iVar3 + 0x28) = 0x800b5dbc;
 	  
 	  // time rolling
@@ -9300,10 +9300,10 @@ void FUN_800b5f50(int param_1)
 		// if there is a collision
 		if (iVar7 != 0) 
 		{
-		  // instance -> thread -> funcOnCollide
+		  // instance -> thread -> funcThCollide
           pcVar5 = *(code **)(*(int *)(iVar7 + 0x6c) + 0x28);
 		  
-		  // execute funcOnCollide
+		  // execute funcThCollide
           (*pcVar5)(*(int *)(iVar7 + 0x6c),param_1,pcVar5,0);
         }
       }
@@ -9421,7 +9421,7 @@ void FUN_800b6270(int param_1)
 	  // get the object attached to the thread
       puVar3 = *(undefined2 **)(iVar1 + 0x30);
 	  
-	  // set funcOnCollide to burn the player
+	  // set funcThCollide to burn the player
       *(undefined4 *)(iVar1 + 0x28) = 0x800b625c;
 	  
 	  // give instance to thread
@@ -9652,7 +9652,7 @@ void FUN_800b6728(int param_1)
 			// instance -> thread
             local_28 = *(undefined4 *)(iVar1 + 0x6c);
 			
-			// instance -> thread -> funcOnCollide
+			// instance -> thread -> funcThCollide
             local_20 = *(undefined4 *)(*(int *)(iVar1 + 0x6c) + 0x28);
 			
 			// RB_Hazard_ThCollide_Generic_Alt
@@ -9962,7 +9962,7 @@ void FUN_800b6f00(int param_1,int param_2)
 	  // Get the thread
       iVar1 = *(int *)(iVar1 + 0x6c);
 	  
-	  // set funcOnDestroy to remove instance from instance pool
+	  // set funcThDestroy to remove instance from instance pool
       *(undefined4 *)(iVar1 + 0x24) = 0x80041dfc;
       
 	  // get the object attached to the thread
@@ -10141,7 +10141,7 @@ undefined4 FUN_800b7260(int param_1,undefined4 param_2,undefined4 param_3)
 	// give instance to thread
     *(int *)(iVar3 + 0x34) = param_1;
 	
-	// set funcOnCollide
+	// set funcThCollide
     *(undefined4 *)(iVar3 + 0x28) = 0x800b70a8;
 	
 	// set back to thread
@@ -10154,7 +10154,7 @@ undefined4 FUN_800b7260(int param_1,undefined4 param_2,undefined4 param_3)
 		// if thread is valid
 		(iVar3 != 0) && 
 		(
-			// get funcOnCollide
+			// get funcThCollide
 			pcVar2 = *(code **)(iVar3 + 0x28), 
 			
 			// if it is a function
@@ -10774,7 +10774,7 @@ void FUN_800b7ecc(int param_1)
 	  // get object created with thread
       puVar6 = *(undefined4 **)(iVar4 + 0x30);
 	  
-	  // set funcOnCollide, RB_Orca_ThCollide
+	  // set funcThCollide, RB_Orca_ThCollide
       *(undefined4 *)(iVar4 + 0x28) = 0x800b7eb8;
 	  
 	  // give instance to thread
@@ -11120,7 +11120,7 @@ void FUN_800b84f0(int param_1)
 		  // instance->thread
           uStack32 = *(undefined4 *)(iVar2 + 0x6c);
 		  
-		  // instance->thread->OnCollide
+		  // instance->thread->funcThCollide
           uStack24 = *(undefined4 *)(*(int *)(iVar2 + 0x6c) + 0x28);
           
 		  // RB_Hazard_ThCollide_Generic_Alt
@@ -11626,10 +11626,10 @@ void FUN_800b8c00(int param_1)
 	  // if there is a collision
 	  if (iVar4 != 0) 
 	  {
-		// instance -> thread -> funcOnCollide
+		// instance -> thread -> funcThCollide
         pcVar5 = *(code **)(*(int *)(iVar4 + 0x6c) + 0x28);
 		
-		// execute funcOnCollide
+		// execute funcThCollide
         (*pcVar5)(*(int *)(iVar4 + 0x6c),param_1,pcVar5,0);
       }
     }
@@ -11868,7 +11868,7 @@ void FUN_800b90ec(int param_1)
 	  // Get object created with thread
       puVar6 = *(undefined4 **)(iVar4 + 0x30);
 	  
-	  // set funcOnCollide
+	  // set funcThCollide
       *(undefined4 *)(iVar4 + 0x28) = 0x800b90d8;
 	  
 	  // give instance to thread
@@ -12639,7 +12639,7 @@ void FUN_800b9bd4(int param_1)
 	  // get object created with thread
       puVar6 = *(undefined2 **)(iVar1 + 0x30);
 	  
-	  // set funcOnCollide, to make player spin out
+	  // set funcThCollide, to make player spin out
       *(undefined4 *)(iVar1 + 0x28) = 0x800b9bc0;
 	  
 	  // give instance to thread

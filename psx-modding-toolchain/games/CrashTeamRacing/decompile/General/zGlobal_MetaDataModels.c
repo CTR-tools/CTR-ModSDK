@@ -76,7 +76,7 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,0,0),
 	
 	// 0x02 - PU_WUMPA_FRUIT
-	// OG game births a thread, calls OnCollide, then dies,
+	// OG game births a thread, calls ThCollide, then dies,
 	// DECOMP shouldn't birth in LInC, just trigger HUD
 	SET_MDM(0,RB_Fruit_LInB,RB_Fruit_LInC),
 	
@@ -366,7 +366,7 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,0,0),
 	
 	// 0x60 - STATIC_CRYSTAL
-	// LInC should not birth a thread, nor call OnCollide,
+	// LInC should not birth a thread, nor call ThCollide,
 	// LInC should only kill LInB's thread and trigger HUD
 	SET_MDM(0,RB_Crystal_LInB,RB_Crystal_LInC),
 	
@@ -521,17 +521,17 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,0,0),
 	
 	// 0x93 - STATIC_C
-	// LInC should not birth a thread, nor call OnCollide,
+	// LInC should not birth a thread, nor call ThCollide,
 	// LInC should only kill LInB's thread and trigger HUD
 	SET_MDM(0,RB_CtrLetter_LInB,RB_CtrLetter_LInC),
 	
 	// 0x94 - STATIC_T
-	// LInC should not birth a thread, nor call OnCollide,
+	// LInC should not birth a thread, nor call ThCollide,
 	// LInC should only kill LInB's thread and trigger HUD
 	SET_MDM(0,RB_CtrLetter_LInB,RB_CtrLetter_LInC),
 	
 	// 0x95 - STATIC_R
-	// LInC should not birth a thread, nor call OnCollide,
+	// LInC should not birth a thread, nor call ThCollide,
 	// LInC should only kill LInB's thread and trigger HUD
 	SET_MDM(0,RB_CtrLetter_LInB,RB_CtrLetter_LInC),
 	

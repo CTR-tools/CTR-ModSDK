@@ -12,10 +12,10 @@ void BOTS_Adv_AdjustDifficulty();
 void BOTS_UpdateGlobals();
 void BOTS_SetRotation(int param_1, int param_2);
 void BOTS_LevInstColl(int param_1);
-void BOTS_PerFrame_EngineRevving(int param_1);
+void BOTS_ThTick_EngineRevving(int param_1);
 void BOTS_MaskGrab(int param_1);
 void BOTS_Killplane(int param_1);
-void BOTS_PerFrame_Drive(struct Thread* thread);
+void BOTS_ThTick_Drive(struct Thread* thread);
 u_int BOTS_ChangeState(int param_1, int param_2, int param_3, int param_4);
 void BOTS_CollideWithOtherAI(int param_1, int param_2);
 void BOTS_GotoStartingLine(struct Driver* driver);
@@ -43,7 +43,7 @@ void CAM_FollowDriver_Spin360(struct CameraDC* cDC, u_int param_2, struct Driver
 void CAM_SetDesiredPosRot(int param_1, u_short* param_2, u_short* param_3);
 void CAM_FollowDriver_Normal(struct CameraDC* cDC, struct Driver* d, short* camera110, short scratchpad, short* param_5);
 int CAM_MapRange_PosPoints(short* vec3sPos1, short* vec3sPos2, short* vec3iPos);
-void CAM_PerFrame(struct Thread* t);
+void CAM_ThTick(struct Thread* t);
 
 // unorganized
 

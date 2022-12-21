@@ -5,8 +5,8 @@ void GAMEPAD_Vib_3(struct Driver* driver, u_int param_2, int param_3);
 void OtherFX_DriverTurbo(void*, int, int);
 void ThreadBucketFastRET(struct Thread*);
 
-// Turbo_FuncPerFrame
-void DECOMP_Turbo_FuncPerFrame(struct Thread* turboThread)
+// Turbo_ThTick
+void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 {
 	char kartState;
 	short frameIndex;

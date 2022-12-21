@@ -5404,7 +5404,7 @@ void FUN_80034aa4(void)
   // reset timer
   ResetRCnt(0xf2000001);
 
-  // howl_PlayAudio_PerFrame
+  // howl_PlayAudio_Update
   FUN_8002c208();
 
   // check for unplugged gamepads
@@ -5898,7 +5898,7 @@ LAB_80035098:
 			{
               do 
 			  {
-				// if no funcPerFrame (when would that change?)
+				// if no funcThTick (when would that change?)
                 if ((*(int *)(iVar4 + 0x2c) == 0) &&
 
 					// playerThread->driver->funcPtr[iVar8]
@@ -5992,7 +5992,7 @@ LAB_80035098:
   // If game is not paused
   if ((*(uint *)PTR_DAT_8008d2ac & 0xf) == 0)
   {
-	// Audio_PerFrame
+	// Audio_Update1
     FUN_8002d67c();
   }
   puVar9 = PTR_DAT_8008d2b0;
@@ -8970,11 +8970,11 @@ code_r0x800369d8:
 	  // If game is not paused
       if ((*(uint *)PTR_DAT_8008d2ac & 0xf) == 0)
 	  {
-		// RivalWeapons_PerFrame
+		// RivalWeapons_Update
         FUN_800408b8();
       }
 
-	  // StartLine_PerFrame
+	  // StartLine_Update
       FUN_800414f4();
     }
   }
@@ -18208,7 +18208,7 @@ void FUN_80040850(void)
 }
 
 
-// RivalWeapons_PerFrame
+// RivalWeapons_Update
 void FUN_800408b8(void)
 {
   // handles which weapons bosses use
@@ -18911,7 +18911,7 @@ LAB_80040da0:
 }
 
 
-// StartLine_PerFrame
+// StartLine_Update
 void FUN_800414f4(void)
 {
   byte bVar1;
@@ -19884,7 +19884,7 @@ void FUN_80041ff4(void)
 
 
 // param1 = flags
-// param2 = funcPerFrame
+// param2 = funcThTick
 // param3 = name of object
 // param4 = another thread (parent, sibling, child)
 
@@ -19983,10 +19983,10 @@ int FUN_8004205c(uint param_1,undefined4 param_2,undefined4 param_3,int param_4)
 		// erase cooldown
         *(undefined4 *)(iVar4 + 0x18) = 0;
 
-		// funcOnDestroy
+		// funcThDestroy
         *(undefined4 *)(iVar4 + 0x24) = 0;
 
-		// funcOnCollide
+		// funcThCollide
         *(undefined4 *)(iVar4 + 0x28) = 0;
 
 		// There is no instance attached to thread
@@ -22025,7 +22025,7 @@ int FUN_80044094(void)
 }
 
 
-// CheckeredFlag_PerFrame_GetOT
+// CheckeredFlag_GetOT
 int FUN_800440a0(void)
 {
   // In Naughty Dog's code, this could have
@@ -25458,7 +25458,7 @@ void FUN_80047da8(undefined4 param_1)
 }
 
 
-// LoadSave_PerFrame
+// LoadSave_ThTick
 void FUN_80047dfc(int param_1)
 
 {
@@ -29396,7 +29396,7 @@ LAB_8004c7d4:
 
 // Draw various objects, like relic,
 // key trophy, token, crystal, etc
-// PerFrame_Hud_Object3D
+// ThTick_Hud_Object3D
 void FUN_8004c850(int param_1)
 
 {
@@ -39602,7 +39602,7 @@ LAB_80058568:
       puVar10 = &FUN_80058c44;
     }
 
-	// driver -> instance -> thread -> funcPerFrame = puVar10
+	// driver -> instance -> thread -> funcThTick = puVar10
     *(undefined **)(*(int *)(*(int *)(param_1 + 0x1c) + 0x6c) + 0x2c) = puVar10;
 
 
@@ -40199,7 +40199,7 @@ void FUN_80058d2c(int param_1,int param_2)
   // if you are not in cutscene and not in main menu
   if ((*(uint *)PTR_DAT_8008d2ac & 0x20002000) != 0)
   {
-	// funcPerFrame
+	// funcThTick
 	// 0x80058c44 is an empty function that does nothing
     *(undefined4 *)(param_1 + 0x2c) = 0x80058c44;
 
@@ -51485,7 +51485,7 @@ LAB_80064d4c:
 	// give beam instance to mask head object
     *(undefined4 *)(puVar3 + 4) = uVar5;
 
-	// set funcOnDestroy to remove instance from instance pool
+	// set funcThDestroy to remove instance from instance pool
     *(undefined4 *)(iVar6 + 0x24) = 0x80041dfc;
 
 	// allow this thread to ignore all collisions
@@ -52265,10 +52265,10 @@ LAB_800659ec:
     *(undefined2 *)(iVar5 + 0x1e) = 0;
     *(undefined2 *)(iVar5 + 0x20) = 0;
 
-	// set funcOnDestroy to remove instance from instance pool
+	// set funcThDestroy to remove instance from instance pool
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x24) = 0x80041dfc
 
-	// set funcOnCollide function
+	// set funcThCollide function
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x28) = 0x800ac4b8;
 
 	// Play potion sound,
@@ -52483,10 +52483,10 @@ LAB_800659ec:
 	// header -> flag: always face camera
     *(ushort *)(iVar14 + 0x16) = *(ushort *)(iVar14 + 0x16) | 2;
 
-	// set funcOnDestroy to remove instance from instance pool
+	// set funcThDestroy to remove instance from instance pool
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x24) = 0x80041dfc;
 
-	// set funcOnCollide
+	// set funcThCollide
 	*(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x28) = 0x800ac4b8;
 
 	// get instance of driver
@@ -52649,7 +52649,7 @@ LAB_800659ec:
     *(undefined2 *)(iVar5 + 0x1e) = 0x700;
     *(undefined2 *)(iVar5 + 0x20) = 0x700;
 
-	// set funcOnDestroy to remove instance from instance pool
+	// set funcThDestroy to remove instance from instance pool
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x24) = 0x80041dfc;
 
 	// OtherFX_Play Activate Shield sound
@@ -52824,7 +52824,7 @@ LAB_800659ec:
     *(undefined4 *)(iVar5 + 0x34) = 0;
     *(undefined4 *)(iVar5 + 0x3c) = 0;
 
-	// set funcOnDestroy to remove instance from instance pool
+	// set funcThDestroy to remove instance from instance pool
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x24) = 0x80041dfc;
 
 	// Play warpball spawn sound,
@@ -54052,7 +54052,7 @@ void FUN_800677d0(int param_1,int param_2)
   {
     *(undefined2 *)(*(int *)(*(int *)(param_2 + 0x4a0) + 0x30) + 4) = 0;
 
-	// Set driver->cloudTh->funcPerFrame to destroy thread
+	// Set driver->cloudTh->funcThTick to destroy thread
     *(undefined4 *)(*(int *)(param_2 + 0x4a0) + 0x2c) = 0x800b0f1c;
 
 	// erase pointer to "cloud" thread
@@ -55541,7 +55541,7 @@ void FUN_80069178(void)
   // get thread from instance
   iVar1 = *(int *)(iVar1 + 0x6c);
 
-  // set funcOnDestroy to remove instance from instance pool
+  // set funcThDestroy to remove instance from instance pool
   *(undefined4 *)(iVar1 + 0x24) = 0x80041dfc;
 
   // object -> 4
@@ -55689,7 +55689,7 @@ void FUN_80069284(int param_1)
 }
 
 
-// Turbo_OnDestroy
+// Turbo_ThDestroy
 void FUN_80069370(int param_1)
 
 {
@@ -55713,7 +55713,7 @@ void FUN_80069370(int param_1)
 }
 
 
-// Turbo_FuncPerFrame
+// Turbo_ThTick
 void FUN_800693c8(int param_1)
 
 {

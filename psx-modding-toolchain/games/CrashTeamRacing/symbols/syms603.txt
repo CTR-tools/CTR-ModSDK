@@ -12,10 +12,10 @@
 8001c2d8 BOTS_UpdateGlobals
 8001c388 BOTS_SetRotation
 8001c4f4 BOTS_LevInstColl
-8001c638 BOTS_PerFrame_EngineRevving
+8001c638 BOTS_ThTick_EngineRevving
 8001c73c BOTS_MaskGrab
 8001c950 BOTS_Killplane
-8001caf8 BOTS_PerFrame_Drive
+8001caf8 BOTS_ThTick_Drive
 8001ee30 BOTS_ChangeState
 // missing BOTS_CollideWithOtherAI
 8001f080 BOTS_GotoStartingLine
@@ -45,7 +45,7 @@
 // missing CAM_SetDesiredPosRot
 // missing CAM_FollowDriver_Normal
 800219bc CAM_MapRange_PosPoints
-80021a9c CAM_PerFrame
+80021a9c CAM_ThTick
 
 // [few more in between]
 8002414c CDSYS_Init
