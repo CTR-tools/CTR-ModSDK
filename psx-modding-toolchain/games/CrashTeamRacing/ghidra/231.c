@@ -8167,7 +8167,7 @@ void FUN_800b4fe4(int param_1)
   return;
 }
 
-// RB_CtrLetter_OnCollide
+// RB_CtrLetter_ThCollide
 bool FUN_800b5090(int param_1,int param_2,undefined4 param_3,int param_4)
 
 {
@@ -8320,7 +8320,7 @@ undefined4 FUN_800b5210(int param_1,undefined4 param_2,undefined4 param_3)
 	// save Instance pointer to the thread
     *(int *)(iVar3 + 0x34) = param_1;
 	
-	// RB_CtrLetter_OnCollide
+	// RB_CtrLetter_ThCollide
     *(undefined4 *)(iVar3 + 0x28) = 0x800b5090;
 	
 	// set iVar3 back to the thread pointer that 
@@ -8364,7 +8364,7 @@ undefined4 FUN_800b5210(int param_1,undefined4 param_2,undefined4 param_3)
   return uVar1;
 }
 
-// RB_CtrLetter_PerFrame
+// RB_CtrLetter_ThTick
 void FUN_800b52dc(int param_1)
 {
   int iVar1;
@@ -8423,7 +8423,7 @@ void FUN_800b5334(int param_1)
 	// Get the pointer to the token that the thread created
     puVar2 = *(undefined2 **)(iVar1 + 0x30);
 	
-	// RB_CtrLetter_OnCollide
+	// RB_CtrLetter_ThCollide
     *(undefined4 *)(iVar1 + 0x28) = 0x800b5090;
 	
     *(int *)(iVar1 + 0x34) = param_1;
@@ -8611,7 +8611,7 @@ LAB_800b5788:
   } while( true );
 }
 
-// RB_Banner_PerFrame
+// RB_Banner_ThTick
 void FUN_800b57b4(int param_1)
 {
   // thread -> object -> 2???
@@ -8740,7 +8740,7 @@ void FUN_800b57f8(int param_1)
   return;
 }
 
-// RB_Armadillo_PerFrame_TurnAround
+// RB_Armadillo_ThTick_TurnAround
 void FUN_800b5984(int param_1)
 {
   char cVar1;
@@ -8811,7 +8811,7 @@ void FUN_800b5984(int param_1)
 	  // reset animation frame
       *(undefined2 *)(iVar7 + 0x54) = 0;
 	  
-	  // Change PerFrame to RB_Armadillo_PerFrame_Rolling
+	  // Change PerFrame to RB_Armadillo_ThTick_Rolling
       FUN_800716ec(param_1,&FUN_800b5b74);
     }
     else 
@@ -8891,7 +8891,7 @@ LAB_800b5a08:
   } while( true );
 }
 
-// RB_Armadillo_PerFrame_Rolling
+// RB_Armadillo_ThTick_Rolling
 void FUN_800b5b74(int param_1)
 {
   char cVar1;
@@ -9051,7 +9051,7 @@ void FUN_800b5b74(int param_1)
         }
         puVar6[5] = (short)iVar5 + (short)(iVar3 >> 0xc) * -0x1000;
 		
-		// Change thread to RB_Armadillo_PerFrame_TurnAround
+		// Change thread to RB_Armadillo_ThTick_TurnAround
         FUN_800716ec(param_1,&FUN_800b5984);
       }
     }
@@ -9070,7 +9070,7 @@ void FUN_800b5b74(int param_1)
   } while( true );
 }
 
-// RB_Armadillo_OnCollide
+// RB_Armadillo_ThCollide
 void FUN_800b5dbc(int param1, int param_2, int param_3, int param_4)
 { 
   // check if modelID is player
@@ -9192,7 +9192,7 @@ void FUN_800b5dd0(int param_1)
   return;
 }
 
-// RB_Fireball_PerFrame
+// RB_Fireball_ThTick
 void FUN_800b5f50(int param_1)
 {
   short sVar1;
@@ -9386,7 +9386,7 @@ void FUN_800b5f50(int param_1)
   return;
 }
 
-// RB_Fireball_OnCollide
+// RB_Fireball_ThCollide
 void FUN_800b625c(int param1, int param_2, int param_3, int param_4)
 { 
   // check if modelID is player
@@ -9556,7 +9556,7 @@ void FUN_800b64c0(int param_1,int param_2)
   return;
 }
 
-// RB_FlameJet_PerFrame
+// RB_FlameJet_ThTick
 void FUN_800b6728(int param_1)
 {
   int iVar1;
@@ -9834,7 +9834,7 @@ void FUN_800b6d58(int param_1)
   return;
 }
 
-// RB_Follower_PerFrame
+// RB_Follower_ThTick
 void FUN_800b6e10(int param_1)
 {
   char cVar1;
@@ -9989,9 +9989,9 @@ void FUN_800b6f00(int param_1,int param_2)
   return;
 }
 
-// RB_Fruit_PerFrame
+// RB_Fruit_ThTick
 // This is useless, both thread death and pointer erasing
-// happen inside RB_Fruit_OnCollide anyway
+// happen inside RB_Fruit_ThCollide anyway
 void FUN_800b706c(int param_1)
 {
   int iVar1;
@@ -10015,7 +10015,7 @@ void FUN_800b706c(int param_1)
   } while( true );
 }
 
-// RB_Fruit_OnCollide
+// RB_Fruit_ThCollide
 void FUN_800b70a8(int param_1,int param_2,undefined4 param_3,int param_4)
 
 {
@@ -10179,7 +10179,7 @@ undefined4 FUN_800b7260(int param_1,undefined4 param_2,undefined4 param_3)
   return uVar1;
 }
 
-// RB_Minecart_PerFrame
+// RB_Minecart_ThTick
 void FUN_800b7338(int param_1)
 {
   ushort uVar1;
@@ -10540,7 +10540,7 @@ LAB_800b7980:
   return;
 }
 
-// RB_Orca_PerFrame
+// RB_Orca_ThTick
 void FUN_800b7b8c(int param_1)
 {
   ushort uVar1;
@@ -10730,7 +10730,7 @@ LAB_800b7c40:
   return;
 }
 
-// RB_Orca_OnCollide
+// RB_Orca_ThCollide
 void FUN_800b7eb8(int param1, int param_2, int param_3, int param_4)
 { 
   // check if modelID is player
@@ -10774,7 +10774,7 @@ void FUN_800b7ecc(int param_1)
 	  // get object created with thread
       puVar6 = *(undefined4 **)(iVar4 + 0x30);
 	  
-	  // set funcOnCollide, RB_Orca_OnCollide
+	  // set funcOnCollide, RB_Orca_ThCollide
       *(undefined4 *)(iVar4 + 0x28) = 0x800b7eb8;
 	  
 	  // give instance to thread
@@ -10857,7 +10857,7 @@ void FUN_800b7ecc(int param_1)
   return;
 }
 
-// RB_Plant_PerFrame_Eat
+// RB_Plant_ThTick_Eat
 void FUN_800b81e8(int param_1)
 {
   char cVar1;
@@ -11047,7 +11047,7 @@ DAT_800b82bc:
             psVar7[3] = 0;
 			
 			// Change state to
-			// RB_Plant_PerFrame_Rest
+			// RB_Plant_ThTick_Rest
             FUN_800716ec(param_1,&FUN_800b88a8);
           }
         }
@@ -11060,7 +11060,7 @@ DAT_800b82bc:
   } while( true );
 }
 
-// RB_Plant_PerFrame_Transition_HungryToEat
+// RB_Plant_ThTick_Grab
 void FUN_800b84f0(int param_1)
 {
   short sVar1;
@@ -11093,7 +11093,9 @@ void FUN_800b84f0(int param_1)
   iStack52 = param_1;
   iStack28 = param_1;
   
-  do {
+  do 
+  {
+	// if grabbing
     if (*(char *)(iVar4 + 0x52) == '\x03') {
       
 	  // instance -> animFrame
@@ -11127,7 +11129,7 @@ void FUN_800b84f0(int param_1)
       }
       else 
 	  {
-		// RB_Plant_PerFrame_Eat
+		// RB_Plant_ThTick_Eat
         puVar3 = &DAT_800b81e8;
 		
         *(undefined2 *)(iVar4 + 0x54) = 0;
@@ -11136,6 +11138,8 @@ DAT_800b8638:
         FUN_800716ec(param_1,puVar3);
       }
     }
+	
+	// unused mistake
     else {
       if (*(char *)(iVar4 + 0x52) == '\x04') {
         
@@ -11148,7 +11152,7 @@ DAT_800b8638:
         if (iVar2 <= (int)sVar1 + 1) 
 		{
 		  // Change state to
-		  // RB_Plant_PerFrame_Rest
+		  // RB_Plant_ThTick_Rest
           puVar3 = &FUN_800b88a8;
 		  
 		  // Change animation to Rest, restart animation
@@ -11169,7 +11173,7 @@ DAT_800b8638:
   } while( true );
 }
 
-// RB_Plant_PerFrame_Transition_HungryToRest
+// RB_Plant_ThTick_Transition_HungryToRest
 void FUN_800b8650(int param_1)
 {
   int iVar1;
@@ -11188,7 +11192,7 @@ void FUN_800b8650(int param_1)
       *(undefined *)(iVar1 + 0x52) = 0;
 	  
 	  // Change state to
-	  // RB_Plant_PerFrame_Rest
+	  // RB_Plant_ThTick_Rest
       FUN_800716ec(param_1,&FUN_800b88a8);
     }
 	
@@ -11205,7 +11209,7 @@ void FUN_800b8650(int param_1)
   } while( true );
 }
 
-// RB_Plant_PerFrame_Hungry
+// RB_Plant_ThTick_Hungry
 // Mouth near ground, ready to eat
 void FUN_800b86b4(int param_1)
 {
@@ -11275,7 +11279,7 @@ void FUN_800b86b4(int param_1)
           *psVar6 = 0;
 		  
 		  // Change state to
-		  // RB_Plant_PerFrame_Transition_HungryToRest
+		  // RB_Plant_ThTick_Transition_HungryToRest
           FUN_800716ec(param_1,&FUN_800b8650);
         }
       }
@@ -11311,7 +11315,7 @@ void FUN_800b86b4(int param_1)
 			
             *psVar6 = 0;
 			
-			// Change plant state to GrabDriver
+			// Change plant state to EndHunger (grab)
             goto DAT_800b8890;
           }
         }
@@ -11345,7 +11349,7 @@ void FUN_800b86b4(int param_1)
           psVar6[3] = 1;
 DAT_800b8890:
 		  // Change plant state to 
-		  // RB_Plant_PerFrame_Transition_HungryToEat
+		  // RB_Plant_ThTick_Grab (grab or rest)
           FUN_800716ec(param_1,&FUN_800b84f0);
         }
       }
@@ -11357,7 +11361,7 @@ DAT_800b8890:
   } while( true );
 }
 
-// RB_Plant_PerFrame_Rest
+// RB_Plant_ThTick_Rest
 // Standing tall, not trying to eat
 void FUN_800b88a8(int param_1)
 {
@@ -11438,7 +11442,7 @@ DAT_800b8968:
           *(undefined *)(iVar3 + 0x52) = 2;
 		  
 		  // Change state to
-		  // RB_Plant_PerFrame_Hungry
+		  // RB_Plant_ThTick_Hungry
           FUN_800716ec(param_1,&FUN_800b86b4);
         }
       }
@@ -11525,7 +11529,7 @@ void FUN_800b89a4(int param_1)
   return;
 }
 
-// RB_Seal_PerFrame_TurnAround
+// RB_Seal_ThTick_TurnAround
 void FUN_800b8c00(int param_1)
 {
   char cVar1;
@@ -11579,7 +11583,7 @@ void FUN_800b8c00(int param_1)
 	// make a matrix
 	FUN_8006c2a4(iVar7 + 0x30,iVar6 + 0x10);
 	
-	// SetPerFrame_AndExec RB_Seal_PerFrame_Move
+	// SetPerFrame_AndExec RB_Seal_ThTick_Move
     FUN_800716ec(param_1,FUN_800b8e1c);
   }
   
@@ -11657,7 +11661,7 @@ void FUN_800b8c00(int param_1)
   return;
 }
 
-// RB_Seal_PerFrame_Move
+// RB_Seal_ThTick_Move
 void FUN_800b8e1c(int param_1)
 {
   char cVar1;
@@ -11762,7 +11766,7 @@ void FUN_800b8e1c(int param_1)
   }
   psVar6[0x11] = (short)iVar5 + (short)(iVar3 >> 0xc) * -0x1000;
   
-  // SetPerFrame_AndExec RB_Seal_PerFrame_TurnAround
+  // SetPerFrame_AndExec RB_Seal_ThTick_TurnAround
   FUN_800716ec(param_1,&FUN_800b8c00);
   
 LAB_800b8fdc:
@@ -11824,7 +11828,7 @@ LAB_800b8fdc:
   return;
 }
 
-// RB_Seal_OnCollide
+// RB_Seal_ThCollide
 void FUN_800b90d8(int param1, int param_2, int param_3, int param_4)
 { 
   // check if modelID is player
@@ -11937,7 +11941,7 @@ void FUN_800b90ec(int param_1)
   return;
 }
 
-// RB_Snowball_PerFrame
+// RB_Snowball_ThTick
 void FUN_800b92ac(int param_1)
 {
   short sVar1;
@@ -12348,7 +12352,7 @@ void FUN_800b95fc(int param_1,int param_2)
   return;
 }
 
-// RB_Spider_PerFrame
+// RB_Spider_ThTick
 void FUN_800b9848(int param_1)
 {
   char cVar1;
@@ -12592,7 +12596,7 @@ LAB_800b9aa8:
   return;
 }
 
-// RB_Spider_OnCollide
+// RB_Spider_ThCollide (unused?)
 void FUN_800b9bc0(int param1, int param_2, int param_3, int param_4)
 { 
   // check if modelID is player
@@ -12818,7 +12822,7 @@ void FUN_800b9e44(short *param_1,int param_2)
   return;
 }
 
-// RB_Teeth_PerFrame
+// RB_Teeth_ThTick
 void FUN_800b9f0c(int param_1)
 {
   int iVar1;
