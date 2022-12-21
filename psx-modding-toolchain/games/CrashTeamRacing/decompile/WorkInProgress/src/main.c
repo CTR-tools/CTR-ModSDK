@@ -523,7 +523,7 @@ u_int main()
 				// if mask is talking in Adventure Hub
 				if (sdata->boolDraw3D_AdvMask != 0)
 				{
-					AH_MaskHint_PerFrame();
+					AH_MaskHint_Update();
 				}
 				break;
 

@@ -13089,7 +13089,7 @@ void FUN_800ba220(int param_1)
   return;
 }
 
-// RB_Turtle_PerFrame
+// RB_Turtle_ThTick
 void FUN_800ba2c0(int param_1)
 {
   short sVar1;

@@ -698,7 +698,7 @@ void FUN_800ac714(void)
   // loop through all threads
   while (iVar3 != 0) 
   {
-	// check if funcOnDestroy != CS_Podium_Prize_OnDestroy
+	// check if funcOnDestroy != CS_Podium_Prize_ThDestroy
     if (*(code **)(iVar3 + 0x24) != FUN_800afe58) 
 	{
 	  // This thread is now dead
@@ -2217,7 +2217,7 @@ void FUN_800ae318(int param_1)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// CS_Thread_PerFrame
+// CS_Thread_ThTick
 // ND Box, Boss cutscenes, etc
 void FUN_800ae54c(int param_1)
 
@@ -2425,7 +2425,7 @@ void FUN_800ae834(int *param_1)
 }
 
 
-// CS_Boss_PerFrame
+// CS_Boss_ThTick
 void FUN_800ae9a8(int param_1)
 
 {
@@ -2683,7 +2683,7 @@ undefined4 FUN_800aed48(void)
 }
 
 
-// CS_Podium_Camera_PerFrame
+// CS_Podium_Camera_ThTick
 void FUN_800aedf8(int param_1)
 
 {
@@ -2941,7 +2941,7 @@ void FUN_800aedf8(int param_1)
 	  // At this point, there must be a boss cutscene,
 	  // or else the function would return by now
 	  
-	  // Change PerFrame function, CS_Boss_PerFrame
+	  // Change PerFrame function, CS_Boss_ThTick
       *(undefined4 *)(param_1 + 0x2c) = 0x800ae9a8;
 	  
 	  // If you are not at the podium for winning a relic
@@ -3023,7 +3023,7 @@ int FUN_800af328
 	// 0x200 = MediumStackPool
 	// 0xf = camera thread bucket
 	
-	// thread for CS_Thread_PerFrame
+	// thread for CS_Thread_ThTick
     iVar1 = FUN_8004205c(0x60020f,FUN_800ae54c,param_2,param_5);
 	
 	// quit if thread creation failed
@@ -3054,7 +3054,7 @@ int FUN_800af328
 	// this one is for a different pool than prev
 	// 0x200 flag = MediumStackPool
 
-	// thread for CS_Thread_PerFrame
+	// thread for CS_Thread_ThTick
     iVar9 = FUN_800309a4(param_1,param_2,0x200,uVar7,FUN_800ae54c,0x60,param_5);
 	
 	// quit if it failed
@@ -3401,7 +3401,7 @@ LAB_800af948:
 }
 
 
-// CS_Podium_Prize_PerFrame3
+// CS_Podium_Prize_ThTick3
 void FUN_800af994(int param_1)
 
 {
@@ -3564,7 +3564,7 @@ LAB_800afa68:
 }
 
 
-// CS_Podium_Prize_PerFrame2
+// CS_Podium_Prize_ThTick2
 void FUN_800afbc8(int param_1)
 
 {
@@ -3621,7 +3621,7 @@ void FUN_800afbc8(int param_1)
 }
 
 
-// CS_Podium_Prize_PerFrame1
+// CS_Podium_Prize_ThTick1
 void FUN_800afcc4(int param_1)
 
 {
@@ -3702,7 +3702,7 @@ void FUN_800afcc4(int param_1)
 }
 
 
-// CS_Podium_Prize_OnDestroy
+// CS_Podium_Prize_ThDestroy
 void FUN_800afe58(void)
 {
   // remove bit flag
@@ -4175,7 +4175,7 @@ void FUN_800b06ac(int param_1)
 	// 0x200 = MediumStackPool
 	// 0x3 = static thread bucket
 	
-	// thread for CS_Thread_PerFrame
+	// thread for CS_Thread_ThTick
     iVar4 = FUN_8004205c(0x600203,FUN_800ae54c,s_introguy_800abd18,0);
 	
 	// give thread to Instance
@@ -5459,7 +5459,7 @@ LAB_800b8c64:
 }
 
 
-// CS_Credits_PerFrame
+// CS_Credits_ThTick
 void FUN_800b8dc8(void)
 
 {

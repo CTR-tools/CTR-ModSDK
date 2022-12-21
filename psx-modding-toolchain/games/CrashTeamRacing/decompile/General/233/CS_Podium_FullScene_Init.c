@@ -9,7 +9,7 @@ short howl_VolumeGet(int volumeType);
 void Player_Freeze_Init(struct Thread* t, struct Driver* d);
 void ConvertRotToMatrix(u_int *, short *);
 int CS_Thread_Init(u_int, char*, short *, short, u_int);
-void CS_Podium_Camera_PerFrame(int param_1);
+void CS_Podium_Camera_ThTick(int param_1);
 
 void DECOMP_CS_Podium_FullScene_Init()
 {
@@ -154,7 +154,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	// 0 = no relation to param4
 	// 0x300 flag = SmallStackPool
 	// 0xf = camera thread bucket
-	victoryCamThread = (struct Thread *)THREAD_BirthWithObject(0x4030f, (u_int)CS_Podium_Camera_PerFrame, &OVR_233.s_victorycam[0], 0);
+	victoryCamThread = (struct Thread *)THREAD_BirthWithObject(0x4030f, (u_int)CS_Podium_Camera_ThTick, &OVR_233.s_victorycam[0], 0);
 	
 	// if it allocated correctly
 	if (victoryCamThread != 0) 

@@ -1481,7 +1481,7 @@
 800BA368 RB_Teeth_PerFrame
 800BA524 RB_Teeth_LInC
 800BA67C RB_Teeth_OpenDoor
-800BA71C RB_Turtle_PerFrame
+800BA71C RB_Turtle_ThTick
 800BA87C RB_Turtle_LInC
 800BA8CC RB_Turtle_LInB
 
@@ -1490,18 +1490,18 @@
 800abff0 AH_WarpPad_AllWarppadNum
 800ac194 AH_WarpPad_MenuBoxFuncPtr
 800ac210 AH_WarpPad_SpinRewards
-800ac35c AH_WarpPad_PerFrame
-800ad6dc AH_WarpPad_OnDestroy
-800ad800 AH_WarpPad_OnInit
-800aecb4 AH_Garage_OnDestroy
+800ac35c AH_WarpPad_ThTick
+800ad6dc AH_WarpPad_ThDestroy
+800ad800 AH_WarpPad_LInB
+800aecb4 AH_Garage_ThDestroy
 800aecf4 AH_Garage_Open
-800aed9c AH_Garage_PerFrame
+800aed9c AH_Garage_ThTick
 800af484 AH_Garage_LInB
-800af7b8 AH_SaveObj_Destroy
-800af7f8 AH_SaveObj_PerFrame
+800af7b8 AH_SaveObj_ThDestroy
+800af7f8 AH_SaveObj_ThTick
 800afc04 AH_SaveObj_LInB
-800afe0c AH_Door_OnDestroy
-800afe74 AH_Door_PerFrame
+800afe0c AH_Door_ThDestroy
+800afe74 AH_Door_ThTick
 800b0b40 AH_Door_LInB
 800b0fac AH_Map_LoadSave_Prim
 800b10f4 AH_Map_LoadSave_Full
@@ -1512,7 +1512,7 @@
 800b20a4 AH_Map_Main
 800b230c AH_Pause_Destroy
 800b238c AH_Pause_Draw
-800b3558 AH_Pause_PerFrame
+800b3558 AH_Pause_Update
 800b3860 AH_HintMenu_FiveArrows
 800b392c AH_HintMenu_MaskPosRot
 800b39a4 AH_HintMenu_MenuBoxFuncPtr
@@ -1521,7 +1521,7 @@
 800b4444 AH_MaskHint_EnterAnim
 800b4760 AH_MaskHint_SpawnParticles
 800b4878 AH_MaskHint_End
-800b491c AH_MaskHint_PerFrame
+800b491c AH_MaskHint_Update
 800b125c AH_Sign_LInB // not in sep3
 
 // 233 (Cutscene)
@@ -1546,18 +1546,18 @@
 800ae43c CS_Thread_MoveOnPath
 800ae868 CS_Thread_AnimateScale
 800ae8c8 CS_Thread_InterpolateFramesMS
-800aeafc CS_Thread_PerFrame
+800aeafc CS_Thread_ThTick
 // small func here?
 800aee34 CS_Boss_Init
-800aefac CS_Boss_PerFrame
+800aefac CS_Boss_ThTick
 800af34c CS_Boss_BoolShouldStart
-800af3fc CS_Podium_Camera_PerFrame
+800af3fc CS_Podium_Camera_ThTick
 800af92c CS_Thread_Init
 800afdc4 CS_Podium_Prize_Spin
-800aff98 CS_Podium_Prize_PerFrame3
-800b01cc CS_Podium_Prize_PerFrame2
-800b02c8 CS_Podium_Prize_PerFrame1
-800b045c CS_Podium_Prize_OnDestroy
+800aff98 CS_Podium_Prize_ThTick3
+800b01cc CS_Podium_Prize_ThTick2
+800b02c8 CS_Podium_Prize_ThTick1
+800b045c CS_Podium_Prize_ThDestroy
 800b0494 CS_Podium_Prize_Init
 800b084c CS_Podium_Stand_Init
 800b0904 CS_Podium_FullScene_Init
@@ -1573,7 +1573,7 @@
 800b9074 CS_Credits_DestroyCreditGhost
 800b90e0 CS_Credits_DrawNames
 800b93e8 CS_Credits_DrawEpilogue
-800b95e0 CS_Credits_PerFrame
+800b95e0 CS_Credits_ThTick
 800b97a4 CS_Credits_Init
 800b9ab8 CS_Credits_IsTextValid
 800b9ae4 CS_Credits_NewDancer

@@ -10793,7 +10793,7 @@ void FUN_80039a44(int param_1)
       return;
     }
 
-	// AH_Pause_PerFrame
+	// AH_Pause_Update
     FUN_800b3144();
 
     return;
@@ -14574,7 +14574,7 @@ LAB_8003ce08:
 	  // if mask is talking in Adventure Hub
       if (DAT_8008d888 != 0)
 	  {
-		// AH_MaskHint_PerFrame
+		// AH_MaskHint_Update
         FUN_800b4470();
       }
       break;

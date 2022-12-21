@@ -404,7 +404,7 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,0,0),
 	
 	// 0x6C - STATIC_WARPPAD
-	SET_MDM(0,0,0),
+	SET_MDM(0,AH_WarpPad_LInB,0),
 	
 	// 0x6D - STATIC_BIG0
 	SET_MDM(0,0,0),

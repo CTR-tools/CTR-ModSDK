@@ -237,7 +237,7 @@ LAB_800abe94:
 
 
 
-// AH_WarpPad_PerFrame
+// AH_WarpPad_ThTick
 void FUN_800abf48(int param_1)
 
 {
@@ -1186,7 +1186,7 @@ LAB_800acef8:
 }
 
 
-// AH_WarpPad_OnDestroy
+// AH_WarpPad_ThDestroy
 void FUN_800ad2c8(int param_1)
 
 {
@@ -1285,7 +1285,7 @@ void FUN_800ad2c8(int param_1)
 }
 
 
-// AH_WarpPad_OnInit
+// AH_WarpPad_LInB
 void FUN_800ad3ec(int param_1)
 
 {
@@ -1346,7 +1346,7 @@ void FUN_800ad3ec(int param_1)
   // Give Instance to Thread
   *(int *)(iVar4 + 0x34) = param_1;
   
-  // set funcOnDestroy, AH_WarpPad_OnDestroy
+  // set funcOnDestroy, AH_WarpPad_ThDestroy
   *(undefined4 *)(iVar4 + 0x24) = 0x800ad2c8;
   
   // set modelID to zero ??
@@ -2311,7 +2311,7 @@ LAB_800ad920:
 }
 
 
-// AH_Garage_OnDestroy
+// AH_Garage_ThDestroy
 void FUN_800ae8a0(int param_1)
 
 {
@@ -2388,7 +2388,7 @@ void FUN_800ae8e0(int param_1,int param_2)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// AH_Garage_PerFrame
+// AH_Garage_ThTick
 void FUN_800ae988(int param_1)
 
 {
@@ -2776,7 +2776,7 @@ void FUN_800af070(int param_1)
   // give Instance to thread
   *(int *)(iVar3 + 0x34) = param_1;
   
-  // set OnDestroy, AH_Garage_OnDestroy
+  // set OnDestroy, AH_Garage_ThDestroy
   *(undefined4 *)(iVar3 + 0x24) = 0x800ae8a0;
   
   *puVar10 = 0;
@@ -2951,7 +2951,7 @@ LAB_800af254:
 }
 
 
-// AH_SaveObj_Destroy
+// AH_SaveObj_ThDestroy
 void FUN_800af3a4(int param_1)
 
 {
@@ -2970,7 +2970,7 @@ void FUN_800af3a4(int param_1)
 }
 
 
-// AH_SaveObj_PerFrame
+// AH_SaveObj_ThTick
 void FUN_800af3e4(int param_1)
 
 {
@@ -3255,7 +3255,7 @@ void FUN_800af7f0(int param_1)
 	  // give Instance to the thread
       *(int *)(iVar2 + 0x34) = param_1;
 	  
-	  // AH_SaveObj_Destroy
+	  // AH_SaveObj_ThDestroy
       *(undefined4 *)(iVar2 + 0x24) = 0x800af3a4;
 	  
 	  // initialize object
@@ -3335,7 +3335,7 @@ void FUN_800af7f0(int param_1)
 }
 
 
-// AH_Door_OnDestroy
+// AH_Door_ThDestroy
 void FUN_800af9f8(int param_1)
 
 {
@@ -3370,7 +3370,7 @@ void FUN_800af9f8(int param_1)
 
 // WARNING: Removing unreachable block (ram,0x800b00f0)
 
-// AH_Door_PerFrame
+// AH_Door_ThTick
 void FUN_800afa60(int param_1)
 
 {
@@ -4144,7 +4144,7 @@ void FUN_800b072c(int param_1)
   // give Instance to the thread
   *(int *)(iVar5 + 0x34) = param_1;
   
-  // set OnDestroy, AH_Door_OnDestroy
+  // set OnDestroy, AH_Door_ThDestroy
   *(undefined4 *)(iVar5 + 0x24) = 0x800af9f8;
   
   piVar6 = piVar11 + 3;
@@ -5887,7 +5887,7 @@ void FUN_800b1f78(int param_1,ushort param_2)
 }
 
 
-// AH_Pause_PerFrame
+// AH_Pause_Update
 void FUN_800b3144(void)
 
 {
@@ -6801,7 +6801,7 @@ void FUN_800b43cc(int param_1)
   return;
 }
 
-// AH_MaskHint_PerFrame
+// AH_MaskHint_Update
 void FUN_800b4470(void)
 
 {
