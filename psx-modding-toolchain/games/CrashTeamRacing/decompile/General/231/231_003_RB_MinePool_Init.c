@@ -2,7 +2,7 @@
 
 // LinkedList, and MinePool data,
 // comes between last RB Weapon func (ClosestTracker),
-// and first RB Hazard func (Baron_PerFrame)
+// and first RB Hazard func (Baron_ThTick)
 
 void DECOMP_RB_MinePool_Init(void)
 {

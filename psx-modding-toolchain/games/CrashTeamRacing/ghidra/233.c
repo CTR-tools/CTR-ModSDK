@@ -5610,7 +5610,7 @@ void FUN_800b8f8c(void)
   iVar11 = FUN_8004205c(0x30d,FUN_800b8dc8,s_credits_800b8644,0);
   
   // Credits_OnDestroy
-  // last two bytes of PerFrame, just RET and NOP
+  // last two bytes of ThTick, just RET and NOP
   *(undefined4 *)(iVar11 + 0x24) = 0x800b8f84;
   
   // save credits thread globally

@@ -44,7 +44,7 @@ int NewDecode()
 }
 
 // jmp hook
-void SaveObj_PerFrame_Hook()
+void SaveObj_ThTick_Hook()
 {
 	register int animFrame asm("v0");
 	register struct Instance* inst asm("v1");
@@ -526,7 +526,7 @@ void NewCallback232()
 	// saveload
 	{
 		// fix scanline
-		*(unsigned int*)0x800af7e8 = JMP(SaveObj_PerFrame_Hook);
+		*(unsigned int*)0x800af7e8 = JMP(SaveObj_ThTick_Hook);
 	}
 
 	LOAD_Callback_Overlay_232();

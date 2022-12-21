@@ -1274,7 +1274,7 @@ void FUN_80018fec(short *param_1,ushort *param_2,short *param_3,short *param_4,s
 // param_2 is driver object
 // param_4 is cam110 pos
 // param_5 is cam110 rot
-// only called from PerFrame
+// only called from ThTick
 void FUN_80019128(int param_1,int param_2,int param_3,short *param_4,short *param_5)
 {
   long lVar1;

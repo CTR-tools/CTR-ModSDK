@@ -384,7 +384,7 @@ int FUN_800308e4(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 // param2 is a string
 // param3 is stackSize (small medium large)
 // param4 is bucket type
-// param5 is perFrame update func
+// param5 is ThTick update func
 // param6 is size in bytes, and relation to param7
 // param7 is parent thread (driver shooting weapon), can be nullptr
 undefined4
@@ -20070,7 +20070,7 @@ int FUN_8004205c(uint param_1,undefined4 param_2,undefined4 param_3,int param_4)
           }
         }
 
-		// set PerFrame funcPtr
+		// set ThTick funcPtr
         *(undefined4 *)(iVar4 + 0x2c) = param_2;
 
 		// set string pointer
@@ -63551,15 +63551,15 @@ void FUN_800715e8(undefined4 param_1)
 		{
           DAT_1f8000e0 = iVar3;
 
-		  // execute PerFrame funcPtr,
+		  // execute ThTick funcPtr,
 		  // most of these can't JR RA back, cause $RA
 		  // is not backed up on stack memory, so the
 		  // threads JAL back to one of two labels...
 		  (**(code **)(iVar3 + 0x2c))(iVar3);
 
-// SetThTick_AndExec, called from PerFrame,
-// cancels the previous PerFrame, and goes here,
-// or if you did an ordinary JR RA from a PerFrame,
+// SetThTick_AndExec, called from ThTick,
+// cancels the previous ThTick, and goes here,
+// or if you did an ordinary JR RA from a ThTick,
 // like TNT thread does
 LAB_80071678:
 
@@ -63571,8 +63571,8 @@ LAB_80071678:
         }
 
 // where threads JAL in an infinite loop,
-// iVar3 is set to what it was before PerFrame
-// ran, because PerFrame passed thread as 
+// iVar3 is set to what it was before ThTick
+// ran, because ThTick passed thread as 
 // paramter to this JAL
 LAB_80071694:
 
