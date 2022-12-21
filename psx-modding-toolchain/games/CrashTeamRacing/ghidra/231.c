@@ -7178,7 +7178,7 @@ code_r0x800b4024:
   return 1;
 }
 
-// RB_Crate_Weapon_LThB
+// RB_Crate_Weapon_LInC
 undefined4 FUN_800b4278(int param_1,undefined4 param_2,undefined4 param_3)
 {
   code *pcVar1;
@@ -7462,7 +7462,7 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
   return 0;
 }
 
-// RB_Crate_Fruit_LThB
+// RB_Crate_Fruit_LInC
 undefined4 FUN_800b471c(int param_1,undefined4 param_2,undefined4 param_3)
 {
   code *pcVar1;
@@ -7811,7 +7811,7 @@ LAB_800b4b2c:
   return 1;
 }
 
-// RB_Crate_Time_LThB
+// RB_Crate_Time_LInC
 undefined4 FUN_800b4ba8(int param_1,undefined4 param_2,undefined4 param_3)
 {
   code *pcVar1;
@@ -8008,7 +8008,7 @@ void FUN_800b4dd8(int param_1)
   return;
 }
 
-// RB_Crystal_LThB
+// RB_Crystal_LInC
 undefined4 FUN_800b4e7c(int param_1,undefined4 param_2,undefined4 param_3)
 
 {
@@ -8282,7 +8282,7 @@ bool FUN_800b5090(int param_1,int param_2,undefined4 param_3,int param_4)
   return bVar1;
 }
 
-// RB_CtrLetter_LThB
+// RB_CtrLetter_LInC
 undefined4 FUN_800b5210(int param_1,undefined4 param_2,undefined4 param_3)
 {
   undefined4 uVar1;
@@ -10107,7 +10107,7 @@ void FUN_800b722c(int param_1)
   return;
 }
 
-// RB_Fruit_LThB
+// RB_Fruit_LInC
 // spawns for one frame then destroys
 undefined4 FUN_800b7260(int param_1,undefined4 param_2,undefined4 param_3)
 {
@@ -12958,7 +12958,7 @@ LAB_800ba084:
   return;
 }
 
-// RB_Teeth_LThB
+// RB_Teeth_LInC
 undefined4 FUN_800ba0c8(int param_1,int param_2,short *param_3)
 {
   int iVar1;
@@ -13209,7 +13209,7 @@ void FUN_800ba2c0(int param_1)
   return;
 }
 
-// RB_Turtle_OnCollide
+// RB_Turtle_LInC
 undefined4 FUN_800ba420(int param_1,int param_2)
 {
   int iVar1;

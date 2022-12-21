@@ -7089,7 +7089,7 @@ struct Data
 		// Level Instance Collision
 		// callback after detecting
 		// Lev BSP hitbox collision
-		void* LThB;
+		void* LInC;
 
 	// Number of elements changes...
 	} MetaDataModels

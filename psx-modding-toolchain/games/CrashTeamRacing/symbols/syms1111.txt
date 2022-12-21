@@ -1399,18 +1399,18 @@
 800B72C4 RB_Crate_PerFrame_Explode
 800B733C RB_Crate_PerFrame_Normal
 800B743C RB_Crate_Weapon_OnCollide
-800B7838 RB_Crate_Weapon_LThB
+800B7838 RB_Crate_Weapon_LInC
 800B78EC RB_Crate_Fruit_OnCollide
-800B7CDC RB_Crate_Fruit_LThB
+800B7CDC RB_Crate_Fruit_LInC
 800B7D90 RB_Crate_Time_OnCollide
-800B8168 RB_Crate_Time_LThB
+800B8168 RB_Crate_Time_LInC
 800B821C RB_Crystal_OnCollide
 800B8398 RB_Crystal_PerFrame
-800B843C RB_Crystal_LThB
+800B843C RB_Crystal_LInC
 800B8508 RB_Crystal_LInB
 800B85A4 RB_Default_LInB
 800B8650 RB_CtrLetter_OnCollide
-800B87D0 RB_CtrLetter_LThB
+800B87D0 RB_CtrLetter_LInC
 800B889C RB_CtrLetter_PerFrame
 800B88F4 RB_CtrLetter_LInB
 800B89A0 RB_Banner_Animate_Init
@@ -1432,7 +1432,7 @@
 800BA4C0 RB_Follower_Init
 800BA62C RB_Fruit_PerFrame
 800BA7EC RB_Fruit_LInB
-800BA820 RB_Fruit_LThB
+800BA820 RB_Fruit_LInC
 800BA8F8 RB_Minecart_PerFrame
 800BADD4 RB_Minecart_LInB
 800BB14C RB_Orca_PerFrame
@@ -1459,10 +1459,10 @@
 800BD3B0 RB_Teeth_LInB
 800BD404 RB_Teeth_BSP_Callback
 800BD4CC RB_Teeth_PerFrame
-800BD688 RB_Teeth_LThB
+800BD688 RB_Teeth_LInC
 800BD7E0 RB_Teeth_OpenDoor
 800BD880 RB_Turtle_PerFrame
-800BD9E0 RB_Turtle_OnCollide
+800BD9E0 RB_Turtle_LInC
 800BDA30 RB_Turtle_LInB
 
 // 232 (AdvHub)
