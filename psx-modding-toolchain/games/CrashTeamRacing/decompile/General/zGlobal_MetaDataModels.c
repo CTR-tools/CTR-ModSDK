@@ -15,7 +15,7 @@ void RB_Minecart_LInB();
 void RB_Snowball_LInB();
 void RB_Armadillo_LInB();
 void DECOMP_RB_Blade_LInB();
-void RB_Seal_LInB();
+void DECOMP_RB_Seal_LInB();
 void RB_Orca_LInB();
 void RB_Baron_LInB();
 void RB_Turtle_LInB();
@@ -307,7 +307,7 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,0,0),
 	
 	// 0x4c - DYNAMIC_SEAL (polar pass)
-	SET_MDM(0,RB_Seal_LInB,0),
+	SET_MDM(0,DECOMP_RB_Seal_LInB,0),
 	
 	// 0x4d - DYNAMIC_ORCA
 	SET_MDM(0,RB_Orca_LInB,0),
