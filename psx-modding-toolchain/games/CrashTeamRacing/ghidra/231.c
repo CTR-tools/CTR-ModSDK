@@ -7887,6 +7887,8 @@ undefined4 FUN_800b4c5c(int param_1,int param_2,undefined4 param_3,int param_4)
   short sStack14;
   
   puVar2 = PTR_DAT_8008d2ac;
+  
+  // scratchpad modelID
   sVar1 = *(short *)(param_4 + 0xc);
   
   // get crystal instance from thread
@@ -7904,11 +7906,13 @@ undefined4 FUN_800b4c5c(int param_1,int param_2,undefined4 param_3,int param_4)
 		)
 	  ) 
   {
+	// driverThread->driverObj
     iVar5 = *(int *)(param_2 + 0x30);
 	
 	// If this is player
     if (sVar1 == 0x18) 
 	{
+	  // crystal position
       local_18 = CONCAT22(*(undefined2 *)(iVar6 + 0x48),*(undefined2 *)(iVar6 + 0x44));
       local_14 = local_14 & 0xffff0000 | (uint)*(ushort *)(iVar6 + 0x4c);
 	  

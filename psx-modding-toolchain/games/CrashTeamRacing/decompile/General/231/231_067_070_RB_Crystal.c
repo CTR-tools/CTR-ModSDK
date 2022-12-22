@@ -65,14 +65,13 @@ void DECOMP_RB_Crystal_LInB(struct Instance* inst)
 }
 
 int DECOMP_RB_Crystal_LInC(
-	struct Thread* crystalTh, 
+	struct Instance* crystalInst,
 	struct Thread* driverTh,
 	struct WeaponSearchData* info)
 {
 	short posWorld[4];
 	short posScreen[2];
 	MATRIX* m;
-	struct Instance* crystalInst;
 	struct Driver* driver;
 	struct Camera110* c110;
 	int driverID;
@@ -85,8 +84,15 @@ int DECOMP_RB_Crystal_LInC(
 	// quit function
 	if (!((modelID == 0x18) || (modelID == 0x3f))) return 0;
 	
+	// handle scale
+	if(crystalInst->scale[0] == 0) return 0;
+	crystalInst->scale[0] = 0;
+	crystalInst->scale[1] = 0;
+	crystalInst->scale[2] = 0;
+	
 	// kill thread
-	crystalTh->flags |= 0x800;
+	crystalInst->thread->flags |= 0x800;
+	crystalInst->thread = 0;
 	
 	// get driver object
 	driver = driverTh->object;
@@ -98,15 +104,10 @@ int DECOMP_RB_Crystal_LInC(
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
 	
-	// get instance, disappear, remove thread
-	crystalInst = crystalTh->inst;
-	crystalInst->flags |= 0x80;
-	crystalInst->thread = 0;
-	
 	// load input vector
-	posWorld[0] = *(short*)crystalInst->matrix.t[0];
-	posWorld[1] = *(short*)crystalInst->matrix.t[1];
-	posWorld[2] = *(short*)crystalInst->matrix.t[2];
+	posWorld[0] = *(short*)&crystalInst->matrix.t[0];
+	posWorld[1] = *(short*)&crystalInst->matrix.t[1];
+	posWorld[2] = *(short*)&crystalInst->matrix.t[2];
 	posWorld[3] = 0;
 	gte_ldv0(&posWorld[0]);
 	

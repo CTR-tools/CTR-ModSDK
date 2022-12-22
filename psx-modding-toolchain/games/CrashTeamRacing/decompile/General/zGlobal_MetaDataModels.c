@@ -26,13 +26,8 @@ void RB_StartText_LInB();
 void RB_Banner_LInB();
 void RB_CtrLetter_LInB();
 void RB_CtrLetter_LInC();
-
 void DECOMP_RB_Crystal_LInB();
 void DECOMP_RB_Crystal_LInC();
-
-	void RB_Crystal_LInB();
-	void RB_Crystal_LInC();
-
 void RB_StartText_LInB();
 void RB_Teeth_LInB();
 void RB_Teeth_LInC();
@@ -374,8 +369,7 @@ struct MetaDataModel mdm[0xe2] =
 	// 0x60 - STATIC_CRYSTAL
 	// LInC should not birth a thread, nor call ThCollide,
 	// LInC should only kill LInB's thread and trigger HUD
-	SET_MDM(0,RB_Crystal_LInB,RB_Crystal_LInC),
-	//SET_MDM(0,DECOMP_RB_Crystal_LInB,DECOMP_RB_Crystal_LInC),
+	SET_MDM(0,DECOMP_RB_Crystal_LInB,DECOMP_RB_Crystal_LInC),
 	
 	// 0x61 - STATIC_RELIC
 	SET_MDM(0,0,0),
