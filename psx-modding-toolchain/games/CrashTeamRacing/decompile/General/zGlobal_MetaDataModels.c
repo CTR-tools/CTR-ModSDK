@@ -24,8 +24,8 @@ void RB_Spider_LInB();
 void RB_Fireball_LInB();
 void RB_StartText_LInB();
 void RB_Banner_LInB();
-void RB_CtrLetter_LInB();
-void RB_CtrLetter_LInC();
+void DECOMP_RB_CtrLetter_LInB();
+void DECOMP_RB_CtrLetter_LInC();
 void DECOMP_RB_Crystal_LInB();
 void DECOMP_RB_Crystal_LInC();
 void RB_StartText_LInB();
@@ -524,17 +524,17 @@ struct MetaDataModel mdm[0xe2] =
 	// 0x93 - STATIC_C
 	// LInC should not birth a thread, nor call ThCollide,
 	// LInC should only kill LInB's thread and trigger HUD
-	SET_MDM(0,RB_CtrLetter_LInB,RB_CtrLetter_LInC),
+	SET_MDM(0,DECOMP_RB_CtrLetter_LInB,DECOMP_RB_CtrLetter_LInC),
 	
 	// 0x94 - STATIC_T
 	// LInC should not birth a thread, nor call ThCollide,
 	// LInC should only kill LInB's thread and trigger HUD
-	SET_MDM(0,RB_CtrLetter_LInB,RB_CtrLetter_LInC),
+	SET_MDM(0,DECOMP_RB_CtrLetter_LInB,DECOMP_RB_CtrLetter_LInC),
 	
 	// 0x95 - STATIC_R
 	// LInC should not birth a thread, nor call ThCollide,
 	// LInC should only kill LInB's thread and trigger HUD
-	SET_MDM(0,RB_CtrLetter_LInB,RB_CtrLetter_LInC),
+	SET_MDM(0,DECOMP_RB_CtrLetter_LInB,DECOMP_RB_CtrLetter_LInC),
 	
 	// 0x96 - STATIC_CRASHINTRO
 	SET_MDM(0,CS_LevThread_LInB,0),

@@ -3015,16 +3015,10 @@ struct Crystal
 
 struct CtrLetter
 {
-	// 0x0
-	short rotX;
+	short rot[3];
+	short padding;
 
-	// 0x2
-	short rotY;
-
-	// 0x4
-	short rotZ;
-
-	// can be 4 bytes large or 8
+	// 0x8 bytes large
 };
 
 struct StartBanner
