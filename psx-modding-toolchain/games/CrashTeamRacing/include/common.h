@@ -3218,9 +3218,7 @@ struct Seal
 
 	// 0x10
 	short rotSpawn[3];
-
-	// 0x16
-	// unk
+	short padding16;
 
 	// 0x18
 	short rotCurr[3];
@@ -3229,17 +3227,14 @@ struct Seal
 	short direction;
 
 	// 0x20
-	// unk
+	short unk20[3];
 
 	// 0x26
 	short numFramesSpinning;
 
 	// 0x28
 	short vel[3];
-
-	// 0x2e
-	// not used
-	short padding;
+	short padding2e;
 
 	// 0x30 bytes large
 };
@@ -3955,6 +3950,12 @@ struct mesh_info
 	// 0x20 bytes large
 };
 
+struct SpawnType2
+{
+	int unk;
+	short* posCoords;
+};
+
 struct Level
 {
 	// 0x0
@@ -4066,10 +4067,10 @@ struct Level
 	// like Seal, Minecart, etc
 
 	// 0x138
-	int cnt_spawn_arrays2;
+	int numSpawnType2;
 
 	// 0x13C
-	void* ptr_spawn_arrays2;
+	struct SpawnType2* ptrSpawnType2;
 
 	// spawn_arrays is for things
 	// N Gin Labs barrel, more like a path

@@ -52,8 +52,9 @@ void DECOMP_RB_Crystal_LInB(struct Instance* inst)
 	t->inst = inst;
 	
 	crystalObj = ((struct Crystal*)t->object);
-	crystalObj->rot[0] = 0;
-	crystalObj->rot[1] = 0;
+	
+	// rotX, rotY, rotZ
+	*(int*)&crystalObj->rot[0] = 0;
 	crystalObj->rot[2] = 0;
 	
 	inst->colorRGB = 0xd22fff0;
@@ -80,14 +81,14 @@ int DECOMP_RB_Crystal_LInC(
 	modelID = info->modelID;
 	
 	// if crystal did not collide with 
-	// DYNAMIC_PLAYER or DYNAMIC_ROBOT_CAR,
-	// quit function
-	if (!((modelID == 0x18) || (modelID == 0x3f))) return 0;
+	// DYNAMIC_PLAYER, quit function
+	if (modelID != 0x18) return 0;
 	
-	// handle scale
+	// check scale
 	if(crystalInst->scale[0] == 0) return 0;
-	crystalInst->scale[0] = 0;
-	crystalInst->scale[1] = 0;
+	
+	// scaleX, scaleY, scaleZ
+	*(int*)&crystalInst->scale[0] = 0;
 	crystalInst->scale[2] = 0;
 	
 	// kill thread
@@ -108,9 +109,8 @@ int DECOMP_RB_Crystal_LInC(
     gte_SetTransMatrix(m);
 	
 	// load input vector
-	posWorld[0] = *(short*)&crystalInst->matrix.t[0];
-	posWorld[1] = *(short*)&crystalInst->matrix.t[1];
-	posWorld[2] = *(short*)&crystalInst->matrix.t[2];
+	*(int*)&posWorld[0] = *(int*)&crystalInst->matrix.t[0];
+	posWorld[2] = crystalInst->matrix.t[2];
 	posWorld[3] = 0;
 	gte_ldv0(&posWorld[0]);
 	

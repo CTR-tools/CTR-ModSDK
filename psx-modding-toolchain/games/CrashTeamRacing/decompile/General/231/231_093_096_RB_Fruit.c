@@ -27,10 +27,11 @@ int DECOMP_RB_Fruit_LInC(
 	// quit function
 	if (!((modelID == 0x18) || (modelID == 0x3f))) return 0;
 	
-	// handle scale
+	// check scale
 	if(fruitInst->scale[0] == 0) return 0;
-	fruitInst->scale[0] = 0;
-	fruitInst->scale[1] = 0;
+	
+	// set scaleX, scaleY, scaleZ
+	*(int*)&fruitInst->scale[0] = 0;
 	fruitInst->scale[2] = 0;
 	
 	// play sound
@@ -47,9 +48,8 @@ int DECOMP_RB_Fruit_LInC(
     gte_SetTransMatrix(m);
 	
 	// load input vector
-	posWorld[0] = *(short*)&fruitInst->matrix.t[0];
-	posWorld[1] = *(short*)&fruitInst->matrix.t[1];
-	posWorld[2] = *(short*)&fruitInst->matrix.t[2];
+	*(int*)&posWorld[0] = *(int*)&fruitInst->matrix.t[0];
+	posWorld[2] = fruitInst->matrix.t[2];
 	posWorld[3] = 0;
 	gte_ldv0(&posWorld[0]);
 	

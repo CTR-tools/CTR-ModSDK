@@ -11907,17 +11907,23 @@ void FUN_800b90ec(int param_1)
         puVar5 = *(undefined4 **)(iVar4 * 8 + *(int *)(*(int *)(puVar2 + 0x160) + 0x13c) + 4);
         sVar1 = *(short *)(puVar5 + 1);
 		
-		// store spawn point in seal object
+		// spawnPosX, spawnPosY
         *puVar6 = *puVar5;
+		
+		// spawnPosZ
         *(short *)(puVar6 + 1) = sVar1;
 		
-		// use sealID to get end position of this seal
+		// use sealID to get spawnPosY
         iVar4 = *(int *)((int)*(short *)((int)puVar6 + 6) * 8 +
                          *(int *)(*(int *)(puVar3 + 0x160) + 0x13c) + 4);
+						 
+		// endPosZ
 		sVar1 = *(short *)(iVar4 + 10);
 		
-		// store end point in seal object
+		// endPosX, endPosY
         puVar6[2] = *(undefined4 *)(iVar4 + 6);
+		
+		// endPosZ
         *(short *)(puVar6 + 3) = sVar1;
       }
 	  
