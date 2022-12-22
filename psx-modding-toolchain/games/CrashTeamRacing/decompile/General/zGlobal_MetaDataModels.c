@@ -3,8 +3,8 @@
 // NonLev-related entries are empty
 
 void RB_Default_LInB();
-void RB_Fruit_LInB();
-void RB_Fruit_LInC();
+void DECOMP_RB_Fruit_LInB();
+void DECOMP_RB_Fruit_LInC();
 void RB_GenericMine_LInB();
 void RB_CrateFruit_LInC();
 void RB_CrateWeapon_LInC();
@@ -79,7 +79,7 @@ struct MetaDataModel mdm[0xe2] =
 	// 0x02 - PU_WUMPA_FRUIT
 	// OG game births a thread, calls ThCollide, then dies,
 	// DECOMP shouldn't birth in LInC, just trigger HUD
-	SET_MDM(0,RB_Fruit_LInB,RB_Fruit_LInC),
+	SET_MDM(0,DECOMP_RB_Fruit_LInB,DECOMP_RB_Fruit_LInC),
 	
 	// 0x03 - PU_SMALL_BOMB
 	SET_MDM(0,0,0),

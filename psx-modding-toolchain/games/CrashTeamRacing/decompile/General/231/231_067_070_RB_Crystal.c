@@ -94,6 +94,9 @@ int DECOMP_RB_Crystal_LInC(
 	crystalInst->thread->flags |= 0x800;
 	crystalInst->thread = 0;
 	
+	// play sound
+	PlaySound3D(0x43,crystalInst);
+	
 	// get driver object
 	driver = driverTh->object;
 	driverID = driver->driverID;
