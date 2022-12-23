@@ -31,7 +31,7 @@ common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c
 // skip a bunch
 common, 231, RB_Fruit_ThTick, 0x0, General/231/231_093_096_RB_Fruit.c
 // skip a bunch
-common, 231, RB_Seal_LInB, 0x0, General/231/231_108_111_RB_Seal.c
+common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_108_111_RB_Seal.c
 
 // exe globals
 926, exe, 0x80081088, 0x0, General/zGlobal_MetaDataModels.c

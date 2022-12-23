@@ -1118,7 +1118,7 @@ struct Thread
 	void* funcThDestroy;
 
 	// 0x28
-	void* funcThCollide;
+	void (*funcThCollide)(struct Thread* self);
 
 	// 0x2c
 	void* funcThTick;
@@ -3217,17 +3217,17 @@ struct Seal
 	short distFromSpawn;
 
 	// 0x10
-	short rotSpawn[3];
+	short rotCurr[3];
 	short padding16;
 
 	// 0x18
-	short rotCurr[3];
+	short rotSpawn[3];
 
 	// 0x1e
 	short direction;
 
 	// 0x20
-	short unk20[3];
+	short rotDesired[3];
 
 	// 0x26
 	short numFramesSpinning;
