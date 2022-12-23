@@ -9886,7 +9886,7 @@ struct BSS
 	int boolPlayGhost;
 
 	// 8008d95c
-	char data18_aaa[0x18];
+	char data18_aaa[0x14];
 
 	// 8008d968 boolWipeMemcard (why?)
 
@@ -9896,6 +9896,7 @@ struct BSS
 	//	- main menu character icon border
 	//	- main menu character window border
 	//	etc
+	int frameCounter;
 
 	// 8008bda8 -- SepReview
 	// 8008d974 -- UsaRetail
