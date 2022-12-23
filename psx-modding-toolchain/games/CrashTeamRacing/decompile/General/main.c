@@ -543,6 +543,8 @@ void StateZero()
 	// for instant-boot, dont erase
 	#if 0
 	gGT->levelID = 0;
+	//gGT->numPlayers = 4;
+	//gGT->numScreens = 4;
 	#endif
 	
 	// set level name to "ndi"

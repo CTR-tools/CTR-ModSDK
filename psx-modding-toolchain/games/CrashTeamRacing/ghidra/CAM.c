@@ -2686,6 +2686,7 @@ void FUN_8001b334(int param_1)
 						(*(uint *)(PTR_DAT_8008d2ac + 8) & 4) == 0 &&
 
 						// If you press L2
+						// gGamepads->gamepad[cameraDC->cameraID]->buttonsHeld
 						((*(uint *)(PTR_DAT_8008d2b0 + *piVar18 * 0x50 + 0x14) & 0x80) != 0)
 					)
 				)

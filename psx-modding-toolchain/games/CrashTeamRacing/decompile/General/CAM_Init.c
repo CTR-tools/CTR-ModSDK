@@ -14,8 +14,8 @@ void DECOMP_CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struc
 
 	memset(cDC, 0, sizeof(struct CameraDC));
 
-	// needed?
-	//cDC->cameraID = cameraID;
+	// needed or L2 breaks
+	cDC->cameraID = cameraID;
 
 	cDC->driverToFollow = d;
 	cDC->cam110 = c110;
