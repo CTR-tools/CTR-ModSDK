@@ -114,33 +114,40 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 		PlaySound3D(0x77, sealInst);
 	}
 	
-	// interpolate rotCurrY to rotDesiredY
+	// spin rotCurrY 180 degrees (turn around)
 	sealObj->rotCurr[1] = 
 		RB_Hazard_InterpolateValue(
-			sealObj->rotCurr[1], sealObj->rotSpawn[1], 0x80
+			sealObj->rotCurr[1], sealObj->rotDesired[1], 0x80
 		);
 		
-	// interpolate rotCurrX to rotSpawnX
+	// negate rotCurrX (slant)
 	sealObj->rotCurr[0] = 
 		RB_Hazard_InterpolateValue(
-			sealObj->rotCurr[0], -sealObj->rotSpawn[0], 0x14
+			sealObj->rotCurr[0], sealObj->rotDesired[0], 0x14
 		);
 	
-	// interpolate rotCurrX to rotSpawnX
+	// negate rotCurrZ (slant)
 	sealObj->rotCurr[2] = 
 		RB_Hazard_InterpolateValue(
-			sealObj->rotCurr[2], -sealObj->rotSpawn[2], 0x14
+			sealObj->rotCurr[2], sealObj->rotDesired[2], 0x14
 		);
 	
 	ConvertRotToMatrix(&sealInst->matrix, &sealObj->rotCurr[0]);
 
 	// if rotation is finished
-	if(sealObj->rotCurr[1] == sealObj->rotSpawn[1])
+	if(sealObj->rotCurr[1] != sealObj->rotDesired[1])
 	{
-		SetThTick_AndExec(t, DECOMP_RB_Seal_ThTick_Move);
+		Seal_CheckColl(sealInst, t);
+		return;
 	}
 	
-	Seal_CheckColl(sealInst, t);
+	// === End of TurnAround state ===
+	
+	// negate
+	sealObj->direction = !sealObj->direction;
+	
+	// move
+	SetThTick_AndExec(t, DECOMP_RB_Seal_ThTick_Move);
 }
 
 void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
@@ -202,13 +209,12 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	
 	// === end of Move state ===
 	
-	// negate
-	sealObj->direction = !sealObj->direction;
+	// flip Y 180 degrees (turn around)
+	sealObj->rotDesired[1] = (sealObj->rotCurr[1] + 0x800) & 0xfff;
 	
-	// flip
-	sealObj->rotSpawn[0] = sealObj->rotCurr[0];
-	sealObj->rotSpawn[2] = sealObj->rotCurr[2];
-	sealObj->rotSpawn[1] = (sealObj->rotSpawn[1] + 0x800) & 0xfff;
+	// negate X and Z (for slants)
+	sealObj->rotDesired[0] = -sealObj->rotCurr[0];
+	sealObj->rotDesired[2] = -sealObj->rotCurr[2];
 	
 	// turn around
 	SetThTick_AndExec(t, DECOMP_RB_Seal_ThTick_TurnAround);
@@ -256,25 +262,16 @@ void DECOMP_RB_Seal_LInB(struct Instance* inst)
 	*(int*)&sealObj->spawnPos[0] = *(int*)&spawnType2->posCoords[0];
 	sealObj->spawnPos[2] = spawnType2->posCoords[2];
 	
-	// endPos
-	sealObj->endPos[0] = spawnType2->posCoords[3];
-	sealObj->endPos[1] = spawnType2->posCoords[4];
-	sealObj->endPos[2] = spawnType2->posCoords[5];
-	
 	// distance between points
-	sealObj->vel[0] = sealObj->spawnPos[0] - sealObj->endPos[0];
-	sealObj->vel[1] = sealObj->spawnPos[1] - sealObj->endPos[1];
-	sealObj->vel[2] = sealObj->spawnPos[2] - sealObj->endPos[2];
+	sealObj->vel[0] = sealObj->spawnPos[0] - spawnType2->posCoords[3];
+	sealObj->vel[1] = sealObj->spawnPos[1] - spawnType2->posCoords[4];
+	sealObj->vel[2] = sealObj->spawnPos[2] - spawnType2->posCoords[5];
 	
-	// rotSpawn
+	// rotCurr
 	instDef = inst->instDef;
-	sealObj->rotSpawn[0] = instDef->rot[0];
-	sealObj->rotSpawn[1] = instDef->rot[1];
-	sealObj->rotSpawn[2] = instDef->rot[2];
-	
-	// rotCurr, also copies direction into padding
-	*(int*)&sealObj->rotCurr[0] = *(int*)&sealObj->rotSpawn[0];
-	*(int*)&sealObj->rotCurr[2] = *(int*)&sealObj->rotSpawn[2];
+	sealObj->rotCurr[0] = instDef->rot[0];
+	sealObj->rotCurr[1] = instDef->rot[1];
+	sealObj->rotCurr[2] = instDef->rot[2];
 	
 	ConvertRotToMatrix(&inst->matrix, &sealObj->rotCurr[0]);
 	

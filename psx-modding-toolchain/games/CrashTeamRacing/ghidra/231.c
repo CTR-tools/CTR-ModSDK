@@ -11601,11 +11601,11 @@ void FUN_800b8c00(int param_1)
     uVar3 = FUN_800ada90((int)*(short *)(iVar6 + 0x12),(int)*(short *)(iVar6 + 0x22),0x80);
     *(undefined2 *)(iVar6 + 0x12) = uVar3;
     
-	// rotCurrX to rotSpawnX
+	// rotCurrX to rotDesiredAltX
 	uVar3 = FUN_800ada90((int)*(short *)(iVar6 + 0x10),(int)-*(short *)(iVar6 + 0x18),0x14);
     *(undefined2 *)(iVar6 + 0x10) = uVar3;
     
-	// rotCurrZ to rotSpawnZ
+	// rotCurrZ to rotDesiredAltZ
 	uVar3 = FUN_800ada90((int)*(short *)(iVar6 + 0x14),(int)-*(short *)(iVar6 + 0x1c),0x14);
     *(undefined2 *)(iVar6 + 0x14) = uVar3;
     
@@ -11731,7 +11731,7 @@ void FUN_800b8e1c(int param_1)
 	
 	// === end of Move state ===
 	
-	// rotSpawn_Y
+	// rotDesiredAlt_Y
     sVar2 = psVar6[9];
 	
 	// change direction
@@ -11946,7 +11946,7 @@ void FUN_800b90ec(int param_1)
       sVar1 = *(short *)(*(int *)(param_1 + 0x2c) + 0x38);
       *(short *)((int)puVar6 + 0x12) = sVar1;
 	  
-	  // rotSpawn (0x18)
+	  // rotDesiredAlt (0x18)
       *(short *)(puVar6 + 6) = *(short *)(puVar6 + 4);
       *(short *)((int)puVar6 + 0x26) = 0;
       *(short *)((int)puVar6 + 0x1a) = sVar1;

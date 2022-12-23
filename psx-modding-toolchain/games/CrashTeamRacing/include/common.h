@@ -3211,6 +3211,7 @@ struct Seal
 	short sealID;
 
 	// 0x8
+	// unused, should erase
 	short endPos[3];
 
 	// 0xe
@@ -3221,13 +3222,14 @@ struct Seal
 	short padding16;
 
 	// 0x18
-	short rotSpawn[3];
+	short rotDesired[3];
 
 	// 0x1e
 	short direction;
 
 	// 0x20
-	short rotDesired[3];
+	// unused, should erase
+	short rotDesiredAlt[3];
 
 	// 0x26
 	short numFramesSpinning;
