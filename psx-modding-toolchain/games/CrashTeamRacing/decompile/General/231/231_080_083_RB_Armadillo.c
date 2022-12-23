@@ -53,6 +53,9 @@ void DECOMP_RB_Armadillo_ThTick_TurnAround(struct Thread* t)
 			armObj->rotCurr[1], armObj->rotDesired[1], 0x100
 		);
 		
+	// increment frame
+	armInst->animFrame = armInst->animFrame+1;
+		
 	ConvertRotToMatrix(&armInst->matrix, &armObj->rotCurr[0]);
 	
 	if(armObj->rotCurr[1] != armObj->rotDesired[1])
