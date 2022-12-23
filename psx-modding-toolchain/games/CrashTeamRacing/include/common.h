@@ -3952,6 +3952,14 @@ struct mesh_info
 	// 0x20 bytes large
 };
 
+struct SpawnType1
+{
+	int count;
+	
+	// more than 1, determined by "count"
+	void* pointers[1];
+};
+
 struct SpawnType2
 {
 	int unk;
@@ -4063,7 +4071,7 @@ struct Level
 	struct RainBuffer rainBuffer;
 
 	// 0x134
-	int* ptr_trial_data;
+	struct SpawnType1* ptrSpawnType1;
 
 	// spawn_arrays2 is for things
 	// like Seal, Minecart, etc
@@ -5285,12 +5293,13 @@ struct GameTracker
   } deadcoed_struct;
 
   // 0x2534
-  char final_filler_mostly_null[0x0C];
+  char final_filler_mostly_null[0x0B];
 
   // 0x253f,
   // Debug_ToggleNormalSpawn
   // always 1, in normal gameplay
   // set to 0, to immediately spawn at (0,0,0)
+  char Debug_ToggleNormalSpawn;
 
   //2540
   char overlayIndex_LOD;

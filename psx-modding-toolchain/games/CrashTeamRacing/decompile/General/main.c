@@ -44,6 +44,7 @@ u_int main()
 
 			// Happens on first frame that loading ends
 			case 1:
+			
 				// deactivate pause
 				ElimBG_Deactivate(gGT);
 				RestartRace_IncrementLossCount();
@@ -271,6 +272,33 @@ u_int main()
 
 				// Process all gamepad input
 				GAMEPAD_UpdateAll(sdata->gGamepads);
+
+				#if 1
+				
+				// disable spawn
+				gGT->Debug_ToggleNormalSpawn = 0;
+				
+				// disable maskgrab_init
+				*(int*)0x800671b0 = 0x3E00008;
+				*(int*)0x800671b4 = 0;
+				
+				if(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_L2)
+				{
+					gGT->drivers[0]->posCurr[0] = 0x13F5BF;
+					gGT->drivers[0]->posCurr[1] = 0x8FFB3;
+					gGT->drivers[0]->posCurr[2] = 0xFFECB546;
+					gGT->drivers[0]->angle = 0x1E8;
+				}
+				
+				if(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_R2)
+				{
+					gGT->drivers[0]->posCurr[0] = 0x52430e;
+					gGT->drivers[0]->posCurr[1] = 0x2ff58;
+					gGT->drivers[0]->posCurr[2] = 0x255f7a;
+					gGT->drivers[0]->angle = 0xbb4;
+				}
+				
+				#endif
 
 				// Start new frame (ClearOTagR)
 				StartNewFrame(gGT, sdata->gGamepads);
@@ -508,7 +536,7 @@ void StateZero()
 	gGT->overlayIndex_null_notUsed = 0;
 	
 	// set level ID to naughty dog box
-	gGT->levelID = 41;
+	gGT->levelID = 0;
 	
 	// set level name to "ndi"
 	*(u_int*)&gGT->levelName[0] = *(u_int*)&sdata->s_ndi_needToRename[0];

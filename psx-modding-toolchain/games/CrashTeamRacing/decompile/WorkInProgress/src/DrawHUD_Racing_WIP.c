@@ -162,11 +162,9 @@ void DECOMP_DrawHUD_Racing()
 		sdata->HudAndDebugFlags = 8;
 	}
 
-	// LEV -> trial_data . numPointers
-	if (sdata->gGT->level1->ptr_trial_data[0] != 0)
+	if (sdata->gGT->level1->ptrSpawnType1 != 0)
 	{
-		// LEV -> trial_data . ptr_map
-		levPtrMap = sdata->gGT->level1->ptr_trial_data[1];
+		levPtrMap = sdata->gGT->level1->ptrSpawnType1->pointers[0];
 	}
 
 	// If you are not in Relic Race, and not in battle mode,

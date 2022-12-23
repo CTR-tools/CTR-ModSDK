@@ -968,7 +968,7 @@ int FUN_80018b18(void)
   // If LEV exists
   if (*(int *)(PTR_DAT_8008d2ac + 0x160) != 0)
   {
-	// LEV -> ptr_trial_data
+	// LEV -> SpawnType1
     piVar2 = *(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134);
 
     iVar1 = 0;
