@@ -204,34 +204,25 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 				((sealObj->distFromSpawn * sealObj->vel[i]) >> 5);
 	}
 	
-	// moving towards spawn
+	// moving towards spawn (0)
 	if(sealObj->direction == 0)
 	{
-		if(sealObj->distFromSpawn > 0)
-		{
-			sealObj->distFromSpawn--;
-			goto DontTurnAround;
-		}
-		
-		if(sealObj->distFromSpawn != 0)
-		{
-			goto DontTurnAround;
-		}
+		// until == 0
+		sealObj->distFromSpawn--;
 	}
 	
-	// moving away from spawn
+	// moving away from spawn (1)
 	else
 	{
-		if(sealObj->distFromSpawn < 0x2d)
-		{
-			sealObj->distFromSpawn++;
-			goto DontTurnAround;
-		}
+		// until == 0x2d
+		sealObj->distFromSpawn++;
+	}
+	
+	if(sealObj->distFromSpawn != sealObj->direction*0x2d)
+	{
+		Seal_CheckColl(sealInst, t);
 		
-		if(sealObj->distFromSpawn != 0x2d)
-		{
-			goto DontTurnAround;
-		}
+		return;
 	}
 	
 	// === end of Move state ===
@@ -244,15 +235,6 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	
 	// turn around
 	SetThTick_AndExec(t, DECOMP_RB_Seal_ThTick_TurnAround);
-	
-	// this JR RA never executes,
-	// but it tells compiler not to backup
-	// registers when writing parameters
-	return;
-	
-DontTurnAround:
-	
-	Seal_CheckColl(sealInst, t);
 }
 
 void DECOMP_RB_Seal_LInB(struct Instance* inst)
