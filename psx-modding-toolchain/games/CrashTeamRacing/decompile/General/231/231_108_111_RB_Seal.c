@@ -3,7 +3,7 @@
 // one seal can not collide with more than one other thread,
 // then quits, it was like that in the original game too,
 // but one seal likely-wont collide with two threads at the same time
-void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh)
+void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int radius)
 {
 	struct GameTracker* gGT;
 	struct Instance* hitInst;
@@ -18,7 +18,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh)
 		(struct Instance*)INSTANCE_CollBucket_Radius(
 			sealInst, sealTh, 
 			gGT->threadBuckets[PLAYER].thread,
-			0x4000);
+			radius);
 	
 	// if hit a player
 	if(hitInst != 0)
@@ -50,7 +50,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh)
 		(struct Instance*)INSTANCE_CollBucket_Radius(
 			sealInst, sealTh, 
 			gGT->threadBuckets[ROBOT].thread,
-			0x4000);
+			radius);
 			
 	// if hit a robot
 	if(hitInst != 0)
@@ -70,7 +70,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh)
 		(struct Instance*)INSTANCE_CollBucket_Radius(
 			sealInst, sealTh, 
 			gGT->threadBuckets[MINE].thread,
-			0x4000);
+			radius);
 			
 	// if hit a mine
 	if(hitInst != 0)
@@ -137,7 +137,7 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 	// if rotation is finished
 	if(sealObj->rotCurr[1] != sealObj->rotDesired[1])
 	{
-		Seal_CheckColl(sealInst, t);
+		Seal_CheckColl(sealInst, t, 0x4000);
 		return;
 	}
 	
@@ -202,8 +202,7 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	
 	if(sealObj->distFromSpawn != sealObj->direction*0x2d)
 	{
-		Seal_CheckColl(sealInst, t);
-		
+		Seal_CheckColl(sealInst, t, 0x4000);
 		return;
 	}
 	

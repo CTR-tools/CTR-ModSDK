@@ -273,7 +273,7 @@ u_int main()
 				// Process all gamepad input
 				GAMEPAD_UpdateAll(sdata->gGamepads);
 
-				#if 1
+				#if 0
 				
 				// disable spawn
 				gGT->Debug_ToggleNormalSpawn = 0;
@@ -536,7 +536,7 @@ void StateZero()
 	gGT->overlayIndex_null_notUsed = 0;
 	
 	// set level ID to naughty dog box
-	gGT->levelID = 0;
+	gGT->levelID = 41;
 	
 	// set level name to "ndi"
 	*(u_int*)&gGT->levelName[0] = *(u_int*)&sdata->s_ndi_needToRename[0];

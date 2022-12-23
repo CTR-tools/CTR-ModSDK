@@ -13,7 +13,7 @@ void RB_FlameJet_LInB();
 void RB_Plant_LInB();
 void RB_Minecart_LInB();
 void RB_Snowball_LInB();
-void RB_Armadillo_LInB();
+void DECOMP_RB_Armadillo_LInB();
 void DECOMP_RB_Blade_LInB();
 void DECOMP_RB_Seal_LInB();
 void RB_Orca_LInB();
@@ -184,7 +184,7 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,0,0),
 	
 	// 0x24 - ARMADILLO (armadillo)
-	SET_MDM(0,RB_Armadillo_LInB,0),
+	SET_MDM(0,DECOMP_RB_Armadillo_LInB,0),
 	
 	// 0x25 - BLADE
 	SET_MDM(0,DECOMP_RB_Blade_LInB,0),
