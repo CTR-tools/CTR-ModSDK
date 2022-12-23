@@ -190,12 +190,9 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	// move seal
 	for(i = 0; i < 3; i++)
 	{
-		// ">>5" is the same as "/0x2d"
-		// 0x2d is the frame count
-		
 		sealInst->matrix.t[i] = 
-			sealObj->spawnPos[i] - 
-				((sealObj->distFromSpawn * sealObj->vel[i]) >> 5);
+			(int)sealObj->spawnPos[i] - 
+				(sealObj->distFromSpawn * (int)sealObj->vel[i]) / 0x2d;
 	}
 	
 	// moving towards spawn (0)
