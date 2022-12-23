@@ -273,8 +273,9 @@ u_int main()
 				// Process all gamepad input
 				GAMEPAD_UpdateAll(sdata->gGamepads);
 
-				#if 1
-				
+				// Niko testing armadillo,
+				// dont erase, will be used for many future tests
+				#if 0
 				// disable spawn
 				gGT->Debug_ToggleNormalSpawn = 0;
 				
@@ -536,7 +537,13 @@ void StateZero()
 	gGT->overlayIndex_null_notUsed = 0;
 	
 	// set level ID to naughty dog box
+	gGT->levelID = 41;
+	
+	// Niko testing, override level
+	// for instant-boot, dont erase
+	#if 0
 	gGT->levelID = 0;
+	#endif
 	
 	// set level name to "ndi"
 	*(u_int*)&gGT->levelName[0] = *(u_int*)&sdata->s_ndi_needToRename[0];
