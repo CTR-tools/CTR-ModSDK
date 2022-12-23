@@ -321,7 +321,7 @@ u_int main()
 					else
 					{
 						// if any button is pressed by anyone
-						if (*(int *)(sdata->gGamepads + 0x290) != 0)
+						if (*(int *)(&((char*)sdata->gGamepads)[0x290]) != 0)
 						{
 							// leave demo mode
 							gGT->boolDemoMode = 0;
