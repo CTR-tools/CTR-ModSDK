@@ -7005,8 +7005,14 @@ LAB_800b420c:
   // initialize thread for explosion
   iVar4 = FUN_80030a50(&uStack112);
   
+  // set color
   *(undefined4 *)(iVar4 + 0x24) = 0xfafafa0;
+  
+  // set alpha
   *(undefined2 *)(iVar4 + 0x22) = 0x1000;
+  
+  // create random rotation vector 
+  // {0, rand&0xfff, 0}
   uStack80 = 0;
   iVar5 = FUN_80078be8();
   iVar6 = iVar5;
@@ -7021,7 +7027,10 @@ LAB_800b420c:
   *(undefined4 *)(iVar4 + 0x48) = *(undefined4 *)(iVar10 + 0x48);
   *(undefined4 *)(iVar4 + 0x4c) = *(undefined4 *)(iVar10 + 0x4c);
   
+  // make rotation matrix from rand vector
   FUN_8006c2a4(auStack72,&uStack80);
+  
+  // explosion = crate + rotation
   FUN_8006c3b0(iVar4 + 0x30,iVar10 + 0x30,auStack72);
   
   // play sound for breaking box
@@ -7324,7 +7333,7 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
 	  // set scale
       *(undefined2 *)(iVar4 + 0x22) = 0x1000;
 	  
-	  // Copy position and rotation from one instance to another
+	  // explosion matrix = crate matrix
       uVar8 = *(undefined4 *)(iVar11 + 0x34);
       uVar9 = *(undefined4 *)(iVar11 + 0x38);
       uVar10 = *(undefined4 *)(iVar11 + 0x3c);
@@ -7367,7 +7376,7 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
 		// set number of wumpa to pick up
         *(int *)(iVar4 + 0x4c0) = iVar11;
 		
-		// Something with X, Y, and Z of driver->instance
+		// input vector is driver->instSelf->matrix.t[] position
         local_28 = CONCAT22(*(undefined2 *)(*(int *)(iVar4 + 0x1c) + 0x48),
                             *(undefined2 *)(*(int *)(iVar4 + 0x1c) + 0x44));
         local_24 = local_24 & 0xffff0000 | (uint)*(ushort *)(*(int *)(iVar4 + 0x1c) + 0x4c);
@@ -7411,7 +7420,7 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
 		// set number of wumpa to pick up
 		*(int *)(iVar4 + 0x4c0) = iVar11;
 		
-		// Something with X, Y, and Z of driver->instance
+		// input vector is driver->instSelf->matrix.t[] position
         local_28 = CONCAT22(*(undefined2 *)(*(int *)(iVar4 + 0x1c) + 0x48),
                             *(undefined2 *)(*(int *)(iVar4 + 0x1c) + 0x44));
         local_24 = local_24 & 0xffff0000 | (uint)*(ushort *)(*(int *)(iVar4 + 0x1c) + 0x4c);
@@ -7643,6 +7652,7 @@ LAB_800b4b38:
   // set scale[4]
   *(undefined2 *)(iVar4 + 0x22) = 0x1000;
   
+  // random vector {0, rand&0xfff, 0}
   local_58 = 0;
   iVar5 = FUN_80078be8();
   iVar6 = iVar5;
@@ -7657,10 +7667,10 @@ LAB_800b4b38:
   *(undefined4 *)(iVar4 + 0x48) = *(undefined4 *)(iVar10 + 0x48);
   *(undefined4 *)(iVar4 + 0x4c) = *(undefined4 *)(iVar10 + 0x4c);
   
-   // convert 3 rotation shorts into rotation matrix
+   // make matrix from rand vector
   FUN_8006c2a4(auStack80,&local_58);
   
-  // copy rotation matrix from crate to exploded box,
+  // explosion matrix = crate matrix + random rotation
   FUN_8006c3b0(iVar4 + 0x30,iVar10 + 0x30,auStack80);
   
   // play sound for breaking box
