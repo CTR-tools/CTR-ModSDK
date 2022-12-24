@@ -54,20 +54,20 @@ Work-in-progress project to decompile Crash Team Racing into human-readable C co
 [![Decompile Overview](https://img.youtube.com/vi/V9QlFzSVDAU/hqdefault.jpg)](https://www.youtube.com/watch?v=V9QlFzSVDAU)
 
 ## 📊 Progress
-### Research and Decompilation
+### Decompilation, Research and Documentation
 
-Decompiling the assembly assisted by Ghidra, researching how it works and adding comments for guidelines.
+Decompiling the binaries assisted by Ghidra, researching how it works and documentating them with comments.
 
 ![](https://progress-bar.dev/97/?width=300&title=USA&suffix=%%20done)
 
 ### Code Rewrite
 
-Rewriting Ghidra output to human-readable C Code and testing if it matches.
+Rewriting Ghidra output to human-readable C Code and testing if it's functional.
 Most of the source code are shared between versions.
 
-- ![](https://progress-bar.dev/93/?scale=1171&width=300&title=USA&suffix=%20functions%20out%20of%201171*)
-- ![](https://progress-bar.dev/22/?scale=1171&width=300&title=PAL&suffix=%20functions%20out%20of%201200*)
-- ![](https://progress-bar.dev/95/?scale=1171&width=300&title=JPN&suffix=%20functions%20out%20of%201200*)
+- ![](https://progress-bar.dev/124/?scale=1171&width=300&title=USA&suffix=%20functions%20out%20of%201171*)
+- ![](https://progress-bar.dev/22/?scale=1200&width=300&title=PAL&suffix=%20functions%20out%20of%201200*)
+- ![](https://progress-bar.dev/95/?scale=1200&width=300&title=JPN&suffix=%20functions%20out%20of%201200*)
 
 \* These are not accurate numbers and subject to change.
 
@@ -75,4 +75,28 @@ Most of the source code are shared between versions.
 
 Are you interested in contributing? Have any experience in C programming language? You're welcome to join!
 
-Get in touch with us through our [Discord server](https://discord.gg/WHkuh2n) or you can directly look at our [decompile directory](https://github.com/CTR-tools/CTR-ModSDK/tree/main/psx-modding-toolchain/games/CrashTeamRacing/decompile). 
+### How to rewrite functions:
+
+- Make sure you have cloned this repo and installed the requirements.
+- Choose a .c file from [ghidra](https://github.com/CTR-tools/CTR-ModSDK/tree/main/psx-modding-toolchain/games/CrashTeamRacing/ghidra) folder. Each file represents a code section or category. All non-numbered .c files are parts of the main EXE while the numbered files are overlays.
+- Choose a function in that section to rewrite. Read the documentation comments on what the function does and what's the address.
+- Add a new line for your new function to [buildList.txt](https://github.com/CTR-tools/CTR-ModSDK/blob/main/psx-modding-toolchain/games/CrashTeamRacing/decompile/buildList.txt) with this format:
+```
+common*, exe**, <name of original function to replace>, 0x0,  <rewritten function .c file>
+```
+\* Build codenames:  
+common: All versions;  
+926: USA Retail;  
+1006: Japan Trial;  
+1020: Europe Retail;  
+1111: Japan Retail.  
+
+\**  Code region:  
+exe: main EXE;  
+221-233: Overlays (use the original .c filename number)
+
+- Run `build.bat` and choose "Compile", "build ISO", then test the game.
+- After you've confirmed that it's functional, add your new function c file to the [decompile directory](https://github.com/CTR-tools/CTR-ModSDK/tree/main/psx-modding-toolchain/games/CrashTeamRacing/decompile).
+- Now you can make a pull request
+
+If you have any questions, reach us out in our [Discord server](https://discord.gg/WHkuh2n). 
