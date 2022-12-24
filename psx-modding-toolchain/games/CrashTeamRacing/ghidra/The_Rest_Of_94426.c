@@ -3860,13 +3860,9 @@ void FUN_80033318(undefined4 param_1)
 void FUN_80033474(int param_1)
 
 {
-  // if overlayIndex_LOD loaded is not the one being requested
+  // if overlayIndex_LOD needs reloading
   if ((uint)(byte)PTR_DAT_8008d2ac[0x2540] != param_1 - 1U)
   {
-	// load new overlay,
-	// this means it skips loading if
-	// the overlay was already loaded before
-
 	// game is now loading
     DAT_8008d0a4 = 1;
 
@@ -3880,7 +3876,7 @@ void FUN_80033474(int param_1)
 	PTR_DAT_8008d2ac[0x2540] = (char)(param_1 - 1U);
 
 	// force overlayIndex_Threads to reload
-    PTR_DAT_8008d2ac[0x2541] = 0xff;	// but why? what a waste
+    PTR_DAT_8008d2ac[0x2541] = 0xff;
   }
   return;
 }
@@ -3890,12 +3886,9 @@ void FUN_80033474(int param_1)
 void FUN_800334f4(uint param_1)
 
 {
-  // if overlayIndex_EndOfRace is different than the overlay requested
+  // if overlayIndex_EndOfRace needs reloading
   if ((uint)(byte)PTR_DAT_8008d2ac[0x2543] != param_1)
   {
-	// load new overlay, this means
-	// overlay wont load unless changed
-
 	// game is now loading
     DAT_8008d0a4 = 1;
 
@@ -3910,7 +3903,7 @@ void FUN_800334f4(uint param_1)
 
 	// force LOD overlay to reload,
 	// by nullifying the saved index
-    PTR_DAT_8008d2ac[0x2540] = 0xff;	// but why? what a waste
+    PTR_DAT_8008d2ac[0x2540] = 0xff;
   }
   return;
 }
@@ -3920,12 +3913,9 @@ void FUN_800334f4(uint param_1)
 void FUN_80033570(uint param_1)
 
 {
-  // if overlayIndex_Threads changed from last time
+  // if overlayIndex_Threads needs reloading
   if ((uint)(byte)PTR_DAT_8008d2ac[0x2541] != param_1)
   {
-	// load new overlay,
-	// therefore, overlay shouldn't reload unless changed
-
 	// game is now loading
     DAT_8008d0a4 = 1;
 
