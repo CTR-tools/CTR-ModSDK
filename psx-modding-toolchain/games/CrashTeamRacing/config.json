@@ -3,7 +3,7 @@
 	{
 		"function_sections": 1,
 		"reorder_functions": 0,
-		"optimization": 4,
+		"optimization": 2,
 		"debug": 1,
 		"psyq": 0,
 		"8mb": 1

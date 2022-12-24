@@ -25,6 +25,7 @@ common, 231, RB_Potion_CheckTeethCollision, 0x0, General/231/231_013_RB_Potion_C
 // skip a bunch
 common, 231, RB_Blade_ThTick, 0x0, General/231/231_056_057_RB_Blade.c
 // skip a bunch
+common, 231, RB_CrateAny_ThTick_Explode, 0x0, General/231/231_059_066_RB_Crate.c
 common, 231, RB_Crystal_ThCollide, 0x0, General/231/231_067_070_RB_Crystal.c
 // skip one
 common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c

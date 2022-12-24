@@ -799,6 +799,7 @@ ConvertRotToMatrix_InverseTranspose_NoRotY = 0x8006c124;
 ConvertRotToMatrix_InverseTranspose = 0x8006c1d0;
 ConvertRotToMatrix = 0x8006c2a4;
 ConvertRotToMatrix_Transpose = 0x8006c378;
+MatrixRotate = 0x8006c3b0;
 TRIG_AngleSinCos_r16r17r18_duplicate = 0x8006c430;
 SquareRoot0_stub = 0x8006c618;
 ApplyMatrixLV_stub = 0x8006c6f0;

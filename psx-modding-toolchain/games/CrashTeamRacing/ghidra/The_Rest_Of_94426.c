@@ -15032,6 +15032,7 @@ void FUN_8003d460(int param_1,MATRIX *param_2,int param_3)
 {
   // param_3 - input
   // param_1 - output
+  // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
   FUN_8006c3b0(param_1, param_2, param_3);
 
   // FUN_8006c6f0
@@ -29366,6 +29367,7 @@ LAB_8004c7d4:
    // convert 3 rotation shorts into rotation matrix
   FUN_8006c2a4(iVar4,iVar6);
 
+  // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
   FUN_8006c3b0(iVar4,iVar6 + 8,iVar4);
 
   // if hud is enabled, and this is not demo mode
@@ -29414,7 +29416,9 @@ void FUN_8004c850(int param_1)
    // convert 3 rotation shorts into rotation matrix
   FUN_8006c2a4(iVar3,iVar2);
 
+  // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
   FUN_8006c3b0(iVar3,iVar2 + 8,iVar3);
+  
   if (
 		((*(uint *)(PTR_DAT_8008d2ac + 0x1d30) & 0xff0100) == 0x100) &&
 
@@ -29498,7 +29502,9 @@ void FUN_8004c914(int param_1)
    // convert 3 rotation shorts into rotation matrix
   FUN_8006c2a4(iVar2,&local_18);
 
+  // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
   FUN_8006c3b0(iVar2,iVar3 + 8,iVar2);
+  
   return;
 }
 
@@ -29529,7 +29535,10 @@ void FUN_8004ca04(int param_1)
   *(undefined2 *)(iVar4 + 0x3e) = 0;
   *(undefined2 *)(iVar4 + 0x38) = uVar1;
   *(undefined2 *)(iVar4 + 0x40) = *(undefined2 *)(iVar3 + 6);
+  
+  // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
   FUN_8006c3b0(iVar4 + 0x30,iVar3 + 8,iVar4 + 0x30);
+  
   if ((*(uint *)(PTR_DAT_8008d2ac + 0x1d30) & 0xff0100) == 0x100)
   {
 	// make visible
@@ -38889,7 +38898,7 @@ void FUN_80057884(undefined *param_1)
           local_68 = local_68 & 0xffff0000 | (uint)*(ushort *)(iVar9 + 0x12);
           local_60 = *(undefined2 *)(iVar9 + 0x14);
 		  
-		  // write result [3] [4] and [5]
+		  // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
           FUN_8006c3b0(iVar9 + 8,&local_70,&localMatrix);
 		  
 		  // loop index
@@ -45462,7 +45471,7 @@ LAB_8005f354:
     
 	pMVar10 = r0;
     
-	// instance matrix and driver matrix
+	// MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
 	FUN_8006c3b0(iVar14 + 0x30,r0,piVar12 + 2);
 	
 	// load matrix
@@ -58723,12 +58732,12 @@ void FUN_8006c378(uint *param_1,short *param_2)
 }
 
 
-// param_1 - output
-// param_2 - input
-// param_3 - input
-void FUN_8006c3b0(undefined4 *param_1,undefined4 param_2,undefined4 *param_3)
 
+// MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
+void FUN_8006c3b0(undefined4 *param_1,undefined4 param_2,undefined4 *param_3)
 {
+  // see decompile RB_Crate for documented usage
+	
   undefined4 uVar1;
   undefined4 uVar2;
   undefined4 uVar3;

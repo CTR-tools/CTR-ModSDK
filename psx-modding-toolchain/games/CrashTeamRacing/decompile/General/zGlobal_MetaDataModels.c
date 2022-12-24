@@ -6,9 +6,9 @@ void RB_Default_LInB();
 void DECOMP_RB_Fruit_LInB();
 void DECOMP_RB_Fruit_LInC();
 void RB_GenericMine_LInB();
-void RB_CrateFruit_LInC();
-void RB_CrateWeapon_LInC();
-void RB_CrateTime_LInC();
+void DECOMP_RB_CrateFruit_LInC();
+void DECOMP_RB_CrateWeapon_LInC();
+void DECOMP_RB_CrateTime_LInC();
 void RB_FlameJet_LInB();
 void RB_Plant_LInB();
 void RB_Minecart_LInB();
@@ -97,10 +97,10 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,RB_GenericMine_LInB,0),
 	
 	// 0x07 - PU_FRUIT_CRATE
-	SET_MDM(0,RB_Default_LInB,RB_CrateFruit_LInC),
+	SET_MDM(0,RB_Default_LInB,DECOMP_RB_CrateFruit_LInC),
 	
 	// 0x08 - PU_RANDOM_CRATE (Weapon Box)
-	SET_MDM(0,RB_Default_LInB,RB_CrateWeapon_LInC),
+	SET_MDM(0,RB_Default_LInB,DECOMP_RB_CrateWeapon_LInC),
 	
 	// 0x09 - PU_TIME_CRATE_1 (unused duplicate of 0x5C)
 	SET_MDM(0,0,0),
@@ -355,7 +355,7 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,0,0),
 	
 	// 0x5c - STATIC_TIME_CRATE_01
-	SET_MDM(0,RB_Default_LInB,RB_CrateTime_LInC),
+	SET_MDM(0,RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
 	
 	// 0x5d - DYNAMIC_HIGHLIGHT
 	SET_MDM(0,0,0),
@@ -381,10 +381,10 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,0,0),
 	
 	// 0x64 - STATIC_TIME_CRATE_02
-	SET_MDM(0,RB_Default_LInB,RB_CrateTime_LInC),
+	SET_MDM(0,RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
 	
 	// 0x65 - STATIC_TIME_CRATE_03
-	SET_MDM(0,RB_Default_LInB,RB_CrateTime_LInC),
+	SET_MDM(0,RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
 	
 	// 0x66 - STATIC_INTRO_TROPHY
 	SET_MDM(0,0,0),

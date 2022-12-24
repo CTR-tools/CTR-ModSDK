@@ -7458,6 +7458,8 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
     if ((((uVar3 != 6) && (uVar3 != 0x27)) && (uVar3 != 0x46)) && (uVar3 != 0x47)) {
       return 0;
     }
+	
+	// offset4 = 1, prevent crate from growing back
     *(undefined2 *)(piVar6 + 1) = 1;
   }
   return 0;
@@ -7599,10 +7601,14 @@ LAB_800b4b38:
 	  {
         return 0;
       }
+	  
+	  // offset4 = 1, prevent crate from growing back
       *(undefined2 *)(piVar11 + 1) = 1;
     }
     return 0;
   }
+  
+  // == assume first frame of hit ==
   *piVar11 = 0x1e;
   
   // if scale is not 0x1000
@@ -7655,7 +7661,6 @@ LAB_800b4b38:
   FUN_8006c2a4(auStack80,&local_58);
   
   // copy rotation matrix from crate to exploded box,
-  // I think???
   FUN_8006c3b0(iVar4 + 0x30,iVar10 + 0x30,auStack80);
   
   // play sound for breaking box
@@ -7800,7 +7805,10 @@ LAB_800b4974:
        sStack38 + *(short *)(puVar9 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x186);
 	   
 LAB_800b4b2c:
+  
+  // offset4 = 1, prevent crate from growing back
   *(undefined2 *)(piVar11 + 1) = 1;
+  
   return 1;
 }
 

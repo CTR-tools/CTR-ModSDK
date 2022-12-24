@@ -59,12 +59,13 @@ void DECOMP_RB_CtrLetter_LInB(struct Instance* inst)
 	RB_Default_LInB(inst);
 }
 
+void RB_Fruit_GetScreenCoords(struct Camera110* c110, struct Instance* inst, short* output);
+
 int DECOMP_RB_CtrLetter_LInC(
 	struct Instance* letterInst,
 	struct Thread* driverTh,
 	struct WeaponSearchData* info)
 {
-	short posWorld[4];
 	short posScreen[2];
 	MATRIX* m;
 	struct Driver* driver;
@@ -95,31 +96,8 @@ int DECOMP_RB_CtrLetter_LInC(
 	driver = driverTh->object;
 	driverID = driver->driverID;
 	
-	// load camera matrix
 	c110 = &sdata->gGT->camera110[driverID];
-	m = &c110->matrix_ViewProj;
-    gte_SetRotMatrix(m);
-    gte_SetTransMatrix(m);
-	
-	// load input vector
-	posWorld[0] = *(short*)&letterInst->matrix.t[0];
-	posWorld[1] = *(short*)&letterInst->matrix.t[1];
-	posWorld[2] = *(short*)&letterInst->matrix.t[2];
-	posWorld[3] = 0;
-	gte_ldv0(&posWorld[0]);
-	
-// inline_c.h gte_rtps() is broken? swap for mine:
-// copied from 231.c, address 800B514C, CTR Letter World->HUD
-#define gte_rtps_NikoVersion() __asm__ volatile ( \
-	"nop;"							\
-	"nop;"							\
-	".word 0x4A180001" )
-
-	// perspective projection
-	gte_rtps_NikoVersion();
-	
-	// get result
-	gte_stsxy(&posScreen[0]);
+	RB_Fruit_GetScreenCoords(c110, letterInst, &posScreen[0]);
 	
 	// screenPosX
 	driver->PickupLetterHUD.startX = 

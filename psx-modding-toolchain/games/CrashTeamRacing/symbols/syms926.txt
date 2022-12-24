@@ -1047,9 +1047,7 @@
 8006c1d0 ConvertRotToMatrix_InverseTranspose
 8006c2a4 ConvertRotToMatrix
 8006c378 ConvertRotToMatrix_Transpose
-
-// definitely a matrix function
-// unknown 8006c3b0
+8006c3b0 MatrixRotate
 
 8006c430 TRIG_AngleSinCos_r16r17r18_duplicate
 

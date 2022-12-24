@@ -2903,7 +2903,7 @@ struct MaskHeadWeapon
 };
 
 // don't know where to put this but it probably exists
-struct Raincloud
+struct RainCloud
 {
 	char unknown[5];
 	// 0x6
