@@ -523,14 +523,16 @@ void FUN_800ac13c(int param_1)
 // or level instance (spider, armadillo, etc)
 
 // RB_Hazard_HurtDriver
-void FUN_800ac1b0(int param_1,undefined4 param_2, param_3, param_4)
+// return 1 if driver was hurt,
+// return 0 if driver was not hurt (mask grab, mask weapon, etc)
+int FUN_800ac1b0(int param_1,undefined4 param_2, param_3, param_4)
 
 {
   // if this driver is not an AI
   if ((*(uint *)(param_1 + 0x2c8) & 0x100000) == 0) 
   {
 	// Player_ChangeState
-    FUN_80064568(param_1,param_2,param_3,param_4);
+    return FUN_80064568(param_1,param_2,param_3,param_4);
   }
   
   // If driver is an AI
@@ -549,9 +551,8 @@ void FUN_800ac1b0(int param_1,undefined4 param_2, param_3, param_4)
     }
 	
 	// BOTS_ChangeState
-    FUN_80016b00(param_1,param_2);
+    return FUN_80016b00(param_1,param_2);
   }
-  return;
 }
 
 // RB_Hazard_CollideWithDrivers
@@ -8847,7 +8848,7 @@ LAB_800b5a08:
           pcVar5 = *(code **)(*(int *)(iVar4 + 0x6c) + 0x28);
 		  
 		  // execute funcThCollide
-          (*pcVar5)(*(int *)(iVar4 + 0x6c),param_1,pcVar5,0);
+          (*pcVar5)(*(int *)(iVar4 + 0x6c));
         }
       }
 	  
@@ -8984,7 +8985,7 @@ void FUN_800b5b74(int param_1)
               pcVar4 = *(code **)(*(int *)(iVar3 + 0x6c) + 0x28);
 			  
 			  // execute funcThCollide
-              (*pcVar4)(*(int *)(iVar3 + 0x6c),param_1,pcVar4,0);
+              (*pcVar4)(*(int *)(iVar3 + 0x6c));
             }
           }
 		  
@@ -9299,7 +9300,7 @@ void FUN_800b5f50(int param_1)
           pcVar5 = *(code **)(*(int *)(iVar7 + 0x6c) + 0x28);
 		  
 		  // execute funcThCollide
-          (*pcVar5)(*(int *)(iVar7 + 0x6c),param_1,pcVar5,0);
+          (*pcVar5)(*(int *)(iVar7 + 0x6c));
         }
       }
 	  
@@ -11579,7 +11580,7 @@ void FUN_800b8c00(int param_1)
 	// reset numFramesSpinning
     *(undefined2 *)(iVar6 + 0x26) = 0;
 	
-	// set current rotation to desired rotation
+	// set spawn rotation to desired rotation (why?)
     *(undefined2 *)(iVar6 + 0x18) = *(undefined2 *)(iVar6 + 0x10);
     *(undefined2 *)(iVar6 + 0x1a) = *(undefined2 *)(iVar6 + 0x12);
     *(undefined2 *)(iVar6 + 0x1c) = *(undefined2 *)(iVar6 + 0x14);
@@ -11596,12 +11597,15 @@ void FUN_800b8c00(int param_1)
   {
 	// RB_Hazard_InterpolateValue x3
 	
+	// rotCurrY to rotDesiredY
     uVar3 = FUN_800ada90((int)*(short *)(iVar6 + 0x12),(int)*(short *)(iVar6 + 0x22),0x80);
     *(undefined2 *)(iVar6 + 0x12) = uVar3;
     
+	// rotCurrX to rotDesiredAltX
 	uVar3 = FUN_800ada90((int)*(short *)(iVar6 + 0x10),(int)-*(short *)(iVar6 + 0x18),0x14);
     *(undefined2 *)(iVar6 + 0x10) = uVar3;
     
+	// rotCurrZ to rotDesiredAltZ
 	uVar3 = FUN_800ada90((int)*(short *)(iVar6 + 0x14),(int)-*(short *)(iVar6 + 0x1c),0x14);
     *(undefined2 *)(iVar6 + 0x14) = uVar3;
     
@@ -11634,7 +11638,7 @@ void FUN_800b8c00(int param_1)
         pcVar5 = *(code **)(*(int *)(iVar4 + 0x6c) + 0x28);
 		
 		// execute funcThCollide
-        (*pcVar5)(*(int *)(iVar4 + 0x6c),param_1,pcVar5,0);
+        (*pcVar5)(*(int *)(iVar4 + 0x6c));
       }
     }
 	
@@ -11725,9 +11729,9 @@ void FUN_800b8e1c(int param_1)
 	// if you have not returned to spawn, dont turn around
     if (psVar6[7] != 0) goto LAB_800b8fdc;
 	
-	// If it is time to turn around
+	// === end of Move state ===
 	
-	// rotSpawn_Y
+	// rotDesiredAlt_Y
     sVar2 = psVar6[9];
 	
 	// change direction
@@ -11752,14 +11756,16 @@ void FUN_800b8e1c(int param_1)
 	// 0x2d = 45 frames = 1.5 seconds
     if (psVar6[7] != 0x2d) goto LAB_800b8fdc;
 	
-	// If it is time to turn around
+	// === end of Move state ===
 	
-	// rotSpawn_Y
+	// rotCurr_Y
     sVar2 = psVar6[9];
 	
 	// change direction
     psVar6[0xf] = 0;
   }
+  
+  // === end of Move state ===
   
   // turn around 180 degrees
   iVar5 = (int)sVar2 + 0x800;
@@ -11768,6 +11774,8 @@ void FUN_800b8e1c(int param_1)
   if (iVar5 < 0) {
     iVar3 = (int)sVar2 + 0x17ff;
   }
+  
+  // 0x22, rotDesired
   psVar6[0x11] = (short)iVar5 + (short)(iVar3 >> 0xc) * -0x1000;
   
   // SetThTick_AndExec RB_Seal_ThTick_TurnAround
@@ -11793,11 +11801,11 @@ LAB_800b8fdc:
 	  // if there is a collision 
 	  if (iVar3 != 0) 
 	  {
-		// instance -> thread -> onFuncCollide
+		// instance -> thread -> funcThCollide
         pcVar4 = *(code **)(*(int *)(iVar3 + 0x6c) + 0x28);
 		
-		// execute onFuncCollide
-        (*pcVar4)(*(int *)(iVar3 + 0x6c),param_1,pcVar4,0);
+		// execute funcThCollide
+        (*pcVar4)(*(int *)(iVar3 + 0x6c));
       }
     }
 	
@@ -11932,13 +11940,13 @@ void FUN_800b90ec(int param_1)
       *(short *)((int)puVar6 + 0x2a) = *(short *)((int)puVar6 + 2) - *(short *)((int)puVar6 + 10);
       *(short *)(puVar6 + 0xb) = *(short *)(puVar6 + 1) - *(short *)(puVar6 + 3);
       
-	  // rotSpawn (0x10) = instance->instDef->rot
+	  // rotCurr (0x10) = instance->instDef->rot
 	  *(short *)(puVar6 + 4) = *(short *)(*(int *)(param_1 + 0x2c) + 0x36);
       *(short *)(puVar6 + 5) = *(short *)(*(int *)(param_1 + 0x2c) + 0x3a);
       sVar1 = *(short *)(*(int *)(param_1 + 0x2c) + 0x38);
       *(short *)((int)puVar6 + 0x12) = sVar1;
 	  
-	  // rotCurr (0x18)
+	  // rotDesiredAlt (0x18)
       *(short *)(puVar6 + 6) = *(short *)(puVar6 + 4);
       *(short *)((int)puVar6 + 0x26) = 0;
       *(short *)((int)puVar6 + 0x1a) = sVar1;
@@ -12566,11 +12574,11 @@ LAB_800b9aa8:
 	  // if there is a collision
       if (iVar5 != 0) 
 	  {
-		// instance -> thread -> onFuncCollide
+		// instance -> thread -> funcThCollide
         pcVar4 = *(code **)(*(int *)(iVar5 + 0x6c) + 0x28);
 		
 		// execute collison pointer
-        (*pcVar4)(*(int *)(iVar5 + 0x6c),param_1,pcVar4,0);
+        (*pcVar4)(*(int *)(iVar5 + 0x6c));
       }
     }
 	

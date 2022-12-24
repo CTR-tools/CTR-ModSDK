@@ -29,9 +29,11 @@ common, 231, RB_Crystal_ThCollide, 0x0, General/231/231_067_070_RB_Crystal.c
 // skip one
 common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c
 // skip a bunch
+common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_080_083_RB_Armadillo.c
+// skip a bunch
 common, 231, RB_Fruit_ThTick, 0x0, General/231/231_093_096_RB_Fruit.c
 // skip a bunch
-common, 231, RB_Seal_LInB, 0x0, General/231/231_108_111_RB_Seal.c
+common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_108_111_RB_Seal.c
 
 // exe globals
 926, exe, 0x80081088, 0x0, General/zGlobal_MetaDataModels.c
@@ -83,6 +85,9 @@ common, exe, LIST_Init, 0x0, General/LIST_Init.c
 // LOAD
 common, exe, LOAD_DriverMPK, 0x0, General/LOAD_DriverMPK.c
 common, exe, LOAD_ReadFile, 0x0, General/LOAD_ReadFile.c
+
+// MAIN
+common, exe, main, 0x0, General/main.c
 
 // MATH
 // MATH_Sin relocated to RDATA

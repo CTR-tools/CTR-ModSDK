@@ -968,7 +968,7 @@ int FUN_80018b18(void)
   // If LEV exists
   if (*(int *)(PTR_DAT_8008d2ac + 0x160) != 0)
   {
-	// LEV -> ptr_trial_data
+	// LEV -> SpawnType1
     piVar2 = *(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134);
 
     iVar1 = 0;
@@ -2686,6 +2686,7 @@ void FUN_8001b334(int param_1)
 						(*(uint *)(PTR_DAT_8008d2ac + 8) & 4) == 0 &&
 
 						// If you press L2
+						// gGamepads->gamepad[cameraDC->cameraID]->buttonsHeld
 						((*(uint *)(PTR_DAT_8008d2b0 + *piVar18 * 0x50 + 0x14) & 0x80) != 0)
 					)
 				)

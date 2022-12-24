@@ -1118,7 +1118,7 @@ struct Thread
 	void* funcThDestroy;
 
 	// 0x28
-	void* funcThCollide;
+	void (*funcThCollide)(struct Thread* self);
 
 	// 0x2c
 	void* funcThTick;
@@ -3211,23 +3211,25 @@ struct Seal
 	short sealID;
 
 	// 0x8
+	// unused, should erase
 	short endPos[3];
 
 	// 0xe
 	short distFromSpawn;
 
 	// 0x10
-	short rotSpawn[3];
+	short rotCurr[3];
 	short padding16;
 
 	// 0x18
-	short rotCurr[3];
+	short rotDesired[3];
 
 	// 0x1e
 	short direction;
 
 	// 0x20
-	short unk20[3];
+	// unused, should erase
+	short rotDesiredAlt[3];
 
 	// 0x26
 	short numFramesSpinning;
@@ -3950,6 +3952,14 @@ struct mesh_info
 	// 0x20 bytes large
 };
 
+struct SpawnType1
+{
+	int count;
+	
+	// more than 1, determined by "count"
+	void* pointers[1];
+};
+
 struct SpawnType2
 {
 	int unk;
@@ -4061,7 +4071,7 @@ struct Level
 	struct RainBuffer rainBuffer;
 
 	// 0x134
-	int* ptr_trial_data;
+	struct SpawnType1* ptrSpawnType1;
 
 	// spawn_arrays2 is for things
 	// like Seal, Minecart, etc
@@ -5283,12 +5293,13 @@ struct GameTracker
   } deadcoed_struct;
 
   // 0x2534
-  char final_filler_mostly_null[0x0C];
+  char final_filler_mostly_null[0x0B];
 
   // 0x253f,
   // Debug_ToggleNormalSpawn
   // always 1, in normal gameplay
   // set to 0, to immediately spawn at (0,0,0)
+  char Debug_ToggleNormalSpawn;
 
   //2540
   char overlayIndex_LOD;
@@ -9884,7 +9895,7 @@ struct BSS
 	int boolPlayGhost;
 
 	// 8008d95c
-	char data18_aaa[0x18];
+	char data18_aaa[0x14];
 
 	// 8008d968 boolWipeMemcard (why?)
 
@@ -9894,6 +9905,7 @@ struct BSS
 	//	- main menu character icon border
 	//	- main menu character window border
 	//	etc
+	int frameCounter;
 
 	// 8008bda8 -- SepReview
 	// 8008d974 -- UsaRetail

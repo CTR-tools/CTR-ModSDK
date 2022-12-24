@@ -32,9 +32,9 @@ void DECOMP_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX,
 		color = 0x402000;
 	}
 
-	if (gGT->level1->ptr_trial_data != 0)
+	if (gGT->level1->ptrSpawnType1 != 0)
 	{
-		iVar9 = gGT->level1->ptr_trial_data[1];
+		iVar9 = gGT->level1->ptrSpawnType1->pointers[0];
 	}
 
 	// position of the bottom margin of the primitive for the bottom half of the minimap
