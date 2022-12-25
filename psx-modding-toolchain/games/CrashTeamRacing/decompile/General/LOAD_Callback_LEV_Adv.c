@@ -6,25 +6,17 @@ void MEMPACK_ClearHighMem();
 
 void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs)
 {		
-	// pointer to first byte after file "started"
-	// before being converted to CTR's "DRAM"
 	char* patchPtr;
-	
-	// first pointer in the array of pointers to patch
 	char* patchStart;
-	
-	// size array for patching
-	int patchSize;
-	
-	// number of pointers to patch
+	int patchSize;	
 	int patchNum;
 
-	// sdata->ptrLEV_DuringLoading
-	// "should be" the same as ptrDestination
+	// CTR doesn't load one lev DRAM for AdvHub,
+	// it loads one ReadFile for LEV in a sub-mempack,
+	// it loads one ReadFile for PtrMap with AllocHighMem
 	
-	// what? how?
+	// that's why patchPtr is ptrDestination
 	patchPtr = (char*)lqs->ptrDestination;
-	
 	patchStart = &patchPtr[4];
 	patchSize = *(int*)&patchPtr[0];
 	patchNum = patchSize >> 2;
