@@ -395,7 +395,7 @@ int DECOMP_RB_CrateFruit_LInC(
 		
 		// screenPosY
 		driver->PickupWumpaHUD.startY = 
-			c110->rect.y + posScreen[1] - 0x14;;
+			c110->rect.y + posScreen[1] - 0x14;
 		
 		// means thread was born?
 		return 1;
