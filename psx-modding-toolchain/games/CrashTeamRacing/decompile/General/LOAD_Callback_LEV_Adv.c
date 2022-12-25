@@ -20,7 +20,7 @@ void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs)
 	int patchNum;
 
 	// sdata->ptrLEV_DuringLoading
-	// is the same as ptrDestination
+	// "should be" the same as ptrDestination
 	
 	// what? how?
 	patchPtr = (char*)lqs->ptrDestination;
