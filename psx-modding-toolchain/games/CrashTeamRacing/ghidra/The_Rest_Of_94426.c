@@ -1900,7 +1900,8 @@ void FUN_80031a78(int param_1)
     uGp00000138 = 0;
   }
 
-  // pointer to LEV
+  // gp -> 0x120 (0x8008d08c)
+  // sdata->ptrLEV_DuringLoading
   // param_1 -> 0xC
   // LoadQueueSlot -> ptrDestination
   uGp00000120 = *(undefined4 *)(param_1 + 0xc);

@@ -89,6 +89,7 @@ common, exe, LOAD_ReadFile, 0x0, General/LOAD_ReadFile.c
 common, exe, LOAD_OvrLOD, 0x0, General/LOAD_OvrLOD.c
 common, exe, LOAD_OvrEndRace, 0x0, General/LOAD_OvrEndRace.c
 common, exe, LOAD_OvrThreads, 0x0, General/LOAD_OvrThreads.c
+common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD_Callback_LEV_Adv.c
 
 // MAIN
 common, exe, main, 0x0, General/main.c
