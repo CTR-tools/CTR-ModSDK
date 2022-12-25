@@ -56,6 +56,8 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct WeaponSearchData* 
 	else if (hitModelID_cast == 0x18) // DYNAMIC_PLAYER
 	{
 		driver = (struct Driver*)t->object;
+		
+		return driver;
 	}
 	
 	return 1;
