@@ -89,7 +89,16 @@ common, exe, LOAD_ReadFile, 0x0, General/LOAD_ReadFile.c
 common, exe, LOAD_OvrLOD, 0x0, General/LOAD_OvrLOD.c
 common, exe, LOAD_OvrEndRace, 0x0, General/LOAD_OvrEndRace.c
 common, exe, LOAD_OvrThreads, 0x0, General/LOAD_OvrThreads.c
+common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD_Callback_Overlay_Generic.c
+common, exe, LOAD_Callback_Overlay_230, 0x0, General/LOAD_Callback_Overlay_230.c
+common, exe, LOAD_Callback_Overlay_231, 0x0, General/LOAD_Callback_Overlay_231.c
+common, exe, LOAD_Callback_Overlay_232, 0x0, General/LOAD_Callback_Overlay_232.c
+common, exe, LOAD_Callback_Overlay_233, 0x0, General/LOAD_Callback_Overlay_233.c
+common, exe, LOAD_Callback_MaskHints3D, 0x0, General/LOAD_Callback_MaskHints3D.c
+common, exe, LOAD_Callback_Podiums, 0x0, General/LOAD_Callback_Podiums.c
+common, exe, LOAD_Callback_LEV, 0x0, General/LOAD_Callback_LEV.c
 common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD_Callback_LEV_Adv.c
+common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD_Callback_DriverModels.c
 
 // MAIN
 common, exe, main, 0x0, General/main.c
