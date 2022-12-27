@@ -4,8 +4,9 @@ void DECOMP_LIST_AddFront(struct LinkedList* L, struct Item* I)
 {
   struct Item* oldFirst;
 
-  // dont check if item is nullptr,
-  // it wil never happen anyway
+  // can't remove this check, or it'll crash
+  // after beating Roo, spawning at key door
+  if(I == 0) return 0;
 
   I->prev = 0;
 
