@@ -5,8 +5,8 @@ void DECOMP_LIST_AddBack(struct LinkedList* L, struct Item* I)
   struct Item* oldLast;
 
   // can't remove this check, or it'll crash
-  // after beating Roo, spawning at key door
-  if(I == 0) return 0;
+  // in 232, bottom of Door_ThTick, erasing keys
+  if(I == 0) return;
 
   I->next = 0;
 
