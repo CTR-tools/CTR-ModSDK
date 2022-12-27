@@ -5,7 +5,7 @@ struct Item* DECOMP_LIST_RemoveMember(struct LinkedList* L, struct Item* I)
   // dont check if list has "first", waste of time
 
   // can't remove this check, or it'll crash
-  // when swapping adventure hubs
+  // in 232, bottom of Door_ThTick, erasing keys
   if(I == 0) return 0;
 
   // if this is not the first item
