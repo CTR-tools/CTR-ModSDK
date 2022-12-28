@@ -15,16 +15,25 @@ void DECOMP_AH_WarpPad_AllWarppadNum()
 	
 	for(t; t != 0; t = t->siblingThread)
 	{
-		inst = wp->inst[2];
-		mh = &inst->model->headers[0];
-		AH_WarpPad_SetNumModelData(inst, &mh[wp->digit1s-1]);
+		if (
+				(wp->inst[2] != 0) &&
+				(wp->digit1s != 0) &&
+				(wp->digit1s != 9)
+			)
+		{
+			inst = wp->inst[2];
+			mh = &inst->model->headers[0];
+			AH_WarpPad_SetNumModelData(inst, &mh[wp->digit1s-1]);
+		}
 		
-		// need to fix
-		if(wp->inst[3] != 0)
+		if (
+				(wp->inst[3] != 0) &&
+				(wp->>digit10s != 0)
+			)
 		{
 			inst = wp->inst[3];
 			mh = &inst->model->headers[0];
-			AH_WarpPad_SetNumModelData(inst, &mh[1-1]);
+			AH_WarpPad_SetNumModelData(inst, mh);
 		}
 	}
 }
