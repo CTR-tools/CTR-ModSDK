@@ -15,6 +15,9 @@ void DECOMP_AH_WarpPad_AllWarppadNum()
 	
 	for(t; t != 0; t = t->siblingThread)
 	{
+		// DCxDemo says:
+		// 1 to 8 is taken from mpk i guess, 0, 9 and X are seprate models
+		
 		if (
 				(wp->inst[2] != 0) &&
 				(wp->digit1s != 0) &&
@@ -28,7 +31,7 @@ void DECOMP_AH_WarpPad_AllWarppadNum()
 		
 		if (
 				(wp->inst[3] != 0) &&
-				(wp->>digit10s != 0)
+				(wp->digit10s != 0)
 			)
 		{
 			inst = wp->inst[3];

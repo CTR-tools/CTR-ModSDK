@@ -38,7 +38,7 @@ common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_108_111_RB_Seal.c
 
 // 232 (incomplete)
 common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_01_AH_WarpPad_GetSpawnPosRot.c
-//common, 232, AH_WarpPad_AllWarppadNum, 0x0, General/232/232_02_AH_WarpPad_AllWarppadNum.c
+common, 232, AH_WarpPad_AllWarppadNum, 0x0, General/232/232_02_AH_WarpPad_AllWarppadNum.c
 
 // exe globals
 926, exe, 0x80081088, 0x0, General/zGlobal_MetaDataModels.c

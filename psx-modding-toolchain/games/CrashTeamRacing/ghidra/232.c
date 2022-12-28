@@ -75,7 +75,8 @@ void FUN_800abbdc(void)
 				(iVar1 = (int)*(short *)(iVar2 + 0x6a), iVar1 != 0)
 			) && 
 			
-			// there is no 9, only 0-8
+			// DCxDemo says:
+			// 1 to 8 is taken from mpk i guess, 0, 9 and X are seprate models
 			(iVar1 != 9)
 		) 
 	{
