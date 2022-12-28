@@ -1,5 +1,6 @@
 #include <common.h>
 
+#if 0
 short* DECOMP_AH_WarpPad_GetSpawnPosRot(short* posData)
 {
 	struct Thread* t;
@@ -69,3 +70,6 @@ void DECOMP_AH_WarpPad_AllWarppadNum()
 		inst->
 	}
 }
+#endif
+
+int x = sizeof(struct Instance);

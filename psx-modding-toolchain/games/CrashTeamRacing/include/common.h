@@ -1334,11 +1334,10 @@ struct InstDrawPerPlayer
 	// 0xf0 - func (for what?)
 
 	// 0xf4
-	short specLighting[4];
+	short specLight[4];
 
 	// 0xfc
-	// end of struct,
-	// or InstanceBirth2D?
+	struct Instance* birth2D;
 
 	// 0x74 + 0x88 = 0xFC
 	// 0x88 = size of struct
@@ -1448,7 +1447,7 @@ struct Instance
 	// end of "main" Instance
 
 	// 0x74
-	struct InstDrawPerPlayer idpp[4];
+	struct InstDrawPerPlayer idpp[0];
 
 	// struct is 0xFC bytes large (in 1P mode)
 };
@@ -3588,7 +3587,7 @@ enum WarpPadInstances
 	Reward2,
 	Reward3,
 	NUM_WARPPADINSTANCES
-}
+};
 
 struct WarpPad
 {
