@@ -4242,7 +4242,10 @@ enum GameMode2
 {
   // & 1 - spawn outside boss door
   // & 4 - can't move (see Player_Driving_Input)
+  
   // & 8 - token race
+	TOKEN_RACE = 8,
+  
   // & 0x10 - Arcade cup
   // & 0x20 - lev swap
   // & 0x80 - CREDITS
