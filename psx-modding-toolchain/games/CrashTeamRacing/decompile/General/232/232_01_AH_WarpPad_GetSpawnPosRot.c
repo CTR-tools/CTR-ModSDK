@@ -1,6 +1,5 @@
 #include <common.h>
 
-#if 0
 short* DECOMP_AH_WarpPad_GetSpawnPosRot(short* posData)
 {
 	struct Thread* t;
@@ -49,27 +48,3 @@ short* DECOMP_AH_WarpPad_GetSpawnPosRot(short* posData)
 		
 	return &instDef->rot[0];
 }
-
-void AH_WarpPad_SetNumModelData(struct Instance* inst, int num)
-{
-	
-}
-
-// normally can't fit in one I-Cache block (0x1000)
-void DECOMP_AH_WarpPad_AllWarppadNum()
-{
-	struct WarpPad* wp;
-	
-	struct Thread* t =
-		sdata->gGT->threadBuckets[WARPPAD].thread;
-		
-	for(t; t != 0; t = t->siblingThread)
-	{
-		wp = t->object;
-		
-		inst->
-	}
-}
-#endif
-
-int x = sizeof(struct Instance);

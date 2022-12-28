@@ -3579,20 +3579,10 @@ struct CameraDC
 	// 0xDC bytes large in usaRetail
 };
 
-enum WarpPadInstances
-{
-	WarpnumInst10s=0,
-	WarpnumInst1s,
-	Reward1,
-	Reward2,
-	Reward3,
-	NUM_WARPPADINSTANCES
-};
-
 struct WarpPad
 {
 	// 0x0
-	struct Instance* inst[NUM_WARPPADINSTANCES];
+	struct Instance* inst[5];
 	
 	// 0x14
 	char unk54[0x54];
