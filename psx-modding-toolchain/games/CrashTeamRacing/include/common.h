@@ -1296,31 +1296,49 @@ struct InstDrawPerPlayer
 	struct Camera110* cam110;
 
 	// 0x78 - another matrix? in DrawFunc_Split and DrawFunc_Normal
+	MATRIX m1;
+	
 	// 0x98 - another matrix? in normal wheel rendering (FUN_8006e588) (and drawFuncs, like 0x78)
+	MATRIX m2;
 
 	// all get set in FUN_80070950
 	// 0xb8 - copy of 0x28 (prev frame?) (flags per player?)
+	int unkb8[2];
 
 	// 0xc0 - origin of cur frame
 	// 0xc4 - origin of next frame
-	// 0xc8 - ptrCommandList
-	// 0xcc - ptrTexLayout
-	// 0xd0 - ptrColorLayout
+	int unkc0[2];
+	
+	// 0xc8
+	int ptrCommandList;
+	
+	// 0xcc
+	int ptrTexLayout;
+	
+	// 0xd0
+	int ptrColorLayout;
+	
 	// 0xd4 - Anim->offset0x14?
+	int unkD4;
+	
 	// 0xd8 - LOD index (0,1,2,3)
+	int lodIndex;
 
 	// 0xe0 - pointer to LOD ModelHeader
+	struct ModelHeader* mh;
+
+	// 0xe4
+	char unkE4[0x10];
 
 	// 0xec - render function
 	// 0xf0 - func (for what?)
 
-	// all used for specular lighting
-	// 0xf4, 0xf6, 0xf8,
+	// 0xf4
+	short specLighting[4];
 
-	// 0xfc, INSTANCE_Birth2D
-
-	// 0x78
-	char data[0x84];
+	// 0xfc
+	// end of struct,
+	// or InstanceBirth2D?
 
 	// 0x74 + 0x88 = 0xFC
 	// 0x88 = size of struct
@@ -3562,10 +3580,20 @@ struct CameraDC
 	// 0xDC bytes large in usaRetail
 };
 
+enum WarpPadInstances
+{
+	WarpnumInst10s=0,
+	WarpnumInst1s,
+	Reward1,
+	Reward2,
+	Reward3,
+	NUM_WARPPADINSTANCES
+}
+
 struct WarpPad
 {
 	// 0x0
-	struct Instance* inst[5];
+	struct Instance* inst[NUM_WARPPADINSTANCES];
 	
 	// 0x14
 	char unk54[0x54];
