@@ -3585,16 +3585,19 @@ struct WarpPad
 	struct Instance* inst[5];
 	
 	// 0x14
-	char unk54[0x54];
+	char unk54[0x3C];
 	
 	// 0x28
-	// vec3 specDir1
+	// some other rotation vector?
 	
-	// 0x2C
-	// vec3 specDir2
+	// 0x50
+	short specLightGem[4];
 	
-	// 0x30
-	// vec3 specDir3
+	// 0x58
+	short specLightRelic[4];
+	
+	// 0x60
+	short specLightToken[4];
 	
 	// 0x68
 	short digit10s;
