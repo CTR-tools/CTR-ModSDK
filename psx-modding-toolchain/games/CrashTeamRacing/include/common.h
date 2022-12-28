@@ -3562,6 +3562,38 @@ struct CameraDC
 	// 0xDC bytes large in usaRetail
 };
 
+struct WarpPad
+{
+	// 0x0
+	struct Instance* inst[5];
+	
+	// 0x14
+	
+	// 0x28
+	// vec3 specDir1
+	
+	// 0x2C
+	// vec3 specDir2
+	
+	// 0x30
+	// vec3 specDir3
+	
+	// 0x68
+	// short digit10s
+	
+	// 0x6a
+	// short digit1s
+	
+	// 0x6c (1b*4)
+	// int levelID
+	
+	// 0x74 (1d*4)
+	// short boolWaitForAkuHint
+	
+	// 0x76
+	// framesWarping
+};
+
 enum STACK_POOL
 {
 	LARGE=0x100,
