@@ -4,8 +4,9 @@ void DECOMP_LIST_AddFront(struct LinkedList* L, struct Item* I)
 {
   struct Item* oldFirst;
 
-  // dont check if item is nullptr,
-  // it wil never happen anyway
+  // can't remove this check, or it'll crash
+  // in 232, bottom of Door_ThTick, erasing keys
+  if(I == 0) return;
 
   I->prev = 0;
 

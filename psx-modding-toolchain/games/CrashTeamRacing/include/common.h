@@ -7108,7 +7108,7 @@ struct Data
 
 	// June 1999 - 0x5a
 
-	// EuroDemo53, Jap D26, both spyros,
+	// EuroDemo53, Jpn D26, both spyros,
 	// all have 0x5c
 
 	// search "NO_FUNC" and see number
@@ -8810,7 +8810,7 @@ struct sData
 	// DoesNotExist -- Late June? EuroDemo53
 	// 80084bd8 -- July? Usa Spyro2
 	// 80084df0 -- July? Eur Spyro2
-	// 80084dac -- July? Jap D26
+	// 80084dac -- July? Jpn D26
 	// 80089b34 -- Aug5
 
 	// 8008dec0 -- Aug14
@@ -10439,7 +10439,7 @@ struct BSS
 	// 80099650 -- Late June? EuroDemo53
 	// 80091560 -- July? Usa Spyro2
 	// 80091790 -- July? Eur Spyro2
-	// 80091738 -- July? Jap D26
+	// 80091738 -- July? Jpn D26
 	// 8008E308 -- AugReview
 
 	// 80092880 -- Aug14
