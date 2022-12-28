@@ -3568,6 +3568,7 @@ struct WarpPad
 	struct Instance* inst[5];
 	
 	// 0x14
+	char unk54[0x54];
 	
 	// 0x28
 	// vec3 specDir1
@@ -3579,19 +3580,24 @@ struct WarpPad
 	// vec3 specDir3
 	
 	// 0x68
-	// short digit10s
+	short digit10s;
 	
 	// 0x6a
-	// short digit1s
+	short digit1s;
 	
 	// 0x6c (1b*4)
-	// int levelID
+	int levelID;
+	
+	// 0x70
+	int unk70;
 	
 	// 0x74 (1d*4)
-	// short boolWaitForAkuHint
+	short boolWaitForAkuHint;
 	
 	// 0x76
-	// framesWarping
+	short framesWarping;
+	
+	// 0x78 -- size
 };
 
 enum STACK_POOL
