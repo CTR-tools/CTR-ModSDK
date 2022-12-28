@@ -11,10 +11,10 @@ void DECOMP_AH_WarpPad_AllWarppadNum()
 	struct Thread* t =
 		sdata->gGT->threadBuckets[WARPPAD].thread;
 	
-	wp = t->object;
-	
 	for(t; t != 0; t = t->siblingThread)
 	{
+		wp = t->object;
+		
 		// DCxDemo says:
 		// 1 to 8 is taken from mpk i guess, 0, 9 and X are seprate models
 		

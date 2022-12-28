@@ -153,6 +153,7 @@ void FUN_800abbdc(void)
 void FUN_800abd80(int param_1)
 
 {
+  // MenuBox_Hide
   FUN_800469c8();
   
   // If row selected is 0
