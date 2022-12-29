@@ -13144,10 +13144,12 @@ void FUN_800ba2c0(int param_1)
   // thread -> instance
   iVar5 = *(int *)(param_1 + 0x34);
   
+  // 0 from moment it hits bottom to moment it hits top
   if (psVar4[1] == 0) {
     sVar1 = *psVar4;
 	
 	// if less than 1.0 seconds
+	// wait for rise
     if (*psVar4 < 0x3c0) 
 	{
 	  // get elapsed ms per frame ~32
@@ -13155,6 +13157,14 @@ void FUN_800ba2c0(int param_1)
 	  
 	  // add milliseconds
       *psVar4 = sVar1 + sVar2;
+	  
+	  // Naughty Dog bug, should have just been:
+	  // if (0x3c0 < sVar1+sVar2)
+	  //	*psVar4 = 0x3c0
+	  // 	play sound
+	  
+	  // Then the original "if < 0x3c0"
+	  // goes to "else" next frame
 	  
 	  // if more than 1.5 seconds passed
       if (0x5a0 < (short)(sVar1 + sVar2)) 
@@ -13165,45 +13175,47 @@ void FUN_800ba2c0(int param_1)
 	  
 	  // if 1.5s passed
       if (*psVar4 == 0x5a0) 
-	  {
-		// NOP 800ba3c4 to make this work
-		// bug?
-		  
+	  {  
 		// play water sound
         FUN_8002f0dc(0x7d,iVar5);
       }
     }
     
 	// if more than one second has passed
+	// time to rise
 	else 
 	{
-	  // turtle is now up
+	  // turtle not fully down,
+	  // impacts jumping
       psVar4[4] = 1;
 	  
-	  // instance -> animFrame is at beginning
+	  // end of animation
       if ((int)*(short *)(iVar5 + 0x54) + -1 < 1) 
 	  {
+		// reset direction
         psVar4[1] = 1;
 		
 		// reset timer to zero
         *psVar4 = 0;
       }
 	  
-	  // if you are not on first animation frame
+	  // playing animation
       else 
 	  {
-		// play animation backwards
+		// decrement frame (make turtle rise)
         *(short *)(iVar5 + 0x54) = *(short *)(iVar5 + 0x54) + -1;
       }
     }
   }
   
+  // 1 from moment it hits top to moment it hits bottom
   else 
   {
 	// get timer
     sVar1 = *psVar4;
 	
 	// if less than 1.0 seconds
+	// wait for time to fall
     if (*psVar4 < 0x3c0) 
 	{
       // get elaped time
@@ -13211,6 +13223,8 @@ void FUN_800ba2c0(int param_1)
       
 	  // add milliseconds
 	  *psVar4 = sVar1 + sVar2;
+	  
+	  // Naughty Dog bug, should be 0x3c0
       
 	  // if more than 1.5s
 	  if (0x5a0 < (short)(sVar1 + sVar2)) 
@@ -13221,6 +13235,7 @@ void FUN_800ba2c0(int param_1)
     }
 	
 	// if more than 1.0s
+	// time to fall
     else 
 	{
 	  // get animation frame
@@ -13232,16 +13247,20 @@ void FUN_800ba2c0(int param_1)
 	  // if animation is not done
       if ((int)sVar1 + 1 < iVar3) 
 	  {
-		// increment animation frame
+		// increment frame (make turtle fall)
         *(short *)(iVar5 + 0x54) = *(short *)(iVar5 + 0x54) + 1;
       }
 	  
 	  // if animation is done
-      else {
+      else 
+	  {
+		// reset direction
         psVar4[1] = 0;
+		
+		// reset timer
         *psVar4 = 0;
 		
-		// turtle is down
+		// turtle is fully down
         psVar4[4] = 0;
       }
     }
@@ -13269,7 +13288,7 @@ undefined4 FUN_800ba420(int param_1,int param_2)
 	// small jump
     uVar2 = 1;
 	
-	// if turtleInst->thread->object->state != STATE_DOWN (== STATE_UP)
+	// if turtleInst->thread->object->state != FullyDown
     if (*(short *)(*(int *)(*(int *)(param_1 + 0x6c) + 0x30) + 8) != 0) {
       
 	  // big jump
@@ -13326,7 +13345,10 @@ void FUN_800ba470(int param_1)
 	  // turtleID
       puVar3[2] = (ushort)*(byte *)(iVar2 + param_1 + 7) - 0x30;
       
+	  // default direction (waste)
 	  puVar3[1] = 1;
+	  
+	  // reset timer
       *puVar3 = 0;
 	  
 	  // restart animation, set frame to zero
@@ -13335,23 +13357,20 @@ void FUN_800ba470(int param_1)
 	  // put turtles on different cycles, based on turtleID
       if ((puVar3[2] & 1) == 0) 
 	  {
+		// turtle is fully up
         puVar3[1] = 1;
-		
-		// turtle is up
         puVar3[4] = 1;
       }
       
 	  else 
 	  {
+		// turtle is fully down
         puVar3[1] = 0;
-		
-		// turtle is down
         puVar3[4] = 0;
 		
 		// INSTANCE_GetNumAnimFrames
+		// last frame of fall animation
         uVar1 = FUN_80030f58(param_1,0);
-		
-		// set animation frame to last frame
         *(undefined2 *)(param_1 + 0x54) = uVar1;
       }
     }

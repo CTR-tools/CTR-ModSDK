@@ -18,8 +18,8 @@ void DECOMP_RB_Blade_LInB();
 void DECOMP_RB_Seal_LInB();
 void RB_Orca_LInB();
 void RB_Baron_LInB();
-void RB_Turtle_LInB();
-void RB_Turtle_LInC();
+void DECOMP_RB_Turtle_LInB();
+void DECOMP_RB_Turtle_LInC();
 void RB_Spider_LInB();
 void RB_Fireball_LInB();
 void RB_StartText_LInB();
@@ -322,7 +322,7 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,RB_Minecart_LInB,0),
 	
 	// 0x51 - DYNAMIC_TURTLE (mystery caves)
-	SET_MDM(0,RB_Turtle_LInB,RB_Turtle_LInC),
+	SET_MDM(0,DECOMP_RB_Turtle_LInB,DECOMP_RB_Turtle_LInC),
 	
 	// 0x52 - DYNAMIC_SPIDER (cortex castle)
 	SET_MDM(0,RB_Spider_LInB,0),
