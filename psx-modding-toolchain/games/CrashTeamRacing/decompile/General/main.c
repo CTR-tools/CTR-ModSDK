@@ -116,8 +116,9 @@ u_int main()
 				Audio_SetState_Safe(1);
 				MEMPACK_PopState();
 				
-				// ignore threads, because we PopState, so the threadpool will reset anyway
-				INSTANCE_LevInstancesStop(gGT->level1, 0);
+				// ignore threads, because we PopState, 
+				// so the threadpool will reset anyway
+				INSTANCE_LevInstancesStop(gGT->level1->ptr_mesh_info, 0);
 				sdata->mainGameState = 1;
 				break;
 
