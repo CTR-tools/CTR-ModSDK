@@ -3322,11 +3322,21 @@ struct Turtle
 {
 	// 0x0
 	short timer;
+	
+	// 0x2
+	// 0 from moment it hits top to moment it hits bottom
+	// 1 from moment it hits bottom to moment it hits top
+	short direction;
+	
+	// 0x4
+	short unk4;
 
 	// 0x6
 	short turtleID;
 
 	// 0x8
+	// 0 - fully up (big jump)
+	// 1 - not fully up (small jump)
 	short state;
 
 	// 0xC bytes large
