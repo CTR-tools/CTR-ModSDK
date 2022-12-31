@@ -156,6 +156,10 @@ void DECOMP_RB_Fireball_LInB(struct Instance* inst)
 	inst->animIndex = 0;
 	#endif
 	
+	fireObj = ((struct Fireball*)t->object);
+	fireObj->cycleTimer = 0;
+	fireObj->velY = 96;
+	
 	// unlike turtle, fireballs are named with same length,
 	// and they all have a number (0,1,2,3,4,5),
 	// similar to turtles, dont need to subtract '0'
