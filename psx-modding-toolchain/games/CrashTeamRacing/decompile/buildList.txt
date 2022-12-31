@@ -5,7 +5,7 @@ common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthSt
 
 // 230 (incomplete)
 common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/MM_Characters_boolIsInvalid.c
-common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/MM_RewrittenCheatCodes.c // contains 22 functions
+common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/MM_09_30_CheatCodes.c // contains 22 functions
 common, 230, MM_ParseCheatCodes, 0x0, General/230/MM_ParseCheatCodes_Hook.c
 
 // 231 (incomplete)
