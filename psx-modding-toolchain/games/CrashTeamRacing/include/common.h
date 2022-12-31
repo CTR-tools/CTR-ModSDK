@@ -3106,6 +3106,9 @@ struct Fireball
 	// just like spiders
 	short cooldown;
 
+	// 0x6 (maybe a rot[3]?)
+	short unused[3];
+
 	// 0xC
 	short velY;
 
