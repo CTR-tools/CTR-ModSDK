@@ -64,6 +64,9 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 	
 	fireObj->cycleTimer -= elapsedTimeMS;
 	
+	// this code was in the game,
+	// but not used since instance is invisible
+#if 0
 	// if animation is not over
 	if(
 		(fireInst->animFrame+1) < 
@@ -80,6 +83,7 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		// reset
 		fireInst->animFrame = 0;
 	}
+#endif
 	
 	// if cycle is over
 	if(fireObj->cycleTimer < 1)
@@ -129,12 +133,20 @@ void DECOMP_RB_Fireball_LInB(struct Instance* inst)
 	inst->thread = t;
 	t->inst = inst;
 	
+	// make instance invisible,
+	// unused beta "tail"
+	inst->flags |= 0x80;
+	
 	inst->scale[0] = 0x4000;
 	inst->scale[1] = 0x4000;
 	inst->scale[2] = 0x4000;
 	
+	// this code was in the game,
+	// but not used since instance is invisible
+	#if 0
 	inst->animFrame = 0;
 	inst->animIndex = 0;
+	#endif
 	
 	// unlike turtle, fireballs are named with same length,
 	// and they all have a number (0,1,2,3,4,5),
