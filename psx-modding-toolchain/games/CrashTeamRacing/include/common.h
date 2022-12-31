@@ -2154,126 +2154,127 @@ struct Driver
 
 	/* Constant table - Metaphysics */
 
-	// 0x416 - 0
+	// 0x416 - 0x00
 	short const_Gravity; // OK
 
-	// 0x418 - 1
+	// 0x418 - 0x01
 	short const_JumpForce; // OK
 
-	// 0x41A - 2
+	// 0x41A - 0x02
 	short const_PedalFriction_Perpendicular; // OK applied sideways to the kart
 
-	// 0x41C - 3
+	// 0x41C - 0x03
 	short const_PedalFriction_Forward; // OK
 
-	// 0x41E - 4
+	// 0x41E - 0x04
 	short const_NoPedalFriction_Perpendicular; // OK applied sideways to the kart
 
-	// 0x420 - 5
+	// 0x420 - 0x05
 	short const_NoPedalFriction_Forward; // OK
 
-	// 0x422 - 6
+	// 0x422 - 0x06
 	short const_BrakeFriction; // OK
 
-	// 0x424 - 7
+	// 0x424 - 0x07
 	short const_DriftCurve; // OK
 
-	// 0x426 - 8
+	// 0x426 - 0x08
 	short const_DriftFriction; // OK
 
-	// 0x428 - 9
+	// 0x428 - 0x09
 	short const_Accel_ClassStat; // OK
 
-	// 0x42A - 10
+	// 0x42A - 0x0A
 	short const_Accel_Reserves; // OK
 
-	// 0x42C - 11
+	// 0x42C - 0x0B
 	short const_Speed_ClassStat; // OK
 
-	// 0x42E - 12
+	// 0x42E - 0x0C
 	short const_SpeedometerScale_ClassStat; // OK
 
-	// 0x430 - 13
+	// 0x430 - 0x0D
 	short const_SingleTurboSpeed; // OK
 
-	// 0x432 - 14
+	// 0x432 - 0x0E
 	short const_SacredFireSpeed; // OK
 
-	// 0x434 - 15
+	// 0x434 - 0x0F
 	short const_BackwardSpeed; // OK
 
-	// 0x436 - 16
+	// 0x436 - 0x10
 	// for aku and uka weapons
 	short const_MaskSpeed;
 
-	// 0x438 - 17
+	// 0x438 - 0x11
 	short const_DamagedSpeed;
 
-	// 0x43A - 18
+	// 0x43A - 0x12
 	char const_TurnRate; // OK
 
-	// 0x43B - 19
+	// 0x43B - 0x13
 	char const_BackwardTurnRate; // OK
 
-	// 0x43C - 20
+	// 0x43C - 0x14
 	short const_TurnDecreaseRate; // OK
 
-	// 0x43E - 21
+	// 0x43E - 0x15
 	short const_TurnInputDelay; // OK
 
-	// 0x440 - 22
+	// 0x440 - 0x16
 	short const_unk440;
 
-	// 0x442 - 23
+	// 0x442 - 0x17
 	short const_TerminalVelocity; // OK
 
-	// 0x444
+	// 0x444 - 0x18
 	short const_unk444;
 	
-	// 0x446
+	// 0x446 - 0x19
 	char const_SteerAccel_Stage4_FirstFrame;
 	
-	// 0x447
+	// 0x447 - 0x1A
 	char const_SteerAccel_Stage2_FirstFrame;
 	
-	// 0x448
+	// 0x448 - 0x1B
 	char const_SteerAccel_Stage2_FrameLength;
-	
-	// 0x449
 	char boolFirstFrameSinceEngineRevving;
 	
-	// 0x44a
+	// 0x44a - 0x1C
 	short const_SteerAccel_Stage1_MaxSteer;
 	
-	// 0x44c
+	// 0x44c - 0x1D
 	short const_SteerAccel_Stage1_MinSteer;
 
-	// 0x44e
+	// 0x44e - 0x1E
 	short unk44e;
 	
-	// 0x450
+	// 0x450 - 0x1F
 	short unk450;
 
-	// 0x452, 0x454
+	// 0x452, 0x454 - 0x20, 0x21
 	// exaggerate model rotation while steering
 	short const_modelRotVelMax; // OK
 	short const_modelRotVelMin;
 
-	// 0x456
-	char unk456;
+	// 0x456 - [part of 0x22?]
+	// either unused, or a short,
+	// and then 457 is just the top
+	// byte of the short
+	char unusedPadding;
 	
 	// all related to Player_Driving_LerpToForwards
-	char unk457;
-	char unk458;
-	char unk459;
-	short unk45a;
+	char unk457; // 0x22
+	char unk458; // 0x23
+	char unk459; // 0x24
+	short unk45a; // 0x25
 
-	// 0x45c, 0x45d
+	// 0x45c, 0x45d - 0x26, 0x27
 	// resist turning at low speed
 	char const_turnResistMin;
 	char const_turnResistMax;
 	
-	// 0x45e, 0x45f
+	// 0x45e, 0x45f - 0x28, 0x29
 	// hold drift in direction it started,
 	// compared to switching direction "SwitchWay"
 	char const_SteerVel_DriftSwitchWay;
@@ -2281,11 +2282,11 @@ struct Driver
 	
 	// all Player_Drifting_Interpolate
 	// or Player_Drifting_Finalize
-	char unk460;
-	char unk461;
-	char unk462;
+	char unk460; // 0x2A
+	char unk461; // 0x2B
+	char unk462; // 0x2C
 	
-	// 0x463
+	// 0x463 - 0x2D
 	char const_Drifting_FramesTillSpinout;
 	
 	// impact turning?

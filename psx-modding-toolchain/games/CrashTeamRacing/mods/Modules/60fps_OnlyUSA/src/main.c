@@ -781,9 +781,23 @@ void RunEntryHook()
 
 	// Driver physics
 	{
-		// frames until spinout
+		// MetaPhys
 		for(i = 0; i < NUM_CLASSES; i++)
-			data.metaPhys[0x2D].value[i] = 60*2;
+		{
+			// frames until spinout
+			data.metaPhys[0x2D].value[i] = data.metaPhys[0x2D].value[i] << 1;
+			
+			// doesn't work for some reason?
+			#if 0
+			// steer stages
+			data.metaPhys[0x19].value[i] = data.metaPhys[0x19].value[i] << 1;
+			data.metaPhys[0x1A].value[i] = data.metaPhys[0x1A].value[i] << 1;
+			data.metaPhys[0x1B].value[i] = data.metaPhys[0x1B].value[i] << 1;
+			data.metaPhys[0x1C].value[i] = data.metaPhys[0x1C].value[i] << 1;
+			data.metaPhys[0x1D].value[i] = data.metaPhys[0x1D].value[i] << 1;
+			#endif
+		}
+
 
 		// Angular velocity spinout
 		*(unsigned int*)0x80063F48 = 0x24020096;
