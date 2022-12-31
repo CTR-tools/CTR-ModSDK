@@ -5,7 +5,7 @@ common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthSt
 
 // 230 (incomplete)
 common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/MM_Characters_boolIsInvalid.c
-common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/MM_RewrittenCheatCodes.c // contains 22 functions
+common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/MM_09_30_CheatCodes.c // contains 22 functions
 common, 230, MM_ParseCheatCodes, 0x0, General/230/MM_ParseCheatCodes_Hook.c
 
 // 231 (incomplete)
@@ -35,6 +35,13 @@ common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_080_083_RB_Arm
 common, 231, RB_Fruit_ThTick, 0x0, General/231/231_093_096_RB_Fruit.c
 // skip a bunch
 common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_108_111_RB_Seal.c
+// skip a bunch
+common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
+
+// 232 (incomplete)
+common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_01_AH_WarpPad_GetSpawnPosRot.c
+common, 232, AH_WarpPad_AllWarppadNum, 0x0, General/232/232_02_AH_WarpPad_AllWarppadNum.c
+common, 232, AH_WarpPad_MenuBoxFuncPtr, 0x0, General/232/232_03_AH_WarpPad_MenuBoxFuncPtr.c
 
 // exe globals
 926, exe, 0x80081088, 0x0, General/zGlobal_MetaDataModels.c

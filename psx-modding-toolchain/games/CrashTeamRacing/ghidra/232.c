@@ -75,7 +75,8 @@ void FUN_800abbdc(void)
 				(iVar1 = (int)*(short *)(iVar2 + 0x6a), iVar1 != 0)
 			) && 
 			
-			// there is no 9, only 0-8
+			// DCxDemo says:
+			// 1 to 8 is taken from mpk i guess, 0, 9 and X are seprate models
 			(iVar1 != 9)
 		) 
 	{
@@ -101,7 +102,7 @@ void FUN_800abbdc(void)
             (*(short *)(iVar2 + 0x6a) * 0x40 + *(int *)(*(int *)(*(int *)(iVar2 + 8) + 0x18) + 0x14)
             + -0x18);
       
-	  // xxx = ptrVertexLayout
+	  // xxx = ptrVertexData
 	  *(undefined4 *)(*(int *)(iVar2 + 8) + 0xc0) =
            *(undefined4 *)
             (*(short *)(iVar2 + 0x6a) * 0x40 + *(int *)(*(int *)(*(int *)(iVar2 + 8) + 0x18) + 0x14)
@@ -152,6 +153,7 @@ void FUN_800abbdc(void)
 void FUN_800abd80(int param_1)
 
 {
+  // MenuBox_Hide
   FUN_800469c8();
   
   // If row selected is 0
@@ -743,9 +745,12 @@ LAB_800ac860:
     if ((uVar8 - 0x10 & 0xffff) < 2) 
 	{
 	  // warp for 2 seconds, then assume relic race, load immediately
-		
+	
+	  // waiting for aku hint
       *(undefined2 *)(piVar19 + 0x1d) = 1;
-      *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
+      
+	  // increase frames spent warping
+	  *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 	  
 	  // Player_Warp_Init
       *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
@@ -770,8 +775,11 @@ LAB_800ac860:
       if ((((uVar8 - 0x12 & 0xffff) < 2) || (iVar7 == 0x15)) || (iVar7 == 0x17)) 
 	  {
 		// give hint if needed, then load level after 2 seconds of warping
-		  
+		
+		// waiting for aku hint
         *(undefined2 *)(piVar19 + 0x1d) = 1;
+		
+		// increase frames warping
         *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 		
 		// Player_Warp_Init
@@ -892,6 +900,8 @@ LAB_800ac860:
 				  // if aku is gone
                   if ((uVar8 & 0xffff) != 0) {
                     DAT_8008d4b0 = 0;
+					
+					// no longer waiting for aku hint
                     *(undefined2 *)(piVar19 + 0x1d) = 0;
 					
 					// when loading is done, remove flag for "in adventure arena"
@@ -901,9 +911,13 @@ LAB_800ac860:
                   }
                 }
               }
+			  
+			  // frames warping
               if (*(short *)((int)piVar19 + 0x76) < 0x400) {
                 *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
               }
+			  
+			  // waiting for aku hint
               *(undefined2 *)(piVar19 + 0x1d) = 1;
 			  
 			  // Player_Warp_Init
@@ -943,8 +957,11 @@ LAB_800ace34:
 		// if trophy has not been awarded on track [ anything < 16 ],
 		// then warp for 2 seconds, then start loading track
 		
+		// waiting for aku hint
 		*(undefined2 *)(piVar19 + 0x1d) = 1;
-        *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
+        
+		// increment frames warping
+		*(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 		
 		// Player_Warp_Init
         *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
@@ -962,9 +979,13 @@ LAB_800ace34:
   
   // if just entered a cup
   // [100 + cupID]
-  else {
+  else 
+  {
+	// waiting for aku hint
     *(undefined2 *)(piVar19 + 0x1d) = 1;
-    *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
+    
+	// increment frames warping
+	*(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 	
 	// Player_Warp_Init
     *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;

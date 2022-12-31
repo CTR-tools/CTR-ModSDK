@@ -116,8 +116,9 @@ u_int main()
 				Audio_SetState_Safe(1);
 				MEMPACK_PopState();
 				
-				// ignore threads, because we PopState, so the threadpool will reset anyway
-				INSTANCE_LevInstancesStop(gGT->level1, 0);
+				// ignore threads, because we PopState, 
+				// so the threadpool will reset anyway
+				INSTANCE_LevInstancesStop(gGT->level1->ptr_mesh_info, 0);
 				sdata->mainGameState = 1;
 				break;
 
@@ -273,7 +274,7 @@ u_int main()
 				// Process all gamepad input
 				GAMEPAD_UpdateAll(sdata->gGamepads);
 
-				// Niko testing armadillo,
+				// Niko testing turtles,
 				// dont erase, will be used for many future tests
 				#if 0
 				// disable spawn
@@ -285,20 +286,11 @@ u_int main()
 				
 				if(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_L2)
 				{
-					gGT->drivers[0]->posCurr[0] = 0x13F5BF;
-					gGT->drivers[0]->posCurr[1] = 0x8FFB3;
-					gGT->drivers[0]->posCurr[2] = 0xFFECB546;
-					gGT->drivers[0]->angle = 0x1E8;
+					gGT->drivers[0]->posCurr[0] = 0xfc394;
+					gGT->drivers[0]->posCurr[1] = 0x188;
+					gGT->drivers[0]->posCurr[2] = 0xFFFD93BC;
+					gGT->drivers[0]->angle = 0xAA4;
 				}
-				
-				if(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_R2)
-				{
-					gGT->drivers[0]->posCurr[0] = 0x52430e;
-					gGT->drivers[0]->posCurr[1] = 0x2ff58;
-					gGT->drivers[0]->posCurr[2] = 0x255f7a;
-					gGT->drivers[0]->angle = 0xbb4;
-				}
-				
 				#endif
 
 				// Start new frame (ClearOTagR)
@@ -542,7 +534,7 @@ void StateZero()
 	// Niko testing, override level
 	// for instant-boot, dont erase
 	#if 0
-	gGT->levelID = 0;
+	gGT->levelID = 9;
 	//gGT->numPlayers = 4;
 	//gGT->numScreens = 4;
 	#endif
