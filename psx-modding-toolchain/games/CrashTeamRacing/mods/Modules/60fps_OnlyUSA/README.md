@@ -49,20 +49,15 @@ A 60 fps conversion patch for Crash Team Racing. An overclock of at least 4x is 
 
 ## Known issues
 * Animations are half-working, half-fix
-* Flashing colors for player icons are too fast
 * Demo Mode only lasts half-time (even though it "should" be fixed???)
-* UI highlight (red/yellow) in menus is too fast
 * Demo Mode / End-Of-Race cameras sometimes are too fast
 * Adventure Garage camera is too fast
 * Adventure Hub Warp pad electric field
-* Lots of flashing text is flashing too fast
 * At end of Time Trial / Relic, high scores disappear halfway off-screen
 * AI acceleration from starting line
 * Screen fade transitions (fade to black, fade to white, etc.)
 * Red potion (fix disabled, freezes game)
 * Bubble particles fail to be culled by water surface (hits the top of the screen)
-* Still can't skip weapon roulette by pressing circle
-* Wumpa gets collected too quickly (code for this is in DrawHUD_Racing)
 
 ## Changelog
 ### Nov 2021 changes
