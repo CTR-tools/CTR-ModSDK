@@ -24,10 +24,10 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 	{
 		// move based on velocity
 		velY = fireObj->velY;
-		fireInst->matrix.t[1] += velY * (elapsedTimeMS>>5);
+		fireInst->matrix.t[1] += (velY * elapsedTimeMS) >> 5;
 		
 		// reduce velocity (gravity)
-		fireObj->velY = velY - ((elapsedTimeMS * 10) >> 5);
+		velY -= ((elapsedTimeMS * 10) >> 5);
 		
 		// terminal velocity
 		if(velY < -200)
@@ -35,26 +35,32 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 			velY = -200;
 		}
 		
+		// set new velY
+		fireObj->velY = velY;
+		
 		// [particle]
 		// 800b6344 is between Fireball and Flamejet
 		particle = Particle_CreateInstance(0, gGT->iconGroup[0xA], 0x800b6344);
 		
 		if(particle != 0)
 		{
-			// adjust positions
-			particle->axis[0].pos += fireInst->matrix.t[0] << 8;
-			particle->axis[1].pos += fireInst->matrix.t[1] << 8;
-			particle->axis[2].pos += fireInst->matrix.t[2] << 8;
+			// adjust positions,
+			// dont bitshift, must multiply, or negatives break
+			particle->axis[0].pos += fireInst->matrix.t[0] * 0x100;
+			particle->axis[1].pos += fireInst->matrix.t[1] * 0x100;
+			particle->axis[2].pos += fireInst->matrix.t[2] * 0x100;
 			
 			particle->unk1A = 0x1e00;
 			
 			// reuse "velY" variable for particles
 			velY = fireObj->velY * -0x180;
 			
-			// range
+			// range check
 			if(velY < -0x7fff) velY = -0x7fff;
+			velY = (short)velY;
+			if(velY > 0x7fff) velY = 0x7fff;
 			
-			particle->axis[1].vel = velY;
+			particle->axis[1].vel = (int)velY;
 		}
 		
 		Seal_CheckColl(fireInst, t, 4, 0x10000);
@@ -99,8 +105,10 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		// reset position under lava
 		fireInst->matrix.t[1] = (fireInst->instDef->pos[1] - 0x440);
 		
+		#if 0
 		// reset animation
 		fireInst->animFrame = 0;
+		#endif
 		
 		// fwooooossssssssshhhh
 		PlaySound3D(0x81, fireInst);
