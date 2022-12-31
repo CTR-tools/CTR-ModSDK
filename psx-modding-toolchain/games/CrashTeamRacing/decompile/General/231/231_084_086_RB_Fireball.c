@@ -53,12 +53,12 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 			particle->unk1A = 0x1e00;
 			
 			// reuse "velY" variable for particles
-			velY = fireObj->velY * -0x180;
+			velY *= -0x180;
 			
 			// range check
 			if(velY < -0x7fff) velY = -0x7fff;
-			velY = (short)velY;
 			if(velY > 0x7fff) velY = 0x7fff;
+			velY = (short)velY;
 			
 			particle->axis[1].vel = (int)velY;
 		}
