@@ -1569,6 +1569,9 @@ struct Particle
 
 	// 0x14
 	short flagsAxis; // old notes???
+	
+	// 0x16
+	short unk16;
 
 	// ---
 
