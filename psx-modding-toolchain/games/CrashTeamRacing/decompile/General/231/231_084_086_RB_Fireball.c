@@ -2,6 +2,37 @@
 
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius);
 
+#if 1
+struct ParticleEmitter fireballPE[10] =
+{
+	// As of Jan 1, 2023,
+	// we dont have enough research to rewrite this,
+	// needs to replace the 0x800b6344 pointer
+	
+	[0] =
+	{
+		.flags = 1,
+		.initOffset = 0xC,
+		.InitTypes.AxisInit.baseValue =
+		{
+			.pos = 0,
+			.vel = 0x4A1,
+			.accel = 4
+		}
+	},
+	
+	[1] = 
+	{
+		.flags = 1,
+		.initOffset = 0,
+		
+	},
+	
+	// null terminator
+	[9] = {}
+};
+#endif
+
 void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 {
 	struct Instance* fireInst;

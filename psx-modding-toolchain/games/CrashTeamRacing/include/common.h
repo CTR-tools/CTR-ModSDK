@@ -1660,6 +1660,8 @@ struct ParticleEmitter
 	// 0x14
 	// this gets memcpy'd into particle,
 	// & 0x40 == 1
+	
+	// possibly two more ParticleAxis structs
 	char data[0x10];
 	
 	// 0x24 bytes each
