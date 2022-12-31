@@ -2,7 +2,7 @@
 
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius);
 
-#if 1
+#if 0
 struct ParticleEmitter fireballPE[10] =
 {
 	// As of Jan 1, 2023,
