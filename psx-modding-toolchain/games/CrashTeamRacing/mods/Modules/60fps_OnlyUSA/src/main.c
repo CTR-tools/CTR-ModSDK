@@ -113,6 +113,22 @@ void NewCallback230()
 	// intro trophy animation
 	*(unsigned int*)0x800AC660 = JAL(NewTitleCamera);
 
+	// character select flashing colors, half speed
+	// change multiplier to 128, sll 0x7
+	*(unsigned short*)0x800ad9d0 = 0x11c0;
+
+	// high score flashing arrows
+	*(unsigned char*)0x800b1218 = 2*2;
+	
+	// ghost data exists flashing text
+	*(unsigned char*)0x800b0a40 = 4*2;
+
+	// battle menu team flashing text
+	*(unsigned char*)0x800b2a54 = 2;
+
+	// high score flashing arrows
+	*(unsigned char*)0x800b3010 = 4*2;
+
 	LOAD_Callback_Overlay_230();
 }
 
@@ -276,7 +292,7 @@ void NewCallback231()
 		*(unsigned char*)0x800b11a4 = 5*2;
 
 		// mash circle to get item faster
-		*(unsigned short*)0x800621b8 = 0x46*2;
+		*(unsigned short*)0x800620f4 = 0x46*2;
 	}
 
 	// spinning bomb
@@ -339,6 +355,7 @@ void NewCallback231()
 		*(unsigned char*)0x800B4468 = 5*2;
 		*(unsigned char*)0x800b4598 = 5*2;
 		*(unsigned char*)0x800B4D80 = 5*2;
+		*(unsigned char*)0x80053494 = 5*2;
 	}
 
 	// CTR 3D Letter
@@ -731,6 +748,9 @@ void RunEntryHook()
 
 	// Demo Mode Timer 1
 	*(unsigned short*)0x8003be38 = 900*2;
+
+	// Main Menu Row Highlight
+	*(unsigned char*)0x800363bc = 0x80;
 
 	// Mask Grab
 	*(unsigned int*)0x80067B58 = 0x2442FF00;
