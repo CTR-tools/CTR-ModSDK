@@ -1574,7 +1574,9 @@ struct Particle
 
 	// 0x18
 	// char[2], short[1] (0, 0xff, 0x0400)
-	int unk1;
+	char unk18;
+	char unk19;
+	short unk1A;
 
 	// 0x19
 	// driverID (if needed)
@@ -3105,6 +3107,7 @@ struct Fireball
 	short velY;
 
 	// 0xE
+	// unused
 	short direction;
 
 	// 0x10 bytes large

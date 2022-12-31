@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int radius);
+void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius);
 
 void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t);	
 
@@ -22,7 +22,7 @@ void RB_Armadillo_ThTick_Flip(struct Thread* t)
 		// increment frame
 		armInst->animFrame = armInst->animFrame+1;
 		
-		Seal_CheckColl(armInst,t,0x2400);
+		Seal_CheckColl(armInst, t, 1, 0x2400);
 		return;
 	}
 	
@@ -60,7 +60,7 @@ void DECOMP_RB_Armadillo_ThTick_TurnAround(struct Thread* t)
 	
 	if(armObj->rotCurr[1] != armObj->rotDesired[1])
 	{
-		Seal_CheckColl(armInst,t,0x2400);
+		Seal_CheckColl(armInst, t, 1, 0x2400);
 		return;
 	}
 	
@@ -107,7 +107,7 @@ void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t)
 	// could be >= if using accurate ms clock
 	if(armObj->timeRolling != 0x500)
 	{
-		Seal_CheckColl(armInst,t,0x2400);
+		Seal_CheckColl(armInst, t, 1, 0x2400);
 		return;
 	}
 	

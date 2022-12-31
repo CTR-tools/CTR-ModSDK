@@ -21,7 +21,7 @@ void RB_Baron_LInB();
 void DECOMP_RB_Turtle_LInB();
 void DECOMP_RB_Turtle_LInC();
 void RB_Spider_LInB();
-void RB_Fireball_LInB();
+void DECOMP_RB_Fireball_LInB();
 void RB_StartText_LInB();
 void RB_Banner_LInB();
 void DECOMP_RB_CtrLetter_LInB();
@@ -331,7 +331,8 @@ struct MetaDataModel mdm[0xe2] =
 	SET_MDM(0,0,0),
 	
 	// 0x54 - DYNAMIC_FIREBALL (mystery caves fireball)
-	SET_MDM(0,RB_Fireball_LInB,0),
+	// DECOMP version removed LInC, it does nothing
+	SET_MDM(0,DECOMP_RB_Fireball_LInB,0),
 	
 	// 0x55 - DYNAMIC_DRUM (n gin labs barrel)
 	SET_MDM(0,RB_Baron_LInB,0),

@@ -9377,7 +9377,7 @@ void FUN_800b5f50(int param_1)
 	  *psVar10 = 0xb40;
 	  
 	  // play sound
-      FUN_8002f0dc(0x81);
+      FUN_8002f0dc(0x81, iVar9);
     }
   }
   
