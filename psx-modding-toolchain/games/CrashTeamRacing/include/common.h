@@ -3101,7 +3101,7 @@ struct Fireball
 	short cooldown;
 
 	// 0xC
-	short distanceUp;
+	short velY;
 
 	// 0xE
 	short direction;

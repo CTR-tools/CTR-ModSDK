@@ -9242,23 +9242,23 @@ void FUN_800b5f50(int param_1)
 	
     if ((int)*(short *)(*(int *)(iVar9 + 0x2c) + 0x32) + -0x440 <= *(int *)(iVar9 + 0x48)) 
 	{
-	  // distanceUp
+	  // velY
       uVar11 = (uint)(ushort)psVar10[6];
 	  
 	  // Change height by elapsed time
       *(int *)(iVar9 + 0x48) =
            *(int *)(iVar9 + 0x48) + ((int)psVar10[6] * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5);
       
-	  // subtract distanceUp, which makes fireball move down
+	  // subtract velY, which makes fireball move down
 	  iVar7 = (uint)(ushort)psVar10[6] - (*(int *)(puVar4 + 0x1d04) * 10 >> 5);
 	  
-	  // set new distanceUp
+	  // set new velY
       psVar10[6] = (short)iVar7;
 	  
-	  // if lava is -200 units
+	  // terminal velocity
       if (iVar7 * 0x10000 >> 0x10 < -200) 
 	  {
-		// cannot go lower
+		// cant fall faster
         psVar10[6] = -200;
       }
       
@@ -9277,7 +9277,7 @@ void FUN_800b5f50(int param_1)
 		// posZ
 		*(int *)(iVar7 + 0x34) = *(int *)(iVar7 + 0x34) + iVar8 * 0x100;
         
-		// distanceUp
+		// velY
 		iVar8 = (int)psVar10[6] * -0x180;
 		
 		// negative range
@@ -9365,7 +9365,7 @@ void FUN_800b5f50(int param_1)
 	{
       *(int *)(iVar9 + 0x48) = (int)*(short *)(*(int *)(iVar9 + 0x2c) + 0x32) + -0x440;
       
-	  // distanceUp,
+	  // velY,
 	  psVar10[6] = 200;
 	  
       *(undefined2 *)(iVar9 + 0x54) = 0;
@@ -9457,7 +9457,7 @@ void FUN_800b6270(int param_1)
       puVar3[1] = (short)uVar2;
       puVar3[3] = 0;
 	  
-	  // distanceUp (96)
+	  // velY (96)
       puVar3[6] = 0x60;
       
 	  // direction is down

@@ -274,9 +274,9 @@ u_int main()
 				// Process all gamepad input
 				GAMEPAD_UpdateAll(sdata->gGamepads);
 
-				// Niko testing turtles,
+				// Niko testing
 				// dont erase, will be used for many future tests
-				#if 0
+				#if 1
 				// disable spawn
 				gGT->Debug_ToggleNormalSpawn = 0;
 				
@@ -284,12 +284,18 @@ u_int main()
 				*(int*)0x800671b0 = 0x3E00008;
 				*(int*)0x800671b4 = 0;
 				
-				if(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_L2)
+				if (
+					// first frame of spawn
+					(sdata->gGT->elapsedEventTime == 0) ||
+					
+					// L2 tap
+					(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_L2)
+					)
 				{
-					gGT->drivers[0]->posCurr[0] = 0xfc394;
-					gGT->drivers[0]->posCurr[1] = 0x188;
-					gGT->drivers[0]->posCurr[2] = 0xFFFD93BC;
-					gGT->drivers[0]->angle = 0xAA4;
+					gGT->drivers[0]->posCurr[0] = 0xFFEC6392;
+					gGT->drivers[0]->posCurr[1] = 0xFFFA009D;
+					gGT->drivers[0]->posCurr[2] = 0xFFC85BF2;
+					gGT->drivers[0]->angle = 0xB8A;
 				}
 				#endif
 
@@ -533,7 +539,7 @@ void StateZero()
 	
 	// Niko testing, override level
 	// for instant-boot, dont erase
-	#if 0
+	#if 1
 	gGT->levelID = 9;
 	//gGT->numPlayers = 4;
 	//gGT->numScreens = 4;
