@@ -158,6 +158,7 @@ common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
 common, exe, DrawRectangle, 0x0, General/DrawRectangle.c
 common, exe, DrawBoxOutline_LowLevel, 0x0, General/DrawBoxOutline_LowLevel.c
 
+common, exe, Player_Spinning_Update, 0x0, General/Player_Spinning_FuncPtrs.c
 common, exe, Player_Spinning_Init, 0x0, General/Player_Spinning_Init.c
 
 // Japan
