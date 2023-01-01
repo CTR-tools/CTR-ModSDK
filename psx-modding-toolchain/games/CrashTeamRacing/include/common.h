@@ -2014,10 +2014,10 @@ struct Driver
 	short unk_offset3B2;
 	
 	// 0x3B4
-	int rotationSpinRate; // again?
+	short rotationSpinRate; // again?
 
-	// 0x3B8
-	char fill_turningAccel[2];
+	// 0x3B6
+	char fill_turningAccel[3];
 
 	// 0x3BA
 	// in japanese Turbo_Increment

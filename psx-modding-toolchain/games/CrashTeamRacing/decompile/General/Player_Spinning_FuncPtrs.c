@@ -59,8 +59,11 @@ void DECOMP_Player_Spinning_Interpolate(struct Thread* t, struct Driver* d)
 	// subtract itself by 1/8
 	d->unk3D4[0] -= d->unk3D4[0] >> 3;
 	
-	d->angle += (d->rotationSpinRate * elapsedTimeMS) >> 0xd;
-	d->angle &= 0xfff;
+	d->angle = 
+	(
+		d->angle + 
+		(d->rotationSpinRate * elapsedTimeMS >> 0xd)
+	) & 0xfff;
 	
 	d->rotCurr.y = d->unk3D4[0] + d->angle + d->unknownDimension2Curr;
 	
