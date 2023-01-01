@@ -30,7 +30,7 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 		)
 		{
 			// character width, plus extra spacing for button
-			pixLength += font_charPixWidth + font_buttonPixWidth;
+			pixLength += font_buttonPixWidth; // + font_charPixWidth
 		}
 		
 		// colon or period
@@ -40,7 +40,7 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 		)
 		{
 			// punctuation spacing
-			pixLength += font_puncPixWidth;
+			pixLength += font_puncPixWidth - font_charPixWidth; // + font_charPixWidth
 		}
 		
 		#if BUILD > UsaRetail
@@ -48,6 +48,9 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 		{
 			character += 2;
 			len += 2;
+			
+			// dont add charPixWidth
+			goto NextIteration;
 		}
 		#endif
 
@@ -59,9 +62,12 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 		#endif
 		{
 			// normal character spacing
+			// this will be added on top of button,
+			// and colon, and period, so dont "else if"
 			pixLength += font_charPixWidth;
 		}
 
+NextIteration:
 		character++;
 		len--;
 	}

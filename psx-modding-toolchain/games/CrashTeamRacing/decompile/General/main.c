@@ -4,7 +4,7 @@ void VsyncCallbackFunc();
 void DrawSyncCallbackFunc();
 void StateZero();
 
-#define FastBoot
+//#define FastBoot
 
 u_int main()
 {
@@ -525,6 +525,7 @@ void StateZero()
 	// Get CD Position fo BIGFILE
 	sdata->ptrBigfile1 = LOAD_ReadDirectory(rdata.s_PathTo_Bigfile);
 	
+	#ifndef FastBoot
 	// Load Language
 	// takes 1 as hard-coded parameter for English
 	// PAL SCES02105 has this same function (different name), and calls it multiple times
@@ -533,6 +534,7 @@ void StateZero()
 	GAMEPROG_NewGame_OnBoot();
 	
 	gGT->overlayIndex_null_notUsed = 0;
+	#endif
 	
 	// set level ID to naughty dog box
 	gGT->levelID = 41;
@@ -542,9 +544,6 @@ void StateZero()
 	//gGT->numPlayers = 4;
 	//gGT->numScreens = 4;
 	#endif
-	
-	// set level name to "ndi"
-	*(u_int*)&gGT->levelName[0] = *(u_int*)&sdata->s_ndi_needToRename[0];
 	
 	InitGeom();
 	
@@ -579,12 +578,13 @@ void StateZero()
 	howl_InitGlobals(data.kartHwlPath);
 	
 	VSyncCallback(VsyncCallbackFunc);
+	
+	#ifndef FastBoot
 	Music_SetIntro();
 	CseqMusic_StopAll();
 	CseqMusic_Start(0, 0, 0, 0, 0);
 	Music_Start(0);
 	
-	#ifndef FastBoot
 	// CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
 	// "Start your engines, for Sony Computer..."
 	CDSYS_XAPlay(1, 0x50);
@@ -608,7 +608,7 @@ void StateZero()
 	
 	sdata->mainGameState = 3;
 	
-	// set loading state to begin
+	// start loading
 	sdata->Loading.stage = 0;
 	
 	clockEffect = &gGT->clockEffectEnabled;
