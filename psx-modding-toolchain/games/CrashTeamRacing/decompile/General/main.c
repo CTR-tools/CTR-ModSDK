@@ -292,10 +292,10 @@ u_int main()
 					(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_L2)
 					)
 				{
-					gGT->drivers[0]->posCurr[0] = 0xFFEC6392;
-					gGT->drivers[0]->posCurr[1] = 0xFFFA009D;
-					gGT->drivers[0]->posCurr[2] = 0xFFC85BF2;
-					gGT->drivers[0]->angle = 0xB8A;
+					gGT->drivers[0]->posCurr[0] = 0x857FF;
+					gGT->drivers[0]->posCurr[1] = 0xFFFFBFA9;
+					gGT->drivers[0]->posCurr[2] = 0xFFFC1453;
+					gGT->drivers[0]->angle = 0xC10;
 				}
 				#endif
 
@@ -540,7 +540,7 @@ void StateZero()
 	// Niko testing, override level
 	// for instant-boot, dont erase
 	#if 1
-	gGT->levelID = 9;
+	gGT->levelID = 4;
 	//gGT->numPlayers = 4;
 	//gGT->numScreens = 4;
 	#endif
