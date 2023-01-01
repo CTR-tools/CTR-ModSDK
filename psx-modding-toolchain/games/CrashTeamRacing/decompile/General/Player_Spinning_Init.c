@@ -30,7 +30,7 @@ void* PlayerSpinningFuncTable[0xD] =
 	SpawnParticle_DriverMain,
 };
 
-void Player_Spinning_Init(struct Thread* t, struct Driver* d)
+void DECOMP_Player_Spinning_Init(struct Thread* t, struct Driver* d)
 {
 	int i;
 	
