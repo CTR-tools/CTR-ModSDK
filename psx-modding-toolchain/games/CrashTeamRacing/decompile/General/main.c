@@ -4,6 +4,8 @@ void VsyncCallbackFunc();
 void DrawSyncCallbackFunc();
 void StateZero();
 
+#define FastBoot
+
 u_int main()
 {
 	struct GameTracker* gGT;
@@ -274,9 +276,7 @@ u_int main()
 				// Process all gamepad input
 				GAMEPAD_UpdateAll(sdata->gGamepads);
 
-				// Niko testing
-				// dont erase, will be used for many future tests
-				#if 1
+				#ifdef FastBoot
 				// disable spawn
 				gGT->Debug_ToggleNormalSpawn = 0;
 				
@@ -537,9 +537,7 @@ void StateZero()
 	// set level ID to naughty dog box
 	gGT->levelID = 41;
 	
-	// Niko testing, override level
-	// for instant-boot, dont erase
-	#if 1
+	#ifdef FastBoot
 	gGT->levelID = 4;
 	//gGT->numPlayers = 4;
 	//gGT->numScreens = 4;
@@ -568,11 +566,13 @@ void StateZero()
 	PutDrawEnv(&gGT->db[1].drawEnv);
 	DrawSync(0);
 	
+	#ifndef FastBoot
 	// Load Intro TIM for "SCEA Presents" page from VRAM file
 	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
 	// Add a bookmark before loading (param_3 is 0 in the call)
 	LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, auStack40, 0xffffffff);
 	UpdateIntroScreen();
+	#endif
 	
 	// \SOUNDS\KART.HWL;1
 	// enable audio if not already enabled
@@ -584,6 +584,7 @@ void StateZero()
 	CseqMusic_Start(0, 0, 0, 0, 0);
 	Music_Start(0);
 	
+	#ifndef FastBoot
 	// CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
 	// "Start your engines, for Sony Computer..."
 	CDSYS_XAPlay(1, 0x50);
@@ -592,6 +593,8 @@ void StateZero()
 		// WARNING: Read-only address (ram, 0x8008d888) is written
 		CDSYS_XAPauseAtEnd();
 	}
+	#endif
+	
 	// WARNING: Read-only address (ram, 0x8008d888) is written
 	DecalGlobal_Clear(gGT);
 	
