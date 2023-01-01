@@ -50511,7 +50511,7 @@ void FUN_8006402c(undefined4 param_1,int param_2)
 	// Change all funcPtrs to transition
 	// from LastSpin to Driving
 	// Player_StopSpin_Init
-    FUN_800644d0();
+    FUN_800644d0(param_1, param_2);
   }
   return;
 }
