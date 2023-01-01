@@ -1,7 +1,6 @@
 // functions bigger than their originals
-common, exe, rdata_free, 0x0, General/MATH_Sin.c General/DecalFont_GetLineWidthStrlen.c, rdata.bin
+common, exe, rdata_free, 0x0, General/MATH_Sin.c, rdata.bin
 common, exe, MATH_Sin, 0x0, General/MATH_Sin_hook.s
-common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthStrlen_hook.s
 
 // 230 (incomplete)
 common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/MM_Characters_boolIsInvalid.c
@@ -56,6 +55,8 @@ common, exe, BOTS_Adv_NumTimesLostEvent, 0x0, General/BOTS_Adv_NumTimesLostEvent
 // CAM
 common, exe, CAM_Init, 0x0, General/CAM_Init.c
 common, exe, CAM_SetDesiredPosRot, 0x0, General/CAM_SetDesiredPosRot.c
+//common, exe, CAM_EndOfRace_Battle, 0x0, General/CAM_EndOfRace_Battle.c
+//common, exe, CAM_StartOfRace, 0x0, General/CAM_StartOfRace.c
 
 // CTR
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
@@ -68,6 +69,7 @@ common, exe, DecalFont_DrawLine, 0x0, General/DecalFont_DrawLine.c
 common, exe, DecalFont_DrawLineOT, 0x0, General/DecalFont_DrawLineOT.c
 common, exe, DecalFont_DrawMultiLineStrlen, 0x0, General/DecalFont_DrawMultiLineStrlen.c
 common, exe, DecalFont_DrawMultiLine, 0x0, General/DecalFont_DrawMultiLine.c
+common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthStrlen.c
 
 // DecalHUD
 common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD_DrawPolyFT4.c
