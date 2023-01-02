@@ -68,57 +68,63 @@ void DECOMP_RB_Crystal_LInB(struct Instance* inst)
 void RB_Fruit_GetScreenCoords(struct Camera110* c110, struct Instance* inst, short* output);
 
 int DECOMP_RB_Crystal_LInC(
-	struct Instance* crystalInst,
+	struct Instance* LevInst,
 	struct Thread* driverTh,
 	struct WeaponSearchData* info)
 {
-	short posWorld[4];
-	short posScreen[2];
-	MATRIX* m;
-	struct Driver* driver;
 	struct Camera110* c110;
-	int driverID;
-	int modelID;
+	short posScreen[2];
+	struct Driver* driver;
+	int modelID_self;
+	int modelID_hit;
 
-	modelID = info->modelID;
+	modelID_self = LevInst->model->id;
+	modelID_hit = info->modelID;
 	
-	// if crystal did not collide with 
-	// DYNAMIC_PLAYER, quit function
-	if (modelID != 0x18) return 0;
+	// if LevInst is crystal
+	if(modelID_self == 0x60)
+	{
+		// if did not collide with 
+		// DYNAMIC_PLAYER, quit function
+		if (modelID_hit != 0x18) return 0;
 	
-	// check scale
-	if(crystalInst->scale[0] == 0) return 0;
+		// kill thread
+		LevInst->thread->flags |= 0x800;
+		LevInst->thread = 0;	
+	}
 	
-	// scaleX, scaleY, scaleZ
-	*(int*)&crystalInst->scale[0] = 0;
-	crystalInst->scale[2] = 0;
+	// if LevInst is wumpa fruit
+	else
+	{
+		if (
+				// not DYNAMIC_PLAYER
+				(modelID_hit != 0x18) && 
+				
+				// not DYNAMIC_ROBOT_CAR
+				(modelID_hit != 0x3f)
+			)
+		{
+			return 0;
+		}
+	}
 	
-	// kill thread
-	crystalInst->thread->flags |= 0x800;
-	crystalInst->thread = 0;
+	// check scale, and erase
+	if(LevInst->scale[0] == 0) return 0;
+	*(int*)&LevInst->scale[0] = 0;
+	LevInst->scale[2] = 0;
 	
 	// play sound
-	PlaySound3D(0x43,crystalInst);
+	PlaySound3D(0x43,LevInst);
 	
-	// get driver object
+	// get driver object, get screen coords
 	driver = driverTh->object;
-	driverID = driver->driverID;
+	c110 = &sdata->gGT->camera110[driver->driverID];
+	RB_Fruit_GetScreenCoords(c110, LevInst, &posScreen[0]);
 	
-	c110 = &sdata->gGT->camera110[driverID];
-	RB_Fruit_GetScreenCoords(c110, crystalInst, &posScreen[0]);
-	
-	// screenPosX
-	driver->PickupWumpaHUD.startX = 
-		c110->rect.x + posScreen[0];
-		
-	// screenPosY
-	driver->PickupWumpaHUD.startY = 
-		c110->rect.y + posScreen[1] - 0x14;
-	
-	// transition should last 5 frames
+	// lasts 5 frames, give start position, count numCollected
+	driver->PickupWumpaHUD.startX = c110->rect.x + posScreen[0];
+	driver->PickupWumpaHUD.startY = c110->rect.y + posScreen[1] - 0x14;
 	driver->PickupWumpaHUD.cooldown = 5;
-	
-	// increment number of items in hud
 	driver->PickupWumpaHUD.numCollected++;
 	
 	return 1;
