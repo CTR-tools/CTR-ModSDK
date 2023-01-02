@@ -75,37 +75,30 @@ int DECOMP_RB_Crystal_LInC(
 	struct Camera110* c110;
 	short posScreen[2];
 	struct Driver* driver;
-	int modelID_self;
-	int modelID_hit;
+	int modelID;
 
-	modelID_self = LevInst->model->id;
-	modelID_hit = info->modelID;
+	modelID = info->modelID;
 	
-	// if LevInst is crystal
-	if(modelID_self == 0x60)
+	// wumpa fruit or crystal can be grabbed
+	// by player, or robotcar, and there's no
+	// AIs in Crystal Challenge anyway
+	if (
+			// not DYNAMIC_PLAYER
+			(modelID != 0x18) && 
+			
+			// not DYNAMIC_ROBOT_CAR
+			(modelID != 0x3f)
+		)
 	{
-		// if did not collide with 
-		// DYNAMIC_PLAYER, quit function
-		if (modelID_hit != 0x18) return 0;
-	
-		// kill thread
-		LevInst->thread->flags |= 0x800;
-		LevInst->thread = 0;	
+		return 0;
 	}
 	
-	// if LevInst is wumpa fruit
-	else
+	// kill crystal thread
+	if(LevInst->thread != 0)
 	{
-		if (
-				// not DYNAMIC_PLAYER
-				(modelID_hit != 0x18) && 
-				
-				// not DYNAMIC_ROBOT_CAR
-				(modelID_hit != 0x3f)
-			)
-		{
-			return 0;
-		}
+		// kill thread
+		LevInst->thread->flags |= 0x800;
+		LevInst->thread = 0;
 	}
 	
 	// check scale, and erase
