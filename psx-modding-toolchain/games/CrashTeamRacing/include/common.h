@@ -583,7 +583,7 @@ struct AdvProgress
 	char name[18]; // 0x12
 
 	// 8FBCE
-	unsigned short characterID;
+	short characterID;
 
 	// 8FBD0
 	short unk;
@@ -607,6 +607,8 @@ struct AdvProgress
 	// 8FBF0
 	// definitely saves to profile
 	int unk_8FBF0;
+	
+	// 0x50 -- size of struct
 };
 
 struct RacingWheelData
@@ -657,6 +659,23 @@ struct GameOptions
 	// audio mode (mono/stereo)
 	int audioMode;
 #endif
+};
+
+struct MemcardProfile
+{
+	// 0x0
+	short header[2];
+	
+	// 0x4
+	struct AdvProgress advProgress[4];
+
+	// 0x144
+	struct GameProgress gameProgress;
+	
+	// 0x15D8
+	struct GameOptions gameOptions;
+	
+	// 0x1600 - size of profile
 };
 
 struct NavFrame

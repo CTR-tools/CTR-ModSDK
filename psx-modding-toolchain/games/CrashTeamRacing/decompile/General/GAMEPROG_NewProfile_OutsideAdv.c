@@ -2,8 +2,11 @@
 
 void GAMEPROG_NewProfile_OutsideAdv(struct GameProgress* gameProg)
 {
+	// GameOptions is probably a struct "inside"
+	// of GameProgress, still working on it
+	
 	// GameProgress and GameOptions
-	memset(gameProg, 0, 0x14bc);
+	memset(gameProg, 0, sizeof(struct GameProgress) + sizeof(struct GameOptions));
 	
 	GAMEPROG_ResetHighScores(gameProg);
 }

@@ -77,6 +77,7 @@ common, exe, GAMEPROG_AdvPercent, 0x0, General/GAMEPROG_AdvPercent.c
 common, exe, GAMEPROG_ResetHighScores, 0x0, General/GAMEPROG_ResetHighScores.c
 common, exe, GAMEPROG_CheckGhostsBeaten, 0x0, General/GAMEPROG_CheckGhostsBeaten.c
 common, exe, GAMEPROG_NewProfile_OutsideAdv, 0x0, General/GAMEPROG_NewProfile_OutsideAdv.c
+common, exe, GAMEPROG_InitFullMemcard, 0x0, General/GAMEPROG_InitFullMemcard.c
 
 // DecalHUD
 common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD_DrawPolyFT4.c
