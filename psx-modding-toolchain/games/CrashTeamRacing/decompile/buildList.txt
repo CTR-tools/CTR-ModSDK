@@ -62,7 +62,6 @@ common, exe, CAM_SetDesiredPosRot, 0x0, General/CAM_SetDesiredPosRot.c
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
 
 // DecalFont
-// DecalFont_DrawMultiLineStrlen relocated to RDATA
 common, exe, DecalFont_GetLineWidth, 0x0, General/DecalFont_GetLineWidth.c
 common, exe, DecalFont_DrawLineStrlen, 0x0, General/DecalFont_DrawLineStrlen.c
 common, exe, DecalFont_DrawLine, 0x0, General/DecalFont_DrawLine.c
@@ -73,7 +72,7 @@ common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthSt
 
 // GAMEPAD
 
-// GAMEPROG
+// GAMEPROG, InitFullMemcard is next
 common, exe, GAMEPROG_AdvPercent, 0x0, General/GAMEPROG_AdvPercent.c
 common, exe, GAMEPROG_ResetHighScores, 0x0, General/GAMEPROG_ResetHighScores.c
 common, exe, GAMEPROG_CheckGhostsBeaten, 0x0, General/GAMEPROG_CheckGhostsBeaten.c

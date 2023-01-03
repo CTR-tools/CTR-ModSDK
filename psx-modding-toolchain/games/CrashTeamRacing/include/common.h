@@ -9119,12 +9119,6 @@ struct sData
 	// 8008d474
 	// pointer to memcard bytes (again?) 800992E4
 
-	// --------------------------
-
-	// In 221 ASM, PtrMempack is relative to "gp"
-	// while menuReadyToPass appears to be relative
-	// to something else, maybe the structure is divided?
-
 	// 8008d490
 	// grey color (80 80 80)
 
