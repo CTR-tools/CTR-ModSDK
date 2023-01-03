@@ -6,13 +6,15 @@ struct Instance* RB_Hazard_CollideWithBucket(
 	char boolCanSkipParent, int hitRadius, struct Instance* mineDriverInst
 )
 {
-	int j;
+	int i;
 	struct Instance* threadInst;
 	
 	int distComponent;
 	int distCheck;
 	
-	while(bucket != 0)
+	distCheck = 0;
+	
+	for(; bucket != 0; bucket = bucket->siblingThread)
 	{
 		threadInst = bucket->inst;
 		
@@ -28,9 +30,9 @@ struct Instance* RB_Hazard_CollideWithBucket(
 			continue;
 		}
 		
-		for(j = 0; j < 3; j++)
+		for(i = 0; i < 3; i++)
 		{
-			distComponent = threadInst->matrix.t[j] - weaponInst->matrix.t[j];
+			distComponent = threadInst->matrix.t[i] - weaponInst->matrix.t[i];
 			distComponent *= distComponent;
 			distCheck += distComponent;
 		}
@@ -39,8 +41,6 @@ struct Instance* RB_Hazard_CollideWithBucket(
 		{
 			return threadInst;
 		}
-		
-		bucket = bucket->siblingThread;
 	}
 	
 	return 0;

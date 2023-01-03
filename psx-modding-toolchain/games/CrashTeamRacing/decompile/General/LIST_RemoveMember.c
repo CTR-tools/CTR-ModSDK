@@ -2,7 +2,8 @@
 
 struct Item* DECOMP_LIST_RemoveMember(struct LinkedList* L, struct Item* I)
 {
-  // dont check if list has "first", waste of time
+  // probably waste of time, but leave it for now
+  if(L->first == 0) return 0;
 
   // can't remove this check, or it'll crash
   // in 232, bottom of Door_ThTick, erasing keys
