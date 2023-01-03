@@ -1,18 +1,22 @@
 #include <common.h>
 
-void RB_Hazard_HurtDriver(struct Driver* d, int newState)
+void RB_Hazard_HurtDriver(
+	struct Driver* driverVictim, 
+	int damageType,
+	struct Driver* driverAttacker,
+	int reason)
 {
 	// if not an AI
-	if ((d->actionsFlagSet & 0x100000) == 0)
+	if ((driverVictim->actionsFlagSet & 0x100000) == 0)
 	{
-		Player_ChangeState(d, newState);
+		Player_ChangeState(driverVictim, damageType, driverAttacker, reason);
 		return;
 	}
 	
 	// if not an AI...
 	
 	// original code
-	#if 1
+	#if 0
 	
 	// if boss mode
 	if ((sdata->gGT->gameMode1 & ADVENTURE_BOSS) != 0)
@@ -21,7 +25,7 @@ void RB_Hazard_HurtDriver(struct Driver* d, int newState)
 		if(sdata->gGT->levelID == 0xd)
 		{
 			// override to spin out
-			newState = 1;
+			damageType = 1;
 		}
 	}
 	
@@ -33,10 +37,10 @@ void RB_Hazard_HurtDriver(struct Driver* d, int newState)
 	if ((sdata->gGT->bossID & 4) != 0)
 	{
 		// override to spin out
-		newState = 1;
+		damageType = 1;
 	}
 	
 	#endif
 	
-	BOTS_ChangeState(d, newState);
+	BOTS_ChangeState(driverVictim, damageType, driverAttacker, reason);
 }

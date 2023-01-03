@@ -3495,14 +3495,12 @@ LAB_8001686c:
 }
 
 // BOTS_ChangeState
-// handles pushbacks (when racer is damaged and their progress is affected)
-// this is only for AIs, not for humans
+// param1 - driverVictim
+// param2 - damageType
+// param3 - driverAttacker
+// param4 - reason
 undefined4 FUN_80016b00(int param_1,int param_2,int param_3,int param_4)
-
 {
-  // param_1 is the address of a player or AI structure (9900C, 99010, etc)
-  //param2 seems to be damage type
-	// param_3 seems to be either 0 or offset 0x500 of player 1 struct
 
   undefined4 uVar1;
   int iVar2;
@@ -3709,6 +3707,9 @@ undefined4 FUN_80016b00(int param_1,int param_2,int param_3,int param_4)
     //set AI progress cooldown to 0x3C
     *(undefined4 *)(param_1 + 0x604) = 0x3c;
   }
+
+  // === Count Statistics ===
+  // Exactly the same as Player_ChangeState
 
   if ((param_3 != 0) && (param_2 != 0)) {
     *(char *)(param_3 + 0x559) = *(char *)(param_3 + 0x559) + '\x01';

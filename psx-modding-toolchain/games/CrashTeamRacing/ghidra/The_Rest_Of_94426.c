@@ -50886,6 +50886,10 @@ void FUN_800644d0(undefined4 param_1,int param_2)
 
 
 // Player_ChangeState
+// param1 - driverVictim
+// param2 - damageType
+// param3 - driverAttacker
+// param4 - reason
 undefined4 FUN_80064568(int param_1,int param_2,int param_3,undefined4 param_4)
 
 {
