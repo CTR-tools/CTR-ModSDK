@@ -277,8 +277,9 @@ void FUN_8002689c(int param_1)
 
 
 // Check if ghosts are beaten on all tracks
-// 1 for N Tropy
-// 2 for N Oxide
+// 0 for N Tropy Open
+// 1 for N Tropy Beaten
+// 2 for N Oxide Beaten
 // GAMEPROG_CheckGhostsBeaten
 uint FUN_80026ae4(uint param_1)
 {
@@ -342,8 +343,8 @@ uint FUN_80026ae4(uint param_1)
   // GAMEPROG_GetPtrHighScoreTrack
   FUN_80026e80();
 
-  // only if uVar3 is not zero on all tracks,
-  // will uVar3 return anything that isn't zero
+  // 0 if not beaten on all tracks,
+  // 1 if beaten on all tracks
   return uVar3;
 }
 
