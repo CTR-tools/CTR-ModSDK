@@ -1,7 +1,5 @@
 #include <common.h>
 
-int x = sizeof(struct MemcardProfile);
-
 void GAMEPROG_InitFullMemcard(struct MemcardProfile* mcp)
 {
 	int i;
@@ -11,7 +9,7 @@ void GAMEPROG_InitFullMemcard(struct MemcardProfile* mcp)
 	
 	// header
 	mcp->header[0] = 0xffee; // version (-18)
-	mcp->header[1] = 0x1600; // size
+	mcp->header[1] = sizeof(struct MemcardProfile);
 	
 	// GameProgress and GameOptions
 	GAMEPROG_NewProfile_OutsideAdv(&mcp->gameProgress);
