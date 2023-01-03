@@ -109,11 +109,11 @@ void FUN_800265c0(int param_1)
       sVar7 = sVar7 + 1;
     }
 
-	// Check if any of the 4 doors are open
+	// Check if any of the 4 purple tokens
     if ((iVar4 < 4) &&
        ((*(uint *)(param_1 + ((int)(iVar4 + 0x6fU) >> 5) * 4) >> (iVar4 + 0x6fU & 0x1f) & 1) != 0))
     {
-	  // increment number of open doors
+	  // increment number of purple tokens
       sVar6 = sVar6 + 1;
       *(int *)(puVar2 + 0x1e50) = *(int *)(puVar2 + 0x1e50) + 1;
     }
@@ -192,10 +192,10 @@ void FUN_800265c0(int param_1)
 		// 		number of keys							number of CTR tokens
 		*(int *)(PTR_DAT_8008d2ac + 0x1e38) + *(int *)(PTR_DAT_8008d2ac + 0x1e3c) +
 
-		// one percent for every door opened
+		// one percent for every purple token
 		(int)sVar6 +
 
-		// one percent for each gem collected
+		// one percent for every gem
 		(int)sVar7;
 
   return;

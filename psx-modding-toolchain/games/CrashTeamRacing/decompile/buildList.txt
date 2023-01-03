@@ -71,6 +71,12 @@ common, exe, DecalFont_DrawMultiLineStrlen, 0x0, General/DecalFont_DrawMultiLine
 common, exe, DecalFont_DrawMultiLine, 0x0, General/DecalFont_DrawMultiLine.c
 common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthStrlen.c
 
+// GAMEPAD
+
+// GAMEPROG
+common, exe, GAMEPROG_AdvPercent, 0x0, General/GAMEPROG_AdvPercent.c
+common, exe, GAMEPROG_ResetHighScores, 0x0, General/GAMEPROG_ResetHighScores.c
+
 // DecalHUD
 common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD_DrawPolyFT4.c
 common, exe, DecalHUD_DrawWeapon, 0x0, General/DecalHUD_DrawWeapon.c

@@ -6030,6 +6030,56 @@ struct Terrain
 	int accel_impact;
 };
 
+struct MetaDataLEV
+{
+	// 0x0
+	int hubID;
+	// 0 - gemstone
+	// 1 - n sanity
+	// 2 - lost ruin
+	// 3 - glacier
+	// 4 - citadel
+	// 0xffff - does not belong
+
+	// 0x4
+	// debug name of level
+	// "hub1", "hub2", etc
+	char* name_Debug;
+
+	// 0x8
+	// lng index of level,
+	// "Gem Stone Valley", "N Sanity Beach", etc,
+	// that is, if it exists for this LEV
+	int name_LNG;
+
+	// 0xC
+	// this is the amount of time you need
+	// to beat, to open N Tropy's Ghost
+	int timeTrial;
+
+	// 0x10
+	// in adventure arena
+	short numTrophiesToOpen;
+
+	// 0x12
+	// 0 - red
+	// 1 - green
+	// 2 - blue
+	// 3 - yellow
+	// 4 - purple
+	short ctrTokenGroupID;
+
+	// 0x14
+	// 0x0A - Roo on Roo's Tubes,
+	// 0xFF - Nobody (most tracks)
+	short characterID_Boss;
+
+	// 0x16
+	// Used in Aug14 prototype
+	short characterID_SpecialGhost;
+
+};
+
 // always starts at address 0x80010000,
 // which is 0x800 bytes into the EXE file
 struct rData
@@ -7576,55 +7626,7 @@ struct Data
 	void* overlayCallbackFuncs[4];
 
 	// 80083A80 -- UsaRetail,
-	struct
-	{
-		// 0x0
-		int hubID;
-		// 0 - gemstone
-		// 1 - n sanity
-		// 2 - lost ruin
-		// 3 - glacier
-		// 4 - citadel
-		// 0xffff - does not belong
-
-		// 0x4
-		// debug name of level
-		// "hub1", "hub2", etc
-		char* name_Debug;
-
-		// 0x8
-		// lng index of level,
-		// "Gem Stone Valley", "N Sanity Beach", etc,
-		// that is, if it exists for this LEV
-		int name_LNG;
-
-		// 0xC
-		// this is the amount of time you need
-		// to beat, to open N Tropy's Ghost
-		int timeTrial;
-
-		// 0x10
-		// in adventure arena
-		short numTrophiesToOpen;
-
-		// 0x12
-		// 0 - red
-		// 1 - green
-		// 2 - blue
-		// 3 - yellow
-		// 4 - purple
-		short ctrTokenGroupID;
-
-		// 0x14
-		// 0x0A - Roo on Roo's Tubes,
-		// 0xFF - Nobody (most tracks)
-		short characterID_Boss;
-
-		// 0x16
-		// Used in Aug14 prototype
-		short characterID_SpecialGhost;
-
-	} MetaDataLEV[0x41];
+	struct MetaDataLEV metaDataLEV[0x41];
 
 	// 80084098
 	// [0] (gemstone) = 0x62 (beat oxide)

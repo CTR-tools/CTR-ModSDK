@@ -657,6 +657,7 @@ LAB_OVR1__800a03b8:
             (&DAT_8008fba4)[(int)(iVar15 + 0x5eU) >> 5] = uVar7 | 1 << uVar5;
 			
 			// 6f is where purple CTR tokens are, not sure what this does
+			// ghidra fail? should be 0x5e?
             (&DAT_8008fba4)[(int)(*(int *)(puVar6 + 0x1eb8) + 0x6fU) >> 5] =
                  (&DAT_8008fba4)[(int)(*(int *)(puVar6 + 0x1eb8) + 0x6fU) >> 5] |
                  1 << (*(int *)(puVar6 + 0x1eb8) + 0x6fU & 0x1f);
