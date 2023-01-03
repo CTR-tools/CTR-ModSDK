@@ -37,7 +37,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	if (sdata->gGT->battleSetup.enabledWeapons == 0x34de) itemSet = ITEMSET_BattleDefault;
 
 	// Not in Battle Mode
-	if (!(sdata->gGT->gameMode1 & 0x20))
+	if ((sdata->gGT->gameMode1 & 0x20) == 0)
 	{
 		// 7th Itemset (Crystal Challenge)
 		itemSet = ITEMSET_CrystalChallenge;
@@ -135,10 +135,10 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 					}
 			}
 		}
+		
+		// if you have 4th-place itemset on first lap, then override to 3rd place
+		if (itemSet == ITEMSET_Race4 && driver->lapIndex == 0) itemSet = ITEMSET_Race3;
 	}
-
-	// if you have 4th-place itemset on first lap, then override to 3rd place
-	if (itemSet == ITEMSET_Race4 && driver->lapIndex == 0) itemSet = ITEMSET_Race3;
 
 	// Decide item for Driver
 	rng = (RNG_Scramble() >> 0x3) % 0xc8;
@@ -153,9 +153,14 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 		case ITEMSET_Race3:
 		case ITEMSET_Race4:
 		case ITEMSET_BattleDefault:
-		case ITEMSET_BattleCustom:
 		case ITEMSET_BossRace:
 			driver->heldItemID = charPtr[itemSet][(rng * numWeapons[itemSet]) / 0xc8];
+			break;
+			
+		// uses int array instead of char,
+		// should fix that later, requires 230 rewrite
+		case ITEMSET_BattleCustom:
+			driver->heldItemID = ((int*)charPtr[itemSet])[(rng * numWeapons[itemSet]) / 0xc8];
 			break;
 
 		case ITEMSET_CrystalChallenge:
