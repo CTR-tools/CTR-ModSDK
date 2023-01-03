@@ -472,7 +472,7 @@ void DECOMP_MM_ParseCheatCodes()
 	DecalFont_DrawLine("Date/Time in CheatCodes.c", 5, 197, 2, 0xffff0000);
 	DecalFont_DrawLine(__DATE__, 5, 206, 2, 0xffff0000);
 	DecalFont_DrawLine(__TIME__, 170, 206, 2, 0xffff0000);
-	DecalFont_DrawLine("14%", 285, 206, 2, 0xffff0000);
+	DecalFont_DrawLine("15%", 285, 206, 2, 0xffff0000);
 	#endif
 	
 	// if not holding L1 and R1
