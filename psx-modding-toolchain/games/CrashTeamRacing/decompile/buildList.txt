@@ -79,6 +79,7 @@ common, exe, GAMEPROG_CheckGhostsBeaten, 0x0, General/GAMEPROG_CheckGhostsBeaten
 common, exe, GAMEPROG_NewProfile_OutsideAdv, 0x0, General/GAMEPROG_NewProfile_OutsideAdv.c
 common, exe, GAMEPROG_InitFullMemcard, 0x0, General/GAMEPROG_InitFullMemcard.c
 common, exe, GAMEPROG_NewProfile_InsideAdv, 0x0, General/GAMEPROG_NewProfile_InsideAdv.c
+common, exe, GAMEPROG_SaveCupProgress, 0x0, General/GAMEPROG_SaveCupProgress.c
 
 // DecalHUD
 common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD_DrawPolyFT4.c
