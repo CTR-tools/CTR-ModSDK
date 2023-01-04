@@ -468,11 +468,12 @@ void DECOMP_MM_ParseCheatCodes()
 	// there's extra room in here, 
 	// so store this code here
 	#if 1
+	char* info = "Date/Time in CheatCodes.c";
 	void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
-	DecalFont_DrawLine("Date/Time in CheatCodes.c", 5, 197, 2, 0xffff0000);
-	DecalFont_DrawLine(__DATE__, 5, 206, 2, 0xffff0000);
-	DecalFont_DrawLine(__TIME__, 170, 206, 2, 0xffff0000);
-	DecalFont_DrawLine("15%", 285, 206, 2, 0xffff0000);
+	DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, 0xffff0000);
+	DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, 0xffff0000);
+	DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, 0xffff0000);
+	DecalFont_DrawLine("16%", 		285, 206, FONT_SMALL, 0xffff0000);
 	#endif
 	
 	// if not holding L1 and R1

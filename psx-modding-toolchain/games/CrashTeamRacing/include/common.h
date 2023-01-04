@@ -43,11 +43,11 @@ enum Font
 	// erased in final builds
 	FONT_DEBUG=0,
 
-	// good for debugging
-	FONT_SMALL=1,
-
 	// most gameplay
-	FONT_BIG=2,
+	FONT_BIG=1,
+	
+	// good for debugging
+	FONT_SMALL=2,
 
 	// same as "BIG" but less spacing
 	FONT_CREDITS=3,
