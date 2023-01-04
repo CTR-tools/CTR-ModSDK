@@ -147,7 +147,7 @@ common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK_PopToState.c
 
 // MENUBOX
 // skip DrawBG
-//common, exe, MenuBox_GetHeight, 0x0, General/MENUBOX_GetHeight.c
+common, exe, MenuBox_GetHeight, 0x0, General/MENUBOX_GetHeight.c
 //common, exe, MenuBox_GetWidth, 0x0, General/MENUBOX_GetWidth.c
 // skip DrawSelf
 common, exe, MenuBox_ClearInput, 0x0, General/MENUBOX_ClearInput.c

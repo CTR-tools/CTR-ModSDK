@@ -23370,9 +23370,12 @@ void FUN_80045b1c(short *param_1,short *param_2,short param_3)
     sVar1 = DAT_8008236a + 3;
   }
 
-  if ((*(uint *)(param_1 + 4) & 0x40) == 0) {
-    if ((*(uint *)(param_1 + 4) & 4) == 0) {
-
+  // if not showing only highlighted row
+  if ((*(uint *)(param_1 + 4) & 0x40) == 0) 
+  {
+	// if not drawing only title bar
+    if ((*(uint *)(param_1 + 4) & 4) == 0) 
+	{
 	  // MenuRow array
 	  psVar3 = *(short **)(param_1 + 6);
 
@@ -23393,11 +23396,19 @@ void FUN_80045b1c(short *param_1,short *param_2,short param_3)
       }
       goto LAB_80045bd0;
     }
+	
+	// if only showing title bar
+	// height = height + lineHeight - 6
     sVar2 = *param_2 + -6;
   }
-  else {
+  
+  // if only showing highlighted row
+  else 
+  {
+	// height = height + lineHeight
     sVar2 = *param_2;
   }
+  
   *param_2 = sVar1 + sVar2;
 
 LAB_80045bd0:

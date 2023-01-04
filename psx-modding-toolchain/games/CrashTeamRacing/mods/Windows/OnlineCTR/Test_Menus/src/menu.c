@@ -47,7 +47,7 @@ struct MenuRow menuRows[5] =
 struct MenuBox menuBox =
 {
 	// custom string made myself
-	.index1 = 0x17d, 
+	.stringIndexTitle = 0x17d, 
 	
 	.posX_curr = 0x100, // X position
 	.posY_curr = 0x74,  // Y position

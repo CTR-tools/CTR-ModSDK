@@ -979,25 +979,25 @@ struct MenuRow
 	// determine if the row is "locked"
 
 	// 0x0
-	unsigned short stringIndex;
+	short stringIndex;
 
 	// 0x2
-	unsigned char rowOnPressUp;
+	char rowOnPressUp;
 
 	// 0x3
-	unsigned char rowOnPressDown;
+	char rowOnPressDown;
 
 	// 0x4
-	unsigned char rowOnPressLeft;
+	char rowOnPressLeft;
 
 	// 0x5
-	unsigned char rowOnPressRight;
+	char rowOnPressRight;
 };
 
 struct MenuBox
 {
 	// 0x0
-	unsigned short index1; // string index of title (null, with no row)
+	short stringIndexTitle; // string index of title (null, with no row)
 
 	// position for current frame
 	unsigned short posX_curr;   // X position
@@ -1008,10 +1008,11 @@ struct MenuBox
 
 	// 0x8
 	// This is an int, see FUN_800469dc
-	// & 1, centers Y
-	// & 2, centers X
+	// & 1, centers posY
+	// & 2, centers posX
 	// & 4, draw only title bar
 	// & 0x10, draw ptrNextMenuBox_InHierarchy
+	// & 0x40, show only highlighted row
 	// & 0x28, main menu character select (better meaning)?
 	// & 0x80, tiny text in rows
 	// & 0x1000, needs to close

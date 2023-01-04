@@ -18,7 +18,7 @@ void MyMenuBoxFuncPtr(struct MenuBox* m);
 
 struct MenuBox myBox =
 {
-	.index1 = -1,
+	.stringIndexTitle = -1,
 	.state = 0x28,
 	.funcPtr = (void*)MyMenuBoxFuncPtr,
 	.unk6 = 1,
