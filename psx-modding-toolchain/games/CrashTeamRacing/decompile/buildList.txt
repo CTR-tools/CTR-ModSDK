@@ -72,7 +72,7 @@ common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthSt
 
 // GAMEPAD
 
-// GAMEPROG
+// GAMEPROG (done)
 common, exe, GAMEPROG_AdvPercent, 0x0, General/GAMEPROG_AdvPercent.c
 common, exe, GAMEPROG_ResetHighScores, 0x0, General/GAMEPROG_ResetHighScores.c
 common, exe, GAMEPROG_CheckGhostsBeaten, 0x0, General/GAMEPROG_CheckGhostsBeaten.c
