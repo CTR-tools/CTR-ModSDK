@@ -145,6 +145,16 @@ common, exe, MEMPACK_ClearLowMem, 0x0, General/MEMPACK_ClearLowMem.c
 common, exe, MEMPACK_PopState, 0x0, General/MEMPACK_PopState.c
 common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK_PopToState.c
 
+// MENUBOX
+// skip top 4 functions
+common, exe, MenuBox_ClearInput, 0x0, General/MENUBOX_ClearInput.c
+common, exe, MenuBox_CollectInput, 0x0, General/MENUBOX_CollectInput.c
+// skip ProcessInput (wip)
+common, exe, MenuBox_ProcessState, 0x0, General/MENUBOX_ProcessState.c
+common, exe, MenuBox_Show, 0x0, General/MENUBOX_Show.c
+common, exe, MenuBox_Hide, 0x0, General/MENUBOX_Hide.c
+common, exe, MenuBox_BoolHidden, 0x0, General/MENUBOX_BoolHidden.c
+
 // Camera110
 common, exe, Camera110_InitStructs, 0x0, General/Camera110_InitStructs.c
 common, exe, Camera110_SetViewMatrix, 0x0, General/Camera110_SetViewMatrix.c

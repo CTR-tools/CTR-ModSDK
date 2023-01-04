@@ -24245,7 +24245,7 @@ void FUN_8004680c(void)
 
   if ((*(uint *)(DAT_8008d908 + 8) & 0x20) == 0)
   {
-	// Navigate main menu
+	// MenuBox_ProcessInput
     FUN_80046534();
 
     if ((*(uint *)(DAT_8008d908 + 8) & 0x2000) == 0)
@@ -24264,12 +24264,13 @@ void FUN_8004680c(void)
   // If you aren't drawing the menu with tiny text
   if ((*(uint *)(DAT_8008d908 + 8) & 0x800) == 0)
   {
+	// CheckeredFlag_GetCanDraw
     iVar3 = FUN_80044094();
 
 	// if the value is zero
     if (iVar3 == 0)
 	{
-	  // enable checkered flag
+	  // CheckeredFlag_SetCanDraw(true)
       FUN_80044088(1);
     }
 

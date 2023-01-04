@@ -18,7 +18,7 @@ void DECOMP_MENUBOX_ProcessState()
 {
 	struct MenuBox* currMenuBox;
 	int currState;
-	RECT r;
+	short width;
 	
 	// check for curr box
 	currMenuBox = sdata->ptrDesiredMenuBox;
@@ -66,11 +66,11 @@ void DECOMP_MENUBOX_ProcessState()
 		if((currMenuBox->state & 0x2000) == 0)
 		{
 			// clear width, then get width
-			r.w = 0;
-			MenuBox_Background_GetWidth(currMenuBox, &r, 1);
+			width = 0;
+			MenuBox_Background_GetWidth(currMenuBox, &width, 1);
 			
 			// draw
-			MenuBox_Draw(currMenuBox, 0, 0, &r);
+			MenuBox_Draw(currMenuBox, 0, 0, (int)width);
 		}
 	}
 	
