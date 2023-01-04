@@ -26165,7 +26165,7 @@ void FUN_80048a30(int param_1,short param_2,short param_3,short param_4,undefine
 void FUN_80048da0(void)
 
 {
-  // offset 8 of menuBox_drawFourAdvProfiles
+  // offset 8 of MenuBox_DrawSelfFourAdvProfiles
   DAT_80085b90 = DAT_80085b90 | 0x800000;
 
   // offset 8 of menuBox_GhostSelection
@@ -26181,7 +26181,7 @@ void FUN_80048da0(void)
 void FUN_80048de4(void)
 
 {
-  // offset 8 of menuBox_drawFourAdvProfiles
+  // offset 8 of MenuBox_DrawSelfFourAdvProfiles
   DAT_80085b90 = DAT_80085b90 & 0xff7fffff;
 
   // offset 8 of menuBox_GhostSelection

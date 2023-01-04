@@ -4,9 +4,9 @@ void CheckeredFlag_SetCanDraw(int value);
 int CheckeredFlag_GetCanDraw();
 
 void MenuBox_Show(struct MenuBox* m);
-void MenuBox_Draw(struct MenuBox* m, int, int, RECT* r);
+void MenuBox_DrawSelf(struct MenuBox* m, int, int, RECT* r);
 void MenuBox_ProcessInput(struct MenuBox* m);
-void MenuBox_Background_GetWidth(struct MenuBox* m, RECT* r, int);
+void MenuBox_GetWidth(struct MenuBox* m, RECT* r, int);
 
 /*
 easy way to fix the menu storage bug
@@ -67,10 +67,10 @@ void DECOMP_MENUBOX_ProcessState()
 		{
 			// clear width, then get width
 			width = 0;
-			MenuBox_Background_GetWidth(currMenuBox, &width, 1);
+			MenuBox_GetWidth(currMenuBox, &width, 1);
 			
 			// draw
-			MenuBox_Draw(currMenuBox, 0, 0, (int)width);
+			MenuBox_DrawSelf(currMenuBox, 0, 0, (int)width);
 		}
 	}
 	

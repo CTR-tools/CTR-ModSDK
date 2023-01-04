@@ -8027,7 +8027,7 @@ struct Data
 	// 80083e20 -- SepReview
 	// 80085b88 -- UsaRetail
 	// menuBox to draw adventure profiles
-	struct MenuBox menuBox_drawFourAdvProfiles;
+	struct MenuBox MenuBox_DrawSelfFourAdvProfiles;
 
 	// 80083e54 -- SepReview
 	// 80085bb4 -- UsaRetail

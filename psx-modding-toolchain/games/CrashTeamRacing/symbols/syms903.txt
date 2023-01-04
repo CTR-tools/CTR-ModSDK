@@ -703,10 +703,10 @@
 8004403c DrawPlayerComment
 8004419c DrawTextBackground
 
-800443d8 MenuBox_Background_Draw
-800444dc MenuBox_Background_GetHeight
-800445e0 MenuBox_Background_GetWidth
-80044740 MenuBox_Draw
+800443d8 MenuBox_DrawBG
+800444dc MenuBox_GetHeight
+800445e0 MenuBox_GetWidth
+80044740 MenuBox_DrawSelf
 80044d78 MenuBox_ClearInput
 80044dcc MenuBox_CollectInput
 80044eac MenuBox_ProcessInput
