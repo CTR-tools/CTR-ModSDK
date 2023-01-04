@@ -69,5 +69,4 @@ void DECOMP_MENUBOX_GetHeight(struct MenuBox* m, short* height, int boolCheckSub
 				height, 1);
 		}
 	}
-	
 }
