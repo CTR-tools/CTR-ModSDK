@@ -468,10 +468,10 @@ void FUN_80026cf4(void)
 }
 
 // GAMEPROG_SaveTimeTrialProgress
-// not "save", more like "sync" memcard and ram
-// Not in Sep3, but Sep3 can still save time trial progress???
-// param1 - memcard ptr
-// param2 - destimation ram ptr
+// combine progress of game instance, and memcard,
+// this allows multiple memcards to combine progress
+// param1 - GameProgress memcard buffer
+// param2 - GameProgress sdata global buffer
 void FUN_80026d7c(int param_1,int param_2)
 
 {
@@ -482,11 +482,14 @@ void FUN_80026d7c(int param_1,int param_2)
   int iVar5;
   int iVar6;
 
+  // GameProgress.Unlocks
   puVar4 = (uint *)(param_1 + 4);
   puVar3 = (uint *)(param_2 + 4);
 
   iVar5 = 0;
 
+  // combine unlock flags for 
+  // characters, tracks, scrapbook
   do
   {
     iVar5 = iVar5 + 1;
@@ -519,6 +522,8 @@ void FUN_80026d7c(int param_1,int param_2)
 
     iVar5 = 0;
 
+	// combine flags for which ghosts
+	// have been beaten, (n tropy / oxide)
 	do
 	{
       iVar5 = iVar5 + 1;
