@@ -210,7 +210,7 @@
 80028258 GAMEPROG_NewProfile_InsideAdv
 
 // No CupProgress in 1006
-80028294 GAMEPROG_SaveTimeTrialProgress
+80028294 GAMEPROG_SyncGameAndCard
 
 80028360 GAMEPROG_NewGame_OnBoot
 80028398 GAMEPROG_GetPtrHighScoreTrack

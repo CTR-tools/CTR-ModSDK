@@ -389,14 +389,9 @@ struct GameProgress
 	// 8008e6e8
 	unsigned int unknown;
 
-	struct
-	{
-		// 8008e6ec
-		unsigned int characters_tracks;
-
-		// 8008e6f0
-		unsigned int scrapbook;
-	} Unlocks;
+	// 8008e6ec
+	// characters, tracks, cups, scrapbook
+	int unlocks[2];
 
 	// 8008e6f4 -- 0x1488 bytes large
 	struct HighScoreTrack highScoreTracks[18];

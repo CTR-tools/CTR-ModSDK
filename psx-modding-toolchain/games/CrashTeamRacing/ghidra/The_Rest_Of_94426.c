@@ -24807,7 +24807,7 @@ void FUN_80047230(void)
   DAT_8008d928 = 1;
   DAT_8008d96c = 0xffff;
 
-  // GAMEPROG_SaveTimeTrialProgress
+  // GAMEPROG_SyncGameAndCard
   // params are: memcardPtr, ram ptr
   // not "save", more like "sync" memcard and ram
   FUN_80026d7c(PTR_DAT_8008d474 + 0x144,&DAT_8008e6e8);
@@ -26703,7 +26703,7 @@ LAB_800495ac:
 		// GAMEPROG_SaveCupProgress
 		FUN_80026cf4();
 
-		// GAMEPROG_SaveTimeTrialProgress
+		// GAMEPROG_SyncGameAndCard
 		// params are: memcardPtr, ram ptr
 		// not "save", more like "sync" memcard and ram
         FUN_80026d7c(PTR_DAT_8008d474 + 0x144,&DAT_8008e6e8);
@@ -26876,7 +26876,7 @@ LAB_80049624:
 	  // 8008d474 is ptr to memcard data
       if (-1 < *(short *)(PTR_DAT_8008d474 + (int)*(short *)(param_1 + 0x1a) * 0x50 + 0x2e))
 	  {
-		// GAMEPROG_SaveTimeTrialProgress
+		// GAMEPROG_SyncGameAndCard
 		// params are: memcardPtr, ram ptr
 		// not "save", more like "sync" memcard and ram
         FUN_80026d7c(PTR_DAT_8008d474 + 0x144,&DAT_8008e6e8);
@@ -27024,7 +27024,7 @@ LAB_800499e4:
 	  // GAMEPROG_SaveCupProgress
 	  FUN_80026cf4();
 
-	  // GAMEPROG_SaveTimeTrialProgress
+	  // GAMEPROG_SyncGameAndCard
 	  // params are: memcardPtr, ram ptr
 	  // not "save", more like "sync" memcard and ram
       FUN_80026d7c(PTR_DAT_8008d474 + 0x144,&DAT_8008e6e8);

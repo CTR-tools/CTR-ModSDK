@@ -185,7 +185,7 @@
 80026c24 GAMEPROG_InitFullMemcard
 80026cb8 GAMEPROG_NewProfile_InsideAdv
 80026cf4 GAMEPROG_SaveCupProgress
-80026d7c GAMEPROG_SaveTimeTrialProgress
+80026d7c GAMEPROG_SyncGameAndCard
 80026e48 GAMEPROG_NewGame_OnBoot
 80026e80 GAMEPROG_GetPtrHighScoreTrack
 

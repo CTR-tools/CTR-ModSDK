@@ -186,7 +186,7 @@ void MM_Characters_MenuBox()
 		case 3:
 		
 			// If Fake Crash is unlocked, do not draw "Select Character"
-			if (sdata->gameProgress.Unlocks.characters_tracks & 0x800) goto dontDrawSelectCharacter;
+			if (sdata->gameProgress.unlocks[0] & 0x800) goto dontDrawSelectCharacter;
 		
 			// SELECT
 			DecalFont_DrawLine
@@ -520,7 +520,7 @@ void MM_Characters_MenuBox()
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
 			// also the variable written by cheats
-			(((u_int)(&sdata->gameProgress.Unlocks.characters_tracks)[iVar8] >> (psVar18[4] & 0x1fU) & 1) != 0)
+			(((u_int)(&sdata->gameProgress.unlocks[0])[iVar8] >> (psVar18[4] & 0x1fU) & 1) != 0)
 		) 
 		{
 			iconColor = &OVR_230.characterSelect_NeutralColor;
@@ -663,7 +663,7 @@ void MM_Characters_MenuBox()
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
 			// also the variable written by cheats
-			(((u_int)(&sdata->gameProgress.Unlocks.characters_tracks)[iVar8 >> 0x15] >> (psVar18[4] & 0x1fU) & 1) != 0)
+			(((u_int)(&sdata->gameProgress.unlocks[0])[iVar8 >> 0x15] >> (psVar18[4] & 0x1fU) & 1) != 0)
 		) 
 		{
 			iVar8 = (int)(short)i * 10 + DAT_800b5a3c;

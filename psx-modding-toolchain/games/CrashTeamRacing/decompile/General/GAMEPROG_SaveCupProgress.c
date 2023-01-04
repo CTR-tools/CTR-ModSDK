@@ -11,7 +11,7 @@ void GAMEPROG_SaveCupProgress()
 	int bitIndex1;
 	int bitIndex2;
 	
-	prog = &sdata->gameProgress.Unlocks.characters_tracks;
+	prog = &sdata->gameProgress.unlocks[0];
 	
 	// 4 cups, 3 difficulties
 	for(i = 0; i < 12; i++)

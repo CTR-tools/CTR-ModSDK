@@ -25,7 +25,7 @@ void TT_EndEvent_DrawMenu()
 	)
 	{
 		// Unlock N. Tropy
-		sdata->gameProgress.Unlocks.characters_tracks |= 0x20;
+		sdata->gameProgress.unlocks[0] |= 0x20;
 	}
 	
 	// If the race ended less than 900 frames ago (30 seconds) 

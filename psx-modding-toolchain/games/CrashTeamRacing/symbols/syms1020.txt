@@ -198,7 +198,7 @@
 80026d54 GAMEPROG_NewProfile_InsideAdv
 
 80026d90 GAMEPROG_SaveCupProgress
-80026e18 GAMEPROG_SaveTimeTrialProgress
+80026e18 GAMEPROG_SyncGameAndCard
 
 80026ee4 GAMEPROG_NewGame_OnBoot
 80026f1c GAMEPROG_GetPtrHighScoreTrack

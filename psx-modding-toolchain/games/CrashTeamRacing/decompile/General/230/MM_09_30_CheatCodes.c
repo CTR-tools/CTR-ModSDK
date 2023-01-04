@@ -86,7 +86,7 @@ struct Cheat cheats[22] =
 			0,0,0
 		},
 		
-		.writeAddr = &sdata_static.gameProgress.Unlocks.characters_tracks,
+		.writeAddr = &sdata_static.gameProgress.unlocks[0],
 		.addBits = 0x80,
 	},
 	
@@ -107,7 +107,7 @@ struct Cheat cheats[22] =
 			0
 		},
 		
-		.writeAddr = &sdata_static.gameProgress.Unlocks.characters_tracks,
+		.writeAddr = &sdata_static.gameProgress.unlocks[0],
 		.addBits = 0x100,
 	},
 	
@@ -126,7 +126,7 @@ struct Cheat cheats[22] =
 			0,0,0
 		},
 		
-		.writeAddr = &sdata_static.gameProgress.Unlocks.characters_tracks,
+		.writeAddr = &sdata_static.gameProgress.unlocks[0],
 		.addBits = 0x200,
 	},
 	
@@ -144,7 +144,7 @@ struct Cheat cheats[22] =
 			0,0,0,0
 		},
 		
-		.writeAddr = &sdata_static.gameProgress.Unlocks.characters_tracks,
+		.writeAddr = &sdata_static.gameProgress.unlocks[0],
 		.addBits = 0x400,
 	},
 	
@@ -165,7 +165,7 @@ struct Cheat cheats[22] =
 			0
 		},
 		
-		.writeAddr = &sdata_static.gameProgress.Unlocks.characters_tracks,
+		.writeAddr = &sdata_static.gameProgress.unlocks[0],
 		.addBits = 0x800,
 	},
 	
@@ -184,7 +184,7 @@ struct Cheat cheats[22] =
 			0,0,0
 		},
 		
-		.writeAddr = &sdata_static.gameProgress.Unlocks.characters_tracks,
+		.writeAddr = &sdata_static.gameProgress.unlocks[0],
 		.addBits = 0x40,
 	},
 	
@@ -203,7 +203,7 @@ struct Cheat cheats[22] =
 			0,0,0
 		},
 		
-		.writeAddr = &sdata_static.gameProgress.Unlocks.characters_tracks,
+		.writeAddr = &sdata_static.gameProgress.unlocks[0],
 		.addBits = 0x20,
 	},
 	
@@ -223,7 +223,7 @@ struct Cheat cheats[22] =
 			LETTER_R,
 		},
 		
-		.writeAddr = &sdata_static.gameProgress.Unlocks.scrapbook,
+		.writeAddr = &sdata_static.gameProgress.unlocks[1],
 		.addBits = 0x10,
 	},
 	
@@ -242,7 +242,7 @@ struct Cheat cheats[22] =
 			0,0,0
 		},
 		
-		.writeAddr = &sdata_static.gameProgress.Unlocks.characters_tracks,
+		.writeAddr = &sdata_static.gameProgress.unlocks[0],
 		.addBits = 0x1e,
 	},
 	

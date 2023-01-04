@@ -467,7 +467,7 @@ void FUN_80026cf4(void)
   return;
 }
 
-// GAMEPROG_SaveTimeTrialProgress
+// GAMEPROG_SyncGameAndCard
 // combine progress of game instance, and memcard,
 // this allows multiple memcards to combine progress
 // param1 - GameProgress memcard buffer
