@@ -9508,7 +9508,7 @@ struct BSS
 	} debugFont;
 
 	// 8008d738
-	struct HighScoreEntry* ptrArray_HighScoreEntry;
+	struct HighScoreEntry* ptrActiveHighScoreEntry;
 
 	// 8008d73C
 	int unk_8008d73C_relatedToRowHighlighted;

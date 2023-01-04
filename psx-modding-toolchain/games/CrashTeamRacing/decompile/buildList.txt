@@ -82,6 +82,7 @@ common, exe, GAMEPROG_NewProfile_InsideAdv, 0x0, General/GAMEPROG_NewProfile_Ins
 common, exe, GAMEPROG_SaveCupProgress, 0x0, General/GAMEPROG_SaveCupProgress.c
 common, exe, GAMEPROG_SyncGameAndCard, 0x0, General/GAMEPROG_SyncGameAndCard.c
 common, exe, GAMEPROG_NewGame_OnBoot, 0x0, General/GAMEPROG_NewGame_OnBoot.c
+common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG_GetPtrHighScoreTrack.c
 
 // DecalHUD
 common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD_DrawPolyFT4.c
