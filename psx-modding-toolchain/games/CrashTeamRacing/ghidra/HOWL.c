@@ -3504,6 +3504,8 @@ void FUN_8002b508(void)
 
 // Channel_SetVolume
 // param_1 - ChannelAttr
+// param_2 - volume
+// param_3 - LR
 void FUN_8002b540(int param_1,uint param_2,int param_3)
 
 {
@@ -3515,8 +3517,8 @@ void FUN_8002b540(int param_1,uint param_2,int param_3)
   if (DAT_8008d7cc == '\x01')
   {
 	// adjust volume for left and right speaker
-    *(undefined2 *)(param_1 + 0xc) = (short)( (param_2 * (byte)(&DAT_80082dac)[0xff-param_3]) >> 8);
-    *(undefined2 *)(param_1 + 0xe) = (short)( (param_2 * (byte)(&DAT_80082dac)[0x00+param_3]) >> 8);
+    *(undefined2 *)(param_1 + 0xc) = (short)( (param_2 * (byte)(&DAT_80082dac)[0x00+param_3]) >> 8);
+    *(undefined2 *)(param_1 + 0xe) = (short)( (param_2 * (byte)(&DAT_80082dac)[0xff-param_3]) >> 8);
     return;
   }
 
