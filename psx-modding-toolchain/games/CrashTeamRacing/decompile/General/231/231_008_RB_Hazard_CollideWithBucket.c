@@ -12,10 +12,9 @@ struct Instance* RB_Hazard_CollideWithBucket(
 	int distComponent;
 	int distCheck;
 	
-	distCheck = 0;
-	
 	for(; bucket != 0; bucket = bucket->siblingThread)
 	{
+		distCheck = 0;
 		threadInst = bucket->inst;
 		
 		if (
@@ -41,6 +40,8 @@ struct Instance* RB_Hazard_CollideWithBucket(
 		{
 			return threadInst;
 		}
+		
+		//printf("%d %d\n", distCheck, hitRadius);
 	}
 	
 	return 0;
