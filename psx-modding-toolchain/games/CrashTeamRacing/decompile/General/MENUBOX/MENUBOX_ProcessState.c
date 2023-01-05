@@ -52,7 +52,7 @@ void DECOMP_MENUBOX_ProcessState()
 	// run funcPtr if it exists
 	if((currMenuBox->state & 0x420) != 0)
 	{
-		currMenuBox->unk6 = 1;
+		currMenuBox->unk1e = 1;
 		currMenuBox->funcPtr(currMenuBox);
 	}
 	

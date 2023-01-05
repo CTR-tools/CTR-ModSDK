@@ -62,33 +62,33 @@ common, exe, CAM_SetDesiredPosRot, 0x0, General/CAM_SetDesiredPosRot.c
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
 
 // DecalFont
-common, exe, DecalFont_GetLineWidth, 0x0, General/DecalFont_GetLineWidth.c
-common, exe, DecalFont_DrawLineStrlen, 0x0, General/DecalFont_DrawLineStrlen.c
-common, exe, DecalFont_DrawLine, 0x0, General/DecalFont_DrawLine.c
-common, exe, DecalFont_DrawLineOT, 0x0, General/DecalFont_DrawLineOT.c
-common, exe, DecalFont_DrawMultiLineStrlen, 0x0, General/DecalFont_DrawMultiLineStrlen.c
-common, exe, DecalFont_DrawMultiLine, 0x0, General/DecalFont_DrawMultiLine.c
-common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont_GetLineWidthStrlen.c
+common, exe, DecalFont_GetLineWidth, 0x0, General/DecalFont/DecalFont_GetLineWidth.c
+common, exe, DecalFont_DrawLineStrlen, 0x0, General/DecalFont/DecalFont_DrawLineStrlen.c
+common, exe, DecalFont_DrawLine, 0x0, General/DecalFont/DecalFont_DrawLine.c
+common, exe, DecalFont_DrawLineOT, 0x0, General/DecalFont/DecalFont_DrawLineOT.c
+common, exe, DecalFont_DrawMultiLineStrlen, 0x0, General/DecalFont/DecalFont_DrawMultiLineStrlen.c
+common, exe, DecalFont_DrawMultiLine, 0x0, General/DecalFont/DecalFont_DrawMultiLine.c
+common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont/DecalFont_GetLineWidthStrlen.c
+
+// DecalHUD
+common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyFT4.c
+common, exe, DecalHUD_DrawWeapon, 0x0, General/DecalHUD/DecalHUD_DrawWeapon.c
+common, exe, DecalHUD_DrawPolyGT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyGT4.c
+common, exe, DecalHUD_Arrow2D, 0x0, General/DecalHUD/DecalHUD_Arrow2D.c
 
 // GAMEPAD
 
 // GAMEPROG (done)
-common, exe, GAMEPROG_AdvPercent, 0x0, General/GAMEPROG_AdvPercent.c
-common, exe, GAMEPROG_ResetHighScores, 0x0, General/GAMEPROG_ResetHighScores.c
-common, exe, GAMEPROG_CheckGhostsBeaten, 0x0, General/GAMEPROG_CheckGhostsBeaten.c
-common, exe, GAMEPROG_NewProfile_OutsideAdv, 0x0, General/GAMEPROG_NewProfile_OutsideAdv.c
-common, exe, GAMEPROG_InitFullMemcard, 0x0, General/GAMEPROG_InitFullMemcard.c
-common, exe, GAMEPROG_NewProfile_InsideAdv, 0x0, General/GAMEPROG_NewProfile_InsideAdv.c
-common, exe, GAMEPROG_SaveCupProgress, 0x0, General/GAMEPROG_SaveCupProgress.c
-common, exe, GAMEPROG_SyncGameAndCard, 0x0, General/GAMEPROG_SyncGameAndCard.c
-common, exe, GAMEPROG_NewGame_OnBoot, 0x0, General/GAMEPROG_NewGame_OnBoot.c
-common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG_GetPtrHighScoreTrack.c
-
-// DecalHUD
-common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD_DrawPolyFT4.c
-common, exe, DecalHUD_DrawWeapon, 0x0, General/DecalHUD_DrawWeapon.c
-common, exe, DecalHUD_DrawPolyGT4, 0x0, General/DecalHUD_DrawPolyGT4.c
-common, exe, DecalHUD_Arrow2D, 0x0, General/DecalHUD_Arrow2D.c
+common, exe, GAMEPROG_AdvPercent, 0x0, General/GAMEPROG/GAMEPROG_AdvPercent.c
+common, exe, GAMEPROG_ResetHighScores, 0x0, General/GAMEPROG/GAMEPROG_ResetHighScores.c
+common, exe, GAMEPROG_CheckGhostsBeaten, 0x0, General/GAMEPROG/GAMEPROG_CheckGhostsBeaten.c
+common, exe, GAMEPROG_NewProfile_OutsideAdv, 0x0, General/GAMEPROG/GAMEPROG_NewProfile_OutsideAdv.c
+common, exe, GAMEPROG_InitFullMemcard, 0x0, General/GAMEPROG/GAMEPROG_InitFullMemcard.c
+common, exe, GAMEPROG_NewProfile_InsideAdv, 0x0, General/GAMEPROG/GAMEPROG_NewProfile_InsideAdv.c
+common, exe, GAMEPROG_SaveCupProgress, 0x0, General/GAMEPROG/GAMEPROG_SaveCupProgress.c
+common, exe, GAMEPROG_SyncGameAndCard, 0x0, General/GAMEPROG/GAMEPROG_SyncGameAndCard.c
+common, exe, GAMEPROG_NewGame_OnBoot, 0x0, General/GAMEPROG/GAMEPROG_NewGame_OnBoot.c
+common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c
 
 // AllocPool comes between CAM and LIST, it is right after INSTANCE alphabetically
 common, exe, AllocPool_Clear, 0x0, General/AllocPool_Clear.c
@@ -97,32 +97,32 @@ common, exe, AllocPool_Add, 0x0, General/AllocPool_Add.c
 common, exe, AllocPool_Remove, 0x0, General/AllocPool_Remove.c
 
 // LIST
-common, exe, LIST_Clear, 0x0, General/LIST_Clear.c
-common, exe, LIST_AddFront, 0x0, General/LIST_AddFront.c
-common, exe, LIST_AddBack, 0x0, General/LIST_AddBack.c
-common, exe, LIST_GetNextItem, 0x0, General/LIST_GetNextItem.c
-common, exe, LIST_GetFirstItem, 0x0, General/LIST_GetFirstItem.c
-common, exe, LIST_RemoveMember, 0x0, General/LIST_RemoveMember.c
-common, exe, LIST_RemoveFront, 0x0, General/LIST_RemoveFront.c
-common, exe, LIST_RemoveBack, 0x0, General/LIST_RemoveBack.c
-common, exe, LIST_Init, 0x0, General/LIST_Init.c
+common, exe, LIST_Clear, 0x0, General/LIST/LIST_Clear.c
+common, exe, LIST_AddFront, 0x0, General/LIST/LIST_AddFront.c
+common, exe, LIST_AddBack, 0x0, General/LIST/LIST_AddBack.c
+common, exe, LIST_GetNextItem, 0x0, General/LIST/LIST_GetNextItem.c
+common, exe, LIST_GetFirstItem, 0x0, General/LIST/LIST_GetFirstItem.c
+common, exe, LIST_RemoveMember, 0x0, General/LIST/LIST_RemoveMember.c
+common, exe, LIST_RemoveFront, 0x0, General/LIST/LIST_RemoveFront.c
+common, exe, LIST_RemoveBack, 0x0, General/LIST/LIST_RemoveBack.c
+common, exe, LIST_Init, 0x0, General/LIST/LIST_Init.c
 
 // LOAD
-common, exe, LOAD_DriverMPK, 0x0, General/LOAD_DriverMPK.c
-common, exe, LOAD_ReadFile, 0x0, General/LOAD_ReadFile.c
-common, exe, LOAD_OvrLOD, 0x0, General/LOAD_OvrLOD.c
-common, exe, LOAD_OvrEndRace, 0x0, General/LOAD_OvrEndRace.c
-common, exe, LOAD_OvrThreads, 0x0, General/LOAD_OvrThreads.c
-common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD_Callback_Overlay_Generic.c
-common, exe, LOAD_Callback_Overlay_230, 0x0, General/LOAD_Callback_Overlay_230.c
-common, exe, LOAD_Callback_Overlay_231, 0x0, General/LOAD_Callback_Overlay_231.c
-common, exe, LOAD_Callback_Overlay_232, 0x0, General/LOAD_Callback_Overlay_232.c
-common, exe, LOAD_Callback_Overlay_233, 0x0, General/LOAD_Callback_Overlay_233.c
-common, exe, LOAD_Callback_MaskHints3D, 0x0, General/LOAD_Callback_MaskHints3D.c
-common, exe, LOAD_Callback_Podiums, 0x0, General/LOAD_Callback_Podiums.c
-common, exe, LOAD_Callback_LEV, 0x0, General/LOAD_Callback_LEV.c
-common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD_Callback_LEV_Adv.c
-common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD_Callback_DriverModels.c
+common, exe, LOAD_DriverMPK, 0x0, General/LOAD/LOAD_DriverMPK.c
+common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_ReadFile.c
+common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_OvrLOD.c
+common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_OvrEndRace.c
+common, exe, LOAD_OvrThreads, 0x0, General/LOAD/LOAD_OvrThreads.c
+common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_Callback_Overlay_Generic.c
+common, exe, LOAD_Callback_Overlay_230, 0x0, General/LOAD/LOAD_Callback_Overlay_230.c
+common, exe, LOAD_Callback_Overlay_231, 0x0, General/LOAD/LOAD_Callback_Overlay_231.c
+common, exe, LOAD_Callback_Overlay_232, 0x0, General/LOAD/LOAD_Callback_Overlay_232.c
+common, exe, LOAD_Callback_Overlay_233, 0x0, General/LOAD/LOAD_Callback_Overlay_233.c
+common, exe, LOAD_Callback_MaskHints3D, 0x0, General/LOAD/LOAD_Callback_MaskHints3D.c
+common, exe, LOAD_Callback_Podiums, 0x0, General/LOAD/LOAD_Callback_Podiums.c
+common, exe, LOAD_Callback_LEV, 0x0, General/LOAD/LOAD_Callback_LEV.c
+common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD/LOAD_Callback_LEV_Adv.c
+common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD/LOAD_Callback_DriverModels.c
 
 // MAIN
 common, exe, main, 0x0, General/main.c
@@ -132,31 +132,31 @@ common, exe, main, 0x0, General/main.c
 common, exe, MATH_Cos, 0x0, General/MATH_Cos.c
 
 // MEMPACK (done)
-common, exe, MEMPACK_Init, 0x0, General/MEMPACK_Init.c
-common, exe, MEMPACK_SwapPacks, 0x0, General/MEMPACK_SwapPacks.c
-common, exe, MEMPACK_NewPack_StartEnd, 0x0, General/MEMPACK_NewPack_StartEnd.c
-common, exe, MEMPACK_GetFreeBytes, 0x0, General/MEMPACK_GetFreeBytes.c
-common, exe, MEMPACK_AllocMem, 0x0, General/MEMPACK_AllocMem.c
-common, exe, MEMPACK_AllocHighMem, 0x0, General/MEMPACK_AllocHighMem.c
-common, exe, MEMPACK_ClearHighMem, 0x0, General/MEMPACK_ClearHighMem.c
-common, exe, MEMPACK_ReallocMem, 0x0, General/MEMPACK_ReallocMem.c
-common, exe, MEMPACK_PushState, 0x0, General/MEMPACK_PushState.c
-common, exe, MEMPACK_ClearLowMem, 0x0, General/MEMPACK_ClearLowMem.c
-common, exe, MEMPACK_PopState, 0x0, General/MEMPACK_PopState.c
-common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK_PopToState.c
+common, exe, MEMPACK_Init, 0x0, General/MEMPACK/MEMPACK_Init.c
+common, exe, MEMPACK_SwapPacks, 0x0, General/MEMPACK/MEMPACK_SwapPacks.c
+common, exe, MEMPACK_NewPack_StartEnd, 0x0, General/MEMPACK/MEMPACK_NewPack_StartEnd.c
+common, exe, MEMPACK_GetFreeBytes, 0x0, General/MEMPACK/MEMPACK_GetFreeBytes.c
+common, exe, MEMPACK_AllocMem, 0x0, General/MEMPACK/MEMPACK_AllocMem.c
+common, exe, MEMPACK_AllocHighMem, 0x0, General/MEMPACK/MEMPACK_AllocHighMem.c
+common, exe, MEMPACK_ClearHighMem, 0x0, General/MEMPACK/MEMPACK_ClearHighMem.c
+common, exe, MEMPACK_ReallocMem, 0x0, General/MEMPACK/MEMPACK_ReallocMem.c
+common, exe, MEMPACK_PushState, 0x0, General/MEMPACK/MEMPACK_PushState.c
+common, exe, MEMPACK_ClearLowMem, 0x0, General/MEMPACK/MEMPACK_ClearLowMem.c
+common, exe, MEMPACK_PopState, 0x0, General/MEMPACK/MEMPACK_PopState.c
+common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK/MEMPACK_PopToState.c
 
 // MENUBOX
 // skip DrawBG
-common, exe, MenuBox_GetHeight, 0x0, General/MENUBOX_GetHeight.c
-common, exe, MenuBox_GetWidth, 0x0, General/MENUBOX_GetWidth.c
+common, exe, MenuBox_GetHeight, 0x0, General/MENUBOX/MENUBOX_GetHeight.c
+common, exe, MenuBox_GetWidth, 0x0, General/MENUBOX/MENUBOX_GetWidth.c
 // skip DrawSelf
-common, exe, MenuBox_ClearInput, 0x0, General/MENUBOX_ClearInput.c
-common, exe, MenuBox_CollectInput, 0x0, General/MENUBOX_CollectInput.c
+common, exe, MenuBox_ClearInput, 0x0, General/MENUBOX/MENUBOX_ClearInput.c
+common, exe, MenuBox_CollectInput, 0x0, General/MENUBOX/MENUBOX_CollectInput.c
 // skip ProcessInput (wip)
-common, exe, MenuBox_ProcessState, 0x0, General/MENUBOX_ProcessState.c
-common, exe, MenuBox_Show, 0x0, General/MENUBOX_Show.c
-common, exe, MenuBox_Hide, 0x0, General/MENUBOX_Hide.c
-common, exe, MenuBox_BoolHidden, 0x0, General/MENUBOX_BoolHidden.c
+common, exe, MenuBox_ProcessState, 0x0, General/MENUBOX/MENUBOX_ProcessState.c
+common, exe, MenuBox_Show, 0x0, General/MENUBOX/MENUBOX_Show.c
+common, exe, MenuBox_Hide, 0x0, General/MENUBOX/MENUBOX_Hide.c
+common, exe, MenuBox_BoolHidden, 0x0, General/MENUBOX/MENUBOX_BoolHidden.c
 
 // Camera110
 common, exe, Camera110_InitStructs, 0x0, General/Camera110_InitStructs.c
@@ -191,8 +191,8 @@ common, exe, Player_StopSpin_Init, 0x0, General/Player_StopSpin_Init.c
 
 // Japan
 
-1006, exe, DecalFont_SetJfontDimensions, 0x0, General/Japan/DecalFont_SetJfontDimensions.c
-1111, exe, DecalFont_SetJfontDimensions, 0x0, General/Japan/DecalFont_SetJfontDimensions.c
+1006, exe, DecalFont_SetJfontDimensions, 0x0, General/RegionJapan/DecalFont_SetJfontDimensions.c
+1111, exe, DecalFont_SetJfontDimensions, 0x0, General/RegionJapan/DecalFont_SetJfontDimensions.c
 
 /// Retail
-1111, exe, DecalFont_boolRacingWheel, 0x0, General/Japan/Retail/DecalFont_boolRacingWheel.c
+1111, exe, DecalFont_boolRacingWheel, 0x0, General/RegionJapan/Retail/DecalFont_boolRacingWheel.c
