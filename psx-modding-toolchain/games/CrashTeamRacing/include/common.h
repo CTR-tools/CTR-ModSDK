@@ -163,10 +163,10 @@ struct ChannelAttr
 struct ChannelStats
 {
 	// 0x0
-	void* next;
+	struct ChannelStats* next;
 
 	// 0x4
-	void* prev;
+	struct ChannelStats* prev;
 
 	// 0x8
 	char flags;

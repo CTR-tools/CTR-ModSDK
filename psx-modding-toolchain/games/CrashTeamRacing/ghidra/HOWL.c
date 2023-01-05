@@ -310,7 +310,7 @@ undefined4 FUN_800284d0(uint param_1,byte param_2,uint param_3)
 			(param_2 != 2) ||
 
 			(
-				// Channel_FindDuplicateSound
+				// Channel_FindSound
 				iVar2 = FUN_8002b5b4(uVar4),
 
 				// if sound is not playing
@@ -318,7 +318,7 @@ undefined4 FUN_800284d0(uint param_1,byte param_2,uint param_3)
 			)
 		  )
 	  {
-		// Channel_AllocSlot_CheckDups
+		// Channel_AllocSlot_AntiSpam
         iVar2 = FUN_8002b608(param_1 & 0xffff,(uint)param_2,0x7c,auStack56);
 
 		// if free channel slot was found
@@ -3529,7 +3529,7 @@ void FUN_8002b540(int param_1,uint param_2,int param_3)
 }
 
 
-// Channel_FindDuplicateSound
+// Channel_FindSound
 undefined4 FUN_8002b5b4(short param_1)
 
 {
@@ -3567,7 +3567,7 @@ undefined4 FUN_8002b5b4(short param_1)
 }
 
 
-// Channel_AllocSlot_CheckDups
+// Channel_AllocSlot_AntiSpam
 int FUN_8002b608(short param_1,char param_2,uint param_3,undefined4 *param_4)
 
 {

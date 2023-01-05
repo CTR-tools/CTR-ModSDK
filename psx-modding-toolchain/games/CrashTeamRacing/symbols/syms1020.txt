@@ -301,8 +301,8 @@
 8002b5f4 Smart_ExitCriticalSection
 
 8002b62c Channel_SetVolume
-8002b6a0 Channel_FindDuplicateSound
-8002b6f4 Channel_AllocSlot_CheckDups
+8002b6a0 Channel_FindSound
+8002b6f4 Channel_AllocSlot_AntiSpam
 8002b8bc Channel_AllocSlot
 8002b984 Channel_SearchFX_EditAttr
 8002baa4 Channel_SearchFX_Destroy

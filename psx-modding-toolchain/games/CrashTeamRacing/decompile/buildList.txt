@@ -92,6 +92,7 @@ common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPt
 
 // HOWL
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
+common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c
 
 // INSTANCE
 common, exe, INSTANCE_Birth, 0x0, General/INSTANCE/INSTANCE_Birth.c
