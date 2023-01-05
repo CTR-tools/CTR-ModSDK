@@ -1019,6 +1019,7 @@ struct MenuBox
 	// & 0x2000, invisible
 	// & 0x4000, big text in title
 	// & 0x8000, anyone can use menu
+	// & 0x100000, top of menu hierarchy
 	// & 0x800000, mute sound of moving cursor
 	unsigned int state;
 
@@ -1040,19 +1041,14 @@ struct MenuBox
 	short posY_prev;
 
 	// 0x1a
-	char rowSelected;
-	char unk3;
+	short rowSelected;
 
 	// 0x1c
-	char unk4;
-	char unk5;
+	short unk1a;
 
 	// 0x1e
-	// not hierarchy level,
-	// used several times in code,
-	// set to 1 in main menu character menubox
-	char unk6;
-	char unk7;
+	// no idea, used in save/load
+	short unk1e;
 
 	// 0x20
 	short width;

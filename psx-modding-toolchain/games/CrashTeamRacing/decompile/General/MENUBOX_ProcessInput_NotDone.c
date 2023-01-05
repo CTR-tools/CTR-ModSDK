@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MENUBOX_ProcessInput(struct MenuBox* m)
+int DECOMP_MENUBOX_ProcessInput(struct MenuBox* m)
 {
 	struct MenuRow* currMenuRow;
 	int button;
@@ -8,12 +8,18 @@ void DECOMP_MENUBOX_ProcessInput(struct MenuBox* m)
 	int newRow;
 	int i;
 	
+	int returnVal;
+
+	returnVal = 0;
+
 	#if 0
 	// do we need this?
 	FUN_8006c684();
 	#endif
 	
 	if(
+		// if not drawing only title bar,
+		// therefore this is the bottom of hierarchy
 		((m->state & 4) == 0) &&
 		
 		// must be both 0x20000 and 0x40000
@@ -75,13 +81,78 @@ void DECOMP_MENUBOX_ProcessInput(struct MenuBox* m)
 	  // if not Cross or Circle
 	  if((button & 0x50) == 0)
 	  {
-	    // process GO BACK
+		if(
+			// if Triangle or Square
+			((button & 0x40020) != 0) &&
+
+			// if this is not the top of the menu
+			((m->state & 0x100000) == 0)
+		  )
+		{
+			// process GO BACK
+
+			// if menu is not muted
+			if ((m->state & 0x800000) == 0)
+			{
+				OtherFX_Play(2, 1);
+			}
+
+			returnVal = -1;
+
+			// bool showRows?
+			m->unk6 = 0;
+			m->rowSelected = -1;
+
+			if (m->funcPtr != 0)
+			{
+				MenuBox_ClearInput();
+				m->funcPtr(m);
+			}
+
+			// useless? cause set later?
+			m->selectedRow = newRow;
+
+		}
 	  }
 	  
 	  // if Cross or Circle
 	  else
 	  {
-	    // process ENTER
+		// if row is locked
+		if((m->rows[m->rowSelected] & 0x8000) != 0)
+		{
+			// if menu is not muted
+			if ((m->state & 0x800000) == 0)
+			{
+				// "womp" sound
+				OtherFX_Play(5, 1);
+			}
+		}
+
+		// unlocked row
+		else
+		{
+			// if menu is not muted
+			if ((m->state & 0x800000) == 0)
+			{
+				// enter sound
+				OtherFX_Play(1, 1);
+			}
+
+			// bool showRows?
+			m->unk6 = 0;
+
+			// useless? cause set later?
+			m->selectedRow = newRow;
+
+			returnVal = 1;
+
+			if (m->funcPtr != 0)
+			{
+				MenuBox_ClearInput();
+				m->funcPtr(m);
+			}
+		}
 	  }
 	  
 	  MenuBox_ClearInput();
@@ -93,14 +164,16 @@ void DECOMP_MENUBOX_ProcessInput(struct MenuBox* m)
 	  
 	}
 	
-	// why does it do this?
-	// is this a mistake?
-	// why not just call the function once for one hierarchy level
-	if(m->state & 0x10)
+	// if "next" hierarchy level exists
+	if((m->state & 0x10) != 0)
 	{
+		// store self in the next
 		m->ptrNextMenuBox_InHierarchy->ptrPrevMenuBox_InHierarchy = m;
 		
-		// call yourself
-		DECOMP_MENUBOX_ProcessInput(m->ptrNextMenuBox_InHierarchy);
+		// keep going till the bottom hierarchy level is hit,
+		// where m->state&4==0, cause not drawing "only title"
+		returnVal = DECOMP_MENUBOX_ProcessInput(m->ptrNextMenuBox_InHierarchy);
 	}
+
+	return returnVal;
 }

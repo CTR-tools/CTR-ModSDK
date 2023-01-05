@@ -24106,7 +24106,7 @@ int FUN_80046534(int param_1)
 			// set the current selected row
             *(undefined2 *)(param_1 + 0x1a) = 0xffff;
 
-			// if you have not reached the bottom of the submenu
+			// if funcPtr exists
             if (*(int *)(param_1 + 0x10) != 0)
 			{
 			  // clear gamepad input (for menus)
