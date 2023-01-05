@@ -90,6 +90,13 @@ common, exe, GAMEPROG_SyncGameAndCard, 0x0, General/GAMEPROG/GAMEPROG_SyncGameAn
 common, exe, GAMEPROG_NewGame_OnBoot, 0x0, General/GAMEPROG/GAMEPROG_NewGame_OnBoot.c
 common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c
 
+// HOWL
+
+// INSTANCE
+common, exe, INSTANCE_Birth, 0x0, General/INSTANCE/INSTANCE_Birth.c
+common, exe, INSTANCE_Birth3D, 0x0, General/INSTANCE/INSTANCE_Birth3D.c
+common, exe, INSTANCE_Birth2D, 0x0, General/INSTANCE/INSTANCE_Birth2D.c
+
 // AllocPool comes between CAM and LIST, it is right after INSTANCE alphabetically
 common, exe, AllocPool_Clear, 0x0, General/AllocPool_Clear.c
 common, exe, AllocPool_Init, 0x0, General/AllocPool_Init.c

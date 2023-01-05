@@ -1406,12 +1406,12 @@ struct Instance
 	MATRIX matrix;
 
 	// 0x50
-	short unk2;
+	char unk50;
+	char unk51;
 
 	// 0x52
-	short animIndex;
-
-	// 0x53 unk
+	char animIndex;
+	char unk53;
 
 	// 0x54
 	short animFrame;
