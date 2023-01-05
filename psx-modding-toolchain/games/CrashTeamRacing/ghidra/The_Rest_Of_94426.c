@@ -24272,7 +24272,6 @@ void FUN_8004680c(void)
     }
   }
 
-  // If you aren't drawing the menu with tiny text
   if ((*(uint *)(DAT_8008d908 + 8) & 0x800) == 0)
   {
 	// CheckeredFlag_GetCanDraw
