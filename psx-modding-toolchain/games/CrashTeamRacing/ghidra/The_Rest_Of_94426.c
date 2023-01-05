@@ -382,10 +382,10 @@ int FUN_800308e4(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 // Create Thread, Object, and Instance
 // param1 is model ID (see 96b20+2160)
 // param2 is a string
-// param3 is stackSize (small medium large)
-// param4 is bucket type
+// param3 is stackSize, and thread relation
+// param4 is bucket type, and thread relation
 // param5 is ThTick update func
-// param6 is size in bytes, and relation to param7
+// param6 is size in bytes
 // param7 is parent thread (driver shooting weapon), can be nullptr
 undefined4
 FUN_800309a4(int param_1,undefined4 param_2,uint param_3,uint param_4,undefined4 param_5,
@@ -457,7 +457,7 @@ FUN_800309a4(int param_1,undefined4 param_2,uint param_3,uint param_4,undefined4
 
 	*/
 
-	// set instance to the allocation in the pool
+	// t->inst = inst
 	*(undefined4 *)(iVar2 + 0x34) = uVar1;
   }
 
@@ -465,14 +465,14 @@ FUN_800309a4(int param_1,undefined4 param_2,uint param_3,uint param_4,undefined4
   return uVar1;
 }
 
-
+// used for every explosion
 // INSTANCE_BirthWithThread_Stack
-void FUN_80030a50(undefined4 *param_1)
+void* FUN_80030a50(undefined4 *param_1)
 
 {
   // same as previous function, but this time with struct instead of typing parameters by hand
-  FUN_800309a4(*param_1,param_1[1],param_1[2],param_1[3],param_1[4],param_1[5],param_1[6]);
-  return;
+  return FUN_800309a4(*param_1,param_1[1],param_1[2],
+	param_1[3],param_1[4],param_1[5],param_1[6]);
 }
 
 

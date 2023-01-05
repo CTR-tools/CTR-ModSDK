@@ -96,6 +96,9 @@ common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPt
 common, exe, INSTANCE_Birth, 0x0, General/INSTANCE/INSTANCE_Birth.c
 common, exe, INSTANCE_Birth3D, 0x0, General/INSTANCE/INSTANCE_Birth3D.c
 common, exe, INSTANCE_Birth2D, 0x0, General/INSTANCE/INSTANCE_Birth2D.c
+common, exe, INSTANCE_BirthWithThread, 0x0, General/INSTANCE/INSTANCE_BirthWithThread.c
+common, exe, INSTANCE_BirthWithThread_Stack, 0x0, General/INSTANCE/INSTANCE_BirthWithThread_Stack.c
+common, exe, INSTANCE_Death, 0x0, General/INSTANCE/INSTANCE_Death.c
 
 // AllocPool comes between CAM and LIST, it is right after INSTANCE alphabetically
 common, exe, AllocPool_Clear, 0x0, General/AllocPool_Clear.c

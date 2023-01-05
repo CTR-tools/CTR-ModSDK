@@ -3662,9 +3662,14 @@ enum STACK_POOL
 
 enum THREAD_RELATIVE
 {
+	// yes, both are zero
+	// specify PARENT if thread relative is given,
+	// specify NONE if no thread relative is given
+	
 	NONE=0,
+	PARENT=0,
 	RELATIVE=0x400,
-	PARENT=0x2000
+	CHILD=0x2000
 };
 
 enum THREAD_BUCKET
