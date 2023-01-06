@@ -2118,7 +2118,7 @@ void FUN_80029e18(int param_1)
 		(&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] =
 		(&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] | 1;
 
-		// clear other bits
+		// remove "playing" flag
 		(&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] =
 		(&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] & 0xfffffffd;
 
@@ -2882,7 +2882,7 @@ void FUN_8002ab18(byte *param_1)
 		(&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] =
 		(&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] | 1;
 
-		// clear other bits
+		// remove "playing" flag
         (&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] =
         (&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] & 0xfffffffd;
 
@@ -3568,6 +3568,10 @@ undefined4 FUN_8002b5b4(short param_1)
 
 
 // Channel_AllocSlot_AntiSpam
+// param_1 - soundID
+// param_2 - boolUseAntiSpam (always true except one Aku "whoosh" in Adv Hub)
+// param_3 - flags
+// param_4 - ChannelAttr
 int FUN_8002b608(short param_1,char param_2,uint param_3,undefined4 *param_4)
 
 {
@@ -3614,7 +3618,7 @@ int FUN_8002b608(short param_1,char param_2,uint param_3,undefined4 *param_4)
         (&DAT_8008fc6c)[*(byte *)((int)piVar5 + 9)] =
         (&DAT_8008fc6c)[*(byte *)((int)piVar5 + 9)] | 1;
 
-		// clear all flags
+		// remove "playing" flag
         (&DAT_8008fc6c)[*(byte *)((int)piVar5 + 9)] =
         (&DAT_8008fc6c)[*(byte *)((int)piVar5 + 9)] & 0xfffffffd;
 
@@ -3762,7 +3766,7 @@ int * FUN_8002b898(char param_1,int param_2,uint param_3,undefined4 *param_4)
 	{
 	  // if slot is found with matching parameters
       if (
-			// status
+			// type (music, engine, otherFX)
 			(*(char *)((int)piVar2 + 0xb) == param_1) &&
 
 			// soundID
@@ -3843,7 +3847,7 @@ int * FUN_8002b9b8(char param_1,uint param_2,uint param_3)
 		(&DAT_8008fc6c)[*(byte *)((int)piVar2 + 9)] =
         (&DAT_8008fc6c)[*(byte *)((int)piVar2 + 9)] | 1;
 
-		// clear other bits
+		// remove "playing" flag
 		(&DAT_8008fc6c)[*(byte *)((int)piVar2 + 9)] =
         (&DAT_8008fc6c)[*(byte *)((int)piVar2 + 9)] & 0xfffffffd;
 
@@ -3913,7 +3917,7 @@ void FUN_8002ba90(int param_1,int param_2,char param_3)
 		(&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] =
         (&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] | 1;
 
-		// disable other bits
+		// remove "playing" flag
 		(&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] =
         (&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] & 0xfffffffd;
 
@@ -4429,7 +4433,7 @@ void FUN_8002c208(void)
         (&DAT_8008fc6c)[*(byte *)((int)ppiVar1 + 9)] =
         (&DAT_8008fc6c)[*(byte *)((int)ppiVar1 + 9)] | 1;
 
-		// erase other bits
+		// remove "playing" flag
         (&DAT_8008fc6c)[*(byte *)((int)ppiVar1 + 9)] =
         (&DAT_8008fc6c)[*(byte *)((int)ppiVar1 + 9)] & 0xfffffffd;
 
@@ -4596,7 +4600,7 @@ void FUN_8002c510(void)
 	  // increment numBackup_ChannelStats
       DAT_8008d790 = DAT_8008d790 + 1;
 
-	  // remove bits of other channels
+	  // remove "playing" flag
       (&DAT_8008fc6c)[*(byte *)((int)piVar2 + 9)] =
       (&DAT_8008fc6c)[*(byte *)((int)piVar2 + 9)] & 0xfffffffd;
 

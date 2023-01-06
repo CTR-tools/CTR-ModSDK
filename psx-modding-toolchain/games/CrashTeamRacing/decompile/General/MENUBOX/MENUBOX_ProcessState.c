@@ -4,7 +4,7 @@ void CheckeredFlag_SetCanDraw(int value);
 int CheckeredFlag_GetCanDraw();
 
 void MenuBox_Show(struct MenuBox* m);
-void MenuBox_DrawSelf(struct MenuBox* m, int, int, RECT* r);
+void MenuBox_DrawSelf(struct MenuBox* m, int, int, int);
 void MenuBox_ProcessInput(struct MenuBox* m);
 void MenuBox_GetWidth(struct MenuBox* m, RECT* r, int);
 

@@ -4578,20 +4578,22 @@ struct GameTracker
   int timer;
 
   // 1cf0
-  int variousTimers[5];
+  int variousTimers[2];
 
   // 1cf0
   // confetti timer
 
   // 1cf8
-  // frameTimer_StartNewFrame
+  int frameTimer_StartNewFrame;
 
   // 1cfc
   // frames since end of loading
+  int framesInThisLEV;
 
   // 1d00
   // Naughty Dog Box Scene timer
   // milliseconds since end of loading
+  int BoxSceneTimer;
 
   // 1d04
   // milliseconds per frame
