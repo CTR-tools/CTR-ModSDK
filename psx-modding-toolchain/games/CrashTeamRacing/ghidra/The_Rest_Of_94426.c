@@ -19740,7 +19740,7 @@ void FUN_80041e9c(int param_1)
 	{
 	  // execute OnDestroy,
 	  // which is usually a pointer to THREAD_DestroyInstance
-      (**(code **)(param_1 + 0x24))();
+      (**(code **)(param_1 + 0x24))(param_1);
     }
 
 	// Count how many times this thread has been used?
