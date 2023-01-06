@@ -145,7 +145,8 @@ struct ChannelAttr
 	short sr;
 
 	// 0x8
-	short pitch;
+	char pitch;
+	char unk9;
 
 	// 0xa
 	short reverb;
