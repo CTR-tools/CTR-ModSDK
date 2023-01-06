@@ -7530,7 +7530,7 @@ struct Data
 	// 80081ed8 -- JpnTrial
 	// 800832c4 -- EurRetail
 	// 80086208 -- JpnRetail
-	char volumeLR[0x100];
+	unsigned char volumeLR[0x100];
 
 	// 80082eac -- UsaRetail
 	char unk_between_volumeLR_pitch[0xD8];

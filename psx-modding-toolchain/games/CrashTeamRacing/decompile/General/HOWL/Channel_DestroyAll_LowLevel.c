@@ -8,9 +8,15 @@ void Channel_DestroyAll_LowLevel(int opt1, int boolKeepMusic, char type)
 {	
 	struct ChannelStats* stats = 
 		sdata->channelTaken.first;
-		
+	
+	struct ChannelStats* nextStats;
+	
 	while(stats != 0)
 	{
+		// do this before DestroySelf to get
+		// next "taken", otherwise you get next "free"
+		nextStats = stats->next;
+		
 		if(
 			// destroy if not music
 			(stats->type != type) ||
@@ -37,6 +43,6 @@ void Channel_DestroyAll_LowLevel(int opt1, int boolKeepMusic, char type)
 			}
 		}
 		
-		stats = stats->next;
+		stats = nextStats;
 	}
 }
