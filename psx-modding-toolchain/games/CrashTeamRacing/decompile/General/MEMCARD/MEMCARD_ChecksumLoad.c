@@ -33,15 +33,18 @@ unsigned int MEMCARD_ChecksumLoad(unsigned char* saveBytes, int len)
 		crc = MEMCARD_CRC16(crc, saveBytes[i]);
 	}
 	
+	// at this point, 'i' equals byteIndexEnd,
+	// but can't use 'i' cause that's too much asm
+	
 	// save checkpoints
 	sdata->crc16_checkpoint_status = crc;
-	sdata->crc16_checkpoint_byteIndex = i;
+	sdata->crc16_checkpoint_byteIndex = byteIndexEnd;
 	
 	// if end is not reached
-	if(i != len) return 7;
+	if(byteIndexEnd != len) return 7;
 	
 	// finalize checksum twice (dont loop)
-	crc = MEMCARD_CRC16(crc, saveBytes[i]);
-	crc = MEMCARD_CRC16(crc, saveBytes[i+1]);	
+	crc = MEMCARD_CRC16(crc, saveBytes[byteIndexEnd]);
+	crc = MEMCARD_CRC16(crc, saveBytes[byteIndexEnd+1]);	
 	return (unsigned int)(crc != 0);
 }
