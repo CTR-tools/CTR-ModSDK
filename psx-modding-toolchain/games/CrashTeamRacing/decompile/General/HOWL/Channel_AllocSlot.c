@@ -1,9 +1,10 @@
 #include <common.h>
 
-struct ChannelAttr* Channel_AllocSlot(
+struct ChannelStats* Channel_AllocSlot(
 	int flags,
 	struct ChannelAttr* attr)
 {
+	int i;
 	struct ChannelAttr* newAttr;
 	struct ChannelStats* stats;
 	
@@ -23,12 +24,13 @@ struct ChannelAttr* Channel_AllocSlot(
 	// make new ChanenlAttr
 	newAttr = &sdata->channelAttrCurr[stats->channelID];
 	
-	((int*)newAttr)[0] = ((int*)attr)[0];
-	((int*)newAttr)[1] = ((int*)attr)[1];
-	((int*)newAttr)[2] = ((int*)attr)[2];
-	((int*)newAttr)[3] = ((int*)attr)[3];
+	// copy all 0x10 bytes in ChannelAttr
+	for(i = 0; i < 4; i++)
+	{
+		((int*)newAttr)[i] = ((int*)attr)[i];
+	}
 	
-	newAttr->pitch = 1;
+	stats->flags = 1;
 	
-	return newAttr;
+	return stats;
 }

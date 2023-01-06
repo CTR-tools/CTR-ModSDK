@@ -1,10 +1,10 @@
 #include <common.h>
 
-struct ChannelAttr* Channel_AllocSlot(
+struct ChannelStats* Channel_AllocSlot(
 	int flags,
 	struct ChannelAttr* attr);
 
-struct ChannelAttr* Channel_AllocSlot_AntiSpam(
+struct ChannelStats* Channel_AllocSlot_AntiSpam(
 	short soundID,
 	char boolUseAntiSpam,
 	int flags,
