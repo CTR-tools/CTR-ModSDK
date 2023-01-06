@@ -19664,7 +19664,7 @@ void FUN_80041c84(int param_1)
 
 
 // THREAD_DestroyTracker
-void FUN_80041dc0(void)
+void FUN_80041dc0(struct Thread* t)
 
 {
   // If there are any missiles in play
@@ -19675,7 +19675,7 @@ void FUN_80041dc0(void)
   }
 
   // THREAD_DestroyInstance
-  FUN_80041dfc();
+  FUN_80041dfc(t);
 
   return;
 }
