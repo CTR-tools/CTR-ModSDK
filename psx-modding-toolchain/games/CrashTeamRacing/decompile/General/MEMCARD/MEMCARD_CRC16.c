@@ -1,6 +1,6 @@
 #include <common.h>
 
-unsigned int MEMCARD_CRC16(unsigned int crc, int nextInt)
+unsigned int MEMCARD_CRC16(unsigned int crc, int nextByte)
 {
 	int i;
 	int bitCheck;
@@ -8,7 +8,7 @@ unsigned int MEMCARD_CRC16(unsigned int crc, int nextInt)
 	for(i = 7; i >= 0; i--)
 	{
 		bitCheck = crc << 1;
-		crc = bitCheck | nextInt >> i & 1;
+		crc = bitCheck | nextByte >> i & 1;
 		
 		if((bitCheck & 0x10000) != 0)
 		{

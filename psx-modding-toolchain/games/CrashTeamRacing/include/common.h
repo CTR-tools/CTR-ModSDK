@@ -9820,7 +9820,7 @@ struct BSS
 	int memoryCard_SizeRemaining;
 
 	// 8008d8b0
-	int crc16_checkpoint;
+	int crc16_checkpoint_byteIndex;
 
 	// 8008d8b4
 	int HwCARD_EvSpERROR;
@@ -9845,10 +9845,10 @@ struct BSS
 	int HwCARD_EvSpIOE;
 
 	// 8008d8cc
-	int unk_loading_mc_related;
+	int memcardStatusFlags;
 
 	// 8008d8d0
-	int unk_mc_related;
+	int crc16_checkpoint_status;
 
 	// 8008d8d4
 	int SwCARD_EvSpIOE;

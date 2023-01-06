@@ -15167,7 +15167,7 @@ void FUN_8003d584(byte *param_1,int param_2)
 	} while (iVar4 < param_2 + -2);
   }
 
-  //save data crc to global
+  // waste, dont need to save checkpoint
   DAT_8008d8d0 = uVar3;
 
   // finalize checksum
@@ -15206,12 +15206,12 @@ uint FUN_8003d618(int param_1,int param_2)
 	// CRC end byte (start + 0x200)
     iVar5 = DAT_8008d8b0 + 0x200;
     bVar1 = false;
+	
+	// if checksum is not over
     if (iVar5 < param_2 + -2) goto LAB_8003d688;
   }
 
-  // else
-  // if last frame of crc16
-
+  // checksum is over, go to finalize
   bVar1 = true;
 
   // CRC end byte (last two bytes of data)
