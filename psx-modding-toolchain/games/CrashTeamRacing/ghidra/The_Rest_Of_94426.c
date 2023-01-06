@@ -15175,7 +15175,9 @@ void FUN_8003d584(byte *param_1,int param_2)
   uVar3 = FUN_8003d540(uVar3,0);
   uVar1 = FUN_8003d540(uVar3,0);
 
-  //write checksum to data (last 2 bytes)
+  // write checksum to data (last 2 bytes),
+  // swap endians to throw off hackers,
+  // which didn't really throw anyone off at all
   param_1[iVar4] = (byte)((ushort)uVar1 >> 8);
   param_1[iVar4 + 1] = (byte)uVar1;
 

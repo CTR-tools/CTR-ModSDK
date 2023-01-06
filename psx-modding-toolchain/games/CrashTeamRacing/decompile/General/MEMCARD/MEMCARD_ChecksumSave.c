@@ -4,16 +4,18 @@ void MEMCARD_ChecksumSave(unsigned char* saveBytes, int len)
 {
 	int i;
 	int crc = 0;
+	int nextByte;
 	
-	for(i = 0; i < len-2; i++)
+	for(i = 0; i < len; i++)
 	{
-		crc = MEMCARD_CRC16(crc, (int)saveBytes[i]);
+		nextByte = 0;
+		if(i < len-2) nextByte = (int)saveBytes[i];
+		crc = MEMCARD_CRC16(crc, nextByte);
 	}
 	
-	// finalize CRC twice
-	crc = MEMCARD_CRC16(crc, 0);
-	crc = MEMCARD_CRC16(crc, 0);
-	
-	*(unsigned short*)&saveBytes[i] = 
-		(unsigned short)crc;
+	// write checksum to data (last 2 bytes),
+	// swap endians to throw off hackers,
+	// which didn't really throw anyone off at all
+	saveBytes[len-2] = (char)(crc>>8);
+	saveBytes[len-1] = (char)(crc);
 }
