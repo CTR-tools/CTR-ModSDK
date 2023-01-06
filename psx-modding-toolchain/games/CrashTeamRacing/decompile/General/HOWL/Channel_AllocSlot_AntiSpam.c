@@ -4,6 +4,19 @@ struct ChannelStats* Channel_AllocSlot(
 	int flags,
 	struct ChannelAttr* attr);
 
+void Channel_DestroySelf(struct ChannelStats* stats)
+{
+	// set channel to OFF, and remove PLAYING bit
+	sdata->ChannelUpdateFlags[stats->channelID] |= 1;
+	sdata->ChannelUpdateFlags[stats->channelID] &= ~(2);
+	
+	stats->flags &= 0xfe;
+	
+	// recycle
+	LIST_RemoveMember(&sdata->channelTaken, stats);
+	LIST_AddBack(&sdata->channelFree, stats);
+}	
+
 struct ChannelStats* Channel_AllocSlot_AntiSpam(
 	short soundID,
 	char boolUseAntiSpam,
@@ -41,15 +54,7 @@ struct ChannelStats* Channel_AllocSlot_AntiSpam(
 				// otherwise you'll allocate too many sounds and overflow
 				if(duration < 10)
 				{
-					// set channel to OFF, and remove PLAYING bit
-					sdata->ChannelUpdateFlags[stats->channelID] |= 1;
-					sdata->ChannelUpdateFlags[stats->channelID] &= ~(2);
-					
-					stats->flags &= 0xfe;
-					
-					// recycle
-					LIST_RemoveMember(&sdata->channelTaken, stats);
-					LIST_AddBack(&sdata->channelFree, stats);
+					Channel_DestroySelf(stats);
 				}
 			}
 			
