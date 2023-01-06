@@ -7879,13 +7879,13 @@ struct Data
 	unsigned int trigApprox[0x400];
 
 	// 0x800855A0
-	char memcardIcon_CrashHead[0x100];
+	int memcardIcon_CrashHead[0x40];
 
 	// 0x800856A0
-	char memcardIcon_Ghost[0x100];
+	int memcardIcon_Ghost[0x40];
 
 	// 0x800857A0
-	char memcardIcon_PsyqHand[0x100];
+	int memcardIcon_PsyqHand[0x40];
 
 	#if 0
 

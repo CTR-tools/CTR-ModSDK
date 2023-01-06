@@ -149,6 +149,9 @@ common, exe, main, 0x0, General/main.c
 // MATH_Sin relocated to RDATA
 common, exe, MATH_Cos, 0x0, General/MATH_Cos.c
 
+// MEMCARD
+common, exe, MEMCARD_SetIcon, 0x0, General/MEMCARD/MEMCARD_SetIcon.c
+
 // MEMPACK (done)
 common, exe, MEMPACK_Init, 0x0, General/MEMPACK/MEMPACK_Init.c
 common, exe, MEMPACK_SwapPacks, 0x0, General/MEMPACK/MEMPACK_SwapPacks.c
