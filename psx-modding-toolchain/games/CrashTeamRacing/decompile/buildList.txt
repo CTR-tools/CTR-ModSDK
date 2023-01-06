@@ -98,7 +98,7 @@ common, exe, Channel_AllocSlot, 0x0, General/HOWL/Channel_AllocSlot.c
 common, exe, Channel_SearchFX_EditAttr, 0x0, General/HOWL/Channel_SearchFX_EditAttr.c
 common, exe, Channel_SearchFX_Destroy, 0x0, General/HOWL/Channel_SearchFX_Destroy.c
 common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/Channel_DestroyAll_LowLevel.c
-// not enough research for Channel_ParseSongToChannels
+// skip last two "channel" functions
 
 // INSTANCE
 common, exe, INSTANCE_Birth, 0x0, General/INSTANCE/INSTANCE_Birth.c
