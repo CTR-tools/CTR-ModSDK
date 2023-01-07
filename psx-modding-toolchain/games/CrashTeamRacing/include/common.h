@@ -3667,9 +3667,9 @@ enum THREAD_RELATIVE
 	// specify NONE if no thread relative is given
 	
 	NONE=0,
-	PARENT=0,
-	RELATIVE=0x400,
-	CHILD=0x2000
+	CHILD_SIBLING=0,
+	SELF_SIBLING=0x400,
+	CHILD_BETWEEN=0x2000
 };
 
 enum THREAD_BUCKET
