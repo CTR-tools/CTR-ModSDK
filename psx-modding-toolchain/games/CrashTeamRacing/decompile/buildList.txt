@@ -100,6 +100,10 @@ common, exe, GAMEPROG_NewGame_OnBoot, 0x0, General/GAMEPROG/GAMEPROG_NewGame_OnB
 common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c
 
 // HOWL
+common, exe, OtherFX_Play, 0x0, General/HOWL/OtherFX_Play.c
+common, exe, OtherFX_Play_Echo, 0x0, General/HOWL/OtherFX_Play_Echo.c
+common, exe, OtherFX_Stop1, 0x0, General/HOWL/OtherFX_Stop1.c
+common, exe, OtherFX_Stop2, 0x0, General/HOWL/OtherFX_Stop2.c
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c
 common, exe, Channel_AllocSlot_AntiSpam, 0x0, General/HOWL/Channel_AllocSlot_AntiSpam.c

@@ -468,7 +468,7 @@ undefined4 FUN_80028690(uint param_1,uint param_2)
 }
 
 
-// OtherFX_Stop1
+// OtherFX_Stop1 (specific instance of sound)
 void FUN_80028808(undefined4 param_1)
 
 {
@@ -486,7 +486,7 @@ void FUN_80028808(undefined4 param_1)
 }
 
 
-// OtherFX_Stop2
+// OtherFX_Stop2 (all of this kind of sound)
 void FUN_80028844(uint param_1)
 
 {
@@ -3313,7 +3313,7 @@ void FUN_8002b208(int param_1,int param_2)
       else {
         if ((DAT_8008d798 == 2) && (DAT_8008d7a0 != 0))
 		{
-		  // stop sound
+		  // OtherFX_Stop1 (specific instance of soundID)
           FUN_80028808();
           DAT_8008d7a0 = 0;
         }

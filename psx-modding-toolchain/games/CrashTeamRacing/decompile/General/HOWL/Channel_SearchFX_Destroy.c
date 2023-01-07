@@ -2,8 +2,11 @@
 
 void Channel_DestroySelf(struct ChannelStats* stats);
 
+// depending on flags, you might have:
+//	16-bit soundID, which destroys all of this type of sound
+//	32-bit soundID_count, which destroys specific instance of sound
 struct ChannelStats* Channel_SearchFX_Destroy(
-	int type, int soundID_count, int soundID)
+	int type, int soundID, int flags)
 {	
 	struct ChannelStats* stats = 
 		sdata->channelTaken.first;
@@ -15,7 +18,7 @@ struct ChannelStats* Channel_SearchFX_Destroy(
 			(stats->type == type) &&
 		
 			// matching ID and bit-shifted soundCount
-			((stats->soundID & soundID) == (soundID_count & soundID))
+			((stats->soundID & flags) == (soundID & flags))
 		)
 		{
 			Channel_DestroySelf(stats);
