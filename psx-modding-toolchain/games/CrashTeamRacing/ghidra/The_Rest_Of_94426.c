@@ -19772,14 +19772,14 @@ void FUN_80041f04(int param_1)
       if (*(int *)(param_1 + 0x14) != 0)
 	  {
 		// THREAD_DestroyBloodline
-        FUN_80041f04();
+        FUN_80041f04(param_1 + 0x14);
       }
+
+	  // THREAD_DestroySelf
+      FUN_80041e9c(param_1);
 
 	  // recursively find all siblings
       param_1 = *(int *)(param_1 + 0x10);
-
-	  // THREAD_DestroySelf
-      FUN_80041e9c();
 
     } while (param_1 != 0);
   }
@@ -19804,7 +19804,7 @@ void FUN_80041f58(int *param_1,int param_2)
 	  // if thread does not need to be deleted
       if ((*(uint *)(param_2 + 0x1c) & 0x800) == 0)
 	  {
-		// sibling thread
+		// pointer to sibling thread pointer
         param_1 = (int *)(param_2 + 0x10);
 
 		// if there are children
@@ -19814,9 +19814,9 @@ void FUN_80041f58(int *param_1,int param_2)
 		  // all children, basically all threads "under" this one
 
 		  // THREAD_CheckBloodlineForDead
-          FUN_80041f58(param_2 + 0x14);
+          FUN_80041f58((int*)(param_2 + 0x14), *(int*)(param_2 + 0x14));
 
-		  // sibling thread
+		  // pointer sibling thread pointer
           param_1 = (int *)(param_2 + 0x10);
         }
       }
@@ -19828,12 +19828,14 @@ void FUN_80041f58(int *param_1,int param_2)
         if (*(int *)(param_2 + 0x14) != 0)
 		{
 		  // THREAD_DestroyBloodline
-          FUN_80041f04();
+          FUN_80041f04(*(int *)(param_2 + 0x14));
         }
 
 		// THREAD_DestroySelf
         FUN_80041e9c(param_2);
 
+		// replace thread in thread bucket,
+		// with sibling thread
         *param_1 = iVar1;
       }
       param_2 = iVar1;

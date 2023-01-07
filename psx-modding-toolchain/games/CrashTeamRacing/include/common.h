@@ -1126,7 +1126,7 @@ struct Thread
 	int timesDestroyed;
 
 	// 0x24
-	void* funcThDestroy;
+	void (*funcThDestroy)(struct Thread* self);
 
 	// 0x28
 	void (*funcThCollide)(struct Thread* self);
