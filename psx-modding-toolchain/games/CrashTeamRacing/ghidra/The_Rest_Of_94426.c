@@ -41714,7 +41714,9 @@ LAB_8005a73c:
 			) &&
 
 			(
-				// THREAD_SearchForModel
+				// why do this? Doesn't driver have pointer to thread?
+				
+				// THREAD_SearchForModel(turbo fire)
 				iVar22 = FUN_80042394(*(undefined4 *)(param_1 + 0x14),0x2c),
 
 				// result found
