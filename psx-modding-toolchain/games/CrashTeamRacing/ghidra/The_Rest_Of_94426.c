@@ -41713,18 +41713,18 @@ LAB_8005a73c:
 				)
 			) &&
 
-			(
-				// why do this? Doesn't driver have pointer to thread?
-				
-				// THREAD_SearchForModel(turbo fire)
+			(	
+				// THREAD_SearchForModel(thread->childThread, turbo fire)
 				iVar22 = FUN_80042394(*(undefined4 *)(param_1 + 0x14),0x2c),
 
 				// result found
 				iVar22 != 0
 			)
 		 )
-      goto LAB_8005a9d8;
-      goto LAB_8005a858;
+	  {
+		goto LAB_8005a9d8;
+      }
+	  goto LAB_8005a858;
     }
 LAB_8005a868:
     *(char *)(param_2 + 0x381) = *(char *)(param_2 + 0x381) + -1;
