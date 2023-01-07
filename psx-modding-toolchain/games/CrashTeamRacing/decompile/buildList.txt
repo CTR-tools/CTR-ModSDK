@@ -48,9 +48,11 @@ common, 232, AH_WarpPad_MenuBoxFuncPtr, 0x0, General/232/232_03_AH_WarpPad_MenuB
 926, exe, 0x80081088, 0x0, General/zGlobal_MetaDataModels.c
 
 // BOTS
-common, exe, BOTS_SetGlobalNavData, 0x0, General/BOTS_SetGlobalNavData.c
-common, exe, BOTS_InitNavPath, 0x0, General/BOTS_InitNavPath.c
-common, exe, BOTS_Adv_NumTimesLostEvent, 0x0, General/BOTS_Adv_NumTimesLostEvent.c
+common, exe, BOTS_SetGlobalNavData, 0x0, General/BOTS/BOTS_SetGlobalNavData.c
+common, exe, BOTS_InitNavPath, 0x0, General/BOTS/BOTS_InitNavPath.c
+common, exe, BOTS_Adv_NumTimesLostEvent, 0x0, General/BOTS/BOTS_Adv_NumTimesLostEvent.c
+// skip a few
+// BOTS_Driver_Init was started, not finished
 
 // CAM
 common, exe, CAM_Init, 0x0, General/CAM_Init.c
