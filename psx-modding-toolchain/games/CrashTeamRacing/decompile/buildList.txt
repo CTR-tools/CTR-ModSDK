@@ -67,6 +67,9 @@ common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_XAGetNumTracks.c
 // CTR
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
 
+// DebugFont
+// DebugFont_Init does not fit the byte budget
+
 // DecalFont
 common, exe, DecalFont_GetLineWidth, 0x0, General/DecalFont/DecalFont_GetLineWidth.c
 common, exe, DecalFont_DrawLineStrlen, 0x0, General/DecalFont/DecalFont_DrawLineStrlen.c

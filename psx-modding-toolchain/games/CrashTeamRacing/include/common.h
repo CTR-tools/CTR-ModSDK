@@ -9507,8 +9507,8 @@ struct BSS
 	{
 		unsigned int pixelX;
 		unsigned int pixelY;
-		unsigned short palette;
-		unsigned short texPage;
+		unsigned short paletteXY;
+		unsigned short pageXY;
 	} debugFont;
 
 	// 8008d738
