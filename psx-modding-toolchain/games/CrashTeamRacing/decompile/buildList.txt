@@ -60,6 +60,10 @@ common, exe, CAM_SetDesiredPosRot, 0x0, General/CAM_SetDesiredPosRot.c
 //common, exe, CAM_EndOfRace_Battle, 0x0, General/CAM_EndOfRace_Battle.c
 //common, exe, CAM_StartOfRace, 0x0, General/CAM_StartOfRace.c
 
+// CDSYS
+common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_XAGetNumTracks.c
+// started XAGetTrackLength, not done
+
 // CTR
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
 
