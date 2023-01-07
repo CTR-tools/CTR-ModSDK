@@ -29,7 +29,7 @@ void THREAD_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf)
 	
 	for(i = 0; i < 3; i++)
 	{
-		distComp[i] = inst->matrix.t[i] - buf->pos[i];
+		distComp[i] = (int)buf->pos[i]-(int)inst->matrix.t[i];
 		if((distComp[i]*distComp[i]) > 0x10000000) return;
 		dist += distComp[i]*distComp[i];
 	}
