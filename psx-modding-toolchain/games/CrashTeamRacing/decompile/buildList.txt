@@ -193,7 +193,7 @@ common, exe, THREAD_CheckAllForDead, 0x0, General/THREAD/THREAD_CheckAllForDead.
 common, exe, THREAD_BirthWithObject, 0x0, General/THREAD/THREAD_BirthWithObject.c
 common, exe, THREAD_CollidePointWithSelf, 0x0, General/THREAD/THREAD_CollidePointWithSelf.c
 common, exe, THREAD_CollidePointWithBucket, 0x0, General/THREAD/THREAD_CollidePointWithBucket.c
-//common, exe, THREAD_SearchForModel, 0x0, General/THREAD/THREAD_SearchForModel.c
+common, exe, THREAD_SearchForModel, 0x0, General/THREAD/THREAD_SearchForModel.c
 
 // Camera110
 common, exe, Camera110_InitStructs, 0x0, General/Camera110_InitStructs.c

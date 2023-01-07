@@ -159,3 +159,26 @@ struct Thread* THREAD_BirthWithObject(
 	
 	return th;
 }
+
+// == This function was relocated due to byte budget ==
+
+// search starts with driver thread's child
+// searches for turbo model
+struct Thread* DECOMP_THREAD_SearchForModel_InsideBirthWithObject(struct Thread* th, int modelID)
+{
+	struct Thread* other;
+
+	while(th != 0)
+	{
+		// if found, quit
+		if(th->modelIndex == modelID) return th;
+
+		// check children recursively, quit if found
+		other = DECOMP_THREAD_SearchForModel_InsideBirthWithObject(th->childThread, modelID);
+		if(other != 0) return other;
+
+		th = th->siblingThread;
+	}
+	
+	return th;
+}
