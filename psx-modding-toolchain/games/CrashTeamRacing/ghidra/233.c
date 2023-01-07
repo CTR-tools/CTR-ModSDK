@@ -3703,13 +3703,13 @@ void FUN_800afcc4(int param_1)
 
 
 // CS_Podium_Prize_ThDestroy
-void FUN_800afe58(void)
+void FUN_800afe58(struct Thread* t)
 {
   // remove bit flag
   *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xf8ffffff;
   
   // THREAD_DestroyInstance
-  FUN_80041dfc();
+  FUN_80041dfc(t);
   
   return;
 }
