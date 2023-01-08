@@ -40,7 +40,7 @@ void DECOMP_Player_Spinning_Init(struct Thread* t, struct Driver* d)
 	d->unk_LerpToForwards = 0;
 	d->turboMeterLeft = 0;
 	
-	if(!LOAD_IsOpen_RacingOrBattle())
+	if(LOAD_IsOpen_RacingOrBattle())
 	{
 		RB_Player_ModifyWumpa(d, -1);
 	}
