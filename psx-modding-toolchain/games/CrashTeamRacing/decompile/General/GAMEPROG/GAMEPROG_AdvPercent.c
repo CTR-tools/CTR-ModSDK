@@ -28,7 +28,7 @@ void GAMEPROG_AdvPercent(struct AdvProgress* adv)
 	for(i = 0; i < 18; i++)
 	{
 		// first bit of blue relic
-		bitIndex = i + 0x16;
+		bitIndex = 0x16 + i;
 		if(CHECK_ADV_BIT(adv->rewards, bitIndex))
 		{
 			gGT->currAdvProfile.numRelics++;
@@ -38,14 +38,14 @@ void GAMEPROG_AdvPercent(struct AdvProgress* adv)
 		if(i < 0x10)
 		{
 			// first bit of trophy
-			bitIndex = 6;
+			bitIndex = 6 + i;
 			if(CHECK_ADV_BIT(adv->rewards, bitIndex))
 			{
 				gGT->currAdvProfile.numTrophies++;
 			}
 			
 			// first bit of token
-			bitIndex = 0x4c;
+			bitIndex = 0x4c + i;
 			if(CHECK_ADV_BIT(adv->rewards, bitIndex))
 			{
 				// increment number of tokens, based on
