@@ -32,7 +32,7 @@ struct ChannelStats* Channel_AllocSlot_AntiSpam(
 				(stats->type == 1) &&
 			
 				// matching ID
-				(stats->soundID == soundID)
+				((short)stats->soundID == soundID)
 			)
 			{
 				int duration = 
