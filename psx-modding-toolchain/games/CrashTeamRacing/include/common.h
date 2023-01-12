@@ -7193,10 +7193,14 @@ struct Data
 	// 80081464 -- EurRetail
 	// 800842A4 -- JpnRetail
 	// === Nav Path related ===
-	char data_beforeIdentity[0x18];
+	short data_beforeIdentity[0xC];
 
 	// 80080F48
 	MATRIX identity;
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80080F68
 	struct ZoomData NearCam4x3; // 1P,3P,4P
@@ -8537,6 +8541,8 @@ struct Data
 	// 8008c05c -- pointer to first exe function
 
 	// 8008cf6b -- end of Data
+// DATA_DEV
+#endif
 };
 
 // 0x8008D218 -- Early June? PizzaHut USA
@@ -8577,6 +8583,8 @@ struct sData
 	// 8008d30c -- EurRetail
 	// 80090390 -- JpnRetail
 	char s_camera[8];
+	
+#ifndef SDATA_DEV
 
 	// 8008CF94
 	struct
@@ -9313,20 +9321,15 @@ struct sData
 
 	// 8008d660
 	char s_head[8];
+	
+// #ifndef SDATA_DEV
 
 	// BSS is still addressed by $gp,
-	// not sure how to separate these,
-	// can be seen in 800123e0 (first func)
+	// so they share SDATA struct,
+	// but #ifndef SDATA_DEV should 
+	// never touch BSS
 
-#if 0
-	// 8008d668
-	// end of sData (real end)
-};
-
-// 0x8008d668 -- UsaRetail
-struct BSS
-{
-#endif
+	// ===== BSS Region ========
 
 	// 8008d668
 	// used for RNG
@@ -10434,7 +10437,7 @@ struct BSS
 	// part of voices, see FUN_8002cf28, FUN_8002dc4c
 	char data_80096194[0x150];
 
-#if 0
+	#if 0
 	// 80096194 -- next variable
 	int backupParams_FUN_8002cf28[4];
 
@@ -10485,19 +10488,19 @@ struct BSS
 		int soundID_soundCount;
 	} SoundFadeInput[2];
 
-#endif
+	#endif
 
-// garage pool added after sep3
+	// garage pool added after sep3
 
 
-#if BUILD >= UsaRetail
+	#if BUILD >= UsaRetail
 	// 800962E4
 	// eight members, each 0xc
 	struct
 	{
 		char data[0xC];
 	} garageSoundPool[8];
-#endif
+	#endif
 
 	// 800962E4 to 80096338 ^^ from FUN_8003074c
 
@@ -10658,7 +10661,7 @@ struct BSS
 	// 8009b0e0 - EurRetail	-- 1c34 from mempack
 	// 8009e208 - JpnRetail	-- 1c54 from mempack
 
-#if 0
+	#if 0
 	// 8009AD18 - camera110_DecalMP
 	// 8009ae0c - ptrOT, camera110 ^^ + 0xf4
 	struct Camera110 camera110_DecalMP;
@@ -10670,7 +10673,7 @@ struct BSS
 	// 8009ae38 used as rotation vector
 
 	// 8009AE58 start of psyq lib data
-#endif
+	#endif
 
 	// 8009AD18 - UsaRetail
 	#if BUILD == UsaRetail || BUILD == EurRetail
@@ -10691,6 +10694,9 @@ struct BSS
 	// 800a2c00 -- JpnRetail
 
 	// 8009f6fc end of BSS
+	
+// SDATA_DEV
+#endif
 };
 
 // ".rData"
