@@ -8583,23 +8583,15 @@ struct sData
 	// 8008d30c -- EurRetail
 	// 80090390 -- JpnRetail
 	char s_camera[8];
-	
-#ifndef SDATA_DEV
 
 	// 8008CF94
 	struct
 	{
 		// 8008CF94
-		short posX_offset;
-		short posY_offset;
-		short posZ_offset;
-		short posW_offset; // empty align filler
+		short posOffset[4];
 
 		// 8008CF9C
-		short rotX_offset;
-		short rotY_offset;
-		short rotZ_offset;
-		short rotW_offset; // empty align filler
+		short rotOffset[4];
 
 	} FirstPersonCamera;
 
@@ -8704,6 +8696,8 @@ struct sData
 	// 80090468 -- JpnRetail
 	char s_HOWL[8];
 
+#ifndef SDATA_DEV
+
 	// 8008D068
 	#if BUILD == SepReview
 	char afterHOWL[0x18];
@@ -8730,6 +8724,8 @@ struct sData
 
 	// 8008d080
 	// used in Garage_Idle2
+	
+	// ============================
 
 	// 8008b4e8 - Sep3
 	// 8008d088 - UsaRetail
