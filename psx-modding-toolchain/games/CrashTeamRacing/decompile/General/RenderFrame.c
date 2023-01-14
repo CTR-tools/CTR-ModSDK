@@ -6,6 +6,7 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	DrawControllerError(gGT, gGamepads);
 	DrawFinalLap(gGT);
+	ElimBG_HandleState(gGT);
 }
 
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -93,6 +94,8 @@ void DrawFinalLap(struct GameTracker* gGT)
 	int endX;
 	int posY;
 	
+	short resultPos[2];
+	
 	// number of players
 	for(i = 0; i < 4; i++)
 	{
@@ -141,7 +144,16 @@ void DrawFinalLap(struct GameTracker* gGT)
 		
 DrawFinalLapString:
 
-		
+		InterpolatePosition2D_Linear(&resultPos, startX, startY, endX, endY, 10);
 
+		// need to specify OT, or else "FINAL LAP" will draw on top of character icons,
+		// and by doing this, "FINAL LAP" draws under the character icons instead
+		DecalFont_DrawLineOT(
+			sdata->lngStrings[0x8cc/4],
+			resultPos[0], resultPos[1],
+			1, 0xffff8000,
+			c110->ptrOT);
+			
+		sdata->finalLapTextTimer[i]--;
 	}
 }
