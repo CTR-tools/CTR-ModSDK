@@ -11,7 +11,7 @@ void FUN_800251ac(int param_1)
 
   // PS/psx/sample/pad/anlgctrl/main.c
   // shows the parameters are simply
-  // unsigned char padbuff[2][34];
+  // gGamepads->slotBuffer
   PadInitMtap(param_1 + 0x2d0,param_1 + 0x2f2);
   PadStartCom();
 

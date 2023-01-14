@@ -973,7 +973,7 @@ struct MainMenu_LevelRow
 struct MenuRow
 {
 	// can have values above 0xFF,
-	// such as 0x155 for "Gamepad 1C",
+	// such as 0x155 for "Controller 1C",
 	// sometimes the top bit 0x8000 is used,
 	// like VS 2P,3P,4P in main menu, to
 	// determine if the row is "locked"
@@ -4542,9 +4542,10 @@ struct GameTracker
   // 1c40 -- SepReview
   // 1ca8 -- UsaRetail, JpnTrial
   // 1cb0 -- EurRetail, JpnRetail
+  
+  // we got these flipped,
+  // need to fix the names
   char numPlayers;
-
-  // 1ca9
   char numScreens;
 
   // 1caa
@@ -5622,7 +5623,7 @@ struct GamepadBuffer
 
 	// 0x20
 	// For details,
-	// see GamepadSystem->padBuff
+	// see GamepadSystem->slotBuffer
 	short* ptrRawInput;
 
 	// 0x24
@@ -5707,7 +5708,14 @@ struct GamepadSystem
 	// 0x22 =
 		// 0x2 for meta (pad or multitap)
 		// 0x8 per gamepad port in multitap (4*0x8 = 0x20)
-	unsigned char padbuff[2][0x22];
+	struct
+	{
+		char meta[2];
+		struct
+		{
+			char data[8];
+		} padBuffer[4];
+	} slotBuffer[2];
 
 	// 0x2cc -- Sep3, which is 0x314 - 64 - 8
 	// 0x314 -- all others
@@ -7778,7 +7786,7 @@ struct Data
 	int gGT_gameMode1_Vibration_PerPlayer[4];
 
 	// 8008431c
-	// Gamepad 1, 2, 1A, 1B, 1C, 1D
+	// Controller 1, 2, 1A, 1B, 1C, 1D
 	short Options_StringIDs_Gamepads[6];
 
 	// 80084328
@@ -9692,7 +9700,8 @@ struct sData
 
 	// 8008bc78 sep3
 	// 8008d83c usaRetil
-	int LEV_LOD;
+	short levelLOD;
+	short levelID
 
 	// 8008d840
 	int boolLoadKartHWL; // I think???

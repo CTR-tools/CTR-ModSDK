@@ -6088,7 +6088,7 @@ LAB_80035098:
 									// loop counter
 									iVar7 = 0,
 
-									// (72a*4 = 1ca8), numPlayers
+									// (72a*4 = 1ca8), numScreens
 									*(char *)(param_1 + 0x72a) != '\0'
 								)
 							)
@@ -6107,7 +6107,7 @@ LAB_80035098:
 						(iVar10 != 0) &&
 						(
 							(
-								// check for missing gamepads, depending on numPlayers
+								// check for missing gamepads, depending on numScreens
 								uVar5 = FUN_80035d70((uint)(byte)PTR_DAT_8008d2ac[0x1ca9]),
 
 								// if a gamepad is missing that is needed
@@ -6146,7 +6146,7 @@ LAB_80035098:
 
             param_2 = param_2 + 0x50;
 
-			// (72a*4 = 1ca8), numPlayers
+			// (72a*4 = 1ca8), numScreens
           } while (iVar7 < (int)(uint)*(byte *)(param_1 + 0x72a));
         }
       }
@@ -6715,7 +6715,7 @@ void FUN_80035d30
   return;
 }
 
-// CheckMissingGamepads
+// BoolAllPadsConnected
 int FUN_80035d70(short param_1)
 
 {
@@ -6753,7 +6753,7 @@ int FUN_80035d70(short param_1)
 		// loop through all players and make sure
 		// all their gamepads are connected
 
-		// iVar5 = 0; iVar5 < numPlayers; iVar5++
+		// iVar5 = 0; iVar5 < numScreens; iVar5++
         do
 		{
 		  // only continue checking gamepads if
@@ -6942,7 +6942,7 @@ void FUN_80035e70(uint *param_1)
 			(PTR_DAT_8008d2b0[0x2d1] == -0x80) ||
 
 			(
-				// pointer goes to "gamepad 1" or "gamepad 2"
+				// pointer goes to "Controller 1" or "Controller 2"
 				sVar10 = 0,
 
 				// if number of players is more than 2
@@ -6964,6 +6964,7 @@ void FUN_80035e70(uint *param_1)
 	  // 0 for p1, 0x30 for p2, etc
       iVar19 = 0;
 
+	  // box height
       local_3a = 0xe;
 
 	  // for(int iVar6 = 0; iVar6 < Number of Players; iVar6++)
@@ -6973,9 +6974,13 @@ void FUN_80035e70(uint *param_1)
 		// check each player's gamepad buffer
         if ((*(char **)(PTR_DAT_8008d2b0 + iVar19 + 0x20) == (char *)0x0) ||
            (**(char **)(PTR_DAT_8008d2b0 + iVar19 + 0x20) != '\0')) {
-          iVar13 = (int)sVar17;
-          local_3a = local_3a + 8;
-          sVar17 = sVar17 + 8;
+          
+		  iVar13 = (int)sVar17;
+          
+		  // box height
+		  local_3a = local_3a + 8;
+          
+		  sVar17 = sVar17 + 8;
 
 		  // One of 6 strings for "Gamepad x is Unplugged
           FUN_80022878(*(undefined4 *)			//  -0x7ff7bdbc should be 80084244
@@ -7175,7 +7180,7 @@ void FUN_80035e70(uint *param_1)
   iVar6 = 0;
 
   // Camera Frustums
-  // gGT->1ca8(numPlayers) != 0
+  // gGT->1ca8(numScreens) != 0
   if (*(char *)(param_1 + 0x72a) != '\0')
   {
 	// offset of 8008d2ac where camera110 structs
@@ -7185,7 +7190,7 @@ void FUN_80035e70(uint *param_1)
     puVar18 = param_1;
     puVar12 = param_1;
 
-	// for iVar6 = 0; iVar6 < numPlayers; iVar6++
+	// for iVar6 = 0; iVar6 < numScreens; iVar6++
     do
 	{
 	  // Camera110_UpdateFrustum
@@ -7199,7 +7204,7 @@ void FUN_80035e70(uint *param_1)
 		// gGT->CameraDC[i].ptrQuadBlock->weather_intensity
         uVar7 = (uint)*(byte *)(puVar18[0x52d] + 0x39);
 
-		// (72a*4 = 1ca8), numPlayers
+		// (72a*4 = 1ca8), numScreens
         bVar2 = *(byte *)(param_1 + 0x72a);
 
         if (bVar2 == 0) {
@@ -7213,7 +7218,7 @@ void FUN_80035e70(uint *param_1)
 		// gGT->RainBuffer[i].numParticles_max
         *(short *)(puVar12 + 0x691) = (short)((int)(uVar7 << 2) / (int)(uint)bVar2);
 
-		// (72a*4 = 1ca8), numPlayers
+		// (72a*4 = 1ca8), numScreens
 		bVar2 = *(byte *)(param_1 + 0x72a);
 
 		if (bVar2 == 0) {
@@ -7240,7 +7245,7 @@ void FUN_80035e70(uint *param_1)
 	  // increment camera110 pointer to next camera110
       iVar19 = iVar19 + 0x110;
 
-	  // (72a*4 = 1ca8), numPlayers
+	  // (72a*4 = 1ca8), numScreens
     } while (iVar6 < (int)(uint)*(byte *)(param_1 + 0x72a));
   }
 
@@ -7742,7 +7747,7 @@ LAB_800367d4:
 	// This block of code draws Exhaust
 	// Only if param_1[0x95b] & 0x20 also happens
 
-	  // (72a*4 = 1ca8), numPlayers
+	  // (72a*4 = 1ca8), numScreens
     cVar3 = *(char *)(param_1 + 0x72a);
 
 	// loop counter
@@ -7754,7 +7759,7 @@ LAB_800367d4:
 	// are held for each player (pos, size, etc)
     iVar19 = 0x168;
 
-	// for iVar6 = 0; iVar6 < numPlayers iVar6++
+	// for iVar6 = 0; iVar6 < numScreens iVar6++
 	do
 	{
 	  // pointer to camera110 struct
@@ -7772,7 +7777,7 @@ LAB_800367d4:
     } while (iVar6 < (int)(uint)*(byte *)(param_1 + 0x72a));
   }
 
-  // (72a*4 = 1ca8), numPlayers
+  // (72a*4 = 1ca8), numScreens
   cVar3 = *(char *)(param_1 + 0x72a);
 
 code_r0x800369d8:
@@ -7811,7 +7816,7 @@ code_r0x800369d8:
 	  // pointer to camera110 struct
       puVar12 = (uint *)((int)param_1 + iVar19);
 
-	// (72a*4 = 1ca8), numPlayers
+	// (72a*4 = 1ca8), numScreens
 	} while (iVar6 < (int)(uint)*(byte *)(param_1 + 0x72a));
   }
 
@@ -7882,7 +7887,7 @@ code_r0x800369d8:
     FUN_80069284(*(undefined4 *)(PTR_DAT_8008d2ac + 0x1be0));
 
 	// param1 is PTR_DAT_8008d2ac
-	// (72a*4 = 1ca8), numPlayers
+	// (72a*4 = 1ca8), numScreens
     if (*(char *)(param_1 + 0x72a) != '\0')
 	{
 	  // offset of 8008d2ac where camera110 structs are stored
@@ -7905,7 +7910,7 @@ code_r0x800369d8:
 		// increment loop counter
 		iVar6 = iVar6 + 1;
 
-		// (72a*4 = 1ca8), numPlayers
+		// (72a*4 = 1ca8), numScreens
       } while (iVar6 < (int)(uint)*(byte *)(param_1 + 0x72a));
     }
   }
@@ -7956,7 +7961,7 @@ code_r0x800369d8:
 					// pointer to PrimMem struct
 					*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-					// (72a*4 = 1ca8), numPlayers
+					// (72a*4 = 1ca8), numScreens
                    (uint)*(byte *)(param_1 + 0x72a));
 
 	  //Draws reflected wheels (visible on ice terrain)
@@ -7967,7 +7972,7 @@ code_r0x800369d8:
 				   // pointer to PrimMem struct
 				   *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-				   // (72a*4 = 1ca8), numPlayers
+				   // (72a*4 = 1ca8), numScreens
 				   (uint)*(byte *)(param_1 + 0x72a));
     }
 
@@ -7982,7 +7987,7 @@ code_r0x800369d8:
 				   // pointer to PrimMem struct
 				   *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-				   // (72a*4 = 1ca8), numPlayers
+				   // (72a*4 = 1ca8), numScreens
 				   (uint)*(byte *)(param_1 + 0x72a));
 
 	  //Draws reflected wheels (visible on ice terrain)
@@ -7993,7 +7998,7 @@ code_r0x800369d8:
 				   // pointer to PrimMem struct
 				   *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-				   // (72a*4 = 1ca8), numPlayers
+				   // (72a*4 = 1ca8), numScreens
 				   (uint)*(byte *)(param_1 + 0x72a));
     }
 
@@ -8008,7 +8013,7 @@ code_r0x800369d8:
 					// pointer to PrimMem struct
 					*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-					// (72a*4 = 1ca8), numPlayers
+					// (72a*4 = 1ca8), numScreens
                    (uint)*(byte *)(param_1 + 0x72a));
 
 	  //Draws reflected wheels (visible on ice terrain)
@@ -8019,7 +8024,7 @@ code_r0x800369d8:
 					// pointer to PrimMem struct
 					*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-					// (72a*4 = 1ca8), numPlayers
+					// (72a*4 = 1ca8), numScreens
 					(uint)*(byte *)(param_1 + 0x72a));
     }
   }
@@ -8043,7 +8048,7 @@ code_r0x800369d8:
 				 // pointer to PrimMem struct
 				 *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-				 // (72a*4 = 1ca8), numPlayers
+				 // (72a*4 = 1ca8), numScreens
 				 (uint)*(byte *)(param_1 + 0x72a),
 
 				 // swapchain index * 0x128
@@ -8138,7 +8143,7 @@ code_r0x800369d8:
 						// VisMem 0x80-0x8F
 						puVar9[0x20],
 
-						// (72a*4 = 1ca8), numPlayers
+						// (72a*4 = 1ca8), numScreens
 						(uint)*(byte *)(param_1 + 0x72a));
 
 		// increment loop counter
@@ -8333,7 +8338,7 @@ code_r0x800369d8:
 						// VisMem 0x80-0x8F
 						((undefined4 *)param_1[0x68e])[0x20],
 
-						// (72a*4 = 1ca8), numPlayers
+						// (72a*4 = 1ca8), numScreens
 						(uint)*(byte *)(param_1 + 0x72a));
 
 		  // offset 0x1CC0,
@@ -8717,7 +8722,7 @@ code_r0x800369d8:
 	// loop counter
     iVar6 = 0;
 
-	// (72a*4 = 1ca8), numPlayers
+	// (72a*4 = 1ca8), numScreens
     if (*(char *)(param_1 + 0x72a) != '\0')
 	{
 	  // offset of 8008d2ac where camera110 structs are stored
@@ -8747,7 +8752,7 @@ code_r0x800369d8:
 
         puVar12 = (uint *)((int)param_1 + iVar22);
 
-		// (72a*4 = 1ca8), numPlayers
+		// (72a*4 = 1ca8), numScreens
       } while (iVar6 < (int)(uint)*(byte *)(param_1 + 0x72a));
     }
 
@@ -10468,7 +10473,7 @@ switchD_80038f90_caseD_9:
 	// DUAL SHOCK:
     FUN_80022878(*(undefined4 *)(DAT_8008d878 + 0x528),0x4c,(iVar6 + 0x5a) * 0x10000 >> 0x10,2,0);
 
-	// Gamepad 1A
+	// Controller 1A
 	// DecalFont_GetLineWidth
 	iVar13 = FUN_800224d0(*(undefined4 *)((int)DAT_80084320 * 4 + DAT_8008d878),2);
 
@@ -10509,7 +10514,7 @@ switchD_80038f90_caseD_9:
         }
 
 		// might be printing string for
-		// "Gamepad 1", "Gamepad 2", 1A 1B 1C 1D, etc
+		// "Controller 1", "Controller 2", 1A 1B 1C 1D, etc
         FUN_80022878(*(undefined4 *)
                       ((int)*(short *)(&DAT_8008431c + ((int)((uVar14 + local_48) * 0x10000) >> 0xf)
                                       ) * 4 + DAT_8008d878),iVar12 * 0x10000 >> 0x10,
@@ -12329,7 +12334,7 @@ void FUN_8003b0f0(uint *param_1)
 	// If you are not in main menu
     if ((*param_1 & 0x2000) == 0)
 	{
-	  // (72a*4 = 1ca8), numPlayers
+	  // (72a*4 = 1ca8), numScreens
       switch(*(undefined *)(param_1 + 0x72a))
 	  {
 		// zero players, how?
@@ -12454,7 +12459,7 @@ void FUN_8003b334(uint *param_1)
 	  // If not in Battle
       if ((uVar1 & 0x20) == 0)
 	  {
-		// (72a*4 = 1ca8), numPlayers
+		// (72a*4 = 1ca8), numScreens
 
 		// if less than 3 players
         if (*(byte *)(param_1 + 0x72a) < 3)
@@ -12506,7 +12511,7 @@ void FUN_8003b334(uint *param_1)
   // "ot[0]"
 
   // MEMPACK_AllocMem
-  // (72a*4 = 1ca8), numPlayers
+  // (72a*4 = 1ca8), numScreens
   uVar1 = FUN_8003e874((uint)*(byte *)(param_1 + 0x72a) << 0xc | 0x18,s_ot_0__8008d2fc);
 
   // first index of "ot" pointer array
@@ -12516,7 +12521,7 @@ void FUN_8003b334(uint *param_1)
   // "ot[1]"
 
   // MEMPACK_AllocMem
-  // (72a*4 = 1ca8), numPlayers
+  // (72a*4 = 1ca8), numScreens
   uVar1 = FUN_8003e874((uint)*(byte *)(param_1 + 0x72a) << 0xc | 0x18,s_ot_1__8008d304);
 
   // second index of "ot" pointer array
@@ -12595,7 +12600,7 @@ void FUN_8003b43c(uint *param_1)
   FUN_8003105c(param_1 + 0x634,uVar9 * 3 >> 7,0x48,"ThreadPool");
 
   // 8008d2ac + 0x18F8
-  // instance size changes based on numPlayers
+  // instance size changes based on numScreens
   FUN_8003105c(param_1 + 0x63e,uVar9 >> 5,
 			  0x74 + (0x88 * (uint)(byte)PTR_DAT_8008d2ac[0x1ca8]),
 			  "InstancePool");
@@ -12692,7 +12697,7 @@ void FUN_8003b43c(uint *param_1)
 	  // increment loop counter
       iVar6 = iVar6 + 1;
 
-									// Level ID							// numScreens
+									// Level ID							// numPlayers
       iVar2 = FUN_80034960(*(undefined4 *)(puVar5 + 0x1a10),(uint)(byte)puVar5[0x1ca8]);
 
 	  // MEMPACK_AllocMem
@@ -12767,7 +12772,7 @@ void FUN_8003b6d0(uint *param_1)
   // This is a strange way to count a loop
 
   // iVar5 = number of players - 1
-  // (72a*4 = 1ca8), numPlayers
+  // (72a*4 = 1ca8), numScreens
   iVar5 = (uint)*(byte *)(param_1 + 0x72a) - 1;
 
   // if that is zero or more, which it always will be,
@@ -12778,7 +12783,7 @@ void FUN_8003b6d0(uint *param_1)
 
 	// spawn all players
 
-	// iVar5 = numPlayers - 1; iVar5 > -1; iVar5--
+	// iVar5 = numScreens - 1; iVar5 > -1; iVar5--
 	do {
 
 	  // spawn a player, return Driver*
@@ -12841,7 +12846,7 @@ void FUN_8003b6d0(uint *param_1)
 			)
 		  )
 	  {
-		// (72a*4 = 1ca8), numPlayers
+		// (72a*4 = 1ca8), numScreens
         bVar1 = *(byte *)(param_1 + 0x72a);
 
         uVar3 = (uint)bVar1;
@@ -13231,7 +13236,7 @@ void FUN_8003b934(uint *param_1)
   // if you are not in main menu
   if ((*param_1 & 0x2000) == 0)
   {
-	// set FOV depending no numPlayers (72a*4 = 1ca8)
+	// set FOV depending no numScreens (72a*4 = 1ca8)
     uVar6 = (uint)*(byte *)(param_1 + 0x72a);
   }
 
@@ -13474,7 +13479,7 @@ void FUN_8003b934(uint *param_1)
   *(undefined2 *)(param_1 + 0x4e7) = 0x1000;
   *(undefined2 *)((int)param_1 + 0x139e) = 0x200;
 
-  // (72a*4 = 1ca8), numPlayers
+  // (72a*4 = 1ca8), numScreens
   bVar1 = *(byte *)(param_1 + 0x72a);
 
   if (bVar1 == 0) {
@@ -18255,7 +18260,7 @@ void FUN_800408b8(void)
 
 	// if number of screens is not zero
 
-	// for(int iVar13 = 0; iVar13 < numScreens; iVar13++)
+	// for(int iVar13 = 0; iVar13 < numPlayers; iVar13++)
     do
 	{
 	  // get the player structure of each human player
@@ -18563,7 +18568,7 @@ LAB_80041298:
       // increment loop counter
       iVar13 = iVar13 + 1;
 
-	  // for(int iVar13 = 0; iVar13 < numScreens; iVar13++)
+	  // for(int iVar13 = 0; iVar13 < numPlayers; iVar13++)
       if ((int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] <= iVar13)
 	  {
 		// when the loop is finished, quit the function
@@ -19394,7 +19399,7 @@ LAB_80041910:
 	  // if number of screens is not zero
       if (PTR_DAT_8008d2ac[0x1ca8] != '\0') {
 
-		// for(int iVar11 = 0; iVar11 < numScreens; iVar11++)
+		// for(int iVar11 = 0; iVar11 < numPlayers; iVar11++)
         do
 		{
 		  // pointer to each player structure
@@ -21622,7 +21627,7 @@ void FUN_80043ab8(void)
 	// offset of 8008d2ac for camera110 buffers
     iVar2 = 0x168;
 
-	// for(int iVar1 = 0; iVar1 < numScreens; iVar1++)
+	// for(int iVar1 = 0; iVar1 < numPlayers; iVar1++)
     do
 	{
       // add fade quad for current camera
@@ -23931,7 +23936,7 @@ void FUN_80046458(void)
   {
     iVar3 = 0;
 
-	// for iVar4 = 0; iVar4 < numPlayers; iVar4++
+	// for iVar4 = 0; iVar4 < numScreens; iVar4++
 	do
 	{
 	  // increment pointer counter
@@ -31696,7 +31701,7 @@ void FUN_8004f894(short param_1,short param_2,short param_3)
 		// End Race for all Players
 		// ============
 
-		// for iVar5 = 0; iVar5 < numScreens; iVar5++
+		// for iVar5 = 0; iVar5 < numPlayers; iVar5++
         do
 		{
 		  // pointer of each player (P1, P2, P3, P4)
@@ -31795,7 +31800,7 @@ void FUN_8004f9d8(int param_1)
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0') {
     iVar6 = 0;
 
-	// for(int iVar14 = 0; iVar14 < numScreens; iVar14++)
+	// for(int iVar14 = 0; iVar14 < numPlayers; iVar14++)
     do
 	{
 	  // something related to player structure address
@@ -31919,7 +31924,7 @@ void FUN_8004f9d8(int param_1)
 
       iVar6 = uVar14 * 4;
 
-	  // for(int iVar14 = 0; iVar14 < numScreens; iVar14++)
+	  // for(int iVar14 = 0; iVar14 < numPlayers; iVar14++)
     } while ((int)uVar14 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
   return;
@@ -34163,7 +34168,7 @@ LAB_800528cc:
       iVar12 = 0;
       iVar15 = 0;
 
-	  // for iVar14 = 0; iVar14 < numScreens+numAI; iVar14++
+	  // for iVar14 = 0; iVar14 < numPlayers+numAI; iVar14++
 	  do
 	  {
 		// puVar5 increases by 4 for each iteration
@@ -34317,7 +34322,7 @@ LAB_80052b00:
         *puVar16 = uVar11;
         puVar16 = puVar16 + 1;
 
-		// iVar14 < numScreens + number of AIs
+		// iVar14 < numPlayers + number of AIs
       } while (iVar14 < (int)((uint)(byte)puVar5[0x1ca8] + (uint)(byte)puVar5[0x1cab]));
     }
 
@@ -35447,7 +35452,7 @@ LAB_80054040:
     iVar19 = 0;
     iVar7 = 0;
 
-	// for(int iVar21 = 0; iVar21 < numScreens; iVar21++)
+	// for(int iVar21 = 0; iVar21 < numPlayers; iVar21++)
     do
 	{
 	  // pointer to array of pointers for each driver (9900C, 99010, etc)
@@ -35555,7 +35560,7 @@ LAB_80054040:
 
       iVar7 = iVar7 + 4;
 
-	  // for(int iVar21 = 0; iVar21 < numScreens; iVar21++)
+	  // for(int iVar21 = 0; iVar21 < numPlayers; iVar21++)
     } while (iVar21 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
   if (
@@ -35847,15 +35852,15 @@ void FUN_8005465c(int param_1)
   // if there is more than 1 screen
   if (1 < *(byte *)(param_1 + 0x1ca8))
   {
-	// get HUD position variables [numScreens - 1]
+	// get HUD position variables [numPlayers - 1]
     puVar5 = (&PTR_DAT_8008625c)[(uint)*(byte *)(param_1 + 0x1ca8) - 1];
 
     iVar6 = 0;
 
-	// if numScreens is not zero
+	// if numPlayers is not zero
 	if (*(byte *)(param_1 + 0x1ca8) != 0)
 	{
-	  // for iVar6 = 0; iVar6 < numScreens; iVar6++
+	  // for iVar6 = 0; iVar6 < numPlayers; iVar6++
       do {
         if (
 			//if racer hasn't finished the race
@@ -36577,7 +36582,7 @@ void FUN_800552a4(void)
     local_30 = 0;
     iVar7 = 0;
 
-	// for(int iVar13 = 0; iVar13 < numScreens; iVar13++)
+	// for(int iVar13 = 0; iVar13 < numPlayers; iVar13++)
     do
 	{
 	  // flags, for which players have pressed X to continue
@@ -36663,7 +36668,7 @@ void FUN_800552a4(void)
 					// print a hit b
 					// print b hit a
 
-			// for(int iVar9 = 0; iVar9 < numScreens; iVar9++)
+			// for(int iVar9 = 0; iVar9 < numPlayers; iVar9++)
             do
 			{
 			  // Get Battle Team of player
@@ -36779,7 +36784,7 @@ void FUN_800552a4(void)
 
       iVar7 = iVar13 * 0x10;
 
-	  // for(int iVar13 = 0; iVar13 < numScreens; iVar13++)
+	  // for(int iVar13 = 0; iVar13 < numPlayers; iVar13++)
 	} while (iVar13 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
   iVar13 = 3;
@@ -38068,7 +38073,7 @@ LAB_800568d8:
 		{
           local_8c = 0;
 
-		  // for iVar17 = 0; iVar17 < numScreens; iVar17++
+		  // for iVar17 = 0; iVar17 < numPlayers; iVar17++
           do
 		  {
 			// Increment Loop counter
@@ -38081,7 +38086,7 @@ LAB_800568d8:
 
 			// Incremented by
 
-			// numScreens - rank
+			// numPlayers - rank
 			((uint)(byte)puVar4[0x1ca8] - iVar17);
 
             local_8c = iVar17 * 4;
@@ -38526,7 +38531,7 @@ void FUN_800572d0(int param_1,undefined4 param_2,SVECTOR *param_3)
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
   {
 	// each InstDrawPerPlayer
-	// for iVar2 = 0; iVar2 < numScreens; iVar2++
+	// for iVar2 = 0; iVar2 < numPlayers; iVar2++
     do 
 	{
 	  // write specular values,
@@ -38590,7 +38595,7 @@ void FUN_8005741c(int param_1,undefined4 param_2,SVECTOR *param_3)
     puVar2 = PTR_DAT_8008d2ac;
     iVar5 = param_1;
 
-	// for iVar6 = 0; iVar6 < numScreens; iVar6++
+	// for iVar6 = 0; iVar6 < numPlayers; iVar6++
     do
 	{
 	  // pointer to start of camera110 buffer array
@@ -38725,7 +38730,7 @@ void FUN_800576b8(int param_1,undefined4 param_2,SVECTOR *param_3)
     iVar5 = 0x168;
     iVar6 = param_1;
 
-	// for iVar3 = 0; iVar3 < numScreens; iVar3++
+	// for iVar3 = 0; iVar3 < numPlayers; iVar3++
     do
 	{
 	  // pointer to camera110 buffer
@@ -42857,7 +42862,7 @@ void FUN_8005b720(void)
 		// number of screens - 1
 		iVar17 = (byte)puVar1[0x1ca8] - 1;
         
-		// numPlayers > 0
+		// numScreens > 0
 		if (-1 < iVar17) 
 		{
 		  // InstDrawPerPlayer = Instance -> InstDrawPerPlayer[iVar17]
@@ -55663,7 +55668,7 @@ void FUN_80069284(int param_1)
       if (puVar2[0x1ca8] != '\0') 
 	  {
 		// each InstDrawPerPlayer
-		// for iVar8 = 0; iVar8 < numScreens; iVar8++
+		// for iVar8 = 0; iVar8 < numPlayers; iVar8++
         do
 		{
 		  // if camera110 does not exist ?
@@ -60141,7 +60146,7 @@ void FUN_8006db7c(undefined4 param_1,undefined4 param_2,int *param_3,short param
 // param1 - camera110
 // param2 - primMem
 // param3 - rainPool
-// param4 - numScreens
+// param4 - numPlayers
 // param5 - check if game is paused
 void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
 
@@ -60409,7 +60414,7 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
 // param1 - camera110
 // param2 - PrimMem
 // param3 - numStars
-// param4 - numPlayers
+// param4 - numScreens
 void FUN_8006e26c(int param_1,int param_2,ushort *param_3,int param_4)
 
 {
@@ -60595,7 +60600,7 @@ void FUN_8006e26c(int param_1,int param_2,ushort *param_3,int param_4)
 // draw normal tires (not reflected)
 // param1 - first thread
 // param2 - PrimMem
-// param3 - numPlayers
+// param3 - numScreens
 void FUN_8006e588(int param_1,int param_2,int param_3)
 
 {
@@ -61162,7 +61167,7 @@ void FUN_8006ef98(void)
 // draw reflected tires (reflected on ice)
 // param1 - first thread
 // param2 - PrimMem
-// param3 - numPlayers
+// param3 - numScreens
 void FUN_8006f004(int param_1,int param_2,int param_3)
 
 {
@@ -61644,7 +61649,7 @@ void FUN_8006f004(int param_1,int param_2,int param_3)
 // param_1 camera110
 // param_2 PrimMem
 // param_3 RainBuffer
-// param_4 numScreens
+// param_4 numPlayers
 // param_5 paused?
 void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int param_5)
 {
@@ -62500,7 +62505,7 @@ undefined4 FUN_80070388(ushort *param_1,int param_2,int param_3,int param_4,int 
 // param2 - otMem
 // param3 - render bucket instance, unused?
 // param4 - trackLOD
-// param5 - numScreens
+// param5 - numPlayers
 // param6 - isPaused?
 // RenderBucket_QueueLevInstances
 undefined4
@@ -62612,7 +62617,7 @@ FUN_80070720(int param_1,int param_2,undefined4 param_3,undefined4 param_4,int p
 // param2 - otMem
 // param3 - RenderBucketInstance
 // param4 - track LOD
-// param5 - numScreens
+// param5 - numPlayers
 // param6 - isPaused?
 // RenderBucket_QueueNonLevInstances
 undefined4
@@ -62639,7 +62644,7 @@ FUN_8007084c(undefined *param_1,int param_2,undefined4 param_3,undefined4 param_
   DAT_1f800020 = &_gp_4;
   DAT_1f800034 = *(undefined4 *)(param_2 + 0xc);
 
-  // put numScreens on scratchpad
+  // put numPlayers on scratchpad
   DAT_1f80005c = param_5;
 
   _DAT_1f800090 = param_6;
