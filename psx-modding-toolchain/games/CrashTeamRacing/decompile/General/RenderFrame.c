@@ -80,3 +80,5 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 		
 	DrawTextBackground(&window, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 }
+
+void DrawFinalLap

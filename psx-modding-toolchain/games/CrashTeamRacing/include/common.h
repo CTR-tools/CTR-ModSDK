@@ -9701,7 +9701,7 @@ struct sData
 	// 8008bc78 sep3
 	// 8008d83c usaRetil
 	short levelLOD;
-	short levelID
+	short levelID;
 
 	// 8008d840
 	int boolLoadKartHWL; // I think???
