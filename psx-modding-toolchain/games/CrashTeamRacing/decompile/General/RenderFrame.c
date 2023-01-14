@@ -4,9 +4,29 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 
 void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
+	struct Level* lev = gGT->level1;
+	
 	DrawControllerError(gGT, gGamepads);
 	DrawFinalLap(gGT);
 	ElimBG_HandleState(gGT);
+	
+	if((gGT->renderFlags & 0x21) != 0)
+		VisMem_FullFrame(gGT, level1);
+	
+	if((gGT->renderFlags & 1) != 0)
+		if(gGT->visMem != 0)
+			if(lev != 0)
+				CTR_CycleTex_LEV(
+					lev->ptr_anim_tex,
+					gGT->timer);
+					
+	if(
+		(sdata->ptrActiveMenu != 0) ||
+		((gGT->gameMode1 & END_OF_RACE) != 0)
+	)
+	{
+		MenuBox_CollectInput();
+	}
 }
 
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
