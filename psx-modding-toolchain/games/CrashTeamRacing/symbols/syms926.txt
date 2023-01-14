@@ -490,7 +490,7 @@
 
 800357b8 VisMem_FullFrame
 80035d30 VideoSTR_Init
-80035d70 CheckMissingGamepads
+80035d70 BoolAllPadsConnected
 
 80035e20 RequestMaskHint
 80035e70 RenderFrame

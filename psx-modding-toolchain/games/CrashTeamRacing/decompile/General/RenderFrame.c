@@ -5,12 +5,15 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	DrawControllerError(gGT, gGamepads);
+	DrawFinalLap(gGT);
 }
 
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	int posY;
 	int lngArrStart;
+	RECT window;
+	int i;
 	
 	// dont draw error if demo mode, or cutscene,
 	// or if no controllers are missing currently
@@ -30,7 +33,6 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// "Controller 1" or "Controller 2"
 	lngArrStart = 0;
 	
-	RECT window;
 	window.x = 0xffec;
 	window.y = posY - 3;
 	window.w = 0x228;
@@ -81,4 +83,65 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	DrawTextBackground(&window, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 }
 
-void DrawFinalLap
+void DrawFinalLap(struct GameTracker* gGT)
+{
+	int i;
+	int textTimer;
+	struct Camera110* c110;
+	
+	int startX;
+	int endX;
+	int posY;
+	
+	// number of players
+	for(i = 0; i < 4; i++)
+	{
+		// time remaining in animation
+		textTimer = sdata->finalLapTextTimer[i];
+		
+		// skip if not drawing "FINAL LAP"
+		if(textTimer == 0)
+			continue;
+		
+		// turn "time remaining" into "time elapsed",
+		// 90 frames total in animation, 1.5 seconds
+		textTimer = 90 - textTimer;
+		
+		// camera
+		c110 = gGT->camera110[i];
+		
+		// << 0x10, >> 0x12
+		posY = c110->rect.h / 4;
+		
+		// fly from right to center
+		if(textTimer < 11)
+		{
+			startX = c110->rect.w + 100;
+			endX = c110->rect.w / 2;
+
+			goto DrawFinalLapString;
+		}
+		
+		// sit in center
+		if(textTimer < 0x51)
+		{
+			startX = c110->rect.w / 2;
+			endX = startX;
+			
+			// for duration
+			textTimer -= 10;
+
+			goto DrawFinalLapString;
+		}
+
+		// fly from center to left
+		startX = c110->rect.w / 2;
+		endX = -100;
+		textTimer -= 0x50;
+		
+DrawFinalLapString:
+
+		
+
+	}
+}
