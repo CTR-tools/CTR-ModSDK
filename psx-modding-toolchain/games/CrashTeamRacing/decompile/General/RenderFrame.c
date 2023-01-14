@@ -27,6 +27,10 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	{
 		MenuBox_CollectInput();
 	}
+	
+	if(sdata->ptrActiveMenu != 0)
+		if(sdata->Loading.stage == -1)
+			MenuBox_ProcessState();
 }
 
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
