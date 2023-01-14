@@ -7738,17 +7738,17 @@ struct Data
 	#if BUILD == SepReview
 	// Remember MenuBox is bigger in SepReview
 	char data_preAdvHub[0xE4];
-	#elif BUILD == UsaRetail || BUILD == JpnTrial
+	#elif BUILD == JpnTrial
 	char data_preAdvHub[0x118];
 	#elif BUILD == EurRetail
 	char data_preAdvHub[0xDC];
 	#elif BUILD == JpnRetail
 	char data_preAdvHub[0xD0];
-	#endif
+	
+	#elif BUILD == UsaRetail
 
+	// block should be 0x118 bytes
 
-
-	#if 0
 	// 80084250 (start of hole)
 	// heights that "gamepad unplugged can be at
 	short errorPosY[4];
@@ -7761,6 +7761,7 @@ struct Data
 
 	// 80084290
 	// number of options on each page of race wheel config
+	char unk80084258[0x54];
 
 	// 800842ac
 	char raceConfig_colors_arrows[0xc];
@@ -7771,6 +7772,7 @@ struct Data
 
 	// 800842D0
 	// related to namco gamepad
+	char unkNamcoGamepad[0x3c];
 
 	// 8008430c -- UsaRetail
 	int gGT_gameMode1_Vibration_PerPlayer[4];
@@ -7780,11 +7782,8 @@ struct Data
 	short Options_StringIDs_Gamepads[6];
 
 	// 80084328
-	// FX, MUSIC, VOIEC
-	short Options_StringIDs_Audio[3];
-
-	// 0x8008432E
-	// +2 byte padding
+	// FX, MUSIC, VOICE, 4th for padding
+	short Options_StringIDs_Audio[4];
 
 	// 0x80084330
 	// horizontal bar (blue),
