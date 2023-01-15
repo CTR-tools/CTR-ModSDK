@@ -17,13 +17,6 @@ mkpsxiso = Mkpsxiso()
 nops = Nops()
 num_options = [0]
 
-def parse_compile_list(make: Makefile, sym: Syms):
-    with open(COMPILE_LIST, "r") as file:
-        for line in file:
-            cl = CompileList(line, sym)
-            if not cl.should_ignore():
-                make.add_cl(cl)
-
 def get_options() -> int:
     intro_msg = (
         "Please select an action:\n\n"
@@ -58,7 +51,12 @@ def compile() -> None:
         return
     game_syms = Syms()
     make = Makefile(game_syms.get_build_id(), game_syms.get_files())
-    parse_compile_list(make, game_syms)
+    # parsing compile list
+    with open(COMPILE_LIST, "r") as file:
+        for line in file:
+            cl = CompileList(line, game_syms)
+            if not cl.should_ignore():
+                make.add_cl(cl)
     if make.build_makefile():
         make.make()
     free_sections()
