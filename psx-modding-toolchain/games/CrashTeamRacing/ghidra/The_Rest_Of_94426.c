@@ -6967,7 +6967,7 @@ void FUN_80035e70(uint *param_1)
 	  // box height
       local_3a = 0xe;
 
-	  // for(int iVar6 = 0; iVar6 < Number of Players; iVar6++)
+	  // for(int iVar6 = 0; iVar6 < numPlyrNextGame; iVar6++)
 
       do
 	  {
@@ -6994,7 +6994,7 @@ void FUN_80035e70(uint *param_1)
 		// increment offest to next player's gamepad buffer
         iVar19 = iVar19 + 0x50;
 
-						// Number of Players
+						// numPlyrNextGame
       } while (iVar6 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca9]);
     }
 
@@ -7215,7 +7215,7 @@ void FUN_80035e70(uint *param_1)
         }
 
 		// gGT -> 0x1a44
-		// gGT->RainBuffer[i].numParticles_max
+		// gGT->RainBuffer[i].numParticles_max = quadblock->weather_Intensity / numPlyrCurrGame
         *(short *)(puVar12 + 0x691) = (short)((int)(uVar7 << 2) / (int)(uint)bVar2);
 
 		// (72a*4 = 1ca8), numPlyrCurrGame
@@ -7228,7 +7228,8 @@ void FUN_80035e70(uint *param_1)
           trap(0x1800);
         }
 
-		// gGT -> 0x1a46? (rainBuffer 0x6 = quadblock 0x3a)
+		// gGT -> 0x1a46 
+		// gGT->RainBuffer[i].vanishRate = quadblock->weather_vanishRate / numPlyrCurrGame
         *(undefined2 *)((int)puVar12 + 0x1a46) =
              (short)((int)((uint)*(byte *)(puVar18[0x52d] + 0x3a) << 2) / (int)(uint)bVar2);
       }
@@ -61691,11 +61692,14 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
   iVar4 = 0x1f800000;
   DAT_1f800020 = &DAT_8008cf6c;
   gte_ldtr(0,0,0);
+  
+  // matrix_ViewProj
   gte_ldR11R12(param_1[10]);
   gte_ldR13R21(param_1[0xb]);
   gte_ldR22R23(param_1[0xc]);
   gte_ldR31R32(param_1[0xd]);
   gte_ldR33(param_1[0xe]);
+  
   DAT_1f800000 = unaff_s0;
   DAT_1f800004 = unaff_s1;
   DAT_1f800008 = unaff_s2;
@@ -61717,16 +61721,29 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
 
   *(uint *)(iVar4 + 0x38) = uVar15 | 0x4000000;
   *(int *)(iVar4 + 0x3c) = iVar16;
+  
   uVar13 = param_1[8];
+  
+  // ptrOT
   uVar11 = param_1[0x3d];
+  
+  // window dimensions
   gte_ldOFX((int)*(short *)(param_1 + 8) << 0xf);
   gte_ldOFY((int)*(short *)((int)param_1 + 0x22) << 0xf);
   gte_ldH(param_1[6]);
+  
   uVar14 = *param_3;
+  
+  // rain numParticles_max
   uVar6 = (uint)*(ushort *)(param_3 + 1);
-  if (param_5 == 0) {
+  
+  // if not paused
+  if (param_5 == 0) 
+  {
+	// rain vanishRate
     uVar8 = (uint)*(ushort *)((int)param_3 + 6);
-    iVar9 = uVar6 - uVar14;
+    
+	iVar9 = uVar6 - uVar14;
     if (uVar6 != uVar14) {
       if (iVar9 < 0) {
         uVar14 = uVar14 - uVar8;
@@ -61743,6 +61760,7 @@ void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int
       *param_3 = uVar14;
     }
   }
+  
   uVar6 = param_3[2];
   uVar8 = param_3[3];
   uVar19 = uVar8 + param_3[5];

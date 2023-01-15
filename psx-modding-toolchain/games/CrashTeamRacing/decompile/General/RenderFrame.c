@@ -2,6 +2,8 @@
 
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 
+void DrawFinalLap(struct GameTracker* gGT);
+
 void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	struct Level* lev = gGT->level1;
@@ -31,6 +33,9 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	if(sdata->ptrActiveMenuBox != 0)
 		if(sdata->Loading.stage == -1)
 			MenuBox_ProcessState();
+		
+	RainLogic(gGT);
+	EffectSfxRain_MakeSound(gGT);
 }
 
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -178,5 +183,33 @@ DrawFinalLapString:
 			c110->ptrOT);
 			
 		sdata->finalLapTextTimer[i]--;
+	}
+}
+
+void RainLogic(struct GameTracker* gGT)
+{
+	int i;
+	struct Quadblock* camQB;
+	int numPlyrCurrGame;
+	
+	numPlyrCurrGame = gGT->numPlyrCurrGame;
+	
+	for(i = 0; i < numPlyrCurrGame; i++)
+	{
+		Camera110_UpdateFrustum(&gGT->camera110[i]);
+		
+		camQB = gGT->cameraDC[i].ptrQuadBlock;
+		
+		// skip if camera isn't over quadblock
+		if(camQB == 0) continue;
+		
+		// assume numPlayers is never zero,
+		// assume weather_intensity is always valid
+		
+		gGT->RainBuffer[i].numParticles_max =
+			(camQB->weather_intensity << 2) / numPlyrCurrGame;
+			
+		gGT->RainBuffer[i].unk1a46 =
+			(camQB->weather_vanishRate << 2) / numPlyrCurrGame;
 	}
 }

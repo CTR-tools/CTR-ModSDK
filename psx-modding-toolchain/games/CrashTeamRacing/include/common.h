@@ -3812,7 +3812,7 @@ struct QuadBlock
 	// 0x38
 	char terrain_type;
 	char weather_intensity;
-	char weather_type;
+	char weather_vanishRate;
 	char speedImpact;
 
 	// 0x3C
@@ -3954,7 +3954,8 @@ struct RainBuffer
 
   // 0x4 (0x1a44)
   // if zero, then there is no max
-  int numParticles_max;
+  short numParticles_max;
+  short vanishRate;
 
   // 0x8
   char unk_4[0x10];
