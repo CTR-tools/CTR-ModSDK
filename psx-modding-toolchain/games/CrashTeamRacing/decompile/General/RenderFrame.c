@@ -42,6 +42,12 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	#endif
 	
 	RenderAllHUD(gGT);
+	RenderAllBeakerRain(gGT);
+	RenderAllBoxSceneSplitLines(gGT);
+	
+	// next comes RenderBucket,
+	// CTRL + F:
+	// "gGT->256c & renderBucket (instances)"
 }
 
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -239,7 +245,7 @@ void RenderAllWeather(struct GameTracker* gGT)
 {
 	int numPlyrCurrGame = gGT->numPlyrCurrGame;
 	
-	// only for multiplayer, 
+	// only for single player, 
 	// probably Naughty Dog's last-minute hack
 	if(numPlyrCurrGame != 1) return;
 	
@@ -371,7 +377,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 						return;
 					}
 					
-					if((gameMode2 & ARCADE_VS_CUP) != 0)
+					if((gGT->gameMode2 & ARCADE_VS_CUP) != 0)
 					{
 						// disable drawing hud,
 						// enable drawing "standings"
@@ -388,8 +394,64 @@ void RenderAllHUD(struct GameTracker* gGT)
 			// if adv hub
 			else
 			{
-				// [still need to do]
-				// CTRL + F "if ((1 < (byte)PTR_DAT_8008d2ac[0x2579]) &&"
+				// load on last frame of waiting to load 232,
+				// leave transition at 1 (see later in func),
+				// and load the 232 overlay
+				if(gGT->overlayTransition > 1)
+				{
+					gGT->overlayTransition--;
+					if(gGT->overlayTransition == 1)
+						LOAD_OvrThreads(2);
+				}
+				
+				// if 233 is still loaded
+				if(LOAD_IsOpen_AdvHub() == 0)
+				{
+					// if any transition is over
+					if(gGT->camera110_UI.fadeFromBlack_currentValue > 0xfff)
+					{
+						DrawHUD_AdvStrings();
+					}
+				}
+				
+				// if 232 overlay is loaded
+				else
+				{
+					// if any transition is over
+					if(gGT->camera110_UI.fadeFromBlack_currentValue > 0xfff)
+					{
+						AH_Map_Main();
+						
+						if(sdata->AkuHint_RequestedHint != -1)
+						{
+							AH_MaskHint_Start(
+								sdata->AkuHint_RequestedHint,
+								sdata->AkuHint_boolInterruptWarppad
+							);
+							
+							//erase submitted request
+							sdata->AkuHint_RequestedHint = -1;
+							sdata->AkuHint_boolInterruptWarppad = 0;
+						}
+					}
+					
+					// if first frame of transition to 232
+					if(gGT->overlayTransition != 0)
+					{
+						gGT->overlayTransition = 0;
+						
+						INSTANCE_LevRestartLInBs(
+							gGT->level1->ptrInstDefs,
+							gGT->level1->numInstances);
+							
+						// allow instances again
+						gGT->gameMode2 &= ~(DISABLE_LEV_INSTANCE);
+
+						// fade transition
+						gGT->camera110_UI.fadeFromBlack_desiredResult = 0x1000;
+						gGT->camera110_UI.fade_step = 0x2aa;
+					}
+				}
 			}
 		}
 	}
@@ -400,3 +462,38 @@ void RenderAllHUD(struct GameTracker* gGT)
 		DrawIntroRaceText_1P();
 	}
 }
+
+void RenderAllBeakerRain(struct GameTracker* gGT)
+{
+	int numPlyrCurrGame = gGT->numPlyrCurrGame;
+	
+	// only for 1P/2P
+	if(numPlyrCurrGame > 2) return;
+	
+	// only if beaker rain is enabled
+	if((gGT->renderFlags & 0x10) == 0) return;
+	
+	RenderWeather(
+		&gGT->camera110[0],
+		&gGT->backBuffer->primMem,
+		&gGT->AllocPools.rain,
+		numPlyrCurrGame,
+		gGT->gameMode1 & 0xf);
+}
+
+void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
+{
+	// skip checking if 233 is loaded,
+	// cause ND Box scene will always have it
+	
+	// ND Box Scene
+	if(gGT->levelID == 0x29)
+	{
+		CS_BoxScene_InstanceSplitLines();
+	}
+}
+
+
+
+
+

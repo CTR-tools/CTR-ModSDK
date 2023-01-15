@@ -6831,11 +6831,11 @@ void FUN_80035e20(short param_1,undefined2 param_2)
     *(undefined **)(puGp00000340[0x93b] + 0x54) = &FUN_80062d04;
 
 	// 8008d2cc
-	// requestedAkuHint
+	// AkuHint_RequestedHint
 	sGp00000360 = param_1;
 
 	// 8008d2ce
-	// bool_AkuHint_InterruptWarppad
+	// AkuHint_boolInterruptWarppad
 	uGp00000362 = param_2;
   }
   return;
@@ -7563,7 +7563,7 @@ LAB_800367d4:
 			// AH_Map_Main (map, icons, etc)
             FUN_800b1c90();
 
-			// if aku is not giving a hint
+			// if request mask hint
             if ((int)DAT_8008d2cc != -1)
 			{
 			  // AH_MaskHint_Start

@@ -4303,7 +4303,9 @@ enum GameMode2
   
   // & 0x20 - lev swap
   // & 0x80 - CREDITS
-  // & 0x100 - ENABLE_LEV_INSTANCES
+  
+  // & 0x100 - DISABLE_LEV_INSTANCES
+	DISABLE_LEV_INSTANCE = 0x100,
 	
 	CHEAT_WUMPA 	= 0x200,
 	CHEAT_MASK 		= 0x400,
@@ -8965,10 +8967,10 @@ struct sData
 	// 8008d2cc
 	// (actually two shorts, not one int),
 	// (both related to requesting Aku Hint)
-	short requestedAkuHint;
+	short AkuHint_RequestedHint;
 
 	// 8008d2ce
-	short bool_AkuHint_InterruptWarppad;
+	short AkuHint_boolInterruptWarppad;
 
 	// 8008d2d0
 	// 1,2,4,4,8,8,8,8
