@@ -4299,6 +4299,8 @@ enum GameMode2
 	TOKEN_RACE = 8,
   
   // & 0x10 - Arcade cup
+	ARCADE_VS_CUP = 0x10,
+  
   // & 0x20 - lev swap
   // & 0x80 - CREDITS
   // & 0x100 - ENABLE_LEV_INSTANCES

@@ -322,13 +322,74 @@ void RenderAllHUD(struct GameTracker* gGT)
 			// if not adv hub
 			if((gameMode1 & ADVENTURE_ARENA) == 0)
 			{
+				// if not drawing end of race
+				if(
+					// end of race is not reached
+					((gameMode1 & END_OF_RACE) == 0) ||
+					
+					// cooldown after end of race not expired
+					(gGT->timerEndOfRaceVS != 0)
+				)
+				{
+					// not crystal challenge
+					if((gameMode1 & CRYSTAL_CHALLENGE) == 0)
+					{
+						DrawHUD_Racing();
+					}
+					
+					// if crystal challenge
+					else
+					{
+						DrawHUD_CrystalChallenge();
+					}
+				}
 				
+				// drawing end of race
+				else
+				{
+					if((gameMode1 & (ADVENTURE_MODE | ARCADE_MODE)) != 0)
+					{
+						AA_EndEvent_DrawMenu();
+						return;
+					}
+					
+					if((gameMode1 & RELIC_RACE) != 0)
+					{
+						RR_EndEvent_DrawMenu();
+						return;
+					}
+					
+					if((gameMode1 & TIME_TRIAL) != 0)
+					{
+						TT_EndEvent_DrawMenu();
+						return;
+					}
+					
+					if((gameMode1 & CRYSTAL_CHALLENGE) != 0)
+					{
+						CC_EndEvent_DrawMenu();
+						return;
+					}
+					
+					if((gameMode2 & ARCADE_VS_CUP) != 0)
+					{
+						// disable drawing hud,
+						// enable drawing "standings"
+						gGT->hudFlags = (hudFlags & 0xfe) | 4;
+						return;
+					}
+					
+					// only remaining option
+					VB_EndEvent_DrawMenu();
+					return;
+				}
 			}
 			
 			// if adv hub
 			else
 			{
-				
+				// [still need to do]
+				// CTRL + F "if ((1 < (byte)PTR_DAT_8008d2ac[0x2579]) &&"
 			}
 		}
 	}
