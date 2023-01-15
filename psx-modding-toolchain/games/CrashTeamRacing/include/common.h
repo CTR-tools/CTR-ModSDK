@@ -3472,21 +3472,31 @@ struct CameraDC
 	int cameraID;
 
 	// 0x4
-	char data40[0x40];
-
-	// 0x4
 	// action,
 	// 0x20000 constantly swaps L2 zoom
+	int action;
 
 	// 0x08
 	// camera mode, zoom out and such
+	int mode;
+	
+	// 0xC
+	int unk0xC;
 
 	// 0x10
 	// desired rotation
+	short desiredRot[4];
+
+	// 0x18
+	int unk0x18;
 
 	// 0x1c - ptrQuadBlock
 	// similar to driver +a0,
 	// quadblock camera is currently above
+	struct Quadblock* ptrQuadBlock;
+	
+	// 0x24
+	char unk24[0x20];
 
 	// duplicate ptr[4] array,
 	// copied from quadblock + 0x44

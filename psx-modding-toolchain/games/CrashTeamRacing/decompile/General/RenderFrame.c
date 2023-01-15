@@ -189,7 +189,7 @@ DrawFinalLapString:
 void RainLogic(struct GameTracker* gGT)
 {
 	int i;
-	struct Quadblock* camQB;
+	struct QuadBlock* camQB;
 	int numPlyrCurrGame;
 	
 	numPlyrCurrGame = gGT->numPlyrCurrGame;
@@ -206,10 +206,10 @@ void RainLogic(struct GameTracker* gGT)
 		// assume numPlayers is never zero,
 		// assume weather_intensity is always valid
 		
-		gGT->RainBuffer[i].numParticles_max =
+		gGT->rainBuffer[i].numParticles_max =
 			(camQB->weather_intensity << 2) / numPlyrCurrGame;
 			
-		gGT->RainBuffer[i].unk1a46 =
+		gGT->rainBuffer[i].vanishRate =
 			(camQB->weather_vanishRate << 2) / numPlyrCurrGame;
 	}
 }
