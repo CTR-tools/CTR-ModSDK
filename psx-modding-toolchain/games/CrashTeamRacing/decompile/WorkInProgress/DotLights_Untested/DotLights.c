@@ -81,14 +81,14 @@ void DotLights(struct GameTracker* gGT)
   
 DrawLights:
   
-  for(playerIndex = 0; playerIndex < gGT->numPlayers; playerIndex++)
+  for(playerIndex = 0; playerIndex < gGT->numPlyrCurrGame; playerIndex++)
   {
 
       c110 = &gGT->camera110[playerIndex];
 
 	  scale = 0x800;
-	  if(gGT->numPlayers == 1) scale = 0x1000;
-	  if(gGT->numPlayers == 2) scale = 0xaaa;
+	  if(gGT->numPlyrCurrGame == 1) scale = 0x1000;
+	  if(gGT->numPlyrCurrGame == 2) scale = 0xaaa;
 
 	  // pointer to first traffic light icon
       icon = gGT->trafficLightIcon[0];

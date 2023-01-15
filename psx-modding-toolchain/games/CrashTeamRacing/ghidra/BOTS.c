@@ -426,7 +426,7 @@ LAB_8001288c:
 	 )
 	{
 
-	 // if number of screens is 2
+	 // if numPlyrCurrGame is 2
      if (PTR_DAT_8008d2ac[0x1ca8] == 2)
 	 {
 	   // {0, 1, 2, 4, 5, 6, 3, 7}
@@ -434,7 +434,7 @@ LAB_8001288c:
        DAT_8008d6a0 = DAT_80080efc;
      }
 
-	 // if number of screens is more than 2
+	 // if numPlyrCurrGame is more than 2
      else if (2 < (byte)PTR_DAT_8008d2ac[0x1ca8])
 	 {
 	   // {0, 1, 2, 3, 4, 5, 6, 7}
@@ -634,7 +634,7 @@ LAB_8001288c:
     do {
       if (
 			(
-					// number of screens <= var >> 0x10
+					// numPlyrCurrGame <= var >> 0x10
 				(int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] <= iVar11 >> 0x10
 			) &&
 			(
@@ -1790,7 +1790,7 @@ LAB_800144a0:
           uVar8 = uVar8 - 1;
         }
 
-		    // if number of screens is more than 1
+		    // if numPlyrCurrGame is more than 1
         if ((1 < (byte)PTR_DAT_8008d2ac[0x1ca8]) &&
            (*(short *)(*(int *)(PTR_DAT_8008d2ac + 0x24f0) + 0x482) <= (short)uVar8)) {
           uVar8 = uVar8 - 1;

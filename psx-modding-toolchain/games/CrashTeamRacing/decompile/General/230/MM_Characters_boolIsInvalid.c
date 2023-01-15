@@ -7,10 +7,10 @@ u_int DECOMP_MM_Characters_boolIsInvalid(short* globalIconPerPlayer, short chara
 	int i = 0;
 	
 	// if there are players
-	if (sdata->gGT->numScreens) 
+	if (sdata->gGT->numPlyrNextGame) 
 	{
 		// loop through players
-		for (i = 0; i < sdata->gGT->numScreens; i++)
+		for (i = 0; i < sdata->gGT->numPlyrNextGame; i++)
 		{
 			// if driver is taken
 			if ((i != player) && (characterID == globalIconPerPlayer[i]))

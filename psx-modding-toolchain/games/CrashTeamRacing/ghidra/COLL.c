@@ -530,7 +530,7 @@ void FUN_8001d944(int param_1,int param_2)
   // low-LOD collision (2 triangles)
   DAT_1f80012a = 0;
 
-  // if number of screens is less than 3 (1P or 2P)
+  // if numPlyrCurrGame is less than 3 (1P or 2P)
   if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) 
   {
 	// high-LOD collision (8 triangles)
@@ -647,7 +647,7 @@ void FUN_8001d944(int param_1,int param_2)
 
     puVar3 = PTR_DAT_8008d2ac;
 
-	// if number of screens is less than 2
+	// if numPlyrCurrGame is less than 2
     if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 2)
 	{
 	  // quadblock flags
@@ -3235,7 +3235,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
   // low-LOD collision (2 triangles)
   DAT_1f80012a = 1;
 
-  // if number of screens is less than 3
+  // if numPlyrCurrGame is less than 3
   if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3)
   {
 	// high-LOD collision (8 triangles)

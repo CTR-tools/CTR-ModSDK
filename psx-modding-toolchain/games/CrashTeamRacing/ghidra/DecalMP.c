@@ -33,7 +33,7 @@ void FUN_80023488(void)
   // camera110
   puVar11 = (undefined2 *)(PTR_DAT_8008d2ac + 0x168);
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0') 
   {
 	// gGT->camera110[i].cameraID
@@ -42,7 +42,7 @@ void FUN_80023488(void)
 	
     iVar10 = 0;
 
-	// for(int iVar9 = 0; iVar9 < numScreens; iVar9++)
+	// for(int iVar9 = 0; iVar9 < numPlyrCurrGame; iVar9++)
     do {
 
 	  // another loop counter
@@ -166,7 +166,7 @@ void FUN_80023488(void)
 	  // InstDrawPerPlayer
       puVar11 = puVar11 + 0x88;
 
-	  // for(int iVar9 = 0; iVar9 < numScreens; iVar9++)
+	  // for(int iVar9 = 0; iVar9 < numPlyrCurrGame; iVar9++)
     } while (iVar9 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
   return;
@@ -318,10 +318,10 @@ void FUN_80023784(int param_1)
   local_2c = 0x60;
   local_2a = 0x40;
 
-  // if number of screens is not 2
+  // if numPlyrCurrGame is not 2
   uVar14 = 0x100;
 
-  // if number of screens is 2
+  // if numPlyrCurrGame is 2
   if (PTR_DAT_8008d2ac[0x1ca8] == '\x02') {
     uVar14 = 0x180;
   }

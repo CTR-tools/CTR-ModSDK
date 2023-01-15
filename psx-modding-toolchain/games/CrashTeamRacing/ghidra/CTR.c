@@ -325,7 +325,7 @@ void FUN_80021b94(uint *param_1,uint *param_2,int param_3)
 
 // CTR_ClearRenderLists_1P2P
 // param1 - gGT
-// param2 - numPlayers
+// param2 - numPlyrCurrGame
 void FUN_80021bbc(int param_1,int param_2)
 
 {
@@ -373,7 +373,7 @@ void FUN_80021bbc(int param_1,int param_2)
 
 // CTR_ClearRenderLists_3P4P
 // param1 - gGT
-// param2 - numPlayers
+// param2 - numPlyrCurrGame
 void FUN_80021c2c(int param_1,int param_2)
 
 {

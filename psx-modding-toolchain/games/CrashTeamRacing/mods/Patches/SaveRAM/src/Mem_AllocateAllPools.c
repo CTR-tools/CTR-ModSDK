@@ -11,7 +11,7 @@ void ANTICHIP_CheckFraud_Entry();
 #endif
 
 // only in builds 926+
-int GetClipBufferSize(int levID, int numPlayers);
+int GetClipBufferSize(int levID, int numPlyrCurrGame);
 
 // To do: add header for CTR funcs
 void AllocPool_Init(struct AllocPool* ap, int numItems, int itemSize);
@@ -129,7 +129,7 @@ void AllocateAllPools_New(struct GameTracker* gGT)
   // most other mods use RDATA when combined with oxide fix
   gGT->ptrRenderBucketInstance = (void*)MEMPACK_AllocMem(0x1000);
 
-  AllocPool_Init(&gGT->AllocPools.instance, uVar9, 0x74 + (0x88 * gGT->numPlayers));
+  AllocPool_Init(&gGT->AllocPools.instance, uVar9, 0x74 + (0x88 * gGT->numPlyrCurrGame));
 
   // everywhere else (main menu, race, adv hub, podiums)
   medStackCount = 12;
@@ -189,12 +189,12 @@ void AllocateAllPools_New(struct GameTracker* gGT)
   #elif BUILD >= UsaRetail
 
   // get size
-  clipSize = GetClipBufferSize(gGT->levelID,gGT->numPlayers);
+  clipSize = GetClipBufferSize(gGT->levelID,gGT->numPlyrCurrGame);
 
   #endif
 
   // clip buffer for each player
-  for(loop = 0; loop < gGT->numPlayers; loop++)
+  for(loop = 0; loop < gGT->numPlyrCurrGame; loop++)
   {
 	data.PtrClipBuffer[loop] = MEMPACK_AllocMem(clipSize << 2);
   }

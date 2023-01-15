@@ -108,7 +108,7 @@ void RunUpdateHook()
 	sdata->gGT->gameMode1 |= 0x400000;
 	
 	// prevent error message for gamepads
-	sdata->gGT->numScreens = 1;
+	sdata->gGT->numPlyrNextGame = 1;
 	
 	// lock, dont decrease,
 	// prevents main menu from leaving,
@@ -253,8 +253,8 @@ void RunUpdateHook()
 	if((tap & BTN_START) != 0)
 	{
 		sdata->gGT->boolDemoMode = 1;
-		sdata->gGT->numPlayers = PLAYERS;
-		sdata->gGT->numScreens = PLAYERS;
+		sdata->gGT->numPlyrCurrGame = PLAYERS;
+		sdata->gGT->numPlyrNextGame = PLAYERS;
 		Level_RequestNewLEV(SIN_TRACK());
 	}
 }

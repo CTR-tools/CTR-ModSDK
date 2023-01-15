@@ -614,15 +614,15 @@ undefined4 FUN_800289b0(uint param_1,uint param_2)
 
   uVar4 = param_2 >> 8 & 0xff;
 
-  // if number of screens is 2
+  // if numPlyrCurrGame is 2
   if (PTR_DAT_8008d2ac[0x1ca8] == 2) {
     iVar1 = uVar2 * 0x37;
   }
 
-  // if number of screens is not 2
+  // if numPlyrCurrGame is not 2
   else
   {
-	// if number of screens is less than 3
+	// if numPlyrCurrGame is less than 3
 	// which would only be for 1P mode
     if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) goto LAB_80028a78;
 
@@ -5420,7 +5420,7 @@ void FUN_8002d0f8(void)
 			// canPlayWrongWaySFX = False
 			DAT_8008d7ed = '\0',
 
-			// if number of screens is 1
+			// if numPlyrCurrGame is 1
 			PTR_DAT_8008d2ac[0x1ca8] == '\x01')
 	   )
 	{
@@ -5738,10 +5738,10 @@ void FUN_8002d554(undefined4 param_1)
 
   puVar4 = PTR_DAT_8008d2ac;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != 0) {
 
-  // for(int iVar2 = 0; iVar2 < numScreens; iVar2++)
+  // for(int iVar2 = 0; iVar2 < numPlyrCurrGame; iVar2++)
 	do
 	{
       //if player is using mask weapon
@@ -5757,7 +5757,7 @@ void FUN_8002d554(undefined4 param_1)
 	  // increment pointer
       puVar4 = puVar4 + 4;
 
-	  //               number of screens
+	  //               numPlyrCurrGame
     } while (iVar2 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
 
@@ -6545,7 +6545,7 @@ uint FUN_8002de48(void)
 	  {
         cVar2 = '\x03';
 
-							// number of screens
+							// numPlyrCurrGame
         if (DAT_8008d800 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]) {
 
           if (
@@ -7456,7 +7456,7 @@ void FUN_8002ebe4(void)
 		// if ordinary racing track
 		(local_40 < 0x19) &&
 
-		// if number of screens is less than 3
+		// if numPlyrCurrGame is less than 3
 		((byte)PTR_DAT_8008d2ac[0x1ca8] < 3)
 	 )
    {
@@ -7473,10 +7473,10 @@ void FUN_8002ebe4(void)
 
       puVar8 = PTR_DAT_8008d2ac;
 
-	  // if number of screens is not zero
+	  // if numPlyrCurrGame is not zero
       if (PTR_DAT_8008d2ac[0x1ca8] != 0) {
 
-		// for(int iVar16 = 0; iVar16 < numScreens; iVar16++)
+		// for(int iVar16 = 0; iVar16 < numPlyrCurrGame; iVar16++)
 		do {
 
 		  // driver->0xc2 (current terrain)
@@ -7510,7 +7510,7 @@ void FUN_8002ebe4(void)
 		  // pointer incrementation
           puVar8 = puVar8 + 4;
 
-		  //                  number of screens
+		  //                  numPlyrCurrGame
         } while (iVar16 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
       }
 	  
@@ -7554,10 +7554,10 @@ void FUN_8002ebe4(void)
 
         puVar8 = PTR_DAT_8008d2ac;
 
-		// if number of screens is not zero
+		// if numPlyrCurrGame is not zero
         if (PTR_DAT_8008d2ac[0x1ca8] != 0) {
 
-		  // for(int iVar16 = 0; iVar16 < numScreens; iVar16++)
+		  // for(int iVar16 = 0; iVar16 < numPlyrCurrGame; iVar16++)
 		  do
 		  {
 			// driver -> terrain -> sound
@@ -7586,7 +7586,7 @@ void FUN_8002ebe4(void)
 			// increment pointer
             puVar8 = puVar8 + 4;
 
-								// number of screens
+								// numPlyrCurrGame
           } while (iVar16 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
         }
         
@@ -7668,7 +7668,7 @@ void FUN_8002ebe4(void)
               do {
                 iVar13 = 0;
 
-				// if number of screens is not zero
+				// if numPlyrCurrGame is not zero
                 if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
 				{
 				  // offset of 8008d2ac where camera110 structs are held
@@ -7677,7 +7677,7 @@ void FUN_8002ebe4(void)
 
                   piVar18 = (int *)((int)local_3c + iVar12);
 
-				  // for(int iVar13 = 0; iVar13 < numScreens; iVar13++)
+				  // for(int iVar13 = 0; iVar13 < numPlyrCurrGame; iVar13++)
                   do {
                     local_30 = piVar9;
                     local_2c = iVar12;
@@ -7703,7 +7703,7 @@ void FUN_8002ebe4(void)
 					// increment pointer to next camera110 struct
                     iVar14 = iVar14 + 0x110;
 
-									// number of screens
+									// numPlyrCurrGame
                   } while (iVar13 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
                 }
                 iVar15 = iVar15 + 1;
@@ -7791,12 +7791,12 @@ void FUN_8002f0dc(uint param_1,int param_2)
 
   iVar7 = 0;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0') {
     iVar6 = 0;
     iVar5 = 0;
 
-	// for(int iVar4 = 0; iVar4 < numScreens; iVar4++)
+	// for(int iVar4 = 0; iVar4 < numPlyrCurrGame; iVar4++)
     do
 	{
 	  // use iVar6 to imcrement pointer
@@ -7831,7 +7831,7 @@ void FUN_8002f0dc(uint param_1,int param_2)
 
       iVar5 = iVar5 + 0xc;
 
-					// number of screens
+					// numPlyrCurrGame
     } while (iVar4 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
   if (uVar8 == 9000) {
@@ -7934,12 +7934,12 @@ void FUN_8002f31c(uint *param_1,uint param_2,int param_3)
   // loop counter
   iVar4 = 0;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0') {
     iVar6 = 0;
 
 	// find closest camera to the instance
-	// for(int iVar4 = 0; iVar4 < numScreens; iVar4++)
+	// for(int iVar4 = 0; iVar4 < numPlyrCurrGame; iVar4++)
 	do {
       puVar3 = PTR_DAT_8008d2ac + iVar6;
 
@@ -7980,7 +7980,7 @@ void FUN_8002f31c(uint *param_1,uint param_2,int param_3)
 	  // increment loop counter
       iVar4 = iVar4 + 1;
 
-					// number of screens
+					// numPlyrCurrGame
     } while (iVar4 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
 
@@ -8625,7 +8625,7 @@ void FUN_8002ff28(void)
 	  // loop counter
 	  iVar10 = 0;
 
-	  // if number of screens is not zero
+	  // if numPlyrCurrGame is not zero
       if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
 	  {
 		// pointer incrementer
@@ -8679,7 +8679,7 @@ void FUN_8002ff28(void)
 		  // pointer incrementer
           iVar2 = iVar10 * 0x10000;
 
-											// number of screens
+											// numPlyrCurrGame
         } while (iVar10 * 0x10000 >> 0x10 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
       }
 

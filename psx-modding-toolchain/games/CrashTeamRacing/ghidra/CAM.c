@@ -658,7 +658,7 @@ void FUN_8001861c(int param_1)
   // loop counter
   iVar12 = 0;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (*(char *)(param_1 + 0x1ca8) != '\0')
   {
 	// offset of 8008d2ac where each screen holds
@@ -667,7 +667,7 @@ void FUN_8001861c(int param_1)
 
     puVar9 = puVar10 + 1;
 
-	// for iVar12 = 0; iVar12 < numScreens; iVar12++
+	// for iVar12 = 0; iVar12 < numPlyrCurrGame; iVar12++
 	do
 	{
 	  // pointer to camera110 struct
@@ -1127,7 +1127,7 @@ void FUN_80018d9c(int param_1,int param_2)
   // Activate end-of-race Battle flag
   *(uint *)(param_1 + 0x70) = *(uint *)(param_1 + 0x70) | 4;
 
-  // Spin360_heightOffset_cameraPos[numPlayers]
+  // Spin360_heightOffset_cameraPos[numPlyrCurrGame]
   uVar1 = *(undefined2 *)(&DAT_80080fd4 + (uint)(byte)PTR_DAT_8008d2ac[0x1ca8] * 4);
 
   *(undefined2 *)(param_1 + 0xa8) = 0xc0;
@@ -1166,7 +1166,7 @@ void FUN_80018e38(int param_1, int param_2)
 	  // LEV -> trial_data -> numPointers
       (1 < **(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))) &&
 
-	  // if number of screens is less than 3
+	  // if numPlyrCurrGame is less than 3
      ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3))
   {
 	// This flag bit is for racing end-of-race,
@@ -1942,7 +1942,7 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
   }
   uVar8 = 0;
 
-  // if number of screens != 2
+  // if numPlyrCurrGame != 2
   if (PTR_DAT_8008d2ac[0x1ca8] != '\x02') {
     uVar8 = 0xff9c;
   }
@@ -2058,7 +2058,7 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
   // rotX
   uVar8 = 0;
 
-  // if numScreens is not 2
+  // if numPlyrCurrGame is not 2
   if (puVar6[0x1ca8] != '\x02') {
     uVar8 = 0xff9c;
   }
@@ -2730,7 +2730,7 @@ void FUN_8001b334(int param_1)
   // if you have 4:3 aspect ratio
   iVar20 = iVar9 + -0x7ff7f098; // 80080F68
 
-  // if number of screens is 2
+  // if numPlyrCurrGame is 2
   // if you have 8:3 aspect ratio
   if (PTR_DAT_8008d2ac[0x1ca8] == '\x02') {
     iVar20 = iVar9 + -0x7ff7f086; // 80080F7A

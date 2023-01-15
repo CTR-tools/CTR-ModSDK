@@ -29,10 +29,10 @@ void FUN_80024464(int param_1)
 	// param1 is PTR_DAT_8008d2ac
     iVar2 = param_1;
 
-	// if numScreens is not zero
+	// if numPlyrCurrGame is not zero
     if (*(byte *)(param_1 + 0x1ca8) != 0)
 	{
-	  // for iVar3 = 0; iVar3 < numScreens; iVar3++
+	  // for iVar3 = 0; iVar3 < numPlyrCurrGame; iVar3++
       do
 	  {
 		// increment loop counter

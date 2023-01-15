@@ -164,7 +164,7 @@ void EndCrystalChallenge(void)
 	// cross  = 0x10, 0x10 >> 4 = 1
 	// square = 0x20, 0x20 >> 4 = 2
 	// circle = 0x40, 0x40 >> 4 = 4
-	sdata->gGT->numScreens = tap >> 4;
+	sdata->gGT->numPlyrNextGame = tap >> 4;
 
 	// Add Parking Lot to Queue
 	Level_RequestNewLEV(20);
@@ -214,7 +214,7 @@ void RunInitHook()
 	mgs->numVerticesTotal = mgs->mInfo->numVertex;
 
 	// initialize each player
-	for(playerIndex = 0; playerIndex < sdata->gGT->numScreens; playerIndex++)
+	for(playerIndex = 0; playerIndex < sdata->gGT->numPlyrNextGame; playerIndex++)
 	{
 		// initialize camera
 		mgs->playerVars[playerIndex].zoom = 0x40;
@@ -243,7 +243,7 @@ void RunInitHook()
 	}
 
 	// if this is 2P mode
-	if(sdata->gGT->numScreens == 2)
+	if(sdata->gGT->numPlyrNextGame == 2)
 	{
 		// initialize model
 		// make player 2 into the first player of team 2
@@ -268,7 +268,7 @@ void CameraPerFrameHook(struct Thread* t)
 	driver = camDC->driverToFollow;
 
 	// get pointer to hud positions for each driver
-	hud = data.hudStructPtr[(sdata->gGT->numScreens-1)];
+	hud = data.hudStructPtr[(sdata->gGT->numPlyrNextGame-1)];
 	hud = (short*)((char*)hud + 0xA0*driver->driverID);
 
 	DrawPowerslideMeter((int)hud[0x20],(int)hud[0x21],driver);
@@ -456,7 +456,7 @@ void RunUpdateHook()
 	if(sdata->gGT->trafficLightsTimer < 0)
 	{
 
-		for(playerIndex = 0; playerIndex < sdata->gGT->numScreens; playerIndex++)
+		for(playerIndex = 0; playerIndex < sdata->gGT->numPlyrNextGame; playerIndex++)
 		{
 			// driver struct
 			driver = sdata->gGT->drivers[playerIndex];
@@ -721,7 +721,7 @@ void RunUpdateHook()
 
 	// ============= Camera Position =================
 
-	for(playerIndex = 0; playerIndex < sdata->gGT->numScreens; playerIndex++)
+	for(playerIndex = 0; playerIndex < sdata->gGT->numPlyrNextGame; playerIndex++)
 	{
 		// zoom doesn't change, leave this out till it's needed
 

@@ -5,7 +5,7 @@
 
 void MM_Characters_MenuBox()
 {
-	u_char numScreens;
+	u_char numPlyrNextGame;
 	int bVar2;
 	int bVar3;
 	u_short characterSelectFlags5bit;
@@ -154,7 +154,7 @@ void MM_Characters_MenuBox()
 	}
 	OVR_230.transitionFrames = transitionFrames;
 
-	switch(OVR_230.characterSelectNumScreens)
+	switch(OVR_230.characterSelectIconLayout)
 	{
 		default:
 			goto dontDrawSelectCharacter;
@@ -224,11 +224,11 @@ void MM_Characters_MenuBox()
 	dontDrawSelectCharacter:
 
 	// if number of players is not zero
-	if (sdata->gGT->numScreens)
+	if (sdata->gGT->numPlyrNextGame)
 	{
 		globalIconPerPlayerPtr = &globalIconPerPlayer[0];
 
-		for (i = 0; i < sdata->gGT->numScreens; i++)
+		for (i = 0; i < sdata->gGT->numPlyrNextGame; i++)
 		{
 			characterSelectFlags5bit = (u_short)(1 << (i & 0x1f));
 			globalIconPerPlayerCopy = globalIconPerPlayerPtr[i];
@@ -378,9 +378,9 @@ void MM_Characters_MenuBox()
 							bVar2 = false;
 				
 							// If number of players is not zero
-							if (sdata->gGT->numScreens) 
+							if (sdata->gGT->numPlyrNextGame) 
 							{
-								for (k = 0; k < sdata->gGT->numScreens; k++)
+								for (k = 0; k < sdata->gGT->numPlyrNextGame; k++)
 								{
 									if((k != j) && ((short)globalIconPerPlayerCopy2 == globalIconPerPlayerPtr[k]))
 									{
@@ -407,9 +407,9 @@ void MM_Characters_MenuBox()
 					globalIconPerPlayerCopy = (u_short)globalIconPerPlayerCopy2;
 			
 					// if number of players is not zero
-					if (sdata->gGT->numScreens) 
+					if (sdata->gGT->numPlyrNextGame) 
 					{
-						for (j = 0; j < sdata->gGT->numScreens; j++)
+						for (j = 0; j < sdata->gGT->numPlyrNextGame; j++)
 						{
 							if ((j != i) && ((short)globalIconPerPlayerCopy2 == globalIconPerPlayerPtr[j]))
 							{
@@ -425,13 +425,13 @@ void MM_Characters_MenuBox()
 						// this player has now selected a character
 						sdata->characterSelectFlags = sdata->characterSelectFlags | (u_short)(1 << (i & 0x1fU));
 			
-						numScreens = sdata->gGT->numScreens;
+						numPlyrNextGame = sdata->gGT->numPlyrNextGame;
 			
 						// Play sound
 						OtherFX_Play();
 			
 						// if all players have selected their characters
-						if ((int)(short)sdata->characterSelectFlags == ((0xff << ((u_int)numScreens & 0x1f) ^ 0xffU) & 0xff)) 
+						if ((int)(short)sdata->characterSelectFlags == ((0xff << ((u_int)numPlyrNextGame & 0x1f) ^ 0xffU) & 0xff)) 
 						{
 							// move to track selection
 							OVR_230.movingToTrackMenu = 1;
@@ -526,9 +526,9 @@ void MM_Characters_MenuBox()
 			iconColor = &OVR_230.characterSelect_NeutralColor;
 		
 			// if number of players is not zero
-			if (sdata->gGT->numScreens != 0) 
+			if (sdata->gGT->numPlyrNextGame != 0) 
 			{
-				for (j = 0; j < sdata->gGT->numScreens; j++)
+				for (j = 0; j < sdata->gGT->numPlyrNextGame; j++)
 				{
 					if
 					(
@@ -570,9 +570,9 @@ void MM_Characters_MenuBox()
 	}
 	
 	// if number of players is not zero
-	if (sdata->gGT->numScreens) 
+	if (sdata->gGT->numPlyrNextGame) 
 	{
-		for (i = 0; i < sdata->gGT->numScreens; i++)
+		for (i = 0; i < sdata->gGT->numPlyrNextGame; i++)
 		{
 			j = i;
 			playerIcon = globalIconPerPlayer[j];
@@ -614,19 +614,19 @@ void MM_Characters_MenuBox()
 			) 
 			{
 				// get number of players
-				numScreens = sdata->gGT->numScreens;
+				numPlyrNextGame = sdata->gGT->numPlyrNextGame;
 		
 				// if number of players is 1 or 2
 				fontType = 3;
 		
 				// if number of players is 3 or 4
-				if (numScreens >= 3) fontType = 2;
+				if (numPlyrNextGame >= 3) fontType = 2;
 		
 				iVar8 = j * 10 + DAT_800b5a3c;
 				sVar10 = *(short *)(iVar8 + 0xa8) + (DAT_800b5a0c + j * 2)[1];
-				sVar6 = (short)((((u_int)(numScreens < 3) ^ 1) << 0x12) >> 0x10);
+				sVar6 = (short)((((u_int)(numPlyrNextGame < 3) ^ 1) << 0x12) >> 0x10);
 
-				if ((numScreens == 4) && (j > 1)) sVar6 = sVar10 + sVar6 - 6;
+				if ((numPlyrNextGame == 4) && (j > 1)) sVar6 = sVar10 + sVar6 - 6;
 				else							  sVar6 = sVar10 + DAT_800b5a38 + sVar6;
 		
 				// draw string
@@ -684,11 +684,11 @@ void MM_Characters_MenuBox()
 	}
 	
 	// if number of players is not zero
-	if (sdata->gGT->numScreens != 0) 
+	if (sdata->gGT->numPlyrNextGame != 0) 
 	{
 		psVar22 = DAT_800b5a0c;
 
-		for (i = 0; i < sdata->gGT->numScreens; i++)
+		for (i = 0; i < sdata->gGT->numPlyrNextGame; i++)
 		{
 			j = i;
 			iVar8 = j * 10 + DAT_800b5a3c;

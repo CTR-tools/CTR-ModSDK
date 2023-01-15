@@ -23,7 +23,7 @@ void ChRand_SetCharacters()
 
 	// this randomizes non-players, but if you want
 	// all drivers randomized, then set 'i' to zero here
-	int i = sdata->gGT->numPlayers;
+	int i = sdata->gGT->numPlyrCurrGame;
 
 	// if in a cup
 	if

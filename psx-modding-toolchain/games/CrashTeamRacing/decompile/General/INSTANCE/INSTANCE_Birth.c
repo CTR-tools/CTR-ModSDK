@@ -38,7 +38,7 @@ void INSTANCE_Birth(
 	inst->thread = th;
 	inst->bitCompressed_NormalVector_AndDriverIndex = 0;
 	
-	for(i = 0; i < gGT->numPlayers; i++)
+	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		inst->idpp[i].cam110 = &gGT->camera110[i];
 		inst->idpp[i].mh = 0;

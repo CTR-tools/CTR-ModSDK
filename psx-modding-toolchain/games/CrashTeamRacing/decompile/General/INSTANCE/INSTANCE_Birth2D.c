@@ -15,7 +15,7 @@ struct Instance* INSTANCE_Birth2D(
 	
 	inst->idpp[0].cam110 = &gGT->camera110_UI;
 	
-	for(i = 1; i < gGT->numPlayers; i++)
+	for(i = 1; i < gGT->numPlyrCurrGame; i++)
 	{
 		inst->idpp[i].cam110 = 0;
 	}

@@ -316,16 +316,16 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					// If racer is in 8th place
 					(driverRankItemValue == 7) &&
 
-					// If number of screens is 1
-					(sdata->gGT->numPlayers == 1)
+					// If numPlyrCurrGame is 1
+					(sdata->gGT->numPlyrCurrGame == 1)
 				) ||
 				(
 					(
 						// If racer is in 6th place
 						driverRankItemValue == 5 &&
 
-						// if number of screens is 2
-						(sdata->gGT->numPlayers == 2)
+						// if numPlyrCurrGame is 2
+						(sdata->gGT->numPlyrCurrGame == 2)
 					)
 				)
 			) ||
@@ -334,8 +334,8 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					// if racer is in 4th place
 					driverRankItemValue == 3 &&
 
-					// if number of screens is more than 2
-					(2 < (u_char)sdata->gGT->numPlayers)
+					// if numPlyrCurrGame is more than 2
+					(2 < (u_char)sdata->gGT->numPlyrCurrGame)
 				)
 			)
 		) &&
@@ -538,10 +538,10 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		if ((noItemTimer == 1) && (driver->numHeldItems == 0))
 		{
 
-			// if number of screens is > 2
+			// if numPlyrCurrGame is > 2
 			if
 			(
-				(2 < (u_char)sdata->gGT->numPlayers) &&
+				(2 < (u_char)sdata->gGT->numPlyrCurrGame) &&
 
 				// If you're not in Battle Mode
 				(

@@ -111,7 +111,7 @@ void DrawReservesMeter(short posX, short posY, struct Driver* driver)
 
 void ICantBelieveItTookNearly23YearsToMakeThis()
 {
-	if(sdata->gGT->numPlayers == 1)
+	if(sdata->gGT->numPlyrCurrGame == 1)
 	{
 		DrawReservesMeter(data.hud_1P_P1[0x10].x, data.hud_1P_P1[0x10].y + 5, (struct Driver*)sdata->gGT->threadBuckets[0].thread->object);
 	}

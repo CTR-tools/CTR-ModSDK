@@ -86,7 +86,7 @@ void DECOMP_DrawHUD_Racing()
 	struct Icon* icon2;
 
 	// Get pointer to array of HUD structs
-	hudStructPtr = (struct HudElement*)data.hudStructPtr[sdata->gGT->numPlayers - 1];
+	hudStructPtr = (struct HudElement*)data.hudStructPtr[sdata->gGT->numPlyrCurrGame - 1];
 
 	levPtrMap = 0;
 
@@ -149,10 +149,10 @@ void DECOMP_DrawHUD_Racing()
 		}
 	}
 
-	// number of screens is 0
+	// numPlyrCurrGame is 0
 	if
 	(
-		(sdata->gGT->numPlayers == '\0') &&
+		(sdata->gGT->numPlyrCurrGame == '\0') &&
 
 		// If this is an AI and not a human
 		((sdata->gGT->drivers[0]->actionsFlagSet & 0x100000) != 0)
@@ -245,8 +245,8 @@ void DECOMP_DrawHUD_Racing()
 
 			if
 			(
-				// number of screens is less than 2 (1P mode)
-				(sdata->gGT->numPlayers < 2) &&
+				// numPlyrCurrGame is less than 2 (1P mode)
+				(sdata->gGT->numPlyrCurrGame < 2) &&
 
 				// if want to draw speedometer
 				((sdata->HudAndDebugFlags & 8) != 0)
@@ -608,8 +608,8 @@ void DECOMP_DrawHUD_Racing()
 					((playerStruct->actionsFlagSet & 0x2000000) == 0) ||
 					(
 						(
-							// if number of screens is 2
-							sdata->gGT->numPlayers == '\x02' &&
+							// if numPlyrCurrGame is 2
+							sdata->gGT->numPlyrCurrGame == '\x02' &&
 
 							// AND
 
@@ -627,8 +627,8 @@ void DECOMP_DrawHUD_Racing()
 				else
 				{
 
-					// if number of screens is less than 3
-					if (sdata->gGT->numPlayers < 3) goto LAB_80053af4;
+					// if numPlyrCurrGame is less than 3
+					if (sdata->gGT->numPlyrCurrGame < 3) goto LAB_80053af4;
 					sVar1 = hudStructPtr[0xA].x;
 					sVar2 = hudStructPtr[0xA].y;
 					bVar3 = (sdata->gGT->timer & 1) == 0;
@@ -641,7 +641,7 @@ void DECOMP_DrawHUD_Racing()
 				DrawPlacmentSuffix(sVar1, sVar2, playerStruct, (short)partTimeVariable5);
 
 				// if more than 2 players
-				if (2 < sdata->gGT->numPlayers)
+				if (2 < sdata->gGT->numPlyrCurrGame)
 				{
 					// pointer to OT memory
 					ptrOT = sdata->gGT->camera110_UI.ptrOT;
@@ -783,8 +783,8 @@ void DECOMP_DrawHUD_Racing()
 
 	sdata->framesDrivingSameDirection++;
 
-	// if number of screens is 1
-	if (sdata->gGT->numPlayers == '\x01')
+	// if numPlyrCurrGame is 1
+	if (sdata->gGT->numPlyrCurrGame == '\x01')
 	{
 		playerStruct = sdata->gGT->drivers[0];
 
@@ -973,7 +973,7 @@ void DECOMP_DrawHUD_Racing()
 		}
 	}
 
-	// if number of screens is not 1 (multiplayer)
+	// if numPlyrCurrGame is not 1 (multiplayer)
 	else
 	{
 
@@ -989,8 +989,8 @@ void DECOMP_DrawHUD_Racing()
 	(
 		(
 			(
-				// if number of screens is 1
-				(sdata->gGT->numPlayers == '\x01') &&
+				// if numPlyrCurrGame is 1
+				(sdata->gGT->numPlyrCurrGame == '\x01') &&
 
 				// if ptr_map is valid
 				(levPtrMap != 0)
@@ -1003,8 +1003,8 @@ void DECOMP_DrawHUD_Racing()
 
 		(
 			(
-				// if number of screens is 3
-				sdata->gGT->numPlayers == '\x03' &&
+				// if numPlyrCurrGame is 3
+				sdata->gGT->numPlyrCurrGame == '\x03' &&
 
 				// if ptr_map is valid
 				(levPtrMap != 0)
@@ -1028,8 +1028,8 @@ void DECOMP_DrawHUD_Racing()
 		if (levPtrMap != 0)
 		{
 
-			// If number of screens is 1
-			if (sdata->gGT->numPlayers == '\x01')
+			// If numPlyrCurrGame is 1
+			if (sdata->gGT->numPlyrCurrGame == '\x01')
 			{
 				// pointer to backBuffer
 				backBuffer = sdata->gGT->backBuffer;
@@ -1048,16 +1048,16 @@ void DECOMP_DrawHUD_Racing()
 				local_74 = 0xc3;
 			}
 
-			// if number of screens is not 1
+			// if numPlyrCurrGame is not 1
 			else
 			{
 				// posX
 				partTimeVariable4 = 0x1b8;
 
-				// if number of screens is not 3
-				if (sdata->gGT->numPlayers != '\x03') goto LAB_80054040;
+				// if numPlyrCurrGame is not 3
+				if (sdata->gGT->numPlyrCurrGame != '\x03') goto LAB_80054040;
 
-				// This happens only if number of screens is 3
+				// This happens only if numPlyrCurrGame is 3
 				// pointer to backBuffer
 				backBuffer = sdata->gGT->backBuffer;
 
@@ -1098,12 +1098,12 @@ void DECOMP_DrawHUD_Racing()
 	// loop counter
 	levPtrMap = 0;
 
-	// if number of screens is not 0
-	if (sdata->gGT->numPlayers != '\0')
+	// if numPlyrCurrGame is not 0
+	if (sdata->gGT->numPlyrCurrGame != '\0')
 	{
 		i = 0;
 
-		// for(int levPtrMap = 0; levPtrMap < numScreens; levPtrMap++)
+		// for(int levPtrMap = 0; levPtrMap < numPlyrCurrGame; levPtrMap++)
 		do
 		{
 			// pointer to array of pointers for each driver (9900C, 99010, etc)
@@ -1140,7 +1140,7 @@ void DECOMP_DrawHUD_Racing()
 					// 0 = 1st place, 1 = 2nd place, 2 = 3rd place, etc
 
 					// Basically, out of all human players, if you did not come in last
-					((int)playerStruct->driverRank < (int)sdata->gGT->numPlayers - 1) &&
+					((int)playerStruct->driverRank < (int)sdata->gGT->numPlyrCurrGame - 1) &&
 
 					// If you're not in Battle Mode (winner of battle mode wont be in this function)
 					((sdata->gGT->gameMode1 & 0x20) == 0)
@@ -1205,8 +1205,8 @@ void DECOMP_DrawHUD_Racing()
 
 			i++;
 
-		// for(int levPtrMap = 0; levPtrMap < numScreens; levPtrMap++)
-		} while (levPtrMap < (int)sdata->gGT->numPlayers);
+		// for(int levPtrMap = 0; levPtrMap < numPlyrCurrGame; levPtrMap++)
+		} while (levPtrMap < (int)sdata->gGT->numPlyrCurrGame);
 	}
 	if
 	(

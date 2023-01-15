@@ -4274,7 +4274,7 @@ enum GameMode1
 	RELIC_RACE			= 0x4000000,
     CRYSTAL_CHALLENGE   = 0x8000000,
     ADVENTURE_CUP       = 0x10000000,
-    GAME_INTRO          = 0x20000000,
+    GAME_CUTSCENE      	= 0x20000000,
     LOADING             = 0x40000000,
     ADVENTURE_BOSS      = 0x80000000
 };
@@ -4543,16 +4543,13 @@ struct GameTracker
   // 1ca8 -- UsaRetail, JpnTrial
   // 1cb0 -- EurRetail, JpnRetail
   
-  // we got these flipped,
-  // need to fix the names
-  char numPlayers;
-  char numScreens;
+  // 1ca8, 1ca9
+  char numPlyrCurrGame;
+  char numPlyrNextGame;
 
-  // 1caa
-  char unk_NotUsedAnywhere;
-
-  // 1cab
-  char numRobotcars;
+  // 1caa, 1cab
+  char numBotsCurrGame;
+  char numBotsNextGame;
 
   // 1cac
   char unk_between_screens_and_timer[0x30];

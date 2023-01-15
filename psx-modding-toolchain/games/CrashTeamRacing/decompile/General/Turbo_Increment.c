@@ -174,13 +174,13 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			addFlags = 0;
 	
 			// 1P flags
-			if (sdata->gGT->numPlayers == 1)
+			if (sdata->gGT->numPlyrCurrGame == 1)
 			{
 				addFlags = 0x2000000;
 			}
 	
 			// make turbos invisible, and transparent.
-			// why does numPlayers alter pause-menu invisible toggle?
+			// why does numPlyrCurrGame alter pause-menu invisible toggle?
 			turboInst1->flags = turboInst1->flags | addFlags | 0x1040080;
 			turboInst2->flags = turboInst2->flags | addFlags | 0x1040080;
 		}

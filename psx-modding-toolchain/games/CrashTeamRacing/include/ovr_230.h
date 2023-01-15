@@ -291,9 +291,9 @@ extern struct
 	char fill_movingtotrackmenu[0x28];
 
 	// 800b5a10
-	int characterSelectNumScreens;
+	int characterSelectIconLayout;
 
-	char fill_characterSelectNumScreens[0xC];
+	char fill_characterSelectIconLayout[0xC];
 
 	// 0x800b5a20 -- UsaRetail
 	// 0x800b62c4 -- EurRetail

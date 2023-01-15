@@ -209,7 +209,7 @@ void RunUpdateHook()
 	short rot[3];
 
 	// Loop through all drivers
-	for(loop = 0; loop < (unsigned int)sdata->gGT->numScreens; loop++)
+	for(loop = 0; loop < (unsigned int)sdata->gGT->numPlyrNextGame; loop++)
 	{
 		// Loop through all weapons
 		for(loop2 = 0; loop2 < NUM_WEAPONS; loop2++)

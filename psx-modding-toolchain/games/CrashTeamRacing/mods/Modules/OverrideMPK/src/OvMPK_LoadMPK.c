@@ -97,7 +97,7 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 	// VS or Battle
 	else
 	{
-		// levelLOD, or gGT->numPlayers
+		// levelLOD, or gGT->numPlyrCurrGame
 		numDrivers = levelLOD;
 	}
 

@@ -21,8 +21,8 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 	// height of bar in 1P or 2P
 	meterHeight = 7;
 
-	// if number of screens is more than 2 (3P or 4P)
-	if (2 < sdata->gGT->numPlayers)
+	// if numPlyrCurrGame is more than 2 (3P or 4P)
+	if (2 < sdata->gGT->numPlyrCurrGame)
 	{
 		// Make the bar shorter
 		meterHeight = 3;

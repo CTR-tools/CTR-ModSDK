@@ -31,11 +31,11 @@ void DECOMP_Turbo_ProcessBucket(struct Thread* turboThread)
 
 			i = 0;
 
-			// number of screens is not zero
-			if (puVar2->numPlayers != '\0') 
+			// numPlyrCurrGame is not zero
+			if (puVar2->numPlyrCurrGame != '\0') 
 			{
 				// each InstDrawPerPlayer
-				// for i = 0; i < numScreens; i++
+				// for i = 0; i < numPlyrCurrGame; i++
 				do
 				{
 					// if camera110 does not exist ?
@@ -66,7 +66,7 @@ void DECOMP_Turbo_ProcessBucket(struct Thread* turboThread)
 					i = i + 1;
 					driverInstance = (int)driverInstance + 0x88;
 			
-				} while (i < puVar3->numPlayers);
+				} while (i < puVar3->numPlyrCurrGame);
 			}
 
 		// go to next thread

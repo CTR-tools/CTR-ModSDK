@@ -46,7 +46,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 		if (!(sdata->gGT->gameMode1 & 0x8000000))
 		{
 			// Choose Itemset based on number of Drivers
-			switch(sdata->gGT->numPlayers + sdata->gGT->numRobotcars)
+			switch(sdata->gGT->numPlyrCurrGame + sdata->gGT->numBotsNextGame)
 			{
 				// if boss race
 				case 2:
@@ -224,7 +224,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 			driver->heldItemID == 0xb &&
 
 			// if more than 2 players
-			sdata->gGT->numPlayers > 2 &&
+			sdata->gGT->numPlyrCurrGame > 2 &&
 
 			// if not in battle mode
 			!(sdata->gGT->gameMode1 & 0x20)

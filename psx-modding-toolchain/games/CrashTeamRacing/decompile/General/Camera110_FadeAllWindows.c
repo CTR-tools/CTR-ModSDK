@@ -9,7 +9,7 @@ void DECOMP_Camera110_FadeAllWindows()
 	gGT = sdata->gGT;
 
 	i=0;
-	for(i=0; i < gGT->numPlayers; i++)
+	for(i=0; i < gGT->numPlyrCurrGame; i++)
 	{
 		Camera110_FadeOneWindow(&gGT->camera110[i]);
 	}

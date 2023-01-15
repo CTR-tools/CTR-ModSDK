@@ -34,7 +34,7 @@ void FUN_8009f704(void)
   // pointer to P1
   iVar16 = *(int *)(PTR_DAT_8008d2ac + 0x24ec);
   
-									// number of screens - 1
+									// numPlyrCurrGame - 1
   puVar13 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
   
   // if race ended less than 30 second ago,
@@ -370,7 +370,7 @@ LAB_OVR1__8009ff60:
     
 	iVar8 = 0;
     
-	// for iVar14 = 0; iVar14 < numPlayers; iVar14++
+	// for iVar14 = 0; iVar14 < numPlyrCurrGame; iVar14++
 	do 
 	{
 	  // Draw how much time it took to finish laps and race
@@ -786,7 +786,7 @@ void FUN_800a06f8(ushort param_1,short param_2)
   short local_2e;
   
   puVar5 = PTR_DAT_8008d2ac;
-											// number of screens - 1
+											// numPlyrCurrGame - 1
   puVar7 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
   
   // default size of box with 3 laps
@@ -837,7 +837,7 @@ void FUN_800a06f8(ushort param_1,short param_2)
 			((DAT_8008d950 & 0x50) != 0)
 		) && 
 		
-		// If number of screens is one
+		// If numPlyrCurrGame is one
 		(puVar5[0x1ca8] == '\x01')
 	 ) 
   {
@@ -846,7 +846,7 @@ void FUN_800a06f8(ushort param_1,short param_2)
 	
     DAT_8008d52c = 0x6e;
 	
-	// Number of drivers =   number of screens  +    number of AIs
+	// Number of drivers =   numPlyrCurrGame  +    number of AIs
     DAT_8008d570 = (ushort)(byte)puVar5[0x1ca8] + (ushort)(byte)puVar5[0x1cab];
 	
 	// clear gamepad input (for menus)

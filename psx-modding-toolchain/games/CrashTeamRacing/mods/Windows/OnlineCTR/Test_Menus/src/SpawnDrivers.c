@@ -23,7 +23,7 @@ void SpawnDrivers(struct GameTracker* gGT)
 		return;
 	}
 	
-	gGT->numRobotcars = 0;
+	gGT->numBotsNextGame = 0;
 	
 	// must be called before spawning AIs,
 	// therefore, must not be Adv specific

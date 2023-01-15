@@ -334,7 +334,7 @@ u_int main()
 						gGT->boolDemoMode = 0;
 
 						// set number of players to 1
-						gGT->numScreens = 1;
+						gGT->numPlyrNextGame = 1;
 
 						// go to main menu
 						sdata->mainMenuState = 0;
@@ -356,8 +356,8 @@ u_int main()
 						}
 					}
 
-					// if number of screens is 1
-					if (gGT->numPlayers == 1)
+					// if numPlyrCurrGame is 1
+					if (gGT->numPlyrCurrGame == 1)
 					{
 						// Draw text near top of screen
 						uVar12 = 0x23;
@@ -498,8 +498,8 @@ void StateZero()
 	gGT->numLaps = 3;
 	
 	gGT->battleSetup.enabledWeapons |= 0x34de;
-	gGT->numPlayers = 1;
-	gGT->numScreens = 1;
+	gGT->numPlyrCurrGame = 1;
+	gGT->numPlyrNextGame = 1;
 	*(u_int*)&gGT->battleSetup.teamOfEachPlayer = 0x3020100;
 	
 	// traffic light countdown timer, set to negative one second
@@ -541,8 +541,8 @@ void StateZero()
 	
 	#ifdef FastBoot
 	gGT->levelID = 4;
-	//gGT->numPlayers = 4;
-	//gGT->numScreens = 4;
+	//gGT->numPlyrCurrGame = 4;
+	//gGT->numPlyrNextGame = 4;
 	#endif
 	
 	InitGeom();

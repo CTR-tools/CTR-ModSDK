@@ -12,7 +12,7 @@ void DECOMP_MENUBOX_CollectInput()
 	// this contradicts logic in MENUBOX_ProcessInput where only P1 is listened to
 	if((sdata->activeSubMenu == 0) || (numListen = 4, (sdata->activeSubMenu->state & 0x8000) != 0))
 	{
-		numListen = sdata->gGT->numScreens;
+		numListen = sdata->gGT->numPlyrNextGame;
 	}
 	
 	for(i = 0; i < numListen; i++)

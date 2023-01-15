@@ -11,24 +11,24 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	ElimBG_HandleState(gGT);
 	
 	if((gGT->renderFlags & 0x21) != 0)
-		VisMem_FullFrame(gGT, level1);
+		VisMem_FullFrame(gGT, gGT->level1);
 	
 	if((gGT->renderFlags & 1) != 0)
-		if(gGT->visMem != 0)
+		if(gGT->visMem1 != 0)
 			if(lev != 0)
 				CTR_CycleTex_LEV(
 					lev->ptr_anim_tex,
 					gGT->timer);
 					
 	if(
-		(sdata->ptrActiveMenu != 0) ||
+		(sdata->ptrActiveMenuBox != 0) ||
 		((gGT->gameMode1 & END_OF_RACE) != 0)
 	)
 	{
 		MenuBox_CollectInput();
 	}
 	
-	if(sdata->ptrActiveMenu != 0)
+	if(sdata->ptrActiveMenuBox != 0)
 		if(sdata->Loading.stage == -1)
 			MenuBox_ProcessState();
 }
@@ -43,17 +43,16 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// dont draw error if demo mode, or cutscene,
 	// or if no controllers are missing currently
 	if(gGT->boolDemoMode == 1) return;
-	if((gGT->gameMode1 & GAME_CUSTSCENE) != 0) return;
-	if(BoolAllPadsConnected(gGT->numScreens) == 1) return;
+	if((gGT->gameMode1 & GAME_CUTSCENE) != 0) return;
+	if(BoolAllPadsConnected(gGT->numPlyrNextGame) == 1) return;
 	
 	// if main menu is open, assume 230 loaded,
 	// quit if menu is at highest level (no ptrNext to draw)
 	if(sdata->ptrActiveMenuBox == 0x800B4540)
-		if((*(int*)800b4548 & 0x10) == 0) return;
+		if((*(int*)0x800b4548 & 0x10) == 0) return;
 	
-	// position of erro
+	// position of error
 	posY = data.errorPosY[sdata->errorMessagePosIndex];
-	posY2 = posY;
 
 	// "Controller 1" or "Controller 2"
 	lngArrStart = 0;
@@ -65,7 +64,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	
 	// if more than 2 players, or if multitap used
 	if(
-		(gGT->numScreens > 2) || 
+		(gGT->numPlyrNextGame > 2) || 
 		(gGamepads->slotBuffer[0].meta[1] == -0x80)
 	)
 	{
@@ -73,7 +72,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 		lngArrStart = 2;
 	}
 	
-	for(i = 0; i < numScreens; i++)
+	for(i = 0; i < gGT->numPlyrNextGame; i++)
 	{
 		// yes, char*, not short*
 		char* ptrRawInput = gGamepads->gamepad[i].ptrRawInput;
@@ -97,7 +96,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// PLEASE CONNECT A CONTROLLER
 	DecalFont_DrawLine(
 		sdata->lngStrings[0xac/4],
-		0x100, posY2, 2, 0xffff8000);
+		0x100, posY + window.h, 2, 0xffff8000);
 		
 	// add for each line
 	window.h += 8;
@@ -135,7 +134,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 		textTimer = 90 - textTimer;
 		
 		// camera
-		c110 = gGT->camera110[i];
+		c110 = &gGT->camera110[i];
 		
 		// << 0x10, >> 0x12
 		posY = c110->rect.h / 4;
@@ -168,7 +167,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 		
 DrawFinalLapString:
 
-		InterpolatePosition2D_Linear(&resultPos, startX, startY, endX, endY, 10);
+		InterpolatePosition2D_Linear(&resultPos, startX, posY, endX, posY, 10);
 
 		// need to specify OT, or else "FINAL LAP" will draw on top of character icons,
 		// and by doing this, "FINAL LAP" draws under the character icons instead

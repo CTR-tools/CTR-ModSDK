@@ -260,14 +260,14 @@ void FUN_80030778(int param_1,undefined4 param_2,undefined *param_3,undefined4 p
   // loop counter
   iVar4 = 0;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (puVar3[0x1ca8] != '\0')
   {
 	// offset of 8008d2ac where camera110 structs
 	// are held for each player (pos, size, etc)
     iVar5 = 0x168;
 
-	// loop for the number of screens,
+	// loop for the numPlyrCurrGame,
 	// each instance's InstDrawPerPlayer
     do
 	{
@@ -358,10 +358,10 @@ int FUN_800308e4(undefined4 param_1,undefined4 param_2,undefined4 param_3)
   // copy pointer to instance
   iVar1 = iVar3;
 
-  // if number of screens is more than 1
+  // if numPlyrCurrGame is more than 1
   if (1 < (byte)puVar2[0x1ca8])
   {
-	// for iVar4 = 1 (not zero); iVar4 < numScreens; iVar4++)
+	// for iVar4 = 1 (not zero); iVar4 < numPlyrCurrGame; iVar4++)
     do 
 	{
 	  // cam110 pointer for P2, P3, P4
@@ -613,7 +613,7 @@ void FUN_80030ad4(undefined4 *param_1,int param_2)
 	  // loop iteration counter
       iVar13 = 0;
 
-	  // if number of screens is not zero
+	  // if numPlyrCurrGame is not zero
       if (puVar3[0x1ca8] != '\0')
 	  {
 		// offset of 8008d2ac where camera110 structs
@@ -623,7 +623,7 @@ void FUN_80030ad4(undefined4 *param_1,int param_2)
         iVar12 = iVar6;
 
 		// loop through InstDrawPerPlayer
-		// for iVar13 = 0; iVar13 < numScreens; iVar13++
+		// for iVar13 = 0; iVar13 < numPlyrCurrGame; iVar13++
         do
 		{
 		  // pointer to camera110 struct
@@ -3777,10 +3777,10 @@ void FUN_80033318(undefined4 param_1)
   // loop counter
   iVar9 = 0;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0') {
 
-    // for(int iVar9 = 0; iVar9 < numScreens; iVar9++)
+    // for(int iVar9 = 0; iVar9 < numPlyrCurrGame; iVar9++)
     do
 	{
 	  // if game is not loading
@@ -3850,7 +3850,7 @@ void FUN_80033318(undefined4 param_1)
 	  // increment loop counter
       iVar9 = iVar9 + 1;
 
-					// number of screens
+					// numPlyrCurrGame
     } while (iVar9 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
   return;
@@ -4079,7 +4079,7 @@ int FUN_80033610(undefined4 param_1,int param_2,undefined4 param_3)
 	// set pointer of 2nd LEV (used in adv hub) to zero
     *(undefined4 *)(puVar3 + 0x164) = 0;
 
-	// set number of screens to number of players
+	// set numPlyrCurrGame to number of players
     puVar3[0x1ca8] = uVar2;
 
 	// copy level name into global string
@@ -4180,10 +4180,10 @@ int FUN_80033610(undefined4 param_1,int param_2,undefined4 param_3)
 		  // enable flag that shows you are in main menu
           *(uint *)puVar3 = uVar10 | 0x2000;
 
-		  // set number of players to number of screens
+		  // set number of players to numPlyrCurrGame
           puVar14[0x1ca9] = puVar14[0x1ca8];
 
-		  // set number of screens to 4
+		  // set numPlyrCurrGame to 4
 		  // Either 4P mode or main menu
           PTR_DAT_8008d2ac[0x1ca8] = 4;
 
@@ -4194,7 +4194,7 @@ int FUN_80033610(undefined4 param_1,int param_2,undefined4 param_3)
 		  // if you are loading into character selection screen
           if (iVar9 == 0)
 		  {
-			// set number of screens to 1
+			// set numPlyrCurrGame to 1
             PTR_DAT_8008d2ac[0x1ca8] = 1;
 
 			// Enter Adventure Character Selection
@@ -4219,7 +4219,7 @@ int FUN_80033610(undefined4 param_1,int param_2,undefined4 param_3)
 			// Set Number of Players to 1
             PTR_DAT_8008d2ac[0x1ca9] = 1;
 
-			// set Number of Screens to 1
+			// set numPlyrCurrGame to 1
 			puVar3[0x1ca8] = 1;
 
             puVar14 = PTR_DAT_8008d2ac;
@@ -4250,7 +4250,7 @@ int FUN_80033610(undefined4 param_1,int param_2,undefined4 param_3)
 			// set Number of Players to 1
             PTR_DAT_8008d2ac[0x1ca9] = 1;
 
-			// set Number of Screens to 1
+			// set numPlyrCurrGame to 1
             puVar3[0x1ca8] = 1;
 
             puVar14 = PTR_DAT_8008d2ac;
@@ -4290,7 +4290,7 @@ LAB_80033a70:
 				(*(uint *)PTR_DAT_8008d2ac & 0x4020000) == 0)
 		)
 	{
-	  // Set LOD level to number of screens
+	  // Set LOD level to numPlyrCurrGame
 	  DAT_8008d83c = (ushort)(byte)PTR_DAT_8008d2ac[0x1ca8];
     }
 
@@ -4390,7 +4390,7 @@ LAB_80033bd8:
 
 	// 225 is for Naughty Dog Box
 
-	// Load DLL 225 + number of screens
+	// Load DLL 225 + numPlyrCurrGame
 	// 226 - 229
     FUN_80033474((uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
     break;
@@ -5250,7 +5250,7 @@ uint FUN_80034940(void)
 
 
 // param_1 is levelID
-// param_2 is number of screens
+// param_2 is numPlyrCurrGame
 undefined4 FUN_80034960(undefined4 param_1,int param_2)
 
 {
@@ -5495,7 +5495,7 @@ void FUN_80034bbc(int param_1)
 
   ClearOTagR(*(undefined4 *)(param_1 + *(int *)(param_1 + 0xc) * 4 + 0x18c8),
 
-				// number of screens << 10 | 6
+				// numPlyrCurrGame << 10 | 6
                (uint)(byte)PTR_DAT_8008d2ac[0x1ca8] << 10 | 6);
 
   puVar1 = PTR_DAT_8008d2ac;
@@ -5505,13 +5505,13 @@ void FUN_80034bbc(int param_1)
 
   iVar3 = param_1;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
   {
 	// Initialize OTMem of each player, each 0x1000 apart,
 	// overflowing OTMem of one player will impact graphics of another
 
-	// for iVar4 = 0; iVar4 < numScreens; iVar4++
+	// for iVar4 = 0; iVar4 < numPlyrCurrGame; iVar4++
     do {
       iVar2 = (uint)(byte)puVar1[0x1ca8] - iVar4;
 
@@ -6088,7 +6088,7 @@ LAB_80035098:
 									// loop counter
 									iVar7 = 0,
 
-									// (72a*4 = 1ca8), numScreens
+									// (72a*4 = 1ca8), numPlyrCurrGame
 									*(char *)(param_1 + 0x72a) != '\0'
 								)
 							)
@@ -6107,7 +6107,7 @@ LAB_80035098:
 						(iVar10 != 0) &&
 						(
 							(
-								// check for missing gamepads, depending on numScreens
+								// check for missing gamepads, depending on numPlyrNextGame
 								uVar5 = FUN_80035d70((uint)(byte)PTR_DAT_8008d2ac[0x1ca9]),
 
 								// if a gamepad is missing that is needed
@@ -6146,7 +6146,7 @@ LAB_80035098:
 
             param_2 = param_2 + 0x50;
 
-			// (72a*4 = 1ca8), numScreens
+			// (72a*4 = 1ca8), numPlyrCurrGame
           } while (iVar7 < (int)(uint)*(byte *)(param_1 + 0x72a));
         }
       }
@@ -6362,7 +6362,7 @@ void FUN_800357b8(int param_1,int param_2)
 			// loop counter
 			iVar9 = 0,
 
-			// if number of screens is not zero
+			// if numPlyrCurrGame is not zero
 			*(char *)(param_1 + 0x1ca8) != '\0'
 		)
 	)
@@ -6375,7 +6375,7 @@ void FUN_800357b8(int param_1,int param_2)
 
 	// loop through all four cameras
 
-	// for iVar9 = 0; iVar9 < numScreens; iVar9++
+	// for iVar9 = 0; iVar9 < numPlyrCurrGame; iVar9++
     do
 	{
 	  // CameraDC
@@ -6731,7 +6731,7 @@ int FUN_80035d70(short param_1)
   // if game is not loading
   if (DAT_8008d0f8 == -1)
   {
-	// numbers of players in a game
+	// numPlyrNextGame
     iVar2 = (int)param_1;
 
 	// if there are no players (cutscene)
@@ -6747,13 +6747,13 @@ int FUN_80035d70(short param_1)
 	  // loop counter
       iVar5 = 0;
 
-	  // if there are players in this game
+	  // numPlyrNextGame > 0
       if (0 < iVar2)
 	  {
 		// loop through all players and make sure
 		// all their gamepads are connected
 
-		// iVar5 = 0; iVar5 < numScreens; iVar5++
+		// iVar5 = 0; iVar5 < numPlyrNextGame; iVar5++
         do
 		{
 		  // only continue checking gamepads if
@@ -7180,7 +7180,7 @@ void FUN_80035e70(uint *param_1)
   iVar6 = 0;
 
   // Camera Frustums
-  // gGT->1ca8(numScreens) != 0
+  // gGT->1ca8(numPlyrCurrGame) != 0
   if (*(char *)(param_1 + 0x72a) != '\0')
   {
 	// offset of 8008d2ac where camera110 structs
@@ -7190,7 +7190,7 @@ void FUN_80035e70(uint *param_1)
     puVar18 = param_1;
     puVar12 = param_1;
 
-	// for iVar6 = 0; iVar6 < numScreens; iVar6++
+	// for iVar6 = 0; iVar6 < numPlyrCurrGame; iVar6++
     do
 	{
 	  // Camera110_UpdateFrustum
@@ -7204,7 +7204,7 @@ void FUN_80035e70(uint *param_1)
 		// gGT->CameraDC[i].ptrQuadBlock->weather_intensity
         uVar7 = (uint)*(byte *)(puVar18[0x52d] + 0x39);
 
-		// (72a*4 = 1ca8), numScreens
+		// (72a*4 = 1ca8), numPlyrCurrGame
         bVar2 = *(byte *)(param_1 + 0x72a);
 
         if (bVar2 == 0) {
@@ -7218,7 +7218,7 @@ void FUN_80035e70(uint *param_1)
 		// gGT->RainBuffer[i].numParticles_max
         *(short *)(puVar12 + 0x691) = (short)((int)(uVar7 << 2) / (int)(uint)bVar2);
 
-		// (72a*4 = 1ca8), numScreens
+		// (72a*4 = 1ca8), numPlyrCurrGame
 		bVar2 = *(byte *)(param_1 + 0x72a);
 
 		if (bVar2 == 0) {
@@ -7245,7 +7245,7 @@ void FUN_80035e70(uint *param_1)
 	  // increment camera110 pointer to next camera110
       iVar19 = iVar19 + 0x110;
 
-	  // (72a*4 = 1ca8), numScreens
+	  // (72a*4 = 1ca8), numPlyrCurrGame
     } while (iVar6 < (int)(uint)*(byte *)(param_1 + 0x72a));
   }
 
@@ -7287,7 +7287,7 @@ void FUN_80035e70(uint *param_1)
 			(param_1[0x95b] & 2) != 0
 		) &&
 		(
-			// if number of screens is less than 2
+			// if numPlyrCurrGame is less than 2
 			(byte)PTR_DAT_8008d2ac[0x1ca8] < 2
 		)
 	  )
@@ -7303,7 +7303,7 @@ void FUN_80035e70(uint *param_1)
 					// &gGT->rainBuffer[0]
 					PTR_DAT_8008d2ac + 0x1a40,
 
-					// number of screens
+					// numPlyrCurrGame
 					(uint)(byte)PTR_DAT_8008d2ac[0x1ca8],
 
 					// check if the game is paused
@@ -7374,7 +7374,7 @@ void FUN_80035e70(uint *param_1)
 					// &gGT->stars
 					PTR_DAT_8008d2ac + 0x1b0c,
 
-					// number of screens
+					// numPlyrCurrGame
 					(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]
 				);
   }
@@ -7384,7 +7384,7 @@ void FUN_80035e70(uint *param_1)
 		// param1 is PTR_DAT_8008d2ac
 		((param_1[0x95b] & 0x100) != 0) &&
 
-		// number of screens > 1
+		// numPlyrCurrGame > 1
 		(1 < (byte)PTR_DAT_8008d2ac[0x1ca8])
 	)
   {
@@ -7398,7 +7398,7 @@ void FUN_80035e70(uint *param_1)
 		(
 			((PTR_DAT_8008d2ac[0x1d31] & 8) == 0) ||
 
-			// if number of screens is not 1
+			// if numPlyrCurrGame is not 1
 			// if you're in multiplayer
 			(PTR_DAT_8008d2ac[0x1ca8] != '\x01')
 		) ||
@@ -7614,7 +7614,7 @@ LAB_800367d4:
 			(param_1[0x95b] & 0x10) != 0
 		) &&
 		(
-			// if number of screens is less than 3
+			// if numPlyrCurrGame is less than 3
 			(byte)PTR_DAT_8008d2ac[0x1ca8] < 3)
 		)
   {
@@ -7629,7 +7629,7 @@ LAB_800367d4:
 					// Rain Pool
 					PTR_DAT_8008d2ac + 0x19e8,
 
-					// number of screens
+					// numPlyrCurrGame
 					(uint)(byte)PTR_DAT_8008d2ac[0x1ca8],
 
 					// check if game is paused
@@ -7662,7 +7662,7 @@ LAB_800367d4:
 	// and weapons, I think all 3D geometry except for track
 	// Does not include tire sprites
 
-	// number of screens - 1
+	// numPlyrCurrGame - 1
     uVar7 = (uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1;
 
 	// If you're in a Relic Race
@@ -7687,13 +7687,13 @@ LAB_800367d4:
 							// track LOD
 							(uint)(byte)(&DAT_8008d2d0)[uVar7],
 
-							// number of screens
+							// numPlyrCurrGame
 							(uint)(byte)PTR_DAT_8008d2ac[0x1ca8],
 
 							// check if you paused the game
 							*(uint *)PTR_DAT_8008d2ac & 0xf);
 
-	// number of screens - 1
+	// numPlyrCurrGame - 1
     uVar7 = (uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1;
 
 	// If you're in a Relic Race
@@ -7722,7 +7722,7 @@ LAB_800367d4:
 							// track LOD
 							(uint)(byte)(&DAT_8008d2d0)[uVar7],
 
-							// number of screens
+							// numPlyrCurrGame
 							(uint)(byte)PTR_DAT_8008d2ac[0x1ca8],
 
 							// check if game is paused
@@ -7747,7 +7747,7 @@ LAB_800367d4:
 	// This block of code draws Exhaust
 	// Only if param_1[0x95b] & 0x20 also happens
 
-	  // (72a*4 = 1ca8), numScreens
+	  // (72a*4 = 1ca8), numPlyrCurrGame
     cVar3 = *(char *)(param_1 + 0x72a);
 
 	// loop counter
@@ -7759,7 +7759,7 @@ LAB_800367d4:
 	// are held for each player (pos, size, etc)
     iVar19 = 0x168;
 
-	// for iVar6 = 0; iVar6 < numScreens iVar6++
+	// for iVar6 = 0; iVar6 < numPlyrCurrGame iVar6++
 	do
 	{
 	  // pointer to camera110 struct
@@ -7777,7 +7777,7 @@ LAB_800367d4:
     } while (iVar6 < (int)(uint)*(byte *)(param_1 + 0x72a));
   }
 
-  // (72a*4 = 1ca8), numScreens
+  // (72a*4 = 1ca8), numPlyrCurrGame
   cVar3 = *(char *)(param_1 + 0x72a);
 
 code_r0x800369d8:
@@ -7816,7 +7816,7 @@ code_r0x800369d8:
 	  // pointer to camera110 struct
       puVar12 = (uint *)((int)param_1 + iVar19);
 
-	// (72a*4 = 1ca8), numScreens
+	// (72a*4 = 1ca8), numPlyrCurrGame
 	} while (iVar6 < (int)(uint)*(byte *)(param_1 + 0x72a));
   }
 
@@ -7824,7 +7824,7 @@ code_r0x800369d8:
 		// param1 is PTR_DAT_8008d2ac
 		((param_1[0x95b] & 0x100) != 0) &&
 
-		// if number of screens is more than 1
+		// if numPlyrCurrGame is more than 1
 		(1 < (byte)PTR_DAT_8008d2ac[0x1ca8])
 	)
   {
@@ -7887,7 +7887,7 @@ code_r0x800369d8:
     FUN_80069284(*(undefined4 *)(PTR_DAT_8008d2ac + 0x1be0));
 
 	// param1 is PTR_DAT_8008d2ac
-	// (72a*4 = 1ca8), numScreens
+	// (72a*4 = 1ca8), numPlyrCurrGame
     if (*(char *)(param_1 + 0x72a) != '\0')
 	{
 	  // offset of 8008d2ac where camera110 structs are stored
@@ -7910,7 +7910,7 @@ code_r0x800369d8:
 		// increment loop counter
 		iVar6 = iVar6 + 1;
 
-		// (72a*4 = 1ca8), numScreens
+		// (72a*4 = 1ca8), numPlyrCurrGame
       } while (iVar6 < (int)(uint)*(byte *)(param_1 + 0x72a));
     }
   }
@@ -7961,7 +7961,7 @@ code_r0x800369d8:
 					// pointer to PrimMem struct
 					*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-					// (72a*4 = 1ca8), numScreens
+					// (72a*4 = 1ca8), numPlyrCurrGame
                    (uint)*(byte *)(param_1 + 0x72a));
 
 	  //Draws reflected wheels (visible on ice terrain)
@@ -7972,7 +7972,7 @@ code_r0x800369d8:
 				   // pointer to PrimMem struct
 				   *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-				   // (72a*4 = 1ca8), numScreens
+				   // (72a*4 = 1ca8), numPlyrCurrGame
 				   (uint)*(byte *)(param_1 + 0x72a));
     }
 
@@ -7987,7 +7987,7 @@ code_r0x800369d8:
 				   // pointer to PrimMem struct
 				   *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-				   // (72a*4 = 1ca8), numScreens
+				   // (72a*4 = 1ca8), numPlyrCurrGame
 				   (uint)*(byte *)(param_1 + 0x72a));
 
 	  //Draws reflected wheels (visible on ice terrain)
@@ -7998,7 +7998,7 @@ code_r0x800369d8:
 				   // pointer to PrimMem struct
 				   *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-				   // (72a*4 = 1ca8), numScreens
+				   // (72a*4 = 1ca8), numPlyrCurrGame
 				   (uint)*(byte *)(param_1 + 0x72a));
     }
 
@@ -8013,7 +8013,7 @@ code_r0x800369d8:
 					// pointer to PrimMem struct
 					*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-					// (72a*4 = 1ca8), numScreens
+					// (72a*4 = 1ca8), numPlyrCurrGame
                    (uint)*(byte *)(param_1 + 0x72a));
 
 	  //Draws reflected wheels (visible on ice terrain)
@@ -8024,7 +8024,7 @@ code_r0x800369d8:
 					// pointer to PrimMem struct
 					*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-					// (72a*4 = 1ca8), numScreens
+					// (72a*4 = 1ca8), numPlyrCurrGame
 					(uint)*(byte *)(param_1 + 0x72a));
     }
   }
@@ -8048,7 +8048,7 @@ code_r0x800369d8:
 				 // pointer to PrimMem struct
 				 *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 
-				 // (72a*4 = 1ca8), numScreens
+				 // (72a*4 = 1ca8), numPlyrCurrGame
 				 (uint)*(byte *)(param_1 + 0x72a),
 
 				 // swapchain index * 0x128
@@ -8143,7 +8143,7 @@ code_r0x800369d8:
 						// VisMem 0x80-0x8F
 						puVar9[0x20],
 
-						// (72a*4 = 1ca8), numScreens
+						// (72a*4 = 1ca8), numPlyrCurrGame
 						(uint)*(byte *)(param_1 + 0x72a));
 
 		// increment loop counter
@@ -8338,7 +8338,7 @@ code_r0x800369d8:
 						// VisMem 0x80-0x8F
 						((undefined4 *)param_1[0x68e])[0x20],
 
-						// (72a*4 = 1ca8), numScreens
+						// (72a*4 = 1ca8), numPlyrCurrGame
 						(uint)*(byte *)(param_1 + 0x72a));
 
 		  // offset 0x1CC0,
@@ -8722,7 +8722,7 @@ code_r0x800369d8:
 	// loop counter
     iVar6 = 0;
 
-	// (72a*4 = 1ca8), numScreens
+	// (72a*4 = 1ca8), numPlyrCurrGame
     if (*(char *)(param_1 + 0x72a) != '\0')
 	{
 	  // offset of 8008d2ac where camera110 structs are stored
@@ -8752,7 +8752,7 @@ code_r0x800369d8:
 
         puVar12 = (uint *)((int)param_1 + iVar22);
 
-		// (72a*4 = 1ca8), numScreens
+		// (72a*4 = 1ca8), numPlyrCurrGame
       } while (iVar6 < (int)(uint)*(byte *)(param_1 + 0x72a));
     }
 
@@ -8761,7 +8761,7 @@ code_r0x800369d8:
 			// gGT->hudFlags & 1
 			((PTR_DAT_8008d2ac[0x1d31] & 1) != 0) &&
 
-			// if number of screens is more than 1
+			// if numPlyrCurrGame is more than 1
 			(1 < (byte)PTR_DAT_8008d2ac[0x1ca8])
 		)
 	{
@@ -8774,7 +8774,7 @@ code_r0x800369d8:
 		// param1 is PTR_DAT_8008d2ac
 		((param_1[0x95b] & 0x100) != 0) &&
 
-		// if number of screens is more than 1
+		// if numPlyrCurrGame is more than 1
 		(1 < (byte)PTR_DAT_8008d2ac[0x1ca8])
 		)
 	{
@@ -8804,21 +8804,21 @@ code_r0x800369d8:
 				// If you're in Battle Mode
 				((*(uint *)PTR_DAT_8008d2ac & 0x20) != 0) &&
 
-				// if number of screens is more than 2
+				// if numPlyrCurrGame is more than 2
 				(2 < (byte)PTR_DAT_8008d2ac[0x1ca8])
 			) &&
 			(
 				// set loop counter to zero
 				iVar6 = 0,
 
-				// number of screens is not zero
+				// numPlyrCurrGame is not zero
 				PTR_DAT_8008d2ac[0x1ca8] != '\0'
 			)
 		 )
 	  {
         iVar22 = 0;
 
-	    // for(int iVar6 = 0; iVar6 < numScreens; iVar6++)
+	    // for(int iVar6 = 0; iVar6 < numPlyrCurrGame; iVar6++)
         do {
           puVar14 = PTR_DAT_8008d2ac + iVar22;
 
@@ -8846,11 +8846,11 @@ code_r0x800369d8:
 
           iVar22 = iVar22 + 0x110;
 
-						// number of screens
+						// numPlyrCurrGame
         } while (iVar6 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
       }
 
-	  // if number of screens is more than 1
+	  // if numPlyrCurrGame is more than 1
       if (1 < (byte)PTR_DAT_8008d2ac[0x1ca8])
 	  {
 		// backBuffer->primMem.curr
@@ -8886,7 +8886,7 @@ code_r0x800369d8:
              *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x80) + 0x18;
       }
 
-	  // if number of screens is more than 2
+	  // if numPlyrCurrGame is more than 2
       if (2 < (byte)PTR_DAT_8008d2ac[0x1ca8])
 	  {
 		// backBuffer->primMem.curr
@@ -8922,7 +8922,7 @@ code_r0x800369d8:
              *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x80) + 0x18;
       }
 
-	  // if number of screens is 3
+	  // if numPlyrCurrGame is 3
       if (PTR_DAT_8008d2ac[0x1ca8] == '\x03')
 	  {
 		// backBuffer->primMem.curr
@@ -10000,11 +10000,11 @@ void FUN_80038b5c(int param_1)
   // loop counter
   iVar13 = 0;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0') {
     iVar6 = 0;
 
-	// for iVar13 = 0; iVar13 < numScreens; iVar13++
+	// for iVar13 = 0; iVar13 < numPlyrCurrGame; iVar13++
     do
 	{
       pcVar8 = *(char **)(PTR_DAT_8008d2b0 + (iVar6 >> 0x10) * 0x50 + 0x20);
@@ -10049,7 +10049,7 @@ void FUN_80038b5c(int param_1)
       iVar13 = iVar13 + 1;
 
       iVar6 = iVar13 * 0x10000;
-										// number of screens
+										// numPlyrCurrGame
     } while (iVar13 * 0x10000 >> 0x10 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
 
@@ -10064,7 +10064,7 @@ void FUN_80038b5c(int param_1)
     uVar5 = (ushort)(local_50 != 0);
   }
 
-						// number of screens
+						// numPlyrCurrGame
   sVar7 = (4 - uVar5) - (ushort)(byte)PTR_DAT_8008d2ac[0x1ca8];
   uVar5 = sVar7 * 10;
 
@@ -11613,7 +11613,7 @@ void FUN_8003a3fc(void)
 
         puVar10 = puVar13;
 
-		// for iVar17 = 0; iVar17 < numScreens; iVar17++
+		// for iVar17 = 0; iVar17 < numPlyrCurrGame; iVar17++
         do
 		{
 		  // if racer is in the top 3 positions of the race (1st, 2nd, 3rd)
@@ -11786,19 +11786,19 @@ void FUN_8003a3fc(void)
 				// save the rank that the driver (or team) finished this event
                 *(int *)(puVar13 + (int)*(short *)puVar7 * 4 + 0x1da8) = iVar17;
 
-				// number of screens
+				// numPlyrCurrGame
                 pbVar1 = puVar13 + 0x1ca8;
 
 				// loop iteration counter
                 uVar14 = 0;
 
-				// if number of screens is not zero
+				// if numPlyrCurrGame is not zero
                 if (*pbVar1 != 0)
 				{
 					// address of each player structure
                   piVar2 = (int *)(puVar13 + (int)*(short *)puVar7 * 4 + 0x24ec);
 
-				  // for uVar14 = 0; uVar14 < numScreens; uVar14++
+				  // for uVar14 = 0; uVar14 < numPlyrCurrGame; uVar14++
 				  do
 				  {
 					// If two players are on the same team
@@ -12208,11 +12208,11 @@ void FUN_8003af84(int param_1)
 		(
 			iVar1 = 0,
 
-			// number of screens is not zero
+			// numPlyrCurrGame is not zero
 			*(char *)(param_1 + 0x1ca8) != '\0')
 		)
   {
-	// for iVar1 = 0; iVar1 < numScreens; iVar1++
+	// for iVar1 = 0; iVar1 < numPlyrCurrGame; iVar1++
     do {
       iVar2 = iVar1 * 4;
       *(undefined4 *)(*(int *)(param_1 + 0x1a38) + iVar2 + 0x40) = 0;
@@ -12244,10 +12244,10 @@ void FUN_8003b008(int param_1)
   iVar6 = 0;
   iVar5 = param_1;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (*(char *)(param_1 + 0x1ca8) != '\0') {
 
-	// for ivar6 = 0; ivar6 < numScreens; ivar6++
+	// for ivar6 = 0; ivar6 < numPlyrCurrGame; ivar6++
     do
 	{
 	  // gGT->level1
@@ -12334,7 +12334,7 @@ void FUN_8003b0f0(uint *param_1)
 	// If you are not in main menu
     if ((*param_1 & 0x2000) == 0)
 	{
-	  // (72a*4 = 1ca8), numScreens
+	  // (72a*4 = 1ca8), numPlyrCurrGame
       switch(*(undefined *)(param_1 + 0x72a))
 	  {
 		// zero players, how?
@@ -12459,7 +12459,7 @@ void FUN_8003b334(uint *param_1)
 	  // If not in Battle
       if ((uVar1 & 0x20) == 0)
 	  {
-		// (72a*4 = 1ca8), numScreens
+		// (72a*4 = 1ca8), numPlyrCurrGame
 
 		// if less than 3 players
         if (*(byte *)(param_1 + 0x72a) < 3)
@@ -12511,7 +12511,7 @@ void FUN_8003b334(uint *param_1)
   // "ot[0]"
 
   // MEMPACK_AllocMem
-  // (72a*4 = 1ca8), numScreens
+  // (72a*4 = 1ca8), numPlyrCurrGame
   uVar1 = FUN_8003e874((uint)*(byte *)(param_1 + 0x72a) << 0xc | 0x18,s_ot_0__8008d2fc);
 
   // first index of "ot" pointer array
@@ -12521,7 +12521,7 @@ void FUN_8003b334(uint *param_1)
   // "ot[1]"
 
   // MEMPACK_AllocMem
-  // (72a*4 = 1ca8), numScreens
+  // (72a*4 = 1ca8), numPlyrCurrGame
   uVar1 = FUN_8003e874((uint)*(byte *)(param_1 + 0x72a) << 0xc | 0x18,s_ot_1__8008d304);
 
   // second index of "ot" pointer array
@@ -12600,7 +12600,7 @@ void FUN_8003b43c(uint *param_1)
   FUN_8003105c(param_1 + 0x634,uVar9 * 3 >> 7,0x48,"ThreadPool");
 
   // 8008d2ac + 0x18F8
-  // instance size changes based on numScreens
+  // instance size changes based on numPlyrCurrGame
   FUN_8003105c(param_1 + 0x63e,uVar9 >> 5,
 			  0x74 + (0x88 * (uint)(byte)PTR_DAT_8008d2ac[0x1ca8]),
 			  "InstancePool");
@@ -12685,19 +12685,19 @@ void FUN_8003b43c(uint *param_1)
   // loop count
   iVar6 = 0;
 
-  // Number of screens != 0
+  // numPlyrCurrGame != 0
   if (puVar5[0x1ca8] != '\0')
   {
 	// global clip buffers
     puVar8 = &DAT_80084228;
 
-	// ivar6 = 0; ivar6 < numScreens; iVar6++
+	// ivar6 = 0; ivar6 < numPlyrCurrGame; iVar6++
     do {
 
 	  // increment loop counter
       iVar6 = iVar6 + 1;
 
-									// Level ID							// numPlayers
+									// Level ID							// numPlyrCurrGame
       iVar2 = FUN_80034960(*(undefined4 *)(puVar5 + 0x1a10),(uint)(byte)puVar5[0x1ca8]);
 
 	  // MEMPACK_AllocMem
@@ -12772,7 +12772,7 @@ void FUN_8003b6d0(uint *param_1)
   // This is a strange way to count a loop
 
   // iVar5 = number of players - 1
-  // (72a*4 = 1ca8), numScreens
+  // (72a*4 = 1ca8), numPlyrCurrGame
   iVar5 = (uint)*(byte *)(param_1 + 0x72a) - 1;
 
   // if that is zero or more, which it always will be,
@@ -12783,7 +12783,7 @@ void FUN_8003b6d0(uint *param_1)
 
 	// spawn all players
 
-	// iVar5 = numScreens - 1; iVar5 > -1; iVar5--
+	// iVar5 = numPlyrCurrGame - 1; iVar5 > -1; iVar5--
 	do {
 
 	  // spawn a player, return Driver*
@@ -12807,7 +12807,7 @@ void FUN_8003b6d0(uint *param_1)
 			// not one of the following game modes ????
 			((*param_1 & 0x2c122020) == 0) &&
 
-			// number of screens is not 3
+			// numPlyrCurrGame is not 3
 			(PTR_DAT_8008d2ac[0x1ca8] != '\x03')
 		) &&
 		(
@@ -12846,7 +12846,7 @@ void FUN_8003b6d0(uint *param_1)
 			)
 		  )
 	  {
-		// (72a*4 = 1ca8), numScreens
+		// (72a*4 = 1ca8), numPlyrCurrGame
         bVar1 = *(byte *)(param_1 + 0x72a);
 
         uVar3 = (uint)bVar1;
@@ -12915,15 +12915,15 @@ void FUN_8003b6d0(uint *param_1)
   // if this is main menu
   if ((*param_1 & 0x2000) != 0) {
 
-	// uvar3 = number of screens
+	// uvar3 = numPlyrCurrGame
     uVar3 = (uint)(byte)PTR_DAT_8008d2ac[0x1ca8];
 
-	// if number of screens is less than 4
+	// if numPlyrCurrGame is less than 4
     if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 4) {
 
 	  param_1 = param_1 + uVar3;
 
-	  // uVar3 = numScreens; uVar3 < 4; uVar3++
+	  // uVar3 = numPlyrCurrGame; uVar3 < 4; uVar3++
 	  do {
 
 		// spawn player, return Driver*
@@ -13236,7 +13236,7 @@ void FUN_8003b934(uint *param_1)
   // if you are not in main menu
   if ((*param_1 & 0x2000) == 0)
   {
-	// set FOV depending no numScreens (72a*4 = 1ca8)
+	// set FOV depending no numPlyrCurrGame (72a*4 = 1ca8)
     uVar6 = (uint)*(byte *)(param_1 + 0x72a);
   }
 
@@ -13293,7 +13293,7 @@ void FUN_8003b934(uint *param_1)
 	  // get instance
       iVar7 = *(int *)(iVar4 + 0x1c);
 
-	  // if loop iteration is less than number of screens,
+	  // if loop iteration is less than numPlyrCurrGame,
 	  // basically: if this driver is a human player
       if (iVar8 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8])
 	  {
@@ -13374,7 +13374,7 @@ void FUN_8003b934(uint *param_1)
 				// loop iteration counter
 				iVar8 = 0,
 
-				// if number of screens is not zero
+				// if numPlyrCurrGame is not zero
 				PTR_DAT_8008d2ac[0x1ca8] != '\0'
 			)
 		)
@@ -13382,7 +13382,7 @@ void FUN_8003b934(uint *param_1)
 	  // pointer counter (adds 4 each iteration)
       iVar9 = 0;
 
-	  // for(int iVar8 = 0; iVar8 < numScreens; iVar8++)
+	  // for(int iVar8 = 0; iVar8 < numPlyrCurrGame; iVar8++)
       do
 	  {
 		// iterate loop counter
@@ -13394,7 +13394,7 @@ void FUN_8003b934(uint *param_1)
 		// increment pointer
         iVar9 = iVar8 * 4;
 
-						// number of screens
+						// numPlyrCurrGame
       } while (iVar8 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
     }
   }
@@ -13407,7 +13407,7 @@ void FUN_8003b934(uint *param_1)
   DAT_8008cff8 = (uint)*(byte *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0xd9);
   DAT_8008cffc = (uint)*(byte *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0xda);
 
-  // if number of screens is 1
+  // if numPlyrCurrGame is 1
   if (((PTR_DAT_8008d2ac[0x1ca8] == '\x01') &&
       (*(char *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x163) != '\0')) &&
      (*(char *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x167) != '\0'))
@@ -13479,7 +13479,7 @@ void FUN_8003b934(uint *param_1)
   *(undefined2 *)(param_1 + 0x4e7) = 0x1000;
   *(undefined2 *)((int)param_1 + 0x139e) = 0x200;
 
-  // (72a*4 = 1ca8), numScreens
+  // (72a*4 = 1ca8), numPlyrCurrGame
   bVar1 = *(byte *)(param_1 + 0x72a);
 
   if (bVar1 == 0) {
@@ -13945,7 +13945,7 @@ undefined4 main(void)
 	  // weapons enabled in battle
 	  *(uint *)(puVar6 + 0x1da0) = *(uint *)(puVar6 + 0x1da0) | 0x34de;
 
-	  // set number of screens to 1
+	  // set numPlyrCurrGame to 1
 	  puVar7[0x1ca8] = 1;
 
 	  // set number of players to 1
@@ -14520,7 +14520,7 @@ LAB_8003ce08:
           }
         }
 
-		// if number of screens is 1
+		// if numPlyrCurrGame is 1
         if (PTR_DAT_8008d2ac[0x1ca8] == '\x01')
 		{
 		  // Draw text near top of screen
@@ -18253,14 +18253,14 @@ void FUN_800408b8(void)
 
     iVar13 = 0;
 
-	// if number of screens is 0
+	// if numPlyrCurrGame is 0
     if (PTR_DAT_8008d2ac[0x1ca8] == '\0') {
       return;
     }
 
-	// if number of screens is not zero
+	// if numPlyrCurrGame is not zero
 
-	// for(int iVar13 = 0; iVar13 < numPlayers; iVar13++)
+	// for(int iVar13 = 0; iVar13 < numPlyrCurrGame; iVar13++)
     do
 	{
 	  // get the player structure of each human player
@@ -18568,7 +18568,7 @@ LAB_80041298:
       // increment loop counter
       iVar13 = iVar13 + 1;
 
-	  // for(int iVar13 = 0; iVar13 < numPlayers; iVar13++)
+	  // for(int iVar13 = 0; iVar13 < numPlyrCurrGame; iVar13++)
       if ((int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] <= iVar13)
 	  {
 		// when the loop is finished, quit the function
@@ -19396,10 +19396,10 @@ LAB_80041910:
       puVar5 = puVar7;
       puVar12 = puVar7;
 
-	  // if number of screens is not zero
+	  // if numPlyrCurrGame is not zero
       if (PTR_DAT_8008d2ac[0x1ca8] != '\0') {
 
-		// for(int iVar11 = 0; iVar11 < numPlayers; iVar11++)
+		// for(int iVar11 = 0; iVar11 < numPlyrCurrGame; iVar11++)
         do
 		{
 		  // pointer to each player structure
@@ -19443,7 +19443,7 @@ LAB_80041910:
 		  // increment pointer
           puVar12 = puVar12 + 4;
 
-							// number of screens
+							// numPlyrCurrGame
         } while (iVar11 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
       }
 
@@ -19451,7 +19451,7 @@ LAB_80041910:
 	  // If not in end-of-race menu
       if ((*(uint *)puVar7 & 0x200000) == 0)
 	  {
-		// number of screens
+		// numPlyrCurrGame
         bVar1 = puVar7[0x1ca8];
 
 		// Basically "if race should end",
@@ -20487,7 +20487,7 @@ LAB_80042810:
   // If this is not 2P mode
   else {
 
-	// If number of screens is less than 3 (1 or 2)
+	// If numPlyrCurrGame is less than 3 (1 or 2)
     if (param_3 < 3)
 	{
 	  // If this is not 1P mode
@@ -21621,13 +21621,13 @@ void FUN_80043ab8(void)
   // loop counter
   iVar1 = 0;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
   {
 	// offset of 8008d2ac for camera110 buffers
     iVar2 = 0x168;
 
-	// for(int iVar1 = 0; iVar1 < numPlayers; iVar1++)
+	// for(int iVar1 = 0; iVar1 < numPlyrCurrGame; iVar1++)
     do
 	{
       // add fade quad for current camera
@@ -21642,7 +21642,7 @@ void FUN_80043ab8(void)
 	  // increment offset to next camera110 buffer
       iVar2 = iVar2 + 0x110;
 
-						// number of screens
+						// numPlyrCurrGame
     } while (iVar1 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
 
@@ -23936,7 +23936,7 @@ void FUN_80046458(void)
   {
     iVar3 = 0;
 
-	// for iVar4 = 0; iVar4 < numScreens; iVar4++
+	// for iVar4 = 0; iVar4 < numPlyrNextGame; iVar4++
 	do
 	{
 	  // increment pointer counter
@@ -29343,7 +29343,7 @@ void FUN_8004c718(int param_1)
   // instance color
   *(undefined4 *)(iVar5 + 0x24) = 0xffff0000;
 
-  // if number of screens is 1
+  // if numPlyrCurrGame is 1
   if (puVar1[0x1ca8] == '\x01')
   {
 	// if instance->model->modelID is not timebox
@@ -29364,7 +29364,7 @@ void FUN_8004c718(int param_1)
     }
   }
 
-  // if number of screens is not 1
+  // if numPlyrCurrGame is not 1
   else {
 LAB_8004c7a4:
 
@@ -29634,7 +29634,7 @@ int FUN_8004cae8(int param_1,undefined4 param_2,int param_3,int param_4,int para
   // get model pointer
   iVar16 = *(int *)(PTR_DAT_8008d2ac + param_1 * 4 + 0x2160);
 
-								// number of screens - 1
+								// numPlyrCurrGame - 1
   puVar8 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
 
   iVar13 = 0;
@@ -30017,7 +30017,7 @@ void FUN_8004cec4(void)
     DAT_8008d4b8 = FUN_8004cae8(0x37,FUN_8004c718,3,1,DAT_8008d4b4,"fruitdisp");
 
     if (
-			// If number of screens is less than 3
+			// If numPlyrCurrGame is less than 3
 			((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) &&
 
 			// If you're not in Battle Mode
@@ -30360,7 +30360,7 @@ void FUN_8004d8b4(short *param_1,int *param_2,int *param_3)
     }
   }
 
-  // If number of screens is 3
+  // If numPlyrCurrGame is 3
   if (PTR_DAT_8008d2ac[0x1ca8] == '\x03') {
     iVar3 = iVar3 + -0x3c;
     iVar5 = iVar5 + 10;
@@ -30462,7 +30462,7 @@ void FUN_8004dd5c(undefined4 param_1,int param_2,short *param_3)
 	// loop through all drivers
     do
 	{
-	  // If number of screens is 1, or 3
+	  // If numPlyrCurrGame is 1, or 3
       if ((PTR_DAT_8008d2ac[0x1ca8] == '\x01') || (PTR_DAT_8008d2ac[0x1ca8] == '\x03'))
 	  {
 		// Player structure
@@ -31690,7 +31690,7 @@ void FUN_8004f894(short param_1,short param_2,short param_3)
 	  // count iterations of loop
       iVar5 = 0;
 
-	  // If number of screens is not zero
+	  // If numPlyrCurrGame is not zero
       if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
 	  {
 		// loop iteration * 4,
@@ -31701,7 +31701,7 @@ void FUN_8004f894(short param_1,short param_2,short param_3)
 		// End Race for all Players
 		// ============
 
-		// for iVar5 = 0; iVar5 < numPlayers; iVar5++
+		// for iVar5 = 0; iVar5 < numPlyrCurrGame; iVar5++
         do
 		{
 		  // pointer of each player (P1, P2, P3, P4)
@@ -31796,11 +31796,11 @@ void FUN_8004f9d8(int param_1)
   // loop counter
   uVar14 = 0;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0') {
     iVar6 = 0;
 
-	// for(int iVar14 = 0; iVar14 < numPlayers; iVar14++)
+	// for(int iVar14 = 0; iVar14 < numPlyrCurrGame; iVar14++)
     do
 	{
 	  // something related to player structure address
@@ -31821,7 +31821,7 @@ void FUN_8004f9d8(int param_1)
 		// If 3 or 4 Players
         sVar15 = 5;
 
-		// If number of screens is less than 3
+		// If numPlyrCurrGame is less than 3
         if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) {
           sVar15 = 3;
         }
@@ -31924,7 +31924,7 @@ void FUN_8004f9d8(int param_1)
 
       iVar6 = uVar14 * 4;
 
-	  // for(int iVar14 = 0; iVar14 < numPlayers; iVar14++)
+	  // for(int iVar14 = 0; iVar14 < numPlyrCurrGame; iVar14++)
     } while ((int)uVar14 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
   return;
@@ -32375,7 +32375,7 @@ void FUN_80050528(short param_1,int param_2,undefined4 param_3,int param_4)
     sVar3 = (short)(char)PTR_DAT_8008d2ac[0x1d33];
   }
 
-  // if number of screens is less than 3
+  // if numPlyrCurrGame is less than 3
   if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3)
   {
 	// DAT_8008d878 + 0x60
@@ -32404,7 +32404,7 @@ void FUN_80050528(short param_1,int param_2,undefined4 param_3,int param_4)
     local_38 = 0x4001;
   }
 
-  // if number of screens is 3 or 4
+  // if numPlyrCurrGame is 3 or 4
   else
   {
 	// set pointer to string
@@ -32448,7 +32448,7 @@ void FUN_80050654(int param_1,int param_2,int param_3)
   sVar1 = *(short *)(&DAT_8008644c +
                     (uint)*(byte *)(param_3 + 0x4a) * 2 +
 
-					// number of screens - 1
+					// numPlyrCurrGame - 1
                     ((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1) * 8);
 
 
@@ -32755,7 +32755,7 @@ void FUN_80050c20(int param_1,int param_2,int param_3)
   sVar3 = (short)param_1;
   sVar4 = (short)param_2;
 
-  // if number of screens is less than 3
+  // if numPlyrCurrGame is less than 3
   if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3)
   {
 	// Draw 'x' before drawing number of wumpa
@@ -32772,7 +32772,7 @@ void FUN_80050c20(int param_1,int param_2,int param_3)
 
   }
 
-  // if number of screens is 3 or 4
+  // if numPlyrCurrGame is 3 or 4
   else
   {
 	// amount of wumpa
@@ -33724,7 +33724,7 @@ void FUN_80052250(short param_1,short param_2,int param_3)
   // height of bar in 1P or 2P
   sVar7 = 7;
 
-  // if number of screens is more than 2 (3P or 4P)
+  // if numPlyrCurrGame is more than 2 (3P or 4P)
   if (2 < (byte)PTR_DAT_8008d2ac[0x1ca8])
   {
 	// Make the bar shorter
@@ -33888,7 +33888,7 @@ void FUN_800524c4(void)
   uint local_30;
   uint local_2c;
 
-  // if number of screens is 1
+  // if numPlyrCurrGame is 1
   if (PTR_DAT_8008d2ac[0x1ca8] == '\x01')
   {
 	// Number of racers that have finished race
@@ -34162,13 +34162,13 @@ LAB_800528cc:
 	// loop counter
     iVar14 = 0;
 
-	// number of screens  +  number of AIs
+	// numPlyrCurrGame  +  number of AIs
     if ((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] + (uint)(byte)PTR_DAT_8008d2ac[0x1cab] != 0) {
       puVar16 = &DAT_800862d8;
       iVar12 = 0;
       iVar15 = 0;
 
-	  // for iVar14 = 0; iVar14 < numPlayers+numAI; iVar14++
+	  // for iVar14 = 0; iVar14 < numPlyrCurrGame+numBotsNextGame; iVar14++
 	  do
 	  {
 		// puVar5 increases by 4 for each iteration
@@ -34322,7 +34322,7 @@ LAB_80052b00:
         *puVar16 = uVar11;
         puVar16 = puVar16 + 1;
 
-		// iVar14 < numPlayers + number of AIs
+		// iVar14 < numPlyrCurrGame + number of AIs
       } while (iVar14 < (int)((uint)(byte)puVar5[0x1ca8] + (uint)(byte)puVar5[0x1cab]));
     }
 
@@ -34462,7 +34462,7 @@ void FUN_80052f98(void)
   short local_36;
   undefined2 local_30 [4];
 
-  // Get pointer to array of HUD structs                number of screens - 1
+  // Get pointer to array of HUD structs                numPlyrCurrGame - 1
   psVar20 = (short *)(&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
 
   iVar21 = 0;
@@ -34514,7 +34514,7 @@ void FUN_80052f98(void)
     }
   }
 
-  // number of screens is 0
+  // numPlyrCurrGame is 0
   if ((PTR_DAT_8008d2ac[0x1ca8] == '\0') &&
 
 	// If this is an AI and not a human
@@ -34607,7 +34607,7 @@ LAB_80053260:
       }
 
       if (
-			// number of screens is less than 2 (1P mode)
+			// numPlyrCurrGame is less than 2 (1P mode)
 			((byte)PTR_DAT_8008d2ac[0x1ca8] < 2) &&
 
 			// if want to draw speedometer
@@ -34942,7 +34942,7 @@ LAB_80053584:
 				((*(uint *)(iVar19 + 0x2c8) & 0x2000000) == 0) ||
 				(
 					(
-						// if number of screens is 2
+						// if numPlyrCurrGame is 2
 						PTR_DAT_8008d2ac[0x1ca8] == '\x02' &&
 
 						// AND
@@ -34960,7 +34960,7 @@ LAB_80053584:
         }
         else {
 
-		  // if number of screens is less than 3
+		  // if numPlyrCurrGame is less than 3
           if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) goto LAB_80053af4;
           sVar1 = psVar20[0x14];
           sVar2 = psVar20[0x15];
@@ -35138,7 +35138,7 @@ LAB_80053af4:
   // framesDrivingSameDirection += 1
   DAT_8008d9e4 = DAT_8008d9e4 + 1;
 
-  // if number of screens is 1
+  // if numPlyrCurrGame is 1
   if (PTR_DAT_8008d2ac[0x1ca8] == '\x01')
   {
 	// pointer to player structure
@@ -35325,7 +35325,7 @@ LAB_80053c98:
     }
   }
 
-  // if number of screens is not 1 (multiplayer)
+  // if numPlyrCurrGame is not 1 (multiplayer)
   else {
 
 	// if you have a time limit (battle)
@@ -35339,7 +35339,7 @@ LAB_80053c98:
   if (
 		(
 			(
-				// if number of screens is 1
+				// if numPlyrCurrGame is 1
 				(PTR_DAT_8008d2ac[0x1ca8] == '\x01') &&
 
 				// if ptr_map is valid
@@ -35353,7 +35353,7 @@ LAB_80053c98:
 
 		(
 			(
-				// if number of screens is 3
+				// if numPlyrCurrGame is 3
 				PTR_DAT_8008d2ac[0x1ca8] == '\x03' &&
 
 				// if ptr_map is valid
@@ -35379,7 +35379,7 @@ LAB_80053c98:
 	// if ptr_map is valid
     if (iVar21 != 0) {
 
-	  // If number of screens is 1
+	  // If numPlyrCurrGame is 1
       if (PTR_DAT_8008d2ac[0x1ca8] == '\x01')
 	  {
 		// pointer to backBuffer
@@ -35399,16 +35399,16 @@ LAB_80053c98:
 		local_74 = 0xc3;
       }
 
-	  // if number of screens is not 1
+	  // if numPlyrCurrGame is not 1
       else
 	  {
 		// posX
         local_80 = 0x1b8;
 
-		// if number of screens is not 3
+		// if numPlyrCurrGame is not 3
         if (PTR_DAT_8008d2ac[0x1ca8] != '\x03') goto LAB_80054040;
 
-		// This happens only if number of screens is 3
+		// This happens only if numPlyrCurrGame is 3
         // pointer to backBuffer
         iVar21 = *(int *)(PTR_DAT_8008d2ac + 0x10);
 
@@ -35447,12 +35447,12 @@ LAB_80054040:
   // loop counter
   iVar21 = 0;
 
-  // if number of screens is not 0
+  // if numPlyrCurrGame is not 0
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0') {
     iVar19 = 0;
     iVar7 = 0;
 
-	// for(int iVar21 = 0; iVar21 < numPlayers; iVar21++)
+	// for(int iVar21 = 0; iVar21 < numPlyrCurrGame; iVar21++)
     do
 	{
 	  // pointer to array of pointers for each driver (9900C, 99010, etc)
@@ -35560,7 +35560,7 @@ LAB_80054040:
 
       iVar7 = iVar7 + 4;
 
-	  // for(int iVar21 = 0; iVar21 < numPlayers; iVar21++)
+	  // for(int iVar21 = 0; iVar21 < numPlyrCurrGame; iVar21++)
     } while (iVar21 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
   if (
@@ -35595,7 +35595,7 @@ void FUN_80054298(void)
   // get Player 1
   uVar2 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec);
 
-								// number of screens - 1
+								// numPlyrCurrGame - 1
   puVar1 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
 
   // DrawNumRelic
@@ -35628,7 +35628,7 @@ void FUN_8005435c(void)
   //iVar3 = player 1 pointer struct
   iVar3 = *(int *)(PTR_DAT_8008d2ac + 0x24ec);
 
-											// number of screens - 1
+											// numPlyrCurrGame - 1
   psVar4 = (short *)(&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
 
   // If game is not paused
@@ -35808,7 +35808,7 @@ void FUN_8005465c(int param_1)
   local_1c = DAT_8008d560;
   puVar9 = &local_28;
 
-  // if number of screens is more than 2
+  // if numPlyrCurrGame is more than 2
   if (2 < (byte)PTR_DAT_8008d2ac[0x1ca8]) {
     puVar9 = &local_20;
   }
@@ -35852,15 +35852,15 @@ void FUN_8005465c(int param_1)
   // if there is more than 1 screen
   if (1 < *(byte *)(param_1 + 0x1ca8))
   {
-	// get HUD position variables [numPlayers - 1]
+	// get HUD position variables [numPlyrCurrGame - 1]
     puVar5 = (&PTR_DAT_8008625c)[(uint)*(byte *)(param_1 + 0x1ca8) - 1];
 
     iVar6 = 0;
 
-	// if numPlayers is not zero
+	// if numPlyrCurrGame is not zero
 	if (*(byte *)(param_1 + 0x1ca8) != 0)
 	{
-	  // for iVar6 = 0; iVar6 < numPlayers; iVar6++
+	  // for iVar6 = 0; iVar6 < numPlyrCurrGame; iVar6++
       do {
         if (
 			//if racer hasn't finished the race
@@ -36125,7 +36125,7 @@ void FUN_80054bfc(void)
 
   local_2c = 0;
 
-  // number of screens is more than 1
+  // numPlyrCurrGame is more than 1
   if (1 < (byte)PTR_DAT_8008d2ac[0x1ca8]) {
 
 	// If you're not in Battle Mode
@@ -36574,7 +36574,7 @@ void FUN_800552a4(void)
   // loop counter
   iVar13 = 0;
 
-  // if number of screens is not 0
+  // if numPlyrCurrGame is not 0
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
   {
     local_34 = acStack88;
@@ -36582,7 +36582,7 @@ void FUN_800552a4(void)
     local_30 = 0;
     iVar7 = 0;
 
-	// for(int iVar13 = 0; iVar13 < numPlayers; iVar13++)
+	// for(int iVar13 = 0; iVar13 < numPlyrCurrGame; iVar13++)
     do
 	{
 	  // flags, for which players have pressed X to continue
@@ -36652,7 +36652,7 @@ void FUN_800552a4(void)
 		  // loop counter
 		  iVar9 = 0;
 
-		  // if number of screens is not zero
+		  // if numPlyrCurrGame is not zero
           if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
 		  {
 			// same as checking HIT YOU vs YOU HIT before
@@ -36668,7 +36668,7 @@ void FUN_800552a4(void)
 					// print a hit b
 					// print b hit a
 
-			// for(int iVar9 = 0; iVar9 < numPlayers; iVar9++)
+			// for(int iVar9 = 0; iVar9 < numPlyrCurrGame; iVar9++)
             do
 			{
 			  // Get Battle Team of player
@@ -36678,7 +36678,7 @@ void FUN_800552a4(void)
 			  // use flags from registers
               puVar6 = &local_70;
 
-			  // If number of screens is 2
+			  // If numPlyrCurrGame is 2
               if (PTR_DAT_8008d2ac[0x1ca8] == '\x02')
 			  {
 				// use flags from ram, loaded to stack
@@ -36737,7 +36737,7 @@ void FUN_800552a4(void)
 
               iVar11 = iVar11 + 1;
 
-								// number of screens
+								// numPlyrCurrGame
             } while (iVar9 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
           }
         }
@@ -36784,12 +36784,12 @@ void FUN_800552a4(void)
 
       iVar7 = iVar13 * 0x10;
 
-	  // for(int iVar13 = 0; iVar13 < numPlayers; iVar13++)
+	  // for(int iVar13 = 0; iVar13 < numPlyrCurrGame; iVar13++)
 	} while (iVar13 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
   iVar13 = 3;
 
-  // if number players ready to continue is equal to number of screens
+  // if number players ready to continue is equal to numPlyrCurrGame
   // Basically: If all players press X to continue
   if ((int)local_40 == (uint)(byte)PTR_DAT_8008d2ac[0x1ca8])
   {
@@ -37443,7 +37443,7 @@ void FUN_8005607c(void)
   puVar1 = PTR_DAT_8008d2ac;
   iVar9 = -1;
 
-  // number of screens + number of AIs
+  // numPlyrCurrGame + number of AIs
   uVar3 = (uint)(byte)PTR_DAT_8008d2ac[0x1ca8] + (uint)(byte)PTR_DAT_8008d2ac[0x1cab];
   sVar8 = 0;
 
@@ -37522,7 +37522,7 @@ void FUN_80056220(void)
   puVar1 = PTR_DAT_8008d2ac;
   uVar5 = 0;
 
-  //        number of AIs          +        number of screens
+  //        number of AIs          +        numPlyrCurrGame
   iVar2 = (uint)(byte)PTR_DAT_8008d2ac[0x1cab] + (uint)(byte)PTR_DAT_8008d2ac[0x1ca8];
 
   // for(int iVar8 = 0; iVar8  < totalNumCharacters; iVar8++)
@@ -37624,7 +37624,7 @@ void FUN_800562fc(void)
 
   puVar4 = PTR_DAT_8008d2ac;
 
-  // number of screens        +         number of AIs
+  // numPlyrCurrGame        +         number of AIs
   iVar17 = (uint)(byte)PTR_DAT_8008d2ac[0x1ca8] + (uint)(byte)PTR_DAT_8008d2ac[0x1cab];
 
   if (
@@ -37632,7 +37632,7 @@ void FUN_800562fc(void)
 			// If you are in Arcade or VS cup
 			((*(uint *)(PTR_DAT_8008d2ac + 8) & 0x10) != 0) &&
 
-			// if number of screens is not 1
+			// if numPlyrCurrGame is not 1
 			// if this is a multiplayer game
 			(PTR_DAT_8008d2ac[0x1ca8] != 1)
 		) &&
@@ -37655,7 +37655,7 @@ void FUN_800562fc(void)
 		// if it is
 		(local_8c != 0) &&
 
-		// if number of screens is not 1
+		// if numPlyrCurrGame is not 1
 		// if this is a multiplayer game
 		(PTR_DAT_8008d2ac[0x1ca8] != '\x01')
 	  )
@@ -37671,7 +37671,7 @@ void FUN_800562fc(void)
 		// if not
 		(local_8c == 0) &&
 
-		// if number of screens is not 1
+		// if numPlyrCurrGame is not 1
 		// if this is a multiplayer game
 		(PTR_DAT_8008d2ac[0x1ca8] != '\x01')
 	 )
@@ -37688,7 +37688,7 @@ void FUN_800562fc(void)
 		// if fully on screen
 		(local_8c != 0) ||
 
-		// If number of screens is 1
+		// If numPlyrCurrGame is 1
 		(PTR_DAT_8008d2ac[0x1ca8] == '\x01')
 	  )
   {
@@ -37718,7 +37718,7 @@ void FUN_800562fc(void)
     DAT_8008d52c = 0x3c;
 
 	// Save the number of drivers
-	//               number of screens                 +         number of AIs
+	//               numPlyrCurrGame                 +         number of AIs
     DAT_8008d570 = (ushort)(byte)PTR_DAT_8008d2ac[0x1ca8] + (ushort)(byte)PTR_DAT_8008d2ac[0x1cab];
 
 	// clear gamepad input (for menus)
@@ -37840,7 +37840,7 @@ LAB_80056678:
 	  // If this is not Purple Gem Cup
       else {
 
-		//           number of screens      +       number of AIs
+		//           numPlyrCurrGame      +       number of AIs
         // Basically, if you're in 2P Arcade
 		if ((uint)(byte)PTR_DAT_8008d2ac[0x1ca8] + (uint)(byte)PTR_DAT_8008d2ac[0x1cab] == 6) {
           uVar9 = 0x42;
@@ -37947,7 +37947,7 @@ LAB_800568d8:
 
 		  // amount of points to add is based on how
 		  // many players are in the race, and race position
-						// number of screens - [unknown]
+						// numPlyrCurrGame - [unknown]
           iVar12 = (uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - (local_8c + 1);
         }
 
@@ -38068,12 +38068,12 @@ LAB_800568d8:
 		// Loop counter
         iVar17 = 0;
 
-		// if number of screens != 0
+		// if numPlyrCurrGame != 0
         if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
 		{
           local_8c = 0;
 
-		  // for iVar17 = 0; iVar17 < numPlayers; iVar17++
+		  // for iVar17 = 0; iVar17 < numPlyrCurrGame; iVar17++
           do
 		  {
 			// Increment Loop counter
@@ -38086,7 +38086,7 @@ LAB_800568d8:
 
 			// Incremented by
 
-			// numPlayers - rank
+			// numPlyrCurrGame - rank
 			((uint)(byte)puVar4[0x1ca8] - iVar17);
 
             local_8c = iVar17 * 4;
@@ -38527,11 +38527,11 @@ void FUN_800572d0(int param_1,undefined4 param_2,SVECTOR *param_3)
   puVar1 = PTR_DAT_8008d2ac;
   iVar2 = 0;
 
-  // if number of screens != 0
+  // if numPlyrCurrGame != 0
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
   {
 	// each InstDrawPerPlayer
-	// for iVar2 = 0; iVar2 < numPlayers; iVar2++
+	// for iVar2 = 0; iVar2 < numPlyrCurrGame; iVar2++
     do 
 	{
 	  // write specular values,
@@ -38580,7 +38580,7 @@ void FUN_8005741c(int param_1,undefined4 param_2,SVECTOR *param_3)
 
   iVar4 = 0;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
   {
     r0_00 = aMStack120;
@@ -38595,7 +38595,7 @@ void FUN_8005741c(int param_1,undefined4 param_2,SVECTOR *param_3)
     puVar2 = PTR_DAT_8008d2ac;
     iVar5 = param_1;
 
-	// for iVar6 = 0; iVar6 < numPlayers; iVar6++
+	// for iVar6 = 0; iVar6 < numPlyrCurrGame; iVar6++
     do
 	{
 	  // pointer to start of camera110 buffer array
@@ -38723,14 +38723,14 @@ void FUN_800576b8(int param_1,undefined4 param_2,SVECTOR *param_3)
   *(uint *)(param_1 + 0x58) = (uint)*(ushort *)(puVar7 + 0x38);
   iVar4 = 0;
 
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (puVar2[0x1ca8] != '\0')
   {
     r0 = (SVECTOR *)(puVar7 + 0x50);
     iVar5 = 0x168;
     iVar6 = param_1;
 
-	// for iVar3 = 0; iVar3 < numPlayers; iVar3++
+	// for iVar3 = 0; iVar3 < numPlyrCurrGame; iVar3++
     do
 	{
 	  // pointer to camera110 buffer
@@ -39062,7 +39062,7 @@ void FUN_80057c8c(int param_1,uint param_2,int param_3)
   // low-LOD collision (2 triangles)
   DAT_1f80012a = 0;
 
-  // if number of screens is less than 3
+  // if numPlyrCurrGame is less than 3
   if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) 
   {
 	// high-LOD collision (8 triangles)
@@ -39726,7 +39726,7 @@ LAB_800587cc:
 
 		// Player / AI structure + 0x4a shows driver index (0-7)
 
-		// driver ID must be less than number of screens,
+		// driver ID must be less than numPlyrCurrGame,
 		// which makes the cheat apply to players and not AIs
 		(*(byte *)(param_1 + 0x4a) < (byte)puVar4[0x1ca8]))
   {
@@ -40196,7 +40196,7 @@ void FUN_80058d2c(int param_1,int param_2)
   // get instance from thread
   iVar4 = *(int *)(param_1 + 0x34);
 
-  // if driverID is less than number of screens,
+  // if driverID is less than numPlyrCurrGame,
   // "If driver belongs to human player"
   if (param_2 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8])
   {
@@ -40528,19 +40528,19 @@ int FUN_80059100(int param_1,int *param_2,int *param_3)
 	// high LOD exhaust
     puVar2 = (undefined *)0x80089224;
 
-	// if number of screens is less than 3
+	// if numPlyrCurrGame is less than 3
     if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) {
 
-	  // if number of screens is more than 1
+	  // if numPlyrCurrGame is more than 1
       if (1 < (byte)PTR_DAT_8008d2ac[0x1ca8]) {
 
-		// really only happens if number of screens is 2
+		// really only happens if numPlyrCurrGame is 2
 		// med LOD exhaust
         puVar2 = (undefined *)0x80089344;
       }
     }
 
-	// if number of screens is 3 or 4
+	// if numPlyrCurrGame is 3 or 4
     else
 	{
 	  // low LOD exhaust
@@ -41074,7 +41074,7 @@ void FUN_80059a18(int param_1,int param_2)
     }
   }
 
-  // if number of screens is less than 2
+  // if numPlyrCurrGame is less than 2
   if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 2)
   {
     iVar20 = (int)*(short *)(param_2 + 0x38c);
@@ -41150,7 +41150,7 @@ void FUN_80059a18(int param_1,int param_2)
       }
     }
 
-	// if number of screens is less than 2 (useless if?)
+	// if numPlyrCurrGame is less than 2 (useless if?)
     if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 2)
 	{
       //if racer started touching the ground in this frame
@@ -41685,13 +41685,13 @@ LAB_8005a73c:
 		(*(char *)(param_2 + 0x4fe) == '\x02') ||
 		(
 			(
-				// If number of screens is more than 1
+				// If numPlyrCurrGame is more than 1
 				// If this is a multiplayer game
 				1 < (byte)PTR_DAT_8008d2ac[0x1ca8] &&
 				(
 					(
 						(
-							// If number of screens is not 2
+							// If numPlyrCurrGame is not 2
 							PTR_DAT_8008d2ac[0x1ca8] != 2 ||
 							(
 								// for 2P mode, make driver skids on alternating frames (0 or 1)
@@ -42145,10 +42145,10 @@ LAB_8005ad6c:
 	// inside Turbo object
     *piVar7 = iVar8;
 
-    // if number of screens is not 1
+    // if numPlyrCurrGame is not 1
     uVar6 = 0x1040000;
 
-    // if number of screens is 1
+    // if numPlyrCurrGame is 1
     if (puVar3[0x1ca8] == '\x01')
 	{
       uVar6 = 0x3040000;
@@ -42859,10 +42859,10 @@ void FUN_8005b720(void)
 											// instance flags
 		*(undefined2 *)(puVar15 + 0x14) = *(undefined2 *)(iVar19 + 0x28);
         
-		// number of screens - 1
+		// numPlyrCurrGame - 1
 		iVar17 = (byte)puVar1[0x1ca8] - 1;
         
-		// numScreens > 0
+		// numPlyrCurrGame > 0
 		if (-1 < iVar17) 
 		{
 		  // InstDrawPerPlayer = Instance -> InstDrawPerPlayer[iVar17]
@@ -42908,7 +42908,7 @@ void FUN_8005b720(void)
     
 	*(undefined4 *)(uVar6 + 0x3c) = 0;
 	
-	// number of screens - 1
+	// numPlyrCurrGame - 1
     iVar4 = (byte)puVar1[0x1ca8] - 1;
 	
 	// loop through all player screens
@@ -45680,7 +45680,7 @@ LAB_8005f6a4:
     }
   }
   
-  // if number of screens is less than 2
+  // if numPlyrCurrGame is less than 2
   else if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 2) 
   {
 	// get speed
@@ -47417,7 +47417,7 @@ LAB_800613a4:
 
   if (
 		(
-			// If number of screens is more than 2 and
+			// If numPlyrCurrGame is more than 2 and
 			(2 < (byte)PTR_DAT_8008d2ac[0x1ca8]) &&
 
 			// you're not in Battle Mode, and
@@ -48048,7 +48048,7 @@ void FUN_8006181c(int param_1,int param_2)
 					// If racer is in 8th place
 					(sVar13 == 7) &&
 
-					// If number of screens is 1
+					// If numPlyrCurrGame is 1
 					(PTR_DAT_8008d2ac[0x1ca8] == '\x01')
 				) ||
 
@@ -48057,7 +48057,7 @@ void FUN_8006181c(int param_1,int param_2)
 						// If racer is in 6th place
 						sVar13 == 5 &&
 
-						// if number of screens is 2
+						// if numPlyrCurrGame is 2
 						(PTR_DAT_8008d2ac[0x1ca8] == '\x02')
 					)
 				)
@@ -48067,7 +48067,7 @@ void FUN_8006181c(int param_1,int param_2)
 					// if racer is in 4th place
 					sVar13 == 3 &&
 
-					// if number of screens is more than 2
+					// if numPlyrCurrGame is more than 2
 					(2 < (byte)PTR_DAT_8008d2ac[0x1ca8])
 				)
 			)
@@ -48278,7 +48278,7 @@ LAB_80061cf8:
 	//if Item is about to be gone and Number of Items = 0
     if ((sVar3 == 1) && (*(char *)(param_2 + 0x37) == '\0')) {
 
-	  // if number of screens is > 2
+	  // if numPlyrCurrGame is > 2
 	  if ((2 < (byte)PTR_DAT_8008d2ac[0x1ca8]) &&
 
 		  // If you're not in Battle Mode
@@ -52349,7 +52349,7 @@ LAB_800659ec:
 	// low-LOD collision (2 triangles)
     DAT_1f80012a = 1;
 
-	// if number of screens is less than 3
+	// if numPlyrCurrGame is less than 3
     if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) 
 	{
 	  // high-LOD collision (8 triangles)
@@ -52580,7 +52580,7 @@ LAB_800659ec:
 	  // low-LOD collision (2 triangles)
       DAT_1f80012a = 1;
 
-	  // if number of screens is less than 3
+	  // if numPlyrCurrGame is less than 3
       if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) 
 	  {
 		// high-LOD collision (8 triangles)
@@ -53257,7 +53257,7 @@ void FUN_8006677c(int param_1,short *param_2)
 		
         DAT_1f80010c = (ushort)((uint)*(undefined4 *)(param_1 + 0x2dc) >> 8);
 
-		// if number of screens is less than 3
+		// if numPlyrCurrGame is less than 3
         if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) 
 		{
 		  // high-LOD collision (8 triangles)
@@ -55664,11 +55664,11 @@ void FUN_80069284(int param_1)
 
       iVar8 = 0;
 
-	  // number of screens is not zero
+	  // numPlyrCurrGame is not zero
       if (puVar2[0x1ca8] != '\0') 
 	  {
 		// each InstDrawPerPlayer
-		// for iVar8 = 0; iVar8 < numPlayers; iVar8++
+		// for iVar8 = 0; iVar8 < numPlyrCurrGame; iVar8++
         do
 		{
 		  // if camera110 does not exist ?
@@ -60146,7 +60146,7 @@ void FUN_8006db7c(undefined4 param_1,undefined4 param_2,int *param_3,short param
 // param1 - camera110
 // param2 - primMem
 // param3 - rainPool
-// param4 - numPlayers
+// param4 - numPlyrCurrGame
 // param5 - check if game is paused
 void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
 
@@ -60414,7 +60414,7 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
 // param1 - camera110
 // param2 - PrimMem
 // param3 - numStars
-// param4 - numScreens
+// param4 - numPlyrCurrGame
 void FUN_8006e26c(int param_1,int param_2,ushort *param_3,int param_4)
 
 {
@@ -60600,7 +60600,7 @@ void FUN_8006e26c(int param_1,int param_2,ushort *param_3,int param_4)
 // draw normal tires (not reflected)
 // param1 - first thread
 // param2 - PrimMem
-// param3 - numScreens
+// param3 - numPlyrCurrGame
 void FUN_8006e588(int param_1,int param_2,int param_3)
 
 {
@@ -60707,7 +60707,7 @@ void FUN_8006e588(int param_1,int param_2,int param_3)
 	// vertical line for split or reflection
     uVar12 = *(undefined2 *)(iVar7 + 0x56);
 
-	// number of screens to render tires on
+	// numPlyrCurrGame to render tires on
     *(undefined4 *)(iVar3 + 0x34) = *(undefined4 *)(iVar3 + 0x30);
 
 	// vertical line for split or reflection
@@ -61167,7 +61167,7 @@ void FUN_8006ef98(void)
 // draw reflected tires (reflected on ice)
 // param1 - first thread
 // param2 - PrimMem
-// param3 - numScreens
+// param3 - numPlyrCurrGame
 void FUN_8006f004(int param_1,int param_2,int param_3)
 
 {
@@ -61274,7 +61274,7 @@ void FUN_8006f004(int param_1,int param_2,int param_3)
 	// vertical line for split or reflection
     uVar12 = *(undefined2 *)(iVar8 + 0x56);
 
-	// number of screens to render tires on
+	// numPlyrCurrGame to render tires on
     *(undefined4 *)(iVar3 + 0x34) = *(undefined4 *)(iVar3 + 0x30);
 
 	// vertical line for split or reflection
@@ -61649,7 +61649,7 @@ void FUN_8006f004(int param_1,int param_2,int param_3)
 // param_1 camera110
 // param_2 PrimMem
 // param_3 RainBuffer
-// param_4 numPlayers
+// param_4 numPlyrCurrGame
 // param_5 paused?
 void FUN_8006f9a8(uint *param_1,int param_2,uint *param_3,undefined4 param_4,int param_5)
 {
@@ -62505,7 +62505,7 @@ undefined4 FUN_80070388(ushort *param_1,int param_2,int param_3,int param_4,int 
 // param2 - otMem
 // param3 - render bucket instance, unused?
 // param4 - trackLOD
-// param5 - numPlayers
+// param5 - numPlyrCurrGame
 // param6 - isPaused?
 // RenderBucket_QueueLevInstances
 undefined4
@@ -62617,7 +62617,7 @@ FUN_80070720(int param_1,int param_2,undefined4 param_3,undefined4 param_4,int p
 // param2 - otMem
 // param3 - RenderBucketInstance
 // param4 - track LOD
-// param5 - numPlayers
+// param5 - numPlyrCurrGame
 // param6 - isPaused?
 // RenderBucket_QueueNonLevInstances
 undefined4
@@ -62644,7 +62644,7 @@ FUN_8007084c(undefined *param_1,int param_2,undefined4 param_3,undefined4 param_
   DAT_1f800020 = &_gp_4;
   DAT_1f800034 = *(undefined4 *)(param_2 + 0xc);
 
-  // put numPlayers on scratchpad
+  // put numPlyrCurrGame on scratchpad
   DAT_1f80005c = param_5;
 
   _DAT_1f800090 = param_6;
@@ -62684,13 +62684,13 @@ FUN_8007084c(undefined *param_1,int param_2,undefined4 param_3,undefined4 param_
       puVar3 = *(undefined **)puVar3;
     }
 
-	// decrease number of screens
+	// decrease numPlyrCurrGame
     iVar2 = *(int *)(iVar1 + 0x5c) + -1;
 
 	// InstDrawPerPlayer
     *(int *)(iVar1 + 0x54) = *(int *)(iVar1 + 0x54) + -0x88;
 
-	// store number of screens
+	// store numPlyrCurrGame
     *(int *)(iVar1 + 0x5c) = iVar2;
 
 	// go back to start of instance pool,

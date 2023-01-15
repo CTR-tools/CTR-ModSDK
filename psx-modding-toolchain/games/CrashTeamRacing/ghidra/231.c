@@ -969,7 +969,7 @@ void FUN_800ac6b4(int param_1)
   DAT_1f800130 = 0;
   DAT_1f80012a = 0x41;
   
-  // number of screens is less than 3
+  // numPlyrCurrGame is less than 3
   if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) {
     DAT_1f80012a = 0x43;
   }
@@ -2391,7 +2391,7 @@ LAB_800add14:
 			// if instance -> model -> modelID == missile
 			(*(short *)(*(int *)(iVar10 + 0x18) + 0x10) == 0x29) && 
 			
-			// number of screens < 2
+			// numPlyrCurrGame < 2
 			((byte)PTR_DAT_8008d2ac[0x1ca8] < 2)
 		) && 
 		(
@@ -2461,7 +2461,7 @@ LAB_800add14:
   DAT_1f800130 = 0;
   DAT_1f80012a = 0x41;
   
-  // number of screens < 3
+  // numPlyrCurrGame < 3
   if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) {
     DAT_1f80012a = 0x43;
   }
@@ -3570,7 +3570,7 @@ LAB_800af34c:
   // If you have 3 or 4 screens
   DAT_1f80012a = 0x41;
   
-  // number of screens < 3
+  // numPlyrCurrGame < 3
   if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 3) {
     DAT_1f80012a = 0x43;
   }
@@ -3933,14 +3933,14 @@ void FUN_800afdbc(int param_1)
 	// iteration counter
     iVar4 = 0;
 	
-	// number of screens is not zero
+	// numPlyrCurrGame is not zero
     if (PTR_DAT_8008d2ac[0x1ca8] != '\0') 
 	{
       iVar8 = 0x168;
       iVar6 = 0;
       iVar7 = iVar10;
 	  
-	  // For iVar4 = 0; iVar4 < numScreens; iVar4++
+	  // For iVar4 = 0; iVar4 < numPlyrCurrGame; iVar4++
       do {
         puVar3 = puVar2 + iVar8;
         iVar8 = iVar8 + 0x110;
@@ -3963,13 +3963,13 @@ void FUN_800afdbc(int param_1)
 	// count loop iteration
     uVar5 = 0;
 	
-	// if number of screens is not zero
+	// if numPlyrCurrGame is not zero
     if (PTR_DAT_8008d2ac[0x1ca8] != '\0') 
 	{
       iVar7 = 0;
       iVar4 = iVar10;
 	  
-	  // for uVar5 = 0; uVar5 < numScreens; uVar5++
+	  // for uVar5 = 0; uVar5 < numPlyrCurrGame; uVar5++
       do {
         if (uVar5 != (uint)*(byte *)(*(int *)(*(int *)(param_1 + 0xc) + 0x30) + 0x4a)) {
           *(undefined4 *)(iVar4 + 0x74) = 0;
@@ -4301,13 +4301,13 @@ void FUN_800b0454(int param_1)
 	// loop counter
 	iVar8 = 0;
 	
-	// if number of screens is not zero
+	// if numPlyrCurrGame is not zero
     if (PTR_DAT_8008d2ac[0x1ca8] != '\0') {
       iVar12 = 0x168;
       iVar6 = 0;
       iVar10 = iVar16;
 	  
-	  // for iVar8 = 0; iVar8 < numScreens; iVar8++
+	  // for iVar8 = 0; iVar8 < numPlyrCurrGame; iVar8++
       do 
 	  {
         puVar5 = puVar3 + iVar12;
@@ -4329,13 +4329,13 @@ void FUN_800b0454(int param_1)
 	// loop counter
     uVar9 = 0;
 	
-	// if number of screens is not zero
+	// if numPlyrCurrGame is not zero
     if (PTR_DAT_8008d2ac[0x1ca8] != '\0') 
 	{
       iVar10 = 0;
       iVar8 = iVar16;
 	  
-	  // for iVar9 = 0; iVar9 < numScreens; iVar9++
+	  // for iVar9 = 0; iVar9 < numPlyrCurrGame; iVar9++
       do {
         if (uVar9 != (uint)*(byte *)(*(int *)(*(int *)(param_1 + 0xc) + 0x30) + 0x4a)) {
           *(undefined4 *)(iVar8 + 0x74) = 0;
@@ -6060,11 +6060,11 @@ void FUN_800b25b8(int param_1)
   int local_34;
   int local_30;
   
-  // number of screens
+  // numPlyrCurrGame
   cVar1 = *(char *)(param_1 + 0x1ca8);
   iVar8 = 0;
   
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (cVar1 != '\0') {
     piVar3 = local_60;
     piVar5 = local_70;
@@ -6129,20 +6129,20 @@ void FUN_800b25b8(int param_1)
       iVar10 = iVar10 + 0x110;
     } while (iVar8 < (int)(uint)*(byte *)(param_1 + 0x1ca8));
 	
-	// number of screens
+	// numPlyrCurrGame
     cVar1 = *(char *)(param_1 + 0x1ca8);
   }
   
   // iteration counter
   iVar8 = 0;
   
-  // if number of screens is not zero
+  // if numPlyrCurrGame is not zero
   if (cVar1 != '\0') {
     iVar10 = 0x168;
     iVar9 = 0;
     piVar5 = local_60;
 	
-	// for iVar8 = 0; iVar8 < numScreens; iVar8++
+	// for iVar8 = 0; iVar8 < numPlyrCurrGame; iVar8++
     do 
 	{
 	  // pointer to first burst thread
@@ -12249,7 +12249,7 @@ void FUN_800b95fc(int param_1,int param_2)
 	// backBuffer->primMem.curr
 	puVar10 = *(uint **)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x80);
 	
-	// if (primMem.curr + (numSpiders * numPlayers * 6)) < primMem.endMin100
+	// if (primMem.curr + (numSpiders * numPlyrCurrGame * 6)) < primMem.endMin100
     if (puVar10 + iVar12 * (uint)(byte)PTR_DAT_8008d2ac[0x1ca8] * 6 <
         *(uint **)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x84)) 
 	{

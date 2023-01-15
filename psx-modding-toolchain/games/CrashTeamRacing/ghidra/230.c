@@ -2156,7 +2156,7 @@ void FUN_800adc0c(int param_1)
   if (PTR_DAT_8008d2ac[0x1ca9] != '\0') {
     iVar10 = 0;
 	
-	// for iVar14 = 0; iVar14 < numPlayers iVar14++
+	// for iVar14 = 0; iVar14 < numPlyrCurrGame iVar14++
     do {
       iVar10 = iVar10 >> 0x10;
       psVar11 = (short *)(iVar10 * 4 + DAT_800b5a0c);
@@ -2492,7 +2492,7 @@ void FUN_800ae2c0(void)
   {
     iVar2 = 0;
 	
-	// for iVar7 = 0; iVar7 < numPlayers; iVar7++
+	// for iVar7 = 0; iVar7 < numPlyrCurrGame; iVar7++
     do 
 	{
 	  // get character ID
@@ -2520,7 +2520,7 @@ void FUN_800ae2c0(void)
   {
     iVar2 = 0x10000;
     
-	// for iVar7 = 1; iVar7 < numPlayers; iVar7++
+	// for iVar7 = 1; iVar7 < numPlyrCurrGame; iVar7++
 	do {
       iVar4 = iVar2 >> 0x10;
       iVar6 = 0;
@@ -2663,7 +2663,7 @@ void FUN_800ae464(void)
 	// Loop through players, if cursor is on
 	// a locked player, change character to Crash
 	
-	// for iVar6 = 0; iVar6 < numPlayers; iVar6++
+	// for iVar6 = 0; iVar6 < numPlyrCurrGame; iVar6++
     do 
 	{
 	  // Determine if this icon is unlocked (and drawing)
@@ -2709,7 +2709,7 @@ void FUN_800ae464(void)
   {
     iVar5 = 0;
 	
-	// for iVar6 = 0; iVar6 < numPlayers; iVar6++
+	// for iVar6 = 0; iVar6 < numPlyrCurrGame; iVar6++
     do 
 	{
 	  // increment loop counter
@@ -3024,7 +3024,7 @@ LAB_800aead0:
   if (PTR_DAT_8008d2ac[0x1ca9] != '\0') {
     local_30 = local_88;
 	
-	// for uVar25 = 0; uVar25 < numPlayers; uVar25++
+	// for uVar25 = 0; uVar25 < numPlyrCurrGame; uVar25++
     do 
 	{
 	  // copy the loop counter
@@ -3200,7 +3200,7 @@ LAB_800aec08:
 			  {
                 iVar11 = 0;
 				
-				// for iVar19 = 0; iVar19 < numPlayers; iVar19++
+				// for iVar19 = 0; iVar19 < numPlyrCurrGame; iVar19++
                 do 
 				{
                   if ((iVar11 >> 0x10 != iVar8) && ((short)uVar21 == local_30[iVar11 >> 0x10])) {
@@ -3238,7 +3238,7 @@ LAB_800aec08:
 		  {
             iVar8 = 0;
 			
-			// for iVar24 = 0; iVar24 < numPlayers; iVar24++
+			// for iVar24 = 0; iVar24 < numPlyrCurrGame; iVar24++
             do {
               if ((iVar8 >> 0x10 != (int)sVar6) && ((short)uVar21 == local_30[iVar8 >> 0x10])) {
                 uVar21 = (uint)(ushort)local_30[(int)sVar6];
@@ -3370,7 +3370,7 @@ LAB_800aec08:
 	  {
         iVar19 = 0;
 		
-		// for iVar8 = 0; iVar8 < numPlayers; iVar8++
+		// for iVar8 = 0; iVar8 < numPlyrCurrGame; iVar8++
         do 
 		{
           if (((short)iVar24 == local_88[iVar19 >> 0x10]) &&
@@ -3437,7 +3437,7 @@ LAB_800aec08:
   {
     iVar8 = 0;
 	
-	// for iVar24 = 0; iVar24 < numPlayers; iVar24++
+	// for iVar24 = 0; iVar24 < numPlyrCurrGame; iVar24++
     do 
 	{
       uVar25 = iVar8 >> 0x10;
@@ -3570,7 +3570,7 @@ LAB_800aec08:
   {
     psVar22 = DAT_800b5a0c;
 	
-	// for iVar24 = 0; iVar24 < numPlayers; iVar24++
+	// for iVar24 = 0; iVar24 < numPlyrCurrGame; iVar24++
     do {
       uVar25 = SEXT24((short)iVar24);
       iVar8 = uVar25 * 10 + DAT_800b5a3c;
@@ -5304,7 +5304,7 @@ void FUN_800b1848(void)
   // if number of players is not zero
   if (PTR_DAT_8008d2ac[0x1ca9] != '\0') 
   {
-	// for iVar15 = 0; iVar15 < numPlayers; iVar15++
+	// for iVar15 = 0; iVar15 < numPlyrCurrGame; iVar15++
     do 
 	{
 	  // If you are selecting "Teams" row
@@ -5814,7 +5814,7 @@ LAB_800b25f0:
 	{
       iVar9 = 0;
       
-	  // for iVar15 = 0; iVar15 < numPlayers; iVar15++
+	  // for iVar15 = 0; iVar15 < numPlyrCurrGame; iVar15++
 	  do 
 	  {
         iVar9 = (int)(char)PTR_DAT_8008d2ac[(iVar9 >> 0x10) + 0x1da4];
@@ -5883,7 +5883,7 @@ LAB_800b25f0:
       puVar18 = &DAT_80086e84;
       iVar9 = 0;
 	  
-	  // for iVar16 = 0; iVar16 < numPlayers; iVar16++
+	  // for iVar16 = 0; iVar16 < numPlyrCurrGame; iVar16++
       do {
         if ((int)(char)PTR_DAT_8008d2ac[(iVar9 >> 0x10) + 0x1da4] == iVar15) {
           sVar6 = (short)iVar13;

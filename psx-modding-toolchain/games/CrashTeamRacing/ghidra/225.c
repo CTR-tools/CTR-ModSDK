@@ -76,7 +76,7 @@ void FUN_8009f718(void)
 	// if you don't have zero players
 	if (PTR_DAT_8008d2ac[0x1ca8] != '\0') 
 	{
-	  // for iVar11 = 0; iVar11 < numPlayers; iVar11++
+	  // for iVar11 = 0; iVar11 < numPlyrCurrGame; iVar11++
       do 
 	  {
 			// increment something based on which team each player is on

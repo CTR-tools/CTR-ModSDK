@@ -9,9 +9,9 @@ void CustomSplit()
 	int i;
 	struct Camera110* c110;
 	POLY_F4* p;
-	int numPlayers;
+	int numPlyrCurrGame;
 
-	numPlayers = sdata->gGT->numPlayers;
+	numPlyrCurrGame = sdata->gGT->numPlyrCurrGame;
 
 	// JMP to CustomSplit happens right after this, in RenderFrame
 	//if ((sdata->gGT->renderFlags & 0x8000) != 0)
@@ -21,12 +21,12 @@ void CustomSplit()
 			// If you're in Battle Mode
 			(sdata->gGT->gameMode1 & BATTLE_MODE) &&
 
-			// if number of screens is more than 2
-			(2 < numPlayers)
+			// if numPlyrCurrGame is more than 2
+			(2 < numPlyrCurrGame)
 		)
 	 )
 	{
-		for(i = 0; i < numPlayers; i++)
+		for(i = 0; i < numPlyrCurrGame; i++)
 		{
 			c110 = &sdata->gGT->camera110[i];
 
@@ -48,9 +48,9 @@ void CustomSplit()
 
 	// changed in this mod:
 	// draw horizontal split when
-	// numPlayers > 2, instead of 1
+	// numPlyrCurrGame > 2, instead of 1
 
-    if (numPlayers > 2)
+    if (numPlyrCurrGame > 2)
 	{
 		p = (POLY_F4*)sdata->gGT->backBuffer->primMem.curr;
 
@@ -82,9 +82,9 @@ void CustomSplit()
 
 	// changed in this mod:
 	// draw vertical split when
-	// numPlayers > 1, instead of 2
+	// numPlyrCurrGame > 1, instead of 2
 
-	if (numPlayers > 1)
+	if (numPlyrCurrGame > 1)
 	{
 		p = sdata->gGT->backBuffer->primMem.curr;
 
@@ -114,8 +114,8 @@ void CustomSplit()
 		sdata->gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
 
-	// if number of screens is 3
-    if (numPlayers == 3)
+	// if numPlyrCurrGame is 3
+    if (numPlyrCurrGame == 3)
 	{
 		// This is useless, cause it gets cleared
 		// to black anyway, even without this block,

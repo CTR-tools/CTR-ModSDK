@@ -29,7 +29,7 @@ void FUN_8002406c(int param_1,int param_2,int param_3,int param_4,int param_5,in
 	// position of each player's screen, with, height, etc
     iVar7 = 0x168;
 
-	// for iVar6 = 0; iVar6 < numScreens; iVar6++
+	// for iVar6 = 0; iVar6 < numPlyrCurrGame; iVar6++
     do {
 
 	  // pointer to camera110 info
@@ -41,7 +41,7 @@ void FUN_8002406c(int param_1,int param_2,int param_3,int param_4,int param_5,in
 		// icon scale in 2P mode
         iVar4 = 0xaaa;
 
-		// if number of screens is 1
+		// if numPlyrCurrGame is 1
 		if (PTR_DAT_8008d2ac[0x1ca8] == 1)
 		{
 		  // icon scale in 1P mode
@@ -49,7 +49,7 @@ void FUN_8002406c(int param_1,int param_2,int param_3,int param_4,int param_5,in
         }
       }
 
-	  // if number of screens is 3 or 4
+	  // if numPlyrCurrGame is 3 or 4
       else
 	  {
 		// icon scale in 3P/4P mode

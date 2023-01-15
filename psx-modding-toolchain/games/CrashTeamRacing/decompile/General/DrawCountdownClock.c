@@ -28,11 +28,11 @@ void DECOMP_DrawCountdownClock(short posX, short posY, short fontType)
 		// If you're not in End-Of-Race menu
 		if ((sdata->gGT->gameMode1 & 0x200000) == 0)
 		{
-			// dont check if numPlayers != 0,
+			// dont check if numPlyrCurrGame != 0,
 			// when would that ever be false
 
 			// end race for all players
-			for(i = 0; i < gGT->numPlayers; i++)
+			for(i = 0; i < gGT->numPlyrCurrGame; i++)
 			{
 				// pointer of each player (P1, P2, P3, P4)
 				d = gGT->drivers[i];
