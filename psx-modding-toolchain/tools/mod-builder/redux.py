@@ -130,7 +130,7 @@ class Redux:
                 backup_bin = BACKUP_FOLDER + "redux_" + cl.section_name + ".bin"
                 offset = cl.address & 0xFFFFFFF
                 if not os.path.isfile(bin):
-                    print("\n[Redux-py] ERROR: backup file " + bin + " not found.\n")
+                    print("\n[Redux-py] ERROR: " + bin + " not found.\n")
                     continue
                 size = os.path.getsize(bin)
                 if backup:
@@ -140,20 +140,19 @@ class Redux:
                 if restore:
                     bin = backup_bin
                     if not os.path.isfile(bin):
-                        print("\n[Redux-py] ERROR: " + bin + " not found.\n")
+                        print("\n[Redux-py] ERROR: backup file " + bin + " not found.\n")
                         continue
                     size = os.path.getsize(bin)
                 file = open(bin, "rb")
                 files = {"file": file}
-                if not cl.should_ignore():
-                    response = r.post(url + "?offset=" + str(offset) + "&size=" + str(size), files=files)
-                    if response.status_code == 200:
-                        if restore:
-                            print(bin + " successfully restored.")
-                        else:
-                            print(bin + " successfully injected.")
+                response = r.post(url + "?offset=" + str(offset) + "&size=" + str(size), files=files)
+                if response.status_code == 200:
+                    if restore:
+                        print(bin + " successfully restored.")
                     else:
-                        print("\n[Redux - Web Server] error injecting " + bin + "\n")
+                        print(bin + " successfully injected.")
+                else:
+                    print("\n[Redux - Web Server] error injecting " + bin + "\n")
                 file.close()
 
     def inject_textures(self, backup: bool, restore: bool) -> None:

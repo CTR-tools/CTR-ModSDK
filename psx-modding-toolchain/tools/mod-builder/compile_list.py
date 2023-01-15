@@ -1,4 +1,4 @@
-from common import COMMENT_SYMBOL, CONFIG_PATH, is_number
+from common import COMMENT_SYMBOL, CONFIG_PATH, OUTPUT_FOLDER, is_number
 from syms import Syms
 
 import json
@@ -71,13 +71,17 @@ class CompileList:
             src = src.replace("\\", "/").rsplit("/", 1)
             directory = src[0] + "/"
             regex = re.compile(src[1].replace("*", "(.*)"))
+            output_name = src[1].split(".")[0]
             if not directory in folders:
                 for _, _, files in os.walk(directory):
                     folders[directory] = files
                     break
-            for file in folders[directory]:
-                if regex.search(file):
-                    self.source.append(directory + file)
+            if directory == OUTPUT_FOLDER and output_name in sections:
+                self.source.append(directory + src[1])
+            else:
+                for file in folders[directory]:
+                    if regex.search(file):
+                        self.source.append(directory + file)
         if len(self.source) == 0:
             print("\n[BuildList-py] WARNING: no file(s) found.")
             print("at line: " + str(line_count[0]) + ": " + self.original_line + "\n")

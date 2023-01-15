@@ -10,7 +10,7 @@ Watch the demo:
 * Test your changes in game during runtime;
 * Replace game textures using custom images;
 * Automatic rebuild a PSX iso with your own modifications.
-* Generate xdelta patches to easily distribute your ROM hacks. You can apply xdelta patches using this [web application](https://hack64.net/tools/patcher.php)
+* Generate xdelta patches to easily distribute your ROM hacks. You can apply xdelta patches using this [web application](https://kotcrab.github.io/xdelta-wasm/)
 
 To discuss PSX development, hacking, and reverse engineering in general, please join the PSXDev Network Discord server: [![Discord](https://img.shields.io/discord/642647820683444236)](https://discord.gg/QByKPpH)
 
@@ -45,7 +45,7 @@ mips install 12.1.0
 As an alternative, you can download the toolchain directly [here](https://static.grumpycoder.net/pixel/mips/g++-mipsel-none-elf-12.1.0.zip), and then add the `bin/` folder to your `PATH`.
 
 ##### Linux
-You'll need to install `g++-mipsel-linux-gnu cpp-mipsel-linux-gnu binutils-mipsel-linux-gnu`, which are available in the [AUR](https://wiki.archlinux.org/index.php/Aur) via [cross-mipsel-linux-gnu-binutils](https://aur.archlinux.org/packages/cross-mipsel-linux-gnu-binutils/) and [cross-mipsel-linux-gnu-gcc](https://aur.archlinux.org/packages/cross-mipsel-linux-gnu-gcc/).
+Compile the latest version of gcc `mipsel-none-elf` using [this script](https://github.com/grumpycoders/pcsx-redux/tree/main/tools/linux-mips), or download the pre-compiled binaries [here](https://drive.google.com/file/d/1VTCPRpriwPS5wkLVeDfx5dAXzUB1gAoa/view?usp=share_link). Make sure that you added the `bin/` folder to your `$PATH`.
 
 ##### MacOS
 You'll need [brew](https://brew.sh/), and then run:

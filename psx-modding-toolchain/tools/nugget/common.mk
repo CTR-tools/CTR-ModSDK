@@ -1,12 +1,5 @@
-HAS_LINUX_MIPS_GCC = $(shell which mipsel-linux-gnu-gcc > /dev/null 2> /dev/null && echo true || echo false)
-
-ifeq ($(HAS_LINUX_MIPS_GCC),true)
-PREFIX ?= mipsel-linux-gnu
-FORMAT ?= elf32-tradlittlemips
-else
 PREFIX ?= mipsel-none-elf
 FORMAT ?= elf32-littlemips
-endif
 
 ROOTDIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 

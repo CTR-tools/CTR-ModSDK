@@ -911,7 +911,7 @@ struct BigHeader
 struct LoadQueueSlot {
 
 	// 0x0
-	unsigned int ptrBigfileCdPos;
+	struct BigHeader* ptrBigfileCdPos;
 
 	// 0x4
 	unsigned short flags;
@@ -4462,15 +4462,16 @@ struct GameTracker
   char s_region_8byte[8];
   #endif
 
-  // 0x1a38
+  // 0x1a38 -- UsaRetail
+  // 0x1a40 -- EurRetail, JpnRetail
   void* visMem1;
   void* visMem2;
 
-  // 0x1a40
+  // 0x1a40 -- UsaRetail
   // one for each player
   struct RainBuffer rainBuffer[4];
 
-  // 0x1b00
+  // 0x1b00 -- UsaRetail
   struct
   {
 	  // 0x1b00
@@ -8811,7 +8812,7 @@ struct sData
 	char s_intro[8];
 	char s_screen[8];
 	char s_garage[8];
-	char s_hud[4];
+	char s_hub[4];
 	char s_credit[8];
 
 	// 8008d0f0
