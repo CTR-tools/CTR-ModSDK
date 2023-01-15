@@ -66,7 +66,7 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 			(gGT->gameMode1 & MAIN_MENU) ||
 
 			// if in cutscene, and in adv arena
-			(gGT->gameMode1 & (GAME_INTRO | ADVENTURE_HUB)) ||
+			(gGT->gameMode1 & (GAME_INTRO | ADVENTURE_ARENA)) ||
 
 			// if in credits
 			((gGT->gameMode2 & 0x80) != 0)

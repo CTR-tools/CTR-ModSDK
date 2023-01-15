@@ -4276,7 +4276,7 @@ enum GameMode1
     TIME_TRIAL          = 0x20000,
 	// 0x40000?
     ADVENTURE_MODE      = 0x80000,
-    ADVENTURE_HUB       = 0x100000,
+    ADVENTURE_ARENA     = 0x100000,
     END_OF_RACE 		= 0x200000,
     ARCADE_MODE         = 0x400000,
     ROLLING_ITEM        = 0x800000,

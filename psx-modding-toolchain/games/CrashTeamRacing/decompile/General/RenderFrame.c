@@ -35,6 +35,13 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	MenuHighlight();
 	RenderAllWeather(gGT);
 	RenderAllConfetti(gGT);
+	RenderAllStars(gGT);
+	
+	#if 0
+	// Multiplayer PixelLOD Part 1
+	#endif
+	
+	RenderAllHUD(gGT);
 }
 
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -266,5 +273,69 @@ void RenderAllConfetti(struct GameTracker* gGT)
 			&gGT->confetti,
 			gGT->frameTimer_Confetti,
 			gGT->gameMode1 & 0xf);
+	}
+}
+
+void RenderAllStars(struct GameTracker* gGT)
+{
+	// only if stars are enabled
+	if((gGT->renderFlags & 8) == 0) return;
+
+	// quit if no stars exist
+	if(gGT->stars.numStars == 0) return;
+
+	RenderStars(
+		&gGT->camera110[0],
+		&gGT->backBuffer->primMem,
+		&gGT->stars,
+		gGT->numPlyrCurrGame);
+}
+
+void RenderAllHUD(struct GameTracker* gGT)
+{
+	int hudFlags;
+	int gameMode1;
+	
+	hudFlags = gGT->hudFlags;
+	gameMode1 = gGT->gameMode1;
+	
+	// if not drawing intro-race title bars
+	if(
+		(gGT->numPlyrCurrGame != 1) ||
+		((hudFlags & 8) == 0) ||
+		((gameMode1 & RACE_INTRO_CUTSCENE) == 0)
+	)
+	{
+		// if no hud
+		if((hudFlags & 1) == 0)
+		{
+			// if standings
+			if((hudFlags & 4) != 0)
+			{
+				CupStandings_InputAndDraw();
+			}
+		}
+		
+		// if hud
+		else
+		{
+			// if not adv hub
+			if((gameMode1 & ADVENTURE_ARENA) == 0)
+			{
+				
+			}
+			
+			// if adv hub
+			else
+			{
+				
+			}
+		}
+	}
+	
+	// if drawing intro-race title bars
+	else
+	{
+		DrawIntroRaceText_1P();
 	}
 }

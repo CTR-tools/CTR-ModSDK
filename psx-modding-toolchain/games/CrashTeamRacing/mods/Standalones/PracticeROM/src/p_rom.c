@@ -398,7 +398,7 @@ void RunUpdateHook()
 		{
 			// if the countdown to the race is over OR
 			// you're in the adventure hub
-			if ((countdown == -0x3C0) || (gGT->gameMode1 == ADVENTURE_HUB))
+			if ((countdown == -0x3C0) || (gGT->gameMode1 == ADVENTURE_ARENA))
 			{
 				gGT->drivers[0]->reserves = saffi;
 				SetSlotString(s_infiniteReserves, 0);
