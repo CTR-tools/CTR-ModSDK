@@ -4584,14 +4584,13 @@ struct GameTracker
   int frameTimer_notPaused;
 
   // 1cec
-  // counts frames since boot
+  // frameTimer_sinceBoot??
   int timer;
 
   // 1cf0
-  int variousTimers[2];
+  int frameTimer_Confetti;
 
-  // 1cf0
-  // confetti timer
+  int unk1cf4;
 
   // 1cf8
   int frameTimer_StartNewFrame;
@@ -5442,8 +5441,6 @@ struct GameTracker
   int winnerIndex[4];
 
   // 2568
-  // this value increases time between frames, not sure what is this exactly,
-  // related to confetti???
   unsigned int numWinners;
 
   //256c

@@ -1,9 +1,5 @@
 #include <common.h>
 
-void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
-
-void DrawFinalLap(struct GameTracker* gGT);
-
 void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	struct Level* lev = gGT->level1;
@@ -36,6 +32,9 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 		
 	RainLogic(gGT);
 	EffectSfxRain_MakeSound(gGT);
+	MenuHighlight();
+	RenderAllWeather(gGT);
+	RenderAllConfetti(gGT);
 }
 
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -211,5 +210,61 @@ void RainLogic(struct GameTracker* gGT)
 			
 		gGT->rainBuffer[i].vanishRate =
 			(camQB->weather_vanishRate << 2) / numPlyrCurrGame;
+	}
+}
+
+void MenuHighlight()
+{
+	int fc;
+	int trig;
+	
+	fc = sdata->frameCounter << 7;
+	trig = MATH_Sin(fc);
+	
+	trig = (trig << 6) >> 0xc;
+	
+	// sine curve of green, plus base color
+	sdata->menuRowHighlight_Normal = ((trig + 0x40) * 0x100) | 0x80;
+	sdata->menuRowHighlight_Green = ((trig + 0xA0) * 0x100) | 0x400040;
+}
+
+void RenderAllWeather(struct GameTracker* gGT)
+{
+	int numPlyrCurrGame = gGT->numPlyrCurrGame;
+	
+	// only for multiplayer, 
+	// probably Naughty Dog's last-minute hack
+	if(numPlyrCurrGame != 1) return;
+	
+	// only if rain is enabled
+	if((gGT->renderFlags & 2) == 0) return;
+	
+	RenderWeather(
+		&gGT->camera110[0],
+		&gGT->backBuffer->primMem,
+		&gGT->rainBuffer[0],
+		numPlyrCurrGame,
+		gGT->gameMode1 & 0xf);
+}
+
+void RenderAllConfetti(struct GameTracker* gGT)
+{
+	int i;
+	int numWinners = gGT->numWinners;
+	
+	// only if someone needs confetti
+	if(numWinners == 0) return;
+	
+	// only if confetti is enabled
+	if((gGT->renderFlags & 4) == 0) return;
+	
+	for(i = 0; i < numWinners; i++)
+	{
+		RenderWeather(
+			&gGT->camera110[gGT->winnerIndex[i]],
+			&gGT->backBuffer->primMem,
+			&gGT->confetti,
+			gGT->frameTimer_Confetti,
+			gGT->gameMode1 & 0xf);
 	}
 }
