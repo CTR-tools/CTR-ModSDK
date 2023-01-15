@@ -911,7 +911,7 @@ struct BigHeader
 struct LoadQueueSlot {
 
 	// 0x0
-	unsigned int ptrBigfileCdPos;
+	struct BigHeader* ptrBigfileCdPos;
 
 	// 0x4
 	unsigned short flags;
