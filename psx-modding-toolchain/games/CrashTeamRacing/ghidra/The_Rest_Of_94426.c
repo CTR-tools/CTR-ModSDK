@@ -7833,8 +7833,7 @@ code_r0x800369d8:
     FUN_80023640(param_1);
   }
 
-  // gGT->256c & battle
-  // what? no it's not, happens in Cortex Castle Arcade
+  // gGT->256c & 0x40
   if ((param_1[0x95b] & 0x40) != 0)
   {
 	// Check if 231.dll is loaded

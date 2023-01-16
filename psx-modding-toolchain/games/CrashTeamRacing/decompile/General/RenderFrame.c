@@ -45,9 +45,19 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	RenderAllBeakerRain(gGT);
 	RenderAllBoxSceneSplitLines(gGT);
 	
-	// next comes RenderBucket,
-	// CTRL + F:
-	// "gGT->256c & renderBucket (instances)"
+	RenderBucket_QueueAllInstances(gGT);
+	
+	RenderAllParticles(gGT);
+	
+	#if 0
+	// Link OT between cameras,
+	// only for multiplayer, skipping,
+	// CTRL + F: "code_r0x800369d8" in ghidra
+	#endif
+	
+	#if 0
+	// Multiplayer PixelLOD Part 2
+	#endif
 	
 	// === Skip To End ===
 	RenderSubmit(gGT);
@@ -495,6 +505,60 @@ void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
 		{
 			CS_BoxScene_InstanceSplitLines();
 		}
+	}
+}
+
+void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
+{
+	int lod;
+	int* RBI;
+	int numPlyrCurrGame = gGT->numPlyrCurrGame;
+	
+	if((gGT->renderFlags & 0x20) == 0) return;
+
+	lod = numPlyrCurrGame - 1;
+	if((gGT->gameMode1 & RELIC_RACE) == 0)
+		lod |= 4;
+	
+	RBI = RenderBucket_QueueLevInstances(
+		&gGT->cameraDC[0],
+		&gGT->backBuffer->otMem,
+		gGT->ptrRenderBucketInstance,
+		sdata->LOD[lod],
+		numPlyrCurrGame,
+		gGT->gameMode1 & 0xf);
+		
+	RBI = RenderBucket_QueueNonLevInstances(
+		gGT->AllocPools.instance.taken.first,
+		&gGT->backBuffer->otMem,
+		RBI,
+		sdata->LOD[lod],
+		numPlyrCurrGame,
+		gGT->gameMode1 & 0xf);
+		
+	// Aug prototype
+#if 0
+		// ptrEnd of otmem is less than ptrCurr otmem
+    if (*(uint *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x98) <
+        *(uint *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x9c)) {
+      printf("OTMEM OVERFLOW!\n");
+    }
+#endif
+
+	*RBI = 0;
+}
+
+void RenderAllParticles(struct GameTracker* gGT)
+{
+	int i;
+	
+	if((gGT->renderFlags & 0x200) == 0) return;
+	
+	for(i = 0; i < gGT->numPlyrCurrGame; i++)
+	{
+		Particle_RenderList(
+			&gGT->camera110[i],
+			gGT->particleList_ordinary);
 	}
 }
 
