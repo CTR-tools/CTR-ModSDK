@@ -47,7 +47,7 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	
 	RenderBucket_QueueAllInstances(gGT);
 	
-	RenderAllParticles(gGT);
+	RenderAllNormalParticles(gGT);
 	
 	#if 0
 	// Link OT between cameras,
@@ -58,6 +58,19 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	#if 0
 	// Multiplayer PixelLOD Part 2
 	#endif
+	
+	RenderAllFlag0x40(gGT); // I need a better name
+	RenderAllTitleDPP(gGT);
+	
+	RenderBucket_ExecuteAllInstances(gGT);
+	
+	RenderAllTires(gGT);
+	RenderAllShadows(gGT);
+	RenderAllHeatParticles(gGT);
+	
+	Camera110_FadeAllWindows();
+	
+	// === Next is ClearRenderlists ==
 	
 	// === Skip To End ===
 	RenderSubmit(gGT);
@@ -545,10 +558,11 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
     }
 #endif
 
+	// null terminator at end of list
 	*RBI = 0;
 }
 
-void RenderAllParticles(struct GameTracker* gGT)
+void RenderAllNormalParticles(struct GameTracker* gGT)
 {
 	int i;
 	
@@ -562,7 +576,103 @@ void RenderAllParticles(struct GameTracker* gGT)
 	}
 }
 
+// I need a better name
+void RenderAllFlag0x40(struct GameTracker* gGT)
+{
+	int i;
+	struct Camera110* c110;
+	
+	if((gGT->renderFlags & 0x40) == 0) return;
+	
+	if(LOAD_IsOpen_RacingOrBattle() != 0)
+	{
+		RB_Player_ToggleInvisible();
+		RB_Player_ToggleFlicker();
+		RB_Burst_ProcessBucket(gGT->threadBuckets[BURST].thread);
+		RB_Blowup_ProcessBucket(gGT->threadBuckets[BLOWUP].thread);
+		RB_Spider_DrawWebs(gGT->threadBuckets[SPIDER].thread, &gGT->camera110[0]);
+		RB_Follower_ProcessBucket(gGT->threadBuckets[FOLLOWER].thread);
+		
+		// skipping RB_StartText_ProcessBucket, it's empty in 231
+	}
+	
+	if(LOAD_IsOpen_AdvHub() != 0)
+	{
+		if((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
+		{
+			AH_WarpPad_AllWarppadNum();
+		}
+	}
+	
+	Turbo_ProcessBucket(gGT->threadBuckets[TURBO].thread);
 
+	for(i = 0; i < gGT->numPlyrCurrGame; i++)
+	{
+		c110 = &gGT->camera110[i];
+		DrawSkidMarks_Main(gGT->threadBuckets[PLAYER].thread, c110);
+		DrawSkidMarks_Main(gGT->threadBuckets[ROBOT].thread, c110);
+	}
+}
+
+void RenderAllTitleDPP(struct GameTracker* gGT)
+{
+	if((gGT->gameMode1 & MAIN_MENU) == 0) return;
+	if(LOAD_IsOpen_MainMenu() == 0) return;
+	MM_Title_SetTrophyDPP();
+}
+
+void RenderBucket_ExecuteAllInstances(struct GameTracker* gGT)
+{
+	if((gGT->renderFlags & 0x20) == 0) return;
+	
+	RenderBucket_Execute(
+		gGT->ptrRenderBucketInstance,
+		&gGT->backBuffer->primMem);
+}
+
+void RenderAllTires(struct GameTracker* gGT)
+{
+	int i;
+	struct Thread* th;
+	int numPlyrCurrGame;
+	struct PrimMem* gGT_primMem;
+	if((gGT->renderFlags & 0x80) == 0) return;
+
+	// replace checking number of AIs, with 
+	// checking if the threadBucket exists,
+	// then roll this up into a loop
+	
+	gGT_primMem = &gGT->backBuffer->primMem;
+	numPlyrCurrGame = gGT->numPlyrCurrGame;
+	
+	// player, robot, ghost
+	for(i = 0; i < 3; i++)
+	{
+		th = gGT->threadBuckets[i].thread;
+		if(th == 0) continue;
+		
+		DrawTires_Solid(th, gGT_primMem, numPlyrCurrGame);
+		DrawTires_Reflection(th, gGT_primMem, numPlyrCurrGame);
+	}
+}
+
+void RenderAllShadows(struct GameTracker* gGT)
+{
+	if((gGT->renderFlags & 0x200) == 0) return;
+	DrawShadows_Main();
+}
+
+void RenderAllHeatParticles(struct GameTracker* gGT)
+{
+	if((gGT->renderFlags & 0x800) == 0) return;
+	
+	DrawHeat_Main(
+		gGT->particleList_heatWarp,
+		&gGT->camera110[0],
+		&gGT->backBuffer->primMem,
+		gGT->numPlyrCurrGame,
+		gGT->swapchainIndex * 0x128);
+}
 
 
 
