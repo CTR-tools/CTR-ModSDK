@@ -48,6 +48,9 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	// next comes RenderBucket,
 	// CTRL + F:
 	// "gGT->256c & renderBucket (instances)"
+	
+	// === Skip To End ===
+	RenderSubmit(gGT);
 }
 
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -273,7 +276,7 @@ void RenderAllConfetti(struct GameTracker* gGT)
 	
 	for(i = 0; i < numWinners; i++)
 	{
-		RenderWeather(
+		DrawConfetti(
 			&gGT->camera110[gGT->winnerIndex[i]],
 			&gGT->backBuffer->primMem,
 			&gGT->confetti,
@@ -473,7 +476,7 @@ void RenderAllBeakerRain(struct GameTracker* gGT)
 	// only if beaker rain is enabled
 	if((gGT->renderFlags & 0x10) == 0) return;
 	
-	RenderWeather(
+	RedBeaker_RenderRain(
 		&gGT->camera110[0],
 		&gGT->backBuffer->primMem,
 		&gGT->AllocPools.rain,
@@ -483,13 +486,15 @@ void RenderAllBeakerRain(struct GameTracker* gGT)
 
 void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
 {
-	// skip checking if 233 is loaded,
-	// cause ND Box scene will always have it
-	
-	// ND Box Scene
-	if(gGT->levelID == 0x29)
+	// check 233 overlay, cause levelID is set
+	// and RenderFrame runs, before 233 loads
+	if(LOAD_IsOpen_Podiums() != 0)
 	{
-		CS_BoxScene_InstanceSplitLines();
+		// ND Box Scene
+		if(gGT->levelID == 0x29)
+		{
+			CS_BoxScene_InstanceSplitLines();
+		}
 	}
 }
 
@@ -497,3 +502,33 @@ void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
 
 
 
+// === Skip To End ===
+void RenderSubmit(struct GameTracker* gGT)
+{	
+	gGT->countTotalTime =
+	RCNT_GetTime_Elapsed(gGT->countTotalTime,0);
+	
+	// do I need the "if"? will it ever be nullptr?
+	if(gGT->frontBuffer != 0)
+	{
+		sdata->frameDuplicator = 2;
+		
+		// skip debug stuff
+		
+		PutDispEnv(&gGT->frontBuffer->dispEnv);
+		PutDrawEnv(&gGT->frontBuffer->drawEnv);
+	}
+	
+	// swap=0, get db[1]
+	// swap=1, get db[0]
+	gGT->frontBuffer = &gGT->db
+		[
+			1 - sdata->gGT->swapchainIndex
+		];
+		
+	gGT->bool_DrawOTag_InProgress = 1;
+	
+	DrawOTag((int)gGT->camera110[0].ptrOT + 0xffc);
+	
+	gGT->frameTimer_notPaused = gGT->frameTimer_VsyncCallback;
+}

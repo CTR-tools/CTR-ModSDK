@@ -3495,8 +3495,8 @@ struct CameraDC
 	// quadblock camera is currently above
 	struct Quadblock* ptrQuadBlock;
 	
-	// 0x24
-	char unk24[0x20];
+	// 0x20
+	char unk24[0x24];
 
 	// duplicate ptr[4] array,
 	// copied from quadblock + 0x44
