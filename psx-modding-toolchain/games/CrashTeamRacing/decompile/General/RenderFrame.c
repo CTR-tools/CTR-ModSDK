@@ -70,7 +70,7 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	
 	Camera110_FadeAllWindows();
 	
-	// === Next is ClearRenderlists ==
+	RenderAllLevelGeometry(gGT);
 	
 	// === Skip To End ===
 	RenderSubmit(gGT);
@@ -674,6 +674,141 @@ void RenderAllHeatParticles(struct GameTracker* gGT)
 		gGT->swapchainIndex * 0x128);
 }
 
+void RenderAllLevelGeometry(struct GameTracker* gGT)
+{
+	int distToScreen;
+	int numPlyrCurrGame;
+	struct Level* level1;
+	struct Camera110* c110;
+	struct mesh_info* ptr_mesh_info;
+	
+	if((gGT->renderFlags & 1) == 0) return;
+	
+	level1 = gGT->level1;
+	if(level1 == 0) return;
+	
+	ptr_mesh_info = level1->ptr_mesh_info;
+	if(ptr_mesh_info == 0) return;
+	
+	numPlyrCurrGame = gGT->numPlyrCurrGame;
+	
+	if(numPlyrCurrGame == 1)
+	{	
+		CTR_ClearRenderLists_1P2P(gGT, 1);
+		c110 = &gGT->camera110[0];
+		
+		// if no SCVert
+		if((level1->configFlags & 4) == 0)
+		{
+			// assume OVert (no primitives generated here)
+			AnimateWater1P(gGT->timer, level1->count_water,
+				level1->ptr_water, level1->ptr_tex_waterEnvMap,
+				gGT->visMem1->Water_Bit_Visibility[0]);
+		}
+		
+		// if SCVert
+		else
+		{
+			// draw SCVert (no primitives generated here
+			AnimateQuad(gGT->timer << 7, 
+				level1->numSCVert, level1->ptrSCVert,
+				gGT->visMem1->AnimatedVertex_Bit_Visibility[0]);
+		}
+		
+		if(
+			// adv character selection screen
+			(gGT->levelID == 0x28) ||
+			
+			// cutscene that's not Crash Bandicoot intro
+			// where he's sleeping and snoring on a hill
+			(
+				((gGT->gameMode1 & GAME_CUTSCENE) != 0) &&
+				(gGT->levelID != 0x25)
+			)
+		)
+		{
+			distToScreen = 0x640;
+			
+			*(int*)0x1f800014 = 0x1e00;
+			*(int*)0x1f800018 = 0x640;
+			*(int*)0x1f80001c = distToScreen;
+			*(int*)0x1f800020 = 0x500;
+			*(int*)0x1f800024 = 0x280;
+			*(int*)0x1f800028 = 0x140;
+			*(int*)0x1f80002c = 0x640+0x140;
+		}
+		
+		// every non-cutscene,
+		// except for Crash Bandicoot intro
+		else
+		{
+			distToScreen = c110->distanceToScreen_PREV;
+			
+			// int and unsigned int have specific purposes
+			*(unsigned int*)0x1f800014 = distToScreen * 0x2080;
+			if(*(int*)0x1f800014 < 0)
+			{
+				*(int*)0x1f800014 = *(int*)0x1f800014 + 0xff;
+			}
+			*(int*)0x1f800014 = *(int*)0x1f800014 >> 8;
+			
+			*(int*)0x1f800018 = distToScreen * 0x1a;
+			*(int*)0x1f80001c = distToScreen * 0x18;
+			*(int*)0x1f800020 = distToScreen * 0xc;
+			*(int*)0x1f800024 = distToScreen * 7;
+			*(int*)0x1f80002c = *(int*)0x1f800018 + 0x140;
+			
+			// int and unsigned int have specific purposes
+			*(unsigned int*)0x1f800028 = distToScreen * 0x380;
+			if(*(int*)0x1f800028 < 0)
+			{
+				*(int*)0x1f800028 = *(int*)0x1f800028 + 0xff;
+			}
+			*(int*)0x1f800028 = *(int*)0x1f800028 >> 8;
+		}
+		
+		VisData_CopyJMPsToScratchpad();
+		
+		gGT->numVisDataLinks = 
+		  CreateRenderLists_1P2P(
+			ptr_mesh_info->ptrVisDataArray,
+			level1->visMem->VisDataLeaf_Bit_Visibility[0],
+			c110,
+			&gGT->LevRenderLists[0],
+			level1->visMem->VisData_List_Memory[0],
+			gGT->numPlyrCurrGame);
+			
+		// 226-229
+		DrawLevelPrims_EntryFunc(
+			&gGT->LevRenderLists[0],
+			c110,
+			ptr_mesh_info,
+			&gGT->backBuffer->primMem,
+			gGT->visMem1->QuadBlock_Bit_Visibliity[0],
+			level1->ptr_tex_waterEnvMap); // waterEnvMap?
+			
+		DrawSky_Full(
+			level1->ptr_skybox,
+			c110,
+			&gGT->backBuffer->primMem);
+			
+		// skybox gradient
+		if((level1->configFlags & 1) != 0)
+		{
+			CAM_SkyboxGlow(
+				&level1->glowGradient[0],
+				c110,
+				&gGT->backBuffer->primMem,
+				(unsigned int)c110->ptrOT + 0xffc);
+		}
+		
+		return;
+	}
+
+	if(numPlyrCurrGame == 2)
+	{
+	}
+}
 
 
 // === Skip To End ===

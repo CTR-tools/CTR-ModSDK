@@ -3994,7 +3994,7 @@ struct VisMem
 
 	// June 1999 calls this visLeafList
 	// 0x00-0x0F
-	void* array0[4];
+	void* VisDataLeaf_Bit_Visibility[4];
 
 	// June 1999 calls this visFaceList
 	// 0x10-0x1F
@@ -4251,7 +4251,7 @@ struct Level
 	int unk_18C;
 
 	// 0x190
-	void* visMem;
+	struct VisMem* visMem;
 };
 
 enum GameMode1 
@@ -4479,8 +4479,8 @@ struct GameTracker
 
   // 0x1a38 -- UsaRetail
   // 0x1a40 -- EurRetail, JpnRetail
-  void* visMem1;
-  void* visMem2;
+  struct VisMem* visMem1;
+  struct VisMem* visMem2;
 
   // 0x1a40 -- UsaRetail
   // one for each player
@@ -4568,12 +4568,13 @@ struct GameTracker
   char numBotsNextGame;
 
   // 1cac
-  char unk_between_screens_and_timer[0x30];
+  int unk1cac[5];
 
-  // all of these count and freeze at different times
-
-  // offset 0x1CC0,
-  // numVisDataLinks for all render lists of all players combined
+  // 1cc0
+  int numVisDataLinks;
+  
+  // 1cc4
+  int unk1cc4[6];
 
   // 1cdc
   int countTotalTime;

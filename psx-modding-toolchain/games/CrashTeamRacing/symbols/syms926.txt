@@ -1102,8 +1102,9 @@
 // all related to Visdata->..
 // unknown 80070284
 // unknown 80070290
-// unknown 800702d4 -- called before every FindLevVisData
+800702d4 VisData_CopyJMPsToScratchpad
 // 8 more jmp pointers here...
+// probably the ones copied to scratchpad
 
 
 80070388 CreateRenderLists_3P4P

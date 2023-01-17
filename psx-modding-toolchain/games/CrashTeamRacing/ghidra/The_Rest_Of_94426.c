@@ -8091,7 +8091,7 @@ code_r0x800369d8:
 	  // loop counter
       iVar19 = 0;
 
-	  // called before every FindLevVisData
+	  // VisData_CopyJMPsToScratchpad
       FUN_800702d4();
 
 	  // offset 0x1CC0,
@@ -8244,6 +8244,7 @@ code_r0x800369d8:
 		  if (((piVar21[0x37] & 4U) == 0) && (piVar21 != (int *)0x0))
 		  {
 			// animates water, 1P mode
+			// s0 - &gGT->camera110[0]
             FUN_8006d79c(param_1[0x73b],piVar21[0xd],piVar21[0xe],piVar21[0x11],
                          
 						 // Vismem 0x20-0x2F (visOVertList)
@@ -8255,6 +8256,7 @@ code_r0x800369d8:
 			// roo's pipe floors
 			
 			// AnimateQuads
+			// s0 - &gGT->camera110[0]
             FUN_80069e70(
 			
 						// timer
@@ -8272,16 +8274,20 @@ code_r0x800369d8:
 		  // camera110 -> 0x18, distToScreen
           DAT_1f80001c = *(int *)(PTR_DAT_8008d2ac + 0x180);
 
-		  // If Level ID == 40
-		  // If you are in Adventure Character Selection Screen
-          if ((*(int *)(PTR_DAT_8008d2ac + 0x1a10) == 0x28) ||
+          if (
+				// If Level ID == 40
+				// If you are in Adventure Character Selection Screen
+				(*(int *)(PTR_DAT_8008d2ac + 0x1a10) == 0x28) ||
 
-			 // If you are in a cutscene
-             (((*(uint *)PTR_DAT_8008d2ac & 0x20000000) != 0 &&
+				(
+					// If you are in a cutscene
+					(*(uint *)PTR_DAT_8008d2ac & 0x20000000) != 0 &&
 
-			  // Level ID != 37
-			  // If it is not Crash Bandicoot intro (he's sleeping and snoring)
-              (*(int *)(PTR_DAT_8008d2ac + 0x1a10) != 0x25))))
+					// Level ID != 37
+					// If it is not Crash Bandicoot intro (he's sleeping and snoring)
+					(*(int *)(PTR_DAT_8008d2ac + 0x1a10) != 0x25)
+				)
+			  )
 		  {
             DAT_1f800014 = 0x1e00;
             DAT_1f800018 = 0x640;
@@ -8309,7 +8315,7 @@ code_r0x800369d8:
             DAT_1f80002c = DAT_1f800018 + 0x140;
           }
 
-		  // called before every FindLevVisData
+		  // VisData_CopyJMPsToScratchpad
           FUN_800702d4();
 
 		  // param1 is PTR_DAT_8008d2ac
@@ -8426,7 +8432,7 @@ code_r0x800369d8:
 		  // loop counter
           iVar19 = 0;
 
-		  // called before every FindLevVisData
+		  // VisData_CopyJMPsToScratchpad
           FUN_800702d4();
 
 		  // offset 0x1CC0,
@@ -8583,7 +8589,7 @@ code_r0x800369d8:
 			// loop counter
             iVar19 = 0;
 
-			// called before every FindLevVisData
+			// VisData_CopyJMPsToScratchpad
             FUN_800702d4();
 
 			// offset 0x1CC0,
@@ -62263,7 +62269,7 @@ void FUN_80070290(void)
   return;
 }
 
-// called before every FindLevVisData
+// VisData_CopyJMPsToScratchpad
 void FUN_800702d4(void)
 
 {

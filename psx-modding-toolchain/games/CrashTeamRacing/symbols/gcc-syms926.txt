@@ -820,6 +820,7 @@ DrawTires_Reflection = 0x8006f004;
 RenderWeather = 0x8006f9a8;
 TRIG_AngleSinCos_r16r17r18 = 0x8006fe08;
 CreateRenderLists_1P2P = 0x8006fe70;
+VisData_CopyJMPsToScratchpad = 0x800702d4;
 CreateRenderLists_3P4P = 0x80070388;
 RenderBucket_QueueLevInstances = 0x80070720;
 RenderBucket_QueueNonLevInstances = 0x8007084c;
