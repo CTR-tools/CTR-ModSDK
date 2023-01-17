@@ -49,11 +49,7 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	
 	RenderAllNormalParticles(gGT);
 	
-	#if 0
-	// Link OT between cameras,
-	// only for multiplayer, skipping,
-	// CTRL + F: "code_r0x800369d8" in ghidra
-	#endif
+	LinkCameraOTs(gGT);
 	
 	#if 0
 	// Multiplayer PixelLOD Part 2
@@ -72,7 +68,21 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	
 	RenderAllLevelGeometry(gGT);
 	
+	LinkCameraOTs(gGT);
+	
+	// MultiplayerWumpaHUD
+	
+	#if 0
+	// Multiplayer Pixel LOD Part 3
+	#endif
+	
+	// in DotLights.c
+	void DotLights(struct GameTracker* gGT);
+	DotLights(gGT);
+	
 	// === Skip To End ===
+	RenderVSYNC(gGT);
+	RenderFMV();
 	RenderSubmit(gGT);
 }
 
@@ -576,6 +586,19 @@ void RenderAllNormalParticles(struct GameTracker* gGT)
 	}
 }
 
+void LinkCameraOTs(struct GameTracker* gGT)
+{
+	int i;
+	struct Camera110* c110;
+	for(i = 0; i < gGT->numPlyrCurrGame; i++)
+	{
+		c110 = &gGT->camera110[i];
+		Camera110_LinkOT_Normal(
+			(unsigned int)c110->ptrOT + 0xffc,
+			c110, gGT->backBuffer, 0, 0);
+	}
+}
+
 // I need a better name
 void RenderAllFlag0x40(struct GameTracker* gGT)
 {
@@ -676,6 +699,7 @@ void RenderAllHeatParticles(struct GameTracker* gGT)
 
 void RenderAllLevelGeometry(struct GameTracker* gGT)
 {
+	int i;
 	int distToScreen;
 	int numPlyrCurrGame;
 	struct Level* level1;
@@ -695,7 +719,6 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	if(numPlyrCurrGame == 1)
 	{	
 		CTR_ClearRenderLists_1P2P(gGT, 1);
-		c110 = &gGT->camera110[0];
 		
 		// if no SCVert
 		if((level1->configFlags & 4) == 0)
@@ -715,6 +738,9 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 				gGT->visMem1->AnimatedVertex_Bit_Visibility[0]);
 		}
 		
+		// camera of player 1
+		c110 = &gGT->camera110[0];
+		
 		if(
 			// adv character selection screen
 			(gGT->levelID == 0x28) ||
@@ -726,12 +752,12 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 				(gGT->levelID != 0x25)
 			)
 		)
-		{
-			distToScreen = 0x640;
-			
+		{	
+			// relationship between near-clip and far-clip,
+			// for each RenderList LOD set in the level
 			*(int*)0x1f800014 = 0x1e00;
 			*(int*)0x1f800018 = 0x640;
-			*(int*)0x1f80001c = distToScreen;
+			*(int*)0x1f80001c = 0x640;
 			*(int*)0x1f800020 = 0x500;
 			*(int*)0x1f800024 = 0x280;
 			*(int*)0x1f800028 = 0x140;
@@ -742,34 +768,30 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		// except for Crash Bandicoot intro
 		else
 		{
+			// 0x1c2 in 1P mode
 			distToScreen = c110->distanceToScreen_PREV;
 			
 			// int and unsigned int have specific purposes
 			*(unsigned int*)0x1f800014 = distToScreen * 0x2080;
-			if(*(int*)0x1f800014 < 0)
-			{
-				*(int*)0x1f800014 = *(int*)0x1f800014 + 0xff;
-			}
-			*(int*)0x1f800014 = *(int*)0x1f800014 >> 8;
+			if(*(int*)0x1f800014 < 0) *(int*)0x1f800014 = *(int*)0x1f800014 + 0xff;
+			*(int*)0x1f800014 = *(int*)0x1f800014 >> 8; // 0x3921
 			
-			*(int*)0x1f800018 = distToScreen * 0x1a;
-			*(int*)0x1f80001c = distToScreen * 0x18;
-			*(int*)0x1f800020 = distToScreen * 0xc;
-			*(int*)0x1f800024 = distToScreen * 7;
-			*(int*)0x1f80002c = *(int*)0x1f800018 + 0x140;
+			*(int*)0x1f800018 = distToScreen * 0x1a;	// 0x2DB4
+			*(int*)0x1f80001c = distToScreen * 0x18;	// 0x2A30
+			*(int*)0x1f800020 = distToScreen * 0xc;		// 0x1518
+			*(int*)0x1f800024 = distToScreen * 7;		// 0xC4E
+			*(int*)0x1f80002c = *(int*)0x1f800018 + 0x140; // 0x2EF4
 			
 			// int and unsigned int have specific purposes
 			*(unsigned int*)0x1f800028 = distToScreen * 0x380;
-			if(*(int*)0x1f800028 < 0)
-			{
-				*(int*)0x1f800028 = *(int*)0x1f800028 + 0xff;
-			}
-			*(int*)0x1f800028 = *(int*)0x1f800028 >> 8;
+			if(*(int*)0x1f800028 < 0) *(int*)0x1f800028 = *(int*)0x1f800028 + 0xff;
+			*(int*)0x1f800028 = *(int*)0x1f800028 >> 8; // 0x627
 		}
 		
 		VisData_CopyJMPsToScratchpad();
+		gGT->numVisDataLinks = 0;
 		
-		gGT->numVisDataLinks = 
+		gGT->numVisDataLinks += 
 		  CreateRenderLists_1P2P(
 			ptr_mesh_info->ptrVisDataArray,
 			level1->visMem->VisDataLeaf_Bit_Visibility[0],
@@ -804,14 +826,112 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		
 		return;
 	}
-
+	
 	if(numPlyrCurrGame == 2)
 	{
+		CTR_ClearRenderLists_1P2P(gGT, 2);
+		
+		// if no SCVert
+		if((level1->configFlags & 4) == 0)
+		{
+			// assume OVert (no primitives generated here)
+			AnimateWater2P(gGT->timer, level1->count_water,
+				level1->ptr_water, level1->ptr_tex_waterEnvMap,
+				gGT->visMem1->Water_Bit_Visibility[0],
+				gGT->visMem1->Water_Bit_Visibility[1]);
+		}
+		
+		VisData_CopyJMPsToScratchpad();
+		gGT->numVisDataLinks = 0;
+		
+		for(i = 0; i < numPlyrCurrGame; i++)
+		{
+			gGT->numVisDataLinks += 
+			  CreateRenderLists_1P2P(
+				ptr_mesh_info->ptrVisDataArray,
+				level1->visMem->VisDataLeaf_Bit_Visibility[i],
+				&gGT->camera110[i],
+				&gGT->LevRenderLists[i],
+				level1->visMem->VisData_List_Memory[i],
+				gGT->numPlyrCurrGame);
+		}
+		
+		// 226-229
+		DrawLevelPrims_EntryFunc(
+			&gGT->LevRenderLists[0],
+			&gGT->camera110[0],
+			ptr_mesh_info,
+			&gGT->backBuffer->primMem,
+			gGT->visMem1->QuadBlock_Bit_Visibliity[0],
+			gGT->visMem1->QuadBlock_Bit_Visibliity[1],
+			level1->ptr_tex_waterEnvMap); // waterEnvMap?
+			
+		// skybox gradient
+		for(i = 0; i < numPlyrCurrGame; i++)
+		{
+			c110 = &gGT->camera110[i];
+			CAM_SkyboxGlow(
+				&level1->glowGradient[0],
+				c110,
+				&gGT->backBuffer->primMem,
+				(unsigned int)c110->ptrOT + 0xffc);
+		}
 	}
 }
 
 
+
+
+
 // === Skip To End ===
+void RenderVSYNC(struct GameTracker* gGT)
+{	
+	// render checkered flag
+	if((gGT->renderFlags & 0x1000) != 0)
+	{
+		VSync(0);
+	}
+
+	while(1)
+	{
+		if(
+			// if DrawOTag finished
+			(gGT->bool_DrawOTag_InProgress == 0) &&
+			
+			// two VSYNCs passed, 30fps lock
+			(sdata->vsyncTillFlip < 1)
+		  )
+		{
+			// quit, end of stall
+			return;
+		}
+		
+		// if more than 6 VSYNCs passed since
+		// the last successful draw, FPS < 10fps
+		if(gGT->vSync_between_drawSync > 6)
+		{
+			// just quit and try the next frame
+			BreakDraw();
+			return;
+		}
+	}
+}
+
+void RenderFMV()
+{
+	if(sdata->boolPlayVideoSTR == 1)
+	{
+		MM_Video_CheckIfFinished(1);
+		
+		MoveImage(
+			&sdata->videoSTR_src_vramRect,
+			sdata->videoSTR_dst_vramX, 
+			sdata->videoSTR_dst_vramY);
+			
+		DrawSync(0);
+	}
+}
+
 void RenderSubmit(struct GameTracker* gGT)
 {	
 	gGT->countTotalTime =
@@ -820,7 +940,9 @@ void RenderSubmit(struct GameTracker* gGT)
 	// do I need the "if"? will it ever be nullptr?
 	if(gGT->frontBuffer != 0)
 	{
-		sdata->frameDuplicator = 2;
+		// wait two VSYNCs per frame,
+		// this is the 30fps lock
+		sdata->vsyncTillFlip = 2;
 		
 		// skip debug stuff
 		

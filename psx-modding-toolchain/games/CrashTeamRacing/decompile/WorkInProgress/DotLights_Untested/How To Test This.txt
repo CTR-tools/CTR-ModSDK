@@ -1,8 +1,0 @@
-This combines two DotLights functions into one.
-1016 bytes optimized to 696
-
-Inject DotLights.c to 0x8002406c, 
-	where DotLights_Video is (original func #1)
-
-Change address 0x800374a4 from JAL DotLights_VideoAndAudio (original func #2) 
-	to JAL 0x8002406c (where new function takes place of both)

@@ -87,6 +87,9 @@ common, exe, DecalHUD_DrawWeapon, 0x0, General/DecalHUD/DecalHUD_DrawWeapon.c
 common, exe, DecalHUD_DrawPolyGT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyGT4.c
 common, exe, DecalHUD_Arrow2D, 0x0, General/DecalHUD/DecalHUD_Arrow2D.c
 
+// DotLights (done)
+common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c
+
 // GAMEPAD
 
 // GAMEPROG (done)
@@ -247,7 +250,7 @@ common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
 common, exe, DrawRectangle, 0x0, General/DrawRectangle.c
 common, exe, DrawBoxOutline_LowLevel, 0x0, General/DrawBoxOutline_LowLevel.c
 
-//common, exe, RenderFrame, 0x0, General/RenderFrame.c
+common, exe, RenderFrame, 0x0, General/RenderFrame.c
 
 common, exe, Player_Spinning_Update, 0x0, General/Player_Spinning_FuncPtrs.c
 common, exe, Player_Spinning_Init, 0x0, General/Player_Spinning_Init.c

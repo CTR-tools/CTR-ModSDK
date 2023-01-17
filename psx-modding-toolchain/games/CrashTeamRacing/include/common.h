@@ -8954,7 +8954,7 @@ struct sData
 	// making 60fps look like 30fps
 
 	// 8008d2b4
-	int frameDuplicator;
+	int vsyncTillFlip;
 
 	// 8008d2b8
 	char s_PrimMem[8];

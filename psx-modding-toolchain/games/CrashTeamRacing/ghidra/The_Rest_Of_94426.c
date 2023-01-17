@@ -20874,15 +20874,18 @@ void FUN_80042a8c(void *param_1,int param_2,undefined4 *param_3,short *param_4,u
   // gGT->backBuffer->primMem.curr
   pvVar3 = (void *)param_3[0x20];
 
+  // render no primitives if
+  // less than 100 remains
   p = (void *)0x0;
 
   // curr < endMin100
+  // if more than 100 remains
   if (pvVar3 <= (void *)param_3[0x21])
   {
-	// advance curr
+	// advance curr, reserve 0x40 bytes of OT
     param_3[0x20] = (int)pvVar3 + 0x40;
 
-	// write primitive here
+	// write primitive here, with 0x40 reserved
 	p = pvVar3;
   }
 
