@@ -555,6 +555,7 @@ LoadSave_StartMemcardAction = 0x80047198;
 LoadSave_StopMemcardAction = 0x800471ac;
 GhostData_ResetNumGhosts = 0x80047224;
 LoadFromCard_GameProgressAndOptions = 0x80047230;
+unk80047d64 = 0x80047d64;
 LoadSave_LoadProfileFromHub_MenuBoxFuncPtr = 0x80047da8;
 LoadSave_ThTick = 0x80047dfc;
 LoadSave_PrintInteger = 0x80047f20;

@@ -81,53 +81,42 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 		WindowDivsionLines(gGT);
 	}
 	
-#if 0
 	// if game is not loading
-    if (DAT_8008d0f8 == -1) {
+    if (sdata->Loading.stage == -1) {
 
 	  // If game is not paused
-      if ((*(uint *)PTR_DAT_8008d2ac & 0xf) == 0)
+      if ((gGT->gameMode1 & 0xf) == 0)
 	  {
-		// RivalWeapons_Update
-        FUN_800408b8();
+		RivalWeapons_Update();
       }
 
-	  // StartLine_Update
-      FUN_800414f4();
+	  StartLine_Update();
     }
 
 	// If in main menu, or in adventure arena,
 	// or in End-Of-Race menu
-	if ((*(uint *)PTR_DAT_8008d2ac & 0x302000) != 0) {
-		FUN_80047d64();
+	if ((gGT->gameMode1 & 0x302000) != 0) {
+		unk80047d64();
 	}
 	
-  // clear swapchain
-  if (
-		// gGT->256c & clear swapchain
-		((*(uint *)(PTR_DAT_8008d2ac + 0x256c) & 0x2000) != 0) &&
+	// clear swapchain
+	if (
+			((gGT->renderFlags & 0x2000) != 0) &&
+			(
+				(lev->clearColor[0].enable != 0) ||
+				(lev->clearColor[1].enable != 0)
+			)
+		)
+	{
+		CAM_ClearScreen(gGT);
+	}
+	
+	if ((gGT->renderFlags & 0x1000) != 0)
+	{
+		CheckeredFlag_DrawSelf();
+	}
 
-		// if lev has clear-color data, for clearing screen without skybox
-		((*(char *)(param_1[0x58] + 0x163) != '\0' || (*(char *)(param_1[0x58] + 0x167) != '\0')))
-	 )
-  {
-	// CAM_ClearScreen
-    FUN_8001861c(param_1);
-  }
-
-  // gGT->256c & checkered flag
-  if ((*(uint *)(PTR_DAT_8008d2ac + 0x256c) & 0x1000) != 0)
-  {
-    // draw checkered flag
-	FUN_800444e8();
-  }
-#endif
-	
-	
-	
-	// === Skip To End ===
-	
-	//LinkCameraOT_UI();
+	LinkCameraOT_UI();
 	
 	gGT->countTotalTime = 
 		RCNT_GetTime_Total();
@@ -872,11 +861,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		// skybox gradient
 		if((level1->configFlags & 1) != 0)
 		{
-			CAM_SkyboxGlow(
-				&level1->glowGradient[0],
-				c110,
-				&gGT->backBuffer->primMem,
-				(unsigned int)c110->ptrOT + 0xffc);
+			goto SkyboxGlow;
 		}
 		
 		return;
@@ -921,17 +906,94 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			gGT->visMem1->QuadBlock_Bit_Visibliity[1],
 			level1->ptr_tex_waterEnvMap); // waterEnvMap?
 			
-		// skybox gradient
-		for(i = 0; i < numPlyrCurrGame; i++)
+		goto SkyboxGlow;
+	}
+	
+	// 3P or 4P
+	CTR_ClearRenderLists_3P4P(gGT, numPlyrCurrGame);
+	
+	// if no SCVert
+	if((level1->configFlags & 4) == 0)
+	{
+		if(numPlyrCurrGame == 3)
 		{
-			c110 = &gGT->camera110[i];
-			CAM_SkyboxGlow(
-				&level1->glowGradient[0],
-				c110,
-				&gGT->backBuffer->primMem,
-				(unsigned int)c110->ptrOT + 0xffc);
+			// assume OVert (no primitives generated here)
+			AnimateWater3P(gGT->timer, level1->count_water,
+				level1->ptr_water, level1->ptr_tex_waterEnvMap,
+				gGT->visMem1->Water_Bit_Visibility[0],
+				gGT->visMem1->Water_Bit_Visibility[1],
+				gGT->visMem1->Water_Bit_Visibility[2]);
+		}
+		
+		else // 4P mode
+		{
+			// assume OVert (no primitives generated here)
+			AnimateWater4P(gGT->timer, level1->count_water,
+				level1->ptr_water, level1->ptr_tex_waterEnvMap,
+				gGT->visMem1->Water_Bit_Visibility[0],
+				gGT->visMem1->Water_Bit_Visibility[1],
+				gGT->visMem1->Water_Bit_Visibility[2],
+				gGT->visMem1->Water_Bit_Visibility[3]);
 		}
 	}
+	
+	VisData_CopyJMPsToScratchpad();
+	gGT->numVisDataLinks = 0;
+	
+	for(i = 0; i < numPlyrCurrGame; i++)
+	{
+		gGT->numVisDataLinks += 
+		  CreateRenderLists_3P4P(
+			ptr_mesh_info->ptrVisDataArray,
+			level1->visMem->VisDataLeaf_Bit_Visibility[i],
+			&gGT->camera110[i],
+			&gGT->LevRenderLists[i],
+			level1->visMem->VisData_List_Memory[i]);
+	}
+	
+	if(numPlyrCurrGame == 3)
+	{
+		// 226-229
+		DrawLevelPrims_EntryFunc(
+			&gGT->LevRenderLists[0],
+			&gGT->camera110[0],
+			ptr_mesh_info,
+			&gGT->backBuffer->primMem,
+			gGT->visMem1->QuadBlock_Bit_Visibliity[0],
+			gGT->visMem1->QuadBlock_Bit_Visibliity[1],
+			gGT->visMem1->QuadBlock_Bit_Visibliity[2],
+			level1->ptr_tex_waterEnvMap); // waterEnvMap?
+	}
+	
+	else // 4P mode
+	{
+		// 226-229
+		DrawLevelPrims_EntryFunc(
+			&gGT->LevRenderLists[0],
+			&gGT->camera110[0],
+			ptr_mesh_info,
+			&gGT->backBuffer->primMem,
+			gGT->visMem1->QuadBlock_Bit_Visibliity[0],
+			gGT->visMem1->QuadBlock_Bit_Visibliity[1],
+			gGT->visMem1->QuadBlock_Bit_Visibliity[2],
+			gGT->visMem1->QuadBlock_Bit_Visibliity[3],
+			level1->ptr_tex_waterEnvMap); // waterEnvMap?
+	}
+		
+SkyboxGlow:
+		
+	// skybox gradient
+	for(i = 0; i < numPlyrCurrGame; i++)
+	{
+		c110 = &gGT->camera110[i];
+		CAM_SkyboxGlow(
+			&level1->glowGradient[0],
+			c110,
+			&gGT->backBuffer->primMem,
+			(unsigned int)c110->ptrOT + 0xffc);
+	}
+	
+	return;
 }
 
 void MultiplayerWumpaHUD(struct GameTracker* gGT)
@@ -1069,12 +1131,6 @@ void WindowDivsionLines(struct GameTracker* gGT)
     }
 }
 
-
-
-
-
-
-// === Skip To End ===
 void LinkCameraOT_UI(struct GameTracker* gGT)
 {
 	struct Camera110* c110 = &gGT->camera110_UI;

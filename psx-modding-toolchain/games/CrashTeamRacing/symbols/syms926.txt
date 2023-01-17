@@ -719,6 +719,7 @@
 
 // this one \/ calls the other two ^^
 // unknown 80047d64 -- related to memcard
+80047d64 unk80047d64 // needed for RenderFrame
 
 80047da8 LoadSave_LoadProfileFromHub_MenuBoxFuncPtr
 80047dfc LoadSave_ThTick

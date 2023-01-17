@@ -541,8 +541,8 @@ void StateZero()
 	
 	#ifdef FastBoot
 	gGT->levelID = 0;
-	gGT->numPlyrCurrGame = 2;
-	gGT->numPlyrNextGame = 2;
+	gGT->numPlyrCurrGame = 4;
+	gGT->numPlyrNextGame = 4;
 	#endif
 	
 	InitGeom();
