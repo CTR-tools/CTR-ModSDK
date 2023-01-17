@@ -4,7 +4,7 @@ void VsyncCallbackFunc();
 void DrawSyncCallbackFunc();
 void StateZero();
 
-#define FastBoot
+//#define FastBoot
 
 u_int main()
 {
@@ -276,7 +276,7 @@ u_int main()
 				// Process all gamepad input
 				GAMEPAD_UpdateAll(sdata->gGamepads);
 
-				#if 0
+				#ifdef FastBoot
 				// disable spawn
 				gGT->Debug_ToggleNormalSpawn = 0;
 				
@@ -537,12 +537,12 @@ void StateZero()
 	#endif
 	
 	// set level ID to naughty dog box
-	gGT->levelID = 39;
+	gGT->levelID = 41;
 	
 	#ifdef FastBoot
-	gGT->levelID = 0;
-	gGT->numPlyrCurrGame = 4;
-	gGT->numPlyrNextGame = 4;
+	gGT->levelID = 4;
+	gGT->numPlyrCurrGame = 1;
+	gGT->numPlyrNextGame = 1;
 	#endif
 	
 	InitGeom();

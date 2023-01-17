@@ -8789,7 +8789,7 @@ code_r0x800369d8:
     }
 
 	if (
-			// if not loading
+			// if not cutscene
 			// if not in adventure arena
 			// if not in main menu
 			((*param_1 & 0x20102000) == 0) &&

@@ -71,9 +71,20 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	// Multiplayer Pixel LOD Part 3
 	#endif
 	
-	// in DotLights.c
-	void DotLights(struct GameTracker* gGT);
-	DotLights(gGT);
+	if(
+		// if not cutscene
+		// if not in adventure arena
+		// if not in main menu
+		((gGT->gameMode1 & 0x20102000) == 0) &&
+		
+		// if loading is 100% finished
+		(sdata->Loading.stage != -4)
+	)
+	{
+		// in DotLights.c
+		void DotLights(struct GameTracker* gGT);
+		DotLights(gGT);
+	}
 	
 	if((gGT->renderFlags & 0x8000) != 0)
 	{
@@ -116,7 +127,7 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 		CheckeredFlag_DrawSelf();
 	}
 
-	LinkCameraOT_UI();
+	LinkCameraOT_UI(gGT);
 	
 	gGT->countTotalTime = 
 		RCNT_GetTime_Total();
@@ -1008,8 +1019,8 @@ void WindowBoxLines(struct GameTracker* gGT)
 	int i;
 	
 	// only battle and 3P4P mode allowed
-	//if((gGT->gameMode1 & BATTLE_MODE) == 0) return;
-	//if(gGT->numPlyrCurrGame < 3) return;
+	if((gGT->gameMode1 & BATTLE_MODE) == 0) return;
+	if(gGT->numPlyrCurrGame < 3) return;
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
