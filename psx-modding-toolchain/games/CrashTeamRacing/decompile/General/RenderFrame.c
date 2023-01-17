@@ -46,10 +46,8 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	RenderAllBoxSceneSplitLines(gGT);
 	
 	RenderBucket_QueueAllInstances(gGT);
-	
 	RenderAllNormalParticles(gGT);
-	
-	LinkCameraOTs(gGT);
+	LinkCameraOTs(gGT); // == LinkCameraOTs ==
 	
 	#if 0
 	// Multiplayer PixelLOD Part 2
@@ -65,12 +63,9 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	RenderAllHeatParticles(gGT);
 	
 	Camera110_FadeAllWindows();
-	
 	RenderAllLevelGeometry(gGT);
-	
-	LinkCameraOTs(gGT);
-	
-	// MultiplayerWumpaHUD
+	LinkCameraOTs(gGT); // == LinkCameraOTs ==
+	MultiplayerWumpaHUD(gGT);
 	
 	#if 0
 	// Multiplayer Pixel LOD Part 3
@@ -80,9 +75,69 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	void DotLights(struct GameTracker* gGT);
 	DotLights(gGT);
 	
+	if((gGT->renderFlags & 0x8000) != 0)
+	{
+		WindowBoxLines(gGT);
+		WindowDivsionLines(gGT);
+	}
+	
+#if 0
+	// if game is not loading
+    if (DAT_8008d0f8 == -1) {
+
+	  // If game is not paused
+      if ((*(uint *)PTR_DAT_8008d2ac & 0xf) == 0)
+	  {
+		// RivalWeapons_Update
+        FUN_800408b8();
+      }
+
+	  // StartLine_Update
+      FUN_800414f4();
+    }
+
+	// If in main menu, or in adventure arena,
+	// or in End-Of-Race menu
+	if ((*(uint *)PTR_DAT_8008d2ac & 0x302000) != 0) {
+		FUN_80047d64();
+	}
+	
+  // clear swapchain
+  if (
+		// gGT->256c & clear swapchain
+		((*(uint *)(PTR_DAT_8008d2ac + 0x256c) & 0x2000) != 0) &&
+
+		// if lev has clear-color data, for clearing screen without skybox
+		((*(char *)(param_1[0x58] + 0x163) != '\0' || (*(char *)(param_1[0x58] + 0x167) != '\0')))
+	 )
+  {
+	// CAM_ClearScreen
+    FUN_8001861c(param_1);
+  }
+
+  // gGT->256c & checkered flag
+  if ((*(uint *)(PTR_DAT_8008d2ac + 0x256c) & 0x1000) != 0)
+  {
+    // draw checkered flag
+	FUN_800444e8();
+  }
+#endif
+	
+	
+	
 	// === Skip To End ===
+	
+	//LinkCameraOT_UI();
+	
+	gGT->countTotalTime = 
+		RCNT_GetTime_Total();
+	
 	RenderVSYNC(gGT);
 	RenderFMV();
+	
+	gGT->countTotalTime =
+		RCNT_GetTime_Elapsed(gGT->countTotalTime,0);
+	
 	RenderSubmit(gGT);
 }
 
@@ -157,7 +212,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// add 3 pixels above, 3 pixels bellow
 	window.h += 6;
 		
-	DrawTextBackground(&window, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
+	DrawTextBackground(&window, 1, gGT->backBuffer->otMem.startPlusFour);
 }
 
 void DrawFinalLap(struct GameTracker* gGT)
@@ -540,7 +595,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 	if((gGT->renderFlags & 0x20) == 0) return;
 
 	lod = numPlyrCurrGame - 1;
-	if((gGT->gameMode1 & RELIC_RACE) == 0)
+	if((gGT->gameMode1 & RELIC_RACE) != 0)
 		lod |= 4;
 	
 	RBI = RenderBucket_QueueLevInstances(
@@ -879,11 +934,156 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	}
 }
 
+void MultiplayerWumpaHUD(struct GameTracker* gGT)
+{
+	if((gGT->hudFlags & 1) == 0) return;
+	if(gGT->numPlyrCurrGame < 2) return;
+	DrawHUD_Wumpa3D_2P3P4P(gGT);
+}
+
+void WindowBoxLines(struct GameTracker* gGT)
+{
+	int i;
+	
+	// only battle and 3P4P mode allowed
+	//if((gGT->gameMode1 & BATTLE_MODE) == 0) return;
+	//if(gGT->numPlyrCurrGame < 3) return;
+	
+	for(i = 0; i < gGT->numPlyrCurrGame; i++)
+	{
+		DrawBoxOutline_LowLevel(
+
+			// dimensions, thickness
+			&gGT->camera110[i].rect,4,2,
+
+			// color data, 0x18 is enum offset of BLUE
+			data.ptrColor[gGT->drivers[i]->BattleHUD.teamID + 0x18],
+
+			0,
+
+			// camera110_UI = 0x1388
+			(unsigned int)gGT->camera110_UI.ptrOT + 0xC);
+	}
+}
+
+void WindowDivsionLines(struct GameTracker* gGT)
+{
+	POLY_F4* p;
+	int numPlyrCurrGame;
+
+	numPlyrCurrGame = gGT->numPlyrCurrGame;
+
+	// if numPlyrCurrGame is more than 1
+    if (1 < numPlyrCurrGame)
+	{
+		p = gGT->backBuffer->primMem.curr;
+
+		// set R, G, B, CODE, all to zero,
+		// this makes black color, and invalid CODE
+		*(int*)&p->r0 = 0;
+
+		// this sets CODE to the proper value
+		setPolyF4(p);
+
+		// Make four (x,y) coordinates
+		p->y0 = 0x6a;
+		p->y1 = 0x6a;
+		p->x0 = 0;
+		p->x1 = 0x200;
+
+		p->x2 = 0;
+		p->y2 = 0x6e;
+		p->x3 = 0x200;
+		p->y3 = 0x6e;
+
+		// Draw a bar from left to right,
+		// dividing the screen in half on top and bottom
+		AddPrim((unsigned int)gGT->camera110_UI.ptrOT + 0xC,p);
+
+		gGT->backBuffer->primMem.curr = (void*)(p + 1);
+    }
+
+	// if numPlyrCurrGame is more than 2
+    if (2 < numPlyrCurrGame)
+	{
+		p = gGT->backBuffer->primMem.curr;
+
+		// set R, G, B, CODE, all to zero,
+		// this makes black color, and invalid CODE
+		*(int*)&p->r0 = 0;
+
+		// this sets CODE to the proper value
+		setPolyF4(p);
+
+		// Make four (x,y) coordinates
+		p->x0 = 0xfd;
+		p->x2 = 0xfd;
+		p->y0 = 0;
+		p->x1 = 0x103;
+
+		p->y1 = 0;
+		p->y2 = 0xd8;
+		p->x3 = 0x103;
+		p->y3 = 0xd8;
+
+		// Draw a bar from left to right,
+		// dividing the screen in half on top and bottom
+		AddPrim((unsigned int)gGT->camera110_UI.ptrOT + 0xC,p);
+
+		// backBuffer->primMem.curr
+		gGT->backBuffer->primMem.curr = (void*)(p + 1);
+    }
+
+	// if numPlyrCurrGame is 3
+    if (numPlyrCurrGame == '\x03')
+	{
+		// This is useless, cause it gets cleared
+		// to black anyway, even without this block,
+		// at least it does it Crash Cove, does it always?
+
+		p = gGT->backBuffer->primMem.curr;
+
+		// set R, G, B, CODE, all to zero,
+		// this makes black color, and invalid CODE
+		*(int*)&p->r0 = 0;
+
+		// this sets CODE to the proper value
+		setPolyF4(p);
+
+		// xy0
+		p->x0 = 0x100;
+		p->x2 = 0x100;
+		p->y0 = 0x6c;
+		p->y1 = 0x6c;
+		p->x1 = 0x200;
+		p->y2 = 0xd8;
+		p->x3 = 0x200;
+		p->y3 = 0xd8;
+
+		// Draw a bar from left to right,
+		// dividing the screen in half on top and bottom
+		AddPrim((unsigned int)gGT->camera110_UI.ptrOT + 0xC,p);
+
+		// backBuffer->primMem.curr
+		gGT->backBuffer->primMem.curr = (void*)(p + 1);
+    }
+}
+
+
 
 
 
 
 // === Skip To End ===
+void LinkCameraOT_UI(struct GameTracker* gGT)
+{
+	struct Camera110* c110 = &gGT->camera110_UI;
+	
+	Camera110_LinkOT_Normal(
+		(unsigned int)c110->ptrOT + 0x10,
+		c110, gGT->backBuffer, 0, 0);
+}
+
 void RenderVSYNC(struct GameTracker* gGT)
 {	
 	// render checkered flag
@@ -933,10 +1133,7 @@ void RenderFMV()
 }
 
 void RenderSubmit(struct GameTracker* gGT)
-{	
-	gGT->countTotalTime =
-	RCNT_GetTime_Elapsed(gGT->countTotalTime,0);
-	
+{		
 	// do I need the "if"? will it ever be nullptr?
 	if(gGT->frontBuffer != 0)
 	{
@@ -954,12 +1151,12 @@ void RenderSubmit(struct GameTracker* gGT)
 	// swap=1, get db[0]
 	gGT->frontBuffer = &gGT->db
 		[
-			1 - sdata->gGT->swapchainIndex
+			1 - gGT->swapchainIndex
 		];
 		
 	gGT->bool_DrawOTag_InProgress = 1;
 	
-	DrawOTag((int)gGT->camera110[0].ptrOT + 0xffc);
+	DrawOTag((unsigned int)gGT->camera110[0].ptrOT + 0xffc);
 	
 	gGT->frameTimer_notPaused = gGT->frameTimer_VsyncCallback;
 }
