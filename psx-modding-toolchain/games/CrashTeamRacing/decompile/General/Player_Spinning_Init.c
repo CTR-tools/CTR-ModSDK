@@ -1,5 +1,6 @@
 #include <common.h>
 
+void DECOMP_Player_Spinning_InitSetUpdate(struct Thread* t, struct Driver* d);
 void DECOMP_Player_Spinning_Update();
 void DECOMP_Player_Spinning_Input();
 void Player_Driving_Audio();
@@ -15,8 +16,8 @@ void SpawnParticle_DriverMain();
 
 void* PlayerSpinningFuncTable[0xD] =
 {
+	DECOMP_Player_Spinning_InitSetUpdate,
 	0,
-	DECOMP_Player_Spinning_Update,
 	DECOMP_Player_Spinning_Input,
 	Player_Driving_Audio,
 	DECOMP_Player_Spinning_Interpolate,
@@ -74,4 +75,13 @@ void DECOMP_Player_Spinning_Init(struct Thread* t, struct Driver* d)
 	{
 		d->funcPtrs[i] = PlayerSpinningFuncTable[i];
 	}
+}
+
+// all other Spinning functions should execute for one frame,
+// and then DECOMP_Player_Spinning_Update should happen after that,
+// otherwise driver wont spin out if hitting armadillo while driver is motionless
+void DECOMP_Player_Spinning_InitSetUpdate(struct Thread* t, struct Driver* d)
+{
+	d->funcPtrs[0] = 0;
+	d->funcPtrs[1] = DECOMP_Player_Spinning_Update;
 }

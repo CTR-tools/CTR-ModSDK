@@ -84,12 +84,13 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 		// in DotLights.c
 		void DotLights(struct GameTracker* gGT);
 		DotLights(gGT);
-	}
 	
-	if((gGT->renderFlags & 0x8000) != 0)
-	{
-		WindowBoxLines(gGT);
-		WindowDivsionLines(gGT);
+		if((gGT->renderFlags & 0x8000) != 0)
+		{
+			WindowBoxLines(gGT);
+			WindowDivsionLines(gGT);
+		}
+	
 	}
 	
 	// if game is not loading
@@ -185,8 +186,8 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 		// yes, char*, not short*
 		char* ptrRawInput = gGamepads->gamepad[i].ptrRawInput;
 		
-		if(ptrRawInput == 0) continue;
-		if(ptrRawInput[0] == 0) continue;
+		if(ptrRawInput != 0)
+			if(ptrRawInput[0] == 0) continue;
 		
 		// if controller is unplugged
 		
@@ -195,7 +196,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 			[
 				data.lngIndex_gamepadUnplugged[lngArrStart + i]
 			],
-			0x100, window.h, 2, 0xffff8000);
+			0x100, posY + window.h, 2, 0xffff8000);
 
 		// add for each line
 		window.h += 8;
