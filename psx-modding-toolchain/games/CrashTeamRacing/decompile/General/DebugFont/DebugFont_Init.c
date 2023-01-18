@@ -1,7 +1,7 @@
 #include <common.h>
 
 // Does not fit byte budget
-void DebugFont_Init(struct GameTracker* gGT)
+void DECOMP_DebugFont_Init(struct GameTracker* gGT)
 {
 	struct Icon* debugFontIcon = gGT->ptrIcons[0x42];
 	
