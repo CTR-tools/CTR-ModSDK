@@ -86,7 +86,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	{
 		case 0:
 
-			// if level is not in range of 0x28 and 0x28+1,
+			// if level is not in range of 0x28 and 0x28+1
 			// if level is not AdvGarage or Naughty Dog Box Scene
 			if (1 < sdata->gGT->levelID - 0x28U)
 			{
@@ -119,8 +119,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// if you have not drawn the intro frames yet
 			else
 			{
-				// Record that you've seen the logos,
-				// so that you do not see them again
+				// Record that you've seen the logos, so that you do not see them again
 				sdata.boolShownIntros = 0;
 
 				// Load Intro TIM for Sony Presents from VRAM file
@@ -155,7 +154,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			sdata->gGT->numPlyrCurrGame = numPlyrNextGame;
 
 			// copy level name into global string
-			// * 6? --Super
+			// original ghidra output mentioned something about * 6? --Super
 			strcpy(&sdata->gGT->levelName[0], sdata.metaDataLEV[sdata->gGT->levelID].name_Debug);
 
 			// add a bookmark, the index of the bookmark is
