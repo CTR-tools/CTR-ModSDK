@@ -872,6 +872,7 @@ DLL221_plus_uVar16:
 			if (sdata->gGT->unkIconPtr != 0)
 			{
 				// search for icon by string
+				//what even are these first arguments? --Super
 				uVar16 = DecalGlobal_Find2(*(u_int *)(sdata->gGT->unkIconPtr + 4), "lightredoff");
 				piVar15 = sdata->gGT->unkIconPtr;
 				sdata->gGT->trafficLightIcon[0] = uVar16;
@@ -950,6 +951,7 @@ DLL221_plus_uVar16:
 				{
 					// add something to loading queue
 					// '2' for dram
+					// the hudFlags pointer dereferencing here is scuffed --Super
 					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)hudFlags - 0x7e) * 2 + 0x16d, &sdata.podiumModel_firstPlace, 0xfffffffe);
 				}
 
@@ -1018,6 +1020,7 @@ DLL221_plus_uVar16:
 							*piVar15 = iVar12 + 4;
 							iVar12 = *piVar15;
 						}
+						// idk --Super
 						if ((int)*(short *)(iVar12 + 0x10) != -1)
 						{
 							*(int *)(moredata + (int)*(short *)(iVar12 + 0x10) * 4 + 0x2160) = iVar12;
