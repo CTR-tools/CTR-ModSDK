@@ -4439,10 +4439,8 @@ struct GameTracker
   // used in ClearOTagR
   // 0x18c8
   // 0x18cc
-  // ot[0]
-  // ot[1]
   // one for each DB
-  void* ot[2];
+  void* ot_camera110_UI[2];
 
   // 0x18d0
   struct
@@ -7894,7 +7892,9 @@ struct Data
 	// 0x8008454C
 	// 1P, 2P, 4P
 	// LEV 0 - 0x19 (0x1c for alignment)
-	char primMem_SizePerLEV[3][0x1c];
+	char primMem_SizePerLEV_1P[0x1c];
+	char primMem_SizePerLEV_2P[0x1c];
+	char primMem_SizePerLEV_4P[0x1c];
 
 	// 0x800845a0
 	// trigonometry approximation table (1kb)

@@ -74,7 +74,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	int *piVar15;
 	u_int uVar16;
 	u_int uVar17;
-	u_char auStack40 [8];
+	int vramSize;
 	int boolDefault1P;
 	int levelID;
 	int ovrRegion1;
@@ -110,8 +110,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				sdata->boolFirstBoot = 0;
 
 				// Load Intro TIM for Copyright Page from VRAM file
-				LOAD_VramFile(bigfile, 0x1fe, 0, auStack40, 0xffffffff);
-
+				LOAD_VramFile(bigfile, 0x1fe, 0, &vramSize, 0xffffffff);
 				UpdateIntroScreen();
 
 				gGT->db[0].drawEnv.isbg = 0;

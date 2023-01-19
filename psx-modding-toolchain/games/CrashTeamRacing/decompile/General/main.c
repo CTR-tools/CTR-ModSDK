@@ -435,7 +435,7 @@ u_int main()
 void StateZero()
 {
 	u_short *clockEffect;
-	u_char auStack40[8];
+	int vramSize;
 	
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
@@ -566,10 +566,8 @@ void StateZero()
 	DrawSync(0);
 	
 	#ifndef FastBoot
-	// Load Intro TIM for "SCEA Presents" page from VRAM file
-	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
-	// Add a bookmark before loading (param_3 is 0 in the call)
-	LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, auStack40, 0xffffffff);
+	// Load Intro TIM for "SCEA Presents" from VRAM file
+	LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
 	UpdateIntroScreen();
 	#endif
 	
@@ -604,7 +602,7 @@ void StateZero()
 	// 	the area between 2 screen buffers and top right corner in vram
 	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
 	// Add a bookmark before loading (param_3 is 0 in the call)
-	LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, auStack40, 0xffffffff);
+	LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, &vramSize, 0xffffffff);
 	
 	sdata->mainGameState = 3;
 	
