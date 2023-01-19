@@ -2,8 +2,9 @@
 
 void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
+	int i;
 	struct Level* lev = gGT->level1;
-	unsigned int end;
+	unsigned int end[4];
 	
 	DrawControllerError(gGT, gGamepads);
 	DrawFinalLap(gGT);
@@ -45,9 +46,7 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	RenderAllHUD(gGT);
 	RenderAllBeakerRain(gGT);
 	RenderAllBoxSceneSplitLines(gGT);
-	
-	end = (unsigned int)gGT->camera110[0].ptrOT;
-	
+		
 	RenderBucket_QueueAllInstances(gGT);
 	RenderAllNormalParticles(gGT);
 	LinkCameraOTs(gGT); // == LinkCameraOTs ==
@@ -59,6 +58,9 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	RenderAllFlag0x40(gGT); // I need a better name
 	RenderAllTitleDPP(gGT);
 	
+	for(i = 0; i < gGT->numPlyrCurrGame; i++)
+		end[i] = (unsigned int)gGT->camera110[i].ptrOT;
+	
 	RenderBucket_ExecuteAllInstances(gGT);
 	
 	RenderAllTires(gGT);
@@ -68,7 +70,12 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	Camera110_FadeAllWindows();
 	RenderAllLevelGeometry(gGT);
 	
-	DF_ParseOT((unsigned int)gGT->camera110[0].ptrOT + 0xffc, end);
+	for(i = 0; i < gGT->numPlyrCurrGame; i++)
+		DF_ParseOT(
+			(unsigned int)gGT->camera110[i].ptrOT + 0xffc, 
+			end[i],
+			gGT->camera110[i].rect.x,
+			gGT->camera110[i].rect.x + gGT->camera110[i].rect.w);
 	
 	LinkCameraOTs(gGT); // == LinkCameraOTs ==
 	MultiplayerWumpaHUD(gGT);
@@ -148,7 +155,7 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	RenderSubmit(gGT);
 }
 
-void DF_ParseOT(u_long* param_1, unsigned int end)
+void DF_ParseOT(u_long* param_1, unsigned int end, int startX, int endX)
 {
   u_int* header;
 
@@ -210,9 +217,9 @@ void DF_ParseOT(u_long* param_1, unsigned int end)
 	// 0x48 LineF3
     case 0x20:
     case 0x48:
-      ((POLY_F3*)header)->x0 = 0x200 - ((POLY_F3*)header)->x0;
-      ((POLY_F3*)header)->x1 = 0x200 - ((POLY_F3*)header)->x1;
-      ((POLY_F3*)header)->x2 = 0x200 - ((POLY_F3*)header)->x2;
+      ((POLY_F3*)header)->x0 = (endX - ((POLY_F3*)header)->x0) + startX;
+      ((POLY_F3*)header)->x1 = (endX - ((POLY_F3*)header)->x1) + startX;
+      ((POLY_F3*)header)->x2 = (endX - ((POLY_F3*)header)->x2) + startX;
 	  backup = ((POLY_F3*)header)->x0;
 	  ((POLY_F3*)header)->x0 = ((POLY_F3*)header)->x1;
 	  ((POLY_F3*)header)->x1 = backup;
@@ -225,9 +232,9 @@ void DF_ParseOT(u_long* param_1, unsigned int end)
 	// 0x30 PolyG3
     case 0x24:
     case 0x30:
-      ((POLY_FT3*)header)->x0 = 0x200 - ((POLY_FT3*)header)->x0;
-      ((POLY_FT3*)header)->x1 = 0x200 - ((POLY_FT3*)header)->x1;
-      ((POLY_FT3*)header)->x2 = 0x200 - ((POLY_FT3*)header)->x2;
+      ((POLY_FT3*)header)->x0 = (endX - ((POLY_FT3*)header)->x0) + startX;
+      ((POLY_FT3*)header)->x1 = (endX - ((POLY_FT3*)header)->x1) + startX;
+      ((POLY_FT3*)header)->x2 = (endX - ((POLY_FT3*)header)->x2) + startX;
 	  backup = ((POLY_FT3*)header)->x0;
 	  ((POLY_FT3*)header)->x0 = ((POLY_FT3*)header)->x1;
 	  ((POLY_FT3*)header)->x1 = backup;
@@ -246,10 +253,10 @@ void DF_ParseOT(u_long* param_1, unsigned int end)
 	// 0x4c LineF4
     case 0x28:
     case 0x4c:
-      ((POLY_F4*)header)->x0 = 0x200 - ((POLY_F4*)header)->x0;
-      ((POLY_F4*)header)->x1 = 0x200 - ((POLY_F4*)header)->x1;
-      ((POLY_F4*)header)->x2 = 0x200 - ((POLY_F4*)header)->x2;
-      ((POLY_F4*)header)->x3 = 0x200 - ((POLY_F4*)header)->x3;
+      ((POLY_F4*)header)->x0 = (endX - ((POLY_F4*)header)->x0) + startX;
+      ((POLY_F4*)header)->x1 = (endX - ((POLY_F4*)header)->x1) + startX;
+      ((POLY_F4*)header)->x2 = (endX - ((POLY_F4*)header)->x2) + startX;
+      ((POLY_F4*)header)->x3 = (endX - ((POLY_F4*)header)->x3) + startX;
 	  backup = ((POLY_F4*)header)->x0;
 	  ((POLY_F4*)header)->x0 = ((POLY_F4*)header)->x3;
 	  ((POLY_F4*)header)->x3 = backup;
@@ -266,10 +273,10 @@ void DF_ParseOT(u_long* param_1, unsigned int end)
 
 	// 0x38 PolyG4
     case 0x38:
-      ((POLY_FT4*)header)->x0 = 0x200 - ((POLY_FT4*)header)->x0;
-      ((POLY_FT4*)header)->x1 = 0x200 - ((POLY_FT4*)header)->x1;
-      ((POLY_FT4*)header)->x2 = 0x200 - ((POLY_FT4*)header)->x2;
-      ((POLY_FT4*)header)->x3 = 0x200 - ((POLY_FT4*)header)->x3;
+      ((POLY_FT4*)header)->x0 = (endX - ((POLY_FT4*)header)->x0) + startX;
+      ((POLY_FT4*)header)->x1 = (endX - ((POLY_FT4*)header)->x1) + startX;
+      ((POLY_FT4*)header)->x2 = (endX - ((POLY_FT4*)header)->x2) + startX;
+      ((POLY_FT4*)header)->x3 = (endX - ((POLY_FT4*)header)->x3) + startX;
 	  backup = ((POLY_FT4*)header)->x0;
 	  ((POLY_FT4*)header)->x0 = ((POLY_FT4*)header)->x3;
 	  ((POLY_FT4*)header)->x3 = backup;
@@ -286,10 +293,10 @@ void DF_ParseOT(u_long* param_1, unsigned int end)
 	  
 	// 0x2C PolyFT4
     case 0x2c:
-      ((POLY_FT4*)header)->x0 = 0x200 - ((POLY_FT4*)header)->x0;
-      ((POLY_FT4*)header)->x1 = 0x200 - ((POLY_FT4*)header)->x1;
-      ((POLY_FT4*)header)->x2 = 0x200 - ((POLY_FT4*)header)->x2;
-      ((POLY_FT4*)header)->x3 = 0x200 - ((POLY_FT4*)header)->x3;
+      ((POLY_FT4*)header)->x0 = (endX - ((POLY_FT4*)header)->x0) + startX;
+      ((POLY_FT4*)header)->x1 = (endX - ((POLY_FT4*)header)->x1) + startX;
+      ((POLY_FT4*)header)->x2 = (endX - ((POLY_FT4*)header)->x2) + startX;
+      ((POLY_FT4*)header)->x3 = (endX - ((POLY_FT4*)header)->x3) + startX;
 	  backup = ((POLY_FT4*)header)->x0;
 	  ((POLY_FT4*)header)->x0 = ((POLY_FT4*)header)->x3;
 	  ((POLY_FT4*)header)->x3 = backup;
@@ -318,9 +325,9 @@ void DF_ParseOT(u_long* param_1, unsigned int end)
 
 	// PolyGT3
     case 0x34:
-      ((POLY_GT3*)header)->x0 = 0x200 - ((POLY_GT3*)header)->x0;
-      ((POLY_GT3*)header)->x1 = 0x200 - ((POLY_GT3*)header)->x1;
-      ((POLY_GT3*)header)->x2 = 0x200 - ((POLY_GT3*)header)->x2;
+      ((POLY_GT3*)header)->x0 = (endX - ((POLY_GT3*)header)->x0) + startX;
+      ((POLY_GT3*)header)->x1 = (endX - ((POLY_GT3*)header)->x1) + startX;
+      ((POLY_GT3*)header)->x2 = (endX - ((POLY_GT3*)header)->x2) + startX;
 	  backup = ((POLY_GT3*)header)->x0;
 	  ((POLY_GT3*)header)->x0 = ((POLY_GT3*)header)->x1;
 	  ((POLY_GT3*)header)->x1 = backup;
@@ -337,10 +344,10 @@ void DF_ParseOT(u_long* param_1, unsigned int end)
 
 	// PolyGT4
     case 0x3c:
-      ((POLY_GT4*)header)->x0 = 0x200 - ((POLY_GT4*)header)->x0;
-      ((POLY_GT4*)header)->x1 = 0x200 - ((POLY_GT4*)header)->x1;
-      ((POLY_GT4*)header)->x2 = 0x200 - ((POLY_GT4*)header)->x2;
-      ((POLY_GT4*)header)->x3 = 0x200 - ((POLY_GT4*)header)->x3;
+      ((POLY_GT4*)header)->x0 = (endX - ((POLY_GT4*)header)->x0) + startX;
+      ((POLY_GT4*)header)->x1 = (endX - ((POLY_GT4*)header)->x1) + startX;
+      ((POLY_GT4*)header)->x2 = (endX - ((POLY_GT4*)header)->x2) + startX;
+      ((POLY_GT4*)header)->x3 = (endX - ((POLY_GT4*)header)->x3) + startX;
 	  backup = ((POLY_GT4*)header)->x0;
 	  ((POLY_GT4*)header)->x0 = ((POLY_GT4*)header)->x3;
 	  ((POLY_GT4*)header)->x3 = backup;
@@ -369,14 +376,14 @@ void DF_ParseOT(u_long* param_1, unsigned int end)
 
 	// LineF2
     case 0x40:
-      ((LINE_F2*)header)->x0 = 0x200 - ((LINE_F2*)header)->x0;
-      ((LINE_F2*)header)->x1 = 0x200 - ((LINE_F2*)header)->x1;
+      ((LINE_F2*)header)->x0 = (endX - ((LINE_F2*)header)->x0) + startX;
+      ((LINE_F2*)header)->x1 = (endX - ((LINE_F2*)header)->x1) + startX;
 	  break;
 
 	// LineG2
     case 0x50:
-      ((LINE_G2*)header)->x0 = 0x200 - ((LINE_G2*)header)->x0;
-      ((LINE_G2*)header)->x1 = 0x200 - ((LINE_G2*)header)->x1;
+      ((LINE_G2*)header)->x0 = (endX - ((LINE_G2*)header)->x0) + startX;
+      ((LINE_G2*)header)->x1 = (endX - ((LINE_G2*)header)->x1) + startX;
 	  break;
 
 	// does this even exist?
