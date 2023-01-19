@@ -4533,7 +4533,7 @@ struct GameTracker
   // 1b28
   // handles character icons,
   // traffic light sprites, etc
-  unsigned int unkIconPtr;
+  unsigned int mpkIcons;
 
   // 0x1b2c - 0x1c93
   struct ThreadBucket threadBuckets[NUM_BUCKETS];
@@ -8817,7 +8817,7 @@ struct sData
 	char dataC_afterFILE[0x8];
 
 	// 8008d0bc
-	int boolShownIntros;
+	int boolFirstBoot;
 
 	// 8008D0C0
 	char s_ndi[4];
