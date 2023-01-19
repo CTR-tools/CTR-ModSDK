@@ -282,7 +282,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// neither of them need an overlay
 			if(ovrRegion1 != -1)
 			{
-				LOAD_OvrEndRace(uVar16);
+				LOAD_OvrEndRace(ovrRegion1);
 			}
 			
 			break;
