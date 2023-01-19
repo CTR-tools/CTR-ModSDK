@@ -1,9 +1,8 @@
 cluts = []
-num_clut = [1]
+num_clut = [0]
 
 class CLUT:
-
-    def __init__(self, x: int, y: int, mode: int, name: str):
+    def __init__(self, name: str, x: int, y: int, mode: int) -> None:
         self.name = name
         self.x = x * 16
         self.y = y
@@ -16,8 +15,9 @@ class CLUT:
         self.max_colors = 2 ** mode
         self.color_offset = {}
         self.valid = True
+        self.output_path = None
 
-    def add_color(self, psx_color: int):
+    def add_color(self, psx_color: int) -> None:
         if self.color_count == self.max_colors:
             self.valid = False
             return
@@ -43,10 +43,16 @@ class CLUT:
     def is_valid(self) -> bool:
         return self.valid
 
-    def debug_print(self) -> str:
+    def set_path(self, path: str) -> None:
+        self.output_path = path
+
+    def get_path(self) -> str:
+        return self.output_path
+
+    def __str__(self) -> str:
         buffer = ""
         if self.valid:
-            buffer += "CLUT:\n\n"
+            buffer += "CLUT: " + self.name + "\n"
             buffer += "Coords: (" + str(self.x) + ", " + str(self.y) + ")\n"
             buffer += "Width, height: (" + str(self.w) + ", " + str(self.h) +")\n"
             buffer += "Address: " + hex(self.address) + "\n"
@@ -56,57 +62,58 @@ class CLUT:
             buffer += ']\n'
         else:
             buffer += "ERROR: Too many colors for this CLUT.\n"
-        print(buffer)
-
-    def __str__(self) -> str:
-        buffer = ""
-        if self.valid:
-            buffer += "short " + self.name + "[" + str(self.max_colors) + '] __attribute__ ((section (".data"))) = {\n'
-            for color in self.colors:
-                buffer += hex(color) + ","
-            for _ in range(len(self.colors), self.max_colors):
-                buffer += "0x0,"
-            buffer += "};\n\n"
-            buffer += "RECT " + self.name + "_pos" + ' __attribute__ ((section (".data"))) = {\n'
-            buffer += "	.x = " + str(self.x) + ",\n"
-            buffer += "	.y = " + str(self.y) + ",\n"
-            buffer += "	.w = " + str(self.w) + ",\n"
-            buffer += "	.h = " + str(self.h) + "\n"
-            buffer += "};\n"
-        else:
-            buffer += "ERROR: Too many colors for this CLUT.\n"
         return buffer
 
 
-def get_clut(x: int, y: int, mode: int, label: str) -> CLUT:
+def clear_cluts() -> None:
+    num_clut[0] = 0
+    cluts.clear()
+
+def dump_cluts(path: str) -> None:
+    print("[CLUT-py] Dumping CLUTs...")
+    for clut in cluts:
+        if clut.is_valid():
+            output = bytearray()
+            clut_path = path + clut.name + ".bin"
+            clut.set_path(clut_path)
+            for color in clut.colors:
+                output.append(color & 0xFF)
+                output.append((color >> 8) & 0xFF)
+            for _ in range(len(clut.colors), clut.max_colors):
+                output.append(0)
+                output.append(0)
+            with open(clut_path, "wb") as file:
+                file.write(output)
+
+def get_clut_list() -> list[CLUT]:
+    return cluts
+
+def get_clut(x: int, y: int, mode: int) -> CLUT:
     if mode == 16:
         return None
     for clut in cluts:
         if clut.cmp_coords(x, y):
             return clut
-    cluts.append(CLUT(x, y, mode, label + '_clut'+str(num_clut[0])))
+    cluts.append(CLUT("clut_" + str(num_clut[0]), x, y, mode))
     num_clut[0] += 1
     return cluts[-1]
 
-def get_cluts() -> list:
-    return cluts
-
-def print_cluts():
-    for clut in cluts:
-        print(clut)
-
-def debug_print_cluts():
-    for clut in cluts:
-        clut.debug_print()
-
 def rgb2psx(r: int, g: int, b: int, a: int) -> int:
+        # No transparency case
         if a == 255:
             a = 0
+            # PSX interprets opaque pitch black as fully transparent,
+            # so we artificially set the color to RGBA(0, 0, 8, 255) in order
+            # to draw as pitch black
+            if r == 0 and g == 0 and b == 0:
+                b = 8
+        # Full transparency translates to RGBA(0, 0, 0, 255) in the PSX
         elif a == 0:
             r = 0
             g = 0
             b = 0
             a = 0
+        # Last case, add transparency to the colors if a is in ]0, 255[
         else:
             a = 1
         color = a << 5

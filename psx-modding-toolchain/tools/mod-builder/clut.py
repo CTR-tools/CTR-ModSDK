@@ -99,13 +99,21 @@ def get_clut(x: int, y: int, mode: int) -> CLUT:
     return cluts[-1]
 
 def rgb2psx(r: int, g: int, b: int, a: int) -> int:
+        # No transparency case
         if a == 255:
             a = 0
+            # PSX interprets opaque pitch black as fully transparent,
+            # so we artificially set the color to RGBA(0, 0, 8, 255) in order
+            # to draw as pitch black
+            if r == 0 and g == 0 and b == 0:
+                b = 8
+        # Full transparency translates to RGBA(0, 0, 0, 255) in the PSX
         elif a == 0:
             r = 0
             g = 0
             b = 0
             a = 0
+        # Last case, add transparency to the colors if a is in ]0, 255[
         else:
             a = 1
         color = a << 5
