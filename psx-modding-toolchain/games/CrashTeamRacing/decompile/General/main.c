@@ -537,7 +537,7 @@ void StateZero()
 	#endif
 	
 	// set level ID to naughty dog box
-	gGT->levelID = 41;
+	gGT->levelID = 0;
 	
 	#ifdef FastBoot
 	gGT->levelID = 4;

@@ -32,11 +32,11 @@ void CseqMusic_StopAll();
 void Music_LoadBanks();
 u_int Music_AsyncParseBanks();
 void Cutscene_VolumeRestore();
-void* MEMPACK_AllocMem(int allocSize);
+void* MEMPACK_AllocMem(int allocSize, char* name);
 void MEMPACK_NewPack_StartEnd(void* start, int size);
 u_int LOAD_GetAdvPackIndex();
 int MEMPACK_GetFreeBytes();
-void* MEMPACK_AllocHighMem(int allocSize);
+void* MEMPACK_AllocHighMem(int allocSize, char* name);
 void LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, unsigned int callback);
 void DebugFont_Init(struct GameTracker* gGT);
 void INSTANCE_ModelGlobal_Store(struct GameTracker* gGT, int param_2, int* param_3);
@@ -46,36 +46,41 @@ void Audio_SetState_Safe(int param_1);
 u_int CheckeredFlag_IsFullyOffScreen();
 void CheckeredFlag_BeginTransition(int param_1);
 void ElimBG_Deactivate(int param_1);
+void LOAD_Callback_MaskHints3D(struct LoadQueueSlot* lqs);
+void LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
+void LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
+void LOAD_Callback_LEV_Adv(struct LoadQueueSlot* lqs);
+void LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 
 // LOAD_TenStages
 // loadingStage is loading stage
 // bigfile is the Pointer to "cd position of bigfile"
 int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
 {
-	// u_char* hudFlags; -- redundant
 	u_char numPlyrNextGame;
-	// u_char* moredata; -- redundant
+	u_char* moredata; //-- redundant
 	short sVar4;
 	int iVar5;
 	u_int uVar6;
 	CdlCB pcVar7;
 	u_int* puVar8;
 	int iVar9;
-	// u_int gameMode1; -- redundant
+	struct Level* lev;
+	u_int gameMode1; //-- redundant
 	u_char hudFlags;
 	int iVar12;
 	char *levelNamePtr;
-	// u_char* moremoredata; -- redundant
+	u_char* moremoredata; //-- redundant
 	int *piVar15;
 	u_int uVar16;
 	u_int uVar17;
 	u_char auStack40 [8];
 
 	// pointer to LEV
-	iVar9 = sdata.ptrLEV_DuringLoading;
+	iVar9 = sdata->ptrLEV_DuringLoading;
 
 	// if game is loading
-	if (sdata.load_inProgress != 0)
+	if (sdata->load_inProgress != 0)
 	{
 		return loadingStage;
 	}
@@ -97,7 +102,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			// if you've already drawn intro frames
 			// "sony computer entertainment" + "copyright page"
-			if (sdata.boolShownIntros == 0)
+			if (sdata->boolShownIntros == 0)
 			{
 				// change active allocation system to #1
 				// used for whole game (except adventure arena)
@@ -110,17 +115,17 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				// "island1" -> 3 (crash cove)
 				// etc
 
-				sdata.levelID = StringToLevID(&sdata->gGT->levelName[0]);
+				sdata->levelID = StringToLevID(&sdata->gGT->levelName[0]);
 
 				// erase all memory past this bookmark
-				MEMPACK_PopToState(sdata.bookmarkID);
+				MEMPACK_PopToState(sdata->bookmarkID);
 			}
 
 			// if you have not drawn the intro frames yet
 			else
 			{
 				// Record that you've seen the logos, so that you do not see them again
-				sdata.boolShownIntros = 0;
+				sdata->boolShownIntros = 0;
 
 				// Load Intro TIM for Sony Presents from VRAM file
 				// Add a bookmark before loading (bigfile is 0 in the call)
@@ -155,11 +160,11 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			// copy level name into global string
 			// original ghidra output mentioned something about * 6? --Super
-			strcpy(&sdata->gGT->levelName[0], sdata.metaDataLEV[sdata->gGT->levelID].name_Debug);
+			strcpy(&sdata->gGT->levelName[0], data.metaDataLEV[sdata->gGT->levelID].name_Debug);
 
 			// add a bookmark, the index of the bookmark is
 			// saved into 0x8d098, which is used to erase later
-			sdata.bookmarkID = MEMPACK_PushState();
+			sdata->bookmarkID = MEMPACK_PushState();
 
 			DrawSync(0);
 
@@ -174,14 +179,14 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			sdata->gGT->visMem1 = 0;
 			sdata->gGT->visMem2 = 0;
 
-			iVar9 = strncmp(levelNamePtr, &sdata.s_ndi[0], 3);
+			iVar9 = strncmp(levelNamePtr, &sdata->s_ndi[0], 3);
 
 			if
 			(
 				// If you're in Naughty Dog Box Scene
 				(iVar9 == 0) ||
 				(
-					iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata.s_ending[0], 6),
+					iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata->s_ending[0], 6),
 					iVar9 == 0
 				)
 			)
@@ -193,7 +198,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			}
 			else
 			{
-				iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata.s_intro[0], 5);
+				iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata->s_intro[0], 5);
 
 				// if you are loading oxide intro cutscene (from main menu)
 				if (iVar9 == 0)
@@ -210,14 +215,14 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				// if you are not loading oxide intro
 				else
 				{
-					iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata.s_screen[0], 6);
+					iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata->s_screen[0], 6);
 
 					if
 					(
 						// if you are loading any menu of any kind
 						(iVar9 == 0) ||
 						(
-							iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata.s_garage[0], 6),
+							iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata->s_garage[0], 6),
 
 							// if you are loading into adventure character selection screen
 							iVar9 == 0
@@ -235,7 +240,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 						// Either 4P mode or main menu
 						sdata->gGT->numPlyrCurrGame = 4;
 
-						iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata.s_garage[0], 6);
+						iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata->s_garage[0], 6);
 
 						// if you are loading into character selection screen
 						if (iVar9 == 0)
@@ -244,14 +249,14 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 							sdata->gGT->numPlyrCurrGame = 1;
 
 							// Enter Adventure Character Selection
-							sdata.mainMenuState = 4;
+							sdata->mainMenuState = 4;
 						}
 					}
 
 					// if you are not loading menu or adventure character selection
 					else
 					{
-						iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata.s_hub[0], 3);
+						iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata->s_hub[0], 3);
 
 						// if you are loading into adventure map:
 						// any of the hubs: "hub1", "hub2", etc
@@ -276,7 +281,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 						{
 
 							// check to see if you are loading credits
-							iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata.s_credit[0], 6);
+							iVar9 = strncmp(&sdata->gGT->levelName[0], &sdata->s_credit[0], 6);
 
 							if (iVar9 != 0)
 							{
@@ -311,7 +316,7 @@ LAB_80033a70:
 			sdata->gGT->Debug_ToggleNormalSpawn = 1;
 
 			// Set LOD level to 1P level
-			sdata.levelLOD = 1;
+			sdata->levelLOD = 1;
 
 			if
 			(
@@ -319,7 +324,7 @@ LAB_80033a70:
 				((sdata->gGT->gameMode1 & 0x2000) == 0) &&
 				(
 					// set LOD level to 8P level (does this exist??)
-					sdata.levelLOD = 8,
+					sdata->levelLOD = 8,
 
 					// if not loading, and not in time trial
 					(sdata->gGT->gameMode1 & 0x4020000) == 0
@@ -327,7 +332,7 @@ LAB_80033a70:
 			)
 			{
 				// Set LOD level to numPlyrCurrGame
-				sdata.levelLOD = sdata->gGT->numPlyrCurrGame;
+				sdata->levelLOD = sdata->gGT->numPlyrCurrGame;
 			}
 
 			SetPrimMemSize(sdata->gGT);
@@ -346,7 +351,7 @@ LAB_80033a70:
 			{
 
 				// (now, at beginning of mempack)
-				AllocateAllPools( /*sdata->gGT*/ );
+				AllocateAllPools(sdata->gGT);
 
 				return loadingStage + 1;
 			}
@@ -356,7 +361,7 @@ LAB_80033a70:
 			// if XA has not paused yet,
 			// since the request above,
 			// due to IRQ not being hit yet
-			if (sdata.XA_State == 4)
+			if (sdata->XA_State == 4)
 			{
 				// quit, try again next frame
 				return loadingStage;
@@ -514,7 +519,7 @@ DLL221_plus_uVar16:
 			if ((sdata->gGT->gameMode1 & 0x2000) != 0)
 			{
 				// all these are 230 except for adv garage which is 233
-				switch(sdata.mainMenuState)
+				switch(sdata->mainMenuState)
 				{
 					// main menu
 					case 0:
@@ -546,16 +551,16 @@ DLL221_plus_uVar16:
 					MM_JumpTo_Scrapbook(bigfile);
 				}
 			}
-			sdata.driverModel_lowLOD[0] = 0;
-			sdata.driverModel_lowLOD[1] = 0;
-			sdata.driverModel_lowLOD[2] = 0;
-			sdata.ptrMPK = 0;
+			data.driverModel_lowLOD[0] = 0;
+			data.driverModel_lowLOD[1] = 0;
+			data.driverModel_lowLOD[2] = 0;
+			sdata->ptrMPK = 0;
 
 			// game is now loading
-			sdata.load_inProgress = 1;
+			sdata->load_inProgress = 1;
 
 			// LOD level (num players, plus Time Trial flag)
-			LOAD_DriverMPK(bigfile, sdata.levelLOD, &LOAD_Callback_DriverModels);
+			LOAD_DriverMPK(bigfile, sdata->levelLOD, &LOAD_Callback_DriverModels);
 			break;
 		case 5:
 
@@ -564,24 +569,24 @@ DLL221_plus_uVar16:
 
 			// set value of PLYROBJECTLIST, the array of model pointers from MPK that was loaded in loading stage 4
 			// I might be getting this wrong --Super
-			sdata.PLYROBJECTLIST++;
-			if (sdata.ptrMPK == 0)
+			sdata->PLYROBJECTLIST++;
+			if (sdata->ptrMPK == 0)
 			{
-				sdata.PLYROBJECTLIST = 0;
+				sdata->PLYROBJECTLIST = 0;
 			}
 
 			LOAD_GlobalModelPtrs_MPK();
 
 			DecalGlobal_Clear(sdata->gGT);
 
-			if ((sdata.ptrMPK == 0) || (*sdata.ptrMPK == 0))
+			if ((sdata->ptrMPK == 0) || (*(int*)sdata->ptrMPK == 0))
 			{
 				sdata->gGT->unkIconPtr = 0;
 			}
 			else 
 			{
-				DecalGlobal_Store(sdata->gGT);
-				sdata->gGT->unkIconPtr = *sdata.ptrMPK;
+				DecalGlobal_Store(sdata->gGT, *(int*)sdata->ptrMPK);
+				sdata->gGT->unkIconPtr = *(int*)sdata->ptrMPK;
 			}
 
 			// if level is not in range of 0x28 and 0x28+1,
@@ -614,7 +619,7 @@ DLL221_plus_uVar16:
 			}
 
 			// loop through models
-			piVar15 = &sdata.driverModel_lowLOD[0];
+			piVar15 = &data.driverModel_lowLOD[0];
 
 			for (iVar9 = 0; iVar9 < 3; iVar9++)
 			{
@@ -661,7 +666,7 @@ DLL221_plus_uVar16:
 				iVar5 = MEMPACK_AllocMem(iVar9 + iVar12, "HUB ALLOC");
 
 				// Set ptrHubAlloc to pointer that hub will use
-				sdata.ptrHubAlloc = iVar5;
+				sdata->ptrHubAlloc = iVar5;
 
 				// Change active allocation system to #2
 				MEMPACK_SwapPacks(1);
@@ -712,9 +717,9 @@ DLL221_plus_uVar16:
 				MEMPACK_SwapPacks(0);
 
 				// Get amount of free memory in CTR
-				sdata.PatchMem_Size = MEMPACK_GetFreeBytes();
+				sdata->PatchMem_Size = MEMPACK_GetFreeBytes();
 
-				sdata.PatchMem_Ptr = MEMPACK_AllocHighMem(sdata.PatchMem_Size, "Patch Table Memory");
+				sdata->PatchMem_Ptr = MEMPACK_AllocHighMem(sdata->PatchMem_Size, "Patch Table Memory");
 
 				// change active allocation system
 				// Swap 1 and 2 while on adventure map
@@ -722,7 +727,7 @@ DLL221_plus_uVar16:
 			}
 
 			// game is now loading
-			sdata.load_inProgress = 1;
+			sdata->load_inProgress = 1;
 
 			// get VRAM subfile index within BIGFILE,
 			// of the track you want to load
@@ -734,7 +739,7 @@ DLL221_plus_uVar16:
 				sdata->gGT->levelID,
 
 				// LOD of level you want to load
-				sdata.levelLOD, 0
+				sdata->levelLOD, 0
 			);
 
 			// adds VRAM to loading queue
@@ -758,7 +763,7 @@ DLL221_plus_uVar16:
 					iVar9,
 
 					// LOD of level you want to load
-					sdata.levelLOD, 1
+					sdata->levelLOD, 1
 				);
 
 				// adds LEV to loading queue
@@ -775,7 +780,7 @@ DLL221_plus_uVar16:
 					sdata->gGT->levelID,
 
 					// LOD of level you want to load
-					sdata.levelLOD, 2
+					sdata->levelLOD, 2
 				);
 
 				// '1' means readfile
@@ -785,7 +790,7 @@ DLL221_plus_uVar16:
 				pcVar7 = LOAD_Callback_LEV_Adv;
 
 				// HighMem patch table
-				uVar16 = sdata.PatchMem_Ptr;
+				uVar16 = sdata->PatchMem_Ptr;
 			}
 
 			// if Level ID is not something insane load ordinary track
@@ -802,7 +807,7 @@ DLL221_plus_uVar16:
 					iVar9,
 
 					// LOD of level you want to load
-					sdata.levelLOD, 1
+					sdata->levelLOD, 1
 				);
 
 				// 2 for dram
@@ -819,11 +824,14 @@ DLL221_plus_uVar16:
 			break;
 		case 7:
 
-			// Set LEV pointer
-			sdata->gGT->level1 = sdata.ptrLEV_DuringLoading;
+			// get level pointer
+			lev = sdata->ptrLEV_DuringLoading;
 
-			// iVar9 is set to sdata.ptrLEV_DuringLoading at the top of the function
-			sdata->gGT->visMem1 = iVar9->visMem;
+			// Set LEV pointer
+			sdata->gGT->level1 = lev;
+			
+			// iVar9 is set to sdata->ptrLEV_DuringLoading at the top of the function
+			sdata->gGT->visMem1 = lev->visMem;
 
 			// if LEV is valid
 			if (sdata->gGT->level1 != 0)
@@ -834,61 +842,53 @@ DLL221_plus_uVar16:
 
 			DebugFont_Init(sdata->gGT);
 
-			// get level pointer
-			iVar9 = sdata->gGT->level1;
-
 			// if level is not nullptr
-			if (iVar9 != 0)
+			if (lev != 0)
 			{
 				// store array of model pointers in GameTracker
-				INSTANCE_ModelGlobal_Store(sdata->gGT, iVar9->numModels, iVar9->ptrModelsPtrArray);
+				INSTANCE_ModelGlobal_Store(sdata->gGT, lev->numModels, lev->ptrModelsPtrArray);
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(sdata->gGT->level1, "circle");
-				puVar8 = sdata->gGT->level1;
+				uVar16 = DecalGlobal_Find1(lev, "circle");
 				sdata->gGT->stars.unk[2] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(*puVar8, "clod"); // &sdata.s_clod "clod"
-				puVar8 = sdata->gGT->level1;
+				uVar16 = DecalGlobal_Find1(lev, "clod"); // &sdata->s_clod "clod"
 				sdata->gGT->ptrClod = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(*puVar8, "dustpuff");
-				puVar8 = sdata->gGT->level1;
+				uVar16 = DecalGlobal_Find1(lev, "dustpuff");
 				sdata->gGT->ptrDustpuff = uVar16;
 
 				// search for icon by string "Smoke Ring"
-				uVar16 = DecalGlobal_Find1(*puVar8, "smokering");
-				puVar8 = sdata->gGT->level1;
+				uVar16 = DecalGlobal_Find1(lev, "smokering");
 				sdata->gGT->ptrSmoking = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(*puVar8, "sparkle");
+				uVar16 = DecalGlobal_Find1(lev, "sparkle");
 				sdata->gGT->ptrSparkle = uVar16;
 			}
 
 			// if linked list of icons exists
 			if (sdata->gGT->unkIconPtr != 0)
 			{
+				piVar15 = *(u_int *)((u_int)sdata->gGT->unkIconPtr + 4);
+				
 				// search for icon by string
 				//what even are these first arguments? --Super
-				uVar16 = DecalGlobal_Find2(*(u_int *)(sdata->gGT->unkIconPtr + 4), "lightredoff");
-				piVar15 = sdata->gGT->unkIconPtr;
+				uVar16 = DecalGlobal_Find2(piVar15, "lightredoff");
 				sdata->gGT->trafficLightIcon[0] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find2(*(u_int *)(*piVar15 + 4), "lightredon");
-				piVar15 = sdata->gGT->unkIconPtr;
+				uVar16 = DecalGlobal_Find2(piVar15, "lightredon");
 				sdata->gGT->trafficLightIcon[1] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find2(*(u_int *)(*piVar15 + 4), "lightgreenoff");
-				piVar15 = sdata->gGT->unkIconPtr;
+				uVar16 = DecalGlobal_Find2(piVar15, "lightgreenoff");
 				sdata->gGT->trafficLightIcon[2] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find2(*(u_int *)(*piVar15 + 4), "lightgreenon");
+				uVar16 = DecalGlobal_Find2(piVar15, "lightgreenon");
 				sdata->gGT->trafficLightIcon[3] = uVar16;
 			}
 			sdata->gGT->gameMode1_prevFrame = 1;
@@ -904,7 +904,7 @@ DLL221_plus_uVar16:
 			)
 			{
 				// (now, at end of mempack)
-				AllocateAllPools( /*sdata->gGT*/ );
+				AllocateAllPools(sdata->gGT);
 
 				return loadingStage + 1;
 			}
@@ -914,7 +914,7 @@ DLL221_plus_uVar16:
 			if (sdata->gGT->podiumRewardID != 0)
 			{
 				// clear all podium model pointers
-				puVar8 = &sdata.podiumModel_podiumStands;
+				puVar8 = &data.podiumModel_podiumStands;
 				do
 				{
 					*puVar8 = 0;
@@ -930,7 +930,7 @@ DLL221_plus_uVar16:
 				MEMPACK_SwapPacks(3 - sdata->gGT->activeMempackIndex);
 
 				// game is now loading
-				sdata.load_inProgress = 1;
+				sdata->load_inProgress = 1;
 
 				// add something to loading queue
 				// '3' for vram
@@ -952,7 +952,7 @@ DLL221_plus_uVar16:
 					// add something to loading queue
 					// '2' for dram
 					// the hudFlags pointer dereferencing here is scuffed --Super
-					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)hudFlags - 0x7e) * 2 + 0x16d, &sdata.podiumModel_firstPlace, 0xfffffffe);
+					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)hudFlags - 0x7e) * 2 + 0x16d, &data.podiumModel_firstPlace, 0xfffffffe);
 				}
 
 				// podium second place exists
@@ -960,7 +960,7 @@ DLL221_plus_uVar16:
 				{
 					// adds to loading queue
 					// '2' for dram
-					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)(u_char)sdata->gGT->podium_modelIndex_Second - 0x7e) * 2 + 0x18d, &sdata.podiumModel_secondPlace, 0xfffffffe);
+					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)(u_char)sdata->gGT->podium_modelIndex_Second - 0x7e) * 2 + 0x18d, &data.podiumModel_secondPlace, 0xfffffffe);
 				}
 			
 				// podium third place exists
@@ -968,12 +968,12 @@ DLL221_plus_uVar16:
 				{
 					// add something to loading queue
 					// '2' for dram
-					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)(u_char)sdata->gGT->podium_modelIndex_Third - 0x7e) * 2 + 0x18d, &sdata.podiumModel_thirdPlace, 0xfffffffe);
+					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)(u_char)sdata->gGT->podium_modelIndex_Third - 0x7e) * 2 + 0x18d, &data.podiumModel_thirdPlace, 0xfffffffe);
 				}
 
 				// add TAWNA to loading queue
 				// '2' for dram
-				LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)(u_char)sdata->gGT->podium_modelIndex_tawna - 0x8f) * 2 + 0x1ad, &sdata.podiumModel_tawna, 0xfffffffe);
+				LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)(u_char)sdata->gGT->podium_modelIndex_tawna - 0x8f) * 2 + 0x1ad, &data.podiumModel_tawna, 0xfffffffe);
 
 				// -0x7d = 0x83
 				// 0x83 - 0x7e = 5 (dingo)
@@ -981,7 +981,7 @@ DLL221_plus_uVar16:
 				{
 					// add "DingoFire" to loading queue
 					// '2' for dram
-					LOAD_AppendQueue(bigfile, 2, iVar9 + 0x1bd, &sdata.podiumModel_dingoFire, 0xfffffffe);
+					LOAD_AppendQueue(bigfile, 2, iVar9 + 0x1bd, &data.podiumModel_dingoFire, 0xfffffffe);
 				}
 
 				// add Podium
@@ -991,6 +991,7 @@ DLL221_plus_uVar16:
 				// Disable LEV instances on Adv Hub, for podium scene
 				sdata->gGT->gameMode2 = sdata->gGT->gameMode2 | 0x100;
 			}
+			
 			break;
 		case 8:
 
@@ -1007,7 +1008,7 @@ DLL221_plus_uVar16:
 				)
 			)
 			{
-				piVar15 = &sdata.podiumModel_firstPlace;
+				piVar15 = &data.podiumModel_firstPlace;
 
 				// for iVar9 = 0; iVar9 < 8; iVar9++
 				do
@@ -1092,7 +1093,7 @@ LAB_800346b0:
 			if (iVar9 - 0x2aU < 2) goto LAB_800346b0;
 			break;
 		case 9:
-			if (sdata.XA_State != 2)
+			if (sdata->XA_State != 2)
 			{
 
 				if
@@ -1142,7 +1143,7 @@ LAB_800346b0:
 				sdata->gGT->BoxSceneTimer = 0;
 
 				// deactivate pause
-				ElimBG_Deactivate();
+				ElimBG_Deactivate(sdata->gGT);
 
 				loadingStage = -2;
 			}
