@@ -551,24 +551,28 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				// store array of model pointers in GameTracker
 				INSTANCE_ModelGlobal_Store(gGT, lev->numModels, lev->ptrModelsPtrArray);
 
+				// == must use RDATA strings ==
+				// they have bigger sizes that the 
+				// search algorithm depends on
+
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(lev, "circle");
+				uVar16 = DecalGlobal_Find1(lev, rdata.s_circle);
 				gGT->stars.unk[2] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(lev, "clod"); // &sdata->s_clod "clod"
+				uVar16 = DecalGlobal_Find1(lev, rdata.s_clod);
 				gGT->ptrClod = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(lev, "dustpuff");
+				uVar16 = DecalGlobal_Find1(lev, rdata.s_dustpuff);
 				gGT->ptrDustpuff = uVar16;
 
 				// search for icon by string "Smoke Ring"
-				uVar16 = DecalGlobal_Find1(lev, "smokering");
+				uVar16 = DecalGlobal_Find1(lev, rdata.s_smokering);
 				gGT->ptrSmoking = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(lev, "sparkle");
+				uVar16 = DecalGlobal_Find1(lev, rdata.s_sparkle);
 				gGT->ptrSparkle = uVar16;
 			}
 
@@ -579,19 +583,19 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				
 				// search for icon by string
 				//what even are these first arguments? --Super
-				uVar16 = DecalGlobal_Find2(piVar15, "lightredoff");
+				uVar16 = DecalGlobal_Find2(piVar15, rdata.s_lightredoff);
 				gGT->trafficLightIcon[0] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find2(piVar15, "lightredon");
+				uVar16 = DecalGlobal_Find2(piVar15, rdata.s_lightredon);
 				gGT->trafficLightIcon[1] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find2(piVar15, "lightgreenoff");
+				uVar16 = DecalGlobal_Find2(piVar15, rdata.s_lightgreenoff);
 				gGT->trafficLightIcon[2] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find2(piVar15, "lightgreenon");
+				uVar16 = DecalGlobal_Find2(piVar15, rdata.s_lightgreenon);
 				gGT->trafficLightIcon[3] = uVar16;
 			}
 			gGT->gameMode1_prevFrame = 1;
