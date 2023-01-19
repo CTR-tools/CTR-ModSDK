@@ -7892,9 +7892,9 @@ struct Data
 	// 0x8008454C
 	// 1P, 2P, 4P
 	// LEV 0 - 0x19 (0x1c for alignment)
-	char primMem_SizePerLEV_1P[0x1c];
-	char primMem_SizePerLEV_2P[0x1c];
-	char primMem_SizePerLEV_4P[0x1c];
+	unsigned char primMem_SizePerLEV_1P[0x1c];
+	unsigned char primMem_SizePerLEV_2P[0x1c];
+	unsigned char primMem_SizePerLEV_4P[0x1c];
 
 	// 0x800845a0
 	// trigonometry approximation table (1kb)

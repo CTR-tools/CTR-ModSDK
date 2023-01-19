@@ -35,7 +35,7 @@ u_long * DECOMP_LOAD_ReadFile_NoCallback(char *fileString, u_long *bufAddress, u
 		(
 			(bufAddress == (u_long *)0x0) &&
 			(
-				buf = (u_long *)MEMPACK_AllocMem(Cdl.size + 0x7ff & 0xfffff800, fileString),
+				buf = (u_long *)MEMPACK_AllocMem(Cdl.size + 0x7ff & 0xfffff800), // fileString
 				// if allocation failed
 				buf == (u_long *)0x0
 			)

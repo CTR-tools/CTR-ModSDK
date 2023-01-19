@@ -32,11 +32,11 @@ void CseqMusic_StopAll();
 void Music_LoadBanks();
 u_int Music_AsyncParseBanks();
 void Cutscene_VolumeRestore();
-void* MEMPACK_AllocMem(int allocSize, char* name);
+void* MEMPACK_AllocMem(int allocSize);
 void MEMPACK_NewPack_StartEnd(void* start, int size);
 u_int LOAD_GetAdvPackIndex();
 int MEMPACK_GetFreeBytes();
-void* MEMPACK_AllocHighMem(int allocSize, char* name);
+void* MEMPACK_AllocHighMem(int allocSize);
 void LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, unsigned int callback);
 void DebugFont_Init(struct GameTracker* gGT);
 void INSTANCE_ModelGlobal_Store(struct GameTracker* gGT, int param_2, int* param_3);
@@ -90,6 +90,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	}
 	
 	levelID = gGT->levelID;
+	printf("%d\n", loadingStage);
 
 	switch(loadingStage)
 	{
@@ -250,8 +251,10 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				sdata->levelLOD = 8;
 			}
 			
-			SetPrimMemSize(gGT);
-			SetOTMemSize(gGT);
+			void DECOMP_SetPrimMemSize(void* gGT);
+			void DECOMP_SetOTMemSize(void* gGT);
+			DECOMP_SetPrimMemSize(gGT);
+			DECOMP_SetOTMemSize(gGT);
 
 			// if cutscene, adventure arena, or credits
 			if
@@ -443,7 +446,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				}
 
 				// Allocate room for LEV swapping
-				iVar5 = MEMPACK_AllocMem(iVar9 + iVar12, "HUB ALLOC");
+				iVar5 = MEMPACK_AllocMem(iVar9 + iVar12); // "HUB ALLOC"
 				sdata->ptrHubAlloc = iVar5;
 
 				// Change active allocation system to #2
@@ -485,7 +488,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				// so the pointer maps dont bloat subpacks
 				MEMPACK_SwapPacks(0);
 				sdata->PatchMem_Size = MEMPACK_GetFreeBytes();
-				sdata->PatchMem_Ptr = MEMPACK_AllocHighMem(sdata->PatchMem_Size, "Patch Table Memory");
+				sdata->PatchMem_Ptr = MEMPACK_AllocHighMem(sdata->PatchMem_Size); //, "Patch Table Memory");
 
 				// make all futuere allocations in subpacks
 				MEMPACK_SwapPacks(gGT->activeMempackIndex);

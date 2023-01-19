@@ -39,7 +39,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 		data.currSlot.flags = data.currSlot.flags | 1;
 
 		// MEMPACK_AllocMem
-		buf = (u_long *)MEMPACK_AllocMem(*size + 0x7ffU & 0xfffff800, &sdata->s_FILE[0]);
+		buf = (u_long *)MEMPACK_AllocMem(*size + 0x7ffU & 0xfffff800); // "FILE"
 
 		// if allocation failed
 		if (buf == (u_long *)0x0)
