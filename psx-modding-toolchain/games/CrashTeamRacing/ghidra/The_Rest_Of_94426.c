@@ -62118,20 +62118,39 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
       iVar17 = *(int *)(puVar13 + 4);
 	  
 	  // if in hitbox
-      if (((iVar6 >> 0x10) - iVar12 < 1) &&
-         (*(int *)(iVar5 + 0xd4) = iVar6, (short)iVar6 - iVar11 < 1)) 
+      if (
+			((iVar6 >> 0x10) - iVar12 < 1) &&
+			(
+
+				// 1f8000d4 = minPosX
+				// 1f8000d6 = minPosY
+				*(int *)(iVar5 + 0xd4) = iVar6, 
+				
+				(short)iVar6 - iVar11 < 1
+			)
+		  ) 
 	  {
 
 		// maxPos y,z
 		iVar6 = *(int *)(puVar13 + 6);
 
 		// if in hitbox
-		if ((((iVar8 - (iVar17 >> 0x10) < 1) && ((int)(short)iVar17 - (int)sVar2 < 1)) &&
-            (iVar10 - (iVar6 >> 0x10) < 1)) &&
-           (*(int *)(iVar5 + 0xd8) = iVar17, iVar9 - (short)iVar6 < 1)) 
+		if (
+				(
+					((iVar8 - (iVar17 >> 0x10) < 1) && ((int)(short)iVar17 - (int)sVar2 < 1)) &&
+					(iVar10 - (iVar6 >> 0x10) < 1)
+				) &&
+           
+				// 1f8000d8 = minPosZ
+				// 1f8000da = maxPosX
+				(*(int *)(iVar5 + 0xd8) = iVar17, iVar9 - (short)iVar6 < 1)
+			) 
 		{
-		  // record childID
+		  // 1f8000dc = maxPosY
+		  // 1f8000de = maxPosZ
           *(int *)(iVar5 + 0xdc) = iVar6;
+		  
+		  // record childID
           *(undefined2 *)(iVar5 + 0xd0) = (short)(uVar14 >> 0x10);
           
 		  // advance recording
@@ -62182,8 +62201,8 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		// 80070284():
 		//   $t9 = 80070290
 		//   80070330():
-		//     $gp = 1f8000d4 + (lwr)1f8000da
-		//     $fp = 1f8000de
+		//     $gp = 1f8000d4 + (lwr)1f8000da (minPosX+maxPosX, minPosY)
+		//     $fp = 1f8000de (maxPosY)
 		//     80070290():
 		//       ldv0(gp, gp, fp, fp)
 		//       t9 = result
@@ -62192,8 +62211,8 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		
 		// lw $s7, deref(1f8000B0), (c110->0xd4) (80070340)
 		// $t8 = 0x8
-		// $gp = 1f8000d4
-		// $fp = 1f8000de
+		// $gp = 1f8000d4 (minPosX, minPosY)
+		// $fp = 1f8000de (maxPosZ)
 		// 80070290();
 		// which then returns at the IF
 		iVar5 = FUN_80070284();
@@ -62201,8 +62220,8 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		
 		// lw $s7, deref(1f8000B4), (c110->0xd8) (8007035C)
 		// $t8 = 0x10
-		// $gp = 1f8000d4 + (lwr)1f8000dd
-		// $fp = 1f8000d8
+		// $gp = 1f8000d4 + (lwr)1f8000dd (minPosX, minPosY+maxPosY)
+		// $fp = 1f8000d8 (minPosZ)
 		// 80070290();
 		// which then returns at the IF
 		iVar5 = FUN_80070284();
@@ -62210,8 +62229,8 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		
 		// lw $s7, deref(1f8000B8), (c110->0xdc) (8007036C)
 		// $t8 = 0x18
-		// $gp = 1f8000d4 + (lwr)1f8000da
-		// $fp = 1f8000d8
+		// $gp = 1f8000d4 + (lwr)1f8000da (minPosX+maxPosX, minPosY)
+		// $fp = 1f8000d8 (minPosZ)
 		// 80070290();
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
