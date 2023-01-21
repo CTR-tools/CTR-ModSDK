@@ -61994,7 +61994,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
   iVar12 = (int)*(short *)(param_3 + 0xf0);
   sVar2 = *(short *)(param_3 + 0xf2);
   
-  // before jump pointers, after matrix (all matrix stuff)
+  // before jump pointers, after matrix (all frustum stuff)
   _DAT_1f800060 = *(undefined4 *)(param_3 + 0xa8);
   DAT_1f800064 = *(undefined4 *)(param_3 + 0xac);
   _DAT_1f800068 = *(undefined4 *)(param_3 + 0xb0);
