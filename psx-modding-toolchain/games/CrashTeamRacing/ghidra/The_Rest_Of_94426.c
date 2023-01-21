@@ -62161,10 +62161,11 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		
 
 		// FUN_80070284:
-		// 	li $t9 80070290 (return after JR)
+		// 	li $t9 80070290
 		//	jr $s7 (800703XX)
 		//  === (at s7) ===
-		//	li $gp 1f8000xx (depends on which s7 you jump to)
+		//  li $fp deref(1f8000xx) -- depends which s7
+		//	li $gp deref(1f8000xx) -- depends which s7
 		//	jr $t9 (80070290)
 		
 		
@@ -62304,14 +62305,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 
 // part of FindVisData
 void FUN_80070284(void)
-{
-	// jr to s7,
-	// then the end of the function at s7 jumps to t9,
-	// which is set here, 80070290 (next function after this)
-	
-	// s7 can be 80070308 to 8007037c,
-	// each is only 3 instructions, one of which jumps to t9
-	
+{	
         80070284 07 80 19 3c     lui        t9,0x8007
         80070288 08 00 e0 02     jr         s7
         8007028c 90 02 39 37     _ori       t9,t9,0x290
@@ -62328,17 +62322,14 @@ void FUN_80070290(void)
   int in_t8;
   undefined4 unaff_s8;
 
-  // in_at is a scratchpad pointer
-  iVar1 = *(int *)(in_t8 + in_at + 100);
-
   // $gp is overwritten temporarily
   // by hand-written assembly
   gte_ldVXY0($gp);
 
   gte_ldVZ0(unaff_s8);
-  gte_ldL11L12(*(undefined4 *)(in_t8 + in_at + 0x60));
-  gte_ldL13L21(iVar1);
-  gte_ldRBK((iVar1 >> 0x10) * -2);
+  gte_ldL11L12(*(int*)(1f800060+in_t8));
+  gte_ldL13L21(*(int*)(1f800064+in_t8) & 0xffff);
+  gte_ldRBK((*(int*)(1f800064+in_t8) >> 0x10) * -2);
   gte_llv0bk();
   gte_stIR1();
   return;
