@@ -62060,6 +62060,8 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 	  if (
 			((iVar6 >> 0x10) - iVar12 < 1) &&
 			(
+				// 1f8000d4 = minPosX
+				// 1f8000d6 = minPosY
 				*(int *)(iVar5 + 0xd4) = iVar6, 
 				(short)iVar6 - iVar11 < 1
 			)
@@ -62079,13 +62081,19 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 				(iVar10 - (iVar6 >> 0x10) < 1)
 			) &&
 			(
-				*(int *)(iVar5 + 0xd8) = iVar17, 
+				// 1f8000d8 = minPosZ
+				// 1f8000da = maxPosX
+				*(int *)(iVar5 + 0xd8) = iVar17,
+				
 				iVar9 - (short)iVar6 < 1
 			)
 		   ) 
 		{
-		  // record childID
+		  // 1f8000dc = maxPosY
+		  // 1f8000de = maxPosZ
           *(int *)(iVar5 + 0xdc) = iVar6;
+		  
+		  // record childID
           *(undefined2 *)(iVar5 + 0xd0) = (short)uVar14;
           
 		  // advance recording
