@@ -62372,8 +62372,7 @@ void FUN_80070290(void)
   int iVar1;
   int in_t8;
 
-  // $gp is overwritten temporarily
-  // by hand-written assembly
+  // point on VisData node hitbox
   gte_ldVXY0($gp);
   gte_ldVZ0(&fp);
   
