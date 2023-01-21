@@ -3441,8 +3441,14 @@ struct Camera110
 	// 0xB8 - plane3
 	// 0xC0 - plane4
 
-	// 0xA8 to 0xF2, all set in
-	char data_A8_F4[0x4C];
+	// 0xA8
+	char frustumData[0x28];
+	
+	// 0xD0
+	int RenderListJmpIndex[6];
+	
+	// 0xE8
+	struct BoundingBox bbox;
 
 	// 0xF4
 	// u_long* is the type in the psn00b header
