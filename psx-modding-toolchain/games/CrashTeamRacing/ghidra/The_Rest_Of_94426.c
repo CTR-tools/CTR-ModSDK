@@ -62196,12 +62196,12 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		//	jr $t9 (80070290)
 		
 		
-		// lw $s7, deref(1f8000AC), (c110->0xd0) (80070330)
+		// lw $s7, deref(1f8000AC), (1f800084[c110->0xd0]) (80070330)
 		// $t8 = 0x0
 		// 80070284():
 		//   $t9 = 80070290
 		//   80070330():
-		//     $gp = 1f8000d4 + (lwr)1f8000da (minPosX+maxPosX, minPosY)
+		//     $gp = 1f8000d4 + (lwr)1f8000da (maxPosX, minPosY)
 		//     $fp = 1f8000de (maxPosY)
 		//     80070290():
 		//       ldv0(gp, gp, fp, fp)
@@ -62209,7 +62209,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
-		// lw $s7, deref(1f8000B0), (c110->0xd4) (80070340)
+		// lw $s7, deref(1f8000B0), (1f800084[c110->0xd4]) (80070340)
 		// $t8 = 0x8
 		// $gp = 1f8000d4 (minPosX, minPosY)
 		// $fp = 1f8000de (maxPosZ)
@@ -62218,18 +62218,18 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
-		// lw $s7, deref(1f8000B4), (c110->0xd8) (8007035C)
+		// lw $s7, deref(1f8000B4), (1f800084[c110->0xd8]) (8007035C)
 		// $t8 = 0x10
-		// $gp = 1f8000d4 + (lwr)1f8000dd (minPosX, minPosY+maxPosY)
+		// $gp = 1f8000d4 + (lwr)1f8000dd (minPosX, maxPosY)
 		// $fp = 1f8000d8 (minPosZ)
 		// 80070290();
 		// which then returns at the IF
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
-		// lw $s7, deref(1f8000B8), (c110->0xdc) (8007036C)
+		// lw $s7, deref(1f8000B8), (1f800084[c110->0xdc]) (8007036C)
 		// $t8 = 0x18
-		// $gp = 1f8000d4 + (lwr)1f8000da (minPosX+maxPosX, minPosY)
+		// $gp = 1f8000d4 + (lwr)1f8000da (maxPosX, minPosY)
 		// $fp = 1f8000d8 (minPosZ)
 		// 80070290();
 		iVar5 = FUN_80070284();
@@ -62255,7 +62255,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 			  )
 			) 
 		  {
-			// lw $s7, deref(1f8000C0), (c110->0xe8)  (8007037C)
+			// lw $s7, deref(1f8000C0), (1f800084[c110->0xe4])  (8007037C)
 			
 			// 80070308():
 			//   t9 = ra
