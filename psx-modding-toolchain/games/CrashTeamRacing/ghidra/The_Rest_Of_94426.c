@@ -62174,6 +62174,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		// $gp = 1f8000d4 + (lwr)1f8000da
 		// $fp = 1f8000de
 		// 80070290();
+		// which then returns at the IF
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
@@ -62182,6 +62183,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		// $gp = 1f8000d4
 		// $fp = 1f8000de
 		// 80070290();
+		// which then returns at the IF
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
@@ -62190,6 +62192,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		// $gp = 1f8000d4 + (lwr)1f8000dd
 		// $fp = 1f8000d8
 		// 80070290();
+		// which then returns at the IF
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
@@ -62332,17 +62335,20 @@ void FUN_80070290(void)
   int in_at;
   int iVar1;
   int in_t8;
-  undefined4 unaff_s8;
 
   // $gp is overwritten temporarily
   // by hand-written assembly
   gte_ldVXY0($gp);
-
-  gte_ldVZ0(unaff_s8);
+  gte_ldVZ0(&fp);
+  
+  // camera frustum stuff, cam->0xa8 and beyond
   gte_ldL11L12(*(int*)(1f800060+in_t8));
   gte_ldL13L21(*(int*)(1f800064+in_t8) & 0xffff);
   gte_ldRBK((*(int*)(1f800064+in_t8) >> 0x10) * -2);
+  
   gte_llv0bk();
+  
+  // store result in $t9
   gte_stIR1();
   return;
 }
