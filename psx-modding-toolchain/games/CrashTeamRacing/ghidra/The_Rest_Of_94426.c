@@ -62159,16 +62159,13 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		// VisData flag
 		uVar3 = *puVar13;
 		
-		
-		
+
 		// FUN_80070284:
 		// 	li $t9 80070290 (return after JR)
-		//	jr $s7
-		
-		// FUN $s7 (800703XX)
-		//	li $gp 1f8000xx
-		//	jr $t9
-		
+		//	jr $s7 (800703XX)
+		//  === (at s7) ===
+		//	li $gp 1f8000xx (depends on which s7 you jump to)
+		//	jr $t9 (80070290)
 		
 		
 		// lw $s7, deref(1f8000AC), (c110->0xd0)
