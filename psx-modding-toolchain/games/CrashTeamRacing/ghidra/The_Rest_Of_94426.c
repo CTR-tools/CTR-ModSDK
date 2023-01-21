@@ -62230,13 +62230,18 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		  {
 			// lw $s7, deref(1f8000C0), (c110->0xe8)  (8007037C)
 			
-			// t9 = ra
-			// jr s7
+			// 80070308():
+			//   t9 = ra
+			//   jr s7
+			//   8007037C():
+			//     gp = 1f8000d4
+			//     fp = 1f8000d8
+			//     jr t9 (fake ra)
             iVar5 = FUN_80070308();
 
 			// $gp overwritten temporarily
 			gte_ldVXY0($gp);
-            gte_ldVZ0(unaff_s8);
+            gte_ldVZ0($fp);
 
 			// RTPS - Perspective Transformation (single)
 			gte_rtps();
