@@ -62024,6 +62024,9 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
   DAT_1f800054 = (undefined *)register0x00000074;
   _DAT_1f800058 = unaff_s8;
   DAT_1f80005c = unaff_retaddr;
+  
+  // loop infinitely until scratchpad 
+  // list is built and emptied
   do
   {
 	// Assume VisData branch, not leaf
@@ -62125,54 +62128,84 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
       }
     }
 	
-	
-    while( true ) {
-      if (iVar5 == iVar4) {
-        return *(undefined4 *)(iVar4 + 0x80);
-      }
-
-	  // get child VisData index (and flags)
-      psVar1 = (short *)(iVar5 + 0xc0);
-
-      iVar5 = iVar5 + -0x10;
-
-	  // get just the index
-      uVar14 = (int)*psVar1 & 0x3fff;
-
-	  // pointer to VisData node
-      puVar13 = param_1 + uVar14 * 0x10;
-
-	  // If this is not a leaf node, break
-	  if (((int)*psVar1 & 0x4000U) == 0) break;
-
-	  // as long as we have leaf nodes, keep going...
-
-	  // VisData flag
-	  uVar3 = *puVar13;
-
-      iVar5 = FUN_80070284();
-      if ((((int)pcVar19 < 1) && (iVar5 = FUN_80070284(), (int)pcVar19 < 1)) &&
-         (iVar5 = FUN_80070284(), (int)pcVar19 < 1)) {
-        iVar5 = FUN_80070284();
-        if ((int)pcVar19 < 1) 
-		{
-		  // VisDataList_Water
-          piVar18 = (int *)(param_4 + 0x24);
+	// loop infinitely until last leaf node
+    while( true ) 
+	{
+		// if scratchpad list empty, quit function
+		if (iVar5 == iVar4) {
+		return *(undefined4 *)(iVar4 + 0x80);
+		}
+		
+		// get child VisData index (and flags)
+		psVar1 = (short *)(iVar5 + 0xc0);
+		
+		iVar5 = iVar5 + -0x10;
+		
+		// get just the index
+		uVar14 = (int)*psVar1 & 0x3fff;
+		
+		// pointer to VisData node
+		puVar13 = param_1 + uVar14 * 0x10;
+		
+		// If this is not a leaf node, break
+		if (((int)*psVar1 & 0x4000U) == 0) break;
+		
+		// as long as we have leaf nodes, keep going...
+		
+		// VisData flag
+		uVar3 = *puVar13;
+		
+		
+		
+		// FUN_80070284:
+		// 	li $t9 80070290 (return after JR)
+		//	jr $s7
+		
+		// FUN $s7 (800703XX)
+		//	li $gp 1f8000xx
+		//	jr $t9
+		
+		
+		
+		// lw $s7, deref(1f8000AC)
+		// $t8 = 0x0
+		iVar5 = FUN_80070284();
+		if ($t9 > 0) goto CheckNextLeaf;
+		
+		// lw $s7, deref(1f8000B0)
+		// $t8 = 0x8
+		iVar5 = FUN_80070284();
+		if ($t9 > 0) goto CheckNextLeaf;
+		
+		// lw $s7, deref(1f8000B4)
+		// $t8 = 0x10
+		iVar5 = FUN_80070284();
+		if ($t9 > 0) goto CheckNextLeaf;
+		
+		// lw $s7, deref(1f8000B8)
+		// $t8 = 0x18
+		iVar5 = FUN_80070284();
+		if ($t9 > 0) goto CheckNextLeaf;
+		
+		
+		// == Leaf Node ==
+		
+		
+		// VisDataList_Water
+        piVar18 = (int *)(param_4 + 0x24);
 		  
-          if (
-				(
-				
-				// is VisData flag is not water
-				(uVar3 & 2) == 0) && 
-				
-				(
-					// VisDataList_DynamicSubdiv
-					piVar18 = (int *)(param_4 + 0xc), 
-					
-					// if forcedDynamicSubdiv is disabled
-					(uVar3 & 0x20) == 0
-				)
-			  ) 
+        if (
+			  // is VisData flag is not water	
+			  ((uVar3 & 2) == 0) && 
+			  
+			  (
+			  	// VisDataList_DynamicSubdiv
+			  	piVar18 = (int *)(param_4 + 0xc), 
+			  	
+			  	// if forcedDynamicSubdiv is disabled
+			  	(uVar3 & 0x20) == 0
+			  )
+			) 
 		  {
             iVar5 = FUN_80070308();
 
@@ -62253,9 +62286,13 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 
 		  // increment counter
 		  *(int *)(iVar4 + 0x80) = iVar6 + 1;
-        }
-      }
-    }
+    
+	// loop infinitely until last leaf node
+	CheckNextLeaf:
+	}
+      
+  // loop infinitely until scratchpad 
+  // list is built and emptied
   } while( true );
 }
 
