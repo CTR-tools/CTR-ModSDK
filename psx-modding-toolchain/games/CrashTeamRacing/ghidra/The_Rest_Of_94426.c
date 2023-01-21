@@ -62207,6 +62207,10 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 			  )
 			) 
 		  {
+			// lw $s7, deref(1f8000C0)
+			  
+			// t9 = ra
+			// jr s7
             iVar5 = FUN_80070308();
 
 			// $gp overwritten temporarily
