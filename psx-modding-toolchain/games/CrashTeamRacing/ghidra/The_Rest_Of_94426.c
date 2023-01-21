@@ -61986,13 +61986,15 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
   // distance to screen
   gte_ldH(*(undefined4 *)(param_3 + 0x18));
 
-  // all this is frustum related
+  // after jump pointers, before ptrOT
   iVar8 = (int)*(short *)(param_3 + 0xe8);
   iVar9 = (int)*(short *)(param_3 + 0xea);
   iVar10 = (int)*(short *)(param_3 + 0xec);
   iVar11 = (int)*(short *)(param_3 + 0xee);
   iVar12 = (int)*(short *)(param_3 + 0xf0);
   sVar2 = *(short *)(param_3 + 0xf2);
+  
+  // before jump pointers, after matrix
   _DAT_1f800060 = *(undefined4 *)(param_3 + 0xa8);
   DAT_1f800064 = *(undefined4 *)(param_3 + 0xac);
   _DAT_1f800068 = *(undefined4 *)(param_3 + 0xb0);
@@ -62001,6 +62003,8 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
   DAT_1f800074 = *(undefined4 *)(param_3 + 0xbc);
   _DAT_1f800078 = *(undefined4 *)(param_3 + 0xc0);
   DAT_1f80007c = *(undefined4 *)(param_3 + 0xc4);
+  
+  // all jump pointers
   DAT_1f8000ac = (&DAT_1f800084)[*(int *)(param_3 + 0xd0)];
   _DAT_1f8000b0 = (&DAT_1f800084)[*(int *)(param_3 + 0xd4)];
   DAT_1f8000b4 = (&DAT_1f800084)[*(int *)(param_3 + 0xd8)];
