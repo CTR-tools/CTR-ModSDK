@@ -62049,18 +62049,40 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 	  // minPos z, maxPos x
 	  iVar17 = *(int *)(puVar13 + 4);
 
-	  if (((iVar6 >> 0x10) - iVar12 < 1) &&
-         (*(int *)(iVar5 + 0xd4) = iVar6, (short)iVar6 - iVar11 < 1)) {
+	  // if inside hitbox
+	  if (
+			((iVar6 >> 0x10) - iVar12 < 1) &&
+			(
+				*(int *)(iVar5 + 0xd4) = iVar6, 
+				(short)iVar6 - iVar11 < 1
+			)
+		  ) 
+	  {
 
 		// maxPos y,z
 		iVar6 = *(int *)(puVar13 + 6);
 
-		if ((((iVar8 - (iVar17 >> 0x10) < 1) && ((int)(short)iVar17 - (int)sVar2 < 1)) &&
-            (iVar10 - (iVar6 >> 0x10) < 1)) &&
-           (*(int *)(iVar5 + 0xd8) = iVar17, iVar9 - (short)iVar6 < 1)) {
+		// if still in hitbox
+		if (
+			(
+				(
+					(iVar8 - (iVar17 >> 0x10) < 1) && 
+					((int)(short)iVar17 - (int)sVar2 < 1)
+				) &&
+				(iVar10 - (iVar6 >> 0x10) < 1)
+			) &&
+			(
+				*(int *)(iVar5 + 0xd8) = iVar17, 
+				iVar9 - (short)iVar6 < 1
+			)
+		   ) 
+		{
+		  // record childID
           *(int *)(iVar5 + 0xdc) = iVar6;
           *(undefined2 *)(iVar5 + 0xd0) = (short)uVar14;
-          iVar5 = iVar5 + 0x10;
+          
+		  // advance recording
+		  iVar5 = iVar5 + 0x10;
         }
       }
     }
