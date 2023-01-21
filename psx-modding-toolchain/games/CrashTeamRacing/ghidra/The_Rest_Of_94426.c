@@ -62171,10 +62171,14 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		
 		// lw $s7, deref(1f8000AC), (c110->0xd0) (80070330)
 		// $t8 = 0x0
-		// $gp = 1f8000d4 + (lwr)1f8000da
-		// $fp = 1f8000de
-		// 80070290();
-		// which then returns at the IF
+		// 80070284():
+		//   $t9 = 80070290
+		//   80070330():
+		//     $gp = 1f8000d4 + (lwr)1f8000da
+		//     $fp = 1f8000de
+		//     80070290():
+		//       ldv0(gp, gp, fp, fp)
+		//       t9 = result
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
