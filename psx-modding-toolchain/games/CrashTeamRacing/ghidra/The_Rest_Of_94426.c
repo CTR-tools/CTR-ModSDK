@@ -62171,22 +62171,22 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		
 		
 		
-		// lw $s7, deref(1f8000AC)
+		// lw $s7, deref(1f8000AC), (c110->0xd0)
 		// $t8 = 0x0
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
-		// lw $s7, deref(1f8000B0)
+		// lw $s7, deref(1f8000B0), (c110->0xd4)
 		// $t8 = 0x8
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
-		// lw $s7, deref(1f8000B4)
+		// lw $s7, deref(1f8000B4), (c110->0xd8)
 		// $t8 = 0x10
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
-		// lw $s7, deref(1f8000B8)
+		// lw $s7, deref(1f8000B8), (c110->0xdc)
 		// $t8 = 0x18
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
@@ -62211,7 +62211,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 			  )
 			) 
 		  {
-			// lw $s7, deref(1f8000C0)
+			// lw $s7, deref(1f8000C0), (c110->0xe8)
 			
 			// t9 = ra
 			// jr s7
