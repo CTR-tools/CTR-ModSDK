@@ -707,6 +707,12 @@ struct NavHeader
 	struct NavFrame frame[1];
 };
 
+struct BoundingBox
+{
+	short min[3];
+	short max[3];
+};
+
 struct BspSearchVertex
 {
 	// 0x0
@@ -3797,12 +3803,6 @@ struct DB
 
   // 0x90
   struct OTMem otMem;
-};
-
-struct BoundingBox
-{
-	short min[3];
-	short max[3];
 };
 
 struct QuadBlock

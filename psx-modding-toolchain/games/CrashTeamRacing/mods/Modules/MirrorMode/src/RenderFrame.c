@@ -155,6 +155,9 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	RenderSubmit(gGT);
 }
 
+// warning, this increases the size of RenderFrame.c,
+// making it overwrite the RacingWheel_Config functions,
+// but not like anybody uses those anyway
 void DF_ParseOT(u_long* param_1, unsigned int end, int startX, int endX)
 {
   u_int* header;
@@ -229,9 +232,7 @@ void DF_ParseOT(u_long* param_1, unsigned int end, int startX, int endX)
       break;
 
 	// 0x24 PolyFT3
-	// 0x30 PolyG3
     case 0x24:
-    case 0x30:
       ((POLY_FT3*)header)->x0 = (endX - ((POLY_FT3*)header)->x0) + startX;
       ((POLY_FT3*)header)->x1 = (endX - ((POLY_FT3*)header)->x1) + startX;
       ((POLY_FT3*)header)->x2 = (endX - ((POLY_FT3*)header)->x2) + startX;
@@ -247,6 +248,30 @@ void DF_ParseOT(u_long* param_1, unsigned int end, int startX, int endX)
 	  backup = ((POLY_FT3*)header)->v0;
 	  ((POLY_FT3*)header)->v0 = ((POLY_FT3*)header)->v1;
 	  ((POLY_FT3*)header)->v1 = backup;
+      break;
+	  
+	// 0x30 PolyG3
+    case 0x30:
+      ((POLY_G3*)header)->x0 = (endX - ((POLY_G3*)header)->x0) + startX;
+      ((POLY_G3*)header)->x1 = (endX - ((POLY_G3*)header)->x1) + startX;
+      ((POLY_G3*)header)->x2 = (endX - ((POLY_G3*)header)->x2) + startX;
+	  backup = ((POLY_G3*)header)->x0;
+	  ((POLY_G3*)header)->x0 = ((POLY_G3*)header)->x1;
+	  ((POLY_G3*)header)->x1 = backup;
+	  backup = ((POLY_G3*)header)->y0;
+	  ((POLY_G3*)header)->y0 = ((POLY_G3*)header)->y1;
+	  ((POLY_G3*)header)->y1 = backup;
+#if 0
+	  backup = ((POLY_G3*)header)->r0;
+	  ((POLY_G3*)header)->r0 = ((POLY_G3*)header)->r1;
+	  ((POLY_G3*)header)->r1 = backup;
+	  backup = ((POLY_G3*)header)->g0;
+	  ((POLY_G3*)header)->g0 = ((POLY_G3*)header)->g1;
+	  ((POLY_G3*)header)->g1 = backup;
+	  backup = ((POLY_G3*)header)->b0;
+	  ((POLY_G3*)header)->b0 = ((POLY_G3*)header)->b1;
+	  ((POLY_G3*)header)->b1 = backup;
+#endif
       break;
 
 	// 0x28 PolyF4
@@ -273,22 +298,42 @@ void DF_ParseOT(u_long* param_1, unsigned int end, int startX, int endX)
 
 	// 0x38 PolyG4
     case 0x38:
-      ((POLY_FT4*)header)->x0 = (endX - ((POLY_FT4*)header)->x0) + startX;
-      ((POLY_FT4*)header)->x1 = (endX - ((POLY_FT4*)header)->x1) + startX;
-      ((POLY_FT4*)header)->x2 = (endX - ((POLY_FT4*)header)->x2) + startX;
-      ((POLY_FT4*)header)->x3 = (endX - ((POLY_FT4*)header)->x3) + startX;
-	  backup = ((POLY_FT4*)header)->x0;
-	  ((POLY_FT4*)header)->x0 = ((POLY_FT4*)header)->x3;
-	  ((POLY_FT4*)header)->x3 = backup;
-	  backup = ((POLY_FT4*)header)->x1;
-	  ((POLY_FT4*)header)->x1 = ((POLY_FT4*)header)->x2;
-	  ((POLY_FT4*)header)->x2 = backup;
-	  backup = ((POLY_FT4*)header)->y0;
-	  ((POLY_FT4*)header)->y0 = ((POLY_FT4*)header)->y3;
-	  ((POLY_FT4*)header)->y3 = backup;
-	  backup = ((POLY_FT4*)header)->y1;
-	  ((POLY_FT4*)header)->y1 = ((POLY_FT4*)header)->y2;
-	  ((POLY_FT4*)header)->y2 = backup;
+      ((POLY_G4*)header)->x0 = (endX - ((POLY_G4*)header)->x0) + startX;
+      ((POLY_G4*)header)->x1 = (endX - ((POLY_G4*)header)->x1) + startX;
+      ((POLY_G4*)header)->x2 = (endX - ((POLY_G4*)header)->x2) + startX;
+      ((POLY_G4*)header)->x3 = (endX - ((POLY_G4*)header)->x3) + startX;
+	  backup = ((POLY_G4*)header)->x0;
+	  ((POLY_G4*)header)->x0 = ((POLY_G4*)header)->x3;
+	  ((POLY_G4*)header)->x3 = backup;
+	  backup = ((POLY_G4*)header)->x1;
+	  ((POLY_G4*)header)->x1 = ((POLY_G4*)header)->x2;
+	  ((POLY_G4*)header)->x2 = backup;
+	  backup = ((POLY_G4*)header)->y0;
+	  ((POLY_G4*)header)->y0 = ((POLY_G4*)header)->y3;
+	  ((POLY_G4*)header)->y3 = backup;
+	  backup = ((POLY_G4*)header)->y1;
+	  ((POLY_G4*)header)->y1 = ((POLY_G4*)header)->y2;
+	  ((POLY_G4*)header)->y2 = backup;
+#if 0
+	  backup = ((POLY_G4*)header)->r0;
+	  ((POLY_G4*)header)->r0 = ((POLY_G4*)header)->r3;
+	  ((POLY_G4*)header)->r3 = backup;
+	  backup = ((POLY_G4*)header)->r1;
+	  ((POLY_G4*)header)->r1 = ((POLY_G4*)header)->r2;
+	  ((POLY_G4*)header)->r2 = backup;
+	  backup = ((POLY_G4*)header)->g0;
+	  ((POLY_G4*)header)->g0 = ((POLY_G4*)header)->g3;
+	  ((POLY_G4*)header)->g3 = backup;
+	  backup = ((POLY_G4*)header)->g1;
+	  ((POLY_G4*)header)->g1 = ((POLY_G4*)header)->g2;
+	  ((POLY_G4*)header)->g2 = backup;
+	  backup = ((POLY_G4*)header)->b0;
+	  ((POLY_G4*)header)->b0 = ((POLY_G4*)header)->b3;
+	  ((POLY_G4*)header)->b3 = backup;
+	  backup = ((POLY_G4*)header)->b1;
+	  ((POLY_G4*)header)->b1 = ((POLY_G4*)header)->b2;
+	  ((POLY_G4*)header)->b2 = backup;
+#endif
 	  break;
 	  
 	// 0x2C PolyFT4
@@ -340,6 +385,17 @@ void DF_ParseOT(u_long* param_1, unsigned int end, int startX, int endX)
 	  backup = ((POLY_GT3*)header)->v0;
 	  ((POLY_GT3*)header)->v0 = ((POLY_GT3*)header)->v1;
 	  ((POLY_GT3*)header)->v1 = backup;
+#if 0
+	  backup = ((POLY_GT3*)header)->r0;
+	  ((POLY_GT3*)header)->r0 = ((POLY_GT3*)header)->r1;
+	  ((POLY_GT3*)header)->r1 = backup;
+	  backup = ((POLY_GT3*)header)->g0;
+	  ((POLY_GT3*)header)->g0 = ((POLY_GT3*)header)->g1;
+	  ((POLY_GT3*)header)->g1 = backup;
+	  backup = ((POLY_GT3*)header)->b0;
+	  ((POLY_GT3*)header)->b0 = ((POLY_GT3*)header)->b1;
+	  ((POLY_GT3*)header)->b1 = backup;
+#endif
 	  break;
 
 	// PolyGT4
@@ -372,7 +428,27 @@ void DF_ParseOT(u_long* param_1, unsigned int end, int startX, int endX)
 	  backup = ((POLY_GT4*)header)->v1;
 	  ((POLY_GT4*)header)->v1 = ((POLY_GT4*)header)->v2;
 	  ((POLY_GT4*)header)->v2 = backup;
-      break;
+#if 0
+	  backup = ((POLY_GT4*)header)->r0;
+	  ((POLY_GT4*)header)->r0 = ((POLY_GT4*)header)->r3;
+	  ((POLY_GT4*)header)->r3 = backup;
+	  backup = ((POLY_GT4*)header)->r1;
+	  ((POLY_GT4*)header)->r1 = ((POLY_GT4*)header)->r2;
+	  ((POLY_GT4*)header)->r2 = backup;
+	  backup = ((POLY_GT4*)header)->g0;
+	  ((POLY_GT4*)header)->g0 = ((POLY_GT4*)header)->g3;
+	  ((POLY_GT4*)header)->g3 = backup;
+	  backup = ((POLY_GT4*)header)->g1;
+	  ((POLY_GT4*)header)->g1 = ((POLY_GT4*)header)->g2;
+	  ((POLY_GT4*)header)->g2 = backup;
+	  backup = ((POLY_GT4*)header)->b0;
+	  ((POLY_GT4*)header)->b0 = ((POLY_GT4*)header)->b3;
+	  ((POLY_GT4*)header)->b3 = backup;
+	  backup = ((POLY_GT4*)header)->b1;
+	  ((POLY_GT4*)header)->b1 = ((POLY_GT4*)header)->b2;
+	  ((POLY_GT4*)header)->b2 = backup;
+#endif
+	  break;
 
 	// LineF2
     case 0x40:
