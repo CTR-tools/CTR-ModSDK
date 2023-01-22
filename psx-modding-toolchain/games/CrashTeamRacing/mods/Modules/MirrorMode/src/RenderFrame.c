@@ -59,7 +59,12 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	RenderAllTitleDPP(gGT);
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
-		end[i] = (unsigned int)gGT->camera110[i].ptrOT;
+	{
+		// need to subtract 4, cause RenderBucket_Execute
+		// gets pointer to primitives, not pointer to OT,
+		// so ptrOT - 4 ends up being the "real" start
+		end[i] = (unsigned int)gGT->camera110[i].ptrOT - 0x4;
+	}
 	
 	RenderBucket_ExecuteAllInstances(gGT);
 	
