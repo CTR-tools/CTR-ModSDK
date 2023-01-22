@@ -60,9 +60,8 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		// need to subtract 4, cause RenderBucket_Execute
-		// gets pointer to primitives, not pointer to OT,
-		// so ptrOT - 4 ends up being the "real" start
+		// need to subtract 4, cause the loop doesn't 
+		// stop "on" end[i], it stops when it sees end[i] in a tag
 		end[i] = (unsigned int)gGT->camera110[i].ptrOT - 0x4;
 	}
 	
