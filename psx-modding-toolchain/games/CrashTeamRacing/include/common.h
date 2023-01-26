@@ -1021,6 +1021,7 @@ struct MenuBox
 	// & 0x40, show only highlighted row
 	// & 0x28, main menu character select (better meaning)?
 	// & 0x80, tiny text in rows
+	// & 0x800, ??? used in 221 menu
 	// & 0x1000, needs to close
 	// & 0x2000, invisible
 	// & 0x4000, big text in title
@@ -4304,8 +4305,8 @@ enum GameMode2
   // & 8 - token race
 	TOKEN_RACE = 8,
   
-  // & 0x10 - Arcade cup
-	ARCADE_VS_CUP = 0x10,
+  // & 0x10 - arcade/vs/adv cup
+	CUP_ANY_KIND = 0x10,
   
   // & 0x20 - lev swap
   // & 0x80 - CREDITS
@@ -10098,7 +10099,7 @@ struct sData
 	struct Instance* ptrHudCrystal;
 
 	// 8008d9c0
-	struct Instance* ptrEndRaceMenuCrystal;
+	struct Instance* ptrMenuCrystal;
 
 	// 8008d9c4
 	struct Instance* ptrHudT;

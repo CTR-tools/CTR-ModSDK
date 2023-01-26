@@ -539,6 +539,10 @@ void StateZero()
 	// set level ID to naughty dog box
 	gGT->levelID = 41;
 	
+	// crystal challenge
+	gGT->levelID = 0x15;
+	gGT->gameMode1 |= CRYSTAL_CHALLENGE;
+	
 	#ifdef FastBoot
 	gGT->levelID = 4;
 	gGT->numPlyrCurrGame = 1;

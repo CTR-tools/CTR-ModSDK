@@ -464,8 +464,8 @@ void InitGame()
 	semiGlobal.ptrHudCrystal->flags =
 	semiGlobal.ptrHudCrystal->flags | 0x80;
 
-	semiGlobal.ptrEndRaceMenuCrystal->flags =
-	semiGlobal.ptrEndRaceMenuCrystal->flags | 0x80;
+	semiGlobal.ptrMenuCrystal->flags =
+	semiGlobal.ptrMenuCrystal->flags | 0x80;
 
 	// Resetting global game variables and strings
 	ggv.beatPb = 0;

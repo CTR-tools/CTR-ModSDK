@@ -469,7 +469,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 						return;
 					}
 					
-					if((gGT->gameMode2 & ARCADE_VS_CUP) != 0)
+					if((gGT->gameMode2 & CUP_ANY_KIND) != 0)
 					{
 						// disable drawing hud,
 						// enable drawing "standings"

@@ -46,8 +46,8 @@ void KillCrystals()
 	// make crystals invisible
 	sdata->ptrHudCrystal->flags =
 	sdata->ptrHudCrystal->flags | 0x80;
-	sdata->ptrEndRaceMenuCrystal->flags =
-	sdata->ptrEndRaceMenuCrystal->flags | 0x80;
+	sdata->ptrMenuCrystal->flags =
+	sdata->ptrMenuCrystal->flags | 0x80;
 }
 
 // dont store in 221,

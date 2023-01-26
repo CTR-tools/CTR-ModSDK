@@ -2,6 +2,9 @@
 common, exe, rdata_free, 0x0, General/MATH_Sin.c, rdata.bin
 common, exe, MATH_Sin, 0x0, General/MATH_Sin_hook.s
 
+// 221
+common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
+
 // 230 (incomplete)
 common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/MM_Characters_boolIsInvalid.c
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/MM_09_30_CheatCodes.c // contains 22 functions

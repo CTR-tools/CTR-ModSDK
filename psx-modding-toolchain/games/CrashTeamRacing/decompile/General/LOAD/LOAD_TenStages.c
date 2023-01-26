@@ -274,20 +274,35 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// then quit the function and try again next frame
 			if (sdata->XA_State == 4) return loadingStage;
 
-			ovrRegion1 = -1;
-			if ((gGT->gameMode1 & 0x8000000) != 0) 	ovrRegion1 = 0;	// 221 - Crystal Challenge
-			if ((gGT->gameMode1 & 0x480000) != 0) 	ovrRegion1 = 1;	// 222 - Arcade/Adv Mode
-			if ((gGT->gameMode1 & 0x4000000) != 0) 	ovrRegion1 = 2;	// 223 - Relic Race
-			if ((gGT->gameMode1 & 0x20000) != 0)	ovrRegion1 = 3;	// 224 - Time Trial
-			if ((gGT->gameMode2 & 0x10) == 0)		ovrRegion1 = 4;	// 225 - VS/Battle (non-cup)
+			// dont load end-of-race in these modes:
+			//	cup, credits, lev swap, cutscene
+			if ((gGT->gameMode2 & 0xB0) != 0) break;
+			if ((gGT->gameMode1 & GAME_CUTSCENE) != 0) break;
+
+			// === pick overlay to load ===
 			
-			// dont load overlay in Main Menu or Cup,
-			// neither of them need an overlay
-			if(ovrRegion1 != -1)
-			{
-				LOAD_OvrEndRace(ovrRegion1);
-			}
+			// 221 - Crystal Challenge
+			if ((gGT->gameMode1 & CRYSTAL_CHALLENGE) != 0) 	
+				ovrRegion1 = 0;
+
+			// 223 - Relic Race
+			else if ((gGT->gameMode1 & RELIC_RACE) != 0) 
+				ovrRegion1 = 2;
 			
+			// 224 - Time Trial
+			else if ((gGT->gameMode1 & TIME_TRIAL) != 0)
+				ovrRegion1 = 3;
+			
+			// 222 - Arcade/Trophy/C-T-R token
+			// if arcade, or adv that isn't listed above
+			else if ((gGT->gameMode1 & 0x480000) != 0)
+				ovrRegion1 = 1;
+			
+			// default VS/Battle overlay if no mode found
+			else 
+				ovrRegion1 = 4;
+		
+			LOAD_OvrEndRace(ovrRegion1);
 			break;
 		}
 		case 2:
