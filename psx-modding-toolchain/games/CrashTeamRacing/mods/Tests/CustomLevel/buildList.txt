@@ -1,0 +1,13 @@
+
+
+// LOAD
+common, exe, LOAD_TenStages, 0x0, src/LOAD_TenStages.c
+
+// MAIN
+common, exe, main, 0x0, src/main.c
+
+// 221 hack
+926, 221, 0x8009f6fc, 0x0, src/data.lev
+
+// disable INSTANCE_LevInstancesStart
+common, exe, INSTANCE_LevInstancesStart, 0x0, src/return.c
