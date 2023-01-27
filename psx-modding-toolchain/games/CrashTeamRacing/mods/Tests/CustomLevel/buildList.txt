@@ -1,13 +1,16 @@
 
-
-// LOAD
+// loads bigfile 221 as lev
 common, exe, LOAD_TenStages, 0x0, src/LOAD_TenStages.c
 
-// MAIN
+// fast-boot enabled
 common, exe, main, 0x0, src/main.c
 
-// 221 hack
+// sets lev to bigfile 221
 926, 221, 0x8009f6fc, 0x0, src/data.lev
 
 // disable INSTANCE_LevInstancesStart
 common, exe, INSTANCE_LevInstancesStart, 0x0, src/return.c
+
+// disable LevInstQueue
+// required? or just needed cause I messed up? crashes in relocate attempts
+common, exe, RenderBucket_QueueLevInstances, 0x0, src/disableQueueLevInst.c
