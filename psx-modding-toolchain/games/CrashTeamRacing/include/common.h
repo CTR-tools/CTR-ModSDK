@@ -8221,7 +8221,7 @@ struct Data
 	// [1] = 2P P1
 	// [2] = 4P P1
 	// [3] = 4P P1
-	void* hudStructPtr[4];
+	struct HudElement* hudStructPtr[4];
 
 
 	// ============================================================================
