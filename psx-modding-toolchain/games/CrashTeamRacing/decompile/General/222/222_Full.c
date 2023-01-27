@@ -1,15 +1,22 @@
 #include <common.h>
 
-int s_numString;
+// copy/paste from GameProg
+#define CHECK_ADV_BIT(rewards, bitIndex) \
+	((rewards[bitIndex>>5] >> (bitIndex & 0x1f)) & 1) != 0
+
+int s_numString = 0;
 
 void AA_EndEvent_DrawMenu()
 {
 	struct GameTracker* gGT;
 	struct Driver* driver;
 	struct HudElement* hudArray;
+	struct AdvProgress* adv;
+	int bitIndex;
 	
 	gGT = sdata->gGT;
 	driver = gGT->drivers[0];
+	adv = &sdata->advProgress;
 	
 	hudArray = data.hudStructPtr[gGT->numPlyrCurrGame-1];
 	
@@ -36,7 +43,18 @@ void AA_EndEvent_DrawMenu()
 			(driver->PickupLetterHUD.numCollected == 3)
 		)
 		{
+			// if token was already won
+			bitIndex = gGT->levelID + 0x4C;
+			if(CHECK_ADV_BIT(adv->rewards, bitIndex))
+			{
+				
+			}
 			
+			// if won for the first time
+			else
+			{
+				
+			}
 		}
 		
 		// if did not win
