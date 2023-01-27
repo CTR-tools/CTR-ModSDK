@@ -90,7 +90,6 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	}
 	
 	levelID = gGT->levelID;
-	printf("%d\n", loadingStage);
 
 	switch(loadingStage)
 	{
