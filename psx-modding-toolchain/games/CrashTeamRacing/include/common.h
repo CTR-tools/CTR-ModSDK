@@ -2113,7 +2113,7 @@ struct Driver
 	short previousFrameMultDrift; //previous frame or just repeat?
 
 	// 0x3ec
-	short unk3EC;
+	short timeUntilDriftSpinout;
 
 	// 0x3ee
 	short distanceFromGround;
