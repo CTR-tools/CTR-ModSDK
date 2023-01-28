@@ -63729,7 +63729,7 @@ void FUN_800715e8(undefined4 param_1)
 		  // threads JAL back to one of two labels...
 		  (**(code **)(iVar3 + 0x2c))(iVar3);
 
-// SetThTick_AndExec, called from ThTick,
+// ThTick_SetAndExec, called from ThTick,
 // cancels the previous ThTick, and goes here,
 // or if you did an ordinary JR RA from a ThTick,
 // like TNT thread does
@@ -63781,7 +63781,7 @@ LAB_80071694:
 }
 
 
-// SetThTick_AndExec
+// ThTick_SetAndExec
 void FUN_800716ec(int param_1,code *UNRECOVERED_JUMPTABLE)
 
 {
@@ -63797,7 +63797,7 @@ void FUN_800716ec(int param_1,code *UNRECOVERED_JUMPTABLE)
 }
 
 
-// SetThTick
+// ThTick_Set
 void FUN_80071704(int param_1,undefined4 param_2)
 
 {

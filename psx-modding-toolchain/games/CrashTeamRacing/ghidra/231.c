@@ -1023,7 +1023,7 @@ void FUN_800ac6b4(int param_1)
 		// remove flag "| 2"
 		*(ushort *)(iVar7 + 0x28) = *(ushort *)(iVar7 + 0x28) & 0xfffd;
 		
-		// SetThTick_AndExec(self, RB_GenericMine_ThTick)
+		// ThTick_SetAndExec(self, RB_GenericMine_ThTick)
         FUN_800716ec(param_1,FUN_800acb60);
 		
         return;
@@ -1205,7 +1205,7 @@ void FUN_800acb60(int param_1)
       pcVar7 = FUN_800ac6b4;
     }
 	
-	// SetThTick_AndExec
+	// ThTick_SetAndExec
     FUN_800716ec(param_1,pcVar7);
   }
   
@@ -1460,7 +1460,7 @@ LAB_800ad174:
         *(undefined2 *)(piVar13 + 8) = 0;
         *(undefined2 *)((int)piVar13 + 0x12) = 0x3fff;
 		
-		// SetThTick_AndExec RB_TNT_ThrowOnHead
+		// ThTick_SetAndExec RB_TNT_ThrowOnHead
         FUN_800716ec(param_1,FUN_800ad710);
       }
 	  
@@ -2762,7 +2762,7 @@ void FUN_800ae604(int param_1)
   // stop audio of moving
   FUN_8002e724(iVar1 + 0x24);
   
-  // SetThTick_AndExec RB_Warpball_FadeAway
+  // ThTick_SetAndExec RB_Warpball_FadeAway
   FUN_800716ec(param_1,&FUN_800ae524);
   return;
 }
@@ -4098,7 +4098,7 @@ void FUN_800afdbc(int param_1)
 	// end duration
     *(undefined2 *)(iVar9 + 6) = 0;
 	
-	// SetThTick_AndExec RB_MaskWeapon_FadeAway
+	// ThTick_SetAndExec RB_MaskWeapon_FadeAway
     FUN_800716ec(param_1,FUN_800afb70);
   }
   
@@ -4884,7 +4884,7 @@ void FUN_800b1000(int param_1)
     *(undefined4 *)(iVar4 + 0x4a0) = 0;
   }
   
-  // SetThTick_AndExec RB_RainCloud_FadeAway
+  // ThTick_SetAndExec RB_RainCloud_FadeAway
   FUN_800716ec(param_1,FUN_800b0f1c);
   return;
 }
@@ -11606,7 +11606,7 @@ void FUN_800b8c00(int param_1)
 	// make a matrix
 	FUN_8006c2a4(iVar7 + 0x30,iVar6 + 0x10);
 	
-	// SetThTick_AndExec RB_Seal_ThTick_Move
+	// ThTick_SetAndExec RB_Seal_ThTick_Move
     FUN_800716ec(param_1,FUN_800b8e1c);
   }
   
@@ -11796,7 +11796,7 @@ void FUN_800b8e1c(int param_1)
   // 0x22, rotDesired
   psVar6[0x11] = (short)iVar5 + (short)(iVar3 >> 0xc) * -0x1000;
   
-  // SetThTick_AndExec RB_Seal_ThTick_TurnAround
+  // ThTick_SetAndExec RB_Seal_ThTick_TurnAround
   FUN_800716ec(param_1,&FUN_800b8c00);
   
 LAB_800b8fdc:

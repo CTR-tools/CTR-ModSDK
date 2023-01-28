@@ -1118,10 +1118,10 @@
 // unknown 80071524
 // unknown 80071590
 
-800715e8 ThreadBucketTickAll
-80071694 ThreadBucketFastRET
-800716ec SetThTick_AndExec
-80071704 SetThTick
+800715e8 ThTick_RunBucket
+80071694 ThTick_FastRET
+800716ec ThTick_SetAndExec
+80071704 ThTick_Set
 
 // libs in the exe
 // ==============================

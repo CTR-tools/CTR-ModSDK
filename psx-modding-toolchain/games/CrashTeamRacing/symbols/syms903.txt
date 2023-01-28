@@ -1065,9 +1065,9 @@
 // == 40 more functions, only stubbed in 926 ==
 
 8006e140 CreateRenderLists_1P2P
-8006f95c ThreadBucketFastRET
-8006f9b4 SetThTick_AndExec
-8006f9cc SetThTick
+8006f95c ThTick_FastRET
+8006f9b4 ThTick_SetAndExec
+8006f9cc ThTick_Set
 
 // libs in the exe
 // ==============================

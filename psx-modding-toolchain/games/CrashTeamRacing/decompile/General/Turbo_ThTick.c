@@ -3,7 +3,7 @@
 
 void GAMEPAD_Vib_3(struct Driver* driver, u_int param_2, int param_3);
 void OtherFX_DriverTurbo(void*, int, int);
-void ThreadBucketFastRET(struct Thread*);
+void ThTick_FastRET(struct Thread*);
 
 // Turbo_ThTick
 void DECOMP_Turbo_ThTick(struct Thread* turboThread)

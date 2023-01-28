@@ -1065,9 +1065,9 @@
 8006c730 SquareRoot0_stub
 8006c808 ApplyMatrixLV_stub
 8006ff88 CreateRenderLists_1P2P
-800717ac ThreadBucketFastRET
-80071804 SetThTick_AndExec
-8007181c SetThTick
+800717ac ThTick_FastRET
+80071804 ThTick_SetAndExec
+8007181c ThTick_Set
 
 // libs in the exe
 // ==============================
