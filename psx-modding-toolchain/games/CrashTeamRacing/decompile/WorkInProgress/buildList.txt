@@ -1,2 +1,2 @@
-//common, exe,  0x0, src/DrawHUD_Racing_Hook.s
-common, exe, Player_Driving_Input, 0x0, src/Player_Driving_Input_WIP.c
+common, exe, Player_Driving_Interpolate, 0x0, src/Player_Driving_Interpolate_Hook.s
+common, exe, rdata_free, 0x0, src/Player_Driving_Interpolate.c
