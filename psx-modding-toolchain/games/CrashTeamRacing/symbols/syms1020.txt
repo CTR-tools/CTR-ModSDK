@@ -533,7 +533,7 @@
 80039f70 EndOfRace_TimeTrial_Relic_SaveHighScore
 8003a0b8 ToggleGameState_EndOfRace
 8003abcc ToggleGameState_StartOfRace
-8003ac68 VisMem_Clear1
+8003ac68 VisMem_Clear
 8003acec RainBufferInit
 
 8003add4 SetPrimMemSize
