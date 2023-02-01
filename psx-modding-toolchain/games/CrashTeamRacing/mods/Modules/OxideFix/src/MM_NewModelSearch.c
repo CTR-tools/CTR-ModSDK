@@ -103,7 +103,8 @@ int * FUN_800adb64(int *param_1)
 
   // if model was not found,
   // check oxide
-  m = (struct Model*)(MM_EndOfFile + 0x30*0xC + 4);
+  extern unsigned char oxideModel[];
+  m = (struct Model*)(&oxideModel[4]);
   if(*param_1 == *(int*)m) return (int*)m;
 
   // at this point, fail
