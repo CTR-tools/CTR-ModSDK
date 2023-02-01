@@ -46,10 +46,10 @@ common, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increme
 
 // Import SaveRAM
 common, exe, LOAD_DriverMPK, 0x0, ../../../decompile/General/LOAD/LOAD_DriverMPK.c
-common, exe, MainInit_JitPoolsNew, 0x0, ../../Patches/SaveRAM/src/Mem_JitPoolsNew.c
-common, exe, Camera110_InitStructs, 0x0, ../../../decompile/General/Camera110_InitStructs.c ../../Patches/SaveRAM/src/Mem_DriverPool.c, Mem_DriverPool.bin
-common, exe, MainInit_JitPoolsReset, 0x0, ../../Patches/SaveRAM/src/Mem_hookJitPoolsReset.s
-common, exe, DrawRaceClock, 0x0, ../../../decompile/General/DrawRaceClock.c ../../Patches/SaveRAM/src/Mem_ThreadPool.c, Mem_ThreadPool.bin
+common, exe, MainInit_JitPoolsNew, 0x0, ../../Patches/SaveRAM/src/CustomJitPoolsNew.c
+common, exe, Camera110_InitStructs, 0x0, ../../../decompile/General/Camera110_InitStructs.c ../../Patches/SaveRAM/src/NewDriverPool.c, Mem_DriverPool.bin
+common, exe, MainInit_JitPoolsReset, 0x0, ../../Patches/SaveRAM/src/hookJitPoolsReset.s
+common, exe, DrawRaceClock, 0x0, ../../../decompile/General/DrawRaceClock.c ../../Patches/SaveRAM/src/NewThreadPool.c, Mem_ThreadPool.bin
 
 // Custom version of AdvBosses
 common, 233, CS_Garage_GetMenuBox, -0x8, ../../Modules/OxideFix/src/AdvBosses_hook233.s

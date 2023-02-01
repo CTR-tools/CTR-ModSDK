@@ -1,7 +1,7 @@
 Works in USA Retail, Japan Trial, Europe Retail, Japan Retail.
 Does not work in Sep3
 
-Mem_JitPoolsNew.c overwrites the original exe function.
+CustomJitPoolsNew.c overwrites the original exe function.
 While the original would put all pools in mempack (heap),
 the new function stores as much into kernel as possible.
 In order from top to bottom:
@@ -13,7 +13,7 @@ In order from top to bottom:
 		will have already finished it's purpose before being
 		overwritten
 
-Mem_DriverPool.c appends the decompiled Camera110_InitStructs,
+NewDriverPool.c appends the decompiled Camera110_InitStructs,
 which was reduced in size with logical optimizations.
 The new Driver pool is not solid memory, drivers are scattered
 around RAM. The game mostly-uses the linked lists, and only treats 
@@ -23,7 +23,7 @@ The code in this file relocates every driver to kernel memory,
 and rewrites the ClearAllPools function, to use custom pool
 allocators.
 
-Mem_ThreadPool.c fully relocates thread pool, just like how the
+NewThreadPool.c fully relocates thread pool, just like how the
 driver pool was fully relocated, except the thread pool
 is partially on lib-RDATA (debug messages of psyq libs), and 
 partially overwriting function assembly. The functions overwritten 
