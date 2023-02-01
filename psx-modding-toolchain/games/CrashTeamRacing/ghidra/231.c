@@ -305,7 +305,7 @@ void FUN_800abbb4(int param_1,int param_2)
     }
   }
   
-  // ToggleGameState_EndOfRace
+  // NewState_EndRace
   FUN_8003a3fc();
   
   return;

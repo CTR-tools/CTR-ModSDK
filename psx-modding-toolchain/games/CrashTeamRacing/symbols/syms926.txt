@@ -503,19 +503,18 @@
 80038b5c MenuBoxFuncPtr_Options
 80039908 MenuBoxFuncPtr_Quit
 
-800399fc AdvPause_SafeDestroy
-
+800399fc PauseGame_SafeAdvDestroy
 80039A44 PauseGame_MenuBoxFuncPtr
-80039dcc PauseGame_Get_MenuBox
+80039dcc PauseGame_GetMenuBox
 80039e98 PauseGame_WhenPressingStart
 
-80039fa8 EndOfRace_TimeTrial_Relic_CalculateReward
-8003a2b4 EndOfRace_TimeTrial_Relic_SaveHighScore
-8003a3fc ToggleGameState_EndOfRace
-8003aee8 ToggleGameState_StartOfRace
-8003af84 VisMem_Clear
-8003b008 RainBufferInit
+80039fa8 EndRace_TimeTrialRelic_GetReward
+8003a2b4 EndRace_TimeTrialRelic_SaveHighScore
+8003a3fc NewState_EndRace
+8003aee8 NewState_StartRace
 
+8003af84 VisMemInit
+8003b008 RainBufferInit
 8003b0f0 SetPrimMemSize
 8003b2d4 ClearAllMemPools
 8003b334 SetOTMemSize

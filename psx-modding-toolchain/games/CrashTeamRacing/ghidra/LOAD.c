@@ -1914,7 +1914,7 @@ void FUN_80033108(void)
   // swap 1 and 2 during adventure mode
   FUN_8003e80c((int)*(short *)(PTR_DAT_8008d2ac + 0x254a));
 
-  // VisMem_Clear
+  // VisMemInit
   FUN_8003af84(PTR_DAT_8008d2ac);
 
   puVar1 = PTR_DAT_8008d2ac;

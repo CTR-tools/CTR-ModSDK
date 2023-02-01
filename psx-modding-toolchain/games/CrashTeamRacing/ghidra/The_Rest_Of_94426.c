@@ -983,7 +983,7 @@ LAB_80035098:
 		  // OtherFX_Play
           FUN_80028468(1,1);
 
-		  // AdvPause_SafeDestroy
+		  // PauseGame_SafeAdvDestroy
           FUN_800399fc();
 
 		  // deactivate pause
@@ -4927,7 +4927,7 @@ void FUN_80038b5c(int param_1)
 
   local_78 = param_1;
 
-  // AdvPause_SafeDestroy
+  // PauseGame_SafeAdvDestroy
   FUN_800399fc();
 
   iVar12 = 0;
@@ -5657,14 +5657,14 @@ void FUN_80039908(int param_1)
       *(ushort *)(param_1 + 0x14) = uVar3 | 0x100;
     }
 
-	// AdvPause_SafeDestroy
+	// PauseGame_SafeAdvDestroy
 	FUN_800399fc();
   }
   return;
 }
 
 
-// AdvPause_SafeDestroy
+// PauseGame_SafeAdvDestroy
 void FUN_800399fc(void)
 
 {
@@ -5779,7 +5779,7 @@ void FUN_80039a44(int param_1)
   // make MenuBox invisible
   FUN_800469c8(param_1);
 
-  // AdvPause_SafeDestroy
+  // PauseGame_SafeAdvDestroy
   FUN_800399fc();
 
   puVar2 = PTR_DAT_8008d2ac;
@@ -6139,7 +6139,7 @@ void FUN_80039e98(void)
 }
 
 
-// EndOfRace_TimeTrial_Relic_CalculateReward
+// EndRace_TimeTrialRelic_GetReward
 void FUN_80039fa8(int param_1)
 
 {
@@ -6338,7 +6338,7 @@ LAB_8003a27c:
 }
 
 
-// EndOfRace_TimeTrial_Relic_SaveHighScore
+// EndRace_TimeTrialRelic_SaveHighScore
 void FUN_8003a2b4(void)
 
 {
@@ -6354,7 +6354,7 @@ void FUN_8003a2b4(void)
   // player structure
   iVar8 = *(int *)(PTR_DAT_8008d2ac + 0x24ec);
 
-  // EndOfRace_TimeTrial_Relic_CalculateReward
+  // EndRace_TimeTrialRelic_GetReward
   FUN_80039fa8(0);
 
   puVar2 = PTR_DAT_8008d2ac;
@@ -6427,7 +6427,7 @@ void FUN_8003a2b4(void)
 }
 
 
-// ToggleGameState_EndOfRace
+// NewState_EndRace
 void FUN_8003a3fc(void)
 
 {
@@ -7041,7 +7041,7 @@ LAB_8003a71c:
 	// if you are in Relic Race or Time Trial
     if ((*(uint *)PTR_DAT_8008d2ac & 0x4020000) != 0)
 	{
-	  // EndOfRace_TimeTrial_Relic_CalculateReward
+	  // EndRace_TimeTrialRelic_GetReward
       FUN_80039fa8(1);
 
 	  // If you're not in a Relic Race
@@ -7084,7 +7084,7 @@ LAB_8003a71c:
 }
 
 
-// ToggleGameState_StartOfRace
+// NewState_StartRace
 void FUN_8003aee8(uint *param_1,int param_2)
 
 {
@@ -7139,7 +7139,7 @@ void FUN_8003aee8(uint *param_1,int param_2)
 }
 
 
-// VisMem_Clear
+// VisMemInit
 // param1 is PTR_DAT_8008d2ac
 void FUN_8003af84(int param_1)
 
@@ -8314,7 +8314,7 @@ void FUN_8003b934(uint *param_1)
   // Debug_ToggleNormalSpawn == normal spawn
   if (PTR_DAT_8008d2ac[0x253f] != '\0')
   {
-	// ToggleGameState_StartOfRace
+	// NewState_StartRace
     FUN_8003aee8(param_1,1);
 
     if (
@@ -8396,7 +8396,7 @@ void FUN_8003b934(uint *param_1)
     FUN_8003116c();
   }
 
-  // VisMem_Clear
+  // VisMemInit
   FUN_8003af84(param_1);
 
   // RainBufferInit
@@ -14513,7 +14513,7 @@ LAB_80041910:
 
           } while (iVar11 < 8);
 
-		  // ToggleGameState_EndOfRace
+		  // NewState_EndRace
           FUN_8003a3fc();
         }
       }
@@ -21607,7 +21607,7 @@ LAB_800495ac:
 
         if (DAT_8008d918 == 0)
 		{
-		  // EndOfRace_TimeTrial_Relic_SaveHighScore
+		  // EndRace_TimeTrialRelic_SaveHighScore
           FUN_8003a2b4();
         }
 
@@ -21666,7 +21666,7 @@ LAB_800495ac:
 	{
         if (DAT_8008d918 == 0)
 		{
-		  // EndOfRace_TimeTrial_Relic_SaveHighScore
+		  // EndRace_TimeTrialRelic_SaveHighScore
           FUN_8003a2b4();
         }
 
@@ -26671,7 +26671,7 @@ void FUN_8004f894(short param_1,short param_2,short param_3)
         } while (iVar5 < (int)(uint)(byte)puVar1[0x1ca8]);
       }
 
-	  // ToggleGameState_EndOfRace
+	  // NewState_EndRace
       FUN_8003a3fc();
     }
   }
@@ -30660,7 +30660,7 @@ void FUN_8005435c(void)
       //turn on 26th bit of Actions Flag set (means racer finished the race)
       *(uint *)(iVar3 + 0x2c8) = *(uint *)(iVar3 + 0x2c8) | 0x2000000;
 
-	  // ToggleGameState_EndOfRace
+	  // NewState_EndRace
       FUN_8003a3fc(0x42);
     }
 
