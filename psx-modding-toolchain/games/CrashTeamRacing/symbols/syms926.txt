@@ -475,9 +475,9 @@
 
 // Start of MAIN_ 	vvvv		???
 
-80034960 GetClipBufferSize
-800349c4 Alloc_PrimMem
-80034a28 Alloc_OTMem
+80034960 MainDB_GetClipSize
+800349c4 MainDB_PrimMem
+80034a28 MainDB_OTMem
 
 80034a80 DrawSyncCallbackFunc
 80034aa4 VsyncCallbackFunc

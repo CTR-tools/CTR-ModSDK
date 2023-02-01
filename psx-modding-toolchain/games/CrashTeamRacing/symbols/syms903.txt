@@ -490,10 +490,10 @@
 // Start of MAIN_ 	vvvv		???
 
 // Does not exist in Sep3
-// GetClipBufferSize
+// MainDB_GetClipSize
 
-80033c84 Alloc_PrimMem
-80033ce8 Alloc_OTMem
+80033c84 MainDB_PrimMem
+80033ce8 MainDB_OTMem
 
 80033d40 DrawSyncCallbackFunc
 80033d64 VsyncCallbackFunc

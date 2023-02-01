@@ -11,7 +11,7 @@ void ANTICHIP_CheckFraud_Entry();
 #endif
 
 // only in builds 926+
-int GetClipBufferSize(int levID, int numPlyrCurrGame);
+int MainDB_GetClipSize(int levID, int numPlyrCurrGame);
 
 // To do: add header for CTR funcs
 void JitPool_Init(struct JitPool* ap, int numItems, int itemSize);
@@ -172,7 +172,7 @@ void GameInit_JitPoolsNew_New(struct GameTracker* gGT)
 	}
   }
 
-  // GetClipBufferSize didn't exist in Sep3
+  // MainDB_GetClipSize didn't exist in Sep3
   // build, instead it was just this:
   #if BUILD == SepReview
 
@@ -189,7 +189,7 @@ void GameInit_JitPoolsNew_New(struct GameTracker* gGT)
   #elif BUILD >= UsaRetail
 
   // get size
-  clipSize = GetClipBufferSize(gGT->levelID,gGT->numPlyrCurrGame);
+  clipSize = MainDB_GetClipSize(gGT->levelID,gGT->numPlyrCurrGame);
 
   #endif
 

@@ -230,7 +230,7 @@ undefined4 FUN_80034960(undefined4 param_1,int param_2)
 }
 
 
-// Alloc_PrimMem
+// MainDB_PrimMem
 // param_1 is &gGT->DB[x].primMem
 void FUN_800349c4(uint *param_1,uint param_2)
 
@@ -263,7 +263,7 @@ void FUN_800349c4(uint *param_1,uint param_2)
   return;
 }
 
-// Alloc_OTMem
+// MainDB_OTMem
 // param_1 is &gGT->DB[x].otMem
 void FUN_80034a28(uint *param_1,uint param_2)
 

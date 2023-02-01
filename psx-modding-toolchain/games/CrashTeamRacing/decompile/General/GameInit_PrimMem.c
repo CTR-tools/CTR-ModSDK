@@ -61,8 +61,8 @@ void DECOMP_GameInit_PrimMem(struct GameTracker* gGT)
 	size = data.primMem_SizePerLEV_4P[levelID] << 10;
 	
 EndFunc:
-	Alloc_PrimMem(&gGT->db[0].primMem, size);
-	Alloc_PrimMem(&gGT->db[1].primMem, size);
+	MainDB_PrimMem(&gGT->db[0].primMem, size);
+	MainDB_PrimMem(&gGT->db[1].primMem, size);
 }
 
 void DECOMP_GameInit_OTMem(struct GameTracker* gGT)
@@ -103,8 +103,8 @@ void DECOMP_GameInit_OTMem(struct GameTracker* gGT)
 	size = 0x3000;
 	
 EndFunc:
-	Alloc_OTMem(&gGT->db[0].otMem, size);
-	Alloc_OTMem(&gGT->db[1].otMem, size);
+	MainDB_OTMem(&gGT->db[0].otMem, size);
+	MainDB_OTMem(&gGT->db[1].otMem, size);
 	
 	// 0x1000 per player, plus 0x18 for linking
 	size = ((gGT->numPlyrCurrGame) << 0xC) | 0x18;
