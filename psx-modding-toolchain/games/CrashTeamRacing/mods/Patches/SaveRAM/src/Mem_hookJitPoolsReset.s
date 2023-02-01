@@ -1,3 +1,3 @@
 .set noreorder
-j MainInit_JitPoolsNew_New
+j New_MainInit_JitPoolsReset
 nop
