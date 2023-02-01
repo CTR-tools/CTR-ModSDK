@@ -4933,7 +4933,7 @@ void FUN_800b1220(int param_1)
     *(undefined *)(iVar1 + 0x50) = *(undefined *)(*(int *)(param_1 + 0x1c) + 0x50);
     *(undefined *)(iVar1 + 0x51) = *(undefined *)(*(int *)(param_1 + 0x1c) + 0x51);
     
-	// AllocPool_Add -- Rain Pool
+	// JitPool_Add -- Rain Pool
 	iVar2 = FUN_800310d4(PTR_DAT_8008d2ac + 0x19e8);
     
 	if (iVar2 != 0) {

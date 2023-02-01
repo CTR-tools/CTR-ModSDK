@@ -206,7 +206,7 @@ void RunInitHook()
 	{
 		LIST_AddFront(
 		
-			&sdata->gGT->AllocPools.instance.free,
+			&sdata->gGT->JitPools.instance.free,
 			(void*)((int)buffer + 0xFC*i)
 		);
 	}
@@ -221,14 +221,14 @@ void RunInitHook()
 	// max instance, max thread, prim size, ot size
 
 	// cause of SaveRAM patches, hard-code 47
-	maxThreads = 47; //sdata->gGT->AllocPools.thread.maxItems;
+	maxThreads = 47; //sdata->gGT->JitPools.thread.maxItems;
 	str4[18] = '0' + (maxThreads / 1000) % 10;
 	str4[19] = '0' + (maxThreads / 100) % 10;
 	str4[20] = '0' + (maxThreads / 10) % 10;
 	str4[21] = '0' + maxThreads % 10;
 
 	// cause of manual List_AddFront, hard-code number
-	maxInstances = 600+128; //sdata->gGT->AllocPools.instance.maxItems;
+	maxInstances = 600+128; //sdata->gGT->JitPools.instance.maxItems;
 	str5[18] = '0' + (maxInstances / 1000) % 10;
 	str5[19] = '0' + (maxInstances / 100) % 10;
 	str5[20] = '0' + (maxInstances / 10) % 10;
@@ -292,7 +292,7 @@ void RunUpdateHook()
 	// not every "taken" member is counted in "taken.count"
 	curThreads =
 		47 // cause of saveRAM patches, hard-code, dont use maxItems
-		- sdata->gGT->AllocPools.thread.free.count;
+		- sdata->gGT->JitPools.thread.free.count;
 	str4[10] = '0' + (curThreads / 1000) % 10;
 	str4[11] = '0' + (curThreads / 100) % 10;
 	str4[12] = '0' + (curThreads / 10) % 10;
@@ -302,7 +302,7 @@ void RunUpdateHook()
 	// not every "taken" member is counted in "taken.count"
 	curInstances =
 		600+128 // cause of saveRAM patches, hard-code, dont use maxItems
-		- sdata->gGT->AllocPools.instance.free.count;
+		- sdata->gGT->JitPools.instance.free.count;
 	str5[10] = '0' + (curInstances / 1000) % 10;
 	str5[11] = '0' + (curInstances / 100) % 10;
 	str5[12] = '0' + (curInstances / 10) % 10;

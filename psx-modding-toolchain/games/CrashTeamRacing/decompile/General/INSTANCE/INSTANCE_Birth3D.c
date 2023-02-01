@@ -4,7 +4,7 @@ struct Instance* INSTANCE_Birth3D(
 	struct Model* model, char* name, struct Thread* th)
 {
 	struct Instance* inst =
-		AllocPool_Add(&sdata->gGT->AllocPools.instance);
+		JitPool_Add(&sdata->gGT->JitPools.instance);
 
 	if(inst != 0)
 	{

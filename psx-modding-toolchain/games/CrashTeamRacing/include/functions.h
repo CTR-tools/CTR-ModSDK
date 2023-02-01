@@ -47,10 +47,10 @@ void CAM_ThTick(struct Thread* t);
 
 // unorganized
 
-void AllocPool_Clear(struct AllocPool* AP);
-void AllocPool_Init(struct AllocPool* AP, int maxItems, int itemSize, char* name);
-int AllocPool_Add(struct AllocPool* AP);
-void AllocPool_Remove(struct AllocPool* AP, struct Item* item);
+void JitPool_Clear(struct JitPool* AP);
+void JitPool_Init(struct JitPool* AP, int maxItems, int itemSize, char* name);
+int JitPool_Add(struct JitPool* AP);
+void JitPool_Remove(struct JitPool* AP, struct Item* item);
 
 void LIST_Clear(struct LinkedList* L);
 void LIST_AddFront(struct LinkedList* L, struct Item* I);

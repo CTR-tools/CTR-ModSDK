@@ -15,7 +15,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 	
 	// check players
 	hitInst = 
-		(struct Instance*)INSTANCE_CollBucket_Radius(
+		(struct Instance*)LinkedCollide_Radius(
 			sealInst, sealTh, 
 			gGT->threadBuckets[PLAYER].thread,
 			radius);
@@ -47,7 +47,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 	
 	// check robots
 	hitInst = 
-		(struct Instance*)INSTANCE_CollBucket_Radius(
+		(struct Instance*)LinkedCollide_Radius(
 			sealInst, sealTh, 
 			gGT->threadBuckets[ROBOT].thread,
 			radius);
@@ -67,7 +67,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 	
 	// check mines
 	hitInst = 
-		(struct Instance*)INSTANCE_CollBucket_Radius(
+		(struct Instance*)LinkedCollide_Radius(
 			sealInst, sealTh, 
 			gGT->threadBuckets[MINE].thread,
 			radius);

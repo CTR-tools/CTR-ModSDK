@@ -2,7 +2,7 @@
 
 void INSTANCE_Death(struct Instance* inst)
 {
-	AllocPool_Remove(
-		&sdata->gGT->AllocPools.instance,
+	JitPool_Remove(
+		&sdata->gGT->JitPools.instance,
 		inst);
 }

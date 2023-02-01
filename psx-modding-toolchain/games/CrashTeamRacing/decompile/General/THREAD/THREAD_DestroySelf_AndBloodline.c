@@ -17,7 +17,7 @@ void THREAD_DestroySelf(struct Thread* t)
 	THREAD_DestroyObject(t->object, t->flags);
 	
 	// recycle thread
-	LIST_AddFront(&sdata->gGT->AllocPools.thread.free, t);
+	LIST_AddFront(&sdata->gGT->JitPools.thread.free, t);
 }
 
 // must be here, too large for original slot

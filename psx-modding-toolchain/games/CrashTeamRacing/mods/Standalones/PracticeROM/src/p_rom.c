@@ -350,7 +350,7 @@ void RunUpdateHook()
 			for (i = 0; i < numSlots; i++)
 			{
 				// initialize the other 5 empty drivers remaining
-				gGT->drivers[i + 1] = (struct Driver *) LIST_RemoveFront(&gGT->AllocPools.largeStack.free);
+				gGT->drivers[i + 1] = (struct Driver *) LIST_RemoveFront(&gGT->JitPools.largeStack.free);
 				// clearing the 5 drivers to avoid silly side effects
 				driver = (int *) gGT->drivers[i + 1];
 				for (j = 0; j < driverSize; j++)

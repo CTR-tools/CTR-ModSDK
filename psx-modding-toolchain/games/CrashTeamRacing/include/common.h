@@ -1486,7 +1486,7 @@ struct LinkedList
 };
 
 // complete struct
-struct AllocPool
+struct JitPool
 {
 	struct LinkedList free;
 	struct LinkedList taken;
@@ -4452,15 +4452,15 @@ struct GameTracker
   // 0x18d0
   struct
   {
-	  struct AllocPool thread;		// 0x18d0
-	  struct AllocPool instance;	// 0x18f8
-	  struct AllocPool smallStack;	// 0x1920, used for items
-	  struct AllocPool mediumStack;	// 0x1948, used for ???
-	  struct AllocPool largeStack;	// 0x1970, used for drivers
-	  struct AllocPool particle;	// 0x1998
-	  struct AllocPool oscillator;	// 0x19c0
-	  struct AllocPool rain;		// 0x19e8
-  } AllocPools;
+	  struct JitPool thread;		// 0x18d0
+	  struct JitPool instance;	// 0x18f8
+	  struct JitPool smallStack;	// 0x1920, used for items
+	  struct JitPool mediumStack;	// 0x1948, used for ???
+	  struct JitPool largeStack;	// 0x1970, used for drivers
+	  struct JitPool particle;	// 0x1998
+	  struct JitPool oscillator;	// 0x19c0
+	  struct JitPool rain;		// 0x19e8
+  } JitPools;
 
   // 1a10
   int levelID;

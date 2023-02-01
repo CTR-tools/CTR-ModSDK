@@ -1,14 +1,14 @@
 #include <common.h>
 
 // To do: add header
-void AllocPool_Clear(struct AllocPool* ap);
+void JitPool_Clear(struct JitPool* ap);
 void LIST_Clear(struct LinkedList* L);
 void LIST_AddFront(struct LinkedList* L, void* item);
 
 // Mem_AddExtraThreads.c
-void ClearThreadPool(struct AllocPool* p);
+void ClearThreadPool(struct JitPool* p);
 
-void ClearDriverPool(struct AllocPool* p)
+void ClearDriverPool(struct JitPool* p)
 {
 	int loop;
 	LIST_Clear(&p->free);
@@ -31,13 +31,13 @@ void New_ClearAllMemPools(struct GameTracker* gGT)
 
 {
   // erase everything in all pools
-  ClearThreadPool(&gGT->AllocPools.thread); 		// Thread Pool
-  AllocPool_Clear(&gGT->AllocPools.instance); 		// Instance Pool
-  AllocPool_Clear(&gGT->AllocPools.smallStack); 	// Small Stack Pool
-  AllocPool_Clear(&gGT->AllocPools.mediumStack); 	// Medium Stack Pool
-  ClearDriverPool(&gGT->AllocPools.largeStack); 	// Large Stack Pool (drivers)
-  AllocPool_Clear(&gGT->AllocPools.particle); 		// Particle Pool
-  AllocPool_Clear(&gGT->AllocPools.oscillator); 	// Oscillator Pool
-  AllocPool_Clear(&gGT->AllocPools.rain); 			// Rain Pools
+  ClearThreadPool(&gGT->JitPools.thread); 		// Thread Pool
+  JitPool_Clear(&gGT->JitPools.instance); 		// Instance Pool
+  JitPool_Clear(&gGT->JitPools.smallStack); 	// Small Stack Pool
+  JitPool_Clear(&gGT->JitPools.mediumStack); 	// Medium Stack Pool
+  ClearDriverPool(&gGT->JitPools.largeStack); 	// Large Stack Pool (drivers)
+  JitPool_Clear(&gGT->JitPools.particle); 		// Particle Pool
+  JitPool_Clear(&gGT->JitPools.oscillator); 	// Oscillator Pool
+  JitPool_Clear(&gGT->JitPools.rain); 			// Rain Pools
   return;
 }

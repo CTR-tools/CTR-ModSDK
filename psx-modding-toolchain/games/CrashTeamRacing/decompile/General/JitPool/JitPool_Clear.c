@@ -3,7 +3,7 @@
 void LIST_Clear(struct LinkedList* L);
 void LIST_AddFront(struct LinkedList* L, struct Item* I);
 
-void DECOMP_AllocPool_Clear(struct AllocPool* AP)
+void DECOMP_JitPool_Clear(struct JitPool* AP)
 {
   int loopIndex;
   unsigned int currSlot;

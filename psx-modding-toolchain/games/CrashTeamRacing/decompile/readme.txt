@@ -30,10 +30,10 @@ Functions:
 -DecalFont_SetJfontDimensions
 
 Some functions have been decompiled for all the 5 builds of CTR that we cater to:
--AllocPool_Add
--AllocPool_Clear
--AllocPool_Init
--AllocPool_Remove
+-JitPool_Add
+-JitPool_Clear
+-JitPool_Init
+-JitPool_Remove
 -BOTS_Adv_NumTimesLostEvent
 -BOTS_InitNavPath
 -BOTS_SetGlobalNavData

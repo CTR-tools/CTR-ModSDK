@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_AllocPool_Init(struct AllocPool* AP,int maxItems,int itemSize,char* name)
+void DECOMP_JitPool_Init(struct JitPool* AP,int maxItems,int itemSize,char* name)
 {
   // dont call memset, we overwrite the whole thing anyway
 
@@ -12,7 +12,7 @@ void DECOMP_AllocPool_Init(struct AllocPool* AP,int maxItems,int itemSize,char* 
   // all items in a pool, dont give "name" as parameter, waste of time
   AP->ptrPoolData = MEMPACK_AllocMem(maxItems * itemSize, name);
 
-  AllocPool_Clear(AP);
+  JitPool_Clear(AP);
 
   return;
 }

@@ -17,7 +17,7 @@ Mem_DriverPool.c appends the decompiled Camera110_InitStructs,
 which was reduced in size with logical optimizations.
 The new Driver pool is not solid memory, drivers are scattered
 around RAM. The game mostly-uses the linked lists, and only treats 
-the pool as solid-unscattered buffer during AllocPool_Clear, which 
+the pool as solid-unscattered buffer during JitPool_Clear, which 
 this mod overrides, so the memory can be scattered with no problem.
 The code in this file relocates every driver to kernel memory,
 and rewrites the ClearAllPools function, to use custom pool

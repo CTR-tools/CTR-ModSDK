@@ -909,7 +909,7 @@ void RenderAllBeakerRain(struct GameTracker* gGT)
 	RedBeaker_RenderRain(
 		&gGT->camera110[0],
 		&gGT->backBuffer->primMem,
-		&gGT->AllocPools.rain,
+		&gGT->JitPools.rain,
 		numPlyrCurrGame,
 		gGT->gameMode1 & 0xf);
 }
@@ -949,7 +949,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 		gGT->gameMode1 & 0xf);
 		
 	RBI = RenderBucket_QueueNonLevInstances(
-		gGT->AllocPools.instance.taken.first,
+		gGT->JitPools.instance.taken.first,
 		&gGT->backBuffer->otMem,
 		RBI,
 		sdata->LOD[lod],

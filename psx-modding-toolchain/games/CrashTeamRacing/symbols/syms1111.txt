@@ -416,21 +416,21 @@
 80032ad4 INSTANCE_LevRestartLInBs
 // INSTANCE_GetNumAnimFrames
 
-80032bdc AllocPool_Clear
-80032c5c AllocPool_Init
-80032cd4 AllocPool_Add
-80032d2c AllocPool_Remove
+80032bdc JitPool_Clear
+80032c5c JitPool_Init
+80032cd4 JitPool_Add
+80032d2c JitPool_Remove
 
-80032d6c INSTANCE_LevInstancesStart
-80032e68 INSTANCE_LevInstancesStop
-80032fc8 INSTANCE_ParentInstance
+80032d6c LevInstDef_UnPack
+80032e68 LevInstDef_RePack
+80032fc8 LHMatrix_Parent
 
-8003307c INSTANCE_ModelGlobal_Store
-800330c0 INSTANCE_ModelGlobal_Clear
+8003307c LibraryOfModels_Store
+800330c0 LibraryOfModels_Clear
 
-// INSTANCE_CollBucket_Radius
-800331ac INSTANCE_CollBucket_Hitbox_Desc
-80033208 INSTANCE_CollBucket_Hitbox
+// LinkedCollide_Radius
+800331ac LinkedCollide_Hitbox_Desc
+80033208 LinkedCollide_Hitbox
 
 80033334 LIST_Clear
 80033344 LIST_AddFront

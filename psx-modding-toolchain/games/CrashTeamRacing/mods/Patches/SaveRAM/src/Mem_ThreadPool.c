@@ -1,7 +1,7 @@
 #include <common.h>
 
 // To do: add header
-void AllocPool_Clear(struct AllocPool* ap);
+void JitPool_Clear(struct JitPool* ap);
 void LIST_Clear(struct LinkedList* L);
 void LIST_AddFront(struct LinkedList* L, void* item);
 
@@ -15,7 +15,7 @@ void MEMPACK_Init();
 // room for 3 threads
 struct Thread threads[3];
 
-void ClearThreadPool(struct AllocPool* p)
+void ClearThreadPool(struct JitPool* p)
 {
 	int loop;
 	int loop2;

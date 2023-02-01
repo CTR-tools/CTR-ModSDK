@@ -2,12 +2,12 @@
 
 void THREAD_DestroyObject(void* object, int threadFlags)
 {
-	struct AllocPool* allPools; 
-	struct AllocPool* myPool;
+	struct JitPool* allPools; 
+	struct JitPool* myPool;
 	int index;
 	
 	// TODO: need an array and enum for this
-	allPools = &sdata->gGT->AllocPools.thread;
+	allPools = &sdata->gGT->JitPools.thread;
 	
 	// 0x100 - largeStackPool	(0x1970) [4]
 	// 0x200 - medStackPool		(0x1948) [3]

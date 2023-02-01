@@ -143,11 +143,11 @@ common, exe, INSTANCE_BirthWithThread, 0x0, General/INSTANCE/INSTANCE_BirthWithT
 common, exe, INSTANCE_BirthWithThread_Stack, 0x0, General/INSTANCE/INSTANCE_BirthWithThread_Stack.c
 common, exe, INSTANCE_Death, 0x0, General/INSTANCE/INSTANCE_Death.c
 
-// AllocPool comes between CAM and LIST, it is right after INSTANCE alphabetically
-common, exe, AllocPool_Clear, 0x0, General/AllocPool_Clear.c
-common, exe, AllocPool_Init, 0x0, General/AllocPool_Init.c
-common, exe, AllocPool_Add, 0x0, General/AllocPool_Add.c
-common, exe, AllocPool_Remove, 0x0, General/AllocPool_Remove.c
+// JitPool
+common, exe, JitPool_Clear, 0x0, General/JitPool/JitPool_Clear.c
+common, exe, JitPool_Init, 0x0, General/JitPool/JitPool_Init.c
+common, exe, JitPool_Add, 0x0, General/JitPool/JitPool_Add.c
+common, exe, JitPool_Remove, 0x0, General/JitPool/JitPool_Remove.c
 
 // LIST
 common, exe, LIST_Clear, 0x0, General/LIST/LIST_Clear.c

@@ -23,7 +23,7 @@ void MM_JumpTo_BattleSetup();
 void CS_Garage_Init();
 void MM_JumpTo_Scrapbook(struct BigHeader* bigfile);
 void LOAD_DriverMPK(struct BigHeader* bigfile, int levelLOD, void* callback);
-void INSTANCE_ModelGlobal_Clear(struct GameTracker* gGT);
+void LibraryOfModels_Clear(struct GameTracker* gGT);
 void LOAD_GlobalModelPtrs_MPK();
 void DecalGlobal_Clear(struct GameTracker* gGT);
 void DecalGlobal_Store(struct GameTracker* gGT, struct Icon* icon); // second parameter might be wrong --Super
@@ -39,7 +39,7 @@ int MEMPACK_GetFreeBytes();
 void* MEMPACK_AllocHighMem(int allocSize);
 void LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, unsigned int callback);
 void DebugFont_Init(struct GameTracker* gGT);
-void INSTANCE_ModelGlobal_Store(struct GameTracker* gGT, int param_2, int* param_3);
+void LibraryOfModels_Store(struct GameTracker* gGT, int param_2, int* param_3);
 int* DecalGlobal_Find1(struct Level* level, char* str);
 int* DecalGlobal_Find2(u_int* param_1, char* str);
 void Audio_SetState_Safe(int param_1);
@@ -382,7 +382,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			if (sdata->ptrMPK == 0) sdata->PLYROBJECTLIST = 0;
 			
 			// clear and reset
-			INSTANCE_ModelGlobal_Clear(gGT);
+			LibraryOfModels_Clear(gGT);
 			LOAD_GlobalModelPtrs_MPK();
 
 			// clear and reset
@@ -561,7 +561,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			if (lev != 0)
 			{
 				// store array of model pointers in GameTracker
-				INSTANCE_ModelGlobal_Store(gGT, lev->numModels, lev->ptrModelsPtrArray);
+				LibraryOfModels_Store(gGT, lev->numModels, lev->ptrModelsPtrArray);
 
 				// == must use RDATA strings ==
 				// they have bigger sizes that the 
