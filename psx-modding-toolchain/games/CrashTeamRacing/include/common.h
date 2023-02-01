@@ -4269,7 +4269,7 @@ enum GameMode1
 	PAUSE_4				= 0x8,	// unused, debug
 	PAUSE_THREADS		= 0x10,
     BATTLE_MODE         = 0x20,
-    RACE_INTRO_CUTSCENE = 0x40,
+    START_OF_RACE 		= 0x40,
 	// 0x80?
 	P1_VIBRATE			= 0x100,
 	P2_VIBRATE			= 0x200,

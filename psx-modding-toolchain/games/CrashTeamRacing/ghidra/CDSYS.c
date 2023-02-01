@@ -852,9 +852,9 @@ int FUN_8001cd20(int param_1,int param_2)
 
 // intro cutscene
 // "greeting creatures of this planet, I come to compete..."
-// 0x4d - SPEAK_OXIDE_GAME_INTRO_1
-// 0x4e - SPEAK_OXIDE_GAME_INTRO_2
-// 0x4f - SPEAK_OXIDE_GAME_INTRO_3
+// 0x4d - SPEAK_OXIDE_GAME_CUTSCENE_1
+// 0x4e - SPEAK_OXIDE_GAME_CUTSCENE_2
+// 0x4f - SPEAK_OXIDE_GAME_CUTSCENE_3
 
 // "start your engines for sony, fasten seatbelts for naughty dog"
 // 0x50 - SPEAK_CLANCY_BROWN_SCEA_PAGE

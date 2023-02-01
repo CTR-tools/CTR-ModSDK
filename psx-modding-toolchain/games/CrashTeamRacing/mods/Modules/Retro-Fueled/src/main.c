@@ -163,7 +163,7 @@ void RunUpdateHook()
 	driver = gGT->drivers[0];
 	
 	// if the player is not racing
-	if (gGT->gameMode1 & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
+	if (gGT->gameMode1 & (START_OF_RACE | MAIN_MENU | END_OF_RACE | GAME_CUTSCENE | LOADING))
 		return;
 
 	if (driver->reserves)

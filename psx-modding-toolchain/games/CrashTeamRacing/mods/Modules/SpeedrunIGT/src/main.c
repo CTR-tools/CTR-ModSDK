@@ -450,7 +450,7 @@ void RunUpdateHook()
 
         kartState = sdata->gGT->drivers[0]->kartState;
         // if you're not loading, end of race, race countdown, adv mask speech or adv warping
-        if ((!igt->stopIncrementing) && (!((gameMode1 & (LOADING | RACE_OUTRO_CUTSCENE)) || (kartState == 4) || (kartState == 10) || (kartState == 11))))
+        if ((!igt->stopIncrementing) && (!((gameMode1 & (LOADING | END_OF_RACE)) || (kartState == 4) || (kartState == 10) || (kartState == 11))))
             IncrementIGT();
     }
     else

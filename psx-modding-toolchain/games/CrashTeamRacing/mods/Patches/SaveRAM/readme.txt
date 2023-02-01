@@ -1,7 +1,7 @@
 Works in USA Retail, Japan Trial, Europe Retail, Japan Retail.
 Does not work in Sep3
 
-Mem_MainInit_JitPoolsNew.c overwrites the original exe function.
+Mem_JitPoolsNew.c overwrites the original exe function.
 While the original would put all pools in mempack (heap),
 the new function stores as much into kernel as possible.
 In order from top to bottom:

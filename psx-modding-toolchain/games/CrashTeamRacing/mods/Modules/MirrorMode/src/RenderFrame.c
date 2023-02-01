@@ -742,7 +742,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 	if(
 		(gGT->numPlyrCurrGame != 1) ||
 		((hudFlags & 8) == 0) ||
-		((gameMode1 & RACE_INTRO_CUTSCENE) == 0)
+		((gameMode1 & START_OF_RACE) == 0)
 	)
 	{
 		// if no hud

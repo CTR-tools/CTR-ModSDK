@@ -48,7 +48,7 @@ void InjectRedFire()
 void RunUpdateHook()
 {
 	// if the player is not racing
-	if (sdata->gGT->gameMode & (RACE_INTRO_CUTSCENE | MAIN_MENU | RACE_OUTRO_CUTSCENE | GAME_INTRO | LOADING))
+	if (sdata->gGT->gameMode & (START_OF_RACE | MAIN_MENU | END_OF_RACE | GAME_CUTSCENE | LOADING))
 		return;
 
 	if (sdata->gGT->drivers[0]->reserves)

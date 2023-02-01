@@ -5,9 +5,9 @@
 
 // Import SaveRAM
 common, exe, LOAD_DriverMPK, 0x0, ../../../decompile/General/LOAD_DriverMPK.c
-common, exe, MainInit_JitPoolsNew, 0x0, ../../Patches/SaveRAM/src/Mem_MainInit_JitPoolsNew.c
+common, exe, MainInit_JitPoolsNew, 0x0, ../../Patches/SaveRAM/src/Mem_JitPoolsNew.c
 common, exe, Camera110_InitStructs, 0x0, ../../../decompile/General/Camera110_InitStructs.c ../../Patches/SaveRAM/src/Mem_DriverPool.c, Mem_DriverPool.bin
-common, exe, MainInit_JitPoolsReset, 0x0, ../../Patches/SaveRAM/src/Mem_hookClearAllPools.s
+common, exe, MainInit_JitPoolsReset, 0x0, ../../Patches/SaveRAM/src/Mem_hookJitPoolsReset.s
 common, exe, DrawRaceClock, 0x0, ../../../decompile/General/DrawRaceClock.c ../../Patches/SaveRAM/src/Mem_ThreadPool.c, Mem_ThreadPool.bin
 
 // Include OverrideMPK
