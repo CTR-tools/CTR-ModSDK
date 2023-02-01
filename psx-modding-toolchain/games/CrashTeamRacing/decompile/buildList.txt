@@ -252,8 +252,8 @@ common, exe, InterpolatePosition2D_HUD, 0x0, General/InterpolatePosition2D_HUD.c
 common, exe, InterpolatePosition2D_Linear, 0x0, General/InterpolatePosition2D_Linear.c
 common, exe, DrawJumpMeter, 0x0, General/DrawJumpMeter.c
 common, exe, DrawPowerslideMeter, 0x0, General/DrawPowerslideMeter.c
-common, exe, SetPrimMemSize, 0x0, General/SetPrimMemSize.c
-common, exe, SetOTMemSize, 0x0, General/SetOTMemSize.c
+common, exe, GameInit_PrimMem, 0x0, General/GameInit_PrimMem.c
+common, exe, GameInit_OTMem, 0x0, General/GameInit_OTMem.c
 common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
 common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
 common, exe, DrawRectangle, 0x0, General/DrawRectangle.c

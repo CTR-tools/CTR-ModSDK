@@ -26,7 +26,7 @@ common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_ho
 // CustomCups //
 
 common, exe, LOAD_Callback_Overlay_231, -0x8, ../../Modules/CustomCups/src/hook230.s
-common, exe, StringToLevID, -0x8, ../../Modules/CustomCups/src/hookInit.s
+common, exe, GameInit_StringToLevID, -0x8, ../../Modules/CustomCups/src/hookInit.s
 
 // DebugFrustum //
 

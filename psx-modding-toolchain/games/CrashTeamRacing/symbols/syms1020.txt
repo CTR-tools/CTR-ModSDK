@@ -533,23 +533,23 @@
 80039f70 EndRace_TimeTrialRelic_SaveHighScore
 8003a0b8 NewState_EndRace
 8003abcc NewState_StartRace
-8003ac68 VisMemInit
-8003acec RainBufferInit
+8003ac68 GameInit_VisMem
+8003acec GameInit_RainBuffer
 
-8003add4 SetPrimMemSize
-8003afb4 ClearAllMemPools
-8003b014 SetOTMemSize
-8003b11c AllocateAllPools
-8003b3b0 AllocAllDrivers
-8003b614 InitThreadBuckets
-8003beb4 StringToLevID
+8003add4 GameInit_PrimMem
+8003afb4 GameInit_JitPoolsReset
+8003b014 GameInit_OTMem
+8003b11c GameInit_JitPoolsNew
+8003b3b0 GameInit_Drivers
+8003b614 GameInit_FinalizeInit
+8003beb4 GameInit_StringToLevID
 
-8003bf28 VRAM_ClearToBlack
-8003bff0 UpdateIntroScreen
-8003c0fc EndGame
+8003bf28 GameInit_WipeVRAM
+8003bff0 GameInit_DisplayVRAM
+8003c0fc GameEnd_StopCTR
 
 8003c160 PrepareSpyro2
-8003c1d0 LaunchSpyro2
+8003c1d0 GameEnd_LaunchSpyro2
 
 8003c208 LoadVlcTable_Callback
 8003c218 LoadVlcTable // whatever that is

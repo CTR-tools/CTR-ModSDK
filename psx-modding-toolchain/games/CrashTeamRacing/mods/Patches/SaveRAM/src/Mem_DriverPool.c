@@ -27,7 +27,7 @@ void ClearDriverPool(struct JitPool* p)
 }
 
 // original is now free to overwrite
-void New_ClearAllMemPools(struct GameTracker* gGT)
+void New_GameInit_JitPoolsReset(struct GameTracker* gGT)
 
 {
   // erase everything in all pools

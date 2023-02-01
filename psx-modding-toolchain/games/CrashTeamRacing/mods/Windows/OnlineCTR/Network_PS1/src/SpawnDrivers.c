@@ -1,6 +1,6 @@
 #include "global.h"
 
-// replace AllocAllDrivers
+// replace GameInit_Drivers
 void SpawnDrivers(struct GameTracker* gGT)
 {	
 	int i;

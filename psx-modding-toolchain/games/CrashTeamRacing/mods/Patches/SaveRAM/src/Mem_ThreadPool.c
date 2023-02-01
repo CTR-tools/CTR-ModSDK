@@ -8,7 +8,7 @@ void LIST_AddFront(struct LinkedList* L, void* item);
 void PadInitMtap();
 void howl_InitGlobals(); // 80029988
 void BakeMathGTE(); // 80057884
-void StringToLevID();
+void GameInit_StringToLevID();
 void MEMCARD_InitCard();
 void MEMPACK_Init();
 
@@ -60,7 +60,7 @@ void ClearThreadPool(struct JitPool* p)
 	arr[4-1] = (unsigned int)howl_InitGlobals;
 	arr[5-1] = (unsigned int)MEMCARD_InitCard;
 	arr[6-1] = (unsigned int)RDATA_1; // can be 11, but must skip index 7
-	arr[7-1] = 0;//(unsigned int)StringToLevID; // can be 8 [NOT WORKING]
+	arr[7-1] = 0;//(unsigned int)GameInit_StringToLevID; // can be 8 [NOT WORKING]
 	arr[8-1] = (unsigned int)PadInitMtap;
 	arr[9-1] = (unsigned int)RDATA_2;
 	arr[10-1] = 0;

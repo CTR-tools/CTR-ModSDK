@@ -532,23 +532,23 @@
 80038f2c EndRace_TimeTrialRelic_SaveHighScore
 80039074 NewState_EndRace
 80039b60 NewState_StartRace
-80039bf8 VisMemInit
-80039c7c RainBufferInit
+80039bf8 GameInit_VisMem
+80039c7c GameInit_RainBuffer
 
-80039d64 SetPrimMemSize
-80039ea4 ClearAllMemPools
-80039f04 SetOTMemSize
-80039f74 AllocateAllPools
-8003a208 AllocAllDrivers
-8003a4c0 InitThreadBuckets
-8003ad74 StringToLevID
+80039d64 GameInit_PrimMem
+80039ea4 GameInit_JitPoolsReset
+80039f04 GameInit_OTMem
+80039f74 GameInit_JitPoolsNew
+8003a208 GameInit_Drivers
+8003a4c0 GameInit_FinalizeInit
+8003ad74 GameInit_StringToLevID
 
-8003add8 VRAM_ClearToBlack
-8003aea0 UpdateIntroScreen
-8003afb0 EndGame
+8003add8 GameInit_WipeVRAM
+8003aea0 GameInit_DisplayVRAM
+8003afb0 GameEnd_StopCTR
 
 // no "prepare", just one large "launch"
-8003b014 LaunchSpyro2
+8003b014 GameEnd_LaunchSpyro2
 // == six other cheat code funcs here ==
 
 8003b1e8 LoadVlcTable_Callback

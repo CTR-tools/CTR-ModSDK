@@ -513,22 +513,20 @@
 8003a3fc NewState_EndRace
 8003aee8 NewState_StartRace
 
-8003af84 VisMemInit
-8003b008 RainBufferInit
-8003b0f0 SetPrimMemSize
-8003b2d4 ClearAllMemPools
-8003b334 SetOTMemSize
-8003b43c AllocateAllPools
-8003b6d0 AllocAllDrivers
-8003b934 InitThreadBuckets
-8003c1d4 StringToLevID
+8003af84 GameInit_VisMem
+8003b008 GameInit_RainBuffer
+8003b0f0 GameInit_PrimMem
+8003b2d4 GameInit_JitPoolsReset
+8003b334 GameInit_OTMem
+8003b43c GameInit_JitPoolsNew
+8003b6d0 GameInit_Drivers
+8003b934 GameInit_FinalizeInit
+8003c1d4 GameInit_StringToLevID // unused
+8003c248 GameInit_WipeVRAM
+8003c310 GameInit_DisplayVRAM
 
-8003c248 VRAM_ClearToBlack
-8003c310 UpdateIntroScreen
-8003c41c EndGame
-
-// no "prepare", just one large "launch"
-8003c480 LaunchSpyro2
+8003c41c GameEnd_StopCTR
+8003c480 GameEnd_LaunchSpyro2
 
 8003c508 LoadVlcTable_Callback
 8003c518 LoadVlcTable // whatever that is

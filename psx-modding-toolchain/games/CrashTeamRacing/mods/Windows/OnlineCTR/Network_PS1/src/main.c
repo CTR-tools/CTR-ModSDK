@@ -79,7 +79,7 @@ void ThreadFunc()
 	octr->funcs[octr->CurrState]();
 }
 
-// this runs after the end of InitThreadBuckets,
+// this runs after the end of GameInit_FinalizeInit,
 // which is also after the end of camera initialization
 void RunInitHook()
 {

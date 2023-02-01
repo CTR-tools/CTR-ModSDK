@@ -17,7 +17,7 @@
 common, exe, rdata_free, 0x0, ../../Tutorials/TemplateParkingLot/src/flagFunc.c
 
 // Hook
-common, exe, StringToLevID, -0x8, src/hookInit.s
+common, exe, GameInit_StringToLevID, -0x8, src/hookInit.s
 
 903, exe, 0x800101DC, 0x0, src/main.c
 926, exe, 0x800101CC, 0x0, src/main.c

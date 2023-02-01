@@ -545,20 +545,20 @@
 8003b828 EndRace_TimeTrialRelic_SaveHighScore
 8003b970 NewState_EndRace
 8003c484 NewState_StartRace
-8003c520 VisMemInit
-8003c5a4 RainBufferInit
+8003c520 GameInit_VisMem
+8003c5a4 GameInit_RainBuffer
 
-8003c68c SetPrimMemSize
-8003c844 ClearAllMemPools
-8003c8a4 SetOTMemSize
-8003c9ac AllocateAllPools
-8003cc40 AllocAllDrivers
-8003cea4 InitThreadBuckets
-8003d744 StringToLevID
+8003c68c GameInit_PrimMem
+8003c844 GameInit_JitPoolsReset
+8003c8a4 GameInit_OTMem
+8003c9ac GameInit_JitPoolsNew
+8003cc40 GameInit_Drivers
+8003cea4 GameInit_FinalizeInit
+8003d744 GameInit_StringToLevID
 
-8003d7b8 VRAM_ClearToBlack
-8003d880 UpdateIntroScreen
-8003d98c EndGame
+8003d7b8 GameInit_WipeVRAM
+8003d880 GameInit_DisplayVRAM
+8003d98c GameEnd_StopCTR
 
 // No Spyro 2 in this build
 

@@ -29,7 +29,7 @@ u_int main()
 		// wont happen under normal conditions
 		if (sdata->mainGameState == 5)
 		{
-			EndGame();
+			GameEnd_StopCTR();
 			return 0;
 		}
 		#endif
@@ -82,7 +82,7 @@ u_int main()
 				}
 				EffectSfxRain_Reset(gGT);
 				GAMEPROG_GetPtrHighScoreTrack();
-				InitThreadBuckets(gGT);
+				GameInit_FinalizeInit(gGT);
 				GAMEPAD_GetNumConnected(sdata->gGamepads);
 				sdata->boolSoundPaused = 0;
 				Init_EngineAudio_AllPlayers();
@@ -458,7 +458,7 @@ void StateZero()
 	ResetGraph(0);
 	SetGraphDebug(0);
 	
-	VRAM_ClearToBlack();
+	GameInit_WipeVRAM();
 	
 	SetDispMask(1);
 	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
@@ -568,7 +568,7 @@ void StateZero()
 	#ifndef FastBoot
 	// Load Intro TIM for "SCEA Presents" from VRAM file
 	LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
-	UpdateIntroScreen();
+	GameInit_DisplayVRAM();
 	#endif
 	
 	// \SOUNDS\KART.HWL;1

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_SetPrimMemSize(struct GameTracker* gGT)
+void DECOMP_GameInit_PrimMem(struct GameTracker* gGT)
 {
 	int size;
 	int levelID = gGT->levelID;
@@ -65,7 +65,7 @@ EndFunc:
 	Alloc_PrimMem(&gGT->db[1].primMem, size);
 }
 
-void DECOMP_SetOTMemSize(struct GameTracker* gGT)
+void DECOMP_GameInit_OTMem(struct GameTracker* gGT)
 {
 	int size;
 	int levelID = gGT->levelID;

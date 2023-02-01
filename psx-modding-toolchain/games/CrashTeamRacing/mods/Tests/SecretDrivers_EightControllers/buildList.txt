@@ -33,7 +33,7 @@ common, exe, LOAD_AppendQueue, 0x8, ../../Modules/OverrideMPK/src/numDriversPlus
 common, exe, Driver_GetModelByName, 0x0, ../../Modules/OverrideMPK/src/OvMPK_StringSearch.c
 common, exe, LOAD_DriverMPK, 0x0, ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.c
 
-common, exe, StringToLevID, -0x8, src/hookInit.s
+common, exe, GameInit_StringToLevID, -0x8, src/hookInit.s
 
 // Compile main code to empty spaces in RDATA
 903, exe, 0x800101DC, 0x0, src/main.c

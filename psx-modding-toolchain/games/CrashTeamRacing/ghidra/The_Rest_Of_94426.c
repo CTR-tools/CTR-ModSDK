@@ -7139,7 +7139,7 @@ void FUN_8003aee8(uint *param_1,int param_2)
 }
 
 
-// VisMemInit
+// GameInit_VisMem
 // param1 is PTR_DAT_8008d2ac
 void FUN_8003af84(int param_1)
 
@@ -7176,7 +7176,7 @@ void FUN_8003af84(int param_1)
 }
 
 
-// RainBufferInit
+// GameInit_RainBuffer
 // param1 is PTR_DAT_8008d2ac
 void FUN_8003b008(int param_1)
 
@@ -7258,7 +7258,7 @@ void FUN_8003b008(int param_1)
   return;
 }
 
-// SetPrimMemSize
+// GameInit_PrimMem
 void FUN_8003b0f0(uint *param_1)
 
 {
@@ -7375,7 +7375,7 @@ LAB_8003b2b8:
 }
 
 
-// ClearAllMemPools
+// GameInit_JitPoolsReset
 void FUN_8003b2d4(int param_1)
 
 {
@@ -7391,7 +7391,7 @@ void FUN_8003b2d4(int param_1)
   return;
 }
 
-// SetOTMemSize
+// GameInit_OTMem
 void FUN_8003b334(uint *param_1)
 
 {
@@ -7480,7 +7480,7 @@ void FUN_8003b334(uint *param_1)
   return;
 }
 
-// AllocateAllPools
+// GameInit_JitPoolsNew
 void FUN_8003b43c(uint *param_1)
 {
   // In theory, param_1 is PTR_DAT_8008d2ac
@@ -7662,7 +7662,7 @@ void FUN_8003b43c(uint *param_1)
 }
 
 
-// AllocAllDrivers
+// GameInit_Drivers
 void FUN_8003b6d0(uint *param_1)
 
 {
@@ -7911,7 +7911,7 @@ void FUN_8003b6d0(uint *param_1)
 
 
 // param1 is PTR_DAT_8008d2ac
-// InitThreadBuckets
+// GameInit_FinalizeInit
 void FUN_8003b934(uint *param_1)
 
 {
@@ -8177,7 +8177,7 @@ void FUN_8003b934(uint *param_1)
 	   // number of laps * 8
        (int)(char)PTR_DAT_8008d2ac[0x1d33] * 8;
 
-  // AllocAllDrivers
+  // GameInit_Drivers
   FUN_8003b6d0(param_1);
 
   // assume 1P fov
@@ -8396,10 +8396,10 @@ void FUN_8003b934(uint *param_1)
     FUN_8003116c();
   }
 
-  // VisMemInit
+  // GameInit_VisMem
   FUN_8003af84(param_1);
 
-  // RainBufferInit
+  // GameInit_RainBuffer
   FUN_8003b008(param_1);
 
   // gGT->lev (0x58*4 = 0x160)
@@ -8551,7 +8551,7 @@ int FUN_8003c1d4(char *param_1)
 }
 
 
-// VRAM_ClearToBlack
+// GameInit_WipeVRAM
 void FUN_8003c248(void)
 
 {
@@ -8643,7 +8643,7 @@ void FUN_8003c310(void)
 }
 
 
-// EndGame
+// GameEnd_StopCTR
 void FUN_8003c41c(void)
 {
   // set callback and save callback
@@ -8833,7 +8833,7 @@ undefined4 main(void)
       ResetGraph(0);
       SetGraphDebug(0);
 
-	  // VRAM_ClearToBlack
+	  // GameInit_WipeVRAM
       FUN_8003c248();
 
       SetDispMask(1);

@@ -3,15 +3,15 @@
 void Cutscene_VolumeBackup();
 void CDSYS_XAPauseRequest();
 void MEMPACK_SwapPacks(int index);
-int StringToLevID(char* str);
+int GameInit_StringToLevID(char* str);
 void MEMPACK_PopToState(int id);
 u_int LOAD_VramFile(struct BigHeader* bigfile, u_int fileIndex, u_int* destination, u_int* sizePtr, int callback);
 void LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs);
-void UpdateIntroScreen();
+void GameInit_DisplayVRAM();
 int MEMPACK_PushState();
-void SetPrimMemSize(u_int* param_1);
-void SetOTMemSize(u_int* param_1);
-void AllocateAllPools(u_int* param_1);
+void GameInit_PrimMem(u_int* param_1);
+void GameInit_OTMem(u_int* param_1);
+void GameInit_JitPoolsNew(u_int* param_1);
 void LOAD_OvrEndRace(u_int* param_1);
 void LOAD_OvrLOD(int param_1);
 void LOAD_OvrThreads(u_int param_1);
@@ -111,7 +111,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 				// Load Intro TIM for Copyright Page from VRAM file
 				LOAD_VramFile(bigfile, 0x1fe, 0, &vramSize, 0xffffffff);
-				UpdateIntroScreen();
+				GameInit_DisplayVRAM();
 
 				gGT->db[0].drawEnv.isbg = 0;
 				gGT->db[1].drawEnv.isbg = 0;
@@ -250,8 +250,8 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				sdata->levelLOD = 8;
 			}
 			
-			SetPrimMemSize(gGT);
-			SetOTMemSize(gGT);
+			GameInit_PrimMem(gGT);
+			GameInit_OTMem(gGT);
 
 			// if cutscene, adventure arena, or credits
 			if
@@ -261,7 +261,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			)
 			{
 				// (now, at beginning of mempack)
-				AllocateAllPools(gGT);
+				GameInit_JitPoolsNew(gGT);
 			}
 			break;
 		}
@@ -641,7 +641,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			)
 			{
 				// (now, at end of mempack)
-				AllocateAllPools(gGT);
+				GameInit_JitPoolsNew(gGT);
 
 				return loadingStage + 1;
 			}

@@ -4,7 +4,7 @@
 1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
 
 common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
-common, exe, StringToLevID, -0x8, src/hookInit.s
+common, exe, GameInit_StringToLevID, -0x8, src/hookInit.s
 common, 221, CC_EndEvent_DrawMenu,0x0, src/patch221_EndEvent.s
 common, 230, MM_MenuBox_Main,0x318, src/patch230_CrystalChallengeMode.s
 common, 221, CC_EndEvent_DrawMenu,0x10, src/patch221_StoreRings.c
