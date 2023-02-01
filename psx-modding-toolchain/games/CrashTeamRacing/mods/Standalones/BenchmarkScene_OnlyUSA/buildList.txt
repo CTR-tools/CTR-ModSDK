@@ -7,7 +7,7 @@
 926, exe, 0x8001B038, 0x0, ../../Patches/DisableHUD/src/disable.s
 
 // Include SaveRAM
-common, exe, LOAD_DriverMPK, 0x0, ../../../decompile/General/LOAD_DriverMPK.c
+common, exe, LOAD_DriverMPK, 0x0, ../../../decompile/General/LOAD/LOAD_DriverMPK.c
 common, exe, MainInit_JitPoolsNew, 0x0, ../../Patches/SaveRAM/src/Mem_JitPoolsNew.c
 common, exe, Camera110_InitStructs, 0x0, ../../../decompile/General/Camera110_InitStructs.c ../../Patches/SaveRAM/src/Mem_DriverPool.c, Mem_DriverPool
 common, exe, MainInit_JitPoolsReset, 0x0, ../../Patches/SaveRAM/src/Mem_hookJitPoolsReset.s
