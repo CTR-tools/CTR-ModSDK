@@ -22,8 +22,8 @@ void MEMPACK_PopState();
 void LIST_Clear(struct LinkedList* L);
 void LIST_AddFront(struct LinkedList* L, void* item);
 
-// GameInit_JitPoolsNew
-void GameInit_JitPoolsNew_New(struct GameTracker* gGT)
+// MainInit_JitPoolsNew
+void MainInit_JitPoolsNew_New(struct GameTracker* gGT)
 {
   int clipSize;
   int *piVar4;

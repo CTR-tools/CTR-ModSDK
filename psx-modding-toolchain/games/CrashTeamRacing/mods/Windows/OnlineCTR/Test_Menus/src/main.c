@@ -61,7 +61,7 @@ void RunEntryHook()
 	octr->funcs[2] = (int)MenuState3_Minimize;
 }
 
-// this runs after the end of GameInit_FinalizeInit,
+// this runs after the end of MainInit_FinalizeInit,
 // which is also after the end of camera initialization
 void RunInitHook()
 {

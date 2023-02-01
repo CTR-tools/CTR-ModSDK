@@ -239,7 +239,7 @@ common, exe, Camera110_FadeAllWindows, 0x0, General/Camera110_FadeAllWindows.c
 
 // Uncategorized
 common, exe, RNG_Scramble, 0x0, General/RNG_Scramble.c
-common, exe, RacingWheel_Config_DrawArrows, 0x0, General/RacingWheel_Config_DrawArrows.c
+common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MainFreeze_ConfigDrawArrows.c
 common, exe, Map_DrawMap, 0x0, General/Map_DrawMap.c
 common, exe, DrawCharacterIcon, 0x0, General/DrawCharacterIcon.c
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
@@ -252,14 +252,14 @@ common, exe, InterpolatePosition2D_HUD, 0x0, General/InterpolatePosition2D_HUD.c
 common, exe, InterpolatePosition2D_Linear, 0x0, General/InterpolatePosition2D_Linear.c
 common, exe, DrawJumpMeter, 0x0, General/DrawJumpMeter.c
 common, exe, DrawPowerslideMeter, 0x0, General/DrawPowerslideMeter.c
-common, exe, GameInit_PrimMem, 0x0, General/GameInit_PrimMem.c
-common, exe, GameInit_OTMem, 0x0, General/GameInit_OTMem.c
+common, exe, MainInit_PrimMem, 0x0, General/MainInit_PrimMem.c
+common, exe, MainInit_OTMem, 0x0, General/MainInit_OTMem.c
 common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
 common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
 common, exe, DrawRectangle, 0x0, General/DrawRectangle.c
 common, exe, DrawBoxOutline_LowLevel, 0x0, General/DrawBoxOutline_LowLevel.c
 
-common, exe, RenderFrame, 0x0, General/RenderFrame.c
+common, exe, MainFrame_RenderFrame, 0x0, General/MainFrame_RenderFrame.c
 
 common, exe, Player_Spinning_Update, 0x0, General/Player_Spinning_FuncPtrs.c
 common, exe, Player_Spinning_Init, 0x0, General/Player_Spinning_Init.c

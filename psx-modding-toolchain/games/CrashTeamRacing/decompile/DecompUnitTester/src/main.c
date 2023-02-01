@@ -10,13 +10,13 @@
 // Functions
 void DECOMP_Player_Spinning_Interpolate(struct Thread* bread, struct Driver* driver);
 void Player_Spinning_Interpolate(struct Thread* bread, struct Driver* driver);
-void GameplayUpdateLoop();
+void MainFrame_GameLogic();
 
 typedef void (*func)(struct Thread* bread, struct Driver* driver);
 func newFunc = (func) &DECOMP_Player_Spinning_Interpolate;
 func oldFunc = (func) &Player_Spinning_Interpolate;
 
-unsigned int * hookAddress = (unsigned int *) (&GameplayUpdateLoop - 8);
+unsigned int * hookAddress = (unsigned int *) (&MainFrame_GameLogic - 8);
 unsigned int instructions[4];
 
 unsigned int * ram = (unsigned int *) 0x80010000;

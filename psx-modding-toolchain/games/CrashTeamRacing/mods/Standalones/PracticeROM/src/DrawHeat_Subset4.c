@@ -1,6 +1,6 @@
 #include "../p_rom.h"
 
-void howl_TogglePause(int enable);
+void MainFrame_TogglePauseAudio(int enable);
 
 void SaveState()
 {
@@ -18,11 +18,11 @@ void SaveState()
 	for (i = 0; i < instanceSize; i++)
 		instanceBuffer[i] = selfInstance[i];
 
-	howl_TogglePause(1);
+	MainFrame_TogglePauseAudio(1);
 	p_rom->numSounds[p_rom->slot] = sdata->numBackup_ChannelStats;
 	for (i = 0; i < soundSize; i++)
 		soundBuffer[i] = sound[i];
-	howl_TogglePause(0);
+	MainFrame_TogglePauseAudio(0);
 
 	p_rom->clock[p_rom->slot][0] = sdata->gGT->elapsedEventTime;
 	p_rom->clock[p_rom->slot][1] = sdata->gGT->lapTime[0];

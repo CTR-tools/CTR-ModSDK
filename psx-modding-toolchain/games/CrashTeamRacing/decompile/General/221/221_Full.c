@@ -192,7 +192,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	adv->rewards[bitIndex>>5] |= (1<<(bitIndex&0x1f));
 	
 	// go back to adv hub
-	Level_RequestNewLEV(gGT->prevLEV);
+	MainRaceTrack_RequestLoad(gGT->prevLEV);
 }
 
 void MenuBoxFuncPtr_GenericEndOfRace();

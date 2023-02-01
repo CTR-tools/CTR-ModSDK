@@ -100,7 +100,7 @@
 80021b94 CTR_CycleTex_2p3p4pWumpaHUD
 80021bbc CTR_ClearRenderLists_1P2P
 80021c2c CTR_ClearRenderLists_3P4P
-80021c8c CTR_EmptyFunc_StartNewFrame
+80021c8c CTR_EmptyFunc_MainFrame_ResetDB
 80021c94 CTR_ErrorScreen
 
 // CTR_Frustum_UpdateVisMem
@@ -122,7 +122,7 @@
 80022930 DecalFont_DrawMultiLineStrlen
 80022b34 DecalFont_DrawMultiLine
 
-80022b94 DecalGlobal_EmptyFunc_StartNewFrame
+80022b94 DecalGlobal_EmptyFunc_MainFrame_ResetDB
 80022b9c DecalGlobal_Clear
 80022bdc DecalGlobal_Store
 80022c88 DecalGlobal_Find1
@@ -471,76 +471,62 @@
 80034920 LOAD_IsOpen_AdvHub
 80034940 LOAD_IsOpen_Podiums
 
-// End of LOAD_ 	^^^^		???
-
-// Start of MAIN_ 	vvvv		???
-
 80034960 MainDB_GetClipSize
 800349c4 MainDB_PrimMem
 80034a28 MainDB_OTMem
 
-80034a80 DrawSyncCallbackFunc
-80034aa4 VsyncCallbackFunc
+80034a80 MainDrawCallback_DrawSync
+80034aa4 MainDrawCallback_Vsync
 
-80034b48 howl_TogglePause
-80034bbc StartNewFrame
-80034d54 GameplayUpdateLoop
+80034b48 MainFrame_TogglePauseAudio
+80034bbc MainFrame_ResetDB
+80034d54 MainFrame_GameLogic
+// unknown 80035684 // VisMem related
+800357b8 MainFrame_VisMemFullFrame
+80035d30 MainFrame_InitVideoSTR
+80035d70 MainFrame_HaveAllPads
+80035e20 MainFrame_RequestMaskHint
+80035e70 MainFrame_RenderFrame
 
-// VisMem (not important)
-// unknown 80035684
+800379f4 MainFreeze_ConfigDrawNPC105
+80037bc0 MainFreeze_ConfigDrawArrows
+80037da0 MainFreeze_ConfigSetupEntry
+80038b5c MainFreeze_MenuPtrOptions
+80039908 MainFreeze_MenuPtrQuit
+800399fc MainFreeze_SafeAdvDestroy
+80039A44 MainFreeze_MenuPtrDefault
+80039dcc MainFreeze_GetMenuBox
+80039e98 MainFreeze_IfPressStart
 
-800357b8 VisMem_FullFrame
-80035d30 VideoSTR_Init
-80035d70 BoolAllPadsConnected
+80039fa8 MainGameEnd_SoloRaceGetReward
+8003a2b4 MainGameEnd_SoloRaceSaveHighScore
+8003a3fc MainGameEnd_Initialize
+8003aee8 MainGameStart_Initialize
 
-80035e20 RequestMaskHint
-80035e70 RenderFrame
+8003af84 MainInit_VisMem
+8003b008 MainInit_RainBuffer
+8003b0f0 MainInit_PrimMem
+8003b2d4 MainInit_JitPoolsReset
+8003b334 MainInit_OTMem
+8003b43c MainInit_JitPoolsNew
+8003b6d0 MainInit_Drivers
+8003b934 MainInit_FinalizeInit
+8003c1d4 MainInit_StringToLevID // unused
+8003c248 MainInit_WipeVRAM
+8003c310 MainInit_DisplayVRAM
 
-800379f4 RacingWheel_Config_DrawNPC105
-80037bc0 RacingWheel_Config_DrawArrows
-80037da0 RacingWheel_Config
+8003c41c MainKillGame_StopCTR
+8003c480 MainKillGame_LaunchSpyro2
 
-80038b5c MenuBoxFuncPtr_Options
-80039908 MenuBoxFuncPtr_Quit
-
-800399fc PauseGame_SafeAdvDestroy
-80039A44 PauseGame_MenuBoxFuncPtr
-80039dcc PauseGame_GetMenuBox
-80039e98 PauseGame_WhenPressingStart
-
-80039fa8 EndRace_TimeTrialRelic_GetReward
-8003a2b4 EndRace_TimeTrialRelic_SaveHighScore
-8003a3fc NewState_EndRace
-8003aee8 NewState_StartRace
-
-8003af84 GameInit_VisMem
-8003b008 GameInit_RainBuffer
-8003b0f0 GameInit_PrimMem
-8003b2d4 GameInit_JitPoolsReset
-8003b334 GameInit_OTMem
-8003b43c GameInit_JitPoolsNew
-8003b6d0 GameInit_Drivers
-8003b934 GameInit_FinalizeInit
-8003c1d4 GameInit_StringToLevID // unused
-8003c248 GameInit_WipeVRAM
-8003c310 GameInit_DisplayVRAM
-
-8003c41c GameEnd_StopCTR
-8003c480 GameEnd_LaunchSpyro2
-
-8003c508 LoadVlcTable_Callback
-8003c518 LoadVlcTable // whatever that is
+8003c508 MainLoadVLC_Callback
+8003c518 MainLoadVLC // whatever that is
 8003c58c main
 
-8003cf7c Level_StartLoading
-8003cfc0 Level_RequestNewLEV
+8003cf7c MainRaceTrack_StartLoad
+8003cfc0 MainRaceTrack_RequestLoad
 
-8003d024 ClearStandings_BattleVS
-8003d068 RestartRace_IncrementLossCount
-
-// End of MAIN ^^^
-
-// Start of MATH vvv
+8003d024 MainStats_ClearBattleVS
+8003d068 MainStats_RestartRaceCountLoss
 
 8003d184 MATH_Sin
 8003d1c0 MATH_Cos
@@ -549,10 +535,6 @@
 8003d328 MATH_VectorLength
 8003d378 MATH_VectorNormalize
 8003d460 MATH_MatrixMul
-
-// End of MATH ^^^
-
-// Start of MEMCARD vvv
 
 8003d4e4 MEMCARD_SetIcon
 // Extra function in sep3, name scramble?
@@ -717,7 +699,7 @@
 
 // this one \/ calls the other two ^^
 // unknown 80047d64 -- related to memcard
-80047d64 unk80047d64 // needed for RenderFrame
+80047d64 unk80047d64 // needed for MainFrame_RenderFrame
 
 80047da8 LoadSave_LoadProfileFromHub_MenuBoxFuncPtr
 80047dfc LoadSave_ThTick

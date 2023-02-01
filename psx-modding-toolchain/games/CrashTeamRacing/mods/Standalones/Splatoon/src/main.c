@@ -36,7 +36,7 @@
 
 void DecalFont_DrawLine(char*, int, int, int, int);
 void* MEMPACK_AllocMem(int size, char* name);
-void Level_RequestNewLEV(int levID);
+void MainRaceTrack_RequestLoad(int levID);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void DrawTextBackground(RECT* r, int flag, void* ot);
 void CAM_ThTick(struct Thread* t);
@@ -167,7 +167,7 @@ void EndCrystalChallenge(void)
 	sdata->gGT->numPlyrNextGame = tap >> 4;
 
 	// Add Parking Lot to Queue
-	Level_RequestNewLEV(20);
+	MainRaceTrack_RequestLoad(20);
 }
 
 void RunEntryHook()

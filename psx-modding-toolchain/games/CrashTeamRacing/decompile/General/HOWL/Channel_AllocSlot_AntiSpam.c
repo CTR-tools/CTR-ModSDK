@@ -36,7 +36,7 @@ struct ChannelStats* Channel_AllocSlot_AntiSpam(
 			)
 			{
 				int duration = 
-				sdata->gGT->frameTimer_StartNewFrame -
+				sdata->gGT->frameTimer_MainFrame_ResetDB -
 				stats->startFrame;
 				
 				// if started within 10 frames, cancel old and start new,

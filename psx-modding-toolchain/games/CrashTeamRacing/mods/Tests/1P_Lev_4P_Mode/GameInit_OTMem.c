@@ -1,4 +1,4 @@
 #include <common.h>
 
-// === relocated to GameInit_PrimMem.c
+// === relocated to MainInit_PrimMem.c
 

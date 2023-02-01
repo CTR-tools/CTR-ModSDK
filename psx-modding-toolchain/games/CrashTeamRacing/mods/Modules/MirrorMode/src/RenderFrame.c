@@ -1,6 +1,6 @@
 #include <common.h>
 
-void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
+void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	int i;
 	struct Level* lev = gGT->level1;
@@ -11,7 +11,7 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	ElimBG_HandleState(gGT);
 	
 	if((gGT->renderFlags & 0x21) != 0)
-		VisMem_FullFrame(gGT, gGT->level1);
+		MainFrame_VisMemFullFrame(gGT, gGT->level1);
 	
 	if((gGT->renderFlags & 1) != 0)
 		if(gGT->visMem1 != 0)
@@ -158,8 +158,8 @@ void RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	RenderSubmit(gGT);
 }
 
-// warning, this increases the size of RenderFrame.c,
-// making it overwrite the RacingWheel_Config functions,
+// warning, this increases the size of MainFrame_RenderFrame.c,
+// making it overwrite the MainFreeze_ConfigSetupEntry functions,
 // but not like anybody uses those anyway
 #define COLOR 0
 void DF_ParseOT(u_long* startOT, unsigned int endOT, int windowWidth)
@@ -494,7 +494,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// or if no controllers are missing currently
 	if(gGT->boolDemoMode == 1) return;
 	if((gGT->gameMode1 & GAME_CUTSCENE) != 0) return;
-	if(BoolAllPadsConnected(gGT->numPlyrNextGame) == 1) return;
+	if(MainFrame_HaveAllPads(gGT->numPlyrNextGame) == 1) return;
 	
 	// if main menu is open, assume 230 loaded,
 	// quit if menu is at highest level (no ptrNext to draw)
@@ -917,7 +917,7 @@ void RenderAllBeakerRain(struct GameTracker* gGT)
 void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
 {
 	// check 233 overlay, cause levelID is set
-	// and RenderFrame runs, before 233 loads
+	// and MainFrame_RenderFrame runs, before 233 loads
 	if(LOAD_IsOpen_Podiums() != 0)
 	{
 		// ND Box Scene

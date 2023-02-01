@@ -5,7 +5,7 @@ void DrawHeat_Subset1();
 void DrawHeat_Subset4();
 void DrawHeat_Subset7();
 void Driver_SetConsts(struct Driver* d);
-void howl_TogglePause(int enable);
+void MainFrame_TogglePauseAudio(int enable);
 void* LIST_RemoveFront(struct LinkedList* L);
 int MATH_FastSqrt(int dist, int unk);
 

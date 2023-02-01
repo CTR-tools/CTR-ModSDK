@@ -13,7 +13,7 @@ void CustomSplit()
 
 	numPlyrCurrGame = sdata->gGT->numPlyrCurrGame;
 
-	// JMP to CustomSplit happens right after this, in RenderFrame
+	// JMP to CustomSplit happens right after this, in MainFrame_RenderFrame
 	//if ((sdata->gGT->renderFlags & 0x8000) != 0)
 
     if (

@@ -1914,7 +1914,7 @@ void FUN_80033108(void)
   // swap 1 and 2 during adventure mode
   FUN_8003e80c((int)*(short *)(PTR_DAT_8008d2ac + 0x254a));
 
-  // GameInit_VisMem
+  // MainInit_VisMem
   FUN_8003af84(PTR_DAT_8008d2ac);
 
   puVar1 = PTR_DAT_8008d2ac;
@@ -2506,10 +2506,10 @@ LAB_80033a70:
 	  DAT_8008d83c = (ushort)(byte)PTR_DAT_8008d2ac[0x1ca8];
     }
 
-	// GameInit_PrimMem
+	// MainInit_PrimMem
     FUN_8003b0f0(PTR_DAT_8008d2ac);
 
-	// GameInit_OTMem
+	// MainInit_OTMem
     FUN_8003b334(PTR_DAT_8008d2ac);
 
 	// 2 is for cutscene
@@ -2520,7 +2520,7 @@ LAB_80033a70:
        ((*(uint *)(PTR_DAT_8008d2ac + 8) & 0x80) != 0))
 	{
 
-	  // GameInit_JitPoolsNew
+	  // MainInit_JitPoolsNew
 	  // (now, at beginning of mempack)
       FUN_8003b43c( /*PTR_DAT_8008d2ac*/ );
 
@@ -3094,7 +3094,7 @@ LAB_80033ccc:
 			((*(uint *)(puVar3 + 8) & 0x80) == 0)
 		)
 	{
-	  // GameInit_JitPoolsNew
+	  // MainInit_JitPoolsNew
 	  // (now, at end of mempack)
       FUN_8003b43c( /*PTR_DAT_8008d2ac*/ );
 

@@ -18,6 +18,6 @@ common, exe, rdata_free, 0x0, ../../Tutorials/TemplateParkingLot/src/flagFunc.c
 
 // Hooks
 common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
-common, exe, GameInit_StringToLevID, -0x8, src/hookInit.s
+common, exe, MainInit_StringToLevID, -0x8, src/hookInit.s
 
 common, exe, Player_Freeze_Input, 0x0, src/main.c

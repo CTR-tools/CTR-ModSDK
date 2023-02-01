@@ -1099,7 +1099,7 @@ void FUN_8001cfec(void)
 	// '\t' = 9 = CdlPause
 	CdControl('\t',(u_char *)0x0,(u_char *)0x0);
 
-	// save timer, copy of frameTimer_StartNewFrame
+	// save timer, copy of frameTimer_MainFrame_ResetDB
     DAT_8008d6ec = *(undefined4 *)(PTR_DAT_8008d2ac + 0x1cf8);
   }
   return;

@@ -4603,7 +4603,7 @@ struct GameTracker
   int unk1cf4;
 
   // 1cf8
-  int frameTimer_StartNewFrame;
+  int frameTimer_MainFrame_ResetDB;
 
   // 1cfc
   // frames since end of loading
@@ -9052,7 +9052,7 @@ struct sData
 	char s_PAUS[8];
 
 	// 8008D3F8
-	void* DrawSyncCallbackFuncPtr;
+	void* MainDrawCallback_DrawSyncPtr;
 
 	// 8008D3FC
 	void* ptrVlcTable;

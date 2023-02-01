@@ -275,7 +275,7 @@ void EndCrystalChallenge(void)
 			ggv.personalBest = 0;
 
 			// load selected level
-			Level_RequestNewLEV(tracks[menu.currTrack].id);
+			MainRaceTrack_RequestLoad(tracks[menu.currTrack].id);
 
 			// load ring data of the selected level
 			ringData = FileToBuffer((char *) ((int) tracks + tracks[menu.currTrack].file), 0, &size);

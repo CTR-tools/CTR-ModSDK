@@ -1024,7 +1024,7 @@ LAB_800ace34:
                             ((int)((uVar8 - 100) * 0x10000) >> 0xc));
   }
   
-  // Level_RequestNewLEV
+  // MainRaceTrack_RequestLoad
   FUN_8003cfc0(iVar18);
   
 LAB_800acef8:

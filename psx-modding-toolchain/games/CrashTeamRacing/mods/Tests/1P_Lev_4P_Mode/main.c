@@ -1,7 +1,7 @@
 #include <common.h>
 
-void VsyncCallbackFunc();
-void DrawSyncCallbackFunc();
+void MainDrawCallback_Vsync();
+void MainDrawCallback_DrawSync();
 void StateZero();
 
 //#define FastBoot
@@ -29,7 +29,7 @@ u_int main()
 		// wont happen under normal conditions
 		if (sdata->mainGameState == 5)
 		{
-			GameEnd_StopCTR();
+			MainKillGame_StopCTR();
 			return 0;
 		}
 		#endif
@@ -49,7 +49,7 @@ u_int main()
 			
 				// deactivate pause
 				ElimBG_Deactivate(gGT);
-				RestartRace_IncrementLossCount();
+				MainStats_RestartRaceCountLoss();
 				Voiceline_ClearTimeStamp();
 				
 				// Disable End-Of-Race menu
@@ -82,7 +82,7 @@ u_int main()
 				}
 				EffectSfxRain_Reset(gGT);
 				GAMEPROG_GetPtrHighScoreTrack();
-				GameInit_FinalizeInit(gGT);
+				MainInit_FinalizeInit(gGT);
 				GAMEPAD_GetNumConnected(sdata->gGamepads);
 				sdata->boolSoundPaused = 0;
 				Init_EngineAudio_AllPlayers();
@@ -196,7 +196,7 @@ u_int main()
 									(gGT->levelID == 64)
 								)
 								{
-									LoadVlcTable();
+									MainLoadVLC();
 									// start loading VLC (scroll up to iVar8 == -6)
 									sdata->Loading.stage = -6;
 									break;
@@ -235,7 +235,7 @@ u_int main()
 							gGT->gameMode1 = gameMode1 | AddBitsConfig0;
 							gGT->gameMode1 = (gameMode1 | AddBitsConfig0) & ~RemBitsConfig0;
 							gGT->gameMode2 = (gameMode2 | AddBitsConfig8) & ~RemBitsConfig8;
-							Level_StartLoading(iVar8);
+							MainRaceTrack_StartLoad(iVar8);
 						}
 						else
 						{
@@ -300,7 +300,7 @@ u_int main()
 				#endif
 
 				// Start new frame (ClearOTagR)
-				StartNewFrame(gGT, sdata->gGamepads);
+				MainFrame_ResetDB(gGT, sdata->gGamepads);
 
 				if
 				(
@@ -341,7 +341,7 @@ u_int main()
 
 						// load LEV of main menu
 						LAB_8003ce08:
-						Level_RequestNewLEV(39);
+						MainRaceTrack_RequestLoad(39);
 					}
 					
 					// if time remains on the timer
@@ -376,7 +376,7 @@ u_int main()
 				
 				if ((gGT->gameMode1 & LOADING) == 0)
 				{
-					GameplayUpdateLoop(gGT, sdata->gGamepads);
+					MainFrame_GameLogic(gGT, sdata->gGamepads);
 				}
 				
 				// If you are in demo mode
@@ -389,7 +389,7 @@ u_int main()
 				// reset vsync calls between drawsync
 				gGT->vSync_between_drawSync = 0;
 
-				RenderFrame(gGT, sdata->gGamepads);
+				MainFrame_RenderFrame(gGT, sdata->gGamepads);
 
 				// if mask is talking in Adventure Hub
 				if (sdata->boolDraw3D_AdvMask != 0)
@@ -458,7 +458,7 @@ void StateZero()
 	ResetGraph(0);
 	SetGraphDebug(0);
 	
-	GameInit_WipeVRAM();
+	MainInit_WipeVRAM();
 	
 	SetDispMask(1);
 	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
@@ -509,7 +509,7 @@ void StateZero()
 	
 	// set callback and save callback
 	EnterCriticalSection();
-	sdata->DrawSyncCallbackFuncPtr = DrawSyncCallback(&DrawSyncCallbackFunc);
+	sdata->MainDrawCallback_DrawSyncPtr = DrawSyncCallback(&MainDrawCallback_DrawSync);
 	ExitCriticalSection();
 	
 	MEMCARD_InitCard();
@@ -568,14 +568,14 @@ void StateZero()
 	#ifndef FastBoot
 	// Load Intro TIM for "SCEA Presents" from VRAM file
 	LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
-	GameInit_DisplayVRAM();
+	MainInit_DisplayVRAM();
 	#endif
 	
 	// \SOUNDS\KART.HWL;1
 	// enable audio if not already enabled
 	howl_InitGlobals(data.kartHwlPath);
 	
-	VSyncCallback(VsyncCallbackFunc);
+	VSyncCallback(MainDrawCallback_Vsync);
 	
 	#ifndef FastBoot
 	Music_SetIntro();

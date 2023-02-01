@@ -356,7 +356,7 @@ undefined4 FUN_800284d0(uint param_1,byte param_2,uint param_3)
 		  // soundID with CountSounds shifted in
           *(uint *)(iVar2 + 0x18) = iVar3 << 0x10 | param_1 & 0xffff;
 
-		  // save the frame that the channel started, frameTimer_StartNewFrame
+		  // save the frame that the channel started, frameTimer_MainFrame_ResetDB
           *(undefined4 *)(iVar2 + 0x1c) = *(undefined4 *)(puVar1 + 0x1cf8);
         }
 
@@ -3419,7 +3419,7 @@ void FUN_8002b208(int param_1,int param_2)
   // If you are hovering over the "Voice" slider
   if ((DAT_8008d794 != 0) && (DAT_8008d798 == 2))
   {
-	// frameTimer_StartNewFrame
+	// frameTimer_MainFrame_ResetDB
     uVar4 = *(uint *)(PTR_DAT_8008d2ac + 0x1cf8);
 
 	// every 25th frame
@@ -3586,7 +3586,7 @@ int FUN_8002b608(short param_1,char param_2,uint param_3,undefined4 *param_4)
   // if there can only be one instance of this audio
   if ((param_2 == '\x01') &&
      (
-		// frameTimer_StartNewFrame
+		// frameTimer_MainFrame_ResetDB
 		iVar7 = *(int *)(PTR_DAT_8008d2ac + 0x1cf8),
 
 		// channel linked list taken
@@ -5279,7 +5279,7 @@ LAB_8002cee4:
 
 LAB_8002ce00:
 
-  // store time stamp, with frameTimer_StartNewFrame
+  // store time stamp, with frameTimer_MainFrame_ResetDB
   (&DAT_80096284)[param_2] = *(undefined4 *)(PTR_DAT_8008d2ac + 0x1cf8);
 
   return;

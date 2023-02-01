@@ -5515,7 +5515,7 @@ void FUN_800b1848(void)
                       if ((uint)(byte)(&DAT_8008d960)[iVar7] !=
                           (int)(char)PTR_DAT_8008d2ac[iVar7 + 0x1da4]) 
 					  {
-						// ClearStandings_BattleVS
+						// MainStats_ClearBattleVS
                         FUN_8003d024();
                       }
                       iVar15 = iVar15 + 1;
@@ -7015,7 +7015,7 @@ void FUN_800b4364(void)
   // MainMenu_ResetAllMenuBoxes
   FUN_800b42b0();
   
-  // ClearStandings_BattleVS
+  // MainStats_ClearBattleVS
   FUN_8003d024();
   
   puVar1 = PTR_DAT_8008d2ac;

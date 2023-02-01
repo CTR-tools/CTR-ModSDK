@@ -513,9 +513,9 @@ void RunUpdateHook()
 
 void EffectSfxRain_Reset();
 void INSTANCE_Birth2D();
-void RequestMaskHint();
+void MainFrame_RequestMaskHint();
 void AA_EndEvent_DisplayTime();
-void GameInit_FinalizeInit();
+void MainInit_FinalizeInit();
 void Driver_TeleportAll();
 
 void AllocDriversHook_BeforeTeleport()

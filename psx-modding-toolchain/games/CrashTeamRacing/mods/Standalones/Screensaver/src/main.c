@@ -4,7 +4,7 @@ void DecalFont_DrawLine(char*, int, int, int, int);
 void DrawTextBackground(RECT* r, int flag, void* ot);
 void EndOfRace_DrawAllComments();
 void MM_JumpTo_Scrapbook();
-void Level_RequestNewLEV(int level);
+void MainRaceTrack_RequestLoad(int level);
 
 RECT window1 = {0, 0, 400, 130};
 char options[14] = "\0";
@@ -255,6 +255,6 @@ void RunUpdateHook()
 		sdata->gGT->boolDemoMode = 1;
 		sdata->gGT->numPlyrCurrGame = PLAYERS;
 		sdata->gGT->numPlyrNextGame = PLAYERS;
-		Level_RequestNewLEV(SIN_TRACK());
+		MainRaceTrack_RequestLoad(SIN_TRACK());
 	}
 }

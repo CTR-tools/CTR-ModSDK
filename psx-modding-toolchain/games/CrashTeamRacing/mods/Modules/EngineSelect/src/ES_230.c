@@ -2,7 +2,7 @@
 
 void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
 void OtherFX_Play(int sfxID, int flag);
-void RacingWheel_Config_DrawArrows(int posX, int posY, char* str);
+void MainFreeze_ConfigDrawArrows(int posX, int posY, char* str);
 
 static char bal[] = "Balanced";
 static char acc[] = "Acceleration";
@@ -70,7 +70,7 @@ void NewCharacterNameString(char* str, int posX, int posY, short fontType, int f
 
 			// Only draw arrows for EngineText when players < 3
 			if (sdata->gGT->numPlyrNextGame > 2) return;
-			RacingWheel_Config_DrawArrows
+			MainFreeze_ConfigDrawArrows
 			(
 				posX, posY,
 				engineText_s[data.MetaDataCharacters[data.characterIDs[i]].engineID]

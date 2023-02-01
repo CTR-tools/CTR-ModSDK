@@ -16,7 +16,7 @@
 #define LETTER_O (BTN_CIRCLE & 0xff)
 #define LETTER_X (BTN_CROSS  & 0xff)
 
-void GameEnd_LaunchSpyro2();
+void MainKillGame_LaunchSpyro2();
 void OtherFX_Play(int sfxID, int flag);
 
 struct Cheat
@@ -530,7 +530,7 @@ void DECOMP_MM_ParseCheatCodes()
 		// if spyro 2 cheat
 		if(cheat == &cheats[0])
 		{
-			GameEnd_LaunchSpyro2();
+			MainKillGame_LaunchSpyro2();
 			
 			return;
 		}

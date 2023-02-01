@@ -1,5 +1,5 @@
 
-// DecalGlobal_EmptyFunc_StartNewFrame
+// DecalGlobal_EmptyFunc_MainFrame_ResetDB
 void FUN_80022b94(void)
 
 {

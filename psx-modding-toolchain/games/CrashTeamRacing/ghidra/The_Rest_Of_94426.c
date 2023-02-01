@@ -351,7 +351,7 @@ void FUN_80034aa4(void)
 
 //toggles sound (used by pause menu)
 //0 = unpause, 1 = pause
-//howl_TogglePause
+//MainFrame_TogglePauseAudio
 void FUN_80034b48(int param_1)
 
 {
@@ -391,7 +391,7 @@ void FUN_80034b48(int param_1)
 }
 
 
-// StartNewFrame
+// MainFrame_ResetDB
 void FUN_80034bbc(int param_1)
 
 {
@@ -513,7 +513,7 @@ void FUN_80034bbc(int param_1)
 }
 
 
-// GameplayUpdateLoop
+// MainFrame_GameLogic
 // param1 = 8008d2ac - main game struct
 // param2 = 8008d2b0 - gamepad struct
 void FUN_80034d54(uint *param_1,int param_2)
@@ -983,7 +983,7 @@ LAB_80035098:
 		  // OtherFX_Play
           FUN_80028468(1,1);
 
-		  // PauseGame_SafeAdvDestroy
+		  // MainFreeze_SafeAdvDestroy
           FUN_800399fc();
 
 		  // deactivate pause
@@ -1278,7 +1278,7 @@ void FUN_80035684(int param_1,int param_2)
   return;
 }
 
-// VisMem_FullFrame
+// MainFrame_VisMemFullFrame
 // param1 is PTR_DAT_8008d2ac
 void FUN_800357b8(int param_1,int param_2)
 
@@ -1636,7 +1636,7 @@ LAB_80035cec:
   return;
 }
 
-// VideoSTR_Init
+// MainFrame_InitVideoSTR
 void FUN_80035d30
                (undefined4 param_1,undefined2 *param_2,undefined2 param_3,undefined2 param_4)
 
@@ -1659,7 +1659,7 @@ void FUN_80035d30
   return;
 }
 
-// BoolAllPadsConnected
+// MainFrame_HaveAllPads
 int FUN_80035d70(short param_1)
 
 {
@@ -1787,7 +1787,7 @@ void FUN_80035e20(short param_1,undefined2 param_2)
 
 
 
-// RenderFrame
+// MainFrame_RenderFrame
 // param1 is PTR_DAT_8008d2ac - GameTracker
 void FUN_80035e70(uint *param_1)
 {
@@ -2067,7 +2067,7 @@ void FUN_80035e70(uint *param_1)
   // gGT->256c & (renderBucket || drawLev)
   if ((param_1[0x95b] & 0x21) != 0)
   {
-	// VisMem_FullFrame
+	// MainFrame_VisMemFullFrame
 	// use quadblock offset 0x44 with camera data
     FUN_800357b8(param_1,piVar21);
   }
@@ -4865,7 +4865,7 @@ LAB_80038b24:
 }
 
 
-// MenuBoxFuncPtr_Options
+// MainFreeze_MenuPtrOptions
 void FUN_80038b5c(int param_1)
 
 {
@@ -4927,7 +4927,7 @@ void FUN_80038b5c(int param_1)
 
   local_78 = param_1;
 
-  // PauseGame_SafeAdvDestroy
+  // MainFreeze_SafeAdvDestroy
   FUN_800399fc();
 
   iVar12 = 0;
@@ -5657,14 +5657,14 @@ void FUN_80039908(int param_1)
       *(ushort *)(param_1 + 0x14) = uVar3 | 0x100;
     }
 
-	// PauseGame_SafeAdvDestroy
+	// MainFreeze_SafeAdvDestroy
 	FUN_800399fc();
   }
   return;
 }
 
 
-// PauseGame_SafeAdvDestroy
+// MainFreeze_SafeAdvDestroy
 void FUN_800399fc(void)
 
 {
@@ -5779,7 +5779,7 @@ void FUN_80039a44(int param_1)
   // make MenuBox invisible
   FUN_800469c8(param_1);
 
-  // PauseGame_SafeAdvDestroy
+  // MainFreeze_SafeAdvDestroy
   FUN_800399fc();
 
   puVar2 = PTR_DAT_8008d2ac;
@@ -6039,7 +6039,7 @@ undefined * FUN_80039dcc(void)
 }
 
 
-// PauseGame_WhenPressingStart
+// MainFreeze_IfPressStart
 void FUN_80039e98(void)
 
 {
@@ -6139,7 +6139,7 @@ void FUN_80039e98(void)
 }
 
 
-// EndRace_TimeTrialRelic_GetReward
+// MainGameEnd_SoloRaceGetReward
 void FUN_80039fa8(int param_1)
 
 {
@@ -6338,7 +6338,7 @@ LAB_8003a27c:
 }
 
 
-// EndRace_TimeTrialRelic_SaveHighScore
+// MainGameEnd_SoloRaceSaveHighScore
 void FUN_8003a2b4(void)
 
 {
@@ -6354,7 +6354,7 @@ void FUN_8003a2b4(void)
   // player structure
   iVar8 = *(int *)(PTR_DAT_8008d2ac + 0x24ec);
 
-  // EndRace_TimeTrialRelic_GetReward
+  // MainGameEnd_SoloRaceGetReward
   FUN_80039fa8(0);
 
   puVar2 = PTR_DAT_8008d2ac;
@@ -6427,7 +6427,7 @@ void FUN_8003a2b4(void)
 }
 
 
-// NewState_EndRace
+// MainGameEnd_Initialize
 void FUN_8003a3fc(void)
 
 {
@@ -7041,7 +7041,7 @@ LAB_8003a71c:
 	// if you are in Relic Race or Time Trial
     if ((*(uint *)PTR_DAT_8008d2ac & 0x4020000) != 0)
 	{
-	  // EndRace_TimeTrialRelic_GetReward
+	  // MainGameEnd_SoloRaceGetReward
       FUN_80039fa8(1);
 
 	  // If you're not in a Relic Race
@@ -7084,7 +7084,7 @@ LAB_8003a71c:
 }
 
 
-// NewState_StartRace
+// MainGameStart_Initialize
 void FUN_8003aee8(uint *param_1,int param_2)
 
 {
@@ -7139,7 +7139,7 @@ void FUN_8003aee8(uint *param_1,int param_2)
 }
 
 
-// GameInit_VisMem
+// MainInit_VisMem
 // param1 is PTR_DAT_8008d2ac
 void FUN_8003af84(int param_1)
 
@@ -7176,7 +7176,7 @@ void FUN_8003af84(int param_1)
 }
 
 
-// GameInit_RainBuffer
+// MainInit_RainBuffer
 // param1 is PTR_DAT_8008d2ac
 void FUN_8003b008(int param_1)
 
@@ -7258,7 +7258,7 @@ void FUN_8003b008(int param_1)
   return;
 }
 
-// GameInit_PrimMem
+// MainInit_PrimMem
 void FUN_8003b0f0(uint *param_1)
 
 {
@@ -7375,7 +7375,7 @@ LAB_8003b2b8:
 }
 
 
-// GameInit_JitPoolsReset
+// MainInit_JitPoolsReset
 void FUN_8003b2d4(int param_1)
 
 {
@@ -7391,7 +7391,7 @@ void FUN_8003b2d4(int param_1)
   return;
 }
 
-// GameInit_OTMem
+// MainInit_OTMem
 void FUN_8003b334(uint *param_1)
 
 {
@@ -7480,7 +7480,7 @@ void FUN_8003b334(uint *param_1)
   return;
 }
 
-// GameInit_JitPoolsNew
+// MainInit_JitPoolsNew
 void FUN_8003b43c(uint *param_1)
 {
   // In theory, param_1 is PTR_DAT_8008d2ac
@@ -7662,7 +7662,7 @@ void FUN_8003b43c(uint *param_1)
 }
 
 
-// GameInit_Drivers
+// MainInit_Drivers
 void FUN_8003b6d0(uint *param_1)
 
 {
@@ -7911,7 +7911,7 @@ void FUN_8003b6d0(uint *param_1)
 
 
 // param1 is PTR_DAT_8008d2ac
-// GameInit_FinalizeInit
+// MainInit_FinalizeInit
 void FUN_8003b934(uint *param_1)
 
 {
@@ -8177,7 +8177,7 @@ void FUN_8003b934(uint *param_1)
 	   // number of laps * 8
        (int)(char)PTR_DAT_8008d2ac[0x1d33] * 8;
 
-  // GameInit_Drivers
+  // MainInit_Drivers
   FUN_8003b6d0(param_1);
 
   // assume 1P fov
@@ -8314,7 +8314,7 @@ void FUN_8003b934(uint *param_1)
   // Debug_ToggleNormalSpawn == normal spawn
   if (PTR_DAT_8008d2ac[0x253f] != '\0')
   {
-	// NewState_StartRace
+	// MainGameStart_Initialize
     FUN_8003aee8(param_1,1);
 
     if (
@@ -8396,10 +8396,10 @@ void FUN_8003b934(uint *param_1)
     FUN_8003116c();
   }
 
-  // GameInit_VisMem
+  // MainInit_VisMem
   FUN_8003af84(param_1);
 
-  // GameInit_RainBuffer
+  // MainInit_RainBuffer
   FUN_8003b008(param_1);
 
   // gGT->lev (0x58*4 = 0x160)
@@ -8551,7 +8551,7 @@ int FUN_8003c1d4(char *param_1)
 }
 
 
-// GameInit_WipeVRAM
+// MainInit_WipeVRAM
 void FUN_8003c248(void)
 
 {
@@ -8643,7 +8643,7 @@ void FUN_8003c310(void)
 }
 
 
-// GameEnd_StopCTR
+// MainKillGame_StopCTR
 void FUN_8003c41c(void)
 {
   // set callback and save callback
@@ -8700,7 +8700,7 @@ void FUN_8003c480(void)
   return;
 }
 
-// LoadVlcTable_Callback
+// MainLoadVLC_Callback
 void FUN_8003c508(void)
 
 {
@@ -8710,7 +8710,7 @@ void FUN_8003c508(void)
   return;
 }
 
-// LoadVlcTable
+// MainLoadVLC
 void FUN_8003c518(void)
 
 {
@@ -8833,7 +8833,7 @@ undefined4 main(void)
       ResetGraph(0);
       SetGraphDebug(0);
 
-	  // GameInit_WipeVRAM
+	  // MainInit_WipeVRAM
       FUN_8003c248();
 
       SetDispMask(1);
@@ -9284,7 +9284,7 @@ LAB_8003ca68:
 					)
 				 )
               {
-				// LoadVlcTable
+				// MainLoadVLC
                 FUN_8003c518();
 
 				// start loading VLC (scroll up to iVar8 == -6)
@@ -9494,7 +9494,7 @@ LAB_8003ce08:
 	  // If you are not in a loading screen
       if ((*(uint *)PTR_DAT_8008d2ac & 0x40000000) == 0)
 	  {
-		// GameplayUpdateLoop
+		// MainFrame_GameLogic
         FUN_80034d54(PTR_DAT_8008d2ac,PTR_DAT_8008d2b0);
       }
 
@@ -9514,7 +9514,7 @@ LAB_8003ce08:
 	  // reset vsync calls between drawsync
       *(undefined4 *)(PTR_DAT_8008d2ac + 0x1ce0) = 0;
 
-	  // RenderFrame
+	  // MainFrame_RenderFrame
       FUN_80035e70(puVar6,puVar7);
 
 	  // if mask is talking in Adventure Hub
@@ -9576,7 +9576,7 @@ LAB_8003ce08:
 }
 
 
-// Level_StartLoading
+// MainRaceTrack_StartLoad
 void FUN_8003cf7c(short param_1)
 
 {
@@ -9598,7 +9598,7 @@ void FUN_8003cf7c(short param_1)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// Level_RequestNewLEV
+// MainRaceTrack_RequestLoad
 void FUN_8003cfc0(short param_1)
 
 {
@@ -9628,7 +9628,7 @@ void FUN_8003cfc0(short param_1)
   return;
 }
 
-// ClearStandings_BattleVS
+// MainStats_ClearBattleVS
 void FUN_8003d024(void)
 
 {
@@ -14513,7 +14513,7 @@ LAB_80041910:
 
           } while (iVar11 < 8);
 
-		  // NewState_EndRace
+		  // MainGameEnd_Initialize
           FUN_8003a3fc();
         }
       }
@@ -21607,7 +21607,7 @@ LAB_800495ac:
 
         if (DAT_8008d918 == 0)
 		{
-		  // EndRace_TimeTrialRelic_SaveHighScore
+		  // MainGameEnd_SoloRaceSaveHighScore
           FUN_8003a2b4();
         }
 
@@ -21666,7 +21666,7 @@ LAB_800495ac:
 	{
         if (DAT_8008d918 == 0)
 		{
-		  // EndRace_TimeTrialRelic_SaveHighScore
+		  // MainGameEnd_SoloRaceSaveHighScore
           FUN_8003a2b4();
         }
 
@@ -26671,7 +26671,7 @@ void FUN_8004f894(short param_1,short param_2,short param_3)
         } while (iVar5 < (int)(uint)(byte)puVar1[0x1ca8]);
       }
 
-	  // NewState_EndRace
+	  // MainGameEnd_Initialize
       FUN_8003a3fc();
     }
   }
@@ -30660,7 +30660,7 @@ void FUN_8005435c(void)
       //turn on 26th bit of Actions Flag set (means racer finished the race)
       *(uint *)(iVar3 + 0x2c8) = *(uint *)(iVar3 + 0x2c8) | 0x2000000;
 
-	  // NewState_EndRace
+	  // MainGameEnd_Initialize
       FUN_8003a3fc(0x42);
     }
 

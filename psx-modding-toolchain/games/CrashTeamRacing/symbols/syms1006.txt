@@ -120,7 +120,7 @@
 80022fe4 CTR_CycleTex_2p3p4pWumpaHUD
 8002300c CTR_ClearRenderLists_1P2P
 8002307c CTR_ClearRenderLists_3P4P
-800230dc CTR_EmptyFunc_StartNewFrame
+800230dc CTR_EmptyFunc_MainFrame_ResetDB
 800230e4 CTR_ErrorScreen
 
 // CTR_Frustum_UpdateVisMem
@@ -143,7 +143,7 @@
 80023ffc DecalFont_DrawMultiLineStrlen
 80024210 DecalFont_DrawMultiLine
 
-80024270 DecalGlobal_EmptyFunc_StartNewFrame
+80024270 DecalGlobal_EmptyFunc_MainFrame_ResetDB
 80024278 DecalGlobal_Clear
 800242b8 DecalGlobal_Store
 80024364 DecalGlobal_Find1
@@ -511,66 +511,66 @@
 80035fb0 MainDB_PrimMem
 80036014 MainDB_OTMem
 
-8003606c DrawSyncCallbackFunc
-80036090 VsyncCallbackFunc
+8003606c MainDrawCallback_DrawSync
+80036090 MainDrawCallback_Vsync
 
-80036134 howl_TogglePause
-800361a8 StartNewFrame
-80036340 GameplayUpdateLoop
+80036134 MainFrame_TogglePauseAudio
+800361a8 MainFrame_ResetDB
+80036340 MainFrame_GameLogic
 
 // VisMem (not important)
 // unknown 80036c70
 
-80036da4 VisMem_FullFrame
-// VideoSTR_Init
-8003735c BoolAllPadsConnected
+80036da4 MainFrame_VisMemFullFrame
+// MainFrame_InitVideoSTR
+8003735c MainFrame_HaveAllPads
 
-8003740c RequestMaskHint
-8003745c RenderFrame
+8003740c MainFrame_RequestMaskHint
+8003745c MainFrame_RenderFrame
 
-8003902c RacingWheel_Config_DrawNPC105
-800391f8 RacingWheel_Config_DrawArrows
-800393d8 RacingWheel_Config
+8003902c MainFreeze_ConfigDrawNPC105
+800391f8 MainFreeze_ConfigDrawArrows
+800393d8 MainFreeze_ConfigSetupEntry
 
-8003a11c MenuBoxFuncPtr_Options
-8003ae7c MenuBoxFuncPtr_Quit
+8003a11c MainFreeze_MenuPtrOptions
+8003ae7c MainFreeze_MenuPtrQuit
 
-8003af70 PauseGame_SafeAdvDestroy
+8003af70 MainFreeze_SafeAdvDestroy
 
-8003afb8 PauseGame_MenuBoxFuncPtr
-8003b340 PauseGame_GetMenuBox
-8003b40c PauseGame_WhenPressingStart
+8003afb8 MainFreeze_MenuPtrDefault
+8003b340 MainFreeze_GetMenuBox
+8003b40c MainFreeze_IfPressStart
 
-8003b51c EndRace_TimeTrialRelic_GetReward
-8003b828 EndRace_TimeTrialRelic_SaveHighScore
-8003b970 NewState_EndRace
-8003c484 NewState_StartRace
-8003c520 GameInit_VisMem
-8003c5a4 GameInit_RainBuffer
+8003b51c MainGameEnd_SoloRaceGetReward
+8003b828 MainGameEnd_SoloRaceSaveHighScore
+8003b970 MainGameEnd_Initialize
+8003c484 MainGameStart_Initialize
+8003c520 MainInit_VisMem
+8003c5a4 MainInit_RainBuffer
 
-8003c68c GameInit_PrimMem
-8003c844 GameInit_JitPoolsReset
-8003c8a4 GameInit_OTMem
-8003c9ac GameInit_JitPoolsNew
-8003cc40 GameInit_Drivers
-8003cea4 GameInit_FinalizeInit
-8003d744 GameInit_StringToLevID
+8003c68c MainInit_PrimMem
+8003c844 MainInit_JitPoolsReset
+8003c8a4 MainInit_OTMem
+8003c9ac MainInit_JitPoolsNew
+8003cc40 MainInit_Drivers
+8003cea4 MainInit_FinalizeInit
+8003d744 MainInit_StringToLevID
 
-8003d7b8 GameInit_WipeVRAM
-8003d880 GameInit_DisplayVRAM
-8003d98c GameEnd_StopCTR
+8003d7b8 MainInit_WipeVRAM
+8003d880 MainInit_DisplayVRAM
+8003d98c MainKillGame_StopCTR
 
 // No Spyro 2 in this build
 
-8003d9f8 LoadVlcTable_Callback
-8003da08 LoadVlcTable // whatever that is
+8003d9f8 MainLoadVLC_Callback
+8003da08 MainLoadVLC // whatever that is
 8003da7c main
 
-8003e534 Level_StartLoading
-8003e578 Level_RequestNewLEV
+8003e534 MainRaceTrack_StartLoad
+8003e578 MainRaceTrack_RequestLoad
 
-// ClearStandings_BattleVS
-8003e620 RestartRace_IncrementLossCount
+// MainStats_ClearBattleVS
+8003e620 MainStats_RestartRaceCountLoss
 
 // End of MAIN ^^^
 
