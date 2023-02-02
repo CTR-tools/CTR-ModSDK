@@ -5494,7 +5494,7 @@ void FUN_800399fc(void)
 }
 
 
-// MenuFuncPtr_ElimBG_Universal
+// MainFreeze_MenuPtrDefault
 void FUN_80039a44(int param_1)
 
 {
