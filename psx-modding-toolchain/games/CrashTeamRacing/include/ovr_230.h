@@ -37,9 +37,8 @@ struct CharacterSelectMeta
 // starts at 800ab9f0, overlay region 3
 extern struct
 {
-	// 800ab9f0 (tag given by compiler, meaningless to game),
-	// do not compile this "tag" in the struct,
-	// when we're actually building the overlay
+	// 800ab9f0 (tag given by compiler, meaningless to game)
+	// do not compile this "tag" in the struct when we're actually building the overlay
 	int overlayTag;
 	
 	// 800ab9f4
