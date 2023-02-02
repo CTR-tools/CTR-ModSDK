@@ -5594,9 +5594,16 @@ void FUN_80039a44(int param_1)
   // removed after loading finishes
   uVar1 = DAT_8008d104;
 
-  switch((int)((uVar7 - 1) * 0x10000) >> 0x10) {
+  // careful, it's String MINUS one
+  switch((int)((uVar7 - 1) * 0x10000) >> 0x10) 
+  {
+ 
+  // String 0x1: "Restart"
   case 0:
+  
+  // String 0x4: "Retry"
   case 3:
+  
 	// Unpause game
     *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xfffffffe;
     i
@@ -5629,6 +5636,8 @@ void FUN_80039a44(int param_1)
 
 	DAT_8008d0f8 = -5;
     return;
+	
+  // String 0x2: "Resume"
   case 1:
 
     // deactivate pause??
@@ -5646,6 +5655,7 @@ void FUN_80039a44(int param_1)
   default:
     goto switchD_80039bcc_caseD_2;
 
+  // String 0x5: "Change Character"
   case 4:
 
 	// Erase ghost of previous race from RAM
@@ -5664,6 +5674,8 @@ void FUN_80039a44(int param_1)
 	// Unpause game
     *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xfffffffe;
     break;
+  
+  // String 0x6: "Change Level"
   case 5:
 
 	// Erase ghost of previous race from RAM
@@ -5682,6 +5694,8 @@ void FUN_80039a44(int param_1)
 	// Unpause game
     *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xfffffffe;
     break;
+	
+  // String 0xA: "Change Setup"
   case 9:
 
 	// levelID of main menu
@@ -5698,7 +5712,7 @@ void FUN_80039a44(int param_1)
     *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xfffffffe;
     break;
 
-	// If you use "Exit To Map"
+  // String 0xD: "Exit To Map"
   case 0xc:
 
 	// when loading is done
