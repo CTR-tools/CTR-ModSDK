@@ -5553,24 +5553,31 @@ void FUN_80039a44(int param_1)
   if ((int)*(short *)(param_1 + 0x1a) < 0) {
     return;
   }
+  
+  // get string from row selected
   puVar4 = (ushort *)((int)*(short *)(param_1 + 0x1a) * 6 + *(int *)(param_1 + 0xc));
   uVar6 = *puVar4;
   uVar7 = (uint)*puVar4;
 
+  // String 0xE: Options
   if (uVar6 == 0xe)
   {
-	// Set desired MenuBox to racingWheel
+	// Set desired MenuBox to Options
     DAT_8008d924 = &DAT_80084190;
 
     DAT_800841aa = 8;
     return;
   }
 
-  if ((uVar7 - 0xb & 0xffff) < 2) {
+  // AkuAku Hints, or UkaUka Hints
+  if ((uVar7 - 0xb & 0xffff) < 2) 
+  {
+	// Hints menu
     DAT_8008d924 = &DAT_800b518c;
     return;
   }
 
+  // String 0x3: Quit
   if (uVar6 == 3)
   {
 	// Set active MenuBox to Quit
@@ -5616,13 +5623,17 @@ void FUN_80039a44(int param_1)
     }
 
 	// if you are not showing a ghost during a race
-    if (DAT_8008d958 == 0) {
+    if (DAT_8008d958 == 0) 
+	{
+	  // restart race
       DAT_8008d0f8 = -5;
       return;
     }
 
 	// If the ghost playing buffer is nullptr
-    if (DAT_8008d754 == 0) {
+    if (DAT_8008d754 == 0) 
+	{
+	  // restart race
       DAT_8008d0f8 = -5;
       return;
     }
@@ -5634,6 +5645,7 @@ void FUN_80039a44(int param_1)
 	// header of the ghost that you will see in the race
     DAT_80086e86 = *(undefined2 *)(DAT_8008d754 + 6);
 
+	// restart race
 	DAT_8008d0f8 = -5;
     return;
 	
