@@ -60,9 +60,9 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		// need to subtract 4, cause the loop doesn't 
+		// need to subtract one, cause the loop doesn't 
 		// stop "on" end[i], it stops when it sees end[i] in a tag
-		end[i] = (unsigned int)gGT->camera110[i].ptrOT - 0x4;
+		end[i] = &gGT->camera110[i].ptrOT[-1];
 	}
 	
 	RenderBucket_ExecuteAllInstances(gGT);
@@ -76,7 +76,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 		DF_ParseOT(
-			(unsigned int)gGT->camera110[i].ptrOT + 0xffc, 
+			&gGT->camera110[i].ptrOT[0x3ff], 
 			end[i],
 			gGT->camera110[i].rect.w);
 	
@@ -1377,7 +1377,7 @@ void WindowBoxLines(struct GameTracker* gGT)
 			0,
 
 			// camera110_UI = 0x1388
-			(unsigned int)gGT->camera110_UI.ptrOT + 0xC);
+			&gGT->camera110_UI.ptrOT[3]);
 	}
 }
 
@@ -1413,7 +1413,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim((unsigned int)gGT->camera110_UI.ptrOT + 0xC,p);
+		AddPrim(&gGT->camera110_UI.ptrOT[3],p);
 
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
@@ -1443,7 +1443,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim((unsigned int)gGT->camera110_UI.ptrOT + 0xC,p);
+		AddPrim(&gGT->camera110_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
@@ -1477,7 +1477,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim((unsigned int)gGT->camera110_UI.ptrOT + 0xC,p);
+		AddPrim(&gGT->camera110_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);

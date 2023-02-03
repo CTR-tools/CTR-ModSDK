@@ -1036,7 +1036,7 @@ void WindowBoxLines(struct GameTracker* gGT)
 			0,
 
 			// camera110_UI = 0x1388
-			(unsigned int)gGT->camera110_UI.ptrOT + 0xC);
+			&gGT->camera110_UI.ptrOT[3]);
 	}
 }
 
@@ -1072,7 +1072,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim((unsigned int)gGT->camera110_UI.ptrOT + 0xC,p);
+		AddPrim(&gGT->camera110_UI.ptrOT[3],p);
 
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
@@ -1102,7 +1102,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim((unsigned int)gGT->camera110_UI.ptrOT + 0xC,p);
+		AddPrim(&gGT->camera110_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
@@ -1136,7 +1136,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim((unsigned int)gGT->camera110_UI.ptrOT + 0xC,p);
+		AddPrim(&gGT->camera110_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
