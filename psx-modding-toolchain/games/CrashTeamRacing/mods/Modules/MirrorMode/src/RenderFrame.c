@@ -1,5 +1,34 @@
 #include <common.h>
 
+// all in this file
+void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
+void DrawFinalLap(struct GameTracker* gGT);
+void RainLogic(struct GameTracker* gGT);
+void MenuHighlight();
+void RenderAllWeather(struct GameTracker* gGT);
+void RenderAllConfetti(struct GameTracker* gGT);
+void RenderAllStars(struct GameTracker* gGT);
+void RenderAllHUD(struct GameTracker* gGT);
+void RenderAllBeakerRain(struct GameTracker* gGT);
+void RenderAllBoxSceneSplitLines(struct GameTracker* gGT);
+void RenderBucket_QueueAllInstances(struct GameTracker* gGT);
+void RenderAllNormalParticles(struct GameTracker* gGT);
+void LinkCameraOTs(struct GameTracker* gGT);
+void RenderAllFlag0x40(struct GameTracker* gGT);
+void RenderAllTitleDPP(struct GameTracker* gGT);
+void RenderBucket_ExecuteAllInstances(struct GameTracker* gGT);
+void RenderAllTires(struct GameTracker* gGT);
+void RenderAllShadows(struct GameTracker* gGT);
+void RenderAllHeatParticles(struct GameTracker* gGT);
+void RenderAllLevelGeometry(struct GameTracker* gGT);
+void MultiplayerWumpaHUD(struct GameTracker* gGT);
+void WindowBoxLines(struct GameTracker* gGT);
+void WindowDivsionLines(struct GameTracker* gGT);
+void LinkCameraOT_UI(struct GameTracker* gGT);
+void RenderVSYNC(struct GameTracker* gGT);
+void RenderFMV();
+void RenderSubmit(struct GameTracker* gGT);
+
 void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	int i;
