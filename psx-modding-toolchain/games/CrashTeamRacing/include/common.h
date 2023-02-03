@@ -10763,3 +10763,5 @@ register struct sData* sdata asm("$gp");
 
 // SP
 // 801ff800 - 80200000
+
+#include <functions.h>

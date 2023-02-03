@@ -1,4 +1,4 @@
-#include <common.h>
+// included from common.h, do not include common.h
 
 //remember to ctrl + f ctrl + r the DECOMP_ prefix
 
@@ -60,5 +60,5 @@ struct Item* LIST_RemoveMember(struct LinkedList* L, struct Item* I);
 struct Item* LIST_RemoveFront(struct LinkedList* L);
 struct Item* LIST_RemoveBack(struct LinkedList* L);
 
-void* MEMPACK_AllocMem(int allocSize, char* name);
+void* MEMPACK_AllocMem(int allocSize);
 void* MEMPACK_ReallocMem(int allocSize);

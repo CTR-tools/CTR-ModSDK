@@ -16,7 +16,6 @@ int MainDB_GetClipSize(int levID, int numPlyrCurrGame);
 // To do: add header for CTR funcs
 void JitPool_Init(struct JitPool* ap, int numItems, int itemSize);
 void JitPool_Clear(struct JitPool* ap);
-void* MEMPACK_AllocMem(int size); // no char* name needed
 int MEMPACK_PushState();
 void MEMPACK_PopState();
 void LIST_Clear(struct LinkedList* L);

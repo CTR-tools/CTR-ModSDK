@@ -32,7 +32,6 @@ void CseqMusic_StopAll();
 void Music_LoadBanks();
 u_int Music_AsyncParseBanks();
 void Cutscene_VolumeRestore();
-void* MEMPACK_AllocMem(int allocSize);
 void MEMPACK_NewPack_StartEnd(void* start, int size);
 u_int LOAD_GetAdvPackIndex();
 int MEMPACK_GetFreeBytes();
