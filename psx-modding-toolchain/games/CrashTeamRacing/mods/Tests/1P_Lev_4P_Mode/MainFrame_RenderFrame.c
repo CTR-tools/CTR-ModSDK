@@ -1105,7 +1105,7 @@ void RenderSubmit(struct GameTracker* gGT)
 		
 	gGT->bool_DrawOTag_InProgress = 1;
 	
-	DrawOTag((unsigned int)gGT->camera110[0].ptrOT + 0xffc);
+	DrawOTag(&gGT->camera110[0].ptrOT[0x3ff]);
 	
 	gGT->frameTimer_notPaused = gGT->frameTimer_VsyncCallback;
 }
