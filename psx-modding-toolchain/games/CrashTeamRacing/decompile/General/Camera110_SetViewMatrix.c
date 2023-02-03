@@ -37,6 +37,7 @@ void DECOMP_Camera110_SetViewMatrix(struct Camera110* c110)
   ty = c110->pos[1];
   tz = c110->pos[2];
 
+// gte_SetLightMatrix
 #define gte_r8(r0) __asm__ volatile("ctc2   %0, $8" : : "r"(r0))
 #define gte_r9(r0) __asm__ volatile("ctc2   %0, $9" : : "r"(r0))
 #define gte_r10(r0) __asm__ volatile("ctc2   %0, $10" : : "r"(r0))
@@ -80,11 +81,9 @@ void DECOMP_Camera110_SetViewMatrix(struct Camera110* c110)
   gte_ldVXY0(-tx & 0xffff | -ty * 0x10000);
   gte_ldVZ0(-tz);
 
-  // multiply inverted camera position, by transpose camera matrix
-#define gte_llv0_nikoVersion() __asm__ volatile (	\
-	"nop;" "nop;"									\
-	".word 0x4a4a6012" )
-  gte_llv0_nikoVersion();
+  // multiply inverted camera position, 
+  // by transpose camera matrix
+  gte_llv0();
 
   // get the result
 #define read_mt(r0, r1, r2) 	__asm__ volatile( \

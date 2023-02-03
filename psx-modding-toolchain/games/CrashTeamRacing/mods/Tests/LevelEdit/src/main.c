@@ -108,19 +108,12 @@ void Freecam()
 	gGT->drivers[0]->posCurr[2] = gGT->camera110[0].pos[2] << 8;
 }
 
-// copied off 231.c WorldLetterCTR_OnCollide,
-// 231.c, address 800B514C
-#define gte_rtps_NikoVersion() __asm__ volatile (				\
-	"nop;"							\
-	"nop;"							\
-	".word 0x4A180001" )
-
 char name1[20] = "";
 
 void Gte_PrintInt(char* fmt, int i)
 {
-	// this one works
-	gte_rtps_NikoVersion();
+	// perspective projection
+	gte_rtps();
 
 	// get result
 	gte_stsxy(&k1->Screen_posX);

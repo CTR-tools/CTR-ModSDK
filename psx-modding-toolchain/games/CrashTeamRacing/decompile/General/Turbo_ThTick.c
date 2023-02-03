@@ -1,5 +1,4 @@
 #include <common.h>
-#include <gte.h>
 
 void GAMEPAD_Vib_3(struct Driver* driver, u_int param_2, int param_3);
 void OtherFX_DriverTurbo(void*, int, int);

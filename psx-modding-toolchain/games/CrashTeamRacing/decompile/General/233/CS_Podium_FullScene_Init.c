@@ -1,5 +1,4 @@
 #include <ovr_233.h>
-#include <gte.h>
 
 u_int CDSYS_XAPlay(int, int);
 int THREAD_BirthWithObject(u_int, u_int, char*, int);

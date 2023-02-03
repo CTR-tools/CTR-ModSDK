@@ -44,15 +44,8 @@ void RunUpdateHook()
 		// load position of driver
 		gte_ldv0(&ptrDest->World_posX);
 
-// inline_c.h gte_rtps() is broken? swap for mine:
-// copied from 231.c, address 800B514C, CTR Letter World->HUD
-#define gte_rtps_NikoVersion() __asm__ volatile ( \
-	"nop;"							\
-	"nop;"							\
-	".word 0x4A180001" )
-
 		// perspective projection
-		gte_rtps_NikoVersion();
+		gte_rtps();
 
 		// get result
 		gte_stsxy(&ptrDest->Screen_posX);

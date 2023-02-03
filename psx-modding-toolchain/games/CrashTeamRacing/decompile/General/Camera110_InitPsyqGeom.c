@@ -1,5 +1,4 @@
 #include <common.h>
-#include <gte.h>
 
 void DECOMP_Camera110_InitPsyqGeom(struct Camera110* c110)
 {
