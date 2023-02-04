@@ -1,6 +1,6 @@
 // included from common.h, do not include common.h
 
-//remember to ctrl + f ctrl + r the DECOMP_ prefix
+// remember to ctrl + f ctrl + r the DECOMP_ prefix
 
 // BOTS
 
@@ -44,6 +44,28 @@ void CAM_SetDesiredPosRot(int param_1, u_short* param_2, u_short* param_3);
 void CAM_FollowDriver_Normal(struct CameraDC* cDC, struct Driver* d, short* camera110, short scratchpad, short* param_5);
 int CAM_MapRange_PosPoints(short* vec3sPos1, short* vec3sPos2, short* vec3iPos);
 void CAM_ThTick(struct Thread* t);
+
+// CDSYS
+
+u_int CDSYS_Init(int useDisc);
+u_int CDSYS_GetFilePosInt(char* fileString, int* filePos);
+void CDSYS_SetMode_StreamData();
+void CDSYS_SetMode_StreamAudio();
+u_int CDSYS_SetXAToLang(int lngIndex);
+void CDSYS_CdSyncCallback(char result);
+void CDSYS_CdReadyCallback(char result);
+void CDSYS_IRQ_Callback();
+void CDSYS_Transfer_Callback();
+void CDSYS_IRQ_Enable();
+void CDSYS_IRQ_Disable();
+void CDSYS_ParseSpuData();
+u_int CDSYS_XAGetNumTracks(int categoryID);
+u_int CDSYS_XASeek(int isCdControl, int categoryID, int audioTrackID);
+u_int CDSYS_XAGetTrackLength(int categoryID, int audioTrackID);
+void CDSYS_XAPlay(int categoryID, int index);
+void CDSYS_XAPauseRequest();
+void CDSYS_XAPauseForce();
+void CDSYS_XAPauseAtEnd();
 
 // unorganized
 
