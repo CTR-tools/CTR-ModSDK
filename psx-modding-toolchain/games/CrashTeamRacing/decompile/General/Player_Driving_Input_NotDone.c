@@ -352,7 +352,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driverRankItemValue = 4;
 
 	// if you have a raincloud over your head from potion
-	if (driver->thCloud != 0) driverRankItemValue = ((struct Raincloud*)driver->thCloud->object)->itemScrollRandom;
+	if (driver->thCloud != 0) driverRankItemValue = ((struct RainCloud*)driver->thCloud->object)->itemScrollRandom;
 
 	// get approximate speed
 	approximateSpeed = (int)driver->speedApprox;
@@ -620,18 +620,22 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	// Random guess, this next block is probably for making a backup
 	// of current position and rotation, to calculate linear + angular
 	// velocity by comparing two frames
-
-	*(u_int*)&driver->rotPrev[0] = *(u_int*)&driver->rotCurr[0];
 	
 	// action flags
 	driver->actionsFlagSetPrevFrame = actionflags;
 	
+	// backup rotation
+	*(u_int*)&driver->rotPrev.x = *(u_int*)&driver->rotCurr.x;
+	driver->rotPrev.z = driver->rotCurr.z;
+	
+	// backup position
+	driver->posPrev[0] = driver->posCurr[0];
 	driver->posPrev[1] = driver->posCurr[1];
 	driver->posPrev[2] = driver->posCurr[2];
-	driver->rotPrev[2] = driver->rotCurr[2];
+	
+	// unknown
 	driver->unknownDimensionPrev = driver->unknownDimensionCurr;
 	driver->unknownDimension2Prev = driver->unknownDimension2Curr;
-	driver->posPrev[0] = driver->posCurr[0];
 
 	// ??? --Super
 	specialFlag = actionflags & 0x7f1f83d5;
@@ -1140,9 +1144,9 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 
 	else
 	{
-		// Increase [uknown] by elapsed time
-		driver->unk520 += msPerFrame;
-		code_r0x80062644:
+		driver->timeSpentReversing += msPerFrame;
+		
+code_r0x80062644:
 		actionflags = buttonHeld & 8;
 	}
 
@@ -1222,14 +1226,11 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	{
 		if (driver->unknownCollision == 0)
 		{
-			if ((buttonHeld & 0x28) == 0) gamepadRacingWheel = ptrgamepad->rwd;
-			else
+			if ((buttonHeld & 0x28) != 0)
 			{
 				// if you are not holding cross
 				if (cross == 0)
 				{
-					gamepadRacingWheel = ptrgamepad->rwd;
-
 					iVar14 = 0x40;
 				}
 
@@ -1245,26 +1246,21 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					// Map value from [oldMin, oldMax] to [newMin, newMax]
 					// inverting newMin and newMax will give an inverse range mapping
 					iVar14 = MapToRange(driverTimer,0x300,(int)((u_int)driver->const_Speed_ClassStat << 0x10) >> 0x11,0x40,iVar14);
-
-					gamepadRacingWheel = ptrgamepad->rwd;
 				}
 			}
 		}
 		else
 		{
-			gamepadRacingWheel = ptrgamepad->rwd;
 			iVar14 = 0x30;
 		}
 	}
 	else
 	{
-		gamepadRacingWheel = ptrgamepad->rwd;
-
 		iVar14 = 0x5a;
 	}
 
 	// Steer
-	iVar14 = Player_Steer_AbsoluteStrength(driverSpeedOrSmth, iVar14, gamepadRacingWheel);
+	iVar14 = Player_Steer_AbsoluteStrength(driverSpeedOrSmth, iVar14, ptrgamepad->rwd);
 
 	if (-iVar14 == 0) *(u_short*)&driver->numFramesSpentSteering = 10000;
 	else

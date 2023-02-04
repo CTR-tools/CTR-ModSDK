@@ -1,9 +1,9 @@
 #include <common.h>
 
-int CDSYS_XAGetNumTracks(int category)
+u_int CDSYS_XAGetNumTracks(int categoryID)
 {
 	if(sdata->useDisc == 0) return 0;
-	if(category > 2) return 0;
+	if(categoryID > 2) return 0;
 	
-	return sdata->ptrArray_numSongs[category];
+	return sdata->ptrArray_numSongs[categoryID];
 }

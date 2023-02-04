@@ -1,6 +1,6 @@
 // functions bigger than their originals
-common, exe, rdata_free, 0x0, General/MATH_Sin.c, rdata.bin
-common, exe, MATH_Sin, 0x0, General/MATH_Sin_hook.s
+common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c, rdata.bin
+common, exe, MATH_Sin, 0x0, General/MATH/MATH_Sin_hook.s
 
 // 221
 common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
@@ -187,7 +187,7 @@ common, exe, main, 0x0, General/MAIN/MainMain.c
 
 // MATH
 // MATH_Sin relocated to RDATA
-common, exe, MATH_Cos, 0x0, General/MATH_Cos.c
+common, exe, MATH_Cos, 0x0, General/MATH/MATH_Cos.c
 
 // MEMCARD
 common, exe, MEMCARD_SetIcon, 0x0, General/MEMCARD/MEMCARD_SetIcon.c
@@ -260,6 +260,7 @@ common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
 common, exe, DrawRectangle, 0x0, General/DrawRectangle.c
 common, exe, DrawBoxOutline_LowLevel, 0x0, General/DrawBoxOutline_LowLevel.c
 
+//common, exe, Player_Driving_Input, 0x0, General/Player_Driving_Input.c
 common, exe, Player_Spinning_Update, 0x0, General/Player_Spinning_FuncPtrs.c
 common, exe, Player_Spinning_Init, 0x0, General/Player_Spinning_Init.c
 common, exe, Player_LastSpin_Init, 0x0, General/Player_LastSpin_Init.c

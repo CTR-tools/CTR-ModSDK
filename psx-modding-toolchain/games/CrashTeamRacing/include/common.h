@@ -2152,10 +2152,10 @@ struct Driver
 	short NoInputTimer;
 
 	// 0x402
-	unsigned short burnTimer;
+	short burnTimer;
 
 	// 0x404
-	unsigned short squishTimer;
+	short squishTimer;
 
 	// 0x406
 	short StateDriving_0x60;

@@ -4,7 +4,7 @@ void MainDrawCallback_Vsync();
 void MainDrawCallback_DrawSync();
 void StateZero();
 
-//#define FastBoot
+#define FastBoot
 
 u_int main()
 {
@@ -447,7 +447,7 @@ void StateZero()
 	ResetCallback();
 	
 	// We have 2mb RAM total
-	MEMPACK_Init(0x200000);
+	MEMPACK_Init(0x800000);
 	
 	// also sets debug variables to "off"
 	LOAD_InitCD();
