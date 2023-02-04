@@ -35,7 +35,6 @@
 
 
 void DecalFont_DrawLine(char*, int, int, int, int);
-void* MEMPACK_AllocMem(int size, char* name);
 void MainRaceTrack_RequestLoad(int levID);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void DrawTextBackground(RECT* r, int flag, void* ot);
@@ -59,13 +58,11 @@ struct MainGameStruct
 
 		short zoom;
 		short rotY;
-		short jumpOffset;
+		short jumpHold;
 		short speedVar;
 
 	} playerVars[4];
 };
-
-char mgs_name[] = "mgs";
 
 struct ModelHeader_Custom
 {
@@ -202,7 +199,7 @@ void RunInitHook()
 	sdata->gGT->gameMode1 = 0;
 
 	// MEMPACK_AllocMem
-	sdata->gGT->level2 = (void*)MEMPACK_AllocMem(sizeof(struct MainGameStruct),mgs_name);
+	sdata->gGT->level2 = (void*)MEMPACK_AllocMem(sizeof(struct MainGameStruct));
 
 	// update mgs
 	// forgetting this makes real PS1 freeze
@@ -214,7 +211,7 @@ void RunInitHook()
 	mgs->numVerticesTotal = mgs->mInfo->numVertex;
 
 	// initialize each player
-	for(playerIndex = 0; playerIndex < sdata->gGT->numPlyrNextGame; playerIndex++)
+	for(playerIndex = 0; playerIndex < sdata->gGT->numPlyrCurrGame; playerIndex++)
 	{
 		// initialize camera
 		mgs->playerVars[playerIndex].zoom = 0x40;
@@ -229,7 +226,7 @@ void RunInitHook()
 		sdata->gGT->camera110[playerIndex].rot[2] = 0x800;
 
 		// initialize jump
-		mgs->playerVars[playerIndex].jumpOffset = 0;
+		mgs->playerVars[playerIndex].jumpHold = 0;
 
 		// set drivers
 		sdata->gGT->drivers[playerIndex]->const_turboLowRoomWarning = 0;
@@ -243,7 +240,7 @@ void RunInitHook()
 	}
 
 	// if this is 2P mode
-	if(sdata->gGT->numPlyrNextGame == 2)
+	if(sdata->gGT->numPlyrCurrGame == 2)
 	{
 		// initialize model
 		// make player 2 into the first player of team 2
@@ -255,23 +252,23 @@ void CameraPerFrameHook(struct Thread* t)
 {
 	struct CameraDC* camDC;
 	struct Driver* driver;
-	short* hud;
+	struct HudElement* hud;
 
 	// driver = thread->(cameraDC*)inst->driverToFollow
 
-	// no clue why camera thread stores CameraDC at 0x34,
+	// no clue why camera thread stores CameraDC here,
 	// every other thread uses this offset for instance
-	camDC = *(struct CameraDC**)((char*)t + 0x34);
+	camDC = (struct CameraDC*)t->inst;
 
 	// get driver from CamDC
 	// driverToFollow is offset 0x44
 	driver = camDC->driverToFollow;
 
 	// get pointer to hud positions for each driver
-	hud = data.hudStructPtr[(sdata->gGT->numPlyrNextGame-1)];
-	hud = (short*)((char*)hud + 0xA0*driver->driverID);
+	hud = data.hudStructPtr[(sdata->gGT->numPlyrCurrGame-1)];
+	hud = &hud[driver->driverID * 0x28];
 
-	DrawPowerslideMeter((int)hud[0x20],(int)hud[0x21],driver);
+	DrawPowerslideMeter(hud[0x10].x, hud[0x10].y, driver);
 
 	// call original function
 	CAM_ThTick(t);
@@ -324,14 +321,14 @@ void PaintLEV()
 		color = &mgs->mInfo->ptrVertexArray[mgs->numVerticesPainted++].color_hi[0];
 
 		// high LOD color
-		color[0] = color[0] / 2;
-		color[1] = color[1] / 2;
-		color[2] = color[2] / 2;
+		color[0] = color[0] >> 1;
+		color[1] = color[1] >> 1;
+		color[2] = color[2] >> 1;
 
 		// low LOD color
-		color[4] = color[4] / 2;
-		color[5] = color[5] / 2;
-		color[6] = color[6] / 2;
+		color[4] = color[4] >> 1;
+		color[5] = color[5] >> 1;
+		color[6] = color[6] >> 1;
 
 		if(mgs->numVerticesPainted >= numVertices) return;
 	}
@@ -456,7 +453,7 @@ void RunUpdateHook()
 	if(sdata->gGT->trafficLightsTimer < 0)
 	{
 
-		for(playerIndex = 0; playerIndex < sdata->gGT->numPlyrNextGame; playerIndex++)
+		for(playerIndex = 0; playerIndex < sdata->gGT->numPlyrCurrGame; playerIndex++)
 		{
 			// driver struct
 			driver = sdata->gGT->drivers[playerIndex];
@@ -465,8 +462,12 @@ void RunUpdateHook()
 			// dont use m.mgti[playerIndex] or else 2P breaks
 			mgti = (struct Model_GiveToInst*)driver->instSelf->model;
 
-			// setting to zero removes controls
+			// kill Input function, and audio
 			driver->funcPtrs[2] = (void*)0;
+			driver->funcPtrs[3] = (void*)0;
+			
+			// not done without those functions
+			driver->actionsFlagSetPrevFrame = driver->actionsFlagSet;
 
 			// get closest vertex
 			currVertex = GetClosestVertex(driver);
@@ -546,34 +547,47 @@ void RunUpdateHook()
 			}
 
 			// ========== Jump =============
-
-			// jumping only works on flat surfaces,
-			// just a prototype for now
-
-			if(mgs->playerVars[playerIndex].jumpOffset == 0)
+			
+			// if on quadblock
+			if((driver->actionsFlagSet & 1) == 1)
 			{
-				mgs->playerVars[playerIndex].preJumpY = driver->posCurr[1];
+				// if tap triangle, jump off quadblock
+				if((buttonsTap & BTN_TRIANGLE) != 0)
+				{
+					// starts a jump when you hit Player_JumpAndFriction
+					driver->forcedJump_trampoline = 1;
+					
+					// jump should go higher if you hold triangle
+					mgs->playerVars[playerIndex].jumpHold = 1;
+				}
 			}
-
-			// optional, check driver->a0
-			// to make sure player is on ground
-
-			if(buttonsHeld & BTN_TRIANGLE)
+			
+			// default gravity, same for all classes
+			driver->const_Gravity = 900;
+			
+			// holding jump after jumping
+			if(mgs->playerVars[playerIndex].jumpHold == 1)
 			{
-				GrowTo((short*)&mgs->playerVars[playerIndex].jumpOffset, 1, 0x10);
+				// if triangle is released
+				if((buttonsHeld & BTN_TRIANGLE) == 0)
+				{
+					// no longer holding jump,
+					// can not "hold" again until next jump
+					mgs->playerVars[playerIndex].jumpHold = 0;
+				}
+				
+				// dont decrease rate of fall,
+				// only increase rate of jump
+				if(driver->velocityXYZ[1] > 0)
+				{
+					// lower gravity
+					driver->const_Gravity = 300;
+				}
 			}
-
-			else
-			{
-				// when you release Triangle,
-				// default gravity carries you down
-				mgs->playerVars[playerIndex].preJumpY = driver->posCurr[1];
-				mgs->playerVars[playerIndex].jumpOffset = 0;
-			}
-
-			driver->posCurr[1] =
-				mgs->playerVars[playerIndex].preJumpY +
-				(mgs->playerVars[playerIndex].jumpOffset << 13);
+			
+			// must be done manually, Driver_Input is gone
+			driver->jump_ForcedMS -= sdata->gGT->elapsedTimeMS;
+			if(driver->jump_ForcedMS < 0) driver->jump_ForcedMS = 0;
 
 			// =========== Sticks ==============
 
@@ -721,7 +735,7 @@ void RunUpdateHook()
 
 	// ============= Camera Position =================
 
-	for(playerIndex = 0; playerIndex < sdata->gGT->numPlyrNextGame; playerIndex++)
+	for(playerIndex = 0; playerIndex < sdata->gGT->numPlyrCurrGame; playerIndex++)
 	{
 		// zoom doesn't change, leave this out till it's needed
 

@@ -677,8 +677,8 @@
 
 800440d4 Camera110_InitStructs
 800442ec Camera110_InitPsyqGeom
-80044350 Camera110_LinkOT_DecalMP
-80044468 Camera110_LinkOT_Normal
+80044350 Camera110_SetDrawEnv_DecalMP
+80044468 Camera110_SetDrawEnv_Normal
 800445e0 Camera110_SetViewMatrix
 8004482c Camera110_SetFrustumPlane
 80044acc Camera110_UpdateFrustum

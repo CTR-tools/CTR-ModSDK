@@ -4242,7 +4242,7 @@ void FUN_80042910(int param_1)
 }
 
 
-// Camera110_LinkOT_DecalMP
+// Camera110_SetDrawEnv_DecalMP
 // param1 - ptrOT
 // param2 - gGT->backbuffer
 // param3 - RECT
@@ -4367,7 +4367,7 @@ void FUN_80042974(void *param_1,undefined4 *param_2,undefined2 *param_3,undefine
   return;
 }
 
-// Camera110_LinkOT_Normal
+// Camera110_SetDrawEnv_Normal
 // param1 otmem
 // param2 camera110
 // param3 backbuffer
@@ -19418,7 +19418,7 @@ void FUN_8005465c(int param_1)
   {
 	// called once to draw all wumpas
 
-	// Camera110_LinkOT_DecalMP
+	// Camera110_SetDrawEnv_DecalMP
     FUN_80042974(
 					*(undefined4 *)(DAT_8008d4b4 + 0xf8),
 
@@ -27350,8 +27350,12 @@ void FUN_8005cd1c(int param_1,int *param_2)
   // extraout_var_01 = extraout_var_01 << 0x8;
 
   *(short *)(param_1 + 0x38e) = extraout_var_01;
-  if (iVar1 * *(short *)(param_1 + 0x314) + iVar2 * *(short *)(param_1 + 0x31a) +
-      iVar3 * *(short *)(param_1 + 800) < 0) {
+  if (
+		iVar1 * *(short *)(param_1 + 0x314) + 
+		iVar2 * *(short *)(param_1 + 0x31a) +
+		iVar3 * *(short *)(param_1 + 0x320) 
+		< 0
+	  ) {
     *(short *)(param_1 + 0x38e) = -extraout_var_01;
   }
   return;
@@ -28604,23 +28608,26 @@ void FUN_8005ea60(undefined4 param_1,int param_2)
 
   if (
 		(
-			(
-				// if under-quadblock exists
-				(*(int *)(param_2 + 0x350) != 0) &&
+			// if under-quadblock exists
+			(*(int *)(param_2 + 0x350) != 0) &&
 
-				// if quadblock terrain is mud
-				(*(char *)(*(int *)(param_2 + 0x350) + 0x38) == '\x0e')
-			)
-			&&
-
-			// if you have not sinked too far under the mud
-			(-0x1000 < *(int *)(param_2 + 0x2d8))
-		) &&
-
-		(iVar2 = -0x1000 - *(int *)(param_2 + 0x2d8), *(int *)(param_2 + 0x8c) < iVar2)
+			// if quadblock terrain is mud
+			(*(char *)(*(int *)(param_2 + 0x350) + 0x38) == '\x0e')
+		)
 	 )
   {
-    *(int *)(param_2 + 0x8c) = iVar2;
+	// if you have not sinked to the mud's bottom (-0x1000)
+	if(-0x1000 < *(int *)(param_2 + 0x2d8))
+	{
+		// sink slower as you approach the mud's bottom
+		iVar2 = -0x1000 - *(int *)(param_2 + 0x2d8)
+	
+		// set driver velY
+		if(*(int *)(param_2 + 0x8c) < iVar2)
+		{
+			*(int *)(param_2 + 0x8c) = iVar2;
+		}
+	}
   }
 
   // OnGravity
@@ -30660,7 +30667,7 @@ LAB_80060c30:
     uVar12 = uVar11;
   }
   
-  // min value for movementY (on stack)
+  // max value for movementY (on stack)
   if ((int)local_24 < (int)uVar12) 
   {
 	// set movementY to the speed that 
@@ -30675,12 +30682,15 @@ LAB_80060e1c:
   
   FUN_8005cd1c(param_2,&local_28,0);
   
+  // decrease speed
   iVar7 = *(ushort *)(param_2 + 0x38c) - uVar13;
   *(undefined2 *)(param_2 + 0x38c) = (short)iVar7;
   if (iVar7 * 0x10000 < 0) {
     *(undefined2 *)(param_2 + 0x38c) = 0;
   }
+  
   iVar7 = (int)*(short *)(param_2 + 0x38e);
+  
   if (iVar7 < 0) {
     if (iVar7 < 0) {
       iVar7 = -iVar7;

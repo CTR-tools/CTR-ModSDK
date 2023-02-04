@@ -13,7 +13,7 @@ void RenderAllBeakerRain(struct GameTracker* gGT);
 void RenderAllBoxSceneSplitLines(struct GameTracker* gGT);
 void RenderBucket_QueueAllInstances(struct GameTracker* gGT);
 void RenderAllNormalParticles(struct GameTracker* gGT);
-void LinkCameraOTs(struct GameTracker* gGT);
+void RenderDispEnv_World(struct GameTracker* gGT);
 void RenderAllFlag0x40(struct GameTracker* gGT);
 void RenderAllTitleDPP(struct GameTracker* gGT);
 void RenderBucket_ExecuteAllInstances(struct GameTracker* gGT);
@@ -24,7 +24,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT);
 void MultiplayerWumpaHUD(struct GameTracker* gGT);
 void WindowBoxLines(struct GameTracker* gGT);
 void WindowDivsionLines(struct GameTracker* gGT);
-void LinkCameraOT_UI(struct GameTracker* gGT);
+void RenderDispEnv_UI(struct GameTracker* gGT);
 void RenderVSYNC(struct GameTracker* gGT);
 void RenderFMV();
 void RenderSubmit(struct GameTracker* gGT);
@@ -78,7 +78,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 		
 	RenderBucket_QueueAllInstances(gGT);
 	RenderAllNormalParticles(gGT);
-	LinkCameraOTs(gGT); // == LinkCameraOTs ==
+	RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 	
 	#if 0
 	// Multiplayer PixelLOD Part 2
@@ -109,7 +109,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 			end[i],
 			gGT->camera110[i].rect.w);
 	
-	LinkCameraOTs(gGT); // == LinkCameraOTs ==
+	RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 	MultiplayerWumpaHUD(gGT);
 	
 	#if 0
@@ -173,7 +173,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 		CheckeredFlag_DrawSelf();
 	}
 
-	LinkCameraOT_UI(gGT);
+	RenderDispEnv_UI(gGT);
 	
 	gGT->countTotalTime = 
 		RCNT_GetTime_Total();
@@ -1012,15 +1012,15 @@ void RenderAllNormalParticles(struct GameTracker* gGT)
 	}
 }
 
-void LinkCameraOTs(struct GameTracker* gGT)
+void RenderDispEnv_World(struct GameTracker* gGT)
 {
 	int i;
 	struct Camera110* c110;
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		c110 = &gGT->camera110[i];
-		Camera110_LinkOT_Normal(
-			(unsigned int)c110->ptrOT + 0xffc,
+		Camera110_SetDrawEnv_Normal(
+			&c110->ptrOT[0x3ff],
 			c110, gGT->backBuffer, 0, 0);
 	}
 }
@@ -1372,7 +1372,7 @@ SkyboxGlow:
 			&level1->glowGradient[0],
 			c110,
 			&gGT->backBuffer->primMem,
-			(unsigned int)c110->ptrOT + 0xffc);
+			&c110->ptrOT[0x3ff]);
 	}
 	
 	return;
@@ -1513,12 +1513,12 @@ void WindowDivsionLines(struct GameTracker* gGT)
     }
 }
 
-void LinkCameraOT_UI(struct GameTracker* gGT)
+void RenderDispEnv_UI(struct GameTracker* gGT)
 {
 	struct Camera110* c110 = &gGT->camera110_UI;
 	
-	Camera110_LinkOT_Normal(
-		(unsigned int)c110->ptrOT + 0x10,
+	Camera110_SetDrawEnv_Normal(
+		&c110->ptrOT[4],
 		c110, gGT->backBuffer, 0, 0);
 }
 

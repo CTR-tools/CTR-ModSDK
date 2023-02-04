@@ -393,7 +393,7 @@ void FUN_80023784(int param_1)
 		// called 12 times, once for each possible
 		// driver that needs pixelLOD in multiplayer
 
-		// Camera110_LinkOT_DecalMP
+		// Camera110_SetDrawEnv_DecalMP
         FUN_80042974(
 						// ptrOT?
 						piVar12[-1],

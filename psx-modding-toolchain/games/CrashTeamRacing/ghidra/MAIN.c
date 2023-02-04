@@ -2555,7 +2555,7 @@ code_r0x800369d8:
       puVar1 = puVar18 + 0x97;
       puVar18 = puVar18 + 0x44;
 
-	  // Camera110_LinkOT_Normal
+	  // Camera110_SetDrawEnv_Normal
 	  // param1 otmem
 	  // param2 camera110
 	  // param3 backbuffer
@@ -3497,7 +3497,7 @@ code_r0x800369d8:
         puVar1 = puVar18 + 0x97;
         puVar18 = puVar18 + 0x44;
 
-		// Camera110_LinkOT_Normal
+		// Camera110_SetDrawEnv_Normal
 		// param1 otmem
 		// param2 camera110
 		// param3 backbuffer
@@ -3759,7 +3759,7 @@ code_r0x800369d8:
 
   // param1 is PTR_DAT_8008d2ac
 
-  // Camera110_LinkOT_Normal
+  // Camera110_SetDrawEnv_Normal
   // param1 otmem
   // param2 camera110
   // param3 backbuffer
