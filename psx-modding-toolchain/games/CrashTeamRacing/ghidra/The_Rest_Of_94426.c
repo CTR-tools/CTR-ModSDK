@@ -32012,7 +32012,10 @@ LAB_80061cf8:
   // driver -> instBubble
   iVar8 = *(int *)(param_1 + 0x14);
 
-  while (uVar22 = uVar20, iVar8 != 0)
+  uVar22 = uVar20;
+
+  // loop through all, find mask if it exists
+  while (iVar8 != 0)
   {
 	// If thread->modelIndex is Aku or Uka
     if ((*(short *)(iVar8 + 0x44) == 0x3a) || (*(short *)(iVar8 + 0x44) == 0x39)) {
@@ -32020,7 +32023,7 @@ LAB_80061cf8:
       break;
     }
 
-	// check next player in linked list
+	// check next bubble in linked list
     iVar8 = *(int *)(iVar8 + 0x10);
   }
 
