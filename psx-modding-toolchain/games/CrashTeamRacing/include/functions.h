@@ -93,6 +93,23 @@ void FUN_80020334(struct QuadBlock* qb, int triangleID, int param_3);
 void COLL_StartSearch_NearPlayer(struct Thread* t, struct Driver* d);
 u_int COLL_Scrub(struct Driver* d, struct Thread* t, int param_3, int param_4, int* param_5);
 
+// CTR
+
+void CTR_Box_DrawWirePrims(u_short x, u_short y, u_short u, u_short v, u_char r, u_char g, u_char b, u_long* otMem, struct PrimMem* primMem);
+void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem);
+void CTR_Box_DrawClearBox(RECT* r, u_int rgb, int param_3, u_long* otMem, struct PrimMem* primMem);
+void CTR_Box_DrawSolidBox(RECT* r, u_int rgb, u_long* otMem, struct PrimMem* primMem);
+void CTR_CycleTex_LEV(void* animtex, int timer);
+CTR_CycleTex_Model();
+CTR_CycleTex_AllModels();
+CTR_CycleTex_2p3p4pWumpaHUD();
+void CTR_ClearRenderLists_1P2P(struct GameTracker* gGT, int numPlyrCurrGame);
+void CTR_ClearRenderLists_3P4P(struct GameTracker* gGT, int numPlyrCurrGame);
+CTR_EmptyFunc_MainFrame_ResetDB();
+void CTR_ErrorScreen(char r, char g, char b);
+CTR_MatrixToRot();
+CTR_ScrambleGhostString();
+
 // unorganized
 
 void JitPool_Clear(struct JitPool* AP);
