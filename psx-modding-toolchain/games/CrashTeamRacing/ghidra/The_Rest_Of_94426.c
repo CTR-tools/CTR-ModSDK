@@ -31976,11 +31976,14 @@ LAB_80061cf8:
 
   uVar20 = uVar22 & 0x7f1f83d5;
   
+  // disable input if opening adv hub door with key
   if ((*(uint *)(puVar24 + 8) & 0x4004) != 0) goto LAB_800629f8;
+  
   iVar19 = (uint)*(byte *)(param_2 + 0x380) + 1;
   uVar17 = (undefined)iVar19;
   
-  // vectorID * 8, vec4s = 8 bytes
+  // this is always zero, there's no possible
+  // way for it not to be, so AxisAngle4
   iVar8 = iVar19 * 8;
   
   if (iVar19 != 0) {
@@ -31988,7 +31991,7 @@ LAB_80061cf8:
     iVar8 = 0;
   }
   
-  // get pointer to normalVec, iVar8 is which vector
+  // always AxisAngle4
   puVar12 = (undefined4 *)(param_2 + iVar8 + 0x378);
   
   // if not touching ground

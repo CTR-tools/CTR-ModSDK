@@ -22,12 +22,11 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	u_int jumpCooldown;
 	int driverBaseSpeed;
 	int approximateSpeed;
-	u_int* AxisAnglePointer;
+	char* AxisAnglePointer;
 	short sVar13;
 	int iVar14;
 	u_int buttonsTapped;
 	struct RacingWheelData* gamepadRacingWheel;
-	u_char trueVectorID;
 	u_short driverTimerShort;
 	int driverTimer;
 	u_int timerHazard;
@@ -352,7 +351,9 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driverRankItemValue = 4;
 
 	// if you have a raincloud over your head from potion
-	if (driver->thCloud != 0) driverRankItemValue = ((struct RainCloud*)driver->thCloud->object)->itemScrollRandom;
+	if (driver->thCloud != 0) 
+		driverRankItemValue = 
+			((struct RainCloud*)driver->thCloud->object)->itemScrollRandom;
 
 	// get approximate speed
 	approximateSpeed = (int)driver->speedApprox;
@@ -415,7 +416,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		}
 
 		// Hazard Timer = timerHazardSomething
-		*(u_short*)&driver->hazardTimer = timerHazardSomething;
+		driver->hazardTimer = timerHazardSomething;
 	}
 
 	// if you are not impacted by hazard (other than clock)
@@ -490,7 +491,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 				driverTimerUnk = driverTimerShort | 1;
 			}
 		}
-		*(u_short*)&driver->hazardTimer = driverTimerUnk;
+		driver->hazardTimer = driverTimerUnk;
 	}
 
 	//trigger Item roll / selection
@@ -531,7 +532,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	noItemTimer = driver->noItemTimer;
 
 	//if Item is going away
-	if (noItemTimer)
+	if (noItemTimer != 0)
 	{
 
 		// if Item is about to be gone and Number of Items = 0
@@ -640,33 +641,26 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	// ??? --Super
 	specialFlag = actionflags & 0x7f1f83d5;
 	
+	// disable input if opening adv hub door with key
 	if ((sdata->gGT->gameMode2 & 0x4004) != 0) goto setActionsFlagSetToSomething;
-	trueVectorID = *(u_char*)&driver->normalVecID + 1;
-	
-	// what --Super
-	if (trueVectorID) trueVectorID = 0;
-	
-	// get pointer to normalVec, vectorID2 is which vector
-	// gotta watch this as well --Super
-	AxisAnglePointer = (u_int*)&driver->AxisAngle4_normalVec[trueVectorID];
 	
 	// if not touching ground
 	if ((actionflags & 1) == 0) 
 	{
 		// AngleAxis2_NormalVec
-		*AxisAnglePointer = *(u_int*)&driver->AxisAngle2_normalVec[0];
-		*(u_short*)(AxisAnglePointer + 1) = driver->AxisAngle2_normalVec[2];
+		*(u_int*)&driver->AxisAngle4_normalVec[0] = *(u_int*)&driver->AxisAngle2_normalVec[0];
+		driver->AxisAngle4_normalVec[2] = driver->AxisAngle2_normalVec[2];
 	}
 	
 	// if touching ground
 	else 
 	{
 		// AngleAxis1_NormalVec
-		*AxisAnglePointer = *(u_int*)&driver->AxisAngle1_normalVec[0];
-		*(u_short*)(AxisAnglePointer + 1) = driver->AxisAngle1_normalVec[2];
+		*(u_int*)&driver->AxisAngle4_normalVec[0] = *(u_int*)&driver->AxisAngle1_normalVec[0];
+		driver->AxisAngle4_normalVec[2] = driver->AxisAngle1_normalVec[2];
 	}
 	
-	*(u_char*)&driver->normalVecID = trueVectorID;
+	driver->normalVecID = 0;
 
 	driverItemThread = thread->childThread;
 
@@ -788,13 +782,15 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 							{
 								// sext.... --Super
 								jumpCooldown = (u_int)driver->jump_CooldownMS;
-								goto YouUsedTheSpring;
+								goto ReduceCount;
 							}
 						}
 						else
 						{
+							// only reduce numHeldItem if not using cheats
 							jumpCooldown = sdata->gGT->gameMode2 & 0x400c00;
-							YouUsedTheSpring:
+							
+							ReduceCount:
 							if (jumpCooldown == 0) driver->numHeldItems--;
 						}
 						driver->noItemTimer = 5;

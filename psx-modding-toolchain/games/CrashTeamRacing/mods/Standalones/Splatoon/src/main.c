@@ -462,6 +462,8 @@ void RunUpdateHook()
 			// dont use m.mgti[playerIndex] or else 2P breaks
 			mgti = (struct Model_GiveToInst*)driver->instSelf->model;
 
+			// could also do gGT->gameMode2 | 0x4004
+
 			// kill Input function, and audio
 			driver->funcPtrs[2] = (void*)0;
 			driver->funcPtrs[3] = (void*)0;
