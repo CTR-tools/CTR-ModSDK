@@ -8557,7 +8557,7 @@ struct Data
 	// 8008a480 -- count 0 to 0x200
 	// 8008ac84 -- mostly-empty data
 	// 8008ad7c -- funcPtr to Printf
-
+	// 8008b000 to 8008c000 -- $sp for psyq libs
 	// 8008cb34 -- 0x00008000
 	// 8008cb38 -- 0x00800000
 
