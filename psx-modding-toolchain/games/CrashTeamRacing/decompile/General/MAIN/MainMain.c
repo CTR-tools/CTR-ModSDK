@@ -4,7 +4,7 @@ void MainDrawCallback_Vsync();
 void MainDrawCallback_DrawSync();
 void StateZero();
 
-#define FastBoot
+//#define FastBoot
 
 u_int main()
 {
