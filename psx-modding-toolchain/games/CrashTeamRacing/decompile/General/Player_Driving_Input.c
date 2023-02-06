@@ -664,7 +664,9 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 
 	driverItemThread = thread->childThread;
 
-	while (actionflags = specialFlag, driverItemThread != 0)
+	actionflags = specialFlag;
+
+	while (driverItemThread != 0)
 	{
 		// If thread->modelIndex is Aku or Uka
 		if ((*(short*)&driverItemThread->modelIndex == 0x3a) || (*(short*)&driverItemThread->modelIndex == 0x39))
@@ -715,7 +717,6 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			// If you press circle
 			((buttonsTapped & 0x40) != 0) &&
 
-
 			(
 				// if neutral driving
 				((kartState == 0 ||
@@ -753,14 +754,12 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					if
 					(
 						(
-							(heldItemID != 0xF) && (heldItemID != 0x10)
-						) &&
-						(
-							(driver->noItemTimer == 0 &&
-								(
-									(driverRankItemValue != 1 && (driver->clockReceive == 0))
-								)
-							)
+							(heldItemID != 0xF) && 
+							(heldItemID != 0x10) &&
+							(driver->noItemTimer == 0) &&
+							(driverRankItemValue != 1) &&
+							(driver->clockReceive == 0)
+							
 						)
 					)
 					{
