@@ -12,6 +12,7 @@ int InterpBySpeed(int param_1,int param_2,int param_3);
 
 void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 {
+	struct GameTracker* gGT;
 	char kartState;
 	char heldItemID;
 	short noItemTimer;
@@ -54,16 +55,18 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	struct Shield* shield;
 	struct TrackerWeapon* bomb;
 	u_int superEngineFireLevel;
+	
+	gGT = sdata->gGT;
 
 	// If race timer is not supposed to stop for this racer
 	if ((driver->actionsFlagSet & 0x40000) == 0)
 	{
 		// set racer's timer to the time on the clock
-		driver->timeElapsedInRace = sdata->gGT->elapsedEventTime;
+		driver->timeElapsedInRace = gGT->elapsedEventTime;
 	}
 
 	// elapsed milliseconds per frame, ~32
-	msPerFrame = sdata->gGT->elapsedTimeMS;
+	msPerFrame = gGT->elapsedTimeMS;
 
 	// negative elapsed milliseconds per frame
 	negativeMsPerFrame = -msPerFrame;
@@ -71,7 +74,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	if
 	(
 		// time on the clock
-		(sdata->gGT->elapsedEventTime < 0x8ca00) &&
+		(gGT->elapsedEventTime < 0x8ca00) &&
 
 		// race timer is not frozen for this player
 		((driver->actionsFlagSet & 0x40000) == 0)
@@ -248,7 +251,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	}
 
 	// If Super Engine Cheat is not enabled
-	if (!(sdata->gGT->gameMode2 & 0x10000))
+	if (!(gGT->gameMode2 & 0x10000))
 	{
 		// Next 7 lines are repetitive, this time for Super Engine Timer (0x38)
 		// Make "desired" amount by subtracting elapsed time from "current" amount,
@@ -316,7 +319,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					(driverRankItemValue == 7) &&
 
 					// If numPlyrCurrGame is 1
-					(sdata->gGT->numPlyrCurrGame == 1)
+					(gGT->numPlyrCurrGame == 1)
 				) ||
 				(
 					(
@@ -324,7 +327,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 						driverRankItemValue == 5 &&
 
 						// if numPlyrCurrGame is 2
-						(sdata->gGT->numPlyrCurrGame == 2)
+						(gGT->numPlyrCurrGame == 2)
 					)
 				)
 			) ||
@@ -334,7 +337,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					driverRankItemValue == 3 &&
 
 					// if numPlyrCurrGame is more than 2
-					(2 < (u_char)sdata->gGT->numPlyrCurrGame)
+					(2 < (u_char)gGT->numPlyrCurrGame)
 				)
 			)
 		) &&
@@ -387,7 +390,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 				driverRankItemValue != 0 ||
 				(
 					// if time on the clock is zero
-					driverTimer = sdata->gGT->elapsedEventTime,
+					driverTimer = gGT->elapsedEventTime,
 					driverTimer == 0
 				)
 			)
@@ -542,26 +545,26 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			// if numPlyrCurrGame is > 2
 			if
 			(
-				(2 < (u_char)sdata->gGT->numPlyrCurrGame) &&
+				(2 < (u_char)gGT->numPlyrCurrGame) &&
 
 				// If you're not in Battle Mode
 				(
 					(
 						(
-							(sdata->gGT->gameMode1 & 0x20) == 0 &&
+							(gGT->gameMode1 & 0x20) == 0 &&
 
 							// your weapon is 3 missiles
 							(driver->heldItemID == 0xB)
 		 				) &&
 
 						// If there are racers that had 3 missiles
-						(sdata->gGT->numPlayersWith3Missiles > 0)
+						(gGT->numPlayersWith3Missiles > 0)
 					)
 				)
 			)
 			{
 				// decrement the number of players that had 3 missiles
-				sdata->gGT->numPlayersWith3Missiles--;
+				gGT->numPlayersWith3Missiles--;
 			}
 
 			// take away weapon
@@ -579,7 +582,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	(
 		(driver->invincibleTimer != 0) &&
 		(
-			driverTimer2 = driver->invincibleTimer - sdata->gGT->elapsedTimeMS,
+			driverTimer2 = driver->invincibleTimer - gGT->elapsedTimeMS,
 			driver->invincibleTimer = driverTimer2, driverTimer2 < 0
 		)
 	)
@@ -597,11 +600,11 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		(driver->invisibleTimer != 0) &&
 
 		// If Permanent Invisibility Cheat is Disabled
-		(!(sdata->gGT->gameMode2 & 0x8000))
+		(!(gGT->gameMode2 & 0x8000))
 	)
 	{
 		// decrease invisibility timer, can not go below zero
-		driverTimer2 = driver->invisibleTimer - sdata->gGT->elapsedTimeMS;
+		driverTimer2 = driver->invisibleTimer - gGT->elapsedTimeMS;
 		driver->invisibleTimer = driverTimer2;
 		if (driverTimer2 < 0) driver->invisibleTimer = 0;
 
@@ -642,7 +645,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	specialFlag = actionflags & 0x7f1f83d5;
 	
 	// disable input if opening adv hub door with key
-	if ((sdata->gGT->gameMode2 & 0x4004) != 0) goto SkipInput;
+	if ((gGT->gameMode2 & 0x4004) != 0) goto SkipInput;
 	
 	// if not touching ground
 	if ((actionflags & 1) == 0) 
@@ -686,7 +689,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	buttonHeld = 0;
 
 	// If you're not in End-Of-Race menu
-	if (!(sdata->gGT->gameMode1 & 0x200000))
+	if (!(gGT->gameMode1 & 0x200000))
 	{
 		// Get which button is held
 		buttonHeld = ptrgamepad->buttonsHeldCurrFrame;
@@ -696,7 +699,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	buttonsTapped = 0;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata->gGT->gameMode1 & 0x200000) == 0)
+	if ((gGT->gameMode1 & 0x200000) == 0)
 	{
 		// Get which button is tapped
 		buttonsTapped = ptrgamepad->buttonsTapped;
@@ -787,7 +790,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 						else
 						{
 							// only reduce numHeldItem if not using cheats
-							jumpCooldown = sdata->gGT->gameMode2 & 0x400c00;
+							jumpCooldown = gGT->gameMode2 & 0x400c00;
 							
 							ReduceCount:
 							if (jumpCooldown == 0) driver->numHeldItems--;
@@ -913,7 +916,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	joystickStrength = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata->gGT->gameMode1 & 0x200000) == 0)
+	if ((gGT->gameMode1 & 0x200000) == 0)
 	{
 		// gamepadBuffer -> stickRY (for gas or reverse)
 		joystickStrength = (int)ptrgamepad->stickRY;
@@ -965,7 +968,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driverTimer = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata->gGT->gameMode1 & 0x200000) == 0) 
+	if ((gGT->gameMode1 & 0x200000) == 0) 
 	{
 		driverTimer = (int)ptrgamepad->stickLY;
 	}
@@ -1214,7 +1217,7 @@ code_r0x80062644:
 	driverSpeedOrSmth = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata->gGT->gameMode1 & 0x200000) == 0)
+	if ((gGT->gameMode1 & 0x200000) == 0)
 	{
 		// gamepadBuffer -> stickLX
 		driverSpeedOrSmth = (int)ptrgamepad->stickLX;
