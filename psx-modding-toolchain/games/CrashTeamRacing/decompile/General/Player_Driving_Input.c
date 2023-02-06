@@ -1151,11 +1151,12 @@ code_r0x80062644:
 
 	LAB_80062648:
 	if (actionflags != 0)
-	{
-		driverSpeedOrSmth = (int)driver->speedApprox;
-		if (driverSpeedOrSmth < 0) driverSpeedOrSmth = -driverSpeedOrSmth;
-		
-		if (driverSpeedOrSmth > 0x300) 
+	{		
+		// high speed
+		if (
+				(driver->speedApprox > 0x300) || 
+				(driver->speedApprox < -0x300)
+			) 
 		{
 			// record amount of time with high speed
 			driver->timeSpentWithHighSpeed += msPerFrame;
