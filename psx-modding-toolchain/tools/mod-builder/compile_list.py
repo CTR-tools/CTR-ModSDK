@@ -7,6 +7,11 @@ import os
 
 sections = dict()
 line_count = [0]
+print_errors = [False]
+
+def error_print(error: str):
+    print(error)
+    print_errors[0] = True
 
 class CompileList:
     def __init__(self, line: str, sym: Syms) -> None:
@@ -36,7 +41,7 @@ class CompileList:
                 break
         if len(line) < 5:
             if len(line) > 0:
-                print("\n[BuildList-py] ERROR: wrong syntax at line " + str(line_count[0]) + ": " + self.original_line + "\n")
+                error_print("\n[BuildList-py] ERROR: wrong syntax at line " + str(line_count[0]) + ": " + self.original_line + "\n")
             self.ignore = True
             return
 
@@ -56,12 +61,12 @@ class CompileList:
         try:
             offset = eval(line[3])
         except Exception:
-            print("\n[BuildList-py] ERROR: invalid arithmetic expression for offset at line " + str(line_count[0]) + ": " + self.original_line + "\n")
+            error_print("\n[BuildList-py] ERROR: invalid arithmetic expression for offset at line " + str(line_count[0]) + ": " + self.original_line + "\n")
 
         self.address = self.calculate_address_base(line[2], offset)
         if (self.address != 0) and ((self.address < self.min_addr) or (self.address > self.max_addr)):
-            print("\n[BuildList-py] ERROR: address specified is not in the [" + hex(self.min_addr) + ", " + hex(self.max_addr) + "] range.")
-            print("[BuildList-py] at line " + str(line_count[0]) + ": " + self.original_line + "\n")
+            error_print("\n[BuildList-py] ERROR: address specified is not in the [" + hex(self.min_addr) + ", " + hex(self.max_addr) + "] range.")
+            error_print("[BuildList-py] at line " + str(line_count[0]) + ": " + self.original_line + "\n")
             self.ignore = True
             return
         srcs = [l.strip() for l in line[4].split()]
@@ -79,12 +84,19 @@ class CompileList:
             if directory == OUTPUT_FOLDER and output_name in sections:
                 self.source.append(directory + src[1])
             else:
-                for file in folders[directory]:
-                    if regex.search(file):
-                        self.source.append(directory + file)
+                if directory in folders:
+                    for file in folders[directory]:
+                        if regex.search(file):
+                            self.source.append(directory + file)
+                else:
+                    error_print("\n[BuildList-py] WARNING: directory " + directory + " not found.")
+                    error_print("at line: " + str(line_count[0]) + ": " + self.original_line + "\n")
+                    self.ignore = True
+                    return
+
         if len(self.source) == 0:
-            print("\n[BuildList-py] WARNING: no file(s) found.")
-            print("at line: " + str(line_count[0]) + ": " + self.original_line + "\n")
+            error_print("\n[BuildList-py] WARNING: no file(s) found.")
+            error_print("at line: " + str(line_count[0]) + ": " + self.original_line + "\n")
             self.ignore = True
             return
         if len(line) == 6:
@@ -100,8 +112,8 @@ class CompileList:
 
         if self.section_name in sections:
             self.ignore = True
-            print("\n[BuildList-py] ERROR: binary filename already in use, please define another alias.")
-            print("[BuildList-py] at line " + str(line_count[0]) + ": " + self.original_line + "\n")
+            error_print("\n[BuildList-py] ERROR: binary filename already in use, please define another alias.")
+            error_print("[BuildList-py] at line " + str(line_count[0]) + ": " + self.original_line + "\n")
             return
         else:
             sections[self.section_name] = True
@@ -115,7 +127,7 @@ class CompileList:
             return addr + offset
         if is_number(symbol):
             return int(symbol, 0) + offset
-        print("\n[BuildList-py] ERROR: invalid address or symbol at line " + str(line_count[0]) + ": " + self.original_line + "\n")
+        error_print("\n[BuildList-py] ERROR: invalid address or symbol at line " + str(line_count[0]) + ": " + self.original_line + "\n")
         return -1
 
     def should_ignore(self) -> bool:
@@ -129,3 +141,4 @@ class CompileList:
 def free_sections() -> None:
     sections.clear()
     line_count[0] = 0
+    print_errors[0] = False

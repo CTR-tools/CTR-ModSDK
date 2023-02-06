@@ -1,5 +1,5 @@
 from compile_list import CompileList
-from common import create_directory, request_user_input, rename_psyq_sections, COMP_SOURCE, GAME_INCLUDE_PATH, FOLDER_DISTANCE, SRC_FOLDER, DEBUG_FOLDER, OUTPUT_FOLDER, BACKUP_FOLDER, OBJ_FOLDER, DEP_FOLDER, GCC_MAP_FILE, REDUX_MAP_FILE, CONFIG_PATH, PSYQ_RENAME_CONFIRM_FILE
+from common import create_directory, request_user_input, rename_psyq_sections, delete_file, cli_clear, GCC_OUT_FILE, COMP_SOURCE, GAME_INCLUDE_PATH, FOLDER_DISTANCE, SRC_FOLDER, DEBUG_FOLDER, OUTPUT_FOLDER, BACKUP_FOLDER, OBJ_FOLDER, DEP_FOLDER, GCC_MAP_FILE, REDUX_MAP_FILE, CONFIG_PATH, PSYQ_RENAME_CONFIRM_FILE
 
 import re
 import json
@@ -149,6 +149,13 @@ class Makefile:
 
         return True
 
+    def delete_temp_files(self) -> None:
+        for ovr in self.ovrs:
+            for src in ovr[1]:
+                src = src.rsplit(".", 1)[0]
+                delete_file(src + ".o")
+                delete_file(src + ".dep")
+
     # Moving the .o and .dep to debug/
     def move_temp_files(self) -> None:
         buffer = str()
@@ -170,23 +177,27 @@ class Makefile:
             file.write(buffer)
 
     # Restoring the saved .o and .dep for faster compilation
-    def restore_temp_files(self, backwards: bool) -> None:
+    def restore_temp_files(self) -> None:
         if os.path.isfile(COMP_SOURCE):
             with open(COMP_SOURCE, "r") as file:
                 for line in file:
                     line = [l.strip() for l in line.split()]
-                    if backwards:
-                        shutil.move(line[1], line[0])
-                    else:
-                        shutil.move(line[0], line[1])
+                    shutil.copyfile(line[0], line[1])
 
     def make(self) -> None:
-        self.restore_temp_files(False)
+        self.restore_temp_files()
         create_directory(OUTPUT_FOLDER)
         create_directory(BACKUP_FOLDER)
-        os.system("make -s -j8")
+        cli_clear()
+        print("\n[Makefile-py] Compilation started...\n")
+
+        os.system("make -s -j8 > " + GCC_OUT_FILE + " 2>&1")
+        with open(GCC_OUT_FILE) as file:
+            for line in file:
+                print(line)
+
         if (not os.path.isfile("mod.map")) or (not os.path.isfile("mod.elf")):
-            self.restore_temp_files(True)
+            self.delete_temp_files()
             print("\n[Makefile-py] ERROR: compilation was not successful.\n")
             return
 
