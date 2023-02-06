@@ -928,15 +928,15 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		(driverRankItemValue == 6)
 	)
 	{
-		if
-		(
-			// If you are not holding Cross
-			(cross == 0) &&
-
-			(driverTimer = Player_StickReturnToRest(joystickStrength, 0x80, 0), driverTimer > -1)
-		)
+		// If you are not holding Cross
+		if(cross == 0)
 		{
-			actionflags |= 0x400000;
+			driverTimer = Player_StickReturnToRest(joystickStrength, 0x80, 0); 
+			
+			if(driverTimer > -1)
+			{
+				actionflags |= 0x400000;
+			}
 		}
 
 
@@ -966,8 +966,11 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driverTimer = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((sdata->gGT->gameMode1 & 0x200000) == 0) driverTimer = (int)ptrgamepad->stickLY;
-
+	if ((sdata->gGT->gameMode1 & 0x200000) == 0) 
+	{
+		driverTimer = (int)ptrgamepad->stickLY;
+	}
+	
 	if
 	(
 		(driver->simpTurnState < 0) ||
