@@ -897,9 +897,9 @@
 80061488 Player_GetBaseSpeed
 
 // Player_Steer, way different in Sep3?
-8006163c Player_Steer_ReturnToRest
-800616b0 Player_Steer_AnalogStrength
-800617cc Player_Steer_AbsoluteStrength
+8006163c Player_StickReturnToRest
+800616b0 Player_StickGetStrength
+800617cc Player_StickGetStrengthAbsolute
 
 8006181c Player_Driving_Input
 80062a2c Player_Driving_Audio

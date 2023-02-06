@@ -31177,7 +31177,7 @@ int FUN_80061488(int param_1)
 }
 
 
-// Player_Steer_ReturnToRest
+// Player_StickReturnToRest
 int FUN_8006163c(int param_1,undefined4 param_2,short *param_3)
 
 {
@@ -31211,20 +31211,30 @@ int FUN_8006163c(int param_1,undefined4 param_2,short *param_3)
     iVar1 = -(int)*param_3;
   }
 
+  // convert from [0,0xff] to [-0x7f,0x7f]
   param_1 = param_1 + iVar1;
 
-  if (param_1 < 0) {
-
-    // Map value from [oldMin, oldMax] to [newMin, newMax]
-    // inverting newMin and newMax will give an inverse range mapping
-    iVar1 = FUN_80058f9c(-param_1,iVar2,iVar3,0,param_2);
+  // negative strength
+  if (param_1 < 0) 
+  {
+	// map value
+    iVar1 = FUN_80058f9c(
+				-param_1,iVar2, // [stickVal, deadzone]
+				iVar3,0,		// [range, 0]
+				param_2			// const 0x80 (halfway lerp)
+			);
     iVar1 = -iVar1;
   }
-  else {
-
-    // Map value from [oldMin, oldMax] to [newMin, newMax]
-    // inverting newMin and newMax will give an inverse range mapping
-    iVar1 = FUN_80058f9c(param_1,iVar2,iVar3,0,param_2);
+  
+  // positive strength
+  else 
+  {
+	// map value
+    iVar1 = FUN_80058f9c(
+				param_1,iVar2, 	// [stickVal, deadzone]
+				iVar3,0,		// [range, 0]
+				param_2			// const 0x80 (halfway lerp)
+			);
   }
   return iVar1;
 }
@@ -31234,7 +31244,7 @@ int FUN_8006163c(int param_1,undefined4 param_2,short *param_3)
 // param_2 is max possible steer
 // param_3 RacingWheelData struct
 
-// Player_Steer_AnalogStrength
+// Player_StickGetStrength
 // can only be positive (negated elsewhere)
 int FUN_800616b0(int param_1,int param_2,int param_3)
 
@@ -31252,7 +31262,7 @@ int FUN_800616b0(int param_1,int param_2,int param_3)
 	// range of steering
     iVar2 = 0x7f;
 
-	// strength of steering
+	// RangeMinusDeadzone
     iVar3 = 0x5e;
   }
 
@@ -31265,46 +31275,48 @@ int FUN_800616b0(int param_1,int param_2,int param_3)
 	// range
 	iVar2 = (int)*(short *)(param_3 + 4);
 
-	// strength of steering
+	// RangeMinusDeadzone
 	iVar3 = iVar2 - iVar1;
   }
 
-  // if desired steer strength is
-  // less than minimum possible steer strength
+  // if desired steer < Deadzone
   if (param_1 < iVar1)
   {
 	// dont steer
     return 0;
   }
 
-  // subtract steer from deadzone
+  // SteerMinusDeadzone
   iVar1 = param_1 - iVar1;
 
-  // if you attempt to steer farther
-  // than maximum possible range
+  // if desired steer > Range
   if (iVar2 <= param_1)
   {
 	// default to max desired steer
     return param_2;
   }
 
-  if (iVar3 / 2 <= iVar1) {
+  // if SteerMinusDeadzone >= Half RangeMinusDeadzone
+  if (iVar3 / 2 <= iVar1) 
+  {
     iVar1 = (iVar1 - iVar3 / 2) * (param_2 - param_2 / 5) * 2;
-    if (iVar3 == 0) {
-      trap(0x1c00);
-    }
-    if ((iVar3 == -1) && (iVar1 == -0x80000000)) {
-      trap(0x1800);
-    }
+    
+	// check error
+	if (iVar3 == 0) trap(0x1c00);
+    if ((iVar3 == -1) && (iVar1 == -0x80000000)) trap(0x1800);
+    
     return iVar1 / iVar3 + param_2 / 5;
   }
+  
+  // if SteerMinusDeadzone < Half RangeMinusDeadzone
+  
   iVar1 = iVar1 * (param_2 / 5) * 2;
-  if (iVar3 == 0) {
-    trap(0x1c00);
-  }
-  if ((iVar3 == -1) && (iVar1 == -0x80000000)) {
-    trap(0x1800);
-  }
+  
+  // check error
+  if (iVar3 == 0) trap(0x1c00);
+  if ((iVar3 == -1) && (iVar1 == -0x80000000)) trap(0x1800);
+  
+  // xxx / RangeMinusDeadzone
   return iVar1 / iVar3;
 }
 
@@ -31315,7 +31327,7 @@ int FUN_800616b0(int param_1,int param_2,int param_3)
 // param_2 is max possible steer
 // param_3 RacingWheelData struct
 
-// Player_Steer_AbsoluteStrength
+// Player_StickGetStrengthAbsolute
 // can be positive or negative
 int FUN_800617cc(int param_1,undefined4 param_2,short *param_3)
 
@@ -31335,7 +31347,7 @@ int FUN_800617cc(int param_1,undefined4 param_2,short *param_3)
   // if steering right
   if (param_1 - iVar1 < 0)
   {
-	// assume steering left (negate)
+	// Player_StickGetStrength
     iVar1 = FUN_800616b0(-(param_1 - iVar1), param_2, param_3);
 
 	// negate result to steer right
@@ -31345,7 +31357,7 @@ int FUN_800617cc(int param_1,undefined4 param_2,short *param_3)
   // if steer left
   else
   {
-	// steer left
+	// Player_StickGetStrength
     iVar1 = FUN_800616b0(param_1 - iVar1, param_2, param_3);
   }
 
@@ -32283,7 +32295,7 @@ LAB_8006222c:
 			// If you are not holding Cross
 			(local_38 == 0) &&
 
-			// Player_Steer_ReturnToRest
+			// Player_StickReturnToRest
 			(iVar19 = FUN_8006163c(iVar8,0x80,0), -1 < iVar19)
 		)
 	{
@@ -32352,14 +32364,14 @@ LAB_8006253c:
     // if you are not holding cross, or have no Reserves...
     //iVar23 is replaced
 
-	// Player_Steer_ReturnToRest
+	// Player_StickReturnToRest
     iVar23 = FUN_8006163c(iVar8,0x80,0);
 
 	iVar8 = -iVar23;
     if (iVar23 < 1) {
       if ((iVar8 == 0) &&
 
-		  // Player_Steer_ReturnToRest
+		  // Player_StickReturnToRest
          ((iVar19 = FUN_8006163c(iVar19,0x80,0), 99 < iVar19 ||
 
 		  ((0 < iVar19 && ((uVar22 & 0x20000) != 0))))))
@@ -32402,7 +32414,7 @@ LAB_800625c4:
   // If you are holding Square
   else
   {
-	// Player_Steer_ReturnToRest
+	// Player_StickReturnToRest
     iVar19 = FUN_8006163c(iVar19,0x80,0);
 
 	if ((iVar19 < 100) && ((iVar19 < 1 || ((uVar22 & 0x20000) == 0))))
@@ -32410,7 +32422,7 @@ LAB_800625c4:
 	  // if you are not holding cross, and you have no Reserves
       if (local_38 == 0)
 	  {
-        // Player_Steer_ReturnToRest
+        // Player_StickReturnToRest
 		iVar8 = FUN_8006163c(iVar8,0x80,0);
 
 		iVar23 = iVar10 * -iVar8;

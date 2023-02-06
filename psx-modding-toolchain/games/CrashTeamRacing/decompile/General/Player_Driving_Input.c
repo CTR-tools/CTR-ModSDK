@@ -3,11 +3,11 @@
 void GAMEPAD_Vib_4(struct Driver* driver, u_int param_2, int param_3);
 void Player_SetHeldItem(struct Driver* driver);
 void OtherFX_Play(int sfxID, int flag);
-int Player_Steer_ReturnToRest(int param_1, u_int param_2, struct RacingWheelData* param_3);
+int Player_StickReturnToRest(int param_1, u_int param_2, struct RacingWheelData* param_3);
 int Player_GetBaseSpeed(struct Driver* driver);
 void Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
 int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
-int Player_Steer_AbsoluteStrength(int param_1, u_int param_2, struct RacingWheelData* param_3);
+int Player_StickGetStrengthAbsolute(int param_1, u_int param_2, struct RacingWheelData* param_3);
 int InterpBySpeed(int param_1,int param_2,int param_3);
 
 void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
@@ -48,7 +48,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	u_int buttonHeld;
 	u_int vectorID;
 	int vectorID2;
-	int steeringDirectionOrSmth;
+	int joystickStrength;
 	int driverSpeedOrSmth = 0;
 	struct Thread* driverItemThread;
 	struct Shield* shield;
@@ -911,13 +911,13 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	}
 
 	// assume normal gas pedal
-	steeringDirectionOrSmth = 0x80;
+	joystickStrength = 0x80;
 
 	// If you're not in End-Of-Race menu
 	if ((sdata->gGT->gameMode1 & 0x200000) == 0)
 	{
 		// gamepadBuffer -> stickRY (for gas or reverse)
-		steeringDirectionOrSmth = (int)ptrgamepad->stickRY;
+		joystickStrength = (int)ptrgamepad->stickRY;
 	}
 
 	if
@@ -933,7 +933,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			// If you are not holding Cross
 			(cross == 0) &&
 
-			(driverTimer = Player_Steer_ReturnToRest(steeringDirectionOrSmth, 0x80, 0), driverTimer > -1)
+			(driverTimer = Player_StickReturnToRest(joystickStrength, 0x80, 0), driverTimer > -1)
 		)
 		{
 			actionflags |= 0x400000;
@@ -1008,8 +1008,8 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		// if you are not holding cross, or have no Reserves...
 		//driverSpeedSmth2 is replaced
 
-		// Player_Steer_ReturnToRest
-		driverSpeedSmth2 = Player_Steer_ReturnToRest(steeringDirectionOrSmth, 0x80, 0);
+		// Player_StickReturnToRest
+		driverSpeedSmth2 = Player_StickReturnToRest(joystickStrength, 0x80, 0);
 
 		driverSpeedOrSmth = -driverSpeedSmth2;
 		if (driverSpeedSmth2 < 1)
@@ -1019,7 +1019,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 				(driverSpeedOrSmth == 0) &&
 				(
 					(
-						driverTimer = Player_Steer_ReturnToRest(driverTimer, 0x80, 0), driverTimer > 99 ||
+						driverTimer = Player_StickReturnToRest(driverTimer, 0x80, 0), driverTimer > 99 ||
 
 						(
 							(driverTimer > 0 && ((actionflags & 0x20000) != 0))
@@ -1063,15 +1063,15 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	// If you are holding Square
 	else
 	{
-		driverTimer = Player_Steer_ReturnToRest(driverTimer, 0x80, 0);
+		driverTimer = Player_StickReturnToRest(driverTimer, 0x80, 0);
 
 		if ((driverTimer < 100) && ((driverTimer < 1 || ((actionflags & 0x20000) == 0))))
 		{
 			// if you are not holding cross, and you have no Reserves
 			if (cross == 0)
 			{
-				// Player_Steer_ReturnToRest
-				driverSpeedOrSmth = Player_Steer_ReturnToRest(driverSpeedOrSmth, 0x80, 0);
+				// Player_StickReturnToRest
+				driverSpeedOrSmth = Player_StickReturnToRest(driverSpeedOrSmth, 0x80, 0);
 
 				driverSpeedSmth2 = driverBaseSpeed * -driverSpeedOrSmth;
 				if (driverSpeedOrSmth < 0)
@@ -1266,7 +1266,7 @@ code_r0x80062644:
 	}
 
 	// Steer, based on strength, and LeftStickX
-	iVar14 = Player_Steer_AbsoluteStrength(driverSpeedOrSmth, iVar14, ptrgamepad->rwd);
+	iVar14 = Player_StickGetStrengthAbsolute(driverSpeedOrSmth, iVar14, ptrgamepad->rwd);
 
 	if (-iVar14 == 0) *(u_short*)&driver->numFramesSpentSteering = 10000;
 	else
@@ -1283,7 +1283,7 @@ code_r0x80062644:
 	*(u_char*)&driver->simpTurnState = (char)-iVar14;
 
 	// Steer
-	driverSpeedOrSmth = Player_Steer_AbsoluteStrength(driverSpeedOrSmth, 0x40, ptrgamepad->rwd);
+	driverSpeedOrSmth = Player_StickGetStrengthAbsolute(driverSpeedOrSmth, 0x40, ptrgamepad->rwd);
 
 	// Interpolate rotation by speed
 	driverBaseSpeedUshort = InterpBySpeed((int)driver->wheelRotation, 0x18, -driverSpeedOrSmth);
