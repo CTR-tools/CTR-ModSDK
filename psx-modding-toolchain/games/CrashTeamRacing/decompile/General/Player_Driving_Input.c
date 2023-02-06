@@ -132,12 +132,12 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	// then handle subtraction. In subtraction, make sure desired is not negative,
 	// then set current to desired
 
-	driverValueMinusMsPerFrame = (int)driver->unknownCollision + negativeMsPerFrame;
+	driverValueMinusMsPerFrame = (int)driver->set_0xF0_OnWallRub + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->unknownCollision)
+	if (0 < (int)driver->set_0xF0_OnWallRub)
 	{
 		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->unknownCollision = driverValueMinusMsPerFrameUnsigned;
+		*(u_short*)&driver->set_0xF0_OnWallRub = driverValueMinusMsPerFrameUnsigned;
 
 		// Add elapsed time to a counter for how long you've driven against a wall
 		driver->timeSpentAgainstWall += msPerFrame;
@@ -1217,45 +1217,55 @@ code_r0x80062644:
 		driverSpeedOrSmth = (int)ptrgamepad->stickLX;
 	}
 
+	// default steer strength from class stats
 	iVar14 = (u_int)driver->const_TurnRate + ((int)driver->turnConst << 1) / 5;
+	
 	if ((driver->mashXUnknown < 7) || (approximateSpeed > 0x25ff))
 	{
-		if (driver->unknownCollision == 0)
+		// not rubbing on wall now, or recently
+		if (driver->set_0xF0_OnWallRub == 0)
 		{
 			if ((buttonHeld & 0x28) != 0)
 			{
 				// if you are not holding cross
 				if (cross == 0)
 				{
+					// turn rate
 					iVar14 = 0x40;
 				}
 
 				// if you are holding cross
 				else
 				{
-					// get speed
+					// absolute value driver speed
 					driverTimer = (int)driver->speed;
-
-					// set speed to absolute value
 					if (driverTimer < 0) driverTimer = -driverTimer;
 
-					// Map value from [oldMin, oldMax] to [newMin, newMax]
-					// inverting newMin and newMax will give an inverse range mapping
-					iVar14 = MapToRange(driverTimer,0x300,(int)((u_int)driver->const_Speed_ClassStat << 0x10) >> 0x11,0x40,iVar14);
+					// As speed increases, turn rate decreases
+					iVar14 = MapToRange(
+								driverTimer,0x300,
+								(int)((u_int)driver->const_Speed_ClassStat << 0x10) >> 0x11,0x40,
+								iVar14);
 				}
 			}
 		}
+		
+		// rubbing on wall now, or recently
 		else
 		{
+			// restrict turn
 			iVar14 = 0x30;
 		}
 	}
+	
+	// if mashing X button
 	else
 	{
+		// sharp turn
 		iVar14 = 0x5a;
 	}
 
-	// Steer
+	// Steer, based on strength, and LeftStickX
 	iVar14 = Player_Steer_AbsoluteStrength(driverSpeedOrSmth, iVar14, ptrgamepad->rwd);
 
 	if (-iVar14 == 0) *(u_short*)&driver->numFramesSpentSteering = 10000;
@@ -1317,13 +1327,12 @@ code_r0x80062644:
 	{
 		//reset 0x3BC
 		driver->unkSpeedValue1 = 0x1e00;
-		//Jittery number 1
-		*(u_int*)&driver->tireColor = 0x2e606061;
+		
+		driver->tireColor = 0x2e606061;
 	}
 	else
 	{
-		//jittery number 2
-		*(u_int*)&driver->tireColor = 0x2e808080;
+		driver->tireColor = 0x2e808080;
 	}
 	SkipInput:
 	driver->actionsFlagSet = specialFlag;

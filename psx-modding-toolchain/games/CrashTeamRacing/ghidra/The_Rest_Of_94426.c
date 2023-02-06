@@ -30145,7 +30145,10 @@ int FUN_80060488(int param_1,int param_2,int param_3,int param_4)
     param_4 = -param_4;
   }
   iVar3 = 0;
-  if (*(short *)(param_1 + 0x3fe) != 0xf0) {
+  
+  // if not rubbing on wall
+  if (*(short *)(param_1 + 0x3fe) != 0xf0) 
+  {
     if (param_4 < param_2) {
       if (*(short *)(param_1 + 0x452) < param_2) {
         uVar2 = (uint)*(byte *)(param_1 + 0x458) * 0xf;
@@ -30286,7 +30289,10 @@ void FUN_80060630(undefined4 param_1,int param_2)
     }
     *(short *)(param_2 + 0x39c) = *(short *)(param_2 + 0x39c) + sVar8;
   }
-  if (*(short *)(param_2 + 0x3fe) != 0) {
+  
+  // if rubbing on wall now, or recenlty
+  if (*(short *)(param_2 + 0x3fe) != 0) 
+  {
     if (*(short *)(param_2 + 0x38a) < *(short *)(param_2 + 0x39c)) {
       *(undefined2 *)(param_2 + 0x39c) = *(undefined2 *)(param_2 + 0x38a);
     }

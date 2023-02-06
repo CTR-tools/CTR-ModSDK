@@ -49,7 +49,7 @@ u_int FUN_8005fb4c(struct Driver* driver)
 						// if driver is on quadblock
 						uVar2 = driver->actionsFlagSet & 1,
 
-						driver->unknownCollision == 0 &&
+						driver->set_0xF0_OnWallRub == 0 &&
 
 						// if driver is on quadblock
 						(uVar2 != 0)

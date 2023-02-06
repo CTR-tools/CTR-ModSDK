@@ -2146,7 +2146,7 @@ struct Driver
 	short jump_LandingBoost;
 
 	// 0x3FE
-	short unknownCollision;
+	short set_0xF0_OnWallRub;
 
 	// 0x400
 	short NoInputTimer;
