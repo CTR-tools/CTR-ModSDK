@@ -31195,7 +31195,7 @@ int FUN_8006163c(int param_1,undefined4 param_2,short *param_3)
     iVar3 = 0x7f;
 
 	// center of wheel
-    iVar1 = -0x80;
+    iVar1 = 0x80;
   }
 
   // if using racing wheel
@@ -31208,11 +31208,11 @@ int FUN_8006163c(int param_1,undefined4 param_2,short *param_3)
     iVar3 = (int)param_3[2];
 
 	// center of wheel
-    iVar1 = -(int)*param_3;
+    iVar1 = (int)*param_3;
   }
 
   // convert from [0,0xff] to [-0x7f,0x7f]
-  param_1 = param_1 + iVar1;
+  param_1 = param_1 - iVar1;
 
   // negative strength
   if (param_1 < 0) 
