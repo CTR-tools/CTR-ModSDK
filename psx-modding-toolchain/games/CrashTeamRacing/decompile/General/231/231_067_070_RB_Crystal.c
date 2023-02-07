@@ -57,7 +57,7 @@ void DECOMP_RB_Crystal_LInB(struct Instance* inst)
 	*(int*)&crystalObj->rot[0] = 0;
 	crystalObj->rot[2] = 0;
 	
-	inst->colorRGB = 0xd22fff0;
+	inst->colorRGBA = 0xd22fff0;
 	
 	// specular light
 	inst->flags |= 0x20000;

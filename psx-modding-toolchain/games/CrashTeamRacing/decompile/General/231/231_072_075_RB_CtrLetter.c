@@ -51,7 +51,7 @@ void DECOMP_RB_CtrLetter_LInB(struct Instance* inst)
 	inst->scale[1] = 0x1800;
 	inst->scale[2] = 0x1800;
 	
-	inst->colorRGB = 0xffc8000;
+	inst->colorRGBA = 0xffc8000;
 	
 	// specular light, plus another
 	inst->flags |= 0x30000;

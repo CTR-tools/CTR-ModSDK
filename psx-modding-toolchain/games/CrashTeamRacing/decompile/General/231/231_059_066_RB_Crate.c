@@ -113,7 +113,7 @@ void RB_CrateAny_ExplodeInit(struct Instance* crateInst, int color)
 	);
 	
 	// color
-	explosionInst->colorRGB = color;
+	explosionInst->colorRGBA = color;
 	explosionInst->alphaScale = 0x1000;
 	
 	// position

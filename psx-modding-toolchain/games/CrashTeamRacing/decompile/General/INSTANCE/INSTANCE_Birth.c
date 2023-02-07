@@ -27,13 +27,13 @@ void INSTANCE_Birth(
 	inst->scale[2] = 0x1000;
 	
 	inst->alphaScale = 0;
-	inst->colorRGB = 0;
+	inst->colorRGBA = 0;
 	inst->flags = flags;
 	inst->instDef = 0;
 	
 	inst->animFrame = 0;
 	inst->vertSplit = 0;
-	inst->reflectionRGB = 0x7f7f7f;
+	inst->reflectionRGBA = 0x7f7f7f;
 	
 	inst->thread = th;
 	inst->bitCompressed_NormalVector_AndDriverIndex = 0;
