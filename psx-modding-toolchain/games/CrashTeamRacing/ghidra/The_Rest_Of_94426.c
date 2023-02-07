@@ -32859,7 +32859,7 @@ void FUN_80062b74(undefined4 param_1,int param_2)
     *(undefined4 *)(param_2 + 0x5c) = 0x8006181c;
 
 	*(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
-    *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnInterpolate
+    *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnPhysAngular
     *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
 	*(undefined4 *)(param_2 + 0x6c) = 0x80020410; // OnCollide_QuadblockTouch
 	*(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // OnCollide_Drivers
@@ -32929,7 +32929,7 @@ void FUN_80062d04(undefined4 param_1,int param_2)
     *(undefined4 *)(param_2 + 0x5c) = 0x80062ca8;
 
 	*(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
-    *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnInterpolate
+    *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnPhysAngular
     *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
 	*(undefined4 *)(param_2 + 0x6c) = 0x80020410; // OnCollide_QuadblockTouch
 	*(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // OnCollide_Drivers
@@ -33036,7 +33036,7 @@ void FUN_80062e94(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x5c) = 0x8006181c;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
-  *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnInterpolate
+  *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
   *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // OnCollide_QuadblockTouch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // OnCollide_Drivers
@@ -33747,7 +33747,7 @@ void FUN_80063934(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x5c) = 0x800638d4;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
-  *(undefined4 *)(param_2 + 100) = 0x80062f4c; // OnInterpolate
+  *(undefined4 *)(param_2 + 100) = 0x80062f4c; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
   *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // OnCollide_QuadblockTouch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // OnCollide_Drivers
@@ -33939,7 +33939,7 @@ void FUN_80063bd4(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x5c) = 0x80063b00;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
-  *(undefined4 *)(param_2 + 100) = 0x80063a44; // OnInterpolate
+  *(undefined4 *)(param_2 + 100) = 0x80063a44; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
   *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // OnCollide_QuadblockTouch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // OnCollide_Drivers
@@ -34361,7 +34361,7 @@ void FUN_80064254(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x5c) = 0x8006406c;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
-  *(undefined4 *)(param_2 + 100) = 0x800640a4; // OnInterpolate
+  *(undefined4 *)(param_2 + 100) = 0x800640a4; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
   *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // OnCollide_QuadblockTouch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // OnCollide_Drivers
@@ -34547,7 +34547,7 @@ void FUN_800644d0(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x5c) = 0x800642f4;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
-  *(undefined4 *)(param_2 + 100) = 0x80064320; // OnInterpolate
+  *(undefined4 *)(param_2 + 100) = 0x80064320; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
   *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // OnCollide_QuadblockTouch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // OnCollide_Drivers
@@ -37501,7 +37501,7 @@ void FUN_800671b0(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x5c) = 0x80066e3c;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
-  *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnInterpolate
+  *(undefined4 *)(param_2 + 100) = 0x8005fc8c; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
   *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // OnCollide_QuadblockTouch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // OnCollide_Drivers
@@ -38474,7 +38474,7 @@ void FUN_800682a4(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x5c) = 0x800680d0;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
-  *(undefined4 *)(param_2 + 100) = 0x80068150; // OnInterpolate
+  *(undefined4 *)(param_2 + 100) = 0x80068150; // OnPhysAngular
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
   *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // OnCollide_QuadblockTouch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // OnCollide_Drivers
@@ -38991,7 +38991,7 @@ void FUN_80068e04(undefined4 param_1,int param_2)
     *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
 
 	// eventually calls AddDustPuff
-    *(undefined4 *)(param_2 + 100) = 0x80068be8;  // OnInterpolate
+    *(undefined4 *)(param_2 + 100) = 0x80068be8;  // OnPhysAngular
 
 	*(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // OnRender -- move position to instance matrix
 
@@ -39005,7 +39005,7 @@ void FUN_80068e04(undefined4 param_1,int param_2)
 
     *(undefined4 *)(param_2 + 0x54) = 0; // OnInit
     *(undefined4 *)(param_2 + 0x58) = 0; // OnUpdate
-	*(undefined4 *)(param_2 + 0x5c) = 0; // OnInput -- disable input, timers, and effects
+	*(undefined4 *)(param_2 + 0x5c) = 0; // OnPhysLinear -- disable input, timers, and effects
 
     *(undefined4 *)(param_2 + 0x68) = 0;
     *(undefined4 *)(param_2 + 0x6c) = 0; // OnCollide_QuadblockTouch
