@@ -1284,7 +1284,7 @@ struct InstDef
 	short scale[4];
 
 	// 0x1c (0x24 - 8)
-	int colorRGB;
+	int colorRGBA;
 
 	// 0x20 (0x28 - 8)
 	int flags;
@@ -1383,7 +1383,7 @@ struct Instance
 	short alphaScale;
 
 	// 0x24
-	int colorRGB;
+	int colorRGBA;
 
 	// 0x28
 	// & 0x1 = draw instance
@@ -1429,7 +1429,7 @@ struct Instance
 
 	// 0x58
 	// on ice
-	int reflectionRGB;
+	int reflectionRGBA;
 
 	// instance->0x5C
 	// instance->0x60 (funcPtr for individual prims)
@@ -3946,7 +3946,7 @@ struct SCVert
 	struct LevVertex* v;
 	int offset_pos_xy;
 	int offset_pos_zw;
-	int offset_color_rgb;
+	int offset_color_rgba;
 };
 
 // ocean vertex
@@ -3986,8 +3986,8 @@ struct RainBuffer
   short unk_22;
 
   // 0x20
-  int colorRGB_top;
-  int colorRGB_bottom;
+  int colorRGBA_top;
+  int colorRGBA_bottom;
 
   // 0x28
   int renderMode[2];
@@ -4147,7 +4147,7 @@ struct Level
 		short pointFrom;
 		short pointTo;
 
-		// RGB
+		// RGBA
 		int colorFrom;
 		int colorTo;
 
@@ -4165,7 +4165,7 @@ struct Level
 
 	// 0xD8
 	// for fullscreen clears
-	int clearColorRGB;
+	int clearColorRGBA;
 
 	// 0xDC
 	// & 2 = mask grab when underwater
@@ -8104,7 +8104,7 @@ struct Data
 		char r;
 		char g;
 		char b;
-		char unknown;
+		char a;
 
 		// 0xE - size of struct
 
