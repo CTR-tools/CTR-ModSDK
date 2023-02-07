@@ -55,34 +55,27 @@ struct Thread* THREAD_BirthWithObject(
 		return 0;
 	}
 	
-	// get thread from thread pool (need enum)
-	th = LIST_RemoveFront(&allPools[0].free);
-	
-	// if thread fails
-	if(th == 0)
+	// if no threads remain
+	if (allPools[0].free.last == 0)
 	{
 		// sep 3
 		// printf("out of threads \'%s\'\n",name);
 		return 0;
 	}
 	
-	// allocate
-	object = LIST_RemoveFront(myPool);
-	
-	if(object == 0)
+	if (myPool->free.last == 0)
 	{
-		// recycle thread,
-		// put that thing back where it came from or so help me
-		LIST_AddFront(&allPools[0].free, th);
-		
-		// Sep3
+		// sep 3
 		// printf("%ld byte stack allocate failed for thread \'%s\'\n",
 		//	myPool->itemSize, name);
-		
 		return 0;
 	}
 	
 	// === initialize thread ===
+
+	// thread and object
+	th = LIST_RemoveFront(&allPools[0].free);
+	object = LIST_RemoveFront(&myPool->free);
 
 	th->inst = 0;
 	th->funcThDestroy = 0;

@@ -32,7 +32,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	int driverTimer;
 	u_int timerHazard;
 	int approximateSpeed2;
-	u_int actionflags;
+	u_int uVar22;
 	int driverSpeedSmth2;
 	struct GamepadBuffer* ptrgamepad;
 	u_int cross;
@@ -45,8 +45,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	short driverRankItemValue;
 	u_short timerHazardSomething;
 	u_int itemSound;
-	u_int specialFlag;
-	u_int buttonHeld;
+	u_int uVar20;
 	u_int vectorID;
 	int vectorID2;
 	int joystickStrength;
@@ -362,7 +361,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	approximateSpeed = (int)driver->speedApprox;
 
 	// Action flags (isRaceOver, isTimeFrozen, etc)
-	actionflags = driver->actionsFlagSet;
+	uVar22 = driver->actionsFlagSet;
 
 	// driver->clockReceive
 	driverTimer = (int)driver->clockReceive;
@@ -428,7 +427,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		driverTimerShort = (u_short)driverTimer;
 
 		// if you are not touching the ground
-		if ((actionflags & 1) == 0)
+		if ((uVar22 & 1) == 0)
 		{
 			// if speed is low
 			if (approximateSpeed < 0x101) goto speedIsLow;
@@ -626,7 +625,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	// velocity by comparing two frames
 	
 	// action flags
-	driver->actionsFlagSetPrevFrame = actionflags;
+	driver->actionsFlagSetPrevFrame = uVar22;
 	
 	// backup rotation
 	*(u_int*)&driver->rotPrev.x = *(u_int*)&driver->rotCurr.x;
@@ -642,13 +641,13 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driver->unknownDimension2Prev = driver->unknownDimension2Curr;
 
 	// ??? --Super
-	specialFlag = actionflags & 0x7f1f83d5;
+	uVar20 = uVar22 & 0x7f1f83d5;
 	
 	// disable input if opening adv hub door with key
 	if ((gGT->gameMode2 & 0x4004) != 0) goto SkipInput;
 	
 	// if not touching ground
-	if ((actionflags & 1) == 0) 
+	if ((uVar22 & 1) == 0) 
 	{
 		// AngleAxis2_NormalVec
 		*(u_int*)&driver->AxisAngle4_normalVec[0] = *(u_int*)&driver->AxisAngle2_normalVec[0];
@@ -667,14 +666,14 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 
 	driverItemThread = thread->childThread;
 
-	actionflags = specialFlag;
+	uVar22 = uVar20;
 
 	while (driverItemThread != 0)
 	{
 		// If thread->modelIndex is Aku or Uka
 		if ((*(short*)&driverItemThread->modelIndex == 0x3a) || (*(short*)&driverItemThread->modelIndex == 0x39))
 		{
-			actionflags = specialFlag | 0x800000;
+			uVar22 = uVar20 | 0x800000;
 			break;
 		}
 
@@ -686,13 +685,13 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	ptrgamepad = &sdata->gGamepads->gamepad[(u_int)driver->driverID];
 
 	// by default, hold no buttons
-	buttonHeld = 0;
+	uVar20 = 0;
 
 	// If you're not in End-Of-Race menu
 	if (!(gGT->gameMode1 & 0x200000))
 	{
 		// Get which button is held
-		buttonHeld = ptrgamepad->buttonsHeldCurrFrame;
+		uVar20 = ptrgamepad->buttonsHeldCurrFrame;
 	}
 
 	// by default, tap no buttons
@@ -706,10 +705,10 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	}
 
 	// If you hold Cross
-	cross = buttonHeld & 0x10;
+	cross = uVar20 & 0x10;
 
 	// If you hold Square
-	square = buttonHeld & 0x20;
+	square = uVar20 & 0x20;
 
 	// state of kart
 	kartState = driver->kartState;
@@ -767,7 +766,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					)
 					{
 						// This driver wants to fire a weapon
-						actionflags = actionflags | 0x8000;
+						uVar22 = uVar22 | 0x8000;
 
 						// If "held item quantity" is zero
 						if (driver->numHeldItems == 0)
@@ -859,18 +858,18 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		if
 		(
 			// If you are holding L1 or R1 and
-			((buttonHeld & 0xc00) != 0) &&
+			((uVar20 & 0xc00) != 0) &&
 			(driverRankItemValue != 3)
 		)
 		{
-			if ((actionflags & 4) == 0)
+			if ((uVar22 & 4) == 0)
 			{
 				// 10 frame jump buffer
 				driver->jump_TenBuffer = 10;
 			}
 			goto LAB_8006222c;
 		}
-		actionflags = actionflags & 0xfffffffb;
+		uVar22 = uVar22 & 0xfffffffb;
 		if (driver->jump_TenBuffer > 0) driver->jump_TenBuffer = 0;
 	}
 
@@ -895,7 +894,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		{
 			driver->jump_TenBuffer = 10;
 			LAB_8006222c:
-			actionflags = actionflags | 4;
+			uVar22 = uVar22 | 4;
 		}
 	}
 
@@ -937,7 +936,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			
 			if(driverTimer > -1)
 			{
-				actionflags |= 0x400000;
+				uVar22 |= 0x400000;
 			}
 		}
 
@@ -950,7 +949,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			(approximateSpeed > 0x300)
 		)
 		{
-			actionflags |= 0x800;
+			uVar22 |= 0x800;
 		}
 
 		// if you're on any turbo pad
@@ -976,10 +975,10 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	if
 	(
 		(driver->simpTurnState < 0) ||
-		(actionflags &= 0xdfffffff, driver->simpTurnState < 1)
+		(uVar22 &= 0xdfffffff, driver->simpTurnState < 1)
 	)
 	{
-		actionflags = actionflags & 0xbfffffff;
+		uVar22 = uVar22 & 0xbfffffff;
 	}
 	approximateSpeed2 = (int)driver->speedApprox;
 	if (approximateSpeed2 < 0)
@@ -988,7 +987,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	}
 	if (approximateSpeed2 < 0x300)
 	{
-		actionflags = actionflags & 0x9fffffff;
+		uVar22 = uVar22 & 0x9fffffff;
 	}
 	approximateSpeed2 = 0;
 	// Racer's Base Speed (4s)
@@ -1006,7 +1005,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		if (cross != 0)
 		{
 			LAB_8006253c:
-			actionflags = actionflags & 0xfffdffff;
+			uVar22 = uVar22 & 0xfffdffff;
 			goto LAB_80062548;
 		}
 
@@ -1027,14 +1026,14 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 						driverTimer = Player_StickReturnToRest(driverTimer, 0x80, 0), driverTimer > 99 ||
 
 						(
-							(driverTimer > 0 && ((actionflags & 0x20000) != 0))
+							(driverTimer > 0 && ((uVar22 & 0x20000) != 0))
 						)
 					)
 				)
 			)
 			{
 				// driver is steering?
-				actionflags |= 0x20000;
+				uVar22 |= 0x20000;
 		
 				driverSpeedSmth2 = -(int)driver->const_BackwardSpeed;
 				goto LAB_80062548;
@@ -1044,23 +1043,23 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			if (driverSpeedOrSmth < 0) driverSpeedSmth2 = driverSpeedOrSmth + 0x7f >> 7;
 			goto LAB_8006253c;
 		}
-		if ((driver->speedApprox < 0x301) && ((actionflags & 0x60000000) == 0))
+		if ((driver->speedApprox < 0x301) && ((uVar22 & 0x60000000) == 0))
 		{
 			driverSpeedOrSmth = driver->const_BackwardSpeed * driverSpeedOrSmth;
 			if (driverSpeedOrSmth < 0) driverSpeedOrSmth = driverSpeedOrSmth + 0x7f;
 			approximateSpeed2 = driverSpeedOrSmth >> 7;
 			buttonsTapped = 0x20000;
 			LAB_800625c4:
-			buttonHeld = actionflags | buttonsTapped;
+			uVar20 = uVar22 | buttonsTapped;
 		}
 		else
 		{
-			buttonHeld = actionflags | 8;
-			if (0 < driver->simpTurnState) buttonHeld = actionflags | 0x40000008;
+			uVar20 = uVar22 | 8;
+			if (0 < driver->simpTurnState) uVar20 = uVar22 | 0x40000008;
 			if (driver->simpTurnState < 0)
 			{
 				buttonsTapped = 0x20000000;
-				actionflags = buttonHeld;
+				uVar22 = uVar20;
 				goto LAB_800625c4;
 			}
 		}
@@ -1070,7 +1069,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	{
 		driverTimer = Player_StickReturnToRest(driverTimer, 0x80, 0);
 
-		if ((driverTimer < 100) && ((driverTimer < 1 || ((actionflags & 0x20000) == 0))))
+		if ((driverTimer < 100) && ((driverTimer < 1 || ((uVar22 & 0x20000) == 0))))
 		{
 			// if you are not holding cross, and you have no Reserves
 			if (cross == 0)
@@ -1083,7 +1082,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 				{
 					if (driverSpeedSmth2 < 0) driverSpeedSmth2 = driverSpeedSmth2 + 0xff;
 					driverSpeedSmth2 = driverSpeedSmth2 >> 8;
-					actionflags = actionflags | 0x20;
+					uVar22 = uVar22 | 0x20;
 					goto LAB_80062548;
 				}
 				if (0 < driverSpeedOrSmth)
@@ -1093,13 +1092,13 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					if (driverSpeedOrSmth < 0) driverSpeedSmth2 = driverSpeedOrSmth + 0xff >> 8;
 					goto LAB_8006248c;
 				}
-				actionflags = actionflags | 8;
+				uVar22 = uVar22 | 8;
 				driverSpeedSmth2 = approximateSpeed2;
 			}
 			// If you are holding cross, or you have Reserves
 			else
 			{
-				actionflags = actionflags | 0x20;
+				uVar22 = uVar22 | 0x20;
 				driverSpeedSmth2 = driverBaseSpeed / 2;
 			}
 			goto LAB_8006253c;
@@ -1108,26 +1107,26 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		driverSpeedSmth2 = driverSpeedOrSmth >> 2;
 		if (driverSpeedOrSmth < 0) 	driverSpeedSmth2 = driverSpeedOrSmth + 3 >> 2;
 		LAB_8006248c:
-		actionflags = actionflags | 0x20020;
+		uVar22 = uVar22 | 0x20020;
 		LAB_80062548:
-		buttonHeld = actionflags & 0x9fffffff;
+		uVar20 = uVar22 & 0x9fffffff;
 		approximateSpeed2 = driverSpeedSmth2;
 	}
-	if ((buttonHeld & 0x20000) == 0)
+	if ((uVar20 & 0x20000) == 0)
 	{
-		actionflags = buttonHeld & 8;
+		uVar22 = uVar20 & 8;
 		if (driver->superEngineTimer != 0)
 		{
 			// if Racer is moving
 			if (0 < approximateSpeed2)
 			{
-				actionflags = buttonHeld & 8;
-				if ((buttonHeld & 0x400020) != 0) goto LAB_80062648;
+				uVar22 = uVar20 & 8;
+				if ((uVar20 & 0x400020) != 0) goto LAB_80062648;
 
 				// if you have less than 10 wumpa
 				superEngineFireLevel = 0x80;
 
-				driver->actionsFlagSet = buttonHeld;
+				driver->actionsFlagSet = uVar20;
 
 				// if number of wumpa > 9
 				// if wumpa is 10
@@ -1137,7 +1136,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 				// add 0.12s reserves
 				Turbo_Increment(driver, 0x78, 0x14, superEngineFireLevel);
 
-				buttonHeld = driver->actionsFlagSet;
+				uVar20 = driver->actionsFlagSet;
 			}
 			goto code_r0x80062644;
 		}
@@ -1148,11 +1147,11 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		driver->timeSpentReversing += msPerFrame;
 		
 code_r0x80062644:
-		actionflags = buttonHeld & 8;
+		uVar22 = uVar20 & 8;
 	}
 
 	LAB_80062648:
-	if (actionflags != 0)
+	if (uVar22 != 0)
 	{		
 		// high speed
 		if (
@@ -1197,7 +1196,7 @@ code_r0x80062644:
 		//Racer struct + 0x39E = Racer's Base Speed
 		*(u_short*)&driver->fireSpeed = (short)approximateSpeed2;
 	}
-	if ((buttonHeld & 0x800020) == 0)
+	if ((uVar20 & 0x800020) == 0)
 	{
 		driverSpeedOrSmth = driver->terrainMeta2->unk_0x8;
 		//if racer is out of normal driving conditions?
@@ -1231,7 +1230,7 @@ code_r0x80062644:
 		// not rubbing on wall now, or recently
 		if (driver->set_0xF0_OnWallRub == 0)
 		{
-			if ((buttonHeld & 0x28) != 0)
+			if ((uVar20 & 0x28) != 0)
 			{
 				// if you are not holding cross
 				if (cross == 0)
@@ -1280,9 +1279,9 @@ code_r0x80062644:
 		if ((iVar14 < 1) || (driver->simpTurnState < 0))
 		{
 			if ((-1 < iVar14) || (0 < driver->simpTurnState)) goto LAB_800628b0;
-			buttonHeld = buttonHeld | 0x10;
+			uVar20 = uVar20 | 0x10;
 		}
-		else buttonHeld = buttonHeld & 0xffffffef;
+		else uVar20 = uVar20 & 0xffffffef;
 		driver->numFramesSpentSteering = 0;
 	}
 	LAB_800628b0:
@@ -1341,6 +1340,6 @@ code_r0x80062644:
 		driver->tireColor = 0x2e808080;
 	}
 	SkipInput:
-	driver->actionsFlagSet = specialFlag;
+	driver->actionsFlagSet = uVar20;
 	return;
 }
