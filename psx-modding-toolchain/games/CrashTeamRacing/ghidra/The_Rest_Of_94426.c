@@ -28579,13 +28579,16 @@ LAB_8005e9d8:
 LAB_8005ea08:
 
 
-  // if driver has been "Driving" less than 0.64s
+  // if driver has been "rolling backward" less than 0.64s,
+  // and already started shifting forward from another quadblock,
+  // happens when driver is stuck in a "V" shape of two quadblocks
   if (*(short *)(param_1 + 0x408) != 0) 
   {
+	// increment number of V_Shifts
     *(short *)(param_1 + 0x40a) = *(short *)(param_1 + 0x40a) + 1;
   }
 
-  // reset timer
+  // reset timer, still rolling backward
   *(undefined2 *)(param_1 + 0x408) = 0x280;
   
   return;
@@ -32807,19 +32810,22 @@ void FUN_80062a4c(undefined4 param_1,int param_2)
 		// if driver has been "Player_Driving" more than 0.1 seconds?
 		(*(short *)(param_2 + 0x406) == 0) &&
 
+		// if V_Shift happened too many times,
+		// meaning you jitter between two quadblocks
+		// in a "V" shape
 		(4 < *(short *)(param_2 + 0x40a))
 	 )
   {
-	// if driving for more than 0.1s, less than 0.64s,
-	// and the 0x40A variable was hit 5 times (in OnGravity)
+
+	// Stop driving, until you press X, prevents jitters
 	  
-    // OnInit_State9 (what is it?)
+    // Player_PreventVShift_Init
     FUN_80062e94(param_1);
   }
 
   else {
 
-	// if driver has been "Player_Driving" more than 0.64 seconds
+	// if driver has been "rolling backwards" more than 0.64 seconds
     if (*(short *)(param_2 + 0x408) == 0)
 	{
       // wipe
@@ -32970,7 +32976,7 @@ void FUN_80062d04(undefined4 param_1,int param_2)
   return;
 }
 
-// State9_Update
+// Player_PreventVShift_Update
 // param1 = thread, param2 = driver
 void FUN_80062db0(undefined4 param_1,int param_2)
 //seems to handle end of blasted effect
@@ -33000,7 +33006,7 @@ void FUN_80062db0(undefined4 param_1,int param_2)
 }
 
 
-// State9_Weapons (no weapons)
+// Player_PreventVShift_ReverseOneFrame
 // param1 = thread, param2 = driver
 // reverse one frame of position
 void FUN_80062e04(undefined4 param_1,int param_2)
@@ -33061,7 +33067,7 @@ void FUN_80062e94(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x6c) = 0x80020410; // OnCollide_QuadblockTouch
   *(undefined4 *)(param_2 + 0x70) = 0x8005ebac; // OnCollide_Drivers
   *(undefined4 *)(param_2 + 0x74) = 0x8001d944; // OnCollide_QuadblockNear
-  *(undefined4 *)(param_2 + 0x78) = 0x80062e04; // NO WEAPONS
+  *(undefined4 *)(param_2 + 0x78) = 0x80062e04; // alter jump mechanics
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // OnRender -- move position to instance matrix
   *(undefined4 *)(param_2 + 0x80) = 0x8005b178; // OnAnimate_Driving
 

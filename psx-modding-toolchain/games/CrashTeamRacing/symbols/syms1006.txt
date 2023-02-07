@@ -957,9 +957,9 @@
 80061ab0 Player_Freeze_PhysLinear
 80061b0c Player_Freeze_Init
 
-80061bb8 Player_State9_Update
-80061c0c Player_State9_ReverseOneFrame
-80061c9c Player_State9_Init
+80061bb8 Player_PreventVShift_Update
+80061c0c Player_PreventVShift_ReverseOneFrame
+80061c9c Player_PreventVShift_Init
 
 80061d54 Player_Drifting_PhysAngular
 8006243c Player_Drifting_Finalize
