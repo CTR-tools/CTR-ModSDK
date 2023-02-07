@@ -557,6 +557,8 @@ void RunUpdateHook()
 				// if tap triangle, jump off quadblock
 				if((buttonsTap & BTN_TRIANGLE) != 0)
 				{
+					// this only works when VelX and VelZ are non-zero,
+					// how do you make a jump happen, independently?
 					driver->velocityXYZ[1] = 0x100000;
 					Driver_ConvertVectorsToSpeed(driver, &driver->velocityXYZ[0]);
 					
