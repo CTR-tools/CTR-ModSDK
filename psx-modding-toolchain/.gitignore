@@ -26,6 +26,9 @@ gcc_out.txt
 overlay.ld
 Makefile
 
+# Version tracker
+tools/updater/.version
+
 # Third party stuff
 tools/gcc-psyq-converted/include/*
 tools/gcc-psyq-converted/lib/*
