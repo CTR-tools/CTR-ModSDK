@@ -9241,10 +9241,10 @@ LAB_8003ccf8:
 	  // frame counter
       DAT_8008d970 = DAT_8008d970 + 1;
 
-	  // Process all gamepad input
+	  // GAMEPAD_UpdateAll
       FUN_800262d0(PTR_DAT_8008d2b0);
 
-	  // Start new frame (ClearOTagR)
+	  // MainFrame_ResetDB (ClearOTagR)
       FUN_80034bbc(PTR_DAT_8008d2ac,PTR_DAT_8008d2b0);
 
       if (
