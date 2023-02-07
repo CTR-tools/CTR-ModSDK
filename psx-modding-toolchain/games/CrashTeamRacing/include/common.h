@@ -1792,7 +1792,7 @@ struct Driver
 	// 0x58 - OnUpdate, updates per frame for any generic purpose
 	// 0x5C - OnPhysLinear
 	// 0x60 - OnAudio, engine sounds (always same)
-	// 0x64 - OnPhysAngula
+	// 0x64 - OnPhysAngular
 	// 0x68 - OnApplyForces
 	// 0x6C - OnCollide_QuadblockTouch
 	// 0x70 - OnCollide_Drivers
