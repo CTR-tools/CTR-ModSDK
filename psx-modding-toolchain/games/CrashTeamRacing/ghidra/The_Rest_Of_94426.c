@@ -28514,12 +28514,15 @@ LAB_8005e8d8:
 			(uVar8 != 0)
 		) 
 	{
+	  // move forward
       uVar2 = 1;
+	  
+	  // move backward
       if ((int)uVar8 < 0) {
         uVar2 = 0xffff;
       }
 	  
-	  // turnSign (0x3e8)
+	  // forwardDir (0x3e8)
       *(undefined2 *)(param_1 + 1000) = uVar2;
 	  
 	  // firstFrameSinceEngineRevving
@@ -28527,24 +28530,36 @@ LAB_8005e8d8:
 	  
       goto LAB_8005e9d8;
     }
-    if (*(int *)(puVar14 + 0x10) < 0) {
+	
+    if (*(int *)(puVar14 + 0x10) < 0) 
+	{
+
 LAB_8005e9cc:
+
+	  // moving forward
       if (-1 < (int)uVar8) 
 	  {
-		// turnSign (0x3e8)
+		// forwardDir (0x3e8)
         *(undefined2 *)(param_1 + 1000) = 1;
       }
       goto LAB_8005e9d8;
     }
-    if ((int)uVar8 < 0) 
+    
+	// moving backward
+	if ((int)uVar8 < 0) 
 	{
-	  // turnSign (0x3e8)
+	  // forwardDir (0x3e8)
       *(undefined2 *)(param_1 + 1000) = 0xffff;
     }
+	
     if (*(int *)(puVar14 + 0x10) < 1) goto LAB_8005e9cc;
+
 LAB_8005e9e8:
-    if ((int)uVar8 < 0) goto LAB_8005ea08;
-    if (0 < *(int *)(puVar14 + 0x10)) {
+    
+	// moving backward
+	if ((int)uVar8 < 0) goto LAB_8005ea08;
+    
+	if (0 < *(int *)(puVar14 + 0x10)) {
       return;
     }
   }
@@ -29692,7 +29707,7 @@ void FUN_8005fc8c(undefined4 param_1,int param_2)
 	// baseSpeed is negative
     if (*(short *)(param_2 + 0x39c) < 0) 
 	{
-	  // turnSign (0x3e8)
+	  // forwardDir (0x3e8)
       sVar4 = -1;
       *(undefined2 *)(param_2 + 1000) = 0xffff; // -1
     }
@@ -29707,7 +29722,7 @@ LAB_8005fd74:
 	// baseSpeed is positive
 	if (-1 < *(short *)(param_2 + 0x39c)) 
 	{
-	  // turnSign (0x3e8)
+	  // forwardDir (0x3e8)
       sVar4 = 1;
       *(undefined2 *)(param_2 + 1000) = 1;
     }
@@ -29790,7 +29805,7 @@ LAB_8005fee4:
         goto LAB_8005fee4;
       }
     }
-    //if (isTurnSignNegative)
+    //if (isforwardDirNegative)
     if (bVar1) {
         //rotationSpinRateS16 = -rotationSpinRateS16
       sVar4 = -sVar4;
