@@ -29946,6 +29946,8 @@ LAB_8005fee4:
   iVar16 = (int)sVar13 + (iVar6 * iVar8 >> 5);
   *(short *)(param_2 + 0x3c6) = (short)iVar16;
   iVar11 = iVar9;
+  
+  // if [???] && touching quadblock
   if ((0x2ff < iVar14) && ((local_38 & 1) != 0))
   {
 	// number of frames spent steering
@@ -30012,7 +30014,7 @@ LAB_8005fee4:
   sVar4 = *(short *)(param_2 + 0x3d8);
   sVar13 = *(short *)(param_2 + 0x3d6);
   
-  // terrain related, or 0x2c8 related
+  // terrain related, and touching quadblock
   if (((*(uint *)(iVar12 + 4) & 0x10) == 0) && ((local_38 & 1) != 0)) {
     iVar18 = iVar16;
     if (iVar16 < 0) {
