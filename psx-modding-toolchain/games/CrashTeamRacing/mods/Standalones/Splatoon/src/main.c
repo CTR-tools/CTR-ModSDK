@@ -40,6 +40,7 @@ void ConvertRotToMatrix(MATRIX* m, short* rot);
 void DrawTextBackground(RECT* r, int flag, void* ot);
 void CAM_ThTick(struct Thread* t);
 void DrawPowerslideMeter(int x, int y, struct Driver* d);
+void Driver_ConvertVectorsToSpeed(struct Driver* d, int* v);
 int MATH_Cos(int angle);
 int MATH_Sin(int angle);
 int ratan2(int x, int y);
@@ -551,45 +552,20 @@ void RunUpdateHook()
 			// ========== Jump =============
 			
 			// if on quadblock
-			if((driver->actionsFlagSet & 1) == 1)
+			if((driver->actionsFlagSet & 1) != 0)
 			{
 				// if tap triangle, jump off quadblock
 				if((buttonsTap & BTN_TRIANGLE) != 0)
 				{
-					// starts a jump when you hit Player_JumpAndFriction
-					driver->forcedJump_trampoline = 1;
+					driver->velocityXYZ[1] = 0x100000;
+					Driver_ConvertVectorsToSpeed(driver, &driver->velocityXYZ[0]);
 					
 					// jump should go higher if you hold triangle
 					mgs->playerVars[playerIndex].jumpHold = 1;
 				}
 			}
 			
-			// default gravity, same for all classes
-			driver->const_Gravity = 900;
-			
-			// holding jump after jumping
-			if(mgs->playerVars[playerIndex].jumpHold == 1)
-			{
-				// if triangle is released
-				if((buttonsHeld & BTN_TRIANGLE) == 0)
-				{
-					// no longer holding jump,
-					// can not "hold" again until next jump
-					mgs->playerVars[playerIndex].jumpHold = 0;
-				}
-				
-				// dont decrease rate of fall,
-				// only increase rate of jump
-				if(driver->velocityXYZ[1] > 0)
-				{
-					// lower gravity
-					driver->const_Gravity = 300;
-				}
-			}
-			
-			// must be done manually, Driver_Input is gone
-			driver->jump_ForcedMS -= sdata->gGT->elapsedTimeMS;
-			if(driver->jump_ForcedMS < 0) driver->jump_ForcedMS = 0;
+
 
 			// =========== Sticks ==============
 
@@ -699,8 +675,6 @@ void RunUpdateHook()
 				// move the driver
 				driver->velocityXYZ[0] = (xx+xz) >> tempSpeedVar;
 				driver->velocityXYZ[2] = (zx+zz) >> tempSpeedVar;
-				
-				void Driver_ConvertVectorsToSpeed(struct Driver* d, int* v);
 				Driver_ConvertVectorsToSpeed(driver, &driver->velocityXYZ[0]);
 
 				// forwardDir is supposed to be the direction
