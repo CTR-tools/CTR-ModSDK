@@ -38,6 +38,7 @@ def get_distance_to_config(print_error: bool) -> str:
 
 LOG_FILE = "crash.log"
 FOLDER_DISTANCE = get_distance_to_config(False)
+DISTANCE_LENGTH = FOLDER_DISTANCE.count("/") + 1
 ISO_PATH = FOLDER_DISTANCE + "build/"
 SYMS_PATH = FOLDER_DISTANCE + "symbols/"
 PLUGIN_PATH = FOLDER_DISTANCE + "plugins/"
@@ -65,6 +66,7 @@ PSYQ_CONVERTED_PATH = TOOLS_PATH + "gcc-psyq-converted/lib/"
 PSYQ_RENAME_CONFIRM_FILE = PSYQ_CONVERTED_PATH + ".sections-renamed"
 COMMENT_SYMBOL = "//"
 MOD_NAME = os.getcwd().replace("\\", "/").split("/")[-1]
+GAME_NAME = os.getcwd().replace("\\", "/").split("/")[-DISTANCE_LENGTH]
 HEXDIGITS = ["A", "B", "C", "D", "E", "F"]
 
 def rename_psyq_sections() -> None:

@@ -33,6 +33,11 @@ CXXFLAGS += -fno-exceptions -fno-rtti
 
 OBJS += $(addsuffix .o, $(basename $(SRCS)))
 
+DEPS := $(patsubst %.cpp, %.dep,$(filter %.cpp,$(SRCS)))
+DEPS += $(patsubst %.cc, %.dep,$(filter %.cc,$(SRCS)))
+DEPS +=	$(patsubst %.c, %.dep,$(filter %.c,$(SRCS)))
+DEPS += $(patsubst %.s, %.dep,$(filter %.s,$(SRCS)))
+
 all: dep $(foreach ovl, $(OVERLAYSECTION), $(BINDIR)Overlay$(ovl))
 
 $(BINDIR)Overlay%: $(BINDIR)$(TARGET).elf
@@ -46,7 +51,7 @@ endif
 	$(CC) -o $(BINDIR)$(TARGET).elf $(OBJS) $(LDFLAGS)
 
 %.o: %.s
-	$(CC) $(ARCHFLAGS) -I$(ROOTDIR) -c -o $@ $<
+	$(CC) $(ARCHFLAGS) -I$(ROOTDIR) -c $< -o $@
 
 %.dep: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -M -MT $(addsuffix .o, $(basename $@)) -MF $@ $<
@@ -57,14 +62,11 @@ endif
 %.dep: %.cc
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -M -MT $(addsuffix .o, $(basename $@)) -MF $@ $<
 
-# A bit broken, but that'll do in most cases.
 %.dep: %.s
 	$(GCCDIR)touch $@
 
-DEPS := $(patsubst %.cpp, %.dep,$(filter %.cpp,$(SRCS)))
-DEPS += $(patsubst %.cc, %.dep,$(filter %.cc,$(SRCS)))
-DEPS +=	$(patsubst %.c, %.dep,$(filter %.c,$(SRCS)))
-DEPS += $(patsubst %.s, %.dep,$(filter %.s,$(SRCS)))
+dep: $(DEPS)
 
 -include $(DEPS)
-dep: $(DEPS)
+
+.PHONY: all

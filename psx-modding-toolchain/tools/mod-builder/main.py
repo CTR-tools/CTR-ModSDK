@@ -2,7 +2,7 @@ from makefile import Makefile
 from compile_list import CompileList, free_sections, print_errors
 from syms import Syms
 from redux import Redux
-from common import LOG_FILE, COMPILE_LIST, DEBUG_FOLDER, BACKUP_FOLDER, OUTPUT_FOLDER, COMPILATION_RESIDUES, TEXTURES_FOLDER, TEXTURES_OUTPUT_FOLDER, request_user_input, cli_clear, cli_pause, check_compile_list, check_prerequisite_files, create_directory, delete_directory, delete_file, rename_psyq_sections
+from common import MOD_NAME, GAME_NAME, LOG_FILE, COMPILE_LIST, DEBUG_FOLDER, BACKUP_FOLDER, OUTPUT_FOLDER, COMPILATION_RESIDUES, TEXTURES_FOLDER, TEXTURES_OUTPUT_FOLDER, request_user_input, cli_clear, cli_pause, check_compile_list, check_prerequisite_files, create_directory, delete_directory, delete_file, rename_psyq_sections
 from mkpsxiso import Mkpsxiso
 from nops import Nops
 from game_options import game_options
@@ -10,6 +10,7 @@ from image import create_images, clear_images, dump_images
 from clut import clear_cluts, dump_cluts
 
 import os
+import sys
 import logging
 
 class Main:
@@ -38,6 +39,11 @@ class Main:
             16  :   self.clean_all,
         }
         self.num_options = len(self.actions)
+        self.window_title = GAME_NAME + " - " + MOD_NAME
+        if sys.platform == "win32":
+            os.system("title " + self.window_title)
+        else:
+            os.system('echo -n -e "\\033]0;' + self.window_title + '\\007"')
 
     def get_options(self) -> int:
         intro_msg = (
