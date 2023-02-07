@@ -45,8 +45,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	short driverRankItemValue;
 	u_short timerHazardSomething;
 	u_int itemSound;
-	u_int specialFlag;
-	u_int buttonHeld;
+	u_int uVar20;
 	u_int vectorID;
 	int vectorID2;
 	int joystickStrength;
@@ -642,7 +641,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driver->unknownDimension2Prev = driver->unknownDimension2Curr;
 
 	// ??? --Super
-	specialFlag = actionflags & 0x7f1f83d5;
+	uVar20 = actionflags & 0x7f1f83d5;
 	
 	// disable input if opening adv hub door with key
 	if ((gGT->gameMode2 & 0x4004) != 0) goto SkipInput;
@@ -667,14 +666,14 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 
 	driverItemThread = thread->childThread;
 
-	actionflags = specialFlag;
+	actionflags = uVar20;
 
 	while (driverItemThread != 0)
 	{
 		// If thread->modelIndex is Aku or Uka
 		if ((*(short*)&driverItemThread->modelIndex == 0x3a) || (*(short*)&driverItemThread->modelIndex == 0x39))
 		{
-			actionflags = specialFlag | 0x800000;
+			actionflags = uVar20 | 0x800000;
 			break;
 		}
 
@@ -686,13 +685,13 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	ptrgamepad = &sdata->gGamepads->gamepad[(u_int)driver->driverID];
 
 	// by default, hold no buttons
-	buttonHeld = 0;
+	uVar20 = 0;
 
 	// If you're not in End-Of-Race menu
 	if (!(gGT->gameMode1 & 0x200000))
 	{
 		// Get which button is held
-		buttonHeld = ptrgamepad->buttonsHeldCurrFrame;
+		uVar20 = ptrgamepad->buttonsHeldCurrFrame;
 	}
 
 	// by default, tap no buttons
@@ -706,10 +705,10 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	}
 
 	// If you hold Cross
-	cross = buttonHeld & 0x10;
+	cross = uVar20 & 0x10;
 
 	// If you hold Square
-	square = buttonHeld & 0x20;
+	square = uVar20 & 0x20;
 
 	// state of kart
 	kartState = driver->kartState;
@@ -859,7 +858,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		if
 		(
 			// If you are holding L1 or R1 and
-			((buttonHeld & 0xc00) != 0) &&
+			((uVar20 & 0xc00) != 0) &&
 			(driverRankItemValue != 3)
 		)
 		{
@@ -1051,16 +1050,16 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			approximateSpeed2 = driverSpeedOrSmth >> 7;
 			buttonsTapped = 0x20000;
 			LAB_800625c4:
-			buttonHeld = actionflags | buttonsTapped;
+			uVar20 = actionflags | buttonsTapped;
 		}
 		else
 		{
-			buttonHeld = actionflags | 8;
-			if (0 < driver->simpTurnState) buttonHeld = actionflags | 0x40000008;
+			uVar20 = actionflags | 8;
+			if (0 < driver->simpTurnState) uVar20 = actionflags | 0x40000008;
 			if (driver->simpTurnState < 0)
 			{
 				buttonsTapped = 0x20000000;
-				actionflags = buttonHeld;
+				actionflags = uVar20;
 				goto LAB_800625c4;
 			}
 		}
@@ -1110,24 +1109,24 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		LAB_8006248c:
 		actionflags = actionflags | 0x20020;
 		LAB_80062548:
-		buttonHeld = actionflags & 0x9fffffff;
+		uVar20 = actionflags & 0x9fffffff;
 		approximateSpeed2 = driverSpeedSmth2;
 	}
-	if ((buttonHeld & 0x20000) == 0)
+	if ((uVar20 & 0x20000) == 0)
 	{
-		actionflags = buttonHeld & 8;
+		actionflags = uVar20 & 8;
 		if (driver->superEngineTimer != 0)
 		{
 			// if Racer is moving
 			if (0 < approximateSpeed2)
 			{
-				actionflags = buttonHeld & 8;
-				if ((buttonHeld & 0x400020) != 0) goto LAB_80062648;
+				actionflags = uVar20 & 8;
+				if ((uVar20 & 0x400020) != 0) goto LAB_80062648;
 
 				// if you have less than 10 wumpa
 				superEngineFireLevel = 0x80;
 
-				driver->actionsFlagSet = buttonHeld;
+				driver->actionsFlagSet = uVar20;
 
 				// if number of wumpa > 9
 				// if wumpa is 10
@@ -1137,7 +1136,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 				// add 0.12s reserves
 				Turbo_Increment(driver, 0x78, 0x14, superEngineFireLevel);
 
-				buttonHeld = driver->actionsFlagSet;
+				uVar20 = driver->actionsFlagSet;
 			}
 			goto code_r0x80062644;
 		}
@@ -1148,7 +1147,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		driver->timeSpentReversing += msPerFrame;
 		
 code_r0x80062644:
-		actionflags = buttonHeld & 8;
+		actionflags = uVar20 & 8;
 	}
 
 	LAB_80062648:
@@ -1197,7 +1196,7 @@ code_r0x80062644:
 		//Racer struct + 0x39E = Racer's Base Speed
 		*(u_short*)&driver->fireSpeed = (short)approximateSpeed2;
 	}
-	if ((buttonHeld & 0x800020) == 0)
+	if ((uVar20 & 0x800020) == 0)
 	{
 		driverSpeedOrSmth = driver->terrainMeta2->unk_0x8;
 		//if racer is out of normal driving conditions?
@@ -1231,7 +1230,7 @@ code_r0x80062644:
 		// not rubbing on wall now, or recently
 		if (driver->set_0xF0_OnWallRub == 0)
 		{
-			if ((buttonHeld & 0x28) != 0)
+			if ((uVar20 & 0x28) != 0)
 			{
 				// if you are not holding cross
 				if (cross == 0)
@@ -1280,9 +1279,9 @@ code_r0x80062644:
 		if ((iVar14 < 1) || (driver->simpTurnState < 0))
 		{
 			if ((-1 < iVar14) || (0 < driver->simpTurnState)) goto LAB_800628b0;
-			buttonHeld = buttonHeld | 0x10;
+			uVar20 = uVar20 | 0x10;
 		}
-		else buttonHeld = buttonHeld & 0xffffffef;
+		else uVar20 = uVar20 & 0xffffffef;
 		driver->numFramesSpentSteering = 0;
 	}
 	LAB_800628b0:
@@ -1341,6 +1340,6 @@ code_r0x80062644:
 		driver->tireColor = 0x2e808080;
 	}
 	SkipInput:
-	driver->actionsFlagSet = specialFlag;
+	driver->actionsFlagSet = uVar20;
 	return;
 }
