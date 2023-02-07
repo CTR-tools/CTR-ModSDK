@@ -32,7 +32,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	int driverTimer;
 	u_int timerHazard;
 	int approximateSpeed2;
-	u_int actionflags;
+	u_int uVar22;
 	int driverSpeedSmth2;
 	struct GamepadBuffer* ptrgamepad;
 	u_int cross;
@@ -361,7 +361,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	approximateSpeed = (int)driver->speedApprox;
 
 	// Action flags (isRaceOver, isTimeFrozen, etc)
-	actionflags = driver->actionsFlagSet;
+	uVar22 = driver->actionsFlagSet;
 
 	// driver->clockReceive
 	driverTimer = (int)driver->clockReceive;
@@ -427,7 +427,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		driverTimerShort = (u_short)driverTimer;
 
 		// if you are not touching the ground
-		if ((actionflags & 1) == 0)
+		if ((uVar22 & 1) == 0)
 		{
 			// if speed is low
 			if (approximateSpeed < 0x101) goto speedIsLow;
@@ -625,7 +625,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	// velocity by comparing two frames
 	
 	// action flags
-	driver->actionsFlagSetPrevFrame = actionflags;
+	driver->actionsFlagSetPrevFrame = uVar22;
 	
 	// backup rotation
 	*(u_int*)&driver->rotPrev.x = *(u_int*)&driver->rotCurr.x;
@@ -641,13 +641,13 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	driver->unknownDimension2Prev = driver->unknownDimension2Curr;
 
 	// ??? --Super
-	uVar20 = actionflags & 0x7f1f83d5;
+	uVar20 = uVar22 & 0x7f1f83d5;
 	
 	// disable input if opening adv hub door with key
 	if ((gGT->gameMode2 & 0x4004) != 0) goto SkipInput;
 	
 	// if not touching ground
-	if ((actionflags & 1) == 0) 
+	if ((uVar22 & 1) == 0) 
 	{
 		// AngleAxis2_NormalVec
 		*(u_int*)&driver->AxisAngle4_normalVec[0] = *(u_int*)&driver->AxisAngle2_normalVec[0];
@@ -666,14 +666,14 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 
 	driverItemThread = thread->childThread;
 
-	actionflags = uVar20;
+	uVar22 = uVar20;
 
 	while (driverItemThread != 0)
 	{
 		// If thread->modelIndex is Aku or Uka
 		if ((*(short*)&driverItemThread->modelIndex == 0x3a) || (*(short*)&driverItemThread->modelIndex == 0x39))
 		{
-			actionflags = uVar20 | 0x800000;
+			uVar22 = uVar20 | 0x800000;
 			break;
 		}
 
@@ -766,7 +766,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					)
 					{
 						// This driver wants to fire a weapon
-						actionflags = actionflags | 0x8000;
+						uVar22 = uVar22 | 0x8000;
 
 						// If "held item quantity" is zero
 						if (driver->numHeldItems == 0)
@@ -862,14 +862,14 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			(driverRankItemValue != 3)
 		)
 		{
-			if ((actionflags & 4) == 0)
+			if ((uVar22 & 4) == 0)
 			{
 				// 10 frame jump buffer
 				driver->jump_TenBuffer = 10;
 			}
 			goto LAB_8006222c;
 		}
-		actionflags = actionflags & 0xfffffffb;
+		uVar22 = uVar22 & 0xfffffffb;
 		if (driver->jump_TenBuffer > 0) driver->jump_TenBuffer = 0;
 	}
 
@@ -894,7 +894,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		{
 			driver->jump_TenBuffer = 10;
 			LAB_8006222c:
-			actionflags = actionflags | 4;
+			uVar22 = uVar22 | 4;
 		}
 	}
 
@@ -936,7 +936,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			
 			if(driverTimer > -1)
 			{
-				actionflags |= 0x400000;
+				uVar22 |= 0x400000;
 			}
 		}
 
@@ -949,7 +949,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			(approximateSpeed > 0x300)
 		)
 		{
-			actionflags |= 0x800;
+			uVar22 |= 0x800;
 		}
 
 		// if you're on any turbo pad
@@ -975,10 +975,10 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	if
 	(
 		(driver->simpTurnState < 0) ||
-		(actionflags &= 0xdfffffff, driver->simpTurnState < 1)
+		(uVar22 &= 0xdfffffff, driver->simpTurnState < 1)
 	)
 	{
-		actionflags = actionflags & 0xbfffffff;
+		uVar22 = uVar22 & 0xbfffffff;
 	}
 	approximateSpeed2 = (int)driver->speedApprox;
 	if (approximateSpeed2 < 0)
@@ -987,7 +987,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	}
 	if (approximateSpeed2 < 0x300)
 	{
-		actionflags = actionflags & 0x9fffffff;
+		uVar22 = uVar22 & 0x9fffffff;
 	}
 	approximateSpeed2 = 0;
 	// Racer's Base Speed (4s)
@@ -1005,7 +1005,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		if (cross != 0)
 		{
 			LAB_8006253c:
-			actionflags = actionflags & 0xfffdffff;
+			uVar22 = uVar22 & 0xfffdffff;
 			goto LAB_80062548;
 		}
 
@@ -1026,14 +1026,14 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 						driverTimer = Player_StickReturnToRest(driverTimer, 0x80, 0), driverTimer > 99 ||
 
 						(
-							(driverTimer > 0 && ((actionflags & 0x20000) != 0))
+							(driverTimer > 0 && ((uVar22 & 0x20000) != 0))
 						)
 					)
 				)
 			)
 			{
 				// driver is steering?
-				actionflags |= 0x20000;
+				uVar22 |= 0x20000;
 		
 				driverSpeedSmth2 = -(int)driver->const_BackwardSpeed;
 				goto LAB_80062548;
@@ -1043,23 +1043,23 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			if (driverSpeedOrSmth < 0) driverSpeedSmth2 = driverSpeedOrSmth + 0x7f >> 7;
 			goto LAB_8006253c;
 		}
-		if ((driver->speedApprox < 0x301) && ((actionflags & 0x60000000) == 0))
+		if ((driver->speedApprox < 0x301) && ((uVar22 & 0x60000000) == 0))
 		{
 			driverSpeedOrSmth = driver->const_BackwardSpeed * driverSpeedOrSmth;
 			if (driverSpeedOrSmth < 0) driverSpeedOrSmth = driverSpeedOrSmth + 0x7f;
 			approximateSpeed2 = driverSpeedOrSmth >> 7;
 			buttonsTapped = 0x20000;
 			LAB_800625c4:
-			uVar20 = actionflags | buttonsTapped;
+			uVar20 = uVar22 | buttonsTapped;
 		}
 		else
 		{
-			uVar20 = actionflags | 8;
-			if (0 < driver->simpTurnState) uVar20 = actionflags | 0x40000008;
+			uVar20 = uVar22 | 8;
+			if (0 < driver->simpTurnState) uVar20 = uVar22 | 0x40000008;
 			if (driver->simpTurnState < 0)
 			{
 				buttonsTapped = 0x20000000;
-				actionflags = uVar20;
+				uVar22 = uVar20;
 				goto LAB_800625c4;
 			}
 		}
@@ -1069,7 +1069,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	{
 		driverTimer = Player_StickReturnToRest(driverTimer, 0x80, 0);
 
-		if ((driverTimer < 100) && ((driverTimer < 1 || ((actionflags & 0x20000) == 0))))
+		if ((driverTimer < 100) && ((driverTimer < 1 || ((uVar22 & 0x20000) == 0))))
 		{
 			// if you are not holding cross, and you have no Reserves
 			if (cross == 0)
@@ -1082,7 +1082,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 				{
 					if (driverSpeedSmth2 < 0) driverSpeedSmth2 = driverSpeedSmth2 + 0xff;
 					driverSpeedSmth2 = driverSpeedSmth2 >> 8;
-					actionflags = actionflags | 0x20;
+					uVar22 = uVar22 | 0x20;
 					goto LAB_80062548;
 				}
 				if (0 < driverSpeedOrSmth)
@@ -1092,13 +1092,13 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 					if (driverSpeedOrSmth < 0) driverSpeedSmth2 = driverSpeedOrSmth + 0xff >> 8;
 					goto LAB_8006248c;
 				}
-				actionflags = actionflags | 8;
+				uVar22 = uVar22 | 8;
 				driverSpeedSmth2 = approximateSpeed2;
 			}
 			// If you are holding cross, or you have Reserves
 			else
 			{
-				actionflags = actionflags | 0x20;
+				uVar22 = uVar22 | 0x20;
 				driverSpeedSmth2 = driverBaseSpeed / 2;
 			}
 			goto LAB_8006253c;
@@ -1107,20 +1107,20 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		driverSpeedSmth2 = driverSpeedOrSmth >> 2;
 		if (driverSpeedOrSmth < 0) 	driverSpeedSmth2 = driverSpeedOrSmth + 3 >> 2;
 		LAB_8006248c:
-		actionflags = actionflags | 0x20020;
+		uVar22 = uVar22 | 0x20020;
 		LAB_80062548:
-		uVar20 = actionflags & 0x9fffffff;
+		uVar20 = uVar22 & 0x9fffffff;
 		approximateSpeed2 = driverSpeedSmth2;
 	}
 	if ((uVar20 & 0x20000) == 0)
 	{
-		actionflags = uVar20 & 8;
+		uVar22 = uVar20 & 8;
 		if (driver->superEngineTimer != 0)
 		{
 			// if Racer is moving
 			if (0 < approximateSpeed2)
 			{
-				actionflags = uVar20 & 8;
+				uVar22 = uVar20 & 8;
 				if ((uVar20 & 0x400020) != 0) goto LAB_80062648;
 
 				// if you have less than 10 wumpa
@@ -1147,11 +1147,11 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 		driver->timeSpentReversing += msPerFrame;
 		
 code_r0x80062644:
-		actionflags = uVar20 & 8;
+		uVar22 = uVar20 & 8;
 	}
 
 	LAB_80062648:
-	if (actionflags != 0)
+	if (uVar22 != 0)
 	{		
 		// high speed
 		if (
