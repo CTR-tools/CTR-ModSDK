@@ -29841,6 +29841,7 @@ LAB_8005fee4:
   iVar18 = iVar19 >> 8;
   iVar16 = iVar6 >> 8;
   
+  // gas and break together
   if ((local_38 & 0x20) != 0) 
   {
     iVar18 = iVar19 >> 9;
@@ -29985,9 +29986,12 @@ LAB_8005fee4:
     if (iVar11 < iVar18) {
       iVar18 = iVar11;
     }
+	
+	// steering left or right
     if ((local_38 & 0x10) != 0) {
       iVar18 = -iVar18;
     }
+	
     iVar19 = (int)*(short *)(param_2 + 0x450);
     if ((iVar9 < 1) || (iVar11 = -iVar19, iVar11 <= iVar9 + iVar18)) {
       if (iVar9 < 0) {
@@ -30077,14 +30081,20 @@ LAB_80060284:
   sVar4 = (short)uVar10;
   *(short *)(param_2 + 0x39a) = sVar4;
   *(short *)(param_2 + 0x2ee) = sVar4 + (short)iVar16 + sVar17;
+  
+  // if not holding break, and not mashing X
   if (((local_38 & 8) == 0) && (*(short *)(param_2 + 0x3c2) < 7)) {
     if (*(int *)(iVar12 + 0x14) != 0x100) {
       iVar11 = iVar11 * *(int *)(iVar12 + 0x14) >> 8;
     }
   }
+  
+  // holding break, or mashing X
   else {
     iVar11 = iVar11 * 10 >> 8;
   }
+  
+  // axisRotationX
   *(ushort *)(param_2 + 0x396) =
        *(short *)(param_2 + 0x396) + (short)(iVar11 * iVar8 >> 0xd) & 0xfff;
 
