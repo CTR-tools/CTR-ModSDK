@@ -182,7 +182,7 @@ class Makefile:
             with open(COMP_SOURCE, "r") as file:
                 for line in file:
                     line = [l.strip() for l in line.split()]
-                    shutil.copyfile(line[0], line[1])
+                    shutil.move(line[0], line[1])
 
     def make(self) -> None:
         self.restore_temp_files()
@@ -190,13 +190,13 @@ class Makefile:
         create_directory(BACKUP_FOLDER)
         cli_clear()
         print("\n[Makefile-py] Compilation started...\n")
-
         os.system("make -s -j8 > " + GCC_OUT_FILE + " 2>&1")
         with open(GCC_OUT_FILE) as file:
             for line in file:
                 print(line)
 
         if (not os.path.isfile("mod.map")) or (not os.path.isfile("mod.elf")):
+            self.move_temp_files()
             self.delete_temp_files()
             print("\n[Makefile-py] ERROR: compilation was not successful.\n")
             return

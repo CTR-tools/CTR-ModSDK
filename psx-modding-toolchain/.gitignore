@@ -22,6 +22,7 @@ debug/
 *.log
 offset.txt
 comport.txt
+gcc_out.txt
 overlay.ld
 Makefile
 
