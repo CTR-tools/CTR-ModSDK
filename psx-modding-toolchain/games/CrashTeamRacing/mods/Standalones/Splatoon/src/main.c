@@ -659,6 +659,11 @@ void RunUpdateHook()
 
 			// =========== Movement ==============
 
+			// move the driver
+			driver->velocityXYZ[0] = 0;
+			driver->velocityXYZ[2] = 0;
+			Driver_ConvertVectorsToSpeed(driver, &driver->velocityXYZ[0]);
+
 			if(dirLX != 0 || dirLZ != 0)
 			{
 				// zero by default

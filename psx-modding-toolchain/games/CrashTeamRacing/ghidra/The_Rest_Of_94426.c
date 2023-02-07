@@ -30487,9 +30487,12 @@ LAB_80060ab0:
 			(*(short *)(param_2 + 0x39c) < 1)
 		)
 	{
-      if (*(short *)(param_2 + 0x39c) != 0) {
+      if (*(short *)(param_2 + 0x39c) != 0) 
+	  {
+		// terrain related
         if ((((*(uint *)(*(int *)(param_2 + 0x358) + 4) & 4) == 0) ||
-            (*(short *)(param_2 + 0x39c) < 1)) || (-1 < *(short *)(param_2 + 0x38e))) {
+            (*(short *)(param_2 + 0x39c) < 1)) || (-1 < *(short *)(param_2 + 0x38e))) 
+		{
           iVar10 = (int)*(short *)(param_2 + 0x38e);
           iVar2 = iVar10;
           if (iVar10 < 0) {
