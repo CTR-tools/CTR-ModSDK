@@ -32796,7 +32796,7 @@ void FUN_80062a4c(undefined4 param_1,int param_2)
 	 )
   {
 	// if driving for more than 0.1s, less than 0.64s,
-	// and the 0x40A variable was hit 5 times
+	// and the 0x40A variable was hit 5 times (in OnGravity)
 	  
     // OnInit_State9 (what is it?)
     FUN_80062e94(param_1);
