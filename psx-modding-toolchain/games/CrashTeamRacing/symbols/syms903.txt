@@ -948,9 +948,9 @@
 80060c24 Player_Freeze_PhysLinear
 80060c80 Player_Freeze_Init
 
-80060d2c Player_PreventVShift_Update
-80060d80 Player_PreventVShift_ReverseOneFrame
-80060de4 Player_PreventVShift_Init
+80060d2c Player_AntiVShift_Update
+80060d80 Player_AntiVShift_ReverseOneFrame
+80060de4 Player_AntiVShift_Init
 
 80060e9c Player_Drifting_PhysAngular
 80061584 Player_Drifting_Finalize

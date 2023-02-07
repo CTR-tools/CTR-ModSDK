@@ -32819,7 +32819,7 @@ void FUN_80062a4c(undefined4 param_1,int param_2)
 
 	// Stop driving, until you press X, prevents jitters
 	  
-    // Player_PreventVShift_Init
+    // Player_AntiVShift_Init
     FUN_80062e94(param_1);
   }
 
@@ -32976,7 +32976,7 @@ void FUN_80062d04(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_PreventVShift_Update
+// Player_AntiVShift_Update
 // param1 = thread, param2 = driver
 void FUN_80062db0(undefined4 param_1,int param_2)
 //seems to handle end of blasted effect
@@ -33006,7 +33006,7 @@ void FUN_80062db0(undefined4 param_1,int param_2)
 }
 
 
-// Player_PreventVShift_ReverseOneFrame
+// Player_AntiVShift_ReverseOneFrame
 // param1 = thread, param2 = driver
 // reverse one frame of position
 void FUN_80062e04(undefined4 param_1,int param_2)
@@ -33048,7 +33048,7 @@ void FUN_80062e04(undefined4 param_1,int param_2)
 }
 
 
-// Player_PreventVShift_Init
+// Player_AntiVShift_Init
 // param1 = thread, param2 = driver
 void FUN_80062e94(undefined4 param_1,int param_2)
 {
