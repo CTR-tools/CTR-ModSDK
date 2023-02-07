@@ -29937,9 +29937,12 @@ LAB_8005fee4:
   *(short *)(param_2 + 0x3d2) = sVar4;
   
   iVar6 = (int)sVar4;
+  
+  // terrain related
   if (*(int *)(iVar12 + 0x24) != 0x100) {
     iVar6 = *(int *)(iVar12 + 0x24) * iVar6 >> 8;
   }
+  
   iVar16 = (int)sVar13 + (iVar6 * iVar8 >> 5);
   *(short *)(param_2 + 0x3c6) = (short)iVar16;
   iVar11 = iVar9;
@@ -30008,6 +30011,8 @@ LAB_8005fee4:
   iVar9 = (int)*(short *)(param_2 + 0x3d4);
   sVar4 = *(short *)(param_2 + 0x3d8);
   sVar13 = *(short *)(param_2 + 0x3d6);
+  
+  // terrain related, or 0x2c8 related
   if (((*(uint *)(iVar12 + 4) & 0x10) == 0) && ((local_38 & 1) != 0)) {
     iVar18 = iVar16;
     if (iVar16 < 0) {
@@ -30083,8 +30088,11 @@ LAB_80060284:
   *(short *)(param_2 + 0x2ee) = sVar4 + (short)iVar16 + sVar17;
   
   // if not holding break, and not mashing X
-  if (((local_38 & 8) == 0) && (*(short *)(param_2 + 0x3c2) < 7)) {
-    if (*(int *)(iVar12 + 0x14) != 0x100) {
+  if (((local_38 & 8) == 0) && (*(short *)(param_2 + 0x3c2) < 7)) 
+  {
+	// terrain related
+    if (*(int *)(iVar12 + 0x14) != 0x100) 
+	{
       iVar11 = iVar11 * *(int *)(iVar12 + 0x14) >> 8;
     }
   }
