@@ -2160,10 +2160,10 @@ struct Driver
 	short squishTimer;
 
 	// 0x406
-	short StateDriving_0x60;
+	short StartDriving_0x60;
 
 	// 0x408
-	short StateDriving_0x280;
+	short StartRollback_0x280;
 
 	// 0x40A
 	short unknownTraction;

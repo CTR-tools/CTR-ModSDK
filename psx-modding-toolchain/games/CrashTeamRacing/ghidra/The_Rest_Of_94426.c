@@ -28573,22 +28573,21 @@ LAB_8005e9d8:
     return;
   }
   
-  // these variables are related to kart state 9,
-  // why is this inside OnGravity?
-  
+// start Rollback
 LAB_8005ea08:
 
 
-  // if driver has been "rolling backward" less than 0.64s,
-  // and already started shifting forward from another quadblock,
-  // happens when driver is stuck in a "V" shape of two quadblocks
+  // if rollback is starting, but in the last 0.64s
+  // the driver started rollback already, then rolled 
+  // forward, and is now rolling back AGAIN, count
+  // V_Shift, inside two quadblocks in the shape of a V
   if (*(short *)(param_1 + 0x408) != 0) 
   {
 	// increment number of V_Shifts
     *(short *)(param_1 + 0x40a) = *(short *)(param_1 + 0x40a) + 1;
   }
 
-  // reset timer, still rolling backward
+  // reset timer, rolling backward
   *(undefined2 *)(param_1 + 0x408) = 0x280;
   
   return;

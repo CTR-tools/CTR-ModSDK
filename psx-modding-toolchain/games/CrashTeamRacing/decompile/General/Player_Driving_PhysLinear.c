@@ -227,12 +227,12 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	// then handle subtraction. In subtraction, make sure desired is not negative,
 	// then set current to desired
 
-	driverValueMinusMsPerFrame = (int)driver->StateDriving_0x60 + negativeMsPerFrame;
+	driverValueMinusMsPerFrame = (int)driver->StartDriving_0x60 + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->StateDriving_0x60)
+	if (0 < (int)driver->StartDriving_0x60)
 	{
 		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->StateDriving_0x60 = driverValueMinusMsPerFrameUnsigned;
+		*(u_short*)&driver->StartDriving_0x60 = driverValueMinusMsPerFrameUnsigned;
 	}
 
 	// Next 7 lines are repetitive, this time for Unknown (0x408)
@@ -241,12 +241,12 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	// then handle subtraction. In subtraction, make sure desired is not negative,
 	// then set current to desired
 
-	driverValueMinusMsPerFrame = (int)driver->StateDriving_0x280 + negativeMsPerFrame;
+	driverValueMinusMsPerFrame = (int)driver->StartRollback_0x280 + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->StateDriving_0x280)
+	if (0 < (int)driver->StartRollback_0x280)
 	{
 		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->StateDriving_0x280 = driverValueMinusMsPerFrameUnsigned;
+		*(u_short*)&driver->StartRollback_0x280 = driverValueMinusMsPerFrameUnsigned;
 	}
 
 	// If Super Engine Cheat is not enabled
