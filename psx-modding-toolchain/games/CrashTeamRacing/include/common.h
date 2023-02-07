@@ -1786,6 +1786,7 @@ struct Driver
 	// There is no "short" on 0x52,
 	// there is padding for the next
 	// 4-byte void* that is unused
+	short funcPtrs_compilerpadding;
 
 	// 0x54 - OnInit, First function for spawn, drifting, damage, etc
 	// 0x58 - OnUpdate, updates per frame for any generic purpose
@@ -2035,7 +2036,7 @@ struct Driver
 	short rotationSpinRate; // again?
 
 	// 0x3B6
-	char fill_turningAccel[3];
+	char fill_3B6[4];
 
 	// 0x3BA
 	// in japanese Turbo_Increment
@@ -2140,7 +2141,7 @@ struct Driver
 	short jump_InitialVelY;
 
 	// 0x3FA
-	short unknownJump3;
+	short jump_unknown;
 
 	// 0x3FC
 	short jump_LandingBoost;
@@ -2475,7 +2476,7 @@ struct Driver
 	// two-byte quip
 
 	// 0x4f0
-	char unk_4F0_4F6[8];
+	char unk_4F0_4F8[8];
 
 	// 0x4f8
 	struct Instance* wakeInst;

@@ -179,12 +179,12 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 	// then handle subtraction. In subtraction, make sure desired is not negative,
 	// then set current to desired
 
-	driverValueMinusMsPerFrame = (int)driver->unknownJump3 + negativeMsPerFrame;
+	driverValueMinusMsPerFrame = (int)driver->jump_unknown + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->unknownJump3)
+	if (0 < (int)driver->jump_unknown)
 	{
 		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->unknownJump3 = driverValueMinusMsPerFrameUnsigned;
+		*(u_short*)&driver->jump_unknown = driverValueMinusMsPerFrameUnsigned;
 	}
 
 	// Next 7 lines are repetitive, this time for Burnt Effect Timer (0x402)
