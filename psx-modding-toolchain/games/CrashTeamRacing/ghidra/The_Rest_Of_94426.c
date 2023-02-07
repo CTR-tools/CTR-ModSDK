@@ -32795,6 +32795,9 @@ void FUN_80062a4c(undefined4 param_1,int param_2)
 		(4 < *(short *)(param_2 + 0x40a))
 	 )
   {
+	// if driving for more than 0.1s, less than 0.64s,
+	// and the 0x40A variable was hit 5 times
+	  
     // OnInit_State9 (what is it?)
     FUN_80062e94(param_1);
   }
@@ -32804,7 +32807,7 @@ void FUN_80062a4c(undefined4 param_1,int param_2)
 	// if driver has been "Player_Driving" more than 0.64 seconds
     if (*(short *)(param_2 + 0x408) == 0)
 	{
-      //traction related
+      // wipe
       *(undefined2 *)(param_2 + 0x40a) = 0;
     }
   }
