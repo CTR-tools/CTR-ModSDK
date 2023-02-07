@@ -2109,7 +2109,7 @@ struct Driver
 	short numFramesSpentSteering;
 
 	// 0x3E8
-	short turnSign;
+	short forwardDir;
 
 	// 0x3EA
 	short previousFrameMultDrift; //previous frame or just repeat?

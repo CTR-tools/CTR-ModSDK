@@ -30,7 +30,7 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 	short iVar19;
 	u_int actionsFlagSet;
 	short rotCurrWInterpolated;
-	short turnSign;
+	short forwardDir;
 	int simpTurnState256;
 	short speedApprox;
 	int rotationSpinRateInterpolated;
@@ -79,7 +79,7 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 	rotCurrWInterpolated = InterpBySpeed(driver->rotCurr.w, rotPrevWInterpolated * elapsedTimeMS >> 5, 0);
 
 	actionsFlagSet = driver->actionsFlagSet;
-	turnSign = driver->turnSign;
+	forwardDir = driver->forwardDir;
 
 	// set camera rotation (rotCurr.W)
 	driver->rotCurr.w = rotCurrWInterpolated;
@@ -94,8 +94,8 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 		// baseSpeed is negative
 		if (driver->baseSpeed < 0) 
 		{
-			turnSign = -1;
-			driver->turnSign = -1;
+			forwardDir = -1;
+			driver->forwardDir = -1;
 		}
 		if (-1 < speedApprox) goto LAB_8005fd74;
 	}
@@ -108,12 +108,12 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 		// baseSpeed is positive
 		if (-1 < driver->baseSpeed) 
 		{
-			turnSign = 1;
-			driver->turnSign = 1;
+			forwardDir = 1;
+			driver->forwardDir = 1;
 		}
 	}
 
-	if (turnSign < 0)
+	if (forwardDir < 0)
 	{
 		simpTurnState256 = driver->simpTurnState * -256;
 		actionsFlagSet ^= 16;
