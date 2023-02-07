@@ -185,9 +185,12 @@ class Makefile:
                     shutil.move(line[0], line[1])
 
     def make(self) -> None:
-        self.restore_temp_files()
         create_directory(OUTPUT_FOLDER)
         create_directory(BACKUP_FOLDER)
+        create_directory(DEBUG_FOLDER)
+        create_directory(OBJ_FOLDER)
+        create_directory(DEP_FOLDER)
+        self.restore_temp_files()
         cli_clear()
         print("\n[Makefile-py] Compilation started...\n")
         os.system("make -s -j8 > " + GCC_OUT_FILE + " 2>&1")
@@ -201,9 +204,6 @@ class Makefile:
             print("\n[Makefile-py] ERROR: compilation was not successful.\n")
             return
 
-        create_directory(DEBUG_FOLDER)
-        create_directory(OBJ_FOLDER)
-        create_directory(DEP_FOLDER)
         shutil.move("mod.map", DEBUG_FOLDER + "mod.map")
         shutil.move("mod.elf", DEBUG_FOLDER + "mod.elf")
         self.move_temp_files()
