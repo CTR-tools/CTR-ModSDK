@@ -1075,7 +1075,7 @@ void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
 			if (cross == 0)
 			{
 				// Player_StickReturnToRest
-				driverSpeedOrSmth = Player_StickReturnToRest(driverSpeedOrSmth, 0x80, 0);
+				driverSpeedOrSmth = Player_StickReturnToRest(joystickStrength, 0x80, 0);
 
 				driverSpeedSmth2 = driverBaseSpeed * -driverSpeedOrSmth;
 				if (driverSpeedOrSmth < 0)
