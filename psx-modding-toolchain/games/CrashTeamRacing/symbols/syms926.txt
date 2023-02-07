@@ -872,14 +872,14 @@
 8005c354 DrawSkidMarks_Main
 
 8005ca24 Driver_UpdateLapProgress
+8005cd1c Driver_ConvertVectorsToSpeed
 
-// unknown 8005cd1c
 8005cf64 DriverCrash_BounceSelf
 8005d0d0 DriverCrash_AI
 8005d218 DriverCrash_Attack
 8005d404 DriverCrash_AnyTwoCars
 
-8005e104 OnVelocityXYZ
+8005e104 Driver_ConvertSpeedToVectors
 8005e214 OnGravity
 8005ea60 OnApplyForces
 8005ebac OnCollide_Drivers

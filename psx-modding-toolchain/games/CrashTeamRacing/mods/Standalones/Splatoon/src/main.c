@@ -697,8 +697,11 @@ void RunUpdateHook()
 				tempSpeedVar = mgs->playerVars[playerIndex].speedVar;
 
 				// move the driver
-				driver->posCurr[0] += (xx+xz) >> tempSpeedVar;
-				driver->posCurr[2] += (zx+zz) >> tempSpeedVar;
+				driver->velocityXYZ[0] = (xx+xz) >> tempSpeedVar;
+				driver->velocityXYZ[2] = (zx+zz) >> tempSpeedVar;
+				
+				void Driver_ConvertVectorsToSpeed(struct Driver* d, int* v);
+				Driver_ConvertVectorsToSpeed(driver, &driver->velocityXYZ[0]);
 
 				// forwardDir is supposed to be the direction
 				// the camera faces, but [now] it is the direction

@@ -27281,7 +27281,7 @@ void FUN_8005ca24(int param_1)
   return;
 }
 
-
+// Driver_ConvertVectorsToSpeed
 // param_1: &driver
 // param_2: velocityXYZs
 void FUN_8005cd1c(int param_1,int *param_2)
@@ -27846,7 +27846,7 @@ void FUN_8005d404(int param_1,int param_2,int *param_3)
 	  // If this (other driver) is human and not AI
       if ((*(uint *)(iVar8 + 0x2c8) & 0x100000) == 0)
 	  {
-		// NOP makes player fail to move when hitting X
+		// Driver_ConvertSpeedToVectors
         FUN_8005e104(iVar8,&local_48);
 
         iVar6 = (int)*(short *)(iVar5 + 0x47c) + (int)*(short *)(iVar8 + 0x47c);
@@ -27905,6 +27905,7 @@ void FUN_8005d404(int param_1,int param_2,int *param_3)
 		// DriverCrash_AI
         FUN_8005d0d0(iVar5,param_3);
 
+		// Driver_ConvertVectorsToSpeed
         FUN_8005cd1c(iVar8,&local_48,0);
       }
 
@@ -27979,7 +27980,7 @@ void FUN_8005d404(int param_1,int param_2,int *param_3)
   return;
 }
 
-// hint : disabling this function stops player from moving, but you can still turn
+// Driver_ConvertSpeedToVectors
 // param_1 = &driver
 // param_2 = &driver.velocityXYZ
 void FUN_8005e104(int param_1,int *param_2)
@@ -28603,7 +28604,7 @@ void FUN_8005ea60(undefined4 param_1,int param_2)
   gte_stlvnl1((long *)(param_2 + 0x98));
   gte_stlvnl2((long *)(param_2 + 0x9c));
 
-  // NOP makes player fail to move when hitting X
+  // Driver_ConvertSpeedToVectors
   FUN_8005e104(param_2,param_2 + 0x88,0);
 
   if (
@@ -30706,6 +30707,7 @@ LAB_80060c30:
 // skip here if not jumping
 LAB_80060e1c:
   
+  // Driver_ConvertVectorsToSpeed
   FUN_8005cd1c(param_2,&local_28,0);
   
   // decrease speed
