@@ -1,5 +1,6 @@
 #include <common.h>
 #include "math.h"
+#include "../../../../../tools/nugget/common/macros/gte.h"
 
 // MIPS Instructions
 #define J(addr) ((((unsigned int) addr & 0xFFFFFF) >> 2) | 0x08000000)
@@ -7,13 +8,13 @@
 #define NOP   0x00000000
 
 // Functions
-void DECOMP_Player_Spinning_PhysAngular(struct Thread* bread, struct Driver* driver);
-void Player_Spinning_PhysAngular(struct Thread* bread, struct Driver* driver);
+void DECOMP_Player_Driving_PhysLinear(struct Thread* bread, struct Driver* driver);
+void Player_Driving_PhysLinear(struct Thread* bread, struct Driver* driver);
 void MainFrame_GameLogic();
 
 typedef void (*func)(struct Thread* bread, struct Driver* driver);
-func newFunc = (func) &DECOMP_Player_Spinning_PhysAngular;
-func oldFunc = (func) &Player_Spinning_PhysAngular;
+func newFunc = (func) &DECOMP_Player_Driving_PhysLinear;
+func oldFunc = (func) &Player_Driving_PhysLinear;
 
 unsigned int * hookAddress = (unsigned int *) (&MainFrame_GameLogic - 8);
 unsigned int instructions[4];
