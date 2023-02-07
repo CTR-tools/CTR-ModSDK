@@ -1,6 +1,5 @@
 #include <ovr_233.h>
 
-u_int CDSYS_XAPlay(int, int);
 int THREAD_BirthWithObject(u_int, u_int, char*, int);
 void CS_Podium_Stand_Init(u_short *);
 void CS_Podium_Prize_Init(u_int, char*, short *);
