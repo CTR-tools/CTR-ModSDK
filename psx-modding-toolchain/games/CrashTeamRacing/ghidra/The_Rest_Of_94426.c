@@ -33048,11 +33048,11 @@ void FUN_80062e04(undefined4 param_1,int param_2)
 }
 
 
-// State9_Init
+// Player_PreventVShift_Init
 // param1 = thread, param2 = driver
 void FUN_80062e94(undefined4 param_1,int param_2)
 {
-  //kart state = 9? what is this state?
+  // kart state 9
   *(undefined *)(param_2 + 0x376) = 9;
 
   // OnUpdate
