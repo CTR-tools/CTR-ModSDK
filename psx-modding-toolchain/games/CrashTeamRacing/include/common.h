@@ -2036,7 +2036,8 @@ struct Driver
 	short rotationSpinRate; // again?
 
 	// 0x3B6
-	char fill_3B6[4];
+	// both related to EngineSound
+	short fill_3B6[2];
 
 	// 0x3BA
 	// in japanese Turbo_Increment
