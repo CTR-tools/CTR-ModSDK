@@ -7,7 +7,7 @@ void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
 int Player_SteerAccel(int param_1, int param_2, int param_3, u_int param_4, u_int param_5, u_int param_6);
 void FUN_8005fb4c(struct Driver* driver);
 
-void DECOMP_Player_Driving_Interpolate(u_int param_1, struct Driver* driver)
+void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 {
 	// bool isSimpTurnState256LessThan0;
 	// bool isSimpTurnState256LessThanTurningAccel;

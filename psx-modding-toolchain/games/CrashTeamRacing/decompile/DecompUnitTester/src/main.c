@@ -7,13 +7,13 @@
 #define NOP   0x00000000
 
 // Functions
-void DECOMP_Player_Spinning_Interpolate(struct Thread* bread, struct Driver* driver);
-void Player_Spinning_Interpolate(struct Thread* bread, struct Driver* driver);
+void DECOMP_Player_Spinning_PhysAngular(struct Thread* bread, struct Driver* driver);
+void Player_Spinning_PhysAngular(struct Thread* bread, struct Driver* driver);
 void MainFrame_GameLogic();
 
 typedef void (*func)(struct Thread* bread, struct Driver* driver);
-func newFunc = (func) &DECOMP_Player_Spinning_Interpolate;
-func oldFunc = (func) &Player_Spinning_Interpolate;
+func newFunc = (func) &DECOMP_Player_Spinning_PhysAngular;
+func oldFunc = (func) &Player_Spinning_PhysAngular;
 
 unsigned int * hookAddress = (unsigned int *) (&MainFrame_GameLogic - 8);
 unsigned int instructions[4];

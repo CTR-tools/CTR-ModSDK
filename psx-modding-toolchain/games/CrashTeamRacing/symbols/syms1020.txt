@@ -925,7 +925,7 @@
 
 // unknown 8005fc64
 
-8005fda4 Player_Driving_Interpolate
+8005fda4 Player_Driving_PhysAngular
 80060570 Player_Driving_LerpQuarterStrength
 800605a0 Player_Driving_LerpToForwards
 800606b8 Player_Jump_GetVelY
@@ -938,45 +938,45 @@
 800617c8 Player_StickGetStrength
 800618e4 Player_StickGetStrengthAbsolute
 
-80061934 Player_Driving_Input
+80061934 Player_Driving_PhysLinear
 80062b44 Player_Driving_Audio
 80062b64 Player_Driving_Update
 80062c8c Player_Driving_Init
 
-80062dc0 Player_Freeze_Input
+80062dc0 Player_Freeze_PhysLinear
 80062e1c Player_Freeze_Init
 
 80062ec8 Player_State9_Update
 80062f1c Player_State9_ReverseOneFrame
 80062fac Player_State9_Init
 
-80063064 Player_Drifting_Interpolate
+80063064 Player_Drifting_PhysAngular
 8006374c Player_Drifting_Finalize
 80063764 Player_Drifting_Update
-800639ec Player_Drifting_Input
+800639ec Player_Drifting_PhysLinear
 80063a38 Player_Drifting_InitSetUpdate
 80063a4c Player_Drifting_Init
 
-80063b5c Player_Crashing_Interpolate
+80063b5c Player_Crashing_PhysAngular
 80063c10 Player_Crashing_Update
-80063c18 Player_Crashing_Input
+80063c18 Player_Crashing_PhysLinear
 80063c44 Player_Crashing_Animate
 80063cec Player_Crashing_Init
 
 80063e0c Player_Spinning_Update
-80063e5c Player_Spinning_Input
-80063ee0 Player_Spinning_Interpolate
+80063e5c Player_Spinning_PhysLinear
+80063ee0 Player_Spinning_PhysAngular
 80063fc4 Player_Spinning_InitSetUpdate
 80063fd8 Player_Spinning_Init
 
 80064144 Player_LastSpin_Update
-80064184 Player_LastSpin_Input
-800641bc Player_LastSpin_Interpolate
+80064184 Player_LastSpin_PhysLinear
+800641bc Player_LastSpin_PhysAngular
 8006436c Player_LastSpin_Init
 
 80064404 Player_StopSpin_Update
-8006440c Player_StopSpin_Input
-80064438 Player_StopSpin_Interpolate
+8006440c Player_StopSpin_PhysLinear
+80064438 Player_StopSpin_PhysAngular
 800644ec Player_StopSpin_Animate
 800645e8 Player_StopSpin_Init
 
@@ -992,25 +992,25 @@
 80066894 Player_MaskGrab_FindDestPos
 80066dc8 Player_MaskGrab_Particles
 80066e64 Player_MaskGrab_Update
-80066f54 Player_MaskGrab_Input
+80066f54 Player_MaskGrab_PhysLinear
 80066fa4 Player_MaskGrab_Animate
 800672c8 Player_MaskGrab_Init
 
 800675b4 Player_EatenByPlant_Update
-8006766c Player_EatenByPlant_Input
+8006766c Player_EatenByPlant_PhysLinear
 800676d8 Player_EatenByPlant_Animate
 800678e8 Player_EatenByPlant_Init
 
 80067a48 Player_Dead_Init // (tombstone sep3)
 
 80067a78 Player_EngineRevving_Update
-80067b8c Player_EngineRevving_Input
+80067b8c Player_EngineRevving_PhysLinear
 80067c94 Player_EngineRevving_Animate
 80068064 Player_EngineRevving_Init
 
 800681b4 Player_Blasted_Update
-800681e8 Player_Blasted_Input
-80068268 Player_Blasted_Interpolate
+800681e8 Player_Blasted_PhysLinear
+80068268 Player_Blasted_PhysAngular
 8006835c Player_Blasted_Animate
 800683bc Player_Blasted_Init
 
@@ -1018,7 +1018,7 @@
 800686c8 Player_Warp_AddDustPuff1
 8006875c Player_Warp_AddDustPuff2
 // extra here in Sep3
-80068d00 Player_Warp_Interpolate
+80068d00 Player_Warp_PhysAngular
 80068f1c Player_Warp_Init
 
 // extra here in sep3 (tombstone vibrate)

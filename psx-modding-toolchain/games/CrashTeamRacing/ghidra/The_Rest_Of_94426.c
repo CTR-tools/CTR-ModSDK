@@ -29493,8 +29493,8 @@ void FUN_8005f89c(undefined2 *param_1,short *param_2,uint param_3)
 
 // param1 - driver object
 // called from:
-//		Player_Driving_Interpolate
-//		Player_Drifting_Interpolate
+//		Player_Driving_PhysAngular
+//		Player_Drifting_PhysAngular
 uint FUN_8005fb4c(int param_1)
 
 {
@@ -29614,7 +29614,7 @@ uint FUN_8005fb4c(int param_1)
 }
 
 
-// Player_Driving_Interpolate
+// Player_Driving_PhysAngular
 void FUN_8005fc8c(undefined4 param_1,int param_2)
 
 {
@@ -31392,7 +31392,7 @@ int FUN_800617cc(int param_1,undefined4 param_2,short *param_3)
 
 
 
-// Player_Driving_Input
+// Player_Driving_PhysLinear
 void FUN_8006181c(int param_1,int param_2)
 {
   char cVar1;
@@ -32855,7 +32855,7 @@ void FUN_80062b74(undefined4 param_1,int param_2)
 	// Player_Driving_Update
     *(undefined4 *)(param_2 + 0x58) = 0x80062a4c;
 
-	// Player_Driving_Input
+	// Player_Driving_PhysLinear
     *(undefined4 *)(param_2 + 0x5c) = 0x8006181c;
 
 	*(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -32884,12 +32884,12 @@ void FUN_80062b74(undefined4 param_1,int param_2)
 }
 
 
-// Player_Freeze_Input
+// Player_Freeze_PhysLinear
 void FUN_80062ca8(undefined4 param_1,int param_2)
 {
   uint uVar1;
 
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   FUN_8006181c();
 
   // get flags
@@ -32925,7 +32925,7 @@ void FUN_80062d04(undefined4 param_1,int param_2)
 {
   if (*(char *)(param_2 + 0x376) != '\v')
   {
-	// Player_Freeze_Input
+	// Player_Freeze_PhysLinear
     *(undefined4 *)(param_2 + 0x5c) = 0x80062ca8;
 
 	*(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -33032,7 +33032,7 @@ void FUN_80062e94(undefined4 param_1,int param_2)
   // OnUpdate
   *(undefined4 *)(param_2 + 0x58) = 0x80062db0;
 
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x8006181c;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -33058,7 +33058,7 @@ void FUN_80062e94(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Drifting_Interpolate
+// Player_Drifting_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_80062f4c(undefined4 param_1,int param_2)
 
@@ -33682,13 +33682,13 @@ void FUN_8006364c(undefined4 param_1,int param_2)
 }
 
 
-// Player_Drifting_Input
+// Player_Drifting_PhysLinear
 void FUN_800638d4(undefined4 param_1,int param_2)
 
 {
   undefined *puVar1;
 
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   FUN_8006181c();
 
   puVar1 = PTR_DAT_8008d2ac;
@@ -33743,7 +33743,7 @@ void FUN_80063934(undefined4 param_1,int param_2)
   // Player_Drifting_InitSetUpdate
   *(undefined4 *)(param_2 + 0x54) = 0x80063920;
 
-  // Player_Drifting_Input
+  // Player_Drifting_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x800638d4;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -33776,7 +33776,7 @@ void FUN_80063934(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Crashing_Interpolate
+// Player_Crashing_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_80063a44(undefined4 param_1,int param_2)
 {
@@ -33816,12 +33816,12 @@ void FUN_80063af8(void)
   return;
 }
 
-// Player_Crashing_Input
+// Player_Crashing_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_80063b00(undefined4 param_1,int param_2)
 
 {
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   FUN_8006181c();
 
   // reset two speed variables
@@ -33935,7 +33935,7 @@ void FUN_80063bd4(int param_1,int param_2)
   // OnInit
   *(undefined4 *)(param_2 + 0x54) = 0;
 
-  // Player_Crashing_Input
+  // Player_Crashing_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x80063b00;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -33993,7 +33993,7 @@ void FUN_80063cf4(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Spinning_Input
+// Player_Spinning_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_80063d44(undefined4 param_1,int param_2)
 
@@ -34012,7 +34012,7 @@ void FUN_80063d44(undefined4 param_1,int param_2)
     *(undefined2 *)(param_2 + 0x400) = 0;
   }
 
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   FUN_8006181c(param_1,param_2);
 
   puVar1 = PTR_DAT_8008d2ac;
@@ -34031,7 +34031,7 @@ void FUN_80063d44(undefined4 param_1,int param_2)
 }
 
 
-// Player_Spinning_Interpolate
+// Player_Spinning_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_80063dc8(undefined4 param_1,int param_2)
 
@@ -34139,7 +34139,7 @@ void FUN_80063ec0(undefined4 param_1,int param_2)
 
   // Set function pointers for spinning out
   *(undefined4 *)(param_2 + 0x54) = 0x80063eac // Player_Spinning_InitSetUpdate
-  *(undefined4 *)(param_2 + 0x5c) = 0x80063d44; // Player_Spinning_Input
+  *(undefined4 *)(param_2 + 0x5c) = 0x80063d44; // Player_Spinning_PhysLinear
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 100) = 0x80063dc8;
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
@@ -34198,12 +34198,12 @@ void FUN_8006402c(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_LastSpin_Input
+// Player_LastSpin_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_8006406c(undefined4 param_1,int param_2)
 
 {
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   FUN_8006181c();
 
   // reset two speed variables
@@ -34214,7 +34214,7 @@ void FUN_8006406c(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_LastSpin_Interpolate
+// Player_LastSpin_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_800640a4(undefined4 param_1,int param_2)
 
@@ -34357,7 +34357,7 @@ void FUN_80064254(undefined4 param_1,int param_2)
   // Player_LastSpin_Update
   *(undefined4 *)(param_2 + 0x58) = 0x8006402c;
 
-  // Player_LastSpin_Input
+  // Player_LastSpin_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x8006406c;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -34386,11 +34386,11 @@ void FUN_800642ec(void)
   return;
 }
 
-// Player_StopSpin_Input
+// Player_StopSpin_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_800642f4(undefined4 param_1,int param_2)
 {
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   FUN_8006181c();
 
   // reset two speed variables
@@ -34400,7 +34400,7 @@ void FUN_800642f4(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_StopSpin_Interpolate
+// Player_StopSpin_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_80064320(undefined4 param_1,int param_2)
 {
@@ -34543,7 +34543,7 @@ void FUN_800644d0(undefined4 param_1,int param_2)
   // "updating" happens in OnAnimate
   *(undefined4 *)(param_2 + 0x58) = 0x800642ec;
 
-  // Player_StopSpin_Input
+  // Player_StopSpin_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x800642f4;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -37102,12 +37102,12 @@ void FUN_80066d4c(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_MaskGrab_Input
+// Player_MaskGrab_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_80066e3c(undefined4 param_1,int param_2)
 
 {
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   FUN_8006181c(param_1, param_2);
 
   // reset base speed
@@ -37497,7 +37497,7 @@ void FUN_800671b0(int param_1,int param_2)
   // Player_MaskGrab_Update
   *(undefined4 *)(param_2 + 0x58) = 0x80066d4c;
 
-  // Player_MaskGrab_Input
+  // Player_MaskGrab_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x80066e3c;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -37566,13 +37566,13 @@ void FUN_8006749c(int param_1,int param_2)
 }
 
 
-// Player_EatenByPlant_Input
+// Player_EatenByPlant_PhysLinear
 void FUN_80067554(undefined4 param_1,int param_2)
 
 {
   undefined *puVar1;
 
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   FUN_8006181c();
 
   // reset speed
@@ -37776,7 +37776,7 @@ void FUN_800677d0(int param_1,int param_2)
   // Player_EatenByPlant_Update
   *(undefined4 *)(param_2 + 0x58) = 0x8006749c;
 
-  // Player_EatenByPlant_Input
+  // Player_EatenByPlant_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x80067554;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -37904,7 +37904,7 @@ void FUN_80067960(undefined4 param_1,int param_2)
 }
 
 
-// Player_EngineRevving_Input
+// Player_EngineRevving_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_80067a74(undefined4 param_1,int param_2)
 
@@ -37926,7 +37926,7 @@ void FUN_80067a74(undefined4 param_1,int param_2)
     *(undefined2 *)(param_2 + 0x590) = 0;
   }
 
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   FUN_8006181c(param_1,param_2);
 
   puVar1 = PTR_DAT_8008d2ac;
@@ -38255,7 +38255,7 @@ void FUN_80067f4c(undefined4 param_1,int param_2)
   // Player_EngineRevving_Update
   *(undefined4 *)(param_2 + 0x58) = 0x80067960;
 
-  // Player_EngineRevving_Input
+  // Player_EngineRevving_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x80067a74;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -38301,7 +38301,7 @@ void FUN_8006809c(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Blasted_Input
+// Player_Blasted_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_800680d0(undefined4 param_1,int param_2)
 
@@ -38319,7 +38319,7 @@ void FUN_800680d0(undefined4 param_1,int param_2)
     *(undefined2 *)(param_2 + 0x400) = 0;
   }
 
-  // Player_Driving_Input
+  // Player_Driving_PhysLinear
   FUN_8006181c(param_1,param_2);
 
   // force to jump when hit the ground,
@@ -38340,7 +38340,7 @@ void FUN_800680d0(undefined4 param_1,int param_2)
 }
 
 
-// Player_Blasted_Interpolate
+// Player_Blasted_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_80068150(undefined4 param_1,int param_2)
 
@@ -38470,7 +38470,7 @@ void FUN_800682a4(undefined4 param_1,int param_2)
   // Player_Blasted_Update
   *(undefined4 *)(param_2 + 0x58) = 0x8006809c;
 
-  // Player_Blasted_Input
+  // Player_Blasted_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x800680d0;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -38813,7 +38813,7 @@ void FUN_80068644(int param_1,int param_2)
 }
 
 
-// Player_Warp_Interpolate
+// Player_Warp_PhysAngular
 // param1 = thread, param2 = driver
 // animate rotation and scale in warppad
 void FUN_80068be8(undefined4 param_1,int param_2)

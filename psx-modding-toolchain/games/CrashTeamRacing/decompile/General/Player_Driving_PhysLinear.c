@@ -10,7 +10,7 @@ int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
 int Player_StickGetStrengthAbsolute(int param_1, u_int param_2, struct RacingWheelData* param_3);
 int InterpBySpeed(int param_1,int param_2,int param_3);
 
-void Player_Driving_Input(struct Thread* thread, struct Driver* driver)
+void Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 {
 	struct GameTracker* gGT;
 	char kartState;

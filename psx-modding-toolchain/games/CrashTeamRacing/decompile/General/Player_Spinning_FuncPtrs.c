@@ -22,14 +22,14 @@ void DECOMP_Player_Spinning_Update(struct Thread* t, struct Driver* d)
 	Player_LastSpin_Init(t,d);
 }
 
-void DECOMP_Player_Spinning_Input(struct Thread* t, struct Driver* d)
+void DECOMP_Player_Spinning_PhysLinear(struct Thread* t, struct Driver* d)
 {
 	int elapsedTimeMS = sdata->gGT->elapsedTimeMS;
 	
 	d->NoInputTimer -= elapsedTimeMS;
 	if(d->NoInputTimer < 0) d->NoInputTimer = 0;
 	
-	Player_Driving_Input(t,d);
+	Player_Driving_PhysLinear(t,d);
 	
 	// baseSpeed and fireSpeed
 	// set both "shorts" in one "int"
@@ -40,7 +40,7 @@ void DECOMP_Player_Spinning_Input(struct Thread* t, struct Driver* d)
 	d->timeSpentSpinningOut += elapsedTimeMS;
 }
 
-void DECOMP_Player_Spinning_Interpolate(struct Thread* t, struct Driver* d)
+void DECOMP_Player_Spinning_PhysAngular(struct Thread* t, struct Driver* d)
 {
 	int elapsedTimeMS = sdata->gGT->elapsedTimeMS;
 	

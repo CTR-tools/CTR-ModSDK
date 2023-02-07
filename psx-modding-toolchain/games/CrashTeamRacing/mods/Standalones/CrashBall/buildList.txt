@@ -27,7 +27,7 @@ common, exe, rdata_free, 0x0, ../../Tutorials/TemplateParkingLot/src/flagFunc.c
 common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
 common, exe, MainInit_StringToLevID, -0x8, src/hookInit.s
 
-common, exe, Player_Freeze_Input, 0x0, src/main.c
+common, exe, Player_Freeze_PhysLinear, 0x0, src/main.c
 
 926, bigfilescreentitle01_usatim, 0x0, 0x0, CML_Splash/title01_usa.tim
 926, bigfilescreentitle02_usatim, 0x0, 0x0, CML_Splash/title02_usa.tim

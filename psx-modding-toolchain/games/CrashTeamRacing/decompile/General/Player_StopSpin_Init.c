@@ -1,9 +1,9 @@
 #include <common.h>
 
 void Player_StopSpin_Update();
-void Player_StopSpin_Input();
+void Player_StopSpin_PhysLinear();
 void Player_Driving_Audio();
-void Player_StopSpin_Interpolate();
+void Player_StopSpin_PhysAngular();
 void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
 void OnCollide_Drivers();
@@ -17,9 +17,9 @@ void* PlayerStopSpinFuncTable[0xD] =
 {
 	0,
 	Player_StopSpin_Update,
-	Player_StopSpin_Input,
+	Player_StopSpin_PhysLinear,
 	Player_Driving_Audio,
-	Player_StopSpin_Interpolate,
+	Player_StopSpin_PhysAngular,
 	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,

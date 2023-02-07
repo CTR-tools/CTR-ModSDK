@@ -2042,31 +2042,31 @@ struct Driver
 	short japanTurboUnknown;
 
 	// 0x3BC
-	// in Player_Driving_Input
+	// in Player_Driving_PhysLinear
 	short unkSpeedValue1;
 
 	// 0x3BE
-	// in Player_Driving_Input
+	// in Player_Driving_PhysLinear
 	short unkSpeedValue2;
 
 	// 0x3C0
-	// in Player_Driving_Input
+	// in Player_Driving_PhysLinear
 	short mashingXMakesItBig;
 
 	// 0x3C2
-	// in Player_Driving_Input
+	// in Player_Driving_PhysLinear
 	short mashXUnknown;
 
 	// 0x3C4
-	// in Player_Driving_Input
+	// in Player_Driving_PhysLinear
 	short unknowndriverBaseSpeed;
 
 	// 0x3C6
-	// in Player_Driving_Input
+	// in Player_Driving_PhysLinear
 	short unknownDimension2Curr;
 
 	// 0x3C8
-	// in Player_Driving_Input
+	// in Player_Driving_PhysLinear
 	short unknownDimension2Prev;
 	
 	// 0x3CA
@@ -2305,7 +2305,7 @@ struct Driver
 	char const_SteerVel_DriftSwitchWay;
 	char const_SteerVel_DriftStandard;
 	
-	// all Player_Drifting_Interpolate
+	// all Player_Drifting_PhysAngular
 	// or Player_Drifting_Finalize
 	char unk460; // 0x2A
 	char unk461; // 0x2B
@@ -4300,7 +4300,7 @@ enum GameMode1
 enum GameMode2
 {
   // & 1 - spawn outside boss door
-  // & 4 - can't move (see Player_Driving_Input)
+  // & 4 - can't move (see Player_Driving_PhysLinear)
   
   // & 8 - token race
 	TOKEN_RACE = 8,
@@ -4320,7 +4320,7 @@ enum GameMode2
 	
   // & 0x1000 - FIRST_TIME_WIN_CUP
   // & 0x2000 - FIRST_TIME_UNLOCK_BATTLE_MAP
-  // & 0x4000 - can't move (see Player_Driving_Input)
+  // & 0x4000 - can't move (see Player_Driving_PhysLinear)
   
 	CHEAT_INVISIBLE	= 0x8000,
 	CHEAT_ENGINE	= 0x10000,

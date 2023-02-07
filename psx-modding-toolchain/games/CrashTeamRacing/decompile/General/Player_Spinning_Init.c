@@ -2,9 +2,9 @@
 
 void DECOMP_Player_Spinning_InitSetUpdate(struct Thread* t, struct Driver* d);
 void DECOMP_Player_Spinning_Update();
-void DECOMP_Player_Spinning_Input();
+void DECOMP_Player_Spinning_PhysLinear();
 void Player_Driving_Audio();
-void DECOMP_Player_Spinning_Interpolate();
+void DECOMP_Player_Spinning_PhysAngular();
 void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
 void OnCollide_Drivers();
@@ -18,9 +18,9 @@ void* PlayerSpinningFuncTable[0xD] =
 {
 	DECOMP_Player_Spinning_InitSetUpdate,
 	0,
-	DECOMP_Player_Spinning_Input,
+	DECOMP_Player_Spinning_PhysLinear,
 	Player_Driving_Audio,
-	DECOMP_Player_Spinning_Interpolate,
+	DECOMP_Player_Spinning_PhysAngular,
 	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
