@@ -985,13 +985,12 @@ CheckJumpButtons:
 
 
 	// assume neutral steer (drive straight)
-	driverSpeedOrSmth = 0x80;
+	joystickStrength = 0x80;
 
 	// If you're not in End-Of-Race menu
 	if ((gGT->gameMode1 & 0x200000) == 0)
 	{
-		// gamepadBuffer -> stickLX
-		driverSpeedOrSmth = (int)ptrgamepad->stickLX;
+		joystickStrength = (int)ptrgamepad->stickLX;
 	}
 
 	// default steer strength from class stats
@@ -1046,7 +1045,7 @@ CheckJumpButtons:
 UseTurnRate:
 
 	// Steer, based on strength, and LeftStickX
-	iVar14 = Player_StickGetStrengthAbsolute(driverSpeedOrSmth, iVar14, ptrgamepad->rwd);
+	iVar14 = Player_StickGetStrengthAbsolute(joystickStrength, iVar14, ptrgamepad->rwd);
 
 	// no desired steer
 	if (-iVar14 == 0) 
@@ -1084,22 +1083,25 @@ SkipSetSteer:
 	*(u_char*)&driver->simpTurnState = (char)-iVar14;
 
 	// Steer
-	driverSpeedOrSmth = Player_StickGetStrengthAbsolute(driverSpeedOrSmth, 0x40, ptrgamepad->rwd);
+	driverSpeedOrSmth = 
+		Player_StickGetStrengthAbsolute(joystickStrength, 0x40, ptrgamepad->rwd);
 
 	// Interpolate rotation by speed
-	driverBaseSpeedUshort = InterpBySpeed((int)driver->wheelRotation, 0x18, -driverSpeedOrSmth);
+	driver->wheelRotation = 
+		InterpBySpeed((int)driver->wheelRotation, 0x18, -driverSpeedOrSmth);
 
+
+	// Fire
 	driverSpeedOrSmth = (int)driver->fireSpeed;
-	*(u_short*)&driver->wheelRotation = driverBaseSpeedUshort;
 	if (driverSpeedOrSmth < 0) driverSpeedOrSmth = -driverSpeedOrSmth;
 
 	if (((driver->actionsFlagSetPrevFrame & 1) == 0) || (kartState == 2))
 	{
-		driverSpeedOrSmth = driverSpeedOrSmth + 0xf00;
+		driverSpeedOrSmth += 0xf00;
 	}
 	else
 	{
-		driverSpeedOrSmth = driverSpeedOrSmth + approximateSpeed >> 1;
+		driverSpeedOrSmth += approximateSpeed >> 1;
 	}
 
 	sVar13 = (short)((driverSpeedOrSmth * 0x89 + (int)driver->unkSpeedValue2 * 0x177) * 8 >> 0xc);
