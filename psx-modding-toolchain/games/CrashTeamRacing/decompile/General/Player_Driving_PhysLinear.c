@@ -884,8 +884,14 @@ CheckJumpButtons:
 		approximateSpeed2 = driverSpeedSmth2;
 	}
 
+	// driving backwards
+	if ((uVar20 & 0x20000) != 0)
+	{
+		driver->timeSpentReversing += gGT->elapsedTimeMS;
+	}
+	
 	// not driving backwards
-	if ((uVar20 & 0x20000) == 0)
+	else
 	{
 		if (driver->superEngineTimer != 0)
 		{
@@ -895,16 +901,13 @@ CheckJumpButtons:
 				// not holding breaks
 				if ((uVar20 & 0x400020) == 0) 
 				{
-					// if you have less than 10 wumpa
-					superEngineFireLevel = 0x80;
-
 					driver->actionsFlagSet = uVar20;
 
-					// if number of wumpa > 9
-					// if wumpa is 10
-					if (driver->numWumpas > 9) superEngineFireLevel = 0x100;
+					// fire level, depending on numWumpa
+					superEngineFireLevel = 0x80;
+					if (driver->numWumpas > 9) 
+						superEngineFireLevel = 0x100;
 
-					// Turbo_Increment
 					// add 0.12s reserves
 					Turbo_Increment(driver, 0x78, 0x14, superEngineFireLevel);
 
@@ -912,12 +915,6 @@ CheckJumpButtons:
 				}
 			}
 		}
-	}
-	
-	// driving backwards
-	else
-	{
-		driver->timeSpentReversing += gGT->elapsedTimeMS;
 	}
 
 	uVar22 = uVar20 & 8;
