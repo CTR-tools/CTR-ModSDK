@@ -4101,7 +4101,7 @@ struct Level
 	void* ptr_skybox;
 
 	// 0x8
-	void* ptr_anim_tex;
+	struct AnimTex* ptr_anim_tex;
 
 	// 0xc
 	unsigned int numInstances;
@@ -4271,6 +4271,27 @@ struct Level
 
 	// 0x190
 	struct VisMem* visMem;
+};
+
+struct AnimTex
+{
+	// 0x0
+	struct AnimTex* ptr_notsure;
+
+	// 0x4
+	short idk;
+
+	// 0x6
+	short shrug;
+
+	// 0x8
+	short lottashortshuh;
+
+	// 0xA
+	u_short frameIndex;
+
+	// 0xC
+	struct AnimTex* ptrarray[20];
 };
 
 enum GameMode1 
