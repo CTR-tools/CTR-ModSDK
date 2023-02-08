@@ -16,6 +16,8 @@ extern short PhysLinear_DriverOffsets[14];
 void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 {
 	struct GameTracker* gGT;
+	int gameMode2;
+	
 	char kartState;
 	char heldItemID;
 	short noItemTimer;
@@ -23,7 +25,6 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	u_short driverTimerUnk;
 	u_short driverBaseSpeedUshort;
 	int driverTimer2;
-	u_int jumpCooldown;
 	int driverBaseSpeed;
 	int approximateSpeed;
 	char* AxisAnglePointer;
@@ -40,6 +41,8 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	u_int cross;
 	u_int square;
 
+	short* normSrc;
+	short* normDst;
 	short* val;
 	int i;
 	int msPerFrame;
@@ -60,6 +63,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	u_int superEngineFireLevel;
 	
 	gGT = sdata->gGT;
+	gameMode2 = gGT->gameMode2;
 
 	// If race timer is not supposed to stop for this racer
 	if ((driver->actionsFlagSet & 0x40000) == 0)
@@ -67,6 +71,10 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		// set racer's timer to the time on the clock
 		driver->timeElapsedInRace = gGT->elapsedEventTime;
 	}
+
+
+	// === Count Timers ===
+
 
 	// elapsed milliseconds per frame, ~32
 	msPerFrame = gGT->elapsedTimeMS;
@@ -100,62 +108,41 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	if(driver->squishTimer > 0) driver->timeSpentSquished += msPerFrame;	
 
 	// If Super Engine Cheat is not enabled
-	if (!(gGT->gameMode2 & 0x10000))
+	if (!(gameMode2 & 0x10000))
 	{
-		// [Same repetition]
-		driverValueMinusMsPerFrame = (int)driver->superEngineTimer + negativeMsPerFrame;
-		driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-		if (0 < (int)driver->superEngineTimer)
-		{
-			if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-			*(u_short*)&driver->superEngineTimer = driverValueMinusMsPerFrameUnsigned;
-		}
+		driver->superEngineTimer -= msPerFrame;
+		if(driver->superEngineTimer < 0) driver->superEngineTimer = 0;
 	}
 
-	// If invisible, and not using perm cheat
+	// If invisible, without Permanent Invisibility cheat,
+	// dont remove invisibleTimer check, or an invalid
+	// instFlagsBackup overwrites instFlags
 	if
 	(
-		// must check this first, otherwise
-		// instFlagsBackup is invalid
 		(driver->invisibleTimer != 0) &&
-
-		// If Permanent Invisibility Cheat is Disabled
-		(!(gGT->gameMode2 & 0x8000))
+		(!(gameMode2 & 0x8000))
 	)
 	{		
-		// [Same repetition]
-		driverValueMinusMsPerFrame = (int)driver->invisibleTimer + negativeMsPerFrame;
-		driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-		if (0 < (int)driver->invisibleTimer)
+		driver->invisibleTimer -= msPerFrame;
+		
+		// if newly visible
+		if(driver->invisibleTimer < 0) 
 		{
-			if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-			*(u_short*)&driver->invisibleTimer = driverValueMinusMsPerFrameUnsigned;
-		}
-
-		// If the timer expires, make yourself visible
-		if (driver->invisibleTimer == 0)
-		{
-			// restore backup of instance flags
+			driver->invisibleTimer = 0;
 			driver->instSelf->flags = driver->instFlagsBackup;
-
-			// set instance transparency to zero
 			driver->instSelf->alphaScale = 0;
-
 			OtherFX_Play(0x62, 1);
 		}
 	}
 
-	// This one is a frame timer, not a millisecond timer,
-	// Decrease one frame from Jump Buffering as long as timer is more than zero
 	if (0 < driver->jump_TenBuffer) driver->jump_TenBuffer--;
-
-	//keep track of time spent with full wumpa
 	if (9 < driver->numWumpas) driver->timeSpentInTenWumpa += msPerFrame;
-
-	//keep track of time spent in mud
 	if (driver->currentTerrain == 0xE) driver->timeSpentInMud += msPerFrame;
 
-	// Get placement of racer (1st place, 2nd, 3rd, etc)
+
+	// === Check Last Place ===
+
+
 	driverRankItemValue = driver->driverRank;
 
 	// Basically, if racer is in last place in any possible race scenario
@@ -199,6 +186,10 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		// Increase the time racer has been in last place by elapsed milliseconds
 		driver->timeSpentInLastPlace += msPerFrame;
 	}
+
+
+	// === Determine Hazard ===
+	
 
 	driverRankItemValue = 4;
 
@@ -345,9 +336,12 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		}
 		driver->hazardTimer = driverTimerUnk;
 	}
+	
+	
+	// === Item Roll ===
+	
 
-	//trigger Item roll / selection
-	//if Held Item = None
+	// if Held Item = None (rolling)
 	if (driver->heldItemID == 0x10)
 	{
 
@@ -381,47 +375,36 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		else driver->itemRollTimer--;
 	}
 
-	noItemTimer = driver->noItemTimer;
 
-	//if Item is going away
-	if (noItemTimer != 0)
+	// === Item Used By Player ===
+	
+
+	// Make Item fade away from icon
+	if (driver->noItemTimer > 0) driver->noItemTimer--;
+
+	// if Item is about to be gone and Number of Items = 0
+	if ((driver->noItemTimer == 1) && (driver->numHeldItems == 0))
 	{
-
-		// if Item is about to be gone and Number of Items = 0
-		if ((noItemTimer == 1) && (driver->numHeldItems == 0))
+		if
+		(
+			// multiplayer game, not battle, weapon was 3 missiles
+			(2 < (u_char)gGT->numPlyrCurrGame) &&
+			((gGT->gameMode1 & 0x20) == 0) &&
+			(driver->heldItemID == 0xB) &&
+			(gGT->numPlayersWith3Missiles > 0)
+		)
 		{
-
-			// if numPlyrCurrGame is > 2
-			if
-			(
-				(2 < (u_char)gGT->numPlyrCurrGame) &&
-
-				// If you're not in Battle Mode
-				(
-					(
-						(
-							(gGT->gameMode1 & 0x20) == 0 &&
-
-							// your weapon is 3 missiles
-							(driver->heldItemID == 0xB)
-		 				) &&
-
-						// If there are racers that had 3 missiles
-						(gGT->numPlayersWith3Missiles > 0)
-					)
-				)
-			)
-			{
-				// decrement the number of players that had 3 missiles
-				gGT->numPlayersWith3Missiles--;
-			}
-
-			// take away weapon
-			*(u_char*)&driver->heldItemID = 0xf;
+			// keep count
+			gGT->numPlayersWith3Missiles--;
 		}
 
-		driver->noItemTimer = noItemTimer - 1;
+		// take away weapon
+		*(u_char*)&driver->heldItemID = 0xf;
 	}
+	
+	
+	// === Normal Vector ===
+	
 	
 	// action flags
 	driver->actionsFlagSetPrevFrame = uVar22;
@@ -443,39 +426,40 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	uVar20 = uVar22 & 0x7f1f83d5;
 	
 	// disable input if opening adv hub door with key
-	if ((gGT->gameMode2 & 0x4004) != 0)
+	if ((gameMode2 & 0x4004) != 0)
 	{
 		driver->actionsFlagSet = uVar20;
 		return;
 	}
 	
-	// if not touching ground
-	if ((uVar22 & 1) == 0) 
-	{
-		// AngleAxis2_NormalVec
-		*(u_int*)&driver->AxisAngle4_normalVec[0] = *(u_int*)&driver->AxisAngle2_normalVec[0];
-		driver->AxisAngle4_normalVec[2] = driver->AxisAngle2_normalVec[2];
-	}
-	
-	// if touching ground
-	else 
-	{
-		// AngleAxis1_NormalVec
-		*(u_int*)&driver->AxisAngle4_normalVec[0] = *(u_int*)&driver->AxisAngle1_normalVec[0];
-		driver->AxisAngle4_normalVec[2] = driver->AxisAngle1_normalVec[2];
-	}
-	
+	// destination
+	normDst = &driver->AxisAngle4_normalVec[0];
+	if(driver->normalVecID == -1) normDst = &driver->AxisAngle3_normalVec[0];
 	driver->normalVecID = 0;
+	
+	// source
+	normSrc = &driver->AxisAngle2_normalVec[0];
+	if ((uVar22 & 1) != 0) normSrc = &driver->AxisAngle1_normalVec[0];
+	
+	// copy
+	*(u_int*)&normDst[0] = *(u_int*)&normSrc[0];
+	normDst[2] = normSrc[2];
+	
+	
+	
+	// === Check Mask Weapon ===
 
-	driverItemThread = thread->childThread;
 
 	uVar22 = uVar20;
-
+	driverItemThread = thread->childThread;
 	while (driverItemThread != 0)
 	{
 		// If thread->modelIndex is Aku or Uka
-		if ((*(short*)&driverItemThread->modelIndex == 0x3a) || (*(short*)&driverItemThread->modelIndex == 0x39))
+		if (
+				(*(short*)&driverItemThread->modelIndex == 0x3a) || 
+				(*(short*)&driverItemThread->modelIndex == 0x39))
 		{
+			// driver is using mask weapon
 			uVar22 = uVar20 | 0x800000;
 			break;
 		}
@@ -484,37 +468,33 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		driverItemThread = driverItemThread->siblingThread;
 	}
 
+
+	// === Check Buttons ===
+	
+
 	// pointer to gamepad input of current player (driver)
 	ptrgamepad = &sdata->gGamepads->gamepad[(u_int)driver->driverID];
 
-	// by default, hold no buttons
+	// no hold, no tap
 	uVar20 = 0;
-
-	// If you're not in End-Of-Race menu
-	if (!(gGT->gameMode1 & 0x200000))
-	{
-		// Get which button is held
-		uVar20 = ptrgamepad->buttonsHeldCurrFrame;
-	}
-
-	// by default, tap no buttons
 	buttonsTapped = 0;
 
 	// If you're not in End-Of-Race menu
 	if ((gGT->gameMode1 & 0x200000) == 0)
 	{
-		// Get which button is tapped
+		uVar20 = ptrgamepad->buttonsHeldCurrFrame;
 		buttonsTapped = ptrgamepad->buttonsTapped;
 	}
 
-	// If you hold Cross
 	cross = uVar20 & 0x10;
-
-	// If you hold Square
 	square = uVar20 & 0x20;
 
 	// state of kart
 	kartState = driver->kartState;
+	
+	
+	// === Check Weapons ===
+	
 
 	if
 	(
@@ -529,7 +509,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 				// or sliding
 				(kartState == 2)) ||
 
-				// or ???
+				// or AntiVShift
 				(kartState == 9))
 			)
 		) &&
@@ -538,114 +518,100 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		(driver->instTntRecv == 0)
 	)
 	{
-		// If there is no Bomb pointer
-		if (driver->instBombThrow == 0)
-		{
-
-			// If there is no Bubble pointer
-			if (driver->instBubbleHold == 0)
-			{
-
-				// If there is no "weapon roulette" animation
-				noItemTimer = driver->itemRollTimer;
-				if (noItemTimer == 0)
-				{
-
-					// If you dont have "roulette" weapon (0x10), and if you dont have "no weapon" (0xf)
-					// and if you did not have a weapon last frame (0x3c->0),
-					// and if (unknown driverRankItemValue related to 0x4a0),
-					// and if you are not being effected by Clock Weapon
-					heldItemID = driver->heldItemID;
-					if
-					(
-						(
-							(heldItemID != 0xF) && 
-							(heldItemID != 0x10) &&
-							(driver->noItemTimer == 0) &&
-							(driverRankItemValue != 1) &&
-							(driver->clockReceive == 0)
-							
-						)
-					)
-					{
-						// This driver wants to fire a weapon
-						uVar22 = uVar22 | 0x8000;
-
-						// If "held item quantity" is zero
-						if (driver->numHeldItems == 0)
-						{
-							driver->noItemTimer = 0x1e;
-							goto CheckButtons;
-						}
-
-						// If you have the Spring weapon
-						// probably removed in later builds --Super
-						if (heldItemID == 5)
-						{
-							if (driver->jump_CoyoteTimerMS != 0)
-							{
-								// sext.... --Super
-								jumpCooldown = (u_int)driver->jump_CooldownMS;
-								goto ReduceCount;
-							}
-						}
-						else
-						{
-							// only reduce numHeldItem if not using cheats
-							jumpCooldown = gGT->gameMode2 & 0x400c00;
-							
-							ReduceCount:
-							if (jumpCooldown == 0) driver->numHeldItems--;
-						}
-						driver->noItemTimer = 5;
-						goto CheckButtons;
-					}
-					noItemTimer = driver->itemRollTimer;
-				}
-
-				// if there are less than 70 frames (2.3 sec remaining)
-				if (noItemTimer < 0x46)
-				{
-					// skip to the end of the countdown
-					driver->itemRollTimer = 0;
-				}
-			}
-
-			// If there is a Bubble Pointer
-			else
-			{
-				// Shoot the bubble
-
-				// We can see the bubble pointer (driver + 0x14)
-
-				// instance -> thread -> object
-				shield = (struct Shield*)driver->instBubbleHold->thread->object;
-
-				shield->shieldshot |= 2;
-
-				// Reset to nullptr
-				driver->instBubbleHold = 0;
-			}
-		}
-
 		// If there is a Bomb Pointer
-		else
+		if (driver->instBombThrow != 0)
 		{
 			// Detonate the bomb
-
-			// We can see the bomb pointer (driver + 0x10)
-
-			// instance -> thread -> object
 			bomb = (struct TrackerWeapon*)driver->instBombThrow->thread->object;
-
-			// always face camera
 			bomb->flags |= 2;
-
-			// Reset to nullptr
 			driver->instBombThrow = 0;
+			goto CheckJumpButtons;
+		}
+
+		// If there is a Bubble Pointer
+		if (driver->instBubbleHold != 0)
+		{
+			// Shoot the bubble
+			shield = (struct Shield*)driver->instBubbleHold->thread->object;
+			shield->shieldshot |= 2;
+			driver->instBubbleHold = 0;
+			goto CheckJumpButtons;
+		}
+		
+		// item is rolling
+		if (driver->itemRollTimer != 0)
+		{
+			// circle button ends timer, if 
+			// less than 70 frames (2.3s) remain
+			if (driver->itemRollTimer < 0x46)
+				driver->itemRollTimer = 0;
+			
+			// skip weapon firing check
+			goto CheckJumpButtons;
+		}
+
+		// === Item Roll finished before PhysLinear ===
+
+		// If you dont have "roulette" weapon (0x10), and if you dont have "no weapon" (0xf)
+		// and if you did not have a weapon last frame (0x3c->0),
+		// and if (unknown driverRankItemValue related to 0x4a0),
+		// and if you are not being effected by Clock Weapon
+		heldItemID = driver->heldItemID;
+		if
+		(
+			(heldItemID != 0xF) && 
+			(heldItemID != 0x10) &&
+			(driver->noItemTimer == 0) &&
+			(driverRankItemValue != 1) &&
+			(driver->clockReceive == 0)
+		)
+		{
+			// This driver wants to fire a weapon
+			uVar22 = uVar22 | 0x8000;
+			
+			// if numHeldItems == 0
+			// wait a full second before next weapon
+			driver->noItemTimer = 0x1e;
+
+			// If "held item quantity" is zero
+			if (driver->numHeldItems != 0)
+			{
+				// if numHeldItems > 0,
+				// wait 5 frames before next weapon use
+				driver->noItemTimer = 5;
+			
+				// not spring weapon
+				if (heldItemID != 5)
+				{
+					// only reduce numHeldItem if not using cheats
+					if ((gameMode2 & 0x400c00) == 0) driver->numHeldItems--;
+				}
+				
+				// no spring in final game
+				#if 0
+				
+				// If you have the Spring weapon
+				else
+				{
+					if (
+						(driver->jump_CoyoteTimerMS != 0) &&
+						(driver->jump_CooldownMS == 0)
+					   )
+					{
+						driver->numHeldItems--;
+					}
+				}
+				
+				#endif
+			}
 		}
 	}
-	CheckButtons:
+
+	
+	// === Drift Section ===
+	
+	
+CheckJumpButtons:
 
 	// Check for Tapping L1 and R1
 	buttonsTapped = buttonsTapped & 0xc00;
@@ -743,15 +709,10 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 			}
 		}
 
-
-		if
-		(
-			// If are holding Square
-			(square != 0) &&
-
-			(approximateSpeed > 0x300)
-		)
+		// If holding Square while moving fast
+		if((square != 0) && (approximateSpeed > 0x300))
 		{
+			// back wheel skids
 			uVar22 |= 0x800;
 		}
 
@@ -766,6 +727,10 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		// you have Reserves and you aren't slowing down
 		cross = 0x10;
 	}
+	
+	
+	// === Gas/Break section ===
+	
 
 	driverTimer = 0x80;
 
@@ -826,7 +791,9 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 				(driverSpeedOrSmth == 0) &&
 				(
 					(
-						driverTimer = Player_StickReturnToRest(driverTimer, 0x80, 0), driverTimer > 99 ||
+						driverTimer = Player_StickReturnToRest(driverTimer, 0x80, 0), 
+						
+						driverTimer > 99 ||
 
 						(
 							(driverTimer > 0 && ((uVar22 & 0x20000) != 0))
@@ -841,6 +808,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 				driverSpeedSmth2 = -(int)driver->const_BackwardSpeed;
 				goto LAB_80062548;
 			}
+			
 			driverSpeedOrSmth = driverBaseSpeed * driverSpeedOrSmth;
 			driverSpeedSmth2 = driverSpeedOrSmth >> 7;
 			if (driverSpeedOrSmth < 0) driverSpeedSmth2 = driverSpeedOrSmth + 0x7f >> 7;
@@ -916,8 +884,14 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		approximateSpeed2 = driverSpeedSmth2;
 	}
 
+	// driving backwards
+	if ((uVar20 & 0x20000) != 0)
+	{
+		driver->timeSpentReversing += gGT->elapsedTimeMS;
+	}
+	
 	// not driving backwards
-	if ((uVar20 & 0x20000) == 0)
+	else
 	{
 		if (driver->superEngineTimer != 0)
 		{
@@ -927,16 +901,13 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 				// not holding breaks
 				if ((uVar20 & 0x400020) == 0) 
 				{
-					// if you have less than 10 wumpa
-					superEngineFireLevel = 0x80;
-
 					driver->actionsFlagSet = uVar20;
 
-					// if number of wumpa > 9
-					// if wumpa is 10
-					if (driver->numWumpas > 9) superEngineFireLevel = 0x100;
+					// fire level, depending on numWumpa
+					superEngineFireLevel = 0x80;
+					if (driver->numWumpas > 9) 
+						superEngineFireLevel = 0x100;
 
-					// Turbo_Increment
 					// add 0.12s reserves
 					Turbo_Increment(driver, 0x78, 0x14, superEngineFireLevel);
 
@@ -944,12 +915,6 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 				}
 			}
 		}
-	}
-	
-	// driving backwards
-	else
-	{
-		driver->timeSpentReversing += gGT->elapsedTimeMS;
 	}
 
 	uVar22 = uVar20 & 8;
@@ -1014,6 +979,10 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	}
 	*(u_short*)&driver->unknowndriverBaseSpeed = driverBaseSpeedUshort;
 	*(u_short*)&driver->baseSpeed = (short)approximateSpeed2;
+
+
+	// === Steering Section ===
+
 
 	// assume neutral steer (drive straight)
 	driverSpeedOrSmth = 0x80;
@@ -1127,12 +1096,13 @@ UseTurnRate:
 		}
 	}
 	
-	//if 0x3BC <= 0 and last bit of jittery number 2 is off and
+	// alternate tire colors each frame,
+	// if 2e808080 is detected (&1==0),
+	// if not EngineRevving, and if unkSpeedVal
 	if
 	(
-		(
-			(driver->unkSpeedValue1 < 1) && ((driver->tireColor & 1) == 0)
-		) &&
+		(driver->unkSpeedValue1 < 1) && 
+		((driver->tireColor & 1) == 0) &&
 		(kartState != 4)
 	)
 	{
@@ -1141,6 +1111,8 @@ UseTurnRate:
 		
 		driver->tireColor = 0x2e606061;
 	}
+	
+	// default tire color
 	else
 	{
 		driver->tireColor = 0x2e808080;

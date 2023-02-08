@@ -2969,7 +2969,7 @@ struct RainCloud
 // same
 struct Shield
 {
-	char unknown[5];
+	char unknown[6];
 	// 0x6
 	// something to do with shooting the shield i guess
 	u_short shieldshot;
