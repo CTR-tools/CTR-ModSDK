@@ -30015,7 +30015,9 @@ LAB_8005fee4:
       iVar18 = -iVar18;
     }
 	
+	// constant value zero, for all classes
     iVar19 = (int)*(short *)(param_2 + 0x450);
+	
     if ((iVar9 < 1) || (iVar11 = -iVar19, iVar11 <= iVar9 + iVar18)) {
       if (iVar9 < 0) {
         iVar11 = iVar9 + iVar18;
