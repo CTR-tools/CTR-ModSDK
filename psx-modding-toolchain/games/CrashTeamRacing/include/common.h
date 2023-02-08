@@ -8635,7 +8635,7 @@ struct sData
 	int AI_dragDuringAccel_0x18;
 
 	// 0x8008CF88
-	int AI_VelY_WhenBlasted_0x300;
+	int AI_VelY_WhenBlasted_0x3000;
 
 	// 8008b3ec -- SepReview
 	// 8008CF8C -- UsaRetail
