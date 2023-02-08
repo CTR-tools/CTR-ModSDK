@@ -73,14 +73,14 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	if
 	(
 		// time on the clock
-		(gGT->elapsedEventTime < 0x8ca00) &&
+		(gGT->elapsedEventTime < 10 * MINUTE) &&
 
 		// race timer is not frozen for this player
 		((driver->actionsFlagSet & 0x40000) == 0)
 	)
 	{
 		// increment timer by (speed * time)
-		driver->distanceDriven += (driver->speedApprox * msPerFrame >> 8);
+		driver->distanceDriven += (driver->speedApprox * gGT->elapsedTimeMS >> 8);
 	}
 
 	// [Same repetition] plus reserve counter
@@ -194,19 +194,6 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		*(u_short*)&driver->StartRollback_0x280 = driverValueMinusMsPerFrameUnsigned;
 	}
 
-	// If Super Engine Cheat is not enabled
-	if (!(gGT->gameMode2 & 0x10000))
-	{
-		// [Same repetition]
-		driverValueMinusMsPerFrame = (int)driver->superEngineTimer + negativeMsPerFrame;
-		driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-		if (0 < (int)driver->superEngineTimer)
-		{
-			if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-			*(u_short*)&driver->superEngineTimer = driverValueMinusMsPerFrameUnsigned;
-		}
-	}
-
 	// [Same repetition]
 	driverValueMinusMsPerFrame = (int)driver->clockReceive + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
@@ -223,6 +210,60 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	{
 		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
 		*(u_short*)&driver->mashingXMakesItBig = driverValueMinusMsPerFrameUnsigned;
+	}
+	
+	// [Same repetition]
+	driverValueMinusMsPerFrame = (int)driver->invincibleTimer + negativeMsPerFrame;
+	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
+	if (0 < (int)driver->invincibleTimer)
+	{
+		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
+		*(u_short*)&driver->invincibleTimer = driverValueMinusMsPerFrameUnsigned;
+	}
+	
+
+	// If Super Engine Cheat is not enabled
+	if (!(gGT->gameMode2 & 0x10000))
+	{
+		// [Same repetition]
+		driverValueMinusMsPerFrame = (int)driver->superEngineTimer + negativeMsPerFrame;
+		driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
+		if (0 < (int)driver->superEngineTimer)
+		{
+			if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
+			*(u_short*)&driver->superEngineTimer = driverValueMinusMsPerFrameUnsigned;
+		}
+	}
+
+	if
+	(
+		// if driver is invisible
+		(driver->invisibleTimer != 0) &&
+
+		// If Permanent Invisibility Cheat is Disabled
+		(!(gGT->gameMode2 & 0x8000))
+	)
+	{		
+		// [Same repetition]
+		driverValueMinusMsPerFrame = (int)driver->invisibleTimer + negativeMsPerFrame;
+		driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
+		if (0 < (int)driver->invisibleTimer)
+		{
+			if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
+			*(u_short*)&driver->invisibleTimer = driverValueMinusMsPerFrameUnsigned;
+		}
+
+		// If the timer expires, make yourself visible
+		if (driver->invisibleTimer == 0)
+		{
+			// restore backup of instance flags
+			driver->instSelf->flags = driver->instFlagsBackup;
+
+			// set instance transparency to zero
+			driver->instSelf->alphaScale = 0;
+
+			OtherFX_Play(0x62, 1);
+		}
 	}
 
 	// This one is a frame timer, not a millisecond timer,
@@ -502,57 +543,6 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 
 		driver->noItemTimer = noItemTimer - 1;
 	}
-
-	// If Invinsibility effect is active (timer at 0x24)
-	// Make "desired" timer by subtracting elapsed time from "current",
-	// set "current" to "desired", then set "current" to zero if "desired" is negative
-
-	if
-	(
-		(driver->invincibleTimer != 0) &&
-		(
-			driverTimer2 = driver->invincibleTimer - gGT->elapsedTimeMS,
-			driver->invincibleTimer = driverTimer2, driverTimer2 < 0
-		)
-	)
-	{
-		driver->invincibleTimer = 0;
-	}
-
-	// If Invincibility effect is active (timer at 0x28) and if Cheat Code is Disabled
-	// Make "desired" timer by subtracting elapsed time from "current",
-	// set "current" to "desired", then set "current" to zero if "desired" is negative
-
-	if
-	(
-		// if driver is invisible
-		(driver->invisibleTimer != 0) &&
-
-		// If Permanent Invisibility Cheat is Disabled
-		(!(gGT->gameMode2 & 0x8000))
-	)
-	{
-		// decrease invisibility timer, can not go below zero
-		driverTimer2 = driver->invisibleTimer - gGT->elapsedTimeMS;
-		driver->invisibleTimer = driverTimer2;
-		if (driverTimer2 < 0) driver->invisibleTimer = 0;
-
-		// If the timer expires, make yourself visible
-		if (driver->invisibleTimer == 0)
-		{
-			// restore backup of instance flags
-			driver->instSelf->flags = driver->instFlagsBackup;
-
-			// set instance transparency to zero
-			driver->instSelf->alphaScale = 0;
-
-			OtherFX_Play(0x62, 1);
-		}
-	}
-
-	// Random guess, this next block is probably for making a backup
-	// of current position and rotation, to calculate linear + angular
-	// velocity by comparing two frames
 	
 	// action flags
 	driver->actionsFlagSetPrevFrame = uVar22;
@@ -574,7 +564,11 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	uVar20 = uVar22 & 0x7f1f83d5;
 	
 	// disable input if opening adv hub door with key
-	if ((gGT->gameMode2 & 0x4004) != 0) goto SkipInput;
+	if ((gGT->gameMode2 & 0x4004) != 0)
+	{
+		driver->actionsFlagSet = uVar20;
+		return;
+	}
 	
 	// if not touching ground
 	if ((uVar22 & 1) == 0) 
@@ -1042,45 +1036,45 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		uVar20 = uVar22 & 0x9fffffff;
 		approximateSpeed2 = driverSpeedSmth2;
 	}
+
+	// not driving backwards
 	if ((uVar20 & 0x20000) == 0)
 	{
-		uVar22 = uVar20 & 8;
 		if (driver->superEngineTimer != 0)
 		{
 			// if Racer is moving
 			if (0 < approximateSpeed2)
 			{
-				uVar22 = uVar20 & 8;
-				if ((uVar20 & 0x400020) != 0) goto LAB_80062648;
+				// not holding breaks
+				if ((uVar20 & 0x400020) == 0) 
+				{
+					// if you have less than 10 wumpa
+					superEngineFireLevel = 0x80;
 
-				// if you have less than 10 wumpa
-				superEngineFireLevel = 0x80;
+					driver->actionsFlagSet = uVar20;
 
-				driver->actionsFlagSet = uVar20;
+					// if number of wumpa > 9
+					// if wumpa is 10
+					if (driver->numWumpas > 9) superEngineFireLevel = 0x100;
 
-				// if number of wumpa > 9
-				// if wumpa is 10
-				if (driver->numWumpas > 9) superEngineFireLevel = 0x100;
+					// Turbo_Increment
+					// add 0.12s reserves
+					Turbo_Increment(driver, 0x78, 0x14, superEngineFireLevel);
 
-				// Turbo_Increment
-				// add 0.12s reserves
-				Turbo_Increment(driver, 0x78, 0x14, superEngineFireLevel);
-
-				uVar20 = driver->actionsFlagSet;
+					uVar20 = driver->actionsFlagSet;
+				}
 			}
-			goto code_r0x80062644;
 		}
 	}
-
+	
+	// driving backwards
 	else
 	{
-		driver->timeSpentReversing += msPerFrame;
-		
-code_r0x80062644:
-		uVar22 = uVar20 & 8;
+		driver->timeSpentReversing += gGT->elapsedTimeMS;
 	}
 
-	LAB_80062648:
+	uVar22 = uVar20 & 8;
+
 	if (uVar22 != 0)
 	{		
 		// high speed
@@ -1272,7 +1266,7 @@ UseTurnRate:
 	{
 		driver->tireColor = 0x2e808080;
 	}
-	SkipInput:
+	
 	driver->actionsFlagSet = uVar20;
 	return;
 }
