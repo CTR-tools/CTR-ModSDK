@@ -2074,8 +2074,9 @@ struct Driver
 	short unknowndriverBaseSpeed;
 
 	// 0x3C6 0x3C8
-	// in Player_Driving_PhysLinear,
-	// and FUN_8005fb4c
+	// in Player_Driving_PhysLinear, 
+	// and FUN_8005fb4c, 
+	// and Player_LastSpin_Update
 	short unknownDimension2Curr;
 	short unknownDimension2Prev;
 	
