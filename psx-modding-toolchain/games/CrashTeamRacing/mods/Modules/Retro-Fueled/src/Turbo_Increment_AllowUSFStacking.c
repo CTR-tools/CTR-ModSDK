@@ -320,11 +320,11 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		// then prevent reserves from decreasing until the first frame 
 		// you leave the turbo pad
 		
-		oldOTT = driver->outsideTurboTimer;
+		oldOTT = driver->turbo_outsideTimer;
 		
 		if (oldOTT < reserves)
 		{
-			driver->outsideTurboTimer += 	(reserves - oldOTT);
+			driver->turbo_outsideTimer += 	(reserves - oldOTT);
 			driver->reserves += 			(reserves - oldOTT);
 		}
 	}

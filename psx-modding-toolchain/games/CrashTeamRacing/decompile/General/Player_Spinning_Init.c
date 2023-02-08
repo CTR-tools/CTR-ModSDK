@@ -39,7 +39,7 @@ void DECOMP_Player_Spinning_Init(struct Thread* t, struct Driver* d)
 	d->kartState = 3;
 	
 	d->unk_LerpToForwards = 0;
-	d->turboMeterLeft = 0;
+	d->turbo_MeterRoomLeft = 0;
 	
 	if(LOAD_IsOpen_RacingOrBattle())
 	{

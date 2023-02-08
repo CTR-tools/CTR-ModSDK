@@ -29,10 +29,10 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 	}
 
 	// if powerslide meter is not zero
-	if ((int)driver->turboMeterLeft != 0)
+	if ((int)driver->turbo_MeterRoomLeft != 0)
 	{
 		// current room remaining
-		currentRoomRemaining = driver->turboMeterLeft * 0x31;
+		currentRoomRemaining = driver->turbo_MeterRoomLeft * 0x31;
 
 		// max amount of room in turbo
 		maxRoom = (u_int)driver->const_turboMaxRoom << 5;
@@ -78,7 +78,7 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 	if (p != 0)
 	{
 		// if remaining room is more than the "low warning"
-		if ((int)((u_int)driver->const_turboLowRoomWarning << 5) < (int)driver->turboMeterLeft)
+		if ((int)((u_int)driver->const_turboLowRoomWarning << 5) < (int)driver->turbo_MeterRoomLeft)
 		{
 			// set color to green
 			colorAndCode = 0x2800ff00;

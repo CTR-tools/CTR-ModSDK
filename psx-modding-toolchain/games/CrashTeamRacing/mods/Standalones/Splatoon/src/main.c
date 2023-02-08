@@ -231,7 +231,7 @@ void RunInitHook()
 
 		// set drivers
 		sdata->gGT->drivers[playerIndex]->const_turboLowRoomWarning = 0;
-		sdata->gGT->drivers[playerIndex]->turboMeterLeft = 1;
+		sdata->gGT->drivers[playerIndex]->turbo_MeterRoomLeft = 1;
 
 		// erase cam110 pointer from camDC, so we can move cam110 ourselves
 		sdata->gGT->cameraDC[playerIndex].cam110 = 0;
@@ -518,10 +518,10 @@ void RunUpdateHook()
 				if (buttonsTap & BTN_R2)
 				{
 					// nullptr while jumping
-					if(currVertex && driver->turboMeterLeft < 960)
+					if(currVertex && driver->turbo_MeterRoomLeft < 960)
 					{
 						// subtract 6 per shot, so there are 5 shots total
-						GrowTo(&driver->turboMeterLeft, 960/6, 960);
+						GrowTo(&driver->turbo_MeterRoomLeft, 960/6, 960);
 
 
 						// This can potentially be optimized
@@ -618,7 +618,7 @@ void RunUpdateHook()
 						// or else nothing will draw
 
 						// only fill if there is room left
-						ShrinkTo((short*)&driver->turboMeterLeft, 1000/30, 1);
+						ShrinkTo((short*)&driver->turbo_MeterRoomLeft, 1000/30, 1);
 					}
 
 					// stand in your paint

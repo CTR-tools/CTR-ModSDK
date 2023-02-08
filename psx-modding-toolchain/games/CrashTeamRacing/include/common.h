@@ -2097,15 +2097,15 @@ struct Driver
 	short multDrift;
 
 	// 0x3DC
-	// turboMeterLeft has values 0-1000 (dec),
+	// turbo_MeterRoomLeft has values 0-1000 (dec),
 	// can go negative and it draws farther left
-	short turboMeterLeft;
+	short turbo_MeterRoomLeft;
 
 	// 0x3DE
-	short outsideTurboTimer;
+	short turbo_outsideTimer;
 
 	// 0x3E0
-	short turboAudioCooldown;
+	short turbo_audioCooldown;
 
 	// 0x3E2
 	short reserves;
@@ -2178,11 +2178,15 @@ struct Driver
 
 	// 0x40C
 	// when jumping and when hitting ground
-	int jumpSquishStretch;
+	short jumpSquishStretch;
+	
+	short unk40E;
 	
 	// 0x410
 	// used to calculate the other ^^
-	int jumpSquishStretch2;
+	short jumpSquishStretch2;
+	
+	short unk412;
 	
 	// 0x414 (physics/terrain related)
 	short filler_short;

@@ -19,7 +19,7 @@ struct sData sdata_static =
 	
 	.AI_timeToFullAccel_0xa0 = 0xa0,
 	.AI_dragDuringAccel_0x18 = 0x18,
-	.AI_VelY_WhenBlasted_0x300 = 0x300,
+	.AI_VelY_WhenBlasted_0x3000 = 0x3000,
 	
 	.s_camera = "camera",
 	
