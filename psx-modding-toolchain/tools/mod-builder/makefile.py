@@ -1,16 +1,25 @@
 from compile_list import CompileList
-from common import create_directory, request_user_input, rename_psyq_sections, delete_file, cli_clear, GCC_OUT_FILE, COMP_SOURCE, GAME_INCLUDE_PATH, FOLDER_DISTANCE, SRC_FOLDER, DEBUG_FOLDER, OUTPUT_FOLDER, BACKUP_FOLDER, OBJ_FOLDER, DEP_FOLDER, GCC_MAP_FILE, REDUX_MAP_FILE, CONFIG_PATH, PSYQ_RENAME_CONFIRM_FILE
+from common import create_directory, request_user_input, rename_psyq_sections, delete_file, cli_clear, MAKEFILE, TRIMBIN_OFFSET, GCC_OUT_FILE, COMP_SOURCE, GAME_INCLUDE_PATH, FOLDER_DISTANCE, SRC_FOLDER, DEBUG_FOLDER, OUTPUT_FOLDER, BACKUP_FOLDER, OBJ_FOLDER, DEP_FOLDER, GCC_MAP_FILE, REDUX_MAP_FILE, CONFIG_PATH, PSYQ_RENAME_CONFIRM_FILE
 
 import re
 import json
 import os
 import shutil
+from time import time
+
+def clean_pch() -> None:
+    with open(CONFIG_PATH, "r") as file:
+        data = json.load(file)["compiler"]
+        if "pch" in data:
+            pch = data["pch"] + ".gch"
+            delete_file(GAME_INCLUDE_PATH + pch)
 
 class Makefile:
     def __init__(self, build_id: int, sym_file: list[str]) -> None:
         self.build_id = build_id
         self.sym_file = sym_file
         self.cl = list()
+        self.pch = str()
         self.load_config()
 
     def load_config(self) -> None:
@@ -27,6 +36,8 @@ class Makefile:
                 self.compiler_flags += " -g"
             self.use_psyq_str = str(data["psyq"] != 0).lower()
             self.use_psyq = data["psyq"] != 0
+            if "pch" in data:
+                self.pch = data["pch"] + ".gch"
 
     def add_cl(self, cl: CompileList) -> None:
         self.cl.append(cl)
@@ -100,7 +111,8 @@ class Makefile:
         with open(filename, "w") as file:
             file.write(buffer)
 
-        with open("offset.txt", "w") as file:
+        create_directory(DEBUG_FOLDER)
+        with open(TRIMBIN_OFFSET, "w") as file:
             file.write(offset_buffer)
 
         return filename
@@ -141,10 +153,12 @@ class Makefile:
         buffer += "SRCINCLUDEDIR = $(MODDIR)" + SRC_FOLDER + "\n"
         buffer += "GAMEINCLUDEDIR = $(MODDIR)" + GAME_INCLUDE_PATH + "\n"
         buffer += "EXTRA_CC_FLAGS = " + self.compiler_flags + "\n"
+        buffer += "PCHS = $(GAMEINCLUDEDIR)" + self.pch + "\n"
+        buffer += "TRIMBIN_OFFSET = $(MODDIR)" + TRIMBIN_OFFSET + "\n"
         buffer += "\n"
         buffer += "include " + FOLDER_DISTANCE + "../common.mk\n"
 
-        with open("Makefile", "w") as file:
+        with open(MAKEFILE, "w") as file:
             file.write(buffer)
 
         return True
@@ -187,28 +201,30 @@ class Makefile:
     def make(self) -> None:
         create_directory(OUTPUT_FOLDER)
         create_directory(BACKUP_FOLDER)
-        create_directory(DEBUG_FOLDER)
         create_directory(OBJ_FOLDER)
         create_directory(DEP_FOLDER)
         self.restore_temp_files()
         cli_clear()
         print("\n[Makefile-py] Compilation started...\n")
+        start_time = time()
         os.system("make -s -j8 > " + GCC_OUT_FILE + " 2>&1")
-        with open(GCC_OUT_FILE) as file:
+        end_time = time()
+        total_time = str(round(end_time - start_time, 3))
+        with open(GCC_OUT_FILE, "r") as file:
             for line in file:
                 print(line)
 
         if (not os.path.isfile("mod.map")) or (not os.path.isfile("mod.elf")):
             self.move_temp_files()
             self.delete_temp_files()
-            print("\n[Makefile-py] ERROR: compilation was not successful.\n")
+            print("\n[Makefile-py] ERROR: compilation was not successful. (" + total_time + "s)\n")
             return
 
         shutil.move("mod.map", DEBUG_FOLDER + "mod.map")
         shutil.move("mod.elf", DEBUG_FOLDER + "mod.elf")
         self.move_temp_files()
 
-        print("\n[Makefile-py] Successful compilation.\n")
+        print("\n[Makefile-py] Successful compilation in " + total_time + "s.\n")
         pattern = re.compile(r"0x0000000080[0-7][0-9a-fA-F]{5}\s+([a-zA-Z]|_)\w*")
         special_symbols = ["__heap_base", "__ovr_start", "__ovr_end", "OVR_START_ADDR"]
         buffer = ""

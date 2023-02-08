@@ -19,6 +19,7 @@ class CompileList:
         self.sym = sym
         self.ignore = False
         self.is_bin = False
+        self.pch = str()
         self.min_addr = 0x80000000
         self.max_addr = 0x807FFFFF if self.is_8mb() else 0x801FFFFF
         self.parse_line(line)

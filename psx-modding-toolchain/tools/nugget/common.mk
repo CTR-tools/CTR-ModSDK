@@ -38,11 +38,11 @@ DEPS += $(patsubst %.cc, %.dep,$(filter %.cc,$(SRCS)))
 DEPS +=	$(patsubst %.c, %.dep,$(filter %.c,$(SRCS)))
 DEPS += $(patsubst %.s, %.dep,$(filter %.s,$(SRCS)))
 
-all: dep $(foreach ovl, $(OVERLAYSECTION), $(BINDIR)Overlay$(ovl))
+all: pch dep $(foreach ovl, $(OVERLAYSECTION), $(BINDIR)Overlay$(ovl))
 
 $(BINDIR)Overlay%: $(BINDIR)$(TARGET).elf
 	$(PREFIX)-objcopy -j $(@:$(BINDIR)Overlay%=%) -O binary $< $(BINDIR)$(TARGET)$(@:$(BINDIR)Overlay%=%)
-	$(PYTHON) $(TOOLSDIR)trimbin/trimbin.py $(BINDIR)$(TARGET)$(@:$(BINDIR)Overlay%=%) $(BUILDDIR)
+	$(PYTHON) $(TOOLSDIR)trimbin/trimbin.py $(BINDIR)$(TARGET)$(@:$(BINDIR)Overlay%=%) $(BUILDDIR) $(TRIMBIN_OFFSET)
 
 $(BINDIR)$(TARGET).elf: $(OBJS)
 ifneq ($(strip $(BINDIR)),)
@@ -67,6 +67,11 @@ endif
 
 dep: $(DEPS)
 
+%.h.gch: %.h
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+pch: $(PCHS)
+
 -include $(DEPS)
 
-.PHONY: all
+.PHONY: all pch dep

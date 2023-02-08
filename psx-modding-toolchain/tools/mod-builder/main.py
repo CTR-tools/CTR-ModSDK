@@ -1,4 +1,4 @@
-from makefile import Makefile
+from makefile import Makefile, clean_pch
 from compile_list import CompileList, free_sections, print_errors
 from syms import Syms
 from redux import Redux
@@ -34,9 +34,10 @@ class Main:
             11  :   self.redux.start_emulation,
             12  :   self.nops.hot_reload,
             13  :   self.nops.restore,
-            14  :   self.disasm,
-            15  :   rename_psyq_sections,
-            16  :   self.clean_all,
+            14  :   self.clean_pch,
+            15  :   self.disasm,
+            16  :   rename_psyq_sections,
+            17  :   self.clean_all,
         }
         self.num_options = len(self.actions)
         self.window_title = GAME_NAME + " - " + MOD_NAME
@@ -48,27 +49,28 @@ class Main:
     def get_options(self) -> int:
         intro_msg = (
             "Please select an action:\n\n"
-            "Mod:\n\n"
+            "Mod:\n"
             "1 - Compile\n"
             "2 - Clean\n\n"
-            "Iso:\n\n"
+            "Iso:\n"
             "3 - Extract Iso\n"
             "4 - Build Iso\n"
             "5 - Generate xdelta patch\n"
             "6 - Clean Build\n\n"
-            "PCSX-Redux:\n\n"
+            "PCSX-Redux:\n"
             "7 - Hot Reload Mod\n"
             "8 - Restore Mod\n"
             "9 - Replace Textures\n"
             "10 - Restore Textures\n"
             "11 - Start Emulation\n\n"
-            "NotPSXSerial:\n\n"
+            "NotPSXSerial:\n"
             "12 - Hot Reload\n"
             "13 - Restore\n\n"
-            "Misc:\n\n"
-            "14 - Disassemble Elf\n"
-            "15 - Rename PSYQ Sections\n"
-            "16 - Clean All\n"
+            "General:\n"
+            "14 - Clean Precompiled Header\n"
+            "15 - Disassemble Elf\n"
+            "16 - Rename PSYQ Sections\n"
+            "17 - Clean All\n"
         )
         error_msg = "ERROR: Wrong option. Please type a number from 1-" + str(self.num_options) + ".\n"
         return request_user_input(first_option=1, last_option=self.num_options, intro_msg=intro_msg, error_msg=error_msg)
@@ -103,9 +105,13 @@ class Main:
         for file in COMPILATION_RESIDUES:
             delete_file(file)
 
+    def clean_pch(self) -> None:
+        clean_pch()
+
     def clean_all(self) -> None:
         self.mkpsxiso.clean(all=True)
         self.clean()
+        self.clean_pch()
 
     def replace_textures(self) -> None:
         create_directory(TEXTURES_OUTPUT_FOLDER)

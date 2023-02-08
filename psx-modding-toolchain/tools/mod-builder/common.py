@@ -55,8 +55,9 @@ COMP_SOURCE = DEBUG_FOLDER + "source.txt"
 TEXTURES_FOLDER = "newtex/"
 TEXTURES_OUTPUT_FOLDER = TEXTURES_FOLDER + "output/"
 GCC_MAP_FILE = DEBUG_FOLDER + "mod.map"
-GCC_OUT_FILE = "gcc_out.txt"
-COMPILATION_RESIDUES = ["overlay.ld", MAKEFILE, "offset.txt", "comport.txt", GCC_OUT_FILE]
+GCC_OUT_FILE = DEBUG_FOLDER + "gcc_out.txt"
+TRIMBIN_OFFSET = DEBUG_FOLDER + "offset.txt"
+COMPILATION_RESIDUES = ["overlay.ld", MAKEFILE, "comport.txt"]
 REDUX_MAP_FILE = DEBUG_FOLDER + "redux.map"
 CONFIG_PATH = FOLDER_DISTANCE + CONFIG_FILE
 SETTINGS_PATH = FOLDER_DISTANCE + "../settings.json"
@@ -164,9 +165,9 @@ def request_user_input(first_option: int, last_option: int, intro_msg: str, erro
     return i
 
 def get_build_id() -> int:
-    if not os.path.isfile("Makefile"):
+    if not os.path.isfile(MAKEFILE):
         return None
-    with open("Makefile", "r") as file:
+    with open(MAKEFILE, "r") as file:
         for line in file:
             line = line.split()
             if len(line) and line[0] == "CPPFLAGS":

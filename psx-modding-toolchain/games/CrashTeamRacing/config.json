@@ -6,7 +6,8 @@
 		"optimization": 4,
 		"debug": 1,
 		"psyq": 0,
-		"8mb": 1
+		"8mb": 1,
+		"pch": "common.h"
 	},
 	"versions":
 	[
