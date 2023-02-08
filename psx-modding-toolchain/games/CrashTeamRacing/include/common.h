@@ -19,6 +19,16 @@
 #define EurRetail 1020
 #define JpnRetail 1111
 
+#if BUILD == EurRetail
+#define FPS 25
+#define ELAPSED_MS 40
+#else
+#define FPS 30
+#define ELAPSED_MS 32
+#endif
+#define SECOND (FPS * ELAPSED_MS)
+#define MINUTE (SECOND * 60)
+
 // from TOMB5, not from psyq
 // https://github.com/TOMB5/TOMB5/blob/master/EMULATOR/LIBSPU.H
 typedef struct {
