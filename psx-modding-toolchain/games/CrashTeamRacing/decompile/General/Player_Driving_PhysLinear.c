@@ -1155,50 +1155,53 @@ code_r0x80062644:
 	// default steer strength from class stats
 	iVar14 = (u_int)driver->const_TurnRate + ((int)driver->turnConst << 1) / 5;
 	
-	if ((driver->mashXUnknown < 7) || (approximateSpeed > 0x25ff))
-	{
-		// not rubbing on wall now, or recently
-		if (driver->set_0xF0_OnWallRub == 0)
-		{
-			if ((uVar20 & 0x28) != 0)
-			{
-				// if you are not holding cross
-				if (cross == 0)
-				{
-					// turn rate
-					iVar14 = 0x40;
-				}
-
-				// if you are holding cross
-				else
-				{
-					// absolute value driver speed
-					driverTimer = (int)driver->speed;
-					if (driverTimer < 0) driverTimer = -driverTimer;
-
-					// As speed increases, turn rate decreases
-					iVar14 = MapToRange(
-								driverTimer,0x300,
-								(int)((u_int)driver->const_Speed_ClassStat << 0x10) >> 0x11,0x40,
-								iVar14);
-				}
-			}
-		}
-		
-		// rubbing on wall now, or recently
-		else
-		{
-			// restrict turn
-			iVar14 = 0x30;
-		}
-	}
-	
 	// if mashing X button
-	else
+	if ((driver->mashXUnknown > 6) && (approximateSpeed < 0x2600))
 	{
 		// sharp turn
 		iVar14 = 0x5a;
+		goto UseTurnRate;
 	}
+	
+	// rubbing on wall now, or recently
+	if (driver->set_0xF0_OnWallRub != 0)
+	{
+		// restrict turn
+		iVar14 = 0x30;
+		goto UseTurnRate;
+	}
+	
+	// === not rubbing on wall now, or recently ===
+
+	// if not holding Square (& 0x8)
+	// or holding Square + Cross (& 0x20)
+	if ((uVar20 & 0x28) == 0)
+	{
+		// use const_TurnRate + turnConst<<1/5
+		goto UseTurnRate;
+	}
+	
+	// if only holding Square
+	if (cross == 0)
+	{
+		// turn rate
+		iVar14 = 0x40;
+		goto UseTurnRate;
+	}
+
+	// === if holding Square + Cross ===
+	
+	// absolute value driver speed
+	driverTimer = (int)driver->speed;
+	if (driverTimer < 0) driverTimer = -driverTimer;
+
+	// As speed increases, turn rate decreases
+	iVar14 = MapToRange(
+				driverTimer,0x300,
+				(int)((u_int)driver->const_Speed_ClassStat << 0x10) >> 0x11,0x40,
+				iVar14);
+	
+UseTurnRate:
 
 	// Steer, based on strength, and LeftStickX
 	iVar14 = Player_StickGetStrengthAbsolute(driverSpeedOrSmth, iVar14, ptrgamepad->rwd);
