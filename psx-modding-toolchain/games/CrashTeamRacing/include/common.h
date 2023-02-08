@@ -2283,7 +2283,7 @@ struct Driver
 	// 0x44c - 0x1D
 	short const_SteerAccel_Stage1_MinSteer;
 
-	// 0x44e - 0x1E
+	// 0x44e - 0x1E (const 0x80)
 	short unk44e;
 	
 	// 0x450 - 0x1F (const zero)

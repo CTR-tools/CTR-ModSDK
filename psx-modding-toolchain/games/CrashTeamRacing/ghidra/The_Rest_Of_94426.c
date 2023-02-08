@@ -29997,6 +29997,8 @@ LAB_8005fee4:
     if (iVar9 < 0) {
       iVar11 = -iVar9;
     }
+	
+	// 0x44e is const val 0x80
     iVar11 = *(short *)(param_2 + 0x44e) * iVar11 >> 8;
 
 	// increment frame counter
