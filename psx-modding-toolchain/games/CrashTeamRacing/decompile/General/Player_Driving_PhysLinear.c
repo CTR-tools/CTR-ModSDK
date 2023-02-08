@@ -40,7 +40,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	u_int cross;
 	u_int square;
 
-	short val;
+	short* val;
 	int i;
 	int msPerFrame;
 	int negativeMsPerFrame;
@@ -89,10 +89,9 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 
 	for(i = 0; i < 14; i++)
 	{
-		short val = *(short*)((int)driver + (int)PhysLinear_DriverOffsets[i]);
-		val -= msPerFrame;
-		if(val < 0) val = 0;
-		*(short*)((int)driver + (int)PhysLinear_DriverOffsets[i]) = val;
+		short* val = (short*)((int)driver + (int)PhysLinear_DriverOffsets[i]);
+		*val -= msPerFrame;
+		if(*val < 0) *val = 0;
 	}
 	
 	if(driver->reserves > 0) driver->timeSpentUsingReserves += msPerFrame;
