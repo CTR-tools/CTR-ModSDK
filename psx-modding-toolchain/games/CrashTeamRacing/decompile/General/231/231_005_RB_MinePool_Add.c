@@ -1,28 +1,27 @@
 #include <common.h>
 
+void RB_MinePool_Remove(struct MineWeapon* mw);
+
 void DECOMP_RB_MinePool_Add(struct MineWeapon* mw)
 {
 	struct WeaponSlot231* ws;
 	
     // if no more items on free list
-    // (800b2ea8 + 8 = 800b2eb0)
-	if (*(int*)0x800b2ea8 == 0)
+	if ( ((struct LinkedList*)0x800b2ea8)->count == 0 )
 	{
 		// remove oldest mine
-	
-		// RB_MinePool_Remove
-		// (800b2e9c + 4 = 800b2ea0) (taken->last)
-		// (*(int*)800b2ea0 + 8) (taken->last->mineWeapon)
-		RB_MinePool_Remove(*(int*)(*(int*)0x800b2ea0 + 8));
+		RB_MinePool_Remove(
+			((struct WeaponSlot231*)((struct LinkedList*)0x800b2e9c)->last)->mineWeapon
+		);
 	}
 	
 	// LIST_RemoveBack free list
-	ws = LIST_RemoveBack(0x800b2ea8);
+	ws = (struct WeaponSlot231*)LIST_RemoveBack((struct LinkedList*)0x800b2ea8);
 
 	// link together
 	ws->mineWeapon = mw;
 	mw->weaponSlot231 = ws;
 
 	// LIST_AddFront to taken list
-	LIST_AddFront(0x800b2e9c, ws);
+	LIST_AddFront((struct LinkedList*)0x800b2e9c, (struct Item*)ws);
 }

@@ -1034,7 +1034,7 @@ struct MenuBox
 	struct MenuRow* rows;
 
 	// 0x10
-	void *(*funcPtr)(struct MenuBox* m);
+	void (*funcPtr)(struct MenuBox* m);
 
 	// 0x14
 	// text color, box color, etc

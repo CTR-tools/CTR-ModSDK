@@ -13,6 +13,6 @@ void DECOMP_RB_MinePool_Remove(struct MineWeapon* mw)
 	#endif
 	
 	// remove from taken, add to free
-	LIST_RemoveMember(0x800b2e9c, ws);
-	LIST_AddFront(0x800b2ea8, ws);
+	LIST_RemoveMember((struct LinkedList*)0x800b2e9c, (struct Item*)ws);
+	LIST_AddFront((struct LinkedList*)0x800b2ea8, (struct Item*)ws);
 }

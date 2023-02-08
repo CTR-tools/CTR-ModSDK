@@ -20,6 +20,20 @@ const short hub[8] =
 extern struct MenuRow menuRows221[3];
 extern struct MenuBox menuBox221;
 
+void InterpolatePosition2D_Linear(short* posXY,
+	int startX, int startY, int endX, int endY,
+	int frameCurr, int frameLen);
+	
+int UI_ConvertX_2(int x, int const_0x200);
+int UI_ConvertY_2(int y, int const_0x200);
+void DrawNumCrystal(int x, int y, struct Driver* d);
+void DrawCountdownClock(short x, short y, short fontSize);
+void MenuBox_ClearInput();
+void MenuBox_Show(struct MenuBox*);
+void OtherFX_Play(int, int);
+void MainRaceTrack_RequestLoad(int);
+void DecalFont_DrawLine(char* str, short posX, short posY, short type, int flags);
+
 void DECOMP_CC_EndEvent_DrawMenu()
 {
 	struct GameTracker* gGT;
@@ -195,7 +209,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	MainRaceTrack_RequestLoad(gGT->prevLEV);
 }
 
-void MenuBoxFuncPtr_GenericEndOfRace();
+void MenuBoxFuncPtr_GenericEndOfRace(struct MenuBox*);
 
 struct MenuRow menuRows221[3] =
 {	

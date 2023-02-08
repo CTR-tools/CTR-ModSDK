@@ -12,10 +12,10 @@ void DECOMP_RB_MinePool_Init(void)
 	int gameMode;
 	
 	// clear taken
-	LIST_Clear(0x800b2e9c);
+	LIST_Clear((struct LinkedList*)0x800b2e9c);
 	
 	// clear free
-	LIST_Clear(0x800b2ea8);
+	LIST_Clear((struct LinkedList*)0x800b2ea8);
 	
 	gameMode = sdata->gGT->gameMode1;
 	
@@ -44,7 +44,7 @@ void DECOMP_RB_MinePool_Init(void)
 	// add all mines
 	for(i = 0; i < numMines; i++)
 	{
-		LIST_AddFront(0x800b2ea8, addr);
+		LIST_AddFront((struct LinkedList*)0x800b2ea8, (struct Item*)addr);
 		
 		addr += 0xC;
 	}
