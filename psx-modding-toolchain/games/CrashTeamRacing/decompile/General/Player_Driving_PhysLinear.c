@@ -1099,12 +1099,13 @@ UseTurnRate:
 		}
 	}
 	
-	//if 0x3BC <= 0 and last bit of jittery number 2 is off and
+	// alternate tire colors each frame,
+	// if 2e808080 is detected (&1==0),
+	// if not EngineRevving, and if unkSpeedVal
 	if
 	(
-		(
-			(driver->unkSpeedValue1 < 1) && ((driver->tireColor & 1) == 0)
-		) &&
+		(driver->unkSpeedValue1 < 1) && 
+		((driver->tireColor & 1) == 0) &&
 		(kartState != 4)
 	)
 	{
@@ -1113,6 +1114,8 @@ UseTurnRate:
 		
 		driver->tireColor = 0x2e606061;
 	}
+	
+	// default tire color
 	else
 	{
 		driver->tireColor = 0x2e808080;
