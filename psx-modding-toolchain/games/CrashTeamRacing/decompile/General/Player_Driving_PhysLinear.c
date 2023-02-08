@@ -83,12 +83,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		driver->distanceDriven += (driver->speedApprox * msPerFrame >> 8);
 	}
 
-	// Next 7 lines are repetitive, this time for Reserves (0x3e2)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition] plus reserve counter
 	driverValueMinusMsPerFrame = (int)driver->reserves + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->reserves)
@@ -100,12 +95,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		driver->timeSpentUsingReserves += msPerFrame;
 	}
 
-	// Next 7 lines are repetitive, this time for Outside Turbo Timer (0x3de)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition]
 	driverValueMinusMsPerFrame = (int)driver->outsideTurboTimer + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->outsideTurboTimer)
@@ -114,12 +104,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		*(u_short*)&driver->outsideTurboTimer = driverValueMinusMsPerFrameUnsigned;
 	}
 
-	// Next 7 lines are repetitive, this time for Outside Turbo Sound (0x3e0)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition]
 	driverValueMinusMsPerFrame = (int)driver->turboAudioCooldown + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->turboAudioCooldown)
@@ -128,12 +113,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		*(u_short*)&driver->turboAudioCooldown = driverValueMinusMsPerFrameUnsigned;
 	}
 
-	// Next 7 lines are repetitive, this time for Collision (0x3fe)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition] plus wall counter
 	driverValueMinusMsPerFrame = (int)driver->set_0xF0_OnWallRub + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->set_0xF0_OnWallRub)
@@ -145,12 +125,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		driver->timeSpentAgainstWall += msPerFrame;
 	}
 
-	// Next 7 lines are repetitive, this time for Jump Animation (0x3f6)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition]
 	driverValueMinusMsPerFrame = driver->jump_ForcedMS + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->jump_ForcedMS)
@@ -159,12 +134,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		*(u_short*)&driver->jump_ForcedMS = driverValueMinusMsPerFrameUnsigned;
 	}
 
-	// Next 7 lines are repetitive, this time for Unknown (0x3f2)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition]
 	driverValueMinusMsPerFrame = (int)driver->jump_CooldownMS + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->jump_CooldownMS)
@@ -173,12 +143,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		*(u_short*)&driver->jump_CooldownMS = driverValueMinusMsPerFrameUnsigned;
 	}
 
-	// Next 7 lines are repetitive, this time for Unknown (0x3fa)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition]
 	driverValueMinusMsPerFrame = (int)driver->jump_unknown + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->jump_unknown)
@@ -187,12 +152,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		*(u_short*)&driver->jump_unknown = driverValueMinusMsPerFrameUnsigned;
 	}
 
-	// Next 7 lines are repetitive, this time for Burnt Effect Timer (0x402)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition] plus burn counter
 	driverValueMinusMsPerFrame = (int)driver->burnTimer + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->burnTimer)
@@ -204,12 +164,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		driver->timeSpentBurnt += msPerFrame;
 	}
 
-	// Next 7 lines are repetitive, this time for Squished Effect Timer (0x404)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition] plus squish counter
 	driverValueMinusMsPerFrame = (int)driver->squishTimer + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->squishTimer)
@@ -221,12 +176,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		driver->timeSpentSquished += msPerFrame;
 	}
 
-	// Next 7 lines are repetitive, this time for Unknown (0x406)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition]
 	driverValueMinusMsPerFrame = (int)driver->StartDriving_0x60 + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->StartDriving_0x60)
@@ -235,12 +185,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		*(u_short*)&driver->StartDriving_0x60 = driverValueMinusMsPerFrameUnsigned;
 	}
 
-	// Next 7 lines are repetitive, this time for Unknown (0x408)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition]
 	driverValueMinusMsPerFrame = (int)driver->StartRollback_0x280 + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->StartRollback_0x280)
@@ -252,12 +197,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	// If Super Engine Cheat is not enabled
 	if (!(gGT->gameMode2 & 0x10000))
 	{
-		// Next 7 lines are repetitive, this time for Super Engine Timer (0x38)
-		// Make "desired" amount by subtracting elapsed time from "current" amount,
-		// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-		// then handle subtraction. In subtraction, make sure desired is not negative,
-		// then set current to desired
-
+		// [Same repetition]
 		driverValueMinusMsPerFrame = (int)driver->superEngineTimer + negativeMsPerFrame;
 		driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 		if (0 < (int)driver->superEngineTimer)
@@ -267,12 +207,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		}
 	}
 
-	// Next 7 lines are repetitive, this time for Clock Weapon Timer (0xC)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition]
 	driverValueMinusMsPerFrame = (int)driver->clockReceive + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->clockReceive)
@@ -281,12 +216,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		*(u_short*)&driver->clockReceive = driverValueMinusMsPerFrameUnsigned;
 	}
 
-	// Next 7 lines are repetitive, this time for "Mashing X makes it big" (0x3c0)
-	// Make "desired" amount by subtracting elapsed time from "current" amount,
-	// store desired into driverValueMinusMsPerFrame, then copy it into iVar7. If current is more than 0,
-	// then handle subtraction. In subtraction, make sure desired is not negative,
-	// then set current to desired
-
+	// [Same repetition]
 	driverValueMinusMsPerFrame = (int)driver->mashingXMakesItBig + negativeMsPerFrame;
 	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
 	if (0 < (int)driver->mashingXMakesItBig)
