@@ -2073,12 +2073,10 @@ struct Driver
 	// in Player_Driving_PhysLinear
 	short unknowndriverBaseSpeed;
 
-	// 0x3C6
-	// in Player_Driving_PhysLinear
+	// 0x3C6 0x3C8
+	// in Player_Driving_PhysLinear,
+	// and FUN_8005fb4c
 	short unknownDimension2Curr;
-
-	// 0x3C8
-	// in Player_Driving_PhysLinear
 	short unknownDimension2Prev;
 	
 	// 0x3CA

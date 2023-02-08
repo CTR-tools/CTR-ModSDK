@@ -29581,7 +29581,7 @@ uint FUN_8005fb4c(int param_1)
 	   )
 	{
 
-	  // cameraAngleCurr - cameraAnglePrev
+	  // angleCurr - anglePrev
 	  uVar4 = (int)*(short *)(param_1 + 0x3c6) - (int)*(short *)(param_1 + 0x3c8);
 
 	  // kart angle cap from 'straight to camera'
