@@ -10,6 +10,8 @@ int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
 int Player_StickGetStrengthAbsolute(int param_1, u_int param_2, struct RacingWheelData* param_3);
 int InterpBySpeed(int param_1,int param_2,int param_3);
 
+extern short PhysLinear_DriverOffsets[14];
+
 void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 {
 	struct GameTracker* gGT;
@@ -38,6 +40,8 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	u_int cross;
 	u_int square;
 
+	short val;
+	int i;
 	int msPerFrame;
 	int negativeMsPerFrame;
 	int driverValueMinusMsPerFrame;
@@ -83,144 +87,18 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		driver->distanceDriven += (driver->speedApprox * gGT->elapsedTimeMS >> 8);
 	}
 
-	// [Same repetition] plus reserve counter
-	driverValueMinusMsPerFrame = (int)driver->reserves + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->reserves)
+	for(i = 0; i < 14; i++)
 	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->reserves = driverValueMinusMsPerFrameUnsigned;
-
-		// adds *spent* Reserves to cumulative counter
-		driver->timeSpentUsingReserves += msPerFrame;
-	}
-
-	// [Same repetition]
-	driverValueMinusMsPerFrame = (int)driver->outsideTurboTimer + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->outsideTurboTimer)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->outsideTurboTimer = driverValueMinusMsPerFrameUnsigned;
-	}
-
-	// [Same repetition]
-	driverValueMinusMsPerFrame = (int)driver->turboAudioCooldown + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->turboAudioCooldown)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->turboAudioCooldown = driverValueMinusMsPerFrameUnsigned;
-	}
-
-	// [Same repetition] plus wall counter
-	driverValueMinusMsPerFrame = (int)driver->set_0xF0_OnWallRub + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->set_0xF0_OnWallRub)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->set_0xF0_OnWallRub = driverValueMinusMsPerFrameUnsigned;
-
-		// Add elapsed time to a counter for how long you've driven against a wall
-		driver->timeSpentAgainstWall += msPerFrame;
-	}
-
-	// [Same repetition]
-	driverValueMinusMsPerFrame = driver->jump_ForcedMS + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->jump_ForcedMS)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->jump_ForcedMS = driverValueMinusMsPerFrameUnsigned;
-	}
-
-	// [Same repetition]
-	driverValueMinusMsPerFrame = (int)driver->jump_CooldownMS + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->jump_CooldownMS)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->jump_CooldownMS = driverValueMinusMsPerFrameUnsigned;
-	}
-
-	// [Same repetition]
-	driverValueMinusMsPerFrame = (int)driver->jump_unknown + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->jump_unknown)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->jump_unknown = driverValueMinusMsPerFrameUnsigned;
-	}
-
-	// [Same repetition] plus burn counter
-	driverValueMinusMsPerFrame = (int)driver->burnTimer + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->burnTimer)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->burnTimer = driverValueMinusMsPerFrameUnsigned;
-
-		// increment timer for total frames burnt
-		driver->timeSpentBurnt += msPerFrame;
-	}
-
-	// [Same repetition] plus squish counter
-	driverValueMinusMsPerFrame = (int)driver->squishTimer + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->squishTimer)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->squishTimer = driverValueMinusMsPerFrameUnsigned;
-
-		// increment timer for total frames squished
-		driver->timeSpentSquished += msPerFrame;
-	}
-
-	// [Same repetition]
-	driverValueMinusMsPerFrame = (int)driver->StartDriving_0x60 + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->StartDriving_0x60)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->StartDriving_0x60 = driverValueMinusMsPerFrameUnsigned;
-	}
-
-	// [Same repetition]
-	driverValueMinusMsPerFrame = (int)driver->StartRollback_0x280 + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->StartRollback_0x280)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->StartRollback_0x280 = driverValueMinusMsPerFrameUnsigned;
-	}
-
-	// [Same repetition]
-	driverValueMinusMsPerFrame = (int)driver->clockReceive + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->clockReceive)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->clockReceive = driverValueMinusMsPerFrameUnsigned;
-	}
-
-	// [Same repetition]
-	driverValueMinusMsPerFrame = (int)driver->mashingXMakesItBig + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->mashingXMakesItBig)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->mashingXMakesItBig = driverValueMinusMsPerFrameUnsigned;
+		short val = *(short*)((int)driver + (int)PhysLinear_DriverOffsets[i]);
+		val -= msPerFrame;
+		if(val < 0) val = 0;
+		*(short*)((int)driver + (int)PhysLinear_DriverOffsets[i]) = val;
 	}
 	
-	// [Same repetition]
-	driverValueMinusMsPerFrame = (int)driver->invincibleTimer + negativeMsPerFrame;
-	driverValueMinusMsPerFrameUnsigned = (u_short)driverValueMinusMsPerFrame;
-	if (0 < (int)driver->invincibleTimer)
-	{
-		if (driverValueMinusMsPerFrame < 0) driverValueMinusMsPerFrameUnsigned = 0;
-		*(u_short*)&driver->invincibleTimer = driverValueMinusMsPerFrameUnsigned;
-	}
-	
+	if(driver->reserves > 0) driver->timeSpentUsingReserves += msPerFrame;
+	if(driver->set_0xF0_OnWallRub > 0) driver->timeSpentAgainstWall += msPerFrame;
+	if(driver->burnTimer > 0) driver->timeSpentBurnt += msPerFrame;
+	if(driver->squishTimer > 0) driver->timeSpentSquished += msPerFrame;	
 
 	// If Super Engine Cheat is not enabled
 	if (!(gGT->gameMode2 & 0x10000))
@@ -235,9 +113,11 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		}
 	}
 
+	// If invisible, and not using perm cheat
 	if
 	(
-		// if driver is invisible
+		// must check this first, otherwise
+		// instFlagsBackup is invalid
 		(driver->invisibleTimer != 0) &&
 
 		// If Permanent Invisibility Cheat is Disabled
@@ -1270,3 +1150,22 @@ UseTurnRate:
 	driver->actionsFlagSet = uVar20;
 	return;
 }
+
+#define OFFSETOF(TYPE, ELEMENT) (short)((unsigned int)&(((TYPE *)0)->ELEMENT))
+short PhysLinear_DriverOffsets[14] =
+{
+	OFFSETOF(struct Driver, reserves),
+	OFFSETOF(struct Driver, set_0xF0_OnWallRub),
+	OFFSETOF(struct Driver, burnTimer),
+	OFFSETOF(struct Driver, squishTimer),
+	OFFSETOF(struct Driver, outsideTurboTimer),
+	OFFSETOF(struct Driver, turboAudioCooldown),
+	OFFSETOF(struct Driver, jump_ForcedMS),
+	OFFSETOF(struct Driver, jump_CooldownMS),
+	OFFSETOF(struct Driver, jump_unknown),
+	OFFSETOF(struct Driver, StartDriving_0x60),
+	OFFSETOF(struct Driver, StartRollback_0x280),
+	OFFSETOF(struct Driver, clockReceive),
+	OFFSETOF(struct Driver, mashingXMakesItBig),
+	OFFSETOF(struct Driver, invincibleTimer)
+};
