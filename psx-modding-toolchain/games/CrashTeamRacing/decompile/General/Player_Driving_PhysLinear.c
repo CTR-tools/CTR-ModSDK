@@ -10,6 +10,7 @@ int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
 int Player_StickGetStrengthAbsolute(int param_1, u_int param_2, struct RacingWheelData* param_3);
 int InterpBySpeed(int param_1,int param_2,int param_3);
 
+// see the bottom of this file
 extern short PhysLinear_DriverOffsets[14];
 
 void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
