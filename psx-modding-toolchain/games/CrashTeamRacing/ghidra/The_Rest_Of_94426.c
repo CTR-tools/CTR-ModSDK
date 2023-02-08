@@ -29524,9 +29524,10 @@ uint FUN_8005fb4c(int param_1)
   // speed
   iVar1 = (int)*(short *)(param_1 + 0x38e);
 
-  // erase accel X,Y
+  // erase accel X,Y,Z
   *(undefined2 *)(param_1 + 0x3cc) = 0;
   *(undefined2 *)(param_1 + 0x3ce) = 0;
+  *(undefined2 *)(param_1 + 0x3d0) = 0;
   
   if (iVar1 < 0) {
     iVar1 = -iVar1;
@@ -29534,9 +29535,6 @@ uint FUN_8005fb4c(int param_1)
 
   // low speed (useless? shoould just be '= 0;')
   uVar2 = (uint)(iVar1 < 0x301);
-
-  // erase accel Z
-  *(undefined2 *)(param_1 + 0x3d0) = 0;
 
   if (
 		// high speed
@@ -29583,17 +29581,15 @@ uint FUN_8005fb4c(int param_1)
 	   )
 	{
 
+	  // cameraAngleCurr - cameraAnglePrev
 	  uVar4 = (int)*(short *)(param_1 + 0x3c6) - (int)*(short *)(param_1 + 0x3c8);
 
 	  // kart angle cap from 'straight to camera'
 	  uVar3 = (uint)*(byte *)(param_1 + 0x457);
 
-	  if ((int)uVar3 < (int)uVar4) {
-        uVar4 = uVar3;
-      }
-      if ((int)uVar4 < (int)-uVar3) {
-        uVar4 = -uVar3;
-      }
+	  // clamp to min cap or max cap
+	  if ((int)uVar3 < (int)uVar4) uVar4 = uVar3;
+      if ((int)uVar4 < (int)-uVar3) uVar4 = -uVar3;
 
 	  // approximate trigonometry
       iVar1 = *(int *)(&DAT_800845a0 + (uVar4 & 0x3ff) * 4);
