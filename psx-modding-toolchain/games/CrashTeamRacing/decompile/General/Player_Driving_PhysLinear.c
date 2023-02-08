@@ -1048,18 +1048,39 @@ UseTurnRate:
 	// Steer, based on strength, and LeftStickX
 	iVar14 = Player_StickGetStrengthAbsolute(driverSpeedOrSmth, iVar14, ptrgamepad->rwd);
 
-	if (-iVar14 == 0) *(u_short*)&driver->numFramesSpentSteering = 10000;
+	// no desired steer
+	if (-iVar14 == 0) 
+	{
+		*(u_short*)&driver->numFramesSpentSteering = 10000;
+	}
+	
+	// desired steer
 	else
 	{
+		// desired steer left, or active steer left
 		if ((iVar14 < 1) || (driver->simpTurnState < 0))
 		{
-			if ((-1 < iVar14) || (0 < driver->simpTurnState)) goto LAB_800628b0;
+			// desired steer right, or active steer right
+			if ((-1 < iVar14) || (0 < driver->simpTurnState)) 
+			{
+				// active steer has not changed
+				goto SkipSetSteer;
+			}
+			
+			// active steer left
 			uVar20 = uVar20 | 0x10;
 		}
-		else uVar20 = uVar20 & 0xffffffef;
+		
+		else 
+		{
+			// active steer right
+			uVar20 = uVar20 & 0xffffffef;
+		}
 		driver->numFramesSpentSteering = 0;
 	}
-	LAB_800628b0:
+	
+SkipSetSteer:
+
 	*(u_char*)&driver->simpTurnState = (char)-iVar14;
 
 	// Steer
