@@ -30,7 +30,6 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	short sVar13;
 	int iVar14;
 	u_int buttonsTapped;
-	struct RacingWheelData* gamepadRacingWheel;
 	u_short driverTimerShort;
 	int driverTimer;
 	u_int timerHazard;
