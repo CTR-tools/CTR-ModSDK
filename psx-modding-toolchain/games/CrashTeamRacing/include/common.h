@@ -4279,7 +4279,7 @@ struct Level
 struct AnimTex
 {
 	// 0x0
-	struct AnimTex* ptr_notsure;
+	struct AnimTex* ptrNext;
 
 	// 0x4
 	short idk;
