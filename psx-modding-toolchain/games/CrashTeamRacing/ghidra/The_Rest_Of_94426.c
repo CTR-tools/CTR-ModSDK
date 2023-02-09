@@ -33810,16 +33810,21 @@ void FUN_80063a44(undefined4 param_1,int param_2)
   undefined2 uVar3;
 
   puVar1 = PTR_DAT_8008d2ac;
+
+  // increase spin by (lastFrameSpinRate * elapsedTime)
   uVar2 = *(short *)(param_2 + 0x39a) +				// elapsed milliseconds per frame, ~32
           (short)((int)*(short *)(param_2 + 0xc0) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 0xd) &
           0xfff;
+		  
   *(ushort *)(param_2 + 0x39a) = uVar2;
   
-  // cameraRotY = ??? + kart angle + drift angle
+  // cameraRotY = spinRate + kart angle + drift angle,
+  // spin rate is added so you're one frame ahead
   *(short *)(param_2 + 0x2ee) = *(short *)(param_2 + 0x3d4) + uVar2 + *(short *)(param_2 + 0x3c6);
 
   // Interpolate rotation by speed
   uVar3 = FUN_80058f54((int)*(short *)(param_2 + 0x2f2),(*(int *)(puVar1 + 0x1d04) << 5) >> 5,0);
+  
   puVar1 = PTR_DAT_8008d2ac;
 
   // set camera rotation angle around player

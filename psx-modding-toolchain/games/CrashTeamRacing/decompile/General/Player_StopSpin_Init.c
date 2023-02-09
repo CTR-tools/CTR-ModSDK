@@ -1,32 +1,31 @@
 #include <common.h>
 
-void Player_StopSpin_Update();
-void Player_StopSpin_PhysLinear();
+void DECOMP_Player_Crashing_PhysLinear(); // not a mistake, use Crashing
 void Player_Driving_Audio();
-void Player_StopSpin_PhysAngular();
+void DECOMP_Player_Crashing_PhysAngular(); // not a mistake, use Crashing
 void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
 void OnCollide_Drivers();
 void COLL_StartSearch_Player();
 void Player_JumpAndFriction();
 void OnRender();
-void Player_StopSpin_Animate();
+void DECOMP_Player_StopSpin_Animate();
 void SpawnParticle_DriverMain();
 
 void* PlayerStopSpinFuncTable[0xD] =
 {
 	0,
-	Player_StopSpin_Update,
-	Player_StopSpin_PhysLinear,
+	0,
+	DECOMP_Player_Crashing_PhysLinear,	// not a mistake, use Crashing
 	Player_Driving_Audio,
-	Player_StopSpin_PhysAngular,
+	DECOMP_Player_Crashing_PhysAngular, // not a mistake, use Crashing
 	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
 	COLL_StartSearch_Player,
 	Player_JumpAndFriction,
 	OnRender,
-	Player_StopSpin_Animate,
+	DECOMP_Player_StopSpin_Animate,
 	SpawnParticle_DriverMain,
 };
 
