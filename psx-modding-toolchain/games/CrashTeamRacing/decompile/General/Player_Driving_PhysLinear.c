@@ -46,15 +46,12 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	short* val;
 	int i;
 	int msPerFrame;
-	int negativeMsPerFrame;
 	int driverValueMinusMsPerFrame;
 	u_int driverValueMinusMsPerFrameUnsigned;
 	short driverRankItemValue;
 	u_short timerHazardSomething;
 	u_int itemSound;
 	u_int uVar20;
-	u_int vectorID;
-	int vectorID2;
 	int joystickStrength;
 	int driverSpeedOrSmth = 0;
 	struct Thread* driverItemThread;
@@ -78,9 +75,6 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 
 	// elapsed milliseconds per frame, ~32
 	msPerFrame = gGT->elapsedTimeMS;
-
-	// negative elapsed milliseconds per frame
-	negativeMsPerFrame = -msPerFrame;
 
 	if
 	(
@@ -249,7 +243,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		if (approximateSpeed > 0x100)
 		{
 			// decrease hazard by elapsed time
-			timerHazard += negativeMsPerFrame;
+			timerHazard -= msPerFrame;
 		}
 
 		timerHazardSomething = (u_short)(timerHazard & 0xfffffffe);
@@ -812,6 +806,8 @@ CheckJumpButtons:
 			driverSpeedOrSmth = driverBaseSpeed * driverSpeedOrSmth;
 			driverSpeedSmth2 = driverSpeedOrSmth >> 7;
 			if (driverSpeedOrSmth < 0) driverSpeedSmth2 = driverSpeedOrSmth + 0x7f >> 7;
+			
+			// remove flag for reversing
 			goto LAB_8006253c;
 		}
 		if ((driver->speedApprox < 0x301) && ((uVar22 & 0x60000000) == 0))
@@ -849,27 +845,42 @@ CheckJumpButtons:
 				driverSpeedOrSmth = Player_StickReturnToRest(joystickStrength, 0x80, 0);
 
 				driverSpeedSmth2 = driverBaseSpeed * -driverSpeedOrSmth;
+				
 				if (driverSpeedOrSmth < 0)
 				{
 					if (driverSpeedSmth2 < 0) driverSpeedSmth2 = driverSpeedSmth2 + 0xff;
 					driverSpeedSmth2 = driverSpeedSmth2 >> 8;
+					
+					// gas and breaks together
 					uVar22 = uVar22 | 0x20;
+					
 					goto LAB_80062548;
 				}
+				
 				if (0 < driverSpeedOrSmth)
 				{
 					driverSpeedOrSmth = (int)driver->const_BackwardSpeed * -driverSpeedOrSmth;
 					driverSpeedSmth2 = driverSpeedOrSmth >> 8;
 					if (driverSpeedOrSmth < 0) driverSpeedSmth2 = driverSpeedOrSmth + 0xff >> 8;
+					
+					// reversing, and gas+break
 					goto LAB_8006248c;
 				}
+				
+				// driverSpeedOrSmth == 0,
+				// no gas, only breaks
+				
+				// using the breaks
 				uVar22 = uVar22 | 8;
+				
 				driverSpeedSmth2 = approximateSpeed2;
 			}
 			// If you are holding cross, or you have Reserves
 			else
 			{
+				// gas and breaks together
 				uVar22 = uVar22 | 0x20;
+				
 				driverSpeedSmth2 = driverBaseSpeed / 2;
 			}
 			goto LAB_8006253c;
