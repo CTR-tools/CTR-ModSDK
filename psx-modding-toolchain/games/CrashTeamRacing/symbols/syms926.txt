@@ -885,8 +885,7 @@
 8005ebac OnCollide_Drivers
 8005ee34 OnRender
 8005f89c Rot_AxisAngle
-
-// unknown 8005fb4c
+8005fb4c CameraSlack_PhysAngular
 
 8005fc8c Player_Driving_PhysAngular
 80060458 Player_Driving_LerpQuarterStrength

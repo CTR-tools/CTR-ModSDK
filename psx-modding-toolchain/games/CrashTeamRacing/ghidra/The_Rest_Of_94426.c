@@ -29508,6 +29508,7 @@ void FUN_8005f89c(undefined2 *param_1,short *param_2,uint param_3)
 }
 
 
+// CameraSlack_PhysAngular
 // param1 - driver object
 // called from:
 //		Player_Driving_PhysAngular
@@ -29584,6 +29585,9 @@ uint FUN_8005fb4c(int param_1)
 	  // angleCurr - anglePrev
 	  uVar4 = (int)*(short *)(param_1 + 0x3c6) - (int)*(short *)(param_1 + 0x3c8);
 
+	  // set 0x457 to zero, to remove all camera slack,
+	  // with no slack, steering locks camera to driver
+	  
 	  // kart angle cap from 'straight to camera'
 	  uVar3 = (uint)*(byte *)(param_1 + 0x457);
 
@@ -30130,6 +30134,7 @@ LAB_80060284:
   FUN_8005f89c((undefined4 *)(param_2 + 0x310),param_2 + 0x360,uVar10);
   gte_SetRotMatrix((MATRIX *)(param_2 + 0x310));
 
+  // CameraSlack_PhysAngular
   FUN_8005fb4c(param_2);
   return;
 }
@@ -33503,6 +33508,7 @@ LAB_800632cc:
   FUN_8005f89c((undefined4 *)(param_2 + 0x310),param_2 + 0x360,(int)*(short *)(param_2 + 0x39a));
   gte_SetRotMatrix((MATRIX *)(param_2 + 0x310));
 
+  // CameraSlack_PhysAngular
   FUN_8005fb4c(param_2);
   return;
 }

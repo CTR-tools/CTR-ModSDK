@@ -1,3 +1,5 @@
+
+// CameraSlack_PhysAngular
 u_int FUN_8005fb4c(struct Driver* driver)
 {
 	int iVar1;

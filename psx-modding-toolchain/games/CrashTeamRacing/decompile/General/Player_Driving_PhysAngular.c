@@ -509,8 +509,9 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 
 	// Rot_AxisAngle
 	Rot_AxisAngle(&driver->matrix310, driver->AxisAngle1_normalVec, driverAngle);
-	gte_SetRotMatrix(driver->matrix310);
+	gte_SetRotMatrix(&driver->matrix310);
 
-	FUN_8005fb4c(driver);
+	void CameraSlack_PhysAngular(struct Driver* d);
+	CameraSlack_PhysAngular(driver);
 	return;
 }
