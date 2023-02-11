@@ -587,7 +587,7 @@ void FUN_8001d944(int param_1,int param_2)
   // quadblock under driver
   if (*(int *)(param_2 + 0x350) != 0)
   {
-	// COLL_Quadblock_Graphics
+	// COLL_PerQuadblock_CheckTriangles_Touching
     FUN_8001f41c(*(int *)(param_2 + 0x350),&DAT_1f800108);
   }
 
@@ -1592,7 +1592,7 @@ void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,in
       _DAT_1f800068 = iVar14;
       DAT_1f80006c = iVar3;
 
-	  // COLL_SearchCallback_QuadBlocks_Graphics
+	  // COLL_PerVisData_CheckQuadblocks_Touching
       FUN_8001f5f0(iVar12,param_3);
 
 	  iVar3 = DAT_1f80006c;
@@ -2271,7 +2271,7 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
 }
 
 
-// COLL_Quadblock_Graphics
+// COLL_PerQuadblock_CheckTriangles_Touching
 // param1 - ptrQuadblock
 // param2 - BSP Search Result: either 0x1f800108, 0x1f800118, 8008db1c
 void FUN_8001f41c(int param_1,int param_2)
@@ -2364,7 +2364,7 @@ void FUN_8001f41c(int param_1,int param_2)
 }
 
 
-// COLL_SearchCallback_QuadBlocks_Graphics
+// COLL_PerVisData_CheckQuadblocks_Touching
 // param_1 is VisData node
 // param_2 is 0x1f800108
 void FUN_8001f5f0(uint *param_1,int param_2)
@@ -2387,7 +2387,7 @@ void FUN_8001f5f0(uint *param_1,int param_2)
   // loop through all quadblocks
   do
   {
-	// COLL_Quadblock_Graphics
+	// COLL_PerQuadblock_CheckTriangles_Touching
     FUN_8001f41c(uVar2,param_2);
 
 	// reduce count

@@ -919,7 +919,7 @@ void FUN_800188a8(short *param_1,int param_2,undefined4 param_3,short *param_4)
 	// if camera -> ptrQuadblock
     if (*(int *)(param_2 + 0x1c) != 0)
 	{
-	  // COLL_Quadblock_Graphics
+	  // COLL_PerQuadblock_CheckTriangles_Touching
       FUN_8001f41c(*(int *)(param_2 + 0x1c),param_1);
     }
 

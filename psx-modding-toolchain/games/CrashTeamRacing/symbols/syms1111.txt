@@ -78,11 +78,11 @@
 
 8001e550 COLL_LevModelMeta
 8001e580 COLL_Instance
-8001eacc COLL_SearchCallback_Instances
+8001eacc COLL_PerVisData_CheckInstances
 8001ec38 COLL_CheckDriver_AI
 8001ee00 COLL_CheckDriver_Player
-8001ffc8 COLL_SearchTree_NoCallback
-800200a8 COLL_SearchTree_WithCallback
+8001ffc8 COLL_SearchTree_FindQuadblock_Touching
+800200a8 COLL_SearchTree_FindX
 
 // unknown 800202a0
 // unknown 800203d8
@@ -90,8 +90,8 @@
 // 20430 is not a real function
 // unknown 80020798
 
-800208d8 COLL_Quadblock_Graphics
-80020aac COLL_SearchCallback_QuadBlocks_Graphics
+800208d8 COLL_PerQuadblock_CheckTriangles_Touching
+80020aac COLL_PerVisData_CheckQuadblocks_Touching
 
 // unknown 80020b38
 // unknown 80020bac
@@ -102,8 +102,8 @@
 // unknown 800210cc
 // unknown 800210fc
 
-80021520 COLL_Quadblock_Physics
-80021764 COLL_SearchCallback_QuadBlocks_Physics
+80021520 COLL_PerQuadblock_CheckTriangles_NearPlayer
+80021764 COLL_PerVisData_CheckQuadblocks_NearPlayer
 
 // unknown 800217f0
 // unknown 800218cc
