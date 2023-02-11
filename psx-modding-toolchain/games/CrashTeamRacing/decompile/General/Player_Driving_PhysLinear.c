@@ -22,21 +22,20 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	char heldItemID;
 	short noItemTimer;
 	char isNumWumpas10;
-	u_short driverTimerUnk;
+	u_short driverTimerNegativeFinal;
 	u_short driverBaseSpeedUshort;
-	int driverTimer2;
+	int approxTrig;
 	int driverBaseSpeed;
-	int approximateSpeed;
-	char* AxisAnglePointer;
+	short approximateSpeed;
 	short sVar13;
 	int iVar14;
 	u_int buttonsTapped;
-	u_short driverTimerShort;
-	int driverTimer;
-	u_int timerHazard;
-	int approximateSpeed2;
-	u_int uVar22;
-	int driverSpeedSmth2;
+	u_short driverTimerNegativePrelim;
+	short driverTimer;
+	short timerHazard;
+	short approximateSpeed2;
+	u_int actionsFlagSetCopy;
+	short driverSpeedSmth2;
 	struct GamepadBuffer* ptrgamepad;
 	u_int cross;
 	u_int square;
@@ -46,10 +45,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	short* val;
 	int i;
 	int msPerFrame;
-	int driverValueMinusMsPerFrame;
-	u_int driverValueMinusMsPerFrameUnsigned;
 	short driverRankItemValue;
-	u_short timerHazardSomething;
 	u_int itemSound;
 	u_int uVar20;
 	int joystickStrength;
@@ -58,7 +54,9 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	struct Shield* shield;
 	struct TrackerWeapon* bomb;
 	u_int superEngineFireLevel;
-	
+	int unk0x80;
+	short driverSpeedCopy;
+
 	gGT = sdata->gGT;
 	gameMode2 = gGT->gameMode2;
 
@@ -193,13 +191,13 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 			((struct RainCloud*)driver->thCloud->object)->itemScrollRandom;
 
 	// get approximate speed
-	approximateSpeed = (int)driver->speedApprox;
+	approximateSpeed = driver->speedApprox;
 
 	// Action flags (isRaceOver, isTimeFrozen, etc)
-	uVar22 = driver->actionsFlagSet;
+	actionsFlagSetCopy = driver->actionsFlagSet;
 
 	// driver->clockReceive
-	driverTimer = (int)driver->clockReceive;
+	driverTimer = driver->clockReceive;
 
 	driver->driverRankItemValue = driverRankItemValue;
 
@@ -213,7 +211,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 			(driverTimer == 0) &&
 			(
 				// get squished timer
-				driverTimer = (int)driver->squishTimer,
+				driverTimer = driver->squishTimer,
 
 				// if you are not squished
 				driverTimer == 0
@@ -231,13 +229,10 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		)
 	)
 	{
-		// timerHazard = Hazard Timer (sign extended 2 to 4 bytes)
-		// keep a close eye on this one --Super
-		timerHazard = (u_int)driver->hazardTimer;
+		timerHazard = driver->hazardTimer;
 
-		// hazard timer will not go
-		// down unless you keep moving,
-		// is this for red potion raincloud?
+		// hazard timer will not go down unless you keep moving
+		// is this for the raincloud from red beakers?
 
 		// if you have high speed
 		if (approximateSpeed > 0x100)
@@ -246,23 +241,19 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 			timerHazard -= msPerFrame;
 		}
 
-		timerHazardSomething = (u_short)(timerHazard & 0xfffffffe);
-		if ((int)(timerHazard & 0xfffffffe) > -1)
-		{
-			timerHazardSomething = 0xfffe;
-		}
+		timerHazard = timerHazard & 0xfffe;
+		if (timerHazard > -1) timerHazard = -2;
 
-		// Hazard Timer = timerHazardSomething
-		driver->hazardTimer = timerHazardSomething;
+		driver->hazardTimer = timerHazard;
 	}
 
 	// if you are not impacted by hazard (other than clock)
 	else
 	{
-		driverTimerShort = (u_short)driverTimer;
+		driverTimerNegativePrelim = driverTimer;
 
 		// if you are not touching the ground
-		if ((uVar22 & 1) == 0)
+		if ((actionsFlagSetCopy & 1) == 0)
 		{
 			// if speed is low
 			if (approximateSpeed < 0x101) goto speedIsLow;
@@ -272,11 +263,11 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 			// absolute value of clock hazard
 			if (driverTimer < 0)
 			{
-				driverTimerShort = -driverTimerShort;
+				driverTimerNegativePrelim = -driverTimerNegativePrelim;
 			}
 
-			turnDriverTimerNegative:
-			driverTimerUnk = -driverTimerShort | 1;
+			turndriverTimerNegative:
+			driverTimerNegativeFinal = -driverTimerNegativePrelim | 1;
 		}
 
 		// if you are touching the ground
@@ -286,9 +277,9 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 			if (approximateSpeed < 0x101)
 			{
 				speedIsLow:
-				driverTimerShort = *(u_short*)&driver->hazardTimer;
-				driverTimerUnk = driverTimerShort | 1;
-				if (0 < (short)driverTimerShort) goto turnDriverTimerNegative;
+				driverTimerNegativePrelim = *(u_short*)&driver->hazardTimer;
+				driverTimerNegativeFinal = driverTimerNegativePrelim | 1;
+				if ((short)driverTimerNegativePrelim > 0) goto turndriverTimerNegative;
 			}
 
 			// if speed is high
@@ -297,38 +288,35 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 				// absolute value of clock hazard
 				if (driverTimer < 0)
 				{
-					driverTimerShort = -driverTimerShort;
+					driverTimerNegativePrelim = -driverTimerNegativePrelim;
 				}
 
 				// Use trigonometry with speed and
 				// clock timer to make the car waddle
 
-				// driverTimer2 = Clock Item (Receive) Timer << 0x10
-				driverTimer2 = (u_int)driver->clockReceive << 0x10;
-
-				driverTimer = driverTimer2 >> 0x16;
+				driverTimer = driver->clockReceive >> 6;
 				if (driverTimer > 0x40) driverTimer = 0x40;
 
-				timerHazard = (driverTimer2 >> 0x10) << 4;
+				timerHazard = driver->clockReceive << 4;
 
 				// approximate trigonometry
-				driverTimer2 = data.trigApprox[(timerHazard & 0x3ff)];
+				approxTrig = data.trigApprox[(timerHazard & 0x3ff)];
 
-				if ((timerHazard & 0x400) == 0) driverTimer2 = driverTimer2 << 0x10;
-				driverTimer2 = driverTimer2 >> 0x10;
+				if ((timerHazard & 0x400) == 0) approxTrig = approxTrig << 0x10;
+				approxTrig = approxTrig >> 0x10;
 
-				if ((timerHazard & 0x800) != 0) driverTimer2 = -driverTimer2;
+				if ((timerHazard & 0x800) != 0) approxTrig = -approxTrig;
 				approximateSpeed2 = approximateSpeed >> 8;
 
 				if (approximateSpeed2 > 0x20) approximateSpeed2 = 0x20;
 
 				// gamepad vibration
-				GAMEPAD_Vib_4(driver, 4, driverTimer + (driverTimer2 >> 5) + approximateSpeed2 + 0x18);
+				GAMEPAD_Vib_4(driver, 4, driverTimer + (approxTrig >> 5) + approximateSpeed2 + 0x18);
 
-				driverTimerUnk = driverTimerShort | 1;
+				driverTimerNegativeFinal = driverTimerNegativePrelim | 1;
 			}
 		}
-		driver->hazardTimer = driverTimerUnk;
+		driver->hazardTimer = driverTimerNegativeFinal;
 	}
 	
 	
@@ -362,7 +350,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 			}
 
 			// OtherFX_Play of getting weapon
-			OtherFX_Play(itemSound, (u_int)isNumWumpas10);
+			OtherFX_Play(itemSound, isNumWumpas10);
 		}
 
 		//if Item roll is not done
@@ -401,7 +389,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	
 	
 	// action flags
-	driver->actionsFlagSetPrevFrame = uVar22;
+	driver->actionsFlagSetPrevFrame = actionsFlagSetCopy;
 	
 	// backup rotation
 	*(u_int*)&driver->rotPrev.x = *(u_int*)&driver->rotCurr.x;
@@ -417,7 +405,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	driver->unknownDimension2Prev = driver->unknownDimension2Curr;
 
 	// ??? --Super
-	uVar20 = uVar22 & 0x7f1f83d5;
+	uVar20 = actionsFlagSetCopy & 0x7f1f83d5;
 	
 	// disable input if opening adv hub door with key
 	if ((gameMode2 & 0x4004) != 0)
@@ -433,7 +421,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	
 	// source
 	normSrc = &driver->AxisAngle2_normalVec[0];
-	if ((uVar22 & 1) != 0) normSrc = &driver->AxisAngle1_normalVec[0];
+	if ((actionsFlagSetCopy & 1) != 0) normSrc = &driver->AxisAngle1_normalVec[0];
 	
 	// copy
 	*(u_int*)&normDst[0] = *(u_int*)&normSrc[0];
@@ -444,17 +432,19 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	// === Check Mask Weapon ===
 
 
-	uVar22 = uVar20;
+	actionsFlagSetCopy = uVar20;
 	driverItemThread = thread->childThread;
 	while (driverItemThread != 0)
 	{
 		// If thread->modelIndex is Aku or Uka
-		if (
-				(*(short*)&driverItemThread->modelIndex == 0x3a) || 
-				(*(short*)&driverItemThread->modelIndex == 0x39))
+		if
+		(
+			(*(short*)&driverItemThread->modelIndex == 0x3a) || 
+			(*(short*)&driverItemThread->modelIndex == 0x39)
+		)
 		{
 			// driver is using mask weapon
-			uVar22 = uVar20 | 0x800000;
+			actionsFlagSetCopy = uVar20 | 0x800000;
 			break;
 		}
 
@@ -561,7 +551,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		)
 		{
 			// This driver wants to fire a weapon
-			uVar22 = uVar22 | 0x8000;
+			actionsFlagSetCopy |= 0x8000;
 			
 			// if numHeldItems == 0
 			// wait a full second before next weapon
@@ -625,14 +615,14 @@ CheckJumpButtons:
 			(driverRankItemValue != 3)
 		)
 		{
-			if ((uVar22 & 4) == 0)
+			if ((actionsFlagSetCopy & 4) == 0)
 			{
 				// 10 frame jump buffer
 				driver->jump_TenBuffer = 10;
 			}
 			goto LAB_8006222c;
 		}
-		uVar22 = uVar22 & 0xfffffffb;
+		actionsFlagSetCopy &= 0xfffffffb;
 		if (driver->jump_TenBuffer > 0) driver->jump_TenBuffer = 0;
 	}
 
@@ -650,14 +640,14 @@ CheckJumpButtons:
 		else
 		{
 			//Last Jump button pressed = buttonsTapped
-			driver->buttonUsedToStartDrift = (short)buttonsTapped;
+			driver->buttonUsedToStartDrift = buttonsTapped;
 		}
 
 		if (driverRankItemValue != 3)
 		{
 			driver->jump_TenBuffer = 10;
 			LAB_8006222c:
-			uVar22 = uVar22 | 4;
+			actionsFlagSetCopy |= 4;
 		}
 	}
 
@@ -695,11 +685,11 @@ CheckJumpButtons:
 		// If you are not holding Cross
 		if(cross == 0)
 		{
-			driverTimer = Player_StickReturnToRest(joystickStrength, 0x80, 0); 
+			unk0x80 = Player_StickReturnToRest(joystickStrength, 0x80, 0); 
 			
-			if(driverTimer > -1)
+			if(unk0x80 > -1)
 			{
-				uVar22 |= 0x400000;
+				actionsFlagSetCopy |= 0x400000;
 			}
 		}
 
@@ -707,7 +697,7 @@ CheckJumpButtons:
 		if((square != 0) && (approximateSpeed > 0x300))
 		{
 			// back wheel skids
-			uVar22 |= 0x800;
+			actionsFlagSetCopy |= 0x800;
 		}
 
 		// if you're on any turbo pad
@@ -726,36 +716,36 @@ CheckJumpButtons:
 	// === Gas/Break section ===
 	
 
-	driverTimer = 0x80;
+	unk0x80 = 0x80;
 
 	// If you're not in End-Of-Race menu
 	if ((gGT->gameMode1 & 0x200000) == 0) 
 	{
-		driverTimer = (int)ptrgamepad->stickLY;
+		unk0x80 = ptrgamepad->stickLY;
 	}
 	
 	if
 	(
 		(driver->simpTurnState < 0) ||
-		(uVar22 &= 0xdfffffff, driver->simpTurnState < 1)
+		(actionsFlagSetCopy &= 0xdfffffff, driver->simpTurnState < 1)
 	)
 	{
-		uVar22 = uVar22 & 0xbfffffff;
+		actionsFlagSetCopy &= 0xbfffffff;
 	}
-	approximateSpeed2 = (int)driver->speedApprox;
+	approximateSpeed2 = driver->speedApprox;
 	if (approximateSpeed2 < 0)
 	{
 		approximateSpeed2 = -approximateSpeed2;
 	}
 	if (approximateSpeed2 < 0x300)
 	{
-		uVar22 = uVar22 & 0x9fffffff;
+		actionsFlagSetCopy &= 0x9fffffff;
 	}
 	approximateSpeed2 = 0;
 	// Racer's Base Speed (4s)
 	driverBaseSpeed = Player_GetBaseSpeed(driver);
 	// Racer's Base Speed (2u)
-	driverBaseSpeedUshort = (u_short)driverBaseSpeed;
+	driverBaseSpeedUshort = driverBaseSpeed;
 
 	// If you are not holding Square
 	if (square == 0)
@@ -767,12 +757,12 @@ CheckJumpButtons:
 		if (cross != 0)
 		{
 			LAB_8006253c:
-			uVar22 = uVar22 & 0xfffdffff;
+			actionsFlagSetCopy &= 0xfffdffff;
 			goto LAB_80062548;
 		}
 
 		// if you are not holding cross, or have no Reserves...
-		//driverSpeedSmth2 is replaced
+		// driverSpeedSmth2 is replaced
 
 		// Player_StickReturnToRest
 		driverSpeedSmth2 = Player_StickReturnToRest(joystickStrength, 0x80, 0);
@@ -785,21 +775,21 @@ CheckJumpButtons:
 				(driverSpeedOrSmth == 0) &&
 				(
 					(
-						driverTimer = Player_StickReturnToRest(driverTimer, 0x80, 0), 
+						unk0x80 = Player_StickReturnToRest(unk0x80, 0x80, 0), 
 						
-						driverTimer > 99 ||
+						unk0x80 > 99 ||
 
 						(
-							(driverTimer > 0 && ((uVar22 & 0x20000) != 0))
+							(unk0x80 > 0 && ((actionsFlagSetCopy & 0x20000) != 0))
 						)
 					)
 				)
 			)
 			{
 				// driver is steering?
-				uVar22 |= 0x20000;
+				actionsFlagSetCopy |= 0x20000;
 		
-				driverSpeedSmth2 = -(int)driver->const_BackwardSpeed;
+				driverSpeedSmth2 = -driver->const_BackwardSpeed;
 				goto LAB_80062548;
 			}
 			
@@ -810,23 +800,23 @@ CheckJumpButtons:
 			// remove flag for reversing
 			goto LAB_8006253c;
 		}
-		if ((driver->speedApprox < 0x301) && ((uVar22 & 0x60000000) == 0))
+		if ((driver->speedApprox < 0x301) && ((actionsFlagSetCopy & 0x60000000) == 0))
 		{
 			driverSpeedOrSmth = driver->const_BackwardSpeed * driverSpeedOrSmth;
 			if (driverSpeedOrSmth < 0) driverSpeedOrSmth = driverSpeedOrSmth + 0x7f;
 			approximateSpeed2 = driverSpeedOrSmth >> 7;
 			buttonsTapped = 0x20000;
 			LAB_800625c4:
-			uVar20 = uVar22 | buttonsTapped;
+			uVar20 = actionsFlagSetCopy | buttonsTapped;
 		}
 		else
 		{
-			uVar20 = uVar22 | 8;
-			if (0 < driver->simpTurnState) uVar20 = uVar22 | 0x40000008;
+			uVar20 = actionsFlagSetCopy | 8;
+			if (0 < driver->simpTurnState) uVar20 = actionsFlagSetCopy | 0x40000008;
 			if (driver->simpTurnState < 0)
 			{
 				buttonsTapped = 0x20000000;
-				uVar22 = uVar20;
+				actionsFlagSetCopy = uVar20;
 				goto LAB_800625c4;
 			}
 		}
@@ -834,9 +824,9 @@ CheckJumpButtons:
 	// If you are holding Square
 	else
 	{
-		driverTimer = Player_StickReturnToRest(driverTimer, 0x80, 0);
+		unk0x80 = Player_StickReturnToRest(unk0x80, 0x80, 0);
 
-		if ((driverTimer < 100) && ((driverTimer < 1 || ((uVar22 & 0x20000) == 0))))
+		if ((unk0x80 < 100) && ((unk0x80 < 1 || ((actionsFlagSetCopy & 0x20000) == 0))))
 		{
 			// if you are not holding cross, and you have no Reserves
 			if (cross == 0)
@@ -852,14 +842,14 @@ CheckJumpButtons:
 					driverSpeedSmth2 = driverSpeedSmth2 >> 8;
 					
 					// gas and breaks together
-					uVar22 = uVar22 | 0x20;
+					actionsFlagSetCopy |= 0x20;
 					
 					goto LAB_80062548;
 				}
 				
 				if (0 < driverSpeedOrSmth)
 				{
-					driverSpeedOrSmth = (int)driver->const_BackwardSpeed * -driverSpeedOrSmth;
+					driverSpeedOrSmth = driver->const_BackwardSpeed * -driverSpeedOrSmth;
 					driverSpeedSmth2 = driverSpeedOrSmth >> 8;
 					if (driverSpeedOrSmth < 0) driverSpeedSmth2 = driverSpeedOrSmth + 0xff >> 8;
 					
@@ -871,7 +861,7 @@ CheckJumpButtons:
 				// no gas, only breaks
 				
 				// using the breaks
-				uVar22 = uVar22 | 8;
+				actionsFlagSetCopy |= 8;
 				
 				driverSpeedSmth2 = approximateSpeed2;
 			}
@@ -879,19 +869,19 @@ CheckJumpButtons:
 			else
 			{
 				// gas and breaks together
-				uVar22 = uVar22 | 0x20;
+				actionsFlagSetCopy |= 0x20;
 				
 				driverSpeedSmth2 = driverBaseSpeed / 2;
 			}
 			goto LAB_8006253c;
 		}
-		driverSpeedOrSmth = (int)driver->const_BackwardSpeed * -3;
+		driverSpeedOrSmth = driver->const_BackwardSpeed * -3;
 		driverSpeedSmth2 = driverSpeedOrSmth >> 2;
 		if (driverSpeedOrSmth < 0) 	driverSpeedSmth2 = driverSpeedOrSmth + 3 >> 2;
 		LAB_8006248c:
-		uVar22 = uVar22 | 0x20020;
+		actionsFlagSetCopy |= 0x20020;
 		LAB_80062548:
-		uVar20 = uVar22 & 0x9fffffff;
+		uVar20 = actionsFlagSetCopy & 0x9fffffff;
 		approximateSpeed2 = driverSpeedSmth2;
 	}
 
@@ -928,9 +918,9 @@ CheckJumpButtons:
 		}
 	}
 
-	uVar22 = uVar20 & 8;
+	actionsFlagSetCopy = uVar20 & 8;
 
-	if (uVar22 != 0)
+	if (actionsFlagSetCopy != 0)
 	{		
 		// high speed
 		if (
@@ -960,7 +950,7 @@ CheckJumpButtons:
 		if (approximateSpeed2 > 0) goto LAB_800626d4;
 		LAB_800626fc:
 		//Racer struct + 0x39E = Racer's Base Speed
-		*(u_short*)&driver->fireSpeed = (short)approximateSpeed2;
+		*(u_short*)&driver->fireSpeed = approximateSpeed2;
 	}
 	else
 	{
@@ -973,7 +963,7 @@ CheckJumpButtons:
 			goto LAB_800626fc;
 		}
 		//Racer struct + 0x39E = Racer's Base Speed
-		*(u_short*)&driver->fireSpeed = (short)approximateSpeed2;
+		*(u_short*)&driver->fireSpeed = approximateSpeed2;
 	}
 	if ((uVar20 & 0x800020) == 0)
 	{
@@ -989,7 +979,7 @@ CheckJumpButtons:
 		}
 	}
 	*(u_short*)&driver->unknowndriverBaseSpeed = driverBaseSpeedUshort;
-	*(u_short*)&driver->baseSpeed = (short)approximateSpeed2;
+	*(u_short*)&driver->baseSpeed = approximateSpeed2;
 
 
 	// === Steering Section ===
@@ -1006,7 +996,7 @@ CheckJumpButtons:
 	}
 
 	// default steer strength from class stats
-	iVar14 = (u_int)driver->const_TurnRate + ((int)driver->turnConst << 1) / 5;
+	iVar14 = driver->const_TurnRate + (driver->turnConst << 1) / 5;
 	
 	// if mashing X button
 	if ((driver->mashXUnknown > 6) && (approximateSpeed < 0x2600))
@@ -1045,14 +1035,17 @@ CheckJumpButtons:
 	// === if holding Square + Cross ===
 	
 	// absolute value driver speed
-	driverTimer = (int)driver->speed;
-	if (driverTimer < 0) driverTimer = -driverTimer;
+	driverSpeedCopy = driver->speed;
+	if (driverSpeedCopy < 0) driverSpeedCopy = -driverSpeedCopy;
 
 	// As speed increases, turn rate decreases
-	iVar14 = MapToRange(
-				driverTimer,0x300,
-				(int)((u_int)driver->const_Speed_ClassStat << 0x10) >> 0x11,0x40,
-				iVar14);
+	iVar14 =
+	MapToRange
+	(
+		driverSpeedCopy, 0x300,
+		driver->const_Speed_ClassStat / 2, 0x40,
+		iVar14
+	);
 	
 UseTurnRate:
 
@@ -1111,7 +1104,7 @@ SkipSetSteer:
 		driverSpeedOrSmth = driverSpeedOrSmth + approximateSpeed >> 1;
 	}
 
-	sVar13 = (short)((driverSpeedOrSmth * 0x89 + (int)driver->unkSpeedValue2 * 0x177) * 8 >> 0xc);
+	sVar13 = (driverSpeedOrSmth * 0x89 + driver->unkSpeedValue2 * 0x177) * 8 >> 0xc;
 	driver->unkSpeedValue2 = sVar13;
 
 	if ((driver->actionsFlagSetPrevFrame & 8) == 0)
