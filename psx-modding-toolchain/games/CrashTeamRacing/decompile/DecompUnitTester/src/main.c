@@ -8,13 +8,13 @@
 #define NOP   0x00000000
 
 // Functions
-void DECOMP_CS_Podium_FullScene_Init();
-void CS_Podium_FullScene_Init();
+void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
+void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
 void MainFrame_GameLogic();
 
-typedef void (*func)();
-func newFunc = (func) &DECOMP_CS_Podium_FullScene_Init;
-func oldFunc = (func) &CS_Podium_FullScene_Init;
+typedef void (*func)(struct AnimTex* animtex, int timer);
+func newFunc = (func) &DECOMP_CTR_CycleTex_LEV;
+func oldFunc = (func) &CTR_CycleTex_LEV;
 
 unsigned int * hookAddress = (unsigned int *) (&MainFrame_GameLogic - 8);
 unsigned int instructions[4];
@@ -81,7 +81,7 @@ int isEqual(unsigned int * dest, unsigned int * src, unsigned int size)
 }
 
 // The Tester() function takes the same signature as the function you're decompiling
-void Tester()
+void Tester(struct AnimTex* animtex, int timer)
 {
 	enterCriticalSection();
 	// Backup the program state before calling the decomp function
@@ -89,7 +89,7 @@ void Tester()
 	memCopy(scratchpadBackup_4mb, scratchpad, scratchpadSize);
 	gte_saveContext(gteBackup_4mb);
 	// Call the decomp function
-	newFunc();
+	newFunc(animtex, timer);
 	// Backup result of decomp function
 	memCopy(ram_6mb, ram, ramSize);
 	memCopy(scratchpadBackup_6mb, scratchpad, scratchpadSize);
@@ -100,7 +100,7 @@ void Tester()
 	gte_loadContext(gteBackup_4mb);
 	// Call the original function
 	func ogFunc = (func) &instructions[0];
-	ogFunc();
+	ogFunc(animtex, timer);
 	gte_saveContext(gteBackup_4mb);
 	total++;
 	// Comparing the results of the original function and the decomp function
