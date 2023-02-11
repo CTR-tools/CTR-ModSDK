@@ -1425,7 +1425,7 @@ LAB_80035c98:
 	  // if animated lev vertices
       else
 	  {
-		// VisMem 0x0-0xF
+		// VisMem 0x70-0x7F
         iVar2 = *(int *)(param_1 + 0x1a38) + iVar7;
         iVar8 = *(int *)(iVar2 + 0x70);
 

@@ -323,7 +323,7 @@ LAB_80035900:
 				else
 				{
 					// camera 0x2C
-					unk20->0x60 = cameraDC->unk2c;
+					unk20->0x60[i] = cameraDC->unk2c;
 
 					uVar5 = cameraDC->unk2c;
 
