@@ -184,13 +184,13 @@ LAB_80035900:
 			// if following warpball path like track select videos,
 			else
 			{
-				// VisMem 0x0-0xF
-				iVar3 = gGT->visMem1->VisDataLeaf_Bit_Visibility[i];
+				// VisMem 0x50-0x5F
+				iVar3 = gGT->visMem1;
 
 				// if this changed from the previous frame
-				if ((void*)((int)iVar3 + 0x50) != unk20)
+				if ((void*)((int)iVar3->0x50[i]) != unk20)
 				{
-					(void*)((int)iVar3 + 0x50) = unk20;
+					(void*)((int)iVar3->0x50[i]) = unk20;
 
 					// CameraDC 0x24
 					if ((cameraDC->unk24 & 1) == 0)

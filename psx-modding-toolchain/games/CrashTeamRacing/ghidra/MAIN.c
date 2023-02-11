@@ -1279,7 +1279,7 @@ LAB_80035900:
 	  // if following warpball path like track select videos,
       else
 	  {
-		// VisMem 0x0-0xF
+		// VisMem 0x50-0x5F
         iVar3 = *(int *)(param_1 + 0x1a38) + iVar7;
 
 		// if cameraDC->0x24 changed
