@@ -1158,6 +1158,9 @@ void FUN_800357b8(int param_1,int param_2)
 				(iVar2 = *piVar1, iVar2 != 0)
 			)
 		{
+		  // if camDC->0x20 is nullptr,
+		  // take from quadblock->0x44->0x0
+			
 		  // VisMem 0x40-0x4F
           *(int *)(*(int *)(param_1 + 0x1a38) + iVar7 + 0x40) = iVar2;
 
@@ -1242,6 +1245,9 @@ LAB_80035900:
 				(iVar2 = *(int *)(iVar2 + 4), iVar2 != 0)
 		   )
 		{
+		  // if camDC->0x24 is nullptr,
+		  // take from quadblock->0x44->0x4
+			
 		  // VisMem 0x50-0x5F
           *(int *)(*(int *)(param_1 + 0x1a38) + iVar7 + 0x50) = iVar2;
 
@@ -1276,7 +1282,7 @@ LAB_80035900:
 		// VisMem 0x0-0xF
         iVar3 = *(int *)(param_1 + 0x1a38) + iVar7;
 
-		// if this changed from the previous frame
+		// if cameraDC->0x24 changed
 		if (*(int *)(iVar3 + 0x50) != iVar2)
 		{
           *(int *)(iVar3 + 0x50) = iVar2;
@@ -1376,7 +1382,10 @@ LAB_80035900:
 			)
 		 )
 	  {
+		// quadblock->0x44->0x8
+		  
 		// CameraDC 0x28
+		// which instances are visible
         *(int *)(iVar6 + 0x28) = iVar2;
       }
 	  

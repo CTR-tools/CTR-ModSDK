@@ -3534,19 +3534,24 @@ struct CameraDC
 	// FUN_800188a8 suggests 2c is lev -> mesh_info
 	
 	// 0x20
-	// VisMem->0x40[player]
+	// VisMem->0x40[player], quadblock->0x44->0x0
 	void* unk20;
 
 	// 0x24
+	// VisMem->0x50[player], quadblock->0x44->0x4
 	void* unk24;
 
 	// 0x28
+	// quadblock->0x44->0x8
+	// which instances are visible from quadblock
 	void* unk28;
 
 	// 0x2c
+	// VisMem->0x60[player]
 	void* unk2c;
 
 	// 0x30
+	// VisMem->0x70[player],
 	void* unk30;
 
 	// 0x34

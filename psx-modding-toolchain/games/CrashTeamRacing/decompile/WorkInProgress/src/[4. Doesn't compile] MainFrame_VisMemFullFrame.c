@@ -60,6 +60,9 @@ void DECOMP_MainFrame_VisMemFullFrame(struct GameTracker* gGT, struct Level* lev
 					(unk20 = ptr_add_tex->0x0, unk20 != 0)
 				)
 				{
+					// if cameraDC->0x20 is nullptr,
+					// grab from quadblock->0x440->0x0
+					
 					// VisMem 0x40-0x4F
 					gGT->visMem1->array4[i] = unk20;
 
@@ -144,6 +147,9 @@ LAB_80035900:
 					(unk20 = unk20->0x4, unk20 != 0)
 				)
 				{
+					// if camDC->0x24 is nullptr,
+					// take from quadblock->0x44->0x4
+					
 					// VisMem 0x50-0x5F
 					gGT->visMem1->array5[i] = unk20;
 
@@ -293,6 +299,10 @@ LAB_80035900:
 				)
 			)
 			{
+				// quadblock->0x44->0x8
+		
+				// CameraDC 0x28
+				// which instances are visible
 				cameraDC->unk28 = unk20;
 			}
 		
