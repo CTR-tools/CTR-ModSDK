@@ -309,11 +309,9 @@ LAB_80035900:
 			// if no animated vertices
 			if ((level->configFlags & 4) == 0)
 			{
-				// VisMem 0x0-0xF
-				unk20 = gGT->visMem1->VisDataLeaf_Bit_Visibility[i];
-
-				// + 0x60
-				driver = unk20->0x60;
+				// VisMem 0x60-0x6F
+				unk20 = gGT->visMem1;
+				driver = unk20->0x60[i];
 
 				// CameraDC 0x2C
 				if (driver == cameraDC->unk2c)

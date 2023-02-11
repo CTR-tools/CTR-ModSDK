@@ -1392,10 +1392,8 @@ LAB_80035900:
 	  // if no animated vertices
       if ((*(uint *)(param_2 + 0xdc) & 4) == 0)
 	  {
-		// VisMem 0x0-0xF
+		// VisMem 0x60-0x6F
         iVar2 = *(int *)(param_1 + 0x1a38) + iVar7;
-
-		// + 0x60
 		iVar8 = *(int *)(iVar2 + 0x60);
 
 		// CameraDC 0x2C
