@@ -1059,7 +1059,8 @@ void FUN_80035684(int param_1,int param_2)
 	// driver -> ptr_add_tex -> offset4
     uVar3 = *(uint *)(*(int *)(*(int *)(iVar5 + 0x350) + 0x44) + 4);
 
-	if (uVar3 != 0) {
+	if (uVar3 != 0) 
+	{
       if ((uVar3 & 1) == 0) 
 	  {
         FUN_80021ea8(
@@ -1163,8 +1164,12 @@ void FUN_800357b8(int param_1,int param_2)
 		  // quadblock -> ptr_add_tex -> 0x0
           uVar5 = **(uint **)(*(int *)(iVar8 + 0x350) + 0x44);
 
+		  // only memcpy if size is specified
 		  if ((uVar5 & 1) == 0) goto LAB_80035900;
+
 LAB_800358e0:
+		  
+		  // copy until nullptr
           FUN_80021da0(
 		  
 			// VisMem 0x0-0xF
@@ -1188,6 +1193,7 @@ LAB_800358e0:
 		  // CameraDC 0x20
 		  uVar5 = *(uint *)(iVar6 + 0x20);
 
+		  // only memcpy if size is specified
 		  if ((uVar5 & 1) != 0) goto LAB_800358e0;
 LAB_80035900:
 
@@ -1201,6 +1207,15 @@ LAB_80035900:
 					uVar5,
 
 					// unk size
+					// get number of bits
+					// lw a2 0x1c(s6) (CameraDC->0x1C)
+					
+					// get number of ints
+					// addiu a2, 1F
+					// sra a2, 5
+					
+					// get number of bytes
+					// sll a2, 2
 				);
         }
       }
@@ -1233,6 +1248,7 @@ LAB_80035900:
 		  // quadblock -> ptr_add_tex -> 0x4
           uVar5 = *(uint *)(*(int *)(*(int *)(iVar8 + 0x350) + 0x44) + 4);
 
+		  // only memcpy if size is specified
 		  if ((uVar5 & 1) == 0)
 		  {
 			// called VISMEM in prototypes
@@ -1246,6 +1262,7 @@ LAB_80035900:
           else 
 		  {
 			// VisMem 0x10-0x1F
+			// copy until nullptr
             FUN_80021da0(*(undefined4 *)(*(int *)(param_1 + 0x1a38) + iVar7 + 0x10),
                                uVar5 & 0xfffffffc);
           }
@@ -1265,6 +1282,7 @@ LAB_80035900:
           *(int *)(iVar3 + 0x50) = iVar2;
 
 		  // CameraDC 0x24
+		  // only memcpy if size is specified
 		  if ((*(uint *)(iVar6 + 0x24) & 1) == 0)
 		  {
             memcpy(
@@ -1278,6 +1296,7 @@ LAB_80035900:
 
           else
 		  {
+			// copy until nullptr
             FUN_80021da0(
 
 					// VisMem 0x10-0x1F
@@ -1383,11 +1402,15 @@ LAB_80035900:
 
           uVar5 = *(uint *)(iVar6 + 0x2c);
 
+		  // only memcpy if size is specified
 		  if ((uVar5 & 1) == 0) goto LAB_80035ce0;
 
 		  // VisMem 0x20-0x2F (visOVertList)
 		  uVar4 = *(undefined4 *)(*(int *)(param_1 + 0x1a38) + iVar7 + 0x20);
+
 LAB_80035c98:
+
+		  // copy until nullptr
           FUN_80021da0(uVar4,uVar5 & 0xfffffffc);
         }
       }
@@ -1411,6 +1434,7 @@ LAB_80035c98:
           *(int *)(iVar2 + 0x70) = *(int *)(iVar6 + 0x30);
           uVar5 = *(uint *)(iVar6 + 0x30);
 
+		  // only memcpy if size is specified
           if ((uVar5 & 1) != 0)
 		  {
 			// VisMem 0x30-0x3F

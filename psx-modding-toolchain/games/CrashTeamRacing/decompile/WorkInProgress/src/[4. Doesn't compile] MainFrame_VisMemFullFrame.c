@@ -68,6 +68,7 @@ void DECOMP_MainFrame_VisMemFullFrame(struct GameTracker* gGT, struct Level* lev
 
 					if ((uVar5 & 1) == 0) goto LAB_80035900;
 LAB_800358e0:
+					// copy until nullptr
 					FUN_80021da0
 					(
 						// VisMem 0x0-0xF
@@ -82,16 +83,17 @@ LAB_800358e0:
 			else
 			{
 				// VisMem 0x0-0xF
-				iVar3 = gGT->visMem1->VisDataLeaf_Bit_Visibility[i];
+				iVar3 = gGT->visMem1;
 
 				// if this changed from previous frame
-				if (gGT->visMem1->VisDataLeaf_Bit_Visibility[i]->0x40 != unk20)
+				if (iVar3->array4[i] != unk20)
 				{
-					gGT->visMem1->VisDataLeaf_Bit_Visibility[i]->0x40 = unk20;
+					iVar3->array4[i] = unk20;
 
 					// CameraDC 0x20
 					uVar5 = cameraDC->unk20;
 
+					// if size is not specified
 					if ((uVar5 & 1) != 0) goto LAB_800358e0;
 LAB_80035900:
 
@@ -106,6 +108,15 @@ LAB_80035900:
 						uVar5,
 
 						// unk size
+						// get number of bits
+						// lw a2 0x1c(s6) (CameraDC->0x1C)
+						
+						// get number of ints
+						// addiu a2, 1F
+						// sra a2, 5
+						
+						// get number of bytes
+						// sll a2, 2
 					);
 				}
 			}
@@ -153,6 +164,7 @@ LAB_80035900:
 					else 
 					{
 						// VisMem 0x10-0x1F
+						// copy until nullptr
 						FUN_80021da0
 						(
 							gGT->visMem1->QuadBlock_Bit_Visibility[i],
@@ -189,6 +201,7 @@ LAB_80035900:
 
 					else
 					{
+						// copy until nullptr
 						FUN_80021da0
 						(
 
@@ -311,6 +324,7 @@ LAB_80035900:
 					// VisMem 0x20-0x2F (visOVertList)
 					uVar4 = gGT->visMem1->Water_Bit_Visibility[i];
 LAB_80035c98:
+					// copy until nullptr
 					FUN_80021da0(uVar4, uVar5 & 0xfffffffc);
 				}
 			}
@@ -332,7 +346,7 @@ LAB_80035c98:
 				else
 				{
 					// VisMem + playerIndex*4 + 0x70 = CameraDC 0x30
-					unk20->0x70 = cameraDC->unk30;
+					unk20->0x70[playerIndex] = cameraDC->unk30;
 					uVar5 = cameraDC->unk30;
 
 					if ((uVar5 & 1) != 0)

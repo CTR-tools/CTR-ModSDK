@@ -3534,6 +3534,7 @@ struct CameraDC
 	// FUN_800188a8 suggests 2c is lev -> mesh_info
 	
 	// 0x20
+	// VisMem->0x40[player]
 	void* unk20;
 
 	// 0x24
