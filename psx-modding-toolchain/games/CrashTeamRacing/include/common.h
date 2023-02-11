@@ -3522,9 +3522,6 @@ struct CameraDC
 	// similar to driver +a0,
 	// quadblock camera is currently above
 	struct Quadblock* ptrQuadBlock;
-	
-	// 0x20
-	char unk24[0x24];
 
 	// duplicate ptr[4] array,
 	// copied from quadblock + 0x44
@@ -3535,6 +3532,24 @@ struct CameraDC
 	// 0x30 - ??? (sometimes swapped with 2C)
 
 	// FUN_800188a8 suggests 2c is lev -> mesh_info
+	
+	// 0x20
+	void* unk20;
+
+	// 0x24
+	void* unk24;
+
+	// 0x28
+	void* unk28;
+
+	// 0x2c
+	void* unk2c;
+
+	// 0x30
+	void* unk30;
+
+	// 0x34
+	char unk30fill[0x10];
 
 	// 96b20+14c0
 
@@ -4022,7 +4037,7 @@ struct VisMem
 	// 0x10-0x1F
 	// each pointer goes to a byte block of [lev->mesh_info->numQuadBlock/32],
 	// one bit for every quadblock visible by each driver
-	void* QuadBlock_Bit_Visibliity[4];
+	void* QuadBlock_Bit_Visibility[4];
 
 	// June 1999 calls this visOVertList (O for ocean)
 	// 0x20-0x2F
