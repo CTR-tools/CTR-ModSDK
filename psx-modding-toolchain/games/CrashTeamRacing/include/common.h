@@ -4034,6 +4034,11 @@ struct VisMem
 {
 	// 4 of each for number of players
 
+	// 0x00-0x3F are all DST
+	// 0x40-0x7F are all SRC
+	// SRC constantly copies to DST
+	// DST never changes, SRC always changes
+	// why?
 
 	// June 1999 calls this visLeafList
 	// 0x00-0x0F
