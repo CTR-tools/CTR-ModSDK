@@ -4037,8 +4037,9 @@ struct VisMem
 	// 0x00-0x3F are all DST
 	// 0x40-0x7F are all SRC
 	// SRC constantly copies to DST
-	// DST never changes, SRC always changes
-	// why?
+	// DST never changes 
+	// SRC always changes based on CamDC
+	// why is the copy needed?
 
 	// June 1999 calls this visLeafList
 	// 0x00-0x0F
