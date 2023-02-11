@@ -130,7 +130,7 @@ LAB_80035900:
 						)
 					) &&
 
-					(unk20 = ((struct VisMem*)ptr_add_tex)->VisDataLeaf_Bit_Visibility[1], unk20 != 0)
+					(unk20 = ((struct VisMem*)unk20)->VisDataLeaf_Bit_Visibility[1], unk20 != 0)
 				)
 				{
 					// VisMem 0x50-0x5F
