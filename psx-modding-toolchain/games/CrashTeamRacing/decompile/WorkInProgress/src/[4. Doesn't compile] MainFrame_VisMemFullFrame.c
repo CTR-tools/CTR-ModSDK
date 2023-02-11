@@ -57,14 +57,14 @@ void DECOMP_MainFrame_VisMemFullFrame(struct GameTracker* gGT, struct Level* lev
 					) &&
 
 					// pull vismem data from quadblock + 0x44
-					(unk20 = ((struct VisMem*)ptr_add_tex)->VisDataLeaf_Bit_Visibility[0], unk20 != 0)
+					(unk20 = ptr_add_tex->0x0, unk20 != 0)
 				)
 				{
 					// VisMem 0x40-0x4F
 					gGT->visMem1->array4[i] = unk20;
 
 					// quadblock -> ptr_add_tex -> 0x0
-					uVar5 = ((struct VisMem*)driver->underDriver->ptr_add_tex)->VisDataLeaf_Bit_Visibility[0];
+					uVar5 = driver->underDriver->ptr_add_tex->0x0;
 
 					if ((uVar5 & 1) == 0) goto LAB_80035900;
 LAB_800358e0:
@@ -85,9 +85,9 @@ LAB_800358e0:
 				iVar3 = gGT->visMem1->VisDataLeaf_Bit_Visibility[i];
 
 				// if this changed from previous frame
-				if (((struct VisMem*)gGT->visMem1->VisDataLeaf_Bit_Visibility[i])->array4[0] != unk20)
+				if (gGT->visMem1->VisDataLeaf_Bit_Visibility[i]->0x40 != unk20)
 				{
-					((struct VisMem*)gGT->visMem1->VisDataLeaf_Bit_Visibility[i])->array4[0] = unk20;
+					gGT->visMem1->VisDataLeaf_Bit_Visibility[i]->0x40 = unk20;
 
 					// CameraDC 0x20
 					uVar5 = cameraDC->unk20;
@@ -130,14 +130,14 @@ LAB_80035900:
 						)
 					) &&
 
-					(unk20 = ((struct VisMem*)unk20)->VisDataLeaf_Bit_Visibility[1], unk20 != 0)
+					(unk20 = unk20->0x4, unk20 != 0)
 				)
 				{
 					// VisMem 0x50-0x5F
-					((struct VisMem*)gGT->visMem1->VisDataLeaf_Bit_Visibility[i])->array5[0] = unk20;
+					gGT->visMem1->array5[i] = unk20;
 
 					// quadblock -> ptr_add_tex -> 0x4
-					uVar5 = ((struct VisMem*)driver->underDriver->ptr_add_tex)->VisDataLeaf_Bit_Visibility[1];
+					uVar5 = driver->underDriver->ptr_add_tex->0x4;
 
 					if ((uVar5 & 1) == 0)
 					{
@@ -155,7 +155,7 @@ LAB_80035900:
 						// VisMem 0x10-0x1F
 						FUN_80021da0
 						(
-							((struct VisMem*)gGT->visMem1->VisDataLeaf_Bit_Visibility[i])->QuadBlock_Bit_Visibility[0],
+							gGT->visMem1->QuadBlock_Bit_Visibility[i],
 							uVar5 & 0xfffffffc
 						);
 					}
@@ -170,9 +170,9 @@ LAB_80035900:
 				iVar3 = gGT->visMem1->VisDataLeaf_Bit_Visibility[i];
 
 				// if this changed from the previous frame
-				if (((struct VisMem*)iVar3)->array5[0] != unk20)
+				if ((void*)((int)iVar3 + 0x50) != unk20)
 				{
-					((struct VisMem*)iVar3)->array5[0] = unk20;
+					(void*)((int)iVar3 + 0x50) = unk20;
 
 					// CameraDC 0x24
 					if ((cameraDC->unk24 & 1) == 0)
@@ -180,7 +180,7 @@ LAB_80035900:
 						memcpy
 						(
 							// VisMem 0x10-0x1F
-							((struct VisMem*)gGT->visMem1->VisDataLeaf_Bit_Visibility[i])->QuadBlock_Bit_Visibility[0]
+							gGT->visMem1->QuadBlock_Bit_Visibility[i]
 					
 							cameraDC->unk24,
 							// unk size
@@ -193,7 +193,7 @@ LAB_80035900:
 						(
 
 							// VisMem 0x10-0x1F
-							((struct VisMem*)gGT->visMem1->VisDataLeaf_Bit_Visibility[i])->QuadBlock_Bit_Visibility[0],
+							gGT->visMem1->QuadBlock_Bit_Visibility[i],
 
 							// CameraDC 0x24
 							cameraDC->unk24 & 0xfffffffc
@@ -210,20 +210,17 @@ LAB_80035900:
 						(
 							// data from quadblock -> ptr_add_tex is invalid
 							(
-								((struct VisMem*)ptr_add_tex)->VisDataLeaf_Bit_Visibility[0] == 0 ||
+								ptr_add_tex->0x0 == 0 ||
 								
 								(
 									(
-										(
-											((struct VisMem*)ptr_add_tex)->VisDataLeaf_Bit_Visibility[1] == 0 ||
-											(((struct VisMem*)ptr_add_tex)->VisDataLeaf_Bit_Visibility[2] == 0)
-										) ||
+										(ptr_add_tex->0x4 == 0 || (ptr_add_tex->0x8 == 0)) ||
 
 										// LEV -> mesh_info -> ptrQuadBlockArray
 										(unk20 = (unk20 - gGT->level1->ptr_mesh_info->ptrQuadBlockArray) * -0x1642c859,
 
 										// VisMem 0x10-0x1F
-										(*(u_int* )((unk20 >> 7) * 4 + ((struct VisMem*)gGT->visMem1->VisDataLeaf_Bit_Visibility[i])->QuadBlock_Bit_Visibility[0]) &
+										(*(u_int* )((unk20 >> 7) * 4 + gGT->visMem1->QuadBlock_Bit_Visibility[i]) &
 										1 << (unk20 >> 2 & 0x1fU)) != 0)
 									)
 								)
@@ -277,7 +274,7 @@ LAB_80035900:
 							// driver -> quadblock -> ptr_add_tex
 							(unk20 = driver->underDriver->ptr_add_tex, unk20 != 0 &&
 
-							(unk20 = ((struct VisMem*)unk20)->VisDataLeaf_Bit_Visibility[2], unk20 != 0))
+							(unk20 = unk20->0x8, unk20 != 0))
 						)
 					)
 				)
@@ -293,7 +290,7 @@ LAB_80035900:
 				unk20 = gGT->visMem1->VisDataLeaf_Bit_Visibility[i];
 
 				// + 0x60
-				driver = ((struct VisMem*)unk20)->array6[0];
+				driver = unk20->0x60;
 
 				// CameraDC 0x2C
 				if (driver == cameraDC->unk2c)
@@ -305,14 +302,14 @@ LAB_80035900:
 				else
 				{
 					// camera 0x2C
-					((struct VisMem*)unk20)->array6[0] = cameraDC->unk2c;
+					unk20->0x60 = cameraDC->unk2c;
 
 					uVar5 = cameraDC->unk2c;
 
 					if ((uVar5 & 1) == 0) goto LAB_80035ce0;
 
 					// VisMem 0x20-0x2F (visOVertList)
-					uVar4 = ((struct VisMem*)gGT->visMem1->VisDataLeaf_Bit_Visibility[i])->Water_Bit_Visibility;
+					uVar4 = gGT->visMem1->Water_Bit_Visibility[i];
 LAB_80035c98:
 					FUN_80021da0(uVar4, uVar5 & 0xfffffffc);
 				}
@@ -323,7 +320,7 @@ LAB_80035c98:
 			{
 				// VisMem 0x0-0xF
 				unk20 = gGT->visMem1->VisDataLeaf_Bit_Visibility[i];
-				driver = ((struct VisMem*)unk20)->array7[0];
+				driver = unk20->0x70;
 
 				// CameraDC 0x30
 				if (driver == cameraDC->unk30)
@@ -335,13 +332,13 @@ LAB_80035c98:
 				else
 				{
 					// VisMem + playerIndex*4 + 0x70 = CameraDC 0x30
-					((struct VisMem*)unk20)->array7[0] = cameraDC->unk30;
+					unk20->0x70 = cameraDC->unk30;
 					uVar5 = cameraDC->unk30;
 
 					if ((uVar5 & 1) != 0)
 					{
 						// VisMem 0x30-0x3F
-						uVar4 = ((struct VisMem*)gGT->visMem1->VisDataLeaf_Bit_Visibility[i])->AnimatedVertex_Bit_Visibility[0];
+						uVar4 = gGT->visMem1->AnimatedVertex_Bit_Visibility[i];
 						goto LAB_80035c98;
 					}
 				}
