@@ -7,9 +7,13 @@ common, exe, main, 0x0, src/main.c
 
 // sets lev to bigfile 221
 926, 221, 0x8009f6fc, 0x0, src/data.lev
+//926, 221, 0x8009f6fc, 0x0, src/Lev221.c
 
 // disable LevInstDef_UnPack
-common, exe, LevInstDef_UnPack, 0x0, src/return.c
+common, exe, LevInstDef_UnPack, 0x0, src/return1.c
+
+// disable CycleTex
+common, exe, CTR_CycleTex_LEV, 0x0, src/return2.c
 
 // disable LevInstQueue
 // required? or just needed cause I messed up? crashes in relocate attempts

@@ -1,4 +1,0 @@
-void x()
-{
-	return;
-}

@@ -3850,7 +3850,7 @@ struct VisFromQuadBlock
 	
 	// either OVert or SCVert
 	int* visExtraSrc;
-}
+};
 
 struct QuadBlock
 {
@@ -3887,7 +3887,7 @@ struct QuadBlock
 	void* ptr_texture_low;
 
 	// 0x44
-	struct VisFromQuadBlock* visFromQuadblock;
+	struct VisFromQuadBlock* visFromQuadBlock;
 
 	// 0x48
 	// explained in FUN_8001f2dc
@@ -4307,6 +4307,8 @@ struct Level
 
 	// 0x190
 	struct VisMem* visMem;
+	
+	char footer[0x60];
 };
 
 struct AnimTex
