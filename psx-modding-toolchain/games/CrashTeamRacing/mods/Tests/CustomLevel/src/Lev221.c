@@ -12,7 +12,7 @@ struct LevelFile
 	struct VisData visData[3];
 	struct VisFromQuadBlock visFromQuadBlock;
 	int visBitIndex[4];
-	unsigned char emptyTexData[0x30];
+	struct IconGroup4 group4;
 	struct VisMem visMem;
 	int VisMem_bitIndex_DstMemcpy[8]; // leave empty
 	int VisMem_bspList_RenderList[3*2];
@@ -49,10 +49,10 @@ struct LevelFile file =
 		.draw_order_high = 0,
 		.ptr_texture_mid =
 		{
-			OFFSETOF(struct LevelFile, emptyTexData[0])-4,
-			OFFSETOF(struct LevelFile, emptyTexData[0])-4,
-			OFFSETOF(struct LevelFile, emptyTexData[0])-4,
-			OFFSETOF(struct LevelFile, emptyTexData[0])-4
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4
 		},
 		
 		.bbox =
@@ -70,7 +70,7 @@ struct LevelFile file =
 		.respawnIndex = -1,
 		.triNormalVecBitShift = 0x12,
 		
-		.ptr_texture_low = OFFSETOF(struct LevelFile, emptyTexData[0])-4,
+		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4,
 		.visFromQuadBlock = OFFSETOF(struct LevelFile, visFromQuadBlock)-4,
 		.triNormalVecDividend =
 		{
@@ -248,37 +248,32 @@ struct LevelFile file =
 		-1, -1, -1, -1
 	},
 	
-	.emptyTexData =
+	// A quadblock can draw 32 textures,
+	.group4 =
 	{
-		// first 0x24 empty
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,
-		
-		// see DCxDemo's lev.ksy
-		
-		// short uv1
-		0xF0, 0x80, 
-		
-		// palletX(b6), 
-		// pelletY(b10)
-		0xED, 0x61, 
-		
-		// short uv2
-		0xFF, 0x80, 
-		
-		// pageX(b4), 
-		// pageY(b1), 
-		// blending(b2), 
-		// bitDepth(b2), 
-		// restBits(b7)
-		0x6C, 0x00,
-		
-		// short uv3
-		0xF0, 0x8F,
-		
-		// short uv4
-		0xFF, 0x8F
+		.texLayout[0] = {},
+		.texLayout[1] = {},
+		.texLayout[2] = {},
+		.texLayout[3] = 
+		{
+			.X1 = 0xF0, .Y1 = 0x80,
+			
+			// X(b6) Y(b10)
+			.paletteXY = 0x61ED,
+			
+			.X2 = 0xFF, .Y2 = 0x80,
+			
+			// pageX(b4), 
+			// pageY(b1), 
+			// blending(b2), 
+			// bitDepth(b2), 
+			// restBits(b7)
+			.pageXY = 0x6C,
+			
+			.X3 = 0xF0, .Y3 = 0x8F,
+			
+			.X4 = 0xFF, .Y4 = 0x8F,
+		},
 	},
 	
 	.visMem =

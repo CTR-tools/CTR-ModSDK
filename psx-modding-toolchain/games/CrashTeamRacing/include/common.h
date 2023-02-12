@@ -1507,16 +1507,8 @@ struct JitPool
 	void* ptrPoolData;
 };
 
-struct Icon
+struct TextureLayout
 {
-	// https://github.com/DCxDemo/CTR-tools/blob/master/ctr-tools/CTRFramework/CTRFramework.Code/lev/TextureLayout.cs
-
-	// 0x0
-	char name[0x10];
-
-	// 0x10
-	int global_IconArray_Index;
-
 	// 0x14
 	// top left corner
 	unsigned char X1;
@@ -1543,9 +1535,26 @@ struct Icon
 	// 0x1e
 	// bottom right corner
 	unsigned char X4;
-	unsigned char Y4;
+	unsigned char Y4;	
+};
 
-	// 0x20 bytes large
+// for drawing on quadblocks
+struct IconGroup4
+{
+	struct TextureLayout texLayout[4];
+};
+
+struct Icon
+{
+	// https://github.com/DCxDemo/CTR-tools/blob/master/ctr-tools/CTRFramework/CTRFramework.Code/lev/TextureLayout.cs
+
+	// 0x0
+	char name[0x10];
+
+	// 0x10
+	int global_IconArray_Index;
+
+	struct TextureLayout texLayout;
 };
 
 struct IconGroup
@@ -3867,7 +3876,7 @@ struct QuadBlock
 	int draw_order_high;
 
 	// 0x1c
-	void* ptr_texture_mid[4];
+	struct IconGroup4* ptr_texture_mid[4];
 
 	// 0x2c
 	struct BoundingBox bbox;
@@ -3884,7 +3893,7 @@ struct QuadBlock
 	char triNormalVecBitShift;
 
 	// 0x40
-	void* ptr_texture_low;
+	struct IconGroup4* ptr_texture_low;
 
 	// 0x44
 	struct VisFromQuadBlock* visFromQuadBlock;
