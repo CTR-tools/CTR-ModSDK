@@ -1,5 +1,9 @@
 #include <common.h>
 
+#if BUILD == JpnRetail
+	u_int DecalFont_boolRacingWheel();
+#endif
+
 int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 {
 	short font_charPixWidth;
@@ -7,6 +11,9 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 	short font_puncPixWidth;
 	int pixLength;
 	char c;
+	#if BUILD == JpnRetail
+		u_int isRacingWheel;
+	#endif
 	
 	font_charPixWidth = data.font_charPixWidth[fontType];
 	font_buttonPixWidth = data.font_buttonPixWidth[fontType];
@@ -17,24 +24,36 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 	{
 		c = *character;
 		
-		// do not use "switch" or "else if" that increases 
-		// number of bytes, and makes the function too large
-		
+		// do not use "switch" or "else if" that increases the number of bytes, and makes the function too large
+
 		// if the character is one of the PSX buttons
 		// @ is circle, [ is square, ^ is triangle, * is cross
-		if(
+		if
+		(
 			(c == '@') ||
 			(c == '[') ||
 			(c == '^') ||
 			(c == '*')
 		)
 		{
-			// character width, plus extra spacing for button
-			pixLength += font_buttonPixWidth; // + font_charPixWidth
+			#if BUILD == JpnRetail
+
+				isRacingWheel = DecalFont_boolRacingWheel();
+								
+				if ((isRacingWheel & 0xffff) == 0) pixLength += font_buttonPixWidth;
+				else pixLength += font_charPixWidth;
+
+			#else
+
+				// character width, plus extra spacing for button
+				pixLength += font_buttonPixWidth; // + font_charPixWidth
+
+			#endif
 		}
 		
 		// colon or period
-		if(
+		if
+		(
 			(c == ':') ||
 			(c == '.')
 		)
@@ -47,7 +66,7 @@ int DECOMP_DecalFont_GetLineWidthStrlen(char* character, int len, int fontType)
 		if(c == '~')
 		{
 			character += 2;
-			len += 2;
+			len -= 2;
 			
 			// dont add charPixWidth
 			goto NextIteration;
