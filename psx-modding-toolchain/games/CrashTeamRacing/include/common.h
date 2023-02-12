@@ -3535,24 +3535,24 @@ struct CameraDC
 	
 	// 0x20
 	// VisMem->0x40[player], quadblock->0x44->0x0
-	void* unk20;
+	int* visLeafSrc;
 
 	// 0x24
 	// VisMem->0x50[player], quadblock->0x44->0x4
-	void* unk24;
+	int* visFaceSrc;
 
 	// 0x28
 	// quadblock->0x44->0x8
 	// which instances are visible from quadblock
-	void* unk28;
+	struct Instance** visInstSrc;
 
 	// 0x2c
 	// VisMem->0x60[player]
-	void* unk2c;
+	int* visOVertSrc;
 
 	// 0x30
 	// VisMem->0x70[player],
-	void* unk30;
+	int* visSCVertSrc;
 
 	// 0x34
 	char unk30fill[0x10];
@@ -3842,6 +3842,16 @@ struct DB
   struct OTMem otMem;
 };
 
+struct VisFromQuadBlock
+{
+	int* visLeafSrc;
+	int* visFaceSrc;
+	struct Instance** visInstSrc;
+	
+	// either OVert or SCVert
+	int* visExtraSrc;
+}
+
 struct QuadBlock
 {
 	// 0x0
@@ -4041,42 +4051,41 @@ struct VisMem
 	// SRC always changes based on CamDC
 	// why is the copy needed?
 
-	// June 1999 calls this visLeafList
 	// 0x00-0x0F
-	void* VisDataLeaf_Bit_Visibility[4];
+	// list of BSP leaf nodes
+	// size = numLeaf/32
+	int* visLeafList[4]; // real ND name
 
-	// June 1999 calls this visFaceList
 	// 0x10-0x1F
-	// each pointer goes to a byte block of [lev->mesh_info->numQuadBlock/32],
-	// one bit for every quadblock visible by each driver
-	void* QuadBlock_Bit_Visibility[4];
+	// bit index quadblock visibility
+	// size = numQuadBlock/32 bytes
+	int* visFaceList[4]; // real ND name
 
-	// June 1999 calls this visOVertList (O for ocean)
 	// 0x20-0x2F
-	void* Water_Bit_Visibility[4];
+	// bit index ocean visibility
+	int* visOVertList[4]; // real ND name
 
-	// June 1999 calls this visSCVertList (SC for Scenery?)
 	// 0x30-0x3F
-	void* AnimatedVertex_Bit_Visibility[4];
+	// bit index scenery visibility
+	void* visSCVertList[4]; // real ND name
 
 	// 0x40-0x4F
-	void* array4[4];
+	void* visLeafSrc[4]; // copies to other
 
 	// 0x50-0x5F
-	void* array5[4];
+	void* visFaceSrc[4]; // copies to other
 
 	// 0x60-0x6F
-	void* array6[4];
+	void* visOVertSrc[4]; // copies to other
 
 	// 0x70-0x7F
-	void* array7[4];
+	void* visSCVertSrc[4]; // copies to other
 
-	// June 1999 calls this bspList
 	// 0x80-0x8F
-	// each pointer goes to a byte block of [8*lev->mesh_info->numVisData],
-	// 8 bytes are: ptrVisData, ptrNext, to dynamically build the 1808
-	// linked lists, with the ability to append any list in any order
-	void* VisData_List_Memory[4];
+	// size = 8 * numVisData,
+	// this is the memory where RenderLists exist,
+	// allows every VisData to link to another VisData
+	void* bspList[4];
 };
 
 struct mesh_info

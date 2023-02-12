@@ -812,7 +812,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		// assume OVert (no primitives generated here)
 		AnimateWater1P(gGT->timer, level1->count_water,
 			level1->ptr_water, level1->ptr_tex_waterEnvMap,
-			gGT->visMem1->Water_Bit_Visibility[0]);
+			gGT->visMem1->visOVertList[0]);
 	}
 	
 	// if SCVert
@@ -821,7 +821,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		// draw SCVert (no primitives generated here
 		AnimateQuad(gGT->timer << 7, 
 			level1->numSCVert, level1->ptrSCVert,
-			gGT->visMem1->AnimatedVertex_Bit_Visibility[0]);
+			gGT->visMem1->visSCVertList[0]);
 	}
 	
 	// camera of player 1
@@ -880,10 +880,10 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	gGT->numVisDataLinks += 
 	  CreateRenderLists_1P2P(
 		ptr_mesh_info->ptrVisDataArray,
-		level1->visMem->VisDataLeaf_Bit_Visibility[0],
+		level1->visMem->visLeafList[0],
 		c110,
 		&gGT->LevRenderLists[0],
-		level1->visMem->VisData_List_Memory[0],
+		level1->visMem->bspList[0],
 		gGT->numPlyrCurrGame);
 	
 			

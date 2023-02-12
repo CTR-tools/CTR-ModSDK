@@ -75,7 +75,7 @@ LAB_800358e0:
 					FUN_80021da0
 					(
 						// VisMem 0x0-0xF
-						gGT->visMem1->VisDataLeaf_Bit_Visibility[i],
+						gGT->visMem1->visLeafList[i],
 						uVar5 & 0xfffffffc
 					);
 				}
@@ -105,7 +105,7 @@ LAB_80035900:
 					(
 						// destination
 						// VisMem 0x0-0xF
-						gGT->visMem1->VisDataLeaf_Bit_Visibility[i],
+						gGT->visMem1->visLeafList[i],
 
 						// source
 						uVar5,
@@ -162,7 +162,7 @@ LAB_80035900:
 						memcpy
 						(
 							// VisMem 0x0-0xF
-							gGT->visMem1->VisDataLeaf_Bit_Visibility[i],
+							gGT->visMem1->visLeafList[i],
 							uVar5,
 							// unk size
 						);
@@ -173,7 +173,7 @@ LAB_80035900:
 						// copy until nullptr
 						FUN_80021da0
 						(
-							gGT->visMem1->QuadBlock_Bit_Visibility[i],
+							gGT->visMem1->visFaceList[i],
 							uVar5 & 0xfffffffc
 						);
 					}
@@ -198,7 +198,7 @@ LAB_80035900:
 						memcpy
 						(
 							// VisMem 0x10-0x1F
-							gGT->visMem1->QuadBlock_Bit_Visibility[i]
+							gGT->visMem1->visFaceList[i]
 					
 							cameraDC->unk24,
 							// unk size
@@ -212,7 +212,7 @@ LAB_80035900:
 						(
 
 							// VisMem 0x10-0x1F
-							gGT->visMem1->QuadBlock_Bit_Visibility[i],
+							gGT->visMem1->visFaceList[i],
 
 							// CameraDC 0x24
 							cameraDC->unk24 & 0xfffffffc
@@ -239,7 +239,7 @@ LAB_80035900:
 										(unk20 = (unk20 - gGT->level1->ptr_mesh_info->ptrQuadBlockArray) * -0x1642c859,
 
 										// VisMem 0x10-0x1F
-										(*(u_int* )((unk20 >> 7) * 4 + gGT->visMem1->QuadBlock_Bit_Visibility[i]) &
+										(*(u_int* )((unk20 >> 7) * 4 + gGT->visMem1->visFaceList[i]) &
 										1 << (unk20 >> 2 & 0x1fU)) != 0)
 									)
 								)
@@ -330,7 +330,7 @@ LAB_80035900:
 					if ((uVar5 & 1) == 0) goto LAB_80035ce0;
 
 					// VisMem 0x20-0x2F (visOVertList)
-					uVar4 = gGT->visMem1->Water_Bit_Visibility[i];
+					uVar4 = gGT->visMem1->visOVertList[i];
 LAB_80035c98:
 					// copy until nullptr
 					FUN_80021da0(uVar4, uVar5 & 0xfffffffc);
@@ -341,7 +341,7 @@ LAB_80035c98:
 			else
 			{
 				// VisMem 0x0-0xF
-				unk20 = gGT->visMem1->VisDataLeaf_Bit_Visibility[i];
+				unk20 = gGT->visMem1->visLeafList[i];
 				driver = unk20->0x70;
 
 				// CameraDC 0x30
@@ -360,7 +360,7 @@ LAB_80035c98:
 					if ((uVar5 & 1) != 0)
 					{
 						// VisMem 0x30-0x3F
-						uVar4 = gGT->visMem1->AnimatedVertex_Bit_Visibility[i];
+						uVar4 = gGT->visMem1->visSCVertList[i];
 						goto LAB_80035c98;
 					}
 				}
