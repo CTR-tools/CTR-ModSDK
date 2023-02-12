@@ -6,7 +6,6 @@ common, exe, LOAD_TenStages, 0x0, src/LOAD_TenStages.c
 common, exe, main, 0x0, src/main.c
 
 // sets lev to bigfile 221
-//926, 221, 0x8009f6fc, 0x0, src/data.lev
 926, 221, 0x8009f6fc, 0x0, src/Lev221.c
 
 // disable LevInstDef_UnPack

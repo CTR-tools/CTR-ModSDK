@@ -12,7 +12,7 @@ struct LevelFile
 	struct VisData visData[3];
 	struct VisFromQuadBlock visFromQuadBlock;
 	int visBitIndex[4];
-	int emptyTexData[2]; // leave empty
+	unsigned char emptyTexData[0x30];
 	struct VisMem visMem;
 	int VisMem_bitIndex_DstMemcpy[8]; // leave empty
 	int VisMem_bspList_RenderList[3*2];
@@ -246,6 +246,22 @@ struct LevelFile file =
 	{
 		// all 0xFFFFFFFFFFFF
 		-1, -1, -1, -1
+	},
+	
+	.emptyTexData =
+	{
+		// first 0x24 empty
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,
+		
+		// see DCxDemo's lev.ksy
+		0xF0, 0x80, 
+		0xED, 0x61, 
+		0xFF, 0x80, 
+		0x6C, 0x00,
+		0xF0, 0x8F,
+		0xFF, 0x8F
 	},
 	
 	.visMem =
