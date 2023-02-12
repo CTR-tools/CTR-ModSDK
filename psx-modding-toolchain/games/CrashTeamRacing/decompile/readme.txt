@@ -30,26 +30,32 @@ Functions:
 -DecalFont_SetJfontDimensions
 
 Some functions have been decompiled for all the 5 builds of CTR that we cater to:
--JitPool_Add
--JitPool_Clear
--JitPool_Init
--JitPool_Remove
 -BOTS_Adv_NumTimesLostEvent
+-BOTS_Driver_Init
 -BOTS_InitNavPath
 -BOTS_SetGlobalNavData
 -CAM_Init
 -CAM_SetDesiredPosRot
+-CDSYS_XAGetNumTracks
+-CDSYS_XAGetTrackLength
 -Camera110_FadeAllWindows
 -Camera110_InitPsyqGeom
 -Camera110_InitStructs
 -Camera110_SetViewMatrix
 -ConvertTimeToString
+-DebugFont_Init
 -DecalFont_DrawLine
 -DecalFont_DrawLineOT
 -DecalFont_DrawLineStrlen
 -DecalFont_DrawMultiLine
 -DecalFont_DrawMultiLineStrlen
+-DecalFont_GetLineWidth
+-DecalFont_GetLineWidthStrlen
 -InterpBySpeed
+-JitPool_Add
+-JitPool_Clear
+-JitPool_Init
+-JitPool_Remove
 -LOAD_ReadFile
 -Turbo_ThTick
 -Turbo_Increment
