@@ -508,6 +508,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// game is now loading
 			sdata->load_inProgress = 1;
 
+			#if 0
 			// bigfile index, 0 = vram
 			uVar16 = LOAD_GetBigfileIndex
 						(gGT->levelID, sdata->levelLOD, 0);
@@ -515,8 +516,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// adds VRAM to loading queue
 			// second parameter '3' means vram
 			LOAD_AppendQueue(bigfile, 3, uVar16, 0, 0);
-
-			#if 0
+			
 			// bigfile index, 1 = lev
 			uVar16 = LOAD_GetBigfileIndex
 					(gGT->levelID, sdata->levelLOD, 1);
@@ -528,6 +528,10 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			// rig custom level to 221, cause lazy testing
 			#if 1
+			// adds VRAM to loading queue
+			// second parameter '3' means vram
+			LOAD_AppendQueue(bigfile, 3, 222, 0, 0);
+			
 			// adds LEV to loading queue
 			// '2' means dram
 			LOAD_AppendQueue(bigfile, 2, 221, 0, &LOAD_Callback_LEV);

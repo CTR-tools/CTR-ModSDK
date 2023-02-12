@@ -254,25 +254,30 @@ struct LevelFile file =
 		.texLayout[0] = {},
 		.texLayout[1] = {},
 		.texLayout[2] = {},
+		
+		// gGT->trafficLightIcon[0],
+		// ui_textures.vram
 		.texLayout[3] = 
 		{
-			.X1 = 0xF0, .Y1 = 0x80,
-			
 			// X(b6) Y(b10)
-			.paletteXY = 0x61ED,
+			// row of 16 pixels, or row of 256 pixels,
+			// this is how it chooses what colors to use
+			.paletteXY = (512 >> 10) | (256 >> 6),
 			
-			.X2 = 0xFF, .Y2 = 0x80,
+			// each page is 256x256 large
 			
 			// pageX(b4), 
 			// pageY(b1), 
 			// blending(b2), 
 			// bitDepth(b2), 
 			// restBits(b7)
-			.pageXY = 0x6C,
+			.pageXY = 0x4180 | (8) | (1<<4), // page = (2,1) (512,256)
 			
-			.X3 = 0xF0, .Y3 = 0x8F,
-			
-			.X4 = 0xFF, .Y4 = 0x8F,
+			// coordinates within page
+			.X1 = 0xFF, .Y1 = 0x0,
+			.X2 = 0xFF, .Y2 = 0x7F,
+			.X3 = 0x0, .Y3 = 0x0,
+			.X4 = 0x0, .Y4 = 0x7F,			
 		},
 	},
 	
