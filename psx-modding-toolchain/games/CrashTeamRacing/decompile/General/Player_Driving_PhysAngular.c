@@ -59,7 +59,7 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 	// elapsed milliseconds per frame, ~32
 	elapsedTimeMS = sdata->gGT->elapsedTimeMS;
 
-	// goes to a maximum of 0x30 degrees
+	// goes to a maximum of 48 (0x30) degrees
 	rotPrevW30 = rotPrevWInterpolated >> 3;
 	if (rotPrevW30 == 0)
 	{
@@ -144,7 +144,7 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 	
 	if (simpTurnState256 == 0)
 	{	
-		rotationSpinRateInterpolated = InterpBySpeed(rotationSpinRate, (driver->const_TurnInputDelay + driver->turnConst * 0x32) * terrainMeta1->friction >> 8, 0);
+		rotationSpinRateInterpolated = InterpBySpeed(rotationSpinRate, (driver->const_TurnInputDelay + driver->turnConst * 50) * terrainMeta1->friction >> 8, 0);
 	}
 
 	else
