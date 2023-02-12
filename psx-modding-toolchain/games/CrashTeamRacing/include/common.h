@@ -3887,10 +3887,7 @@ struct QuadBlock
 	void* ptr_texture_low;
 
 	// 0x44
-	void* ptr_add_tex;
-
-	// ptr_add_tex -> array of instance ptrs
-	// converts back and forth, Inst to InstDef
+	struct VisFromQuadBlock* visFromQuadblock;
 
 	// 0x48
 	// explained in FUN_8001f2dc
