@@ -256,11 +256,28 @@ struct LevelFile file =
 		0,0,0,0,
 		
 		// see DCxDemo's lev.ksy
+		
+		// short uv1
 		0xF0, 0x80, 
+		
+		// palletX(b6), 
+		// pelletY(b10)
 		0xED, 0x61, 
+		
+		// short uv2
 		0xFF, 0x80, 
+		
+		// pageX(b4), 
+		// pageY(b1), 
+		// blending(b2), 
+		// bitDepth(b2), 
+		// restBits(b7)
 		0x6C, 0x00,
+		
+		// short uv3
 		0xF0, 0x8F,
+		
+		// short uv4
 		0xFF, 0x8F
 	},
 	
