@@ -2364,7 +2364,8 @@ struct Driver
 	
 	// 0x479
 	char unk479; // 582 related
-	short unk47A; // 582 related
+	char unk47A; // 582 related
+	char unk47B;
 	short unk47C;
 	short unk47E;
 	short unk480;
@@ -2666,7 +2667,7 @@ struct Driver
 			short driftBoostTimeMS;
 			
 			// 0x584
-			int driftTotalTimeMS;
+			short driftTotalTimeMS;
 			
 			// 0x586
 			short numBoostsAttempted;
