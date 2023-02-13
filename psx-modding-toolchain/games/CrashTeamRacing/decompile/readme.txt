@@ -23,6 +23,7 @@ Functions:
 -InterpolatePosition2D_HUD
 -InterpolatePosition2D_Linear
 -Map_DrawMap
+-Player_Drifting_PhysAngular
 -Turbo_ThTick
 -Turbo_Increment
 -MM_Characters_boolIsInvalid

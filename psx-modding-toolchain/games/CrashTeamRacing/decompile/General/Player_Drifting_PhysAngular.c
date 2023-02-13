@@ -1,6 +1,11 @@
 #include <common.h>
 
-void Player_Drifting_PhysAngular(struct Thread* th, struct Driver* driver)
+int InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
+int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
+void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
+void CameraSlack_PhysAngular(struct Driver* d);
+
+void DECOMP_Player_Drifting_PhysAngular(struct Thread* th, struct Driver* driver)
 {
 	char cVar1;
 	char bVar2;
@@ -430,8 +435,8 @@ LAB_800632cc:
 		driver->KartStates.Drifting.driftTotalTimeMS = (u_short)driver->unk462 << 5;
 	}
 
-	Rot_AxisAngle(driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
-	gte_SetRotMatrix(driver->matrix310);
+	Rot_AxisAngle(&driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
+	gte_SetRotMatrix(&driver->matrix310);
 
 	CameraSlack_PhysAngular(driver);
 	return;
