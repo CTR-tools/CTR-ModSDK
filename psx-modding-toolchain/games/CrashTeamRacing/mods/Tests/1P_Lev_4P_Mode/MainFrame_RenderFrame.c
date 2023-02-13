@@ -898,7 +898,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			c110,
 			ptr_mesh_info,
 			&gGT->backBuffer->primMem,
-			gGT->visMem1->QuadBlock_Bit_Visibliity[0],
+			gGT->visMem1->visFaceList[0],
 			level1->ptr_tex_waterEnvMap); // waterEnvMap?
 			
 		DrawSky_Full(

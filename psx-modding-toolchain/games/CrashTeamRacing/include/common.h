@@ -1554,7 +1554,36 @@ struct Icon
 	// 0x10
 	int global_IconArray_Index;
 
-	struct TextureLayout texLayout;
+	// === struct TextureLayout ===
+	// but can't be bothered to rewrite Icon functions rn
+
+	// 0x14
+	// top left corner
+	unsigned char X1;
+	unsigned char Y1;
+
+	// 0x16
+	// holds X and Y with bit shifting
+	short paletteXY;
+
+	// 0x18
+	// top right corner
+	unsigned char X2;
+	unsigned char Y2;
+
+	// 0x1a
+	// holds X and Y with bit shifting
+	short pageXY;
+
+	// 0x1c
+	// bottom left corner
+	unsigned char X3;
+	unsigned char Y3;
+
+	// 0x1e
+	// bottom right corner
+	unsigned char X4;
+	unsigned char Y4;
 };
 
 struct IconGroup

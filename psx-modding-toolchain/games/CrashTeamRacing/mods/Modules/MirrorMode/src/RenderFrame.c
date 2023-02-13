@@ -1232,7 +1232,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			c110,
 			ptr_mesh_info,
 			&gGT->backBuffer->primMem,
-			gGT->visMem1->QuadBlock_Bit_Visibliity[0],
+			gGT->visMem1->visFaceList[0],
 			level1->ptr_tex_waterEnvMap); // waterEnvMap?
 			
 		DrawSky_Full(
@@ -1284,8 +1284,8 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			&gGT->camera110[0],
 			ptr_mesh_info,
 			&gGT->backBuffer->primMem,
-			gGT->visMem1->QuadBlock_Bit_Visibliity[0],
-			gGT->visMem1->QuadBlock_Bit_Visibliity[1],
+			gGT->visMem1->visFaceList[0],
+			gGT->visMem1->visFaceList[1],
 			level1->ptr_tex_waterEnvMap); // waterEnvMap?
 			
 		goto SkyboxGlow;
@@ -1341,9 +1341,9 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			&gGT->camera110[0],
 			ptr_mesh_info,
 			&gGT->backBuffer->primMem,
-			gGT->visMem1->QuadBlock_Bit_Visibliity[0],
-			gGT->visMem1->QuadBlock_Bit_Visibliity[1],
-			gGT->visMem1->QuadBlock_Bit_Visibliity[2],
+			gGT->visMem1->visFaceList[0],
+			gGT->visMem1->visFaceList[1],
+			gGT->visMem1->visFaceList[2],
 			level1->ptr_tex_waterEnvMap); // waterEnvMap?
 	}
 	
@@ -1355,10 +1355,10 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			&gGT->camera110[0],
 			ptr_mesh_info,
 			&gGT->backBuffer->primMem,
-			gGT->visMem1->QuadBlock_Bit_Visibliity[0],
-			gGT->visMem1->QuadBlock_Bit_Visibliity[1],
-			gGT->visMem1->QuadBlock_Bit_Visibliity[2],
-			gGT->visMem1->QuadBlock_Bit_Visibliity[3],
+			gGT->visMem1->visFaceList[0],
+			gGT->visMem1->visFaceList[1],
+			gGT->visMem1->visFaceList[2],
+			gGT->visMem1->visFaceList[3],
 			level1->ptr_tex_waterEnvMap); // waterEnvMap?
 	}
 		

@@ -1,5 +1,8 @@
 #include <common.h>
 
+// budget 0x6E8 (1768)
+// curr (1860)
+
 int InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
 int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
 void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
@@ -198,42 +201,33 @@ void DECOMP_Player_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 LAB_80063244:
 
 		// Interpolate by 1 unit, until zero
-		uVar6 = InterpBySpeed((int)driver->KartStates.Drifting.numFramesDrifting, 1, 0);
-		*(u_short*)&driver->KartStates.Drifting.numFramesDrifting = uVar6;
+		driver->KartStates.Drifting.numFramesDrifting =
+			InterpBySpeed((int)driver->KartStates.Drifting.numFramesDrifting, 1, 0);
 	}
 	
 	// if steering
 	else 
 	{
-		// if drifting right
-		if (iVar15 < 1) 
+		// SwitchWay drift
+		if(iVar15 < 0)
 		{
-			// if less than zero, reset to zero
-			if (-1 < iVar15) goto LAB_80063244;
-		
 			// decrease positive number
-			uVar7 = driver->KartStates.Drifting.numFramesDrifting - 1;
-			*(u_short*)&driver->KartStates.Drifting.numFramesDrifting = uVar7;
+			driver->KartStates.Drifting.numFramesDrifting--;
 		
 			// skip to zero if already positive
-			if (0 < (int)((u_int)uVar7 << 0x10))
-			{
-				*(u_short*)&driver->KartStates.Drifting.numFramesDrifting = 0;
-			}
+			if (driver->KartStates.Drifting.numFramesDrifting > 0)
+				driver->KartStates.Drifting.numFramesDrifting = 0;
 		}
 		
-		// if drifting left
-		else 
+		// Standard drift
+		if(iVar15 > 0) 
 		{
 			// increase number
-			uVar7 = driver->KartStates.Drifting.numFramesDrifting + 1;
-			*(u_short*)&driver->KartStates.Drifting.numFramesDrifting = uVar7;
+			driver->KartStates.Drifting.numFramesDrifting++;
 		
 			// skip to zero if already negative
-			if ((int)((u_int)uVar7 << 0x10) < 0)
-			{
-				*(u_short*)&driver->KartStates.Drifting.numFramesDrifting = 0;
-			}
+			if (driver->KartStates.Drifting.numFramesDrifting < 0)
+				driver->KartStates.Drifting.numFramesDrifting = 0;
 		}
 	}
 	if (bVar3)

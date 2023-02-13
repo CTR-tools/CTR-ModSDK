@@ -73,7 +73,7 @@ common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_XAGetNumTracks.c
 // started XAGetTrackLength, not done
 
 // CTR
-common, exe, CTR_CycleTex_LEV, 0x0, General/CTR_CycleTex_LEV.c
+//common, exe, CTR_CycleTex_LEV, 0x0, General/CTR_CycleTex_LEV.c
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
 
 // DebugFont
@@ -263,7 +263,8 @@ common, exe, DrawBoxOutline_LowLevel, 0x0, General/DrawBoxOutline_LowLevel.c
 
 common, exe, Player_Crashing_PhysAngular, 0x0, General/Player_Crashing_FuncPtrs.c
 common, exe, Player_Crashing_Init, 0x0, General/Player_Crashing_Init.c
-common, exe, Player_Driving_PhysAngular, 0x0, General/Player_Driving_PhysAngular.c
+common, exe, Player_Drifting_PhysAngular, 0x0, General/Player_Drifting_PhysAngular.c
+//common, exe, Player_Driving_PhysAngular, 0x0, General/Player_Driving_PhysAngular.c
 common, exe, Player_Driving_PhysLinear, 0x0, General/Player_Driving_PhysLinear.c
 common, exe, Player_Spinning_Update, 0x0, General/Player_Spinning_FuncPtrs.c
 common, exe, Player_Spinning_Init, 0x0, General/Player_Spinning_Init.c
