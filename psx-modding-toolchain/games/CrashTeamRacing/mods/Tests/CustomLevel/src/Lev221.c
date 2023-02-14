@@ -7,8 +7,8 @@ struct LevelFile
 	void* ptrMap;
 	struct Level level;
 	struct mesh_info mInfo;
-	struct QuadBlock quadBlock;
-	struct LevVertex levVertex[9];
+	struct QuadBlock quadBlock[4];
+	struct LevVertex levVertex[9*4];
 	struct VisData visData[3];
 	struct VisFromQuadBlock visFromQuadBlock;
 	int visBitIndex[4];
@@ -31,17 +31,17 @@ struct LevelFile file =
 	
 	.mInfo =
 	{
-		.numQuadBlock = 1,
+		.numQuadBlock = 4,
 		.numVertex = 0, // not really used
 		.unk1 = 0, // idk, fine to leave null
-		.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock)-4,
+		.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4,
 		.ptrVertexArray = OFFSETOF(struct LevelFile, levVertex[0])-4, // no -4 for some reason?
 		.unk2 = 0, // idk, fine to leave null
 		.ptrVisDataArray = OFFSETOF(struct LevelFile, visData[0])-4,
 		.numVisData = 1, // can be anything non-zero
 	},
 	
-	.quadBlock =
+	.quadBlock[0] =
 	{
 		.index = {0,1,2,3,4,5,6,7,8},
 		.quadFlags = 0x1800,
@@ -65,8 +65,163 @@ struct LevelFile file =
 		.weather_intensity = 0,
 		.weather_vanishRate = 0,
 		.speedImpact = 0,
+
+		// visData->numBlocks-currIndex-1
+		.blockID = 4-0-1,
 		
-		.blockID = 0,
+		.respawnIndex = -1,
+		.triNormalVecBitShift = 0x12,
+		
+		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4,
+		.visFromQuadBlock = OFFSETOF(struct LevelFile, visFromQuadBlock)-4,
+		.triNormalVecDividend =
+		{
+			// hi 8
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			
+			// lo 2
+			0x1C71,
+			0x1C71,
+		}
+	},
+	
+	.quadBlock[1] =
+	{
+		.index = {0+9*1,1+9*1,2+9*1,3+9*1,4+9*1,5+9*1,6+9*1,7+9*1,8+9*1},
+		.quadFlags = 0x1800,
+		.draw_order_low = 0,
+		.draw_order_high = 0,
+		.ptr_texture_mid =
+		{
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4
+		},
+		
+		.bbox =
+		{
+			.min = {-0x180+0x300*1, 0, -0x180},
+			.max = {0x180+0x300*1, 0, 0x180}
+		},
+		
+		.terrain_type = 0,
+		.weather_intensity = 0,
+		.weather_vanishRate = 0,
+		.speedImpact = 0,
+		
+		// visData->numBlocks-currIndex-1
+		.blockID = 4-1-1,
+		
+		.respawnIndex = -1,
+		.triNormalVecBitShift = 0x12,
+		
+		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4,
+		.visFromQuadBlock = OFFSETOF(struct LevelFile, visFromQuadBlock)-4,
+		.triNormalVecDividend =
+		{
+			// hi 8
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			
+			// lo 2
+			0x1C71,
+			0x1C71,
+		}
+	},
+	
+	.quadBlock[2] =
+	{
+		.index = {0+9*2,1+9*2,2+9*2,3+9*2,4+9*2,5+9*2,6+9*2,7+9*2,8+9*2},
+		.quadFlags = 0x1800,
+		.draw_order_low = 0,
+		.draw_order_high = 0,
+		.ptr_texture_mid =
+		{
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4
+		},
+		
+		.bbox =
+		{
+			.min = {-0x180+0x300*2, 0, -0x180},
+			.max = {0x180+0x300*2, 0, 0x180}
+		},
+		
+		.terrain_type = 0,
+		.weather_intensity = 0,
+		.weather_vanishRate = 0,
+		.speedImpact = 0,
+		
+		// visData->numBlocks-currIndex-1
+		.blockID = 4-2-1,
+		
+		.respawnIndex = -1,
+		.triNormalVecBitShift = 0x12,
+		
+		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4,
+		.visFromQuadBlock = OFFSETOF(struct LevelFile, visFromQuadBlock)-4,
+		.triNormalVecDividend =
+		{
+			// hi 8
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			0x1C71,
+			
+			// lo 2
+			0x1C71,
+			0x1C71,
+		}
+	},
+	
+	.quadBlock[3] =
+	{
+		.index = {0+9*3,1+9*3,2+9*3,3+9*3,4+9*3,5+9*3,6+9*3,7+9*3,8+9*3},
+		.quadFlags = 0x1800,
+		.draw_order_low = 0,
+		.draw_order_high = 0,
+		.ptr_texture_mid =
+		{
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4,
+			OFFSETOF(struct LevelFile, group4)-4
+		},
+		
+		.bbox =
+		{
+			.min = {-0x180+0x300*3, 0, -0x180},
+			.max = {0x180+0x300*3, 0, 0x180}
+		},
+		
+		.terrain_type = 0,
+		.weather_intensity = 0,
+		.weather_vanishRate = 0,
+		.speedImpact = 0,
+		
+		// visData->numBlocks-currIndex-1
+		.blockID = 4-3-1,
+		
 		.respawnIndex = -1,
 		.triNormalVecBitShift = 0x12,
 		
@@ -163,6 +318,222 @@ struct LevelFile file =
 			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
 			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
 		},
+	
+		[0+9*1] =
+		{
+			.pos = {-0x180+0x300*1,0,-0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[1+9*1] =
+		{
+			.pos = {0x180+0x300*1,0,-0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[2+9*1] =
+		{
+			.pos = {-0x180+0x300*1,0,0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[3+9*1] =
+		{
+			.pos = {0x180+0x300*1,0,0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[4+9*1] =
+		{
+			.pos = {0+0x300*1,0,-0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[5+9*1] =
+		{
+			.pos = {-0x180+0x300*1,0,0},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[6+9*1] =
+		{
+			.pos = {0+0x300*1,0,0},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[7+9*1] =
+		{
+			.pos = {0x180+0x300*1,0,0},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[8+9*1] =
+		{
+			.pos = {0+0x300*1,0,0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[0+9*2] =
+		{
+			.pos = {-0x180+0x300*2,0,-0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[1+9*2] =
+		{
+			.pos = {0x180+0x300*2,0,-0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[2+9*2] =
+		{
+			.pos = {-0x180+0x300*2,0,0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[3+9*2] =
+		{
+			.pos = {0x180+0x300*2,0,0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[4+9*2] =
+		{
+			.pos = {0+0x300*2,0,-0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[5+9*2] =
+		{
+			.pos = {-0x180+0x300*2,0,0},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[6+9*2] =
+		{
+			.pos = {0+0x300*2,0,0},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[7+9*2] =
+		{
+			.pos = {0x180+0x300*2,0,0},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[8+9*2] =
+		{
+			.pos = {0+0x300*2,0,0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[0+9*3] =
+		{
+			.pos = {-0x180+0x300*3,0,-0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[1+9*3] =
+		{
+			.pos = {0x180+0x300*3,0,-0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[2+9*3] =
+		{
+			.pos = {-0x180+0x300*3,0,0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[3+9*3] =
+		{
+			.pos = {0x180+0x300*3,0,0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[4+9*3] =
+		{
+			.pos = {0+0x300*3,0,-0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[5+9*3] =
+		{
+			.pos = {-0x180+0x300*3,0,0},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[6+9*3] =
+		{
+			.pos = {0+0x300*3,0,0},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[7+9*3] =
+		{
+			.pos = {0x180+0x300*3,0,0},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
+		
+		[8+9*3] =
+		{
+			.pos = {0+0x300*3,0,0x180},
+			.flags = 0,
+			.color_hi = {0xCE, 0x8F, 0x77, 0x00},
+			.color_lo = {0xCE, 0x8F, 0x77, 0x00},
+		},
 	},
 	
 	.visData =
@@ -218,7 +589,7 @@ struct LevelFile file =
 			{
 				// random box that exists nowhere
 				.min = {0xFE80, 0xFFE4, 0xFE80},
-				.max = {0xD80, 0x7C, 0x480}
+				.max = {0x1D80, 0x7C, 0x480}
 			},
 			
 			.data =
@@ -227,8 +598,8 @@ struct LevelFile file =
 				{
 					.unk1 = 0,
 					.ptrVisDataArray_InstHitboxes = 0,
-					.numQuads = 1,
-					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock)-4
+					.numQuads = 4,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
 				}
 			}
 		},
@@ -293,20 +664,38 @@ struct LevelFile file =
 	
 	.map =
 	{
-		// 18 pointers
-		18<<2,
+		// 24 pointers
+		(12+4*6)<<2,
 		
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVertexArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVisDataArray)-4,
-		OFFSETOF(struct LevelFile, quadBlock.ptr_texture_mid[0])-4,
-		OFFSETOF(struct LevelFile, quadBlock.ptr_texture_mid[1])-4,
-		OFFSETOF(struct LevelFile, quadBlock.ptr_texture_mid[2])-4,
-		OFFSETOF(struct LevelFile, quadBlock.ptr_texture_mid[3])-4,
-		OFFSETOF(struct LevelFile, quadBlock.ptr_texture_low)-4,
-		OFFSETOF(struct LevelFile, quadBlock.visFromQuadBlock)-4,
+		OFFSETOF(struct LevelFile, quadBlock[0].ptr_texture_mid[0])-4,
+		OFFSETOF(struct LevelFile, quadBlock[0].ptr_texture_mid[1])-4,
+		OFFSETOF(struct LevelFile, quadBlock[0].ptr_texture_mid[2])-4,
+		OFFSETOF(struct LevelFile, quadBlock[0].ptr_texture_mid[3])-4,
+		OFFSETOF(struct LevelFile, quadBlock[0].ptr_texture_low)-4,
+		OFFSETOF(struct LevelFile, quadBlock[0].visFromQuadBlock)-4,
+		OFFSETOF(struct LevelFile, quadBlock[1].ptr_texture_mid[0])-4,
+		OFFSETOF(struct LevelFile, quadBlock[1].ptr_texture_mid[1])-4,
+		OFFSETOF(struct LevelFile, quadBlock[1].ptr_texture_mid[2])-4,
+		OFFSETOF(struct LevelFile, quadBlock[1].ptr_texture_mid[3])-4,
+		OFFSETOF(struct LevelFile, quadBlock[1].ptr_texture_low)-4,
+		OFFSETOF(struct LevelFile, quadBlock[1].visFromQuadBlock)-4,
+		OFFSETOF(struct LevelFile, quadBlock[2].ptr_texture_mid[0])-4,
+		OFFSETOF(struct LevelFile, quadBlock[2].ptr_texture_mid[1])-4,
+		OFFSETOF(struct LevelFile, quadBlock[2].ptr_texture_mid[2])-4,
+		OFFSETOF(struct LevelFile, quadBlock[2].ptr_texture_mid[3])-4,
+		OFFSETOF(struct LevelFile, quadBlock[2].ptr_texture_low)-4,
+		OFFSETOF(struct LevelFile, quadBlock[2].visFromQuadBlock)-4,
+		OFFSETOF(struct LevelFile, quadBlock[3].ptr_texture_mid[0])-4,
+		OFFSETOF(struct LevelFile, quadBlock[3].ptr_texture_mid[1])-4,
+		OFFSETOF(struct LevelFile, quadBlock[3].ptr_texture_mid[2])-4,
+		OFFSETOF(struct LevelFile, quadBlock[3].ptr_texture_mid[3])-4,
+		OFFSETOF(struct LevelFile, quadBlock[3].ptr_texture_low)-4,
+		OFFSETOF(struct LevelFile, quadBlock[3].visFromQuadBlock)-4,
 		OFFSETOF(struct LevelFile, visData[2].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, visFromQuadBlock.visLeafSrc)-4,
 		OFFSETOF(struct LevelFile, visFromQuadBlock.visFaceSrc)-4,
