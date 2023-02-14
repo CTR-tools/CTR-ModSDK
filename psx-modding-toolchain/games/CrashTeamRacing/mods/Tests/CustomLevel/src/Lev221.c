@@ -32,13 +32,13 @@ struct LevelFile file =
 	.mInfo =
 	{
 		.numQuadBlock = 7,
-		.numVertex = 0, // not really used
+		.numVertex = 7*9, // not really used
 		.unk1 = 0, // idk, fine to leave null
 		.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4,
 		.ptrVertexArray = OFFSETOF(struct LevelFile, levVertex[0])-4, // no -4 for some reason?
 		.unk2 = 0, // idk, fine to leave null
 		.ptrVisDataArray = OFFSETOF(struct LevelFile, visData[0])-4,
-		.numVisData = 1, // can be anything non-zero
+		.numVisData = 3, // can be anything non-zero
 	},
 	
 	.quadBlock[0] =
@@ -991,12 +991,40 @@ struct LevelFile file =
 	// A quadblock can draw 32 textures,
 	.group4 =
 	{
-		.texLayout[0] = {},
-		.texLayout[1] = {},
-		.texLayout[2] = {},
+		// duplicate for low LOD
+		.texLayout[0] = 
+		{
+			.paletteXY = (512 >> 10) | (256 >> 6),
+			.pageXY = 0x4180 | (8) | (1<<4),
+			.X1 = 0xFF, .Y1 = 0x0,
+			.X2 = 0xFF, .Y2 = 0x7F,
+			.X3 = 0x0, .Y3 = 0x0,
+			.X4 = 0x0, .Y4 = 0x7F,		
+		},
+
+		// duplicate for low LOD
+		.texLayout[1] = 
+		{
+			.paletteXY = (512 >> 10) | (256 >> 6),
+			.pageXY = 0x4180 | (8) | (1<<4),
+			.X1 = 0xFF, .Y1 = 0x0,
+			.X2 = 0xFF, .Y2 = 0x7F,
+			.X3 = 0x0, .Y3 = 0x0,
+			.X4 = 0x0, .Y4 = 0x7F,		
+		},
 		
-		// gGT->trafficLightIcon[0],
-		// ui_textures.vram
+		// duplicate for low LOD
+		.texLayout[2] = 
+		{
+			.paletteXY = (512 >> 10) | (256 >> 6),
+			.pageXY = 0x4180 | (8) | (1<<4),
+			.X1 = 0xFF, .Y1 = 0x0,
+			.X2 = 0xFF, .Y2 = 0x7F,
+			.X3 = 0x0, .Y3 = 0x0,
+			.X4 = 0x0, .Y4 = 0x7F,		
+		},
+		
+		// drawn directly under player
 		.texLayout[3] = 
 		{
 			// X(b6) Y(b10)
