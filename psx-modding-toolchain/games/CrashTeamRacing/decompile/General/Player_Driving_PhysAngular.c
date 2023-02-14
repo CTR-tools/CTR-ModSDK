@@ -502,7 +502,8 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 	driverAngle += (iVar11_B * elapsedTimeMS >> 0xd);
 	driverAngle &= 0xfff;
 	
-	driver->rotCurr.y = driver->angle + sVar16 + sVar17;
+	driver->angle = driverAngle;
+	driver->rotCurr.y = driverAngle + sVar16 + sVar17;
 	
 	// if preventing accel by holding square and ???
 	if (((actionsFlagSet & 8) == 0) && (driver->mashXUnknown < 7))
