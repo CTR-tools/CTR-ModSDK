@@ -1,7 +1,7 @@
 #include <common.h>
 
 // budget 0x6E8 (1768)
-// curr (1764)
+// curr (1708)
 
 int InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
 int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
@@ -390,10 +390,8 @@ LAB_800632cc:
 
 	if (driver->KartStates.Drifting.driftTotalTimeMS > (int)((u_int)driver->unk462 << 5))
 		driver->KartStates.Drifting.driftTotalTimeMS = (u_short)driver->unk462 << 5;
-
-	Rot_AxisAngle(&driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
-	gte_SetRotMatrix(&driver->matrix310);
-
-	CameraSlack_PhysAngular(driver);
-	return;
+	
+	// bottom of Driving_PhysLinear.c
+	void PhysAngularFooter(struct Driver* driver);
+	PhysAngularFooter(driver);
 }

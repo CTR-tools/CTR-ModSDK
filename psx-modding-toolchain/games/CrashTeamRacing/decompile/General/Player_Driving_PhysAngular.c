@@ -1,5 +1,8 @@
 #include <common.h>
 
+// budget 1996
+// curr 1892
+
 int InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
 int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
 int Player_Driving_LerpToForwards(struct Driver* driver, int param_2, int param_3, int param_4);
@@ -46,6 +49,11 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 	short sVar13_B;
 	short sVar16;
 	short characterSpeed;
+	int spinAccel[2];
+	int i;
+	
+	#define spinAccel50 spinAccel[0]
+	#define spinAccel100 spinAccel[1]
 
 	// get W (quaternion) of camera rotation
 	rotPrevWInterpolated = driver->rotCurr.w;
@@ -53,7 +61,7 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 	// make sure the camera is not negative; ie. get camera angle absolute
 	if (driver->rotCurr.w < 0)
 	{
-		rotPrevWInterpolated = -driver->rotCurr.w;
+		rotPrevWInterpolated = -rotPrevWInterpolated;
 	}
 
 	// elapsed milliseconds per frame, ~32
@@ -79,7 +87,6 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 	rotCurrWInterpolated = InterpBySpeed(driver->rotCurr.w, rotPrevWInterpolated * elapsedTimeMS >> 5, 0);
 
 	actionsFlagSet = driver->actionsFlagSet;
-	forwardDir = driver->forwardDir;
 
 	// set camera rotation (rotCurr.W)
 	driver->rotCurr.w = rotCurrWInterpolated;
@@ -94,7 +101,6 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 		// baseSpeed is negative
 		if (driver->baseSpeed < 0) 
 		{
-			forwardDir = -1;
 			driver->forwardDir = -1;
 		}
 		if (-1 < speedApprox) goto LAB_8005fd74;
@@ -108,12 +114,11 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 		// baseSpeed is positive
 		if (-1 < driver->baseSpeed) 
 		{
-			forwardDir = 1;
 			driver->forwardDir = 1;
 		}
 	}
 
-	if (forwardDir < 0)
+	if (driver->forwardDir < 0)
 	{
 		simpTurnState256 = driver->simpTurnState * -256;
 		actionsFlagSet ^= 16;
@@ -142,9 +147,16 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 	
 	rotationSpinRate = driver->rotationSpinRate;
 	
+	for(i = 0; i < 2; i++)
+	{
+		spinAccel[i] = driver->const_TurnInputDelay;
+		spinAccel[i] += driver->turnConst * (50 << i);
+		spinAccel[i] *= terrainMeta1->friction >> 8;
+	}
+	
 	if (simpTurnState256 == 0)
 	{	
-		rotationSpinRateInterpolated = InterpBySpeed(rotationSpinRate, (driver->const_TurnInputDelay + driver->turnConst * 0x32) * terrainMeta1->friction >> 8, 0);
+		rotationSpinRateInterpolated = InterpBySpeed(rotationSpinRate, spinAccel50, 0);
 	}
 
 	else
@@ -160,7 +172,7 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 		if (rotationSpinRate < simpTurnState256)
 		{
 			// 100% turning acceleration
-			rotationSpinRate = rotationSpinRate + ((driver->const_TurnInputDelay + driver->turnConst * 100) * terrainMeta1->friction >> 8);
+			rotationSpinRate = rotationSpinRate + (spinAccel100);
 			rotationSpinRateInterpolated = rotationSpinRate;
 
 			if (simpTurnState256 < rotationSpinRate)
@@ -173,7 +185,7 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 			if (simpTurnState256 < rotationSpinRate)
 			{
 				// 50% turning acceleration
-				rotationSpinRate = rotationSpinRate - ((driver->const_TurnInputDelay + driver->turnConst * 0x32) * terrainMeta1->friction >> 8);
+				rotationSpinRate = rotationSpinRate - spinAccel50;
 				rotationSpinRateInterpolated = rotationSpinRate;
 
 				if (simpTurnState256 < rotationSpinRate)
@@ -389,8 +401,8 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 		}
 	}
 
-	rotationSpinRate = (int)driver->unk3D4[1];
-	sVar4_C = driver->unk3D4[1];
+	rotationSpinRate = (int)driver->unk3D4[0];
+	sVar4_C = driver->unk3D4[2];
 	sVar13_B = driver->unk3D4[1];
 
 	if (((terrainMeta1->flags & 0x10) == 0) && ((actionsFlagSet & 1) != 0))
@@ -420,7 +432,7 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 					sVar13_B = 0x14;
 					if (sVar16 < 0)
 					{
-						sVar13_B = -0x14;
+						sVar13_B = -sVar13_B;
 					}
 				}
 			}
@@ -446,17 +458,14 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 
 	if (sVar4_C == 0)
 	{
+		// This section needs work,
+		// shouldn't need negation twice
+		
 		modelRotVelMax = 10;
-		if (0 < rotationSpinRate)
-		{
-			modelRotVelMax = -10;
-		}
+		if (0 < rotationSpinRate) modelRotVelMax = -modelRotVelMax;
+		
 		sVar13_B = (short)modelRotVelMax;
-		if (modelRotVelMax < 0)
-		{
-			modelRotVelMax = -modelRotVelMax;
-		}
-
+		if (modelRotVelMax < 0) modelRotVelMax = -modelRotVelMax;
 		
 		sVar17 = InterpBySpeed(rotationSpinRate, modelRotVelMax, 0);
 	}
@@ -469,8 +478,8 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 
 	driverAngle = driver->angle;
 
-	driver->unk3D4[1] = sVar4_C;
-	driver->unk3D4[1] = sVar17;
+	driver->unk3D4[2] = sVar4_C;
+	driver->unk3D4[0] = sVar17;
 	driver->unk3D4[1] = sVar13_B;
 
 	modelRotVelMax = MapToRange(speedApprox, 0, 0x600, sVar4_A_Backup, 0);
@@ -484,14 +493,16 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 
 	if (1 < modelRotVelMax)
 	{
-		driverAngle = driverAngle - speedApprox & 0xfff;
+		driverAngle -= speedApprox;
+		driverAngle &= 0xfff;
 	}
 
 	driver->ampTurnState = iVar11_B;
-	driverAngle = driverAngle + (iVar11_B * elapsedTimeMS >> 0xd) & 0xfff;
-	driverAngleNew = driverAngle;
-	driver->angle = driverAngleNew;
-	driver->rotCurr.y = driverAngleNew + sVar16 + sVar17;
+	
+	driverAngle += (iVar11_B * elapsedTimeMS >> 0xd);
+	driverAngle &= 0xfff;
+	
+	driver->rotCurr.y = driver->angle + sVar16 + sVar17;
 	
 	// if preventing accel by holding square and ???
 	if (((actionsFlagSet & 8) == 0) && (driver->mashXUnknown < 7))
@@ -505,13 +516,11 @@ void DECOMP_Player_Driving_PhysAngular(u_int param_1, struct Driver* driver)
 	{
 		iVar11_B = iVar11_B * 10 >> 8;
 	}
-	driver->axisRotationX = driver->axisRotationX + (short)(iVar11_B * elapsedTimeMS >> 0xd) & 0xfff;
+	
+	driver->axisRotationX += (short)(iVar11_B * elapsedTimeMS >> 0xd);
+	driver->axisRotationX &= 0xfff;
 
-	// Rot_AxisAngle
-	Rot_AxisAngle(&driver->matrix310, driver->AxisAngle1_normalVec, driverAngle);
-	gte_SetRotMatrix(&driver->matrix310);
-
-	void CameraSlack_PhysAngular(struct Driver* d);
-	CameraSlack_PhysAngular(driver);
-	return;
+	// bottom of Driving_PhysLinear.c
+	void PhysAngularFooter(struct Driver* driver);
+	PhysAngularFooter(driver);
 }

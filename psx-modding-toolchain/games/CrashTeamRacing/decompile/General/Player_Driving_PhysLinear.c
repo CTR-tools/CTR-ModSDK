@@ -1,5 +1,8 @@
 #include <common.h>
 
+// budget: 4624
+// curr: 4380
+
 void GAMEPAD_Vib_4(struct Driver* driver, u_int param_2, int param_3);
 void Player_SetHeldItem(struct Driver* driver);
 void OtherFX_Play(int sfxID, int flag);
@@ -1163,3 +1166,11 @@ short PhysLinear_DriverOffsets[14] =
 	OFFSETOF(struct Driver, mashingXMakesItBig),
 	OFFSETOF(struct Driver, invincibleTimer)
 };
+
+void PhysAngularFooter(struct Driver* driver)
+{
+	Rot_AxisAngle(&driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
+	gte_SetRotMatrix(&driver->matrix310);
+
+	CameraSlack_PhysAngular(driver);
+}
