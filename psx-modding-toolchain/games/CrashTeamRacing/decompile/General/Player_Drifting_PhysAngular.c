@@ -1,7 +1,7 @@
 #include <common.h>
 
 // budget 0x6E8 (1768)
-// curr (1860)
+// curr (1764)
 
 int InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
 int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
@@ -30,6 +30,8 @@ void DECOMP_Player_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 	short iVar12_C;
 	short iVar12_D;
 	short iVar12_E;
+	
+	gGT = sdata->gGT;
 
 	iVar12_A = ((driver->axisRotationX - driver->angle) + 0x800U & 0xfff) - 0x800;
 	iVar13 = iVar12_A >> 3;
@@ -40,33 +42,28 @@ void DECOMP_Player_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 			iVar13 = 1;
 		}
 
-		elapsedTimeDouble = (sdata->gGT->elapsedTimeMS << 6) >> 5;
+		elapsedTimeDouble = (gGT->elapsedTimeMS << 6) >> 5;
 
-		if (elapsedTimeDouble < iVar13)
-		{
+		if (iVar13 > elapsedTimeDouble)
 			iVar13 = elapsedTimeDouble;
-		}
-		sVar5 = (short)iVar13;
+		
 		if (iVar13 < -elapsedTimeDouble)
-		{
-			sVar5 = (short)-elapsedTimeDouble;
-		}
+			iVar13 = -elapsedTimeDouble;
 
 		// change player rotation
-		driver->angle += sVar5;
+		driver->angle += iVar13;
 
-		*(u_short*)&driver->axisRotationX = driver->axisRotationX - sVar5 & 0xfff;
+		driver->axisRotationX -= iVar13;
+		driver->axisRotationX &= 0xfff;
 	}
+	
+	// positive cam spin rate
+	iVar13 = (int)driver->const_Drifting_CameraSpinRate;
 	
 	if (driver->multDrift < 0) 
 	{
 		// negative cam spin rate
-		iVar13 = -(int)driver->const_Drifting_CameraSpinRate;
-	}
-	else 
-	{
-		// positive cam spin rate
-		iVar13 = (int)driver->const_Drifting_CameraSpinRate;
+		iVar13 = -iVar13;
 	}
 
 	// get camera rotation
@@ -90,12 +87,18 @@ void DECOMP_Player_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 	}
 
 	// Interpolate rotation by speed
-	sVar5 = InterpBySpeed((int)driver->rotPrev.w, 8, uVar10);
-	gGT = sdata->gGT;
-	driver->rotPrev.w = sVar5;
+	driver->rotPrev.w =
+		InterpBySpeed(
+			(int)driver->rotPrev.w, 
+			8, 
+			uVar10);
 
 	// Interpolate rotation by speed
-	uVar6 = InterpBySpeed((int)driver->rotCurr.w, (int)sVar5 * gGT->elapsedTimeMS >> 5, iVar13);
+	driver->rotCurr.w =
+		InterpBySpeed(
+			(int)driver->rotCurr.w, 
+			(int)driver->rotPrev.w * gGT->elapsedTimeMS >> 5, 
+			iVar13);
 
 	// turning rate
 	iVar12_D = driver->rotationSpinRate;
@@ -104,9 +107,6 @@ void DECOMP_Player_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 	iVar15 = (int)driver->multDrift;
 	
 	bVar3 = false;
-
-	// set new rotation variable
-	*(u_short*)&driver->rotCurr.w = uVar6;
 
 	iVar9 = (int)driver->simpTurnState;
 	
@@ -181,12 +181,12 @@ void DECOMP_Player_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 
 	if (bVar2)
 	{
-		iVar12_D = iVar12_D - ((int)driver->unk466 * sdata->gGT->elapsedTimeMS >> 5);
+		iVar12_D -= ((int)driver->unk466 * gGT->elapsedTimeMS >> 5);
 		bVar2 = iVar12_D < iVar13;
 	}
 	else
 	{
-		iVar12_D = iVar12_D + ((int)driver->unk464 * sdata->gGT->elapsedTimeMS >> 5);
+		iVar12_D += ((int)driver->unk464 * gGT->elapsedTimeMS >> 5);
 		bVar2 = iVar13 < iVar12_D;
 	}
 	
@@ -195,8 +195,9 @@ void DECOMP_Player_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 		iVar12_D = iVar13;
 	}
 	
-	// if not steering then interpolate to "neutral" drift
-	if (iVar13 == 0) 
+	// if not holding a drift direction, 
+	// interpolate to "neutral" drift
+	if ((iVar13 == 0) || (iVar15 == 0)) 
 	{
 LAB_80063244:
 
@@ -205,30 +206,24 @@ LAB_80063244:
 			InterpBySpeed((int)driver->KartStates.Drifting.numFramesDrifting, 1, 0);
 	}
 	
-	// if steering
+	// if holding a drift
 	else 
 	{
-		// SwitchWay drift
-		if(iVar15 < 0)
-		{
-			// decrease positive number
-			driver->KartStates.Drifting.numFramesDrifting--;
+		iVar13 = driver->KartStates.Drifting.numFramesDrifting;
 		
-			// skip to zero if already positive
-			if (driver->KartStates.Drifting.numFramesDrifting > 0)
-				driver->KartStates.Drifting.numFramesDrifting = 0;
+		// if opposite signs,
+		// switchWay with positive count,
+		// standard with negative count
+		if((iVar15 ^ iVar13) < 0) iVar13 = 0;
+		
+		// share signs
+		else
+		{
+			if(iVar15 < 0) iVar13--;
+			else iVar13++;
 		}
 		
-		// Standard drift
-		if(iVar15 > 0) 
-		{
-			// increase number
-			driver->KartStates.Drifting.numFramesDrifting++;
-		
-			// skip to zero if already negative
-			if (driver->KartStates.Drifting.numFramesDrifting < 0)
-				driver->KartStates.Drifting.numFramesDrifting = 0;
-		}
+		driver->KartStates.Drifting.numFramesDrifting = iVar13;
 	}
 	if (bVar3)
 	{
@@ -268,61 +263,30 @@ LAB_800632cc:
 	
 	iVar15 = iVar9;
 	
+	if (iVar9 < 0) 
+		iVar15 = -iVar9;
+	
+	// iVar13 and iVar9 have different signs
+	iVar8 = (int)driver->unk472;
+	iVar11 = driver->const_SteerVel_DriftSwitchWay;
+	
+	// if both numbers have same sign,
+	// either both < 0, or both >= 0
+	if((iVar13 ^ iVar9) >= 0)
+	{
+		iVar8 = (int)driver->unk470;
+		iVar11 = (int)driver->const_SteerVel_DriftStandard;	
+	}
+	
 	if (iVar13 < 0) 
 	{
 		iVar12_D = -iVar12_D;
-		
-		if (iVar9 < 0) 
-		{
-			if (iVar9 < 0)
-			{
-				iVar15 = -iVar9;
-			}
-			
-			// const_SteerVel_DriftStandard
-			iVar11 = (int)driver->const_SteerVel_DriftStandard << 8;
-			
-			iVar8 = -(int)driver->unk470;
-		}
-	
-		else 
-		{
-			// const_SteerVel_DriftSwitchWay
-			iVar11 = (int)driver->const_SteerVel_DriftSwitchWay << 8;
-		
-			iVar8 = -(int)driver->unk472;
-		}
-	}
-	
-	else 
-	{
-		if (iVar9 < 0) 
-		{
-			if (iVar9 < 0) 
-			{
-				iVar15 = -iVar9;
-			}
-		
-			// const_SteerVel_DriftSwitchWay
-			cVar1 = driver->const_SteerVel_DriftSwitchWay;
-		
-			sVar5 = driver->unk472;
-		}
-		
-		else 
-		{
-			// const_SteerVel_DriftStandard
-			cVar1 = driver->const_SteerVel_DriftStandard;
-		
-			sVar5 = driver->unk470;
-		}
-		iVar8 = (int)sVar5;
-		iVar11 = (int)cVar1 << 8;
+		iVar8 = -iVar8;
 	}
 
 	// Map value from [oldMin, oldMax] to [newMin, newMax]
 	// inverting newMin and newMax will give an inverse range mapping
-	iVar15 = MapToRange(iVar15, 0, iVar11, 0, iVar8);
+	iVar15 = MapToRange(iVar15, 0, iVar11 << 8, 0, iVar8);
 	iVar12_D = (iVar12_D + iVar15) - driver->unknownDimension2Curr;
 	iVar15 = iVar12_D >> 3;
 	sVar5 = (short)iVar15;
@@ -352,11 +316,11 @@ LAB_800632cc:
 		}
 		if (iVar12_E < 10)
 		{
-			*(u_short*)&driver->unk3D4[2] = 8;
-			*(u_short*)&driver->unk3D4[1] = 0x14;
+			driver->unk3D4[2] = 8;
+			driver->unk3D4[1] = 0x14;
 			if (iVar13 < 0)
 			{
-				*(u_short*)&driver->unk3D4[1] = 0xffec;
+				driver->unk3D4[1] = -driver->unk3D4[1];
 			}
 		}
 	}
@@ -375,11 +339,10 @@ LAB_800632cc:
 	}
 	if (driver->unk3D4[2] == 0)
 	{
-		*(u_short*)&driver->unk3D4[1] = 10;
+		driver->unk3D4[1] = 10;
 		if (0 < driver->unk3D4[0])
-		{
-			*(u_short*)&driver->unk3D4[1] = 0xfff6;
-		}
+			driver->unk3D4[1] = -driver->unk3D4[1];
+		
 		iVar12_E = driver->unk3D4[1];
 		if (iVar12_E < 0)
 		{
@@ -391,43 +354,42 @@ LAB_800632cc:
 	}
 	else
 	{
-		driver->unk3D4[2] = driver->unk3D4[2] - 1;
+		driver->unk3D4[2]--;
 		sVar5 = driver->unk3D4[0] + driver->unk3D4[1];
 	}
 	driver->unk3D4[0] = sVar5;
-	gGT = sdata->gGT;
-	*(u_short*)&driver->ampTurnState = (short)(iVar9 + iVar13);
-	*(u_short*)&driver->angle = driver->angle + (short)((iVar9 + iVar13) * gGT->elapsedTimeMS >> 0xd) & 0xfff;
+	
+	driver->ampTurnState = (short)(iVar9 + iVar13);
+	
+	driver->angle += (short)(driver->ampTurnState * gGT->elapsedTimeMS >> 0xd);
+	driver->angle &= 0xfff;
 	
 	if (driver->KartStates.Drifting.driftBoostTimeMS != 0) 
 	{  
 		// decrease by elpased time
-		iVar13 = (u_int)*(u_short*)&driver->KartStates.Drifting.driftBoostTimeMS - (u_int)gGT->elapsedTimeMS;
-		*(u_short*)&driver->KartStates.Drifting.driftBoostTimeMS = (short)iVar13;
-		if (iVar13 * 0x10000 < 0)
-		{
-			*(u_short*)&driver->KartStates.Drifting.driftBoostTimeMS = 0;
-		}
+		driver->KartStates.Drifting.driftBoostTimeMS -= (u_int)gGT->elapsedTimeMS;
+		
+		if (driver->KartStates.Drifting.driftBoostTimeMS < 0)
+			driver->KartStates.Drifting.driftBoostTimeMS = 0;
 															
-		sVar5 = (short)((int)((u_int)driver->unk47A * sdata->gGT->elapsedTimeMS) >> 5);
+		sVar5 = (short)((int)((u_int)driver->unk47A * gGT->elapsedTimeMS) >> 5);
 				
 		if (driver->unknownDimension2Curr < 0)
 		{
 			sVar5 = -sVar5;
 		}
-		*(u_short*)&driver->axisRotationX = driver->axisRotationX + sVar5 & 0xfff;
+		
+		driver->axisRotationX += sVar5;
+		driver->axisRotationX &= 0xfff;
 	}
 	
 	driver->rotCurr.y = driver->unk3D4[0] + driver->angle + driver->unknownDimension2Curr;
 
 	// increment this by milliseconds
-	sVar5 = driver->KartStates.Drifting.driftTotalTimeMS + gGT->elapsedTimeMS;
-	driver->KartStates.Drifting.driftTotalTimeMS = sVar5;
+	driver->KartStates.Drifting.driftTotalTimeMS += gGT->elapsedTimeMS;
 
-	if ((int)((u_int)driver->unk462 << 5) < (int)sVar5)
-	{
+	if (driver->KartStates.Drifting.driftTotalTimeMS > (int)((u_int)driver->unk462 << 5))
 		driver->KartStates.Drifting.driftTotalTimeMS = (u_short)driver->unk462 << 5;
-	}
 
 	Rot_AxisAngle(&driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
 	gte_SetRotMatrix(&driver->matrix310);
