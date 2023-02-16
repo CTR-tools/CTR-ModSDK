@@ -1,7 +1,7 @@
 #include <common.h>
 
 // byte budget: 1996
-// current size: 2008
+// current size: 1948
 
 int InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
 int MapToRange(int param_1, int param_2, int param_3, int param_4, int param_5);
@@ -383,8 +383,8 @@ LAB_80060284:
 		turnResistMinBitshift = turnResistMinBitshift * 10 >> 8;
 	}
 	driver->axisRotationX = driver->axisRotationX + (short)(turnResistMinBitshift * elapsedTimeMS >> 0xd) & 0xfff;
-	Rot_AxisAngle(&driver->matrix310, driver->AxisAngle1_normalVec, angle);
-	gte_SetRotMatrix(&driver->matrix310);
-	CameraSlack_PhysAngular(driver);
-	return;
+
+	// bottom of Driving_PhysLinear.c
+	void PhysAngularFooter(struct Driver* driver);
+	PhysAngularFooter(driver);
 }
