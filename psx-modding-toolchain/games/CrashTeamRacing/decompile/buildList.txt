@@ -272,6 +272,8 @@ common, exe, Player_LastSpin_Update, 0x0, General/Player_LastSpin_FuncPtrs.c
 common, exe, Player_LastSpin_Init, 0x0, General/Player_LastSpin_Init.c
 common, exe, Player_StopSpin_Update, 0x0, General/Player_StopSpin_FuncPtrs.c
 common, exe, Player_StopSpin_Init, 0x0, General/Player_StopSpin_Init.c
+common, exe, Player_Blasted_Update, 0x0, General/Player_Blasted_FuncPtrs.c
+common, exe, Player_Blasted_Init, 0x0, General/Player_Blasted_Init.c
 
 // Japan
 
