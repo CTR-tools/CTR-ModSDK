@@ -9,6 +9,7 @@ Functions:
 *Most of these functions were tested prior to the creation of the unit tester tool, as a result these may not function exactly as in the original game. The following functions were, however, tested:
 -BOTS_InitNavPath
 -BOTS_SetGlobalNavPath
+-CTR_CycleTex_LEV
 -DecalFont_DrawLine
 -DecalFont_DrawLineStrlen
 -DecalHUD_Arrow2D

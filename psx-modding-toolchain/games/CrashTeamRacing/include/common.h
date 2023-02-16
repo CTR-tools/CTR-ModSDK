@@ -3850,16 +3850,16 @@ struct OTMem
 	int size;		// 90
 
 	// 0x4
-	void* start;	// 94
+	u_long* start;	// 94
 
 	// 0x8
-	void* end;		// 98
+	u_long* end;		// 98
 
 	// 0xC
-	void* curr;		// 9c
+	u_long* curr;		// 9c
 
 	// 0x10
-	void* startPlusFour; // a0
+	u_long* startPlusFour; // a0
 };
 
 // 0xA4

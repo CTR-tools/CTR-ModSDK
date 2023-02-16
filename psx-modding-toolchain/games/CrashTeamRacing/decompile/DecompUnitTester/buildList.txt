@@ -1,4 +1,2 @@
-//common, exe, MainFrame_GameLogic, -0x8, src/hook.s
-//common, oob, 0x80200000, 0x0, src/main.c ../General/CTR_CycleTex_LEV.c, unit_tester.bin
-
-common, exe, CTR_CycleTex_LEV, 0x0, ../General/CTR_CycleTex_LEV.c
+common, exe, MainFrame_GameLogic, -0x8, src/hook.s
+common, oob, 0x80200000, 0x0, src/main.c ../General/CTR_CycleTex_LEV.c, unit_tester.bin

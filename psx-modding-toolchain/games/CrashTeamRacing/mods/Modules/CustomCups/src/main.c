@@ -5,7 +5,7 @@
 #define StoreLong(dest, val) (*(unsigned long*)(dest) = (unsigned long)(val))
 #define ADDR_230 0x800AB9F0
 
-void DrawTextBackground(RECT* r, int unk, void* ot);
+void DrawTextBackground(RECT* r, int flag, u_long* ot);
 void DecalFont_DrawLine(char*, int, int, int, int);
 void RNG_Scramble();
 int RCNT_GetTime_Total();

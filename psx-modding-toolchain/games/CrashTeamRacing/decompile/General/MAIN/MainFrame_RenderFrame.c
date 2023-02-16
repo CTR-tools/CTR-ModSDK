@@ -29,6 +29,46 @@ void RenderVSYNC(struct GameTracker* gGT);
 void RenderFMV();
 void RenderSubmit(struct GameTracker* gGT);
 
+u_int LOAD_IsOpen_MainMenu();
+int MainFrame_HaveAllPads(short param_1);
+void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
+void DrawTextBackground(RECT* r, int flag, u_long* ot);
+void InterpolatePosition2D_Linear(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);
+void DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, u_long* ot);
+void ElimBG_HandleState(struct GameTracker* gGT);
+void MainFrame_VisMemFullFrame(struct GameTracker* gGT, struct Level* level);
+void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
+void MenuBox_CollectInput();
+void MenuBox_ProcessState();
+void Camera110_UpdateFrustum(struct Camera110* c110);
+void EffectSfxRain_MakeSound(struct GameTracker* gGT);
+void RenderWeather(struct Camera110* c110, struct PrimMem* primMem, struct RainBuffer* rainBuffer, char numPlyr, int gameMode1);
+void DrawConfetti(struct Camera110* c110, struct PrimMem* primMem, void* confetti, int frameTimer, int gameMode1);
+void RenderStars(struct Camera110* c110, struct PrimMem* primMem, void* stars, char numPlyr);
+void DecalMP_01(struct GameTracker* gGT);
+void CupStandings_InputAndDraw();
+void DrawHUD_Racing();
+void DrawHUD_CrystalChallenge();
+void VB_EndEvent_DrawMenu();
+void RR_EndEvent_DrawMenu();
+void AA_EndEvent_DrawMenu();
+void TT_EndEvent_DrawMenu();
+void CC_EndEvent_DrawMenu();
+void LOAD_OvrThreads(u_int param_1);
+u_int LOAD_IsOpen_AdvHub();
+void DrawHUD_AdvStrings();
+void AH_Map_Main();
+void AH_MaskHint_Start(short requestedHint, short bool_interruptWarppad);
+void INSTANCE_LevRestartLInBs(void* instDefs, u_int numInstances);
+void DrawIntroRaceText_1P();
+void RedBeaker_RenderRain(struct Camera110* c110, struct PrimMem* primMem, struct JitPool* rain, char numPlyr, int gameMode1);
+u_int LOAD_IsOpen_Podiums();
+void CS_BoxScene_InstanceSplitLines();
+void* RenderBucket_QueueLevInstances(struct CameraDC* cDC, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
+void* RenderBucket_QueueNonLevInstances(struct Item* item, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
+void Particle_RenderList(struct Camera110* c110, void* particleList);
+void Camera110_SetDrawEnv_Normal(u_long* ot, struct Camera110* c110, struct DB* backBuffer, short* param_4, u_char param_5);
+
 void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	struct Level* lev = gGT->level1;

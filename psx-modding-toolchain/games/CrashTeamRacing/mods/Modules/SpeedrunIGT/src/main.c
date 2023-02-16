@@ -3,7 +3,7 @@
 void DecalFont_DrawLine(char*, int, int, int, int);
 void DrawHeat_Subset1();
 void MEMCARD_SetIcon(int id);
-void DrawTextBackground(RECT* r, int unk, void* ot);
+void DrawTextBackground(RECT* r, int flag, u_long* ot);
 void LoadSave_StartMemcardAction(int action);
 
 // to do: make header for IGT funcs
