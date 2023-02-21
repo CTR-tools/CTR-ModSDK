@@ -89,6 +89,8 @@ void ParseMessage()
 	// if recvSize is equal to expected, and if type is valid
 	else if (((struct SG_Header*)recvBuf)->type < SG_COUNT)
 	{
+		int slot;
+
 		// switch will compile into a jmp table, no funcPtrs needed
 		switch (((struct SG_Header*)recvBuf)->type)
 		{
@@ -101,14 +103,30 @@ void ParseMessage()
 			break;
 		
 		case SG_DROPCLIENT:
-			
+
+			int clientDropped = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
+			octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
+
+			// fix driver IDs
+			if (clientDropped == octr->DriverID) slot = 0;
+			if (clientDropped < octr->DriverID) slot = clientDropped + 1;
+			if (clientDropped > octr->DriverID) slot = clientDropped;
+
+			for (int i = slot; i < octr->NumDrivers; i++)
+			{
+				*(short*)&pBuf[(0x80086e84 + 2 * (i)) & 0xffffff] =
+					*(short*)&pBuf[(0x80086e84 + 2 * (i + 1)) & 0xffffff];
+
+				octr->boolLockedInCharacter_Others[i] =
+					octr->boolLockedInCharacter_Others[i + 1];
+			}
+
 			// clientID is the client disconnected
-			if (octr->DriverID > ((struct SG_MessageClientStatus*)recvBuf)->clientID)
+			if (octr->DriverID > clientDropped)
 				octr->DriverID--;
 
-			octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
 			printf("New client, you are now: %d/%d\n", octr->DriverID, octr->NumDrivers);
-			
+
 			// if you are new host
 			if (octr->DriverID == 0)
 			{
@@ -133,7 +151,6 @@ void ParseMessage()
 			int clientID = ((struct SG_MessageCharacter*)recvBuf)->clientID;
 			printf("Client: %d, Character: %d\n", clientID, characterID);
 			
-			int slot;
 			if (clientID == octr->DriverID) slot = 0;
 			if (clientID < octr->DriverID) slot = clientID + 1;
 			if (clientID > octr->DriverID) slot = clientID;

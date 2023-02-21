@@ -148,7 +148,7 @@ void CheckNewClients()
 void Disconnect(int i)
 {
 	// prevent a one-frame accident
-	if (CtrClient[i].disconnectCount < 10)
+	if (CtrClient[i].disconnectCount < 100)
 	{
 		CtrClient[i].disconnectCount++;
 		return;
