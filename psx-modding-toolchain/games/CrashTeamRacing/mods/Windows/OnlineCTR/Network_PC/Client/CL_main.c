@@ -154,10 +154,10 @@ void ParseMessage()
 
 			*(short*)&pBuf[(0x80086e84 + 2*slot) & 0xffffff] = characterID;
 			octr->boolLockedInCharacter_Others[clientID] = ((struct SG_MessageCharacter*)recvBuf)->boolLockedIn;
+			break;
 
-			// if everyone locked in,
-			// start race
-
+		case SG_STARTLOADING:
+			octr->CurrState = LOBBY_START_LOADING;
 			break;
 
 		default:

@@ -53,8 +53,11 @@ enum ServerGiveMessageType
 {
 	SG_NEWCLIENT,
 	SG_DROPCLIENT,
-	SG_CHARACTER,
 	SG_TRACK,
+	SG_CHARACTER,
+	SG_STARTLOADING,
+
+	// gameplay
 	SG_POSITION,
 	
 	SG_COUNT

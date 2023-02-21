@@ -40,6 +40,7 @@ enum ServerState
 {
 	SERVER_BOOT,
 	SERVER_LOBBY,
+	SERVER_RACE,
 };
 
 void ServerState_Boot()
@@ -300,6 +301,7 @@ void ParseMessage(int i)
 	}
 }
 
+int startCount = 0;
 void ServerState_Lobby()
 {
 	CheckNewClients();
@@ -325,13 +327,47 @@ void ServerState_Lobby()
 			boolReadyToStart = 0;
 
 	if (boolReadyToStart)
-		printf("Ready To Start\n");
+	{
+		printf("Start Loading\n");
+
+		// give people a moment to see
+		// locked in drivers
+		startCount++;
+		if (startCount < 10) return;
+		startCount = 0;
+
+		struct SG_Header sg;
+		sg.type = SG_STARTLOADING;
+		sg.size = sizeof(struct SG_Header);
+		sg.boolLastMessage = 1;
+
+		// send a message to the client
+		for (int j = 0; j < clientCount; j++)
+			send(CtrClient[j].socket, &sg, sg.size, 0);
+
+		state = SERVER_RACE;
+	}
+}
+
+void ServerState_Race()
+{
+	CheckNewClients();
+
+	// check messages in sockets
+	for (int i = 0; i < 8; i++)
+	{
+		if (CtrClient[i].socket != 0)
+		{
+			ParseMessage(i);
+		}
+	}
 }
 
 void (*ServerState[]) () =
 {
 	ServerState_Boot,
-	ServerState_Lobby
+	ServerState_Lobby,
+	ServerState_Race,
 };
 
 int main()
