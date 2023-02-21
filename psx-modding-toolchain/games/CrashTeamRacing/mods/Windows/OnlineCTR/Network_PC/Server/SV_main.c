@@ -14,7 +14,10 @@
 struct SocketCtr
 {
 	SOCKET socket;
-	int disconnectCount;
+
+	short disconnectCount;
+	char characterID;
+	char boolLockedInCharacter;
 
 #if 0
 	Message sendBuf;
@@ -249,6 +252,8 @@ void ParseMessage(int i)
 						(i != j)
 					)
 				{
+					CtrClient[j].boolLockedInCharacter = 0;
+
 					printf("Give Track to %d\n", j);
 					send(CtrClient[j].socket, &mt, mt.size, 0);
 				}
@@ -267,6 +272,9 @@ void ParseMessage(int i)
 			mg.clientID = i;
 			mg.characterID = ((struct CG_MessageCharacter*)recvBuf)->characterID;
 			mg.boolLockedIn = ((struct CG_MessageCharacter*)recvBuf)->boolLockedIn;
+			
+			CtrClient[i].characterID = mg.characterID;
+			CtrClient[i].boolLockedInCharacter = mg.boolLockedIn;
 
 			printf("Client: %d, Character: %d\n", mg.clientID, mg.characterID);
 
@@ -304,6 +312,18 @@ void ServerState_Lobby()
 			ParseMessage(i);
 		}
 	}
+
+	// This must be here,
+	// otherwise dropping a client wont start the race,
+	// while all other drivers are ready to start
+
+	int boolReadyToStart = 1;
+	for (int j = 0; j < clientCount; j++)
+		if (CtrClient[j].boolLockedInCharacter == 0)
+			boolReadyToStart = 0;
+
+	if (boolReadyToStart)
+		printf("Ready To Start\n");
 }
 
 void (*ServerState[]) () =

@@ -21,13 +21,18 @@ char ip[100];
 struct SocketCtr
 {
 	SOCKET socket;
+	int disconnectCount;
 };
 
 struct SocketCtr CtrMain;
 
 void Disconnect()
 {
+	CtrMain.disconnectCount++;
+	if (CtrMain.disconnectCount < 10) return;
+
 	octr->CurrState = LAUNCH_ENTER_IP;
+	CtrMain.disconnectCount = 0;
 }
 
 void ParseMessage()
@@ -37,16 +42,6 @@ void ParseMessage()
 
 	int recvByteCount;
 	recvByteCount = recv(CtrMain.socket, recvBuf, 8, 0);
-
-	// This happens when the server uses closesocket(),
-	// either because you connected to a full server, or
-	// a client disconnected so the server reset
-	if (recvByteCount == 0)
-	{
-		Disconnect();
-		octr->CurrState = LAUNCH_CONNECT_FAILED;
-		return;
-	}
 
 	// check for errors
 	if (recvByteCount == -1)
@@ -64,6 +59,8 @@ void ParseMessage()
 
 			if (err == WSAENOTCONN)
 			{
+				Disconnect();
+
 				system("cls");
 				printf("Failed to connect to server\n\n");
 				printf("Close Client.exe and reopen, try again\n");
@@ -215,6 +212,7 @@ void StatePC_Launch_EnterIP()
 
 	// Create a SOCKET for connecting to server
 	CtrMain.socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	CtrMain.disconnectCount = 0;
 	
 	// Setup the TCP listening socket
 	int res = connect(CtrMain.socket, (struct sockaddr*)&socketIn, sizeof(socketIn));
