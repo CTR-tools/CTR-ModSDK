@@ -128,6 +128,7 @@ void StatePS1_Launch_FirstInit()
 {
 	// starting at index 381 (0x17d) is
 	// dialogue for adventure hints
+	int i;
 	
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
@@ -154,6 +155,9 @@ void StatePS1_Launch_FirstInit()
 
 	// keep running till the client gets a result,
 	// DriverID is set to -1 on windows-side before this.
+	
+	for(i = 0; i < 8; i++)
+		data.characterIDs[i] = -1;
 
 	if(octr->DriverID == 0)
 	{		
@@ -259,8 +263,40 @@ void DrawRecvTrack()
 
 void DrawCharacterStats()
 {
-	// loop through and draw each character name,
-	// change color to green if character is "lockedIn"
+	char message[32];
+	int slot;
+	int i;
+	
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
+	for(i = 0; i < octr->NumDrivers; i++)
+	{	
+		if(i == octr->DriverID) slot = 0;
+		if(i < octr->DriverID) slot = i+1;
+		if(i > octr->DriverID) slot = i;
+		
+		sprintf(message, "Client %d:", i);
+		
+		if(data.characterIDs[slot] == -1)
+		{
+			sprintf(message, "%s N/A", message);
+			
+			DecalFont_DrawLine(message,0x8,0x48+i*0x8,2,0x19);
+		}
+		
+		else
+		{
+			sprintf(message, "%s %s", message, 
+				sdata->lngStrings[
+					data.MetaDataCharacters[
+						data.characterIDs[slot]
+					].name_LNG_short]);
+					
+			DecalFont_DrawLine(message,0x8,0x48+i*0x8,2,0x1A);
+		}
+	}
 }
 
 void MenuBox_OnPressX_Character(struct MenuBox* b)
@@ -289,12 +325,16 @@ void StatePS1_Lobby_CharacterPick()
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
-	// quit, if a choice has already been made
-	if(octr->boolLockedInCharacter) return;
-	
 	DrawClientCountStats();
 	DrawCharacterStats();
 	DrawRecvTrack();
+	
+	// quit, if a choice has already been made
+	if(octr->boolLockedInCharacter) 
+	{
+		DecalFont_DrawLine("Waiting For Players",0x8,0x38,2,0);
+		return;
+	}
 	
 	// open menu, set defaults
 	if(sdata->ptrActiveMenuBox != &menuBox)
