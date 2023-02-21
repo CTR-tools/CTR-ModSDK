@@ -317,6 +317,8 @@ void ServerState_Lobby()
 	// otherwise dropping a client wont start the race,
 	// while all other drivers are ready to start
 
+	if (clientCount == 0) return;
+
 	int boolReadyToStart = 1;
 	for (int j = 0; j < clientCount; j++)
 		if (CtrClient[j].boolLockedInCharacter == 0)

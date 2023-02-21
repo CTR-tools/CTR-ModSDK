@@ -29,7 +29,7 @@ struct SocketCtr CtrMain;
 void Disconnect()
 {
 	CtrMain.disconnectCount++;
-	if (CtrMain.disconnectCount < 10) return;
+	if (CtrMain.disconnectCount < 1000) return;
 
 	octr->CurrState = LAUNCH_ENTER_IP;
 	CtrMain.disconnectCount = 0;
