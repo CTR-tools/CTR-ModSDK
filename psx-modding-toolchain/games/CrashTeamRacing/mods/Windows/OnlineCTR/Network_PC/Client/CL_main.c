@@ -92,10 +92,32 @@ void ParseMessage()
 		// switch will compile into a jmp table, no funcPtrs needed
 		switch (((struct SG_Header*)recvBuf)->type)
 		{
-		case SG_WELCOME:
-			octr->DriverID = ((struct SG_MessageWelcome*)recvBuf)->clientID;
-			octr->NumDrivers = ((struct SG_MessageWelcome*)recvBuf)->numClientsTotal;
+		case SG_NEWCLIENT:
+			
+			// clientID is "you"
+			octr->DriverID = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
+			octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
+			printf("New client, you are now: %d/%d\n", octr->DriverID, octr->NumDrivers);
 			break;
+		
+		case SG_DROPCLIENT:
+			
+			// clientID is the client disconnected
+			if (octr->DriverID > ((struct SG_MessageClientStatus*)recvBuf)->clientID)
+				octr->DriverID--;
+
+			octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
+			printf("New client, you are now: %d/%d\n", octr->DriverID, octr->NumDrivers);
+			
+			// if you are new host
+			if (octr->DriverID == 0)
+			{
+				if (octr->CurrState == LOBBY_GUEST_TRACK_WAIT)
+					octr->CurrState = LOBBY_HOST_TRACK_PICK;
+			}
+			
+			break;
+		
 		case SG_TRACK:
 			octr->boolLockedInTrack = 1;
 			int trackID = ((struct SG_MessageTrack*)recvBuf)->trackID;
@@ -337,6 +359,7 @@ int main()
 	}
 
 	octr = (struct OnlineCTR*)&pBuf[0x8000C000 & 0xffffff];
+	//octr->CurrState = StatePC_Launch_EnterPID;
 
 	while (1)
 	{

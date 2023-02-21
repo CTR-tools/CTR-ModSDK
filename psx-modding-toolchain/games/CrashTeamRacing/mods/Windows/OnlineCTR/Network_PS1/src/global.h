@@ -45,7 +45,8 @@ struct OnlineCTR
 
 enum ServerGiveMessageType
 {
-	SG_WELCOME,
+	SG_NEWCLIENT,
+	SG_DROPCLIENT,
 	SG_CHARACTER,
 	SG_TRACK,
 	SG_POSITION,
@@ -71,7 +72,7 @@ struct SG_Header
 };
 
 // sent to each user when someone connects
-struct SG_MessageWelcome
+struct SG_MessageClientStatus
 {
 	// max of 16 message types
 	unsigned char type : 4;
@@ -136,6 +137,7 @@ struct SG_MessageTrack
 
 enum ClientGiveMessageType
 {
+	CG_DROPCLIENT,
 	CG_CHARACTER,
 	CG_TRACK,
 	CG_POSITION,

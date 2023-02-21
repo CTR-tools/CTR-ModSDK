@@ -39,33 +39,6 @@ enum ServerState
 	SERVER_LOBBY,
 };
 
-void Disconnect(int i)
-{
-#if 0
-	closesocket(CtrClient[i].socket);
-	FD_CLR(CtrClient[i].socket, &master);
-	clientCount--;
-
-	// Send ClientID and clientCount back to all clients
-	for (int j = i; j < clientCount; j++)
-	{
-		memcpy(&CtrClient[j + 1], &CtrClient[j], sizeof(struct SocketCtr));
-
-		struct SG_MessageWelcome mw;
-		mw.type = SG_WELCOME;
-		mw.size = sizeof(struct SG_MessageWelcome);
-		mw.boolLastMessage = 1;
-		mw.clientID = j;
-		mw.numClientsTotal = clientCount;
-
-		// send a message to the client
-		send(CtrClient[j].socket, &mw, mw.size, 0);
-	}
-
-	printf("ClientCount: %d\n", clientCount);
-#endif
-}
-
 void ServerState_Boot()
 {
 	HWND console = GetConsoleWindow();
@@ -154,9 +127,9 @@ void CheckNewClients()
 			// Send ClientID and clientCount back to all clients
 			for (int j = 0; j < clientCount; j++)
 			{
-				struct SG_MessageWelcome mw;
-				mw.type = SG_WELCOME;
-				mw.size = sizeof(struct SG_MessageWelcome);
+				struct SG_MessageClientStatus mw;
+				mw.type = SG_NEWCLIENT;
+				mw.size = sizeof(struct SG_MessageClientStatus);
 				mw.boolLastMessage = 1;
 				mw.clientID = j;
 				mw.numClientsTotal = clientCount;
@@ -167,6 +140,34 @@ void CheckNewClients()
 
 			printf("ClientCount: %d\n", clientCount);
 		}
+	}
+}
+
+void Disconnect(int i)
+{
+	clientCount--;
+	printf("Disconnected %d, now %d remain\n", i, clientCount);
+ 
+	for (int j = i; j < clientCount; j++)
+	{
+		memcpy(&CtrClient[j], &CtrClient[j+1], sizeof(struct SocketCtr));
+	}
+
+	// clear last
+	memset(&CtrClient[clientCount], 0, sizeof(struct SocketCtr));
+
+	// Send ClientID and clientCount back to all clients
+	for (int j = 0; j < clientCount; j++)
+	{
+		struct SG_MessageClientStatus mw;
+		mw.type = SG_DROPCLIENT;
+		mw.size = sizeof(struct SG_MessageClientStatus);
+		mw.boolLastMessage = 1;
+		mw.clientID = i;
+		mw.numClientsTotal = clientCount;
+
+		// send a message to the client
+		send(CtrClient[j].socket, &mw, mw.size, 0);
 	}
 }
 
