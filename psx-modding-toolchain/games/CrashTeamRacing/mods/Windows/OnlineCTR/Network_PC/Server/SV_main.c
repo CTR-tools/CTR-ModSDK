@@ -301,7 +301,6 @@ void ParseMessage(int i)
 	}
 }
 
-int startCount = 0;
 void ServerState_Lobby()
 {
 	CheckNewClients();
@@ -328,13 +327,11 @@ void ServerState_Lobby()
 
 	if (boolReadyToStart)
 	{
-		printf("Start Loading\n");
-
 		// give people a moment to see
 		// locked in drivers
-		startCount++;
-		if (startCount < 10) return;
-		startCount = 0;
+		Sleep(1000);
+
+		printf("Start Loading\n");
 
 		struct SG_Header sg;
 		sg.type = SG_STARTLOADING;
