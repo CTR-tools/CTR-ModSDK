@@ -264,6 +264,8 @@ void StatePC_Lobby_GuestTrackWait()
 	ParseMessage();
 }
 
+int prev_characterID = -1;
+int prev_boolLockedIn = -1;
 void StatePC_Lobby_CharacterPick()
 {
 	ParseMessage();
@@ -275,12 +277,20 @@ void StatePC_Lobby_CharacterPick()
 
 	// data.characterIDs[0]
 	mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
-
 	mc.boolLockedIn = octr->boolLockedInCharacter;
 
-	// send a message to the client
-	send(CtrMain.socket, &mc, mc.size, 0);
+	if(
+		(prev_characterID != mc.characterID) ||
+		(prev_boolLockedIn != mc.boolLockedIn)
+	  )
+	{
+		prev_characterID = mc.characterID;
+		prev_boolLockedIn = mc.boolLockedIn;
 
+		// send a message to the client
+		send(CtrMain.socket, &mc, mc.size, 0);
+	}
+	
 	if (mc.boolLockedIn == 1)
 	{
 		octr->CurrState = LOBBY_WAIT_FOR_LOADING;
