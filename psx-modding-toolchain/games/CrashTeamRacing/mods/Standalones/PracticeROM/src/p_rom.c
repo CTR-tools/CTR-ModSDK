@@ -6,7 +6,6 @@ void DrawHeat_Subset4();
 void DrawHeat_Subset7();
 void Driver_SetConsts(struct Driver* d);
 void MainFrame_TogglePauseAudio(int enable);
-void* LIST_RemoveFront(struct LinkedList* L);
 int MATH_FastSqrt(int dist, int unk);
 
 #define NumbersToString DrawHeat_Subset1
@@ -281,7 +280,7 @@ void ResetControlVariables()
 	p_rom->slot = 0;
 
 	// Restore prefered camera zoom
-	sdata->gGT->cameraDC[0].data40[6] = 1;
+	*(char*)((int)&sdata->gGT->cameraDC[0].mode + 2) = 1;
 
 	// Hardcoding the speed-o-meter
 	sdata->HudAndDebugFlags |= 8;
@@ -454,7 +453,7 @@ void RunUpdateHook()
 		if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_R3)
 		{
 			// invert self
-			gGT->cameraDC[0].data40[6] = !gGT->cameraDC[0].data40[6];
+			*(char*)((int)&gGT->cameraDC[0].mode + 2) = !(*(char*)((int)&gGT->cameraDC[0].mode + 2));
 		}
 
 		// Ghost cheat
