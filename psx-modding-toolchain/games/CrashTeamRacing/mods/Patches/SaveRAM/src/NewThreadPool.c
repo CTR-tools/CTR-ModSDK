@@ -1,9 +1,6 @@
 #include <common.h>
 
 // To do: add header
-void JitPool_Clear(struct JitPool* ap);
-void LIST_Clear(struct LinkedList* L);
-void LIST_AddFront(struct LinkedList* L, void* item);
 
 void PadInitMtap();
 void howl_InitGlobals(); // 80029988

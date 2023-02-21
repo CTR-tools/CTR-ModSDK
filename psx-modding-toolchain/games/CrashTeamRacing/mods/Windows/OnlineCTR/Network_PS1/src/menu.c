@@ -67,11 +67,8 @@ struct MenuBox menuBox =
 	.posY_prev = 0,
 	
 	.rowSelected = 0,
-	.unk3 = 0,
-	.unk4 = 0,
-	.unk5 = 0,
-	.unk6 = 0,
-	.unk7 = 0,
+	.unk1a = 0,
+	.unk1e = 0,
 	.width = 0,
 	.height = 0,
 	
@@ -90,7 +87,7 @@ void SetNames_Tracks()
 	for(i = 0; i < 4; i++)
 	{
 		menuRows[i].stringIndex = 
-			data.MetaDataLEV[4*octr->PageNumber+i].name_LNG;
+			data.metaDataLEV[4*octr->PageNumber+i].name_LNG;
 	}
 }
 
@@ -112,19 +109,19 @@ void SetNames_Characters()
 
 void StatePS1_Launch_EnterPID()
 {	
-	DecalFont_DrawLine("Attach Windows Client To Continue",0x0,0xd0,2,0);
+	DecalFont_DrawLine("Attach Windows Client To Continue",0x8,0xd0,2,0);
 }
 
 void StatePS1_Launch_EnterIP()
 {	
-	DecalFont_DrawLine("Client Attached",0x0,0xc8,2,0x1A);
-	DecalFont_DrawLine("Enter IP Address",0x0,0xd0,2,0);
+	DecalFont_DrawLine("Client Attached",0x8,0xc8,2,0x1A);
+	DecalFont_DrawLine("Enter IP Address",0x8,0xd0,2,0);
 }
 
 void StatePS1_Launch_ConnectFailed()
 {
-	DecalFont_DrawLine("Server Not Found",0x0,0xc8,2,0x19);
-	DecalFont_DrawLine("Please Try Again",0x0,0xd0,2,0);
+	DecalFont_DrawLine("Server Not Found",0x8,0xc8,2,0x19);
+	DecalFont_DrawLine("Please Try Again",0x8,0xd0,2,0);
 }
 
 void StatePS1_Launch_FirstInit()
@@ -178,10 +175,10 @@ void DrawClientCountStats()
 	#endif
 	
 	sprintf(message, "ClientID: %d", octr->DriverID);
-	DecalFont_DrawLine(message,0x0,0x20,2,0);
+	DecalFont_DrawLine(message,0x8,0x20,2,0);
 	
 	sprintf(message, "NumTotal: %d", octr->NumDrivers);
-	DecalFont_DrawLine(message,0x0,0x28,2,0);
+	DecalFont_DrawLine(message,0x8,0x28,2,0);
 }
 
 void MenuBox_OnPressX_Track(struct MenuBox* b)
@@ -244,7 +241,7 @@ void StatePS1_Lobby_GuestTrackWait()
 {
 	DrawClientCountStats();
 	
-	DecalFont_DrawLine("Waiting for Host to Pick Track",0x0,0xd0,2,0);
+	DecalFont_DrawLine("Waiting for Host to Pick Track",0x8,0xd0,2,0);
 }
 
 void DrawRecvTrack()
@@ -253,11 +250,11 @@ void DrawRecvTrack()
 	sprintf(message, "Track: %s", 
 				sdata->lngStrings
 				[
-					data.MetaDataLEV[sdata->gGT->levelID].name_LNG
+					data.metaDataLEV[sdata->gGT->levelID].name_LNG
 				]
 			);
 	
-	DecalFont_DrawLine(message,0x0,0x10,2,0x18);
+	DecalFont_DrawLine(message,0x8,0x10,2,0x18);
 }
 
 void DrawCharacterStats()
@@ -327,7 +324,7 @@ void StatePS1_Lobby_CharacterPick()
 
 void StatePS1_Lobby_WaitForLoading()
 {
-	DecalFont_DrawLine("Waiting for All Characters",0x0,0xd0,2,0);
+	DecalFont_DrawLine("Waiting for All Characters",0x8,0xd0,2,0);
 }
 
 void StatePS1_Lobby_StartLoading()

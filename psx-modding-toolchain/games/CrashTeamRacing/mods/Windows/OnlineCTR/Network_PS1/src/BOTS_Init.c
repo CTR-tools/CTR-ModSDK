@@ -44,7 +44,7 @@ void BOTS_ThTick_Drive_custom(struct Thread* th)
 	// Make RotateY matrix
 	ConvertRotToMatrix(
 		&dr->instSelf->matrix, 
-		&dr->rotCurr[0]
+		&dr->rotCurr
 	);
 	
 	return;

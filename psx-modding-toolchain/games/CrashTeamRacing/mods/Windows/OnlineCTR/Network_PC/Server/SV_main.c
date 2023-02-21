@@ -39,6 +39,33 @@ enum ServerState
 	SERVER_LOBBY,
 };
 
+void Disconnect(int i)
+{
+#if 0
+	closesocket(CtrClient[i].socket);
+	FD_CLR(CtrClient[i].socket, &master);
+	clientCount--;
+
+	// Send ClientID and clientCount back to all clients
+	for (int j = i; j < clientCount; j++)
+	{
+		memcpy(&CtrClient[j + 1], &CtrClient[j], sizeof(struct SocketCtr));
+
+		struct SG_MessageWelcome mw;
+		mw.type = SG_WELCOME;
+		mw.size = sizeof(struct SG_MessageWelcome);
+		mw.boolLastMessage = 1;
+		mw.clientID = j;
+		mw.numClientsTotal = clientCount;
+
+		// send a message to the client
+		send(CtrClient[j].socket, &mw, mw.size, 0);
+	}
+
+	printf("ClientCount: %d\n", clientCount);
+#endif
+}
+
 void ServerState_Boot()
 {
 	HWND console = GetConsoleWindow();
@@ -156,7 +183,7 @@ void ParseMessage(int i)
 	// a client disconnected so the server reset
 	if (recvByteCount == 0)
 	{
-		//Disconnect();
+		Disconnect(i);
 		return;
 	}
 
@@ -171,7 +198,7 @@ void ParseMessage(int i)
 			// if server is closed disconnected
 			if (err == WSAECONNRESET)
 			{
-				//Disconnect();
+				Disconnect(i);
 			}
 
 			// client closed connection

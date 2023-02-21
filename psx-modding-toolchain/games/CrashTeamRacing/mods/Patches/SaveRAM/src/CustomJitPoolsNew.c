@@ -13,14 +13,6 @@ void ANTICHIP_CheckFraud_Entry();
 // only in builds 926+
 int MainDB_GetClipSize(int levID, int numPlyrCurrGame);
 
-// To do: add header for CTR funcs
-void JitPool_Init(struct JitPool* ap, int numItems, int itemSize);
-void JitPool_Clear(struct JitPool* ap);
-int MEMPACK_PushState();
-void MEMPACK_PopState();
-void LIST_Clear(struct LinkedList* L);
-void LIST_AddFront(struct LinkedList* L, void* item);
-
 // MainInit_JitPoolsNew
 void MainInit_JitPoolsNew_New(struct GameTracker* gGT)
 {
@@ -45,14 +37,14 @@ void MainInit_JitPoolsNew_New(struct GameTracker* gGT)
 	// 0x140 for rain
 	// 0x1000>>5 = 128, 0x1000>>9 = 8,
 	sdata->mempack[0].firstFreeByte = (void*)0x800091C0;
-	JitPool_Init(&gGT->JitPools.oscillator,128,0x18);
-	JitPool_Init(&gGT->JitPools.rain,8,0x28);
+	JitPool_Init(&gGT->JitPools.oscillator,128,0x18,0);
+	JitPool_Init(&gGT->JitPools.rain,8,0x28,0);
 
 	// 0x8000E3E0 - 0x80010000
 	// 0x1c20 for small stack
 	// 0x1000 * 0x19 >> 10 = 100 (dec 100 = 0x64 hex)
 	sdata->mempack[0].firstFreeByte = (void*)0x8000E3E0;
-	JitPool_Init(&gGT->JitPools.smallStack, 100, 0x48);
+	JitPool_Init(&gGT->JitPools.smallStack, 100, 0x48,0);
 
 	// 0x1B00 shaved off heap
 	// Original game wanted 96 threads, but the game
@@ -128,7 +120,7 @@ void MainInit_JitPoolsNew_New(struct GameTracker* gGT)
   // most other mods use RDATA when combined with oxide fix
   gGT->ptrRenderBucketInstance = (void*)MEMPACK_AllocMem(0x1000);
 
-  JitPool_Init(&gGT->JitPools.instance, uVar9, 0x74 + (0x88 * gGT->numPlyrCurrGame));
+  JitPool_Init(&gGT->JitPools.instance, uVar9, 0x74 + (0x88 * gGT->numPlyrCurrGame),0);
 
   // everywhere else (main menu, race, adv hub, podiums)
   medStackCount = 12;
@@ -140,16 +132,16 @@ void MainInit_JitPoolsNew_New(struct GameTracker* gGT)
   }
 
   // 0x660
-  JitPool_Init(&gGT->JitPools.mediumStack,medStackCount,0x88);
+  JitPool_Init(&gGT->JitPools.mediumStack,medStackCount,0x88,0);
 
   // 0x3e00
   JitPool_Init(&gGT->JitPools.particle,
 	uVar7 >> 5,
 
 	#if BUILD == SepReview
-	0x84
+	0x84,0
 	#elif BUILD >= UsaRetail
-	0x7c
+	0x7c,0
 	#endif
 
 	);

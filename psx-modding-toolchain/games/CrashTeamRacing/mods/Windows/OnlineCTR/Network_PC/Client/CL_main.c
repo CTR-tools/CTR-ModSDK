@@ -25,6 +25,11 @@ struct SocketCtr
 
 struct SocketCtr CtrMain;
 
+void Disconnect()
+{
+	octr->CurrState = LAUNCH_ENTER_IP;
+}
+
 void ParseMessage()
 {
 	char recvBuf[8];
@@ -38,7 +43,7 @@ void ParseMessage()
 	// a client disconnected so the server reset
 	if (recvByteCount == 0)
 	{
-		//Disconnect();
+		Disconnect();
 		octr->CurrState = LAUNCH_CONNECT_FAILED;
 		return;
 	}
@@ -54,7 +59,7 @@ void ParseMessage()
 			// if server is closed disconnected
 			if (err == WSAECONNRESET)
 			{
-				//Disconnect();
+				Disconnect();
 			}
 
 			if (err == WSAENOTCONN)

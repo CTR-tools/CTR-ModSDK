@@ -1,10 +1,5 @@
 #include <common.h>
 
-// To do: add header
-void JitPool_Clear(struct JitPool* ap);
-void LIST_Clear(struct LinkedList* L);
-void LIST_AddFront(struct LinkedList* L, void* item);
-
 // Mem_AddExtraThreads.c
 void ClearThreadPool(struct JitPool* p);
 

@@ -1,0 +1,4 @@
+void QuitConfetti()
+{
+	return;
+}
