@@ -126,6 +126,26 @@ void ParseMessage()
 			// set sdata->gGT->trackID
 			*(char*)&pBuf[(0x80096b20 + 0x1a10) & 0xffffff] = trackID;
 			octr->CurrState = LOBBY_CHARACTER_PICK;
+			break;
+
+		case SG_CHARACTER:
+			int characterID = ((struct SG_MessageCharacter*)recvBuf)->characterID;
+			int clientID = ((struct SG_MessageCharacter*)recvBuf)->clientID;
+			printf("Client: %d, Character: %d\n", clientID, characterID);
+			
+			int slot;
+			if (clientID == octr->DriverID) slot = 0;
+			if (clientID < octr->DriverID) slot = clientID + 1;
+			if (clientID > octr->DriverID) slot = clientID;
+
+			*(short*)&pBuf[(0x80086e84 + 2*slot) & 0xffffff] = characterID;
+			octr->boolLockedInCharacter_Others[clientID] = ((struct SG_MessageCharacter*)recvBuf)->boolLockedIn;
+
+			// if everyone locked in,
+			// start race
+
+			break;
+
 		default:
 			break;
 		}
@@ -144,6 +164,9 @@ void StatePC_Launch_EnterPID()
 
 void StatePC_Launch_EnterIP()
 {
+	if(CtrMain.socket != 0)
+		closesocket(CtrMain.socket);
+
 	printf("\n");
 	printf("Enter IP Address: ");
 	scanf_s("%s", ip, sizeof(ip));
@@ -245,8 +268,6 @@ void StatePC_Lobby_CharacterPick()
 {
 	ParseMessage();
 
-	if (!octr->boolLockedInCharacter) return;
-
 	struct CG_MessageCharacter mc;
 	mc.type = CG_CHARACTER;
 	mc.size = sizeof(struct CG_MessageCharacter);
@@ -255,10 +276,15 @@ void StatePC_Lobby_CharacterPick()
 	// data.characterIDs[0]
 	mc.characterID = *(char*)&pBuf[0x80086e84 & 0xffffff];
 
+	mc.boolLockedIn = octr->boolLockedInCharacter;
+
 	// send a message to the client
 	send(CtrMain.socket, &mc, mc.size, 0);
 
-	octr->CurrState = LOBBY_WAIT_FOR_LOADING;
+	if (mc.boolLockedIn == 1)
+	{
+		octr->CurrState = LOBBY_WAIT_FOR_LOADING;
+	}
 }
 
 void StatePC_Lobby_WaitForLoading()
@@ -362,6 +388,9 @@ int main()
 		octr->time[0]++;
 
 		ClientState[octr->CurrState]();
+		
+		// 4ms, 60fps=16ms
+		Sleep(4);
 	}
 
 	system("pause");

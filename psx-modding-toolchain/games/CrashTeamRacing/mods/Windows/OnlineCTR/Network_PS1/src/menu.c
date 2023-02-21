@@ -155,9 +155,6 @@ void StatePS1_Launch_FirstInit()
 
 	// keep running till the client gets a result,
 	// DriverID is set to -1 on windows-side before this.
-	
-	for(i = 0; i < 8; i++)
-		data.characterIDs[i] = -1;
 
 	if(octr->DriverID == 0)
 	{		
@@ -266,6 +263,7 @@ void DrawCharacterStats()
 	char message[32];
 	int slot;
 	int i;
+	int color;
 	
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
@@ -277,25 +275,19 @@ void DrawCharacterStats()
 		if(i < octr->DriverID) slot = i+1;
 		if(i > octr->DriverID) slot = i;
 		
-		sprintf(message, "Client %d:", i);
+		sprintf(message, "Client %d: %s", i, 
+			sdata->lngStrings[
+				data.MetaDataCharacters[
+					data.characterIDs[slot]
+				].name_LNG_short]);
 		
-		if(data.characterIDs[slot] == -1)
-		{
-			sprintf(message, "%s N/A", message);
-			
-			DecalFont_DrawLine(message,0x8,0x48+i*0x8,2,0x19);
-		}
-		
-		else
-		{
-			sprintf(message, "%s %s", message, 
-				sdata->lngStrings[
-					data.MetaDataCharacters[
-						data.characterIDs[slot]
-					].name_LNG_short]);
-					
-			DecalFont_DrawLine(message,0x8,0x48+i*0x8,2,0x1A);
-		}
+		// 0x19 - red
+		// 0x1A - green
+		int color = 
+			octr->boolLockedInCharacter_Others[i] ? 
+			0x1A : 0x19;
+	
+		DecalFont_DrawLine(message,0x8,0x48+i*0x8,2,color);
 	}
 }
 
@@ -313,6 +305,7 @@ void MenuBox_OnPressX_Character(struct MenuBox* b)
 	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
 	
 	octr->boolLockedInCharacter = 1;
+	octr->boolLockedInCharacter_Others[octr->DriverID] = 1;
 }
 
 void StatePS1_Lobby_CharacterPick()
@@ -328,6 +321,9 @@ void StatePS1_Lobby_CharacterPick()
 	DrawClientCountStats();
 	DrawCharacterStats();
 	DrawRecvTrack();
+	
+	// will switch to WaitForLoad soon
+	if(octr->boolLockedInCharacter == 1) return;
 	
 	// open menu, set defaults
 	if(sdata->ptrActiveMenuBox != &menuBox)
@@ -353,6 +349,8 @@ void StatePS1_Lobby_CharacterPick()
 		if (octr->PageNumber > 3) octr->PageNumber = 3;
 		SetNames_Characters();
 	}
+	
+	data.characterIDs[0] = (4 * octr->PageNumber) + menuBox.rowSelected;
 }
 
 void StatePS1_Lobby_WaitForLoading()

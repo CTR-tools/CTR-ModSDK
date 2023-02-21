@@ -38,6 +38,9 @@ struct OnlineCTR
 	int time[4];
 
 	// 0x30
+	char boolLockedInCharacter_Others[8];
+
+	// 0x38
 	// function pointers MUST come last,
 	// cause windows thinks pointers are 
 	// 8 bytes, while PSX thinks 4 bytes
@@ -109,15 +112,16 @@ struct SG_MessageCharacter
 	// is this the last message or not?
 	unsigned char boolLastMessage : 1;
 	
+	// index 0 - 7
+	unsigned char clientID : 3;
+
 	// character 0 - 15
 	unsigned char characterID : 4;
-	
+
 	unsigned char boolLockedIn : 1;
-	
-	// extra junk
-	unsigned char padding : 2;
-	
-	// 16 bits total (2 bytes)
+	unsigned char padding : 7;
+
+	// 24 bits total (3 bytes)
 };
 
 // get track, assigned by host
@@ -170,20 +174,21 @@ struct CG_MessageCharacter
 {
 	// max of 16 message types
 	unsigned char type : 4;
-	
+
 	// max of 16 byte message
 	unsigned char size : 4;
-	
+
 	// is this the last message or not?
 	unsigned char boolLastMessage : 1;
-	
-	// index 0 - 7
-	// unused
-	unsigned char clientID : 3;
-	
+
 	// character 0 - 15
 	unsigned char characterID : 4;
-	
+
+	unsigned char boolLockedIn : 1;
+
+	// extra junk
+	unsigned char padding : 2;
+
 	// 16 bits total (2 bytes)
 };
 

@@ -254,7 +254,34 @@ void ParseMessage(int i)
 			break;
 
 		case CG_CHARACTER:
+
 			printf("Got Character from %d\n", i);
+			
+			struct SG_MessageCharacter mg;
+			mg.type = SG_CHARACTER;
+			mg.size = sizeof(struct SG_MessageCharacter);
+			mg.boolLastMessage = 1;
+
+			mg.clientID = i;
+			mg.characterID = ((struct CG_MessageCharacter*)recvBuf)->characterID;
+			mg.boolLockedIn = ((struct CG_MessageCharacter*)recvBuf)->boolLockedIn;
+
+			printf("Client: %d, Character: %d\n", mg.clientID, mg.characterID);
+
+			// send a message all other clients
+			for (int j = 0; j < 8; j++)
+			{
+				if (
+					// skip empty sockets, skip self
+					(CtrClient[j].socket != 0) &&
+					(i != j)
+					)
+				{
+					printf("Give Character to %d\n", j);
+					send(CtrClient[j].socket, &mg, mg.size, 0);
+				}
+			}
+
 			break;
 
 		default:
