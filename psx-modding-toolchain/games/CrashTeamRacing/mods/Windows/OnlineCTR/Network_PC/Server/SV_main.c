@@ -14,6 +14,7 @@
 struct SocketCtr
 {
 	SOCKET socket;
+	int disconnectCount;
 
 #if 0
 	Message sendBuf;
@@ -24,7 +25,6 @@ struct SocketCtr
 };
 
 struct SocketCtr CtrMain;
-short characterIDs[8];
 #define MAX_CLIENTS 8
 
 unsigned char clientCount = 0;
@@ -122,7 +122,9 @@ void CheckNewClients()
 			// this is bad though, cause if someone disconnects and 
 			// reconnects, they'll overwrite another socket in the array,
 			// I'll fix it later
-			CtrClient[clientCount++].socket = client;
+			CtrClient[clientCount].socket = client;
+			CtrClient[clientCount].disconnectCount = 0;
+			clientCount++;
 
 			// Send ClientID and clientCount back to all clients
 			for (int j = 0; j < clientCount; j++)
@@ -145,6 +147,13 @@ void CheckNewClients()
 
 void Disconnect(int i)
 {
+	// prevent a one-frame accident
+	if (CtrClient[i].disconnectCount < 10)
+	{
+		CtrClient[i].disconnectCount++;
+		return;
+	}
+	
 	clientCount--;
 	printf("Disconnected %d, now %d remain\n", i, clientCount);
  
@@ -179,15 +188,6 @@ void ParseMessage(int i)
 	int recvByteCount;
 	recvByteCount = recv(CtrClient[i].socket, recvBuf, 8, 0);
 
-	// This happens when the server uses closesocket(),
-	// either because you connected to a full server, or
-	// a client disconnected so the server reset
-	if (recvByteCount == 0)
-	{
-		Disconnect(i);
-		return;
-	}
-
 	// check for errors
 	if (recvByteCount == -1)
 	{
@@ -205,7 +205,7 @@ void ParseMessage(int i)
 			// client closed connection
 			if (err == WSAENOTCONN)
 			{
-
+				Disconnect(i);
 			}
 
 			return;
@@ -223,6 +223,8 @@ void ParseMessage(int i)
 	// if recvSize is equal to expected, and if type is valid
 	else if (((struct CG_Header*)recvBuf)->type < CG_COUNT)
 	{
+		CtrClient[i].disconnectCount = 0;
+
 		// switch will compile into a jmp table, no funcPtrs needed
 		switch (((struct CG_Header*)recvBuf)->type)
 		{
@@ -315,5 +317,8 @@ int main()
 	while (1)
 	{
 		ServerState[state]();
+		
+		// 1ms
+		Sleep(1);
 	}
 }

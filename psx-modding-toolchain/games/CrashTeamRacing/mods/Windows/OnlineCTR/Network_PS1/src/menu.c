@@ -156,6 +156,12 @@ void StatePS1_Launch_FirstInit()
 	// keep running till the client gets a result,
 	// DriverID is set to -1 on windows-side before this.
 
+	for(i = 0; i < 8; i++)
+	{
+		data.characterIDs[i] = 0;
+		octr->boolLockedInCharacter_Others[i] = 0;
+	}
+
 	if(octr->DriverID == 0)
 	{		
 		octr->CurrState = LOBBY_HOST_TRACK_PICK;
