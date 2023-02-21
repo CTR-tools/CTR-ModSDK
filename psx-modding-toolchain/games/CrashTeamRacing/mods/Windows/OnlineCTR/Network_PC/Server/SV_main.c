@@ -200,13 +200,13 @@ void ParseMessage(int i)
 		// This happens due to nonblock, ignore it
 		if (err != WSAEWOULDBLOCK)
 		{
-			// if server is closed disconnected
+			// server closed
 			if (err == WSAECONNRESET)
 			{
 				Disconnect(i);
 			}
 
-			// client closed connection
+			// client closed
 			if (err == WSAENOTCONN)
 			{
 				Disconnect(i);
@@ -259,6 +259,10 @@ void ParseMessage(int i)
 					send(CtrClient[j].socket, &mt, mt.size, 0);
 				}
 			}
+			
+			// make sure everyone gets this
+			Sleep(100);
+
 			break;
 
 		case CG_CHARACTER:
@@ -327,9 +331,8 @@ void ServerState_Lobby()
 
 	if (boolReadyToStart)
 	{
-		// give people a moment to see
-		// locked in drivers
-		Sleep(1000);
+		// make sure everyone has drivers
+		Sleep(100);
 
 		printf("Start Loading\n");
 

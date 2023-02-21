@@ -29,8 +29,8 @@ struct SocketCtr CtrMain;
 void Disconnect()
 {
 	CtrMain.disconnectCount++;
-	if (CtrMain.disconnectCount < 1000) return;
-
+	if (CtrMain.disconnectCount < 100) return;
+	printf("%d\n", CtrMain.disconnectCount);
 	octr->CurrState = LAUNCH_ENTER_IP;
 	CtrMain.disconnectCount = 0;
 }
@@ -178,8 +178,14 @@ void StatePC_Launch_EnterPID()
 
 void StatePC_Launch_EnterIP()
 {
-	if(CtrMain.socket != 0)
-		closesocket(CtrMain.socket);
+	// how does this happen anyway?
+	// if you connected and somehow got kicked back?
+	if (CtrMain.socket != 0)
+	{
+		// wait for the state to change momentarily
+		octr->CurrState = LAUNCH_FIRST_INIT;
+		return;
+	}
 
 	printf("\n");
 	printf("Enter IP Address: ");

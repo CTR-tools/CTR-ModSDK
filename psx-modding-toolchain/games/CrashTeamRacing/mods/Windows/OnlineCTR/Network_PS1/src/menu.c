@@ -216,6 +216,13 @@ void StatePS1_Lobby_HostTrackPick()
 	// quit, if a choice has already been made
 	if(octr->boolLockedInTrack) return;
 	
+	// how does this happen?
+	if(octr->DriverID != 0)
+	{
+		octr->CurrState = LOBBY_GUEST_TRACK_WAIT;
+		sdata->ptrActiveMenuBox = 0;
+	}
+	
 	DrawClientCountStats();
 	
 	// open menu, set defaults
