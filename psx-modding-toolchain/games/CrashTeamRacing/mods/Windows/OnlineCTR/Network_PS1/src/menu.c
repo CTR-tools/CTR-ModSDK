@@ -329,13 +329,6 @@ void StatePS1_Lobby_CharacterPick()
 	DrawCharacterStats();
 	DrawRecvTrack();
 	
-	// quit, if a choice has already been made
-	if(octr->boolLockedInCharacter) 
-	{
-		DecalFont_DrawLine("Waiting For Players",0x8,0x38,2,0);
-		return;
-	}
-	
 	// open menu, set defaults
 	if(sdata->ptrActiveMenuBox != &menuBox)
 	{
@@ -364,6 +357,10 @@ void StatePS1_Lobby_CharacterPick()
 
 void StatePS1_Lobby_WaitForLoading()
 {
+	DrawClientCountStats();
+	DrawCharacterStats();
+	DrawRecvTrack();
+	
 	DecalFont_DrawLine("Waiting for All Characters",0x8,0xd0,2,0);
 }
 

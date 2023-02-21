@@ -247,10 +247,6 @@ void StatePC_Lobby_CharacterPick()
 
 	if (!octr->boolLockedInCharacter) return;
 
-	// should be able to send character on "changed"
-	// as well as on "lockedIn"
-
-#if 0
 	struct CG_MessageCharacter mc;
 	mc.type = CG_CHARACTER;
 	mc.size = sizeof(struct CG_MessageCharacter);
@@ -262,15 +258,12 @@ void StatePC_Lobby_CharacterPick()
 	// send a message to the client
 	send(CtrMain.socket, &mc, mc.size, 0);
 
-	octr->CurrState = LOBBY_CHARACTER_PICK;
-#endif
+	octr->CurrState = LOBBY_WAIT_FOR_LOADING;
 }
 
 void StatePC_Lobby_WaitForLoading()
 {
 	ParseMessage();
-
-	// send message that character is "lockedIn"
 
 	// if recv message to start loading,
 	// change state to StartLoading,
@@ -365,6 +358,8 @@ int main()
 	{
 		// To do: Check for PS1 system clock tick,
 		// then run client update
+
+		octr->time[0]++;
 
 		ClientState[octr->CurrState]();
 	}

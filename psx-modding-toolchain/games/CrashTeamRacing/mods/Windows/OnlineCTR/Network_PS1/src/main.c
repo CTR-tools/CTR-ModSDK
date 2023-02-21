@@ -72,9 +72,30 @@ void RunEntryHook()
 
 void ThreadFunc()
 {
+	int i;
+	
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
+	
+	for(i = 2; i >= 0; i--)
+		octr->time[i+1] = octr->time[i];
+	
+	for(i = 2; i >= 0; i--)
+		if(octr->time[i+1] != octr->time[i])
+			break;
+		
+	// if client didn't update the game in 4 frames
+	if(
+		(i == -1) &&
+		(octr->CurrState >= LAUNCH_FIRST_INIT)
+	  )
+	{
+		// reset, including CurrState
+		memset(octr, 0, sizeof(struct OnlineCTR));
+		sdata->ptrActiveMenuBox = 0;
+		RunEntryHook();
+	}
 	
 	octr->funcs[octr->CurrState]();
 }

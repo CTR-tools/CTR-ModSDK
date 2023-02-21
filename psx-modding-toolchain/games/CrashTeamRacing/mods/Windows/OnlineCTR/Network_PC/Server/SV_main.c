@@ -252,6 +252,11 @@ void ParseMessage(int i)
 				}
 			}
 			break;
+
+		case CG_CHARACTER:
+			printf("Got Character from %d\n", i);
+			break;
+
 		default:
 			break;
 		}
