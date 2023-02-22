@@ -223,7 +223,8 @@ void StatePS1_Lobby_HostTrackPick()
 	// quit, if a choice has already been made
 	if(octr->boolLockedInTrack) return;
 	
-	// how does this happen?
+	// Probably not needed since adding "AssignRole",
+	// invert a "guest" that is accidentally assigned "host"
 	if(octr->DriverID != 0)
 	{
 		octr->CurrState = LOBBY_GUEST_TRACK_WAIT;
