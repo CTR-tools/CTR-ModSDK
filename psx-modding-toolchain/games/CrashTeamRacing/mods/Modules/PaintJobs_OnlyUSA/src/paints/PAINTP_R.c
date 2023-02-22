@@ -1,18 +1,7 @@
 // CLUT pos
 
 #include <common.h>
-
-struct Texture
-{
-	const RECT * front;
-	const RECT * back;
-	const RECT * floor;
-	const RECT * brown;
-	const RECT * motorside;
-	const RECT * motortop;
-	const RECT * bridge;
-	const RECT * exhaust;
-};
+#include "../tex.h"
 
 RECT motorside_crash_pos __attribute__ ((section (".data"))) = {
 	.x = 112,
@@ -71,22 +60,22 @@ RECT bridge_crash_pos __attribute__ ((section (".data"))) = {
 };
 
 RECT floor_cortex_pos __attribute__ ((section (".data"))) = {
-	.x = 160,
-	.y = 252,
+	.x = 960,
+	.y = 226,
 	.w = 16,
 	.h = 1
 };
 
 RECT floor_tiny_pos __attribute__ ((section (".data"))) = {
-	.x = 176,
-	.y = 249,
+	.x = 960,
+	.y = 227,
 	.w = 16,
 	.h = 1
 };
 
 RECT floor_coco_pos __attribute__ ((section (".data"))) = {
-	.x = 176,
-	.y = 255,
+	.x = 960,
+	.y = 231,
 	.w = 16,
 	.h = 1
 };
@@ -161,21 +150,21 @@ RECT floor_fakecrash_pos __attribute__ ((section (".data"))) = {
 };
 
 RECT motortop_cortex_pos __attribute__ ((section (".data"))) = {
-	.x = 144,
+	.x = 128,
 	.y = 252,
 	.w = 16,
 	.h = 1
 };
 
 RECT motortop_tiny_pos __attribute__ ((section (".data"))) = {
-	.x = 256,
-	.y = 247,
+	.x = 144,
+	.y = 251,
 	.w = 16,
 	.h = 1
 };
 RECT motortop_coco_pos __attribute__ ((section (".data"))) = {
-	.x = 256,
-	.y = 252,
+	.x = 160,
+	.y = 251,
 	.w = 16,
 	.h = 1
 };
@@ -252,20 +241,20 @@ RECT motortop_fakecrash_pos __attribute__ ((section (".data"))) = {
 };
 
 RECT brown_cortex_pos __attribute__ ((section (".data"))) = {
-	.x = 944,
-	.y = 249,
+	.x = 992,
+	.y = 225,
 	.w = 16,
 	.h = 1
 };
 RECT brown_tiny_pos __attribute__ ((section (".data"))) = {
-	.x = 160,
-	.y = 253,
+	.x = 992,
+	.y = 226,
 	.w = 16,
 	.h = 1
 };
 RECT brown_coco_pos __attribute__ ((section (".data"))) = {
-	.x = 176,
-	.y = 248,
+	.x = 992,
+	.y = 227,
 	.w = 16,
 	.h = 1
 };
@@ -342,21 +331,21 @@ RECT brown_fakecrash_pos __attribute__ ((section (".data"))) = {
 	.h = 1
 };
 RECT front_cortex_pos __attribute__ ((section (".data"))) = {
-	.x = 144,
-	.y = 250,
+	.x = 128,
+	.y = 254,
 	.w = 16,
 	.h = 1
 };
 
 RECT front_tiny_pos __attribute__ ((section (".data"))) = {
-	.x = 960,
-	.y = 226,
+	.x = 144,
+	.y = 249,
 	.w = 16,
 	.h = 1
 };
 RECT front_coco_pos __attribute__ ((section (".data"))) = {
-	.x = 960,
-	.y = 227,
+	.x = 160,
+	.y = 249,
 	.w = 16,
 	.h = 1
 };
@@ -483,15 +472,15 @@ RECT bridge_papu_pos __attribute__ ((section (".data"))) = {
 };
 
 RECT bridge_tiny_pos __attribute__ ((section (".data"))) = {
-	.x = 224,
-	.y = 252,
+	.x = 400,
+	.y = 257,
 	.w = 16,
 	.h = 1
 };
 
 RECT bridge_coco_pos __attribute__ ((section (".data"))) = {
-	.x = 240,
-	.y = 248,
+	.x = 416,
+	.y = 262,
 	.w = 16,
 	.h = 1
 };
@@ -504,8 +493,8 @@ RECT bridge_ngin_pos __attribute__ ((section (".data"))) = {
 };
 
 RECT bridge_cortex_pos __attribute__ ((section (".data"))) = {
-	.x = 240,
-	.y = 255,
+	.x = 496,
+	.y = 263,
 	.w = 16,
 	.h = 1
 };
@@ -531,21 +520,21 @@ RECT bridge_tropy_pos __attribute__ ((section (".data"))) = {
 };
 
 RECT motorside_cortex_pos __attribute__ ((section (".data"))) = {
-	.x = 992,
-	.y = 225,
+	.x = 128,
+	.y = 253,
 	.w = 16,
 	.h = 1
 };
 
 RECT motorside_tiny_pos __attribute__ ((section (".data"))) = {
-	.x = 992,
-	.y = 226,
+	.x = 144,
+	.y = 252,
 	.w = 16,
 	.h = 1
 };
 RECT motorside_coco_pos __attribute__ ((section (".data"))) = {
-	.x = 992,
-	.y = 227,
+	.x = 160,
+	.y = 252,
 	.w = 16,
 	.h = 1
 };
@@ -673,21 +662,21 @@ RECT exhaust_papu_pos __attribute__ ((section (".data"))) = {
 	.h = 1
 };
 RECT exhaust_cortex_pos __attribute__ ((section (".data"))) = {
-	.x = 224,
-	.y = 251,
+	.x = 384,
+	.y = 256,
 	.w = 16,
 	.h = 1
 };
 
 RECT exhaust_tiny_pos __attribute__ ((section (".data"))) = {
-	.x = 224,
-	.y = 254,
+	.x = 400,
+	.y = 258,
 	.w = 16,
 	.h = 1
 };
 RECT exhaust_coco_pos __attribute__ ((section (".data"))) = {
-	.x = 240,
-	.y = 250,
+	.x = 416,
+	.y = 263,
 	.w = 16,
 	.h = 1
 };
@@ -719,22 +708,22 @@ RECT exhaust_tropy_pos __attribute__ ((section (".data"))) = {
 };
 
 RECT back_cortex_pos __attribute__ ((section (".data"))) = {
-	.x = 256,
-	.y = 246,
+	.x = 128,
+	.y = 255,
 	.w = 16,
 	.h = 1
 };
 
 RECT back_tiny_pos __attribute__ ((section (".data"))) = {
-	.x = 256,
-	.y = 251,
+	.x = 144,
+	.y = 250,
 	.w = 16,
 	.h = 1
 };
 
 RECT back_coco_pos __attribute__ ((section (".data"))) = {
-	.x = 320,
-	.y = 259,
+	.x = 160,
+	.y = 253,
 	.w = 16,
 	.h = 1
 };
@@ -812,7 +801,7 @@ RECT back_fakecrash_pos __attribute__ ((section (".data"))) = {
 	.h = 1
 };
 
-struct Texture PAINTP_R[] __attribute__ ((section (".sdata"))) =
+Texture PAINTP_R[] __attribute__ ((section (".sdata"))) =
 {
 	[0] =
 	{

@@ -5,7 +5,7 @@
 #define NUM_CHARACTERS 15
 
 typedef union {
-    struct KartModel {
+    struct {
         const char * front;
         const char * back;
         const char * floor;
@@ -15,10 +15,10 @@ typedef union {
         const char * bridge;
         const char * exhaust;
     };
-    const char * p[sizeof(struct KartModel) / sizeof(char *)];
+    const char * p[8];
 } Texture;
 
-const int numTex = sizeof(Texture) / sizeof(char *);
+#define numTex sizeof(Texture) / sizeof (char *)
 
 typedef struct
 {
