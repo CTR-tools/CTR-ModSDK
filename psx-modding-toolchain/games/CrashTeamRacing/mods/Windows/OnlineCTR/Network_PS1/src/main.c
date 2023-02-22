@@ -61,6 +61,7 @@ void RunEntryHook()
 	octr->funcs[LAUNCH_ENTER_IP] = StatePS1_Launch_EnterIP;
 	octr->funcs[LAUNCH_CONNECT_FAILED] = StatePS1_Launch_ConnectFailed;
 	octr->funcs[LAUNCH_FIRST_INIT] = StatePS1_Launch_FirstInit;
+	octr->funcs[LOBBY_ASSIGN_ROLE] = StatePS1_Lobby_AssignRole;
 	octr->funcs[LOBBY_HOST_TRACK_PICK] = StatePS1_Lobby_HostTrackPick;
 	octr->funcs[LOBBY_GUEST_TRACK_WAIT] = StatePS1_Lobby_GuestTrackWait;
 	octr->funcs[LOBBY_CHARACTER_PICK] = StatePS1_Lobby_CharacterPick;

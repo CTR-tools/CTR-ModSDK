@@ -9,13 +9,15 @@ enum ClientState
 	LAUNCH_ENTER_IP,
 	LAUNCH_CONNECT_FAILED,
 	LAUNCH_FIRST_INIT,
+	LOBBY_ASSIGN_ROLE,
 	LOBBY_HOST_TRACK_PICK,
 	LOBBY_GUEST_TRACK_WAIT,
 	LOBBY_CHARACTER_PICK,
 	LOBBY_WAIT_FOR_LOADING,
 	LOBBY_START_LOADING,
 	GAME_WAIT_FOR_RACE,
-	GAME_START_RACE
+	GAME_START_RACE,
+	NUM_STATES
 };
 
 // This can be 0x400 bytes max:
@@ -44,7 +46,7 @@ struct OnlineCTR
 	// function pointers MUST come last,
 	// cause windows thinks pointers are 
 	// 8 bytes, while PSX thinks 4 bytes
-	void (*funcs[4]) ();
+	void (*funcs[NUM_STATES]) ();
 };
 
 #ifdef WINDOWS_INCLUDE
@@ -243,6 +245,7 @@ void StatePS1_Launch_EnterPID();
 void StatePS1_Launch_EnterIP();
 void StatePS1_Launch_ConnectFailed();
 void StatePS1_Launch_FirstInit();
+void StatePS1_Lobby_AssignRole();
 void StatePS1_Lobby_HostTrackPick();
 void StatePS1_Lobby_GuestTrackWait();
 void StatePS1_Lobby_CharacterPick();

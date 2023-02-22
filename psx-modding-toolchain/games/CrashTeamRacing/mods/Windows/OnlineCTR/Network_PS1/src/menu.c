@@ -161,7 +161,14 @@ void StatePS1_Launch_FirstInit()
 		data.characterIDs[i] = 0;
 		octr->boolLockedInCharacter_Others[i] = 0;
 	}
+}
 
+void StatePS1_Lobby_AssignRole()
+{
+	#if USE_K1 == 0
+	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
+	#endif
+	
 	if(octr->DriverID == 0)
 	{		
 		octr->CurrState = LOBBY_HOST_TRACK_PICK;
@@ -380,6 +387,16 @@ void StatePS1_Lobby_StartLoading()
 	#if USE_K1 == 0
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
+	
+	DrawClientCountStats();
+	DrawCharacterStats();
+	DrawRecvTrack();
+	DecalFont_DrawLine("LOADING...",0x100,0x6c,2,0xffff0000);
+	
+	// variable reuse, wait a few frames,
+	// so screen updates with green names
+	octr->CountPressX++;
+	if(octr->CountPressX < 3) return;
 	
 	// stop music, 
 	// stop "most FX", let menu FX ring

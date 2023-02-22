@@ -11,6 +11,13 @@
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
 
+struct Message
+{
+	char buf[256];
+	int offsetLatest_Start;
+	int offsetLatest_End;
+};
+
 struct SocketCtr
 {
 	SOCKET socket;
@@ -19,12 +26,8 @@ struct SocketCtr
 	char characterID;
 	char boolLockedInCharacter;
 
-#if 0
-	Message sendBuf;
-	Message sendBufPrev;
-	Message recvBuf;
-	Message recvBufPrev;
-#endif
+	struct Message sendBuf;
+	struct Message sendBufPrev;
 };
 
 struct SocketCtr CtrMain;
@@ -32,8 +35,22 @@ struct SocketCtr CtrMain;
 
 unsigned char clientCount = 0;
 struct SocketCtr CtrClient[MAX_CLIENTS];
-
 fd_set master;
+
+void MessageAppend(int i, struct SG_Header* header)
+{
+	struct Message* sendBuf = &CtrClient[i].sendBuf;
+
+	// if message is not empty
+	if (sendBuf->offsetLatest_End != 0)
+	{
+		((struct SG_Header*)&sendBuf->buf[sendBuf->offsetLatest_Start])->boolLastMessage = 0;
+	}
+
+	sendBuf->offsetLatest_Start = sendBuf->offsetLatest_End;
+	sendBuf->offsetLatest_End += header->size;
+	memcpy(&sendBuf->buf[sendBuf->offsetLatest_Start], header, header->size);
+}
 
 int state = 0;
 enum ServerState
@@ -141,7 +158,7 @@ void CheckNewClients()
 				mw.numClientsTotal = clientCount;
 
 				// send a message to the client
-				send(CtrClient[j].socket, &mw, mw.size, 0);
+				MessageAppend(j, &mw);
 			}
 
 			printf("ClientCount: %d\n", clientCount);
@@ -180,7 +197,7 @@ void Disconnect(int i)
 		mw.numClientsTotal = clientCount;
 
 		// send a message to the client
-		send(CtrClient[j].socket, &mw, mw.size, 0);
+		MessageAppend(j, &mw);
 	}
 }
 
@@ -256,12 +273,9 @@ void ParseMessage(int i)
 					CtrClient[j].boolLockedInCharacter = 0;
 
 					printf("Give Track to %d\n", j);
-					send(CtrClient[j].socket, &mt, mt.size, 0);
+					MessageAppend(j, &mt);
 				}
 			}
-			
-			// make sure everyone gets this
-			Sleep(100);
 
 			break;
 
@@ -293,7 +307,7 @@ void ParseMessage(int i)
 					)
 				{
 					printf("Give Character to %d\n", j);
-					send(CtrClient[j].socket, &mg, mg.size, 0);
+					MessageAppend(j, &mg);
 				}
 			}
 
@@ -331,9 +345,6 @@ void ServerState_Lobby()
 
 	if (boolReadyToStart)
 	{
-		// make sure everyone has drivers
-		Sleep(100);
-
 		printf("Start Loading\n");
 
 		struct SG_Header sg;
@@ -343,7 +354,7 @@ void ServerState_Lobby()
 
 		// send a message to the client
 		for (int j = 0; j < clientCount; j++)
-			send(CtrClient[j].socket, &sg, sg.size, 0);
+			MessageAppend(j, &sg);
 
 		state = SERVER_RACE;
 	}
@@ -370,11 +381,32 @@ void (*ServerState[]) () =
 	ServerState_Race,
 };
 
+int saved = 0;
 int main()
 {
 	while (1)
 	{
 		ServerState[state]();
+
+		for (int j = 0; j < clientCount; j++)
+		{
+			int check = memcmp(&CtrClient[j].sendBuf, &CtrClient[j].sendBufPrev, sizeof(struct Message));
+
+			// no message to send
+			if (CtrClient[j].sendBuf.offsetLatest_End == 0) continue;
+
+			// dont send message if they're identical
+			if (check == 0)
+			{
+				printf("Saved: %d\n", saved++);
+				continue;
+			}
+
+			send(CtrClient[j].socket, &CtrClient[j].sendBuf, CtrClient[j].sendBuf.offsetLatest_End, 0);
+
+			memcpy(&CtrClient[j].sendBufPrev, &CtrClient[j].sendBuf, sizeof(struct Message));
+			memset(&CtrClient[j].sendBuf, 0, sizeof(struct Message));
+		}
 		
 		// 1ms
 		Sleep(1);

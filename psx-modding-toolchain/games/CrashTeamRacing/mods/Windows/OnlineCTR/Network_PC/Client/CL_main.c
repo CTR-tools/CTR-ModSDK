@@ -37,11 +37,11 @@ void Disconnect()
 
 void ParseMessage()
 {
-	char recvBuf[8];
-	memset(recvBuf, 0xFF, 8);
+	char recvBufFull[0x20];
+	memset(recvBufFull, 0xFF, 0x20);
 
 	int recvByteCount;
-	recvByteCount = recv(CtrMain.socket, recvBuf, 8, 0);
+	recvByteCount = recv(CtrMain.socket, recvBufFull, 8, 0);
 
 	// check for errors
 	if (recvByteCount == -1)
@@ -75,16 +75,10 @@ void ParseMessage()
 		}
 	}
 
-	if (recvByteCount != ((struct SG_Header*)recvBuf)->size)
-	{
-		//printf("Bug! -- Tag: %d, recvBuf.size: %d, recvCount: %d\n",
-		//	recvBuf.type, recvBuf.size, receivedByteCount);
+	struct SG_Header* recvBuf = &recvBufFull[0];
+	int offset = 0;
 
-		// dont disconnect, just try again next cycle
-	}
-
-	// if recvSize is equal to expected, and if type is valid
-	else if (((struct SG_Header*)recvBuf)->type < SG_COUNT)
+	while(1)
 	{
 		int slot;
 
@@ -92,11 +86,18 @@ void ParseMessage()
 		switch (((struct SG_Header*)recvBuf)->type)
 		{
 		case SG_NEWCLIENT:
-			
+
 			// clientID is "you"
 			octr->DriverID = ((struct SG_MessageClientStatus*)recvBuf)->clientID;
 			octr->NumDrivers = ((struct SG_MessageClientStatus*)recvBuf)->numClientsTotal;
 			printf("New client, you are now: %d/%d\n", octr->DriverID, octr->NumDrivers);
+			
+			if (octr->CurrState = LAUNCH_FIRST_INIT)
+			{
+				// choose to get host menu or guest menu
+				octr->CurrState = LOBBY_ASSIGN_ROLE;
+			}
+			
 			break;
 		
 		case SG_DROPCLIENT:
@@ -157,11 +158,27 @@ void ParseMessage()
 			break;
 
 		case SG_STARTLOADING:
+			// variable reuse, wait a few frames,
+			// so screen updates with green names
+			octr->CountPressX = 0;
 			octr->CurrState = LOBBY_START_LOADING;
 			break;
 
 		default:
 			break;
+		}
+
+		if (recvBuf->boolLastMessage == 1)
+		{
+			// end found
+			break;
+		}
+
+		// end not found
+		else
+		{
+			offset += recvBuf->size;
+			recvBuf = &recvBufFull[offset];
 		}
 	}
 }
@@ -254,6 +271,11 @@ void StatePC_Launch_ConnectFailed()
 }
 
 void StatePC_Launch_FirstInit()
+{
+	ParseMessage();
+}
+
+void StatePC_Lobby_AssignRole()
 {
 	ParseMessage();
 }
@@ -358,6 +380,7 @@ void (*ClientState[]) () =
 	StatePC_Launch_EnterIP,
 	StatePC_Launch_ConnectFailed,
 	StatePC_Launch_FirstInit,
+	StatePC_Lobby_AssignRole,
 	StatePC_Lobby_HostTrackPick,
 	StatePC_Lobby_GuestTrackWait,
 	StatePC_Lobby_CharacterPick,
