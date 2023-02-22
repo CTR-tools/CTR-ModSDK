@@ -13,7 +13,7 @@ void OtherFX_Play(int sfxID, int flag);
 
 TexData * texData;
 
-int characterIndex[NUM_CHARACTERS] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
+int characterIndex[NUM_CHARACTERS] = {0,1,2,3,4,5,6,7,8,9,0xA,0xB,0xC,0xD,0xE};
 
 u_char wasLoadedYet;
 

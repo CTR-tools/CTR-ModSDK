@@ -1,5 +1,16 @@
 #include <common.h>
-#include "../tex.h"
+
+struct Texture
+{
+	const short * front;
+	const short * back;
+	const short * floor;
+	const short * brown;
+	const short * motorside;
+	const short * motortop;
+	const short * bridge;
+	const short * exhaust;
+};
 
 short brown_pura[16] __attribute__ ((section (".data"))) = {
 0x4806,0x4005,0x3004,0x2803,0x3002,0x1401,0x214d,0x190b,0x2d8f,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
@@ -18,7 +29,7 @@ short exhaust_pura[16] __attribute__ ((section (".data"))) = {
 short floor_pura[16] __attribute__ ((section (".data"))) = {
 0x2002,0x3404,0x5807,0x4005,0x5c07,0x6808,0x6408,0x5407,0x3805,0x4c06,0x5007,0x2403,0x4806,0x1802,0x1402,0x2c04,};
 
-Texture PAINT8[] __attribute__ ((section (".sdata"))) = {
+struct Texture PAINT8[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
 		.front = front_pura,
