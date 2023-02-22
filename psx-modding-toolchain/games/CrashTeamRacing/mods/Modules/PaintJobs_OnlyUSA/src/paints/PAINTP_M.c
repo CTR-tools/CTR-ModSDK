@@ -1,18 +1,7 @@
 // CLUT pos
 
 #include <common.h>
-
-struct Texture
-{
-	const RECT * front;
-	const RECT * back;
-	const RECT * floor;
-	const RECT * brown;
-	const RECT * motorside;
-	const RECT * motortop;
-	const RECT * bridge;
-	const RECT * exhaust;
-};
+#include "../tex.h"
 
 RECT front_crash_menu_pos __attribute__ ((section (".data"))) = {
 	.x = 784,
@@ -745,7 +734,7 @@ RECT exhaust_pura_menu_pos __attribute__ ((section (".data"))) = {
 	.h = 1
 };
 
-struct Texture PAINTP_M[] __attribute__ ((section (".sdata"))) =
+Texture PAINTP_M[] __attribute__ ((section (".sdata"))) =
 {
 	[0] =
 	{
