@@ -23,9 +23,6 @@ typedef union {
 typedef struct
 {
     Texture colors[NUM_PAINT_JOB];
-    Texture spriteTex;
-    Texture spriteRacePos;
-    Texture spriteMenuPos;
     Texture colorsMenuPos[NUM_CHARACTERS];
     Texture colorsRacePos[NUM_CHARACTERS];
 } TexData;

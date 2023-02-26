@@ -27,17 +27,8 @@ void LoadFile_CustomTexturesMempack()
 	//load in mempack
 	texData = (TexData *) LOAD_ReadFile_NoCallback("\\PAINTALL.BIN;1", (void *) 0x801CE000, 0);
 
-	/* Loads textures in their specific locations */
-
-	for (u_int i = 0; i < numTex; i++)
-	{
-		LoadImage((RECT *) texData->spriteRacePos.p[i], (u_long *) texData->spriteTex.p[i]);
-		LoadImage((RECT *) texData->spriteMenuPos.p[i], (u_long *) texData->spriteTex.p[i]);
-	}
-
 	/* Loads CLUTs in their specific locations */
-	for(int i = 0; i < NUM_CHARACTERS; i++)
-		loadCLUT(i);
+	for(int i = 0; i < NUM_CHARACTERS; i++) loadCLUT(i);
 
 	wasLoadedYet = 1;
 }
