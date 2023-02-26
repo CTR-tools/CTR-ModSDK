@@ -21,13 +21,13 @@ short exhaust_pinstripe[16] __attribute__ ((section (".data"))) = {
 Texture PAINT12[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_pinstripe,
-		.back = back_pinstripe,
-		.floor = floor_pinstripe,
-		.brown = brown_pinstripe,
-		.motorside = motorside_pinstripe,
-		.motortop = motortop_pinstripe,
-		.bridge = bridge_pinstripe,
-		.exhaust = exhaust_pinstripe,
+		.front = (char*)front_pinstripe,
+		.back = (char*)back_pinstripe,
+		.floor = (char*)floor_pinstripe,
+		.brown = (char*)brown_pinstripe,
+		.motorside = (char*)motorside_pinstripe,
+		.motortop = (char*)motortop_pinstripe,
+		.bridge = (char*)bridge_pinstripe,
+		.exhaust = (char*)exhaust_pinstripe,
 	},
 };

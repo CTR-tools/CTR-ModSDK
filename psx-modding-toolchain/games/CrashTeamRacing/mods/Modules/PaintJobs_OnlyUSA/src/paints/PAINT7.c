@@ -21,13 +21,13 @@ short exhaust_polar[16] __attribute__ ((section (".data"))) = {
 Texture PAINT7[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_polar,
-		.back = back_polar,
-		.floor = floor_polar,
-		.brown = brown_polar,
-		.motorside = motorside_polar,
-		.motortop = motortop_polar,
-		.bridge = bridge_polar,
-		.exhaust = exhaust_polar,
+		.front = (char*)front_polar,
+		.back = (char*)back_polar,
+		.floor = (char*)floor_polar,
+		.brown = (char*)brown_polar,
+		.motorside = (char*)motorside_polar,
+		.motortop = (char*)motortop_polar,
+		.bridge = (char*)bridge_polar,
+		.exhaust = (char*)exhaust_polar,
 	},
 };

@@ -28,13 +28,13 @@ short exhaust_penta[16] __attribute__ ((section (".data"))) = {
 Texture PAINT15[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_penta,
-		.back = back_penta,
-		.floor = floor_penta,
-		.brown = brown_penta,
-		.motorside = motorside_penta,
-		.motortop = motortop_penta,
-		.bridge = bridge_penta,
-		.exhaust = exhaust_penta,
+		.front = (char*)front_penta,
+		.back = (char*)back_penta,
+		.floor = (char*)floor_penta,
+		.brown = (char*)brown_penta,
+		.motorside = (char*)motorside_penta,
+		.motortop = (char*)motortop_penta,
+		.bridge = (char*)bridge_penta,
+		.exhaust = (char*)exhaust_penta,
 	},
 };

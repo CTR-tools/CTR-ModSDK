@@ -22,13 +22,13 @@ short exhaust_tiny[16] __attribute__ ((section (".data"))) = {
 Texture PAINT3[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_tiny,
-		.back = back_tiny,
-		.floor = floor_tiny,
-		.brown = brown_tiny,
-		.motorside = motorside_tiny,
-		.motortop = motortop_tiny,
-		.bridge = bridge_tiny,
-		.exhaust = exhaust_tiny,
+		.front = (char*)front_tiny,
+		.back = (char*)back_tiny,
+		.floor = (char*)floor_tiny,
+		.brown = (char*)brown_tiny,
+		.motorside = (char*)motorside_tiny,
+		.motortop = (char*)motortop_tiny,
+		.bridge = (char*)bridge_tiny,
+		.exhaust = (char*)exhaust_tiny,
 	},
 };

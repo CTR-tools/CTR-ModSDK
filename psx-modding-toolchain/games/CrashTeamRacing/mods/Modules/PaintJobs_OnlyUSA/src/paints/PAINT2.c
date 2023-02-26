@@ -21,13 +21,13 @@ short exhaust_cortex[16] __attribute__ ((section (".data"))) = {
 Texture PAINT2[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_cortex,
-		.back = back_cortex,
-		.floor = floor_cortex,
-		.brown = brown_cortex,
-		.motorside = motorside_cortex,
-		.motortop = motortop_cortex,
-		.bridge = bridge_cortex,
-		.exhaust = exhaust_cortex,
+		.front = (char*)front_cortex,
+		.back = (char*)back_cortex,
+		.floor = (char*)floor_cortex,
+		.brown = (char*)brown_cortex,
+		.motorside = (char*)motorside_cortex,
+		.motortop = (char*)motortop_cortex,
+		.bridge = (char*)bridge_cortex,
+		.exhaust = (char*)exhaust_cortex,
 	},
 };

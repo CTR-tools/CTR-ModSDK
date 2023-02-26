@@ -37,7 +37,7 @@ def export_objects(obj_list, is_img: bool) -> str:
     return buffer + "\n"
 
 def create_texture_struct() -> str:
-    def fill_struct(struct_type, struct_name, names: list[str]) -> str:
+    def fill_struct(struct_type: str, struct_name: str, names: list[str]) -> str:
         buffer = struct_type + " " + struct_name + '[] __attribute__ ((section (".sdata"))) = {\n'
         counter = 0
         for name in names:

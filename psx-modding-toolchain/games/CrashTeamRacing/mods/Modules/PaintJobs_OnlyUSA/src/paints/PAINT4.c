@@ -21,13 +21,13 @@ short exhaust_coco[16] __attribute__ ((section (".data"))) = {
 Texture PAINT4[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_coco,
-		.back = back_coco,
-		.floor = floor_coco,
-		.brown = brown_coco,
-		.motorside = motorside_coco,
-		.motortop = motortop_coco,
-		.bridge = bridge_coco,
-		.exhaust = exhaust_coco,
+		.front = (char*)front_coco,
+		.back = (char*)back_coco,
+		.floor = (char*)floor_coco,
+		.brown = (char*)brown_coco,
+		.motorside = (char*)motorside_coco,
+		.motortop = (char*)motortop_coco,
+		.bridge = (char*)bridge_coco,
+		.exhaust = (char*)exhaust_coco,
 	},
 };

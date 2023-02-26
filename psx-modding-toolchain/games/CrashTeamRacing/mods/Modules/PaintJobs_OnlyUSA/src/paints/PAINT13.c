@@ -21,13 +21,13 @@ short exhaust_tropy[16] __attribute__ ((section (".data"))) = {
 Texture PAINT13[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_tropy,
-		.back = back_tropy,
-		.floor = floor_tropy,
-		.brown = brown_tropy,
-		.motorside = motorside_tropy,
-		.motortop = motortop_tropy,
-		.bridge = bridge_tropy,
-		.exhaust = exhaust_tropy,
+		.front = (char*)front_tropy,
+		.back = (char*)back_tropy,
+		.floor = (char*)floor_tropy,
+		.brown = (char*)brown_tropy,
+		.motorside = (char*)motorside_tropy,
+		.motortop = (char*)motortop_tropy,
+		.bridge = (char*)bridge_tropy,
+		.exhaust = (char*)exhaust_tropy,
 	},
 };

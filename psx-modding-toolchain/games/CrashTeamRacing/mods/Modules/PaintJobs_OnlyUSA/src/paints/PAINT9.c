@@ -21,13 +21,13 @@ short exhaust_roo[16] __attribute__ ((section (".data"))) = {
 Texture PAINT9[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_roo,
-		.back = back_roo,
-		.floor = floor_roo,
-		.brown = brown_roo,
-		.motorside = motorside_roo,
-		.motortop = motortop_roo,
-		.bridge = bridge_roo,
-		.exhaust = exhaust_roo,
+		.front = (char*)front_roo,
+		.back = (char*)back_roo,
+		.floor = (char*)floor_roo,
+		.brown = (char*)brown_roo,
+		.motorside = (char*)motorside_roo,
+		.motortop = (char*)motortop_roo,
+		.bridge = (char*)bridge_roo,
+		.exhaust = (char*)exhaust_roo,
 	},
 };

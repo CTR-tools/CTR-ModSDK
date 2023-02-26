@@ -21,13 +21,13 @@ short exhaust_ngin[16] __attribute__ ((section (".data"))) = {
 Texture PAINT5[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_ngin,
-		.back = back_ngin,
-		.floor = floor_ngin,
-		.brown = brown_ngin,
-		.motorside = motorside_ngin,
-		.motortop = motortop_ngin,
-		.bridge = bridge_ngin,
-		.exhaust = exhaust_ngin,
+		.front = (char*)front_ngin,
+		.back = (char*)back_ngin,
+		.floor = (char*)floor_ngin,
+		.brown = (char*)brown_ngin,
+		.motorside = (char*)motorside_ngin,
+		.motortop = (char*)motortop_ngin,
+		.bridge = (char*)bridge_ngin,
+		.exhaust = (char*)exhaust_ngin,
 	},
 };

@@ -24,6 +24,6 @@ list of colors:
 18. Dark blue-gray
 19. Reddish orange
 20. Brown
-23. Lilac
+21. Lilac
 
 by Superstarxalien

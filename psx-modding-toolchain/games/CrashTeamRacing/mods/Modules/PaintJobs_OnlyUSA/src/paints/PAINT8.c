@@ -21,13 +21,13 @@ short floor_pura[16] __attribute__ ((section (".data"))) = {
 Texture PAINT8[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_pura,
-		.back = back_pura,
-		.floor = floor_pura,
-		.brown = brown_pura,
-		.motorside = motorside_pura,
-		.motortop = motortop_pura,
-		.bridge = bridge_pura,
-		.exhaust = exhaust_pura,
+		.front = (char*)front_pura,
+		.back = (char*)back_pura,
+		.floor = (char*)floor_pura,
+		.brown = (char*)brown_pura,
+		.motorside = (char*)motorside_pura,
+		.motortop = (char*)motortop_pura,
+		.bridge = (char*)bridge_pura,
+		.exhaust = (char*)exhaust_pura,
 	},
 };

@@ -21,13 +21,13 @@ short exhaust_dingo[16] __attribute__ ((section (".data"))) = {
 Texture PAINT6[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_dingo,
-		.back = back_dingo,
-		.floor = floor_dingo,
-		.brown = brown_dingo,
-		.motorside = motorside_dingo,
-		.motortop = motortop_dingo,
-		.bridge = bridge_dingo,
-		.exhaust = exhaust_dingo,
+		.front = (char*)front_dingo,
+		.back = (char*)back_dingo,
+		.floor = (char*)floor_dingo,
+		.brown = (char*)brown_dingo,
+		.motorside = (char*)motorside_dingo,
+		.motortop = (char*)motortop_dingo,
+		.bridge = (char*)bridge_dingo,
+		.exhaust = (char*)exhaust_dingo,
 	},
 };

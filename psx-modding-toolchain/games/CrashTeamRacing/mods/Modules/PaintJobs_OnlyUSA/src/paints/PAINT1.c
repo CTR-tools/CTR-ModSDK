@@ -28,13 +28,13 @@ short exhaust_crash[16] __attribute__ ((section (".data"))) = {
 Texture PAINT1[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_crash,
-		.back = back_crash,
-		.floor = floor_crash,
-		.brown = brown_crash,
-		.motorside = motorside_crash,
-		.motortop = motortop_crash,
-		.bridge = bridge_crash,
-		.exhaust = exhaust_crash,
+		.front = (char*)front_crash,
+		.back = (char*)back_crash,
+		.floor = (char*)floor_crash,
+		.brown = (char*)brown_crash,
+		.motorside = (char*)motorside_crash,
+		.motortop = (char*)motortop_crash,
+		.bridge = (char*)bridge_crash,
+		.exhaust = (char*)exhaust_crash,
 	},
 };

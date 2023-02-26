@@ -21,13 +21,13 @@ short exhaust_fakecrash[16] __attribute__ ((section (".data"))) = {
 Texture PAINT14[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_fakecrash,
-		.back = back_fakecrash,
-		.floor = floor_fakecrash,
-		.brown = brown_fakecrash,
-		.motorside = motorside_fakecrash,
-		.motortop = motortop_fakecrash,
-		.bridge = bridge_fakecrash,
-		.exhaust = exhaust_fakecrash,
+		.front = (char*)front_fakecrash,
+		.back = (char*)back_fakecrash,
+		.floor = (char*)floor_fakecrash,
+		.brown = (char*)brown_fakecrash,
+		.motorside = (char*)motorside_fakecrash,
+		.motortop = (char*)motortop_fakecrash,
+		.bridge = (char*)bridge_fakecrash,
+		.exhaust = (char*)exhaust_fakecrash,
 	},
 };

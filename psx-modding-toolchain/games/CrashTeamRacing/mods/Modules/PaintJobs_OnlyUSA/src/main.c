@@ -1,9 +1,3 @@
-// 19 Paint Jobs
-// start of PAINTK: +0
-// start of PAINTP_M: +3
-// start of PAINTP_R: +18
-#define PaintJobCount 19
-
 #include <common.h>
 #include "tex.h"
 
@@ -20,7 +14,7 @@ u_char wasLoadedYet;
 void loadCLUT(int character)
 {
 	int color = characterIndex[character];
-	for (int i = 0; i < numTex; i++)
+	for (u_int i = 0; i < numTex; i++)
 	{
 		LoadImage((RECT *) texData->colorsMenuPos[character].p[i], (u_long *) texData->colors[color].p[i]);
 		LoadImage((RECT *) texData->colorsRacePos[character].p[i], (u_long *) texData->colors[color].p[i]);
@@ -35,7 +29,7 @@ void LoadFile_CustomTexturesMempack()
 
 	/* Loads textures in their specific locations */
 
-	for (int i = 0; i < numTex; i++)
+	for (u_int i = 0; i < numTex; i++)
 	{
 		LoadImage((RECT *) texData->spriteRacePos.p[i], (u_long *) texData->spriteTex.p[i]);
 		LoadImage((RECT *) texData->spriteMenuPos.p[i], (u_long *) texData->spriteTex.p[i]);

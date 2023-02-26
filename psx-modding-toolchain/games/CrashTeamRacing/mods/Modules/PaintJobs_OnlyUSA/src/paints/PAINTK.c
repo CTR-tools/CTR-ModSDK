@@ -190,14 +190,14 @@ RECT exhaust_menu_pos __attribute__ ((section (".data"))) = {
 Texture PAINTK[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front,
-		.back = back,
-		.floor = floor,
-		.brown = brown,
-		.motorside = motorside,
-		.motortop = motortop,
-		.bridge = bridge,
-		.exhaust = exhaust,
+		.front = (char*)&front,
+		.back = (char*)&back,
+		.floor = (char*)&floor,
+		.brown = (char*)&brown,
+		.motorside = (char*)&motorside,
+		.motortop = (char*)&motortop,
+		.bridge = (char*)&bridge,
+		.exhaust = (char*)&exhaust,
 	},
 	[1] =
 	{

@@ -28,13 +28,13 @@ short exhaust_burgundy[16] __attribute__ ((section (".data"))) = {
 Texture PAINT16[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_burgundy,
-		.back = back_burgundy,
-		.floor = floor_burgundy,
-		.brown = brown_burgundy,
-		.motorside = motorside_burgundy,
-		.motortop = motortop_burgundy,
-		.bridge = bridge_burgundy,
-		.exhaust = exhaust_burgundy,
+		.front = (char*)front_burgundy,
+		.back = (char*)back_burgundy,
+		.floor = (char*)floor_burgundy,
+		.brown = (char*)brown_burgundy,
+		.motorside = (char*)motorside_burgundy,
+		.motortop = (char*)motortop_burgundy,
+		.bridge = (char*)bridge_burgundy,
+		.exhaust = (char*)exhaust_burgundy,
 	},
 };

@@ -28,13 +28,13 @@ short exhaust_forestgreen[16] __attribute__ ((section (".data"))) = {
 Texture PAINT17[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_forestgreen,
-		.back = back_forestgreen,
-		.floor = floor_forestgreen,
-		.brown = brown_forestgreen,
-		.motorside = motorside_forestgreen,
-		.motortop = motortop_forestgreen,
-		.bridge = bridge_forestgreen,
-		.exhaust = exhaust_forestgreen,
+		.front = (char*)front_forestgreen,
+		.back = (char*)back_forestgreen,
+		.floor = (char*)floor_forestgreen,
+		.brown = (char*)brown_forestgreen,
+		.motorside = (char*)motorside_forestgreen,
+		.motortop = (char*)motortop_forestgreen,
+		.bridge = (char*)bridge_forestgreen,
+		.exhaust = (char*)exhaust_forestgreen,
 	},
 };

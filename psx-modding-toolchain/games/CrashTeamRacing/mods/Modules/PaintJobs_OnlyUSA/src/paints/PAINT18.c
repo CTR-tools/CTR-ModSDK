@@ -28,13 +28,13 @@ short exhaust_darkgrayblue[16] __attribute__ ((section (".data"))) = {
 Texture PAINT18[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_darkgrayblue,
-		.back = back_darkgrayblue,
-		.floor = floor_darkgrayblue,
-		.brown = brown_darkgrayblue,
-		.motorside = motorside_darkgrayblue,
-		.motortop = motortop_darkgrayblue,
-		.bridge = bridge_darkgrayblue,
-		.exhaust = exhaust_darkgrayblue,
+		.front = (char*)front_darkgrayblue,
+		.back = (char*)back_darkgrayblue,
+		.floor = (char*)floor_darkgrayblue,
+		.brown = (char*)brown_darkgrayblue,
+		.motorside = (char*)motorside_darkgrayblue,
+		.motortop = (char*)motortop_darkgrayblue,
+		.bridge = (char*)bridge_darkgrayblue,
+		.exhaust = (char*)exhaust_darkgrayblue,
 	},
 };

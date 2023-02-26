@@ -19,13 +19,13 @@ short exhaust_papu[16] __attribute__ ((section (".data"))) = {
 Texture PAINT10[] __attribute__ ((section (".sdata"))) = {
 	[0] =
 	{
-		.front = front_papu,
-		.back = back_papu,
-		.floor = front_papu,
-		.brown = brown_papu,
-		.motorside = motorside_papu,
-		.motortop = motortop_papu,
-		.bridge = bridge_papu,
-		.exhaust = exhaust_papu,
+		.front = (char*)front_papu,
+		.back = (char*)back_papu,
+		.floor = (char*)front_papu,
+		.brown = (char*)brown_papu,
+		.motorside = (char*)motorside_papu,
+		.motortop = (char*)motortop_papu,
+		.bridge = (char*)bridge_papu,
+		.exhaust = (char*)exhaust_papu,
 	},
 };

@@ -11,6 +11,11 @@ class Image:
         path = filename
         filename = filename.split('/')[-1][:-4]
         filename = filename.split('_')
+        self.valid = True
+        if len(filename) != 8:
+            print("[Image-py] ERROR: wrong naming convention for the texture.")
+            self.valid = False
+            return
         self.name = filename[0]
         self.mode = int(filename[7])
         self.x = int(filename[1])
@@ -52,12 +57,16 @@ class Image:
     def get_path(self) -> str:
         return self.output_path
 
+    def is_valid(self) -> bool:
+        return self.valid
+
     def show(self) -> None:
         cv2.imshow('image', self.img)
         cv2.waitKey(0)
 
     def as_c_struct(self) -> str:
-        buffer = "char " + self.name + "[] = {"
+        buffer = "// CLUT = " + self.clut.name + "\n"
+        buffer += "char " + self.name + "[] = {"
         for px in self.psx_img:
             buffer += hex(px) + ","
         buffer += "};\n\n"
@@ -110,6 +119,7 @@ def create_images(directory: str) -> int:
                 total += 1
                 path = root + filename
                 img = Image(path)
-                imgs.append(img)
-                img.img2psx()
+                if img.is_valid():
+                    imgs.append(img)
+                    img.img2psx()
     return total
