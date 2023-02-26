@@ -1,7 +1,7 @@
 #ifndef TEX_H
 #define TEX_H
 
-#define NUM_PAINT_JOB 20
+#define NUM_PAINT_JOB 21
 #define NUM_CHARACTERS 15
 
 typedef union {
