@@ -65,11 +65,6 @@ class CompileList:
             error_print("\n[BuildList-py] ERROR: invalid arithmetic expression for offset at line " + str(line_count[0]) + ": " + self.original_line + "\n")
 
         self.address = self.calculate_address_base(line[2], offset)
-        if (self.address != 0) and ((self.address < self.min_addr) or (self.address > self.max_addr)):
-            error_print("\n[BuildList-py] ERROR: address specified is not in the [" + hex(self.min_addr) + ", " + hex(self.max_addr) + "] range.")
-            error_print("[BuildList-py] at line " + str(line_count[0]) + ": " + self.original_line + "\n")
-            self.ignore = True
-            return
         srcs = [l.strip() for l in line[4].split()]
         self.source = list()
         folders = dict()
@@ -108,6 +103,12 @@ class CompileList:
         extension = self.source[0].rsplit(".", 1)[1]
         if not (extension.lower() in ["c", "s"]):
             self.is_bin = True
+            self.ignore = True
+            return
+
+        if (self.address != 0) and ((self.address < self.min_addr) or (self.address > self.max_addr)):
+            error_print("\n[BuildList-py] ERROR: address specified is not in the [" + hex(self.min_addr) + ", " + hex(self.max_addr) + "] range.")
+            error_print("[BuildList-py] at line " + str(line_count[0]) + ": " + self.original_line + "\n")
             self.ignore = True
             return
 

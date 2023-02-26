@@ -20,6 +20,7 @@ This project uses a specific folder structure in order to look for components du
                     ├──MOD.BAT
                 ├──mod2/
                     ├──...
+                ├──STARTUP_MOD.BAT
             ├──symbols/
             ├──config.json
             ├──disc.json
@@ -27,6 +28,8 @@ This project uses a specific folder structure in order to look for components du
             ├──...
       ├──settings.json
       ├──common.mk
+      ├──startup_game.json
+      ├──STARTUP.BAT
 ├──tools/
     ├──gcc-psyq-converted/
                 ├──include/

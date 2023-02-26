@@ -8,6 +8,7 @@ from nops import Nops
 from game_options import game_options
 from image import create_images, clear_images, dump_images
 from clut import clear_cluts, dump_cluts
+from c import export_as_c
 
 import os
 import sys
@@ -36,8 +37,9 @@ class Main:
             13  :   self.nops.restore,
             14  :   self.clean_pch,
             15  :   self.disasm,
-            16  :   rename_psyq_sections,
-            17  :   self.clean_all,
+            16  :   export_as_c,
+            17  :   rename_psyq_sections,
+            18  :   self.clean_all,
         }
         self.num_options = len(self.actions)
         self.window_title = GAME_NAME + " - " + MOD_NAME
@@ -69,8 +71,9 @@ class Main:
             "General:\n"
             "14 - Clean Precompiled Header\n"
             "15 - Disassemble Elf\n"
-            "16 - Rename PSYQ Sections\n"
-            "17 - Clean All\n"
+            "16 - Export textures as C file\n"
+            "17 - Rename PSYQ Sections\n"
+            "18 - Clean All\n"
         )
         error_msg = "ERROR: Wrong option. Please type a number from 1-" + str(self.num_options) + ".\n"
         return request_user_input(first_option=1, last_option=self.num_options, intro_msg=intro_msg, error_msg=error_msg)
@@ -116,14 +119,14 @@ class Main:
     def replace_textures(self) -> None:
         create_directory(TEXTURES_OUTPUT_FOLDER)
         img_count = create_images(TEXTURES_FOLDER)
-        if img_count > 0:
-            dump_images(TEXTURES_OUTPUT_FOLDER)
-            dump_cluts(TEXTURES_OUTPUT_FOLDER)
-            self.redux.replace_textures()
-            clear_images()
-            clear_cluts()
-        else:
+        if img_count == 0:
             print("\n[Image-py] WARNING: 0 images found. No textures were replaced.\n")
+            return
+        dump_images(TEXTURES_OUTPUT_FOLDER)
+        dump_cluts(TEXTURES_OUTPUT_FOLDER)
+        self.redux.replace_textures()
+        clear_images()
+        clear_cluts()
 
     def disasm(self) -> None:
         os.system("mipsel-none-elf-objdump -d " + DEBUG_FOLDER + "mod.elf >> " + DEBUG_FOLDER + "disasm.txt")

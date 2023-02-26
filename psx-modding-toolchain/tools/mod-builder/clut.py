@@ -49,6 +49,19 @@ class CLUT:
     def get_path(self) -> str:
         return self.output_path
 
+    def as_c_struct(self) -> str:
+        buffer = "short " + self.name + "[] = {"
+        for color in self.colors:
+            buffer += hex(color) + ","
+        buffer += "};\n\n"
+        buffer += "RECT " + self.name + "_pos = {\n"
+        buffer += " " * 4 + ".x = " + str(self.x) + ",\n"
+        buffer += " " * 4 + ".y = " + str(self.y) + ",\n"
+        buffer += " " * 4 + ".w = " + str(self.w) + ",\n"
+        buffer += " " * 4 + ".h = " + str(self.h) + "\n"
+        buffer += "};\n"
+        return buffer
+
     def __str__(self) -> str:
         buffer = ""
         if self.valid:

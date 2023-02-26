@@ -20,6 +20,8 @@ class Makefile:
         self.sym_file = sym_file
         self.cl = list()
         self.pch = str()
+        self.opt_ccflags = str()
+        self.opt_ldflags = str()
         self.load_config()
 
     def load_config(self) -> None:
@@ -38,6 +40,10 @@ class Makefile:
             self.use_psyq = data["psyq"] != 0
             if "pch" in data:
                 self.pch = data["pch"] + ".gch"
+            if "ccflags" in data:
+                self.opt_ccflags = data["ccflags"]
+            if "ldflags" in data:
+                self.opt_ldflags = data["ldflags"]
 
     def add_cl(self, cl: CompileList) -> None:
         self.cl.append(cl)
@@ -153,6 +159,8 @@ class Makefile:
         buffer += "SRCINCLUDEDIR = $(MODDIR)" + SRC_FOLDER + "\n"
         buffer += "GAMEINCLUDEDIR = $(MODDIR)" + GAME_INCLUDE_PATH + "\n"
         buffer += "EXTRA_CC_FLAGS = " + self.compiler_flags + "\n"
+        buffer += "OPT_CC_FLAGS = " + self.opt_ccflags + "\n"
+        buffer += "OPT_LD_FLAGS = " + self.opt_ldflags + "\n"
         buffer += "PCHS = $(GAMEINCLUDEDIR)" + self.pch + "\n"
         buffer += "TRIMBIN_OFFSET = $(MODDIR)" + TRIMBIN_OFFSET + "\n"
         buffer += "\n"

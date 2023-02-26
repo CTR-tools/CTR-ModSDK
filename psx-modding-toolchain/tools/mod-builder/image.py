@@ -56,6 +56,19 @@ class Image:
         cv2.imshow('image', self.img)
         cv2.waitKey(0)
 
+    def as_c_struct(self) -> str:
+        buffer = "char " + self.name + "[] = {"
+        for px in self.psx_img:
+            buffer += hex(px) + ","
+        buffer += "};\n\n"
+        buffer += "RECT " + self.name + "_pos = {\n"
+        buffer += " " * 4 + ".x = " + str(self.x) + ",\n"
+        buffer += " " * 4 + ".y = " + str(self.y) + ",\n"
+        buffer += " " * 4 + ".w = " + str(self.w) + ",\n"
+        buffer += " " * 4 + ".h = " + str(self.h) + "\n"
+        buffer += "};\n"
+        return buffer
+
     def __str__(self) -> str:
         buffer = ""
         if (self.clut is not None) and (self.clut.is_valid()):
