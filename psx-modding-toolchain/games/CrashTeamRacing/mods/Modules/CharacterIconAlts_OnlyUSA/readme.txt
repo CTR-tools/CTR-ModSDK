@@ -18,6 +18,7 @@ Crash Bandicoot
 
 Dr. Neo Cortex
 	1. Japanese CTR icon
+	2. Custom icon #1 by Baconfish
 
 Tiny Tiger
 	1. June 3 build (Pizza Hut Test Drive / Spyro 2 demo) icon
@@ -30,6 +31,10 @@ Coco Bandicoot
 
 N. Gin
 	1. June 3 build (Pizza Hut Test Drive / Spyro 2 demo) icon
+	2. Custom icon #1 by Baconfish
+
+Dingodile
+	1. Custom icon #1 by Baconfish
 
 Polar
 	1. August 5 build icon (slightly updated version of June 3 icon)
@@ -38,6 +43,9 @@ Polar
 
 Pura
 	1. Japanese CTR icon
+
+Ripper Roo
+	1. Custom icon #1 by Baconfish
 
 Papu Papu
 	1. August 5 build icon
@@ -66,6 +74,7 @@ Penta Penguin
 	3. Custom icon #1 by Avery
 	4. Custom icon #2 by Avery
 	5. Custom icon #3 by Avery
+	6. Custom icon #4 by Baconfish
 
                                 TECHNICAL DATA
 

@@ -13,7 +13,7 @@ struct IconSelection
 {
 	char characterIndex;
 	char maxIndex;
-	char * icons[0xC];
+	char * icons[14];
 	RECT * iconPos;
 	RECT * iconCLUT;
 };
@@ -39,18 +39,20 @@ void LoadFile_CustomTextures()
 	CTRICON3 = (struct Texture*)LOAD_ReadFile_NoCallback("\\CTRICON3.BIN;1", (void*)0x8000E400, 0);
 
 	chr[0].maxIndex = 5;
-	chr[1].maxIndex = 2;
+	chr[1].maxIndex = 3;
 	chr[2].maxIndex = 3;
 	chr[3].maxIndex = 4;
-	chr[4].maxIndex = 2;
+	chr[4].maxIndex = 3;
+	chr[5].maxIndex = 2;
 	chr[6].maxIndex = 4;
 	chr[7].maxIndex = 2;
 	chr[8].maxIndex = 3;
 	chr[9].maxIndex = 4;
-	chr[0xB].maxIndex = 2;
-	chr[0xC].maxIndex = 3;
-	chr[0xD].maxIndex = 6;
-	chr[0xE].maxIndex = 4;
+	chr[10].maxIndex = 2;
+	chr[11].maxIndex = 2;
+	chr[12].maxIndex = 3;
+	chr[13].maxIndex = 7;
+	chr[14].maxIndex = 4;
 
 	//crash
 	//og
@@ -74,9 +76,9 @@ void LoadFile_CustomTextures()
 	//japan
 	chr[1].icons[1] = CTRICON2[10].image;
 	//og clut
-	chr[1].icons[2] = CTRICON1[0].clut;
+	chr[1].icons[3] = CTRICON1[0].clut;
 	//japan clut
-	chr[1].icons[3] = CTRICON2[10].clut;
+	chr[1].icons[4] = CTRICON2[10].clut;
 	chr[1].iconPos = (RECT *)CTRICON1[10].image;
 	chr[1].iconCLUT = (RECT *)CTRICON1[10].clut;
 
@@ -114,11 +116,19 @@ void LoadFile_CustomTextures()
 	//june 3
 	chr[4].icons[1] = CTRICON2[7].image;
 	//og clut
-	chr[4].icons[2] = CTRICON1[3].clut;
+	chr[4].icons[3] = CTRICON1[3].clut;
 	//june 3 clut
-	chr[4].icons[3] = CTRICON2[7].clut;
+	chr[4].icons[4] = CTRICON2[7].clut;
 	chr[4].iconPos = (RECT *)CTRICON1[13].image;
 	chr[4].iconCLUT = (RECT *)CTRICON1[13].clut;
+
+	//dingodile
+	//og
+	chr[5].icons[0] = CTRICON1[4].image;
+	//og clut
+	chr[5].icons[2] = CTRICON1[4].clut;
+	chr[5].iconPos = (RECT*)CTRICON1[14].image;
+	chr[5].iconCLUT = (RECT*)CTRICON1[14].clut;
 
 	//polar
 	//og
@@ -144,6 +154,14 @@ void LoadFile_CustomTextures()
 	chr[7].iconPos = (RECT *)CTRICON1[22].image;
 	chr[7].iconCLUT = (RECT *)CTRICON1[22].clut;
 
+	//ripper roo
+	//og
+	chr[10].icons[0] = CTRICON2[4].image;
+	//og clut
+	chr[10].icons[2] = CTRICON2[4].clut;
+	chr[10].iconPos = (RECT*)CTRICON1[24].image;
+	chr[10].iconCLUT = (RECT*)CTRICON1[24].clut;
+
 	//papu
 	//og
 	chr[9].icons[0] = CTRICON1[6].image;
@@ -158,11 +176,11 @@ void LoadFile_CustomTextures()
 
 	//joe
 	//og
-	chr[0xB].icons[0] = CTRICON1[8].image;
+	chr[11].icons[0] = CTRICON1[8].image;
 	//og clut
-	chr[0xB].icons[2] = CTRICON1[8].clut;
-	chr[0xB].iconPos = (RECT *)CTRICON1[18].image;
-	chr[0xB].iconCLUT = (RECT *)CTRICON1[18].clut;
+	chr[11].icons[2] = CTRICON1[8].clut;
+	chr[11].iconPos = (RECT *)CTRICON1[18].image;
+	chr[11].iconCLUT = (RECT *)CTRICON1[18].clut;
 
 	//pinstripe
 	//og
@@ -174,47 +192,47 @@ void LoadFile_CustomTextures()
 
 	//tropy
 	//og
-	chr[0xC].icons[0] = CTRICON2[1].image;
+	chr[12].icons[0] = CTRICON2[1].image;
 	//japan
-	chr[0xC].icons[1] = CTRICON3[1].image;
+	chr[12].icons[1] = CTRICON3[1].image;
 	//og clut
-	chr[0xC].icons[3] = CTRICON2[1].clut;
+	chr[12].icons[3] = CTRICON2[1].clut;
 	//japan clut
-	chr[0xC].icons[4] = CTRICON3[1].clut;
-	chr[0xC].iconPos = (RECT *)CTRICON1[21].image;
-	chr[0xC].iconCLUT = (RECT *)CTRICON1[21].clut;
+	chr[12].icons[4] = CTRICON3[1].clut;
+	chr[12].iconPos = (RECT *)CTRICON1[21].image;
+	chr[12].iconCLUT = (RECT *)CTRICON1[21].clut;
 
 	//fake crash
 	//og
-	chr[0xe].icons[0] = CTRICON1[7].image;
+	chr[14].icons[0] = CTRICON1[7].image;
 	//japan
-	chr[0xe].icons[1] = CTRICON3[0].image;
+	chr[14].icons[1] = CTRICON3[0].image;
 	//august 5
-	chr[0xe].icons[2] = CTRICON3[4].image;
+	chr[14].icons[2] = CTRICON3[4].image;
 	//og clut
-	chr[0xe].icons[4] = CTRICON1[7].clut;
+	chr[14].icons[4] = CTRICON1[7].clut;
 	//japan clut
-	chr[0xe].icons[5] = CTRICON3[0].clut;
+	chr[14].icons[5] = CTRICON3[0].clut;
 	//august 5 clut
-	chr[0xe].icons[6] = CTRICON3[4].clut;
-	chr[0xe].iconPos = (RECT *)CTRICON1[17].image;
-	chr[0xe].iconCLUT = (RECT *)CTRICON1[17].clut;
+	chr[14].icons[6] = CTRICON3[4].clut;
+	chr[14].iconPos = (RECT *)CTRICON1[17].image;
+	chr[14].iconCLUT = (RECT *)CTRICON1[17].clut;
 
 	//penta
 	//og
-	chr[0xD].icons[0] = CTRICON2[3].image;
+	chr[13].icons[0] = CTRICON2[3].image;
 	//japan
-	chr[0xD].icons[1] = CTRICON3[3].image;
+	chr[13].icons[1] = CTRICON3[3].image;
 	//august 5
-	chr[0xD].icons[2] = CTRICON3[6].image;
+	chr[13].icons[2] = CTRICON3[6].image;
 	//og clut
-	chr[0xD].icons[6] = CTRICON2[3].clut;
+	chr[13].icons[7] = CTRICON2[3].clut;
 	//japan clut
-	chr[0xD].icons[7] = CTRICON3[3].clut;
+	chr[13].icons[8] = CTRICON3[3].clut;
 	//august 5 clut
-	chr[0xD].icons[8] = CTRICON3[6].clut;
-	chr[0xD].iconPos = (RECT *)CTRICON1[23].image;
-	chr[0xD].iconCLUT = (RECT *)CTRICON1[23].clut;
+	chr[13].icons[9] = CTRICON3[6].clut;
+	chr[13].iconPos = (RECT *)CTRICON1[23].image;
+	chr[13].iconCLUT = (RECT *)CTRICON1[23].clut;
 }
 
 //Load custom textures to available heap space in main menu (which is 0x801CE000)
@@ -248,43 +266,58 @@ void LoadFile_CustomTexturesMempack()
 	//pinstripe august 14 clut
 	chr[8].icons[5] = CTRICON4[0].clut;
 	//fake crash custom 1 by avery
-	chr[0xe].icons[3] = CTRICON4[4].image;
+	chr[14].icons[3] = CTRICON4[4].image;
 	//fake crash custom 1 clut
-	chr[0xe].icons[7] = CTRICON4[4].clut;
+	chr[14].icons[7] = CTRICON4[4].clut;
 	//penta custom 1 by avery
-	chr[0xD].icons[3] = CTRICON4[6].image;
+	chr[13].icons[3] = CTRICON4[6].image;
 	//penta custom 2 by avery
-	chr[0xD].icons[4] = CTRICON4[7].image;
+	chr[13].icons[4] = CTRICON4[7].image;
 	//penta custom 3 by avery
-	chr[0xD].icons[5] = CTRICON4[8].image;
+	chr[13].icons[5] = CTRICON4[8].image;
 	//penta custom 1 clut
-	chr[0xD].icons[9] = CTRICON4[6].clut;
+	chr[13].icons[10] = CTRICON4[6].clut;
 	//penta custom 2 clut
-	chr[0xD].icons[10] = CTRICON4[7].clut;
+	chr[13].icons[11] = CTRICON4[7].clut;
 	//penta custom 3 clut
-	chr[0xD].icons[11] = CTRICON4[8].clut;
+	chr[13].icons[12] = CTRICON4[8].clut;
 	//papu august 14
 	chr[9].icons[2] = CTRICON4[13].image;
 	//papu august 14 clut
 	chr[9].icons[6] = CTRICON4[13].clut;
 	//joe august 5
-	chr[0xB].icons[1] = CTRICON4[10].image;
+	chr[11].icons[1] = CTRICON4[10].image;
 	//joe august 5 clut
-	chr[0xB].icons[3] = CTRICON4[10].clut;
+	chr[11].icons[3] = CTRICON4[10].clut;
 	//pinstripe august 5
 	chr[8].icons[1] = CTRICON4[11].image;
 	//pinstripe august 5 clut
 	chr[8].icons[4] = CTRICON4[11].clut;
 	//tropy august 5
-	chr[0xC].icons[2] = CTRICON4[12].image;
+	chr[12].icons[2] = CTRICON4[12].image;
 	//tropy august 5 clut
-	chr[0xC].icons[5] = CTRICON4[12].clut;
+	chr[12].icons[5] = CTRICON4[12].clut;
 	//crash custom 1
 	chr[0].icons[4] = CTRICON4[14].image;
 	chr[0].icons[9] = CTRICON4[14].clut;
 	//polar custom 2
 	chr[6].icons[3] = CTRICON4[15].image;
 	chr[6].icons[7] = CTRICON4[15].clut;
+	//cortex custom 1
+	chr[1].icons[2] = CTRICON4[16].image;
+	chr[1].icons[5] = CTRICON4[16].clut;
+	//n. gin custom 1
+	chr[4].icons[2] = CTRICON4[18].image;
+	chr[4].icons[5] = CTRICON4[18].clut;
+	//dingodile custom 1
+	chr[5].icons[1] = CTRICON4[17].image;
+	chr[5].icons[3] = CTRICON4[17].clut;
+	//ripper roo custom 1
+	chr[10].icons[1] = CTRICON3[7].image;
+	chr[10].icons[3] = CTRICON3[7].clut;
+	//penta custom 4
+	chr[13].icons[6] = CTRICON4[19].image;
+	chr[13].icons[13] = CTRICON4[19].clut;
 
 	wasLoadedYet = 1;
 }
