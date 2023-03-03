@@ -45,8 +45,8 @@ void LoadFile_CustomTextures()
 	chr[4].maxIndex = 3;
 	chr[5].maxIndex = 2;
 	chr[6].maxIndex = 4;
-	chr[7].maxIndex = 2;
-	chr[8].maxIndex = 3;
+	chr[7].maxIndex = 3;
+	chr[8].maxIndex = 4;
 	chr[9].maxIndex = 4;
 	chr[10].maxIndex = 2;
 	chr[11].maxIndex = 2;
@@ -147,10 +147,14 @@ void LoadFile_CustomTextures()
 	chr[7].icons[0] = CTRICON2[2].image;
 	//japan
 	chr[7].icons[1] = CTRICON3[2].image;
+	//custom 1
+	chr[7].icons[2] = CTRICON3[8].image;
 	//og clut
-	chr[7].icons[2] = CTRICON2[2].clut;
+	chr[7].icons[3] = CTRICON2[2].clut;
 	//japan clut
-	chr[7].icons[3] = CTRICON3[2].clut;
+	chr[7].icons[4] = CTRICON3[2].clut;
+	//custom 1 clut
+	chr[7].icons[5] = CTRICON3[8].clut;
 	chr[7].iconPos = (RECT *)CTRICON1[22].image;
 	chr[7].iconCLUT = (RECT *)CTRICON1[22].clut;
 
@@ -190,7 +194,10 @@ void LoadFile_CustomTextures()
 	//og
 	chr[8].icons[0] = CTRICON1[9].image;
 	//og clut
-	chr[8].icons[3] = CTRICON1[9].clut;
+	chr[8].icons[4] = CTRICON1[9].clut;
+	//custom 1
+	chr[8].icons[3] = CTRICON3[9].image;
+	chr[8].icons[7] = CTRICON3[9].clut;
 	chr[8].iconPos = (RECT *)CTRICON1[19].image;
 	chr[8].iconCLUT = (RECT *)CTRICON1[19].clut;
 
@@ -268,7 +275,7 @@ void LoadFile_CustomTexturesMempack()
 	//pinstripe august 14
 	chr[8].icons[2] = CTRICON4[0].image;
 	//pinstripe august 14 clut
-	chr[8].icons[5] = CTRICON4[0].clut;
+	chr[8].icons[6] = CTRICON4[0].clut;
 	//fake crash custom 1 by avery
 	chr[14].icons[3] = CTRICON4[4].image;
 	//fake crash custom 1 clut
@@ -296,7 +303,7 @@ void LoadFile_CustomTexturesMempack()
 	//pinstripe august 5
 	chr[8].icons[1] = CTRICON4[11].image;
 	//pinstripe august 5 clut
-	chr[8].icons[4] = CTRICON4[11].clut;
+	chr[8].icons[5] = CTRICON4[11].clut;
 	//tropy august 5
 	chr[12].icons[2] = CTRICON4[12].image;
 	//tropy august 5 clut

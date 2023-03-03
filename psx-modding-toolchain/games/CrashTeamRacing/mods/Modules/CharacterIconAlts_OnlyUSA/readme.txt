@@ -43,6 +43,7 @@ Polar
 
 Pura
 	1. Japanese CTR icon
+	2. Custom icon #1 by Baconfish
 
 Ripper Roo
 	1. Custom icon #1 by Baconfish
@@ -57,7 +58,8 @@ Komodo Joe
 
 Pinstripe
 	1. August 5 build icon
-	2. August 14 build iocn
+	2. August 14 build icon
+	3. Custom icon #1 by Baconfish
 
 Dr. N. Tropy
 	1. Japanese CTR icon
