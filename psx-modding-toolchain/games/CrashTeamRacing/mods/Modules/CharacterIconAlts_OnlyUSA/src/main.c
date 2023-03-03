@@ -159,6 +159,10 @@ void LoadFile_CustomTextures()
 	chr[10].icons[0] = CTRICON2[4].image;
 	//og clut
 	chr[10].icons[2] = CTRICON2[4].clut;
+	//ripper roo custom 1
+	chr[10].icons[1] = CTRICON3[7].image;
+	chr[10].icons[3] = CTRICON3[7].clut;
+	
 	chr[10].iconPos = (RECT*)CTRICON1[24].image;
 	chr[10].iconCLUT = (RECT*)CTRICON1[24].clut;
 
@@ -312,9 +316,6 @@ void LoadFile_CustomTexturesMempack()
 	//dingodile custom 1
 	chr[5].icons[1] = CTRICON4[17].image;
 	chr[5].icons[3] = CTRICON4[17].clut;
-	//ripper roo custom 1
-	chr[10].icons[1] = CTRICON3[7].image;
-	chr[10].icons[3] = CTRICON3[7].clut;
 	//penta custom 4
 	chr[13].icons[6] = CTRICON4[19].image;
 	chr[13].icons[13] = CTRICON4[19].clut;
@@ -341,7 +342,7 @@ void ChangeCharacterIcon(char character, int buttonTap)
 //Hooked at the very end of BOTS_UpdateGlobals, which makes this function run every frame
 void MainMenuLoop()
 {
-	if(sdata->gGT->gameMode1 != MAIN_MENU)
+	if(!(sdata->gGT->gameMode1 & MAIN_MENU))
 	{
 		wasLoadedYet = 0;
 		return;
