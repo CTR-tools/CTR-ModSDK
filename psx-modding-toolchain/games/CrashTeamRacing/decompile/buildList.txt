@@ -31,7 +31,7 @@ common, 231, RB_CrateAny_ThTick_Explode, 0x0, General/231/231_059_066_RB_Crate.c
 common, 231, RB_Crystal_ThCollide, 0x0, General/231/231_067_070_RB_Crystal.c
 common, 231, RB_Default_LInB, 0x0, General/231/231_071_RB_Default_LInB.c
 common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c
-// skip a bunch
+// skip Banner
 common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_080_083_RB_Armadillo.c
 common, 231, RB_Fireball_ThTick, 0x0, General/231/231_084_086_RB_Fireball.c
 //common, 231, RB_FlameJet_Particles, 0x0, General/231/231_087_089_RB_FlameJet.c
