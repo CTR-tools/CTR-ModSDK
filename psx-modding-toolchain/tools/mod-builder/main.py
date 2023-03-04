@@ -2,7 +2,7 @@ from makefile import Makefile, clean_pch
 from compile_list import CompileList, free_sections, print_errors
 from syms import Syms
 from redux import Redux
-from common import MOD_NAME, GAME_NAME, LOG_FILE, COMPILE_LIST, DEBUG_FOLDER, BACKUP_FOLDER, OUTPUT_FOLDER, COMPILATION_RESIDUES, TEXTURES_FOLDER, TEXTURES_OUTPUT_FOLDER, request_user_input, cli_clear, cli_pause, check_compile_list, check_prerequisite_files, create_directory, delete_directory, delete_file, rename_psyq_sections
+from common import MOD_NAME, GAME_NAME, LOG_FILE, COMPILE_LIST, DEBUG_FOLDER, BACKUP_FOLDER, OUTPUT_FOLDER, COMPILATION_RESIDUES, TEXTURES_FOLDER, TEXTURES_OUTPUT_FOLDER, RECURSIVE_COMP_PATH, ABORT_PATH, CONFIG_FILE, request_user_input, cli_clear, cli_pause, check_compile_list, check_prerequisite_files, create_directory, delete_directory, delete_file, rename_psyq_sections, get_distance_to_file
 from mkpsxiso import Mkpsxiso
 from nops import Nops
 from game_options import game_options
@@ -43,10 +43,17 @@ class Main:
         }
         self.num_options = len(self.actions)
         self.window_title = GAME_NAME + " - " + MOD_NAME
+        self.python = str()
+        self.compilation_dep = list()
+        self.update_title()
+
+    def update_title(self):
         if sys.platform == "win32":
             os.system("title " + self.window_title)
+            self.python = "python "
         else:
             os.system('echo -n -e "\\033]0;' + self.window_title + '\\007"')
+            self.python = "python3 "
 
     def get_options(self) -> int:
         intro_msg = (
@@ -82,31 +89,74 @@ class Main:
         if not check_compile_list():
             print("\n[Compile-py] ERROR: " + COMPILE_LIST + " not found.\n")
             return
+        root = False
+        if not os.path.isfile(RECURSIVE_COMP_PATH):
+            with open(RECURSIVE_COMP_PATH, "w") as _:
+                root = True
+        else:
+            with open(RECURSIVE_COMP_PATH, "r") as file:
+                # if the file was already compiled
+                if MOD_NAME in file.readline().split():
+                    return
+        if os.path.isfile(ABORT_PATH):
+            # Abort ongoing compilation chain due to an error that occured
+            return
         game_syms = Syms()
         make = Makefile(game_syms.get_build_id(), game_syms.get_files())
+        dependencies = []
         # parsing compile list
+        free_sections()
         with open(COMPILE_LIST, "r") as file:
             for line in file:
-                cl = CompileList(line, game_syms)
+                cl = CompileList(line, game_syms, "./")
+                if cl.is_cl():
+                    dependencies.append(cl.bl_path)
                 if not cl.should_ignore():
                     make.add_cl(cl)
         if print_errors[0]:
             intro_msg = "[Compile-py] Would you like to continue to compilation process?\n\n1 - Yes\n2 - No\n"
             error_msg = "ERROR: Wrong option. Please type a number from 1-2.\n"
             if request_user_input(first_option=1, last_option=2, intro_msg=intro_msg, error_msg=error_msg) == 2:
-                free_sections()
                 return
         if make.build_makefile():
-            make.make()
-        free_sections()
+            if make.make():
+                with open(RECURSIVE_COMP_PATH, "a") as file:
+                    file.write(MOD_NAME + " ")
+            else:
+                print("Aborting ongoing compilations. Press enter to continue.")
+                input()
+                with open(ABORT_PATH, "w") as _:
+                    pass
+        curr_dir = os.getcwd() + "/"
+        if root:
+            self.compilation_dep.clear()
+        for dep in dependencies:
+            if root:
+                self.compilation_dep.append(dep)
+            os.chdir(dep)
+            command =  self.python + get_distance_to_file(False, CONFIG_FILE) + "../../tools/mod-builder/main.py 1 " + str(game_syms.version)
+            os.system(command)
+        os.chdir(curr_dir)
+        if root:
+            delete_file(RECURSIVE_COMP_PATH)
+            delete_file(ABORT_PATH)
+            self.update_title()
 
-    def clean(self) -> None:
+    def clean_files(self) -> None:
         delete_directory(DEBUG_FOLDER)
         delete_directory(BACKUP_FOLDER)
         delete_directory(OUTPUT_FOLDER)
         delete_directory(TEXTURES_OUTPUT_FOLDER)
         for file in COMPILATION_RESIDUES:
             delete_file(file)
+
+    def clean(self) -> None:
+        self.clean_files()
+        curr_dir = os.getcwd() + "/"
+        for dep in self.compilation_dep:
+            os.chdir(dep)
+            self.clean_files()
+        os.chdir(curr_dir)
 
     def clean_pch(self) -> None:
         clean_pch()
@@ -147,5 +197,7 @@ if __name__ == "__main__":
         main = Main()
         main.exec()
     except Exception as e:
+        delete_file(RECURSIVE_COMP_PATH)
+        delete_file(ABORT_PATH)
         logging.basicConfig(filename=LOG_FILE, filemode="w", format='%(levelname)s:%(message)s')
         logging.exception(e)

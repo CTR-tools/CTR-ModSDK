@@ -1,0 +1,1 @@
+python ../../../tools/startup/startup.py 1

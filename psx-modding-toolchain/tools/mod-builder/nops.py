@@ -21,29 +21,32 @@ class Nops:
 
     def inject(self, backup: bool, restore: bool) -> None:
         sym = Syms(get_build_id())
-        with open(COMPILE_LIST, "r") as file:
-            for line in file:
-                cl = CompileList(line, sym)
-                if not cl.should_build():
-                    continue
-                bin = str()
-                if cl.is_bin:
-                    bin = cl.source[0]
-                else:
-                    bin = OUTPUT_FOLDER + cl.section_name + ".bin"
-                backup_bin = BACKUP_FOLDER + "nops_" + cl.section_name + ".bin"
-                if backup:
+        build_lists = ["./"]
+        while build_lists:
+            prefix = build_lists.pop(0)
+            bl = prefix + COMPILE_LIST
+            free_sections()
+            with open(bl, "r") as file:
+                for line in file:
+                    cl = CompileList(line, sym, prefix)
+                    if cl.is_cl():
+                        build_lists.append(cl.bl_path)
+                    if not cl.should_build():
+                        continue
+                    bin = cl.get_output_name()
+                    backup_bin = BACKUP_FOLDER + "nops_" + cl.section_name + ".bin"
+                    if backup:
+                        if not os.path.isfile(bin):
+                            print("\n[NoPS-py] ERROR: " + bin + " not found.\n")
+                            continue
+                        size = os.path.getsize(bin)
+                        self.fire_command("/dump " + hex(cl.address) + " " + hex(size) + " " + backup_bin)
+                    if restore:
+                        bin = backup_bin
                     if not os.path.isfile(bin):
                         print("\n[NoPS-py] ERROR: " + bin + " not found.\n")
                         continue
-                    size = os.path.getsize(bin)
-                    self.fire_command("/dump " + hex(cl.address) + " " + hex(size) + " " + backup_bin)
-                if restore:
-                    bin = backup_bin
-                if not os.path.isfile(bin):
-                    print("\n[NoPS-py] ERROR: " + bin + " not found.\n")
-                    continue
-                self.fire_command("/bin " + hex(cl.address) + " " + bin)
+                    self.fire_command("/bin " + hex(cl.address) + " " + bin)
 
     def hot_reload(self) -> None:
         if not check_compile_list():
@@ -61,7 +64,6 @@ class Nops:
         self.fire_command("/halt")
         self.inject(backup, False)
         self.fire_command("/cont")
-        free_sections()
 
     def restore(self) -> None:
         if not check_compile_list():
@@ -70,4 +72,3 @@ class Nops:
         self.fire_command("/halt")
         self.inject(False, True)
         self.fire_command("/cont")
-        free_sections()

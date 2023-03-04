@@ -1,5 +1,5 @@
 from compile_list import CompileList
-from common import create_directory, request_user_input, rename_psyq_sections, delete_file, cli_clear, MAKEFILE, TRIMBIN_OFFSET, GCC_OUT_FILE, COMP_SOURCE, GAME_INCLUDE_PATH, FOLDER_DISTANCE, SRC_FOLDER, DEBUG_FOLDER, OUTPUT_FOLDER, BACKUP_FOLDER, OBJ_FOLDER, DEP_FOLDER, GCC_MAP_FILE, REDUX_MAP_FILE, CONFIG_PATH, PSYQ_RENAME_CONFIRM_FILE
+from common import create_directory, request_user_input, rename_psyq_sections, delete_file, cli_clear, MAKEFILE, TRIMBIN_OFFSET, GCC_OUT_FILE, COMP_SOURCE, GAME_INCLUDE_PATH, FOLDER_DISTANCE, SRC_FOLDER, DEBUG_FOLDER, OUTPUT_FOLDER, BACKUP_FOLDER, OBJ_FOLDER, DEP_FOLDER, GCC_MAP_FILE, REDUX_MAP_FILE, CONFIG_PATH, PSYQ_RENAME_CONFIRM_FILE, MOD_NAME
 
 import re
 import json
@@ -206,14 +206,14 @@ class Makefile:
                     line = [l.strip() for l in line.split()]
                     shutil.move(line[0], line[1])
 
-    def make(self) -> None:
+    def make(self) -> bool:
         create_directory(OUTPUT_FOLDER)
         create_directory(BACKUP_FOLDER)
         create_directory(OBJ_FOLDER)
         create_directory(DEP_FOLDER)
         self.restore_temp_files()
         cli_clear()
-        print("\n[Makefile-py] Compilation started...\n")
+        print("\n[Makefile-py] Compiling " + MOD_NAME + "...\n")
         start_time = time()
         os.system("make -s -j8 > " + GCC_OUT_FILE + " 2>&1")
         end_time = time()
@@ -226,7 +226,7 @@ class Makefile:
             self.move_temp_files()
             self.delete_temp_files()
             print("\n[Makefile-py] ERROR: compilation was not successful. (" + total_time + "s)\n")
-            return
+            return False
 
         shutil.move("mod.map", DEBUG_FOLDER + "mod.map")
         shutil.move("mod.elf", DEBUG_FOLDER + "mod.elf")
@@ -246,3 +246,4 @@ class Makefile:
 
         with open(REDUX_MAP_FILE, "w") as file:
             file.write(buffer)
+        return True

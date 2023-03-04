@@ -114,6 +114,13 @@ binary name: optional field. Specifies the final name of the binary. If not spec
 
 Note: if you want to add assets in your mod, rename their extension to `.bin` and add them to the `buildList.txt`. This will ensure that the file will be used when hot-reloading and building the iso, but it won't be fed to the compiler.
 
+Furthermore, you can add other mods to your compile list by adding the following line:
+```
+add, ModFolder
+```
+
+This will chain multi-compilations, as every `add` command will trigger a compilation in a new context.
+
 ### games/game/mods/mod/newtex/
 Place here any image png that you want to inject in game. The image name must be in the following format: `name_x_y_clutx_cluty_width_height_bpp`.
 

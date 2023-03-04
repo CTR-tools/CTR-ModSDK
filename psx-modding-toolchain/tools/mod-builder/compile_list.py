@@ -1,4 +1,4 @@
-from common import COMMENT_SYMBOL, CONFIG_PATH, OUTPUT_FOLDER, is_number
+from common import COMMENT_SYMBOL, CONFIG_PATH, OUTPUT_FOLDER, MOD_PATH, is_number
 from syms import Syms
 
 import json
@@ -14,11 +14,14 @@ def error_print(error: str):
     print_errors[0] = True
 
 class CompileList:
-    def __init__(self, line: str, sym: Syms) -> None:
+    def __init__(self, line: str, sym: Syms, prefix: str) -> None:
         self.original_line = line
         self.sym = sym
+        self.prefix = prefix
         self.ignore = False
         self.is_bin = False
+        self.cl = False
+        self.bl_path = str()
         self.pch = str()
         self.min_addr = 0x80000000
         self.max_addr = 0x807FFFFF if self.is_8mb() else 0x801FFFFF
@@ -41,7 +44,16 @@ class CompileList:
                     line = line[:i]
                 break
         if len(line) < 5:
-            if len(line) > 0:
+            if len(line) == 2 and line[0] == "add":
+                line[1] = line[1].replace("\\", "/")
+                if line[1][-1] != "/":
+                    line[1] += "/"
+                self.bl_path = MOD_PATH + line[1]
+                if os.path.isdir(self.bl_path):
+                    self.cl = True
+                else:
+                    error_print("\n[BuildList-py] ERROR: mod directory not found at line " + str(line_count[0]) + ": " + self.bl_path + "\n")
+            if (not self.cl) and (len(line) > 0):
                 error_print("\n[BuildList-py] ERROR: wrong syntax at line " + str(line_count[0]) + ": " + self.original_line + "\n")
             self.ignore = True
             return
@@ -69,7 +81,7 @@ class CompileList:
         self.source = list()
         folders = dict()
         for src in srcs:
-            src = src.replace("\\", "/").rsplit("/", 1)
+            src = (self.prefix + src).replace("\\", "/").rsplit("/", 1)
             directory = src[0] + "/"
             regex = re.compile(src[1].replace("*", "(.*)"))
             output_name = src[1].split(".")[0]
@@ -77,7 +89,7 @@ class CompileList:
                 for _, _, files in os.walk(directory):
                     folders[directory] = files
                     break
-            if directory == OUTPUT_FOLDER and output_name in sections:
+            if directory.rsplit("/", 1)[-1] == OUTPUT_FOLDER and output_name in sections:
                 self.source.append(directory + src[1])
             else:
                 if directory in folders:
@@ -121,7 +133,7 @@ class CompileList:
             sections[self.section_name] = True
 
     def get_section_name_from_filepath(self, filepath: str) -> str:
-        return filepath.replace("/", "").replace(".", "").replace("-", "_")
+        return filepath.rsplit("/", 1)[-1].replace(".", "").replace("-", "_")
 
     def calculate_address_base(self, symbol: str, offset: int) -> int:
         addr = self.sym.get_address(symbol)
@@ -132,6 +144,11 @@ class CompileList:
         error_print("\n[BuildList-py] ERROR: invalid address or symbol at line " + str(line_count[0]) + ": " + self.original_line + "\n")
         return -1
 
+    def get_output_name(self) -> str:
+        if self.is_bin:
+            return self.source[0]
+        return self.prefix + OUTPUT_FOLDER + self.section_name + ".bin"
+
     def should_ignore(self) -> bool:
         return self.ignore
 
@@ -139,6 +156,9 @@ class CompileList:
         if self.ignore and not self.is_bin:
             return False
         return True
+
+    def is_cl(self) -> bool:
+        return self.cl
 
 def free_sections() -> None:
     sections.clear()

@@ -5,6 +5,7 @@ import os
 
 class Syms():
     def __init__(self, build_id=None) -> None:
+        self.version = int()
         self.gv = self.ask_user_for_version(build_id)
         self.syms = dict()
         for file in self.gv.syms_files:
@@ -18,8 +19,8 @@ class Syms():
         for i in range(len(names)):
             intro_msg += str(i + 1) + " - " + names[i] + "\n"
         error_msg = "ERROR: Invalid version. Please select a number from 1-" + str(len(names)) +"."
-        version = request_user_input(first_option=1, last_option=len(names), intro_msg=intro_msg, error_msg=error_msg)
-        return game_options.get_gv_by_name(names[version - 1])
+        self.version = request_user_input(first_option=1, last_option=len(names), intro_msg=intro_msg, error_msg=error_msg)
+        return game_options.get_gv_by_name(names[self.version - 1])
 
     def parse_gcc_file(self, filename: str) -> None:
         if not os.path.isfile(filename):

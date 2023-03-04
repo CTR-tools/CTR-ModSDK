@@ -6,8 +6,6 @@ import sys
 remaining_args = copy.deepcopy(sys.argv[1:])
 using_cl_args = len(sys.argv) > 1
 
-CONFIG_FILE = "config.json"
-
 def cli_pause() -> None:
     if using_cl_args:
         if len(remaining_args) == 0:
@@ -16,33 +14,35 @@ def cli_pause() -> None:
         print("Press Enter to continue...")
         input()
 
-def get_distance_to_config(print_error: bool) -> str:
+def get_distance_to_file(print_error: bool, file: str) -> str:
     if print_error:
         print("No config.json found. Make sure to set this prerequisite file before continuing.")
         cli_pause()
-    config = CONFIG_FILE
+    search = file
     distance = str()
     max_depth = 100
     k = 0
     failed = False
-    while not os.path.isfile(config):
+    while not os.path.isfile(search):
         distance += "../"
-        config = distance + CONFIG_FILE
+        search = distance + file
         k += 1
         if k == max_depth:
             failed = True
             break
     if not failed:
         return distance
-    return get_distance_to_config(True)
+    return get_distance_to_file(True, file)
 
 LOG_FILE = "crash.log"
-FOLDER_DISTANCE = get_distance_to_config(False)
+CONFIG_FILE = "config.json"
+FOLDER_DISTANCE = get_distance_to_file(False, CONFIG_FILE)
 DISTANCE_LENGTH = FOLDER_DISTANCE.count("/") + 1
 ISO_PATH = FOLDER_DISTANCE + "build/"
 SYMS_PATH = FOLDER_DISTANCE + "symbols/"
 PLUGIN_PATH = FOLDER_DISTANCE + "plugins/"
 GAME_INCLUDE_PATH = FOLDER_DISTANCE + "include/"
+MOD_PATH = FOLDER_DISTANCE + "mods/"
 MAKEFILE = "Makefile"
 COMPILE_LIST = "buildList.txt"
 SRC_FOLDER = "src/"
@@ -60,8 +60,14 @@ TRIMBIN_OFFSET = DEBUG_FOLDER + "offset.txt"
 COMPILATION_RESIDUES = ["overlay.ld", MAKEFILE, "comport.txt"]
 REDUX_MAP_FILE = DEBUG_FOLDER + "redux.map"
 CONFIG_PATH = FOLDER_DISTANCE + CONFIG_FILE
-SETTINGS_PATH = FOLDER_DISTANCE + "../settings.json"
-DISC_PATH = FOLDER_DISTANCE + "disc.json"
+SETTINGS_FILE = "settings.json"
+SETTINGS_PATH = FOLDER_DISTANCE + "../" + SETTINGS_FILE
+RECURSIVE_COMP_FILE = ".recursive"
+RECURSIVE_COMP_PATH = FOLDER_DISTANCE + RECURSIVE_COMP_FILE
+ABORT_FILE = ".abort"
+ABORT_PATH = FOLDER_DISTANCE + ABORT_FILE
+DISC_FILE = "disc.json"
+DISC_PATH = FOLDER_DISTANCE + DISC_FILE
 TOOLS_PATH = FOLDER_DISTANCE + "../../tools/"
 PSYQ_CONVERTED_PATH = TOOLS_PATH + "gcc-psyq-converted/lib/"
 PSYQ_RENAME_CONFIRM_FILE = PSYQ_CONVERTED_PATH + ".sections-renamed"

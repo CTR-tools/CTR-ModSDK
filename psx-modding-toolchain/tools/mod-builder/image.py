@@ -13,7 +13,7 @@ class Image:
         filename = filename.split('_')
         self.valid = True
         if len(filename) != 8:
-            print("[Image-py] ERROR: wrong naming convention for the texture.")
+            print("[Image-py] ERROR: wrong naming convention for the texture for image " + path)
             self.valid = False
             return
         self.name = filename[0]

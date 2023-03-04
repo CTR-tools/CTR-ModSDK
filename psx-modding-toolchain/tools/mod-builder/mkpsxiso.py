@@ -74,98 +74,100 @@ class Mkpsxiso:
         build_files_folder += "/"
         xml_tree = et.parse(xml)
         dir_tree = xml_tree.findall(".//directory_tree")[0]
-        with open(COMPILE_LIST, "r") as file:
-            for line in file:
-                cl = CompileList(line, sym)
-                if not cl.should_build():
-                    continue
-
-                # if it's a file to be replaced in the game
-                df = disc.get_df(cl.game_file)
-                if df is not None:
-                    # Checking file start boundaries
-                    if (cl.address - df.address) < 0:
-                        error_msg = (
-                            "\n[ISO-py] ERROR: Cannot overwrite " + df.physical_file + "\n"
-                            "Base address " + hex(df.address) + " is bigger than the requested address " + hex(cl.address) + "\n"
-                            "At line: " + cl.original_line + "\n\n"
-                        )
-                        print(error_msg)
-                        if self.abort_build_request():
-                            return False
+        build_lists = ["./"]
+        while build_lists:
+            prefix = build_lists.pop(0)
+            bl = prefix + COMPILE_LIST
+            free_sections()
+            with open(bl, "r") as file:
+                for line in file:
+                    cl = CompileList(line, sym, prefix)
+                    if cl.is_cl():
+                        build_lists.append(cl.bl_path)
+                    if not cl.should_build():
                         continue
 
-                    # checking whether the original file exists and retrieving its size
-                    game_file = build_files_folder + df.physical_file
-                    if not os.path.isfile(game_file):
-                        print("\n[ISO-py] ERROR: " + game_file + " not found.\n")
-                        if self.abort_build_request():
-                            return False
-                        continue
-                    game_file_size = os.path.getsize(game_file)
+                    # if it's a file to be replaced in the game
+                    df = disc.get_df(cl.game_file)
+                    if df is not None:
+                        # Checking file start boundaries
+                        if (cl.address - df.address) < 0:
+                            error_msg = (
+                                "\n[ISO-py] ERROR: Cannot overwrite " + df.physical_file + "\n"
+                                "Base address " + hex(df.address) + " is bigger than the requested address " + hex(cl.address) + "\n"
+                                "At line: " + cl.original_line + "\n\n"
+                            )
+                            print(error_msg)
+                            if self.abort_build_request():
+                                return False
+                            continue
 
-                    # checking whether the modded file exists and retrieving its size
-                    mod_file = str()
-                    if cl.is_bin:
-                        mod_file = cl.source[0]
+                        # checking whether the original file exists and retrieving its size
+                        game_file = build_files_folder + df.physical_file
+                        if not os.path.isfile(game_file):
+                            print("\n[ISO-py] ERROR: " + game_file + " not found.\n")
+                            if self.abort_build_request():
+                                return False
+                            continue
+                        game_file_size = os.path.getsize(game_file)
+
+                        # checking whether the modded file exists and retrieving its size
+                        mod_file = cl.get_output_name()
+                        if not os.path.isfile(mod_file):
+                            print("\n[ISO-py] ERROR: " + mod_file + " not found.\n")
+                            if self.abort_build_request():
+                                return False
+                            continue
+                        mod_size = os.path.getsize(mod_file)
+
+                        # Checking potential file size overflows and warning the user about them
+                        offset = cl.address - df.address + df.offset
+                        if (mod_size + offset) > game_file_size:
+                            print("\n[ISO-py] WARNING: " + mod_file + " will change the total file size of " + game_file + "\n")
+
+                        mod_data = bytearray()
+                        with open(mod_file, "rb") as mod:
+                            mod_data = bytearray(mod.read())
+                        if game_file not in modded_files:
+                            modified_game_file = build_files_folder + df.physical_file
+                            modded_stream = open(modified_game_file, "r+b")
+                            modded_files[game_file] = [modded_stream, bytearray(modded_stream.read())]
+                            iso_changed = True
+
+                        modded_stream = modded_files[game_file][0]
+                        modded_buffer = modded_files[game_file][1]
+                        modded_stream.seek(0)
+                        # Add zeroes if the new total file size will be less than the original file size
+                        for i in range(len(modded_buffer), offset + mod_size):
+                            modded_buffer.append(0)
+                        for i in range(mod_size):
+                            modded_buffer[i + offset] = mod_data[i]
+                        modded_stream.write(modded_buffer)
+
+                    # if it's not a file to be replaced in the game
+                    # assume it's a new file to be inserted in the disc
                     else:
+                        filename = (cl.section_name + ".bin").upper()
+                        filename_len = len(filename)
+                        if filename_len > 12:
+                            filename = filename[(filename_len - 12):]
                         mod_file = OUTPUT_FOLDER + cl.section_name + ".bin"
-                    if not os.path.isfile(mod_file):
-                        print("\n[ISO-py] ERROR: " + mod_file + " not found.\n")
-                        if self.abort_build_request():
-                            return False
-                        continue
-                    mod_size = os.path.getsize(mod_file)
-
-                    # Checking potential file size overflows and warning the user about them
-                    offset = cl.address - df.address + df.offset
-                    if (mod_size + offset) > game_file_size:
-                        print("\n[ISO-py] WARNING: " + mod_file + " will change the total file size of " + game_file + "\n")
-
-                    mod_data = bytearray()
-                    with open(mod_file, "rb") as mod:
-                        mod_data = bytearray(mod.read())
-                    if game_file not in modded_files:
-                        modified_game_file = build_files_folder + df.physical_file
-                        modded_stream = open(modified_game_file, "r+b")
-                        modded_files[game_file] = [modded_stream, bytearray(modded_stream.read())]
+                        dst = build_files_folder + filename
+                        shutil.copyfile(mod_file, dst)
+                        contents = {
+                            "name": filename,
+                            "source": modified_rom_name + "/" + filename,
+                            "type": "data"
+                        }
+                        element = et.Element("file", contents)
+                        dir_tree.insert(-1, element)
                         iso_changed = True
 
+                for game_file in modded_files:
                     modded_stream = modded_files[game_file][0]
-                    modded_buffer = modded_files[game_file][1]
-                    modded_stream.seek(0)
-                    # Add zeroes if the new total file size will be less than the original file size
-                    for i in range(len(modded_buffer), offset + mod_size):
-                        modded_buffer.append(0)
-                    for i in range(mod_size):
-                        modded_buffer[i + offset] = mod_data[i]
-                    modded_stream.write(modded_buffer)
-
-                # if it's not a file to be replaced in the game
-                # assume it's a new file to be inserted in the disc
-                else:
-                    filename = (cl.section_name + ".bin").upper()
-                    filename_len = len(filename)
-                    if filename_len > 12:
-                        filename = filename[(filename_len - 12):]
-                    mod_file = OUTPUT_FOLDER + cl.section_name + ".bin"
-                    dst = build_files_folder + filename
-                    shutil.copyfile(mod_file, dst)
-                    contents = {
-                        "name": filename,
-                        "source": modified_rom_name + "/" + filename,
-                        "type": "data"
-                    }
-                    element = et.Element("file", contents)
-                    dir_tree.insert(-1, element)
-                    iso_changed = True
-
-            for game_file in modded_files:
-                modded_stream = modded_files[game_file][0]
-                modded_stream.close()
-            if iso_changed:
-                xml_tree.write(xml)
-            free_sections()
+                    modded_stream.close()
+                if iso_changed:
+                    xml_tree.write(xml)
 
         return iso_changed
 

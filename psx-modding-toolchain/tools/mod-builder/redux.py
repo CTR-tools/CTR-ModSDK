@@ -117,43 +117,46 @@ class Redux:
                 print("Successfully retrieved a backup of the RAM.")
             else:
                 print("\n[Redux - Web Server] error backing up the RAM.\n")
-        with open(COMPILE_LIST, "r") as file:
-            for line in file:
-                cl = CompileList(line, sym)
-                if not cl.should_build():
-                    continue
-                bin = str()
-                if cl.is_bin:
-                    bin = cl.source[0]
-                else:
-                    bin = OUTPUT_FOLDER + cl.section_name + ".bin"
-                backup_bin = BACKUP_FOLDER + "redux_" + cl.section_name + ".bin"
-                offset = cl.address & 0xFFFFFFF
-                if not os.path.isfile(bin):
-                    print("\n[Redux-py] ERROR: " + bin + " not found.\n")
-                    continue
-                size = os.path.getsize(bin)
-                if backup:
-                    section = psx_ram[offset : (offset + size)]
-                    with open(backup_bin, "wb") as file:
-                        file.write(section)
-                if restore:
-                    bin = backup_bin
+        build_lists = ["./"]
+        while build_lists:
+            prefix = build_lists.pop(0)
+            bl = prefix + COMPILE_LIST
+            free_sections()
+            with open(bl, "r") as file:
+                for line in file:
+                    cl = CompileList(line, sym, prefix)
+                    if cl.is_cl():
+                        build_lists.append(cl.bl_path)
+                    if not cl.should_build():
+                        continue
+                    bin = cl.get_output_name()
+                    backup_bin = BACKUP_FOLDER + "redux_" + cl.section_name + ".bin"
+                    offset = cl.address & 0xFFFFFFF
                     if not os.path.isfile(bin):
-                        print("\n[Redux-py] ERROR: backup file " + bin + " not found.\n")
+                        print("\n[Redux-py] ERROR: " + bin + " not found.\n")
                         continue
                     size = os.path.getsize(bin)
-                file = open(bin, "rb")
-                files = {"file": file}
-                response = r.post(url + "?offset=" + str(offset) + "&size=" + str(size), files=files)
-                if response.status_code == 200:
+                    if backup:
+                        section = psx_ram[offset : (offset + size)]
+                        with open(backup_bin, "wb") as file:
+                            file.write(section)
                     if restore:
-                        print(bin + " successfully restored.")
+                        bin = backup_bin
+                        if not os.path.isfile(bin):
+                            print("\n[Redux-py] ERROR: backup file " + bin + " not found.\n")
+                            continue
+                        size = os.path.getsize(bin)
+                    file = open(bin, "rb")
+                    files = {"file": file}
+                    response = r.post(url + "?offset=" + str(offset) + "&size=" + str(size), files=files)
+                    if response.status_code == 200:
+                        if restore:
+                            print(bin + " successfully restored.")
+                        else:
+                            print(bin + " successfully injected.")
                     else:
-                        print(bin + " successfully injected.")
-                else:
-                    print("\n[Redux - Web Server] error injecting " + bin + "\n")
-                file.close()
+                        print("\n[Redux - Web Server] error injecting " + bin + "\n")
+                    file.close()
 
     def inject_textures(self, backup: bool, restore: bool) -> None:
         url = self.url + "/api/v1/gpu/vram/raw"
@@ -225,7 +228,6 @@ class Redux:
         self.flush_cache()
         if is_running:
             self.resume_emulation()
-        free_sections()
 
     def restore(self) -> None:
         if not check_compile_list():
@@ -244,7 +246,6 @@ class Redux:
         self.flush_cache()
         if is_running:
             self.resume_emulation()
-        free_sections()
 
     def replace_textures(self) -> None:
         print("[Redux-py] Replacing textures...\n")
