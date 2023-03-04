@@ -26,10 +26,10 @@ common, 231, RB_Potion_OpenTeeth, 0x0, General/231/231_012_RB_Potion_OpenTeeth.c
 common, 231, RB_Potion_CheckTeethCollision, 0x0, General/231/231_013_RB_Potion_CheckTeethCollision.c
 // skip a bunch
 common, 231, RB_Blade_ThTick, 0x0, General/231/231_056_057_RB_Blade.c
-// skip a bunch
+common, 231, RB_Bubbles_RoosTubes, 0x0, General/231/231_058_RB_Bubbles_RoosTubes.c
 common, 231, RB_CrateAny_ThTick_Explode, 0x0, General/231/231_059_066_RB_Crate.c
 common, 231, RB_Crystal_ThCollide, 0x0, General/231/231_067_070_RB_Crystal.c
-// skip one
+// skip Default_LInB
 common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c
 // skip a bunch
 common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_080_083_RB_Armadillo.c

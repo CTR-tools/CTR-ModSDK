@@ -57,16 +57,14 @@ void DrawTires_Reflection(struct Thread* thread, struct PrimMem* primMem, char n
 void DrawShadows_Main();
 void DrawHeat_Main(void* particleList_heatWarp, struct Camera110* c110, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
 void Camera110_FadeAllWindows();
-void CTR_ClearRenderLists_1P2P(struct GameTracker* gGT, char numPlyr);
 void AnimateWater2P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
 void VisData_CopyJMPsToScratchpad();
 int CreateRenderLists_1P2P(struct VisData* visData, int* visLeafList, struct Camera110* c110, u_int LevRenderList, void* bspList, char numPlyr);
-void DrawLevelPrims_EntryFunc(void* LevRenderList, struct Camera110* c110, struct VisData* visData, struct PrimMem* primMem, int* param_5, int* param_6, void* waterEnvMap);
+//void DrawLevelPrims_EntryFunc(void* LevRenderList, struct Camera110* c110, struct VisData* visData, struct PrimMem* primMem, int* param_5, int* param_6, void* waterEnvMap);
 //void CAM_SkyboxGlow(short* param_1, struct Camera110* camera, struct PrimMem* primMem, u_long* ptrOT);
 void AnimateWater1P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5);
 void AnimateQuad(int timer, int numSCVert, void* ptrSCVert, int* visSCVertList);
 void DrawSky_Full(void* skybox, struct Camera110* c110, struct PrimMem* primMem);
-void CTR_ClearRenderLists_3P4P(struct GameTracker* gGT, char numPlyr);
 void AnimateWater3P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7);
 void AnimateWater4P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7, int* param_8);
 int CreateRenderLists_3P4P(struct VisData* visData, int* visLeafList, struct Camera110* c110, u_int LevRenderList, void* bspList);

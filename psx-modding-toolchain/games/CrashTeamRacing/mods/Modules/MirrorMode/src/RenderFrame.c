@@ -646,7 +646,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 		
 DrawFinalLapString:
 
-		InterpolatePosition2D_Linear(&resultPos, startX, posY, endX, posY, 10);
+		InterpolatePosition2D_Linear(&resultPos, startX, posY, endX, posY, textTimer, 10);
 
 		// need to specify OT, or else "FINAL LAP" will draw on top of character icons,
 		// and by doing this, "FINAL LAP" draws under the character icons instead

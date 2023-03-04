@@ -6667,8 +6667,7 @@ void FUN_800b39dc(void)
   int iVar10;
   short *psVar11;
   int iVar12;
-  short *psVar13;
-  int iVar14;
+  int iVar13;
   
   if (
 		(
@@ -6687,15 +6686,19 @@ void FUN_800b39dc(void)
     iVar4 = *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x13c);
 	
     iVar8 = *(int *)(iVar4 + 0xc);
-    psVar13 = (short *)(iVar8 + 6);
-    if (psVar13 != (short *)0x0) 
+    psVar11 = (short *)(iVar8 + 6);
+    if (psVar11 != (short *)0x0) 
 	{
-      iVar14 = *(int *)(PTR_DAT_8008d2ac + 0x19a0);
+	  // gGT->JitPools.particle.free.count
+      iVar13 = *(int *)(PTR_DAT_8008d2ac + 0x19a0);
 	  
 	  // pointer to player 1 address
       iVar5 = *(int *)(PTR_DAT_8008d2ac + 0x24ec);
 	  
+	  // timer
       iVar7 = *(int *)(PTR_DAT_8008d2ac + 0x1cec);
+	  
+	  // spawn positions in SpawnType2
       iVar12 = *(int *)(iVar4 + 8) + -1;
 	  
 	  // currentX
@@ -6711,15 +6714,14 @@ void FUN_800b39dc(void)
       iVar4 = *(int *)(iVar5 + 0x2e8);
 	  
       if (0 < iVar12) {
-        psVar11 = (short *)(iVar8 + 10);
         do {
-          if (iVar14 < 0x14) {
+          if (iVar13 < 0x14) {
             return;
           }
           if ((iVar7 + iVar12 & 7U) == 0) {
-            sVar1 = *psVar13;
-            sVar2 = *psVar11;
-            sVar3 = psVar11[-1];
+            sVar1 = psVar11[0];
+            sVar2 = psVar11[1];
+            sVar3 = psVar11[2];
 			
 			// currentX - previousX
             iVar8 = ((iVar9 - iVar6 >> 4) + (iVar9 >> 8)) - (int)sVar1;
@@ -6730,7 +6732,7 @@ void FUN_800b39dc(void)
             }
 			
 			// currentZ - previousZ
-            iVar5 = ((iVar10 - iVar4 >> 4) + (iVar10 >> 8)) - (int)sVar2;
+            iVar5 = ((iVar10 - iVar4 >> 4) + (iVar10 >> 8)) - (int)sVar3;
 			
 			// absolute value
             if (iVar5 < 0) {
@@ -6747,7 +6749,7 @@ void FUN_800b39dc(void)
               iVar8 = FUN_80040308(0,*(undefined4 *)(PTR_DAT_8008d2ac + 0x2130),
                                    &DAT_800b3bc0);
 								   
-              iVar14 = iVar14 + -1;
+              iVar13 = iVar13 + -1;
 			  
 			  // quit if particle fails
               if (iVar8 == 0) {
@@ -6757,13 +6759,12 @@ void FUN_800b39dc(void)
 			  *(undefined2 *)(iVar8 + 0x1a) = 0x7fff;
               *(undefined *)(iVar8 + 0x18) = 8;
               *(int *)(iVar8 + 0x24) = *(int *)(iVar8 + 0x24) + (int)sVar1 * 0x100;
-              *(int *)(iVar8 + 0x2c) = *(int *)(iVar8 + 0x2c) + (int)sVar3 * 0x100;
-              *(int *)(iVar8 + 0x34) = *(int *)(iVar8 + 0x34) + (int)sVar2 * 0x100;
+              *(int *)(iVar8 + 0x2c) = *(int *)(iVar8 + 0x2c) + (int)sVar2 * 0x100;
+              *(int *)(iVar8 + 0x34) = *(int *)(iVar8 + 0x34) + (int)sVar3 * 0x100;
             }
           }
           iVar12 = iVar12 + -1;
           psVar11 = psVar11 + 3;
-          psVar13 = psVar13 + 3;
         } while (0 < iVar12);
       }
     }

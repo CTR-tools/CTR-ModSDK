@@ -4163,7 +4163,7 @@ struct SpawnType1
 
 struct SpawnType2
 {
-	int unk;
+	int numCoords;
 	short* posCoords;
 };
 
