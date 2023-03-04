@@ -13548,37 +13548,41 @@ void FUN_8004cec4(void)
 	  // Level ID
       iVar8 = *(int *)(PTR_DAT_8008d2ac + 0x1a10);
 
-	  // 0x8fba4 is where the adventure profile (currently loaded) begins
+	  // Get Relic Time to put in HUD
+	  
+	  // If not unlocked Gold and not unlocked Platinum
       if ((((uint)(&DAT_8008fba4)[(int)(iVar8 + 0x3aU) >> 5] >> (iVar8 + 0x3aU & 0x1f) & 1) == 0) &&
-         (((uint)(&DAT_8008fba4)[(int)(iVar8 + 0x28U) >> 5] >> (iVar8 + 0x28U & 0x1f) & 1) == 0)) {
+         (((uint)(&DAT_8008fba4)[(int)(iVar8 + 0x28U) >> 5] >> (iVar8 + 0x28U & 0x1f) & 1) == 0)) 
+	  {
+		// choose to put sapphire or gold on screen
         uVar3 = (uint)(&DAT_8008fba4)[(int)(iVar8 + 0x16U) >> 5] >> (iVar8 + 0x16U & 0x1f) & 1;
       }
-      else {
+	  
+	  // if unlocked gold or unlocked platinum
+      else 
+	  {
+		// put platinum time on screen
         uVar3 = 2;
       }
 
 	  // Level ID
       iVar5 = *(int *)(PTR_DAT_8008d2ac + 0x1a10);
-      iVar2 = uVar3 * 4;
+      
+	  // int offset in table
+	  iVar2 = uVar3 * 4;
 
-												// Level ID
-      iVar8 = *(int *)(&DAT_80086340 + iVar2 + *(int *)(PTR_DAT_8008d2ac + 0x1a10) * 0xc) >> 0x1f;
+	  // [change for easy reading]
+	  // get relic time on this track, for this relic type (sapphire, gold, platinum)
+	  uVar3 = *(int *)(&DAT_80086340 + iVar2 + iVar5 * 0xc);
 
-	  // store relic time globally,
-	  // store every digit in RDATA
-      _DAT_8008d9b0 = *(int *)(&DAT_80086340 + iVar2 + iVar5 * 0xc) / 0xe100;
-
-														// Level ID
-      _DAT_8008d9b8 =
-           ((*(int *)(&DAT_80086340 + iVar2 + *(int *)(PTR_DAT_8008d2ac + 0x1a10) * 0xc) * 100) /
-           0x3c0) % 10;
-
-														// Level ID
-      _DAT_8008d9d4 =
-           ((*(int *)(&DAT_80086340 + iVar2 + *(int *)(PTR_DAT_8008d2ac + 0x1a10) * 0xc) / 6 + iVar8
-            >> 4) - iVar8) % 10;
-      _DAT_8008d9e0 = (*(int *)(&DAT_80086340 + iVar2 + iVar5 * 0xc) / 0x2580) % 6;
-      _DAT_8008d9e8 = (*(int *)(&DAT_80086340 + iVar2 + iVar5 * 0xc) / 0x3c0) % 10;
+	  // [change for easy reading]
+	  // store globally for HUD to access later
+      iVar8 = uVar3 >> 0x1f;
+      _DAT_8008d9b0 = uVar3 / 0xe100;
+      _DAT_8008d9b8 = ((uVar3 * 100) / 0x3c0) % 10;
+      _DAT_8008d9d4 = ((uVar3 / 6 + iVar8 >> 4) - iVar8) % 10;
+      _DAT_8008d9e0 = (uVar3 / 0x2580) % 6;
+      _DAT_8008d9e8 = (uVar3 / 0x3c0) % 10;
       return;
     }
     DAT_8008d4b4 = (undefined2 *)0x0;
