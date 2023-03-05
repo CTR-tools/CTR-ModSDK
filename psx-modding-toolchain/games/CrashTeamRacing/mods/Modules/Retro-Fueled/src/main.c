@@ -41,12 +41,10 @@ RECT plumes_pos __attribute__ ((section (".data"))) = {
 #endif
 
 char blueFire = 0;
-#if BUILD == UsaRetail
-	char * holdingX_withReserves = (char *) 0x80062314;
-#elif BUILD == EurRetail
-	char * holdingX_withReserves = (char *) 0x8006242C;
-#elif BUILD == JpnRetail
-	char * holdingX_withReserves = (char *) 0x800651D8;
+#if BUILD < JpnRetail
+	char * holdingX_withReserves = (char *) ((u_int)Player_Driving_PhysLinear + 0xAF8);
+#else
+	char * holdingX_withReserves = (char *) ((u_int)Player_Driving_PhysLinear + 0xB14);
 #endif
 
 // forward declaration of our functions

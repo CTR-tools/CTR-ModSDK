@@ -9,15 +9,13 @@ common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
 926, exe, LOAD_VramFile, -0x8, src/hookVRAM.s
 1020, exe, LOAD_VramFile, -0x8, src/hookVRAM.s
 
-// Player_Driving_PhysLinear + offset
-// USA: 0xA30, PAL: 0xA30, JPN: 0xA4C
 // Erasing the original reserve cancelation if, so that we can run our own code
-926, exe, 0x8006224C, 0x0, src/hookReserveCancelation.s
-926, exe, 0x8006224C, 0x8, ../../../nop.s
-1020, exe, 0x80062364, 0x0, src/hookReserveCancelation.s
-1020, exe, 0x80062364, 0x8, ../../../nop.s
-1111, exe, 0x80065110, 0x0, src/hookReserveCancelation.s
-1111, exe, 0x80065110, 0x8, ../../../nop.s
+926, exe, Player_Driving_PhysLinear, 0xA30, src/hookReserveCancelation.s
+926, exe, Player_Driving_PhysLinear, 0xA38, ../../../nop.s
+1020, exe, Player_Driving_PhysLinear, 0xA30, src/hookReserveCancelation.s
+1020, exe, Player_Driving_PhysLinear, 0xA38, ../../../nop.s
+1111, exe, Player_Driving_PhysLinear, 0xA4C, src/hookReserveCancelation.s
+1111, exe, Player_Driving_PhysLinear, 0xA54, ../../../nop.s
 
 // Binary edits
 // Turbo pad to STP
@@ -34,7 +32,10 @@ common, exe, OnCollide_Drivers, 0xA4, assets/StandardizeTurboPadReserves.bin
 1020, iso, 0x8000E400, 0x0, src/banner_p.c, banner_p.bin
 
 // Modify Turbo_Increment function to allow for USF stacking
-common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_AllowUSFStacking.c
+// this rewritten function has inaccurate behavior in the european version (1020), see github issues
+926, exe, Turbo_Increment, 0x0, src/Turbo_Increment_AllowUSFStacking.c
+1111, exe, Turbo_Increment, 0x0, src/Turbo_Increment_AllowUSFStacking.c
+1020, exe, Turbo_Increment, 0x37A, ../../../8bitnop.bin
 
 // Compile code to empty spaces in RDATA
 common, exe, rdata_free, 0x0, src/main.c src/texturereplacements.c
