@@ -5,7 +5,6 @@
 
 void MM_Title_CameraMove(int a, int b);
 u_int MM_Video_DecodeFrame();
-void* LIST_RemoveFront(int L);
 void LOAD_Callback_Overlay_230();
 void LOAD_Callback_Overlay_231();
 void LOAD_Callback_Overlay_232();
@@ -708,7 +707,7 @@ int PatchPE(struct ParticleEmitter* pe)
 	return 1;
 }
 
-struct Particle* NewParticleCreateInstance(int param_1)
+struct Particle* NewParticleCreateInstance(struct LinkedList* param_1)
 {
 	if(sdata->gGT->timer & 1) return 0;
 	

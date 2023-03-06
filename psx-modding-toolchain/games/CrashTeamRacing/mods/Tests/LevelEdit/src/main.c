@@ -1,6 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void Player_Driving_Init(struct Thread* t, struct Driver* d);
 void Player_MaskGrab_Init(struct Thread* t, struct Driver* d);

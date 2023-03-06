@@ -130,6 +130,9 @@ void* MEMPACK_ReallocMem(int allocSize);
 
 void Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driver);
 
+int MEMPACK_PushState();
+void MEMPACK_PopState();
+
 void howl_StopAudio(int clearBackupStats, int bool_DestroyMusic, int bool_DestroyAllSFX);
 void howl_UnPauseAudio();
 void OtherFX_Stop2(int soundID_count);

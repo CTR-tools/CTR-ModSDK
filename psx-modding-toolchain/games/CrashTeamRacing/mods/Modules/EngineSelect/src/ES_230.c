@@ -1,6 +1,5 @@
 #include <ovr_230.h>
 
-void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
 void OtherFX_Play(int sfxID, int flag);
 void MainFreeze_ConfigDrawArrows(int posX, int posY, char* str);
 

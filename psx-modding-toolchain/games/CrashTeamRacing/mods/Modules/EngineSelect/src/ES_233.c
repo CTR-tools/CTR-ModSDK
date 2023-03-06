@@ -1,6 +1,5 @@
 #include <ovr_233.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void MainFreeze_ConfigDrawArrows(int posX, int posY, char* str);
 void OtherFX_Play(int sfxID, int flag);
 void CS_Garage_Init();

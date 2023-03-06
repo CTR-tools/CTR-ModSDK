@@ -1,6 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void CS_Garage_Init();
 
 void AdvBosses_HookGarageUI()

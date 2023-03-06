@@ -1,6 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void DrawHeat_Subset1();
 void MEMCARD_SetIcon(int id);
 void DrawTextBackground(RECT* r, int flag, u_long* ot);

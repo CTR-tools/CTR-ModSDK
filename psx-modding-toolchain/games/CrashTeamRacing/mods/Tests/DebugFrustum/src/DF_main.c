@@ -1,6 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem);
 
 // copy/paste from HelloWorld_Advanced,

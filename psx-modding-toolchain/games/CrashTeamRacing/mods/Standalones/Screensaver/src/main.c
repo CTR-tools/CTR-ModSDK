@@ -1,6 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void DrawTextBackground(RECT* r, int flag, void* ot);
 void EndOfRace_DrawAllComments();
 void MM_JumpTo_Scrapbook();

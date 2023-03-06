@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
-
 void NumbersToString(char * str, int value, int digits, int hexadecimal)
 {
 	int i;

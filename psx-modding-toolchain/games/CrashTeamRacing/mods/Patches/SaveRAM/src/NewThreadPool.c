@@ -75,13 +75,13 @@ void ClearThreadPool(struct JitPool* p)
 		{
 			if(arr[loop2] != 0)
 			{
-				LIST_AddFront(&p->free, (void*)(arr[loop2]+(loop*0x48)));
+				LIST_AddFront(&p->free, (struct Item*)(arr[loop2]+(loop*0x48)));
 			}
 		}
 	}
 	
 	for(loop = 0; loop < 3; loop++)
 	{
-		LIST_AddFront(&p->free, &threads[loop]);
+		LIST_AddFront(&p->free, (struct Item*)&threads[loop]);
 	}
 }

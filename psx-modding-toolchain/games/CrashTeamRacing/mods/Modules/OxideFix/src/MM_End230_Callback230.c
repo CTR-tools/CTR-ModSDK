@@ -22,7 +22,7 @@ void LOAD_Callback_230_hook()
 	int loop;
 
 	// unlock all cars and tracks
-	unlocks = &sdata->gameProgress.unlocks;
+	unlocks = sdata->gameProgress.unlocks;
 	unlocks[0] = -1;
 	unlocks[1] = -1;
 

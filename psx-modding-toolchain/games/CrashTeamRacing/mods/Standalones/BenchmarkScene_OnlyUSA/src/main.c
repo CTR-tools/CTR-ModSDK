@@ -25,7 +25,6 @@
 #define HUNDRED_TNT 7
 
 // Original CTR functions
-void DecalFont_DrawLine(char*, int, int, int, int);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void* MEMPACK_AllocMem(int size, char* name);
 struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);

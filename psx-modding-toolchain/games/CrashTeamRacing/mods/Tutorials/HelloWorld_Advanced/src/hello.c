@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
-
 // draw the string, while rearranging the ordering table,
 // to always assert that the text is drawn on top
 void PrintText()

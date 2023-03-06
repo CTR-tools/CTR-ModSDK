@@ -10,7 +10,6 @@
 // traditional-looking MenuBox, so it was just
 // kept that way
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void MM_CupSelect_Init();
 void MM_TrackSelect_Init();
 

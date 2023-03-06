@@ -1,7 +1,6 @@
 #include <common.h>
 
 // to do: add headers for project
-void DrawHeat_Main();
 void LOAD_Callback_DriverModels();
 void ClearThreadPool(struct JitPool* ap);
 void ClearDriverPool(struct JitPool* ap);

@@ -1,6 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void DrawTextBackground(RECT* r, int flag, void* ot);
 
 int boolShow = 1;

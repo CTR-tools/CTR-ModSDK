@@ -1,6 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 struct Driver* Init_Player(int index);
 void Driver_TeleportAll(struct GameTracker* gGT, int flag);
 void* MEMPACK_AllocMem(int size, char* name);

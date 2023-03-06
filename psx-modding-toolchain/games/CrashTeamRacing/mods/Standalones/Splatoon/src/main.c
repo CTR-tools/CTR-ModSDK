@@ -34,7 +34,6 @@
 	// the game freezes, this only happens with P4
 
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void MainRaceTrack_RequestLoad(int levID);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void DrawTextBackground(RECT* r, int flag, void* ot);

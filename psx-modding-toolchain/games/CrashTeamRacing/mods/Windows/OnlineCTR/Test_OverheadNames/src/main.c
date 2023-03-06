@@ -1,6 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void LOAD_Robots1P(int characterP1);
 void Driver_TeleportAll(struct GameTracker* gGT, int flag);
 struct Driver* Init_Player(int id);

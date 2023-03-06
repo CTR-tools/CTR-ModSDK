@@ -1,6 +1,5 @@
 #include <common.h>
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void GhostBuffer_ThTick();
 void* MEMPACK_AllocMem(int size, char* name);

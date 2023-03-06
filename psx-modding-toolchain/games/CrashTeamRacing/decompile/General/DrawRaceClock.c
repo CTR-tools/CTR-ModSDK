@@ -1,7 +1,6 @@
 #include <common.h>
 
 // To do: add a header
-void DecalFont_DrawLine(char*, int, int, int, int);
 void SaveLapTime(int lapID, int time, int driverID);
 
 // used for both finished lap time and current race time

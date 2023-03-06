@@ -1,6 +1,5 @@
 #include "../p_rom.h"
 
-void DecalFont_DrawLine(char*, int, int, int, int);
 void DrawHeat_Subset1();
 void DrawHeat_Subset4();
 void DrawHeat_Subset7();

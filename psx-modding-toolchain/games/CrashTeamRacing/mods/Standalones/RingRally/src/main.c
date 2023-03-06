@@ -36,7 +36,6 @@ void InjectRetroFueled();
 
 // Original CTR functions
 void OtherFX_Play(int sfxID, int flag);
-void DecalFont_DrawLine(char*, int, int, int, int);
 void Player_Freeze_Init();
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 struct INSTANCE* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
