@@ -1825,18 +1825,21 @@ struct Driver
 	#endif
 
 	#if BUILD >= SepReview
-	// 0x4E (or 0x54 on pal)
+	// 0x4E -- UsaRetail
+	// 0x54 -- EurRetail, JpnRetail
 	short numTurbos;
 	// 0x50
 	unsigned short timeAgainstWall; // allocated in Sep3, does not function
 	#endif
 
+	#if BUILD < EurRetail
 	// There is no "short" on 0x52,
 	// there is padding for the next
 	// 4-byte void* that is unused
 	short funcPtrs_compilerpadding;
+	#endif
 
-	// 0x54 - OnInit, First function for spawn, drifting, damage, etc
+	// 0x54 (UsaRetail) / 0x58 (EurRetail, JpnRetail) - OnInit, First function for spawn, drifting, damage, etc
 	// 0x58 - OnUpdate, updates per frame for any generic purpose
 	// 0x5C - OnPhysLinear
 	// 0x60 - OnAudio, engine sounds (always same)
@@ -8925,7 +8928,7 @@ struct sData
 	// 8008D0AC
 	char s_FILE[8];
 
-	// Eur and Jap
+	// Eur and Jpn
 	#if BUILD >= EurRetail
 	void* lngFile;
 	#endif
@@ -9267,7 +9270,7 @@ struct sData
 	char data94_afterRand[0x68];
 	#elif BUILD == JpnTrial || BUILD == SepReview
 	char data9C_afterRand[0x60];
-	// Eur and Jap
+	// Eur and Jpn
 	#elif BUILD >= EurRetail
 	char data98_afterRand[0x6C];
 	#endif
