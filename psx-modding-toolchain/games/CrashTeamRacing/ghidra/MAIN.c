@@ -8414,7 +8414,7 @@ int FUN_8003c1d4(char *param_1)
 }
 
 
-// MainInit_WipeVRAM
+// MainInit_VRAMClear
 void FUN_8003c248(void)
 
 {
@@ -8696,7 +8696,7 @@ undefined4 main(void)
       ResetGraph(0);
       SetGraphDebug(0);
 
-	  // MainInit_WipeVRAM
+	  // MainInit_VRAMClear
       FUN_8003c248();
 
       SetDispMask(1);

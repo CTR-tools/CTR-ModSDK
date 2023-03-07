@@ -556,8 +556,8 @@
 8003cea4 MainInit_FinalizeInit
 8003d744 MainInit_StringToLevID
 
-8003d7b8 MainInit_WipeVRAM
-8003d880 MainInit_DisplayVRAM
+8003d7b8 MainInit_VRAMClear
+8003d880 MainInit_VRAMDisplay
 8003d98c MainKillGame_StopCTR
 
 // No Spyro 2 in this build

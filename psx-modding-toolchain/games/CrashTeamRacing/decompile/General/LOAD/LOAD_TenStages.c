@@ -7,7 +7,7 @@ int MainInit_StringToLevID(char* str);
 void MEMPACK_PopToState(int id);
 u_int LOAD_VramFile(struct BigHeader* bigfile, u_int fileIndex, u_int* destination, u_int* sizePtr, int callback);
 void LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs);
-void MainInit_DisplayVRAM();
+void MainInit_VRAMDisplay();
 int MEMPACK_PushState();
 void MainInit_PrimMem(u_int* param_1);
 void MainInit_OTMem(u_int* param_1);
@@ -110,7 +110,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 				// Load Intro TIM for Copyright Page from VRAM file
 				LOAD_VramFile(bigfile, 0x1fe, 0, &vramSize, 0xffffffff);
-				MainInit_DisplayVRAM();
+				MainInit_VRAMDisplay();
 
 				gGT->db[0].drawEnv.isbg = 0;
 				gGT->db[1].drawEnv.isbg = 0;

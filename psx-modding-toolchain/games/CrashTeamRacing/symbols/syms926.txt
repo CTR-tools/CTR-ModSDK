@@ -512,8 +512,8 @@
 8003b6d0 MainInit_Drivers
 8003b934 MainInit_FinalizeInit
 8003c1d4 MainInit_StringToLevID // unused
-8003c248 MainInit_WipeVRAM
-8003c310 MainInit_DisplayVRAM
+8003c248 MainInit_VRAMClear
+8003c310 MainInit_VRAMDisplay
 
 8003c41c MainKillGame_StopCTR
 8003c480 MainKillGame_LaunchSpyro2

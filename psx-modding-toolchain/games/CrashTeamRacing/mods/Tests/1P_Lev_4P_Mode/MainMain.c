@@ -458,7 +458,7 @@ void StateZero()
 	ResetGraph(0);
 	SetGraphDebug(0);
 	
-	MainInit_WipeVRAM();
+	MainInit_VRAMClear();
 	
 	SetDispMask(1);
 	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
@@ -568,7 +568,7 @@ void StateZero()
 	#ifndef FastBoot
 	// Load Intro TIM for "SCEA Presents" from VRAM file
 	LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
-	MainInit_DisplayVRAM();
+	MainInit_VRAMDisplay();
 	#endif
 	
 	// \SOUNDS\KART.HWL;1

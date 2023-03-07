@@ -543,8 +543,8 @@
 8003a4c0 MainInit_FinalizeInit
 8003ad74 MainInit_StringToLevID
 
-8003add8 MainInit_WipeVRAM
-8003aea0 MainInit_DisplayVRAM
+8003add8 MainInit_VRAMClear
+8003aea0 MainInit_VRAMDisplay
 8003afb0 MainKillGame_StopCTR
 
 // no "prepare", just one large "launch"

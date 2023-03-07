@@ -558,8 +558,8 @@
 8003cebc MainInit_FinalizeInit
 8003d75c MainInit_StringToLevID
 
-8003d7d0 MainInit_WipeVRAM
-8003d898 MainInit_DisplayVRAM
+8003d7d0 MainInit_VRAMClear
+8003d898 MainInit_VRAMDisplay
 8003d9a4 MainKillGame_StopCTR
 
 8003da10 PrepareSpyro2
