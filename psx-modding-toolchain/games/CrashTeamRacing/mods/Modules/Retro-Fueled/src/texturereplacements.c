@@ -43,7 +43,7 @@ void LoadCustomTexVRAM_MainMenu()
 	int i;
 
 	// if the current level ID is the main menu
-	if (sdata->gGT->levelID == MAIN_MENU)
+	if (sdata->gGT->levelID == MAIN_MENU_LEVEL)
 	{
 		for (i = 0; i < mainMenuTex_Count; i++)
 			LoadImage((RECT *)(mainMenuTex[i].pos), (u_long *)(mainMenuTex[i].image));

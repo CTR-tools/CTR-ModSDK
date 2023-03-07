@@ -13,7 +13,7 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT)
 	}
 	
 	// main menu
-	if(levelID == MAIN_MENU)
+	if(levelID == MAIN_MENU_LEVEL)
 	{
 		size = 0x17c00;
 		goto EndFunc;

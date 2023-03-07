@@ -312,7 +312,7 @@ void DrawMenu()
 	// japan builds
 	#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
 	// if main menu
-	if(sdata->gGT->levelID == MAIN_MENU)
+	if(sdata->gGT->levelID == MAIN_MENU_LEVEL)
 	{
 		// disable checkered flag
 		sdata->gGT->renderFlags &= 0xffffefff;
@@ -444,7 +444,7 @@ void RunUpdateHook()
     if (igt->isSpeedrunning)
     {
         // if you went back to the main menu
-        if (sdata->gGT->levelID == MAIN_MENU)
+        if (sdata->gGT->levelID == MAIN_MENU_LEVEL)
             ResetIGT();
 
         kartState = sdata->gGT->drivers[0]->kartState;
@@ -481,7 +481,7 @@ void RunUpdateHook()
 			#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
 			// if in main menu, turn checkered flag "back" on,
 			// it will be disabled in DrawMenu
-			if(sdata->gGT->levelID == MAIN_MENU)
+			if(sdata->gGT->levelID == MAIN_MENU_LEVEL)
 			{
 				// enable flag by default
 				sdata->gGT->renderFlags |= 0x1000;

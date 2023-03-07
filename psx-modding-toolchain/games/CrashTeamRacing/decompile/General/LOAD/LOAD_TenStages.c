@@ -167,14 +167,14 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// If you're in Naughty Dog Box Scene,
 			// Oxide Any% ending
 			// Oxide 101% ending
-			else if(levelID >= CREDITS_CRASH)
+			else if(levelID >= NAUGHTY_DOG_CRATE)
 			{
 				// Enable cutscene flag
 				gGT->gameMode1 |= 0x20000000;
 			}
 
 			// main menu or garage
-			else if(levelID >= MAIN_MENU)
+			else if(levelID >= MAIN_MENU_LEVEL)
 			{
 				// enable flag that shows you are in main menu
 				gGT->gameMode1 |= 0x2000;
@@ -311,7 +311,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		case 3:
 		{
 			// main menu, 230
-			if (levelID == MAIN_MENU) 
+			if (levelID == MAIN_MENU_LEVEL) 
 			{
 				ovrRegion3 = 0;
 			}

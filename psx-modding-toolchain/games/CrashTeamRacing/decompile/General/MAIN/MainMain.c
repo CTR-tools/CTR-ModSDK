@@ -56,7 +56,7 @@ u_int main()
 				gGT->gameMode1 &= 0xffdfffff;
 
 				// Main Menu Level ID
-				if (gGT->levelID == MAIN_MENU)
+				if (gGT->levelID == MAIN_MENU_LEVEL)
 				{
 					LAB_8003ca68:
 					iVar8 = CheckeredFlag_IsFullyOffScreen();
@@ -73,7 +73,7 @@ u_int main()
 					if (iVar8 == 0)
 					{
 						// If you are drawing main menu, set fully on screen
-						if (gGT->levelID == MAIN_MENU) goto LAB_8003ca68;
+						if (gGT->levelID == MAIN_MENU_LEVEL) goto LAB_8003ca68;
 					}
 					else
 					{
@@ -191,7 +191,7 @@ u_int main()
 								if
 								(
 									// If you're in main menu
-									(gGT->levelID == MAIN_MENU) ||
+									(gGT->levelID == MAIN_MENU_LEVEL) ||
 									// If you're in scrapbook
 									(gGT->levelID == SCRAPBOOK)
 								)
