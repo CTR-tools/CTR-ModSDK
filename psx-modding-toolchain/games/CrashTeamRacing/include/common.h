@@ -2820,6 +2820,9 @@ struct Driver
 	// incline rotXZ
 	// probably only for AIs
 	
+	// 0x5d4
+	// AI speed
+	
 	// 0x60c
 	// short estimatePos[3]
 	

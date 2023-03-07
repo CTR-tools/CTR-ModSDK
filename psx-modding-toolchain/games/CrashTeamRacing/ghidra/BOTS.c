@@ -2099,6 +2099,8 @@ LAB_80014b48:
 
 		// nav path index, * 2
 		// Default: if level is Hot Air Skyway
+		
+		// 80080F30[navPathIndex]
         iVar3 = (int)*(short *)(iVar17 + 0x5b8) * 2;
 
 		// iVar5 = level ID
@@ -2107,6 +2109,7 @@ LAB_80014b48:
 		// if level is Polar Pass
         if (iVar15 == 0xc)
 		{
+		  // 80080F30[navPathIndex + 3]
           iVar3 = iVar3 + 6;
         }
 
@@ -2115,6 +2118,7 @@ LAB_80014b48:
 		  // if level is Papu's Pyramid
           if (iVar15 == 5)
 		  {
+			// 80080F30[navPathIndex + 6]
             iVar3 = iVar3 + 0xc;
           }
 
@@ -2123,6 +2127,7 @@ LAB_80014b48:
 			// if level is Slide Coliseum
             if (iVar15 == 0x10)
 			{
+			  // 80080F30[navPathIndex + 9]
               iVar3 = iVar3 + 0x12;
             }
           }
@@ -2134,14 +2139,22 @@ LAB_80014b48:
                  * 0x33334000 >> 0x10;
 		
 		// control max speed on certain tracks?
-        if ((((int)*(short *)(&DAT_80080f30 + iVar3) <= iVar15) &&
-            (iVar15 < (int)*(short *)(&DAT_80080f30 + iVar3) + 0xb)) &&
-           (9000 < *(int *)(iVar17 + 0x5d4))) 
+        if (
+				(
+					// iVar15 between [XXX] and [XXX + 0xb]
+					((int)*(short *)(&DAT_80080f30 + iVar3) <= iVar15) &&
+					(iVar15 < (int)*(short *)(&DAT_80080f30 + iVar3) + 0xb)
+				) &&
+				
+				// speed higher than 9000
+				(9000 < *(int *)(iVar17 + 0x5d4))
+			) 
 		{
           *(undefined2 *)(iVar17 + 0x5c4) = 0;
 
-        	//*(int *)(iVar17 + 0x5d4) = (*(int *)(iVar17 + 0x5d4) - 100) - character's accel stat
-          *(int *)(iVar17 + 0x5d4) = (*(int *)(iVar17 + 0x5d4) + -100) - (int)*(short *)(iVar17 + 0x428);
+          // AI speed: subtract 100, then subtract character's accel stat
+          *(int *)(iVar17 + 0x5d4) = 
+		  (*(int *)(iVar17 + 0x5d4) - 100) - (int)*(short *)(iVar17 + 0x428);
         }
       }
 

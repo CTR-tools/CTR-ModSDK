@@ -2831,11 +2831,10 @@ void FUN_8001b334(int param_1)
     } while (sVar7 != 0);
   }
   
-  
-  
   if ((psVar16 == (short *)0x0) || (psVar16 == (short *)piVar18[0x28]))
   goto switchD_8001b678_caseD_1;
   *(short **)(piVar18 + 0x28) = psVar16;
+  
   sVar7 = *psVar16;
   psVar12 = psVar16 + 1;
   uVar17 = piVar18[0x1c];
