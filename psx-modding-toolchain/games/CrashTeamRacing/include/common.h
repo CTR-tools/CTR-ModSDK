@@ -9165,7 +9165,7 @@ struct sData
 	char s_PAUS[8];
 
 	// 8008D3F8
-	void* MainDrawCallback_DrawSyncPtr;
+	void* MainDrawCb_DrawSyncPtr;
 
 	// 8008D3FC
 	void* ptrVlcTable;

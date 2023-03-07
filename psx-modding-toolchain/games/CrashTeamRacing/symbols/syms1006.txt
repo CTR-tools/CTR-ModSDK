@@ -511,8 +511,8 @@
 80035fb0 MainDB_PrimMem
 80036014 MainDB_OTMem
 
-8003606c MainDrawCallback_DrawSync
-80036090 MainDrawCallback_Vsync
+8003606c MainDrawCb_DrawSync
+80036090 MainDrawCb_Vsync
 
 80036134 MainFrame_TogglePauseAudio
 800361a8 MainFrame_ResetDB

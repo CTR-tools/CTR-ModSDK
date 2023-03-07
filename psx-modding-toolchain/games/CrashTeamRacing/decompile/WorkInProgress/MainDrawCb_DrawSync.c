@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainDrawCallback_DrawSync()
+void MainDrawCb_DrawSync()
 {
 	if (sdata->gGT->bool_DrawOTag_InProgress == 1)
 	{

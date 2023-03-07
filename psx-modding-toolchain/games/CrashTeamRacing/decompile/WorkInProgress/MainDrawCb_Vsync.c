@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainDrawCallback_Vsync()
+void MainDrawCb_Vsync()
 {
 	struct GameTracker* gGT;
 	int iVar2;

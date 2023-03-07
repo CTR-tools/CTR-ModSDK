@@ -1,7 +1,7 @@
 #include <common.h>
 
-void MainDrawCallback_Vsync();
-void MainDrawCallback_DrawSync();
+void MainDrawCb_Vsync();
+void MainDrawCb_DrawSync();
 void StateZero();
 
 #define FastBoot
@@ -511,7 +511,7 @@ void StateZero()
 	
 	// set callback and save callback
 	EnterCriticalSection();
-	sdata->MainDrawCallback_DrawSyncPtr = DrawSyncCallback(&MainDrawCallback_DrawSync);
+	sdata->MainDrawCb_DrawSyncPtr = DrawSyncCallback(&MainDrawCb_DrawSync);
 	ExitCriticalSection();
 	
 	MEMCARD_InitCard();
@@ -577,7 +577,7 @@ void StateZero()
 	// enable audio if not already enabled
 	howl_InitGlobals(data.kartHwlPath);
 	
-	VSyncCallback(MainDrawCallback_Vsync);
+	VSyncCallback(MainDrawCb_Vsync);
 	
 	#ifndef FastBoot
 	Music_SetIntro();
