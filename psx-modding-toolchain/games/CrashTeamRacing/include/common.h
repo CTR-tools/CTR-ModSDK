@@ -7525,15 +7525,15 @@ struct Data
 	// 80082330 -- EurRetail
 	// 80085170 -- JpnRetail
 	#if BUILD == SepReview
-	char ghostScrambleData[0x55c+0x84];
+	short ghostScrambleData[0x2ae + 0x42];
 	#elif BUILD == UsaRetail
-	char ghostScrambleData[0x55c];
+	short ghostScrambleData[0x2ae];
 	#elif BUILD == JpnTrial
-	char ghostScrambleData[0x55c];
+	short ghostScrambleData[0x2ae];
 	#elif BUILD == EurRetail
-	char ghostScrambleData[0x55c+0xc];
+	short ghostScrambleData[0x2ae + 6];
 	#elif BUILD == JpnRetail
-	char ghostScrambleData[0x55c+0xc];
+	short ghostScrambleData[0x2ae + 6];
 	#endif
 
 	// 80082358 -- UsaRetail
