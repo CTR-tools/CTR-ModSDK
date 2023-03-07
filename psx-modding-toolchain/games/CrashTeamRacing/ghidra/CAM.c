@@ -1991,10 +1991,15 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
   *(undefined2 *)(param_4 + 0x20c) = 0;
   *(undefined2 *)(param_4 + 0x20e) = 0;
 
-  // Map value from [oldMin, oldMax] to [newMin, newMax]
-  // inverting newMin and newMax will give an inverse range mapping
-  uVar8 = FUN_80058f9c(*(undefined4 *)(param_1 + 0x40),(int)param_5[2],(int)param_5[3],(int)*param_5
-                       ,(int)param_5[1]);
+  // Map cameraSpeed from:
+  //	[ZoomData 0x4, ZoomData 0x6]
+  //	[ZoomData 0x0, ZoomData 0x2]
+  uVar8 = FUN_80058f9c(*(undefined4 *)(param_1 + 0x40),
+						(int)param_5[2],
+						(int)param_5[3],
+						(int)*param_5,
+						(int)param_5[1]);
+						
   *(undefined2 *)(param_4 + 0x210) = uVar8;
 
   if (*(int *)(param_1 + 0xbc) == 0)

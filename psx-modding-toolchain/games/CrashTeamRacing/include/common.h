@@ -6114,14 +6114,14 @@ struct MetaPhys
 
 struct ZoomData
 {
-	// 0x00
-	short horizDistance_still;
+	// get distance by mapping camera speeed from:
+	// [speedMin, speedMax] to [distMin, distMax]
+	
+	short distMin;
+	short distMax;
 
-	// 0x02
-	short horizDistance_moving;
-
-	short unk_04; // speed where you start transitioning out
-	short unk_06; // speed where you start transitioning in
+	short speedMin;
+	short speedMax;
 	
 	char unk8;
 	char unk9;
