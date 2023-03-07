@@ -2782,6 +2782,9 @@ void FUN_8001b334(int param_1)
   local_26 = (short)((uint)*(undefined4 *)(iVar22 + 0x2d8) >> 8);
   local_24 = (short)((uint)*(undefined4 *)(iVar22 + 0x2dc) >> 8);
 
+
+  // psVar13 and psVar12 are both short*
+
   psVar13 = psVar12 + 1;
   if (sVar7 != 0) {
     uVar17 = (uint)*(byte *)(iVar22 + 0x495);
@@ -2795,19 +2798,31 @@ void FUN_8001b334(int param_1)
       psVar13 = (short *)((int)psVar12 +
                          (int)*(short *)(&DAT_80080fb0 + ((iVar9 << 0x10) >> 0xf)) + 2);
 
-	  if (((uVar17 == (int)sVar5) ||
+	  if (
+			(
+				(uVar17 == (int)sVar5) ||
 
-													// pointer to LEV
-          (iVar9 = (int)sVar5 * 0xc + *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c),
-          uVar17 == (uint)*(byte *)(iVar9 + 8))) ||
-         ((uVar17 == (uint)*(byte *)(iVar9 + 9) ||
-          ((uVar17 == (uint)*(byte *)(iVar9 + 10) || (uVar17 == (uint)*(byte *)(iVar9 + 0xb))))))) {
+																// pointer to LEV
+				(iVar9 = (int)sVar5 * 0xc + *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c),
+				
+				uVar17 == (uint)*(byte *)(iVar9 + 8))
+			) ||
+			(
+				(uVar17 == (uint)*(byte *)(iVar9 + 9) ||
+				((uVar17 == (uint)*(byte *)(iVar9 + 10) || 
+				(uVar17 == (uint)*(byte *)(iVar9 + 0xb)))))
+			)
+		  ) 
+	  {
         psVar16 = psVar12;
       }
       sVar7 = sVar7 + -1;
       psVar12 = psVar13 + 1;
     } while (sVar7 != 0);
   }
+  
+  
+  
   if ((psVar16 == (short *)0x0) || (psVar16 == (short *)piVar18[0x28]))
   goto switchD_8001b678_caseD_1;
   *(short **)(piVar18 + 0x28) = psVar16;
