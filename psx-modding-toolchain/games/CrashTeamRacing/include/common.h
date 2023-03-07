@@ -3564,16 +3564,6 @@ struct CameraDC
 	// similar to driver +a0,
 	// quadblock camera is currently above
 	struct Quadblock* ptrQuadBlock;
-
-	// duplicate ptr[4] array,
-	// copied from quadblock + 0x44
-	// 0x20 - ??? used in FUN_800357b8
-	// 0x24 - ??? used in FUN_800357b8
-	// 0x28 - ??? pointer array of visible instances
-	// 0x2C - ??? used in FUN_800198f8
-	// 0x30 - ??? (sometimes swapped with 2C)
-
-	// FUN_800188a8 suggests 2c is lev -> mesh_info
 	
 	// 0x20
 	// VisMem->0x40[player], quadblock->0x44->0x0
@@ -3638,8 +3628,10 @@ struct CameraDC
 	short unk82;
 
 	// 0x84 - duplicate of driver + 0x5b0
+	int driver5B0;
 
 	// 0x88 - used in CAM_FollowDriver_TrackPath
+	void* unk88;
 
 	// 0x8C - Interpolate from fly-in
 	// camera to driver, 0x0000 is fly-in,
