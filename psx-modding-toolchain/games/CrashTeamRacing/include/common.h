@@ -3607,7 +3607,7 @@ struct CameraDC
 	int unkTriplet3[3];
 	
 	// 0x70 - flags
-	// & 1 - search "+ 0x1508) | 1;"
+	// & 1 - search "+ 0x1508) | 1;", resets RainBuffer cameraPos
 	// & 4 - battle end-of-race
 	// & 8 - just changed direction (forward or backward) this frame
 	// & 0x10 - mask grab
@@ -3649,10 +3649,10 @@ struct CameraDC
 	// 0x94
 
 	// 0x9a - semi-unused camera mode swap
-	short cameraMode;
+	short cameraMode; // Curr
 
 	// 0x9C
-	short unk_DC;
+	short cameraModePrev; // previous frame
 
 	// 0x9e - frame counter for transition
 	short frameCounterTransition;

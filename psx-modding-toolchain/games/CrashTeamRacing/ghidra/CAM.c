@@ -3233,7 +3233,9 @@ LAB_8001c128:
 
 LAB_8001c150:
 
+  // 0x9C = 0x9A
   *(undefined2 *)(piVar18 + 0x27) = *(undefined2 *)((int)piVar18 + 0x9a);
+  
   puVar3 = PTR_DAT_8008d2ac;
 
   // camera quadblock exists
@@ -3301,12 +3303,19 @@ LAB_8001c150:
       }
     }
   }
-  if (piVar18[0xf] == 0) {
+  
+  if (piVar18[0xf] == 0) 
+  {
+	// visLeafSrc
     piVar18[8] = 0;
+	
+	// visFaceSrc
     piVar18[9] = 0;
   }
+  
   puVar3 = PTR_DAT_8008d2ac;
 
+  // if need to reset rainbuffer camPos
   if ((piVar18[0x1c] & 1U) != 0)
   {
 	// store Camera110 position in gGT->RainBuffer[x].cameraPos
@@ -3314,8 +3323,11 @@ LAB_8001c150:
     *(short *)(puVar3 + *piVar18 * 0x30 + 0x1a5a) = psVar19[1];
     *(short *)(puVar3 + *piVar18 * 0x30 + 0x1a5c) = psVar19[2];
 
+	// dont need to reset anymore
     piVar18[0x1c] = piVar18[0x1c] & 0xfffffffe;
   }
+  
   piVar18[0x1c] = piVar18[0x1c] & 0xffffff77;
+  
   return;
 }
