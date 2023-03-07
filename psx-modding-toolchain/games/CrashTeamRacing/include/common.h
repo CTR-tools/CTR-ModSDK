@@ -7354,6 +7354,7 @@ struct Data
 	struct ZoomData FarCam8x3;  // 2P
 
 	// 80080FB0
+	// end of race camera
 	char data_ZoomData[0x24];
 
 	// 80080fd4 from EndOfRace_Battle
