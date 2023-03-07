@@ -2983,13 +2983,13 @@ LAB_8001c128:
             iVar20 = FUN_8001b254(piVar18 + 0x29,(int)piVar18 + 0xaa,&local_28);
 
 			iVar10 = (int)*(short *)((int)piVar18 + 0xb6);
-            local_28 = *(short *)(piVar18 + 0x2c) - *(short *)((int)piVar18 + 0xaa);
-            local_26 = *(short *)((int)piVar18 + 0xb2) - *(short *)(piVar18 + 0x2b);
+            local_28 = *(short *)((int)piVar18 + 0xb0) - *(short *)((int)piVar18 + 0xaa);
+            local_26 = *(short *)((int)piVar18 + 0xb2) - *(short *)((int)piVar18 + 0xac);
             iVar9 = iVar10;
             if (iVar10 < 0) {
               iVar9 = -iVar10;
             }
-            local_24 = *(short *)(piVar18 + 0x2d) - *(short *)((int)piVar18 + 0xae);
+            local_24 = *(short *)((int)piVar18 + 0xb4) - *(short *)((int)piVar18 + 0xae);
             if (iVar10 < 0) {
               local_28 = -local_28;
               local_26 = -local_26;
@@ -3042,7 +3042,7 @@ LAB_8001c128:
           }
           if (sVar7 == 7) {
             *psVar19 = (short)((uint)*(undefined4 *)(iVar22 + 0x2d4) >> 8);
-            psVar19[1] = *(short *)(piVar18 + 0x29) +
+            psVar19[1] = *(short *)((int)piVar18 + 0xa4) +
                          (short)((uint)*(undefined4 *)(iVar22 + 0x2d8) >> 8);
             psVar19[2] = (short)((uint)*(undefined4 *)(iVar22 + 0x2dc) >> 8);
             sVar7 = *(short *)((int)piVar18 + 0xa6);
