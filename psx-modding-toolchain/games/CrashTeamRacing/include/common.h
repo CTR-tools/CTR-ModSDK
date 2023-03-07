@@ -3608,11 +3608,10 @@ struct CameraDC
 	struct Camera110* cam110;
 
 	// 0x4C
-	char unk_24[0x24];
-
-	// 0x4C to 0x54
-	// three ints between -2 and 2
-
+	int unkTriplet1[3];
+	int unkTriplet2[3];
+	int unkTriplet3[3];
+	
 	// 0x70 - flags
 	// & 1 - search "+ 0x1508) | 1;"
 	// & 4 - battle end-of-race
@@ -3627,6 +3626,12 @@ struct CameraDC
 	int flags;
 
 	// 0x74
+	// short[3] gte_rt FollowDriver_AngleAxis
+	// short 0x7a
+	
+	// 0x7c
+	// short[3] gte_rt FollowDriver_AngleAxis
+	// short 0x82
 	char unk_30[0x18];
 
 	// 0x84 - duplicate of driver + 0x5b0
