@@ -8915,32 +8915,31 @@ struct sData
 #ifndef SDATA_DEV
 
 	// 8008D068
-	#if BUILD == SepReview
-	char afterHOWL[0x18];
-	#elif BUILD == UsaRetail || BUILD == JpnTrial || BUILD == JpnRetail
-	char afterHOWL[0x20];
-	#elif BUILD == EurRetail
-	char afterHOWL[0x28];
-	#endif
+	// given to SongPool_Start as param_5,
+	// passed as pointer, should just pass by value
+	int AdvHubSong_constVal_0x14;
 
-	// AdvHub song related
-	// 8008D068 - const 0x14
-	// given to SongPool_Start as param_5
-	// as pointer, should just pass by value
-
+	// 8008D06C
 	// AdvHub song bits (for music swap)
-	// 8008D06C - ptr 800838f8
+	void* AdvHubSong_ptrBits;
 
 	// 8008d070
-	// Reverb Mode based on Boss ID
-	// 8 bytes
+	char reverbModeBossID[8];
 
 	// 8008d078
-	// song bank based on Boss ID
-	// 8 bytes
+	char songBankBossID[8];
 
+	#if BUILD == EurRetail
+	// 8008d40c
+	// extra 8 bytes
+	char Eur_ExtraBytes[8];
+	#endif
+
+	#if BUILD >= UsaRetail
 	// 8008d080
 	// used in Garage_Idle2
+	char Garage_Idle2[8];
+	#endif
 	
 	// ============================
 
