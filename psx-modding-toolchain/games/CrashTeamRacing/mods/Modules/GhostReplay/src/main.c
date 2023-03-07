@@ -65,7 +65,7 @@ void RunUpdateHook()
 		return;
 
 	// dont activate in main menu, or ND box
-	if(gGT->levelID > 18)
+	if(gGT->levelID > NITRO_COURT)
 		return;
 
 	// need to do it like this, cause drivers[1] and drivers[2] are nullptr,

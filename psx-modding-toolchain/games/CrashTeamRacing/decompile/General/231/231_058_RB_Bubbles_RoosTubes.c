@@ -19,7 +19,7 @@ void DECOMP_RB_Bubbles_RoosTubes()
 	// 1P mode Roo's Tubes only
 	gGT = sdata->gGT;
 	if(gGT->numPlyrCurrGame > 1) return;
-	if(gGT->levelID != 6) return;
+	if(gGT->levelID != ROO_TUBES) return;
 	
 	level1 = gGT->level1;
 	if(level1->numSpawnType2 < 2) return;

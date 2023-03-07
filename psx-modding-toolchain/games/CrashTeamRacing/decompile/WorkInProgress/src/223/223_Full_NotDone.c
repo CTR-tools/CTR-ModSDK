@@ -70,8 +70,7 @@ void RR_EndEvent_UnlockAward()
 		// do not make this an AND (&&) if statement
 		if(i == 0)
 		{	
-			// if turbo track
-			if(gGT->levelID == 0x11)
+			if(gGT->levelID == TURBO_TRACK)
 			{
 				// unlock turbo track
 				sdata->gameProgress.unlocks[0] |= 2;

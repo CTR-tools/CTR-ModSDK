@@ -166,12 +166,12 @@ void MainInit_JitPoolsNew_New(struct GameTracker* gGT)
   // build, instead it was just this:
   #if BUILD == SepReview
 
-      if (gGT->levelID == 0x29) {
+      if (gGT->levelID == NAUGHTY_DOG_CRATE) {
         clipSize = 96000>>2;
       }
       else {
         clipSize = 12000>>2;
-        if (gGT->levelID == 0x28) {
+        if (gGT->levelID == ADVENTURE_CHARACTER_SELECT) {
           clipSize = 0x1000>>2;
         }
       }

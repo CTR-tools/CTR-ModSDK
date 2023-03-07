@@ -17,7 +17,7 @@ void SpawnDrivers(struct GameTracker* gGT)
 	}
 	
 	// if first boot
-	if(gGT->levelID == 0x32)
+	if(gGT->levelID == CREDITS_POLAR)
 	{
 		gGT->drivers[0] = Init_Player(0);
 		return;
@@ -37,8 +37,8 @@ void SpawnDrivers(struct GameTracker* gGT)
 	
 	// override for battle maps
 	if(
-		(gGT->levelID > 0x11) &&
-		(gGT->levelID < 0x19)
+		(gGT->levelID > TURBO_TRACK) &&
+		(gGT->levelID < GEM_STONE_VALLEY)
 	  )
 	{
 		// 4 spawn positions

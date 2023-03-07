@@ -312,7 +312,7 @@ void DrawMenu()
 	// japan builds
 	#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
 	// if main menu
-	if(sdata->gGT->levelID == 0x27)
+	if(sdata->gGT->levelID == MAIN_MENU)
 	{
 		// disable checkered flag
 		sdata->gGT->renderFlags &= 0xffffefff;
@@ -444,7 +444,7 @@ void RunUpdateHook()
     if (igt->isSpeedrunning)
     {
         // if you went back to the main menu
-        if (sdata->gGT->levelID == 0x27)
+        if (sdata->gGT->levelID == MAIN_MENU)
             ResetIGT();
 
         kartState = sdata->gGT->drivers[0]->kartState;
@@ -455,7 +455,7 @@ void RunUpdateHook()
     else
     {
         // if you accessed hub 1
-        if (sdata->gGT->levelID == 0x1A)
+        if (sdata->gGT->levelID == N_SANITY_BEACH)
         {
             for (i = 0; i < numLevels; i++)
                 splitsComparing[i] = splits[i];
@@ -468,7 +468,7 @@ void RunUpdateHook()
     }
 
     // if you're not on the naughty dog box screen and you're not running
-    if ((sdata->gGT->levelID != 41) && (!(igt->isSpeedrunning && !igt->stopIncrementing)))
+    if ((sdata->gGT->levelID != NAUGHTY_DOG_CRATE) && (!(igt->isSpeedrunning && !igt->stopIncrementing)))
         if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_SELECT)
         {
             igt->onMenu ^= 1;
@@ -481,7 +481,7 @@ void RunUpdateHook()
 			#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
 			// if in main menu, turn checkered flag "back" on,
 			// it will be disabled in DrawMenu
-			if(sdata->gGT->levelID == 0x27)
+			if(sdata->gGT->levelID == MAIN_MENU)
 			{
 				// enable flag by default
 				sdata->gGT->renderFlags |= 0x1000;

@@ -22,7 +22,7 @@ void RB_Hazard_HurtDriver(
 	if ((sdata->gGT->gameMode1 & ADVENTURE_BOSS) != 0)
 	{
 		// if oxide station
-		if(sdata->gGT->levelID == 0xd)
+		if(sdata->gGT->levelID == OXIDE_STATION)
 		{
 			// override to spin out
 			damageType = 1;

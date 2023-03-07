@@ -43,14 +43,14 @@ void LoadCustomTexVRAM_MainMenu()
 	int i;
 
 	// if the current level ID is the main menu
-	if (sdata->gGT->levelID == 0x27)
+	if (sdata->gGT->levelID == MAIN_MENU)
 	{
 		for (i = 0; i < mainMenuTex_Count; i++)
 			LoadImage((RECT *)(mainMenuTex[i].pos), (u_long *)(mainMenuTex[i].image));
 	}
 
-	// if player is in a racetrack and the racetrack isn't slide coliseum (because it has no turbo pads, therefore no blue fire)
-	if (sdata->gGT->levelID < 18 && sdata->gGT->levelID != 16)
+	// slide coliseum has no turbo pads, which means no turbo fire, so let's not give it the banner
+	if (sdata->gGT->levelID < NITRO_COURT && sdata->gGT->levelID != SLIDE_COLISEUM)
 	{
 		// if player is in time trial mode, load banner textures for time trial .lev
 		if (sdata->gGT->gameMode1 & TIME_TRIAL)

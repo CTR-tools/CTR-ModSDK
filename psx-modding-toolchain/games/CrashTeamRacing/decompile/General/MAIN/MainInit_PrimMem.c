@@ -6,14 +6,14 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT)
 	int levelID = gGT->levelID;
 	
 	// adv garage
-	if(levelID == 0x28)
+	if(levelID == ADVENTURE_CHARACTER_SELECT)
 	{
 		size = 0x1b800;
 		goto EndFunc;
 	}
 	
 	// main menu
-	if(levelID == 0x27)
+	if(levelID == MAIN_MENU)
 	{
 		size = 0x17c00;
 		goto EndFunc;
@@ -22,21 +22,21 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT)
 	if(gGT->numPlyrCurrGame == 1)
 	{
 		// any% end, 101% end, credits
-		if(levelID >= 42)
+		if(levelID >= OXIDE_ENDING)
 		{
 			size = 0x17c00;
 			goto EndFunc;
 		}
 		
 		// intro cutscene
-		if(levelID >= 30)
+		if(levelID >= INTRO_RACE_TODAY)
 		{
 			size = 0x1e000;
 			goto EndFunc;
 		}
 		
 		// adv hub
-		if(levelID >= 25)
+		if(levelID >= GEM_STONE_VALLEY)
 		{
 			size = 0x1c000;
 			goto EndFunc;
@@ -72,21 +72,21 @@ void DECOMP_MainInit_OTMem(struct GameTracker* gGT)
 	
 	// cutscenes, main menu, garage, ND Box, 
 	// any% end, 101% end, credits
-	if(levelID >= 30)
+	if(levelID >= INTRO_RACE_TODAY)
 	{
 		size = 0x2000;
 		goto EndFunc;
 	}
 	
 	// Adv Hub
-	if(levelID >= 25)
+	if(levelID >= GEM_STONE_VALLEY)
 	{
 		size = 0x2c00;
 		goto EndFunc;
 	}
 	
 	// battle maps
-	if(levelID >= 18)
+	if(levelID >= NITRO_COURT)
 	{
 		size = 0x8000;
 		goto EndFunc;

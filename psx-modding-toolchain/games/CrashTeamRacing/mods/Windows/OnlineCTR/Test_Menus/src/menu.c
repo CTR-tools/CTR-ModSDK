@@ -189,7 +189,7 @@ void MenuState2_Navigate(struct Thread* t)
 		}
 	}
 	
-	if(sdata->gGT->levelID != 0x32)
+	if(sdata->gGT->levelID != CREDITS_POLAR)
 	{
 		DecalFont_DrawLine("Press Select to Close",0x0,0xd0,2,0);
 				

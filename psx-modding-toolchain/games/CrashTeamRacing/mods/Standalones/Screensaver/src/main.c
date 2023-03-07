@@ -115,7 +115,7 @@ void RunUpdateHook()
 	sdata->gGT->demoCountdownTimer = 9999;
 	
 	// do nothing else unless in main menu
-	if(sdata->gGT->levelID != 0x27) return;
+	if(sdata->gGT->levelID != MAIN_MENU) return;
 	else
 	{
 		// NOP function

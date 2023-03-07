@@ -299,7 +299,7 @@ LAB_800367d4:
 							 sdata_gGT->numPlyrCurrGame, sdata_gGT->gameMode1 & 0xf);
 	}
 	uVar5 = LOAD_IsOpen_Podiums();
-	if ((uVar5 != 0) && (sdata_gGT->levelID == 0x29)) {
+	if ((uVar5 != 0) && (sdata_gGT->levelID == NAUGHTY_DOG_CRATE)) {
 		CS_BoxScene_InstanceSplitLines();
 	}
 	if ((gGT->renderFlags & 0x20) != 0) {
@@ -478,8 +478,8 @@ code_r0x800369d8:
 											(int *)gGT->visMem1->visSCVertList[0]);
 				}
 				iVar19 = sdata_gGT->camera110[0].distanceToScreen_PREV;
-				if ((sdata_gGT->levelID == 0x28) ||
-					 (((sdata_gGT->gameMode1 & 0x20000000U) != 0 && (sdata_gGT->levelID != 0x25)))) {
+				if ((sdata_gGT->levelID == ADVENTURE_CHARACTER_SELECT) ||
+					 (((sdata_gGT->gameMode1 & 0x20000000U) != 0 && (sdata_gGT->levelID != INTRO_CRASH)))) {
 					DAT_1f800014 = 0x1e00;
 					DAT_1f800018 = 0x640;
 					DAT_1f80001c = 0x640;

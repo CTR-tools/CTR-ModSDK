@@ -190,7 +190,7 @@ void RunInitHook()
 
 
 	// only run if this is a race track
-	if(sdata->gGT->levelID > 0x11) return;
+	if(sdata->gGT->levelID > TURBO_TRACK) return;
 
 
 
@@ -283,7 +283,7 @@ void RunUpdateHook()
 	char boolCollide;
 
 	// only run if this is a race track
-	if(sdata->gGT->levelID > 0x11) return;
+	if(sdata->gGT->levelID > TURBO_TRACK) return;
 
 	// if you are right about to run out of time
 	if(

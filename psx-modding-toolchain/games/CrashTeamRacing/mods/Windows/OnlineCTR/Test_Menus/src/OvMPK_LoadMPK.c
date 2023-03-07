@@ -12,7 +12,7 @@ void LOAD_DriverMPK_Hook(unsigned int param_1,int param_2,unsigned int param_3)
 	#endif
 	
 	// load penta on the spawn lev
-	if(sdata->gGT->levelID == 0x32) 
+	if(sdata->gGT->levelID == CREDITS_POLAR) 
 	{
 		data.characterIDs[0] = 0xD;
 		LOAD_AppendQueue(param_1,2,0xD + 0x114,0,LOAD_Callback_DriverModels);
@@ -26,8 +26,8 @@ void LOAD_DriverMPK_Hook(unsigned int param_1,int param_2,unsigned int param_3)
 	
 	// on adv hub
 	if(
-		(sdata->gGT->levelID >= 0x19) &&
-		(sdata->gGT->levelID <= 0x1D)
+		(sdata->gGT->levelID >= GEM_STONE_VALLEY) &&
+		(sdata->gGT->levelID <= CITADEL_CITY)
 	  )
 	  
 	{

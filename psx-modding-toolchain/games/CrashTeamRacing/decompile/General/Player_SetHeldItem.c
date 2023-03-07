@@ -167,7 +167,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 			// Item is bomb at Rocky Road, Nitro Court
 			// Item is turbo at Skull Rock and Rampage Ruins
 			item = 0x1;
-			if (sdata->gGT->levelID != 0x15 && sdata->gGT->levelID != 0x13) goto SetItem;
+			if (sdata->gGT->levelID != SKULL_ROCK && sdata->gGT->levelID != RAMPAGE_RUINS) goto SetItem;
 			driver->heldItemID = 0x0;
 			break;
 
@@ -203,7 +203,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 		}
 
 		// Replace 3 Missiles with 1 Missile if racing Komodo Joe
-		if (sdata->gGT->levelID == 0x1 && driver->heldItemID == 0xb) driver->heldItemID = 0x2;
+		if (sdata->gGT->levelID == DRAGON_MINES && driver->heldItemID == 0xb) driver->heldItemID = 0x2;
 	}
 
 	// Replace unused Spring item with Turbo

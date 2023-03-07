@@ -56,7 +56,7 @@ u_int main()
 				gGT->gameMode1 &= 0xffdfffff;
 
 				// Main Menu Level ID
-				if (gGT->levelID == 39)
+				if (gGT->levelID == MAIN_MENU)
 				{
 					LAB_8003ca68:
 					iVar8 = CheckeredFlag_IsFullyOffScreen();
@@ -73,7 +73,7 @@ u_int main()
 					if (iVar8 == 0)
 					{
 						// If you are drawing main menu, set fully on screen
-						if (gGT->levelID == 39) goto LAB_8003ca68;
+						if (gGT->levelID == MAIN_MENU) goto LAB_8003ca68;
 					}
 					else
 					{
@@ -136,7 +136,7 @@ u_int main()
 						// wait for flag to be fully on-screen before starting to load the game
 						((iVar8 == 1) ||
 						// If Level ID is Naughty Dog Box
-						(gGT->levelID == 0x29)) || (sdata->pause_state != 0)
+						(gGT->levelID == NAUGHTY_DOG_CRATE)) || (sdata->pause_state != 0)
 					)
 					{
 						gGT->gameMode1 |= LOADING;
@@ -191,9 +191,9 @@ u_int main()
 								if
 								(
 									// If you're in main menu
-									(gGT->levelID == 39) ||
+									(gGT->levelID == MAIN_MENU) ||
 									// If you're in scrapbook
-									(gGT->levelID == 64)
+									(gGT->levelID == SCRAPBOOK)
 								)
 								{
 									MainLoadVLC();
@@ -537,10 +537,10 @@ void StateZero()
 	#endif
 	
 	// set level ID to naughty dog box
-	gGT->levelID = 41;
+	gGT->levelID = NAUGHTY_DOG_CRATE;
 	
 	#ifdef FastBoot
-	gGT->levelID = 4;
+	gGT->levelID = TIGER_TEMPLE;
 	gGT->numPlyrCurrGame = 1;
 	gGT->numPlyrNextGame = 1;
 	#endif
