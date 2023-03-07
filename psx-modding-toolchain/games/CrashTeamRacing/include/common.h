@@ -7799,6 +7799,8 @@ struct Data
 	// 800838dc -- UsaRetail
 	short voiceID[0x16];
 
+	// 800838f4 somewhere?
+
 	#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
 	char unkBetween_voiceID_nTropyXA[0x14];
 	#endif
@@ -8919,7 +8921,7 @@ struct sData
 	// passed as pointer, should just pass by value
 	int AdvHubSong_constVal_0x14;
 
-	// 8008D06C
+	// 8008D06C (ptr to 800838f4)
 	// AdvHub song bits (for music swap)
 	void* AdvHubSong_ptrBits;
 
