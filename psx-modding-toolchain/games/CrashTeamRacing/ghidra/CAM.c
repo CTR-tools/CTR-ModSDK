@@ -1841,6 +1841,7 @@ void FUN_8001a054(int param_1,undefined2 *param_2,undefined2 *param_3)
 // param2 is driver object
 // param3 is Camera110
 // param4 is scratchpad (BSP stuff)
+// param5 is ZoomData (becomes $s3)
 // NOP mid-race to stop following driver,
 // also handles fly-in and adv hub transitions
 void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *param_5)
@@ -1918,42 +1919,54 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
   sVar10 = (ushort)((*(uint *)(param_1 + 0x70) & 0x10000) != 0) * 0x800;
 
   // if camera angle was not just changed
-  if ((*(uint *)(param_1 + 0x70) & 8) == 0) {
+  if ((*(uint *)(param_1 + 0x70) & 8) == 0) 
+  {
+	// absolute value driver speed
     x = (int)*(short *)(param_2 + 0x38e);
     if (x < 0) {
       x = -x;
     }
 
-	// cameraDC 0x40?
-    if (x < *(int *)(param_1 + 0x40)) {
+	// driver speed slower than camera speed
+    if (x < *(int *)(param_1 + 0x40)) 
+	{
+	  // transition inward
       uVar13 = (uint)*(byte *)((int)param_5 + 9);
-      uVar11 = (uint)*(byte *)(param_5 + 4);
+      uVar11 = (uint)*(byte *)((int)param_5 + 8);
     }
-    else {
-      uVar13 = (uint)*(byte *)(param_5 + 4);
+	
+	// driver speed faster than camera
+    else 
+	{
+	  // transition outward
+      uVar13 = (uint)*(byte *)((int)param_5 + 8);
       uVar11 = uVar13;
     }
 
-	// cameraDC 0x40?
+	// cameraSpeed = iVar11*cameraSpeed + 0x100-iVar3*driverSpeed
     *(int *)(param_1 + 0x40) = (int)(uVar11 * *(int *)(param_1 + 0x40) + (0x100 - uVar13) * x) >> 8;
   }
 
   // if camera angle changed
-  else {
+  else 
+  {
+	// absolute value driver speed
     x = (int)*(short *)(param_2 + 0x38e);
     if (x < 0) {
       x = -x;
     }
 
-	// cameraDC 0x40?
+	// cameraSpeed = driverSpeed
 	*(int *)(param_1 + 0x40) = x;
   }
+  
   uVar8 = 0;
-
+  
   // if numPlyrCurrGame != 2
   if (PTR_DAT_8008d2ac[0x1ca8] != '\x02') {
     uVar8 = 0xff9c;
   }
+  
   *(undefined2 *)(param_4 + 0x20c) = uVar8;
 
   // 0x20e

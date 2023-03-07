@@ -3587,9 +3587,12 @@ struct CameraDC
 	int* visSCVertSrc;
 
 	// 0x34
-	char unk30fill[0x10];
+	char unk30fill[0xC];
 
 	// 96b20+14c0
+	
+	// 0x40
+	int cameraMoveSpeed;
 
 	// 0x44
 	struct Driver* driverToFollow;
@@ -6117,14 +6120,14 @@ struct ZoomData
 	// 0x02
 	short horizDistance_moving;
 
-	short unk_04;
-	short unk_06;
-	short unk_08;
-	short unk_0A;
-	short unk_0C;
-
-	// 0x0E
-	short angle;
+	short unk_04; // speed where you start transitioning out
+	short unk_06; // speed where you start transitioning in
+	
+	char unk8;
+	char unk9;
+	
+	// 0xA
+	short angle[3];
 
 	// 0x10
 	short vertDistance;
