@@ -2796,11 +2796,15 @@ void FUN_8001b334(int param_1)
   sVar7 = *psVar16;
   psVar12 = psVar16 + 1;
   uVar17 = piVar18[0x1c];
+  
   sVar5 = sVar7;
   if (sVar7 < 0) {
     sVar5 = -sVar7;
   }
+  
+  // new camera mode
   *(short *)((int)piVar18 + 0x9a) = sVar5;
+  
   piVar18[0x1c] = uVar17 & 0xffffefff | 9;
   if (sVar7 < 0) {
     piVar18[0x1c] = uVar17 & 0xffffefff | 0x1009;
@@ -2966,9 +2970,12 @@ LAB_8001c128:
           FUN_80019f58(piVar18,&DAT_1f800108,iVar22,psVar19,psVar19 + 3);
           goto LAB_8001c128;
         }
-        if (sVar7 != 0xb) {
-          if (sVar7 == 0xc) {
-            if (*(short *)(piVar18 + 0x27) != 0xc) {
+        if (sVar7 != 0xb) 
+		{
+          if (sVar7 == 0xc) 
+		  {
+			// first frame of mode 0xc
+            if (*(short *)((int)piVar18 + 0x9c) != 0xc) {
               *(undefined2 *)((int)piVar18 + 0x8e) = 0;
             }
 
