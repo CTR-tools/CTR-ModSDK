@@ -1269,12 +1269,12 @@ void FUN_80018fec(short *param_1,ushort *param_2,short *param_3,short *param_4,s
   return;
 }
 
-// CAM_FollowDriver_AngleAxis
+// CAM_FollowDriver_AngleAxis (camera->0x9a is 0x8 or 0xe)
 // param_1 is cameraDC
 // param_2 is driver object
 // param_4 is cam110 pos
 // param_5 is cam110 rot
-// only called from ThTick
+// only called from ThTick (camera->0x9a is 0x8 or 0xe)
 void FUN_80019128(int param_1,int param_2,int param_3,short *param_4,short *param_5)
 {
   long lVar1;
@@ -1309,6 +1309,7 @@ void FUN_80019128(int param_1,int param_2,int param_3,short *param_4,short *para
   // driver -> selfInstance -> matrix
   gte_SetTransMatrix((MATRIX *)(*(int *)(param_2 + 0x1c) + 0x30));
 
+  // driverOffset_CamEyePos
   gte_ldVXY0(*(undefined4 *)(param_1 + 0x74));
   gte_ldVZ0((uint)*(ushort *)(param_1 + 0x78));
   gte_rt();
@@ -1320,6 +1321,7 @@ void FUN_80019128(int param_1,int param_2,int param_3,short *param_4,short *para
   uVar3 = gte_stMAC3();
   *(undefined4 *)(param_3 + 0x248) = uVar3;
 
+  // driverOffset_CamLookAtPos
   gte_ldVXY0(*(undefined4 *)(param_1 + 0x7c));
   gte_ldVZ0((uint)*(ushort *)(param_1 + 0x80));
   gte_rt();
@@ -1343,6 +1345,9 @@ void FUN_80019128(int param_1,int param_2,int param_3,short *param_4,short *para
          (0x100 - *(short *)(param_1 + 0x7a)) * *(int *)(param_3 + 0x248) +
          (int)*(short *)(param_1 + 0x7a) * (int)param_4[2] >> 8;
     iVar2 = (int)*(short *)(param_1 + 0x7a);
+	
+	// 0x64 - 0x6c (triplet[3])
+	// interpolate from stack->10 (CamLookAtPos) GTE
     *(int *)(param_1 + 100) =
          (0x100 - iVar2) * *(int *)(puVar6 + 0x10) + iVar2 * *(int *)(param_1 + 100) >> 8;
     *(int *)(param_1 + 0x68) =
@@ -1353,6 +1358,7 @@ void FUN_80019128(int param_1,int param_2,int param_3,short *param_4,short *para
 
   else
   {
+	// copy directly from stack->10 (CamLookAtPos) GTE
     *(undefined4 *)(param_1 + 100) = uVar3;
     *(undefined4 *)(param_1 + 0x68) = *(undefined4 *)(puVar6 + 0x14);
     *(undefined4 *)(param_1 + 0x6c) = *(undefined4 *)(puVar6 + 0x18);
@@ -1366,8 +1372,10 @@ void FUN_80019128(int param_1,int param_2,int param_3,short *param_4,short *para
   lVar1 = ratan2(*(long *)(param_3 + 0x24c),iVar2);
   param_5[1] = (short)lVar1;
 
+  // SquareRoot0_stub
   lVar1 = FUN_8006c618(*(int *)(param_3 + 0x24c) * *(int *)(param_3 + 0x24c) +
                        *(int *)(param_3 + 0x254) * *(int *)(param_3 + 0x254));
+  
   lVar1 = ratan2(*(long *)(param_3 + 0x250),lVar1);
 
   *param_5 = 0x800 - (short)lVar1;

@@ -3609,7 +3609,11 @@ struct CameraDC
 
 	// 0x4C
 	int unkTriplet1[3];
+	
+	// 0x58
 	int unkTriplet2[3];
+	
+	// 0x64
 	int unkTriplet3[3];
 	
 	// 0x70 - flags
@@ -3625,14 +3629,13 @@ struct CameraDC
 	// & 0x10000 - reverse camera
 	int flags;
 
-	// 0x74
-	// short[3] gte_rt FollowDriver_AngleAxis
-	// short 0x7a
+	// 0x74 (cam->0x9a is 8 or 0xe)
+	short driverOffset_CamEyePos[3];
+	short unk7A;
 	
-	// 0x7c
-	// short[3] gte_rt FollowDriver_AngleAxis
-	// short 0x82
-	char unk_30[0x18];
+	// 0x7c (cam->0x9a is 8 or 0xe)
+	short driverOffset_CamLookAtPos[3];
+	short unk82;
 
 	// 0x84 - duplicate of driver + 0x5b0
 
