@@ -8924,8 +8924,9 @@ struct sData
 	#endif
 
 	// AdvHub song related
-	// 8008D068 - start of struct,
+	// 8008D068 - const 0x14
 	// given to SongPool_Start as param_5
+	// as pointer, should just pass by value
 
 	// AdvHub song bits (for music swap)
 	// 8008D06C - ptr 800838f8
