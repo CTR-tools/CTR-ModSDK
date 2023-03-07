@@ -2775,6 +2775,9 @@ void FUN_8001b334(int param_1)
   // LEV -> trial_data -> ptr_post_cam
   psVar12 = (short *)(*(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))[3];
 
+  // number of nodes for end-of-race camera,
+  // these are not "position" nodes, they 
+  // are nodes that change camera mode as you move
   sVar7 = *psVar12;
 
   // something with driver position
@@ -2786,9 +2789,16 @@ void FUN_8001b334(int param_1)
   // psVar13 and psVar12 are both short*
 
   psVar13 = psVar12 + 1;
-  if (sVar7 != 0) {
+  
+  // if nodes exist
+  if (sVar7 != 0) 
+  {
     uVar17 = (uint)*(byte *)(iVar22 + 0x495);
     psVar12 = psVar12 + 2;
+	
+	// loop through all of them till one is found
+	// with the same value is driver->0x495 (sorta like 
+	// track progress percentage, but not really)
     do {
       iVar9 = (int)*psVar12;
       sVar5 = *psVar13;
