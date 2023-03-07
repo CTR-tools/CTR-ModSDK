@@ -450,7 +450,7 @@ code_r0x800369d8:
 			} while (iVar15 < 2);
 			iVar19 = 0;
 			iVar15 = 0x168;
-			DrawLevelPrims_EntryFunc
+			DrawLevelOvr2P
 								(gGT->LevRenderLists, gGT->camera110, (struct VisData *)playstationVar23, 
 								 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], gGT->visMem1->visFaceList[1]
 								 , level->ptr_tex_waterEnvMap);
@@ -512,7 +512,7 @@ code_r0x800369d8:
 														gGT->visMem1->visLeafList[0], psVar14, (u_int)gGT->LevRenderLists, 
 														gGT->visMem1->bspList[0], gGT->numPlyrCurrGame);
 				gGT->numVisDataLinks = iVar19;
-				DrawLevelPrims_EntryFunc
+				DrawLevelOvr1P
 									(gGT->LevRenderLists, psVar14, (struct VisData *)level->ptr_mesh_info, 
 									 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], 
 									 (int *)level->ptr_tex_waterEnvMap, in_stack_ffffffb0);
@@ -550,7 +550,7 @@ code_r0x800369d8:
 			} while (iVar15 < 3);
 			iVar19 = 0;
 			iVar15 = 0x168;
-			DrawLevelPrims_EntryFunc
+			DrawLevelOvr3P
 								(gGT->LevRenderLists, gGT->camera110, (struct VisData *)playstationVar23, 
 								 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], gGT->visMem1->visFaceList[1]
 								 , gGT->visMem1->visFaceList[2]);
@@ -593,7 +593,7 @@ code_r0x800369d8:
 			} while (iVar15 < 4);
 			iVar19 = 0;
 			iVar15 = 0x168;
-			DrawLevelPrims_EntryFunc
+			DrawLevelOvr4P
 								(gGT->LevRenderLists, gGT->camera110, (struct VisData *)playstationVar23, 
 								 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], gGT->visMem1->visFaceList[1]
 								 , gGT->visMem1->visFaceList[2]);

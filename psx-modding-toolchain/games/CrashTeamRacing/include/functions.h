@@ -226,7 +226,12 @@ void Camera110_FadeAllWindows();
 void AnimateWater2P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
 void VisData_CopyJMPsToScratchpad();
 int CreateRenderLists_1P2P(struct VisData* visData, int* visLeafList, struct Camera110* c110, u_int LevRenderList, void* bspList, char numPlyr);
-void DrawLevelPrims_EntryFunc(void* LevRenderList, struct Camera110* c110, struct VisData* visData, struct PrimMem* primMem, int* param_5, int* param_6, void* waterEnvMap);
+
+void DrawLevelOvr1P(void* LevRenderList, struct Camera110* c110, struct VisData* visData, struct PrimMem* primMem, void* VisMem10, void* waterEnvMap);
+void DrawLevelOvr2P(void* LevRenderList, struct Camera110* c110, struct VisData* visData, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* waterEnvMap);
+void DrawLevelOvr3P(void* LevRenderList, struct Camera110* c110, struct VisData* visData, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* VisMem18, void* waterEnvMap);
+void DrawLevelOvr4P(void* LevRenderList, struct Camera110* c110, struct VisData* visData, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* VisMem18, void* VisMem1C, void* waterEnvMap);
+
 void AnimateWater1P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5);
 void AnimateQuad(int timer, int numSCVert, void* ptrSCVert, int* visSCVertList);
 void DrawSky_Full(void* skybox, struct Camera110* c110, struct PrimMem* primMem);

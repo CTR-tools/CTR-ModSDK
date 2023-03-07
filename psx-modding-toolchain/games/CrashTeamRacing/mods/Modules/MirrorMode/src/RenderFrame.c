@@ -1227,7 +1227,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			gGT->numPlyrCurrGame);
 			
 		// 226-229
-		DrawLevelPrims_EntryFunc(
+		DrawLevelOvr1P(
 			&gGT->LevRenderLists[0],
 			c110,
 			ptr_mesh_info,
@@ -1279,7 +1279,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		}
 		
 		// 226-229
-		DrawLevelPrims_EntryFunc(
+		DrawLevelOvr2P(
 			&gGT->LevRenderLists[0],
 			&gGT->camera110[0],
 			ptr_mesh_info,
@@ -1336,7 +1336,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	if(numPlyrCurrGame == 3)
 	{
 		// 226-229
-		DrawLevelPrims_EntryFunc(
+		DrawLevelOvr3P(
 			&gGT->LevRenderLists[0],
 			&gGT->camera110[0],
 			ptr_mesh_info,
@@ -1350,7 +1350,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	else // 4P mode
 	{
 		// 226-229
-		DrawLevelPrims_EntryFunc(
+		DrawLevelOvr4P(
 			&gGT->LevRenderLists[0],
 			&gGT->camera110[0],
 			ptr_mesh_info,

@@ -2,7 +2,6 @@
 
 u_char* ConvertTimeToString(int milliseconds);
 void MainGameEnd_Initialize();
-void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
 
 // countdown clock, used for Battle Mode and Crystal Challenge
 void DECOMP_DrawCountdownClock(short posX, short posY, short fontType)

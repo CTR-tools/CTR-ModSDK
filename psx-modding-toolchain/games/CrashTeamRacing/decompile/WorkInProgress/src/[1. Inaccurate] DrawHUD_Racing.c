@@ -18,7 +18,6 @@ void DecalHUD_DrawPolyFT4(struct Icon*, u_int, int, struct PrimMem*, u_long*, u_
 int UI_ConvertX_2(int, int);
 int UI_ConvertY_2(int, int);
 void DrawWeapon(short, short, short, struct Driver*);
-void DecalFont_DrawLine(char*, int, int, int, int);
 void DrawLapCounter(short, short, u_int, struct Driver*);
 void DrawBattleScores(int, int, struct Driver*);
 void AA_EndEvent_DisplayTime(u_short, short);
@@ -28,7 +27,6 @@ void UpdateTrackerTargets(struct Driver*);
 void Battle_DrawArrowsOverHeads(struct Driver*);
 void DrawWeaponBackground(short, short, short, struct Driver*);
 void DrawRaceClock(u_short paramX, u_short, u_int, struct Driver*);
-void InterpolatePosition2D_Linear(short *, short, short, short, short, int, short);
 int DecalFont_GetLineWidth(char*, short);
 void DrawCountdownClock(short, short, short);
 void Map_DrawDrivers(u_int, struct Thread*, short *);

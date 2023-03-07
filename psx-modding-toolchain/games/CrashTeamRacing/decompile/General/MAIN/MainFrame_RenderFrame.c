@@ -31,9 +31,7 @@ void RenderSubmit(struct GameTracker* gGT);
 
 u_int LOAD_IsOpen_MainMenu();
 int MainFrame_HaveAllPads(short param_1);
-void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
 void DrawTextBackground(RECT* r, int flag, u_long* ot);
-void InterpolatePosition2D_Linear(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);
 void DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, u_long* ot);
 void ElimBG_HandleState(struct GameTracker* gGT);
 void MainFrame_VisMemFullFrame(struct GameTracker* gGT, struct Level* level);
@@ -89,7 +87,6 @@ void Camera110_FadeAllWindows();
 void AnimateWater2P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
 void VisData_CopyJMPsToScratchpad();
 int CreateRenderLists_1P2P(struct VisData* visData, int* visLeafList, struct Camera110* c110, u_int LevRenderList, void* bspList, char numPlyr);
-//void DrawLevelPrims_EntryFunc(void* LevRenderList, struct Camera110* c110, struct VisData* visData, struct PrimMem* primMem, int* param_5, int* param_6, void* waterEnvMap);
 //void CAM_SkyboxGlow(short* param_1, struct Camera110* camera, struct PrimMem* primMem, u_long* ptrOT);
 void AnimateWater1P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5);
 void AnimateQuad(int timer, int numSCVert, void* ptrSCVert, int* visSCVertList);
@@ -968,7 +965,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			gGT->numPlyrCurrGame);
 			
 		// 226-229
-		DrawLevelPrims_EntryFunc(
+		DrawLevelOvr1P(
 			&gGT->LevRenderLists[0],
 			c110,
 			ptr_mesh_info,
@@ -1020,7 +1017,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		}
 		
 		// 226-229
-		DrawLevelPrims_EntryFunc(
+		DrawLevelOvr2P(
 			&gGT->LevRenderLists[0],
 			&gGT->camera110[0],
 			ptr_mesh_info,
@@ -1077,7 +1074,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	if(numPlyrCurrGame == 3)
 	{
 		// 226-229
-		DrawLevelPrims_EntryFunc(
+		DrawLevelOvr3P(
 			&gGT->LevRenderLists[0],
 			&gGT->camera110[0],
 			ptr_mesh_info,
@@ -1091,7 +1088,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	else // 4P mode
 	{
 		// 226-229
-		DrawLevelPrims_EntryFunc(
+		DrawLevelOvr4P(
 			&gGT->LevRenderLists[0],
 			&gGT->camera110[0],
 			ptr_mesh_info,

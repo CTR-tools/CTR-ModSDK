@@ -893,7 +893,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		c110 = &gGT->camera110[i];
 		
 		// 226-229
-		DrawLevelPrims_EntryFunc(
+		DrawLevelOvr1P(
 			&gGT->LevRenderLists[0],
 			c110,
 			ptr_mesh_info,

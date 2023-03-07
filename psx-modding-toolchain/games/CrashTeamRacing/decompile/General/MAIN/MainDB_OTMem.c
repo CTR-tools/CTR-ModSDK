@@ -8,6 +8,10 @@ void MainDB_OTMem(struct OTMem* otMem, u_int size)
 	otMem->size = size;
 	otMem->curr = pvVar1;
 	otMem->start = pvVar1;
-	otMem->end = (void*)((int)pvVar1 + (size & 0xfffffffc));
+	
+	// skip alignment by & 0xfffffffc,
+	// all possible size inputs are already aligned
+	otMem->end = (void*)((int)pvVar1 + size);
+	
 	return;
 }

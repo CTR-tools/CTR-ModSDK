@@ -1261,7 +1261,10 @@
 800a10cc OVR_Region2
 
 // (226, 227, 228, 229, all same)
-800a0cd0 DrawLevelPrims_EntryFunc
+800a0cd0 DrawLevelOvr1P
+800a0cd0 DrawLevelOvr2P
+800a0cd0 DrawLevelOvr3P
+800a0cd0 DrawLevelOvr4P
 
 800abe04 OVR_Region3
 
