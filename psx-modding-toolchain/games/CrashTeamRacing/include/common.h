@@ -6117,14 +6117,17 @@ struct ZoomData
 	// get distance by mapping camera speeed from:
 	// [speedMin, speedMax] to [distMin, distMax]
 	
+	// 0x0
 	short distMin;
 	short distMax;
 
+	// 0x4
 	short speedMin;
 	short speedMax;
 	
-	char unk8;
-	char unk9;
+	// 0x8
+	char percentage1;
+	char percentage2;
 	
 	// 0xA
 	short angle[3];
