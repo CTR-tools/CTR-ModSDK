@@ -3084,10 +3084,13 @@ LAB_8001c128:
 			  // or right above player
               if ((sVar7 == 8) || (sVar7 == 0xe))
 			  {
-				// if player is not blasted or spinning out
+				// if player is not blasted or spinning out (currFrame)
                 if ((*(uint *)(iVar22 + 0x5b0) & 2) == 0)
 				{
-                  if ((piVar18[0x21] & 2U) != 0) {
+				  // if player is blasted or spinning out (prevFrame)
+                  if ((piVar18[0x21] & 2U) != 0) 
+				  {
+					// reset position and change view
                     piVar18[0x1c] = piVar18[0x1c] | 9;
                   }
 
@@ -3104,7 +3107,10 @@ LAB_8001c128:
 				// if player is blasted or spinning out
                 else
 				{
-                  if ((piVar18[0x21] & 2U) == 0) {
+				  // not blasted or spinning on prevFrame
+                  if ((piVar18[0x21] & 2U) == 0) 
+				  {
+					// reset position and change view
                     piVar18[0x1c] = piVar18[0x1c] | 9;
                   }
 
@@ -3117,7 +3123,7 @@ LAB_8001c128:
                   FUN_8001a0bc(piVar18,iVar22,psVar19,&DAT_1f800108,iVar20);
                 }
 
-				// CameraDC 0x84
+				// CameraDC 0x84 (prevFrame)
 				piVar18[0x21] = *(int *)(iVar22 + 0x5b0);
 
                 goto LAB_8001c150;

@@ -3627,8 +3627,8 @@ struct CameraDC
 	short driverOffset_CamLookAtPos[3];
 	short unk82;
 
-	// 0x84 - duplicate of driver + 0x5b0
-	int driver5B0;
+	// 0x84
+	int driver5B0_prevFrame;
 
 	// 0x88 - used in CAM_FollowDriver_TrackPath
 	void* unk88;
