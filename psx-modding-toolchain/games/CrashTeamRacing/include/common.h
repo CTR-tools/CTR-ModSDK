@@ -7338,8 +7338,7 @@ struct Data
 	// 8007ff94 -- JpnTrial
 	// 80081464 -- EurRetail
 	// 800842A4 -- JpnRetail
-	// === Nav Path related ===
-	short data_beforeIdentity[0xC];
+	short botsThrottle[0xC];
 
 	// 80080F48
 	MATRIX identity;

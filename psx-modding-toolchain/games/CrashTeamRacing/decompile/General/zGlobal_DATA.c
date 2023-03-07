@@ -40,7 +40,7 @@ struct Data data =
 		.arcade_2 = 0x7060504,
 	},
 	
-	.data_beforeIdentity =
+	.botsThrottle =
 	{
 		// one per NavPath, Hot Air Skyway
 		0x1CC, 
