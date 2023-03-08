@@ -7437,7 +7437,7 @@ struct Data
 
 	// 80080FB0
 	// end of race camera
-	char data_ZoomData[0x24];
+	short EndOfRace_Camera_Size[0x12];
 
 	// 80080fd4 from EndOfRace_Battle
 	int Spin360_heightOffset_cameraPos[5];

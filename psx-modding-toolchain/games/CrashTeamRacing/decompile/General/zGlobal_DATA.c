@@ -75,4 +75,29 @@ struct Data data =
 		
 		.t = {0,-0x20,0}
 	},
+	
+#if 0
+	.EndOfRace_Camera_Size[0x12] =
+	{
+		0,		// mode 0 (following driver)
+		-1,		// mode 1 (doesn't exist)
+		-1,		// mode 2 (doesn't exist)
+		0xC,	// mode 3 (freecam)
+		0x6, 	// mode 4 (lookAt and frozen)
+		-1,		// mode 5 (doesn't exist)
+		-1,		// mode 6 (doesn't exist)
+		0x6,	// mode 7
+		0xC,	// mode 8
+		0x10,	// mode 9 (trackSel and follow path)
+		0x6,	// mode A
+		0xC,	// mode B
+		0x14,	// mode C
+		0x10,	// mode D (lookAt driver and follow path)
+		0xC,	// mode E
+		0,		// mode F (first person)
+		0,		// mode 10 (first person)
+		
+		0, 0,	// alignment
+	},
+#endif
 };

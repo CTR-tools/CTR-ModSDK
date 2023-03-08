@@ -2788,20 +2788,23 @@ void FUN_8001b334(int param_1)
 
   // psVar13 and psVar12 are both short*
 
+  // respawn index
   psVar13 = psVar12 + 1;
   
-  // if nodes exist
+  // number of camera modes
   if (sVar7 != 0) 
   {
     uVar17 = (uint)*(byte *)(iVar22 + 0x495);
-    psVar12 = psVar12 + 2;
+    
+	// camera mode
+	psVar12 = psVar12 + 2;
 	
 	// loop through all of them till one is found
 	// with the same value is driver->0x495 (sorta like 
 	// track progress percentage, but not really)
     do 
 	{
-	  // offset in unk array
+	  // camera mode
       iVar9 = (int)*psVar12;
 	  
 	  // respawn point index
@@ -2814,15 +2817,20 @@ void FUN_8001b334(int param_1)
 	  // next node =
       psVar13 = 
 		
+		// current node +
 		(short *)((int)psVar12 +
         
-		(int)*(short *)(&DAT_80080fb0 + ((iVar9 << 0x10) >> 0xf)) + 2);
+		// EndOfRace_Camera_Size[cameraMode]
+		(int)*(short *)(&DAT_80080fb0 + ((iVar9 << 0x10) >> 0xf)) 
+		
+		// plus another 2 bytes (iVar9 and iVar5)
+		+ 2);
 
 	  if (
 			(
 				(uVar17 == (int)sVar5) ||
 
-																// pointer to LEV
+				// gGT->level1->ptr_restart_points[sVar5]
 				(iVar9 = (int)sVar5 * 0xc + *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c),
 				
 				uVar17 == (uint)*(byte *)(iVar9 + 8))
@@ -2836,9 +2844,14 @@ void FUN_8001b334(int param_1)
 	  {
         psVar16 = psVar12;
       }
+	  
+	  // loop count
       sVar7 = sVar7 + -1;
+	  
+	  // start of next buffer
       psVar12 = psVar13 + 1;
-    } while (sVar7 != 0);
+    
+	} while (sVar7 != 0);
   }
   
   if ((psVar16 == (short *)0x0) || (psVar16 == (short *)piVar18[0x28]))
