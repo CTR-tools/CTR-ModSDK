@@ -6326,6 +6326,22 @@ struct MetaDataLEV
 
 };
 
+struct MetaDataMODEL
+{
+	// debug
+	char* name;
+	
+	// Level Instance Birth
+	// callback after converting
+	// Lev InstDef to Lev Instance
+	void* LInB;
+	
+	// Level Instance Collision
+	// callback after detecting
+	// Lev BSP hitbox collision
+	void* LInC;
+};
+
 // always starts at address 0x80010000,
 // which is 0x800 bytes into the EXE file
 struct rData
@@ -7451,10 +7467,6 @@ struct Data
 	char s_XA_ENG_EXTRA[0x18];
 	char s_XA_ENG_GAME[0x18];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 8007f240 -- SepReview
 	// 80081050 -- UsaRetail
 	// 800800B4 -- JpnTrial
@@ -7471,23 +7483,7 @@ struct Data
 
 	// 80081088
 	// modelID (0-0xe2) is used to access array
-	struct
-	{
-		// debug
-		char* name;
-		
-		// Level Instance Birth
-		// callback after converting
-		// Lev InstDef to Lev Instance
-		void* LInB;
-		
-		// Level Instance Collision
-		// callback after detecting
-		// Lev BSP hitbox collision
-		void* LInC;
-
-	// Number of elements changes...
-	} MetaDataModels
+	struct MetaDataMODEL MetaDataModels
 
 	// June 1999 - 0x5a
 
@@ -7502,6 +7498,10 @@ struct Data
 	#elif BUILD >= UsaRetail
 		[0xe2];
 	#endif
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 8007fce0 -- SepReview
 	// 80081B20 -- UsaRetail
