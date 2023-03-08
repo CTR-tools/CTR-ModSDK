@@ -27,7 +27,7 @@ void PrintText()
 	backup = gGT->camera110_UI.ptrOT;
 
 	// modify
-	gGT->camera110_UI.ptrOT = gGT->ot[gGT->swapchainIndex];
+	gGT->camera110_UI.ptrOT = gGT->ot_camera110_UI[gGT->swapchainIndex];
 
 	// draw
 	DecalFont_DrawLine("Hello World!", 10, 200, 2, 0xffff0000);
