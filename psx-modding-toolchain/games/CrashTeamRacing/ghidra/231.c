@@ -13066,14 +13066,21 @@ undefined4 FUN_800ba0c8(int param_1,int param_2,short *param_3)
       }
     }
 	
+	// teeth->timeOpen == 0 (time to close)
     if (*(int *)(iVar1 + 4) == 0) 
 	{
-      iVar1 = ((int)*param_3 - *(int *)(param_1 + 0x44)) * (int)*(short *)(param_1 + 0x34) +
-              ((int)param_3[2] - *(int *)(param_1 + 0x4c)) * (int)*(short *)(param_1 + 0x40);
+      iVar1 = 
+				// (collObj.x - teethInst.x) * teethInst.matrix[0][2]
+				((int)*param_3 - *(int *)(param_1 + 0x44)) * (int)*(short *)(param_1 + 0x34) +
+				
+				// (collObj.z - teethInst.z) * teethInst.matrix[2][2]
+				((int)param_3[2] - *(int *)(param_1 + 0x4c)) * (int)*(short *)(param_1 + 0x40);
+				
       if (iVar1 < 0) {
         iVar1 = -iVar1;
       }
-      if (iVar1 >> 0xc < 0x81) {
+      if (iVar1 >> 0xc < 0x81) 
+	  {
         return 1;
       }
       return 2;
