@@ -46,7 +46,9 @@ common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_ho
 1006, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
 1020, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
 1111, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
-common, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
+926, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
+1006, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
+1111, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
 
 // USAUnlimitedPenta //
 
@@ -83,4 +85,7 @@ common, 233, CS_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_233_OxideFix.c
 1111, 230, 0x800b2da4, 0x0, ../../Modules/EngineSelect/src/ES_hookCharacterName.s
 common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelect/src/ES_hook230.s
 
-common, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c
+926, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c
+1006, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c
+1111, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c
+1020, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c

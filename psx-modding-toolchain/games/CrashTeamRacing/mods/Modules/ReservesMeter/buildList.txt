@@ -4,8 +4,16 @@
 1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
 
 // Compile the code in the empty space in RDATA
+// the rewritten Turbo_Increment function has inaccurate behavior in the european version (1020), see github issues
+926, exe, rdata_free, 0x0, src/main.c src/Turbo_Increment.c
+1111, exe, rdata_free, 0x0, src/main.c src/Turbo_Increment.c
+926, exe, Turbo_Increment, 0x0, src/Turbo_Increment_Hook.s
+1111, exe, Turbo_Increment, 0x0, src/Turbo_Increment_Hook.s
+1020, exe, rdata_free, 0x0, src/main.c
+
+// these lines are for when you want the red fire improvements and blue fire at the same time
 //common, exe, rdata_free, 0x0, src/main.c src/bluefire.c src/Turbo_Increment.c
-common, exe, rdata_free, 0x0, src/main.c src/Turbo_Increment.c
+//common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
 
 // Compile the ASM injection that will load our code
 903, exe, DrawHUD_CrystalChallenge, -0x8, src/reserveshook.s
@@ -13,5 +21,3 @@ common, exe, rdata_free, 0x0, src/main.c src/Turbo_Increment.c
 1006, exe, DrawHUD_AdvStrings, -0x8, src/reserveshook.s
 1020, exe, DrawHUD_AdvStrings, -0x8, src/reserveshook.s
 1111, exe, DrawHUD_AdvStrings, -0x8, src/reserveshook.s
-common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_Hook.s
-//common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
