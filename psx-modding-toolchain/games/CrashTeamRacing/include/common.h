@@ -6211,8 +6211,8 @@ struct ZoomData
 	short speedMax;
 	
 	// 0x8
-	char percentage1;
-	char percentage2;
+	unsigned char percentage1;
+	unsigned char percentage2;
 	
 	// 0xA
 	short angle[3];
@@ -7425,10 +7425,6 @@ struct Data
 	// 80080F48
 	MATRIX identity;
 	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80080F68
 	struct ZoomData NearCam4x3; // 1P,3P,4P
 	struct ZoomData NearCam8x3; // 2P
@@ -7454,6 +7450,10 @@ struct Data
 	char s_XA_MUSIC[0x14];
 	char s_XA_ENG_EXTRA[0x18];
 	char s_XA_ENG_GAME[0x18];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 8007f240 -- SepReview
 	// 80081050 -- UsaRetail

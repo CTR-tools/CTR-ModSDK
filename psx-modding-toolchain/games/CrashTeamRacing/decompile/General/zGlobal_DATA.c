@@ -76,8 +76,63 @@ struct Data data =
 		.t = {0,-0x20,0}
 	},
 	
-#if 0
-	.EndOfRace_Camera_Size[0x12] =
+	.NearCam4x3 =
+	{
+		.distMin = 0xB3,
+		.distMax = 0xE0,
+		.speedMin = 0x400,
+		.speedMax = 0x1400,
+		.percentage1 = 0xF0, // 90%
+		.percentage2 = 0xFF, // 99%
+		.angle[0] = 0x80,
+		.angle[1] = 0xE0,
+		.angle[2] = 0x70,
+		.vertDistance = 0x40
+	},
+	
+	.NearCam8x3 =
+	{
+		.distMin = 0x133,
+		.distMax = 0x14c,
+		.speedMin = 0x400,
+		.speedMax = 0x1400,
+		.percentage1 = 0xF0, // 90%
+		.percentage2 = 0xFF, // 99%
+		.angle[0] = 0x80,
+		.angle[1] = 0xE0,
+		.angle[2] = 0x60,
+		.vertDistance = 0x60
+	},
+	
+	.FarCam4x3 =
+	{
+		.distMin = 0xE0,
+		.distMax = 0x120,
+		.speedMin = 0x400,
+		.speedMax = 0x1400,
+		.percentage1 = 0xF0, // 90%
+		.percentage2 = 0xFF, // 99%
+		.angle[0] = 0x80,
+		.angle[1] = 0xE0,
+		.angle[2] = 0x60,
+		.vertDistance = 0x60
+	},
+	
+	.FarCam8x3 =
+	{
+		.distMin = 0x180,
+		.distMax = 0x1B3,
+		.speedMin = 0x400,
+		.speedMax = 0x1400,
+		.percentage1 = 0xF0, // 90%
+		.percentage2 = 0xFF, // 99%
+		.angle[0] = 0x80,
+		.angle[1] = 0xE0,
+		.angle[2] = 0x60,
+		.vertDistance = 0xA0
+	},
+	
+	.EndOfRace_Camera_Size =
 	{
 		0,		// mode 0 (following driver)
 		-1,		// mode 1 (doesn't exist)
@@ -92,12 +147,32 @@ struct Data data =
 		0x6,	// mode A
 		0xC,	// mode B
 		0x14,	// mode C
-		0x10,	// mode D (lookAt driver and follow path)
+		0x10,	// mode D (lookAt and follow path)
 		0xC,	// mode E
 		0,		// mode F (first person)
 		0,		// mode 10 (first person)
-		
-		0, 0,	// alignment
 	},
-#endif
+	
+	.Spin360_heightOffset_cameraPos =
+	{
+		0,		// not possible
+		0x80,	// 1P
+		0x60,	// 2P
+		0x80,	// 3P
+		0x80	// 4P
+	},
+	
+	.Spin360_heightOffset_driverPos =
+	{
+		0,		// not possible
+		0x60,	// 1P
+		0x40,	// 2P
+		0x60,	// 3P
+		0x60	// 4P
+	},
+	
+	.s_XA_ENG_XNF 	= "\\XA\\ENG.XNF;1",
+	.s_XA_MUSIC 	= "\\XA\\MUSIC\\S00.XA;1",
+	.s_XA_ENG_EXTRA	= "\\XA\\ENG\\EXTRA\\S00.XA;1",
+	.s_XA_ENG_GAME	= "\\XA\\ENG\\GAME\\S00.XA;1",
 };
