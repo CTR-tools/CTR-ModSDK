@@ -2799,14 +2799,24 @@ void FUN_8001b334(int param_1)
 	// loop through all of them till one is found
 	// with the same value is driver->0x495 (sorta like 
 	// track progress percentage, but not really)
-    do {
+    do 
+	{
+	  // offset in unk array
       iVar9 = (int)*psVar12;
+	  
+	  // respawn point index
       sVar5 = *psVar13;
+	  
       if (iVar9 < 0) {
         iVar9 = -iVar9;
       }
-      psVar13 = (short *)((int)psVar12 +
-                         (int)*(short *)(&DAT_80080fb0 + ((iVar9 << 0x10) >> 0xf)) + 2);
+	  
+	  // next node =
+      psVar13 = 
+		
+		(short *)((int)psVar12 +
+        
+		(int)*(short *)(&DAT_80080fb0 + ((iVar9 << 0x10) >> 0xf)) + 2);
 
 	  if (
 			(
