@@ -249,7 +249,7 @@ void DrawIGT()
 
   gGT = sdata->gGT;
   backupOT = gGT->camera110_UI.ptrOT;
-  gGT->camera110_UI.ptrOT = gGT->ot[gGT->swapchainIndex];
+  gGT->camera110_UI.ptrOT = gGT->ot_camera110_UI[gGT->swapchainIndex];
 
   if (igt->splitFadeTimer > 0)
   {

@@ -17,7 +17,7 @@ void DF_PrintText()
 
   gGT = sdata->gGT;
   backup = gGT->camera110_UI.ptrOT;
-  gGT->camera110_UI.ptrOT = gGT->ot[gGT->swapchainIndex];
+  gGT->camera110_UI.ptrOT = gGT->ot_camera110_UI[gGT->swapchainIndex];
   DecalFont_DrawLine("Debug View: R1+Select", 10, 208, 2, 0xffff0000);
   gGT->camera110_UI.ptrOT = backup;
 }
