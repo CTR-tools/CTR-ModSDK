@@ -5,7 +5,6 @@ void CS_Podium_Stand_Init(u_short *);
 void CS_Podium_Prize_Init(u_int, char*, short *);
 short howl_VolumeGet(int volumeType);
 void Player_Freeze_Init(struct Thread* t, struct Driver* d);
-void ConvertRotToMatrix(u_int *, short *);
 int CS_Thread_Init(u_int, char*, short *, short, u_int);
 void CS_Podium_Camera_ThTick(int param_1);
 

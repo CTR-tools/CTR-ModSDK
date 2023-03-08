@@ -1,7 +1,5 @@
 #include <common.h>
 
-void ConvertRotToMatrix(MATRIX* m, short* rot);
-
 void RunInitHook()
 {
 	int loop;

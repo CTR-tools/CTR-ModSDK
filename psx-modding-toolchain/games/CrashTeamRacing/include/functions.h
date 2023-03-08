@@ -112,6 +112,9 @@ void CTR_ErrorScreen(char r, char g, char b);
 
 // unorganized
 
+void ConvertRotToMatrix(MATRIX* m, short* rot);
+int SquareRoot0_stub (int param_1);
+
 void JitPool_Clear(struct JitPool* AP);
 void JitPool_Init(struct JitPool* AP, int maxItems, int itemSize, char* name);
 int JitPool_Add(struct JitPool* AP);

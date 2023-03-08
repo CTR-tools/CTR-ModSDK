@@ -98,6 +98,19 @@ enum LevelID
 	SCRAPBOOK // 64.
 };
 
+enum KartState
+{
+	NORMAL=0,
+	CRASHING=1,
+	DRIFTING=2,
+	ENGINE_REVVING=4,
+	MASK_GRABBED=5,
+	BLASTED=6,
+	ANTIVSHIFT=9,
+	WARP_PAD=10,
+	FREEZE=11
+};
+
 // from TOMB5, not from psyq
 // https://github.com/TOMB5/TOMB5/blob/master/EMULATOR/LIBSPU.H
 typedef struct {
