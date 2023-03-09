@@ -6211,8 +6211,8 @@ struct ZoomData
 	short speedMax;
 	
 	// 0x8
-	char percentage1;
-	char percentage2;
+	unsigned char percentage1;
+	unsigned char percentage2;
 	
 	// 0xA
 	short angle[3];
@@ -6324,6 +6324,22 @@ struct MetaDataLEV
 	// Used in Aug14 prototype
 	short characterID_SpecialGhost;
 
+};
+
+struct MetaDataMODEL
+{
+	// debug
+	char* name;
+	
+	// Level Instance Birth
+	// callback after converting
+	// Lev InstDef to Lev Instance
+	void* LInB;
+	
+	// Level Instance Collision
+	// callback after detecting
+	// Lev BSP hitbox collision
+	void* LInC;
 };
 
 // always starts at address 0x80010000,
@@ -7425,10 +7441,6 @@ struct Data
 	// 80080F48
 	MATRIX identity;
 	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80080F68
 	struct ZoomData NearCam4x3; // 1P,3P,4P
 	struct ZoomData NearCam8x3; // 2P
@@ -7437,7 +7449,7 @@ struct Data
 
 	// 80080FB0
 	// end of race camera
-	char data_ZoomData[0x24];
+	short EndOfRace_Camera_Size[0x12];
 
 	// 80080fd4 from EndOfRace_Battle
 	int Spin360_heightOffset_cameraPos[5];
@@ -7471,23 +7483,7 @@ struct Data
 
 	// 80081088
 	// modelID (0-0xe2) is used to access array
-	struct
-	{
-		// debug
-		char* name;
-		
-		// Level Instance Birth
-		// callback after converting
-		// Lev InstDef to Lev Instance
-		void* LInB;
-		
-		// Level Instance Collision
-		// callback after detecting
-		// Lev BSP hitbox collision
-		void* LInC;
-
-	// Number of elements changes...
-	} MetaDataModels
+	struct MetaDataMODEL MetaDataModels
 
 	// June 1999 - 0x5a
 
@@ -7502,6 +7498,10 @@ struct Data
 	#elif BUILD >= UsaRetail
 		[0xe2];
 	#endif
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 8007fce0 -- SepReview
 	// 80081B20 -- UsaRetail

@@ -50,7 +50,6 @@ common, 232, AH_WarpPad_MenuBoxFuncPtr, 0x0, General/232/232_03_AH_WarpPad_MenuB
 // exe globals
 common, exe, data, 0x0, General/zGlobal_DATA.c
 common, exe, sdata_static, 0x0, General/zGlobal_SDATA.c
-926, exe, 0x80081088, 0x0, General/zGlobal_MetaDataModels.c
 
 // BOTS
 common, exe, BOTS_SetGlobalNavData, 0x0, General/BOTS/BOTS_SetGlobalNavData.c
