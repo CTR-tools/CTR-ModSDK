@@ -44,7 +44,6 @@ class Main:
         self.num_options = len(self.actions)
         self.window_title = GAME_NAME + " - " + MOD_NAME
         self.python = str()
-        self.compilation_dep = list()
         self.update_title()
 
     def update_title(self):
@@ -86,6 +85,8 @@ class Main:
         return request_user_input(first_option=1, last_option=self.num_options, intro_msg=intro_msg, error_msg=error_msg)
 
     def compile(self) -> None:
+        if os.path.isfile(ABORT_PATH):
+            return # Abort ongoing compilation chain due to an error that occured
         if not check_compile_list():
             print("\n[Compile-py] ERROR: " + COMPILE_LIST + " not found.\n")
             return
@@ -98,9 +99,6 @@ class Main:
                 # if the file was already compiled
                 if MOD_NAME in file.readline().split():
                     return
-        if os.path.isfile(ABORT_PATH):
-            # Abort ongoing compilation chain due to an error that occured
-            return
         game_syms = Syms()
         make = Makefile(game_syms.get_build_id(), game_syms.get_files())
         dependencies = []
@@ -117,22 +115,28 @@ class Main:
             intro_msg = "[Compile-py] Would you like to continue to compilation process?\n\n1 - Yes\n2 - No\n"
             error_msg = "ERROR: Wrong option. Please type a number from 1-2.\n"
             if request_user_input(first_option=1, last_option=2, intro_msg=intro_msg, error_msg=error_msg) == 2:
-                return
+                if root:
+                    delete_file(RECURSIVE_COMP_PATH)
+                    return
+                else:
+                    with open(ABORT_PATH, "w") as _:
+                        return
+
         if make.build_makefile():
             if make.make():
                 with open(RECURSIVE_COMP_PATH, "a") as file:
                     file.write(MOD_NAME + " ")
             else:
-                print("Aborting ongoing compilations. Press enter to continue.")
+                print("[Compile-py] Aborting ongoing compilations. Please press enter to continue.")
                 input()
-                with open(ABORT_PATH, "w") as _:
-                    pass
+                if root:
+                    delete_file(RECURSIVE_COMP_PATH)
+                    return
+                else:
+                    with open(ABORT_PATH, "w") as _:
+                        return
         curr_dir = os.getcwd() + "/"
-        if root:
-            self.compilation_dep.clear()
         for dep in dependencies:
-            if root:
-                self.compilation_dep.append(dep)
             os.chdir(dep)
             command =  self.python + get_distance_to_file(False, CONFIG_FILE) + "../../tools/mod-builder/main.py 1 " + str(game_syms.version)
             os.system(command)
@@ -142,21 +146,13 @@ class Main:
             delete_file(ABORT_PATH)
             self.update_title()
 
-    def clean_files(self) -> None:
+    def clean(self) -> None:
         delete_directory(DEBUG_FOLDER)
         delete_directory(BACKUP_FOLDER)
         delete_directory(OUTPUT_FOLDER)
         delete_directory(TEXTURES_OUTPUT_FOLDER)
         for file in COMPILATION_RESIDUES:
             delete_file(file)
-
-    def clean(self) -> None:
-        self.clean_files()
-        curr_dir = os.getcwd() + "/"
-        for dep in self.compilation_dep:
-            os.chdir(dep)
-            self.clean_files()
-        os.chdir(curr_dir)
 
     def clean_pch(self) -> None:
         clean_pch()
