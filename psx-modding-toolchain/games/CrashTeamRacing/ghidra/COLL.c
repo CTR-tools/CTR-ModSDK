@@ -934,6 +934,7 @@ LAB_8001e4d0:
 				// if you are not being mask grabbed
 				(*(char *)(param_2 + 0x376) != '\x05') &&
 
+				// if not already on killplane
 				((*(ushort *)(param_2 + 0xaa) & 1) == 0)
 			) &&
 
