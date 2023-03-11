@@ -11,9 +11,74 @@ enum PlantAnim
 	PlantAnim_Chew
 };
 
+void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t);
+
+void DECOMP_RB_Plant_ThTick_Transition_HungryToRest(struct Thread* t)
+{
+	struct Instance* plantInst = t->inst;
+	
+	// if animation is not over (backwards)
+	if((plantInst->animFrame-1) > 0)
+	{
+		// increment frame
+		plantInst->animFrame = plantInst->animFrame-1;
+	}
+	
+	// animation is done
+	else
+	{
+		// reset animation
+		plantInst->animFrame = 0;
+		
+		plantInst->animIndex = PlantAnim_Rest;
+		ThTick_SetAndExec(t, DECOMP_RB_Plant_ThTick_Rest);
+	}
+}
+
 void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 {
+	struct Instance* plantInst;
+	struct Plant* plantObj;
 	
+	plantInst = t->inst;
+	plantObj = (struct Plant*)t->object;
+	
+	// if animIndex == PlantAnim_Hungry
+	
+	// if animation is not over
+	if(
+		(plantInst->animFrame+1) < 
+		INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Hungry)
+	)
+	{
+		// increment frame
+		plantInst->animFrame = plantInst->animFrame+1;
+	}
+	
+	// if animation is done
+	else
+	{
+		// reset animation
+		plantInst->animFrame = 0;
+		
+		// After 4 cycles, transition to rest
+		plantObj->cycleCount++;
+		if(plantObj->cycleCount == 4)
+		{
+			plantObj->cycleCount = 0;
+			
+			// end of animation
+			plantInst->animFrame =
+				INSTANCE_GetNumAnimFrames(
+					plantInst, PlantAnim_TransitionRestHungry);
+			
+			plantInst->animIndex = PlantAnim_TransitionRestHungry;
+			ThTick_SetAndExec(t, DECOMP_RB_Plant_ThTick_Transition_HungryToRest);
+		}
+	}
+	
+	// [check for collision]
+	// lines 11320 and beyond
 }
 
 void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t)
@@ -29,7 +94,7 @@ void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t)
 		// if animation is not over
 		if(
 			(plantInst->animFrame+1) < 
-			INSTANCE_GetNumAnimFrames(plantInst, 0)
+			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Rest)
 		)
 		{
 			// increment frame
@@ -57,7 +122,7 @@ void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t)
 		// if animation is not over
 		if(
 			(plantInst->animFrame+1) < 
-			INSTANCE_GetNumAnimFrames(plantInst, 1)
+			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_TransitionRestHungry)
 		)
 		{
 			// increment frame
@@ -67,14 +132,9 @@ void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t)
 		// animation is done
 		else
 		{
-			#if 0
 			plantInst->animFrame = 0;
 			plantInst->animIndex = PlantAnim_Hungry;	
 			ThTick_SetAndExec(t, DECOMP_RB_Plant_ThTick_Hungry);
-			#else
-			plantInst->animFrame = 0;
-			plantInst->animIndex = PlantAnim_Rest;
-			#endif
 		}
 	}
 }

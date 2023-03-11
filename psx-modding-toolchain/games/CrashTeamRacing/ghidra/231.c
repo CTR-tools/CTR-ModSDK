@@ -11307,7 +11307,7 @@ void FUN_800b86b4(int param_1)
 		  // which will play backwards
           *(undefined *)(iVar5 + 0x52) = 1;
 		  
-		  // reset animation counter
+		  // reset cycle counter
           *psVar6 = 0;
 		  
 		  // Change state to
