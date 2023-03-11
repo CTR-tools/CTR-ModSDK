@@ -11543,7 +11543,9 @@ void FUN_800b89a4(int param_1)
       DAT_800b8bf0._0_2_ = 0;
 	  
 	  // LEV -> trial_data -> numPointers
-      if (0 < **(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134)) {
+      if (0 < **(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134)) 
+	  {
+		// strlen
         iVar1 = FUN_80077cc8(param_1 + 8);
 		
         puVar2 = (undefined2 *)
