@@ -3380,10 +3380,15 @@ struct Orca
 struct Plant
 {
 	// 0x0
-	short frameTimer;
+	short cycleCount;
 
 	// 0x2
-	short pos[2];
+	short cooldown;
+	
+	// 0x4
+	// 0: left side of track
+	// 1: right side of track
+	short LeftOrRight;
 
 	// 0x6
 	short boolEating;

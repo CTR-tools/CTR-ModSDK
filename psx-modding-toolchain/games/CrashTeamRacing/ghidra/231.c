@@ -11171,7 +11171,7 @@ DAT_800b8638:
       }
     }
 	
-	// unused mistake
+	// if chewing
     else {
       if (*(char *)(iVar4 + 0x52) == '\x04') {
         
@@ -11408,7 +11408,9 @@ void FUN_800b88a8(int param_1)
   // get instance from thread
   iVar3 = *(int *)(param_1 + 0x34);
   
-  do {
+  do 
+  {
+	// cooldown
     if (psVar4[1] == 0) 
 	{
 	  // Set animation to rest
@@ -11479,7 +11481,10 @@ DAT_800b8968:
         }
       }
     }
-    else {
+    
+	// cooldown
+	else 
+	{
       psVar4[1] = psVar4[1] + -1;
     }
     

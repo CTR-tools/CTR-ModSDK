@@ -12,7 +12,7 @@ void DECOMP_RB_CrateFruit_LInC();
 void DECOMP_RB_CrateWeapon_LInC();
 void DECOMP_RB_CrateTime_LInC();
 void RB_FlameJet_LInB();
-void RB_Plant_LInB();
+void DECOMP_RB_Plant_LInB();
 void DECOMP_RB_Minecart_LInB();
 void RB_Snowball_LInB();
 void DECOMP_RB_Armadillo_LInB();
@@ -325,7 +325,7 @@ struct Data data =
 		SET_MDM(0,RB_FlameJet_LInB,0),
 		
 		// 0x13 - PIRANHA_PLANT (papu pyramid)
-		SET_MDM(0,RB_Plant_LInB,0),
+		SET_MDM(0,DECOMP_RB_Plant_LInB,0),
 		
 		// 0x14 - GATE
 		SET_MDM(0,0,0),
