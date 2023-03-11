@@ -8,10 +8,86 @@ enum PlantAnim
 	PlantAnim_TransitionRestHungry,
 	PlantAnim_Hungry,
 	PlantAnim_Grab,
-	PlantAnim_Chew
+	PlantAnim_Unk4,
+	PlantAnim_Eat,
+};
+
+struct HitboxDesc
+{
+	// check collision
+	struct Instance* inst;
+	struct Thread* thread;
+	struct Thread* bucket;
+	struct BoundingBox bbox;
+	
+	// post collision
+	struct Thread* threadHit; // from bucket
+	void* funcThCollide;
+};
+
+struct HitboxDesc boxDesc =
+{
+	0, 0, 0,
+	{
+		.min = {0xFFC0, 0xFFC0, 0},
+		.max = {0x40, 0x80, 0x1E0}
+	}
 };
 
 void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t);
+
+void DECOMP_RB_Plant_ThTick_Eat(struct Thread* t)
+{
+	
+}
+
+void DECOMP_RB_Plant_ThTick_Grab(struct Thread* t)
+{
+	struct Instance* plantInst;
+	struct Plant* plantObj;
+	
+	struct Instance* hitInst;
+	struct GameTracker* gGT = sdata->gGT;
+	
+	plantInst = t->inst;
+	plantObj = (struct Plant*)t->object;
+	
+	if(plantInst->animIndex == PlantAnim_Grab)
+	{
+		// if animation is not over
+		if(
+			(plantInst->animFrame+1) < 
+			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Hungry)
+		)
+		{
+			// increment frame
+			plantInst->animFrame = plantInst->animFrame+1;
+			
+			boxDesc.bucket = gGT->threadBuckets[MINE].thread;
+			hitInst = LinkedCollide_Hitbox_Desc(&boxDesc);
+			
+			if(hitInst != 0)
+			{
+				boxDesc.threadHit = hitInst->thread;
+				boxDesc.funcThCollide = hitInst->thread->funcThCollide;
+				RB_Hazard_ThCollide_Generic_Alt(&boxDesc);
+			}
+		}
+		
+		else
+		{
+			plantInst->animFrame = 0;
+			plantInst->animIndex = PlantAnim_Eat;
+			ThTick_SetAndExec(t, DECOMP_RB_Plant_ThTick_Eat);
+		}
+	}
+	
+	// what? used or unused?
+	else if(plantInst->animIndex == PlantAnim_Unk4)
+	{
+		// transitions back to Rest, but how?
+	}
+}
 
 void DECOMP_RB_Plant_ThTick_Transition_HungryToRest(struct Thread* t)
 {
@@ -39,6 +115,11 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 {
 	struct Instance* plantInst;
 	struct Plant* plantObj;
+	
+	struct Instance* hitInst;
+	struct Driver* hitDriver;
+	
+	struct GameTracker* gGT = sdata->gGT;
 	
 	plantInst = t->inst;
 	plantObj = (struct Plant*)t->object;
@@ -77,8 +158,58 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 		}
 	}
 	
-	// [check for collision]
-	// lines 11320 and beyond
+	// === collision ===
+	
+	boxDesc.inst = plantInst;
+	boxDesc.thread = t;
+	
+	boxDesc.bucket = gGT->threadBuckets[PLAYER].thread;
+	hitInst = LinkedCollide_Hitbox_Desc(&boxDesc);
+	
+	if(hitInst != 0)
+	{
+		// get driver from instance
+		hitDriver = (struct Driver*)hitInst->thread->object;
+		
+		// attempt to harm driver (eat)
+		if(RB_Hazard_HurtDriver(hitDriver,5,0,0) != 0)
+		{
+			// play PlantGrab sound
+			OtherFX_Play(0x6d, 0);
+			plantObj->boolEatingPlayer = 1;
+			
+EatDriver:
+			
+			plantInst->animFrame = 0;
+			plantInst->animIndex = PlantAnim_Grab;
+			
+			plantObj->cycleCount = 0;
+			hitDriver->plantEatingMe = t;
+			
+			ThTick_SetAndExec(t, DECOMP_RB_Plant_ThTick_Grab);
+		}
+		
+		return;
+	}
+	
+	// === did not collide with PLAYER ===
+	
+	// bosses are immune
+	if((gGT->gameMode1 & 0x80000000) != 0) return;
+	
+	boxDesc.bucket = gGT->threadBuckets[ROBOT].thread;
+	hitInst = LinkedCollide_Hitbox_Desc(&boxDesc);
+	
+	if(hitInst != 0)
+	{		
+		// get driver from instance
+		hitDriver = (struct Driver*)hitInst->thread->object;
+		
+		RB_Hazard_HurtDriver(hitDriver,5,0,0);
+		plantObj->boolEatingPlayer = 0;
+		
+		goto EatDriver;
+	}
 }
 
 void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t)
@@ -175,7 +306,7 @@ void DECOMP_RB_Plant_LInB(struct Instance* inst)
 	
 	plantObj = ((struct Plant*)t->object);
 	plantObj->cycleCount = 0;
-	plantObj->boolEating = 0;
+	plantObj->boolEatingPlayer = 0;
 	
 	ptrSpawnType1 = sdata->gGT->level1->ptrSpawnType1;
 	if(ptrSpawnType1->count > 0)

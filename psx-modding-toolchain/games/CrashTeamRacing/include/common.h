@@ -3391,7 +3391,7 @@ struct Plant
 	short LeftOrRight;
 
 	// 0x6
-	short boolEating;
+	short boolEatingPlayer;
 
 	// 0x8 bytes large
 };
