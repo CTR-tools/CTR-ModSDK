@@ -7,9 +7,11 @@ enum PlantAnim
 	PlantAnim_Rest,
 	PlantAnim_TransitionRestHungry,
 	PlantAnim_Hungry,
-	PlantAnim_Grab,
-	PlantAnim_Unk4,
-	PlantAnim_Eat,
+	PlantAnim_GrabDriver,
+	PlantAnim_GrabMine, // unused
+	PlantAnim_StartEat,
+	PlantAnim_Chew,
+	PlantAnim_Spit
 };
 
 struct HitboxDesc
@@ -52,7 +54,7 @@ void DECOMP_RB_Plant_ThTick_Grab(struct Thread* t)
 	plantInst = t->inst;
 	plantObj = (struct Plant*)t->object;
 	
-	if(plantInst->animIndex == PlantAnim_Grab)
+	if(plantInst->animIndex == PlantAnim_GrabDriver)
 	{
 		// if animation is not over
 		if(
@@ -77,16 +79,19 @@ void DECOMP_RB_Plant_ThTick_Grab(struct Thread* t)
 		else
 		{
 			plantInst->animFrame = 0;
-			plantInst->animIndex = PlantAnim_Eat;
+			plantInst->animIndex = PlantAnim_StartEat;
 			ThTick_SetAndExec(t, DECOMP_RB_Plant_ThTick_Eat);
 		}
 	}
 	
-	// what? used or unused?
-	else if(plantInst->animIndex == PlantAnim_Unk4)
+	#if 0
+	// UNUSED!
+	else if(plantInst->animIndex == PlantAnim_GrabMine)
 	{
-		// transitions back to Rest, but how?
+		// play animation, make mine explode,
+		// then return to PlantAnim_Rest
 	}
+	#endif
 }
 
 void DECOMP_RB_Plant_ThTick_Transition_HungryToRest(struct Thread* t)
@@ -181,7 +186,7 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 EatDriver:
 			
 			plantInst->animFrame = 0;
-			plantInst->animIndex = PlantAnim_Grab;
+			plantInst->animIndex = PlantAnim_GrabDriver;
 			
 			plantObj->cycleCount = 0;
 			hitDriver->plantEatingMe = t;
