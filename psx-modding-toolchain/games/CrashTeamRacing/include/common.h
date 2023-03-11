@@ -3316,7 +3316,7 @@ struct Minecart
 	short posStart[3];
 
 	// 0x6
-	short currSpeed;
+	short betweenPoints_currFrame;
 
 	// 0x8
 	short posEnd[3];
@@ -3331,7 +3331,7 @@ struct Minecart
 	short rotCurr[3];
 
 	// 0x1e
-	short maxSpeed;
+	short betweenPoints_numFrames;
 
 	// 0x20
 	short rotDesired[3];

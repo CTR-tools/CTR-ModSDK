@@ -34,10 +34,10 @@ common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c
 // skip Banner
 common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_080_083_RB_Armadillo.c
 common, 231, RB_Fireball_ThTick, 0x0, General/231/231_084_086_RB_Fireball.c
-//common, 231, RB_FlameJet_Particles, 0x0, General/231/231_087_089_RB_FlameJet.c
-// skip Follower
+// skip FlameJet, Follower
 common, 231, RB_Fruit_ThTick, 0x0, General/231/231_093_096_RB_Fruit.c
-// skip Minecart, Orca, Plant
+common, 231, RB_Minecart_ThTick, 0x0, General/231/231_097_098_RB_Minecart.c
+// skip Orca, Plant
 common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_108_111_RB_Seal.c
 // skip Snowball, Spider, StartText, Teeth
 common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c

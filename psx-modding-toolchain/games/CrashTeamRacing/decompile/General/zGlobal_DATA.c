@@ -13,7 +13,7 @@ void DECOMP_RB_CrateWeapon_LInC();
 void DECOMP_RB_CrateTime_LInC();
 void RB_FlameJet_LInB();
 void RB_Plant_LInB();
-void RB_Minecart_LInB();
+void DECOMP_RB_Minecart_LInB();
 void RB_Snowball_LInB();
 void DECOMP_RB_Armadillo_LInB();
 void DECOMP_RB_Blade_LInB();
@@ -367,7 +367,7 @@ struct Data data =
 		SET_MDM(0,0,0),
 		
 		// 0x21 - DYNAMIC_MINE_CART
-		SET_MDM(0,RB_Minecart_LInB,0),
+		SET_MDM(0,DECOMP_RB_Minecart_LInB,0),
 		
 		// 0x22 - TEMP_SNOWBALL (blizzard bluff boulder)
 		SET_MDM(0,RB_Snowball_LInB,0),
@@ -501,8 +501,8 @@ struct Data data =
 		// 0x4c - DYNAMIC_SEAL (polar pass)
 		SET_MDM(0,DECOMP_RB_Seal_LInB,0),
 		
-		// 0x4d - DYNAMIC_ORCA
-		SET_MDM(0,RB_Orca_LInB,0),
+		// 0x4d - DYNAMIC_ORCA (unused, polar pass)
+		SET_MDM(0,0 /*RB_Orca_LInB*/,0),
 		
 		// 0x4e - DYNAMIC_BARREL (sewer speedway)
 		SET_MDM(0,RB_Snowball_LInB,0),
@@ -511,7 +511,7 @@ struct Data data =
 		SET_MDM(0,RB_Baron_LInB,0),
 		
 		// 0x50 - DYNAMIC_SKUNK (unused, unknown track)
-		SET_MDM(0,RB_Minecart_LInB,0),
+		SET_MDM(0,0 /*RB_Minecart_LInB*/,0),
 		
 		// 0x51 - DYNAMIC_TURTLE (mystery caves)
 		SET_MDM(0,DECOMP_RB_Turtle_LInB,DECOMP_RB_Turtle_LInC),
