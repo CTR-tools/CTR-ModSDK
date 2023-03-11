@@ -3316,7 +3316,7 @@ struct Minecart
 	short posStart[3];
 
 	// 0x6
-	short currSpeed;
+	short betweenPoints_currFrame;
 
 	// 0x8
 	short posEnd[3];
@@ -3331,7 +3331,7 @@ struct Minecart
 	short rotCurr[3];
 
 	// 0x1e
-	short maxSpeed;
+	short betweenPoints_numFrames;
 
 	// 0x20
 	short rotDesired[3];
@@ -3380,10 +3380,15 @@ struct Orca
 struct Plant
 {
 	// 0x0
-	short frameTimer;
+	short cycleCount;
 
 	// 0x2
-	short pos[2];
+	short cooldown;
+	
+	// 0x4
+	// 0: left side of track
+	// 1: right side of track
+	short LeftOrRight;
 
 	// 0x6
 	short boolEating;

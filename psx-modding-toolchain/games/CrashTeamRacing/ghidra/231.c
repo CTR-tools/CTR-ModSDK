@@ -10246,17 +10246,17 @@ void FUN_800b7338(int param_1)
   // LEV -> numSpawn2
   if (*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x138) != 0) 
   {
-	// if current speed is less than max
+	// if not reached next point
     if (psVar7[3] < psVar7[0xf]) 
 	{
-	  // increase speed
+	  // increment interpolation to next point
       psVar7[3] = psVar7[3] + 1;
     }
 	
-	// if max speed
+	// if reached next point
     else 
 	{
-	  // slow down?
+	  // reset interpolation between points
       psVar7[3] = 1;
 	  
 	  // position index < num positions (LEV -> ptrSpawn2)
@@ -10340,31 +10340,39 @@ void FUN_800b7338(int param_1)
         psVar7[0xe] = psVar7[0x12];
       }
     }
+	
+	// from array
     *(undefined *)(iVar8 + 0x50) = (&DAT_800b7b20)[(int)psVar7[10] * 2];
     *(undefined *)(iVar8 + 0x51) = (&DAT_800b7b20)[(int)psVar7[10] * 2];
-    iVar4 = (int)psVar7[0xf];
-    if (iVar4 == 0) {
-      trap(0x1c00);
-    }
-    if ((iVar4 == -1) && ((int)psVar7[3] * (int)psVar7[7] == -0x80000000)) {
-      trap(0x1800);
-    }
-    *(int *)(iVar8 + 0x44) = (int)*psVar7 - ((int)psVar7[3] * (int)psVar7[7]) / iVar4;
-    iVar4 = (int)psVar7[0xf];
-    if (iVar4 == 0) {
-      trap(0x1c00);
-    }
-    if ((iVar4 == -1) && ((int)psVar7[3] * (int)psVar7[8] == -0x80000000)) {
-      trap(0x1800);
-    }
+    
+	// interpolate points
+	iVar4 = (int)psVar7[0xf];
+	
+	// safety check
+    if (iVar4 == 0) trap(0x1c00);
+    if ((iVar4 == -1) && ((int)psVar7[3] * (int)psVar7[7] == -0x80000000)) trap(0x1800);
+    
+	// posX
+	*(int *)(iVar8 + 0x44) = (int)*psVar7 - ((int)psVar7[3] * (int)psVar7[7]) / iVar4;
+    
+	// interpolate points
+	iVar4 = (int)psVar7[0xf];
+
+	// safety check
+    if (iVar4 == 0) trap(0x1c00);
+    if ((iVar4 == -1) && ((int)psVar7[3] * (int)psVar7[7] == -0x80000000)) trap(0x1800);
+	
+	// posY
     *(int *)(iVar8 + 0x48) = (int)psVar7[1] - ((int)psVar7[3] * (int)psVar7[8]) / iVar4;
+	
+	// interpolate points
     iVar4 = (int)psVar7[0xf];
-    if (iVar4 == 0) {
-      trap(0x1c00);
-    }
-    if ((iVar4 == -1) && ((int)psVar7[3] * (int)psVar7[9] == -0x80000000)) {
-      trap(0x1800);
-    }
+
+	// safety check
+    if (iVar4 == 0) trap(0x1c00);
+    if ((iVar4 == -1) && ((int)psVar7[3] * (int)psVar7[7] == -0x80000000)) trap(0x1800);
+	
+	// posZ
     *(int *)(iVar8 + 0x4c) = (int)psVar7[2] - ((int)psVar7[3] * (int)psVar7[9]) / iVar4;
 	
 	// RB_Hazard_InterpolateValue x2
@@ -10487,7 +10495,7 @@ void FUN_800b7814(int param_1)
   *(undefined2 *)(param_1 + 0x1e) = 0x1000;
   *(undefined2 *)(param_1 + 0x20) = 0x1000;
   
-  // minecart speed
+  // minecart speed (8 frames between points)
   psVar6[0xf] = 8;
   
   // rotation speed
@@ -10514,7 +10522,7 @@ void FUN_800b7814(int param_1)
   *(undefined2 *)(param_1 + 0x1e) = uVar2;
   *(undefined2 *)(param_1 + 0x20) = uVar2;
   
-  // max speed
+  // speed (4 frames between points)
   psVar6[0xf] = 4;
   
   // rotation speed
@@ -10526,7 +10534,7 @@ LAB_800b7980:
   // desired position index
   iVar4 = (int)psVar6[10];
   
-  // current speed
+  // betweenPoints currFrame
   psVar6[3] = 0;
   
   // pos1 = points[desired-1]
@@ -11163,7 +11171,7 @@ DAT_800b8638:
       }
     }
 	
-	// unused mistake
+	// if chewing
     else {
       if (*(char *)(iVar4 + 0x52) == '\x04') {
         
@@ -11400,7 +11408,9 @@ void FUN_800b88a8(int param_1)
   // get instance from thread
   iVar3 = *(int *)(param_1 + 0x34);
   
-  do {
+  do 
+  {
+	// cooldown
     if (psVar4[1] == 0) 
 	{
 	  // Set animation to rest
@@ -11471,7 +11481,10 @@ DAT_800b8968:
         }
       }
     }
-    else {
+    
+	// cooldown
+	else 
+	{
       psVar4[1] = psVar4[1] + -1;
     }
     
@@ -11535,7 +11548,9 @@ void FUN_800b89a4(int param_1)
       DAT_800b8bf0._0_2_ = 0;
 	  
 	  // LEV -> trial_data -> numPointers
-      if (0 < **(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134)) {
+      if (0 < **(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134)) 
+	  {
+		// strlen
         iVar1 = FUN_80077cc8(param_1 + 8);
 		
         puVar2 = (undefined2 *)
