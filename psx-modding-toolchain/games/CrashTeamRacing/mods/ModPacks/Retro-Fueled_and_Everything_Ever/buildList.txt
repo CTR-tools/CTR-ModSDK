@@ -35,11 +35,7 @@ common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_ho
 // Retro-Fueled //
 
 // Hooks
-926, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, ../../Modules/Retro-Fueled/src/hookNewGame.s
-1020, exe, GAMEPROG_GetPtrHighScoreTrack, -0x8, ../../Modules/Retro-Fueled/src/hookNewGame.s
 common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
-926, exe, LOAD_VramFile, -0x8, ../../Modules/Retro-Fueled/src/hookVRAM.s
-1020, exe, LOAD_VramFile, -0x8, ../../Modules/Retro-Fueled/src/hookVRAM.s
 
 // Erasing the original reserve cancelation if, so that we can run our own code
 926, exe, Player_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
@@ -55,13 +51,83 @@ common, exe, OnCollide_Drivers, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPad
 // Standardize turbo pad reserves
 common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
 
-// Compile texture replacements to kernel for US and PAL versions
-926, iso, 0x8000A000, 0x0, ../../Modules/Retro-Fueled/src/logo.c, logo.bin
-926, iso, 0x8000C400, 0x0, ../../Modules/Retro-Fueled/src/banner.c, banner.bin
-926, iso, 0x8000E400, 0x0, ../../Modules/Retro-Fueled/src/banner_p.c, banner_p.bin
-1020, iso, 0x8000A000, 0x0, ../../Modules/Retro-Fueled/src/logo.c, logo.bin
-1020, iso, 0x8000C400, 0x0, ../../Modules/Retro-Fueled/src/banner.c, banner.bin
-1020, iso, 0x8000E400, 0x0, ../../Modules/Retro-Fueled/src/banner_p.c, banner_p.bin
+// Texture replacements
+// Replacements are only for US and Europe, Japan has these textures either drastically or slightly altered and I can't be bothered
+// Slide Coliseum (secret1) doesn't get the texture replacement because it doesn't have blue fire at all
+926, bigfilelevelsmenu_modelsdatavrm, 0x0, 0x0, ../../Modules/Retro-Fueled/assets/logo/data.vrm
+1020, bigfilelevelsmenu_modelsdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/logo/data.vrm
+926, bigfilelevelstracksarena21Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/arena21P.vrm
+926, bigfilelevelstracksblimp11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/blimp11P.vrm
+926, bigfilelevelstrackscastle11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/castle11P.vrm
+926, bigfilelevelstrackscave11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/cave11P.vrm
+926, bigfilelevelstrackscoco11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/coco11P.vrm
+926, bigfilelevelstracksdesert21Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/desert21P.vrm
+926, bigfilelevelstracksice11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/ice11P.vrm
+926, bigfilelevelstracksisland11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/island11P.vrm
+926, bigfilelevelstrackslabs11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/labs11P.vrm
+926, bigfilelevelstracksproto81Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/proto81P.vrm
+926, bigfilelevelstracksproto91Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/proto91P.vrm
+//926, bigfilelevelstrackssecret11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/secret11P.vrm
+926, bigfilelevelstrackssecret21Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/secret21P.vrm
+926, bigfilelevelstrackssewer11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/sewer11P.vrm
+926, bigfilelevelstracksspace1Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/space1P.vrm
+926, bigfilelevelstrackstemple11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/temple11P.vrm
+926, bigfilelevelstrackstemple21Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/temple21P.vrm
+926, bigfilelevelstrackstube11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/tube11P.vrm
+926, bigfilelevelstracksarena2relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/arena2relic.vrm
+926, bigfilelevelstracksblimp1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/blimp1relic.vrm
+926, bigfilelevelstrackscastle1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/castle1relic.vrm
+926, bigfilelevelstrackscave1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/cave1relic.vrm
+926, bigfilelevelstrackscoco1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/coco1relic.vrm
+926, bigfilelevelstracksdesert2relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/desert2relic.vrm
+926, bigfilelevelstracksice1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/ice1relic.vrm
+926, bigfilelevelstracksisland1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/island1relic.vrm
+926, bigfilelevelstrackslabs1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/labs1relic.vrm
+926, bigfilelevelstracksproto8relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/proto8relic.vrm
+926, bigfilelevelstracksproto9relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/proto9relic.vrm
+//926, bigfilelevelstrackssecret1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/secret1relic.vrm
+926, bigfilelevelstrackssecret2relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/secret2relic.vrm
+926, bigfilelevelstrackssewer1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/sewer1relic.vrm
+926, bigfilelevelstracksspacerelicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/spacerelic.vrm
+926, bigfilelevelstrackstemple1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/temple1relic.vrm
+926, bigfilelevelstrackstemple2relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/temple2relic.vrm
+926, bigfilelevelstrackstube1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/tube1relic.vrm
+1020, bigfilelevelstracksarena21Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/arena21P.vrm
+1020, bigfilelevelstracksblimp11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/blimp11P.vrm
+1020, bigfilelevelstrackscastle11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/castle11P.vrm
+1020, bigfilelevelstrackscave11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/cave11P.vrm
+1020, bigfilelevelstrackscoco11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/coco11P.vrm
+1020, bigfilelevelstracksdesert21Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/desert21P.vrm
+1020, bigfilelevelstracksice11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/ice11P.vrm
+1020, bigfilelevelstracksisland11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/island11P.vrm
+1020, bigfilelevelstrackslabs11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/labs11P.vrm
+1020, bigfilelevelstracksproto81Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/proto81P.vrm
+1020, bigfilelevelstracksproto91Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/proto91P.vrm
+//1020, bigfilelevelstrackssecret11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/secret11P.vrm
+1020, bigfilelevelstrackssecret21Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/secret21P.vrm
+1020, bigfilelevelstrackssewer11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/sewer11P.vrm
+1020, bigfilelevelstracksspace1Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/space1P.vrm
+1020, bigfilelevelstrackstemple11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/temple11P.vrm
+1020, bigfilelevelstrackstemple21Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/temple21P.vrm
+1020, bigfilelevelstrackstube11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/tube11P.vrm
+1020, bigfilelevelstracksarena2relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/arena2relic.vrm
+1020, bigfilelevelstracksblimp1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/blimp1relic.vrm
+1020, bigfilelevelstrackscastle1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/castle1relic.vrm
+1020, bigfilelevelstrackscave1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/cave1relic.vrm
+1020, bigfilelevelstrackscoco1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/coco1relic.vrm
+1020, bigfilelevelstracksdesert2relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/desert2relic.vrm
+1020, bigfilelevelstracksice1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/ice1relic.vrm
+1020, bigfilelevelstracksisland1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/island1relic.vrm
+1020, bigfilelevelstrackslabs1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/labs1relic.vrm
+1020, bigfilelevelstracksproto8relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/proto8relic.vrm
+1020, bigfilelevelstracksproto9relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/proto9relic.vrm
+//1020, bigfilelevelstrackssecret1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/secret1relic.vrm
+1020, bigfilelevelstrackssecret2relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/secret2relic.vrm
+1020, bigfilelevelstrackssewer1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/sewer1relic.vrm
+1020, bigfilelevelstracksspacerelicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/spacerelic.vrm
+1020, bigfilelevelstrackstemple1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/temple1relic.vrm
+1020, bigfilelevelstrackstemple2relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/temple2relic.vrm
+1020, bigfilelevelstrackstube1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/tube1relic.vrm
 
 // Modify Turbo_Increment function to allow for USF stacking, and also fix red fire
 // this rewritten function has inaccurate behavior in the european version (1020), see github issues
@@ -106,4 +172,4 @@ common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelect/
 common, 230, MM_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_230.c
 
 // Compile code to empty spaces in RDATA //
-common, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c ../../Modules/Retro-Fueled/src/texturereplacements.c ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c
+common, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c  ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c
