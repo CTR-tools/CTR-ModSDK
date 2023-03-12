@@ -11127,7 +11127,7 @@ void FUN_800b84f0(int param_1)
   
   do 
   {
-	// if grabbing
+	// if grabbing driver
     if (*(char *)(iVar4 + 0x52) == '\x03') {
       
 	  // instance -> animFrame
@@ -11171,7 +11171,7 @@ DAT_800b8638:
       }
     }
 	
-	// if chewing
+	// if grabbing mine (unused)
     else {
       if (*(char *)(iVar4 + 0x52) == '\x04') {
         
@@ -11307,7 +11307,7 @@ void FUN_800b86b4(int param_1)
 		  // which will play backwards
           *(undefined *)(iVar5 + 0x52) = 1;
 		  
-		  // reset animation counter
+		  // reset cycle counter
           *psVar6 = 0;
 		  
 		  // Change state to
