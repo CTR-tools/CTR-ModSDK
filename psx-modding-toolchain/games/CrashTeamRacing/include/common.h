@@ -2980,6 +2980,21 @@ struct Title
 	// 0x24 -- size of struct
 };
 
+// used all over 231,
+// Plant, FlameJet, etc
+struct HitboxDesc
+{
+	// check collision
+	struct Instance* inst;
+	struct Thread* thread;
+	struct Thread* bucket;
+	struct BoundingBox bbox;
+	
+	// post collision
+	struct Thread* threadHit; // from bucket
+	void* funcThCollide;
+};
+
 // bomb, missile, warpball
 // yes, the bomb chases you and steers towards targets
 struct TrackerWeapon

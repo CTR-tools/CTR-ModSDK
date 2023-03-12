@@ -14,20 +14,7 @@ enum PlantAnim
 	PlantAnim_Spit
 };
 
-struct HitboxDesc
-{
-	// check collision
-	struct Instance* inst;
-	struct Thread* thread;
-	struct Thread* bucket;
-	struct BoundingBox bbox;
-	
-	// post collision
-	struct Thread* threadHit; // from bucket
-	void* funcThCollide;
-};
-
-struct HitboxDesc boxDesc =
+struct HitboxDesc plantBoxDesc =
 {
 	0, 0, 0,
 	{
@@ -219,14 +206,14 @@ void DECOMP_RB_Plant_ThTick_Grab(struct Thread* t)
 			// increment frame
 			plantInst->animFrame = plantInst->animFrame+1;
 			
-			boxDesc.bucket = gGT->threadBuckets[MINE].thread;
-			hitInst = LinkedCollide_Hitbox_Desc(&boxDesc);
+			plantBoxDesc.bucket = gGT->threadBuckets[MINE].thread;
+			hitInst = LinkedCollide_Hitbox_Desc(&plantBoxDesc);
 			
 			if(hitInst != 0)
 			{
-				boxDesc.threadHit = hitInst->thread;
-				boxDesc.funcThCollide = hitInst->thread->funcThCollide;
-				RB_Hazard_ThCollide_Generic_Alt(&boxDesc);
+				plantBoxDesc.threadHit = hitInst->thread;
+				plantBoxDesc.funcThCollide = hitInst->thread->funcThCollide;
+				RB_Hazard_ThCollide_Generic_Alt(&plantBoxDesc);
 			}
 		}
 		
@@ -319,11 +306,11 @@ void DECOMP_RB_Plant_ThTick_Hungry(struct Thread* t)
 	
 	// === collision ===
 	
-	boxDesc.inst = plantInst;
-	boxDesc.thread = t;
+	plantBoxDesc.inst = plantInst;
+	plantBoxDesc.thread = t;
 	
-	boxDesc.bucket = gGT->threadBuckets[PLAYER].thread;
-	hitInst = LinkedCollide_Hitbox_Desc(&boxDesc);
+	plantBoxDesc.bucket = gGT->threadBuckets[PLAYER].thread;
+	hitInst = LinkedCollide_Hitbox_Desc(&plantBoxDesc);
 	
 	if(hitInst != 0)
 	{
@@ -356,8 +343,8 @@ EatDriver:
 	// bosses are immune
 	if((gGT->gameMode1 & 0x80000000) != 0) return;
 	
-	boxDesc.bucket = gGT->threadBuckets[ROBOT].thread;
-	hitInst = LinkedCollide_Hitbox_Desc(&boxDesc);
+	plantBoxDesc.bucket = gGT->threadBuckets[ROBOT].thread;
+	hitInst = LinkedCollide_Hitbox_Desc(&plantBoxDesc);
 	
 	if(hitInst != 0)
 	{		
