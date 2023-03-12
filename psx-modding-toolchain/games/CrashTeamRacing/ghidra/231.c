@@ -6288,10 +6288,10 @@ void FUN_800b3120(int param_1)
   
   puVar1 = PTR_DAT_8008d2ac;
   
-  // LEV -> numSpawn1
+  // LEV -> numSpawnType2_PosRot
   if (*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x140) != 0) 
   {
-	// LEV -> ptrSpawn1
+	// LEV -> ptrSpawnType2_PosRot
     iVar7 = **(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x144);
 	
     iVar2 = (int)*(short *)(iVar5 + 0x2c) + 1;
@@ -6316,12 +6316,14 @@ void FUN_800b3120(int param_1)
         FUN_8002f0dc(0xc,iVar6);
       }
 	  
+	  // frame 0-16
       if (*(short *)(iVar5 + 0x2c) < 0x11) 
 	  {
 		// stop audio
         FUN_8002e724(iVar5 + 0x24);
       }
       
+	  // frame 17+
 	  else 
 	  {
 		// PlaySound3D_Flags

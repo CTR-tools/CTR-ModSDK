@@ -4,7 +4,7 @@
 // this is only for LevInstances,
 // NonLev-related entries are empty
 
-void RB_Default_LInB();
+void DECOMP_RB_Default_LInB();
 void DECOMP_RB_Fruit_LInB();
 void DECOMP_RB_Fruit_LInC();
 void RB_GenericMine_LInB();
@@ -19,7 +19,7 @@ void DECOMP_RB_Armadillo_LInB();
 void DECOMP_RB_Blade_LInB();
 void DECOMP_RB_Seal_LInB();
 void RB_Orca_LInB();
-void RB_Baron_LInB();
+void DECOMP_RB_Baron_LInB();
 void DECOMP_RB_Turtle_LInB();
 void DECOMP_RB_Turtle_LInC();
 void RB_Spider_LInB();
@@ -289,10 +289,10 @@ struct Data data =
 		SET_MDM(0,RB_GenericMine_LInB,0),
 		
 		// 0x07 - PU_FRUIT_CRATE
-		SET_MDM(0,RB_Default_LInB,DECOMP_RB_CrateFruit_LInC),
+		SET_MDM(0,DECOMP_RB_Default_LInB,DECOMP_RB_CrateFruit_LInC),
 		
 		// 0x08 - PU_RANDOM_CRATE (Weapon Box)
-		SET_MDM(0,RB_Default_LInB,DECOMP_RB_CrateWeapon_LInC),
+		SET_MDM(0,DECOMP_RB_Default_LInB,DECOMP_RB_CrateWeapon_LInC),
 		
 		// 0x09 - PU_TIME_CRATE_1 (unused duplicate of 0x5C)
 		SET_MDM(0,0,0),
@@ -508,7 +508,7 @@ struct Data data =
 		SET_MDM(0,DECOMP_RB_Snowball_LInB,0),
 		
 		// 0x4f - DYNAMIC_VONLABASS (unused, hot air skyway)
-		SET_MDM(0,RB_Baron_LInB,0),
+		SET_MDM(0,DECOMP_RB_Baron_LInB,0),
 		
 		// 0x50 - DYNAMIC_SKUNK (unused, unknown track)
 		SET_MDM(0,0 /*RB_Minecart_LInB*/,0),
@@ -527,7 +527,7 @@ struct Data data =
 		SET_MDM(0,DECOMP_RB_Fireball_LInB,0),
 		
 		// 0x55 - DYNAMIC_DRUM (n gin labs barrel)
-		SET_MDM(0,RB_Baron_LInB,0),
+		SET_MDM(0,DECOMP_RB_Baron_LInB,0),
 		
 		// 0x56 - DYNAMIC_SHIELD (blue shield)
 		SET_MDM(0,0,0),
@@ -548,7 +548,7 @@ struct Data data =
 		SET_MDM(0,0,0),
 		
 		// 0x5c - STATIC_TIME_CRATE_01
-		SET_MDM(0,RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
+		SET_MDM(0,DECOMP_RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
 		
 		// 0x5d - DYNAMIC_HIGHLIGHT
 		SET_MDM(0,0,0),
@@ -574,10 +574,10 @@ struct Data data =
 		SET_MDM(0,0,0),
 		
 		// 0x64 - STATIC_TIME_CRATE_02
-		SET_MDM(0,RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
+		SET_MDM(0,DECOMP_RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
 		
 		// 0x65 - STATIC_TIME_CRATE_03
-		SET_MDM(0,RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
+		SET_MDM(0,DECOMP_RB_Default_LInB,DECOMP_RB_CrateTime_LInC),
 		
 		// 0x66 - STATIC_INTRO_TROPHY
 		SET_MDM(0,0,0),

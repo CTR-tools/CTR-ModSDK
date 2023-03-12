@@ -48,7 +48,6 @@ RollSound:
 		PlaySound3D_Flags(&snowObj->audioPtr, soundID, snowInst);
 	}
 	
-	// [12046 - 12058]
 	baseShort = snowObj->pointIndex;
 	if(baseShort > snowObj->numPoints)
 		baseShort = (snowObj->numPoints*2) - baseShort;

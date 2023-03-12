@@ -1,6 +1,6 @@
 #include <common.h>
 
-void RB_Default_LInB(struct Instance* inst)
+void DECOMP_RB_Default_LInB(struct Instance* inst)
 {
 	// low ram budget
 	register char* scratch asm("$at");
