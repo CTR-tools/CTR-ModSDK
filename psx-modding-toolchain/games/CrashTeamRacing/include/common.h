@@ -3450,7 +3450,7 @@ struct Snowball
 	short numPoints;
 
 	// 0xA
-	short snowball_ID;
+	short snowball_ID; // unused
 
 	// 0xC
 	int audioPtr;
@@ -4386,10 +4386,10 @@ struct Level
 	// N Gin Labs barrel, more like a path
 
 	// 0x140
-	int cnt_spawn_arrays;
+	int numSpawnType2_again;
 
 	// 0x144
-	void* ptr_spawn_arrays;
+	struct SpawnType2* ptrSpawnType2_again;
 
 	// restart_points is for respawning
 	// driver on track after falling off

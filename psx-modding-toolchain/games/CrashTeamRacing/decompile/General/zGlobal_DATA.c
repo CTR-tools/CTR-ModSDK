@@ -14,7 +14,7 @@ void DECOMP_RB_CrateTime_LInC();
 void RB_FlameJet_LInB();
 void DECOMP_RB_Plant_LInB();
 void DECOMP_RB_Minecart_LInB();
-void RB_Snowball_LInB();
+void DECOMP_RB_Snowball_LInB();
 void DECOMP_RB_Armadillo_LInB();
 void DECOMP_RB_Blade_LInB();
 void DECOMP_RB_Seal_LInB();
@@ -370,7 +370,7 @@ struct Data data =
 		SET_MDM(0,DECOMP_RB_Minecart_LInB,0),
 		
 		// 0x22 - TEMP_SNOWBALL (blizzard bluff boulder)
-		SET_MDM(0,RB_Snowball_LInB,0),
+		SET_MDM(0,DECOMP_RB_Snowball_LInB,0),
 		
 		// 0x23 - FINISH_LINE
 		SET_MDM(0,0,0),
@@ -505,7 +505,7 @@ struct Data data =
 		SET_MDM(0,0 /*RB_Orca_LInB*/,0),
 		
 		// 0x4e - DYNAMIC_BARREL (sewer speedway)
-		SET_MDM(0,RB_Snowball_LInB,0),
+		SET_MDM(0,DECOMP_RB_Snowball_LInB,0),
 		
 		// 0x4f - DYNAMIC_VONLABASS (unused, hot air skyway)
 		SET_MDM(0,RB_Baron_LInB,0),
