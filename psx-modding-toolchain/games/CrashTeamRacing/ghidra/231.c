@@ -6407,7 +6407,9 @@ void FUN_800b3120(int param_1)
                            *(int *)(*(int *)(*(int *)(puVar1 + 0x160) + 0x144) + 4) + 4);
     }
     
-	if (*(int *)(iVar5 + 0x28) != 0) {
+	// if instance exists, update instance position
+	if (*(int *)(iVar5 + 0x28) != 0) 
+	{
       iVar2 = (int)*(short *)(iVar5 + 0x2c) + 0x78;
       if (iVar7 == 0) {
         trap(0x1c00);
@@ -6445,7 +6447,10 @@ void FUN_800b3120(int param_1)
 	  sStack32 = -*(short *)((iVar2 % iVar7) * 0xc +
                              *(int *)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x144) + 4) + 6)
       ;
+	  
+	  // new instance rotation matrix
       FUN_8006c2a4(*(int *)(iVar5 + 0x28) + 0x30,&sStack32);
+	  
       puVar1 = PTR_DAT_8008d2ac;
       iVar2 = (int)*(short *)(iVar5 + 0x2c) + 0x78;
       if (iVar7 == 0) {
@@ -6455,7 +6460,7 @@ void FUN_800b3120(int param_1)
         trap(0x1800);
       }
 	  
-	  // LEV -> ptrSpawn1
+	  // instance->matrix.t[0]
       *(int *)(*(int *)(iVar5 + 0x28) + 0x44) =
            (int)*(short *)((iVar2 % iVar7) * 0xc +
                           *(int *)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x144) + 4));
@@ -6468,7 +6473,7 @@ void FUN_800b3120(int param_1)
         trap(0x1800);
       }
 	  
-	  // LEV -> ptrSpawn1
+	  // instance->matrix.t[1]
       *(int *)(*(int *)(iVar5 + 0x28) + 0x48) =
            (int)*(short *)((iVar2 % iVar7) * 0xc +
                            *(int *)(*(int *)(*(int *)(puVar1 + 0x160) + 0x144) + 4) + 2);
@@ -6480,7 +6485,7 @@ void FUN_800b3120(int param_1)
         trap(0x1800);
       }
 	  
-	  // LEV -> ptrSpawn1
+	  // instance->matrix.t[2]
       *(int *)(*(int *)(iVar5 + 0x28) + 0x4c) =
            (int)*(short *)((iVar2 % iVar7) * 0xc +
                            *(int *)(*(int *)(*(int *)(puVar1 + 0x160) + 0x144) + 4) + 4);
