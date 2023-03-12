@@ -6407,7 +6407,8 @@ void FUN_800b3120(int param_1)
                            *(int *)(*(int *)(*(int *)(puVar1 + 0x160) + 0x144) + 4) + 4);
     }
     
-	// if instance exists, update instance position
+	// if "other?" instance exists, 
+	// update instance position
 	if (*(int *)(iVar5 + 0x28) != 0) 
 	{
       iVar2 = (int)*(short *)(iVar5 + 0x2c) + 0x78;
@@ -6543,6 +6544,8 @@ void FUN_800b37d4(int param_1)
 	  // Give instance to thread
       *(int *)(iVar2 + 0x34) = param_1;
 	  
+	  // unused for baron plane,
+	  // barrel#0 does "0/2" just gets zero
       iVar2 = strlen(param_1 + 8);
       uVar1 = 1;
       if (*(char *)(iVar2 + param_1 + 7) == '0') {

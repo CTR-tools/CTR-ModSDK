@@ -3176,9 +3176,19 @@ struct MineWeapon
 struct Baron
 {
 	// 0x0
+	// for the baron plane
+	char unused[0x24];
+	
+	// 0x24
+	int soundID_flags;
+	
+	// 0x28
+	// unused, for baron
+	struct Instance* otherInst;
 	
 	// 0x2c
 	short pointIndex;
+	short footerPaddingUnused;
 	
 	// 0x30 bytes large
 };
