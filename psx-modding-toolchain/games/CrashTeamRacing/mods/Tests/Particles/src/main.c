@@ -46,7 +46,7 @@ struct ParticleEmitter emSet[8] =
 	{
 		.flags = 0x3,
 		.initOffset = 5,
-		.InitTypes.AxisInit.baseValue.pos = 0x1600
+		.InitTypes.AxisInit.baseValue.startVal = 0x1600
 	},
 	
 	// color
@@ -54,7 +54,7 @@ struct ParticleEmitter emSet[8] =
 	{
 		.flags = 0x3,
 		.initOffset = 7,
-		.InitTypes.AxisInit.baseValue.pos = 0x4000
+		.InitTypes.AxisInit.baseValue.startVal = 0x4000
 	},
 };
 
@@ -79,12 +79,12 @@ void RunUpdateHook()
 		
 		p->unk1 = d->instSelf->unk2;
 		p->driverInst = d->instSelf;
-		p->axis[1].vel = 0x100;
+		p->axis[1].velocity = 0x100;
 		
 		// make particles come from car
-		p->axis[0].pos = d->posCurr[0];
-		p->axis[1].pos = d->posCurr[1] + 0x80;
-		p->axis[2].pos = d->posCurr[2];
+		p->axis[0].startVal = d->posCurr[0];
+		p->axis[1].startVal = d->posCurr[1] + 0x80;
+		p->axis[2].startVal = d->posCurr[2];
 	}
 }
 

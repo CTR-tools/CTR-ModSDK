@@ -77,7 +77,7 @@ void DECOMP_RB_Bubbles_RoosTubes()
 		p->unk18 = 8;
 		
 		for(i = 0; i < 3; i++)
-			p->axis[i].pos += ptrSpawnPosCoords[i] * 0x100;
+			p->axis[i].startVal += ptrSpawnPosCoords[i] * 0x100;
 	}
 }
 

@@ -9,24 +9,9 @@ struct ParticleEmitter fireballPE[10] =
 	// we dont have enough research to rewrite this,
 	// needs to replace the 0x800b6344 pointer
 	
-	[0] =
-	{
-		.flags = 1,
-		.initOffset = 0xC,
-		.InitTypes.AxisInit.baseValue =
-		{
-			.pos = 0,
-			.vel = 0x4A1,
-			.accel = 4
-		}
-	},
+	// look at PLANT for more info
 	
-	[1] = 
-	{
-		.flags = 1,
-		.initOffset = 0,
-		
-	},
+	[0] = {}
 	
 	// null terminator
 	[9] = {}
@@ -77,9 +62,9 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		{
 			// adjust positions,
 			// dont bitshift, must multiply, or negatives break
-			particle->axis[0].pos += fireInst->matrix.t[0] * 0x100;
-			particle->axis[1].pos += fireInst->matrix.t[1] * 0x100;
-			particle->axis[2].pos += fireInst->matrix.t[2] * 0x100;
+			particle->axis[0].startVal += fireInst->matrix.t[0] * 0x100;
+			particle->axis[1].startVal += fireInst->matrix.t[1] * 0x100;
+			particle->axis[2].startVal += fireInst->matrix.t[2] * 0x100;
 			
 			particle->unk1A = 0x1e00;
 			
@@ -91,7 +76,7 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 			if(velY > 0x7fff) velY = 0x7fff;
 			velY = (short)velY;
 			
-			particle->axis[1].vel = (int)velY;
+			particle->axis[1].velocity = (int)velY;
 		}
 		
 		Seal_CheckColl(fireInst, t, 4, 0x10000);

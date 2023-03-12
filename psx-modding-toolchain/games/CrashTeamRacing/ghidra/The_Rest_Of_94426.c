@@ -1415,7 +1415,8 @@ undefined4 * FUN_80040308(undefined4 param_1,int param_2,ushort *param_3)
 		  // used as an offset for writing particle
           uVar16 = (uint)*(byte *)(puVar15 + -8);
 
-		  // if invalid, assume color/funcPtr initializer
+		  // if initOffset is invalid, assume 
+		  // this is not axis-related (not AxisInit)
           if (*(byte *)(puVar15 + -8) == 0xc)
 		  {
 			// if not an AxisInit or (other?),

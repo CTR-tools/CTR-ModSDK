@@ -145,34 +145,34 @@ PlayChewSound:
 						particle->funcPtr = Particle_FuncPtr_SpitTire;
 						particle->driverInst = plantInst;
 						
-						particle->axis[0].pos +=
+						particle->axis[0].startVal +=
 							(
 								plantInst->matrix.t[0] +
 								(plantInst->matrix.m[0][2] * 9 >> 7) 
 							) * 0x100;
 							
-						particle->axis[1].pos +=
+						particle->axis[1].startVal +=
 							(
 								plantInst->matrix.t[1] 
 								+ 0x20
 							) * 0x100;
 							
-						particle->axis[2].pos +=
+						particle->axis[2].startVal +=
 							(
 								plantInst->matrix.t[2] +
 								(plantInst->matrix.m[2][2] * 9 >> 7) 
 							) * 0x100;
 							
-						particle->axis[0].vel +=
+						particle->axis[0].velocity +=
 							(
 								// 6 - 26
 								(RNG_Scramble() & 10 + 0x10) *
 								(plantInst->matrix.m[0][2] >> 0xC)
 							) * 0x100;
 							
-						// axis[1].vel is untouched
+						// axis[1].velocity is untouched
 							
-						particle->axis[2].vel +=
+						particle->axis[2].velocity +=
 							(
 								// 6 - 26
 								(RNG_Scramble() & 10 + 0x10) *
@@ -475,14 +475,146 @@ void DECOMP_RB_Plant_LInB(struct Instance* inst)
 		t->cooldownFrameCount = metaArray[plantID*2+0];
 		plantObj->LeftOrRight = metaArray[plantID*2+1];
 	}
-	
-#if 0
-      DAT_800b8bf0._2_2_ = 0x40;
-      DAT_800b8bec._0_2_ = 0xffc0;
-      DAT_800b8bec._2_2_ = 0xffc0;
-      DAT_800b8bf4._0_2_ = 0x80;
-      DAT_800b8bf4._2_2_ = 0x1e0;
-      DAT_800b8bf0._0_2_ = 0;
-#endif
-
 }
+
+#if 0
+struct ParticleEmitter emSet_PlantTires[8] =
+{
+	[0] =
+	{
+		.flags = 1,
+		
+		// invalid axis, assume FuncInit
+		.initOffset = 0xC,
+		
+		.FuncInit =
+		{	
+			.particle_funcPtr = 0,
+			.particle_colorFlags = 0x121,
+			.paricle_lifespan = 0x50,
+			.particle_Type = 0,
+		}
+		
+		// last 0x10 bytes are blank
+	},
+	
+	[1] =
+	{
+		.flags = 0x13,
+		
+		// X axis
+		.initOffset = 0,
+		
+		.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 1,
+				.velocity = -0x320,
+				.accel = 0,
+			},
+			
+			.rngSeed =
+			{
+				.startVal = 0,
+				.velocity = 0x640,
+				.accel = 0,
+			}
+		}
+		
+		// last 0x10 are blank
+	},
+	
+	[2] =
+	{
+		.flags = 0x13,
+		
+		// Z axis
+		.initOffset = 2,
+		
+		.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 1,
+				.velocity = -0x320,
+				.accel = 0,
+			},
+			
+			.rngSeed =
+			{
+				.startVal = 0,
+				.velocity = 0x640,
+				.accel = 0,
+			}
+		}
+		
+		// last 0x10 are blank
+	},
+	
+	[3] =
+	{
+		.flags = 0x17,
+		
+		// Y axis
+		.initOffset = 1,
+		
+		.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 1,
+				.velocity = -0x640,
+				.accel = -0x320,
+			},
+			
+			.rngSeed =
+			{
+				.startVal = 0,
+				.velocity = 0x320,
+				.accel = 0,
+			}
+		}
+		
+		// last 0x10 are blank
+	},
+	
+	[4] =
+	{
+		.flags = 1,
+		
+		// scale?
+		.initOffset = 5,
+		
+		// 100% scale
+		.AxisInit.baseValue.startVal = 0x1000,
+		
+		// all the rest is untouched
+	},
+	
+	[5] =
+	{
+		.flags = 0x1A,
+		
+		// ???
+		.initOffset = 4,
+		
+		.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 0,
+				.velocity = 0xC0,
+				.accel = 0,
+			},
+			
+			.rngSeed =
+			{
+				.startVal = 0x400,
+				.velocity = 0x40,
+				.accel = 0,
+			}
+		}
+	}
+}
+#endif

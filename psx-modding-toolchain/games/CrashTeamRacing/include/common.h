@@ -1690,8 +1690,8 @@ struct IconGroup
 
 struct ParticleAxis
 {
-	int pos;
-	short vel;
+	int startVal;
+	short velocity;
 	short accel;
 };
 
@@ -1740,13 +1740,13 @@ struct Particle
 	struct Instance* driverInst;
 
 	/*
-		0x24: axisX
-		0x2C: axisY
-		0x34: axisZ
-		0x3C: ???
-		0x44: ???
-		0x4C: scale?
-		0x54: ???
+		0x24: posX
+		0x2C: posY
+		0x34: posZ
+		0x3C: rotX ?
+		0x44: rotY ?
+		0x4C: scale -- yes, they mixed the order up
+		0x54: rotZ ?
 		0x5C: colorR
 		0x64: colorG
 		0x6C: colorB
@@ -1763,6 +1763,8 @@ struct ParticleEmitter
 {
 	// 0x0
 	// flags = 0 for last emitter
+	// flags = 1 for FuncInit
+	// flags = 0xC0 for AxisInit
 	short flags;
 	
 	// 0x2
