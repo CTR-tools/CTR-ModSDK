@@ -104,4 +104,4 @@ common, exe, OnCollide_Drivers, 0xA4, assets/StandardizeTurboPadReserves.bin
 1020, exe, Turbo_Increment, 0x37A, ../../../8bitnop.bin
 
 // Compile code to empty spaces in RDATA
-common, exe, rdata_free, 0x0, src/main.c src/texturereplacements.c
+common, exe, rdata_free, 0x0, src/main.c
