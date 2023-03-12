@@ -211,7 +211,7 @@ void DECOMP_RB_Plant_ThTick_Grab(struct Thread* t)
 		// if animation is not over
 		if(
 			(plantInst->animFrame+1) < 
-			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Hungry)
+			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_GrabDriver)
 		)
 		{
 			// increment frame
