@@ -6369,6 +6369,7 @@ void FUN_800b3120(int param_1)
       *(int *)(iVar6 + 0x4c) = *(int *)(iVar6 + 0x4c) + -0x110;
     }
     
+	// [Unused, Baron plane]
 	// if this is not N Gin Labs Barrel
 	else 
 	{
@@ -6407,6 +6408,7 @@ void FUN_800b3120(int param_1)
                            *(int *)(*(int *)(*(int *)(puVar1 + 0x160) + 0x144) + 4) + 4);
     }
     
+	// [Unused, Baron plane]
 	// if "other?" instance exists, 
 	// update instance position
 	if (*(int *)(iVar5 + 0x28) != 0) 
