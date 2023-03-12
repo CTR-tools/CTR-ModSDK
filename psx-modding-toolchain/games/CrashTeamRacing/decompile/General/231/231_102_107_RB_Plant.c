@@ -40,7 +40,109 @@ void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t);
 
 void DECOMP_RB_Plant_ThTick_Eat(struct Thread* t)
 {
+	struct Instance* plantInst;
+	struct Plant* plantObj;
 	
+	plantInst = t->inst;
+	plantObj = (struct Plant*)t->object;
+	
+	if(plantInst->animIndex == PlantAnim_StartEat)
+	{
+		// if animation is not over
+		if(
+			(plantInst->animFrame+1) < 
+			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_StartEat)
+		)
+		{
+			// increment frame
+			plantInst->animFrame = plantInst->animFrame+1;
+		}
+		
+		// if animation is over
+		else
+		{
+			plantInst->animFrame = 0;
+			plantInst->animIndex = PlantAnim_Chew;
+			
+PlayChewSound:
+			
+			if(plantObj->boolEatingPlayer != 0)
+			{
+				OtherFX_Play(0x6e, 0);
+			}
+		}
+	}
+	
+	else if(plantInst->animIndex == PlantAnim_Chew)
+	{
+		// if animation is not over
+		if(
+			(plantInst->animFrame+1) < 
+			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Chew)
+		)
+		{
+			// increment frame
+			plantInst->animFrame = plantInst->animFrame+1;
+			
+			// last frame
+			if(plantInst->animFrame == 0xf)
+			{
+				goto PlayChewSound;
+			}
+		}
+		
+		// if animation is done
+		else
+		{
+			// reset animation
+			plantInst->animFrame = 0;
+			
+			// After 4 cycles, transition to rest
+			plantObj->cycleCount++;
+			if(plantObj->cycleCount == 1)
+			{
+				plantObj->cycleCount = 0;
+			
+				plantInst->animFrame = 0;
+				plantInst->animIndex = PlantAnim_Spit;
+			}
+		}
+	}
+	
+	else if(plantInst->animIndex == PlantAnim_Spit)
+	{
+		// if animation is not over
+		if(
+			(plantInst->animFrame+1) < 
+			INSTANCE_GetNumAnimFrames(plantInst, PlantAnim_Spit)
+		)
+		{
+			// increment frame
+			plantInst->animFrame = plantInst->animFrame+1;
+			
+			// last frame
+			if(plantInst->animFrame == 0x19)
+			{
+				if(plantObj->boolEatingPlayer != 0)
+				{
+					// play PlantSpit sound
+					OtherFX_Play(0x6f, 0);
+				}
+				
+				// [spit tires]
+			}
+		}
+		
+		// animation done
+		else
+		{
+			plantInst->animFrame = 0;
+			plantInst->animIndex = PlantAnim_Rest;
+			
+			plantObj->boolEatingPlayer = 0;
+			ThTick_SetAndExec(t, DECOMP_RB_Plant_ThTick_Rest);
+		}
+	}
 }
 
 void DECOMP_RB_Plant_ThTick_Grab(struct Thread* t)
