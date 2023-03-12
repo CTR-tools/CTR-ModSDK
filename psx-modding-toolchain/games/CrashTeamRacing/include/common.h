@@ -3450,7 +3450,7 @@ struct Snowball
 	short numPoints;
 
 	// 0xA
-	short snowball_ID; // unused
+	short snowID;
 
 	// 0xC
 	int audioPtr;
@@ -4374,7 +4374,8 @@ struct Level
 	struct SpawnType1* ptrSpawnType1;
 
 	// spawn_arrays2 is for things
-	// like Seal, Minecart, etc
+	// like Seal, Minecart, etc,
+	// series of positions (only positions)
 
 	// 0x138
 	int numSpawnType2;
@@ -4383,13 +4384,14 @@ struct Level
 	struct SpawnType2* ptrSpawnType2;
 
 	// spawn_arrays is for things
-	// N Gin Labs barrel, more like a path
+	// N Gin Labs barrel, Snowball,
+	// series of positions and rotations
 
 	// 0x140
-	int numSpawnType2_again;
+	int numSpawnType2_PosRot;
 
 	// 0x144
-	struct SpawnType2* ptrSpawnType2_again;
+	struct SpawnType2* ptrSpawnType2_PosRot;
 
 	// restart_points is for respawning
 	// driver on track after falling off

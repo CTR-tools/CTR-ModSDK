@@ -12078,8 +12078,7 @@ DAT_800b9328:
 	  // posX
       *(int *)(iVar7 + 0x44) =
            (int)*(short *)(iVar5 + *(int *)((int)*(short *)(iVar6 + 10) * 8 +
-                                            *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x144) + 4
-                                           ));
+                                            *(int *)(*(int *)(puVar2 + 0x160) + 0x144) + 4) + 0);
       // posY
 	  *(int *)(iVar7 + 0x48) =
            (int)*(short *)(iVar5 + *(int *)((int)*(short *)(iVar6 + 10) * 8 +

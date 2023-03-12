@@ -4,6 +4,43 @@
 
 extern short minecartArr[50];
 
+void RB_Minecart_CheckColl(struct Instance* minecartInst, struct Thread* minecartTh)
+{
+	struct Driver* hitDriver;
+	struct Instance* hitInst;
+	struct GameTracker* gGT = sdata->gGT;
+	
+	// check players
+	hitInst = 
+		(struct Instance*)LinkedCollide_Radius(
+			minecartInst, minecartTh, 
+			gGT->threadBuckets[PLAYER].thread,
+			0x10000);
+	
+	if(hitInst == 0)
+	{
+		// check robots
+		hitInst = 
+			(struct Instance*)LinkedCollide_Radius(
+				minecartInst, minecartTh, 
+				gGT->threadBuckets[ROBOT].thread,
+				0x10000);
+	}
+	
+	if(hitInst != 0)
+	{
+		#if 0
+		// unused, DYNAMIC_SKUNK causes spin-out
+		#endif
+		
+		// get driver from instance
+		hitDriver = (struct Driver*)hitInst->thread->object;
+		
+		// attempt to harm driver (squish)
+		RB_Hazard_HurtDriver(hitDriver,3,0,0);
+	}
+}
+
 void RB_Minecart_NewPoint(
 	struct Minecart* minecartObj,
 	struct SpawnType2* spawnType2)
@@ -45,10 +82,6 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 	
 	short i;
 	short pos[3];
-	
-	struct Driver* hitDriver;
-	struct Instance* hitInst;
-	struct GameTracker* gGT = sdata->gGT;
 	
 	minecartInst = t->inst;
 	minecartObj = (struct Minecart*)t->object;
@@ -165,35 +198,7 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 		0x72, // minecart sound
 		minecartInst);
 		
-	// check players
-	hitInst = 
-		(struct Instance*)LinkedCollide_Radius(
-			minecartInst, t, 
-			gGT->threadBuckets[PLAYER].thread,
-			0x10000);
-	
-	if(hitInst == 0)
-	{
-		// check robots
-		hitInst = 
-			(struct Instance*)LinkedCollide_Radius(
-				minecartInst, t, 
-				gGT->threadBuckets[ROBOT].thread,
-				0x10000);
-	}
-	
-	if(hitInst != 0)
-	{
-		#if 0
-		// unused, DYNAMIC_SKUNK causes spin-out
-		#endif
-		
-		// get driver from instance
-		hitDriver = (struct Driver*)hitInst->thread->object;
-		
-		// attempt to harm driver (squish)
-		RB_Hazard_HurtDriver(hitDriver,3,0,0);
-	}
+	RB_Minecart_CheckColl(minecartInst, t);
 }
 
 void DECOMP_RB_Minecart_LInB(struct Instance* inst)
