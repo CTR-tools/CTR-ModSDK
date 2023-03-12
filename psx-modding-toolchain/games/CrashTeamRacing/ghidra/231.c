@@ -6552,7 +6552,7 @@ void FUN_800b37d4(int param_1)
         uVar1 = (undefined2)(**(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x13c) / 2);
       }
 	  
-	  // Initialize object
+	  // starting node
       *(undefined2 *)(iVar3 + 0x2c) = uVar1;
 	  
 	  // Set scale (x, y, z)
@@ -6560,6 +6560,8 @@ void FUN_800b37d4(int param_1)
       *(undefined2 *)(param_1 + 0x1e) = 0x1000;
       *(undefined2 *)(param_1 + 0x20) = 0x1000;
 	  
+	  // only need to set 0x28 -> 0x0,
+	  // the rest is unused for baron
       *(undefined2 *)(iVar3 + 0x1a) = 4;
       *(undefined2 *)(iVar3 + 0x22) = 0x18;
       *(undefined2 *)(iVar3 + 6) = 0;
