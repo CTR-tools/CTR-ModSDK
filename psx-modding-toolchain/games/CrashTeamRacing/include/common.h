@@ -3175,6 +3175,11 @@ struct MineWeapon
 
 struct Baron
 {
+	// 0x0
+	
+	// 0x2c
+	short pointIndex;
+	
 	// 0x30 bytes large
 };
 
