@@ -1736,6 +1736,7 @@ struct Particle
 	void* funcPtr;
 
 	// 0x20
+	// also can be plantInst, need to rename
 	struct Instance* driverInst;
 
 	/*

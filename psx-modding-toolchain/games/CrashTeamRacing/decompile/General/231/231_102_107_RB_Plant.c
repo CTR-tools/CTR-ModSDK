@@ -40,6 +40,8 @@ void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t);
 
 void DECOMP_RB_Plant_ThTick_Eat(struct Thread* t)
 {
+	int i;
+	struct Particle* particle;
 	struct Instance* plantInst;
 	struct Plant* plantObj;
 	
@@ -129,7 +131,55 @@ PlayChewSound:
 					OtherFX_Play(0x6f, 0);
 				}
 				
-				// [spit tires]
+				for(i = 0; i < 4; i++)
+				{
+					// spit tires
+					particle = 
+						Particle_CreateInstance(
+							0, sdata->gGT->iconGroup[0],
+							0x800b8acc);
+							
+					if(particle != 0)
+					{
+						void Particle_FuncPtr_SpitTire();
+						particle->funcPtr = Particle_FuncPtr_SpitTire;
+						particle->driverInst = plantInst;
+						
+						particle->axis[0].pos +=
+							(
+								plantInst->matrix.t[0] +
+								(plantInst->matrix.m[0][2] * 9 >> 7) 
+							) * 0x100;
+							
+						particle->axis[1].pos +=
+							(
+								plantInst->matrix.t[1] 
+								+ 0x20
+							) * 0x100;
+							
+						particle->axis[2].pos +=
+							(
+								plantInst->matrix.t[2] +
+								(plantInst->matrix.m[2][2] * 9 >> 7) 
+							) * 0x100;
+							
+						particle->axis[0].vel +=
+							(
+								// 6 - 26
+								(RNG_Scramble() & 10 + 0x10) *
+								(plantInst->matrix.m[0][2] >> 0xC)
+							) * 0x100;
+							
+						// axis[1].vel is untouched
+							
+						particle->axis[2].vel +=
+							(
+								// 6 - 26
+								(RNG_Scramble() & 10 + 0x10) *
+								(plantInst->matrix.m[2][2] >> 0xC)
+							) * 0x100;
+					}
+				}
 			}
 		}
 		
