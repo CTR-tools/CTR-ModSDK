@@ -1743,14 +1743,14 @@ struct Particle
 		0x24: posX
 		0x2C: posY
 		0x34: posZ
-		0x3C: rotX ?
-		0x44: rotY ?
+		0x3C: rotX ???
+		0x44: rotY ???
 		0x4C: scale -- yes, they mixed the order up
-		0x54: rotZ ?
+		0x54: rotZ ???
 		0x5C: colorR
 		0x64: colorG
 		0x6C: colorB
-		0x74: colorA
+		0x74: colorA ???
 	*/
 
 	// 0x24

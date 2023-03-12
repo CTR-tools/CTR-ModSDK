@@ -36,6 +36,8 @@ struct HitboxDesc boxDesc =
 	}
 };
 
+extern struct ParticleEmitter emSet_PlantTires[8];
+
 void DECOMP_RB_Plant_ThTick_Rest(struct Thread* t);
 
 void DECOMP_RB_Plant_ThTick_Eat(struct Thread* t)
@@ -137,7 +139,7 @@ PlayChewSound:
 					particle = 
 						Particle_CreateInstance(
 							0, sdata->gGT->iconGroup[0],
-							0x800b8acc);
+							&emSet_PlantTires[0]);
 							
 					if(particle != 0)
 					{
@@ -477,7 +479,6 @@ void DECOMP_RB_Plant_LInB(struct Instance* inst)
 	}
 }
 
-#if 0
 struct ParticleEmitter emSet_PlantTires[8] =
 {
 	[0] =
@@ -487,11 +488,11 @@ struct ParticleEmitter emSet_PlantTires[8] =
 		// invalid axis, assume FuncInit
 		.initOffset = 0xC,
 		
-		.FuncInit =
+		.InitTypes.FuncInit =
 		{	
 			.particle_funcPtr = 0,
 			.particle_colorFlags = 0x121,
-			.paricle_lifespan = 0x50,
+			.particle_lifespan = 0x50,
 			.particle_Type = 0,
 		}
 		
@@ -502,10 +503,10 @@ struct ParticleEmitter emSet_PlantTires[8] =
 	{
 		.flags = 0x13,
 		
-		// X axis
+		// posX
 		.initOffset = 0,
 		
-		.AxisInit =
+		.InitTypes.AxisInit =
 		{
 			.baseValue =
 			{
@@ -529,10 +530,10 @@ struct ParticleEmitter emSet_PlantTires[8] =
 	{
 		.flags = 0x13,
 		
-		// Z axis
+		// posZ
 		.initOffset = 2,
 		
-		.AxisInit =
+		.InitTypes.AxisInit =
 		{
 			.baseValue =
 			{
@@ -556,10 +557,10 @@ struct ParticleEmitter emSet_PlantTires[8] =
 	{
 		.flags = 0x17,
 		
-		// Y axis
+		// posY
 		.initOffset = 1,
 		
-		.AxisInit =
+		.InitTypes.AxisInit =
 		{
 			.baseValue =
 			{
@@ -583,11 +584,11 @@ struct ParticleEmitter emSet_PlantTires[8] =
 	{
 		.flags = 1,
 		
-		// scale?
+		// Scale
 		.initOffset = 5,
 		
 		// 100% scale
-		.AxisInit.baseValue.startVal = 0x1000,
+		.InitTypes.AxisInit.baseValue.startVal = 0x1000,
 		
 		// all the rest is untouched
 	},
@@ -596,10 +597,10 @@ struct ParticleEmitter emSet_PlantTires[8] =
 	{
 		.flags = 0x1A,
 		
-		// ???
+		// RotX
 		.initOffset = 4,
 		
-		.AxisInit =
+		.InitTypes.AxisInit =
 		{
 			.baseValue =
 			{
@@ -615,6 +616,33 @@ struct ParticleEmitter emSet_PlantTires[8] =
 				.accel = 0,
 			}
 		}
-	}
-}
-#endif
+	},
+	
+	[6] =
+	{
+		.flags = 0xA,
+		
+		// colorA ???
+		.initOffset = 0xA,
+		
+		.InitTypes.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 0,
+				.velocity = 0x100,
+				.accel = 0,
+			},
+			
+			.rngSeed =
+			{
+				.startVal = 0xE00,
+				.velocity = 0,
+				.accel = 0,
+			}
+		}
+	},
+	
+	// null terminator
+	[7] = {}
+};
