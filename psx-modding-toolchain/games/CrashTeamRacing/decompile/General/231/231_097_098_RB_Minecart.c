@@ -281,11 +281,6 @@ void DECOMP_RB_Minecart_LInB(struct Instance* inst)
 	
 	RB_Minecart_NewPoint(minecartObj, spawnType2);
 	
-	printf("%04x, %04x, %04x\n", 
-		minecartObj->dir[0],
-		minecartObj->dir[1],
-		minecartObj->dir[2]);
-	
 	return;
 }
 

@@ -4,7 +4,7 @@ void MainDrawCb_Vsync();
 void MainDrawCb_DrawSync();
 void StateZero();
 
-//#define FastBoot
+#define FastBoot
 
 u_int main()
 {
@@ -292,10 +292,10 @@ u_int main()
 					(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_L2)
 					)
 				{
-					gGT->drivers[0]->posCurr[0] = 0xFFF4692E;
-					gGT->drivers[0]->posCurr[1] = 0xFFFA00AA;
-					gGT->drivers[0]->posCurr[2] = 0xFFCAB1CF;
-					gGT->drivers[0]->angle = 0xB3C;
+					gGT->drivers[0]->posCurr[0] = 0xE1700;
+					gGT->drivers[0]->posCurr[1] = 0xFFFD0039;
+					gGT->drivers[0]->posCurr[2] = 0x4D0B00;
+					gGT->drivers[0]->angle = 0x283;
 				}
 				#endif
 
@@ -540,7 +540,7 @@ void StateZero()
 	gGT->levelID = NAUGHTY_DOG_CRATE;
 	
 	#ifdef FastBoot
-	gGT->levelID = MYSTERY_CAVES;
+	gGT->levelID = N_GIN_LABS;
 	gGT->numPlyrCurrGame = 1;
 	gGT->numPlyrNextGame = 1;
 	#endif
