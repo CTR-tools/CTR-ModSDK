@@ -2,21 +2,7 @@
 
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius);
 
-#if 0
-struct ParticleEmitter fireballPE[10] =
-{
-	// As of Jan 1, 2023,
-	// we dont have enough research to rewrite this,
-	// needs to replace the 0x800b6344 pointer
-	
-	// look at PLANT for more info
-	
-	[0] = {}
-	
-	// null terminator
-	[9] = {}
-};
-#endif
+extern struct ParticleEmitter emSet_Fireball[10];
 
 void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 {
@@ -54,9 +40,11 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 		// set new velY
 		fireObj->velY = velY;
 		
-		// [particle]
-		// 800b6344 is between Fireball and Flamejet
-		particle = Particle_CreateInstance(0, gGT->iconGroup[0xA], 0x800b6344);
+		// fire particles
+		particle = 
+			Particle_CreateInstance(
+				0, gGT->iconGroup[0xA], 
+				&emSet_Fireball[0]);
 		
 		if(particle != 0)
 		{
@@ -161,13 +149,13 @@ void DECOMP_RB_Fireball_LInB(struct Instance* inst)
 	// unused beta "tail"
 	inst->flags |= 0x80;
 	
+	#if 0
 	inst->scale[0] = 0x4000;
 	inst->scale[1] = 0x4000;
 	inst->scale[2] = 0x4000;
 	
 	// this code was in the game,
 	// but not used since instance is invisible
-	#if 0
 	inst->animFrame = 0;
 	inst->animIndex = 0;
 	#endif
@@ -185,3 +173,184 @@ void DECOMP_RB_Fireball_LInB(struct Instance* inst)
 		t->cooldownFrameCount = 1440 >> 5;
 	}
 }
+
+struct ParticleEmitter emSet_Fireball[10] =
+{
+	[0] =
+	{
+		.flags = 1,
+		
+		// invalid axis, assume FuncInit
+		.initOffset = 0xC,
+		
+		.InitTypes.FuncInit =
+		{	
+			.particle_funcPtr = 0,
+			.particle_colorFlags = 0x4A1,
+			.particle_lifespan = 0x400,
+			.particle_Type = 0,
+		}
+		
+		// last 0x10 bytes are blank
+	},
+	
+	[1] =
+	{
+		.flags = 1,
+		
+		// posX
+		.initOffset = 0,
+		
+		.InitTypes.AxisInit.baseValue.startVal = 1,
+
+		// The rest is blank
+		
+		// last 0x10 are blank
+	},
+	
+	[2] =
+	{
+		.flags = 1,
+		
+		// posZ
+		.initOffset = 2,
+		
+		.InitTypes.AxisInit.baseValue.startVal = 1,
+
+		// The rest is blank
+		
+		// last 0x10 are blank
+	},
+	
+	[3] =
+	{
+		.flags = 3,
+		
+		// posY
+		.initOffset = 1,
+		
+		.InitTypes.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 1,
+				.velocity = 1,
+				.accel = 0,
+			}
+		}
+	},
+	
+	[4] =
+	{
+		.flags = 9,
+		
+		// rotX ??
+		.initOffset = 4,
+		
+		.InitTypes.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 1,
+				.velocity = 0,
+				.accel = 0
+			},
+			
+			.rngSeed =
+			{
+				.startVal = 0x1000,
+				.velocity = 0,
+				.accel = 0
+			}
+		}
+	},
+	
+	[5] =
+	{
+		.flags = 3,
+		
+		// scale
+		.initOffset = 5,
+		
+		.InitTypes.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 0xA00,
+				.velocity = -0xB0,
+				.accel = 0
+			},
+		}
+	},
+	
+	[6] =
+	{
+		.flags = 0xB,
+		
+		// colorR
+		.initOffset = 7,
+		
+		.InitTypes.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 0xFF00,
+				.velocity = 0xC000,
+				.accel = 0
+			},
+			
+			.rngSeed =
+			{
+				.startVal = 0x5F00,
+				.velocity = 0,
+				.accel = 0,
+			}
+		}
+	},
+	
+	[7] =
+	{
+		.flags = 3,
+		
+		// colorG
+		.initOffset = 8,
+		
+		.InitTypes.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 0x8000,
+				.velocity = 0xE000,
+				.accel = 0
+			},
+			
+			.rngSeed =
+			{
+				.startVal = 0,
+				.velocity = 0,
+				.accel = 0,
+			}
+		}
+	},
+	
+	[8] =
+	{
+		.flags = 3,
+		
+		// colorB
+		.initOffset = 9,
+		
+		.InitTypes.AxisInit =
+		{
+			.baseValue =
+			{
+				.startVal = 0x4000,
+				.velocity = 0xF000,
+				.accel = 0
+			}
+		}
+	},
+	
+	// null terminator
+	[9] = {}
+};
