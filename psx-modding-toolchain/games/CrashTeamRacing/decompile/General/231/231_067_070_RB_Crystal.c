@@ -1,5 +1,10 @@
 #include <common.h>
 
+short crystalLightDir[4] =
+{
+	0x94F, 0x94F, 0x94F, 0
+};
+
 void DECOMP_RB_Crystal_ThTick(struct Thread* t)
 {
 	int sine;
@@ -22,8 +27,7 @@ void DECOMP_RB_Crystal_ThTick(struct Thread* t)
 		((sine << 4) >> 0xc) +			// sine (bounce up/down)
 		0x30;							// airborne bump
 	
-	// to do: find 0x800b5968 and reallocate (probably light dir)
-	SpecularLight_Spinning3D(crystalInst, &crystalObj->rot[0], 0x800b5968);
+	SpecularLight_Spinning3D(crystalInst, &crystalObj->rot[0], &crystalLightDir[0]);
 }
 
 void DECOMP_RB_Crystal_LInB(struct Instance* inst)

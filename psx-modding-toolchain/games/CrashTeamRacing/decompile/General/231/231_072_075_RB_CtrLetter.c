@@ -1,5 +1,10 @@
 #include <common.h>
 
+short letterLightDir[4] =
+{
+	0x94F, 0x94F, -0x94F, 0
+};
+
 void DECOMP_RB_CtrLetter_ThTick(struct Thread* t)
 {
 	int sine;
@@ -13,8 +18,7 @@ void DECOMP_RB_CtrLetter_ThTick(struct Thread* t)
 	letterObj->rot[1] += 0x40;
 	ConvertRotToMatrix(&letterInst->matrix, &letterObj->rot[0]);
 	
-	// to do: find 0x800b5970 and reallocate (probably light dir)
-	SpecularLight_Spinning3D(letterInst, &letterObj->rot[0], 0x800b5970);
+	SpecularLight_Spinning3D(letterInst, &letterObj->rot[0], &letterLightDir[0]);
 }
 
 void DECOMP_RB_CtrLetter_LInB(struct Instance* inst)
