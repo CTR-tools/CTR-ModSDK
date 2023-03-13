@@ -11,7 +11,7 @@ void RB_GenericMine_LInB();
 void DECOMP_RB_CrateFruit_LInC();
 void DECOMP_RB_CrateWeapon_LInC();
 void DECOMP_RB_CrateTime_LInC();
-void RB_FlameJet_LInB();
+void DECOMP_RB_FlameJet_LInB();
 void DECOMP_RB_Plant_LInB();
 void DECOMP_RB_Minecart_LInB();
 void DECOMP_RB_Snowball_LInB();
@@ -24,13 +24,11 @@ void DECOMP_RB_Turtle_LInB();
 void DECOMP_RB_Turtle_LInC();
 void RB_Spider_LInB();
 void DECOMP_RB_Fireball_LInB();
-void RB_StartText_LInB();
 void RB_Banner_LInB();
 void DECOMP_RB_CtrLetter_LInB();
 void DECOMP_RB_CtrLetter_LInC();
 void DECOMP_RB_Crystal_LInB();
 void DECOMP_RB_Crystal_LInC();
-void RB_StartText_LInB();
 void RB_Teeth_LInB();
 void RB_Teeth_LInC();
 
@@ -322,7 +320,7 @@ struct Data data =
 		SET_MDM(0,0,0),
 		
 		// 0x12 - FLAME_JET (tiger temple)
-		SET_MDM(0,RB_FlameJet_LInB,0),
+		SET_MDM(0,DECOMP_RB_FlameJet_LInB,0),
 		
 		// 0x13 - PIRANHA_PLANT (papu pyramid)
 		SET_MDM(0,DECOMP_RB_Plant_LInB,0),
@@ -613,7 +611,7 @@ struct Data data =
 		SET_MDM(0,RB_Teeth_LInB,RB_Teeth_LInC),
 		
 		// 0x71 - STATIC_STARTTEXT
-		SET_MDM(0,RB_StartText_LInB,0),
+		SET_MDM(0,0/*RB_StartText_LInB*/,0),
 		
 		// 0x72 - STATIC_SAVEOBJ
 		SET_MDM(0,AH_SaveObj_LInB,0),
