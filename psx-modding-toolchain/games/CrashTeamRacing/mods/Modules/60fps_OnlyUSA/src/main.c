@@ -537,6 +537,9 @@ void NewCallback232()
 	{
 		// fix spin rate
 		*(unsigned int*)0x800b3100 = 0x21140;
+
+		// flashing arrows
+		*(unsigned char*)0x800b2048 = 4*2;
 	}
 	
 	// saveload
@@ -556,6 +559,9 @@ void NewCallback233()
 	*(unsigned short*)0x800af7e4 = 50; // 100/2 (not hex)
 
 	// Need to fix Adv Character Select
+	
+	// Adv Char Select arrows
+	*(unsigned char*)0x800b7e0c = 8;
 
 	LOAD_Callback_Overlay_233();
 }
@@ -699,9 +705,9 @@ int PatchPE(struct ParticleEmitter* pe)
 	// any other type,
 	// assuming they're all AxisInit (I hope),
 	// unless there's more that we haven't researched yet
-	pe->InitTypes.AxisInit.baseValue.vel /= 2;
+	pe->InitTypes.AxisInit.baseValue.velocity /= 2;
 	pe->InitTypes.AxisInit.baseValue.accel /= 2;
-	pe->InitTypes.AxisInit.rngSeed.vel /= 2;
+	pe->InitTypes.AxisInit.rngSeed.velocity /= 2;
 	pe->InitTypes.AxisInit.rngSeed.accel /= 2;
 	
 	return 1;

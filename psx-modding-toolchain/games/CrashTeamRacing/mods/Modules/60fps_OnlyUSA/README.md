@@ -40,7 +40,7 @@ A 60 fps conversion patch for Crash Team Racing. An overclock of at least 4x is 
 * Blizzard Bluff + Sewer Speedway update hazards at 30fps
 * N Gin Labs barrel hazard runs at 30fps
 * Weapon roulette flashes too fast, but duration is correct
-* Shiled weapon shakes too much
+* Shield weapon shakes too much
 * Entering warp pad sometimes works right, and sometimes throws player upward
 * Blinking map UI, partly fixed and partly abandoned
 * AI animations
@@ -49,7 +49,6 @@ A 60 fps conversion patch for Crash Team Racing. An overclock of at least 4x is 
 
 ## Known issues
 * Animations are half-working, half-fix
-* Demo Mode only lasts half-time (even though it "should" be fixed???)
 * Demo Mode / End-Of-Race cameras sometimes are too fast
 * Adventure Garage camera is too fast
 * Adventure Hub Warp pad electric field
