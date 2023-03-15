@@ -1039,8 +1039,8 @@
 // everything above ^^ is matrix math
 
 8006c618 SquareRoot0_stub
+8006c684 RngDeadCoed
 
-// unknown 8006c684 -- RNG (psyq name?)
 // unknown 8006c6c8
 
 // hole: several unstubbed functions after this

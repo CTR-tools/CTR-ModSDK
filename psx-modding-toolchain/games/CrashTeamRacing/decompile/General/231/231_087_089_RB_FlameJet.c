@@ -13,6 +13,7 @@ short fjLightDir[4] = { 0x8B8, 0xD6A, 0, 0 };
 
 void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 {
+	int result;
 	struct Particle* particle1;
 	struct Particle* particle2;
 	struct GameTracker* gGT = sdata->gGT;
@@ -33,7 +34,18 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 		particle1->axis[1].velocity = 0;
 		particle1->axis[2].velocity = fjObj->dirZ;
 		
-		// [need more]
+		result = RngDeadCoed(&gGT->deadcoed_struct);
+		result = MATH_Sin((gGT->timer * 0x100 + result>>0x18) & 0xfff);
+		particle1->axis[1].accel = result >> 4;
+		
+		particle1->unk1A = 0x1e00;
+		particle1->unk18 = inst->unk50 - 1;
+		
+		if((gGT->timer & 1) != 0)
+		{
+			particle1->axis[4].startVal = -particle1->axis[4].startVal;
+			particle1->axis[4].velocity = -particle1->axis[4].velocity;
+		}
 	}
 	
 	// heat particle is 1P only
@@ -47,7 +59,28 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 	// heat particle
 	if(particle2 != 0)
 	{
-		// [need more]
+		particle2->axis[0].startVal = particle1->axis[0].startVal;
+		particle2->axis[1].startVal = particle1->axis[1].startVal + 0x1000;
+		particle2->axis[2].startVal = particle1->axis[2].startVal;
+		
+		// register sharing
+		result = particle2->axis[3].startVal;
+		
+		particle2->axis[4].startVal = result - 0x400;
+		particle2->axis[5].startVal = result - 0x600;
+		
+		particle2->axis[0].velocity = fjObj->dirX;
+		particle2->axis[1].velocity = 0;
+		particle2->axis[2].velocity = fjObj->dirZ;
+		
+		particle1->axis[3].velocity = (0x4a00 - particle2->axis[3].startVal)/7;
+		particle1->axis[4].velocity = (0x4600 - particle2->axis[4].startVal)/7;
+		particle1->axis[5].velocity = (0x4400 - particle2->axis[5].startVal)/7;
+		
+		particle2->axis[1].accel = particle1->axis[1].accel;
+		
+		particle2->unk1A = 0x1e00;
+		particle2->unk18 = inst->unk50 - 1;
 	}
 }
 
