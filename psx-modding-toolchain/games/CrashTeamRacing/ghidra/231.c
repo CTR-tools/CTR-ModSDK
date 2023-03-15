@@ -9561,10 +9561,10 @@ void FUN_800b64c0(int param_1,int param_2)
 	// dirX
     uVar1 = *(undefined2 *)(param_2 + 4);
 	
-	// velX
+	// velY
     *(undefined2 *)(iVar4 + 0x30) = 0;
 	
-	// velY
+	// velX
     *(undefined2 *)(iVar4 + 0x28) = uVar1;
 	
 	// velZ = dirZ
