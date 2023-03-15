@@ -35,7 +35,7 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 		particle1->axis[2].velocity = fjObj->dirZ;
 		
 		result = RngDeadCoed(&gGT->deadcoed_struct);
-		result = MATH_Sin((gGT->timer * 0x100 + result>>0x18) & 0xfff);
+		result = MATH_Sin(gGT->timer * 0x100 + (result>>0x18) & 0xfff);
 		particle1->axis[1].accel = result >> 4;
 		
 		particle1->unk1A = 0x1e00;
@@ -73,9 +73,9 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 		particle2->axis[1].velocity = 0;
 		particle2->axis[2].velocity = fjObj->dirZ;
 		
-		particle1->axis[3].velocity = (0x4a00 - particle2->axis[3].startVal)/7;
-		particle1->axis[4].velocity = (0x4600 - particle2->axis[4].startVal)/7;
-		particle1->axis[5].velocity = (0x4400 - particle2->axis[5].startVal)/7;
+		particle2->axis[3].velocity = (0x4a00 - particle2->axis[3].startVal)/7;
+		particle2->axis[4].velocity = (0x4600 - particle2->axis[4].startVal)/7;
+		particle2->axis[5].velocity = (0x4400 - particle2->axis[5].startVal)/7;
 		
 		particle2->axis[1].accel = particle1->axis[1].accel;
 		
