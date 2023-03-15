@@ -50,7 +50,6 @@ char blueFire = 0;
 // forward declaration of our functions
 void HookReserveCancelation();
 extern void ReserveCancelation();
-void MainUpdateLoop();
 
 asm(".section .text					\n"
 	".align 2						\n"
