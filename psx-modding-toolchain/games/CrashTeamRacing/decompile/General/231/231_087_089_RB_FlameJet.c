@@ -30,9 +30,9 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 		particle1->axis[1].startVal += (inst->matrix.t[1] + 0x32) * 0x100;
 		particle1->axis[2].startVal += (inst->matrix.t[2]) * 0x100;
 		
-		particle1->axis[0].velocity = fjObj->dirX;
+		particle1->axis[0].velocity = (short)fjObj->dirX;
 		particle1->axis[1].velocity = 0;
-		particle1->axis[2].velocity = fjObj->dirZ;
+		particle1->axis[2].velocity = (short)fjObj->dirZ;
 		
 		result = RngDeadCoed(&gGT->deadcoed_struct);
 		result = MATH_Sin(gGT->timer * 0x100 + (result>>0x18) & 0xfff);
@@ -69,9 +69,9 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 		particle2->axis[4].startVal = result - 0x400;
 		particle2->axis[5].startVal = result - 0x600;
 		
-		particle2->axis[0].velocity = fjObj->dirX;
+		particle2->axis[0].velocity = (short)fjObj->dirX;
 		particle2->axis[1].velocity = 0;
-		particle2->axis[2].velocity = fjObj->dirZ;
+		particle2->axis[2].velocity = (short)fjObj->dirZ;
 		
 		particle2->axis[3].velocity = (0x4a00 - particle2->axis[3].startVal)/7;
 		particle2->axis[4].velocity = (0x4600 - particle2->axis[4].startVal)/7;
@@ -200,8 +200,8 @@ void DECOMP_RB_FlameJet_LInB(struct Instance* inst)
 	
 	fjObj = (struct FlameJet*)t->object;
 	fjObj->cycleTimer = 0;
-	fjObj->dirX = inst->matrix.m[0][2];
-	fjObj->dirZ = inst->matrix.m[2][2];
+	fjObj->dirX = inst->matrix.m[0][2] * -0x4b >> 5;
+	fjObj->dirZ = inst->matrix.m[2][2] * 0x4b >> 5;
 	fjObj->audioPtr = 0;
 	
 	// put on separate cycles
