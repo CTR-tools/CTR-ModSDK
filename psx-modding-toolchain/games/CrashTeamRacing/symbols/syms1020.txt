@@ -623,9 +623,9 @@
 8003e794 MEMPACK_PopState
 8003e7cc MEMPACK_PopToState
 
-8003e7ec RNG_Scramble
-8003e830 RNG_Particles
-8003e870 RNG_GetValue
+8003e7ec MixRNG_Scramble
+8003e830 MixRNG_Particles
+8003e870 MixRNG_GetValue
 
 8003e8a4 Particle_FuncPtr_PotionShatter
 8003e9dc Particle_FuncPtr_SpitTire

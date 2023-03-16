@@ -155,7 +155,7 @@ PlayChewSound:
 						particle->axis[0].velocity +=
 							(
 								// 6 - 26
-								(RNG_Scramble() & 10 + 0x10) *
+								(MixRNG_Scramble() & 10 + 0x10) *
 								(plantInst->matrix.m[0][2] >> 0xC)
 							) * 0x100;
 							
@@ -164,7 +164,7 @@ PlayChewSound:
 						particle->axis[2].velocity +=
 							(
 								// 6 - 26
-								(RNG_Scramble() & 10 + 0x10) *
+								(MixRNG_Scramble() & 10 + 0x10) *
 								(plantInst->matrix.m[2][2] >> 0xC)
 							) * 0x100;
 					}

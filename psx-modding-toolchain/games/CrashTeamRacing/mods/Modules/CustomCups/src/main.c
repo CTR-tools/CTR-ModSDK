@@ -6,7 +6,7 @@
 #define ADDR_230 0x800AB9F0
 
 void DrawTextBackground(RECT* r, int flag, u_long* ot);
-void RNG_Scramble();
+void MixRNG_Scramble();
 int RCNT_GetTime_Total();
 void MM_JumpTo_Scrapbook();
 
@@ -127,7 +127,7 @@ void HookCups(int* param_1)
 			while(i < 4)
 			{
 				// random
-				RNG_Scramble();
+				MixRNG_Scramble();
 
 				id = (
 						// system clock

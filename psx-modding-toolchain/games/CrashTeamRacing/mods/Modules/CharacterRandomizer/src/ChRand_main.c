@@ -1,6 +1,6 @@
 #include <common.h>
 
-void RNG_Scramble();
+void MixRNG_Scramble();
 int RCNT_GetTime_Total();
 
 char ChRand_Repeat(int index, int character)
@@ -43,7 +43,7 @@ void ChRand_SetCharacters()
 	while(i < 8)
 	{
 		// random
-		RNG_Scramble();
+		MixRNG_Scramble();
 
 		id = (
 				// system clock

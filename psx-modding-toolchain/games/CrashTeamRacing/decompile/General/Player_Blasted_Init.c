@@ -4,7 +4,7 @@ u_int LOAD_IsOpen_RacingOrBattle();
 void RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
 int Instance_GetNumAnimFrames(struct Driver* driver, int param_2);
 int Instance_GetStartFrame(int midpoint, int numFrames);
-int RNG_Scramble();
+int MixRNG_Scramble();
 void DECOMP_Player_Blasted_Update(struct Thread* thread, struct Driver* driver);
 void DECOMP_Player_Blasted_PhysLinear(struct Thread* thread, struct Driver* driver);
 void Player_Driving_Audio(struct Thread* thread, struct Driver* driver);
@@ -59,7 +59,7 @@ void Player_Blasted_Init(struct Thread *thread, struct Driver *driver)
 	iVar2 = Instance_GetNumAnimFrames(driver->instSelf, 0);
 	iVar2 = Instance_GetStartFrame(0, iVar2);
 	driver->instSelf->vertSplit = (short)iVar2;
-	iVar2 = RNG_Scramble();
+	iVar2 = MixRNG_Scramble();
 	driver->KartStates.Blasted.boolPlayBackwards = iVar2 & 4;
 	
 	simpTurnState = driver->simpTurnState;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-int RNG_Scramble();
+int MixRNG_Scramble();
 
 enum ItemSet
 {
@@ -78,7 +78,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 					if (driver->driverRank == 1)
 					{
 						itemSet = ITEMSET_Race3;
-						rng = RNG_Scramble();
+						rng = MixRNG_Scramble();
 						if (rng & 1) goto Itemset2;
 					}
 
@@ -141,7 +141,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	}
 
 	// Decide item for Driver
-	rng = (RNG_Scramble() >> 0x3) % 0xc8;
+	rng = (MixRNG_Scramble() >> 0x3) % 0xc8;
 
 	// number of weapons for RNG
 	numWeapons[ITEMSET_BattleCustom] = sdata->gGT->battleSetup.numWeapons;
@@ -173,7 +173,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 
 		// "-1st place": Undecided rank
 		default:
-			rng = RNG_Scramble();
+			rng = MixRNG_Scramble();
 			item = (char)rng + -0xc*((char)(rng / 6 + (rng >> 0x1f) >> 1) - (char)(rng >> 0x1f));
 			SetItem:
 			driver->heldItemID = item;
