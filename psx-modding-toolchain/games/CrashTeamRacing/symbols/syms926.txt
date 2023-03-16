@@ -598,9 +598,11 @@
 8003f590 Particle_RenderList
 80040308 Particle_CreateInstance
 
-80040850 RivalWeapons_Init
-800408b8 RivalWeapons_Update
+80040850 RobotcarWeapons_Init
+800408b8 RobotcarWeapons_Update
+
 800414f4 StartLine_Update
+
 80041c84 Tawna_Init
 
 80041dc0 THREAD_DestroyTracker

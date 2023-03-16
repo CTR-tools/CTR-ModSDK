@@ -713,7 +713,7 @@ code_r0x800369d8:
 		}
 		if (sdata->Loading.stage == -1) {
 			if ((sdata_gGT->gameMode1 & 0xfU) == 0) {
-				RivalWeapons_Update();
+				RobotcarWeapons_Update();
 			}
 			StartLine_Update();
 		}

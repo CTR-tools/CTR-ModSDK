@@ -144,7 +144,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 	  // If game is not paused
       if ((gGT->gameMode1 & 0xf) == 0)
 	  {
-		RivalWeapons_Update();
+		RobotcarWeapons_Update();
       }
 
 	  StartLine_Update();

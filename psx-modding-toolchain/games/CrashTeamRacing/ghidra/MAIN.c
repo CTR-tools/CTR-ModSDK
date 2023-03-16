@@ -3753,7 +3753,7 @@ code_r0x800369d8:
 	  // If game is not paused
       if ((*(uint *)PTR_DAT_8008d2ac & 0xf) == 0)
 	  {
-		// RivalWeapons_Update
+		// RobotcarWeapons_Update
         FUN_800408b8();
       }
 
@@ -8360,7 +8360,7 @@ void FUN_8003b934(uint *param_1)
     FUN_800b087c();
   }
 
-  // RivalWeapons_Init
+  // RobotcarWeapons_Init
   FUN_80040850();
 
   return;

@@ -245,7 +245,7 @@ void DrawHUD_Wumpa3D_2P3P4P(struct GameTracker* gGT);
 void DecalMP_03(struct GameTracker* gGT);
 void DotLights_AudioAndVideo(struct GameTracker* gGT);
 void DrawBoxOutline_LowLevel(RECT* r, short x, u_short y, int* ptrColor, short param_5, u_long* ptrOT);
-void RivalWeapons_Update();
+void RobotcarWeapons_Update();
 void StartLine_Update();
 void unk80047d64();
 void CheckeredFlag_DrawSelf();
