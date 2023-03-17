@@ -5196,6 +5196,7 @@ void FUN_80047a58(void)
   }
   switch(iVar2 >> 0x10) {
   
+  // from MEMCARD_GetNextSlot1Event fail
   case 0:
     DAT_8009aa34 = 7;
     if ((DAT_8009aa36 == 1) && (DAT_8009aa34 = 4, (DAT_8009aa30 & 8) == 0)) {
