@@ -5195,41 +5195,65 @@ void FUN_80047a58(void)
 	iVar2 = iVar2 << 0x10;
   }
   switch(iVar2 >> 0x10) {
+  
   case 0:
     DAT_8009aa34 = 7;
     if ((DAT_8009aa36 == 1) && (DAT_8009aa34 = 4, (DAT_8009aa30 & 8) == 0)) {
       DAT_8009aa34 = 7;
     }
     break;
+  
+  // from MEMCARD_GetInfo, 
+  // from MEMCARD_Save if seek() fails or write() fails
+  // from MEMCARD_Load if seek() fails or read() fails
+  // from MEMCARD_GetNextSlot1Event fail
   case 1:
     DAT_8009aa34 = 2;
     break;
+	
+  // from MEMCARD_GetNextSlot1Event fail
   case 2:
     DAT_8009aa34 = 0;
     DAT_8009aa36 = 0;
     goto switchD_80047c84_caseD_8;
+  
+  // from MEMCARD_GetNextSlot1Event fail
   case 3:
     DAT_8009aa34 = 3;
     if (DAT_8009aa36 == 4) {
       DAT_8009aa34 = 7;
     }
     break;
+  
+  // from MEMCARD_Save if open() fails
   case 4:
     DAT_8009aa34 = 1;
     break;
+  
+  // from FUN_8003ddac
   case 5:
     DAT_8009aa34 = 6;
     break;
+  
+  // from MEMCARD_Load if open() fails
   case 6:
     DAT_8009aa34 = 5;
     break;
+  
+  // from MEMCARD_GetInfo, 
+  // from MEMCARD_Save if write() works
+  // from MEMCARD_Load if read() works
   case 7:
     DAT_8009aa34 = 8;
+	
   default:
     goto switchD_80047c84_caseD_8;
   }
+  
   DAT_8009aa36 = 0;
+  
 switchD_80047c84_caseD_8:
+  
   if ((DAT_8009aa36 == 0) && (DAT_8009aa3a != 0)) {
     DAT_8009aa36 = DAT_8009aa3a;
     DAT_8009aa3a = 0;
