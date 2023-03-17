@@ -347,7 +347,7 @@ undefined4 FUN_8003d9ec(void)
   long lVar1;
   undefined4 uVar2;
 
-  // SwIOE
+  // SwIOE (processing done)
   lVar1 = TestEvent(DAT_8008d8d4);
   uVar2 = 0;
   if (lVar1 != 1) 
@@ -385,7 +385,7 @@ undefined4 FUN_8003da68(void)
   long lVar1;
   undefined4 uVar2;
 
-  // HwIOE
+  // HwIOE (processing done)
   lVar1 = TestEvent(DAT_8008d8c8);
   uVar2 = 0;
   if (lVar1 != 1) 
@@ -425,7 +425,7 @@ undefined4 FUN_8003dae4(void)
 
   do 
   {
-	// HwIOE
+	// HwIOE (processing done)
     lVar1 = TestEvent(DAT_8008d8c8);
     if (lVar1 == 1) {
       return 0;
