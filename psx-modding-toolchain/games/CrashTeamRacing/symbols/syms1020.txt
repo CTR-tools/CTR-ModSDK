@@ -869,8 +869,8 @@
 80057798 SpecularLight_Motionless3D
 
 80057964 BakeMathGTE
-80057d24 GetPtr_MetaData_Surface
-80057d48 GetPtr_MetaData_Terrain
+80057d24 VehGetSurface
+80057d48 VehGetTerrain
 
 80057d6c Driver_TeleportSelf
 80058978 Driver_TeleportAll
