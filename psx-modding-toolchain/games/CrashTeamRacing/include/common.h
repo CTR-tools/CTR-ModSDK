@@ -9410,6 +9410,9 @@ struct sData
 
 	// 8008d474
 	// pointer to memcard bytes (again?) 800992E4
+	
+	// 8008d47c
+	// 12 shorts for LoadSave profiles
 
 	// 8008d490
 	// grey color (80 80 80)
