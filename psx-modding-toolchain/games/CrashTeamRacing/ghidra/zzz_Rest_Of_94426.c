@@ -4837,6 +4837,8 @@ LAB_800475b4:
     bVar1 = true;
     DAT_8008d984 = 1;
   }
+  
+  // if NEWCARD detected
   iVar2 = FUN_80046a90(3);
   if (iVar2 != 0) {
     FUN_800471e8();
@@ -4846,13 +4848,18 @@ LAB_800475b4:
 
     goto LAB_80047a08;
   }
+  
   iVar2 = FUN_80046a90(0);
   if (iVar2 == 0) {
     iVar2 = FUN_80046a90(1);
     local_1c = 6;
     if (iVar2 == 0) {
-      iVar2 = FUN_80046a90(2);
-      if (iVar2 == 0) {
+      
+	  // if TIMEOUT (no card) detected
+	  iVar2 = FUN_80046a90(2);
+      
+	  // no TIMEOUT
+	  if (iVar2 == 0) {
         iVar2 = FUN_80046a90(5);
         if (iVar2 == 0) {
           iVar2 = FUN_80046a90(4);
@@ -5054,6 +5061,8 @@ LAB_80047984:
 		bVar1 = false;
         goto LAB_80047a08;
       }
+	  
+	  // TIMEOUT (no card)
       FUN_800471e8();
       local_1c = 7;
     }
@@ -5196,7 +5205,7 @@ void FUN_80047a58(void)
   }
   switch(iVar2 >> 0x10) {
   
-  // from MEMCARD_GetNextSlot1Event fail
+  // from MEMCARD_GetNextSlot1Event fail (IOE)
   case 0:
     DAT_8009aa34 = 7;
     if ((DAT_8009aa36 == 1) && (DAT_8009aa34 = 4, (DAT_8009aa30 & 8) == 0)) {
@@ -5207,18 +5216,18 @@ void FUN_80047a58(void)
   // from MEMCARD_GetInfo, 
   // from MEMCARD_Save if seek() fails or write() fails
   // from MEMCARD_Load if seek() fails or read() fails
-  // from MEMCARD_GetNextSlot1Event fail
+  // from MEMCARD_GetNextSlot1Event fail (ERROR, bad card)
   case 1:
     DAT_8009aa34 = 2;
     break;
 	
-  // from MEMCARD_GetNextSlot1Event fail
+  // from MEMCARD_GetNextSlot1Event fail (TIMEOUT, no card)
   case 2:
     DAT_8009aa34 = 0;
     DAT_8009aa36 = 0;
     goto switchD_80047c84_caseD_8;
   
-  // from MEMCARD_GetNextSlot1Event fail
+  // from MEMCARD_GetNextSlot1Event fail (NEWCARD)
   case 3:
     DAT_8009aa34 = 3;
     if (DAT_8009aa36 == 4) {

@@ -352,12 +352,12 @@ undefined4 FUN_8003d9ec(void)
   uVar2 = 0;
   if (lVar1 != 1) 
   {
-	// ERROR
+	// ERROR (bad card)
     lVar1 = TestEvent(DAT_8008d8c4);
     uVar2 = 1;
     if (lVar1 != 1) 
 	{
-	  // TIMEOUT
+	  // TIMEOUT (no card)
       lVar1 = TestEvent(DAT_8008d8e0);
       if (lVar1 == 1) {
         uVar2 = 2;
@@ -390,12 +390,12 @@ undefined4 FUN_8003da68(void)
   uVar2 = 0;
   if (lVar1 != 1) 
   {
-	// ERROR
+	// ERROR (bad card)
     lVar1 = TestEvent(DAT_8008d8b4);
     uVar2 = 1;
     if (lVar1 != 1) 
 	{
-	  // TIMEOUT
+	  // TIMEOUT (no card)
       lVar1 = TestEvent(DAT_8008d8dc);
       if (lVar1 == 1) {
         uVar2 = 2;
@@ -431,13 +431,13 @@ undefined4 FUN_8003dae4(void)
       return 0;
     }
 	
-	// ERROR
+	// ERROR (bad card)
     lVar1 = TestEvent(DAT_8008d8b4);
     if (lVar1 == 1) {
       return 1;
     }
 	
-	// TIMEOUT
+	// TIMEOUT (no card)
     lVar1 = TestEvent(DAT_8008d8dc);
     if (lVar1 == 1) {
       return 2;
