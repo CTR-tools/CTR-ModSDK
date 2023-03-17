@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct Thread* THREAD_BirthWithObject(
+struct Thread* DECOMP_THREAD_BirthWithObject(
 	int flags, void* funcThTick, 
 	char* name, struct Thread* relativeTh)
 {
