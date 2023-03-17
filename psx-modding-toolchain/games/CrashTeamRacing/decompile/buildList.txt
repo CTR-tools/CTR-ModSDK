@@ -218,6 +218,9 @@ common, exe, MEMPACK_ClearLowMem, 0x0, General/MEMPACK/MEMPACK_ClearLowMem.c
 common, exe, MEMPACK_PopState, 0x0, General/MEMPACK/MEMPACK_PopState.c
 common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK/MEMPACK_PopToState.c
 
+// MixRNG
+common, exe, MixRNG_Scramble, 0x0, General/MixRNG/MixRNG_Scramble.c
+
 // MENUBOX
 // skip DrawBG
 common, exe, MenuBox_GetHeight, 0x0, General/MENUBOX/MENUBOX_GetHeight.c
@@ -250,7 +253,6 @@ common, exe, Camera110_InitPsyqGeom, 0x0, General/Camera110_InitPsyqGeom.c
 common, exe, Camera110_FadeAllWindows, 0x0, General/Camera110_FadeAllWindows.c
 
 // Uncategorized
-common, exe, MixRNG_Scramble, 0x0, General/MixRNG_Scramble.c
 common, exe, Map_DrawMap, 0x0, General/Map_DrawMap.c
 common, exe, DrawCharacterIcon, 0x0, General/DrawCharacterIcon.c
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
@@ -281,6 +283,8 @@ common, exe, Player_StopSpin_Update, 0x0, General/Player_StopSpin_FuncPtrs.c
 common, exe, Player_StopSpin_Init, 0x0, General/Player_StopSpin_Init.c
 common, exe, Player_Blasted_Update, 0x0, General/Player_Blasted_FuncPtrs.c
 common, exe, Player_Blasted_Init, 0x0, General/Player_Blasted_Init.c
+
+common, exe, Weapon_Mask_boolGoodGuy, 0x0, General/Weapon_Mask_boolGoodGuy.c
 
 // Japan
 
