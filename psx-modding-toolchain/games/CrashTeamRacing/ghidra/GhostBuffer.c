@@ -425,7 +425,7 @@ LAB_80027658:
 				) &&
 
 				(
-					// CheckeredFlag_IsFullyOnScreen
+					// TitleFlag_IsFullyOnScreen
 					iVar8 = FUN_80043f1c(),
 
 					// if not fully on screen

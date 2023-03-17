@@ -1,7 +1,7 @@
 #include <common.h>
 
-void CheckeredFlag_SetCanDraw(int value);
-int CheckeredFlag_GetCanDraw();
+void TitleFlag_SetCanDraw(int value);
+int TitleFlag_GetCanDraw();
 
 void MenuBox_Show(struct MenuBox* m);
 void MenuBox_DrawSelf(struct MenuBox* m, int, int, int);
@@ -77,9 +77,9 @@ void DECOMP_MENUBOX_ProcessState()
 	// not sure what this is
 	if((currMenuBox->state & 0x800) == 0)
 	{
-		if(CheckeredFlag_GetCanDraw() == 0)
+		if(TitleFlag_GetCanDraw() == 0)
 		{
-			CheckeredFlag_SetCanDraw(1);
+			TitleFlag_SetCanDraw(1);
 		}
 		
 		sdata->gGT->renderFlags |= 0x20;

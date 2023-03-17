@@ -828,7 +828,7 @@ LAB_80035098:
 						DAT_8008d874 == 0 &&
 						(
 							(
-								// CheckeredFlag_IsFullyOnScreen
+								// TitleFlag_IsFullyOnScreen
 								iVar7 = FUN_80043f1c(),
 
 								// if not fully on screen
@@ -5645,7 +5645,7 @@ void FUN_80039a44(int param_1)
 	// Unpause game
     *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xfffffffe;
     i
-	// CheckeredFlag_IsFullyOffScreen
+	// TitleFlag_IsFullyOffScreen
 	Var3 = FUN_80043f28();
     if (iVar3 == 1)
 	{
@@ -5909,7 +5909,7 @@ void FUN_80039e98(void)
   int iVar1;
   uint uVar2;
 
-  // CheckeredFlag_IsFullyOnScreen
+  // TitleFlag_IsFullyOnScreen
   iVar1 = FUN_80043f1c();
 
   if (
@@ -8687,7 +8687,7 @@ undefined4 main(void)
 	  // also sets debug variables to "off"
       FUN_80031c58();
 
-	  // CheckeredFlag_SetFullyOffScreen
+	  // TitleFlag_SetFullyOffScreen
 	  // Without this, checkered flag will draw one
 	  // frame after the copyright page draws, then
 	  // go away once Naughty Dog Box scene is ready
@@ -8948,11 +8948,11 @@ undefined4 main(void)
 	  {
 LAB_8003ca68:
 
-		// CheckeredFlag_IsFullyOffScreen
+		// TitleFlag_IsFullyOffScreen
         iVar8 = FUN_80043f28();
         if (iVar8 != 0)
 		{
-		  // CheckeredFlag_SetFullyOnScreen
+		  // TitleFlag_SetFullyOnScreen
           FUN_8004402c();
         }
       }
@@ -8960,7 +8960,7 @@ LAB_8003ca68:
 	  // if not main menu
       else
 	  {
-		// CheckeredFlag_IsFullyOnScreen
+		// TitleFlag_IsFullyOnScreen
         iVar8 = FUN_80043f1c();
 
 		// if not
@@ -9054,7 +9054,7 @@ LAB_8003ca68:
 	  // if loading is not finished
       if (DAT_8008d0f8 != -1)
 	  {
-		// CheckeredFlag_IsFullyOnScreen
+		// TitleFlag_IsFullyOnScreen
         iVar8 = FUN_80043f1c();
 
         if (
@@ -9088,7 +9088,7 @@ LAB_8003ca68:
 		// to be reset (maybe for credits?)
         if (iVar8 == -5)
 		{
-		  // CheckeredFlag_IsFullyOnScreen
+		  // TitleFlag_IsFullyOnScreen
           iVar8 = FUN_80043f1c();
           if (iVar8 == 1)
 		  {
@@ -9176,7 +9176,7 @@ LAB_8003ca68:
 		  
 		  // if == -4, if waiting for checkered flag
 
-		  // CheckeredFlag_IsFullyOnScreen
+		  // TitleFlag_IsFullyOnScreen
           iVar8 = FUN_80043f1c();
 
 		  // Get address of GameTracker
@@ -9231,7 +9231,7 @@ LAB_8003ca68:
 		  // if not fully on screen
           else
 		  {
-			// CheckeredFlag_IsFullyOffScreen
+			// TitleFlag_IsFullyOffScreen
             iVar8 = FUN_80043f28();
             if (iVar8 == 1)
 			{
@@ -9470,7 +9470,7 @@ void FUN_8003cfc0(short param_1)
   // Turn off HUD
   PTR_DAT_8008d2ac[0x1d31] = PTR_DAT_8008d2ac[0x1d31] & 0xfe;
 
-  // CheckeredFlag_IsFullyOffScreen
+  // TitleFlag_IsFullyOffScreen
   iVar1 = FUN_80043f28();
 
   if (iVar1 == 1)
@@ -9479,7 +9479,7 @@ void FUN_8003cfc0(short param_1)
     FUN_80043fb0(1);
   }
 
-  // CheckeredFlag_ResetTextAnim
+  // TitleFlag_ResetTextAnim
   FUN_80044290();
 
   // loading stage = -4 (waiting for checkered flag)

@@ -677,20 +677,20 @@
 // LoadGameOptions
 // SaveGameOptions
 
-80042b40 CheckeredFlag_MoveModels
-80042c28 CheckeredFlag_IsFullyOnScreen
-80042c34 CheckeredFlag_IsFullyOffScreen
+80042b40 TitleFlag_MoveModels
+80042c28 TitleFlag_IsFullyOnScreen
+80042c34 TitleFlag_IsFullyOffScreen
 // missing Bool_Transitioning
 // missing SetDrawOrder
-80042c5c CheckeredFlag_BeginTransition
-80042cac CheckeredFlag_SetFullyOnScreen
-80042cd0 CheckeredFlag_SetFullyOffScreen
-80042cf8 CheckeredFlag_SetCanDraw
-80042d04 CheckeredFlag_GetCanDraw
-80042d10 CheckeredFlag_GetOT
+80042c5c TitleFlag_BeginTransition
+80042cac TitleFlag_SetFullyOnScreen
+80042cd0 TitleFlag_SetFullyOffScreen
+80042cf8 TitleFlag_SetCanDraw
+80042d04 TitleFlag_GetCanDraw
+80042d10 TitleFlag_GetOT
 // no ResetTextAnimation
 // no Draw_LoadingString
-80042ee4 CheckeredFlag_DrawSelf
+80042ee4 TitleFlag_DrawSelf
 
 800438a8 DecalHUD_DrawPolyGT4_Safe
 80043940 DrawRectangle

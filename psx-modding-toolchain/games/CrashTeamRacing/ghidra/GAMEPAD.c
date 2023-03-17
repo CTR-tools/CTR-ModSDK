@@ -1005,7 +1005,7 @@ void FUN_80025e18(int param_1)
 	  {
         if (*(int *)(iVar5 + 0x20) == 0) goto LAB_800260ac;
 
-		// CheckeredFlag_IsTransitioning
+		// TitleFlag_IsTransitioning
         iVar2 = FUN_80043f44();
         if (iVar2 != 0) goto LAB_80026074;
 

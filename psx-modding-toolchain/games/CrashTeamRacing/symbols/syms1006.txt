@@ -688,20 +688,20 @@
 8004516c LoadGameOptions
 // no SaveGameOptions in this build
 
-80045280 CheckeredFlag_MoveModels
-80045368 CheckeredFlag_IsFullyOnScreen
-80045374 CheckeredFlag_IsFullyOffScreen
-80045390 CheckeredFlag_IsTransitioning
-800453d8 CheckeredFlag_SetDrawOrder
-800453fc CheckeredFlag_BeginTransition
-80045478 CheckeredFlag_SetFullyOnScreen
-800454a4 CheckeredFlag_SetFullyOffScreen
-800454d4 CheckeredFlag_SetCanDraw
-800454e0 CheckeredFlag_GetCanDraw
-800454ec CheckeredFlag_GetOT
-800456dc CheckeredFlag_ResetTextAnim
-800456ec CheckeredFlag_DrawLoadingString
-80045934 CheckeredFlag_DrawSelf
+80045280 TitleFlag_MoveModels
+80045368 TitleFlag_IsFullyOnScreen
+80045374 TitleFlag_IsFullyOffScreen
+80045390 TitleFlag_IsTransitioning
+800453d8 TitleFlag_SetDrawOrder
+800453fc TitleFlag_BeginTransition
+80045478 TitleFlag_SetFullyOnScreen
+800454a4 TitleFlag_SetFullyOffScreen
+800454d4 TitleFlag_SetCanDraw
+800454e0 TitleFlag_GetCanDraw
+800454ec TitleFlag_GetOT
+800456dc TitleFlag_ResetTextAnim
+800456ec TitleFlag_DrawLoadingString
+80045934 TitleFlag_DrawSelf
 
 80046344 DecalHUD_DrawPolyGT4_Safe
 800463dc DrawRectangle

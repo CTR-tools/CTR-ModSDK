@@ -59,17 +59,17 @@ u_int main()
 				if (gGT->levelID == 39)
 				{
 					LAB_8003ca68:
-					iVar8 = CheckeredFlag_IsFullyOffScreen();
+					iVar8 = TitleFlag_IsFullyOffScreen();
 					if (iVar8 != 0)
 					{
-						CheckeredFlag_SetFullyOnScreen();
+						TitleFlag_SetFullyOnScreen();
 					}
 				}
 				
 				// if not main menu
 				else
 				{
-					iVar8 = CheckeredFlag_IsFullyOnScreen();
+					iVar8 = TitleFlag_IsFullyOnScreen();
 					if (iVar8 == 0)
 					{
 						// If you are drawing main menu, set fully on screen
@@ -77,7 +77,7 @@ u_int main()
 					}
 					else
 					{
-						CheckeredFlag_BeginTransition(2);
+						TitleFlag_BeginTransition(2);
 					}
 				}
 				EffectSfxRain_Reset(gGT);
@@ -130,7 +130,7 @@ u_int main()
 				// if loading is not finished
 				if (sdata->Loading.stage != -1)
 				{
-					iVar8 = CheckeredFlag_IsFullyOnScreen();
+					iVar8 = TitleFlag_IsFullyOnScreen();
 					if
 					(
 						// wait for flag to be fully on-screen before starting to load the game
@@ -150,7 +150,7 @@ u_int main()
 					// if loading is finished, but still in "loading mode", and if pools dont need to be reset (maybe for credits?)
 					if (iVar8 == -5)
 					{
-						iVar8 = CheckeredFlag_IsFullyOnScreen();
+						iVar8 = TitleFlag_IsFullyOnScreen();
 						if (iVar8 == 1)
 						{
 							// set game state to 2 to initialize the world
@@ -210,7 +210,7 @@ u_int main()
 							gGT->gameMode1 &= 0xbfffffff;
 							break;
 						}
-						iVar8 = CheckeredFlag_IsFullyOnScreen();
+						iVar8 = TitleFlag_IsFullyOnScreen();
 						RemBitsConfig8 = sdata->Loading.OnBegin.RemBitsConfig8;
 						AddBitsConfig8 = sdata->Loading.OnBegin.AddBitsConfig8;
 						RemBitsConfig0 = sdata->Loading.OnBegin.RemBitsConfig0;
@@ -239,10 +239,10 @@ u_int main()
 						}
 						else
 						{
-							iVar8 = CheckeredFlag_IsFullyOffScreen();
+							iVar8 = TitleFlag_IsFullyOffScreen();
 							if (iVar8 == 1)
 							{
-								CheckeredFlag_BeginTransition(1);
+								TitleFlag_BeginTransition(1);
 							}
 						}
 					}
@@ -455,7 +455,7 @@ void StateZero()
 	LOAD_InitCD();
 	
 	// Without this, checkered flag will draw one frame after the copyright page draws, then go away once Naughty Dog Box scene is ready
-	CheckeredFlag_SetFullyOffScreen();
+	TitleFlag_SetFullyOffScreen();
 	
 	ResetGraph(0);
 	SetGraphDebug(0);

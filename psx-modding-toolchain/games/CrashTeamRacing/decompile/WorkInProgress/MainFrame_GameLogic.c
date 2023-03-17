@@ -285,7 +285,7 @@ LAB_80035098:
 						sdata->AkuAkuHintState == 0 &&
 						(
 							(
-								uVar7 = CheckeredFlag_IsFullyOnScreen(), uVar7 == 0 &&
+								uVar7 = TitleFlag_IsFullyOnScreen(), uVar7 == 0 &&
 								(iVar4 = 0,  sdata->gGT->numPlyrCurrGame != '\0')
 							)
 						)

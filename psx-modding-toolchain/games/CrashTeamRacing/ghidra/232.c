@@ -729,7 +729,7 @@ LAB_800ac860:
   // P1 spawn in 8th place on track
   DAT_8008d69c = 7;
   
-  // CheckeredFlag_IsTransitioning
+  // TitleFlag_IsTransitioning
   iVar7 = FUN_80043f44();
   
   // If transitioning then do not start loading new level yet
@@ -5084,7 +5084,7 @@ void FUN_800b1c90(void)
 		// if Aku Hint is not unlocked
 		((DAT_8008fbb0 & 0x400000) == 0) && 
 		
-		// CheckeredFlag_IsFullyOffScreen
+		// TitleFlag_IsFullyOffScreen
 		(iVar1 = FUN_80043f28(), iVar1 != 0)
 	 ) 
   {

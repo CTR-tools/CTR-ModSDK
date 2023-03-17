@@ -42,8 +42,8 @@ void LibraryOfModels_Store(struct GameTracker* gGT, int param_2, int* param_3);
 int* DecalGlobal_Find1(struct Level* level, char* str);
 int* DecalGlobal_Find2(u_int* param_1, char* str);
 void Audio_SetState_Safe(int param_1);
-u_int CheckeredFlag_IsFullyOffScreen();
-void CheckeredFlag_BeginTransition(int param_1);
+u_int TitleFlag_IsFullyOffScreen();
+void TitleFlag_BeginTransition(int param_1);
 void ElimBG_Deactivate(int param_1);
 void LOAD_Callback_MaskHints3D(struct LoadQueueSlot* lqs);
 void LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
@@ -871,11 +871,11 @@ LAB_800346b0:
 					// enable pause menu? Or enable 3D cars on track?
 					gGT->renderFlags = gGT->renderFlags & 0x1000 | 0x20;
 
-					iVar9 = CheckeredFlag_IsFullyOffScreen();
+					iVar9 = TitleFlag_IsFullyOffScreen();
 					if (iVar9 == 1)
 					{
 						// checkered flag, begin transition on-screen
-						CheckeredFlag_BeginTransition(1);
+						TitleFlag_BeginTransition(1);
 					}
 				}
 				gGT->hudFlags = gGT->hudFlags | 8;

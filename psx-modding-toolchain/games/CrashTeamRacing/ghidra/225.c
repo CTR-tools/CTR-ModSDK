@@ -95,7 +95,7 @@ void FUN_8009f718(void)
   // Disable drawing lines between multiplayer screens
   *(uint *)(PTR_DAT_8008d2ac + 0x256c) = *(uint *)(PTR_DAT_8008d2ac + 0x256c) & 0xffff7fff;
   
-  // CheckeredFlag_SetFullyOnScreen
+  // TitleFlag_SetFullyOnScreen
   FUN_8004402c();
   
   if (DAT_8008d52c < 0x1a) {

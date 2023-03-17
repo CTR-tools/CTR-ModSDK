@@ -8245,7 +8245,7 @@ struct Data
 	// 80085d5c -- EurRetail
 	// 80088d24 -- JpnRetail
 	// MATRIX struct at 80085AC0
-	MATRIX matrixCheckeredFlag;
+	MATRIX matrixTitleFlag;
 
 	// 80085AE0
 	int checkerFlagVariables[5];
@@ -9373,29 +9373,29 @@ struct sData
 	// 8008c3a0 JpnTrial
 	// 8008d7e0 EurRetail
 	// 80090854 JpnRetail
-	int CheckeredFlag_AnimationType;
+	int TitleFlag_AnimationType;
 
 	// 8008d444
-	short CheckeredFlag_Position;
+	short TitleFlag_Position;
 
 	// 8008d446
 	short unk_CheckFlag1;
 
 	// 8008d448
-	short CheckeredFlag_CanDraw;
+	short TitleFlag_CanDraw;
 
 	// 8008d44a
 	short unk_CheckFlag2;
 
 	// 8008d44c
-	int CheckeredFlag_DrawOrder;
+	int TitleFlag_DrawOrder;
 
 	// does it exist in Sep3?
 	// 8008d450
-	int CheckeredFlag_LoadingTextAnimFrame;
+	int TitleFlag_LoadingTextAnimFrame;
 
 	// 8008d458
-	// some kind of elapsed time in CheckeredFlag
+	// some kind of elapsed time in TitleFlag
 
 	// 8008d454
 	#if BUILD == UsaRetail

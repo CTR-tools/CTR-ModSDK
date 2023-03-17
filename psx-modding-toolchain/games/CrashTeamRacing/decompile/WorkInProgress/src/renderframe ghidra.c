@@ -726,7 +726,7 @@ code_r0x800369d8:
 		CAM_ClearScreen(gGT);
 	}
 	if ((sdata_gGT->renderFlags & 0x1000) != 0) {
-		CheckeredFlag_DrawSelf();
+		TitleFlag_DrawSelf();
 	}
 	TileView_SetDrawEnv_Normal
 						((gGT->tileView_UI).ptrOT + 4, &gGT->tileView_UI, gGT->backBuffer, (short *)0x0, '\0');

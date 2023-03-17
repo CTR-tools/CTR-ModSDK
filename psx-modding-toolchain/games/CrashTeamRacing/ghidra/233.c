@@ -1007,21 +1007,21 @@ LAB_800acb0c:
 		  // enable checkered flag
 		  FUN_80044088(1);
           
-		  // CheckeredFlag_IsTransitioning
+		  // TitleFlag_IsTransitioning
 		  iVar8 = FUN_80043f44();
           if (
 				// if not
 				(iVar8 == 0) && 
 				
 				(
-					// CheckeredFlag_IsFullyOnScreen
+					// TitleFlag_IsFullyOnScreen
 					iVar8 = FUN_80043f1c(), 
 					iVar8 == 0
 				)
 			 ) 
 		  {
             
-			// CheckeredFlag_SetFullyOffScreen
+			// TitleFlag_SetFullyOffScreen
 			FUN_80044058();
           }
         }
@@ -1032,7 +1032,7 @@ LAB_800acb0c:
 		  // enable checkered flag
           FUN_80044088(1);
 		  
-		  // CheckeredFlag_IsTransitioning
+		  // TitleFlag_IsTransitioning
           iVar8 = FUN_80043f44();
 		  
           if (
@@ -1040,13 +1040,13 @@ LAB_800acb0c:
 				(iVar8 == 0) && 
 				
 				(
-					// CheckeredFlag_IsFullyOnScreen
+					// TitleFlag_IsFullyOnScreen
 					iVar8 = FUN_80043f1c(), 
 					iVar8 == 0
 				)
 			 ) 
 		  {
-			// CheckeredFlag_SetFullyOffScreen
+			// TitleFlag_SetFullyOffScreen
             FUN_80044058();
           }
 		  
@@ -1553,7 +1553,7 @@ LAB_800ad334:
 	
   case 0x16:
   
-	// CheckeredFlag_IsFullyOffScreen
+	// TitleFlag_IsFullyOffScreen
     iVar10 = FUN_80043f28();
     if (iVar10 == 1) 
 	{
@@ -1567,13 +1567,13 @@ LAB_800ad334:
 	
   case 0x17:
   
-	// CheckeredFlag_IsFullyOnScreen
+	// TitleFlag_IsFullyOnScreen
     uVar7 = FUN_80043f1c();
     goto joined_r0x800ad160;
 	
   case 0x18:
   
-    // CheckeredFlag_IsFullyOnScreen
+    // TitleFlag_IsFullyOnScreen
     iVar10 = FUN_80043f1c();
     if (iVar10 == 1) 
 	{

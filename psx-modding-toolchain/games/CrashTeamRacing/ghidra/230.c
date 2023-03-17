@@ -434,7 +434,7 @@ void FUN_800ac1f0(int param_1,short param_2)
   int iVar2;
   short *psVar3;
   
-  // CheckeredFlag_MoveModels
+  // TitleFlag_MoveModels
   // after frame 0xe6, make the intro models transition from the center
   // of the screen, to the left of the screen, over the course of 15 frames
   iVar2 = FUN_80043e34((int)(((uint)DAT_800b5a14 - 0xe6) * 0x10000) >> 0x10,0xf);
@@ -2300,7 +2300,7 @@ void FUN_800adc0c(int param_1)
 		// if timer is before midpoint
         if ((int)sVar9 < (int)DAT_800b536e) 
 		{
-		  // CheckeredFlag_MoveModels
+		  // TitleFlag_MoveModels
 		  // make driver fly off screen
           *psVar13 = (&DAT_800b59f0)[iVar6];
           iVar5 = FUN_80043e34();
@@ -2313,7 +2313,7 @@ void FUN_800adc0c(int param_1)
 		// if timer is after midpoint
         else 
 		{
-		  // CheckeredFlag_MoveModels
+		  // TitleFlag_MoveModels
 		  // make new driver fly on screen
           iVar5 = FUN_80043e34((int)sVar9 - (int)DAT_800b536e);
 		  
@@ -6770,7 +6770,7 @@ void FUN_800b4014(int param_1)
   // alter checkered flag
   case 0:
   
-    // CheckeredFlag_IsFullyOnScreen
+    // TitleFlag_IsFullyOnScreen
     iVar1 = FUN_80043f1c();
     if (iVar1 == 1) 
 	{
@@ -6792,7 +6792,7 @@ void FUN_800b4014(int param_1)
   // find the TEST.STR file
   case 1:
   
-	// CheckeredFlag_IsFullyOffScreen
+	// TitleFlag_IsFullyOffScreen
     iVar1 = FUN_80043f28();
     
 	// if not fully off screen
@@ -6873,7 +6873,7 @@ void FUN_800b4014(int param_1)
 	  // If you press Start, Cross, Circle, Triangle, or Square
       if ((DAT_8009a990 & 0x41070) != 0) 
 	  {
-		// CheckeredFlag_SetFullyOnScreen
+		// TitleFlag_SetFullyOnScreen
         FUN_8004402c();
       }
 	  
@@ -6895,7 +6895,7 @@ void FUN_800b4014(int param_1)
 	// MM_Video_ClearMem
     FUN_800b64d4();
     
-	// CheckeredFlag_IsFullyOffScreen
+	// TitleFlag_IsFullyOffScreen
 	iVar1 = FUN_80043f28();
     if (iVar1 == 1) 
 	{
@@ -6912,7 +6912,7 @@ LAB_800b4224:
 	// or back to main menu
   case 4:
   
-	// CheckeredFlag_IsFullyOnScreen
+	// TitleFlag_IsFullyOnScreen
     iVar1 = FUN_80043f1c();
     if (iVar1 == 1) 
 	{

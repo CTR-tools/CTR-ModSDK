@@ -156,7 +156,7 @@ void Weapon_Shoot_OnCirclePress(struct Driver* driver);
 void MenuBox_ClearInput();
 void ElimBG_Deactivate(int param_1);
 void MenuBox_Hide(struct MenuBox* mb);
-u_int CheckeredFlag_IsFullyOnScreen();
+u_int TitleFlag_IsFullyOnScreen();
 void MainFreeze_IfPressStart();
 short OSK_DrawMenu(u_short param_1);
 void LoadSave_ToggleMode(u_int param_1);
@@ -248,7 +248,7 @@ void DrawBoxOutline_LowLevel(RECT* r, short x, u_short y, int* ptrColor, short p
 void RobotcarWeapons_Update();
 void StartLine_Update();
 void unk80047d64();
-void CheckeredFlag_DrawSelf();
+void TitleFlag_DrawSelf();
 int RCNT_GetTime_Total();
 void BreakDraw();
 u_int MM_Video_CheckIfFinished(int param_1);

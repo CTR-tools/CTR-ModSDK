@@ -157,7 +157,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 	
 	if ((gGT->renderFlags & 0x1000) != 0)
 	{
-		CheckeredFlag_DrawSelf();
+		TitleFlag_DrawSelf();
 	}
 
 	RenderDispEnv_UI(gGT);

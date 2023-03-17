@@ -102,7 +102,7 @@ void RobotcarWeapons_Update();
 void StartLine_Update();
 void unk80047d64();
 //void CAM_ClearScreen(struct GameTracker* gGT);
-void CheckeredFlag_DrawSelf();
+void TitleFlag_DrawSelf();
 int RCNT_GetTime_Total();
 void BreakDraw();
 u_int MM_Video_CheckIfFinished(int param_1);
@@ -233,7 +233,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 	
 	if ((gGT->renderFlags & 0x1000) != 0)
 	{
-		CheckeredFlag_DrawSelf();
+		TitleFlag_DrawSelf();
 	}
 
 	RenderDispEnv_UI(gGT);

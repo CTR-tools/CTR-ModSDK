@@ -1608,12 +1608,12 @@ void FUN_80043d24(void)
 }
 
 
-// CheckeredFlag_MoveModels
+// TitleFlag_MoveModels
 // param_1 - frame index
 // param_2 - numFrames in transition
 int FUN_80043e34(int param_1,int param_2)
 {
-  // need a better prefix than CheckeredFlag,
+  // need a better prefix than TitleFlag,
   // all this does is move the intro logo models
   // from the center of the screen, to the right
 
@@ -1685,31 +1685,31 @@ int FUN_80043e34(int param_1,int param_2)
   return iVar1;
 }
 
-// CheckeredFlag_IsFullyOnScreen
+// TitleFlag_IsFullyOnScreen
 uint FUN_80043f1c(void)
 
 {
 
-  // CheckeredFlag_Position
+  // TitleFlag_Position
   // return true if flag is fully on screen
   // return false if flag is not fully on screen
   return (uint)(DAT_8008d444 == 0);
 }
 
 
-// CheckeredFlag_IsFullyOffScreen
+// TitleFlag_IsFullyOffScreen
 uint FUN_80043f28(void)
 
 {
 
-  // CheckeredFlag_Position
+  // TitleFlag_Position
   // return false, "not true", if flag is < 5000, partially on-screen
   // return true, "not false", if flag is >= 5000, fully off-screen
   return (uint)((ushort)(DAT_8008d444 + 4999U) < 9999) ^ 1;
 }
 
 
-// CheckeredFlag_IsTransitioning
+// TitleFlag_IsTransitioning
 uint FUN_80043f44(void)
 
 {
@@ -1718,7 +1718,7 @@ uint FUN_80043f44(void)
   // by default, assume false
   uVar1 = 0;
 
-  // CheckeredFlag_Position
+  // TitleFlag_Position
   // if checkered flag is not fully on-screen and not fully off-screen
   if (((DAT_8008d444 != 0) && (DAT_8008d444 != -5000)) && (DAT_8008d444 != 5000))
   {
@@ -1730,37 +1730,37 @@ uint FUN_80043f44(void)
 
 
 
-// CheckeredFlag_SetDrawOrder
+// TitleFlag_SetDrawOrder
 void FUN_80043f8c(int param_1)
 
 {
   if (param_1 != 0) {
 
-    // CheckeredFlag_DrawOrder = 1
+    // TitleFlag_DrawOrder = 1
     DAT_8008d44c = 1;
     return;
   }
 
-  // CheckeredFlag_DrawOrder = -1
+  // TitleFlag_DrawOrder = -1
   DAT_8008d44c = 0xffff;
   return;
 }
 
 
-// CheckeredFlag_BeginTransition
+// TitleFlag_BeginTransition
 void FUN_80043fb0(int param_1)
 
 {
   // Begin Transition on-screen
   if (param_1 == 1) {
 
-    // CheckeredFlag_LoadingTextAnimFrame = -1
+    // TitleFlag_LoadingTextAnimFrame = -1
     DAT_8008d450 = 0xffffffff;
 
-    // CheckeredFlag_Position = 5000
+    // TitleFlag_Position = 5000
     DAT_8008d444 = 5000;
 
-    // CheckeredFlag_AnimationType = 0
+    // TitleFlag_AnimationType = 0
     DAT_8008d440 = 0;
   }
 
@@ -1769,10 +1769,10 @@ void FUN_80043fb0(int param_1)
     if (param_1 == 2) {
       FUN_80043f8c(0);
 
-      // CheckeredFlag_Position = 0
+      // TitleFlag_Position = 0
       DAT_8008d444 = 0;
 
-      // CheckeredFlag_AnimationType = 2
+      // TitleFlag_AnimationType = 2
       DAT_8008d440 = param_1;
     }
   }
@@ -1783,17 +1783,17 @@ void FUN_80043fb0(int param_1)
 }
 
 
-// CheckeredFlag_SetFullyOnScreen
+// TitleFlag_SetFullyOnScreen
 void FUN_8004402c(void)
 
 {
   // flag is now fully on-screen
   DAT_8008d444 = 0;
 
-  // CheckeredFlag_AnimationType = 0
+  // TitleFlag_AnimationType = 0
   DAT_8008d440 = 0;
 
-  // CheckeredFlag_LoadingTextAnimFrame = -1
+  // TitleFlag_LoadingTextAnimFrame = -1
   DAT_8008d450 = 0xffffffff;
 
   // enable loading screen's checkered flag
@@ -1802,18 +1802,18 @@ void FUN_8004402c(void)
 }
 
 
-// CheckeredFlag_SetFullyOffScreen
+// TitleFlag_SetFullyOffScreen
 void FUN_80044058(void)
 
 {
-  // CheckeredFlag_LoadingTextAnimFrame = -1
+  // TitleFlag_LoadingTextAnimFrame = -1
   DAT_8008d450 = 0xffffffff;
 
-  // CheckeredFlag_Position
+  // TitleFlag_Position
   // flag is now fully off-screen
   DAT_8008d444 = 5000;
 
-  // CheckeredFlag_AnimationType = 0
+  // TitleFlag_AnimationType = 0
   DAT_8008d440 = 0;
 
   // disable loading screen's checkered flag
@@ -1821,7 +1821,7 @@ void FUN_80044058(void)
   return;
 }
 
-// CheckeredFlag_SetCanDraw
+// TitleFlag_SetCanDraw
 void FUN_80044088(undefined2 param_1)
 
 {
@@ -1831,7 +1831,7 @@ void FUN_80044088(undefined2 param_1)
 }
 
 
-// CheckeredFlag_GetCanDraw
+// TitleFlag_GetCanDraw
 int FUN_80044094(void)
 
 {
@@ -1839,7 +1839,7 @@ int FUN_80044094(void)
 }
 
 
-// CheckeredFlag_GetOT
+// TitleFlag_GetOT
 int FUN_800440a0(void)
 {
   // In Naughty Dog's code, this could have
@@ -1854,34 +1854,34 @@ int FUN_800440a0(void)
     DAT_8008d44a = 1;
   }
 
-  // if CheckeredFlag_AnimationType != 1
+  // if TitleFlag_AnimationType != 1
   if (DAT_8008d440 != 1) {
 
-    // if CheckeredFlag_AnimationType == 0
+    // if TitleFlag_AnimationType == 0
     if (DAT_8008d440 == 0) {
 
-      // if CheckeredFlag_Position < 0
+      // if TitleFlag_Position < 0
       if ((short)DAT_8008d444 < 0) {
 
-        // CheckeredFlag_Position = 5000
+        // TitleFlag_Position = 5000
         DAT_8008d444 = 5000;
       }
       DAT_8008d446 = 300;
 
-      // iVar2 = (CheckeredFlag_Position << 0x10) >> 0x10
+      // iVar2 = (TitleFlag_Position << 0x10) >> 0x10
       iVar2 = (int)((uint)DAT_8008d444 << 0x10) >> 0x10;
       if (iVar2 < 1) {
 
-        // CheckeredFlag_Position = 0
+        // TitleFlag_Position = 0
         DAT_8008d444 = 0;
 
-        // if CheckeredFlag_DrawOrder != 1
+        // if TitleFlag_DrawOrder != 1
         if (DAT_8008d44c != 1) {
 
-          // if CheckeredFlag_DrawOrder != -1
+          // if TitleFlag_DrawOrder != -1
           if (DAT_8008d44c != -1) {
 
-            // CheckeredFlag_Position = 0
+            // TitleFlag_Position = 0
             DAT_8008d444 = 0;
             DAT_8008d446 = 300;
 
@@ -1889,7 +1889,7 @@ int FUN_800440a0(void)
             return *(int *)(PTR_DAT_8008d2ac + 0x25c) + 0xffc;
           }
 
-          // CheckeredFlag_DrawOrder = 0
+          // TitleFlag_DrawOrder = 0
           DAT_8008d44c = 0;
           goto LAB_80044268;
         }
@@ -1901,7 +1901,7 @@ int FUN_800440a0(void)
 		{
 		  // drop to zero
 
-          // CheckeredFlag_Position = 0
+          // TitleFlag_Position = 0
           DAT_8008d444 = 0;
         }
 
@@ -1910,7 +1910,7 @@ int FUN_800440a0(void)
 		{
 		  // decrease until position is near zero
 
-		  // Take CheckeredFlag_Position, remove top 2 bytes, divide by 8		// elapsed milliseconds per frame, ~32
+		  // Take TitleFlag_Position, remove top 2 bytes, divide by 8		// elapsed milliseconds per frame, ~32
           iVar2 = ((int)((uint)DAT_8008d444 << 0x10) >> 0x13) * *(int *)(PTR_DAT_8008d2ac + 0x1d04)
                   >> 5;
           sVar1 = -(short)iVar2;
@@ -1918,7 +1918,7 @@ int FUN_800440a0(void)
             sVar1 = -1;
           }
 
-          // CheckeredFlag_Position += sVar1
+          // TitleFlag_Position += sVar1
           DAT_8008d444 = DAT_8008d444 + sVar1;
         }
       }
@@ -1929,7 +1929,7 @@ int FUN_800440a0(void)
       return *(undefined4 *)(PTR_DAT_8008d2ac + *(int *)(PTR_DAT_8008d2ac + 0xc) * 4 + 0x18c8);
     }
 
-    // if CheckeredFlag_AnimationType == 2
+    // if TitleFlag_AnimationType == 2
     if (DAT_8008d440 == 2)
 	{
       if ((short)DAT_8008d446 < 1000)
@@ -1939,13 +1939,13 @@ int FUN_800440a0(void)
         DAT_8008d446 = DAT_8008d446 + (short)(*(int *)(PTR_DAT_8008d2ac + 0x1d04) * 10 >> 5);
       }
 
-      // if CheckeredFlag_Position < -4999
+      // if TitleFlag_Position < -4999
       if ((short)DAT_8008d444 < -4999) {
 
-        // CheckeredFlag_Position = 5000
+        // TitleFlag_Position = 5000
         DAT_8008d444 = 5000;
 
-        // CheckeredFlag_AnimationType = 0
+        // TitleFlag_AnimationType = 0
         DAT_8008d440 = 0;
 
 		// disable loading screen
@@ -1957,7 +1957,7 @@ int FUN_800440a0(void)
 	  {
 		// decrease until -5000
 
-        // CheckeredFlag_Position -= ???
+        // TitleFlag_Position -= ???
         DAT_8008d444 = DAT_8008d444 -
                        (short)(((int)((uint)DAT_8008d446 << 0x10) >> 0x12) *
 
@@ -1972,19 +1972,19 @@ LAB_80044268:
 }
 
 
-// CheckeredFlag_ResetTextAnim
+// TitleFlag_ResetTextAnim
 void FUN_80044290(void)
 
 {
 
-  // CheckeredFlag_LoadingTextAnimFrame = -1
+  // TitleFlag_LoadingTextAnimFrame = -1
   DAT_8008d450 = 0xffffffff;
 
   return;
 }
 
 
-// CheckeredFlag_DrawLoadingString
+// TitleFlag_DrawLoadingString
 void FUN_800442a0(void)
 
 {
@@ -2035,12 +2035,12 @@ void FUN_800442a0(void)
   }
   iVar10 = (DAT_8008d454 & 0xffff) - (((iVar3 << 0x10) >> 0x10) - ((iVar3 << 0x10) >> 0x1f) >> 1);
 
-  // iVar3 = CheckeredFlag_LoadingTextAnimFrame
+  // iVar3 = TitleFlag_LoadingTextAnimFrame
   iVar3 = DAT_8008d450;
 
   if (0 < iVar2) {
 
-    // iVar9 = CheckeredFlag_LoadingTextAnimFrame * -0x3C + 0x23C
+    // iVar9 = TitleFlag_LoadingTextAnimFrame * -0x3C + 0x23C
     iVar9 = DAT_8008d450 * -0x3c + 0x23c;
 
 	// for iVar6 = 0; iVar6 < strlen("LOADING..."); iVar6++)
@@ -2121,17 +2121,17 @@ LAB_800443c4:
       iVar2 = 1;
     }
 
-    // CheckeredFlag_LoadingTextAnimFrame += iVar2
+    // TitleFlag_LoadingTextAnimFrame += iVar2
     DAT_8008d450 = DAT_8008d450 + iVar2;
   }
 
   else {
 
-    // CheckeredFlag_LoadingTextAnimFrame = -1
+    // TitleFlag_LoadingTextAnimFrame = -1
     DAT_8008d450 = -1;
     if (DAT_8008d0f8 - 6U < 2) {
 
-      // CheckeredFlag_LoadingTextAnimFrame = 0
+      // TitleFlag_LoadingTextAnimFrame = 0
       DAT_8008d450 = 0;
     }
   }
@@ -2142,7 +2142,7 @@ LAB_800443c4:
 
 // WARNING: Could not reconcile some variable overlaps
 
-// CheckeredFlag_DrawSelf
+// TitleFlag_DrawSelf
 void FUN_800444e8(void)
 
 {
@@ -2179,29 +2179,29 @@ void FUN_800444e8(void)
   puVar24 = &DAT_8008cf6c;
   puVar25 = auStack136;
   
-  // if CheckeredFlag_CanDraw == false
+  // if TitleFlag_CanDraw == false
   if (DAT_8008d448 == 0) 
   {
 	// don't draw
     return;
   }
   
-  // if CheckeredFlag_LoadingTextAnimFrame < 0
+  // if TitleFlag_LoadingTextAnimFrame < 0
   if (DAT_8008d450 < 0) 
   {
 	// if loading stage is 6 or 7,
 	// during the level loading
     if ((5 < DAT_8008d0f8) && (DAT_8008d0f8 < 8)) {
 		
-	  // CheckeredFlag_LoadingTextAnimFrame = 0
+	  // TitleFlag_LoadingTextAnimFrame = 0
       DAT_8008d450 = 0;
     }
 	
-	// if CheckeredFlag_LoadingTextAnimFrame < 0 goto ???
+	// if TitleFlag_LoadingTextAnimFrame < 0 goto ???
     if (DAT_8008d450 < 0) goto LAB_80044568;
   }
   
-  // CheckeredFlag_DrawLoadingString
+  // TitleFlag_DrawLoadingString
   FUN_800442a0();
   
 LAB_80044568:
@@ -2222,7 +2222,7 @@ LAB_80044568:
   r0_00 = &DAT_1f800000;
   uVar23 = 1;
   
-  // some kind of elapsed time in CheckeredFlag,
+  // some kind of elapsed time in TitleFlag,
   // 8008d458
   uVar16 = *(int *)(puVar24 + 0x4ec) >> 5;
   *(uint *)(puVar25 + 0x4c) = uVar16;
@@ -2297,13 +2297,13 @@ LAB_80044568:
   *(undefined2 *)(puVar25 + 0x12) = 0xfc72;
   
   // 8008d444
-  // CheckeredFlag_Position
+  // TitleFlag_Position
   sVar2 = *(short *)(puVar24 + 0x4d8);
   
   *(undefined2 *)(puVar25 + 0x1a) = 0xfcd0;
   *(undefined2 *)(puVar25 + 0x22) = 0xfd2e;
   
-  // sVar3 = -0xBBE - CheckeredFlag_Position
+  // sVar3 = -0xBBE - TitleFlag_Position
   sVar2 = -0xbbe - sVar2;
   
   // flag position
@@ -2645,7 +2645,7 @@ LAB_80044568:
 	if (0x22 < iVar5) 
 	{	
 		// 8008d458
-		// some kind of elapsed time in CheckeredFlag
+		// some kind of elapsed time in TitleFlag
       *(int *)(puVar24 + 0x4ec) =
            *(int *)(puVar24 + 0x4ec) + *(int *)(PTR_DAT_8008d2ac + 0x1d04) * 100;
       return;
@@ -4096,13 +4096,13 @@ void FUN_8004680c(void)
 
   if ((*(uint *)(DAT_8008d908 + 8) & 0x800) == 0)
   {
-	// CheckeredFlag_GetCanDraw
+	// TitleFlag_GetCanDraw
     iVar3 = FUN_80044094();
 
 	// if the value is zero
     if (iVar3 == 0)
 	{
-	  // CheckeredFlag_SetCanDraw(true)
+	  // TitleFlag_SetCanDraw(true)
       FUN_80044088(1);
     }
 
@@ -9306,7 +9306,7 @@ void FUN_8004c914(int param_1)
 		((*(uint *)PTR_DAT_8008d2ac & 0x200000) != 0) &&
 
 		(
-			// CheckeredFlag_IsTransitioning
+			// TitleFlag_IsTransitioning
 			iVar1 = FUN_80043f44(),
 			iVar1 != 0
 		)
@@ -16812,7 +16812,7 @@ LAB_80055930:
     iVar10 = 0x1e - (uint)*(ushort *)(PTR_DAT_8008d2ac + 0x1526);
   }
 
-  // CheckeredFlag_IsFullyOnScreen
+  // TitleFlag_IsFullyOnScreen
   iVar3 = FUN_80043f1c();
 
   // if not
@@ -17021,7 +17021,7 @@ void FUN_80055c90(int param_1)
 			// Turn off HUD
             PTR_DAT_8008d2ac[0x1d31] = PTR_DAT_8008d2ac[0x1d31] & 0xfe;
 
-			// CheckeredFlag_IsFullyOffScreen
+			// TitleFlag_IsFullyOffScreen
 			iVar4 = FUN_80043f28();
 
             if (iVar4 == 1)
@@ -17455,7 +17455,7 @@ void FUN_800562fc(void)
 		) &&
 
 		(
-			// CheckeredFlag_IsFullyOffScreen
+			// TitleFlag_IsFullyOffScreen
 			local_8c = FUN_80043f28(),
 			local_8c == 1
 		)
@@ -17465,7 +17465,7 @@ void FUN_800562fc(void)
     FUN_80043fb0(1);
   }
 
-  // CheckeredFlag_IsFullyOnScreen
+  // TitleFlag_IsFullyOnScreen
   local_8c = FUN_80043f1c();
 
   if (
@@ -17481,7 +17481,7 @@ void FUN_800562fc(void)
     FUN_80044088(1);
   }
 
-  // CheckeredFlag_IsFullyOnScreen
+  // TitleFlag_IsFullyOnScreen
   local_8c = FUN_80043f1c();
 
   if (
@@ -17496,7 +17496,7 @@ void FUN_800562fc(void)
     return;
   }
 
-  // CheckeredFlag_IsFullyOnScreen
+  // TitleFlag_IsFullyOnScreen
   local_8c = FUN_80043f1c();
 
   puVar11 = PTR_DAT_8008d2ac;

@@ -3309,7 +3309,7 @@ LAB_800346b0:
 		  // enable pause menu? Or enable 3D cars on track?
         *(uint *)(PTR_DAT_8008d2ac + 0x256c) = *(uint *)(PTR_DAT_8008d2ac + 0x256c) & 0x1000 | 0x20;
 
-		// CheckeredFlag_IsFullyOffScreen
+		// TitleFlag_IsFullyOffScreen
         iVar9 = FUN_80043f28();
         if (iVar9 == 1)
 		{
@@ -3409,7 +3409,7 @@ void FUN_80034874(undefined4 param_1)
   // is & 0x1000 only for the transition?
   *(uint *)(puVar2 + 0x256c) = *(uint *)(puVar2 + 0x256c) & 0x1000;
 
-  // CheckeredFlag_IsFullyOffScreen
+  // TitleFlag_IsFullyOffScreen
   iVar4 = FUN_80043f28();
   if (iVar4 == 1)
   {

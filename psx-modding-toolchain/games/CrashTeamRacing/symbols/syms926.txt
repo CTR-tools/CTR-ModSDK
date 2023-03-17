@@ -637,20 +637,21 @@
 80043c10 LoadGameOptions
 80043d24 SaveGameOptions
 
-80043e34 CheckeredFlag_MoveModels
-80043f1c CheckeredFlag_IsFullyOnScreen
-80043f28 CheckeredFlag_IsFullyOffScreen
-80043f44 CheckeredFlag_IsTransitioning
-80043f8c CheckeredFlag_SetDrawOrder
-80043fb0 CheckeredFlag_BeginTransition
-8004402c CheckeredFlag_SetFullyOnScreen
-80044058 CheckeredFlag_SetFullyOffScreen
-80044088 CheckeredFlag_SetCanDraw
-80044094 CheckeredFlag_GetCanDraw
-800440a0 CheckeredFlag_GetOT
-80044290 CheckeredFlag_ResetTextAnim
-800442a0 CheckeredFlag_DrawLoadingString
-800444e8 CheckeredFlag_DrawSelf
+// TitleFlag
+80043e34 TitleFlag_MoveModels
+80043f1c TitleFlag_IsFullyOnScreen
+80043f28 TitleFlag_IsFullyOffScreen
+80043f44 TitleFlag_IsTransitioning
+80043f8c TitleFlag_SetDrawOrder
+80043fb0 TitleFlag_BeginTransition
+8004402c TitleFlag_SetFullyOnScreen
+80044058 TitleFlag_SetFullyOffScreen
+80044088 TitleFlag_SetCanDraw
+80044094 TitleFlag_GetCanDraw
+800440a0 TitleFlag_GetOT
+80044290 TitleFlag_ResetTextAnim
+800442a0 TitleFlag_DrawLoadingString
+800444e8 TitleFlag_DrawSelf
 
 80044ef8 DecalHUD_DrawPolyGT4_Safe
 80044f90 DrawRectangle
@@ -663,6 +664,7 @@
 8004568c DrawPlayerComment
 800457b0 DrawTextBackground
 
+// TitleMenuBox
 800459ec MenuBox_DrawBG
 80045b1c MenuBox_GetHeight
 80045c50 MenuBox_GetWidth
@@ -702,6 +704,7 @@
 // unknown 80047d64 -- related to memcard
 80047d64 unk80047d64 // needed for MainFrame_RenderFrame
 
+// TitleSaveObj
 80047da8 LoadSave_LoadProfileFromHub_MenuBoxFuncPtr
 80047dfc LoadSave_ThTick
 80047f20 LoadSave_PrintInteger
@@ -713,15 +716,14 @@
 800488e0 LoadSave_Destroy
 80048960 LoadSave_OneProfile_MenuBoxFuncPtr
 80048a30 LoadSave_DrawGhostProfile
-
 80048da0 LoadSave_MuteCursors
 80048de4 LoadSave_UnMuteCursors
-
 80048e2c LoadSave_ToggleMode
 80048edc LoadSave_InitAndDestroy
 80048f0c LoadSave_InputLogic
 800490c4 LoadSave_AllProfiles_MenuBoxFuncPtr
 
+// TitleTypeName
 8004aa08 OSK_RestoreName
 8004aa60 OSK_DrawMenu
 8004b144 OSK_MenuBoxFuncPtr
