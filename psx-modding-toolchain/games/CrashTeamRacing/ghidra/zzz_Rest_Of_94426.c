@@ -1466,7 +1466,7 @@ void FUN_80043ab8(void)
 }
 
 
-// loadNonAdvTrack_MenuFuncPtr
+// TitleBeginTrack_MenuFuncPtr
 void FUN_80043b30(undefined4 param_1)
 
 {
@@ -1513,7 +1513,7 @@ void FUN_80043b30(undefined4 param_1)
 }
 
 
-// loadNonAdvTrack_Get_MenuBox
+// TitleBeginTrack_Get_MenuBox
 undefined * FUN_80043c04(void)
 
 {
@@ -7529,7 +7529,7 @@ LAB_800499e4:
         DAT_80086e86 = *(undefined2 *)(DAT_8008d754 + 6);
       }
 
-	  // change active MenuBox to loadNonAdvTrack
+	  // change active MenuBox to TitleBeginTrack
       DAT_8008d924 = (undefined *)FUN_80043c04();
 
 	  sVar22 = DAT_8008d904;

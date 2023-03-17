@@ -4101,7 +4101,7 @@ void FUN_800b00d4(int param_1)
           }
           
 		  // passthrough MenuBox for the function
-		  // loadNonAdvTrack
+		  // TitleBeginTrack
 		  DAT_8008d924 = &DAT_80085a94;
 		  
 		  // make error message posY appear 
@@ -4816,7 +4816,7 @@ void FUN_800b0eec(int param_1)
 			  } while (iVar8 * 0x10000 >> 0x10 < 8);
 			  
 			  // passthrough MenuBox for the function
-			  // loadNonAdvTrack
+			  // TitleBeginTrack
               DAT_8008d924 = &DAT_80085a94;
 			  
 			  // set current level to...
@@ -5206,7 +5206,7 @@ void FUN_800b1848(void)
           if (DAT_800b59c4 != 0) 
 		  {
 			// passthrough MenuBox for the function
-			// loadNonAdvTrack
+			// TitleBeginTrack
             DAT_8008d924 = &DAT_80085a94;
             return;
           }

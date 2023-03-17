@@ -685,8 +685,8 @@
 80045304 TileView_FadeOneWindow
 80045494 TileView_FadeAllWindows
 
-8004550c loadNonAdvTrack_MenuBoxFuncPtr
-800455e0 loadNonAdvTrack_Get_MenuBox
+8004550c TitleBeginTrack_MenuBoxFuncPtr
+800455e0 TitleBeginTrack_Get_MenuBox
 
 // missing in sep3
 800455ec LoadGameOptions

@@ -8237,7 +8237,7 @@ struct Data
 	// 0x80085A94
 	// has internal pointer to 80043b30,
 	// which loads a LEV from track selection
-	struct MenuBox menuBox_loadNonAdvTrack;
+	struct MenuBox menuBox_TitleBeginTrack;
 
 	// 80083d40 -- SepReview -- remember MenuBoxes are larger
 	// 80085AC0 -- UsaRetail
