@@ -573,3 +573,156 @@ int FUN_80042394(int param_1,int param_2)
   // if thread is not valid, return 0
   return param_1;
 }
+
+// THREAD_PerVisData_CheckInstances
+// param_1 is VisData
+void FUN_800423fc(int param_1,short *param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  int *piVar5;
+
+  // ptrVisDataArray_InstHitboxes
+  piVar5 = *(int **)(param_1 + 0x14);
+  
+  if ((piVar5 != (int *)0x0) && (*piVar5 != 0)) 
+  {
+    piVar4 = piVar5 + 5;
+    
+	// loop through all hitboxes
+	do 
+	{
+      if (((*(byte *)piVar5 & 0x80) != 0) &&
+         ((piVar4[2] == 0 || ((*(uint *)(*(int *)(piVar4[2] + 0x2c) + 0x28) & 0xf) != 0)))) {
+        iVar3 = (int)*param_2 - (int)*(short *)(piVar4 + -1);
+        iVar1 = (int)param_2[2] - (int)*(short *)piVar4;
+        iVar2 = (int)param_2[1] - (int)*(short *)((int)piVar4 + -2);
+        if (iVar3 * iVar3 < 0x10000000) {
+          if (((iVar2 * iVar2 < 0x10000000) && (iVar1 * iVar1 < 0x10000000)) &&
+             (iVar3 * iVar3 + iVar2 * iVar2 + iVar1 * iVar1 < *(int *)(param_2 + 4))) {
+            param_2[10] = (short)iVar1;
+            param_2[9] = (short)iVar2;
+            param_2[8] = (short)iVar3;
+
+			// short+0x14 = byte+0x28,
+			// callback on collision
+
+			// either for colliding with lev object or nonLev
+            (**(code **)(param_2 + 0x14))(param_2,piVar5);
+          }
+        }
+      }
+      piVar5 = piVar5 + 8;
+      piVar4 = piVar4 + 8;
+    } while (*piVar5 != 0);
+  }
+  return;
+}
+
+
+// THREAD_StartSearch_Self
+void FUN_80042544(short *param_1)
+
+{
+  short sVar1;
+  undefined *puVar2;
+
+  // box half-length
+  sVar1 = param_1[3];
+
+  // position of object hitting
+  // tiger temple teeth
+
+  // param[0] = posX,
+  // param[1] = posY,
+  // param[2] = posZ,
+
+  // Make hitbox, min and max x,y,z
+  param_1[0xe] = *param_1 - sVar1;
+  param_1[0xf] = param_1[1] - sVar1;
+  param_1[0x10] = param_1[2] - sVar1;
+  param_1[0x11] = *param_1 + sVar1;
+  param_1[0x12] = param_1[1] + sVar1;
+  puVar2 = PTR_DAT_8008d2ac;
+  param_1[0x13] = param_1[2] + sVar1;
+
+  // COLL_SearchTree_FindX, callback is THREAD_PerVisData_CheckInstances
+  FUN_8001ebec(*(undefined4 *)(**(int **)(puVar2 + 0x160) + 0x18),param_1 + 0xe,FUN_800423fc);
+  return;
+}
+
+
+// THREAD_CollideHitboxWithBucket
+// param1 is thread checked for collision
+// param2 is WeaponSearchData
+// param3 is person who used weapon
+void FUN_800425d4(int param_1,short *param_2,int param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+
+  // if thread is valid
+  if (param_1 != 0) {
+    do
+	{
+	  // if child thread exists
+      if (*(int *)(param_1 + 0x14) != 0)
+	  {
+		// recursively check all children
+        FUN_800425d4(*(int *)(param_1 + 0x14),param_2,param_3);
+      }
+
+      if (
+			// make sure you dont hit your own weapon???
+			(param_1 != param_3) &&
+
+			// if collision is not disabled for this thread,
+			// and if this thread is not dead
+		    ((*(uint *)(param_1 + 0x1c) & 0x1800) == 0)
+		 )
+	  {
+		// get instance
+        iVar1 = *(int *)(param_1 + 0x34);
+
+		// get distance of X, Y, Z
+        iVar3 = (int)*param_2 - *(int *)(iVar1 + 0x44);
+        iVar2 = (int)param_2[1] - *(int *)(iVar1 + 0x48);
+        iVar1 = (int)param_2[2] - *(int *)(iVar1 + 0x4c);
+
+		// if X dist is small
+        if (iVar3 * iVar3 < 0x10000000)
+		{
+          if (
+				(
+					// if Y dist and Z dist are small
+					(iVar2 * iVar2 < 0x10000000) &&
+					(iVar1 * iVar1 < 0x10000000)
+				) &&
+
+				// if distance is less than collision radius
+				(iVar3 * iVar3 + iVar2 * iVar2 + iVar1 * iVar1 < *(int *)(param_2 + 4))
+			 )
+		  {
+			// save distances
+            param_2[8] = (short)iVar3;
+            param_2[9] = (short)iVar2;
+            param_2[10] = (short)iVar1;
+
+			// some collision funcPtr???
+            (**(code **)(param_2 + 0x14))(param_2,param_1);
+          }
+        }
+      }
+
+	  // thread = thread->sibling;
+      param_1 = *(int *)(param_1 + 0x10);
+
+    } while (param_1 != 0);
+  }
+  return;
+}

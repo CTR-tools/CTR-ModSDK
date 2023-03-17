@@ -231,7 +231,7 @@ common, exe, MenuBox_Show, 0x0, General/MENUBOX/MENUBOX_Show.c
 common, exe, MenuBox_Hide, 0x0, General/MENUBOX/MENUBOX_Hide.c
 common, exe, MenuBox_BoolHidden, 0x0, General/MENUBOX/MENUBOX_BoolHidden.c
 
-// THREAD
+// THREAD (need 3 more)
 common, exe, THREAD_DestroyTracker, 0x0, General/THREAD/THREAD_DestroyTracker.c
 common, exe, THREAD_DestroyInstance, 0x0, General/THREAD/THREAD_DestroyInstance.c
 common, exe, THREAD_DestroyObject, 0x0, General/THREAD/THREAD_DestroyObject.c

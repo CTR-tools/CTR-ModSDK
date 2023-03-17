@@ -656,9 +656,9 @@
 800412b4 THREAD_CollidePointWithBucket
 80041300 THREAD_SearchForModel
 
-80041368 Weapon_SearchCallback
-800414b0 Weapon_MakeHitbox_SearchBSP
-80041540 Weapon_CollideThreadBucket
+80041368 THREAD_PerVisData_CheckInstances
+800414b0 THREAD_StartSearch_Self
+80041540 THREAD_CollideHitboxWithBucket
 
 80041664 Camera110_InitStructs
 8004187c Camera110_InitPsyqGeom

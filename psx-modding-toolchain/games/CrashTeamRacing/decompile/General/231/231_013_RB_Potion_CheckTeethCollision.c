@@ -19,5 +19,5 @@ void DECOMP_RB_Potion_CheckTeethCollision(struct Instance* inst)
 	WSD->thread = inst->thread;
 	WSD->funcCallback = RB_Potion_OpenTeeth;
 	
-	Weapon_MakeHitbox_SearchBSP(WSD);
+	THREAD_StartSearch_Self(WSD);
 }
