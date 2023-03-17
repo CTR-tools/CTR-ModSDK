@@ -347,24 +347,24 @@ undefined4 FUN_8003d9ec(void)
   long lVar1;
   undefined4 uVar2;
 
-  // IOE
+  // SwIOE
   lVar1 = TestEvent(DAT_8008d8d4);
   uVar2 = 0;
   if (lVar1 != 1) 
   {
-	// ERROR (bad card)
+	// SwERROR (bad card)
     lVar1 = TestEvent(DAT_8008d8c4);
     uVar2 = 1;
     if (lVar1 != 1) 
 	{
-	  // TIMEOUT (no card)
+	  // SwTIMEOUT (no card)
       lVar1 = TestEvent(DAT_8008d8e0);
       if (lVar1 == 1) {
         uVar2 = 2;
       }
       else 
 	  {
-		// NEWCARD
+		// SwNEWCARD
         lVar1 = TestEvent(DAT_8008d8c0);
         uVar2 = 3;
         if (lVar1 != 1) {
@@ -385,24 +385,24 @@ undefined4 FUN_8003da68(void)
   long lVar1;
   undefined4 uVar2;
 
-  // IOE
+  // HwIOE
   lVar1 = TestEvent(DAT_8008d8c8);
   uVar2 = 0;
   if (lVar1 != 1) 
   {
-	// ERROR (bad card)
+	// HwERROR (bad card)
     lVar1 = TestEvent(DAT_8008d8b4);
     uVar2 = 1;
     if (lVar1 != 1) 
 	{
-	  // TIMEOUT (no card)
+	  // HwTIMEOUT (no card)
       lVar1 = TestEvent(DAT_8008d8dc);
       if (lVar1 == 1) {
         uVar2 = 2;
       }
       else 
 	  {
-		// NEWCARD
+		// HwNEWCARD
         lVar1 = TestEvent(DAT_8008d8bc);
         uVar2 = 3;
         if (lVar1 != 1) {
@@ -425,25 +425,25 @@ undefined4 FUN_8003dae4(void)
 
   do 
   {
-	// IOE
+	// HwIOE
     lVar1 = TestEvent(DAT_8008d8c8);
     if (lVar1 == 1) {
       return 0;
     }
 	
-	// ERROR (bad card)
+	// HwERROR (bad card)
     lVar1 = TestEvent(DAT_8008d8b4);
     if (lVar1 == 1) {
       return 1;
     }
 	
-	// TIMEOUT (no card)
+	// HwTIMEOUT (no card)
     lVar1 = TestEvent(DAT_8008d8dc);
     if (lVar1 == 1) {
       return 2;
     }
 	
-	// NEWCARD
+	// HwNEWCARD
     lVar1 = TestEvent(DAT_8008d8bc);
   } while (lVar1 != 1);
   return 3;
