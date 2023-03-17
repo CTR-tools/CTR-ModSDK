@@ -865,15 +865,18 @@
 80059780 SpawnParticle_Sparks_Wall
 80059a18 SpawnParticle_DriverMain
 
+// VehTurbo
 8005ab24 Turbo_Audio
 8005abfc Turbo_Increment
+
+// VehAnim
 8005b0c4 Instance_GetStartFrame
 8005b0f4 Instance_GetNumAnimFrames
-
 8005b178 OnAnimate_Driving
 8005b510 OnAnimate_Spinning
 8005b5fc OnAnimate_LastSpin
 
+// VehShadow
 8005b6b8 DrawShadows_Subset1
 8005b720 DrawShadows_Main 
 8005c120 DrawSkidMarks_Subset1
