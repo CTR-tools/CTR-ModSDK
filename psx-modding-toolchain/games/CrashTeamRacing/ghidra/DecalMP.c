@@ -30,13 +30,13 @@ void FUN_80023488(void)
   // ???
   puVar7 = (undefined2 *)(PTR_DAT_8008d2ac + 0x5a8);
 
-  // camera110
+  // tileView
   puVar11 = (undefined2 *)(PTR_DAT_8008d2ac + 0x168);
 
   // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0') 
   {
-	// gGT->camera110[i].cameraID
+	// gGT->tileView[i].cameraID
     // 0x270 = 0x168+0x108
 	puVar4 = PTR_DAT_8008d2ac + 0x270;
 	
@@ -85,10 +85,10 @@ void FUN_80023488(void)
               }
             }
 			
-			// camera110->0x108-0xE0
-			// camera110->0x28
+			// tileView->0x108-0xE0
+			// tileView->0x28
 			
-			// copy matrix camera110->0x28
+			// copy matrix tileView->0x28
 			// to piVar3 (gGT->0x5a8 region)
             iVar1 = *(int *)(puVar4 + -0xdc);
             iVar12 = *(int *)(puVar4 + -0xd8);
@@ -98,7 +98,7 @@ void FUN_80023488(void)
             piVar3[0x10] = iVar12;
             piVar3[0x11] = iVar13;
 			
-			// copy matrix camera110->0x38 (second half of 0x28)
+			// copy matrix tileView->0x38 (second half of 0x28)
 			// to piVar3 (gGT->0x5a8 region)
             iVar1 = *(int *)(puVar4 + -0xcc);
             iVar12 = *(int *)(puVar4 + -200);
@@ -108,28 +108,28 @@ void FUN_80023488(void)
             piVar3[0x14] = iVar12;
             piVar3[0x15] = iVar13;
 
-			// store pointer to camera110
+			// store pointer to tileView
             *(undefined2 *)(piVar3 + 4) = *puVar11;
 
 			*(undefined2 *)((int)piVar3 + 0x12) = *(undefined2 *)(puVar4 + -0x106);
             *(undefined2 *)(piVar3 + 5) = *(undefined2 *)(puVar4 + -0x104);
 			
-			// camera110->0x108-0xEC
-			// camera110->rect.x
+			// tileView->0x108-0xEC
+			// tileView->rect.x
 			// startX, startY, sizeX, sizeY
             *(undefined2 *)(piVar3 + 0xb) = *(undefined2 *)(puVar4 + -0xec);
             *(undefined2 *)((int)piVar3 + 0x2e) = *(undefined2 *)(puVar4 + -0xea);
             *(undefined2 *)(piVar3 + 0xc) = *(undefined2 *)(puVar4 + -0xe8);
             *(undefined2 *)((int)piVar3 + 0x32) = *(undefined2 *)(puVar4 + -0xe6);
 			
-			// camera110->0x108-0x14
-			// camera110->ptrOT 
+			// tileView->0x108-0x14
+			// tileView->ptrOT 
             piVar3[0x41] = *(int *)(puVar4 + -0x14);
 			
             puVar2 = puVar7 + 0xc;
 			
-			// camera110->0x108-0xF0
-			// camera110->distToScreenPREV
+			// tileView->0x108-0xF0
+			// tileView->distToScreenPREV
             piVar3[10] = *(int *)(puVar4 + -0xf0);
             
 			// next region of gGT->0x5a8 (0x128 bytes) (0x94*2)
@@ -138,7 +138,7 @@ void FUN_80023488(void)
 			// cameraID (0x108)
             *(undefined *)(piVar3 + 0x46) = *puVar4;
 
-			// instance 88*i + 0x74 = camera110 pointer
+			// instance 88*i + 0x74 = tileView pointer
             *(undefined2 **)(iVar6 + iVar10 + 0x74) = puVar2;
 
 			*piVar3 = iVar6;
@@ -160,7 +160,7 @@ void FUN_80023488(void)
 	  // loop counter
       iVar9 = iVar9 + 1;
 
-	  // Camera110
+	  // TileView
       puVar4 = puVar4 + 0x110;
 
 	  // InstDrawPerPlayer
@@ -393,7 +393,7 @@ void FUN_80023784(int param_1)
 		// called 12 times, once for each possible
 		// driver that needs pixelLOD in multiplayer
 
-		// Camera110_SetDrawEnv_DecalMP
+		// TileView_SetDrawEnv_DecalMP
         FUN_80042974(
 						// ptrOT?
 						piVar12[-1],

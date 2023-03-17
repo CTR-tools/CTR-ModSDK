@@ -35,7 +35,7 @@ int Hello_Main()
 		170,
 
 		&sdata->gGT->backBuffer->primMem,
-		sdata->gGT->camera110_UI.ptrOT,
+		sdata->gGT->tileView_UI.ptrOT,
 
 		data.ptrColor[0x17][0],
 		data.ptrColor[0x17][1],

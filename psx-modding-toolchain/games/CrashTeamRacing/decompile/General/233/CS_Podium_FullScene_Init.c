@@ -71,7 +71,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	sdata->gGT->numWinners = 1;
 	
 	// Set winnerIndex[0] to 0, to draw 
-	// confetti on the first camera110
+	// confetti on the first tileView
 	sdata->gGT->winnerIndex[0] = 0;
 	
 	sdata->gGT->confetti.numParticles_max = 200;

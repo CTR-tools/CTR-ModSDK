@@ -108,6 +108,6 @@ EndFunc:
 	
 	// 0x1000 per player, plus 0x18 for linking
 	size = ((gGT->numPlyrCurrGame) << 0xC) | 0x18;
-	gGT->ot_camera110_UI[0] = MEMPACK_AllocMem(size); // "ot1"
-	gGT->ot_camera110_UI[1] = MEMPACK_AllocMem(size); // "ot2"
+	gGT->ot_tileView_UI[0] = MEMPACK_AllocMem(size); // "ot1"
+	gGT->ot_tileView_UI[1] = MEMPACK_AllocMem(size); // "ot2"
 }

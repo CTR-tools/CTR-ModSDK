@@ -65,10 +65,10 @@ common, exe, BOTS_Adv_NumTimesLostEvent, 0x0, General/BOTS/BOTS_Adv_NumTimesLost
 // BOTS_Driver_Init was started, not finished
 
 // CAM
-common, exe, CAM_Init, 0x0, General/CAM_Init.c
-common, exe, CAM_SetDesiredPosRot, 0x0, General/CAM_SetDesiredPosRot.c
-//common, exe, CAM_EndOfRace_Battle, 0x0, General/CAM_EndOfRace_Battle.c
-//common, exe, CAM_StartOfRace, 0x0, General/CAM_StartOfRace.c
+common, exe, CAM_Init, 0x0, General/CAMERA/CAM_Init.c
+common, exe, CAM_SetDesiredPosRot, 0x0, General/CAMERA/CAM_SetDesiredPosRot.c
+//common, exe, CAM_EndOfRace_Battle, 0x0, General/CAMERA/CAM_EndOfRace_Battle.c
+//common, exe, CAM_StartOfRace, 0x0, General/CAMERA/CAM_StartOfRace.c
 
 // CDSYS
 common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_XAGetNumTracks.c
@@ -246,11 +246,11 @@ common, exe, THREAD_CollidePointWithSelf, 0x0, General/THREAD/THREAD_CollidePoin
 common, exe, THREAD_CollidePointWithBucket, 0x0, General/THREAD/THREAD_CollidePointWithBucket.c
 common, exe, THREAD_SearchForModel, 0x0, General/THREAD/THREAD_SearchForModel.c
 
-// Camera110
-common, exe, Camera110_InitStructs, 0x0, General/Camera110_InitStructs.c
-common, exe, Camera110_SetViewMatrix, 0x0, General/Camera110_SetViewMatrix.c
-common, exe, Camera110_InitPsyqGeom, 0x0, General/Camera110_InitPsyqGeom.c
-common, exe, Camera110_FadeAllWindows, 0x0, General/Camera110_FadeAllWindows.c
+// TileView
+common, exe, TileView_Init, 0x0, General/TileView/TileView_Init.c
+common, exe, TileView_SetMatrixVP, 0x0, General/TileView/TileView_SetMatrixVP.c
+common, exe, TileView_SetPsyqGeom, 0x0, General/TileView/TileView_SetPsyqGeom.c
+common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
 
 // Uncategorized
 common, exe, Map_DrawMap, 0x0, General/Map_DrawMap.c

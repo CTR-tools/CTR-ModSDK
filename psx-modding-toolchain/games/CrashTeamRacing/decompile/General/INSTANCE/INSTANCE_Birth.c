@@ -40,7 +40,7 @@ void INSTANCE_Birth(
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		inst->idpp[i].cam110 = &gGT->camera110[i];
+		inst->idpp[i].tileView = &gGT->tileView[i];
 		inst->idpp[i].mh = 0;
 		inst->idpp[i].unkb8[0] = 0;
 	}

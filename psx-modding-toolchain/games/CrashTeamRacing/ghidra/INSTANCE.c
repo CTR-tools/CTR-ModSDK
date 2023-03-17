@@ -77,7 +77,7 @@ void FUN_80030778(int param_1,undefined4 param_2,undefined *param_3,undefined4 p
   // if numPlyrCurrGame is not zero
   if (puVar3[0x1ca8] != '\0')
   {
-	// offset of 8008d2ac where camera110 structs
+	// offset of 8008d2ac where tileView structs
 	// are held for each player (pos, size, etc)
     iVar5 = 0x168;
 
@@ -85,7 +85,7 @@ void FUN_80030778(int param_1,undefined4 param_2,undefined *param_3,undefined4 p
 	// each instance's InstDrawPerPlayer
     do
 	{
-	  // pointer to camera110 struct
+	  // pointer to tileView struct
       puVar2 = puVar3 + iVar5;
 
 	  // increment pointer to next winow struct
@@ -94,7 +94,7 @@ void FUN_80030778(int param_1,undefined4 param_2,undefined *param_3,undefined4 p
 	  // pointer to LOD ModelHeader
       *(undefined4 *)(param_1 + 0xe0) = 0;
 
-	  // camera110
+	  // tileView
       *(undefined **)(param_1 + 0x74) = puVar2;
 
 	  // inst flags per player
@@ -163,7 +163,7 @@ int FUN_800308e4(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 
   puVar2 = PTR_DAT_8008d2ac;
 
-  // camera110_UI
+  // tileView_UI
   *(undefined **)(iVar3 + 0x74) = PTR_DAT_8008d2ac + 5000;
 
   // iteration counter starts at 1, not 0
@@ -178,7 +178,7 @@ int FUN_800308e4(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 	// for iVar4 = 1 (not zero); iVar4 < numPlyrCurrGame; iVar4++)
     do 
 	{
-	  // cam110 pointer for P2, P3, P4
+	  // tileView pointer for P2, P3, P4
       *(undefined4 *)(iVar1 + 0xfc) = 0;
 
 	  // increment loop counter
@@ -430,7 +430,7 @@ void FUN_80030ad4(undefined4 *param_1,int param_2)
 	  // if numPlyrCurrGame is not zero
       if (puVar3[0x1ca8] != '\0')
 	  {
-		// offset of 8008d2ac where camera110 structs
+		// offset of 8008d2ac where tileView structs
 		// are held for each player (pos, size, etc)
         iVar14 = 0x168;
 
@@ -440,16 +440,16 @@ void FUN_80030ad4(undefined4 *param_1,int param_2)
 		// for iVar13 = 0; iVar13 < numPlyrCurrGame; iVar13++
         do
 		{
-		  // pointer to camera110 struct
+		  // pointer to tileView struct
           puVar9 = puVar3 + iVar14;
 
-		  // increment pointer to next camera110 struct
+		  // increment pointer to next tileView struct
           iVar14 = iVar14 + 0x110;
 
 		  // LOD ModelHeader
           *(undefined4 *)(iVar12 + 0xe0) = 0;
 
-		  // camera110
+		  // tileView
           *(undefined **)(iVar12 + 0x74) = puVar9;
 
 		  // increment counter

@@ -58,7 +58,7 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 	box.h = meterHeight;
 	memset(auStack40, 0, 4);
 
-	CTR_Box_DrawWireBox(&box, auStack40, sdata->gGT->camera110_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
+	CTR_Box_DrawWireBox(&box, auStack40, sdata->gGT->tileView_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
 
 	backDB = sdata->gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
@@ -104,7 +104,7 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 		p->x2 = posX - meterLength;
 
 		// pointer to OT memory
-		primmemCurr = gGT->camera110_UI.ptrOT;
+		primmemCurr = gGT->tileView_UI.ptrOT;
 
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
@@ -131,7 +131,7 @@ void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
 			p->x2 = posX - 0x31;
 
 			// pointer to OT memory
-			primmemCurr = gGT->camera110_UI.ptrOT;
+			primmemCurr = gGT->tileView_UI.ptrOT;
 
 			*(int*)p = *primmemCurr | 0x5000000;
 			*primmemCurr = (u_int)p & 0xffffff;

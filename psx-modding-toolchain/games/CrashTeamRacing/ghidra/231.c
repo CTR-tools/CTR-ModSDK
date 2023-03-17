@@ -4478,13 +4478,13 @@ void FUN_800b0454(int param_1)
 	{
       *(undefined2 *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar16 + 0x4a) * 0x110 + 0x17a) = 0x1fff;
 	  
-	  // camera110 based on...
+	  // tileView based on...
 	  // thread -> parentthread -> (Driver*)object -> index
       *(undefined2 *)
        (puVar3 + (uint)*(byte *)(*(int *)(*(int *)(param_1 + 0xc) + 0x30) + 0x4a) * 0x110 + 0x17c) =
            0x1000;
 		 
-	  // camera110 based on...
+	  // tileView based on...
 	  // thread -> parentthread -> (Driver*)object -> index
       *(undefined2 *)
        (puVar3 + (uint)*(byte *)(*(int *)(*(int *)(param_1 + 0xc) + 0x30) + 0x4a) * 0x110 + 0x17e) =
@@ -7168,10 +7168,10 @@ code_r0x800b4024:
       uStack40 = CONCAT22(*(undefined2 *)(iVar10 + 0x48),*(undefined2 *)(iVar10 + 0x44));
       uStack36 = CONCAT22(uStack36._2_2_,*(undefined2 *)(iVar10 + 0x4c));
       
-	  // gGT->camera110[driver->driverID]
+	  // gGT->tileView[driver->driverID]
 	  puVar7 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110;
 	  
-	  // camera110 0x28 (matrix)
+	  // tileView 0x28 (matrix)
 	  gte_SetRotMatrix(puVar5 + 0x168 + 0x28);
 	  gte_SetTransMatrix(puVar5 + 0x168 + 0x28);
       
@@ -7187,14 +7187,14 @@ code_r0x800b4024:
       
 	  sStack32 = (short)uVar1;
 	  
-	  // Camera110_rect.x
-      *(short *)(iVar6 + 0x4b4) =					// camera110 variable
+	  // TileView_rect.x
+      *(short *)(iVar6 + 0x4b4) =					// tileView variable
            sStack32 + *(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x184);
       
 	  sStack30 = (short)((uint)uVar1 >> 0x10);
       
-	  // Camera110_rect.y
-	  *(short *)(iVar6 + 0x4b6) =					// camera110 variable
+	  // TileView_rect.y
+	  *(short *)(iVar6 + 0x4b6) =					// tileView variable
            sStack30 + *(short *)(puVar2 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x186);
       return 1;
     }
@@ -7440,10 +7440,10 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
                             *(undefined2 *)(*(int *)(iVar4 + 0x1c) + 0x44));
         local_24 = local_24 & 0xffff0000 | (uint)*(ushort *)(*(int *)(iVar4 + 0x1c) + 0x4c);
 		
-		// camera110 of driver
+		// tileView of driver
         puVar5 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar4 + 0x4a) * 0x110;
 		
-		// gGT->camera110[driver->driverID]->0x28 (matrix)
+		// gGT->tileView[driver->driverID]->0x28 (matrix)
 		gte_SetRotMatrix(puVar5 + 0x168 + 0x28);
 		gte_SetTransMatrix(puVar5 + 0x168 + 0x28);
 		
@@ -7465,10 +7465,10 @@ undefined4 FUN_800b432c(int param_1,int param_2,undefined4 param_3,int param_4)
       }
       puVar2 = PTR_DAT_8008d2ac;
 	  
-	  // driver->PickupWumpaHUD.startX = screen posX + camera110 startX
+	  // driver->PickupWumpaHUD.startX = screen posX + tileView startX
       *(short *)(iVar4 + 0x4bc) = local_20[0] + *(short *)(puVar5 + 0x184);
 	  
-	  // driver->PickupWumpaHUD.startY = screen posY + camera110 startY - 0x14
+	  // driver->PickupWumpaHUD.startY = screen posY + tileView startY - 0x14
       *(short *)(iVar4 + 0x4be) =
            *(short *)((int)puVar7 + 2) +
            *(short *)(puVar2 + (uint)*(byte *)(iVar4 + 0x4a) * 0x110 + 0x186) + -0x14;
@@ -7800,10 +7800,10 @@ LAB_800b4974:
   local_30 = CONCAT22(*(undefined2 *)(iVar10 + 0x48),*(undefined2 *)(iVar10 + 0x44));
   local_2c = CONCAT22(local_2c._2_2_,*(undefined2 *)(iVar10 + 0x4c));
   
-  // camera110 of driver
+  // tileView of driver
   puVar7 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110;
   
-  // camera110 -> 0x28 (matrix)
+  // tileView -> 0x28 (matrix)
   r0 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 400);
   gte_SetRotMatrix(r0);
   gte_SetTransMatrix(r0);
@@ -7818,14 +7818,14 @@ LAB_800b4974:
   // screen posX
   local_28 = (short)uVar2;
   
-  // driver->PickupHUD.startX = screen posX + camera110 rect.x
+  // driver->PickupHUD.startX = screen posX + tileView rect.x
   *(short *)(iVar6 + 0x4b4) =
        local_28 + *(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x184);
   
   // screen posY
   sStack38 = (short)((uint)uVar2 >> 0x10);
   
-  // driver->PickupHUD.startY = screen posY + camera110 rect.y
+  // driver->PickupHUD.startY = screen posY + tileView rect.y
   *(short *)(iVar6 + 0x4b6) =
        sStack38 + *(short *)(puVar9 + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 0x186);
 	   
@@ -7950,7 +7950,7 @@ undefined4 FUN_800b4c5c(int param_1,int param_2,undefined4 param_3,int param_4)
       local_18 = CONCAT22(*(undefined2 *)(iVar6 + 0x48),*(undefined2 *)(iVar6 + 0x44));
       local_14 = local_14 & 0xffff0000 | (uint)*(ushort *)(iVar6 + 0x4c);
 	  
-	  // camera110 -> 0x28 (matrix)
+	  // tileView -> 0x28 (matrix)
       puVar4 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar5 + 0x4a) * 0x110;
 	  r0 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 400);
       gte_SetRotMatrix(r0);
@@ -8243,7 +8243,7 @@ bool FUN_800b5090(int param_1,int param_2,undefined4 param_3,int param_4)
 	// 80090000
     puVar5 = &DAT_80090000;
     
-	// gGT->camera110[driver->driverID]->0x28 (matrix)
+	// gGT->tileView[driver->driverID]->0x28 (matrix)
 	r0 = (MATRIX *)(PTR_DAT_8008d2ac + 0x168 + (uint)*(byte *)(iVar7 + 0x4a) * 0x110 + 0x28);
     gte_SetRotMatrix(r0);
     gte_SetTransMatrix(r0);
@@ -8267,13 +8267,13 @@ bool FUN_800b5090(int param_1,int param_2,undefined4 param_3,int param_4)
 		 // &r0_00 + 0x0 (screen posX)
          *(short *)(puVar9 + 0x18) +
 		 
-		 // gGT->camera110[driver->driverID].rect.x
+		 // gGT->tileView[driver->driverID].rect.x
          *(short *)(iVar6 + (uint)*(byte *)(iVar7 + 0x4a) * 0x110 + 0x168 + 0x1c);
     
 	// &r0_00 + 0x2 (screen posY)
 	sVar2 = *(short *)((int)r0_00 + 2);
 	
-	// gGT->camera110[driver->driverID].rect.y
+	// gGT->tileView[driver->driverID].rect.y
     sVar3 = *(short *)(iVar6 + (uint)*(byte *)(iVar7 + 0x4a) * 0x110 + 0x168 + 0x1e);
     
 	// should last 10 frames
@@ -10078,7 +10078,7 @@ void FUN_800b70a8(int param_1,int param_2,undefined4 param_3,int param_4)
       uStack22 = *(undefined2 *)(iVar7 + 0x48);
       uStack20 = *(undefined2 *)(iVar7 + 0x4c);
       
-	  // camera110 -> 0x28 (matrix)
+	  // tileView -> 0x28 (matrix)
 	  r0 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(iVar6 + 0x4a) * 0x110 + 400);
       gte_SetRotMatrix(r0);
       gte_SetTransMatrix(r0);
@@ -12208,7 +12208,7 @@ void FUN_800b950c(int param_1)
 
 // RB_Spider_DrawWebs
 // param_1 - threadbucket
-// param_2 - ptr first camera110
+// param_2 - ptr first tileView
 void FUN_800b95fc(int param_1,int param_2)
 {
   short sVar1;
@@ -12306,7 +12306,7 @@ void FUN_800b95fc(int param_1,int param_2)
 		// loop through all players
         do 
 		{
-		  // camera110->0x28 (matrix)
+		  // tileView->0x28 (matrix)
           r0 = (MATRIX *)(param_2 + 0x28);
 		  
 		  // store on GTE
@@ -12370,7 +12370,7 @@ void FUN_800b95fc(int param_1,int param_2)
                   iVar7 = 0x3ff;
                 }
 				
-				// camera110 0xf4, ptrOT
+				// tileView 0xf4, ptrOT
                 puVar6 = (uint *)(*(int *)(param_2 + 0xf4) + iVar7 * 4);
 				
                 puVar8 = puVar8 + 6;
@@ -12399,7 +12399,7 @@ void FUN_800b95fc(int param_1,int param_2)
 		  // next player
           iVar3 = iVar3 + -1;
 		  
-		  // next camera110
+		  // next tileView
           param_2 = param_2 + 0x110;
 		  
 		  // reset spider loop count,

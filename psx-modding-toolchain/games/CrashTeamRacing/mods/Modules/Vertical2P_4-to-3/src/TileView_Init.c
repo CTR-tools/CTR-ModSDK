@@ -1,13 +1,13 @@
 #include <common.h>
 
 // compiles to 184 bytes, down from 536
-void Camera110_InitStructs(struct Camera110* c110, int id, int total)
+void TileView_Init(struct TileView* tileView, int id, int total)
 {
-	c110->fade_step = 0x88;
-	c110->cameraID = id;
+	tileView->fade_step = 0x88;
+	tileView->cameraID = id;
 
-	c110->fadeFromBlack_currentValue = 0x1000;
-	c110->fadeFromBlack_desiredResult = 0x1000;
+	tileView->fadeFromBlack_currentValue = 0x1000;
+	tileView->fadeFromBlack_desiredResult = 0x1000;
 
 	// dont write Projection matrix, waste of time,
 	// dont write Aspect Ratio, waste of time,
@@ -15,14 +15,14 @@ void Camera110_InitStructs(struct Camera110* c110, int id, int total)
 	// 3P 4P
 	if(total > 2)
 	{
-		c110->distanceToScreen_PREV = 0x80;
-		c110->distanceToScreen_CURR = 0x80;
+		tileView->distanceToScreen_PREV = 0x80;
+		tileView->distanceToScreen_CURR = 0x80;
 
-		c110->rect.w = 0xfd;
-		c110->rect.h = 0x6a;
+		tileView->rect.w = 0xfd;
+		tileView->rect.h = 0x6a;
 
-		c110->rect.x = (id&1) * 0x103;
-		c110->rect.y = (id>>1) * 0x6e;
+		tileView->rect.x = (id&1) * 0x103;
+		tileView->rect.y = (id>>1) * 0x6e;
 
 		return;
 	}
@@ -31,14 +31,14 @@ void Camera110_InitStructs(struct Camera110* c110, int id, int total)
 	// not horizontally split
 
 	// 1P 2P
-	c110->distanceToScreen_PREV = 0x100;
-	c110->distanceToScreen_CURR = 0x100;
+	tileView->distanceToScreen_PREV = 0x100;
+	tileView->distanceToScreen_CURR = 0x100;
 
-	c110->rect.w = (total == 1) ? 0x200 : 0xfd;
-	c110->rect.h = 0xd8;
+	tileView->rect.w = (total == 1) ? 0x200 : 0xfd;
+	tileView->rect.h = 0xd8;
 
-	c110->rect.x = (id&1) * 0x103;
-	c110->rect.y = 0;
+	tileView->rect.x = (id&1) * 0x103;
+	tileView->rect.y = 0;
 
 	// There's 400 bytes here, so may as well store this here
 
@@ -80,7 +80,7 @@ void Camera110_InitStructs(struct Camera110* c110, int id, int total)
 	data.hud_2P_P2[0x16].y = -2;
 
 	// correct shine behind wumpa, yes, make both X's into 0x8D,
-	// it's relative to the camera110, not relative to the whole screen
+	// it's relative to the tileView, not relative to the whole screen
 	data.hud_2P_P1[0x18].x = 0x8D;
 	data.hud_2P_P2[0x18].x = 0x8D;
 	data.hud_2P_P2[0x18].y = 4;

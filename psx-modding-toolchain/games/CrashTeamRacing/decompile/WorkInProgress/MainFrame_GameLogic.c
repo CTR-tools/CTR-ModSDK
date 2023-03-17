@@ -17,7 +17,7 @@ void MainFrame_GameLogic(struct GameTracker* sdata->gGT, struct GamepadSystem* g
 	struct Driver* psVar11;
 	struct Driver* pvVar12;
 	int iVar12;
-	struct Camera110* c110;
+	struct TileView* tileView;
 	int iVar13;
 	struct Thread* psVar14;
 	int iVar15;
@@ -28,7 +28,7 @@ void MainFrame_GameLogic(struct GameTracker* sdata->gGT, struct GamepadSystem* g
 	if ((sdata->gGT->gameMode1 & 0xfU) == 0)
 	{
 		bVar1 = false;
-		c110 = ::sdata->gGT->camera110;
+		tileView = ::sdata->gGT->tileView;
 		for (psVar14 = ::sdata->gGT->threadBuckets[0].thread; psVar14 != (struct Thread*)0x0; psVar14 = psVar14->siblingThread)
 		{
 			pvVar12 = (struct Driver*)psVar14->object;
@@ -56,15 +56,15 @@ void MainFrame_GameLogic(struct GameTracker* sdata->gGT, struct GamepadSystem* g
 					}
 					uVar3 = (u_int)pvVar12->clockReceive;
 				}
-				DISPLAY_Blur_Main(c110, uVar3);
+				DISPLAY_Blur_Main(tileView, uVar3);
 			}
 			else
 			{
-				DISPLAY_Blur_Main(c110, -uVar3);
+				DISPLAY_Blur_Main(tileView, -uVar3);
 				*(char*)((int)&pvVar12->forcedJump_trampoline + 1) = *(char*)((int)&pvVar12->forcedJump_trampoline + 1) - 1;
 			}
 LAB_80034e74:
-			c110 = c110 + 1;
+			tileView = tileView + 1;
 		}
 		sdata->gGT->timer = sdata->gGT->timer + 1;
 		psVar17 = ::sdata->gGT;

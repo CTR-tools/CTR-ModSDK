@@ -4,7 +4,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 {
 	int *piVar1;
 	u_char bVar2;
-	struct Camera110 *psVar3;
+	struct TileView *psVar3;
 	char cVar4;
 	u_int uVar5;
 	u_int uVar6;
@@ -18,7 +18,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 	struct Thread *psVar13;
 	DISPENV *env;
 	short startX;
-	struct Camera110 *psVar14;
+	struct TileView *psVar14;
 	short startY;
 	int iVar15;
 	short sVar16;
@@ -121,7 +121,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 			InterpolatePosition2D_Linear(&local_38, startX, startY, sVar16, startY, iVar10, 10);
 			DecalFont_DrawLineOT
 								(sdata->lngStrings[0x233], (int)local_38, (int)local_36, 1, -0x8000, 
-								 *(u_long **)(sdata_gGT->camera110[0].filler2 + iVar19 - 4));
+								 *(u_long **)(sdata_gGT->tileView[0].filler2 + iVar19 - 4));
 			*(short *)((int)sdata->finalLapTextTimer + iVar15) = *(short *)((int)sdata->finalLapTextTimer + iVar15) - 1
 			;
 		}
@@ -153,7 +153,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 		psVar17 = gGT;
 		psVar21 = gGT;
 		do {
-			Camera110_UpdateFrustum((struct Camera110 *)((int)gGT->db[0].drawEnv.ofs + iVar15 - 0x20));
+			TileView_UpdateFrustum((struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar15 - 0x20));
 			iVar18 = *(int *)(psVar17->cameraDC[0].data40 + 0x18);
 			if (iVar18 != 0) {
 				uVar6 = (u_int)*(u_char *)(iVar18 + 0x39);
@@ -186,13 +186,13 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 	sdata->menuRowHighlight_Normal = (iVar19 + 0x40) * 0x100 | 0x80;
 	sdata->menuRowHighlight_Green = (iVar19 + 0xa0) * 0x100 | 0x400040;
 	if (((gGT->renderFlags & 2) != 0) && ((u_char)sdata_gGT->numPlyrCurrGame < 2)) {
-		RenderWeather(sdata_gGT->camera110, &sdata_gGT->backBuffer->primMem, sdata_gGT->rainBuffer, 
+		RenderWeather(sdata_gGT->tileView, &sdata_gGT->backBuffer->primMem, sdata_gGT->rainBuffer, 
 									sdata_gGT->numPlyrCurrGame, sdata_gGT->gameMode1 & 0xf);
 	}
 	if (((gGT->renderFlags & 4) != 0) && (iVar19 = 0, 0 < (int)sdata_gGT->numWinners)) {
 		iVar15 = 0;
 		do {
-			DrawConfetti(sdata_gGT->camera110 + *(int *)((int)sdata_gGT->winnerIndex + iVar15), 
+			DrawConfetti(sdata_gGT->tileView + *(int *)((int)sdata_gGT->winnerIndex + iVar15), 
 									 &sdata_gGT->backBuffer->primMem, &sdata_gGT->confetti, 
 									 sdata_gGT->frameTimer_Confetti, sdata_gGT->gameMode1 & 0xf);
 			iVar19 = iVar19 + 1;
@@ -200,7 +200,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 		} while (iVar19 < (int)sdata_gGT->numWinners);
 	}
 	if (((gGT->renderFlags & 8) != 0) && (*(short *)&(sdata_gGT->stars).numStars != 0)) {
-		RenderStars(sdata_gGT->camera110, &sdata_gGT->backBuffer->primMem, &sdata_gGT->stars, 
+		RenderStars(sdata_gGT->tileView, &sdata_gGT->backBuffer->primMem, &sdata_gGT->stars, 
 								sdata_gGT->numPlyrCurrGame);
 	}
 	if (((gGT->renderFlags & 0x100) != 0) && (1 < (u_char)sdata_gGT->numPlyrCurrGame)) {
@@ -265,12 +265,12 @@ LAB_800367d4:
 				}
 				uVar5 = LOAD_IsOpen_AdvHub();
 				if (uVar5 == 0) {
-					if (0xfff < (sdata_gGT->camera110_UI).fadeFromBlack_currentValue) {
+					if (0xfff < (sdata_gGT->tileView_UI).fadeFromBlack_currentValue) {
 						DrawHUD_AdvStrings();
 					}
 				}
 				else {
-					if ((0xfff < (sdata_gGT->camera110_UI).fadeFromBlack_currentValue) &&
+					if ((0xfff < (sdata_gGT->tileView_UI).fadeFromBlack_currentValue) &&
 						 (AH_Map_Main(), sdata->AkuHint_RequestedHint != -1)) {
 						AH_MaskHint_Start(sdata->AkuHint_RequestedHint, sdata->AkuHint_boolInterruptWarppad);
 						sdata->AkuHint_RequestedHint = -1;
@@ -283,8 +283,8 @@ LAB_800367d4:
 						sdata_gGT->overlayTransition = '\0';
 						psVar21 = sdata_gGT;
 						psVar17->gameMode2 = *piVar1 & 0xfffffeff;
-						(psVar21->camera110_UI).fadeFromBlack_desiredResult = 0x1000;
-						(psVar21->camera110_UI).fade_step = 0x2aa;
+						(psVar21->tileView_UI).fadeFromBlack_desiredResult = 0x1000;
+						(psVar21->tileView_UI).fade_step = 0x2aa;
 					}
 				}
 			}
@@ -295,7 +295,7 @@ LAB_800367d4:
 	}
 	if (((gGT->renderFlags & 0x10) != 0) && ((u_char)sdata_gGT->numPlyrCurrGame < 3)) {
 		RedBeaker_RenderRain
-							(gGT->camera110, &gGT->backBuffer->primMem, &(sdata_gGT->JitPools).rain, 
+							(gGT->tileView, &gGT->backBuffer->primMem, &(sdata_gGT->JitPools).rain, 
 							 sdata_gGT->numPlyrCurrGame, sdata_gGT->gameMode1 & 0xf);
 	}
 	uVar5 = LOAD_IsOpen_Podiums();
@@ -332,7 +332,7 @@ LAB_800367d4:
 		do {
 			iVar18 = iVar15 - 0x20;
 			iVar15 = iVar15 + 0x110;
-			Particle_RenderList((struct Camera110 *)((int)gGT->db[0].drawEnv.ofs + iVar18), 
+			Particle_RenderList((struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar18), 
 													sdata_gGT->particleList_ordinary);
 			iVar19 = iVar19 + 1;
 		} while (iVar19 < (int)(u_int)(u_char)gGT->numPlyrCurrGame);
@@ -341,15 +341,15 @@ LAB_800367d4:
 code_r0x800369d8:
 	iVar19 = 0;
 	if (cVar4 != '\0') {
-		psVar14 = gGT->camera110;
+		psVar14 = gGT->tileView;
 		psVar17 = gGT;
 		iVar15 = 0x168;
 		do {
-			psVar3 = psVar17->camera110;
+			psVar3 = psVar17->tileView;
 			psVar17 = (struct GameTracker *)(psVar17->db[1].drawEnv.dr_env.code + 0xd);
-			Camera110_SetDrawEnv_Normal(psVar3->ptrOT + 0x3ff, psVar14, gGT->backBuffer, (short *)0x0, '\0');
+			TileView_SetDrawEnv_Normal(psVar3->ptrOT + 0x3ff, psVar14, gGT->backBuffer, (short *)0x0, '\0');
 			iVar19 = iVar19 + 1;
-			psVar14 = (struct Camera110 *)((int)gGT->camera110[0].pos + iVar15 - 0x58);
+			psVar14 = (struct TileView *)((int)gGT->tileView[0].pos + iVar15 - 0x58);
 			iVar15 = iVar15 + 0x110;
 		} while (iVar19 < (int)(u_int)(u_char)gGT->numPlyrCurrGame);
 	}
@@ -363,7 +363,7 @@ code_r0x800369d8:
 			RB_Player_ToggleFlicker();
 			RB_Burst_ProcessBucket(sdata_gGT->threadBuckets[7].thread);
 			RB_Blowup_ProcessBucket(sdata_gGT->threadBuckets[8].thread);
-			RB_Spider_DrawWebs(sdata_gGT->threadBuckets[10].thread, gGT->camera110);
+			RB_Spider_DrawWebs(sdata_gGT->threadBuckets[10].thread, gGT->tileView);
 			RB_Follower_ProcessBucket(sdata_gGT->threadBuckets[0xb].thread);
 			RB_StartText_ProcessBucket(sdata_gGT->threadBuckets[0xc].thread);
 		}
@@ -376,7 +376,7 @@ code_r0x800369d8:
 		if (gGT->numPlyrCurrGame != '\0') {
 			iVar15 = 0x168;
 			do {
-				psVar14 = (struct Camera110 *)((int)gGT->db[0].drawEnv.ofs + iVar15 - 0x20);
+				psVar14 = (struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar15 - 0x20);
 				DrawSkidMarks_Main(sdata_gGT->threadBuckets[0].thread, psVar14);
 				iVar15 = iVar15 + 0x110;
 				DrawSkidMarks_Main(sdata_gGT->threadBuckets[1].thread, psVar14);
@@ -417,10 +417,10 @@ code_r0x800369d8:
 		DrawShadows_Main();
 	}
 	if ((gGT->renderFlags & 0x800) != 0) {
-		DrawHeat_Main(sdata_gGT->particleList_heatWarp, gGT->camera110, &sdata_gGT->backBuffer->primMem, 
+		DrawHeat_Main(sdata_gGT->particleList_heatWarp, gGT->tileView, &sdata_gGT->backBuffer->primMem, 
 									gGT->numPlyrCurrGame, sdata_gGT->swapchainIndex * 0x128);
 	}
-	Camera110_FadeAllWindows();
+	TileView_FadeAllWindows();
 	if (((gGT->renderFlags & 1) != 0) && (playstationVar23 != (struct mesh_info *)0x0)) {
 		bVar2 = sdata_gGT->numPlyrCurrGame;
 		if (bVar2 == 2) {
@@ -442,7 +442,7 @@ code_r0x800369d8:
 				iVar19 = iVar19 + 0x110;
 				iVar20 = CreateRenderLists_1P2P
 													 ((struct VisData *)(&playstationVar23->ptrVertexArray)[2], *ppiVar12, 
-														(struct Camera110 *)((int)gGT->db[0].drawEnv.ofs + iVar20), 
+														(struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar20), 
 														(int)gGT->db[0].drawEnv.ofs + iVar10, ppiVar12[0x20], gGT->numPlyrCurrGame
 													 );
 				iVar15 = iVar15 + 1;
@@ -451,18 +451,18 @@ code_r0x800369d8:
 			iVar19 = 0;
 			iVar15 = 0x168;
 			DrawLevelOvr2P
-								(gGT->LevRenderLists, gGT->camera110, (struct VisData *)playstationVar23, 
+								(gGT->LevRenderLists, gGT->tileView, (struct VisData *)playstationVar23, 
 								 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], gGT->visMem1->visFaceList[1]
 								 , level->ptr_tex_waterEnvMap);
 			psVar17 = gGT;
 			do {
 				iVar18 = iVar15 - 0x20;
-				psVar14 = psVar17->camera110;
+				psVar14 = psVar17->tileView;
 				psVar17 = (struct GameTracker *)(psVar17->db[1].drawEnv.dr_env.code + 0xd);
 				iVar15 = iVar15 + 0x110;
 				iVar19 = iVar19 + 1;
 				CAM_SkyboxGlow(&level->glowGradient[0].pointFrom, 
-											 (struct Camera110 *)((int)gGT->db[0].drawEnv.ofs + iVar18), 
+											 (struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar18), 
 											 &gGT->backBuffer->primMem, psVar14->ptrOT + 0x3ff);
 			} while (iVar19 < 2);
 		}
@@ -477,7 +477,7 @@ code_r0x800369d8:
 					AnimateQuad(gGT->timer << 7, level->numSCVert, level->ptrSCVert, 
 											(int *)gGT->visMem1->visSCVertList[0]);
 				}
-				iVar19 = sdata_gGT->camera110[0].distanceToScreen_PREV;
+				iVar19 = sdata_gGT->tileView[0].distanceToScreen_PREV;
 				if ((sdata_gGT->levelID == ADVENTURE_CHARACTER_SELECT) ||
 					 (((sdata_gGT->gameMode1 & 0x20000000U) != 0 && (sdata_gGT->levelID != INTRO_CRASH)))) {
 					DAT_1f800014 = 0x1e00;
@@ -506,7 +506,7 @@ code_r0x800369d8:
 					DAT_1f80002c = DAT_1f800018 + 0x140;
 				}
 				VisData_CopyJMPsToScratchpad();
-				psVar14 = gGT->camera110;
+				psVar14 = gGT->tileView;
 				iVar19 = CreateRenderLists_1P2P
 													 ((struct VisData *)(&playstationVar23->ptrVertexArray)[2], 
 														gGT->visMem1->visLeafList[0], psVar14, (u_int)gGT->LevRenderLists, 
@@ -519,7 +519,7 @@ code_r0x800369d8:
 				DrawSky_Full(level->ptr_skybox, psVar14, &gGT->backBuffer->primMem);
 				if ((level->configFlags & 1U) != 0) {
 					CAM_SkyboxGlow(&level->glowGradient[0].pointFrom, psVar14, &gGT->backBuffer->primMem, 
-												 gGT->camera110[0].ptrOT + 0x3ff);
+												 gGT->tileView[0].ptrOT + 0x3ff);
 				}
 			}
 		}
@@ -543,7 +543,7 @@ code_r0x800369d8:
 				iVar19 = iVar19 + 0x110;
 				iVar20 = CreateRenderLists_3P4P
 													 ((struct VisData *)(&playstationVar23->ptrVertexArray)[2], *ppiVar12, 
-														(struct Camera110 *)((int)gGT->db[0].drawEnv.ofs + iVar20), 
+														(struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar20), 
 														(int)gGT->db[0].drawEnv.ofs + iVar10, ppiVar12[0x20]);
 				iVar15 = iVar15 + 1;
 				gGT->numVisDataLinks = gGT->numVisDataLinks + iVar20;
@@ -551,18 +551,18 @@ code_r0x800369d8:
 			iVar19 = 0;
 			iVar15 = 0x168;
 			DrawLevelOvr3P
-								(gGT->LevRenderLists, gGT->camera110, (struct VisData *)playstationVar23, 
+								(gGT->LevRenderLists, gGT->tileView, (struct VisData *)playstationVar23, 
 								 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], gGT->visMem1->visFaceList[1]
 								 , gGT->visMem1->visFaceList[2]);
 			psVar17 = gGT;
 			do {
 				iVar18 = iVar15 - 0x20;
-				psVar14 = psVar17->camera110;
+				psVar14 = psVar17->tileView;
 				psVar17 = (struct GameTracker *)(psVar17->db[1].drawEnv.dr_env.code + 0xd);
 				iVar15 = iVar15 + 0x110;
 				iVar19 = iVar19 + 1;
 				CAM_SkyboxGlow(&level->glowGradient[0].pointFrom, 
-											 (struct Camera110 *)((int)gGT->db[0].drawEnv.ofs + iVar18), 
+											 (struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar18), 
 											 &gGT->backBuffer->primMem, psVar14->ptrOT + 0x3ff);
 			} while (iVar19 < 3);
 		}
@@ -586,7 +586,7 @@ code_r0x800369d8:
 				iVar19 = iVar19 + 0x110;
 				iVar20 = CreateRenderLists_3P4P
 													 ((struct VisData *)(&playstationVar23->ptrVertexArray)[2], *ppiVar12, 
-														(struct Camera110 *)((int)gGT->db[0].drawEnv.ofs + iVar20), 
+														(struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar20), 
 														(int)gGT->db[0].drawEnv.ofs + iVar10, ppiVar12[0x20]);
 				iVar15 = iVar15 + 1;
 				gGT->numVisDataLinks = gGT->numVisDataLinks + iVar20;
@@ -594,33 +594,33 @@ code_r0x800369d8:
 			iVar19 = 0;
 			iVar15 = 0x168;
 			DrawLevelOvr4P
-								(gGT->LevRenderLists, gGT->camera110, (struct VisData *)playstationVar23, 
+								(gGT->LevRenderLists, gGT->tileView, (struct VisData *)playstationVar23, 
 								 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], gGT->visMem1->visFaceList[1]
 								 , gGT->visMem1->visFaceList[2]);
 			psVar17 = gGT;
 			do {
 				iVar18 = iVar15 - 0x20;
-				psVar14 = psVar17->camera110;
+				psVar14 = psVar17->tileView;
 				psVar17 = (struct GameTracker *)(psVar17->db[1].drawEnv.dr_env.code + 0xd);
 				iVar15 = iVar15 + 0x110;
 				iVar19 = iVar19 + 1;
 				CAM_SkyboxGlow(&level->glowGradient[0].pointFrom, 
-											 (struct Camera110 *)((int)gGT->db[0].drawEnv.ofs + iVar18), 
+											 (struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar18), 
 											 &gGT->backBuffer->primMem, psVar14->ptrOT + 0x3ff);
 			} while (iVar19 < 4);
 		}
 		iVar19 = 0;
 		if (gGT->numPlyrCurrGame != '\0') {
-			psVar14 = gGT->camera110;
+			psVar14 = gGT->tileView;
 			psVar17 = gGT;
 			iVar15 = 0x168;
 			do {
-				psVar3 = psVar17->camera110;
+				psVar3 = psVar17->tileView;
 				psVar17 = (struct GameTracker *)(psVar17->db[1].drawEnv.dr_env.code + 0xd);
-				Camera110_SetDrawEnv_Normal(psVar3->ptrOT + 0x3ff, psVar14, gGT->backBuffer, (short *)0x0, '\0')
+				TileView_SetDrawEnv_Normal(psVar3->ptrOT + 0x3ff, psVar14, gGT->backBuffer, (short *)0x0, '\0')
 				;
 				iVar19 = iVar19 + 1;
-				psVar14 = (struct Camera110 *)((int)gGT->camera110[0].pos + iVar15 - 0x58);
+				psVar14 = (struct TileView *)((int)gGT->tileView[0].pos + iVar15 - 0x58);
 				iVar15 = iVar15 + 0x110;
 			} while (iVar19 < (int)(u_int)(u_char)gGT->numPlyrCurrGame);
 		}
@@ -638,14 +638,14 @@ code_r0x800369d8:
 				 (iVar19 = 0, sdata_gGT->numPlyrCurrGame != '\0')) {
 				iVar15 = 0;
 				do {
-					local_30.x = *(short *)((int)sdata_gGT->camera110[0].matrix_ViewProj.m[-2] + iVar15);
-					local_30.y = *(short *)((int)sdata_gGT->camera110[0].matrix_ViewProj.m[-2] + iVar15 + 2);
-					local_30.w = *(short *)((int)sdata_gGT->camera110[0].matrix_ViewProj.m[-2] + iVar15 + 4);
-					local_30.h = *(short *)((int)sdata_gGT->camera110[0].matrix_ViewProj.m[-1] + iVar15);
+					local_30.x = *(short *)((int)sdata_gGT->tileView[0].matrix_ViewProj.m[-2] + iVar15);
+					local_30.y = *(short *)((int)sdata_gGT->tileView[0].matrix_ViewProj.m[-2] + iVar15 + 2);
+					local_30.w = *(short *)((int)sdata_gGT->tileView[0].matrix_ViewProj.m[-2] + iVar15 + 4);
+					local_30.h = *(short *)((int)sdata_gGT->tileView[0].matrix_ViewProj.m[-1] + iVar15);
 					DrawBoxOutline_LowLevel
 										(&local_30, 4, 2, 
 										 data.ptrColor[(sdata_gGT->drivers[iVar19]->BattleHUD).teamID + 0x18], 0, 
-										 (sdata_gGT->camera110_UI).ptrOT + 3);
+										 (sdata_gGT->tileView_UI).ptrOT + 3);
 					iVar19 = iVar19 + 1;
 					iVar15 = iVar15 + 0x110;
 				} while (iVar19 < (int)(u_int)(u_char)sdata_gGT->numPlyrCurrGame);
@@ -666,7 +666,7 @@ code_r0x800369d8:
 				*(u_short *)((int)pvVar8 + 0x12) = 0x6e;
 				*(u_short *)((int)pvVar8 + 0x14) = 0x200;
 				*(u_short *)((int)pvVar8 + 0x16) = 0x6e;
-				AddPrim((psVar17->camera110_UI).ptrOT + 3, pvVar8);
+				AddPrim((psVar17->tileView_UI).ptrOT + 3, pvVar8);
 				(sdata_gGT->backBuffer->primMem).curr =
 						 (void *)((int)(sdata_gGT->backBuffer->primMem).curr + 0x18);
 			}
@@ -686,7 +686,7 @@ code_r0x800369d8:
 				*(u_short *)((int)pvVar8 + 0x12) = 0xd8;
 				*(u_short *)((int)pvVar8 + 0x14) = 0x103;
 				*(u_short *)((int)pvVar8 + 0x16) = 0xd8;
-				AddPrim((psVar17->camera110_UI).ptrOT + 3, pvVar8);
+				AddPrim((psVar17->tileView_UI).ptrOT + 3, pvVar8);
 				(sdata_gGT->backBuffer->primMem).curr =
 						 (void *)((int)(sdata_gGT->backBuffer->primMem).curr + 0x18);
 			}
@@ -706,7 +706,7 @@ code_r0x800369d8:
 				*(u_short *)((int)pvVar8 + 0x12) = 0xd8;
 				*(u_short *)((int)pvVar8 + 0x14) = 0x200;
 				*(u_short *)((int)pvVar8 + 0x16) = 0xd8;
-				AddPrim((psVar17->camera110_UI).ptrOT + 3, pvVar8);
+				AddPrim((psVar17->tileView_UI).ptrOT + 3, pvVar8);
 				(sdata_gGT->backBuffer->primMem).curr =
 						 (void *)((int)(sdata_gGT->backBuffer->primMem).curr + 0x18);
 			}
@@ -728,8 +728,8 @@ code_r0x800369d8:
 	if ((sdata_gGT->renderFlags & 0x1000) != 0) {
 		CheckeredFlag_DrawSelf();
 	}
-	Camera110_SetDrawEnv_Normal
-						((gGT->camera110_UI).ptrOT + 4, &gGT->camera110_UI, gGT->backBuffer, (short *)0x0, '\0');
+	TileView_SetDrawEnv_Normal
+						((gGT->tileView_UI).ptrOT + 4, &gGT->tileView_UI, gGT->backBuffer, (short *)0x0, '\0');
 	iVar19 = RCNT_GetTime_Total();
 	psVar17 = sdata_gGT;
 	gGT->countTotalTime = iVar19;
@@ -768,7 +768,7 @@ LAB_800378d0:
 	psVar17 = sdata_gGT;
 	gGT->frontBuffer = (struct DB *)((int)gGT - (gGT->swapchainIndex * 0xa4 - 0xbc));
 	psVar17->bool_DrawOTag_InProgress = '\x01';
-	DrawOTag(gGT->camera110[0].ptrOT + 0x3ff);
+	DrawOTag(gGT->tileView[0].ptrOT + 0x3ff);
 	gGT->frameTimer_notPaused = gGT->frameTimer_VsyncCallback;
 	return;
 }

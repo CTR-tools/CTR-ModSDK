@@ -10,8 +10,8 @@ void DECOMP_CAM_EndOfRace_Battle(struct CameraDC* cDC, struct Driver* d) {
   cDC->transitionTo.pos[1] = data.Spin360_heightOffset_cameraPos[sdata->gGT->numPlyrCurrGame];
   cDC->transitionTo.pos[2] = 0xc0;
 
-  long dx = cDC->cam110->pos[0] - (d->posCurr[0] >> 8);
-  long dz = cDC->cam110->pos[2] - (d->posCurr[2] >> 8);
+  long dx = cDC->tileView->pos[0] - (d->posCurr[0] >> 8);
+  long dz = cDC->tileView->pos[2] - (d->posCurr[2] >> 8);
   long direction = ratan2(dx, dz);
 
   cDC->unk90[0] = (short)direction;

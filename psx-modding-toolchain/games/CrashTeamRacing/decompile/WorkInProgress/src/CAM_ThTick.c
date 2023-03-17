@@ -23,7 +23,7 @@ void CAM_ThTick(struct Thread *t)
 	long* plVar19;
 	u_int uVar20;
 	struct Instance* cDC;
-	short* cam110Pos;
+	short* tileViewPos;
 	short* psVar21;
 	struct Driver* d;
 	short* scratchpad;
@@ -36,7 +36,7 @@ void CAM_ThTick(struct Thread *t)
 	scratchpad = &DAT_1f800108;
 	cDC = t->inst;
 	d = (struct Driver *)(cDC->matrix).t[0];
-	cam110Pos = (short *)(cDC->matrix).t[1];
+	tileViewPos = (short *)(cDC->matrix).t[1];
 	if ((*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) & 0x8000) != 0)
 	{
 		return;
@@ -161,21 +161,21 @@ void CAM_ThTick(struct Thread *t)
 	switch(sVar5)
 	{
 		case 0:
-			*cam110Pos = *(short *)(d->instSelf->matrix).t;
-			cam110Pos[1] = *(short *)((d->instSelf->matrix).t + 1);
-			cam110Pos[2] = *(short *)((d->instSelf->matrix).t + 2);
-			cam110Pos[3] = (d->rotCurr).x;
-			cam110Pos[4] = (d->rotCurr).y;
-			cam110Pos[5] = (d->rotCurr).z;
+			*tileViewPos = *(short *)(d->instSelf->matrix).t;
+			tileViewPos[1] = *(short *)((d->instSelf->matrix).t + 1);
+			tileViewPos[2] = *(short *)((d->instSelf->matrix).t + 2);
+			tileViewPos[3] = (d->rotCurr).x;
+			tileViewPos[4] = (d->rotCurr).y;
+			tileViewPos[5] = (d->rotCurr).z;
 			*(u_short *)((int)cDC->idpp[0].unkc0 + 2) = 0;
 			break;
 		case 3:
-			*cam110Pos = *psVar16;
-			cam110Pos[1] = psVar18[2];
-			cam110Pos[2] = psVar18[3];
-			cam110Pos[3] = psVar18[4];
-			cam110Pos[4] = psVar18[5];
-			cam110Pos[5] = psVar18[6];
+			*tileViewPos = *psVar16;
+			tileViewPos[1] = psVar18[2];
+			tileViewPos[2] = psVar18[3];
+			tileViewPos[3] = psVar18[4];
+			tileViewPos[4] = psVar18[5];
+			tileViewPos[5] = psVar18[6];
 			*(short *)&cDC->prev = *psVar16;
 			*(short *)((int)&cDC->prev + 2) = psVar18[2];
 			*(short *)cDC->name = psVar18[3];
@@ -184,9 +184,9 @@ void CAM_ThTick(struct Thread *t)
 			*(short *)(cDC->name + 8) = psVar18[6];
 			break;
 		case 4:
-			*cam110Pos = *psVar16;
-			cam110Pos[1] = psVar18[2];
-			cam110Pos[2] = psVar18[3];
+			*tileViewPos = *psVar16;
+			tileViewPos[1] = psVar18[2];
+			tileViewPos[2] = psVar18[3];
 			break;
 		case 7:
 			cDC->idpp[0].m2.m[2][1] = *psVar16;
@@ -200,8 +200,8 @@ void CAM_ThTick(struct Thread *t)
 			break;
 		case 8:
 		case 0xe:
-			*(short *)((int)&cDC->idpp[0].cam110 + 2) = *psVar16;
-			iVar9 = (int)*(short *)((int)&cDC->idpp[0].cam110 + 2);
+			*(short *)((int)&cDC->idpp[0].tileView + 2) = *psVar16;
+			iVar9 = (int)*(short *)((int)&cDC->idpp[0].tileView + 2);
 			cDC->idpp[0].m1.m[0] = psVar18[2];
 			iVar6 = (int)cDC->idpp[0].m1.m[0];
 			cDC->idpp[0].m1.m[1] = psVar18[3];
@@ -231,11 +231,11 @@ void CAM_ThTick(struct Thread *t)
 			psVar16 = psVar18 + 2;
 			goto LAB_8001b928;
 		case 0xb:
-			*cam110Pos = *psVar16;
-			cam110Pos[1] = psVar18[2];
-			cam110Pos[2] = psVar18[3];
+			*tileViewPos = *psVar16;
+			tileViewPos[1] = psVar18[2];
+			tileViewPos[2] = psVar18[3];
 			psVar16 = psVar18 + 5;
-			sVar5 = psVar18[4] - cam110Pos[0x86];
+			sVar5 = psVar18[4] - tileViewPos[0x86];
 LAB_8001b928:
 			cDC->idpp[0].m2.m[2][1] = sVar5;
 			cDC->idpp[0].m2.m[2][2] = *psVar16;
@@ -254,7 +254,7 @@ LAB_8001b928:
 			*(short *)cDC->idpp[0].unkb8 = psVar18[10];
 	}
 switchD_8001b678_caseD_1:
-	*(u_int *)(cam110Pos + 0xc) = *(u_int *)(cam110Pos + 0x86);
+	*(u_int *)(tileViewPos + 0xc) = *(u_int *)(tileViewPos + 0x86);
 	sVar5 = cDC->idpp[0].m2.m[2];
 	if (sVar5 != 0)
 	{
@@ -265,12 +265,12 @@ switchD_8001b678_caseD_1:
 			if (sVar5 == 4)
 			{
 LAB_8001c11c:
-				CAM_LookAtPosition((int)scratchpad, d->posCurr, cam110Pos, cam110Pos + 3);
+				CAM_LookAtPosition((int)scratchpad, d->posCurr, tileViewPos, tileViewPos + 3);
 				psVar18 = scratchpad;
 LAB_8001c128:
-				*(int *)(psVar18 + 0x120) = (int)*cam110Pos;
-				*(int *)(psVar18 + 0x122) = (int)cam110Pos[1];
-				sVar5 = cam110Pos[2];
+				*(int *)(psVar18 + 0x120) = (int)*tileViewPos;
+				*(int *)(psVar18 + 0x122) = (int)tileViewPos[1];
+				sVar5 = tileViewPos[2];
 				scratchpad = psVar18;
 			}
 			else
@@ -278,7 +278,7 @@ LAB_8001c128:
 				psVar18 = scratchpad;
 				if (sVar5 == 10)
 				{
-					CAM_FollowDriver_Spin360((struct CameraDC *)cDC, (u_int)&DAT_1f800108, d, cam110Pos, (u_int)(cam110Pos + 3));
+					CAM_FollowDriver_Spin360((struct CameraDC *)cDC, (u_int)&DAT_1f800108, d, tileViewPos, (u_int)(tileViewPos + 3));
 					goto LAB_8001c128;
 				}
 				if (sVar5 != 0xb)
@@ -337,43 +337,43 @@ LAB_8001c128:
 						{
 							plVar19 = (long *)((int)cDC->idpp[0].m2.t + 6);
 						}
-						*cam110Pos = *(short *)plVar19 + (short)(local_28 * iVar23 >> 0xc);
-						cam110Pos[1] = *(short *)((int)plVar19 + 2) + (short)(local_26 * iVar23 >> 0xc);
-						cam110Pos[2] = *(short *)(plVar19 + 1) + (short)(local_24 * iVar23 >> 0xc);
+						*tileViewPos = *(short *)plVar19 + (short)(local_28 * iVar23 >> 0xc);
+						tileViewPos[1] = *(short *)((int)plVar19 + 2) + (short)(local_26 * iVar23 >> 0xc);
+						tileViewPos[2] = *(short *)(plVar19 + 1) + (short)(local_24 * iVar23 >> 0xc);
 						goto LAB_8001c11c;
 					}
 					if (sVar5 == 7)
 					{
-						*cam110Pos = (short)((u_int)d->posCurr[0] >> 8);
-						cam110Pos[1] = cDC->idpp[0].m2.m[2][1] + (short)((u_int)d->posCurr[1] >> 8);
-						cam110Pos[2] = (short)((u_int)d->posCurr[2] >> 8);
+						*tileViewPos = (short)((u_int)d->posCurr[0] >> 8);
+						tileViewPos[1] = cDC->idpp[0].m2.m[2][1] + (short)((u_int)d->posCurr[1] >> 8);
+						tileViewPos[2] = (short)((u_int)d->posCurr[2] >> 8);
 						sVar5 = cDC->idpp[0].m2.m[2][2];
-						cam110Pos[4] = 0;
-						cam110Pos[5] = 0;
-						cam110Pos[3] = sVar5 + 0x400;
+						tileViewPos[4] = 0;
+						tileViewPos[5] = 0;
+						tileViewPos[3] = sVar5 + 0x400;
 						psVar18 = &DAT_1f800108;
 						if ((*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) & 0x40) != 0)
 						{
-							cam110Pos[4] = d->angle + 0x800;
+							tileViewPos[4] = d->angle + 0x800;
 						}
 					}
 					else if ((u_short)(sVar4 - 0xfU) < 2)
 					{
-						*cam110Pos = sdata->FirstPersonCamera.posOffset[0] + (short)((u_int)d->posCurr[0] >> 8);
-						cam110Pos[1] = sdata->FirstPersonCamera.posOffset[1] + (short)((u_int)d->posCurr[1] >> 8);
-						cam110Pos[2] = sdata->FirstPersonCamera.posOffset[2] + (short)((u_int)d->posCurr[2] >> 8);
+						*tileViewPos = sdata->FirstPersonCamera.posOffset[0] + (short)((u_int)d->posCurr[0] >> 8);
+						tileViewPos[1] = sdata->FirstPersonCamera.posOffset[1] + (short)((u_int)d->posCurr[1] >> 8);
+						tileViewPos[2] = sdata->FirstPersonCamera.posOffset[2] + (short)((u_int)d->posCurr[2] >> 8);
 						if (cDC->idpp[0].m2.m[2] == 0x10)
 						{
-							cam110Pos[3] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
+							tileViewPos[3] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
 							sVar5 = sdata->FirstPersonCamera.rotOffset[1] + d->angle;
 						}
 						else
 						{
-							cam110Pos[3] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
+							tileViewPos[3] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
 							sVar5 = sdata->FirstPersonCamera.rotOffset[1] + (d->rotCurr).y;
 						}
-						cam110Pos[4] = sVar5;
-						cam110Pos[5] = sdata->FirstPersonCamera.rotOffset[2] + (d->rotCurr).z;
+						tileViewPos[4] = sVar5;
+						tileViewPos[5] = sdata->FirstPersonCamera.rotOffset[2] + (d->rotCurr).z;
 					}
 					else
 					{
@@ -385,7 +385,7 @@ LAB_8001c128:
 								{
 									*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) |= 9;
 								}
-								CAM_FollowDriver_AngleAxis((struct CameraDC *)cDC, d, (int)&DAT_1f800108, cam110Pos, cam110Pos + 3);
+								CAM_FollowDriver_AngleAxis((struct CameraDC *)cDC, d, (int)&DAT_1f800108, tileViewPos, tileViewPos + 3);
 							}
 							else
 							{
@@ -393,7 +393,7 @@ LAB_8001c128:
 								{
 									*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) |= 9;
 								}
-								CAM_FollowDriver_Normal((struct CameraDC *)cDC, d, cam110Pos, 0x108, psVar21);
+								CAM_FollowDriver_Normal((struct CameraDC *)cDC, d, tileViewPos, 0x108, psVar21);
 							}
 							*(u_int *)(cDC->idpp[0].m1.m[2] + 1) = *(u_int *)(d->no_mans_land + 0x18);
 							goto LAB_8001c150;
@@ -427,12 +427,12 @@ LAB_8001c128:
 								gte_ldv0((SVECTOR *)(cDC->idpp[0].m2.m[2] + 1));
 								gte_rtv0();
 								read_mt(uVar7, iVar9, iVar6);
-								*cam110Pos = scratchpad[0x144] + (short)uVar7;
-								cam110Pos[1] = scratchpad[0x145] + (short)iVar9;
-								cam110Pos[2] = scratchpad[0x146] + (short)iVar6;
-								cam110Pos[3] = scratchpad[0x106] + *(short *)cDC->idpp[0].m2.t;
-								cam110Pos[4] = scratchpad[0x107] + *(short *)((int)cDC->idpp[0].m2.t + 2);
-								cam110Pos[5] = scratchpad[0x108] + *(short *)(cDC->idpp[0].m2.t + 1);
+								*tileViewPos = scratchpad[0x144] + (short)uVar7;
+								tileViewPos[1] = scratchpad[0x145] + (short)iVar9;
+								tileViewPos[2] = scratchpad[0x146] + (short)iVar6;
+								tileViewPos[3] = scratchpad[0x106] + *(short *)cDC->idpp[0].m2.t;
+								tileViewPos[4] = scratchpad[0x107] + *(short *)((int)cDC->idpp[0].m2.t + 2);
+								tileViewPos[5] = scratchpad[0x108] + *(short *)(cDC->idpp[0].m2.t + 1);
 							}
 							psVar18 = scratchpad;
 							if (cDC->idpp[0].m2.m[2] == 0xd) goto LAB_8001c11c;
@@ -440,7 +440,7 @@ LAB_8001c128:
 					}
 					goto LAB_8001c128;
 				}
-				CAM_LookAtPosition((int)&DAT_1f800108, d->posCurr, cam110Pos, cam110Pos + 3);
+				CAM_LookAtPosition((int)&DAT_1f800108, d->posCurr, tileViewPos, tileViewPos + 3);
 				iVar9 = SquareRoot0_stub(DAT_1f800354 * DAT_1f800354 + DAT_1f80035c * DAT_1f80035c);
 				iVar13 = (int)cDC->idpp[0].m2.m[2][1];
 				iVar22 = (iVar9 - cDC->idpp[0].m2.m[2][2]) * iVar13;
@@ -456,17 +456,17 @@ LAB_8001c128:
 				{
 					iVar9 = iVar13;
 				}
-				DAT_1f800348 = (int)*cam110Pos;
-				*(int *)(cam110Pos + 0xc) = *(int *)(cam110Pos + 0x86) + iVar9;
-				DAT_1f80034c = (int)cam110Pos[1];
-				sVar5 = cam110Pos[2];
+				DAT_1f800348 = (int)*tileViewPos;
+				*(int *)(tileViewPos + 0xc) = *(int *)(tileViewPos + 0x86) + iVar9;
+				DAT_1f80034c = (int)tileViewPos[1];
+				sVar5 = tileViewPos[2];
 			}
 			*(int *)(scratchpad + 0x124) = (int)sVar5;
 			CAM_FindClosestQuadblock(scratchpad, (struct CameraDC *)cDC, d, (short *)((u_int)scratchpad | 0x240));
 			goto LAB_8001c150;
 		}
 	}
-	CAM_FollowDriver_Normal((struct CameraDC *)cDC, d, cam110Pos, 0x108, psVar21);
+	CAM_FollowDriver_Normal((struct CameraDC *)cDC, d, tileViewPos, 0x108, psVar21);
 LAB_8001c150:
 	iVar9 = *(int *)cDC->scale;
 	cDC->idpp[0].m2.m[1][0] = cDC->idpp[0].m2.m[2];
@@ -519,9 +519,9 @@ LAB_8001c150:
 	psVar2 = sdata->gGT;
 	if ((*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) & 1) != 0)
 	{
-		sdata->gGT->rainBuffer[(int)cDC->next].cameraPos[0] = *cam110Pos;
-		psVar2->rainBuffer[(int)cDC->next].cameraPos[1] = cam110Pos[1];
-		psVar2->rainBuffer[(int)cDC->next].cameraPos[2] = cam110Pos[2];
+		sdata->gGT->rainBuffer[(int)cDC->next].cameraPos[0] = *tileViewPos;
+		psVar2->rainBuffer[(int)cDC->next].cameraPos[1] = tileViewPos[1];
+		psVar2->rainBuffer[(int)cDC->next].cameraPos[2] = tileViewPos[2];
 		*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) &= 0xfffffffe;
 	}
 	*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) &= 0xffffff77;

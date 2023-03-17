@@ -108,7 +108,7 @@ void RB_CrateAny_ExplodeInit(struct Instance* crateInst, int color)
 		// pool, bucket, ThTick
 		SMALL, OTHER, DECOMP_RB_CrateAny_ThTick_Explode,
 		
-		// Camera110 and threadRelative
+		// TileView and threadRelative
 		0, 0
 	);
 	
@@ -210,14 +210,14 @@ struct Thread* RB_CrateAny_GrowInit(struct Instance* crateInst)
 	return crateThread;
 }
 
-void RB_Fruit_GetScreenCoords(struct Camera110* c110, struct Instance* inst, short* output);
+void RB_Fruit_GetScreenCoords(struct TileView* tileView, struct Instance* inst, short* output);
 
 int DECOMP_RB_CrateWeapon_LInC(
 	struct Instance* crateInst,
 	struct Thread* collidingTh,
 	struct WeaponSearchData* info)
 {
-	struct Camera110* c110;
+	struct TileView* tileView;
 	short posScreen[2];
 	struct Thread* crateThread;
 	struct Crate* crateObj;
@@ -306,16 +306,16 @@ int DECOMP_RB_CrateWeapon_LInC(
 			driver->BattleHUD.juicedUpCooldown = 10;
 		}
 		
-		c110 = &sdata->gGT->camera110[driver->driverID];
-		RB_Fruit_GetScreenCoords(c110, crateInst, &posScreen[0]);
+		tileView = &sdata->gGT->tileView[driver->driverID];
+		RB_Fruit_GetScreenCoords(tileView, crateInst, &posScreen[0]);
 		
 		// screenPosX
 		driver->PickupTimeboxHUD.startX = 
-			c110->rect.x + posScreen[0];
+			tileView->rect.x + posScreen[0];
 		
 		// screenPosY
 		driver->PickupTimeboxHUD.startY = 
-			c110->rect.y + posScreen[1];
+			tileView->rect.y + posScreen[1];
 		
 		// means thread was born?
 		return 1;
@@ -355,7 +355,7 @@ int DECOMP_RB_CrateFruit_LInC(
 	struct Thread* collidingTh,
 	struct WeaponSearchData* info)
 {
-	struct Camera110* c110;
+	struct TileView* tileView;
 	short posScreen[2];
 	struct Thread* crateThread;
 	struct Crate* crateObj;
@@ -388,16 +388,16 @@ int DECOMP_RB_CrateFruit_LInC(
 		driver->PickupWumpaHUD.cooldown = 5;
 		driver->PickupWumpaHUD.numCollected = newWumpa;
 		
-		c110 = &sdata->gGT->camera110[driver->driverID];
-		RB_Fruit_GetScreenCoords(c110, crateInst, &posScreen[0]);
+		tileView = &sdata->gGT->tileView[driver->driverID];
+		RB_Fruit_GetScreenCoords(tileView, crateInst, &posScreen[0]);
 		
 		// screenPosX
 		driver->PickupWumpaHUD.startX = 
-			c110->rect.x + posScreen[0];
+			tileView->rect.x + posScreen[0];
 		
 		// screenPosY
 		driver->PickupWumpaHUD.startY = 
-			c110->rect.y + posScreen[1] - 0x14;
+			tileView->rect.y + posScreen[1] - 0x14;
 		
 		// means thread was born?
 		return 1;
@@ -437,7 +437,7 @@ int DECOMP_RB_CrateTime_LInC(
 	struct Thread* driverTh,
 	struct WeaponSearchData* info)
 {
-	struct Camera110* c110;
+	struct TileView* tileView;
 	short posScreen[2];
 	struct Driver* driver;
 	
@@ -479,14 +479,14 @@ int DECOMP_RB_CrateTime_LInC(
 	
 	driver->PickupTimeboxHUD.cooldown = 10;
 	
-	c110 = &gGT->camera110[driver->driverID];
-	RB_Fruit_GetScreenCoords(c110, crateInst, &posScreen[0]);
+	tileView = &gGT->tileView[driver->driverID];
+	RB_Fruit_GetScreenCoords(tileView, crateInst, &posScreen[0]);
 	
 	// screenPosX
 	driver->PickupTimeboxHUD.startX = 
-		c110->rect.x + posScreen[0];
+		tileView->rect.x + posScreen[0];
 	
 	// screenPosY
 	driver->PickupTimeboxHUD.startY = 
-		c110->rect.y + posScreen[1];
+		tileView->rect.y + posScreen[1];
 }

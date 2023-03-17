@@ -3,7 +3,7 @@
 void CAM_ThTick();
 struct Thread* THREAD_BirthWithObject();
 
-void DECOMP_CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct Camera110* c110)
+void DECOMP_CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct TileView* tileView)
 {
 	// Naughty Dog debug printf
 	#if BUILD == SepReview
@@ -18,7 +18,7 @@ void DECOMP_CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struc
 	cDC->cameraID = cameraID;
 
 	cDC->driverToFollow = d;
-	cDC->cam110 = c110;
+	cDC->tileView = tileView;
 
 	// dont set cameraMode to zero,
 	// memset makes it already zero

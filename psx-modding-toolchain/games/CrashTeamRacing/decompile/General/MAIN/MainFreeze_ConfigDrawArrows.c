@@ -39,7 +39,7 @@ void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str)
 		&sdata->gGT->backBuffer->primMem,
 
 		// pointer to OT memory
-		sdata->gGT->camera110_UI.ptrOT,
+		sdata->gGT->tileView_UI.ptrOT,
 
 		// color data
 		*colorPtr[0],
@@ -62,7 +62,7 @@ void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str)
 		&sdata->gGT->backBuffer->primMem,
 
 		// pointer to OT memory
-		sdata->gGT->camera110_UI.ptrOT,
+		sdata->gGT->tileView_UI.ptrOT,
 
 		// color data
 		*colorPtr[0],

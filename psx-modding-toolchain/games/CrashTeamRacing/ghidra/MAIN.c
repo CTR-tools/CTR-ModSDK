@@ -268,13 +268,13 @@ void FUN_80034bbc(int param_1)
 	  // increment loop iteration counter
       iVar4 = iVar4 + 1;
 
-	  // pointer to Camera110->OTMem (25c-168=0xf4)
+	  // pointer to TileView->OTMem (25c-168=0xf4)
       *(int *)(iVar3 + 0x25c) =
 
 			// ptrOT depending on swapchain index, plus playerIndex * 0x1000
            *(int *)(param_1 + *(int *)(param_1 + 0xc) * 4 + 0x18c8) + (iVar2 + -1) * 0x1000 + 0x18;
 
-	  // next camera110
+	  // next tileView
       iVar3 = iVar3 + 0x110;
 
     } while (iVar4 < (int)(uint)(byte)puVar1[0x1ca8]);
@@ -285,7 +285,7 @@ void FUN_80034bbc(int param_1)
   // if less than 4 players (yes, I'm certain)
   if (iVar4 < 4)
   {
-	// camera110 (at max [3])
+	// tileView (at max [3])
     iVar3 = iVar4 * 0x110 + param_1;
 
 	// for iVar4 = iVar4 (not typo); iVar4 < 4; iVar4++
@@ -294,14 +294,14 @@ void FUN_80034bbc(int param_1)
 	  // increment loop counter
       iVar4 = iVar4 + 1;
 
-	  // pointer to Camera110->OTMem (25c-168=0xf4)
+	  // pointer to TileView->OTMem (25c-168=0xf4)
       *(int *)(iVar3 + 0x25c) =
 
 			// the OTMem after 3rd player,
 			// pointer to OTMem of (non-present) 4th player
 			*(int *)(param_1 + *(int *)(param_1 + 0xc) * 4 + 0x18c8) + 0x3018;
 
-	  // next camera110
+	  // next tileView
       iVar3 = iVar3 + 0x110;
 
     } while (iVar4 < 4);
@@ -349,7 +349,7 @@ void FUN_80034d54(uint *param_1,int param_2)
 	// pointer to first Player thread
     iVar10 = *(int *)(PTR_DAT_8008d2ac + 0x1b2c);
 
-	// pointer to P1's camera110 struct (pos, size, etc)
+	// pointer to P1's tileView struct (pos, size, etc)
     puVar9 = PTR_DAT_8008d2ac + 0x168;
 
 	// loop through players
@@ -408,14 +408,14 @@ LAB_80034e74:
 	  // player -> next
       iVar10 = *(int *)(iVar10 + 0x10);
 
-	  // increment pointer to next camera110 struct
+	  // increment pointer to next tileView struct
       puVar9 = puVar9 + 0x110;
     }
 
 	// frame timer since boot
     param_1[0x73b] = param_1[0x73b] + 1;
 
-	// not camera110 struct anymore, now main game struct
+	// not tileView struct anymore, now main game struct
     puVar9 = PTR_DAT_8008d2ac;
 
 	// frame timer since end of loading
@@ -1797,11 +1797,11 @@ void FUN_80035e70(uint *param_1)
   // loop counter
   iVar13 = 0;
 
-  // offset of 8008d2ac where camera110 structs
+  // offset of 8008d2ac where tileView structs
   // are held for each player (pos, size, etc)
   iVar20 = 0x168;
 
-  // NOT for camera110
+  // NOT for tileView
   // offset in another array of 0x110-byte structs
   iVar6 = iVar13;
 
@@ -1809,7 +1809,7 @@ void FUN_80035e70(uint *param_1)
   // for iVar13 = 0; iVar13 < 4; iVar13++
   do
   {
-	// pointer to array of camera110 structs
+	// pointer to array of tileView structs
     puVar14 = PTR_DAT_8008d2ac + iVar20;
 
 	// If there is time remaining in the "Final Lap" animation
@@ -1869,8 +1869,8 @@ void FUN_80035e70(uint *param_1)
 	  // DecalFont_DrawLineOT
       FUN_800228c4(*(undefined4 *)(DAT_8008d878 + 0x8cc),(int)local_38,(int)local_36,1,0xffff8000,
 
-					// first Camera110 is at 0x168,
-					// 0x25c - 0x110 is 0xF4, known camera110 ptrOT
+					// first TileView is at 0x168,
+					// 0x25c - 0x110 is 0xF4, known tileView ptrOT
                    *(undefined4 *)(PTR_DAT_8008d2ac + iVar6 + 0x25c));
 
 	  // subtract a frame from the animation
@@ -1878,14 +1878,14 @@ void FUN_80035e70(uint *param_1)
     }
     iVar19 = iVar19 + 2;
 
-	// NOT for camera110
+	// NOT for tileView
 	// increment some other pointer that also holds 0x110 structs
     iVar6 = iVar6 + 0x110;
 
 	// increment loop counter
     iVar13 = iVar13 + 1;
 
-	// increment pointer to next camera110 struct
+	// increment pointer to next tileView struct
     iVar20 = iVar20 + 0x110;
 
   } while (iVar13 < 4);
@@ -1964,7 +1964,7 @@ void FUN_80035e70(uint *param_1)
   // gGT->1ca8(numPlyrCurrGame) != 0
   if (*(char *)(param_1 + 0x72a) != '\0')
   {
-	// offset of 8008d2ac where camera110 structs
+	// offset of 8008d2ac where tileView structs
 	// are held for each player (pos, size, etc)
 	iVar19 = 0x168;
 
@@ -1974,8 +1974,8 @@ void FUN_80035e70(uint *param_1)
 	// for iVar6 = 0; iVar6 < numPlyrCurrGame; iVar6++
     do
 	{
-	  // Camera110_UpdateFrustum
-	  // pointer to camera110 struct
+	  // TileView_UpdateFrustum
+	  // pointer to tileView struct
       FUN_800430f0((int)param_1 + iVar19);
 
 	  // 0x5d2 = 0x14b4, cameraDC = 0x1498,
@@ -2024,7 +2024,7 @@ void FUN_80035e70(uint *param_1)
 	  // increment loop counter
       iVar6 = iVar6 + 1;
 
-	  // increment camera110 pointer to next camera110
+	  // increment tileView pointer to next tileView
       iVar19 = iVar19 + 0x110;
 
 	  // (72a*4 = 1ca8), numPlyrCurrGame
@@ -2076,7 +2076,7 @@ void FUN_80035e70(uint *param_1)
   {
 	// RenderWeather
     FUN_8006f9a8(
-					// pointer to start of camera110 buffers
+					// pointer to start of tileView buffers
 					PTR_DAT_8008d2ac + 0x168,
 
 					// pointer to PrimMem struct
@@ -2114,7 +2114,7 @@ void FUN_80035e70(uint *param_1)
 	  // draw confetti
       FUN_80069ffc(
 
-					// camera110 of the player that won
+					// tileView of the player that won
 					PTR_DAT_8008d2ac + *(int *)(PTR_DAT_8008d2ac + iVar19 + 0x2558) * 0x110 + 0x168,
 
 				   // pointer to PrimMem struct
@@ -2147,7 +2147,7 @@ void FUN_80035e70(uint *param_1)
   {
 	// renders stars in night sky
     FUN_8006e26c(
-					// pointer to start of camera110 buffers
+					// pointer to start of tileView buffers
 					PTR_DAT_8008d2ac + 0x168,
 
 					// pointer to PrimMem struct
@@ -2402,7 +2402,7 @@ LAB_800367d4:
   {
 	// RedBeaker_RenderRain
     FUN_8006dc30(
-					// 0x5a*4 = 0x168 (camera110 structs)
+					// 0x5a*4 = 0x168 (tileView structs)
 					param_1 + 0x5a,
 
 					// gGT->backBuffer->primMem
@@ -2537,17 +2537,17 @@ LAB_800367d4:
 
     if (cVar3 == '\0') goto code_r0x800369d8;
 
-	// offset of 8008d2ac where camera110 structs
+	// offset of 8008d2ac where tileView structs
 	// are held for each player (pos, size, etc)
     iVar19 = 0x168;
 
 	// for iVar6 = 0; iVar6 < numPlyrCurrGame iVar6++
 	do
 	{
-	  // pointer to camera110 struct
+	  // pointer to tileView struct
 	  iVar13 = (int)param_1 + iVar19;
 
-	  // increment offset to next camera110 struct
+	  // increment offset to next tileView struct
       iVar19 = iVar19 + 0x110;
 
 	  // Draw particle List
@@ -2567,35 +2567,35 @@ code_r0x800369d8:
   // loop counter
   iVar6 = 0;
 
-  // link OT of all four player camera110's
+  // link OT of all four player tileView's
   if (cVar3 != '\0')
   {
-	// offset of 8008d2ac where camera110 structs are held
+	// offset of 8008d2ac where tileView structs are held
     iVar19 = 0x168;
 
 	// param1 is PTR_DAT_8008d2ac
 
-	// 0x5a*4 = 0x168 (camera110 structs)
+	// 0x5a*4 = 0x168 (tileView structs)
     puVar12 = param_1 + 0x5a;
     puVar18 = param_1;
     do
 	{
-	  // increment offset to next camera110 struct
+	  // increment offset to next tileView struct
       iVar19 = iVar19 + 0x110;
 
       puVar1 = puVar18 + 0x97;
       puVar18 = puVar18 + 0x44;
 
-	  // Camera110_SetDrawEnv_Normal
+	  // TileView_SetDrawEnv_Normal
 	  // param1 otmem
-	  // param2 camera110
+	  // param2 tileView
 	  // param3 backbuffer
       FUN_80042a8c(*puVar1 + 0xffc,puVar12,param_1[4],0,0);
 
 	  // increment loop counter
 	  iVar6 = iVar6 + 1;
 
-	  // pointer to camera110 struct
+	  // pointer to tileView struct
       puVar12 = (uint *)((int)param_1 + iVar19);
 
 	// (72a*4 = 1ca8), numPlyrCurrGame
@@ -2671,18 +2671,18 @@ code_r0x800369d8:
 	// (72a*4 = 1ca8), numPlyrCurrGame
     if (*(char *)(param_1 + 0x72a) != '\0')
 	{
-	  // offset of 8008d2ac where camera110 structs are stored
+	  // offset of 8008d2ac where tileView structs are stored
       iVar19 = 0x168;
 
       do
 	  {
-		// pointer to camera110 struct
+		// pointer to tileView struct
         iVar13 = (int)param_1 + iVar19;
 
 		// Draw Skidmarks of all Player threads
         FUN_8005c354(*(undefined4 *)(PTR_DAT_8008d2ac + 0x1b2c),iVar13);
 
-		// increment pointer to next camera110 struct
+		// increment pointer to next tileView struct
         iVar19 = iVar19 + 0x110;
 
 		// Draw Skidmarks of all robotcar threads
@@ -2823,7 +2823,7 @@ code_r0x800369d8:
 	// draw heat effect (tiger temple fire, behind rockets, etc)
     FUN_8004b470(*(undefined4 *)(PTR_DAT_8008d2ac + 0x1ca0),
 
-				// 0x5a*4 = 0x168 (camera110 structs)
+				// 0x5a*4 = 0x168 (tileView structs)
 				param_1 + 0x5a,
 
 				 // pointer to PrimMem struct
@@ -2836,7 +2836,7 @@ code_r0x800369d8:
                  *(int *)(PTR_DAT_8008d2ac + 0xc) * 0x128);
   }
 
-  // Camera110_FadeAllWindows
+  // TileView_FadeAllWindows
   FUN_80043ab8();
 
   // draw level
@@ -2882,13 +2882,13 @@ code_r0x800369d8:
 	  // render lists
       iVar13 = 0x1808;
 
-	  // offset of 8008d2ac where camera110 structs are held
+	  // offset of 8008d2ac where tileView structs are held
       iVar6 = 0x168;
 
 	  // for iVar19 = 0; iVar19 < 2; iVar19++
       do
 	  {
-		// pointer to camera110 structs
+		// pointer to tileView structs
         iVar20 = (int)param_1 + iVar6;
 
 	    // VisMem = 
@@ -2903,7 +2903,7 @@ code_r0x800369d8:
 		local_54 = (int)param_1 + iVar13;
         iVar13 = iVar13 + 0x30;
 
-		// increment offset to next camera110 struct
+		// increment offset to next tileView struct
         iVar6 = iVar6 + 0x110;
 
 		// CreateRenderLists_1P2P
@@ -2915,7 +2915,7 @@ code_r0x800369d8:
 						// Vismem 0x0-0xF
 						*puVar9,
 
-						// camera110
+						// tileView
 						iVar20,
 
 						// render lists
@@ -2939,7 +2939,7 @@ code_r0x800369d8:
 	  // loop counter
       iVar6 = 0;
 
-	  // pointer to camera110 struct
+	  // pointer to tileView struct
       iVar19 = 0x168;
 
 	  // param1 is PTR_DAT_8008d2ac
@@ -2950,7 +2950,7 @@ code_r0x800369d8:
 					// 1808, render lists
 					param_1 + 0x602,
 
-					// 0x5a*4 = 0x168 (camera110 structs)
+					// 0x5a*4 = 0x168 (tileView structs)
 					param_1 + 0x5a,
 
 					// LEV -> ptr_mesh_info
@@ -2972,18 +2972,18 @@ code_r0x800369d8:
 	  // for iVar6 = 0; iVar6 < 2; iVar6++
 	  do
 	  {
-		// pointer to camera110 struct
+		// pointer to tileView struct
         iVar22 = (int)param_1 + iVar19;
 
 		// gGT + 0x25C
-		// camera110->ptrOT
+		// tileView->ptrOT
         puVar12 = puVar18 + 0x97;
 
 		// gGT + 0x25C + 0x110
-		// camera110(next)->ptrOT
+		// tileView(next)->ptrOT
         puVar18 = puVar18 + 0x44;
 
-		// increment offset to next camera110 struct
+		// increment offset to next tileView struct
 		iVar19 = iVar19 + 0x110;
 
 		// increment loop counter
@@ -2995,7 +2995,7 @@ code_r0x800369d8:
 			// LEV -> skyboxGlowData
 			piVar21 + 0x12,
 
-			// camera110
+			// tileView
 			iVar22,
 
 			// gGT->backBuffer->primMem
@@ -3025,7 +3025,7 @@ code_r0x800369d8:
 		  if (((piVar21[0x37] & 4U) == 0) && (piVar21 != (int *)0x0))
 		  {
 			// animates water, 1P mode
-			// s0 - &gGT->camera110[0]
+			// s0 - &gGT->tileView[0]
             FUN_8006d79c(param_1[0x73b],piVar21[0xd],piVar21[0xe],piVar21[0x11],
                          
 						 // Vismem 0x20-0x2F (visOVertList)
@@ -3037,7 +3037,7 @@ code_r0x800369d8:
 			// roo's pipe floors
 			
 			// AnimateQuads
-			// s0 - &gGT->camera110[0]
+			// s0 - &gGT->tileView[0]
             FUN_80069e70(
 			
 						// timer
@@ -3052,7 +3052,7 @@ code_r0x800369d8:
                         *(undefined4 *)(param_1[0x68e] + 0x30));
           }
 
-		  // camera110 -> 0x18, distToScreen
+		  // tileView -> 0x18, distToScreen
           DAT_1f80001c = *(int *)(PTR_DAT_8008d2ac + 0x180);
 
           if (
@@ -3101,7 +3101,7 @@ code_r0x800369d8:
 
 		  // param1 is PTR_DAT_8008d2ac
 
-		  // 0x5a*4 = 0x168 (camera110 structs)
+		  // 0x5a*4 = 0x168 (tileView structs)
           puVar18 = param_1 + 0x5a;
 
 		  // iVar22 is LEV->mesh_info,
@@ -3116,7 +3116,7 @@ code_r0x800369d8:
 						// Vismem 0x0-0xF
 						*(undefined4 *)param_1[0x68e],
 
-						// camera110
+						// tileView
 						puVar18,
 
 						// render lists
@@ -3138,7 +3138,7 @@ code_r0x800369d8:
 						// 1808, render lists
 						param_1 + 0x602,
 
-						// camera110 structs
+						// tileView structs
 						puVar18,
 
 						// LEV -> ptr_mesh_info
@@ -3158,7 +3158,7 @@ code_r0x800369d8:
 						// level ptr_skybox
 						piVar21[1],
 
-						// camera110
+						// tileView
 						puVar18,
 
 						// gGT->backBuffer->primMem
@@ -3174,14 +3174,14 @@ code_r0x800369d8:
 				// LEV -> skyboxGlowData
 				piVar21 + 0x12,
 
-				// camera110
+				// tileView
 				puVar18,
 
 				// gGT->backBuffer->primMem
 				param_1[4] + 0x74,
 
 				// gGT+0x25C
-				// camera110->ptrOT
+				// tileView->ptrOT
 				param_1[0x97] + 0xffc);
           }
         }
@@ -3223,13 +3223,13 @@ code_r0x800369d8:
 		  // 1808, render lists
           iVar13 = 0x1808;
 
-		  // offset of 8008d2ac where camera110 structs are held
+		  // offset of 8008d2ac where tileView structs are held
           iVar6 = 0x168;
 
 		  // for iVar9 = 0; iVar9 < 3; iVar9++
           do
 		  {
-			// pointer to camera110 struct
+			// pointer to tileView struct
             iVar20 = (int)param_1 + iVar6;
 
 			// gGT -> render list for player
@@ -3241,7 +3241,7 @@ code_r0x800369d8:
 			// next render list
 			iVar13 = iVar13 + 0x30;
 
-			// increment offset to next camera110 struct
+			// increment offset to next tileView struct
             iVar6 = iVar6 + 0x110;
 
 			// CreateRenderLists_3P4P
@@ -3253,7 +3253,7 @@ code_r0x800369d8:
 				// Vismem 0x0-0xF
 				*puVar9,
 
-				// camera110
+				// tileView
 				iVar20,
 
 				// render list to generate
@@ -3274,7 +3274,7 @@ code_r0x800369d8:
 		  // loop counter
           iVar6 = 0;
 
-		  // offset of 8008d2ac where camera110 structs
+		  // offset of 8008d2ac where tileView structs
 		  // are held for each player (pos, size, etc)
           iVar19 = 0x168;
 
@@ -3286,7 +3286,7 @@ code_r0x800369d8:
 						// 1808, render lists
 						param_1 + 0x602,
 
-						// 0x5a*4 = 0x168 (camera110 structs)
+						// 0x5a*4 = 0x168 (tileView structs)
 						param_1 + 0x5a,
 
 						// LEV -> ptr_mesh_info
@@ -3308,18 +3308,18 @@ code_r0x800369d8:
 		  // for iVar6 = 0; iVar6 < 3; iVar6++
           do
 		  {
-			// pointer to camera110 struct
+			// pointer to tileView struct
             iVar22 = (int)param_1 + iVar19;
 
 			// gGT + 0x25C
-			// camera110->ptrOT
+			// tileView->ptrOT
             puVar12 = puVar18 + 0x97;
 
 			// gGT + 0x25C + 0x110
-			// camera110(next)->ptrOT
+			// tileView(next)->ptrOT
             puVar18 = puVar18 + 0x44;
 
-			// increment pointer to next camera110 struct
+			// increment pointer to next tileView struct
 			iVar19 = iVar19 + 0x110;
 
 			// increment loop counter
@@ -3331,7 +3331,7 @@ code_r0x800369d8:
 				// LEV -> skyboxGlowData
 				piVar21 + 0x12,
 
-				// camera110
+				// tileView
 				iVar22,
 
 				// gGT->backBuffer->primMem
@@ -3380,13 +3380,13 @@ code_r0x800369d8:
 			// render list
             iVar13 = 0x1808;
 
-			// offset to next camera110 struct
+			// offset to next tileView struct
             iVar6 = 0x168;
 
 			// for iVar19 = 0; iVar19 < 4; iVar19++
             do
 			{
-			  // pointer to camera110 struct
+			  // pointer to tileView struct
               iVar20 = (int)param_1 + iVar6;
 
 			  // render list
@@ -3398,7 +3398,7 @@ code_r0x800369d8:
 			  // render list
 			  iVar13 = iVar13 + 0x30;
 
-			  // increment pointer to next camera110 structure
+			  // increment pointer to next tileView structure
               iVar6 = iVar6 + 0x110;
 
 			  // CreateRenderLists_3P4P
@@ -3410,7 +3410,7 @@ code_r0x800369d8:
 					// Vismem 0x0-0xF
 					*puVar9,
 
-					// camera110
+					// tileView
 					iVar20,
 
 					// render list being generated
@@ -3433,7 +3433,7 @@ code_r0x800369d8:
 			// loop counter
             iVar6 = 0;
 
-			// offset of 8008d2ac to camera110 structs
+			// offset of 8008d2ac to tileView structs
             iVar19 = 0x168;
 
 			// draw 4p LEV geometry
@@ -3443,7 +3443,7 @@ code_r0x800369d8:
 						// 1808, render lists
 						param_1 + 0x602,
 
-						// 0x5a*4 = 0x168 (camera110 structs)
+						// 0x5a*4 = 0x168 (tileView structs)
 						param_1 + 0x5a,
 
 						// LEV -> ptr_mesh_info
@@ -3466,18 +3466,18 @@ code_r0x800369d8:
 			// for iVar6 = 0; iVar6 < 4; iVar6++
             do
 			{
-			  // pointer to camera110 struct
+			  // pointer to tileView struct
               iVar22 = (int)param_1 + iVar19;
 
 			  // gGT + 0x25C
-			  // camera110->ptrOT
+			  // tileView->ptrOT
               puVar12 = puVar18 + 0x97;
 
 			  // gGT + 0x25C + 0x110
-			  // camera110(next)->ptrOT
+			  // tileView(next)->ptrOT
               puVar18 = puVar18 + 0x44;
 
-			  // increment offset to next camera110
+			  // increment offset to next tileView
 			  iVar19 = iVar19 + 0x110;
 
 			  // increment loop counter
@@ -3489,7 +3489,7 @@ code_r0x800369d8:
 				// LEV -> skyboxGlowData
 				piVar21 + 0x12,
 
-				// camera110
+				// tileView
 				iVar22,
 
 				// gGT->backBuffer->primMem
@@ -3512,25 +3512,25 @@ code_r0x800369d8:
 	// (72a*4 = 1ca8), numPlyrCurrGame
     if (*(char *)(param_1 + 0x72a) != '\0')
 	{
-	  // offset of 8008d2ac where camera110 structs are stored
+	  // offset of 8008d2ac where tileView structs are stored
       iVar22 = 0x168;
 
-	  // pointer to the "full screen" camera110, which comes 0x110
-	  // bytes before each player's individual internal camera110
+	  // pointer to the "full screen" tileView, which comes 0x110
+	  // bytes before each player's individual internal tileView
       puVar12 = param_1 + 0x5a;
 
       puVar18 = param_1;
       do {
 
-		// increment offset to next camera110 struct
+		// increment offset to next tileView struct
         iVar22 = iVar22 + 0x110;
 
         puVar1 = puVar18 + 0x97;
         puVar18 = puVar18 + 0x44;
 
-		// Camera110_SetDrawEnv_Normal
+		// TileView_SetDrawEnv_Normal
 		// param1 otmem
-		// param2 camera110
+		// param2 tileView
 		// param3 backbuffer
         FUN_80042a8c(*puVar1 + 0xffc,puVar12,param_1[4],0,0);
 
@@ -3609,7 +3609,7 @@ code_r0x800369d8:
         do {
           puVar14 = PTR_DAT_8008d2ac + iVar22;
 
-		  // Get dimensions of each window (camera110)
+		  // Get dimensions of each window (tileView)
           local_30 = *(undefined2 *)(puVar14 + 0x184);	// startX
           local_2e = *(undefined2 *)(puVar14 + 0x186);	// startY
           local_2c = *(undefined2 *)(puVar14 + 0x188);	// sizeX
@@ -3790,12 +3790,12 @@ code_r0x800369d8:
 
   // param1 is PTR_DAT_8008d2ac
 
-  // Camera110_SetDrawEnv_Normal
+  // TileView_SetDrawEnv_Normal
   // param1 otmem
-  // param2 camera110
+  // param2 tileView
   // param3 backbuffer
-  // 0x4e2 = 0x1388 = camera110_UI
-  // 0x51f = 0x147c = camera110_UI + 0xf4 (ptrOT)
+  // 0x4e2 = 0x1388 = tileView_UI
+  // 0x51f = 0x147c = tileView_UI + 0xf4 (ptrOT)
   FUN_80042a8c(param_1[0x51f] + 0x10,param_1 + 0x4e2,param_1[4],0,0);
 
   // RCNT_GetTime_Total
@@ -3898,7 +3898,7 @@ LAB_800378d0:
   // Record that an OT has been submitted
   puVar14[0x1d30] = 1;
 
-  // camera110[0]->ptrOT + 0xffc,
+  // tileView[0]->ptrOT + 0xffc,
   // draws from end to start
   DrawOTag(param_1[0x97] + 0xffc);
 
@@ -6563,7 +6563,7 @@ void FUN_8003a3fc(void)
                                       );
 
 				  // Edit gGT offsets 0x17a, 0x17c, 0x17e
-				  // = Camera110 offsets 0x12, 0x14, 0x16
+				  // = TileView offsets 0x12, 0x14, 0x16
 
 				  // current fade = flash white
                   *(undefined2 *)
@@ -6768,7 +6768,7 @@ LAB_8003a71c:
 				 // Player / AI structure + 0x4a shows driver index (0-7)
 				 (uint)*(byte *)(iVar11 + 0x4a);
 
-			// Edit Camera110 offsets 0x17a, 0x17c, 0x17e
+			// Edit TileView offsets 0x17a, 0x17c, 0x17e
 
             *(undefined2 *)
              (puVar13 + *(int *)(puVar13 + *(int *)(puVar13 + 0x2568) * 4 + 0x2558) * 0x110 + 0x17a)
@@ -8053,26 +8053,26 @@ void FUN_8003b934(uint *param_1)
     uVar6 = (uint)*(byte *)(param_1 + 0x72a);
   }
 
-  // Initialize four Camera110, 4 main screens
+  // Initialize four TileView, 4 main screens
   FUN_800426f8(param_1 + 0x5a,0,uVar6);
   FUN_800426f8(param_1 + 0x9e,1,uVar6);
   FUN_800426f8(param_1 + 0xe2,2,uVar6);
   FUN_800426f8(param_1 + 0x126,3,uVar6);
 
-  // pointer to Camera110_UI
+  // pointer to TileView_UI
   puVar5 = param_1 + 0x4e2;
 
-  // Initialize Camera110
+  // Initialize TileView
   FUN_800426f8(puVar5,0,1);
 
-  // camera110_UI.offset6
+  // tileView_UI.offset6
   // rotX = 180 degrees
   *(undefined2 *)((int)param_1 + 0x138e) = 0x800;
 
-  // Camera110_InitPsyqGeom
+  // TileView_SetPsyqGeom
   FUN_80042910(puVar5);
 
-  // Camera110_SetViewMatrix
+  // TileView_SetMatrixVP
   FUN_80042c04(puVar5);
 
   // loop counter
@@ -8085,7 +8085,7 @@ void FUN_8003b934(uint *param_1)
     FUN_8004cec4();
   }
 
-  // offset of 8008d2ac where P1's camera110 is
+  // offset of 8008d2ac where P1's tileView is
   iVar10 = 0x168;
 
   // offset of 8008d2ac where P1's camera is
@@ -8114,7 +8114,7 @@ void FUN_8003b934(uint *param_1)
 		// pointer to cameraDC buffer
 
 		// param_1 + iVar10
-		// pointer to camera110 buffer
+		// pointer to tileView buffer
 
 		// CAM_Init for all cameras
         FUN_80018818((int)param_1 + iVar9,iVar8,iVar4,(int)param_1 + iVar10);
@@ -8151,7 +8151,7 @@ void FUN_8003b934(uint *param_1)
 	// += 0xDC (next cameraDC)
     puVar5 = puVar5 + 0x37;
 
-	// increment offset to next camera110
+	// increment offset to next tileView
     iVar10 = iVar10 + 0x110;
 
 	// increment loop counter

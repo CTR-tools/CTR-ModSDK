@@ -7,7 +7,7 @@ void DrawBoxOutline_LowLevel(RECT* r, int thickX, int thickY, int* colorPtr, int
 void CustomSplit()
 {
 	int i;
-	struct Camera110* c110;
+	struct TileView* tileView;
 	POLY_F4* p;
 	int numPlyrCurrGame;
 
@@ -28,21 +28,21 @@ void CustomSplit()
 	{
 		for(i = 0; i < numPlyrCurrGame; i++)
 		{
-			c110 = &sdata->gGT->camera110[i];
+			tileView = &sdata->gGT->tileView[i];
 
 			// Draw a 2D box made of four rectangles
 			DrawBoxOutline_LowLevel(
 
 				// dimensions, thickness
-				(RECT*)&c110->rect.x,4,2,
+				(RECT*)&tileView->rect.x,4,2,
 
 				// color data, 0x18 is enum offset of BLUE
 				data.ptrColor[sdata->gGT->drivers[i]->BattleHUD.teamID + 0x18],
 
 				0,
 
-				// camera110_UI = 0x1388
-				&sdata->gGT->camera110_UI.ptrOT[3]);
+				// tileView_UI = 0x1388
+				&sdata->gGT->tileView_UI.ptrOT[3]);
 		}
     }
 
@@ -74,7 +74,7 @@ void CustomSplit()
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim(&sdata->gGT->camera110_UI.ptrOT[3],p);
+		AddPrim(&sdata->gGT->tileView_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
 		sdata->gGT->backBuffer->primMem.curr = (void*)(p + 1);
@@ -108,7 +108,7 @@ void CustomSplit()
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim(&sdata->gGT->camera110_UI.ptrOT[3],p);
+		AddPrim(&sdata->gGT->tileView_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
 		sdata->gGT->backBuffer->primMem.curr = (void*)(p + 1);
@@ -142,7 +142,7 @@ void CustomSplit()
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim(&sdata->gGT->camera110_UI.ptrOT[3],p);
+		AddPrim(&sdata->gGT->tileView_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
 		sdata->gGT->backBuffer->primMem.curr = (void*)(p + 1);

@@ -254,7 +254,7 @@ void EndCrystalChallenge(void)
 			&semiGlobal.gameConfig.backBuffer->primMem,
 
 			// pointer to OT mem (struct?)
-			*(int*)semiGlobal.gameConfig.camera110_UI.ptrOT,
+			*(int*)semiGlobal.gameConfig.tileView_UI.ptrOT,
 
 			1, 0x1000, 0x808080
 		);

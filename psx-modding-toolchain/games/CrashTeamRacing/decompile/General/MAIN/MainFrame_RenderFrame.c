@@ -38,11 +38,11 @@ void MainFrame_VisMemFullFrame(struct GameTracker* gGT, struct Level* level);
 void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
 void MenuBox_CollectInput();
 void MenuBox_ProcessState();
-void Camera110_UpdateFrustum(struct Camera110* c110);
+void TileView_UpdateFrustum(struct TileView* tileView);
 void EffectSfxRain_MakeSound(struct GameTracker* gGT);
-void RenderWeather(struct Camera110* c110, struct PrimMem* primMem, struct RainBuffer* rainBuffer, char numPlyr, int gameMode1);
-void DrawConfetti(struct Camera110* c110, struct PrimMem* primMem, void* confetti, int frameTimer, int gameMode1);
-void RenderStars(struct Camera110* c110, struct PrimMem* primMem, void* stars, char numPlyr);
+void RenderWeather(struct TileView* tileView, struct PrimMem* primMem, struct RainBuffer* rainBuffer, char numPlyr, int gameMode1);
+void DrawConfetti(struct TileView* tileView, struct PrimMem* primMem, void* confetti, int frameTimer, int gameMode1);
+void RenderStars(struct TileView* tileView, struct PrimMem* primMem, void* stars, char numPlyr);
 void DecalMP_01(struct GameTracker* gGT);
 void CupStandings_InputAndDraw();
 void DrawHUD_Racing();
@@ -59,41 +59,41 @@ void AH_Map_Main();
 void AH_MaskHint_Start(short requestedHint, short bool_interruptWarppad);
 void INSTANCE_LevRestartLInBs(void* instDefs, u_int numInstances);
 void DrawIntroRaceText_1P();
-void RedBeaker_RenderRain(struct Camera110* c110, struct PrimMem* primMem, struct JitPool* rain, char numPlyr, int gameMode1);
+void RedBeaker_RenderRain(struct TileView* tileView, struct PrimMem* primMem, struct JitPool* rain, char numPlyr, int gameMode1);
 u_int LOAD_IsOpen_Podiums();
 void CS_BoxScene_InstanceSplitLines();
 void* RenderBucket_QueueLevInstances(struct CameraDC* cDC, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
 void* RenderBucket_QueueNonLevInstances(struct Item* item, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
-void Particle_RenderList(struct Camera110* c110, void* particleList);
-void Camera110_SetDrawEnv_Normal(u_long* ot, struct Camera110* c110, struct DB* backBuffer, short* param_4, u_char param_5);
+void Particle_RenderList(struct TileView* tileView, void* particleList);
+void TileView_SetDrawEnv_Normal(u_long* ot, struct TileView* tileView, struct DB* backBuffer, short* param_4, u_char param_5);
 void DecalMP_02(struct GameTracker* gGT);
 void RB_Player_ToggleInvisible();
 void RB_Player_ToggleFlicker();
 void RB_Burst_ProcessBucket(struct Thread* thread);
 void RB_Blowup_ProcessBucket(struct Thread* thread);
-void RB_Spider_DrawWebs(struct Thread* thread, struct Camera110* c110);
+void RB_Spider_DrawWebs(struct Thread* thread, struct TileView* tileView);
 void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 void AH_WarpPad_AllWarppadNum();
 void Turbo_ProcessBucket(struct Thread* turboThread);
-void DrawSkidMarks_Main(struct Thread* thread, struct Camera110* c110);
+void DrawSkidMarks_Main(struct Thread* thread, struct TileView* tileView);
 void MM_Title_SetTrophyDPP();
 void RenderBucket_Execute(void* param_1, struct PrimMem* param_2);
 void DrawTires_Solid(struct Thread* thread, struct PrimMem* primMem, char numPlyr);
 void DrawTires_Reflection(struct Thread* thread, struct PrimMem* primMem, char numPlyr);
 void DrawShadows_Main();
-void DrawHeat_Main(void* particleList_heatWarp, struct Camera110* c110, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
-void Camera110_FadeAllWindows();
+void DrawHeat_Main(void* particleList_heatWarp, struct TileView* tileView, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
+void TileView_FadeAllWindows();
 void AnimateWater2P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
 void VisData_CopyJMPsToScratchpad();
-int CreateRenderLists_1P2P(struct VisData* visData, int* visLeafList, struct Camera110* c110, u_int LevRenderList, void* bspList, char numPlyr);
-//void CAM_SkyboxGlow(short* param_1, struct Camera110* camera, struct PrimMem* primMem, u_long* ptrOT);
+int CreateRenderLists_1P2P(struct VisData* visData, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList, char numPlyr);
+//void CAM_SkyboxGlow(short* param_1, struct TileView* camera, struct PrimMem* primMem, u_long* ptrOT);
 void AnimateWater1P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5);
 void AnimateQuad(int timer, int numSCVert, void* ptrSCVert, int* visSCVertList);
-void DrawSky_Full(void* skybox, struct Camera110* c110, struct PrimMem* primMem);
+void DrawSky_Full(void* skybox, struct TileView* tileView, struct PrimMem* primMem);
 void AnimateWater3P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7);
 void AnimateWater4P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7, int* param_8);
-int CreateRenderLists_3P4P(struct VisData* visData, int* visLeafList, struct Camera110* c110, u_int LevRenderList, void* bspList);
+int CreateRenderLists_3P4P(struct VisData* visData, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList);
 void DrawHUD_Wumpa3D_2P3P4P(struct GameTracker* gGT);
 void DecalMP_03(struct GameTracker* gGT);
 void DotLights_AudioAndVideo(struct GameTracker* gGT);
@@ -170,7 +170,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 	RenderAllShadows(gGT);
 	RenderAllHeatParticles(gGT);
 	
-	Camera110_FadeAllWindows();
+	TileView_FadeAllWindows();
 	RenderAllLevelGeometry(gGT);
 	RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 	MultiplayerWumpaHUD(gGT);
@@ -328,7 +328,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 {
 	int i;
 	int textTimer;
-	struct Camera110* c110;
+	struct TileView* tileView;
 	
 	int startX;
 	int endX;
@@ -351,16 +351,16 @@ void DrawFinalLap(struct GameTracker* gGT)
 		textTimer = 90 - textTimer;
 		
 		// camera
-		c110 = &gGT->camera110[i];
+		tileView = &gGT->tileView[i];
 		
 		// << 0x10, >> 0x12
-		posY = c110->rect.h / 4;
+		posY = tileView->rect.h / 4;
 		
 		// fly from right to center
 		if(textTimer < 11)
 		{
-			startX = c110->rect.w + 100;
-			endX = c110->rect.w / 2;
+			startX = tileView->rect.w + 100;
+			endX = tileView->rect.w / 2;
 
 			goto DrawFinalLapString;
 		}
@@ -368,7 +368,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 		// sit in center
 		if(textTimer < 0x51)
 		{
-			startX = c110->rect.w / 2;
+			startX = tileView->rect.w / 2;
 			endX = startX;
 			
 			// for duration
@@ -378,7 +378,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 		}
 
 		// fly from center to left
-		startX = c110->rect.w / 2;
+		startX = tileView->rect.w / 2;
 		endX = -100;
 		textTimer -= 0x50;
 		
@@ -392,7 +392,7 @@ DrawFinalLapString:
 			sdata->lngStrings[0x8cc/4],
 			resultPos[0], resultPos[1],
 			1, 0xffff8000,
-			c110->ptrOT);
+			tileView->ptrOT);
 			
 		sdata->finalLapTextTimer[i]--;
 	}
@@ -408,7 +408,7 @@ void RainLogic(struct GameTracker* gGT)
 	
 	for(i = 0; i < numPlyrCurrGame; i++)
 	{
-		Camera110_UpdateFrustum(&gGT->camera110[i]);
+		TileView_UpdateFrustum(&gGT->tileView[i]);
 		
 		camQB = gGT->cameraDC[i].ptrQuadBlock;
 		
@@ -453,7 +453,7 @@ void RenderAllWeather(struct GameTracker* gGT)
 	if((gGT->renderFlags & 2) == 0) return;
 	
 	RenderWeather(
-		&gGT->camera110[0],
+		&gGT->tileView[0],
 		&gGT->backBuffer->primMem,
 		&gGT->rainBuffer[0],
 		numPlyrCurrGame,
@@ -474,7 +474,7 @@ void RenderAllConfetti(struct GameTracker* gGT)
 	for(i = 0; i < numWinners; i++)
 	{
 		DrawConfetti(
-			&gGT->camera110[gGT->winnerIndex[i]],
+			&gGT->tileView[gGT->winnerIndex[i]],
 			&gGT->backBuffer->primMem,
 			&gGT->confetti,
 			gGT->frameTimer_Confetti,
@@ -491,7 +491,7 @@ void RenderAllStars(struct GameTracker* gGT)
 	if(gGT->stars.numStars == 0) return;
 
 	RenderStars(
-		&gGT->camera110[0],
+		&gGT->tileView[0],
 		&gGT->backBuffer->primMem,
 		&gGT->stars,
 		gGT->numPlyrCurrGame);
@@ -608,7 +608,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 				if(LOAD_IsOpen_AdvHub() == 0)
 				{
 					// if any transition is over
-					if(gGT->camera110_UI.fadeFromBlack_currentValue > 0xfff)
+					if(gGT->tileView_UI.fadeFromBlack_currentValue > 0xfff)
 					{
 						DrawHUD_AdvStrings();
 					}
@@ -618,7 +618,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 				else
 				{
 					// if any transition is over
-					if(gGT->camera110_UI.fadeFromBlack_currentValue > 0xfff)
+					if(gGT->tileView_UI.fadeFromBlack_currentValue > 0xfff)
 					{
 						AH_Map_Main();
 						
@@ -648,8 +648,8 @@ void RenderAllHUD(struct GameTracker* gGT)
 						gGT->gameMode2 &= ~(DISABLE_LEV_INSTANCE);
 
 						// fade transition
-						gGT->camera110_UI.fadeFromBlack_desiredResult = 0x1000;
-						gGT->camera110_UI.fade_step = 0x2aa;
+						gGT->tileView_UI.fadeFromBlack_desiredResult = 0x1000;
+						gGT->tileView_UI.fade_step = 0x2aa;
 					}
 				}
 			}
@@ -674,7 +674,7 @@ void RenderAllBeakerRain(struct GameTracker* gGT)
 	if((gGT->renderFlags & 0x10) == 0) return;
 	
 	RedBeaker_RenderRain(
-		&gGT->camera110[0],
+		&gGT->tileView[0],
 		&gGT->backBuffer->primMem,
 		&gGT->JitPools.rain,
 		numPlyrCurrGame,
@@ -745,7 +745,7 @@ void RenderAllNormalParticles(struct GameTracker* gGT)
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		Particle_RenderList(
-			&gGT->camera110[i],
+			&gGT->tileView[i],
 			gGT->particleList_ordinary);
 	}
 }
@@ -753,13 +753,13 @@ void RenderAllNormalParticles(struct GameTracker* gGT)
 void RenderDispEnv_World(struct GameTracker* gGT)
 {
 	int i;
-	struct Camera110* c110;
+	struct TileView* tileView;
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		c110 = &gGT->camera110[i];
-		Camera110_SetDrawEnv_Normal(
-			&c110->ptrOT[0x3ff],
-			c110, gGT->backBuffer, 0, 0);
+		tileView = &gGT->tileView[i];
+		TileView_SetDrawEnv_Normal(
+			&tileView->ptrOT[0x3ff],
+			tileView, gGT->backBuffer, 0, 0);
 	}
 }
 
@@ -767,7 +767,7 @@ void RenderDispEnv_World(struct GameTracker* gGT)
 void RenderAllFlag0x40(struct GameTracker* gGT)
 {
 	int i;
-	struct Camera110* c110;
+	struct TileView* tileView;
 	
 	if((gGT->renderFlags & 0x40) == 0) return;
 	
@@ -777,7 +777,7 @@ void RenderAllFlag0x40(struct GameTracker* gGT)
 		RB_Player_ToggleFlicker();
 		RB_Burst_ProcessBucket(gGT->threadBuckets[BURST].thread);
 		RB_Blowup_ProcessBucket(gGT->threadBuckets[BLOWUP].thread);
-		RB_Spider_DrawWebs(gGT->threadBuckets[SPIDER].thread, &gGT->camera110[0]);
+		RB_Spider_DrawWebs(gGT->threadBuckets[SPIDER].thread, &gGT->tileView[0]);
 		RB_Follower_ProcessBucket(gGT->threadBuckets[FOLLOWER].thread);
 		
 		// skipping RB_StartText_ProcessBucket, it's empty in 231
@@ -795,9 +795,9 @@ void RenderAllFlag0x40(struct GameTracker* gGT)
 
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		c110 = &gGT->camera110[i];
-		DrawSkidMarks_Main(gGT->threadBuckets[PLAYER].thread, c110);
-		DrawSkidMarks_Main(gGT->threadBuckets[ROBOT].thread, c110);
+		tileView = &gGT->tileView[i];
+		DrawSkidMarks_Main(gGT->threadBuckets[PLAYER].thread, tileView);
+		DrawSkidMarks_Main(gGT->threadBuckets[ROBOT].thread, tileView);
 	}
 }
 
@@ -855,7 +855,7 @@ void RenderAllHeatParticles(struct GameTracker* gGT)
 	
 	DrawHeat_Main(
 		gGT->particleList_heatWarp,
-		&gGT->camera110[0],
+		&gGT->tileView[0],
 		&gGT->backBuffer->primMem,
 		gGT->numPlyrCurrGame,
 		gGT->swapchainIndex * 0x128);
@@ -867,7 +867,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	int distToScreen;
 	int numPlyrCurrGame;
 	struct Level* level1;
-	struct Camera110* c110;
+	struct TileView* tileView;
 	struct mesh_info* ptr_mesh_info;
 	
 	if((gGT->renderFlags & 1) == 0) return;
@@ -903,7 +903,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		}
 		
 		// camera of player 1
-		c110 = &gGT->camera110[0];
+		tileView = &gGT->tileView[0];
 		
 		if(
 			// adv character selection screen
@@ -933,7 +933,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		else
 		{
 			// 0x1c2 in 1P mode
-			distToScreen = c110->distanceToScreen_PREV;
+			distToScreen = tileView->distanceToScreen_PREV;
 			
 			// int and unsigned int have specific purposes
 			*(unsigned int*)0x1f800014 = distToScreen * 0x2080;
@@ -959,7 +959,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		  CreateRenderLists_1P2P(
 			ptr_mesh_info->ptrVisDataArray,
 			level1->visMem->visLeafList[0],
-			c110,
+			tileView,
 			&gGT->LevRenderLists[0],
 			level1->visMem->bspList[0],
 			gGT->numPlyrCurrGame);
@@ -967,7 +967,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		// 226-229
 		DrawLevelOvr1P(
 			&gGT->LevRenderLists[0],
-			c110,
+			tileView,
 			ptr_mesh_info,
 			&gGT->backBuffer->primMem,
 			gGT->visMem1->visFaceList[0],
@@ -975,7 +975,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			
 		DrawSky_Full(
 			level1->ptr_skybox,
-			c110,
+			tileView,
 			&gGT->backBuffer->primMem);
 			
 		// skybox gradient
@@ -1010,7 +1010,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			  CreateRenderLists_1P2P(
 				ptr_mesh_info->ptrVisDataArray,
 				level1->visMem->visLeafList[i],
-				&gGT->camera110[i],
+				&gGT->tileView[i],
 				&gGT->LevRenderLists[i],
 				level1->visMem->bspList[i],
 				gGT->numPlyrCurrGame);
@@ -1019,7 +1019,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		// 226-229
 		DrawLevelOvr2P(
 			&gGT->LevRenderLists[0],
-			&gGT->camera110[0],
+			&gGT->tileView[0],
 			ptr_mesh_info,
 			&gGT->backBuffer->primMem,
 			gGT->visMem1->visFaceList[0],
@@ -1066,7 +1066,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		  CreateRenderLists_3P4P(
 			ptr_mesh_info->ptrVisDataArray,
 			level1->visMem->visLeafList[i],
-			&gGT->camera110[i],
+			&gGT->tileView[i],
 			&gGT->LevRenderLists[i],
 			level1->visMem->bspList[i]);
 	}
@@ -1076,7 +1076,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		// 226-229
 		DrawLevelOvr3P(
 			&gGT->LevRenderLists[0],
-			&gGT->camera110[0],
+			&gGT->tileView[0],
 			ptr_mesh_info,
 			&gGT->backBuffer->primMem,
 			gGT->visMem1->visFaceList[0],
@@ -1090,7 +1090,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		// 226-229
 		DrawLevelOvr4P(
 			&gGT->LevRenderLists[0],
-			&gGT->camera110[0],
+			&gGT->tileView[0],
 			ptr_mesh_info,
 			&gGT->backBuffer->primMem,
 			gGT->visMem1->visFaceList[0],
@@ -1105,12 +1105,12 @@ SkyboxGlow:
 	// skybox gradient
 	for(i = 0; i < numPlyrCurrGame; i++)
 	{
-		c110 = &gGT->camera110[i];
+		tileView = &gGT->tileView[i];
 		CAM_SkyboxGlow(
 			&level1->glowGradient[0],
-			c110,
+			tileView,
 			&gGT->backBuffer->primMem,
-			&c110->ptrOT[0x3ff]);
+			&tileView->ptrOT[0x3ff]);
 	}
 	
 	return;
@@ -1136,15 +1136,15 @@ void WindowBoxLines(struct GameTracker* gGT)
 		DrawBoxOutline_LowLevel(
 
 			// dimensions, thickness
-			&gGT->camera110[i].rect,4,2,
+			&gGT->tileView[i].rect,4,2,
 
 			// color data, 0x18 is enum offset of BLUE
 			data.ptrColor[gGT->drivers[i]->BattleHUD.teamID + 0x18],
 
 			0,
 
-			// camera110_UI = 0x1388
-			&gGT->camera110_UI.ptrOT[3]);
+			// tileView_UI = 0x1388
+			&gGT->tileView_UI.ptrOT[3]);
 	}
 }
 
@@ -1180,7 +1180,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim(&gGT->camera110_UI.ptrOT[3],p);
+		AddPrim(&gGT->tileView_UI.ptrOT[3],p);
 
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
@@ -1210,7 +1210,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim(&gGT->camera110_UI.ptrOT[3],p);
+		AddPrim(&gGT->tileView_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
@@ -1244,7 +1244,7 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 		// Draw a bar from left to right,
 		// dividing the screen in half on top and bottom
-		AddPrim(&gGT->camera110_UI.ptrOT[3],p);
+		AddPrim(&gGT->tileView_UI.ptrOT[3],p);
 
 		// backBuffer->primMem.curr
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
@@ -1253,11 +1253,11 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 void RenderDispEnv_UI(struct GameTracker* gGT)
 {
-	struct Camera110* c110 = &gGT->camera110_UI;
+	struct TileView* tileView = &gGT->tileView_UI;
 	
-	Camera110_SetDrawEnv_Normal(
-		&c110->ptrOT[4],
-		c110, gGT->backBuffer, 0, 0);
+	TileView_SetDrawEnv_Normal(
+		&tileView->ptrOT[4],
+		tileView, gGT->backBuffer, 0, 0);
 }
 
 void RenderVSYNC(struct GameTracker* gGT)
@@ -1332,7 +1332,7 @@ void RenderSubmit(struct GameTracker* gGT)
 		
 	gGT->bool_DrawOTag_InProgress = 1;
 	
-	DrawOTag(&gGT->camera110[0].ptrOT[0x3ff]);
+	DrawOTag(&gGT->tileView[0].ptrOT[0x3ff]);
 	
 	gGT->frameTimer_notPaused = gGT->frameTimer_VsyncCallback;
 }

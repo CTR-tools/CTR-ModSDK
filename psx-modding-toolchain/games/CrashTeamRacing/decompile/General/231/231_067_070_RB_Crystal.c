@@ -69,14 +69,14 @@ void DECOMP_RB_Crystal_LInB(struct Instance* inst)
 	RB_Default_LInB(inst);
 }
 
-void RB_Fruit_GetScreenCoords(struct Camera110* c110, struct Instance* inst, short* output);
+void RB_Fruit_GetScreenCoords(struct TileView* tileView, struct Instance* inst, short* output);
 
 int DECOMP_RB_Crystal_LInC(
 	struct Instance* LevInst,
 	struct Thread* driverTh,
 	struct WeaponSearchData* info)
 {
-	struct Camera110* c110;
+	struct TileView* tileView;
 	short posScreen[2];
 	struct Driver* driver;
 	int modelID;
@@ -115,12 +115,12 @@ int DECOMP_RB_Crystal_LInC(
 	
 	// get driver object, get screen coords
 	driver = driverTh->object;
-	c110 = &sdata->gGT->camera110[driver->driverID];
-	RB_Fruit_GetScreenCoords(c110, LevInst, &posScreen[0]);
+	tileView = &sdata->gGT->tileView[driver->driverID];
+	RB_Fruit_GetScreenCoords(tileView, LevInst, &posScreen[0]);
 	
 	// lasts 5 frames, give start position, count numCollected
-	driver->PickupWumpaHUD.startX = c110->rect.x + posScreen[0];
-	driver->PickupWumpaHUD.startY = c110->rect.y + posScreen[1] - 0x14;
+	driver->PickupWumpaHUD.startX = tileView->rect.x + posScreen[0];
+	driver->PickupWumpaHUD.startY = tileView->rect.y + posScreen[1] - 0x14;
 	driver->PickupWumpaHUD.cooldown = 5;
 	driver->PickupWumpaHUD.numCollected++;
 	

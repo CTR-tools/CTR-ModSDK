@@ -13,11 +13,11 @@ struct Instance* INSTANCE_Birth2D(
 		
 	inst->flags |= 0x400;
 	
-	inst->idpp[0].cam110 = &gGT->camera110_UI;
+	inst->idpp[0].tileView = &gGT->tileView_UI;
 	
 	for(i = 1; i < gGT->numPlyrCurrGame; i++)
 	{
-		inst->idpp[i].cam110 = 0;
+		inst->idpp[i].tileView = 0;
 	}
 	
 	return inst;

@@ -16,10 +16,10 @@ void DF_PrintText()
   #endif
 
   gGT = sdata->gGT;
-  backup = gGT->camera110_UI.ptrOT;
-  gGT->camera110_UI.ptrOT = gGT->ot_camera110_UI[gGT->swapchainIndex];
+  backup = gGT->tileView_UI.ptrOT;
+  gGT->tileView_UI.ptrOT = gGT->ot_tileView_UI[gGT->swapchainIndex];
   DecalFont_DrawLine("Debug View: R1+Select", 10, 208, 2, 0xffff0000);
-  gGT->camera110_UI.ptrOT = backup;
+  gGT->tileView_UI.ptrOT = backup;
 }
 
 void DF_DrawBox()
@@ -37,7 +37,7 @@ void DF_DrawBox()
 
   CTR_Box_DrawWireBox(
 	&r,local_30,
-	sdata->gGT->camera110_UI.ptrOT,
+	sdata->gGT->tileView_UI.ptrOT,
 	&sdata->gGT->backBuffer->primMem);
 }
 

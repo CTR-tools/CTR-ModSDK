@@ -13,7 +13,7 @@ In order from top to bottom:
 		will have already finished it's purpose before being
 		overwritten
 
-NewDriverPool.c appends the decompiled Camera110_InitStructs,
+NewDriverPool.c appends the decompiled TileView_Init,
 which was reduced in size with logical optimizations.
 The new Driver pool is not solid memory, drivers are scattered
 around RAM. The game mostly-uses the linked lists, and only treats 

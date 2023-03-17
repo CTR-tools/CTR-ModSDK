@@ -360,8 +360,8 @@ void FUN_8009f718(void)
           *(undefined4 *)(puVar4 + 0x274) = 0x80;
         }
 		
-		// first camera110 buffer is at 0x168,
-		// so this is ~0x20 bytes into camera110s
+		// first tileView buffer is at 0x168,
+		// so this is ~0x20 bytes into tileViews
 		
 		// fly-in interpolation
         FUN_8004ecd4(&uStack136,(int)*(short *)(PTR_DAT_8008d2ac + iVar10 + 0x184),
@@ -378,8 +378,8 @@ void FUN_8009f718(void)
         
 		puVar4 = PTR_DAT_8008d2ac + iVar10;
         
-		// first camera110 buffer is at 0x168,
-		// so this is ~0x20 bytes into camera110s
+		// first tileView buffer is at 0x168,
+		// so this is ~0x20 bytes into tileViews
 		
 		*(ushort *)(puVar4 + 0x184) = uStack136;
         *(ushort *)(puVar4 + 0x186) = uStack134;
@@ -388,8 +388,8 @@ void FUN_8009f718(void)
 LAB_8009ff4c:
         puVar4 = PTR_DAT_8008d2ac + iVar10;
 		
-		// first camera110 buffer is at 0x168,
-		// so this is ~0x20 bytes into camera110s
+		// first tileView buffer is at 0x168,
+		// so this is ~0x20 bytes into tileViews
 		
         if (0 < *(short *)(puVar4 + 0x188)) {
           *(short *)(puVar4 + 0x184) = *(short *)(puVar4 + 0x184) + 5;
@@ -400,7 +400,7 @@ LAB_8009ff4c:
       }
       uVar13 = uVar13 + 1;
 	  
-	  // camera110 buffer, one for each player
+	  // tileView buffer, one for each player
       iVar10 = iVar10 + 0x110;
 	  
     } while ((int)uVar13 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);

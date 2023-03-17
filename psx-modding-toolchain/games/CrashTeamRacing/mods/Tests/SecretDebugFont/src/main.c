@@ -57,7 +57,7 @@ void DrawCharacter(int index, int screenPosX, int screenPosY, int letterX, int l
   puVar2 = (unsigned int*)sdata->gGT->backBuffer->primMem.curr;
 
   // OT memory
-  puVar3 = (unsigned int*)sdata->gGT->camera110_UI.ptrOT;
+  puVar3 = (unsigned int*)sdata->gGT->tileView_UI.ptrOT;
 
   // append memory, so that future polygons draw after
   // what we are about to add in this function

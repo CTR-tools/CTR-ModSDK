@@ -4,7 +4,7 @@
 /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 // param1 - offset 0x1808 of gameTracker, one struct per player
-// param2 - camera110
+// param2 - tileView
 // param3 - LEV->ptr_mesh_info, pointer is stored at first four bytes of LEV
 // param4 - primMem
 // param5 - gGT->[0x1a10+0x10] 
@@ -84,7 +84,7 @@ void UndefinedFunction_800a0cbc
     puVar5 = &DAT_1f8001b4;
     DAT_1f800038 = auStack60;
 	
-	// store camera110
+	// store tileView
     DAT_1f8000dc = param_2;
     
 	// erase scratchpad
@@ -212,7 +212,7 @@ void UndefinedFunction_800a0cbc
     }
 	
 	// param_1 is gameTracker->1808
-	// DAT_1f8000dc is camera110
+	// DAT_1f8000dc is tileView
 	// Without this, none of the LEV draws
     FUN_800ab3dc(param_1,DAT_1f8000dc);
 	

@@ -660,15 +660,15 @@
 800414b0 THREAD_StartSearch_Self
 80041540 THREAD_CollideHitboxWithBucket
 
-80041664 Camera110_InitStructs
-8004187c Camera110_InitPsyqGeom
-800418e0 Camera110_SetDrawEnv_DecalMP
-800419f8 Camera110_SetDrawEnv_Normal
-80041b70 Camera110_SetViewMatrix
-80041dbc Camera110_SetFrustumPlane
-8004205c Camera110_UpdateFrustum
-80042894 Camera110_FadeOneWindow
-80042a24 Camera110_FadeAllWindows
+80041664 TileView_Init
+8004187c TileView_SetPsyqGeom
+800418e0 TileView_SetDrawEnv_DecalMP
+800419f8 TileView_SetDrawEnv_Normal
+80041b70 TileView_SetMatrixVP
+80041dbc TileView_SetFrustumPlane
+8004205c TileView_UpdateFrustum
+80042894 TileView_FadeOneWindow
+80042a24 TileView_FadeAllWindows
 
 80042a9c loadNonAdvTrack_MenuBoxFuncPtr
 80042b34 loadNonAdvTrack_Get_MenuBox

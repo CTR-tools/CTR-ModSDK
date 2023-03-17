@@ -4,4 +4,4 @@
 926, exe, 0x80010304, 0x0, src/hook_ReturnToRender.s
 926, exe, 0x80052c70, 0x0, src/hook_IconAxis.s
 
-common, exe, Camera110_InitStructs,0x0, src/Camera110_InitStructs.c
+common, exe, TileView_Init,0x0, src/TileView_Init.c

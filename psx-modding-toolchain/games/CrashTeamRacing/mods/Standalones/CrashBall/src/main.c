@@ -244,7 +244,7 @@ void DrawHUD()
 			// pointer to PrimMem struct
 			&sdata->gGT->backBuffer->primMem,
 
-			sdata->gGT->camera110_UI.ptrOT,
+			sdata->gGT->tileView_UI.ptrOT,
 
 			1,0x1000,0x808080
 		);
@@ -257,15 +257,15 @@ void DrawHUD()
 void SetCamera()
 {
 	// Do not move the camera, based on player
-	sdata->gGT->cameraDC[0].cam110 = 0;
+	sdata->gGT->cameraDC[0].tileView = 0;
 
 	// set posx, posy, posz, rotx, roty, rotz
-	sdata->gGT->camera110[0].pos[0] = -0x880;
-	sdata->gGT->camera110[0].pos[1] = 0x730;
-	sdata->gGT->camera110[0].pos[2] = 0x0;
-	sdata->gGT->camera110[0].rot[0] = 0x60A;
-	sdata->gGT->camera110[0].rot[1] = -0x2400;
-	sdata->gGT->camera110[0].rot[2] = 0x0;
+	sdata->gGT->tileView[0].pos[0] = -0x880;
+	sdata->gGT->tileView[0].pos[1] = 0x730;
+	sdata->gGT->tileView[0].pos[2] = 0x0;
+	sdata->gGT->tileView[0].rot[0] = 0x60A;
+	sdata->gGT->tileView[0].rot[1] = -0x2400;
+	sdata->gGT->tileView[0].rot[2] = 0x0;
 }
 
 void HandleGamepads()

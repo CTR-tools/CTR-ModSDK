@@ -860,7 +860,7 @@ LAB_800ac9c8:
         
 		if ((*(ushort *)(param_2 + 0x16) & 0x100) == 0) 
 		{
-		  // camera110 fade,
+		  // tileView fade,
 		  // flash white after selecting Adv Character
           *(undefined2 *)(puVar3 + 0x17a) = 0x1fff;
           *(undefined2 *)(puVar3 + 0x17c) = 0x1000;
@@ -929,7 +929,7 @@ LAB_800acb0c:
 		// CAM_Path_Move
 		FUN_80018ba0(iVar10,&local_48,&local_50,local_40);
         
-		// store result in camera110 pos and rot
+		// store result in tileView pos and rot
 		*(undefined2 *)(puVar3 + 0x168) = local_48;
         *(undefined2 *)(puVar3 + 0x16a) = local_46;
         *(undefined2 *)(puVar3 + 0x16c) = local_44;
@@ -1397,7 +1397,7 @@ LAB_800ad8ec:
 	
   case 0xc:
   
-	// camera110 fade values
+	// tileView fade values
     *(undefined2 *)(puVar3 + 0x17a) = 0x1fff;
     *(undefined2 *)(puVar3 + 0x17c) = 0x1000;
     *(undefined2 *)(puVar3 + 0x17e) = 0xfd56;
@@ -2162,7 +2162,7 @@ void FUN_800ae318(int param_1)
   // if there is room in primMem
   if (puVar4 + 6 < puVar2) 
   {
-	// camera110 offset 0x28 (400 = 0x190 = 0x168+0x28)
+	// tileView offset 0x28 (400 = 0x190 = 0x168+0x28)
     setCopControlWord(2,0,*(undefined4 *)(PTR_DAT_8008d2ac + 400));
     setCopControlWord(2,0x800,*(undefined4 *)(PTR_DAT_8008d2ac + 0x194));
     setCopControlWord(2,0x1000,*(undefined4 *)(PTR_DAT_8008d2ac + 0x198));
@@ -2493,7 +2493,7 @@ void FUN_800ae9a8(int param_1)
     break;
   case 2:
   
-	// if camera110_UI is fully faded to black
+	// if tileView_UI is fully faded to black
     if (*(short *)(PTR_DAT_8008d2ac + 0x139a) == 0) 
 	{
 	  // podium "other" threads
@@ -2784,7 +2784,7 @@ void FUN_800aedf8(int param_1)
       
 	  puVar3 = PTR_DAT_8008d2ac;
 	  
-	  // store result in camera110 pos and rot
+	  // store result in tileView pos and rot
       *(undefined2 *)(PTR_DAT_8008d2ac + 0x168) = local_28;
       *(undefined2 *)(puVar3 + 0x16a) = local_26;
       *(undefined2 *)(puVar3 + 0x16c) = local_24;
@@ -4019,7 +4019,7 @@ void FUN_800b0300(void)
   *(undefined4 *)(PTR_DAT_8008d2ac + 0x2568) = 1;
   
   // Set winnerIndex[0] to 0, to draw 
-  // confetti on the first camera110
+  // confetti on the first tileView
   *(undefined4 *)(puVar2 + 0x2558) = 0;
   
   *(undefined2 *)(puVar2 + 0x1b04) = 200;
@@ -5011,7 +5011,7 @@ LAB_800b821c:
   // CAM_Path_Move
   FUN_80018ba0((int)sVar4,&local_58,&local_50,auStack72);
   
-  // set position and rotation to camera110
+  // set position and rotation to tileView
   *puVar6 = local_58;
   *(undefined2 *)(puVar2 + 0x16a) = local_56;
   *(undefined2 *)(puVar2 + 0x16c) = local_54;
@@ -5592,7 +5592,7 @@ void FUN_800b8f8c(void)
     *(undefined4 *)(PTR_DAT_8008d2ac + 0x2568) = 1;
 	
 	// Set winnerIndex[0] to 0, to draw 
-	// confetti on the first camera110
+	// confetti on the first tileView
     *(undefined4 *)(puVar2 + 0x2558) = 0;
 	
     *(undefined2 *)(puVar2 + 0x1b04) = 0xfa;
@@ -5645,7 +5645,7 @@ void FUN_800b8f8c(void)
 	// 2D instance
     *(uint *)(iVar5 + 0x28) = *(uint *)(iVar5 + 0x28) | 0x400;
 	
-	// camera110_UI
+	// tileView_UI
     *(undefined **)(iVar5 + 0x74) = puVar2 + 5000;
 	
     puVar3 = PTR_DAT_8008d2ac;

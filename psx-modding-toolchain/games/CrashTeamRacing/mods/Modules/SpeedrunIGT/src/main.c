@@ -248,8 +248,8 @@ void DrawIGT()
   if (sdata->Loading.stage >= 1) return;
 
   gGT = sdata->gGT;
-  backupOT = gGT->camera110_UI.ptrOT;
-  gGT->camera110_UI.ptrOT = gGT->ot_camera110_UI[gGT->swapchainIndex];
+  backupOT = gGT->tileView_UI.ptrOT;
+  gGT->tileView_UI.ptrOT = gGT->ot_tileView_UI[gGT->swapchainIndex];
 
   if (igt->splitFadeTimer > 0)
   {
@@ -265,7 +265,7 @@ void DrawIGT()
       DecalFont_DrawLine(s_totalTime, 256, 8, 2, ND_Orange | 0x8000);
 
   // restore OT
-  gGT->camera110_UI.ptrOT = backupOT;
+  gGT->tileView_UI.ptrOT = backupOT;
 }
 
 void SerializeSplits(char deserialize)

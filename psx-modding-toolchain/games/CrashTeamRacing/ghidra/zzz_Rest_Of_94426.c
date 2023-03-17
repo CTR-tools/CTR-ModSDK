@@ -203,8 +203,8 @@ struct DRAWENV {
 // THREAD:			80041dc0 - 800426f7
 
 
-// Camera110_Init
-// param_1 - camera110
+// TileView_Init
+// param_1 - tileView
 // param_2 - cameraID
 // param_3 - total number cameras
 void FUN_800426f8(int param_1,int param_2,int param_3)
@@ -258,7 +258,7 @@ void FUN_800426f8(int param_1,int param_2,int param_3)
 
 	  // If current player is P2
 
-	  // camera110 dimensions
+	  // tileView dimensions
 	  // Assume +1c is 0
       *(undefined2 *)(param_1 + 0x1e) = 0x6e;
       *(undefined2 *)(param_1 + 0x20) = 0x200;
@@ -281,7 +281,7 @@ LAB_80042810:
 
 	// If current player is P1
 
-	// camera110 dimensions
+	// tileView dimensions
 	// assume +0x1e and +1c is 0
     *(undefined2 *)(param_1 + 0x20) = 0x200;
     *(undefined2 *)(param_1 + 0x22) = 0x6a;
@@ -307,7 +307,7 @@ LAB_80042810:
         return;
       }
 
-	  // camera110 dimensions for Player 1 in 1P mode
+	  // tileView dimensions for Player 1 in 1P mode
       *(undefined2 *)(param_1 + 0x20) = 0x200;
       *(undefined2 *)(param_1 + 0x22) = 0xd8;
 
@@ -328,7 +328,7 @@ LAB_80042810:
 	  // Player 2 in 3P/4P mode
       if (param_2 == 1)
 	  {
-		// camera110 dimensions
+		// tileView dimensions
         // assume +1e is zero
 		*(undefined2 *)(param_1 + 0x1c) = 0x103;
         *(undefined2 *)(param_1 + 0x20) = 0xfd;
@@ -353,7 +353,7 @@ LAB_80042810:
 		  // If this is P4
           if (param_2 == 3)
 		  {
-			// camera110 dimensions for P4 in 4P mode
+			// tileView dimensions for P4 in 4P mode
             *(undefined2 *)(param_1 + 0x1c) = 0x103;
             *(undefined2 *)(param_1 + 0x1e) = 0x6e;
             *(undefined2 *)(param_1 + 0x20) = 0xfd;
@@ -375,7 +375,7 @@ LAB_80042810:
           return;
         }
 
-		// camera110 dimensions for P3 in 3P/4P mode
+		// tileView dimensions for P3 in 3P/4P mode
         // Assume +1c is zero
 		*(undefined2 *)(param_1 + 0x1e) = 0x6e;
         *(undefined2 *)(param_1 + 0x20) = 0xfd;
@@ -432,7 +432,7 @@ LAB_800427a4:
 }
 
 
-// Camera110_InitPsyqGeom
+// TileView_SetPsyqGeom
 void FUN_80042910(int param_1)
 
 {
@@ -454,7 +454,7 @@ void FUN_80042910(int param_1)
 }
 
 
-// Camera110_SetDrawEnv_DecalMP
+// TileView_SetDrawEnv_DecalMP
 // param1 - ptrOT
 // param2 - gGT->backbuffer
 // param3 - RECT
@@ -579,9 +579,9 @@ void FUN_80042974(void *param_1,undefined4 *param_2,undefined2 *param_3,undefine
   return;
 }
 
-// Camera110_SetDrawEnv_Normal
+// TileView_SetDrawEnv_Normal
 // param1 otmem
-// param2 camera110
+// param2 tileView
 // param3 backbuffer
 void FUN_80042a8c(void *param_1,int param_2,undefined4 *param_3,short *param_4,undefined param_5)
 
@@ -641,22 +641,22 @@ void FUN_80042a8c(void *param_1,int param_2,undefined4 *param_3,short *param_4,u
   // always zero?
   if (param_4 == (short *)0x0)
   {
-	// XXX + camera110->rect.x
+	// XXX + tileView->rect.x
     local_70._0_2_ = (short)local_70 + *(short *)(param_2 + 0x1c);
 
-	// XXX + camera110->rect.y
+	// XXX + tileView->rect.y
     local_70._2_2_ = local_70._2_2_ + *(short *)(param_2 + 0x1e);
 
-	// camera110->rect.w
+	// tileView->rect.w
     local_6c = *(short *)(param_2 + 0x20);
 
-	// camera110->rect.h
+	// tileView->rect.h
     sStack106 = *(short *)(param_2 + 0x22);
 
-	// XXX + camera110->rect.x
+	// XXX + tileView->rect.x
     local_68 = local_68 + *(short *)(param_2 + 0x1c);
 
-	// XXX + camera110->rect.y
+	// XXX + tileView->rect.y
     sStack102 = sStack102 + *(short *)(param_2 + 0x1e);
   }
 
@@ -707,8 +707,8 @@ void FUN_80042a8c(void *param_1,int param_2,undefined4 *param_3,short *param_4,u
   return;
 }
 
-// Camera110_SetViewMatrix -- CameraMatrix, and ViewProj
-// param1 is Camera110
+// TileView_SetMatrixVP -- CameraMatrix, and ViewProj
+// param1 is TileView
 void FUN_80042c04(short *param_1)
 
 {
@@ -728,7 +728,7 @@ void FUN_80042c04(short *param_1)
   uint uVar14;
   uint uVar15;
 
-  // camera110 rotation
+  // tileView rotation
   DAT_1f8003f4 = param_1[3];
   DAT_1f8003f6 = param_1[4];
   DAT_1f8003f8 = param_1[5];
@@ -829,7 +829,7 @@ void FUN_80042c04(short *param_1)
 }
 
 
-// Camera110_SetFrustumPlane
+// TileView_SetFrustumPlane
 // param_3 = cameraPos (x,y,z)
 uint FUN_80042e50(undefined2 *param_1,short *param_2,short *param_3,short *param_4)
 {
@@ -942,8 +942,8 @@ uint FUN_80042e50(undefined2 *param_1,short *param_2,short *param_3,short *param
 
 // WARNING: Could not reconcile some variable overlaps
 
-// Camera110_UpdateFrustum
-// param_1 is Camera110
+// TileView_UpdateFrustum
+// param_1 is TileView
 void FUN_800430f0(short *param_1)
 
 {
@@ -978,7 +978,7 @@ void FUN_800430f0(short *param_1)
   int local_3c;
   int local_38;
 
-  // Camera110_SetViewMatrix
+  // TileView_SetMatrixVP
   FUN_80042c04(param_1);
 
   // disable the rest of the function by setting
@@ -1009,7 +1009,7 @@ void FUN_800430f0(short *param_1)
   // bitwise
   uVar5 = (iVar9 - (iVar4 >> 0x1f) >> 1) << 0x10;
   
-  // camera110 0x18, distToScreen
+  // tileView 0x18, distToScreen
   iVar24 = *(int *)(param_1 + 0xc);
   
   // first "do" loop iteration
@@ -1064,7 +1064,7 @@ void FUN_800430f0(short *param_1)
     }
 	
 	// this is ViewProj matrix, loaded into GTE
-	// from end of Camera110_SetViewMatrix (called earlier)
+	// from end of TileView_SetMatrixVP (called earlier)
 	read_mt(iVar10,iVar13,iVar16);
     
 	// result of read_mt, plus cameraPos (x,y,z),
@@ -1230,7 +1230,7 @@ void FUN_800430f0(short *param_1)
   // discovery for widescreen, so that polygons aren't
   // clipped outside of original 4:3 viewport
 
-  // Camera110_SetFrustumPlane (x4)
+  // TileView_SetFrustumPlane (x4)
   
   // these are four corners, two corners per func call,
   // combined with camera position, is used to make a plane
@@ -1317,7 +1317,7 @@ void FUN_800430f0(short *param_1)
 }
 
 
-// Camera110_FadeOneWindow
+// TileView_FadeOneWindow
 void FUN_80043928(int param_1)
 
 {
@@ -1327,7 +1327,7 @@ void FUN_80043928(int param_1)
   int iVar4;
   void *p;
 
-  // if camera110->fadeFromBlack_currentValue
+  // if tileView->fadeFromBlack_currentValue
   // is not 0x1000, which means there must be
   // some amount of fading
   if (*(short *)(param_1 + 0x12) != 0x1000)
@@ -1424,7 +1424,7 @@ void FUN_80043928(int param_1)
 }
 
 
-// Camera110_FadeAllWindows
+// TileView_FadeAllWindows
 void FUN_80043ab8(void)
 
 {
@@ -1437,7 +1437,7 @@ void FUN_80043ab8(void)
   // if numPlyrCurrGame is not zero
   if (PTR_DAT_8008d2ac[0x1ca8] != '\0')
   {
-	// offset of 8008d2ac for camera110 buffers
+	// offset of 8008d2ac for tileView buffers
     iVar2 = 0x168;
 
 	// for(int iVar1 = 0; iVar1 < numPlyrCurrGame; iVar1++)
@@ -1445,21 +1445,21 @@ void FUN_80043ab8(void)
 	{
       // add fade quad for current camera
 
-	  // Camera110_FadeOneWindow
-	  // pointer to camera110 buffer
+	  // TileView_FadeOneWindow
+	  // pointer to tileView buffer
       FUN_80043928(PTR_DAT_8008d2ac + iVar2);
 
 	  // increment loop counter
       iVar1 = iVar1 + 1;
 
-	  // increment offset to next camera110 buffer
+	  // increment offset to next tileView buffer
       iVar2 = iVar2 + 0x110;
 
 						// numPlyrCurrGame
     } while (iVar1 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8]);
   }
 
-  // Camera110_FadeOneWindow
+  // TileView_FadeOneWindow
   // add quad for UI camera
   FUN_80043928(PTR_DAT_8008d2ac + 5000);
   return;
@@ -1885,7 +1885,7 @@ int FUN_800440a0(void)
             DAT_8008d444 = 0;
             DAT_8008d446 = 300;
 
-			// pointer to Camera110->OTMem (25c-168=0xf4)
+			// pointer to TileView->OTMem (25c-168=0xf4)
             return *(int *)(PTR_DAT_8008d2ac + 0x25c) + 0xffc;
           }
 
@@ -3010,7 +3010,7 @@ void FUN_8004568c(undefined4 param_1,short param_2,int param_3,uint param_4,shor
 
 // Draw 2D Menu rectangle background
 // param1 is a pointer to RECT (x,y,w,h)
-// param2 is type of camera110
+// param2 is type of tileView
 	// 0: transparent, like main menu
 	// 1: Black, like "gamepad unplugged"
 void FUN_800457b0(undefined4 *param_1,ushort param_2,undefined4 param_3)
@@ -5675,7 +5675,7 @@ void FUN_800485cc(uint param_1)
           }
           puVar4 = PTR_DAT_8008d2ac;
 
-		  // instance -> InstDrawPerPlayer[0].camera110 = Camera110_UI
+		  // instance -> InstDrawPerPlayer[0].tileView = TileView_UI
           *(undefined **)(iVar5 + 0x74) = PTR_DAT_8008d2ac + 5000;
 
 		  iVar8 = 1;
@@ -5691,7 +5691,7 @@ void FUN_800485cc(uint param_1)
 			  // loop index
               iVar8 = iVar8 + 1;
 			  
-			  // erase camera110
+			  // erase tileView
               *(undefined4 *)(iVar5 + (iVar7 >> 0x10) * 0x88 + 0x74) = 0;
 			  
               iVar7 = iVar8 * 0x10000;
@@ -9592,7 +9592,7 @@ LAB_8004ccc8:
         }
       }
 
-	  // if no camera110 is supplied
+	  // if no tileView is supplied
 	  if (param_5 == 0)
 	  {
         psVar11 = (short *)(puVar8 + param_3 * 8);
@@ -9608,13 +9608,13 @@ LAB_8004ccc8:
 		*(int *)(iVar13 + 0x4c) = (int)psVar11[2];
       }
 
-	  // if camera110 is supplied
+	  // if tileView is supplied
       else
 	  {
-		// instance->camera110
+		// instance->tileView
         *(int *)(iVar13 + 0x74) = param_5;
 
-		// record that camera110 is present
+		// record that tileView is present
 		*(uint *)(iVar13 + 0x28) = *(uint *)(iVar13 + 0x28) | 0x100;
 
         *(undefined4 *)(iVar13 + 0x44) = 0;
@@ -9805,7 +9805,7 @@ void FUN_8004cec4(void)
       DAT_8008d4b4 = &DAT_8009ad18;
     }
 	
-	// second half of pixel-LOD camera110, copy from Camera110_UI
+	// second half of pixel-LOD tileView, copy from TileView_UI
     DAT_8009ad40 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x13b0);
     DAT_8009ad44 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x13b4);
     DAT_8009ad48 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x13b8);
@@ -9815,7 +9815,7 @@ void FUN_8004cec4(void)
     DAT_8009ad58 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x13c8);
     DAT_8009ad5c = *(undefined4 *)(PTR_DAT_8008d2ac + 0x13cc);
 	
-	// first half of pixel-LOD camera110, copy from Camera110_UI
+	// first half of pixel-LOD tileView, copy from TileView_UI
     DAT_8009ad18 = *(undefined2 *)(PTR_DAT_8008d2ac + 5000); // 0x1388
     DAT_8009ad1a = *(undefined2 *)(PTR_DAT_8008d2ac + 0x138a);
     DAT_8009ad1c = *(undefined2 *)(PTR_DAT_8008d2ac + 0x138c);
@@ -11605,7 +11605,7 @@ void FUN_8004f9d8(int param_1)
 
   puVar5 = PTR_DAT_8008d2ac + uVar9 * 0x110;
 
-  // camera110 ViewProj
+  // tileView ViewProj
   r0 = (MATRIX *)(PTR_DAT_8008d2ac + uVar6 * 0x110 + 0x168 + 0x28);
   gte_SetRotMatrix(r0);
   gte_SetTransMatrix(r0);
@@ -11862,7 +11862,7 @@ LAB_8004fe8c:
 						// something with Z position
   local_2c = local_2c & 0xffff0000 | (uint)*(ushort *)(*(int *)(param_1 + 0x1c) + 0x4c);
 
-  // camera110 ViewProj
+  // tileView ViewProj
   r0 = (MATRIX *)(PTR_DAT_8008d2ac + uVar19 * 0x110 + 0x168 + 0x28);
   gte_SetRotMatrix(r0);
   gte_SetTransMatrix(r0);
@@ -12470,7 +12470,7 @@ LAB_800508ec:
   // if timer is not finished
   if (*(int *)(param_4 + 0x4b0) != 0)
   {
-	// 4b4 and 4b6 are WindowStartPos(x,y) from Camera110, inside Driver
+	// 4b4 and 4b6 are WindowStartPos(x,y) from TileView, inside Driver
     FUN_8004ec18(&local_20,(int)*(short *)(param_4 + 0x4b4),(int)*(short *)(param_4 + 0x4b6),
                  (int)param_1,(int)param_2,*(undefined4 *)(param_4 + 0x4b0),5);
 
@@ -14394,7 +14394,7 @@ LAB_80053260:
         if ((*(uint *)PTR_DAT_8008d2ac & 0xf) == 0)
 		{
 		  // Player / AI structure + 0x4a shows driver index (0-7)
-		  // This is a pointer to each player's camera110 buffer
+		  // This is a pointer to each player's tileView buffer
           puVar8 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar19 + 0x4a) * 0x110 + 0x168;
 
 		  // if "Time on clock" last 0xXX byte is greater than 0x80 and less than 0xFF
@@ -14620,7 +14620,7 @@ LAB_80053584:
 		  // print "-x" where x is the amount of seconds
           sprintf(acStack80,&DAT_8008d530,*(undefined4 *)(PTR_DAT_8008d2ac + 0x1e24));
 
-		  // 4b4 and 4b6 are WindowStartPos(x,y) from Camera110, inside Driver
+		  // 4b4 and 4b6 are WindowStartPos(x,y) from TileView, inside Driver
           FUN_8004ec18(&local_60,(int)*(short *)(iVar19 + 0x4b4),(int)*(short *)(iVar19 + 0x4b6),
                        0x14,8,*(undefined4 *)(iVar19 + 0x4b0),10);
 
@@ -15275,7 +15275,7 @@ LAB_80054040:
 	  // pointer to array of pointers for each driver (9900C, 99010, etc)
       iVar4 = *(int *)(PTR_DAT_8008d2ac + iVar7 + 0x24ec);
 
-	  // pointer to each player's camera110 buffer
+	  // pointer to each player's tileView buffer
       puVar8 = PTR_DAT_8008d2ac + (uint)*(byte *)(iVar4 + 0x4a) * 0x110 + 0x168;
 
       if (
@@ -15313,11 +15313,11 @@ LAB_80054040:
 
 		  // Position is the same regardless of win or lose
 
-		  // Midpoint between camera110 Start X and End X
+		  // Midpoint between tileView Start X and End X
           iVar13 = (uint)*(ushort *)(puVar8 + 0x1c) +
                    ((int)((uint)*(ushort *)(puVar8 + 0x20) << 0x10) >> 0x11);
 
-		  // Midpoint between camera110 Start Y and End Y
+		  // Midpoint between tileView Start Y and End Y
           iVar16 = (uint)*(ushort *)(puVar8 + 0x1e) +
                    ((int)((uint)*(ushort *)(puVar8 + 0x22) << 0x10) >> 0x11);
 
@@ -15331,11 +15331,11 @@ LAB_80054040:
 		{
 		  // Position is the same regardless of win or lose
 
-		  // Midpoint between camera110 Start X and End X
+		  // Midpoint between tileView Start X and End X
           iVar13 = (uint)*(ushort *)(puVar8 + 0x1c) +
                    ((int)((uint)*(ushort *)(puVar8 + 0x20) << 0x10) >> 0x11);
 
-		  // Midpoint between camera110 Start Y and End Y
+		  // Midpoint between tileView Start Y and End Y
           iVar16 = (uint)*(ushort *)(puVar8 + 0x1e) +
                    ((int)((uint)*(ushort *)(puVar8 + 0x22) << 0x10) >> 0x11);
 
@@ -15634,7 +15634,7 @@ void FUN_8005465c(int param_1)
   {
 	// called once to draw all wumpas
 
-	// Camera110_SetDrawEnv_DecalMP
+	// TileView_SetDrawEnv_DecalMP
     FUN_80042974(
 					*(undefined4 *)(DAT_8008d4b4 + 0xf8),
 
@@ -15692,7 +15692,7 @@ void FUN_8005465c(int param_1)
 						// wumpaHudPosX
 						*(short *)(puVar5 + 0x18) +
 
-						// Camera110 rect.x
+						// TileView rect.x
 						*(short *)(DAT_8008d4b4 + 0x1c)
 				  ) -
                   ((short)*(ushort *)(puVar9 + 1) >> 1);
@@ -15701,7 +15701,7 @@ void FUN_8005465c(int param_1)
 						// wumpaHudPosY
 						*(short *)(puVar5 + 0x1a) +
 
-						// Camera110 rect.y
+						// TileView rect.y
 						*(short *)(DAT_8008d4b4 + 0x1e)
 				  ) -
                   ((short)*(ushort *)((int)puVar9 + 6) >> 1);
@@ -16261,7 +16261,7 @@ void FUN_800550f4(void)
 	// loop through all threads
     do
 	{
-	  // Dimensions of each player's camera110
+	  // Dimensions of each player's tileView
 	  // PosX, PosY, Width, Height
 	  // (rewritten order for simplicity)
       uVar1 = puVar8[-3];
@@ -16319,10 +16319,10 @@ void FUN_800550f4(void)
 					// The string to print
 					pcVar6,
 
-					// X-position of camera110, plus 50% of width
+					// X-position of tileView, plus 50% of width
 					((int)(short)uVar1 + ((int)((uint)uVar3 << 0x10) >> 0x11)) * 0x10000 >> 0x10,
 
-					// Y-position of camera110, plus 12% of height
+					// Y-position of tileView, plus 12% of height
                     ((int)(short)uVar2 + ((int)((uint)uVar4 << 0x10) >> 0x13)) * 0x10000 >> 0x10,
 
 					0,3,0xffff8000,4);
@@ -16334,7 +16334,7 @@ void FUN_800550f4(void)
 	  // next player thread
       iVar9 = *(int *)(iVar9 + 0x10);
 
-	  // Go to next camera110
+	  // Go to next tileView
       puVar8 = puVar8 + 0x88;
 
     } while (iVar9 != 0);
@@ -16405,7 +16405,7 @@ void FUN_800552a4(void)
 	  // flags, for which players have pressed X to continue
       pbVar10 = &DAT_8008d564 + iVar13;
 
-	  // Pointer to each camera110 struct ???
+	  // Pointer to each tileView struct ???
 	  puVar12 = PTR_DAT_8008d2ac + (iVar7 + iVar13) * 0x10 + 0x168;
 
 	  // Pointer to each player (9900C, 99010, etc)
@@ -16457,7 +16457,7 @@ void FUN_800552a4(void)
 		  // ivar9 0x158: HIT YOU
           FUN_80022878(*(undefined4 *)(iVar9 * 4 + DAT_8008d878),
 
-						// Midpoint between camera110 Start X and End X
+						// Midpoint between tileView Start X and End X
                        (int)(((uint)*(ushort *)(puVar12 + 0x1c) +
                        ((int)((uint)*(ushort *)(puVar12 + 0x20) << 0x10) >> 0x11)) * 0x10000) >> 0x10,
 
@@ -18403,10 +18403,10 @@ void FUN_8005741c(int param_1,undefined4 param_2,SVECTOR *param_3)
     r0_00 = aMStack120;
     r0 = local_38;
 
-	// offset of 8008d2ac for camera110 buffers
+	// offset of 8008d2ac for tileView buffers
 	iVar7 = 0x168;
 
-	// offset in camera110 buffer array (0 for p1, 0x110 for p2, etc)
+	// offset in tileView buffer array (0 for p1, 0x110 for p2, etc)
     iVar6 = 0;
 
     puVar2 = PTR_DAT_8008d2ac;
@@ -18415,13 +18415,13 @@ void FUN_8005741c(int param_1,undefined4 param_2,SVECTOR *param_3)
 	// for iVar6 = 0; iVar6 < numPlyrCurrGame; iVar6++
     do
 	{
-	  // pointer to start of camera110 buffer array
+	  // pointer to start of tileView buffer array
       psVar1 = (short *)(puVar2 + iVar7);
 
 	  // Genius idea from Naughty Dog:
 	  // Transpose-View + Vec3-Inverted = Inverse-Transpose-View + Vec3.
 
-	  // camera110 offset 0x68, CameraMatrix
+	  // tileView offset 0x68, CameraMatrix
       gte_SetLightMatrix((MATRIX *)((int)psVar1 + iVar6 + 0x68));
 
 	  // param_3 = inverted specular light vector 
@@ -18478,12 +18478,12 @@ void FUN_8005741c(int param_1,undefined4 param_2,SVECTOR *param_3)
 
       puVar2 = PTR_DAT_8008d2ac;
 
-	  // next camera110
+	  // next tileView
 	  iVar7 = iVar7 + 0x110;
 
 	  *(undefined2 *)(param_1 + 0xf4) = *(undefined2 *)(puVar8 + 0x50);
 
-	  // next camera110
+	  // next tileView
 	  iVar6 = iVar6 + 0x110;
 
       *(undefined2 *)(param_1 + 0xf6) = *(undefined2 *)(puVar8 + 0x52);
@@ -18550,7 +18550,7 @@ void FUN_800576b8(int param_1,undefined4 param_2,SVECTOR *param_3)
 	// for iVar3 = 0; iVar3 < numPlyrCurrGame; iVar3++
     do
 	{
-	  // pointer to camera110 buffer
+	  // pointer to tileView buffer
       psVar1 = (short *)(puVar2 + iVar5);
 
 	  // direction vector from object to camera
@@ -18581,7 +18581,7 @@ void FUN_800576b8(int param_1,undefined4 param_2,SVECTOR *param_3)
       puVar2 = PTR_DAT_8008d2ac;
       *(undefined2 *)(param_1 + 0xf4) = *(undefined2 *)(puVar7 + 0x50);
 
-	  // increment offset to next camera110 buffer
+	  // increment offset to next tileView buffer
 	  iVar5 = iVar5 + 0x110;
 
 	  *(undefined2 *)(param_1 + 0xf6) = *(undefined2 *)(puVar7 + 0x52);
@@ -22735,7 +22735,7 @@ void FUN_8005b720(void)
       r0_00 = (SVECTOR *)(puVar23 + 0x12);
       uVar21 = 1;
 	  
-	  // camera110 offset 0x38
+	  // tileView offset 0x38
       puVar26 = (undefined2 *)(puVar1 + iVar4 * 0x110 + 0x1a0);
 	  
       do {
@@ -23116,7 +23116,7 @@ void FUN_8005c278(short *param_1,short *param_2,short *param_3,short *param_4)
 
 // draws skidmarks
 // param_1 - thread pointer (player or robot)
-// param_2 - camera110 pointer
+// param_2 - tileView pointer
 void FUN_8005c354(undefined4 param_1,int param_2)
 
 {
@@ -23151,7 +23151,7 @@ void FUN_8005c354(undefined4 param_1,int param_2)
   DAT_1f8000c0 = 0;
   DAT_1f800018 = param_2;
   
-  // camera110 offset 0x28, ViewProj
+  // tileView offset 0x28, ViewProj
   gte_SetRotMatrix((MATRIX *)(param_2 + 0x28));
   gte_SetTransVector((VECTOR *)&DAT_1f8000b8);
   
@@ -31095,7 +31095,7 @@ LAB_800647d8:
 	// camera index depending on player
     puVar5 = PTR_DAT_8008d2ac + (uint)*(byte *)(param_3 + 0x4a) * 0x110;
 
-	// camera110 ViewProj
+	// tileView ViewProj
 	gte_SetRotMatrix(puVar5 + 0x168 + 0x28);
 	gte_SetTransMatrix(puVar5 + 0x168 + 0x28);
     
@@ -31503,7 +31503,7 @@ int FUN_80064f94(int param_1)
   // driver -> instance -> thread -> modelIndex == "player" of any kind
   if (*(short *)(*(int *)(*(int *)(param_1 + 0x1c) + 0x6c) + 0x44) == 0x18)
   {
-	// camera110 ViewProj
+	// tileView ViewProj
     pMVar3 = (MATRIX *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0x110 + 0x168 + 0x28);
     gte_SetRotMatrix(pMVar3);
     gte_SetTransMatrix(pMVar3);
@@ -31608,7 +31608,7 @@ int FUN_80064f94(int param_1)
 				(
 					(int)*(short *)(puVar9 + 0x60) <
 
-					// camera110[driverID]->0x20 (rect.w)
+					// tileView[driverID]->0x20 (rect.w)
 					*(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0x110 + 0x188) + -0x1e &&
 
 					(
@@ -31619,7 +31619,7 @@ int FUN_80064f94(int param_1)
 								(
 									(int)*(short *)((int)r0 + 2) <
 
-									// camera110[driverID]->0x22 (rect.h)
+									// tileView[driverID]->0x22 (rect.h)
 									*(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0x110 + 0x18a) + -0x14
 								)
 							) &&
@@ -32211,7 +32211,7 @@ LAB_800659ec:
 
 	// Play potion sound,
 	// volume depends on disatnce
-	// between instance and nearest camera110
+	// between instance and nearest tileView
     FUN_8002f0dc(0x52,iVar5);
 
 	// If this is human and not AI
@@ -32439,7 +32439,7 @@ LAB_800659ec:
 
 	// Play potion sound,
 	// volume depends on distance
-	// between instance and nearest camera110
+	// between instance and nearest tileView
     FUN_8002f0dc(0x52,iVar5);
 
 	// If this is human and not AI
@@ -32767,7 +32767,7 @@ LAB_800659ec:
 
 	// Play warpball spawn sound,
 	// volume depends on distance
-	// between instance and nearest camera110
+	// between instance and nearest tileView
     FUN_8002f0dc(0x4d,iVar5);
 
 	// If this is human and not AI
@@ -33906,24 +33906,24 @@ void FUN_800675c0(undefined4 param_1,int param_2)
     RotTrans(&local_38,(VECTOR *)&local_30,alStack32);
     puVar2 = PTR_DAT_8008d2ac;
 
-	// camera110->posX
+	// tileView->posX
     *(undefined2 *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_2 + 0x4a) * 0x110 + 0x168) =
          (undefined2)local_30;
 
-	// camera110->posY
+	// tileView->posY
 	*(short *)(puVar2 + (uint)*(byte *)(param_2 + 0x4a) * 0x110 + 0x16a) =
 
 		// driverY + 0xc0
          *(short *)(iVar4 + 0x48) + 0xc0;
 
-	// camera110->posZ
+	// tileView->posZ
     *(undefined2 *)(puVar2 + (uint)*(byte *)(param_2 + 0x4a) * 0x110 + 0x16c) =
 		(undefined2)local_28;
 
 	// cameraX = cameraX - driverX
     local_30 = local_30 - *(int *)(iVar4 + 0x44);
 
-	// get camera110->rotX
+	// get tileView->rotX
     sVar1 = *(short *)(puVar2 + (uint)*(byte *)(param_2 + 0x4a) * 0x110 + 0x16a);
 
 	// driverZ
@@ -33935,7 +33935,7 @@ void FUN_800675c0(undefined4 param_1,int param_2)
 	// get direction from camera to driver
     x = ratan2(local_30,local_28);
 
-	// camera110-> ??? right after rotZ
+	// tileView-> ??? right after rotZ
     *(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_2 + 0x4a) * 0x110 + 0x170) = (short)x;
 
 	// get distance between car and camera
@@ -34868,19 +34868,19 @@ void FUN_80068644(int param_1,int param_2)
   undefined *puVar20;
   int local_30;
 
-  // pointer to each player's camera110 buffer
+  // pointer to each player's tileView buffer
   puVar20 = PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0x110 + 0x168;
 
-  // set several camera110 buffer variables to coprocessor
+  // set several tileView buffer variables to coprocessor
   gte_SetRotMatrix(puVar20 + 0x28);
   gte_SetTransMatrix(puVar20 + 0x28);
 
-  // handle some camera110 buffer variables in RAM
+  // handle some tileView buffer variables in RAM
   sVar1 = *(short *)(puVar20 + 0x48);
   sVar2 = *(short *)(puVar20 + 0x4e);
   uVar3 = *(ushort *)(puVar20 + 0x54);
 
-  // handle some camera110 buffer variables in scratchpad
+  // handle some tileView buffer variables in scratchpad
   DAT_1f8001c0 = (undefined2)((int)sVar1 + (int)*(short *)(puVar20 + 0x4a) >> 5);
   DAT_1f8001c2 = (undefined2)
                  ((int)*(short *)(puVar20 + 0x4e) + (int)*(short *)(puVar20 + 0x50) >> 5);
@@ -35583,7 +35583,7 @@ void FUN_80069284(int param_1)
 		// for iVar8 = 0; iVar8 < numPlyrCurrGame; iVar8++
         do
 		{
-		  // if camera110 does not exist ?
+		  // if tileView does not exist ?
 		  // judging by 0x28 being copied to 0xb8 ?
           if ((*(uint *)(iVar4 + 0xb8) & 0x100) == 0)
 		  {
@@ -35954,7 +35954,7 @@ LAB_80069b50:
 
 // draws level skybox
 // param_1 - lev ptr_skybox
-// param_2 - camera110
+// param_2 - tileView
 // param_3 - primMem
 void FUN_80069bb0(int param_1,int param_2,int param_3)
 
@@ -35980,7 +35980,7 @@ void FUN_80069bb0(int param_1,int param_2,int param_3)
   // level ptr_skybox
   if (param_1 != 0) 
   {
-	// camera110 ViewProj
+	// tileView ViewProj
     gte_ldR11R12(*(undefined4 *)(param_2 + 0x28));
     gte_ldR13R21(*(undefined4 *)(param_2 + 0x2c));
     gte_ldR22R23(*(undefined4 *)(param_2 + 0x30));
@@ -36019,9 +36019,9 @@ void FUN_80069bb0(int param_1,int param_2,int param_3)
 // draws skybox segment
 // every skybox is splitted in 8 segments, only 4 are drawn at a time
 // param_1 - lev ptr_skybox
-// param_2 - camera110
+// param_2 - tileView
 // param_3 - primMem
-// param_4 - camera110->ptrOT
+// param_4 - tileView->ptrOT
 void FUN_80069cc4(undefined4 param_1,undefined4 param_2,undefined4 param_3,int param_4)
 {
   bool bVar1;
@@ -36309,7 +36309,7 @@ void FUN_80069f94(void)
 
 
 // Draw Confetti
-// param1 - cam110
+// param1 - tileView
 // param2 - primMem
 // param3 - &gGT->confetti
 // param4 - frame timer
@@ -36709,17 +36709,17 @@ code_r0x8006a52c:
 
 	  if (iVar7 == 0) break;
 
-	  // instance -> camera110
+	  // instance -> tileView
       iVar10 = *(int *)(iVar12 + 0x74);
 	  
       iVar15 = *(int *)(in_at + 8);
       *(int *)(in_at + 0x10) = iVar7;
       *(int *)(in_at + 8) = iVar10;
       
-	  // if not the same camera110 as previous instance
+	  // if not the same tileView as previous instance
 	  if (iVar10 != iVar15) 
 	  {
-		// take camera110 width, height,
+		// take tileView width, height,
 		// and distToScreen, put them all in GTE,
 		// and scratchpad
 		
@@ -37103,7 +37103,7 @@ void FUN_8006aaa8(int *param_1,int param_2)
     *(int *)(iVar7 + 0x10) = iVar19;
     *(int *)(iVar7 + 8) = iVar9;
 	
-	// camera110
+	// tileView
     if (iVar9 != iVar13) 
 	{
 	  // width, height, distToScreen
@@ -37505,7 +37505,7 @@ code_r0x8006b030:
       *(int *)(in_at + 0x10) = iVar8;
       *(int *)(in_at + 8) = iVar10;
 	  
-	  // camera110
+	  // tileView
       if (iVar10 != iVar12) 
 	  {
 		// width, height, distToScreen
@@ -38000,7 +38000,7 @@ code_r0x8006bbc0:
       *(int *)(in_at + 0x10) = iVar11;
       *(int *)(in_at + 8) = iVar7;
 	  
-	  // camera110
+	  // tileView
       if (iVar7 != iVar12) 
 	  {
 		// width, height, distToScreen
@@ -38998,7 +38998,7 @@ void FUN_8006c984(void)
         *(int *)(in_at + 0x10) = iVar19;
         *(int *)(in_at + 8) = iVar6;
 		
-		// camera110
+		// tileView
         if (iVar6 != iVar11) 
 		{
 		  // width, height, distToScreen
@@ -39168,17 +39168,17 @@ code_r0x8006c9c4:
       *(int **)(in_at + 4) = piVar11 + 2;
       if (iVar12 == 0) break;
 	  
-	  // instance -> camera110
+	  // instance -> tileView
       iVar7 = *(int *)(iVar15 + 0x74);
 	  
       iVar13 = *(int *)(in_at + 8);
       *(int *)(in_at + 0x10) = iVar12;
       *(int *)(in_at + 8) = iVar7;
 	  
-	  // if this camera110 is not previous
+	  // if this tileView is not previous
       if (iVar7 != iVar13) 
 	  {
-		// camera110 width, height, distToScreen
+		// tileView width, height, distToScreen
         sVar3 = *(short *)(iVar7 + 0x20);
         sVar4 = *(short *)(iVar7 + 0x22);
         uVar9 = *(undefined4 *)(iVar7 + 0x18);
@@ -40055,7 +40055,7 @@ void FUN_8006db7c(undefined4 param_1,undefined4 param_2,int *param_3,short param
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
 // RedBeaker_RenderRain
-// param1 - camera110
+// param1 - tileView
 // param2 - primMem
 // param3 - rainPool
 // param4 - numPlyrCurrGame
@@ -40127,7 +40127,7 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
     DAT_1f800030 = 0x2000080;
     do 
 	{
-	  // camera110 ViewProj
+	  // tileView ViewProj
       gte_ldR11R12(*(undefined4 *)(param_1 + 0x28));
       gte_ldR13R21(*(undefined4 *)(param_1 + 0x2c));
       gte_ldR22R23(*(undefined4 *)(param_1 + 0x30));
@@ -40323,7 +40323,7 @@ void FUN_8006dc30(int param_1,int param_2,int param_3,int param_4,int param_5)
 //apparently this function renders stars in various levels, i.e. cutsenes, nd box, oxide station.
 //https://media.discordapp.net/attachments/637616020177289236/823950457101221988/unknown.png
 
-// param1 - camera110
+// param1 - tileView
 // param2 - PrimMem
 // param3 - numStars
 // param4 - numPlyrCurrGame
@@ -40383,7 +40383,7 @@ void FUN_8006e26c(int param_1,int param_2,ushort *param_3,int param_4)
   DAT_1f80002c = unaff_retaddr;
   do
   {
-	// camera110 matrix 0x28
+	// tileView matrix 0x28
     gte_ldR11R12(*(undefined4 *)(param_1 + 0x28));
     gte_ldR13R21(*(undefined4 *)(param_1 + 0x2c));
     gte_ldR22R23(*(undefined4 *)(param_1 + 0x30));
@@ -40408,7 +40408,7 @@ void FUN_8006e26c(int param_1,int param_2,ushort *param_3,int param_4)
 	// ???
     uVar3 = param_3[2];
 
-	// camera110 ptrOT + offset?
+	// tileView ptrOT + offset?
     puVar12 = (uint *)(*(int *)(param_1 + 0xf4) + (uint)param_3[3] * 4);
 
 	// RNG seed,
@@ -40493,7 +40493,7 @@ void FUN_8006e26c(int param_1,int param_2,ushort *param_3,int param_4)
 	// advance to next primitive
     puVar4 = puVar4 + 3;
 
-	// next camera110
+	// next tileView
     param_1 = param_1 + 0x110;
 
 	// next player
@@ -40671,10 +40671,10 @@ void FUN_8006e588(int param_1,int param_2,int param_3)
 		// tire color
 		*(undefined4 *)(iVar3 + 0x3c) = uVar15;
 
-		// instance -> camera110
+		// instance -> tileView
         psVar6 = *(short **)(iVar29 + 0x74);
 
-		// if camera110 exists
+		// if tileView exists
         if (psVar6 != (short *)0x0)
 		{
 		  // instance scale
@@ -40859,7 +40859,7 @@ void FUN_8006e588(int param_1,int param_2,int param_3)
             iVar27 = iVar27 + -8;
           } while (-1 < iVar14);
 
-		  // camera110 ViewProj
+		  // tileView ViewProj
 		  // (multiply by 2, offset 0x28)
           gte_ldR11R12(*(undefined4 *)(psVar6 + 0x14));
           gte_ldR13R21(*(undefined4 *)(psVar6 + 0x16));
@@ -41218,7 +41218,7 @@ void FUN_8006f004(int param_1,int param_2,int param_3)
 					((uVar10 & 0x4000) != 0)
 				) &&
 				(
-					// instance -> camera110
+					// instance -> tileView
 					psVar7 = *(short **)(iVar29 + 0x74),
 
 					// if tires shouldn't disappear on this model LOD
@@ -41226,7 +41226,7 @@ void FUN_8006f004(int param_1,int param_2,int param_3)
 				)
 			) &&
 
-			// if camera110 exists
+			// if tileView exists
 			(psVar7 != (short *)0x0)
 		 )
 	  {
@@ -41429,7 +41429,7 @@ void FUN_8006f004(int param_1,int param_2,int param_3)
           iVar27 = iVar27 + -8;
         } while (-1 < iVar5);
 
-		// camera110 ViewProj
+		// tileView ViewProj
 		// (multiply by 2, offset 0x28)
         gte_ldR11R12(*(undefined4 *)(psVar7 + 0x14));
         gte_ldR13R21(*(undefined4 *)(psVar7 + 0x16));
@@ -41558,7 +41558,7 @@ void FUN_8006f004(int param_1,int param_2,int param_3)
 
 
 // RenderWeather
-// param_1 camera110
+// param_1 tileView
 // param_2 PrimMem
 // param_3 RainBuffer
 // param_4 numPlyrCurrGame
@@ -41819,7 +41819,7 @@ void FUN_8006fe08(void)
 // CreateRenderLists_1P2P
 // param1 is lev->mesh_info->ptrVisDataArray
 // param2 is VisMem 0x00-0x0F (visLeafList)
-// param3 is camera110
+// param3 is tileView
 // param4 is pointer of linked list VisData (1808) to draw in 226
 // param5 is VisMem 0x80-0x8F (bspList)
 // param6 is number of players
@@ -41873,7 +41873,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
     DAT_1f8000a4 = 0x1540;
   }
 
-  // load matrix at camera110 0x28, into GTE registers
+  // load matrix at tileView 0x28, into GTE registers
   gte_ldR11R12(*(undefined4 *)(param_3 + 0x28));
   gte_ldR13R21(*(undefined4 *)(param_3 + 0x2c));
   gte_ldR22R23(*(undefined4 *)(param_3 + 0x30));
@@ -41882,7 +41882,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
   gte_ldtr(*(undefined4 *)(param_3 + 0x3c),*(undefined4 *)(param_3 + 0x40),
            *(undefined4 *)(param_3 + 0x44));
 
-  // camera110 sizeX and sizeY
+  // tileView sizeX and sizeY
   gte_ldOFX((int)*(short *)(param_3 + 0x20) << 0xf);
   gte_ldOFY((int)*(short *)(param_3 + 0x22) << 0xf);
 
@@ -41908,7 +41908,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
   DAT_1f80007c = *(undefined4 *)(param_3 + 0xc4);
   
   // jump pointers (stored on scratchpad from VisData_CopyJMPsToScratchpad),
-  // given the index from camera110, which depends on direction camera faces
+  // given the index from tileView, which depends on direction camera faces
   DAT_1f8000ac = (&DAT_1f800084)[*(int *)(param_3 + 0xd0)];
   _DAT_1f8000b0 = (&DAT_1f800084)[*(int *)(param_3 + 0xd4)];
   DAT_1f8000b4 = (&DAT_1f800084)[*(int *)(param_3 + 0xd8)];
@@ -42103,7 +42103,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		//	jr $t9 (80070290)
 		
 		
-		// lw $s7, deref(1f8000AC), (1f800084[c110->0xd0]) (80070330)
+		// lw $s7, deref(1f8000AC), (1f800084[tileView->0xd0]) (80070330)
 		// $t8 = 0x0
 		// 80070284():
 		//   $t9 = 80070290
@@ -42116,7 +42116,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
-		// lw $s7, deref(1f8000B0), (1f800084[c110->0xd4]) (80070340)
+		// lw $s7, deref(1f8000B0), (1f800084[tileView->0xd4]) (80070340)
 		// $t8 = 0x8
 		// $gp = 1f8000d4 (minPosX, minPosY)
 		// $fp = 1f8000de (maxPosZ)
@@ -42125,7 +42125,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
-		// lw $s7, deref(1f8000B4), (1f800084[c110->0xd8]) (8007035C)
+		// lw $s7, deref(1f8000B4), (1f800084[tileView->0xd8]) (8007035C)
 		// $t8 = 0x10
 		// $gp = 1f8000d4 + (lwr)1f8000dd (minPosX, maxPosY)
 		// $fp = 1f8000d8 (minPosZ)
@@ -42134,7 +42134,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		iVar5 = FUN_80070284();
 		if ($t9 > 0) goto CheckNextLeaf;
 		
-		// lw $s7, deref(1f8000B8), (1f800084[c110->0xdc]) (8007036C)
+		// lw $s7, deref(1f8000B8), (1f800084[tileView->0xdc]) (8007036C)
 		// $t8 = 0x18
 		// $gp = 1f8000d4 + (lwr)1f8000da (maxPosX, minPosY)
 		// $fp = 1f8000d8 (minPosZ)
@@ -42162,7 +42162,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 			  )
 			) 
 		  {
-			// lw $s7, deref(1f8000C0), (1f800084[c110->0xe4])  (8007037C)
+			// lw $s7, deref(1f8000C0), (1f800084[tileView->0xe4])  (8007037C)
 			
 			// 80070308():
 			//   t9 = ra
@@ -42336,7 +42336,7 @@ void FUN_80070308(void)
 // CreateRenderLists_3P4P
 // param1 is lev->mesh_info->ptrVisDataArray
 // param2 is VisMem 0x00-0x0F
-// param3 is camera110
+// param3 is tileView
 // param4 is pointer of linked list VisData (1808) to draw in 226
 // param5 is VisMem 0x80-0x8F
 // param6 is number of players
@@ -42838,7 +42838,7 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
 
   puVar29 = &_gp_4;
 
-  // camera110
+  // tileView
   psVar6 = *(short **)(unaff_s8 + 0x74);
 
   *(undefined4 *)(in_at + 0x40) = unaff_retaddr;
@@ -42850,7 +42850,7 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
     if (psVar8 != psVar6) {
       FUN_8006c600();
 
-	  // copy camera110 position to instance
+	  // copy tileView position to instance
       sVar1 = psVar6[1];
       sVar2 = psVar6[2];
       *(int *)(in_at + 0x44) = (int)*psVar6;

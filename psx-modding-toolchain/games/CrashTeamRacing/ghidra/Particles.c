@@ -540,10 +540,10 @@ void FUN_8003f590(int param_1,int *param_2)
   uint *puVar25;
   uint uVar26;
 
-  // Camera110_InitPsyqGeom
+  // TileView_SetPsyqGeom
   FUN_80042910();
 
-  // camera110 -> 0x28 (matrix)
+  // tileView -> 0x28 (matrix)
   DAT_1f800000 = *(undefined4 *)(param_1 + 0x28);
   DAT_1f800004 = *(undefined4 *)(param_1 + 0x2c);
   DAT_1f800008 = *(undefined4 *)(param_1 + 0x30);
@@ -555,10 +555,10 @@ void FUN_8003f590(int param_1,int *param_2)
   setCopControlWord(2,0x5800,DAT_1f80000c);
   setCopControlWord(2,0x6000,DAT_1f800010);
   
-  // camera110 ptrOT
+  // tileView ptrOT
   DAT_1f800020 = *(int *)(param_1 + 0xf4);
   
-  // camera110 cameraID
+  // tileView cameraID
   cVar1 = *(char *)(param_1 + 0x108);
   
   // another matrix

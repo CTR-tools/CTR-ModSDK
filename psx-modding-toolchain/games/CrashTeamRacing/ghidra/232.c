@@ -6333,7 +6333,7 @@ LAB_800b38c0:
             puVar4 = PTR_DAT_8008d2ac;
             puVar1 = (uint *)(DAT_8008d860 + 0x28);
             
-			// instance -> camera110 = gGT->camera110_ui
+			// instance -> tileView = gGT->tileView_ui
 			*(undefined **)(DAT_8008d860 + 0x74) = PTR_DAT_8008d2ac + 5000;
 			
             *(uint *)(iVar11 + 0x28) = *puVar1 | 0x400;
@@ -6348,7 +6348,7 @@ LAB_800b38c0:
 			  {
                 iVar10 = iVar10 + 1;
                 
-				// clear instance->camera110 per player
+				// clear instance->tileView per player
 				*(undefined4 *)(iVar11 + (iVar7 >> 0x10) * 0x88 + 0x74) = 0;
                 
 				iVar7 = iVar10 * 0x10000;

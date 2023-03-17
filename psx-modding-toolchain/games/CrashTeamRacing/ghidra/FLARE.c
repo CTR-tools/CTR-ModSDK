@@ -41,13 +41,13 @@ void FUN_80024c4c(int param_1)
 
 	if (puVar13 + 0x34 < *(uint **)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x84)) {
 
-	  // Camera110_InitPsyqGeom
+	  // TileView_SetPsyqGeom
 	  FUN_80042910(PTR_DAT_8008d2ac + 0x168);
 
-	  // camera110 ViewProj
+	  // tileView ViewProj
       SetLightMatrix((MATRIX *)(puVar3 + 0x168 + 0x28));
 
-	  // flare position, minus, camera110->0x7C (matrix_Camera position)
+	  // flare position, minus, tileView->0x7C (matrix_Camera position)
 	  gte_ldVXY0(((int)*(short *)(piVar15 + 1) - *(int *)(puVar3 + 0x1e4)) * 4 & 0xffffU |
                     ((int)*(short *)((int)piVar15 + 6) - *(int *)(puVar3 + 0x1e8)) * 0x40000);
       gte_ldVZ0(((int)*(short *)(piVar15 + 2) - *(int *)(puVar3 + 0x1ec)) * 4);

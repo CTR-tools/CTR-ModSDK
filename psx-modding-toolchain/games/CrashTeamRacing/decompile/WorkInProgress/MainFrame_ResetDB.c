@@ -20,7 +20,7 @@ void MainFrame_ResetDB(struct GameTracker* sdata->gGT)
 	(sdata->gGT->backBuffer->otMem).curr = (sdata->gGT->backBuffer->otMem).start;
 	CTR_EmptyFunc_MainFrame_ResetDB();
 	DecalGlobal_EmptyFunc_MainFrame_ResetDB();
-	ClearOTagR((u_long*)sdata->gGT->ot_camera110_UI[sdata->gGT->swapchainIndex], (u_int)(u_char)::sdata->gGT->numPlyrCurrGame << 10 | 6);
+	ClearOTagR((u_long*)sdata->gGT->ot_tileView_UI[sdata->gGT->swapchainIndex], (u_int)(u_char)::sdata->gGT->numPlyrCurrGame << 10 | 6);
 	psVar1 = ::sdata->gGT;
 	iVar4 = 0;
 	psVar6 = sdata->gGT;
@@ -30,7 +30,7 @@ void MainFrame_ResetDB(struct GameTracker* sdata->gGT)
 		{
 			iVar2 = (u_int)(u_char)psVar1->numPlyrCurrGame - iVar4;
 			iVar4 = iVar4 + 1;
-			psVar6->camera110[0].ptrOT = (u_long*)((int)sdata->gGT->ot_camera110_UI[sdata->gGT->swapchainIndex] + (iVar2 - 1) * 0x1000 + 0x18);
+			psVar6->tileView[0].ptrOT = (u_long*)((int)sdata->gGT->ot_tileView_UI[sdata->gGT->swapchainIndex] + (iVar2 - 1) * 0x1000 + 0x18);
 			psVar6 = (struct GameTracker*)(psVar6->db[1].drawEnv.dr_env.code + 0xd);
 		} while (iVar4 < (int)(u_int)(u_char)psVar1->numPlyrCurrGame);
 	}
@@ -40,13 +40,13 @@ void MainFrame_ResetDB(struct GameTracker* sdata->gGT)
 		do
 		{
 			iVar4 = iVar4 + 1;
-			*(int*)(iVar2 + 0x25c) = (int)sdata->gGT->ot_camera110_UI[sdata->gGT->swapchainIndex] + 0x3018;
+			*(int*)(iVar2 + 0x25c) = (int)sdata->gGT->ot_tileView_UI[sdata->gGT->swapchainIndex] + 0x3018;
 			iVar2 = iVar2 + 0x110;
 		} while (iVar4 < 4);
 	}
 	psVar5 = sdata->gGT->backBuffer;
-	puVar3 = (u_long*)((int)sdata->gGT->ot_camera110_UI[sdata->gGT->swapchainIndex] + 4);
-	(sdata->gGT->camera110_UI).ptrOT = puVar3;
+	puVar3 = (u_long*)((int)sdata->gGT->ot_tileView_UI[sdata->gGT->swapchainIndex] + 4);
+	(sdata->gGT->tileView_UI).ptrOT = puVar3;
 	(psVar5->otMem).startPlusFour = puVar3;
 	return;
 }

@@ -4,7 +4,7 @@
 // CAM_SkyboxGlow
 // Draws skybox glowing effect found in Papu's Pyramid
 // param1 is "someData" from lev header
-// param2 is camera110
+// param2 is tileView
 // param3 is primMem
 // param4 is ptrOT (+ 0xffc)?
 void FUN_800175cc(short *param_1,int param_2,int param_3,uint *param_4)
@@ -662,7 +662,7 @@ void FUN_8001861c(int param_1)
   if (*(char *)(param_1 + 0x1ca8) != '\0')
   {
 	// offset of 8008d2ac where each screen holds
-	// camera110 info, like position, width, height
+	// tileView info, like position, width, height
     iVar4 = 0x168;
 
     puVar9 = puVar10 + 1;
@@ -670,7 +670,7 @@ void FUN_8001861c(int param_1)
 	// for iVar12 = 0; iVar12 < numPlyrCurrGame; iVar12++
 	do
 	{
-	  // pointer to camera110 struct
+	  // pointer to tileView struct
       iVar8 = param_1 + iVar4;
 
 	  // window sizeX
@@ -686,7 +686,7 @@ void FUN_8001861c(int param_1)
       iVar5 = (uint)*(ushort *)(iVar8 + 0x22) << 0x10;
 	  iVar11 = iVar5 >> 0x10;
 
-	  // camera110 rotation?
+	  // tileView rotation?
 	  iVar5 = ((int)*(short *)(iVar8 + 6) + -0x800 >> 3) + (iVar11 - (iVar5 >> 0x1f) >> 1);
 	  
       if (iVar5 < 0) {
@@ -697,7 +697,7 @@ void FUN_8001861c(int param_1)
         iVar7 = iVar5;
       }
 
-	  // camera110->ptrOT
+	  // tileView->ptrOT
       iVar5 = *(int *)(iVar8 + 0xf4);
 
 	  // if top-half clear color exists
@@ -747,7 +747,7 @@ void FUN_8001861c(int param_1)
 	  // increment loop counter
       iVar12 = iVar12 + 1;
 
-	  // increment pointer to next camera110 struct
+	  // increment pointer to next tileView struct
       iVar4 = iVar4 + 0x110;
 
     } while (iVar12 < (int)(uint)*(byte *)(param_1 + 0x1ca8));
@@ -767,7 +767,7 @@ void FUN_8001861c(int param_1)
 // param1 is CameraDC
 // param2 is cameraID
 // param3 is driver
-// param4 is Camera110
+// param4 is TileView
 void FUN_80018818(undefined4 *param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
@@ -796,7 +796,7 @@ void FUN_80018818(undefined4 *param_1,undefined4 param_2,undefined4 param_3,unde
   // driver
   param_1[0x11] = param_3;
 
-  // camera110
+  // tileView
   param_1[0x12] = param_4;
 
   // set camera mode to zoomed in
@@ -1272,8 +1272,8 @@ void FUN_80018fec(short *param_1,ushort *param_2,short *param_3,short *param_4,s
 // CAM_FollowDriver_AngleAxis (camera->0x9a is 0x8 or 0xe)
 // param_1 is cameraDC
 // param_2 is driver object
-// param_4 is cam110 pos
-// param_5 is cam110 rot
+// param_4 is tileView pos
+// param_5 is tileView rot
 // only called from ThTick (camera->0x9a is 0x8 or 0xe)
 void FUN_80019128(int param_1,int param_2,int param_3,short *param_4,short *param_5)
 {
@@ -1839,7 +1839,7 @@ void FUN_8001a054(int param_1,undefined2 *param_2,undefined2 *param_3)
 // CAM_FollowDriver_Normal
 // param1 is CameraDC,
 // param2 is driver object
-// param3 is Camera110
+// param3 is TileView
 // param4 is scratchpad (BSP stuff)
 // param5 is ZoomData (becomes $s3)
 // NOP mid-race to stop following driver,
@@ -2150,7 +2150,7 @@ void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *para
   //if kart is being mask grabbed
   if (cVar1 == '\x05')
   {
-	// camera110 position
+	// tileView position
     *(int *)(param_4 + 0x240) = (int)*param_3;
     *(int *)(param_4 + 0x244) = (int)param_3[1];
     *(int *)(param_4 + 0x248) = (int)param_3[2];
@@ -2343,7 +2343,7 @@ LAB_8001ab04:
     param_3[5] = (short)((uint)((int)param_5[5] * (int)*(short *)(param_1 + 0x10)) >> 8);
   }
 
-  // something with camera110 position
+  // something with tileView position
   *(int *)(param_4 + 0x214) = *(int *)(param_4 + 0x240) - (int)*param_3;
   *(int *)(param_4 + 0x218) = *(int *)(param_4 + 0x244) - (int)param_3[1];
   *(int *)(param_4 + 0x21c) = *(int *)(param_4 + 0x248) - (int)param_3[2];
@@ -2378,7 +2378,7 @@ LAB_8001ab04:
   // If not mask grabbed
   if (*(char *)(param_2 + 0x376) != '\x05')
   {
-	// camera110 position
+	// tileView position
     *param_3 = *param_3 + *(short *)(param_4 + 0x214) + *(short *)(param_1 + 0x4c);
     param_3[1] = param_3[1] + *(short *)(param_4 + 0x218) + *(short *)(param_1 + 0x50);
     param_3[2] = param_3[2] + *(short *)(param_4 + 0x21c) + *(short *)(param_1 + 0x54);
@@ -2680,7 +2680,7 @@ void FUN_8001b334(int param_1)
   // p1 from cameraDC, offset 0x44
   iVar22 = piVar18[0x11];
 
-  // camera110 from cameraDC, offset 0x48
+  // tileView from cameraDC, offset 0x48
   psVar19 = (short *)piVar18[0x12];
 
   // if camera is frozen, quit (character select)
@@ -2882,13 +2882,13 @@ void FUN_8001b334(int param_1)
   // following driver
   case 0:
 
-	// Camera110 position
+	// TileView position
     // Get driver -> instance -> position (x, y, z)
     *psVar19 = *(short *)(*(int *)(iVar22 + 0x1c) + 0x44);
     psVar19[1] = *(short *)(*(int *)(iVar22 + 0x1c) + 0x48);
     psVar19[2] = *(short *)(*(int *)(iVar22 + 0x1c) + 0x4c);
 
-	// Camera110 rotation
+	// TileView rotation
 	// compressed 2-byte position?
     psVar19[3] = *(short *)(iVar22 + 0x2ec);
     psVar19[4] = *(short *)(iVar22 + 0x2ee);
@@ -2900,12 +2900,12 @@ void FUN_8001b334(int param_1)
   // freecam (any time you see (dc + 0x1532) = 3 )
   case 3:
 
-	// Camera110 position
+	// TileView position
     *psVar19 = *psVar12;
     psVar19[1] = psVar16[2];
     psVar19[2] = psVar16[3];
 
-	// Camera110 rotation
+	// TileView rotation
     psVar19[3] = psVar16[4];
     psVar19[4] = psVar16[5];
     psVar19[5] = psVar16[6];
@@ -2920,7 +2920,7 @@ void FUN_8001b334(int param_1)
 
   case 4:
 
-    // Camera110 position
+    // TileView position
     *psVar19 = *psVar12;
     psVar19[1] = psVar16[2];
     psVar19[2] = psVar16[3];
@@ -2981,7 +2981,7 @@ void FUN_8001b334(int param_1)
 
   case 0xb:
 
-	// Camera110 position
+	// TileView position
     *psVar19 = *psVar12;
     psVar19[1] = psVar16[2];
     psVar19[2] = psVar16[3];
@@ -3305,7 +3305,7 @@ LAB_8001c128:
 
   // piVar18 = cameraDC
   // iVar22 = driver object
-  // psVar19 - camera110
+  // psVar19 - tileView
   // CAM_FollowDriver_Normal
   FUN_8001a0bc(piVar18,iVar22,psVar19,&DAT_1f800108,iVar20);
 
@@ -3396,7 +3396,7 @@ LAB_8001c150:
   // if need to reset rainbuffer camPos
   if ((piVar18[0x1c] & 1U) != 0)
   {
-	// store Camera110 position in gGT->RainBuffer[x].cameraPos
+	// store TileView position in gGT->RainBuffer[x].cameraPos
     *(short *)(PTR_DAT_8008d2ac + *piVar18 * 0x30 + 0x1a58) = *psVar19;
     *(short *)(puVar3 + *piVar18 * 0x30 + 0x1a5a) = psVar19[1];
     *(short *)(puVar3 + *piVar18 * 0x30 + 0x1a5c) = psVar19[2];

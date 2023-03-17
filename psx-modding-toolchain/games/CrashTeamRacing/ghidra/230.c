@@ -726,7 +726,7 @@ void FUN_800ac6dc(void)
 	// CameraDC, freecam mode
     *(undefined2 *)(PTR_DAT_8008d2ac + 0x1532) = 3;
 	
-	// gGT->camera110[0].distToScreen
+	// gGT->tileView[0].distToScreen
     *(undefined4 *)(puVar1 + 0x274) = 0x1c2;
 	
 	// pointer to Intro Cam, to view Crash holding Trophy in main menu
@@ -2162,7 +2162,7 @@ void FUN_800adc0c(int param_1)
       psVar11 = (short *)(iVar10 * 4 + DAT_800b5a0c);
       iVar6 = iVar10 * 10 + DAT_800b5a3c;
 	  
-	  // camera110
+	  // tileView
       puVar12 = (undefined2 *)(PTR_DAT_8008d2ac + iVar10 * 0x110 + 0x168);
       
 	  // rect.x
@@ -2223,7 +2223,7 @@ void FUN_800adc0c(int param_1)
 	  puVar1 = PTR_DAT_8008d2ac;
       sVar9 = (short)iVar14;
       
-	  // camera110 pos and rot to all zero
+	  // tileView pos and rot to all zero
 	  *puVar12 = 0;
       puVar12[1] = 0;
       puVar12[2] = 0;
@@ -2250,13 +2250,13 @@ void FUN_800adc0c(int param_1)
 	  // copy which driver loaded
       iVar6 = (int)sVar9;
 	  
-	  // clear camera110 in every InstDrawPerPlayer
+	  // clear tileView in every InstDrawPerPlayer
       *(undefined4 *)(iVar10 + 0x74) = 0;
       *(undefined4 *)(iVar10 + 0xfc) = 0;
       *(undefined4 *)(iVar10 + 0x184) = 0;
       *(undefined4 *)(iVar10 + 0x20c) = 0;
 	  
-	  // set camera110 in InstDrawPerPlayer,
+	  // set tileView in InstDrawPerPlayer,
 	  // so that each camera can only see one driver
       *(undefined2 **)(iVar10 + iVar6 * 0x88 + 0x74) = puVar12;
       
@@ -2756,7 +2756,7 @@ void FUN_800ae6b0(void)
   do {
     sVar1 = (short)iVar2;
 	
-	// Camera110_Init for each Camera110
+	// TileView_Init for each TileView
     FUN_800426f8(PTR_DAT_8008d2ac + (int)sVar1 * 0x110 + 0x168,0,1);
     
 	// increment loop counter

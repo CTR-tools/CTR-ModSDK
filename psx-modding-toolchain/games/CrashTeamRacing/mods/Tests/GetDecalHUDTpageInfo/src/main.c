@@ -97,7 +97,7 @@ void KeepDrawingIcon()
 	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata->gGT->camera110_UI.ptrOT,
+	sdata->gGT->tileView_UI.ptrOT,
 
 	1, 0x1000);
 
@@ -107,7 +107,7 @@ void KeepDrawingIcon()
 	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata->gGT->camera110_UI.ptrOT,
+	sdata->gGT->tileView_UI.ptrOT,
 
 	1, 0x1000);/*
 
@@ -117,7 +117,7 @@ void KeepDrawingIcon()
 	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata->gGT->camera110_UI.ptrOT,
+	sdata->gGT->tileView_UI.ptrOT,
 
 	0, 0x1000);
 
@@ -127,7 +127,7 @@ void KeepDrawingIcon()
 	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata->gGT->camera110_UI.ptrOT,
+	sdata->gGT->tileView_UI.ptrOT,
 
 	0, 0x1000);
 
@@ -137,7 +137,7 @@ void KeepDrawingIcon()
 	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata->gGT->camera110_UI.ptrOT,
+	sdata->gGT->tileView_UI.ptrOT,
 
 	0, 0x1000);
 
@@ -147,7 +147,7 @@ void KeepDrawingIcon()
 	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata->gGT->camera110_UI.ptrOT,
+	sdata->gGT->tileView_UI.ptrOT,
 
 	0, 0x1000);
 
@@ -157,7 +157,7 @@ void KeepDrawingIcon()
 	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata->gGT->camera110_UI.ptrOT,
+	sdata->gGT->tileView_UI.ptrOT,
 
 	0, 0x1000);
 
@@ -167,7 +167,7 @@ void KeepDrawingIcon()
 	&sdata->gGT->backBuffer->primMem,
 
 	// pointer to OT mem
-	sdata->gGT->camera110_UI.ptrOT,
+	sdata->gGT->tileView_UI.ptrOT,
 
 	0, 0x1000);*/
 

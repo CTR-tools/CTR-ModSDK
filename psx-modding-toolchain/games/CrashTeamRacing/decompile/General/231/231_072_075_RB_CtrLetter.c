@@ -63,7 +63,7 @@ void DECOMP_RB_CtrLetter_LInB(struct Instance* inst)
 	RB_Default_LInB(inst);
 }
 
-void RB_Fruit_GetScreenCoords(struct Camera110* c110, struct Instance* inst, short* output);
+void RB_Fruit_GetScreenCoords(struct TileView* tileView, struct Instance* inst, short* output);
 
 int DECOMP_RB_CtrLetter_LInC(
 	struct Instance* letterInst,
@@ -73,7 +73,7 @@ int DECOMP_RB_CtrLetter_LInC(
 	short posScreen[2];
 	MATRIX* m;
 	struct Driver* driver;
-	struct Camera110* c110;
+	struct TileView* tileView;
 	int driverID;
 	int modelID;
 
@@ -100,16 +100,16 @@ int DECOMP_RB_CtrLetter_LInC(
 	driver = driverTh->object;
 	driverID = driver->driverID;
 	
-	c110 = &sdata->gGT->camera110[driverID];
-	RB_Fruit_GetScreenCoords(c110, letterInst, &posScreen[0]);
+	tileView = &sdata->gGT->tileView[driverID];
+	RB_Fruit_GetScreenCoords(tileView, letterInst, &posScreen[0]);
 	
 	// screenPosX
 	driver->PickupLetterHUD.startX = 
-		c110->rect.x + posScreen[0];
+		tileView->rect.x + posScreen[0];
 		
 	// screenPosY
 	driver->PickupLetterHUD.startY = 
-		c110->rect.y + posScreen[1] - 0x14;
+		tileView->rect.y + posScreen[1] - 0x14;
 	
 	// transition should last 10 frames
 	driver->PickupLetterHUD.cooldown = 10;

@@ -45,7 +45,7 @@ void DECOMP_DrawHUD_Racing()
 	u_char **ppuVar5;
 	u_char *pbVar6;
 	int i;
-	struct Camera110 *cam110;
+	struct TileView *tileView;
 	u_int partTimeVariable5;
 	struct Icon* iconPtr;
 	u_long *primMemCurr;
@@ -212,8 +212,8 @@ void DECOMP_DrawHUD_Racing()
 				if ((sdata->gGT->gameMode1 & 0xf) == 0)
 				{
 					// Player / AI structure + 0x4a shows driver index (0-7)
-					// This is a pointer to each player's camera110 buffer
-					cam110 = &sdata->gGT->camera110[playerStruct->driverID];
+					// This is a pointer to each player's tileView buffer
+					tileView = &sdata->gGT->tileView[playerStruct->driverID];
 
 					// if "Time on clock" last 0xXX u_char is greater than 0x80 and less than 0xFF
 					if ((sdata->gGT->elapsedEventTime & 0x80) != 0)
@@ -224,10 +224,10 @@ void DECOMP_DrawHUD_Racing()
 							sdata->lngStrings[0x74],
 
 							// Midpoint between Start X and Size X
-							(int)(((u_int)cam110->rect.x + ((int)((u_int)cam110->rect.w << 0x10) >> 0x11)) * 0x10000) >> 0x10,
+							(int)(((u_int)tileView->rect.x + ((int)((u_int)tileView->rect.w << 0x10) >> 0x11)) * 0x10000) >> 0x10,
 
 						 	// Midpoint between Start Y and Size Y, except 0x1e higher
-						 	(int)(((u_int)cam110->rect.y + ((int)((u_int)cam110->rect.h << 0x10) >> 0x11) + -0x1e) * 0x10000) >> 0x10,
+						 	(int)(((u_int)tileView->rect.y + ((int)((u_int)tileView->rect.h << 0x10) >> 0x11) + -0x1e) * 0x10000) >> 0x10,
 
 							1, 0xffff8000
 						);
@@ -357,7 +357,7 @@ void DECOMP_DrawHUD_Racing()
 						&sdata->gGT->backBuffer->primMem,
 
 						// pointer to OT memory
-						sdata->gGT->camera110_UI.ptrOT,
+						sdata->gGT->tileView_UI.ptrOT,
 
 						0, hudStructPtr[1].y
 					);
@@ -455,7 +455,7 @@ void DECOMP_DrawHUD_Racing()
 					// print "-x" where x is the amount of seconds
 					sprintf(acStack80, &sdata->s_subtractLongInt[0], sdata->gGT->timeCrateTypeSmashed);
 
-					// 4b4 and 4b6 are WindowStartPos(x,y) from Camera110, inside Driver
+					// 4b4 and 4b6 are WindowStartPos(x,y) from TileView, inside Driver
 					InterpolatePosition2D_HUD
 					(
 						&wumpaModel_PosX, playerStruct->PickupTimeboxHUD.startX,
@@ -642,7 +642,7 @@ void DECOMP_DrawHUD_Racing()
 				if (2 < sdata->gGT->numPlyrCurrGame)
 				{
 					// pointer to OT memory
-					ptrOT = sdata->gGT->camera110_UI.ptrOT;
+					ptrOT = sdata->gGT->tileView_UI.ptrOT;
 
 					// position, from hud struct
 					sVar1 = hudStructPtr[4].x;
@@ -703,7 +703,7 @@ void DECOMP_DrawHUD_Racing()
 					sVar2 = hudStructPtr[4].y;
 
 					// pointer to OT memory
-					ptrOT = sdata->gGT->camera110_UI.ptrOT;
+					ptrOT = sdata->gGT->tileView_UI.ptrOT;
 
 					// gGT->backBuffer
 					backBuffer = sdata->gGT->backBuffer;
@@ -963,7 +963,7 @@ void DECOMP_DrawHUD_Racing()
 				TurboCounterBar->y3 = local_36 + 0x12;
 
 				// pointer to OT memory
-				primMemCurr = sdata->gGT->camera110_UI.ptrOT;
+				primMemCurr = sdata->gGT->tileView_UI.ptrOT;
 
 				*(int*)TurboCounterBar = *primMemCurr | 0x8000000;
 				*primMemCurr = (u_int)TurboCounterBar & 0xffffff;
@@ -1033,7 +1033,7 @@ void DECOMP_DrawHUD_Racing()
 				backBuffer = sdata->gGT->backBuffer;
 
 				// pointer to OT memory
-				ptrOT = sdata->gGT->camera110_UI.ptrOT;
+				ptrOT = sdata->gGT->tileView_UI.ptrOT;
 
 				// posX
 				partTimeVariable4 = 500;
@@ -1060,7 +1060,7 @@ void DECOMP_DrawHUD_Racing()
 				backBuffer = sdata->gGT->backBuffer;
 
 				// pointer to OT memory
-				ptrOT = sdata->gGT->camera110_UI.ptrOT;
+				ptrOT = sdata->gGT->tileView_UI.ptrOT;
 
 				// two halves of the map textures
 				icon1 = sdata->gGT->ptrIcons[3];
@@ -1107,8 +1107,8 @@ void DECOMP_DrawHUD_Racing()
 			// pointer to array of pointers for each driver (9900C, 99010, etc)
 			playerStruct = sdata->gGT->drivers[i];
 
-			// pointer to each player's camera110 buffer
-			cam110 = &sdata->gGT->camera110[playerStruct->driverID];
+			// pointer to each player's tileView buffer
+			tileView = &sdata->gGT->tileView[playerStruct->driverID];
 
 			if
 			(
@@ -1147,11 +1147,11 @@ void DECOMP_DrawHUD_Racing()
 
 					// Position is the same regardless of win or lose
 
-					// Midpoint between camera110 Start X and End X
-					partTimeVariable3 = (u_int)cam110->rect.x + ((int)((u_int)cam110->rect.w << 0x10) >> 0x11);
+					// Midpoint between tileView Start X and End X
+					partTimeVariable3 = (u_int)tileView->rect.x + ((int)((u_int)tileView->rect.w << 0x10) >> 0x11);
 
-					// Midpoint between camera110 Start Y and End Y
-					partTimeVariable5 = (u_int)cam110->rect.y + ((int)((u_int)cam110->rect.h << 0x10) >> 0x11);
+					// Midpoint between tileView Start Y and End Y
+					partTimeVariable5 = (u_int)tileView->rect.y + ((int)((u_int)tileView->rect.h << 0x10) >> 0x11);
 
 					// FINISHED!
 					pbVar6 = sdata->lngStrings[0x78];
@@ -1162,11 +1162,11 @@ void DECOMP_DrawHUD_Racing()
 				{
 					// Position is the same regardless of win or lose
 
-					// Midpoint between camera110 Start X and End X
-					partTimeVariable3 = (u_int)cam110->rect.x + ((int)((u_int)cam110->rect.w << 0x10) >> 0x11);
+					// Midpoint between tileView Start X and End X
+					partTimeVariable3 = (u_int)tileView->rect.x + ((int)((u_int)tileView->rect.w << 0x10) >> 0x11);
 
-					// Midpoint between camera110 Start Y and End Y
-					partTimeVariable5 = (u_int)cam110->rect.y + ((int)((u_int)cam110->rect.h << 0x10) >> 0x11);
+					// Midpoint between tileView Start Y and End Y
+					partTimeVariable5 = (u_int)tileView->rect.y + ((int)((u_int)tileView->rect.h << 0x10) >> 0x11);
 
 					// LOSER!
 					pbVar6 = sdata->lngStrings[0x50c];

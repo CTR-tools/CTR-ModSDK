@@ -38,7 +38,7 @@ void DECOMP_Turbo_ProcessBucket(struct Thread* turboThread)
 				// for i = 0; i < numPlyrCurrGame; i++
 				do
 				{
-					// if camera110 does not exist ?
+					// if tileView does not exist ?
 					// judging by 0x28 being copied to 0xb8 ?
 					if ((*(u_int *)&driverInstance->idpp.data[0][0x40] & 0x100) == 0)
 					{

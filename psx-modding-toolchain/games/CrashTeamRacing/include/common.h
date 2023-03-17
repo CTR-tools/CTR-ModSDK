@@ -940,7 +940,7 @@ struct BspSearchDataExtended
 	int unk1[2];
 	
 	
-	// --- the rest is for camera110 funcs ---
+	// --- the rest is for tileView funcs ---
 	
 	
 	// 0x2cc - 1f8003d4
@@ -1403,7 +1403,7 @@ struct InstDrawPerPlayer
 {
 	// 0x74
 	// used for flag & 0x2 to face camera
-	struct Camera110* cam110;
+	struct TileView* tileView;
 
 	// 0x78 - another matrix? in DrawFunc_Split and DrawFunc_Normal
 	MATRIX m1;
@@ -1482,7 +1482,7 @@ struct Instance
 	// & 0x2, 0x4, 0x8 -- FUN_80030ad4 -- collision?
 	// & 0xX0 = X=0 freezes animation, X=8 hides model, x=1-7 plays animations
 	// & 0x80 = make invisible
-	// & 0x100 = camera110 exists
+	// & 0x100 = tileView exists
 	// & 0x200 = pixel LOD?
 	// & 0x400 = creditghost, screenspace instance
 	// & 0x2000 = split-line
@@ -3566,7 +3566,7 @@ struct BossGarageDoor
 
 // Not the buffer attached to camera thread,
 // this is global, should be "Window"?
-struct Camera110
+struct TileView
 {
 	// 0x0
 	short pos[3];
@@ -3612,13 +3612,13 @@ struct Camera110
 	// 0x28
 	MATRIX matrix_ViewProj;
 
-	// 0x48 (built in Camera110_SetViewMatrix, never used)
+	// 0x48 (built in TileView_SetMatrixVP, never used)
 	MATRIX matrix_CameraTranspose;
 
 	// 0x68 (GTE_AudioLR_Inst, SpecularLight_Spinning3D)
 	MATRIX matrix_Camera;
 
-	// 0x88 (built in Camera110_Init, never used)
+	// 0x88 (built in TileView_Init, never used)
 	MATRIX matrix_Proj;
 
 	// Frustum Planes
@@ -3650,7 +3650,6 @@ struct Camera110
 	char filler2[0x10];
 
 	// 0x108
-	// for self (cam110) or camDC?
 	int cameraID;
 
 	// 0x10c
@@ -3721,7 +3720,7 @@ struct CameraDC
 	struct Driver* driverToFollow;
 
 	// 0x48
-	struct Camera110* cam110;
+	struct TileView* tileView;
 
 	// 0x4C
 	int unkTriplet1[3];
@@ -4618,7 +4617,7 @@ struct GameTracker
   // not sure if this is window, or camera, but
   // there are also dynamically allocated cameras
   // 0x168
-  struct Camera110 camera110[4];
+  struct TileView tileView[4];
 
   // 0x5A8
   // see 80023784
@@ -4650,7 +4649,7 @@ struct GameTracker
   } DecalMP[3*4];
 
   // 0x1388
-  struct Camera110 camera110_UI;
+  struct TileView tileView_UI;
 
   // 0x1498
   struct CameraDC cameraDC[4];
@@ -4688,7 +4687,7 @@ struct GameTracker
   // 0x18c8
   // 0x18cc
   // one for each DB
-  void* ot_camera110_UI[2];
+  void* ot_tileView_UI[2];
 
   // 0x18d0
   struct
@@ -9435,7 +9434,7 @@ struct sData
 	// check if CTR Token/Relic adv menubox is open or not
 
 	// 8008d4b4
-	// ptr to 8009ad18 (camera110) for multiplayer wumpa
+	// ptr to 8009ad18 (tileView) for multiplayer wumpa
 
 	// 8008d4b8
 	// ptr to fruitdisp thread
@@ -10930,12 +10929,12 @@ struct sData
 	// 8009e208 - JpnRetail	-- 1c54 from mempack
 
 	#if 0
-	// 8009AD18 - camera110_DecalMP
-	// 8009ae0c - ptrOT, camera110 ^^ + 0xf4
-	struct Camera110 camera110_DecalMP;
+	// 8009AD18 - tileView_DecalMP
+	// 8009ae0c - ptrOT, tileView ^^ + 0xf4
+	struct TileView tileView_DecalMP;
 
 	// 8009AE28
-	// first byte after Camera110,
+	// first byte after TileView,
 	// used by FUN_8005d0d0 for collision?
 
 	// 8009ae38 used as rotation vector

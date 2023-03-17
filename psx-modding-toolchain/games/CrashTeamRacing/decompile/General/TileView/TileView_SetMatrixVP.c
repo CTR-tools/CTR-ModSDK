@@ -2,8 +2,8 @@
 
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 
-// Camera110_SetViewMatrix -- CameraMatrix, and ViewProj
-void DECOMP_Camera110_SetViewMatrix(struct Camera110* c110)
+// TileView_SetMatrixVP -- CameraMatrix, and ViewProj
+void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
 {
   // ViewProj used for tracks
 
@@ -25,17 +25,17 @@ void DECOMP_Camera110_SetViewMatrix(struct Camera110* c110)
   int ty;
   int tz;
 
-  // camera110 rotation
-  *(short*)0x1f8003f4 = c110->rot[0];
-  *(short*)0x1f8003f6 = c110->rot[1];
-  *(short*)0x1f8003f8 = c110->rot[2];
+  // tileView rotation
+  *(short*)0x1f8003f4 = tileView->rot[0];
+  *(short*)0x1f8003f6 = tileView->rot[1];
+  *(short*)0x1f8003f8 = tileView->rot[2];
 
   // make rotation matrix for camera's view matrix
   ConvertRotToMatrix((MATRIX *)0x1f8003d4, (short *)0x1f8003f4);
 
-  tx = c110->pos[0];
-  ty = c110->pos[1];
-  tz = c110->pos[2];
+  tx = tileView->pos[0];
+  ty = tileView->pos[1];
+  tz = tileView->pos[2];
 
 // gte_SetLightMatrix
 #define gte_r8(r0) __asm__ volatile("ctc2   %0, $8" : : "r"(r0))
@@ -52,14 +52,14 @@ void DECOMP_Camera110_SetViewMatrix(struct Camera110* c110)
   sVar7 = *(short*)0x1f8003e4;
 
   // CameraMatrix, for shadows, particles, and audio
-  *(int*)((int)&c110->matrix_Camera + 0x0) = uVar3;
-  *(int*)((int)&c110->matrix_Camera + 0x4) = uVar4;
-  *(int*)((int)&c110->matrix_Camera + 0x8) = uVar5;
-  *(int*)((int)&c110->matrix_Camera + 0xC) = uVar6;
-  *(short*)((int)&c110->matrix_Camera + 0x10) = sVar7;
-  c110->matrix_Camera.t[0] = tx;
-  c110->matrix_Camera.t[1] = ty;
-  c110->matrix_Camera.t[2] = tz;
+  *(int*)((int)&tileView->matrix_Camera + 0x0) = uVar3;
+  *(int*)((int)&tileView->matrix_Camera + 0x4) = uVar4;
+  *(int*)((int)&tileView->matrix_Camera + 0x8) = uVar5;
+  *(int*)((int)&tileView->matrix_Camera + 0xC) = uVar6;
+  *(short*)((int)&tileView->matrix_Camera + 0x10) = sVar7;
+  tileView->matrix_Camera.t[0] = tx;
+  tileView->matrix_Camera.t[1] = ty;
+  tileView->matrix_Camera.t[2] = tz;
 
   // transpose the camera matrix
   view0 = uVar3 & 0xffff | uVar4 & 0xffff0000;
@@ -94,11 +94,11 @@ void DECOMP_Camera110_SetViewMatrix(struct Camera110* c110)
   read_mt(tx,ty,tz);
 
   // start with transpose camera matrix
-  *(int*)((int)&c110->matrix_ViewProj + 0x0) = view0;
-  *(int*)((int)&c110->matrix_ViewProj + 0x4) = view4;
-  *(int*)((int)&c110->matrix_ViewProj + 0x8) = view8;
-  *(int*)((int)&c110->matrix_ViewProj + 0xC) = viewC;
-  *(short*)((int)&c110->matrix_ViewProj + 0x10) = sVar7;
+  *(int*)((int)&tileView->matrix_ViewProj + 0x0) = view0;
+  *(int*)((int)&tileView->matrix_ViewProj + 0x4) = view4;
+  *(int*)((int)&tileView->matrix_ViewProj + 0x8) = view8;
+  *(int*)((int)&tileView->matrix_ViewProj + 0xC) = viewC;
+  *(short*)((int)&tileView->matrix_ViewProj + 0x10) = sVar7;
 
   // NTSC:
   // 0x360/0x600 = 9/16 aspect,
@@ -122,21 +122,21 @@ void DECOMP_Camera110_SetViewMatrix(struct Camera110* c110)
   #define r600 0x600
 
   // scale position
-  c110->matrix_ViewProj.t[0] = tx;
-  c110->matrix_ViewProj.t[1] = (ty * r360) / r600;
-  c110->matrix_ViewProj.t[2] = tz;
+  tileView->matrix_ViewProj.t[0] = tx;
+  tileView->matrix_ViewProj.t[1] = (ty * r360) / r600;
+  tileView->matrix_ViewProj.t[2] = tz;
 
   // scale Y axis (1)
-  c110->matrix_ViewProj.m[1][0] =
-  c110->matrix_ViewProj.m[1][0] * r360 / r600;
+  tileView->matrix_ViewProj.m[1][0] =
+  tileView->matrix_ViewProj.m[1][0] * r360 / r600;
 
   // scale Y axis (2)
-  c110->matrix_ViewProj.m[1][1] =
-  c110->matrix_ViewProj.m[1][1] * r360 / r600;
+  tileView->matrix_ViewProj.m[1][1] =
+  tileView->matrix_ViewProj.m[1][1] * r360 / r600;
 
   // scale Y axis (3)
-  c110->matrix_ViewProj.m[1][2] =
-  c110->matrix_ViewProj.m[1][2] * r360 / r600;
+  tileView->matrix_ViewProj.m[1][2] =
+  tileView->matrix_ViewProj.m[1][2] * r360 / r600;
 
   // store camera matrix,
   // otherwise oxide intro cutscene bugs out,

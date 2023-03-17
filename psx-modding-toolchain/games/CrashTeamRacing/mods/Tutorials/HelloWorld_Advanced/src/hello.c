@@ -24,14 +24,14 @@ void PrintText()
 	gGT = sdata->gGT;
 
 	// backup
-	backup = gGT->camera110_UI.ptrOT;
+	backup = gGT->tileView_UI.ptrOT;
 
 	// modify
-	gGT->camera110_UI.ptrOT = gGT->ot_camera110_UI[gGT->swapchainIndex];
+	gGT->tileView_UI.ptrOT = gGT->ot_tileView_UI[gGT->swapchainIndex];
 
 	// draw
 	DecalFont_DrawLine("Hello World!", 10, 200, 2, 0xffff0000);
 
 	// restore
-	gGT->camera110_UI.ptrOT = backup;
+	gGT->tileView_UI.ptrOT = backup;
 }

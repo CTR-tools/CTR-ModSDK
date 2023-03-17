@@ -28,8 +28,8 @@ void RunUpdateHook()
 
 	struct MyData* ptrDest = (struct MyData*)0x8000FFF0;
 
-	// camera110 offset 0x28
-	m = &sdata->gGT->camera110[0].matrix_ViewProj;
+	// tileView offset 0x28
+	m = &sdata->gGT->tileView[0].matrix_ViewProj;
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
 

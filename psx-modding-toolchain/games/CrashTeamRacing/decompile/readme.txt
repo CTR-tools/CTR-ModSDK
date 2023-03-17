@@ -40,10 +40,10 @@ Some functions have been decompiled for all the 5 builds of CTR that we cater to
 -CAM_SetDesiredPosRot
 -CDSYS_XAGetNumTracks
 -CDSYS_XAGetTrackLength
--Camera110_FadeAllWindows
--Camera110_InitPsyqGeom
--Camera110_InitStructs
--Camera110_SetViewMatrix
+-TileView_FadeAllWindows
+-TileView_SetPsyqGeom
+-TileView_Init
+-TileView_SetMatrixVP
 -ConvertTimeToString
 -DebugFont_Init
 -DecalFont_DrawLine

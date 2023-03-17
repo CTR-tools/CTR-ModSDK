@@ -7,7 +7,7 @@
 // Import SaveRAM
 common, exe, LOAD_DriverMPK, 0x0, ../../../decompile/General/LOAD/LOAD_DriverMPK.c
 common, exe, MainInit_JitPoolsNew, 0x0, ../../Patches/SaveRAM/src/CustomJitPoolsNew.c
-common, exe, Camera110_InitStructs, 0x0, ../../../decompile/General/Camera110_InitStructs.c ../../Patches/SaveRAM/src/NewDriverPool.c, Mem_DriverPool.bin
+common, exe, TileView_Init, 0x0, ../../../decompile/General/TileView/TileView_Init.c ../../Patches/SaveRAM/src/NewDriverPool.c, Mem_DriverPool.bin
 common, exe, MainInit_JitPoolsReset, 0x0, ../../Patches/SaveRAM/src/hookJitPoolsReset.s
 common, exe, DrawRaceClock, 0x0, ../../../decompile/General/DrawRaceClock.c ../../Patches/SaveRAM/src/NewThreadPool.c, Mem_ThreadPool.bin
 

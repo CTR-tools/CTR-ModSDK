@@ -553,7 +553,7 @@ void MM_Characters_MenuBox()
 				(int)*(short *)(iVar8 + 8) + (int)*psVar18 + 4,
 
 				&sdata->gGT->backBuffer->primMem,
-				sdata->gGT->camera110_UI.ptrOT,
+				sdata->gGT->tileView_UI.ptrOT,
 
 				*iconColor, *iconColor, *iconColor, *iconColor, 1, 0x1000
 			);
@@ -727,7 +727,7 @@ void MM_Characters_MenuBox()
 			BackgroundBlueRect
 			(
 				&local_60, &DAT_800b5398,
-				sdata->gGT->camera110[i].ptrOT + 0xffc, sdata->gGT->backBuffer->primMem
+				sdata->gGT->tileView[i].ptrOT + 0xffc, sdata->gGT->backBuffer->primMem
 			);
 		
 		}

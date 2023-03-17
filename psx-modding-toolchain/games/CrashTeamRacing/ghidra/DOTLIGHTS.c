@@ -25,14 +25,14 @@ void FUN_8002406c(int param_1,int param_2,int param_3,int param_4,int param_5,in
   // if num screens is not zero
   if (*(char *)(param_1 + 0x1ca8) != '\0')
   {
-	// offset of 8008d2ac where camera110 info is stored,
+	// offset of 8008d2ac where tileView info is stored,
 	// position of each player's screen, with, height, etc
     iVar7 = 0x168;
 
 	// for iVar6 = 0; iVar6 < numPlyrCurrGame; iVar6++
     do {
 
-	  // pointer to camera110 info
+	  // pointer to tileView info
       iVar5 = param_1 + iVar7;
 
 	  // if nubmer of screens is less than 3
@@ -59,7 +59,7 @@ void FUN_8002406c(int param_1,int param_2,int param_3,int param_4,int param_5,in
 	  // pointer to first traffic light icon
       iVar1 = *(int *)(param_1 + 0x1ecc);
 
-	  // increment pointer to next camera110 struct
+	  // increment pointer to next tileView struct
       iVar7 = iVar7 + 0x110;
 
 	  // distance between each light,

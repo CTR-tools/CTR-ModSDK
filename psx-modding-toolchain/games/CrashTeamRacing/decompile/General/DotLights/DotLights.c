@@ -13,7 +13,7 @@ void DotLights(struct GameTracker* gGT)
   int newPosX;
   int sizeX;
   int scale;
-  struct Camera110* c110;
+  struct TileView* tileView;
   int playerIndex;
   int lightIndex;
   int newPosY;
@@ -84,7 +84,7 @@ DrawLights:
   for(playerIndex = 0; playerIndex < gGT->numPlyrCurrGame; playerIndex++)
   {
 
-      c110 = &gGT->camera110[playerIndex];
+      tileView = &gGT->tileView[playerIndex];
 
 	  scale = 0x800;
 	  if(gGT->numPlyrCurrGame == 1) scale = 0x1000;
@@ -100,12 +100,12 @@ DrawLights:
 
 	  // posX of first light
 	  // (window sizeX/2) - (light sizeX*2)
-	  newPosX = (c110->rect.w + sizeX * -4) / 2;
+	  newPosX = (tileView->rect.w + sizeX * -4) / 2;
 
 	  // posY
 	  newPosY =
 				// screen sizeY is used to scale original posY
-				((((int)(c110->rect.h) / 3) * 0x10000 >> 0x10) * sortaPosY >> 0xc) -
+				((((int)(tileView->rect.h) / 3) * 0x10000 >> 0x10) * sortaPosY >> 0xc) -
 
 			    // adjusted icon sizeY,
 				(
@@ -138,7 +138,7 @@ DrawLights:
 			&gGT->backBuffer->primMem,
 
 			// pointer to OT memory
-			c110->ptrOT,
+			tileView->ptrOT,
 
 			0,scale);
 	  }
