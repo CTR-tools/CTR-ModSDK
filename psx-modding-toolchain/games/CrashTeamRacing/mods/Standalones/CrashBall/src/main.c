@@ -2,9 +2,7 @@
 
 struct Driver* Init_Player(int index);
 void Driver_TeleportAll(struct GameTracker* gGT, int flag);
-void* MEMPACK_AllocMem(int size, char* name);
 struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
-void DrawTextBackground(RECT* r, int flag, void* ot);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void MenuBox_ClearInput();
 void DrawCharacterIcon(struct Icon* icon, short posX, int posY, struct PrimMem* primMem, void *ot, u_char semitransparencyEnabled, short scale, u_int vcolorAndCode);
@@ -453,8 +451,10 @@ void RunInitHook()
 	struct Driver** drivers;
 	int driverID;
 
+	//printf("%08x, %08x, %08x\n", &sdata->gGamepads, sdata->gGamepads, &sdata->gGamepads->numGamepadsConnected);
+
 	// allocate memory
-	cbg = (void*)MEMPACK_AllocMem(sizeof(struct CrashBallGame),cbg_name);
+	cbg = (void*)MEMPACK_AllocMem(sizeof(struct CrashBallGame)/*,cbg_name*/);
 
 	// initialize
 	cbg->boolDrawObjective = 1;
