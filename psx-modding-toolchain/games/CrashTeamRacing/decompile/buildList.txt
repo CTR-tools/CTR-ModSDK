@@ -65,10 +65,11 @@ common, exe, BOTS_Adv_NumTimesLostEvent, 0x0, General/BOTS/BOTS_Adv_NumTimesLost
 // BOTS_Driver_Init was started, not finished
 
 // CAM
+common, exe, CAM_EndOfRace, 0x0, General/CAMERA/CAM_EndOfRace.c
+common, exe, CAM_EndOfRace_Battle, 0x0, General/CAMERA/CAM_EndOfRace_Battle.c
 common, exe, CAM_Init, 0x0, General/CAMERA/CAM_Init.c
 common, exe, CAM_SetDesiredPosRot, 0x0, General/CAMERA/CAM_SetDesiredPosRot.c
-//common, exe, CAM_EndOfRace_Battle, 0x0, General/CAMERA/CAM_EndOfRace_Battle.c
-//common, exe, CAM_StartOfRace, 0x0, General/CAMERA/CAM_StartOfRace.c
+common, exe, CAM_StartOfRace, 0x0, General/CAMERA/CAM_StartOfRace.c
 
 // CDSYS
 common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_XAGetNumTracks.c
@@ -95,6 +96,9 @@ common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyFT4.c
 common, exe, DecalHUD_DrawWeapon, 0x0, General/DecalHUD/DecalHUD_DrawWeapon.c
 common, exe, DecalHUD_DrawPolyGT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyGT4.c
 common, exe, DecalHUD_Arrow2D, 0x0, General/DecalHUD/DecalHUD_Arrow2D.c
+
+// Display
+common, exe, DISPLAY_Swap, 0x0, General/Display/DISPLAY_Swap.c
 
 // DotLights (done)
 common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c

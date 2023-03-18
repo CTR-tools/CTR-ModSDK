@@ -3769,9 +3769,16 @@ struct CameraDC
 	short unk8E;
 
 	// 0x90 - used in Spin360
-	char unk90[0xA];
-
+	short unk90;
+	
+	// zoom variable
+	short unk92;
+	
 	// 0x94
+	int unk94;
+	
+	// 0x98
+	short unk98;
 
 	// 0x9a - semi-unused camera mode swap
 	short cameraMode; // Curr
