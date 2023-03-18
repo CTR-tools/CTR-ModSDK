@@ -190,6 +190,7 @@ common, exe, LOAD_Callback_LEV, 0x0, General/LOAD/LOAD_Callback_LEV.c
 common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD/LOAD_Callback_LEV_Adv.c
 common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD/LOAD_Callback_DriverModels.c
 common, exe, LOAD_DriverMPK, 0x0, General/LOAD/LOAD_DriverMPK.c
+//common, exe, LOAD_GetBigfileIndex, 0x0, General/LOAD_GetBigfileIndex.c
 common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_ReadFile.c
 common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_OvrLOD.c
 common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_OvrEndRace.c

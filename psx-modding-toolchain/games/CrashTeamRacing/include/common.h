@@ -9076,7 +9076,9 @@ struct sData
 	#endif
 
 	// 8008D0B4
-	char dataC_afterFILE[0x8];
+	// used to get which lev file
+	// to load, depending on LOD
+	char levBigLodIndex[0x8];
 
 	// 8008d0bc
 	int boolFirstBoot;

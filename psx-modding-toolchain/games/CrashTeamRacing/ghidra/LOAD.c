@@ -1466,12 +1466,12 @@ int FUN_80032c24(uint param_1,int param_2,int param_3)
 {
   // If Level ID is 0 - 17, if level_id is a race track - 18 in total
   if (param_1 < 0x12) {
-    return param_1 * 8 + (uint)(byte)(&DAT_8008d0b3)[param_2] + param_3;
+    return param_1 * 8 + (uint)(byte)(&DAT_8008d0b4)[param_2-1] + param_3;
   }
 
   // If Level ID is 19 - 24, if level_id is a battle map - 7 in total
   if (param_1 - 0x12 < 7) {
-    return (param_1 - 0x12) * 8 + (uint)(byte)(&DAT_8008d0b3)[param_2] + param_3 + 0x90;
+    return (param_1 - 0x12) * 8 + (uint)(byte)(&DAT_8008d0b4)[param_2-1] + param_3 + 0x90;
   }
 
   // one of the intro cutscenes, 9 in total
@@ -1506,12 +1506,13 @@ int FUN_80032c24(uint param_1,int param_2,int param_3)
 
   // 0x19 - 0x1d are adventure hubs
   // if hub, 5 in total
-  //the logic is that we already checked everything before, so it doesn't have to check param_1 - 0x19
+  
+  // if not scrapbook
   if (param_1 != 0x40) {
     return (param_1 - 0x19) * 3 + param_3 + 200;
   }
 
-  //returns the very last empty lev file index. must be the last resort measure if nothing to load.
+  // scrapbook
   return param_3 + 0x25e;
 }
 
