@@ -274,7 +274,7 @@ u_int main()
 				sdata->frameCounter++;
 
 				// Process all gamepad input
-				GAMEPAD_UpdateAll(sdata->gGamepads);
+				GAMEPAD_ProcessAnyoneVars(sdata->gGamepads);
 
 				#ifdef FastBoot
 				// disable spawn

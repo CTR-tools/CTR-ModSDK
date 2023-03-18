@@ -1,9 +1,10 @@
 #include <common.h>
 
-uint DECOMP_GAMEPAD_Update(struct GamepadSystem* gGamepads)
+void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads)
 {
   uint uVar1;
   uint uVar2;
+  struct GamepadBuffer* pad;
 
   // determine which buttons are held this frame,
   // store a backup of "currFrame" into "lastFrame"
@@ -21,24 +22,22 @@ uint DECOMP_GAMEPAD_Update(struct GamepadSystem* gGamepads)
 
   // These are used to see if any button is pressed by anyone
   // during this frame. Reset them all to zero
-  *(undefined4 *)(gGamepads + 0x290) = 0;
-  *(undefined4 *)(gGamepads + 0x294) = 0;
-  *(undefined4 *)(gGamepads + 0x298) = 0;
-  *(undefined4 *)(gGamepads + 0x29c) = 0;
+  gGamepads->anyoneHeldCurr = 0;
+  gGamepads->anyoneTapped 	= 0;
+  gGamepads->anyoneReleased = 0;
+  gGamepads->anyoneHeldPrev = 0;
 
   // if gamepads are connected
   if (gGamepads->numGamepadsConnected)
   {
-
 	// for iVar4 = 0; iVar4 < numGamepads; iVar4++
     for (int i = 0; i < gGamepads->numGamepadsConnected; i++)
 	{
-    struct GamepadBuffer* pad = gGamepads->gamepad[i];
-      *(uint *)(gGamepads + 0x290) = *(uint *)(gGamepads + 0x290) | pad->buttonsHeldCurrFrame;
-      *(uint *)(gGamepads + 0x294) = *(uint *)(gGamepads + 0x294) | pad->buttonsTapped;
-      *(uint *)(gGamepads + 0x298) = *(uint *)(gGamepads + 0x298) | pad->buttonsReleased;
-      *(uint *)(gGamepads + 0x29c) = *(uint *)(gGamepads + 0x29c) | pad->buttonsHeldPrevFrame;
+		pad = gGamepads->gamepad[i];
+		gGamepads->anyoneHeldCurr |= pad->buttonsHeldCurrFrame;
+		gGamepads->anyoneTapped   |= pad->buttonsTapped;
+		gGamepads->anyoneReleased |= pad->buttonsReleased;
+		gGamepads->anyoneHeldPrev |= pad->buttonsHeldPrevFrame;
     } 
   }
-  return uVar1 | uVar2;
 }

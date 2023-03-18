@@ -1224,9 +1224,9 @@ LAB_800260ac:
 }
 
 
-// GAMEPAD_Update
+// GAMEPAD_ProcessAnyoneVars
 // param_1 = PTR_DAT_8008d2b0
-uint FUN_800262d0(int param_1)
+void FUN_800262d0(int param_1)
 {
   uint uVar1;
   uint uVar2;
@@ -1287,7 +1287,6 @@ uint FUN_800262d0(int param_1)
 
     } while (iVar4 < *(int *)(param_1 + 0x314));
   }
-  return uVar1 | uVar2;
 }
 
 

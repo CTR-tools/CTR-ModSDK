@@ -5944,15 +5944,18 @@ struct GamepadSystem
 	// I should come back to investigate Sep3 GamepadSystem later
 	#if BUILD >= UsaRetail
 		// 0x282
-		char unk_8_bytes_per_gamepad[8*8];
+		char unkE[0xE];
 
 		// what's 0x282?
 
 		// 0x290, 0x294, 0x298, 0x29c,
-		// holds,
-		// taps,
-		// releases,
-		// prevHolds
+		int anyoneHeldCurr;
+		int anyoneTapped;
+		int anyoneReleased;
+		int anyoneHeldPrev;
+		
+		// 0x2A0
+		char unk22[0x22];
 
 		// 2C2
 		short unk_2C2;

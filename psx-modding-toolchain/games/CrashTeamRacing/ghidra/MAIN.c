@@ -9272,7 +9272,7 @@ LAB_8003ccf8:
 	  // frame counter
       DAT_8008d970 = DAT_8008d970 + 1;
 
-	  // GAMEPAD_UpdateAll
+	  // GAMEPAD_ProcessAnyoneVars
       FUN_800262d0(PTR_DAT_8008d2b0);
 
 	  // MainFrame_ResetDB (ClearOTagR)
