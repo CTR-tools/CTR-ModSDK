@@ -37,13 +37,13 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	if (sdata->gGT->battleSetup.enabledWeapons == 0x34de) itemSet = ITEMSET_BattleDefault;
 
 	// Not in Battle Mode
-	if ((sdata->gGT->gameMode1 & 0x20) == 0)
+	if ((sdata->gGT->gameMode1 & BATTLE_MODE) == 0)
 	{
 		// 7th Itemset (Crystal Challenge)
 		itemSet = ITEMSET_CrystalChallenge;
 
 		// Not in Crystal Challenge
-		if (!(sdata->gGT->gameMode1 & 0x8000000))
+		if (!(sdata->gGT->gameMode1 & CRYSTAL_CHALLENGE))
 		{
 			// Choose Itemset based on number of Drivers
 			switch(sdata->gGT->numPlyrCurrGame + sdata->gGT->numBotsNextGame)
@@ -180,7 +180,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	}
 
 	// In Boss race
-	if (sdata->gGT->gameMode1 & 0x80000000)
+	if (sdata->gGT->gameMode1 & ADVENTURE_BOSS)
 	{
 		bossFails = sdata->advProgress.timesLostBossRace[sdata->gGT->bossID];
 
@@ -213,7 +213,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	if (driver->heldItemID == 0x9)
 	{
 		// if nobody has warpball, then set flag that somebody has it
-		if (!(sdata->gGT->gameMode1 & 0x1000)) sdata->gGT->gameMode1 |= 0x1000;
+		if (!(sdata->gGT->gameMode1 & WARPBALL_HELD)) sdata->gGT->gameMode1 |= WARPBALL_HELD;
 
 		// if somebody has warpball already, then give 3 missiles
 		else driver->heldItemID = 0xb;
@@ -227,7 +227,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 			sdata->gGT->numPlyrCurrGame > 2 &&
 
 			// if not in battle mode
-			!(sdata->gGT->gameMode1 & 0x20)
+			!(sdata->gGT->gameMode1 & BATTLE_MODE)
 		)
 	{
 		// if less than 2 drivers have 3 missiles, then increase number of drivers that have it

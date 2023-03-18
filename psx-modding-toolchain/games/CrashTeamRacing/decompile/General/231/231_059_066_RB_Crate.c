@@ -290,12 +290,12 @@ int DECOMP_RB_CrateWeapon_LInC(
 		driver->itemRollTimer = 90;
 		
 		// if no roulette
-		if((sdata->gGT->gameMode1 & 0x800000) == 0)
+		if((sdata->gGT->gameMode1 & ROLLING_ITEM) == 0)
 		{
 			// start loop
 			OtherFX_Play(0x5d, 0);
 		
-			sdata->gGT->gameMode1 |= 0x800000;
+			sdata->gGT->gameMode1 |= ROLLING_ITEM;
 		}
 		
 		driver->PickupTimeboxHUD.cooldown = 5;

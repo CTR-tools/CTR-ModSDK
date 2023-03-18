@@ -341,7 +341,7 @@ EatDriver:
 	// === did not collide with PLAYER ===
 	
 	// bosses are immune
-	if((gGT->gameMode1 & 0x80000000) != 0) return;
+	if((gGT->gameMode1 & ADVENTURE_BOSS) != 0) return;
 	
 	plantBoxDesc.bucket = gGT->threadBuckets[ROBOT].thread;
 	hitInst = LinkedCollide_Hitbox_Desc(&plantBoxDesc);

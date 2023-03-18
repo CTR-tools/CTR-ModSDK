@@ -75,7 +75,7 @@ enum LevelID
 	NAUGHTY_DOG_CRATE, // 41.
 	OXIDE_ENDING,
 	OXIDE_TRUE_ENDING,
-	CREDITS, // 44.
+	CREDITS_LEVEL, // 44.
 	CREDITS_CRASH,
 	CREDITS_TINY,
 	CREDITS_COCO,
@@ -4546,28 +4546,30 @@ enum GameMode1
 
 enum GameMode2
 {
-  // & 1 - spawn outside boss door
-  // & 4 - can't move (see Player_Driving_PhysLinear)
+	// & 1 - spawn outside boss door
+	// & 4 - can't move (see Player_Driving_PhysLinear)
   
-  // & 8 - token race
+	// & 8 - token race
 	TOKEN_RACE = 8,
   
-  // & 0x10 - arcade/vs/adv cup
+	// & 0x10 - arcade/vs/adv cup
 	CUP_ANY_KIND = 0x10,
   
-  // & 0x20 - lev swap
-  // & 0x80 - CREDITS
+	// & 0x20 - lev swap
+	LEV_SWAP = 0x20,
+	// & 0x80 - CREDITS
+	CREDITS = 0x80,
   
-  // & 0x100 - DISABLE_LEV_INSTANCES
+	// & 0x100 - DISABLE_LEV_INSTANCES
 	DISABLE_LEV_INSTANCE = 0x100,
 	
 	CHEAT_WUMPA 	= 0x200,
 	CHEAT_MASK 		= 0x400,
 	CHEAT_TURBO		= 0x800,
 	
-  // & 0x1000 - FIRST_TIME_WIN_CUP
-  // & 0x2000 - FIRST_TIME_UNLOCK_BATTLE_MAP
-  // & 0x4000 - can't move (see Player_Driving_PhysLinear)
+	// & 0x1000 - FIRST_TIME_WIN_CUP
+	// & 0x2000 - FIRST_TIME_UNLOCK_BATTLE_MAP
+	// & 0x4000 - can't move (see Player_Driving_PhysLinear)
   
 	CHEAT_INVISIBLE	= 0x8000,
 	CHEAT_ENGINE	= 0x10000,
@@ -4579,9 +4581,9 @@ enum GameMode2
 	CHEAT_BOMBS		= 0x400000,
 	CHEAT_ONELAP	= 0x800000,
 	
-  // & 0x1000000 - INC_RELIC
-  // & 0x2000000 - INC_KEY
-  // & 0x4000000 - INC_TROPHY
+	// & 0x1000000 - INC_RELIC
+	// & 0x2000000 - INC_KEY
+	// & 0x4000000 - INC_TROPHY
   
 	CHEAT_TURBOCOUNT = 0x8000000
 };

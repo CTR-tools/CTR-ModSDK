@@ -374,7 +374,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		(
 			// multiplayer game, not battle, weapon was 3 missiles
 			(2 < (u_char)gGT->numPlyrCurrGame) &&
-			((gGT->gameMode1 & 0x20) == 0) &&
+			((gGT->gameMode1 & BATTLE_MODE) == 0) &&
 			(driver->heldItemID == 0xB) &&
 			(gGT->numPlayersWith3Missiles > 0)
 		)
@@ -467,7 +467,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	buttonsTapped = 0;
 
 	// If you're not in End-Of-Race menu
-	if ((gGT->gameMode1 & 0x200000) == 0)
+	if ((gGT->gameMode1 & END_OF_RACE) == 0)
 	{
 		uVar20 = ptrgamepad->buttonsHeldCurrFrame;
 		buttonsTapped = ptrgamepad->buttonsTapped;
@@ -671,7 +671,7 @@ CheckJumpButtons:
 	joystickStrength = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((gGT->gameMode1 & 0x200000) == 0)
+	if ((gGT->gameMode1 & END_OF_RACE) == 0)
 	{
 		// gamepadBuffer -> stickRY (for gas or reverse)
 		joystickStrength = (int)ptrgamepad->stickRY;
@@ -722,7 +722,7 @@ CheckJumpButtons:
 	unk0x80 = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((gGT->gameMode1 & 0x200000) == 0) 
+	if ((gGT->gameMode1 & END_OF_RACE) == 0) 
 	{
 		unk0x80 = ptrgamepad->stickLY;
 	}
@@ -992,7 +992,7 @@ CheckJumpButtons:
 	driverSpeedOrSmth = 0x80;
 
 	// If you're not in End-Of-Race menu
-	if ((gGT->gameMode1 & 0x200000) == 0)
+	if ((gGT->gameMode1 & END_OF_RACE) == 0)
 	{
 		// gamepadBuffer -> stickLX
 		driverSpeedOrSmth = (int)ptrgamepad->stickLX;

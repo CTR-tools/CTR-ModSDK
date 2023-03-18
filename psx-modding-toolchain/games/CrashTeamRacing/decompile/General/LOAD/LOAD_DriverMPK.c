@@ -38,13 +38,11 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 
 	// adv mpk
 	if(
-		// 2 is for cutscene
-		// 1 is for If you're in Adventure Arena
-		((gameMode1 & 0x20102000) != 0)
+		((gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA | MAIN_MENU)) != 0)
 		||
 
 		// credits
-		((sdata->gGT->gameMode2 & 0x80) != 0)
+		((sdata->gGT->gameMode2 & CREDITS) != 0)
 	  )
 	{
 		// adv mpk
@@ -55,8 +53,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		return;
 	}
 
-	// if loading into time trial level, or boss race
-	if((sdata->gGT->gameMode1 & 0x84020000) != 0)
+	if((sdata->gGT->gameMode1 & (ADVENTURE_BOSS | RELIC_RACE | TIME_TRIAL)) != 0)
 	{
 		// high lod model
 		LOAD_AppendQueue(param_1,2,
@@ -73,7 +70,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 
 	if(
 			// If you are in Adventure cup
-			((gameMode1 & 0x10000000) != 0) &&
+			((gameMode1 & ADVENTURE_CUP) != 0) &&
 
 			// purple gem cup
 			(sdata->gGT->cup.cupID == 4)

@@ -106,7 +106,7 @@ void DECOMP_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Dr
 		str = 0x12;
 
 		// If you're in Time Trial
-		if ((sdata->gGT->gameMode1 & 0x20000) != 0)
+		if ((sdata->gGT->gameMode1 & TIME_TRIAL) != 0)
 		{
 			// TIME TRIAL
 			str = 0x4d;
@@ -124,7 +124,7 @@ void DECOMP_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Dr
 		str = 0xc4;
 
 		// If you're in a Relic Race
-		if ((sdata->gGT->gameMode1 & 0x4000000) != 0)
+		if ((sdata->gGT->gameMode1 & RELIC_RACE) != 0)
 		{
 			// YOUR TIME
 			str = 0xc5;
@@ -221,13 +221,13 @@ void DECOMP_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Dr
 	if
 	(
 		// If you're not in a Relic Race
-		((sdata->gGT->gameMode1 & 0x4000000) == 0) ||
+		((sdata->gGT->gameMode1 & RELIC_RACE) == 0) ||
 		((flags & 2) != 0)
 	)
 	{
 		// If you're not in Arcade mode,
 		// nor Time Trial, nor adventure mode
-		if ((sdata->gGT->gameMode1 & 0x4a0000) == 0)
+		if ((sdata->gGT->gameMode1 & (ARCADE_MODE | TIME_TRIAL | ADVENTURE_MODE)) == 0)
 		{
 			return;
 		}
@@ -288,7 +288,7 @@ void DECOMP_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Dr
 				if ((flags & 1) == 0)
 				{
 					// If you're in Arcade Mode
-					if ((sdata->gGT->gameMode1 & 0x400000) != 0) goto LAB_8004f84c;
+					if ((sdata->gGT->gameMode1 & ARCADE_MODE) != 0) goto LAB_8004f84c;
 
 					// Set lap number in "Ln" string
 					sdata->s_Ln[1] = (char)numLaps + '1';
