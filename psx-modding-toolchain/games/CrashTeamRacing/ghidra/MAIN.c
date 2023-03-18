@@ -2359,7 +2359,7 @@ LAB_800367d4:
 		  // if this is first frame of 232 loaded
           if (PTR_DAT_8008d2ac[0x2579] != '\0')
 		  {
-			// INSTANCE_LevRestartLInBs
+			// INSTANCE_LevDelayedLInBs
             FUN_80030ed4(*(undefined4 *)(param_1[0x58] + 0x10),
 				*(undefined4 *)(param_1[0x58] + 0xc));
 

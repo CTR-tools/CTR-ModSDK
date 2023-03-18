@@ -633,8 +633,8 @@ LAB_80030e18:
   return;
 }
 
-// INSTANCE_LevRestartLInBs
-// only for lev swap, or podium->driving (233->232)
+// INSTANCE_LevDelayedLInBs
+// only for podium->driving (233->232)
 void FUN_80030ed4(int param_1,int param_2)
 
 {
@@ -661,10 +661,10 @@ void FUN_80030ed4(int param_1,int param_2)
 			// if pointer is not nullptr
 			(iVar1 != 0) &&
 
-			// if funcLevInstDefBirth
+			// if LInB
 			(*(code **)(iVar1 + 4) != (code *)0x0))
 	  {
-		// execute funcLevInstDefBirth, make thread for this instance
+		// execute LInB for this instance
         (**(code **)(iVar1 + 4))(*puVar2);
       }
 

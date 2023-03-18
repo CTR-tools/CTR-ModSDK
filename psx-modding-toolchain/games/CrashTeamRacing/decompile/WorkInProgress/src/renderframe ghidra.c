@@ -277,7 +277,7 @@ LAB_800367d4:
 						sdata->AkuHint_boolInterruptWarppad = 0;
 					}
 					if (sdata_gGT->overlayTransition != '\0') {
-						INSTANCE_LevRestartLInBs(gGT->level1->ptrInstDefs, gGT->level1->numInstances);
+						INSTANCE_LevDelayedLInBs(gGT->level1->ptrInstDefs, gGT->level1->numInstances);
 						psVar17 = sdata_gGT;
 						piVar1 = &sdata_gGT->gameMode2;
 						sdata_gGT->overlayTransition = '\0';

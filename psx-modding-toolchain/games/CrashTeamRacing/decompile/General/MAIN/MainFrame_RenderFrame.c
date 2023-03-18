@@ -57,7 +57,7 @@ u_int LOAD_IsOpen_AdvHub();
 void DrawHUD_AdvStrings();
 void AH_Map_Main();
 void AH_MaskHint_Start(short requestedHint, short bool_interruptWarppad);
-void INSTANCE_LevRestartLInBs(void* instDefs, u_int numInstances);
+void INSTANCE_LevDelayedLInBs(void* instDefs, u_int numInstances);
 void DrawIntroRaceText_1P();
 void RedBeaker_RenderRain(struct TileView* tileView, struct PrimMem* primMem, struct JitPool* rain, char numPlyr, int gameMode1);
 u_int LOAD_IsOpen_Podiums();
@@ -640,7 +640,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 					{
 						gGT->overlayTransition = 0;
 						
-						INSTANCE_LevRestartLInBs(
+						INSTANCE_LevDelayedLInBs(
 							gGT->level1->ptrInstDefs,
 							gGT->level1->numInstances);
 							

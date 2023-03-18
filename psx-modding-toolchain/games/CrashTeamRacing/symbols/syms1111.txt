@@ -413,7 +413,7 @@
 800326a8 INSTANCE_Death
 
 800326d4 INSTANCE_LevInitAll
-80032ad4 INSTANCE_LevRestartLInBs
+80032ad4 INSTANCE_LevDelayedLInBs
 // INSTANCE_GetNumAnimFrames
 
 80032bdc JitPool_Clear
