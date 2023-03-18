@@ -2,8 +2,9 @@
 
 void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads)
 {
-  uint uVar1;
-  uint uVar2;
+  int i;
+  unsigned int uVar1;
+  unsigned int uVar2;
   struct GamepadBuffer* pad;
 
   // determine which buttons are held this frame,
@@ -27,17 +28,13 @@ void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads)
   gGamepads->anyoneReleased = 0;
   gGamepads->anyoneHeldPrev = 0;
 
-  // if gamepads are connected
-  if (gGamepads->numGamepadsConnected)
+
+  for (i = 0; i < gGamepads->numGamepadsConnected; i++)
   {
-	// for iVar4 = 0; iVar4 < numGamepads; iVar4++
-    for (int i = 0; i < gGamepads->numGamepadsConnected; i++)
-	{
-		pad = gGamepads->gamepad[i];
-		gGamepads->anyoneHeldCurr |= pad->buttonsHeldCurrFrame;
-		gGamepads->anyoneTapped   |= pad->buttonsTapped;
-		gGamepads->anyoneReleased |= pad->buttonsReleased;
-		gGamepads->anyoneHeldPrev |= pad->buttonsHeldPrevFrame;
-    } 
+	pad = &gGamepads->gamepad[i];
+	gGamepads->anyoneHeldCurr |= pad->buttonsHeldCurrFrame;
+	gGamepads->anyoneTapped   |= pad->buttonsTapped;
+	gGamepads->anyoneReleased |= pad->buttonsReleased;
+	gGamepads->anyoneHeldPrev |= pad->buttonsHeldPrevFrame;
   }
 }
