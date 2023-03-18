@@ -4702,13 +4702,13 @@ struct GameTracker
   struct
   {
 	  struct JitPool thread;		// 0x18d0
-	  struct JitPool instance;	// 0x18f8
+	  struct JitPool instance;		// 0x18f8
 	  struct JitPool smallStack;	// 0x1920, used for items
 	  struct JitPool mediumStack;	// 0x1948, used for ???
 	  struct JitPool largeStack;	// 0x1970, used for drivers
-	  struct JitPool particle;	// 0x1998
+	  struct JitPool particle;		// 0x1998
 	  struct JitPool oscillator;	// 0x19c0
-	  struct JitPool rain;		// 0x19e8
+	  struct JitPool rain;			// 0x19e8
   } JitPools;
 
   // 1a10
@@ -5946,15 +5946,18 @@ struct GamepadSystem
 	// I should come back to investigate Sep3 GamepadSystem later
 	#if BUILD >= UsaRetail
 		// 0x282
-		char unk_8_bytes_per_gamepad[8*8];
+		char unkE[0xE];
 
 		// what's 0x282?
 
 		// 0x290, 0x294, 0x298, 0x29c,
-		// holds,
-		// taps,
-		// releases,
-		// prevHolds
+		int anyoneHeldCurr;
+		int anyoneTapped;
+		int anyoneReleased;
+		int anyoneHeldPrev;
+		
+		// 0x2A0
+		char unk22[0x22];
 
 		// 2C2
 		short unk_2C2;
@@ -9075,7 +9078,9 @@ struct sData
 	#endif
 
 	// 8008D0B4
-	char dataC_afterFILE[0x8];
+	// used to get which lev file
+	// to load, depending on LOD
+	char levBigLodIndex[0x8];
 
 	// 8008d0bc
 	int boolFirstBoot;

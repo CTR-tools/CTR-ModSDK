@@ -1,6 +1,7 @@
 // functions bigger than their originals
-common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c, rdata.bin
+common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
 common, exe, MATH_Sin, 0x0, General/MATH/MATH_Sin_hook.s
+common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels_Store_hook.s
 
 // 221
 common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
@@ -104,6 +105,8 @@ common, exe, DISPLAY_Swap, 0x0, General/Display/DISPLAY_Swap.c
 common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c
 
 // GAMEPAD
+common, exe, GAMEPAD_Init, 0x0, General/GAMEPAD/GAMEPAD_Init.c
+common, exe, GAMEPAD_ProcessAnyoneVars, 0x0, General/GAMEPAD/GAMEPAD_ProcessAnyoneVars.c
 
 // GAMEPROG (done)
 common, exe, GAMEPROG_AdvPercent, 0x0, General/GAMEPROG/GAMEPROG_AdvPercent.c
@@ -156,6 +159,14 @@ common, exe, JitPool_Init, 0x0, General/JitPool/JitPool_Init.c
 common, exe, JitPool_Add, 0x0, General/JitPool/JitPool_Add.c
 common, exe, JitPool_Remove, 0x0, General/JitPool/JitPool_Remove.c
 
+// LevInstDef
+common, exe, LevInstDef_UnPack, 0x0, General/LevInstDef/LevInstDef_UnPack.c
+common, exe, LevInstDef_RePack, 0x0, General/LevInstDef/LevInstDef_RePack.c
+
+// LibraryOfModels
+// LibraryOfModels_Store relocated to RDATA
+common, exe, LibraryOfModels_Clear, 0x0, General/LibraryOfModels/LibraryOfModels_Clear.c
+
 // LIST
 common, exe, LIST_Clear, 0x0, General/LIST/LIST_Clear.c
 common, exe, LIST_AddFront, 0x0, General/LIST/LIST_AddFront.c
@@ -179,6 +190,7 @@ common, exe, LOAD_Callback_LEV, 0x0, General/LOAD/LOAD_Callback_LEV.c
 common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD/LOAD_Callback_LEV_Adv.c
 common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD/LOAD_Callback_DriverModels.c
 common, exe, LOAD_DriverMPK, 0x0, General/LOAD/LOAD_DriverMPK.c
+//common, exe, LOAD_GetBigfileIndex, 0x0, General/LOAD_GetBigfileIndex.c
 common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_ReadFile.c
 common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_OvrLOD.c
 common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_OvrEndRace.c

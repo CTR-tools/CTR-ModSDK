@@ -194,7 +194,7 @@
 800271b0 GAMEPAD_ProcessSticks
 80027580 GAMEPAD_ProcessTapRelease
 80027688 GAMEPAD_ProcessForceFeedback
-80027a0c GAMEPAD_UpdateAll
+80027a0c GAMEPAD_ProcessAnyoneVars
 
 80027adc GAMEPAD_Vib_1
 80027b38 GAMEPAD_Vib_2
@@ -413,7 +413,7 @@
 800326a8 INSTANCE_Death
 
 800326d4 INSTANCE_LevInitAll
-80032ad4 INSTANCE_LevRestartLInBs
+80032ad4 INSTANCE_LevDelayedLInBs
 // INSTANCE_GetNumAnimFrames
 
 80032bdc JitPool_Clear
