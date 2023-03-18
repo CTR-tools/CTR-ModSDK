@@ -158,6 +158,10 @@ common, exe, JitPool_Init, 0x0, General/JitPool/JitPool_Init.c
 common, exe, JitPool_Add, 0x0, General/JitPool/JitPool_Add.c
 common, exe, JitPool_Remove, 0x0, General/JitPool/JitPool_Remove.c
 
+// LevInstDef
+common, exe, LevInstDef_UnPack, 0x0, General/LevInstDef/LevInstDef_UnPack.c
+common, exe, LevInstDef_RePack, 0x0, General/LevInstDef/LevInstDef_RePack.c
+
 // LIST
 common, exe, LIST_Clear, 0x0, General/LIST/LIST_Clear.c
 common, exe, LIST_AddFront, 0x0, General/LIST/LIST_AddFront.c

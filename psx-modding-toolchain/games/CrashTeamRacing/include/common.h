@@ -4700,13 +4700,13 @@ struct GameTracker
   struct
   {
 	  struct JitPool thread;		// 0x18d0
-	  struct JitPool instance;	// 0x18f8
+	  struct JitPool instance;		// 0x18f8
 	  struct JitPool smallStack;	// 0x1920, used for items
 	  struct JitPool mediumStack;	// 0x1948, used for ???
 	  struct JitPool largeStack;	// 0x1970, used for drivers
-	  struct JitPool particle;	// 0x1998
+	  struct JitPool particle;		// 0x1998
 	  struct JitPool oscillator;	// 0x19c0
-	  struct JitPool rain;		// 0x19e8
+	  struct JitPool rain;			// 0x19e8
   } JitPools;
 
   // 1a10
