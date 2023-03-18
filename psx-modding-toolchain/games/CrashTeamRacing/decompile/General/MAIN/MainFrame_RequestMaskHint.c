@@ -21,14 +21,16 @@ void Player_Freeze_Init(struct Thread* t, struct Driver* d);
 // param2:
 //	0x00 - not interrupting a warppad load screen
 // 	0x01 - interrupting (CTR, Relic, or Crystal hints)
-void DECOMP_MainFrame_RequestMaskHint(short hintId, bool interruptWarpPad)
+void DECOMP_MainFrame_RequestMaskHint(short hintId, char interruptWarpPad)
 {
-  if (((sdata->gGT->gameMode1 & 0xf) == 0) &&
+  struct GameTracker* gGT = sdata->gGT;
+	
+  if (((gGT->gameMode1 & 0xf) == 0) &&
 		(sdata->AkuHint_RequestedHint == -1))
   {
     sdata->AkuAkuHintState = 1;
 
-    sdata->gGT->drivers[0].funcPtrs[0] = Player_Freeze_Init;
+    gGT->drivers[0]->funcPtrs[0] = Player_Freeze_Init;
 
 	sdata->AkuHint_RequestedHint = hintId;
 	sdata->AkuHint_boolInterruptWarppad = interruptWarpPad;

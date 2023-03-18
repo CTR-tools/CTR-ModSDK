@@ -192,6 +192,9 @@ common, exe, MainDB_OTMem, 0x0, General/MAIN/MainDB_OTMem.c
 common, exe, MainDrawCb_DrawSync, 0x0, General/MAIN/MainDrawCb_DrawSync.c
 common, exe, MainDrawCb_Vsync, 0x0, General/MAIN/MainDrawCb_Vsync.c
 common, exe, MainFrame_RenderFrame, 0x0, General/MAIN/MainFrame_RenderFrame.c
+common, exe, MainFrame_RequestMaskHint, 0x0, General/MAIN/MainFrame_RequestMaskHint.c
+common, exe, MainFrame_ResetDB, 0x0, General/MAIN/MainFrame_ResetDB.c
+common, exe, MainFrame_TogglePauseAudio, 0x0, General/MAIN/MainFrame_TogglePauseAudio.c
 common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
 common, exe, MainInit_PrimMem, 0x0, General/MAIN/MainInit_PrimMem.c
 common, exe, MainInit_OTMem, 0x0, General/MAIN/MainInit_OTMem.c
