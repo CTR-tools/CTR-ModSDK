@@ -57,7 +57,6 @@ void LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
 {
 	u_char numPlyrNextGame;
-	u_char* moredata; //-- redundant
 	short sVar4;
 	int iVar5;
 	u_int uVar6;
@@ -69,7 +68,6 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	u_char hudFlags;
 	int iVar12;
 	char *levelNamePtr;
-	u_char* moremoredata; //-- redundant
 	int *piVar15;
 	u_int uVar16;
 	u_int uVar17;
@@ -78,6 +76,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	int levelID;
 	int ovrRegion1;
 	int ovrRegion3;
+	struct Model* m;
 
 	// pointer to LEV
 	iVar9 = sdata->ptrLEV_DuringLoading;
@@ -739,10 +738,11 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 							*piVar15 = iVar12 + 4;
 							iVar12 = *piVar15;
 						}
-						// idk --Super
-						if ((int)*(short *)(iVar12 + 0x10) != -1)
+						
+						m = iVar12;
+						if (m->id != -1)
 						{
-							*(int *)(moredata + (int)*(short *)(iVar12 + 0x10) * 4 + 0x2160) = iVar12;
+							gGT->modelPtr[m->id] = m;
 						}
 					}
 
