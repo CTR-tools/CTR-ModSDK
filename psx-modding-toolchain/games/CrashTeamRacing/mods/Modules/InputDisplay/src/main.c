@@ -80,7 +80,7 @@ void DrawAnalog(unsigned short * X, unsigned short * Y)
 
 void inputDisplay_Main()
 {
-	if ((sdata->gGT->gameMode1 & 0x60000000) == 0)
+	if ((sdata->gGT->gameMode1 & (GAME_CUTSCENE | LOADING)) == 0)
 	{	
 		DecalFont_DrawLine(".", 23,178, 2, 0xffff0000);
 

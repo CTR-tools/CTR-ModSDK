@@ -103,7 +103,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	if(driver->squishTimer > 0) driver->timeSpentSquished += msPerFrame;	
 
 	// If Super Engine Cheat is not enabled
-	if (!(gameMode2 & 0x10000))
+	if (!(gameMode2 & CHEAT_ENGINE))
 	{
 		driver->superEngineTimer -= msPerFrame;
 		if(driver->superEngineTimer < 0) driver->superEngineTimer = 0;
@@ -115,7 +115,7 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	if
 	(
 		(driver->invisibleTimer != 0) &&
-		(!(gameMode2 & 0x8000))
+		(!(gameMode2 & CHEAT_INVISIBLE))
 	)
 	{		
 		driver->invisibleTimer -= msPerFrame;
@@ -570,8 +570,8 @@ void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 				// not spring weapon
 				if (heldItemID != 5)
 				{
-					// only reduce numHeldItem if not using cheats
-					if ((gameMode2 & 0x400c00) == 0) driver->numHeldItems--;
+					// only reduce numHeldItem if not using item cheats
+					if ((gameMode2 & (CHEAT_BOMBS | CHEAT_TURBO | CHEAT_MASK)) == 0) driver->numHeldItems--;
 				}
 				
 				// no spring in final game

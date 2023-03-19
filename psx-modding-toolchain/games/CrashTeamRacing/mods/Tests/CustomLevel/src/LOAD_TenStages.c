@@ -96,7 +96,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		{
 
 			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != 0x28) && (levelID != 0x29))
+			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
 				Cutscene_VolumeBackup();
 			}
@@ -146,8 +146,9 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// no overlay transition
 			gGT->overlayTransition = 0;
 
-			gGT->gameMode1 &= 0xdfcfdfff;
-			gGT->gameMode2 &= 0xfffffe5f;
+			// disable certain game mode flags
+			gGT->gameMode1 &= (0xffffffff ^ (GAME_CUTSCENE | END_OF_RACE | ADVENTURE_ARENA | MAIN_MENU));
+			gGT->gameMode2 &= (0xffffffff ^ (LEV_SWAP | CREDITS | DISABLE_LEV_INSTANCE));
 
 			gGT->visMem1 = 0;
 			gGT->visMem2 = 0;
@@ -155,31 +156,31 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			boolDefault1P = 1;
 			
 			// credits
-			if(levelID >= 44)
+			if(levelID >= CREDITS_LEVEL)
 			{
 				// enable cutscene flag
-				gGT->gameMode1 |= 0x20000000;
+				gGT->gameMode1 |= GAME_CUTSCENE;
 			
 				// lev swap (&20) and credits (&80)
-				gGT->gameMode2 |= 0xa0;
+				gGT->gameMode2 |= (LEV_SWAP | CREDITS);
 			}
 				
 			// If you're in Naughty Dog Box Scene,
 			// Oxide Any% ending
 			// Oxide 101% ending
-			else if(levelID >= 41)
+			else if(levelID >= NAUGHTY_DOG_CRATE)
 			{
 				// Enable cutscene flag
-				gGT->gameMode1 |= 0x20000000;
+				gGT->gameMode1 |= GAME_CUTSCENE;
 			}
 
 			// main menu or garage
-			else if(levelID >= 39)
+			else if(levelID >= MAIN_MENU_LEVEL)
 			{
 				// enable flag that shows you are in main menu
-				gGT->gameMode1 |= 0x2000;
+				gGT->gameMode1 |= MAIN_MENU;
 
-				if(levelID == 40)
+				if(levelID == ADVENTURE_CHARACTER_SELECT)
 				{
 					// Enter Adventure Character Selection
 					sdata->mainMenuState = 4;
@@ -195,24 +196,24 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			}
 
 			// intro cutscenes
-			else if(levelID >= 30)
+			else if(levelID >= INTRO_RACE_TODAY)
 			{
 				// Enable cutscene flag
-				gGT->gameMode1 |= 0x20000000;
+				gGT->gameMode1 |= GAME_CUTSCENE;
 
 				// lev swap will be needed
-				gGT->gameMode2 |= 0x20;
+				gGT->gameMode2 |= LEV_SWAP;
 			}
 
 			// if you are loading into adventure map:
 			// any of the hubs: "hub1", "hub2", etc
-			else if(levelID >= 25)
+			else if(levelID >= GEM_STONE_VALLEY)
 			{
 				// Change mode to Adventure Arena
-				gGT->gameMode1 |= 0x100000;
+				gGT->gameMode1 |= ADVENTURE_ARENA;
 
 				// lev swap will be needed
-				gGT->gameMode2 |= 0x20;
+				gGT->gameMode2 |= LEV_SWAP;
 			}
 			
 			// driving track
@@ -238,13 +239,13 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			sdata->levelLOD = gGT->numPlyrCurrGame;
 			
 			// main menu or adv garage
-			if((gGT->gameMode1 & 0x2000) != 0)
+			if((gGT->gameMode1 & MAIN_MENU) != 0)
 			{
 				sdata->levelLOD = 1;
 			}
 			
 			// if relic, or time trial
-			if((gGT->gameMode1 & 0x4020000) != 0)
+			if((gGT->gameMode1 & (TIME TRIAL | RELIC_RACE)) != 0)
 			{
 				sdata->levelLOD = 8;
 			}
@@ -255,8 +256,8 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// if cutscene, adventure arena, or credits
 			if
 			(
-				((gGT->gameMode1 & 0x20100000) != 0) ||
-				((gGT->gameMode2 & 0x80) != 0)
+				((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA)) != 0) ||
+				((gGT->gameMode2 & CREDITS) != 0)
 			)
 			{
 				// (now, at beginning of mempack)
@@ -272,8 +273,8 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			// dont load end-of-race in these modes:
 			//	cup, credits, lev swap, cutscene, main menu
-			if ((gGT->gameMode2 & 0xB0) != 0) break;
-			if ((gGT->gameMode1 & 0x20002000) != 0) break;
+			if ((gGT->gameMode2 & (CUP_ANY_KIND | LEV_SWAP | CREDITS)) != 0) break;
+			if ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) != 0) break;
 
 			// === pick overlay to load ===
 			
@@ -291,7 +292,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			
 			// 222 - Arcade/Trophy/Boss/C-T-R token
 			// if arcade, or adv that isn't listed above
-			else if ((gGT->gameMode1 & 0x480000) != 0)
+			else if ((gGT->gameMode1 & (ARCADE_MODE | ADVENTURE_MODE)) != 0)
 				ovrRegion1 = 1;
 			
 			// default VS/Battle overlay if no mode found
@@ -309,13 +310,13 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		case 3:
 		{
 			// main menu, 230
-			if (levelID == 0x27) 
+			if (levelID == MAIN_MENU_LEVEL) 
 			{
 				ovrRegion3 = 0;
 			}
 			
 			// adv hub, 232
-			else if ((gGT->gameMode1 & 0x100000) != 0)
+			else if ((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
 			{	
 				ovrRegion3 = 2;
 			}
@@ -327,13 +328,12 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				(gGT->podiumRewardID != 0) ||
 
 				// If you are in a cutscene
-				((gGT->gameMode1 & 0x20000000) != 0) ||
+				((gGT->gameMode1 & GAME_CUTSCENE) != 0) ||
 
 				// if going to credits
-				((gGT->gameMode2 & 0x80) != 0) ||
+				((gGT->gameMode2 & CREDITS) != 0) ||
 
-				// If LevelID is 40 (Adv Garage)
-				(gGT->levelID == 0x28)
+				(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
 			)
 			{
 				ovrRegion3 = 3;
@@ -351,13 +351,13 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		case 4:
 		{
 			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != 0x28) && (levelID != 0x29))
+			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
 				Music_Restart();
 			}
 
 			// If in main menu (character selection, track selection, any part of it)
-			if ((gGT->gameMode1 & 0x2000) != 0)
+			if ((gGT->gameMode1 & MAIN_MENU) != 0)
 			{
 				// all these are 230, except for adv garage in 233
 				switch(sdata->mainMenuState)
@@ -404,7 +404,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			}
 
 			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != 0x28) && (levelID != 0x29))
+			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
 				Music_Stop();
 				CseqMusic_StopAll();
@@ -416,7 +416,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		case 6:
 		{
 			// if level is not AdvGarage or Naughty Dog Box Scene
-			if ((levelID != 0x28) && (levelID != 0x29))
+			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
 				iVar9 = Music_AsyncParseBanks();
 
@@ -442,14 +442,14 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			};
 
 			// If the world you're in is made of multiple LEV files
-			if ((gGT->gameMode2 & 0x20) != 0)
+			if ((gGT->gameMode2 & LEV_SWAP) != 0)
 			{
 				// Cutscene Packs
 				iVar9 = 0x6b000;
 				iVar12 = 0x40000;
 
 				// If you're in Adventure Arena
-				if ((gGT->gameMode1 & 0x100000) != 0)
+				if ((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
 				{
 					// Adv Arena Packs
 					iVar9 = 0x68800;
@@ -471,7 +471,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				MEMPACK_NewPack_StartEnd(iVar5 + iVar9, iVar12);
 
 				// Intro cutscene with oxide spaceship and all racers
-				if ((gGT->gameMode1 & 0x100000) == 0)
+				if ((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
 				{
 					// Always start with pool 1
 					sVar4 = 1;
@@ -538,7 +538,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			#endif
 
 			// if level ID is AdvHub or Cutscene
-			if ((gGT->gameMode2 & 0x20) != 0)
+			if ((gGT->gameMode2 & LEV_SWAP) != 0)
 			{
 				// bigfile index, 2 = PTR
 				uVar6 = LOAD_GetBigfileIndex
@@ -637,10 +637,10 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			(
 				// 2 is for cutscene
 				// 1 is for If you're in Adventure Arena
-				((gGT->gameMode1 & 0x20100000) == 0) &&
+				((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA)) == 0) &&
 
 				// if not going to credits
-				((gGT->gameMode2 & 0x80) == 0)
+				((gGT->gameMode2 & CREDITS) == 0)
 			)
 			{
 				// (now, at end of mempack)
@@ -738,7 +738,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			// If you're in Adventure Arena
 			if
 			(
-				((gGT->gameMode1 & 0x100000) != 0) &&
+				((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
 				(
 					// loop counter
 					iVar9 = 0,
@@ -840,15 +840,15 @@ LAB_800346b0:
 				(
 
 					// If not in main menu (not in 2D character selection, track selection, or any part of it)
-					((gGT->gameMode1 & 0x2000) == 0) ||
+					((gGT->gameMode1 & MAIN_MENU) == 0) ||
 
 					// If level ID == 40
 					// If you are in Adventure Character Selection
-					(gGT->levelID == 0x28)
+					(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
 				)
 				{
 					// if not going to credits
-					if ((gGT->gameMode2 & 0x80) == 0)
+					if ((gGT->gameMode2 & CREDITS) == 0)
 					{
 						// enable all flags except loading screen
 						gameMode1 = gGT->renderFlags | 0xffffefff;

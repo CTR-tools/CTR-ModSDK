@@ -71,7 +71,7 @@ void RunTrafficLightHook()
 {	
 	// BORDER
 	if(data.characterIDs[5] == 1)
-		sdata->gGT->gameMode1 |= 0x20;
+		sdata->gGT->gameMode1 |= BATTLE_MODE;
 }
 
 void RunUpdateHook()
@@ -104,7 +104,7 @@ void RunUpdateHook()
 	cIDs = &data.characterIDs[0];
 	
 	// arcade mode (ignored in 3P/4P)
-	sdata->gGT->gameMode1 |= 0x400000;
+	sdata->gGT->gameMode1 |= ARCADE_MODE;
 	
 	// prevent error message for gamepads
 	sdata->gGT->numPlyrNextGame = 1;
@@ -123,7 +123,7 @@ void RunUpdateHook()
 		*(int*)((int)EndOfRace_DrawAllComments + 4) = 0;
 		
 		// remove battle mode
-		sdata->gGT->gameMode1 &= 0xFFFFFFDF;
+		sdata->gGT->gameMode1 &= (0xFFFFFFFF ^ BATTLE_MODE);
 	}
 	
 	tap = sdata->gGamepads->gamepad[0].buttonsTapped;

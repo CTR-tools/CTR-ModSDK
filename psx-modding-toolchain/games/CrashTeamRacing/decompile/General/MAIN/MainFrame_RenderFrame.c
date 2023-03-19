@@ -183,7 +183,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 		// if not cutscene
 		// if not in adventure arena
 		// if not in main menu
-		((gGT->gameMode1 & 0x20102000) == 0) &&
+		((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA | MAIN_MENU)) == 0) &&
 		
 		// if loading is 100% finished
 		(sdata->Loading.stage != -4)
@@ -205,7 +205,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
     if (sdata->Loading.stage == -1) {
 
 	  // If game is not paused
-      if ((gGT->gameMode1 & 0xf) == 0)
+      if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
 	  {
 		RobotcarWeapons_Update();
       }
@@ -215,7 +215,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 
 	// If in main menu, or in adventure arena,
 	// or in End-Of-Race menu
-	if ((gGT->gameMode1 & 0x302000) != 0) {
+	if ((gGT->gameMode1 & (ADVENTURE_ARENA | END_OF_RACE | MAIN_MENU)) != 0) {
 		unk80047d64();
 	}
 	
@@ -457,7 +457,7 @@ void RenderAllWeather(struct GameTracker* gGT)
 		&gGT->backBuffer->primMem,
 		&gGT->rainBuffer[0],
 		numPlyrCurrGame,
-		gGT->gameMode1 & 0xf);
+		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
 }
 
 void RenderAllConfetti(struct GameTracker* gGT)
@@ -478,7 +478,7 @@ void RenderAllConfetti(struct GameTracker* gGT)
 			&gGT->backBuffer->primMem,
 			&gGT->confetti,
 			gGT->frameTimer_Confetti,
-			gGT->gameMode1 & 0xf);
+			gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
 	}
 }
 
@@ -678,7 +678,7 @@ void RenderAllBeakerRain(struct GameTracker* gGT)
 		&gGT->backBuffer->primMem,
 		&gGT->JitPools.rain,
 		numPlyrCurrGame,
-		gGT->gameMode1 & 0xf);
+		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
 }
 
 void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
@@ -713,7 +713,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 		gGT->ptrRenderBucketInstance,
 		sdata->LOD[lod],
 		numPlyrCurrGame,
-		gGT->gameMode1 & 0xf);
+		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
 		
 	RBI = RenderBucket_QueueNonLevInstances(
 		gGT->JitPools.instance.taken.first,
@@ -721,7 +721,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 		RBI,
 		sdata->LOD[lod],
 		numPlyrCurrGame,
-		gGT->gameMode1 & 0xf);
+		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
 		
 	// Aug prototype
 #if 0

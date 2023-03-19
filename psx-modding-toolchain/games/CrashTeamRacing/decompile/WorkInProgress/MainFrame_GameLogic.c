@@ -25,7 +25,7 @@ void MainFrame_GameLogic(struct GameTracker* sdata->gGT, struct GamepadSystem* g
 	struct GameTracker* psVar17;
 	
 	bVar1 = true;
-	if ((sdata->gGT->gameMode1 & 0xfU) == 0)
+	if ((sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
 	{
 		bVar1 = false;
 		tileView = ::sdata->gGT->tileView;
@@ -89,11 +89,11 @@ LAB_80034e74:
 		psVar17 = ::sdata->gGT;
 		if (sdata->gGT->trafficLightsTimer < 1)
 		{
-			if ((::sdata->gGT->gameMode1 & 0x10U) == 0)
+			if ((::sdata->gGT->gameMode1 & PAUSE_THREADS) == 0)
 			{
 				if (sdata->gGT->frozenTimeRemaining < 1)
 				{
-					if ((::sdata->gGT->gameMode1 & 0x200000U) == 0)
+					if ((::sdata->gGT->gameMode1 & END_OF_RACE) == 0)
 					{
 						sdata->gGT->elapsedEventTime = sdata->gGT->elapsedEventTime + sdata->gGT->elapsedTimeMS;
 					}
@@ -170,7 +170,7 @@ LAB_80035098:
 		do
 		{
 			piVar8 = (int*)((int)sdata->gGT->db[0].drawEnv.ofs + iVar15 - 0x20);
-			if ((((::sdata->gGT->gameMode1 & 0x10U) == 0) || ((piVar8[3] & 1U) != 0)) && (*piVar8 != 0))
+			if ((((::sdata->gGT->gameMode1 & PAUSE_THREADS) == 0) || ((piVar8[3] & 1U) != 0)) && (*piVar8 != 0))
 			{
 				if (iVar4 == 0)
 				{
@@ -227,7 +227,7 @@ LAB_80035098:
 	uVar6 = LOAD_IsOpen_RacingOrBattle();
 	if (uVar6 != 0)
 	{
-		if ((::sdata->gGT->gameMode1 & 0xfU) == 0)
+		if ((::sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
 		{
 			RB_Bubbles_RoosTubes();
 		}
@@ -237,7 +237,7 @@ LAB_80035098:
 		}
 	}
 	THREAD_CheckAllForDead();
-	if ((::sdata->gGT->gameMode1 & 0xfU) == 0)
+	if ((::sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
 	{
 		Audio_Update1();
 	}
@@ -247,7 +247,7 @@ LAB_80035098:
 	uVar3 = ::sdata->gGT->gameMode1;
 	if ((uVar3 & 0x200000) == 0)
 	{
-		if ((bVar1) || ((sdata->gGT->gameMode1 & 0xfU) != 0))
+		if ((bVar1) || ((sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0))
 		{
 			if (::sdata->gGT->cooldownfromPauseUntilUnpause == '\0')
 			{
@@ -261,7 +261,7 @@ LAB_80035098:
 				)
 				{
 					MenuBox_ClearInput();
-					::sdata->gGT->gameMode1 = ::sdata->gGT->gameMode1 & 0xfffffffe;
+					::sdata->gGT->gameMode1 = ::sdata->gGT->gameMode1 & (0xffffffff ^ PAUSE_1);
 					MainFrame_TogglePauseAudio(0);
 					OtherFX_Play(1, 1);
 					MainFreeze_SafeAdvDestroy();
@@ -303,7 +303,7 @@ LAB_80035098:
 							 	(
 							 		(
 							 			uVar3 = MainFrame_HaveAllPads((ushort)(u_char)::sdata->gGT->numPlyrNextGame), 
-										(uVar3 & 0xffff) == 0 && ((sdata->gGT->gameMode1 & 0xfU) == 0)
+										(uVar3 & 0xffff) == 0 && ((sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
 									)
 							 	)
 							) ||
@@ -312,7 +312,8 @@ LAB_80035098:
 						(::sdata->gGT->overlayIndex_Threads != -1)
 					)
 					{
-						::sdata->gGT->unknownFlags_1d44 = ::sdata->gGT->gameMode1 & 0x3e0020U | 1;
+						// (ADVENTURE_ARENA | END_OF_RACE | ADVENTURE_MODE | 0x40000 | TIME_TRIAL | TIME_LIMIT | BATTLE_MODE)
+						::sdata->gGT->unknownFlags_1d44 = ::sdata->gGT->gameMode1 & 0x3e0020U | PAUSE_1;
 						MainFreeze_IfPressStart();
 						::sdata->gGT->cooldownfromPauseUntilUnpause = '\x05';
 					}

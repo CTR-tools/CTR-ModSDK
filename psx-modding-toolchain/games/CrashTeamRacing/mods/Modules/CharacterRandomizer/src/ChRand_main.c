@@ -30,8 +30,8 @@ void ChRand_SetCharacters()
 	(
 		(sdata->gGT->gameMode1 & ADVENTURE_CUP) ||
 
-		// arcade cup (need to change "gameMode2" name)
-		((sdata->gGT->gameMode2 & 0x10) != 0)
+		// arcade cup
+		((sdata->gGT->gameMode2 & CUP_ANY_KIND) != 0)
 	)
 	{
 		// if this is not the first track of a cup,

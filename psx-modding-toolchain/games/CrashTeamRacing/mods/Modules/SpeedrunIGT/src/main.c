@@ -437,7 +437,7 @@ void RunUpdateHook()
 		// sdata->gGT->cameraDC[0].flags |= 9;
 
 		// skip race intros
-		sdata->gGT->gameMode1 &= 0xffffffbf;
+		sdata->gGT->gameMode1 &= (0xffffffff ^ START_OF_RACE);
 		sdata->gGT->hudFlags |= 0x21;
 	}
 

@@ -137,7 +137,7 @@ void MM_Characters_MenuBox()
 					MM_Characters_HideDrivers();
 			
 					// if you are in a cup
-					if (sdata->gGT->gameMode2 & 0x10) 
+					if (sdata->gGT->gameMode2 & CUP_ANY_KIND) 
 					{
 						sdata->ptrDesiredMenuBox = &OVR_230.menubox_cupSelect;
 						MM_CupSelect_Init();
