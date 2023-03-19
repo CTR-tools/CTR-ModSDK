@@ -29,11 +29,10 @@ void DrawWeaponBackground(short, short, short, struct Driver*);
 void DrawRaceClock(u_short paramX, u_short, u_int, struct Driver*);
 int DecalFont_GetLineWidth(char*, short);
 void DrawCountdownClock(short, short, short);
-void Map_DrawDrivers(u_int, struct Thread*, short *);
-void Map_DrawGhosts(u_int, struct Thread*);
-void Map_DrawTracking(u_int, struct Thread*);
+void Map_DrawDrivers(void*, struct Thread*, short *);
+void Map_DrawGhosts(void*, struct Thread*);
+void Map_DrawTracking(void*, struct Thread*);
 void Map_DrawMap(struct Icon*, struct Icon*, short, short, struct PrimMem*, u_long*, u_int);
-void OtherFX_Stop2(u_int);
 
 void DECOMP_DrawHUD_Racing()
 {
@@ -63,7 +62,7 @@ void DECOMP_DrawHUD_Racing()
 	u_int local_70;
 	struct Driver* playerStruct;
 	struct HudElement *hudStructPtr;
-	int levPtrMap;
+	void* levPtrMap;
 	char cVar22;
 	short wumpaModel_PosX;
 	short wumpaModel_PosY;
@@ -290,7 +289,7 @@ void DECOMP_DrawHUD_Racing()
 			// If game is not paused
 			if ((sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
 			{
-				if (playerStruct->PickupWumpaHUD.remaining != 0)
+				if (playerStruct->PickupWumpaHUD.numCollected != 0)
 				{
 					wumpaModel_PosX = hudStructPtr[6].x;
 					wumpaModel_PosY = hudStructPtr[6].y;
@@ -299,7 +298,7 @@ void DECOMP_DrawHUD_Racing()
 					if (playerStruct->PickupTimeboxHUD.cooldown == 0)
 					{
 						// deduct from number of queued items to pick up
-						playerStruct->PickupWumpaHUD.remaining--;
+						playerStruct->PickupWumpaHUD.numCollected--;
 
 						// Check if 231 dll is loaded
 						partTimeVariable1 = LOAD_IsOpen_RacingOrBattle(&wumpaModel_PosX);
@@ -323,7 +322,7 @@ void DECOMP_DrawHUD_Racing()
 						partTimeVariable1 = 5;
 
 						// if timer is already running, set new timer value
-						if (playerStruct->PickupWumpaHUD.remaining != 0) goto LAB_80053498;
+						if (playerStruct->PickupWumpaHUD.numCollected != 0) goto LAB_80053498;
 					}
 					else
 					{
@@ -446,7 +445,7 @@ void DECOMP_DrawHUD_Racing()
 			else
 			{
 				// If you smashed a time crate, this variable is set to 10
-				if (playerStruct->TensDiscountFromRelicRace != 0)
+				if (playerStruct->PickupTimeboxHUD.cooldown != 0)
 				{
 					// DAT_8008d530
 					// -%ld
@@ -460,12 +459,12 @@ void DECOMP_DrawHUD_Racing()
 					(
 						&wumpaModel_PosX, playerStruct->PickupTimeboxHUD.startX,
 						playerStruct->PickupTimeboxHUD.startY,
-						0x14, 8, playerStruct->TensDiscountFromRelicRace,
+						0x14, 8, playerStruct->PickupTimeboxHUD.cooldown,
 						10
 					);
 
 					// Decrease remaining number of frames for this to be on screen
-					playerStruct->TensDiscountFromRelicRace--;
+					playerStruct->PickupTimeboxHUD.cooldown--;
 
 					// Put string on the screen
 					// This happens for 10 frames
@@ -720,7 +719,7 @@ void DECOMP_DrawHUD_Racing()
 					// pointer to icon
 					// get rank icon of each battle team after battle is over
 					// OH GOD THIS IS CONVOLUTED and probably wrong --Super
-					iconPtr = sdata->gGT->ptrIcons[sdata->gGT->battleSetup.data30[playerStruct->BattleHUD.teamID] + 0x19];
+					iconPtr = sdata->gGT->ptrIcons[sdata->gGT->battleSetup.finishedRankOfEachTeam[playerStruct->BattleHUD.teamID] + 0x19];
 
 					goto LAB_80053aec;
 				}
@@ -1096,14 +1095,12 @@ void DECOMP_DrawHUD_Racing()
 	bVar3 = false;
 
 	// loop counter
-	levPtrMap = 0;
+	i = 0;
 
 	// if numPlyrCurrGame is not 0
 	if (sdata->gGT->numPlyrCurrGame != '\0')
 	{
-		i = 0;
-
-		// for(int levPtrMap = 0; levPtrMap < numPlyrCurrGame; levPtrMap++)
+		// for(int i = 0; i < numPlyrCurrGame; i++)
 		do
 		{
 			// pointer to array of pointers for each driver (9900C, 99010, etc)
@@ -1201,12 +1198,10 @@ void DECOMP_DrawHUD_Racing()
 			}
 
 			// increment the iteration counter
-			levPtrMap++;
-
 			i++;
 
-		// for(int levPtrMap = 0; levPtrMap < numPlyrCurrGame; levPtrMap++)
-		} while (levPtrMap < (int)sdata->gGT->numPlyrCurrGame);
+		// for(int i = 0; i < numPlyrCurrGame; i++)
+		} while (i < (int)sdata->gGT->numPlyrCurrGame);
 	}
 	if
 	(
