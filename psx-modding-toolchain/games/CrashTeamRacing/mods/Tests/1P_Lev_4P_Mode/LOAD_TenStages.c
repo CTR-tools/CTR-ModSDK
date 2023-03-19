@@ -237,7 +237,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			}
 			
 			// if relic, or time trial
-			if((gGT->gameMode1 & (TIME TRIAL | RELIC_RACE)) != 0)
+			if((gGT->gameMode1 & (TIME_TRIAL | RELIC_RACE)) != 0)
 			{
 				sdata->levelLOD = 8;
 			}
@@ -303,20 +303,8 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		}	
 		case 3:
 		{
-			// main menu, 230
-			if (levelID == MAIN_MENU_LEVEL) 
-			{
-				ovrRegion3 = 0;
-			}
-			
-			// adv hub, 232
-			else if ((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
-			{	
-				ovrRegion3 = 2;
-			}
-
 			// cutscene, 233
-			else if
+			if
 			(
 				// podium reward
 				(gGT->podiumRewardID != 0) ||
@@ -333,10 +321,22 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				ovrRegion3 = 3;
 			}
 			
+			// adv hub, 232
+			else if ((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
+			{	
+				ovrRegion3 = 2;
+			}
+			
 			// 231 - time trial, arcade, vs, battle
-			else
+			else if (levelID != MAIN_MENU_LEVEL)
 			{
 				ovrRegion3 = 1;
+			}
+			
+			// main menu, 230
+			else
+			{
+				ovrRegion3 = 0;
 			}
 			
 			LOAD_OvrThreads(ovrRegion3);
@@ -636,8 +636,8 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				do
 				{
 					*puVar8 = 0;
-					iVar9 = iVar9--;
-					puVar8 = puVar8--;
+					iVar9--;
+					puVar8--;
 				} while (iVar9 > -1);
 			
 				// Get Memory Allocation System Index

@@ -10,7 +10,7 @@ int LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType)
 	
 	// adv hubs
 	if(levelID <= CITADEL_CITY)
-		return 0xc4 + (levelID-GEM_STONE_VALLEY)*3 + fileType;
+		return 0xc8 + (levelID-GEM_STONE_VALLEY)*3 + fileType;
 	
 	// cutscenes
 	if(levelID <= INTRO_OXIDE)
@@ -27,7 +27,7 @@ int LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType)
 		return 0x21e + (levelID-OXIDE_ENDING)*2 + fileType;
 	
 	if(levelID <= CREDITS_MEGUMI)
-		return 0x222 + (levelID-CREDITS)*3 + fileType;
+		return 0x222 + (levelID-CREDITS_LEVEL)*3 + fileType;
 	
 	// SCRAPBOOK
 	return 0x25e + fileType;
