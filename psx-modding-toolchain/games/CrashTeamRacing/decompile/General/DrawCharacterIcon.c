@@ -1,65 +1,32 @@
 #include <common.h>
 
-void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_int vcolorAndCode)
+void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_int color)
 {
-	short iVar6;
 	short height;
 	short width;
+	short rightX;
+	short topY;
+	short bottomY;
+	char bottomV;
 	POLY_FT4* p;
 
 	p = (POLY_FT4*)primMem->curr;
 
-	// vertex color and code
-	*(u_int*)&p->r0 = vcolorAndCode;
+	width = icon->X2 - icon->X1;
+	height = icon->Y3 - icon->Y1;
+	rightX = posX + (width * scale >> 12);
+	topY = posY;
+	if (topY > 165) topY = 165;
+	bottomY = posY + (height * scale >> 12);
+	if (bottomY > 165) bottomY = 165;
+	bottomV = (icon->Y1 + bottomY) - posY;
 
 	setPolyFT4(p);
-
-	// UVs and CLUT
-	*(u_int*)&p->u0 = *(u_int*)&icon->X1;
-
-	// UVs and texpage
-	*(u_int*)&p->u1 = *(u_int*)&icon->X2;
-
-	width = icon->X2 - icon->X1;
-
-	// UVs and... pad1?
-	*(u_int*)&p->u2 = *(u_int*)&icon->X3;
-
-	p->x0 = posX;
-	p->u3 = icon->X4;
-
-	height = icon->Y3 - icon->Y1;
-
-	if (posY < 166)
-		p->y0 = posY;
-	else
-		p->y0 = 165;
-
-	p->x1 = posX + (short)(width * scale >> 12);
-
-	if (posY < 166)
-		p->y1 = posY;
-	else
-		p->y1 = 165;
-
-	iVar6 = posY + (height * scale >> 12);
-	p->x2 = posX;
-
-	if (iVar6 < 166)
-		p->y2 = iVar6;
-	else
-		p->y2 = 165;
-
-	p->x3 = posX + (short)(width * scale >> 12);
-	height = posY + (height * scale >> 12);
-
-	if (height < 166)
-		p->y3 = (short)height;
-	else
-		p->y3 = 165;
-
-	p->v2 = (p->v0 + *(u_char*)&p->y2) - (char)posY;
-	p->v3 = (p->v0 + *(u_char*)&p->y3) - (char)posY;
+	setRGB0(p, (color & 0xff0000) >> 16, (color & 0xff00) >> 8, color & 0xff);
+	setXY4(p, posX, topY, rightX, topY, posX, bottomY, rightX, bottomY);
+	setUV4(p, icon->X1, icon->Y1, icon->X2, icon->Y2, icon->X3, bottomV, icon->X4, bottomV);
+	p->clut = icon->paletteXY;
+	p->tpage = icon->pageXY;
 
 	if (semitransparencyEnabled != 0)
 	{
@@ -70,7 +37,7 @@ void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct 
 
 		// note that these blending modes are different from those used in Map_DrawMap
 		p->tpage = p->tpage & 0xff9f | (semitransparencyEnabled - 1) << 5;
-		p->code = p->code | 2;
+		p->code |= 2;
 	}
 
 	// could also use the psn00bsdk macro, there is no difference
