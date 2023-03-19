@@ -1,18 +1,16 @@
 #include <common.h>
 
-void NumbersToString(char * str, u_int value, int digits, int hexadecimal)
+void NumbersToString(char * str, int value, int digits, int hexadecimal)
 {
 	int i;
 	int j = digits;
 	char isNegative = 0;
 
-	/*
 	if (value < 0)
 	{
 		isNegative = 1;
 		value *= -1;
 	}
-	*/
 
 	for (i = 0; i < digits; i++)
 	{
@@ -52,8 +50,8 @@ void NumbersToString(char * str, u_int value, int digits, int hexadecimal)
 
 int Hello_Main()
 {
-	char string[] = "        ";
-	NumbersToString(string, 0xffffffff ^ (GAME_CUTSCENE | END_OF_RACE | ADVENTURE_ARENA | MAIN_MENU), 8, 1);
+	char string[] = "   ";
+	NumbersToString(string, 9999, 4, 0);
 
 	if (!(sdata->gGT->gameMode1 & LOADING)) DecalFont_DrawLine(string, 10, 190, 1, 0xffff0000);
 }
