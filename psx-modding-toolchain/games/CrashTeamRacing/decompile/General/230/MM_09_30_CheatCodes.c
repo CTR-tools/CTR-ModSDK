@@ -472,7 +472,12 @@ void DECOMP_MM_ParseCheatCodes()
 	DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, 0xffff0000);
 	DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, 0xffff0000);
 	DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, 0xffff0000);
-	DecalFont_DrawLine("22%", 		285, 206, FONT_SMALL, 0xffff0000);
+	DecalFont_DrawLine("24%", 		285, 206, FONT_SMALL, 0xffff0000);
+	#endif
+	
+	#if 0
+	DecalFont_DrawLine("No DotLights", 	325, 197, FONT_SMALL, 0xffff0003);
+	DecalFont_DrawLine("No RenderFrame",325, 206, FONT_SMALL, 0xffff0003);
 	#endif
 	
 	gpad = &sdata->gGamepads->gamepad[0];
