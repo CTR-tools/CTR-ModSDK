@@ -1409,11 +1409,9 @@ void FUN_8003282c(undefined4 param_1,int param_2,undefined4 param_3)
 
 
 
-// loads selected lng file by index
+// LOAD_LangFile
 // param_1 - Pointer to "cd position of bigfile"
 // param_2 - language index - 0 ja, 1 en, 2 en2, 3 fr, 4 de, 5 it, 6 es, 7 ne
-// overflow will cause problems, it will read non lng file. as i see no checks are performed against it.
-
 void FUN_80032b50(undefined4 param_1,int param_2)
 
 {
@@ -1425,9 +1423,10 @@ void FUN_80032b50(undefined4 param_1,int param_2)
   undefined auStack24 [8];
 
   // allocate buffer, if null
-  // FUN_8003e874 is called MEMPACK_AllocMem in earlier builds
-  if (DAT_8008d858 == 0) {
-    DAT_8008d858 = FUN_8003e874(__gp_4,"lang buffer");
+  if (DAT_8008d858 == 0) 
+  {
+	// MEMPACK_AllocMem
+    DAT_8008d858 = FUN_8003e874(DAT_8008cf6c,"lang buffer");
   }
 
   // piVar1 will equal DAT_8008d858 if load succeeds
