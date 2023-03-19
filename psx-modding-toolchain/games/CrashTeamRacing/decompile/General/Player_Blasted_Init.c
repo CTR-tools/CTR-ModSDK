@@ -1,6 +1,6 @@
 #include <common.h>
 
-u_int LOAD_IsOpen_RacingOrBattle();
+int LOAD_IsOpen_RacingOrBattle();
 void RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
 int Instance_GetNumAnimFrames(struct Driver* driver, int param_2);
 int Instance_GetStartFrame(int midpoint, int numFrames);

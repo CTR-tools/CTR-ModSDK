@@ -10,7 +10,7 @@ void DrawPowerslideMeter(short, short, struct Driver*);
 void DrawSpeedometerBackground();
 void DrawNumWumpa(int, int, struct Driver*);
 void DrawNumTimebox(int, int, struct Driver*);
-u_int LOAD_IsOpen_RacingOrBattle();
+int LOAD_IsOpen_RacingOrBattle();
 void RB_Player_ModifyWumpa(struct Driver*, int);
 void OtherFX_Play(int, int);
 void InterpolatePosition2D_HUD(short *, short, short, short, short, int, short);

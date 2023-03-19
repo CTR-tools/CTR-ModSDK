@@ -195,6 +195,10 @@ common, exe, LOAD_GetAdvPackIndex, 0x0, General/LOAD/LOAD_GetAdvPackIndex.c
 common, exe, LOAD_GetBigfileIndex, 0x0, General/LOAD/LOAD_GetBigfileIndex.c
 common, exe, LOAD_HubSwapPtrs, 0x0, General/LOAD/LOAD_HubSwapPtrs.c
 common, exe, LOAD_Hub_SwapNow, 0x0, General/LOAD/LOAD_Hub_SwapNow.c
+common, exe, LOAD_IsOpen_AdvHub, 0x0, General/LOAD/LOAD_IsOpen_AdvHub.c
+common, exe, LOAD_IsOpen_MainMenu, 0x0, General/LOAD/LOAD_IsOpen_MainMenu.c
+common, exe, LOAD_IsOpen_Podiums, 0x0, General/LOAD/LOAD_IsOpen_Podiums.c
+common, exe, LOAD_IsOpen_RacingOrBattle, 0x0, General/LOAD/LOAD_IsOpen_RacingOrBattle.c
 common, exe, LOAD_LangFile, 0x0, General/LOAD/LOAD_LangFile.c
 common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_ReadFile.c
 common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_OvrLOD.c
