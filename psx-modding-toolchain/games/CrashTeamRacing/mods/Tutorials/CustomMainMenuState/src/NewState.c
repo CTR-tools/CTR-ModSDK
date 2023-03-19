@@ -34,7 +34,7 @@ void MyMenuBoxFuncPtr(struct MenuBox* m)
 	if ((gb->buttonsTapped & BTN_CROSS) == 0) return;
 
 	// if you are in a cup
-	if ((sdata->gGT->gameMode2 & 0x10) != 0)
+	if ((sdata->gGT->gameMode2 & CUP_ANY_KIND) != 0)
 	{
 		// change desiredMenuBox to Cup race selection
 		sdata->ptrDesiredMenuBox = (struct MenuBox*)0x800b472c;

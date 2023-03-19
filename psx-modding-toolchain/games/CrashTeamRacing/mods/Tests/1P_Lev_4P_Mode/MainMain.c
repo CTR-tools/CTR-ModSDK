@@ -53,7 +53,7 @@ u_int main()
 				Voiceline_ClearTimeStamp();
 				
 				// Disable End-Of-Race menu
-				gGT->gameMode1 &= 0xffdfffff;
+				gGT->gameMode1 &= (0xffffffff ^ END_OF_RACE);
 
 				// Main Menu Level ID
 				if (gGT->levelID == 39)
@@ -161,7 +161,7 @@ u_int main()
 							sdata->Loading.stage = -1;
 							
 							// Turn off the "Loading..." flag
-							gGT->gameMode1 &= 0xbfffffff;
+							gGT->gameMode1 &= (0xffffffff ^ LOADING);
 							break;
 						}
 					}
@@ -207,7 +207,7 @@ u_int main()
 							// set game state to 1, to initialize world, as well as initialize all pools
 							sdata->mainGameState = 1;
 							// remove "Loading..." flag from gGT
-							gGT->gameMode1 &= 0xbfffffff;
+							gGT->gameMode1 &= (0xffffffff ^ LOADING);
 							break;
 						}
 						iVar8 = TitleFlag_IsFullyOnScreen();
@@ -254,7 +254,7 @@ u_int main()
 						// Check value of traffic lights
 						(-960 < gGT->trafficLightsTimer) &&
 						// if not drawing intro race cutscene and if not paused
-						((gGT->gameMode1 & 0x4f) == 0)
+						((gGT->gameMode1 & (START_OF_RACE | PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
 					) &&
 					(
 						// amount of milliseconds on Traffic Lights - elapsed milliseconds per frame, ~32

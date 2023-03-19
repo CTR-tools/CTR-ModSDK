@@ -10,7 +10,7 @@ void CAM_EndOfRace(struct CameraDC* cDC, struct Driver* d)
   // track path points exist and
   // 1P or 2P mode
   if (
-		((gGT->gameMode1 & 0x20) == 0) &&
+		((gGT->gameMode1 & BATTLE_MODE) == 0) &&
 		(1 < gGT->level1->ptrSpawnType1->count) &&
 		(gGT->numPlyrCurrGame < 3)
 	  )

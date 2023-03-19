@@ -8,7 +8,7 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, u_int posX, int posY, struct
 	u_int topRightCornerAndPageXY;
 	u_int bitshiftPosY;
 
-	POLY_GT4 *p;
+	POLY_GT4* p;
 
 	u_int topLeftCornerAndPaletteXY;
 	u_int bottomMargin;
@@ -22,7 +22,7 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, u_int posX, int posY, struct
 		posX = posX & 0xffff;
 
 		// posY, bitshifted 2 bytes
-		bitshiftPosY = posY * 0x10000;
+		bitshiftPosY = posY << 16;
 
 		bottomMargin = *(u_int*)&icon->X3;
 
@@ -38,11 +38,14 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, u_int posX, int posY, struct
 		{
 			code = 0x3e000000;
 
-			// set top right corner UVs and texpage of primitive, and alter the blending mode bits of the texpage from 11 (Mode 3, which is no blending) to 00 (Mode 0, equivalent to regular 50% opacity)
+			// disable blending mode bits of the texpage using AND, then set them using OR
+			// blending mode bits on most Icon images are set to 11 (Mode 3, which is no blending)
+			// this function is always called with this parameter set to 0 (disabled) or 1 (which is Mode 0, equivalent to 50% transparency)
+
 			// note that these blending modes are different from those used in Map_DrawMap
 			*(int*)&p->u1 =
 				topRightCornerAndPageXY & 0xff9fffff |
-				((u_int)semitransparencyEnabled - 1) * 0x200000;
+				((u_int)semitransparencyEnabled - 1) << 21;
 		}
 
 		// set top left vertex color, and code in 7th byte of prim
@@ -55,24 +58,23 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, u_int posX, int posY, struct
 		// calculate final position of top right vertex of primitive
 		// posX + (endX - startX) * scale / 0x1000
 		topRightCornerAndPageXY =
-			posX + ((int)(((topRightCornerAndPageXY & 0xff) -
-					(topLeftCornerAndPaletteXY & 0xff)) * (int)scale) >> 0xc);
+		posX +
+		(
+			(int)
+			(((topRightCornerAndPageXY & 0xff) - (topLeftCornerAndPaletteXY & 0xff)) * (int)scale)
+			>> 12
+		);
 
 		*(int*)&p->x0 = posX | bitshiftPosY;
 		*(int*)&p->x1 = topRightCornerAndPageXY | bitshiftPosY;
 
 		// posY +=
-		bitshiftPosY += ((int)(
+		bitshiftPosY +=
 		(
-			(u_int)y2 -
-
-			((int)topLeftCornerAndPaletteXY >> 8 & 0xffU)) *
-
-			(int)scale) >> 0xc
-		) *
-
-		// bitshift up 2 bytes
-		0x10000;
+			(int)
+			(((u_int)y2 - ((int)topLeftCornerAndPaletteXY >> 8 & 0xffU)) * (int)scale)
+			>> 12
+		) << 16;
 
 		*(int*)&p->x2 = posX | bitshiftPosY;
 		*(int*)&p->x3 = topRightCornerAndPageXY | bitshiftPosY;

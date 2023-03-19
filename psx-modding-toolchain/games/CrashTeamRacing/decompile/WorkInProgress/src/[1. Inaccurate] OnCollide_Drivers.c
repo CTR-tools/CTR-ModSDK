@@ -41,7 +41,7 @@ void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)
 		reservesIncrement = 0x3c0;
 
 		// If Super Turbo Pads is enabled
-		if (sdata->gGT->gameMode2 & 0x100000)
+		if (sdata->gGT->gameMode2 & CHEAT_TURBOPAD)
 		{
 			// Skip a few lines
 			goto LAB_8005ec50;

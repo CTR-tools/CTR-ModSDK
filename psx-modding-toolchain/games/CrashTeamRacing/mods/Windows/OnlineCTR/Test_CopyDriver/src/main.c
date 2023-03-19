@@ -30,7 +30,7 @@ void RunUpdateHook()
 	if(sdata->gGT->gameMode1 & TIME_TRIAL)
 	{
 		sdata->gGT->gameMode1 =
-		sdata->gGT->gameMode1 & 0xfffdffff;
+		sdata->gGT->gameMode1 & (0xffffffff ^ TIME_TRIAL);
 	}
 
 	if(buttons & BTN_R2)

@@ -25,7 +25,7 @@ void DECOMP_DrawCountdownClock(short posX, short posY, short fontType)
 		gGT = sdata->gGT;
 
 		// If you're not in End-Of-Race menu
-		if ((sdata->gGT->gameMode1 & 0x200000) == 0)
+		if ((sdata->gGT->gameMode1 & END_OF_RACE) == 0)
 		{
 			// dont check if numPlyrCurrGame != 0,
 			// when would that ever be false

@@ -125,7 +125,7 @@ void MainInit_JitPoolsNew_New(struct GameTracker* gGT)
   medStackCount = 12;
 
   // ND Box, oxide intro
-  if((sdata->gGT->gameMode1 & 0x20000000) != 0)
+  if((sdata->gGT->gameMode1 & GAME_CUTSCENE) != 0)
   {
 	  medStackCount = 24;
   }

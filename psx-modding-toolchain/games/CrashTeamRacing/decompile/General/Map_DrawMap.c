@@ -47,7 +47,7 @@ void DECOMP_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX,
 		((iVar9 != 0) && (*(short *)(iVar9 + 0x12) == 0)) ||
 
 		// if in main menu (character selection, track selection, any part of it)
-		((gGT->gameMode1 & 0x2000) != 0)
+		((gGT->gameMode1 & MAIN_MENU) != 0)
 	)
 	{
 		// draw top half of minimap

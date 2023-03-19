@@ -69,7 +69,7 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 			(gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA)) ||
 
 			// if in credits
-			((gGT->gameMode2 & 0x80) != 0)
+			((gGT->gameMode2 & CREDITS) != 0)
 		)
 	{
 		numDrivers = 1;
