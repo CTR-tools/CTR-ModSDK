@@ -1,9 +1,7 @@
 // functions bigger than their originals
 common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
 common, exe, MATH_Sin, 0x0, General/MATH/MATH_Sin_hook.s
-
-// breaks podiums?
-//common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels_Store_hook.s
+common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels_Store_hook.s
 
 // 221
 common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
@@ -275,7 +273,7 @@ common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWind
 
 // Uncategorized
 common, exe, Map_DrawMap, 0x0, General/Map_DrawMap.c
-//common, exe, DrawCharacterIcon, 0x0, General/DrawCharacterIcon.c
+common, exe, DrawCharacterIcon, 0x0, General/DrawCharacterIcon.c
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
 common, exe, ConvertTimeToString, 0x0, General/ConvertTimeToString.c
 common, exe, DrawCountdownClock, 0x0, General/DrawCountdownClock.c

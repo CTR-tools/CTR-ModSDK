@@ -6,7 +6,7 @@ int LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType)
 
 	// race tracks
 	if(levelID <= LAB_BASEMENT)
-		return 0x0 + levelID*8 + sdata->levBigLodIndex[lod] + fileType;
+		return 0x0 + levelID*8 + sdata->levBigLodIndex[lod-1] + fileType;
 	
 	// adv hubs
 	if(levelID <= CITADEL_CITY)

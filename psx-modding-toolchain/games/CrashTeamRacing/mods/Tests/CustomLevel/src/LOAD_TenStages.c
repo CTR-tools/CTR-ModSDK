@@ -154,8 +154,15 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			
 			boolDefault1P = 1;
 			
+			if(levelID >= SCRAPBOOK)
+			{
+				// both in main menu, and after credits,
+				// checked and confirmed in retail version
+				gGT->gameMode1 |= MAIN_MENU;
+			}
+			
 			// credits
-			if(levelID >= CREDITS_LEVEL)
+			else if(levelID >= CREDITS_LEVEL)
 			{
 				// enable cutscene flag
 				gGT->gameMode1 |= GAME_CUTSCENE;
@@ -308,40 +315,34 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 		}	
 		case 3:
 		{
-			// cutscene, 233
-			if
-			(
-				// podium reward
-				(gGT->podiumRewardID != 0) ||
-
-				// If you are in a cutscene
-				((gGT->gameMode1 & GAME_CUTSCENE) != 0) ||
-
-				// if going to credits
-				((gGT->gameMode2 & CREDITS) != 0) ||
-
-				(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
-			)
+			// main menu + scrapbook, 230
+			if (
+					(levelID != ADVENTURE_CHARACTER_SELECT) &&
+					((gGT->gameMode1 & MAIN_MENU) != 0)
+				)
 			{
-				ovrRegion3 = 3;
+				ovrRegion3 = 0;
 			}
 			
-			// adv hub, 232
-			else if ((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
-			{	
-				ovrRegion3 = 2;
-			}
-			
-			// 231 - time trial, arcade, vs, battle
-			else if (levelID != MAIN_MENU_LEVEL)
+			// race threads, 231
+			else if (levelID <= LAB_BASEMENT)
 			{
 				ovrRegion3 = 1;
 			}
 			
-			// main menu, 230
+			// advHub, 232
+			else if (
+						(levelID <= CITADEL_CITY) &&
+						(gGT->podiumRewardID == 0)
+				)
+			{
+				ovrRegion3 = 2;
+			}
+			
+			// Cutscene, Credits, ND, Garage, Podium
 			else
 			{
-				ovrRegion3 = 0;
+				ovrRegion3 = 3;
 			}
 			
 			LOAD_OvrThreads(ovrRegion3);
