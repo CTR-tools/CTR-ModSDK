@@ -3405,9 +3405,7 @@ void FUN_80034874(undefined4 param_1)
   // this is used to help you return to an adventure hub after finishing a race
   *(undefined4 *)(puVar1 + 0x1eb4) = uVar3;
 
-  // disable loading screen's flag,
-  // what? why?
-  // is & 0x1000 only for the transition?
+  // disable all render flags except checkeredFlag
   *(uint *)(puVar2 + 0x256c) = *(uint *)(puVar2 + 0x256c) & 0x1000;
 
   // TitleFlag_IsFullyOffScreen

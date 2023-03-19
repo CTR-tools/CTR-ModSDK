@@ -200,6 +200,7 @@ common, exe, LOAD_IsOpen_MainMenu, 0x0, General/LOAD/LOAD_IsOpen_MainMenu.c
 common, exe, LOAD_IsOpen_Podiums, 0x0, General/LOAD/LOAD_IsOpen_Podiums.c
 common, exe, LOAD_IsOpen_RacingOrBattle, 0x0, General/LOAD/LOAD_IsOpen_RacingOrBattle.c
 common, exe, LOAD_LangFile, 0x0, General/LOAD/LOAD_LangFile.c
+common, exe, LOAD_LevelFile, 0x0, General/LOAD/LOAD_LevelFile.c
 common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_ReadFile.c
 common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_OvrLOD.c
 common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_OvrEndRace.c
