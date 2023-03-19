@@ -60,4 +60,6 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 			visInstSrc[0] = visInstSrc[0]->instDef;
 		}
 	}
+	
+	THREAD_CheckAllForDead();
 }
