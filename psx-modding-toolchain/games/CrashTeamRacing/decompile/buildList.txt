@@ -179,6 +179,7 @@ common, exe, LIST_RemoveBack, 0x0, General/LIST/LIST_RemoveBack.c
 common, exe, LIST_Init, 0x0, General/LIST/LIST_Init.c
 
 // LOAD
+common, exe, LOAD_AppendQueue, 0x0, General/LOAD/LOAD_AppendQueue.c
 common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_Callback_Overlay_Generic.c
 common, exe, LOAD_Callback_Overlay_230, 0x0, General/LOAD/LOAD_Callback_Overlay_230.c
 common, exe, LOAD_Callback_Overlay_231, 0x0, General/LOAD/LOAD_Callback_Overlay_231.c
