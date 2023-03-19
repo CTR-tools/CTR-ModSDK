@@ -1838,7 +1838,7 @@ void FUN_80033108(void)
   // Aug 5
   // FUN_8006fbac("SWAPPING 2...\n");
 
-  // swap primary and secondary LEV pointers
+  // LOAD_HubSwapPtrs
   FUN_80031bdc(PTR_DAT_8008d2ac,1);
 
   puVar1 = PTR_DAT_8008d2ac;
@@ -1885,7 +1885,7 @@ void FUN_80033108(void)
 
   /*
   In Aug 5
-  if(== 0)
+  if(iVar2 == 0)
   {
      printf("ERROR: No LEVEL!\n");
   }
@@ -1925,13 +1925,14 @@ void FUN_80033108(void)
   // quadblock under the camera
   *(undefined4 *)(PTR_DAT_8008d2ac + 0x14b4) = 0;
 
+  // clear VisMem inside camera
   *(undefined4 *)(puVar1 + 0x14c0) = 0;
   *(undefined4 *)(puVar1 + 0x14b8) = 0;
   *(undefined4 *)(puVar1 + 0x14bc) = 0;
   *(undefined4 *)(puVar1 + 0x14c4) = 0;
   *(undefined4 *)(puVar1 + 0x14c8) = 0;
 
-  // clear VisMem pointers
+  // clear VisMem SRC pointers
   *(undefined4 *)(iVar2 + 0x40) = 0;
   *(undefined4 *)(*(int *)(puVar1 + 0x1a38) + 0x50) = 0;
   *(undefined4 *)(*(int *)(puVar1 + 0x1a38) + 0x60) = 0;
