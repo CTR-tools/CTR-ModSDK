@@ -49,10 +49,16 @@ void RemapButtons(unsigned short * buttons)
 
 void Remap_Main()
 {
-	struct GamepadBuffer * gamepad = &sdata->gGamepads->gamepad[0];
+	int i;
+	struct GamepadBuffer* gamepad;
 	
-	if(sdata->gGT->levelID != MAIN_MENU_LEVEL)
+	for(i = 0; i < sdata->gGT->numPlyrCurrGame; i++)
 	{
-		RemapButtons(&gamepad->ptrRawInput[1]);
+		gamepad = &sdata->gGamepads->gamepad[i];
+	
+		if(sdata->gGT->levelID != MAIN_MENU_LEVEL)
+		{
+			RemapButtons(&gamepad->ptrRawInput[1]);
+		}
 	}
 }
