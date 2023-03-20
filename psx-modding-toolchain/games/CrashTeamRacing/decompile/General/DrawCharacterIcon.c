@@ -2,8 +2,8 @@
 
 void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_int color)
 {
-	short height;
 	short width;
+	short height;
 	short rightX;
 	short topY;
 	short bottomY;
@@ -14,9 +14,9 @@ void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct 
 
 	width = icon->X2 - icon->X1;
 	height = icon->Y3 - icon->Y1;
-	rightX = posX + (width * scale >> 12);
+	rightX = posX + (width * scale / 0x1000);
 	topY = (posY < 166) ? posY : 165;
-	bottomY = ((posY + (height * scale >> 12)) < 166) ? (posY + (height * scale >> 12)) : 165;
+	bottomY = ((posY + (height * scale / 0x1000)) < 166) ? (posY + (height * scale / 0x1000)) : 165;
 	bottomV = (icon->Y1 + bottomY) - posY;
 
 	setPolyFT4(p);
