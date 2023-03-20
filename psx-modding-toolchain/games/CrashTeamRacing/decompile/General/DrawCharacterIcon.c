@@ -32,7 +32,6 @@ void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct 
 	{
 		// disable blending mode bits of the texpage using AND, then set them using OR
 		// then set image to use semi-transparent mode using the setSemiTrans macro
-		// blending mode bits on most Icon images are set to 11 (Mode 3, which is no blending)
 		// this function is always called with this parameter set to 1 (which is Mode 0, equivalent to 50% transparency)
 
 		p->tpage = p->tpage & 0xff9f | (semitransparencyEnabled - 1) << 5;
