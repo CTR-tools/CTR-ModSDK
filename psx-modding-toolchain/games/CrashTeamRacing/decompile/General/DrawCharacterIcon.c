@@ -15,10 +15,8 @@ void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct 
 	width = icon->X2 - icon->X1;
 	height = icon->Y3 - icon->Y1;
 	rightX = posX + (width * scale >> 12);
-	topY = posY;
-	if (topY > 165) topY = 165;
-	bottomY = posY + (height * scale >> 12);
-	if (bottomY > 165) bottomY = 165;
+	topY = (posY < 166) ? posY : 165;
+	bottomY = ((posY + (height * scale >> 12)) < 166) ? (posY + (height * scale >> 12)) : 165;
 	bottomV = (icon->Y1 + bottomY) - posY;
 
 	setPolyFT4(p);
