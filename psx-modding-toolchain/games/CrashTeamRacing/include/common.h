@@ -5230,7 +5230,7 @@ struct GameTracker
   // 0x3c - small_crossbtn -- Cross button (small font)
   // 0x3d - small_squarebtn -- Square button (small font)
   // 0x3e - small_triangleb -- Triangle button (small font)
-  // 0x3f - movie1 -- blue sky texture, unknown use
+  // 0x3f - movie1 -- blue sky texture, used as placeholder for track thumbnail
   // 0x40 -
   // 0x41 -
   // 0x42 - debugfont -- search "0x1ff4"
