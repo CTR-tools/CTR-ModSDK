@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_int color)
+void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, u_int color)
 {
 	short width;
 	short height;
@@ -26,13 +26,13 @@ void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct 
 	p->clut = icon->paletteXY;
 	p->tpage = icon->pageXY;
 
-	if (semitransparencyEnabled != 0)
+	if (transparency != 0)
 	{
 		// disable blending mode bits of the texpage using AND, then set them using OR
 		// then set image to use semi-transparent mode using the setSemiTrans macro
 		// this function is always called with this parameter set to 1 (which is Mode 0, equivalent to 50% transparency)
 
-		p->tpage = p->tpage & 0xff9f | (semitransparencyEnabled - 1) << 5;
+		p->tpage = p->tpage & 0xff9f | (transparency - 1) << 5;
 		setSemiTrans(p, true);
 	}
 
