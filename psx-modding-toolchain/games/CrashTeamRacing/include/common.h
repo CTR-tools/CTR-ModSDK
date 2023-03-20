@@ -147,6 +147,14 @@ enum Font
 	FONT_NUM=4,
 };
 
+enum BlendMode
+{
+	TRANS_50=1,
+	ADD=2,
+	SUBTRACT=3,
+	ADD_25=4
+};
+
 enum XA_TYPE
 {
 	CDSYS_XA_TYPE_MUSIC,
