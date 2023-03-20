@@ -169,7 +169,7 @@ void EndOfRace_Battle();
 
 
 
-int LOAD_IsOpen_MainMenu();
+u_int LOAD_IsOpen_MainMenu();
 int MainFrame_HaveAllPads(short param_1);
 void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
 void DrawTextBackground(RECT* r, int flag, u_long* ot);
@@ -195,14 +195,14 @@ void AA_EndEvent_DrawMenu();
 void TT_EndEvent_DrawMenu();
 void CC_EndEvent_DrawMenu();
 void LOAD_OvrThreads(u_int param_1);
-int LOAD_IsOpen_AdvHub();
+u_int LOAD_IsOpen_AdvHub();
 void DrawHUD_AdvStrings();
 void AH_Map_Main();
 void AH_MaskHint_Start(short requestedHint, short bool_interruptWarppad);
 void INSTANCE_LevDelayedLInBs(void* instDefs, u_int numInstances);
 void DrawIntroRaceText_1P();
 void RedBeaker_RenderRain(struct TileView* tileView, struct PrimMem* primMem, struct JitPool* rain, char numPlyr, int gameMode1);
-int LOAD_IsOpen_Podiums();
+u_int LOAD_IsOpen_Podiums();
 void CS_BoxScene_InstanceSplitLines();
 void* RenderBucket_QueueLevInstances(struct CameraDC* cDC, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
 void* RenderBucket_QueueNonLevInstances(struct Item* item, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
@@ -253,3 +253,5 @@ int RCNT_GetTime_Total();
 void BreakDraw();
 u_int MM_Video_CheckIfFinished(int param_1);
 int RCNT_GetTime_Elapsed(int time, void* param_2);
+void DecalHUD_DrawPolyGT4(struct Icon* icon, u_int posX, int posY, struct PrimMem* primMem, u_long* ot, u_int topLeftColor, u_int topRightColor, u_int bottomLeftColor, u_int bottomRightColor, u_char semitransparencyEnabled, short scale);
+void DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_int color);
