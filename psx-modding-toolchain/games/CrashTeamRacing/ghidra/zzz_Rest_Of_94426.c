@@ -1885,7 +1885,8 @@ int FUN_800440a0(void)
             DAT_8008d444 = 0;
             DAT_8008d446 = 300;
 
-			// pointer to TileView->OTMem (25c-168=0xf4)
+			// pointer to TileView[0]->OTMem (25c-168=0xf4)
+			// last primitives drawn, front of sorting order
             return *(int *)(PTR_DAT_8008d2ac + 0x25c) + 0xffc;
           }
 
@@ -1926,6 +1927,7 @@ int FUN_800440a0(void)
 
 
 	  // OTMem depending on swapchain index
+	  // first primitives drawn, back of draw sorting
       return *(undefined4 *)(PTR_DAT_8008d2ac + *(int *)(PTR_DAT_8008d2ac + 0xc) * 4 + 0x18c8);
     }
 
@@ -1968,6 +1970,7 @@ int FUN_800440a0(void)
   }
 LAB_80044268:
   // OTMem depending on swapchain index
+  // first primitives drawn, back of draw sorting
   return *(undefined4 *)(PTR_DAT_8008d2ac + *(int *)(PTR_DAT_8008d2ac + 0xc) * 4 + 0x18c8);
 }
 
