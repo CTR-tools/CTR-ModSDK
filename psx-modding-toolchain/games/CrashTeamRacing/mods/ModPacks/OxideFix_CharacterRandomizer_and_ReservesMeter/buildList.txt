@@ -46,15 +46,7 @@ common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_ho
 // ReservesMeter //
 
 // Compile the ASM injection that will load our code
-926, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
-1006, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
-1020, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
-1111, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
-926, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
-1006, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
-1111, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
+common, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+common, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
 
-926, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c
-1006, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c
-1111, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c
-1020, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c
+common, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c
