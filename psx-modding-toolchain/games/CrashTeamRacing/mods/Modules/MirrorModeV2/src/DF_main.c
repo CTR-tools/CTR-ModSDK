@@ -19,8 +19,16 @@ void DF_ParseOT(u_long* startOT)
 
   struct GameTracker* gGT = sdata->gGT;
 
-  // temporary
+  // if TitleFlag is drawn in background
+  if(TitleFlag_IsFullyOnScreen() == 1)
+  {
+	// dont flip TitleFlag
+	startOT-=4;
+  }
+  
+  // stop when ptrOT-4 is in tag, so ptrOT-0 is flipped
   endOT = (unsigned int)gGT->tileView[gGT->numPlyrCurrGame-1].ptrOT-4;
+  
   windowWidth = gGT->tileView[0].rect.w;
 
   // divide by two (more zoom out)
