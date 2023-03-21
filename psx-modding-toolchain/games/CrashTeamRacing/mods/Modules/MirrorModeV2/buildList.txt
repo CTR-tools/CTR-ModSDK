@@ -10,9 +10,11 @@
 1111, exe, 0x80039674, 0x0, src/DF_JalDrawOTag.s
 
 // Compile main code to empty spaces in RDATA
-common, exe, rdata_free, 0x0, src/pad_remap.c src/DF_main.c, rdata.bin
+common, exe, rdata_free, 0x0, src/pad_remap.c src/DF_main.c src/entry.c, rdata.bin
+
+common, exe, MEMPACK_SwapPacks, -0x8, src/hookEntry.s
 
 // Compile the ASM injection that will load our code
 // ASM injections for loading modded functions, or "hooks", are typically done at the "jr ra" or "return" instruction of a function, which is 8 bytes away from the start of the function that follows it
 // Hooked at the end of LOAD_NextQueuedFile
-common, exe, LOAD_Hub_ReadFile, -0x8, src/hook.s
+common, exe, LOAD_Hub_ReadFile, -0x8, src/hookRemap.s
