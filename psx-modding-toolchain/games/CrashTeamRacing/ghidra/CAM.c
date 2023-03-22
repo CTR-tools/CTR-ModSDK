@@ -2281,8 +2281,11 @@ LAB_8001a8c0:
   
   else 
   {
+	// quadblock->terrainFlags
     cVar1 = *(char *)(*(int *)(param_4 + 0x80) + 0x38);
     
+	// 14, 4, or 13
+	// Mud, Water, or FastWater
 	if (((cVar1 == '\x0e') || (cVar1 == '\x04')) || (cVar1 == '\r')) {
       *(undefined2 *)(param_4 + 0x1e) = 0;
     }
