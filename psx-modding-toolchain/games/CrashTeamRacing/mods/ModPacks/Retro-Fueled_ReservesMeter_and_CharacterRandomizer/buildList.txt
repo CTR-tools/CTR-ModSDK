@@ -130,10 +130,7 @@ common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/Standard
 1020, bigfilelevelstrackstube1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/tube1relic.vrm
 
 // Modify Turbo_Increment function to allow for USF stacking, and also fix red fire
-// this rewritten function has inaccurate behavior in the european version (1020), see github issues
-926, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.c
-1111, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.c
-1020, exe, Turbo_Increment, 0x37A, ../../../8bitnop.bin
+common, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.c
 
 // Compile code to empty spaces in RDATA //
 common, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c  ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c

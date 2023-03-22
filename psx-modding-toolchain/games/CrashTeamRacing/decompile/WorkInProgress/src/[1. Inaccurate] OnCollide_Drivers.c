@@ -38,7 +38,7 @@ void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)
 		if ((stepFlagSet & 1) == 0) goto LAB_8005ec70;
 
 		// add one second reserves
-		reservesIncrement = 0x3c0;
+		reservesIncrement = 960;
 
 		// If Super Turbo Pads is enabled
 		if (sdata->gGT->gameMode2 & CHEAT_TURBOPAD)
@@ -57,7 +57,7 @@ void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)
 LAB_8005ec50:
 
 		// add 0.12s reserves
-		reservesIncrement = 0x78;
+		reservesIncrement = 120;
 
 		// Set speed of turbo to big speed
 		fireLevel = 0x800;
