@@ -8,7 +8,9 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, stru
 	short bottomY;
 	POLY_GT4* p;
 
-	if (!icon) return;
+	#if BUILD > SepReview
+		if (!icon) return;
+	#endif
 
 	p = (POLY_GT4*)primMem->curr;
 

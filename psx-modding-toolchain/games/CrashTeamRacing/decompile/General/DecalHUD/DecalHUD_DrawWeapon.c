@@ -10,7 +10,9 @@ void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struc
 	short sidewaysY;
 	POLY_FT4* p;
 
-	if (!icon) return;
+	#if BUILD > SepReview
+		if (!icon) return;
+	#endif
 
 	p = (POLY_FT4*)primMem->curr;
 

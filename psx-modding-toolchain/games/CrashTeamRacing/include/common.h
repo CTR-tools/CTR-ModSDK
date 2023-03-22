@@ -7511,7 +7511,11 @@ struct Data
 	// end of race camera
 	short EndOfRace_Camera_Size[0x12];
 
-	// 80080fd4 from EndOfRace_Battle
+	// 8007f1c4 -- SepReview
+	// 80080fd4 -- UsaRetail
+	// 80080038 -- JpnTrial
+	// 80081508 -- EurRetail
+	// 80084348 -- JpnRetail
 	int Spin360_heightOffset_cameraPos[5];
 
 	// 80080fe8 from LookAt
