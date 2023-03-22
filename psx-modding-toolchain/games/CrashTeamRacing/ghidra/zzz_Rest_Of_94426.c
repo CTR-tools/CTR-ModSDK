@@ -10553,14 +10553,19 @@ void FUN_8004e37c(int param_1,short param_2,short param_3,int param_4,void *para
   short sVar12;
   undefined4 uVar13;
 
+  // color1[3]
   uVar7 = DAT_8008d9a4;
   uVar9 = DAT_8008d9a8;
   uVar13 = DAT_8008d9ac;
-  if (param_6 != 3) {
+  
+  if (param_6 != 3) 
+  {
+	// color2[3]
     uVar7 = DAT_8008d998;
     uVar9 = DAT_8008d99c;
     uVar13 = DAT_8008d9a0;
   }
+  
   iVar10 = 0;
   iVar8 = (int)(((uint)*(byte *)(param_1 + 0x18) - (uint)*(byte *)(param_1 + 0x14)) * (int)param_7)
           >> 0xc;
