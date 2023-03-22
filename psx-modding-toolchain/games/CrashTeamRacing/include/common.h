@@ -3745,6 +3745,7 @@ struct CameraDC
 	// & 8 - just changed direction (forward or backward) this frame
 	// & 0x10 - mask grab
 	// & 0x20 - arcade end-of-race
+	// & 0x100 - changes TrackPath from point->0x4 to point->0x9
 	// & 0x200 - (aku hints + save/load) transitioning away from player
 	// & 0x400 - (aku hints + save/load) snap to player, or transition to player if 0x600
 	// & 0x800 - (aku hints + save/load) stationary away from player
