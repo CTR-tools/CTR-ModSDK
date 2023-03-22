@@ -4862,15 +4862,24 @@ LAB_800475b4:
 	  iVar2 = FUN_80046a90(2);
       
 	  // no TIMEOUT
-	  if (iVar2 == 0) {
+	  if (iVar2 == 0) 
+	  {
         iVar2 = FUN_80046a90(5);
-        if (iVar2 == 0) {
+        if (iVar2 == 0) 
+		{
           iVar2 = FUN_80046a90(4);
-          if (iVar2 != 0) {
+          if (iVar2 != 0) 
+		  {
 LAB_800479bc:
-            FUN_800471e8();
+            
+			// wrapper for resetting GameProg
+			FUN_800471e8();
+			
             DAT_8008d95c = 0;
-            DAT_8008d968 = 0;
+            
+			// reset gameProg (again?)
+			DAT_8008d968 = 0;
+			
             FUN_800471c4(4);
             uVar5 = 3;
 
@@ -4891,6 +4900,7 @@ LAB_800479f4:
             DAT_8008d984 = 0;
             goto LAB_80047a08;
           }
+		  
           iVar2 = FUN_80046a90(6);
           if (iVar2 != 0)
 		  {
@@ -4901,10 +4911,13 @@ LAB_800479f4:
             local_1c = 1;
             goto LAB_800476b4;
           }
-          iVar2 = FUN_80046a90(7);
+          
+		  iVar2 = FUN_80046a90(7);
           if (iVar2 == 0) goto LAB_80047a08;
-          DAT_8008d984 = 1;
-          if (DAT_8008d47a == 3) 
+          
+		  DAT_8008d984 = 1;
+          
+		  if (DAT_8008d47a == 3) 
 		  {
 			// if saving ghost profile
             if (DAT_8008d478 == 6) {

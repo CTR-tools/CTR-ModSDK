@@ -10297,6 +10297,9 @@ struct sData
 	// 80090d88 -- JpnRetail
 	int boolPlayGhost;
 
+	// 8008d960
+	// char teamOfEachPlayer[4];
+
 	// 8008d95c
 	char data18_aaa[0x14];
 

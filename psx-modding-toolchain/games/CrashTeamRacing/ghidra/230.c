@@ -5508,6 +5508,9 @@ void FUN_800b1848(void)
                   DAT_800b59c4 = 1;
                   DAT_800b59c2 = 2;
                   iVar15 = 0;
+				  
+				  // check if player changed team,
+				  // then clear stats if a change happened
                   if (PTR_DAT_8008d2ac[0x1ca9] != '\0') {
                     iVar7 = 0;
                     do {
@@ -5523,7 +5526,8 @@ void FUN_800b1848(void)
                       iVar7 = iVar15 * 0x10000;
                     } while (iVar15 * 0x10000 >> 0x10 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca9]);
                   }
-                  DAT_8009a994 = 0;
+                  
+				  DAT_8009a994 = 0;
                   DAT_8009a998 = 0;
                   DAT_8009a99c = 0;
                 }
