@@ -3022,7 +3022,11 @@ LAB_8001b928:
     *(short *)(piVar18 + 0x2d) = psVar16[9];
     *(short *)((int)piVar18 + 0xb6) = psVar16[10];
   }
+  
+// Not changing camera mode,
+// continue with code that runs each frame
 switchD_8001b678_caseD_1:
+  
   *(undefined4 *)(psVar19 + 0xc) = *(undefined4 *)(psVar19 + 0x86);
 
   // get camera mode
