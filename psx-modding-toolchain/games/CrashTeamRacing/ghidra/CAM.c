@@ -2259,8 +2259,13 @@ LAB_8001a8c0:
   // CAM_FindClosestQuadblock
   FUN_800188a8(param_4,param_1,param_2,param_4 + 0x240);
 
-  if ((*(short *)(param_4 + 0x3e) == 0) ||
-     ((*(ushort *)(*(int *)(param_4 + 0x80) + 0x12) & 0x4100) != 0)) {
+  if (
+		(*(short *)(param_4 + 0x3e) == 0) ||
+		
+		// quadblock->quadFlags & 0x4100
+		((*(ushort *)(*(int *)(param_4 + 0x80) + 0x12) & 0x4100) != 0)
+	 ) 
+  {
     if (*(int *)(param_4 + 0x244) <
         (int)*(short *)(param_1 + 0xc4) + (*(int *)(param_2 + 0x2d8) >> 8)) {
       *(undefined2 *)(param_1 + 0xc2) = 8;
@@ -2273,15 +2278,20 @@ LAB_8001a8c0:
     *(short *)(param_1 + 0xc0) =
          *(short *)(param_4 + 0x244) - (short)((uint)*(undefined4 *)(param_2 + 0x2d8) >> 8);
   }
-  else {
+  
+  else 
+  {
     cVar1 = *(char *)(*(int *)(param_4 + 0x80) + 0x38);
-    if (((cVar1 == '\x0e') || (cVar1 == '\x04')) || (cVar1 == '\r')) {
+    
+	if (((cVar1 == '\x0e') || (cVar1 == '\x04')) || (cVar1 == '\r')) {
       *(undefined2 *)(param_4 + 0x1e) = 0;
     }
-    x = (int)*(short *)(param_4 + 0x1e) + (int)param_5[8];
+    
+	x = (int)*(short *)(param_4 + 0x1e) + (int)param_5[8];
     if (*(int *)(param_4 + 0x244) < x) {
       *(int *)(param_4 + 0x244) = x;
     }
+	
     x = (int)*(short *)(param_1 + 0xc2);
     if (x != 0) {
       *(int *)(param_4 + 0x244) =
@@ -2698,13 +2708,14 @@ void FUN_8001b334(int param_1)
 				// driver -> instance -> thread -> funcThTick == 0
 				(*(int *)(*(int *)(*(int *)(iVar22 + 0x1c) + 0x6c) + 0x2c) == 0)
 			) &&
-		// If this is human and not AI
-      ((*(uint *)(iVar22 + 0x2c8) & 0x100000) == 0)
+			
+			// If this is human and not AI
+			((*(uint *)(iVar22 + 0x2c8) & 0x100000) == 0)
 		) &&
 		(
 			(
-        //if kart state is not 0xA (?) and kart state is not 0xB (?)
-				(*(char *)(iVar22 + 0x376) != '\n' && (*(char *)(iVar22 + 0x376) != '\v')) &&
+				//if kart state is not warpPad(10), and not Freeze(11)
+				(*(char *)(iVar22 + 0x376) != 10 && (*(char *)(iVar22 + 0x376) != 11)) &&
 				(
 					(
 						// if not in a state where you're seeing the boss key open an adv door,
@@ -2737,10 +2748,10 @@ void FUN_8001b334(int param_1)
       *(undefined2 *)((int)piVar18 + 0x92) = 0;
     }
 
-	// If you are in process of changing 1 back to 0
+	// unused way to toggle first-person by pressing L2 twice
     if (*(short *)((int)piVar18 + 0x92) == 2)
 	{
-		// first person mode?
+		// first person mode
       *(undefined2 *)((int)piVar18 + 0x9a) = 0xf;
     }
 
@@ -2766,7 +2777,11 @@ void FUN_8001b334(int param_1)
   // with and without L2
   // at motion and at rest
 
+  // if not end-of-race camera, skip block
   if ((piVar18[0x1c] & 0x20U) == 0) goto switchD_8001b678_caseD_1;
+  
+  // === Assume End-Of-Race camera ===
+  
   psVar16 = (short *)0x0;
 
   // LEV -> trial_data -> numPointers
@@ -2854,8 +2869,17 @@ void FUN_8001b334(int param_1)
 	} while (sVar7 != 0);
   }
   
+  // if no valid End-Of-Race camera init data found,
+  // or if it has not changed since previous frame
   if ((psVar16 == (short *)0x0) || (psVar16 == (short *)piVar18[0x28]))
-  goto switchD_8001b678_caseD_1;
+  {
+	  // skip initialization of new End-Of-Race camera mode
+	  goto switchD_8001b678_caseD_1;
+  }
+  
+  // === Initialize new End-Of-Race camera mode ===
+  
+  // save new pointer to camera init data
   *(short **)(piVar18 + 0x28) = psVar16;
   
   sVar7 = *psVar16;
@@ -2879,7 +2903,7 @@ void FUN_8001b334(int param_1)
   switch(*(undefined2 *)((int)piVar18 + 0x9a)) 
   {
   
-  // following driver
+  // CAM_FollowDriver_Normal
   case 0:
 
 	// TileView position
@@ -2974,6 +2998,7 @@ void FUN_8001b334(int param_1)
     *(short *)(piVar18 + 0x2c) = psVar16[8];
     break;
 
+  // CAM_FollowDriver_Spin360
   case 10:
     sVar7 = *psVar12;
     psVar12 = psVar16 + 2;
@@ -2994,6 +3019,7 @@ LAB_8001b928:
     *(short *)(piVar18 + 0x2a) = psVar12[1];
     break;
 	
+  // TransitionTo
   case 0xc:
     
 	// set TransitionTo
@@ -3008,17 +3034,25 @@ LAB_8001b928:
     *(short *)(piVar18 + 0x2d) = psVar16[9];
     *(short *)((int)piVar18 + 0xb6) = psVar16[10];
   }
+  
+// Not changing camera mode,
+// continue with code that runs each frame
 switchD_8001b678_caseD_1:
+  
   *(undefined4 *)(psVar19 + 0xc) = *(undefined4 *)(psVar19 + 0x86);
 
   // get camera mode
   sVar7 = *(short *)((int)piVar18 + 0x9a);
 
-  // if camera is not in ordinary-driving mode,
-  // such as an end-of-race spectate mode
+  // not CAM_FollowDriver_Normal
   if (sVar7 != 0) {
-    *(undefined2 *)((int)piVar18 + 0xda) = 0;
-    if (sVar7 != 0) {
+    
+	*(undefined2 *)((int)piVar18 + 0xda) = 0;
+    
+	// not CAM_FollowDriver_Normal
+	if (sVar7 != 0) 
+	{
+	  // LookAt and Frozen
       if (sVar7 == 4) {
 LAB_8001c11c:
 		// CAM_LookAtPosition
@@ -3028,7 +3062,9 @@ LAB_8001c128:
         sVar5 = psVar19[1];
         sVar1 = psVar19[2];
       }
-      else {
+      else 
+	  {
+		// CAM_FollowDriver_Spin360
         if (sVar7 == 10)
 		{
 		  // CAM_FollowDriver_Spin360
@@ -3037,6 +3073,7 @@ LAB_8001c128:
         }
         if (sVar7 != 0xb) 
 		{
+		  // TransitionTo
           if (sVar7 == 0xc) 
 		  {
 			// first frame of mode 0xc
@@ -3299,6 +3336,7 @@ LAB_8001c128:
 	  // iVar22 = driver object
       FUN_800188a8(&DAT_1f800108,piVar18,iVar22,&DAT_1f800348);
 
+	  // jump over CAM_FollowDriver_Normal
 	  goto LAB_8001c150;
     }
   }

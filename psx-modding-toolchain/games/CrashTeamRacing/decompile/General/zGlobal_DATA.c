@@ -180,7 +180,7 @@ struct Data data =
 	
 	.EndOfRace_Camera_Size =
 	{
-		0,		// mode 0 (following driver)
+		0,		// mode 0 (CAM_FollowDriver_Normal)
 		-1,		// mode 1 (doesn't exist)
 		-1,		// mode 2 (doesn't exist)
 		0xC,	// mode 3 (freecam)
@@ -190,9 +190,9 @@ struct Data data =
 		0x6,	// mode 7
 		0xC,	// mode 8
 		0x10,	// mode 9 (trackSel and follow path)
-		0x6,	// mode A
-		0xC,	// mode B
-		0x14,	// mode C
+		0x6,	// mode A (CAM_FollowDriver_Spin360)
+		0xC,	// mode B (LookAt and ???)
+		0x14,	// mode C (TransitionTo)
 		0x10,	// mode D (lookAt and follow path)
 		0xC,	// mode E
 		0,		// mode F (first person)
