@@ -9421,8 +9421,14 @@ struct sData
 	// 8008d450
 	int TitleFlag_LoadingTextAnimFrame;
 
+	// 8008d454
+	// transitioning flag
+
 	// 8008d458
 	// some kind of elapsed time in TitleFlag
+	
+	// 8008d460
+	// DrawSolidBox
 
 	// 8008d454
 	#if BUILD == UsaRetail

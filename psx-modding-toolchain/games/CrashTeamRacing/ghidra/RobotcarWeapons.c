@@ -495,7 +495,9 @@ LAB_80041298:
   // set new boss meta
   DAT_8008d8e8 = pbVar12;
 
-  if (pbVar12[3] == 0) {
+  if (pbVar12[3] == 0) 
+  {
+	// run this once per second
     if (DAT_8008d428 == 0x1e) {
       if ((*(uint *)(iVar13 + 0x5b0) & 0x80) == 0) {
         if (DAT_8008d42a == 0) {
@@ -525,7 +527,9 @@ LAB_80040ba0:
         }
       }
     }
-    else {
+    
+	// count up
+	else {
       if ((*(uint *)(iVar13 + 0x5b0) & 0x40) == 0) {
         DAT_8008d428 = DAT_8008d428 + 1;
       }
