@@ -10353,6 +10353,7 @@ struct sData
 	// 8008d994
 	int wumpaShineResult;
 
+	// 8008d998
 	int wumpaShineColor1[3];
 	int wumpaShineColor2[3];
 
