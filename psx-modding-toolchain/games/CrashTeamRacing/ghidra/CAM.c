@@ -2893,7 +2893,7 @@ void FUN_8001b334(int param_1)
   switch(*(undefined2 *)((int)piVar18 + 0x9a)) 
   {
   
-  // following driver
+  // CAM_FollowDriver_Normal
   case 0:
 
 	// TileView position
@@ -2988,6 +2988,7 @@ void FUN_8001b334(int param_1)
     *(short *)(piVar18 + 0x2c) = psVar16[8];
     break;
 
+  // CAM_FollowDriver_Spin360
   case 10:
     sVar7 = *psVar12;
     psVar12 = psVar16 + 2;
@@ -3032,11 +3033,15 @@ switchD_8001b678_caseD_1:
   // get camera mode
   sVar7 = *(short *)((int)piVar18 + 0x9a);
 
-  // if camera is not in ordinary-driving mode,
-  // such as an end-of-race spectate mode
+  // not CAM_FollowDriver_Normal
   if (sVar7 != 0) {
-    *(undefined2 *)((int)piVar18 + 0xda) = 0;
-    if (sVar7 != 0) {
+    
+	*(undefined2 *)((int)piVar18 + 0xda) = 0;
+    
+	// not CAM_FollowDriver_Normal
+	if (sVar7 != 0) 
+	{
+	  // LookAt and Frozen
       if (sVar7 == 4) {
 LAB_8001c11c:
 		// CAM_LookAtPosition
@@ -3046,7 +3051,9 @@ LAB_8001c128:
         sVar5 = psVar19[1];
         sVar1 = psVar19[2];
       }
-      else {
+      else 
+	  {
+		// CAM_FollowDriver_Spin360
         if (sVar7 == 10)
 		{
 		  // CAM_FollowDriver_Spin360
