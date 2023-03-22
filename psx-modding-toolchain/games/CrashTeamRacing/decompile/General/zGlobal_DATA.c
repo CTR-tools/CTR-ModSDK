@@ -191,8 +191,8 @@ struct Data data =
 		0xC,	// mode 8
 		0x10,	// mode 9 (trackSel and follow path)
 		0x6,	// mode A (CAM_FollowDriver_Spin360)
-		0xC,	// mode B
-		0x14,	// mode C
+		0xC,	// mode B (LookAt and ???)
+		0x14,	// mode C (TransitionTo)
 		0x10,	// mode D (lookAt and follow path)
 		0xC,	// mode E
 		0,		// mode F (first person)

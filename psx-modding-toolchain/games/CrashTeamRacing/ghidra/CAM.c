@@ -3009,6 +3009,7 @@ LAB_8001b928:
     *(short *)(piVar18 + 0x2a) = psVar12[1];
     break;
 	
+  // TransitionTo
   case 0xc:
     
 	// set TransitionTo
@@ -3062,6 +3063,7 @@ LAB_8001c128:
         }
         if (sVar7 != 0xb) 
 		{
+		  // TransitionTo
           if (sVar7 == 0xc) 
 		  {
 			// first frame of mode 0xc
@@ -3324,6 +3326,7 @@ LAB_8001c128:
 	  // iVar22 = driver object
       FUN_800188a8(&DAT_1f800108,piVar18,iVar22,&DAT_1f800348);
 
+	  // jump over CAM_FollowDriver_Normal
 	  goto LAB_8001c150;
     }
   }
