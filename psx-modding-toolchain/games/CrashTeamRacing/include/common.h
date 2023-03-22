@@ -10353,9 +10353,8 @@ struct sData
 	// 8008d994
 	int wumpaShineResult;
 
-	// 8008d998
-	// all used in FUN_8004e37c
-	int data18_aaaa[6];
+	int wumpaShineColor1[3];
+	int wumpaShineColor2[3];
 
 	// 8008d9b0
 	int relicTime_1min;
