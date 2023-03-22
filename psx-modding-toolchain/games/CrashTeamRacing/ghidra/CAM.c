@@ -2767,7 +2767,11 @@ void FUN_8001b334(int param_1)
   // with and without L2
   // at motion and at rest
 
+  // if not end-of-race camera, skip block
   if ((piVar18[0x1c] & 0x20U) == 0) goto switchD_8001b678_caseD_1;
+  
+  // === Assume End-Of-Race camera ===
+  
   psVar16 = (short *)0x0;
 
   // LEV -> trial_data -> numPointers
@@ -2855,8 +2859,17 @@ void FUN_8001b334(int param_1)
 	} while (sVar7 != 0);
   }
   
+  // if no valid End-Of-Race camera init data found,
+  // or if it has not changed since previous frame
   if ((psVar16 == (short *)0x0) || (psVar16 == (short *)piVar18[0x28]))
-  goto switchD_8001b678_caseD_1;
+  {
+	  // skip initialization of new End-Of-Race camera mode
+	  goto switchD_8001b678_caseD_1;
+  }
+  
+  // === Initialize new End-Of-Race camera mode ===
+  
+  // save new pointer to camera init data
   *(short **)(piVar18 + 0x28) = psVar16;
   
   sVar7 = *psVar16;
