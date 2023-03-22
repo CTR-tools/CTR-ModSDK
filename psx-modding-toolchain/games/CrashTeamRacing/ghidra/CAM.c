@@ -2259,8 +2259,13 @@ LAB_8001a8c0:
   // CAM_FindClosestQuadblock
   FUN_800188a8(param_4,param_1,param_2,param_4 + 0x240);
 
-  if ((*(short *)(param_4 + 0x3e) == 0) ||
-     ((*(ushort *)(*(int *)(param_4 + 0x80) + 0x12) & 0x4100) != 0)) {
+  if (
+		(*(short *)(param_4 + 0x3e) == 0) ||
+		
+		// quadblock->quadFlags & 0x4100
+		((*(ushort *)(*(int *)(param_4 + 0x80) + 0x12) & 0x4100) != 0)
+	 ) 
+  {
     if (*(int *)(param_4 + 0x244) <
         (int)*(short *)(param_1 + 0xc4) + (*(int *)(param_2 + 0x2d8) >> 8)) {
       *(undefined2 *)(param_1 + 0xc2) = 8;
@@ -2273,15 +2278,20 @@ LAB_8001a8c0:
     *(short *)(param_1 + 0xc0) =
          *(short *)(param_4 + 0x244) - (short)((uint)*(undefined4 *)(param_2 + 0x2d8) >> 8);
   }
-  else {
+  
+  else 
+  {
     cVar1 = *(char *)(*(int *)(param_4 + 0x80) + 0x38);
-    if (((cVar1 == '\x0e') || (cVar1 == '\x04')) || (cVar1 == '\r')) {
+    
+	if (((cVar1 == '\x0e') || (cVar1 == '\x04')) || (cVar1 == '\r')) {
       *(undefined2 *)(param_4 + 0x1e) = 0;
     }
-    x = (int)*(short *)(param_4 + 0x1e) + (int)param_5[8];
+    
+	x = (int)*(short *)(param_4 + 0x1e) + (int)param_5[8];
     if (*(int *)(param_4 + 0x244) < x) {
       *(int *)(param_4 + 0x244) = x;
     }
+	
     x = (int)*(short *)(param_1 + 0xc2);
     if (x != 0) {
       *(int *)(param_4 + 0x244) =
