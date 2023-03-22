@@ -2738,10 +2738,10 @@ void FUN_8001b334(int param_1)
       *(undefined2 *)((int)piVar18 + 0x92) = 0;
     }
 
-	// If you are in process of changing 1 back to 0
+	// unused way to toggle first-person by pressing L2 twice
     if (*(short *)((int)piVar18 + 0x92) == 2)
 	{
-		// first person mode?
+		// first person mode
       *(undefined2 *)((int)piVar18 + 0x9a) = 0xf;
     }
 
