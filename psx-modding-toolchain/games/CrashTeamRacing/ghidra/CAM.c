@@ -2698,13 +2698,14 @@ void FUN_8001b334(int param_1)
 				// driver -> instance -> thread -> funcThTick == 0
 				(*(int *)(*(int *)(*(int *)(iVar22 + 0x1c) + 0x6c) + 0x2c) == 0)
 			) &&
-		// If this is human and not AI
-      ((*(uint *)(iVar22 + 0x2c8) & 0x100000) == 0)
+			
+			// If this is human and not AI
+			((*(uint *)(iVar22 + 0x2c8) & 0x100000) == 0)
 		) &&
 		(
 			(
-        //if kart state is not 0xA (?) and kart state is not 0xB (?)
-				(*(char *)(iVar22 + 0x376) != '\n' && (*(char *)(iVar22 + 0x376) != '\v')) &&
+				//if kart state is not warpPad(10), and not Freeze(11)
+				(*(char *)(iVar22 + 0x376) != 10 && (*(char *)(iVar22 + 0x376) != 11)) &&
 				(
 					(
 						// if not in a state where you're seeing the boss key open an adv door,
