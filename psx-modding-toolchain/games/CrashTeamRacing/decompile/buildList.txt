@@ -288,16 +288,16 @@ common, exe, TileView_SetPsyqGeom, 0x0, General/TileView/TileView_SetPsyqGeom.c
 common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
 
 // UI
-common, exe, UI_Map_DrawMap, 0x0, General/UI_Map_DrawMap.c
-common, exe, UI_DrawDriverIcon, 0x0, General/UI_DrawDriverIcon.c
-common, exe, UI_DrawLimitClock, 0x0, General/UI_DrawLimitClock.c
-common, exe, UI_SaveLapTime, 0x0, General/UI_SaveLapTime.c
-common, exe, UI_DrawRaceClock, 0x0, General/UI_DrawRaceClock.c
-common, exe, UI_Lerp2D_Angular, 0x0, General/UI_Lerp2D_Angular.c
-common, exe, UI_Lerp2D_HUD, 0x0, General/UI_Lerp2D_HUD.c
-common, exe, UI_Lerp2D_Linear, 0x0, General/UI_Lerp2D_Linear.c
-common, exe, UI_JumpMeter_Draw, 0x0, General/UI_JumpMeter_Draw.c
-common, exe, UI_DrawSlideMeter, 0x0, General/UI_DrawSlideMeter.c
+common, exe, UI_Map_DrawMap, 0x0, General/UI/UI_Map_DrawMap.c
+common, exe, UI_DrawDriverIcon, 0x0, General/UI/UI_DrawDriverIcon.c
+common, exe, UI_DrawLimitClock, 0x0, General/UI/UI_DrawLimitClock.c
+common, exe, UI_SaveLapTime, 0x0, General/UI/UI_SaveLapTime.c
+common, exe, UI_DrawRaceClock, 0x0, General/UI/UI_DrawRaceClock.c
+common, exe, UI_Lerp2D_Angular, 0x0, General/UI/UI_Lerp2D_Angular.c
+common, exe, UI_Lerp2D_HUD, 0x0, General/UI/UI_Lerp2D_HUD.c
+common, exe, UI_Lerp2D_Linear, 0x0, General/UI/UI_Lerp2D_Linear.c
+common, exe, UI_JumpMeter_Draw, 0x0, General/UI/UI_JumpMeter_Draw.c
+common, exe, UI_DrawSlideMeter, 0x0, General/UI/UI_DrawSlideMeter.c
 
 // VEH
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
