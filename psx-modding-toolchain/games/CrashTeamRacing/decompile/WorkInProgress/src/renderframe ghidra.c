@@ -118,7 +118,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 				sVar16 = -100;
 			}
 			in_stack_ffffffb0 = (void *)0xa;
-			InterpolatePosition2D_Linear(&local_38, startX, startY, sVar16, startY, iVar10, 10);
+			UI_Lerp2D_Linear(&local_38, startX, startY, sVar16, startY, iVar10, 10);
 			DecalFont_DrawLineOT
 								(sdata->lngStrings[0x233], (int)local_38, (int)local_36, 1, -0x8000, 
 								 *(u_long **)(sdata->gGT->tileView[0].filler2 + iVar19 - 4));
@@ -219,10 +219,10 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 			if ((uVar6 & 0x100000) == 0) {
 				if (((uVar6 & 0x200000) == 0) || (sdata->gGT->timerEndOfRaceVS != 0)) {
 					if ((uVar6 & 0x8000000) == 0) {
-						DrawHUD_Racing();
+						UI_RenderFrame_Racing();
 					}
 					else {
-						DrawHUD_CrystalChallenge();
+						UI_RenderFrame_CrystChall();
 					}
 				}
 				else if (1 < sdata->Loading.stage + 5U) {
@@ -266,7 +266,7 @@ LAB_800367d4:
 				uVar5 = LOAD_IsOpen_AdvHub();
 				if (uVar5 == 0) {
 					if (0xfff < (sdata->gGT->tileView_UI).fadeFromBlack_currentValue) {
-						DrawHUD_AdvStrings();
+						UI_RenderFrame_AdvHub();
 					}
 				}
 				else {
@@ -291,7 +291,7 @@ LAB_800367d4:
 		}
 	}
 	else {
-		DrawIntroRaceText_1P();
+		UI_RaceStart_IntroText1P();
 	}
 	if (((gGT->renderFlags & 0x10) != 0) && ((u_char)sdata->gGT->numPlyrCurrGame < 3)) {
 		RedBeaker_RenderRain
@@ -625,7 +625,7 @@ code_r0x800369d8:
 			} while (iVar19 < (int)(u_int)(u_char)gGT->numPlyrCurrGame);
 		}
 		if (((sdata->gGT->hudFlags & 1U) != 0) && (1 < (u_char)sdata->gGT->numPlyrCurrGame)) {
-			DrawHUD_Wumpa3D_2P3P4P(gGT);
+			UI_RenderFrame_Wumpa3D_2P3P4P(gGT);
 		}
 		if (((gGT->renderFlags & 0x100) != 0) && (1 < (u_char)sdata->gGT->numPlyrCurrGame)) {
 			DecalMP_03(gGT);

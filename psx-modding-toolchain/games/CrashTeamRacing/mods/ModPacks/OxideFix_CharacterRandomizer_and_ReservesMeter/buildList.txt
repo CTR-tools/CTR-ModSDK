@@ -11,7 +11,7 @@
 common, exe, MainInit_JitPoolsNew, 0x0, ../../Patches/SaveRAM/src/CustomJitPoolsNew.c
 common, exe, TileView_Init, 0x0, ../../../decompile/General/TileView/TileView_Init.c ../../Patches/SaveRAM/src/NewDriverPool.c, Mem_DriverPool.bin
 common, exe, MainInit_JitPoolsReset, 0x0, ../../Patches/SaveRAM/src/hookJitPoolsReset.s
-common, exe, DrawRaceClock, 0x0, ../../../decompile/General/DrawRaceClock.c ../../Patches/SaveRAM/src/NewThreadPool.c, Mem_ThreadPool.bin
+common, exe, UI_DrawRaceClock, 0x0, ../../../decompile/General/UI_DrawRaceClock.c ../../Patches/SaveRAM/src/NewThreadPool.c, Mem_ThreadPool.bin
 
 // Custom version of AdvBosses
 common, 233, CS_Garage_GetMenuBox, -0x8, ../../Modules/OxideFix/src/AdvBosses_hook233.s
@@ -46,7 +46,7 @@ common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_ho
 // ReservesMeter //
 
 // Compile the ASM injection that will load our code
-common, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+common, exe, UI_RenderFrame_AdvHub, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
 common, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
 
 common, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c

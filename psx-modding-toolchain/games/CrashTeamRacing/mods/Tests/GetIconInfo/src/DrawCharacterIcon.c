@@ -2,7 +2,7 @@
 
 void NumbersToString(char * str, int value, int digits, int hexadecimal);
 
-void DECOMP_DrawCharacterIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, u_int color)
+void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, u_int color)
 {
 	short height;
 	short width;

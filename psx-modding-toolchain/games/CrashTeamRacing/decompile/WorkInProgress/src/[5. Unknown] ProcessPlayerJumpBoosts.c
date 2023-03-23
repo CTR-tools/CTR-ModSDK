@@ -3,7 +3,7 @@
 void Turbo_Increment(int param_1, int param_2, u_int param_3, int param_4);
 void Voiceline_RequestPlay(u_int param_1, u_int param_2, u_int param_3);
 
-void DECOMP_ProcessPlayerJumpBoosts(struct Driver* driver)
+void DECOMP_UI_JumpMeter_Update(struct Driver* driver)
 {
 	short jumpMeter;
 	int jumpMeterMinus32ms;

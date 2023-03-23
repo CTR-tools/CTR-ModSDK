@@ -308,7 +308,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 		
 DrawFinalLapString:
 
-		InterpolatePosition2D_Linear(&resultPos, startX, posY, endX, posY, textTimer, 10);
+		UI_Lerp2D_Linear(&resultPos, startX, posY, endX, posY, textTimer, 10);
 
 		// need to specify OT, or else "FINAL LAP" will draw on top of character icons,
 		// and by doing this, "FINAL LAP" draws under the character icons instead
@@ -464,13 +464,13 @@ void RenderAllHUD(struct GameTracker* gGT)
 					// not crystal challenge
 					if((gameMode1 & CRYSTAL_CHALLENGE) == 0)
 					{
-						DrawHUD_Racing();
+						UI_RenderFrame_Racing();
 					}
 					
 					// if crystal challenge
 					else
 					{
-						DrawHUD_CrystalChallenge();
+						UI_RenderFrame_CrystChall();
 					}
 				}
 				
@@ -534,7 +534,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 					// if any transition is over
 					if(gGT->tileView_UI.fadeFromBlack_currentValue > 0xfff)
 					{
-						DrawHUD_AdvStrings();
+						UI_RenderFrame_AdvHub();
 					}
 				}
 				
@@ -583,7 +583,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 	// if drawing intro-race title bars
 	else
 	{
-		DrawIntroRaceText_1P();
+		UI_RaceStart_IntroText1P();
 	}
 }
 
@@ -922,7 +922,7 @@ void MultiplayerWumpaHUD(struct GameTracker* gGT)
 {
 	if((gGT->hudFlags & 1) == 0) return;
 	if(gGT->numPlyrCurrGame < 2) return;
-	DrawHUD_Wumpa3D_2P3P4P(gGT);
+	UI_RenderFrame_Wumpa3D_2P3P4P(gGT);
 }
 
 void WindowBoxLines(struct GameTracker* gGT)

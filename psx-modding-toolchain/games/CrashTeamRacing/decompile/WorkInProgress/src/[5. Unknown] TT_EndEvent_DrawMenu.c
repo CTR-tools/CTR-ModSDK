@@ -76,7 +76,7 @@ void TT_EndEvent_DrawMenu()
 				frameCounterCopy = frameCounterCopy - 0x3e9;
 			}
 		
-			InterpolatePosition2D_Linear(&posX, startX_but_its_also_strFlags, 10, endX_but_its_also_a_string, 10, frameCounterCopy, 0x14);
+			UI_Lerp2D_Linear(&posX, startX_but_its_also_strFlags, 10, endX_but_its_also_a_string, 10, frameCounterCopy, 0x14);
 			
 			TT_EndEvent_DrawHighScore((int)posX, (int)posY, 0);
 		
@@ -94,7 +94,7 @@ void TT_EndEvent_DrawMenu()
 			}
 		
 			// Fly-in Interpolation
-			InterpolatePosition2D_Linear(&posX, startX_but_its_also_strFlags, 0x82, endX_but_its_also_a_string, 0x82, frameCounterCopy, 0x14);
+			UI_Lerp2D_Linear(&posX, startX_but_its_also_strFlags, 0x82, endX_but_its_also_a_string, 0x82, frameCounterCopy, 0x14);
 			
 			TT_EndEvent_DisplayTime((int)posX, (int)posY, sdata->flags_timeTrialEndOfRace);
 				
@@ -130,9 +130,9 @@ void TT_EndEvent_DrawMenu()
 		// These next two functions are related to drawing "TIME" and "TIME TRIAL" in the top-left corner of screen
 	
 		// Fly-in Interpolation
-		InterpolatePosition2D_Linear(&posX, 0x14, 8, startX_but_its_also_strFlags, 8, frameCounterCopy, 0x14);
+		UI_Lerp2D_Linear(&posX, 0x14, 8, startX_but_its_also_strFlags, 8, frameCounterCopy, 0x14);
 	
-		DrawRaceClock((int)posX, (int)posY, 0, sdata->gGT->drivers[0]);
+		UI_DrawRaceClock((int)posX, (int)posY, 0, sdata->gGT->drivers[0]);
 		goto LAB_800a03c0;
 	}
 	
@@ -143,7 +143,7 @@ void TT_EndEvent_DrawMenu()
 		(0x78 < sdata->framesSinceRaceEnded) &&
 	
 		// Fly-in Interpolation
-		(InterpolatePosition2D_Linear(&posX, 0x264, 0x7a, 0x100, 0x7a, sdata->framesSinceRaceEnded - 0x78, 0x14),
+		(UI_Lerp2D_Linear(&posX, 0x264, 0x7a, 0x100, 0x7a, sdata->framesSinceRaceEnded - 0x78, 0x14),
 	 
 		// if there is a new high score
 		-1 < sdata->newHighScoreIndex)
@@ -175,7 +175,7 @@ void TT_EndEvent_DrawMenu()
 		(0x96 < sdata->framesSinceRaceEnded) &&
 
 		// Fly-in Interpolation
-		(InterpolatePosition2D_Linear(&posX, 0xffffff9c, 0x8e, 0x100, 0x8e, sdata->framesSinceRaceEnded - 0x96, 0x14),
+		(UI_Lerp2D_Linear(&posX, 0xffffff9c, 0x8e, 0x100, 0x8e, sdata->framesSinceRaceEnded - 0x96, 0x14),
 
 		(sdata->gGT->unknownFlags_1d44 & 0x4000000) != 0)
 	)
@@ -226,7 +226,7 @@ void TT_EndEvent_DrawMenu()
 	if (0xb4 < sdata->framesSinceRaceEnded) 
 	{
 		// Fly-in Interpolation
-		InterpolatePosition2D_Linear(&posX, 0x264, 0xa2, 0x100, 0xa2, sdata->framesSinceRaceEnded - 0xb4, 0x14);
+		UI_Lerp2D_Linear(&posX, 0x264, 0xa2, 0x100, 0xa2, sdata->framesSinceRaceEnded - 0xb4, 0x14);
 	
 		if ((sdata->gGT->unknownFlags_1d44 & 0x8000) == 0) 
 		{
@@ -275,7 +275,7 @@ void TT_EndEvent_DrawMenu()
 LAB_800a016c:
 
 	// fly-in interpolation
-	InterpolatePosition2D_Linear(&posX, 0xffffff9c, 0x5a, 0x100, 0x5a, sdata->framesSinceRaceEnded + -0x5a, 0x14);
+	UI_Lerp2D_Linear(&posX, 0xffffff9c, 0x5a, 0x100, 0x5a, sdata->framesSinceRaceEnded + -0x5a, 0x14);
 	
 	TT_EndEvent_DisplayTime((int)posX, (int)posY, sdata->flags_timeTrialEndOfRace);
 	

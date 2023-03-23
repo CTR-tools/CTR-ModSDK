@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_SaveLapTime(int numLaps, int lapTime, short driverID)
+void DECOMP_UI_SaveLapTime(int numLaps, int lapTime, short driverID)
 {
 	int numMinutes;
 	int PlayerLapIndex;

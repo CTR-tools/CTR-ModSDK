@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_DrawCharacterIcon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_int vcolorAndCode)
+void DECOMP_UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_int vcolorAndCode)
 {
 	short iVar6;
 	short height;
@@ -68,7 +68,7 @@ void DECOMP_DrawCharacterIcon(struct Icon* icon, int posX, int posY, struct Prim
 		// this function is always called with this parameter set to 1 (which is Mode 0, equivalent to 50% transparency)
 		// uh, I think so anyway, feel free to double check I guess
 
-		// note that these blending modes are different from those used in Map_DrawMap
+		// note that these blending modes are different from those used in UI_Map_DrawMap
 		p->tpage = p->tpage & 0xff9f | (semitransparencyEnabled - 1) << 5;
 		p->code = p->code | 2;
 	}

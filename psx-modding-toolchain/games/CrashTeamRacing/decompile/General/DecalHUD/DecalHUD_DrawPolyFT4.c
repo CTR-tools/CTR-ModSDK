@@ -34,7 +34,7 @@ void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, int posX, int posY, struct P
 			p->code = 0x2f;
 
 			// set top right corner UVs and texpage of primitive, and alter the blending mode bits of the texpage from 11 (Mode 3, which is no blending) to 00 (Mode 0, equivalent to regular 50% opacity)
-			// note that these blending modes are different from those used in Map_DrawMap
+			// note that these blending modes are different from those used in UI_Map_DrawMap
 			*(int*)&p->u1 =
 				topRightCornerAndPageXY & 0xff9fffff |
 				((u_int)semitransparencyEnabled - 1) * 0x200000;

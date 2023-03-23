@@ -22,8 +22,8 @@ extern struct MenuBox menuBox221;
 	
 int UI_ConvertX_2(int x, int const_0x200);
 int UI_ConvertY_2(int y, int const_0x200);
-void DrawNumCrystal(int x, int y, struct Driver* d);
-void DrawCountdownClock(short x, short y, short fontSize);
+void UI_DrawNumCrystal(int x, int y, struct Driver* d);
+void UI_DrawLimitClock(short x, short y, short fontSize);
 void MenuBox_ClearInput();
 void MenuBox_Show(struct MenuBox*);
 void OtherFX_Play(int, int);
@@ -59,7 +59,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// YouWin/TryAgain, and Crystal Count
 	{
 		// fly in from right
-		InterpolatePosition2D_Linear(
+		UI_Lerp2D_Linear(
 			&posXY[0],
 			0x264, 0x56, // startX, startY,
 			0xcd, 0x56, // endX, endY
@@ -87,7 +87,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// this must happen after "Fly from Right" for variable re-use
 	{
 		// fly in from left
-		InterpolatePosition2D_Linear(
+		UI_Lerp2D_Linear(
 			&posXY[0],
 			-0x63, 0x18, // startX, startY,
 			0x100, 0x18, // endX, endY
@@ -100,7 +100,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 			posXY[0], posXY[1],
 			FONT_BIG, 0xffff8000);
 			
-		DrawCountdownClock(posXY[0]-0x33, posXY[1]+0x11, FONT_BIG);
+		UI_DrawLimitClock(posXY[0]-0x33, posXY[1]+0x11, FONT_BIG);
 	}
 		
 	
@@ -204,7 +204,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	MainRaceTrack_RequestLoad(gGT->prevLEV);
 }
 
-void MenuBoxFuncPtr_GenericEndOfRace(struct MenuBox*);
+void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox*);
 
 struct MenuRow menuRows221[3] =
 {	
@@ -246,7 +246,7 @@ struct MenuBox menuBox221 =
 	
 	.state = 0x803,
 	.rows = menuRows221,
-	.funcPtr = MenuBoxFuncPtr_GenericEndOfRace,
+	.funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
 	.drawStyle = 4,
 
 	// rest of variables all default zero

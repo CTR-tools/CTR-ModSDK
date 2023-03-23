@@ -1,8 +1,8 @@
 #include <common.h>
 
-void Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short empty, struct PrimMem* primMem, u_long* otMem, u_int colorID);
+void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short empty, struct PrimMem* primMem, u_long* otMem, u_int colorID);
 
-void DECOMP_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID)
+void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID)
 {
 	short mapBottomHeight;
 	short mapTopHeight;
@@ -64,7 +64,7 @@ void DECOMP_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX,
 		p->y2 = posY - mapBottomHeight;
 		p->y3 = posY - mapBottomHeight;
 
-		Map_DrawMap_ExtraFunc(mapTop, p, posX, 0, primMem, otMem, colorID);
+		UI_Map_DrawMap_ExtraFunc(mapTop, p, posX, 0, primMem, otMem, colorID);
 	}
 
 	// draw bottom half of minimap
@@ -78,14 +78,14 @@ void DECOMP_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX,
 	p->y2 = posY;
 	p->y3 = posY;
 
-	Map_DrawMap_ExtraFunc(mapBottom, p, posX, 0, primMem, otMem, colorID);
+	UI_Map_DrawMap_ExtraFunc(mapBottom, p, posX, 0, primMem, otMem, colorID);
 
 	return;
 }
 
 // function that calculates and sets the width of both minimap primitives and alters texpage on a certain condition
-// doesn't exist in ghidra disassembly, created from Map_DrawMap for optimization
-void Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short empty, struct PrimMem* primMem, u_long* otMem, u_int colorID)
+// doesn't exist in ghidra disassembly, created from UI_Map_DrawMap for optimization
+void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short empty, struct PrimMem* primMem, u_long* otMem, u_int colorID)
 {
 	short leftX;
 

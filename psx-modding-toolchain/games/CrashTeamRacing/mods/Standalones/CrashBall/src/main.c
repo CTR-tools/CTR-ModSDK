@@ -5,7 +5,7 @@ void Driver_TeleportAll(struct GameTracker* gGT, int flag);
 struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void MenuBox_ClearInput();
-void DrawCharacterIcon(struct Icon* icon, short posX, int posY, struct PrimMem* primMem, void *ot, u_char semitransparencyEnabled, short scale, u_int vcolorAndCode);
+void UI_DrawDriverIcon(struct Icon* icon, short posX, int posY, struct PrimMem* primMem, void *ot, u_char semitransparencyEnabled, short scale, u_int vcolorAndCode);
 
 struct Ball
 {
@@ -231,7 +231,7 @@ void DrawHUD()
 		iconID = data.MetaDataCharacters[characterID].iconID;
 
 		// draw icon
-		DrawCharacterIcon(
+		UI_DrawDriverIcon(
 
 			// pointer to icon
 			sdata->gGT->ptrIcons[iconID],

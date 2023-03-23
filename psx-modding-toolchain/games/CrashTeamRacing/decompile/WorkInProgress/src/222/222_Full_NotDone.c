@@ -77,7 +77,7 @@ void AA_EndEvent_DrawMenu()
 					currFrame = sdata->framesSinceRaceEnded - 300;
 				}
 				
-				InterpolatePosition2D_Linear(
+				UI_Lerp2D_Linear(
 					&posXY[0], lerpStartX, lerpStartY, 
 					lerpEndX, lerpEndY, currFrame, lerpFrames);
 					

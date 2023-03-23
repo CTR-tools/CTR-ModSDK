@@ -5,11 +5,11 @@
 // ReservesMeter //
 
 // Compile the ASM injection that will load our code
-903, exe, DrawHUD_CrystalChallenge, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
-926, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
-1006, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
-1020, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
-1111, exe, DrawHUD_AdvStrings, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+903, exe, UI_RenderFrame_CrystChall, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+926, exe, UI_RenderFrame_AdvHub, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+1006, exe, UI_RenderFrame_AdvHub, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+1020, exe, UI_RenderFrame_AdvHub, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+1111, exe, UI_RenderFrame_AdvHub, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
 
 // Retro-Fueled //
 

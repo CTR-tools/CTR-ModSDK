@@ -10,7 +10,7 @@ common, exe, LOAD_DriverMPK, 0x0, ../../../decompile/General/LOAD/LOAD_DriverMPK
 common, exe, MainInit_JitPoolsNew, 0x0, ../../Patches/SaveRAM/src/CustomJitPoolsNew.c
 common, exe, TileView_Init, 0x0, ../../../decompile/General/TileView/TileView_Init.c ../../Patches/SaveRAM/src/NewDriverPool.c, Mem_DriverPool.bin
 common, exe, MainInit_JitPoolsReset, 0x0, ../../Patches/SaveRAM/src/hookJitPoolsReset.s
-common, exe, DrawRaceClock, 0x0, ../../../decompile/General/DrawRaceClock.c ../../Patches/SaveRAM/src/NewThreadPool.c, Mem_ThreadPool.bin
+common, exe, UI_DrawRaceClock, 0x0, ../../../decompile/General/UI_DrawRaceClock.c ../../Patches/SaveRAM/src/NewThreadPool.c, Mem_ThreadPool.bin
 
 // Include OverrideMPK
 926, exe, 0x80033f3c, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s

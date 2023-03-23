@@ -29,7 +29,7 @@ char s_endString[] = "Press * to play again";
 void CC_EndEvent_DrawMenu();
 void CAM_FollowDriver_Normal(int param_1,int param_2,short *param_3,int param_4,short *param_5);
 int LOAD_TenStages(unsigned int param_1,int param_2,unsigned int param_3);
-void DrawHUD_CrystalChallenge(void);
+void UI_RenderFrame_CrystChall(void);
 
 void MainUpdateLoop();
 void InjectRetroFueled();
@@ -176,7 +176,7 @@ void RunInitHook()
 	#endif
 
 	// Remove instruction to draw number crystals
-	*(unsigned int*)(DrawHUD_CrystalChallenge + 0xB0) = 0;
+	*(unsigned int*)(UI_RenderFrame_CrystChall + 0xB0) = 0;
 
 	// disable hud, just like 2P NF mod,
 	// also disable countdown timer
@@ -307,7 +307,7 @@ void RunUpdateHook()
 	if(sdata->gGT->trafficLightsTimer < 3840)
 	{
 		// Draw crystal challenge HUD
-		DrawHUD_CrystalChallenge();
+		UI_RenderFrame_CrystChall();
 
 		// Draw number of rings
 		DecalFont_DrawLine(ringsStr, 0x150,8,2,0);

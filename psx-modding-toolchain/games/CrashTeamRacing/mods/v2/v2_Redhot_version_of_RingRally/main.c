@@ -242,7 +242,7 @@ void EndCrystalChallenge(void)
 		iconID = (int)*(short *)( &global.dataIcons[(menu.currChar * 0x10) + 8]);
 
 		// draw icon of the current selected character
-		DrawCharacterIcon(
+		UI_DrawDriverIcon(
 
 			// pointer to icon
 			semiGlobal.gameConfig.ptrIcons[iconID],

@@ -8,7 +8,7 @@ int MATH_Sin(unsigned int angle);
 // param2 = drawn position
 // param3 = absolute position
 // param4 = frame counter
-void DECOMP_InterpolatePosition2D_Angular(short* ptrPos, short drawnPosition, short absolutePosition, short frameCounter)
+void DECOMP_UI_Lerp2D_Angular(short* ptrPos, short drawnPosition, short absolutePosition, short frameCounter)
 {
 	int angle;
 	int drawnPositionInt;

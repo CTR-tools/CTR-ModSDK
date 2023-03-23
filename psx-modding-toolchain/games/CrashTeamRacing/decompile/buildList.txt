@@ -287,21 +287,24 @@ common, exe, TileView_SetMatrixVP, 0x0, General/TileView/TileView_SetMatrixVP.c
 common, exe, TileView_SetPsyqGeom, 0x0, General/TileView/TileView_SetPsyqGeom.c
 common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
 
-// Uncategorized
-common, exe, Map_DrawMap, 0x0, General/Map_DrawMap.c
-common, exe, DrawCharacterIcon, 0x0, General/DrawCharacterIcon.c
+// UI
+common, exe, UI_Map_DrawMap, 0x0, General/UI_Map_DrawMap.c
+common, exe, UI_DrawDriverIcon, 0x0, General/UI_DrawDriverIcon.c
+common, exe, UI_DrawLimitClock, 0x0, General/UI_DrawLimitClock.c
+common, exe, UI_SaveLapTime, 0x0, General/UI_SaveLapTime.c
+common, exe, UI_DrawRaceClock, 0x0, General/UI_DrawRaceClock.c
+common, exe, UI_Lerp2D_Angular, 0x0, General/UI_Lerp2D_Angular.c
+common, exe, UI_Lerp2D_HUD, 0x0, General/UI_Lerp2D_HUD.c
+common, exe, UI_Lerp2D_Linear, 0x0, General/UI_Lerp2D_Linear.c
+common, exe, UI_JumpMeter_Draw, 0x0, General/UI_JumpMeter_Draw.c
+common, exe, UI_DrawSlideMeter, 0x0, General/UI_DrawSlideMeter.c
+
+// VEH
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
-common, exe, DrawCountdownClock, 0x0, General/DrawCountdownClock.c
-common, exe, SaveLapTime, 0x0, General/SaveLapTime.c
-common, exe, DrawRaceClock, 0x0, General/DrawRaceClock.c
-common, exe, InterpolatePosition2D_Angular, 0x0, General/InterpolatePosition2D_Angular.c
-common, exe, InterpolatePosition2D_HUD, 0x0, General/InterpolatePosition2D_HUD.c
-common, exe, InterpolatePosition2D_Linear, 0x0, General/InterpolatePosition2D_Linear.c
-common, exe, DrawJumpMeter, 0x0, General/DrawJumpMeter.c
-common, exe, DrawPowerslideMeter, 0x0, General/DrawPowerslideMeter.c
 common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
 common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
 
+// VEH
 common, exe, Player_Crashing_PhysAngular, 0x0, General/Player_Crashing_FuncPtrs.c
 common, exe, Player_Crashing_Init, 0x0, General/Player_Crashing_Init.c
 common, exe, Player_Drifting_PhysAngular, 0x0, General/Player_Drifting_PhysAngular.c

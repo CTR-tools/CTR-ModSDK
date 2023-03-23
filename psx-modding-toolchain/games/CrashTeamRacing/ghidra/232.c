@@ -5121,7 +5121,7 @@ void FUN_800b1c90(void)
     local_1e[0] = 0;
     uRam800b5670 = 0;
 	
-	// Map_DrawDrivers
+	// UI_Map_DrawDrivers
     FUN_8004dd5c(iVar3,*(undefined4 *)(PTR_DAT_8008d2ac + 0x1b2c),&local_20);
 	
 	// AH_Map_Warppads
@@ -5130,7 +5130,7 @@ void FUN_800b1c90(void)
 	// AH_Map_HubItems
     FUN_800b14f4(iVar3,local_1e);
 	
-	// Map_DrawMap
+	// UI_Map_DrawMap
     FUN_8004d614(*(undefined4 *)(PTR_DAT_8008d2ac + 0x1ef8),
                  *(undefined4 *)(PTR_DAT_8008d2ac + 0x1efc),500,0xc3,
                  
@@ -5146,15 +5146,15 @@ void FUN_800b1c90(void)
     FUN_80052250((int)*(short *)(puVar2 + 0x40),(int)*(short *)(puVar2 + 0x42),uVar4);
   }
   
-  // DrawNumRelic
+  // UI_DrawNumRelic
   FUN_80050f18((int)(((uint)*(ushort *)(puVar2 + 0x70) + 0x10) * 0x10000) >> 0x10,
                (int)(((uint)*(ushort *)(puVar2 + 0x72) - 10) * 0x10000) >> 0x10,uVar4);
   
-  // DrawNumKey
+  // UI_DrawNumKey
   FUN_80050fc4((int)(((uint)*(ushort *)(puVar2 + 0x78) + 0x10) * 0x10000) >> 0x10,
                (int)(((uint)*(ushort *)(puVar2 + 0x7a) - 10) * 0x10000) >> 0x10,uVar4);
   
-  // DrawNumTrophy
+  // UI_DrawNumTrophy
   FUN_80051070((int)(((uint)*(ushort *)(puVar2 + 0x80) + 0x10) * 0x10000) >> 0x10,
                (int)(((uint)*(ushort *)(puVar2 + 0x82) - 10) * 0x10000) >> 0x10,uVar4);
   return;

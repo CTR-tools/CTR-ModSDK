@@ -4060,7 +4060,7 @@ void FUN_80017318(int param_1)
   //if this racer is not an AI (player)
   if ((*(uint *)(param_1 + 0x2c8) & 0x100000) == 0)
   {
-	// Driver_Finalize_RaceClock
+	// UI_RaceEnd_GetDriverClock
     FUN_8005572c(param_1);
 
     // nav path index of this driver

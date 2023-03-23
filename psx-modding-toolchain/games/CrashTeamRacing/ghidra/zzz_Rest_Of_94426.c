@@ -7450,7 +7450,7 @@ LAB_800499e4:
 			// Change active MenuBox to OSK
             DAT_8008d924 = &DAT_80085c0c;
 
-			// OSK_RestoreName
+			// TitleOSK_RestoreName
             FUN_8004aa08(0);
 
             return;
@@ -7592,7 +7592,7 @@ LAB_800499e4:
 }
 
 
-// OSK_RestoreName
+// TitleOSK_RestoreName
 void FUN_8004aa08(undefined2 param_1)
 
 {
@@ -7621,7 +7621,7 @@ void FUN_8004aa08(undefined2 param_1)
 }
 
 
-// OSK_DrawMenu (on-screen keyboard)
+// TitleOSK_DrawMenu (on-screen keyboard)
 // called from funcptr function,
 // as well as one other place
 int FUN_8004aa60(ushort param_1)
@@ -7998,13 +7998,13 @@ LAB_8004b0dc:
 }
 
 
-// OSK_MenuBoxFuncPtr (on-screen keyboard)
+// TitleOSK_MenuBoxFuncPtr (on-screen keyboard)
 void FUN_8004b144(int param_1)
 
 {
   short sVar1;
 
-  // OSK_DrawMenu
+  // TitleOSK_DrawMenu
   sVar1 = FUN_8004aa60(0x13f);
 
   *(short *)(param_1 + 0x1a) = sVar1;
@@ -9272,7 +9272,7 @@ LAB_8004c7d4:
 
 // Draw various objects, like relic,
 // key trophy, token, crystal, etc
-// ThTick_Hud_Object3D
+// UI_ThTick_Reward
 void FUN_8004c850(int param_1)
 
 {
@@ -9469,7 +9469,7 @@ int FUN_8004cac8(int param_1,int param_2)
 }
 
 
-// HUD_INSTANCE_BirthWithThread
+// UI_INSTANCE_BirthWithThread
 int FUN_8004cae8(int param_1,undefined4 param_2,int param_3,int param_4,int param_5,
                 undefined4 param_6)
 
@@ -9710,7 +9710,7 @@ LAB_8004ccc8:
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// HUD_INSTANCE_InitAll
+// UI_INSTANCE_InitAll
 void FUN_8004cec4(void)
 
 {
@@ -9739,7 +9739,7 @@ void FUN_8004cec4(void)
 	// If you're in Adventure Arena
     if ((uVar3 & 0x100000) != 0)
 	{
-	  // HUD_INSTANCE_BirthWithThread
+	  // UI_INSTANCE_BirthWithThread
       FUN_8004cae8(0x61,FUN_8004c850,0xe,1,0,s_relic1_8008d4c8);   // "relic1"
       FUN_8004cae8(99,FUN_8004c850,0xf,1,0,&DAT_8008d4d0);		   // "key1"
       FUN_8004cae8(0x62,FUN_8004c850,0x10,0,0,s_trophy1_8008d4d8); // "trophy1"
@@ -9792,7 +9792,7 @@ void FUN_8004cec4(void)
 
 	  // The rest of this block only happens in Relic Mode
 
-	  // HUD_INSTANCE_BirthWithThread
+	  // UI_INSTANCE_BirthWithThread
       DAT_8008d9b4 = FUN_8004cae8(0x61,FUN_8004c850,0xe,1,0,s_relic1_8008d4c8); // "relic1"
       DAT_8008d9d8 = FUN_8004cae8(0x5c,FUN_8004c718,0x13,1,0,"timebox1");
 
@@ -9891,7 +9891,7 @@ void FUN_8004cec4(void)
 			((*(uint *)PTR_DAT_8008d2ac & 0x20) == 0)
 		)
 	{
-	  // HUD_INSTANCE_BirthWithThread
+	  // UI_INSTANCE_BirthWithThread
       FUN_8004cae8(0x38,FUN_8004ca04,2,0,0,&DAT_8008d4e0); // "big1"
     }
 
@@ -9900,7 +9900,7 @@ void FUN_8004cec4(void)
       return;
     }
 
-	// HUD_INSTANCE_BirthWithThread
+	// UI_INSTANCE_BirthWithThread
     DAT_8008d9cc = FUN_8004cae8(0x93,FUN_8004c914,0x12,0,0,&DAT_8008d4e8); // "hudc"
     DAT_8008d9c4 = FUN_8004cae8(0x94,FUN_8004c914,0x12,0,0,&DAT_8008d4f0); // "hudt"
     DAT_8008d9c8 = FUN_8004cae8(0x95,FUN_8004c914,0x12,0,0,&DAT_8008d4f8); // "hudr"
@@ -9922,7 +9922,7 @@ void FUN_8004cec4(void)
   // If you're in Crystal Challenge
   else
   {
-	// HUD_INSTANCE_BirthWithThread
+	// UI_INSTANCE_BirthWithThread
 
 	//Make a separate crystal for End of Race menu
     DAT_8008d9c0 = FUN_8004cae8(0x60,FUN_8004c850,0x11,0,0,"crystal1");
@@ -10140,7 +10140,7 @@ void FUN_8004d614(int param_1,int param_2,short param_3,short param_4,int param_
 }
 
 
-// Map_GetIconDemensions
+// UI_Map_GetIconDemensions
 void FUN_8004d8b4(short *param_1,int *param_2,int *param_3)
 
 {
@@ -10316,7 +10316,7 @@ void FUN_8004dc44(undefined4 param_1,undefined4 *param_2,int param_3,int param_4
 }
 
 
-// Map_DrawDrivers
+// UI_Map_DrawDrivers
 void FUN_8004dd5c(undefined4 param_1,int param_2,short *param_3)
 
 {
@@ -10491,7 +10491,7 @@ void FUN_8004dffc(undefined4 param_1,int param_2)
 
 // WARNING: Could not reconcile some variable overlaps
 
-// WeaponBackground_AnimateShine
+// UI_WeaponBG_AnimateShine
 void FUN_8004e0e0(void)
 
 {
@@ -10533,7 +10533,7 @@ void FUN_8004e0e0(void)
 }
 
 
-// WeaponBackground_DrawShine
+// UI_WeaponBG_DrawShine
 void FUN_8004e37c(int param_1,short param_2,short param_3,int param_4,void *param_5,byte param_6,
                  short param_7,short param_8)
 
@@ -10685,7 +10685,7 @@ void FUN_8004e37c(int param_1,short param_2,short param_3,int param_4,void *para
 }
 
 
-// DrawTrackerTargetBackground
+// UI_TrackerBG
 void FUN_8004e660(int param_1,short param_2,short param_3,int param_4,void *param_5,byte param_6,
                  short param_7,short param_8,undefined4 param_9)
 
@@ -10953,7 +10953,7 @@ void FUN_8004eaa8(short *param_1,short param_2,short param_3,short param_4)
 }
 
 
-// InterpolatePosition2D_HUD
+// UI_Lerp2D_HUD
 // param1 pointer to array of two shorts (x,y)
 // param2 startX
 // param3 startY
@@ -11049,7 +11049,7 @@ void FUN_8004ecd4(short *param_1,short param_2,short param_3,short param_4,short
 
 
 // param4 is the pointer to player structure
-// DrawRaceClock, both lap time and race time
+// UI_DrawRaceClock, both lap time and race time
 void FUN_8004edac(ushort param_1,ushort param_2,uint param_3,int param_4)
 
 {
@@ -11803,7 +11803,7 @@ void FUN_8004f9d8(int param_1)
 }
 
 
-// UpdateTrackerTargets
+// UI_TrackerSelf
 // draw lock-on target for driver, if
 // a missile or warpball is chasing them
 // param_1 is a player/AI structure
@@ -12167,7 +12167,7 @@ LAB_8004fe8c:
     } while (iVar7 < 2);
   }
 
-  // DrawTrackerTargetBackground
+  // UI_TrackerBG
   FUN_8004e660(
 
 			   // missile lock-on icon
@@ -12581,7 +12581,7 @@ void FUN_80050af8(short param_1,short param_2,short param_3,int param_4)
 
   iVar1 = iVar2 * 0xd000 >> 0x10;
 
-  // WeaponBackground_DrawShine
+  // UI_WeaponBG_DrawShine
   FUN_8004e37c(
 				// Weapon Roulette background (shine)
 				*(undefined4 *)(PTR_DAT_8008d2ac + 0x1fb0),
@@ -12596,7 +12596,7 @@ void FUN_80050af8(short param_1,short param_2,short param_3,int param_4)
 
 				2,iVar2,iVar1,0xff0000);
 
-  // WeaponBackground_DrawShine
+  // UI_WeaponBG_DrawShine
   FUN_8004e37c(
 				// Weapon Roulette background (shine)
 				*(undefined4 *)(PTR_DAT_8008d2ac + 0x1fb0),
@@ -12614,7 +12614,7 @@ void FUN_80050af8(short param_1,short param_2,short param_3,int param_4)
 }
 
 
-// DrawNumWumpa
+// UI_DrawNumWumpa
 void FUN_80050c20(int param_1,int param_2,int param_3)
 
 {
@@ -12707,7 +12707,7 @@ void FUN_80050c20(int param_1,int param_2,int param_3)
   return;
 }
 
-// DrawNumTimebox
+// UI_DrawNumTimebox
 void FUN_80050e6c(int param_1,int param_2,int param_3)
 
 {
@@ -12732,7 +12732,7 @@ void FUN_80050e6c(int param_1,int param_2,int param_3)
 }
 
 
-// DrawNumRelic
+// UI_DrawNumRelic
 void FUN_80050f18(int param_1,int param_2)
 
 {
@@ -12768,7 +12768,7 @@ void FUN_80050f18(int param_1,int param_2)
 }
 
 
-// DrawNumKey
+// UI_DrawNumKey
 void FUN_80050fc4(int param_1,int param_2)
 
 {
@@ -12803,7 +12803,7 @@ void FUN_80050fc4(int param_1,int param_2)
 }
 
 
-// DrawNumTrophy
+// UI_DrawNumTrophy
 void FUN_80051070(int param_1,int param_2)
 
 {
@@ -12838,7 +12838,7 @@ void FUN_80051070(int param_1,int param_2)
 }
 
 
-// DrawNumCrystal
+// UI_DrawNumCrystal
 void FUN_8005111c(int param_1,int param_2,int param_3)
 
 {
@@ -13727,7 +13727,7 @@ void FUN_80052250(short param_1,short param_2,int param_3)
 // in Arcade mode and Boss mode, and draws
 // icons in multiplayer on the midY axis (and warpball)
 
-// DrawHUD_DriverIcons
+// UI_DrawRankedDrivers
 void FUN_800524c4(void)
 
 {
@@ -14293,7 +14293,7 @@ LAB_80052b00:
   return;
 }
 
-// DrawHUD_Racing
+// UI_RenderFrame_Racing
 void FUN_80052f98(void)
 
 {
@@ -14339,7 +14339,7 @@ void FUN_80052f98(void)
 
   iVar21 = 0;
 
-  // WeaponBackground_AnimateShine
+  // UI_WeaponBG_AnimateShine
   FUN_8004e0e0();
 
   // if time on clock is zero
@@ -14407,7 +14407,7 @@ void FUN_80052f98(void)
   // and not in time trial
   if ((*(uint *)PTR_DAT_8008d2ac & 0x4020020) == 0)
   {
-	// DrawHUD_DriverIcons
+	// UI_DrawRankedDrivers
     FUN_800524c4();
   }
 
@@ -14512,7 +14512,7 @@ LAB_80053260:
 		// If you are not in Time Trial or Relic Race
         if ((*(uint *)PTR_DAT_8008d2ac & 0x4020000) == 0)
 		{
-		  // DrawNumWumpa
+		  // UI_DrawNumWumpa
           FUN_80050c20((int)psVar20[0x10],(int)psVar20[0x11],iVar19);
         }
       }
@@ -14520,7 +14520,7 @@ LAB_80053260:
 	  // If you're in a Relic Race
       if ((*(uint *)PTR_DAT_8008d2ac & 0x4000000) != 0)
 	  {
-		// DrawNumTimebox
+		// UI_DrawNumTimebox
         FUN_80050e6c((int)psVar20[0x4c],(int)psVar20[0x4d],iVar19);
       }
 
@@ -14954,7 +14954,7 @@ LAB_80053aec:
       }
 LAB_80053af4:
 
-	  // UpdateTrackerTargets
+	  // UI_TrackerSelf
 	  // draw lock-on target for driver, if
 	  // a missile or warpball is chasing them
       FUN_8004fd34(iVar19);
@@ -15016,7 +15016,7 @@ LAB_80053af4:
 	// pointer to player structure
     iVar19 = *(int *)(PTR_DAT_8008d2ac + 0x24ec);
 
-	// DrawRaceClock (1P)
+	// UI_DrawRaceClock (1P)
     FUN_8004edac(0x14,8,0,iVar19);
 
     iVar7 = 0;
@@ -15236,10 +15236,10 @@ LAB_80053c98:
 	{
     local_30[0] = 0;
 
-	// Map_DrawDrivers
+	// UI_Map_DrawDrivers
     FUN_8004dd5c(iVar21,*(undefined4 *)(PTR_DAT_8008d2ac + 0x1b2c),local_30);
 
-	// Map_DrawDrivers
+	// UI_Map_DrawDrivers
     FUN_8004dd5c(iVar21,*(undefined4 *)(PTR_DAT_8008d2ac + 0x1b40),local_30);
 
 	// Draw all ghosts on 2D map
@@ -15458,7 +15458,7 @@ LAB_80054040:
 }
 
 
-// DrawHUD_AdvStrings
+// UI_RenderFrame_AdvHub
 void FUN_80054298(void)
 {
   undefined *puVar1;
@@ -15470,22 +15470,22 @@ void FUN_80054298(void)
 								// numPlyrCurrGame - 1
   puVar1 = (&PTR_DAT_8008625c)[(uint)(byte)PTR_DAT_8008d2ac[0x1ca8] - 1];
 
-  // DrawNumRelic
+  // UI_DrawNumRelic
   FUN_80050f18((int)(((uint)*(ushort *)(puVar1 + 0x70) + 0x10) * 0x10000) >> 0x10,
                (int)(((uint)*(ushort *)(puVar1 + 0x72) - 10) * 0x10000) >> 0x10,uVar2);
 
-  // DrawNumKey
+  // UI_DrawNumKey
   FUN_80050fc4((int)(((uint)*(ushort *)(puVar1 + 0x78) + 0x10) * 0x10000) >> 0x10,
                (int)(((uint)*(ushort *)(puVar1 + 0x7a) - 10) * 0x10000) >> 0x10,uVar2);
 
-  // DrawNumTrophy
+  // UI_DrawNumTrophy
   FUN_80051070((int)(((uint)*(ushort *)(puVar1 + 0x80) + 0x10) * 0x10000) >> 0x10,
                (int)(((uint)*(ushort *)(puVar1 + 0x82) - 10) * 0x10000) >> 0x10,uVar2);
   return;
 }
 
 
-// DrawHUD_CrystalChallenge
+// UI_RenderFrame_CrystChall
 void FUN_8005435c(void)
 
 {
@@ -15521,7 +15521,7 @@ void FUN_8005435c(void)
   // draw background of speedometer
   FUN_800516ac((int)psVar4[0x24],(int)psVar4[0x25],iVar3);
 
-  // DrawNumCrystal
+  // UI_DrawNumCrystal
   FUN_8005111c((int)(((uint)(ushort)psVar4[0x44] + 0x10) * 0x10000) >> 0x10,
                (int)(((uint)(ushort)psVar4[0x45] - 0x10) * 0x10000) >> 0x10,iVar3);
 
@@ -15654,7 +15654,7 @@ LAB_800545e8:
   return;
 }
 
-// DrawHUD_Wumpa3D_2P3P4P
+// UI_RenderFrame_Wumpa3D_2P3P4P
 // param1 is gGT
 void FUN_8005465c(int param_1)
 
@@ -15843,7 +15843,7 @@ void FUN_8005465c(int param_1)
   return;
 }
 
-// EndOfRace_GetDriverQuipData
+// UI_VsQuipReadDriver
 // param_1 driver object,
 // param_2 offset,
 // param_3 size
@@ -15883,7 +15883,7 @@ uint FUN_80054a08(int param_1,int param_2,int param_3)
 }
 
 
-// EndOfRace_AssignOneComment
+// UI_VsQuipAssign
 // param_1 - driver object
 void FUN_80054a78(int param_1,uint *param_2,int param_3,undefined4 param_4)
 
@@ -15967,7 +15967,7 @@ void FUN_80054a78(int param_1,uint *param_2,int param_3,undefined4 param_4)
 }
 
 
-// EndOfRace_AssignAllComments
+// UI_VsQuipAssignAll
 void FUN_80054bfc(void)
 
 {
@@ -16132,7 +16132,7 @@ void FUN_80054bfc(void)
           switch(puVar17[-1]) {
           case 0:
 		  
-		    // EndOfRace_GetDriverQuipData
+		    // UI_VsQuipReadDriver
             iVar6 = FUN_80054a08(iVar15,
 								*(undefined4 *)(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverOffset)
 								*(undefined4 *)(puVar17 + 5)  // 0xA + 5*2 = 0x14
@@ -16149,7 +16149,7 @@ LAB_80054f44:
             }
             break;
           case 1:
-			// EndOfRace_GetDriverQuipData
+			// UI_VsQuipReadDriver
             iVar6 = FUN_80054a08(iVar15,
 								*(undefined4 *)(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverOffset)
 								*(undefined4 *)(puVar17 + 5)  // 0xA + 5*2 = 0x14
@@ -16188,7 +16188,7 @@ LAB_80054f44:
             } while (iVar12 < 8);
             break;
           case 4:
-			// EndOfRace_GetDriverQuipData
+			// UI_VsQuipReadDriver
             uVar5 = FUN_80054a08(iVar15,
 								*(undefined4 *)(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverOffset)
 								*(undefined4 *)(puVar17 + 5)  // 0xA + 5*2 = 0x14
@@ -16207,7 +16207,7 @@ LAB_80054fd0:
             }
             break;
           case 5:
-			// EndOfRace_GetDriverQuipData
+			// UI_VsQuipReadDriver
             uVar5 = FUN_80054a08(iVar15,
 								*(undefined4 *)(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverOffset)
 								*(undefined4 *)(puVar17 + 5)  // 0xA + 5*2 = 0x14
@@ -16219,7 +16219,7 @@ LAB_80054fd0:
                -iVar19 < (int)(uVar18 - uVar5))) goto LAB_80054fd0;
             break;
           case 6:
-			// EndOfRace_GetDriverQuipData
+			// UI_VsQuipReadDriver
             uVar18 = FUN_80054a08(iVar15,
 								*(undefined4 *)(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverOffset)
 								*(undefined4 *)(puVar17 + 5)  // 0xA + 5*2 = 0x14
@@ -16243,7 +16243,7 @@ LAB_80054fd0:
             }
             break;
           case 8:
-			// EndOfRace_GetDriverQuipData
+			// UI_VsQuipReadDriver
             iVar4 = FUN_80054a08(iVar15,
 								*(undefined4 *)(puVar17 + 3), // 0xA + 3*2 = 0x10 (driverOffset)
 								*(undefined4 *)(puVar17 + 5)  // 0xA + 5*2 = 0x14
@@ -16255,13 +16255,13 @@ LAB_80054fd0:
           case 9:
             if (*(int *)(iVar15 + 0x56c) == 0)
 			{
-			  // EndOfRace_AssignOneComment
+			  // UI_VsQuipAssign
               FUN_80054a78(iVar15,ppuVar13,iVar3,0);
             }
           }
           if ((iVar8 != 0) && ((*puVar17 & 0xc) != 0))
 		  {
-			// EndOfRace_AssignOneComment
+			// UI_VsQuipAssign
             FUN_80054a78(iVar8,ppuVar13,iVar3,local_2c);
           }
 
@@ -16273,7 +16273,7 @@ LAB_80054fd0:
           uVar18 = uVar9;
         }
 
-		// EndOfRace_AssignOneComment
+		// UI_VsQuipAssign
         FUN_80054a78(iVar4,ppuVar13,iVar3,local_2c);
 
 		// jump 0x18 bytes
@@ -16287,7 +16287,7 @@ LAB_80054fd0:
 }
 
 
-// EndOfRace_DrawAllComments
+// UI_VsQuipDrawAll
 void FUN_800550f4(void)
 
 {
@@ -16398,7 +16398,7 @@ void FUN_800550f4(void)
 }
 
 
-// EndOfRace_Battle
+// UI_VsWaitForPressX
 void FUN_800552a4(void)
 
 {
@@ -16678,7 +16678,7 @@ void FUN_800552a4(void)
 }
 
 
-// Driver_Finalize_RaceClock
+// UI_RaceEnd_GetDriverClock
 void FUN_8005572c(int param_1)
 
 {
@@ -17023,7 +17023,7 @@ LAB_80055930:
 }
 
 
-// MenuBoxFuncPtr_GenericEndOfRace
+// UI_RaceEnd_MenuBoxFuncPtr
 void FUN_80055c90(int param_1)
 
 {
@@ -17298,7 +17298,7 @@ void FUN_80055c90(int param_1)
 }
 
 
-// CupStandings_FinalizeCupRanks
+// UI_CupStandings_FinalizeCupRanks
 void FUN_8005607c(void)
 
 {
@@ -17452,7 +17452,7 @@ void FUN_80056220(void)
 }
 
 
-// CupStandings_UpdateAndDraw
+// UI_CupStandings_UpdateAndDraw
 void FUN_800562fc(void)
 
 {
@@ -18171,7 +18171,7 @@ LAB_800568d8:
 		  // Set Track Index of Cup to 0, for the start of the next cup
           *(undefined4 *)(puVar4 + 0x1e5c) = 0;
 
-		  // CupStandings_FinalizeCupRanks
+		  // UI_CupStandings_FinalizeCupRanks
           FUN_8005607c();
 
           puVar4 = PTR_DAT_8008d2ac;

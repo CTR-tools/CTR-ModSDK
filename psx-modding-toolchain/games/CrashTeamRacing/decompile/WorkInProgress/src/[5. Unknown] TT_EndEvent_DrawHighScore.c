@@ -9,8 +9,8 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 	int iVar3;
 	int local_88;
 	u_int *trackTime;
-	short DrawRaceClockFlags;
-	short DrawRaceClockFlagsAgain;
+	short UI_DrawRaceClockFlags;
+	short UI_DrawRaceClockFlagsAgain;
 	int loop;
 	int bestTimeIndex;
 	short local_68;
@@ -48,12 +48,12 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 	local_50 = param_3;
 	
 	// Fly-in Interpolation
-	InterpolatePosition2D_Linear(&local_68, (int)param_1, (int)sVar1, (int)param_1, (int)sVar1, sdata->framesSinceRaceEnded, 0x14);
+	UI_Lerp2D_Linear(&local_68, (int)param_1, (int)sVar1, (int)param_1, (int)sVar1, sdata->framesSinceRaceEnded, 0x14);
 	
 	bestTimeIndex = 1;
 	
 	// "BEST TIMES"
-	DrawRaceClock(sdata->lngStrings[0x5c4], (int)local_68, (int)local_66, 1, 0xffff8000);
+	UI_DrawRaceClock(sdata->lngStrings[0x5c4], (int)local_68, (int)local_66, 1, 0xffff8000);
 	
 	local_38 = local_88 * 0x10000 >> 0x10;
 	local_34 = (int)(short)(param_1 - 0x1f);
@@ -71,27 +71,27 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 		if ((int)sdata->gGT->newHighScoreIndex == loop) 
 		{
 			// make name color flash every odd frame
-			DrawRaceClockFlags = 4;
+			UI_DrawRaceClockFlags = 4;
 		
 			// if timer on clock is an even number
 			if ((sdata->gGT->timer & 2) == 0) 
 			{
 				// use default color
-				DrawRaceClockFlags = *(short *)((int)trackTime + 0x16) + 5;
+				UI_DrawRaceClockFlags = *(short *)((int)trackTime + 0x16) + 5;
 			}
 		
 			// flash color of time
-			DrawRaceClockFlagsAgain = (short)((sdata->gGT->timer & 2) << 1);
+			UI_DrawRaceClockFlagsAgain = (short)((sdata->gGT->timer & 2) << 1);
 		}
 	
 		// If your current time is not on "best times" list
 		else 
 		{
 			// dont flash color of time
-			DrawRaceClockFlagsAgain = 0;
+			UI_DrawRaceClockFlagsAgain = 0;
 		
 			// dont flash color of name, stick with default
-			DrawRaceClockFlags = *(short *)((int)trackTime + 0x16) + 5;
+			UI_DrawRaceClockFlags = *(short *)((int)trackTime + 0x16) + 5;
 		}
 		iVar3 = local_88 + (local_30 & 0xffff);
 	
@@ -101,7 +101,7 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 		DAT_8009f700 = (char)loop + '1';
 	
 		// Draw String for Rank ('1', '2', '3', '4', '5')
-		DrawRaceClock(&DAT_8009f700, (int)(((u_int)local_40 + 0x20) * 0x10000) >> 0x10, (iVar3 - 1) * 0x10000 >> 0x10, 2, 4);
+		UI_DrawRaceClock(&DAT_8009f700, (int)(((u_int)local_40 + 0x20) * 0x10000) >> 0x10, (iVar3 - 1) * 0x10000 >> 0x10, 2, 4);
 				 
 		// Draw Character Icon
 		MenuBox_DrawPolyGT4(sdata->gGT + (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)trackTime + 0x16) * 0x10) * 4 +
@@ -116,13 +116,13 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 								 ,uRam800a04d0,uRam800a04d0,uRam800a04d0,uRam800a04d0,1,0x1000);
 				 
 	// Draw Name, which is 4 bytes after pointer to Time (puVar6)
-		DrawRaceClock(trackTime + 1,local_34,iVar3 * 0x10000 >> 0x10,3,(int)DrawRaceClockFlags);
+		UI_DrawRaceClock(trackTime + 1,local_34,iVar3 * 0x10000 >> 0x10,3,(int)UI_DrawRaceClockFlags);
 	
 	// make a string for time
 		uVar2 = FUN_80044ff8(*trackTime);
 	
 	// Draw time
-		DrawRaceClock(uVar2,local_34,(iVar3 + 0x11) * 0x10000 >> 0x10,2,(int)DrawRaceClockFlagsAgain);
+		UI_DrawRaceClock(uVar2,local_34,(iVar3 + 0x11) * 0x10000 >> 0x10,2,(int)UI_DrawRaceClockFlagsAgain);
 	
 	// If this loop index is a new high score
 		if ((int)(char)PTR_DAT_8008d2ac[0x1d49] == loop) 
@@ -145,7 +145,7 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 									 *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74);
 		}
 	
-		DrawRaceClockFlags = local_58;
+		UI_DrawRaceClockFlags = local_58;
 		
 	bestTimeIndex++;
 		
@@ -159,26 +159,26 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 	if (local_50 == 0) 
 	{
 	// Change the way text flickers
-		DrawRaceClockFlagsAgain = -0x8000;
+		UI_DrawRaceClockFlagsAgain = -0x8000;
 	
 	// If you got a new best lap
 		if (((*(u_int *)(PTR_DAT_8008d2ac + 0x1d44) & 0x4000000) != 0) &&
 	
 		// Same logic to make text flicker as earlier in the function, but different colors
-			 (DrawRaceClockFlagsAgain = -0x8000, (*(u_int *)(PTR_DAT_8008d2ac + 0x1cec) & 2) != 0)) {
-			DrawRaceClockFlagsAgain = -0x7ffc;
+			 (UI_DrawRaceClockFlagsAgain = -0x8000, (*(u_int *)(PTR_DAT_8008d2ac + 0x1cec) & 2) != 0)) {
+			UI_DrawRaceClockFlagsAgain = -0x7ffc;
 		}
 	
 		// DAT_8008d878 + 0x5c0
 		// "BEST LAP"
-		DrawRaceClock(*(u_int *)(DAT_8008d878 + 0x5c0),(int)local_58,(int)(short)(sVar1 + 0x95),1,
+		UI_DrawRaceClock(*(u_int *)(DAT_8008d878 + 0x5c0),(int)local_58,(int)(short)(sVar1 + 0x95),1,
 								 0xffff8000);
 	
 	// make a string for best lap	
 		uVar2 = FUN_80044ff8(*trackHighScore);
 	
 	// color
-		local_88 = (int)DrawRaceClockFlagsAgain;
+		local_88 = (int)UI_DrawRaceClockFlagsAgain;
 	}
 	
 	// If this is Relic Mode
@@ -186,7 +186,7 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 	{
 		// DAT_8008d878 + 0x314
 		// "YOUR TIME"
-		DrawRaceClock(*(u_int *)(DAT_8008d878 + 0x314),(int)local_58,
+		UI_DrawRaceClock(*(u_int *)(DAT_8008d878 + 0x314),(int)local_58,
 								 (param_2 + 0x95) * 0x10000 >> 0x10,1,0xffff8000);
 	
 	// make a string for your current track time
@@ -197,7 +197,7 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 	}
 
 	// Print amount of time, for whichever purpose
-	DrawRaceClock(uVar2,(int)DrawRaceClockFlags,(param_2 + 0xa6) * 0x10000 >> 0x10,2,local_88);
+	UI_DrawRaceClock(uVar2,(int)UI_DrawRaceClockFlags,(param_2 + 0xa6) * 0x10000 >> 0x10,2,local_88);
 	
 	local_5c = 0xc0;
 	local_5a = 0xb4;

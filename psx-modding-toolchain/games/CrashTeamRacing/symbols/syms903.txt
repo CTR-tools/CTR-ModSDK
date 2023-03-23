@@ -674,8 +674,8 @@
 80042b34 TitleBeginTrack_Get_MenuBox
 
 // missing in sep3
-// TitleLoadGameOptions
-// TitleSaveGameOptions
+// TitleCard_LoadGameOptions
+// TitleCard_SaveGameOptions
 
 80042b40 TitleFlag_MoveModels
 80042c28 TitleFlag_IsFullyOnScreen
@@ -759,9 +759,9 @@
 // no LoadSave_InputLogic
 800477e4 LoadSave_AllProfiles_MenuBoxFuncPtr
 
-800490ec OSK_RestoreName
-80049144 OSK_DrawMenu
-80049768 OSK_MenuBoxFuncPtr
+800490ec TitleOSK_RestoreName
+80049144 TitleOSK_DrawMenu
+80049768 TitleOSK_MenuBoxFuncPtr
 
 80049874 PrixSaveBox_Activate
 8004989c PrixSaveBox_MenuBoxFuncPtr
@@ -784,84 +784,84 @@
 
 // ======== Start of UI ===========
 
-8004aba0 SaveLapTime
+8004aba0 UI_SaveLapTime
 // extra func in japan retail
 
-8004ad5c ThTick_FruitDisp_and_TimeBox
-8004ae94 ThTick_Hud_Object3D
-8004af44 ThTick_CtrLetters
-8004aff8 ThTick_big1
+8004ad5c UI_ThTick_CountPickup
+8004ae94 UI_ThTick_Reward
+8004af44 UI_ThTick_CtrLetters
+8004aff8 UI_ThTick_big1
 
 8004b09c UI_ConvertX_2
 8004b0bc UI_ConvertY_2
 
-8004b0dc HUD_INSTANCE_BirthWithThread
-8004b4b8 HUD_INSTANCE_InitAll
+8004b0dc UI_INSTANCE_BirthWithThread
+8004b4b8 UI_INSTANCE_InitAll
 
-8004bc04 Map_DrawMap
-8004bea4 Map_GetIconDimensions
-8004c19c Map_DrawAdvPlayer
-8004c234 Map_DrawRawIcon
-8004c34c Map_DrawDrivers
-8004c4d8 Map_DrawGhosts
-8004c5ec Map_DrawTracking // warpballs
+8004bc04 UI_Map_DrawMap
+8004bea4 UI_Map_GetIconDimensions
+8004c19c UI_Map_DrawAdvPlayer
+8004c234 UI_Map_DrawRawIcon
+8004c34c UI_Map_DrawDrivers
+8004c4d8 UI_Map_DrawGhosts
+8004c5ec UI_Map_DrawTracking // warpballs
 
-8004c6d0 WeaponBackground_AnimateShine
-8004c96c WeaponBackground_DrawShine
-8004cc50 DrawTrackerTargetBackground
+8004c6d0 UI_WeaponBG_AnimateShine
+8004c96c UI_WeaponBG_DrawShine
+8004cc50 UI_TrackerBG
 
-8004cec8 DrawCharacterIcon
+8004cec8 UI_DrawDriverIcon
 
-8004d098 InterpolatePosition2D_Angular
-8004d208 InterpolatePosition2D_HUD
-8004d2c4 InterpolatePosition2D_Linear
+8004d098 UI_Lerp2D_Angular
+8004d208 UI_Lerp2D_HUD
+8004d2c4 UI_Lerp2D_Linear
 
-8004d39c DrawRaceClock
-8004de58 DrawCountdownClock
+8004d39c UI_DrawRaceClock
+8004de58 UI_DrawLimitClock
 
-8004e0d0 Battle_DrawArrowsOverHeads
-8004e42c UpdateTrackerTargets
-8004eb54 DrawPlacmentSuffix
-8004ec20 DrawLapCounter
-8004ed4c DrawBattleScores
+8004e0d0 UI_BattleDrawHeadArrows
+8004e42c UI_TrackerSelf
+8004eb54 UI_DrawPosSuffix
+8004ec20 UI_DrawLapCount
+8004ed4c UI_DrawBattleScores
 
-8004eed8 DrawWeapon
-8004f2ec DrawWeaponBackground
+8004eed8 UI_Weapon_DrawSelf
+8004f2ec UI_Weapon_DrawBG
 
-8004f414 DrawNumWumpa
-8004f660 DrawNumTimebox
-8004f70c DrawNumRelic
-8004f7a0 DrawNumKey
-8004f834 DrawNumTrophy
-8004f8c8 DrawNumCrystal
+8004f414 UI_DrawNumWumpa
+8004f660 UI_DrawNumTimebox
+8004f70c UI_DrawNumRelic
+8004f7a0 UI_DrawNumKey
+8004f834 UI_DrawNumTrophy
+8004f8c8 UI_DrawNumCrystal
 
-8004f96c DrawSpeedometerNeedle
-8004fe58 DrawSpeedometerBackground
-80050410 ProcessPlayerJumpBoosts
-800505e0 DrawJumpMeter
-80050a0c DrawPowerslideMeter
+8004f96c UI_DrawSpeedNeedle
+8004fe58 UI_DrawSpeedBG
+80050410 UI_JumpMeter_Update
+800505e0 UI_JumpMeter_Draw
+80050a0c UI_DrawSlideMeter
 
-80050c80 DrawHUD_DriverIcons
-// no DrawHUD_TurboCounter (does not exist)
+80050c80 UI_DrawRankedDrivers
+// no UI_DrawTurboCounter (does not exist)
 // one extra function, 1111 (left-hand turbo counter?)
-80051754 DrawHUD_Racing
-// DrawHUD_AdvStrings
-80052780 DrawHUD_CrystalChallenge
-80052a80 DrawHUD_Wumpa3D_2P3P4P
+80051754 UI_RenderFrame_Racing
+// UI_RenderFrame_AdvHub
+80052780 UI_RenderFrame_CrystChall
+80052a80 UI_RenderFrame_Wumpa3D_2P3P4P
 
-80052e2c EndOfRace_GetDriverQuipData
-80052eb8 EndOfRace_AssignOneComment
-8005303c EndOfRace_AssignAllComments
-80053534 EndOfRace_DrawAllComments
-800536e4 EndOfRace_Battle
+80052e2c UI_VsQuipReadDriver
+80052eb8 UI_VsQuipAssign
+8005303c UI_VsQuipAssignAll
+80053534 UI_VsQuipDrawAll
+800536e4 UI_VsWaitForPressX
 
-80053b3c Driver_Finalize_RaceClock
-80053c50 DrawIntroRaceText_1P
-800540a0 MenuBoxFuncPtr_GenericEndOfRace
+80053b3c UI_RaceEnd_GetDriverClock
+80053c50 UI_RaceStart_IntroText1P
+800540a0 UI_RaceEnd_MenuBoxFuncPtr
 
-// no CupStandings_FinalizeCupRanks
-8005446c CupStandings_UpdateCupRanks
-80054548 CupStandings_InputAndDraw
+// no UI_CupStandings_FinalizeCupRanks
+8005446c UI_CupStandings_UpdateCupRanks
+80054548 UI_CupStandings_InputAndDraw
 
 // ======== End of UI ===========
 

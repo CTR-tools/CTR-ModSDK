@@ -1,10 +1,10 @@
 #include <common.h>
 
 // To do: add a header
-void SaveLapTime(int lapID, int time, int driverID);
+void UI_SaveLapTime(int lapID, int time, int driverID);
 
 // used for both finished lap time and current race time
-void DECOMP_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Driver* driver)
+void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Driver* driver)
 {
 	// flag parameter bits
 	// despite being a u_int only 6 bits are ever used
@@ -248,7 +248,7 @@ void DECOMP_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Dr
 		{
 			if ((numLaps <= (int)lapIndex) && (numLaps < (char)sdata->gGT->numLaps))
 			{
-				SaveLapTime(lapIndex, sdata->gGT->elapsedEventTime - driver->lapTime, (u_int)driver->driverID);
+				UI_SaveLapTime(lapIndex, sdata->gGT->elapsedEventTime - driver->lapTime, (u_int)driver->driverID);
 
 				// custom code for optimization using this unrelated variable
 				iVar5 = (u_int)driver->driverID * 7 + numLaps;
@@ -257,7 +257,7 @@ void DECOMP_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Dr
 				rdata.s_timeString_empty[0] = ' ';
 
 				// Convert each number from the binary version of the number to the ascii version of the number by adding ascii value of '0'
-				// This is dynamically programmed to handle time for more than one player, see SaveLapTime
+				// This is dynamically programmed to handle time for more than one player, see UI_SaveLapTime
 
 				rdata.s_timeString_empty[1] = sdata->LapTimes.p1_Min1s[iVar5] + '0';
 				rdata.s_timeString_empty[3] = sdata->LapTimes.p1_Sec10s[iVar5] + '0';

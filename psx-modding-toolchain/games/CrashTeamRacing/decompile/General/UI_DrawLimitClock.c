@@ -4,7 +4,7 @@ u_char* MenuBox_DrawTime(int milliseconds);
 void MainGameEnd_Initialize();
 
 // countdown clock, used for Battle Mode and Crystal Challenge
-void DECOMP_DrawCountdownClock(short posX, short posY, short fontType)
+void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 {
 	struct GameTracker* gGT;
 	char* str;

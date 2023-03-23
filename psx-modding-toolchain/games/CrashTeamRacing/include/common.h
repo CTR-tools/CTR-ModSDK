@@ -461,7 +461,7 @@ struct GhostProfile
 	char profile_name[0x15];
 
 	// 0x15
-	char osk_name[0x11];
+	char TitleOSK_name[0x11];
 
 	// 0x26
 	short alwaysOne;
@@ -4959,7 +4959,7 @@ struct GameTracker
   // sep 0x1ce2
   // usa 0x1d4c
   // on-screen keyboard
-  short OSK_CursorPosition;
+  short TitleOSK_CursorPosition;
 
 
 #if BUILD >= UsaRetail

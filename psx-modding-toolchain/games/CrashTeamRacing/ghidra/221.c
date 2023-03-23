@@ -94,7 +94,7 @@ void FUN_8009f710(void)
   *(undefined4 *)(DAT_8008d9c0 + 0x48) = uVar3;
   
   
-  // DrawNumCrystal
+  // UI_DrawNumCrystal
   FUN_8005111c((int)(((uint)uStack64 + 0xf) * 0x10000) >> 0x10,
                (int)(((uint)uStack62 - 0x10) * 0x10000) >> 0x10,iVar5);
 			   

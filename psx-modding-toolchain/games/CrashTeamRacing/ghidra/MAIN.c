@@ -930,7 +930,7 @@ LAB_80035098:
               return;
             }
 
-			// OSK_DrawMenu
+			// TitleOSK_DrawMenu
 			sVar2 = FUN_8004aa60(0x140);
 
             if (sVar2 == 0) {
@@ -961,14 +961,16 @@ LAB_80035098:
         *(short *)(PTR_DAT_8008d2ac + 0x1d34) = *(short *)(PTR_DAT_8008d2ac + 0x1d34) + -1;
       }
     }
-    else {
+    else 
+	{
+	  // not Arcade mode
       if ((uVar5 & 0x400000) == 0) {
 
 		// If race ended a few seconds ago, start drawing comments,
 		// after cooldown had some time to go down (under 0x96)
         if (*(short *)(PTR_DAT_8008d2ac + 0x1d36) < 0x96)
 		{
-		  // EndOfRace_DrawAllComments
+		  // UI_VsQuipDrawAll
           FUN_800550f4();
 
 		  // Wait for players to press X to continue
@@ -2223,14 +2225,14 @@ void FUN_80035e70(uint *param_1)
 			// If you're not in Crystal Challenge (in adventure mode)
 			if ((uVar7 & 0x8000000) == 0)
 			{
-				// DrawHUD_Racing
+				// UI_RenderFrame_Racing
 				FUN_80052f98();
 			}
 
 			// If you're in Crystal Challenge (in adventure mode)
 			else
 			{
-				// DrawHUD_CrystalChallenge
+				// UI_RenderFrame_CrystChall
 				FUN_8005435c();
 			}
         }
@@ -2330,7 +2332,7 @@ LAB_800367d4:
 		  // if any fade-in-from-black transition is over
           if (0xfff < *(short *)(PTR_DAT_8008d2ac + 0x139a))
 		  {
-			// DrawHUD_AdvStrings
+			// UI_RenderFrame_AdvHub
             FUN_80054298();
           }
         }
@@ -3552,7 +3554,7 @@ code_r0x800369d8:
 			(1 < (byte)PTR_DAT_8008d2ac[0x1ca8])
 		)
 	{
-	  // DrawHUD_Wumpa3D_2P3P4P
+	  // UI_RenderFrame_Wumpa3D_2P3P4P
 	  // param1 is gGT
       FUN_8005465c(param_1);
     }
@@ -6888,17 +6890,17 @@ LAB_8003a71c:
 	// if thread is valid
     while (iVar17 != 0)
 	{
-	  // Driver_Finalize_RaceClock
+	  // UI_RaceEnd_GetDriverClock
       FUN_8005572c(*(undefined4 *)(iVar17 + 0x30));
 
 	  // go to next thread
       iVar17 = *(int *)(iVar17 + 0x10);
     }
 
-	// EndOfRace_AssignAllComments
+	// UI_VsQuipAssignAll
     FUN_80054bfc();
 
-	// OSK_RestoreName
+	// TitleOSK_RestoreName
     FUN_8004aa08(2);
 
 	// if you are in Relic Race or Time Trial
@@ -8081,7 +8083,7 @@ void FUN_8003b934(uint *param_1)
   // If HUD is enabled
   if ((PTR_DAT_8008d2ac[0x1d31] & 2) != 0)
   {
-	// HUD_INSTANCE_InitAll
+	// UI_INSTANCE_InitAll
     FUN_8004cec4();
   }
 

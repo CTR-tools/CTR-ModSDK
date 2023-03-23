@@ -1,38 +1,38 @@
 #include <common.h>
 
 // To do: add a header
-void WeaponBackground_AnimateShine();
-void DrawHUD_DriverIcons();
-void ProcessPlayerJumpBoosts(struct Driver*);
-void DrawSpeedometerNeedle(short, short, struct Driver*);
-void DrawJumpMeter(short, short, struct Driver*);
-void DrawPowerslideMeter(short, short, struct Driver*);
-void DrawSpeedometerBackground();
-void DrawNumWumpa(int, int, struct Driver*);
-void DrawNumTimebox(int, int, struct Driver*);
+void UI_WeaponBG_AnimateShine();
+void UI_DrawRankedDrivers();
+void UI_JumpMeter_Update(struct Driver*);
+void UI_DrawSpeedNeedle(short, short, struct Driver*);
+void UI_JumpMeter_Draw(short, short, struct Driver*);
+void UI_DrawSlideMeter(short, short, struct Driver*);
+void UI_DrawSpeedBG();
+void UI_DrawNumWumpa(int, int, struct Driver*);
+void UI_DrawNumTimebox(int, int, struct Driver*);
 int LOAD_IsOpen_RacingOrBattle();
 void RB_Player_ModifyWumpa(struct Driver*, int);
 void OtherFX_Play(int, int);
-void InterpolatePosition2D_HUD(short *, short, short, short, short, int, short);
+void UI_Lerp2D_HUD(short *, short, short, short, short, int, short);
 int UI_ConvertX_2(int, int);
 int UI_ConvertY_2(int, int);
-void DrawWeapon(short, short, short, struct Driver*);
-void DrawLapCounter(short, short, u_int, struct Driver*);
-void DrawBattleScores(int, int, struct Driver*);
+void UI_Weapon_DrawSelf(short, short, short, struct Driver*);
+void UI_DrawLapCount(short, short, u_int, struct Driver*);
+void UI_DrawBattleScores(int, int, struct Driver*);
 void AA_EndEvent_DisplayTime(u_short, short);
-void DrawPlacmentSuffix(short, short, struct Driver*, short);
-void UpdateTrackerTargets(struct Driver*);
-void Battle_DrawArrowsOverHeads(struct Driver*);
-void DrawWeaponBackground(short, short, short, struct Driver*);
-void DrawRaceClock(u_short paramX, u_short, u_int, struct Driver*);
+void UI_DrawPosSuffix(short, short, struct Driver*, short);
+void UI_TrackerSelf(struct Driver*);
+void UI_BattleDrawHeadArrows(struct Driver*);
+void UI_Weapon_DrawBG(short, short, short, struct Driver*);
+void UI_DrawRaceClock(u_short paramX, u_short, u_int, struct Driver*);
 int DecalFont_GetLineWidth(char*, short);
-void DrawCountdownClock(short, short, short);
-void Map_DrawDrivers(void*, struct Thread*, short *);
-void Map_DrawGhosts(void*, struct Thread*);
-void Map_DrawTracking(void*, struct Thread*);
-void Map_DrawMap(struct Icon*, struct Icon*, short, short, struct PrimMem*, u_long*, u_int);
+void UI_DrawLimitClock(short, short, short);
+void UI_Map_DrawDrivers(void*, struct Thread*, short *);
+void UI_Map_DrawGhosts(void*, struct Thread*);
+void UI_Map_DrawTracking(void*, struct Thread*);
+void UI_Map_DrawMap(struct Icon*, struct Icon*, short, short, struct PrimMem*, u_long*, u_int);
 
-void DECOMP_DrawHUD_Racing()
+void DECOMP_UI_RenderFrame_Racing()
 {
 	short sVar1;
 	short sVar2;
@@ -92,7 +92,7 @@ void DECOMP_DrawHUD_Racing()
 	icon2 = 0;
 	local_36 = 0;
 
-	WeaponBackground_AnimateShine();
+	UI_WeaponBG_AnimateShine();
 
 	// if time on clock is zero
 	if (sdata->gGT->elapsedEventTime == 0)
@@ -166,7 +166,7 @@ void DECOMP_DrawHUD_Racing()
 	// and not in time trial
 	if ((sdata->gGT->gameMode1 & (RELIC_RACE | TIME_TRIAL | BATTLE_MODE)) == 0)
 	{
-		DrawHUD_DriverIcons();
+		UI_DrawRankedDrivers();
 	}
 
 	// pointer to first Player thread
@@ -197,7 +197,7 @@ void DECOMP_DrawHUD_Racing()
 				if ((sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
 				{
 					//execute Jump meter and landing boost processes
-					ProcessPlayerJumpBoosts(playerStruct);
+					UI_JumpMeter_Update(playerStruct);
 				}
 			}
 
@@ -248,16 +248,16 @@ void DECOMP_DrawHUD_Racing()
 			)
 			{
 				// draw spedometer needle
-				DrawSpeedometerNeedle(hudStructPtr[0x12].x, hudStructPtr[0x12].y, playerStruct);
+				UI_DrawSpeedNeedle(hudStructPtr[0x12].x, hudStructPtr[0x12].y, playerStruct);
 
 				// draw jump meter
-				DrawJumpMeter(hudStructPtr[0xC].x, hudStructPtr[0xC].y, playerStruct);
+				UI_JumpMeter_Draw(hudStructPtr[0xC].x, hudStructPtr[0xC].y, playerStruct);
 
 				// Draw Powerslide Meter
-				DrawPowerslideMeter(hudStructPtr[0x10].x, hudStructPtr[0x10].y, playerStruct);
+				UI_DrawSlideMeter(hudStructPtr[0x10].x, hudStructPtr[0x10].y, playerStruct);
 
 				// draw background of spedometer
-				DrawSpeedometerBackground(hudStructPtr[0x12].x, hudStructPtr[0x12].y, playerStruct);
+				UI_DrawSpeedBG(hudStructPtr[0x12].x, hudStructPtr[0x12].y, playerStruct);
 			}
 
 			//if racer hasn't finished the race
@@ -268,7 +268,7 @@ void DECOMP_DrawHUD_Racing()
 				if ((sdata->gGT->gameMode1 & BATTLE_MODE) == 0)
 				{
 					// Draw powerslide meter
-					DrawPowerslideMeter(hudStructPtr[0x10].x, hudStructPtr[0x10].y, playerStruct);
+					UI_DrawSlideMeter(hudStructPtr[0x10].x, hudStructPtr[0x10].y, playerStruct);
 				}
 
 				// If you are not in Time Trial or Relic Race
@@ -324,7 +324,7 @@ void DECOMP_DrawHUD_Racing()
 					}
 					else
 					{
-						InterpolatePosition2D_HUD
+						UI_Lerp2D_HUD
 						(
 							&wumpaModel_PosX,
 							(int)playerStruct->PickupWumpaHUD.startX,
@@ -407,7 +407,7 @@ void DECOMP_DrawHUD_Racing()
 					// PickupLetterHUD.startX and PickupLetterHUD.startY are start position of animation
 
 					// Interpolate from start pos to end pos
-					InterpolatePosition2D_HUD
+					UI_Lerp2D_HUD
 					(
 						&LetterCTR_PosX, playerStruct->PickupLetterHUD.startX,
 						playerStruct->PickupLetterHUD.startY,
@@ -435,7 +435,7 @@ void DECOMP_DrawHUD_Racing()
 				if ((playerStruct->actionsFlagSet & 0x2000000) == 0)
 				{
 					// Draw weapon and number of wumpa fruit in HUD
-					DrawWeapon(hudStructPtr[0].x, hudStructPtr[0].y, hudStructPtr[1].y, playerStruct);
+					UI_Weapon_DrawSelf(hudStructPtr[0].x, hudStructPtr[0].y, hudStructPtr[1].y, playerStruct);
 				}
 			}
 
@@ -453,7 +453,7 @@ void DECOMP_DrawHUD_Racing()
 					sprintf(acStack80, &sdata->s_subtractLongInt[0], sdata->gGT->timeCrateTypeSmashed);
 
 					// 4b4 and 4b6 are WindowStartPos(x,y) from TileView, inside Driver
-					InterpolatePosition2D_HUD
+					UI_Lerp2D_HUD
 					(
 						&wumpaModel_PosX, playerStruct->PickupTimeboxHUD.startX,
 						playerStruct->PickupTimeboxHUD.startY,
@@ -540,7 +540,7 @@ void DECOMP_DrawHUD_Racing()
 					// make the string that flies from the center of your screen to the corner
 					sprintf((char *)&LetterCTR_PosX, fmt, partTimeVariable1);
 
-					InterpolatePosition2D_HUD
+					UI_Lerp2D_HUD
 					(
 						&wumpaModel_PosX, (int)playerStruct->BattleHUD.startX,
 						(int)playerStruct->BattleHUD.startY,
@@ -565,7 +565,7 @@ void DECOMP_DrawHUD_Racing()
 				if ((playerStruct->actionsFlagSet & 0x2000000) == 0)
 				{
 					// Draw which lap they are on (1/3, 2/3, 3/3, etc)
-					DrawLapCounter(hudStructPtr[2].x, hudStructPtr[2].y, (u_int)hudStructPtr[3].y, playerStruct);
+					UI_DrawLapCount(hudStructPtr[2].x, hudStructPtr[2].y, (u_int)hudStructPtr[3].y, playerStruct);
 				}
 			}
 
@@ -573,7 +573,7 @@ void DECOMP_DrawHUD_Racing()
 			else
 			{
 				// Draw how many points or lifes the player has
-				DrawBattleScores((int)hudStructPtr[0x1A].x, (int)hudStructPtr[0x1A].y, playerStruct);
+				UI_DrawBattleScores((int)hudStructPtr[0x1A].x, (int)hudStructPtr[0x1A].y, playerStruct);
 			}
 
 			if
@@ -633,7 +633,7 @@ void DECOMP_DrawHUD_Racing()
 
 				// Draw the "st", "nd", "rd" suffix after "1st, 2nd, 3rd, etc"
 				// "Placment" TYPO IN THE CHAT --Super
-				DrawPlacmentSuffix(sVar1, sVar2, playerStruct, (short)partTimeVariable5);
+				UI_DrawPosSuffix(sVar1, sVar2, playerStruct, (short)partTimeVariable5);
 
 				// if more than 2 players
 				if (2 < sdata->gGT->numPlyrCurrGame)
@@ -694,7 +694,7 @@ void DECOMP_DrawHUD_Racing()
 					partTimeVariable5 = (u_int)((sdata->gGT->timer & 1) == 0);
 
 					// Draw the "st", "nd", "rd" suffix after "1st, 2nd, 3rd, etc"
-					DrawPlacmentSuffix(hudStructPtr[0xA].x, hudStructPtr[0xA].y, playerStruct, (short)(partTimeVariable5 << 2));
+					UI_DrawPosSuffix(hudStructPtr[0xA].x, hudStructPtr[0xA].y, playerStruct, (short)(partTimeVariable5 << 2));
 
 					sVar1 = hudStructPtr[4].x;
 					sVar2 = hudStructPtr[4].y;
@@ -724,16 +724,16 @@ void DECOMP_DrawHUD_Racing()
 			}
 			LAB_80053af4:
 
-			// UpdateTrackerTargets
+			// UI_TrackerSelf
 			// draw lock-on target for driver, if
 			// a missile or warpball is chasing them
-			UpdateTrackerTargets(playerStruct);
+			UI_TrackerSelf(playerStruct);
 
 			// If you're in Battle
 			if ((sdata->gGT->gameMode1 & BATTLE_MODE) != 0)
 			{
 				// Draw arrows over the heads of other players (not AIs)
-				Battle_DrawArrowsOverHeads(playerStruct);
+				UI_BattleDrawHeadArrows(playerStruct);
 			}
 
 			if
@@ -748,7 +748,7 @@ void DECOMP_DrawHUD_Racing()
 				) &&
 				(
 					// draw shining background behind wumpa fruit
-					DrawWeaponBackground(hudStructPtr[0x18].x, hudStructPtr[0x18].y, hudStructPtr[0x19].y, playerStruct),
+					UI_Weapon_DrawBG(hudStructPtr[0x18].x, hudStructPtr[0x18].y, hudStructPtr[0x19].y, playerStruct),
 
 					// If your weapon is not "no weapon"
 					playerStruct->heldItemID != '\x0f'
@@ -756,7 +756,7 @@ void DECOMP_DrawHUD_Racing()
 			)
 			{
 				// draw shining background behind weapon
-				DrawWeaponBackground(hudStructPtr[0x16].x, hudStructPtr[0x16].y, hudStructPtr[0x17].y, playerStruct);
+				UI_Weapon_DrawBG(hudStructPtr[0x16].x, hudStructPtr[0x16].y, hudStructPtr[0x17].y, playerStruct);
 			}
 
 			// go to next player
@@ -783,7 +783,7 @@ void DECOMP_DrawHUD_Racing()
 	{
 		playerStruct = sdata->gGT->drivers[0];
 
-		DrawRaceClock(0x14, 8, 0, playerStruct);
+		UI_DrawRaceClock(0x14, 8, 0, playerStruct);
 
 		turboThread = 0;
 		turboThreadObject = 0;
@@ -892,7 +892,7 @@ void DECOMP_DrawHUD_Racing()
 			if (sdata->TurboDisplayPos_Only1P != 0)
 			{
 				// Interpolate the turbo counter slide in from the right
-				InterpolatePosition2D_Linear(&local_38, 0x2c8, 0x20, 500, 0x20, sdata->TurboDisplayPos_Only1P, 10);
+				UI_Lerp2D_Linear(&local_38, 0x2c8, 0x20, 500, 0x20, sdata->TurboDisplayPos_Only1P, 10);
 
 				// The actual counter number will continue to
 				// increase past 1000, but the on-screen text
@@ -978,7 +978,7 @@ void DECOMP_DrawHUD_Racing()
 		if ((sdata->gGT->gameMode1 & TIME_LIMIT) != 0)
 		{
 			// draw countdown clock
-			DrawCountdownClock(0xd7,0x68,2);
+			UI_DrawLimitClock(0xd7,0x68,2);
 		}
 	}
 

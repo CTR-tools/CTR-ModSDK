@@ -1,7 +1,7 @@
 #include <common.h>
 
 void MenuBox_DrawInnerRect(RECT* r, int flag, void* ot);
-void EndOfRace_DrawAllComments();
+void UI_VsQuipDrawAll();
 void MM_JumpTo_Scrapbook();
 void MainRaceTrack_RequestLoad(int level);
 
@@ -119,8 +119,8 @@ void RunUpdateHook()
 	else
 	{
 		// NOP function
-		*(int*)((int)EndOfRace_DrawAllComments + 0) = 0x3E00008;
-		*(int*)((int)EndOfRace_DrawAllComments + 4) = 0;
+		*(int*)((int)UI_VsQuipDrawAll + 0) = 0x3E00008;
+		*(int*)((int)UI_VsQuipDrawAll + 4) = 0;
 		
 		// remove battle mode
 		sdata->gGT->gameMode1 &= (0xFFFFFFFF ^ BATTLE_MODE);

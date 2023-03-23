@@ -2,7 +2,7 @@
 
 void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem);
 
-void DECOMP_DrawPowerslideMeter(short posX, short posY, struct Driver* driver)
+void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 {
 	struct GameTracker *gGT;
 	u_int colorAndCode;

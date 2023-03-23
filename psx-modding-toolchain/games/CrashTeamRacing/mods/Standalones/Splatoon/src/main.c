@@ -38,7 +38,7 @@ void MainRaceTrack_RequestLoad(int levID);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void MenuBox_DrawInnerRect(RECT* r, int flag, void* ot);
 void CAM_ThTick(struct Thread* t);
-void DrawPowerslideMeter(int x, int y, struct Driver* d);
+void UI_DrawSlideMeter(int x, int y, struct Driver* d);
 void Driver_ConvertVectorsToSpeed(struct Driver* d, int* v);
 int MATH_Cos(int angle);
 int MATH_Sin(int angle);
@@ -268,7 +268,7 @@ void CameraPerFrameHook(struct Thread* t)
 	hud = data.hudStructPtr[(sdata->gGT->numPlyrCurrGame-1)];
 	hud = &hud[driver->driverID * 0x28];
 
-	DrawPowerslideMeter(hud[0x10].x, hud[0x10].y, driver);
+	UI_DrawSlideMeter(hud[0x10].x, hud[0x10].y, driver);
 
 	// call original function
 	CAM_ThTick(t);

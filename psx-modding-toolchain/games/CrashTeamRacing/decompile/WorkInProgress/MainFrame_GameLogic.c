@@ -345,7 +345,7 @@ LAB_80035098:
 				{
 					return;
 				}
-				sVar2 = OSK_DrawMenu(0x140);
+				sVar2 = TitleOSK_DrawMenu(0x140);
 				if (sVar2 == 0)
 				{
 					return;
@@ -369,8 +369,8 @@ LAB_80035098:
 	{
 		if (::sdata->gGT->timerEndOfRaceVS < 0x96)
 		{
-			EndOfRace_DrawAllComments();
-			EndOfRace_Battle();
+			UI_VsQuipDrawAll();
+			UI_VsWaitForPressX();
 		}
 		if (0x1e < ::sdata->gGT->timerEndOfRaceVS)
 		{

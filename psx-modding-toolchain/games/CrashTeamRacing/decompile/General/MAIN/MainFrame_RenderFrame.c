@@ -44,9 +44,9 @@ void RenderWeather(struct TileView* tileView, struct PrimMem* primMem, struct Ra
 void DrawConfetti(struct TileView* tileView, struct PrimMem* primMem, void* confetti, int frameTimer, int gameMode1);
 void RenderStars(struct TileView* tileView, struct PrimMem* primMem, void* stars, char numPlyr);
 void DecalMP_01(struct GameTracker* gGT);
-void CupStandings_InputAndDraw();
-void DrawHUD_Racing();
-void DrawHUD_CrystalChallenge();
+void UI_CupStandings_InputAndDraw();
+void UI_RenderFrame_Racing();
+void UI_RenderFrame_CrystChall();
 void VB_EndEvent_DrawMenu();
 void RR_EndEvent_DrawMenu();
 void AA_EndEvent_DrawMenu();
@@ -54,11 +54,11 @@ void TT_EndEvent_DrawMenu();
 void CC_EndEvent_DrawMenu();
 void LOAD_OvrThreads(u_int param_1);
 int LOAD_IsOpen_AdvHub();
-void DrawHUD_AdvStrings();
+void UI_RenderFrame_AdvHub();
 void AH_Map_Main();
 void AH_MaskHint_Start(short requestedHint, short bool_interruptWarppad);
 void INSTANCE_LevDelayedLInBs(void* instDefs, u_int numInstances);
-void DrawIntroRaceText_1P();
+void UI_RaceStart_IntroText1P();
 void RedBeaker_RenderRain(struct TileView* tileView, struct PrimMem* primMem, struct JitPool* rain, char numPlyr, int gameMode1);
 int LOAD_IsOpen_Podiums();
 void CS_BoxScene_InstanceSplitLines();
@@ -94,7 +94,7 @@ void DrawSky_Full(void* skybox, struct TileView* tileView, struct PrimMem* primM
 void AnimateWater3P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7);
 void AnimateWater4P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7, int* param_8);
 int CreateRenderLists_3P4P(struct VisData* visData, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList);
-void DrawHUD_Wumpa3D_2P3P4P(struct GameTracker* gGT);
+void UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT);
 void DecalMP_03(struct GameTracker* gGT);
 void DotLights_AudioAndVideo(struct GameTracker* gGT);
 void MenuBox_DrawOuterRect_LowLevel(RECT* r, short x, u_short y, int* ptrColor, short param_5, u_long* ptrOT);
@@ -384,7 +384,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 		
 DrawFinalLapString:
 
-		InterpolatePosition2D_Linear(&resultPos, startX, posY, endX, posY, textTimer, 10);
+		UI_Lerp2D_Linear(&resultPos, startX, posY, endX, posY, textTimer, 10);
 
 		// need to specify OT, or else "FINAL LAP" will draw on top of character icons,
 		// and by doing this, "FINAL LAP" draws under the character icons instead
@@ -540,13 +540,13 @@ void RenderAllHUD(struct GameTracker* gGT)
 					// not crystal challenge
 					if((gameMode1 & CRYSTAL_CHALLENGE) == 0)
 					{
-						DrawHUD_Racing();
+						UI_RenderFrame_Racing();
 					}
 					
 					// if crystal challenge
 					else
 					{
-						DrawHUD_CrystalChallenge();
+						UI_RenderFrame_CrystChall();
 					}
 				}
 				
@@ -610,7 +610,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 					// if any transition is over
 					if(gGT->tileView_UI.fadeFromBlack_currentValue > 0xfff)
 					{
-						DrawHUD_AdvStrings();
+						UI_RenderFrame_AdvHub();
 					}
 				}
 				
@@ -659,7 +659,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 	// if drawing intro-race title bars
 	else
 	{
-		DrawIntroRaceText_1P();
+		UI_RaceStart_IntroText1P();
 	}
 }
 
@@ -1120,7 +1120,7 @@ void MultiplayerWumpaHUD(struct GameTracker* gGT)
 {
 	if((gGT->hudFlags & 1) == 0) return;
 	if(gGT->numPlyrCurrGame < 2) return;
-	DrawHUD_Wumpa3D_2P3P4P(gGT);
+	UI_RenderFrame_Wumpa3D_2P3P4P(gGT);
 }
 
 void WindowBoxLines(struct GameTracker* gGT)
