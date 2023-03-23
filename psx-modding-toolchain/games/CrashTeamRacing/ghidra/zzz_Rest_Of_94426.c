@@ -18723,6 +18723,7 @@ void FUN_80057884(undefined *param_1)
 		if (DAT_80087f28 == 0) trap(0x1c00);
         if ((DAT_80087f28 == -1) && (iVar9 == -0x80000000)) trap(0x1800);
 
+		// MATH_Sin
         iVar1 = FUN_8003d184(iVar9 / DAT_80087f28);
         *(short *)(puVar2 + iVar11 * 0x20 + 8) = (short)(-iVar1 / 7);
 
@@ -18730,6 +18731,7 @@ void FUN_80057884(undefined *param_1)
         if (DAT_80087f28 == 0) trap(0x1c00);
         if ((DAT_80087f28 == -1) && (iVar6 == -0x80000000)) trap(0x1800);
 
+		// MATH_Sin
         iVar1 = FUN_8003d184(iVar6 / DAT_80087f28);
         *(short *)(puVar2 + iVar11 * 0x20 + 0x10) = (short)((iVar1 * 6) / 0x28) + 0x1000;
 
@@ -18737,6 +18739,7 @@ void FUN_80057884(undefined *param_1)
         if (DAT_80087f28 == 0) trap(0x1c00);
         if ((DAT_80087f28 == -1) && (iVar6 == -0x80000000)) trap(0x1800);
 
+		// MATH_Sin
         iVar1 = FUN_8003d184(iVar6 / DAT_80087f28);
         *(short *)(puVar2 + iVar11 * 0x20 + 0x14) = (short)((iVar1 * 6) / 0x28) + 0x1000;
         iVar_a0 = (undefined *)(iVar6 / DAT_80087f28);

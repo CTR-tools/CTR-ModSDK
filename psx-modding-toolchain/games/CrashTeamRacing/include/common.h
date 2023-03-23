@@ -8696,7 +8696,8 @@ struct Data
 	// which points everywhere 0x80086e94 - 0x80087e74
 
 	// 0x80087EFC - pointer to 0x80086e94
-	// 0x80087f28 - number of frames blasted
+	// 0x80087f24 - pointer to 0x80087514
+	// 0x80087f28 - number of frames blasted (0x1b)
 
 	// 0x80087f94
 	struct
