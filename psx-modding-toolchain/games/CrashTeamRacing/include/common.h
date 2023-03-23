@@ -8687,18 +8687,35 @@ struct Data
 	short characterIDs[8];
 
 	// 0x80086e94
-	// all for FUN_80057884,
-	// used for "blasted" data, "crashed" data,
-	// all baked data at runtime for some reason
-	char betweenIDsAndMeta[0x1100];
+	// bakedGteMath[0] is blank,
+	// all the rest correspond
+	MATRIX matArr01[0xB];
+	MATRIX matArr02[0x1];
+	MATRIX matArr03[0x9];
+	MATRIX matArr04[0x10];
+	MATRIX matArr05[0xF];
+	MATRIX matArr06[0x1B]; // "blasted"
+	MATRIX matArr07[0x4];
+	MATRIX matArr08[0x4];
+	MATRIX matArr09[0x4];
+	MATRIX matArr0A[0x4];
+	MATRIX matArr0B[0x4];
+	MATRIX matArr0C[0x4];
+	MATRIX matArr0D[0x4];
+	MATRIX matArr0E[0x4];
+	MATRIX matArr0F[0x4];
+	MATRIX matArr10[0x4];
+	MATRIX matArr11[0x4];
+	MATRIX matArr12[0x4];
+	MATRIX matArr13[0x4];
 
-	// 0x80087ef4 - start of pointer table,
-	// which points everywhere 0x80086e94 - 0x80087e74
-
-	// 0x80087EFC - pointer to 0x80086e94
-	// 0x80087f24 - pointer to 0x80087514
-	// 0x80087f28 - number of frames blasted (0x1b)
-
+	// 0x80087EF4 - pointer to 0x80086e94
+	struct
+	{
+		int numEntries
+		void* physEntry;
+	} bakedGteMath[0x14];
+	
 	// 0x80087f94
 	struct
 	{
