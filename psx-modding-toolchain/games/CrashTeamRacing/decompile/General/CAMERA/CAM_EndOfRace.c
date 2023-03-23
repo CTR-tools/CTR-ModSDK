@@ -33,4 +33,6 @@ void CAM_EndOfRace(struct CameraDC* cDC, struct Driver* d)
 			CAM_EndOfRace_Battle(cDC, d);
 		else
 			cDC->flags |= 0x20;
+    
+  #endif
 }

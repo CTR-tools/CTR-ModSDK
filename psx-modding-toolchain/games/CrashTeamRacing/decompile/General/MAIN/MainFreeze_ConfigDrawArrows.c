@@ -2,7 +2,6 @@
 
 // To do: add a header
 int DecalFont_GetLineWidth(char*, short);
-void DecalHUD_Arrow2D(struct Icon*, u_int, int, struct PrimMem*, u_long *, u_int, u_int, u_int, u_int, u_char, short, u_short);
 
 void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str)
 {

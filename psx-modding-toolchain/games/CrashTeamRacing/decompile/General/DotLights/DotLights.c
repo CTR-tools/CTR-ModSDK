@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DecalHUD_DrawPolyFT4(struct Icon*, u_int, int, struct PrimMem*, u_long*, u_char, short);
-
 void DotLights(struct GameTracker* gGT)
 {
   int iVar1;

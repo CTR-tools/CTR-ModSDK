@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, u_int posX, int posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, u_char semitransparencyEnabled, short scale, u_short rot)
+void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char semitransparencyEnabled, short scale, u_short rot)
 {
 	u_char y2;
 	u_int code;

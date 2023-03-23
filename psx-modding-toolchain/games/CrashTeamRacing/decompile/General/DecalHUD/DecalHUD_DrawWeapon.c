@@ -1,59 +1,121 @@
 #include <common.h>
 
-void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, char rot)
+void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_short param_8)
 {
-	short width;
-	short height;
-	short rightX;
-	short bottomY;
-	short sidewaysX;
-	short sidewaysY;
-	POLY_FT4* p;
+	u_int uVar1;
+	u_int bitshiftPosY;
+	u_int uVar3;
+	POLY_FT4 *p;
+	u_int topRightCornerAndPageXY;
+	u_int topLeftCornerAndPaletteXY;
+	u_int bottomMargin;
+	int iVar8;
+	int iVar9;
 
-	#if BUILD > SepReview
-		if (!icon) return;
-	#endif
-
-	p = (POLY_FT4*)primMem->curr;
-
-	width = icon->X2 - icon->X1;
-	height = icon->Y3 - icon->Y1;
-	rightX = posX + (width * scale / 0x1000);
-	bottomY = posY + (height * scale / 0x1000);
-	sidewaysX = posX + (height * scale / 0x1000);
-	sidewaysY = posY + (width * scale / 0x1000);
-
-	if (!(rot & 1))
+	if (icon != 0)
 	{
-		if (rot == 0)
-			setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
+		topRightCornerAndPageXY = *(u_int*)&icon->X2;
+		topLeftCornerAndPaletteXY = *(u_int*)&icon->X1;
+
+		// posY, bitshifted 2 u_chars
+		bitshiftPosY = posY * 0x10000;
+
+		iVar9 = (int)(((topRightCornerAndPageXY & 0xff) - (topLeftCornerAndPaletteXY & 0xff)) * (int)scale) >> 0xc;
+
+		// X and Y of the two bottom corners
+		bottomMargin = *(u_int*)&icon->X3;
+
+		p = (POLY_FT4*)primMem->curr;
+
+		iVar8 = (int)(((u_int)icon->Y3 - ((int)topLeftCornerAndPaletteXY >> 8 & 0xffU)) * (int)scale) >> 0xc;
+
+		if (semitransparencyEnabled == 0)
+		{
+			p->code = 0x2d;
+
+			// set top right corner UVs and texpage of primitive to the ones the icon has
+			*(int*)&p->u1 = topRightCornerAndPageXY;
+		}
+
 		else
-			setXY4(p, rightX, bottomY, posX, bottomY, rightX, posY, posX, posY);
-	}
-	else
-	{
-		if (rot == 1)
-			setXY4(p, posX, sidewaysY, posX, posY, sidewaysX, sidewaysY, sidewaysX, posY);
+		{
+			p->code = 0x2f;
+
+			// set top right corner UVs and texpage of primitive, and alter the blending mode bits of the texpage from 11 (Mode 3, which is no blending) to 00 (Mode 0, equivalent to regular 50% opacity)
+			*(int*)&p->u1 = topRightCornerAndPageXY & 0xff9fffff | ((u_int)semitransparencyEnabled - 1) * 0x200000;
+		}
+
+		// set top left corner UVs and CLUT of primitive to the ones the icon has
+		*(int*)&p->u0 = topLeftCornerAndPaletteXY;
+
+		// set UVs of bottom left corner
+		*(short*)&p->u2 = (short)bottomMargin;
+
+		// set UVs of bottom right corner
+		*(u_short *)&p->u3 = *(u_short *)&icon->X4;
+
+		topRightCornerAndPageXY = posX + iVar8;
+
+		if ((param_8 & 1) == 0)
+		{
+			topLeftCornerAndPaletteXY = posX + iVar9;
+			topRightCornerAndPageXY = bitshiftPosY + iVar8 * 0x10000;
+			uVar1 = posX | topRightCornerAndPageXY;
+			topLeftCornerAndPaletteXY |= bitshiftPosY;
+
+			// same as below
+			topRightCornerAndPageXY |= topLeftCornerAndPaletteXY;
+
+			if (param_8 == 0)
+			{
+				*(int*)&p->x0 = posX | bitshiftPosY;
+				*(int*)&p->x1 = topLeftCornerAndPaletteXY;
+				*(int*)&p->x2 = uVar1;
+				*(int*)&p->x3 = topRightCornerAndPageXY;
+			}
+
+			else
+			{
+				// we go the other way around
+				*(int*)&p->x3 = posX | bitshiftPosY;
+				*(int*)&p->x2 = topLeftCornerAndPaletteXY;
+				*(int*)&p->x1 = uVar1;
+				*(int*)&p->x0 = topRightCornerAndPageXY;
+			}
+		}
+
 		else
-			setXY4(p, sidewaysX, posY, sidewaysX, sidewaysY, posX, posY, posX, sidewaysY);
+		{
+			topLeftCornerAndPaletteXY = bitshiftPosY + iVar9 * 0x10000;
+			uVar3 = topRightCornerAndPageXY | bitshiftPosY;
+			uVar1 = posX | topLeftCornerAndPaletteXY;
+
+			// same as above
+			topRightCornerAndPageXY |= topLeftCornerAndPaletteXY;
+
+			if (param_8 == 1)
+			{
+				*(int*)&p->x1 = posX | bitshiftPosY;
+				*(int*)&p->x3 = uVar3;
+				*(int*)&p->x0 = uVar1;
+				*(int*)&p->x2 = topRightCornerAndPageXY;
+			}
+
+			else
+			{
+				*(int*)&p->x2 = posX | bitshiftPosY;
+				*(int*)&p->x0 = uVar3;
+				*(int*)&p->x3 = uVar1;
+				*(int*)&p->x1 = topRightCornerAndPageXY;
+			}
+		}
+
+		// link prim and OT together
+		*(int*)p = *ot | 0x9000000;
+		*ot = (u_int)p & 0xffffff;
+
+		// POLY_FT4 is 0x28 bytes large
+		primMem->curr = p + 1;
 	}
-
-	setUV4(p, icon->X1, icon->Y1, icon->X2, icon->Y2, icon->X3, icon->Y3, icon->X4, icon->Y4);
-	p->clut = icon->paletteXY;
-	p->tpage = icon->pageXY;
-
-	if (transparency != 0)
-	{
-		// disable blending mode bits of the texpage using AND, then set them using OR
-		// then set image to use semi-transparent mode using the setSemiTrans macro
-
-		p->tpage = p->tpage & 0xff9f | (transparency - 1) << 5;
-		setSemiTrans(p, true);
-	}
-
-	addPrim(ot, p);
-
-	// POLY_FT4 is 0x28 bytes large
-	primMem->curr = p + 1;
 	return;
 }

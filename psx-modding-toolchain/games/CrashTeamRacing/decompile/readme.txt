@@ -55,9 +55,6 @@ Some functions have been decompiled for all the 5 builds of CTR that we cater to
 -DecalFont_DrawMultiLineStrlen
 -DecalFont_GetLineWidth
 -DecalFont_GetLineWidthStrlen
--DecalHUD_DrawPolyFT4
--DecalHUD_DrawWeapon
--DecalHUD_DrawPolyGT4
 -InterpBySpeed
 -JitPool_Add
 -JitPool_Clear
@@ -66,4 +63,3 @@ Some functions have been decompiled for all the 5 builds of CTR that we cater to
 -LOAD_ReadFile
 -Turbo_ThTick
 -Turbo_Increment
--DrawCharacterIcon

@@ -1,11 +1,8 @@
 #include <common.h>
 
 int DecalFont_GetLineWidthStrlen(char* str, short len, short fontType);
-void DecalHUD_DrawPolyGT4(struct Icon* icon, u_int posX, int posY, struct PrimMem* primMem, u_long* ot, u_int topLeftColor, u_int topRightColor, u_int bottomLeftColor, u_int bottomRightColor, u_char semitransparencyEnabled, short scale);
 
-#if BUILD == EurRetail
-void DecalHUD_Arrow2D(struct Icon* icon, u_int posX, int posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, u_char semitransparencyEnabled, short scale, u_short rot);
-#elif BUILD == JpnRetail
+#if BUILD == JpnRetail
 u_int DecalFont_boolRacingWheel();
 #endif
 
