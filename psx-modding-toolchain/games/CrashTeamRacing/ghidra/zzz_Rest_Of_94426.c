@@ -18811,11 +18811,13 @@ void FUN_80057884(undefined *param_1)
     } while (uVar12 < 0x14);
 	
 	// pointer to matrix array
+	// bakedGteMath[6], "blasted"
     ppuVar7 = &PTR_DAT_80087f24;
 	
 	// loop index
     iVar11 = 0;
 	
+	// bakedGteMath[6].numEntires
     if (0 < DAT_80087f28) 
 	{
       uVar5 = 0x2000;
@@ -18823,10 +18825,10 @@ void FUN_80057884(undefined *param_1)
       uVar4 = 0xe0000000;
       uVar3 = 0;
       
+	  // loop through all entries
 	  do 
 	  {  
-		// first byte in matrix array,
-		// 80087510
+		// bakedGteMath[6].physEntry (matArr06)
 		puVar2 = *ppuVar7;
 		
         *(undefined4 *)(puVar13 + 0x50) = 0;

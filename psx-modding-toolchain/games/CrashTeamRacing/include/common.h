@@ -8712,8 +8712,8 @@ struct Data
 	// 0x80087EF4 - pointer to 0x80086e94
 	struct
 	{
-		int numEntries
 		void* physEntry;
+		int numEntries
 	} bakedGteMath[0x14];
 	
 	// 0x80087f94
