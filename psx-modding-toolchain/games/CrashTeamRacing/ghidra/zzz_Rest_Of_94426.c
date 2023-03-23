@@ -18777,10 +18777,13 @@ void FUN_80057884(undefined *param_1)
     local_64 = 0;
     local_60 = 0;
 	
+	// loop through 14 arrays
     do 
 	{
+	  // number of elements != 0, ptr to array != 0
       if (((piVar10[1] != 0) && (*piVar10 != 0)) && (iVar11 = 0, 0 < piVar10[1])) 
 	  {
+		// loop through each matrix of the array
         do 
 		{
 		  // &matrix[loopIndex]
@@ -25388,7 +25391,8 @@ LAB_8005f354:
 	// driver -> 0x330 matrix
     r0 = (MATRIX *)(param_2 + 0x330);
     
-	// data from pointer table (FUN_80057884)
+	// 0x4C - which matrix array
+	// 0x4D - which matrix index
 	piVar12 = (int *)((&DAT_80087ef4)[(uint)*(byte *)(param_2 + 0x4c) * 2] +
                      (uint)*(byte *)(param_2 + 0x4d) * 0x20);
     
