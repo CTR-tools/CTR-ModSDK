@@ -5,7 +5,7 @@
 #define StoreLong(dest, val) (*(unsigned long*)(dest) = (unsigned long)(val))
 #define ADDR_230 0x800AB9F0
 
-void DrawTextBackground(RECT* r, int flag, u_long* ot);
+void MenuBox_DrawInnerRect(RECT* r, int flag, u_long* ot);
 void MixRNG_Scramble();
 int RCNT_GetTime_Total();
 void MM_JumpTo_Scrapbook();
@@ -189,8 +189,8 @@ void HookCups(int* param_1)
 				 2,0xffff8001);
 
 		// Draw background box ========================
-		DrawTextBackground(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
-		DrawTextBackground(&window2,1,sdata->gGT->backBuffer->otMem.startPlusFour);
+		MenuBox_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
+		MenuBox_DrawInnerRect(&window2,1,sdata->gGT->backBuffer->otMem.startPlusFour);
 	}
 
 	// things drawn last are put underneath

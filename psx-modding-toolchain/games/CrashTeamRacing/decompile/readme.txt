@@ -15,10 +15,10 @@ Functions:
 -DecalHUD_Arrow2D
 -DecalHUD_DrawPolyFT4
 -DecalHUD_DrawPolyGT4
--DrawBoxOutline_LowLevel
+-MenuBox_DrawOuterRect_LowLevel
 -DrawJumpMeter
 -DrawPowerslideMeter
--DrawRectangle
+-MenuBox_DrawOuterRect_Edge
 -Driver_SetConsts
 -InterpolatePosition2D_Angular
 -InterpolatePosition2D_HUD
@@ -46,7 +46,7 @@ Some functions have been decompiled for all the 5 builds of CTR that we cater to
 -TileView_SetPsyqGeom
 -TileView_Init
 -TileView_SetMatrixVP
--ConvertTimeToString
+-MenuBox_DrawTime
 -DebugFont_Init
 -DecalFont_DrawLine
 -DecalFont_DrawLineOT

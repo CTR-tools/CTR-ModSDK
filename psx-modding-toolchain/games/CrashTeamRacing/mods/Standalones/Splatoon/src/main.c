@@ -36,7 +36,7 @@
 
 void MainRaceTrack_RequestLoad(int levID);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
-void DrawTextBackground(RECT* r, int flag, void* ot);
+void MenuBox_DrawInnerRect(RECT* r, int flag, void* ot);
 void CAM_ThTick(struct Thread* t);
 void DrawPowerslideMeter(int x, int y, struct Driver* d);
 void Driver_ConvertVectorsToSpeed(struct Driver* d, int* v);
@@ -153,7 +153,7 @@ void EndCrystalChallenge(void)
 	DecalFont_DrawLine(line2, 40, 30, 2, 14);
 
 	// draw box
-	DrawTextBackground(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
+	MenuBox_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
 
 	// you can only press Cross, Circle, or Square
 	if(!(tap & 0x70)) return;

@@ -3967,7 +3967,7 @@ LAB_80037b18:
 
 	if ((uVar6 & 0xffff) != 0)
 	{
-	  // DrawTriangle
+	  // MenuBox_DrawRwdTriangle
       FUN_800453e8(&local_38,&local_48,param_7,param_8);
     }
 
@@ -4469,7 +4469,7 @@ void FUN_80037da0(void)
     local_32 = 0x41;
     local_36 = (short)DAT_8008d2d8;
 
-	// BackgroundBlueRect
+	// MenuBox_DrawRwdBlueRect
     FUN_80045254(&local_38,&DAT_800842b8,
 
 					// pointer to OT mem
@@ -5399,7 +5399,7 @@ switchD_80038f90_caseD_9:
   local_7c = 0x17c;
   local_7a = 2;
 
-  // DrawRectangle (transparent)
+  // MenuBox_DrawOuterRect_Edge (transparent)
   FUN_80044f90(&local_80,&DAT_8008d438,0x20,
                *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
 

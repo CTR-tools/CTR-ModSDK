@@ -2,7 +2,7 @@
 
 void DrawHeat_Subset1();
 void MEMCARD_SetIcon(int id);
-void DrawTextBackground(RECT* r, int flag, u_long* ot);
+void MenuBox_DrawInnerRect(RECT* r, int flag, u_long* ot);
 void LoadSave_StartMemcardAction(int action);
 
 // to do: make header for IGT funcs
@@ -419,7 +419,7 @@ void DrawMenu()
             DecalFont_DrawLine(s_editorTime, 370, 18 + 9 * i, 2, rowColor);
     }
     DecalFont_DrawLine(s_saveSplits, 254, 207, 2, ND_Orange | 0x8000);
-    DrawTextBackground(&menuWindow, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
+    MenuBox_DrawInnerRect(&menuWindow, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 }
 
 // Our mod begins here

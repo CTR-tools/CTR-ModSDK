@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DrawTextBackground(RECT* r, int flag, void* ot);
+void MenuBox_DrawInnerRect(RECT* r, int flag, void* ot);
 
 int boolShow = 1;
 RECT window1 = {0, 0, 300, 130};
@@ -424,8 +424,8 @@ void RunUpdateHook(void)
 	// No "if options[8]" for characterID
 
 	// These background boxes are the same used in Battle/VS End-Of-Race comments
-	DrawTextBackground(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
-	DrawTextBackground(&window2,1,sdata->gGT->backBuffer->otMem.startPlusFour);
+	MenuBox_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
+	MenuBox_DrawInnerRect(&window2,1,sdata->gGT->backBuffer->otMem.startPlusFour);
 }
 
 

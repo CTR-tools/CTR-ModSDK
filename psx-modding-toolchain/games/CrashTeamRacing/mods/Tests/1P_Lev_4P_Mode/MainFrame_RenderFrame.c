@@ -245,7 +245,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// add 3 pixels above, 3 pixels bellow
 	window.h += 6;
 		
-	DrawTextBackground(&window, 1, gGT->backBuffer->otMem.startPlusFour);
+	MenuBox_DrawInnerRect(&window, 1, gGT->backBuffer->otMem.startPlusFour);
 }
 
 void DrawFinalLap(struct GameTracker* gGT)
@@ -935,7 +935,7 @@ void WindowBoxLines(struct GameTracker* gGT)
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		DrawBoxOutline_LowLevel(
+		MenuBox_DrawOuterRect_LowLevel(
 
 			// dimensions, thickness
 			&gGT->tileView[i].rect,4,2,

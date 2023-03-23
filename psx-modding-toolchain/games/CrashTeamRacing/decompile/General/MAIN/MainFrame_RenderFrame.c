@@ -31,7 +31,7 @@ void RenderSubmit(struct GameTracker* gGT);
 
 int LOAD_IsOpen_MainMenu();
 int MainFrame_HaveAllPads(short param_1);
-void DrawTextBackground(RECT* r, int flag, u_long* ot);
+void MenuBox_DrawInnerRect(RECT* r, int flag, u_long* ot);
 void DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, u_long* ot);
 void ElimBG_HandleState(struct GameTracker* gGT);
 void MainFrame_VisMemFullFrame(struct GameTracker* gGT, struct Level* level);
@@ -97,7 +97,7 @@ int CreateRenderLists_3P4P(struct VisData* visData, int* visLeafList, struct Til
 void DrawHUD_Wumpa3D_2P3P4P(struct GameTracker* gGT);
 void DecalMP_03(struct GameTracker* gGT);
 void DotLights_AudioAndVideo(struct GameTracker* gGT);
-void DrawBoxOutline_LowLevel(RECT* r, short x, u_short y, int* ptrColor, short param_5, u_long* ptrOT);
+void MenuBox_DrawOuterRect_LowLevel(RECT* r, short x, u_short y, int* ptrColor, short param_5, u_long* ptrOT);
 void RobotcarWeapons_Update();
 void StartLine_Update();
 void unk80047d64();
@@ -321,7 +321,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// add 3 pixels above, 3 pixels bellow
 	window.h += 6;
 		
-	DrawTextBackground(&window, 1, gGT->backBuffer->otMem.startPlusFour);
+	MenuBox_DrawInnerRect(&window, 1, gGT->backBuffer->otMem.startPlusFour);
 }
 
 void DrawFinalLap(struct GameTracker* gGT)
@@ -1133,7 +1133,7 @@ void WindowBoxLines(struct GameTracker* gGT)
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		DrawBoxOutline_LowLevel(
+		MenuBox_DrawOuterRect_LowLevel(
 
 			// dimensions, thickness
 			&gGT->tileView[i].rect,4,2,

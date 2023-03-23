@@ -88,7 +88,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 		local_40.x = -0x14;
 		local_40.w = 0x228;
 		local_40.y = data.errorPosY[sdata->errorMessagePosIndex] - 3;
-		DrawTextBackground(&local_40, 1, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+		MenuBox_DrawInnerRect(&local_40, 1, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 	}
 	iVar15 = 0;
 	iVar18 = 0;
@@ -642,7 +642,7 @@ code_r0x800369d8:
 					local_30.y = *(short *)((int)sdata->gGT->tileView[0].matrix_ViewProj.m[-2] + iVar15 + 2);
 					local_30.w = *(short *)((int)sdata->gGT->tileView[0].matrix_ViewProj.m[-2] + iVar15 + 4);
 					local_30.h = *(short *)((int)sdata->gGT->tileView[0].matrix_ViewProj.m[-1] + iVar15);
-					DrawBoxOutline_LowLevel
+					MenuBox_DrawOuterRect_LowLevel
 										(&local_30, 4, 2, 
 										 data.ptrColor[(sdata->gGT->drivers[iVar19]->BattleHUD).teamID + 0x18], 0, 
 										 (sdata->gGT->tileView_UI).ptrOT + 3);

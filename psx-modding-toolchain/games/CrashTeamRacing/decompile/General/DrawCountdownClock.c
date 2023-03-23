@@ -1,6 +1,6 @@
 #include <common.h>
 
-u_char* ConvertTimeToString(int milliseconds);
+u_char* MenuBox_DrawTime(int milliseconds);
 void MainGameEnd_Initialize();
 
 // countdown clock, used for Battle Mode and Crystal Challenge
@@ -21,7 +21,7 @@ void DECOMP_DrawCountdownClock(short posX, short posY, short fontType)
 	if (timeRemaining < 0)
 	{
 		// Make a time string with zero milliseconds on the clock
-		str = ConvertTimeToString(0);
+		str = MenuBox_DrawTime(0);
 		gGT = sdata->gGT;
 
 		// If you're not in End-Of-Race menu
@@ -48,7 +48,7 @@ void DECOMP_DrawCountdownClock(short posX, short posY, short fontType)
 	else
 	{
 		// make a string with the remaining time
-		str = ConvertTimeToString(timeRemaining);
+		str = MenuBox_DrawTime(timeRemaining);
 	}
 
 	// default color is dark red

@@ -30,7 +30,7 @@ void TT_EndEvent_DisplayTime(int paramX, short paramY, u_int DrawRaceClockFlags)
 	rectangle.h = 99;
 	
 	// Draw 2D Menu rectangle background
-	DrawTextBackground(&rectangle, 4, sdata->gGT->backBuffer->otMem.startPlusFour);
+	MenuBox_DrawInnerRect(&rectangle, 4, sdata->gGT->backBuffer->otMem.startPlusFour);
 	
 	return;
 }

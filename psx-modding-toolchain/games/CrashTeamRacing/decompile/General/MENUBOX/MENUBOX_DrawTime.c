@@ -1,6 +1,6 @@
 #include <common.h>
 
-u_char* DECOMP_ConvertTimeToString(int milliseconds)
+u_char* DECOMP_MenuBox_DrawTime(int milliseconds)
 {
 	// Here's how it works:
 	// 32 is added to milliseconds every frame,

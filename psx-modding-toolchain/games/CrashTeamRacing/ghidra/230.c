@@ -3327,7 +3327,7 @@ LAB_800aec08:
         puVar12 = &DAT_800b538c;
       }
 	  
-	  // DrawBoxOutline_HighLevel (solid)
+	  // MenuBox_DrawOuterRect_HighLevel (solid)
       FUN_80045650(&local_80,puVar12,0,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
       
 	  // increment loop counter
@@ -3390,7 +3390,7 @@ LAB_800aec08:
       iVar8 = (int)(short)iVar24 * 10 + DAT_800b5a3c;
       
 	  // Draw Character Icon
-	  // DecalHUD_DrawPolyGT4_Safe
+	  // MenuBox_DrawPolyGT4
 	  FUN_80044ef8(*(undefined4 *)
                     (PTR_DAT_8008d2ac +
                     (int)*(short *)(&DAT_80086d8c + (int)psVar18[3] * 0x10) * 4 + 0x1eec),
@@ -3584,7 +3584,7 @@ LAB_800aec08:
 	  // MM_Characters_AnimateColors
 	  FUN_800ad98c(&local_68,uVar25,((int)(short)DAT_8008d934 >> (uVar25 & 0x1f) ^ 1U) & 1);
       
-	  // DrawBoxOutline_HighLevel (solid)
+	  // MenuBox_DrawOuterRect_HighLevel (solid)
 	  FUN_80045650(&local_60,&local_68,0,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
       
 	  iVar8 = 0;
@@ -3601,7 +3601,7 @@ LAB_800aec08:
           local_54 = CONCAT22((short)((uint)local_54 >> 0x10) + -4,(short)local_54 + -6);
           local_66 = local_66 & 0xff00 | (ushort)(byte)((int)((uint)(byte)local_66 << 2) / 5);
           
-		  // DrawBoxOutline_HighLevel (solid)
+		  // MenuBox_DrawOuterRect_HighLevel (solid)
 		  FUN_80045650(&local_58,&local_68,0,
                        *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
           
@@ -3615,7 +3615,7 @@ LAB_800aec08:
       
 	  local_60 = 0;
 	  
-	  // BackgroundBlueRect
+	  // MenuBox_DrawRwdBlueRect
       FUN_80045254(&local_60,&DAT_800b5398,
                    *(int *)(PTR_DAT_8008d2ac + (int)(short)iVar24 * 0x110 + 0x25c) + 0xffc,
 				   
@@ -3788,7 +3788,7 @@ void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort para
 	// This is the same function that draws Character icons
 	  
 	// Draw Video icon
-	// DecalHUD_DrawPolyGT4_Safe
+	// MenuBox_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(((param_3 << 0x10) >> 0xc) + param_2 + 2) * 4 + 0x1eec),
@@ -4953,7 +4953,7 @@ void FUN_800b0eec(int param_1)
         iVar8 = (int)(uVar12 << 0x10) >> 0x10;
 		
 		// Draw Icon of each track
-		// DecalHUD_DrawPolyGT4_Safe
+		// MenuBox_DrawPolyGT4
         FUN_80044ef8(*(undefined4 *)
                       (PTR_DAT_8008d2ac +
                       (int)(short)(&DAT_8008414c)[(int)(short)uVar4 * 9 + iVar8 * 2] * 4 + 0x1eec),
@@ -6353,7 +6353,7 @@ void FUN_800b2fbc(ushort param_1,uint param_2,uint param_3,uint param_4)
                (int)((DAT_800b5926 + uVar11 + 0x4a) * 0x10000) >> 0x10,2,0);
     
 	// Character Icon
-	// DecalHUD_DrawPolyGT4_Safe
+	// MenuBox_DrawPolyGT4
 	FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)puVar10 + 0x16) * 0x10) * 4 +
@@ -6386,7 +6386,7 @@ void FUN_800b2fbc(ushort param_1,uint param_2,uint param_3,uint param_4)
     puVar5 = puVar10 + iVar1 * 6 + 6;
 	
 	// Character Icon
-	// DecalHUD_DrawPolyGT4_Safe
+	// MenuBox_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)puVar5 + 0x16) * 0x10) * 4 +

@@ -148,7 +148,7 @@ void DrawObjective()
 	DecalFont_DrawLine("player standing", 				0x100, 0x60+40,	2, 0xffff8000);
 
 	// Draw background box ========================
-	DrawTextBackground(&window1,0,sdata->gGT->backBuffer->otMem.startPlusFour);
+	MenuBox_DrawInnerRect(&window1,0,sdata->gGT->backBuffer->otMem.startPlusFour);
 
 	buttons = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
 

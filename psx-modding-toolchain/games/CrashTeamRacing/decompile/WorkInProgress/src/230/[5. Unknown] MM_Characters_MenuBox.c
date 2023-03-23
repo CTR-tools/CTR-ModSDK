@@ -498,7 +498,7 @@ void MM_Characters_MenuBox()
 				puVar12 = &DAT_800b538c;
 			}
 		
-			DrawBoxOutline_HighLevel(&local_80, puVar12, 0, sdata->gGT->backBuffer->otMem.startPlusFour);
+			MenuBox_DrawOuterRect_HighLevel(&local_80, puVar12, 0, sdata->gGT->backBuffer->otMem.startPlusFour);
 		}
 	}
 	
@@ -546,7 +546,7 @@ void MM_Characters_MenuBox()
 			iVar8 = (int)(short)i * 10 + DAT_800b5a3c;
 			
 			// Draw Character Icon
-			DecalHUD_DrawPolyGT4_Safe
+			MenuBox_DrawPolyGT4
 			(
 				sdata->gGT->ptrIcons[data.MetaDataCharacters[(int)psVar18[3]].iconID],
 				(int)*(short *)(iVar8 + 6) + (int)*psVar22 + 6,
@@ -673,7 +673,7 @@ void MM_Characters_MenuBox()
 			local_66 = *(short *)(iVar8 + 8) + *psVar18;
 		
 			// Draw 2D Menu rectangle background
-			DrawTextBackground(&local_68, 0, sdata->gGT->backBuffer->otMem.startPlusFour);
+			MenuBox_DrawInnerRect(&local_68, 0, sdata->gGT->backBuffer->otMem.startPlusFour);
 		}
 
 		// advence both short* arrays by 6 shorts,
@@ -700,7 +700,7 @@ void MM_Characters_MenuBox()
 			
 			MM_Characters_AnimateColors(&local_68, j, ((int)(short)sdata->characterSelectFlags >> (j & 0x1f) ^ 1U) & 1);
 			
-			DrawBoxOutline_HighLevel(&local_60, &local_68, 0, sdata->gGT->backBuffer->otMem.startPlusFour);
+			MenuBox_DrawOuterRect_HighLevel(&local_60, &local_68, 0, sdata->gGT->backBuffer->otMem.startPlusFour);
 			
 			// if player selected a character
 			if (((int)(short)sdata->characterSelectFlags >> (j & 0x1f) & 1U) != 0) 
@@ -714,17 +714,17 @@ void MM_Characters_MenuBox()
 					local_54 = CONCAT22((short)((u_int)local_54 >> 0x10) + -4, (short)local_54 + -6);
 					local_66 = local_66 & 0xff00 | (u_short)(u_char)((int)((u_int)(u_char)local_66 << 2) / 5);
 					
-					DrawBoxOutline_HighLevel(&local_58, &local_68, 0, sdata->gGT->backBuffer->otMem.startPlusFour);
+					MenuBox_DrawOuterRect_HighLevel(&local_58, &local_68, 0, sdata->gGT->backBuffer->otMem.startPlusFour);
 				}
 			}
 			psVar22 = psVar22 + 2;
 		
 			// Draw 2D Menu rectangle background
-			DrawTextBackground(&local_60, 9, ((struct OTMem*)sdata->gGT->backBuffer->otMem.startPlusFour)->curr);
+			MenuBox_DrawInnerRect(&local_60, 9, ((struct OTMem*)sdata->gGT->backBuffer->otMem.startPlusFour)->curr);
 			
 			local_60 = 0;
 		
-			BackgroundBlueRect
+			MenuBox_DrawRwdBlueRect
 			(
 				&local_60, &DAT_800b5398,
 				sdata->gGT->tileView[i].ptrOT + 0xffc, sdata->gGT->backBuffer->primMem

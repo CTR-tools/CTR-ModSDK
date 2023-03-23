@@ -172,7 +172,7 @@ void EndOfRace_Battle();
 int LOAD_IsOpen_MainMenu();
 int MainFrame_HaveAllPads(short param_1);
 void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
-void DrawTextBackground(RECT* r, int flag, u_long* ot);
+void MenuBox_DrawInnerRect(RECT* r, int flag, u_long* ot);
 void InterpolatePosition2D_Linear(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);
 void DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, u_long* ot);
 void ElimBG_HandleState(struct GameTracker* gGT);
@@ -244,7 +244,7 @@ int CreateRenderLists_3P4P(struct VisData* visData, int* visLeafList, struct Til
 void DrawHUD_Wumpa3D_2P3P4P(struct GameTracker* gGT);
 void DecalMP_03(struct GameTracker* gGT);
 void DotLights_AudioAndVideo(struct GameTracker* gGT);
-void DrawBoxOutline_LowLevel(RECT* r, short x, u_short y, int* ptrColor, short param_5, u_long* ptrOT);
+void MenuBox_DrawOuterRect_LowLevel(RECT* r, short x, u_short y, int* ptrColor, short param_5, u_long* ptrOT);
 void RobotcarWeapons_Update();
 void StartLine_Update();
 void unk80047d64();

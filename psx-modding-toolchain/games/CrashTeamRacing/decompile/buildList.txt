@@ -252,6 +252,11 @@ common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK/MEMPACK_PopToState.c
 common, exe, MixRNG_Scramble, 0x0, General/MixRNG/MixRNG_Scramble.c
 
 // MENUBOX
+// skip several
+common, exe, MenuBox_DrawOuterRect_Edge, 0x0, General/MENUBOX/MENUBOX_DrawOuterRect_Edge.c
+common, exe, MenuBox_DrawOuterRect_LowLevel, 0x0, General/MENUBOX/MENUBOX_DrawOuterRect_LowLevel.c
+common, exe, MenuBox_DrawTime, 0x0, General/MENUBOX/MENUBOX_DrawTime.c
+// skip several
 // skip DrawBG
 common, exe, MenuBox_GetHeight, 0x0, General/MENUBOX/MENUBOX_GetHeight.c
 common, exe, MenuBox_GetWidth, 0x0, General/MENUBOX/MENUBOX_GetWidth.c
@@ -286,7 +291,6 @@ common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWind
 common, exe, Map_DrawMap, 0x0, General/Map_DrawMap.c
 common, exe, DrawCharacterIcon, 0x0, General/DrawCharacterIcon.c
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
-common, exe, ConvertTimeToString, 0x0, General/ConvertTimeToString.c
 common, exe, DrawCountdownClock, 0x0, General/DrawCountdownClock.c
 common, exe, SaveLapTime, 0x0, General/SaveLapTime.c
 common, exe, DrawRaceClock, 0x0, General/DrawRaceClock.c
@@ -297,8 +301,6 @@ common, exe, DrawJumpMeter, 0x0, General/DrawJumpMeter.c
 common, exe, DrawPowerslideMeter, 0x0, General/DrawPowerslideMeter.c
 common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
 common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
-common, exe, DrawRectangle, 0x0, General/DrawRectangle.c
-common, exe, DrawBoxOutline_LowLevel, 0x0, General/DrawBoxOutline_LowLevel.c
 
 common, exe, Player_Crashing_PhysAngular, 0x0, General/Player_Crashing_FuncPtrs.c
 common, exe, Player_Crashing_Init, 0x0, General/Player_Crashing_Init.c

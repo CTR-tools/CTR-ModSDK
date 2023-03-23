@@ -674,8 +674,8 @@
 80042b34 TitleBeginTrack_Get_MenuBox
 
 // missing in sep3
-// LoadGameOptions
-// SaveGameOptions
+// TitleLoadGameOptions
+// TitleSaveGameOptions
 
 80042b40 TitleFlag_MoveModels
 80042c28 TitleFlag_IsFullyOnScreen
@@ -692,18 +692,18 @@
 // no Draw_LoadingString
 80042ee4 TitleFlag_DrawSelf
 
-800438a8 DecalHUD_DrawPolyGT4_Safe
-80043940 DrawRectangle
-800439a8 ConvertTimeToString
-80043ae4 BackgroundBlueRect_Subset
-80043c04 BackgroundBlueRect
-80043d98 DrawTriangle
-80043ee4 DrawBoxOutline_LowLevel
-80044000 DrawBoxOutline_HighLevel
-8004403c DrawPlayerComment
-8004419c DrawTextBackground
+800438a8 MenuBox_DrawPolyGT4
+80043940 MenuBox_DrawOuterRect_Edge
+800439a8 MenuBox_DrawTime
+80043ae4 MenuBox_DrawRwdBlueRect_Subset
+80043c04 MenuBox_DrawRwdBlueRect
+80043d98 MenuBox_DrawRwdTriangle
+80043ee4 MenuBox_DrawOuterRect_LowLevel
+80044000 MenuBox_DrawOuterRect_HighLevel
+8004403c MenuBox_DrawQuip
+8004419c MenuBox_DrawInnerRect
 
-800443d8 MenuBox_DrawBG
+800443d8 MenuBox_DrawFullRect
 800444dc MenuBox_GetHeight
 800445e0 MenuBox_GetWidth
 80044740 MenuBox_DrawSelf

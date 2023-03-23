@@ -372,7 +372,7 @@ void FUN_8009f718(void)
         sStack116 = *(short *)(PTR_DAT_8008d2ac + iVar10 + 0x188) + 6;
         sStack114 = *(short *)(PTR_DAT_8008d2ac + iVar10 + 0x18a) + 4;
         
-		// DrawBoxOutline_HighLevel (solid)
+		// MenuBox_DrawOuterRect_HighLevel (solid)
 		FUN_80045650(&sStack120,&DAT_8008d438,0,
                      *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
         

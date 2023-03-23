@@ -1,7 +1,7 @@
 #include <common.h>
 
 // to do: make header
-void DrawBoxOutline_LowLevel(RECT* r, int thickX, int thickY, int* colorPtr, int unk, void* ot);
+void MenuBox_DrawOuterRect_LowLevel(RECT* r, int thickX, int thickY, int* colorPtr, int unk, void* ot);
 
 // stored in RDATA
 void CustomSplit()
@@ -31,7 +31,7 @@ void CustomSplit()
 			tileView = &sdata->gGT->tileView[i];
 
 			// Draw a 2D box made of four rectangles
-			DrawBoxOutline_LowLevel(
+			MenuBox_DrawOuterRect_LowLevel(
 
 				// dimensions, thickness
 				(RECT*)&tileView->rect.x,4,2,
