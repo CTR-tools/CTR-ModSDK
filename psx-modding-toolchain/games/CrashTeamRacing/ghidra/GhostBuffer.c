@@ -619,6 +619,7 @@ void FUN_80027838(void)
 	  // Driver + 0x630 = ghostID
       *(short *)(piVar7 + 0x18c) = sVar5;
 
+	  // ghost not initialized
 	  *(undefined2 *)((int)piVar7 + 0x632) = 0;
 
 	  // driverID = ghostID + 1
@@ -756,8 +757,11 @@ void FUN_80027b88(void)
 	  // ghosts are drawing (your own, or tropy/oxide)
 	  DAT_8008d740 = 1;
 
+	  // ghost initialized
       *(undefined2 *)(iVar8 + 0x632) = 1;
-      *(undefined2 *)(iVar8 + 0x634) = 0;
+	  
+      
+	  *(undefined2 *)(iVar8 + 0x634) = 0;
       iVar5 = (uint)uVar1 + 1;
       if (uVar1 == 0) {
 LAB_80027cfc:
