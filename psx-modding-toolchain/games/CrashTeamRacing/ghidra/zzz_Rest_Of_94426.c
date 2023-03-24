@@ -18701,14 +18701,17 @@ void FUN_80057884(undefined *param_1)
 
     iVar11 = 0;
 
-	// if blasted frame count exists
+	// bakedGteMath[6].numEntires "blasted"
     if (0 < DAT_80087f28)
 	{
 
 	  iVar9 = 0;
 
+	  // loop through blasted frames
 	  do
 	  {
+		// pointer to matrix array
+		// bakedGteMath[6], "blasted"
         puVar2 = PTR_DAT_80087f24;
 
 		iVar6 = iVar11 << 0xd;
