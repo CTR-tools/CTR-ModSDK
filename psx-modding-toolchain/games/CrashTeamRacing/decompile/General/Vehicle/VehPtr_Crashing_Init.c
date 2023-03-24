@@ -1,15 +1,15 @@
 #include <common.h>
 
-void DECOMP_Player_Crashing_PhysLinear();
-void Player_Driving_Audio();
-void DECOMP_Player_Crashing_PhysAngular();
+void DECOMP_VehPtr_Crashing_PhysLinear();
+void VehPtr_Driving_Audio();
+void DECOMP_VehPtr_Crashing_PhysAngular();
 void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
 void OnCollide_Drivers();
 void COLL_StartSearch_Player();
 void Player_JumpAndFriction();
 void OnRender();
-void DECOMP_Player_Crashing_Animate();
+void DECOMP_VehPtr_Crashing_Animate();
 void VehParticle_DriverMain();
 
 // budget, 0x120 bytes, 288 bytes
@@ -18,20 +18,20 @@ void* PlayerCrashingFuncTable[0xD] =
 {
 	0,
 	0,
-	DECOMP_Player_Crashing_PhysLinear,
-	Player_Driving_Audio,
-	DECOMP_Player_Crashing_PhysAngular,
+	DECOMP_VehPtr_Crashing_PhysLinear,
+	VehPtr_Driving_Audio,
+	DECOMP_VehPtr_Crashing_PhysAngular,
 	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
 	COLL_StartSearch_Player,
 	Player_JumpAndFriction,
 	OnRender,
-	DECOMP_Player_Crashing_Animate,
+	DECOMP_VehPtr_Crashing_Animate,
 	VehParticle_DriverMain,
 };
 
-void DECOMP_Player_Crashing_Init(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_Crashing_Init(struct Thread* t, struct Driver* d)
 {
 	int i;
 	struct Instance* inst;

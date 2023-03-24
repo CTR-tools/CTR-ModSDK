@@ -1610,7 +1610,7 @@ void FUN_80035e20(short param_1,undefined2 param_2)
 
 	// 8008d2ac[0x93b] + 0x54
 	// 8009900C + 0x54
-	// driver funcPtrInit, Player_Freeze_Init
+	// driver funcPtrInit, VehPtr_Freeze_Init
     *(undefined **)(puGp00000340[0x93b] + 0x54) = &FUN_80062d04;
 
 	// 8008d2cc

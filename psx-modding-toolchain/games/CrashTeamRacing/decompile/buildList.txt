@@ -299,26 +299,26 @@ common, exe, UI_Lerp2D_Linear, 0x0, General/UI/UI_Lerp2D_Linear.c
 common, exe, UI_JumpMeter_Draw, 0x0, General/UI/UI_JumpMeter_Draw.c
 common, exe, UI_DrawSlideMeter, 0x0, General/UI/UI_DrawSlideMeter.c
 
-// VEH
+// VEH PTR
+common, exe, VehPtr_Crashing_PhysAngular, 0x0, General/Vehicle/VehPtr_Crashing_FuncPtrs.c
+common, exe, VehPtr_Crashing_Init, 0x0, General/Vehicle/VehPtr_Crashing_Init.c
+common, exe, VehPtr_Drifting_PhysAngular, 0x0, General/Vehicle/VehPtr_Drifting_PhysAngular.c
+common, exe, VehPtr_Driving_PhysAngular, 0x0, General/Vehicle/VehPtr_Driving_PhysAngular.c
+common, exe, VehPtr_Driving_PhysLinear, 0x0, General/Vehicle/VehPtr_Driving_PhysLinear.c
+common, exe, VehPtr_Spinning_Update, 0x0, General/Vehicle/VehPtr_Spinning_FuncPtrs.c
+common, exe, VehPtr_Spinning_Init, 0x0, General/Vehicle/VehPtr_Spinning_Init.c
+common, exe, VehPtr_LastSpin_Update, 0x0, General/Vehicle/VehPtr_LastSpin_FuncPtrs.c
+common, exe, VehPtr_LastSpin_Init, 0x0, General/Vehicle/VehPtr_LastSpin_Init.c
+common, exe, VehPtr_StopSpin_Update, 0x0, General/Vehicle/VehPtr_StopSpin_FuncPtrs.c
+common, exe, VehPtr_StopSpin_Init, 0x0, General/Vehicle/VehPtr_StopSpin_Init.c
+common, exe, VehPtr_Blasted_Update, 0x0, General/Vehicle/VehPtr_Blasted_FuncPtrs.c
+common, exe, VehPtr_Blasted_Init, 0x0, General/Vehicle/VehPtr_Blasted_Init.c
+
+
+// VEH (other)
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
 common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
 common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
-
-// VEH
-common, exe, Player_Crashing_PhysAngular, 0x0, General/Player_Crashing_FuncPtrs.c
-common, exe, Player_Crashing_Init, 0x0, General/Player_Crashing_Init.c
-common, exe, Player_Drifting_PhysAngular, 0x0, General/Player_Drifting_PhysAngular.c
-common, exe, Player_Driving_PhysAngular, 0x0, General/Player_Driving_PhysAngular.c
-common, exe, Player_Driving_PhysLinear, 0x0, General/Player_Driving_PhysLinear.c
-common, exe, Player_Spinning_Update, 0x0, General/Player_Spinning_FuncPtrs.c
-common, exe, Player_Spinning_Init, 0x0, General/Player_Spinning_Init.c
-common, exe, Player_LastSpin_Update, 0x0, General/Player_LastSpin_FuncPtrs.c
-common, exe, Player_LastSpin_Init, 0x0, General/Player_LastSpin_Init.c
-common, exe, Player_StopSpin_Update, 0x0, General/Player_StopSpin_FuncPtrs.c
-common, exe, Player_StopSpin_Init, 0x0, General/Player_StopSpin_Init.c
-common, exe, Player_Blasted_Update, 0x0, General/Player_Blasted_FuncPtrs.c
-common, exe, Player_Blasted_Init, 0x0, General/Player_Blasted_Init.c
-
 common, exe, Weapon_Mask_boolGoodGuy, 0x0, General/Weapon_Mask_boolGoodGuy.c
 
 // Japan

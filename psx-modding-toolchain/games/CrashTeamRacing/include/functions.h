@@ -131,7 +131,7 @@ struct Item* LIST_RemoveBack(struct LinkedList* L);
 void* MEMPACK_AllocMem(int allocSize);
 void* MEMPACK_ReallocMem(int allocSize);
 
-void Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driver);
+void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver);
 
 int MEMPACK_PushState();
 void MEMPACK_PopState();

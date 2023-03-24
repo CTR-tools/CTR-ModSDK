@@ -2,16 +2,16 @@
 
 // budget = 0x190 (400)
 
-void DECOMP_Player_Crashing_PhysLinear(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_Crashing_PhysLinear(struct Thread* t, struct Driver* d)
 {	
-	Player_Driving_PhysLinear(t,d);
+	VehPtr_Driving_PhysLinear(t,d);
 	
 	// baseSpeed and fireSpeed
 	// set both "shorts" in one "int"
 	*(int*)&d->baseSpeed = 0;
 }
 
-void DECOMP_Player_Crashing_PhysAngular(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_Crashing_PhysAngular(struct Thread* t, struct Driver* d)
 {
 	int elapsedTimeMS = sdata->gGT->elapsedTimeMS;
 	
@@ -34,7 +34,7 @@ void DECOMP_Player_Crashing_PhysAngular(struct Thread* t, struct Driver* d)
 	Rot_AxisAngle(&d->matrix310, &d->AxisAngle1_normalVec[0], d->angle);
 }
 
-void DECOMP_Player_Crashing_Animate(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_Crashing_Animate(struct Thread* t, struct Driver* d)
 {
 	struct Instance* inst;
 	inst = t->inst;
@@ -70,6 +70,6 @@ void DECOMP_Player_Crashing_Animate(struct Thread* t, struct Driver* d)
 			)
 		);
 		
-	void Player_Driving_Init(struct Thread* t, struct Driver* d);
-	d->funcPtrs[0] = Player_Driving_Init;
+	void VehPtr_Driving_Init(struct Thread* t, struct Driver* d);
+	d->funcPtrs[0] = VehPtr_Driving_Init;
 }

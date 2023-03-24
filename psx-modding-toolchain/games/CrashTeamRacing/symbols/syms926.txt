@@ -894,7 +894,7 @@
 8005f89c Rot_AxisAngle
 8005fb4c CameraSlack_PhysAngular
 
-8005fc8c Player_Driving_PhysAngular
+8005fc8c VehPtr_Driving_PhysAngular
 80060458 Player_Driving_LerpQuarterStrength
 80060488 Player_Driving_LerpToForwards
 800605a0 Player_Jump_GetVelY
@@ -907,47 +907,47 @@
 800616b0 Player_StickGetStrength
 800617cc Player_StickGetStrengthAbsolute
 
-8006181c Player_Driving_PhysLinear
-80062a2c Player_Driving_Audio
-80062a4c Player_Driving_Update
-80062b74 Player_Driving_Init
+8006181c VehPtr_Driving_PhysLinear
+80062a2c VehPtr_Driving_Audio
+80062a4c VehPtr_Driving_Update
+80062b74 VehPtr_Driving_Init
 
-80062ca8 Player_Freeze_PhysLinear
-80062d04 Player_Freeze_Init
+80062ca8 VehPtr_Freeze_PhysLinear
+80062d04 VehPtr_Freeze_Init
 
-80062db0 Player_AntiVShift_Update
-80062e04 Player_AntiVShift_ReverseOneFrame
-80062e94 Player_AntiVShift_Init
+80062db0 VehPtr_AntiVShift_Update
+80062e04 VehPtr_AntiVShift_ReverseOneFrame
+80062e94 VehPtr_AntiVShift_Init
 
-80062f4c Player_Drifting_PhysAngular
-80063634 Player_Drifting_Finalize
-8006364c Player_Drifting_Update
-800638d4 Player_Drifting_PhysLinear
-80063920 Player_Drifting_InitSetUpdate
-80063934 Player_Drifting_Init
+80062f4c VehPtr_Drifting_PhysAngular
+80063634 VehPtr_Drifting_Finalize
+8006364c VehPtr_Drifting_Update
+800638d4 VehPtr_Drifting_PhysLinear
+80063920 VehPtr_Drifting_InitSetUpdate
+80063934 VehPtr_Drifting_Init
 
-80063a44 Player_Crashing_PhysAngular
-80063af8 Player_Crashing_Update
-80063b00 Player_Crashing_PhysLinear
-80063b2c Player_Crashing_Animate
-80063bd4 Player_Crashing_Init
+80063a44 VehPtr_Crashing_PhysAngular
+80063af8 VehPtr_Crashing_Update
+80063b00 VehPtr_Crashing_PhysLinear
+80063b2c VehPtr_Crashing_Animate
+80063bd4 VehPtr_Crashing_Init
 
-80063cf4 Player_Spinning_Update
-80063d44 Player_Spinning_PhysLinear
-80063dc8 Player_Spinning_PhysAngular
-80063eac Player_Spinning_InitSetUpdate
-80063ec0 Player_Spinning_Init
+80063cf4 VehPtr_Spinning_Update
+80063d44 VehPtr_Spinning_PhysLinear
+80063dc8 VehPtr_Spinning_PhysAngular
+80063eac VehPtr_Spinning_InitSetUpdate
+80063ec0 VehPtr_Spinning_Init
 
-8006402c Player_LastSpin_Update
-8006406c Player_LastSpin_PhysLinear
-800640a4 Player_LastSpin_PhysAngular
-80064254 Player_LastSpin_Init
+8006402c VehPtr_LastSpin_Update
+8006406c VehPtr_LastSpin_PhysLinear
+800640a4 VehPtr_LastSpin_PhysAngular
+80064254 VehPtr_LastSpin_Init
 
-800642ec Player_StopSpin_Update
-800642f4 Player_StopSpin_PhysLinear
-80064320 Player_StopSpin_PhysAngular
-800643d4 Player_StopSpin_Animate
-800644d0 Player_StopSpin_Init
+800642ec VehPtr_StopSpin_Update
+800642f4 VehPtr_StopSpin_PhysLinear
+80064320 VehPtr_StopSpin_PhysAngular
+800643d4 VehPtr_StopSpin_Animate
+800644d0 VehPtr_StopSpin_Init
 
 80064568 Player_ChangeState
 
@@ -958,37 +958,37 @@
 8006540c Weapon_Shoot_Now
 800666e4 Weapon_Shoot_OnCirclePress
 
-8006677c Player_MaskGrab_FindDestPos
-80066cb0 Player_MaskGrab_Particles
-80066d4c Player_MaskGrab_Update
-80066e3c Player_MaskGrab_PhysLinear
-80066e8c Player_MaskGrab_Animate
-800671b0 Player_MaskGrab_Init
+8006677c VehPtr_MaskGrab_FindDestPos
+80066cb0 VehPtr_MaskGrab_Particles
+80066d4c VehPtr_MaskGrab_Update
+80066e3c VehPtr_MaskGrab_PhysLinear
+80066e8c VehPtr_MaskGrab_Animate
+800671b0 VehPtr_MaskGrab_Init
 
-8006749c Player_EatenByPlant_Update
-80067554 Player_EatenByPlant_PhysLinear
-800675c0 Player_EatenByPlant_Animate
-800677d0 Player_EatenByPlant_Init
+8006749c VehPtr_EatenByPlant_Update
+80067554 VehPtr_EatenByPlant_PhysLinear
+800675c0 VehPtr_EatenByPlant_Animate
+800677d0 VehPtr_EatenByPlant_Init
 
-80067930 Player_Dead_Init // (tombstone sep3)
+80067930 VehPtr_Dead_Init // (tombstone sep3)
 
-80067960 Player_EngineRevving_Update
-80067a74 Player_EngineRevving_PhysLinear
-80067b7c Player_EngineRevving_Animate
-80067f4c Player_EngineRevving_Init
+80067960 VehPtr_EngineRevving_Update
+80067a74 VehPtr_EngineRevving_PhysLinear
+80067b7c VehPtr_EngineRevving_Animate
+80067f4c VehPtr_EngineRevving_Init
 
-8006809c Player_Blasted_Update
-800680d0 Player_Blasted_PhysLinear
-80068150 Player_Blasted_PhysAngular
-80068244 Player_Blasted_Animate
-800682a4 Player_Blasted_Init
+8006809c VehPtr_Blasted_Update
+800680d0 VehPtr_Blasted_PhysLinear
+80068150 VehPtr_Blasted_PhysAngular
+80068244 VehPtr_Blasted_Animate
+800682a4 VehPtr_Blasted_Init
 
-800683f4 Player_Warp_MoveDustPuff
-800685b0 Player_Warp_AddDustPuff1
-80068644 Player_Warp_AddDustPuff2
+800683f4 VehPtr_Warp_MoveDustPuff
+800685b0 VehPtr_Warp_AddDustPuff1
+80068644 VehPtr_Warp_AddDustPuff2
 // extra here in Sep3
-80068be8 Player_Warp_PhysAngular
-80068e04 Player_Warp_Init
+80068be8 VehPtr_Warp_PhysAngular
+80068e04 VehPtr_Warp_Init
 
 // extra here in sep3 (tombstone vibrate)
 

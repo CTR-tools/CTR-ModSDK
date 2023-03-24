@@ -2,7 +2,7 @@
 
 // only Animate is needed, see StopSpin_Init for details
 
-void DECOMP_Player_StopSpin_Animate(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_StopSpin_Animate(struct Thread* t, struct Driver* d)
 {
 	int numFrames;
 	struct Instance* inst;
@@ -72,6 +72,6 @@ void DECOMP_Player_StopSpin_Animate(struct Thread* t, struct Driver* d)
 	
 	
 	// if you are facing forward
-	void Player_Driving_Init(struct Thread* t, struct Driver* d);
-	d->funcPtrs[0] = Player_Driving_Init;
+	void VehPtr_Driving_Init(struct Thread* t, struct Driver* d);
+	d->funcPtrs[0] = VehPtr_Driving_Init;
 }

@@ -4,7 +4,7 @@ int THREAD_BirthWithObject(u_int, u_int, char*, int);
 void CS_Podium_Stand_Init(u_short *);
 void CS_Podium_Prize_Init(u_int, char*, short *);
 short howl_VolumeGet(int volumeType);
-void Player_Freeze_Init(struct Thread* t, struct Driver* d);
+void VehPtr_Freeze_Init(struct Thread* t, struct Driver* d);
 int CS_Thread_Init(u_int, char*, short *, short, u_int);
 void CS_Podium_Camera_ThTick(int param_1);
 
@@ -66,7 +66,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	// Make kart model invisible
 	driverInstSelf->flags |= 0x80;
 	
-	Player_Freeze_Init(driverInstSelf->thread, gGT->drivers[0]);
+	VehPtr_Freeze_Init(driverInstSelf->thread, gGT->drivers[0]);
 	
 	// Number of Winners = 1
 	// this means Draw Confetti on one window

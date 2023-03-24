@@ -122,7 +122,7 @@ void FUN_800abbb4(int param_1,int param_2)
 	
     sVar6 = 0;
 	
-	// Player_Dead_Init
+	// VehPtr_Dead_Init
     *(undefined4 *)(param_2 + 0x54) = 0x80067930;
     
 	puVar1 = PTR_DAT_8008d2ac;

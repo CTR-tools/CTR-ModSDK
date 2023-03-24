@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Player_Freeze_Init(struct Thread* t, struct Driver* d);
+void VehPtr_Freeze_Init(struct Thread* t, struct Driver* d);
 
 // Request Aku Hint, doesn't start till FUN_800b3dd8
 // hintId:
@@ -30,7 +30,7 @@ void DECOMP_MainFrame_RequestMaskHint(short hintId, char interruptWarpPad)
   {
     sdata->AkuAkuHintState = 1;
 
-    gGT->drivers[0]->funcPtrs[0] = Player_Freeze_Init;
+    gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
 
 	sdata->AkuHint_RequestedHint = hintId;
 	sdata->AkuHint_boolInterruptWarppad = interruptWarpPad;

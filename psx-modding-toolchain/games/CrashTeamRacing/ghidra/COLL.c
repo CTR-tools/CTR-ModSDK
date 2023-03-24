@@ -1430,7 +1430,7 @@ code_r0x8001e96c:
 	// NOP-ing this allows you to jump out of bounds,
 	// and not get mask-grabbbed when you hit kill planes
 
-	// Player_MaskGrab_Init
+	// VehPtr_MaskGrab_Init
     FUN_800671b0(param_1,param_2);
   }
   return;
@@ -3925,7 +3925,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
           *(undefined *)(param_1 + 0x4c) = 4;
           *(undefined *)(param_1 + 0x4d) = 0;
 
-		  // Player_Crashing_Init
+		  // VehPtr_Crashing_Init
           FUN_80063bd4(param_2);
           return 2;
         }

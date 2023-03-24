@@ -3,19 +3,19 @@
 // budget: 0x208 (520)
 // curr:
 
-void Player_Driving_Init(struct Thread* t, struct Driver* d);
+void VehPtr_Driving_Init(struct Thread* t, struct Driver* d);
 
-void DECOMP_Player_Blasted_Update(struct Thread *thread, struct Driver *driver)
+void DECOMP_VehPtr_Blasted_Update(struct Thread *thread, struct Driver *driver)
 {
 	if (driver->NoInputTimer != 0) return;
 	
 	driver->matrixArray = 0;
 	driver->matrixIndex = 0;
-	Player_Driving_Init(thread, driver);
+	VehPtr_Driving_Init(thread, driver);
 }
 
-void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driver);
-void DECOMP_Player_Blasted_PhysLinear(struct Thread *thread, struct Driver *driver)
+void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver);
+void DECOMP_VehPtr_Blasted_PhysLinear(struct Thread *thread, struct Driver *driver)
 {
 	int NoInputTimer;
 	
@@ -23,7 +23,7 @@ void DECOMP_Player_Blasted_PhysLinear(struct Thread *thread, struct Driver *driv
 	if (driver->NoInputTimer < 0)
 		driver->NoInputTimer = 0;
 	
-	DECOMP_Player_Driving_PhysLinear(thread, driver);
+	DECOMP_VehPtr_Driving_PhysLinear(thread, driver);
 	
 	driver->jump_ForcedMS = 0x60;
 	driver->baseSpeed = 0;
@@ -37,7 +37,7 @@ void DECOMP_Player_Blasted_PhysLinear(struct Thread *thread, struct Driver *driv
 int InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
 void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
 
-void DECOMP_Player_Blasted_PhysAngular(struct Thread *thread, struct Driver *driver)
+void DECOMP_VehPtr_Blasted_PhysAngular(struct Thread *thread, struct Driver *driver)
 {
 	int elapsedTimeMS = sdata->gGT->elapsedTimeMS;
 	
@@ -66,7 +66,7 @@ void DECOMP_Player_Blasted_PhysAngular(struct Thread *thread, struct Driver *dri
 	return;
 }
 
-void DECOMP_Player_Blasted_Animate(struct Thread *thread,struct Driver *driver)
+void DECOMP_VehPtr_Blasted_Animate(struct Thread *thread,struct Driver *driver)
 {
 	int matrixIndex;
 	int arrLength;

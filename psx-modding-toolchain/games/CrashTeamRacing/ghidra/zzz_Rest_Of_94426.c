@@ -15573,7 +15573,7 @@ void FUN_8005435c(void)
 	// if you have enough crystals to win the race
     if (*(int *)(PTR_DAT_8008d2ac + 0x1e28) <= (int)cVar1)
 	{
-	  // Player_Freeze_Init
+	  // VehPtr_Freeze_Init
       *(undefined4 *)(iVar3 + 0x54) = 0x80062d04;
 
       //turn on 26th bit of Actions Flag set (means racer finished the race)
@@ -19512,14 +19512,14 @@ LAB_80058568:
 	// If you're not in Adventure Arena
 	if ((*(uint *)puVar4 & 0x100000) == 0)
 	{
-	  // Player_EngineRevving_Init
+	  // VehPtr_EngineRevving_Init
       pcVar8 = FUN_80067f4c;
     }
 
 	// If you're in Adventure Arena
     else
 	{
-	  // Player_Driving_Init
+	  // VehPtr_Driving_Init
       pcVar8 = FUN_80062b74;
     }
 
@@ -20142,7 +20142,7 @@ struct Driver* FUN_80058ec0(int param_1)
   // Get Team that player chose from Battle Setup menu
   cVar1 = PTR_DAT_8008d2ac[param_1 + 0x1da4];
 
-  // Player_Driving_Init
+  // VehPtr_Driving_Init
   *(undefined4 *)(iVar3 + 0x54) = 0x80062b74;
 
   // Battle Team that the player is on
@@ -25794,8 +25794,8 @@ void FUN_8005f89c(undefined2 *param_1,short *param_2,uint param_3)
 // CameraSlack_PhysAngular
 // param1 - driver object
 // called from:
-//		Player_Driving_PhysAngular
-//		Player_Drifting_PhysAngular
+//		VehPtr_Driving_PhysAngular
+//		VehPtr_Drifting_PhysAngular
 uint FUN_8005fb4c(int param_1)
 
 {
@@ -25914,7 +25914,7 @@ uint FUN_8005fb4c(int param_1)
 }
 
 
-// Player_Driving_PhysAngular
+// VehPtr_Driving_PhysAngular
 void FUN_8005fc8c(undefined4 param_1,int param_2)
 
 {
@@ -27697,7 +27697,7 @@ int FUN_800617cc(int param_1,undefined4 param_2,short *param_3)
 
 
 
-// Player_Driving_PhysLinear
+// VehPtr_Driving_PhysLinear
 void FUN_8006181c(int param_1,int param_2)
 {
   char cVar1;
@@ -29025,7 +29025,7 @@ LAB_800629f8:
 }
 
 
-// Player_Driving_Audio (universal)
+// VehPtr_Driving_Audio (universal)
 // param1 = thread, param2 = driver
 void FUN_80062a2c(undefined4 param_1,undefined4 param_2)
 {
@@ -29035,7 +29035,7 @@ void FUN_80062a2c(undefined4 param_1,undefined4 param_2)
 }
 
 
-// Player_Driving_Update
+// VehPtr_Driving_Update
 // param1 = thread, param2 = driver
 void FUN_80062a4c(undefined4 param_1,int param_2)
 {
@@ -29083,7 +29083,7 @@ void FUN_80062a4c(undefined4 param_1,int param_2)
 		)
 	   )
     {
-      // Player_Drifting_Init
+      // VehPtr_Drifting_Init
       FUN_80063934(param_1);
 
       //exit the function
@@ -29106,7 +29106,7 @@ void FUN_80062a4c(undefined4 param_1,int param_2)
 
 	// Stop driving, until you press X, prevents jitters
 	  
-    // Player_AntiVShift_Init
+    // VehPtr_AntiVShift_Init
     FUN_80062e94(param_1);
   }
 
@@ -29124,7 +29124,7 @@ void FUN_80062a4c(undefined4 param_1,int param_2)
 
 
 
-// Player_Driving_Init
+// VehPtr_Driving_Init
 // param1 = thread, param2 = driver
 void FUN_80062b74(undefined4 param_1,int param_2)
 {
@@ -29163,10 +29163,10 @@ void FUN_80062b74(undefined4 param_1,int param_2)
     *(undefined2 *)(param_2 + 0x406) = 0x60;
     *(undefined2 *)(param_2 + 0x408) = 0x280;
 
-	// Player_Driving_Update
+	// VehPtr_Driving_Update
     *(undefined4 *)(param_2 + 0x58) = 0x80062a4c;
 
-	// Player_Driving_PhysLinear
+	// VehPtr_Driving_PhysLinear
     *(undefined4 *)(param_2 + 0x5c) = 0x8006181c;
 
 	*(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -29195,12 +29195,12 @@ void FUN_80062b74(undefined4 param_1,int param_2)
 }
 
 
-// Player_Freeze_PhysLinear
+// VehPtr_Freeze_PhysLinear
 void FUN_80062ca8(undefined4 param_1,int param_2)
 {
   uint uVar1;
 
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   FUN_8006181c();
 
   // get flags
@@ -29229,14 +29229,14 @@ void FUN_80062ca8(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Freeze_Init
+// VehPtr_Freeze_Init
 // param1 = thread, param2 = driver
 void FUN_80062d04(undefined4 param_1,int param_2)
 
 {
   if (*(char *)(param_2 + 0x376) != '\v')
   {
-	// Player_Freeze_PhysLinear
+	// VehPtr_Freeze_PhysLinear
     *(undefined4 *)(param_2 + 0x5c) = 0x80062ca8;
 
 	*(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -29263,7 +29263,7 @@ void FUN_80062d04(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_AntiVShift_Update
+// VehPtr_AntiVShift_Update
 // param1 = thread, param2 = driver
 void FUN_80062db0(undefined4 param_1,int param_2)
 //seems to handle end of blasted effect
@@ -29286,14 +29286,14 @@ void FUN_80062db0(undefined4 param_1,int param_2)
   }
   else
   {
-	// Player_Driving_Init
+	// VehPtr_Driving_Init
     FUN_80062b74();
   }
   return;
 }
 
 
-// Player_AntiVShift_ReverseOneFrame
+// VehPtr_AntiVShift_ReverseOneFrame
 // param1 = thread, param2 = driver
 // reverse one frame of position
 void FUN_80062e04(undefined4 param_1,int param_2)
@@ -29327,7 +29327,7 @@ void FUN_80062e04(undefined4 param_1,int param_2)
   // if player did start jumping this frame
   else
   {
-	// Player_Driving_Init
+	// VehPtr_Driving_Init
     FUN_80062b74(param_1,param_2);
   }
 
@@ -29335,7 +29335,7 @@ void FUN_80062e04(undefined4 param_1,int param_2)
 }
 
 
-// Player_AntiVShift_Init
+// VehPtr_AntiVShift_Init
 // param1 = thread, param2 = driver
 void FUN_80062e94(undefined4 param_1,int param_2)
 {
@@ -29345,7 +29345,7 @@ void FUN_80062e94(undefined4 param_1,int param_2)
   // OnUpdate
   *(undefined4 *)(param_2 + 0x58) = 0x80062db0;
 
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x8006181c;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -29371,7 +29371,7 @@ void FUN_80062e94(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Drifting_PhysAngular
+// VehPtr_Drifting_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_80062f4c(undefined4 param_1,int param_2)
 
@@ -29797,7 +29797,7 @@ LAB_800632cc:
 }
 
 
-// Player_Drifting_Finalize
+// VehPtr_Drifting_Finalize
 void FUN_80063634(int param_1)
 
 {
@@ -29807,7 +29807,7 @@ void FUN_80063634(int param_1)
 }
 
 
-// Player_Drifting_Update
+// VehPtr_Drifting_Update
 // param1 = thread, param2 = driver
 void FUN_8006364c(undefined4 param_1,int param_2)
 
@@ -29958,7 +29958,7 @@ void FUN_8006364c(undefined4 param_1,int param_2)
 	// Set amount of NoInput
     *(undefined2 *)(param_2 + 0x400) = uVar2;
 
-	// Player_Spinning_Init
+	// VehPtr_Spinning_Init
     FUN_80063ec0(param_1,param_2);
   }
 
@@ -29985,10 +29985,10 @@ void FUN_8006364c(undefined4 param_1,int param_2)
 	{
 	  // Stop drifting, just drive
 
-	  // Player_Drifting_Finalize
+	  // VehPtr_Drifting_Finalize
       FUN_80063634(param_2);
 
-	  // Player_Driving_Init
+	  // VehPtr_Driving_Init
       FUN_80062b74(param_1,param_2);
     }
   }
@@ -29996,13 +29996,13 @@ void FUN_8006364c(undefined4 param_1,int param_2)
 }
 
 
-// Player_Drifting_PhysLinear
+// VehPtr_Drifting_PhysLinear
 void FUN_800638d4(undefined4 param_1,int param_2)
 
 {
   undefined *puVar1;
 
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   FUN_8006181c();
 
   puVar1 = PTR_DAT_8008d2ac;
@@ -30016,7 +30016,7 @@ void FUN_800638d4(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Drifting_InitSetUpdate
+// VehPtr_Drifting_InitSetUpdate
 // param1 = thread, param2 = driver
 void FUN_80063920(undefined4 param_1,int param_2)
 {
@@ -30026,12 +30026,12 @@ void FUN_80063920(undefined4 param_1,int param_2)
 
   *(undefined4 *)(param_2 + 0x54) = 0;
 
-  // Player_Drifting_Update
+  // VehPtr_Drifting_Update
   *(undefined4 *)(param_2 + 0x58) = 0x8006364c;
   return;
 }
 
-// Player_Drifting_Init
+// VehPtr_Drifting_Init
 // param1 = thread, param2 = driver
 void FUN_80063934(undefined4 param_1,int param_2)
 //seems to handle start of drifts
@@ -30054,10 +30054,10 @@ void FUN_80063934(undefined4 param_1,int param_2)
     *(short *)(param_2 + 0x3da) = sVar1 * -0x100;
   }
 
-  // Player_Drifting_InitSetUpdate
+  // VehPtr_Drifting_InitSetUpdate
   *(undefined4 *)(param_2 + 0x54) = 0x80063920;
 
-  // Player_Drifting_PhysLinear
+  // VehPtr_Drifting_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x800638d4;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -30090,7 +30090,7 @@ void FUN_80063934(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Crashing_PhysAngular
+// VehPtr_Crashing_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_80063a44(undefined4 param_1,int param_2)
 {
@@ -30128,19 +30128,19 @@ void FUN_80063a44(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Crashing_Update
+// VehPtr_Crashing_Update
 void FUN_80063af8(void)
 
 {
   return;
 }
 
-// Player_Crashing_PhysLinear
+// VehPtr_Crashing_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_80063b00(undefined4 param_1,int param_2)
 
 {
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   FUN_8006181c();
 
   // reset two speed variables
@@ -30150,7 +30150,7 @@ void FUN_80063b00(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Crashing_Animate
+// VehPtr_Crashing_Animate
 // param1 = thread, param2 = driver
 void FUN_80063b2c(int param_1,int param_2)
 
@@ -30196,14 +30196,14 @@ void FUN_80063b2c(int param_1,int param_2)
       *(undefined *)(param_2 + 0x4d) = 0;
     }
 
-	// Player_Driving_Init
+	// VehPtr_Driving_Init
     *(undefined4 *)(param_2 + 0x54) = 0x80062b74;
   }
   return;
 }
 
 
-// Player_Crashing_Init
+// VehPtr_Crashing_Init
 // param1 = thread, param2 = driver
 void FUN_80063bd4(int param_1,int param_2)
 
@@ -30248,13 +30248,13 @@ void FUN_80063bd4(int param_1,int param_2)
   *(undefined2 *)(iVar1 + 0x1e) = 0xccc;
   *(undefined2 *)(iVar1 + 0x1c) = 0xccc;
 
-  // Player_Crashing_Update
+  // VehPtr_Crashing_Update
   *(undefined4 *)(param_2 + 0x58) = 0x80063af8;
 
   // OnInit
   *(undefined4 *)(param_2 + 0x54) = 0;
 
-  // Player_Crashing_PhysLinear
+  // VehPtr_Crashing_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x80063b00;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -30266,7 +30266,7 @@ void FUN_80063bd4(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // OnRender -- move position to instance matrix
 
-  // Player_Crashing_Animate
+  // VehPtr_Crashing_Animate
   *(undefined4 *)(param_2 + 0x80) = 0x80063b2c;
 
 
@@ -30277,7 +30277,7 @@ void FUN_80063bd4(int param_1,int param_2)
 }
 
 
-// Player_Spinning_Update
+// VehPtr_Spinning_Update
 // param1 = thread, param2 = driver
 void FUN_80063cf4(undefined4 param_1,int param_2)
 
@@ -30307,12 +30307,12 @@ void FUN_80063cf4(undefined4 param_1,int param_2)
 
   // If you have slown down enough
 
-  // Player_LastSpin_Init
+  // VehPtr_LastSpin_Init
   FUN_80064254(param_1, param_2);
   return;
 }
 
-// Player_Spinning_PhysLinear
+// VehPtr_Spinning_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_80063d44(undefined4 param_1,int param_2)
 
@@ -30331,7 +30331,7 @@ void FUN_80063d44(undefined4 param_1,int param_2)
     *(undefined2 *)(param_2 + 0x400) = 0;
   }
 
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   FUN_8006181c(param_1,param_2);
 
   puVar1 = PTR_DAT_8008d2ac;
@@ -30350,7 +30350,7 @@ void FUN_80063d44(undefined4 param_1,int param_2)
 }
 
 
-// Player_Spinning_PhysAngular
+// VehPtr_Spinning_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_80063dc8(undefined4 param_1,int param_2)
 
@@ -30392,7 +30392,7 @@ void FUN_80063dc8(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Spinning_InitSetUpdate
+// VehPtr_Spinning_InitSetUpdate
 // param1 = thread, param2 = driver
 void FUN_80063eac(undefined4 param_1,int param_2)
 
@@ -30403,12 +30403,12 @@ void FUN_80063eac(undefined4 param_1,int param_2)
   // OnInit
   *(undefined4 *)(param_2 + 0x54) = 0;
 
-  // Player_Spinning_Update
+  // VehPtr_Spinning_Update
   *(undefined4 *)(param_2 + 0x58) = 0x80063cf4;
   return;
 }
 
-// Player_Spinning_Init
+// VehPtr_Spinning_Init
 // param1 = thread, param2 = driver
 void FUN_80063ec0(undefined4 param_1,int param_2)
 
@@ -30457,8 +30457,8 @@ void FUN_80063ec0(undefined4 param_1,int param_2)
   }
 
   // Set function pointers for spinning out
-  *(undefined4 *)(param_2 + 0x54) = 0x80063eac // Player_Spinning_InitSetUpdate
-  *(undefined4 *)(param_2 + 0x5c) = 0x80063d44; // Player_Spinning_PhysLinear
+  *(undefined4 *)(param_2 + 0x54) = 0x80063eac // VehPtr_Spinning_InitSetUpdate
+  *(undefined4 *)(param_2 + 0x5c) = 0x80063d44; // VehPtr_Spinning_PhysLinear
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 100) = 0x80063dc8;
   *(undefined4 *)(param_2 + 0x68) = 0x8005ea60; // OnApplyForces
@@ -30490,7 +30490,7 @@ void FUN_80063ec0(undefined4 param_1,int param_2)
 }
 
 
-// Player_LastSpin_Update
+// VehPtr_LastSpin_Update
 // param1 = thread, param2 = driver
 void FUN_8006402c(undefined4 param_1,int param_2)
 {
@@ -30511,18 +30511,18 @@ void FUN_8006402c(undefined4 param_1,int param_2)
   {
 	// Change all funcPtrs to transition
 	// from LastSpin to Driving
-	// Player_StopSpin_Init
+	// VehPtr_StopSpin_Init
     FUN_800644d0(param_1, param_2);
   }
   return;
 }
 
-// Player_LastSpin_PhysLinear
+// VehPtr_LastSpin_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_8006406c(undefined4 param_1,int param_2)
 
 {
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   FUN_8006181c();
 
   // reset two speed variables
@@ -30533,7 +30533,7 @@ void FUN_8006406c(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_LastSpin_PhysAngular
+// VehPtr_LastSpin_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_800640a4(undefined4 param_1,int param_2)
 
@@ -30668,15 +30668,15 @@ void FUN_800640a4(undefined4 param_1,int param_2)
 
 
 // param1 = thread, param2 = driver
-// Player_LastSpin_Init
+// VehPtr_LastSpin_Init
 void FUN_80064254(undefined4 param_1,int param_2)
 {
 	// Transition out of spinning
 
-  // Player_LastSpin_Update
+  // VehPtr_LastSpin_Update
   *(undefined4 *)(param_2 + 0x58) = 0x8006402c;
 
-  // Player_LastSpin_PhysLinear
+  // VehPtr_LastSpin_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x8006406c;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -30699,17 +30699,17 @@ void FUN_80064254(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_StopSpin_Update
+// VehPtr_StopSpin_Update
 void FUN_800642ec(void)
 {
   return;
 }
 
-// Player_StopSpin_PhysLinear
+// VehPtr_StopSpin_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_800642f4(undefined4 param_1,int param_2)
 {
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   FUN_8006181c();
 
   // reset two speed variables
@@ -30719,7 +30719,7 @@ void FUN_800642f4(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_StopSpin_PhysAngular
+// VehPtr_StopSpin_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_80064320(undefined4 param_1,int param_2)
 {
@@ -30759,7 +30759,7 @@ void FUN_80064320(undefined4 param_1,int param_2)
 
 
 // param1 = thread, param2 = driver
-// Player_StopSpin_Animate
+// VehPtr_StopSpin_Animate
 void FUN_800643d4(int param_1,int param_2)
 
 {
@@ -30845,24 +30845,24 @@ void FUN_800643d4(int param_1,int param_2)
 
   // if you are facing forward
 
-  // Player_Driving_Init
+  // VehPtr_Driving_Init
   *(undefined4 *)(param_2 + 0x54) = 0x80062b74;
   return;
 }
 
 // param1 = thread, param2 = driver
-// Player_StopSpin_Init
+// VehPtr_StopSpin_Init
 void FUN_800644d0(undefined4 param_1,int param_2)
 
 {
   // Transition from
   // LastSpin to Driving
 
-  // Player_StopSpin_Update,
+  // VehPtr_StopSpin_Update,
   // "updating" happens in OnAnimate
   *(undefined4 *)(param_2 + 0x58) = 0x800642ec;
 
-  // Player_StopSpin_PhysLinear
+  // VehPtr_StopSpin_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x800642f4;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -30874,7 +30874,7 @@ void FUN_800644d0(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // OnRender -- move position to instance matrix
 
-  // Player_StopSpin_Animate, calls Player_Driving_Init
+  // VehPtr_StopSpin_Animate, calls VehPtr_Driving_Init
   *(undefined4 *)(param_2 + 0x80) = 0x800643d4;
 
   *(undefined4 *)(param_2 + 0x54) = 0;
@@ -31019,7 +31019,7 @@ LAB_8006462c:
 		// Undo the "Squish" effect
 		*(undefined2 *)(param_1 + 0x404) = 0;
 
-		// Player_Blasted_Init
+		// VehPtr_Blasted_Init
         *(undefined4 *)(param_1 + 0x54) = 0x800682a4;
 
 LAB_800646f0:
@@ -31059,7 +31059,7 @@ LAB_800646f0:
 		// NoInput set to 3.36 seconds
         *(undefined2 *)(param_1 + 0x400) = 0xd20;
 
-		// Player_EatenByPlant_Init
+		// VehPtr_EatenByPlant_Init
         *(undefined4 *)(param_1 + 0x54) = 0x800677d0;
 
         bVar2 = *(byte *)(param_1 + 0x4a);
@@ -31075,7 +31075,7 @@ LAB_800646f0:
   }
 LAB_800647c8:
 
-  // Player_Spinning_Init
+  // VehPtr_Spinning_Init
   *(undefined4 *)(param_1 + 0x54) = 0x80063ec0;
 
 LAB_800647d8:
@@ -33091,7 +33091,7 @@ void FUN_800666e4(int param_1)
 // WARNING: Removing unreachable block (ram,0x80066894)
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// Player_MaskGrab_FindDestPos (destination position)
+// VehPtr_MaskGrab_FindDestPos (destination position)
 void FUN_8006677c(int param_1,short *param_2)
 
 {
@@ -33342,7 +33342,7 @@ void FUN_8006677c(int param_1,short *param_2)
 }
 
 
-// Player_MaskGrab_Particles
+// VehPtr_MaskGrab_Particles
 void FUN_80066cb0(int param_1)
 
 {
@@ -33370,7 +33370,7 @@ void FUN_80066cb0(int param_1)
 }
 
 
-// Player_MaskGrab_Update
+// VehPtr_MaskGrab_Update
 // param1 = thread, param2 = driver
 void FUN_80066d4c(undefined4 param_1,int param_2)
 
@@ -33408,25 +33408,25 @@ void FUN_80066d4c(undefined4 param_1,int param_2)
     *(uint *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_2 + 0x4a) * 0xdc + 0x1508) =
          *(uint *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_2 + 0x4a) * 0xdc + 0x1508) | 8;
 
-	// Player_MaskGrab_FindDestPos
+	// VehPtr_MaskGrab_FindDestPos
 	// driver, and quadblock (last valid)
     FUN_8006677c(param_2,*(undefined4 *)(param_2 + 0x354));
 
 	// VehInit_TeleportSelf (back onto track)
     FUN_80057c8c(param_2,0,0x80);
 
-	// Player_EngineRevving_Init
+	// VehPtr_EngineRevving_Init
     FUN_80067f4c(param_1,param_2);
   }
   return;
 }
 
-// Player_MaskGrab_PhysLinear
+// VehPtr_MaskGrab_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_80066e3c(undefined4 param_1,int param_2)
 
 {
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   FUN_8006181c(param_1, param_2);
 
   // reset base speed
@@ -33448,7 +33448,7 @@ void FUN_80066e3c(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_MaskGrab_Animate
+// VehPtr_MaskGrab_Animate
 // param1 = thread, param2 = driver
 void FUN_80066e8c(int param_1,int param_2)
 {
@@ -33554,7 +33554,7 @@ void FUN_80066e8c(int param_1,int param_2)
 		// if particles are not spawned
         if (*(char *)(param_2 + 0x58c) == '\0')
 		{
-		  // Player_MaskGrab_Particles
+		  // VehPtr_MaskGrab_Particles
           FUN_80066cb0(param_2);
 
 		  // now they are spawned
@@ -33657,7 +33657,7 @@ void FUN_80066e8c(int param_1,int param_2)
 }
 
 
-// Player_MaskGrab_Init
+// VehPtr_MaskGrab_Init
 // when falling off track
 // param1 = thread, param2 = driver
 void FUN_800671b0(int param_1,int param_2)
@@ -33813,10 +33813,10 @@ void FUN_800671b0(int param_1,int param_2)
          (short)((uint)*(undefined4 *)(param_2 + 0x2dc) >> 8);
   }
 
-  // Player_MaskGrab_Update
+  // VehPtr_MaskGrab_Update
   *(undefined4 *)(param_2 + 0x58) = 0x80066d4c;
 
-  // Player_MaskGrab_PhysLinear
+  // VehPtr_MaskGrab_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x80066e3c;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -33828,7 +33828,7 @@ void FUN_800671b0(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // OnRender -- move position to instance matrix
 
-  // Player_MaskGrab_Animate
+  // VehPtr_MaskGrab_Animate
   *(undefined4 *)(param_2 + 0x80) = 0x80066e8c;
 
   *(undefined4 *)(param_2 + 0x54) = 0;
@@ -33840,7 +33840,7 @@ void FUN_800671b0(int param_1,int param_2)
 }
 
 
-// Player_EatenByPlant_Update
+// VehPtr_EatenByPlant_Update
 void FUN_8006749c(int param_1,int param_2)
 
 {
@@ -33864,7 +33864,7 @@ void FUN_8006749c(int param_1,int param_2)
   // when input is now allowed
   if (*(short *)(param_2 + 0x400) == 0)
   {
-	// Player_MaskGrab_FindDestPos
+	// VehPtr_MaskGrab_FindDestPos
 	// driver, and quadblock previously touched by driver
     FUN_8006677c(param_2,*(undefined4 *)(param_2 + 0x354));
 
@@ -33877,7 +33877,7 @@ void FUN_8006749c(int param_1,int param_2)
 	// make visible
 	*(uint *)(iVar2 + 0x28) = *(uint *)(iVar2 + 0x28) & 0xffffff7f;
 
-	// Player_EngineRevving_Init
+	// VehPtr_EngineRevving_Init
 	// this lets you rev engine while falling
 	FUN_80067f4c(param_1,param_2);
   }
@@ -33885,13 +33885,13 @@ void FUN_8006749c(int param_1,int param_2)
 }
 
 
-// Player_EatenByPlant_PhysLinear
+// VehPtr_EatenByPlant_PhysLinear
 void FUN_80067554(undefined4 param_1,int param_2)
 
 {
   undefined *puVar1;
 
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   FUN_8006181c();
 
   // reset speed
@@ -33921,7 +33921,7 @@ void FUN_80067554(undefined4 param_1,int param_2)
 
 // WARNING: Could not reconcile some variable overlaps
 
-// Player_EatenByPlant_Animate
+// VehPtr_EatenByPlant_Animate
 // param1 = thread, param2 = driver
 void FUN_800675c0(undefined4 param_1,int param_2)
 
@@ -34024,7 +34024,7 @@ void FUN_800675c0(undefined4 param_1,int param_2)
 }
 
 
-// Player_EatenByPlant_Init
+// VehPtr_EatenByPlant_Init
 // when eaten by plant on papu pyramid
 // param1 = thread, param2 = driver
 void FUN_800677d0(int param_1,int param_2)
@@ -34092,10 +34092,10 @@ void FUN_800677d0(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x308) = 0;
   FUN_80028808(*(undefined4 *)(param_2 + 0x300));
 
-  // Player_EatenByPlant_Update
+  // VehPtr_EatenByPlant_Update
   *(undefined4 *)(param_2 + 0x58) = 0x8006749c;
 
-  // Player_EatenByPlant_PhysLinear
+  // VehPtr_EatenByPlant_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x80067554;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -34109,7 +34109,7 @@ void FUN_800677d0(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x78) = 0; // cant move anymore
   *(undefined4 *)(param_2 + 0x7c) = 0;
 
-  // Player_EatenByPlant_Animate
+  // VehPtr_EatenByPlant_Animate
   *(undefined4 *)(param_2 + 0x80) = 0x800675c0;
 
   // no particles
@@ -34117,11 +34117,11 @@ void FUN_800677d0(int param_1,int param_2)
   return;
 }
 
-// Player_Dead_Init
+// VehPtr_Dead_Init
 // param1 = thread, param2 = driver
 void FUN_80067930(undefined4 param_1,int param_2)
 {
-  // Player_EatenByPlant_Init
+  // VehPtr_EatenByPlant_Init
   FUN_800677d0(param_1, param_2);
 
   // erase OnUpdate
@@ -34137,7 +34137,7 @@ void FUN_80067930(undefined4 param_1,int param_2)
 }
 
 
-// Player_EngineRevving_Update
+// VehPtr_EngineRevving_Update
 // param1 = thread, param2 = driver
 void FUN_80067960(undefined4 param_1,int param_2)
 
@@ -34217,13 +34217,13 @@ void FUN_80067960(undefined4 param_1,int param_2)
   *(undefined2 *)(param_2 + 0x3dc) = 0;
   *(undefined *)(param_2 + 0x4fe) = 0;
 
-  // Player_Driving_Init
+  // VehPtr_Driving_Init
   FUN_80062b74(param_1);
   return;
 }
 
 
-// Player_EngineRevving_PhysLinear
+// VehPtr_EngineRevving_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_80067a74(undefined4 param_1,int param_2)
 
@@ -34245,7 +34245,7 @@ void FUN_80067a74(undefined4 param_1,int param_2)
     *(undefined2 *)(param_2 + 0x590) = 0;
   }
 
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   FUN_8006181c(param_1,param_2);
 
   puVar1 = PTR_DAT_8008d2ac;
@@ -34273,7 +34273,7 @@ void FUN_80067a74(undefined4 param_1,int param_2)
 }
 
 
-// Player_EngineRevving_Animate
+// VehPtr_EngineRevving_Animate
 // param1 = thread, param2 = driver
 void FUN_80067b7c(int param_1,int param_2)
 
@@ -34527,7 +34527,7 @@ LAB_80067dec:
   return;
 }
 
-// Player_EngineRevving_Init
+// VehPtr_EngineRevving_Init
 // param1 = thread, param2 = driver
 void FUN_80067f4c(undefined4 param_1,int param_2)
 
@@ -34571,16 +34571,16 @@ void FUN_80067f4c(undefined4 param_1,int param_2)
   // firstFrameSinceEngineRevving
   *(undefined *)(param_2 + 0x449) = 1;
 
-  // Player_EngineRevving_Update
+  // VehPtr_EngineRevving_Update
   *(undefined4 *)(param_2 + 0x58) = 0x80067960;
 
-  // Player_EngineRevving_PhysLinear
+  // VehPtr_EngineRevving_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x80067a74;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // OnRender -- move position to instance matrix
 
-  // Player_EngineRevving_Animate
+  // VehPtr_EngineRevving_Animate
   *(undefined4 *)(param_2 + 0x80) = 0x80067b7c;
 
   // VehParticle_DriverMain
@@ -34604,7 +34604,7 @@ void FUN_80067f4c(undefined4 param_1,int param_2)
 }
 
 
-// Player_Blasted_Update
+// VehPtr_Blasted_Update
 // param1 = thread, param2 = driver
 void FUN_8006809c(undefined4 param_1,int param_2)
 
@@ -34614,13 +34614,13 @@ void FUN_8006809c(undefined4 param_1,int param_2)
     *(undefined *)(param_2 + 0x4c) = 0;
     *(undefined *)(param_2 + 0x4d) = 0;
 
-	// Player_Driving_Init
+	// VehPtr_Driving_Init
     FUN_80062b74();
   }
   return;
 }
 
-// Player_Blasted_PhysLinear
+// VehPtr_Blasted_PhysLinear
 // param1 = thread, param2 = driver
 void FUN_800680d0(undefined4 param_1,int param_2)
 
@@ -34638,7 +34638,7 @@ void FUN_800680d0(undefined4 param_1,int param_2)
     *(undefined2 *)(param_2 + 0x400) = 0;
   }
 
-  // Player_Driving_PhysLinear
+  // VehPtr_Driving_PhysLinear
   FUN_8006181c(param_1,param_2);
 
   // force to jump when hit the ground,
@@ -34659,7 +34659,7 @@ void FUN_800680d0(undefined4 param_1,int param_2)
 }
 
 
-// Player_Blasted_PhysAngular
+// VehPtr_Blasted_PhysAngular
 // param1 = thread, param2 = driver
 void FUN_80068150(undefined4 param_1,int param_2)
 
@@ -34703,7 +34703,7 @@ void FUN_80068150(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Blasted_Animate
+// VehPtr_Blasted_Animate
 // param1 = thread, param2 = driver
 void FUN_80068244(undefined4 param_1,int param_2)
 
@@ -34739,7 +34739,7 @@ void FUN_80068244(undefined4 param_1,int param_2)
   return;
 }
 
-// Player_Blasted_Init
+// VehPtr_Blasted_Init
 // param1 = thread, param2 = driver
 void FUN_800682a4(undefined4 param_1,int param_2)
 
@@ -34786,10 +34786,10 @@ void FUN_800682a4(undefined4 param_1,int param_2)
   // randomly play blasted backwards
   *(byte *)(param_2 + 0x580) = bVar1 & 4;
 
-  // Player_Blasted_Update
+  // VehPtr_Blasted_Update
   *(undefined4 *)(param_2 + 0x58) = 0x8006809c;
 
-  // Player_Blasted_PhysLinear
+  // VehPtr_Blasted_PhysLinear
   *(undefined4 *)(param_2 + 0x5c) = 0x800680d0;
 
   *(undefined4 *)(param_2 + 0x60) = 0x80062a2c; // OnAudio
@@ -34801,7 +34801,7 @@ void FUN_800682a4(undefined4 param_1,int param_2)
   *(undefined4 *)(param_2 + 0x78) = 0x80060630; // JumpAndFriction
   *(undefined4 *)(param_2 + 0x7c) = 0x8005ee34; // OnRender -- move position to instance matrix
 
-  // Player_Blasted_Animate
+  // VehPtr_Blasted_Animate
   *(undefined4 *)(param_2 + 0x80) = 0x80068244;
 
   // Erase OnInit, now that it has executed
@@ -34824,7 +34824,7 @@ void FUN_800682a4(undefined4 param_1,int param_2)
 }
 
 
-// Player_Warp_MoveDustPuff
+// VehPtr_Warp_MoveDustPuff
 // "dustpuff" is really lightning under the player,
 // without this, lightning is half-stuck under the player
 void FUN_800683f4(short *param_1,int param_2,int param_3,short *param_4)
@@ -34871,10 +34871,10 @@ void FUN_800683f4(short *param_1,int param_2,int param_3,short *param_4)
   if (2 < param_2) {
     iVar5 = param_3 * 0xc00 >> 0xc;
 
-	// Player_Warp_MoveDustPuff
+	// VehPtr_Warp_MoveDustPuff
     FUN_800683f4(param_1,iVar4,iVar5,param_4);
 
-	// Player_Warp_MoveDustPuff
+	// VehPtr_Warp_MoveDustPuff
     FUN_800683f4(psVar6,iVar4,iVar5,param_4);
   }
   return;
@@ -35024,7 +35024,7 @@ void FUN_80068644(int param_1,int param_2)
 
     uVar11 = 0x10;
 
-	// Player_Warp_MoveDustPuff
+	// VehPtr_Warp_MoveDustPuff
 	FUN_800683f4(&DAT_1f800108,0x10,0x100,&DAT_1f8001c0);
 
     iVar18 = 1;
@@ -35132,7 +35132,7 @@ void FUN_80068644(int param_1,int param_2)
 }
 
 
-// Player_Warp_PhysAngular
+// VehPtr_Warp_PhysAngular
 // param1 = thread, param2 = driver
 // animate rotation and scale in warppad
 void FUN_80068be8(undefined4 param_1,int param_2)
@@ -35264,7 +35264,7 @@ LAB_80068db0:
 }
 
 
-// Player_Warp_Init
+// VehPtr_Warp_Init
 // param1 = thread, param2 = driver
 void FUN_80068e04(undefined4 param_1,int param_2)
 

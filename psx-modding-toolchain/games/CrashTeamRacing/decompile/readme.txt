@@ -24,7 +24,7 @@ Functions:
 -UI_Lerp2D_HUD
 -UI_Lerp2D_Linear
 -Map_DrawMap
--Player_Drifting_PhysAngular
+-VehPtr_Drifting_PhysAngular
 -Turbo_ThTick
 -Turbo_Increment
 -MM_Characters_boolIsInvalid

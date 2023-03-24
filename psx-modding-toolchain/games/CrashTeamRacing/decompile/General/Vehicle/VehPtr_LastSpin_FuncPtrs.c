@@ -2,11 +2,11 @@
 
 // budget 0x228 (552 bytes)
 
-void DECOMP_Player_Crashing_PhysAngular(struct Thread* t, struct Driver* d);
-void Player_StopSpin_Init(struct Thread* t, struct Driver* d);
-void Player_Driving_PhysLinear(struct Thread* t, struct Driver* d);
+void DECOMP_VehPtr_Crashing_PhysAngular(struct Thread* t, struct Driver* d);
+void VehPtr_StopSpin_Init(struct Thread* t, struct Driver* d);
+void VehPtr_Driving_PhysLinear(struct Thread* t, struct Driver* d);
 
-void DECOMP_Player_LastSpin_Update(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_LastSpin_Update(struct Thread* t, struct Driver* d)
 {
 	int driftAngle = d->unknownDimension2Curr;
 	
@@ -17,13 +17,13 @@ void DECOMP_Player_LastSpin_Update(struct Thread* t, struct Driver* d)
 		)
 	{
 		// stop spin
-		Player_StopSpin_Init(t, d);
+		VehPtr_StopSpin_Init(t, d);
 	}
 }
 
-void DECOMP_Player_LastSpin_PhysLinear(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_LastSpin_PhysLinear(struct Thread* t, struct Driver* d)
 {
-	Player_Driving_PhysLinear(t,d);
+	VehPtr_Driving_PhysLinear(t,d);
 	
 	// baseSpeed and fireSpeed
 	// set both "shorts" in one "int"
@@ -32,7 +32,7 @@ void DECOMP_Player_LastSpin_PhysLinear(struct Thread* t, struct Driver* d)
 	d->actionsFlagSet |= 0x4008;
 }
 
-void DECOMP_Player_LastSpin_PhysAngular(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_LastSpin_PhysAngular(struct Thread* t, struct Driver* d)
 {
 	int unknownDimension2Curr;
 	unknownDimension2Curr = d->unknownDimension2Curr;
@@ -99,5 +99,5 @@ void DECOMP_Player_LastSpin_PhysAngular(struct Thread* t, struct Driver* d)
 		}
 	}
 	
-	DECOMP_Player_Crashing_PhysAngular(t, d);
+	DECOMP_VehPtr_Crashing_PhysAngular(t, d);
 }

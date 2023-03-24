@@ -1,8 +1,8 @@
 #include <common.h>
 
 void ConvertRotToMatrix(MATRIX* m, short* rot);
-void Player_Driving_Init(struct Thread* t, struct Driver* d);
-void Player_MaskGrab_Init(struct Thread* t, struct Driver* d);
+void VehPtr_Driving_Init(struct Thread* t, struct Driver* d);
+void VehPtr_MaskGrab_Init(struct Thread* t, struct Driver* d);
 
 #define NUM_PLAYERS 4
 
@@ -198,7 +198,7 @@ void RunUpdateHook()
 		{
 			k1->freecam_enable = 0;
 			sdata->gGT->cameraDC[0].tileView = &sdata->gGT->tileView[0];
-			Player_Driving_Init(0, sdata->gGT->drivers[0]);
+			VehPtr_Driving_Init(0, sdata->gGT->drivers[0]);
 		}
 
 		else
@@ -226,7 +226,7 @@ void RunUpdateHook()
 	{
 		if(sdata->gGT->drivers[0]->kartState != 5)
 		{
-			Player_MaskGrab_Init(sdata->gGT->drivers[0]->instSelf->thread, sdata->gGT->drivers[0]);
+			VehPtr_MaskGrab_Init(sdata->gGT->drivers[0]->instSelf->thread, sdata->gGT->drivers[0]);
 		}
 	}
 }
