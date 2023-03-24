@@ -11,7 +11,7 @@ void COLL_StartSearch_Player();
 void Player_JumpAndFriction();
 void OnRender();
 void OnAnimate_LastSpin();
-void SpawnParticle_DriverMain();
+void VehParticle_DriverMain();
 
 void* PlayerLastSpinFuncTable[0xD] =
 {
@@ -27,7 +27,7 @@ void* PlayerLastSpinFuncTable[0xD] =
 	Player_JumpAndFriction,
 	OnRender,
 	OnAnimate_LastSpin,
-	SpawnParticle_DriverMain,
+	VehParticle_DriverMain,
 };
 
 void DECOMP_Player_LastSpin_Init(struct Thread* t, struct Driver* d)

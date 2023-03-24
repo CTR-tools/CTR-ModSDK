@@ -898,11 +898,11 @@
 80057df4 Player_SteerAccel
 80057e58 FastSqrt
 
-80057ee8 SpawnParticle_Exhaust
-8005812c SpawnParticle_Sparks_Ground
-80058340 SpawnParticle_Terrain_Ground
-80058568 SpawnParticle_Sparks_Wall
-80058800 SpawnParticle_DriverMain
+80057ee8 VehParticle_Exhaust
+8005812c VehParticle_Sparks_Ground
+80058340 VehParticle_Terrain_Ground
+80058568 VehParticle_Sparks_Wall
+80058800 VehParticle_DriverMain
 
 8005990c Turbo_Audio
 800599e4 Turbo_Increment

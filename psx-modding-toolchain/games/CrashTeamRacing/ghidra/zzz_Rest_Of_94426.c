@@ -20391,7 +20391,7 @@ uint FUN_80059070(uint param_1,uint param_2)
 }
 
 
-// SpawnParticle_Exhaust
+// VehParticle_Exhaust
 int FUN_80059100(int param_1,int *param_2,int *param_3)
 
 {
@@ -20512,7 +20512,7 @@ int FUN_80059100(int param_1,int *param_2,int *param_3)
 }
 
 
-// SpawnParticle_Sparks_Ground
+// VehParticle_Sparks_Ground
 void FUN_80059344(int param_1,undefined4 param_2)
 
 {
@@ -20596,7 +20596,7 @@ void FUN_80059344(int param_1,undefined4 param_2)
 }
 
 
-// SpawnParticle_Terrain_Ground
+// VehParticle_Terrain_Ground
 void FUN_80059558(int param_1,undefined4 param_2)
 
 {
@@ -20697,7 +20697,7 @@ LAB_80059674:
   return;
 }
 
-// SpawnParticle_Sparks_Wall
+// VehParticle_Sparks_Wall
 // param_1 is driver struct
 // param_2 is always 0x800896c8, particle data for sparks
 void FUN_80059780(int param_1,undefined4 param_2)
@@ -20826,7 +20826,7 @@ LAB_80059818:
 }
 
 
-// SpawnParticle_DriverMain (calls all other SpawnParticle functions)
+// VehParticle_DriverMain (calls all other SpawnParticle functions)
 void FUN_80059a18(int param_1,int param_2)
 
 {
@@ -21060,7 +21060,7 @@ void FUN_80059a18(int param_1,int param_2)
 			gte_SetRotMatrix(r0);
 			gte_SetTransMatrix(r0);
 
-			// SpawnParticle_Sparks_Ground
+			// VehParticle_Sparks_Ground
             FUN_80059344(param_2,&DAT_80089584);
           }
         }
@@ -21084,7 +21084,7 @@ void FUN_80059a18(int param_1,int param_2)
           iVar20 = *(int *)(iVar22 + 0x18);
         }
 
-		// SpawnParticle_Terrain_Ground
+		// VehParticle_Terrain_Ground
 		FUN_80059558(param_2,iVar20);
       }
 
@@ -21101,7 +21101,7 @@ void FUN_80059a18(int param_1,int param_2)
 		gte_SetRotMatrix(r0);
 		gte_SetTransMatrix(r0);
 
-		// SpawnParticle_Sparks_Wall
+		// VehParticle_Sparks_Wall
 		FUN_80059780(param_2,&DAT_800896c8);
 
 		uVar21 = 0x14;
@@ -21648,7 +21648,7 @@ LAB_8005a868:
   local_4c = getCopReg(2,0x1a);
   local_48 = getCopReg(2,0x1b);
 
-  // SpawnParticle_Exhaust
+  // VehParticle_Exhaust
   FUN_80059100(param_2,&local_50,&local_40);
 
   // ldv0
@@ -21663,7 +21663,7 @@ LAB_8005a868:
   local_4c = getCopReg(2,0x1a);
   local_48 = getCopReg(2,0x1b);
 
-  // SpawnParticle_Exhaust
+  // VehParticle_Exhaust
   FUN_80059100(param_2,&local_50,&local_40);
 
 LAB_8005a9d8:
@@ -29188,7 +29188,7 @@ void FUN_80062b74(undefined4 param_1,int param_2)
 	*(undefined2 *)(param_2 + 0x40a) = 0;
     *(undefined4 *)(param_2 + 0x54) = 0;
 
-	// SpawnParticle_DriverMain
+	// VehParticle_DriverMain
     *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
   }
   return;
@@ -29257,7 +29257,7 @@ void FUN_80062d04(undefined4 param_1,int param_2)
     *(undefined4 *)(param_2 + 0x54) = 0;
     *(undefined4 *)(param_2 + 0x58) = 0;
 
-	// SpawnParticle_DriverMain
+	// VehParticle_DriverMain
     *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
   }
   return;
@@ -29363,7 +29363,7 @@ void FUN_80062e94(undefined4 param_1,int param_2)
 
   *(undefined4 *)(param_2 + 0x54) = 0;
 
-	// SpawnParticle_DriverMain
+	// VehParticle_DriverMain
   *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
 
   //turn off 29th flag of actions flag set (means players dont collide anymore)
@@ -30082,7 +30082,7 @@ void FUN_80063934(undefined4 param_1,int param_2)
   *(undefined2 *)(param_2 + 0x3ec) = 0;
   *(undefined4 *)(param_2 + 0x58) = 0;
 
-  // SpawnParticle_DriverMain
+  // VehParticle_DriverMain
   *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
 
   //Turbo meter space left to fill = Length of Turbo meter << 5
@@ -30270,7 +30270,7 @@ void FUN_80063bd4(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x80) = 0x80063b2c;
 
 
-  // SpawnParticle_DriverMain
+  // VehParticle_DriverMain
   *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
 
   return;
@@ -30473,7 +30473,7 @@ void FUN_80063ec0(undefined4 param_1,int param_2)
 
   *(undefined4 *)(param_2 + 0x58) = 0;
 
-  // SpawnParticle_DriverMain
+  // VehParticle_DriverMain
   *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
 
   if (*(char *)(param_2 + 0x4b) < '\x01') {
@@ -30693,7 +30693,7 @@ void FUN_80064254(undefined4 param_1,int param_2)
 
   *(undefined4 *)(param_2 + 0x54) = 0;
 
-  // SpawnParticle_DriverMain
+  // VehParticle_DriverMain
   *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
 
   return;
@@ -30879,7 +30879,7 @@ void FUN_800644d0(undefined4 param_1,int param_2)
 
   *(undefined4 *)(param_2 + 0x54) = 0;
 
-  // SpawnParticle_DriverMain
+  // VehParticle_DriverMain
   *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
 
   return;
@@ -33833,7 +33833,7 @@ void FUN_800671b0(int param_1,int param_2)
 
   *(undefined4 *)(param_2 + 0x54) = 0;
 
-  // SpawnParticle_DriverMain
+  // VehParticle_DriverMain
   *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
 
   return;
@@ -34583,7 +34583,7 @@ void FUN_80067f4c(undefined4 param_1,int param_2)
   // Player_EngineRevving_Animate
   *(undefined4 *)(param_2 + 0x80) = 0x80067b7c;
 
-  // SpawnParticle_DriverMain
+  // VehParticle_DriverMain
   *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
 
   *(undefined2 *)(param_2 + 0x58c) = 0;
@@ -34807,7 +34807,7 @@ void FUN_800682a4(undefined4 param_1,int param_2)
   // Erase OnInit, now that it has executed
   *(undefined4 *)(param_2 + 0x54) = 0;
 
-  // SpawnParticle_DriverMain
+  // VehParticle_DriverMain
   *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
 
   if (*(char *)(param_2 + 0x4b) < '\x01') {
@@ -35332,7 +35332,7 @@ void FUN_80068e04(undefined4 param_1,int param_2)
     *(undefined4 *)(param_2 + 0x74) = 0; // OnCollide_QuadblockNear
     *(undefined4 *)(param_2 + 0x78) = 0; // cant move anymore
 
-	// SpawnParticle_DriverMain
+	// VehParticle_DriverMain
     *(undefined4 *)(param_2 + 0x84) = 0x80059a18;
 
 	// driver is warping

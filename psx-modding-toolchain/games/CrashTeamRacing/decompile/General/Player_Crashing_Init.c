@@ -10,7 +10,7 @@ void COLL_StartSearch_Player();
 void Player_JumpAndFriction();
 void OnRender();
 void DECOMP_Player_Crashing_Animate();
-void SpawnParticle_DriverMain();
+void VehParticle_DriverMain();
 
 // budget, 0x120 bytes, 288 bytes
 
@@ -28,7 +28,7 @@ void* PlayerCrashingFuncTable[0xD] =
 	Player_JumpAndFriction,
 	OnRender,
 	DECOMP_Player_Crashing_Animate,
-	SpawnParticle_DriverMain,
+	VehParticle_DriverMain,
 };
 
 void DECOMP_Player_Crashing_Init(struct Thread* t, struct Driver* d)

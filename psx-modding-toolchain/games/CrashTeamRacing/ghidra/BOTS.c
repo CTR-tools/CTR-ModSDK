@@ -955,7 +955,7 @@ void FUN_8001372c(int param_1)
 	// OnAnimate_Driving
     FUN_8005b178(param_1,iVar2);
 
-	// SpawnParticle_DriverMain
+	// VehParticle_DriverMain
     FUN_80059a18(param_1,iVar2);
   }
 
@@ -3450,7 +3450,7 @@ LAB_8001686c:
 
   if ((*(uint *)(iVar17 + 0x5b0) & 4) == 0)
   {
-	// SpawnParticle_DriverMain
+	// VehParticle_DriverMain
     FUN_80059a18(param_1,iVar17);
   }
 

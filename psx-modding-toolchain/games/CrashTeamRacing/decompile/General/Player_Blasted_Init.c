@@ -16,7 +16,7 @@ void COLL_StartSearch_Player(struct Thread* thread, struct Driver* driver);
 void Player_JumpAndFriction(struct Thread* thread, struct Driver* driver);
 void OnRender(struct Thread* thread, struct Driver* driver);
 void DECOMP_Player_Blasted_Animate(struct Thread* thread, struct Driver* driver);
-void SpawnParticle_DriverMain(struct Thread* thread, struct Driver* driver);
+void VehParticle_DriverMain(struct Thread* thread, struct Driver* driver);
 void GAMEPAD_Vib_1(struct Driver* driver, char param_2, u_short param_3);
 
 void* PlayerBlastedFuncTable[0xD] =
@@ -33,7 +33,7 @@ void* PlayerBlastedFuncTable[0xD] =
 	Player_JumpAndFriction,
 	OnRender,
 	DECOMP_Player_Blasted_Animate,
-	SpawnParticle_DriverMain
+	VehParticle_DriverMain
 };
 
 void Player_Blasted_Init(struct Thread *thread, struct Driver *driver)

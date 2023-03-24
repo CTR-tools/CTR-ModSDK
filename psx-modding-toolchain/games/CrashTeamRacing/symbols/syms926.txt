@@ -854,11 +854,11 @@
 80059070 FastSqrt
 
 // VehParticle
-80059100 SpawnParticle_Exhaust
-80059344 SpawnParticle_Sparks_Ground
-80059558 SpawnParticle_Terrain_Ground
-80059780 SpawnParticle_Sparks_Wall
-80059a18 SpawnParticle_DriverMain
+80059100 VehParticle_Exhaust
+80059344 VehParticle_Sparks_Ground
+80059558 VehParticle_Terrain_Ground
+80059780 VehParticle_Sparks_Wall
+80059a18 VehParticle_DriverMain
 
 // VehTurbo
 8005ab24 Turbo_Audio

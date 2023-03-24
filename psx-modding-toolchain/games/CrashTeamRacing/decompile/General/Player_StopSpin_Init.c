@@ -10,7 +10,7 @@ void COLL_StartSearch_Player();
 void Player_JumpAndFriction();
 void OnRender();
 void DECOMP_Player_StopSpin_Animate();
-void SpawnParticle_DriverMain();
+void VehParticle_DriverMain();
 
 void* PlayerStopSpinFuncTable[0xD] =
 {
@@ -26,7 +26,7 @@ void* PlayerStopSpinFuncTable[0xD] =
 	Player_JumpAndFriction,
 	OnRender,
 	DECOMP_Player_StopSpin_Animate,
-	SpawnParticle_DriverMain,
+	VehParticle_DriverMain,
 };
 
 void DECOMP_Player_StopSpin_Init(struct Thread* t, struct Driver* d)

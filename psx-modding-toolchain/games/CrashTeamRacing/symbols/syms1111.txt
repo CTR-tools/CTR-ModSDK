@@ -902,11 +902,11 @@
 8005bd94 Player_SteerAccel
 8005bdf8 FastSqrt
 
-8005be88 SpawnParticle_Exhaust
-8005c0cc SpawnParticle_Sparks_Ground
-8005c2e0 SpawnParticle_Terrain_Ground
-8005c508 SpawnParticle_Sparks_Wall
-8005c7a0 SpawnParticle_DriverMain
+8005be88 VehParticle_Exhaust
+8005c0cc VehParticle_Sparks_Ground
+8005c2e0 VehParticle_Terrain_Ground
+8005c508 VehParticle_Sparks_Wall
+8005c7a0 VehParticle_DriverMain
 
 8005d8ac Turbo_Audio
 8005d984 Turbo_Increment
