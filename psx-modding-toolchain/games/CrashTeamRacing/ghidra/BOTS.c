@@ -955,7 +955,7 @@ void FUN_8001372c(int param_1)
 	// OnAnimate_Driving
     FUN_8005b178(param_1,iVar2);
 
-	// SpawnParticle_DriverMain
+	// VehParticle_DriverMain
     FUN_80059a18(param_1,iVar2);
   }
 
@@ -3450,7 +3450,7 @@ LAB_8001686c:
 
   if ((*(uint *)(iVar17 + 0x5b0) & 4) == 0)
   {
-	// SpawnParticle_DriverMain
+	// VehParticle_DriverMain
     FUN_80059a18(param_1,iVar17);
   }
 
@@ -3857,7 +3857,7 @@ void FUN_8001702c(int param_1)
 
   DAT_8008d698 = 0;
 
-  // Driver_TeleportSelf (startline)
+  // VehInit_TeleportSelf (startline)
   FUN_80057c8c(param_1,3,0);
 
   // get position where driver should spawn

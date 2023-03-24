@@ -1610,7 +1610,7 @@ void FUN_80035e20(short param_1,undefined2 param_2)
 
 	// 8008d2ac[0x93b] + 0x54
 	// 8009900C + 0x54
-	// driver funcPtrInit, Player_Freeze_Init
+	// driver funcPtrInit, VehPtr_Freeze_Init
     *(undefined **)(puGp00000340[0x93b] + 0x54) = &FUN_80062d04;
 
 	// 8008d2cc
@@ -6998,7 +6998,7 @@ void FUN_8003aee8(uint *param_1,int param_2)
     FUN_8002c8a8(0,0,1);
   }
 
-  // Driver_TeleportAll
+  // VehInit_TeleportAll
   FUN_80058898(param_1,2);
   return;
 }
@@ -8834,7 +8834,7 @@ undefined4 main(void)
 	  // RenderBucket_InitDepthGTE
       FUN_8006ae74();
 
-	  // BakeMathGTE
+	  // Vector_BakeMatrixTable
       FUN_80057884();
 
 	  // structure to game modes, cheats, etc
@@ -8996,7 +8996,7 @@ LAB_8003ca68:
 	  // set sound to unpaused
       DAT_8008d8a4 = 0;
 
-	  // Init_EngineAudio_AllPlayers
+	  // VehInit_EngineAudio_AllPlayers
       FUN_80058ba4();
 
 	  // This is in OnlineCTR

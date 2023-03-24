@@ -213,7 +213,7 @@ void FUN_800abdfc(int param_1,int param_2,short param_3,int param_4,int param_5,
       }
     }
 	
-	// SpecularLight_Spinning3D
+	// Vector_SpecLightSpin3D
     FUN_8005741c(param_1,param_2 + 0x28,iVar3);
   }
 LAB_800abe94:
@@ -611,7 +611,7 @@ LAB_800ac518:
 		// relic
         if (sVar2 == 0x61) 
 		{
-		  // SpecularLight_Spinning3D
+		  // Vector_SpecLightSpin3D
           FUN_8005741c(iVar4,piVar13,piVar19 + 0x16);
           return;
         }
@@ -619,7 +619,7 @@ LAB_800ac518:
 		// token
         if (sVar2 == 0x7d) 
 		{
-		  // SpecularLight_Spinning3D
+		  // Vector_SpecLightSpin3D
           FUN_8005741c(iVar4,piVar13,piVar19 + 0x18);
           return;
         }
@@ -630,7 +630,7 @@ LAB_800ac518:
         }
       }
 	  
-	  // SpecularLight_Spinning3D
+	  // Vector_SpecLightSpin3D
       FUN_8005741c(iVar4,piVar13,piVar19 + 0x14);
       return;
     }
@@ -752,7 +752,7 @@ LAB_800ac860:
 	  // increase frames spent warping
 	  *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 	  
-	  // Player_Warp_Init
+	  // VehPtr_Warp_Init
       *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 	  
 	  // If [???] then do not start loading new level yet
@@ -782,7 +782,7 @@ LAB_800ac860:
 		// increase frames warping
         *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 		
-		// Player_Warp_Init
+		// VehPtr_Warp_Init
         *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 		
 		// If [???] then do not start loading new level yet
@@ -920,7 +920,7 @@ LAB_800ac860:
 			  // waiting for aku hint
               *(undefined2 *)(piVar19 + 0x1d) = 1;
 			  
-			  // Player_Warp_Init
+			  // VehPtr_Warp_Init
               *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 			  
 			  // Do not start loading new level yet
@@ -963,7 +963,7 @@ LAB_800ace34:
 		// increment frames warping
 		*(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 		
-		// Player_Warp_Init
+		// VehPtr_Warp_Init
         *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 		
 		// If [???] then do not start loading new level yet
@@ -987,7 +987,7 @@ LAB_800ace34:
 	// increment frames warping
 	*(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 	
-	// Player_Warp_Init
+	// VehPtr_Warp_Init
     *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
     
 	puVar12 = PTR_DAT_8008d2ac;
@@ -3653,7 +3653,7 @@ joined_r0x800b06ec:
 	
 	// If you are here, game must not be paused
 	
-	// Player_Freeze_Init
+	// VehPtr_Freeze_Init
     *(undefined4 *)(iVar17 + 0x54) = 0x80062d04;
     
 	*(ushort *)(piVar14 + 7) = *(ushort *)(piVar14 + 7) | 0x10;
@@ -3818,7 +3818,7 @@ joined_r0x800b06ec:
                      ((iVar7 >> 5) * iVar13 >> 0xc);
               }
 			  
-			  // SpecularLight_Spinning3D
+			  // Vector_SpecLightSpin3D
               FUN_8005741c(piVar9[1],piVar16,&local_60);
 			  
 			   // convert 3 rotation shorts into rotation matrix
@@ -3950,7 +3950,7 @@ joined_r0x800b06ec:
       goto LAB_800b0404;
     }
     
-	// Player_Driving_Init
+	// VehPtr_Driving_Init
 	*(undefined4 *)(iVar17 + 0x54) = 0x80062b74;
 	
     uVar3 = *(ushort *)(piVar14 + 7) | 4;
@@ -4016,7 +4016,7 @@ LAB_800b0404:
     }
     *(uint *)(local_30 + 0x70) = *(uint *)(local_30 + 0x70) | 0x400;
 	
-	// Player_Driving_Init
+	// VehPtr_Driving_Init
     *(undefined4 *)(iVar17 + 0x54) = 0x80062b74;
     
 	*(ushort *)(piVar14 + 7) = *(ushort *)(piVar14 + 7) & 0xffef | 4;
@@ -5878,7 +5878,7 @@ void FUN_800b1f78(int param_1,ushort param_2)
         local_d6 = *(undefined2 *)(&DAT_800b506e + iVar9);
         local_d4 = *(undefined2 *)(&DAT_800b5070 + iVar9);
 		
-		// SpecularLight_Spinning2D
+		// Vector_SpecLightSpin2D
         FUN_800572d0(iVar11,psVar16 + 2,&local_d8);
       }
 	  
@@ -6537,7 +6537,7 @@ void FUN_800b3dd8(short param_1,uint param_2)
   // make a copy of hint index
   DAT_800b5558 = param_1;
   
-  // Player_Freeze_Init
+  // VehPtr_Freeze_Init
   *(undefined4 *)(iVar5 + 0x54) = 0x80062d04;
   
   // 0x8fba4 is where the adventure profile (currently loaded) begins

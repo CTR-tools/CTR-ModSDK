@@ -5,38 +5,38 @@ void RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
 int Instance_GetNumAnimFrames(struct Driver* driver, int param_2);
 int Instance_GetStartFrame(int midpoint, int numFrames);
 int MixRNG_Scramble();
-void DECOMP_Player_Blasted_Update(struct Thread* thread, struct Driver* driver);
-void DECOMP_Player_Blasted_PhysLinear(struct Thread* thread, struct Driver* driver);
-void Player_Driving_Audio(struct Thread* thread, struct Driver* driver);
-void DECOMP_Player_Blasted_PhysAngular(struct Thread* thread, struct Driver* driver);
+void DECOMP_VehPtr_Blasted_Update(struct Thread* thread, struct Driver* driver);
+void DECOMP_VehPtr_Blasted_PhysLinear(struct Thread* thread, struct Driver* driver);
+void VehPtr_Driving_Audio(struct Thread* thread, struct Driver* driver);
+void DECOMP_VehPtr_Blasted_PhysAngular(struct Thread* thread, struct Driver* driver);
 void OnApplyForces(struct Thread* thread, struct Driver* driver);
 void COLL_StartSearch_NearPlayer(struct Thread* thread, struct Driver* driver);
 void OnCollide_Drivers(struct Thread* thread, struct Driver* driver);
 void COLL_StartSearch_Player(struct Thread* thread, struct Driver* driver);
 void Player_JumpAndFriction(struct Thread* thread, struct Driver* driver);
 void OnRender(struct Thread* thread, struct Driver* driver);
-void DECOMP_Player_Blasted_Animate(struct Thread* thread, struct Driver* driver);
-void SpawnParticle_DriverMain(struct Thread* thread, struct Driver* driver);
+void DECOMP_VehPtr_Blasted_Animate(struct Thread* thread, struct Driver* driver);
+void VehParticle_DriverMain(struct Thread* thread, struct Driver* driver);
 void GAMEPAD_Vib_1(struct Driver* driver, char param_2, u_short param_3);
 
 void* PlayerBlastedFuncTable[0xD] =
 {
 	(void *)0x0,
-	DECOMP_Player_Blasted_Update,
-	DECOMP_Player_Blasted_PhysLinear,
-	Player_Driving_Audio,
-	DECOMP_Player_Blasted_PhysAngular,
+	DECOMP_VehPtr_Blasted_Update,
+	DECOMP_VehPtr_Blasted_PhysLinear,
+	VehPtr_Driving_Audio,
+	DECOMP_VehPtr_Blasted_PhysAngular,
 	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
 	COLL_StartSearch_Player,
 	Player_JumpAndFriction,
 	OnRender,
-	DECOMP_Player_Blasted_Animate,
-	SpawnParticle_DriverMain
+	DECOMP_VehPtr_Blasted_Animate,
+	VehParticle_DriverMain
 };
 
-void Player_Blasted_Init(struct Thread *thread, struct Driver *driver)
+void VehPtr_Blasted_Init(struct Thread *thread, struct Driver *driver)
 {
 	int i;
 	u_int IsOpen_RacingOrBattle;

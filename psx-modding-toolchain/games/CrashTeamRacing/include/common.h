@@ -1905,9 +1905,9 @@ struct Driver
 	// 0x4B
 	char simpTurnState;
 	// 0x4C
-	unsigned char animationIndex; // copy from Instance
+	unsigned char matrixArray;
 	// 0x4D
-	unsigned char animationFrame; // copy from Instance
+	unsigned char matrixIndex;
 
 	#if BUILD >= EurRetail
 	short compilerPadding_0x4E;
@@ -2188,29 +2188,29 @@ struct Driver
 	short japanTurboUnknown;
 
 	// 0x3BC
-	// in Player_Driving_PhysLinear
+	// in VehPtr_Driving_PhysLinear
 	short unkSpeedValue1;
 
 	// 0x3BE
-	// in Player_Driving_PhysLinear
+	// in VehPtr_Driving_PhysLinear
 	short unkSpeedValue2;
 
 	// 0x3C0
-	// in Player_Driving_PhysLinear
+	// in VehPtr_Driving_PhysLinear
 	short mashingXMakesItBig;
 
 	// 0x3C2
-	// in Player_Driving_PhysLinear
+	// in VehPtr_Driving_PhysLinear
 	short mashXUnknown;
 
 	// 0x3C4
-	// in Player_Driving_PhysLinear
+	// in VehPtr_Driving_PhysLinear
 	short unknowndriverBaseSpeed;
 
 	// 0x3C6 0x3C8
-	// in Player_Driving_PhysLinear, 
+	// in VehPtr_Driving_PhysLinear, 
 	// and FUN_8005fb4c, 
-	// and Player_LastSpin_Update
+	// and VehPtr_LastSpin_Update
 	short unknownDimension2Curr;
 	short unknownDimension2Prev;
 	
@@ -2454,8 +2454,8 @@ struct Driver
 	char const_SteerVel_DriftSwitchWay;
 	char const_SteerVel_DriftStandard;
 	
-	// all Player_Drifting_PhysAngular
-	// or Player_Drifting_Finalize
+	// all VehPtr_Drifting_PhysAngular
+	// or VehPtr_Drifting_Finalize
 	char unk460; // 0x2A
 	char unk461; // 0x2B
 	char unk462; // 0x2C
@@ -3623,7 +3623,7 @@ struct TileView
 	// 0x48 (built in TileView_SetMatrixVP, never used)
 	MATRIX matrix_CameraTranspose;
 
-	// 0x68 (GTE_AudioLR_Inst, SpecularLight_Spinning3D)
+	// 0x68 (GTE_AudioLR_Inst, Vector_SpecLightSpin3D)
 	MATRIX matrix_Camera;
 
 	// 0x88 (built in TileView_Init, never used)
@@ -4556,7 +4556,7 @@ enum GameMode1
 enum GameMode2
 {
 	// & 1 - spawn outside boss door
-	// & 4 - can't move (see Player_Driving_PhysLinear)
+	// & 4 - can't move (see VehPtr_Driving_PhysLinear)
   
 	// & 8 - token race
 	TOKEN_RACE = 8,
@@ -4578,7 +4578,7 @@ enum GameMode2
 	
 	// & 0x1000 - FIRST_TIME_WIN_CUP
 	// & 0x2000 - FIRST_TIME_UNLOCK_BATTLE_MAP
-	// & 0x4000 - can't move (see Player_Driving_PhysLinear)
+	// & 0x4000 - can't move (see VehPtr_Driving_PhysLinear)
   
 	CHEAT_INVISIBLE	= 0x8000,
 	CHEAT_ENGINE	= 0x10000,
@@ -8365,7 +8365,7 @@ struct Data
 		short scale;
 
 		// 0x4
-		// parameter to SpecularLight_Spinning3D
+		// parameter to Vector_SpecLightSpin3D
 		short vec3_specular_inverted[3];
 
 		// 0xA
@@ -8687,17 +8687,42 @@ struct Data
 	short characterIDs[8];
 
 	// 0x80086e94
-	// all for FUN_80057884,
-	// used for "blasted" data, "crashed" data,
-	// all baked data at runtime for some reason
-	char betweenIDsAndMeta[0x1100];
+	// bakedGteMath[0] is blank,
+	// all the rest correspond
+	MATRIX matArr01[0xB]; // hit ground, pop wheelie
+	MATRIX matArr02[0x1]; // in wheelie
+	MATRIX matArr03[0x9]; // from wheelie, back to ground
+	MATRIX matArr04[0x10]; // crashing, and falling
+	MATRIX matArr05[0xF]; // squish, pop back up
+	MATRIX matArr06[0x1B]; // blasted
+	
+	// jump animations
+	MATRIX matArr07[0x4]; // Crash Bandicoot jump
+	MATRIX matArr08[0x4]; // cortex
+	MATRIX matArr09[0x4]; // tiny
+	MATRIX matArr0A[0x4];
+	MATRIX matArr0B[0x4]; // ...
+	MATRIX matArr0C[0x4];
+	MATRIX matArr0D[0x4];
+	MATRIX matArr0E[0x4];
+	MATRIX matArr0F[0x4];
+	MATRIX matArr10[0x4];
+	MATRIX matArr11[0x4];
+	MATRIX matArr12[0x4];
+	MATRIX matArr13[0x4]; // N Tropy jump
 
-	// 0x80087ef4 - start of pointer table,
-	// which points everywhere 0x80086e94 - 0x80087e74
+	// ^^^
+	// (0xD) penta uses ripper roo
+	// (0xE) fake crash uses crash bandicoot
+	// (0xF) oxide uses crash bandicoot
 
-	// 0x80087EFC - pointer to 0x80086e94
-	// 0x80087f28 - number of frames blasted
-
+	// 0x80087EF4 - pointer to 0x80086e94
+	struct
+	{
+		void* physEntry;
+		int numEntries
+	} bakedGteMath[0x14];
+	
 	// 0x80087f94
 	struct
 	{

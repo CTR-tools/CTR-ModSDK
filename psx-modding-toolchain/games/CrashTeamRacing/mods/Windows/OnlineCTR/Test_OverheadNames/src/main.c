@@ -1,8 +1,8 @@
 #include <common.h>
 
 void LOAD_Robots1P(int characterP1);
-void Driver_TeleportAll(struct GameTracker* gGT, int flag);
-struct Driver* Init_Player(int id);
+void VehInit_TeleportAll(struct GameTracker* gGT, int flag);
+struct Driver* VehInit_Player(int id);
 
 #define NUM_PLAYERS 4
 
@@ -65,11 +65,11 @@ void RunInitHook()
 	for(i = 1; i < NUM_PLAYERS; i++)
 	{
 		// player[0] already exists
-		drivers[i] = Init_Player(i);
+		drivers[i] = VehInit_Player(i);
 	}
 
 	// send to start line (corrects driver animations)
-	Driver_TeleportAll(sdata->gGT, 2);
+	VehInit_TeleportAll(sdata->gGT, 2);
 
 	// move drivers that are not P1
 	for(i = 1; i < NUM_PLAYERS; i++)

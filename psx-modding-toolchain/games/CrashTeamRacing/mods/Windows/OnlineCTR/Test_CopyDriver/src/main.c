@@ -11,7 +11,7 @@
 
 void BOTS_Driver_Init(int slot);
 void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
-void SpawnParticle_DriverMain(struct Thread* t, struct Driver* d);
+void VehParticle_DriverMain(struct Thread* t, struct Driver* d);
 
 void RunInitHook(void)
 {
@@ -141,7 +141,7 @@ void RunUpdateHook()
 
 	// this is a PLAYER function being run on a ROBOTCAR,
 	// how do ordinary AIs record skidmark buffer without this?
-	SpawnParticle_DriverMain(
+	VehParticle_DriverMain(
 		sdata->gGT->drivers[1]->instSelf->thread,
 		sdata->gGT->drivers[1]);
 }

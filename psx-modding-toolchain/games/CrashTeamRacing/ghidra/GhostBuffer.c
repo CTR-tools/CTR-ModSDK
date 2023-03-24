@@ -674,7 +674,7 @@ void FUN_80027838(void)
 	  // initialize tire data
       FUN_80058c4c();
 
-	  // Driver_SetConsts(driver*), based on driver class
+	  // VehInit_SetConsts(driver*), based on driver class
       FUN_80058a60(piVar7);
 
 	  // loop counter

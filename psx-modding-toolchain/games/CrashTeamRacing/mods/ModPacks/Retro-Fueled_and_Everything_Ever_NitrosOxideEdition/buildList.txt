@@ -33,7 +33,7 @@ common, exe, LOAD_CDRequestCallback, -0x8, ../../Modules/OxideFix/src/PodiumFix_
 1020, exe, 0x800342f8, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s
 1111, exe, 0x80035b5C, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s
 common, exe, LOAD_AppendQueue, 0x8, ../../Modules/OverrideMPK/src/numDriversPlusOne.s
-common, exe, Driver_GetModelByName, 0x0, ../../Modules/OverrideMPK/src/OvMPK_StringSearch.c
+common, exe, VehInit_GetModelByName, 0x0, ../../Modules/OverrideMPK/src/OvMPK_StringSearch.c
 common, exe, LOAD_DriverMPK, 0x0, ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.c
 
 common, exe, LOAD_Robots1P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_hook1P.s
@@ -52,8 +52,8 @@ common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_ho
 // Inject compiled code for Penta's stats into the executable
 926, exe, 0x80088A0C, 0x0, ../../Patches/USAUnlimitedPenta/assets/stats.bin
 
-// Compile modified Driver_SetConsts
-926, exe, Driver_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
+// Compile modified VehInit_SetConsts
+926, exe, VehInit_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
 
 // FixAdventureModeCharacterSelectArrows //
 // the same bug is also present here of course
@@ -88,12 +88,12 @@ common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelect/
 common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
 
 // Erasing the original reserve cancelation if, so that we can run our own code
-926, exe, Player_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-926, exe, Player_Driving_PhysLinear, 0xA38, ../../../nop.s
-1020, exe, Player_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1020, exe, Player_Driving_PhysLinear, 0xA38, ../../../nop.s
-1111, exe, Player_Driving_PhysLinear, 0xA4C, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1111, exe, Player_Driving_PhysLinear, 0xA54, ../../../nop.s
+926, exe, VehPtr_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+926, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
+1020, exe, VehPtr_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1020, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
+1111, exe, VehPtr_Driving_PhysLinear, 0xA4C, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
 
 // Binary edits
 // Turbo pad to STP

@@ -2,7 +2,7 @@
 
 // budget = 0x1CC (460)
 
-void DECOMP_Player_Spinning_Update(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_Spinning_Update(struct Thread* t, struct Driver* d)
 {
 	int speedApprox;
 	
@@ -19,17 +19,17 @@ void DECOMP_Player_Spinning_Update(struct Thread* t, struct Driver* d)
 	
 	// if speed has slown to near-halt,
 	// or if NoInputTimer ran out
-	Player_LastSpin_Init(t,d);
+	VehPtr_LastSpin_Init(t,d);
 }
 
-void DECOMP_Player_Spinning_PhysLinear(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_Spinning_PhysLinear(struct Thread* t, struct Driver* d)
 {
 	int elapsedTimeMS = sdata->gGT->elapsedTimeMS;
 	
 	d->NoInputTimer -= elapsedTimeMS;
 	if(d->NoInputTimer < 0) d->NoInputTimer = 0;
 	
-	Player_Driving_PhysLinear(t,d);
+	VehPtr_Driving_PhysLinear(t,d);
 	
 	// baseSpeed and fireSpeed
 	// set both "shorts" in one "int"
@@ -40,7 +40,7 @@ void DECOMP_Player_Spinning_PhysLinear(struct Thread* t, struct Driver* d)
 	d->timeSpentSpinningOut += elapsedTimeMS;
 }
 
-void DECOMP_Player_Spinning_PhysAngular(struct Thread* t, struct Driver* d)
+void DECOMP_VehPtr_Spinning_PhysAngular(struct Thread* t, struct Driver* d)
 {
 	int elapsedTimeMS = sdata->gGT->elapsedTimeMS;
 	

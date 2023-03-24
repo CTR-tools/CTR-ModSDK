@@ -515,7 +515,7 @@ void INSTANCE_Birth2D();
 void MainFrame_RequestMaskHint();
 void AA_EndEvent_DisplayTime();
 void MainInit_FinalizeInit();
-void Driver_TeleportAll();
+void VehInit_TeleportAll();
 
 void AllocDriversHook_BeforeTeleport()
 {

@@ -16,7 +16,7 @@ int InterpBySpeed(int param_1,int param_2,int param_3);
 // see the bottom of this file
 extern short PhysLinear_DriverOffsets[14];
 
-void DECOMP_Player_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
+void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 {
 	struct GameTracker* gGT;
 	int gameMode2;

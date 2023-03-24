@@ -4,7 +4,7 @@
 
 void PadInitMtap();
 void howl_InitGlobals(); // 80029988
-void BakeMathGTE(); // 80057884
+void Vector_BakeMatrixTable(); // 80057884
 void MainInit_StringToLevID();
 void MEMCARD_InitCard();
 void MEMPACK_Init();
@@ -63,7 +63,7 @@ void ClearThreadPool(struct JitPool* p)
 	arr[10-1] = 0;
 	arr[11-1] = 0;
 	arr[12-1] = 0;
-	arr[13-1] = (unsigned int)BakeMathGTE;
+	arr[13-1] = (unsigned int)Vector_BakeMatrixTable;
 	arr[14-1] = 0;
 
 	// By the time this function is called, all overwritten functions

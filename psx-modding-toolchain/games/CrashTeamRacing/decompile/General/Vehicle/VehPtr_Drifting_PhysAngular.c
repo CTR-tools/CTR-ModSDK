@@ -8,7 +8,7 @@ int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
 void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
 void CameraSlack_PhysAngular(struct Driver* d);
 
-void DECOMP_Player_Drifting_PhysAngular(struct Thread* th, struct Driver* driver)
+void DECOMP_VehPtr_Drifting_PhysAngular(struct Thread* th, struct Driver* driver)
 {
 	char cVar1;
 	char bVar2;

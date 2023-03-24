@@ -30,7 +30,7 @@ common, exe, rdata_free, 0x0, ../../../Tutorials/TemplateParkingLot/src/flagFunc
 1020, exe, 0x800342f8, 0x0, ../../../Modules/OverrideMPK/src/numDrivers.s
 1111, exe, 0x80035b5C, 0x0, ../../../Modules/OverrideMPK/src/numDrivers.s
 common, exe, LOAD_AppendQueue, 0x8, ../../../Modules/OverrideMPK/src/numDriversPlusOne.s
-common, exe, Driver_GetModelByName, 0x0, ../../../Modules/OverrideMPK/src/OvMPK_StringSearch.c
+common, exe, VehInit_GetModelByName, 0x0, ../../../Modules/OverrideMPK/src/OvMPK_StringSearch.c
 common, exe, LOAD_DriverMPK, 0x0, ../../../Modules/OverrideMPK/src/OvMPK_LoadMPK.c
 
 common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s

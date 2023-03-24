@@ -16,8 +16,8 @@ char pExit[] = "Exit Portal";
 
 // forward declaration
 // dont need to put params, wont call directly
-void Player_Warp_Init();
-void Player_Driving_Init();
+void VehPtr_Warp_Init();
+void VehPtr_Driving_Init();
 
 void RunInitHook()
 {
@@ -106,7 +106,7 @@ void RunUpdateHook()
 		( (collisionZ - driver->posCurr[2]) > (0x7ccc << 1) * -1 )
 	)
 	{
-		driver->funcPtrs[0] = Player_Warp_Init;
+		driver->funcPtrs[0] = VehPtr_Warp_Init;
 	}
 
 	// If driver is invisible, when warp pad animation is done
@@ -135,7 +135,7 @@ void RunUpdateHook()
 		*(unsigned int*) ( (char*)driver + 0x4FC ) = 0;
 
 		// Change state back to driving
-		driver->funcPtrs[0] = Player_Driving_Init;
+		driver->funcPtrs[0] = VehPtr_Driving_Init;
 	}
 }
 

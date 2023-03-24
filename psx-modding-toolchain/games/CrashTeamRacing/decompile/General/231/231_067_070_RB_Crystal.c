@@ -27,7 +27,7 @@ void DECOMP_RB_Crystal_ThTick(struct Thread* t)
 		((sine << 4) >> 0xc) +			// sine (bounce up/down)
 		0x30;							// airborne bump
 	
-	SpecularLight_Spinning3D(crystalInst, &crystalObj->rot[0], &crystalLightDir[0]);
+	Vector_SpecLightSpin3D(crystalInst, &crystalObj->rot[0], &crystalLightDir[0]);
 }
 
 void DECOMP_RB_Crystal_LInB(struct Instance* inst)

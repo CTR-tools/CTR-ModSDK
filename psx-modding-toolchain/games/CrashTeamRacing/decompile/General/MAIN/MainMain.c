@@ -85,7 +85,7 @@ u_int main()
 				MainInit_FinalizeInit(gGT);
 				GAMEPAD_GetNumConnected(sdata->gGamepads);
 				sdata->boolSoundPaused = 0;
-				Init_EngineAudio_AllPlayers();
+				VehInit_EngineAudio_AllPlayers();
 				
 				// 9 = intro cutscene
 				// 10 = traffic lights
@@ -554,7 +554,7 @@ void StateZero()
 	SetGeomScreen(0x140);
 	
 	RenderBucket_InitDepthGTE();
-	BakeMathGTE();
+	Vector_BakeMatrixTable();
 	
 	gGT->overlayIndex_EndOfRace = 0xff;
 	gGT->swapchainIndex = 0;
