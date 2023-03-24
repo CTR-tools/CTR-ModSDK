@@ -417,7 +417,7 @@ code_r0x800369d8:
 		DrawShadows_Main();
 	}
 	if ((gGT->renderFlags & 0x800) != 0) {
-		DrawHeat_Main(sdata->gGT->particleList_heatWarp, gGT->tileView, &sdata->gGT->backBuffer->primMem, 
+		Torch_Main(sdata->gGT->particleList_heatWarp, gGT->tileView, &sdata->gGT->backBuffer->primMem, 
 									gGT->numPlyrCurrGame, sdata->gGT->swapchainIndex * 0x128);
 	}
 	TileView_FadeAllWindows();

@@ -5,9 +5,9 @@
 
 void CTR_ErrorScreen(char r, char g, char b);
 
-// this disables the DrawHeat namespace,
+// this disables the Torch namespace,
 // freeing the memory for whatever we want
-void DrawHeat_Main()
+void Torch_Main()
 {
 	return;
 }

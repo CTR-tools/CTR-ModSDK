@@ -1,15 +1,15 @@
 #include "../p_rom.h"
 
-void DrawHeat_Subset1();
-void DrawHeat_Subset4();
-void DrawHeat_Subset7();
+void Torch_Subset1();
+void Torch_Subset4();
+void Torch_Subset7();
 void VehInit_SetConsts(struct Driver* d);
 void MainFrame_TogglePauseAudio(int enable);
 int MATH_FastSqrt(int dist, int unk);
 
-#define NumbersToString DrawHeat_Subset1
-#define SaveState DrawHeat_Subset4
-#define LoadState DrawHeat_Subset7 // can potentially move back to subset6
+#define NumbersToString Torch_Subset1
+#define SaveState Torch_Subset4
+#define LoadState Torch_Subset7 // can potentially move back to subset6
 
 // String variables
 unsigned char speedVal[numSpeedColor] = {151, 165, 175, 185, 196, 207, 218, 229, 240, 255};

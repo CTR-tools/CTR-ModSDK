@@ -777,7 +777,7 @@ void RenderAllHeatParticles(struct GameTracker* gGT)
 {
 	if((gGT->renderFlags & 0x800) == 0) return;
 	
-	DrawHeat_Main(
+	Torch_Main(
 		gGT->particleList_heatWarp,
 		&gGT->tileView[0],
 		&gGT->backBuffer->primMem,

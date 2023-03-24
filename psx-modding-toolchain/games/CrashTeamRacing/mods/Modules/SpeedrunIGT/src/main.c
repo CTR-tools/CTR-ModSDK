@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DrawHeat_Subset1();
+void Torch_Subset1();
 void MEMCARD_SetIcon(int id);
 void MenuBox_DrawInnerRect(RECT* r, int flag, u_long* ot);
 void LoadSave_StartMemcardAction(int action);
@@ -35,7 +35,7 @@ void SaveGameProgressToMemcardBuffer();
 
 #define numLevels 21
 
-#define TimeToString DrawHeat_Subset1
+#define TimeToString Torch_Subset1
 
 RECT menuWindow = {5, 15, 502, 201};
 

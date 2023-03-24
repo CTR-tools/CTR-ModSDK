@@ -82,7 +82,7 @@ void RenderBucket_Execute(void* param_1, struct PrimMem* param_2);
 void DrawTires_Solid(struct Thread* thread, struct PrimMem* primMem, char numPlyr);
 void DrawTires_Reflection(struct Thread* thread, struct PrimMem* primMem, char numPlyr);
 void DrawShadows_Main();
-void DrawHeat_Main(void* particleList_heatWarp, struct TileView* tileView, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
+void Torch_Main(void* particleList_heatWarp, struct TileView* tileView, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
 void TileView_FadeAllWindows();
 void AnimateWater2P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
 void VisData_CopyJMPsToScratchpad();
@@ -853,7 +853,7 @@ void RenderAllHeatParticles(struct GameTracker* gGT)
 {
 	if((gGT->renderFlags & 0x800) == 0) return;
 	
-	DrawHeat_Main(
+	Torch_Main(
 		gGT->particleList_heatWarp,
 		&gGT->tileView[0],
 		&gGT->backBuffer->primMem,

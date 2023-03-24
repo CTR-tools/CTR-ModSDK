@@ -771,16 +771,16 @@
 800499e8 RCNT_GetTime_Total
 80049a60 RCNT_GetTime_Elapsed
 
-80049ab4 DrawHeat_Main
-80049f58 DrawHeat_Subset1
-80049f90 DrawHeat_Subset2
-8004a010 DrawHeat_Subset3
-8004a090 DrawHeat_Subset4
-8004a22c DrawHeat_Subset5
-8004a3c8 DrawHeat_Subset6
-8004a564 DrawHeat_Subset7
-8004a778 DrawHeat_Subset8
-8004a98c DrawHeat_Subset9
+80049ab4 Torch_Main
+80049f58 Torch_Subset1
+80049f90 Torch_Subset2
+8004a010 Torch_Subset3
+8004a090 Torch_Subset4
+8004a22c Torch_Subset5
+8004a3c8 Torch_Subset6
+8004a564 Torch_Subset7
+8004a778 Torch_Subset8
+8004a98c Torch_Subset9
 
 // ======== Start of UI ===========
 

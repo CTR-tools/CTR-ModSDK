@@ -13,10 +13,10 @@ common, exe, MainInit_StringToLevID, -0x8, src/hookInit.s
 // Compile code to empty spaces in RDATA
 common, exe, rdata_free, 0x0, src/p_rom.c
 
-common, exe, DrawHeat_Main, 0x0, src/DrawHeat_Main.c
-common, exe, DrawHeat_Subset1, 0x0, src/DrawHeat_Subset1.c
-common, exe, DrawHeat_Subset4, 0x0, src/DrawHeat_Subset4.c
-common, exe, DrawHeat_Subset7, 0x0, src/DrawHeat_Subset7.c
+common, exe, Torch_Main, 0x0, src/Torch_Main.c
+common, exe, Torch_Subset1, 0x0, src/Torch_Subset1.c
+common, exe, Torch_Subset4, 0x0, src/Torch_Subset4.c
+common, exe, Torch_Subset7, 0x0, src/Torch_Subset7.c
 
 926, bigfilescreentitle01_usatim, 0x0, 0x0, assets/title01_ver.tim
 926, bigfilescreentitle02_usatim, 0x0, 0x0, assets/title02_ver.tim
