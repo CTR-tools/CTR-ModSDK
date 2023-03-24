@@ -3623,7 +3623,7 @@ struct TileView
 	// 0x48 (built in TileView_SetMatrixVP, never used)
 	MATRIX matrix_CameraTranspose;
 
-	// 0x68 (GTE_AudioLR_Inst, SpecularLight_Spinning3D)
+	// 0x68 (GTE_AudioLR_Inst, Vector_SpecLightSpin3D)
 	MATRIX matrix_Camera;
 
 	// 0x88 (built in TileView_Init, never used)
@@ -8365,7 +8365,7 @@ struct Data
 		short scale;
 
 		// 0x4
-		// parameter to SpecularLight_Spinning3D
+		// parameter to Vector_SpecLightSpin3D
 		short vec3_specular_inverted[3];
 
 		// 0xA

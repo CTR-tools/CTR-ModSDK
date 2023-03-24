@@ -3395,7 +3395,7 @@ LAB_800af948:
   local_18 = (undefined2)(iVar3 * iVar7 >> 0xc);
   local_14 = (undefined2)(iVar3 * iVar4 >> 0xc);
   
-  // SpecularLight_Spinning3D
+  // Vector_SpecLightSpin3D
   FUN_8005741c(param_1,param_2 + 8,&local_18);
   return;
 }

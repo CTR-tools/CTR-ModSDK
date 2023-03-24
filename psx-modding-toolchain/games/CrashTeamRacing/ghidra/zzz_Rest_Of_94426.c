@@ -5367,7 +5367,7 @@ void FUN_80047dfc(int param_1)
       local_26 = (&DAT_80085c6a)[iVar2 * 7];
       local_24 = (&DAT_80085c6c)[iVar2 * 7];
 
-	  // SpecularLight_Spinning3D
+	  // Vector_SpecLightSpin3D
       FUN_8005741c(*piVar4,piVar3,&local_28);
     }
 
@@ -9290,7 +9290,7 @@ void FUN_8004c850(int param_1)
   // Spin on the Y axis
   *(short *)(iVar2 + 2) = *(short *)(iVar2 + 2) + 0x40;
 
-  // SpecularLight_Spinning2D
+  // Vector_SpecLightSpin2D
   // instance, ptr rot[6], cop registers
   FUN_800572d0(iVar4,iVar2,iVar2 + 0x28);
 
@@ -9347,7 +9347,7 @@ void FUN_8004c914(int param_1)
   // Rotate on the Y axis
   *(short *)(iVar3 + 2) = *(short *)(iVar3 + 2) + 0x40;
 
-  // SpecularLight_Spinning2D
+  // Vector_SpecLightSpin2D
   // instance, ptr rot[6], cop registers
   FUN_800572d0(iVar2,iVar3,iVar3 + 0x28);
 
@@ -18351,7 +18351,7 @@ LAB_800568d8:
 
 // WARNING: Could not reconcile some variable overlaps
 
-// SpecularLight_Spinning2D
+// Vector_SpecLightSpin2D
 // instance, ptr rot[6], cop registers
 void FUN_800572d0(int param_1,undefined4 param_2,SVECTOR *param_3)
 
@@ -18425,7 +18425,7 @@ void FUN_800572d0(int param_1,undefined4 param_2,SVECTOR *param_3)
 // WARNING: Could not reconcile some variable overlaps
 
 
-// SpecularLight_Spinning3D
+// Vector_SpecLightSpin3D
 // param_1 MATRIX
 // param_2 vec3s rotation
 void FUN_8005741c(int param_1,undefined4 param_2,SVECTOR *param_3)
@@ -18557,7 +18557,7 @@ void FUN_8005741c(int param_1,undefined4 param_2,SVECTOR *param_3)
 }
 
 
-// SpecularLight_Motionless3D
+// Vector_SpecLightNoSpin3D
 // used on flamejet
 // param_1 - instance
 // param_2 - inst->instDef->rot[3]
@@ -18655,7 +18655,7 @@ void FUN_800576b8(int param_1,undefined4 param_2,SVECTOR *param_3)
 }
 
 
-// BakeMathGTE
+// Vector_BakeMatrixTable
 // called once during init, not related to spec light,
 // NOP will distort the following driver animations into squishing:
 // crashing, boosting, jumping, blasted

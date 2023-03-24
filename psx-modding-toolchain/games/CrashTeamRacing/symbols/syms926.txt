@@ -828,12 +828,10 @@
 // ======== End of UI ===========
 
 // Vector
-800572d0 SpecularLight_Spinning2D
-8005741c SpecularLight_Spinning3D
-800576b8 SpecularLight_Motionless3D
-
-// Vector
-80057884 BakeMathGTE
+800572d0 Vector_SpecLightSpin2D
+8005741c Vector_SpecLightSpin3D
+800576b8 Vector_SpecLightNoSpin3D
+80057884 Vector_BakeMatrixTable
 
 // VehGet
 80057c44 VehGetSurface

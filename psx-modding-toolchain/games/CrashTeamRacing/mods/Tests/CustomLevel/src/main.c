@@ -556,7 +556,7 @@ void StateZero()
 	SetGeomScreen(0x140);
 	
 	RenderBucket_InitDepthGTE();
-	BakeMathGTE();
+	Vector_BakeMatrixTable();
 	
 	gGT->overlayIndex_EndOfRace = 0xff;
 	gGT->swapchainIndex = 0;

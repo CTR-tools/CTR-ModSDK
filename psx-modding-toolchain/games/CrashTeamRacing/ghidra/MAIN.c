@@ -8834,7 +8834,7 @@ undefined4 main(void)
 	  // RenderBucket_InitDepthGTE
       FUN_8006ae74();
 
-	  // BakeMathGTE
+	  // Vector_BakeMatrixTable
       FUN_80057884();
 
 	  // structure to game modes, cheats, etc

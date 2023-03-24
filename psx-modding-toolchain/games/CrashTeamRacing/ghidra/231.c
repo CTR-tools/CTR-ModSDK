@@ -8031,7 +8031,7 @@ void FUN_800b4dd8(int param_1)
   *(int *)(iVar3 + 0x48) =
        (int)*(short *)(*(int *)(iVar3 + 0x2c) + 0x32) + ((iVar1 << 4) >> 0xc) + 0x30;
   
-  // SpecularLight_Spinning3D
+  // Vector_SpecLightSpin3D
   FUN_8005741c(iVar3,iVar2,s_O_O_O_800b5968);
   
   return;
@@ -8414,7 +8414,7 @@ void FUN_800b52dc(int param_1)
   // Convert rotations into a matrix
   FUN_8006c2a4(iVar2 + 0x30,iVar1);
   
-  // SpecularLight_Spinning3D
+  // Vector_SpecLightSpin3D
   FUN_8005741c(iVar2,iVar1,&DAT_800b5970);
   return;
 }
@@ -9719,7 +9719,7 @@ LAB_800b6908:
 	// increment frame
     *piVar2 = *piVar2 + 1;
 	
-	// SpecularLight_Motionless3D
+	// Vector_SpecLightNoSpin3D
 	// instance, inst->instDef->rot[3], specLightDir
     FUN_800576b8(iVar3,*(int *)(iVar3 + 0x2c) + 0x36,&local_48);
 	

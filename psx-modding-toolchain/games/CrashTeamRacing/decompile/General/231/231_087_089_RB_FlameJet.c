@@ -162,7 +162,7 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 EndFjThTick:
 	
 	fjObj->cycleTimer++;
-	SpecularLight_Motionless3D(fjInst, &fjInst->instDef->rot[0], &fjLightDir[0]);
+	Vector_SpecLightNoSpin3D(fjInst, &fjInst->instDef->rot[0], &fjLightDir[0]);
 }
 
 void DECOMP_RB_FlameJet_LInB(struct Instance* inst)

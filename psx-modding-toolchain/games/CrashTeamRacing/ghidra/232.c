@@ -213,7 +213,7 @@ void FUN_800abdfc(int param_1,int param_2,short param_3,int param_4,int param_5,
       }
     }
 	
-	// SpecularLight_Spinning3D
+	// Vector_SpecLightSpin3D
     FUN_8005741c(param_1,param_2 + 0x28,iVar3);
   }
 LAB_800abe94:
@@ -611,7 +611,7 @@ LAB_800ac518:
 		// relic
         if (sVar2 == 0x61) 
 		{
-		  // SpecularLight_Spinning3D
+		  // Vector_SpecLightSpin3D
           FUN_8005741c(iVar4,piVar13,piVar19 + 0x16);
           return;
         }
@@ -619,7 +619,7 @@ LAB_800ac518:
 		// token
         if (sVar2 == 0x7d) 
 		{
-		  // SpecularLight_Spinning3D
+		  // Vector_SpecLightSpin3D
           FUN_8005741c(iVar4,piVar13,piVar19 + 0x18);
           return;
         }
@@ -630,7 +630,7 @@ LAB_800ac518:
         }
       }
 	  
-	  // SpecularLight_Spinning3D
+	  // Vector_SpecLightSpin3D
       FUN_8005741c(iVar4,piVar13,piVar19 + 0x14);
       return;
     }
@@ -3818,7 +3818,7 @@ joined_r0x800b06ec:
                      ((iVar7 >> 5) * iVar13 >> 0xc);
               }
 			  
-			  // SpecularLight_Spinning3D
+			  // Vector_SpecLightSpin3D
               FUN_8005741c(piVar9[1],piVar16,&local_60);
 			  
 			   // convert 3 rotation shorts into rotation matrix
@@ -5878,7 +5878,7 @@ void FUN_800b1f78(int param_1,ushort param_2)
         local_d6 = *(undefined2 *)(&DAT_800b506e + iVar9);
         local_d4 = *(undefined2 *)(&DAT_800b5070 + iVar9);
 		
-		// SpecularLight_Spinning2D
+		// Vector_SpecLightSpin2D
         FUN_800572d0(iVar11,psVar16 + 2,&local_d8);
       }
 	  

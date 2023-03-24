@@ -864,11 +864,11 @@
 
 // ======== End of UI ===========
 
-800573b0 SpecularLight_Spinning2D
-800574fc SpecularLight_Spinning3D
-80057798 SpecularLight_Motionless3D
+800573b0 Vector_SpecLightSpin2D
+800574fc Vector_SpecLightSpin3D
+80057798 Vector_SpecLightNoSpin3D
 
-80057964 BakeMathGTE
+80057964 Vector_BakeMatrixTable
 80057d24 VehGetSurface
 80057d48 VehGetTerrain
 
