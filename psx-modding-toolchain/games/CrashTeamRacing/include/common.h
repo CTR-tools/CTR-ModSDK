@@ -8692,9 +8692,11 @@ struct Data
 	MATRIX matArr01[0xB];
 	MATRIX matArr02[0x1];
 	MATRIX matArr03[0x9];
-	MATRIX matArr04[0x10]; // crashing
+	MATRIX matArr04[0x10]; // crashing, and falling
 	MATRIX matArr05[0xF]; // squish, pop back up
 	MATRIX matArr06[0x1B]; // blasted
+	
+	// all the rest for warppad?
 	MATRIX matArr07[0x4];
 	MATRIX matArr08[0x4];
 	MATRIX matArr09[0x4];
