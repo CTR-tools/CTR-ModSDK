@@ -40,7 +40,7 @@ void DECOMP_Player_Crashing_Animate(struct Thread* t, struct Driver* d)
 	inst = t->inst;
 	
 	inst->animFrame++;
-	d->animationFrame++;
+	d->matrixIndex++;
 	
 	// If crashing animation is not finished, quit function
 	if(
@@ -53,8 +53,8 @@ void DECOMP_Player_Crashing_Animate(struct Thread* t, struct Driver* d)
 	
 	// == Initialize Driving ==
 	
-	d->animationIndex = 0;
-	d->animationFrame = 0;
+	d->matrixArray = 0;
+	d->matrixIndex = 0;
 	inst->animIndex = 0;
 	
 	// start halfway into steer animation

@@ -1905,9 +1905,9 @@ struct Driver
 	// 0x4B
 	char simpTurnState;
 	// 0x4C
-	unsigned char animationIndex; // copy from Instance
+	unsigned char matrixArray;
 	// 0x4D
-	unsigned char animationFrame; // copy from Instance
+	unsigned char matrixIndex;
 
 	#if BUILD >= EurRetail
 	short compilerPadding_0x4E;

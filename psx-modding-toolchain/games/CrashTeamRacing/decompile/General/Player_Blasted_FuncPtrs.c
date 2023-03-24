@@ -9,8 +9,8 @@ void DECOMP_Player_Blasted_Update(struct Thread *thread, struct Driver *driver)
 {
 	if (driver->NoInputTimer != 0) return;
 	
-	driver->animationIndex = 0;
-	driver->animationFrame = 0;
+	driver->matrixArray = 0;
+	driver->matrixIndex = 0;
 	Player_Driving_Init(thread, driver);
 }
 
@@ -68,22 +68,24 @@ void DECOMP_Player_Blasted_PhysAngular(struct Thread *thread, struct Driver *dri
 
 void DECOMP_Player_Blasted_Animate(struct Thread *thread,struct Driver *driver)
 {
-	u_char animationFrame;
-	int iVar2;
+	int matrixIndex;
+	int arrLength;
 	
-	driver->animationIndex = 6;
-	iVar2 = (int)((u_int)(u_short)driver->NoInputTimer << 0x10) >> 0x15;
+	driver->matrixArray = 6;
+	arrLength = data.bakedGteMath[6].numEntries;
 	
-	// what???
-	animationFrame = (u_char)(iVar2 % data.betweenIDsAndMeta[0x1094]);
+	// divide by 32ms to get frame index
+	matrixIndex = driver->NoInputTimer >> 5;
+	
+	// modulus to wrap repeat animation
+	matrixIndex %= arrLength;
 	
 	if (driver->KartStates.Blasted.boolPlayBackwards != 0)
 	{
-		// what???
-		animationFrame = (char)data.betweenIDsAndMeta[0x1094] - (animationFrame + 1);
+		matrixIndex = arrLength - (matrixIndex + 1);
 	}
 	
-	driver->animationFrame = animationFrame;
+	driver->matrixIndex = matrixIndex;
 	
 	return;
 }
