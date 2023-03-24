@@ -31,6 +31,12 @@ void DECOMP_UI_DrawLapCount(short posX,int posY,int param_3,struct Driver* d)
 
 	type = 1;
     color = 0x4001;
+	
+	#if 0
+	// OG game used sprintf in 1P/2P mode,
+	// for old beta races that could have
+	// lap counts of 3,4,5,10,15,20
+	#endif
   }
   
   sdata->s_printDividing[0] = currLap + '0';
