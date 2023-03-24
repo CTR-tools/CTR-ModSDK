@@ -307,6 +307,7 @@ common, exe, UI_Lerp2D_HUD, 0x0, General/UI/UI_Lerp2D_HUD.c
 common, exe, UI_Lerp2D_Linear, 0x0, General/UI/UI_Lerp2D_Linear.c
 common, exe, UI_JumpMeter_Draw, 0x0, General/UI/UI_JumpMeter_Draw.c
 common, exe, UI_DrawSlideMeter, 0x0, General/UI/UI_DrawSlideMeter.c
+common, exe, UI_Weapon_DrawBG, 0x0, General/UI/UI_Weapon_DrawBG.c
 
 // VEH PTR
 common, exe, VehPtr_Crashing_PhysAngular, 0x0, General/Vehicle/VehPtr_Crashing_FuncPtrs.c
