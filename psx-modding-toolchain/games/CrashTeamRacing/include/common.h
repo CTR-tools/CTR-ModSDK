@@ -8689,17 +8689,19 @@ struct Data
 	// 0x80086e94
 	// bakedGteMath[0] is blank,
 	// all the rest correspond
-	MATRIX matArr01[0xB];
-	MATRIX matArr02[0x1];
-	MATRIX matArr03[0x9];
+	MATRIX matArr01[0xB]; // hit ground, pop wheelie
+	MATRIX matArr02[0x1]; // in wheelie
+	MATRIX matArr03[0x9]; // from wheelie, back to ground
 	MATRIX matArr04[0x10]; // crashing, and falling
 	MATRIX matArr05[0xF]; // squish, pop back up
 	MATRIX matArr06[0x1B]; // blasted
-	MATRIX matArr07[0x4];
-	MATRIX matArr08[0x4];
-	MATRIX matArr09[0x4];
+	
+	// jump animations
+	MATRIX matArr07[0x4]; // Crash Bandicoot jump
+	MATRIX matArr08[0x4]; // cortex
+	MATRIX matArr09[0x4]; // tiny
 	MATRIX matArr0A[0x4];
-	MATRIX matArr0B[0x4];
+	MATRIX matArr0B[0x4]; // ...
 	MATRIX matArr0C[0x4];
 	MATRIX matArr0D[0x4];
 	MATRIX matArr0E[0x4];
@@ -8707,7 +8709,7 @@ struct Data
 	MATRIX matArr10[0x4];
 	MATRIX matArr11[0x4];
 	MATRIX matArr12[0x4];
-	MATRIX matArr13[0x4];
+	MATRIX matArr13[0x4]; // N Tropy jump
 
 	// 0x80087EF4 - pointer to 0x80086e94
 	struct
