@@ -42,7 +42,7 @@ void UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 		if ((gGT->gameMode1 & 0x100000) != 0)
 		{
 			// Draw dot for Player on 2D Adv Map
-			UI_Map_DrawAdvPlayer(ptrMap,bucket->inst->matrix.m[0][2],0x32,kartColor,
+			UI_Map_DrawAdvPlayer(ptrMap,&bucket->inst->matrix.t[0],0x32,kartColor,
 						(d->rotCurr.y + 0x800U) | 0x1000,0x800);
 		
 			continue;
