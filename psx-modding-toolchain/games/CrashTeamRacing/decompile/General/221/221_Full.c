@@ -69,7 +69,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		sdata->ptrMenuCrystal->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
 		sdata->ptrMenuCrystal->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
 	
-		DrawNumCrystal(posXY[0]+0xf, posXY[1]-0x10, driver);
+		UI_DrawNumCrystal(posXY[0]+0xf, posXY[1]-0x10, driver);
 	
 		lngIndex = 0x16b; // YOU WIN
 		if(boolLose != 0)

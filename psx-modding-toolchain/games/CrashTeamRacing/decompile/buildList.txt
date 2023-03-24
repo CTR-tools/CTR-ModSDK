@@ -292,6 +292,9 @@ common, exe, TileView_SetPsyqGeom, 0x0, General/TileView/TileView_SetPsyqGeom.c
 common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
 
 // UI
+common, exe, UI_ConvertX_2, 0x0, General/UI/UI_ConvertX_2.c
+common, exe, UI_ConvertY_2, 0x0, General/UI/UI_ConvertY_2.c
+common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_DrawNumWumpa.c
 common, exe, UI_Map_DrawMap, 0x0, General/UI/UI_Map_DrawMap.c
 common, exe, UI_DrawDriverIcon, 0x0, General/UI/UI_DrawDriverIcon.c
 common, exe, UI_DrawLimitClock, 0x0, General/UI/UI_DrawLimitClock.c
