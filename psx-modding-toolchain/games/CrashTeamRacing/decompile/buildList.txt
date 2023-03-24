@@ -224,6 +224,7 @@ common, exe, MainInit_OTMem, 0x0, General/MAIN/MainInit_OTMem.c
 common, exe, main, 0x0, General/MAIN/MainMain.c
 common, exe, MainRaceTrack_RequestLoad, 0x0, General/MAIN/MainRaceTrack_RequestLoad.c
 common, exe, MainRaceTrack_StartLoad, 0x0, General/MAIN/MainRaceTrack_StartLoad.c
+common, exe, MainStats_ClearBattleVS, 0x0, General/MAIN/MainStats_ClearBattleVS.c
 
 // MATH
 // MATH_Sin relocated to RDATA

@@ -5111,12 +5111,10 @@ struct GameTracker
   } cup;
 
   // 0x1e80
-  // 4 * 4 * 3
-  // one int, for how many times
-  // each of 4 players, came in
-  // 1st, 2nd, or 3rd. Used in
-  // VS Standings and Battle Standings
-  char standingsPoints[0x30];
+  // how many times each player (4)
+  // came in 1st, 2nd, or 3rd (3)
+  // Used in VS Standings and Battle Standings
+  int standingsPoints[4*3];
 
   // 1eb0
   // trackSel, AdvHubProfile, battle, cups, etc
