@@ -799,7 +799,7 @@
 8004b4b8 UI_INSTANCE_InitAll
 
 8004bc04 UI_Map_DrawMap
-8004bea4 UI_Map_GetIconDimensions
+8004bea4 UI_Map_GetIconPos
 8004c19c UI_Map_DrawAdvPlayer
 8004c234 UI_Map_DrawRawIcon
 8004c34c UI_Map_DrawDrivers

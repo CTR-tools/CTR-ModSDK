@@ -4569,31 +4569,51 @@ void FUN_800b0f18
   }
   iVar1 = -iVar1;
 LAB_800b0fc0:
+
+  // inner triangle
   iVar6 = 0;
   do {
     iVar2 = (iVar6 << 0x10) >> 0xe;
     psVar3 = (short *)(iVar2 + param_3);
+	
+	// posX of each vertex
     *(short *)((int)local_30 + iVar2) =
+	
+		// posX + ...
          param_1 + (short)(((*psVar3 * iVar4 >> 0xc) + (psVar3[1] * iVar1 >> 0xc)) *
                            ((((int)((uint)param_5 << 0x10) >> 0xd) / 5) * 0x10000 >> 0x10) >> 0xc) +
                    6;
+				   
     iVar6 = iVar6 + 1;
+	
+	// posY of each vertex
     *(short *)((int)local_30 + iVar2 + 2) =
+	
+		// posY + ...
          param_2 + (short)(((psVar3[1] * iVar4 >> 0xc) - (*psVar3 * iVar1 >> 0xc)) *
                            (int)(short)param_5 >> 0xc) + 4;
+						   
   } while (iVar6 * 0x10000 >> 0x10 < 3);
+  
+  // outer triangle
   iVar6 = 0;
   do {
     iVar1 = 0;
     iVar4 = (iVar6 << 0x10) >> 0xe;
     do {
       iVar2 = (iVar1 << 0x10) >> 0xe;
+	  
+	  // posX outer = posX inner + [scale]
       *(short *)((int)local_20 + iVar2) =
            *(short *)((int)local_30 + iVar2) + *(short *)((int)&DAT_800b4ec0 + iVar4);
-      iVar1 = iVar1 + 1;
-      *(short *)((int)local_20 + iVar2 + 2) =
+      
+	  iVar1 = iVar1 + 1;
+      
+	  // posY outer = posY inner + [scale]
+	  *(short *)((int)local_20 + iVar2 + 2) =
            *(short *)((int)local_30 + iVar2 + 2) + *(short *)((int)&DAT_800b4ec2 + iVar4);
-    } while (iVar1 * 0x10000 >> 0x10 < 3);
+    
+	} while (iVar1 * 0x10000 >> 0x10 < 3);
     
 	// MenuBox_DrawRwdTriangle
 	FUN_800453e8(local_20,param_4,

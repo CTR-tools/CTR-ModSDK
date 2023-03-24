@@ -10140,7 +10140,7 @@ void FUN_8004d614(int param_1,int param_2,short param_3,short param_4,int param_
 }
 
 
-// UI_Map_GetIconDemensions
+// UI_Map_GetIconPos
 void FUN_8004d8b4(short *param_1,int *param_2,int *param_3)
 
 {
