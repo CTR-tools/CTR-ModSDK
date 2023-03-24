@@ -11,7 +11,7 @@ void DECOMP_UI_Map_DrawRawIcon(
   int *ptrColor;
   struct GameTracker* gGT = sdata->gGT;
 
-  posX = *param_2;
+  posX = param_2[0];
   posY = param_2[2];
 
   UI_Map_GetIconPos(ptrMap,&posX,&posY);
@@ -19,7 +19,7 @@ void DECOMP_UI_Map_DrawRawIcon(
   ptrColor = data.ptrColor[colorID];
 
   DecalHUD_DrawPolyGT4(
-	gGT->iconGroup[0]->icons[iconID],
+	gGT->iconGroup[5]->icons[iconID],
 	posX, posY,
 	&gGT->backBuffer->primMem,
 	gGT->tileView_UI.ptrOT,

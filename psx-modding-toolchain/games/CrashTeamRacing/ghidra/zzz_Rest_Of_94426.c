@@ -10268,7 +10268,7 @@ void FUN_8004dbac(undefined4 param_1,undefined4 *param_2,undefined4 param_3,unde
 }
 
 
-// Draw icon on map
+// UI_Map_DrawRawIcon
 // param_4 color index
 // param_6 scale
 void FUN_8004dc44(undefined4 param_1,undefined4 *param_2,int param_3,int param_4,undefined4 param_5,
@@ -10384,7 +10384,7 @@ void FUN_8004dd5c(undefined4 param_1,int param_2,short *param_3)
           iVar1 = iVar1 * 0x10000 >> 0x10;
         }
 
-		// Draw icon on map
+		// UI_Map_DrawRawIcon
         FUN_8004dc44(param_1,*(int *)(param_2 + 0x34) + 0x44,uVar2,iVar1,0,0x1000);
       }
 LAB_8004dea8:
@@ -10432,7 +10432,7 @@ void FUN_8004dee8(undefined4 param_1,int param_2)
           }
         }
 
-		// Draw icon on map
+		// UI_Map_DrawRawIcon
         FUN_8004dc44(param_1,*(int *)(param_2 + 0x34) + 0x44,0x31,uVar1,0,0x1000);
       }
 
@@ -10462,7 +10462,7 @@ void FUN_8004dffc(undefined4 param_1,int param_2)
 	  // instance -> model -> modelID == warpball
       if (*(short *)(*(int *)(iVar2 + 0x18) + 0x10) == 0x36)
 	  {
-		// Draw icon on map
+		// UI_Map_DrawRawIcon
         FUN_8004dc44(param_1,iVar2 + 0x44,0x20,0,0,0x1000);
 
 		// get object from thread
@@ -10476,7 +10476,7 @@ void FUN_8004dffc(undefined4 param_1,int param_2)
             uVar1 = 3;
           }
 
-		  // Draw icon on map
+		  // UI_Map_DrawRawIcon
           FUN_8004dc44(param_1,*(int *)(iVar2 + 0x1c) + 0x44,0x21,uVar1,0,0x1000);
         }
       }

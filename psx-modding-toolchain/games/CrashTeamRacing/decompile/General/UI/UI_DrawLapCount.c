@@ -27,7 +27,7 @@ void DECOMP_UI_DrawLapCount(short posX,int posY,int param_3,struct Driver* d)
   if (numPlyrCurrGame < 3)
   {
 	// LAP
-    DecalFont_DrawLine(sdata->lngStrings[0x60],posX,posY,2,0x4001);
+    DecalFont_DrawLine(sdata->lngStrings[0x60/4],posX,posY,2,0x4001);
 
 	type = 1;
     color = 0x4001;
