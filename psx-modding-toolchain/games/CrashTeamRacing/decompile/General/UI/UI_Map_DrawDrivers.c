@@ -52,7 +52,6 @@ void UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 		uVar2 = 0x32;
 	}
 	
-	// Draw icon on map
 	UI_Map_DrawRawIcon(ptrMap,&bucket->inst->matrix.t[0],uVar2,(short)kartColor,0,0x1000);
   }
   return;
