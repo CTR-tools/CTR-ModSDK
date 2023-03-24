@@ -873,15 +873,15 @@
 80055e68 VehGetSurface
 80055e8c VehGetTerrain
 
-80055eb0 Driver_TeleportSelf
-80056988 Driver_TeleportAll
-80056a38 Driver_GetModelByName
-80056b50 Driver_SetConsts
+80055eb0 VehInit_TeleportSelf
+80056988 VehInit_TeleportAll
+80056a38 VehInit_GetModelByName
+80056b50 VehInit_SetConsts
 
-80056ce4 Init_EngineAudio_AllPlayers
-80056d8c Init_TireSprites
-80056e58 Init_NonGhost_Driver
-80057058 Init_Player
+80056ce4 VehInit_EngineAudio_AllPlayers
+80056d8c VehInit_TireSprites
+80056e58 VehInit_NonGhost
+80057058 VehInit_Player
 
 800570ec InterpBySpeed
 80057134 MapToRange

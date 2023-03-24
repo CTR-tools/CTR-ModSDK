@@ -3,7 +3,7 @@
 void DrawHeat_Subset1();
 void DrawHeat_Subset4();
 void DrawHeat_Subset7();
-void Driver_SetConsts(struct Driver* d);
+void VehInit_SetConsts(struct Driver* d);
 void MainFrame_TogglePauseAudio(int enable);
 int MATH_FastSqrt(int dist, int unk);
 
@@ -89,7 +89,7 @@ void RunInitHook()
 	p_rom->engine = 4;
 	p_rom->currEngine = &engineStrings[p_rom->engine][8];
 	data.MetaDataCharacters[data.characterIDs[0]].engineID = p_rom->engine;
-	Driver_SetConsts(sdata->gGT->drivers[0]);
+	VehInit_SetConsts(sdata->gGT->drivers[0]);
 
 	BackupInstructions();
 
@@ -445,7 +445,7 @@ void RunUpdateHook()
 			data.MetaDataCharacters[data.characterIDs[0]].engineID = p_rom->engine;
 			
 			// initialize
-			Driver_SetConsts(gGT->drivers[0]);
+			VehInit_SetConsts(gGT->drivers[0]);
 		}
 
 		// Change Camera Cheat

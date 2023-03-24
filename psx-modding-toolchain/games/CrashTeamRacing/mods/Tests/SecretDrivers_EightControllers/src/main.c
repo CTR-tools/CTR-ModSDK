@@ -1,7 +1,7 @@
 #include <common.h>
 
-struct Driver* Init_Player(int id);
-void Driver_TeleportAll(struct GameTracker* gGT, int flag);
+struct Driver* VehInit_Player(int id);
+void VehInit_TeleportAll(struct GameTracker* gGT, int flag);
 
 #define NUM_PLAYERS 8
 
@@ -16,7 +16,7 @@ void RunInitHook()
 	for(i = 1; i < NUM_PLAYERS; i++)
 	{
 		// player[0] already exists
-		drivers[i] = Init_Player(i);
+		drivers[i] = VehInit_Player(i);
 	}
 
 	// In EurRetail and JpnRetail, Parking Lot has
@@ -27,7 +27,7 @@ void RunInitHook()
 	drivers[7]->driverID = 3;
 
 	// send to start line (corrects driver animations)
-	Driver_TeleportAll(sdata->gGT, 2);
+	VehInit_TeleportAll(sdata->gGT, 2);
 
 	// and change it back
 	drivers[4]->driverID = 4;

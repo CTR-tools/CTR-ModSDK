@@ -19,7 +19,7 @@ void SpawnDrivers(struct GameTracker* gGT)
 	// if first boot
 	if(gGT->levelID == CREDITS_POLAR)
 	{
-		gGT->drivers[0] = Init_Player(0);
+		gGT->drivers[0] = VehInit_Player(0);
 		return;
 	}
 	
@@ -54,15 +54,15 @@ void SpawnDrivers(struct GameTracker* gGT)
 		dr = BOTS_Driver_Init(i+1);
 		gGT->drivers[i+1] = dr;
 		dr->driverID = i&bitFlag;
-		Driver_TeleportSelf(dr,3,0);
+		VehInit_TeleportSelf(dr,3,0);
 		dr->driverID = i+1;
 	}
 	
 	// init, save, fakeID, teleport, realID
-	dr = Init_Player(0);
+	dr = VehInit_Player(0);
 	gGT->drivers[0] = dr;
 	dr->driverID = i&bitFlag;
-	Driver_TeleportSelf(dr,3,0);
+	VehInit_TeleportSelf(dr,3,0);
 	dr->driverID = 0;
 	
 	for(i = i+1; i < octr->NumDrivers; i++)
@@ -71,7 +71,7 @@ void SpawnDrivers(struct GameTracker* gGT)
 		dr = BOTS_Driver_Init(i);
 		gGT->drivers[i] = dr;
 		dr->driverID = i&bitFlag;
-		Driver_TeleportSelf(dr,3,0);
+		VehInit_TeleportSelf(dr,3,0);
 		dr->driverID = i;
 	}
 }

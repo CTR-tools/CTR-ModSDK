@@ -1,7 +1,7 @@
 #include <common.h>
 
-struct Driver* Init_Player(int index);
-void Driver_TeleportAll(struct GameTracker* gGT, int flag);
+struct Driver* VehInit_Player(int index);
+void VehInit_TeleportAll(struct GameTracker* gGT, int flag);
 struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 void MenuBox_ClearInput();
@@ -469,12 +469,12 @@ void RunInitHook()
 	drivers = sdata->gGT->drivers;
 
 	// player[0] already exists
-	drivers[1] = Init_Player(1);
-	drivers[2] = Init_Player(2);
-	drivers[3] = Init_Player(3);
+	drivers[1] = VehInit_Player(1);
+	drivers[2] = VehInit_Player(2);
+	drivers[3] = VehInit_Player(3);
 
 	// send to start line (corrects driver animations)
-	Driver_TeleportAll(sdata->gGT, 2);
+	VehInit_TeleportAll(sdata->gGT, 2);
 
 	// set where we want drivers, on the game grid
 	for(i = 0; i < 4; i++)

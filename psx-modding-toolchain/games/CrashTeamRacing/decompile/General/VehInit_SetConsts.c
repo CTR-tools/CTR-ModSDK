@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_Driver_SetConsts(struct Driver * driver)
+void DECOMP_VehInit_SetConsts(struct Driver * driver)
 {
 	u_int metaPhysSize;
 	u_int i;

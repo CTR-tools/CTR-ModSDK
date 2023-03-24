@@ -18892,7 +18892,7 @@ int FUN_80057c68(uint param_1)
 }
 
 
-// Driver_TeleportSelf
+// VehInit_TeleportSelf
 void FUN_80057c8c(int param_1,uint param_2,int param_3)
 
 {
@@ -19634,7 +19634,7 @@ LAB_800587cc:
 }
 
 
-// Driver_TeleportAll
+// VehInit_TeleportAll
 void FUN_80058898(undefined4 param_1,uint param_2)
 
 {
@@ -19661,7 +19661,7 @@ void FUN_80058898(undefined4 param_1,uint param_2)
       }
       else
 	  {
-		// Driver_TeleportSelf (startline)
+		// VehInit_TeleportSelf (startline)
         FUN_80057c8c(iVar1,param_2 | 1,0);
       }
     }
@@ -19790,7 +19790,7 @@ int * FUN_80058948(int *param_1)
 
 
 
-// Driver_SetConsts(driver*), based on driver class
+// VehInit_SetConsts(driver*), based on driver class
 void FUN_80058a60(int param_1)
 {
 
@@ -19878,7 +19878,7 @@ void FUN_80058a60(int param_1)
   return;
 }
 
-// Init_EngineAudio_AllPlayers
+// VehInit_EngineAudio_AllPlayers
 void FUN_80058ba4(void)
 
 {
@@ -20096,7 +20096,7 @@ void FUN_80058d2c(int param_1,int param_2)
   // initialize tire data
   FUN_80058c4c(param_1);
 
-  // Driver_SetConsts(driver*), based on driver class
+  // VehInit_SetConsts(driver*), based on driver class
   FUN_80058a60(iVar5);
 
   // if you are not in cutscene and not in main menu
@@ -20112,7 +20112,7 @@ void FUN_80058d2c(int param_1,int param_2)
   return;
 }
 
-// Init_Player
+// VehInit_Player
 struct Driver* FUN_80058ec0(int param_1)
 
 {
@@ -33412,7 +33412,7 @@ void FUN_80066d4c(undefined4 param_1,int param_2)
 	// driver, and quadblock (last valid)
     FUN_8006677c(param_2,*(undefined4 *)(param_2 + 0x354));
 
-	// Driver_TeleportSelf (back onto track)
+	// VehInit_TeleportSelf (back onto track)
     FUN_80057c8c(param_2,0,0x80);
 
 	// Player_EngineRevving_Init
@@ -33868,7 +33868,7 @@ void FUN_8006749c(int param_1,int param_2)
 	// driver, and quadblock previously touched by driver
     FUN_8006677c(param_2,*(undefined4 *)(param_2 + 0x354));
 
-	// Driver_TeleportSelf (back onto track)
+	// VehInit_TeleportSelf (back onto track)
     FUN_80057c8c(param_2,0,0x80);
 
 	// enable collision for this thread

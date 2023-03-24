@@ -52,7 +52,7 @@ struct Driver* BOTS_Driver_Init(int driverID)
 		
 	d = t->object;
 	memset(d, 0x0, 0x62C);
-	Init_NonGhost_Driver(t, driverID);
+	VehInit_NonGhost(t, driverID);
 	sdata->gGT->drivers[driverID] = d;
 	t->modelIndex = 0x3f;
 	

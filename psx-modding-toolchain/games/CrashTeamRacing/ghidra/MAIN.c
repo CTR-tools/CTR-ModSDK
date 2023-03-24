@@ -6998,7 +6998,7 @@ void FUN_8003aee8(uint *param_1,int param_2)
     FUN_8002c8a8(0,0,1);
   }
 
-  // Driver_TeleportAll
+  // VehInit_TeleportAll
   FUN_80058898(param_1,2);
   return;
 }
@@ -8996,7 +8996,7 @@ LAB_8003ca68:
 	  // set sound to unpaused
       DAT_8008d8a4 = 0;
 
-	  // Init_EngineAudio_AllPlayers
+	  // VehInit_EngineAudio_AllPlayers
       FUN_80058ba4();
 
 	  // This is in OnlineCTR

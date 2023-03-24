@@ -124,8 +124,8 @@ common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/Standard
 // Inject compiled code for Penta's stats into the executable
 926, exe, 0x80088A0C, 0x0, ../../Patches/USAUnlimitedPenta/assets/stats.bin
 
-// Compile modified Driver_SetConsts
-926, exe, Driver_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
+// Compile modified VehInit_SetConsts
+926, exe, VehInit_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
 
 // FixAdventureModeCharacterSelectArrows //
 // the same bug is also present here of course

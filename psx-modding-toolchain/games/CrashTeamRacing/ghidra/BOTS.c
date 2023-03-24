@@ -3857,7 +3857,7 @@ void FUN_8001702c(int param_1)
 
   DAT_8008d698 = 0;
 
-  // Driver_TeleportSelf (startline)
+  // VehInit_TeleportSelf (startline)
   FUN_80057c8c(param_1,3,0);
 
   // get position where driver should spawn

@@ -8,7 +8,7 @@ common, exe, MainInit_StringToLevID, -0x8, src/hookInit.s
 
 // Include USAUnlimitedPenta
 926, exe, 0x80088A0C, 0x0, ../../Patches/USAUnlimitedPenta/assets/stats.bin
-926, exe, Driver_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
+926, exe, VehInit_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
 
 // Compile code to empty spaces in RDATA
 common, exe, rdata_free, 0x0, src/p_rom.c
