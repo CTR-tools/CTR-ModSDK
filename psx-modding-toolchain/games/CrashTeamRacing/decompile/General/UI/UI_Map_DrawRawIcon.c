@@ -2,7 +2,7 @@
 
 // Draw icon on map
 void DECOMP_UI_Map_DrawRawIcon(
-	int param_1,int *param_2,
+	int ptrMap,int *param_2,
 	int iconID,int colorID,int unused,
     short scale)
 {
@@ -14,7 +14,7 @@ void DECOMP_UI_Map_DrawRawIcon(
   posX = *param_2;
   posY = param_2[2];
 
-  UI_Map_GetIconPos(param_1,&posX,&posY);
+  UI_Map_GetIconPos(ptrMap,&posX,&posY);
 
   ptrColor = data.ptrColor[colorID];
 

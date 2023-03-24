@@ -1,7 +1,7 @@
 #include <common.h>
 
 // Draw dot for Player on 2D Adv Map
-void DECOMP_UI_Map_DrawAdvPlayer(int param_1,int *param_2,int param_3,int param_4,
+void DECOMP_UI_Map_DrawAdvPlayer(int ptrMap,int *param_2,int unused1,int unused2,
                  short param_5,short param_6)
 
 {
@@ -12,7 +12,7 @@ void DECOMP_UI_Map_DrawAdvPlayer(int param_1,int *param_2,int param_3,int param_
   posX = *param_2;
   posY = param_2[2];
 
-  UI_Map_GetIconPos(param_1,&posX,&posY);
+  UI_Map_GetIconPos(ptrMap,&posX,&posY);
 
   puVar1 = &data.playerIconAdvMap.vertCol1[0];
   if ((sdata->gGT->timer & 2) != 0) {
