@@ -220,14 +220,16 @@ LAB_80041720:
         //if racer hadn't finished the race
         if ((*(uint *)(iVar6 + 0x2c8) & 0x2000000) == 0)
         {
-          //turn on 26th bit of Actions Flag set (means racer finished the race)
+          // this one racer has now finished the race
           *(uint *)(iVar6 + 0x2c8) = *(uint *)(iVar6 + 0x2c8) | 0x2000000;
-
-		  // This block of code only executes once
-
-		  // puVar7 is 8008d2ac
+		  
+		  // === Run on first frame that race ends ===
+		  
+		  // if total event hasn't finished (gGT->gameMode1)
           if ((*(uint *)puVar7 & 0x200000) == 0)
 		  {
+			// set driver placement rank, based on
+			// how many drivers have finished the race
             *(short *)(iVar6 + 0x482) = DAT_8008d2aa;
             DAT_8008d2aa = DAT_8008d2aa + 1;
           }

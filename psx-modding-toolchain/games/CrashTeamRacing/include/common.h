@@ -9230,7 +9230,8 @@ struct sData
 	#if BUILD >= UsaRetail
 	// 8008d2a8 -- UsaRetail
 	// 800906b4 -- JpnRetail
-	int TurboDisplayPos_Only1P;
+	short TurboDisplayPos_Only1P;
+	short numPlayersFinishedRace;
 	#endif
 
 	// DoesNotExist -- Early June? PizzaHut USA

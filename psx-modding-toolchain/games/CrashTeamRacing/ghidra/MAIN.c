@@ -9574,6 +9574,8 @@ void FUN_8003d068(void)
 
   // TurboDisplayPos_Only1P
   DAT_8008d2a8 = 0;
+  
+  // reset number of drivers who finished the race
   DAT_8008d2aa = 0;
 
   // no winners, nobody gets confetti
