@@ -8711,6 +8711,11 @@ struct Data
 	MATRIX matArr12[0x4];
 	MATRIX matArr13[0x4]; // N Tropy jump
 
+	// ^^^
+	// (0xD) penta uses ripper roo
+	// (0xE) fake crash uses crash bandicoot
+	// (0xF) oxide uses crash bandicoot
+
 	// 0x80087EF4 - pointer to 0x80086e94
 	struct
 	{
