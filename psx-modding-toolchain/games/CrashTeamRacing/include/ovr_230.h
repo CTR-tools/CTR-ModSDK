@@ -1,5 +1,22 @@
-#include <common.h>
+// MainMenu
+struct Title
+{
+	// 0x0
+	struct Thread* t;
 
+	// 0x4
+	struct Instance* i[6];
+
+	// 0x1c
+	short cameraPosOffset[3];
+
+	// 0x22
+	short UnusedPadding;
+
+	// 0x24 -- size of struct
+};
+
+// used in mods (not correct)
 struct TrackSelectMeta
 {
 	// 0x0
@@ -13,6 +30,36 @@ struct TrackSelectMeta
 	int lngIndex;
 
 	// 0x10 -- size
+};
+
+// Correct version of Above ^^^
+// array at 0x800b53b0
+struct MainMenu_LevelRow
+{
+	// 0 - dingo canyon
+	// 3 - crash cove
+	// etc
+	short levID;
+
+	// texture that shows before video plays
+	short videoThumbnail;
+
+	// which black+white map draws
+	short mapTextureID;
+
+	// 0xFFFF for unlock by default
+	// otherwise has a flag for what is needed,
+	// 0xFFFE means "only show in 1P mode" (oxide station)
+	short unlock;
+
+	// changes which video of level plays
+	int videoID;
+
+	// how long video plays before looping
+	int videoLength;
+
+	// total struct is 16 bytes large,
+	// this structure is complete
 };
 
 struct CharacterSelectMeta

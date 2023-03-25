@@ -1,5 +1,3 @@
-#include <common.h>
-
 struct unknown233
 {
 	void* unknown1;
