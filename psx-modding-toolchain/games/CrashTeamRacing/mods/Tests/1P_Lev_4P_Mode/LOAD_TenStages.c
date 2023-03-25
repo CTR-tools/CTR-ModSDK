@@ -693,9 +693,8 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				// '2' for dram
 				LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_tawna - 0x8f) * 2 + 0x1ad, &data.podiumModel_tawna, 0xfffffffe);
 
-				// -0x7d = 0x83
-				// 0x83 - 0x7e = 5 (dingo)
-				if (gGT->podium_modelIndex_First == -0x7d)
+				// if 0x7e+5 (dingo)
+				if (gGT->podium_modelIndex_First == 0x83)
 				{
 					// add "DingoFire" to loading queue
 					// '2' for dram
