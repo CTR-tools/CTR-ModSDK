@@ -477,9 +477,11 @@ void RenderAllHUD(struct GameTracker* gGT)
 				// drawing end of race
 				else
 				{
-					if((gameMode1 & (ADVENTURE_MODE | ARCADE_MODE)) != 0)
+					if((gGT->gameMode2 & CUP_ANY_KIND) != 0)
 					{
-						AA_EndEvent_DrawMenu();
+						// disable drawing hud,
+						// enable drawing "standings"
+						gGT->hudFlags = (hudFlags & 0xfe) | 4;
 						return;
 					}
 					
@@ -501,11 +503,9 @@ void RenderAllHUD(struct GameTracker* gGT)
 						return;
 					}
 					
-					if((gGT->gameMode2 & CUP_ANY_KIND) != 0)
+					if((gameMode1 & (ADVENTURE_MODE | ARCADE_MODE)) != 0)
 					{
-						// disable drawing hud,
-						// enable drawing "standings"
-						gGT->hudFlags = (hudFlags & 0xfe) | 4;
+						AA_EndEvent_DrawMenu();
 						return;
 					}
 					
