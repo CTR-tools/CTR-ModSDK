@@ -37,11 +37,11 @@ enum PhysType
 {
 	// MetaPhys[0]
 	// Driver Offset 0x416
-	GRAVITY,
+	GRAVITY=0,
 
 	// MetaPhys[1]
 	// Driver offset 0x418
-	JUMP,
+	JUMP=1,
 
 	// MetaPhys[2]
 	// Driver offset 0x41A
@@ -66,11 +66,11 @@ enum PhysType
 
 	// MetaPhys[9]
 	// Driver offset 0x428
-	ACCELERATION_NO_RESERVES,
+	ACCELERATION_NO_RESERVES=9,
 
 	// MetaPhys[A]
 	// Driver offset 0x42A
-	ACCELERATION_WITH_RESERVES,
+	ACCELERATION_WITH_RESERVES=0xA,
 
 	// MetaPhys[B]
 	// Driver offset 0x42C
