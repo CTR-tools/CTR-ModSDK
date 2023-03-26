@@ -83,7 +83,8 @@ struct BigHeader
 	struct BigEntry entry[1];
 };
 
-struct LoadQueueSlot {
+struct LoadQueueSlot
+{
 
 	// 0x0
 	struct BigHeader* ptrBigfileCdPos;
