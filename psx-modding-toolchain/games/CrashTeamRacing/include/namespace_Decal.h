@@ -1,10 +1,16 @@
-
 // transparent parameter of DrawPoly funcs
 enum BlendMode
 {
+	// 50% transparency
 	TRANS_50=1,
+
+	// additive blending
 	ADD=2,
+
+	// subtractive blending
 	SUBTRACT=3,
+
+	// additive blending on 25% transparency
 	ADD_25=4
 };
 
