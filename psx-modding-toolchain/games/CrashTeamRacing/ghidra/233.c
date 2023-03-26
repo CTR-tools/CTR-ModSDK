@@ -5468,16 +5468,21 @@ void FUN_800b8dc8(void)
   int iVar3;
   
   iVar3 = DAT_800b94a4;
+  
+  // copy from base instance
   DAT_800b97e4 = DAT_800b94a4;
+  
   if (DAT_800b94a4 != 0) 
   {
 	// make invisible
     *(uint *)(DAT_800b94a4 + 0x28) = *(uint *)(DAT_800b94a4 + 0x28) | 0x80;
 	
+	// set position
     *(int *)(iVar3 + 0x44) = (int)DAT_800b9488;
     *(int *)(iVar3 + 0x48) = (int)DAT_800b948a;
     puVar1 = PTR_DAT_8008d2ac;
     *(int *)(iVar3 + 0x4c) = (int)DAT_800b948c;
+	
     if ((*(uint *)(puVar1 + 0x1cec) & 3) == 0) {
       iVar3 = 4;
       do {
@@ -5665,8 +5670,13 @@ void FUN_800b8f8c(void)
     iVar12 = iVar12 + 1;
   } while (iVar12 * 0x10000 >> 0x10 < 5);
   
-  // LEV -> trial_data -> ???
+  // LEV -> ptrSpawnType1 -> pointers[6]
   puVar9 = *(undefined4 **)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) + 0x1c);
+  
+  // inside puVar9:
+  // [0] - size
+  // [1] - numStrings
+  // [2] - ptrStrings
   
   DAT_800b94a4 = 0;
   iVar12 = 0;
@@ -5674,10 +5684,18 @@ void FUN_800b8f8c(void)
   // MEMPACK_AllocHighMem
   iVar11 = FUN_8003e8e8(*puVar9,s_credit_strings_800b8658);
   
+  // memcpy
   FUN_80077cb8(iVar11,puVar9,*puVar9);
+  
+  // number of strings
   DAT_800b94a8 = *(ushort *)(iVar11 + 4);
+  
+  // pointer to strings
   piVar10 = (int *)(iVar11 + 8);
   DAT_800b94ac = piVar10;
+  
+  // loop through all strings
+  // patch pointers, just like LNG
   if (0 < (int)((uint)DAT_800b94a8 << 0x10)) {
     do {
       iVar12 = iVar12 + 1;
@@ -5685,7 +5703,12 @@ void FUN_800b8f8c(void)
       piVar10 = piVar10 + 1;
     } while (iVar12 * 0x10000 >> 0x10 < (int)(short)DAT_800b94a8);
   }
+  
+  // credits_posY to bottom of screen, 
+  // wait for scroll up
   DAT_800b97e8 = 0x154;
+  
+  // pointer to strings
   DAT_800b97ec = DAT_800b94ac[0x14];
   return;
 }
@@ -5779,14 +5802,22 @@ undefined4 FUN_800b9398(void)
   
   iVar2 = 0;
   iVar1 = 0;
-  do {
+  
+  // loop through 5 creditghost
+  do 
+  {
     iVar2 = iVar2 + 1;
-    if (*(int *)((int)&DAT_800b94bc + (iVar1 >> 0xe)) !=
+    
+	// check if all 5 creditghost models equal 
+	// dancerInst model, return 1 if all equal, 0 if not
+	if (*(int *)((int)&DAT_800b94bc + (iVar1 >> 0xe)) !=
         *(int *)(DAT_800b94a4 + 0x18)) {
       return 0;
     }
+	
     iVar1 = iVar2 * 0x10000;
   } while (iVar2 * 0x10000 >> 0x10 < 5);
+  
   return 1;
 }
 
