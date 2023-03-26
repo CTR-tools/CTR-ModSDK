@@ -22,12 +22,12 @@ void DECOMP_UI_DrawSpeedNeedle(short posX,short posY,struct Driver* driver)
   iVar9 = iVar6 << 0x10;
   iVar3 = iVar6 + driver->const_SacredFireSpeed >> 8;
   iVar1 = driver->unk36E << 0x10;
-  backDB->drawEnv.clip.x = 0;
+  backDB = 0;
   iVar9 = iVar9 >> 0x18;
   if (iVar6 < iVar1 >> 0x10) {
     local_28 = 0x700;
     uVar8 = 0x980;
-    backDB->drawEnv.clip.x = (iVar9 * 0x1a5e0) / 64000;
+    backDB = (iVar9 * 0x1a5e0) / 64000;
   }
   else {
     local_28 = 0x980;
@@ -37,7 +37,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX,short posY,struct Driver* driver)
 
   // Map value from [oldMin, oldMax] to [newMin, newMax]
   // inverting newMin and newMax will give an inverse range mapping
-  sVar2 = MapToRange(((iVar1 >> 0x18) * 0x1a5e0) / 64000,backDB->drawEnv.clip.x,(iVar3 * 0x1a5e0) / 64000,uVar8,
+  sVar2 = MapToRange(((iVar1 >> 0x18) * 0x1a5e0) / 64000,backDB,(iVar3 * 0x1a5e0) / 64000,uVar8,
                        local_28);
 
   // PrimMem ptrCurrent
@@ -61,47 +61,47 @@ void DECOMP_UI_DrawSpeedNeedle(short posX,short posY,struct Driver* driver)
     p->r2 = 0x3000bbff;
 
 	// Sine(angle)
-	backDB->drawEnv.clip.x= MATH_Sin(iVar1);
+	backDB= MATH_Sin(iVar1);
 
-	p->x2 = posX + ((backDB->drawEnv.clip.x) * 3 >> 0xb) + 0x41;
+	p->x2 = posX + ((backDB) * 3 >> 0xb) + 0x41;
 
 	// Cosine(angle)
-	backDB->drawEnv.clip.x= MATH_Cos(iVar1);
+	backDB= MATH_Cos(iVar1);
 
-	backDB->drawEnv.clip.x= ((backDB->drawEnv.clip.x << 2) >> 0xb) * 0x140;
-    if (backDB->drawEnv.clip.x< 0) {
-      backDB->drawEnv.clip.x= backDB->drawEnv.clip.x+ 0x1ff;
+	backDB= ((backDB << 2) >> 0xb) * 0x140;
+    if (backDB< 0) {
+      backDB= backDB+ 0x1ff;
     }
-    p->y2 = posY + (backDB->drawEnv.clip.x >> 9) + 0x29;
+    p->y2 = posY + (backDB >> 9) + 0x29;
 
 	// Sine(angle)
-	backDB->drawEnv.clip.x= MATH_Sin(iVar3);
+	backDB= MATH_Sin(iVar3);
 
-	p->x1 = posX - ((backDB->drawEnv.clip.x * 3 >> 0xb) + -0x41);
+	p->x1 = posX - ((backDB * 3 >> 0xb) + -0x41);
 
 	// Cosine(angle)
-	backDB->drawEnv.clip.x= MATH_Cos(iVar3);
+	backDB= MATH_Cos(iVar3);
 
-	backDB->drawEnv.clip.x= (backDB->drawEnv.clip.x * 3 >> 0xb) * 0x140;
-    if (backDB->drawEnv.clip.x< 0) {
-      backDB->drawEnv.clip.x= backDB->drawEnv.clip.x+ 0x1ff;
+	backDB= (backDB * 3 >> 0xb) * 0x140;
+    if (backDB< 0) {
+      backDB= backDB+ 0x1ff;
     }
-    p->y1 = posY - ((backDB->drawEnv.clip.x >> 9) + -0x29);
+    p->y1 = posY - ((backDB >> 9) + -0x29);
 
 	// Sine(angle)
-	backDB->drawEnv.clip.x= MATH_Sin(iVar3);
+	backDB= MATH_Sin(iVar3);
 
-	p->x0 = posX + (backDB->drawEnv.clip.x * 0x1e >> 0xb) + 0x41;
+	p->x0 = posX + (backDB * 0x1e >> 0xb) + 0x41;
 
 	// Cosine(angle)
-	backDB->drawEnv.clip.x= MATH_Cos(iVar3);
+	backDB= MATH_Cos(iVar3);
 
 	gGT = sdata->gGT;
-    backDB->drawEnv.clip.x= (backDB->drawEnv.clip.x* 0x1e >> 0xb) * 0x140;
-    if (backDB->drawEnv.clip.x< 0) {
-      backDB->drawEnv.clip.x= backDB->drawEnv.clip.x+ 0x1ff;
+    backDB= (backDB* 0x1e >> 0xb) * 0x140;
+    if (backDB< 0) {
+      backDB= backDB+ 0x1ff;
     }
-    p->y0 = posY + (backDB->drawEnv.clip.x >> 9) + 0x29;
+    p->y0 = posY + (backDB >> 9) + 0x29;
 
 	// pointer to OT memory
     primmemCurr = gGT->tileView_UI.ptrOT;
@@ -110,7 +110,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX,short posY,struct Driver* driver)
     *primmemCurr = (u_int)p & 0xffffff;
 
 	// gGT->backBuffer
-    backDB->drawEnv.clip.x= sdata->gGT->backBuffer;
+    backDB= sdata->gGT->backBuffer;
 
 	// PrimMem ptrCurrent
     primmemCurr = backDB->primMem.curr;
@@ -131,47 +131,47 @@ void DECOMP_UI_DrawSpeedNeedle(short posX,short posY,struct Driver* driver)
       p->r2 = 0x3000ffff;
 
 	  // Sine(angle)
-	  backDB->drawEnv.clip.x= MATH_Sin(iVar1);
+	  backDB= MATH_Sin(iVar1);
 
-	  p->x2 = posX - ((backDB->drawEnv.clip.x * 3 >> 0xb) + -0x41);
+	  p->x2 = posX - ((backDB * 3 >> 0xb) + -0x41);
 
 	  // Cosine(angle)
-	  backDB->drawEnv.clip.x= MATH_Cos(iVar1);
+	  backDB= MATH_Cos(iVar1);
 
-	  backDB->drawEnv.clip.x= ((backDB->drawEnv.clip.x << 2) >> 0xb) * 0x140;
-      if (backDB->drawEnv.clip.x< 0) {
-        backDB->drawEnv.clip.x= backDB->drawEnv.clip.x+ 0x1ff;
+	  backDB= ((backDB << 2) >> 0xb) * 0x140;
+      if (backDB< 0) {
+        backDB= backDB+ 0x1ff;
       }
-      p->y2 = posY - ((backDB->drawEnv.clip.x >> 9) + -0x29);
+      p->y2 = posY - ((backDB >> 9) + -0x29);
 
 	  // Sine(angle)
-	  backDB->drawEnv.clip.x= MATH_Sin(iVar3);
+	  backDB= MATH_Sin(iVar3);
 
-	  p->x1 = posX - ((backDB->drawEnv.clip.x * 3 >> 0xb) + -0x41);
+	  p->x1 = posX - ((backDB * 3 >> 0xb) + -0x41);
 
 	  // Cosine(angle)
-	  backDB->drawEnv.clip.x= MATH_Cos(iVar3);
+	  backDB= MATH_Cos(iVar3);
 
-	  backDB->drawEnv.clip.x= (backDB->drawEnv.clip.x * 3 >> 0xb) * 0x140;
-      if (backDB->drawEnv.clip.x< 0) {
-        backDB->drawEnv.clip.x= backDB->drawEnv.clip.x+ 0x1ff;
+	  backDB= (backDB * 3 >> 0xb) * 0x140;
+      if (backDB< 0) {
+        backDB= backDB+ 0x1ff;
       }
-      p->y1 = posY - ((backDB->drawEnv.clip.x >> 9) + -0x29);
+      p->y1 = posY - ((backDB >> 9) + -0x29);
 
 	  // Sine(angle)
-	  backDB->drawEnv.clip.x= MATH_Sin(iVar3);
+	  backDB= MATH_Sin(iVar3);
 
-	  p->x0 = posX + ((backDB->drawEnv.clip.x * 0x1e >> 0xb) + 0x41);
+	  p->x0 = posX + ((backDB * 0x1e >> 0xb) + 0x41);
 
 	  // Cosine(angle)
-	  backDB->drawEnv.clip.x= MATH_Cos(iVar3);
+	  backDB= MATH_Cos(iVar3);
 
 	  gGT = sdata->gGT;
-      backDB->drawEnv.clip.x= (backDB->drawEnv.clip.x * 0x1e >> 0xb) * 0x140;
-      if (backDB->drawEnv.clip.x< 0) {
-        backDB->drawEnv.clip.x= backDB->drawEnv.clip.x+ 0x1ff;
+      backDB= (backDB * 0x1e >> 0xb) * 0x140;
+      if (backDB< 0) {
+        backDB= backDB+ 0x1ff;
       }
-      *(short *)(p + 10) = posY + ((backDB->drawEnv.clip.x >> 9) + 0x29);
+      *(short *)(p + 10) = posY + ((backDB >> 9) + 0x29);
 
 	  // pointer to OT memory
       primmemCurr = gGT->tileView_UI.ptrOT;
