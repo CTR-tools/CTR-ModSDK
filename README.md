@@ -65,7 +65,7 @@ Decompiling the binaries assisted by Ghidra, researching how it works and docume
 Rewriting Ghidra output to human-readable C Code and testing if it's functional.
 Most of the source code are shared between versions.
 
-- ![](https://progress-bar.dev/124/?scale=1171&width=300&title=USA&suffix=%20functions%20out%20of%201171*)
+- ![](https://progress-bar.dev/301/?scale=1171&width=300&title=USA&suffix=%20functions%20out%20of%201171*)
 - ![](https://progress-bar.dev/22/?scale=1200&width=300&title=PAL&suffix=%20functions%20out%20of%201200*)
 - ![](https://progress-bar.dev/95/?scale=1200&width=300&title=JPN&suffix=%20functions%20out%20of%201200*)
 
