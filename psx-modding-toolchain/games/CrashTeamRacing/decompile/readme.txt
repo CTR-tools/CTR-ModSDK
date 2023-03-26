@@ -48,6 +48,9 @@ Some functions have been decompiled for all the 5 builds of CTR that we cater to
 -TileView_SetMatrixVP
 -MenuBox_DrawTime
 -DebugFont_Init
+-DecalHUD_DrawPolyFT4
+-DecalHUD_DrawPolyGT4
+-DecalHUD_DrawWeapon
 -DecalFont_DrawLine
 -DecalFont_DrawLineOT
 -DecalFont_DrawLineStrlen
@@ -63,3 +66,4 @@ Some functions have been decompiled for all the 5 builds of CTR that we cater to
 -LOAD_ReadFile
 -Turbo_ThTick
 -Turbo_Increment
+-UI_DrawDriverIcon
