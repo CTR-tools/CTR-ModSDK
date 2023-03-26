@@ -252,7 +252,7 @@ void CameraPerFrameHook(struct Thread* t)
 {
 	struct CameraDC* camDC;
 	struct Driver* driver;
-	struct HudElement* hud;
+	struct UiElement2D* hud;
 
 	// driver = thread->(cameraDC*)inst->driverToFollow
 

@@ -59,7 +59,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	u_int local_74;
 	u_int local_70;
 	struct Driver* playerStruct;
-	struct HudElement *hudStructPtr;
+	struct UiElement2D *hudStructPtr;
 	void* levPtrMap;
 	char cVar22;
 	short wumpaModel_PosX;
@@ -81,7 +81,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	struct Icon* icon2;
 
 	// Get pointer to array of HUD structs
-	hudStructPtr = (struct HudElement*)data.hudStructPtr[sdata->gGT->numPlyrCurrGame - 1];
+	hudStructPtr = (struct UiElement2D*)data.hudStructPtr[sdata->gGT->numPlyrCurrGame - 1];
 
 	levPtrMap = 0;
 

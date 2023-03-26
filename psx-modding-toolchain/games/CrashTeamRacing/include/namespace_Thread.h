@@ -1,4 +1,3 @@
-
 #define SIZE_RELATIVE_POOL_BUCKET(a,b,c,d) \
 	(a << 16) | b | c | d
 

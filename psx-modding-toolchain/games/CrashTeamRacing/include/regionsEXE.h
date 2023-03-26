@@ -2194,22 +2194,22 @@ struct Data
 	// 27 - ???
 	// 28 - num elements
 
-	struct HudElement hud_1P_P1[0x28];
+	struct UiElement2D hud_1P_P1[0x28];
 
-	struct HudElement hud_2P_P1[0x28];
-	struct HudElement hud_2P_P2[0x28];
+	struct UiElement2D hud_2P_P1[0x28];
+	struct UiElement2D hud_2P_P2[0x28];
 
-	struct HudElement hud_4P_P1[0x28];
-	struct HudElement hud_4P_P2[0x28];
-	struct HudElement hud_4P_P3[0x28];
-	struct HudElement hud_4P_P4[0x28];
+	struct UiElement2D hud_4P_P1[0x28];
+	struct UiElement2D hud_4P_P2[0x28];
+	struct UiElement2D hud_4P_P3[0x28];
+	struct UiElement2D hud_4P_P4[0x28];
 
 	// 8008625c, array of four pointers,
 	// [0] = 1P P1
 	// [1] = 2P P1
 	// [2] = 4P P1
 	// [3] = 4P P1
-	struct HudElement* hudStructPtr[4];
+	struct UiElement2D* hudStructPtr[4];
 
 
 	// ============================================================================
