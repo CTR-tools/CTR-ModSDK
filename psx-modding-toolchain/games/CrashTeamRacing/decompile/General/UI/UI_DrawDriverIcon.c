@@ -1,76 +1,44 @@
 #include <common.h>
 
-void DECOMP_UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_int vcolorAndCode)
+void DECOMP_UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, u_int color)
 {
-	short iVar6;
-	short height;
 	short width;
+	short height;
+	short rightX;
+	short topY;
+	short bottomY;
+	char bottomV;
 	POLY_FT4* p;
 
 	p = (POLY_FT4*)primMem->curr;
 
-	// vertex color and code
-	*(u_int*)&p->r0 = vcolorAndCode;
+	width = icon->X2 - icon->X1;
+	height = icon->Y3 - icon->Y1;
+	rightX = posX + (width * scale / 0x1000);
+	#if BUILD != EurRetail
+		topY = (posY < 166) ? posY : 165;
+		bottomY = ((posY + (height * scale / 0x1000)) < 166) ? (posY + (height * scale / 0x1000)) : 165;
+	#else
+		topY = (posY < 176) ? posY : 175;
+		bottomY = ((posY + (height * scale / 0x1000)) < 176) ? (posY + (height * scale / 0x1000)) : 175;
+	#endif
+	bottomV = (icon->Y1 + bottomY) - posY;
 
 	setPolyFT4(p);
+	setRGB0(p, color & 0xff, (color & 0xff00) >> 8, (color & 0xff0000) >> 16);
+	setXY4(p, posX, topY, rightX, topY, posX, bottomY, rightX, bottomY);
+	setUV4(p, icon->X1, icon->Y1, icon->X2, icon->Y2, icon->X3, bottomV, icon->X4, bottomV);
+	p->clut = icon->paletteXY;
+	p->tpage = icon->pageXY;
 
-	// UVs and CLUT
-	*(u_int*)&p->u0 = *(u_int*)&icon->X1;
-
-	// UVs and texpage
-	*(u_int*)&p->u1 = *(u_int*)&icon->X2;
-
-	width = icon->X2 - icon->X1;
-
-	// UVs and... pad1?
-	*(u_int*)&p->u2 = *(u_int*)&icon->X3;
-
-	p->x0 = posX;
-	p->u3 = icon->X4;
-
-	height = icon->Y3 - icon->Y1;
-
-	if (posY < 166)
-		p->y0 = posY;
-	else
-		p->y0 = 165;
-
-	p->x1 = posX + (short)(width * scale >> 12);
-
-	if (posY < 166)
-		p->y1 = posY;
-	else
-		p->y1 = 165;
-
-	iVar6 = posY + (height * scale >> 12);
-	p->x2 = posX;
-
-	if (iVar6 < 166)
-		p->y2 = iVar6;
-	else
-		p->y2 = 165;
-
-	p->x3 = posX + (short)(width * scale >> 12);
-	height = posY + (height * scale >> 12);
-
-	if (height < 166)
-		p->y3 = (short)height;
-	else
-		p->y3 = 165;
-
-	p->v2 = (p->v0 + *(u_char*)&p->y2) - (char)posY;
-	p->v3 = (p->v0 + *(u_char*)&p->y3) - (char)posY;
-
-	if (semitransparencyEnabled != 0)
+	if (transparency != 0)
 	{
 		// disable blending mode bits of the texpage using AND, then set them using OR
-		// blending mode bits on most Icon images are set to 11 (Mode 3, which is no blending)
+		// then set image to use semi-transparent mode using the setSemiTrans macro
 		// this function is always called with this parameter set to 1 (which is Mode 0, equivalent to 50% transparency)
-		// uh, I think so anyway, feel free to double check I guess
 
-		// note that these blending modes are different from those used in UI_Map_DrawMap
-		p->tpage = p->tpage & 0xff9f | (semitransparencyEnabled - 1) << 5;
-		p->code = p->code | 2;
+		p->tpage = p->tpage & 0xff9f | (transparency - 1) << 5;
+		setSemiTrans(p, true);
 	}
 
 	// could also use the psn00bsdk macro, there is no difference
