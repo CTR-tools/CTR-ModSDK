@@ -10,7 +10,7 @@ void AA_EndEvent_DrawMenu()
 {
 	struct GameTracker* gGT;
 	struct Driver* driver;
-	struct HudElement* hudArray;
+	struct UiElement2D* hudArray;
 	struct AdvProgress* adv;
 	int bitIndex;
 	short posXY[2];
@@ -97,7 +97,7 @@ void AA_EndEvent_DrawMenu()
 				// what on earth does it do with this?
 				// sdata->ptrHudC->scale[0] - 0x800
 				
-				// copy HudElement X and Y
+				// copy UiElement2D X and Y
 				*(int*)&posXY[0] = *(int*)&data.hud_1P_P1[0x24];
 			}
 		}

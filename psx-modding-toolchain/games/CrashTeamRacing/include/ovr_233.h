@@ -108,9 +108,19 @@ extern struct
 	u_char hasSelectedChar;
 } OVR_233;
 
-// Footer after credits
 #if 0
-800b9488 - first byte after last func
+800b8598 - last byte of garage func
+
+800b8598 - Garage MenuBox
+
+800b8640 - CREDITS RDATA
+800b8668 - first byte of credits func (CREDITS TEXT)
+#endif
+
+// === Credits Functions Here ===
+
+#if 0
+800b9488 - first byte after last func (CREDITS BSS)
 
 800b9488 - short creditGhost_Pos[4]
 800b9490 - short unused_Pos[4]
