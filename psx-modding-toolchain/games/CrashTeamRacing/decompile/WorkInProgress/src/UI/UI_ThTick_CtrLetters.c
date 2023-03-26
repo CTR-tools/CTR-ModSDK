@@ -8,7 +8,7 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
 {
   int endOfRaceTransition;
   struct Instance* inst;
-  void* obj;
+  struct UiElement3D* obj;
   short rotY;
   short rotX;
   short rotZ;
@@ -24,11 +24,11 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
   // that's why the lighting changes in the HUD
 
   // Rotate on the Y axis
-  obj.rot[1] += 0x40;
+  obj->rot[1] += 0x40;
 
   // Vector_SpecLightSpin2D
   // instance, ptr rot[6], cop registers
-  Vector_SpecLightSpin2D(inst,obj,(obj + 0x28));
+  Vector_SpecLightSpin2D(inst,obj,obj->lightDir);
 
   if (
 		// If you're in End-Of-Race menu
@@ -66,7 +66,7 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
   CovertRotToMatrix(inst,&rotY);
 
   // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
-  MatrixRotate(inst,obj.rot[4],inst);
+  MatrixRotate(inst,obj->m.m[0][0],inst);
   
   return;
 }

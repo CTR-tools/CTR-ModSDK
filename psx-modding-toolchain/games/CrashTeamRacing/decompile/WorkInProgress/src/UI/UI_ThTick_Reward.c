@@ -6,7 +6,7 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
 
 {
   u_int flags;
-  void * obj;
+  struct UiElement3D * obj;
   MATRIX mat;
   struct Instance * inst;
 
@@ -17,7 +17,7 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
   obj = bucket->object;
 
   // Spin on the Y axis
-  obj.rot[1] += 0x40;
+  obj->rot[1] += 0x40;
 
   // instance, ptr rot[6], cop registers
   Vector_SpecLightSpin2D(inst,obj,(obj + 0x28));
@@ -29,7 +29,7 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
   CovertRotToMatrix(mat,obj);
 
   // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
-  MatrixRotate(mat,obj.rot[4],mat);
+  MatrixRotate(mat,obj->m.m[0][0],mat);
   
   if (
 		((sdata->gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) &&

@@ -10,7 +10,7 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket) {
   gGT = sdata->gGT;
 
   // object from thread
-  void * obj = bucket->object;
+  struct UiElement3D * obj = bucket->object;
 
   // instance from thread
   struct Instance * inst = bucket->inst;
@@ -41,24 +41,24 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket) {
       // if HUD item is not timecrate
       if (inst->model->id != 0x5c) {
         // rotation speed 0x80
-        rotSpd = obj.rot[1] + 0x80;
+        rotSpd = obj->rot[1] + 0x80;
         goto LAB_8004c7d4;
       }
   }
 
   // if wumpa or crystal,
   // rotation speed 0x40
-  rotSpd = obj.rot[1] + 0x40;
+  rotSpd = obj->rot[1] + 0x40;
 
   LAB_8004c7d4:
 
-  obj.rot[1] = rotSpd;
+  obj->rot[1] = rotSpd;
   mat = inst->matrix.m[0][0];
 
   // convert 3 rotation shorts into rotation matrix
   CovertRotToMatrix(mat, obj);
   // then rotate
-  MatrixRotate(mat, obj.rot[4], mat);
+  MatrixRotate(mat, obj->m.m[0][0], mat);
 
   // if hud is enabled, and this is not demo mode
   if ((gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) {
