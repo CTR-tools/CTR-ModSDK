@@ -1,4 +1,4 @@
-#include <ovr_230.h>
+#include <common.h>
 
 // character selection menu, 
 // MenuBox_FuncPtr for menuBox: 0x800b46b4;
