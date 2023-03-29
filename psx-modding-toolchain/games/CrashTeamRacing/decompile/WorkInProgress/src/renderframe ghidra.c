@@ -644,7 +644,7 @@ code_r0x800369d8:
 					local_30.h = *(short *)((int)sdata->gGT->tileView[0].matrix_ViewProj.m[-1] + iVar15);
 					MenuBox_DrawOuterRect_LowLevel
 										(&local_30, 4, 2, 
-										 data.ptrColor[(sdata->gGT->drivers[iVar19]->BattleHUD).teamID + 0x18], 0, 
+										 data.ptrColor[(sdata->gGT->drivers[iVar19]->BattleHUD).teamID + PLAYER_BLUE], 0, 
 										 (sdata->gGT->tileView_UI).ptrOT + 3);
 					iVar19 = iVar19 + 1;
 					iVar15 = iVar15 + 0x110;

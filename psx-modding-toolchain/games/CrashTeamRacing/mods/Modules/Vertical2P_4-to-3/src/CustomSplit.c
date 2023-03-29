@@ -36,8 +36,8 @@ void CustomSplit()
 				// dimensions, thickness
 				(RECT*)&tileView->rect.x,4,2,
 
-				// color data, 0x18 is enum offset of BLUE
-				data.ptrColor[sdata->gGT->drivers[i]->BattleHUD.teamID + 0x18],
+				// color data
+				data.ptrColor[sdata->gGT->drivers[i]->BattleHUD.teamID + PLAYER_BLUE],
 
 				0,
 

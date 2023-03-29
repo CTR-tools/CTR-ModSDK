@@ -138,7 +138,7 @@ LAB_80022598:
 						charLength = data.font_charPixWidth[fontType] + data.font_buttonPixWidth[fontType];
 
 						// use neutral vertex color for button characters
-						ptrColor = data.ptrColor[0x17];
+						ptrColor = data.ptrColor[GRAY];
 					}
 				}
 			

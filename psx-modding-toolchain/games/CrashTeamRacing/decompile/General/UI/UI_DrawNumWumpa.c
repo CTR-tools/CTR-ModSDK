@@ -57,10 +57,10 @@ void DECOMP_UI_DrawNumWumpa(int param_1,int param_2,struct Driver* d)
 			gGT->tileView_UI.ptrOT,
 	
 			// color data
-			data.ptrColor[0][0],
-			data.ptrColor[0][1],
-			data.ptrColor[0][2],
-			data.ptrColor[0][3],
+			data.ptrColor[ORANGE][0],
+			data.ptrColor[ORANGE][1],
+			data.ptrColor[ORANGE][2],
+			data.ptrColor[ORANGE][3],
 	
 			0,0x1000);
 	}
