@@ -119,31 +119,85 @@ extern struct
 
 // === Credits Functions Here ===
 
-#if 0
-800b9488 - first byte after last func (CREDITS BSS)
+// 800b9488 - first byte after last func (CREDITS BSS)
 
-800b9488 - short creditGhost_Pos[4]
-800b9490 - short unused_Pos[4]
-800b9498 - short creditText_PosX
-800b949c - CreditThread
-800b94a0 - DancerThread
-800b94a4 - Instance* dancerInst // invisible
-800b94a8 - number of strings
-800b94ac - pointer to strings
-800b94b0 - gemstone or main menu
-800b94b4 - int unused[2]
-800b94bc - CreditsObj (0x340 large)
+struct CreditsObj
+{
+	// 800b94bc (000) 
+	struct Model* creditGhostModel[5]; // duplicates
+	
+	// 800b94d0 (014) 
+	struct Instance* creditGhostInst[5];
+	
+	// 800b94e4 (028) 
+	struct
+	{
+		char data[0x80];
+	} data_0x80_0x5[5];
+	
+	// 800b9764 (2a8)
+	struct
+	{
+		char data[0x18];
+	} data_0x18_0x5[5];
+	
+	// 800b97dc (320) 
+	int countdown;
+	
+	// 800b97e0 (324) 
+	int unk;
+	
+	// 800b97e4 (328) 
+	struct Instance* creditDanceInst; // base for copies
+	
+	// 800b97e8 (32c) 
+	int credits_posY;
+	
+	// 800b97ec (330) 
+	char* credits_topString;
+	
+	// 800b97f0 (334) 
+	char* epilogue_topString;
+	
+	// 800b97f4 (338) 
+	char* GetNextString;
+	
+	// 800b97f8 (33c) 
+	int epilogueCount200;
+};
 
-800b94bc (000) - Model* creditGhostModel[5] // duplicates
-800b94d0 (014) - Instance* creditGhostInst[5]
-800b94e4 (028) - struct{0x80}[5]
-800b9764 (2a8) - struct{0x18}[5]
-800b97dc (320) - countdown
-800b97e0 (324) - unk
-800b97e4 (328) - Instance* creditDanceInst // base for copies
-800b97e8 (32c) - credits_posY
-800b97ec (330) - credits_topString
-800b97f0 (334) - epilogue_topString
-800b97f4 (338) - GetNextString
-800b97f8 (33c) - 200-frame counter
-#endif
+struct Ovr233_Credits_BSS
+{	
+	// 800b9488
+	short creditGhost_Pos[4];
+	
+	// 800b9490
+	short unused_Pos[4];
+	
+	// 800b9498
+	int creditText_PosX;
+	
+	// 800b949c
+	struct Thread* CreditThread;
+	
+	// 800b94a0
+	struct Thread* DancerThread;
+	
+	// 800b94a4
+	struct Instance* dancerInst_invisible;
+	
+	// 800b94a8
+	int numStrings;
+	
+	// 800b94ac
+	char** ptrStrings;
+	
+	// 800b94b0
+	int boolGotoScrapbook;
+	
+	// 800b94b4
+	int unused[2];
+	
+	// 800b94bc - CreditsObj (0x340 large)
+	struct CreditsObj creditsObj;
+};
