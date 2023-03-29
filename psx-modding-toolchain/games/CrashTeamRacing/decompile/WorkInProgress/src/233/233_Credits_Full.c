@@ -3,10 +3,17 @@
 // declared at bottom
 extern struct Ovr233_Credits_BSS creditsBSS;
 
+void CS_Credits_DrawNames(struct CreditsObj* creditsObj)
+{
+	// === To do ===
+}
+
 void CS_Credits_DrawEpilogue(struct CreditsObj* creditsObj)
 {
 	if(creditsBSS.boolAllBlue == 0) return;
 	if(creditsObj->epilogue_topString == 0) return;
+	
+	// === To do ===
 }
 
 // should have parameter, but it's not used
