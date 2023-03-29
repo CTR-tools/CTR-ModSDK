@@ -25,6 +25,7 @@ void UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 	d = bucket->object;
 		
 	// characterID + 5
+	// corresponds with ptrColors
 	kartColor = data.characterIDs[d->driverID] + 5;
 	
 	// default (AI)
@@ -34,8 +35,9 @@ void UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 	if ((d->actionsFlagSet & 0x100000) == 0) 
 	{
 		// If this is an even numbered frame
+		// ptrColors white value
 		if ((gGT->timer & 2) == 0) {
-			kartColor = 4;
+			kartColor = WHITE;
 		}
 		
 		// If you're in Adventure Arena
