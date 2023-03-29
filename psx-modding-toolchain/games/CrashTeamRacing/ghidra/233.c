@@ -5326,12 +5326,14 @@ LAB_800b8a48:
 			// if all blue relics
 			(DAT_800b94b0 != 0)) 
 	  {
-		// if text is above epilogue
+		// if text is above epilogue,
+		// and below the top line of text
         if (iVar10 < 1) {
           iVar7 = -1;
         }
 		
-		// if text is below epilogue
+		// if text is below epilogue,
+		// or the top line of text
         else {
           iVar12 = 0;
 		  
