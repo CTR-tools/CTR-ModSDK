@@ -3,6 +3,11 @@
 // declared at bottom
 extern struct Ovr233_Credits_BSS creditsBSS;
 
+void CS_Credits_DrawEpilogue(struct CreditsObj* creditsObj)
+{
+	
+}
+
 // should have parameter, but it's not used
 void CS_Credits_ThTick()
 {
@@ -82,7 +87,7 @@ void CS_Credits_Init()
 	
 	// optimization
 	//int boolAllBlue;
-	#define boolAllBlue creditsBSS.boolGotoScrapbook
+	#define boolAllBlue creditsBSS.boolAllBlue
 	
 	int boolAllGold;
 	struct GameTracker* gGT;
@@ -97,7 +102,7 @@ void CS_Credits_Init()
 	CLH = gGT->level1->ptrSpawnType1->pointers[6];
 	
 	creditsBSS.DancerThread = 0;
-	creditsBSS.boolGotoScrapbook = 1;
+	creditsBSS.boolAllBlue = 1;
 	
 	boolAllBlue = 1;
 	boolAllGold = 1;
@@ -260,7 +265,7 @@ void CS_Credits_End()
 	creditsBSS.CreditThread->flags |= 0x800;
 	
 	// go to gemstone valley
-	if(creditBSS.boolGotoScrapbook == 0)
+	if(creditBSS.boolAllBlue == 0)
 	{
 		levID = 0x19;
 		

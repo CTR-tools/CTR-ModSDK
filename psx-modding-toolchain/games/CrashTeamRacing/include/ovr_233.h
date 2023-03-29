@@ -203,7 +203,7 @@ struct Ovr233_Credits_BSS
 	char** ptrStrings;
 	
 	// 800b94b0
-	int boolGotoScrapbook;
+	int boolAllBlue;
 	
 	// 800b94b4
 	int unused[2];
