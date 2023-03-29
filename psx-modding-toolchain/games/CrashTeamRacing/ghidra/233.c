@@ -5444,7 +5444,12 @@ LAB_800b8c64:
       } while (iVar4 * 0x10000 >> 0x10 < 4);
     }
   }
-  if ((-1 < (int)((uint)uVar2 << 0x10)) && (DAT_800b94b0 != 0)) 
+  if (
+		(-1 < (int)((uint)uVar2 << 0x10)) && 
+		
+		// only draw if you have all blue relics, or higher
+		(DAT_800b94b0 != 0)
+	  ) 
   {
 	// until nullptr
     iVar6 = -1;

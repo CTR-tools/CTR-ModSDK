@@ -5,7 +5,8 @@ extern struct Ovr233_Credits_BSS creditsBSS;
 
 void CS_Credits_DrawEpilogue(struct CreditsObj* creditsObj)
 {
-	
+	if(creditsBSS.boolAllBlue == 0) return;
+	if(creditsObj->epilogue_topString == 0) return;
 }
 
 // should have parameter, but it's not used
