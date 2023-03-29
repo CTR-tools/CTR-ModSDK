@@ -5,6 +5,8 @@ extern struct Ovr233_Credits_BSS creditsBSS;
 
 void CS_Credits_DrawNames(struct CreditsObj* creditsObj)
 {
+	if(creditsObj->credits_topString == 0) return;
+	
 	// === To do ===
 }
 
