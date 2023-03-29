@@ -5498,14 +5498,14 @@ void FUN_800b8dc8(void)
         iVar2 = (int)(short)iVar3;
 		
 		// CS_Credits_AnimateCreditGhost
-        FUN_800b8668((&DAT_800b94d0)[iVar2],(&DAT_800b94d0)[iVar2 + -1]);
+        FUN_800b8668((&DAT_800b94d0)[iVar2],(&DAT_800b94d0)[iVar2 + -1], iVar3);
 		
         iVar3 = iVar3 + -1;
         (&DAT_800b94bc)[iVar2] = (&DAT_800b94bc)[iVar2 + -1];
       } while (0 < iVar3 * 0x10000 >> 0x10);
       
 	  // CS_Credits_AnimateCreditGhost
-	  FUN_800b8668((&DAT_800b94d0)[0],DAT_800b97e4);
+	  FUN_800b8668((&DAT_800b94d0)[0],DAT_800b97e4, iVar3);
 	  
       DAT_800b94bc = *(undefined4 *)(DAT_800b97e4 + 0x18);
     }
