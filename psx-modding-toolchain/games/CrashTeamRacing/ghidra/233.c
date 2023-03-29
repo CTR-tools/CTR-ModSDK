@@ -5516,7 +5516,7 @@ void FUN_800b8dc8(void)
       iVar3 = 1;
 	  
 	  // CS_Credits_AnimateCreditGhost
-      FUN_800b8668(DAT_800b94d0,DAT_800b97e4,0);
+      FUN_800b8668((&DAT_800b94d0)[0],DAT_800b97e4,0);
 	  
 	  // animate all 5 creditghosts
       do 
