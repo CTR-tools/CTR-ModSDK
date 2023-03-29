@@ -2,7 +2,7 @@
 
 void UI_Map_DrawGhosts(int ptrMap,struct Thread* bucket)
 {
-  int iconID;
+  int color;
   struct Driver* d;
   struct GameTracker* gGT = sdata->gGT;
 
@@ -23,29 +23,29 @@ void UI_Map_DrawGhosts(int ptrMap,struct Thread* bucket)
 	{
 		// flash red and blue
 		
-		iconID = 6;
+		color = CORTEX_RED;
 		if ((gGT->timer & 1) != 0)
-			iconID = 5;
+			color = CORTEX_BLUE;
 	}
 	
 	// ghost is N Tropy or Oxide
 	else 
 	{
 		// N Tropy doesn't flicker
-		iconID = 0x11;
+		color = TROPY_LIGHT_BLUE;
 	
 		// if timeTrialFlags for this track show [ n tropy beaten, oxide open ]
 		if((sdata->gameProgress.highScoreTracks[gGT->levelID].timeTrialFlags & 2) != 0)
 		{
 			// oxide flickers
 			
-			iconID = 3;
+			color = RED;
 			if ((gGT->timer & 1) != 0)
-				iconID = 4;
+				color = WHITE;
 		}
 	}
 	
-	UI_Map_DrawRawIcon(ptrMap,&bucket->inst->matrix.t[0],0x31,iconID,0,0x1000);
+	UI_Map_DrawRawIcon(ptrMap,&bucket->inst->matrix.t[0],0x31,color,0,0x1000);
   }
   return;
 }
