@@ -226,7 +226,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						 	// Midpoint between Start Y and Size Y, except 0x1e higher
 						 	(int)(((u_int)tileView->rect.y + ((int)((u_int)tileView->rect.h << 0x10) >> 0x11) + -0x1e) * 0x10000) >> 0x10,
 
-							1, 0xffff8000
+							FONT_BIG, (CENTER_TEXT | ORANGE)
 						);
 					}
 
@@ -466,7 +466,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 					// Put string on the screen
 					// This happens for 10 frames
-					DecalFont_DrawLine(acStack80, (int)wumpaModel_PosX, (int)wumpaModel_PosY, 1, 1);
+					DecalFont_DrawLine(acStack80, (int)wumpaModel_PosX, (int)wumpaModel_PosY, FONT_BIG, PERIWINKLE);
 				}
 			}
 
@@ -554,7 +554,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					playerStruct->BattleHUD.cooldown--;
 
 					// print the string that shows the change in your score
-					DecalFont_DrawLine((char *)&LetterCTR_PosX, (int)wumpaModel_PosX, (int)wumpaModel_PosY, 2, 3);
+					DecalFont_DrawLine((char *)&LetterCTR_PosX, (int)wumpaModel_PosX, (int)wumpaModel_PosY, FONT_SMALL, RED);
 				}
 			}
 
@@ -922,7 +922,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				i = DecalFont_GetLineWidth(sdata->lngStrings[0x92c], 1);
 
 				// Draw the string
-				DecalFont_DrawLine((char *)&wumpaModel_PosX, (int)(((u_int)local_38 - i) * 0x10000) >> 0x10, (int)local_36, 1, 0x4022);
+				DecalFont_DrawLine((char *)&wumpaModel_PosX, (int)(((u_int)local_38 - i) * 0x10000) >> 0x10, (int)local_36, FONT_BIG, (END_AT_X | ORANGE_RED));
 
 				// DAT_8008d550
 				// %s
@@ -931,7 +931,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				sprintf((char *)&wumpaModel_PosX, &sdata->s_str[0], sdata->lngStrings[0x92c]);
 
 				// Draw the string
-				DecalFont_DrawLine((char *)&wumpaModel_PosX, (int)(short)local_38, (int)local_36, 1, 0x4000);
+				DecalFont_DrawLine((char *)&wumpaModel_PosX, (int)(short)local_38, (int)local_36, FONT_BIG, (END_AT_X | ORANGE));
 
 				backBuffer = sdata->gGT->backBuffer;
 				primMemCurr = backBuffer->primMem.curr;
@@ -1172,7 +1172,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				// In some cases, this cuts off bits, but sometimes
 				// [number] * 0x10000 >> 0x10 = [number]
 
-				DecalFont_DrawLine(pbVar6, partTimeVariable3 * 0x10000 >> 0x10, (partTimeVariable5 - 0x1e) * 0x10000 >> 0x10, 1, 0xffff8000);
+				DecalFont_DrawLine(pbVar6, partTimeVariable3 * 0x10000 >> 0x10, (partTimeVariable5 - 0x1e) * 0x10000 >> 0x10, FONT_BIG, (CENTER_TEXT | ORANGE));
 
 				if
 				(

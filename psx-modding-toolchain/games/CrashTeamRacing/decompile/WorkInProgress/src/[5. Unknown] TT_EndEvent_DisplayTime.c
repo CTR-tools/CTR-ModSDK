@@ -15,7 +15,7 @@ void TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceClockFla
 	UI_Lerp2D_Linear(&posX, (paramX - (0x88 - (int)strLineWidthTOTAL) / 2) * 0x10000 >> 0x10, (int)paramY, (paramX - (0x88 - (int)strLineWidthTOTAL) / 2) * 0x10000 >> 0x10, (int)paramY, sdata->framesSinceRaceEnded, 0x14);
 				 
 	// "YOUR TIME"
-	DecalFont_DrawLine(sdata->lngStrings[0x314], (int)paramX, (int)(((u_int)posY - 0x4c) * 0x10000) >> 0x10, 1, 0xffff8000);
+	DecalFont_DrawLine(sdata->lngStrings[0x314], (int)paramX, (int)(((u_int)posY - 0x4c) * 0x10000) >> 0x10, FONT_BIG, (CENTER_TEXT | ORANGE));
 				 
 	UI_DrawRaceClock((int)posX, (int)(short)posY, UI_DrawRaceClockFlags, drivers);
 	

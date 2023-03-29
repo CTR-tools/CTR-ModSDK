@@ -469,15 +469,15 @@ void DECOMP_MM_ParseCheatCodes()
 	// so store this code here
 	#if 1
 	char* info = "Date/Time in CheatCodes.c";
-	DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, 0xffff0000);
-	DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, 0xffff0000);
-	DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, 0xffff0000);
-	DecalFont_DrawLine("25%", 		285, 206, FONT_SMALL, 0xffff0000);
+	DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine("25%", 		285, 206, FONT_SMALL, ORANGE);
 	#endif
 	
 	#if 0
-	DecalFont_DrawLine("No DotLights", 	325, 197, FONT_SMALL, 0xffff0003);
-	DecalFont_DrawLine("No RenderFrame",325, 206, FONT_SMALL, 0xffff0003);
+	DecalFont_DrawLine("No DotLights", 	325, 197, FONT_SMALL, RED);
+	DecalFont_DrawLine("No RenderFrame",325, 206, FONT_SMALL, RED);
 	#endif
 	
 	gpad = &sdata->gGamepads->gamepad[0];

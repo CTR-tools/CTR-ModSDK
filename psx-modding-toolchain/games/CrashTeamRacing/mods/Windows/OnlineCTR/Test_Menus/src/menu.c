@@ -191,7 +191,7 @@ void MenuState2_Navigate(struct Thread* t)
 	
 	if(sdata->gGT->levelID != CREDITS_POLAR)
 	{
-		DecalFont_DrawLine("Press Select to Close",0x0,0xd0,2,0);
+		DecalFont_DrawLine("Press Select to Close",0x0,0xd0,FONT_SMALL,ORANGE);
 				
 		if(buttons & BTN_SELECT)
 		{	
@@ -211,7 +211,7 @@ void MenuState3_Minimize(struct Thread* t)
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 
-	DecalFont_DrawLine("Press Select to Open",0x0,0xd0,2,0);
+	DecalFont_DrawLine("Press Select to Open",0x0,0xd0,FONT_SMALL,ORANGE);
 	
 	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
 	

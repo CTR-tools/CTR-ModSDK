@@ -99,7 +99,7 @@ void TT_EndEvent_DrawMenu()
 			TT_EndEvent_DisplayTime((int)posX, (int)posY, sdata->flags_timeTrialEndOfRace);
 				
 			// PRESS * TO CONTINUE
-			DecalFont_DrawLine(sdata->lngStrings[0x324], 0x100, 0xbe, 1, 0xffff8000);
+			DecalFont_DrawLine(sdata->lngStrings[0x324], 0x100, 0xbe, FONT_BIG, (CENTER_TEXT | ORANGE));
 				
 			// Cross or Circle, or if timer drags on too long
 			if (((sdata->AnyPlayerTap & 0x50) != 0) && (sdata->framesSinceRaceEnded < 0x3ea))
@@ -152,17 +152,17 @@ void TT_EndEvent_DrawMenu()
 		// Change color of text every frame to make it blink
 	
 		// Default orange color
-		startX_but_its_also_strFlags = 0xffff8000;
+		startX_but_its_also_strFlags = (CENTER_TEXT | ORANGE);
 
 		// if the frame you are on, has an even number
 		if ((sdata->gGT->timer & 1) == 0) 
 		{
 			// New white color
-			startX_but_its_also_strFlags = 0xffff8004;
+			startX_but_its_also_strFlags = (CENTER_TEXT | WHITE);
 		}
 
 		// "NEW HIGH SCORE!"
-		DecalFont_DrawLine(sdata->lngStrings[0x584], (int)posX, (int)posY, 1, startX_but_its_also_strFlags);
+		DecalFont_DrawLine(sdata->lngStrings[0x584], (int)posX, (int)posY, FONT_BIG, startX_but_its_also_strFlags);
 	
 		// Total time should flash
 		sdata->flags_timeTrialEndOfRace = sdata->flags_timeTrialEndOfRace | 4;
@@ -183,17 +183,17 @@ void TT_EndEvent_DrawMenu()
 		// Change color of text every frame to make it blink
 	
 		// Default orange color
-		startX_but_its_also_strFlags = 0xffff8000;
+		startX_but_its_also_strFlags = (CENTER_TEXT | ORANGE);
 
 		// if the frame you are on, has an even number
 		if ((sdata->gGT->timer & 1) == 0) 
 		{
 			// New white color
-			startX_but_its_also_strFlags = 0xffff8004;
+			startX_but_its_also_strFlags = (CENTER_TEXT | WHITE);
 		}
 
 		// NEW BEST LAP!
-		DecalFont_DrawLine(sdata->lngStrings[0x5c8], (int)posX, (int)posY, 1, startX_but_its_also_strFlags);
+		DecalFont_DrawLine(sdata->lngStrings[0x5c8], (int)posX, (int)posY, FONT_BIG, startX_but_its_also_strFlags);
 	
 		// If first lap is the new fastest lap
 		if (sdata->gGT->lapIndexNewBest == 0) 
@@ -255,13 +255,13 @@ void TT_EndEvent_DrawMenu()
 			// Change color of text every frame to make it blink
 		
 			// Default orange color
-			startX_but_its_also_strFlags = 0xffff8000;
+			startX_but_its_also_strFlags = (CENTER_TEXT | ORANGE);
 		
 			// if the frame you are on, has an even number
 			if ((sdata->gGT->timer & 1) == 0) 
 			{
 				// New white color
-				startX_but_its_also_strFlags = 0xffff8004;
+				startX_but_its_also_strFlags = (CENTER_TEXT | WHITE);
 			}
 		
 			// N. TROPY OPENED!
@@ -269,7 +269,7 @@ void TT_EndEvent_DrawMenu()
 		}
 	
 		// Draw the N. Tropy-related string
-		DecalFont_DrawLine(endX_but_its_also_a_string, (int)posX, (int)posY, 1, startX_but_its_also_strFlags);
+		DecalFont_DrawLine(endX_but_its_also_a_string, (int)posX, (int)posY, FONT_BIG, startX_but_its_also_strFlags);
 	}
 	
 LAB_800a016c:
@@ -280,7 +280,7 @@ LAB_800a016c:
 	TT_EndEvent_DisplayTime((int)posX, (int)posY, sdata->flags_timeTrialEndOfRace);
 	
 	// PRESS * TO CONTINUE
-	DecalFont_DrawLine(sdata->lngStrings[0x324],0x100,0xbe,1,0xffff8000);
+	DecalFont_DrawLine(sdata->lngStrings[0x324],0x100,0xbe,FONT_BIG,(CENTER_TEXT | ORANGE));
 	
 	// If you press Cross or Circle
 	if ((sdata->AnyPlayerTap & 0x50) != 0) 

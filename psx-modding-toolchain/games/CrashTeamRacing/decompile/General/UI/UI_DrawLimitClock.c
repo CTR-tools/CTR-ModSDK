@@ -52,7 +52,7 @@ void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 	}
 
 	// default color is dark red
-	flags = 0x1c;
+	flags = DARK_RED;
 
 	if
 	(
@@ -64,7 +64,7 @@ void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 	)
 	{
 		// set color to white
-		flags = 4;
+		flags = WHITE;
 	}
 
 	// put the time string on the screen

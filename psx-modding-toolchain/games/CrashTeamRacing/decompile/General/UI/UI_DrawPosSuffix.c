@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_UI_DrawPosSuffix(short param_1,short param_2,struct Driver* d,short param_4)
+void DECOMP_UI_DrawPosSuffix(short posX,short posY,struct Driver* d,short flags)
 {
   int currRank;
   struct GameTracker* gGT = sdata->gGT;
@@ -21,7 +21,7 @@ void DECOMP_UI_DrawPosSuffix(short param_1,short param_2,struct Driver* d,short 
 
   // Draw the suffix of your current position
   DecalFont_DrawLine(sdata->lngStrings[data.stringIndexSuffix[currRank]],
-               (int)param_1,(int)param_2,1,(int)param_4);
+               (int)posX,(int)posY,FONT_BIG,(int)flags);
 
   // If pointer to instance of "Big Number" is valid
   if (d->BigNumber[0] != 0)

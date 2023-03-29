@@ -31,12 +31,14 @@ void AdvBosses_HookGarageUI()
 			CharID = (CharID + 1) & 0xf;
 		}
 
-		DecalFont_DrawLine("PRESS L1 OR R1 TO SWAP",
+		DecalFont_DrawLine
+		(
+			"PRESS L1 OR R1 TO SWAP",
 
-			0x100, // midpoint,
-			0xc8,  // near bottom
-			2,	   // small text
-			0xffff8000	// center
+			0x100,					// midpoint
+			0xc8,					// near bottom
+			FONT_SMALL,				// small text
+			(CENTER_TEXT | ORANGE)	// center
 		);
 	}
 }

@@ -27,7 +27,7 @@ void RunEntryHook()
 
 void ThreadFunc(struct Thread* t)
 {
-	DecalFont_DrawLine("Aug 31 2022", 10, 200, 2, 0xffff0000);
+	DecalFont_DrawLine("Aug 31 2022", 10, 200, FONT_SMALL, ORANGE);
 }
 
 void RunInitHook()

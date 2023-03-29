@@ -28,7 +28,82 @@ enum Font
 	// same as "BIG" but less spacing
 	FONT_CREDITS=3,
 
+	// total amount of enum entries
 	FONT_NUM=4,
+};
+
+// used in DecalFont_DrawLineStrlen
+enum FontFlags
+{
+	// end text at X position
+	END_AT_X=0x4000,
+
+	// center text
+	CENTER_TEXT=0x8000
+};
+
+// text color gradients corresponding to ptrColors
+// used in DecalFont_DrawLineStrlen
+enum Colors
+{
+	// normal UI text colors
+	ORANGE,
+	PERIWINKLE,
+	ORANGE_DARKENED,
+	RED,
+
+	// used for blinking
+	WHITE,
+
+	// driver colors
+	// these are flat colors instead of gradients
+	// used for minimap marker and time trial records
+	CRASH_BLUE,
+	CORTEX_RED,
+	TINY_GREEN,
+	COCO_MAGENTA,
+	N_GIN_PURPLE,
+	DINGODILE_OLIVE,
+	POLAR_CYAN,
+	PURA_VIOLET,
+	PINSTRIPE_PALE_DARK_BLUE,
+	PAPU_YELLOW,
+	ROO_ORANGE,
+	JOE_COLOR,
+	TROPY_LIGHT_BLUE,
+	PENTA_WHITE,
+	FAKE_CRASH_GRAY,
+	OXIDE_LIGHT_GREEN,
+
+	// pitch black, used for text shadows
+	BLACK,
+
+	// the only color in ptrColors that isn't a flat color or a top-to-bottom gradient
+	// used for silver stars in time trial menu and platinum relic text in relic races
+	SILVER,
+
+	// gray #808080, identical to fake crash's
+	// the neutral vertex color for the PSX
+	// used for sprites that don't need coloring as a result
+	GRAY,
+
+	// colors assigned to each player in multiplayer modes
+	PLAYER_BLUE,
+	PLAYER_RED,
+	PLAYER_GREEN,
+	PLAYER_YELLOW,
+
+	// colors only available in versions from UsaRetail onwards
+	DARK_RED,
+	LIGHT_GREEN,
+	FOREST_GREEN,
+	FOREST_GREEN_DUPLICATE,
+	BLUE,
+	LIME_GREEN,
+	ORANGE_RED,
+
+	// total amount of enum entries
+	NUM_COLORS
 };
 
 struct TextureLayout

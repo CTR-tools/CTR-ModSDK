@@ -78,13 +78,13 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 					local_40.h = local_40.h + 8;
 					sVar16 = sVar16 + 8;
 					DecalFont_DrawLine(sdata->lngStrings[*(short *)((iVar23 + sVar10) * 2 - 0x7ff7bdbc)], 0x100, 
-														 iVar15, 2, -0x8000);
+														 iVar15, FONT_SMALL, (CENTER_TEXT | ORANGE));
 				}
 				iVar23 = iVar23 + 1;
 				iVar19 = iVar19 + 0x50;
 			} while (iVar23 < (int)(u_int)(u_char)sdata->gGT->numPlyrNextGame);
 		}
-		DecalFont_DrawLine(sdata->lngStrings[0x2b], 0x100, (int)sVar16, 2, -0x8000);
+		DecalFont_DrawLine(sdata->lngStrings[0x2b], 0x100, (int)sVar16, FONT_SMALL, (CENTER_TEXT | ORANGE));
 		local_40.x = -0x14;
 		local_40.w = 0x228;
 		local_40.y = data.errorPosY[sdata->errorMessagePosIndex] - 3;
@@ -120,7 +120,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 			in_stack_ffffffb0 = (void *)0xa;
 			UI_Lerp2D_Linear(&local_38, startX, startY, sVar16, startY, iVar10, 10);
 			DecalFont_DrawLineOT
-								(sdata->lngStrings[0x233], (int)local_38, (int)local_36, 1, -0x8000, 
+								(sdata->lngStrings[0x233], (int)local_38, (int)local_36, FONT_BIG, (CENTER_TEXT | ORANGE), 
 								 *(u_long **)(sdata->gGT->tileView[0].filler2 + iVar19 - 4));
 			*(short *)((int)sdata->finalLapTextTimer + iVar15) = *(short *)((int)sdata->finalLapTextTimer + iVar15) - 1
 			;

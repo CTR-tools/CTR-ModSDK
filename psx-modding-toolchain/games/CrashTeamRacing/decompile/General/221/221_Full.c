@@ -79,7 +79,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		DecalFont_DrawLine(
 			sdata->lngStrings[lngIndex],
 			posXY[0] + 0x33, posXY[1] + 8,
-			FONT_BIG, 0xffff8000);
+			FONT_BIG, (CENTER_TEXT | ORANGE));
 	}
 	
 	// Fly from Left,
@@ -98,7 +98,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		DecalFont_DrawLine(
 			sdata->lngStrings[0x16D], 
 			posXY[0], posXY[1],
-			FONT_BIG, 0xffff8000);
+			FONT_BIG, (CENTER_TEXT | ORANGE));
 			
 		UI_DrawLimitClock(posXY[0]-0x33, posXY[1]+0x11, FONT_BIG);
 	}
@@ -119,7 +119,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		DecalFont_DrawLine(
 			sdata->lngStrings[0xC9],
 			0x100, 0xbe,
-			FONT_BIG, 0xffff8000);
+			FONT_BIG, (CENTER_TEXT | ORANGE));
 		
 		// if still waiting to press X/O, quit function
 		if((sdata->AnyPlayerTap & (BTN_CROSS|BTN_CIRCLE)) == 0)
@@ -150,7 +150,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	DecalFont_DrawLine(
 		sdata->lngStrings[0x16F],
 		posXY[0], 0xA2,
-		FONT_BIG, 0xffff8000);
+		FONT_BIG, (CENTER_TEXT | ORANGE));
 
 	// make token visible
 	tokenInst->flags &= ~(0x80);
@@ -180,7 +180,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	DecalFont_DrawLine(
 		sdata->lngStrings[0xC9],
 		0x100, 0xbe,
-		FONT_BIG, 0xffff8000);
+		FONT_BIG, (CENTER_TEXT | ORANGE));
 		
 	// if still waiting to press X/O, quit function
 	if((sdata->AnyPlayerTap & (BTN_CROSS|BTN_CIRCLE)) == 0)

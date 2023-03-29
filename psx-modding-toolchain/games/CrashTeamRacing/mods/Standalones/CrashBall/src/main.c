@@ -140,12 +140,12 @@ void DrawObjective()
 	sdata->gGT->trafficLightsTimer = 6000;
 
 	// PRESS * TO CONTINUE
-	DecalFont_DrawLine(sdata->lngStrings[0xC9],			0x100, 0xbe,	1, 0xffff8000);
-	DecalFont_DrawLine("objective", 					0x100, 0x48, 	1, 0xffff8000+14);
-	DecalFont_DrawLine("use your ship to deflect the",	0x100, 0x60, 	2, 0xffff8000);
-	DecalFont_DrawLine("balls away from your goal", 	0x100, 0x60+10,	2, 0xffff8000);
-	DecalFont_DrawLine("win by being the last", 		0x100, 0x60+30,	2, 0xffff8000);
-	DecalFont_DrawLine("player standing", 				0x100, 0x60+40,	2, 0xffff8000);
+	DecalFont_DrawLine(sdata->lngStrings[0xC9],			0x100, 0xbe,	FONT_BIG, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine("objective", 					0x100, 0x48, 	FONT_BIG, (CENTER_TEXT | PAPU_YELLOW));
+	DecalFont_DrawLine("use your ship to deflect the",	0x100, 0x60, 	FONT_SMALL, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine("balls away from your goal", 	0x100, 0x60+10,	FONT_SMALL, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine("win by being the last", 		0x100, 0x60+30,	FONT_SMALL, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine("player standing", 				0x100, 0x60+40,	FONT_SMALL, (CENTER_TEXT | ORANGE));
 
 	// Draw background box ========================
 	MenuBox_DrawInnerRect(&window1,0,sdata->gGT->backBuffer->otMem.startPlusFour);
@@ -248,7 +248,7 @@ void DrawHUD()
 		);
 
 		// draw score
-		DecalFont_DrawLine(&cbg->scoreStr[loop1][0], 0x2 + 0x60 + 0x60 * loop1, 0x20, 1, 0);
+		DecalFont_DrawLine(&cbg->scoreStr[loop1][0], 0x2 + 0x60 + 0x60 * loop1, 0x20, FONT_BIG, ORANGE);
 	}
 }
 
@@ -544,7 +544,7 @@ void RunUpdateHook()
 	if(cbg->boolGameOver)
 	{
 		// Draw instructions for restart
-		DecalFont_DrawLine("Pause game and restart", 0x100, 0xa0, 2, 0xffff8000);
+		DecalFont_DrawLine("Pause game and restart", 0x100, 0xa0, FONT_SMALL, (CENTER_TEXT | ORANGE));
 		return;
 	}
 

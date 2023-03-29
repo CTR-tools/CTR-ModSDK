@@ -164,37 +164,39 @@ void RunUpdateHook(void)
 
 	// Draw main Strings =================================
 
-	DecalFont_DrawLine(arrowText, 20, 10 + (short)(options[12] * 10), 2, 0);
+	DecalFont_DrawLine(arrowText, 20, 10 + (short)(options[12] * 10), FONT_SMALL, ORANGE);
 
-	DecalFont_DrawLine(line0, 40, 10, 2, 14);
-	DecalFont_DrawLine(line1, 40, 20, 2, 14);
-	DecalFont_DrawLine(line2, 40, 30, 2, 14);
-	DecalFont_DrawLine(line3, 40, 40, 2, 14);
-	DecalFont_DrawLine(line4, 40, 50, 2, 14);
-	DecalFont_DrawLine(line5, 40, 60, 2, 14);
-	DecalFont_DrawLine(line6, 40, 70, 2, 14);
-	DecalFont_DrawLine(line7, 40, 80, 2, 14);
-	DecalFont_DrawLine(line8, 40, 90, 2, 14);
+	DecalFont_DrawLine(line0, 40, 10, FONT_SMALL, PAPU_YELLOW);
+	DecalFont_DrawLine(line1, 40, 20, FONT_SMALL, PAPU_YELLOW);
+	DecalFont_DrawLine(line2, 40, 30, FONT_SMALL, PAPU_YELLOW);
+	DecalFont_DrawLine(line3, 40, 40, FONT_SMALL, PAPU_YELLOW);
+	DecalFont_DrawLine(line4, 40, 50, FONT_SMALL, PAPU_YELLOW);
+	DecalFont_DrawLine(line5, 40, 60, FONT_SMALL, PAPU_YELLOW);
+	DecalFont_DrawLine(line6, 40, 70, FONT_SMALL, PAPU_YELLOW);
+	DecalFont_DrawLine(line7, 40, 80, FONT_SMALL, PAPU_YELLOW);
+	DecalFont_DrawLine(line8, 40, 90, FONT_SMALL, PAPU_YELLOW);
 
-	DecalFont_DrawLine(pauseText, 20, 110, 2, 1);
+	DecalFont_DrawLine(pauseText, 20, 110, FONT_SMALL, PERIWINKLE);
 
 	for(i = 0; i < 8; i++)
 	{
 		if(i == 2)
 			continue;
 
-		DecalFont_DrawLine(
-			options[i] ? onText : offText,	// string
-			240, 							// X pos
-			10 + i * 10, 					// Y pos
-			2, 								// size
-			options[i] ? 7 : 6);			// index of Color array
+		DecalFont_DrawLine
+		(
+			options[i] ? onText : offText,			// string
+			240, 									// X pos
+			10 + i * 10, 							// Y pos
+			FONT_SMALL, 							// size
+			options[i] ? TINY_GREEN : CORTEX_RED	// index of Color array
+		);
 	}
 
 	// Super Hard
 	// 0x12658
 	hardText[0] = (char)((*(unsigned short*)0x80012658) / 0x50) + '0';
-	DecalFont_DrawLine(hardText, 240, 30, 2, 1);
+	DecalFont_DrawLine(hardText, 240, 30, FONT_SMALL, PERIWINKLE);
 
 	// Character ID
 	// Avoid using "else" cause that's extra ASM
@@ -207,7 +209,7 @@ void RunUpdateHook(void)
 		idText[0] = *(unsigned char*)0x80086e84 + '0';
 
 	// Print string
-	DecalFont_DrawLine(idText, 240, 90, 2, 1);
+	DecalFont_DrawLine(idText, 240, 90, FONT_SMALL, PERIWINKLE);
 
 	// Test Colors ===============================
 
@@ -215,7 +217,7 @@ void RunUpdateHook(void)
 	#if 0
 	for(i = 0; i < 20; i++)
 	{
-		DecalFont_DrawLine(onText, 400, i * 10, 2, i);
+		DecalFont_DrawLine(onText, 400, i * 10, FONT_SMALL, PERIWINKLE);
 	}
 	#endif
 
@@ -226,11 +228,11 @@ void RunUpdateHook(void)
 	currDescB = descPtrs[options[12] * 2 + 1];
 
 	// Draw the strings
-	DecalFont_DrawLine(currDescA, 20, 160, 2, 1);
-	DecalFont_DrawLine(currDescB, 20, 170, 2, 1);
+	DecalFont_DrawLine(currDescA, 20, 160, FONT_SMALL, PERIWINKLE);
+	DecalFont_DrawLine(currDescB, 20, 170, FONT_SMALL, PERIWINKLE);
 
 	// Draw additional footer
-	DecalFont_DrawLine(menuFooter, 20, 200, 2, 1);
+	DecalFont_DrawLine(menuFooter, 20, 200, FONT_SMALL, PERIWINKLE);
 
 	// Activate Cheats ============================
 

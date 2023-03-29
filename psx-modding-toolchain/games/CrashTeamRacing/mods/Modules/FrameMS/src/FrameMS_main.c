@@ -21,5 +21,5 @@ void FrameMS_RunUpdateHook()
 	string[1] =  '0' + (timer / 10) % 10;
 	string[2] =  '0' + timer % 10;
 	string[3] = 0;
-	DecalFont_DrawLine(string, 10, 200, 1, 0xffff0000);
+	DecalFont_DrawLine(string, 10, 200, FONT_BIG, ORANGE);
 }

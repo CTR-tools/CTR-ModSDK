@@ -13,7 +13,7 @@ int MATH_FastSqrt(int dist, int unk);
 
 // String variables
 unsigned char speedVal[numSpeedColor] = {151, 165, 175, 185, 196, 207, 218, 229, 240, 255};
-int speedColorVal[numSpeedColor] = {darkGreen, green, yellow, orange, red, pink, purple, darkPurple, blue, lightBlue};
+int speedColorVal[numSpeedColor] = {FOREST_GREEN, TINY_GREEN, PAPU_YELLOW, ROO_ORANGE, RED, COCO_MAGENTA, N_GIN_PURPLE, PURA_VIOLET, CRASH_BLUE, POLAR_CYAN};
 
 // Strings
 char s_slotSelected[] = "Slot 1 selected";
@@ -118,9 +118,9 @@ void DrawSlotString()
 		p_rom->slotString[5] = '0' + p_rom->slot + 1;
 
 	if (p_rom->lagDuration)
-		DecalFont_DrawLine(p_rom->slotString, 256, 39, 2, ND_Orange | 0x8000);
+		DecalFont_DrawLine(p_rom->slotString, 256, 39, FONT_SMALL, ORANGE | CENTER_TEXT);
 	else
-		DecalFont_DrawLine(p_rom->slotString, 256, 22, 2, ND_Orange | 0x8000);
+		DecalFont_DrawLine(p_rom->slotString, 256, 22, FONT_SMALL, ORANGE | CENTER_TEXT);
 }
 
 void ResetLag()
@@ -137,14 +137,14 @@ void DrawLag()
 
 	if (ms > msFrame)
 	{
-		DecalFont_DrawLine(s_ms, 256, 8, 2, red | 0x8000);
+		DecalFont_DrawLine(s_ms, 256, 8, FONT_SMALL, RED | CENTER_TEXT);
 		p_rom->lagFrames++;
 		p_rom->lagTime += (ms - msFrame);
 		p_rom->lagDuration = textDuration;
 	}
 	else
 	{
-		DecalFont_DrawLine(s_ms, 256, 8, 2, ND_Orange | 0x8000);
+		DecalFont_DrawLine(s_ms, 256, 8, FONT_SMALL, ORANGE | CENTER_TEXT);
 		if (p_rom->lagDuration)
 			p_rom->lagDuration--;
 		else
@@ -153,14 +153,14 @@ void DrawLag()
 
 	if (p_rom->lagDuration)
 	{
-		DecalFont_DrawLine(s_frames, x_frames, y_frames, 2, red);
-		DecalFont_DrawLine(s_total, x_total, y_total, 2, red);
+		DecalFont_DrawLine(s_frames, x_frames, y_frames, FONT_SMALL, RED);
+		DecalFont_DrawLine(s_total, x_total, y_total, FONT_SMALL, RED);
 
 		NumbersToString(s_numbers, p_rom->lagFrames, 4);
-		DecalFont_DrawLine(s_numbers, x_numFrames, y_numFrames, 2, red);
+		DecalFont_DrawLine(s_numbers, x_numFrames, y_numFrames, FONT_SMALL, RED);
 		
 		NumbersToString(s_lag, p_rom->lagTime, 5);
-		DecalFont_DrawLine(s_lag, x_lag, y_lag, 2, red);
+		DecalFont_DrawLine(s_lag, x_lag, y_lag, FONT_SMALL, RED);
 	}
 }
 
@@ -173,7 +173,7 @@ void DrawDebugString()
 	int checkpoint;
 	int i;
 	struct GameTracker* gGT;
-	int speedColor = silver;
+	int speedColor = SILVER;
 	
 	gGT = sdata->gGT;
 	xSpeed = gGT->drivers[0]->xSpeed;
@@ -191,21 +191,21 @@ void DrawDebugString()
 		}
 	}
 
-	DecalFont_DrawLine(s_progressStr, x_progressStr, y_progressStr, 2, white);
-	DecalFont_DrawLine(s_checkpointStr, x_checkpointStr, y_checkpointStr, 2, white);
-	DecalFont_DrawLine(p_rom->currEngine, x_engine, y_engine, 2, white);
+	DecalFont_DrawLine(s_progressStr, x_progressStr, y_progressStr, FONT_SMALL, PERIWINKLE);
+	DecalFont_DrawLine(s_checkpointStr, x_checkpointStr, y_checkpointStr, FONT_SMALL, PERIWINKLE);
+	DecalFont_DrawLine(p_rom->currEngine, x_engine, y_engine, FONT_SMALL, PERIWINKLE);
 
 	NumbersToString(s_numbers, gGT->drivers[0]->reserves / 10, 4);
-	DecalFont_DrawLine(s_numbers, x_reserves, y_reserves, 2, lime);
+	DecalFont_DrawLine(s_numbers, x_reserves, y_reserves, FONT_SMALL, DINGODILE_OLIVE);
 	
 	NumbersToString(s_numbers, speed / 10, 4);
-	DecalFont_DrawLine(s_numbers, x_speed, y_speed, 2, speedColor);
+	DecalFont_DrawLine(s_numbers, x_speed, y_speed, FONT_SMALL, speedColor);
 	
 	NumbersToString(s_numbers, progress / 10, 5);
-	DecalFont_DrawLine(s_numbers, x_progress, y_progress, 2, white);
+	DecalFont_DrawLine(s_numbers, x_progress, y_progress, FONT_SMALL, PERIWINKLE);
 	
 	NumbersToString(s_numbers, checkpoint / 10, 5);
-	DecalFont_DrawLine(s_numbers, x_checkpoint, y_checkpoint, 2, white);
+	DecalFont_DrawLine(s_numbers, x_checkpoint, y_checkpoint, FONT_SMALL, PERIWINKLE);
 }
 
 

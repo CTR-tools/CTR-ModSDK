@@ -171,9 +171,9 @@ void MM_Characters_MenuBox()
 				sdata->lngStrings[97],
 				(int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0x9c) * 0x10000) >> 0x10,
 				(int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9e) + 0x14) * 0x10000) >> 0x10,
-				1, 0xffff8000
+				FONT_BIG, (CENTER_TEXT | ORANGE)
 			);
-			characterSelectType = 1;
+			characterSelectType = FONT_BIG;
 		
 			// CHARACTER
 			characterSelectString = sdata->lngStrings[98];
@@ -194,9 +194,9 @@ void MM_Characters_MenuBox()
 				sdata->lngStrings[97],
 				(int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9c) + 0xfc) * 0x10000) >> 0x10,
 				(int)(((u_int)*(u_short *)(DAT_800b5a3c + 0x9e) + 8) * 0x10000) >> 0x10,
-				3, 0xffff8000
+				FONT_CREDITS, (CENTER_TEXT | ORANGE)
 			);
-			characterSelectType = 3;
+			characterSelectType = FONT_CREDITS;
 		
 			// CHARACTER
 			characterSelectString = sdata->lngStrings[98];
@@ -209,7 +209,7 @@ void MM_Characters_MenuBox()
 		// when you do NOT have a lot of characters selected
 		case 4:
 		case 5:
-			characterSelectType = 1;
+			characterSelectType = FONT_BIG;
 		
 			// SELECT CHARACTER
 			characterSelectString = sdata->lngStrings[96];
@@ -219,7 +219,7 @@ void MM_Characters_MenuBox()
 	}
 	
 	// Draw String
-	DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, 0xffff8000);
+	DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, (CENTER_TEXT | ORANGE));
 	
 	dontDrawSelectCharacter:
 
@@ -489,7 +489,7 @@ void MM_Characters_MenuBox()
 					(&PTR_DAT_800aba28_800b5374)[i],
 					(int)(((u_int)*(u_short *)(iVar24 + 6) + (u_int)*puVar26 + -6) * 0x10000) >> 0x10,
 					(int)(((u_int)*(u_short *)(iVar24 + 8) + (u_int)puVar26[1] + -3) * 0x10000) >> 0x10,
-					1, 4
+					FONT_BIG, WHITE
 				);
 				puVar12 = auStack120;
 			}
@@ -617,10 +617,10 @@ void MM_Characters_MenuBox()
 				numPlyrNextGame = sdata->gGT->numPlyrNextGame;
 		
 				// if number of players is 1 or 2
-				fontType = 3;
+				fontType = FONT_CREDITS;
 		
 				// if number of players is 3 or 4
-				if (numPlyrNextGame >= 3) fontType = 2;
+				if (numPlyrNextGame >= 3) fontType = FONT_SMALL;
 		
 				iVar8 = j * 10 + DAT_800b5a3c;
 				sVar10 = *(short *)(iVar8 + 0xa8) + (DAT_800b5a0c + j * 2)[1];
@@ -634,7 +634,7 @@ void MM_Characters_MenuBox()
 				(
 					sdata->lngStrings[data.MetaDataCharacters[(int)psVar22[4]].name_LNG_long],
 					(int)(((u_int)*(u_short *)(iVar8 + 0xa6) + (u_int)(u_short)DAT_800b5a0c[j * 2] + (((int)((u_int)DAT_800b5a30 << 0x10) >> 0x10) - ((int)((u_int)DAT_800b5a30 << 0x10) >> 0x1f) >> 1)) * 0x10000) >> 0x10,
-					(int)sVar6, fontType, 0xffff8000
+					(int)sVar6, fontType, (CENTER_TEXT | ORANGE)
 				);
 			}
 			

@@ -52,7 +52,7 @@ unsigned int coords[14][2] = {
 
 void draw(int i)
 {
-   DecalFont_DrawLine(button[i], coords[i][0], coords[i][1], 2, 0xffff0000);
+   DecalFont_DrawLine(button[i], coords[i][0], coords[i][1], FONT_SMALL, ORANGE);
 }
 
 
@@ -64,7 +64,7 @@ void DrawButtons(unsigned short * buttons)
 		if ((curr_buttons & original_map[i]) == 0)
 			draw(i);
 		else
-			 DecalFont_DrawLine(".", coords[i][0]+3, coords[i][1]-2, 2, 0xffff0000);
+			 DecalFont_DrawLine(".", coords[i][0]+3, coords[i][1]-2, FONT_SMALL, ORANGE);
 	}
 }
 
@@ -74,7 +74,7 @@ void DrawAnalog(unsigned short * X, unsigned short * Y)
     {
     	int Xcoord = ((*X)/9)+9;
     	int Ycoord = ((*Y)/16)+170;
-        DecalFont_DrawLine(".", Xcoord, Ycoord, 2, 0xffff0000);
+        DecalFont_DrawLine(".", Xcoord, Ycoord, FONT_SMALL, ORANGE);
     }	
 }
 
@@ -82,7 +82,7 @@ void inputDisplay_Main()
 {
 	if ((sdata->gGT->gameMode1 & (GAME_CUTSCENE | LOADING)) == 0)
 	{	
-		DecalFont_DrawLine(".", 23,178, 2, 0xffff0000);
+		DecalFont_DrawLine(".", 23,178, FONT_SMALL, ORANGE);
 
 		struct GamepadBuffer * controller = &sdata->gGamepads->gamepad[0];
 		DrawButtons(&controller->ptrRawInput[1]);

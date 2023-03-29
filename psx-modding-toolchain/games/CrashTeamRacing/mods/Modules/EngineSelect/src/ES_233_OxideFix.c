@@ -37,12 +37,14 @@ void AdvBoss()
 				AdvID = (AdvID + 1) & 0xf;
 		}
 
-		DecalFont_DrawLine("PRESS L1 OR R1 TO SWAP CHARACTER",
+		DecalFont_DrawLine
+		(
+			"PRESS L1 OR R1 TO SWAP CHARACTER",
 
-			0x100, // midpoint,
-			0xc8,  // near bottom
-			2,	   // small text
-			0xffff8000	// center
+			0x100,					// midpoint
+			0xc8,					// near bottom
+			FONT_SMALL,				// small text
+			(CENTER_TEXT | ORANGE)	// center
 		);
 		charID = (int) AdvID;
 	}
@@ -86,12 +88,14 @@ void AdvEngine()
 	// write back to meta
 	data.MetaDataCharacters[charID].engineID = engineID;
 
-	DecalFont_DrawLine("PRESS UP OR DOWN TO SWAP ENGINE",
+	DecalFont_DrawLine
+	(
+		"PRESS UP OR DOWN TO SWAP ENGINE",
 
-			0x100, // midpoint,
-			0xc8,  // near bottom
-			2,	   // small text
-			0xffff8000	// center
+		0x100,					// midpoint
+		0xc8,					// near bottom
+		FONT_SMALL,				// small text
+		(CENTER_TEXT | ORANGE)	// center
 	);
 }
 
@@ -100,7 +104,8 @@ void AdvEngine()
 void CS_DrawEngine(char* string, int x, int y, int fontsize, int flag) 
 {	
 	// Draw engine text
-	DecalFont_DrawLine(
+	DecalFont_DrawLine
+	(
 		engineText[data.MetaDataCharacters[charID].engineID],
 		x,
 		y,

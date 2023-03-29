@@ -320,14 +320,14 @@ void RunUpdateHook()
 	str8[17] = '0' + (freeBytes / 10) % 10;
 	str8[18] = '0' + freeBytes % 10;
 
-	DecalFont_DrawLine(str1, 0, 130, 2, 0xffff0000);
-	DecalFont_DrawLine(str2, 0, 140, 2, 0xffff0000);
-	DecalFont_DrawLine(str3, 0, 150, 2, 0xffff0000);
-	DecalFont_DrawLine(str4, 0, 160, 2, 0xffff0000);
-	DecalFont_DrawLine(str5, 0, 170, 2, 0xffff0000);
-	DecalFont_DrawLine(str6, 0, 180, 2, 0xffff0000);
-	DecalFont_DrawLine(str7, 0, 190, 2, 0xffff0000);
-	DecalFont_DrawLine(str8, 0, 200, 2, 0xffff0000);
+	DecalFont_DrawLine(str1, 0, 130, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str2, 0, 140, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str3, 0, 150, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str4, 0, 160, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str5, 0, 170, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str6, 0, 180, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str7, 0, 190, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str8, 0, 200, FONT_SMALL, ORANGE);
 
 	// If you tap select
 	// (see all buttons in CrashBall sample)

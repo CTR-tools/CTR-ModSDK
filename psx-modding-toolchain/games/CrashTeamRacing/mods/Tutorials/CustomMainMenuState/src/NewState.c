@@ -27,7 +27,7 @@ void MyMenuBoxFuncPtr(struct MenuBox* m)
 {
 	struct GamepadBuffer* gb;
 
-	DecalFont_DrawLine("Press X", 100, 100, 1, 0);
+	DecalFont_DrawLine("Press X", 100, 100, FONT_BIG, ORANGE);
 
 	gb = &sdata->gGamepads->gamepad[0];
 

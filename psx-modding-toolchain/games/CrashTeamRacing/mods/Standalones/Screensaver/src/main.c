@@ -204,29 +204,29 @@ void RunUpdateHook()
 	
 	
 	
-	if(ROW <= 2) 	DecalFont_DrawLine(arrowText, 20, 10 + ROW * 10, 2, 0);
-	else			DecalFont_DrawLine(arrowText, 20, 20 + ROW * 10, 2, 0);
+	if(ROW <= 2) 	DecalFont_DrawLine(arrowText, 20, 10 + ROW * 10, FONT_SMALL, ORANGE);
+	else			DecalFont_DrawLine(arrowText, 20, 20 + ROW * 10, FONT_SMALL, ORANGE);
 
 	// TRACK
-	DecalFont_DrawLine(line0, 40, 10, 2, 14);
+	DecalFont_DrawLine(line0, 40, 10, FONT_SMALL, PAPU_YELLOW);
 	DecalFont_DrawLine(sdata->lngStrings[SIN_TRACK() + 0x6e],
-		160, 10, 2, 14);
+		160, 10, FONT_SMALL, PAPU_YELLOW);
 	
 	// BORDER
-	DecalFont_DrawLine(line1, 		40, 20, 2, 14);
+	DecalFont_DrawLine(line1, 		40, 20, FONT_SMALL, PAPU_YELLOW);
 	numberText[0] = '0' + BORDER;
-	DecalFont_DrawLine(numberText, 	160, 20, 2, 14);
+	DecalFont_DrawLine(numberText, 	160, 20, FONT_SMALL, PAPU_YELLOW);
 	
 	// PLAYERS
-	DecalFont_DrawLine(line2, 		40, 30, 2, 14);
+	DecalFont_DrawLine(line2, 		40, 30, FONT_SMALL, PAPU_YELLOW);
 	numberText[0] = '0' + PLAYERS;
-	DecalFont_DrawLine(numberText, 	160, 30, 2, 14);
+	DecalFont_DrawLine(numberText, 	160, 30, FONT_SMALL, PAPU_YELLOW);
 
 	// PLAYER1-4
 	for(i = 0; i < PLAYERS; i++)
 	{
 		// line
-		DecalFont_DrawLine(linePlayer[i], 40, 50+i*10, 2, 14);
+		DecalFont_DrawLine(linePlayer[i], 40, 50+i*10, FONT_SMALL, PAPU_YELLOW);
 		
 		// print character IDs
 		DecalFont_DrawLine(
@@ -236,7 +236,7 @@ void RunUpdateHook()
 				cIDs[i]
 			].name_LNG_long
 		],
-		160, 50+i*10, 2, 14);
+		160, 50+i*10, FONT_SMALL, PAPU_YELLOW);
 		
 	}
 	

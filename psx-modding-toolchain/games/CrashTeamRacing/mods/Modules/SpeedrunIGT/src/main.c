@@ -12,22 +12,6 @@ void SaveGameProgressToMemcardBuffer();
 #define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
 #define JMP(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
 
-// colors
-#define ND_Orange 0
-#define white 1
-#define red 3
-#define blue 5
-#define green 7
-#define pink 8
-#define purple 9
-#define lime 10
-#define lightBlue 11
-#define darkPurple 12
-#define yellow 14
-#define orange 15
-#define silver 22
-#define darkGreen 30
-
 #define FRAME 32
 #define SECOND (30 * FRAME)
 #define MINUTE (60 * SECOND)
@@ -165,7 +149,7 @@ void EndOfRace_Hook()
                 s_frozenTime[0] = ' ';
                 s_frozenTime[2] = '+';
             }
-            igt->splitColor = red;
+            igt->splitColor = RED;
         }
         else
         {
@@ -178,7 +162,7 @@ void EndOfRace_Hook()
                 s_frozenTime[0] = ' ';
                 s_frozenTime[2] = '-';
             }
-            igt->splitColor = green;
+            igt->splitColor = TINY_GREEN;
         }
         igt->splitFadeTimer = 300;
         igt->level++;
@@ -254,15 +238,15 @@ void DrawIGT()
   if (igt->splitFadeTimer > 0)
   {
       if (s_frozenTime[0] == ' ')
-          DecalFont_DrawLine(&s_frozenTime[2], 256, 17, 2, igt->splitColor | 0x8000);
+          DecalFont_DrawLine(&s_frozenTime[2], 256, 17, FONT_SMALL, igt->splitColor | CENTER_TEXT);
       else
-          DecalFont_DrawLine(s_frozenTime, 256, 17, 2, igt->splitColor | 0x8000);
+          DecalFont_DrawLine(s_frozenTime, 256, 17, FONT_SMALL, igt->splitColor | CENTER_TEXT);
       igt->splitFadeTimer--;
   }
   if (s_totalTime[0] == ' ')
-      DecalFont_DrawLine(&s_totalTime[2], 256, 8, 2, ND_Orange | 0x8000);
+      DecalFont_DrawLine(&s_totalTime[2], 256, 8, FONT_SMALL, ORANGE | CENTER_TEXT);
   else
-      DecalFont_DrawLine(s_totalTime, 256, 8, 2, ND_Orange | 0x8000);
+      DecalFont_DrawLine(s_totalTime, 256, 8, FONT_SMALL, ORANGE | CENTER_TEXT);
 
   // restore OT
   gGT->tileView_UI.ptrOT = backupOT;
@@ -314,7 +298,7 @@ void DrawMenu()
 	// if main menu
 	if(sdata->gGT->levelID == MAIN_MENU_LEVEL)
 	{
-		// disable checkered flag
+		// disable checkeRED flag
 		sdata->gGT->renderFlags &= 0xffffefff;
 	}
 	#endif
@@ -395,30 +379,30 @@ void DrawMenu()
     for (i = 0; i < numLevels; i++)
     {
 		// if !=
-		rowColor = ND_Orange;
+		rowColor = ORANGE;
 
 		// if ==
         if (i == igt->menuRow)
         {
 			// if selectedRow
-			rowColor = white;
+			rowColor = PERIWINKLE;
 
 			// if !selectedRow
             if (!igt->selectedRow)
             {
                 if (sdata->gGT->timer & 1)
-                    rowColor = ND_Orange;
+                    rowColor = ORANGE;
             }
         }
 
-        DecalFont_DrawLine(sdata->lngStrings[trackNamesLNG[i]], 20, 18 + 9 * i, 2, rowColor);
+        DecalFont_DrawLine(sdata->lngStrings[trackNamesLNG[i]], 20, 18 + 9 * i, FONT_SMALL, rowColor);
         TimeToString(s_editorTime, splits[i]);
         if (s_editorTime[0] == ' ')
-            DecalFont_DrawLine(&s_editorTime[2], 390, 18 + 9 * i, 2, rowColor);
+            DecalFont_DrawLine(&s_editorTime[2], 390, 18 + 9 * i, FONT_SMALL, rowColor);
         else
-            DecalFont_DrawLine(s_editorTime, 370, 18 + 9 * i, 2, rowColor);
+            DecalFont_DrawLine(s_editorTime, 370, 18 + 9 * i, FONT_SMALL, rowColor);
     }
-    DecalFont_DrawLine(s_saveSplits, 254, 207, 2, ND_Orange | 0x8000);
+    DecalFont_DrawLine(s_saveSplits, 254, 207, FONT_SMALL, ORANGE | CENTER_TEXT);
     MenuBox_DrawInnerRect(&menuWindow, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 }
 
@@ -479,7 +463,7 @@ void RunUpdateHook()
 
 			// japan builds
 			#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
-			// if in main menu, turn checkered flag "back" on,
+			// if in main menu, turn checkeRED flag "back" on,
 			// it will be disabled in DrawMenu
 			if(sdata->gGT->levelID == MAIN_MENU_LEVEL)
 			{

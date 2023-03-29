@@ -30,7 +30,7 @@ void PrintText()
 	gGT->tileView_UI.ptrOT = gGT->ot_tileView_UI[gGT->swapchainIndex];
 
 	// draw
-	DecalFont_DrawLine("Hello World!", 10, 200, 2, 0xffff0000);
+	DecalFont_DrawLine("Hello World!", 10, 200, FONT_SMALL, ORANGE);
 
 	// restore
 	gGT->tileView_UI.ptrOT = backup;
