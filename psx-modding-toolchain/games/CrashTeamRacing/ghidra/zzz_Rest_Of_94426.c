@@ -5475,7 +5475,10 @@ void FUN_80047ff8(int param_1,int param_2,int param_3,short param_4,short param_
   }
   local_38 = param_5 * 3;
   local_40 = param_4;
+  
+  // GAMEPROG_AdvPercent
   FUN_800265c0(param_1);
+  
   local_4e = (short)param_3;
   local_50 = (short)param_2;
 
@@ -7415,7 +7418,7 @@ LAB_800499e4:
 		  )
 	  {
 
-		// 0x8fba4 is where the adventure profile (currently loaded) begins
+		// GAMEPROG_AdvPercent
 		FUN_800265c0(&DAT_8008fba4);
 
 		// LoadSave_LoadProfileFromHub_MenuBoxFuncPtr,
@@ -9744,7 +9747,7 @@ void FUN_8004cec4(void)
       FUN_8004cae8(99,FUN_8004c850,0xf,1,0,&DAT_8008d4d0);		   // "key1"
       FUN_8004cae8(0x62,FUN_8004c850,0x10,0,0,s_trophy1_8008d4d8); // "trophy1"
 
-	  // 0x8fba4 is where the adventure profile (currently loaded) begins
+	  // GAMEPROG_AdvPercent
       FUN_800265c0(&DAT_8008fba4);
       return;
     }

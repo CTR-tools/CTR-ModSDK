@@ -5444,9 +5444,14 @@ LAB_800b8c64:
       } while (iVar4 * 0x10000 >> 0x10 < 4);
     }
   }
-  if ((-1 < (int)((uint)uVar2 << 0x10)) && (DAT_800b94b0 != 0)) {
+  if ((-1 < (int)((uint)uVar2 << 0x10)) && (DAT_800b94b0 != 0)) 
+  {
+	// until nullptr
     iVar6 = -1;
-    if (*(int *)(param_1 + 0x338) != 0) {
+	
+	// get length of line
+    if (*(int *)(param_1 + 0x338) != 0) 
+	{
       iVar6 = (int)((((uint)*(ushort *)(param_1 + 0x338) - (uint)*(ushort *)(param_1 + 0x334)) + -1)
                    * 0x10000) >> 0x10;
     }
@@ -5563,18 +5568,28 @@ void FUN_800b8f8c(void)
   // Check all 18 relics
   
   // for iVar11 = 0; iVar11 < 0x12 (18); iVar11++
-  do {
+  do 
+  {
+	// if any gold relic is locked,
+	// stop checking gold relics
     bVar1 = uVar7 != 0;
     uVar7 = 0;
+	
+	// check gold relics
     if (bVar1) {
       uVar7 = (int)(short)iVar11 + 0x28;
 	  
 	  // 0x8fba4 is where the adventure profile (currently loaded) begins
       uVar7 = (uint)(&DAT_8008fba4)[(int)uVar7 >> 5] >> (uVar7 & 0x1f) & 1;
     }
+	
+	// if any sapphire relic is locked,
+	// stop checking sapphire relics
     bVar1 = DAT_800b94b0 != 0;
     DAT_800b94b0 = 0;
-    if (bVar1) {
+    
+	// check sapphire relics
+	if (bVar1) {
       uVar4 = (int)(short)iVar11 + 0x16;
 	  
 						// 0x8fba4 is where the adventure profile (currently loaded) begins
@@ -5586,8 +5601,7 @@ void FUN_800b8f8c(void)
 	
   } while (iVar11 * 0x10000 >> 0x10 < 0x12);
   
-  // if you have all 18 relics,
-  // meaning, "if you 100% the game"
+  // if all 18 relics are gold, or higher
   if (uVar7 != 0) 
   {
 	// Yay Confetti!
@@ -5615,7 +5629,7 @@ void FUN_800b8f8c(void)
   iVar11 = FUN_8004205c(0x30d,FUN_800b8dc8,s_credits_800b8644,0);
   
   // Credits_OnDestroy
-  // last two bytes of ThTick, just RET and NOP
+  // empty, just JR RA and NOP
   *(undefined4 *)(iVar11 + 0x24) = 0x800b8f84;
   
   // save credits thread globally

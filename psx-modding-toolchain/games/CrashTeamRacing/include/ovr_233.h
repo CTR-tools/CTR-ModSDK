@@ -160,10 +160,13 @@ struct CreditsObj
 	char* epilogue_topString;
 	
 	// 800b97f4 (338) 
-	char* GetNextString;
+	char* epilogue_nextString;
 	
 	// 800b97f8 (33c) 
-	int epilogueCount200;
+	short epilogueCount200;
+	
+	// 800b97fa (33e)
+	short epiloguePosX; // unused
 };
 
 struct Ovr233_Credits_BSS
