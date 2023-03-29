@@ -121,6 +121,13 @@ extern struct
 
 // 800b9488 - first byte after last func (CREDITS BSS)
 
+struct CreditsLevHeader
+{
+	int size;
+	int numStrings;
+	void* ptrStrings;
+};
+
 struct CreditsObj
 {
 	// 800b94bc (000) 

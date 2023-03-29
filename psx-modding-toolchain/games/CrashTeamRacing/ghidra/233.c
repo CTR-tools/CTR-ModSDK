@@ -5684,7 +5684,7 @@ void FUN_800b8f8c(void)
     iVar12 = iVar12 + 1;
   } while (iVar12 * 0x10000 >> 0x10 < 5);
   
-  // LEV -> ptrSpawnType1 -> pointers[6]
+  // LEV -> ptrSpawnType1 -> pointers[6], not [7] cause array starts at offset 0x4
   puVar9 = *(undefined4 **)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) + 0x1c);
   
   // inside puVar9:

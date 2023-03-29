@@ -7,6 +7,7 @@ void CS_Credits_Init()
 {
 	int i;
 	int bitIndex;
+	struct Instance* inst;
 	
 	// optimization
 	//int boolAllBlue;
@@ -16,10 +17,13 @@ void CS_Credits_Init()
 	struct GameTracker* gGT;
 	struct AdvProgress* advProg;
 	struct CreditsObj* creditsObj;
+	struct CreditsLevHeader* CLH;
+	struct CreditsLevHeader* creditsDst;
 	
 	gGT = sdata->gGT;
 	advProg = &sdata->advProgress;
 	creditsObj = &creditsBSS.creditsObj;
+	CLH = gGT->level1->ptrSpawnType1->pointers[6];
 	
 	creditsBSS.DancerThread = 0;
 	creditsBSS.boolGotoScrapbook = 1;
@@ -61,12 +65,49 @@ void CS_Credits_Init()
 	creditsObj->countdown = 360;
 	
 	// === 5 instances ===
+	for(i = 0; i < 5; i++)
+	{
+		#if 0
+		// OG game passes CreditsThread as parameter,
+		// but that's pointless, so it is removed
+		#endif
+		
+		// STATIC_AKUAKU for some reason?
+		inst = INSTANCE_Birth3D(gGT->modelPtr[0x39], 0, 0);
+		
+		// save instance
+		creditsObj->creditGhostInst[i] = inst;
 	
-	// === AllocHighMem ===
+		*(int*)(((unsigned int)&inst->matrix) + 0x0) = 0x1000;
+		*(int*)(((unsigned int)&inst->matrix) + 0x4) = 0;
+		*(int*)(((unsigned int)&inst->matrix) + 0x8) = 0x1000;
+		*(int*)(((unsigned int)&inst->matrix) + 0xC) = 0;
+		inst->matrix[2][2] = 0x1000;
+		
+		inst->flags |= 0x400;
+		
+		inst->idpp[0].tileView = &gGT->tileView_UI;
+		
+		#if 0
+		// OG game erases other idpp's, but just ignore it
+		#endif
+	}
 	
-	// === memcpy from Crash LEV ===
+	creditsDst = MEMPACK_AllocHighMem(CLH->size /* "credits strings" */);
 	
-	// === Run Pointer Map ===
+	memcpy(creditsDst, CLH, CLH->size);
+	
+	creditsBSS.numStrings = creditsDst->numStrings;
+	creditsBSS.ptrStrings = creditsDst->ptrStrings;
+	
+	for(i = 0; i < creditsBSS.numStrings; i++)
+	{
+		creditsDst->ptrStrings[i] =
+		((unsigned int)creditsDst->ptrStrings + (unsigned int)creditsDst);
+	}
+	
+	creditsObj->credits_posY = 340;
+	creditsObj->credits_topString = creditsDst->ptrStrings[0x14];
 }
 
 int CS_Credits_IsTextValid()
