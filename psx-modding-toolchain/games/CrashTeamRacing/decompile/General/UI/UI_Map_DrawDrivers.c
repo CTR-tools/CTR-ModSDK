@@ -4,7 +4,7 @@ void UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 
 {
   int kartColor;
-  int uVar2;
+  int iconID;
   struct Driver* d;
   struct GameTracker* gGT = sdata->gGT;
 
@@ -28,7 +28,7 @@ void UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 	kartColor = data.characterIDs[d->driverID] + 5;
 	
 	// default (AI)
-	uVar2 = 0x31;
+	iconID = 0x31;
 	
 	// if this is human and not AI
 	if ((d->actionsFlagSet & 0x100000) == 0) 
@@ -49,10 +49,10 @@ void UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 		}
 		
 		// Player
-		uVar2 = 0x32;
+		iconID = 0x32;
 	}
 	
-	UI_Map_DrawRawIcon(ptrMap,&bucket->inst->matrix.t[0],uVar2,(short)kartColor,0,0x1000);
+	UI_Map_DrawRawIcon(ptrMap,&bucket->inst->matrix.t[0],iconID,(short)kartColor,0,0x1000);
   }
   return;
 }
