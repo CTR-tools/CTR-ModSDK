@@ -20,7 +20,7 @@ void DECOMP_UI_DrawLapCount(short posX,int posY,int param_3,struct Driver* d)
 	currLap = numLaps;
 
   // 3P or 4P
-  type = 2;
+  type = FONT_SMALL;
   flags = PERIWINKLE;
 
   // 1P or 2P
@@ -29,7 +29,7 @@ void DECOMP_UI_DrawLapCount(short posX,int posY,int param_3,struct Driver* d)
     // LAP
     DecalFont_DrawLine(sdata->lngStrings[0x60/4],posX,posY,FONT_SMALL,(END_AT_X | PERIWINKLE));
 
-    type = 1;
+    type = FONT_BIG;
     flags = (END_AT_X | PERIWINKLE);
 	
   	#if 0
