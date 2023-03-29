@@ -5505,7 +5505,7 @@ void FUN_800b8dc8(void)
       } while (0 < iVar3 * 0x10000 >> 0x10);
       
 	  // CS_Credits_AnimateCreditGhost
-	  FUN_800b8668(DAT_800b94d0,DAT_800b97e4);
+	  FUN_800b8668((&DAT_800b94d0)[0],DAT_800b97e4);
 	  
       DAT_800b94bc = *(undefined4 *)(DAT_800b97e4 + 0x18);
     }
