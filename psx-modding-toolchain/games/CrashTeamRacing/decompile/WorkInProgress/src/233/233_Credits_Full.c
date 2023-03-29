@@ -3,6 +3,12 @@
 // declared at bottom
 extern struct Ovr233_Credits_BSS creditsBSS;
 
+// should have parameter, but it's not used
+void CS_Credits_ThTick()
+{
+	
+}
+
 void CS_Credits_Init()
 {
 	int i;

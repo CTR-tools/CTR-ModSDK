@@ -5488,9 +5488,13 @@ void FUN_800b8dc8(void)
     puVar1 = PTR_DAT_8008d2ac;
     *(int *)(iVar3 + 0x4c) = (int)DAT_800b948c;
 	
+	// once every 4 frames
     if ((*(uint *)(puVar1 + 0x1cec) & 3) == 0) {
-      iVar3 = 4;
-      do {
+      
+	  // update 4 ghosts
+	  iVar3 = 4;
+	  do 
+	  {
         iVar2 = (int)(short)iVar3;
 		
 		// CS_Credits_AnimateCreditGhost
@@ -5505,12 +5509,18 @@ void FUN_800b8dc8(void)
 	  
       DAT_800b94bc = *(undefined4 *)(DAT_800b97e4 + 0x18);
     }
-    else {
+	
+	// 3 times out of 4 frames
+    else 
+	{
       iVar3 = 1;
 	  
 	  // CS_Credits_AnimateCreditGhost
       FUN_800b8668(DAT_800b94d0,DAT_800b97e4,0);
-      do {
+	  
+	  // animate all 5 creditghosts
+      do 
+	  {
         iVar2 = (iVar3 << 0x10) >> 0xe;
         *(short *)(*(int *)((int)&DAT_800b94d0 + iVar2) + 0x1c) =
              *(short *)(*(int *)((int)&DAT_800b94d0 + iVar2) + 0x1c) + 0x4b;
