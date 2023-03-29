@@ -228,7 +228,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 			[
 				data.lngIndex_gamepadUnplugged[lngArrStart + i]
 			],
-			0x100, posY + window.h, 2, 0xffff8000);
+			0x100, posY + window.h, FONT_SMALL, (CENTER_TEXT | ORANGE));
 
 		// add for each line
 		window.h += 8;
@@ -237,7 +237,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// PLEASE CONNECT A CONTROLLER
 	DecalFont_DrawLine(
 		sdata->lngStrings[0xac/4],
-		0x100, posY + window.h, 2, 0xffff8000);
+		0x100, posY + window.h, FONT_SMALL, (CENTER_TEXT | ORANGE));
 		
 	// add for each line
 	window.h += 8;
@@ -315,7 +315,7 @@ DrawFinalLapString:
 		DecalFont_DrawLineOT(
 			sdata->lngStrings[0x8cc/4],
 			resultPos[0], resultPos[1],
-			1, 0xffff8000,
+			FONT_BIG, (CENTER_TEXT | ORANGE),
 			tileView->ptrOT);
 			
 		sdata->finalLapTextTimer[i]--;

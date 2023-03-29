@@ -148,9 +148,9 @@ void EndCrystalChallenge(void)
 	int tap = sdata->gGamepads->gamepad[0].buttonsTapped;
 
 	// draw the text
-	DecalFont_DrawLine(line0, 40, 10, 2, 14);
-	DecalFont_DrawLine(line1, 40, 20, 2, 14);
-	DecalFont_DrawLine(line2, 40, 30, 2, 14);
+	DecalFont_DrawLine(line0, 40, 10, FONT_SMALL, PAPU_YELLOW);
+	DecalFont_DrawLine(line1, 40, 20, FONT_SMALL, PAPU_YELLOW);
+	DecalFont_DrawLine(line2, 40, 30, FONT_SMALL, PAPU_YELLOW);
 
 	// draw box
 	MenuBox_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);

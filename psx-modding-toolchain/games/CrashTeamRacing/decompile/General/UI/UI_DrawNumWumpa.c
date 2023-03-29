@@ -20,11 +20,11 @@ void DECOMP_UI_DrawNumWumpa(int param_1,int param_2,struct Driver* d)
   if (gGT->numPlyrCurrGame < 3)
   {
 	// Draw 'x' before drawing number of wumpa
-    DecalFont_DrawLine(&sdata->s_x[0],(int)posX,posY+4,2,0);
+    DecalFont_DrawLine(&sdata->s_x[0],(int)posX,posY+4,FONT_SMALL,ORANGE);
 
 	// Draw number after the 'x'
     sprintf(message,&sdata->s_int[0],d->numWumpas);
-	DecalFont_DrawLine(message,posX+0xd,(int)posY,1,0);
+	DecalFont_DrawLine(message,posX+0xd,(int)posY,FONT_BIG,ORANGE);
 
   }
 

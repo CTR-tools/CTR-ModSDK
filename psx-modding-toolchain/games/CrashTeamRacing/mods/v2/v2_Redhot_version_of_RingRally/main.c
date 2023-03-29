@@ -231,12 +231,12 @@ void EndCrystalChallenge(void)
 		menu.stringColors[menu.cursorPos] = (menu.stringColors[menu.cursorPos] + 1) & 0x1;
 
 		// Drawing strings in the menu
-		DecalFont_DrawLine(menu.selectCharStr, 93, 50, 1, menu.stringColors[0]);
+		DecalFont_DrawLine(menu.selectCharStr, 93, 50, FONT_BIG, menu.stringColors[0]);
 		// the track string comes from the TRACKS file in the folder RINGRALLY
-		DecalFont_DrawLine((char *) ((int) tracks + tracks[menu.currTrack].name), 260, 70, 1, (menu.stringColors[1] | 0x8000));
-		DecalFont_DrawLine(menu.playStr, 260, 106, 1, (menu.stringColors[2] | 0x8000));
-		DecalFont_DrawLine(menu.helpStr[0], 93, 126, 2, 3);
-		DecalFont_DrawLine(menu.helpStr[1], 93, 134, 2, 3);
+		DecalFont_DrawLine((char *) ((int) tracks + tracks[menu.currTrack].name), 260, 70, FONT_BIG, (menu.stringColors[1] | CENTER_TEXT));
+		DecalFont_DrawLine(menu.playStr, 260, 106, FONT_BIG, (menu.stringColors[2] | CENTER_TEXT));
+		DecalFont_DrawLine(menu.helpStr[0], 93, 126, FONT_SMALL, RED);
+		DecalFont_DrawLine(menu.helpStr[1], 93, 134, FONT_SMALL, RED);
 
 		// updating the iconID of the current selected character
 		iconID = (int)*(short *)( &global.dataIcons[(menu.currChar * 0x10) + 8]);
@@ -288,7 +288,7 @@ void EndCrystalChallenge(void)
 	else {
 
 		// Draw your Personal Best
-		DecalFont_DrawLine(pbStr, 0x100, 12, 1, 0xffff8000);
+		DecalFont_DrawLine(pbStr, 0x100, 12, FONT_BIG, (CENTER_TEXT | ORANGE));
 
 		// if you beat your personal best
 		if (ggv.beatPb) {
@@ -297,23 +297,23 @@ void EndCrystalChallenge(void)
 			newRecordColor = (newRecordColor + 1) & 0x1;
 
 			// draw a NEW RECORD!!! congratulating the player
-			DecalFont_DrawLine(newRecordStr, 0x100, 139, 1, newRecordColor | 0x8000);
+			DecalFont_DrawLine(newRecordStr, 0x100, 139, FONT_BIG, newRecordColor | CENTER_TEXT);
 		}
 
 		// Draw your score
-		DecalFont_DrawLine(scoreStr, 140, 98, 1, 3);
+		DecalFont_DrawLine(scoreStr, 140, 98, FONT_BIG, RED);
 
 		// Draw number of rings
-		DecalFont_DrawLine(ringsStrFinal, 140, 66, 1, 1);
+		DecalFont_DrawLine(ringsStrFinal, 140, 66, FONT_BIG, PERIWINKLE);
 
 		// Draw number of lapsStr
-		DecalFont_DrawLine(lapsStrFinal, 140, 45, 1, 1);
+		DecalFont_DrawLine(lapsStrFinal, 140, 45, FONT_BIG, PERIWINKLE);
 
 		// Draw instructions for restart
-		DecalFont_DrawLine(s_endStr, 0x100, 0xB0, 2, 0x8000);
+		DecalFont_DrawLine(s_endStr, 0x100, 0xB0, FONT_SMALL, (CENTER_TEXT | ORANGE));
 
 		// Draw instructions to change character and/or track
-		DecalFont_DrawLine(gotoMenuStr, 0x100, 0xC0, 2, 0x8000);
+		DecalFont_DrawLine(gotoMenuStr, 0x100, 0xC0, FONT_SMALL, (CENTER_TEXT | ORANGE));
 
 		// draw invi box to show the record time
 		DrawBox2D(&recordWindow, 4, semiGlobal.gameConfig.backBuffer->otMem.startPlusFour);
@@ -657,13 +657,13 @@ void MainUpdateLoop()
 		DrawCrystalChallHUD_Game();
 
 		// Draw number of rings
-		DecalFont_DrawLine(ringsStr, 0x160,8,2,0);
+		DecalFont_DrawLine(ringsStr, 0x160,8,FONT_SMALL,ORANGE);
 
 		// Draw number of lapsStr
-		DecalFont_DrawLine(lapsStr, 0x160,0x10,1,0);
+		DecalFont_DrawLine(lapsStr, 0x160,0x10,FONT_BIG,ORANGE);
 
 		// Draw number of points
-		DecalFont_DrawLine(pointsStr, 0xB8, 12, 1, 0);
+		DecalFont_DrawLine(pointsStr, 0xB8, 12, FONT_BIG, ORANGE);
 	}
 
 	for(loop = 0; loop < rrg->numRingsOnTrack; loop++)

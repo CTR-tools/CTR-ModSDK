@@ -248,19 +248,19 @@ void RunUpdateHook()
 	gGT->elapsedEventTime + 0x100000;
 
 	// always draw how to enable text
-	DecalFont_DrawLine(str5, 10, 200, 2, 0xffff0000);
+	DecalFont_DrawLine(str5, 10, 200, FONT_SMALL, ORANGE);
 
 	// quit if we dont want text
 	if(!mgs->showText)
 		return;
 
 	// draw directions
-	DecalFont_DrawLine(str0, 10, 150, 2, 0xffff0000);
-	DecalFont_DrawLine(str1, 10, 160, 2, 0xffff0000);
-	DecalFont_DrawLine(str2, 10, 170, 2, 0xffff0000);
-	DecalFont_DrawLine(str3, 10, 180, 2, 0xffff0000);
-	DecalFont_DrawLine(str4, 10, 190, 2, 0xffff0000);
-	DecalFont_DrawLine(str5, 10, 200, 2, 0xffff0000);
+	DecalFont_DrawLine(str0, 10, 150, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str1, 10, 160, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str2, 10, 170, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str3, 10, 180, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str4, 10, 190, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(str5, 10, 200, FONT_SMALL, ORANGE);
 }
 
 

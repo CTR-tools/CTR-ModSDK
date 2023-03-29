@@ -95,10 +95,14 @@ void HookCups(int* param_1)
 	unsigned int buttonTap;
 	int id;
 
-    DecalFont_DrawLine("PRESS SELECT FOR CUSTOM CUPS",
-                 0x100,
-                 0x4,
-				 2,0xffff8000);
+    DecalFont_DrawLine
+    (
+    	"PRESS SELECT FOR CUSTOM CUPS",
+        0x100,
+        0x4,
+		FONT_SMALL,
+		(CENTER_TEXT | ORANGE)
+	);
 
 	buttonTap = sdata->gGamepads->gamepad[0].buttonsTapped;
 
@@ -150,11 +154,14 @@ void HookCups(int* param_1)
 		}
 
 		// Draw arrow
-		DecalFont_DrawLine("-\0",
+		DecalFont_DrawLine
+		(
+			"-\0",
 			0x108,
 			0x30 + 0x10*cc->choiceY,
-			2,
-			0);
+			FONT_SMALL,
+			ORANGE
+		);
 
 		// set values of all cups
 		for(i = 0; i < 4; i++)
@@ -166,27 +173,42 @@ void HookCups(int* param_1)
 			CUP_ICON(i) = SIN_ICON(i);
 
 			// Draw name of track
-			DecalFont_DrawLine(sdata->lngStrings[CUP_TRACK(i) + 0x6e],
+			DecalFont_DrawLine
+			(
+				sdata->lngStrings[CUP_TRACK(i) + 0x6e],
 				0x118,
 				0x30 + 0x10*i,
-				2,
-				0);
+				FONT_SMALL,
+				ORANGE
+			);
 		}
 
-		DecalFont_DrawLine("USE D-PAD TO CUSTOMIZE WUMPA CUP",
-                 0x100,
-                 0x88,
-				 2,0xffff8001);
+		DecalFont_DrawLine
+		(
+			"USE D-PAD TO CUSTOMIZE WUMPA CUP",
+            0x100,
+            0x88,
+			FONT_SMALL,
+			(CENTER_TEXT | PERIWINKLE)
+		);
 
-		DecalFont_DrawLine("PRESS R1 TO RANDOMOMIZE",
-                 0x100,
-                 0xA0,
-				 2,0xffff8001);
+		DecalFont_DrawLine
+		(
+			"PRESS R1 TO RANDOMOMIZE",
+            0x100,
+            0xA0,
+			FONT_SMALL,
+			(CENTER_TEXT | PERIWINKLE)
+		);
 
-		DecalFont_DrawLine("THEN PRESS SELECT AND PICK WUMPA",
-                 0x100,
-                 0xB8,
-				 2,0xffff8001);
+		DecalFont_DrawLine
+		(
+			"THEN PRESS SELECT AND PICK WUMPA",
+            0x100,
+            0xB8,
+			FONT_SMALL,
+			(CENTER_TEXT | PERIWINKLE)
+		);
 
 		// Draw background box ========================
 		MenuBox_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);

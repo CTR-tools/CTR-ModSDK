@@ -18,7 +18,7 @@ void DF_PrintText()
   gGT = sdata->gGT;
   backup = gGT->tileView_UI.ptrOT;
   gGT->tileView_UI.ptrOT = gGT->ot_tileView_UI[gGT->swapchainIndex];
-  DecalFont_DrawLine("Debug View: R1+Select", 10, 208, 2, 0xffff0000);
+  DecalFont_DrawLine("Debug View: R1+Select", 10, 208, FONT_SMALL, ORANGE);
   gGT->tileView_UI.ptrOT = backup;
 }
 

@@ -109,19 +109,19 @@ void SetNames_Characters()
 
 void StatePS1_Launch_EnterPID()
 {	
-	DecalFont_DrawLine("Attach Windows Client To Continue",0x8,0xd0,2,0);
+	DecalFont_DrawLine("Attach Windows Client To Continue",0x8,0xd0,FONT_SMALL,ORANGE);
 }
 
 void StatePS1_Launch_EnterIP()
 {	
-	DecalFont_DrawLine("Client Attached",0x8,0xc8,2,0x1A);
-	DecalFont_DrawLine("Enter IP Address",0x8,0xd0,2,0);
+	DecalFont_DrawLine("Client Attached",0x8,0xc8,FONT_SMALL,PLAYER_GREEN);
+	DecalFont_DrawLine("Enter IP Address",0x8,0xd0,FONT_SMALL,ORANGE);
 }
 
 void StatePS1_Launch_ConnectFailed()
 {
-	DecalFont_DrawLine("Server Not Found",0x8,0xc8,2,0x19);
-	DecalFont_DrawLine("Please Try Again",0x8,0xd0,2,0);
+	DecalFont_DrawLine("Server Not Found",0x8,0xc8,FONT_SMALL,PLAYER_RED);
+	DecalFont_DrawLine("Please Try Again",0x8,0xd0,FONT_SMALL,ORANGE);
 }
 
 void StatePS1_Launch_FirstInit()
@@ -189,10 +189,10 @@ void DrawClientCountStats()
 	#endif
 	
 	sprintf(message, "ClientID: %d", octr->DriverID);
-	DecalFont_DrawLine(message,0x8,0x20,2,0);
+	DecalFont_DrawLine(message,0x8,0x20,FONT_SMALL,ORANGE);
 	
 	sprintf(message, "NumTotal: %d", octr->NumDrivers);
-	DecalFont_DrawLine(message,0x8,0x28,2,0);
+	DecalFont_DrawLine(message,0x8,0x28,FONT_SMALL,ORANGE);
 }
 
 void MenuBox_OnPressX_Track(struct MenuBox* b)
@@ -263,7 +263,7 @@ void StatePS1_Lobby_GuestTrackWait()
 {
 	DrawClientCountStats();
 	
-	DecalFont_DrawLine("Waiting for Host to Pick Track",0x8,0xd0,2,0);
+	DecalFont_DrawLine("Waiting for Host to Pick Track",0x8,0xd0,FONT_SMALL,ORANGE);
 }
 
 void DrawRecvTrack()
@@ -276,7 +276,7 @@ void DrawRecvTrack()
 				]
 			);
 	
-	DecalFont_DrawLine(message,0x8,0x10,2,0x18);
+	DecalFont_DrawLine(message,0x8,0x10,FONT_SMALL,PLAYER_BLUE);
 }
 
 void DrawCharacterStats()
@@ -306,9 +306,9 @@ void DrawCharacterStats()
 		// 0x1A - green
 		int color = 
 			octr->boolLockedInCharacter_Others[i] ? 
-			0x1A : 0x19;
+			PLAYER_GREEN : PLAYER_RED;
 	
-		DecalFont_DrawLine(message,0x8,0x48+i*0x8,2,color);
+		DecalFont_DrawLine(message,0x8,0x48+i*0x8,FONT_SMALL,color);
 	}
 }
 
@@ -380,7 +380,7 @@ void StatePS1_Lobby_WaitForLoading()
 	DrawCharacterStats();
 	DrawRecvTrack();
 	
-	DecalFont_DrawLine("Waiting for All Characters",0x8,0xd0,2,0);
+	DecalFont_DrawLine("Waiting for All Characters",0x8,0xd0,FONT_SMALL,ORANGE);
 }
 
 void StatePS1_Lobby_StartLoading()
@@ -392,7 +392,7 @@ void StatePS1_Lobby_StartLoading()
 	DrawClientCountStats();
 	DrawCharacterStats();
 	DrawRecvTrack();
-	DecalFont_DrawLine("LOADING...",0x100,0x6c,2,0xffff0000);
+	DecalFont_DrawLine("LOADING...",0x100,0x6c,FONT_SMALL,ORANGE);
 	
 	// variable reuse, wait a few frames,
 	// so screen updates with green names
