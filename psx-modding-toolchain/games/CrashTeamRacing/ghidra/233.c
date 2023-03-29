@@ -5319,10 +5319,19 @@ LAB_800b8a48:
         iVar10 = iVar7;
       }
       iVar7 = iVar15;
-      if ((bVar3) && (DAT_800b94b0 != 0)) {
+      
+	  if (
+			(bVar3) && 
+			
+			// if all blue relics
+			(DAT_800b94b0 != 0)) 
+	  {
+		// if text is above epilogue
         if (iVar10 < 1) {
           iVar7 = -1;
         }
+		
+		// if text is below epilogue
         else {
           iVar12 = 0;
 		  
@@ -5331,7 +5340,8 @@ LAB_800b8a48:
           
 		  iVar10 = (iVar10 << 8) / 0x14;
           
-		  // modify four global colors
+		  // modify four global colors,
+		  // make a transparent version that blends with black background
 		  do 
 		  {
 			// modify color 0x1F - 0x22
@@ -5344,6 +5354,7 @@ LAB_800b8a48:
           } while (iVar12 * 0x10000 >> 0x10 < 4);
         }
       }
+	  
       if (-1 < iVar7 << 0x10) 
 	  {
 		// DecalFont_DrawLineStrlen
