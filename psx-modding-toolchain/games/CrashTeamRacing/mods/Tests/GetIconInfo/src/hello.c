@@ -37,10 +37,10 @@ int Hello_Main()
 		&sdata->gGT->backBuffer->primMem,
 		sdata->gGT->tileView_UI.ptrOT,
 
-		data.ptrColor[0x17][0],
-		data.ptrColor[0x17][1],
-		data.ptrColor[0x17][2],
-		data.ptrColor[0x17][3],
+		data.ptrColor[GRAY][0],
+		data.ptrColor[GRAY][1],
+		data.ptrColor[GRAY][2],
+		data.ptrColor[GRAY][3],
 
 		0, 0x1000
 	);

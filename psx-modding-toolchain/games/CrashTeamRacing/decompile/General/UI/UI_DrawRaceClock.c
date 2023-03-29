@@ -134,7 +134,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 		fontType = FONT_BIG;
 
 		// this particular snippet is for drawing the TOTAL text in the time trial lap results screen before it flashes, at which point it moves from the left to the center of the screen
-		// if global game timer is on an odd number (in which case this condition doesn't execute) then set string to end at posX of next DrawLine and use data.ptrColor[4], which is a flat white
+		// if global game timer is on an odd number (in which case this condition doesn't execute) then set string to end at posX of next DrawLine and use data.ptrColor[WHITE]
 		if (((flags & 4) == 0) || (strFlags_but_its_also_posY = (END_AT_X | WHITE), (sdata->gGT->timer & 2) != 0))
 		{
 			strFlags_but_its_also_posY = (END_AT_X | ORANGE);

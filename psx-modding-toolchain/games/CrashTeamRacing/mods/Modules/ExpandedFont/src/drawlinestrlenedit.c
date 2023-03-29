@@ -156,11 +156,11 @@ LAB_80022598:
 							charLength = data.font_charPixWidth[fontType] + data.font_buttonPixWidth[fontType];
 
 							// use neutral vertex color for button characters
-							ptrColor = data.ptrColor[0x17];
+							ptrColor = data.ptrColor[GRAY];
 						}
 						else
 						{
-							iVar9 = 1;
+							iVar9 = PERIWINKLE;
 							if (*character == '@')
 							{
 								*character = 'A';
@@ -171,13 +171,13 @@ LAB_80022598:
 							{
 								if (*character < 0x41)
 								{
-									japanPtrColor = 4;
+									japanPtrColor = WHITE;
 
 									if(*character == '*')
 									{
 										*character = '1';
 										UnknownJapaneseGoto2:
-										iVar9 = 3;
+										iVar9 = RED;
 										goto UnknownJapaneseGoto1;
 									}
 								}
@@ -188,7 +188,7 @@ LAB_80022598:
 										*character = '2';
 										goto UnknownJapaneseGoto2;
 									}
-									japanPtrColor = 4;
+									japanPtrColor = WHITE;
 									if (*character == '^')
 									{
 										*character = 0x42;
@@ -205,7 +205,7 @@ LAB_80022598:
 						charLength = data.font_charPixWidth[fontType] + data.font_buttonPixWidth[fontType];
 
 						// use neutral vertex color for button characters
-						ptrColor = data.ptrColor[0x17];
+						ptrColor = data.ptrColor[GRAY];
 						#endif
 					}
 				}

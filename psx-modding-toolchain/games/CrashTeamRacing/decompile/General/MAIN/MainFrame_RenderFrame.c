@@ -1138,8 +1138,8 @@ void WindowBoxLines(struct GameTracker* gGT)
 			// dimensions, thickness
 			&gGT->tileView[i].rect,4,2,
 
-			// color data, 0x18 is enum offset of BLUE
-			data.ptrColor[gGT->drivers[i]->BattleHUD.teamID + 0x18],
+			// color data
+			data.ptrColor[gGT->drivers[i]->BattleHUD.teamID + PLAYER_BLUE],
 
 			0,
 
