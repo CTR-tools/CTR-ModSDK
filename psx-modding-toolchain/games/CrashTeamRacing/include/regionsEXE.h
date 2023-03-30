@@ -1659,7 +1659,11 @@ struct Data
 	// 233 = 80031a38
 	void* overlayCallbackFuncs[4];
 
-	// 80083A80 -- UsaRetail,
+	// 80081CFC -- SepReview
+	// 80083A80 -- UsaRetail
+	// 80082980 -- JpnTrial
+	// 80083D58 -- EurRetail
+	// 80086D14 -- JpnRetail
 	struct MetaDataLEV metaDataLEV[0x41];
 
 	// 80084098
