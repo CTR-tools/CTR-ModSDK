@@ -580,14 +580,14 @@ struct GameTracker
 
 	struct
 	{
-	// 1e58
-	int cupID; // 0-3, or 4 for Purple cup
-
-	// 1e5c
-	int trackIndex; // 0-3
-
-	// 1e60
-	int points[8];
+		// 1e58
+		int cupID; // 0-3, or 4 for Purple cup
+		
+		// 1e5c
+		int trackIndex; // 0-3
+		
+		// 1e60
+		int points[8];
 
 	} cup;
 

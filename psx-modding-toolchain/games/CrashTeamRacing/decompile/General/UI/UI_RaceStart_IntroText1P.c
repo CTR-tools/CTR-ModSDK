@@ -15,12 +15,9 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
    int transition;
    char acStack72[24];
    RECT rect;
-   short windowBottom;
-   short windowTop;
-   short local_2a;
    int colors[2];
 
-   gGT = sdata -> gGT;
+   gGT = sdata->gGT;
 
    // by default, do not transition
    // title bars to off-screen
@@ -69,14 +66,14 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
                   }
                   goto LAB_80055930;
                }
-               iVar2 = sdata -> gGT -> bossID;
+               iVar2 = gGT -> bossID;
                txtArray = & data.lng_challenge;
             }
 
             // If you are in Arcade or VS cup
             else {
                // Get Cup ID
-               iVar2 = sdata -> gGT -> cup.cupID;
+               iVar2 = gGT -> cup.cupID;
                txtArray = & data.arcadeVsCupStringIndex;
             }
          }
@@ -84,7 +81,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          // If you are in Adventure Cup
          else {
             // Get Cup ID
-            iVar2 = sdata -> gGT -> cup.cupID;
+            iVar2 = gGT -> cup.cupID;
             txtArray = & data.advCupStringIndex;
          }
 
@@ -126,15 +123,20 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 
          // If you are not in Arcade or VS cup
          (((gGT -> gameMode2 & 0x10) == 0))
-      ) {
-         // X-value, not 0x100???
-         posX = gGT -> tileView -> rect.x + ((gGT -> tileView -> rect.w << 0x10) >> 0x11);
+      ) 
+	  {
+		#if 0  
+         // X-value, X + W/2
+         posX = gGT->tileView[0].rect.x + ((gGT->tileView[0].rect.w << 0x10) >> 0x11);
+		#else
+		 posX = 0x100; // screw it
+		#endif
 
          // string of top title bar
-         pcVar6 = sdata -> lngStrings[textID * 4];
+         pcVar6 = sdata -> lngStrings[textID];
 
          // Y-value that transitions title text to off-screen
-         sVar7 = gGT -> tileView -> rect.y - (windowHeight + -7);
+         sVar7 = gGT->tileView[0].rect.y - (windowHeight + -7);
       }
 
       // If you are in any cup of any kind
@@ -144,8 +146,14 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          // uVar9 * 4
          DecalFont_DrawLine(
             sdata -> lngStrings[textID * 4],
-            gGT -> tileView -> rect.x + ((gGT -> tileView -> rect.w << 0x10) >> 0x11),
-            ((gGT -> tileView -> rect.y - (transition + -7)) + -6),
+			
+			#if 0
+            gGT->tileView[0].rect.x + ((gGT->tileView[0].rect.w << 0x10) >> 0x11),
+            #else
+			0x100, // screw it
+			#endif
+			
+			((gGT->tileView[0].rect.y - (transition + -7)) + -6),
             1, 0xffff8000
          );
 
@@ -156,7 +164,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
             sdata -> lngStrings[0x5d4],
 
             // Track Index (0, 1, 2, 3) + 1
-            (sdata -> gGT -> cup.trackIndex) + 1);
+            (gGT -> cup.trackIndex) + 1);
 
          // string of top title bar
          pcVar6 = acStack72;
@@ -168,11 +176,11 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          font = 2;
 
          // Y-value that transitions title text to off-screen
-         sVar7 = (gGT -> tileView -> rect.y - (transition + -7)) + 0xb;
+         sVar7 = (gGT->tileView[0].rect.y - (transition + -7)) + 0xb;
       }
 
       // Print top title text "Arcade, Time Trial, etc"
-      DecalFont_DrawLine(pcVar6, iVar2, sVar7, font, 0xffff8000);
+      DecalFont_DrawLine(pcVar6, posX, sVar7, font, 0xffff8000);
 
       // Print the name of the level
       // Crash Cove, Roos Tubes, etc
@@ -182,80 +190,54 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          // 8d878 + 110*4 -> Dingo Canyon
 
          // Level ID
-         sdata -> lngStrings[data.metaDataLEV[sdata -> gGT -> levelID].name_LNG],
-         gGT -> tileView -> rect.x + ((gGT -> tileView -> rect.w << 0x10) >> 0x11),
-         (gGT -> tileView -> rect.y + gGT -> tileView -> rect.h + transition + -0x17),
+         sdata -> lngStrings[data.metaDataLEV[gGT -> levelID].name_LNG],
+		 
+		 #if 0
+         gGT->tileView[0].rect.x + ((gGT->tileView[0].rect.w << 0x10) >> 0x11),
+		 #else
+		 0x100, // screw it
+		 #endif
+		 
+         (gGT->tileView[0].rect.y + gGT->tileView[0].rect.h + transition + -0x17),
          1, 0xffff8000);
 
-      // color of rectangle that touches Black title bar
+	  // same for all
+	  rect.x = gGT->tileView[0].rect.x;
+      rect.w = gGT->tileView[0].rect.w;
+	  
+	  // 2-pixel height
+	  // random generic color
       colors[0] = sdata -> battleSetup_Color_UI_1;
-
-      // dimensions of window, two-pixels tall
-      rect = (gGT -> tileView -> rect);
-      windowBottom = gGT -> tileView -> rect.y - (windowHeight + -0x1c);
-      windowTop = gGT -> tileView -> rect.h;
-      local_2a = 2;
+	  rect.h = 2;
 
       // Draw tiny rectangle near big black title bar (first)
-      // CTR_Box_DrawSolidBox
-      CTR_Box_DrawSolidBox( & rect, colors,
-
-         sdata -> gGT -> backBuffer -> otMem.startPlusFour,
-
-         // pointer to PrimMem struct
-         &
-         sdata -> gGT -> backBuffer -> primMem);
-
-      // dimensions of window, two-pixels tall
-      rect = (gGT -> tileView -> rect);
-      windowBottom = gGT -> tileView -> rect.y + gGT -> tileView -> rect.h + windowHeight + -0x1e;
-      windowTop = gGT -> tileView -> rect.h;
-      local_2a = 2;
+      rect.y = gGT->tileView[0].rect.y - (windowHeight + -0x1c);
+      CTR_Box_DrawSolidBox(&rect, colors,
+         gGT->backBuffer->otMem.startPlusFour,
+         &gGT->backBuffer->primMem);
 
       // Draw tiny rectangle near big black title bar (second)
-      // CTR_Box_DrawSolidBox
-      CTR_Box_DrawSolidBox( & rect, colors,
+	  rect.y = gGT->tileView[0].rect.y + gGT->tileView[0].rect.h + windowHeight + -0x1e;
+      CTR_Box_DrawSolidBox(&rect, colors,
+         gGT->backBuffer->otMem.startPlusFour,
+         &gGT->backBuffer->primMem);
 
-         sdata -> gGT -> backBuffer -> otMem.startPlusFour,
-
-         // pointer to PrimMem struct
-         &
-         sdata -> gGT -> backBuffer -> primMem);
-
+	  // 30-pixel height
       // clear RGB, keep alpha (which is zero anyway)
       colors[0] = colors[0] & 0xff000000;
-
-      // dimensions of window, 30-pixels tall
-      rect = gGT -> tileView -> rect;
-      windowBottom = gGT -> tileView -> rect.y - windowHeight;
-      windowTop = gGT -> tileView -> rect.h;
-      local_2a = 0x1e;
+	  rect.h = 0x1e;
 
       // draw big black title bar (first)
-      // CTR_Box_DrawSolidBox
-      CTR_Box_DrawSolidBox( & rect, colors,
-
-         sdata -> gGT -> backBuffer -> otMem.startPlusFour,
-
-         // pointer to PrimMem struct
-         &
-         sdata -> gGT -> backBuffer -> primMem);
-
-      // dimensions of window, 30-pixels tall
-      rect = gGT -> tileView -> rect;
-      windowBottom = gGT -> tileView -> rect.y + gGT -> tileView -> rect.h + windowHeight + -0x1e;
-      windowTop = gGT -> tileView -> rect.h;
-      local_2a = 0x1e;
+	  rect.y = gGT->tileView[0].rect.y - windowHeight;
+      CTR_Box_DrawSolidBox(&rect, colors,
+         gGT->backBuffer->otMem.startPlusFour,
+         &gGT->backBuffer->primMem);
 
       // draw big black title bar (second)
-      // CTR_Box_DrawSolidBox
-      CTR_Box_DrawSolidBox( & rect, colors,
-
-         sdata -> gGT -> backBuffer -> otMem.startPlusFour,
-
-         // pointer to PrimMem struct
-         &
-         sdata -> gGT -> backBuffer -> primMem);
+	  rect.y = gGT->tileView[0].rect.y + gGT->tileView[0].rect.h + windowHeight + -0x1e;
+      CTR_Box_DrawSolidBox(&rect, colors,
+         gGT->backBuffer->otMem.startPlusFour,
+         &gGT->backBuffer->primMem);
    }
    return;
 }

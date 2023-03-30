@@ -16755,8 +16755,7 @@ void FUN_8005572c(int param_1)
 }
 
 
-// Draw Title Bars
-// You see this in 1P mode, right before traffic lights count down
+// UI_RaceStart_IntroText1P
 void FUN_80055840(void)
 
 {
