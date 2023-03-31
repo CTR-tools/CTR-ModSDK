@@ -1024,17 +1024,19 @@ void FUN_800430f0(short *param_1)
   
   iVar9 = -iVar9;
   iVar21 = 0x1f800012;
-  iVar4 = iVar23;
-  iVar7 = iVar25;
-  iVar27 = iVar26;
-  iVar28 = iVar23;
-  local_3c = iVar25;
-  local_38 = iVar26;
+  
+  iVar4 = iVar23;		// min X 1f800000 (default cameraPosX)
+  iVar7 = iVar25;		// min Y 1f800004 (default cameraPosY)
+  iVar27 = iVar26;		// min Z 1f800008 (default cameraPosZ)
+  
+  iVar28 = iVar23;		// max X 1f800000 (default cameraPosX)
+  local_3c = iVar25;	// max Y 1f800004 (default cameraPosY)
+  local_38 = iVar26;	// max Z 1f800008 (default cameraPosZ)
   
   // uVar5, uVar6, uVar8, uVar9 never change
   // beyond this point, they are constant
   
-  // 4 points (x,y,z):
+  // 4 points (uVar22) (x,y,z):
   // uVar6, uVar5, distToScreen
   // uVar8, uVar5, distToScreen
   // uVar8, uVar9, distToScreen
@@ -1205,6 +1207,8 @@ void FUN_800430f0(short *param_1)
       }
     }
 	
+	// === Set 6 Min/Max X,Y,Z variables ===
+	
     if (DAT_1f800000 < iVar28) {
       iVar28 = DAT_1f800000;
     }
@@ -1233,12 +1237,12 @@ void FUN_800430f0(short *param_1)
   } while (-1 < iVar20);
 
   // 0xE8 to 0xF2
-  param_1[0x74] = (short)iVar28;
-  param_1[0x77] = (short)iVar4;
-  param_1[0x78] = (short)iVar7;
-  param_1[0x75] = (short)local_3c;
-  param_1[0x79] = (short)iVar27;
-  param_1[0x76] = (short)local_38;
+  param_1[0x74] = (short)iVar28;	// min X
+  param_1[0x77] = (short)iVar4;		// max X
+  param_1[0x78] = (short)iVar7;		// min Y
+  param_1[0x75] = (short)local_3c;	// max Y
+  param_1[0x79] = (short)iVar27;	// min Z
+  param_1[0x76] = (short)local_38;	// max Z
 
   // cameraPos (x,y,z)
   DAT_1f800024._0_2_ = sVar1;
