@@ -1083,6 +1083,7 @@ void FUN_800430f0(short *param_1)
     DAT_1f800004 = iVar14;
     DAT_1f800008 = iVar17;
     
+	// === X Axis ===
 	if (((iVar23 < -0x8000) && (-0x8000 < iVar11)) || ((-0x8000 < iVar23 && (iVar11 < -0x8000)))) {
       iVar13 = (-0x8000 - iVar23) * 0x1000;
       iVar10 = iVar11 - iVar23;
@@ -1100,6 +1101,8 @@ void FUN_800430f0(short *param_1)
         iVar19 = iVar16;
       }
     }
+	
+	// === Y Axis ===
     if (((iVar25 < -0x8000) && (-0x8000 < iVar14)) || ((-0x8000 < iVar25 && (iVar14 < -0x8000)))) {
       iVar13 = (-0x8000 - iVar25) * 0x1000;
       iVar10 = iVar14 - iVar25;
@@ -1117,6 +1120,8 @@ void FUN_800430f0(short *param_1)
         iVar19 = iVar16;
       }
     }
+	
+	// === Z Axis ===
     if (((iVar26 < -0x8000) && (-0x8000 < iVar17)) || ((-0x8000 < iVar26 && (iVar17 < -0x8000)))) {
       iVar13 = (-0x8000 - iVar26) * 0x1000;
       iVar10 = iVar17 - iVar26;
@@ -1134,6 +1139,8 @@ void FUN_800430f0(short *param_1)
         iVar19 = iVar16;
       }
     }
+	
+	// === X Axis ===
     if (((iVar23 < 0x7fff) && (0x7fff < iVar11)) || ((0x7fff < iVar23 && (iVar11 < 0x7fff)))) {
       iVar13 = (0x7fff - iVar23) * 0x1000;
       iVar10 = iVar11 - iVar23;
@@ -1151,6 +1158,8 @@ void FUN_800430f0(short *param_1)
         iVar19 = iVar16;
       }
     }
+	
+	// === Y Axis ===
     if (((iVar25 < 0x7fff) && (0x7fff < iVar14)) || ((0x7fff < iVar25 && (iVar14 < 0x7fff)))) {
       iVar13 = (0x7fff - iVar25) * 0x1000;
       iVar10 = iVar14 - iVar25;
@@ -1168,6 +1177,8 @@ void FUN_800430f0(short *param_1)
         iVar19 = iVar16;
       }
     }
+	
+	// === Z Axis ===
     if (((iVar26 < 0x7fff) && (0x7fff < iVar17)) || ((0x7fff < iVar26 && (iVar17 < 0x7fff)))) {
       iVar10 = (0x7fff - iVar26) * 0x1000;
       iVar17 = iVar17 - iVar26;
@@ -1184,6 +1195,7 @@ void FUN_800430f0(short *param_1)
         DAT_1f800004 = iVar25 + (iVar13 * (iVar14 - iVar25) >> 0xc);
       }
     }
+	
     if (DAT_1f800000 < iVar28) {
       iVar28 = DAT_1f800000;
     }
