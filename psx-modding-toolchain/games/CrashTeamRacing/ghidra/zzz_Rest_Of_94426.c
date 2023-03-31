@@ -1031,6 +1031,15 @@ void FUN_800430f0(short *param_1)
   local_3c = iVar25;
   local_38 = iVar26;
   
+  // uVar5, uVar6, uVar8, uVar9 never change
+  // beyond this point, they are constant
+  
+  // 4 points (x,y,z):
+  // uVar6, uVar5, distToScreen
+  // uVar8, uVar5, distToScreen
+  // uVar8, uVar9, distToScreen
+  // uVar6, uVar9, distToFinish_checkpoint
+  
   do 
   {
 	// multiply corner of screen,
