@@ -20548,33 +20548,23 @@ void FUN_80059344(int param_1,undefined4 param_2)
   int iVar12;
   int iVar13;
 
-  setCopReg(2,0,0);
-  setCopReg(2,0x800,0xffffe800);
-
-  // rtv0     cop2 $0486012  v0 * rotmatrix
-  copFunction(2,0x486012);
-
-  iVar4 = getCopReg(2,0xc800);
-  iVar5 = getCopReg(2,0xd000);
-  iVar6 = getCopReg(2,0xd800);
-  setCopReg(2,0,0x1800);
-  setCopReg(2,0x800,0);
-
-  // rtv0     cop2 $0486012  v0 * rotmatrix
-  copFunction(2,0x486012);
-
-  iVar13 = getCopReg(2,0xc800);
-  iVar12 = getCopReg(2,0xd000);
-  iVar11 = getCopReg(2,0xd800);
-  setCopReg(2,0,0);
-  setCopReg(2,0x800,0xfffffe00);
-
-  // rtv0     cop2 $0486012  v0 * rotmatrix
-  copFunction(2,0x486012);
-
-  uVar10 = getCopReg(2,0xc800);
-  uVar9 = getCopReg(2,0xd000);
-  uVar8 = getCopReg(2,0xd800);
+  gte_ldVXY0(0);
+  gte_ldVZ0(0xffffe800);
+  gte_rtv0();
+  iVar4 = gte_stMAC1();
+  iVar5 = gte_stMAC2();
+  iVar6 = gte_stMAC3();
+  
+  gte_ldVXY0(0x1800);
+  gte_ldVZ0(0);
+  gte_rtv0();
+  read_mt(iVar13,iVar12,iVar11);
+  
+  gte_ldVXY0(0);
+  gte_ldVZ0(0xfffffe00);
+  gte_rtv0();
+  read_mt(uVar10,uVar9,uVar8);
+  
   iVar7 = 10;
   do
   {
