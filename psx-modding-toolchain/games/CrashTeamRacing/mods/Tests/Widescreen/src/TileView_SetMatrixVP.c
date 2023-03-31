@@ -122,7 +122,7 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   #define r600 0x600
 
   // scale position
-  tileView->matrix_ViewProj.t[0] = (tx * 600) / 1000;
+  tileView->matrix_ViewProj.t[0] = tx;
   tileView->matrix_ViewProj.t[1] = (ty * r360) / r600;
   tileView->matrix_ViewProj.t[2] = tz;
   
@@ -131,11 +131,12 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   // X axis correction for 16x9 must be 9/16 x 4/3 -> 0.75
   // 16x9 is 0.75, 20x9 is 0.6, etc
   
-  // 600 / 1000 for 20x9
-  // 750 / 1000 for 16x9
+  // 600  / 1000 for 20x9
+  // 750  / 1000 for 16x9
+  // 1000 / 1000 for 4x3
   
-  // adjustin m[0][0] will work on Roo's Tubes spawn
-  // will break everywhere else, need more
+  tileView->matrix_ViewProj.t[0] =
+  tileView->matrix_ViewProj.t[0] * 600 / 1000;
   
   tileView->matrix_ViewProj.m[0][0] =
   tileView->matrix_ViewProj.m[0][0] * 600 / 1000;

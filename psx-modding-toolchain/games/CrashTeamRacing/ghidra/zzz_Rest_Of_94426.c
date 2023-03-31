@@ -1003,6 +1003,7 @@ void FUN_800430f0(short *param_1)
   // uVar6 = rect.w/2
   uVar6 = iVar7 - ((int)((uint)(ushort)param_1[0x10] << 0x10) >> 0x1f) >> 1 & 0xffff;
   
+  // Aspect Scaling on Y-Axis (0x600 and 0x360)
   iVar4 = (((int)param_1[0x11] * 0x600000) / 0x360 >> 0xc) << 0x10;
   iVar9 = iVar4 >> 0x10;
   
