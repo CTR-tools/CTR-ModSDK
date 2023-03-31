@@ -997,23 +997,20 @@ void FUN_800430f0(short *param_1)
   sVar3 = param_1[2];
   iVar26 = (int)sVar3;
 
-  // iVar7 = rect.w
+  // iVar6 (X Val) = rect.w - rect.w/2 ???
   iVar7 = (int)((uint)(ushort)param_1[0x10] << 0x10) >> 0x10;
-  
-  // uVar6 = rect.w/2
   uVar6 = iVar7 - ((int)((uint)(ushort)param_1[0x10] << 0x10) >> 0x1f) >> 1 & 0xffff;
   
-  // Aspect Scaling on Y-Axis (0x600 and 0x360)
+  // iVar5 (Y Val) = rect.h scaled with aspect (0x600 / 0x360)
   iVar4 = (((int)param_1[0x11] * 0x600000) / 0x360 >> 0xc) << 0x10;
   iVar9 = iVar4 >> 0x10;
-  
-  // bitwise
   uVar5 = (iVar9 - (iVar4 >> 0x1f) >> 1) << 0x10;
   
   // tileView 0x18, distToScreen
   iVar24 = *(int *)(param_1 + 0xc);
   
   // first "do" loop iteration
+  // X | (Y << 0x10)
   uVar22 = uVar6 | uVar5;
   
   // distToScreen
