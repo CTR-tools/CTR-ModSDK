@@ -9,11 +9,14 @@
 #define JpnRetail 1111
 
 #if BUILD == EurRetail
+#define SCREEN_HEIGHT 236
 #define FPS 25
 #define ELAPSED_MS 40
 #else
+#define SCREEN_HEIGHT 216
 #define FPS 30
 #define ELAPSED_MS 32
 #endif
+#define SCREEN_WIDTH 512
 #define SECOND (FPS * ELAPSED_MS)
 #define MINUTE (SECOND * 60)
