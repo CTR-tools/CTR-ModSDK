@@ -131,8 +131,12 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   // X axis correction for 16x9 must be 9/16 x 4/3 -> 0.75
   // 16x9 is 0.75, 20x9 is 0.6, etc
   
-  // Somewhere you need a 0.75 scale, ND Box and Main Menu
-  // look corrrect, but race tracks break
+  // 600 / 1000 for 20x9
+  // 750 / 1000 for 16x9
+  
+  // adjustin m[0][0] will work on Roo's Tubes spawn
+  // will break everywhere else, need more
+  
   tileView->matrix_ViewProj.m[0][0] =
   tileView->matrix_ViewProj.m[0][0] * 600 / 1000;
 #endif
