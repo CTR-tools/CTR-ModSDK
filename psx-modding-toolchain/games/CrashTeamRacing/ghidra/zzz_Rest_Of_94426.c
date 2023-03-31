@@ -1287,15 +1287,11 @@ void FUN_800430f0(short *param_1)
   // 0xDC
   *(uint *)(param_1 + 0x6e) = ~uVar5 & 7;
 
-  setCopReg(2,0,0);
-  setCopReg(2,0x800,0x1000);
-
-  // llv0     cop2 $04A6012  v0 * light matrix
-  copFunction(2,0x4a6012);
-
-  uVar5 = getCopReg(2,0xc800);
-  iVar4 = getCopReg(2,0xd000);
-  iVar7 = getCopReg(2,0xd800);
+  gte_ldVXY0(0);
+  gte_ldVZ0(0x1000);
+  gte_llv0();
+  
+  read_mt(uVar5,iVar4,iVar7);
 
   // 0xC8, 0xCA, 0xCC
   param_1[100] = -(short)uVar5;
@@ -1323,16 +1319,13 @@ void FUN_800430f0(short *param_1)
   // 0xE0, 0xE4
   *(uint *)(param_1 + 0x70) = ~uVar5 & 7;
   *(uint *)(param_1 + 0x72) = uVar5;
-
-  setCopReg(2,0,0);
-  setCopReg(2,0x800,iVar24 / 2);
-
-  // llv0     cop2 $04A6012  v0 * light matrix
-  copFunction(2,0x4a6012);
-
-  uVar12 = getCopReg(2,0xc800);
-  uVar15 = getCopReg(2,0xd000);
-  uVar18 = getCopReg(2,0xd800);
+  
+  gte_ldVXY0(0);
+  gte_ldVZ0(iVar24 / 2);
+  gte_llv0();
+  
+  read_mt(uVar12,uVar15,uVar18);
+  
   param_1[6] = (short)uVar12 + sVar1;
   param_1[7] = (short)uVar15 + sVar2;
   param_1[8] = (short)uVar18 + sVar3;
