@@ -122,7 +122,7 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   #define r600 0x600
 
   // scale position
-  tileView->matrix_ViewProj.t[0] = tx;
+  tileView->matrix_ViewProj.t[0] = (tx * 600) / 1000;
   tileView->matrix_ViewProj.t[1] = (ty * r360) / r600;
   tileView->matrix_ViewProj.t[2] = tz;
   
@@ -139,6 +139,12 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   
   tileView->matrix_ViewProj.m[0][0] =
   tileView->matrix_ViewProj.m[0][0] * 600 / 1000;
+  
+  tileView->matrix_ViewProj.m[0][1] =
+  tileView->matrix_ViewProj.m[0][1] * 600 / 1000;
+  
+  tileView->matrix_ViewProj.m[0][2] =
+  tileView->matrix_ViewProj.m[0][2] * 600 / 1000;
 #endif
 
   // scale Y axis (1)
