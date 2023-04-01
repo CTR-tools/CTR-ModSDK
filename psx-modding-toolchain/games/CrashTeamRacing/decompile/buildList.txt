@@ -289,7 +289,7 @@ common, exe, THREAD_SearchForModel, 0x0, General/THREAD/THREAD_SearchForModel.c
 common, exe, TileView_Init, 0x0, General/TileView/TileView_Init.c
 common, exe, TileView_SetMatrixVP, 0x0, General/TileView/TileView_SetMatrixVP.c
 common, exe, TileView_SetPsyqGeom, 0x0, General/TileView/TileView_SetPsyqGeom.c
-common, exe, TileView_UpdateFrustum, 0x0, General/TileView/TileView_UpdateFrustum.c
+//common, exe, TileView_UpdateFrustum, 0x0, General/TileView/TileView_UpdateFrustum.c
 common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
 
 // UI

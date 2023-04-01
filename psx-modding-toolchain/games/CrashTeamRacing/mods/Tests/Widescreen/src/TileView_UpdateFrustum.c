@@ -260,7 +260,7 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
 
   // cameraPos (x,y,z)
   *(short*)0x1f800024 = cameraPosX;
-  *(short*)0x1f800026 = cameraPosY;
+  *(short*)0x1f800024 = cameraPosY;
   *(short*)0x1f800028 = cameraPosZ;
 
   // Changing stuff here is what caused EuroAli's
