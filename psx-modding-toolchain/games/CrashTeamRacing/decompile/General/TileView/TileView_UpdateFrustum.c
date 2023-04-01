@@ -93,35 +93,36 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   // uVar8, uVar9, distToScreen
   // uVar6, uVar9, distToFinish_checkpoint
   
-  for (i = 4; i > 0; i--)
+  for (i = 0; i < 4; i++)
   {
+	if (i == 0)
+	{
+		// nothing, it's set
+	}
+	
+    if (i == 1) 
+	{
+	  // prepare for second iteration
+      uVar22 = half_Y | val_Y;
+    }
+
+	if (i == 2) 
+	{
+	  // prepare for third iteration
+      uVar22 = val_X | ((min_X / 2) << 0x10);
+    }
+
+    if (i == 3) 
+	{
+	  // prepare for fourth iteration
+      uVar22 = half_Y | ((min_X / 2) << 0x10);
+    }
+	  
 	// multiply corner of screen,
 	// by view-projection matrix, 
 	// to get frustum plane world-pos
     gte_ldVXY0(uVar22);
     gte_llv0();
-
-	if (i == 2) 
-	{
-	  // prepare for third iteration
-      uVar22 = val_X | min_X / 2 << 0x10;
-    }
-    else {
-      if (i < 3) {
-        if (i == 1) 
-		{
-		  // prepare for fourth iteration
-          uVar22 = half_Y | min_X / 2 << 0x10;
-        }
-      }
-      else {
-        if (i == 3) 
-		{
-		  // prepare for second iteration
-          uVar22 = half_Y | val_Y;
-        }
-      }
-    }
 	
 	// this is ViewProj matrix, loaded into GTE
 	// from end of TileView_SetMatrixVP (called earlier)
@@ -297,20 +298,20 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   
   read_mt(val_Y,min_X,min_Y);
 
-  tileView->frustumData[0x20] = -(char)val_Y;
-  tileView->frustumData[0x22] = -(char)min_X;
-  tileView->frustumData[0x24] = -(char)min_Y;
+  *(short*)&tileView->frustumData[0x20] = -(short)val_Y;
+  *(short*)&tileView->frustumData[0x22] = -(short)min_X;
+  *(short*)&tileView->frustumData[0x24] = -(short)min_Y;
 
   min_X = distToScreen;
   if (distToScreen < 0) {
     min_X = distToScreen + 3;
   }
 
-  tileView->frustumData[0x26] =
-       (char)(-(cameraPosX * val_Y + cameraPosY * min_X + cameraPosZ * min_Y) >> 0xd) -
-       (char)(min_X >> 2);
+  *(short*)&tileView->frustumData[0x26] =
+       (short)(-(cameraPosX * val_Y + cameraPosY * min_X + cameraPosZ * min_Y) >> 0xd) -
+       (short)(min_X >> 2);
 
-  val_Y = val_Y >> *(int*)0x1f;
+  val_Y = val_Y >> 0x1f;
   if (min_X < 0) {
     val_Y = val_Y | 2;
   }
