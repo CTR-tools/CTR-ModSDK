@@ -79,7 +79,7 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   iVar9 = -iVar9;
   corner1 = 0x1f800012;
   
-  iVar4 = cameraPosX;		// min X 1f800000 (default cameraPosX)
+  min_X = cameraPosX;		// min X 1f800000 (default cameraPosX)
   min_Y = cameraPosY;		// min Y 1f800004 (default cameraPosY)
   min_Z = cameraPosZ;		// min Z 1f800008 (default cameraPosZ)
   
@@ -233,29 +233,29 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
 	
 	// === Set 6 Min/Max X,Y,Z variables ===
 	
-    if (*(int*)0x1f800000 < max_X) {
+    if (*(int*)0x1f800000 < min_X) {
+      min_X = *(int*)0x1f800000;
+    }
+    if (max_X < *(int*)0x1f800000) {
       max_X = *(int*)0x1f800000;
     }
-    if (iVar4 < *(int*)0x1f800000) {
-      iVar4 = *(int*)0x1f800000;
-    }
-    if (*(int*)0x1f800004 < max_Y) {
-      max_Y = *(int*)0x1f800004;
-    }
-    if (min_Y < *(int*)0x1f800004) {
+    if (*(int*)0x1f800004 < min_Y) {
       min_Y = *(int*)0x1f800004;
     }
-    if (*(int*)0x1f800008 < max_Z) {
-      max_Z = *(int*)0x1f800008;
+    if (max_Y < *(int*)0x1f800004) {
+      max_Y = *(int*)0x1f800004;
     }
-    if (min_Z < *(int*)0x1f800008) {
+    if (*(int*)0x1f800008 < min_Z) {
       min_Z = *(int*)0x1f800008;
+    }
+    if (max_Z < *(int*)0x1f800008) {
+      max_Z = *(int*)0x1f800008;
     }
 	// next corner to write
     corner1 = corner1 + -6;
   } 
 
-  tileView->bbox.min[0] = (short)iVar4;
+  tileView->bbox.min[0] = (short)min_X;
   tileView->bbox.min[1] = (short)min_Y;
   tileView->bbox.min[2] = (short)min_Z;
   
@@ -333,9 +333,9 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   
   read_mt(uVar12,uVar15,uVar18);
   
-  tileView->data6[0] = uVar12 + cameraPosX;
-  tileView->data6[2] = uVar15 + cameraPosY;
-  tileView->data6[4] = uVar18 + cameraPosZ;
+  tileView->data6[0] = (short)uVar12 + cameraPosX;
+  tileView->data6[2] = (short)uVar15 + cameraPosY;
+  tileView->data6[4] = (short)uVar18 + cameraPosZ;
   return;
 }
  
