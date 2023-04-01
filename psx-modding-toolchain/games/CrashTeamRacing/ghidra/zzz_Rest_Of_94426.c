@@ -1076,20 +1076,19 @@ void FUN_800430f0(short *param_1)
 	// from end of TileView_SetMatrixVP (called earlier)
 	read_mt(iVar10,iVar13,iVar16);
     
-	// result of read_mt, plus cameraPos (x,y,z),
+	// far clip: pos + dir*100
 	iVar11 = iVar10 * 0x100 + iVar23;
     iVar14 = iVar13 * 0x100 + iVar25;
     iVar17 = iVar16 * 0x100 + iVar26;
     
 	iVar19 = 0x1000;
     
-	// result of read_mt, plus cameraPos (x,y,z),
-	// over 4 loop iterations, this writes four corners,
-	// 0x1f80000c = 0x1f800022
+	// near clip: pos + dir*1
 	*(short *)(iVar21 + 0x10) = (short)iVar16 + sVar3;
     *(short *)(iVar21 + 0xc) = (short)iVar10 + sVar1;
     *(short *)(iVar21 + 0xe) = (short)iVar13 + sVar2;
 	
+	// far clip: pos + dir*100
     DAT_1f800000 = iVar11;
     DAT_1f800004 = iVar14;
     DAT_1f800008 = iVar17;

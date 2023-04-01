@@ -131,19 +131,19 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
 	// from end of TileView_SetMatrixVP (called earlier)
 	read_mt(tx,ty,tz);
     
-	// result of read_mt, plus cameraPos (x,y,z),
+	// far clip: pos + dir*100
 	posX = tx * 0x100 + cameraPosX;
     posY = ty * 0x100 + cameraPosY;
     posZ = tz * 0x100 + cameraPosZ;
     
 	iVar19 = 0x1000;
     
-	// result of read_mt, plus cameraPos (x,y,z),
-	// over 4 loop iterations, this writes four corners,
+	// near clip: pos + dir*1
     *(short*)(corner1+0xc) = (short)tx + cameraPosX;
     *(short*)(corner1+0xe) = (short)ty + cameraPosY;
 	*(short*)(corner1+0x10) = (short)tz + cameraPosZ;
 	
+	// far clip: pos + dir*100
     *(int*)0x1f800000 = posX;
     *(int*)0x1f800004 = posY;
     *(int*)0x1f800008 = posZ;
