@@ -18,8 +18,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	
 	// === widescreen ===
 	// replace every 0x31 with 37(dec)
-	// this does not "center" it, far-right X is the same
-	// and far-left X is pushed to the right, looks good
+	// also move everything 0x31/2 pixels left
 	
 	// also, force dont draw speedometer
 	sdata->HudAndDebugFlags &= ~8;
@@ -60,7 +59,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		// length of rectangle is currentRoom / maxRoom
 		meterLength = 37 - (short)(currentRoomRemaining / maxRoom);
 	}
-	box.x = posX - 37;
+	box.x = posX - 37 - 37/4;
 	box.y = posY - meterHeight;
 	box.w = 37;
 	box.h = meterHeight;
@@ -102,14 +101,14 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		*(u_int *)&p->r0 = colorAndCode;
 		gGT = sdata->gGT;
 		meterHeight = posY - meterHeight;
-		p->x0 = posX - meterLength;
+		p->x0 = posX - meterLength - 37/4;
 		p->y0 = meterHeight;
-		p->x1 = posX;
+		p->x1 = posX - 37/4;
 		p->y1 = meterHeight;
 		p->y2 = posY;
-		p->x3 = posX;
+		p->x3 = posX - 37/4;
 		p->y3 = posY;
-		p->x2 = posX - meterLength;
+		p->x2 = posX - meterLength - 37/4;
 
 		// pointer to OT memory
 		primmemCurr = gGT->tileView_UI.ptrOT;
@@ -129,14 +128,14 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		{
 			*(u_int *)&p->r0 = 0x28808080;
 			gGT = sdata->gGT;
-			p->x0 = posX - 37;
+			p->x0 = posX - 37 - 37/4;
 			p->y0 = meterHeight;
-			p->x1 = posX;
+			p->x1 = posX - 37/4;
 			p->y1 = meterHeight;
 			p->y2 = posY;
-			p->x3 = posX;
+			p->x3 = posX - 37/4;
 			p->y3 = posY;
-			p->x2 = posX - 37;
+			p->x2 = posX - 37 - 37/4;
 
 			// pointer to OT memory
 			primmemCurr = gGT->tileView_UI.ptrOT;
