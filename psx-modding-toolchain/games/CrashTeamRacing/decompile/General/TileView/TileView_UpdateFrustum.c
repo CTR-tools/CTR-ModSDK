@@ -3,9 +3,9 @@
 void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
 
 {
-  short cameraPosX;
-  short cameraPosY;
-  short cameraPosZ;
+  int cameraPosX;
+  int cameraPosY;
+  int cameraPosZ;
   
   int val_Y;
   int val_X;
