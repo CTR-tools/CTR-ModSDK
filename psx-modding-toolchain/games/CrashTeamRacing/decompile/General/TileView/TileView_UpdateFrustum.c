@@ -29,6 +29,8 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   int max_X;
   int max_Y;
   int max_Z;
+  int iVar4;
+  int iVar9;
   
   #if 0
   // TRAP checks removed
@@ -58,8 +60,9 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   min_Y = tileView->rect.w;
   val_X = min_Y / 2;
 
-  min_X = (tileView->rect.h * 0x600) / 0x360;
-  val_Y = (min_X / 2) << 0x10;
+  iVar4 = ((tileView->rect.h * 0x600) / 0x360) << 0x10;
+  iVar9 = iVar4 >> 0x10;
+  val_Y = (iVar9 - (iVar4 >> 0x1f) >> 1) << 0x10;
   
   distToScreen = tileView->distanceToScreen_PREV;
   
@@ -73,10 +76,10 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   // -1 * rect.w/2
   half_Y = -min_Y / 2 & 0xffff;
   
-  min_X = -min_X;
+  iVar9 = -iVar9;
   corner1 = 0x1f800012;
   
-  min_X = cameraPosX;		// min X 1f800000 (default cameraPosX)
+  iVar4 = cameraPosX;		// min X 1f800000 (default cameraPosX)
   min_Y = cameraPosY;		// min Y 1f800004 (default cameraPosY)
   min_Z = cameraPosZ;		// min Z 1f800008 (default cameraPosZ)
   
@@ -109,13 +112,13 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
 	if (i == 2) 
 	{
 	  // prepare for third iteration
-      uVar22 = val_X | ((min_X / 2) << 0x10);
+      uVar22 = val_X | ((iVar9 / 2) << 0x10);
     }
 
     if (i == 3) 
 	{
 	  // prepare for fourth iteration
-      uVar22 = half_Y | ((min_X / 2) << 0x10);
+      uVar22 = half_Y | ((iVar9 / 2) << 0x10);
     }
 	  
 	// multiply corner of screen,
@@ -233,8 +236,8 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
     if (*(int*)0x1f800000 < max_X) {
       max_X = *(int*)0x1f800000;
     }
-    if (min_X < *(int*)0x1f800000) {
-      min_X = *(int*)0x1f800000;
+    if (iVar4 < *(int*)0x1f800000) {
+      iVar4 = *(int*)0x1f800000;
     }
     if (*(int*)0x1f800004 < max_Y) {
       max_Y = *(int*)0x1f800004;
@@ -252,12 +255,13 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
     corner1 = corner1 + -6;
   } 
 
-  tileView->bbox.min[0] = (char)max_X;
-  tileView->bbox.max[0] = (char)min_X;
-  tileView->bbox.max[1] = (char)min_Y;
-  tileView->bbox.min[1] = (char)max_Y;
-  tileView->bbox.max[2] = (char)min_Z;
-  tileView->bbox.min[2] = (char)max_Z;
+  tileView->bbox.min[0] = (short)iVar4;
+  tileView->bbox.min[1] = (short)min_Y;
+  tileView->bbox.min[2] = (short)min_Z;
+  
+  tileView->bbox.max[0] = (short)max_X;
+  tileView->bbox.max[1] = (short)max_Y;
+  tileView->bbox.max[2] = (short)max_Z;
 
   // cameraPos (x,y,z)
   *(short*)0x1f800024 = cameraPosX;
@@ -296,23 +300,23 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   gte_ldVZ0(0x1000);
   gte_llv0();
   
-  read_mt(val_Y,min_X,min_Y);
+  read_mt(val_Y,iVar4,min_Y);
 
   *(short*)&tileView->frustumData[0x20] = -(short)val_Y;
-  *(short*)&tileView->frustumData[0x22] = -(short)min_X;
+  *(short*)&tileView->frustumData[0x22] = -(short)iVar4;
   *(short*)&tileView->frustumData[0x24] = -(short)min_Y;
 
-  min_X = distToScreen;
+  iVar9 = distToScreen;
   if (distToScreen < 0) {
-    min_X = distToScreen + 3;
+    iVar9 = distToScreen + 3;
   }
 
   *(short*)&tileView->frustumData[0x26] =
-       (short)(-(cameraPosX * val_Y + cameraPosY * min_X + cameraPosZ * min_Y) >> 0xd) -
-       (short)(min_X >> 2);
+       (short)(-(cameraPosX * val_Y + cameraPosY * iVar4 + cameraPosZ * min_Y) >> 0xd) -
+       (short)(iVar9 >> 2);
 
   val_Y = val_Y >> 0x1f;
-  if (min_X < 0) {
+  if (iVar4 < 0) {
     val_Y = val_Y | 2;
   }
   if (min_Y < 0) {
