@@ -4,12 +4,13 @@
 1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
 
 
-common, exe, rdata_free, 0x8, src/entry.c src/TileView_SetMatrixVP.c src/DecalHUD_DrawPolyFT4.c src/DecalHUD_DrawPolyGT4.c, rdata.bin
+common, exe, rdata_free, 0x8, src/entry.c src/TileView_SetMatrixVP.c src/DecalHUD_DrawPolyFT4.c src/DecalHUD_DrawPolyGT4.c src/DotLights.c, rdata.bin
 
 common, exe, MEMPACK_SwapPacks, -0x8, src/hookEntry.s
 common, exe, TileView_SetMatrixVP, 0x0, src/hookTileView.s
 common, exe, DecalHUD_DrawPolyFT4, 0x0, src/hookPolyFT4.s
 common, exe, DecalHUD_DrawPolyGT4, 0x0, src/hookPolyGT4.s
+common, exe, DotLights_AudioAndVideo, 0x0, src/hookDotLights.s
 
 common, exe, UI_Map_DrawMap, 0x0, src/UI_Map_DrawMap.c
 common, exe, UI_DrawSlideMeter, 0x0, src/UI_DrawSlideMeter.c
