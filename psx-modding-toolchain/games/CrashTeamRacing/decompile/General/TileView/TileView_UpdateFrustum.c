@@ -6,31 +6,36 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   short cameraPosX;
   short cameraPosY;
   short cameraPosZ;
-  int val_Y;
-  int val_X;
-  int min_Y;
-  int half_Y;
-  int min_X;
+  unsigned int val_Y;
+  unsigned int val_X;
+  unsigned int half_Y;
+  unsigned short uVar12;
+
+  unsigned short uVar15;
+  unsigned short uVar18;
+  unsigned int iVar19;
+  unsigned int i;
+  unsigned int corner1;
+  unsigned int uVar22;
+  unsigned int distToScreen;
+ 
   int tx;
-  int posX;
-  short uVar12;
   int ty;
-  int posY;
-  short uVar15;
   int tz;
+
+  int posX;
+  int posY;
   int posZ;
-  short uVar18;
-  int iVar19;
-  int i;
-  int corner1;
-  u_int uVar22;
-  int distToScreen;
+  
+  int min_X;
+  int min_Y;
   int min_Z;
   int max_X;
   int max_Y;
   int max_Z;
-  unsigned int iVar4;
-  unsigned int iVar9;
+  
+  int iVar4;
+  int iVar9;
   
   #if 0
   // TRAP checks removed
