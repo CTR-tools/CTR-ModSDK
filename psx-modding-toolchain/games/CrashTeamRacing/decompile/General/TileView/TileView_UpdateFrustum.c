@@ -29,8 +29,8 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   int max_X;
   int max_Y;
   int max_Z;
-  int iVar4;
-  int iVar9;
+  unsigned int iVar4;
+  unsigned int iVar9;
   
   #if 0
   // TRAP checks removed
@@ -62,7 +62,7 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
 
   iVar4 = ((tileView->rect.h * 0x600) / 0x360) << 0x10;
   iVar9 = iVar4 >> 0x10;
-  val_Y = (iVar9 - (iVar4 >> 0x1f) >> 1) << 0x10;
+  val_Y = (iVar9 - ((unsigned int)iVar4 >> 0x1f) >> 1) << 0x10;
   
   distToScreen = tileView->distanceToScreen_PREV;
   
@@ -315,7 +315,7 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
        (short)(-(cameraPosX * val_Y + cameraPosY * iVar4 + cameraPosZ * min_Y) >> 0xd) -
        (short)(iVar9 >> 2);
 
-  val_Y = val_Y >> 0x1f;
+  val_Y = (unsigned int)val_Y >> 0x1f;
   if (iVar4 < 0) {
     val_Y = val_Y | 2;
   }
