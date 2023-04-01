@@ -320,7 +320,7 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   }
 
   *(short*)&tileView->frustumData[0x26] =
-       (short)(-(cameraPosX * val_Y + cameraPosY * iVar4 + cameraPosZ * min_Y) >> 0xd) -
+       (short)(-(cameraPosX * (short)val_Y + cameraPosY * (short)iVar4 + cameraPosZ * (short)min_Y) >> 0xd) -
        (short)(iVar9 >> 2);
 
   val_Y = (unsigned int)val_Y >> 0x1f;
@@ -341,9 +341,9 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   
   read_mt(uVar12,uVar15,uVar18);
   
-  tileView->data6[0] = (short)uVar12 + cameraPosX;
-  tileView->data6[2] = (short)uVar15 + cameraPosY;
-  tileView->data6[4] = (short)uVar18 + cameraPosZ;
+  *(short*)&tileView->data6[0] = (short)uVar12 + cameraPosX;
+  *(short*)&tileView->data6[2] = (short)uVar15 + cameraPosY;
+  *(short*)&tileView->data6[4] = (short)uVar18 + cameraPosZ;
   return;
 }
  
