@@ -6,13 +6,16 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   short cameraPosX;
   short cameraPosY;
   short cameraPosZ;
+  
   unsigned int val_Y;
   unsigned int val_X;
   unsigned int half_Y;
-  unsigned short uVar12;
-
-  unsigned short uVar15;
-  unsigned short uVar18;
+  
+  // footer only
+  short uVar12;
+  short uVar15;
+  short uVar18;
+  
   unsigned int iVar19;
   unsigned int i;
   unsigned int corner1;
@@ -137,9 +140,9 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
 	read_mt(tx,ty,tz);
     
 	// far clip: pos + dir*100
-	posX = tx * 0x100 + cameraPosX;
-    posY = ty * 0x100 + cameraPosY;
-    posZ = tz * 0x100 + cameraPosZ;
+	posX = (short)tx * 0x100 + cameraPosX;
+    posY = (short)ty * 0x100 + cameraPosY;
+    posZ = (short)tz * 0x100 + cameraPosZ;
     
 	iVar19 = 0x1000;
     
