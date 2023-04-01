@@ -7,20 +7,20 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   short cameraPosY;
   short cameraPosZ;
   
-  unsigned int val_Y;
-  unsigned int val_X;
-  unsigned int half_Y;
+  int val_Y;
+  int val_X;
+  int half_Y;
   
   // footer only
   short uVar12;
   short uVar15;
   short uVar18;
   
-  unsigned int iVar19;
-  unsigned int i;
-  unsigned int corner1;
-  unsigned int uVar22;
-  unsigned int distToScreen;
+  int iVar19;
+  int i;
+  int corner1;
+  int uVar22;
+  int distToScreen;
  
   int tx;
   int ty;
