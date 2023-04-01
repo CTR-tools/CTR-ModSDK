@@ -140,9 +140,9 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
     
 	// result of read_mt, plus cameraPos (x,y,z),
 	// over 4 loop iterations, this writes four corners,
-    *(short*)(corner1+0xc) = (char)tx + cameraPosX;
-    *(short*)(corner1+0xe) = (char)ty + cameraPosY;
-	*(short*)(corner1+0x10) = (char)tz + cameraPosZ;
+    *(short*)(corner1+0xc) = (short)tx + cameraPosX;
+    *(short*)(corner1+0xe) = (short)ty + cameraPosY;
+	*(short*)(corner1+0x10) = (short)tz + cameraPosZ;
 	
     *(int*)0x1f800000 = posX;
     *(int*)0x1f800004 = posY;
