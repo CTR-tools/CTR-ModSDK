@@ -12,5 +12,6 @@ common, exe, DecalHUD_DrawPolyFT4, 0x0, src/hookPolyFT4.s
 common, exe, DecalHUD_DrawPolyGT4, 0x0, src/hookPolyGT4.s
 
 common, exe, UI_Map_DrawMap, 0x0, src/UI_Map_DrawMap.c
+common, exe, UI_DrawSlideMeter, 0x0, src/UI_DrawSlideMeter.c
 common, exe, UI_Map_GetIconPos, 0x0, src/UI_Map_GetIconPos.c
 common, exe, TileView_UpdateFrustum, 0x0, src/TileView_UpdateFrustum.c
