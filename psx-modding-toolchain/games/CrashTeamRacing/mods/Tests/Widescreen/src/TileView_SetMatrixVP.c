@@ -136,16 +136,16 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   // 1000 / 1000 for 4x3
   
   tileView->matrix_ViewProj.t[0] =
-  tileView->matrix_ViewProj.t[0] * 600 / 1000;
+  tileView->matrix_ViewProj.t[0] * 750 / 1000;
   
   tileView->matrix_ViewProj.m[0][0] =
-  tileView->matrix_ViewProj.m[0][0] * 600 / 1000;
+  tileView->matrix_ViewProj.m[0][0] * 750 / 1000;
   
   tileView->matrix_ViewProj.m[0][1] =
-  tileView->matrix_ViewProj.m[0][1] * 600 / 1000;
+  tileView->matrix_ViewProj.m[0][1] * 750 / 1000;
   
   tileView->matrix_ViewProj.m[0][2] =
-  tileView->matrix_ViewProj.m[0][2] * 600 / 1000;
+  tileView->matrix_ViewProj.m[0][2] * 750 / 1000;
 #endif
 
   // scale Y axis (1)
