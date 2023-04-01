@@ -96,9 +96,11 @@ void NewCallback230()
 	// frame countdown to play video
 	*(unsigned char*)0x800afacc = 0x15*2;
 
-	// Double all Menu Transitions,
-	// use NOP hole to bitshift parameter
-	*(unsigned int*)0x800abb3c = 0x28BC3;
+	// Double all Menu transition duration.
+	*(unsigned char*)0x800b4840 = 0xc*2;
+
+	// Double the frames for MM transition
+	*(unsigned char*)0x800b4844 = 2*8;
 
 	// Fix spinning driver
 	*(unsigned char*)0x800af6d0 = 0x20;
@@ -127,6 +129,10 @@ void NewCallback230()
 
 	// high score flashing arrows
 	*(unsigned char*)0x800b3010 = 4*2;
+
+	// MM high score transition
+	*(unsigned char*)0x800b3924 = 0x18;
+	*(unsigned char*)0x800b3a3c = 0x19;
 
 	LOAD_Callback_Overlay_230();
 }
@@ -466,6 +472,13 @@ void NewCallback232()
 
 		// camera transition out
 		// (not fixed)
+
+		// blinking adv map UI
+		*(unsigned char*)0x800b18a0 = 2*2; // door arrows
+		*(unsigned char*)0x800b1934 = 2*2; // boss stars
+		*(unsigned char*)0x800b1ab8 = 2*2; // warppads
+
+		// map items "outer" anims
 
 		// transition in, is in EXE, already patched
 	}
@@ -872,14 +885,19 @@ void RunEntryHook()
 		*(unsigned int*)0x80034FB8 = 0x210C0;
 	}
 
-	// Blinking map UI
-	{
+	// Blinking  UI
+	{	
+		// racing map UI
 		// just getting started...
 		*(unsigned short*)0x8004dc04 = 2*2;
 		*(unsigned short*)0x8004de1c = 2*2;
-		*(unsigned short*)0x8004de74 = 2*2;
+		*(unsigned short*)0x8004de74 = 2*2; // player dot
 		*(unsigned short*)0x8004f094 = 2*2;
 		*(unsigned short*)0x8004f148 = 2*2;
+
+		// on-screen keyboard
+		*(unsigned char*)0x8004ad00 = 2*2; // underscore
+
 	}
 
 	// Missile
