@@ -293,7 +293,7 @@ extern struct
 	int characterSelect_ChosenColor;
 	
 	// 800b5398
-	char fillerBetweenCharacterSelectAndTrackSelect[0x18];
+	char characterSelect_BlueRectColors[0x18];
 	
 	// 800b53b0
 	struct MainMenu_LevelRow arcadeTracks[0x12];
