@@ -4804,6 +4804,8 @@ void FUN_800b0eec(int param_1)
 		  // if more than 12 frames pass
 		  if (0xc < DAT_800b59c0) {
             iVar8 = 0;
+			
+			// if cup selected
             if (DAT_800b59be != 0) 
 			{
 			  // set cupID to the cup selected
@@ -5215,6 +5217,7 @@ void FUN_800b1848(void)
 		// if 12 frames past
 		if (0xc < DAT_800b59c6) 
 		{
+		  // if starting race
           if (DAT_800b59c4 != 0) 
 		  {
 			// passthrough MenuBox for the function
@@ -5222,11 +5225,13 @@ void FUN_800b1848(void)
             DAT_8008d924 = &DAT_80085a94;
             return;
           }
+		  
+		  // == else goBack ==
           
 		  // MM_TrackSelect_Init
 		  FUN_800affd0();
           
-		  // change desiredMenuBox to Single race selection
+		  // change desiredMenuBox to Track Selection
 		  DAT_8008d924 = &DAT_800b46e0;
           
 		  return;
@@ -5407,7 +5412,10 @@ void FUN_800b1848(void)
 				  // Play "Go Back" sound
                   FUN_80028468(2,1);
 				  
+				  // go back when transition is done, dont start race
                   DAT_800b59c4 = 0;
+				  
+				  // start transition out
                   DAT_800b59c2 = 2;
                 }
               }
@@ -5517,8 +5525,12 @@ void FUN_800b1848(void)
                     uVar12 = uVar12 + 1;
                   } while ((int)uVar12 < 0xe);
 				  
+				  // start battle when transition is done
                   DAT_800b59c4 = 1;
+				  
+				  // start transition out
                   DAT_800b59c2 = 2;
+				  
                   iVar15 = 0;
 				  
 				  // check if player changed team,

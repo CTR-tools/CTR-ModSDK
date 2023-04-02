@@ -311,12 +311,41 @@ extern struct
 	#elif BUILD == JpnRetail
 	char prefill_movingToTrackmenu[0xb70];
 	#endif
+	
+	// 800b59a0 title object
+
+	// 800b59a4 trackSelect changeTrack frame count
+	// 800b59a6 trackSelect changeTrack next track (or curr?)
+	// 800b59a8 trackSelect changeTrack next track (or curr?)
+	// 800b59aa trackSelect changeTrack direction
+	// 800b59ac trackSelect boolOpenLapBox
+
+	// 800b59ae trackSelect transition state
+	// 800b59b0 trackSelect post-transition boolStart
+	// 800b59b2 trackSelect transitionFrames
+	
+	// 800b59b4 trackSelect video frame count
+	// 800b59b6 trackSelect video boolAllocated
+	// 800b59b8 ??
+	// 800b59ba ???
+	
+	// 800b59bc cupSelect transition state
+	// 800b59be cupSelect post-transition boolStart
+	// 800b59c0 cupSelect transition frames
+	
+	// 800b59c2 battle transition state
+	// 800b59c4 battle post-transition boolStart
+	// 800b59c6 battle transition frames
+	
+	// 800b59c8 highScore transition state
+	// 800b59ca highScore transition frames
+	// ...
 
 	// 0x800b59e4 -- UsaRetail
 	// 0x800b6288 -- EurRetail
 	// 0x800b9a90 -- JpnRetail
 	int movingToTrackMenu;
-	
+		
 	// 800b59e8
 	char fill_movingtotrackmenu[0x28];
 
