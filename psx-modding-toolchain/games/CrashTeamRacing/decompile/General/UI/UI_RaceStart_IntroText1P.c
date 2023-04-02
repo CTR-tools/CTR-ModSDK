@@ -111,7 +111,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
    // if not
    if (iVar2 == 0) {
       // Draw big string
-      font = 1;
+      font = FONT_BIG;
 
       // used for transitioning bars to off-screen
       windowHeight = transition;
@@ -154,7 +154,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 			#endif
 			
 			((gGT->tileView[0].rect.y - (transition + -7)) + -6),
-            1, 0xffff8000
+            FONT_BIG, (CENTER_TEXT | ORANGE)
          );
 
          // Track 1/4, 2/4, 3/4, 4/4 in cup
@@ -173,14 +173,14 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          posX = 0x100;
 
          // Draw small string
-         font = 2;
+         font = FONT_SMALL;
 
          // Y-value that transitions title text to off-screen
          sVar7 = (gGT->tileView[0].rect.y - (transition + -7)) + 0xb;
       }
 
       // Print top title text "Arcade, Time Trial, etc"
-      DecalFont_DrawLine(pcVar6, posX, sVar7, font, 0xffff8000);
+      DecalFont_DrawLine(pcVar6, posX, sVar7, font, (CENTER_TEXT | ORANGE));
 
       // Print the name of the level
       // Crash Cove, Roos Tubes, etc
@@ -199,7 +199,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 		 #endif
 		 
          (gGT->tileView[0].rect.y + gGT->tileView[0].rect.h + transition + -0x17),
-         1, 0xffff8000);
+         FONT_BIG, (CENTER_TEXT | ORANGE));
 
 	  // same for all
 	  rect.x = gGT->tileView[0].rect.x;
