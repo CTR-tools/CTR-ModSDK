@@ -247,7 +247,7 @@ extern struct
 	} characterSelectTextPos[3];	
 	
 	// 800b4dcc
-	struct CharacterSelectMeta csm_1P2P_limied[0xF];
+	struct CharacterSelectMeta csm_1P2P_limited[0xF];
 	
 	// 800b4e80
 	struct CharacterSelectMeta csm_1P2P[0xF];
@@ -301,8 +301,9 @@ extern struct
 	// 800b54d0
 	struct MainMenu_LevelRow battleTracks[0x7];
 	
-	// 800b5540
-	// MM_TransitionInOut meta data of some sort
+	// 800b5540 (0xA large)
+	// MM_TransitionInOut meta data (Track Sel)
+	// short destX, destY, frameDelay, currX, currY
 
 	char fill_MainMenu_LevelRowbattletracks_temporary[0x494];
 

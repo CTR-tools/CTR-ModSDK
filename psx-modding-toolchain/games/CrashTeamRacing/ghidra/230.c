@@ -42,9 +42,13 @@ uint FUN_800abaf0(ushort *param_1,int param_2,short param_3)
         FUN_80028468(0x65,0);
       }
       iVar3 = (int)((param_2 - (uint)uVar2) * 0x10000) >> 0x10;
-      if (iVar3 < 1) {
+      
+	  if (iVar3 < 1) 
+	  {
         bVar1 = 0;
-        puVar4[1] = 0;
+        
+		// wipe currX and currY
+		puVar4[1] = 0;
         puVar4[2] = 0;
       }
       else {
@@ -61,9 +65,14 @@ uint FUN_800abaf0(ushort *param_1,int param_2,short param_3)
           if ((iVar5 == -1) && (iVar3 * (short)puVar4[-1] == -0x80000000)) {
             trap(0x1800);
           }
+		  
+		  // currX
           uVar2 = (ushort)((iVar3 * (short)puVar4[-1]) / iVar5);
-          bVar1 = 0;
-          puVar4[1] = (ushort)((iVar3 * (short)*param_1) / iVar5);
+          
+		  bVar1 = 0;
+          
+		  // currY
+		  puVar4[1] = (ushort)((iVar3 * (short)*param_1) / iVar5);
         }
         else {
           uVar2 = puVar4[-1];
