@@ -8,12 +8,6 @@ void Turbo_ThDestroy();
 struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
 void GAMEPAD_Vib_4(struct Driver* driver, u_int param_2, int param_3);
 
-// Type 0 - startline boost
-// Type 2 - hang time or powerslide
-// Type 4 (AND = 1) - turbo pad
-// Type 8 (AND = 1) - boost powerup
-// Type 0x10 (AND = 4) - super engine
-
 // param1 - driver
 // param2 - reserves to add
 // param3 - add type
@@ -36,7 +30,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	if
 	(
 		// if this is a turbo pad
-		((type & 4) != 0) &&
+		(type & 4) &&
 		
 		// racer is in accel prevention (holding square)
 		((driver->actionsFlagSet & 8) != 0)
@@ -154,7 +148,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// make flame disappear after
 			// 	- powerslide: two frames (quick death)
 			//	- all others: 255 frames (slowly die out)
-			if ((type & 2) != 0)	count = 2;
+			if (type & 2)	count = 2;
 			else					count = 0xff;
 			turboObj->fireDisappearCountdown = count;
 	
@@ -200,7 +194,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		turboThread->flags &= 0xfffff7ff;
 	
 		// turbo pad
-		if ((type & 4) != 0)
+		if (type & 4)
 		{
 			// only increase counter on the first frame of turbo pad
 			
@@ -302,16 +296,16 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	}
 
 	// boost powerup
-	if ((type & 8) != 0)
+	if (type & 8)
 	{
 		//turn on 14th bit of Actions Flag set (means racer is driving against a wall)
 		driver->actionsFlagSet |= 0x200;
 	}
 
 	// super engine
-	if ((type & 0x10) != 0)
+	if (type & 0x10)
 	{
-		// increase reserves TO param2
+		// set reserves to reserves parameter instead of incrementing
 		if (driver->reserves < reserves)
 		{
 			driver->reserves = reserves;
@@ -319,7 +313,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	}
 
 	// startline, hang time, powerslide
-	else if ((type & 1) == 0)
+	else if (!(type & 1))
 	{
 		// increase reserves BY param2
 		driver->reserves += reserves;

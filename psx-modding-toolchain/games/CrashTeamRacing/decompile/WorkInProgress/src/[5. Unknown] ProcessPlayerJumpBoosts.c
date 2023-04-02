@@ -45,7 +45,7 @@ void DECOMP_UI_JumpMeter_Update(struct Driver* driver)
 			jumpMeterMinus32ms = (int)driver->jumpMeter;
 
 			// if jump is high enough to be significant
-			if (jumpMeterMinus32ms > 0x150)
+			if (jumpMeterMinus32ms > 336)
 			{
 				// keep track of all jumps
 				driver->timeSpentJumping += jumpMeterMinus32ms;
@@ -62,32 +62,32 @@ void DECOMP_UI_JumpMeter_Update(struct Driver* driver)
 
 			jumpMeter = driver->jumpMeter;
 
-			if (jumpMeter < 0x5a0)
+			if (jumpMeter < 1440)
 			{
-				if (jumpMeter < 0x3c0)
+				if (jumpMeter < 960)
 				{
-					//if Jump meter > 0x27F
-					if (0x27f < jumpMeter)
+					//if Jump meter > 639
+					if (jumpMeter > 639)
 					{
 						// add one second reserves
-						Turbo_Increment(driver, 0x3c0, 2, 0);
+						Turbo_Increment(driver, 960, 2, 0);
 					}
 				}
 
-				//if Jump meter >= 0x3C0
+				//if Jump meter >= 960
 				else
 				{
 					// Turbo_Increment
 					// add one second reserves, plus speed
-					Turbo_Increment(driver, 0x3c0, 2, 0x80);
+					Turbo_Increment(driver, 960, 2, 0x80);
 				}
 			}
 
-			//if Jump meter >= 0x5A0
+			//if Jump meter >= 1440
 			else
 			{
 				// add one second reserves, plus speed
-				Turbo_Increment(driver, 0x3c0, 2, 0x100);
+				Turbo_Increment(driver, 960, 2, 0x100);
 			}
 		}
 	}
@@ -95,7 +95,7 @@ void DECOMP_UI_JumpMeter_Update(struct Driver* driver)
 	//if player is in the air
 	else
 	{
-		if ((driver->jump_LandingBoost > 0x480) && (driver->jumpMeter < 0x481))
+		if ((driver->jump_LandingBoost > 1152) && (driver->jumpMeter < 1153))
 		{
 			//Jump meter related operation
 
@@ -103,18 +103,17 @@ void DECOMP_UI_JumpMeter_Update(struct Driver* driver)
 			Voiceline_RequestPlay(7, (int)data.characterIDs[driver->driverID], 0x10);
 		}
 
-		//Jump meter = 0x3FC
 		driver->jumpMeter = driver->jump_LandingBoost;
 
-		//if Jump meter > 0x960
-		if (driver->jump_LandingBoost > 0x960)
+		//if Jump meter > 2400
+		if (driver->jump_LandingBoost > 2400)
 		{
-			//prevent Jump meter from going over 0x960
-			driver->jumpMeter = 0x960;
+			//prevent Jump meter from going over 2400
+			driver->jumpMeter = 2400;
 		}
 
-		//keep Jump meter Timer at 0x5A0.
-		driver->jumpMeterTimer = 0x5a0;
+		//keep Jump meter Timer at 1440.
+		driver->jumpMeterTimer = 1440;
 	}
 	return;
 }

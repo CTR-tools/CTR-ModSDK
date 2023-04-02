@@ -244,6 +244,16 @@ enum PhysType
 	// 65 (0x41) exist
 };
 
+enum TurboType
+{
+	START_LINE_BOOST 					= 0,
+	FREEZE_RESERVES_ON_TURBO_PAD 	= 0x1,
+	POWER_SLIDE_HANG_TIME 			= 0x2,
+	TURBO_PAD 							= 0x4,
+	TURBO_ITEM							= 0x8,
+	SUPER_ENGINE 						= 0x10
+};
+
 struct MetaPhys
 {
 	// unused debug string?
