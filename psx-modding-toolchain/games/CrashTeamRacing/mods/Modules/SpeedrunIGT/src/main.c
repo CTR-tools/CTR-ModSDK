@@ -298,7 +298,7 @@ void DrawMenu()
 	// if main menu
 	if(sdata->gGT->levelID == MAIN_MENU_LEVEL)
 	{
-		// disable checkeRED flag
+		// disable checkered flag
 		sdata->gGT->renderFlags &= 0xffffefff;
 	}
 	#endif
@@ -463,7 +463,7 @@ void RunUpdateHook()
 
 			// japan builds
 			#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
-			// if in main menu, turn checkeRED flag "back" on,
+			// if in main menu, turn checkered flag "back" on,
 			// it will be disabled in DrawMenu
 			if(sdata->gGT->levelID == MAIN_MENU_LEVEL)
 			{

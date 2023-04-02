@@ -217,7 +217,7 @@ void RunUpdateHook(void)
 	#if 0
 	for(i = 0; i < 20; i++)
 	{
-		DecalFont_DrawLine(onText, 400, i * 10, FONT_SMALL, PERIWINKLE);
+		DecalFont_DrawLine(onText, 400, i * 10, FONT_SMALL, i);
 	}
 	#endif
 
