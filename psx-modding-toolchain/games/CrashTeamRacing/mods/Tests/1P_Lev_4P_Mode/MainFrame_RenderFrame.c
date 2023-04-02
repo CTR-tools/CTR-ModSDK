@@ -612,7 +612,7 @@ void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
 	if(LOAD_IsOpen_Podiums() != 0)
 	{
 		// ND Box Scene
-		if(gGT->levelID == 0x29)
+		if(gGT->levelID == NAUGHTY_DOG_CRATE)
 		{
 			CS_BoxScene_InstanceSplitLines();
 		}
@@ -829,13 +829,13 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	
 	if(
 		// adv character selection screen
-		(gGT->levelID == 0x28) ||
+		(gGT->levelID == ADVENTURE_CHARACTER_SELECT) ||
 		
 		// cutscene that's not Crash Bandicoot intro
 		// where he's sleeping and snoring on a hill
 		(
 			((gGT->gameMode1 & GAME_CUTSCENE) != 0) &&
-			(gGT->levelID != 0x25)
+			(gGT->levelID != INTRO_CRASH)
 		)
 	)
 	{	

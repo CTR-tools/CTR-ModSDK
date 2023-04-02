@@ -4,16 +4,7 @@ int LOAD_GetAdvPackIndex()
 {
 	int levelID = sdata->gGT->levelID;
 	
-	if(
-		// Not on GemStone Valley
-		(levelID != 0x19) &&
-		
-		// Not on Glacier Park
-		(levelID != 0x1c)
-	  )
-	{
-		return 1;
-	}
+	if ((levelID != GEM_STONE_VALLEY) && (levelID != GLACIER_PARK)) return 1;
 	
 	return 2;
 }
