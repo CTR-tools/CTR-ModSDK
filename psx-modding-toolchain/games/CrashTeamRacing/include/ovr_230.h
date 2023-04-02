@@ -16,23 +16,7 @@ struct Title
 	// 0x24 -- size of struct
 };
 
-// used in mods (not correct)
-struct TrackSelectMeta
-{
-	// 0x0
-	short levelID;
-	short iconID;
-	short videoID;
-	short unlockFlags; // or -2 for "only show in 1P" -- oxide station
-	
-	// 0x8
-	int videoLen;
-	int lngIndex;
 
-	// 0x10 -- size
-};
-
-// Correct version of Above ^^^
 // array at 0x800b53b0
 struct MainMenu_LevelRow
 {
@@ -312,15 +296,15 @@ extern struct
 	char fillerBetweenCharacterSelectAndTrackSelect[0x18];
 	
 	// 800b53b0
-	struct TrackSelectMeta arcadeTracks[0x12];
+	struct MainMenu_LevelRow arcadeTracks[0x12];
 	
 	// 800b54d0
-	struct TrackSelectMeta battleTracks[0x7];
+	struct MainMenu_LevelRow battleTracks[0x7];
 	
 	// 800b5540
 	// MM_TransitionInOut meta data of some sort
 
-	char fill_trackselectmetabattletracks_temporary[0x494];
+	char fill_MainMenu_LevelRowbattletracks_temporary[0x494];
 
 	#if BUILD == EurRetail
 	char prefill_movingToTrackmenu[0x490];

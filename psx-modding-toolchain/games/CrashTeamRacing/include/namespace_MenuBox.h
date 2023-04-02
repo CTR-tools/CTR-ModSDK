@@ -40,9 +40,11 @@ struct MenuBox
 	// & 2, centers posX
 	// & 4, draw only title bar
 	// & 0x10, draw ptrNextMenuBox_InHierarchy
+	// & 0x20, disable menubox input, allow menubox funcptrz
 	// & 0x40, show only highlighted row
 	// & 0x28, main menu character select (better meaning)?
 	// & 0x80, tiny text in rows
+	// & 0x400, execute menubox funcptr
 	// & 0x800, ??? used in 221 menu
 	// & 0x1000, needs to close
 	// & 0x2000, invisible

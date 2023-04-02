@@ -1412,7 +1412,7 @@ void FUN_800acff4(int param_1)
   // MM_Title_Init
   FUN_800ac6dc();
   
-  // if you are in Arcade or VS cup
+  // if drawing ptrNextMenuBox_InHierarchy
   if ((*(uint *)(param_1 + 8) & 0x10) != 0) {
     DAT_800b5a14 = 1000;
   }
@@ -4715,9 +4715,15 @@ undefined * FUN_800b0eac(void)
 void FUN_800b0eb8(void)
 
 {
+  // 800b472c is menubox_cupSelect,
+  // disable 0x400 (dont exec funcptr)
+  // enable 0x20 (allow exec funcptr, and block input
   DAT_800b4734 = DAT_800b4734 & 0xfffffbff | 0x20;
+  
+  // reset transition data
   DAT_800b59bc = 0;
   DAT_800b59c0 = 0xc;
+  
   return;
 }
 
@@ -4749,9 +4755,15 @@ void FUN_800b0eec(int param_1)
     DAT_800b59bc = 2;
     DAT_800b4734 = DAT_800b4734 & 0xfffffbff | 0x20;
   }
-  else {
+  
+  else 
+  {  
+	// frame count
     sVar2 = DAT_800b59c0;
-    if (DAT_800b59bc != 1) {
+    
+	// if not stationary
+	if (DAT_800b59bc != 1) 
+	{
       if (DAT_800b59bc < 2) 
 	  {
 		// if transiioning in
