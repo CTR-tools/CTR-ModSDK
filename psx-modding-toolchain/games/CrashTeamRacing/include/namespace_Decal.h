@@ -97,7 +97,7 @@ enum Colors
 	DARK_RED,
 	LIGHT_GREEN,
 	FOREST_GREEN,
-	FOREST_GREEN_DUPLICATE,
+	CREDITS_FADE, // written dynamically while credits are running, makes text fade to black bg
 	BLUE,
 	LIME_GREEN,
 	ORANGE_RED,
