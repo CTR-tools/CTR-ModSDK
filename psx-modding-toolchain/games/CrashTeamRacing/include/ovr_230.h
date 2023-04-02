@@ -211,7 +211,7 @@ extern struct
 	} cheats[0x16];
 	
 	// 800B4D04
-	char fillerAfterCheats[0x28];
+	int cheatButtonEntry[10];
 	
 	// 800B4D2C
 	short cupDifficultyUnlockFlags[4];
