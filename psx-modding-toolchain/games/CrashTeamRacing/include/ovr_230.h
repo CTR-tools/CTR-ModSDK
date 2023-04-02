@@ -65,6 +65,20 @@ struct CharacterSelectMeta
 	// 0xC -- size
 };
 
+struct TransitionMeta
+{
+	short distX;
+	short distY;
+	
+	// change when each one starts to move
+	short headStart;
+	
+	short currX;
+	short currY;
+		
+	// 0xA -- size
+};
+
 // starts at 800ab9f0, overlay region 3
 extern struct
 {
@@ -272,19 +286,45 @@ extern struct
 	// wouldn't need this if icons were stored by order of characterID
 	short characterIcon[0x10];
 	
-	// 800b50D4
-	char filler2BC[0x2BC];
+	// 0x15 for transition meta array:
+	// 14 character icons + title text + 4 kart screens + 2 more?
 	
-	// part of filler ^^
-	#if 0
+	// 800b50D4
+	// 1P/2P mode
+	struct TransitionMeta transitionMeta_csm_1P2P[0x15];
+	
+	// 0x2 byte padding
+	
+	// 3P mode
+	// 800b51A8
+	struct TransitionMeta transitionMeta_csm_1P2P[0x15];
+	
+	// 0x2 byte padding
+	
+	// 4P mode
+	// 800b527c
+	struct TransitionMeta transitionMeta_csm_1P2P[0x15];
+	
+	// 0x2 byte padding
+	
+	// 800B5350
+	struct TransitionMeta* ptr_transitionMeta_csm[4];
+	
+	// 800B5360
+	short csm_instPos[4];
+	short csm_instRot[3];
+	short moveModels;
+	
 	// 800b5374
 	// points to s_1, s_2, s_3, s_4
 	int* PlayerNumberStrings[4];
 	
+	#if 0
 	// 800b5384
 	// 800b5388
 	// 800b538c
 	#endif
+	char dataUnk[0xC];
 	
 	// 800b5390
 	int characterSelect_NeutralColor;
@@ -301,9 +341,17 @@ extern struct
 	// 800b54d0
 	struct MainMenu_LevelRow battleTracks[0x7];
 	
-	// 800b5540 (0xA large)
-	// MM_TransitionInOut meta data (Track Sel)
-	// short destX, destY, frameDelay, currX, currY
+	// 800b5540
+	// why on earth does it need this many?
+	struct TransitionMeta transitionMeta_trackSel[0x15];
+
+	// 800b55f0
+	struct TransitionMeta transitionMeta_cupSel[0x6];
+	
+	// 800b562c
+
+	// 800b56c8
+	// 800b583c
 
 	char fill_MainMenu_LevelRowbattletracks_temporary[0x494];
 
