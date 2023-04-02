@@ -913,7 +913,7 @@ CheckJumpButtons:
 						superEngineFireLevel = 0x100;
 
 					// add 0.12s reserves
-					Turbo_Increment(driver, 0x78, 0x14, superEngineFireLevel);
+					Turbo_Increment(driver, 120, (TURBO_PAD | SUPER_ENGINE), superEngineFireLevel);
 
 					uVar20 = driver->actionsFlagSet;
 				}

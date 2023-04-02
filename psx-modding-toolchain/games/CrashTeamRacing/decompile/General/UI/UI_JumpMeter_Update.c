@@ -41,21 +41,21 @@ void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
 
          //if Jump meter < 0x5A0
          if (d->jumpMeter < 0x5a0) {
-            //if Jump meter < 0x3C0
-            if (d->jumpMeter < 0x3c0) {
+            //if Jump meter < 960
+            if (d->jumpMeter < 960) {
                //if Jump meter > 0x27F
                if (0x27f < d->jumpMeter) {
                   // Turbo_Increment
                   // add one second reserves
-                  Turbo_Increment(d, 0x3c0, 2, 0);
+                  Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, 0);
                }
             }
 
-            //if Jump meter >= 0x3C0
+            //if Jump meter >= 960
             else {
                // Turbo_Increment
                // add one second reserves, plus speed
-               Turbo_Increment(d, 0x3c0, 2, 0x80);
+               Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, 0x80);
             }
          }
 
@@ -63,7 +63,7 @@ void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
          else {
             // Turbo_Increment
             // add one second reserves, plus speed
-            Turbo_Increment(d, 0x3c0, 2, 0x100);
+            Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, 0x100);
          }
       }
    }
