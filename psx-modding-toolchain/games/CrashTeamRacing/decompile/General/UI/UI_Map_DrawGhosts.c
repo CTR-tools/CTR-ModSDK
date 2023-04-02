@@ -25,7 +25,7 @@ void UI_Map_DrawGhosts(int ptrMap,struct Thread* bucket)
 		
 		color = CORTEX_RED;
 		if ((gGT->timer & 1) != 0)
-			color = CORTEX_BLUE;
+			color = CRASH_BLUE;
 	}
 	
 	// ghost is N Tropy or Oxide
