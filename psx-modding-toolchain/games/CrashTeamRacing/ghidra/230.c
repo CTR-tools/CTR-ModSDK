@@ -5491,9 +5491,13 @@ void FUN_800b1848(void)
                        (uint)(byte)(&DAT_800b58c0)[DAT_800b57ae];
 					   
                   puVar5 = PTR_DAT_8008d2ac;
-                  if (DAT_800b56e2 == 1) {
+                  
+				  // if time limit
+				  if (DAT_800b56e2 == 1) 
+				  {
                     uVar12 = (uint)(byte)(&DAT_800b58b4)[DAT_800b576a];
                   }
+				  
                   else {
                     uVar12 = SEXT14((char)(&DAT_800b58b8)[DAT_800b5726]);
                   }

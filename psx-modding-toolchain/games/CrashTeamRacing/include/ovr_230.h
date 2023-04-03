@@ -349,18 +349,86 @@ extern struct
 	struct TransitionMeta transitionMeta_cupSel[0x6];
 	
 	// 800b562c
-
-	// 800b56c8
-	// 800b583c
-
-	char fill_MainMenu_LevelRowbattletracks_temporary[0x494];
-
-	#if BUILD == EurRetail
-	char prefill_movingToTrackmenu[0x490];
-	#elif BUILD == JpnRetail
-	char prefill_movingToTrackmenu[0xb70];
-	#endif
+	short cupSel_StarColorIndex[4];
 	
+	// 800b5634
+	short cupSel_StarUnlockFlag[4];
+	
+	// 800b563c
+	int cupSel_Color; // of what?
+
+	// 800b5640
+	struct TransitionMeta transitionMeta_battle[0xB];
+	
+	// 2 byte padding
+
+	// 800b56b0
+	struct MenuRow battleType_rows[4];
+	
+	// 800b56c8
+	struct MenuBox battleType_box;
+	
+	// 800b56f0
+	struct MenuRow battleLengthLifeTime_rows[4]; 
+	
+	// 800b570c
+	struct MenuBox battleLengthLifeTime_box;
+	
+	// 800b5738
+	struct MenuRow battleLengthTimeTime_rows[4]; 
+	
+	// 800b5750
+	struct MenuBox battleLengthTimeTime_box;
+	
+	// 800b577c
+	struct MenuRow battleLengthPoints_rows[4]; 
+	
+	// 800b5794
+	struct MenuBox battleLengthPoints_box;
+	
+	// 800b57c0
+	struct MenuRow battleLengthLifeLife_rows[4]; 
+	
+	// 800b57d8
+	struct MenuBox battleLengthLifeLife_box;
+
+	// 800b5804
+	struct MenuRow battleStartGame_rows[2];
+	
+	// 800b5810
+	struct MenuBox battleStartGame_box;
+	
+	// 800b583c
+	struct MenuBox* battleMenuBoxArray[5];
+	
+	// 800b5850
+	int battleWeaponsEnabled[22];
+	
+	// 800b58a8
+	int FlagesGameMode1_BattleType[3];
+	
+	// 800b58b4
+	char time_3_6_9[4];
+	char time_3_6_INF[4];
+	char lives_3_6_9[4];
+	char points_5_10_15[4];
+	
+	// 800b58c4
+	char color1[4];
+	char color2[4];
+	char color3[4];
+	
+	// ======== End of Battle, Start of High Score ==================
+	
+	// 800b58d0
+	struct TransitionMeta transitionMeta_HighScores[0xC];
+	
+	// 800b5948
+	short colorIndexArray[2];
+
+
+	char fill_MainMenu_LevelRowbattletracks_temporary[0x58];
+
 	// 800b59a0 title object
 
 	// 800b59a4 trackSelect changeTrack frame count
