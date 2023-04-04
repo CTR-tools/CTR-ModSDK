@@ -254,7 +254,7 @@ LAB_8004fe8c:
 	  if (primmemCurr <= backDB->primMem.endMin100)
 	  {
 		// increment curr
-        backDB->primMem.curr = (u_long*)primmemCurr + 7;
+        backDB->primMem.curr = primmemCurr + 7;
         p = (POLY_G3*)primmemCurr;
       }
       if (p == 0) {
@@ -279,9 +279,9 @@ LAB_8004fe8c:
         rgb2 = 0x3000ffff;
       }
       
-      p->r0 = rgb0;
-      p->r1 = 0x30ffffff;
-      p->r2 = rgb2;
+      *(int*)&p->r0 = rgb0;
+      *(int*)&p->r1 = 0x30ffffff;
+      *(int*)&p->r2 = rgb2;
 
       sVar4 = sVar15 * sVar6;
       p->x2 = local_28 + sVar4;
@@ -316,11 +316,11 @@ LAB_8004fe8c:
 
 	  // if tracking object is warpball
       if (*(short *)(*(short*)0x800862f8 + driverid * 2) == 1) {
-        rgb1 = 0x305b5b00;
+        *(int*)&rgb1 = 0x305b5b00;
 		
-        rgb0 = 0x30322b01;
+        *(int*)&rgb0 = 0x30322b01;
 		
-        rgb2 = 0x30ffbb00;
+        *(int*)&rgb2 = 0x30ffbb00;
       }
 
 	  // if tracking object is missile
@@ -331,9 +331,9 @@ LAB_8004fe8c:
 		
         rgb2 = 0x3000bbff;
       }
-      p->r0 = rgb0;
-      p->r1 = rgb1;
-      p->r2 = rgb2;
+      *(int*)&p->r0 = rgb0;
+      *(int*)&p->r1 = rgb1;
+      *(int*)&p->r2 = rgb2;
 
       sVar4 = sVar15 * sVar6;
       p->x2 = local_28 + sVar4;

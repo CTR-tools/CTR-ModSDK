@@ -20,7 +20,7 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
   obj->rot[1] += 0x40;
 
   // instance, ptr rot[6], cop registers
-  Vector_SpecLightSpin2D(inst,obj,(obj + 0x28));
+  Vector_SpecLightSpin2D(inst,obj,obj->lightDir);
 
   // pointer to matrix
   mat = inst->matrix;
