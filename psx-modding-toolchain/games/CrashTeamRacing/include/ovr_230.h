@@ -297,13 +297,13 @@ extern struct
 	
 	// 3P mode
 	// 800b51A8
-	struct TransitionMeta transitionMeta_csm_1P2P[0x15];
+	struct TransitionMeta transitionMeta_csm_3P[0x15];
 	
 	// 0x2 byte padding
 	
 	// 4P mode
 	// 800b527c
-	struct TransitionMeta transitionMeta_csm_1P2P[0x15];
+	struct TransitionMeta transitionMeta_csm_4P[0x15];
 	
 	// 0x2 byte padding
 	
