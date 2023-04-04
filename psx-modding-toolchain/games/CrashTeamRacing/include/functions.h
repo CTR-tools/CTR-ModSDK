@@ -255,7 +255,7 @@ u_int MM_Video_CheckIfFinished(int param_1);
 int RCNT_GetTime_Elapsed(int time, void* param_2);
 void DecalHUD_DrawPolyGT4(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
 void DecalHUD_DrawPolyFT4(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);
-void DecalHUD_DrawWeapon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, char rot);
+void DecalHUD_DrawWeapon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, short rot);
 void UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, u_int color);
 void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char semitransparencyEnabled, short scale, u_short rot);
 int LOAD_IsOpen_RacingOrBattle();
