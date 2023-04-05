@@ -14,8 +14,8 @@ void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, int posX, int posY, struct Pr
 
 	if (icon != 0)
 	{
-		topRightCornerAndPageXY = *(u_int*)&icon->X2;
-		topLeftCornerAndPaletteXY = *(u_int*)&icon->X1;
+		topRightCornerAndPageXY = *(u_int*)&icon->texLayout.u1;
+		topLeftCornerAndPaletteXY = *(u_int*)&icon->texLayout.u0;
 
 		// posY, bitshifted 2 u_chars
 		bitshiftPosY = posY * 0x10000;
@@ -23,11 +23,11 @@ void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, int posX, int posY, struct Pr
 		iVar9 = (int)(((topRightCornerAndPageXY & 0xff) - (topLeftCornerAndPaletteXY & 0xff)) * (int)scale) >> 0xc;
 
 		// X and Y of the two bottom corners
-		bottomMargin = *(u_int*)&icon->X3;
+		bottomMargin = *(u_int*)&icon->texLayout.u2;
 
 		p = (POLY_FT4*)primMem->curr;
 
-		iVar8 = (int)(((u_int)icon->Y3 - ((int)topLeftCornerAndPaletteXY >> 8 & 0xffU)) * (int)scale) >> 0xc;
+		iVar8 = (int)(((u_int)icon->texLayout.v2 - ((int)topLeftCornerAndPaletteXY >> 8 & 0xffU)) * (int)scale) >> 0xc;
 
 		if (semitransparencyEnabled == 0)
 		{
@@ -52,7 +52,7 @@ void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, int posX, int posY, struct Pr
 		*(short*)&p->u2 = (short)bottomMargin;
 
 		// set UVs of bottom right corner
-		*(u_short *)&p->u3 = *(u_short *)&icon->X4;
+		*(u_short *)&p->u3 = *(u_short *)&icon->texLayout.u3;
 
 		topRightCornerAndPageXY = posX + iVar8;
 

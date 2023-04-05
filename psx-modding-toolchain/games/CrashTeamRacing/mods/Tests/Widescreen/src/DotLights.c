@@ -94,7 +94,7 @@ DrawLights:
 	  // distance between each light,
 	  // adjusted sizeX,
 	  // (icon endX - icon startX) * scale / 0x1000
-      sizeX = (int)((icon->X2 - icon->X1) * scale) >> 0xc;
+      sizeX = (int)((icon->texLayout.u1 - icon->texLayout.u0) * scale) >> 0xc;
 
 	  // === Widescreen ===
 	  sizeX = sizeX * 750 / 1000;
@@ -112,7 +112,7 @@ DrawLights:
 			    // adjusted icon sizeY,
 				(
 					// sizeY * scale / 0x1000
-					(int)((icon->Y3 - icon->Y1) * scale) >> 0xc
+					(int)((icon->texLayout.v2 - icon->texLayout.v0) * scale) >> 0xc
 				);
 
 	  for(lightIndex = 0; lightIndex < 4; lightIndex ++)

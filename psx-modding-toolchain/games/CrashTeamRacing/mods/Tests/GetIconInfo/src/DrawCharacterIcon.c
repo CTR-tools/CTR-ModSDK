@@ -35,19 +35,19 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct 
 
 	p = (POLY_FT4*)primMem->curr;
 
-	width = icon->X2 - icon->X1;
-	height = icon->Y3 - icon->Y1;
+	width = icon->texLayout.u1 - icon->texLayout.u0;
+	height = icon->texLayout.v2 - icon->texLayout.v0;
 	rightX = posX + (width * scale >> 12);
 	topY = (posY < 166) ? posY : 165;
 	bottomY = ((posY + (height * scale >> 12)) < 166) ? (posY + (height * scale >> 12)) : 165;
-	bottomV = (icon->Y1 + bottomY) - posY;
+	bottomV = (icon->texLayout.v0 + bottomY) - posY;
 
 	setPolyFT4(p);
 	setRGB0(p, color & 0xff, (color & 0xff00) >> 8, (color & 0xff0000) >> 16);
 	setXY4(p, posX, topY, rightX, topY, posX, bottomY, rightX, bottomY);
-	setUV4(p, icon->X1, icon->Y1, icon->X2, icon->Y2, icon->X3, bottomV, icon->X4, bottomV);
-	p->clut = icon->paletteXY;
-	p->tpage = icon->pageXY;
+	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, bottomV, icon->texLayout.u3, bottomV);
+	p->clut = icon->texLayout.clut;
+	p->tpage = icon->texLayout.tpage;
 
 	if (transparency != 0)
 	{

@@ -38,7 +38,7 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 	}
 
 	// position of the bottom margin of the primitive for the bottom half of the minimap
-	mapBottomHeight = mapBottom->Y3 - mapBottom->Y1;
+	mapBottomHeight = mapBottom->texLayout.v2 - mapBottom->texLayout.v0;
 
 	// if these conditions are met, then draw the top half of the minimap; otherwise, only draw the bottom half
 	// not sure when the game ever draws only the bottom half
@@ -57,7 +57,7 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 		*(int*)&p->r0 = color;
 
 		// position of the top margin of the primitive for the top half of the minimap
-		mapTopHeight = posY - (((u_short)mapTop->Y3 - (u_short)mapTop->Y1) + mapBottomHeight);
+		mapTopHeight = posY - (((u_short)mapTop->texLayout.v2 - (u_short)mapTop->texLayout.v0) + mapBottomHeight);
 
 		p->y0 = mapTopHeight;
 		p->y1 = mapTopHeight;
@@ -91,7 +91,7 @@ void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short 
 
 	// width of the primitive
 	// leftX is the left margin of the primitive, posX is the right
-	leftX = posX - (short)(icon->X2 - icon->X1);
+	leftX = posX - (short)(icon->texLayout.u1 - icon->texLayout.u0);
 	p->x0 = leftX;
 	p->x1 = posX;
 	p->x2 = leftX;
@@ -101,10 +101,10 @@ void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short 
 	setPolyFT4(p);
 
 	// UVs
-	*(int*)&p->u0 = *(int*)&icon->X1;
-	*(int*)&p->u1 = *(int*)&icon->X2;
-	*(int*)&p->u2 = *(int*)&icon->X3;
-	*(short*)&p->u3 = *(short*)&icon->X4;
+	*(int*)&p->u0 = *(int*)&icon->texLayout.u0;
+	*(int*)&p->u1 = *(int*)&icon->texLayout.u1;
+	*(int*)&p->u2 = *(int*)&icon->texLayout.u2;
+	*(short*)&p->u3 = *(short*)&icon->texLayout.u3;
 
 	// check for if the minimap being drawn is white, if it's white then alter the blending mode bits of the texpage from 11 to 01
 	if (colorID == 1)

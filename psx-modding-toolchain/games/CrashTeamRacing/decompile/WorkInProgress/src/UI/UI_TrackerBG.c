@@ -13,7 +13,7 @@ void DECOMP_UI_TrackerBG(struct Icon* targetIcon,short posX,short posY,struct Pr
   short sVar9;
   short sVar10;
 
-  offsX = ((targetIcon->X2 - targetIcon->X1) * param_7) >> 0xc;
+  offsX = ((targetIcon->texLayout.u1 - targetIcon->texLayout.u0) * param_7) >> 0xc;
   sVar1 = posX + offsX;
   param_7 = param_7 >> 0xc;
   sVar10 = sVar1 - param_7;
@@ -21,7 +21,7 @@ void DECOMP_UI_TrackerBG(struct Icon* targetIcon,short posX,short posY,struct Pr
   // wumpaShineTheta (given to sine)
   sdata->wumpaShineTheta += 0x100;
 
-  offsY = ((targetIcon->Y3 - targetIcon->Y1) * param_8) >> 0xc;
+  offsY = ((targetIcon->texLayout.v2 - targetIcon->texLayout.v0) * param_8) >> 0xc;
   sVar2 = posY + offsY;
   param_8 = param_8 >> 0xc;
   sVar9 = sVar2 - param_8;
@@ -31,10 +31,10 @@ void DECOMP_UI_TrackerBG(struct Icon* targetIcon,short posX,short posY,struct Pr
   {
     p = primMem->curr;
     p->r0 = color;
-    p->u0 = targetIcon->X1;
-    p->clut = targetIcon->X2;
-    p->u2 = targetIcon->X3;
-    p->u3 = targetIcon->X4;
+    p->u0 = targetIcon->texLayout.u0;
+    p->clut = targetIcon->texLayout.u1;
+    p->u2 = targetIcon->texLayout.u2;
+    p->u3 = targetIcon->texLayout.u3;
 	
     ((P_TAG*)p->tag)->len = 9; // (p + 3)
     p->code = 0x2c;

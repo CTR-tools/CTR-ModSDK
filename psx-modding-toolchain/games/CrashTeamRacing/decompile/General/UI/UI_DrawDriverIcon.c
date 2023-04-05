@@ -15,20 +15,20 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct Prim
 	setPolyFT4(p);
 
 	// UVs and CLUT
-	*(u_int*)&p->u0 = *(u_int*)&icon->X1;
+	*(u_int*)&p->u0 = *(u_int*)&icon->texLayout.u0;
 
 	// UVs and texpage
-	*(u_int*)&p->u1 = *(u_int*)&icon->X2;
+	*(u_int*)&p->u1 = *(u_int*)&icon->texLayout.u1;
 
-	width = icon->X2 - icon->X1;
+	width = icon->texLayout.u1 - icon->texLayout.u0;
 
 	// UVs and... pad1?
-	*(u_int*)&p->u2 = *(u_int*)&icon->X3;
+	*(u_int*)&p->u2 = *(u_int*)&icon->texLayout.u2;
 
 	p->x0 = posX;
-	p->u3 = icon->X4;
+	p->u3 = icon->texLayout.u3;
 
-	height = icon->Y3 - icon->Y1;
+	height = icon->texLayout.v2 - icon->texLayout.v0;
 
 	if (posY < 166)
 		p->y0 = posY;

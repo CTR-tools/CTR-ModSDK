@@ -12,8 +12,8 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct Prim
 
 	p = (POLY_FT4*)primMem->curr;
 
-	width = icon->X2 - icon->X1;
-	height = icon->Y3 - icon->Y1;
+	width = icon->texLayout.u1 - icon->texLayout.u0;
+	height = icon->texLayout.v2 - icon->texLayout.v0;
 	rightX = posX + (width * scale / 0x1000);
 	#if BUILD != EurRetail
 		topY = (posY < 166) ? posY : 165;
@@ -22,14 +22,14 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct Prim
 		topY = (posY < 176) ? posY : 175;
 		bottomY = ((posY + (height * scale / 0x1000)) < 176) ? (posY + (height * scale / 0x1000)) : 175;
 	#endif
-	bottomV = (icon->Y1 + bottomY) - posY;
+	bottomV = (icon->texLayout.v0 + bottomY) - posY;
 
 	setPolyFT4(p);
 	setRGB0(p, color & 0xff, (color & 0xff00) >> 8, (color & 0xff0000) >> 16);
 	setXY4(p, posX, topY, rightX, topY, posX, bottomY, rightX, bottomY);
-	setUV4(p, icon->X1, icon->Y1, icon->X2, icon->Y2, icon->X3, bottomV, icon->X4, bottomV);
-	p->clut = icon->paletteXY;
-	p->tpage = icon->pageXY;
+	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, bottomV, icon->texLayout.u3, bottomV);
+	p->clut = icon->texLayout.clut;
+	p->tpage = icon->texLayout.tpage;
 
 	if (transparency != 0)
 	{

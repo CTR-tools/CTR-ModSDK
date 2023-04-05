@@ -3494,8 +3494,8 @@ struct sData
 	{
 		unsigned int pixelX;
 		unsigned int pixelY;
-		unsigned short paletteXY;
-		unsigned short pageXY;
+		unsigned short clut;
+		unsigned short tpage;
 	} debugFont;
 
 	// 8008d738

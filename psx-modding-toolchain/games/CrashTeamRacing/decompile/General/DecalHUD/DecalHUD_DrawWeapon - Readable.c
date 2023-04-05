@@ -16,8 +16,8 @@ void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, int posX, int posY, struct Pr
 
 	p = (POLY_FT4*)primMem->curr;
 
-	width = icon->X2 - icon->X1;
-	height = icon->Y3 - icon->Y1;
+	width = icon->texLayout.u1 - icon->texLayout.u0;
+	height = icon->texLayout.v2 - icon->texLayout.v0;
 	rightX = posX + (width * scale / 0x1000);
 	bottomY = posY + (height * scale / 0x1000);
 	sidewaysX = posX + (height * scale / 0x1000);
@@ -41,9 +41,9 @@ void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, int posX, int posY, struct Pr
 			setXY4(p, sidewaysX, posY, sidewaysX, sidewaysY, posX, posY, posX, sidewaysY);
 	}
 
-	setUV4(p, icon->X1, icon->Y1, icon->X2, icon->Y2, icon->X3, icon->Y3, icon->X4, icon->Y4);
-	p->clut = icon->paletteXY;
-	p->tpage = icon->pageXY;
+	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, icon->texLayout.v2, icon->texLayout.u3, icon->texLayout.v3);
+	p->clut = icon->texLayout.clut;
+	p->tpage = icon->texLayout.tpage;
 
 	if (transparency != 0)
 	{

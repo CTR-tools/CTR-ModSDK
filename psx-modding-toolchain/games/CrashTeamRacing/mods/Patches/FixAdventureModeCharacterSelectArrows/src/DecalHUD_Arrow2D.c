@@ -26,10 +26,10 @@ void DecalHUD_Arrow2D_ButItsFixed(struct Icon* icon, u_int posX, int posY, struc
 		return;
 	}
 
-	topRightCornerAndPageXY = *(u_int *)&icon->X2;
-	topLeftCornerAndPaletteXY = *(u_int *)&icon->X1;
-	y2 = icon->Y3;
-	bottomMargin = *(u_int *)&icon->X3;
+	topRightCornerAndPageXY = *(u_int *)&icon->texLayout.u1;
+	topLeftCornerAndPaletteXY = *(u_int *)&icon->texLayout.u0;
+	y2 = icon->texLayout.v2;
+	bottomMargin = *(u_int *)&icon->texLayout.u2;
 
 	p = (POLY_GT4*)primMem->curr;
 
@@ -56,7 +56,7 @@ void DecalHUD_Arrow2D_ButItsFixed(struct Icon* icon, u_int posX, int posY, struc
 
 	bitshiftPosY = (int)(((u_int)y2 - ((int)topLeftCornerAndPaletteXY >> 8 & 0xffU)) * (int)scale) >> 0xd;
 	
-	*(u_short *)&p->u3 = *(u_short *)&icon->X4;
+	*(u_short *)&p->u3 = *(u_short *)&icon->texLayout.u3;
 
 	bitshiftTopRightCorner = (int)(((topRightCornerAndPageXY & 0xff) - (topLeftCornerAndPaletteXY & 0xff)) * (int)scale) >> 0xd;
 

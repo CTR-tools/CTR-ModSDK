@@ -16,16 +16,16 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, int posX, int posY, struct P
 
 	if (icon != 0)
 	{
-		topRightCornerAndPageXY = *(u_int*)&icon->X2;
-		topLeftCornerAndPaletteXY = *(u_int*)&icon->X1;
-		y2 = icon->Y3;
+		topRightCornerAndPageXY = *(u_int*)&icon->texLayout.u1;
+		topLeftCornerAndPaletteXY = *(u_int*)&icon->texLayout.u0;
+		y2 = icon->texLayout.v2;
 
 		posX = posX & 0xffff;
 
 		// posY, bitshifted 2 bytes
 		bitshiftPosY = posY * 0x10000;
 
-		bottomMargin = *(u_int*)&icon->X3;
+		bottomMargin = *(u_int*)&icon->texLayout.u2;
 
 		p = (POLY_GT4*)primMem->curr;
 
@@ -51,7 +51,7 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, int posX, int posY, struct P
 
 		*(int*)&p->u0 = topLeftCornerAndPaletteXY;
 		*(short*)&p->u2 = (short)bottomMargin;
-		bottomRightCorner = *(u_short*)&icon->X4;
+		bottomRightCorner = *(u_short*)&icon->texLayout.u3;
 
 		// calculate final position of top right vertex of primitive
 		// posX + (endX - startX) * scale / 0x1000

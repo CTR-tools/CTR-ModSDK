@@ -20,7 +20,7 @@ int Hello_Main()
 			for(i = 0; i < ig->numIcons; i++)
 			{
 				icon = ig->icons[i];
-				printf("%d. %s   Total width: %d Total height: %d   x0: %d x1: %d x2: %d x3: %d y0: %d y1: %d y2: %d y3: %d   CLUT: 0x%04x Tpage: 0x%04x\n", i, icon->name, (icon->X2 - icon->X1), (icon->Y3 - icon->Y1), icon->X1, icon->X2, icon->X3, icon->X4, icon->Y1, icon->Y2, icon->Y3, icon->Y4, icon->paletteXY, icon->pageXY);
+				printf("%d. %s   Total width: %d Total height: %d   x0: %d x1: %d x2: %d x3: %d y0: %d y1: %d y2: %d y3: %d   CLUT: 0x%04x Tpage: 0x%04x\n", i, icon->name, (icon->texLayout.u1 - icon->texLayout.u0), (icon->texLayout.v2 - icon->texLayout.v0), icon->texLayout.u0, icon->texLayout.u1, icon->texLayout.u2, icon->texLayout.u3, icon->texLayout.v0, icon->texLayout.v1, icon->texLayout.v2, icon->texLayout.v3, icon->texLayout.clut, icon->texLayout.tpage);
 			}
 		}
 		else printf("no dice!\n");

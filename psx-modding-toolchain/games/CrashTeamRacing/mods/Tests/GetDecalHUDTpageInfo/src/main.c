@@ -12,14 +12,14 @@ void NewDrawPolyFT4(struct Icon* icon, u_int posX, int posY, struct PrimMem* pri
 
 	if (icon != 0)
 	{
-		topRightCornerAndPageXY = *(u_int*)&icon->X2;
-		topLeftCornerAndPaletteXY = *(u_int*)&icon->X1;
-		y2 = icon->Y3;
+		topRightCornerAndPageXY = *(u_int*)&icon->texLayout.u1;
+		topLeftCornerAndPaletteXY = *(u_int*)&icon->texLayout.u0;
+		y2 = icon->texLayout.v2;
 
 		// posY, bitshifted 2 bytes
 		bitshiftPosY = posY * 0x10000;
 
-		bottomMargin = *(u_int*)&icon->X3;
+		bottomMargin = *(u_int*)&icon->texLayout.u2;
 
 		p = (POLY_FT4*)primMem->curr;
 
@@ -42,7 +42,7 @@ void NewDrawPolyFT4(struct Icon* icon, u_int posX, int posY, struct PrimMem* pri
 
 		*(int*)&p->u0 = topLeftCornerAndPaletteXY;
 		*(short*)&p->u2 = (short)bottomMargin;
-		bottomRightCorner = *(u_short*)&icon->X4;
+		bottomRightCorner = *(u_short*)&icon->texLayout.u3;
 
 		// calculate final position of top right vertex of primitive
 		// posX + (endX - startX) * scale / 0x1000
@@ -75,8 +75,8 @@ void NewDrawPolyFT4(struct Icon* icon, u_int posX, int posY, struct PrimMem* pri
 		//printf("pointer: 0x%p\n",icon);
 		//printf("index: 0x%p\n",icon->global_IconArray_Index);
 		printf("name: %s\n",icon->name);
-		//printf("clut: 0x%x\n",icon->paletteXY);
-		printf("original texpage: 0x%04x\n",icon->pageXY);
+		//printf("clut: 0x%x\n",icon->texLayout.clut);
+		printf("original texpage: 0x%04x\n",icon->texLayout.tpage);
 		printf("current texpage: 0x%04x\n",p->tpage);
 
 		// link prim and OT together
