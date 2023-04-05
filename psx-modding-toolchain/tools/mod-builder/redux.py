@@ -1,29 +1,42 @@
 from syms import Syms
 from compile_list import CompileList, free_sections
-from common import COMPILE_LIST, ISO_PATH, REDUX_MAP_FILE, SETTINGS_PATH, OUTPUT_FOLDER, BACKUP_FOLDER, TEXTURES_OUTPUT_FOLDER, MOD_NAME, request_user_input, get_build_id, check_compile_list
+from common import COMPILE_LIST, ISO_PATH, REDUX_MAP_FILE, SETTINGS_PATH, OUTPUT_FOLDER, BACKUP_FOLDER, TEXTURES_OUTPUT_FOLDER, MOD_NAME, request_user_input, get_build_id, check_compile_list, cli_pause
 from image import get_image_list
 from clut import get_clut_list
 from game_options import game_options
 
 import os
-from subprocess import Popen
+from subprocess import Popen, DETACHED_PROCESS
 
 import json
 import requests as r
+
+REDUX_EXES = ["pcsx-redux", "pcsx-redux.exe", "PCSX-Redux.app"]
 
 class Redux:
     def __init__(self) -> None:
         pass
 
-    def load_config(self) -> None:
+    def load_config(self) -> bool:
         with open(SETTINGS_PATH) as file:
             data = json.load(file)["redux"]
             self.port = str(data["port"])
+            self.url = "http://127.0.0.1:" + str(self.port)
+            self.found_redux = False
             self.path = data["path"].replace("\\", "/")
             if self.path[-1] != "/":
                 self.path += "/"
-            self.command = self.path + "pcsx-redux.exe"
-            self.url = "http://127.0.0.1:" + str(self.port)
+            if not os.path.isdir(self.path):
+                print("\n[Redux-py] WARNING: Invalid redux directory: " + self.path)
+                return False
+            self.command = str()
+            for exe in REDUX_EXES:
+                cmd = self.path + exe
+                if os.path.isfile(cmd):
+                    self.command = cmd
+                    self.found_redux = True
+                    return True
+            return False
 
     def get_game_name(self) -> str:
         names = game_options.get_version_names()
@@ -35,6 +48,12 @@ class Redux:
         return game_options.get_gv_by_name(names[version - 1]).rom_name
 
     def start_emulation(self) -> None:
+        if not self.found_redux:
+            while not self.load_config():
+                print("\n[Redux-py] Could not find a valid path to PCSX-Redux emulator.")
+                print("Please check your settings.json and provide a valid path to redux.\n")
+                cli_pause()
+            print("\n[Redux-py] Found PCSX-Redux executable at " + self.command + "\n")
         curr_dir = os.getcwd() + "/"
         game_name = self.get_game_name()
         mod_name = game_name.split(".")[0] + "_" + MOD_NAME + ".bin"
@@ -47,7 +66,7 @@ class Redux:
                 print("\n[Redux-py] WARNING: game file not found at " + game_path)
                 print("PCSX-Redux will start without booting the iso.")
         os.chdir(self.path)
-        Popen(self.command + " -run -loadiso " + game_path, shell=True, start_new_session=True)
+        Popen(self.command + " -run -loadiso " + game_path, shell=True, start_new_session=True, close_fds=True, creationflags=DETACHED_PROCESS)
         os.chdir(curr_dir)
         self.load_map(warnings=False)
 
@@ -130,7 +149,7 @@ class Redux:
                     if not cl.should_build():
                         continue
                     bin = cl.get_output_name()
-                    backup_bin = BACKUP_FOLDER + "redux_" + cl.section_name + ".bin"
+                    backup_bin = prefix + BACKUP_FOLDER + "redux_" + cl.section_name + ".bin"
                     offset = cl.address & 0xFFFFFFF
                     if not os.path.isfile(bin):
                         print("\n[Redux-py] ERROR: " + bin + " not found.\n")

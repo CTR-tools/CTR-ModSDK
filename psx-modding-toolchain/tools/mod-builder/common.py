@@ -34,6 +34,7 @@ def get_distance_to_file(print_error: bool, file: str) -> str:
         return distance
     return get_distance_to_file(True, file)
 
+IS_WINDOWS_OS = sys.platform == "win32"
 LOG_FILE = "crash.log"
 CONFIG_FILE = "config.json"
 FOLDER_DISTANCE = get_distance_to_file(False, CONFIG_FILE)
@@ -78,7 +79,7 @@ HEXDIGITS = ["A", "B", "C", "D", "E", "F"]
 
 def rename_psyq_sections() -> None:
     sections = ["text", "data", "bss", "rdata", "sdata", "sbss", "note"]
-    prefix = "mipsel-linux-gnu-" if sys.platform == "linux" or sys.platform == "linux2" else "mipsel-none-elf-"
+    prefix = "mipsel-none-elf-"
     command = prefix + "objcopy"
     for section in sections:
         command += " --rename-section ." + section + "=.psyq" + section
