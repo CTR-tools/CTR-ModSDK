@@ -1,4 +1,4 @@
-from common import ISO_PATH, MOD_NAME, OUTPUT_FOLDER, COMPILE_LIST, PLUGIN_PATH, TOOLS_PATH, request_user_input, create_directory, cli_pause, check_compile_list, delete_directory, delete_file
+from common import ISO_PATH, MOD_NAME, OUTPUT_FOLDER, COMPILE_LIST, PLUGIN_PATH, TOOLS_PATH, request_user_input, create_directory, cli_pause, check_compile_list, delete_directory, delete_file, get_build_id
 from game_options import game_options
 from disc import Disc
 from compile_list import CompileList, free_sections
@@ -87,11 +87,11 @@ class Mkpsxiso:
                     if not cl.should_build():
                         continue
 
-                    # if it's a file to be replaced in the game
+                    # if it's a file to be overwritten in the game
                     df = disc.get_df(cl.game_file)
                     if df is not None:
-                        # Checking file start boundaries
-                        if (cl.address - df.address) < 0:
+                        # checking file start boundaries
+                        if cl.address < df.address:
                             error_msg = (
                                 "\n[ISO-py] ERROR: Cannot overwrite " + df.physical_file + "\n"
                                 "Base address " + hex(df.address) + " is bigger than the requested address " + hex(cl.address) + "\n"
@@ -136,15 +136,13 @@ class Mkpsxiso:
 
                         modded_stream = modded_files[game_file][0]
                         modded_buffer = modded_files[game_file][1]
-                        modded_stream.seek(0)
-                        # Add zeroes if the new total file size will be less than the original file size
+                        # Add zeroes if the new total file size is more than the original file size
                         for i in range(len(modded_buffer), offset + mod_size):
                             modded_buffer.append(0)
                         for i in range(mod_size):
                             modded_buffer[i + offset] = mod_data[i]
-                        modded_stream.write(modded_buffer)
 
-                    # if it's not a file to be replaced in the game
+                    # if it's not a file to be overwritten in the game
                     # assume it's a new file to be inserted in the disc
                     else:
                         filename = (cl.section_name + ".bin").upper()
@@ -163,8 +161,12 @@ class Mkpsxiso:
                         dir_tree.insert(-1, element)
                         iso_changed = True
 
+                # writing changes to files we overwrote
                 for game_file in modded_files:
                     modded_stream = modded_files[game_file][0]
+                    modded_buffer = modded_files[game_file][1]
+                    modded_stream.seek(0)
+                    modded_stream.write(modded_buffer)
                     modded_stream.close()
                 if iso_changed:
                     xml_tree.write(xml)
@@ -184,6 +186,12 @@ class Mkpsxiso:
 
     def build(self, only_extract=False) -> None:
         gv = self.ask_user_for_version()
+        last_compiled_version = get_build_id()
+        if last_compiled_version is not None and gv.build_id != last_compiled_version:
+            print("\n[ISO-py] WARNING: iso build was requested for version: " + gv.version + ", but last compiled version was: " + game_options.get_gv_by_build_id(last_compiled_version).version)
+            print("This could mean that some output files may contain data for the wrong version, resulting in a corrupted disc.")
+            if self.abort_build_request():
+                return
         rom_name = gv.rom_name.split(".")[0]
         extract_folder = ISO_PATH + rom_name
         xml = extract_folder + ".xml"
