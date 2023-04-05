@@ -8,6 +8,11 @@ void DECOMP_UI_RaceEnd_GetDriverClock(struct Driver* driver)
   int timeElapsed;
   int numTimesAttacked;
 
+  #if 0
+  // "trap" calls removed
+  // assume no division by zero
+  #endif
+
   // If race timer is not supposed to stop for this racer
   if ((driver->actionsFlagSet & 0x40000) == 0)
   {
@@ -19,13 +24,8 @@ void DECOMP_UI_RaceEnd_GetDriverClock(struct Driver* driver)
 
 	if (timeElapsed != 0) 
 	{
-	  // get average speed over time (assumed)
-	  
+	  // get average speed over time
       avgSpd = driver->distanceDriven * 100;
-	  
-      if (timeElapsed == 0) { trap(0x1c00); }
-      if ((timeElapsed == -1) && (avgSpd == -0x80000000)) { trap(0x1800); }
-      
 	  driver->distanceDriven = avgSpd / timeElapsed;
     }
 	
@@ -41,14 +41,12 @@ void DECOMP_UI_RaceEnd_GetDriverClock(struct Driver* driver)
       // number of missiles launched
 	  missileLaunched = driver->numTimesMissileLaunched;
       
-	  if (missileLaunched == 0) { trap(0x1c00); }
-      if ((missileLaunched == 0xffffffff) && (driver->numTimesAttacking == 0x80000)) { trap(0x1800); }
-	  
 	  // compare number of missiles to number of attacks
       driver->NumMissilesComparedToNumAttacks = (int)((driver->numTimesAttacking << 0xc) / missileLaunched);
     }
     
     numTimesAttacked = 0;
+
 	// count number of times you were attacked in race
     for (int i = 0; i < 8; i++)
     {

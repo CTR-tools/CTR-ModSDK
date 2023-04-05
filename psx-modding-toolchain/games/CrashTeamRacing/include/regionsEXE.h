@@ -2238,8 +2238,7 @@ struct Data
 	// 0x800852e0 -- JpnTrial
 	// 0x80086708 -- EurRetail
 	// 0x8008978c -- JpnRetail
-	// FUN_800516ac, draws speedometer BG
-	char speedometerBG_vertData[0x10*7];
+	short speedometerBG_vertData[0x38];
 
 	// 0x800864DC
 	// LNG index for end-of-race comments

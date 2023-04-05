@@ -7,20 +7,22 @@ void DECOMP_UI_DrawSpeedBG(void)
   u_int color0, color1;
   u_long* primmemCurr;
   POLY_G4 *p;
-  char* upperHalf; // I think?
+  short* vertData;
+  short* upperHalf;
   struct DB* backDB;
-  int i, j, k;
+  int i;
 
   gGT = sdata->gGT;
-  upperHalf = &data.speedometerBG_vertData[0x38];
+
+  vertData = &data.speedometerBG_vertData;
+  upperHalf = &vertData[0x1c];
   backDB = gGT->backBuffer;
-  for (i = 0; i < 0xe; i += 2) {
-    j = i + 1;
+  for (i = 0; i < 6; i++) {
     CTR_Box_DrawWirePrims(
-      (upperHalf[0] + 0x1e0),
-      (upperHalf[1] + 0xbe),
-      (data.speedometerBG_vertData[0x38 + (j * 2)] + 0x1e0),
-      (data.speedometerBG_vertData[0x3a + (j * 2)] + 0xbe),
+      (u_short)(upperHalf[0] + 0x1e0),
+      (u_short)(upperHalf[1] + 0xbe),
+      (u_short)(upperHalf[2] + 0x1e0),
+      (u_short)(upperHalf[3] + 0xbe),
         // white borders
         0xff, 0xff, 0xff,
 
@@ -28,14 +30,13 @@ void DECOMP_UI_DrawSpeedBG(void)
         gGT->tileView_UI.ptrOT,
 
         // pointer to PrimMem struct
-        &
-        backDB->primMem);
+        &backDB->primMem);
     
     CTR_Box_DrawWirePrims(
-      (upperHalf[0] + 0x1e1),
-      (upperHalf[1] + 0xbf),
-      (data.speedometerBG_vertData[0x38 + (j * 2)] + 0x1e1),
-      (data.speedometerBG_vertData[0x3a + (j * 2)] + 0xbf),
+      (u_short)(upperHalf[0] + 0x1e1),
+      (u_short)(upperHalf[1] + 0xbf),
+      (u_short)(upperHalf[2] + 0x1e1),
+      (u_short)(upperHalf[3] + 0xbf),
         // Black background
         0, 0, 0,
 
@@ -43,18 +44,15 @@ void DECOMP_UI_DrawSpeedBG(void)
         gGT->tileView_UI.ptrOT,
 
         // pointer to PrimMem struct
-        &
-        backDB->primMem);
+        &backDB->primMem);
       upperHalf += 4;
   }
-  for (i = 0; i < 0xc; i +=2 ) {
-    j = i + 2;
-
+  for (i = 0; i < 6; i++) {
     CTR_Box_DrawWirePrims(
-      (data.speedometerBG_vertData[i * 2] + 0x1e0),
-      (data.speedometerBG_vertData[2 + (i * 2)] + 0xbe),
-      (data.speedometerBG_vertData[j * 2] + 0x1e0),
-      (data.speedometerBG_vertData[2 + (j * 2)] + 0xbe),
+      (u_short)(vertData[0] + 0x1e0),
+      (u_short)(vertData[1] + 0xbe),
+      (u_short)(vertData[4] + 0x1e0),
+      (u_short)(vertData[5] + 0xbe),
         // White borders
         0xff, 0xff, 0xff,
 
@@ -65,13 +63,11 @@ void DECOMP_UI_DrawSpeedBG(void)
         &
         backDB->primMem);
 
-    k = i + 1;
-
     CTR_Box_DrawWirePrims(
-      (data.speedometerBG_vertData[k * 2] + 0x1e0),
-      (data.speedometerBG_vertData[2 + (k * 2)] + 0xbe),
-      (data.speedometerBG_vertData[(j + 1) * 2] + 0x1e0),
-      (data.speedometerBG_vertData[2 + ((j + 1) * 2)] + 0xbe),
+      (u_short)(vertData[2] + 0x1e0),
+      (u_short)(vertData[3] + 0xbe),
+      (u_short)(vertData[6] + 0x1e0),
+      (u_short)(vertData[7] + 0xbe),
         // white borders
         0xff, 0xff, 0xff,
 
@@ -83,10 +79,10 @@ void DECOMP_UI_DrawSpeedBG(void)
         backDB->primMem);
 
     CTR_Box_DrawWirePrims(
-      (data.speedometerBG_vertData[i * 2] + 0x1e1),
-      (data.speedometerBG_vertData[2 + (i * 2)] + 0xbf),
-      (data.speedometerBG_vertData[j * 2] + 0x1e1),
-      (data.speedometerBG_vertData[2 + (j * 2)] + 0xbf),
+      (u_short)(vertData[0] + 0x1e1),
+      (u_short)(vertData[1] + 0xbf),
+      (u_short)(vertData[4] + 0x1e1),
+      (u_short)(vertData[5] + 0xbf),
         // Black background
         0, 0, 0,
 
@@ -98,10 +94,10 @@ void DECOMP_UI_DrawSpeedBG(void)
         backDB->primMem);
 
     CTR_Box_DrawWirePrims(
-      (data.speedometerBG_vertData[k * 2] + 0x1e1),
-      (data.speedometerBG_vertData[2 + (k * 2)] + 0xbf),
-      (data.speedometerBG_vertData[(j + 1) * 2] + 0x1e1),
-      (data.speedometerBG_vertData[2 + ((j + 1) * 2)] + 0xbf),
+      (u_short)(vertData[2] + 0x1e1),
+      (u_short)(vertData[3] + 0xbf),
+      (u_short)(vertData[6] + 0x1e1),
+      (u_short)(vertData[7] + 0xbf),
         // Black background
         0, 0, 0,
 
@@ -123,9 +119,9 @@ void DECOMP_UI_DrawSpeedBG(void)
 
     color0 = 0xb500;
     color1 = color0;
-    if ((2 < i) && (color1 = 0xd1ff, 4 < i)) {
+    if ((1 < i) && (color1 = 0xd1ff, 2 < i)) {
       color0 = 0xd1ff;
-      if (i < 7) {
+      if (i < 4) {
         color1 = 0xdb;
       } else {
         color0 = 0xdb;
@@ -137,25 +133,26 @@ void DECOMP_UI_DrawSpeedBG(void)
     *(u_int *)&p->r1 = color0 | 0x38000000;
     *(u_int *)&p->r2 = color1 | 0x38000000;
     *(u_int *)&p->r3 = color1 | 0x38000000;
-    p->x0 = data.speedometerBG_vertData[i * 2] + 0x1e0;
-    p->x1 = data.speedometerBG_vertData[2 + (i * 2)] + 0xbe;
-    p->x1 = data.speedometerBG_vertData[(i + 1) * 2] + 0x1e0;
-    p->y1 = data.speedometerBG_vertData[2 + ((i + 1) * 2)] + 0xbe;
-    p->x2 = data.speedometerBG_vertData[j * 2] + 0x1e0;
-    p->y2 = data.speedometerBG_vertData[2 + (j * 2)] + 0xbe;
-    p->x3 = data.speedometerBG_vertData[(i + 3) * 2] + 0x1e0;
-    p->y3 = data.speedometerBG_vertData[2 + ((i + 3) * 2)] + 0xbe;
+    p->x0 = vertData[0] + 0x1e0;
+    p->y0 = vertData[1] + 0xbe;
+    p->x1 = vertData[2] + 0x1e0;
+    p->y1 = vertData[3] + 0xbe;
+    p->x2 = vertData[4] + 0x1e0;
+    p->y2 = vertData[5] + 0xbe;
+    p->x3 = vertData[6] + 0x1e0;
+    p->y3 = vertData[7] + 0xbe;
 
     // pointer to OT memory
     primmemCurr = gGT->tileView_UI.ptrOT;
 
     *(int*)p = *primmemCurr | 0x8000000;
     *primmemCurr = (u_int)p & 0xffffff;
+    vertData += 4;
   }
-  j = 0xc;
-  k = 4;
-
-  for (i = 0; i < 0xc; i += 2) {
+  
+  vertData = &data.speedometerBG_vertData;
+  
+  for (i = 0; i < 6; i++) {
     // prim reset
     primmemCurr = backDB->primMem.curr;
     p = 0;
@@ -169,32 +166,24 @@ void DECOMP_UI_DrawSpeedBG(void)
     if (p == 0) return;
     ((P_TAG *)p)->len = 8;
     *(u_int *)&p->r0 = 0xe1000a00;
-    p->g0 = 0;
-    p->r1 = 0;
-    p->g1 = 0;
-    p->b1 = 0;
-    p->r2 = 0;
-    p->g2 = 0;
-    p->b2 = 0;
+	*(u_int *)&p->x0 = 0;
+	*(u_int *)&p->r1 = 0;
+	*(u_int *)&p->r2 = 0;
+	*(u_int *)&p->r3 = 0;
     p->pad0 = 0x32;
-    p->r3 = 0;
-    p->g3 = 0;
-    p->b3 = 0;
-    p->x1 = data.speedometerBG_vertData[k] + 0x1e0;
-    p->y1 = data.speedometerBG_vertData[2 + k] + 0xbe;
-    p->x2 = data.speedometerBG_vertData[j] + 0x1e0;
-    p->y2 = data.speedometerBG_vertData[2 + j] + 0xbe;
-    p->x3 = data.speedometerBG_vertData[0x34] + 0x1e0;
-    p->y3 = data.speedometerBG_vertData[6] + 0xbe;
-
-    k += 8;
-    j += 8;
+    p->x1 = vertData[2] + 0x1e0;
+    p->y1 = vertData[3] + 0xbe;
+    p->x2 = vertData[6] + 0x1e0;
+    p->y2 = vertData[7] + 0xbe;
+    p->x3 = data.speedometerBG_vertData[0x1A] + 0x1e0;
+    p->y3 = data.speedometerBG_vertData[3] + 0xbe;
 
     // pointer to OT memory
     primmemCurr = gGT->tileView_UI.ptrOT;
 
     *(int*)p = *primmemCurr | 0x8000000;
     *primmemCurr = (u_int)p & 0xffffff;
+    vertData += 4;
   }
   return;
 }
