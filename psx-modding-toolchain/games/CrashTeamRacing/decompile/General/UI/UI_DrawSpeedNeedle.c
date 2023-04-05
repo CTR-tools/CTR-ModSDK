@@ -105,6 +105,8 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
     *(int *)p = *primmemCurr | 0x6000000;
     *primmemCurr = (u_int) p & 0xffffff;
 
+	// PrimMem ptrCurrent
+	primmemCurr = backDB->primMem.curr;
     p = 0;
 
     // if there is room for more
