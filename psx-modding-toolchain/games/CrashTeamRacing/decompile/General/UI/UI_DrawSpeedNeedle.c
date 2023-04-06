@@ -64,89 +64,83 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
     p = (POLY_G3*) primmemCurr;
   }
 
-  if (p != 0) {
-    setPolyG3(p);
-    setRGB0(p, 0x5b, 0x5b, 0);
-    setRGB1(p, 0x32, 0x2b, 1);
-    setRGB2(p, 0xff, 0xbb, 0);
+  if (p == 0) return;
+    
+  setPolyG3(p);
+  setRGB0(p, 0x5b, 0x5b, 0);
+  setRGB1(p, 0x32, 0x2b, 1);
+  setRGB2(p, 0xff, 0xbb, 0);
 
-    p->x2 = posX + (sin[1] * 3 >> 0xb) + 0x41;
-
-    ratio = ((cos[1] << 2) >> 0xb) * 0x140;
-    if (ratio < 0) {
-      ratio += 0x1ff;
-    }
-    p->y2 = posY + (ratio >> 9) + 0x29;
-
-    p->x1 = posX - ((sin[0] * 3 >> 0xb) + -0x41);
-
-    ratio = (cos[0] * 3 >> 0xb) * 0x140;
-    if (ratio < 0) {
-      ratio += 0x1ff;
-    }
-    p->y1 = posY - ((ratio >> 9) + -0x29);
-
-    p->x0 = posX + (sin[0] * 0x1e >> 0xb) + 0x41;
-
-    ratio = (cos[0] * 0x1e >> 0xb) * 0x140;
-    if (ratio < 0) {
-      ratio += 0x1ff;
-    }
-    p->y0 = posY + (ratio >> 9) + 0x29;
-
-    // pointer to OT memory
-    primmemCurr = gGT->tileView_UI.ptrOT;
-
-    *(int *)p = *primmemCurr | 0x6000000;
-    *primmemCurr = (u_int) p & 0xffffff;
-
-	// PrimMem ptrCurrent
-	primmemCurr = backDB->primMem.curr;
-    p = 0;
-
-    // if there is room for more
-    if (primmemCurr <= (u_long*) backDB->primMem.endMin100) {
-      // increment prim pointer
-      backDB->primMem.curr = primmemCurr + 7;
-      p = (POLY_G3*) primmemCurr;
-    }
-
-    if (p != 0) {
-      setPolyG3(p);
-      setRGB0(p, 0xff, 0xff, 0xff);
-      setRGB1(p, 0x9c, 0x69, 0);
-      setRGB2(p, 0xff, 0xff, 0);
-
-      p->x2 = posX - ((sin[1] * 3 >> 0xb) + -0x41);
-
-      ratio = ((cos[1] << 2) >> 0xb) * 0x140;
-      if (ratio < 0) {
-        ratio += 0x1ff;
-      }
-      p->y2 = posY - ((ratio >> 9) + -0x29);
-
-      p->x1 = posX - ((sin[0] * 3 >> 0xb) + -0x41);
-
-      ratio = (cos[0] * 3 >> 0xb) * 0x140;
-      if (ratio < 0) {
-        ratio += 0x1ff;
-      }
-      p->y1 = posY - ((ratio >> 9) + -0x29);
-
-      p->x0 = posX + ((sin[0] * 0x1e >> 0xb) + 0x41);
-
-      ratio = (cos[0] * 0x1e >> 0xb) * 0x140;
-      if (ratio < 0) {
-        ratio += 0x1ff;
-      }
-      p->y0 = posY + ((ratio >> 9) + 0x29);
-
-      // pointer to OT memory
-      primmemCurr = gGT->tileView_UI.ptrOT;
-
-      *(int *)p = *primmemCurr | 0x6000000;
-      *primmemCurr = (u_int) p & 0xffffff;
-    }
+  ratio = ((cos[1] << 2) >> 0xb) * 0x140;
+  if (ratio < 0) {
+    ratio += 0x1ff;
   }
+  p->x2 = posX + (sin[1] * 3 >> 0xb) + 0x41;
+  p->y2 = posY + (ratio >> 9) + 0x29;
+
+  ratio = (cos[0] * 3 >> 0xb) * 0x140;
+  if (ratio < 0) {
+    ratio += 0x1ff;
+  }
+  p->x1 = posX - ((sin[0] * 3 >> 0xb) + -0x41);
+  p->y1 = posY - ((ratio >> 9) + -0x29);
+
+  ratio = (cos[0] * 0x1e >> 0xb) * 0x140;
+  if (ratio < 0) {
+    ratio += 0x1ff;
+  }
+  p->x0 = posX + (sin[0] * 0x1e >> 0xb) + 0x41;
+  p->y0 = posY + (ratio >> 9) + 0x29;
+
+  // pointer to OT memory
+  primmemCurr = gGT->tileView_UI.ptrOT;
+
+  *(int *)p = *primmemCurr | 0x6000000;
+  *primmemCurr = (u_int) p & 0xffffff;
+
+  // PrimMem ptrCurrent
+  primmemCurr = backDB->primMem.curr;
+  p = 0;
+
+  // if there is room for more
+  if (primmemCurr <= (u_long*) backDB->primMem.endMin100) {
+    // increment prim pointer
+    backDB->primMem.curr = primmemCurr + 7;
+    p = (POLY_G3*) primmemCurr;
+  }
+
+  if (p == 0) return;
+  setPolyG3(p);
+  setRGB0(p, 0xff, 0xff, 0xff);
+  setRGB1(p, 0x9c, 0x69, 0);
+  setRGB2(p, 0xff, 0xff, 0);
+
+  ratio = ((cos[1] << 2) >> 0xb) * 0x140;
+  if (ratio < 0) {
+    ratio += 0x1ff;
+  }
+  p->x2 = posX - ((sin[1] * 3 >> 0xb) + -0x41);
+  p->y2 = posY - ((ratio >> 9) + -0x29);
+
+  ratio = (cos[0] * 3 >> 0xb) * 0x140;
+  if (ratio < 0) {
+    ratio += 0x1ff;
+  }
+  p->x1 = posX - ((sin[0] * 3 >> 0xb) + -0x41);
+  p->y1 = posY - ((ratio >> 9) + -0x29);
+
+  ratio = (cos[0] * 0x1e >> 0xb) * 0x140;
+  if (ratio < 0) {
+    ratio += 0x1ff;
+  }
+  p->x0 = posX + ((sin[0] * 0x1e >> 0xb) + 0x41);
+  p->y0 = posY + ((ratio >> 9) + 0x29);
+
+  // pointer to OT memory
+  primmemCurr = gGT->tileView_UI.ptrOT;
+
+  *(int *)p = *primmemCurr | 0x6000000;
+  *primmemCurr = (u_int) p & 0xffffff;
+
   return;
 }
