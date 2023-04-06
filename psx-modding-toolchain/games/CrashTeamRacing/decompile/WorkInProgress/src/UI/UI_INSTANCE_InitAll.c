@@ -22,7 +22,6 @@ void DECOMP_UI_INSTANCE_InitAll(void)
   
   relicType = gGT->gameMode1;
 
-  // uVar3 is same as gGT
   // For most of the function
 
   // If you're not in Crystal Challenge (in adventure mode)
@@ -31,18 +30,15 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	// If you're in Adventure Arena
     if ((relicType & ADVENTURE_ARENA) != 0)
 	{
-	  // UI_INSTANCE_BirthWithThread
-      UI_INSTANCE_BirthWithThread(0x61,UI_ThTick_Reward,0xe,1,0,"relic1");
-      UI_INSTANCE_BirthWithThread(99,UI_ThTick_Reward,0xf,1,0,"key1");
-      UI_INSTANCE_BirthWithThread(0x62,UI_ThTick_Reward,0x10,0,0,"trophy1");
+      UI_INSTANCE_BirthWithThread(0x61,UI_ThTick_Reward,0xe,1,0,sdata->s_relic1);
+      UI_INSTANCE_BirthWithThread(99,UI_ThTick_Reward,0xf,1,0,sdata->s_key1);
+      UI_INSTANCE_BirthWithThread(0x62,UI_ThTick_Reward,0x10,0,0,sdata->s_trophy1);
 
-	  // 0x8fba4 is where the adventure profile (currently loaded) begins
       GAMEPROG_AdvPercent(&sdata->advProgress);
       return;
     }
 
 	// ???
-	// If you're loading, or on adventure map, or in main menu ???
     if ((relicType & (LOADING | ADVENTURE_ARENA | MAIN_MENU)) != 0) {
       puVar7 = &DAT_800862d8;
       puVar6 = &DAT_800862c8;
@@ -72,9 +68,8 @@ void DECOMP_UI_INSTANCE_InitAll(void)
     int relicType;
 	  // The rest of this block only happens in Relic Mode
 
-	  // UI_INSTANCE_BirthWithThread
-      sdata->ptrRelic = UI_INSTANCE_BirthWithThread(0x61,UI_ThTick_Reward,0xe,1,0,"relic1");
-      sdata->ptrTimebox1 = UI_INSTANCE_BirthWithThread(0x5c,UI_ThTick_CountPickup,0x13,1,0,"timebox1");
+      sdata->ptrRelic = UI_INSTANCE_BirthWithThread(0x61,UI_ThTick_Reward,0xe,1,0,sdata->s_relic1);
+      sdata->ptrTimebox1 = UI_INSTANCE_BirthWithThread(0x5c,UI_ThTick_CountPickup,0x13,1,0,sdata->s_timebox1);
 
 	  // if instance
       if (sdata->ptrRelic != 0)
@@ -156,7 +151,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 
 	// create thread and Instance for "fruitdisp"
 	// the function returns an enttity
-    *(void*)0x8008d4b8 = UI_INSTANCE_BirthWithThread(0x37,UI_ThTick_CountPickup,3,1,*(struct TileView*)0x8008d4b4,"fruitdisp");
+    *(void*)0x8008d4b8 = UI_INSTANCE_BirthWithThread(0x37,UI_ThTick_CountPickup,3,1,*(struct TileView*)0x8008d4b4,sdata->s_fruitdisp);
 
     if (
 			// If numPlyrCurrGame is less than 3
@@ -167,19 +162,17 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 		)
 	{
 	  // UI_INSTANCE_BirthWithThread
-      UI_INSTANCE_BirthWithThread(0x38,UI_ThTick_big1,2,0,0,"big1"); // "big1"
+      UI_INSTANCE_BirthWithThread(0x38,UI_ThTick_big1,2,0,0,sdata->s_big1);
     }
 
 	// If you're not in Adventure Mode
     if ((relicType & ADVENTURE_MODE) == 0) {
       return;
     }
-
-	// UI_INSTANCE_BirthWithThread
-    sdata->ptrHudC = UI_INSTANCE_BirthWithThread(0x93,UI_ThTick_CtrLetters,0x12,0,0,"hudc");
-    sdata->ptrHudT = UI_INSTANCE_BirthWithThread(0x94,UI_ThTick_CtrLetters,0x12,0,0,"hudt");
-    sdata->ptrHudR = UI_INSTANCE_BirthWithThread(0x95,UI_ThTick_CtrLetters,0x12,0,0,"hudr");
-    sdata->ptrToken = UI_INSTANCE_BirthWithThread(0x7d,UI_ThTick_Reward,0x12,0,0,"token");
+    sdata->ptrHudC = UI_INSTANCE_BirthWithThread(0x93,UI_ThTick_CtrLetters,0x12,0,0,sdata->s_hudc);
+    sdata->ptrHudT = UI_INSTANCE_BirthWithThread(0x94,UI_ThTick_CtrLetters,0x12,0,0,sdata->s_hudt);
+    sdata->ptrHudR = UI_INSTANCE_BirthWithThread(0x95,UI_ThTick_CtrLetters,0x12,0,0,sdata->s_hudr);
+    sdata->ptrToken = UI_INSTANCE_BirthWithThread(0x7d,UI_ThTick_Reward,0x12,0,0,sdata->s_token);
 
     sdata->ptrHudC->flags |= 0x80;
     sdata->ptrHudT->flags |= 0x80;
@@ -189,16 +182,14 @@ void DECOMP_UI_INSTANCE_InitAll(void)
   // If you're in Crystal Challenge
   else
   {
-	// UI_INSTANCE_BirthWithThread
-
 	//Make a separate crystal for End of Race menu
-    sdata->ptrMenuCrystal = UI_INSTANCE_BirthWithThread(0x60,UI_ThTick_Reward,0x11,0,0,"crystal1");
+    sdata->ptrMenuCrystal = UI_INSTANCE_BirthWithThread(0x60,UI_ThTick_Reward,0x11,0,0,sdata->s_crystal1);
 
 	// Make a crystal for HUD
-    sdata->ptrHudCrystal = UI_INSTANCE_BirthWithThread(0x60,UI_ThTick_Reward,0x11,0,0,"crystal1");
+    sdata->ptrHudCrystal = UI_INSTANCE_BirthWithThread(0x60,UI_ThTick_Reward,0x11,0,0,sdata->s_crystal1);
 
 	// Make a token
-    sdata->ptrToken = UI_INSTANCE_BirthWithThread(0x7d,UI_ThTick_Reward,0x12,0,0,"token");
+    sdata->ptrToken = UI_INSTANCE_BirthWithThread(0x7d,UI_ThTick_Reward,0x12,0,0,sdata->s_token);
 
 	// make copy of hudCrystal pointer
   crystal = sdata->ptrHudCrystal;
