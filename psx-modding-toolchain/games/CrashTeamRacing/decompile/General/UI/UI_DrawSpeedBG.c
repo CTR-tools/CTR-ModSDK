@@ -9,7 +9,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 {
   struct GameTracker* gGT;
   u_int color_gradient0, color_gradient1;
-  u_long* primmemCurr;
+  u_long* ot;
   POLY_G4 *p;
   short* vertData;
   short* upperHalf;
@@ -21,106 +21,80 @@ void DECOMP_UI_DrawSpeedBG(void)
   vertData = &data.speedometerBG_vertData;
   upperHalf = &vertData[0x1c];
   backDB = gGT->backBuffer;
-  for (i = 0; i < 7; i++) {
+  
+  for (i = 0; i < 7; i++) 
+  {
+	  // white
     CTR_Box_DrawWirePrims(
-      (u_short)(upperHalf[0] + 0x1e0),
-      (u_short)(upperHalf[1] + 0xbe),
-      (u_short)(upperHalf[2] + 0x1e0),
-      (u_short)(upperHalf[3] + 0xbe),
-        // white borders
-        0xff, 0xff, 0xff,
-
-        // pointer to OT memory
-        gGT->tileView_UI.ptrOT,
-
-        // pointer to PrimMem struct
-        &backDB->primMem);
+		(u_short)(upperHalf[0] + 0x1e0),
+		(u_short)(upperHalf[1] + 0xbe),
+		(u_short)(upperHalf[2] + 0x1e0),
+		(u_short)(upperHalf[3] + 0xbe),
+		0xff, 0xff, 0xff,
+		gGT->tileView_UI.ptrOT,
+		&backDB->primMem);
     
+	// black
     CTR_Box_DrawWirePrims(
-      (u_short)(upperHalf[0] + 0x1e1),
-      (u_short)(upperHalf[1] + 0xbf),
-      (u_short)(upperHalf[2] + 0x1e1),
-      (u_short)(upperHalf[3] + 0xbf),
-        // Black background
-        0, 0, 0,
-
-        // pointer to OT memory
-        gGT->tileView_UI.ptrOT,
-
-        // pointer to PrimMem struct
-        &backDB->primMem);
-      upperHalf += 4;
+		(u_short)(upperHalf[0] + 0x1e1),
+		(u_short)(upperHalf[1] + 0xbf),
+		(u_short)(upperHalf[2] + 0x1e1),
+		(u_short)(upperHalf[3] + 0xbf),
+		0, 0, 0,
+		gGT->tileView_UI.ptrOT,
+		&backDB->primMem);
+      
+	upperHalf += 4;
   }
-  for (i = 0; i < 6; i++) {
+  
+  for (i = 0; i < 6; i++) 
+  {
+	// white
     CTR_Box_DrawWirePrims(
-      (u_short)(vertData[0] + 0x1e0),
-      (u_short)(vertData[1] + 0xbe),
-      (u_short)(vertData[4] + 0x1e0),
-      (u_short)(vertData[5] + 0xbe),
-        // White borders
-        0xff, 0xff, 0xff,
+		(u_short)(vertData[0] + 0x1e0),
+		(u_short)(vertData[1] + 0xbe),
+		(u_short)(vertData[4] + 0x1e0),
+		(u_short)(vertData[5] + 0xbe),
+		0xff, 0xff, 0xff,
+		gGT->tileView_UI.ptrOT,
+		&backDB->primMem);
 
-        // pointer to OT memory
-        gGT->tileView_UI.ptrOT,
-
-        // pointer to PrimMem struct
-        &
-        backDB->primMem);
-
+	// white
     CTR_Box_DrawWirePrims(
-      (u_short)(vertData[2] + 0x1e0),
-      (u_short)(vertData[3] + 0xbe),
-      (u_short)(vertData[6] + 0x1e0),
-      (u_short)(vertData[7] + 0xbe),
-        // white borders
-        0xff, 0xff, 0xff,
+		(u_short)(vertData[2] + 0x1e0),
+		(u_short)(vertData[3] + 0xbe),
+		(u_short)(vertData[6] + 0x1e0),
+		(u_short)(vertData[7] + 0xbe),
+		0xff, 0xff, 0xff,
+		gGT->tileView_UI.ptrOT,
+		&backDB->primMem);
 
-        // pointer to OT memory
-        gGT->tileView_UI.ptrOT,
-
-        // pointer to PrimMem struct
-        &
-        backDB->primMem);
-
+	// black
     CTR_Box_DrawWirePrims(
-      (u_short)(vertData[0] + 0x1e1),
-      (u_short)(vertData[1] + 0xbf),
-      (u_short)(vertData[4] + 0x1e1),
-      (u_short)(vertData[5] + 0xbf),
-        // Black background
-        0, 0, 0,
+		(u_short)(vertData[0] + 0x1e1),
+		(u_short)(vertData[1] + 0xbf),
+		(u_short)(vertData[4] + 0x1e1),
+		(u_short)(vertData[5] + 0xbf),
+		0, 0, 0,
+		gGT->tileView_UI.ptrOT,
+		&backDB->primMem);
 
-        // pointer to OT memory
-        gGT->tileView_UI.ptrOT,
-
-        // pointer to PrimMem struct
-        &
-        backDB->primMem);
-
+	// black
     CTR_Box_DrawWirePrims(
-      (u_short)(vertData[2] + 0x1e1),
-      (u_short)(vertData[3] + 0xbf),
-      (u_short)(vertData[6] + 0x1e1),
-      (u_short)(vertData[7] + 0xbf),
-        // Black background
-        0, 0, 0,
-
-        // pointer to OT memory
-        gGT->tileView_UI.ptrOT,
-
-        // pointer to PrimMem struct
-        &
-        backDB->primMem);
+		(u_short)(vertData[2] + 0x1e1),
+		(u_short)(vertData[3] + 0xbf),
+		(u_short)(vertData[6] + 0x1e1),
+		(u_short)(vertData[7] + 0xbf),
+		0, 0, 0,
+		gGT->tileView_UI.ptrOT,
+		&backDB->primMem);
 
     // reset prim
-    primmemCurr = backDB->primMem.curr;
-
-    if (primmemCurr <= (u_long *)backDB->primMem.endMin100) {
-      backDB->primMem.curr = primmemCurr + 9;
-      p = (POLY_G4*)primmemCurr;
-    }
-    if (p == 0) return;
-
+    p = backDB->primMem.curr;
+    if (p > (u_long *)backDB->primMem.endMin100)
+		return;
+    backDB->primMem.curr = p + 1;
+    
     color_gradient0 = SPEEDO_GREEN;
     color_gradient1 = color_gradient0;
     if ((1 < i) && (color_gradient1 = 0xd1ff, 2 < i)) {
@@ -133,39 +107,35 @@ void DECOMP_UI_DrawSpeedBG(void)
       }
     }
 
+    *(int*)&p->r0 = color_gradient0; // RGB0
+    *(int*)&p->r1 = color_gradient0; // RGB1
+    *(int*)&p->r2 = color_gradient1; // RGB2
+    *(int*)&p->r3 = color_gradient1; // RGB3
+	
     setPolyG4(p);
-    setRGB0(p,color_gradient0 & 0xff, (color_gradient0 & 0xff00) >> 8, (color_gradient0 & 0xff0000) >> 16);
-    setRGB1(p,color_gradient0 & 0xff, (color_gradient0 & 0xff00) >> 8, (color_gradient0 & 0xff0000) >> 16);
-    setRGB2(p,color_gradient1 & 0xff, (color_gradient1 & 0xff00) >> 8, (color_gradient1 & 0xff0000) >> 16);
-    setRGB3(p,color_gradient1 & 0xff, (color_gradient1 & 0xff00) >> 8, (color_gradient1 & 0xff0000) >> 16);
     setXY4(p, 
     vertData[0] + 0x1e0, vertData[1] + 0xbe, 
     vertData[2] + 0x1e0, vertData[3] + 0xbe, 
     vertData[4] + 0x1e0, vertData[5] + 0xbe, 
     vertData[6] + 0x1e0, vertData[7] + 0xbe);
 
-    // pointer to OT memory
-    primmemCurr = gGT->tileView_UI.ptrOT;
-
-    *(int*)p = *primmemCurr | 0x8000000;
-    *primmemCurr = (u_int)p & 0xffffff;
-    vertData += 4;
+	// inline AddPrim
+    ot = gGT->tileView_UI.ptrOT;
+    *(int*)p = *ot | 0x8000000;
+    *ot = (u_int)p & 0xffffff;
+    
+	vertData += 4;
   }
   
   vertData = &data.speedometerBG_vertData;
   
-  for (i = 0; i < 6; i++) {
-    // prim reset
-    primmemCurr = backDB->primMem.curr;
-    p = 0;
-
-    // if there is room for more
-    if (primmemCurr <= (u_long *)backDB->primMem.endMin100) {
-      // increment primitive pointer
-      backDB->primMem.curr = primmemCurr + 9;
-      p = (POLY_G4*)primmemCurr;
-    }
-    if (p == 0) return;
+  for (i = 0; i < 6; i++) 
+  {
+    p = backDB->primMem.curr;
+    if (p > (u_long *)backDB->primMem.endMin100) 
+		return;
+    backDB->primMem.curr = p + 1;
+    
     setlen(p, 8);
     setcode(p, 0xe1);
     setRGB0(p, 0, 0xa, 0);
@@ -178,12 +148,12 @@ void DECOMP_UI_DrawSpeedBG(void)
     vertData[6] + 0x1e0, vertData[7] + 0xbe,
     data.speedometerBG_vertData[0x1a] + 0x1e0, data.speedometerBG_vertData[3] + 0xbe);
 
-    // pointer to OT memory
-    primmemCurr = gGT->tileView_UI.ptrOT;
-
-    *(int*)p = *primmemCurr | 0x8000000;
-    *primmemCurr = (u_int)p & 0xffffff;
-    vertData += 4;
+	// inline AddPrim
+    ot = gGT->tileView_UI.ptrOT;
+    *(int*)p = *ot | 0x8000000;
+    *ot = (u_int)p & 0xffffff;
+    
+	vertData += 4;
   }
   return;
 }
