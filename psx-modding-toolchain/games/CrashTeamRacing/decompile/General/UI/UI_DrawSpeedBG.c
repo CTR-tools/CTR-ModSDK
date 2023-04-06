@@ -97,7 +97,7 @@ void DECOMP_UI_DrawSpeedBG(void)
     
     color_gradient0 = SPEEDO_GREEN;
     color_gradient1 = color_gradient0;
-    if ((1 < i) && (color_gradient1 = 0xd1ff, 2 < i)) {
+    if ((1 < i) && (color_gradient1 = SPEEDO_YELLOW, 2 < i)) {
       color_gradient0 = SPEEDO_YELLOW;
       if (i < 4) {
         color_gradient1 = SPEEDO_RED;
