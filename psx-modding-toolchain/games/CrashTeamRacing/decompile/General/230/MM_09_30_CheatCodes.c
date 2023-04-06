@@ -17,7 +17,6 @@
 #define LETTER_X (BTN_CROSS  & 0xff)
 
 void MainKillGame_LaunchSpyro2();
-void OtherFX_Play(int sfxID, int flag);
 
 struct Cheat
 {

@@ -12,7 +12,6 @@ void UI_DrawNumWumpa(int, int, struct Driver*);
 void UI_DrawNumTimebox(int, int, struct Driver*);
 int LOAD_IsOpen_RacingOrBattle();
 void RB_Player_ModifyWumpa(struct Driver*, int);
-void OtherFX_Play(int, int);
 void UI_Lerp2D_HUD(short *, short, short, short, short, int, short);
 int UI_ConvertX_2(int, int);
 int UI_ConvertY_2(int, int);

@@ -4,7 +4,6 @@
 
 void MATH_VectorNormalize(short(*)[3]);
 void ConvertRotToMatrix_Transpose(MATRIX(*)[32], short(*)[3]);
-void OtherFX_Play(short, int);
 
 int MM_Title_ThTick(struct Thread* title)
 {

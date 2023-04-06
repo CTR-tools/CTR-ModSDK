@@ -260,6 +260,6 @@ void UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct PrimMem* pr
 void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char semitransparencyEnabled, short scale, u_short rot);
 int LOAD_IsOpen_RacingOrBattle();
 void MainFrame_TogglePauseAudio(int bool_pause);
-void OtherFX_Play(int sfxID, int flag);
+void OtherFX_Play(unsigned int soundID, int flags);
 void MainFreeze_SafeAdvDestroy();
 void MenuBox_Show(struct MenuBox* m);

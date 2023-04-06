@@ -26,7 +26,6 @@ void UI_DrawNumCrystal(int x, int y, struct Driver* d);
 void UI_DrawLimitClock(short x, short y, short fontSize);
 void MenuBox_ClearInput();
 void MenuBox_Show(struct MenuBox*);
-void OtherFX_Play(int, int);
 void MainRaceTrack_RequestLoad(int);
 
 void DECOMP_CC_EndEvent_DrawMenu()

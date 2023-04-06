@@ -1,7 +1,6 @@
 #include <common.h>
 
 void* LOAD_ReadFile_NoCallback(const char* file, void* addr, int unk);
-void OtherFX_Play(int sfxID, int flag);
 
 struct Texture
 {

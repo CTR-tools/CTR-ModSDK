@@ -1,7 +1,6 @@
 #include <common.h>
 
 void MainFreeze_ConfigDrawArrows(int posX, int posY, char* str);
-void OtherFX_Play(int sfxID, int flag);
 void CS_Garage_Init();
 
 static char bal[] = "Balanced";

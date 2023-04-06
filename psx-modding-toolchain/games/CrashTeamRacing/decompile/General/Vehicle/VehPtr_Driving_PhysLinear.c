@@ -5,7 +5,6 @@
 
 void GAMEPAD_Vib_4(struct Driver* driver, u_int param_2, int param_3);
 void Player_SetHeldItem(struct Driver* driver);
-void OtherFX_Play(int sfxID, int flag);
 int Player_StickReturnToRest(int param_1, u_int param_2, struct RacingWheelData* param_3);
 int Player_GetBaseSpeed(struct Driver* driver);
 void Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
