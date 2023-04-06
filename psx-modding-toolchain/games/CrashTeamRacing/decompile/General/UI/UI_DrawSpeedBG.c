@@ -1,8 +1,7 @@
 #include <common.h>
 
-#define SPEEDO_GREEN 0xb500;
-#define SPEEDO_YELLOW 0xd1ff;
-#define SPEEDO_RED 0xdb;
+// at bottom of file
+extern unsigned short DrawSpeedBG_Colors[6*2];
 
 // speedometer background
 void DECOMP_UI_DrawSpeedBG(void)
@@ -26,20 +25,16 @@ void DECOMP_UI_DrawSpeedBG(void)
   {
 	  // white
     CTR_Box_DrawWirePrims(
-		(u_short)(upperHalf[0] + 0x1e0),
-		(u_short)(upperHalf[1] + 0xbe),
-		(u_short)(upperHalf[2] + 0x1e0),
-		(u_short)(upperHalf[3] + 0xbe),
+		upperHalf[0] + 0x1e0, upperHalf[1] + 0xbe,
+		upperHalf[2] + 0x1e0, upperHalf[3] + 0xbe,
 		0xff, 0xff, 0xff,
 		gGT->tileView_UI.ptrOT,
 		&backDB->primMem);
     
 	// black
     CTR_Box_DrawWirePrims(
-		(u_short)(upperHalf[0] + 0x1e1),
-		(u_short)(upperHalf[1] + 0xbf),
-		(u_short)(upperHalf[2] + 0x1e1),
-		(u_short)(upperHalf[3] + 0xbf),
+		upperHalf[0] + 0x1e1, upperHalf[1] + 0xbf,
+		upperHalf[2] + 0x1e1, upperHalf[3] + 0xbf,
 		0, 0, 0,
 		gGT->tileView_UI.ptrOT,
 		&backDB->primMem);
@@ -51,40 +46,32 @@ void DECOMP_UI_DrawSpeedBG(void)
   {
 	// white
     CTR_Box_DrawWirePrims(
-		(u_short)(vertData[0] + 0x1e0),
-		(u_short)(vertData[1] + 0xbe),
-		(u_short)(vertData[4] + 0x1e0),
-		(u_short)(vertData[5] + 0xbe),
+		vertData[0] + 0x1e0, vertData[1] + 0xbe,
+		vertData[4] + 0x1e0, vertData[5] + 0xbe,
 		0xff, 0xff, 0xff,
 		gGT->tileView_UI.ptrOT,
 		&backDB->primMem);
 
 	// white
     CTR_Box_DrawWirePrims(
-		(u_short)(vertData[2] + 0x1e0),
-		(u_short)(vertData[3] + 0xbe),
-		(u_short)(vertData[6] + 0x1e0),
-		(u_short)(vertData[7] + 0xbe),
+		vertData[2] + 0x1e0, vertData[3] + 0xbe,
+		vertData[6] + 0x1e0, vertData[7] + 0xbe,
 		0xff, 0xff, 0xff,
 		gGT->tileView_UI.ptrOT,
 		&backDB->primMem);
 
 	// black
     CTR_Box_DrawWirePrims(
-		(u_short)(vertData[0] + 0x1e1),
-		(u_short)(vertData[1] + 0xbf),
-		(u_short)(vertData[4] + 0x1e1),
-		(u_short)(vertData[5] + 0xbf),
+		vertData[0] + 0x1e1, vertData[1] + 0xbf,
+		vertData[4] + 0x1e1, vertData[5] + 0xbf,
 		0, 0, 0,
 		gGT->tileView_UI.ptrOT,
 		&backDB->primMem);
 
 	// black
     CTR_Box_DrawWirePrims(
-		(u_short)(vertData[2] + 0x1e1),
-		(u_short)(vertData[3] + 0xbf),
-		(u_short)(vertData[6] + 0x1e1),
-		(u_short)(vertData[7] + 0xbf),
+		vertData[2] + 0x1e1, vertData[3] + 0xbf,
+		vertData[6] + 0x1e1, vertData[7] + 0xbf,
 		0, 0, 0,
 		gGT->tileView_UI.ptrOT,
 		&backDB->primMem);
@@ -95,17 +82,8 @@ void DECOMP_UI_DrawSpeedBG(void)
 		return;
     backDB->primMem.curr = p + 1;
     
-    color_gradient0 = SPEEDO_GREEN;
-    color_gradient1 = color_gradient0;
-    if ((1 < i) && (color_gradient1 = 0xd1ff, 2 < i)) {
-      color_gradient0 = SPEEDO_YELLOW;
-      if (i < 4) {
-        color_gradient1 = SPEEDO_RED;
-      } else {
-        color_gradient0 = SPEEDO_RED;
-        color_gradient1 = color_gradient0;
-      }
-    }
+    color_gradient0 = DrawSpeedBG_Colors[i*2 + 0];
+    color_gradient1 = DrawSpeedBG_Colors[i*2 + 1];
 
     *(int*)&p->r0 = color_gradient0; // RGB0
     *(int*)&p->r1 = color_gradient0; // RGB1
@@ -157,3 +135,17 @@ void DECOMP_UI_DrawSpeedBG(void)
   }
   return;
 }
+
+#define SPEEDO_GREEN 0xb500
+#define SPEEDO_YELLOW 0xd1ff
+#define SPEEDO_RED 0xdb
+
+unsigned short DrawSpeedBG_Colors[6*2] =
+{
+	SPEEDO_GREEN, SPEEDO_GREEN,
+	SPEEDO_GREEN, SPEEDO_GREEN,
+	SPEEDO_GREEN, SPEEDO_YELLOW,
+	SPEEDO_YELLOW, SPEEDO_RED,
+	SPEEDO_RED, SPEEDO_RED,
+	SPEEDO_RED, SPEEDO_RED
+};
