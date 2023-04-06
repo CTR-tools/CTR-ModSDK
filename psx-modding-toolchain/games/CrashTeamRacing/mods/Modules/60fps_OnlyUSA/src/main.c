@@ -15,22 +15,6 @@ void INSTANCE_Birth(struct Instance* i, struct Model* m, char* name, struct Thre
 void INSTANCE_LevInitAll(struct InstDef* instDef, int num);
 int PatchPE(struct ParticleEmitter* pe);
 
-struct TrophyAnimSound
-{
-	short frameID;
-	short soundID;
-
-	// 0x4 each
-};
-
-struct TrophyAnimModel
-{
-	short modelID;
-	short frameIDs[7];
-
-	// 0x10 each
-};
-
 // jal hook, call og function if needed
 int NewDecode()
 {
@@ -64,31 +48,37 @@ void SaveObj_ThTick_Hook()
 	}
 }
 
-void NewTitleCamera(int a, int b)
-{
-  MM_Title_CameraMove(a,(int)b);
-
-  #define TITLE_FRAME *(int*)0x800b5a14
-  
-  if(TITLE_FRAME == 0) return;
-  
-  if(sdata->gGT->timer & 1) return;
-  
-  // if title frame is not zero,
-  // then every odd frame, subtract,
-  // then game increments, cancelling,
-  // turning 60fps into 30fps
-  
-  TITLE_FRAME = TITLE_FRAME - 1;
-}
-
 void NewCallback230()
 {
-	int i;
-	int j;
+	// Title (Crash holding trophy) animation
+	{
+		// prevent main menu to spawn until 2x title is over
+		*(unsigned short*)0x800abd10 = 2*0xe6;
 
-	struct TrophyAnimSound* s = (struct TrophyAnimSound*)0x800b48c4;
-	struct TrophyAnimModel* m = (struct TrophyAnimModel*)0x800b4800;
+		// double the transition frames to spawn menu
+		*(unsigned char*)0x800ac20c = 2* 0xf;
+
+		// reposition frame index for intro camera
+		*(short*)0x800ac214 = 2 * -0xe6;
+
+		// make camera use the same position for every pair of frames
+		*(unsigned char*)0x800ac23c = 0x43;
+
+		// double the duration cap, so it won't immediately skip to menu
+		*(unsigned short*)0x800ac3bc = 2*0xe6;
+		*(unsigned short*)0x800ac3c8 = 0x1cb;
+
+		// reposition the time window for trophy in the air
+		*(short*)0x800ac4a8 = 2 * -0x8a;
+		*(unsigned short*)0x800ac4ac= 2*0x3e;
+		*(unsigned short*)0x800ac4d0 = 2*0xc8;
+
+		// double the total animation frames per model?
+		*(short*)0x800ac4dc = 2 * -0xc8;
+
+		// double the frame/time limit for the whole animation seq
+		*(unsigned short*)0x800ac674 = 2*0xf6;
+	}
 
 	// patch video
 	*(unsigned int*)0x800afc8c = JAL(NewDecode);
@@ -110,9 +100,6 @@ void NewCallback230()
 
 	// Demo Mode Timer 2
 	*(unsigned short*)0x800ad10c = 900*2;
-
-	// intro trophy animation
-	*(unsigned int*)0x800AC660 = JAL(NewTitleCamera);
 
 	// character select flashing colors, half speed
 	// change multiplier to 128, sll 0x7
@@ -593,9 +580,6 @@ void PatchModel(struct Model* m, struct Thread* t)
 
 	// ignore ND box, intro models, oxide intro, podiums, etc
 	if(LOAD_IsOpen_Podiums()) return;
-	
-	// ignore main menu models, such as Crash throwing his trophy
-	if(LOAD_IsOpen_MainMenu()) return;
 	
 	// if this is a driver model
 	if(m->id == -1)
