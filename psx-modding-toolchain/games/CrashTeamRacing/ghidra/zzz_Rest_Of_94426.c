@@ -42919,6 +42919,8 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
   undefined4 param_25;
   undefined4 param_26;
   uint param_28;
+  
+  // $gp = inst->0x28 (instance flags)
 
   puVar29 = &_gp_4;
 
@@ -43129,8 +43131,10 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
 
           if (((*(int *)(in_at + 0x90) == 0) && ((undefined *)register0x00000074 == unaff_s8)) &&
              (param_22 = *(int *)(in_at + 0x80) - 1, *(int *)(in_at + 0x80) < 1)) {
-            puVar29 = (undefined *)0x8008cf7c;
-            param_22 = 1;
+            
+			// $gp |= 0x10
+			puVar29 = (undefined *)0x8008cf7c;
+			param_22 = 1;
           }
 
 		  // model -> anim -> offset0x18, plus frame index * frame size ???
@@ -43174,6 +43178,8 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
         *(uint *)(unaff_s8 + 0xa8) = uVar25;
         *(undefined4 *)(in_at + 0x68) = 0;
         *(undefined4 *)(in_at + 0x6c) = 0;
+		
+		// not reflective, not split-line, not (0x1000?)
         if (((uint)puVar5 & 0x7000) == 0) {
 LAB_80070f6c:
 
@@ -43238,7 +43244,9 @@ LAB_80070f84:
             *(uint *)(unaff_s8 + 0x88) = uVar15;
           }
         }
-        else {
+        
+		// either reflective, or split-line, or 0x1000?
+		else {
           *(undefined4 *)(in_at + 0x70) = 0;
           iVar9 = (int)sStack00000056 -
                   (*(int *)(in_at + 0x7c) +
@@ -43405,6 +43413,8 @@ code_r0x80070e84:
             }
             *(uint **)(unaff_s8 + 0xe4) = puVar28 + iVar3 * 0x3fffffff;
             *(uint **)(unaff_s8 + 0xe8) = puVar28 + iVar3 * 0x3fffffff;
+			
+			// no split-line and not relflective
             if ((((uint)puVar29 & 0x100) != 0) || (((uint)puVar29 & 0x6000) == 0)) {
 LAB_80071478:
 			  // RenderBucket_DrawFunc_Normal
@@ -43412,13 +43422,18 @@ LAB_80071478:
 
               goto LAB_80071480;
             }
+			
+			// split-line exists
             if (((uint)puVar29 & 0x4000) == 0) {
               puVar28 = *(uint **)(in_at + 0x34);
               if ((*(uint *)(in_at + 0x68) | *(uint *)(in_at + 0x6c)) == 0) goto LAB_80071478;
             }
+			
+			// no split-line, just reflective
             else {
               puVar28 = *(uint **)(in_at + 0x34);
             }
+			
             puVar11 = puVar28 + (iVar9 - iVar3);
             if (*(int *)(in_at + 0x38) - (int)(puVar11 + 1) < 1) goto LAB_80071514;
             *(uint **)(in_at + 0x34) = puVar11 + 1;
