@@ -19938,7 +19938,7 @@ void FUN_80058c44()
 #endif
 
 
-// initialize driver tires
+// VehInit_TireSprites
 void FUN_80058c4c(int param_1)
 
 {
@@ -20009,7 +20009,7 @@ void FUN_80058c4c(int param_1)
   return;
 }
 
-// Init NonGhost Driver
+// VehInit_NonGhost
 // param1 is thread
 // param2 is driverID (0-7)
 void FUN_80058d2c(int param_1,int param_2)
