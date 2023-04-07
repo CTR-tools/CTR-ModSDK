@@ -43355,7 +43355,9 @@ code_r0x80070e84:
         gte_stSZ2();
         FUN_80071524();
 
-        if (((uint)puVar29 & 0x100) != 0) {
+		// connected to TileView (2D element)
+        if (((uint)puVar29 & 0x100) != 0) 
+		{
           *(uint *)(psVar6 + 0x80) = iVar19 << 0x10 | uVar21 & 0xffff;
           uVar22 = uVar15 - uVar21 & 0xffff;
           *(uint *)(psVar6 + 0x82) = (iVar9 - iVar19) * 0x10000 | uVar22;
@@ -43365,7 +43367,8 @@ code_r0x80070e84:
             puVar29 = (undefined *)((uint)puVar29 & 0xfffffeff);
           }
         }
-        if (((-1 < (int)uVar15) && (-1 < iVar9)) &&
+        
+		if (((-1 < (int)uVar15) && (-1 < iVar9)) &&
            ((-1 < iVar27 - extraout_v1_02 &&
             (((int)(uVar21 - *(ushort *)(in_at + 0x3c)) < 1 &&
              ((int)(iVar19 - (uint)*(ushort *)(in_at + 0x3e)) < 1)))))) {
@@ -43379,6 +43382,8 @@ code_r0x80070e84:
             *(uint **)(in_at + 0x34) = puVar11 + 1;
             iVar14 = *(int *)(in_at + 0x8c) >> 6;
             puVar17 = puVar28;
+			
+			// not connected to TileView
             if (((uint)puVar29 & 0x100) == 0) {
               iVar14 = *(int *)(in_at + 0xbc) + iVar14;
               iVar19 = iVar14 * 4;
@@ -43395,6 +43400,8 @@ code_r0x80070e84:
               *puVar20 = (uint)puVar11 & 0xffffff;
               *puVar28 = uVar15;
             }
+			
+			// connected to TileView
             else {
               iVar14 = *(int *)(in_at + 0xbc) + iVar14;
               iVar19 = iVar14 * 4;
