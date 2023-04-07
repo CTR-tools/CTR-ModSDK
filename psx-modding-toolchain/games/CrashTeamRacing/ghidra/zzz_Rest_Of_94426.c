@@ -43423,13 +43423,13 @@ LAB_80071478:
               goto LAB_80071480;
             }
 			
-			// split-line exists
+			// not reflective, just split-line
             if (((uint)puVar29 & 0x4000) == 0) {
               puVar28 = *(uint **)(in_at + 0x34);
               if ((*(uint *)(in_at + 0x68) | *(uint *)(in_at + 0x6c)) == 0) goto LAB_80071478;
             }
 			
-			// no split-line, just reflective
+			// reflective
             else {
               puVar28 = *(uint **)(in_at + 0x34);
             }
@@ -43474,9 +43474,13 @@ LAB_80071480:
             }
             else {
               if (uVar21 == 0) {
-                if ((int)uVar15 < 0) {
+                if ((int)uVar15 < 0) 
+				{
+				  // not reflective
                   if (((uint)puVar29 & 0x4000) == 0) goto LAB_80071478;
-                  goto code_r0x80071450;
+                  
+				  // reflective
+				  goto code_r0x80071450;
                 }
 
 				// not reflective
