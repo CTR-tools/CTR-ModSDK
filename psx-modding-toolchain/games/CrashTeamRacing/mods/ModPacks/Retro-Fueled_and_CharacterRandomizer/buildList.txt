@@ -45,8 +45,8 @@ common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/Standard
 // Texture replacements
 // Replacements are only for US and Europe, Japan has these textures either drastically or slightly altered and I can't be bothered
 // Slide Coliseum (secret1) doesn't get the texture replacement because it doesn't have blue fire at all
-926, bigfilelevelsmenu_modelsdatavrm, 0x0, 0x0, ../../Modules/Retro-Fueled/assets/logo/data.vrm
-1020, bigfilelevelsmenu_modelsdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/logo/data.vrm
+926, bigfilelevelsmenu_modelsdatavrm, 0x0, 0x0, ../../Modules/Retro-Fueled/assets/logo/usa.vrm
+1020, bigfilelevelsmenu_modelsdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/logo/eur.vrm
 926, bigfilelevelstracksarena21Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/arena21P.vrm
 926, bigfilelevelstracksblimp11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/blimp11P.vrm
 926, bigfilelevelstrackscastle11Pdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/castle11P.vrm
