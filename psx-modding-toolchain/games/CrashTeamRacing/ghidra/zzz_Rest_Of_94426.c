@@ -43260,6 +43260,8 @@ LAB_80070f84:
           }
           iVar9 = iVar9 * 4;
           *(short *)(unaff_s8 + 0xbe) = (short)iVar9;
+		  
+		  // not reflective
           if (((uint)puVar5 & 0x4000) == 0)
 		  {
 			// model -> flags
@@ -43269,6 +43271,8 @@ LAB_80070f84:
             if (-1 < iVar9 + 0x16a) goto code_r0x80070e84;
             goto LAB_80070f70;
           }
+		  
+		  // == reflective ==
 
 		  // model -> flags
           uVar7 = *(ushort *)(iVar26 + 0x16);
