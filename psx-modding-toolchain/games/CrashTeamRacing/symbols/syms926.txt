@@ -1020,7 +1020,7 @@
 8006ae74 RenderBucket_InitDepthGTE
 8006ae90 RenderBucket_DrawInstPrim_KeyRelicToken
 8006b030 RenderBucket_DrawFunc_Split
-8006b24c Draw_KartCloseToCamera
+8006b24c Draw_Uncompress2
 8006bad0 Draw_KartFlames
 8006bf30 Draw_KartInWaterMud
 

@@ -37804,7 +37804,7 @@ LAB_8006b15c:
   } while( true );
 }
 
-// Draw_KartCloseToCamera
+// Draw_Uncompress2
 void UndefinedFunction_8006b24c(void)
 
 {
@@ -43483,7 +43483,7 @@ LAB_80071480:
               puVar12 = &LAB_8006a8e0; // reference to FUN_8006a8e0(void), called later in this function indirectly. normal rendering, no special case like reflection, water/mud and or near clip
               if (*(int *)(in_at + 100) != 0) 
 			  {
-				// Draw_KartCloseToCamera
+				// Draw_Uncompress2
                 puVar12 = &LAB_8006b24c; 
               }
             }
