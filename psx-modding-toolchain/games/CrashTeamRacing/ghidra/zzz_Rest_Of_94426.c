@@ -18881,7 +18881,7 @@ void FUN_80057884(undefined *param_1)
 }
 
 
-// get pointer to Scrub MetaData
+// VehGetSurface
 int FUN_80057c44(uint param_1)
 
 {
@@ -18895,7 +18895,7 @@ int FUN_80057c44(uint param_1)
 }
 
 
-// get pointer to terrain MetaData
+// VehGetTerrain
 int FUN_80057c68(uint param_1)
 
 {
@@ -19691,7 +19691,7 @@ void FUN_80058898(undefined4 param_1,uint param_2)
 }
 
 
-// Driver_SearchModelByString
+// VehInit_GetModelByName
 int * FUN_80058948(int *param_1)
 
 {
