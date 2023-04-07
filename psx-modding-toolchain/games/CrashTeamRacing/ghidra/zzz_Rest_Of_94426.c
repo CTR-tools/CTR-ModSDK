@@ -43206,6 +43206,8 @@ LAB_80070f84:
             uVar4 = 0xfff8ffff;
             iVar9 = gte_stTRX();
             iVar14 = gte_stTRZ();
+			
+			// if cull direction reversed
             if (((uint)puVar29 & 0x8000) != 0) {
               iVar9 = -iVar9;
             }
