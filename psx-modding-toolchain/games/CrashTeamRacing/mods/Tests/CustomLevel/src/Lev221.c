@@ -994,34 +994,34 @@ struct LevelFile file =
 		// duplicate for low LOD
 		.texLayout[0] = 
 		{
-			.paletteXY = (512 >> 10) | (256 >> 6),
-			.pageXY = 0x4180 | (8) | (1<<4),
-			.X1 = 0xFF, .Y1 = 0x0,
-			.X2 = 0xFF, .Y2 = 0x7F,
-			.X3 = 0x0, .Y3 = 0x0,
-			.X4 = 0x0, .Y4 = 0x7F,		
+			.clut = (512 >> 10) | (256 >> 6),
+			.tpage = 0x4180 | (8) | (1<<4),
+			.u0 = 0xFF, .v0 = 0x0,
+			.u1 = 0xFF, .v1 = 0x7F,
+			.u2 = 0x0, 	.v2 = 0x0,
+			.u3 = 0x0, 	.v3 = 0x7F,
 		},
 
 		// duplicate for low LOD
 		.texLayout[1] = 
 		{
-			.paletteXY = (512 >> 10) | (256 >> 6),
-			.pageXY = 0x4180 | (8) | (1<<4),
-			.X1 = 0xFF, .Y1 = 0x0,
-			.X2 = 0xFF, .Y2 = 0x7F,
-			.X3 = 0x0, .Y3 = 0x0,
-			.X4 = 0x0, .Y4 = 0x7F,		
+			.clut = (512 >> 10) | (256 >> 6),
+			.tpage = 0x4180 | (8) | (1<<4),
+			.u0 = 0xFF, .v0 = 0x0,
+			.u1 = 0xFF, .v1 = 0x7F,
+			.u2 = 0x0, 	.v2 = 0x0,
+			.u3 = 0x0, 	.v3 = 0x7F,
 		},
 		
 		// duplicate for low LOD
 		.texLayout[2] = 
 		{
-			.paletteXY = (512 >> 10) | (256 >> 6),
-			.pageXY = 0x4180 | (8) | (1<<4),
-			.X1 = 0xFF, .Y1 = 0x0,
-			.X2 = 0xFF, .Y2 = 0x7F,
-			.X3 = 0x0, .Y3 = 0x0,
-			.X4 = 0x0, .Y4 = 0x7F,		
+			.clut = (512 >> 10) | (256 >> 6),
+			.tpage = 0x4180 | (8) | (1<<4),
+			.u0 = 0xFF, .v0 = 0x0,
+			.u1 = 0xFF, .v1 = 0x7F,
+			.u2 = 0x0, 	.v2 = 0x0,
+			.u3 = 0x0, 	.v3 = 0x7F,	
 		},
 		
 		// drawn directly under player
@@ -1030,7 +1030,7 @@ struct LevelFile file =
 			// X(b6) Y(b10)
 			// row of 16 pixels, or row of 256 pixels,
 			// this is how it chooses what colors to use
-			.paletteXY = (512 >> 10) | (256 >> 6),
+			.clut = (512 >> 10) | (256 >> 6),
 			
 			// each page is 256x256 large
 			
@@ -1039,13 +1039,13 @@ struct LevelFile file =
 			// blending(b2), 
 			// bitDepth(b2), 
 			// restBits(b7)
-			.pageXY = 0x4180 | (8) | (1<<4), // page = (2,1) (512,256)
+			.tpage = 0x4180 | (8) | (1<<4), // page = (2,1) (512,256)
 			
 			// coordinates within page
-			.X1 = 0xFF, .Y1 = 0x0,
-			.X2 = 0xFF, .Y2 = 0x7F,
-			.X3 = 0x0, .Y3 = 0x0,
-			.X4 = 0x0, .Y4 = 0x7F,			
+			.u0 = 0xFF, .v0 = 0x0,
+			.u1 = 0xFF, .v1 = 0x7F,
+			.u2 = 0x0, 	.v2 = 0x0,
+			.u3 = 0x0, 	.v3 = 0x7F,			
 		},
 	},
 	

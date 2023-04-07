@@ -42685,6 +42685,11 @@ FUN_80070720(int param_1,int param_2,undefined4 param_3,undefined4 param_4,int p
   DAT_1f80002c = unaff_retaddr;
   _DAT_1f800050 = param_4;
   FUN_80071590();
+  
+  // right here is 
+  // lw gp 28(sp)
+  // lw sp 00(sp)
+  // that will trip up Ghidra for QueueDraw
 
   // loop for all players
   do
@@ -42790,6 +42795,11 @@ FUN_8007084c(undefined *param_1,int param_2,undefined4 param_3,undefined4 param_
   DAT_1f80002c = unaff_retaddr;
   _DAT_1f800050 = param_4;
   FUN_80071590();
+  
+  // right here is 
+  // lw gp 28(sp)
+  // lw sp 00(sp)
+  // that will trip up Ghidra for QueueDraw
 
   // pointer to instance
   puVar3 = param_1;
@@ -43497,6 +43507,7 @@ LAB_80071480:
             *(undefined **)(unaff_s8 + 0xec) = puVar5;
 
 			// function for something else?
+			// called with jalr s6 in the puVar5 function
 			*(undefined **)(unaff_s8 + 0xf0) = puVar12;
 
 			// ptrCommandList, ptrTexLayout, and ptrColors
