@@ -20116,7 +20116,7 @@ void FUN_80058d2c(int param_1,int param_2)
   // VehInit_SetConsts(driver*), based on driver class
   FUN_80058a60(iVar5);
 
-  // if you are not in cutscene and not in main menu
+  // if you are in cutscene or in main menu
   if ((*(uint *)PTR_DAT_8008d2ac & 0x20002000) != 0)
   {
 	// funcThTick
