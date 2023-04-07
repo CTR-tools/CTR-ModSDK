@@ -43584,7 +43584,7 @@ LAB_80071514:
   return;
 }
 
-
+// only t0 and t1 change
 void FUN_80071524(void)
 {
         80071524 03 44 09 00     sra        t0,t1,0x10
