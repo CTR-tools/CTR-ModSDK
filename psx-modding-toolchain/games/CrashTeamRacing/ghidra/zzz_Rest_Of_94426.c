@@ -37933,84 +37933,71 @@ undefined8 FUN_8006bad0(void)
 
 {
   int in_at;
-  uint *in_v0;
+  u_long *in_v0;
   uint uVar1;
-  int iVar2;
-  uint *puVar3;
-  uint uVar4;
+  u_long uVar2;
+  int iVar3;
+  u_long *puVar4;
   uint uVar5;
-  uint uVar6;
-  int iVar7;
-  uint *puVar8;
+  u_long uVar6;
+  uint uVar7;
+  int iVar8;
+  uint *puVar9;
   undefined4 in_t6;
   undefined4 in_t7;
   undefined4 unaff_s0;
-
-  iVar2 = *(int *)(in_at + 0x38);
-  iVar7 = (*(uint *)(in_at + 0x2c) >> 0x11) * 4;
-  if (iVar7 - *(short *)(in_at + 0x134) < 0) {
-    puVar8 = (uint *)(*(short *)(in_at + 0x134) + iVar2);
+  
+  iVar3 = *(int *)(in_at + 0x38);
+  iVar8 = (*(uint *)(in_at + 0x2c) >> 0x11) * 4;
+  if (iVar8 - *(short *)(in_at + 0x134) < 0) {
+    puVar9 = (uint *)(*(short *)(in_at + 0x134) + iVar3);
   }
   else {
-    puVar8 = (uint *)(iVar7 + iVar2);
-    if (0 < iVar7 - *(short *)(in_at + 0x136)) {
-      puVar8 = (uint *)(*(short *)(in_at + 0x136) + iVar2);
+    puVar9 = (uint *)(iVar8 + iVar3);
+    if (0 < iVar8 - *(short *)(in_at + 0x136)) {
+      puVar9 = (uint *)(*(short *)(in_at + 0x136) + iVar3);
     }
   }
-  puVar3 = *(uint **)(in_at + 0x50);
-  setCopReg(2,0xa000,in_t6);
-  setCopReg(2,0xa800,in_t7);
-  setCopReg(2,0xb000,unaff_s0);
-  setCopReg(2,0x4000,(int)*(short *)(in_at + 0x120));
-  if ((*(short *)(in_at + 0x120) != 0) && (-1 < (int)puVar8 << 7)) {
-    copFunction(2,0xf8002a);
+  puVar4 = *(u_long **)(in_at + 0x50);
+  gte_ldRGB0(in_t6);
+  gte_ldRGB1(in_t7);
+  gte_ldRGB2(unaff_s0);
+  gte_ldIR0((int)*(short *)(in_at + 0x120));
+  if ((*(short *)(in_at + 0x120) != 0) && (-1 < (int)puVar9 << 7)) {
+    gte_dpct_b();
   }
-  if (puVar3 == (uint *)0x0) {
-    uVar4 = getCopReg(2,0xc);
-    in_v0[2] = uVar4;
-    uVar4 = getCopReg(2,0xd);
-    in_v0[4] = uVar4;
-    uVar4 = getCopReg(2,0xe);
-    in_v0[6] = uVar4;
-    uVar4 = getCopReg(2,0xa000);
-    iVar2 = 0x1c;
-    in_v0[1] = uVar4 | 0x30000000;
-    uVar4 = getCopReg(2,0x15);
-    in_v0[3] = uVar4;
-    uVar4 = getCopReg(2,0x16);
-    in_v0[5] = uVar4;
-    uVar4 = 0x6000000;
+  uVar1 = 0x30000000;
+  if (puVar4 == (u_long *)0x0) {
+    gte_stsxy3_g3(in_v0);
+    uVar5 = gte_stRGB0();
+    iVar3 = 0x1c;
+    in_v0[1] = uVar1 | uVar5;
+    gte_stRGB1();
+    gte_stRGB2();
+    uVar1 = 0x6000000;
   }
   else {
-    uVar1 = *puVar3;
-    uVar5 = puVar3[1];
-    uVar6 = puVar3[2];
-    uVar4 = getCopReg(2,0xc);
-    in_v0[2] = uVar4;
-    uVar4 = getCopReg(2,0xd);
-    in_v0[5] = uVar4;
-    uVar4 = getCopReg(2,0xe);
-    in_v0[8] = uVar4;
-    in_v0[3] = uVar1;
+    uVar2 = *puVar4;
+    uVar5 = puVar4[1];
+    uVar6 = puVar4[2];
+    gte_stsxy3_gt3(in_v0);
+    in_v0[3] = uVar2;
     in_v0[6] = uVar5;
     in_v0[9] = uVar6;
-    uVar1 = getCopReg(2,0xa000);
-    uVar4 = 0x34000000;
+    uVar7 = gte_stRGB0();
+    uVar1 = 0x34000000;
     if ((uVar5 & 0x600000) != 0x600000) {
-      uVar4 = 0x36000000;
+      uVar1 = 0x36000000;
     }
-    in_v0[1] = uVar4 | uVar1;
-    uVar4 = getCopReg(2,0x15);
-    in_v0[4] = uVar4;
-    uVar4 = getCopReg(2,0x16);
-    in_v0[7] = uVar4;
-    iVar2 = 0x28;
-    uVar4 = 0x9000000;
+    in_v0[1] = uVar1 | uVar7;
+    gte_stRGB1();
+    gte_stRGB2();
+    iVar3 = 0x28;
+    uVar1 = 0x9000000;
   }
-  uVar1 = *puVar8;
-  *in_v0 = uVar1 | uVar4;
-  *puVar8 = (uint)in_v0 & 0xffffff;
-  return CONCAT44(uVar1 | uVar4,(int)in_v0 + iVar2);
+  *in_v0 = *puVar9 | uVar1;
+  *puVar9 = (uint)in_v0 & 0xffffff;
+  return (int)in_v0 + iVar3;
 }
 
 // something to do with drawing.
