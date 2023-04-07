@@ -298,6 +298,7 @@ common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWind
 common, exe, UI_ConvertX_2, 0x0, General/UI/UI_ConvertX_2.c
 common, exe, UI_ConvertY_2, 0x0, General/UI/UI_ConvertY_2.c
 common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
+common, exe, UI_DrawNumTimebox, 0x0, General/UI/UI_DrawNumTimebox.c
 common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_DrawNumWumpa.c
 common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_DrawPosSuffix.c
 common, exe, UI_Map_GetIconPos, 0x0, General/UI/UI_Map_GetIconPos.c
