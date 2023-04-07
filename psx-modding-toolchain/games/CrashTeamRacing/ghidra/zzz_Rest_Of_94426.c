@@ -43457,8 +43457,11 @@ LAB_80071478:
               puVar17 = puVar17 + 1;
             }
             uVar15 = *(uint *)(in_at + 0x68);
+			
+			// no split-line and not relflective
             if (((uint)puVar29 & 0x6000) == 0) goto LAB_80071478;
-            uVar21 = *(uint *)(in_at + 0x6c);
+            
+			uVar21 = *(uint *)(in_at + 0x6c);
             *(uint **)(unaff_s8 + 0xe8) = puVar28 + iVar3 * 0x3fffffff;
             if ((uVar15 | uVar21) == 0) {
 code_r0x80071450:
@@ -43476,12 +43479,14 @@ LAB_80071480:
                   goto code_r0x80071450;
                 }
 
+				// not reflective
 				if (((uint)puVar29 & 0x4000) == 0)
 				{
 				  // RenderBucket_DrawFunc_Split
                   puVar5 = &UNK_8006b030;
                 }
 
+				// reflective
                 else
 				{
 				  // Draw_KartBodyReflection
