@@ -37803,7 +37803,8 @@ LAB_8006b15c:
     *(short *)(in_at + 0xce) = *(short *)(in_at + 0x44) - (short)(uVar11 >> 0x10);
   } while( true );
 }
-// guessing: model close to camera near clipping or something like that???
+
+// Draw_KartCloseToCamera
 void UndefinedFunction_8006b24c(void)
 
 {
@@ -43478,9 +43479,12 @@ LAB_80071478:
 code_r0x80071450:
               puVar5 = &LAB_8006bbc0;
 LAB_80071480:
+			  // RenderBucket_UncompressAnimationFrame
               puVar12 = &LAB_8006a8e0; // reference to FUN_8006a8e0(void), called later in this function indirectly. normal rendering, no special case like reflection, water/mud and or near clip
-              if (*(int *)(in_at + 100) != 0) {
-                puVar12 = &LAB_8006b24c; // reference to undefinedFunction_8006b24c(void), called later in this function indirectly, near clip maybe?
+              if (*(int *)(in_at + 100) != 0) 
+			  {
+				// Draw_KartCloseToCamera
+                puVar12 = &LAB_8006b24c; 
               }
             }
             else {
