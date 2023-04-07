@@ -4,7 +4,12 @@
 1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
 
 
-common, exe, rdata_free, 0x8, src/entry.c src/TileView_SetMatrixVP.c src/DecalHUD_DrawPolyFT4.c src/DecalHUD_DrawPolyGT4.c src/DotLights.c, rdata.bin
+// Without vertical 2P
+//common, exe, rdata_free, 0x0, src/entry.c src/TileView_SetMatrixVP.c src/DecalHUD_DrawPolyFT4.c src/DecalHUD_DrawPolyGT4.c src/DotLights.c, rdata.bin
+
+// with vertical 2P
+common, exe, rdata_free, 0x0, src/entry.c src/TileView_SetMatrixVP.c src/DecalHUD_DrawPolyFT4.c src/DecalHUD_DrawPolyGT4.c src/DotLights.c ../../Modules/Vertical2P_4-to-3/src/2P_CustomSplit.c ../../Modules/Vertical2P_4-to-3/src/2P_FixIconAxis.c, rdata.bin
+
 
 common, exe, MEMPACK_SwapPacks, -0x8, src/hookEntry.s
 common, exe, TileView_SetMatrixVP, 0x0, src/hookTileView.s
@@ -16,3 +21,12 @@ common, exe, UI_Map_DrawMap, 0x0, src/UI_Map_DrawMap.c
 common, exe, UI_DrawSlideMeter, 0x0, src/UI_DrawSlideMeter.c
 common, exe, UI_Map_GetIconPos, 0x0, src/UI_Map_GetIconPos.c
 common, exe, TileView_UpdateFrustum, 0x0, src/TileView_UpdateFrustum.c
+
+// === Vertical 2P (USA only) ===
+
+// combined above
+//926, exe, rdata_free, 0x0, ../../Modules/Vertical2P_4-to-3/src/2P_CustomSplit.c ../../Modules/Vertical2P_4-to-3/src/2P_FixIconAxis.c, v2P_main
+
+926, exe, 0x800374c0, 0x0, ../../Modules/Vertical2P_4-to-3/src/2P_hook_LeaveRender.s
+926, exe, 0x80052c70, 0x0, ../../Modules/Vertical2P_4-to-3/src/2P_hook_IconAxis.s
+common, exe, TileView_Init,0x0, ../../Modules/Vertical2P_4-to-3/src/2P_TileView_Init.c

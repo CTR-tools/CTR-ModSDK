@@ -1,8 +1,5 @@
 #include <common.h>
 
-// to do: make header
-void MenuBox_DrawOuterRect_LowLevel(RECT* r, int thickX, int thickY, int* colorPtr, int unk, void* ot);
-
 // stored in RDATA
 void CustomSplit()
 {
@@ -10,6 +7,7 @@ void CustomSplit()
 	struct TileView* tileView;
 	POLY_F4* p;
 	int numPlyrCurrGame;
+	register unsigned int* sp asm("$sp");
 
 	numPlyrCurrGame = sdata->gGT->numPlyrCurrGame;
 
@@ -147,4 +145,14 @@ void CustomSplit()
 		// backBuffer->primMem.curr
 		sdata->gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
+	
+	// go back to RenderFrame
+	// check assembly, it fetches $ra here
+	
+	// assembles sw [this] 2C(sp)
+	// then does lw ra 2C(sp), 
+	// custom $ra accomplished
+	sp[0xB] = 0x80037768;
+	
+	return;
 }

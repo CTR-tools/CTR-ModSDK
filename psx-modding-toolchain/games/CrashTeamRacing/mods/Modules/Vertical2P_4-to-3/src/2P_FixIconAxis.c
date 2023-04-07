@@ -1,8 +1,5 @@
 #include <common.h>
 
-void DecalHUD_DrawPolyGT4(int param_1,u_int param_2,int param_3,int param_4,u_int *param_5,u_int param_6,
-                 u_int param_7,u_int param_8,u_int param_9,u_char param_10,short param_11);
-
 void FixIconAxis(int param_1,u_int param_2,int param_3,int param_4,u_int *param_5,u_int param_6,
                  u_int param_7,u_int param_8,u_int param_9,u_char param_10,short param_11)
 {
