@@ -43119,6 +43119,7 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
 		
         uVar15 = -iVar19 + 0x12;
         
+		// bitshifted model scale
 		gte_ldLR1LR2((*(uint *)(iVar26 + 0x18) << 0x10) >> (uVar15 & 0x1f));
         gte_ldLR3LG1(0);
         gte_ldLG2LG3(*(uint *)(iVar26 + 0x18) >> (uVar15 & 0x1f));
