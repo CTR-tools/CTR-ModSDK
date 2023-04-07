@@ -298,6 +298,10 @@ common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWind
 common, exe, UI_ConvertX_2, 0x0, General/UI/UI_ConvertX_2.c
 common, exe, UI_ConvertY_2, 0x0, General/UI/UI_ConvertY_2.c
 common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
+common, exe, UI_DrawNumKey, 0x0, General/UI/UI_DrawNumKey.c
+common, exe, UI_DrawNumRelic, 0x0, General/UI/UI_DrawNumRelic.c
+common, exe, UI_DrawNumTrophy, 0x0, General/UI/UI_DrawNumTrophy.c
+common, exe, UI_DrawNumCrystal, 0x0, General/UI/UI_DrawNumCrystal.c
 common, exe, UI_DrawNumTimebox, 0x0, General/UI/UI_DrawNumTimebox.c
 common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_DrawNumWumpa.c
 common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_DrawPosSuffix.c
@@ -316,6 +320,7 @@ common, exe, UI_Lerp2D_Angular, 0x0, General/UI/UI_Lerp2D_Angular.c
 common, exe, UI_Lerp2D_HUD, 0x0, General/UI/UI_Lerp2D_HUD.c
 common, exe, UI_Lerp2D_Linear, 0x0, General/UI/UI_Lerp2D_Linear.c
 common, exe, UI_JumpMeter_Draw, 0x0, General/UI/UI_JumpMeter_Draw.c
+common, exe, UI_JumpMeter_Update, 0x0, General/UI/UI_JumpMeter_Update.c
 common, exe, UI_DrawSlideMeter, 0x0, General/UI/UI_DrawSlideMeter.c
 common, exe, UI_Weapon_DrawBG, 0x0, General/UI/UI_Weapon_DrawBG.c
 common, exe, UI_RenderFrame_AdvHub, 0x0, General/UI/UI_RenderFrame_AdvHub.c
