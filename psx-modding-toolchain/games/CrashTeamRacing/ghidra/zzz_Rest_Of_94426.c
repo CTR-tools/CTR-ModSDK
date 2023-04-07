@@ -39012,6 +39012,128 @@ int * FUN_8006c6c8(uint *param_1,int *param_2,undefined4 *param_3)
 //FUN_8006d3c8 used to be here, but it was deleted.
 //FUN_8006d4a4 used to be here, but it was deleted.
 
+uint * FUN_8006c778(void)
+
+{
+  int in_at;
+  uint *in_v0;
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  uint uVar4;
+  uint uVar5;
+  uint *puVar6;
+  int iVar7;
+  byte *pbVar8;
+  uint uVar9;
+  uint uVar10;
+  uint uVar11;
+  int in_t3;
+  uint *puVar12;
+  uint in_t6;
+  
+  gte_nclip_b();
+  puVar12 = (uint *)((*(uint *)(in_at + 0x2c) >> 0x11) * 4 + *(int *)(in_at + 0x38));
+  puVar6 = *(uint **)(in_at + 0x50);
+  uVar11 = gte_stMAC0();
+  uVar11 = uVar11 ^ (int)*(short *)(in_at + 0x24) ^ in_t3 << 2;
+  gte_stSXY0();
+  if ((int)uVar11 < 0) {
+    puVar12 = puVar12 + 1;
+  }
+  gte_stSXY1();
+  gte_stSXY2();
+  gte_ldIR1((int)(in_t6 << 0x18) >> 0x13);
+  gte_ldIR2((int)((in_t6 >> 8) << 0x18) >> 0x13);
+  gte_ldIR3((int)((in_t6 >> 0x10) << 0x18) >> 0x13);
+  gte_lcir();
+  iVar1 = gte_stIR1();
+  iVar7 = gte_stIR3();
+  uVar2 = (iVar1 + 0x1000) * 7 + 0x2000;
+  uVar3 = uVar2 >> 4;
+  if ((int)uVar11 < 0) {
+    uVar3 = uVar2 >> 5;
+  }
+  iVar7 = iVar7 >> 3;
+  gte_ldIR0(uVar3);
+  gte_dpcs_b();
+  if (iVar7 < 0) {
+    iVar7 = -iVar7;
+  }
+  uVar2 = 0;
+  if (-1 < iVar7 + -0x180) {
+    pbVar8 = &DAT_8008a144 + iVar7;
+    if (-1 < iVar7 + -0x200) {
+      pbVar8 = &DAT_8008a343;
+    }
+    uVar2 = (uint)*pbVar8;
+  }
+  uVar3 = gte_stRGB2();
+  if ((int)uVar11 < 0) {
+    uVar2 = uVar2 >> 3;
+  }
+  uVar9 = (uVar3 & 0xff) + uVar2;
+  iVar1 = (uVar3 >> 8 & 0xff) + uVar2;
+  iVar7 = (uVar3 >> 0x10 & 0xff) + uVar2;
+  uVar2 = iVar7 * 0x10000;
+  if (0 < iVar7 + -0xff) {
+    uVar2 = 0xff0000;
+  }
+  uVar3 = iVar1 * 0x100;
+  if (0 < iVar1 + -0xff) {
+    uVar3 = 0xff00;
+  }
+  if (0 < (int)(uVar9 - 0xff)) {
+    uVar9 = 0xff;
+  }
+  uVar5 = puVar6[1];
+  uVar10 = 0x600000;
+  if ((uVar5 & 0x600000) == 0) {
+    uVar10 = 0x200000;
+    uVar4 = 0x26000000;
+    if ((int)uVar11 < 0) {
+      uVar10 = 0x400000;
+    }
+  }
+  else {
+    uVar4 = 0x24000000;
+    if ((int)((int)puVar12 << 3 & uVar11) < 0) {
+      return in_v0;
+    }
+  }
+  in_v0[1] = uVar4 | uVar3 | uVar2 | uVar9;
+  uVar11 = puVar6[2];
+  in_v0[3] = *puVar6;
+  in_v0[5] = uVar10 | uVar5;
+  in_v0[7] = uVar11;
+  *in_v0 = *puVar12 | 0x7000000;
+  *puVar12 = (uint)in_v0 & 0xffffff;
+  return in_v0 + 8;
+}
+
+uint * FUN_8006c8e8(undefined4 param_1,uint param_2,uint *param_3)
+
+{
+  uint *in_v0;
+  uint in_t0;
+  uint in_t1;
+  uint uVar1;
+  int in_t2;
+  uint *in_t3;
+  
+  if (in_t2 < 0) {
+    in_t0 = 0x400000;
+  }
+  in_v0[1] = in_t1 | 0x26000000;
+  uVar1 = param_3[2];
+  in_v0[3] = *param_3;
+  in_v0[5] = in_t0 | param_2;
+  in_v0[7] = uVar1;
+  *in_v0 = *in_t3 | 0x7000000;
+  *in_t3 = (uint)in_v0 & 0xffffff;
+  return in_v0 + 8;
+}
+
 // Draw_KartGhost
 void FUN_8006c984(void)
 
