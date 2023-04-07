@@ -43282,11 +43282,13 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
 		// origin next frame?
         *(short **)(unaff_s8 + 0xc4) = psVar8;
 
+		// InstDrawPerPlayer m2
         *(uint *)(unaff_s8 + 0x98) = uVar21;
         *(uint *)(unaff_s8 + 0x9c) = uVar22;
         *(uint *)(unaff_s8 + 0xa0) = uVar23;
         *(uint *)(unaff_s8 + 0xa4) = uVar24;
         *(uint *)(unaff_s8 + 0xa8) = uVar25;
+		
         *(undefined4 *)(in_at + 0x68) = 0;
         *(undefined4 *)(in_at + 0x6c) = 0;
 		
