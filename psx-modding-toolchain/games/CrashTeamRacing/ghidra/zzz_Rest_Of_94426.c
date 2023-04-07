@@ -43192,6 +43192,8 @@ LAB_80070f70:
           uVar4 = 0xfff8ffff;
           if ((((uint)puVar29 & 0x800) == 0) && ((uVar7 & 1) == 0)) {
             FUN_8006c558();
+			
+			// instance dpp matrix m1
             *(uint *)(unaff_s8 + 0x78) = uVar21;
             *(uint *)(unaff_s8 + 0x7c) = uVar22;
             *(uint *)(unaff_s8 + 0x80) = uVar23;
@@ -43240,6 +43242,7 @@ LAB_80070f84:
 			// same instance?
 			FUN_8006c49c();
 
+			// instance dpp matrix m1
             *(uint *)(unaff_s8 + 0x78) = uVar21;
             *(uint *)(unaff_s8 + 0x7c) = uVar22;
             *(undefined4 *)(unaff_s8 + 0x80) = uVar13;
@@ -43291,10 +43294,13 @@ code_r0x80070e84:
           uVar13 = gte_stL11L12();
           uVar18 = gte_stL13L21();
           uVar16 = gte_stL22L23();
+		  
+		  // instance dpp matrix m1
           *(undefined4 *)(unaff_s8 + 0x78) = uVar13;
           *(undefined4 *)(unaff_s8 + 0x7c) = uVar18;
           *(undefined4 *)(unaff_s8 + 0x80) = uVar16;
-          uVar13 = gte_stL31L32();
+          
+		  uVar13 = gte_stL31L32();
           uVar18 = gte_stL33();
 		  
 		  *(undefined4 *)(unaff_s8 + 0x84) = uVar13;
