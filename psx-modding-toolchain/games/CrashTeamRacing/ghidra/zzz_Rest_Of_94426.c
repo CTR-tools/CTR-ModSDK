@@ -43600,10 +43600,12 @@ code_r0x80071450:
               puVar5 = &LAB_8006bbc0;
 LAB_80071480:
 			  // RenderBucket_UncompressAnimationFrame
-              puVar12 = &LAB_8006a8e0; // reference to FUN_8006a8e0(void), called later in this function indirectly. normal rendering, no special case like reflection, water/mud and or near clip
-              if (*(int *)(in_at + 100) != 0) 
+              puVar12 = &LAB_8006a8e0; 
+			  
+			  // if 60fps
+			  if (*(int *)(in_at + 100) != 0) 
 			  {
-				// Draw_Uncompress2
+				// RenderBucket_UncompressAnimationFrame_60fps
                 puVar12 = &LAB_8006b24c; 
               }
             }
@@ -43654,6 +43656,7 @@ LAB_80071480:
 			  // Draw_KartInWaterMud
 			  puVar12 = &LAB_8006bf30; // reference to FUN_8006bf30(void), called later in this function indirectly, under water or mud
 
+			  // if 60fps mode
 			  if (*(int *)(in_at + 100) != 0) {
                 puVar12 = &LAB_8006cdec; // reference to FUN_8006cdec(void), called later in this function indirectly. underwater or in mud something and near clip??
               }
