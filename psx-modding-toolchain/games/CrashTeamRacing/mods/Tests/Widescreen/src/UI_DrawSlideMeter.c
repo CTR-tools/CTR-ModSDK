@@ -20,9 +20,6 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	// replace every 0x31 with 37(dec)
 	// also move everything 0x31/2 pixels left
 	
-	// also, force dont draw speedometer
-	sdata->HudAndDebugFlags &= ~8;
-
 	meterLength = 0;
 
 	// height of bar in 1P or 2P
