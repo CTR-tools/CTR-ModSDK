@@ -27,7 +27,7 @@ void DECOMP_AH_Map_Main(void)
   
   if (
 		// if Aku Hint is not unlocked
-		((sdata->advProgress.rewards[4] & 0x400000) == 0) && 
+		((sdata->advProgress.rewards[3] & 0x400000) == 0) && 
 		
 		(iVar1 = TitleFlag_IsFullyOffScreen(), iVar1 != 0)
 	 ) 
