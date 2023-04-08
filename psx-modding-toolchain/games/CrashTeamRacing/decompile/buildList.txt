@@ -1,4 +1,4 @@
-// 257+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2 = 315 rewritten so far
+// 260+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2 = 318 rewritten so far
 
 // functions bigger than their originals
 common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
