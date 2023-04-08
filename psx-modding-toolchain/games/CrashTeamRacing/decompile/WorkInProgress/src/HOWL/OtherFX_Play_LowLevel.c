@@ -1,15 +1,15 @@
 #include <common.h>
 
-short DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int sfx)
+short DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int flags)
 {
-  struct GameTracker* gGT;
+  struct GameTracker* gGT = sdata->gGT;;
   struct ChannelStats* channel;
   int count;
   short id;
   char *ptrCseq;
-  u_int distortion = sfx >> 8;
-  u_int volume = sfx >> 0x10;
-  u_short echo = sfx >> 0x18;
+  u_int distortion = flags >> 8;
+  u_int volume = flags >> 0x10;
+  u_short echo = flags >> 0x18;
 
   struct ChannelAttr* channelAttr [10];
 
@@ -29,7 +29,7 @@ short DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int sfx)
 			)
         )
 	{
-      howl_InitChannelAttr_OtherFX(ptrCseq, channelAttr, volume, sfx & 0xff, distortion);
+      howl_InitChannelAttr_OtherFX(ptrCseq, channelAttr, volume, flags & 0xff, distortion);
 
       Smart_EnterCriticalSection();
 
@@ -63,14 +63,12 @@ short DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int sfx)
 
           channel->distort = distortion;
 
-          channel->LeftRight = sfx;
+          channel->LeftRight = flags;
 
 		  // duration
           channel->timeLeft = ptrCseq[6];
 
           count = CountSounds();
-
-		  gGT = sdata->gGT;
 
 		  // CountSounds shifted in
           channel->soundID = count << 0x10 | id;

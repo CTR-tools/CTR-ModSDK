@@ -107,8 +107,8 @@ LAB_8004fe8c:
   }
 
 						// something with X and Y position
-  local_30 = CONCAT22(*(short *)d->instSelf->matrix.t[1],
-                      *(short *)d->instSelf->matrix.t[0]);
+  local_30 = CONCAT22((short)d->instSelf->matrix.t[1],
+                      (short)d->instSelf->matrix.t[0]);
 
 						// something with Z position
   local_2c = local_2c & 0xffff0000 | (u_int)d->instSelf->matrix.t[2];
