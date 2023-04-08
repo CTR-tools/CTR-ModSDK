@@ -788,10 +788,7 @@ void DECOMP_UI_RenderFrame_Racing()
 		turboThread = 0;
 		turboThreadObject = 0;
 		
-		#if 0
 		if ((gGT->gameMode2 & CHEAT_TURBOCOUNT) != 0)
-		#endif
-	
 		{
 
 			// Get number of boosts
@@ -854,7 +851,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					LAB_80053cd4:
 
 					// Animate counter to move off screen
-					sVar1 = sdata->TurboDisplayPos_Only1P--;
+					sVar1 = sdata->TurboDisplayPos_Only1P - 1;
 				}
 			}
 
@@ -864,23 +861,21 @@ void DECOMP_UI_RenderFrame_Racing()
 			{
 
 				// Animate counter to move onto screen
-				sVar1 = sdata->TurboDisplayPos_Only1P++;
+				sVar1 = sdata->TurboDisplayPos_Only1P + 1;
 
 				// If pointer == nullptr
-				if (i == 0)
+				if (turboThread == 0)
 				{
 					LAB_80053c98:
 					// If counter is off screen
 					if (sdata->TurboDisplayPos_Only1P < 1)
 					{
 						// set svar1 to display position
-						// does the "else" get skipped?
 						goto LAB_80053cac;
 					}
 
 					// If counter is on screen
 					// decrease boost counter,
-					// does the "else" get skipped?
 					goto LAB_80053cd4;
 				}
 			}
