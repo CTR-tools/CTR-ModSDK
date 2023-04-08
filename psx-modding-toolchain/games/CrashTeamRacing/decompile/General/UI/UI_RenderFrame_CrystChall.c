@@ -16,15 +16,15 @@ void UI_JumpMeter_Draw(short, short, struct Driver*);
 void UI_DrawSlideMeter(short, short, struct Driver*);
 void VehPtr_Freeze_Init(struct Thread*,struct Driver*);
 
+// 692 by default, budget 768
+
 void DECOMP_UI_RenderFrame_CrystChall(void)
 {
-  int cooldown;
   struct GameTracker* gGT = sdata->gGT;
   struct Driver* player;
   struct UiElement2D *hudStructPtr;
   int iVar5;
-  short local_18;
-  short local_16;
+  short local_18[2];
 
   player = gGT->drivers[0];
   hudStructPtr = data.hudStructPtr[0];
@@ -49,7 +49,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   UI_Weapon_DrawSelf(hudStructPtr[0].x,hudStructPtr[0].y,hudStructPtr[1].y,player);
 
   // TIME
-  DecalFont_DrawLine((sdata->lngStrings[0x48]),0x14,8,2,0);
+  DecalFont_DrawLine(sdata->lngStrings[0x12],0x14,8,FONT_SMALL,ORANGE);
 
   // "TIME" and the actual time are printed at the same
   // X-coordinate, so we know 0x14 is the X, which only
@@ -71,8 +71,8 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
     sdata->ptrHudCrystal->flags |= 0x80;
     goto LAB_800545e8;
   }
-  local_18 = hudStructPtr[0x22].x;
-  local_16 = hudStructPtr[0x22].y;
+  local_18[0] = hudStructPtr[0x22].x;
+  local_18[1] = hudStructPtr[0x22].y;
 
   // make visible
   sdata->ptrHudCrystal->flags &= 0xffffff7f;
@@ -90,7 +90,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 	// if you have enough crystals to win the race
     if (gGT->numCrystalsInLEV <= player->numCrystals)
 	{
-      player->funcPtrs[0] = &VehPtr_Freeze_Init;
+      player->funcPtrs[0] = VehPtr_Freeze_Init;
 
       //turn on 26th bit of Actions Flag set (means racer finished the race)
       player->actionsFlagSet |= 0x2000000;
@@ -100,10 +100,8 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 
     OtherFX_Play(0x42,1);
 
-	// 5 frame cooldown
-    cooldown = 5;
-
-    if (player->PickupWumpaHUD.numCollected != 0) goto LAB_8005456c;
+    if (player->PickupWumpaHUD.numCollected != 0)
+		player->PickupWumpaHUD.cooldown = 5;
   }
 
   // if cooldown is not done
@@ -111,57 +109,54 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   {
 	// interpolate position over course of 5 frames
     UI_Lerp2D_HUD(
-					&local_18,
-					(int)player->PickupWumpaHUD.startX,
-					(int)player->PickupWumpaHUD.startY,
-					hudStructPtr[0x22].x,
-					hudStructPtr[0x22].y,
+		&local_18[0],
+		(int)player->PickupWumpaHUD.startX,
+		(int)player->PickupWumpaHUD.startY,
+		(int)hudStructPtr[0x22].x,
+		(int)hudStructPtr[0x22].y,
 
-					// cooldown (0-5)
-				  player->PickupWumpaHUD.cooldown,
+		// cooldown (0-5)
+		player->PickupWumpaHUD.cooldown,
 
-					// 5 frames total
-					5);
+		// 5 frames total
+		5);
 
 	// reduce cooldown between getting each wumpa (or crystal)
-	cooldown = player->PickupWumpaHUD.cooldown + -1;
-
-LAB_8005456c:
-
-	// set new cooldown
-    player->PickupWumpaHUD.cooldown = cooldown;
+	player->PickupWumpaHUD.cooldown--;
   }
+  
   struct Instance* hudCrystal = sdata->ptrHudCrystal;
-  iVar5 = (local_18 + -0x100) * hudStructPtr[0x23].x;
+  
+  // posX
+  iVar5 = (local_18[0] + -0x100) * hudStructPtr[0x23].x;
   if (iVar5 < 0) {
     iVar5 = iVar5 + 0xff;
   }
-  sdata->ptrHudCrystal->matrix.t[0] = iVar5 >> 8;
-  iVar5 = (local_16 + -0x6c) * hudStructPtr[0x23].x;
+  hudCrystal->matrix.t[0] = iVar5 >> 8;
+  
+  // posY
+  iVar5 = (local_18[1] + -0x6c) * hudStructPtr[0x23].x;
   if (iVar5 < 0) {
     iVar5 = iVar5 + 0xff;
   }
   hudCrystal->matrix.t[1] = iVar5 >> 8;
+  
+  // posZ
   hudCrystal->matrix.t[2] = hudStructPtr[0x23].x;
+
 LAB_800545e8:
-  if (
-		(
-			// If game is not paused
-			((gGT->gameMode1 & 0xf) == 0) &&
 
-			// item roll is done
-			(player->itemRollTimer == 0)
-		) &&
+  // quit if game is paused, or item is 
+  // rolling, or not drawing roulette
+  if((gGT->gameMode1 & 0xf) != 0) return;
+  if(player->itemRollTimer != 0) return;
+  if((gGT->gameMode1 & 0x800000) == 0) return;
 
-		// If you're drawing Weapon Roulette (randomizing)
-		((gGT->gameMode1 & 0x800000) != 0)
-	  )
-  {
-	// stop weapon shuffle sound
-    OtherFX_Stop2(0x5d);
-
-	// Disable the randomizing effect in the HUD
-    gGT->gameMode1 &= 0xff7fffff;
-  }
+  // if not paused, item stopped rolling, and 
+  // weapon roulette sound is playing, then
+  // stop the sound and remove flag
+  OtherFX_Stop2(0x5d);
+  gGT->gameMode1 &= ~(0x800000);
+  
   return;
 }
