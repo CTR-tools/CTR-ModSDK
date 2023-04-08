@@ -23,8 +23,8 @@ common, exe, TileView_UpdateFrustum, 0x0, src/TileView_UpdateFrustum.c
 
 // note to self, still need UI_DrawRankedDrivers,
 // squish 11 functions
-// all decompile folder except for: UI_DrawSlideMeter, UI_DrawSpeedBG, UI_DrawSpeedNeedle
-common, exe, UI_DrawNumWumpa, 0x0, ../../../Decompile/General/UI/UI_DrawNumWumpa.c ../../../Decompile/General/UI/UI_DrawNumKey.c ../../../Decompile/General/UI/UI_DrawNumRelic.c ../../../Decompile/General/UI/UI_DrawNumTrophy.c ../../../Decompile/General/UI/UI_DrawNumCrystal.c ../../../Decompile/General/UI/UI_DrawNumTimebox.c src/UI_DrawSpeedBG.c src/UI_DrawSpeedNeedle.c ../../../Decompile/General/UI/UI_JumpMeter_Draw.c ../../../Decompile/General/UI/UI_JumpMeter_Update.c src/UI_DrawSlideMeter.c, UI_ElevenFuncs.bin
+// all decompile folder except for: UI_DrawSlideMeter, UI_DrawSpeedNeedle
+common, exe, UI_DrawNumWumpa, 0x0, ../../../Decompile/General/UI/UI_DrawNumWumpa.c ../../../Decompile/General/UI/UI_DrawNumKey.c ../../../Decompile/General/UI/UI_DrawNumRelic.c ../../../Decompile/General/UI/UI_DrawNumTrophy.c ../../../Decompile/General/UI/UI_DrawNumCrystal.c ../../../Decompile/General/UI/UI_DrawNumTimebox.c ../../../Decompile/General/UI/UI_DrawSpeedBG.c src/UI_DrawSpeedNeedle.c src/UI_JumpMeter_Draw.c ../../../Decompile/General/UI/UI_JumpMeter_Update.c src/UI_DrawSlideMeter.c, UI_ElevenFuncs.bin
 
 // Requierd for relocated 11 UI functions
 common, exe, UI_RenderFrame_Racing, 0x0, ../../../Decompile/General/UI/UI_RenderFrame_Racing.c

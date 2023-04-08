@@ -76,7 +76,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 		*primmemCurr = (u_int)p & 0xffffff;
 
 		box2.y = posY - 0x26;
-		box2.w = 0xc;
+		box2.w = 0xc * 750 / 1000; // === widescreen ===
 		box2.h = 0x26;
 		box2.x = posX;
 		memset(auStack48, 0, 4);
@@ -118,7 +118,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 			}
 			*(u_int *)&p->r0 = colorAndCode;
 			jumpMeterHeight = (int)sVar9 * 0x26;
-			sVar9 = posX + 0xc;
+			sVar9 = posX + 0xc * 750 / 1000; // === widescreen ===
 			p->x0 = posX;
 			p->x1 = sVar9;
 			p->x2 = posX;

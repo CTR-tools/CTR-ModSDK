@@ -38,7 +38,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	u_char bVar3;
 	int partTimeVariable1;
 	u_int partTimeVariable4;
-	u_char **ppuVar5;
+	int* ptrColor;
 	u_char *pbVar6;
 	int i;
 	struct TileView *tileView;
@@ -649,13 +649,13 @@ void DECOMP_UI_RenderFrame_Racing()
 					backBuffer = gGT->backBuffer;
 
 					// Get Color Data
-					ppuVar5 = (u_char **)&data.ptrColor[sVar17];
+					ptrColor = data.ptrColor[sVar17];
 
 					// Four colors, one for each corner
-					local_7c = *ppuVar5[0];
-					local_78 = *ppuVar5[1];
-					local_74 = *ppuVar5[2];
-					local_70 = *ppuVar5[3];
+					local_7c = ptrColor[0];
+					local_78 = ptrColor[1];
+					local_74 = ptrColor[2];
+					local_70 = ptrColor[3];
 
 					// icon pointer, specifically for the big rank icons that start at 0x19
 					iconPtr = gGT->ptrIcons[(int)playerStruct->driverRank + 0x19];
@@ -706,13 +706,13 @@ void DECOMP_UI_RenderFrame_Racing()
 					backBuffer = gGT->backBuffer;
 
 					// Get Color Data
-					ppuVar5 = (u_char **)&data.ptrColor[partTimeVariable5];
+					ptrColor = data.ptrColor[partTimeVariable5];
 
 					// Four colors, one for each corner
-					local_7c = *ppuVar5[0];
-					local_78 = *ppuVar5[1];
-					local_74 = *ppuVar5[2];
-					local_70 = *ppuVar5[3];
+					local_7c = ptrColor[0];
+					local_78 = ptrColor[1];
+					local_74 = ptrColor[2];
+					local_70 = ptrColor[3];
 
 					// pointer to icon
 					// get rank icon of each battle team after battle is over

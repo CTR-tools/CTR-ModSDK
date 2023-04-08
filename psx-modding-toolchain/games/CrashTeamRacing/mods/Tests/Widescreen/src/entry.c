@@ -6,6 +6,14 @@ void DecalMP_03();
 
 void RunEntryHook()
 {
+  int i;
+  
+  for(i = 0; i < 0x1c; i++)
+  {
+	  data.speedometerBG_vertData[i*2] =
+	  data.speedometerBG_vertData[i*2] * 750 / 1000;
+  }
+	
   data.font_charPixWidth[0] = 0;
   data.font_charPixWidth[1] = 0xD;
   data.font_charPixWidth[2] = 0xA;
