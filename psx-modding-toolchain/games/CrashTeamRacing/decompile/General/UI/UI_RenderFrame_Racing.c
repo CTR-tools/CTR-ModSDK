@@ -3,13 +3,13 @@
 // To do: add a header
 void UI_WeaponBG_AnimateShine();
 void UI_DrawRankedDrivers();
-void UI_JumpMeter_Update(struct Driver*);
-void UI_DrawSpeedNeedle(short, short, struct Driver*);
-void UI_JumpMeter_Draw(short, short, struct Driver*);
-void UI_DrawSlideMeter(short, short, struct Driver*);
-void UI_DrawSpeedBG();
-void UI_DrawNumWumpa(int, int, struct Driver*);
-void UI_DrawNumTimebox(int, int, struct Driver*);
+void DECOMP_UI_JumpMeter_Update(struct Driver*);
+void DECOMP_UI_DrawSpeedNeedle(short, short, struct Driver*);
+void DECOMP_UI_JumpMeter_Draw(short, short, struct Driver*);
+void DECOMP_UI_DrawSlideMeter(short, short, struct Driver*);
+void DECOMP_UI_DrawSpeedBG();
+void DECOMP_UI_DrawNumWumpa(int, int, struct Driver*);
+void DECOMP_UI_DrawNumTimebox(int, int, struct Driver*);
 int LOAD_IsOpen_RacingOrBattle();
 void RB_Player_ModifyWumpa(struct Driver*, int);
 void UI_Lerp2D_HUD(short *, short, short, short, short, int, short);
@@ -197,7 +197,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
 				{
 					//execute Jump meter and landing boost processes
-					UI_JumpMeter_Update(playerStruct);
+					DECOMP_UI_JumpMeter_Update(playerStruct);
 				}
 			}
 
@@ -248,16 +248,16 @@ void DECOMP_UI_RenderFrame_Racing()
 			)
 			{
 				// draw spedometer needle
-				UI_DrawSpeedNeedle(hudStructPtr[0x12].x, hudStructPtr[0x12].y, playerStruct);
+				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[0x12].x, hudStructPtr[0x12].y, playerStruct);
 
 				// draw jump meter
-				UI_JumpMeter_Draw(hudStructPtr[0xC].x, hudStructPtr[0xC].y, playerStruct);
+				DECOMP_UI_JumpMeter_Draw(hudStructPtr[0xC].x, hudStructPtr[0xC].y, playerStruct);
 
 				// Draw Powerslide Meter
-				UI_DrawSlideMeter(hudStructPtr[0x10].x, hudStructPtr[0x10].y, playerStruct);
+				DECOMP_UI_DrawSlideMeter(hudStructPtr[0x10].x, hudStructPtr[0x10].y, playerStruct);
 
 				// draw background of spedometer
-				UI_DrawSpeedBG(hudStructPtr[0x12].x, hudStructPtr[0x12].y, playerStruct);
+				DECOMP_UI_DrawSpeedBG(hudStructPtr[0x12].x, hudStructPtr[0x12].y, playerStruct);
 			}
 
 			//if racer hasn't finished the race
@@ -268,20 +268,20 @@ void DECOMP_UI_RenderFrame_Racing()
 				if ((gGT->gameMode1 & BATTLE_MODE) == 0)
 				{
 					// Draw powerslide meter
-					UI_DrawSlideMeter(hudStructPtr[0x10].x, hudStructPtr[0x10].y, playerStruct);
+					DECOMP_UI_DrawSlideMeter(hudStructPtr[0x10].x, hudStructPtr[0x10].y, playerStruct);
 				}
 
 				// If you are not in Time Trial or Relic Race
 				if ((gGT->gameMode1 & (TIME_TRIAL | RELIC_RACE)) == 0)
 				{
-					UI_DrawNumWumpa((int)hudStructPtr[8].x, (int)hudStructPtr[8].y, playerStruct);
+					DECOMP_UI_DrawNumWumpa((int)hudStructPtr[8].x, (int)hudStructPtr[8].y, playerStruct);
 				}
 			}
 
 			// If you're in a Relic Race
 			if ((gGT->gameMode1 & RELIC_RACE) != 0)
 			{
-				UI_DrawNumTimebox((int)hudStructPtr[0x26].x, (int)hudStructPtr[0x26].y, playerStruct);
+				DECOMP_UI_DrawNumTimebox((int)hudStructPtr[0x26].x, (int)hudStructPtr[0x26].y, playerStruct);
 			}
 
 			// If game is not paused

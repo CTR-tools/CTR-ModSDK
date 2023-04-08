@@ -1,6 +1,6 @@
 #include <common.h>
 
-void UI_DrawNumTrophy(int posX, int posY)
+void DECOMP_UI_DrawNumTrophy(int posX, int posY)
 {
 	int num;
 	struct GameTracker* gGT;

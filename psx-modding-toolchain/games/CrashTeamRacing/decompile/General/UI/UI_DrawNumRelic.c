@@ -1,6 +1,6 @@
 #include <common.h>
 
-void UI_DrawNumRelic(int posX, int posY)
+void DECOMP_UI_DrawNumRelic(int posX, int posY)
 {
 	int num;
 	struct GameTracker* gGT;

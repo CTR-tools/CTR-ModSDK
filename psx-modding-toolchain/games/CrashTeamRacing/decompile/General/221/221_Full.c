@@ -22,7 +22,7 @@ extern struct MenuBox menuBox221;
 	
 int UI_ConvertX_2(int x, int const_0x200);
 int UI_ConvertY_2(int y, int const_0x200);
-void UI_DrawNumCrystal(int x, int y, struct Driver* d);
+void DECOMP_UI_DrawNumCrystal(int x, int y, struct Driver* d);
 void UI_DrawLimitClock(short x, short y, short fontSize);
 void MenuBox_ClearInput();
 void MenuBox_Show(struct MenuBox*);
@@ -68,7 +68,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		sdata->ptrMenuCrystal->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
 		sdata->ptrMenuCrystal->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
 	
-		UI_DrawNumCrystal(posXY[0]+0xf, posXY[1]-0x10, driver);
+		DECOMP_UI_DrawNumCrystal(posXY[0]+0xf, posXY[1]-0x10, driver);
 	
 		lngIndex = 0x16b; // YOU WIN
 		if(boolLose != 0)

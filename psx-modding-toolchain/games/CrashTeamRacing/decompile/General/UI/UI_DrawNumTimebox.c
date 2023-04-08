@@ -2,7 +2,7 @@
 
 // 172 byte budget
 
-void UI_DrawNumTimebox(int posX, int posY, struct Driver* d)
+void DECOMP_UI_DrawNumTimebox(int posX, int posY, struct Driver* d)
 {
 	int numCratesOwned;
 	int numCratesTotal;

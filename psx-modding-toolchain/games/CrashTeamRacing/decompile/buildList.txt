@@ -1,4 +1,4 @@
-// 260+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2 = 318 rewritten so far
+// 252+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10 = 318 rewritten so far
 
 // functions bigger than their originals
 common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
@@ -299,12 +299,12 @@ common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWind
 common, exe, UI_ConvertX_2, 0x0, General/UI/UI_ConvertX_2.c
 common, exe, UI_ConvertY_2, 0x0, General/UI/UI_ConvertY_2.c
 common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
-common, exe, UI_DrawNumKey, 0x0, General/UI/UI_DrawNumKey.c
-common, exe, UI_DrawNumRelic, 0x0, General/UI/UI_DrawNumRelic.c
-common, exe, UI_DrawNumTrophy, 0x0, General/UI/UI_DrawNumTrophy.c
-common, exe, UI_DrawNumCrystal, 0x0, General/UI/UI_DrawNumCrystal.c
-common, exe, UI_DrawNumTimebox, 0x0, General/UI/UI_DrawNumTimebox.c
-common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_DrawNumWumpa.c
+
+// note to self, still need UI_DrawRankedDrivers,
+// squish 11 functions
+common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_DrawNumWumpa.c General/UI/UI_DrawNumKey.c General/UI/UI_DrawNumRelic.c General/UI/UI_DrawNumTrophy.c General/UI/UI_DrawNumCrystal.c General/UI/UI_DrawNumTimebox.c General/UI/UI_DrawSpeedBG.c General/UI/UI_DrawSpeedNeedle.c General/UI/UI_JumpMeter_Draw.c General/UI/UI_JumpMeter_Update.c General/UI/UI_DrawSlideMeter.c, UI_ElevenFuncs.bin
+
+
 common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_DrawPosSuffix.c
 common, exe, UI_Map_GetIconPos, 0x0, General/UI/UI_Map_GetIconPos.c
 common, exe, UI_Map_DrawAdvPlayer, 0x0, General/UI/UI_Map_DrawAdvPlayer.c
@@ -320,17 +320,14 @@ common, exe, UI_DrawRaceClock, 0x0, General/UI/UI_DrawRaceClock.c
 common, exe, UI_Lerp2D_Angular, 0x0, General/UI/UI_Lerp2D_Angular.c
 common, exe, UI_Lerp2D_HUD, 0x0, General/UI/UI_Lerp2D_HUD.c
 common, exe, UI_Lerp2D_Linear, 0x0, General/UI/UI_Lerp2D_Linear.c
-common, exe, UI_JumpMeter_Draw, 0x0, General/UI/UI_JumpMeter_Draw.c
-common, exe, UI_JumpMeter_Update, 0x0, General/UI/UI_JumpMeter_Update.c
-common, exe, UI_DrawSlideMeter, 0x0, General/UI/UI_DrawSlideMeter.c
+
 common, exe, UI_Weapon_DrawBG, 0x0, General/UI/UI_Weapon_DrawBG.c
 common, exe, UI_RenderFrame_Racing, 0x0, General/UI/UI_RenderFrame_Racing.c
 common, exe, UI_RenderFrame_AdvHub, 0x0, General/UI/UI_RenderFrame_AdvHub.c
 common, exe, UI_RenderFrame_CrystChall, 0x0, General/UI/UI_RenderFrame_CrystChall.c
 common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
-common, exe, UI_DrawSpeedBG, 0x0, General/UI/UI_DrawSpeedBG.c
-common, exe, UI_DrawSpeedNeedle, 0x0, General/UI/UI_DrawSpeedNeedle.c
+
 
 // VEH PTR
 common, exe, VehPtr_Crashing_PhysAngular, 0x0, General/Vehicle/VehPtr_Crashing_FuncPtrs.c

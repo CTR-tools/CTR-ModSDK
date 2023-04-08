@@ -1,22 +1,16 @@
 #include <common.h>
 
-void UI_DrawNumRelic(short, short, struct Driver*);
-void UI_DrawNumKey(short, short, struct Driver*);
-void UI_DrawNumTrophy(short, short, struct Driver*);
+void DECOMP_UI_DrawNumRelic(short, short);
+void DECOMP_UI_DrawNumKey(short, short);
+void DECOMP_UI_DrawNumTrophy(short, short);
 
 void DECOMP_UI_RenderFrame_AdvHub(void)
 {
     struct UiElement2D* hudStructPtr;
-    struct Driver* player;
-    int xOffset;
-    int yOffset;
 	
 	hudStructPtr = data.hudStructPtr[0];
-	player = sdata->gGT->drivers[0];
-	xOffset = 0x10;
-	yOffset = -10;
 
-    UI_DrawNumRelic(	hudStructPtr[0x38].x + xOffset, hudStructPtr[0x38].y + yOffset, player);
-    UI_DrawNumKey(		hudStructPtr[0x3c].x + xOffset, hudStructPtr[0x3c].y + yOffset, player);
-    UI_DrawNumTrophy(	hudStructPtr[0x40].x + xOffset, hudStructPtr[0x40].y + yOffset, player);
+	DECOMP_UI_DrawNumRelic	(hudStructPtr[0x1C].x + 0x10, hudStructPtr[0x1C].y - 10);
+	DECOMP_UI_DrawNumKey	(hudStructPtr[0x1E].x + 0x10, hudStructPtr[0x1E].y - 10);
+	DECOMP_UI_DrawNumTrophy	(hudStructPtr[0x20].x + 0x10, hudStructPtr[0x20].y - 10);
 }

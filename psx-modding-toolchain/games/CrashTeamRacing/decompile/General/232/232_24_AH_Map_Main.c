@@ -1,5 +1,9 @@
 #include <common.h>
 
+void DECOMP_UI_DrawNumRelic(short, short);
+void DECOMP_UI_DrawNumKey(short, short);
+void DECOMP_UI_DrawNumTrophy(short, short);
+
 void DECOMP_AH_Map_Main(void)
 {
   struct GameTracker* gGT = sdata->gGT;
@@ -55,7 +59,7 @@ void DECOMP_AH_Map_Main(void)
   if ((gGT->gameMode1 & 0xf) == 0) 
   {
 	// Jump meter and landing boost
-    UI_JumpMeter_Update(advDriver);
+    DECOMP_UI_JumpMeter_Update(advDriver);
   }
   
   // Check a HUD flag
@@ -85,12 +89,12 @@ void DECOMP_AH_Map_Main(void)
                  
 				1);
 	
-    UI_DrawSlideMeter(ptrHudData[0x10].x,ptrHudData[0x10].y,advDriver);
+    DECOMP_UI_DrawSlideMeter(ptrHudData[0x10].x,ptrHudData[0x10].y,advDriver);
   }
   
-  UI_DrawNumRelic	(ptrHudData[0x1C].x + 0x10, ptrHudData[0x1C].y - 10, advDriver);
-  UI_DrawNumKey		(ptrHudData[0x1E].x + 0x10, ptrHudData[0x1E].y - 10, advDriver);
-  UI_DrawNumTrophy	(ptrHudData[0x20].x + 0x10, ptrHudData[0x20].y - 10, advDriver);
+  DECOMP_UI_DrawNumRelic	(ptrHudData[0x1C].x + 0x10, ptrHudData[0x1C].y - 10);
+  DECOMP_UI_DrawNumKey		(ptrHudData[0x1E].x + 0x10, ptrHudData[0x1E].y - 10);
+  DECOMP_UI_DrawNumTrophy	(ptrHudData[0x20].x + 0x10, ptrHudData[0x20].y - 10);
   
   return;
 }

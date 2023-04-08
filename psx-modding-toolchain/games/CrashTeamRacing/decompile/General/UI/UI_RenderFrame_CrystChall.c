@@ -4,16 +4,15 @@ void MainGameEnd_Initialize(short);
 void UI_Lerp2D_HUD(short*, short, short, short, short, int, short);
 void UI_DrawLimitClock(short, short, short);
 void UI_Weapon_DrawSelf(short, short, short, struct Driver*);
-void UI_DrawNumWumpa(short, short, struct Driver*);
-void UI_DrawNumRelic(short, short, struct Driver*);
-void UI_DrawNumKey(short, short, struct Driver*);
-void UI_DrawNumTrophy(short, short, struct Driver*);
-void UI_DrawNumCrystal(short, short, struct Driver*);
-void UI_DrawSpeedNeedle(short, short, struct Driver*);
-void UI_DrawSpeedBG(short, short, struct Driver*);
-void UI_JumpMeter_Update(struct Driver*);
-void UI_JumpMeter_Draw(short, short, struct Driver*);
-void UI_DrawSlideMeter(short, short, struct Driver*);
+void DECOMP_UI_DrawNumRelic(short, short);
+void DECOMP_UI_DrawNumKey(short, short);
+void DECOMP_UI_DrawNumTrophy(short, short);
+void DECOMP_UI_DrawNumCrystal(short, short, struct Driver*);
+void DECOMP_UI_DrawSpeedNeedle(short, short, struct Driver*);
+void DECOMP_UI_DrawSpeedBG(short, short, struct Driver*);
+void DECOMP_UI_JumpMeter_Update(struct Driver*);
+void DECOMP_UI_JumpMeter_Draw(short, short, struct Driver*);
+void DECOMP_UI_DrawSlideMeter(short, short, struct Driver*);
 void VehPtr_Freeze_Init(struct Thread*,struct Driver*);
 
 // 692 by default, budget 768
@@ -32,18 +31,18 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   // If game is not paused
   if ((gGT->gameMode1 & 0xf) == 0) {
     //execute Jump meter and landing boost processes
-    UI_JumpMeter_Update(player);
+    DECOMP_UI_JumpMeter_Update(player);
   }
 
-  UI_DrawSpeedNeedle(hudStructPtr[0x12].x,hudStructPtr[0x12].y,player);
+  DECOMP_UI_DrawSpeedNeedle(hudStructPtr[0x12].x,hudStructPtr[0x12].y,player);
 
-  UI_JumpMeter_Draw(hudStructPtr[0xc].x,hudStructPtr[0xc].y,player);
+  DECOMP_UI_JumpMeter_Draw(hudStructPtr[0xc].x,hudStructPtr[0xc].y,player);
 
-  UI_DrawSlideMeter(hudStructPtr[0x10].x,hudStructPtr[0x10].y,player);
+  DECOMP_UI_DrawSlideMeter(hudStructPtr[0x10].x,hudStructPtr[0x10].y,player);
 
-  UI_DrawSpeedBG(hudStructPtr[0x12].x,hudStructPtr[0x12].y,player);
+  DECOMP_UI_DrawSpeedBG(hudStructPtr[0x12].x,hudStructPtr[0x12].y,player);
 
-  UI_DrawNumCrystal(hudStructPtr[0x22].x + 0x10, hudStructPtr[0x22].y - 0x10,player);
+  DECOMP_UI_DrawNumCrystal(hudStructPtr[0x22].x + 0x10, hudStructPtr[0x22].y - 0x10,player);
 
   // Draw weapon and number of wumpa fruit in HUD
   UI_Weapon_DrawSelf(hudStructPtr[0].x,hudStructPtr[0].y,hudStructPtr[1].y,player);
