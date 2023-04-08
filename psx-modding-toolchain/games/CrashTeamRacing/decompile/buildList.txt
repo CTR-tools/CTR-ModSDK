@@ -349,7 +349,10 @@ common, exe, VehPtr_Blasted_Init, 0x0, General/Vehicle/VehPtr_Blasted_Init.c
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
 common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
 common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
+common, exe, Turbo_Audio, 0x0, General/Turbo_Audio.c
 common, exe, Weapon_Mask_boolGoodGuy, 0x0, General/Weapon_Mask_boolGoodGuy.c
+
+common, exe, Tawna_Init, 0x0, General/Tawna_Init.c
 
 // Japan
 
