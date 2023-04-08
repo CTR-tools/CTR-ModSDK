@@ -1,5 +1,7 @@
 #include <common.h>
 
+void MainGameEnd_Initialize(short);
+void UI_Lerp2D_HUD(short*, short, short, short, short, int, short);
 void UI_DrawLimitClock(short, short, short);
 void UI_Weapon_DrawSelf(short, short, short, struct Driver*);
 void UI_DrawNumWumpa(short, short, struct Driver*);
@@ -88,23 +90,20 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 	// if you have enough crystals to win the race
     if (gGT->numCrystalsInLEV <= player->numCrystals)
 	{
-	  // VehPtr_Freeze_Init
       player->funcPtrs[0] = &VehPtr_Freeze_Init;
 
       //turn on 26th bit of Actions Flag set (means racer finished the race)
-      (player->actionsFlagSet) |= 0x2000000;
+      player->actionsFlagSet |= 0x2000000;
 
-	  // MainGameEnd_Initialize
       MainGameEnd_Initialize(0x42);
     }
 
-	// OtherFX_Play
     OtherFX_Play(0x42,1);
 
 	// 5 frame cooldown
     cooldown = 5;
 
-    if ((player->PickupWumpaHUD.numCollected) != 0) goto LAB_8005456c;
+    if (player->PickupWumpaHUD.numCollected != 0) goto LAB_8005456c;
   }
 
   // if cooldown is not done
@@ -113,8 +112,8 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 	// interpolate position over course of 5 frames
     UI_Lerp2D_HUD(
 					&local_18,
-					&player->PickupWumpaHUD.startX,
-					&player->PickupWumpaHUD.startY,
+					(int)player->PickupWumpaHUD.startX,
+					(int)player->PickupWumpaHUD.startY,
 					hudStructPtr[0x22].x,
 					hudStructPtr[0x22].y,
 
@@ -137,13 +136,13 @@ LAB_8005456c:
   if (iVar5 < 0) {
     iVar5 = iVar5 + 0xff;
   }
-  sdata->ptrHudCrystal->matrix.m[2][1] = iVar5 >> 8;
+  sdata->ptrHudCrystal->matrix.t[0] = iVar5 >> 8;
   iVar5 = (local_16 + -0x6c) * hudStructPtr[0x23].x;
   if (iVar5 < 0) {
     iVar5 = iVar5 + 0xff;
   }
-  hudCrystal->matrix.t[0] = iVar5 >> 8;
-  hudCrystal->matrix.t[1] = hudStructPtr[0x23].x;
+  hudCrystal->matrix.t[1] = iVar5 >> 8;
+  hudCrystal->matrix.t[2] = hudStructPtr[0x23].x;
 LAB_800545e8:
   if (
 		(
@@ -158,7 +157,6 @@ LAB_800545e8:
 		((gGT->gameMode1 & 0x800000) != 0)
 	  )
   {
-	// OtherFX_Stop2
 	// stop weapon shuffle sound
     OtherFX_Stop2(0x5d);
 

@@ -58,7 +58,6 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
 
     if ((iVar6 != 0) && ((decalMP->ptrOT) != 0))
 	{
-	  // CTR_CycleTex_2p3p4pWumpaHUD
       CTR_CycleTex_2p3p4pWumpaHUD(
         gGT->tileView->matrix_ViewProj.m[2][1] + 0xffc,
         iVar6, 
@@ -101,11 +100,10 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
 						decalMP->rect.y
 				  ) - ((ptrHudData + 6) >> 1);
 
-		  // backBuffer->primMem.curr
           p = gGT->backBuffer->primMem.curr;
 
           // sets len and code
-		      *(char*)(p->tag + 0x3) = 9;
+		      ((P_TAG*)p)->len = 9;
           p->code = 0x2c;
 		  
 		  // if wumpa is not 10
@@ -149,10 +147,9 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
                (ptrHudData >> 6) | 0x100 |
                ((ptrHudData + 2)  << 2);
 
-		  // backBuffer->primMem.curr
 		  // move pointer after writing polygons
-          (sdata->gGT->backBuffer->primMem).curr =
-						 (void *)((int)(sdata->gGT->backBuffer->primMem).curr + 0x28);
+          gGT->backBuffer->primMem.curr =
+						 (void *)((int)(gGT->backBuffer->primMem).curr + 0x28);
 
 		  // pointer to OT memory, and pointer to primitive
 		  AddPrim(gGT->tileView_UI.ptrOT,p);

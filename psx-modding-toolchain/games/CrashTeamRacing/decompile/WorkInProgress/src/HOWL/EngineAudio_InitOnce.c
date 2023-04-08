@@ -1,14 +1,14 @@
 #include <common.h>
 
 // Initialize car engine audio system for one driver
-short EngineAudio_InitOnce(u_int soundID,u_int sfx)
+char EngineAudio_InitOnce(u_int soundID,u_int flags)
 
 {
   struct ChannelStats* channel;
-  u_int distortion = sfx >> 8;
-  u_int volume = sfx >> 0x10;
-  u_short echo = sfx >> 0x18;
-  u_short leftRight = sfx & 0xff;
+  u_int distortion = flags >> 8;
+  u_int volume = flags >> 0x10;
+  u_short echo = flags >> 0x18;
+  u_short leftRight = flags & 0xff;
 
   struct ChannelAttr* auStack48 [10];
 
@@ -27,7 +27,7 @@ short EngineAudio_InitOnce(u_int soundID,u_int sfx)
         Smart_EnterCriticalSection();
 
 		// Channel_AllocSlot
-        channel = FUN_8002b7d0(0x7c,auStack48);
+        channel = Channel_AllocSlot(0x7c,auStack48);
 
 		// if channel was found
         if (channel != 0)
