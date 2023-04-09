@@ -46,7 +46,7 @@ void CAM_ThTick(struct Thread *t)
 		(
 			(
 				((sdata->gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU | START_OF_RACE | PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) &&
-				(*(int *)(*(int *)((int)&d->instSelf->thread + 2) + 0x2c) == 0)
+				((((int)&d->instSelf->thread + 2) + 0x2c) == 0)
 			) &&
 			((d->actionsFlagSet & 0x100000) == 0)
 		) &&
@@ -89,7 +89,7 @@ void CAM_ThTick(struct Thread *t)
 	if ((*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) & 0x20) == 0)
 	goto switchD_8001b678_caseD_1;
 	piVar10 = sdata->gGT->level1->ptr_trial_data;
-	psVar18 = (short *)0x0;
+	psVar18 = 0;
 	if (*piVar10 < 3) goto switchD_8001b678_caseD_1;
 	psVar16 = (short *)piVar10[3];
 	sVar5 = *psVar16;
@@ -268,8 +268,8 @@ LAB_8001c11c:
 				CAM_LookAtPosition((int)scratchpad, d->posCurr, tileViewPos, tileViewPos + 3);
 				psVar18 = scratchpad;
 LAB_8001c128:
-				*(int *)(psVar18 + 0x120) = (int)*tileViewPos;
-				*(int *)(psVar18 + 0x122) = (int)tileViewPos[1];
+				(psVar18 + 0x120) = (int)*tileViewPos;
+				(psVar18 + 0x122) = (int)tileViewPos[1];
 				sVar5 = tileViewPos[2];
 				scratchpad = psVar18;
 			}
@@ -309,10 +309,10 @@ LAB_8001c128:
 							local_24 = -local_24;
 						}
 						iVar22 = SquareRoot0_stub((int)local_28 * (int)local_28 + (int)local_26 * (int)local_26 + (int)local_24 * (int)local_24);
-						iVar14 = *(int *)((int)cDC->idpp[0].m1.t + 10);
+						iVar14 = ((int)cDC->idpp[0].m1.t + 10);
 						iVar15 = iVar14 << 0xc;
 						iVar23 = iVar15 / iVar22;
-						*(int *)((int)cDC->idpp[0].m1.t + 10) = iVar14 + (((*(short *)(cDC->idpp[0].m1.t + 1) * 0x1000) / 0x1e) * iVar9 >> 0xc);
+						((int)cDC->idpp[0].m1.t + 10) = iVar14 + (((*(short *)(cDC->idpp[0].m1.t + 1) * 0x1000) / 0x1e) * iVar9 >> 0xc);
 						if (iVar6 < 1)
 						{
 							if (iVar23 < 0x1001)
@@ -457,18 +457,18 @@ LAB_8001c128:
 					iVar9 = iVar13;
 				}
 				DAT_1f800348 = (int)*tileViewPos;
-				*(int *)(tileViewPos + 0xc) = *(int *)(tileViewPos + 0x86) + iVar9;
+				(tileViewPos + 0xc) = (tileViewPos + 0x86) + iVar9;
 				DAT_1f80034c = (int)tileViewPos[1];
 				sVar5 = tileViewPos[2];
 			}
-			*(int *)(scratchpad + 0x124) = (int)sVar5;
+			(scratchpad + 0x124) = (int)sVar5;
 			CAM_FindClosestQuadblock(scratchpad, (struct CameraDC *)cDC, d, (short *)((u_int)scratchpad | 0x240));
 			goto LAB_8001c150;
 		}
 	}
 	CAM_FollowDriver_Normal((struct CameraDC *)cDC, d, tileViewPos, 0x108, psVar21);
 LAB_8001c150:
-	iVar9 = *(int *)cDC->scale;
+	iVar9 = cDC->scale;
 	cDC->idpp[0].m2.m[1][0] = cDC->idpp[0].m2.m[2];
 	psVar2 = sdata->gGT;
 	if (iVar9 != 0)
@@ -476,27 +476,27 @@ LAB_8001c150:
 		piVar10 = *(int **)(iVar9 + 0x44);
 		if ((piVar10 != (int *)0x0) && (iVar9 = *piVar10,  iVar9 != 0))
 		{
-			*(int *)(cDC->scale + 2) = iVar9;
-			psVar2->unk1cac[1] = (*(int *)cDC->scale - (int)psVar2->level1->ptr_mesh_info->ptrQuadBlockArray) * -0x1642c859 >> 2;
+			(cDC->scale + 2) = iVar9;
+			psVar2->unk1cac[1] = (cDC->scale - (int)psVar2->level1->ptr_mesh_info->ptrQuadBlockArray) * -0x1642c859 >> 2;
 		}
-		if (*(int *)cDC->scale != 0)
+		if (cDC->scale != 0)
 		{
-			iVar9 = *(int *)(*(int *)cDC->scale + 0x44);
-			if ((iVar9 != 0) && (iVar9 = *(int *)(iVar9 + 4),  iVar9 != 0))
+			iVar9 = (cDC->scale + 0x44);
+			if ((iVar9 != 0) && (iVar9 = (iVar9 + 4),  iVar9 != 0))
 			{
 				cDC->colorRGBA = iVar9;
 			}
-			if (*(int *)cDC->scale != 0)
+			if (cDC->scale != 0)
 			{
-				iVar9 = *(int *)(*(int *)cDC->scale + 0x44);
-				if ((iVar9 != 0) && (iVar9 = *(int *)(iVar9 + 8),  iVar9 != 0))
+				iVar9 = (cDC->scale + 0x44);
+				if ((iVar9 != 0) && (iVar9 = (iVar9 + 8),  iVar9 != 0))
 				{
 					cDC->flags = iVar9;
 				}
 				if
 				(
-					((*(int *)cDC->scale != 0) && (iVar9 = *(int *)(*(int *)cDC->scale + 0x44),  iVar9 != 0)) &&
-					(iVar9 = *(int *)(iVar9 + 0xc),  iVar9 != 0)
+					((cDC->scale != 0) && (iVar9 = (cDC->scale + 0x44),  iVar9 != 0)) &&
+					(iVar9 = (iVar9 + 0xc),  iVar9 != 0)
 				)
 				{
 					if ((sdata->gGT->level1->configFlags & 4U) == 0)
@@ -505,15 +505,15 @@ LAB_8001c150:
 					}
 					else
 					{
-						*(int *)(cDC->matrix).m = iVar9;
+						cDC->matrix.m[0][0] = iVar9;
 					}
 				}
 			}
 		}
 	}
-	if (*(int *)(cDC->matrix).m[2] == 0)
+	if ((int)cDC->matrix.m[2] == 0)
 	{
-		*(u_int *)(cDC->scale + 2) = 0;
+		cDC->scale[2] = 0;
 		cDC->colorRGBA = 0;
 	}
 	psVar2 = sdata->gGT;
@@ -522,8 +522,8 @@ LAB_8001c150:
 		sdata->gGT->rainBuffer[(int)cDC->next].cameraPos[0] = *tileViewPos;
 		psVar2->rainBuffer[(int)cDC->next].cameraPos[1] = tileViewPos[1];
 		psVar2->rainBuffer[(int)cDC->next].cameraPos[2] = tileViewPos[2];
-		*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) &= 0xfffffffe;
+		(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) &= 0xfffffffe;
 	}
-	*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) &= 0xffffff77;
+	(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) &= 0xffffff77;
 	return;
 }
