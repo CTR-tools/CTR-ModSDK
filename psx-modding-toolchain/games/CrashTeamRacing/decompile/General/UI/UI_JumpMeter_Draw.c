@@ -31,9 +31,9 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	iVar11 = (int)posX;
 	iVar8 = (int)posY + -0x2b;
 
-	DebugFont_DrawNumbers(iVar5, iVar11 - 0x10, iVar8);
-	DebugFont_DrawNumbers(iVar10, iVar11 + -4, iVar8);
-	DebugFont_DrawNumbers((((whateverThisIs + iVar10 * -0x60) * 100) / 0x3c0) * 0x10000 >> 0x10, iVar11 + 4, iVar8);
+	DECOMP_DebugFont_DrawNumbers(iVar5, iVar11 - 0x10, iVar8);
+	DECOMP_DebugFont_DrawNumbers(iVar10, iVar11 + -4, iVar8);
+	DECOMP_DebugFont_DrawNumbers((((whateverThisIs + iVar10 * -0x60) * 100) / 0x3c0) * 0x10000 >> 0x10, iVar11 + 4, iVar8);
 
 	sVar9 = posX + -0x14;
 	jumpMeter = posY + -0x2d;
