@@ -170,7 +170,7 @@ struct IconGroup
 	// struct Icon icons[numIcons];
 };
 
-#define setIconUV4(p, icon) \
+#define setIconUV(p, icon) \
 	*(u_int*)&p->u0 = *(u_int*)&icon->texLayout.u0, \
 	*(u_int*)&p->u1 = *(u_int*)&icon->texLayout.u1, \
 	*(u_short*)&p->u2 = *(u_short*)&icon->texLayout.u2, \

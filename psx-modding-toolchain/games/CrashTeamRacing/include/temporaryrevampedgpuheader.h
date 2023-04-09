@@ -179,7 +179,12 @@ force_inline void addVram2Vram(u_long* ot, VRAM2VRAM* p)
 	p->tpage = p->tpage & 0xff9f | (transparency - 1) << 5, \
 	p->code |= 2
 
-#define setInt32RGB4(p, color0) \
+// macros for setting the rgb values in primitives using pointer blah blah
+// this is *maybe* what naughty dog did?
+// all primitive functions pass colors as a single 32-bit integer value
+// these macros are used prior to any of the primitive functions seen in this
+// header as they overwrite the primitive's code value
+#define setInt32RGB0(p, color0) \
 	*(u_int*)&p->r0 = color0,
 
 #define setInt32RGB4(p, color0, color1, color2, color3) \

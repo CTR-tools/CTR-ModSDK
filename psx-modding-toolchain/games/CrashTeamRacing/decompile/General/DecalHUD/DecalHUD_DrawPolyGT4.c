@@ -6,6 +6,8 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, stru
 		if (!icon) return;
 	#endif
 
+	// setInt32RGB4 needs to go before addPolyGT4
+	// for more information check "temporaryrevampedgpuheader.h"
 	POLY_GT4* p = (POLY_GT4*)primMem->curr;
 	setInt32RGB4(p, color0, color1, color2, color3);
 	addPolyGT4(ot, p);
@@ -16,7 +18,7 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, stru
 	unsigned int bottomY = posY + (height * scale / 0x1000);
 
 	setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
-	setIconUV4(p, icon);
+	setIconUV(p, icon);
 	if (transparency)
 	{
 		setTransparency(p, transparency);
