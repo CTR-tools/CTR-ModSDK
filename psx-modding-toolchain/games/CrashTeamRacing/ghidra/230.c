@@ -1705,7 +1705,7 @@ void FUN_800AD560(int param_1)
 	  // set number of players to row + 1
       PTR_DAT_8008d2ac[0x1ca9] = *(char *)(param_1 + 0x1a) + '\x01';
 	  
-	  // set next menuBox to difficulty selection ???
+	  // set next menuBox to difficulty selection
       *(undefined4 *)(param_1 + 0x24) = 0x800b4608;
       
 	  *(uint *)(param_1 + 8) = *(uint *)(param_1 + 8) | 0x14;
