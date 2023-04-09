@@ -29,14 +29,9 @@ void DECOMP_DebugFont_DrawNumbers(int index, int screenPosX, int screenPosY)
 
   // '0' is 6th character in 2nd row,
   // 5*7 to X, add 1*7 to Y
-  
   uVar4 = sdata->debugFont.pixelX + (5+0) * 7;
-
-  uVar6 = (sdata->debugFont.pixelY + 1*7);
-  uVar5 = uVar6 + 7;
-  
-  uVar6 *= 0x100;
-  uVar5 *= 0x100;
+  uVar6 = (sdata->debugFont.pixelY + 1 * 7) << 8;
+  uVar5 = uVar6 + 0x700;
 
   *(int*)&p->u0 = uVar4     | uVar6;
   *(int*)&p->u1 = uVar4 + 7 | uVar6;
