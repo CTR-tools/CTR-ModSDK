@@ -7,8 +7,7 @@ void DECOMP_DebugFont_Init(struct GameTracker* gGT)
 	
 	if(debugFontIcon == 0) return;
 	
-	sdata->debugFont.pixelX = debugFontIcon->texLayout.u0;
-	sdata->debugFont.pixelY = debugFontIcon->texLayout.v0;
+	sdata->debugFont.UV = *(short*)&debugFontIcon->texLayout.u0;
 	sdata->debugFont.clut = debugFontIcon->texLayout.clut;
 	sdata->debugFont.tpage = debugFontIcon->texLayout.tpage;
 }

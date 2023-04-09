@@ -24,19 +24,14 @@ void DECOMP_DebugFont_DrawNumbers(int index, int screenPosX, int screenPosY)
   *(int*)&p->x1 = uVar6      | uVar5;
   *(int*)&p->x2 = screenPosX | uVar4;
 
-  // each character is 7 pixels wide
-  // and 7 pixels tall
+  // Each character is 7x7 pixels,
+  // '0' is 6th character on 2nd row
+  uVar4 = sdata->debugFont.UV + 5*7 + 0x700;
 
-  // '0' is 6th character in 2nd row,
-  // 5*7 to X, add 1*7 to Y
-  uVar4 = sdata->debugFont.pixelX + (5+0) * 7;
-  uVar6 = (sdata->debugFont.pixelY + 1 * 7) << 8;
-  uVar5 = uVar6 + 0x700;
-
-  *(int*)&p->u0 = uVar4     | uVar6;
-  *(int*)&p->u1 = uVar4 + 7 | uVar6;
-  *(int*)&p->u2 = uVar4     | uVar5;
-  *(int*)&p->u3 = uVar4 + 7 | uVar5;
+  *(int*)&p->u0 = uVar4 + (index+0)*7;
+  *(int*)&p->u1 = uVar4 + (index+1)*7;
+  *(int*)&p->u2 = uVar4 + (index+0)*7 + 0x700;
+  *(int*)&p->u3 = uVar4 + (index+1)*7 + 0x700;
 
   p->clut = sdata->debugFont.clut;
   p->tpage = sdata->debugFont.tpage;

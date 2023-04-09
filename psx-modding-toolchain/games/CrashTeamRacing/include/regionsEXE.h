@@ -3492,8 +3492,19 @@ struct sData
 	// All these are related drawing debug strings
 	struct
 	{
+
+#if 0 // original game
+
 		unsigned int pixelX;
 		unsigned int pixelY;
+
+#else // had to, we were desperate
+
+		short UV;
+		short padding[3];
+
+#endif	
+
 		unsigned short clut;
 		unsigned short tpage;
 	} debugFont;
