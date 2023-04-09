@@ -218,7 +218,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						DecalFont_DrawLine
 						(
 							// "WRONG WAY!"
-							sdata->lngStrings[0x74],
+							sdata->lngStrings[0x1D],
 
 							// Midpoint between Start X and Size X
 							(int)(((u_int)tileView->rect.x + ((int)((u_int)tileView->rect.w << 0x10) >> 0x11)) * 0x10000) >> 0x10,
