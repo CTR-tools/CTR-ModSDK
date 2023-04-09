@@ -51,6 +51,10 @@ void DECOMP_UI_Map_GetIconPos(short* ptrMap,int* posX,int* posY)
     iVar4 += 10;
   }
   
+  // === widescreen ===
+  if((sdata->gGT->gameMode1 & MAIN_MENU) == 0)
+  	iVar2 += 4;
+  
   *posX = iVar2;
   *posY = iVar4;
   return;

@@ -12,6 +12,10 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 	struct GameTracker* gGT;
 
 	gGT = sdata->gGT;
+	
+	// === widescreen ===
+	if((gGT->gameMode1 & MAIN_MENU) == 0)
+		posX += 4;
 
 	iVar9 = 0;
 

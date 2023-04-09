@@ -21,6 +21,10 @@ common, exe, UI_Map_DrawMap, 0x0, src/UI_Map_DrawMap.c
 common, exe, UI_Map_GetIconPos, 0x0, src/UI_Map_GetIconPos.c
 common, exe, TileView_UpdateFrustum, 0x0, src/TileView_UpdateFrustum.c
 
+// DebugFont
+common, exe, DebugFont_Init, 0x0, ../../../Decompile/General/DebugFont/DebugFont_Init.c src/DebugFont_DrawNumbers, DebugFont.bin
+
+
 // note to self, still need UI_DrawRankedDrivers,
 // squish 11 functions
 // all decompile folder except for: UI_DrawSlideMeter, UI_DrawSpeedNeedle

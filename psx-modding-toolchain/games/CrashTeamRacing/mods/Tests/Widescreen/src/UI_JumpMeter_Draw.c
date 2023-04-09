@@ -31,13 +31,20 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	iVar11 = (int)posX;
 	iVar8 = (int)posY + -0x2b;
 
+	// === widescreen ===
+	// instead of -0x10, -4, +4,
+	// use -0x10, -6, +0
 	DebugFont_DrawNumbers(iVar5, iVar11 - 0x10, iVar8);
-	DebugFont_DrawNumbers(iVar10, iVar11 + -4, iVar8);
-	DebugFont_DrawNumbers((((whateverThisIs + iVar10 * -0x60) * 100) / 0x3c0) * 0x10000 >> 0x10, iVar11 + 4, iVar8);
+	DebugFont_DrawNumbers(iVar10, iVar11 + -6, iVar8);
+	DebugFont_DrawNumbers((((whateverThisIs + iVar10 * -0x60) * 100) / 0x3c0) * 0x10000 >> 0x10, iVar11 + 0, iVar8);
 
 	sVar9 = posX + -0x14;
 	jumpMeter = posY + -0x2d;
-	box.w = 0x22;
+	
+	// === widescreen ===
+	// use 0x1D(29) instead of 0x22(34)
+	box.w = 0x1D;
+	
 	box.h = 10;
 	box.x = sVar9;
 	box.y = jumpMeter;
@@ -60,8 +67,8 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	if (p != 0)
 	{
 		*(u_int *)&p->r0 = 0x28ffffff;
-		p->x1 = posX + 0xe;
-		p->x3 = posX + 0xe;
+		p->x1 = posX + 0xe * 750/1000;
+		p->x3 = posX + 0xe * 750/1000;
 		p->x0 = sVar9;
 		p->y0 = jumpMeter;
 		p->y1 = jumpMeter;
