@@ -98,10 +98,10 @@ void DrawCharacter(int index, int screenPosX, int screenPosY, int letterX, int l
   puVar2[9] = uVar4 + 7 | uVar5;
 
   // texture page
-  uVar1 = sdata->debugFont.texPage;
+  uVar1 = sdata->debugFont.tpage;
 
   // color palette
-  *(unsigned short *)((int)puVar2 + 0xe) = sdata->debugFont.palette;
+  *(unsigned short *)((int)puVar2 + 0xe) = sdata->debugFont.clut;
 
   // optional: (I forget what this does, change color each frame?)
   //*(unsigned short *)((int)puVar2 + 0xe) = sdata->gGT->timer >> 6;
