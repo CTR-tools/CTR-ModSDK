@@ -16,7 +16,7 @@ void BOTS_ThTick_EngineRevving(int param_1);
 void BOTS_MaskGrab(int param_1);
 void BOTS_Killplane(int param_1);
 void BOTS_ThTick_Drive(struct Thread* thread);
-u_int BOTS_ChangeState(int param_1, int param_2, int param_3, int param_4);
+u_int BOTS_ChangeState(struct Driver* d1, int param_2, struct Driver* d2, int param_4);
 void BOTS_CollideWithOtherAI(int param_1, int param_2);
 void BOTS_GotoStartingLine(struct Driver* driver);
 struct Driver* BOTS_Driver_Init(int slot);
@@ -257,7 +257,7 @@ void DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct Prim
 void DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale);
 void DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, short rot);
 void UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, u_int color);
-void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char transparency, int scale, u_short rot);
+void DecalHUD_Arrow2D(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char transparency, int scale, u_short rot);
 int LOAD_IsOpen_RacingOrBattle();
 void MainFrame_TogglePauseAudio(int bool_pause);
 void OtherFX_Play(unsigned int soundID, int flags);

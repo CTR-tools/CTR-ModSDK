@@ -16,8 +16,11 @@ void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, stru
 	unsigned int bottomY = posY + (height * scale / 0x1000);
 
 	setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
-	ICON_setTexture(p, icon);
-	if (transparency) setTransparency(p, transparency);
+	setIconUV4(p, icon);
+	if (transparency)
+	{
+		setTransparency(p, transparency);
+	}
 
 	primMem->curr = p + 1;
 }

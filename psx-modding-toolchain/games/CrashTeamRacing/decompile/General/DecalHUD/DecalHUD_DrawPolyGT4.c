@@ -1,94 +1,26 @@
 #include <common.h>
 
-void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, u_int topLeftColor, u_int topRightColor, u_int bottomLeftColor, u_int bottomRightColor, char semitransparencyEnabled, short scale)
+void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, int scale)
 {
-	u_char y2;
-	u_short bottomRightCorner;
-	u_int code;
-	u_int topRightCornerAndPageXY;
-	u_int bitshiftPosY;
+	#if BUILD > SepReview
+		if (!icon) return;
+	#endif
 
-	POLY_GT4 *p;
+	POLY_GT4* p = (POLY_GT4*)primMem->curr;
+	setInt32RGB4(p, color0, color1, color2, color3);
+	addPolyGT4(ot, p);
 
-	u_int topLeftCornerAndPaletteXY;
-	u_int bottomMargin;
+	unsigned int width = icon->texLayout.u1 - icon->texLayout.u0;
+	unsigned int height = icon->texLayout.v2 - icon->texLayout.v0;
+	unsigned int rightX = posX + (width * scale / 0x1000);
+	unsigned int bottomY = posY + (height * scale / 0x1000);
 
-	if (icon != 0)
+	setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
+	setIconUV4(p, icon);
+	if (transparency)
 	{
-		topRightCornerAndPageXY = *(u_int*)&icon->texLayout.u1;
-		topLeftCornerAndPaletteXY = *(u_int*)&icon->texLayout.u0;
-		y2 = icon->texLayout.v2;
-
-		posX = posX & 0xffff;
-
-		// posY, bitshifted 2 bytes
-		bitshiftPosY = posY * 0x10000;
-
-		bottomMargin = *(u_int*)&icon->texLayout.u2;
-
-		p = (POLY_GT4*)primMem->curr;
-
-		// if semitransparencyEnabled == 0,
-		// except made default...
-
-		code = 0x3c000000;
-		*(int*)&p->u1 = topRightCornerAndPageXY;
-
-		if(semitransparencyEnabled != 0)
-		{
-			code = 0x3e000000;
-
-			// set top right corner UVs and texpage of primitive, and alter the blending mode bits of the texpage from 11 (Mode 3, which is no blending) to 00 (Mode 0, equivalent to regular 50% opacity)
-			// note that these blending modes are different from those used in UI_Map_DrawMap
-			*(int*)&p->u1 =
-				topRightCornerAndPageXY & 0xff9fffff |
-				((u_int)semitransparencyEnabled - 1) * 0x200000;
-		}
-
-		// set top left vertex color, and code in 7th byte of prim
-		*(int*)&p->r0 = topLeftColor & 0xffffff | code;
-
-		*(int*)&p->u0 = topLeftCornerAndPaletteXY;
-		*(short*)&p->u2 = (short)bottomMargin;
-		bottomRightCorner = *(u_short*)&icon->texLayout.u3;
-
-		// calculate final position of top right vertex of primitive
-		// posX + (endX - startX) * scale / 0x1000
-		topRightCornerAndPageXY =
-			posX + ((int)(((topRightCornerAndPageXY & 0xff) -
-					(topLeftCornerAndPaletteXY & 0xff)) * (int)scale) >> 0xc);
-
-		*(int*)&p->x0 = posX | bitshiftPosY;
-		*(int*)&p->x1 = topRightCornerAndPageXY | bitshiftPosY;
-
-		// posY +=
-		bitshiftPosY += ((int)(
-		(
-			(u_int)y2 -
-
-			((int)topLeftCornerAndPaletteXY >> 8 & 0xffU)) *
-
-			(int)scale) >> 0xc
-		) *
-
-		// bitshift up 2 bytes
-		0x10000;
-
-		*(int*)&p->x2 = posX | bitshiftPosY;
-		*(int*)&p->x3 = topRightCornerAndPageXY | bitshiftPosY;
-		*(u_short *)&p->u3 = bottomRightCorner;
-
-		// color data from parameters
-		*(int*)&p->r1 = topRightColor;
-		*(int*)&p->r2 = bottomLeftColor;
-		*(int*)&p->r3 = bottomRightColor;
-
-		// link prim and OT together
-		*(int*)p = *ot | 0xc000000;
-		*ot = (u_int)p & 0xffffff;
-
-		// POLY_GT4 is 0x34 bytes large
-		primMem->curr = p + 1;
+		setTransparency(p, transparency);
 	}
-	return;
+
+	primMem->curr = p + 1;
 }

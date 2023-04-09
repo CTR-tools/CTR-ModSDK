@@ -170,38 +170,8 @@ struct IconGroup
 	// struct Icon icons[numIcons];
 };
 
-#ifndef __PSXGPU_H
-#include <psn00bsdk/include/psxgpu.h>
-#endif
-
-#define force_inline static inline __attribute__((always_inline))
-
-force_inline void ICON_setTexture(POLY_FT4* restrict p, struct Icon* restrict icon)
-{
-	p->u0 = icon->texLayout.u0;
-	p->v0 = icon->texLayout.v0;
-	p->clut = icon->texLayout.clut;
-	p->u1 = icon->texLayout.u1;
-	p->v1 = icon->texLayout.v1;
-	p->tpage = icon->texLayout.tpage;
-	p->u2 = icon->texLayout.u2;
-	p->v2 = icon->texLayout.v2;
-	p->u3 = icon->texLayout.u3;
-	p->v3 = icon->texLayout.v3;
-}
-
-force_inline void addPolyFT4(u_long* ot, POLY_FT4* p)
-{
-	p->tag = 0x9000000 | *ot;
-	*ot = ((u_int) p) ^ 0x80000000;
-	p->code = 0x2c;
-}
-
-force_inline void setTransparency(POLY_FT4* restrict p, char transparency)
-{
-	// clear blending mode bits of the texpage using AND, then set them using OR
-	// then set image to use semi-transparent mode using the setSemiTrans macro
-
-	p->tpage = p->tpage & 0xff9f | (transparency - 1) << 5;
-	p->code |= 2;
-}
+#define setIconUV4(p, icon) \
+	*(u_int*)&p->u0 = *(u_int*)&icon->texLayout.u0, \
+	*(u_int*)&p->u1 = *(u_int*)&icon->texLayout.u1, \
+	*(u_short*)&p->u2 = *(u_short*)&icon->texLayout.u2, \
+	*(u_short*)&p->u3 = *(u_short*)&icon->texLayout.u3
