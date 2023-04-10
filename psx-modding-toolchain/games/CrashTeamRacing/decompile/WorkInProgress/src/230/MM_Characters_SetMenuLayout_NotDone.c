@@ -16,12 +16,9 @@ void MM_Characters_SetMenuLayout(void)
   // it can be index 0,1,2,3
   OVR_230.characterSelectIconLayout = numPlyr - 1;
 
-  // Loop through all characters,
-  // If a character is unlocked that covers
-  // the top row (Joe, Penta, Fake Crash)
-  // Then dont draw "Select character"
-
-  for (i = 0; i < 0xf; i++) {
+  // Loop through bottom characters,
+  // if any are unlocked, use expanded
+  for (i = 0xc; i < 0xf; i++) {
     unlocked = OVR_230.csm_1P2P[i].characterID; // 800B4E8A
     if ((sdata->gameProgress->unlocks[unlocked >> 5] >> unlocked & 1) != 0) {
 

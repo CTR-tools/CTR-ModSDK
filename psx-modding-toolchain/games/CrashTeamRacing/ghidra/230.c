@@ -2375,10 +2375,8 @@ void FUN_800ae0bc(void)
   
   iVar3 = 0xc0000;
   
-  // Loop through all characters,
-  // If a character is unlocked that covers
-  // the top row (Joe, Penta, Fake Crash)
-  // Then dont draw "Select character"
+  // Loop through bottom characters (0xC, 0xD, 0xE)
+  // if any are unlocked, use expanded
   do {
     uVar1 = *(ushort *)((iVar3 >> 0x10) * 0xc + -0x7ff4b176); // 800B4E8A
     iVar4 = iVar4 + 1;
