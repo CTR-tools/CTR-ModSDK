@@ -16,17 +16,17 @@ common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels
 common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
 
 // 230 (incomplete)
-common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_MM_09_30_CheatCodes.c // contains 22 functions
-common, 230, MM_ParseCheatCodes, 0x0, General/230/230_MM_30_ParseCheatCodes_Hook.c
-common, 230, MM_MenuBox_Main, 0x0, General/230/230_MM_31_MenuBox_Main.c
-common, 230, MM_ToggleRows_PlayerCount, 0x0, General/230/230_MM_32_ToggleRows_PlayerCount.c
-common, 230, MM_MenuBox_1p2p, 0x0, General/230/230_MM_33_MenuBox_1p2p.c
-common, 230, MM_MenuBox_2p3p4p, 0x0, General/230/230_MM_34_MenuBox_2p3p4p.c
-common, 230, MM_ToggleRows_Difficulty, 0x0, General/230/230_MM_35_ToggleRows_Difficulty.c
-common, 230, MM_MenuBox_Difficulty, 0x0, General/230/230_MM_36_MenuBox_Difficulty.c
-common, 230, MM_MenuBox_SingleCup, 0x0, General/230/230_MM_37_MenuBox_SingleCup.c
-common, 230, MM_MenuBox_NewLoad, 0x0, General/230/230_MM_38_MenuBox_NewLoad.c
-common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/230_MM_42_Characters_boolIsInvalid.c
+common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
+common, 230, MM_MenuBox_Main, 0x0, General/230/230_31_MM_MenuBox_Main.c
+common, 230, MM_ToggleRows_PlayerCount, 0x0, General/230/230_32_MM_ToggleRows_PlayerCount.c
+common, 230, MM_MenuBox_1p2p, 0x0, General/230/230_33_MM_MenuBox_1p2p.c
+common, 230, MM_MenuBox_2p3p4p, 0x0, General/230/230_34_MM_MenuBox_2p3p4p.c
+common, 230, MM_ToggleRows_Difficulty, 0x0, General/230/230_35_MM_ToggleRows_Difficulty.c
+common, 230, MM_MenuBox_Difficulty, 0x0, General/230/230_36_MM_MenuBox_Difficulty.c
+common, 230, MM_MenuBox_SingleCup, 0x0, General/230/230_37_MM_MenuBox_SingleCup.c
+common, 230, MM_MenuBox_NewLoad, 0x0, General/230/230_38_MM_MenuBox_NewLoad.c
+common, 230, MM_AdvNewLoad_GetMenuBox, 0x0, General/230/230_39_MM_AdvNewLoad_GetMenuBox.c
+common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/230_42_MM_Characters_boolIsInvalid.c
 
 // 231 (incomplete)
 // skip first two

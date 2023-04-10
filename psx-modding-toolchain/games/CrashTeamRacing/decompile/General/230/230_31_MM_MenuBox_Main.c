@@ -16,7 +16,7 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
 	mainMenu->rows = &OVR_230.rows_mainMenu_WithScrapbook[0];
   }
 
-  MM_ParseCheatCodes();
+  DECOMP_MM_ParseCheatCodes();
   
   MM_ToggleRows_Difficulty();
   
