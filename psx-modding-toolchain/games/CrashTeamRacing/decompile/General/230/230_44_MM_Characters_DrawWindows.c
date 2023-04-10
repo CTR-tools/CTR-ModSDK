@@ -36,10 +36,8 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
   
     tileview->rect.x = psVar11[0] + tMeta[0x10].currX;
     tileview->rect.y = psVar11[1] + tMeta[0x10].currY;
-  
-    // windowSize (X and Y)
-    tileview->aspectX = OVR_230.characterSelect_aspectX;
-    tileview->aspectY = OVR_230.characterSelect_aspectY;
+    tileview->rect.w = OVR_230.characterSelect_sizeX;
+    tileview->rect.h = OVR_230.characterSelect_sizeY;
   
     // negative StartX
     if ((short)tileview->rect.x < 0) {

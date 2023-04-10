@@ -471,7 +471,7 @@ extern struct
 	// ...
 
 	// 0x800b59dc
-	int characterSelect_aspectY;
+	int characterSelect_sizeY;
 	
 	int unkE0;
 
@@ -523,7 +523,7 @@ extern struct
 	int isRosterExpanded;
 
 	// 800b5a30
-	int characterSelect_aspectX;
+	int characterSelect_sizeX;
 
 	// 800b5a34
 	int unkPtr1;
