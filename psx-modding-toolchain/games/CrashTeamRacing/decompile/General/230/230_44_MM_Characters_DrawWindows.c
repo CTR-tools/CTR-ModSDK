@@ -41,36 +41,36 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
   
     // negative StartX
     if ((short)tileview->rect.x < 0) {
-      tileview->aspectX -= tileview->rect.x;
+      tileview->rect.w -= tileview->rect.x;
       tileview->rect.x = 0;
-      if ((short)tileview->aspectX < 0) {
-        tileview->aspectX = 0;
+      if ((short)tileview->rect.w < 0) {
+        tileview->rect.w = 0;
       }
     }
   
     // negative StartY
     if ((short)tileview->rect.y < 0) {
-      tileview->aspectY -= tileview->rect.y;
+      tileview->rect.h -= tileview->rect.y;
       tileview->rect.y = 0;
-      if ((short)tileview->aspectY < 0) {
-        tileview->aspectY = 0;
+      if ((short)tileview->rect.h < 0) {
+        tileview->rect.h = 0;
       }
     }
   
     // startX + sizeX out of bounds
-    if ((0x200 < (int)(short)tileview->rect.x + (int)(short)tileview->aspectX) &&
-        (tileview->aspectX = (short)(0x200 - (u_int)(u_short)tileview->rect.x),
+    if ((0x200 < (int)(short)tileview->rect.x + (int)(short)tileview->rect.w) &&
+        (tileview->rect.w = (short)(0x200 - (u_int)(u_short)tileview->rect.x),
          (int)((0x200 - (u_int)(u_short)tileview->rect.x) * 0x10000) < 0)) {
       tileview->rect.x = 0x200;
-      tileview->aspectX = 0;
+      tileview->rect.w = 0;
     }
   
     // startY + sizeY out of bounds
-    if ((0xd8 < (int)(short)tileview->rect.y + (int)(short)tileview->aspectY) &&
-        (tileview->aspectY = (short)(0xd8 - (u_int)(u_short)tileview->rect.y),
+    if ((0xd8 < (int)(short)tileview->rect.y + (int)(short)tileview->rect.h) &&
+        (tileview->rect.h = (short)(0xd8 - (u_int)(u_short)tileview->rect.y),
          (int)((0xd8 - (u_int)(u_short)tileview->rect.y) * 0x10000) < 0)) {
       tileview->rect.y = 0xd8;
-      tileview->aspectY = 0;
+      tileview->rect.h = 0;
     }
   
     // distanceToScreen
