@@ -207,7 +207,7 @@ extern struct
 	// 800B4840
 	// random stuff related to the title animation,
 	// come up with better names later
-	char title_OtherStuff[0x94];
+	char title_OtherStuff[0x84];
 	
 	// 800b48c4
 	struct
