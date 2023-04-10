@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_int vcolorAndCode)
+void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, u_int color)
 {
 	short iVar6;
 	short height;
@@ -10,7 +10,7 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct Prim
 	p = (POLY_FT4*)primMem->curr;
 
 	// vertex color and code
-	*(u_int*)&p->r0 = vcolorAndCode;
+	*(u_int*)&p->r0 = color;
 
 	setPolyFT4(p);
 
@@ -61,7 +61,7 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct Prim
 	p->v2 = (p->v0 + *(u_char*)&p->y2) - (char)posY;
 	p->v3 = (p->v0 + *(u_char*)&p->y3) - (char)posY;
 
-	if (semitransparencyEnabled != 0)
+	if (transparency != 0)
 	{
 		// disable blending mode bits of the texpage using AND, then set them using OR
 		// blending mode bits on most Icon images are set to 11 (Mode 3, which is no blending)
@@ -69,7 +69,7 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, int posX, int posY, struct Prim
 		// uh, I think so anyway, feel free to double check I guess
 
 		// note that these blending modes are different from those used in UI_Map_DrawMap
-		p->tpage = p->tpage & 0xff9f | (semitransparencyEnabled - 1) << 5;
+		p->tpage = p->tpage & 0xff9f | (transparency - 1) << 5;
 		p->code = p->code | 2;
 	}
 

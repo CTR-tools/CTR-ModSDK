@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char semitransparencyEnabled, short scale, u_short rot)
+void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char transparency, int scale, u_short rot)
 {
 	u_char y2;
 	u_int code;
@@ -30,7 +30,7 @@ void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, int posX, int posY, struct PrimM
 
 	p = (POLY_GT4*)primMem->curr;
 
-	if (semitransparencyEnabled == 0)
+	if (transparency == 0)
 	{
 		code = 0x3c000000;
 		*(int*)&p->u1 = topRightCornerAndPageXY;
@@ -41,7 +41,7 @@ void DECOMP_DecalHUD_Arrow2D(struct Icon* icon, int posX, int posY, struct PrimM
 		code = 0x3e000000;
 
 		// set top right corner UVs and texpage of primitive, and alter the blending mode bits of the texpage from 11 (Mode 3, which is no blending) to 00 (Mode 0, equivalent to regular 50% opacity)
-		*(int*)&p->u1 = topRightCornerAndPageXY & 0xff9fffff | ((u_int)semitransparencyEnabled - 1) * 0x200000;
+		*(int*)&p->u1 = topRightCornerAndPageXY & 0xff9fffff | ((u_int)transparency - 1) * 0x200000;
 	}
 
 	// set top left vertex color, and code in 7th byte of prim

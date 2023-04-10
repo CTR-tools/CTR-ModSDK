@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, short rot)
+void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, short rot)
 {
 	short width;
 	short height;
