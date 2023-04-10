@@ -46,7 +46,7 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
     
 	if ((OVR_230.menubox_mainMenu.state & 0x10) == 0) 
 	{
-      gGT->numPlyrCurrGame = 1;
+      gGT->numPlyrNextGame = 1;
 	  
 	  // if no buttons pressed, check demo mode
       if (sdata->gGamepads->anyoneHeldCurr == 0) 
@@ -147,7 +147,7 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
     *(int*)0x800b59e0 = 2;
     
     // set number of players to 1
-    gGT->numPlyrCurrGame = 1;
+    gGT->numPlyrNextGame = 1;
     
     // set game mode to Time Trial Mode
     gGT->gameMode1 |= 0x20000;
