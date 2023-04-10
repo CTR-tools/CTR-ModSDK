@@ -56,6 +56,8 @@ struct Driver* BOTS_Driver_Init(int driverID)
 	sdata->gGT->drivers[driverID] = d;
 	t->modelIndex = 0x3f;
 	
+	// === Need to Finish ===
+	
 	// [0x5a4, 0x5b8 not in common.h]
 	d->actionsFlagSet |= 0x100000;
 	// [&DAT_8008daf8] unknown use
