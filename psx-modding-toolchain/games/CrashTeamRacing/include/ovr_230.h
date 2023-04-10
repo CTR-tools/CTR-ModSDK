@@ -439,7 +439,7 @@ extern struct
 	short colorIndexArray[2];
 
 	// 800b594c
-	char fill_MainMenu_LevelRowbattletracks_temporary[0x98];
+	char fill_MainMenu_LevelRowbattletracks_temporary[0x90];
 
 	// 800b59a0 title object
 
@@ -470,13 +470,33 @@ extern struct
 	// 800b59ca highScore transition frames
 	// ...
 
+	// 0x800b59dc
+	int characterSelect_aspectY;
+	
+	int unkE0;
+
 	// 0x800b59e4 -- UsaRetail
 	// 0x800b6288 -- EurRetail
 	// 0x800b9a90 -- JpnRetail
 	int movingToTrackMenu;
 		
 	// 800b59e8
-	char fill_movingtotrackmenu[0x28];
+	short characterSelect_MoveDir[4];
+	
+	// 800b59f0
+	short characterSelect_charIDs_desired[4];
+	
+	// 800b59f8
+	short characterSelect_charIDs_curr[4];
+	
+	// 800b5a00
+	short characterSelect_angle[4];
+	
+	// 800b5a08
+	int transitionState;
+	
+	// 800b5a0c
+	short* characterSelect_ptrWindowXY;
 
 	// 800b5a10
 	int characterSelectIconLayout;
@@ -496,13 +516,25 @@ extern struct
 	// 0 = transitioning in, 1 = in focus/still, 2 = transitioning out
 	int isMenuTransitioning;
 
-	int fill_isMenuTransitioning1;
+	// 0x800b5a24
+	short timerPerPlayer[4];
 
 	// 800b5a2c
 	int isRosterExpanded;
 
-	// 800b5a24
-	char fill_isMenuTransitioning2[0x20];
+	// 800b5a30
+	int characterSelect_aspectX;
+
+	// 800b5a34
+	int unkPtr1;
+	
+	// 800b5a38
+	int unkCount;
+
+	// 800b5a3c
+	struct TransitionMeta* ptrTransitionMeta;
+	int countMeta0xD;
+
 
 	// 800b5a44
 	short transitionFrames;
