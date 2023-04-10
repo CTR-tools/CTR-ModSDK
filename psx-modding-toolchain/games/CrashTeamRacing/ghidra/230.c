@@ -2077,7 +2077,7 @@ undefined4 FUN_800adae4(int param_1,short param_2,short param_3)
 // Search for character model by string,
 // specific to main menu lev, altered in oxide mod
 
-// MM_Characters_SearchModelByString
+// MM_Characters_GetModelByString
 int * FUN_800adb64(int *param_1)
 
 {
