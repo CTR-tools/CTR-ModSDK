@@ -663,20 +663,20 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
             puVar16 = ((int) & local_50 + difficulty * 2);
 
             // add cupID to bit
-            uVar6 = (int) puVar16 + gGT->cup.cupID;
+            uVar6 = (int)puVar16[gGT->cup.cupID];
 
             // byte index
             byteIndex = (int) uVar6 >> 5;
 
             // Save record that this cup, on this difficulty, was won
-            sdata->gameProgress.unlocks[byteIndex] = sdata->gameProgress.unlocks[byteIndex] | 1 << (uVar6 & 0x1f);
+            sdata->gameProgress.unlocks[byteIndex] |= 1 << uVar6;
 
             // bit index of cup completion on this difficulty (prior to now)
             uVar6 = (int)((int) & local_48 + difficulty * 2) + gGT->cup.cupID;
 
             // If this cup was not previuosly beaten on this difficulty,
             // and this is the first time the cup was won
-            if (((u_int) sdata->gameProgress.unlocks[(int) uVar6 >> 5] >> (uVar6 & 0x1f) & 1) == 0) {
+            if ((sdata->gameProgress.unlocks[byteIndex] >> uVar6 & 1) == 0) {
 
               // gGT->0x8 | 0x1000,
               // lets 233 know to prompt the Save Game box
@@ -692,7 +692,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
               for (i = 0; i < 4; i++) {
 
                 // if any of four cups on this difficulty was not won
-                if (((u_int) sdata->gameProgress.unlocks[(int) uVar6 >> 5] >> (uVar6 & 0x1f) & 1) == 0) {
+                if ((sdata->gameProgress.unlocks[uVar6 >> 5] >> uVar6 & 1) == 0) {
                   // you dont deserve to unlock a battle map
                   wonCup = false;
                   break;

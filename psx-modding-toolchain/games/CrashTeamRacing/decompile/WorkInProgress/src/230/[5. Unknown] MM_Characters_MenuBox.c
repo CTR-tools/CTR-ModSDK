@@ -520,7 +520,7 @@ void MM_Characters_MenuBox()
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
 			// also the variable written by cheats
-			(((u_int)(&sdata->gameProgress.unlocks[0])[iVar8] >> (psVar18[4] & 0x1fU) & 1) != 0)
+			((sdata->gameProgress.unlocks[iVar8] >> psVar18[4] & 1) != 0)
 		) 
 		{
 			iconColor = &OVR_230.characterSelect_NeutralColor;

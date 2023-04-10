@@ -57,7 +57,10 @@ struct Driver* BOTS_Driver_Init(int driverID)
 	t->modelIndex = 0x3f;
 	
 	// [0x5a4, 0x5b8 not in common.h]
+	d->actionsFlagSet |= 0x100000;
 	// [&DAT_8008daf8] unknown use
 	
-	// [need to finish]
+	sdata->gGT->numBotsCurrGame += 1;
+	BOTS_GotoStartingLine(d);
+	return d;
 }
