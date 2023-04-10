@@ -1,6 +1,6 @@
 // 260+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 329 rewritten so far
 
-// 257 for every 'common' and ','
+// 260 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -25,7 +25,8 @@ common, 230, MM_MenuBox_2p3p4p, 0x0, General/230/230_MM_34_MenuBox_2p3p4p.c
 common, 230, MM_ToggleRows_Difficulty, 0x0, General/230/230_MM_35_ToggleRows_Difficulty.c
 common, 230, MM_MenuBox_Difficulty, 0x0, General/230/230_MM_36_MenuBox_Difficulty.c
 common, 230, MM_MenuBox_SingleCup, 0x0, General/230/230_MM_37_MenuBox_SingleCup.c
-common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/230_MM_43_Characters_boolIsInvalid.c
+common, 230, MM_MenuBox_NewLoad, 0x0, General/230/230_MM_38_MenuBox_NewLoad.c
+common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/230_MM_42_Characters_boolIsInvalid.c
 
 // 231 (incomplete)
 // skip first two
