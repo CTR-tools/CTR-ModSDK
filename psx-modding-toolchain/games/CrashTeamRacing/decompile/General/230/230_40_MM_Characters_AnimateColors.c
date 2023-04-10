@@ -25,11 +25,11 @@ void DECOMP_MM_Characters_AnimateColors(unsigned char *colorData, short playerID
     iVar4 = iVar4 >> 0x10;
 
     if ((uVar3 & 0x800) != 0)
-      iVar4 = -iVar4;
+      iVar4 = -(int)iVar4;
   }
 
   bVar1 = 0;
-  if (0xc00 < iVar4) {
+  if (0xc00 < (int)iVar4) {
     bVar1 = ((iVar4 << 7) >> 0xc);
   }
   
