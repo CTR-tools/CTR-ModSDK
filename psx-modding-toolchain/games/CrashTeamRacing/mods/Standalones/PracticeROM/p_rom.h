@@ -31,22 +31,6 @@
 #define msFrame 32
 #endif
 
-// colors
-#define ND_Orange 0
-#define white 1
-#define red 3
-#define blue 5
-#define green 7
-#define pink 8
-#define purple 9
-#define lime 10
-#define lightBlue 11
-#define darkPurple 12
-#define yellow 14
-#define orange 15
-#define silver 22
-#define darkGreen 30
-
 struct P_ROM
 {
 

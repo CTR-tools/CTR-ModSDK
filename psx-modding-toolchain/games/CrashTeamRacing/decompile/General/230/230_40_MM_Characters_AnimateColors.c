@@ -2,12 +2,14 @@
 
 void DECOMP_MM_Characters_AnimateColors(unsigned char *colorData, short playerID, short flag)
 {
-  char bVar1;
+  unsigned char bVar1;
   unsigned int uVar3;
-  int iVar4;
-  int *ptrColor;
-
-  ptrColor = data.ptrColor[playerID + 0x18];
+  unsigned int iVar4;
+  
+  // access int RGBA as a char array,
+  // for editing components of color
+  unsigned char* ptrColor;
+  ptrColor = (unsigned char*)data.ptrColor[playerID + PLAYER_BLUE];
 
   iVar4 = 0;
 
@@ -22,17 +24,19 @@ void DECOMP_MM_Characters_AnimateColors(unsigned char *colorData, short playerID
     }
     iVar4 = iVar4 >> 0x10;
 
-    if ((uVar3 & 0x800) != 0) {
+    if ((uVar3 & 0x800) != 0)
       iVar4 = -iVar4;
-    }
   }
 
+  bVar1 = 0;
   if (0xc00 < iVar4) {
     bVar1 = ((iVar4 << 7) >> 0xc);
   }
+  
   colorData[0] = ptrColor[0] | bVar1;
   colorData[1] = ptrColor[1] | bVar1;
   colorData[2] = ptrColor[2] | bVar1;
   colorData[3] = 0;
+  
   return;
 }
