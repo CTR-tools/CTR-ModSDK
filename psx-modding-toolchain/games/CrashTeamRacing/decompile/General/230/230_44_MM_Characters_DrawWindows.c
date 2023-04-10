@@ -16,6 +16,7 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
   struct TileView* tileview;
   short *ptrCurr;
   int iVar14;
+  struct TransitionMeta* tMeta;
   short rot[3];
   
   gGT = sdata->gGT;
@@ -28,24 +29,17 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
   for (iVar14 = 0; iVar14 < gGT->numPlyrNextGame; iVar14++)
   {
     psVar11 = &OVR_230.characterSelect_ptrWindowXY[iVar14*2];
-    iVar6 = &OVR_230.ptrTransitionMeta[iVar14];
+    tMeta = &OVR_230.ptrTransitionMeta[iVar14];
   
     // tileView
     tileview = &gGT->tileView[iVar14];
   
-    tileview->rect.x = *psVar11 + *(short *)(iVar6 + 0xa6);
-  
-    // window width
-    uVar3 = OVR_230.characterSelect_aspectX;
-  
-    // window height
-    uVar2 = OVR_230.characterSelect_aspectY;
-  
-    tileview->rect.y = psVar11[1] + *(short *)(iVar6 + 0xa8);
+    tileview->rect.x = psVar11[0] + tMeta[0x10].currX;
+    tileview->rect.y = psVar11[1] + tMeta[0x10].currY;
   
     // windowSize (X and Y)
-    tileview->aspectX = uVar3;
-    tileview->aspectY = uVar2;
+    tileview->aspectX = OVR_230.characterSelect_aspectX;
+    tileview->aspectY = OVR_230.characterSelect_aspectY;
   
     // negative StartX
     if ((short)tileview->rect.x < 0) {
