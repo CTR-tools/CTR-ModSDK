@@ -127,6 +127,8 @@ extern struct
 	// 800b44e4
 	struct MenuRow rows_mainMenu_Basic[7];
 
+	char padding800b450E[2];
+
 	// 800b4510
 	struct MenuRow rows_mainMenu_WithScrapbook[8];
 

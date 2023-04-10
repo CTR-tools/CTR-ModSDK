@@ -18,6 +18,7 @@ common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
 // 230 (incomplete)
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_MM_09_30_CheatCodes.c // contains 22 functions
 common, 230, MM_ParseCheatCodes, 0x0, General/230/230_MM_30_ParseCheatCodes_Hook.c
+common, 230, MM_MenuBox_Main, 0x0, General/230/230_MM_31_MenuBox_Main.c
 common, 230, MM_ToggleRows_PlayerCount, 0x0, General/230/230_MM_32_ToggleRows_PlayerCount.c
 common, 230, MM_MenuBox_1p2p, 0x0, General/230/230_MM_33_MenuBox_1p2p.c
 common, 230, MM_MenuBox_2p3p4p, 0x0, General/230/230_MM_34_MenuBox_2p3p4p.c
