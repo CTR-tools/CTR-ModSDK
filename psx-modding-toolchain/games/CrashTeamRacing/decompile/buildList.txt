@@ -27,6 +27,7 @@ common, 230, MM_MenuBox_SingleCup, 0x0, General/230/230_37_MM_MenuBox_SingleCup.
 common, 230, MM_MenuBox_NewLoad, 0x0, General/230/230_38_MM_MenuBox_NewLoad.c
 common, 230, MM_AdvNewLoad_GetMenuBox, 0x0, General/230/230_39_MM_AdvNewLoad_GetMenuBox.c
 common, 230, MM_Characters_AnimateColors, 0x0, General/230/230_40_MM_Characters_AnimateColors.c
+common, 230, MM_Characters_GetNextDriver, 0x0, General/230/230_41_MM_Characters_GetNextDriver.c
 common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/230_42_MM_Characters_boolIsInvalid.c
 common, 230, MM_Characters_GetModelByName, 0x0, General/230/230_43_MM_Characters_GetModelByName.c
 

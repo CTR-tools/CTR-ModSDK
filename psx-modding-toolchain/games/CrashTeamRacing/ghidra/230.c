@@ -2028,7 +2028,7 @@ int FUN_800ada4c(short param_1,ushort param_2)
   
   if (
 		// bitshift right
-		// if desired driver is not unlocked
+		// if desired driver is not unlocked by default
 		(iVar3 >> 0x10 != -1) && 
 		
 		(((uint)(&DAT_8008e6ec)[iVar3 >> 0x15] >> (uVar2 & 0x1f) & 1) == 0)

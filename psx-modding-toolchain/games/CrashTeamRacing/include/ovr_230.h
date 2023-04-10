@@ -53,10 +53,11 @@ struct CharacterSelectMeta
 	short posY;
 	
 	// 0x4
-	char indexUp;
-	char indexDown;
-	char indexLeft;
-	char indexRight;
+	// up, down, left, right
+	// must be array, needs enum,
+	// see MM_Characters_GetNextDriver,
+	// which means MenuRow needs the same
+	char indexNext[4];
 	
 	// 0x8
 	short characterID;
@@ -296,18 +297,21 @@ extern struct
 	struct TransitionMeta transitionMeta_csm_1P2P[0x15];
 	
 	// 0x2 byte padding
+	short padding800b51A6;
 	
 	// 3P mode
 	// 800b51A8
 	struct TransitionMeta transitionMeta_csm_3P[0x15];
 	
 	// 0x2 byte padding
+	short padding800B527A;
 	
 	// 4P mode
 	// 800b527c
 	struct TransitionMeta transitionMeta_csm_4P[0x15];
 	
 	// 0x2 byte padding
+	short padding800B534E;
 	
 	// 800B5350
 	struct TransitionMeta* ptr_transitionMeta_csm[4];
@@ -316,6 +320,9 @@ extern struct
 	short csm_instPos[4];
 	short csm_instRot[3];
 	short moveModels;
+	
+	// 800B5370
+	int unkCharacterWindows;
 	
 	// 800b5374
 	// points to s_1, s_2, s_3, s_4
@@ -345,7 +352,10 @@ extern struct
 	
 	// 800b5540
 	// why on earth does it need this many?
-	struct TransitionMeta transitionMeta_trackSel[0x15];
+	struct TransitionMeta transitionMeta_trackSel[0x11];
+	
+	short padding800b55EA;
+	int unk800b55EC;
 
 	// 800b55f0
 	struct TransitionMeta transitionMeta_cupSel[0x6];
@@ -428,8 +438,8 @@ extern struct
 	// 800b5948
 	short colorIndexArray[2];
 
-
-	char fill_MainMenu_LevelRowbattletracks_temporary[0x58];
+	// 800b594c
+	char fill_MainMenu_LevelRowbattletracks_temporary[0x98];
 
 	// 800b59a0 title object
 
@@ -470,8 +480,15 @@ extern struct
 
 	// 800b5a10
 	int characterSelectIconLayout;
+	
+	// 800b5a14
+	int unkTimerMM;
+	
+	// 800b5a18
+	struct CharacterSelectMeta* csm_Active;
 
-	char fill_characterSelectIconLayout[0xC];
+	// 800b5a1c ???
+	int MM_State;
 
 	// 0x800b5a20 -- UsaRetail
 	// 0x800b62c4 -- EurRetail
