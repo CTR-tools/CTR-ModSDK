@@ -209,7 +209,7 @@ void MM_Characters_MenuBox()
 	dontDrawSelectCharacter:
 
 	// if number of players is not zero
-	if (gGT->numPlyrNextGame)
+	if (gGT->numPlyrNextGame != 0)
 	{
 		globalIconPerPlayerPtr = &globalIconPerPlayer[0];
 
@@ -481,7 +481,7 @@ void MM_Characters_MenuBox()
 			}
 			else
 			{
-				puVar12 = OVR_230.dataUnk[7];
+				puVar12 = &OVR_230.dataUnk[8];
 			}
 		
 			MenuBox_DrawOuterRect_HighLevel(&r80, puVar12, 0, gGT->backBuffer->otMem.startPlusFour);
