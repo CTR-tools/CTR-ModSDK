@@ -5970,6 +5970,7 @@ LAB_800b25f0:
     iVar7 = iVar7 + 1;
     iVar15 = iVar7 * 0x10000;
   } while (iVar7 * 0x10000 >> 0x10 < 4);
+  
   if (DAT_8008d432 == 2) {
     local_4c = 0x134;
     local_4a = 0x1e;
