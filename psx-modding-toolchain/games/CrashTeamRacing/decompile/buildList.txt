@@ -1,6 +1,6 @@
-// 266+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 335 rewritten so far
+// 270+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 339 rewritten so far
 
-// 266 for every 'common' and ','
+// 270 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
