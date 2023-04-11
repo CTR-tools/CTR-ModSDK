@@ -6902,7 +6902,8 @@ void FUN_800b4014(int param_1)
     iVar1 = FUN_800b6674(0);
 	
     if (
-			// if movie is finished
+			// if movie is finished,
+			// means scrapbook ended, no looping
 			(iVar1 == 1) || 
 			
 			// If you press Start, Cross, Circle, Triangle, or Square
@@ -7346,13 +7347,23 @@ void FUN_800b5c8c(void)
     }
     DAT_800b67c6 = 0;
 	
-    if ((DAT_800b67ac < 0) &&
+	// if reached end of video,
+	// choose to loop or not loop
+    if (
+		(DAT_800b67ac < 0) &&
        
-	   // length of video
-	   ((DAT_800b67d4 <= iVar2 || (iVar2 < DAT_800b67e0)))) 
+		(
+			// length of video
+			(DAT_800b67d4 <= iVar2 || 
+			
+			(iVar2 < DAT_800b67e0))
+		)
+	   ) 
 	{
-	  // scrapbook not track select
-      if ((DAT_800b67e8 & 4) == 0) {
+	  // scrapbook not track select,
+	  // if video is not looping
+      if ((DAT_800b67e8 & 4) == 0) 
+	  {
         do 
 		{
 		  // 9 = CdlPause
@@ -7360,11 +7371,14 @@ void FUN_800b5c8c(void)
         
 		} while (iVar3 == 0);
         
+		// end of scrapbook
 		DAT_800b67c4 = 1;
       }
 	  
-	  // track select, not scrapbook
-      else {
+	  // track select, not scrapbook,
+	  // if video is looping
+      else 
+	  {
         DAT_800b67e4 = 0xffffffff;
         if (DAT_800b67b0 < 1) {
           
@@ -7753,6 +7767,8 @@ uint FUN_800b6674(int param_1)
 	  // does not affect internal states (libref)
       FUN_80079884(1);
     }
+	
+	// end of scrapbook
     uVar2 = (uint)DAT_800b67c4;
   }
   return uVar2;
