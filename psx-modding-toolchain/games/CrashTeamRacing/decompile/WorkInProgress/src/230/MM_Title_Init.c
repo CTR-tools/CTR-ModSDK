@@ -59,7 +59,7 @@ void DECOMP_MM_Title_Init(void)
     memset(piVar9,0,0x24);
 	
 	// store pointer to thread inside object
-    *piVar9 = &threadTitle;
+    *piVar9 = threadTitle;
 	
     piVar8 = piVar9;
     
