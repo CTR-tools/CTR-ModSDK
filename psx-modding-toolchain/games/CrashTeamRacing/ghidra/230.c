@@ -2909,8 +2909,7 @@ void FUN_800ae74c(void)
 		// if more than 12 frames
 		if (0xc < DAT_800b5a44) 
 		{
-		  // Make a backup of the characters
-		  // you selected in character selection screen
+		  // MM_Characters_BackupIDs
           FUN_800ae274();
 		  
 		  // if returning to main menu
