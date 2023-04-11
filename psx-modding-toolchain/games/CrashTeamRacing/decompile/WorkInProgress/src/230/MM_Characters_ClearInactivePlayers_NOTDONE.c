@@ -19,7 +19,7 @@ void DECOMP_MM_Characters_ClearInactivePlayers(void) {
   *(int*)&local_8[4] = OVR_230.characterIDBackup2;
 
   // if number of players is not zero
-  if (gGT->numPlyrNextGame) {
+  if (gGT->numPlyrNextGame != 0) {
     
 	iVar2 = 0;
     
