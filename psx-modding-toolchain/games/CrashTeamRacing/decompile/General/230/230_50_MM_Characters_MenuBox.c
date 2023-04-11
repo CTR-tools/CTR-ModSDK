@@ -466,7 +466,7 @@ void MM_Characters_MenuBox()
 			r80.h = 0x21;
 		
 			// if player has not selected a character
-			if (sdata->characterSelectFlags >> (i & 1U) == 0) 
+			if (((sdata->characterSelectFlags >> i) & 1U) == 0) 
 			{
 				// draw string
 				// "1", "2", "3", "4", above the character icon
