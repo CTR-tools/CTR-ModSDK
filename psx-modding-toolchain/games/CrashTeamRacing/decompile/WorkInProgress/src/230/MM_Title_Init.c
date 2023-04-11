@@ -74,7 +74,7 @@ void DECOMP_MM_Title_Init(void)
               (gGT->ptrModel[OVR_230.titleInstances[i].modelID]),OVR_230.s_title,threadTitle);
       
 	  // store instance
-	  *piVar8 = &titleInst;
+	  *piVar8 = titleInst;
       
 	  if (OVR_230.titleInstances[i].boolApplyFlag != 0) 
 	  { 
