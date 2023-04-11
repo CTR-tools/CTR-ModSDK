@@ -43,7 +43,7 @@ void DECOMP_MM_Characters_ClearInactivePlayers(void) {
   {
     for (iVar7 = 1; iVar7 < gGT->numPlyrNextGame; iVar7++) 
 	{
-	  for (iVar6 = 0; iVar6 < iVar5; iVar6++) 
+	  for (iVar6 = 0; iVar6 < iVar2; iVar6++) 
 	  {
 		if (data.characterIDs[iVar2] == data.characterIDs[iVar6]) 
 		{
