@@ -7280,6 +7280,7 @@ void FUN_800b5c8c(void)
   // WAIT_TIME
   iVar5 = 10;
   
+  // free sectors and over sectors
   StRingStatus(&local_30,auStack46);
   
   // StGetBackloc
