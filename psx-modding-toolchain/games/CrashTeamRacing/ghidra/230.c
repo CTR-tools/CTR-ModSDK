@@ -7281,7 +7281,10 @@ void FUN_800b5c8c(void)
   iVar5 = 10;
   
   StRingStatus(&local_30,auStack46);
+  
+  // StGetBackloc
   iVar2 = FUN_8007a3b0(&DAT_800b6828);
+  
   sVar1 = DAT_800b67c6;
   if ((DAT_800b67c6 == 1) &&
      (DAT_800b67ec - (DAT_800b67ec >> 2) <= (int)local_30)) {
@@ -7522,7 +7525,11 @@ void FUN_800b6260(void)
   }
   StClearRing();
   StSetMask(1,0,0);
+  
+  // CdDataCallback
   FUN_80071e20(0);
+  
+  // CdReadyCallback
   FUN_80071a10(0);
   
   // DecDCTReset
