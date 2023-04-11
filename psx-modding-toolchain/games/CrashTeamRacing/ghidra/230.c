@@ -7248,6 +7248,8 @@ void FUN_800b5b7c(undefined *param_1)
     }
     DAT_800b67cc = 1;
   }
+  
+  // CdlModeSpeed
   local_18[0] = 0x80;
   
   // 0xe = CdlSetmode
@@ -7390,14 +7392,21 @@ LAB_800b5fec:
 	// retrieve data with timeout (10 frames)
 	do {
       iVar3 = StGetNext(&local_2c,local_28);
-      if (iVar3 == 0) {
+      if (iVar3 == 0) 
+	  {
+		// sector->frameCount
         DAT_800b67d8 = *(int *)(local_28[0] + 8);
-        if (DAT_800b67d8 == DAT_800b67dc) {
+        
+		if (DAT_800b67d8 == DAT_800b67dc) {
           StFreeRing(local_2c);
           goto LAB_800b5fec;
         }
-        if (0 < DAT_800b67ac) {
+        
+		if (0 < DAT_800b67ac) 
+		{
+		  // sector->loc
           iVar3 = CdPosToInt(local_28[0] + 0x1c);
+		  
           iVar5 = 10;
           if (DAT_800b67ac <= iVar3) {
             DAT_800b67b4 = 1;
@@ -7414,7 +7423,9 @@ LAB_800b5fec:
 		// DecDCTBufSize
         uVar4 = FUN_800798b8(local_2c);
 		
-        if (uVar4 <= DAT_800b67f4) {
+        if (uVar4 <= DAT_800b67f4) 
+		{
+		  // sector->loc
           DAT_800b67d4 = *(undefined *)(local_28[0] + 0x1c);
           DAT_800b682d = *(undefined *)(local_28[0] + 0x1d);
           DAT_800b682e = *(undefined *)(local_28[0] + 0x1e);
@@ -7479,6 +7490,7 @@ void FUN_800b615c(undefined4 param_1,undefined4 param_2)
   // CDSYS_SetMode_StreamData
   FUN_8001c470();
   
+  // 800b6814 = Ring_Buf (mempack)
   // 800b67ec = RING_SIZE
   StSetRing(DAT_800b6814,DAT_800b67ec);
   
