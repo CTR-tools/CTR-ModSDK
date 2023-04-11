@@ -6884,6 +6884,9 @@ void FUN_800b4014(int param_1)
 	
 	// Actually play the movie
   case 2:
+  
+	// infinite loop (cause this is scrapbook),
+	// keep doing DecodeFrame and VSync until done
     while (
 	
 		// MM_Video_DecodeFrame
