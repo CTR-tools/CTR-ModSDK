@@ -19,7 +19,7 @@ void MM_Characters_MenuBox()
 	u_char* puVar12;
 	u_int characterSelectType;
 	u_int fontType;
-	u_int* iconColor;
+	u_int iconColor;
 	u_int globalIconPerPlayerCopy3;
 	int nextDriverCopy;
 	int globalIconPerPlayerCopy4;
@@ -509,7 +509,7 @@ void MM_Characters_MenuBox()
 			(((sdata->gameProgress.unlocks[iVar8>>5] >> (iVar8&0x1f)) & 1) != 0)
 		) 
 		{
-			iconColor = &OVR_230.characterSelect_NeutralColor;
+			iconColor = OVR_230.characterSelect_NeutralColor;
 		
 			// if number of players is not zero
 			if (gGT->numPlyrNextGame != 0) 
@@ -524,7 +524,7 @@ void MM_Characters_MenuBox()
 						 (((int)(short)sdata->characterSelectFlags >> (j & 0x1fU) & 1U) != 0)
 					)
 					{
-						iconColor = &OVR_230.characterSelect_ChosenColor;
+						iconColor = OVR_230.characterSelect_ChosenColor;
 					}
 				}
 			}
@@ -541,12 +541,15 @@ void MM_Characters_MenuBox()
 				&gGT->backBuffer->primMem,
 				gGT->tileView_UI.ptrOT,
 
-				*iconColor, *iconColor, *iconColor, *iconColor, 1, 0x1000
+				iconColor, iconColor, iconColor, iconColor, 1, 0x1000
 			);
 		}
 		
 		csm_Active++;
 	}
+	
+	// reset
+	csm_Active = OVR_230.csm_Active;
 	
 	for (i = 0; i < 4; i++)
 	{
