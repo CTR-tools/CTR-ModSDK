@@ -7222,6 +7222,7 @@ void FUN_800b5b7c(undefined *param_1)
 	  // CdlModeStream2|CdlModeSpeed
 	  uVar2 = 0x1a0;
       
+	  // scrapbook
 	  if ((DAT_800b67e8 & 2) != 0) 
 	  {
 		// CdlModeStream2|CdlModeSpeed|CdlModeRT
@@ -7314,6 +7315,7 @@ void FUN_800b5c8c(void)
   else {
     DAT_800b67d0 = 0;
     
+	// Scrapbook
 	if (((DAT_800b67e8 & 8) == 0) && ((int)local_30 < DAT_800b67ec >> 4)) 
 	{
 	  // MM_Video_KickCD
@@ -7349,6 +7351,7 @@ void FUN_800b5c8c(void)
 	   // length of video
 	   ((DAT_800b67d4 <= iVar2 || (iVar2 < DAT_800b67e0)))) 
 	{
+	  // scrapbook not track select
       if ((DAT_800b67e8 & 4) == 0) {
         do 
 		{
@@ -7359,6 +7362,8 @@ void FUN_800b5c8c(void)
         
 		DAT_800b67c4 = 1;
       }
+	  
+	  // track select, not scrapbook
       else {
         DAT_800b67e4 = 0xffffffff;
         if (DAT_800b67b0 < 1) {
