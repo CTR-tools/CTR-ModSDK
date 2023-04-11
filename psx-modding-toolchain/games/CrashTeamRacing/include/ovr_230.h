@@ -532,4 +532,13 @@ extern struct
 	// 800b5a44
 	short transitionFrames;
 	
+	// ================= End of Character Select, Start of Video ===========================
+	
+	// 800b5a44 (RDATA for region)
+	char s_SliceBuf[0xC];
+	char s_VlcBuf[8];
+	char s_RingBuf[8];
+	
+	// 800b5a64 MM_Video_DecDCToutCallbackFunc
+	
 } OVR_230;
