@@ -3706,6 +3706,7 @@ void FUN_800afa94(int param_1)
 
 
 // MM_TrackSelect_Video_Draw
+// param_1 - RECT
 // param_2 - array of bigfile offsets
 // param_3 - track index
 void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort param_5)
@@ -3725,9 +3726,11 @@ void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort para
   if ((((DAT_8008d09c[*(int *)(iVar5 + 8) * 2 + 3] == 0) || ((int)*param_1 < 0)) ||
       ((int)param_1[1] < 0)) ||
      
-	 // compare values, against screen resolution
+	 // compare values, against screen resolution,
+	 // check if video is off-screen (and should not play)
 	 ((0x200 < (int)*param_1 + (int)param_1[2] || (0xd8 < (int)param_1[1] + (int)param_1[3])))) 
   {
+	// draw icon
     DAT_800b59b8 = 1;
   }
   else 
@@ -3789,6 +3792,8 @@ void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort para
       }
     }
   }
+  
+  // if not playing video, draw icon
   if (DAT_800b59b8 != 3) 
   {
 	// This is the same function that draws Character icons
@@ -3809,6 +3814,7 @@ void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort para
 				 DAT_800b55c0,
                  DAT_800b55c0,DAT_800b55c0,DAT_800b55c0,0,0x1000);
   }
+  
   if (DAT_800b59ba == 1) 
   {
 	// disable video copy
