@@ -7216,13 +7216,21 @@ void FUN_800b5b7c(undefined *param_1)
       if (DAT_800b67cc != 3) {
         return;
       }
-      uVar2 = 0x1a0;
-      if ((DAT_800b67e8 & 2) != 0) {
+      
+	  // CdlModeStream2|CdlModeSpeed
+	  uVar2 = 0x1a0;
+      
+	  if ((DAT_800b67e8 & 2) != 0) 
+	  {
+		// CdlModeStream2|CdlModeSpeed|CdlModeRT
         uVar2 = 0x1e0;
       }
-      DAT_800b67cc = 0;
-      iVar1 = CdRead2(uVar2);
-      if (iVar1 == 0) {
+      
+	  DAT_800b67cc = 0;
+      
+	  iVar1 = CdRead2(uVar2);
+      
+	  if (iVar1 == 0) {
         return;
       }
       puRam800b6830 = (undefined *)0x0;
@@ -7402,9 +7410,12 @@ LAB_800b5fec:
             DAT_800b67e0 = iVar2;
           }
         }
+		
+		// DecDCTBufSize
         uVar4 = FUN_800798b8(local_2c);
+		
         if (uVar4 <= DAT_800b67f4) {
-          DAT_800b682c = *(undefined *)(local_28[0] + 0x1c);
+          DAT_800b67d4 = *(undefined *)(local_28[0] + 0x1c);
           DAT_800b682d = *(undefined *)(local_28[0] + 0x1d);
           DAT_800b682e = *(undefined *)(local_28[0] + 0x1e);
           DAT_800b682f = *(undefined *)(local_28[0] + 0x1f);

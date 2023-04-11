@@ -547,4 +547,7 @@ extern struct
 extern struct
 {
 	
+	// 800b67d4
+	int numFrames;
+	
 } OVR_230_Video;
