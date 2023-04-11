@@ -83,10 +83,12 @@ void MM_Characters_MenuBox()
 				OVR_230.transitionFrames--;
 		
 				// if no more frames
-				if (OVR_230.transitionFrames == 0) 
+				if (OVR_230.transitionFrames == -1) 
 				{
 					// menu is now in focus
 					OVR_230.isMenuTransitioning = 1;
+					
+					OVR_230.transitionFrames = 0;
 				}
 			}
 			else  // assumes menu is in focus
@@ -202,6 +204,8 @@ void MM_Characters_MenuBox()
 		default:
 			goto dontDrawSelectCharacter;
 	}
+	
+	printf("%08x\n", &OVR_230.ptrTransitionMeta[15].currX);
 	
 	// Draw String
 	DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, (CENTER_TEXT | ORANGE));
