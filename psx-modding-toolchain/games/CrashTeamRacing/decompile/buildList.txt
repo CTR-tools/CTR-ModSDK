@@ -31,6 +31,7 @@ common, 230, MM_Characters_GetNextDriver, 0x0, General/230/230_41_MM_Characters_
 common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/230_42_MM_Characters_boolIsInvalid.c
 common, 230, MM_Characters_GetModelByName, 0x0, General/230/230_43_MM_Characters_GetModelByName.c
 common, 230, MM_Characters_DrawWindows, 0x0, General/230/230_44_MM_Characters_DrawWindows.c
+common, 230, MM_Characters_SetMenuLayout, 0x0, General/230/230_45_MM_Characters_SetMenuLayout.c
 
 // 231 (incomplete)
 // skip first two

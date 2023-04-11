@@ -250,18 +250,19 @@ extern struct
 	void* ptrSelectWindowPos[6];
 	
 	// 800B4D90
-	struct
-	{
-		short sizeX;
-		short sizeY;
-	} characterSelectWindowSize[0xC];
+	short windowW[6];
+	
+	// 800B4D9C
+	short windowH[6];
+	
+	// 800b4da8
+	short driverPosZ[6];
+	
+	// 800b4db4
+	short driverPosY[6];
 	
 	// 800b4dc0
-	struct
-	{
-		short posX;
-		short posY;
-	} characterSelectTextPos[3];	
+	short textPosArr[6];
 	
 	// 800b4dcc
 	struct CharacterSelectMeta csm_1P2P_limited[0xF];
@@ -276,14 +277,7 @@ extern struct
 	struct CharacterSelectMeta csm_4P[0xF];
 
 	// 800b509C
-	struct CharacterSelectMeta* ptr_csm_1P;
-	struct CharacterSelectMeta* ptr_csm_2P;
-	struct CharacterSelectMeta* ptr_csm_3P;
-	struct CharacterSelectMeta* ptr_csm_4P;
-	
-	// 800b50AC
-	struct CharacterSelectMeta* ptr_csm_1P_limited;
-	struct CharacterSelectMeta* ptr_csm_2P_limited;
+	struct CharacterSelectMeta* ptrCsmArr[6];
 	
 	// 800b50B4
 	// wouldn't need this if icons were stored by order of characterID
@@ -529,7 +523,7 @@ extern struct
 	int unkPtr1;
 	
 	// 800b5a38
-	int unkCount;
+	int textPos;
 
 	// 800b5a3c
 	struct TransitionMeta* ptrTransitionMeta;
