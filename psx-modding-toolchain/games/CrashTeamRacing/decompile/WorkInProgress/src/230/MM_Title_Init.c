@@ -7,7 +7,7 @@ void DECOMP_MM_Title_Init(void)
   struct GameTracker* gGT = sdata->gGT;
   struct Thread* threadTitle;
   struct Instance* titleInst;
-  struct Title* titleObj = (struct Title*)0x800b59a0;
+  struct Title* titleObj = *(int*)0x800b59a0;
   int i;
   int *piVar8;
   int *piVar9;
