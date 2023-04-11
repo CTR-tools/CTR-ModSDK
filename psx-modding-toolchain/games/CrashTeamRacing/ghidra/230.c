@@ -7156,6 +7156,8 @@ void FUN_800b5a64(void)
   
   if (((DAT_800b67e8 & 1) != 0) && (DAT_8009ebf8 != 0)) {
     StCdInterrupt();
+	
+	// StCdIntrFlag
     DAT_8009ebf8 = 0;
   }
   
