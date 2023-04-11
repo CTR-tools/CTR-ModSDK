@@ -7224,6 +7224,7 @@ void FUN_800b5b7c(undefined *param_1)
 	  uVar2 = 0x1a0;
       
 	  // scrapbook
+	  // if video contains audio
 	  if ((DAT_800b67e8 & 2) != 0) 
 	  {
 		// CdlModeStream2|CdlModeSpeed|CdlModeRT
