@@ -529,7 +529,6 @@ extern struct
 	struct TransitionMeta* ptrTransitionMeta;
 	int countMeta0xD;
 
-
 	// 800b5a44
 	short transitionFrames;
 	
