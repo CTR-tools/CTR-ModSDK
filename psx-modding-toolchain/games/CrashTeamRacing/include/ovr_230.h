@@ -542,3 +542,9 @@ extern struct
 	// 800b5a64 MM_Video_DecDCToutCallbackFunc
 	
 } OVR_230;
+
+// starts at 800b67ac
+extern struct
+{
+	
+} OVR_230_Video;
