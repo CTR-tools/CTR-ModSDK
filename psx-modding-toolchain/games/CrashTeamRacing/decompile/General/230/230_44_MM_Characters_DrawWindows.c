@@ -114,7 +114,7 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     iVar10->animFrame = 0;
     iVar10->vertSplit = 0;
   
-    uVar4 = MM_Characters_GetModelByName(data.MetaDataCharacters[(int)*ptrCurr].name_Debug);
+    uVar4 = DECOMP_MM_Characters_GetModelByName(data.MetaDataCharacters[(int)*ptrCurr].name_Debug);
   
     // set modelPtr in Instance
     iVar10->model = uVar4;

@@ -22,7 +22,7 @@ void DECOMP_MM_Characters_RestoreIDs(void) {
     data.characterIDs[i] = sdata->characterIDs_backup[i];
   }
 
-  MM_Characters_SetMenuLayout();
+  DECOMP_MM_Characters_SetMenuLayout();
 
   for (i = 0; i < 0xf; i++) 
   {  
@@ -62,7 +62,7 @@ void DECOMP_MM_Characters_RestoreIDs(void) {
     }
   }
 
-  MM_Characters_PreventOverlap();
+  DECOMP_MM_Characters_PreventOverlap();
 
   for (i = 0; i < gGT->numPlyrNextGame; i++) 
   {
@@ -78,7 +78,7 @@ void DECOMP_MM_Characters_RestoreIDs(void) {
 	OVR_230.characterSelect_angle[i] = (i * 0x400) + 400;
   }
 
-  MM_Characters_DrawWindows(0);
+  DECOMP_MM_Characters_DrawWindows(0);
   return;
 }
 

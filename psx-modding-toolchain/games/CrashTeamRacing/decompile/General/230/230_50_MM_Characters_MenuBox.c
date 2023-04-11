@@ -60,83 +60,65 @@ void MM_Characters_MenuBox()
 		globalIconPerPlayer[i] = OVR_230.characterIcon[data.characterIDs[i]];
 	}
 	
-	// if menu is in focus
-	if (OVR_230.isMenuTransitioning == 1) 
+	// if menu is not in focus
+	if (OVR_230.isMenuTransitioning != 1) 
 	{
-		MM_Characters_SetMenuLayout();
-		MM_Characters_DrawWindows(1);
+		MM_TransitionInOut(OVR_230.ptrTransitionMeta, (int)OVR_230.transitionFrames, 8);
 	}
+
+	DECOMP_MM_Characters_SetMenuLayout();
+	DECOMP_MM_Characters_DrawWindows(1);
 	
-	// if transitioning (in or out)
-	else
+	// if transitioning in
+	if (OVR_230.isMenuTransitioning == 0) 
 	{
-		if (OVR_230.isMenuTransitioning < 2) 
+		// subtract frame
+		OVR_230.transitionFrames--;
+	
+		// if no more frames
+		if (OVR_230.transitionFrames == -1) 
 		{
-			// if transitioning in
-			if (OVR_230.isMenuTransitioning == 0) 
-			{
-				MM_TransitionInOut(OVR_230.ptrTransitionMeta, (int)OVR_230.transitionFrames, 8);
-				MM_Characters_SetMenuLayout();
-				MM_Characters_DrawWindows(1);
-		
-				// subtract frame
-				OVR_230.transitionFrames--;
-		
-				// if no more frames
-				if (OVR_230.transitionFrames == -1) 
-				{
-					// menu is now in focus
-					OVR_230.isMenuTransitioning = 1;
-					
-					OVR_230.transitionFrames = 0;
-				}
-			}
-			else  // assumes menu is in focus
-			{
-				MM_Characters_SetMenuLayout();
-				MM_Characters_DrawWindows(1);
-			}
+			// menu is now in focus
+			OVR_230.isMenuTransitioning = 1;
+			
+			OVR_230.transitionFrames = 0;
 		}
-		else 
-		{
-			MM_TransitionInOut(OVR_230.ptrTransitionMeta, (int)OVR_230.transitionFrames, 8);
-			MM_Characters_SetMenuLayout();
-			MM_Characters_DrawWindows(1);
+	}
+
+	// if transitioning out
+	if (OVR_230.isMenuTransitioning == 2) 
+	{
+		// increase frame
+		OVR_230.transitionFrames++;
 		
-			// increase frame
-			OVR_230.transitionFrames++;
+		// if more than 12 frames
+		if (OVR_230.transitionFrames > 12) 
+		{
+			// Make a backup of the characters
+			// you selected in character selection screen
+			DECOMP_MM_Characters_BackupIDs();
 			
-			// if more than 12 frames
-			if (OVR_230.transitionFrames > 12) 
+			DECOMP_MM_Characters_HideDrivers();
+		
+			// if returning to main menu
+			if (OVR_230.movingToTrackMenu == 0) 
 			{
-				// Make a backup of the characters
-				// you selected in character selection screen
-				MM_Characters_BackupIDs();
-			
-				// if returning to main menu
-				if (OVR_230.movingToTrackMenu == 0) 
-				{
-					MM_JumpTo_Title_Returning();
-					MM_Characters_HideDrivers();
-					return;
-				}
-			
-				// if going to track/cup selection
-				MM_Characters_HideDrivers();
-			
-				// if you are in a cup
-				if (gGT->gameMode2 & CUP_ANY_KIND) 
-				{
-					sdata->ptrDesiredMenuBox = &OVR_230.menubox_cupSelect;
-					MM_CupSelect_Init();
-					return;
-				}
-			
-				// if going to track selection
-				sdata->ptrDesiredMenuBox = &OVR_230.menubox_trackSelect;
-				MM_TrackSelect_Init();
+				MM_JumpTo_Title_Returning();
 				return;
 			}
+		
+			// if you are in a cup
+			if ((gGT->gameMode2 & CUP_ANY_KIND) != 0) 
+			{
+				sdata->ptrDesiredMenuBox = &OVR_230.menubox_cupSelect;
+				MM_CupSelect_Init();
+				return;
+			}
+		
+			// if going to track selection
+			sdata->ptrDesiredMenuBox = &OVR_230.menubox_trackSelect;
+			MM_TrackSelect_Init();
+			return;
 		}
 	}
 
@@ -223,7 +205,7 @@ void MM_Characters_MenuBox()
 			globalIconPerPlayerCopy = globalIconPerPlayerPtr[i];
 			globalIconPerPlayerCopy2 = globalIconPerPlayerCopy;
 		
-			MM_Characters_AnimateColors(auStack120, i, (int)(short)(sdata->characterSelectFlags & characterSelectFlags5bit));
+			DECOMP_MM_Characters_AnimateColors(auStack120, i, (int)(short)(sdata->characterSelectFlags & characterSelectFlags5bit));
 			
 			puVar26 = &OVR_230.csm_Active[globalIconPerPlayerCopy];
 			
@@ -300,26 +282,26 @@ void MM_Characters_MenuBox()
 						globalIconPerPlayerCopy3 = globalIconPerPlayerCopy2;
 						do
 						{
-							globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy3);
+							globalIconPerPlayerCopy2 = DECOMP_MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy3);
 							globalIconPerPlayerCopy4 = globalIconPerPlayerCopy2;
 							
 							if (globalIconPerPlayerCopy2 == globalIconPerPlayerCopy3) 
 							{
 								local_50 = 1;
-								nextDriver = MM_Characters_GetNextDriver(direction, (int)(short)*globalIconPerPlayerPtr2);
+								nextDriver = DECOMP_MM_Characters_GetNextDriver(direction, (int)(short)*globalIconPerPlayerPtr2);
 								nextDriverCopy = (int)nextDriver;
-								globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[direction], nextDriverCopy);
+								globalIconPerPlayerCopy2 = DECOMP_MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[direction], nextDriverCopy);
 								globalIconPerPlayerCopy5 = (int)(short)globalIconPerPlayerCopy2;
 
 								if
 								(
 									(((globalIconPerPlayerCopy5 == globalIconPerPlayerCopy4) || (nextDriverCopy == globalIconPerPlayerCopy4)) || (nextDriverCopy == globalIconPerPlayerCopy5)) ||
-									(button = MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy5, j), (button & 0xffff) != 0)
+									(button = DECOMP_MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy5, j), (button & 0xffff) != 0)
 								)
 								{
-									nextDriver = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[direction], (int)(short)*globalIconPerPlayerPtr2);
+									nextDriver = DECOMP_MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[direction], (int)(short)*globalIconPerPlayerPtr2);
 									globalIconPerPlayerCopy5 = (int)nextDriver;
-									globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy5);
+									globalIconPerPlayerCopy2 = DECOMP_MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy5);
 									globalIconPerPlayerCopy4 = (int)(short)globalIconPerPlayerCopy2;
 
 									if
@@ -327,13 +309,13 @@ void MM_Characters_MenuBox()
 										((globalIconPerPlayerCopy4 == globalIconPerPlayerCopy3) || (globalIconPerPlayerCopy5 == globalIconPerPlayerCopy3)) ||
 										(
 											(globalIconPerPlayerCopy5 == globalIconPerPlayerCopy4 ||
-											(button = MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy4, j), (button & 0xffff) != 0))
+											(button = DECOMP_MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy4, j), (button & 0xffff) != 0))
 										)
 									)
 									{
-										nextDriver = MM_Characters_GetNextDriver(direction, (int)(short)*globalIconPerPlayerPtr2);
+										nextDriver = DECOMP_MM_Characters_GetNextDriver(direction, (int)(short)*globalIconPerPlayerPtr2);
 										globalIconPerPlayerCopy5 = (int)nextDriver;
-										globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[3 + direction], globalIconPerPlayerCopy5);
+										globalIconPerPlayerCopy2 = DECOMP_MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[3 + direction], globalIconPerPlayerCopy5);
 										globalIconPerPlayerCopy4 = (int)(short)globalIconPerPlayerCopy2;
 
 										if
@@ -342,20 +324,20 @@ void MM_Characters_MenuBox()
 											(
 												(
 													globalIconPerPlayerCopy5 == globalIconPerPlayerCopy4 ||
-													(button = MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy4, j), (button & 0xffff) != 0)
+													(button = DECOMP_MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy4, j), (button & 0xffff) != 0)
 												)
 											)
 										) 
 										{
-											nextDriver = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[3 + direction], (int)(short)*globalIconPerPlayerPtr2);
+											nextDriver = DECOMP_MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[3 + direction], (int)(short)*globalIconPerPlayerPtr2);
 											globalIconPerPlayerCopy5 = (int)nextDriver;
-											globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy5);
+											globalIconPerPlayerCopy2 = DECOMP_MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy5);
 											globalIconPerPlayerCopy4 = (int)(short)globalIconPerPlayerCopy2;
 
 											if
 											(
 												(((globalIconPerPlayerCopy4 == globalIconPerPlayerCopy3) || (globalIconPerPlayerCopy5 == globalIconPerPlayerCopy3)) || (globalIconPerPlayerCopy5 == globalIconPerPlayerCopy4)) ||
-												(button = MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy4, j), (button & 0xffff) != 0)
+												(button = DECOMP_MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy4, j), (button & 0xffff) != 0)
 											)
 											{
 												globalIconPerPlayerCopy2 = (u_int)*globalIconPerPlayerPtr2;
@@ -420,7 +402,7 @@ void MM_Characters_MenuBox()
 						OtherFX_Play(0,0);
 			
 						// if all players have selected their characters
-						if ((int)(short)sdata->characterSelectFlags == (0xff << ((u_int)numPlyrNextGame ^ 0xffU) & 0xff)) 
+						if ((int)(short)sdata->characterSelectFlags == (1 << numPlyrNextGame)-1) 
 						{
 							// move to track selection
 							OVR_230.movingToTrackMenu = 1;
@@ -492,7 +474,7 @@ void MM_Characters_MenuBox()
 		}
 	}
 
-	MM_Characters_PreventOverlap();
+	DECOMP_MM_Characters_PreventOverlap();
 	
 	csm_Active = OVR_230.csm_Active;
 	
@@ -572,7 +554,7 @@ void MM_Characters_MenuBox()
 			// if player has not selected a character
 			if (((int)(short)sdata->characterSelectFlags >> j & 1U) == 0) 
 			{
-				MM_Characters_AnimateColors
+				DECOMP_MM_Characters_AnimateColors
 				(
 					&colorRGBA, j,
 						
@@ -681,7 +663,7 @@ void MM_Characters_MenuBox()
 			r60.w = OVR_230.characterSelect_sizeX;
 			r60.h = OVR_230.characterSelect_sizeY;
 			
-			MM_Characters_AnimateColors(&r68, j, ((int)(short)sdata->characterSelectFlags >> j ^ 1U) & 1);
+			DECOMP_MM_Characters_AnimateColors(&r68, j, ((int)(short)sdata->characterSelectFlags >> j ^ 1U) & 1);
 			MenuBox_DrawOuterRect_HighLevel(&r60, &r68, 0, gGT->backBuffer->otMem.startPlusFour);
 			
 			// if player selected a character

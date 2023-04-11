@@ -156,7 +156,7 @@ LAB_800ac004:
 	// return to character selection
     sdata->ptrDesiredMenuBox = &OVR_230.menubox_characterSelect;
 	
-    MM_Characters_RestoreIDs();
+    DECOMP_MM_Characters_RestoreIDs();
     break;
 	
   // high score menu
