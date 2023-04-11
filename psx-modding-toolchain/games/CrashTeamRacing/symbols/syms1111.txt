@@ -1297,7 +1297,7 @@
 800b1338 MM_Characters_DrawWindows
 800b17e8 MM_Characters_SetMenuLayout
 800b19a0 MM_Characters_BackupIDs
-800b19ec MM_Characters_ClearInactivePlayers
+800b19ec MM_Characters_PreventOverlap
 800b1b90 MM_Characters_RestoreIDs
 800b1ddc MM_Characters_HideDrivers
 800b1e78 MM_Characters_MenuBox

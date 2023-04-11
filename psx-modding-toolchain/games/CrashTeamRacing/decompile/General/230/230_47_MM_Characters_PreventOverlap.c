@@ -1,8 +1,7 @@
 #include <common.h>
 
-// if NOP'd, you can type at 80086e84 while in selection,
-// otherwise, 80086e84 will be reset to zero after typing
-void DECOMP_MM_Characters_ClearInactivePlayers(void) {
+void DECOMP_MM_Characters_PreventOverlap(void) 
+{
   struct GameTracker *gGT = sdata->gGT;
   char cVar1;
   int iVar2;
@@ -14,13 +13,13 @@ void DECOMP_MM_Characters_ClearInactivePlayers(void) {
   
   char local_8[8];
 
-  // 8 bytes, backed up character IDs (maybe should've been arrays?)
-  *(int*)&local_8[0] = OVR_230.characterIDBackup1;
-  *(int*)&local_8[4] = OVR_230.characterIDBackup2;
+  // default 0,1,2,3,4,5,6,7
+  *(int*)&local_8[0] = OVR_230.characterID_default[0];
+  *(int*)&local_8[4] = OVR_230.characterID_default[1];
 
   // if number of players is not zero
-  if (gGT->numPlyrNextGame != 0) {
-    
+  if (gGT->numPlyrNextGame != 0) 
+  {  
 	iVar2 = 0;
     
 	for (iVar7 = 0; iVar7 < gGT->numPlyrNextGame; iVar7++) 
@@ -32,7 +31,7 @@ void DECOMP_MM_Characters_ClearInactivePlayers(void) {
 	  // if not a secret character
       if (iVar2 < 8) 
 	  {  
-		// save -1 (used later in func)
+		// character is taken
         local_8[iVar2] = 0xff;
       }
     }
@@ -43,28 +42,27 @@ void DECOMP_MM_Characters_ClearInactivePlayers(void) {
   {
     for (iVar7 = 1; iVar7 < gGT->numPlyrNextGame; iVar7++) 
 	{
-	  for (iVar6 = 0; iVar6 < iVar2; iVar6++) 
+	  for (iVar6 = 0; iVar6 < iVar7; iVar6++) 
 	  {
-		if (data.characterIDs[iVar2] == data.characterIDs[iVar6]) 
+		// if two characters are the same
+		if (data.characterIDs[iVar7] == data.characterIDs[iVar6]) 
 		{
-		  iVar2 = 0;
-		
+		  // look for a new character
 		  for (iVar5 = 0; iVar5 < 8; iVar5++) 
 		  {
-			// get value from $sp
-			pcVar3 = &local_8[iVar2];
-		
+			// get default character
+			pcVar3 = &local_8[iVar5];
 			cVar1 = *pcVar3;
 			
-			// if not -1,
-			// meaning this "was" a secret character
-		
+			// if character is not taken
 			if (-1 < cVar1) 
 			{
-				// set character ID to non-secret character
+				// assign free character
 				data.characterIDs[iVar7] = (short)cVar1;
-				// set to -1
+				
+				// character is now taken
 				*pcVar3 = -1;
+				
 				break;
 			}
 		  }

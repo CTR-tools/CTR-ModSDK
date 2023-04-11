@@ -1293,7 +1293,7 @@
 800ac148 MM_Characters_DrawWindows
 800ac5f4 MM_Characters_SetMenuLayout
 // MM_Characters_BackupIDs not in sep3
-// MM_Characters_ClearInactivePlayers not in sep3
+// MM_Characters_PreventOverlap not in sep3
 800ac7ac MM_Characters_RestoreIDs
 800acb5c MM_Characters_HideDrivers
 800acbf8 MM_Characters_MenuBox

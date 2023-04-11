@@ -502,7 +502,7 @@ void MM_Characters_MenuBox()
 		}
 	}
 	
-	MM_Characters_ClearInactivePlayers();
+	MM_Characters_PreventOverlap();
 	
 	psVar18 = DAT_800b5a18 + 1;
 	psVar22 = DAT_800b5a18;

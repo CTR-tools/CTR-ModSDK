@@ -33,6 +33,9 @@ common, 230, MM_Characters_GetModelByName, 0x0, General/230/230_43_MM_Characters
 common, 230, MM_Characters_DrawWindows, 0x0, General/230/230_44_MM_Characters_DrawWindows.c
 common, 230, MM_Characters_SetMenuLayout, 0x0, General/230/230_45_MM_Characters_SetMenuLayout.c
 common, 230, MM_Characters_BackupIDs, 0x0, General/230/230_46_MM_Characters_BackupIDs.c
+common, 230, MM_Characters_PreventOverlap, 0x0, General/230/230_47_MM_Characters_PreventOverlap.c
+common, 230, MM_Characters_RestoreIDs, 0x0, General/230/230_48_MM_Characters_RestoreIDs.c
+common, 230, MM_Characters_HideDrivers, 0x0, General/230/230_49_MM_Characters_HideDrivers.c
 
 // 231 (incomplete)
 // skip first two

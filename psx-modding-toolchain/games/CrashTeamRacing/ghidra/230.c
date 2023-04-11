@@ -2469,7 +2469,7 @@ void FUN_800ae274(void)
 }
 
 
-// MM_Characters_ClearInactivePlayers
+// MM_Characters_PreventOverlap
 // if NOP'd, you can type at 80086e84 while in selection,
 // otherwise, 80086e84 will be reset to zero after typing
 void FUN_800ae2c0(void)
@@ -2705,7 +2705,7 @@ void FUN_800ae464(void)
     } while (iVar6 * 0x10000 >> 0x10 < (int)(uint)(byte)puVar2[0x1ca9]);
   }
   
-  // MM_Characters_ClearInactivePlayers
+  // MM_Characters_PreventOverlap
   FUN_800ae2c0();
   
   // loop counter
@@ -3345,7 +3345,7 @@ LAB_800aec08:
   // loop counter
   iVar24 = 0;
   
-  // MM_Characters_ClearInactivePlayers
+  // MM_Characters_PreventOverlap
   FUN_800ae2c0();
   
   psVar18 = DAT_800b5a18 + 1;

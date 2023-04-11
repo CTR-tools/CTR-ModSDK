@@ -94,10 +94,10 @@ extern struct
 	// 800aba0c
 	// "title"
 	char s_title[8];
+	
 	// 800aba14
-	int characterIDBackup1;
-	// 800aba18
-	int characterIDBackup2;
+	// 0,1,2,3,4,5,6,7
+	int characterID_default[2];
 
 	// strings for the player numbers in the character select screen
 	// "4"

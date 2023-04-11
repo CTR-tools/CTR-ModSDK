@@ -6,7 +6,7 @@ void DECOMP_MM_Characters_BackupIDs(void) {
   for (i = 0; i < 8; i++) {
     // make a backup when you leave character selection,
 	// backup is restored when you go back to selection
-    data.characterIDs_backup[i] = data.characterIDs[i];
+    sdata->characterIDs_backup[i] = data.characterIDs[i];
   }
   return;
 }
