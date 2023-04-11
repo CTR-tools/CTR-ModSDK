@@ -399,7 +399,7 @@ void MM_Characters_MenuBox()
 						numPlyrNextGame = gGT->numPlyrNextGame;
 			
 						// Play sound
-						OtherFX_Play(0,0);
+						OtherFX_Play(1,1);
 			
 						// if all players have selected their characters
 						if ((int)(short)sdata->characterSelectFlags == (1 << numPlyrNextGame)-1) 
