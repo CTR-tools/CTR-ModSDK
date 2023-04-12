@@ -83,6 +83,8 @@ struct TransitionMeta
 // starts at 800ab9f0, overlay region 3
 extern struct
 {
+	// =========== 230 RDATA ============
+	
 	// 800ab9f0 (tag given by compiler, meaningless to game)
 	// do not compile this "tag" in the struct when we're actually building the overlay
 	int overlayTag;
@@ -122,8 +124,12 @@ extern struct
 	// " test.str 1"
 	char s_teststr1[12];
 	
+	// ========== Functions ==============
+	
 	// 800aba94
 	char fillafterteststr[0x8A50];
+	
+	// =========== Main Menu CONST =============
 
 	// 800b44e4
 	struct MenuRow rows_mainMenu_Basic[7];
@@ -239,6 +245,8 @@ extern struct
 	// 800B4D3C
 	short cupDifficultySpeed[4];
 	
+	// ============= Character Select CONST ================
+	
 	// 800B4D44
 	struct
 	{
@@ -338,6 +346,8 @@ extern struct
 	// 800b5398
 	char characterSelect_BlueRectColors[0x18];
 	
+	// =========== Track Select CONST ============
+	
 	// 800b53b0
 	struct MainMenu_LevelRow arcadeTracks[0x12];
 	
@@ -350,6 +360,8 @@ extern struct
 	
 	short padding800b55EA;
 	int unk800b55EC;
+	
+	// ============== Cup Select ==================
 
 	// 800b55f0
 	struct TransitionMeta transitionMeta_cupSel[0x6];
@@ -362,6 +374,8 @@ extern struct
 	
 	// 800b563c
 	int cupSel_Color; // of what?
+	
+	// ============= Battle CONST ================
 
 	// 800b5640
 	struct TransitionMeta transitionMeta_battle[0xB];
@@ -424,7 +438,7 @@ extern struct
 	char color2[4];
 	char color3[4];
 	
-	// ======== End of Battle, Start of High Score ==================
+	// ================ High Score CONST ==================
 	
 	// 800b58d0
 	struct TransitionMeta transitionMeta_HighScores[0xC];
@@ -435,7 +449,23 @@ extern struct
 	// 800b594c
 	char fill_MainMenu_LevelRowbattletracks_temporary[0x90];
 
+	// 800b594c unk flags
+
+	// 800b5950 color for icons
+	
+	// 800b5954 MenuRow highScoreRows[4]
+	// 800b596c MenuBox highScoreBox
+
+	// 800B5998 highScore trackCurr
+	// 800B599A highScore rowCurr
+	// 800B599C highScore trackNext
+	// 800B599E highScore rowNext
+
+
 	// 800b59a0 title object
+
+
+	// ============== Track Select DYN ====================
 
 	// 800b59a4 trackSelect changeTrack frame count
 	// 800b59a6 trackSelect changeTrack next track (or curr?)
@@ -452,17 +482,25 @@ extern struct
 	// 800b59b8 ??
 	// 800b59ba ???
 	
+	// ============== Cup Select DYN ========================
+	
 	// 800b59bc cupSelect transition state
 	// 800b59be cupSelect post-transition boolStart
 	// 800b59c0 cupSelect transition frames
+	
+	// ============== Battle DYN ==========================
 	
 	// 800b59c2 battle transition state
 	// 800b59c4 battle post-transition boolStart
 	// 800b59c6 battle transition frames
 	
+	// =============== High Score DYN ===================
+	
 	// 800b59c8 highScore transition state
 	// 800b59ca highScore transition frames
 	// ...
+	
+	// ============= Character Select DYN ====================
 
 	// 0x800b59dc
 	int characterSelect_sizeY;
@@ -532,7 +570,7 @@ extern struct
 	// 800b5a44
 	short transitionFrames;
 	
-	// ================= End of Character Select, Start of Video ===========================
+	// ================= Video RDATA ===========================
 	
 	// 800b5a44 (RDATA for region)
 	char s_SliceBuf[0xC];
@@ -550,4 +588,4 @@ extern struct
 	// 800b67d4
 	int numFrames;
 	
-} OVR_230_Video;
+} OVR_230_VideoBSS;

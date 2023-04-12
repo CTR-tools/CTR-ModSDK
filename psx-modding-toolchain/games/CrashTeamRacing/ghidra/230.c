@@ -6304,10 +6304,13 @@ void FUN_800b2fbc(ushort param_1,uint param_2,uint param_3,uint param_4)
       FUN_80026e80();
       iVar1 = (int)(short)iVar6;
 	  
-      if ((*(uint *)(&DAT_8008e814 +     // Level ID
-                    (*(int *)(PTR_DAT_8008d2ac + 0x1a10) * 0x49 +
-                    ((int)((uint)(ushort)(&DAT_800b594c)[iVar1] << 0x10) >> 0x15)) * 4) >>
-           ((&DAT_800b594c)[iVar1] & 0x1f) & 1) != 0) 
+      if (
+			// GameProgress.highScoreTracks[gGT->levelID].timeTrialFlags
+			(*(uint *)(&DAT_8008e814 + (*(int *)(PTR_DAT_8008d2ac + 0x1a10) * 0x49 +
+			
+			((int)((uint)(ushort)(&DAT_800b594c)[iVar1] << 0x10) >> 0x15)) * 4) >>
+			((&DAT_800b594c)[iVar1] & 0x1f) & 1) != 0
+		  ) 
 	 {
 		// &DAT_800b5948
 		// array of color IDs
