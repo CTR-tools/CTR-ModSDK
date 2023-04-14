@@ -76,7 +76,7 @@ int TitleOSK_DrawMenu(short param_1)
   // the cursor is highlighting in the menu
   sVar8 = cursor;
 
-  sdata->data10_aaaaa[0xd] += 1;
+  sdata->titleoskunknown += 1;
 
   local_30 = 1;
 
@@ -95,7 +95,7 @@ int TitleOSK_DrawMenu(short param_1)
         if (sVar8 == (iVar6 + iVar7 * 0xd))
 		{
 		  // make the text flash colors
-          sVar10 = ((sdata->data10_aaaaa[0xe] & 1) << 2);
+          sVar10 = ((sdata->titleoskunknown & 1) << 2);
         }
 
 		// 80085d94
@@ -133,35 +133,36 @@ int TitleOSK_DrawMenu(short param_1)
 
   // sdata->lngStrings + 0x4f8
   // PLEASE ENTER YOUR NAME
-  DecalFont_DrawLine((sdata->lngStrings + 0x4f8),0x100,0x2c,1,0xffff8000);
+  DecalFont_DrawLine((sdata->lngStrings[318*4],0x100,0x2c,FONT_BIG, (CENTER_TEXT | ORANGE));
 
   // The string you typed for OSK
-  DecalFont_DrawLine(sdata->gGT->currNameEntered,0xc0,0x44,1,4);
+  DecalFont_DrawLine(sdata->gGT->currNameEntered,0xc0,0x44,FONT_BIG, WHITE);
 
-  if (((sdata->data10_aaaaa[0xe] & 2) != 0) && (cursor < 0x10))
+  if (((sdata->titleoskunknown & 2) != 0) && (cursor < 0x10))
   {
-    iVar7 = DecalFont_GetLineWidth(sdata->gGT->currNameEntered,1);
+    iVar7 = DecalFont_GetLineWidth(sdata->gGT->currNameEntered,FONT_BIG);
 
 	// This draws the blinking red underscore that comes
 	// after the string you entered in OSK
-	DecalFont_DrawLine(&sdata->str_underscore[0],(iVar7 + 0xc0),0x44,1,0);
+	DecalFont_DrawLine(&sdata->str_underscore[0],(iVar7 + 0xc0),0x44,FONT_BIG,ORANGE);
   }
   iVar7 = sVar8;
   uVar3 = 0;
-  if (iVar7 == 0x3e9) {
-    uVar3 = (sdata->data10_aaaaa[0xe] & 1) << 2;
+  if (iVar7 == 0x3e9)
+  {
+    uVar3 = (sdata->titleoskunknown & 1) << 2;
   }
 
   // Draw String entered
-  DecalFont_DrawLine(sdata->lngStrings[local_48 << 0x10 >> 0xe],0x1d8,0x96,1,
-               uVar3 | 0x4000);
+  DecalFont_DrawLine(sdata->lngStrings[local_48*4],0x1d8,0x96,FONT_BIG,
+               uVar3 | END_AT_X);
   sVar10 = 0;
   if (iVar7 == 1000) {
-    sVar10 = ((sdata->data10_aaaaa[0xe] & 1) << 2);
+    sVar10 = ((sdata->titleoskunknown & 1) << 2);
   }
 
   // CANCEL
-  DecalFont_DrawLine((sdata->lngStrings[0x504]),0x28,0x96,1,sVar10);
+  DecalFont_DrawLine((sdata->lngStrings[321*4]),0x28,0x96,1,sVar10);
 
   box.h = 0x20;
   box.w = 0x1c0;

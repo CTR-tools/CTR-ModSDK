@@ -2068,11 +2068,12 @@ struct Data
 
 	// A.B.C.D... all the way to Z and then numbers,
 	// used in high score "Enter Your Name" window
+	// 80085D94 -- UsaRetail
 	#if BUILD == SepReview || BUILD == UsaRetail || BUILD == EurRetail
 	// 26 letters, 10 numbers, period, underscore, arrow, nullptr
-	short unicodeAscii[40];
+	u_short unicodeAscii[40];
 	#elif BUILD == JpnRetail
-	short unicodeAscii[40 + 94]; // extra Jpn characters
+	u_short unicodeAscii[40 + 94]; // extra Jpn characters
 	#else
 			// this does not exist in JpnTrial
 	#endif
@@ -3114,12 +3115,12 @@ struct sData
 
 	// 8008d454
 	#if BUILD == UsaRetail
-	char data94_afterRand[0x68];
+	char data94_afterRand[0x58];
 	#elif BUILD == JpnTrial || BUILD == SepReview
-	char data9C_afterRand[0x60];
+	char data9C_afterRand[0x50];
 	// Eur and Jpn
 	#elif BUILD >= EurRetail
-	char data98_afterRand[0x6C];
+	char data98_afterRand[0x5C];
 	#endif
 	// ===========
 
@@ -3146,7 +3147,9 @@ struct sData
 	// "filter out 'all but red' "
 
 	// 8008d4ac
-	// str_underscore[4] = "_";
+	char str_underscore[4];
+
+	char data_after_str_underscore[0xC];
 
 	// 8008d4b0
 	// check if CTR Token/Relic adv menubox is open or not
@@ -3873,7 +3876,8 @@ struct sData
 	// 8008d8e4
 	// UsaRetail JpnTrial EurRetail
 	#if BUILD >= SepReview && BUILD <= EurRetail
-	char data10_aaaaa[0x10];
+	char data10_aaaaa[0xE];
+	u_short titleoskunknown;
 	#elif BUILD == JpnRetail
 	char data14_aaaaa[0x14];
 	#endif
@@ -4589,7 +4593,7 @@ struct sData
 	short characterIDs_backup[8];
 
 	// 8009A990
-	int buttonTapPerPlayer[4];
+	u_int buttonTapPerPlayer[4];
 
 	// 8009A9A0
 	// 0x90 bytes total
