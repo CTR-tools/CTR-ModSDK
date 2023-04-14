@@ -263,3 +263,6 @@ void MainFrame_TogglePauseAudio(int bool_pause);
 void OtherFX_Play(unsigned int soundID, int flags);
 void MainFreeze_SafeAdvDestroy();
 void MenuBox_Show(struct MenuBox* m);
+int DecalFont_GetLineWidth(char* str, short fontType);
+void MenuBox_DrawOuterRect_Edge(RECT* r, u_int rgb, u_int param_3, u_long* otMem);
+void MenuBox_DrawInnerRect(RECT* r, int unk, u_long* ot);
