@@ -35,10 +35,10 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 	local_38 = 0;
 	nameLength = 0;
 	stringCopy = string;
-	strlenCurrNameEnteredInt = strlen(gameTracker->currNameEntered);
+	strlenCurrNameEnteredInt = strlen(sdata->gGT->currNameEntered);
 	currNameLength = strlenCurrNameEnteredInt;
-	currNameEntered = gameTracker->currNameEntered;
-	if (gameTracker->currNameEntered[0])
+	currNameEntered = sdata->gGT->currNameEntered;
+	if (sdata->gGT->currNameEntered[0])
 	{
 		for(character = *currNameEntered; character; currNameEntered++)
 		{
@@ -48,13 +48,13 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 			}
 		}
 	}
-	cursorPosition = gameTracker->TitleOSK_CursorPosition;
+	cursorPosition = sdata->gGT->TitleOSK_CursorPosition;
 	if ((cursorPosition > 38) && (cursorPosition < 1000))
 	{
 		cursorPosition = 38;
 	}
 	cursorPositionShort = cursorPosition;
-	sdata->titleosunknown++;
+	sdata->titleoskunknown++;
 	local_30 = 1;
 	for(i = 0; i < 3; i++)
 	{
@@ -65,7 +65,7 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 				strColorBlink = ORANGE;
 				if (cursorPositionShort == j + i*13)
 				{
-					strColorBlink = (sdata->titleosunknown & 1) << 2;
+					strColorBlink = (sdata->titleoskunknown & 1) << 2;
 				}
 				keyboardCharacter = data.unicodeAscii[i*13 + j];
 				keyboardCharacterTopByte = keyboardCharacter & 0xff00;
@@ -90,33 +90,33 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 		}
 	}
 	DecalFont_DrawLine(sdata->lngStrings[318], 256, 44, FONT_BIG, (CENTER_TEXT | ORANGE));
-	DecalFont_DrawLine(gameTracker->currNameEntered, 192, 68, FONT_BIG, WHITE);
-	if ((sdata->titleosunknown & 2) && (currNameLength < 16))
+	DecalFont_DrawLine(sdata->gGT->currNameEntered, 192, 68, FONT_BIG, WHITE);
+	if ((sdata->titleoskunknown & 2) && (currNameLength < 16))
 	{
-		currNameWidth = DecalFont_GetLineWidth(gameTracker->currNameEntered, FONT_BIG);
+		currNameWidth = DecalFont_GetLineWidth(sdata->gGT->currNameEntered, FONT_BIG);
 		DecalFont_DrawLine(sdata->str_underscore, currNameWidth + 192, 68, FONT_BIG, ORANGE);
 	}
 	cursorPosition2 = cursorPositionShort;
 	strColorBlink2 = 0;
 	if (cursorPosition2 == 1001)
 	{
-		strColorBlink2 = (sdata->titleosunknown & 1) << 2;
+		strColorBlink2 = (sdata->titleoskunknown & 1) << 2;
 	}
 	DecalFont_DrawLine(sdata->lngStrings[stringCopy], 472, 150, FONT_BIG, (END_AT_X | strColorBlink2));
 	strColorBlink = 0;
 	if (cursorPosition2 == 1000)
 	{
-		strColorBlink = (sdata->titleosunknown & 1) << 2;
+		strColorBlink = (sdata->titleoskunknown & 1) << 2;
 	}
 	DecalFont_DrawLine(sdata->lngStrings[321], 40, 150, 1, strColorBlink);
 	r.x = 32;
 	r.w = 448;
 	r.y = 62;
 	r.h = 2;
-	MenuBox_DrawOuterRect_Edge(&r, (u_int)&sdata->battlesetup_color_ui_1, 0x20, (u_long*)(gameTracker->backBuffer->otMem).startPlusFour);
+	MenuBox_DrawOuterRect_Edge(&r, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long*)(sdata->gGT->backBuffer->otMem).startPlusFour);
 	r.y = 39;
 	r.h = 130;
-	MenuBox_DrawInnerRect(&r, 0, (u_long*)(gameTracker->backBuffer->otMem).startPlusFour);
+	MenuBox_DrawInnerRect(&r, 0, (u_long*)(sdata->gGT->backBuffer->otMem).startPlusFour);
 	if ((sdata->buttonTapPerPlayer[0] & (BTN_UP | BTN_DOWN | BTN_LEFT | BTN_RIGHT)) == 0)
 	{
 		if ((sdata->buttonTapPerPlayer[0] & BTN_START) == 0)
@@ -134,7 +134,7 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 						}
 						else
 						{
-							gameTracker->prevNameEntered[currNameLength + 0x10] = 0;
+							sdata->gGT->prevNameEntered[currNameLength + 0x10] = 0;
 						}
 					}
 					else if (cursorPosition2 < 38)
@@ -152,10 +152,10 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 							{
 								currNameLengthIncrement = currNameLength + 1;
 								cursorCharacter = cursorCharacter & 0xff;
-								gameTracker->currNameEntered[currNameLength] = cursorCharacterLBitshift16 >> 24;
+								sdata->gGT->currNameEntered[currNameLength] = cursorCharacterLBitshift16 >> 24;
 							}
 							soundID = 1;
-							gameTracker->currNameEntered[currNameLengthIncrement] = cursorCharacter;
+							sdata->gGT->currNameEntered[currNameLengthIncrement] = cursorCharacter;
 						}
 						else
 						{
@@ -168,7 +168,7 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 						{
 							soundID = 2;
 							local_38 = 1;
-							memmove((u_char*)gameTracker->prevNameEntered, (u_char*)gameTracker->currNameEntered, 0x11);
+							memmove((u_char*)sdata->gGT->prevNameEntered, (u_char*)sdata->gGT->currNameEntered, 0x11);
 						}
 						else
 						{
@@ -187,11 +187,11 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 				soundID = 0;
 				if (currNameLengthCopy)
 				{
-					gameTracker->prevNameEntered[currNameLengthCopy + 0x10] = 0;
+					sdata->gGT->prevNameEntered[currNameLengthCopy + 0x10] = 0;
 					soundID = 4;
-					if (gameTracker->prevNameEntered[currNameLengthCopy + 0xf] < 3)
+					if (sdata->gGT->prevNameEntered[currNameLengthCopy + 0xf] < 3)
 					{
-						gameTracker->prevNameEntered[currNameLengthCopy + 0xf] = 0;
+						sdata->gGT->prevNameEntered[currNameLengthCopy + 0xf] = 0;
 					}
 				}
 			}
@@ -256,8 +256,8 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 LAB_8004b0dc:
 	if (soundID)
 	{
-		OtherFX_Play(*(u_short *)&data.soundIndexArray[iVar5], 1);
+		OtherFX_Play(*(u_short *)&data.soundIndexArray[soundID], 1);
 	}
-	gameTracker->TitleOSK_CursorPosition = cursorPositionShort;
+	sdata->gGT->TitleOSK_CursorPosition = cursorPositionShort;
 	return local_38;
 }
