@@ -255,7 +255,7 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 LAB_8004b0dc:
 	if (iVar5 != 0)
 	{
-		DECOMP_OtherFX_Play(*(u_short *)&data.soundIndexArray[iVar5], 1);
+		OtherFX_Play(*(u_short *)&data.soundIndexArray[iVar5], 1);
 	}
 	sdata->gGT->TitleOSK_CursorPosition = TitleOSK_CursorPositionShort;
 	return local_38;
