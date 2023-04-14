@@ -123,7 +123,7 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 		{
 			if ((sdata->buttonTapPerPlayer[0] & (BTN_TRIANGLE | BTN_SQUARE_one)) == 0)
 			{
-				if ((sdata->buttonTapPerPlayer[0] & (BTN_CIRCLE | BTN_CROSS_one)))
+				if (sdata->buttonTapPerPlayer[0] & (BTN_CIRCLE | BTN_CROSS_one))
 				{
 					if (cursorPosition2 == 38)
 					{
@@ -148,10 +148,10 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 						{
 							cursorCharacterLBitshift16 = cursorCharacter << 16;
 							currNameLengthIncrement = currNameLength;
-							if ((cursorCharacter & 0xff00))
+							if (cursorCharacter & 0xff00)
 							{
 								currNameLengthIncrement = currNameLength + 1;
-								cursorCharacter = cursorCharacter & 0xff;
+								cursorCharacter &= 0xff;
 								sdata->gGT->currNameEntered[currNameLength] = cursorCharacterLBitshift16 >> 24;
 							}
 							soundID = 1;
