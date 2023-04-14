@@ -2,178 +2,179 @@
 
 short DECOMP_TitleOSK_DrawMenu(u_short string)
 {
-	short strlenCurrNameEntered;
-	u_int strColorBlink2;
-	int TitleOSK_CursorPosition;
+	short currNameLength;
+	u_short uVar3;
+	int currNameWidth;
+	int cursorPositionLBitshift16;
 	u_int uVar2;
-	char *currNameEntered;
-	int iVar3;
-	int iVar4;
-	short TitleOSK_CursorPositionShort;
-	int iVar5;
-	short strColorBlink;
-	char local_58;
-	char local_57;
-	u_char local_56;
-	RECT local_50;
-	u_short local_48;
-	short nameSize;
+	u_int cursorCharacter;
+	int cursorPosition;
+	u_int keyboardCharacter;
+	char* currNameEntered;
+	int currNameLengthCopy;
+	u_int cursorCharacterLBitshift16;
+	u_short strColorBlink;
+	u_short strColorBlink2;
+	int j;
+	int cursorPosition2;
+	int i;
+	short cursorPositionShort;
+	u_int soundID;
+	short currNameLengthIncrement;
+	char keyboardString [3];
+	RECT r;
+	u_short stringCopy;
+	short nameLength;
 	short local_38;
 	int local_30;
 	int strlenCurrNameEnteredInt;
+	u_int keyboardCharacterTopByte;
 	u_char character;
 	
-	iVar5 = 0;
+	soundID = 0;
 	local_38 = 0;
-	nameSize = 0;
-	local_48 = string;
-	strlenCurrNameEnteredInt = strlen(sdata->gGT->currNameEntered);
-	strlenCurrNameEntered = (short)strlenCurrNameEnteredInt;
-	currNameEntered = sdata->gGT->currNameEntered;
-	if (sdata->gGT->currNameEntered[0] != 0)
+	nameLength = 0;
+	stringCopy = string;
+	strlenCurrNameEnteredInt = strlen(gameTracker->currNameEntered);
+	currNameLength = strlenCurrNameEnteredInt;
+	currNameEntered = gameTracker->currNameEntered;
+	if (gameTracker->currNameEntered[0])
 	{
-		character = *currNameEntered;
-		do
+		for(character = *currNameEntered; character; currNameEntered++)
 		{
 			if (character > 2)
 			{
-				nameSize++;
+				nameLength++;
 			}
-			currNameEntered++;
-			character = *currNameEntered;
-		} while (character != 0);
+		}
 	}
-	TitleOSK_CursorPosition = (int)sdata->gGT->TitleOSK_CursorPosition;
-	if ((0x26 < TitleOSK_CursorPosition) && (TitleOSK_CursorPosition < 1000))
+	cursorPosition = gameTracker->TitleOSK_CursorPosition;
+	if ((cursorPosition > 38) && (cursorPosition < 1000))
 	{
-		TitleOSK_CursorPosition = 0x26;
+		cursorPosition = 38;
 	}
-	TitleOSK_CursorPositionShort = (short)TitleOSK_CursorPosition;
-	sdata->titleoskunknown++;
-	iVar4 = 0;
+	cursorPositionShort = cursorPosition;
+	sdata->titleosunknown++;
 	local_30 = 1;
-	do
+	for(i = 0; i < 3; i++)
 	{
-		iVar3 = 0;
-		if (local_30 != 0)
+		if (local_30)
 		{
-			do
+			for(j = 0; j < 13; j++)
 			{
 				strColorBlink = ORANGE;
-				if ((int)TitleOSK_CursorPositionShort == (iVar3 + iVar4 * 0xd) * 0x10000 >> 0x10)
+				if (cursorPositionShort == j + i*13)
 				{
-					strColorBlink = (short)((sdata->titleoskunknown & 1) << 2);
+					strColorBlink = (sdata->titleosunknown & 1) << 2;
 				}
-				uVar2 = (u_int)data.unicodeAscii[(short)iVar4 * 0xd + (int)(short)iVar3];
-				strColorBlink2 = uVar2 & 0xff00;
-				if ((uVar2 & 0xff00) == 0x1000)
+				keyboardCharacter = data.unicodeAscii[i*13 + j];
+				keyboardCharacterTopByte = keyboardCharacter & 0xff00;
+				if ((keyboardCharacter & 0xff00) == 0x1000)
 				{
-					uVar2 = uVar2 & 0xff;
-					strColorBlink2 = 0;
+					keyboardCharacter = keyboardCharacter & 0xff;
+					keyboardCharacterTopByte = 0;
 				}
-				if (strColorBlink2 == 0)
+				if (keyboardCharacterTopByte == 0)
 				{
-					local_57 = '\0';
-					local_58 = (char)uVar2;
+					keyboardString[1] = 0;
+					keyboardString[0] = keyboardCharacter;
 				}
 				else
 				{
-					local_56 = 0;
-					local_58 = (char)((uVar2 << 0x10) >> 0x18);
-					local_57 = (char)uVar2;
+					keyboardString[2] = 0;
+					keyboardString[0] = (keyboardCharacter << 16) >> 24;
+					keyboardString[1] = keyboardCharacter;
 				}
-				DecalFont_DrawLine(&local_58, ((short)iVar3 * 0x16 + 0x74) * 0x10000 >> 0x10, ((short)iVar4 * 0x12 + 0x58) * 0x10000 >> 0x10, FONT_BIG, (int)strColorBlink);
-				iVar3++;
-			} while (iVar3 * 0x10000 >> 0x10 < 0xd);
+				DecalFont_DrawLine(keyboardString, j*22 + 116, i*18 + 88, FONT_BIG, strColorBlink);
+			}
 		}
-		iVar4++;
-	} while (iVar4 * 0x10000 >> 0x10 < 3);
-	DecalFont_DrawLine(sdata->lngStrings[318], 0x100, 0x2c, FONT_BIG, (CENTER_TEXT | ORANGE));
-	DecalFont_DrawLine(sdata->gGT->currNameEntered, 0xc0, 0x44, FONT_BIG, TINY_GREEN);
-	if (((sdata->titleoskunknown & 2) != 0) && (strlenCurrNameEntered < 0x10))
-	{
-		iVar4 = DecalFont_GetLineWidth(sdata->gGT->currNameEntered, FONT_BIG);
-		DecalFont_DrawLine(sdata->str_underscore, (iVar4 + 0xc0) * 0x10000 >> 0x10, 0x44, FONT_BIG, ORANGE);
 	}
-	iVar4 = (int)TitleOSK_CursorPositionShort;
+	DecalFont_DrawLine(sdata->lngStrings[318], 256, 44, FONT_BIG, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine(gameTracker->currNameEntered, 192, 68, FONT_BIG, WHITE);
+	if ((sdata->titleosunknown & 2) && (currNameLength < 16))
+	{
+		currNameWidth = DecalFont_GetLineWidth(gameTracker->currNameEntered, FONT_BIG);
+		DecalFont_DrawLine(sdata->str_underscore, currNameWidth + 192, 68, FONT_BIG, ORANGE);
+	}
+	cursorPosition2 = cursorPositionShort;
 	strColorBlink2 = 0;
-	if (iVar4 == 0x3e9)
+	if (cursorPosition2 == 1001)
 	{
-		strColorBlink2 = (sdata->titleoskunknown & 1) << 2;
+		strColorBlink2 = (sdata->titleosunknown & 1) << 2;
 	}
-	DecalFont_DrawLine(sdata->lngStrings[local_48], 0x1d8, 0x96, FONT_BIG, strColorBlink2 | END_AT_X);
+	DecalFont_DrawLine(sdata->lngStrings[stringCopy], 472, 150, FONT_BIG, (END_AT_X | strColorBlink2));
 	strColorBlink = 0;
-	if (iVar4 == 1000)
+	if (cursorPosition2 == 1000)
 	{
-		strColorBlink = (short)((sdata->titleoskunknown & 1) << 2);
+		strColorBlink = (sdata->titleosunknown & 1) << 2;
 	}
-	DecalFont_DrawLine(sdata->lngStrings[321], 0x28, 0x96, FONT_BIG, (int)strColorBlink);
-	local_50.x = 0x20;
-	local_50.w = 0x1c0;
-	local_50.y = 0x3e;
-	local_50.h = 2;
-	MenuBox_DrawOuterRect_Edge(&local_50, (u_int)sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
-	local_50.y = 0x27;
-	local_50.h = 0x82;
-	MenuBox_DrawInnerRect(&local_50, 0, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	DecalFont_DrawLine(sdata->lngStrings[321], 40, 150, 1, strColorBlink);
+	r.x = 32;
+	r.w = 448;
+	r.y = 62;
+	r.h = 2;
+	MenuBox_DrawOuterRect_Edge(&r, (u_int)&sdata->battlesetup_color_ui_1, 0x20, (u_long*)(gameTracker->backBuffer->otMem).startPlusFour);
+	r.y = 39;
+	r.h = 130;
+	MenuBox_DrawInnerRect(&r, 0, (u_long*)(gameTracker->backBuffer->otMem).startPlusFour);
 	if ((sdata->buttonTapPerPlayer[0] & (BTN_UP | BTN_DOWN | BTN_LEFT | BTN_RIGHT)) == 0)
 	{
 		if ((sdata->buttonTapPerPlayer[0] & BTN_START) == 0)
 		{
 			if ((sdata->buttonTapPerPlayer[0] & (BTN_TRIANGLE | BTN_SQUARE_one)) == 0)
 			{
-				if ((sdata->buttonTapPerPlayer[0] & (BTN_CIRCLE | BTN_CROSS_one)) != 0)
+				if ((sdata->buttonTapPerPlayer[0] & (BTN_CIRCLE | BTN_CROSS_one)))
 				{
-					if (iVar4 == 0x26)
+					if (cursorPosition2 == 38)
 					{
-						iVar5 = 2;
-						if (strlenCurrNameEntered == 0)
+						soundID = 2;
+						if (currNameLength == 0)
 						{
-							iVar5 = 2;
+							soundID = 2;
 						}
 						else
 						{
-							sdata->gGT->prevNameEntered[strlenCurrNameEntered + 0x10] = '\0';
+							gameTracker->prevNameEntered[currNameLength + 0x10] = 0;
 						}
 					}
-					else if (iVar4 < 0x26)
+					else if (cursorPosition2 < 38)
 					{
-						strColorBlink2 = (u_int)(u_short)data.unicodeAscii[iVar4];
-						if (((int)data.unicodeAscii[iVar4] & 0xff00U) == 0x1000)
+						cursorCharacter = data.unicodeAscii[cursorPosition2];
+						if ((data.unicodeAscii[cursorPosition2] & 0xff00) == 0x1000)
 						{
-							strColorBlink2 = strColorBlink2 & 0xff;
+							cursorCharacter &= 0xff;
 						}
-						if (nameSize < 8)
+						if (nameLength < 8)
 						{
-							iVar5 = strColorBlink2 << 0x10;
-							strColorBlink = strlenCurrNameEntered;
-							if ((strColorBlink2 & 0xff00) != 0)
+							cursorCharacterLBitshift16 = cursorCharacter << 16;
+							currNameLengthIncrement = currNameLength;
+							if ((cursorCharacter & 0xff00))
 							{
-								strColorBlink = strlenCurrNameEntered + 1;
-								strColorBlink2 = strColorBlink2 & 0xff;
-								sdata->gGT->currNameEntered[strlenCurrNameEntered] = (char)((u_int)iVar5 >> 0x18);
+								currNameLengthIncrement = currNameLength + 1;
+								cursorCharacter = cursorCharacter & 0xff;
+								gameTracker->currNameEntered[currNameLength] = cursorCharacterLBitshift16 >> 24;
 							}
-							iVar5 = 1;
-							sdata->gGT->currNameEntered[strColorBlink] = (char)strColorBlink2;
+							soundID = 1;
+							gameTracker->currNameEntered[currNameLengthIncrement] = cursorCharacter;
 						}
 						else
 						{
-							iVar5 = 5;
+							soundID = 5;
 						}
 					}
 					else
 					{
-						if (iVar4 == 0x3e9)
+						if (cursorPosition2 == 1001)
 						{
-							iVar5 = 2;
+							soundID = 2;
 							local_38 = 1;
-							memmove((u_char *)sdata->gGT->prevNameEntered, (u_char *)sdata->gGT->currNameEntered, 0x11);
+							memmove((u_char*)gameTracker->prevNameEntered, (u_char*)gameTracker->currNameEntered, 0x11);
 						}
 						else
 						{
-							iVar5 = 0;
-							if (iVar4 != 1000) goto LAB_8004b0dc;
-							iVar5 = 3;
+							soundID = 0;
+							if (cursorPosition2 != 1000) goto LAB_8004b0dc;
+							soundID = 3;
 							local_38 = -1;
 						}
 						MenuBox_ClearInput();
@@ -182,81 +183,81 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 			}
 			else
 			{
-				TitleOSK_CursorPosition = (int)strlenCurrNameEntered;
-				iVar5 = 0;
-				if (TitleOSK_CursorPosition != 0)
+				currNameLengthCopy = currNameLength;
+				soundID = 0;
+				if (currNameLengthCopy)
 				{
-					sdata->gGT->prevNameEntered[TitleOSK_CursorPosition + 0x10] = 0;
-					iVar5 = 4;
-					if ((u_char)sdata->gGT->prevNameEntered[TitleOSK_CursorPosition + 0xf] < 3)
+					gameTracker->prevNameEntered[currNameLengthCopy + 0x10] = 0;
+					soundID = 4;
+					if (gameTracker->prevNameEntered[currNameLengthCopy + 0xf] < 3)
 					{
-						sdata->gGT->prevNameEntered[TitleOSK_CursorPosition + 0xf] = '\0';
+						gameTracker->prevNameEntered[currNameLengthCopy + 0xf] = 0;
 					}
 				}
 			}
 		}
 		else
 		{
-			iVar5 = 3;
-			if (iVar4 == 1000)
+			soundID = 3;
+			if (cursorPosition2 == 1000)
 			{
 				local_38 = -1;
 			}
 			else
 			{
-				TitleOSK_CursorPositionShort = 1000;
-				iVar5 = 1;
+				cursorPositionShort = 1000;
+				soundID = 1;
 			}
 		}
 	}
 	else
 	{
-		if ((sdata->buttonTapPerPlayer[0] & 1) != 0)
+		if (sdata->buttonTapPerPlayer[0] & BTN_UP)
 		{
-			TitleOSK_CursorPosition = TitleOSK_CursorPosition - 0xd;
+			cursorPosition -= 13;
 		}
-		if ((sdata->buttonTapPerPlayer[0] & 2) != 0)
+		if (sdata->buttonTapPerPlayer[0] & BTN_DOWN)
 		{
-			TitleOSK_CursorPosition = TitleOSK_CursorPosition + 0xd;
+			cursorPosition += 13;
 		}
-		if ((sdata->buttonTapPerPlayer[0] & 4) != 0)
+		if (sdata->buttonTapPerPlayer[0] & BTN_LEFT)
 		{
-			TitleOSK_CursorPosition = TitleOSK_CursorPosition - 1;
+			cursorPosition--;
 		}
-		iVar5 = TitleOSK_CursorPosition << 0x10;
-		if ((sdata->buttonTapPerPlayer[0] & 8) != 0)
+		cursorPositionLBitshift16 = cursorPosition << 16;
+		if (sdata->buttonTapPerPlayer[0] & BTN_RIGHT)
 		{
-			TitleOSK_CursorPosition = TitleOSK_CursorPosition + 1;
-			iVar5 = TitleOSK_CursorPosition * 0x10000;
+			cursorPosition++;
+			cursorPositionLBitshift16 = cursorPosition * 0x10000;
 		}
-		iVar4 = TitleOSK_CursorPosition << 0x10;
-		if (iVar5 < 0)
+		cursorPositionLBitshift16 = cursorPosition << 16;
+		if (cursorPositionLBitshift16 < 0)
 		{
-			TitleOSK_CursorPosition = 0x3e9;
-			iVar4 = 0x3e90000;
+			cursorPosition = 0x3e9;
+			cursorPositionLBitshift16 = 0x3e90000;
 		}
-		TitleOSK_CursorPositionShort = (short)TitleOSK_CursorPosition;
-		strColorBlink2 = TitleOSK_CursorPosition - 500;
-		if ((0x26 < iVar4 >> 0x10) && (strColorBlink2 = TitleOSK_CursorPosition - 500,  iVar4 >> 0x10 < 500))
+		cursorPositionShort = cursorPosition;
+		uVar2 = cursorPosition - 500;
+		if ((38 < cursorPositionLBitshift16 >> 16) && (uVar2 = cursorPosition - 500,  cursorPositionLBitshift16 >> 16 < 500))
 		{
-			TitleOSK_CursorPositionShort = 0x3e9;
-			strColorBlink2 = 0x1f5;
+			cursorPositionShort = 0x3e9;
+			uVar2 = 0x1f5;
 		}
-		if ((strColorBlink2 & 0xffff) < 500)
+		if ((uVar2 & 0xffff) < 500)
 		{
-			TitleOSK_CursorPositionShort = 0x26;
+			cursorPositionShort = 38;
 		}
-		iVar5 = 1;
-		if (0x3ea < TitleOSK_CursorPositionShort)
+		soundID = 1;
+		if (0x3ea < cursorPositionShort)
 		{
-			TitleOSK_CursorPositionShort = 0;
+			cursorPositionShort = 0;
 		}
 	}
 LAB_8004b0dc:
-	if (iVar5 != 0)
+	if (soundID)
 	{
 		OtherFX_Play(*(u_short *)&data.soundIndexArray[iVar5], 1);
 	}
-	sdata->gGT->TitleOSK_CursorPosition = TitleOSK_CursorPositionShort;
+	gameTracker->TitleOSK_CursorPosition = cursorPositionShort;
 	return local_38;
 }
