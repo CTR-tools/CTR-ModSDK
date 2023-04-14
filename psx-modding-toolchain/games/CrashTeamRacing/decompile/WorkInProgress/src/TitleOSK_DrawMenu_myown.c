@@ -46,6 +46,7 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 			{
 				nameLength++;
 			}
+			character = *currNameEntered;
 		}
 	}
 	cursorPosition = sdata->gGT->TitleOSK_CursorPosition;
