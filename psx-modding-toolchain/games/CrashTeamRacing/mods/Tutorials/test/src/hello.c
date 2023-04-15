@@ -9,7 +9,7 @@ int Hello_Main2()
 		DecalHUD_DrawPolyGT4
 		(
 			sdata->gGT->ptrIcons[1],
-			-10, 6,
+			-10, 32,
 			&sdata->gGT->backBuffer->primMem,
 			sdata->gGT->tileView_UI.ptrOT,
 			data.ptrColor[COCO_MAGENTA][0],
