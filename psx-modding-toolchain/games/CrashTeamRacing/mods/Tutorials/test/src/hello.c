@@ -16,7 +16,7 @@ int Hello_Main2()
 			data.ptrColor[GRAY][1],
 			data.ptrColor[GRAY][2],
 			data.ptrColor[GRAY][3],
-			3, 0x1000
+			SUBTRACT, 0x1000
 		);
 	}
 }
