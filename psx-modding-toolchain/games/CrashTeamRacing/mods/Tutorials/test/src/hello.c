@@ -8,9 +8,9 @@ int Hello_Main2()
 	{
 		RECT r;
 		r.x = -10;
-		r.y = 28;
+		r.y = 0;
 		r.w = 64;
-		r.h = 64;
+		r.h = 92;
 
 		u_int color = 0xFFFFFF;
 
