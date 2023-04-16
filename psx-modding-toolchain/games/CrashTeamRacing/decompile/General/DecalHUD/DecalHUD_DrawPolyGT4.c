@@ -32,9 +32,7 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, stru
 
 		unsigned int rightX = (posX & 0xFFFF) + (width * scale / 0x1000);
 		unsigned int rightXOverflow = (rightX & 0xFFFF0000) >> 16;
-		unsigned int y1 = posY | rightXOverflow;
-		unsigned int y3 = bottomY | rightXOverflow;
-		setXY4(p, posX, posY, rightX, y1, posX, bottomY, rightX, y3);
+		setXY4(p, posX, posY, rightX, posY | rightXOverflow, posX, bottomY, rightX, bottomY | rightXOverflow);
 	#else
 		unsigned int rightX = posX + (width * scale / 0x1000);
 		setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
