@@ -28,10 +28,13 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, stru
 		// function sets the primitive's X and Y coordinate values by dereferencing both of them as a singular
 		// 32-bit integer, with x1 and y1's bits being added together using bitwise OR, the bottom 16 bits of
 		// x1 are added onto y1's bits, resulting in y1's value being altered by x1's overflow.
+		// This also affects the bottom right vertex.
 
 		unsigned int rightX = (posX & 0xFFFF) + (width * scale / 0x1000);
-		unsigned int y1 = posY | ((rightX & 0xFFFF0000) >> 16);
-		setXY4(p, posX, posY, rightX, y1, posX, bottomY, rightX, bottomY);
+		unsigned int rightXOverflow = (rightX & 0xFFFF0000) >> 16;
+		unsigned int y1 = posY | rightXOverflow;
+		unsigned int y3 = bottomY | rightXOverflow;
+		setXY4(p, posX, posY, rightX, y1, posX, bottomY, rightX, y3);
 	#else
 		unsigned int rightX = posX + (width * scale / 0x1000);
 		setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
