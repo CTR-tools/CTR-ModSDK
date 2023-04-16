@@ -31,7 +31,7 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, stru
 		// This also affects the bottom right vertex.
 
 		unsigned int rightX = (posX & 0xFFFF) + (width * scale / 0x1000);
-		unsigned int rightXOverflow = (rightX & 0xFFFF0000) >> 16;
+		unsigned int rightXOverflow = rightX >> 16;
 		setXY4(p, posX, posY, rightX, posY | rightXOverflow, posX, bottomY, rightX, bottomY | rightXOverflow);
 	#else
 		unsigned int rightX = posX + (width * scale / 0x1000);

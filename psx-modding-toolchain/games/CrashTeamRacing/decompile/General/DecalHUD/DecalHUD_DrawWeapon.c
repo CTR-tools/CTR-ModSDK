@@ -16,9 +16,26 @@ void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struc
 	unsigned int height = icon->texLayout.v2 - icon->texLayout.v0;
 	unsigned int rightX = posX + (width * scale / 0x1000);
 	unsigned int bottomY = posY + (height * scale / 0x1000);
+	unsigned int sidewaysX = posX + (height * scale / 0x1000);
+	unsigned int sidewaysY = posY + (width * scale / 0x1000);
 
-	setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
+	if (!(rot & 1))
+	{
+		if (rot == 0)
+			setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
+		else
+			setXY4(p, rightX, bottomY, posX, bottomY, rightX, posY, posX, posY);
+	}
+	else
+	{
+		if (rot == 1)
+			setXY4(p, posX, sidewaysY, posX, posY, sidewaysX, sidewaysY, sidewaysX, posY);
+		else
+			setXY4(p, sidewaysX, posY, sidewaysX, sidewaysY, posX, posY, posX, sidewaysY);
+	}
+	
 	setIconUV4(p, icon);
+
 	if (transparency)
 	{
 		setTransparency(p, transparency);
