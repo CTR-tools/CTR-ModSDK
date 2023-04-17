@@ -2,7 +2,7 @@
 
 #define EDUCATIONAL_BUG_IF 0
 
-void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale)
+void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, int posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale)
 {
 	if (!icon) return;
 
@@ -18,8 +18,8 @@ void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, stru
 	unsigned int rightX = posX + (width * scale / 0x1000);
 	
 	#if EDUCATIONAL_BUG_IF
-		unsigned int rightXOverflow = rightX >> 16;
-		setXY4(p, posX, posY | rightXOverflow, rightX, posY, posX, bottomY | rightXOverflow, rightX, bottomY);
+		unsigned int posXOverflow = posX >> 16;
+		setXY4(p, posX, posY | posXOverflow, rightX, posY, posX, bottomY | posXOverflow, rightX, bottomY);
 	#else
 		setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
 	#endif
