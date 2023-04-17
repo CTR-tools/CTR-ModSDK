@@ -844,7 +844,7 @@ undefined4 FUN_800ac4b8(int param_1)
   return 1;
 }
 
-// RB_Potion_OpenTeeth
+// RB_Potion_OnShatter_TeethCallback
 // param_2 Lev Hitbox (VisData)
 void FUN_800ac5e8(undefined4 param_1,int param_2)
 
@@ -872,9 +872,15 @@ void FUN_800ac5e8(undefined4 param_1,int param_2)
   return;
 }
 
-// RB_Potion_CheckTeethCollision
+// RB_Potion_OnShatter_TeethSearch
 void FUN_800ac638(int param_1)
 {
+  // This function is not a waste,
+  // if potion explodes while sitting next to teeth,
+  // either cause another driver hit it, 
+  // or cause too many potions in MinePool,
+  // then this is the only way for teeth to open
+	
   // position
   DAT_1f800108 = *(undefined2 *)(param_1 + 0x44);
   DAT_1f80010a = *(undefined2 *)(param_1 + 0x48);
@@ -890,7 +896,7 @@ void FUN_800ac638(int param_1)
   // inst->modelPtr->modelID
   DAT_1f800114 = *(undefined2 *)(*(int *)(param_1 + 0x18) + 0x10);
   
-  // RB_Potion_OpenTeeth
+  // RB_Potion_OnShatter_TeethCallback
   DAT_1f800130 = FUN_800ac5e8;
   
   // THREAD_StartSearch_Self
@@ -1051,6 +1057,10 @@ void FUN_800ac6b4(int param_1)
       return;
     }
   }
+  
+  // This is not a waste,
+  // Potion_OnShatter_SearchTeeth fails
+  // to open Teeth while the potion is airborne
   else {
     bVar1 = true;
     if (((((*DAT_1f800150 & 0x80) != 0) && (iVar4 = *(int *)(DAT_1f800150 + 0x1c), iVar4 != 0)) &&
@@ -5095,7 +5105,7 @@ void FUN_800b1458(int param_1)
     iVar6 = iVar6 + 1;
   } while (iVar6 < 5);
   
-  // RB_Potion_CheckTeethCollision
+  // RB_Potion_OnShatter_TeethSearch
   FUN_800ac638(param_1);
   
   return;

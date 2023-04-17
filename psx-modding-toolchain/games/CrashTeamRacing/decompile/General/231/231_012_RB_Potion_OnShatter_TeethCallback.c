@@ -1,9 +1,9 @@
 #include <common.h>
 
-// This is broken even in retail CTR,
-// cause teeth collision is detected 
-// by Potion_InAir, so this can be scrapped
-int RB_Potion_OpenTeeth(int unk, struct VisData* vd)
+// Required to make door open
+// when driver hits potion, or 
+// potion shatters due to full MinePool
+int RB_Potion_OnShatter_TeethCallback(int unk, struct VisData* vd)
 {
 	struct InstDef* instDef;
 	struct Instance* teethInst;

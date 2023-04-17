@@ -59,47 +59,48 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 		RB_GenericMine_ThDestroy(t,inst,mw);
 	}
 
-	if (DAT_1f80014a == 0) {
-    if (DAT_1f800146 != 0) 
+	if (DAT_1f80014a == 0) 
 	{
-		Rot_AxisAngle(&inst->matrix&DAT_1f800178,0);
-
-		if (WSD->min[0] + 0x30 < inst->matrix.t[1]) 
-			return;
-
-		// if no cooldown
-		if (mw->cooldown == 0)
+		if (DAT_1f800146 != 0) 
 		{
-			inst->matrix.t[1] = WSD->min[0];
-
-			// reset cooldown (3.84s)
-			mw->cooldown = 0xf00;
+			Rot_AxisAngle(&inst->matrix&DAT_1f800178,0);
+	
+			if (WSD->min[0] + 0x30 < inst->matrix.t[1]) 
+				return;
+	
+			// if no cooldown
+			if (mw->cooldown == 0)
+			{
+				inst->matrix.t[1] = WSD->min[0];
+	
+				// reset cooldown (3.84s)
+				mw->cooldown = 0xf00;
+				
+				// reset velocity
+				mw->velocity[0] = 0;
+				mw->velocity[1] = 0;
+				mw->velocity[2] = 0;
+	
+				mw->maxHeight = DAT_1f800124;
+	
+				// remove "thrown" flag 
+				mw->extraFlags &= 0xfffd;
+	
+				ThTick_SetAndExec(t, RB_GenericMine_ThTick);
+	
+				return;
+			}
+			int temp = inst->matrix.t[1];
 			
-			// reset velocity
-			mw->velocity[0] = 0;
-			mw->velocity[1] = 0;
-			mw->velocity[2] = 0;
-
-			mw->maxHeight = DAT_1f800124;
-
-			// remove "thrown" flag 
-			mw->extraFlags &= 0xfffd;
-
-			ThTick_SetAndExec(t, RB_GenericMine_ThTick);
-
+			if (mw->velocity[1] <= DAT_1f800124) {
+			inst->matrix.t[1] = DAT_1f800124;
+			}
+			if ((inst->matrix.t[1] - temp) + 0x28 <= mw->velocity[1]) {
+				return;
+			}
+			mw->velocity[1] = (inst->matrix.t[1] - temp) + 0x28;
 			return;
 		}
-		int temp = inst->matrix.t[1];
-		
-		if (mw->velocity[1] <= DAT_1f800124) {
-        inst->matrix.t[1] = DAT_1f800124;
-		}
-		if ((inst->matrix.t[1] - temp) + 0x28 <= mw->velocity[1]) {
-			return;
-		}
-		mw->velocity[1] = (inst->matrix.t[1] - temp) + 0x28;
-		return;
-	}
 
 		// posBottom
 		posBottom[2] = inst->matrix.t[0];
@@ -109,7 +110,10 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 		COLL_SearchTree_FindQuadblock_Touching(&posBottom, &posTop, &DAT_1f800108, );
 
 		if (DAT_1f800146 != 0) return;
-	} else {
+	} 
+	
+	else 
+	{
 		
 		if (((((*DAT_1f800150 & 0x80) != 0) && (iVar4 = *(int *)(DAT_1f800150 + 0x1c), iVar4 != 0)) &&
         (*(short *)(iVar4 + 0x3c) == 0x70)) && (*(int *)(iVar4 + 0x2c) != 0)) 

@@ -68,7 +68,7 @@ void DECOMP_RB_Explosion_InitPotion(struct Instance* inst)
     }
   } 
   
-  RB_Potion_CheckTeethCollision(inst);
+  RB_Potion_OnShatter_TeethSearch(inst);
   
   return;
 }

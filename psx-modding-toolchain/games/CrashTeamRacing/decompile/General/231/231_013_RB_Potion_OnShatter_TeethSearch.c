@@ -1,11 +1,11 @@
 #include <common.h>
 
-int RB_Potion_OpenTeeth(int unk, struct VisData* vd);
+int RB_Potion_OnShatter_TeethCallback(int unk, struct VisData* vd);
 
 // This is broken even in retail CTR,
 // cause teeth collision is detected 
 // by Potion_InAir, so this can be scrapped
-void DECOMP_RB_Potion_CheckTeethCollision(struct Instance* inst)
+void DECOMP_RB_Potion_OnShatter_TeethSearch(struct Instance* inst)
 {
 	#define WSD \
 	((struct WeaponSearchData*)0x1f800108)
@@ -17,7 +17,7 @@ void DECOMP_RB_Potion_CheckTeethCollision(struct Instance* inst)
 	WSD->hitRadiusSquared = 0x19000;
 	WSD->modelID = inst->model->id;
 	WSD->thread = inst->thread;
-	WSD->funcCallback = RB_Potion_OpenTeeth;
+	WSD->funcCallback = RB_Potion_OnShatter_TeethCallback;
 	
 	THREAD_StartSearch_Self(WSD);
 }

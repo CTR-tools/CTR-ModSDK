@@ -1346,8 +1346,8 @@
 800ab0f0 RB_Hazard_ThCollide_Generic_Alt
 800ab124 RB_Hazard_ThCollide_Missile
 800ab1b0 RB_Hazard_ThCollide_Generic
-800ab2e0 RB_Potion_OpenTeeth
-800ab330 RB_Potion_CheckTeethCollision
+800ab2e0 RB_Potion_OnShatter_TeethCallback
+800ab330 RB_Potion_OnShatter_TeethSearch
 800ab3ac RB_Potion_ThTick_InAir
 800ab6dc RB_GenericMine_LInB
 800ab7ec RB_GenericMine_ThTick
