@@ -169,3 +169,9 @@ struct IconGroup
 	// So it really looks like this
 	// struct Icon icons[numIcons];
 };
+
+#define setIconUV(p, icon) \
+	*(u_int*)&p->u0 = *(u_int*)&icon->texLayout.u0, \
+	*(u_int*)&p->u1 = *(u_int*)&icon->texLayout.u1, \
+	*(u_short*)&p->u2 = *(u_short*)&icon->texLayout.u2, \
+	*(u_short*)&p->u3 = *(u_short*)&icon->texLayout.u3

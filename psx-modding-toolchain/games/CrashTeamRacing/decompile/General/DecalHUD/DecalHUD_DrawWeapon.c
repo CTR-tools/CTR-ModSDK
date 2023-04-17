@@ -1,121 +1,86 @@
 #include <common.h>
 
-void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char semitransparencyEnabled, short scale, u_short param_8)
+#define EDUCATIONAL_BUG_IF 0
+
+void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, char rot)
 {
-	u_int uVar1;
-	u_int bitshiftPosY;
-	u_int uVar3;
-	POLY_FT4 *p;
-	u_int topRightCornerAndPageXY;
-	u_int topLeftCornerAndPaletteXY;
-	u_int bottomMargin;
-	int iVar8;
-	int iVar9;
+	#if BUILD > SepReview
+		if (!icon) return;
+	#endif
 
-	if (icon != 0)
+	POLY_FT4* p = (POLY_FT4*)primMem->curr;
+	addPolyFT4(ot, p);
+
+	// this function doesn't support coloring the primitives
+	setShadeTex(p, true);
+
+	unsigned int width = icon->texLayout.u1 - icon->texLayout.u0;
+	unsigned int height = icon->texLayout.v2 - icon->texLayout.v0;
+	unsigned int rightX = posX + (width * scale / 0x1000);
+	unsigned int bottomY = posY + (height * scale / 0x1000);
+	unsigned int sidewaysX = posX + (height * scale / 0x1000);
+	unsigned int sidewaysY = posY + (width * scale / 0x1000);
+
+	// instead of psn00bsdk's setXY4, this function uses a custom-made macro that resembles the compiler optimization used in the original code
+	// the X and Y fields of the primitive will be dereferenced as combined 32-bit integers for each vertex
+	// from this, the X and Y coordinates will be added onto these integers using bitwise OR
+	// this originally caused a bug where if X is higher than 0xFFFF (by not being cast as unsigned 16-bits) it will overflow onto Y
+	// for the sake of making this compile under the original file size of the function (0x190 bytes) this macro will be used with the proper variable casts
+	// the bugged version of the code is still intact as a compiler macro
+	#if EDUCATIONAL_BUG_IF == 0
+		if (!(rot & 1))
+		{
+			if (rot == 0)
+			{
+				setXY4CompilerHack(p, (u_short)posX, posY, (u_short)rightX, posY, (u_short)posX, bottomY, (u_short)rightX, bottomY);
+			}
+			else
+			{
+				setXY4CompilerHack(p, (u_short)rightX, bottomY, (u_short)posX, bottomY, (u_short)rightX, posY, (u_short)posX, posY);
+			}
+		}
+		else
+		{
+			if (rot == 1)
+			{
+				setXY4CompilerHack(p, (u_short)posX, sidewaysY, (u_short)posX, posY, (u_short)sidewaysX, sidewaysY, (u_short)sidewaysX, posY);
+			}
+			else
+			{
+				setXY4CompilerHack(p, (u_short)sidewaysX, posY, (u_short)sidewaysX, sidewaysY, (u_short)posX, posY, (u_short)posX, sidewaysY);
+			}
+		}
+	#else
+		if (!(rot & 1))
+		{
+			if (rot == 0)
+			{
+				setXY4CompilerHack(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
+			}
+			else
+			{
+				setXY4CompilerHack(p, rightX, bottomY, posX, bottomY, rightX, posY, posX, posY);
+			}
+		}
+		else
+		{
+			if (rot == 1)
+			{
+				setXY4CompilerHack(p, posX, sidewaysY, posX, posY, sidewaysX, sidewaysY, sidewaysX, posY);
+			}
+			else
+			{
+				setXY4CompilerHack(p, sidewaysX, posY, sidewaysX, sidewaysY, posX, posY, posX, sidewaysY);
+			}
+		}
+	#endif
+	
+	setIconUV(p, icon);
+
+	if (transparency)
 	{
-		topRightCornerAndPageXY = *(u_int*)&icon->texLayout.u1;
-		topLeftCornerAndPaletteXY = *(u_int*)&icon->texLayout.u0;
-
-		// posY, bitshifted 2 u_chars
-		bitshiftPosY = posY * 0x10000;
-
-		iVar9 = (int)(((topRightCornerAndPageXY & 0xff) - (topLeftCornerAndPaletteXY & 0xff)) * (int)scale) >> 0xc;
-
-		// X and Y of the two bottom corners
-		bottomMargin = *(u_int*)&icon->texLayout.u2;
-
-		p = (POLY_FT4*)primMem->curr;
-
-		iVar8 = (int)(((u_int)icon->texLayout.v2 - ((int)topLeftCornerAndPaletteXY >> 8 & 0xffU)) * (int)scale) >> 0xc;
-
-		if (semitransparencyEnabled == 0)
-		{
-			p->code = 0x2d;
-
-			// set top right corner UVs and texpage of primitive to the ones the icon has
-			*(int*)&p->u1 = topRightCornerAndPageXY;
-		}
-
-		else
-		{
-			p->code = 0x2f;
-
-			// set top right corner UVs and texpage of primitive, and alter the blending mode bits of the texpage from 11 (Mode 3, which is no blending) to 00 (Mode 0, equivalent to regular 50% opacity)
-			*(int*)&p->u1 = topRightCornerAndPageXY & 0xff9fffff | ((u_int)semitransparencyEnabled - 1) * 0x200000;
-		}
-
-		// set top left corner UVs and CLUT of primitive to the ones the icon has
-		*(int*)&p->u0 = topLeftCornerAndPaletteXY;
-
-		// set UVs of bottom left corner
-		*(short*)&p->u2 = (short)bottomMargin;
-
-		// set UVs of bottom right corner
-		*(u_short *)&p->u3 = *(u_short *)&icon->texLayout.u3;
-
-		topRightCornerAndPageXY = posX + iVar8;
-
-		if ((param_8 & 1) == 0)
-		{
-			topLeftCornerAndPaletteXY = posX + iVar9;
-			topRightCornerAndPageXY = bitshiftPosY + iVar8 * 0x10000;
-			uVar1 = posX | topRightCornerAndPageXY;
-			topLeftCornerAndPaletteXY |= bitshiftPosY;
-
-			// same as below
-			topRightCornerAndPageXY |= topLeftCornerAndPaletteXY;
-
-			if (param_8 == 0)
-			{
-				*(int*)&p->x0 = posX | bitshiftPosY;
-				*(int*)&p->x1 = topLeftCornerAndPaletteXY;
-				*(int*)&p->x2 = uVar1;
-				*(int*)&p->x3 = topRightCornerAndPageXY;
-			}
-
-			else
-			{
-				// we go the other way around
-				*(int*)&p->x3 = posX | bitshiftPosY;
-				*(int*)&p->x2 = topLeftCornerAndPaletteXY;
-				*(int*)&p->x1 = uVar1;
-				*(int*)&p->x0 = topRightCornerAndPageXY;
-			}
-		}
-
-		else
-		{
-			topLeftCornerAndPaletteXY = bitshiftPosY + iVar9 * 0x10000;
-			uVar3 = topRightCornerAndPageXY | bitshiftPosY;
-			uVar1 = posX | topLeftCornerAndPaletteXY;
-
-			// same as above
-			topRightCornerAndPageXY |= topLeftCornerAndPaletteXY;
-
-			if (param_8 == 1)
-			{
-				*(int*)&p->x1 = posX | bitshiftPosY;
-				*(int*)&p->x3 = uVar3;
-				*(int*)&p->x0 = uVar1;
-				*(int*)&p->x2 = topRightCornerAndPageXY;
-			}
-
-			else
-			{
-				*(int*)&p->x2 = posX | bitshiftPosY;
-				*(int*)&p->x0 = uVar3;
-				*(int*)&p->x3 = uVar1;
-				*(int*)&p->x1 = topRightCornerAndPageXY;
-			}
-		}
-
-		// link prim and OT together
-		*(int*)p = *ot | 0x9000000;
-		*ot = (u_int)p & 0xffffff;
-
-		// POLY_FT4 is 0x28 bytes large
-		primMem->curr = p + 1;
+		setTransparency(p, transparency);
 	}
-	return;
+
+	primMem->curr = p + 1;
 }
