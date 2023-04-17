@@ -4219,12 +4219,10 @@ struct sData
 
 	// 0x18c bytes after 8008E52C
 	// 8008e6b8 CdLoc (which is an int)
-	// 8008d6bc counter1
-	// 8008d6c0 counter2
-	// 8008d6c4 offset (0x0 or 0x200)
-	// 8008d6c8 subtract from music volume
-	// 8008d6cc ptrArray_numSongs
-	// 8008d6d0 ptrArray_firstSongIndex
+	// 8008d6bc counter
+	// 8008d6c0 counter (0-3)
+	// 8008d6c4 offset (0 or 0x200)
+	// 8008e6c8 array of 3 ints
 
 	#if BUILD == SepReview
 	// 8008d308
