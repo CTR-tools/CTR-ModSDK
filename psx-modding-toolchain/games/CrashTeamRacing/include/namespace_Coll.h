@@ -50,7 +50,10 @@ struct BspSearchData
 	// 0x16
 	// deltaCurr
 	
-	// 0xC
+	// 0x18
+	
+	// 0x24
+	// search flags
 	
 	// 0x30
 	// boundingbox
