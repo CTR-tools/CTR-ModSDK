@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MM_Characters_SetMenuLayout(void)
+void DECOMP_MM_Characters_SetMenuLayout(void)
 {
   unsigned short unlocked;
   char expand;

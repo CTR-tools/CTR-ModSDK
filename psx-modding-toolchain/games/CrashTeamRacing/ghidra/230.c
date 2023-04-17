@@ -2909,8 +2909,7 @@ void FUN_800ae74c(void)
 		// if more than 12 frames
 		if (0xc < DAT_800b5a44) 
 		{
-		  // Make a backup of the characters
-		  // you selected in character selection screen
+		  // MM_Characters_BackupIDs
           FUN_800ae274();
 		  
 		  // if returning to main menu
@@ -3707,6 +3706,7 @@ void FUN_800afa94(int param_1)
 
 
 // MM_TrackSelect_Video_Draw
+// param_1 - RECT
 // param_2 - array of bigfile offsets
 // param_3 - track index
 void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort param_5)
@@ -3726,9 +3726,11 @@ void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort para
   if ((((DAT_8008d09c[*(int *)(iVar5 + 8) * 2 + 3] == 0) || ((int)*param_1 < 0)) ||
       ((int)param_1[1] < 0)) ||
      
-	 // compare values, against screen resolution
+	 // compare values, against screen resolution,
+	 // check if video is off-screen (and should not play)
 	 ((0x200 < (int)*param_1 + (int)param_1[2] || (0xd8 < (int)param_1[1] + (int)param_1[3])))) 
   {
+	// draw icon
     DAT_800b59b8 = 1;
   }
   else 
@@ -3790,6 +3792,8 @@ void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort para
       }
     }
   }
+  
+  // if not playing video, draw icon
   if (DAT_800b59b8 != 3) 
   {
 	// This is the same function that draws Character icons
@@ -3810,6 +3814,7 @@ void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort para
 				 DAT_800b55c0,
                  DAT_800b55c0,DAT_800b55c0,DAT_800b55c0,0,0x1000);
   }
+  
   if (DAT_800b59ba == 1) 
   {
 	// disable video copy
@@ -6299,10 +6304,13 @@ void FUN_800b2fbc(ushort param_1,uint param_2,uint param_3,uint param_4)
       FUN_80026e80();
       iVar1 = (int)(short)iVar6;
 	  
-      if ((*(uint *)(&DAT_8008e814 +     // Level ID
-                    (*(int *)(PTR_DAT_8008d2ac + 0x1a10) * 0x49 +
-                    ((int)((uint)(ushort)(&DAT_800b594c)[iVar1] << 0x10) >> 0x15)) * 4) >>
-           ((&DAT_800b594c)[iVar1] & 0x1f) & 1) != 0) 
+      if (
+			// GameProgress.highScoreTracks[gGT->levelID].timeTrialFlags
+			(*(uint *)(&DAT_8008e814 + (*(int *)(PTR_DAT_8008d2ac + 0x1a10) * 0x49 +
+			
+			((int)((uint)(ushort)(&DAT_800b594c)[iVar1] << 0x10) >> 0x15)) * 4) >>
+			((&DAT_800b594c)[iVar1] & 0x1f) & 1) != 0
+		  ) 
 	 {
 		// &DAT_800b5948
 		// array of color IDs
@@ -6879,6 +6887,9 @@ void FUN_800b4014(int param_1)
 	
 	// Actually play the movie
   case 2:
+  
+	// infinite loop (cause this is scrapbook),
+	// keep doing DecodeFrame and VSync until done
     while (
 	
 		// MM_Video_DecodeFrame
@@ -6903,7 +6914,8 @@ void FUN_800b4014(int param_1)
     iVar1 = FUN_800b6674(0);
 	
     if (
-			// if movie is finished
+			// if movie is finished,
+			// means scrapbook ended, no looping
 			(iVar1 == 1) || 
 			
 			// If you press Start, Cross, Circle, Triangle, or Square
@@ -7157,6 +7169,8 @@ void FUN_800b5a64(void)
   
   if (((DAT_800b67e8 & 1) != 0) && (DAT_8009ebf8 != 0)) {
     StCdInterrupt();
+	
+	// StCdIntrFlag
     DAT_8009ebf8 = 0;
   }
   
@@ -7217,13 +7231,23 @@ void FUN_800b5b7c(undefined *param_1)
       if (DAT_800b67cc != 3) {
         return;
       }
-      uVar2 = 0x1a0;
-      if ((DAT_800b67e8 & 2) != 0) {
+      
+	  // CdlModeStream2|CdlModeSpeed
+	  uVar2 = 0x1a0;
+      
+	  // scrapbook
+	  // if video contains audio
+	  if ((DAT_800b67e8 & 2) != 0) 
+	  {
+		// CdlModeStream2|CdlModeSpeed|CdlModeRT
         uVar2 = 0x1e0;
       }
-      DAT_800b67cc = 0;
-      iVar1 = CdRead2(uVar2);
-      if (iVar1 == 0) {
+      
+	  DAT_800b67cc = 0;
+      
+	  iVar1 = CdRead2(uVar2);
+      
+	  if (iVar1 == 0) {
         return;
       }
       puRam800b6830 = (undefined *)0x0;
@@ -7241,6 +7265,8 @@ void FUN_800b5b7c(undefined *param_1)
     }
     DAT_800b67cc = 1;
   }
+  
+  // CdlModeSpeed
   local_18[0] = 0x80;
   
   // 0xe = CdlSetmode
@@ -7269,8 +7295,12 @@ void FUN_800b5c8c(void)
   // WAIT_TIME
   iVar5 = 10;
   
+  // free sectors and over sectors
   StRingStatus(&local_30,auStack46);
+  
+  // StGetBackloc
   iVar2 = FUN_8007a3b0(&DAT_800b6828);
+  
   sVar1 = DAT_800b67c6;
   if ((DAT_800b67c6 == 1) &&
      (DAT_800b67ec - (DAT_800b67ec >> 2) <= (int)local_30)) {
@@ -7299,6 +7329,7 @@ void FUN_800b5c8c(void)
   else {
     DAT_800b67d0 = 0;
     
+	// Scrapbook
 	if (((DAT_800b67e8 & 8) == 0) && ((int)local_30 < DAT_800b67ec >> 4)) 
 	{
 	  // MM_Video_KickCD
@@ -7329,12 +7360,23 @@ void FUN_800b5c8c(void)
     }
     DAT_800b67c6 = 0;
 	
-    if ((DAT_800b67ac < 0) &&
+	// if reached end of video,
+	// choose to loop or not loop
+    if (
+		(DAT_800b67ac < 0) &&
        
-	   // length of video
-	   ((DAT_800b67d4 <= iVar2 || (iVar2 < DAT_800b67e0)))) 
+		(
+			// length of video
+			(DAT_800b67d4 <= iVar2 || 
+			
+			(iVar2 < DAT_800b67e0))
+		)
+	   ) 
 	{
-      if ((DAT_800b67e8 & 4) == 0) {
+	  // scrapbook not track select,
+	  // if video is not looping
+      if ((DAT_800b67e8 & 4) == 0) 
+	  {
         do 
 		{
 		  // 9 = CdlPause
@@ -7342,9 +7384,14 @@ void FUN_800b5c8c(void)
         
 		} while (iVar3 == 0);
         
+		// end of scrapbook
 		DAT_800b67c4 = 1;
       }
-      else {
+	  
+	  // track select, not scrapbook,
+	  // if video is looping
+      else 
+	  {
         DAT_800b67e4 = 0xffffffff;
         if (DAT_800b67b0 < 1) {
           
@@ -7383,14 +7430,21 @@ LAB_800b5fec:
 	// retrieve data with timeout (10 frames)
 	do {
       iVar3 = StGetNext(&local_2c,local_28);
-      if (iVar3 == 0) {
+      if (iVar3 == 0) 
+	  {
+		// sector->frameCount
         DAT_800b67d8 = *(int *)(local_28[0] + 8);
-        if (DAT_800b67d8 == DAT_800b67dc) {
+        
+		if (DAT_800b67d8 == DAT_800b67dc) {
           StFreeRing(local_2c);
           goto LAB_800b5fec;
         }
-        if (0 < DAT_800b67ac) {
+        
+		if (0 < DAT_800b67ac) 
+		{
+		  // sector->loc
           iVar3 = CdPosToInt(local_28[0] + 0x1c);
+		  
           iVar5 = 10;
           if (DAT_800b67ac <= iVar3) {
             DAT_800b67b4 = 1;
@@ -7403,9 +7457,14 @@ LAB_800b5fec:
             DAT_800b67e0 = iVar2;
           }
         }
+		
+		// DecDCTBufSize
         uVar4 = FUN_800798b8(local_2c);
-        if (uVar4 <= DAT_800b67f4) {
-          DAT_800b682c = *(undefined *)(local_28[0] + 0x1c);
+		
+        if (uVar4 <= DAT_800b67f4) 
+		{
+		  // sector->loc
+          DAT_800b67d4 = *(undefined *)(local_28[0] + 0x1c);
           DAT_800b682d = *(undefined *)(local_28[0] + 0x1d);
           DAT_800b682e = *(undefined *)(local_28[0] + 0x1e);
           DAT_800b682f = *(undefined *)(local_28[0] + 0x1f);
@@ -7469,6 +7528,7 @@ void FUN_800b615c(undefined4 param_1,undefined4 param_2)
   // CDSYS_SetMode_StreamData
   FUN_8001c470();
   
+  // 800b6814 = Ring_Buf (mempack)
   // 800b67ec = RING_SIZE
   StSetRing(DAT_800b6814,DAT_800b67ec);
   
@@ -7498,7 +7558,11 @@ void FUN_800b6260(void)
   }
   StClearRing();
   StSetMask(1,0,0);
+  
+  // CdDataCallback
   FUN_80071e20(0);
+  
+  // CdReadyCallback
   FUN_80071a10(0);
   
   // DecDCTReset
@@ -7716,6 +7780,8 @@ uint FUN_800b6674(int param_1)
 	  // does not affect internal states (libref)
       FUN_80079884(1);
     }
+	
+	// end of scrapbook
     uVar2 = (uint)DAT_800b67c4;
   }
   return uVar2;

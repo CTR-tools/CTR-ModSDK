@@ -7,7 +7,7 @@ void DECOMP_MM_Title_Init(void)
   struct GameTracker* gGT = sdata->gGT;
   struct Thread* threadTitle;
   struct Instance* titleInst;
-  struct Title* titleObj = (struct Title*)0x800b59a0;
+  struct Title* titleObj = *(int*)0x800b59a0;
   int i;
   int *piVar8;
   int *piVar9;
@@ -59,7 +59,7 @@ void DECOMP_MM_Title_Init(void)
     memset(piVar9,0,0x24);
 	
 	// store pointer to thread inside object
-    *piVar9 = &threadTitle;
+    *piVar9 = threadTitle;
 	
     piVar8 = piVar9;
     
@@ -74,7 +74,7 @@ void DECOMP_MM_Title_Init(void)
               (gGT->ptrModel[OVR_230.titleInstances[i].modelID]),OVR_230.s_title,threadTitle);
       
 	  // store instance
-	  *piVar8 = &titleInst;
+	  *piVar8 = titleInst;
       
 	  if (OVR_230.titleInstances[i].boolApplyFlag != 0) 
 	  { 
