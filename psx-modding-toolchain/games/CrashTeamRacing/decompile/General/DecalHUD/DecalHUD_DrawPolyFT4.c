@@ -1,5 +1,7 @@
 #include <common.h>
 
+#define EDUCATIONAL_BUG_IF 0
+
 void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale)
 {
 	if (!icon) return;
@@ -12,11 +14,17 @@ void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, stru
 
 	unsigned int width = icon->texLayout.u1 - icon->texLayout.u0;
 	unsigned int height = icon->texLayout.v2 - icon->texLayout.v0;
-	unsigned int rightX = posX + (width * scale / 0x1000);
 	unsigned int bottomY = posY + (height * scale / 0x1000);
-
-	setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
+	unsigned int rightX = posX + (width * scale / 0x1000);
+	
+	#if EDUCATIONAL_BUG_IF
+		unsigned int rightXOverflow = rightX >> 16;
+		setXY4(p, posX, posY | rightXOverflow, rightX, posY, posX, bottomY | rightXOverflow, rightX, bottomY);
+	#else
+		setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
+	#endif
 	setIconUV(p, icon);
+
 	if (transparency)
 	{
 		setTransparency(p, transparency);
