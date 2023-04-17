@@ -2,81 +2,34 @@
 
 void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, u_int color)
 {
-	short iVar6;
-	short height;
-	short width;
-	POLY_FT4* p;
+	// setInt32RGB0 needs to go before addPolyGT4
+	// for more information check "temporaryrevampedgpuheader.h"
+	POLY_FT4* p = (POLY_FT4*)primMem->curr;
+	setInt32RGB0(p, color);
+	addPolyFT4(ot, p);
 
-	p = (POLY_FT4*)primMem->curr;
+	unsigned int width = icon->texLayout.u1 - icon->texLayout.u0;
+	unsigned int height = icon->texLayout.v2 - icon->texLayout.v0;
+	unsigned int rightX = posX + (width * scale / 0x1000);
+	#if BUILD != EurRetail
+		unsigned int topY = (posY < 166) ? posY : 165;
+		unsigned int bottomY = ((posY + (height * scale / 0x1000)) < 166) ? (posY + (height * scale / 0x1000)) : 165;
+	#else
+		unsigned int topY = (posY < 176) ? posY : 175;
+		unsigned int bottomY = ((posY + (height * scale / 0x1000)) < 176) ? (posY + (height * scale / 0x1000)) : 175;
+	#endif
+	unsigned int bottomV = (icon->texLayout.v0 + bottomY) - posY;
 
-	// vertex color and code
-	*(u_int*)&p->r0 = color;
+	setXY4(p, posX, topY, rightX, topY, posX, bottomY, rightX, bottomY);
+	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, bottomV, icon->texLayout.u3, bottomV);
+	p->clut = icon->texLayout.clut;
+	p->tpage = icon->texLayout.tpage;
 
-	setPolyFT4(p);
-
-	// UVs and CLUT
-	*(u_int*)&p->u0 = *(u_int*)&icon->texLayout.u0;
-
-	// UVs and texpage
-	*(u_int*)&p->u1 = *(u_int*)&icon->texLayout.u1;
-
-	width = icon->texLayout.u1 - icon->texLayout.u0;
-
-	// UVs and... pad1?
-	*(u_int*)&p->u2 = *(u_int*)&icon->texLayout.u2;
-
-	p->x0 = posX;
-	p->u3 = icon->texLayout.u3;
-
-	height = icon->texLayout.v2 - icon->texLayout.v0;
-
-	if (posY < 166)
-		p->y0 = posY;
-	else
-		p->y0 = 165;
-
-	p->x1 = posX + (short)(width * scale >> 12);
-
-	if (posY < 166)
-		p->y1 = posY;
-	else
-		p->y1 = 165;
-
-	iVar6 = posY + (height * scale >> 12);
-	p->x2 = posX;
-
-	if (iVar6 < 166)
-		p->y2 = iVar6;
-	else
-		p->y2 = 165;
-
-	p->x3 = posX + (short)(width * scale >> 12);
-	height = posY + (height * scale >> 12);
-
-	if (height < 166)
-		p->y3 = (short)height;
-	else
-		p->y3 = 165;
-
-	p->v2 = (p->v0 + *(u_char*)&p->y2) - (char)posY;
-	p->v3 = (p->v0 + *(u_char*)&p->y3) - (char)posY;
-
-	if (transparency != 0)
+	if (transparency)
 	{
-		// disable blending mode bits of the texpage using AND, then set them using OR
-		// blending mode bits on most Icon images are set to 11 (Mode 3, which is no blending)
-		// this function is always called with this parameter set to 1 (which is Mode 0, equivalent to 50% transparency)
-		// uh, I think so anyway, feel free to double check I guess
-
-		// note that these blending modes are different from those used in UI_Map_DrawMap
-		p->tpage = p->tpage & 0xff9f | (transparency - 1) << 5;
-		p->code = p->code | 2;
+		setTransparency(p, transparency);
 	}
-
-	// could also use the psn00bsdk macro, there is no difference
-	AddPrim(ot, p);
-
-	// POLY_FT4 is 0x28 bytes large
+	
 	primMem->curr = p + 1;
 
 	return;
