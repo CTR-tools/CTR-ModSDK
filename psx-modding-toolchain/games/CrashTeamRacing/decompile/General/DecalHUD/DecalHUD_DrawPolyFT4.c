@@ -18,6 +18,10 @@ void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, stru
 	unsigned int rightX = posX + (width * scale / 0x1000);
 	
 	#if EDUCATIONAL_BUG_IF
+		// using custom-made macro that resembles the compiler optimization used in the original code
+		// the X and Y fields of the primitive will be dereferenced as combined 32-bit integers for each vertex
+		// from this, the X and Y coordinates will be added onto these integers using bitwise OR
+		// this causes a bug where if X is higher than 0xFFFF (by not being cast as unsigned 16-bits) it will overflow onto Y
 		setXY4CompilerHack(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
 	#else
 		setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);

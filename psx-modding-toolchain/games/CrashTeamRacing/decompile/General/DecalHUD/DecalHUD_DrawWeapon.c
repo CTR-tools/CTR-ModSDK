@@ -21,6 +21,12 @@ void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struc
 	unsigned int sidewaysX = posX + (height * scale / 0x1000);
 	unsigned int sidewaysY = posY + (width * scale / 0x1000);
 
+	// instead of psn00bsdk's setXY4, this function uses a custom-made macro that resembles the compiler optimization used in the original code
+	// the X and Y fields of the primitive will be dereferenced as combined 32-bit integers for each vertex
+	// from this, the X and Y coordinates will be added onto these integers using bitwise OR
+	// this originally caused a bug where if X is higher than 0xFFFF (by not being cast as unsigned 16-bits) it will overflow onto Y
+	// for the sake of making this compile under the original file size of the function (0x190 bytes) this macro will be used with the proper variable casts
+	// the bugged version of the code is still intact as a compiler macro
 	#if EDUCATIONAL_BUG_IF == 0
 		if (!(rot & 1))
 		{
