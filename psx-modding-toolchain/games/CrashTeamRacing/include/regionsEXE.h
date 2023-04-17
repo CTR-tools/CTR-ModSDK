@@ -4211,18 +4211,16 @@ struct sData
 	#endif
 
 	// 8008E528
-	// unused, seemingly no impact?
-	int unused_SetZero_CDSYS_Init;
+	// 400 bytes, 100 ints
+	int unused400[100];
 
-	// 8008E52C
-	unsigned char data1a8[0x1a8];
-
-	// 0x18c bytes after 8008E52C
+	// 8008E6B8
 	// 8008e6b8 CdLoc (which is an int)
 	// 8008d6bc counter
 	// 8008d6c0 counter (0-3)
 	// 8008d6c4 offset (0 or 0x200)
 	// 8008e6c8 array of 3 ints
+	char cdsysUnk[0x1C];
 
 	#if BUILD == SepReview
 	// 8008d308
