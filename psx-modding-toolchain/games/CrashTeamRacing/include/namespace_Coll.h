@@ -51,6 +51,7 @@ struct BspSearchData
 	// deltaCurr
 	
 	// 0x18
+	// 1F800120 (thread, or const 0x271?)
 	
 	// 0x24
 	// search flags
