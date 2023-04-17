@@ -30,9 +30,8 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, stru
 		// x1 are added onto y1's bits, resulting in y1's value being altered by x1's overflow.
 		// This also affects the bottom right vertex.
 
-		unsigned int rightX = (posX & 0xFFFF) + (width * scale / 0x1000);
-		unsigned int rightXOverflow = rightX >> 16;
-		setXY4(p, posX, posY, rightX, posY | rightXOverflow, posX, bottomY, rightX, bottomY | rightXOverflow);
+		unsigned int rightX = (u_short)posX + (width * scale / 0x1000);
+		setXY4CompilerHack(p, (u_short)posX, posY, rightX, posY, (u_short)posX, bottomY, rightX, bottomY);
 	#else
 		unsigned int rightX = posX + (width * scale / 0x1000);
 		setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);

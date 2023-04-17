@@ -172,12 +172,16 @@ force_inline void addVram2Vram(u_long* ot, VRAM2VRAM* p)
 	p->pad[0], p->pad[1], p->pad[2], p->pad[3] = 0;
 }
 
-// clear blending mode bits of the texpage using AND, then set them using OR
-// then set image to use semi-transparent mode using the setSemiTrans macro
-// (which enables the 2 bit on the primitive's code field)
-#define setTransparency(p, transparency) \
-	p->tpage = p->tpage & 0xff9f | (transparency - 1) << 5, \
-	p->code |= 2
+// version of psn00bsdk's setXY4 macro that compiles to a smaller bytesize
+// based on original compiled code for the game's primitive functions
+// this produces bugs if any of the X values are negative and not cast to u_short
+// this is terrible code
+// please avoid writing something like this, unless you really really need it
+#define setXY4CompilerHack(p, s0, t0, s1, t1, s2, t2, s3, t3) \
+	*(u_int*)&p->x0 = s0 | (t0 << 16), \
+	*(u_int*)&p->x1 = s1 | (t1 << 16), \
+	*(u_int*)&p->x2 = s2 | (t2 << 16), \
+	*(u_int*)&p->x3 = s3 | (t3 << 16)
 
 // macros for setting the rgb values in primitives using pointer blah blah
 // this is *maybe* what naughty dog did?
@@ -185,10 +189,17 @@ force_inline void addVram2Vram(u_long* ot, VRAM2VRAM* p)
 // these macros are used prior to any of the primitive functions seen in this
 // header as they overwrite the primitive's code value
 #define setInt32RGB0(p, color0) \
-	*(u_int*)&p->r0 = color0,
+	*(u_int*)&p->r0 = color0
 
 #define setInt32RGB4(p, color0, color1, color2, color3) \
 	*(u_int*)&p->r0 = color0, \
 	*(u_int*)&p->r1 = color1, \
 	*(u_int*)&p->r2 = color2, \
 	*(u_int*)&p->r3 = color3
+
+// clear blending mode bits of the texpage using AND, then set them using OR
+// then set image to use semi-transparent mode using the setSemiTrans macro
+// (which enables the 2 bit on the primitive's code field)
+#define setTransparency(p, transparency) \
+	p->tpage = p->tpage & 0xff9f | (transparency - 1) << 5, \
+	p->code |= 2

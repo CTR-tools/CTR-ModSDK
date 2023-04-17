@@ -1,6 +1,8 @@
 #include <common.h>
 
-void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, short rot)
+#define EDUCATIONAL_BUG_IF 0
+
+void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, char rot)
 {
 	#if BUILD > SepReview
 		if (!icon) return;
@@ -19,22 +21,55 @@ void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struc
 	unsigned int sidewaysX = posX + (height * scale / 0x1000);
 	unsigned int sidewaysY = posY + (width * scale / 0x1000);
 
-	if (!(rot & 1))
-	{
-		if (rot == 0)
-			setXY4(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
+	#if EDUCATIONAL_BUG_IF == 0
+		if (!(rot & 1))
+		{
+			if (rot == 0)
+			{
+				setXY4CompilerHack(p, (u_short)posX, posY, (u_short)rightX, posY, (u_short)posX, bottomY, (u_short)rightX, bottomY);
+			}
+			else
+			{
+				setXY4CompilerHack(p, (u_short)rightX, bottomY, (u_short)posX, bottomY, (u_short)rightX, posY, (u_short)posX, posY);
+			}
+		}
 		else
-			setXY4(p, rightX, bottomY, posX, bottomY, rightX, posY, posX, posY);
-	}
-	else
-	{
-		if (rot == 1)
-			setXY4(p, posX, sidewaysY, posX, posY, sidewaysX, sidewaysY, sidewaysX, posY);
+		{
+			if (rot == 1)
+			{
+				setXY4CompilerHack(p, (u_short)posX, sidewaysY, (u_short)posX, posY, (u_short)sidewaysX, sidewaysY, (u_short)sidewaysX, posY);
+			}
+			else
+			{
+				setXY4CompilerHack(p, (u_short)sidewaysX, posY, (u_short)sidewaysX, sidewaysY, (u_short)posX, posY, (u_short)posX, sidewaysY);
+			}
+		}
+	#else
+		if (!(rot & 1))
+		{
+			if (rot == 0)
+			{
+				setXY4CompilerHack(p, posX, posY, rightX, posY, posX, bottomY, rightX, bottomY);
+			}
+			else
+			{
+				setXY4CompilerHack(p, rightX, bottomY, posX, bottomY, rightX, posY, posX, posY);
+			}
+		}
 		else
-			setXY4(p, sidewaysX, posY, sidewaysX, sidewaysY, posX, posY, posX, sidewaysY);
-	}
+		{
+			if (rot == 1)
+			{
+				setXY4CompilerHack(p, posX, sidewaysY, posX, posY, sidewaysX, sidewaysY, sidewaysX, posY);
+			}
+			else
+			{
+				setXY4CompilerHack(p, sidewaysX, posY, sidewaysX, sidewaysY, posX, posY, posX, sidewaysY);
+			}
+		}
+	#endif
 	
-	setIconUV4(p, icon);
+	setIconUV(p, icon);
 
 	if (transparency)
 	{
