@@ -4210,9 +4210,6 @@ struct sData
 	unsigned int SpuDecodedData[0x200];
 	#endif
 
-	// 8008e126
-	// 0x400 byte buffer in CDSYS_IRQ_Enable
-
 	// 8008E528
 	// unused, seemingly no impact?
 	int unused_SetZero_CDSYS_Init;

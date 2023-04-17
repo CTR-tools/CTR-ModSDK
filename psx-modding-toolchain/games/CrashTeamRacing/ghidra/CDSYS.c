@@ -532,6 +532,8 @@ void FUN_8001c9e4(void)
   undefined2 *puVar1;
   int iVar2;
 
+  // Erase SpuDecodedData, 
+  // wipe it all to zeros
   iVar2 = 0x1ff;
   puVar1 = &DAT_8008e126;
   DAT_8008d714 = 0;
