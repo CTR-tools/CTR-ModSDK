@@ -54,3 +54,4 @@
 #include <ovr_233.h>
 #include <regionsEXE.h>
 #include <functions.h>
+#include <temporaryrevampedgpuheader.h>

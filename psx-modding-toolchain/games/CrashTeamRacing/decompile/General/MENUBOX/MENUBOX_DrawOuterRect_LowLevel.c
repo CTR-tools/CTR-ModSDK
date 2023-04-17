@@ -1,8 +1,6 @@
 #include <common.h>
 
-void MenuBox_DrawOuterRect_Edge(RECT* r, u_int rgb, u_int param_3, u_long* otMem);
-
-void DECOMP_MenuBox_DrawOuterRect_LowLevel(RECT* p, short xOffset, u_short yOffset, u_int rgb, short param_5, u_long* otMem)
+void DECOMP_MenuBox_DrawOuterRect_LowLevel(RECT* p, short xOffset, u_short yOffset, u_int* rgb, short param_5, u_long* otMem)
 {
 	int iVar1;
 	RECT r;
