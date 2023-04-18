@@ -44,7 +44,9 @@ struct CameraDC
 	short desiredRot[4];
 
 	// 0x18
-	int unk0x18;
+	short unk18;
+	// 0x1a
+	short unk1A;
 
 	// 0x1c - ptrQuadBlock
 	// similar to driver +a0,
