@@ -993,13 +993,15 @@ void FUN_800ac6b4(int param_1)
 	// RB_GenericMine_ThDestroy
     FUN_800ad250(param_1,iVar6,iVar7);
   }
+  
+  // did not hit VisData hitbox
   if (DAT_1f80014a == 0) {
     if (DAT_1f800146 != 0) 
 	{
 	  // Rot_AxisAngle
       FUN_8005f89c(iVar6 + 0x30,&DAT_1f800178,0);
       
-	  iVar4 = (int)DAT_1f800124._2_2_;
+	  iVar4 = (int)DAT_1f800126;
       iVar5 = *(int *)(iVar6 + 0x48);
       if (iVar4 + 0x30 < iVar5) {
         return;
@@ -1009,7 +1011,7 @@ void FUN_800ac6b4(int param_1)
       if (*(short *)(iVar7 + 0x2a) == 0) 
 	  {
         *(int *)(iVar6 + 0x48) = iVar4;
-        sVar2 = DAT_1f800124._2_2_;
+        sVar2 = DAT_1f800126;
         
 		// reset cooldown (3.84s)
 		// if potion hits ground, and hit within 3.84s,
@@ -1045,6 +1047,9 @@ void FUN_800ac6b4(int param_1)
       return;
     }
 	
+	// if did not touch quadblock in range [-0x40, 0x100],
+	// check again with range [-0x900, 0x100]
+	
 	// posBottom
     local_28 = *(undefined2 *)(iVar6 + 0x44);
     local_26 = *(short *)(iVar6 + 0x48) + -0x900;
@@ -1053,6 +1058,8 @@ void FUN_800ac6b4(int param_1)
 	// COLL_SearchTree_FindQuadblock_Touching
 	FUN_8001eb0c(&local_28,&local_20,&DAT_1f800108,0);
 	
+	// if quadblock exists within 0x900 units of Y axis,
+	// do not destroy the potion, let it keep flying
     if (DAT_1f800146 != 0) {
       return;
     }
@@ -1061,6 +1068,8 @@ void FUN_800ac6b4(int param_1)
   // This is not a waste,
   // Potion_OnShatter_SearchTeeth fails
   // to open Teeth while the potion is airborne
+  
+  // If hit VisData hitbox
   else {
     bVar1 = true;
     if (((((*DAT_1f800150 & 0x80) != 0) && (iVar4 = *(int *)(DAT_1f800150 + 0x1c), iVar4 != 0)) &&
@@ -1081,6 +1090,9 @@ void FUN_800ac6b4(int param_1)
       return;
     }
   }
+  
+  // hit TEETH door,
+  // or no quadblock exists within 0x900 units of Y axis
   
   // RB_GenericMine_ThDestroy
   FUN_800ad250(param_1,iVar6,iVar7);

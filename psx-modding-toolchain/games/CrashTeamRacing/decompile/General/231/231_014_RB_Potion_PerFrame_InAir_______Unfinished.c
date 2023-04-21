@@ -11,6 +11,9 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	short posBottom[3];
 	short posTop[3];
 	
+	#define SPS \
+	((struct ScratchpadStruct*)0x1f800108)
+	
 	gGT = sdata->gGT;
 	inst = t->inst;
 	mw = t->object;
@@ -40,40 +43,42 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	posTop[1] = inst->matrix.t[1] + 0x100;
 	posTop[2] = inst->matrix.t[2];
 
-	DAT_1f80012c = 0x1040;
-	DAT_1f800130 = 0;
-	DAT_1f80012a = 0x41;
+	SPS->Union.Input2.searchFlags = 0x1040;
+	SPS->Union.Input2.unk28 = 0;
+	SPS->Union.Input2.unk22 = 0x41;
 
 	if (gGT->numPlyrCurrGame < 3) {
-		DAT_1f80012a = 0x43;
+		SPS->Union.Input2.unk22 = 0x43;
 	}
 
 	DAT_1f800134 = gGT->level1;
 
-	COLL_SearchTree_FindQuadblock_Touching(&posBottom, &posTop, &DAT_1f800108,0);
+	COLL_SearchTree_FindQuadblock_Touching(&posBottom, &posTop, SPS,0);
 
-	RB_MakeInstanceReflective(&DAT_1f800108, inst);
+	RB_MakeInstanceReflective(SPS, inst);
 
+	// 1f800108+1A4
 	if ((DAT_1f8002ac & 4) != 0) 
 	{
 		RB_GenericMine_ThDestroy(t,inst,mw);
 	}
 
-	if (DAT_1f80014a == 0) 
+	// did not hit VisData hitbox
+	if (SPS->boolDidTouchHitbox == 0) 
 	{
-		if (DAT_1f800146 != 0) 
+		if (SPS->boolDidTouchQuadblock != 0) 
 		{
-			Rot_AxisAngle(&inst->matrix&DAT_1f800178,0);
+			Rot_AxisAngle(&inst->matrix&SPS->unk40[0x30],0);
 	
-				// need to rename to SPS
-			if (WSD->min[0] + 0x30 < inst->matrix.t[1]) 
+			// if very high above quadblock hitbox, quit
+			if (SPS->Union.ThBuckOnCollide.min[1] + 0x30 < inst->matrix.t[1]) 
 				return;
 	
 			// if no cooldown
 			if (mw->cooldown == 0)
 			{
-				// need to rename to SPS
-				inst->matrix.t[1] = WSD->min[0];
+				// set potion position to quadblock hitbox minY
+				inst->matrix.t[1] = SPS->Union.ThBuckOnCollide.min[1];
 	
 				// reset cooldown (3.84s)
 				mw->cooldown = 0xf00;
@@ -83,7 +88,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 				mw->velocity[1] = 0;
 				mw->velocity[2] = 0;
 	
-				mw->maxHeight = DAT_1f800124;
+				mw->maxHeight = inst->matrix.t[1];
 	
 				// remove "thrown" flag 
 				mw->extraFlags &= 0xfffd;
@@ -104,6 +109,9 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 			return;
 		}
 
+		// if did not touch quadblock in range [-0x40, 0x100],
+		// check again with range [-0x900, 0x100]
+
 		// posBottom
 		posBottom[2] = inst->matrix.t[0];
 		posBottom[1] = inst->matrix.t[1] - 0x900;
@@ -111,14 +119,33 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 
 		COLL_SearchTree_FindQuadblock_Touching(&posBottom, &posTop, &DAT_1f800108, );
 
-		if (DAT_1f800146 != 0) return;
+		// quadblock exists far below potion, dont destroy
+		if (SPS->boolDidTouchQuadblock != 0) return;
 	} 
 	
+	// hit VisData hitbox
 	else 
 	{
 		
-		if (((((*DAT_1f800150 & 0x80) != 0) && (iVar4 = *(int *)(DAT_1f800150 + 0x1c), iVar4 != 0)) &&
-        (*(short *)(iVar4 + 0x3c) == 0x70)) && (*(int *)(iVar4 + 0x2c) != 0)) 
+		if (
+			(
+				(
+					// visData->flags hitbox
+					((*DAT_1f800150 & 0x80) != 0) && 
+					(
+						// hitbox contains instDef
+						iVar4 = *(int *)(DAT_1f800150 + 0x1c), 
+						iVar4 != 0
+					)
+				) &&
+        
+				// instDef->modelID == TEETH
+				(*(short *)(iVar4 + 0x3c) == 0x70)
+			) && 
+			
+			// instDef->instance exists
+			(*(int *)(iVar4 + 0x2c) != 0)
+		   ) 
 		{
 			// if door is closed
 			if ((sdata->doorAccessFlags & 1) == 0) 
@@ -130,6 +157,10 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 			}
 		}
 	}
+	
+	// hit TEETH door,
+	// or no quadblock exists within 0x900 units of Y axis
 	RB_GenericMine_ThDestroy(t, inst, mw);
+	
 	return;
 }	

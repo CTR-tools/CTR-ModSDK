@@ -68,7 +68,7 @@ struct ScratchpadStruct
 			short unk22;
 			
 			// 0x24
-			int searchFlags;
+			short searchFlags;
 			
 			// 0x28
 			// could be non-union callback
@@ -105,13 +105,15 @@ struct ScratchpadStruct
 	
 	// 0x3C...
 	short unk3C;
-	short unk3E;
+	short boolDidTouchQuadblock;
 	
 	// 0x40
 	char unk40[0xB0];
 	
-	// 0x42 (number collisions?)
-	// 0x48 instanceHitbox
+	// 0x42 short boolDidTouchHitbox
+	// 0x44 unk
+	// 0x46
+	// 0x48 VisData* visDataHitbox
 	
 	// 0x64
 	// ptrQuadblock
