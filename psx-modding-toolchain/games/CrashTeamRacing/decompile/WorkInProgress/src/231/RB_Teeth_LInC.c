@@ -2,7 +2,7 @@
 
 void RB_Teeth_ThTick(struct Thread *);
 
-int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct WeaponSearchData *wsd)
+int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct ScratchpadStruct* sps)
 {
     int iVar1;
     struct Thread *teethTh;
@@ -48,7 +48,7 @@ int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct We
     teeth = teethTh->object;
 
     // if collided object is a player
-    if (wsd->modelID == 0x18)
+    if (sps->Input1.modelID == 0x18)
     {
         // if driver is using mask weapon
         if ((d->actionsFlagSet & 0x800000) != 0)
@@ -56,19 +56,18 @@ int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct We
             RB_Teeth_OpenDoor(teethInst);
         }
 
-        // if collided object is a player
-        if (wsd->modelID == 0x18)
-        {
-            return 2;
-        }
+        return 2;
     }
+	
+	// If collide with something
+	// that is not a player
 
     // time to close
     if (teeth->timeOpen == 0)
     {
         iVar1 =
-            ((int)wsd->pos[0] - teethInst->matrix.t[0]) * (int)teethInst->matrix.m[0][2] +
-            ((int)wsd->pos[2] - teethInst->matrix.t[2]) * (int)teethInst->matrix.m[2][2];
+            ((int)sps->Input1.pos[0] - teethInst->matrix.t[0]) * (int)teethInst->matrix.m[0][2] +
+            ((int)sps->Input1.pos[2] - teethInst->matrix.t[2]) * (int)teethInst->matrix.m[2][2];
 
         if (iVar1 < 0)
         {

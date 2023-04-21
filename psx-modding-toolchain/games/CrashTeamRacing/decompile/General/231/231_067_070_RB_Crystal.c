@@ -74,14 +74,14 @@ void RB_Fruit_GetScreenCoords(struct TileView* tileView, struct Instance* inst, 
 int DECOMP_RB_Crystal_LInC(
 	struct Instance* LevInst,
 	struct Thread* driverTh,
-	struct WeaponSearchData* info)
+	struct ScratchpadStruct* sps)
 {
 	struct TileView* tileView;
 	short posScreen[2];
 	struct Driver* driver;
 	int modelID;
 
-	modelID = info->modelID;
+	modelID = sps->Input1.modelID;
 	
 	// wumpa fruit or crystal can be grabbed
 	// by player, or robotcar, and there's no

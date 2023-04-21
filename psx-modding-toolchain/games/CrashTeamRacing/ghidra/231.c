@@ -12867,7 +12867,7 @@ void FUN_800b9e44(short *param_1,int param_2)
     }
   }
   
-  // thread on WeaponSearchData
+  // thread on ScratchpadStruct
   iVar2 = *(int *)(param_1 + 0xc);
   
   // another instance
@@ -13103,6 +13103,9 @@ undefined4 FUN_800ba0c8(int param_1,int param_2,short *param_3)
         return 2;
       }
     }
+	
+	// If collide with something
+	// that is not a player
 	
 	// teeth->timeOpen == 0 (time to close)
     if (*(int *)(iVar1 + 4) == 0) 

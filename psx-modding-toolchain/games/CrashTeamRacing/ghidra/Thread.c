@@ -590,6 +590,7 @@ void FUN_800423fc(int param_1,short *param_2)
   
   if ((piVar5 != (int *)0x0) && (*piVar5 != 0)) 
   {
+	// VisData[0x14]
     piVar4 = piVar5 + 5;
     
 	// loop through all hitboxes
@@ -597,9 +598,16 @@ void FUN_800423fc(int param_1,short *param_2)
 	{
       if (((*(byte *)piVar5 & 0x80) != 0) &&
          ((piVar4[2] == 0 || ((*(uint *)(*(int *)(piVar4[2] + 0x2c) + 0x28) & 0xf) != 0)))) {
-        iVar3 = (int)*param_2 - (int)*(short *)(piVar4 + -1);
-        iVar1 = (int)param_2[2] - (int)*(short *)piVar4;
+        
+		// 0x14 - 4
+		iVar3 = (int)*param_2 - (int)*(short *)(piVar4 + -1);
+        
+		// 0x14 - 0
+		iVar1 = (int)param_2[2] - (int)*(short *)piVar4;
+		
+		// 0x14 - 2
         iVar2 = (int)param_2[1] - (int)*(short *)((int)piVar4 + -2);
+		
         if (iVar3 * iVar3 < 0x10000000) {
           if (((iVar2 * iVar2 < 0x10000000) && (iVar1 * iVar1 < 0x10000000)) &&
              (iVar3 * iVar3 + iVar2 * iVar2 + iVar1 * iVar1 < *(int *)(param_2 + 4))) {
@@ -657,7 +665,7 @@ void FUN_80042544(short *param_1)
 
 // THREAD_CollideHitboxWithBucket
 // param1 is thread checked for collision
-// param2 is WeaponSearchData
+// param2 is ScratchpadStruct
 // param3 is person who used weapon
 void FUN_800425d4(int param_1,short *param_2,int param_3)
 

@@ -1187,7 +1187,7 @@ void FUN_80018e38(int param_1, int param_2)
 
 
 // CAM_StartLine_FlyIn_FixY
-undefined * FUN_80018ec0(undefined2 *param_1)
+void FUN_80018ec0(undefined2 *param_1)
 
 {
   int iVar1;
@@ -1231,7 +1231,7 @@ undefined * FUN_80018ec0(undefined2 *param_1)
     sVar3 = local_26;
   } while (iVar2 * 0x10000 >> 0x10 < 8);
   param_1[1] = sVar3;
-  return &DAT_8008db1c;
+  return;
 }
 
 

@@ -2,7 +2,7 @@
 //  (tnt, potion, warpball, etc) (not hazard? moving explosive?)
 // param_1 - BSP result
 // param_2 - VisData (hitbox)
-unsigned short DECOMP_RB_Hazard_CollLevInst(struct BspSearchData* param_1,struct VisData* param_2)
+unsigned short DECOMP_RB_Hazard_CollLevInst(struct ScratchpadStruct* param_1,struct VisData* param_2)
 {
   struct InstDef* iVar1;
   struct Instance* iVar4;

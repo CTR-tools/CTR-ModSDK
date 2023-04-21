@@ -22,14 +22,14 @@ void RB_CrateAny_CheckBlockage(struct Crate* crateObj, int hitModelID_cast)
 	}
 }
 
-struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct WeaponSearchData* info)
+struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* sps)
 {
 	int hitModelID;
 	int hitModelID_cast;
 	struct Driver* driver;
 	
 	// get what hit the box
-	hitModelID = info->modelID;
+	hitModelID = sps->Input1.modelID;
 	hitModelID_cast = hitModelID & 0x7fff;
 	
 	// if moving explosive
@@ -215,7 +215,7 @@ void RB_Fruit_GetScreenCoords(struct TileView* tileView, struct Instance* inst, 
 int DECOMP_RB_CrateWeapon_LInC(
 	struct Instance* crateInst,
 	struct Thread* collidingTh,
-	struct WeaponSearchData* info)
+	struct ScratchpadStruct* sps)
 {
 	struct TileView* tileView;
 	short posScreen[2];
@@ -235,7 +235,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 		crateThread = RB_CrateAny_GrowInit(crateInst);
 		if(crateThread == 0) return 0;
 		
-		driver = RB_CrateAny_GetDriver(collidingTh, info);
+		driver = RB_CrateAny_GetDriver(collidingTh, sps);
 		if(driver == 1) return 1;
 		
 		// if driver already has a weapon, quit
@@ -325,7 +325,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 	// is only initialized during thread birth
 	crateObj = ((struct Crate*)crateThread->object);
 	
-	hitModelID = info->modelID;
+	hitModelID = sps->Input1.modelID;
 	hitModelID_cast = hitModelID & 0x7fff;
 	
 	// if crate hasn't grown back yet,
@@ -341,7 +341,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 	if((hitModelID & 0x8000) == 0) return 0;
 	
 	// overwrite, remove bit
-	info->modelID = hitModelID_cast;
+	sps->Input1.modelID = hitModelID_cast;
 	
 	// block if needed
 	RB_CrateAny_CheckBlockage(crateObj, hitModelID_cast);
@@ -353,7 +353,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 int DECOMP_RB_CrateFruit_LInC(
 	struct Instance* crateInst,
 	struct Thread* collidingTh,
-	struct WeaponSearchData* info)
+	struct ScratchpadStruct* sps)
 {
 	struct TileView* tileView;
 	short posScreen[2];
@@ -375,7 +375,7 @@ int DECOMP_RB_CrateFruit_LInC(
 		crateThread = RB_CrateAny_GrowInit(crateInst);
 		if(crateThread == 0) return 0;
 		
-		driver = RB_CrateAny_GetDriver(collidingTh, info);
+		driver = RB_CrateAny_GetDriver(collidingTh, sps);
 		if(driver == 1) return 1;
 		
 		random = MixRNG_Scramble();
@@ -407,7 +407,7 @@ int DECOMP_RB_CrateFruit_LInC(
 	// is only initialized during thread birth
 	crateObj = ((struct Crate*)crateThread->object);
 	
-	hitModelID = info->modelID;
+	hitModelID = sps->Input1.modelID;
 	hitModelID_cast = hitModelID & 0x7fff;
 	
 	// if crate hasn't grown back yet,
@@ -423,7 +423,7 @@ int DECOMP_RB_CrateFruit_LInC(
 	if((hitModelID & 0x8000) == 0) return 0;
 	
 	// overwrite, remove bit
-	info->modelID = hitModelID_cast;
+	sps->Input1.modelID = hitModelID_cast;
 	
 	// block if needed
 	RB_CrateAny_CheckBlockage(crateObj, hitModelID_cast);
@@ -435,7 +435,7 @@ int DECOMP_RB_CrateFruit_LInC(
 int DECOMP_RB_CrateTime_LInC(
 	struct Instance* crateInst,
 	struct Thread* driverTh,
-	struct WeaponSearchData* info)
+	struct ScratchpadStruct* sps)
 {
 	struct TileView* tileView;
 	short posScreen[2];

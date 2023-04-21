@@ -1,9 +1,9 @@
 #include <common.h>
 
 // param1 is thread checked for collision
-// param2 is WeaponSearchData
+// param2 is ScratchpadStruct
 // param3 is person who used weapon
-void DECOMP_THREAD_CollideHitboxWithBucket(struct Thread* collThread,struct WeaponSearchData* param_2,int param_3)
+void DECOMP_THREAD_CollideHitboxWithBucket(struct Thread* collThread,struct ScratchpadStruct* param_2,int param_3)
 {
   struct Instance* inst;
   int distX, distY, distZ;
@@ -32,21 +32,22 @@ void DECOMP_THREAD_CollideHitboxWithBucket(struct Thread* collThread,struct Weap
         inst = collThread->inst;
 
 		// get distance of X, Y, Z
-        distX = (int)param_2->pos[0] - inst->matrix.t[0];
-        distY = (int)param_2->pos[1] - inst->matrix.t[1];
-        distZ = (int)param_2->pos[2] - inst->matrix.t[2];
+        distX = (int)param_2->Input1.pos[0] - inst->matrix.t[0];
+        distY = (int)param_2->Input1.pos[1] - inst->matrix.t[1];
+        distZ = (int)param_2->Input1.pos[2] - inst->matrix.t[2];
 
 		// if all the dist values are small
         if ((distX * distX < 0x10000000) &&
 			(distY * distY < 0x10000000) &&
 			(distZ * distZ < 0x10000000) &&
 			// if abs distance is less than collision radius
-			(distX * distX + distY * distY + distZ * distZ < param_2->hitRadiusSquared)
+			(distX * distX + distY * distY + distZ * distZ < param_2->Input1.hitRadiusSquared)
 			 )
-		  {
-			// save distancdistX        param_2->pos[8] = (short)iVardistX        param_2->pos[9] = (short)iVardistX        param_2->pos[10] = (short)iVar1;
-			// some collision funcPtr???
-            (**(code **)param_2->funcCallback)(param_2,collThread);
+		  {			
+			param_2->Union.ThBuckOnCollide.distance[0] = distX;
+			param_2->Union.ThBuckOnCollide.distance[1] = distY;
+			param_2->Union.ThBuckOnCollide.distance[2] = distZ;
+			param_2->Union.ThBuckOnCollide.funcCallback(param_2,visDataHitbox);
           }
         }
 	  // thread = thread->sibling;

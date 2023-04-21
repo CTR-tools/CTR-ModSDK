@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_RB_Teeth_BSP_Callback(struct WeaponSearchData* wsd,struct Thread* weaponThread)
+void DECOMP_RB_Teeth_BSP_Callback(struct ScratchpadStruct* sps,struct Thread* weaponThread)
 {
   short model;
   struct Thread* teethTh;
@@ -29,15 +29,15 @@ void DECOMP_RB_Teeth_BSP_Callback(struct WeaponSearchData* wsd,struct Thread* we
     }
   }
   
-  teethTh = wsd->thread;
+  teethTh = sps->Union.ThBuckOnCollide.thread;
   
   weaponInst = weaponThread->inst;
   
   teethInst = teethTh->inst;
   
   if ((weaponInst != NULL) && (teethInst != NULL)) {
-    iVar5 = ((int)wsd->pos[0] - weaponInst->matrix.t[0]) * (int)teethInst->matrix.m[0][2] +
-            ((int)wsd->pos[2] - weaponInst->matrix.t[2]) * (int)teethInst->matrix.m[2][2];
+    iVar5 = ((int)sps->Input1.pos[0] - weaponInst->matrix.t[0]) * (int)teethInst->matrix.m[0][2] +
+            ((int)sps->Input1.pos[2] - weaponInst->matrix.t[2]) * (int)teethInst->matrix.m[2][2];
 
 		// catch negative value
     if (iVar5 < 0) {

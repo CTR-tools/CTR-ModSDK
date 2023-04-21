@@ -68,7 +68,7 @@ void RB_Fruit_GetScreenCoords(struct TileView* tileView, struct Instance* inst, 
 int DECOMP_RB_CtrLetter_LInC(
 	struct Instance* letterInst,
 	struct Thread* driverTh,
-	struct WeaponSearchData* info)
+	struct ScratchpadStruct* sps)
 {
 	short posScreen[2];
 	MATRIX* m;
@@ -77,7 +77,7 @@ int DECOMP_RB_CtrLetter_LInC(
 	int driverID;
 	int modelID;
 
-	modelID = info->modelID;
+	modelID = sps->Input1.modelID;
 	
 	// if crystal did not collide with 
 	// DYNAMIC_PLAYER, quit function

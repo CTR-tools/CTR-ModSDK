@@ -7,17 +7,18 @@ int RB_Potion_OnShatter_TeethCallback(int unk, struct VisData* vd);
 // by Potion_InAir, so this can be scrapped
 void DECOMP_RB_Potion_OnShatter_TeethSearch(struct Instance* inst)
 {
-	#define WSD \
-	((struct WeaponSearchData*)0x1f800108)
+	#define SPS \
+	((struct ScratchpadStruct*)0x1f800108)
 	
-	WSD->pos[0] = (short)inst->matrix.t[0];
-	WSD->pos[1] = (short)inst->matrix.t[1];
-	WSD->pos[2] = (short)inst->matrix.t[2];
-	WSD->hitRadius = 0x140;
-	WSD->hitRadiusSquared = 0x19000;
-	WSD->modelID = inst->model->id;
-	WSD->thread = inst->thread;
-	WSD->funcCallback = RB_Potion_OnShatter_TeethCallback;
+	SPS->Input1.pos[0] = (short)inst->matrix.t[0];
+	SPS->Input1.pos[1] = (short)inst->matrix.t[1];
+	SPS->Input1.pos[2] = (short)inst->matrix.t[2];
+	SPS->Input1.hitRadius = 0x140;
+	SPS->Input1.hitRadiusSquared = 0x19000;
+	SPS->Input1.modelID = inst->model->id;
 	
-	THREAD_StartSearch_Self(WSD);
+	SPS->Union.ThBuckOnCollide.thread = inst->thread;
+	SPS->Union.ThBuckOnCollide.funcCallback = RB_Potion_OnShatter_TeethCallback;
+	
+	THREAD_StartSearch_Self(SPS);
 }

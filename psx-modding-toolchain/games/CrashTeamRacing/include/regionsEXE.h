@@ -4193,7 +4193,7 @@ struct sData
 	struct LinkedList unk_NavRelated[3];
 
 	// 8008DB1C - BSP Search Result
-	struct BspSearchData bspSearchData;
+	struct ScratchpadStruct scratchpadStruct;
 		// 8008db40: search flags
 		// 8008db48: lev -> mesh_info
 

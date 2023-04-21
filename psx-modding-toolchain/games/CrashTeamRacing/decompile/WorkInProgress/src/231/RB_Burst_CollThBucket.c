@@ -1,24 +1,26 @@
 #include <common.h>
 
-void DECOMP_RB_Burst_CollThBucket(struct WeaponSearchData *wsd, struct Thread *t)
+void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t)
 {
   struct GameTracker* gGT;
   struct Driver* target, attacker;
   struct MineWeapon* mw;
   short model;
   unsigned short reason;
+  struct Thread* thOther;
 
   gGT = sdata->gGT;
   target = t->object;
   attacker = mw->instParent->thread->object;
-  mw = wsd->thread->object;
+  thOther = sps->Union.ThBuckOnCollide.thread;
+  mw = thOther->object;
 
   model = t->modelIndex;
 
   // if this is a player of any kind, or robotcar of any kind
   if ((model == 0x18) || (model == 0x3f))
   {
-    model = wsd->thread->modelIndex;
+    model = thOther->modelIndex;
 
     // nitro, green beaker, red beaker, TNT
     if ((model == 6) || (((model == 0x46 || (model == 0x47)) || (model == 0x27))))
@@ -87,7 +89,7 @@ void DECOMP_RB_Burst_CollThBucket(struct WeaponSearchData *wsd, struct Thread *t
   if (t->funcThCollide != NULL)
   {
     // execute funcThCollide
-    t->funcThCollide(t, wsd->thread, t->funcThCollide, 3);
+    t->funcThCollide(t, thOther, t->funcThCollide, 3);
   }
   return;
 }

@@ -203,7 +203,7 @@ struct VisData
 		struct
 		{
 			// 0x10
-			int unk[3];
+			short unkShort[6];
 			// see FUN_8001d0c4
 			
 			// 0x1C

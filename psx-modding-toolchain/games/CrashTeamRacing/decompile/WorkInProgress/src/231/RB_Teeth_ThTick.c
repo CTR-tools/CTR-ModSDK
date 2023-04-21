@@ -1,6 +1,6 @@
 #include <common.h>
 
-void RB_Teeth_BSP_Callback(struct WeaponSearchData*,struct Thread*);
+void RB_Teeth_BSP_Callback(struct ScratchpadStruct*,struct Thread*);
 
 void DECOMP_RB_Teeth_ThTick(struct Thread* t)
 {
@@ -12,8 +12,8 @@ void DECOMP_RB_Teeth_ThTick(struct Thread* t)
   teeth = t->object;
   inst = t->inst;
 
-  #define WSD \
-	((struct WeaponSearchData*)0x1f800108)
+  #define SPS \
+	((struct ScratchpadStruct*)0x1f800108)
   
   // if door is not moving
   if (teeth->direction == 0) 
@@ -92,24 +92,24 @@ LAB_800b9ff8:
   }
   
   // Teeth instance position
-  WSD->pos[0] = inst->matrix.t[0];
-  WSD->pos[1] = inst->matrix.t[1];
-  WSD->pos[2] = inst->matrix.t[2];
+  SPS->Input1.pos[0] = inst->matrix.t[0];
+  SPS->Input1.pos[1] = inst->matrix.t[1];
+  SPS->Input1.pos[2] = inst->matrix.t[2];
   
-  WSD->hitRadius = 0x300;
-  WSD->hitRadiusSquared = 0x90000;
+  SPS->Input1.hitRadius = 0x300;
+  SPS->Input1.hitRadiusSquared = 0x90000;
   
-  WSD->funcCallback = RB_Teeth_BSP_Callback;
+  SPS->Input1.modelID = 0x70;
   
-  WSD->modelID = 0x70;
-  WSD->thread = t;
+  SPS->Union.ThBuckOnCollide.thread = t;
+  SPS->Union.ThBuckOnCollide.funcCallback = RB_Teeth_BSP_Callback;
   
   // If door wants to close, but Player or Mine
   // is in the way, then do not force the doors to close
   
-  THREAD_CollideHitboxWithBucket(sdata->gGT->threadBuckets[PLAYER],WSD,0);
+  THREAD_CollideHitboxWithBucket(sdata->gGT->threadBuckets[PLAYER],SPS,0);
   
-  THREAD_CollideHitboxWithBucket(sdata->gGT->threadBuckets[MINE],WSD,0);
+  THREAD_CollideHitboxWithBucket(sdata->gGT->threadBuckets[MINE],SPS,0);
   
 LAB_800ba084:
 

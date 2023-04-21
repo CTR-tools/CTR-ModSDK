@@ -1,9 +1,7 @@
 #include <common.h>
 
-struct BspSearchData* DECOMP_CAM_StartLine_FlyIn_FixY(struct {
-    short pos[3];
-    short rot[3];
-} *DriverSpawn) {
+void DECOMP_CAM_StartLine_FlyIn_FixY(short* posRot) 
+{
   int iVar1;
   int iVar2;
   short local_26;
@@ -16,16 +14,15 @@ struct BspSearchData* DECOMP_CAM_StartLine_FlyIn_FixY(struct {
   short local_14;
 
   // lev -> mesh_info
-  *(u_int*)0x8008db48 = &sdata->gGT->level1;
+  sdata->scratchpadStruct.ptr_mesh_info = sdata->gGT->level1->ptr_mesh_info;
+  sdata->scratchpadStruct.Union.Input2.unk22 = 2;
+  sdata->scratchpadStruct.Union.Input2.searchFlags = 0x3000; // ground and wall
+  sdata->scratchpadStruct.Union.Input2.unk28 = 0;
 
-  *(u_int*)0x8008db3e = 2;
-  // search flags
-  *(u_int*)0x8008db40 = 0x3000; // ground and wall
-  *(u_int*)0x8008db44 = 0;
-
-  local_20 = DriverSpawn->pos[0];
-  local_26 = DriverSpawn->pos[1];
-  local_1c = DriverSpawn->pos[2];
+  local_20 = posRot[0];
+  local_26 = posRot[1];
+  local_1c = posRot[2];
+  
   for (iVar2 = 0; iVar2 < 8; iVar2++)
   {
     iVar1 = 0x400 * iVar2;
@@ -34,12 +31,12 @@ struct BspSearchData* DECOMP_CAM_StartLine_FlyIn_FixY(struct {
     local_18 = local_20;
     local_14 = local_1c;
 
-    COLL_SearchTree_FindQuadblock_Touching(&local_20,&local_18,&sdata->bspSearchData,0,local_20,local_1c);
+    COLL_SearchTree_FindQuadblock_Touching(&local_20,&local_18,&sdata->scratchpadStruct,0,local_20,local_1c);
 
-    sVar3 = *(short*)0x8008db3a;
-    if (*(int*)0x8008db5a != 0) break;
+    sVar3 = sdata->scratchpadStruct.Union.Input2.unk1E;
+    if (sdata->scratchpadStruct.Union.Input2.unk3E != 0) break;
     sVar3 = local_26;
   }
-  DriverSpawn->pos[1] = sVar3;
-  return &sdata->bspSearchData;
+  
+  posRot[1] = sVar3;
 }

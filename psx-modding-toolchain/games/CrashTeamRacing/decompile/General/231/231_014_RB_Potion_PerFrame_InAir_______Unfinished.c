@@ -65,12 +65,14 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 		{
 			Rot_AxisAngle(&inst->matrix&DAT_1f800178,0);
 	
+				// need to rename to SPS
 			if (WSD->min[0] + 0x30 < inst->matrix.t[1]) 
 				return;
 	
 			// if no cooldown
 			if (mw->cooldown == 0)
 			{
+				// need to rename to SPS
 				inst->matrix.t[1] = WSD->min[0];
 	
 				// reset cooldown (3.84s)

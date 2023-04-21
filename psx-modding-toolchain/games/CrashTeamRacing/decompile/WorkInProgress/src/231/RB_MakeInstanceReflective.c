@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_RB_MakeInstanceReflective(struct BspSearchData* param_1, struct Instance* inst)
+void DECOMP_RB_MakeInstanceReflective(struct ScratchpadStruct* param_1, struct Instance* inst)
 {
     u_short quadFlags;
     struct GameTracker* gGT = sdata->gGT;

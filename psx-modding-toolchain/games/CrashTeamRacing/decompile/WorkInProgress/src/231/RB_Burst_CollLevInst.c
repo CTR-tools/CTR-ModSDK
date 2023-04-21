@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_RB_Burst_CollLevInst(struct WeaponSearchData* wsd,struct VisData* vis)
+void DECOMP_RB_Burst_CollLevInst(struct ScratchpadStruct* sps,struct VisData* vis)
 {
   short model;
   struct InstDef* instdef;
@@ -32,7 +32,7 @@ void DECOMP_RB_Burst_CollLevInst(struct WeaponSearchData* wsd,struct VisData* vi
 		{
 		  // execute funcLevThreadsBirth, make thread for this instance
 		  // upon collision with the instance, let it run thread->funcThCollide
-          (**(code **)(meta + 8))(inst,wsd->thread,wsd);
+          (**(code **)(meta + 8))(inst,sps->Union.ThBuckOnCollide.thread,sps);
         }
       }
       else 
