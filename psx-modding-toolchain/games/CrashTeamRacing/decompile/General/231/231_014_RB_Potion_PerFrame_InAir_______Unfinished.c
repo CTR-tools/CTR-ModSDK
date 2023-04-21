@@ -97,14 +97,22 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	
 				return;
 			}
+			
+			// backup posY
 			int temp = inst->matrix.t[1];
 			
-			if (mw->velocity[1] <= DAT_1f800124) {
-			inst->matrix.t[1] = DAT_1f800124;
+			// move potion upward if it drops below quadblock
+			if (inst->matrix.t[1] <= SPS->Union.ThBuckOnCollide.min[1]) 
+			{
+				inst->matrix.t[1] = SPS->Union.ThBuckOnCollide.min[1];
 			}
+			
+			// if distance to move back to quadblock < velocity
 			if ((inst->matrix.t[1] - temp) + 0x28 <= mw->velocity[1]) {
 				return;
 			}
+			
+			// increase velocity
 			mw->velocity[1] = (inst->matrix.t[1] - temp) + 0x28;
 			return;
 		}

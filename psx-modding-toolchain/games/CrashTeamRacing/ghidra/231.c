@@ -1001,9 +1001,13 @@ void FUN_800ac6b4(int param_1)
 	  // Rot_AxisAngle
       FUN_8005f89c(iVar6 + 0x30,&DAT_1f800178,0);
       
+	  // hitbox minY
 	  iVar4 = (int)DAT_1f800126;
-      iVar5 = *(int *)(iVar6 + 0x48);
-      if (iVar4 + 0x30 < iVar5) {
+      
+	  // instance posY
+	  iVar5 = *(int *)(iVar6 + 0x48);
+      
+	  if (iVar4 + 0x30 < iVar5) {
         return;
       }
 	  
