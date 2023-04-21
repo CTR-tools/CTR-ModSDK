@@ -101,6 +101,9 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 			// backup posY
 			int temp = inst->matrix.t[1];
 			
+			// === Maybe this isn't Hitbox Min ===
+			// === Maybe overwritten as impact position ===
+			
 			// move potion upward if it drops below quadblock
 			if (inst->matrix.t[1] <= SPS->Union.ThBuckOnCollide.min[1]) 
 			{
