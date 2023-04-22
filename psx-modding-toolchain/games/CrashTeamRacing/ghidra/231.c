@@ -1597,6 +1597,7 @@ LAB_800ad17c:
   }
   
   // if thread is dead, quit function
+  // this is if GenericMine_ThDestroy already ran
   if ((*(uint *)(param_1 + 0x1c) & 0x800) != 0) {
     return;
   }

@@ -2,38 +2,37 @@
 
 void DECOMP_RB_GenericMine_ThDestroy(struct Thread* t, struct Instance* inst, struct MineWeapon* mw)
 {
-  short model;
+  unsigned int model;
   unsigned short soundId;
 
   model = inst->model->id;
 
-  // if Nitro
-  if (model == 6)
+  // if model is green or red beaker
+  if ((unsigned int)(model - 0x46) < 2) 
   {
-    // glass shatter sound
-    soundId = 0x3f;
-  }
-  else
-  {
-    // if not TNT
-    if (model != 0x27)
-    {
       // play sound of glass shatter
       PlaySound3D(0x3f, inst);
 
       RB_Explosion_InitPotion(inst);
-
-      goto LAB_800ad2c8;
-    }
-    // explosion sound
-    soundId = 0x3d;
   }
+  
+  else
+  {
+    // if model is TNT
+	// tnt explosion sound
+	param = 0x3d;
+  
+	// if model is Nitro
+	if (model == 6) 
+	{
+		// glass shatter
+		param = 0x3f;
+	}
+	
+	PlaySound3D(soundId, inst);
 
-  PlaySound3D(soundId, inst);
-
-  RB_Blowup_Init(inst);
-
-LAB_800ad2c8:
+	RB_Blowup_Init(inst);
+  }
 
   // Set scale (x, y, z) to zero
   inst->scale[0] = 0;

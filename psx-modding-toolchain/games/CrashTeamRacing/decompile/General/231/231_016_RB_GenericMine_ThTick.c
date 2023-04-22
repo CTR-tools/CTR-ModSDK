@@ -1,5 +1,11 @@
 #include <common.h>
 
+void RB_TNT_ThrowOnHead();
+void RB_TNT_ThrowOffHead();
+void THREAD_DestroyInstance();
+void RB_Hazard_ThCollide_Generic();
+void RB_Potion_ThTick_InAir();
+
 void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
 { 
   struct GameTracker* gGT;
@@ -10,7 +16,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   struct Crate* crate;
   struct Instance* instCrate;
   struct MineWeapon* tnt;
-  short model;
+  unsigned int model;
   int numFrames;
   int *func;
   unsigned short param;
@@ -50,7 +56,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   // === If not "thrown" ===
   
   // reduce cooldown
-  mw->cooldown - sdata->gGT->elapsedTimeMS;
+  mw->cooldown -= gGT->elapsedTimeMS;
   
   if(mw->cooldown < 0)
 		mw->cooldown = 0;
@@ -136,21 +142,21 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
 	// if collision, and if this was a red potion
 	if ((coll != 0) && (mw->extraFlags & 1) != 0)
 	{
-    RB_RainCloud_Init(d);
-  }
+		RB_RainCloud_Init(d);
+	}
 	
 	// if this driver is not an AI
     if ((d->actionsFlagSet & 0x100000) == 0) 
 	{
 	  // current fade value (bright white)
-    gGT->tileView[d->driverID].fadeFromBlack_currentValue = 0x1fff;
+	  gGT->tileView[d->driverID].fadeFromBlack_currentValue = 0x1fff;
       
 	  // desired fade value (neutral)
 	  gGT->tileView[d->driverID].fadeFromBlack_desiredResult = 0x1000;
       
 	  // fade step
 	  gGT->tileView[d->driverID].fade_step = 0xff78;
-  }
+	}
 	
 	// make player icon red
 	// If this is a red beaker
@@ -171,9 +177,11 @@ LAB_800ace88:
 LAB_800ad174:
 
     RB_GenericMine_ThDestroy(t,inst,mw);
-}
-  else {
-	  
+  }
+  
+  // TNT/Nitro
+  else
+  {  
 	// if driver->instTntRecv is valid
     if (d->instTntRecv!= NULL) 
 	{
@@ -270,7 +278,8 @@ LAB_800ad174:
 		// "tnt1"
 		
 		// create thread for TNT, get an Instance
-        instCrate = INSTANCE_BirthWithThread(0x27,sdata->s_tnt1,SMALL,MINE,RB_GenericMine_ThTick,0x2c,0);
+        instCrate = INSTANCE_BirthWithThread(
+			0x27,0,SMALL,MINE,RB_TNT_ThrowOnHead,sizeof(struct MineWeapon),0);
 		
 		// get rotation of player and assign to tnt
         instCrate->matrix.m[0][0] = inst->matrix.m[0][0];
@@ -322,9 +331,6 @@ LAB_800ad174:
         tnt->deltaPos[1] = 0;
         tnt->deltaPos[2] = 0;
 		
-		// set 
-        instCrate->thread->funcThTick = RB_TNT_ThrowOnHead;
-		
         RB_MinePool_Remove(mw);
 		
 		// set scale (x, y, z) to zero
@@ -336,7 +342,7 @@ LAB_800ad174:
         inst->flags |= 0x80;
         
 		// this thread is now dead
-		    t->flags |= 0x800;
+		t->flags |= 0x800;
       }
     }
   }
@@ -351,6 +357,7 @@ LAB_800ad17c:
   }
   
   // if thread is dead, quit function
+  // this is if GenericMine_ThDestroy already ran
   if ((t->flags & 0x800) != 0) {
     return;
   }
@@ -358,40 +365,34 @@ LAB_800ad17c:
   // instance -> model -> modelID
   model = inst->model->id;
   
-  // if model is Nitro
-  if (model == 6) 
+  // if model is green or red beaker
+  if ((unsigned int)(model - 0x46) < 2) 
   {
-	// glass shatter
-    param = 0x3f;
-  }
-  
-  else 
-  {
-	// if model is not TNT
-    if (model != 0x27) 
-	{
-	  // if model is green or red beaker
-      if (model - 0x46U < 2) 
-	  {
-		// glass shatter sound
-        PlaySound3D(0x3f,inst);
-		
-        RB_Explosion_InitPotion(inst);
-      }
-      goto LAB_800ad21c;
-    }
+	// glass shatter sound
+	PlaySound3D(0x3f,inst);
 	
-	// tnt explosion sound
-    param = 0x3d;
+	RB_Explosion_InitPotion(inst);
   }
   
-  // play sound
-  PlaySound3D(param,inst);
+  else
+  {
+    // if model is TNT
+	// tnt explosion sound
+	param = 0x3d;
   
-  RB_Blowup_Init(inst);
-
-LAB_800ad21c:
-
+	// if model is Nitro
+	if (model == 6) 
+	{
+		// glass shatter
+		param = 0x3f;
+	}
+	
+	// play sound
+	PlaySound3D(param,inst);
+  
+	RB_Blowup_Init(inst);
+  }
+  
   // this thread is now dead
   t->flags |= 0x800;
   
