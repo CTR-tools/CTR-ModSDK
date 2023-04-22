@@ -1602,6 +1602,8 @@ LAB_800ad17c:
     return;
   }
   
+  // === If destroyed from MinePool overflow ===
+  
   // instance -> model -> modelID
   sVar1 = *(short *)(*(int *)(iVar12 + 0x18) + 0x10);
   

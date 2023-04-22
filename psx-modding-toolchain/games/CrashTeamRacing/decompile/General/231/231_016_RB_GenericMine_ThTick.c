@@ -362,6 +362,8 @@ LAB_800ad17c:
     return;
   }
   
+  // === If destroyed from MinePool overflow ===
+  
   // instance -> model -> modelID
   model = inst->model->id;
   
