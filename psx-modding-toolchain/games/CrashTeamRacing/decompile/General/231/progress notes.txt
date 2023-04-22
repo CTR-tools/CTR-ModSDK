@@ -1,4 +1,0 @@
-Did not do top two functions of 231 (MakeInstanceReflective or KillPlayer),
-ThTick_InAir needs BspSearchData struct
-
-Then skipped to LInB/LInC

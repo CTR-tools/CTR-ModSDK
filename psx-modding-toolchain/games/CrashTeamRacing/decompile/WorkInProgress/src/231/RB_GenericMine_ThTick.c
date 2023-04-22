@@ -43,8 +43,11 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
       func = RB_Potion_ThTick_InAir;
     }
 	
+	// this also quits the function
     ThTick_SetAndExec(t,func);
   }
+  
+  // === If not "thrown" ===
   
   // reduce cooldown
   mw->cooldown - sdata->gGT->elapsedTimeMS;
