@@ -30,7 +30,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
 	// if TNT landed on head
 	if (
 		(mw->deltaPos[1] < array[data.characterIDs[mw->driverTarget->driverID]]) &&
-		( mw->deltaPos[1] = array[data.characterIDs[mw->driverTarget->driverID]],
+		(mw->deltaPos[1] = array[data.characterIDs[mw->driverTarget->driverID]],
 		inst->scale[0] == 0x800)
 	   )
 	{
@@ -54,11 +54,11 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
   }
   
   // CopyMatrix
-  LHMatrix_Parent(inst,mw->driverTarget->instSelf,mw->deltaPos[0]);
+  LHMatrix_Parent(inst,mw->driverTarget->instSelf,&mw->deltaPos[0]);
   
   // rotation
   rot[0] = 0;
-  rot[1] = *(short *)((int)mw + 0x26);
+  rot[1] = *(short *)((unsigned int)mw + 0x26);
   rot[2] = 0;
   
    // convert 3 rotation shorts into rotation matrix
@@ -73,7 +73,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
 	if(mw->velocity[1] < -0x60) mw->velocity[1] = -0x60;
   
   // rotation
-  *(short *)((int)mw + 0x26) += 0x100;
+  *(short *)((unsigned int)mw + 0x26) += 0x100;
   
   // if scale is small
   if (inst->scale[0] < 0x801) 

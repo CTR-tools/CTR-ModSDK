@@ -14,13 +14,13 @@ void DECOMP_RB_TNT_ThTick_SitOnHead(struct Thread* t)
   inst = t->inst;
   
   // object (tnt)
-  mw = inst->thread->object;
+  mw = t->object;
   
   // CopyMatrix
   // To: TNT instance
   // From: obj->driverWhoHitMe->instance
   // Delta: TNT -> 0x1c (position relative to driver)
-  LHMatrix_Parent(inst,mw->driverTarget->instSelf,mw->deltaPos[0]);
+  LHMatrix_Parent(inst,mw->driverTarget->instSelf,&mw->deltaPos[0]);
   
   // Get Kart State
   state = mw->driverTarget->kartState;
@@ -109,8 +109,10 @@ LAB_800ad5f8:
   if (numFrames < 0x5a) 
   {
 	// If frame is any of these 6 numbers
-    if ((((numFrames == 0) || (numFrames == 0x14)) ||
-        ((numFrames == 0x28 || ((numFrames == 0x3c || (numFrames == 0x46)))))) || (numFrames == 0x50)) 
+    if (
+		(numFrames == 0x0) || (numFrames == 0x14) || (numFrames == 0x28) || 
+		(numFrames == 0x3c) || (numFrames == 0x46) || (numFrames == 0x50)
+	   ) 
 	{
 	  // Make a "honk" sound
       PlaySound3D(0x3e,inst);
@@ -118,6 +120,12 @@ LAB_800ad5f8:
 	
 	// add to the frame counter
     mw->numFramesOnHead += 1;
+	
+	// set scale of TNT, given frame of animation
+	uVar3 = ((short*)0x800b295c)[numFrames*2+0];
+	inst->scale[0] = uVar3;
+	inst->scale[2] = uVar3;
+	inst->scale[1] = ((short*)0x800b295c)[numFrames*2+1];
   }
   
   // If time runs out
@@ -139,14 +147,6 @@ LAB_800ad5f8:
     t->flags |= 0x800;
 	
     mw->driverTarget->instTntRecv = NULL;
-	
-	return;
   }
   
-  // set scale of TNT, given frame of animation
-  uVar3 = ((int*)0x800b295c)[numFrames];
-   inst->scale[0] = uVar3;
-   inst->scale[2] = uVar3;
-   inst->scale[1] = ((int*)0x800b295e)[numFrames];
-  return;
 }

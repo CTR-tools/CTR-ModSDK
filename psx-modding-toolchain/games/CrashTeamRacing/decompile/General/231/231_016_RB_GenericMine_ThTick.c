@@ -79,8 +79,10 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   // increment posY by velY * time
   inst->matrix.t[1] += mw->velocity[1] * (gGT->elapsedTimeMS >> 5);
   
-  // if height is higher than max height
-  if (inst->matrix.t[1] > mw->maxHeight) {
+  // === This is not "maxHeight" ===
+  // what is it?
+  
+  if (inst->matrix.t[1] < mw->maxHeight) {
     inst->matrix.t[1] = mw->maxHeight;
   }
   
@@ -88,7 +90,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   mw->velocity[1] -= ((gGT->elapsedTimeMS << 2) >> 5);
   
   // terminal velocity
-	if(mw->velocity[1] < -0x60) mw->velocity[1] = -0x60;
+  if(mw->velocity[1] < -0x60) mw->velocity[1] = -0x60;
   
   // If scale is not big enough
   if (inst->scale[0] < 0x1000) 
@@ -306,7 +308,7 @@ LAB_800ad174:
 		
         tnt->unk24 = 10;
         tnt->boolDestroyed = 0;
-        *(short *)((int)tnt + 0x26) = 0;
+        *(short *)((unsigned int)tnt + 0x26) = 0;
         tnt->crateInst= 0;
         tnt->extraFlags = 0;
         

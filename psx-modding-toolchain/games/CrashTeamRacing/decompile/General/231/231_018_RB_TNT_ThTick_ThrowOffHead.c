@@ -10,7 +10,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOffHead(struct Thread* t)
   inst = t->inst;
   
   //  object (tnt)
-  mw = inst->thread->object;
+  mw = t->object;
   
   inst->matrix.t[1] += mw->velocity[1] * (sdata->gGT->elapsedTimeMS >> 5);
 	   
