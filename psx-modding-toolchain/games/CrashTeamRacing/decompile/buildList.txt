@@ -56,7 +56,7 @@ common, 231, RB_Potion_ThTick_InAir, 0x0, General/231/231_014_RB_Potion_ThTick_I
 common, 231, RB_GenericMine_LInB, 0x0, General/231/231_015_RB_GenericMine_LInB.c
 common, 231, RB_GenericMine_ThTick, 0x0, General/231/231_016_RB_GenericMine_ThTick.c
 common, 231, RB_GenericMine_ThDestroy, 0x0, General/231/231_017_RB_GenericMine_ThDestroy.c
-//common, 231, RB_TNT_ThTick_ThrowOffHead, 0x0, General/231/231_018_RB_TNT_ThTick_ThrowOffHead.c
+common, 231, RB_TNT_ThTick_ThrowOffHead, 0x0, General/231/231_018_RB_TNT_ThTick_ThrowOffHead.c
 //common, 231, RB_TNT_ThTick_SitOnHead, 0x0, General/231/231_019_RB_TNT_ThTick_SitOnHead.c
 //common, 231, RB_TNT_ThTick_ThrowOnHead, 0x0, General/231/231_020_RB_TNT_ThTick_ThrowOnHead.c
 
