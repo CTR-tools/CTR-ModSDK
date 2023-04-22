@@ -8,8 +8,15 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
   struct MineWeapon* mw;
   struct Instance* inst;
   short* array;
+  struct GameTracker* gGT;
+  
   short rot[3];
+  short distHead;
+  
+  // matrix?
   short auStack48 [32];
+  
+  gGT = sdata->gGT;
   
   inst = t->inst;
   
@@ -17,7 +24,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
   mw = inst->thread->object;
   
   // alter height of TNT as it flies onto a driver's head
-  mw->deltaPos[1] += mw->velocity[1] * (sdata->gGT->elapsedTimeMS >> 5);
+  mw->deltaPos[1] += mw->velocity[1] * (gGT->elapsedTimeMS >> 5);
   
   // if TNT is moving downward
   if (mw->velocity[1] < 0) 
@@ -27,10 +34,12 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
 	// determines height of TNT for each player
 	array = 0x800b2ac4;
     
+	distHead = array[data.characterIDs[mw->driverTarget->driverID]];
+	
 	// if TNT landed on head
 	if (
-		(mw->deltaPos[1] < array[data.characterIDs[mw->driverTarget->driverID]]) &&
-		(mw->deltaPos[1] = array[data.characterIDs[mw->driverTarget->driverID]],
+		(mw->deltaPos[1] < distHead) &&
+		(mw->deltaPos[1] = distHead,
 		inst->scale[0] == 0x800)
 	   )
 	{
@@ -67,7 +76,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
   MatrixRotate(&inst->matrix,&inst->matrix,auStack48);
   
   // reduce time remaining until TNT lands on head
-  mw->velocity[1] -= ((sdata->gGT->elapsedTimeMS << 2) >> 5);
+  mw->velocity[1] -= ((gGT->elapsedTimeMS << 2) >> 5);
   
    // set a minimum value (-0x60)
 	if(mw->velocity[1] < -0x60) mw->velocity[1] = -0x60;
