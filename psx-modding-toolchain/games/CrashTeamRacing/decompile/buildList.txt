@@ -1,6 +1,6 @@
-// 275+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 344 rewritten so far
+// 276+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 345 rewritten so far
 
-// 275 for every 'common' and ','
+// 276 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -55,6 +55,7 @@ common, 231, RB_Potion_OnShatter_TeethSearch, 0x0, General/231/231_013_RB_Potion
 common, 231, RB_Potion_ThTick_InAir, 0x0, General/231/231_014_RB_Potion_ThTick_InAir.c
 common, 231, RB_GenericMine_LInB, 0x0, General/231/231_015_RB_GenericMine_LInB.c
 common, 231, RB_GenericMine_ThTick, 0x0, General/231/231_016_RB_GenericMine_ThTick.c
+common, 231, RB_GenericMine_ThDestroy, 0x0, General/231/231_017_RB_GenericMine_ThDestroy.c
 
 common, 231, RB_Baron_ThTick, 0x0, General/231/231_054_055_RB_Baron.c
 common, 231, RB_Blade_ThTick, 0x0, General/231/231_056_057_RB_Blade.c

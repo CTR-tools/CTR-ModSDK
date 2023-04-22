@@ -3,7 +3,7 @@
 void DECOMP_RB_GenericMine_ThDestroy(struct Thread* t, struct Instance* inst, struct MineWeapon* mw)
 {
   unsigned int model;
-  unsigned short soundId;
+  unsigned short param;
 
   model = inst->model->id;
 
@@ -29,7 +29,7 @@ void DECOMP_RB_GenericMine_ThDestroy(struct Thread* t, struct Instance* inst, st
 		param = 0x3f;
 	}
 	
-	PlaySound3D(soundId, inst);
+	PlaySound3D(param, inst);
 
 	RB_Blowup_Init(inst);
   }
