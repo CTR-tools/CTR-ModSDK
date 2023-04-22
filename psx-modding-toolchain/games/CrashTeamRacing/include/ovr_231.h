@@ -160,7 +160,7 @@ struct MineWeapon
 	short jumpsRemaining;
 
 	// 0x24
-	// int numParticles? set to 10 by potion
+	// number of frames that mine can't hurt parent
 	int unk24;
 
 	// 0x28

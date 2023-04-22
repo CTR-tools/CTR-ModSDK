@@ -20,17 +20,29 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   int numFrames;
   int *func;
   unsigned short param;
+  int boolPotion;
   
   gGT = sdata->gGT;
   inst = t->inst;
   mw = inst->thread->object;
   model = inst->model->id;
   
+  boolPotion = (unsigned int)(model - 0x46) < 2;
+  
   // if weapon is "thrown" like Komodo Joe
   if ((mw->extraFlags & 2) != 0) 
   {
+	// Potion
+    if(boolPotion != 0)
+	{
+	  // cooldown of 0.24s
+      mw->cooldown = 0xf0;
+	  
+      func = RB_Potion_ThTick_InAir;
+    }
+	
 	// TNT
-    if (inst->model->id == 0x27) 
+    else
 	{
       func = RB_TNT_ThTick_ThrowOffHead;
 	  
@@ -38,15 +50,6 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
       inst->scale[0] = 0x800;
       inst->scale[1] = 0x800;
       inst->scale[2] = 0x800;
-    }
-	
-	// Potion
-    else 
-	{
-	  // cooldown of 0.24s
-      mw->cooldown = 0xf0;
-	  
-      func = RB_Potion_ThTick_InAir;
     }
 	
 	// this also quits the function
@@ -104,7 +107,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   param = 0x3840;
 
   // red beaker or green beaker
-  if (model - 0x46 < 2) 
+  if (boolPotion != 0) 
   {
     param = 0x1900;
   }
@@ -126,7 +129,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   }
 
   // red beaker or green beaker
-  if (model - 0x46 < 2)
+  if (boolPotion != 0)
   {
     // count times hit by motionless potion
     param = 2;
@@ -350,7 +353,7 @@ LAB_800ad174:
   }
 LAB_800ad17c:
 
-  // numParticles?
+  // canSkipParentFrameCount
   if (mw->unk24 != 0) {
     mw->unk24 += -1;
   }
@@ -372,7 +375,7 @@ LAB_800ad17c:
   model = inst->model->id;
   
   // if model is green or red beaker
-  if ((unsigned int)(model - 0x46) < 2) 
+  if (boolPotion != 0) 
   {
 	// glass shatter sound
 	PlaySound3D(0x3f,inst);

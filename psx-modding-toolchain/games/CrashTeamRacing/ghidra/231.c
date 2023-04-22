@@ -1588,7 +1588,7 @@ LAB_800ad174:
   }
 LAB_800ad17c:
 
-  // numParticles?
+  // canSkipParentFrameCount
   if (*(short *)(piVar13 + 9) != 0) {
     *(short *)(piVar13 + 9) = *(short *)(piVar13 + 9) + -1;
   }
