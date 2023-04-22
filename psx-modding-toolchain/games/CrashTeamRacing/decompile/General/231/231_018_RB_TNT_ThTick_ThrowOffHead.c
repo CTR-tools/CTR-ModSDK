@@ -1,7 +1,7 @@
 #include <common.h>
 // In air, after spamming L1 or R1,
 // will explode on impact with ground
-void DECOMP_RB_TNT_ThrowOffHead(struct Thread* t)
+void DECOMP_RB_TNT_ThTick_ThrowOffHead(struct Thread* t)
 {
   struct GameTracker* gGT = sdata->gGT;
   struct Instance* inst;
@@ -12,7 +12,7 @@ void DECOMP_RB_TNT_ThrowOffHead(struct Thread* t)
   //  object (tnt)
   mw = inst->thread->object;
   
- inst->matrix.t[1] += mw->velocity[1] * (sdata->gGT->elapsedTimeMS >> 5);
+  inst->matrix.t[1] += mw->velocity[1] * (sdata->gGT->elapsedTimeMS >> 5);
 	   
   if (mw->maxHeight == 0x3fff) 
   {
@@ -35,7 +35,7 @@ void DECOMP_RB_TNT_ThrowOffHead(struct Thread* t)
     inst->flags |= 0x80;
 	
 	// this thread is now dead
-     t->flags |= 0x800;
+	t->flags |= 0x800;
 	
     mw->driverTarget->instTntRecv = 0;
   }
@@ -44,10 +44,7 @@ void DECOMP_RB_TNT_ThrowOffHead(struct Thread* t)
   mw->velocity[1] -= ((gGT->elapsedTimeMS << 2) >> 5);
   
   // terminal velocity
-	if (mw->velocity[1] < -0x60) mw->velocity[1] = -0x60;
-  	
-  // this skips $RA backup/restore, faster than JR $RA
-  ThTick_FastRET(t);
+  if (mw->velocity[1] < -0x60) mw->velocity[1] = -0x60;
   
   return;
 }

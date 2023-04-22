@@ -1212,7 +1212,7 @@ void FUN_800acb60(int param_1)
 	// instance -> model -> modelID == TNT
     if (*(short *)(*(int *)(iVar12 + 0x18) + 0x10) == 0x27) 
 	{
-	  // RB_TNT_ThrowOffHead
+	  // RB_TNT_ThTick_ThrowOffHead
       pcVar7 = FUN_800ad310;
 	  
 	  // set scale (x, y, z)
@@ -1486,7 +1486,7 @@ LAB_800ad174:
         *(undefined2 *)(piVar13 + 8) = 0;
         *(undefined2 *)((int)piVar13 + 0x12) = 0x3fff;
 		
-		// ThTick_SetAndExec RB_TNT_ThrowOnHead
+		// ThTick_SetAndExec RB_TNT_ThTick_ThrowOnHead
         FUN_800716ec(param_1,FUN_800ad710);
       }
 	  
@@ -1498,7 +1498,7 @@ LAB_800ad174:
 		// "tnt1"
 		
 		// create thread for TNT, get an Instance
-		// ThTick = RB_GenericMine_ThTick, but set later to RB_TNT_ThrowOnHead
+		// ThTick = RB_GenericMine_ThTick, but set later to RB_TNT_ThTick_ThrowOnHead
 		// 0x300 flag = SmallStackPool
 		// 4 = "mine" thread bucket
         iVar6 = FUN_800309a4(0x27,&DAT_800ab9fc,0x300,4,FUN_800acb60,0x2c,0);
@@ -1567,7 +1567,7 @@ LAB_800ad174:
         *(undefined2 *)((int)piVar11 + 0x1e) = 0;
         *(undefined2 *)(piVar11 + 8) = 0;
 		
-		// set RB_TNT_ThrowOnHead
+		// set RB_TNT_ThTick_ThrowOnHead
         *(undefined4 *)(*(int *)(iVar6 + 0x6c) + 0x2c) = 0x800ad710;
 		
 		// RB_MinePool_Remove
@@ -1707,7 +1707,7 @@ LAB_800ad2c8:
   return;
 }
 
-// RB_TNT_ThrowOffHead
+// RB_TNT_ThTick_ThrowOffHead
 // In air, after spamming L1 or R1,
 // will explode on impact with ground
 void FUN_800ad310(int param_1)
@@ -1765,7 +1765,7 @@ void FUN_800ad310(int param_1)
   return;
 }
 
-// RB_TNT_OnHead
+// RB_TNT_ThTick_SitOnHead
 void FUN_800ad44c(int param_1)
 {
   char cVar1;
@@ -1865,7 +1865,7 @@ LAB_800ad4ec:
   *(undefined2 *)((int)piVar5 + 0x1e) = 0;
   *(undefined2 *)(piVar5 + 8) = 0;
   
-  // assign RB_TNT_ThrowOffHead
+  // assign RB_TNT_ThTick_ThrowOffHead
   FUN_800716ec(param_1,FUN_800ad310);
   
 LAB_800ad5f8:
@@ -1926,7 +1926,7 @@ LAB_800ad5f8:
   return;
 }
 
-// RB_TNT_ThrowOnHead
+// RB_TNT_ThTick_ThrowOnHead
 // In air, after hitting, before spamming L1 or R1
 void FUN_800ad710(int param_1)
 {
@@ -1951,9 +1951,14 @@ void FUN_800ad710(int param_1)
   // new height of TNT
   *(undefined2 *)((int)piVar2 + 0x1e) = (short)iVar1;
   
-  // if TNT has landed on the driver's head
+  // if TNT velocity moves downward
   if (*(short *)((int)piVar2 + 0xe) < 0) 
   {
+	// 0x800b2ac4
+	// BSS before Baron_ThTick,
+	// determines height of TNT for each player
+    
+	// if TNT landed on head
     if ((iVar1 * 0x10000 >> 0x10 <
          (int)*(short *)(&DAT_800b2ac4 +
                         (int)(short)(&DAT_80086e84)[*(byte *)(*piVar2 + 0x4a)] * 2)) &&
@@ -1977,7 +1982,7 @@ void FUN_800ad710(int param_1)
       *(char *)(iVar3 + 0x50) = *(char *)(*(int *)(*piVar2 + 0x1c) + 0x50) + -1;
       *(char *)(iVar3 + 0x51) = *(char *)(*(int *)(*piVar2 + 0x1c) + 0x51) + -1;
       
-	  // assign RB_TNT_OnHead
+	  // assign RB_TNT_ThTick_SitOnHead
 	  FUN_800716ec(param_1,FUN_800ad44c);
     }
   }

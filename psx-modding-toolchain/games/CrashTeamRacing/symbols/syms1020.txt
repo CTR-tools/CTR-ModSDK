@@ -1376,9 +1376,9 @@
 800ACE98 RB_GenericMine_LInB
 800ACFA8 RB_GenericMine_ThTick
 800AD6AC RB_GenericMine_ThDestroy
-800AD76C RB_TNT_ThrowOffHead
-800AD8A8 RB_TNT_OnHead
-800ADB6C RB_TNT_ThrowOnHead
+800AD76C RB_TNT_ThTick_ThrowOffHead
+800AD8A8 RB_TNT_ThTick_SitOnHead
+800ADB6C RB_TNT_ThTick_ThrowOnHead
 800ADD88 RB_Explosion_ThTick
 800ADE08 RB_Hazard_CollLevInst
 800ADEEC RB_Hazard_InterpolateValue

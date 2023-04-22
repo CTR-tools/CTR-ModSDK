@@ -1,6 +1,8 @@
 #include <common.h>
 
-void DECOMP_RB_TNT_OnHead(struct Thread* t)
+void RB_TNT_ThTick_ThrowOffHead();
+
+void DECOMP_RB_TNT_ThTick_SitOnHead(struct Thread* t)
 {
   struct Instance* inst;
   struct MineWeapon* mw;
@@ -29,7 +31,7 @@ void DECOMP_RB_TNT_OnHead(struct Thread* t)
 	// Play explosion sound
 	PlaySound3D(0x3d,inst);
 	
-  RB_Blowup_Init(inst);
+	RB_Blowup_Init(inst);
 	
 LAB_800ad4ec:
 
@@ -46,8 +48,7 @@ LAB_800ad4ec:
 	
     mw->driverTarget->instTntRecv = 0;
 		
-	// this skips $RA backup/restore, faster than JR $RA
-    ThTick_FastRET(t);
+	return;
   }
   else 
   {
@@ -94,8 +95,8 @@ LAB_800ad4ec:
   mw->deltaPos[1] = 0;
   mw->deltaPos[2] = 0;
   
-  // assign RB_TNT_ThrowOffHead
-  ThTick_SetAndExec(t,RB_TNT_ThrowOffHead);
+  // assign RB_TNT_ThTick_ThrowOffHead
+  ThTick_SetAndExec(t,RB_TNT_ThTick_ThrowOffHead);
   
 LAB_800ad5f8:
 
@@ -139,8 +140,7 @@ LAB_800ad5f8:
 	
     mw->driverTarget->instTntRecv = NULL;
 	
-	// this skips $RA backup/restore, faster than JR $RA
-    ThTick_FastRET(t);
+	return;
   }
   
   // set scale of TNT, given frame of animation

@@ -1,7 +1,7 @@
 #include <common.h>
 
-void RB_TNT_ThrowOnHead();
-void RB_TNT_ThrowOffHead();
+void RB_TNT_ThTick_ThrowOnHead();
+void RB_TNT_ThTick_ThrowOffHead();
 void THREAD_DestroyInstance();
 void RB_Hazard_ThCollide_Generic();
 void RB_Potion_ThTick_InAir();
@@ -32,7 +32,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
 	// TNT
     if (inst->model->id == 0x27) 
 	{
-      func = RB_TNT_ThrowOffHead;
+      func = RB_TNT_ThTick_ThrowOffHead;
 	  
 	  // set scale (x, y, z)
       inst->scale[0] = 0x800;
@@ -267,7 +267,7 @@ LAB_800ad174:
         mw->deltaPos[2] = 0;
         mw->maxHeight = 0x3fff;
 		
-        ThTick_SetAndExec(t,RB_TNT_ThrowOnHead);
+        ThTick_SetAndExec(t,RB_TNT_ThTick_ThrowOnHead);
       }
 	  
 	  // if this TNT has an InstDef, then it is part of LEV,
@@ -279,7 +279,7 @@ LAB_800ad174:
 		
 		// create thread for TNT, get an Instance
         instCrate = INSTANCE_BirthWithThread(
-			0x27,0,SMALL,MINE,RB_TNT_ThrowOnHead,sizeof(struct MineWeapon),0);
+			0x27,0,SMALL,MINE,RB_TNT_ThTick_ThrowOnHead,sizeof(struct MineWeapon),0);
 		
 		// get rotation of player and assign to tnt
         instCrate->matrix.m[0][0] = inst->matrix.m[0][0];
