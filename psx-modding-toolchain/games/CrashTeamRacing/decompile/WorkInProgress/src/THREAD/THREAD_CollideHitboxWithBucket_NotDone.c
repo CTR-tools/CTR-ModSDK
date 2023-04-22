@@ -44,10 +44,10 @@ void DECOMP_THREAD_CollideHitboxWithBucket(struct Thread* collThread,struct Scra
 			(distX * distX + distY * distY + distZ * distZ < param_2->Input1.hitRadiusSquared)
 			 )
 		  {			
-			param_2->Union.ThBuckOnCollide.distance[0] = distX;
-			param_2->Union.ThBuckOnCollide.distance[1] = distY;
-			param_2->Union.ThBuckOnCollide.distance[2] = distZ;
-			param_2->Union.ThBuckOnCollide.funcCallback(param_2,visDataHitbox);
+			param_2->Union.ThBuckColl.distance[0] = distX;
+			param_2->Union.ThBuckColl.distance[1] = distY;
+			param_2->Union.ThBuckColl.distance[2] = distZ;
+			param_2->Union.ThBuckColl.funcCallback(param_2,visDataHitbox);
           }
         }
 	  // thread = thread->sibling;

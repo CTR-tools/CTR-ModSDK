@@ -207,6 +207,7 @@ struct VisData
 			// see FUN_8001d0c4
 			
 			// 0x1C
+			// These are always InstDef, not converted to Instance
 			struct InstDef* instDef;
 		} hitbox;
 

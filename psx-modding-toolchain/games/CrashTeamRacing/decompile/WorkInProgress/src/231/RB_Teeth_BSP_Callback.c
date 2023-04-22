@@ -29,7 +29,7 @@ void DECOMP_RB_Teeth_BSP_Callback(struct ScratchpadStruct* sps,struct Thread* we
     }
   }
   
-  teethTh = sps->Union.ThBuckOnCollide.thread;
+  teethTh = sps->Union.ThBuckColl.thread;
   
   weaponInst = weaponThread->inst;
   

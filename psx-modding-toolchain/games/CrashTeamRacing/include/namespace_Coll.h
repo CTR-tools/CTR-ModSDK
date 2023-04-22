@@ -35,6 +35,9 @@ struct ScratchpadStruct
 {
 	struct
 	{
+		// this "pos" for threads: center of object
+		// this "pos" for quadblock: posMin of object
+		
 		// 0x0
 		short pos[3];
 		short hitRadius;
@@ -52,6 +55,9 @@ struct ScratchpadStruct
 		// This is why pointer 1f800118 gets passed
 		struct
 		{
+			// this "pos" for quadblock: posMax of object,
+			// hitRadius could just be a copy
+			
 			// 0x10
 			short pos[3];
 			short hitRadius;
@@ -60,11 +66,9 @@ struct ScratchpadStruct
 			int hitRadiusSquared;
 		
 			// 0x1C
-			short modelID;
+			short hitPos[3];
 			
-			// 0x1E
-			short unk1E;
-			short unk20;
+			// 0x22
 			short unk22;
 			
 			// 0x24
@@ -73,7 +77,7 @@ struct ScratchpadStruct
 			// 0x28
 			// could be non-union callback
 			int unk28;
-		} Input2;
+		} QuadBlockColl;
 		
 		// when using this,
 		// rest of struct is ignored
@@ -94,7 +98,7 @@ struct ScratchpadStruct
 			// could be non-union 0x28
 			void* funcCallback;
 			
-		} ThBuckOnCollide;
+		} ThBuckColl;
 	} Union;
 	
 	// 0x2C
@@ -104,16 +108,26 @@ struct ScratchpadStruct
 	struct BoundingBox bbox;
 	
 	// 0x3C...
+	// 1f800144, can be ptr_mesh_info, or search flags
 	short unk3C;
 	short boolDidTouchQuadblock;
 	
 	// 0x40
-	char unk40[0xB0];
+	// short boolDidTouch_What?
+	short unk40;
 	
-	// 0x42 short boolDidTouchHitbox
-	// 0x44 unk
-	// 0x46
-	// 0x48 VisData* visDataHitbox
+	// 0x42 
+	short boolDidTouchHitbox;
+	
+	// 0x44
+	struct mesh_info* ptr_mesh_info_2;
+	
+	// 0x48 
+	struct VisData* visDataHitbox;
+	
+	// 0x4c
+	// 1f800154
+	char unk4C[0xA4];
 	
 	// 0x64
 	// ptrQuadblock

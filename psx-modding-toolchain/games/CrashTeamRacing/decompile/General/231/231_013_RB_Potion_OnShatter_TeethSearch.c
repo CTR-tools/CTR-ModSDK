@@ -17,8 +17,8 @@ void DECOMP_RB_Potion_OnShatter_TeethSearch(struct Instance* inst)
 	SPS->Input1.hitRadiusSquared = 0x19000;
 	SPS->Input1.modelID = inst->model->id;
 	
-	SPS->Union.ThBuckOnCollide.thread = inst->thread;
-	SPS->Union.ThBuckOnCollide.funcCallback = RB_Potion_OnShatter_TeethCallback;
+	SPS->Union.ThBuckColl.thread = inst->thread;
+	SPS->Union.ThBuckColl.funcCallback = RB_Potion_OnShatter_TeethCallback;
 	
 	THREAD_StartSearch_Self(SPS);
 }

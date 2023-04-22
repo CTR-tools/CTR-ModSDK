@@ -101,8 +101,8 @@ LAB_800b9ff8:
   
   SPS->Input1.modelID = 0x70;
   
-  SPS->Union.ThBuckOnCollide.thread = t;
-  SPS->Union.ThBuckOnCollide.funcCallback = RB_Teeth_BSP_Callback;
+  SPS->Union.ThBuckColl.thread = t;
+  SPS->Union.ThBuckColl.funcCallback = RB_Teeth_BSP_Callback;
   
   // If door wants to close, but Player or Mine
   // is in the way, then do not force the doors to close

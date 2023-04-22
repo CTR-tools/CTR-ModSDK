@@ -15,8 +15,7 @@ void THREAD_PerVisData_CheckInstances(struct VisData* visDataLeaf, struct Scratc
     if ((visDataHitbox->flag & 0x80) == 0) continue;
 	if  (visDataHitbox.hitbox.instDef == 0) continue;
 	
-	// will execute as Inst->InstDef->0x28, but whatever,
-	// skip this hitbox if the instance is marked as "dont collide"
+	// These are always InstDef, not converted to Instance
 	if ((visDataHitbox.hitbox.instDef->ptrInstance->flags & 0xf) == 0) continue;
 	
     distX = (int)param_2->pos[0] - visDataHitbox->hitbox.unkShort[0];
@@ -30,10 +29,10 @@ void THREAD_PerVisData_CheckInstances(struct VisData* visDataLeaf, struct Scratc
         // if abs distance is less than collision radius
         (distX * distX + distY * distY + distX * distX < param_2->Input1.hitRadiusSquared)) 
 	{
-      param_2->Union.ThBuckOnCollide.distance[0] = distX;
-      param_2->Union.ThBuckOnCollide.distance[1] = distY;
-      param_2->Union.ThBuckOnCollide.distance[2] = distZ;
-	  param_2->Union.ThBuckOnCollide.funcCallback(param_2,visDataHitbox);
+      param_2->Union.ThBuckColl.distance[0] = distX;
+      param_2->Union.ThBuckColl.distance[1] = distY;
+      param_2->Union.ThBuckColl.distance[2] = distZ;
+	  param_2->Union.ThBuckColl.funcCallback(param_2,visDataHitbox);
     }
   }
 }

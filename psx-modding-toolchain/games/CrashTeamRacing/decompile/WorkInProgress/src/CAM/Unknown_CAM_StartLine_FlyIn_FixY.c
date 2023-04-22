@@ -15,9 +15,9 @@ void DECOMP_CAM_StartLine_FlyIn_FixY(short* posRot)
 
   // lev -> mesh_info
   sdata->scratchpadStruct.ptr_mesh_info = sdata->gGT->level1->ptr_mesh_info;
-  sdata->scratchpadStruct.Union.Input2.unk22 = 2;
-  sdata->scratchpadStruct.Union.Input2.searchFlags = 0x3000; // ground and wall
-  sdata->scratchpadStruct.Union.Input2.unk28 = 0;
+  sdata->scratchpadStruct.Union.QuadBlockColl.unk22 = 2;
+  sdata->scratchpadStruct.Union.QuadBlockColl.searchFlags = 0x3000; // ground and wall
+  sdata->scratchpadStruct.Union.QuadBlockColl.unk28 = 0;
 
   local_20 = posRot[0];
   local_26 = posRot[1];
@@ -33,7 +33,7 @@ void DECOMP_CAM_StartLine_FlyIn_FixY(short* posRot)
 
     COLL_SearchTree_FindQuadblock_Touching(&local_20,&local_18,&sdata->scratchpadStruct,0,local_20,local_1c);
 
-    sVar3 = sdata->scratchpadStruct.Union.Input2.unk1E;
+    sVar3 = sdata->scratchpadStruct.Union.QuadBlockColl.unk1E;
     if (sdata->scratchpadStruct.boolDidTouchQuadblock != 0) break;
     sVar3 = local_26;
   }

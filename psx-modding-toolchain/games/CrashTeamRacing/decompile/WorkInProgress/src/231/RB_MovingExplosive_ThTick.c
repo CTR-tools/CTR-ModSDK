@@ -370,11 +370,14 @@ LAB_800add14:
 	
     iVar8 = RB_Hazard_CollLevInst(&DAT_1f800108,t);
     
-	if (iVar8 == 1) {
+	// if hit VisData hitbox
+	if (iVar8 == 1) 
+	{
+	  // copy/paste from Potion_InAir
       if ((((*DAT_1f800150 & 0x80) != 0) && (iVar8 = *(int *)(DAT_1f800150 + 0x1c), iVar8 != 0)) &&
          ((*(int *)(iVar8 + 0x2c) != 0 && (*(short *)(iVar8 + 0x3c) == 0x70)))) 
 	  {
-        RB_Teeth_OpenDoor();
+        RB_Teeth_OpenDoor(*(int *)(iVar8 + 0x2c));
       }
       goto LAB_800ae42c;
     }

@@ -12,7 +12,7 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
   gGT = sdata->gGT;
   target = t->object;
   attacker = mw->instParent->thread->object;
-  thOther = sps->Union.ThBuckOnCollide.thread;
+  thOther = sps->Union.ThBuckColl.thread;
   mw = thOther->object;
 
   model = t->modelIndex;

@@ -32,7 +32,7 @@ void DECOMP_RB_Burst_CollLevInst(struct ScratchpadStruct* sps,struct VisData* vi
 		{
 		  // execute funcLevThreadsBirth, make thread for this instance
 		  // upon collision with the instance, let it run thread->funcThCollide
-          (**(code **)(meta + 8))(inst,sps->Union.ThBuckOnCollide.thread,sps);
+          (**(code **)(meta + 8))(inst,sps->Union.ThBuckColl.thread,sps);
         }
       }
       else 

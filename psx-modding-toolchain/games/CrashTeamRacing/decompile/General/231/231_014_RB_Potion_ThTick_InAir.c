@@ -11,6 +11,9 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	short posBottom[3];
 	short posTop[3];
 	
+	struct VisData* visDataHitbox;
+	struct InstDef* instDef;
+	
 	#define SPS \
 	((struct ScratchpadStruct*)0x1f800108)
 	
@@ -43,22 +46,22 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	posTop[1] = inst->matrix.t[1] + 0x100;
 	posTop[2] = inst->matrix.t[2];
 
-	SPS->Union.Input2.searchFlags = 0x1040;
-	SPS->Union.Input2.unk28 = 0;
-	SPS->Union.Input2.unk22 = 0x41;
+	SPS->Union.QuadBlockColl.searchFlags = 0x1040;
+	SPS->Union.QuadBlockColl.unk28 = 0;
+	SPS->Union.QuadBlockColl.unk22 = 0x41;
 
 	if (gGT->numPlyrCurrGame < 3) {
-		SPS->Union.Input2.unk22 = 0x43;
+		SPS->Union.QuadBlockColl.unk22 = 0x43;
 	}
 
-	DAT_1f800134 = gGT->level1;
+	SPS->ptr_mesh_info = gGT->level1->ptr_mesh_info;
 
-	COLL_SearchTree_FindQuadblock_Touching(&posBottom, &posTop, SPS,0);
+	COLL_SearchTree_FindQuadblock_Touching(&posBottom, &posTop, SPS, 0);
 
 	RB_MakeInstanceReflective(SPS, inst);
 
 	// 1f800108+1A4
-	if ((DAT_1f8002ac & 4) != 0) 
+	if ((*(int*)0x1f8002ac & 4) != 0) 
 	{
 		RB_GenericMine_ThDestroy(t,inst,mw);
 	}
@@ -68,17 +71,17 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	{
 		if (SPS->boolDidTouchQuadblock != 0) 
 		{
-			Rot_AxisAngle(&inst->matrix&SPS->unk40[0x30],0);
+			Rot_AxisAngle(&inst->matrix, &SPS->unk4C[0x24],0);
 	
-			// if very high above quadblock hitbox, quit
-			if (SPS->Union.ThBuckOnCollide.min[1] + 0x30 < inst->matrix.t[1]) 
+			// if inst is 0x30 units above quadblock or more
+			if (SPS->Union.QuadBlockColl.hitPos[1] + 0x30 < inst->matrix.t[1]) 
 				return;
 	
 			// if no cooldown
 			if (mw->cooldown == 0)
 			{
-				// set potion position to quadblock hitbox minY
-				inst->matrix.t[1] = SPS->Union.ThBuckOnCollide.min[1];
+				// set position to where quadblock was hit
+				inst->matrix.t[1] = SPS->Union.QuadBlockColl.hitPos[1];
 	
 				// reset cooldown (3.84s)
 				mw->cooldown = 0xf00;
@@ -104,11 +107,9 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 			// === Maybe this isn't Hitbox Min ===
 			// === Maybe overwritten as impact position ===
 			
-			// move potion upward if it drops below quadblock
-			if (inst->matrix.t[1] <= SPS->Union.ThBuckOnCollide.min[1]) 
-			{
-				inst->matrix.t[1] = SPS->Union.ThBuckOnCollide.min[1];
-			}
+			// if instance is under hitPos, move up
+			if (inst->matrix.t[1] <= SPS->Union.QuadBlockColl.hitPos[1]) 
+				inst->matrix.t[1] = SPS->Union.QuadBlockColl.hitPos[1];
 			
 			// if distance to move back to quadblock < velocity
 			if ((inst->matrix.t[1] - temp) + 0x28 <= mw->velocity[1]) {
@@ -124,48 +125,45 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 		// check again with range [-0x900, 0x100]
 
 		// posBottom
-		posBottom[2] = inst->matrix.t[0];
+		posBottom[0] = inst->matrix.t[0];
 		posBottom[1] = inst->matrix.t[1] - 0x900;
-		posBottom[0] = inst->matrix.t[2];
+		posBottom[2] = inst->matrix.t[2];
 
-		COLL_SearchTree_FindQuadblock_Touching(&posBottom, &posTop, &DAT_1f800108, );
+		COLL_SearchTree_FindQuadblock_Touching(&posBottom, &posTop, SPS, 0);
 
 		// quadblock exists far below potion, dont destroy
 		if (SPS->boolDidTouchQuadblock != 0) return;
 	} 
 	
-	// hit VisData hitbox
+	// hit VisData hitbox, and instance is TEETH
 	else 
 	{
+		visDataHitbox = SPS->visDataHitbox;
 		
 		if (
-			(
-				(
-					// visData->flags hitbox
-					((*DAT_1f800150 & 0x80) != 0) && 
-					(
-						// hitbox contains instDef
-						iVar4 = *(int *)(DAT_1f800150 + 0x1c), 
-						iVar4 != 0
-					)
-				) &&
-        
-				// instDef->modelID == TEETH
-				(*(short *)(iVar4 + 0x3c) == 0x70)
-			) && 
-			
-			// instDef->instance exists
-			(*(int *)(iVar4 + 0x2c) != 0)
+			  (
+			  	// visData->flags hitbox
+			  	((visDataHitbox->flag & 0x80) != 0) && 
+			  	(
+			  		// hitbox contains instDef
+			  		instDef = visDataHitbox->data.hitbox.instDef, 
+			  		instDef != 0
+			  	)
+			  ) &&
+			  
+			  // instDef->modelID == TEETH
+			  (instDef->modelID == 0x70) && 
+			  
+			  // instDef->instance exists
+			  (instDef->ptrInstance != 0)
 		   ) 
 		{
-			// if door is closed
-			if ((sdata->doorAccessFlags & 1) == 0) 
-			{
-				RB_Teeth_OpenDoor();
-			}
-			else {
-				return;
-			}
+			// if door is open, quit
+			if ((sdata->doorAccessFlags & 1) == 1) return;
+		
+			// open door if door is closed,
+			// then destroy mine right after
+			RB_Teeth_OpenDoor(instDef->ptrInstance);
 		}
 	}
 	

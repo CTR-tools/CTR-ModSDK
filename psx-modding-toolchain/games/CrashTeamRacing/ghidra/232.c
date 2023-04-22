@@ -7204,7 +7204,7 @@ void FUN_800b4c80(int param_1)
   _DAT_1f800148 = 0;
   DAT_1f80011c._0_2_ = *(short *)(param_1 + 0x40) >> 6;
   
-  // gGT->level
+  // gGT->level->ptr_mesh_info
   DAT_1f80014c = **(undefined4 **)(PTR_DAT_8008d2ac + 0x160);
   
   // posX + ?
