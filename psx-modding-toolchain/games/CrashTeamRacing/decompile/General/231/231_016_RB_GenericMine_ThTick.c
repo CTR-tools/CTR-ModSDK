@@ -112,7 +112,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
     param = 0x1900;
   }
   
-  coll = RB_Hazard_CollideWithDrivers(inst,mw->unk24,param,mw->instParent);
+  coll = RB_Hazard_CollideWithDrivers(inst,mw->frameCount_DontHurtParent,param,mw->instParent);
   
   // if no collision
   if (coll == 0) goto LAB_800ad17c;
@@ -309,7 +309,7 @@ LAB_800ad174:
 		
         tnt->instParent= d->instSelf;
 		
-        tnt->unk24 = 10;
+        tnt->frameCount_DontHurtParent = 10;
         tnt->boolDestroyed = 0;
         *(short *)((unsigned int)tnt + 0x26) = 0;
         tnt->crateInst= 0;
@@ -353,10 +353,8 @@ LAB_800ad174:
   }
 LAB_800ad17c:
 
-  // canSkipParentFrameCount
-  if (mw->unk24 != 0) {
-    mw->unk24 += -1;
-  }
+  if (mw->frameCount_DontHurtParent != 0)
+	  mw->frameCount_DontHurtParent--;
   
   // if mineWeapon->boolDestroyed == 0
   if (mw->boolDestroyed == 0) {

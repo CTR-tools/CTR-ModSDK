@@ -54,7 +54,7 @@ void DECOMP_RB_GenericMine_LInB(struct Instance *inst)
 	mw->velocity[1] = 0;
 	mw->velocity[2] = 0;
 	mw->boolDestroyed = 0;
-	mw->unk24 = 0;
+	mw->frameCount_DontHurtParent = 0;
 	mw->extraFlags = 0;
 	mw->maxHeight = inst->matrix.t[1];
 	

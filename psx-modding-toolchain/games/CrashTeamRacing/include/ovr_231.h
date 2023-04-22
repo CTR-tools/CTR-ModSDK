@@ -64,6 +64,7 @@ struct TrackerWeapon
 	// 0x1e
 
 	// 0x20
+	// frameCount_DontHurtParent
 	// set to 10?
 	char data4[0x4];
 
@@ -161,7 +162,9 @@ struct MineWeapon
 
 	// 0x24
 	// number of frames that mine can't hurt parent
-	int unk24;
+	short frameCount_DontHurtParent;
+	
+	short unk26;
 
 	// 0x28
 	// 1 - red beaker

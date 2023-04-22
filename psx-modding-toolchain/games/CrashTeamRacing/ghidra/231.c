@@ -1588,7 +1588,7 @@ LAB_800ad174:
   }
 LAB_800ad17c:
 
-  // canSkipParentFrameCount
+  // frameCount_DontHurtParent
   if (*(short *)(piVar13 + 9) != 0) {
     *(short *)(piVar13 + 9) = *(short *)(piVar13 + 9) + -1;
   }
@@ -3837,6 +3837,8 @@ LAB_800af82c:
       }
     }
   }
+  
+  // frameCount_DontHurtParent
   if (*(short *)(piVar11 + 8) != 0) {
     *(short *)(piVar11 + 8) = *(short *)(piVar11 + 8) + -1;
   }
