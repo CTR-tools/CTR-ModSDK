@@ -1587,11 +1587,13 @@ LAB_800ad174:
     }
   }
 LAB_800ad17c:
+
+  // numParticles?
   if (*(short *)(piVar13 + 9) != 0) {
     *(short *)(piVar13 + 9) = *(short *)(piVar13 + 9) + -1;
   }
   
-  // if mineWeapon->boolIsDestroyed == 0
+  // if mineWeapon->boolDestroyed == 0
   if (*(short *)(piVar13 + 5) == 0) {
     return;
   }

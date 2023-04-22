@@ -349,11 +349,13 @@ LAB_800ad174:
     }
   }
 LAB_800ad17c:
-  if (mw->boolDestroyed != 0) {
-    mw->boolDestroyed += -1;
+
+  // numParticles?
+  if (mw->unk24 != 0) {
+    mw->unk24 += -1;
   }
   
-  // if mineWeapon->boolIsDestroyed == 0
+  // if mineWeapon->boolDestroyed == 0
   if (mw->boolDestroyed == 0) {
     return;
   }
