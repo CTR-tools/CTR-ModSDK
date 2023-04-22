@@ -232,7 +232,7 @@ LAB_800ad174:
 	  
 	  // if Instance has no InstDef,
 	  // if this TNT is not part of the level,
-	  // then it already has a thread
+	  // use existing thread
       if (inst->instDef == 0) 
 	  {
 		// icon damage timer, draw icon as red
@@ -263,7 +263,7 @@ LAB_800ad174:
       }
 	  
 	  // if this TNT has an InstDef, then it is part of LEV,
-	  // and it does not have a thread, so initialize one
+	  // kill the old thread and birth a new one (why?)
       else 
 	  {
 		// DAT_800ab9fc
