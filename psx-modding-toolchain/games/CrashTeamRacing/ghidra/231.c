@@ -1498,7 +1498,7 @@ LAB_800ad174:
 		// "tnt1"
 		
 		// create thread for TNT, get an Instance
-		// ThTick = RB_GenericMine_ThTick (same as this)
+		// ThTick = RB_GenericMine_ThTick, but set later to RB_TNT_ThrowOnHead
 		// 0x300 flag = SmallStackPool
 		// 4 = "mine" thread bucket
         iVar6 = FUN_800309a4(0x27,&DAT_800ab9fc,0x300,4,FUN_800acb60,0x2c,0);
