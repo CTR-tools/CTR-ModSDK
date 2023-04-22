@@ -142,7 +142,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
     }
 
     // spin driver
-    coll = RB_Hazard_HurtDriver(coll,1,mw->instParent->thread->object,param);
+    coll = RB_Hazard_HurtDriver(d,1,mw->instParent->thread->object,param);
     
 	// if collision, and if this was a red potion
 	if ((coll != 0) && (mw->extraFlags & 1) != 0)
