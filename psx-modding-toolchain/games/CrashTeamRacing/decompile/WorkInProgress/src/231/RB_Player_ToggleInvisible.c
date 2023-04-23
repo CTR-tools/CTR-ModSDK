@@ -13,11 +13,8 @@ void DECOMP_RB_Player_ToggleInvisible(void)
     // driver object
     d = t->object;
 
-    if (
-        // if driver is invisible
-        (d->invisibleTimer != 0) &&
-        // player exists
-        (gGT->numPlyrCurrGame))
+	// if driver is invisible
+    if (d->invisibleTimer != 0)
     {
       // loop through InstanceDrawPerPlayer
       for (i = 0; i < gGT->numPlyrCurrGame; i++)

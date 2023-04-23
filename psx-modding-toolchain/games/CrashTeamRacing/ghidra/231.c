@@ -9995,6 +9995,7 @@ void FUN_800b6f00(int param_1,int param_2)
   {
 		 
 	// create a thread and an Instance
+	// 0x18 - Follower size
 	// 0x300 flag = SmallStackPool
 	// 0xb = "follower" thread bucket
     iVar1 = FUN_800309a4((int)*(short *)(param_2 + 0x44),s_follower_800b6d4c,0x300,0xb,

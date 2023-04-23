@@ -13,15 +13,12 @@ void DECOMP_RB_Player_ToggleFlicker(void)
     d = t->object;
 
     if (
-        (
             // invincible timer
             (0x2a0 < d->invincibleTimer) &&
 
             // odd number frames
-            ((gGT->timer & 1) != 0)) &&
-
-        // player exists
-        (gGT->numPlyrCurrGame))
+            ((gGT->timer & 1) != 0)
+		)
     {
       // on all screens
       for (i = 0; i < gGT->numPlyrCurrGame; i++)
