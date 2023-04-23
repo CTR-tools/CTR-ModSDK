@@ -187,8 +187,6 @@ void MM_Characters_MenuBox()
 			goto dontDrawSelectCharacter;
 	}
 	
-	printf("%08x\n", &OVR_230.ptrTransitionMeta[15].currX);
-	
 	// Draw String
 	DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, (CENTER_TEXT | ORANGE));
 	
