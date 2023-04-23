@@ -74,6 +74,22 @@ struct TrackerWeapon
 	// 0x28
 	unsigned int distanceToTarget;
 
+	// === This point and beyond is Warpball ===
+	
+	// 0x2c
+	// lev->0x14c + "this" * 0xC
+	int respawnPointIndex;
+	
+	// 0x30
+	int fadeAway_frameCount5;
+	
+	// 0x34
+	// bitshift with driver->driverID
+	// one bit for every driver hit
+	
+	// 0x38
+	// distY from track floor
+
 	// 0x3C - pointer to vec3i
 	// pathNodeStart on path
 

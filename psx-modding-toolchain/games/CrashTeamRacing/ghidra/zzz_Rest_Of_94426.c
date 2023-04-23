@@ -32883,7 +32883,10 @@ LAB_800659ec:
 	// if wumpa < 10
     *(undefined2 *)((int)piVar15 + 0x16) = 0;
 
+	// respawnPointIndex
     piVar15[0xb] = 0;
+	
+	// pathNodeStart = lev->respawnPoint[pathIndexStart]
     piVar15[0xf] = iVar8 + (uint)*(byte *)(piVar15 + 0x11) * 0xc;
 
 	// if 9 < wumpa
@@ -32895,6 +32898,8 @@ LAB_800659ec:
     }
 
 	*(ushort *)((int)piVar15 + 0x16) = *(ushort *)((int)piVar15 + 0x16) | 8;
+	
+	// one flag for each driver
     piVar15[0xd] = 1 << ((uint)*(byte *)(param_1 + 0x4a) & 0x1f);
 
 	// if driver is in first
@@ -32961,6 +32966,7 @@ LAB_800659ec:
 	// get rotation of driver inst
 	sVar2 = *(short *)(*(int *)(param_1 + 0x1c) + 0x40);
 
+	// frameCount_DontHurtParent
 	*(undefined2 *)(piVar15 + 8) = 10;
 
 	// velZ
