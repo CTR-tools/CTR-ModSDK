@@ -90,6 +90,8 @@ common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
 common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_01_AH_WarpPad_GetSpawnPosRot.c
 common, 232, AH_WarpPad_AllWarppadNum, 0x0, General/232/232_02_AH_WarpPad_AllWarppadNum.c
 common, 232, AH_WarpPad_MenuBoxFuncPtr, 0x0, General/232/232_03_AH_WarpPad_MenuBoxFuncPtr.c
+common, 232, AH_Garage_ThDestroy, 0x0, General/232/232_07_AH_Garage_ThDestroy.c
+common, 232, AH_Garage_Open, 0x0, General/232/232_08_AH_Garage_Open.c
 common, 232, AH_Map_Main, 0x0, General/232/232_24_AH_Map_Main.c
 
 // exe globals
