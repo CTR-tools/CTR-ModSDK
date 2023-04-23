@@ -45,7 +45,7 @@ void DECOMP_UI_DrawNumWumpa(int param_1,int param_2,struct Driver* d)
 		
 		DecalHUD_DrawPolyGT4(
 	
-			&gGT->iconGroup[0]->icons[iconID],
+			gGT->iconGroup[5]->icons[iconID],
 	
 			posX + 0xc * i,
 			posY,
