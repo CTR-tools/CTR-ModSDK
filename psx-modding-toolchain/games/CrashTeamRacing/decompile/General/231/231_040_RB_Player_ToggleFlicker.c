@@ -7,7 +7,7 @@ void DECOMP_RB_Player_ToggleFlicker(void)
   struct Driver* d;
   char i;
 
-  for (t = gGT->threadBuckets[PLAYER]; t != NULL; t = t->siblingThread)
+  for (t = gGT->threadBuckets[PLAYER].thread; t != NULL; t = t->siblingThread)
   {
     // driver object
     d = t->object;
@@ -24,7 +24,7 @@ void DECOMP_RB_Player_ToggleFlicker(void)
       for (i = 0; i < gGT->numPlyrCurrGame; i++)
       {
         // make driver invisible
-        d->instSelf->idpp[i].unkb8 &= 0xffffffbf;
+        d->instSelf->idpp[i].unkb8[0] &= 0xffffffbf;
       }
     }
   }

@@ -8,7 +8,7 @@ void DECOMP_RB_Player_ToggleInvisible(void)
   char i;
 
   // loop through player threads
-  for (t = gGT->threadBuckets[PLAYER]; t != NULL; t = t->siblingThread)
+  for (t = gGT->threadBuckets[PLAYER].thread; t != NULL; t = t->siblingThread)
   {
     // driver object
     d = t->object;
@@ -23,7 +23,7 @@ void DECOMP_RB_Player_ToggleInvisible(void)
         if (i != d->driverID)
         {
           // make driver instance invisible on this screen
-          d->instSelf->idpp[i].unkb8 &= 0xffffffbf;
+          d->instSelf->idpp[i].unkb8[0] &= 0xffffffbf;
         }
       }
     }
