@@ -3374,6 +3374,7 @@ void FUN_800af9f8(int param_1)
     *piVar1 = 0;
   }
   
+  // loop through 4 keys
   iVar2 = 0;
   do {
     iVar2 = iVar2 + 1;

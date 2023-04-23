@@ -10,6 +10,16 @@ struct BossGarageDoor
 	// 0x14 bytes large
 };
 
+struct WoodDoor
+{
+	struct Instance* otherDoor;
+	struct Instance* keyInst[4];
+	
+	// more here
+	
+	// 0x38 bytes large
+};
+
 struct WarpPad
 {
 	// 0x0
