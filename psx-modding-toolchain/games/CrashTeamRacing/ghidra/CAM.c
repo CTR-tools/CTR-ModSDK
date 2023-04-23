@@ -686,7 +686,9 @@ void FUN_8001861c(int param_1)
       iVar5 = (uint)*(ushort *)(iVar8 + 0x22) << 0x10;
 	  iVar11 = iVar5 >> 0x10;
 
-	  // tileView rotation?
+	  // tileView rotation
+	  // view up/down will change where the line splits.
+	  // At 0x800, camera looks straight, and line is perfectly midpoint
 	  iVar5 = ((int)*(short *)(iVar8 + 6) + -0x800 >> 3) + (iVar11 - (iVar5 >> 0x1f) >> 1);
 	  
       if (iVar5 < 0) {

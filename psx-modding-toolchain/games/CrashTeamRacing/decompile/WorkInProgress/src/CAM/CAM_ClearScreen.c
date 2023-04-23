@@ -13,20 +13,14 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
   unsigned int uVar6;
   int iVar7;
   struct TileView* view;
-  u_long *primmemNext;
-  u_long *primmemCurr;
+  TILE* tile;
   int iVar11;
   int iVar12;
 
   backDB = gGT->backBuffer;
-  primmemCurr = backDB->primMem.curr;
+  tile = backDB->primMem.curr;
   numPlyr = gGT->numPlyrCurrGame;
-
-  // if numPlyrCurrGame is not zero
-  if (numPlyr)
-    return;
-
-  primmemNext = primmemCurr + 1;
+  swap = gGT->swapchainIndex;
 
   for (iVar12 = 0; iVar12 < numPlyr; iVar12++)
   {
@@ -45,68 +39,65 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
     // window sizeY
     sVar4 = (short)view->rect.h;
 
-    // tileView rotation?
-    iVar5 = ((int)view->distanceToScreen_PREV + -0x800 >> 3) + (sVar4 - (sVar4 >> 0xf) >> 1);
+    // tileView rotation
+	// view up/down will change where the line splits.
+	// At 0x800, camera looks straight, and line is perfectly midpoint
+    iVar5 = ((int)view->rot[0] + -0x800 >> 3) + (sVar4 - (sVar4 >> 0xf) >> 1);
 
+	// if splitline is above top of screen,
+	// camera looks far down and only sees bottom half
     if (iVar5 < 0)
     {
+	  // top half has zero height
       iVar5 = 0;
     }
+	
+	// if splitline is below bottom of the screen,
+	// top quad height is window sizeY, bottom quad is zero height
     iVar7 = sVar4;
 
+	// if splitline is below top of screen
     if (iVar5 < sVar4)
     {
+	  // set midpoint accordingly
       iVar7 = iVar5;
     }
+	
 
-    iVar5 = view->ptrOT;
-
-    // if top-half clear color exists
+    // if top-half clear color exists,
+	// and if splitline is below top of screen (so top quad exists)
     if ((gGT->level1->clearColor[0].enable != 0) && (0 < iVar7))
     {
-      // swapchain index
-      swap = gGT->swapchainIndex;
+      tile->x0 = sVar2;
+	  tile->y0 = ((int)sVar3 + swap * 0x128);
+      tile->w = sVar1; 
+	  tile->h = iVar7;
 
-      // draw colored quad?
-      primmemNext[2] = (int)sVar1 | iVar7 << 0x10;
+      *(int*)&tile->r0 = (unsigned int)gGT->level1->clearColor[0].rgb[0] | 0x2000000;
 
-      // Y-pos in VRAM, position of window + swapIndex*0x128
-      primmemNext[1] = (int)sVar2 | ((int)sVar3 + swap * 0x128) * 0x10000;
-
-      // top half clear color
-      *primmemNext = (unsigned int)gGT->level1->clearColor[0].rgb[0] | 0x2000000;
-
-      primmemNext = primmemNext + 4;
-      *primmemCurr = *(unsigned int *)(iVar5 + 0xffc) | 0x3000000;
-      uVar6 = (unsigned int)primmemCurr & 0xffffff;
-      primmemCurr = primmemCurr + 4;
-      *(unsigned int *)(iVar5 + 0xffc) = uVar6;
+      *(int*)&tile->tag = view->ptrOT[0x3ff] | 0x3000000;
+      view->ptrOT[0x3ff] = tile & 0xffffff;
+	  tile++;
     }
 
-    // if bottom-half clear color exists
+    // if bottom-half clear color exists,
+	// and if splitline is above bottom of screen (so bottom quad exists)
     if ((gGT->level1->clearColor[1].enable != 0) && (iVar7 < sVar4))
     {
-      // swapchain index
-      swap = gGT->swapchainIndex;
+      tile->x0 = sVar2;
+	  tile->y0 = ((int)sVar3 + swap * 0x128 + iVar7);
+      tile->w = sVar1; 
+	  tile->h = sVar4 - iVar7;
 
-      // draw colored quad?
-      primmemNext[2] = (int)sVar1 | (sVar4 - iVar7) * 0x10000;
+      *(int*)&tile->r0 = (unsigned int)gGT->level1->clearColor[1].rgb[0] | 0x2000000;
 
-      // Y-pos in VRAM, position of window + swapIndex*0x128
-      primmemNext[1] = (int)sVar2 | ((int)sVar3 + swap * 0x128 + iVar7) * 0x10000;
-
-      // bottom half clear color
-      *primmemNext = (unsigned int)gGT->level1->clearColor[1].rgb[0] | 0x2000000;
-
-      primmemNext = primmemNext + 4;
-      *primmemCurr = *(unsigned int *)(iVar5 + 0xffc) | 0x3000000;
-      uVar6 = (unsigned int)primmemCurr & 0xffffff;
-      primmemCurr = primmemCurr + 4;
-      *(unsigned int *)(iVar5 + 0xffc) = uVar6;
+      *(int*)&tile->tag = view->ptrOT[0x3ff] | 0x3000000;
+      view->ptrOT[0x3ff] = tile & 0xffffff;
+	  tile++;
     }
   }
-  // set new backBuffer->primMem.curr
-  backDB->primMem.curr = primmemCurr;
+  
+  backDB->primMem.curr = tile;
 
   return;
 }
