@@ -107,6 +107,7 @@ common, exe, BOTS_Adv_NumTimesLostEvent, 0x0, General/BOTS/BOTS_Adv_NumTimesLost
 // BOTS_Driver_Init was started, not finished
 
 // CAM
+common, exe, CAM_ClearScreen, 0x0, General/CAMERA/CAM_ClearScreen.c
 common, exe, CAM_EndOfRace, 0x0, General/CAMERA/CAM_EndOfRace.c
 common, exe, CAM_EndOfRace_Battle, 0x0, General/CAMERA/CAM_EndOfRace_Battle.c
 common, exe, CAM_Init, 0x0, General/CAMERA/CAM_Init.c
