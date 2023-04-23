@@ -1,7 +1,7 @@
 #include <common.h>
 
 // budget: 508,
-// before FOR: 408
+// before FOR: 392
 
 void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
 {
@@ -18,6 +18,7 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
   TILE* tile;
   int loop;
   struct Level* level1;
+  u_long* endOT;
   
   unsigned int shiftUp;
   unsigned int shiftDown;
@@ -32,6 +33,7 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
   {
     // pointer to tileView struct
     view = &gGT->tileView[loop];
+	endOT = &view->ptrOT[0x3FF];
 
     x = view->rect.x;
     y = view->rect.y + swap * 0x128;
@@ -75,8 +77,10 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
 	  tile->h = iVar7;
 
       *(int*)&tile->r0 = (unsigned int)level1->clearColor[0].rgb[0] | 0x2000000;
-      *(int*)&tile->tag = view->ptrOT[0x3ff] | 0x3000000;
-      view->ptrOT[0x3ff] = (unsigned int)tile & 0xffffff;
+      
+	  *(int*)tile = *(unsigned int*)endOT | 0x3000000;
+      *(unsigned int*)endOT = (unsigned int)tile & 0xffffff;
+	  
 	  tile++;
     }
 
@@ -90,8 +94,10 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
 	  tile->h = h - iVar7;
 
       *(int*)&tile->r0 = (unsigned int)level1->clearColor[1].rgb[0] | 0x2000000;
-      *(int*)&tile->tag = view->ptrOT[0x3ff] | 0x3000000;
-      view->ptrOT[0x3ff] = (unsigned int)tile & 0xffffff;
+
+	  *(int*)tile = *(unsigned int*)endOT | 0x3000000;
+      *(unsigned int*)endOT = (unsigned int)tile & 0xffffff;
+
 	  tile++;
     }
   }
