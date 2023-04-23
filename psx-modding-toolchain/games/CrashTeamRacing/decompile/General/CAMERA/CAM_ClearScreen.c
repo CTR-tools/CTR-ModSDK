@@ -1,8 +1,5 @@
 #include <common.h>
 
-// budget: 508,
-// before FOR: 392
-
 void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
 {
   char numPlyr;
@@ -76,7 +73,8 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
       tile->w = w; 
 	  tile->h = iVar7;
 
-      *(int*)&tile->r0 = (unsigned int)level1->clearColor[0].rgb[0] | 0x2000000;
+      *(int*)&tile->r0 = *(int*)&level1->clearColor[0].rgb[0];
+	  tile->code = 0x2;
       
 	  *(int*)tile = *(unsigned int*)endOT | 0x3000000;
       *(unsigned int*)endOT = (unsigned int)tile & 0xffffff;
@@ -93,7 +91,8 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
       tile->w = w; 
 	  tile->h = h - iVar7;
 
-      *(int*)&tile->r0 = (unsigned int)level1->clearColor[1].rgb[0] | 0x2000000;
+      *(int*)&tile->r0 = *(int*)&level1->clearColor[1].rgb[0];
+	  tile->code = 0x2;
 
 	  *(int*)tile = *(unsigned int*)endOT | 0x3000000;
       *(unsigned int*)endOT = (unsigned int)tile & 0xffffff;
