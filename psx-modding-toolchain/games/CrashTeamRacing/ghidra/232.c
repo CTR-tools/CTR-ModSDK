@@ -238,7 +238,6 @@ LAB_800abe94:
 }
 
 
-
 // AH_WarpPad_ThTick
 void FUN_800abf48(int param_1)
 

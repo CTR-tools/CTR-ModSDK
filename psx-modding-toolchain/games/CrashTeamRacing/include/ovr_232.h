@@ -23,10 +23,10 @@ struct WoodDoor
 struct WarpPad
 {
 	// 0x0
-	struct Instance* inst[5];
+	struct Instance* inst[8];
 	
-	// 0x14
-	char unk54[0x3C];
+	// 0x20
+	char unk30[0x30];
 	
 	// 0x28
 	// some other rotation vector?
