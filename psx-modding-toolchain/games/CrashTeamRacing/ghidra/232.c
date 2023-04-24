@@ -1749,10 +1749,14 @@ void FUN_800ad3ec(int param_1)
     *(undefined2 *)(piVar18 + 10) = 0;
     *(undefined2 *)((int)piVar18 + 0x2a) = 0;
     *(undefined2 *)(piVar18 + 0xb) = 0;
+	
+	// offset 0x40, 0x42, 0x44
     *(undefined2 *)(piVar18 + 0x10) = 0;
     *(undefined2 *)((int)piVar18 + 0x42) = 0;
     *(undefined2 *)(piVar18 + 0x11) = 0;
-    piVar5 = piVar18;
+    
+	// offset 0x30, 0x32, 0x34, 0x38
+	piVar5 = piVar18;
     do {
       *(undefined2 *)(piVar5 + 0xc) = 0;
       *(undefined2 *)((int)piVar5 + 0x32) = 0;
@@ -1760,6 +1764,7 @@ void FUN_800ad3ec(int param_1)
       iVar14 = iVar14 + 1;
       piVar5 = piVar5 + 2;
     } while (iVar14 < 2);
+	
     sVar10 = *(short *)(piVar18 + 0x1b);
     iVar14 = (int)*(short *)(piVar18 + 0x1b);
     if (iVar14 < 0x10) 
@@ -2418,7 +2423,10 @@ LAB_800ad920:
 	} while (iVar17 < *(short *)(*(int *)(iVar14 + 0x18) + 0x12));
   }
   
+  // beam
   piVar18[4] = 0;
+  
+  // 2 rings
   iVar14 = 1;
   piVar5 = piVar18 + 1;
   do {
@@ -2426,6 +2434,8 @@ LAB_800ad920:
     iVar14 = iVar14 + -1;
     piVar5 = piVar5 + -1;
   } while (-1 < iVar14);
+  
+  // 3 prizes
   iVar14 = 2;
   piVar18 = piVar18 + 2;
   do {
