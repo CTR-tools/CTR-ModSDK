@@ -1747,17 +1747,18 @@ void FUN_800ad3ec(int param_1)
 	
     iVar14 = 0;
 	
-	// erase prizeSpinRot
+	// erase spinRot_Prize
     *(undefined2 *)(piVar18 + 10) = 0;
     *(undefined2 *)((int)piVar18 + 0x2a) = 0;
     *(undefined2 *)(piVar18 + 0xb) = 0;
 	
-	// erase beamSpinRot
+	// erase spinRot_Beam
 	// offset 0x40, 0x42, 0x44
     *(undefined2 *)(piVar18 + 0x10) = 0;
     *(undefined2 *)((int)piVar18 + 0x42) = 0;
     *(undefined2 *)(piVar18 + 0x11) = 0;
     
+	// erase spinRot_Wisp1 and spinRot_Wisp2
 	// iVar14=0: write 0x30, 0x32, 0x34
 	// iVar14=1: write 0x38, 0x3A, 0x3C
 	piVar5 = piVar18;
