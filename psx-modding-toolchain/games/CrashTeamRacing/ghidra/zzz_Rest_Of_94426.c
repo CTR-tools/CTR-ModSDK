@@ -9322,6 +9322,7 @@ void FUN_8004c850(int param_1)
   FUN_8006c3b0(iVar3,iVar2 + 8,iVar3);
   
   if (
+		// if hud is enabled, and this is not demo mode
 		((*(uint *)(PTR_DAT_8008d2ac + 0x1d30) & 0xff0100) == 0x100) &&
 
 		// if any fade-in-from-black transition is over
@@ -9441,6 +9442,7 @@ void FUN_8004ca04(int param_1)
   // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
   FUN_8006c3b0(iVar4 + 0x30,iVar3 + 8,iVar4 + 0x30);
   
+  // if hud is enabled, and this is not demo mode
   if ((*(uint *)(PTR_DAT_8008d2ac + 0x1d30) & 0xff0100) == 0x100)
   {
 	// make visible

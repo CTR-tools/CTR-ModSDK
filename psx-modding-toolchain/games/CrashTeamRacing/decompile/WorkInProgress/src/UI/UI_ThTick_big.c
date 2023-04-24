@@ -28,7 +28,7 @@ void DECOMP_UI_ThTick_big1(struct Thread * bucket)
   
   // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
   MatrixRotate(inst->matrix,obj->m.m[0][0],inst->matrix);
-
+  
   // if hud is enabled, and this is not demo mode
   if ((sdata->gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) {
     flags = inst->flags & 0xffffff7f; // make visible
