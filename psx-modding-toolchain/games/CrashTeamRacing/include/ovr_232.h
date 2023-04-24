@@ -82,7 +82,7 @@ struct WarpPad
 	// 0x6e
 	// 0/3    1/3     2/3
 	// 0x0    0x555   0xAAA
-	short arr[3];
+	unsigned short thirds[3];
 	
 	// 0x74 (1d*4)
 	short boolWaitForAkuHint;

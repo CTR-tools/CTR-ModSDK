@@ -1,6 +1,6 @@
-// 285+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 354 rewritten so far
+// 286+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 355 rewritten so far
 
-// 285 for every 'common' and ','
+// 286 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -90,6 +90,7 @@ common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
 common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_01_AH_WarpPad_GetSpawnPosRot.c
 common, 232, AH_WarpPad_AllWarppadNum, 0x0, General/232/232_02_AH_WarpPad_AllWarppadNum.c
 common, 232, AH_WarpPad_MenuBoxFuncPtr, 0x0, General/232/232_03_AH_WarpPad_MenuBoxFuncPtr.c
+common, 232, AH_WarpPad_SpinRewards, 0x0, General/232/232_04_AH_WarpPad_SpinRewards.c
 common, 232, AH_Garage_ThDestroy, 0x0, General/232/232_07_AH_Garage_ThDestroy.c
 common, 232, AH_Garage_Open, 0x0, General/232/232_08_AH_Garage_Open.c
 common, 232, AH_Door_ThDestroy, 0x0, General/232/232_14_AH_Door_ThDestroy.c
