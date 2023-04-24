@@ -1440,8 +1440,7 @@ void FUN_800ad3ec(int param_1)
   *(undefined2 *)(piVar18 + 0x1d) = 0;
   *(undefined2 *)((int)piVar18 + 0x76) = 0;
   
-  // get character from string,
-  // sneaky trick, faster than strlen
+  // first character in Inst name
   cVar1 = *(char *)(param_1 + 0x10);
   
   iVar8 = 8;
@@ -1454,6 +1453,9 @@ void FUN_800ad3ec(int param_1)
 			cVar1 != '\0'
 		) 
   {
+	// get warppad ID by parsing Instance string
+	// changing warppad#6 to warppad#0 will change
+	// roo's tubes portal to dingo canyon
   
 	sVar10 = *(short *)(piVar18 + 0x1b);
     *(short *)(piVar18 + 0x1b) = sVar10 * 10;
