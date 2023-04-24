@@ -2109,12 +2109,18 @@ void FUN_800ad3ec(int param_1)
   
   // =======================
   
-  if (iVar19 < 10) {
-    *(undefined2 *)(piVar18 + 0x1a) = 0;
+  // unlock requirment < 10
+  if (iVar19 < 10) 
+  {
+	// no 10s digit, just 1s digit
+    *(short *)((int)piVar18 + 0x68) = 0;
     *(short *)((int)piVar18 + 0x6a) = (short)iVar19;
   }
-  else {
-    *(undefined2 *)(piVar18 + 0x1a) = 1;
+  
+  else 
+  {
+	// 10s digit and 1s digit
+    *(short *)((int)piVar18 + 0x68) = 1;
     *(short *)((int)piVar18 + 0x6a) = (short)iVar19 + -10;
   }
   
