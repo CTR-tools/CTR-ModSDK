@@ -558,12 +558,17 @@ LAB_800ac500:
     DAT_800b4e86 = -1;
 	
 LAB_800ac518:
+
+	// if 1s digit (warppad locked)
+	// adjust all instances to face camera
     if (piVar19[2] != 0) 
 	{
 	  // angle between camera and warppad
       sVar2 = ratan2(*(int *)(iVar20 + 0x44) - (int)*(short *)(PTR_DAT_8008d2ac + 0x168),
                            *(int *)(iVar20 + 0x4c) - (int)*(short *)(PTR_DAT_8008d2ac + 0x16c));
-      if (piVar19[3] == 0) {
+      
+	  // if no 10s digit
+	  if (piVar19[3] == 0) {
         iVar18 = (int)-sVar2;
         
 		// Cos(angle)
@@ -586,6 +591,8 @@ LAB_800ac518:
         
 		*(int *)(*piVar19 + 0x4c) = *(int *)(iVar20 + 0x4c) + ((iVar4 << 7) >> 0xc);
       }
+	  
+	  // if 10s digit
       else {
         iVar18 = (int)-sVar2;
         

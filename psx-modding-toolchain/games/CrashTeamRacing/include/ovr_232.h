@@ -45,10 +45,10 @@ struct WarpPad
 	struct Instance* inst[10];
 	
 	// 0x28
-	char unk28[0x28];
+	short prizeSpinRot[4];
 	
-	// 0x28
-	// some other rotation vector?
+	// 0x30
+	char unk30[0x20];
 	
 	// 0x50
 	short specLightGem[4];
