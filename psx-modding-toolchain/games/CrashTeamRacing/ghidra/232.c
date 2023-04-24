@@ -2439,9 +2439,13 @@ void FUN_800ae988(int param_1)
   
   puVar2 = PTR_DAT_8008d2ac;
   bVar1 = true;
+  
+  // array track to load boss
   local_60 = DAT_800aba4c;
   local_5c = DAT_800aba50;
   local_58 = DAT_800aba54;
+  
+  // bossID
   local_50 = DAT_800aba58;
   local_4c = DAT_800aba5c;
   local_48 = DAT_800aba60;
@@ -2617,6 +2621,7 @@ LAB_800aec34:
   // check distance
   if (0x143fff < iVar4 * iVar4 + iVar6 * iVar6 + iVar7 * iVar7) goto LAB_800aede0;
   
+  // string for LNG
   local_40 = DAT_800aba58;
   local_3c = DAT_800aba5c;
   local_38 = DAT_800aba60;
@@ -2729,6 +2734,7 @@ LAB_800aede8:
 	
     else 
 	{
+	  // set boss ID
       *(int *)(PTR_DAT_8008d2ac + 0x1eb8) =
 													// Level ID - 0x19: Adventure Hub (0-4)
            (int)*(short *)((int)&local_50 + (*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 2);
@@ -2741,7 +2747,9 @@ LAB_800aede8:
                     
 					// Level ID - 0x19: Adventure Hub (0-4)
 					(*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 2) * 0x18);
-    FUN_80043f8c();
+    
+	// TitleFlag_SetDrawOrder
+	FUN_80043f8c(1);
 													// Level ID - 0x19: Adventure Hub (0-4)
     FUN_8003cfc0((int)*(short *)((int)&local_60 + (*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19) * 2)
                 );
