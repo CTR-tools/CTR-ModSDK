@@ -7,7 +7,7 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
 {
   u_int flags;
   struct UiElement3D * obj;
-  MATRIX mat;
+  MATRIX* mat;
   struct Instance * inst;
 
   // Get instance
@@ -23,7 +23,7 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
   Vector_SpecLightSpin2D(inst,obj,obj->lightDir);
 
   // pointer to matrix
-  mat = inst->matrix;
+  mat = &inst->matrix;
 
    // convert 3 rotation shorts into rotation matrix
   CovertRotToMatrix(mat,obj);
