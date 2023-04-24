@@ -1469,6 +1469,7 @@ void FUN_800ad3ec(int param_1)
   
   iVar8 = (int)*(short *)(piVar18 + 0x1b);
   
+  // trophy tracks
   if (iVar8 < 0x10) 
   {
 	// 0x8fba4 is where the adventure profile (currently loaded) begins
@@ -1496,7 +1497,11 @@ void FUN_800ad3ec(int param_1)
       iVar17 = 99;
     }
   }
-  else {
+  
+  // not trophy track
+  else 
+  {
+	// slide col
     if (iVar8 == 0x10) 
 	{
 	  // gGT->numRelics
@@ -1505,7 +1510,11 @@ void FUN_800ad3ec(int param_1)
 	  // STATIC_RELIC
       iVar17 = 0x61;
     }
-    else {
+    
+	// not slide col
+	else 
+	{
+	  // turbo track
       if (iVar8 == 0x11) 
 	  {
 		// STATIC_GEM
@@ -1525,7 +1534,11 @@ void FUN_800ad3ec(int param_1)
           iVar8 = iVar16;
         } while (iVar16 < 5);
       }
-      else {
+	  
+	  // not turbo track
+      else 
+	  {
+		// battle tracks
         if ((((uint)*(ushort *)(piVar18 + 0x1b) - 0x12 < 2) || (iVar8 == 0x15)) ||
            (uVar6 = (uint)*(ushort *)(piVar18 + 0x1b) - 100, iVar8 == 0x17)) {
           
@@ -1535,9 +1548,12 @@ void FUN_800ad3ec(int param_1)
 		  // STATIC_KEY
           iVar17 = 99;
         }
+		
+		// not battle tracks
         else 
 		{
-		  // colorID < 5, there are five colors
+		  // (wrappadID-100) < 5,
+		  // for 5 gem cup warppads
           if ((uVar6 & 0xffff) < 5) 
 		  {
 			// STATIC_GEM
@@ -1550,6 +1566,8 @@ void FUN_800ad3ec(int param_1)
       }
     }
   }
+  
+  // if requirement number was not given
   if (iVar19 < 0) 
   {
 	// STATIC_TOKEN
