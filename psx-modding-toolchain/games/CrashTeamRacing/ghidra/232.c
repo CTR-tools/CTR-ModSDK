@@ -271,6 +271,7 @@ void FUN_800abf48(int param_1)
   piVar19 = *(int **)(param_1 + 0x30);
   
   // offset 0x28 of cameraDC
+  // visible instances from quadblock
   piVar13 = *(int **)(PTR_DAT_8008d2ac + 0x14c0);
   
   // get instance
@@ -281,22 +282,32 @@ void FUN_800abf48(int param_1)
   // pointer to P1 (9900C)
   iVar18 = *(int *)(PTR_DAT_8008d2ac + 0x24ec);
   
+  // assume warppad is not visible
   bVar1 = false;
-  while (iVar4 != 0) {
+  
+  // loop through all visible instances
+  while (iVar4 != 0) 
+  {
     iVar4 = *piVar13;
     piVar13 = piVar13 + 1;
 	
-	// ?? == warppad instance
+	// visible instance == warppad instance
     if (iVar4 == iVar20) {
-      bVar1 = true;
-      break;
+      
+	  // make instances in warppad visible
+	  bVar1 = true;
+      
+	  break;
     }
     iVar4 = *piVar13;
   }
   
   // if the warp pad is visible,
   // then draw stuff in the warp pad
-  if (bVar1) {
+  if (bVar1) 
+  {
+	// 4 CLOSED instances
+	  
     iVar4 = *piVar19;
     if (iVar4 != 0) 
 	{
@@ -321,12 +332,16 @@ void FUN_800abf48(int param_1)
 	  // make visible
       *(uint *)(iVar4 + 0x28) = *(uint *)(iVar4 + 0x28) & 0xffffff7f;
     }
+	
+	// beam
     iVar4 = piVar19[4];
     if (iVar4 != 0) 
 	{
 	  // make visible
       *(uint *)(iVar4 + 0x28) = *(uint *)(iVar4 + 0x28) & 0xffffff7f;
     }
+	
+	// 2 wisps
     iVar4 = 0;
     piVar13 = piVar19;
     do {
@@ -339,6 +354,8 @@ void FUN_800abf48(int param_1)
       iVar4 = iVar4 + 1;
       piVar13 = piVar13 + 1;
     } while (iVar4 < 2);
+	
+	// 3 rewards
     iVar4 = 0;
     piVar13 = piVar19;
     do {
@@ -352,7 +369,12 @@ void FUN_800abf48(int param_1)
       piVar13 = piVar13 + 1;
     } while (iVar4 < 3);
   }
-  else {
+  
+  // warppad is far away
+  else 
+  {
+	// 4 CLOSED instances
+	  
     iVar4 = *piVar19;
     if (iVar4 != 0) 
 	{
@@ -377,6 +399,8 @@ void FUN_800abf48(int param_1)
 	  // make invisible
       *(uint *)(iVar4 + 0x28) = *(uint *)(iVar4 + 0x28) | 0x80;
     }
+	
+	// beam
     iVar4 = piVar19[4];
     iVar7 = 0;
     piVar13 = piVar19;
@@ -385,6 +409,8 @@ void FUN_800abf48(int param_1)
 	  // make invisible
       *(uint *)(iVar4 + 0x28) = *(uint *)(iVar4 + 0x28) | 0x80;
     }
+	
+	// wisps
     do {
       iVar4 = piVar13[5];
       if (iVar4 != 0) 
@@ -395,6 +421,8 @@ void FUN_800abf48(int param_1)
       iVar7 = iVar7 + 1;
       piVar13 = piVar13 + 1;
     } while (iVar7 < 2);
+	
+	// rewards
     iVar4 = 0;
     piVar13 = piVar19;
     do {
