@@ -22,27 +22,29 @@ struct WoodDoor
 
 enum WarpPadInstanceSet
 {
-	WPIS_LOCKED_ITEM = 0,
-	WPIS_LOCKED_X,
-	WPIS_LOCKED_1S,
-	WPIS_LOCKED_10S,
+	// instances that appear
+	// when warppad is closed
+	WPIS_CLOSED_ITEM = 0,
+	WPIS_CLOSED_X,
+	WPIS_CLOSED_1S,
+	WPIS_CLOSED_10S,
 	
-}
+	// istances that appear
+	// when warppad is open
+	WPIS_OPEN_BEAM,
+	WPIS_OPEN_RING1,
+	WPIS_OPEN_RING2,
+	WPIS_OPEN_PRIZE1,
+	WPIS_OPEN_PRIZE2,
+	WPIS_OPEN_PRIZE3,
+	
+	WPIS_NUM_INSTANCES
+};
 
 struct WarpPad
 {
 	// 0x0
-	// [0] - unlock req
-	// [1] - 'x'
-	// [2] - 1s digit
-	// [3] - 10s digit
-	// [4] - staticbeam - electric cone
-	// [5] - bottomring1 - wisps
-	// [6] - bottomring2 - wisps
-	// [7] - prize1
-	// [8] - prize2
-	// [9] - prize3
-	struct Instance* inst[10];
+	struct Instance* inst[WPIS_NUM_INSTANCES];
 	
 	// 0x28
 	short prizeSpinRot[4];
