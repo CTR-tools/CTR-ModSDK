@@ -6,9 +6,12 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
 
 {
   u_int flags;
-  struct UiElement3D * obj;
   MATRIX* mat;
-  struct Instance * inst;
+  struct GameTracker* gGT;
+  struct UiElement3D* obj;
+  struct Instance* inst;
+
+  gGT = sdata->gGT;
 
   // Get instance
   inst = bucket->inst;
@@ -32,10 +35,14 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
   MatrixRotate(mat,obj->m.m[0][0],mat);
   
   if (
-		((sdata->gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) &&
+		// pointless check from original
+		#if 0
+		// if hud is enabled, and this is not demo mode
+		((gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) &&
+		#endif
 
 		// if any fade-in-from-black transition is over
-		(0xfff < sdata->gGT->tileView_UI.fadeFromBlack_currentValue)
+		(0xfff < gGT->tileView_UI.fadeFromBlack_currentValue)
 	 )
   {
 	// make visible
