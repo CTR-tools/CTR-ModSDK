@@ -700,6 +700,9 @@ LAB_800ac860:
   // param_1 will always be P1 Character ID
   FUN_800327dc((int)DAT_80086e84);
   
+  // Get the track "speed champion" scrapped idea from Aug 14,
+  // make this driver spawn in 1st place on the track out of 8 drivers,
+  // If that driver is Crash-Pura, and does not match P1's driver
   if ((*(short *)(&DAT_80083a96 + (int)*(short *)(piVar19 + 0x1b) * 0x18) < 8) &&
      (iVar7 = 0,
      *(short *)(&DAT_80083a96 + (int)*(short *)(piVar19 + 0x1b) * 0x18) !=
@@ -707,7 +710,8 @@ LAB_800ac860:
 	 // Player / AI structure + 0x4a shows driver index (0-7)
 		
 						// character ID
-	 (&DAT_80086e84)[*(byte *)(iVar18 + 0x4a)])) {
+	 (&DAT_80086e84)[*(byte *)(iVar18 + 0x4a)])) 
+  {
    
     // loop counter
     iVar10 = 1;
@@ -749,7 +753,10 @@ LAB_800ac860:
       psVar14 = psVar14 + 1;
     } while (iVar10 < 8);
   }
-  else {
+  
+  // If "speed champion" is an invalid choice, just randomize
+  else 
+  {
     pbVar5 = abStack48 + 1;
     iVar7 = 1;
     do {
