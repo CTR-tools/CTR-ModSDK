@@ -176,7 +176,8 @@ void FUN_800abd80(int param_1)
 // AH_WarpPad_SpinRewards
 // param1 - instance of warppad
 // param2 - object of warppad
-// param3-5, warppad x,y,z
+// param3 - 0,1,2
+// param4-6, warppad x,y,z
 void FUN_800abdfc(int param_1,int param_2,short param_3,int param_4,int param_5,int param_6)
 
 {
