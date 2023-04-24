@@ -47,10 +47,19 @@ struct WarpPad
 	struct Instance* inst[WPIS_NUM_INSTANCES];
 	
 	// 0x28
-	short prizeSpinRot[4];
+	short spinRot_Prize[4];
 	
 	// 0x30
-	char unk30[0x20];
+	short spinRot_Beam[4];
+	
+	// 0x38
+	short spinRot_Wisp1[4];
+	
+	// 0x40
+	short spinRot_Wisp2[4];
+	
+	// 0x48
+	short spinRot_Rewards[4];
 	
 	// 0x50
 	short specLightGem[4];

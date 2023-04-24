@@ -1746,16 +1746,20 @@ void FUN_800ad3ec(int param_1)
 	} while (iVar14 < 3);
 	
     iVar14 = 0;
+	
+	// erase prizeSpinRot
     *(undefined2 *)(piVar18 + 10) = 0;
     *(undefined2 *)((int)piVar18 + 0x2a) = 0;
     *(undefined2 *)(piVar18 + 0xb) = 0;
 	
+	// erase beamSpinRot
 	// offset 0x40, 0x42, 0x44
     *(undefined2 *)(piVar18 + 0x10) = 0;
     *(undefined2 *)((int)piVar18 + 0x42) = 0;
     *(undefined2 *)(piVar18 + 0x11) = 0;
     
-	// offset 0x30, 0x32, 0x34, 0x38
+	// iVar14=0: write 0x30, 0x32, 0x34
+	// iVar14=1: write 0x38, 0x3A, 0x3C
 	piVar5 = piVar18;
     do {
       *(undefined2 *)(piVar5 + 0xc) = 0;
