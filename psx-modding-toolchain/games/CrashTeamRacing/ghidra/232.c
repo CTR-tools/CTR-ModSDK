@@ -482,8 +482,7 @@ void FUN_800abf48(int param_1)
 		// Gem Cups Hint
         uVar11 = 0x1b;
 		
-		// if C-T-R token is not floating over gem cup,
-		// then gem cup is open, dont give hint
+		// 1s digit == 0 (warppad unlocked)
         if (piVar19[2] == 0) goto LAB_800ac860;
 LAB_800ac500:
 
@@ -526,6 +525,7 @@ LAB_800ac500:
 			((DAT_8008fbb0 & 0x1000000) == 0)
 		  ) 
 	  {
+		// 1s digit == 0 (warppad unlocked)
         if (piVar19[2] == 0) goto LAB_800ac860;
 		
 		// If track is not beaten (key is not floating above warppad)
@@ -1720,14 +1720,24 @@ void FUN_800ad3ec(int param_1)
     sVar10 = 0;
     piVar5 = piVar18;
     piVar9 = piVar18;
+	
     do {
-      piVar5[7] = 0;
-      *(short *)((int)piVar9 + 0x6e) = sVar10;
+      
+	  // wipe pointer to prize instance
+	  piVar5[7] = 0;
+      
+	  // offsets 0x6e, 0x70, 0x72,
+	  // 0/3, 1/3, 2/3
+	  *(short *)((int)piVar9 + 0x6e) = sVar10;
       sVar10 = sVar10 + 0x555;
-      piVar9 = (int *)((int)piVar9 + 2);
-      iVar14 = iVar14 + 1;
+      
+	  piVar9 = (int *)((int)piVar9 + 2);
+      
+	  iVar14 = iVar14 + 1;
       piVar5 = piVar5 + 1;
-    } while (iVar14 < 3);
+    
+	} while (iVar14 < 3);
+	
     iVar14 = 0;
     *(undefined2 *)(piVar18 + 10) = 0;
     *(undefined2 *)((int)piVar18 + 0x2a) = 0;

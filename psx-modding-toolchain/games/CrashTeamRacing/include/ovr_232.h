@@ -20,13 +20,32 @@ struct WoodDoor
 	// 0x38 bytes large
 };
 
+enum WarpPadInstanceSet
+{
+	WPIS_LOCKED_ITEM = 0,
+	WPIS_LOCKED_X,
+	WPIS_LOCKED_1S,
+	WPIS_LOCKED_10S,
+	
+}
+
 struct WarpPad
 {
 	// 0x0
-	struct Instance* inst[9];
+	// [0] - unlock req
+	// [1] - 'x'
+	// [2] - 1s digit
+	// [3] - 10s digit
+	// [4] - staticbeam - electric cone
+	// [5] - bottomring1 - wisps
+	// [6] - bottomring2 - wisps
+	// [7] - prize1
+	// [8] - prize2
+	// [9] - prize3
+	struct Instance* inst[10];
 	
-	// 0x24
-	char unk2C[0x2C];
+	// 0x28
+	char unk28[0x28];
 	
 	// 0x28
 	// some other rotation vector?
@@ -47,10 +66,12 @@ struct WarpPad
 	short digit1s;
 	
 	// 0x6c (1b*4)
-	int levelID;
+	short levelID;
 	
-	// 0x70
-	int unk70;
+	// 0x6e
+	// 0/3    1/3     2/3
+	// 0x0    0x555   0xAAA
+	short arr[3];
 	
 	// 0x74 (1d*4)
 	short boolWaitForAkuHint;
