@@ -423,29 +423,58 @@ void FUN_800abf48(int param_1)
   // Get distance from player and warp pad
   iVar4 = iVar4 * iVar4 + iVar7 * iVar7 + iVar10 * iVar10;
   
-  if (((((*(short *)(piVar19 + 0x1b) < 0x10) && (iVar4 < 0x144000)) ||
-       (((uint)*(ushort *)(piVar19 + 0x1b) - 0x10 < 2 && (iVar4 < 0x90000)))) ||
-      (((uint)*(ushort *)(piVar19 + 0x1b) - 0x12 < 7 && (iVar4 < 0x144000)))) ||
-     ((99 < *(short *)(piVar19 + 0x1b) && (iVar4 < 0x90000)))) {
+  if (
+		(
+			(
+				// Trophy tracks
+				((*(short *)(piVar19 + 0x1b) < 0x10) && (iVar4 < 0x144000)) ||
+				(
+					// Slide Col or Turbo Track
+					((uint)*(ushort *)(piVar19 + 0x1b) - 0x10 < 2 && (iVar4 < 0x90000))
+				)
+			) ||
+			(
+				// Battle tracks
+				((uint)*(ushort *)(piVar19 + 0x1b) - 0x12 < 7 && (iVar4 < 0x144000))
+			)
+		) ||
+		(
+			// Gem Cup portals
+			(99 < *(short *)(piVar19 + 0x1b) && (iVar4 < 0x90000))
+		)
+	   ) 
+  {
     if ((DAT_800b4e86 != -1) && (DAT_800b4e86 != *(short *)(piVar19 + 0x1b)))
     goto LAB_800ac518;
-    DAT_800b4e86 = *(short *)(piVar19 + 0x1b);
+    
+	// save warppad ID nearest
+	DAT_800b4e86 = *(short *)(piVar19 + 0x1b);
+	
+	// if warppad is a gem cup
     if (99 < (int)*(short *)(piVar19 + 0x1b)) 
 	{
 	  // if aku is not giving a hint
       if (DAT_8008d874 == 0) 
 	  {
 		// draw a string of cup name "Red Cup", "Green Cup", etc
-        FUN_80022878(*(undefined4 *)
-                      ((int)*(short *)(&DAT_80084114 +
-                                      ((int)(((uint)*(ushort *)(piVar19 + 0x1b) - 100) * 0x10000) >>
-                                      0xd)) * 4 + DAT_8008d878),
-                     (int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x184) +
-                           ((int)((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x188) << 0x10) >> 0x11)) *
-                          0x10000) >> 0x10,
-                     (int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x186) +
-                            (uint)*(ushort *)(PTR_DAT_8008d2ac + 0x18a) + -0x1e) * 0x10000) >> 0x10,
-                     1,0xffff8000);
+        FUN_80022878(
+		
+			// string
+			*(undefined4 *)
+            ((int)*(short *)(&DAT_80084114 +
+                    ((int)(((uint)*(ushort *)(piVar19 + 0x1b) - 100) * 0x10000) >>
+                     0xd)) * 4 + DAT_8008d878),
+            
+			// gGT->tileView[0].rect (midpoint X)
+			(int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x184) +
+                  ((int)((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x188) << 0x10) >> 0x11)) *
+                 0x10000) >> 0x10,
+				 
+			// gGT->tileView[0].rect (bottom Y - 0x1E)
+            (int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x186) +
+                   (uint)*(ushort *)(PTR_DAT_8008d2ac + 0x18a) + -0x1e) * 0x10000) >> 0x10,
+            
+			1,0xffff8000);
       }
 	  
 	  // if hint is not unlocked
@@ -454,6 +483,8 @@ void FUN_800abf48(int param_1)
 		// Gem Cups Hint
         uVar11 = 0x1b;
 		
+		// if C-T-R token is not floating over gem cup,
+		// then gem cup is open, dont give hint
         if (piVar19[2] == 0) goto LAB_800ac860;
 LAB_800ac500:
 
@@ -467,20 +498,38 @@ LAB_800ac500:
     if (DAT_8008d874 == 0) 
 	{
 	  // draw a string, MetaDataLEV
-      FUN_80022878(*(undefined4 *)
-                    ((int)(short)(&DAT_80083a88)[(int)*(short *)(piVar19 + 0x1b) * 0xc] * 4 +
-                    DAT_8008d878),
-                   (int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x184) +
-                         ((int)((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x188) << 0x10) >> 0x11)) *
-                        0x10000) >> 0x10,
-                   (int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x186) +
-                          (uint)*(ushort *)(PTR_DAT_8008d2ac + 0x18a) + -0x1e) * 0x10000) >> 0x10,1,
-                   0xffff8000);
+      FUN_80022878(
+	  
+			// string
+			*(undefined4 *)
+			((int)(short)(&DAT_80083a88)[(int)*(short *)(piVar19 + 0x1b) * 0xc] * 4 +
+			DAT_8008d878),
+			
+			// gGT->tileView[0].rect (midpoint X)
+			(int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x184) +
+			((int)((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x188) << 0x10) >> 0x11)) * 0x10000) >> 0x10,
+				
+			// gGT->tileView[0].rect (bottom Y - 0x1E)
+			(int)(((uint)*(ushort *)(PTR_DAT_8008d2ac + 0x186) +
+				(uint)*(ushort *)(PTR_DAT_8008d2ac + 0x18a) + -0x1e) * 0x10000) >> 0x10,
+			
+			1, 0xffff8000);
     }
-    if (*(short *)(piVar19 + 0x1b) != 0x10) {
-      if ((7 < (ushort)(*(short *)(piVar19 + 0x1b) - 0x11U)) && ((DAT_8008fbb0 & 0x1000000) == 0)) {
+	
+	// if not Slide Col
+    if (*(short *)(piVar19 + 0x1b) != 0x10) 
+	{
+      if (
+			// anything except 0x11-0x18, all trophy tracks
+			(7 < (ushort)(*(short *)(piVar19 + 0x1b) - 0x11U)) && 
+			
+			// if dont have hint "you must have more trophies"
+			((DAT_8008fbb0 & 0x1000000) == 0)
+		  ) 
+	  {
         if (piVar19[2] == 0) goto LAB_800ac860;
 		
+		// If track is not beaten (key is not floating above warppad)
 		// object -> instance -> model -> modelID != STATIC_KEY
         if (*(short *)(*(int *)(*piVar19 + 0x18) + 0x10) != 99) 
 		{
@@ -492,6 +541,8 @@ LAB_800ac500:
       goto LAB_800ac518;
     }
 	
+	// === If Slide Col ===
+	
 	// if aku hint is not unlocked, give hint
     if ((DAT_8008fbb4 & 0x40000) != 0) goto LAB_800ac518;
     
@@ -500,8 +551,13 @@ LAB_800ac500:
 	
     if (piVar19[2] != 0) goto LAB_800ac500;
   }
-  else {
+  
+  else 
+  {
+	// erase warppad name displayed on-screen,
+	// NOP at 800ac514 to keep the ID at address for debugging
     DAT_800b4e86 = -1;
+	
 LAB_800ac518:
     if (piVar19[2] != 0) 
 	{
@@ -2648,7 +2704,7 @@ LAB_800aec34:
   // if this is gemstone valley
   if (*(int *)(PTR_DAT_8008d2ac + 0x1a10) == 0x19) 
   {
-	// if hint is not unlocked
+	// if hint is not unlocked "need 4 keys for oxide"
     if ((DAT_8008fbb0 & 0x4000000) == 0) 
 	{
 	  // need four keys to race oxide
@@ -2664,7 +2720,7 @@ LAB_800aedd4:
   // not gemstone valley
   else 
   {
-	//  if hint is not unlocked
+	//  if hint is not unlocked "to access this boss garage..."
     if ((DAT_8008fbb0 & 0x2000000) == 0) 
 	{
 	  // Need four trophies to enter boss
