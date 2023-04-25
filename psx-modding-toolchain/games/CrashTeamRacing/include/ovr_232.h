@@ -7,6 +7,8 @@ struct BossGarageDoor
 
 	struct Instance* garageTopInst;
 
+	short rot[4];
+
 	// 0x14 bytes large
 };
 
@@ -15,7 +17,22 @@ struct WoodDoor
 	struct Instance* otherDoor;
 	struct Instance* keyInst[4];
 	
-	// more here
+	// 0x14
+	// short vec4[4]
+	
+	// 0x1C
+	// 0x1E
+	// specLightDir[4] ??
+	
+	// 0x24
+	
+	
+	// 0x30
+	// increments by 16 per frame
+	// makes keys move in circular motion
+	
+	// 0x34
+	int doorID;
 	
 	// 0x38 bytes large
 };

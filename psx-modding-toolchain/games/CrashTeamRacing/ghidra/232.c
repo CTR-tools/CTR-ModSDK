@@ -4338,6 +4338,8 @@ void FUN_800b072c(int param_1)
     iVar7 = iVar7 + -1;
     piVar6 = piVar6 + -1;
   } while (-1 < iVar7);
+  
+  // specLight?
   *(undefined2 *)(piVar11 + 9) = 0;
   *(undefined2 *)(piVar11 + 7) = 0;
   *(undefined2 *)((int)piVar11 + 0x1e) = 0;
@@ -4346,9 +4348,13 @@ void FUN_800b072c(int param_1)
   *(undefined2 *)((int)piVar11 + 0x26) = 0;
   
   *(undefined2 *)((int)piVar11 + 0x32) = 0;
+  
+  // another vec3
   *(undefined2 *)(piVar11 + 5) = 0;
   *(undefined2 *)((int)piVar11 + 0x16) = 0;
   *(undefined2 *)(piVar11 + 6) = 0;
+  
+  // door ID
   *(undefined2 *)(piVar11 + 0xd) = 0;
   
   // instance->name[5],
