@@ -483,10 +483,6 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	
 	// wait 2 full seconds before loading
 	if (warppadObj->framesWarping < 61) return;
-	
-	// This sucks, not what ND did
-	//void VehPtr_Freeze_Init();
-	//gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
 
 	// only works for trophy tracks rn
 	if(levelID < 0x10)
@@ -536,8 +532,6 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				
 				// reset for future gameplay
 				sdata->boolOpenTokenRelicMenu = 0;
-				
-				sdata->ptrActiveMenuBox = 0;
 				
 				// [no return, allow level to load]
 			}
