@@ -386,7 +386,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	else if(dist > 0x900000)
 	{
 		// range [90, 90*2] to [0%, 100%]
-		rewardScale = (short)((((0x900000*2)-dist) * 0x100) / 0x900000);
+		rewardScale = ((((0x900000*2)-dist) * 0x100) / 0x900000);
 	}
 	
 	for(i = 0; i < 3; i++)
@@ -429,11 +429,10 @@ void AH_WarpPad_ThTick(struct Thread* t)
 					}
 				}
 				
-				rewardScale = (rewardScale2 * rewardScale) >> 8;
-				
-				instArr[WPIS_OPEN_PRIZE1+i]->scale[0] = rewardScale;
-				instArr[WPIS_OPEN_PRIZE1+i]->scale[1] = rewardScale;
-				instArr[WPIS_OPEN_PRIZE1+i]->scale[2] = rewardScale;
+				rewardScale2 = (unsigned int)(rewardScale2 * rewardScale) >> 8;
+				instArr[WPIS_OPEN_PRIZE1+i]->scale[0] = (short)rewardScale2;
+				instArr[WPIS_OPEN_PRIZE1+i]->scale[1] = (short)rewardScale2;
+				instArr[WPIS_OPEN_PRIZE1+i]->scale[2] = (short)rewardScale2;
 			}
 			
 		}
