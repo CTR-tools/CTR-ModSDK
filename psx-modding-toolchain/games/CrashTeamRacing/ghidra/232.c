@@ -1204,7 +1204,7 @@ LAB_800acef8:
 	  
       iVar9 = piVar13[5];
 	  
-	  // particle rise rate
+	  // particle rise rate (= 0x20)
       iVar15 = iVar7 >> 0x10;
 	  
 	  // if particle hsa not reached max height
@@ -1247,7 +1247,10 @@ LAB_800acef8:
         *(short *)((int)piVar17 + 0x32) = (short)iVar9 + (short)(iVar10 >> 0xc) * -0x1000;
       }
     }
-    iVar7 = iVar7 + 0x100000;
+    
+	// += 0x10
+	iVar7 = iVar7 + 0x100000;
+	
     piVar17 = piVar17 + 2;
     iVar18 = iVar18 + 1;
     piVar13 = piVar13 + 1;

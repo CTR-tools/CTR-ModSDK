@@ -25,6 +25,9 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	MATRIX* warppadMatrix;
 	
 	int wispMaxHeight;
+	int wispRiseRate;
+	int rng1;
+	int rng2;
 	
 	boolOpen = 0;
 	gGT = sdata->gGT;
@@ -298,28 +301,77 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			&warppadObj->spinRot_Beam[0]);
 	}
 	
+	wispRiseRate = 0x20;
+	
+	wispMaxHeight = 0x600;
+	
+	// if close to this warppad
+	if(*(short*)0x800b4e86 != -1)
+		wispMaxHeight = 0x400;
 	
 	for(i = 0; i < 2; i++)
 	{
-		wispMaxHeight = 0x600;
-		
-		// if close to this warppad
-		if(*(short*)0x800b4e86 != -1)
-			wispMaxHeight = 0x400;
-		
-		warppadObj->spinRot_Wisp[i][0] = 0;
-		warppadObj->spinRot_Wisp[i][2] = 0;
-		
-		warppadObj->spinRot_Wisp[i][1] += 0x100;
-		
-		ConvertRotToMatrix(
-			&instArr[WPIS_OPEN_RING1+i]->matrix, 
-			&warppadObj->spinRot_Wisp[i][0]);
+		if(instArr[WPIS_OPEN_RING1+i] != 0)
+		{			
+			warppadObj->spinRot_Wisp[i][0] = 0;
+			warppadObj->spinRot_Wisp[i][2] = 0;
 			
-		// Still need to do rising
+			warppadObj->spinRot_Wisp[i][1] += 0x100;
+			
+			ConvertRotToMatrix(
+				&instArr[WPIS_OPEN_RING1+i]->matrix, 
+				&warppadObj->spinRot_Wisp[i][0]);
+			
+			// if height hasn't reached max height
+			if(
+				instArr[WPIS_OPEN_RING1+i]->matrix.t[1] < 
+				(warppadInst->matrix.t[1] + wispMaxHeight)
+			  )
+			{
+				instArr[WPIS_OPEN_RING1+i]->matrix.t[1] += wispRiseRate;
+				
+				// if height hasn't reached 4x RiseRate,
+				// first 4 frames of rising
+				if(
+					instArr[WPIS_OPEN_RING1+i]->matrix.t[1] < 
+					(warppadInst->matrix.t[1] + wispRiseRate*4)
+				)
+				{
+					// reduce transparency
+					instArr[WPIS_OPEN_RING1+i]->alphaScale -= 0x380;
+				}
+				
+				// after first 4 frames
+				else
+				{
+					// add transparency as the wisp spirals upward (~0x60  per frame)
+					instArr[WPIS_OPEN_RING1+i]->alphaScale += 0xc00 / (wispMaxHeight/wispRiseRate);
+				}
+			}
+			
+			// eached max height
+			else
+			{
+				// reset height
+				instArr[WPIS_OPEN_RING1+i]->matrix.t[1] = warppadInst->matrix.t[1];
+				
+				// full transparency
+				instArr[WPIS_OPEN_RING1+i]->alphaScale = 0x1000;
+				
+				rng1 = MixRNG_Scramble() >> 3;
+				
+				rng2 = rng1;
+				if(rng1 < 0)
+					rng2 = rng1 + 0xfff;
+				
+				warppadObj->spinRot_Wisp[i][1] = (short)rng1 + (short)(rng2 >> 0xc) * -0x1000;
+			}
+		}
 		
-		// [...]
+		wispRiseRate += 0x10;
 	}
+	
+	// [ continue here, ghidra line 1260 ]
 	
 	warppadObj->spinRot_Prize[1] += 0x80;
 	
