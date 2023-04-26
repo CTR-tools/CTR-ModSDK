@@ -29,6 +29,9 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	int rng1;
 	int rng2;
 	
+	int rewardScale;
+	int rewardScale2;
+	
 	boolOpen = 0;
 	gGT = sdata->gGT;
 	warppadObj = t->object;
@@ -371,11 +374,20 @@ void AH_WarpPad_ThTick(struct Thread* t)
 		wispRiseRate += 0x10;
 	}
 	
-	// [ continue here, ghidra line 1260 ]
-	
 	warppadObj->spinRot_Prize[1] += 0x80;
 	
-	// [...]
+	rewardScale = 0x100;
+	
+	if(dist > 0x900000*2)
+	{
+		rewardScale = 0;
+	}
+	
+	else if(dist > 0x900000)
+	{
+		// range [90, 90*2] to [0%, 100%]
+		rewardScale = (short)((((0x900000*2)-dist) * 0x100) / 0x900000);
+	}
 	
 	for(i = 0; i < 3; i++)
 	{
@@ -388,17 +400,53 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				warppadInst->matrix.t[1],
 				warppadInst->matrix.t[2]);
 				
-			// [set scale]
-			// [set visibility]
+			modelID = instArr[WPIS_OPEN_PRIZE1+i]->model->id;
+			
+			if(rewardScale == 0)
+			{
+				// invisible
+				instArr[WPIS_OPEN_PRIZE1+i]->flags |= 0x80;
+			}
+			
+			else
+			{
+				// visible
+				instArr[WPIS_OPEN_PRIZE1+i]->flags &= ~(0x80);
+				
+				// token
+				rewardScale2 = 0x2000;
+	
+				// not token
+				if(modelID != 0x7d)
+				{
+					// trophy
+					rewardScale2 = 0x2800;
+					
+					// relic
+					if(modelID == 0x61)
+					{
+						rewardScale2 = 0x1800;
+					}
+				}
+				
+				rewardScale = (rewardScale2 * rewardScale) >> 8;
+				
+				instArr[WPIS_OPEN_PRIZE1+i]->scale[0] = rewardScale;
+				instArr[WPIS_OPEN_PRIZE1+i]->scale[1] = rewardScale;
+				instArr[WPIS_OPEN_PRIZE1+i]->scale[2] = rewardScale;
+			}
+			
 		}
 			
 		warppadObj->thirds[i] += 0x20;
 		warppadObj->spinRot_Rewards[1] += 0x4;
-			
 	}
 	
-	// [if unlocked, erase locked instances]
-	// would those ever initialize anyway?
+	#if 0
+	// removed code, erase CLOSED instances if they exist,
+	// but that will never happen cause "this" part of the
+	// function only happens if there are no CLOSED instances
+	#endif
 	
 	
 	

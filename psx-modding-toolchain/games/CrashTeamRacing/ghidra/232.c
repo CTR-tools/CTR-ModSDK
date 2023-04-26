@@ -265,6 +265,7 @@ void FUN_800abf48(int param_1)
   int iVar20;
   byte abStack48 [8];
   
+  // rewardScale
   sVar2 = 0x100;
   
   // get object
@@ -1260,7 +1261,7 @@ LAB_800acef8:
   *(short *)((int)piVar19 + 0x2a) = *(short *)((int)piVar19 + 0x2a) + 0x80;
   
   // get distance from driver,
-  // determine if rewards should draw in warppad
+  // calculate rewardScale for rewards in portal
   iVar18 = iVar4 + -0x900000;
   if (0x900000 < iVar4) {
     if (0x900000 < iVar18) {
@@ -1268,6 +1269,7 @@ LAB_800acef8:
     }
     sVar2 = (short)(((0x900000 - iVar18) * 0x100) / 0x900000);
   }
+  
   iVar4 = 0;
   piVar13 = piVar19;
   piVar17 = piVar19;
@@ -1321,6 +1323,12 @@ LAB_800acef8:
     piVar17 = (int *)((int)piVar17 + 2);
   } while (iVar4 < 3);
   
+  // === Naughty Dog mistake ===
+  // This is impossible, even with hacks,
+  // it will never trigger, cause the function
+  // already determined no CLOSED instances
+  
+  // if CLOSED instances exist, erase them
   if (piVar19[2] != 0) 
   {
 	// INSTANCE_Death
@@ -1329,6 +1337,7 @@ LAB_800acef8:
     FUN_80030aa8(piVar19[1]);
     FUN_80030aa8(piVar19[0]);
   }
+  
   return;
 }
 
