@@ -772,11 +772,10 @@ LAB_800ac860:
     // loop counter
     iVar10 = 1;
 	
-	// ??
-	// Starting positions???
+	// &data.kartSpawnOrderArray[1]
     puVar12 = &DAT_8008d69d;
 	
-	// pointer to P2 character ID
+	// &data.characterIDs[1]
     psVar14 = &DAT_80086e86;
 	
 	// loop through all character IDs except P1
@@ -833,8 +832,11 @@ LAB_800ac860:
       }
       iVar10 = (int)(uVar8 & 0xfff) % iVar10 + 1;
       iVar9 = iVar10 * 0x10000 >> 0x10;
+	  
+	  // kartSpawnOrderArray
       (&DAT_8008d69c)[abStack48[iVar9]] = (char)iVar7;
-      while (iVar9 < 7) {
+      
+	  while (iVar9 < 7) {
         sVar3 = (short)iVar10;
         iVar10 = iVar10 + 1;
         iVar9 = iVar10 * 0x10000 >> 0x10;
