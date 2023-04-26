@@ -580,9 +580,6 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				}
 			}
 		}
-			
-		
-		
 	}
 	
 	// Slide Col or Turbo Track
