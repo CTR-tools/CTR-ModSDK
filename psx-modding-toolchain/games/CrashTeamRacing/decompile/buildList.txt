@@ -91,6 +91,7 @@ common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_01_AH_WarpPad_GetSp
 common, 232, AH_WarpPad_AllWarppadNum, 0x0, General/232/232_02_AH_WarpPad_AllWarppadNum.c
 common, 232, AH_WarpPad_MenuBoxFuncPtr, 0x0, General/232/232_03_AH_WarpPad_MenuBoxFuncPtr.c
 common, 232, AH_WarpPad_SpinRewards, 0x0, General/232/232_04_AH_WarpPad_SpinRewards.c
+common, 232, AH_WarpPad_ThTick, 0x0, General/232/232_05_AH_WarpPad_ThTick.c
 common, 232, AH_Garage_ThDestroy, 0x0, General/232/232_07_AH_Garage_ThDestroy.c
 common, 232, AH_Garage_Open, 0x0, General/232/232_08_AH_Garage_Open.c
 common, 232, AH_Door_ThDestroy, 0x0, General/232/232_14_AH_Door_ThDestroy.c
