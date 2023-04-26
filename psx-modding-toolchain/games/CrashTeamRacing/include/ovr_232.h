@@ -106,3 +106,17 @@ struct WarpPad
 	
 	// 0x78 -- size
 };
+
+struct SaveObj
+{
+	// 0x0
+	struct Instance* inst;
+	// 0x4
+	unsigned short flags;
+	// 0x6
+	short scanlineFrame;
+	// 0x8
+	char hudFlagBackup;
+	
+	// total size unk
+};
