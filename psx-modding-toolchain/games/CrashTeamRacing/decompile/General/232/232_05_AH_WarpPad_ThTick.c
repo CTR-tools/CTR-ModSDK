@@ -441,7 +441,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 		
 	// if flag is on-screen, loading has already been finalized
 	if(TitleFlag_IsTransitioning() != 0) return;
-	
+		
 	// if driver has not entered this warppad
 	if(warppadObj->boolEnteredWarppad == 0)
 	{
@@ -454,11 +454,17 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			// now in warppad
 			warppadObj->boolEnteredWarppad = 1;
 			warppadObj->framesWarping = 0;
-			
-			void VehPtr_Warp_Init();
-			gGT->drivers[0]->funcPtrs[0] = VehPtr_Warp_Init;
 		}
 	}
+	
+	// Naughty Dog Bug: spam every frame,
+	// this wont have a negative performance impact cause it's IF-guarded,
+	// needed cause mask hint sets state to 0xB (Freeze), then this sets
+	// warp back. Without this, Freeze causes mask-grab, which makes you drive.
+	// However, with this, state goes 0xA, then 0xB, then 0xA, and warp SFX
+	// plays a second time. Animation also plays twice but is invisible second time
+	void VehPtr_Warp_Init();
+	gGT->drivers[0]->funcPtrs[0] = VehPtr_Warp_Init;
 	
 	if (warppadObj->framesWarping < 0x400)
 		warppadObj->framesWarping++;
