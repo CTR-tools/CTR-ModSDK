@@ -246,21 +246,10 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			&warppadObj->spinRot_Prize[0]);
 		
 		modelID = InstArr0->model->id;
-		
-		// If Gem, change colors every 2 seconds
-		if(modelID == 0x5f)
-		{
-			i = (gGT->timer / 0x3C) % 5;
-			
-			InstArr0->colorRGBA =
-				((unsigned int)data.AdvCups[i].color[0] << 0x14) |
-				((unsigned int)data.AdvCups[i].color[1] << 0xc) |
-				((unsigned int)data.AdvCups[i].color[2] << 0x4);
 				
-			Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &warppadObj->specLightGem[0]);
-			return;
-		}
-		
+		// Trophy has no specular light
+		if(modelID == 0x62) return;
+				
 		// Relic
 		if(modelID == 0x61) 
 		{
@@ -274,6 +263,21 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &warppadObj->specLightToken[0]);
 			return;
 		}
+		
+		// If Gem, change colors every 2 seconds
+		if(modelID == 0x5f)
+		{
+			i = (gGT->timer / 0x3C) % 5;
+			
+			InstArr0->colorRGBA =
+				((unsigned int)data.AdvCups[i].color[0] << 0x14) |
+				((unsigned int)data.AdvCups[i].color[1] << 0xc) |
+				((unsigned int)data.AdvCups[i].color[2] << 0x4);
+				
+		}
+		
+		// for Key or Gem
+		Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &warppadObj->specLightGem[0]);
 		
 		return;
 	}
@@ -475,8 +479,8 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			// now in warppad
 			warppadObj->boolEnteredWarppad = 1;
 			
-			void VehPtr_Freeze_Init();
-			gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
+			void VehPtr_Warp_Init();
+			gGT->drivers[0]->funcPtrs[0] = VehPtr_Warp_Init;
 		}
 	}
 
