@@ -5,6 +5,7 @@
 void AH_WarpPad_ThTick(struct Thread* t)
 {
 	int i;
+	int j;
 	int boolOpen;
 	struct GameTracker* gGT;
 	struct WarpPad* warppadObj;
@@ -31,6 +32,11 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	
 	int rewardScale;
 	int rewardScale2;
+	
+	int champID;
+	int champSlot;
+	
+	char randKartSpawn[8];
 	
 	boolOpen = 0;
 	gGT = sdata->gGT;
@@ -521,12 +527,62 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			}
 		}
 		
-		
-		// === Get Game Mode ===
-		// Then determine spawn positions
-		
 		LOAD_Robots1P(data.characterIDs[0]);
-		for(i = 0; i < 8; i++) sdata->kartSpawnOrderArray[i] = i;	
+		
+		// spawn P1 in the back
+		sdata->kartSpawnOrderArray[0] = 7;
+		
+		// variable reuse, get track speed champion
+		champID = data.metaDataLEV[levelID].characterID_Champion;
+		
+		// If Speed Champion is on the track (Crash-Pura)
+		// and is not the same characterID as Player 1
+		if(
+			(champID < 8) &&
+			(champID != data.characterIDs[0])
+		)
+		{
+			// set everyone to spawn in order
+			for(i = 1; i < 7; i++) 
+			{
+				if(champID == data.characterIDs[i])
+				{
+					sdata->kartSpawnOrderArray[i] = 0;
+					champSlot = i;
+				}
+				
+				else
+					sdata->kartSpawnOrderArray[i] = i;
+			}
+			
+			sdata->kartSpawnOrderArray[7] = champSlot;
+		}
+		
+		// Speed Champion is invalid
+		else
+		{
+			for(i = 1; i < 8; i++) randKartSpawn[i] = i;
+			
+			for(i = 0; i < 7; i++)
+			{
+				rng1 = RngDeadCoed(&sdata->const_0x30215400);
+				rng2 = 7 - i;
+				
+				rng2 = (rng1 & 0xfff) % rng2 + 1;
+				rng2 = (short)rng2;
+				
+				sdata->kartSpawnOrderArray[randKartSpawn[rng2]] = (char)i;
+				
+				while(rng2 < 7)
+				{
+					randKartSpawn[rng2] = randKartSpawn[rng2+1];
+					rng2++;
+				}
+			}
+		}
+			
+		
+		
 	}
 	
 	// Slide Col or Turbo Track

@@ -99,7 +99,8 @@ struct MetaDataLEV
 
 	// 0x16
 	// Used in Aug14 prototype
-	short characterID_SpecialGhost;
+	// N Tropy calls it "Speed Champion"
+	short characterID_Champion;
 
 };
 

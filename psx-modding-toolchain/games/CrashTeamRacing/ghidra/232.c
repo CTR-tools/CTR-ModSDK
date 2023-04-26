@@ -778,12 +778,14 @@ LAB_800ac860:
 	// &data.characterIDs[1]
     psVar14 = &DAT_80086e86;
 	
-	// loop through all character IDs except P1
+	// Make drivers spawn in their usual order,
+	// but P1 in the back, put speed champion first,
+	// and put Pura where the speed champion would've gone
 	
 	// for iVar10 = 1; iVar10 < 8; iVar10++
     do 
 	{
-	  // If [something] equals Character ID
+	  // If Speed Champion equals Character ID
       if (*(short *)(&DAT_80083a96 + (int)*(short *)(piVar19 + 0x1b) * 0x18) == *psVar14) {
         *puVar12 = 0;
         iVar7 = iVar10;
@@ -812,6 +814,8 @@ LAB_800ac860:
   // If "speed champion" is an invalid choice, just randomize
   else 
   {
+	// i = 1; i < 8; i++
+	// arr[i] = i;
     pbVar5 = abStack48 + 1;
     iVar7 = 1;
     do {
@@ -820,28 +824,30 @@ LAB_800ac860:
       pbVar5 = abStack48 + iVar7 + 1;
       iVar7 = iVar10;
     } while (iVar10 < 8);
+	
+	// i = 0; i < 7; i++
     iVar7 = 0;
     do {
       uVar8 = FUN_8006c684(&DAT_8008d668);
       iVar10 = 7 - iVar7;
-      if (iVar10 == 0) {
-        trap(0x1c00);
-      }
-      if ((iVar10 == -1) && ((uVar8 & 0xfff) == 0x80000000)) {
-        trap(0x1800);
-      }
+	  
+      if (iVar10 == 0) trap(0x1c00);
+      if ((iVar10 == -1) && ((uVar8 & 0xfff) == 0x80000000)) trap(0x1800);
+      
       iVar10 = (int)(uVar8 & 0xfff) % iVar10 + 1;
       iVar9 = iVar10 * 0x10000 >> 0x10;
 	  
 	  // kartSpawnOrderArray
       (&DAT_8008d69c)[abStack48[iVar9]] = (char)iVar7;
       
+	  // another loop of 7
 	  while (iVar9 < 7) {
         sVar3 = (short)iVar10;
         iVar10 = iVar10 + 1;
         iVar9 = iVar10 * 0x10000 >> 0x10;
         abStack48[(int)sVar3] = abStack48[(int)sVar3 + 1];
       }
+	  
       iVar7 = iVar7 + 1;
     } while (iVar7 < 7);
   }
