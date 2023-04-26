@@ -67,13 +67,10 @@ struct WarpPad
 	short spinRot_Prize[4];
 	
 	// 0x30
-	short spinRot_Beam[4];
-	
-	// 0x38
-	short spinRot_Wisp1[4];
+	short spinRot_Wisp[2][4];
 	
 	// 0x40
-	short spinRot_Wisp2[4];
+	short spinRot_Beam[4];
 	
 	// 0x48
 	short spinRot_Rewards[4];

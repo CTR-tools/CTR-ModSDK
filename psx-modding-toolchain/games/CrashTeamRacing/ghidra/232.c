@@ -1183,6 +1183,7 @@ LAB_800acef8:
 	  // max height of particle 1
       iVar10 = 0x600;
 	  
+	  // if not close to a warppad
       if (DAT_800b4e86 != -1) 
 	  {
 	    // max height of particle 2

@@ -24,6 +24,8 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	int angleSin, angleCos;
 	MATRIX* warppadMatrix;
 	
+	int wispMaxHeight;
+	
 	boolOpen = 0;
 	gGT = sdata->gGT;
 	warppadObj = t->object;
@@ -271,6 +273,52 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	}
 	
 	// === Assume Unlocked ===
+	
+	// [Skip block that loads track]
+	// Read ghidra "DontLoadLevelYet"
+	// That goes below, and then the code
+	// between LAB_800ac860 and LAB_800acef8
+	// will be at the bottom
+	
+	if(
+		(instArr[WPIS_OPEN_BEAM] != 0) &&
+		((gGT->timer & 1) != 0)
+	  )
+	{	
+		warppadObj->spinRot_Beam[0] = 0;
+		warppadObj->spinRot_Beam[2] = 0;
+		
+		// what on earth was this RNG?
+		// how'd they come up with something so random, that looks so good?
+		i = MixRNG_Scramble();
+		warppadObj->spinRot_Beam[1] += ((short)(i >> 3) + (short)((i >> 3) / 6) * -6 + 1) * 0x200;
+	
+		ConvertRotToMatrix(
+			&instArr[WPIS_OPEN_BEAM]->matrix, 
+			&warppadObj->spinRot_Beam[0]);
+	}
+	
+	
+	for(i = 0; i < 2; i++)
+	{
+		wispMaxHeight = 0x600;
+		
+		// if close to this warppad
+		if(*(short*)0x800b4e86 != -1)
+			wispMaxHeight = 0x400;
+		
+		warppadObj->spinRot_Wisp[i][0] = 0;
+		warppadObj->spinRot_Wisp[i][2] = 0;
+		
+		warppadObj->spinRot_Wisp[i][1] += 0x100;
+		
+		ConvertRotToMatrix(
+			&instArr[WPIS_OPEN_RING1+i]->matrix, 
+			&warppadObj->spinRot_Wisp[i][0]);
+			
+		// Still need to do rising
+	}
+	
 	
 	// temporary
 	if(dist < 0x9000)
