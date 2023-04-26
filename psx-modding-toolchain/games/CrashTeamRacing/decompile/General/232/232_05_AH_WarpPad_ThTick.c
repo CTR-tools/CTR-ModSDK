@@ -478,11 +478,18 @@ void AH_WarpPad_ThTick(struct Thread* t)
 		{
 			// now in warppad
 			warppadObj->boolEnteredWarppad = 1;
+			warppadObj->framesWarping = 0;
 			
 			void VehPtr_Warp_Init();
 			gGT->drivers[0]->funcPtrs[0] = VehPtr_Warp_Init;
 		}
 	}
+	
+	if (warppadObj->framesWarping < 0x400)
+		warppadObj->framesWarping++;
+	
+	// wait 2 full seconds before loading
+	if (warppadObj->framesWarping < 61) return;
 
 	// only works for trophy tracks rn
 	if(levelID < 0x10)
