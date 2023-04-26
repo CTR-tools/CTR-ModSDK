@@ -485,8 +485,8 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	if (warppadObj->framesWarping < 61) return;
 	
 	// This sucks, not what ND did
-	void VehPtr_Freeze_Init();
-	gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
+	//void VehPtr_Freeze_Init();
+	//gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
 
 	// only works for trophy tracks rn
 	if(levelID < 0x10)
