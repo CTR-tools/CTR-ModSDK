@@ -469,6 +469,9 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	// only works for trophy tracks rn
 	if(levelID >= 0x10) return;
 	
+	LOAD_Robots1P(data.characterIDs[0]);
+	for(i = 0; i < 8; i++) sdata->kartSpawnOrderArray[i] = i;
+	
 	void VehPtr_Freeze_Init();
 	gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
 	
