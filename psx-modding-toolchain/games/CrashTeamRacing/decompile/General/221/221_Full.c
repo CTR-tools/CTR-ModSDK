@@ -1,9 +1,5 @@
 #include <common.h>
 
-// copy/paste from GameProg
-#define CHECK_ADV_BIT(rewards, bitIndex) \
-	((rewards[bitIndex>>5] >> (bitIndex & 0x1f)) & 1) != 0
-
 const short hub[8] =
 {
 	3,  // 1st battle map, Nitro Court, 	is for Hub 4 (3+1), Citadel City
@@ -107,7 +103,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	if(
 	
 		(boolLose != 0) ||
-		(CHECK_ADV_BIT(adv->rewards, bitIndex))
+		(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 	)
 	{
 		// If you pressed X/O to continue, quit function

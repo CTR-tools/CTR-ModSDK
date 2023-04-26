@@ -453,13 +453,6 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	
 	
 	
-	// [remove this, put it in GameProg.h]
-// copy/paste from GameProg
-#define CHECK_ADV_BIT(rewards, bitIndex) \
-	((rewards[bitIndex>>5] >> (bitIndex & 0x1f)) & 1) != 0
-	
-	
-	
 	// [temporary]
 	// This is all rough draft, not copied from ghidra,
 	// just eye-balling how this should work...
@@ -490,12 +483,16 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	
 	// wait 2 full seconds before loading
 	if (warppadObj->framesWarping < 61) return;
+	
+	// This sucks, not what ND did
+	void VehPtr_Freeze_Init();
+	gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
 
 	// only works for trophy tracks rn
 	if(levelID < 0x10)
 	{
 		// if trophy is unlocked
-		if(CHECK_ADV_BIT(sdata->advProgress.rewards, levelID + 6))
+		if(CHECK_ADV_BIT(sdata->advProgress.rewards, levelID + 6) != 0)
 		{
 			// if never opened
 			if(sdata->boolOpenTokenRelicMenu == 0)
@@ -519,6 +516,24 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			// if opened, then closed
 			else
 			{
+				// Relic Hint
+				i = 0x1d;
+				
+				// CTR Token Hint
+				if((gGT->gameMode2 & 8) != 0)
+					i = 0x1a;
+				
+				// if hint is locked
+				if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i+0x76)) == 0)
+				{
+					MainFrame_RequestMaskHint(i, 1);
+				}
+				
+				// if can't spawn aku cause he's already here,
+				// quit function, wait till he's done to start race
+				i = AH_MaskHint_boolCanSpawn();
+				if((i & 0xffff) == 0) return;
+				
 				// reset for future gameplay
 				sdata->boolOpenTokenRelicMenu = 0;
 				
@@ -539,25 +554,22 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	// Slide Col or Turbo Track
 	else if(levelID < 0x12)
 	{
-		// Add Relic, Rem Adventure Arena
+		// Add Relic
 		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x4000000;
-		sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
 	}
 	
 	// Battle Tracks
 	else if(levelID < 0x19)
 	{
-		// Add Crystal Challenge, Rem Adventure Arena
+		// Add Crystal Challenge
 		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x8000000;
-		sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
 	}
 	
 	// gem cups
 	else
 	{
-		// Add Adv Cup, Rem Adventure Arena
+		// Add Adv Cup
 		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x10000000;
-		sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
 		
 		gGT->cup.cupID = levelID-100;
 		gGT->cup.trackIndex = 0;
@@ -566,6 +578,9 @@ void AH_WarpPad_ThTick(struct Thread* t)
 		
 		levelID = data.advCupTrackIDs[4*gGT->cup.cupID];
 	}
+	
+	// Rem Adventure Arena
+	sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
 	
 	MainRaceTrack_RequestLoad(levelID);
 }

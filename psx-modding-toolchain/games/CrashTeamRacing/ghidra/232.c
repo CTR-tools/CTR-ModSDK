@@ -1047,13 +1047,15 @@ LAB_800ac860:
               goto LAB_800acef8;
             }
             
-			// if you have the trophy, but not the hub key
+			// if you have the trophy, but not the hub key,
+			// === Not Possible, already determined warppad unlocked ===
 			goto LAB_800ace34;
           }
         }
         
 		// ELSE is not possible,
-		// just designed not to run unless GOTO happens
+		// just designed not to run unless GOTO happens,
+		// which still isn't possible either
 		else {
 LAB_800ace34:
 

@@ -53,7 +53,7 @@ void RR_EndEvent_UnlockAward()
 		bitIndex = 0x16 + 0x12*i;
 		
 		// if relic already unlocked, check next relic
-		if(CHECK_ADV_BIT(adv->rewards, bitIndex))
+		if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			continue;
 		
 		// == beat relic, and unlocked relic ==

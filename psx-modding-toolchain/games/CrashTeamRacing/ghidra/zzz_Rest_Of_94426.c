@@ -29243,7 +29243,7 @@ void FUN_80062ca8(undefined4 param_1,int param_2)
 void FUN_80062d04(undefined4 param_1,int param_2)
 
 {
-  if (*(char *)(param_2 + 0x376) != '\v')
+  if (*(char *)(param_2 + 0x376) != 0xb)
   {
 	// VehPtr_Freeze_PhysLinear
     *(undefined4 *)(param_2 + 0x5c) = 0x80062ca8;

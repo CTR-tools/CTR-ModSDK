@@ -1,8 +1,5 @@
 #include <common.h>
 
-#define CHECK_ADV_BIT(rewards, bitIndex) \
-	((rewards[bitIndex>>5] >> (bitIndex & 0x1f)) & 1) != 0
-
 void GAMEPROG_AdvPercent(struct AdvProgress* adv)
 {
 	int i;
@@ -29,7 +26,7 @@ void GAMEPROG_AdvPercent(struct AdvProgress* adv)
 	{
 		// first bit of blue relic
 		bitIndex = 0x16 + i;
-		if(CHECK_ADV_BIT(adv->rewards, bitIndex))
+		if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 		{
 			gGT->currAdvProfile.numRelics++;
 		}
@@ -39,14 +36,14 @@ void GAMEPROG_AdvPercent(struct AdvProgress* adv)
 		{
 			// first bit of trophy
 			bitIndex = 6 + i;
-			if(CHECK_ADV_BIT(adv->rewards, bitIndex))
+			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				gGT->currAdvProfile.numTrophies++;
 			}
 			
 			// first bit of token
 			bitIndex = 0x4c + i;
-			if(CHECK_ADV_BIT(adv->rewards, bitIndex))
+			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				// increment number of tokens, based on
 				// the tokenID of this level (red, green, blue, etc)
@@ -64,14 +61,14 @@ void GAMEPROG_AdvPercent(struct AdvProgress* adv)
 		{
 			// first bit of key
 			bitIndex = 0x5e + i;
-			if(CHECK_ADV_BIT(adv->rewards, bitIndex))
+			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				gGT->currAdvProfile.numKeys++;
 			}
 			
 			// first bit of purple tokens
 			bitIndex = 0x6f + i;
-			if(CHECK_ADV_BIT(adv->rewards, bitIndex))
+			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				gGT->currAdvProfile.numCtrTokens.purple++;
 			}
@@ -82,7 +79,7 @@ void GAMEPROG_AdvPercent(struct AdvProgress* adv)
 		{
 			// first bit of gem
 			bitIndex = 0x6a + i;
-			if(CHECK_ADV_BIT(adv->rewards, bitIndex))
+			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				numGems++;
 			}
@@ -94,7 +91,7 @@ void GAMEPROG_AdvPercent(struct AdvProgress* adv)
 		{
 			// first bit of beating oxide
 			bitIndex = 0x73 + i;
-			if(CHECK_ADV_BIT(adv->rewards, bitIndex)) 
+			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0) 
 			{
 				percent += 2-i;
 			}
@@ -110,7 +107,7 @@ void GAMEPROG_AdvPercent(struct AdvProgress* adv)
 	{
 		// first bit of gold relic
 		bitIndex = 0x28 + i;
-		if(CHECK_ADV_BIT(adv->rewards, bitIndex))
+		if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 		{
 			// check next relic
 			continue;

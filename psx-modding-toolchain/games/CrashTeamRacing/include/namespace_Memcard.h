@@ -37,6 +37,10 @@ struct GameProgress
 	struct HighScoreTrack highScoreTracks[18];
 };
 
+// copy/paste from GameProg
+#define CHECK_ADV_BIT(rewards, bitIndex) \
+	((rewards[bitIndex>>5] >> (bitIndex & 0x1f)) & 1)
+
 struct AdvProgress
 {
 	// 8008fba4

@@ -1,9 +1,5 @@
 #include <common.h>
 
-// copy/paste from GameProg
-#define CHECK_ADV_BIT(rewards, bitIndex) \
-	((rewards[bitIndex>>5] >> (bitIndex & 0x1f)) & 1) != 0
-
 int s_numString = 0;
 
 void AA_EndEvent_DrawMenu()
@@ -53,7 +49,7 @@ void AA_EndEvent_DrawMenu()
 		{
 			// if token was already won
 			bitIndex = gGT->levelID + 0x4C;
-			if(CHECK_ADV_BIT(adv->rewards, bitIndex))
+			if(CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				// first 10 seconds, lerp closer to center of screen
 				if(sdata->framesSinceRaceEnded < 301)
