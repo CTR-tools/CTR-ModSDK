@@ -1049,7 +1049,8 @@ LAB_800ac860:
           }
         }
         
-		// if this is 
+		// ELSE is not possible,
+		// just designed not to run unless GOTO happens
 		else {
 LAB_800ace34:
 
@@ -1316,10 +1317,10 @@ LAB_800acef8:
   if (piVar19[2] != 0) 
   {
 	// INSTANCE_Death
-    FUN_80030aa8();
+    FUN_80030aa8(piVar19[2]);
     FUN_80030aa8(piVar19[3]);
     FUN_80030aa8(piVar19[1]);
-    FUN_80030aa8(*piVar19);
+    FUN_80030aa8(piVar19[0]);
   }
   return;
 }
