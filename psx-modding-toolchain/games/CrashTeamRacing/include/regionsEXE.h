@@ -3149,16 +3149,17 @@ struct sData
 	// 8008d4ac
 	char str_underscore[4];
 
-	char data_after_str_underscore[0xC];
-
 	// 8008d4b0
 	// check if CTR Token/Relic adv menubox is open or not
+	int boolOpenTokenRelicMenu;
 
 	// 8008d4b4
 	// ptr to 8009ad18 (tileView) for multiplayer wumpa
+	int ptrTileViewUI;
 
 	// 8008d4b8
 	// ptr to fruitdisp thread
+	int ptrThreadFruitDisp;
 
 	// 8008d4bc
 	int menuReadyToPass;

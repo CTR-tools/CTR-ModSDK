@@ -317,10 +317,98 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			&warppadObj->spinRot_Wisp[i][0]);
 			
 		// Still need to do rising
+		
+		// [...]
 	}
 	
+	warppadObj->spinRot_Prize[1] += 0x80;
 	
-	// temporary
-	if(dist < 0x9000)
+	// [...]
+	
+	for(i = 0; i < 3; i++)
+	{
+		if(instArr[WPIS_OPEN_PRIZE1+i] != 0)
+		{
+			AH_WarpPad_SpinRewards(
+				instArr[WPIS_OPEN_PRIZE1+i],
+				warppadObj, i,
+				warppadInst->matrix.t[0],
+				warppadInst->matrix.t[1],
+				warppadInst->matrix.t[2]);
+				
+			// [set scale]
+			// [set visibility]
+		}
+			
+		warppadObj->thirds[i] += 0x20;
+		warppadObj->spinRot_Rewards[1] += 0x4;
+			
+	}
+	
+	// [if unlocked, erase locked instances]
+	// would those ever initialize anyway?
+	
+	
+	
+	// [remove this, put it in GameProg.h]
+// copy/paste from GameProg
+#define CHECK_ADV_BIT(rewards, bitIndex) \
+	((rewards[bitIndex>>5] >> (bitIndex & 0x1f)) & 1) != 0
+	
+	
+	
+	// [temporary]
+	// This is all rough draft, not copied from ghidra,
+	// just eye-balling how this should work...
+	
+	// if flag is on-screen, loading has already been finalized
+	if(TitleFlag_IsTransitioning() != 0) return;
+	
+	// dont load track far away
+	if(dist > 0x8fff) return;
+	
+	// only works for trophy tracks rn
+	if(levelID >= 0x10) return;
+	
+	void VehPtr_Freeze_Init();
+	gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
+	
+	// if trophy is unlocked
+	if(CHECK_ADV_BIT(sdata->advProgress.rewards, levelID + 6))
+	{
+		// if never opened
+		if(sdata->boolOpenTokenRelicMenu == 0)
+		{
+			// now opened
+			sdata->boolOpenTokenRelicMenu = 1;
+			
+			MenuBox_Show(0x800b4e50);
+			
+			// dont load level
+			return;
+		}
+		
+		// if opened, but not closed yet
+		if((MenuBox_BoolHidden(0x800b4e50) & 0xffff) == 0)
+		{
+			// dont load level
+			return;
+		}
+		
+		// if opened, then closed
+		else
+		{
+			// reset for future gameplay
+			sdata->boolOpenTokenRelicMenu = 0;
+			
+			sdata->ptrActiveMenuBox = 0;
+			
+			// [no return, allow level to load]
+		}
+	}
+	
+	// === Will allow Trophy Tracks to load ===
+	// Any portal with levelID >= 0x10 will break here
+	
 	MainRaceTrack_RequestLoad(levelID);
 }

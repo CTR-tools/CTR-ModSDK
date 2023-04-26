@@ -849,7 +849,8 @@ LAB_800ac860:
   // TitleFlag_IsTransitioning
   iVar7 = FUN_80043f44();
   
-  // If transitioning then DontLoadLevelYet
+  // If transitioning then DontLoadLevelYet,
+  // cause loading level has already been decided
   if (iVar7 != 0) goto LAB_800acef8;
   
   iVar7 = (int)*(short *)(piVar19 + 0x1b);
@@ -1255,6 +1256,8 @@ LAB_800acef8:
   // spin rate item inside unlocked warppad
   *(short *)((int)piVar19 + 0x2a) = *(short *)((int)piVar19 + 0x2a) + 0x80;
   
+  // get distance from driver,
+  // determine if rewards should draw in warppad
   iVar18 = iVar4 + -0x900000;
   if (0x900000 < iVar4) {
     if (0x900000 < iVar18) {
