@@ -472,9 +472,15 @@ void FUN_800abf48(int param_1)
 		)
 	   ) 
   {
+	// If closest warppad changed this frame
     if ((DAT_800b4e86 != -1) && (DAT_800b4e86 != *(short *)(piVar19 + 0x1b)))
-    goto LAB_800ac518;
+		
+		// dont give hint
+		goto LAB_800ac518;
     
+	// === warppad didn't change this frame ===
+	// Choose if a hint is needed or not
+	
 	// save warppad ID nearest
 	DAT_800b4e86 = *(short *)(piVar19 + 0x1b);
 	
@@ -511,7 +517,8 @@ void FUN_800abf48(int param_1)
 		// Gem Cups Hint
         uVar11 = 0x1b;
 		
-		// 1s digit == 0 (warppad unlocked)
+		// 1s digit == 0 (warppad unlocked),
+		// skip CLOSED instances, and dont give hint
         if (piVar19[2] == 0) goto LAB_800ac860;
 LAB_800ac500:
 
@@ -520,6 +527,8 @@ LAB_800ac500:
       }
       goto LAB_800ac518;
     }
+	
+	// === Not Gem Cup ===
 	
 	// if aku is not giving a hint
     if (DAT_8008d874 == 0) 
@@ -554,7 +563,8 @@ LAB_800ac500:
 			((DAT_8008fbb0 & 0x1000000) == 0)
 		  ) 
 	  {
-		// 1s digit == 0 (warppad unlocked)
+		// 1s digit == 0 (warppad unlocked),
+		// skip code for CLOSED instances
         if (piVar19[2] == 0) goto LAB_800ac860;
 		
 		// If track is not beaten (key is not floating above warppad)
@@ -563,20 +573,27 @@ LAB_800ac500:
 		{
 		  // give Aku hint for needing more trophies
           uVar11 = 2;
+		  
+		  // give hint, then goto LAB_800ac518 right after
           goto LAB_800ac500;
         }
       }
+	  
+	  // dont give hint
       goto LAB_800ac518;
     }
 	
 	// === If Slide Col ===
 	
-	// if aku hint is not unlocked, give hint
+	// if aku hint is unlocked, dont give hint
     if ((DAT_8008fbb4 & 0x40000) != 0) goto LAB_800ac518;
     
+	// If hint is not unlocked, give hint
+	
 	// Must get 10 relics hint
 	uVar11 = 0x1c;
 	
+	// give hint, then goto LAB_800ac518 right after
     if (piVar19[2] != 0) goto LAB_800ac500;
   }
   
@@ -726,9 +743,11 @@ LAB_800ac518:
       return;
     }
   }
+  
+  // Assume Unlocked
 LAB_800ac860:
 
-  // If [???] then do not start loading new level yet
+  // If dist>0x9000, then DontLoadLevelYet
   if ((0x8fff < iVar4) && (*(short *)(piVar19 + 0x1d) == 0)) goto LAB_800acef8;
   
   // Set Character IDs of AIs
@@ -830,7 +849,7 @@ LAB_800ac860:
   // TitleFlag_IsTransitioning
   iVar7 = FUN_80043f44();
   
-  // If transitioning then do not start loading new level yet
+  // If transitioning then DontLoadLevelYet
   if (iVar7 != 0) goto LAB_800acef8;
   
   iVar7 = (int)*(short *)(piVar19 + 0x1b);
@@ -853,7 +872,7 @@ LAB_800ac860:
 	  // VehPtr_Warp_Init
       *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 	  
-	  // If [???] then do not start loading new level yet
+	  // If [???] then DontLoadLevelYet
       if (*(short *)((int)piVar19 + 0x76) < 0x3d) goto LAB_800acef8;
 	  
       iVar18 = (int)*(short *)(piVar19 + 0x1b);
@@ -883,7 +902,7 @@ LAB_800ac860:
 		// VehPtr_Warp_Init
         *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 		
-		// If [???] then do not start loading new level yet
+		// If [???] then DontLoadLevelYet
         if (*(short *)((int)piVar19 + 0x76) < 0x3d) goto LAB_800acef8;
 		
 		// If hint is not unlocked
@@ -901,7 +920,7 @@ LAB_800ac860:
 		// AH_MaskHint_boolCanSpawn
         uVar8 = FUN_800b3f88();
         
-		// If Aku is speaking, then do not start loading new level yet
+		// If Aku is speaking, then DontLoadLevelYet
 		if ((uVar8 & 0xffff) == 0) goto LAB_800acef8;
 		
 		// when loading is done, remove flag for In Adventure Arena
@@ -1021,7 +1040,7 @@ LAB_800ac860:
 			  // VehPtr_Warp_Init
               *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 			  
-			  // Do not start loading new level yet
+			  // DontLoadLevelYet
               goto LAB_800acef8;
             }
             
@@ -1047,7 +1066,7 @@ LAB_800ace34:
 [(int)((int)(short)(&DAT_80083a80)[(int)*(short *)(piVar19 + 0x1b) * 0xc] + 0x5dU) >> 5] 
    >> ((int)(short)(&DAT_80083a80)[(int)*(short *)(piVar19 + 0x1b) * 0xc] + 0x5dU & 0x1f) 
    
-			// If [???] then do not start loading new level yet
+			// If [???] then DontLoadLevelYet
 			& 1) == 0)) goto LAB_800acef8; 
         
 		}
@@ -1064,7 +1083,7 @@ LAB_800ace34:
 		// VehPtr_Warp_Init
         *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 		
-		// If [???] then do not start loading new level yet
+		// If [???] then DontLoadLevelYet
         if (*(short *)((int)piVar19 + 0x76) < 0x3d) goto LAB_800acef8;
 		
         iVar18 = (int)*(short *)(piVar19 + 0x1b);
@@ -1090,7 +1109,7 @@ LAB_800ace34:
     
 	puVar12 = PTR_DAT_8008d2ac;
 	
-	// If [???] then do not start loading new level yet
+	// If [???] then DontLoadLevelYet
     if (*(short *)((int)piVar19 + 0x76) < 0x3d) goto LAB_800acef8;
     
 	// for loop counts backwards
@@ -1124,7 +1143,8 @@ LAB_800ace34:
   
   // MainRaceTrack_RequestLoad
   FUN_8003cfc0(iVar18);
-  
+
+// DontLoadLevelYet
 LAB_800acef8:
 
   // Spin the electric outline
