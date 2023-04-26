@@ -284,12 +284,6 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	
 	// === Assume Unlocked ===
 	
-	// [Skip block that loads track]
-	// Read ghidra "DontLoadLevelYet"
-	// That goes below, and then the code
-	// between LAB_800ac860 and LAB_800acef8
-	// will be at the bottom
-	
 	if(
 		(instArr[WPIS_OPEN_BEAM] != 0) &&
 		((gGT->timer & 1) != 0)
@@ -444,19 +438,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 		warppadObj->thirds[i] += 0x20;
 		warppadObj->spinRot_Rewards[1] += 0x4;
 	}
-	
-	#if 0
-	// removed code, erase CLOSED instances if they exist,
-	// but that will never happen cause "this" part of the
-	// function only happens if there are no CLOSED instances
-	#endif
-	
-	
-	
-	// [temporary]
-	// This is all rough draft, not copied from ghidra,
-	// just eye-balling how this should work...
-	
+		
 	// if flag is on-screen, loading has already been finalized
 	if(TitleFlag_IsTransitioning() != 0) return;
 	
@@ -521,9 +503,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				
 				// if hint is locked
 				if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i+0x76)) == 0)
-				{
 					MainFrame_RequestMaskHint(i, 1);
-				}
 				
 				// if can't spawn aku cause he's already here,
 				// quit function, wait till he's done to start race
@@ -532,8 +512,6 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				
 				// reset for future gameplay
 				sdata->boolOpenTokenRelicMenu = 0;
-				
-				// [no return, allow level to load]
 			}
 		}
 		
@@ -557,6 +535,17 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	{
 		// Add Crystal Challenge
 		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x8000000;
+		
+		// Dont have hint "collect every crystal"
+		if ((sdata->advProgress.rewards[4] & 0x8000) == 0)
+			MainFrame_RequestMaskHint(0x19, 1);
+		
+		// if can't spawn aku cause he's already here,
+		// quit function, wait till he's done to start race
+		i = AH_MaskHint_boolCanSpawn();
+		if((i & 0xffff) == 0) return;
+		
+		gGT->originalEventTime = *(int*)(0x800b4e88 + 4 * (levelID-0x12));
 	}
 	
 	// gem cups
