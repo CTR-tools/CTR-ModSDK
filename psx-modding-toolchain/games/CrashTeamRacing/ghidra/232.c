@@ -748,7 +748,8 @@ LAB_800ac518:
   // Assume Unlocked
 LAB_800ac860:
 
-  // If dist>0x9000, then DontLoadLevelYet
+  // If dist>0x9000, and if not in warppad, then DontLoadLevelYet,
+  // warp animation can push you outside 0x9000, so the 0x1d offset is a fallback
   if ((0x8fff < iVar4) && (*(short *)(piVar19 + 0x1d) == 0)) goto LAB_800acef8;
   
   // Set Character IDs of AIs
@@ -865,7 +866,7 @@ LAB_800ac860:
 	{
 	  // warp for 2 seconds, then assume relic race, load immediately
 	
-	  // waiting for aku hint
+	  // boolEnteredWarppad
       *(undefined2 *)(piVar19 + 0x1d) = 1;
       
 	  // increase frames spent warping
@@ -895,7 +896,7 @@ LAB_800ac860:
 	  {
 		// give hint if needed, then load level after 2 seconds of warping
 		
-		// waiting for aku hint
+		// boolEnteredWarppad
         *(undefined2 *)(piVar19 + 0x1d) = 1;
 		
 		// increase frames warping
@@ -1020,7 +1021,7 @@ LAB_800ac860:
                   if ((uVar8 & 0xffff) != 0) {
                     DAT_8008d4b0 = 0;
 					
-					// no longer waiting for aku hint
+					// boolEnteredWarppad (to prevent running code again)
                     *(undefined2 *)(piVar19 + 0x1d) = 0;
 					
 					// when loading is done, remove flag for "in adventure arena"
@@ -1036,7 +1037,7 @@ LAB_800ac860:
                 *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
               }
 			  
-			  // waiting for aku hint
+			  // boolEnteredWarppad
               *(undefined2 *)(piVar19 + 0x1d) = 1;
 			  
 			  // VehPtr_Warp_Init
@@ -1077,7 +1078,7 @@ LAB_800ace34:
 		// if trophy has not been awarded on track [ anything < 16 ],
 		// then warp for 2 seconds, then start loading track
 		
-		// waiting for aku hint
+		// boolEnteredWarppad
 		*(undefined2 *)(piVar19 + 0x1d) = 1;
         
 		// increment frames warping
@@ -1101,7 +1102,7 @@ LAB_800ace34:
   // [100 + cupID]
   else 
   {
-	// waiting for aku hint
+	// boolEnteredWarppad
     *(undefined2 *)(piVar19 + 0x1d) = 1;
     
 	// increment frames warping

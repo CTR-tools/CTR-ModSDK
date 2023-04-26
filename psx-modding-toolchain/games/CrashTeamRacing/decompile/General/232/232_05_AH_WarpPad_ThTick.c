@@ -463,54 +463,98 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	// if flag is on-screen, loading has already been finalized
 	if(TitleFlag_IsTransitioning() != 0) return;
 	
-	// dont load track far away
-	if(dist > 0x8fff) return;
-	
-	// only works for trophy tracks rn
-	if(levelID >= 0x10) return;
-	
-	LOAD_Robots1P(data.characterIDs[0]);
-	for(i = 0; i < 8; i++) sdata->kartSpawnOrderArray[i] = i;
-	
-	void VehPtr_Freeze_Init();
-	gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
-	
-	// if trophy is unlocked
-	if(CHECK_ADV_BIT(sdata->advProgress.rewards, levelID + 6))
+	// if driver has not entered this warppad
+	if(warppadObj->boolEnteredWarppad == 0)
 	{
-		// if never opened
-		if(sdata->boolOpenTokenRelicMenu == 0)
-		{
-			// now opened
-			sdata->boolOpenTokenRelicMenu = 1;
-			
-			MenuBox_Show(0x800b4e50);
-			
-			// dont load level
-			return;
-		}
+		// if far away from warppad, quit
+		if(dist > 0x8fff) return;
 		
-		// if opened, but not closed yet
-		if((MenuBox_BoolHidden(0x800b4e50) & 0xffff) == 0)
-		{
-			// dont load level
-			return;
-		}
-		
-		// if opened, then closed
+		// close to warppad, first frame
 		else
 		{
-			// reset for future gameplay
-			sdata->boolOpenTokenRelicMenu = 0;
+			// now in warppad
+			warppadObj->boolEnteredWarppad = 1;
 			
-			sdata->ptrActiveMenuBox = 0;
-			
-			// [no return, allow level to load]
+			void VehPtr_Freeze_Init();
+			gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
 		}
 	}
+
+	// only works for trophy tracks rn
+	if(levelID < 0x10)
+	{
+		// if trophy is unlocked
+		if(CHECK_ADV_BIT(sdata->advProgress.rewards, levelID + 6))
+		{
+			// if never opened
+			if(sdata->boolOpenTokenRelicMenu == 0)
+			{
+				// now opened
+				sdata->boolOpenTokenRelicMenu = 1;
+				
+				MenuBox_Show(0x800b4e50);
+				
+				// dont load level
+				return;
+			}
+			
+			// if opened, but not closed yet
+			if((MenuBox_BoolHidden(0x800b4e50) & 0xffff) == 0)
+			{
+				// dont load level
+				return;
+			}
+			
+			// if opened, then closed
+			else
+			{
+				// reset for future gameplay
+				sdata->boolOpenTokenRelicMenu = 0;
+				
+				sdata->ptrActiveMenuBox = 0;
+				
+				// [no return, allow level to load]
+			}
+		}
+		
+		
+		// === Get Game Mode ===
+		// Then determine spawn positions
+		
+		LOAD_Robots1P(data.characterIDs[0]);
+		for(i = 0; i < 8; i++) sdata->kartSpawnOrderArray[i] = i;	
+	}
 	
-	// === Will allow Trophy Tracks to load ===
-	// Any portal with levelID >= 0x10 will break here
+	// Slide Col or Turbo Track
+	else if(levelID < 0x12)
+	{
+		// Add Relic, Rem Adventure Arena
+		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x4000000;
+		sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
+	}
+	
+	// Battle Tracks
+	else if(levelID < 0x19)
+	{
+		// Add Crystal Challenge, Rem Adventure Arena
+		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x8000000;
+		sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
+	}
+	
+	// gem cups
+	else
+	{
+		// Add Adv Cup, Rem Adventure Arena
+		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x10000000;
+		sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
+		
+		gGT->cup.cupID = levelID-100;
+		gGT->cup.trackIndex = 0;
+		for(i = 0; i < 8; i++)
+			gGT->cup.points[i] = 0;
+		
+		levelID = data.advCupTrackIDs[4*gGT->cup.cupID];
+	}
 	
 	MainRaceTrack_RequestLoad(levelID);
 }

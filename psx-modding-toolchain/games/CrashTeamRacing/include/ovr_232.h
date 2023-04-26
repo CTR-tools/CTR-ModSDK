@@ -98,8 +98,8 @@ struct WarpPad
 	// 0x0    0x555   0xAAA
 	unsigned short thirds[3];
 	
-	// 0x74 (1d*4)
-	short boolWaitForAkuHint;
+	// 0x74
+	short boolEnteredWarppad;
 	
 	// 0x76
 	short framesWarping;
