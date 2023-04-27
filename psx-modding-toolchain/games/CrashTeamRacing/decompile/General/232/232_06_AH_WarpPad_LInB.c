@@ -194,8 +194,31 @@ GetKeysRequirement:
 			}
 		}
 		
+		for(i = 0; i < 3; i++)
+			warppadObj->thirds[i] = 0x555*i;
+		
+		warppadObj->spinRot_Prize[0] = 0;
+		warppadObj->spinRot_Prize[1] = 0;
+		warppadObj->spinRot_Prize[2] = 0;
+		
+		warppadObj->spinRot_Beam[0] = 0;
+		warppadObj->spinRot_Beam[1] = 0;
+		warppadObj->spinRot_Beam[2] = 0;
+		
+		for(i = 0; i < 2; i++)
+		{
+			warppadObj->spinRot_Wisp[i][0] = 0;
+			warppadObj->spinRot_Wisp[i][1] = 0;
+			warppadObj->spinRot_Wisp[i][2] = 0;
+		}
+		
 		// [Prizes Here]
-		// Look at line 1804-2216 of 232.h
+		// Look at line 1852-2217 of 232.h
+	
+		if(levelID < 0x10)
+		{
+			
+		}
 		
 		return;
 	}

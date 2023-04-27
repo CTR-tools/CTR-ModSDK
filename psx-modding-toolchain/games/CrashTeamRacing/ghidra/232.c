@@ -1849,6 +1849,7 @@ void FUN_800ad3ec(int param_1)
       piVar5 = piVar5 + 2;
     } while (iVar14 < 2);
 	
+	// initialize prize instances
     sVar10 = *(short *)(piVar18 + 0x1b);
     iVar14 = (int)*(short *)(piVar18 + 0x1b);
     if (iVar14 < 0x10) 
