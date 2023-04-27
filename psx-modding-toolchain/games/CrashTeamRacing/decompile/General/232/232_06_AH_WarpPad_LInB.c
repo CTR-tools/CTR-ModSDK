@@ -230,10 +230,67 @@ GetKeysRequirement:
 	newInst->scale[1] = 0x2000;
 	newInst->scale[2] = 0x2000;
 	
-	// dont set color of trophy
-	if(unlockItem_modelID == 0x62) {}
-
-	// [Put in Else-If's]
+	// no specular for trophy
+	if(unlockItem_modelID != 0x62) 
+	{
+		// specular lighting
+		newInst->flags |= 0x20000;
+		
+		// relic
+		if(unlockItem_modelID == 0x61)
+		{
+			// Relic blue color
+			newInst->colorRGBA = 0x20a5ff0;
+			
+			warppadObj->specLightRelic[0] = *(short*)0x800b4dfc;
+			warppadObj->specLightRelic[1] = *(short*)0x800b4dfe;
+			warppadObj->specLightRelic[2] = *(short*)0x800b4e00;
+		}
+		
+		// Key
+		else if(unlockItem_modelID == 99)
+		{
+			// Key color
+			newInst->colorRGBA = 0xdca6000;
+			
+			// store in Gem array (intended by ND, not a bug)
+			warppadObj->specLightGem[0] = *(short*)0x800b4ddc;
+			warppadObj->specLightGem[1] = *(short*)0x800b4dde;
+			warppadObj->specLightGem[2] = *(short*)0x800b4de0;
+		}
+		
+		// Gem
+		else if(unlockItem_modelID == 0x5f)
+		{
+			// dont set color, that gets set in ThTick
+			
+			// store in Gem array
+			warppadObj->specLightGem[0] = *(short*)0x800b4ddc;
+			warppadObj->specLightGem[1] = *(short*)0x800b4dde;
+			warppadObj->specLightGem[2] = *(short*)0x800b4de0;
+		}
+		
+		// assume token
+		else
+		{
+			i = levelID-100;
+			
+			// token color
+			newInst->colorRGBA =
+				((unsigned int)data.AdvCups[i].color[0] << 0x14) |
+				((unsigned int)data.AdvCups[i].color[1] << 0xc) |
+				((unsigned int)data.AdvCups[i].color[2] << 0x4);
+			
+			// === Naughty Dog Bug ===
+			// They made an array where every token color
+			// could have it's own specular light, but they're
+			// all the same specLight, so just use the first one
+			
+			warppadObj->specLightToken[0] = *(short*)0x800b4ddc;
+			warppadObj->specLightToken[1] = *(short*)0x800b4dde;
+			warppadObj->specLightToken[2] = *(short*)0x800b4de0;
+		}
+	}
 	
 	warppadObj->inst[WPIS_CLOSED_ITEM] = newInst;
 	
@@ -256,39 +313,48 @@ GetKeysRequirement:
 	newInst->scale[1] = 0x2000;
 	newInst->scale[2] = 0x2000;
 	
-	// [ Put In inst->model->0x14 and ->0x16 ]
+	// always face camera
+	newInst->model->headers[0].flags |= 1;
 	
 	warppadObj->inst[WPIS_CLOSED_X] = newInst;
 	
 	// ====== "10s" ========
 	
-	// WPIS_CLOSED_10S
-	newInst = INSTANCE_Birth3D(gGT->modelPtr[0x38], 0, t);
-	
-	// copy matrix
-	*(int*)((int)&newInst->matrix + 0x0) = 0x1000;
-	*(int*)((int)&newInst->matrix + 0x4) = 0;
-	*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
-	*(int*)((int)&newInst->matrix + 0xC) = 0;
-	*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
-	newInst->matrix.t[0] = inst->matrix.t[0];
-	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
-	newInst->matrix.t[2] = inst->matrix.t[2];
-	
-	newInst->scale[0] = 0x2000;
-	newInst->scale[1] = 0x2000;
-	newInst->scale[2] = 0x2000;
-	
-	// [ Put In inst->model->0x14 and ->0x16 ]
-	
-	warppadObj->inst[WPIS_CLOSED_10S] = newInst;
+	if(warppadObj->digit10s != 0)
+	{
+		// WPIS_CLOSED_10S
+		newInst = INSTANCE_Birth3D(gGT->modelPtr[0x38], 0, t);
+		
+		// copy matrix
+		*(int*)((int)&newInst->matrix + 0x0) = 0x1000;
+		*(int*)((int)&newInst->matrix + 0x4) = 0;
+		*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
+		*(int*)((int)&newInst->matrix + 0xC) = 0;
+		*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
+		newInst->matrix.t[0] = inst->matrix.t[0];
+		newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
+		newInst->matrix.t[2] = inst->matrix.t[2];
+		
+		newInst->scale[0] = 0x2000;
+		newInst->scale[1] = 0x2000;
+		newInst->scale[2] = 0x2000;
+		
+		// always face camera
+		for(i = 0; i < newInst->model->numHeaders; i++)	
+			newInst->model->headers[i].flags |= 1;
+		
+		warppadObj->inst[WPIS_CLOSED_10S] = newInst;
+	}
 	
 	// ====== "1s" ========
 	
-	// [proper model ID pick]
+	// STATIC_BIG (1-8)
+	i = 0x38;
+	if(warppadObj->digit1s == 0) i = 0x6d; // '0'
+	if(warppadObj->digit1s == 9) i = 0x6e; // '9'
 	
 	// WPIS_CLOSED_1S
-	newInst = INSTANCE_Birth3D(gGT->modelPtr[0x38], 0, t);
+	newInst = INSTANCE_Birth3D(gGT->modelPtr[i], 0, t);
 	
 	// copy matrix
 	*(int*)((int)&newInst->matrix + 0x0) = 0x1000;
@@ -303,12 +369,10 @@ GetKeysRequirement:
 	newInst->scale[0] = 0x2000;
 	newInst->scale[1] = 0x2000;
 	newInst->scale[2] = 0x2000;
-	
-	// [ Put In inst->model->0x14 and ->0x16 ]
+			
+	// always face camera
+	for(i = 0; i < newInst->model->numHeaders; i++)	
+		newInst->model->headers[i].flags |= 1;
 	
 	warppadObj->inst[WPIS_CLOSED_1S] = newInst;
-	
-	// dont wipe OPEN instances,
-	// those are already wiped in the beginning
-	return;
 }

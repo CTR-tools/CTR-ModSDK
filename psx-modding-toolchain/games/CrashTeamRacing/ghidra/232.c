@@ -2287,6 +2287,8 @@ void FUN_800ad3ec(int param_1)
       *(undefined4 *)(*piVar18 + 0x24) = 0x20a5ff0;
 	  
       iVar14 = *piVar18;
+	  
+		// warppadObj->specLightRelic
       *(undefined2 *)(piVar18 + 0x16) = DAT_800b4dfc;
       *(undefined2 *)((int)piVar18 + 0x5a) = DAT_800b4dfe;
       *(undefined2 *)(piVar18 + 0x17) = DAT_800b4e00;
@@ -2300,6 +2302,8 @@ void FUN_800ad3ec(int param_1)
         *(undefined4 *)(*piVar18 + 0x24) = 0xdca6000;
 		
         iVar14 = *piVar18;
+		
+		// warppadObj->specLightGem
         *(undefined2 *)(piVar18 + 0x14) = DAT_800b4ddc;
         *(undefined2 *)((int)piVar18 + 0x52) = DAT_800b4dde;
         *(undefined2 *)(piVar18 + 0x15) = DAT_800b4de0;
@@ -2314,6 +2318,8 @@ void FUN_800ad3ec(int param_1)
                (int)DAT_80084116 << 0x14 | (int)DAT_80084118 << 0xc | (int)DAT_8008411a << 4;
         
 		  iVar14 = *piVar18;
+		  
+		  // warppadObj->specLightGem
           *(undefined2 *)(piVar18 + 0x14) = DAT_800b4ddc;
           *(undefined2 *)((int)piVar18 + 0x52) = DAT_800b4dde;
           *(undefined2 *)(piVar18 + 0x15) = DAT_800b4de0;
@@ -2335,6 +2341,8 @@ void FUN_800ad3ec(int param_1)
 			   
           iVar17 = iVar17 * 6;
           iVar14 = *piVar18;
+		  
+		  // warppadObj->specLightToken
           *(undefined2 *)(piVar18 + 0x18) = *(undefined2 *)(&DAT_800b4e1c + iVar17);
           *(undefined2 *)((int)piVar18 + 0x62) = *(undefined2 *)(&DAT_800b4e1e + iVar17);
           *(undefined2 *)(piVar18 + 0x19) = *(undefined2 *)(&DAT_800b4e20 + iVar17);
