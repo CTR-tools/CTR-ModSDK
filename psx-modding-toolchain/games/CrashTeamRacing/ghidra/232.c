@@ -1648,7 +1648,7 @@ void FUN_800ad3ec(int param_1)
 		  // for 5 gem cup warppads
           if ((uVar6 & 0xffff) < 5) 
 		  {
-			// STATIC_GEM
+			// STATIC_TOEKN
             iVar17 = 0x7d;
 			
 			// number of each type of Token (red,green,blue,yellow,purple)
@@ -1746,7 +1746,7 @@ void FUN_800ad3ec(int param_1)
       *(undefined4 *)(piVar18[4] + 0x48) = *(undefined4 *)(param_1 + 0x48);
       *(undefined4 *)(piVar18[4] + 0x4c) = *(undefined4 *)(param_1 + 0x4c);
 	  
-	  // set the scale
+	  // set the alpha scale
       *(undefined2 *)(piVar18[4] + 0x22) = 0xc00;
     }
     
@@ -1794,12 +1794,14 @@ void FUN_800ad3ec(int param_1)
         *(int *)(piVar5[5] + 0x48) = *(int *)(param_1 + 0x48) + iVar14 * 0x400;
         *(undefined4 *)(piVar5[5] + 0x4c) = *(undefined4 *)(param_1 + 0x4c);
 		
-		// set scale
+		// set the alpha scale
         *(undefined2 *)(piVar5[5] + 0x22) = 0x400;
       }
       iVar14 = iVar14 + 1;
       piVar5 = piVar5 + 1;
     } while (iVar14 < 2);
+	
+	// prizes
     iVar14 = 0;
     sVar10 = 0;
     piVar5 = piVar18;
@@ -2378,6 +2380,8 @@ LAB_800ad920:
   // instance flag to always face camera
   *(ushort *)(iVar14 + 0x16) = *(ushort *)(iVar14 + 0x16) | 1;
   
+  // ======= Number Instance 10s =======
+  
   if (*(short *)(piVar18 + 0x1a) == 0) {
     piVar18[3] = 0;
   }
@@ -2434,6 +2438,8 @@ LAB_800ad920:
       } while (iVar17 < *(short *)(*(int *)(iVar14 + 0x18) + 0x12));
     }
   }
+  
+  // ======= Number Instance 1s =======
   
   // Empty model "beaten oxide"
   iVar14 = 0x38;

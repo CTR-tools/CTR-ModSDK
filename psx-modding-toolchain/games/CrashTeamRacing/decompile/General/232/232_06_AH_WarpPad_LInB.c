@@ -10,6 +10,18 @@ void AH_WarpPad_LInB(struct Instance* inst)
 	struct Thread* t;
 	struct WarpPad* warppadObj;
 	
+	struct GameTracker* gGT;
+	
+	int unlockItem_numOwned;
+	int unlockItem_numNeeded;
+	int unlockItem_modelID;
+	
+	int* arrTokenCount;
+	short* arrKeysNeeded;
+	struct Instance* newInst;
+	
+	gGT = sdata->gGT;
+	
     t =	
 		THREAD_BirthWithObject
 		(
@@ -38,11 +50,14 @@ void AH_WarpPad_LInB(struct Instance* inst)
 	// this is the red triangle 
 	// instance from DCxDemo's LEV Viewer
 	inst->flags |= 0x80;
-	
+		
 	warppadObj = t->object;
 	warppadObj->levelID = 0;
 	warppadObj->boolEnteredWarppad = 0;
 	warppadObj->framesWarping = 0;
+	
+	for(i = 0; i < WPIS_NUM_INSTANCES; i++)
+		warppadObj->inst[i] = 0;
 	
 	// each warppad has a name "warppad#xxx"
 	// "warppad#0" is dingo canyon, level ID 0
@@ -59,7 +74,241 @@ void AH_WarpPad_LInB(struct Instance* inst)
 		
 	warppadObj->levelID = levelID;
 	
-	// temporary
-	for(i = 0; i < WPIS_NUM_INSTANCES; i++)
-		warppadObj->inst[i] = 0;
+	unlockItem_numNeeded = -1;
+	
+	// Trophy Track
+	if (levelID < 0x10)
+	{
+		// optimization idea:
+		// instead of data.metaDataLEV[levelID].hubID
+		// can we just do gGT->levelID-0x19?
+		
+		// if trophy owned
+		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) != 0)
+		{
+GetKeysRequirement:
+			arrKeysNeeded = 0x800b4e7c;
+			
+			// keys needed to unlock track again
+			unlockItem_modelID = 99;
+			unlockItem_numOwned = gGT->currAdvProfile.numKeys;
+			unlockItem_numNeeded = arrKeysNeeded[data.metaDataLEV[levelID].hubID];
+		}
+		
+		// if trophy not owned
+		else
+		{
+			// number trophies needed to open
+			unlockItem_modelID = 0x62;
+			unlockItem_numOwned = gGT->currAdvProfile.numTrophies;
+			unlockItem_numNeeded = data.metaDataLEV[levelID].numTrophiesToOpen;
+		}
+	}
+	
+	// Slide Col
+	else if (levelID == 0x10)
+	{
+		// number relics needed to open
+		unlockItem_modelID = 0x61;
+		unlockItem_numOwned = gGT->currAdvProfile.numRelics;
+		unlockItem_numNeeded = 10;
+	}
+	
+	// Turbo Track
+	else if (levelID == 0x11)
+	{
+		// number gems needed to open
+		unlockItem_modelID = 0x5f;
+		unlockItem_numNeeded = 5;
+		
+		// count number of gems owned
+		unlockItem_numOwned = 0;
+		for(i = 0; i < 5; i++)
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x6a)) != 0)
+				unlockItem_numOwned++;
+	}
+	
+	// battle maps
+	else if (levelID < 0x19)
+	{
+		goto GetKeysRequirement;
+	}
+	
+	// gem cups
+	else
+	{
+		// number tokens needed to open
+		unlockItem_modelID = 0x7d;
+		unlockItem_numNeeded = 4;
+		
+		arrTokenCount = &gGT->currAdvProfile.numCtrTokens.red;
+		unlockItem_numOwned = arrTokenCount[levelID-100];
+	}
+	
+	// if unlocked
+	if(unlockItem_numOwned >= unlockItem_numNeeded)
+	{		
+		warppadObj->digit1s = 0;
+		t->modelIndex = 1;
+		
+		// if beam modele exists
+		if(gGT->modelPtr[0x7B] != 0)
+		{
+			newInst = INSTANCE_Birth3D(gGT->modelPtr[0x7B], 0, t);
+				
+			// copy matrix
+			*(int*)((int)&newInst->matrix + 0x0) = *(int*)((int)&inst->matrix + 0x0);
+			*(int*)((int)&newInst->matrix + 0x4) = *(int*)((int)&inst->matrix + 0x4);
+			*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
+			*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
+			*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
+			newInst->matrix.t[0] = inst->matrix.t[0];
+			newInst->matrix.t[1] = inst->matrix.t[1];
+			newInst->matrix.t[2] = inst->matrix.t[2];
+			
+			newInst->alphaScale = 0xc00;
+			
+			warppadObj->inst[WPIS_OPEN_BEAM] = newInst;
+		}
+		
+		// if spiral ring exists
+		if(gGT->modelPtr[0x7C] != 0)
+		{
+			for(i = 0; i < 2; i++)
+			{
+				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x7C], 0, t);
+					
+				// copy matrix
+				*(int*)((int)&newInst->matrix + 0x0) = *(int*)((int)&inst->matrix + 0x0);
+				*(int*)((int)&newInst->matrix + 0x4) = *(int*)((int)&inst->matrix + 0x4);
+				*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
+				*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
+				*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
+				newInst->matrix.t[0] = inst->matrix.t[0];
+				newInst->matrix.t[1] = inst->matrix.t[1] + i * 0x400;
+				newInst->matrix.t[2] = inst->matrix.t[2];
+				
+				newInst->alphaScale = 0x400;
+				
+				warppadObj->inst[WPIS_OPEN_RING1+i] = newInst;
+			}
+		}
+		
+		return;
+	}
+	
+	// === if locked ===
+
+	if(unlockItem_numNeeded < 10)
+	{
+		warppadObj->digit10s = 0;
+		warppadObj->digit1s = unlockItem_numNeeded;
+	}
+	
+	else
+	{
+		warppadObj->digit10s = 1;
+		warppadObj->digit1s = unlockItem_numNeeded - 10;
+	}
+	
+	// ====== Item ========
+	
+	// WPIS_CLOSED_ITEM
+	newInst = INSTANCE_Birth3D(gGT->modelPtr[unlockItem_modelID], 0, t);
+		
+	// copy matrix
+	*(int*)((int)&newInst->matrix + 0x0) = *(int*)((int)&inst->matrix + 0x0);
+	*(int*)((int)&newInst->matrix + 0x4) = *(int*)((int)&inst->matrix + 0x4);
+	*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
+	*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
+	*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
+	newInst->matrix.t[0] = inst->matrix.t[0];
+	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
+	newInst->matrix.t[2] = inst->matrix.t[2];
+	
+	newInst->scale[0] = 0x2000;
+	newInst->scale[1] = 0x2000;
+	newInst->scale[2] = 0x2000;
+	
+	// dont set color of trophy
+	if(unlockItem_modelID == 0x62) {}
+
+	// [Put in Else-If's]
+	
+	warppadObj->inst[WPIS_CLOSED_ITEM] = newInst;
+	
+	// ====== "X" ========
+	
+	// WPIS_CLOSED_X
+	newInst = INSTANCE_Birth3D(gGT->modelPtr[0x6F], 0, t);
+	
+	// copy matrix
+	*(int*)((int)&newInst->matrix + 0x0) = 0x1000;
+	*(int*)((int)&newInst->matrix + 0x4) = 0;
+	*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
+	*(int*)((int)&newInst->matrix + 0xC) = 0;
+	*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
+	newInst->matrix.t[0] = inst->matrix.t[0];
+	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
+	newInst->matrix.t[2] = inst->matrix.t[2];
+	
+	newInst->scale[0] = 0x2000;
+	newInst->scale[1] = 0x2000;
+	newInst->scale[2] = 0x2000;
+	
+	// [ Put In inst->model->0x14 and ->0x16 ]
+	
+	warppadObj->inst[WPIS_CLOSED_X] = newInst;
+	
+	// ====== "10s" ========
+	
+	// WPIS_CLOSED_10S
+	newInst = INSTANCE_Birth3D(gGT->modelPtr[0x38], 0, t);
+	
+	// copy matrix
+	*(int*)((int)&newInst->matrix + 0x0) = 0x1000;
+	*(int*)((int)&newInst->matrix + 0x4) = 0;
+	*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
+	*(int*)((int)&newInst->matrix + 0xC) = 0;
+	*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
+	newInst->matrix.t[0] = inst->matrix.t[0];
+	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
+	newInst->matrix.t[2] = inst->matrix.t[2];
+	
+	newInst->scale[0] = 0x2000;
+	newInst->scale[1] = 0x2000;
+	newInst->scale[2] = 0x2000;
+	
+	// [ Put In inst->model->0x14 and ->0x16 ]
+	
+	warppadObj->inst[WPIS_CLOSED_10S] = newInst;
+	
+	// ====== "1s" ========
+	
+	// [proper model ID pick]
+	
+	// WPIS_CLOSED_1S
+	newInst = INSTANCE_Birth3D(gGT->modelPtr[0x38], 0, t);
+	
+	// copy matrix
+	*(int*)((int)&newInst->matrix + 0x0) = 0x1000;
+	*(int*)((int)&newInst->matrix + 0x4) = 0;
+	*(int*)((int)&newInst->matrix + 0x8) = 0x1000;
+	*(int*)((int)&newInst->matrix + 0xC) = 0;
+	*(short*)((int)&newInst->matrix + 0x10) = 0x1000;
+	newInst->matrix.t[0] = inst->matrix.t[0];
+	newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
+	newInst->matrix.t[2] = inst->matrix.t[2];
+	
+	newInst->scale[0] = 0x2000;
+	newInst->scale[1] = 0x2000;
+	newInst->scale[2] = 0x2000;
+	
+	// [ Put In inst->model->0x14 and ->0x16 ]
+	
+	warppadObj->inst[WPIS_CLOSED_1S] = newInst;
+	
+	// dont wipe OPEN instances,
+	// those are already wiped in the beginning
+	return;
 }
