@@ -100,7 +100,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 		((((unsigned short)(levelID-0x12))	< 7)	&& (dist < 0x144000)) ||
 		
 		// Gem cups
-		((((unsigned short)(levelID))		> 99)	&& (dist < 0x90000))
+		((((unsigned short)(levelID))		>= 100)	&& (dist < 0x90000))
 	  )
 	{
 		// if you are near a new warppad, or if you already were
@@ -124,7 +124,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 						[data.metaDataLEV[levelID].name_LNG];
 				
 				// gem cups
-				if(levelID > 99)
+				if(levelID >= 100)
 					warppadLNG = 
 						sdata->lngStrings
 						[data.AdvCups[levelID-100].lngIndex_CupName];
@@ -147,7 +147,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			  (
 
 				// gem cup
-				(levelID > 99) &&
+				(levelID >= 100) &&
 				
 				// Dont have hint "you must have 4 tokens for a gem"
 				((sdata->advProgress.rewards[4] & 0x20000) == 0)
@@ -526,7 +526,53 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				sdata->boolOpenTokenRelicMenu = 0;
 			}
 		}
+	}
+	
+	// Slide Col or Turbo Track
+	else if(levelID < 0x12)
+	{
+		// Add Relic
+		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x4000000;
+	}
+	
+	// Battle Tracks
+	else if(levelID < 0x19)
+	{
+		// Add Crystal Challenge
+		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x8000000;
 		
+		// Dont have hint "collect every crystal"
+		if ((sdata->advProgress.rewards[4] & 0x8000) == 0)
+			MainFrame_RequestMaskHint(0x19, 1);
+		
+		// if can't spawn aku cause he's already here,
+		// quit function, wait till he's done to start race
+		i = AH_MaskHint_boolCanSpawn();
+		if((i & 0xffff) == 0) return;
+		
+		gGT->originalEventTime = *(int*)(0x800b4e88 + 4 * (levelID-0x12));
+	}
+	
+	// gem cups
+	else
+	{
+		// Add Adv Cup
+		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x10000000;
+		
+		gGT->cup.cupID = levelID-100;
+		gGT->cup.trackIndex = 0;
+		for(i = 0; i < 8; i++)
+			gGT->cup.points[i] = 0;
+		
+		levelID = data.advCupTrackIDs[4*gGT->cup.cupID];
+	}
+	
+	// Assign Characters
+	// Dont worry about Token or Relic, those dont 
+	// use kartSpawnOrderArray, the OG game just did
+	// this without an IF check at all
+	if( (levelID < 0x10) || (levelID >= 100) )
+	{
 		LOAD_Robots1P(data.characterIDs[0]);
 		
 		// spawn P1 in the back
@@ -580,45 +626,6 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				}
 			}
 		}
-	}
-	
-	// Slide Col or Turbo Track
-	else if(levelID < 0x12)
-	{
-		// Add Relic
-		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x4000000;
-	}
-	
-	// Battle Tracks
-	else if(levelID < 0x19)
-	{
-		// Add Crystal Challenge
-		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x8000000;
-		
-		// Dont have hint "collect every crystal"
-		if ((sdata->advProgress.rewards[4] & 0x8000) == 0)
-			MainFrame_RequestMaskHint(0x19, 1);
-		
-		// if can't spawn aku cause he's already here,
-		// quit function, wait till he's done to start race
-		i = AH_MaskHint_boolCanSpawn();
-		if((i & 0xffff) == 0) return;
-		
-		gGT->originalEventTime = *(int*)(0x800b4e88 + 4 * (levelID-0x12));
-	}
-	
-	// gem cups
-	else
-	{
-		// Add Adv Cup
-		sdata->Loading.OnBegin.AddBitsConfig0 |= 0x10000000;
-		
-		gGT->cup.cupID = levelID-100;
-		gGT->cup.trackIndex = 0;
-		for(i = 0; i < 8; i++)
-			gGT->cup.points[i] = 0;
-		
-		levelID = data.advCupTrackIDs[4*gGT->cup.cupID];
 	}
 	
 	// Rem Adventure Arena
