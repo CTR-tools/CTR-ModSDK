@@ -2387,6 +2387,9 @@ LAB_800ad920:
   }
   else 
   {
+	
+	// model 0x38: STATIC_BIG1 (1-8)
+	  
 	// INSTANCE_Birth3D -- ptrModel, name, thread
     iVar14 = FUN_8003086c(*(undefined4 *)(PTR_DAT_8008d2ac + 0x2240),s_warpnum_800aba08,
                           iVar4);
@@ -2441,7 +2444,7 @@ LAB_800ad920:
   
   // ======= Number Instance 1s =======
   
-  // Empty model "beaten oxide"
+  // STATIC_BIG1 (1-8)
   iVar14 = 0x38;
   
   if (*(short *)((int)piVar18 + 0x6a) == 0) 
