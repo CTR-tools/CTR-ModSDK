@@ -145,7 +145,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 
          // uVar9 * 4
          DecalFont_DrawLine(
-            sdata -> lngStrings[textID * 4],
+            sdata -> lngStrings[textID],
 			
 			#if 0
             gGT->tileView[0].rect.x + ((gGT->tileView[0].rect.w << 0x10) >> 0x11),
