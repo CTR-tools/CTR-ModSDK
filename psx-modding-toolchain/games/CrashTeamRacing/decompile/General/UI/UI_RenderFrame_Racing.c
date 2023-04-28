@@ -1204,7 +1204,7 @@ void DECOMP_UI_RenderFrame_Racing()
 		OtherFX_Stop2(0x5d);
 
 		// disable the randomizing effect in the HUD
-		gGT->gameMode1 &= (0xffffffff ^ ROLLING_ITEM);
+		gGT->gameMode1 &= ~ROLLING_ITEM;
 	}
 
 return;

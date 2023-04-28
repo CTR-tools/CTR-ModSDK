@@ -282,7 +282,7 @@ LAB_800367d4:
 						piVar1 = &sdata->gGT->gameMode2;
 						sdata->gGT->overlayTransition = '\0';
 						psVar21 = sdata->gGT;
-						psVar17->gameMode2 = *piVar1 & (0xffffffff ^ (P1_VIBRATE));
+						psVar17->gameMode2 = *piVar1 & ~P1_VIBRATE;
 						(psVar21->tileView_UI).fadeFromBlack_desiredResult = 0x1000;
 						(psVar21->tileView_UI).fade_step = 0x2aa;
 					}

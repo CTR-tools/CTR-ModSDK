@@ -53,7 +53,7 @@ u_int main()
 				Voiceline_ClearTimeStamp();
 				
 				// Disable End-Of-Race menu
-				gGT->gameMode1 &= (0xffffffff ^ END_OF_RACE);
+				gGT->gameMode1 &= ~END_OF_RACE;
 
 				// Main Menu Level ID
 				if (gGT->levelID == 39)
@@ -161,7 +161,7 @@ u_int main()
 							sdata->Loading.stage = -1;
 							
 							// Turn off the "Loading..." flag
-							gGT->gameMode1 &= (0xffffffff ^ LOADING);
+							gGT->gameMode1 &= ~LOADING;
 							break;
 						}
 					}
@@ -207,7 +207,7 @@ u_int main()
 							// set game state to 1, to initialize world, as well as initialize all pools
 							sdata->mainGameState = 1;
 							// remove "Loading..." flag from gGT
-							gGT->gameMode1 &= (0xffffffff ^ LOADING);
+							gGT->gameMode1 &= ~LOADING;
 							break;
 						}
 						iVar8 = TitleFlag_IsFullyOnScreen();

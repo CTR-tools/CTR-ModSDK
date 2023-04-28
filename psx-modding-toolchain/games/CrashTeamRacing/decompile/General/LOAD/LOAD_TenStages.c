@@ -147,8 +147,8 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			gGT->overlayTransition = 0;
 
 			// disable certain game mode flags
-			gGT->gameMode1 &= (0xffffffff ^ (GAME_CUTSCENE | END_OF_RACE | ADVENTURE_ARENA | MAIN_MENU));
-			gGT->gameMode2 &= (0xffffffff ^ (LEV_SWAP | CREDITS | DISABLE_LEV_INSTANCE));
+			gGT->gameMode1 &= ~(GAME_CUTSCENE | END_OF_RACE | ADVENTURE_ARENA | MAIN_MENU);
+			gGT->gameMode2 &= ~(LEV_SWAP | CREDITS | DISABLE_LEV_INSTANCE);
 
 			gGT->visMem1 = 0;
 			gGT->visMem2 = 0;

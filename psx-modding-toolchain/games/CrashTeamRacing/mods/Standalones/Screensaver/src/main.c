@@ -123,7 +123,7 @@ void RunUpdateHook()
 		*(int*)((int)UI_VsQuipDrawAll + 4) = 0;
 		
 		// remove battle mode
-		sdata->gGT->gameMode1 &= (0xFFFFFFFF ^ BATTLE_MODE);
+		sdata->gGT->gameMode1 &= ~BATTLE_MODE;
 	}
 	
 	tap = sdata->gGamepads->gamepad[0].buttonsTapped;
