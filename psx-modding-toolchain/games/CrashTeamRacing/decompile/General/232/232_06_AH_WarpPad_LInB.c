@@ -211,13 +211,131 @@ GetKeysRequirement:
 			warppadObj->spinRot_Wisp[i][1] = 0;
 			warppadObj->spinRot_Wisp[i][2] = 0;
 		}
-		
-		// [Prizes Here]
-		// Look at line 1852-2217 of 232.h
 	
 		if(levelID < 0x10)
 		{
+			// if trophy not owned
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) == 0)
+			{
+				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x62], 0, t);
+				
+				newInst->scale[0] = 0x2800;
+				newInst->scale[1] = 0x2800;
+				newInst->scale[2] = 0x2800;
+				
+				warppadObj->inst[WPIS_OPEN_PRIZE1] = newInst;
+			}
 			
+BattleTrack:
+			
+			// if token not owned
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) == 0)
+			{
+				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x7D], 0, t);
+				
+				// specular lighting
+				newInst->flags |= 0x30000;
+				
+				newInst->scale[0] = 0x2000;
+				newInst->scale[1] = 0x2000;
+				newInst->scale[2] = 0x2000;
+				
+				i = data.metaDataLEV[levelID].ctrTokenGroupID;
+				
+				// token color
+				newInst->colorRGBA =
+					((unsigned int)data.AdvCups[i].color[0] << 0x14) |
+					((unsigned int)data.AdvCups[i].color[1] << 0xc) |
+					((unsigned int)data.AdvCups[i].color[2] << 0x4);
+				
+				// === Naughty Dog Bug ===
+				// They made an array where every token color
+				// could have it's own specular light, but they're
+				// all the same specLight, so just use the first one
+				
+				warppadObj->specLightToken[0] = *(short*)0x800b4e1c;
+				warppadObj->specLightToken[1] = *(short*)0x800b4e1e;
+				warppadObj->specLightToken[2] = *(short*)0x800b4e20;
+				
+				warppadObj->inst[WPIS_OPEN_PRIZE2] = newInst;
+			}
+			
+SlideColTurboTrack:
+			
+			// if relic not owned
+			if(levelID < 0x12) // check this cause of "goto BattleTrack"
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x16)) == 0)
+			{
+				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x61], 0, t);
+				
+				// relic blue
+				newInst->colorRGBA = 0x20a5ff0;
+				
+				// specular lighting
+				newInst->flags |= 0x20000;
+				
+				newInst->scale[0] = 0x1800;
+				newInst->scale[1] = 0x1800;
+				newInst->scale[2] = 0x1800;
+				
+				warppadObj->inst[WPIS_OPEN_PRIZE3] = newInst;
+			}
+			
+			for(i = 0; i < 3; i++)
+			{
+				newInst = warppadObj->inst[WPIS_OPEN_PRIZE1+i];
+				
+				if(newInst == 0) continue;
+			
+				// copy matrix
+				*(int*)((int)&newInst->matrix + 0x0) = *(int*)((int)&inst->matrix + 0x0);
+				*(int*)((int)&newInst->matrix + 0x4) = *(int*)((int)&inst->matrix + 0x4);
+				*(int*)((int)&newInst->matrix + 0x8) = *(int*)((int)&inst->matrix + 0x8);
+				*(int*)((int)&newInst->matrix + 0xC) = *(int*)((int)&inst->matrix + 0xC);
+				*(short*)((int)&newInst->matrix + 0x10) = *(short*)((int)&inst->matrix + 0x10);
+				newInst->matrix.t[0] = inst->matrix.t[0];
+				newInst->matrix.t[1] = inst->matrix.t[1] + 0x100;
+				newInst->matrix.t[2] = inst->matrix.t[2];
+			}
+		}
+		
+		// slide col, turbo track
+		else if(levelID < 0x12)
+		{
+			goto SlideColTurboTrack;
+		}
+		
+		// battle tracks
+		else if(levelID < 0x19)
+		{
+			goto BattleTrack;
+		}
+		
+		// gemstone valley
+		else
+		{	
+			newInst = INSTANCE_Birth3D(gGT->modelPtr[0x5f], 0, t);
+				
+			// specular lighting
+			newInst->flags |= 0x20000;
+
+			i = levelID-100;
+		
+			// token color
+			newInst->colorRGBA =
+				((unsigned int)data.AdvCups[i].color[0] << 0x14) |
+				((unsigned int)data.AdvCups[i].color[1] << 0xc) |
+				((unsigned int)data.AdvCups[i].color[2] << 0x4);
+				
+			warppadObj->inst[WPIS_OPEN_PRIZE1] = newInst;
+			
+			// store in Gem array
+			warppadObj->specLightGem[0] = *(short*)0x800b4ddc;
+			warppadObj->specLightGem[1] = *(short*)0x800b4dde;
+			warppadObj->specLightGem[2] = *(short*)0x800b4de0;
+			
+			// for matrix copy
+			goto SlideColTurboTrack;
 		}
 		
 		return;
@@ -312,9 +430,9 @@ GetKeysRequirement:
 			// could have it's own specular light, but they're
 			// all the same specLight, so just use the first one
 			
-			warppadObj->specLightToken[0] = *(short*)0x800b4ddc;
-			warppadObj->specLightToken[1] = *(short*)0x800b4dde;
-			warppadObj->specLightToken[2] = *(short*)0x800b4de0;
+			warppadObj->specLightToken[0] = *(short*)0x800b4e1c;
+			warppadObj->specLightToken[1] = *(short*)0x800b4e1e;
+			warppadObj->specLightToken[2] = *(short*)0x800b4e20;
 		}
 	}
 	
