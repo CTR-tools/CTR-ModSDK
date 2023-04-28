@@ -36,6 +36,14 @@ void DECOMP_CS_Podium_FullScene_Init()
 		u_int local_20;
 	} InitData;
 	
+	struct PosRot
+	{
+		short pos[3];
+		short rot[3];
+	};
+	
+	struct PosRot* posRot;
+	
 	struct GameTracker* gGT = sdata->gGT;
 
 	// assume cutscene did not manipulate audio
@@ -85,20 +93,15 @@ void DECOMP_CS_Podium_FullScene_Init()
 	
 	gGT->gameMode2 |= 4;
 	
-	struct PosRot
-	{
-		short pos[3];
-		short rot[3];
-	};
-	
 	// position and rotation of podium scene
 	// Y coordinate (podiumPos[1]) has added height
-	InitData.podiumPos[0] = ((struct PosRot*)(*(int*)((int)gGT->level1->ptr_spawn_arrays + 0xC)))->pos[0];
-	InitData.podiumPos[1] = ((struct PosRot*)(*(int*)((int)gGT->level1->ptr_spawn_arrays + 0xC)))->pos[1] + 0x80;
-	InitData.podiumPos[2] = ((struct PosRot*)(*(int*)((int)gGT->level1->ptr_spawn_arrays + 0xC)))->pos[2];
-	InitData.rot[0] =  ((struct PosRot*)(*(int*)((int)gGT->level1->ptr_spawn_arrays + 0xC)))->rot[0];
-	InitData.rot[1] =  ((struct PosRot*)(*(int*)((int)gGT->level1->ptr_spawn_arrays + 0xC)))->rot[1];
-	InitData.rot[2] =  ((struct PosRot*)(*(int*)((int)gGT->level1->ptr_spawn_arrays + 0xC)))->rot[2];
+	posRot = gGT->level1->ptrSpawnType2_PosRot[1].posCoords;
+	InitData.podiumPos[0] = posRot->pos[0];
+	InitData.podiumPos[1] = posRot->pos[1] + 0x80;
+	InitData.podiumPos[2] = posRot->pos[2];
+	InitData.rot[0] =  posRot->rot[0];
+	InitData.rot[1] =  posRot->rot[1];
+	InitData.rot[2] =  posRot->rot[2];
 
 	// convert 3 rotation shorts into rotation matrix
 	ConvertRotToMatrix(&InitData.local_30, &InitData.rot[0]);

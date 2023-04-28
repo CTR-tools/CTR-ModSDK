@@ -125,7 +125,7 @@ struct CreditsLevHeader
 {
 	int size;
 	int numStrings;
-	void* ptrStrings;
+	char* ptrStrings[1];
 };
 
 struct CreditsObj

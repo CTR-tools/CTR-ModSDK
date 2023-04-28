@@ -1,6 +1,6 @@
-// 289+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 358 rewritten so far
+// 292+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 361 rewritten so far
 
-// 289 for every 'common' and ','
+// 292 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -98,6 +98,12 @@ common, 232, AH_Garage_ThDestroy, 0x0, General/232/232_07_AH_Garage_ThDestroy.c
 common, 232, AH_Garage_Open, 0x0, General/232/232_08_AH_Garage_Open.c
 common, 232, AH_Door_ThDestroy, 0x0, General/232/232_14_AH_Door_ThDestroy.c
 common, 232, AH_Map_Main, 0x0, General/232/232_24_AH_Map_Main.c
+
+// 233
+common, 233, CS_Credits_Init, 0x0, General/233/233_CS_Credits_Init.c
+common, 233, CS_Credits_NewDancer, 0x0, General/233/233_CS_Credits_NewDancer.c
+common, 233, CS_Credits_End, 0x0, General/233/233_CS_Credits_End.c
+common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_CS_Podium_FullScene_Init.c
 
 // exe globals
 common, exe, data, 0x0, General/zGlobal_DATA.c
