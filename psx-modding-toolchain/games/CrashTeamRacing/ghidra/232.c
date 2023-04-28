@@ -1854,11 +1854,16 @@ void FUN_800ad3ec(int param_1)
     iVar14 = (int)*(short *)(piVar18 + 0x1b);
     if (iVar14 < 0x10) 
 	{
+	  // If trophy is not unlocked,
+	  // loop through 3 rewards, then return
+		
 	  // 0x8fba4 is where the adventure profile (currently loaded) begins
       if (((uint)(&DAT_8008fba4)[(int)(iVar14 + 6U) >> 5] >> (iVar14 + 6U & 0x1f) & 1) == 0) {
         local_40 = DAT_800aba24;
         local_3c = DAT_800aba28;
-        iVar14 = 0;
+        
+		// 3 prize instances, then return
+		iVar14 = 0;
         iVar17 = 0;
         piVar5 = piVar18;
         do {
@@ -1936,7 +1941,9 @@ void FUN_800ad3ec(int param_1)
               iVar19 = piVar5[7];
               uVar7 = 0x2000;
             }
-            else {
+            
+			// trophy
+			else {
               iVar19 = piVar5[7];
               uVar7 = 0x2800;
             }
@@ -1948,8 +1955,12 @@ void FUN_800ad3ec(int param_1)
           iVar14 = iVar14 + 1;
           piVar5 = piVar5 + 1;
         } while (iVar14 < 3);
+		
         return;
       }
+	  
+	  // === if trophy is unlocked ===
+	  
       *(undefined2 *)(iVar4 + 0x44) = 2;
       puVar3 = PTR_DAT_8008d2ac;
 	  
@@ -1958,6 +1969,8 @@ void FUN_800ad3ec(int param_1)
       if (((uint)(&DAT_8008fba4)[(int)((int)*(short *)(piVar18 + 0x1b) + 0x16U) >> 5] >>
            ((int)*(short *)(piVar18 + 0x1b) + 0x16U & 0x1f) & 1) == 0) 
 	  {
+		// Relic Prize
+		  
         *(undefined2 *)(iVar4 + 0x44) = 3;
 		
 		// INSTANCE_Birth3D -- ptrModel, name, thread
@@ -2012,6 +2025,8 @@ void FUN_800ad3ec(int param_1)
       if (((uint)(&DAT_8008fba4)[(int)uVar6 >> 5] >> (uVar6 & 0x1f) & 1) != 0) {
         return;
       }
+	  
+	  // Token Prize
 	  
       sVar10 = (&DAT_80083a92)[(int)*(short *)(piVar18 + 0x1b) * 0xc];
       *(undefined2 *)(iVar4 + 0x44) = 3;
