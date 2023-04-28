@@ -471,7 +471,7 @@ void DECOMP_MM_ParseCheatCodes()
 	DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, ORANGE);
 	DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, ORANGE);
 	DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, ORANGE);
-	DecalFont_DrawLine("29%", 		285, 206, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine("30%", 		285, 206, FONT_SMALL, ORANGE);
 	#endif
 	
 	#if 0
