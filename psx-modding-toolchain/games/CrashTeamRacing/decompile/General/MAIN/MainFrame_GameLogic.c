@@ -161,21 +161,21 @@ LAB_80035098:
 			*(short*)(psVar8->unk_4F0_4F8 + 2) = (short)iVar4;
 		}
 		iVar14 = 0;
-		iVar4 = 0;
-		do
+		for (iVar4 = 0; iVar4 < 17; iVar4++)
 		{
-			if (
-					(
-						// if threads are not paused
-						((gGT->gameMode1 & PAUSE_THREADS) == 0) || 
-						
-						// if bucket can not be paused
-						((gGT->threadBuckets[PLAYER].boolCantPause & 1U) != 0)
-					) && 
+			if
+			(
+				(
+					// if threads are not paused
+					((gGT->gameMode1 & PAUSE_THREADS) == 0) || 
 					
-					// if threads exist
-					(gGT->threadBuckets[PLAYER].thread != 0)
-				)
+					// if bucket can not be paused
+					((gGT->threadBuckets[PLAYER].boolCantPause & 1U) != 0)
+				) && 
+				
+				// if threads exist
+				(gGT->threadBuckets[PLAYER].thread != 0)
+			)
 			{
 				if (iVar4 == 0)
 				{
@@ -206,9 +206,8 @@ LAB_80035098:
 				ThreadBucketTickAll(gGT->threadBuckets[iVar4].thread);
 			}
 			iVar14 = iVar14 + 0x14;
-			iVar4 = iVar4 + 1;
 			iVar13 = iVar13 + 0x14;
-		} while (iVar4 < 17);
+		}
 		BOTS_UpdateGlobals();
 		GhostBuffer_RecordStats(0);
 		gGT->unk1cc4[4] = (u_int)(gGT->unk1cc4[4] * 10000) / 0x147e;
@@ -255,11 +254,11 @@ LAB_80035098:
 						(sdata->ptrActiveMenuBox != &data.menuBox_optionsMenu_racingWheel) &&
 						(sdata->ptrActiveMenuBox != (struct MenuBox*)0x800b518c)
 					) &&
-					((sdata->AnyPlayerTap & 0x1000) != 0)
+					((sdata->AnyPlayerTap & BTN_START) != 0)
 				)
 				{
 					MenuBox_ClearInput();
-					gGT->gameMode1 = gGT->gameMode1 & (0xffffffff ^ PAUSE_1);
+					gGT->gameMode1 = gGT->gameMode1 & ~PAUSE_1;
 					MainFrame_TogglePauseAudio(0);
 					OtherFX_Play(1, 1);
 					MainFreeze_SafeAdvDestroy();
@@ -304,7 +303,7 @@ LAB_80035098:
 									)
 								)
 							) ||
-							((gGamepads->gamepad[iVar4].buttonsTapped & 0x1000U) != 0)
+							((gGamepads->gamepad[iVar4].buttonsTapped & BTN_START) != 0)
 						) &&
 						(gGT->overlayIndex_Threads != -1)
 					)
@@ -354,7 +353,7 @@ LAB_80035098:
 					return;
 				}
 				gGT->newHighScoreIndex = -1;
-				gGT->unknownFlags_1d44 &= 0xf3ffffff;
+				gGT->unknownFlags_1d44 &= ~(RELIC_RACE | CRYSTAL_CHALLENGE);
 				return;
 			}
 			gGT->unk_timerCooldown_similarTo_1d36--;
