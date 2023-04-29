@@ -1,1 +1,0 @@
-python tools/updater/main.py

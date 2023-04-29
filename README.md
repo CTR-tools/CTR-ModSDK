@@ -16,11 +16,12 @@ This repository also houses an effort to fully decompile and reverse-engineer [C
 
 ## Requirements
 
-This SDK requires the installation of [mateusfavarin](https://github.com/mateusfavarin)'s [psx-modding-toolchain](https://github.com/mateusfavarin/psx-modding-toolchain). You can check the repo's readme for instructions on the installation and additional documentation on its usage.
+This SDK requires the installation of [mateusfavarin](https://github.com/mateusfavarin)'s [psx-modding-toolchain](https://github.com/mateusfavarin/psx-modding-toolchain). You can check the repo's readme for instructions on the installation and additional documentation on its usage. All python and pip steps are mandatory.
 
 ## Downloading the SDK
 
-Clone this repository:
+After setting up psx-modding-toolchain, clone this repository
+into the local directory psx-modding-toolchain/games:
 
 ```
 $ git clone https://github.com/CTR-Tools/CTR-ModSDK.git
@@ -28,7 +29,6 @@ $ git clone https://github.com/CTR-Tools/CTR-ModSDK.git
 
 - You can find [example mods](https://github.com/CTR-tools/CTR-ModSDK/tree/main/psx-modding-toolchain/games/CrashTeamRacing/mods) in our repo.
 - Each mod folder includes a `readme.txt` file on what the mod does and how to use it. 
-- Building a mod requires installation of psx-modding-toolchain, please refer to the [above section for its installation and usage](https://github.com/CTR-tools/CTR-ModSDK#Downloading%20the%20SDK).
 
 # CTR-in-C
 
