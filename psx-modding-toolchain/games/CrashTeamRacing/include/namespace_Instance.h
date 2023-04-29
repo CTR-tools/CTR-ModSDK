@@ -46,7 +46,7 @@ struct ModelHeader
 	// 0x0 - normal 3D model
 	// 0x1 - always point north
 	// 0x2 - always point to camera (warppad numbers)
-	short flags;
+	unsigned short flags;
 
 	// 0x18
 	short scale[4];

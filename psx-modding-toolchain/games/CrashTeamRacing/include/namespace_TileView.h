@@ -1,5 +1,5 @@
 // named after TILE primitive used in DrawEnv/DispEnv,
-// attempting to flip that in MirrorMode killed the screens
+// attempting to flip that in my MirrorMode mod killed the screens
 struct TileView
 {
 	// 0x0

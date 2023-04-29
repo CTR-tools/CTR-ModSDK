@@ -178,7 +178,7 @@ struct Song
 	// & 1 = Playing
 	// & 2 = Paused (can be &3 in menus)
 	// & 4 = needs to stop
-	short flags;
+	unsigned short flags;
 
 	// 0x2
 	short id;

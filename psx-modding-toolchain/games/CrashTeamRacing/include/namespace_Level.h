@@ -280,8 +280,8 @@ struct RainBuffer
   short unk_22;
 
   // 0x20
-  int colorRGBA_top;
-  int colorRGBA_bottom;
+  unsigned int colorRGBA_top;
+  unsigned int colorRGBA_bottom;
 
   // 0x28
   int renderMode[2];

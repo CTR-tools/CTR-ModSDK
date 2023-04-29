@@ -5,7 +5,7 @@ struct Terrain
 
 	// 4
 	// & 0x20 - play sound
-	int flags;
+	unsigned int flags;
 
 	// 0x8
 	int unk_0x8;

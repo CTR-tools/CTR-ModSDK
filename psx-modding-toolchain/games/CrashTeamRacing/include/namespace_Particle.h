@@ -75,7 +75,7 @@ struct ParticleEmitter
 	// flags = 0 for last emitter
 	// flags = 1 for FuncInit
 	// flags = 0xC0 for AxisInit
-	short flags;
+	unsigned short flags;
 	
 	// 0x2
 	// determines which axis is initialized
