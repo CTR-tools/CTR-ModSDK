@@ -1,1 +1,43 @@
-mods/myMods
+# Python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE files
+.vs
+.vscode
+
+# C files
+*.o
+*.dep
+*.bin
+*.gch
+
+# ISO files
+*.cue
+*.iso
+
+# Build artifacts
+build/
+debug/
+*.log
+offset.txt
+comport.txt
+gcc_out.txt
+overlay.ld
+Makefile
+
+# Version tracker
+tools/updater/.version
+
+# Third party stuff
+tools/gcc-psyq-converted/include/*
+tools/gcc-psyq-converted/lib/*
+!/tools/gcc-psyq-converted/lib/.gitignore
+!/tools/gcc-psyq-converted/include/.gitignore
+
+# Settings
+games/settings.json
+
+# Executables
+*.exe
