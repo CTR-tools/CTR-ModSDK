@@ -25,9 +25,9 @@ struct Instance* LinkedCollide_Hitbox_Desc(struct HitboxDesc* objBoxDesc) {
 
     RotTrans(&thInstPos,&outVec, flags);
 
-    if ( (objBoxDesc->bbox.min[0] < outVec.vx) && (objBoxDesc->bbox.max[0] > outVec.vx) &&
-         (objBoxDesc->bbox.min[2] < outVec.vz) && (objBoxDesc->bbox.max[2] > outVec.vz) &&
-         (objBoxDesc->bbox.min[1] >= diff_y)   && (objBoxDesc->bbox.max[1] < diff_y) ) {
+    if ( (objBoxDesc->bbox.min[0] > outVec.vx) && (objBoxDesc->bbox.max[0] < outVec.vx) &&
+         (objBoxDesc->bbox.min[2] > outVec.vz) && (objBoxDesc->bbox.max[2] < outVec.vz) &&
+         (objBoxDesc->bbox.min[1] <= diff_y)   && (objBoxDesc->bbox.max[1] > diff_y) ) {
         return thInst; //collision thread instance
       }
     }
