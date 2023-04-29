@@ -91,7 +91,7 @@ struct AnimTex
 	u_short frameIndex;
 
 	// 0xC
-	struct AnimTex* ptrarray[20];
+	struct AnimTex* ptrarray[1];
 };
 
 struct VisFromQuadBlock
@@ -223,7 +223,7 @@ struct LevVertex
 	
 	// 0x6
 	// FUN_8001ef50
-	short flags;
+	u_short flags;
 
 	// 0x8
 	unsigned char color_hi[4];
@@ -413,7 +413,7 @@ struct Level
 
 	// 0x24
 	// converts back and forth, Inst to InstDef
-	void* ptrInstDefPtrArray;
+	struct InstDef** ptrInstDefPtrArray;
 
 	// 0x28
 	// related to water?
@@ -447,8 +447,8 @@ struct Level
 		short pointTo;
 
 		// RGBA
-		int colorFrom;
-		int colorTo;
+		u_int colorFrom;
+		u_int colorTo;
 
 	} glowGradient[3];
 
@@ -464,7 +464,7 @@ struct Level
 
 	// 0xD8
 	// for fullscreen clears
-	int clearColorRGBA;
+	u_int clearColorRGBA;
 
 	// 0xDC
 	// & 2 = mask grab when underwater

@@ -151,10 +151,10 @@ struct GamepadSystem
 		// what's 0x282?
 
 		// 0x290, 0x294, 0x298, 0x29c,
-		int anyoneHeldCurr;
-		int anyoneTapped;
-		int anyoneReleased;
-		int anyoneHeldPrev;
+		unsigned int anyoneHeldCurr;
+		unsigned int anyoneTapped;
+		unsigned int anyoneReleased;
+		unsigned int anyoneHeldPrev;
 		
 		// 0x2A0
 		char unk22[0x22];

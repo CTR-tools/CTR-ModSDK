@@ -30,14 +30,14 @@ struct CameraDC
 	// 0x4
 	// action,
 	// 0x20000 constantly swaps L2 zoom
-	int action;
+	unsigned int action;
 
 	// 0x08
 	// camera mode, zoom out and such
-	int mode;
+	unsigned int mode;
 	
 	// 0xC
-	int unk0xC;
+	unsigned int unk0xC;
 
 	// 0x10
 	// desired rotation
@@ -109,7 +109,7 @@ struct CameraDC
 	// & 0x800 - (aku hints + save/load) stationary away from player
 	// & 0x8000 - frozen camera (disables thread, for character select)
 	// & 0x10000 - reverse camera
-	int flags;
+	unsigned int flags;
 
 	// 0x74 (cam->0x9a is 8 or 0xe)
 	short driverOffset_CamEyePos[3];
@@ -120,7 +120,7 @@ struct CameraDC
 	short unk82;
 
 	// 0x84
-	int driver5B0_prevFrame;
+	unsigned int driver5B0_prevFrame;
 
 	// 0x88 - used in CAM_FollowDriver_TrackPath
 	void* unk88;

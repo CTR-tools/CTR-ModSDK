@@ -108,10 +108,10 @@ struct InstDef
 	short scale[4];
 
 	// 0x1c (0x24 - 8)
-	int colorRGBA;
+	unsigned int colorRGBA;
 
 	// 0x20 (0x28 - 8)
-	int flags;
+	unsigned int flags;
 
 	int unk24;
 	int unk28;
@@ -152,13 +152,13 @@ struct InstDrawPerPlayer
 	int unkc0[2];
 	
 	// 0xc8
-	int ptrCommandList;
+	unsigned int ptrCommandList;
 	
 	// 0xcc
-	int ptrTexLayout;
+	unsigned int ptrTexLayout;
 	
 	// 0xd0
-	int ptrColorLayout;
+	unsigned int ptrColorLayout;
 	
 	// 0xd4 - Anim->offset0x14?
 	int unkD4;
@@ -207,7 +207,7 @@ struct Instance
 	short alphaScale;
 
 	// 0x24
-	int colorRGBA;
+	unsigned int colorRGBA;
 
 	// 0x28
 	// & 0x1 = draw instance
@@ -226,7 +226,7 @@ struct Instance
 	// & 0x8000000 = draw huge
 	// & 0x10000000 = invisible before pause
 	// & 0x20000000 = invisible only during pause
-	int flags;
+	unsigned int flags;
 
 	// 0x2c
 	// comes from LEVs
@@ -253,7 +253,7 @@ struct Instance
 
 	// 0x58
 	// on ice
-	int reflectionRGBA;
+	unsigned int reflectionRGBA;
 
 	// instance->0x5C
 	// instance->0x60 (funcPtr for individual prims)

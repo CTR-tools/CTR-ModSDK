@@ -31,7 +31,7 @@ struct GameProgress
 
 	// 8008e6ec
 	// characters, tracks, cups, scrapbook
-	int unlocks[2];
+	unsigned int unlocks[2];
 
 	// 8008e6f4 -- 0x1488 bytes large
 	struct HighScoreTrack highScoreTracks[18];

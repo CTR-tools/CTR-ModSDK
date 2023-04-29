@@ -97,7 +97,5 @@ struct MenuBox
 
 	#if BUILD == SepReview
 	unsigned char theRest[8]; // extra size?
-	#elif BUILD >= UsaRetail
-	// Nothing
 	#endif
 };
