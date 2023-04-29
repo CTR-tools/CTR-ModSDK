@@ -230,6 +230,9 @@ common, exe, LIST_RemoveFront, 0x0, General/LIST/LIST_RemoveFront.c
 common, exe, LIST_RemoveBack, 0x0, General/LIST/LIST_RemoveBack.c
 common, exe, LIST_Init, 0x0, General/LIST/LIST_Init.c
 
+// LinkedCollide
+common, exe, LinkedCollide_Radius, 0x0, General/LinkedCollide.c
+
 // LOAD
 common, exe, LOAD_AppendQueue, 0x0, General/LOAD/LOAD_AppendQueue.c
 common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_Callback_Overlay_Generic.c
