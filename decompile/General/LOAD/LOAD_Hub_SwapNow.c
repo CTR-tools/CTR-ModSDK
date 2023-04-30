@@ -31,7 +31,7 @@ void LOAD_Hub_SwapNow()
 	gGT->prevLEV = gGT->levelID;
 	gGT->levelID = gGT->levID_in_each_mempack[gGT->activeMempackIndex];
 	
-	Audio_AdvHub_SwapSong();
+	Audio_AdvHub_SwapSong(gGT->levelID);
 	
 	// Aug 5
 	// ptrintf("SWAPPING 3...\n");

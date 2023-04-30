@@ -1857,7 +1857,7 @@ void FUN_80033108(void)
        (int)*(short *)(puVar1 + (int)*(short *)(puVar1 + 0x254a) * 2 + 0x254c);
 
   // Audio_AdvHub_SwapSong
-  FUN_8002d50c();
+  FUN_8002d50c(puVar1 + 0x1a10);
 
   // Aug 5
   // FUN_8006fbac("SWAPPING 3...\n");
