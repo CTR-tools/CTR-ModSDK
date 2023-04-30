@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius);
+void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
 
 extern struct ParticleEmitter emSet_Fireball[10];
 
@@ -67,7 +67,7 @@ void DECOMP_RB_Fireball_ThTick(struct Thread* t)
 			particle->axis[1].velocity = (int)velY;
 		}
 		
-		Seal_CheckColl(fireInst, t, 4, 0x10000);
+		Seal_CheckColl(fireInst, t, 4, 0x10000, 0);
 	}
 	
 	// === rest of movement behavior ===

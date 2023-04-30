@@ -3,7 +3,7 @@
 // one seal can not collide with more than one other thread,
 // then quits, it was like that in the original game too,
 // but one seal likely-wont collide with two threads at the same time
-void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius)
+void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound)
 {
 	struct GameTracker* gGT;
 	struct Instance* hitInst;
@@ -38,8 +38,10 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 		// if driver was already spinning out
 		if (kartStatePrev == 3) return;
 		
+		if (sound == 0) return;
+		
 		// play seal sound, with echo if driver is on an echo quadblock
-		OtherFX_Play_Echo(0x78,1,hitDriver->actionsFlagSet & 0x00010000);
+		OtherFX_Play_Echo(sound,1,hitDriver->actionsFlagSet & 0x00010000);
 	
 		// dont check other buckets
 		return;
@@ -137,7 +139,7 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 	// if rotation is finished
 	if(sealObj->rotCurr[1] != sealObj->rotDesired[1])
 	{
-		Seal_CheckColl(sealInst, t, 1, 0x4000);
+		Seal_CheckColl(sealInst, t, 1, 0x4000, 0x78);
 		return;
 	}
 	
@@ -202,7 +204,7 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	
 	if(sealObj->distFromSpawn != sealObj->direction*0x2d)
 	{
-		Seal_CheckColl(sealInst, t, 1, 0x4000);
+		Seal_CheckColl(sealInst, t, 1, 0x4000, 0x78);
 		return;
 	}
 	
