@@ -1151,7 +1151,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					partTimeVariable5 = (u_int)tileView->rect.y + ((int)((u_int)tileView->rect.h << 0x10) >> 0x11);
 
 					// LOSER!
-					pbVar6 = sdata->lngStrings[0x50c];
+					pbVar6 = sdata->lngStrings[0x143];
 				}
 
 				// In some cases, this cuts off bits, but sometimes

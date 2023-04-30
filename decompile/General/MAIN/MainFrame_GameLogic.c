@@ -158,7 +158,7 @@ LAB_80035098:
 		{
 			*(short*)(psVar8->unk_4F0_4F8 + 2) = (short)iVar4;
 		}
-		for (iVar4 = 0; iVar4 < 17; iVar4++)
+		for (iVar4 = 0; iVar4 < NUM_BUCKETS; iVar4++)
 		{
 			if
 			(
@@ -167,35 +167,34 @@ LAB_80035098:
 					((gGT->gameMode1 & PAUSE_THREADS) == 0) || 
 					
 					// if bucket can not be paused
-					((gGT->threadBuckets[PLAYER].boolCantPause & 1U) != 0)
+					((gGT->threadBuckets[iVar4].boolCantPause & 1U) != 0)
 				) && 
 				
 				// if threads exist
-				(gGT->threadBuckets[PLAYER].thread != 0)
+				(gGT->threadBuckets[iVar4].thread != 0)
 			)
 			{
 				if (iVar4 == 0)
 				{
-					for(psVar12 = gGT->threadBuckets[PLAYER].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
+					for(psVar12 = gGT->threadBuckets[iVar4].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 					{
 						Weapon_Shoot_OnCirclePress((struct Driver*)psVar12->object);
 					}
-					for(iVar11 = 0; iVar11 < 13; iVar11++)
+					
+					for(psVar12 = gGT->threadBuckets[iVar4].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 					{
-						for(psVar12 = gGT->threadBuckets[PLAYER].thread; psVar12 != 0; psVar12 = psVar12->childThread)
+						// if PLYR converted to robotcar at end of race,
+						// dont run funcPtrs from inside driver struct
+						if (psVar12->funcThTick != 0) continue;
+						
+						for(iVar11 = 0; iVar11 < 13; iVar11++)
 						{
-							if
-							(
-								(psVar12->funcThTick == 0) &&
-								(
-									pcVar5 = ((struct Driver*)psVar12->object)->funcPtrs[iVar11], 
-									pcVar5 != 0
-								)
-							)
+							pcVar5 = ((struct Driver*)psVar12->object)->funcPtrs[iVar11];
+							
+							if (pcVar5 != 0)
 							{
 								pcVar5(psVar12, (struct Driver*)psVar12->object);
 							}
-							psVar12 = psVar12->siblingThread;
 						}
 					}
 				}
