@@ -13,7 +13,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
    short font;
    int textID;
    int transition;
-   char acStack72[24];
+   char trackText[12];
    RECT rect;
    int colors[2];
 
@@ -158,16 +158,16 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          );
 
          // Track 1/4, 2/4, 3/4, 4/4 in cup
-         sprintf(acStack72, "%s %ld/4",
+         sprintf(trackText, "%s %ld/4",
 
             // TRACK
-            sdata -> lngStrings[0x5d4],
+            sdata -> lngStrings[0x175],
 
             // Track Index (0, 1, 2, 3) + 1
             (gGT -> cup.trackIndex) + 1);
 
          // string of top title bar
-         pcVar6 = acStack72;
+         pcVar6 = trackText;
 
          // X-value, centered
          posX = 0x100;
