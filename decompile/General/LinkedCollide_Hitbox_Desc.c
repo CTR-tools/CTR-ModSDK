@@ -18,7 +18,7 @@ struct Instance* LinkedCollide_Hitbox_Desc(struct HitboxDesc* objBoxDesc) {
 
     diff_y = thInst->matrix.t[1] - objBoxDesc->inst->matrix.t[1] ;
 
-    MATH_HitboxMatrix(&thInstMatrix, objBoxDesc->inst->matrix);
+    MATH_HitboxMatrix(&thInstMatrix, &objBoxDesc->inst->matrix);
 
     SetRotMatrix(&thInstMatrix);
     SetTransMatrix(&thInstMatrix);
