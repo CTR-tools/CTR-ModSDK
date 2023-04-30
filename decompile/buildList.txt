@@ -231,7 +231,9 @@ common, exe, LIST_RemoveBack, 0x0, General/LIST/LIST_RemoveBack.c
 common, exe, LIST_Init, 0x0, General/LIST/LIST_Init.c
 
 // LinkedCollide
-common, exe, LinkedCollide_Radius, 0x0, General/LinkedCollide.c
+common, exe, LinkedCollide_Radius, 0x0, General/LinkedCollide_Radius.c
+common, exe, LinkedCollide_Hitbox_Desc, 0x0, General/LinkedCollide_Hitbox_Desc.c
+
 
 // LOAD
 common, exe, LOAD_AppendQueue, 0x0, General/LOAD/LOAD_AppendQueue.c
