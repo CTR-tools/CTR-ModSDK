@@ -1,2 +1,11 @@
 common, exe, TitleOSK_DrawMenu, 0x0, src/TitleOSK_DrawMenu_Hook.s
 common, exe, rdata_free, 0x0, src/TitleOSK_DrawMenu.c
+common, exe, MEMCARD_StringSet, 0x0, General/MEMCARD/MEMCARD_StringSet.c
+common, exe, MEMCARD_GetFreeBytes, 0x0, General/MEMCARD/MEMCARD_GetFreeBytes.c
+common, exe, MEMCARD_CloseFile, 0x0, General/MEMCARD/MEMCARD_CloseFile.c
+common, exe, MEMCARD_ReadFile, 0x0, General/MEMCARD/MEMCARD_ReadFile.c
+common, exe, MEMCARD_WriteFile, 0x0, General/MEMCARD/MEMCARD_WriteFile.c
+common, exe, MEMCARD_NewTask, 0x0, General/MEMCARD/MEMCARD_NewTask.c
+common, exe, MEMCARD_GetNextSlot1Event, 0x0, General/MEMCARD/MEMCARD_GetNextSlot1Event.c
+common, exe, MEMCARD_GetNextSlot2Event, 0x0, General/MEMCARD/MEMCARD_GetNextSlot2Event.c
+common, exe, MEMCARD_WaitForSlot1Event, 0x0, General/MEMCARD/MEMCARD_WaitForSlot1Event.c
