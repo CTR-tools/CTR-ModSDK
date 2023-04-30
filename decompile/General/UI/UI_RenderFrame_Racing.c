@@ -299,7 +299,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						playerStruct->PickupWumpaHUD.numCollected--;
 
 						// Check if 231 dll is loaded
-						partTimeVariable1 = LOAD_IsOpen_RacingOrBattle(&wumpaModel_Pos[0]);
+						partTimeVariable1 = LOAD_IsOpen_RacingOrBattle();
 
 						// If it is loaded
 						if
