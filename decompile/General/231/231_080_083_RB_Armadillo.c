@@ -30,6 +30,9 @@ void RB_Armadillo_ThTick_Flip(struct Thread* t)
 	
 	armObj->velX = -armObj->velX;
 	armObj->velZ = -armObj->velZ;
+	
+	// play roll sound
+	PlaySound3D(0x70, armInst);
 
 	// rolling animation
 	armInst->animFrame = 0;
