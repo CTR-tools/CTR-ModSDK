@@ -61,7 +61,7 @@ void DECOMP_RB_Burst_CollThBucket(struct ScratchpadStruct *sps, struct Thread *t
     }
 
     // icon damage timer, draw icon as red
-    target->unk_FrameTimer_relatedToTnt = 0x1e;
+    target->damageColorTimer = 0x1e;
 
     // get modelID from thread
     model = t->modelIndex;

@@ -1014,7 +1014,7 @@ struct Driver
 	struct Thread* plantEatingMe;
 
 	// 0x4ac
-	int unk_FrameTimer_relatedToTnt;
+	int damageColorTimer;
 
 	struct
 	{

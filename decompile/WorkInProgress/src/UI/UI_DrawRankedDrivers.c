@@ -142,7 +142,7 @@ void DECOMP_UI_DrawRankedDrivers(void) {
           ((absPosRank + 1) < 9)
         ) {
           // player structure + [some offset]
-          iVar12 = gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt;
+          iVar12 = gGT->drivers[iVar14]->damageColorTimer;
 
           if (iVar12 < 1) {
 
@@ -150,16 +150,16 @@ void DECOMP_UI_DrawRankedDrivers(void) {
             if (iVar12 < 0) {
 
               local_30._0_2_ = // player structure + [some offset]
-                CONCAT11(~(((gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt) + 30) * 4), ((char) iVar12 + 30) * 4);
+                CONCAT11(~(((gGT->drivers[iVar14]->damageColorTimer) + 30) * 4), ((char) iVar12 + 30) * 4);
 
               local_30._0_3_ = // player structure + [some offset]
-                CONCAT12(((gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt) + 30) * 4, (short) local_30);
+                CONCAT12(((gGT->drivers[iVar14]->damageColorTimer) + 30) * 4, (short) local_30);
 
               local_30 = (u_int)local_30;
 
               // timer is negative,
               // add to timer, making it closer to zero
-              gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt += 1;
+              gGT->drivers[iVar14]->damageColorTimer += 1;
             }
 
             // if icon should have no effect
@@ -173,17 +173,17 @@ void DECOMP_UI_DrawRankedDrivers(void) {
           // if icon should be turning red
           else {
             local_30._0_2_ = // player structure + [some offset]
-              CONCAT11((30 - gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt) * 4,
+              CONCAT11((30 - gGT->drivers[iVar14]->damageColorTimer) * 4,
                 ~((30 - (char) iVar12) * 4));
             local_30._0_3_ = // player structure + [some offset]
-              CONCAT12((30 - gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt) * 4,
+              CONCAT12((30 - gGT->drivers[iVar14]->damageColorTimer) * 4,
                     (short) local_30); 
             
             local_30 = (u_int)local_30;
 
                 // timer is positive,
                 // decrement to get closer to zero
-                (gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt) += -1;
+                (gGT->drivers[iVar14]->damageColorTimer) += -1;
               }
 
             psVar13 = ((int) & *(short *) 0x800862d8 + iVar15);
@@ -272,36 +272,36 @@ void DECOMP_UI_DrawRankedDrivers(void) {
             // puVar5 increases by 4 for each iteration
 
             // player structure + [some offset]
-            iVar3 = (gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt);
+            iVar3 = (gGT->drivers[iVar14]->damageColorTimer);
 
             if (iVar3 < 1) {
               if (iVar3 < 0) {
 
                 local_2c._0_2_ = // player structure + [some offset]
-                  CONCAT11(~((gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt + 30) * 4), (iVar3 + 30) * 4);
+                  CONCAT11(~((gGT->drivers[iVar14]->damageColorTimer + 30) * 4), (iVar3 + 30) * 4);
 
                 local_2c._0_3_ = // player structure + [some offset]
-                  CONCAT12((((gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt) + 30) * 4), (short)local_2c);
+                  CONCAT12((((gGT->drivers[iVar14]->damageColorTimer) + 30) * 4), (short)local_2c);
 
                 local_2c = (u_int) local_2c;
 
                 // player structure + [some offset]
-                (gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt) += 1;
+                (gGT->drivers[iVar14]->damageColorTimer) += 1;
 
               } else {
                 local_2c = 0x808080;
               }
             } else {
               local_2c._0_2_ = // player structure + [some offset]
-                CONCAT11((30 - gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt) * 4, ~((30 - iVar3) * 4));
+                CONCAT11((30 - gGT->drivers[iVar14]->damageColorTimer) * 4, ~((30 - iVar3) * 4));
 
               local_2c._0_3_ = // player structure + [some offset]
-                CONCAT12((30 - gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt) * 4, (short) local_2c);
+                CONCAT12((30 - gGT->drivers[iVar14]->damageColorTimer) * 4, (short) local_2c);
 
               local_2c = (u_int) local_2c;
 
               // player structure + [some offset]
-              (gGT->drivers[iVar14]->unk_FrameTimer_relatedToTnt) -= 1;
+              (gGT->drivers[iVar14]->damageColorTimer) -= 1;
             }
             local_50 = local_2c;
             uVar1 = *puVar16;

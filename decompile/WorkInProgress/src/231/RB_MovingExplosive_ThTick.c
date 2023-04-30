@@ -450,7 +450,7 @@ LAB_800ae440:
   // if driver was hit
   else {
     
-	((struct Driver*)t->object)->unk_FrameTimer_relatedToTnt = 0x1e;
+	((struct Driver*)t->object)->damageColorTimer = 0x1e;
 	
     if (((struct Driver*)t->object) == tw->driverTarget) 
 	{

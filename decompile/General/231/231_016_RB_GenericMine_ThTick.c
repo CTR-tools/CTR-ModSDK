@@ -19,7 +19,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   unsigned int model;
   int numFrames;
   int *func;
-  unsigned short param;
+  int param;
   int boolPotion;
   
   gGT = sdata->gGT;
@@ -171,13 +171,13 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
     if (model == 0x47) 
 	{
 	  // make player icon green
-      param = 0xffffffe2;
+      param = -0x1e;
     }
 	
 LAB_800ace88:
     
 	// set icon damage timer
-	d->unk_FrameTimer_relatedToTnt = param;
+	d->damageColorTimer = param;
 	
 LAB_800ad174:
 
@@ -194,7 +194,7 @@ LAB_800ad174:
       RB_Hazard_HurtDriver(d,2,0,2);
 	  
 	  // icon damage timer, draw icon as red
-      d->unk_FrameTimer_relatedToTnt = 0x1e;
+      d->damageColorTimer = 0x1e;
 	  
 	  // set scale (x, y, z) to zero
       d->instTntRecv->scale[0] = 0;
@@ -230,7 +230,7 @@ LAB_800ad174:
 	  // Why does icon turn red in gameplay?
 	  
 	  // icon damage timer, draw icon as green
-	  d->unk_FrameTimer_relatedToTnt = 0xffffffe2;
+	  d->damageColorTimer = -0x1e;
 	  
       goto LAB_800ad174;
     }
@@ -249,7 +249,7 @@ LAB_800ad174:
       if (inst->instDef == 0) 
 	  {
 		// icon damage timer, draw icon as red
-       d->unk_FrameTimer_relatedToTnt = 0x1e;
+       d->damageColorTimer = 0x1e;
 		
 		// give driver to tnt object
         mw->driverTarget = d;

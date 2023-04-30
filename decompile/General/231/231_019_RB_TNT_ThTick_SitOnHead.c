@@ -136,7 +136,7 @@ LAB_800ad5f8:
     RB_Hazard_HurtDriver(mw->driverTarget,2,mw->instParent->thread->object,0);
     
 	// icon damage timer, draw icon as red
-	mw->driverTarget->unk_FrameTimer_relatedToTnt = 0x1e;
+	mw->driverTarget->damageColorTimer = 0x1e;
 	
 	// play 3D sound for TNT explosion
     PlaySound3D(0x3d,inst);
