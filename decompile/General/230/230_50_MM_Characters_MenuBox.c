@@ -661,8 +661,17 @@ void MM_Characters_MenuBox()
 			r60.w = OVR_230.characterSelect_sizeX;
 			r60.h = OVR_230.characterSelect_sizeY;
 			
-			DECOMP_MM_Characters_AnimateColors(&r68, j, ((int)(short)sdata->characterSelectFlags >> j ^ 1U) & 1);
-			MenuBox_DrawOuterRect_HighLevel(&r60, &r68, 0, gGT->backBuffer->otMem.startPlusFour);
+			DECOMP_MM_Characters_AnimateColors
+			(
+				&colorRGBA, j, 
+				
+				// flags of which characters are selected
+				((int)(short)sdata->characterSelectFlags >> j ^ 1U) & 1
+			);
+			
+			MenuBox_DrawOuterRect_HighLevel(
+				&r60, &colorRGBA, 0, 
+				gGT->backBuffer->otMem.startPlusFour);
 			
 			// if player selected a character
 			if (((int)(short)sdata->characterSelectFlags >> j & 1U) != 0) 
@@ -676,15 +685,16 @@ void MM_Characters_MenuBox()
 				{
 					r58.x += 3;
 					r58.y += 2;
-					r68.x = (r68.x << 2) / 5;
-					r68.y = (r68.y << 2) / 5;
 					r58.w -= 6;
 					r58.h -= 4;
 					
-					// unkown
-					//local_66 = local_66 & 0xff00 | (u_short)(u_char)((int)((u_int)(u_char)local_66 << 2) / 5);
+					colorRGBA[0] = (u_char)((int)((u_int)colorRGBA[0] << 2) / 5);
+					colorRGBA[1] = (u_char)((int)((u_int)colorRGBA[1] << 2) / 5);
+					colorRGBA[2] = (u_char)((int)((u_int)colorRGBA[2] << 2) / 5);
 					
-					MenuBox_DrawOuterRect_HighLevel(&r58, &r68, 0, gGT->backBuffer->otMem.startPlusFour);
+					MenuBox_DrawOuterRect_HighLevel(
+						&r58, &colorRGBA, 0, 
+						gGT->backBuffer->otMem.startPlusFour);
 				}
 			}
 			psVar22 = psVar22 + 2;

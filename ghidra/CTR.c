@@ -158,25 +158,40 @@ void FUN_80021894(uint *param_1,uint *param_2,uint *param_3,int param_4)
   // primMem.curr
   puVar1 = *(uint **)(param_4 + 0xc);
   puVar2 = (uint *)0x0;
+  
   // if curr is less or equal than primMem.endMin100
-  if (puVar1 <= *(uint **)(param_4 + 0x10)) {
+  if (puVar1 <= *(uint **)(param_4 + 0x10)) 
+  {
     // set curr six bytes further, that's as much as the primitive will need
     *(uint **)(param_4 + 0xc) = puVar1 + 6;
+	
     // set puVar2 to old curr location
     puVar2 = puVar1;
   }
+  
   // if puVar2 was set to old curr location (safety check)
-  if (puVar2 != (uint *)0x0) {
+  if (puVar2 != (uint *)0x0) 
+  {
+	// rgb+code: PolyF4 (0x28)
     puVar2[1] = *param_2 & 0xffffff | 0x28000000;
+	
+	// xy0
     puVar2[2] = *param_1;
+	
+	// xy1
     puVar2[3] = (int)(short)*(ushort *)param_1 + (int)(short)*(ushort *)(param_1 + 1) & 0xffffU |
                 (int)(short)*(ushort *)((int)param_1 + 2) << 0x10;
-    puVar2[4] = (uint)*(ushort *)param_1 |
+    
+	// xy2
+	puVar2[4] = (uint)*(ushort *)param_1 |
                 ((int)(short)*(ushort *)((int)param_1 + 2) +
                 (int)(short)*(ushort *)((int)param_1 + 6)) * 0x10000;
-    puVar2[5] = (int)(short)*(ushort *)param_1 + (int)(short)*(ushort *)(param_1 + 1) & 0xffffU |
+    
+	// xy3
+	puVar2[5] = (int)(short)*(ushort *)param_1 + (int)(short)*(ushort *)(param_1 + 1) & 0xffffU |
                 ((int)(short)*(ushort *)((int)param_1 + 2) +
                 (int)(short)*(ushort *)((int)param_1 + 6)) * 0x10000;
+				
     *puVar2 = *param_3 & 0xffffff | 0x5000000;
     *param_3 = (uint)puVar2 & 0xffffff;
   }

@@ -2901,6 +2901,7 @@ void FUN_800453e8(undefined2 *param_1,undefined *param_2,void *param_3,int param
 // param1 is a pointer RECT
 // param2 is x offset from edge
 // param3 is y offset from edge
+// param4 is color
 // MenuBox_DrawOuterRect_LowLevel
 void FUN_80045534(short *param_1,short param_2,ushort param_3,undefined4 param_4,short param_5,
                  undefined4 param_6)
