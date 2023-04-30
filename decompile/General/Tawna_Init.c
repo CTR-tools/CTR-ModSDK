@@ -8,9 +8,9 @@ void Tawna_Init(struct GameTracker * gGT)
   char i;
 
   // default podium values
-  gGT->podium_modelIndex_First = 0x7e;
-  gGT->podium_modelIndex_Second = 0x7e;
-  gGT->podium_modelIndex_Third = 0x7e;
+  gGT->podium_modelIndex_First = 0;
+  gGT->podium_modelIndex_Second = 0;
+  gGT->podium_modelIndex_Third = 0;
 
   // STATIC_TAWNA1
   gGT->podium_modelIndex_tawna = 0x8f;
