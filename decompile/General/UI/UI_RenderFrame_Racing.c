@@ -1136,7 +1136,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					partTimeVariable5 = (u_int)tileView->rect.y + ((int)((u_int)tileView->rect.h << 0x10) >> 0x11);
 
 					// FINISHED!
-					pbVar6 = sdata->lngStrings[0x78];
+					pbVar6 = sdata->lngStrings[0x1E];
 				}
 
 				// If you came in last place, or you're in battle
