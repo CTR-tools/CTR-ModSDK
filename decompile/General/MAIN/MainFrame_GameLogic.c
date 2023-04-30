@@ -20,8 +20,6 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 	struct TileView* tileView;
 	int iVar11;
 	struct Thread* psVar12;
-	int iVar13;
-	int iVar14;
 	
 	bVar1 = true;
 	if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
@@ -160,7 +158,6 @@ LAB_80035098:
 		{
 			*(short*)(psVar8->unk_4F0_4F8 + 2) = (short)iVar4;
 		}
-		iVar14 = 0;
 		for (iVar4 = 0; iVar4 < 17; iVar4++)
 		{
 			if
@@ -203,10 +200,8 @@ LAB_80035098:
 					}
 				}
 				
-				ThreadBucketTickAll(gGT->threadBuckets[iVar4].thread);
+				ThTick_RunBucket(gGT->threadBuckets[iVar4].thread);
 			}
-			iVar14 = iVar14 + 0x14;
-			iVar13 = iVar13 + 0x14;
 		}
 		BOTS_UpdateGlobals();
 		GhostBuffer_RecordStats(0);
@@ -218,7 +213,7 @@ LAB_80035098:
 		psVar12 = gGT->threadBuckets[AKUAKU].thread;
 		if (psVar12 != 0)
 		{
-			ThreadBucketTickAll(psVar12);
+			ThTick_RunBucket(psVar12);
 		}
 	}
 	uVar5 = LOAD_IsOpen_RacingOrBattle();

@@ -156,13 +156,13 @@ void DECOMP_CS_Podium_FullScene_Init()
 	// 0 = no relation to param4
 	// 0x300 flag = SmallStackPool
 	// 0xf = camera thread bucket
-	victoryCamThread = (struct Thread *)THREAD_BirthWithObject(0x4030f, (u_int)CS_Podium_Camera_ThTick, &OVR_233.s_victorycam[0], 0);
+	victoryCamThread = (struct Thread *)THREAD_BirthWithObject(0x4030f, (u_int)CS_Podium_Camera_ThTick, 0, 0);
 	
 	// if it allocated correctly
 	if (victoryCamThread != 0) 
 	{
 		// initialize first "short" of the object to zero
-		victoryCamThread->object = 0;
+		*(short*)victoryCamThread->object = 0;
 	}
 
 	// change victory music based on who is first in the podium

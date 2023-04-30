@@ -144,7 +144,7 @@ void LOAD_Hub_Main(struct BigHeader* bigfile);
 void DecalGlobal_EmptyFunc_MainFrame_ResetDB();
 u_int OtherFX_Play_LowLevel(u_int param_1, u_char param_2, u_int param_3);
 void DISPLAY_Blur_Main(struct TileView* tileView, int strength);
-void ThreadBucketTickAll(struct Thread* thread);
+void ThTick_RunBucket(struct Thread* thread);
 void GhostBuffer_RecordStats(short param_1);
 void Particle_UpdateAllParticles();
 void RB_Bubbles_RoosTubes();
