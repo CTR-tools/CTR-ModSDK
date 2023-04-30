@@ -14561,7 +14561,7 @@ LAB_80053260:
             *(int *)(iVar19 + 0x4c0) = *(int *)(iVar19 + 0x4c0) + -1;
 
 			// Check if 231 dll is loaded
-            iVar4 = FUN_800348e8(&local_60);
+            iVar4 = FUN_800348e8();
 
 			// If it is loaded
             if (
