@@ -20,6 +20,8 @@ void AH_WarpPad_LInB(struct Instance* inst)
 	short* arrKeysNeeded;
 	struct Instance* newInst;
 	
+	short* battleTrackArr;
+	
 	gGT = sdata->gGT;
 	
     t =	
@@ -226,11 +228,10 @@ GetKeysRequirement:
 				warppadObj->inst[WPIS_OPEN_PRIZE1] = newInst;
 			}
 			
-BattleTrack:
-			
 			// if token not owned
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) == 0)
 			{
+BattleTrack:
 				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x7D], 0, t);
 				
 				// specular lighting
@@ -308,7 +309,11 @@ SlideColTurboTrack:
 		// battle tracks
 		else if(levelID < 0x19)
 		{
-			goto BattleTrack;
+			battleTrackArr = 0x800aba3c;
+			i = battleTrackArr[levelID - 0x12] + 0x6f;
+			
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, i) == 0)
+				goto BattleTrack;
 		}
 		
 		// gemstone valley
