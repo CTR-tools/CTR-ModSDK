@@ -319,6 +319,13 @@ SlideColTurboTrack:
 		// gemstone valley
 		else
 		{	
+			// bit index of gem
+			i = (levelID - 100) + 0x6a;
+	
+			// if gem is already unlocked, quit
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, i) != 0)
+				return;
+	
 			newInst = INSTANCE_Birth3D(gGT->modelPtr[0x5f], 0, t);
 				
 			// specular lighting
