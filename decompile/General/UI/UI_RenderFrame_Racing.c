@@ -293,7 +293,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					wumpaModel_Pos[1] = hudStructPtr[6].y;
 
 					// if cooldown between items is over
-					if (playerStruct->PickupTimeboxHUD.cooldown == 0)
+					if (playerStruct->PickupWumpaHUD.cooldown == 0)
 					{
 						// deduct from number of queued items to pick up
 						playerStruct->PickupWumpaHUD.numCollected--;
@@ -330,17 +330,17 @@ void DECOMP_UI_RenderFrame_Racing()
 							(int)playerStruct->PickupWumpaHUD.startX,
 							(int)playerStruct->PickupWumpaHUD.startY,
 							hudStructPtr[6].x, hudStructPtr[6].y,
-							playerStruct->PickupTimeboxHUD.cooldown,
+							playerStruct->PickupWumpaHUD.cooldown,
 							5
 						);
 
 						// subtract one from timer
-						partTimeVariable1 = playerStruct->PickupTimeboxHUD.cooldown - 1;
+						partTimeVariable1 = playerStruct->PickupWumpaHUD.cooldown - 1;
 
 						LAB_80053498:
 
 						// set timer value
-						playerStruct->PickupTimeboxHUD.cooldown = partTimeVariable1;
+						playerStruct->PickupWumpaHUD.cooldown = partTimeVariable1;
 					}
 
 					// "wumpaposter" icon group
