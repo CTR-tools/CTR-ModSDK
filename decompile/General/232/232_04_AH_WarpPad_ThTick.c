@@ -63,14 +63,16 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	if(boolOpen == 1)
 	{
 		for(i = 0; i < WPIS_NUM_INSTANCES; i++)
-			instArr[i]->flags &= ~(0x80);
+			if (instArr[i] != 0)
+				instArr[i]->flags &= ~(0x80);
 	}
 	
 	// make instances invisible
 	else
 	{
 		for(i = 0; i < WPIS_NUM_INSTANCES; i++)
-			instArr[i]->flags |= 0x80;
+			if (instArr[i] != 0)
+				instArr[i]->flags |= 0x80;
 	}
 	
 	// This is the red triangle in DCxDemo's
@@ -119,12 +121,13 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			if(sdata->AkuAkuHintState == 0)
 			{
 				// default
-				warppadLNG = 
+				if(levelID < 100)
+					warppadLNG = 
 						sdata->lngStrings
 						[data.metaDataLEV[levelID].name_LNG];
 				
 				// gem cups
-				if(levelID >= 100)
+				else
 					warppadLNG = 
 						sdata->lngStrings
 						[data.AdvCups[levelID-100].lngIndex_CupName];
