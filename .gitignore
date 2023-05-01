@@ -41,3 +41,6 @@ games/settings.json
 
 # Executables
 *.exe
+
+# MyMods folder
+mods/MyMods/*
