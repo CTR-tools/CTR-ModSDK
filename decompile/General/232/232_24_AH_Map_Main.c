@@ -70,9 +70,9 @@ void DECOMP_AH_Map_Main(void)
 	
     UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0],&local_20);
 	
-    AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5],&local_1e);
+    AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5],&local_1e[0]);
 	
-    AH_Map_HubItems(hubPtrs,&local_1e);
+    AH_Map_HubItems(hubPtrs,&local_1e[0]);
 	
     UI_Map_DrawMap(
                 gGT->ptrIcons[3],

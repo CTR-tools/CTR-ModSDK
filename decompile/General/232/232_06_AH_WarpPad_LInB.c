@@ -46,6 +46,8 @@ void AH_WarpPad_LInB(struct Instance* inst)
 	t->inst = inst;
 	
 	t->funcThDestroy = AH_WarpPad_ThDestroy;
+	
+	// used by AH_Map_Warppads
 	t->modelIndex = 0;
 	
 	// make invisible
@@ -151,9 +153,11 @@ GetKeysRequirement:
 	if(unlockItem_numOwned >= unlockItem_numNeeded)
 	{		
 		warppadObj->digit1s = 0;
+		
+		// used by AH_Map_Warppads
 		t->modelIndex = 1;
 		
-		// if beam modele exists
+		// if beam model exists
 		if(gGT->modelPtr[0x7B] != 0)
 		{
 			newInst = INSTANCE_Birth3D(gGT->modelPtr[0x7B], 0, t);
@@ -228,6 +232,13 @@ GetKeysRequirement:
 				warppadObj->inst[WPIS_OPEN_PRIZE1] = newInst;
 			}
 			
+			// trophy owned
+			else
+			{
+				// used by AH_Map_Warppads
+				t->modelIndex = 2;
+			}
+			
 			// if token not owned
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) == 0)
 			{
@@ -267,6 +278,14 @@ SlideColTurboTrack:
 			if(levelID < 0x12) // check this cause of "goto BattleTrack"
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x16)) == 0)
 			{
+				// used by AH_Map_Warppads
+				if(levelID<0x10)
+					t->modelIndex = 3;
+				
+				// SlideCol/TurboTrack
+				else
+					t->modelIndex = 4;
+				
 				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x61], 0, t);
 				
 				// relic blue
@@ -303,17 +322,23 @@ SlideColTurboTrack:
 		// slide col, turbo track
 		else if(levelID < 0x12)
 		{
+			// used by AH_Map_Warppads
+			t->modelIndex = 2;
+			
 			goto SlideColTurboTrack;
 		}
 		
 		// battle tracks
 		else if(levelID < 0x19)
-		{
+		{			
 			battleTrackArr = 0x800aba3c;
 			i = battleTrackArr[levelID - 0x12] + 0x6f;
 			
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, i) == 0)
 				goto BattleTrack;
+			
+			else
+				t->modelIndex = 2;
 		}
 		
 		// gemstone valley
@@ -324,8 +349,13 @@ SlideColTurboTrack:
 	
 			// if gem is already unlocked, quit
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, i) != 0)
+			{
+				// used by AH_Map_Warppads
+				t->modelIndex = 2;
+				
 				return;
-	
+			}
+			
 			newInst = INSTANCE_Birth3D(gGT->modelPtr[0x5f], 0, t);
 				
 			// specular lighting
