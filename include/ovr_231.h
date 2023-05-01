@@ -56,7 +56,7 @@ struct TrackerWeapon
 
 	// 0x16
 	// & 1 - used 10 wumpa fruit
-	short flags;
+	u_short flags;
 
 	// 0x18
 	short dir[3];
@@ -185,7 +185,7 @@ struct MineWeapon
 	// 0x28
 	// 1 - red beaker
 	// 2 - thrown (papu or komodo joe) (tnt/potion)
-	short extraFlags;
+	u_short extraFlags;
 	
 	// 0x2a
 	short cooldown; 
@@ -198,7 +198,7 @@ struct Baron
 	char unused[0x24];
 	
 	// 0x24
-	int soundID_flags;
+	u_int soundID_flags;
 	
 	// 0x28
 	// unused, for baron

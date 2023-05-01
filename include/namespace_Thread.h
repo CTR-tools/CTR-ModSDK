@@ -88,7 +88,7 @@ struct Thread
 	// & 0xXXX0000 = size of object allocated
 
 	// 0x1c
-	int flags;
+	u_int flags;
 
 	// 0x20
 	int timesDestroyed;

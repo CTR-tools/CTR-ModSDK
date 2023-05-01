@@ -23,10 +23,10 @@ struct Particle
 	short framesLeftInLife;
 
 	// 0x12 (short)
-	short flagsSetColor;
+	u_short flagsSetColor;
 
 	// 0x14
-	short flagsAxis; // old notes???
+	u_short flagsAxis; // old notes???
 	
 	// 0x16
 	short unk16;
@@ -90,7 +90,7 @@ struct ParticleEmitter
 	
 			// 0x8
 			// flags, passed to SetColors
-			short particle_colorFlags;
+			u_short particle_colorFlags;
 	
 			// 0xA
 			short particle_lifespan;

@@ -381,7 +381,7 @@ struct GameTracker
 	char bool_DrawOTag_InProgress;
 
 	// 1d31
-	char hudFlags;
+	u_char hudFlags;
 
 	// 1d32
 	char boolDemoMode;
@@ -423,7 +423,7 @@ struct GameTracker
 	int lapIndexNewBest;
 
 	// 1d44
-	int unknownFlags_1d44;
+	u_int unknownFlags_1d44;
 
 	// 1d48
 	char unknown_1d48_notFound;
@@ -522,7 +522,7 @@ struct GameTracker
 	// 0b0101 for some on team 1 and some on team 3
 	// 0b1111 for all four teams active
 	// etc
-	int teamFlags;
+	u_int teamFlags;
 
 	// 1ddc
 	int numTeams;

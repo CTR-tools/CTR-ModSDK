@@ -145,7 +145,7 @@ struct InstDrawPerPlayer
 
 	// all get set in FUN_80070950
 	// 0xb8 - copy of 0x28 (prev frame?) (flags per player?)
-	int unkb8[2];
+	u_int unkb8[2];
 
 	// 0xc0 - origin of cur frame
 	// 0xc4 - origin of next frame

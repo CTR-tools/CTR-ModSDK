@@ -57,7 +57,7 @@ struct ChannelStats
 	struct ChannelStats* prev;
 
 	// 0x8
-	char flags;
+	u_char flags;
 
 	// 0x9
 	char channelID;

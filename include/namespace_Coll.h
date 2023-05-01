@@ -11,7 +11,7 @@ struct BspSearchVertex
 	
 	// 0x6
 	// FUN_8001ef50
-	short flags;
+	u_short flags;
 	
 	// 0x8
 	short normalVec[3];
