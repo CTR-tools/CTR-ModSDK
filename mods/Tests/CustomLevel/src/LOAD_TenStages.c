@@ -278,8 +278,8 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			if (sdata->XA_State == 4) return loadingStage;
 
 			// dont load end-of-race in these modes:
-			//	cup, credits, lev swap, cutscene, main menu
-			if ((gGT->gameMode2 & (CUP_ANY_KIND | LEV_SWAP | CREDITS)) != 0) break;
+			//	credits, lev swap, cutscene, main menu
+			if ((gGT->gameMode2 & (LEV_SWAP | CREDITS)) != 0) break;
 			if ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) != 0) break;
 
 			// === pick overlay to load ===
