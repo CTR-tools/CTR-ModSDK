@@ -584,6 +584,9 @@ void AH_WarpPad_ThTick(struct Thread* t)
 		// variable reuse, get track speed champion
 		champID = data.metaDataLEV[levelID].characterID_Champion;
 		
+		// default
+		champSlot = 0;
+		
 		// If Speed Champion is on the track (Crash-Pura)
 		// and is not the same characterID as Player 1
 		if(
