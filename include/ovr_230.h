@@ -61,7 +61,7 @@ struct CharacterSelectMeta
 	
 	// 0x8
 	short characterID;
-	short unlockFlags;
+	u_short unlockFlags;
 	
 	// 0xC -- size
 };
@@ -206,7 +206,7 @@ extern struct
 		short frameIndex_startMoving;
 		short unk2;
 		
-		short boolApplyFlag;
+		u_short boolApplyFlag;
 		
 	} titleInstances[6];
 	
@@ -237,7 +237,7 @@ extern struct
 	int cheatButtonEntry[10];
 	
 	// 800B4D2C
-	short cupDifficultyUnlockFlags[4];
+	u_short cupDifficultyUnlockFlags[4];
 	
 	// 800B4D34
 	short cupDifficultyLngIndex[4];
@@ -370,7 +370,7 @@ extern struct
 	short cupSel_StarColorIndex[4];
 	
 	// 800b5634
-	short cupSel_StarUnlockFlag[4];
+	u_short cupSel_StarUnlockFlag[4];
 	
 	// 800b563c
 	int cupSel_Color; // of what?
@@ -425,7 +425,7 @@ extern struct
 	int battleWeaponsEnabled[22];
 	
 	// 800b58a8
-	int FlagesGameMode1_BattleType[3];
+	u_int FlagesGameMode1_BattleType[3];
 	
 	// 800b58b4
 	char time_3_6_9[4];

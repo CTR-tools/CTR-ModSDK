@@ -116,7 +116,7 @@ struct SaveObj
 	// 0x6
 	short scanlineFrame;
 	// 0x8
-	char hudFlagBackup;
+	u_char hudFlagBackup;
 	
 	// total size unk
 };

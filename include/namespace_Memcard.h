@@ -309,7 +309,7 @@ struct GameOptions
 
 	// 8008fb9c
 	// backup of gameMode1 flag
-	int gameMode1_0xf00;
+	u_int gameMode1_0xf00;
 
 #if BUILD >= UsaRetail
 	// 8008fba0

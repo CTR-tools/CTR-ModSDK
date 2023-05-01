@@ -110,7 +110,7 @@ struct QuadBlock
 	short index[9];
 
 	// 0x12
-	short quadFlags;
+	u_short quadFlags;
 
 	// 0x14
 	int draw_order_low;
@@ -152,7 +152,7 @@ struct QuadBlock
 struct VisData
 {
 	// 0x0
-	short flag;
+	u_short flag;
 
 	// 0x2
 	short id;
@@ -468,7 +468,7 @@ struct Level
 
 	// 0xDC
 	// & 2 = mask grab when underwater
-	int configFlags;
+	u_int configFlags;
 
 	// 0xE0
 	char* build_start;

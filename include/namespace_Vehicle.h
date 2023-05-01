@@ -456,7 +456,7 @@ struct Driver
 	char skidmarks[0x200];
 
 	// 0x2C4
-	int skidmarkEnableFlags;
+	u_int skidmarkEnableFlags;
 
 	// actions:
 	// 0x00000001 - touching quadblock
@@ -718,6 +718,7 @@ struct Driver
 	short turbo_audioCooldown;
 
 	// 0x3E2
+	// needs to be signed to preserve saffi-fire bug
 	short reserves;
 
 	// 0x3E4

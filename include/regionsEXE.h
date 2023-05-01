@@ -2394,7 +2394,7 @@ struct Data
 		// & 2
 		// & 4 - dont count time rubbing on wall
 		// & 8
-		int flags;
+		u_int flags;
 
 		// 0x8
 		int unk_0x8;
@@ -2610,7 +2610,7 @@ struct sData
 	int LevClearColorRGB[3];
 
 	// 8008D000
-	int HudAndDebugFlags;
+	u_int HudAndDebugFlags;
 
 	// 8008D004
 	char unk_CTR_MatrixToRot_table[0x10];
@@ -2625,10 +2625,10 @@ struct sData
 	void* pause_VRAM_Backup_PrimMem[6];
 
 	// 8008d030
-	int pause_backup_renderFlags;
+	u_int pause_backup_renderFlags;
 
 	// 8008d034
-	short pause_backup_hudFlags;
+	u_short pause_backup_hudFlags;
 
 	// 8008d036
 	// (0,1,2,3)
@@ -3234,13 +3234,13 @@ struct sData
 		// 8008d564
 		// one byte per player
 		// Battle and VS
-		int Flags_PressX;
+		u_int Flags_PressX;
 
 		// 8008d568
 		// Normal flags are in registers,
 		// while 2P flags are from RAM
-		int textFlags1_2P;
-		int textFlags2_2P;
+		u_int textFlags1_2P;
+		u_int textFlags2_2P;
 
 	} Battle_EndOfRace;
 
@@ -3490,7 +3490,7 @@ struct sData
 	// & 1 for garage door + tiger temple
 	// & 2 for hub doors
 	// see 8001fc40
-	int doorAccessFlags;
+	u_int doorAccessFlags;
 
 	// 8008bb70 -- sep3
 	// 8008d72c -- UsaRetail
@@ -3849,7 +3849,7 @@ struct sData
 	int HwCARD_EvSpIOE;
 
 	// 8008d8cc
-	int memcardStatusFlags;
+	u_int memcardStatusFlags;
 
 	// 8008d8d0
 	int crc16_checkpoint_status;
@@ -3949,7 +3949,7 @@ struct sData
 	// 8008d934
 	// one bit for each player that has
 	// pressed X to select a character
-	int characterSelectFlags;
+	u_int characterSelectFlags;
 
 	// 8008d938
 	// next is 0x236 or 0x237
@@ -4044,7 +4044,7 @@ struct sData
 	int rcnt_elapsedUnits_betweenVsyncs;
 
 	// 8008d98C
-	int flags_timeTrialEndOfRace;
+	u_int flags_timeTrialEndOfRace;
 
 	// 8008d990
 	int wumpaShineTheta;
@@ -4338,7 +4338,7 @@ struct sData
 		// 8008fc20
 		int animationID;
 		int animationFrame;
-		int instanceFlags;
+		u_int instanceFlags;
 
 	} GhostRecording;
 
@@ -4353,7 +4353,7 @@ struct sData
 		short bankID;
 
 		// 0x2
-		short flags;
+		u_short flags;
 
 		// min and max are ranges used in FUN_80029730,
 		// range for what kind of data?
@@ -4380,7 +4380,7 @@ struct sData
 	// & 0x10 - pitch
 	// & 0x20 - reverb voice
 	// & 0x40 - volume
-	int ChannelUpdateFlags[NUM_SFX_CHANNELS];
+	u_int ChannelUpdateFlags[NUM_SFX_CHANNELS];
 
 	// 8008fccc
 	// backed up every time Curr changes
