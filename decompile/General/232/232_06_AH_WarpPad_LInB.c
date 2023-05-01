@@ -128,7 +128,7 @@ GetKeysRequirement:
 		// count number of gems owned
 		unlockItem_numOwned = 0;
 		for(i = 0; i < 5; i++)
-			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x6a)) != 0)
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i + 0x6a)) != 0)
 				unlockItem_numOwned++;
 	}
 	
