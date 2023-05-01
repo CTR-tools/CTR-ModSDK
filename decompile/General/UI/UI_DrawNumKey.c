@@ -10,7 +10,7 @@ void DECOMP_UI_DrawNumKey(int posX, int posY)
 	
 	gGT = sdata->gGT;
 	num = gGT->currAdvProfile.numKeys;
-	if((gGT->gameMode2 & 0x1000000) != 0) num--;
+	if((gGT->gameMode2 & 0x2000000) != 0) num--;
 	
 	sprintf(&string[0], &sdata->s_longInt[0], num);
 	DecalFont_DrawLine(&string[0], posX+0xD, posY, FONT_BIG, ORANGE);

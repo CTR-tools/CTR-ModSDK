@@ -10,7 +10,7 @@ void DECOMP_UI_DrawNumTrophy(int posX, int posY)
 	
 	gGT = sdata->gGT;
 	num = gGT->currAdvProfile.numTrophies;
-	if((gGT->gameMode2 & 0x1000000) != 0) num--;
+	if((gGT->gameMode2 & 0x4000000) != 0) num--;
 	
 	sprintf(&string[0], &sdata->s_longInt[0], num);
 	DecalFont_DrawLine(&string[0], posX+0xD, posY, FONT_BIG, ORANGE);
