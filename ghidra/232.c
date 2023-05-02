@@ -5234,7 +5234,14 @@ void FUN_800b1a18(undefined4 param_1,int param_2,short *param_3)
   
   iVar8 = 0;
   iVar7 = 0x7fffffff;
-  if (param_2 != 0) {
+  
+  // 0 - locked
+  // 1 - open for trophy
+  // 2 - unlocked all
+  // 3 - open for relic/token
+  // 4 - purple token or SlideCol/TurboTrack
+  if (param_2 != 0) 
+  {
     do {
       bVar1 = false;
 	  
@@ -5242,11 +5249,18 @@ void FUN_800b1a18(undefined4 param_1,int param_2,short *param_3)
       iVar6 = *(int *)(param_2 + 0x34);
 	  
       bVar2 = false;
-      switch(*(undefined2 *)(param_2 + 0x44)) {
-      case 0:
+      
+	  // thread->modelIndex
+	  switch(*(undefined2 *)(param_2 + 0x44)) 
+	  {
+      
+	  // grey, locked
+	  case 0:
         bVar2 = true;
         iVar5 = 0x17;
         break;
+		
+	  // trophy
       case 1:
         iVar5 = 5;
         if ((*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 2) != 0) {
@@ -5254,15 +5268,23 @@ void FUN_800b1a18(undefined4 param_1,int param_2,short *param_3)
         }
         bVar1 = true;
         break;
+		
+	  // red
       case 2:
         iVar5 = 3;
         break;
+		
+	  // yellow
       case 3:
         iVar5 = 0xe;
         break;
+		
+	  // rainbow
       case 4:
         iVar5 = (*(uint *)(PTR_DAT_8008d2ac + 0x1cec) >> 1 & 7) + 5;
         break;
+		
+	  // black - unused
       default:
         bVar2 = true;
         iVar5 = 0x15;

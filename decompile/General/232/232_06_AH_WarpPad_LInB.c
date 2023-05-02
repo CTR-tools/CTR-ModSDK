@@ -47,7 +47,13 @@ void AH_WarpPad_LInB(struct Instance* inst)
 	
 	t->funcThDestroy = AH_WarpPad_ThDestroy;
 	
-	// used by AH_Map_Warppads
+	// 0 - locked
+	// 1 - open for trophy
+	// 2 - unlocked all
+	// 3 - open for relic/token
+	// 4 - purple token or SlideCol/TurboTrack
+	
+	// locked
 	t->modelIndex = 0;
 	
 	// make invisible
@@ -154,7 +160,7 @@ GetKeysRequirement:
 	{		
 		warppadObj->digit1s = 0;
 		
-		// used by AH_Map_Warppads
+		// open for trophy
 		t->modelIndex = 1;
 		
 		// if beam model exists
@@ -235,13 +241,16 @@ GetKeysRequirement:
 			// trophy owned
 			else
 			{
-				// used by AH_Map_Warppads
+				// unlocked all
 				t->modelIndex = 2;
 			}
 			
 			// if token not owned
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) == 0)
 			{
+				// open for relic/token
+				t->modelIndex = 3;
+				
 BattleTrack:
 				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x7D], 0, t);
 				
@@ -278,7 +287,7 @@ SlideColTurboTrack:
 			if(levelID < 0x12) // check this cause of "goto BattleTrack"
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x16)) == 0)
 			{
-				// used by AH_Map_Warppads
+				// open for relic/token
 				if(levelID<0x10)
 					t->modelIndex = 3;
 				
@@ -322,7 +331,7 @@ SlideColTurboTrack:
 		// slide col, turbo track
 		else if(levelID < 0x12)
 		{
-			// used by AH_Map_Warppads
+			// already unlocked
 			t->modelIndex = 2;
 			
 			goto SlideColTurboTrack;
@@ -334,11 +343,16 @@ SlideColTurboTrack:
 			battleTrackArr = 0x800aba3c;
 			i = battleTrackArr[levelID - 0x12] + 0x6f;
 			
-			if(CHECK_ADV_BIT(sdata->advProgress.rewards, i) == 0)
-				goto BattleTrack;
+			// already unlocked
+			t->modelIndex = 2;
 			
-			else
-				t->modelIndex = 2;
+			if(CHECK_ADV_BIT(sdata->advProgress.rewards, i) == 0)
+			{	
+				// rainbow
+				t->modelIndex = 4;
+				
+				goto BattleTrack;
+			}
 		}
 		
 		// gemstone valley
@@ -350,11 +364,14 @@ SlideColTurboTrack:
 			// if gem is already unlocked, quit
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, i) != 0)
 			{
-				// used by AH_Map_Warppads
+				// beaten
 				t->modelIndex = 2;
 				
 				return;
 			}
+			
+			// rainbow color
+			t->modelIndex = 4;
 			
 			newInst = INSTANCE_Birth3D(gGT->modelPtr[0x5f], 0, t);
 				
