@@ -485,7 +485,7 @@ void MM_Characters_MenuBox()
 		(
 			// If Icon is unlocked by default,
 			// dont use iVar8, must be interpeted as "short"
-			(csm_Active->unlockFlags == -1) ||
+			((short)csm_Active->unlockFlags == -1) ||
 			
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
@@ -626,7 +626,7 @@ void MM_Characters_MenuBox()
 		if
 		(
 			// If Icon is unlocked (from array of icons)
-			(csm_Active[i].unlockFlags == -1) ||
+			((short)csm_Active[i].unlockFlags == -1) ||
 			
 			// if character is unlocked
 			// from 4-byte variable that handles all rewards
