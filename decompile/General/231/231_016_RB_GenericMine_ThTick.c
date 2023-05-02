@@ -116,6 +116,17 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   
   // if no collision
   if (coll == 0) goto LAB_800ad17c;
+  
+  // get driver who hit tnt (or nitro) 
+  // from the object attached to thread
+  d = coll->thread->object;
+  
+  if (((mw->crateInst != 0) && (mw->crateInst->thread != 0)) &&
+     (mw->crateInst->thread->object != 0)) 
+  {
+    crate = mw->crateInst->thread->object;
+    crate->boolPauseCooldown = 0;
+  }
 
   // red beaker or green beaker
   if (boolPotion != 0)
@@ -348,17 +359,6 @@ LAB_800ad17c:
   // if mineWeapon->boolDestroyed == 0
   if (mw->boolDestroyed == 0) {
     return;
-  }
-  
-  // get driver who hit tnt (or nitro) 
-  // from the object attached to thread
-  d = coll->thread->object;
-  
-  if (((mw->crateInst != 0) && (mw->crateInst->thread != 0)) &&
-     (mw->crateInst->thread->object != 0)) 
-  {
-    crate = mw->crateInst->thread->object;
-    crate->boolPauseCooldown = 0;
   }
   
   // if thread is dead, quit function
