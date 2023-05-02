@@ -398,6 +398,8 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	
 	for(i = 0; i < 3; i++)
 	{
+		warppadObj->spinRot_Prize[2] = 0x155;
+		
 		if(instArr[WPIS_OPEN_PRIZE1+i] != 0)
 		{
 			AH_WarpPad_SpinRewards(
