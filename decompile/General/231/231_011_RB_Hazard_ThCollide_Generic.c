@@ -27,7 +27,7 @@ int RB_Hazard_ThCollide_Generic(struct Thread* thread)
 			
 			if(crateObj != 0)
 			{
-				crateObj->boolPauseCooldown = 1;
+				crateObj->boolPauseCooldown = 0;
 			}
 		}
 	}
