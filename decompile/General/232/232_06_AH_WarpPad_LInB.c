@@ -160,9 +160,6 @@ GetKeysRequirement:
 	{		
 		warppadObj->digit1s = 0;
 		
-		// open for trophy
-		t->modelIndex = 1;
-		
 		// if beam model exists
 		if(gGT->modelPtr[0x7B] != 0)
 		{
@@ -226,9 +223,15 @@ GetKeysRequirement:
 	
 		if(levelID < 0x10)
 		{
+			// unlocked all
+			t->modelIndex = 2;
+			
 			// if trophy not owned
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) == 0)
 			{
+				// open for trophy
+				t->modelIndex = 1;
+				
 				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x62], 0, t);
 				
 				newInst->scale[0] = 0x2800;
@@ -238,19 +241,12 @@ GetKeysRequirement:
 				warppadObj->inst[WPIS_OPEN_PRIZE1] = newInst;
 			}
 			
-			// trophy owned
-			else
-			{
-				// unlocked all
-				t->modelIndex = 2;
-			}
-			
 			// if token not owned
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) == 0)
 			{
 				// open for relic/token
-				t->modelIndex = 3;
-				
+				if(t->modelIndex != 1)
+					t->modelIndex = 3;
 BattleTrack:
 				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x7D], 0, t);
 				
@@ -287,13 +283,13 @@ SlideColTurboTrack:
 			if(levelID < 0x12) // check this cause of "goto BattleTrack"
 			if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x16)) == 0)
 			{
-				// open for relic/token
-				if(levelID<0x10)
-					t->modelIndex = 3;
-				
 				// SlideCol/TurboTrack
-				else
+				if(levelID>=0x10)
 					t->modelIndex = 4;
+				
+				// open for token/relic
+				else if(t->modelIndex != 1)
+					t->modelIndex = 3;
 				
 				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x61], 0, t);
 				
