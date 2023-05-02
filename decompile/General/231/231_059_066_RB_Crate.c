@@ -4,8 +4,14 @@
 // RB_CrateAny_ThTick_Explode at 800b3d04,
 // and add new LinCs to zGlobalMetaModels.c
 
-void RB_CrateAny_CheckBlockage(struct Crate* crateObj, int hitModelID_cast)
+void RB_CrateAny_CheckBlockage(struct Thread* crateTh, int hitModelID_cast, struct Thread* mineTh)
 {
+	struct Crate* crateObj;
+	struct MineWeapon* mw;
+	
+	crateObj = crateTh->object;
+	mw = mineTh->object;
+	
 	// if model is on top of crate
 	if(
 		(hitModelID_cast == 6) || // nitro
@@ -13,12 +19,12 @@ void RB_CrateAny_CheckBlockage(struct Crate* crateObj, int hitModelID_cast)
 		(hitModelID_cast == 0x46) || // red beaker
 		(hitModelID_cast == 0x47) // green beaker
 	)
-	{
-		// how does this work?
-		// still regrows with driver on top?
-		
+	{	
 		// prevent crate from growing back
 		crateObj->boolPauseCooldown = 1;
+		
+		// store crateInst
+		mw->crateInst = crateTh->inst;
 	}
 }
 
@@ -344,7 +350,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 	sps->Input1.modelID = hitModelID_cast;
 	
 	// block if needed
-	RB_CrateAny_CheckBlockage(crateObj, hitModelID_cast);
+	RB_CrateAny_CheckBlockage(crateThread, hitModelID_cast, sps->Union.ThBuckColl.thread);
 	
 	// means no thread born?
 	return 0;
@@ -426,7 +432,7 @@ int DECOMP_RB_CrateFruit_LInC(
 	sps->Input1.modelID = hitModelID_cast;
 	
 	// block if needed
-	RB_CrateAny_CheckBlockage(crateObj, hitModelID_cast);
+	RB_CrateAny_CheckBlockage(crateThread, hitModelID_cast, sps->Union.ThBuckColl.thread);
 	
 	// means no thread born?
 	return 0;
