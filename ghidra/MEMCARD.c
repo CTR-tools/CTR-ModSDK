@@ -623,7 +623,7 @@ int FUN_8003ddac(void)
 		// allow the "switch" statement to go to stage 2
         DAT_8008d404 = 2;
 
-		// do something wtih both memcards if they're present
+		// MEMCARD_SkipEvents do something wtih both memcards if they're present, 
         FUN_8003db54();
 
 		// ??
