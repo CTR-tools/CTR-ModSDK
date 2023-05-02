@@ -38,7 +38,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	
 	gGT = sdata->gGT;
 	driver = gGT->drivers[0];
-	bitIndex = hub[gGT->levelID]+0x6f;
+	bitIndex = hub[gGT->levelID-0x12]+0x6f;
 	
 	adv = &sdata->advProgress;
 	boolLose = driver->numCrystals < gGT->numCrystalsInLEV;
