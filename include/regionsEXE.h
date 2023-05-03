@@ -3031,7 +3031,7 @@ struct sData
 
 	// 8008d40c
 	// memcard file descriptor, returned from "open(xxx)"
-	int memcard_fileOpen;
+	int memcard_fd;
 
 	// 8008D410
 	int memcard_remainingAttempts;

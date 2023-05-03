@@ -22,9 +22,9 @@ uint8_t MEMCARD_Load(param1, param2, param3, param4, param5)
         // 0x8000 = FASYNC, for asynchronous I/O
         // 0x0001 = FREAD, for reading
 
-        sdata->memcard_fileOpen = open(sdata->s_bu00_BASCUS_94426_slots, 0x8001);
+        sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, 0x8001);
 
-        if (sdata->memcard_fileOpen == -1)
+        if (sdata->memcard_fd == -1)
         {
             MEMCARD_CloseFile();
             return 6;

@@ -54,21 +54,21 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
         // 0x200 is FCREAT, create if it does not exist,
         // DAT_800857a3 handles read or write
 
-        sdata->memcard_fileOpen = open(sdata->s_bu00_BASCUS_94426_slots, (unsigned int)DAT_800857a3 << 0x10 | 0x200);
+        sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, (unsigned int)DAT_800857a3 << 0x10 | 0x200);
 
-        if (sdata->memcard_fileOpen != -1)
+        if (sdata->memcard_fd != -1)
         {
-            close(sdata->memcard_fileOpen);
-            sdata->memcard_fileOpen = -1;
+            close(sdata->memcard_fd);
+            sdata->memcard_fd = -1;
         }
 
         // 0x8002, in sys/fcntl.h
         // 0x8000 = FASYNC, for asynchronous I/O
         // 0x0001 = FWRITE, for writing
 
-        sdata->memcard_fileOpen = open(sdata->s_bu00_BASCUS_94426_slots, 0x8002);
+        sdata->memcard_fd = open(sdata->s_bu00_BASCUS_94426_slots, 0x8002);
 
-        if (sdata->memcard_fileOpen != -1)
+        if (sdata->memcard_fd != -1)
         {
             sdata->unk_card_8008D404 = 9;
 
