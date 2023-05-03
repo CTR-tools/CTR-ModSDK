@@ -89,7 +89,7 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 				case 5:
 					itemSet = driver->driverRank;
 					// 5th rank is 4th Itemset
-					if (itemSet == 5) itemSet = ITEMSET_BattleDefault;
+					if (itemSet == 4) itemSet = 3;
 					break;
 
 				// 2P Arcade
