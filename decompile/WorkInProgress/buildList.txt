@@ -12,3 +12,12 @@ common, exe, MEMCARD_WaitForSlot1Event, 0x0, src/MEMCARD/MEMCARD_WaitForSlot1Eve
 common, exe, MEMCARD_Format, 0x0, src/MEMCARD/MEMCARD_Format.c
 common, exe, MEMCARD_EraseFile, 0x0, src/MEMCARD/MEMCARD_EraseFile.c
 common, exe, MEMCARD_SkipEvents, 0x0, src/MEMCARD/MEMCARD_SkipEvents.c
+common, exe, MEMCARD_8003e59c, 0x0, src/MEMCARD/MEMCARD_8003e59c.c
+// TODO
+// common, exe, MEMCARD_FindFirstGhost, 0x0, src/MEMCARD/MEMCARD_FindFirstGhost.c
+// common, exe, MEMCARD_FindNextGhost, 0x0, src/MEMCARD/MEMCARD_FindNextGhost.c
+// common, exe, MEMCARD_Save, 0x0, src/MEMCARD/MEMCARD_Save.c
+// common, exe, MEMCARD_Load, 0x0, src/MEMCARD/MEMCARD_Load.c
+// common, exe, MEMCARD_Init, 0x0, src/MEMCARD/MEMCARD_Init.c 
+// common, exe, MEMCARD_unknown, 0x0, src/MEMCARD/MEMCARD_unknown.c
+// End of MEMCARD
