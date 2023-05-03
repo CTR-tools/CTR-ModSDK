@@ -1,6 +1,6 @@
 #include <common.h>
 
-uint8_t MEMCARD_WriteFile(long start_offset, uint8_t *data, long end_offset)
+uint8_t MEMCARD_WriteFile(int start_offset, uint8_t *data, int end_offset)
 
 {
     // NOTE: See MEMCARD_ReadFile note

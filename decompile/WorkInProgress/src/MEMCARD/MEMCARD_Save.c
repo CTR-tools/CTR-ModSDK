@@ -1,7 +1,7 @@
 #include <common.h>
 
 uint8_t MEMCARD_Save(int slotIdx, char *name,
-                     char *param_3, uint8_t ptrData, int fileSize,
+                     char *param_3, uint8_t* ptrData, int fileSize,
                      unsigned int param_6)
 
 {
