@@ -18,7 +18,7 @@ uint8_t MEMCARD_EraseFile(int slotIdx, char *srcString)
     char name[64];
     MEMCARD_StringSet(*name, slotIdx, srcString);
 
-    sdata->unk_card_8008D404 = (erase(name) == 1) ? 0xe : 0xd;
+    sdata->unk_card_8008D404 = (erase(*name) == 1) ? 0xe : 0xd;
 
     return sdata->unk_card_8008D404 ? 1 : 7;
 }
