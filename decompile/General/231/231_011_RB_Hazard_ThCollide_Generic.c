@@ -19,16 +19,15 @@ int RB_Hazard_ThCollide_Generic(struct Thread* thread)
 	
 	if(crateInst != 0)
 	{
-		thread = crateInst->thread;
+		// be careful, dont overwrite local variable 
+		// "thread", or else you'll kill the wrong thread
+		// at the end of the function
 		
-		if(thread != 0)
-		{
-			crateObj = (struct Crate*)thread->object;
+		crateObj = (struct Crate*)crateInst->thread->object;
 			
-			if(crateObj != 0)
-			{
-				crateObj->boolPauseCooldown = 0;
-			}
+		if(crateObj != 0)
+		{
+			crateObj->boolPauseCooldown = 0;
 		}
 	}
 	
