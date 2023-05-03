@@ -54,7 +54,7 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
         // 0x200 is FCREAT, create if it does not exist,
         // DAT_800857a3 handles read or write
 
-        sdata->memcard_fileOpen = open(&sdata->s_bu00_BASCUS_94426_slots, (unsigned int)DAT_800857a3 << 0x10 | 0x200);
+        sdata->memcard_fileOpen = open(sdata->s_bu00_BASCUS_94426_slots, (unsigned int)DAT_800857a3 << 0x10 | 0x200);
 
         if (sdata->memcard_fileOpen != -1)
         {
@@ -66,7 +66,7 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
         // 0x8000 = FASYNC, for asynchronous I/O
         // 0x0001 = FWRITE, for writing
 
-        sdata->memcard_fileOpen = open(&sdata->s_bu00_BASCUS_94426_slots, 0x8002);
+        sdata->memcard_fileOpen = open(sdata->s_bu00_BASCUS_94426_slots, 0x8002);
 
         if (sdata->memcard_fileOpen != -1)
         {
@@ -74,7 +74,7 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 
             // write to memory card, given pointer to icon
             // and the size of the icon, psyq hand
-            return MEMCARD_WriteFile(0, &Data->memcardIcon_PsyqHand, sdata->memcardIconSize);
+            return MEMCARD_WriteFile(0, Data->memcardIcon_PsyqHand, sdata->memcardIconSize);
         }
 
         MEMCARD_CloseFile(0);

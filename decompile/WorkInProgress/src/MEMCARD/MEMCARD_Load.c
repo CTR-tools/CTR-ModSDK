@@ -2,6 +2,8 @@
 
 // ghidra couldn't detect parameters,
 // because they were passed directly from this func to another
+// TODO: name params
+// TODO: proper flags from #defines
 uint8_t MEMCARD_Load(param1, param2, param3, param4, param5)
 
 {
@@ -10,8 +12,8 @@ uint8_t MEMCARD_Load(param1, param2, param3, param4, param5)
     if (
         (sdata->unk_card_8008D404 == 0) &&
 
-         // this will always be true
-         MEMCARD_NewTask(param1, param2, param3, param4, param5) == 0)
+        // this will always be true
+        MEMCARD_NewTask(param1, param2, param3, param4, param5) == 0)
     {
         // 800990a4
         // string for directory and file of save that is in use
@@ -20,7 +22,7 @@ uint8_t MEMCARD_Load(param1, param2, param3, param4, param5)
         // 0x8000 = FASYNC, for asynchronous I/O
         // 0x0001 = FREAD, for reading
 
-        sdata->memcard_fileOpen = open(&sdata->s_bu00_BASCUS_94426_slots, 0x8001);
+        sdata->memcard_fileOpen = open(sdata->s_bu00_BASCUS_94426_slots, 0x8001);
 
         if (sdata->memcard_fileOpen == -1)
         {

@@ -3027,10 +3027,10 @@ struct sData
 	int unk_card_8008D404;
 
 	// 8008d408
-	int memcard_ptrStart;
+	uint8_t* memcard_ptrStart;
 
 	// 8008d40c
-	// returned from "open(xxx)"
+	// memcard file descriptor, returned from "open(xxx)"
 	int memcard_fileOpen;
 
 	// 8008D410

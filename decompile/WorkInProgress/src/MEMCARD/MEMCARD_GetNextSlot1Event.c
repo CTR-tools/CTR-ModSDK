@@ -1,32 +1,34 @@
 #include <common.h>
 
 //- basically gets index of first triggered event or returns 7, which is no event i guess. 7 is 3 bits.
+// TODO: Use an enum instead of returning ints 
 uint8_t MEMCARD_GetNextSlot1Event(void)
 {
-    uint8_t result;
-
-    // (processing done)
-    result = 0;
     if (TestEvent(sdata->SwCARD_EvSpIOE) != 1)
     {
-        // (bad card)
-        result = 1;
         if (TestEvent(sdata->SwCARD_EvSpERROR) != 1)
         {
-            // (no card)
             if (TestEvent(sdata->SwCARD_EvSpTIMOUT) == 1)
             {
-                result = 2;
+                return 2; // no card
             }
-            else
+            else if (TestEvent(sdata->SwCARD_EvSpNEW) != 1)
             {
-                result = 3;
-                if (TestEvent(sdata->SwCARD_EvSpNEW) != 1)
-                {
-                    result = 7;
-                }
+                return 7; // new card
             }
         }
+        return 1; // bad card
     }
-    return result;
+    return 0; // processing done
 }
+
+/*
+MC_EVENT_NONE = 0
+MC_EVENT_NO_CARD = 1
+MC_EVENT_BAD_CARD = 2
+MC_EVENT_NEW_CARD = 3
+MC_EVENT_NOT_FORMATTED = 4
+MC_EVENT_FILE_NOT_EXISTS = 5
+MC_EVENT_FILE_ALREADY_EXISTS = 6
+MC_EVENT_BLOCKS_FULL = 7
+*/

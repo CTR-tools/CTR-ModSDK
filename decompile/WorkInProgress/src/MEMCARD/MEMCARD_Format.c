@@ -1,5 +1,6 @@
 #include <common.h>
 
+// TODO: Double check this fn
 uint8_t MEMCARD_Format(int slotIdx)
 {
     char *someVar = 0;

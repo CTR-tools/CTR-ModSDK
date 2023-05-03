@@ -107,13 +107,13 @@ int FUN_8003ddac(void)
             // allow "switch" statement to go to stage 4
             sdata->unk_card_8008D404 = 4;
 
-            // DAT_8008d408 = sdata->memcard_ptrStart
-            sdata->memcardIconSize = (((uint)(byte)DAT_8008d408[2] & 0xf) + 1) * 0x80;
+            // Bitwise & with 0xf to extract last 4 bits then increment by 1
+            sdata->memcardIconSize = ((sdata->memcard_ptrStart[2] & 0xf) + 1) * 0x80;
 
             readResult = MEMCARD_ReadFile(sdata->memcardIconSize, sdata->memoryCardFileSize_0x1680);
 
-            // DAT_8008d408 = sdata->memcard_ptrStart
-            if ((sdata->memcardIconSize + sdata->memoryCardFileSize_0x1680 + 0x1fff >> 0xd < (int)(uint)(byte)DAT_8008d408[3]) &&
+            // count blocks of size 0x200 there are being compared to remaining blocks most likely
+            if ((sdata->memcardIconSize + sdata->memoryCardFileSize_0x1680 + 0x1fff >> 0xd < ((int)(unsigned char)sdata->memcard_ptrStart[3])) &&
                 (1 < sdata->memcardIconSize + sdata->memoryCardFileSize_0x1680 * 2 + 0x1fff >> 0xd))
             {
                 sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffb;
@@ -166,7 +166,7 @@ int FUN_8003ddac(void)
 
         if (sdata->memcard_remainingAttempts > 0)
         {
-            iVar4 = sdata->memcardIconSize + (sdata->unk_card_8008D404 + -4) * sdata->memoryCardFileSize_0x1680;
+            iVar4 = sdata->memcardIconSize + (sdata->unk_card_8008D404 - 4) * sdata->memoryCardFileSize_0x1680;
             event = sdata->memoryCardFileSize_0x1680;
 
             sdata->memcard_remainingAttempts = sdata->memcard_remainingAttempts + -1;
@@ -261,7 +261,7 @@ int FUN_8003ddac(void)
 
             // pointer to memory card icon
             // psyq hand
-            ptrData = &Data->memcardIcon_PsyqHand;
+            ptrData = Data->memcardIcon_PsyqHand;
 
             // 256 bytes, 0x100
             event = sdata->memcardIconSize;
