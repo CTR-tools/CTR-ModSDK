@@ -4869,7 +4869,10 @@ LAB_800475b4:
   }
   
   iVar2 = FUN_80046a90(0);
-  if (iVar2 == 0) {
+  
+  // if memory card is present
+  if (iVar2 == 0) 
+  {
     iVar2 = FUN_80046a90(1);
     local_1c = 6;
     if (iVar2 == 0) {
@@ -4881,7 +4884,9 @@ LAB_800475b4:
 	  if (iVar2 == 0) 
 	  {
         iVar2 = FUN_80046a90(5);
-        if (iVar2 == 0) 
+        
+		// if data found on memcard
+		if (iVar2 == 0) 
 		{
           iVar2 = FUN_80046a90(4);
           if (iVar2 != 0) 
@@ -4896,7 +4901,9 @@ LAB_800479bc:
 			// reset gameProg (again?)
 			DAT_8008d968 = 0;
 			
+			// "Loading..."
             FUN_800471c4(4);
+			
             uVar5 = 3;
 
 			// 800859e4
@@ -4917,6 +4924,7 @@ LAB_800479f4:
             goto LAB_80047a08;
           }
 		  
+		  // check if memcard is unformatted
           iVar2 = FUN_80046a90(6);
           if (iVar2 != 0)
 		  {
@@ -4924,8 +4932,11 @@ LAB_800479f4:
             FUN_80047224();
 
             FUN_800471e8();
+			
+			// "Warning, memcard unformatted"
             local_1c = 1;
-            goto LAB_800476b4;
+            
+			goto LAB_800476b4;
           }
           
 		  iVar2 = FUN_80046a90(7);
@@ -4939,8 +4950,11 @@ LAB_800479f4:
             if (DAT_8008d478 == 6) {
               if (-1 < DAT_8009aa56) {
                 DAT_8009aa56 = -1;
+				
+				/// "Saving..."
                 FUN_800471c4(3);
-                uVar5 = 2;
+                
+				uVar5 = 2;
                 pcVar6 = (char *)&DAT_80085a30;
                 puVar7 = &DAT_800992a4;
 
@@ -5008,6 +5022,7 @@ LAB_800479f4:
 				  // GAMEPROG_InitFullMemcard
                   FUN_80026c24(PTR_DAT_8008d474);
 
+				  // NULL
                   FUN_800471c4(8);
 
 				  // 800859e4
@@ -5064,6 +5079,8 @@ LAB_800479f4:
               DAT_8008d944 = 1;
 
               FUN_800471e8();
+			  
+			  // "No Data"
               local_1c = 9;
             }
           }
@@ -5078,7 +5095,10 @@ LAB_800479f4:
           DAT_8008d944 = 0;
           FUN_800471e8();
           DAT_8008d984 = 1;
+		  
+		  // "No Data"
           local_1c = 9;
+		  
           if ((DAT_8008d978 != 0) && ((DAT_8008d978 < 0 || (local_1c = 8, 2 < DAT_8008d978))))
           goto LAB_80047a08;
 LAB_80047984:
@@ -5096,15 +5116,20 @@ LAB_80047984:
 	  
 	  // TIMEOUT (no card)
       FUN_800471e8();
+	  
+	  // "Error occured while reading memory card"
       local_1c = 7;
     }
   }
+  
+  // if no memory card
   else {
     FUN_800471e8();
 
 	// GhostData_ResetNumGhosts
     FUN_80047224();
 
+	// "Warning, no memory card"
 	local_1c = 0;
   }
 LAB_800476b4:
