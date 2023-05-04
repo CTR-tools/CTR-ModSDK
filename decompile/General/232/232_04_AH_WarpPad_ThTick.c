@@ -487,7 +487,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	if(levelID < 0x10)
 	{
 		// if trophy is unlocked
-		if(CHECK_ADV_BIT(sdata->advProgress.rewards, levelID + 6) != 0)
+		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) != 0)
 		{
 			// if never opened
 			if(sdata->boolOpenTokenRelicMenu == 0)
