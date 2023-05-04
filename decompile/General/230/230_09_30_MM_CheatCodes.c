@@ -474,7 +474,7 @@ void DECOMP_MM_ParseCheatCodes()
 	DecalFont_DrawLine("30%", 		285, 206, FONT_SMALL, ORANGE);
 	#endif
 	
-	#if 0
+	#if 1
 	DecalFont_DrawLine("No DotLights", 	325, 197, FONT_SMALL, RED);
 	DecalFont_DrawLine("No RenderFrame",325, 206, FONT_SMALL, RED);
 	#endif
