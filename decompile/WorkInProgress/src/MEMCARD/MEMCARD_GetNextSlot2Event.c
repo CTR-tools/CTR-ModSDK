@@ -1,5 +1,6 @@
 #include <common.h>
 
+// TODO: Use enum
 uint8_t MEMCARD_GetNextSlot2Event(void)
 {
     uint8_t result;

@@ -1,11 +1,29 @@
-common, exe, TitleOSK_DrawMenu, 0x0, src/TitleOSK_DrawMenu_Hook.s
-common, exe, rdata_free, 0x0, src/TitleOSK_DrawMenu.c
-common, exe, MEMCARD_StringSet, 0x0, General/MEMCARD/MEMCARD_StringSet.c
-common, exe, MEMCARD_GetFreeBytes, 0x0, General/MEMCARD/MEMCARD_GetFreeBytes.c
-common, exe, MEMCARD_CloseFile, 0x0, General/MEMCARD/MEMCARD_CloseFile.c
-common, exe, MEMCARD_ReadFile, 0x0, General/MEMCARD/MEMCARD_ReadFile.c
-common, exe, MEMCARD_WriteFile, 0x0, General/MEMCARD/MEMCARD_WriteFile.c
-common, exe, MEMCARD_NewTask, 0x0, General/MEMCARD/MEMCARD_NewTask.c
-common, exe, MEMCARD_GetNextSlot1Event, 0x0, General/MEMCARD/MEMCARD_GetNextSlot1Event.c
-common, exe, MEMCARD_GetNextSlot2Event, 0x0, General/MEMCARD/MEMCARD_GetNextSlot2Event.c
-common, exe, MEMCARD_WaitForSlot1Event, 0x0, General/MEMCARD/MEMCARD_WaitForSlot1Event.c
+// common, exe, TitleOSK_DrawMenu, 0x0, src/TitleOSK_DrawMenu_Hook.s
+// common, exe, rdata_free, 0x0, src/TitleOSK_DrawMenu.c
+common, exe, MEMCARD_StringSet, 0x0, src/MEMCARD/MEMCARD_StringSet.c
+common, exe, MEMCARD_GetFreeBytes, 0x0, src/MEMCARD/MEMCARD_GetFreeBytes.c
+common, exe, MEMCARD_CloseFile, 0x0, src/MEMCARD/MEMCARD_CloseFile.c
+common, exe, MEMCARD_ReadFile, 0x0, src/MEMCARD/MEMCARD_ReadFile.c
+common, exe, MEMCARD_NewTask, 0x0, src/MEMCARD/MEMCARD_NewTask.c
+common, exe, MEMCARD_GetNextSlot1Event, 0x0, src/MEMCARD/MEMCARD_GetNextSlot1Event.c
+common, exe, MEMCARD_CloseCard, 0x0, src/MEMCARD/MEMCARD_CloseCard.c 
+common, exe, MEMCARD_GetNextSlot2Event, 0x0, src/MEMCARD/MEMCARD_GetNextSlot2Event.c
+common, exe, MEMCARD_Format, 0x0, src/MEMCARD/MEMCARD_Format.c
+common, exe, MEMCARD_EraseFile, 0x0, src/MEMCARD/MEMCARD_EraseFile.c
+common, exe, MEMCARD_SkipEvents, 0x0, src/MEMCARD/MEMCARD_SkipEvents.c
+common, exe, MEMCARD_FindNextGhost, 0x0, src/MEMCARD/MEMCARD_FindNextGhost.c
+common, exe, MEMCARD_IsFile, 0x0, src/MEMCARD/MEMCARD_IsFile.c
+
+// TODO
+// 4 bytes over budget
+// common, exe, MEMCARD_WriteFile, 0x0, src/MEMCARD/MEMCARD_WriteFile.c
+// common, exe, MEMCARD_FindFirstGhost, 0x0, src/MEMCARD/MEMCARD_FindFirstGhost.c
+// 8 bytes over budget
+// common, exe, MEMCARD_WaitForSlot1Event, 0x0, src/MEMCARD/MEMCARD_WaitForSlot1Event.c
+// Causes game to not detect any memcards
+// common, exe, MEMCARD_InitCard, 0x0, src/MEMCARD/MEMCARD_InitCard.c 
+// Incomplete
+// common, exe, MEMCARD_Load, 0x0, src/MEMCARD/MEMCARD_Load.c
+// common, exe, MEMCARD_Save, 0x0, src/MEMCARD/MEMCARD_Save.c
+// common, exe, MEMCARD_unknown, 0x0, src/MEMCARD/MEMCARD_unknown.c
+// End of MEMCARD
