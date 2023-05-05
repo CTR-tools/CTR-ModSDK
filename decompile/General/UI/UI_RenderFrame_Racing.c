@@ -398,7 +398,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						*(u_int *)&ptrHudT->flags &= 0xffffff7f;
 
 						LetterCTR_Pos[0] = hudStructPtr[0x24].x + 0x1d;
-						LetterCTR_Pos[1] = hudStructPtr[0x24].y--;
+						LetterCTR_Pos[1] = hudStructPtr[0x24].y - 1;
 					}
 
 					// reduce frame counter

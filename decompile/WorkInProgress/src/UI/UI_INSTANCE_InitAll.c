@@ -81,14 +81,16 @@ void DECOMP_UI_INSTANCE_InitAll(void)
       }
 
 	  // Get Relic Time to put in HUD
-	  
-	  // If not unlocked Gold and not unlocked Platinum
-      if (((sdata->advProgress.rewards[(gGT->levelID + 0x3aU) >> 5] >> (gGT->levelID + 0x3aU & 0x1f) & 1) == 0) &&
-         ((sdata->advProgress.rewards[(gGT->levelID + 0x28U) >> 5] >> (gGT->levelID + 0x28U & 0x1f) & 1) == 0))
+	  if(
+			// no platinum and no gold
+			(CHECK_ADV_BIT(sdata->advProgress.rewards, (gGT->levelID + 0x3a)) == 0) &&
+			(CHECK_ADV_BIT(sdata->advProgress.rewards, (gGT->levelID + 0x28)) == 0)
+		)
 	  {
-		// choose to put sapphire or gold on screen
-        relicType = sdata->advProgress.rewards[(i + 0x16U) >> 5] >> (i + 0x16U & 0x1f) & 1;
-      }
+		  // 0 if sapphire not unlocked, (show sapphire)
+		  // 1 if sapphire is unlocked (show gold)
+		  relicType = CHECK_ADV_BIT(sdata->advProgress.rewards, (gGT->levelID + 0x16));
+	  }
 	  
 	  // if unlocked gold or unlocked platinum
       else 

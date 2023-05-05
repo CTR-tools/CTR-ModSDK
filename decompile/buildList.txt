@@ -154,7 +154,7 @@ common, exe, DecalHUD_Arrow2D, 0x0, General/DecalHUD/DecalHUD_Arrow2D.c
 common, exe, DISPLAY_Swap, 0x0, General/Display/DISPLAY_Swap.c
 
 // DotLights (done)
-//common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c
+common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c
 
 // GAMEPAD
 common, exe, GAMEPAD_Init, 0x0, General/GAMEPAD/GAMEPAD_Init.c
@@ -272,7 +272,7 @@ common, exe, MainDB_OTMem, 0x0, General/MAIN/MainDB_OTMem.c
 common, exe, MainDrawCb_DrawSync, 0x0, General/MAIN/MainDrawCb_DrawSync.c
 common, exe, MainDrawCb_Vsync, 0x0, General/MAIN/MainDrawCb_Vsync.c
 common, exe, MainFrame_GameLogic, 0x0, General/MAIN/MainFrame_GameLogic.c
-//common, exe, MainFrame_RenderFrame, 0x0, General/MAIN/MainFrame_RenderFrame.c
+common, exe, MainFrame_RenderFrame, 0x0, General/MAIN/MainFrame_RenderFrame.c
 common, exe, MainFrame_RequestMaskHint, 0x0, General/MAIN/MainFrame_RequestMaskHint.c
 common, exe, MainFrame_ResetDB, 0x0, General/MAIN/MainFrame_ResetDB.c
 common, exe, MainFrame_TogglePauseAudio, 0x0, General/MAIN/MainFrame_TogglePauseAudio.c
