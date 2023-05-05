@@ -2,7 +2,6 @@
 //- only called once, wonder how that doesn't halt the exection. or maybe it does, are there hangs when save/load happens?
 uint8_t MEMCARD_WaitForHwEvent(void)
 {
-    // NOTE: This impl is 8 bytes over budget
     while (1)
     {
         // HwIOE (processing done)
