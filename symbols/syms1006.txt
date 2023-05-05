@@ -612,7 +612,7 @@
 8003f7f8 MEMCARD_Load
 8003f8a0 MEMCARD_Save
 8003fa78 MEMCARD_Format
-// unknown 8003faf8
+8003faf8 MEMCARD_IsFile
 8003fb5c MEMCARD_FindFirstGhost
 8003fbd4 MEMCARD_FindNextGhost
 8003fc30 MEMCARD_EraseFile
