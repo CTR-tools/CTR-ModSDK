@@ -424,6 +424,7 @@ MEMCARD_GetInfo = 0x8003cf18;
 MEMCARD_Load = 0x8003cf7c;
 MEMCARD_Save = 0x8003d024;
 MEMCARD_Format = 0x8003d214;
+MEMCARD_IsFile = 0x8003d294;
 MEMCARD_FindFirstGhost = 0x8003d2f8;
 MEMCARD_FindNextGhost = 0x8003d370;
 MEMCARD_EraseFile = 0x8003d3cc;
