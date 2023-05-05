@@ -339,7 +339,7 @@ void FUN_8003d95c(void)
 }
 
 
-//8003d9ec - tests for 1st slot events - MEMCARD_GetNextSlot1Event
+//8003d9ec - tests for 1st slot events - MEMCARD_GetNextSwEvent
 //- basically gets index of first triggered event or returns 7, which is no event i guess. 7 is 3 bits.
 undefined4 FUN_8003d9ec(void)
 
@@ -377,7 +377,7 @@ undefined4 FUN_8003d9ec(void)
 }
 
 
-//8003da68 - tests for 2nd slot events - MEMCARD_GetNextSlot2Event
+//8003da68 - tests for 2nd slot events - MEMCARD_GetNextHwEvent
 //- same as above but for other 4 events
 undefined4 FUN_8003da68(void)
 
@@ -415,7 +415,7 @@ undefined4 FUN_8003da68(void)
 }
 
 
-//8003dae4 - waits for event on slot1 to happen and returns index - MEMCARD_WaitForSlot1Event
+//8003dae4 - waits for event on slot1 to happen and returns index - MEMCARD_WaitForHwEvent
 //- loops while there is not a single true for mc1 events
 //- only called once, wonder how that doesn't halt the exection. or maybe it does, are there hangs when save/load happens?
 undefined4 FUN_8003dae4(void)
@@ -459,13 +459,13 @@ undefined4 FUN_8003db54(void)
 
   do
   {
-	// MEMCARD_GetNextSlot1Event
+	// MEMCARD_GetNextSwEvent
     iVar1 = FUN_8003d9ec();
   } while (iVar1 != 7);
 
   do
   {
-	// MEMCARD_GetNextSlot2Event
+	// MEMCARD_GetNextHwEvent
     iVar1 = FUN_8003da68();
   } while (iVar1 != 7);
 
@@ -611,7 +611,7 @@ int FUN_8003ddac(void)
 
   case 1:
 
-	// MEMCARD_GetNextSlot1Event
+	// MEMCARD_GetNextSwEvent
 	iVar3 = FUN_8003d9ec();
 
     if (iVar3 == 0)
@@ -674,7 +674,7 @@ int FUN_8003ddac(void)
 
   case 2:
 
-	// MEMCARD_GetNextSlot1Event
+	// MEMCARD_GetNextSwEvent
 	iVar3 = FUN_8003d9ec();
 
     if (iVar3 == 0) {
@@ -700,7 +700,7 @@ LAB_8003df38:
 
   case 3:
 
-	// MEMCARD_GetNextSlot1Event
+	// MEMCARD_GetNextSwEvent
     iVar3 = FUN_8003d9ec();
 
     if (iVar3 == 0)
@@ -743,7 +743,7 @@ LAB_8003df38:
   case 4:
   case 6:
 
-    // MEMCARD_GetNextSlot1Event
+    // MEMCARD_GetNextSwEvent
     iVar3 = FUN_8003d9ec();
 
     if (iVar3 == 0) {
@@ -820,7 +820,7 @@ LAB_8003e1fc:
   case 10:
   case 0xb:
 
-	// MEMCARD_GetNextSlot1Event
+	// MEMCARD_GetNextSwEvent
     iVar3 = FUN_8003d9ec();
 
     if (iVar3 == 0)

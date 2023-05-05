@@ -2,7 +2,7 @@
 
 //- basically gets index of first triggered event or returns 7, which is no event i guess. 7 is 3 bits.
 // TODO: Use an enum instead of returning ints 
-uint8_t MEMCARD_GetNextSlot1Event(void)
+uint8_t MEMCARD_GetNextSwEvent(void)
 {
     if (TestEvent(sdata->SwCARD_EvSpIOE) != 1)
     {

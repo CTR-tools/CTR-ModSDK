@@ -13,7 +13,7 @@ int FUN_8003ddac(void)
 
     case 1:
 
-        event = MEMCARD_GetNextSlot1Event();
+        event = MEMCARD_GetNextSwEvent();
 
         if (event == 0)
         {
@@ -73,7 +73,7 @@ int FUN_8003ddac(void)
 
     case 2:
 
-        event = MEMCARD_GetNextSlot1Event();
+        event = MEMCARD_GetNextSwEvent();
 
         if (event == 0)
         {
@@ -100,7 +100,7 @@ int FUN_8003ddac(void)
 
     case 3:
 
-        event = MEMCARD_GetNextSlot1Event();
+        event = MEMCARD_GetNextSwEvent();
 
         if (event == 0)
         {
@@ -143,7 +143,7 @@ int FUN_8003ddac(void)
     case 4:
     case 6:
 
-        event = MEMCARD_GetNextSlot1Event();
+        event = MEMCARD_GetNextSwEvent();
 
         if (event == 0)
         {
@@ -215,7 +215,7 @@ int FUN_8003ddac(void)
     case 10:
     case 11:
 
-        event = MEMCARD_GetNextSlot1Event();
+        event = MEMCARD_GetNextSwEvent();
 
         if (event == 0)
         {

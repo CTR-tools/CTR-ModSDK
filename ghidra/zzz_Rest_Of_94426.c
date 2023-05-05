@@ -5262,7 +5262,7 @@ void FUN_80047a58(void)
   }
   switch(iVar2 >> 0x10) {
   
-  // from MEMCARD_GetNextSlot1Event == IOE (processing done)
+  // from MEMCARD_GetNextSwEvent == IOE (processing done)
   case 0:
     DAT_8009aa34 = 7;
     if ((DAT_8009aa36 == 1) && (DAT_8009aa34 = 4, (DAT_8009aa30 & 8) == 0)) {
@@ -5273,18 +5273,18 @@ void FUN_80047a58(void)
   // from MEMCARD_GetInfo, 
   // from MEMCARD_Save if seek() fails or write() fails
   // from MEMCARD_Load if seek() fails or read() fails
-  // from MEMCARD_GetNextSlot1Event fail (ERROR, bad card)
+  // from MEMCARD_GetNextSwEvent fail (ERROR, bad card)
   case 1:
     DAT_8009aa34 = 2;
     break;
 	
-  // from MEMCARD_GetNextSlot1Event fail (TIMEOUT, no card)
+  // from MEMCARD_GetNextSwEvent fail (TIMEOUT, no card)
   case 2:
     DAT_8009aa34 = 0;
     DAT_8009aa36 = 0;
     goto switchD_80047c84_caseD_8;
   
-  // from MEMCARD_GetNextSlot1Event fail (NEWCARD)
+  // from MEMCARD_GetNextSwEvent fail (NEWCARD)
   case 3:
     DAT_8009aa34 = 3;
     if (DAT_8009aa36 == 4) {

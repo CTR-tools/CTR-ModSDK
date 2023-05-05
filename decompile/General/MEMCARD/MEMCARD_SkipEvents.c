@@ -4,6 +4,6 @@ void MEMCARD_SkipEvents(void)
 
 {
     // Non infinite, bot functions have timeouts
-    while ((MEMCARD_GetNextSlot1Event() != 7) && (MEMCARD_GetNextSlot2Event() != 7))
+    while ((MEMCARD_GetNextSwEvent() != 7) && (MEMCARD_GetNextHwEvent() != 7))
         ;
 }
