@@ -863,7 +863,7 @@ LAB_800346b0:
 				}
 				gGT->hudFlags = gGT->hudFlags | 8;
 				gGT->framesInThisLEV = 0;
-				gGT->BoxSceneTimer = 0;
+				gGT->msInThisLEV = 0;
 
 				// deactivate pause
 				ElimBG_Deactivate(gGT);

@@ -81,7 +81,7 @@ LAB_80034e74:
 		{
 			gGT->elapsedTimeMS = 0x20;
 		}
-		gGT->BoxSceneTimer += gGT->elapsedTimeMS;
+		gGT->msInThisLEV += gGT->elapsedTimeMS;
 		if (gGT->trafficLightsTimer < 1)
 		{
 			if ((gGT->gameMode1 & PAUSE_THREADS) == 0)

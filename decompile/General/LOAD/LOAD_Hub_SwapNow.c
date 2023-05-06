@@ -97,5 +97,5 @@ void LOAD_Hub_SwapNow()
 	gGT->drivers[0]->underDriver = 0;
 	
 	gGT->framesInThisLEV = 0;
-	gGT->BoxSceneTimer = 0;
+	gGT->msInThisLEV = 0;
 }

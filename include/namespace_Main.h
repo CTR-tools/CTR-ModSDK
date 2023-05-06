@@ -351,7 +351,7 @@ struct GameTracker
 	// 1d00
 	// Naughty Dog Box Scene timer
 	// milliseconds since end of loading
-	int BoxSceneTimer;
+	int msInThisLEV;
 
 	// 1d04
 	// milliseconds per frame
