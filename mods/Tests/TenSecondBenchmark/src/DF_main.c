@@ -48,10 +48,12 @@ void DF_DrawOTag(u_long* ot)
 
 	int buttonHoldPrev = sdata->gGamepads->
 							gamepad[0].buttonsHeldPrevFrame;
-							
+	
+	// Edit MainFrame_RenderFrame
 	// Enable 60fps (USA Only)
 	*(unsigned char*)0x80037930 = 0;
 	
+	// Edit GAMEPAD_GetNumConnected
 	// enable 4P with one controller
 	*(unsigned char*)0x800255c4 = 4;
 
