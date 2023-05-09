@@ -1,9 +1,9 @@
 #include <common.h>
 
-//- creates 8 events (4 per card?)
-//- calls InitCARD and StartCARD
+// NOTE: Function is fine, headers are wrong. Wait for new headers then push as is
+// "SwCARD" can be hard-coded to 0xf4000001
+// "HwCARD" to 0xf0000011
 void MEMCARD_InitCard(void)
-
 {
     // This section was copy/pasted by Naughty Dog,
     // psx\sample\memcard\CARD\CARD.C lines 84 to 101

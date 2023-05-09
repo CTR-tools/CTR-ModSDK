@@ -1,32 +1,26 @@
 #include <common.h>
 
-// TODO: Use enum
+// TODO: Use enum, see MEMCARD_GetNextSwEvent
 uint8_t MEMCARD_GetNextHwEvent(void)
 {
-    uint8_t result;
-
-    // (processing done)
-    result = 0;
-    if (TestEvent(sdata->HwCARD_EvSpIOE) != 1)
+    if (TestEvent(sdata->HwCARD_EvSpIOE))
     {
-        // (bad card)
-        result = 1;
-        if (TestEvent(sdata->HwCARD_EvSpERROR) != 1)
-        {
-            // (no card)
-            if (TestEvent(sdata->HwCARD_EvSpTIMOUT) == 1)
-            {
-                result = 2;
-            }
-            else
-            {
-                result = 3;
-                if (TestEvent(sdata->HwCARD_EvSpNEW) != 1)
-                {
-                    result = 7;
-                }
-            }
-        }
+        return 0; // processing done
     }
-    return result;
+    else if (TestEvent(sdata->HwCARD_EvSpERROR))
+    {
+        return 1; // bad card
+    }
+    else if (TestEvent(sdata->HwCARD_EvSpTIMOUT))
+    {
+        return 2; // no card
+    }
+    else if (TestEvent(sdata->HwCARD_EvSpNEW))
+    {
+        return 3; 
+    }
+    else
+    {
+        return 7; 
+    }
 }
