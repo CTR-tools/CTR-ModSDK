@@ -1,6 +1,5 @@
 #include <common.h>
 
-// TODO: Double check this fn
 uint8_t MEMCARD_Format(int slotIdx)
 {
     char *someVar = 0;
@@ -9,7 +8,8 @@ uint8_t MEMCARD_Format(int slotIdx)
     {
         MEMCARD_StringInit(slotIdx, someVar);
 
-        if (format(someVar) == 1)
+        // format always returns 1
+        if (format(someVar))
         {
             sdata->unk_card_8008D404 = 2;
             sdata->memcardSlot = slotIdx;

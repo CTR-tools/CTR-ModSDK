@@ -1375,7 +1375,9 @@ struct Driver
 	// 0x5a4
 	// pointer to NavFrame
 
-	// 0x5b0 flags
+	// 0x5b0
+	// unsigned int flags
+	// & 0x010 - is blasted? Something to do with damage
 	// & 0x100 - camera spectates this AI
 	// & 0x200 - race started for AI
 
@@ -1383,7 +1385,10 @@ struct Driver
 	// acceleration from start-line
 
 	// 0x5b8
-	// path index
+	// short path index
+
+	// 0x5ba
+	// short ???
 
 	// 0x5bc
 	// incline rotXZ
@@ -1392,6 +1397,9 @@ struct Driver
 	// 0x5d4
 	// AI speed
 	
+	// 0x604
+	// AI progress // max recorded value = 60
+
 	// 0x60c
 	// short estimatePos[3]
 	
@@ -1413,6 +1421,9 @@ struct Driver
 	
 	// 0x624
 	// short weaponCooldown
+
+	// 0x626
+	// short ??? // Something set when blasted ?
 
 	// ===========================================
 

@@ -259,6 +259,7 @@ struct Instance
 	// instance->0x60 (funcPtr for individual prims)
 	// instance->0x64
 	// instance->0x68
+	// instance->0x6c (ptr to Thread)
 	// instance->0xEC (funcPtr for full model)
 	// instance->0xF0 (8006a8e0) (animation related?)
 
