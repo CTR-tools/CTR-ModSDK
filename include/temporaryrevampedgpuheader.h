@@ -1,7 +1,3 @@
-#ifndef __PSXGPU_H
-#include <psn00bsdk/include/psxgpu.h>
-#endif
-
 #define force_inline static inline __attribute__((always_inline))
 
 force_inline void addPolyF3(u_long* ot, POLY_F3* p)
@@ -175,19 +171,11 @@ force_inline void addFill(u_long* ot, FILL* p)
 	*(u_int*)&p->x2 = s2 | (t2 << 16), \
 	*(u_int*)&p->x3 = s3 | (t3 << 16)
 
-// macros for setting the rgb values in primitives using pointer blah blah
-// this is *maybe* what naughty dog did?
-// all primitive functions pass colors as a single 32-bit integer value
-// these macros are used prior to any of the primitive functions seen in this
-// header as they overwrite the primitive's code value
-#define setInt32RGB0(p, color0) \
-	*(u_int*)&p->r0 = color0
-
-#define setInt32RGB4(p, color0, color1, color2, color3) \
-	*(u_int*)&p->r0 = color0, \
-	*(u_int*)&p->r1 = color1, \
-	*(u_int*)&p->r2 = color2, \
-	*(u_int*)&p->r3 = color3
+#define setColor4(p, rgb0, rgb1, rgb2, rgb3) \
+	(((P_COLOR *) &((p)->r0))->color = (rgb0)), \
+	(((P_COLOR *) &((p)->r1))->color = (rgb1)), \
+	(((P_COLOR *) &((p)->r2))->color = (rgb2)), \
+	(((P_COLOR *) &((p)->r3))->color = (rgb3))
 
 // clear blending mode bits of the texpage using AND, then set them using OR
 // then set image to use semi-transparent mode using the setSemiTrans macro

@@ -2,10 +2,7 @@
 
 void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, u_int color)
 {
-	// setInt32RGB0 needs to go before addPolyGT4
-	// for more information check "temporaryrevampedgpuheader.h"
 	POLY_FT4* p = (POLY_FT4*)primMem->curr;
-	setInt32RGB0(p, color);
 	addPolyFT4(ot, p);
 
 	unsigned int width = icon->texLayout.u1 - icon->texLayout.u0;
@@ -24,6 +21,7 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct 
 	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, bottomV, icon->texLayout.u3, bottomV);
 	p->clut = icon->texLayout.clut;
 	p->tpage = icon->texLayout.tpage;
+	setColor0(p, color);
 
 	if (transparency)
 	{
