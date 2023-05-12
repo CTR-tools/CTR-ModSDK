@@ -14,8 +14,7 @@
  * registers and issue commands to the GTE.
  */
 
-#ifndef __PSXGTE_H
-#define __PSXGTE_H
+#pragma once
 
 #include <stdint.h>
 
@@ -186,8 +185,8 @@ MATRIX *HiRotMatrix(VECTOR *r, MATRIX *m);
  * @details Simply sets the translation vector of MATRIX m. To perform
  * accumulative translation operations, see CompMatrixLV().
  *
- * @param m Translation vector (input)
- * @param r Matrix (output)
+ * @param m Matrix (output)
+ * @param r Translation vector (input)
  * @return Pointer to m.
  *
  * @see RotMatrix(), CompMatrixLV()
@@ -258,6 +257,4 @@ void Square0(VECTOR *v0, VECTOR *v1);
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif

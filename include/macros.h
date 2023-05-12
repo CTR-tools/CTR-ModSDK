@@ -20,3 +20,6 @@
 #define SCREEN_WIDTH 512
 #define SECOND (FPS * ELAPSED_MS)
 #define MINUTE (SECOND * 60)
+
+#define true 1
+#define false 0

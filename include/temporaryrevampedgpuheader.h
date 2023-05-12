@@ -164,14 +164,6 @@ force_inline void addFill(u_long* ot, FILL* p)
 	p->code = 2;
 }
 
-force_inline void addVram2Vram(u_long* ot, VRAM2VRAM* p)
-{
-	p->tag = 0x8000000 | *ot;
-	*ot = ((u_int) p) ^ 0x80000000;
-	p->code = 0x80;
-	p->pad[0], p->pad[1], p->pad[2], p->pad[3] = 0;
-}
-
 // version of psn00bsdk's setXY4 macro that compiles to a smaller bytesize
 // based on original compiled code for the game's primitive functions
 // this produces bugs if any of the X values are negative and not cast to u_short

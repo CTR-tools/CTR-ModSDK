@@ -1,46 +1,86 @@
 /*
  * PSn00bSDK kernel API library
- * (C) 2019-2022 Lameguy64, spicyjpeg - MPL licensed
+ * (C) 2019-2023 Lameguy64, spicyjpeg - MPL licensed
  */
 
-#ifndef __PSXAPI_H
-#define __PSXAPI_H
+/**
+ * @file psxapi.h
+ * @brief Kernel API library header
+ *
+ * @details This header provides access to most of the APIs made available by
+ * the system's BIOS, including basic file I/O, TTY output, controller and
+ * memory card drivers, threads, events as well as kernel memory allocation.
+ *
+ * For more information and up-to-date documentation on kernel APIs, see:
+ * https://psx-spx.consoledev.net/kernelbios/
+ */
+
+#pragma once
 
 #include <stdint.h>
 #include <stddef.h>
+#include <psn00bsdk/include/hwregs_c.h>
 
 /* Definitions */
 
-#define DescHW			0xf0000000
-#define DescSW			0xf4000000
+typedef enum _SeekMode {
+	SEEK_SET = 0,
+	SEEK_CUR = 1,
+	SEEK_END = 2
+} SeekMode;
 
-#define HwCARD			(DescHW|0x11)
-#define HwCARD_1		(DescHW|0x12)
-#define HwCARD_0		(DescHW|0x13)
-#define SwCARD			(DescHW|0x02)
+typedef enum _EventDescriptor {
+	DescMask = 0xff000000, // Event descriptor mask
+	DescTH   = 0xff000000,
+	DescHW   = 0xf0000000, // Hardware event (IRQ)
+	DescEV   = 0xf1000000, // Event event
+	DescRC   = 0xf2000000, // Root counter event
+	DescUEV  = 0xf3000000, // User event
+	DescSW   = 0xf4000000  // BIOS event
+} EventDescriptor;
 
-#define EvSpIOE			0x0004
-#define EvSpERROR		0x8000
-#define EvSpTIMOUT		0x0100
-#define EvSpNEW			0x0200
+typedef enum _EventType {
+	HwVBLANK = DescHW | 0x01, // VBlank
+	HwGPU    = DescHW | 0x02, // GPU
+	HwCdRom  = DescHW | 0x03, // CDROM
+	HwDMAC   = DescHW | 0x04, // DMA
+	HwRTC0   = DescHW | 0x05, // Timer 0
+	HwRTC1   = DescHW | 0x06, // Timer 1
+	HwRTC2   = DescHW | 0x07, // Timer 2
+	HwCNTL   = DescHW | 0x08, // Controller
+	HwSPU    = DescHW | 0x09, // SPU
+	HwPIO    = DescHW | 0x0a, // PIO & lightgun
+	HwSIO    = DescHW | 0x0b, // Serial
+	HwCPU    = DescHW | 0x10, // Processor exception
+	HwCARD   = DescHW | 0x11, // Memory card (lower level BIOS functions)
+	HwCARD_0 = DescHW | 0x12,
+	HwCARD_1 = DescHW | 0x13,
 
-#define EvMdINTR		0x1000
-#define EvMdNOINTR		0x2000
+	RCntCNT0 = DescRC | 0x00,
+	RCntCNT1 = DescRC | 0x01,
+	RCntCNT2 = DescRC | 0x02,
+	RCntCNT3 = DescRC | 0x03,
 
-// Root counter (timer) definitions
-#define DescRC			0xf2000000
+	SwCARD   = DescSW | 0x01, // Memory card (higher level BIOS functions)
+	SwMATH   = DescSW | 0x02
+} EventType;
 
-#define RCntCNT0		(DescRC|0x00)
-#define RCntCNT1		(DescRC|0x01)
-#define RCntCNT2		(DescRC|0x02)
-#define RCntCNT3		(DescRC|0x03)
+typedef enum _EventFlag {
+	EvSpIOE    = 1 <<  2,
+	EvSpTIMOUT = 1 <<  8,
+	EvSpNEW    = 1 <<  9,
+	EvSpERROR  = 1 << 15,
 
-#define RCntMdINTR		0x1000		// Turns on IRQ
-#define RCntMdNOINTR	0x2000		// Polling mode
-#define RCntMdSC		0x0001		// IRQ when counter target
-#define RCntMdSP		0x0000
-#define RCntMdFR		0x0000
-#define RCntMdGATE		0x0010
+	EvMdINTR   = 1 << 12,
+	EvMdNOINTR = 1 << 13,
+
+	RCntMdSP     = 0 <<  0,
+	RCntMdFR     = 0 <<  0,
+	RCntMdSC     = 1 <<  0, // IRQ when counter target
+	RCntMdGATE   = 1 <<  4,
+	RCntMdINTR   = 1 << 12, // Turns on IRQ
+	RCntMdNOINTR = 1 << 13  // Polling mode
+} EventFlag;
 
 /* Structure definitions */
 
@@ -134,8 +174,6 @@ struct JMP_BUF {
 	uint32_t gp;
 };
 
-// Not recommended to use these functions to install IRQ handlers
-
 typedef struct {
 	uint32_t	*next;
 	uint32_t	*func2;
@@ -143,7 +181,46 @@ typedef struct {
 	int			_reserved;
 } INT_RP;
 
-/* API */
+/* Fast interrupt disabling macros */
+
+// Clearing the IRQ_MASK register is faster than manipulating cop0r12, even
+// though it requires declaring a "hidden" local variable to save its state to;
+// it's also resilient to race conditions as there's no read-modify-write
+// operation during which an interrupt can occur. Note that interrupt flags in
+// the IRQ_STAT register will get set even if the respective enable bits in
+// IRQ_MASK are cleared, so doing this will properly defer IRQs rather than
+// dropping them.
+#define FastEnterCriticalSection() \
+	uint16_t __saved_irq_mask = IRQ_MASK; (IRQ_MASK = 0)
+#define FastExitCriticalSection() \
+	(IRQ_MASK = __saved_irq_mask)
+
+#if 0
+#define FastEnterCriticalSection() { \
+	uint32_t r0, r1; \
+	__asm__ volatile( \
+		"mfc0 %0, $12;" \
+		"li   %1, -1026;" \
+		"and  %1, %0;" \
+		"mtc0 %1, $12;" \
+		"nop;" \
+		: "=r"(r0), "=r"(r1) :: \
+	); \
+}
+#define FastExitCriticalSection() { \
+	uint32_t r0; \
+	__asm__ volatile( \
+		"mfc0 %0, $12;" \
+		"nop;" \
+		"ori  %0, 0x0401;" \
+		"mtc0 %0, $12;" \
+		"nop;" \
+		: "=r"(r0) :: \
+	); \
+}
+#endif
+
+/* BIOS API */
 
 #ifdef __cplusplus
 extern "C" {
@@ -161,27 +238,32 @@ int DisableEvent(int event);
 void DeliverEvent(uint32_t cl, uint32_t spec);
 void UnDeliverEvent(uint32_t cl, uint32_t spec);
 
-int open(const char *name, int mode);
+int open(const char *path, int mode);
 int close(int fd);
-int seek(int fd, uint32_t offset, int mode);
-int read(int fd, uint8_t *buff, size_t len);
-int write(int fd, const uint8_t *buff, size_t len);
+int lseek(int fd, uint32_t offset, int mode);
+int read(int fd, void *buff, size_t len);
+int write(int fd, const void *buff, size_t len);
+int getc(int fd);
+int putc(int ch, int fd);
 int ioctl(int fd, int cmd, int arg);
+int isatty(int fd);
 struct DIRENTRY *firstfile(const char *wildcard, struct DIRENTRY *entry);
 struct DIRENTRY *nextfile(struct DIRENTRY *entry);
-int erase(const char *name);
-int chdir(const char *path);
+int erase(const char *path);
+int undelete(const char *path);
+int cd(const char *path);
 
-//#define cd(p) chdir(p)
+int _get_errno(void);
+int _get_error(int fd);
 
-int AddDev(DCB *dcb);
-int DelDev(const char *name);
-void ListDev(void);
-void AddDummyTty(void);
+int AddDrv(DCB *dcb);
+int DelDrv(const char *name);
+void ListDrv(void);
+void add_nullcon_driver(void);
 
-void EnterCriticalSection(void);
+int EnterCriticalSection(void);
 void ExitCriticalSection(void);
-void SwEnterCriticalSection(void);
+int SwEnterCriticalSection(void);
 void SwExitCriticalSection(void);
 
 void _InitCd(void);
@@ -216,30 +298,33 @@ int ResetRCnt(int spec);
 void ChangeClearPAD(int mode);
 void ChangeClearRCnt(int t, int m);
 
-uint32_t OpenTh(uint32_t (*func)(), uint32_t sp, uint32_t gp);
-int CloseTh(uint32_t thread);
-int ChangeTh(uint32_t thread);
+int OpenTh(uint32_t (*func)(), uint32_t sp, uint32_t gp);
+int CloseTh(int thread);
+int ChangeTh(int thread);
 
-int Exec(struct EXEC *exec, int argc, char **argv);
+int Exec(struct EXEC *exec, int argc, const char **argv);
+int LoadExec(const char *path, int argc, const char **argv);
 void FlushCache(void);
 
 void b_setjmp(struct JMP_BUF *buf);
 void b_longjmp(const struct JMP_BUF *buf, int param);
-void SetDefaultExitFromException(void);
-void SetCustomExitFromException(const struct JMP_BUF *buf);
+void ResetEntryInt(void);
+void HookEntryInt(const struct JMP_BUF *buf);
 void ReturnFromException(void);
+
+int SetConf(int evcb, int tcb, uint32_t sp);
+void GetConf(int *evcb, int *tcb, uint32_t *sp);
+void SetMem(int size);
 
 int GetSystemInfo(int index);
 void *GetB0Table(void);
 void *GetC0Table(void);
 
-void *_kernel_malloc(int size);
-void _kernel_free(void *ptr);
+void *alloc_kernel_memory(int size);
+void free_kernel_memory(void *ptr);
 
 void _boot(void);
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif

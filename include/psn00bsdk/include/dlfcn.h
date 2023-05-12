@@ -3,8 +3,7 @@
  * (C) 2021-2022 spicyjpeg - MPL licensed
  */
 
-#ifndef __DLFCN_H
-#define __DLFCN_H 
+#pragma once
 
 #include <stdint.h>
 #include <stddef.h>
@@ -24,7 +23,7 @@
  * GCC will generate code to set $t9 appropriately.
  */
 #define DL_PRE_CALL(func) \
-	__asm__ volatile("move $t9, %0;" :: "r"(func) : "$t9");
+	__asm__ volatile("move $t9, %0;" :: "r"(func) : "$t9")
 
 /* Structure and enum definitions */
 
@@ -37,15 +36,14 @@ typedef enum _DL_ResolveMode {
 // Members of this struct should not be accessed directly in most cases, but
 // they are intentionally exposed for easier expandability.
 typedef struct _DLL {
-	void			*ptr;
-	void			*malloc_ptr;
+	void			*ptr, *malloc_ptr;
 	size_t			size;
 	const uint32_t	*hash;
 	uint32_t		*got;
 	Elf32_Sym		*symtab;
 	const char		*strtab;
-	uint16_t		symbol_count;
-	uint16_t		got_length;
+	uint16_t		symbol_count, first_got_symbol;
+	uint16_t		got_local_count, got_extern_count;
 } DLL;
 
 /* Public API */
@@ -215,6 +213,4 @@ void *DL_GetDLLSymbol(const DLL *dll, const char *name);
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif
