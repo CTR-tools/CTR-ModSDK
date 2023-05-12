@@ -44009,7 +44009,10 @@ void start(void)
     puVar2 = puVar2 + 1;
   } while (puVar2 < &DAT_8009f6fc);
 
+  // get end of RAM: 807FFFF8 (0x80000000 + 0x800000 - 8)
   puVar3 = (undefined *)(DAT_8008cb38 - 8U | 0x80000000);
+  
+  // 7FFFF8 - 0x8000 - 0x9f6fc (ovr1)
   DAT_8008c058 = ((DAT_8008cb38 - 8U) - DAT_8008cb34) + -0x9f6fc;
 
   // end of BSS, start of overlay1
@@ -44017,8 +44020,14 @@ void start(void)
 
   // save $ra
   DAT_8008da04 = unaff_retaddr;
+  
+  // ghidra does not emit the C code,
+  // but right here before InitHeap is
+  // setting $gp to 8008cf6c
 
   InitHeap(&DAT_8009f700,DAT_8008c058,*puVar3);
+  
+  // not important
   uVar4 = 0x800779e0;
 
   // start the "main" function
