@@ -436,6 +436,9 @@ common, exe, Tawna_Init, 0x0, General/Tawna_Init.c
 /// Retail
 1111, exe, DecalFont_boolRacingWheel, 0x0, General/RegionJapan/Retail/DecalFont_boolRacingWheel.c
 
+// rewritten psyq lib entry, not written by ND, needed for debugging
+926, exe, start, 0x0, General/psyq_start.c
+
 // Benchmarking, requires removing: MainFrame_RenderFrame, DotLights, EffectSfxRain_MakeSound,
 // and requires adding DF_Main to RDATA with the rest of decomp RDATA
 //926, exe, 0x800379b0, 0x0, ../mods/Tests/TenSecondBenchmark/src/DF_JalDrawOTag.s

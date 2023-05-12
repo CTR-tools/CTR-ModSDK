@@ -2,8 +2,6 @@
 
 void DECOMP_MEMPACK_Init(int ramSize)
 {
-	register struct sData* sdata asm("gp"); // r28
-
 	struct Mempack* ptrMempack;
 
 	// Get the pointer to the memory allocation system

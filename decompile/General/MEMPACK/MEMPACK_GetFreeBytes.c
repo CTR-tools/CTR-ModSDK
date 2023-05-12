@@ -2,8 +2,6 @@
 
 int DECOMP_MEMPACK_GetFreeBytes()
 {
-	register struct sData* sdata asm("gp"); // r28
-
 	struct Mempack* ptrMempack;
 
 	// Get the pointer to the memory allocation system

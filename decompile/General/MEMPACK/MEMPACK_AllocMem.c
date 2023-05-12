@@ -5,8 +5,6 @@ int MEMPACK_GetFreeBytes();
 
 void* DECOMP_MEMPACK_AllocMem(int allocSize)
 {
-	register struct sData* sdata asm("gp"); // r28
-
 	int firstFreeByte;
 	int newAllocSize;
 	struct Mempack* ptrMempack;

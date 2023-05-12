@@ -2,8 +2,6 @@
 
 int DECOMP_MEMPACK_PushState()
 {
-	register struct sData* sdata asm("gp");
-
 	struct Mempack* ptrMempack;
 	int numBookmarks;
 

@@ -2,8 +2,6 @@
 
 void DECOMP_MEMPACK_PopState()
 {
-	register struct sData* sdata asm("gp");
-
 	struct Mempack* ptrMempack;
 	int numBookmarks;
 
