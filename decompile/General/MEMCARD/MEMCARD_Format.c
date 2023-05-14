@@ -2,11 +2,9 @@
 
 uint8_t MEMCARD_Format(int slotIdx)
 {
-    char *someVar = 0;
-
     if (sdata->unk_card_8008D404 == 0)
     {
-        MEMCARD_StringInit(slotIdx, someVar);
+        char *someVar = MEMCARD_StringInit(slotIdx, 0);
 
         // format always returns 1
         if (format(someVar))
@@ -15,7 +13,7 @@ uint8_t MEMCARD_Format(int slotIdx)
             sdata->memcardSlot = slotIdx;
             MEMCARD_SkipEvents();
 
-            while (_card_load(sdata->memcardSlot) != 1)
+            while (!_card_load(sdata->memcardSlot))
                 ;
 
             sdata->memcard_remainingAttempts = 8;
