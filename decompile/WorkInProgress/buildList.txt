@@ -1,6 +1,3 @@
-// common, exe, TitleOSK_DrawMenu, 0x0, src/TitleOSK_DrawMenu_Hook.s
-// common, exe, rdata_free, 0x0, src/TitleOSK_DrawMenu.c
-
 // 4 bytes over budget
 // common, exe, MEMCARD_FindFirstGhost, 0x0, src/MEMCARD/MEMCARD_FindFirstGhost.c
 // 8 bytes over budget
