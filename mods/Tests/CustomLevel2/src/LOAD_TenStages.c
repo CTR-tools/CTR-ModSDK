@@ -80,11 +80,20 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 	// for custom level
 	#if 1
+	
 	// drop cutscene flag
 	gGT->gameMode1 &= ~(0x20000000);
-	gGT->numPlyrCurrGame = 4;
-	gGT->numPlyrCurrGame = 4;
-	*(char*)0x800255c4 = 4;
+	
+	// battle
+	gGT->gameMode1 |= 0x20;
+	
+	// load 2P
+	gGT->numPlyrCurrGame = 2;
+	gGT->numPlyrCurrGame = 2;
+	
+	// 2P with 1 controller
+	*(char*)0x800255c4 = 2;
+	
 	#endif
 
 	// pointer to LEV
