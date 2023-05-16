@@ -10,7 +10,11 @@
 	.color_lo = {colR, colG, colB, 0}, \
 }
 
-#define NEW_BLOCK(qIndex, posX, posZ, sizeX, sizeZ, flagV, flagQ, colR, colG, colB) \
+// can't change these, or else triNormalVec has to change
+#define sizeX 0x300
+#define sizeZ 0x300
+
+#define NEW_BLOCK(qIndex, posX, posZ, flagV, flagQ, colR, colG, colB) \
 	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
 	.levVertex[9*qIndex+1] = NEW_VERTEX(posX+sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
 	.levVertex[9*qIndex+2] = NEW_VERTEX(posX-sizeX/2, 0, posZ+sizeZ/2, flagV, colR, colG, colB),\
@@ -77,23 +81,23 @@
 	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_low)-4,\
 	OFFSETOF(struct LevelFile, quadBlock[x].visFromQuadBlock)-4
 
-#define NUM_BLOCKS 6
+#define NUM_BLOCKS 28
 
 struct LevelFile
 {
 	void* ptrMap;
 	struct Level level;
 	struct mesh_info mInfo;
+	struct IconGroup4 group4;
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
 	struct VisData visData[3];
 	struct VisFromQuadBlock visFromQuadBlock;
 	int visBitIndex[4];
-	struct IconGroup4 group4;
 	struct VisMem visMem;
 	int VisMem_bitIndex_DstMemcpy[8]; // leave empty
 	int VisMem_bspList_RenderList[3*2];
-	int map[100];
+	int map[300];
 };
 
 struct LevelFile file =
@@ -116,110 +120,6 @@ struct LevelFile file =
 		.unk2 = 0, // idk, fine to leave null
 		.ptrVisDataArray = OFFSETOF(struct LevelFile, visData[0])-4,
 		.numVisData = 3, // can be anything non-zero
-	},
-	
-	NEW_BLOCK
-	(
-		// index
-		0, 
-		
-		// posX, posY, sizeX, sizeY
-		0x0, 0x0, 0x300, 0x300,
-		
-		// vertex flags, quadblock flags
-		NULL, 0x1800,
-		
-		// colorRGB
-		0xFF, 0x00, 0x0
-	),
-	
-	NEW_BLOCK(1, 0, 0x300, 0x300, 0x300, NULL, 0x1800, 0xFF, 0x20, 0x0),
-	NEW_BLOCK(2, 0, 0x600, 0x300, 0x300, NULL, 0x1800, 0xFF, 0x40, 0x0),
-	NEW_BLOCK(3, 0, 0x900, 0x300, 0x300, NULL, 0x1800, 0xFF, 0x60, 0x0),
-	NEW_BLOCK(4, 0, 0xC00, 0x300, 0x300, NULL, 0x1800, 0xFF, 0x80, 0x0),
-	NEW_BLOCK(5, 0, 0xF00, 0x300, 0x300, NULL, 0x1800, 0xFF, 0xA0, 0x0), 
-	
-	.visData =
-	{
-		// root node
-		[0] =
-		{
-			.flag = 0,
-			.id = 0,
-			.box =
-			{
-				.min = {0xE0C6, 0xFFE4, 0xDFDB},
-				.max = {0x20C0, 0x066E, 0x208F}
-			},
-			
-			.data =
-			{
-				.branch =
-				{
-					// need more info on this
-					.axis = {0x1000, 0x0, 0x0, 0xFF40},
-					
-					// 0x4000 signifies leaf node
-					.childID = {0x4002, 0x4001},
-				}
-			}
-		},
-		
-		// leaf with nothing in it
-		[1] =
-		{
-			.flag = 1,
-			.id = 1,
-			.box =
-			{
-				// random box that exists nowhere
-				.min = {0x1680, 0xA2, 0x4E1},
-				.max = {0x1FB1, 0x515, 0xA80}
-			},
-			
-			.data =
-			{
-				// nothing in it
-			}
-		},
-		
-		// leaf with 1 quadblock
-		[2] =
-		{
-			.flag = 1,
-			.id = 2,
-			.box =
-			{
-				// random box that exists nowhere
-				.min = {0xFE80, 0xFFE4, 0xFE80},
-				.max = {0x1D80, 0x7C, 0x1D80}
-			},
-			
-			.data =
-			{
-				.leaf =
-				{
-					.unk1 = 0,
-					.ptrVisDataArray_InstHitboxes = 0,
-					.numQuads = NUM_BLOCKS,
-					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
-				}
-			}
-		},
-	},
-	
-	.visFromQuadBlock =
-	{
-		.visLeafSrc = OFFSETOF(struct LevelFile, visBitIndex[0]),
-		.visFaceSrc = OFFSETOF(struct LevelFile, visBitIndex[0]),
-		.visInstSrc = 0,
-		.visExtraSrc = 0,
-	},
-	
-	.visBitIndex =
-	{
-		// all 0xFFFFFFFFFFFF
-		-1, -1, -1, -1
 	},
 	
 	// A quadblock can draw 32 textures,
@@ -283,6 +183,169 @@ struct LevelFile file =
 		},
 	},
 	
+/*
+	// leave this commented out
+
+	NEW_BLOCK
+	(
+		// index
+		0, 
+		
+		// posX, posY (size is always 0x300 x 0x300)
+		0x0, 0x0
+		
+		// vertex flags, quadblock flags
+		NULL, 0x1800,
+		
+		// colorRGB
+		0xFF, 0x00, 0x0
+	),
+*/
+	
+	// +z is forward
+	// +x is left, not right
+	
+	// spawn
+	NEW_BLOCK(0, -0x180, 0, NULL, 0x1800, 0xFF, 0x0, 0x0),
+	NEW_BLOCK(1, 0x180, 0, NULL, 0x1800, 0xFF, 0x20, 0x0),
+	
+	// forward
+	NEW_BLOCK(2, -0x180, 0x300, NULL, 0x1800, 0xFF, 0x20, 0x0),
+	NEW_BLOCK(3, 0x180, 0x300, NULL, 0x1800, 0xFF, 0x40, 0x0),
+	
+	// forward
+	NEW_BLOCK(4, -0x180, 0x600, NULL, 0x1800, 0xFF, 0x40, 0x0),
+	NEW_BLOCK(5, 0x180, 0x600, NULL, 0x1800, 0xFF, 0x60, 0x0),
+	
+	// forward
+	NEW_BLOCK(6, -0x180, 0x900, NULL, 0x1800, 0xFF, 0x60, 0x0),
+	NEW_BLOCK(7, 0x180, 0x900, NULL, 0x1800, 0xFF, 0x80, 0x0),
+		
+	// forward
+	NEW_BLOCK(8, -0x180, 0xC00, NULL, 0x1800, 0xFF, 0x80, 0x0),
+	NEW_BLOCK(9, 0x180, 0xC00, NULL, 0x1800, 0xFF, 0x80, 0x0),
+	
+	// right
+	NEW_BLOCK(10, -0x480, 0x900, NULL, 0x1800, 0xFF, 0x80, 0x0),
+	NEW_BLOCK(11, -0x480, 0xC00, NULL, 0x1800, 0, 0xFF, 0),
+	
+	// right
+	NEW_BLOCK(12, -0x780, 0x900, NULL, 0x1800, 0, 0xFF, 0),
+	NEW_BLOCK(13, -0x780, 0xC00, NULL, 0x1800, 0, 0xFF, 0x20),
+	
+	// right
+	NEW_BLOCK(14, -0xA80, 0x900, NULL, 0x1800, 0, 0xFF, 0x20),
+	NEW_BLOCK(15, -0xA80, 0xC00, NULL, 0x1800, 0, 0xFF, 0x40),
+	
+	// right
+	NEW_BLOCK(16, -0xD80, 0x900, NULL, 0x1800, 0, 0xFF, 0x40),
+	NEW_BLOCK(17, -0xD80, 0xC00, NULL, 0x1800, 0, 0xFF, 0x60),
+	
+	// down
+	NEW_BLOCK(18, -0xA80, 0x600, NULL, 0x1800, 0, 0xFF, 0x60),
+	NEW_BLOCK(19, -0xD80, 0x600, NULL, 0x1800, 0, 0xFF, 0x80),
+	
+	
+	// down
+	NEW_BLOCK(20, -0xA80, 0x300, NULL, 0x1800, 0, 0, 0xFF),
+	NEW_BLOCK(21, -0xD80, 0x300, NULL, 0x1800, 0x20, 0, 0xFF),
+	
+	// down
+	NEW_BLOCK(22, -0xA80, 0x0, NULL, 0x1800, 0x20, 0, 0xFF),
+	NEW_BLOCK(23, -0xD80, 0x0, NULL, 0x1800, 0x40, 0, 0xFF),
+	
+	// left
+	NEW_BLOCK(24, -0x780, 0, NULL, 0x1800, 0x40, 0, 0xFF),
+	NEW_BLOCK(25, -0x780, 0x300, NULL, 0x1800, 0x60, 0, 0xFF),
+	
+	// left
+	NEW_BLOCK(26, -0x480, 0, NULL, 0x1800, 0x60, 0, 0xFF),
+	NEW_BLOCK(27, -0x480, 0x300, NULL, 0x1800, 0x80, 0, 0xFF),
+	
+	
+	.visData =
+	{
+		// root node
+		[0] =
+		{
+			.flag = 0,
+			.id = 0,
+			.box =
+			{
+				.min = {0xE0C6, 0xFFE4, 0xDFDB},
+				.max = {0x20C0, 0x066E, 0x208F}
+			},
+			
+			.data =
+			{
+				.branch =
+				{
+					// need more info on this
+					.axis = {0x1000, 0x0, 0x0, 0xFF40},
+					
+					// 0x4000 signifies leaf node
+					.childID = {0x4002, 0x4001},
+				}
+			}
+		},
+		
+		// leaf with nothing in it
+		[1] =
+		{
+			.flag = 1,
+			.id = 1,
+			.box =
+			{
+				// random box that exists nowhere
+				.min = {0x1680, 0xA2, 0x4E1},
+				.max = {0x1FB1, 0x515, 0xA80}
+			},
+			
+			.data =
+			{
+				// nothing in it
+			}
+		},
+		
+		// leaf with 1 quadblock
+		[2] =
+		{
+			.flag = 1,
+			.id = 2,
+			.box =
+			{
+				// random box that exists nowhere
+				.min = {0xEE80, 0xFFE4, 0xFE80},
+				.max = {0x1D80, 0x7C, 0x1D80}
+			},
+			
+			.data =
+			{
+				.leaf =
+				{
+					.unk1 = 0,
+					.ptrVisDataArray_InstHitboxes = 0,
+					.numQuads = NUM_BLOCKS,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
+				}
+			}
+		},
+	},
+	
+	.visFromQuadBlock =
+	{
+		.visLeafSrc = OFFSETOF(struct LevelFile, visBitIndex[0]),
+		.visFaceSrc = OFFSETOF(struct LevelFile, visBitIndex[0]),
+		.visInstSrc = 0,
+		.visExtraSrc = 0,
+	},
+	
+	.visBitIndex =
+	{
+		// all 0xFFFFFFFFFFFF
+		-1, -1, -1, -1
+	},
+	
 	.visMem =
 	{
 		.visLeafList[0] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpy[0])-4,
@@ -295,7 +358,7 @@ struct LevelFile file =
 	
 	.map =
 	{
-		// 18 pointers
+		// 90 pointers
 		(12+NUM_BLOCKS*6)<<2,
 		
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
@@ -303,12 +366,6 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVertexArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVisDataArray)-4,
-		PTR_MAP_QUADBLOCK(0),
-		PTR_MAP_QUADBLOCK(1),
-		PTR_MAP_QUADBLOCK(2),
-		PTR_MAP_QUADBLOCK(3),
-		PTR_MAP_QUADBLOCK(4),
-		PTR_MAP_QUADBLOCK(5),
 		OFFSETOF(struct LevelFile, visData[2].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, visFromQuadBlock.visLeafSrc)-4,
 		OFFSETOF(struct LevelFile, visFromQuadBlock.visFaceSrc)-4,
@@ -316,5 +373,33 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, visMem.visFaceList[0])-4,
 		OFFSETOF(struct LevelFile, visMem.bspList[0])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderList[2*2+1])-4,
+		PTR_MAP_QUADBLOCK(0),
+		PTR_MAP_QUADBLOCK(1),
+		PTR_MAP_QUADBLOCK(2),
+		PTR_MAP_QUADBLOCK(3),
+		PTR_MAP_QUADBLOCK(4),
+		PTR_MAP_QUADBLOCK(5),
+		PTR_MAP_QUADBLOCK(6),
+		PTR_MAP_QUADBLOCK(7),
+		PTR_MAP_QUADBLOCK(8),
+		PTR_MAP_QUADBLOCK(9),
+		PTR_MAP_QUADBLOCK(10),
+		PTR_MAP_QUADBLOCK(11),
+		PTR_MAP_QUADBLOCK(12),
+		PTR_MAP_QUADBLOCK(13),
+		PTR_MAP_QUADBLOCK(14),
+		PTR_MAP_QUADBLOCK(15),
+		PTR_MAP_QUADBLOCK(16),
+		PTR_MAP_QUADBLOCK(17),
+		PTR_MAP_QUADBLOCK(18),
+		PTR_MAP_QUADBLOCK(19),
+		PTR_MAP_QUADBLOCK(20),
+		PTR_MAP_QUADBLOCK(21),
+		PTR_MAP_QUADBLOCK(22),
+		PTR_MAP_QUADBLOCK(23),
+		PTR_MAP_QUADBLOCK(24),
+		PTR_MAP_QUADBLOCK(25),
+		PTR_MAP_QUADBLOCK(26),
+		PTR_MAP_QUADBLOCK(27),
 	},
 };
