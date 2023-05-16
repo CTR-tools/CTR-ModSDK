@@ -95,8 +95,12 @@ struct LevelFile
 	struct VisFromQuadBlock visFromQuadBlock;
 	int visBitIndex[4];
 	struct VisMem visMem;
-	int VisMem_bitIndex_DstMemcpy[8]; // leave empty
-	int VisMem_bspList_RenderList[3*2];
+	
+	int VisMem_bitIndex_DstMemcpyP1[8]; // leave empty
+	int VisMem_bspList_RenderListP1[3*2];
+	int VisMem_bitIndex_DstMemcpyP2[8]; // leave empty
+	int VisMem_bspList_RenderListP2[3*2];
+	
 	int map[300];
 };
 
@@ -347,18 +351,24 @@ struct LevelFile file =
 	
 	.visMem =
 	{
-		.visLeafList[0] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpy[0])-4,
-		.visFaceList[0] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpy[4])-4,
-		.bspList[0] = OFFSETOF(struct LevelFile, VisMem_bspList_RenderList[0])-4
+		// P1
+		.visLeafList[0] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP1[0])-4,
+		.visFaceList[0] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP1[4])-4,
+		.bspList[0] = OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[0])-4,
+		
+		// P2
+		.visLeafList[1] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP2[0])-4,
+		.visFaceList[1] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP2[4])-4,
+		.bspList[1] = OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[0])-4
 	},
 	
 	// initialize for leaf nodes only
-	.VisMem_bspList_RenderList[2*2+1] = OFFSETOF(struct LevelFile, visData[2])-4,
+	.VisMem_bspList_RenderListP1[2*2+1] = OFFSETOF(struct LevelFile, visData[2])-4,
+	.VisMem_bspList_RenderListP2[2*2+1] = OFFSETOF(struct LevelFile, visData[2])-4,
 	
 	.map =
 	{
-		// 90 pointers
-		(12+NUM_BLOCKS*6)<<2,
+		(16+NUM_BLOCKS*6)<<2,
 		
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
@@ -369,9 +379,13 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, visFromQuadBlock.visLeafSrc)-4,
 		OFFSETOF(struct LevelFile, visFromQuadBlock.visFaceSrc)-4,
 		OFFSETOF(struct LevelFile, visMem.visLeafList[0])-4,
+		OFFSETOF(struct LevelFile, visMem.visLeafList[1])-4,
 		OFFSETOF(struct LevelFile, visMem.visFaceList[0])-4,
+		OFFSETOF(struct LevelFile, visMem.visFaceList[1])-4,
 		OFFSETOF(struct LevelFile, visMem.bspList[0])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderList[2*2+1])-4,
+		OFFSETOF(struct LevelFile, visMem.bspList[1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*2+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*2+1])-4,
 		PTR_MAP_QUADBLOCK(0),
 		PTR_MAP_QUADBLOCK(1),
 		PTR_MAP_QUADBLOCK(2),

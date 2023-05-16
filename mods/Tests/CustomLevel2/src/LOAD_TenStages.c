@@ -82,9 +82,9 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	#if 1
 	// drop cutscene flag
 	gGT->gameMode1 &= ~(0x20000000);
-	gGT->numPlyrCurrGame = 1;
-	gGT->numPlyrCurrGame = 1;
-	*(char*)0x800255c4 = 1;
+	gGT->numPlyrCurrGame = 2;
+	gGT->numPlyrCurrGame = 2;
+	*(char*)0x800255c4 = 2;
 	#endif
 
 	// pointer to LEV
