@@ -78,6 +78,12 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	int ovrRegion3;
 	struct Model* m;
 
+	// for custom level
+	#if 1
+	// drop cutscene flag
+	gGT->gameMode1 &= ~(0x20000000);
+	#endif
+
 	// pointer to LEV
 	iVar9 = sdata->ptrLEV_DuringLoading;
 
