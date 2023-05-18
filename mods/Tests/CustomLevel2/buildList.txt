@@ -2,6 +2,9 @@
 // loads bigfile 221 as lev
 common, exe, LOAD_TenStages, 0x0, src/LOAD_TenStages.c
 
+// fast-boot enabled
+common, exe, main, 0x0, src/main.c
+
 // sets lev to bigfile 221
 926, 221, 0x8009f6fc, 0x0, src/Lev221.c
 926, 222, 0x8009f6fc, 0x0, src/Lev222.c

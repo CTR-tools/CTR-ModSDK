@@ -88,11 +88,11 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	gGT->gameMode1 |= 0x20;
 	
 	// load 2P
-	gGT->numPlyrCurrGame = 2;
-	gGT->numPlyrCurrGame = 2;
+	gGT->numPlyrCurrGame = 4;
+	gGT->numPlyrNextGame = 4;
 	
 	// 2P with 1 controller
-	*(char*)0x800255c4 = 2;
+	*(char*)0x800255c4 = 4;
 	
 	#endif
 

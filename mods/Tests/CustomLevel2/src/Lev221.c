@@ -89,6 +89,7 @@ struct LevelFile
 	struct Level level;
 	struct mesh_info mInfo;
 	struct IconGroup4 group4;
+	struct SpawnType1 ptrSpawnType1;
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
 	struct VisData visData[3];
@@ -115,7 +116,23 @@ struct LevelFile file =
 	.level =
 	{
 		.ptr_mesh_info = OFFSETOF(struct LevelFile, mInfo)-4,
-		.visMem = OFFSETOF(struct LevelFile, visMem)-4
+		.visMem = OFFSETOF(struct LevelFile, visMem)-4,
+		
+		// warning, game will edit rotY by 0x400 after spawn
+		
+		.DriverSpawn[0].pos = {0,0,0},
+		.DriverSpawn[0].rot = {0,0-0x400,0},
+		
+		.DriverSpawn[1].pos = {0,0,0xA80},
+		.DriverSpawn[1].rot = {0,0xC00-0x400,0},
+		
+		.DriverSpawn[2].pos = {-0xA80,0,0xA80},
+		.DriverSpawn[2].rot = {0,0x800-0x400,0},
+		
+		.DriverSpawn[3].pos = {-0xA80,0,0},
+		.DriverSpawn[3].rot = {0,0x400-0x400,0},
+		
+		.ptrSpawnType1 = OFFSETOF(struct LevelFile, ptrSpawnType1)-4
 	},
 	
 	.mInfo =
@@ -136,8 +153,8 @@ struct LevelFile file =
 		// duplicate for low LOD
 		.texLayout[0] = 
 		{
-			.clut = (512 >> 10) | (256 >> 6),
-			.tpage = 0x4180 | (8) | (1<<4),
+			.clut = (512 >> 10) | (0 >> 6),
+			.tpage = 0x4180 | (8) | (0<<4),
 			.u0 = 2, .v0 = 0,
 			.u1 = 2, .v1 = 2,
 			.u2 = 0, .v2 = 0,
@@ -147,8 +164,8 @@ struct LevelFile file =
 		// duplicate for low LOD
 		.texLayout[1] = 
 		{
-			.clut = (512 >> 10) | (256 >> 6),
-			.tpage = 0x4180 | (8) | (1<<4),
+			.clut = (512 >> 10) | (0 >> 6),
+			.tpage = 0x4180 | (8) | (0<<4),
 			.u0 = 2, .v0 = 0,
 			.u1 = 2, .v1 = 2,
 			.u2 = 0, .v2 = 0,
@@ -158,8 +175,8 @@ struct LevelFile file =
 		// duplicate for low LOD
 		.texLayout[2] = 
 		{
-			.clut = (512 >> 10) | (256 >> 6),
-			.tpage = 0x4180 | (8) | (1<<4),
+			.clut = (512 >> 10) | (0 >> 6),
+			.tpage = 0x4180 | (8) | (0<<4),
 			.u0 = 2, .v0 = 0,
 			.u1 = 2, .v1 = 2,
 			.u2 = 0, .v2 = 0,
@@ -169,10 +186,14 @@ struct LevelFile file =
 		// drawn directly under player
 		.texLayout[3] = 
 		{
+			// Change since first custom level,
+			// dont use 512,256, use 512,0,
+			// because DecalMP overwrites 512,256
+			
 			// X(b6) Y(b10)
 			// row of 16 pixels, or row of 256 pixels,
 			// this is how it chooses what colors to use
-			.clut = (512 >> 10) | (256 >> 6),
+			.clut = (512 >> 10) | (0 >> 6), // was 256>>6 for 512,256
 			
 			// each page is 256x256 large
 			
@@ -181,7 +202,7 @@ struct LevelFile file =
 			// blending(b2), 
 			// bitDepth(b2), 
 			// restBits(b7)
-			.tpage = 0x4180 | (8) | (1<<4), // page = (2,1) (512,256)
+			.tpage = 0x4180 | (8) | (0<<4), // page = (2,1) (512,0) ------- 1<<4 was 512,256
 			
 			// coordinates within page
 			.u0 = 2, .v0 = 0,
@@ -191,22 +212,22 @@ struct LevelFile file =
 		},
 	},
 	
+	// this must exist, or else camera fly-in
+	// checks for "count" without nullptr check,
+	// and crashes dereferencing nullptr on real PSX
+	.ptrSpawnType1 =
+	{
+		.count = 0,
+	},
+	
 /*
 	// leave this commented out
-
 	NEW_BLOCK
 	(
-		// index
-		0, 
-		
-		// posX, posY (size is always 0x300 x 0x300)
-		0x0, 0x0
-		
-		// vertex flags, quadblock flags
-		NULL, 0x1800,
-		
-		// colorRGB
-		0xFF, 0x00, 0x0
+		0, 					// index
+		0x0, 0x0			// posX, posY (size is always 0x300 x 0x300)
+		NULL, 0x1800, 		// vertex flags, quadblock flags
+		0xFF, 0x00, 0x00	// colorRGB
 	),
 */
 	
@@ -268,7 +289,6 @@ struct LevelFile file =
 	// left
 	NEW_BLOCK(26, -0x480, 0, NULL, 0x1800, 0x60, 0, 0xFF),
 	NEW_BLOCK(27, -0x480, 0x300, NULL, 0x1800, 0x80, 0, 0xFF),
-	
 	
 	.visData =
 	{
@@ -384,10 +404,11 @@ struct LevelFile file =
 	
 	.map =
 	{
-		(24+NUM_BLOCKS*6)<<2,
+		(25+NUM_BLOCKS*6)<<2,
 		
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
+		OFFSETOF(struct LevelFile, level.ptrSpawnType1)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVertexArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVisDataArray)-4,
