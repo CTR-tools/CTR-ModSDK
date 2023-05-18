@@ -277,8 +277,8 @@ u_int main()
 				GAMEPAD_ProcessAnyoneVars(sdata->gGamepads);
 
 				#ifdef FastBoot
-				// disable spawn -- keep normal spawn for CustomLevel2
-				//gGT->Debug_ToggleNormalSpawn = 0;
+				// disable spawn
+				gGT->Debug_ToggleNormalSpawn = 0;
 				
 				#if 0
 				// disable maskgrab_init
