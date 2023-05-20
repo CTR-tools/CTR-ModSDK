@@ -362,6 +362,8 @@ struct LevelFile file =
 	// ========== Other Side Of Map ======================
 	
 	
+	// ========== VisData ======================
+	
 	.visData =
 	{
 		// root node
