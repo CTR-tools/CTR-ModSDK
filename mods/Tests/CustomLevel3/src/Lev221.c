@@ -48,7 +48,7 @@
 		.weather_vanishRate = 0, \
 		.speedImpact = 0, \
 		\
-		.blockID = NUM_BLOCKS-qIndex-1, \
+		.blockID = 0, \
 		.respawnIndex = -1, \
 		.triNormalVecBitShift = 0x12, \
 		\
@@ -112,7 +112,7 @@
 	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_low)-4,\
 	OFFSETOF(struct LevelFile, quadBlock[x].visFromQuadBlock)-4
 
-#define NUM_BLOCKS 32
+#define NUM_BLOCKS 64
 
 struct LevelFile
 {
@@ -137,7 +137,7 @@ struct LevelFile
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
 	int VisMem_bspList_RenderListP4[3*2];
 	
-	int map[300];
+	int map[1000];
 };
 
 struct LevelFile file =
@@ -322,10 +322,10 @@ struct LevelFile file =
 	NEW_BLOCK(27, -0x480, 0x300, NULL, 0x1800, 0x80, 0, 0xFF),
 	
 	// ramp
-	NEW_BLOCK(28, -0x780, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
-	NEW_BLOCK(29, -0x480, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
-	NEW_BLOCK(30, -0x780, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
-	NEW_BLOCK(31, -0x480, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	NEW_BLOCK(28, -0xA80, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(29, -0x180, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(30, -0xA80, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	NEW_BLOCK(31, -0x180, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
 	
 	MAKE_RAMP(
 		28, 0x100, // index, height
@@ -359,8 +359,167 @@ struct LevelFile file =
 	.quadBlock[30].terrain_type = 1,
 	.quadBlock[31].terrain_type = 1,
 	
+	.quadBlock[0].blockID =  32-0-1,
+	.quadBlock[1].blockID =  32-1-1,
+	.quadBlock[2].blockID =  32-2-1,
+	.quadBlock[3].blockID =  32-3-1,
+	.quadBlock[4].blockID =  32-4-1,
+	.quadBlock[5].blockID =  32-5-1,
+	.quadBlock[6].blockID =  32-6-1,
+	.quadBlock[7].blockID =  32-7-1,
+	.quadBlock[8].blockID =  32-8-1,
+	.quadBlock[9].blockID =  32-9-1,
+	.quadBlock[10].blockID = 32-10-1,
+	.quadBlock[11].blockID = 32-11-1,
+	.quadBlock[12].blockID = 32-12-1,
+	.quadBlock[13].blockID = 32-13-1,
+	.quadBlock[14].blockID = 32-14-1,
+	.quadBlock[15].blockID = 32-15-1,
+	.quadBlock[16].blockID = 32-16-1,
+	.quadBlock[17].blockID = 32-17-1,
+	.quadBlock[18].blockID = 32-18-1,
+	.quadBlock[19].blockID = 32-19-1,
+	.quadBlock[20].blockID = 32-20-1,
+	.quadBlock[21].blockID = 32-21-1,
+	.quadBlock[22].blockID = 32-22-1,
+	.quadBlock[23].blockID = 32-23-1,
+	.quadBlock[24].blockID = 32-24-1,
+	.quadBlock[25].blockID = 32-25-1,
+	.quadBlock[26].blockID = 32-26-1,
+	.quadBlock[27].blockID = 32-27-1,
+	.quadBlock[28].blockID = 32-28-1,
+	.quadBlock[29].blockID = 32-29-1,
+	.quadBlock[30].blockID = 32-30-1,
+	.quadBlock[31].blockID = 32-31-1,
+	
 	// ========== Other Side Of Map ======================
 	
+	// spawn
+	NEW_BLOCK(32, -0x180, 0x1500+0, NULL, 0x1800, 0x30, 0x30, 0x30),
+	NEW_BLOCK(33, 0x180, 0x1500+0, NULL, 0x1800, 0x60, 0x60, 0x60),
+	
+	// forward
+	NEW_BLOCK(34, -0x180, 0x1500+0x300, NULL, 0x1800, 0x60, 0x60, 0x60),
+	NEW_BLOCK(35, 0x180, 0x1500+0x300, NULL, 0x1800, 0x30, 0x30, 0x30),
+	
+	// forward
+	NEW_BLOCK(36, -0x180, 0x1500+0x600, NULL, 0x1800, 0x70, 0x70, 0x70),
+	NEW_BLOCK(37, 0x180, 0x1500+0x600, NULL, 0x1800, 0xD0, 0xD0, 0xD0),
+	
+	// forward
+	NEW_BLOCK(38, -0x180, 0x1500+0x900, NULL, 0x1800, 0xD0, 0xD0, 0xD0),
+	NEW_BLOCK(39, 0x180, 0x1500+0x900, NULL, 0x1800, 0x70, 0x70, 0x70),
+		
+	// forward
+	NEW_BLOCK(40, -0x180, 0x1500+0xC00, NULL, 0x1800, 0x70, 0x70, 0x70),
+	NEW_BLOCK(41, 0x180, 0x1500+0xC00, NULL, 0x1800, 0xD0, 0xD0, 0xD0),
+	
+	// right
+	NEW_BLOCK(42, -0x480, 0x1500+0x900, NULL, 0x1800, 0x20, 0x20, 0x20),
+	NEW_BLOCK(43, -0x480, 0x1500+0xC00, NULL, 0x1800, 0x40, 0x40, 0x40),
+	
+	// right
+	NEW_BLOCK(44, -0x780, 0x1500+0x900, NULL, 0x1800, 0x40, 0x40, 0x40),
+	NEW_BLOCK(45, -0x780, 0x1500+0xC00, NULL, 0x1800, 0x20, 0x20, 0x20),
+	
+	// right
+	NEW_BLOCK(46, -0xA80, 0x1500+0x900, NULL, 0x1800, 0xD0, 0xD0, 0xD0),
+	NEW_BLOCK(47, -0xA80, 0x1500+0xC00, NULL, 0x1800, 0x70, 0x70, 0x70),
+	
+	// right
+	NEW_BLOCK(48, -0xD80, 0x1500+0x900, NULL, 0x1800, 0x70, 0x70, 0x70),
+	NEW_BLOCK(49, -0xD80, 0x1500+0xC00, NULL, 0x1800, 0xD0, 0xD0, 0xD0),
+	
+	// down
+	NEW_BLOCK(50, -0xA80, 0x1500+0x600, NULL, 0x1800, 0xD0, 0xD0, 0xD0),
+	NEW_BLOCK(51, -0xD80, 0x1500+0x600, NULL, 0x1800, 0x70, 0x70, 0x70),
+	
+	// down
+	NEW_BLOCK(52, -0xA80, 0x1500+0x300, NULL, 0x1800, 0x30, 0x30, 0x30),
+	NEW_BLOCK(53, -0xD80, 0x1500+0x300, NULL, 0x1800, 0x60, 0x60, 0x60),
+	
+	// down
+	NEW_BLOCK(54, -0xA80, 0x1500+0x0, NULL, 0x1800, 0x60, 0x60, 0x60),
+	NEW_BLOCK(55, -0xD80, 0x1500+0x0, NULL, 0x1800, 0x30, 0x30, 0x30),
+	
+	// left
+	NEW_BLOCK(56, -0x780, 0x1500+0, NULL, 0x1800, 0x30, 0x30, 0x30),
+	NEW_BLOCK(57, -0x780, 0x1500+0x300, NULL, 0x1800, 0x60, 0x60, 0x60),
+	
+	// left
+	NEW_BLOCK(58, -0x480, 0x1500+0, NULL, 0x1800, 0x60, 0x60, 0x60),
+	NEW_BLOCK(59, -0x480, 0x1500+0x300, NULL, 0x1800, 0x30, 0x30, 0x30),
+	
+	// ramp
+	NEW_BLOCK(60, -0xA80, 0x1500-0x300, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(61, -0x180, 0x1500-0x300, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(62, -0xA80, 0x1500-0x300, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	NEW_BLOCK(63, -0x180, 0x1500-0x300, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	
+	MAKE_RAMP(
+		60, 0x100, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		61, 0x100,
+		2,8,3,
+		5,6,7,
+		0,4,1 
+	),
+	
+	MAKE_RAMP(
+		62, 0x100,
+		2,8,3,
+		5,6,7,
+		0,4,1 
+	),
+	
+	MAKE_RAMP(
+		63, 0x100,
+		2,8,3,
+		5,6,7,
+		0,4,1 
+	),
+		
+	// turn into turbo, if flagsQ is 0x1840
+	.quadBlock[62].terrain_type = 1,
+	.quadBlock[63].terrain_type = 1,
+	
+	.quadBlock[32].blockID = 64-0-1,
+	.quadBlock[33].blockID = 64-1-1,
+	.quadBlock[34].blockID = 64-2-1,
+	.quadBlock[35].blockID = 64-3-1,
+	.quadBlock[36].blockID = 64-4-1,
+	.quadBlock[37].blockID = 64-5-1,
+	.quadBlock[38].blockID = 64-6-1,
+	.quadBlock[39].blockID = 64-7-1,
+	.quadBlock[40].blockID = 64-8-1,
+	.quadBlock[41].blockID = 64-9-1,
+	.quadBlock[42].blockID = 64-10-1,
+	.quadBlock[43].blockID = 64-11-1,
+	.quadBlock[44].blockID = 64-12-1,
+	.quadBlock[45].blockID = 64-13-1,
+	.quadBlock[46].blockID = 64-14-1,
+	.quadBlock[47].blockID = 64-15-1,
+	.quadBlock[48].blockID = 64-16-1,
+	.quadBlock[49].blockID = 64-17-1,
+	.quadBlock[50].blockID = 64-18-1,
+	.quadBlock[51].blockID = 64-19-1,
+	.quadBlock[52].blockID = 64-20-1,
+	.quadBlock[53].blockID = 64-21-1,
+	.quadBlock[54].blockID = 64-22-1,
+	.quadBlock[55].blockID = 64-23-1,
+	.quadBlock[56].blockID = 64-24-1,
+	.quadBlock[57].blockID = 64-25-1,
+	.quadBlock[58].blockID = 64-26-1,
+	.quadBlock[59].blockID = 64-27-1,
+	.quadBlock[60].blockID = 64-28-1,
+	.quadBlock[61].blockID = 64-29-1,
+	.quadBlock[62].blockID = 64-30-1,
+	.quadBlock[63].blockID = 64-31-1,
 	
 	// ========== VisData ======================
 	
@@ -398,13 +557,19 @@ struct LevelFile file =
 			.box =
 			{
 				// random box that exists nowhere
-				.min = {0x1680, 0xA2, 0x4E1},
-				.max = {0x1FB1, 0x515, 0xA80}
+				.min = {-0x1100, 0xFFE4, 0x1100},
+				.max = {0x1100, 0x400, 0x2500}
 			},
 			
 			.data =
 			{
-				// nothing in it
+				.leaf =
+				{
+					.unk1 = 0,
+					.ptrVisDataArray_InstHitboxes = 0,
+					.numQuads = 32,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[32])-4
+				}
 			}
 		},
 		
@@ -426,7 +591,7 @@ struct LevelFile file =
 				{
 					.unk1 = 0,
 					.ptrVisDataArray_InstHitboxes = 0,
-					.numQuads = NUM_BLOCKS,
+					.numQuads = 32,
 					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
 				}
 			}
@@ -471,6 +636,10 @@ struct LevelFile file =
 	},
 	
 	// initialize for leaf nodes only
+	.VisMem_bspList_RenderListP1[2*1+1] = OFFSETOF(struct LevelFile, visData[1])-4,
+	.VisMem_bspList_RenderListP2[2*1+1] = OFFSETOF(struct LevelFile, visData[1])-4,
+	.VisMem_bspList_RenderListP3[2*1+1] = OFFSETOF(struct LevelFile, visData[1])-4,
+	.VisMem_bspList_RenderListP4[2*1+1] = OFFSETOF(struct LevelFile, visData[1])-4,
 	.VisMem_bspList_RenderListP1[2*2+1] = OFFSETOF(struct LevelFile, visData[2])-4,
 	.VisMem_bspList_RenderListP2[2*2+1] = OFFSETOF(struct LevelFile, visData[2])-4,
 	.VisMem_bspList_RenderListP3[2*2+1] = OFFSETOF(struct LevelFile, visData[2])-4,
@@ -478,7 +647,7 @@ struct LevelFile file =
 	
 	.map =
 	{
-		(25+NUM_BLOCKS*6)<<2,
+		(30+NUM_BLOCKS*6)<<2,
 		
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
@@ -486,6 +655,7 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVertexArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVisDataArray)-4,
+		OFFSETOF(struct LevelFile, visData[1].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, visData[2].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, visFromQuadBlock.visLeafSrc)-4,
 		OFFSETOF(struct LevelFile, visFromQuadBlock.visFaceSrc)-4,
@@ -501,6 +671,10 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, visMem.bspList[1])-4,
 		OFFSETOF(struct LevelFile, visMem.bspList[2])-4,
 		OFFSETOF(struct LevelFile, visMem.bspList[3])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*1+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*1+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*1+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*1+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*2+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*2+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*2+1])-4,
@@ -537,5 +711,37 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(29),
 		PTR_MAP_QUADBLOCK(30),
 		PTR_MAP_QUADBLOCK(31),
+		PTR_MAP_QUADBLOCK(32),
+		PTR_MAP_QUADBLOCK(33),
+		PTR_MAP_QUADBLOCK(34),
+		PTR_MAP_QUADBLOCK(35),
+		PTR_MAP_QUADBLOCK(36),
+		PTR_MAP_QUADBLOCK(37),
+		PTR_MAP_QUADBLOCK(38),
+		PTR_MAP_QUADBLOCK(39),
+		PTR_MAP_QUADBLOCK(40),
+		PTR_MAP_QUADBLOCK(41),
+		PTR_MAP_QUADBLOCK(42),
+		PTR_MAP_QUADBLOCK(43),
+		PTR_MAP_QUADBLOCK(44),
+		PTR_MAP_QUADBLOCK(45),
+		PTR_MAP_QUADBLOCK(46),
+		PTR_MAP_QUADBLOCK(47),
+		PTR_MAP_QUADBLOCK(48),
+		PTR_MAP_QUADBLOCK(49),
+		PTR_MAP_QUADBLOCK(50),
+		PTR_MAP_QUADBLOCK(51),
+		PTR_MAP_QUADBLOCK(52),
+		PTR_MAP_QUADBLOCK(53),
+		PTR_MAP_QUADBLOCK(54),
+		PTR_MAP_QUADBLOCK(55),
+		PTR_MAP_QUADBLOCK(56),
+		PTR_MAP_QUADBLOCK(57),
+		PTR_MAP_QUADBLOCK(58),
+		PTR_MAP_QUADBLOCK(59),
+		PTR_MAP_QUADBLOCK(60),
+		PTR_MAP_QUADBLOCK(61),
+		PTR_MAP_QUADBLOCK(62),
+		PTR_MAP_QUADBLOCK(63)
 	},
 };
