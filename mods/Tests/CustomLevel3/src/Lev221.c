@@ -72,6 +72,37 @@
 			0x1C71, \
 		} \
 	}
+	
+// get vertex numbers from here:
+// posted by DCxDemo, 4/25/2020 2:44pm, in #ctr-mod-ideas
+// https://discord.com/channels/527135227546435584/534794647738908683/703677797440159744
+#define MAKE_RAMP(qIndex, height, low1, low2, low3, mid1, mid2, mid3, hi1, hi2, hi3) \
+	.levVertex[9*qIndex+low1].pos[1] = 0, \
+	.levVertex[9*qIndex+low2].pos[1] = 0, \
+	.levVertex[9*qIndex+low3].pos[1] = 0, \
+	.levVertex[9*qIndex+mid1].pos[1] = height/2, \
+	.levVertex[9*qIndex+mid2].pos[1] = height/2, \
+	.levVertex[9*qIndex+mid3].pos[1] = height/2, \
+	.levVertex[9*qIndex+hi1].pos[1] = height, \
+	.levVertex[9*qIndex+hi2].pos[1] = height, \
+	.levVertex[9*qIndex+hi3].pos[1] = height, \
+	.quadBlock[qIndex].bbox.max[1] = height, \
+	.quadBlock[qIndex].triNormalVecDividend = \
+	{ \
+		/* hi 2 */ \
+		0x1971, \
+		0x1971, \
+		0x1971, \
+		0x1971, \
+		0x1971, \
+		0x1971, \
+		0x1971, \
+		0x1971, \
+		\
+		/* lo 2 */ \
+		0x1971,  \
+		0x1971,  \
+	}
 
 #define PTR_MAP_QUADBLOCK(x) \
 	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[0])-4,\
@@ -289,281 +320,44 @@ struct LevelFile file =
 	// left
 	NEW_BLOCK(26, -0x480, 0, NULL, 0x1800, 0x60, 0, 0xFF),
 	NEW_BLOCK(27, -0x480, 0x300, NULL, 0x1800, 0x80, 0, 0xFF),
-
-#define qIndex 28
-#define posX -0x780 
-#define posZ 0xF00 
-#define flagV NULL 
-#define flagQ 0x1800 
-#define colR 0xFF 
-#define colG 0xFF
-#define colB 0xFF
-
-	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+1] = NEW_VERTEX(posX+sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+2] = NEW_VERTEX(posX-sizeX/2, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+3] = NEW_VERTEX(posX+sizeX/2, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+4] = NEW_VERTEX(posX, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+5] = NEW_VERTEX(posX-sizeX/2, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+6] = NEW_VERTEX(posX, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+7] = NEW_VERTEX(posX+sizeX/2, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+8] = NEW_VERTEX(posX, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.quadBlock[qIndex] =
-	{
-		.index = {9*qIndex+0,9*qIndex+1,9*qIndex+2,9*qIndex+3,9*qIndex+4,9*qIndex+5,9*qIndex+6,9*qIndex+7,9*qIndex+8},
-		.quadFlags = flagQ,
-		.draw_order_low = 0,
-		.draw_order_high = 0,
-		.ptr_texture_mid =
-		{
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4 
-		}, 
-		
-		.bbox = 
-		{ 
-			.min = {posX-sizeX/2, 0, posZ-sizeZ/2},
-			.max = {posX+sizeX/2, 0x300, posZ+sizeZ/2}
-		},
-		.terrain_type = 0,
-		.weather_intensity = 0,
-		.weather_vanishRate = 0,
-		.speedImpact = 0,
-		
-		.blockID = NUM_BLOCKS-qIndex-1,
-		.respawnIndex = -1,
-		.triNormalVecBitShift = 0x12,
-		
-		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4, 
-		.visFromQuadBlock = OFFSETOF(struct LevelFile, visFromQuadBlock)-4, 
-		
-		.triNormalVecDividend = 
-		{ 
-			/* hi 2 */ 
-			0x1971, 
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			
-			/* lo 2 */ 
-			0x1971, 
-			0x1971, 
-		} 
-	},
 	
-#define qIndex 29
-#define posX -0x480 
-#define posZ 0xF00 
-#define flagV NULL 
-#define flagQ 0x1800 
-#define colR 0xFF 
-#define colG 0xFF
-#define colB 0xFF
-
-	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+1] = NEW_VERTEX(posX+sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+2] = NEW_VERTEX(posX-sizeX/2, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+3] = NEW_VERTEX(posX+sizeX/2, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+4] = NEW_VERTEX(posX, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+5] = NEW_VERTEX(posX-sizeX/2, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+6] = NEW_VERTEX(posX, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+7] = NEW_VERTEX(posX+sizeX/2, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+8] = NEW_VERTEX(posX, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.quadBlock[qIndex] =
-	{
-		.index = {9*qIndex+0,9*qIndex+1,9*qIndex+2,9*qIndex+3,9*qIndex+4,9*qIndex+5,9*qIndex+6,9*qIndex+7,9*qIndex+8},
-		.quadFlags = flagQ,
-		.draw_order_low = 0,
-		.draw_order_high = 0,
-		.ptr_texture_mid =
-		{
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4 
-		}, 
-		
-		.bbox = 
-		{ 
-			.min = {posX-sizeX/2, 0, posZ-sizeZ/2},
-			.max = {posX+sizeX/2, 0x300, posZ+sizeZ/2}
-		},
-		.terrain_type = 0,
-		.weather_intensity = 0,
-		.weather_vanishRate = 0,
-		.speedImpact = 0,
-		
-		.blockID = NUM_BLOCKS-qIndex-1,
-		.respawnIndex = -1,
-		.triNormalVecBitShift = 0x12,
-		
-		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4, 
-		.visFromQuadBlock = OFFSETOF(struct LevelFile, visFromQuadBlock)-4, 
-		
-		.triNormalVecDividend = 
-		{ 
-			/* hi 2 */ 
-			0x1971, 
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			
-			/* lo 2 */ 
-			0x1971, 
-			0x1971, 
-		} 
-	},
+	// ramp
+	NEW_BLOCK(28, -0x780, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(29, -0x480, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(30, -0x780, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	NEW_BLOCK(31, -0x480, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
 	
-	// Use vertical positions to make ramp
-	// Change terrain_type and flagQ to make turbo pad work
+	MAKE_RAMP(
+		28, 0x100, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
 	
-	// Turbo pads must be over another quadblock,
-	// put 30 and 31 on top of 28 and 29
+	MAKE_RAMP(
+		29, 0x100,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
 	
-#define qIndex 30
-#define posX -0x780 
-#define posZ 0xF00 
-#define flagV NULL 
-#define flagQ 0x1840 
-#define colR 0xFF 
-#define colG 0xFF
-#define colB 0xFF
-
-	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+1] = NEW_VERTEX(posX+sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+2] = NEW_VERTEX(posX-sizeX/2, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+3] = NEW_VERTEX(posX+sizeX/2, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+4] = NEW_VERTEX(posX, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+5] = NEW_VERTEX(posX-sizeX/2, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+6] = NEW_VERTEX(posX, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+7] = NEW_VERTEX(posX+sizeX/2, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+8] = NEW_VERTEX(posX, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.quadBlock[qIndex] =
-	{
-		.index = {9*qIndex+0,9*qIndex+1,9*qIndex+2,9*qIndex+3,9*qIndex+4,9*qIndex+5,9*qIndex+6,9*qIndex+7,9*qIndex+8},
-		.quadFlags = flagQ,
-		.draw_order_low = 0,
-		.draw_order_high = 0,
-		.ptr_texture_mid =
-		{
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4 
-		}, 
-		
-		.bbox = 
-		{ 
-			.min = {posX-sizeX/2, 0, posZ-sizeZ/2},
-			.max = {posX+sizeX/2, 0x300, posZ+sizeZ/2}
-		},
-		.terrain_type = 1, // 1 for normal, 2 for STP
-		.weather_intensity = 0,
-		.weather_vanishRate = 0,
-		.speedImpact = 0,
-		
-		.blockID = NUM_BLOCKS-qIndex-1,
-		.respawnIndex = -1,
-		.triNormalVecBitShift = 0x12,
-		
-		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4, 
-		.visFromQuadBlock = OFFSETOF(struct LevelFile, visFromQuadBlock)-4, 
-		
-		.triNormalVecDividend = 
-		{ 
-			/* hi 2 */ 
-			0x1971, 
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			
-			/* lo 2 */ 
-			0x1971, 
-			0x1971, 
-		} 
-	},
+	MAKE_RAMP(
+		30, 0x100,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
 	
-#define qIndex 31
-#define posX -0x480 
-#define posZ 0xF00 
-#define flagV NULL 
-#define flagQ 0x1840 
-#define colR 0xFF 
-#define colG 0xFF
-#define colB 0xFF
-
-	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+1] = NEW_VERTEX(posX+sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+2] = NEW_VERTEX(posX-sizeX/2, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+3] = NEW_VERTEX(posX+sizeX/2, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+4] = NEW_VERTEX(posX, 0, posZ-sizeZ/2, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+5] = NEW_VERTEX(posX-sizeX/2, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+6] = NEW_VERTEX(posX, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+7] = NEW_VERTEX(posX+sizeX/2, 0x80, posZ, flagV, colR, colG, colB),
-	.levVertex[9*qIndex+8] = NEW_VERTEX(posX, 0x100, posZ+sizeZ/2, flagV, colR, colG, colB),
-	.quadBlock[qIndex] =
-	{
-		.index = {9*qIndex+0,9*qIndex+1,9*qIndex+2,9*qIndex+3,9*qIndex+4,9*qIndex+5,9*qIndex+6,9*qIndex+7,9*qIndex+8},
-		.quadFlags = flagQ,
-		.draw_order_low = 0,
-		.draw_order_high = 0,
-		.ptr_texture_mid =
-		{
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4,
-			OFFSETOF(struct LevelFile, group4)-4 
-		}, 
+	MAKE_RAMP(
+		31, 0x100,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
 		
-		.bbox = 
-		{ 
-			.min = {posX-sizeX/2, 0, posZ-sizeZ/2},
-			.max = {posX+sizeX/2, 0x300, posZ+sizeZ/2}
-		},
-		.terrain_type = 1, // 1 for normal, 2 for STP
-		.weather_intensity = 0,
-		.weather_vanishRate = 0,
-		.speedImpact = 0,
-		
-		.blockID = NUM_BLOCKS-qIndex-1,
-		.respawnIndex = -1,
-		.triNormalVecBitShift = 0x12,
-		
-		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4, 
-		.visFromQuadBlock = OFFSETOF(struct LevelFile, visFromQuadBlock)-4, 
-		
-		.triNormalVecDividend = 
-		{ 
-			/* hi 2 */ 
-			0x1971, 
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			0x1971,
-			
-			/* lo 2 */ 
-			0x1971, 
-			0x1971, 
-		} 
-	},
-	
+	// turn into turbo, if flagsQ is 0x1840
+	.quadBlock[30].terrain_type = 1,
+	.quadBlock[31].terrain_type = 1,
 	
 	// ========== Other Side Of Map ======================
 	
