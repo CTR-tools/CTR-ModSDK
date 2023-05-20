@@ -92,6 +92,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	gGT->numPlyrNextGame = 4;
 	
 	// 2P with 1 controller
+	// warning: breaks PSIO and DuckStation
 	//*(char*)0x800255c4 = 4;
 	
 	#endif
