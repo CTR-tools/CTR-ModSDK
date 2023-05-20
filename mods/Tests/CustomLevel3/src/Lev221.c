@@ -154,14 +154,14 @@ struct LevelFile file =
 		.DriverSpawn[0].pos = {0,0,0},
 		.DriverSpawn[0].rot = {0,0-0x400,0},
 		
-		.DriverSpawn[1].pos = {0,0,0xA80},
-		.DriverSpawn[1].rot = {0,0xC00-0x400,0},
+		.DriverSpawn[1].pos = {-0xA80,0,0},
+		.DriverSpawn[1].rot = {0,0-0x400,0},
 		
-		.DriverSpawn[2].pos = {-0xA80,0,0xA80},
+		.DriverSpawn[2].pos = {-0xA80,0,0x1500+0xA80},
 		.DriverSpawn[2].rot = {0,0x800-0x400,0},
 		
-		.DriverSpawn[3].pos = {-0xA80,0,0},
-		.DriverSpawn[3].rot = {0,0x400-0x400,0},
+		.DriverSpawn[3].pos = {0,0,0x1500+0xA80},
+		.DriverSpawn[3].rot = {0,0x800-0x400,0},
 		
 		.ptrSpawnType1 = OFFSETOF(struct LevelFile, ptrSpawnType1)-4
 	},
