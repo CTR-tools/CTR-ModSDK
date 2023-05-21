@@ -68,6 +68,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	u_char hudFlags;
 	int iVar12;
 	char *levelNamePtr;
+	u_char* moremoredata; //-- redundant
 	int *piVar15;
 	u_int uVar16;
 	u_int uVar17;
@@ -78,27 +79,14 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	int ovrRegion3;
 	struct Model* m;
 
-	// for custom level
-	#if 1
-	
-	// drop cutscene flag
-	gGT->gameMode1 &= ~(0x20000000);
-	
-	// battle
-	gGT->gameMode1 |= 0x20;
-	
-	// load 2P
-	gGT->numPlyrCurrGame = 4;
-	gGT->numPlyrNextGame = 4;
-	
-	// 2P with 1 controller
-	// warning: breaks PSIO and DuckStation
-	//*(char*)0x800255c4 = 4;
-	
-	#endif
-
 	// pointer to LEV
 	iVar9 = sdata->ptrLEV_DuringLoading;
+
+	if((sdata->gGT->gameMode1 & TIME_TRIAL) != 0)
+	{
+		sdata->gGT->gameMode1 &= ~(TIME_TRIAL);
+		sdata->gGT->gameMode1 |= BATTLE_MODE;
+	}
 
 	// if game is loading
 	if (sdata->load_inProgress != 0)
@@ -526,46 +514,47 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			// game is now loading
 			sdata->load_inProgress = 1;
-
-			#if 0
-			// bigfile index, 0 = vram
-			uVar16 = LOAD_GetBigfileIndex
-						(gGT->levelID, sdata->levelLOD, 0);
-
-			// adds VRAM to loading queue
-			// second parameter '3' means vram
-			LOAD_AppendQueue(bigfile, 3, uVar16, 0, 0);
 			
-			// bigfile index, 1 = lev
-			uVar16 = LOAD_GetBigfileIndex
-					(gGT->levelID, sdata->levelLOD, 1);
-
-			// adds LEV to loading queue
-			// '2' means dram
-			LOAD_AppendQueue(bigfile, 2, uVar16, 0, &LOAD_Callback_LEV);
-			#endif
-
-			// rig custom level to 221, cause lazy testing
-			#if 1
-			// adds VRAM to loading queue
-			// second parameter '3' means vram
-			LOAD_AppendQueue(bigfile, 3, 222, 0, 0);
-			
-			// adds LEV to loading queue
-			// '2' means dram
-			LOAD_AppendQueue(bigfile, 2, 221, 0, &LOAD_Callback_LEV);
-			#endif
-
-			// if level ID is AdvHub or Cutscene
-			if ((gGT->gameMode2 & LEV_SWAP) != 0)
+			if(gGT->levelID == 0x14)
 			{
-				// bigfile index, 2 = PTR
-				uVar6 = LOAD_GetBigfileIndex
-						(gGT->levelID, sdata->levelLOD, 2);
-
-				// adds PTR map to loading queue
-				// '1' means readFile, load to PatchMem
-				LOAD_AppendQueue(bigfile, 1, uVar6, sdata->PatchMem_Ptr, LOAD_Callback_LEV_Adv);
+				// adds VRAM to loading queue
+				// second parameter '3' means vram
+				LOAD_AppendQueue(bigfile, 3, 222, 0, 0);
+			
+				// adds LEV to loading queue
+				// '2' means dram
+				LOAD_AppendQueue(bigfile, 2, 221, 0, &LOAD_Callback_LEV);
+			}
+			
+			else
+			{
+				// bigfile index, 0 = vram
+				uVar16 = LOAD_GetBigfileIndex
+							(gGT->levelID, sdata->levelLOD, 0);
+	
+				// adds VRAM to loading queue
+				// second parameter '3' means vram
+				LOAD_AppendQueue(bigfile, 3, uVar16, 0, 0);
+	
+				// bigfile index, 1 = lev
+				uVar16 = LOAD_GetBigfileIndex
+						(gGT->levelID, sdata->levelLOD, 1);
+	
+				// adds LEV to loading queue
+				// '2' means dram
+				LOAD_AppendQueue(bigfile, 2, uVar16, 0, &LOAD_Callback_LEV);
+	
+				// if level ID is AdvHub or Cutscene
+				if ((gGT->gameMode2 & LEV_SWAP) != 0)
+				{
+					// bigfile index, 2 = PTR
+					uVar6 = LOAD_GetBigfileIndex
+							(gGT->levelID, sdata->levelLOD, 2);
+	
+					// adds PTR map to loading queue
+					// '1' means readFile, load to PatchMem
+					LOAD_AppendQueue(bigfile, 1, uVar6, sdata->PatchMem_Ptr, LOAD_Callback_LEV_Adv);
+				}
 			}
 			
 			break;
@@ -580,20 +569,16 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			
 			// iVar9 is set to sdata->ptrLEV_DuringLoading at the top of the function
 			gGT->visMem1 = lev->visMem;
-			printf("1");
 
-			#if 0
 			// if LEV is valid
 			if (gGT->level1 != 0)
 			{
 				// Load Icons and IconGroups from LEV
 				DecalGlobal_Store(gGT, gGT->level1->ptr_named_tex);
 			}
-			#endif
 
 			DebugFont_Init(gGT);
 
-			#if 0
 			// if level is not nullptr
 			if (lev != 0)
 			{
@@ -624,7 +609,6 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				uVar16 = DecalGlobal_Find1(lev, rdata.s_sparkle);
 				gGT->ptrSparkle = uVar16;
 			}
-			#endif
 
 			// if linked list of icons exists
 			if (gGT->mpkIcons != 0)
@@ -649,8 +633,6 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				gGT->trafficLightIcon[3] = uVar16;
 			}
 			gGT->gameMode1_prevFrame = 1;
-
-			printf("2");
 
 			if
 			(
@@ -779,7 +761,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 							*piVar15 = iVar12 + 4;
 							iVar12 = *piVar15;
 						}
-						
+
 						m = iVar12;
 						if (m->id != -1)
 						{
@@ -903,8 +885,6 @@ LAB_800346b0:
 
 				// deactivate pause
 				ElimBG_Deactivate(gGT);
-
-				printf("End of load\n");
 
 				// signify end of load
 				return -2;
