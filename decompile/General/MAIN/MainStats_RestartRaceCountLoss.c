@@ -36,7 +36,7 @@ void DECOMP_MainStats_RestartRaceCountLoss(void)
   gGT->numPlayersWith3Missiles = 0;
 
   // only count if inside Adv Mode, but not Cup/Relic
-  if ((gameMode1 & 0x14080000) != 0x80000)
+  if ((gameMode1 & (ADVENTURE_MODE | RELIC_RACE | ADVENTURE_CUP)) != ADVENTURE_MODE)
     return;
 
   // only count loss if you rage-quit on lap 3

@@ -75,7 +75,7 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d) {
       d->instSelf->thread->funcThTick = BOTS_ThTick_Drive;
 
       // if you are in battle mode
-      if ((gGT->gameMode1 & 0x20) != 0) {
+      if ((gGT->gameMode1 & BATTLE_MODE) != 0) {
         // pointer to each AI Path Header
         piVar8 = &sdata->NavPath_ptrHeader[iVar10];
 

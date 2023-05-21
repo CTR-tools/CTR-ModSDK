@@ -613,7 +613,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
             (((gGT->drivers[1]->driverRank) == 0)) &&
 
             // If you're in Arcade Mode
-            ((gGT->gameMode1 & 0x400000) != 0)) {
+            ((gGT->gameMode1 & ARCADE_MODE) != 0)) {
             // If P1 or P2 lost the cup, or if this was VS mode,
             // then nothing would unlock
 

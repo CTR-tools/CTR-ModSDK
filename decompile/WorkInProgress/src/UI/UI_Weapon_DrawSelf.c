@@ -100,10 +100,10 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 	posXY[1] = posY;
 	
 	// If game is not paused
-	if ((gGT->gameMode1 & 0xf) == 0) {
+	if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) {
 	
 		// If you're not in Battle Mode
-		if ((gGT->gameMode1 & 0x20) == 0) {
+		if ((gGT->gameMode1 & BATTLE_MODE) == 0) {
 			iconID = rand();
 			iconID = iconID + ((iconID / 6 + (iconID >> 0x1f) >> 1) - (iconID >> 0x1f)) * -0xc;
 			if (iconID == 5) goto LAB_800508ec;

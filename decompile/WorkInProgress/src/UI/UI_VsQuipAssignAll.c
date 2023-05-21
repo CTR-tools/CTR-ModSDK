@@ -33,7 +33,7 @@ void DECOMP_UI_VsQuipAssignAll(void)
   if (1 < gGT->numPlyrCurrGame) {
 
 	// If you're not in Battle Mode
-    if ((gGT->gameMode1 & 0x20) == 0)
+    if ((gGT->gameMode1 & BATTLE_MODE) == 0)
 	{
 	  // pointer to array of LNG index for end-of-race comment
       eor_start = &data.data850[0];
@@ -86,7 +86,7 @@ void DECOMP_UI_VsQuipAssignAll(void)
       driver->EndOfRaceComment_lngIndex = 0;
 
 	  // If you dont have a point limit (battle)
-      if ((gGT->gameMode1 & 0x4000) == 0)
+      if ((gGT->gameMode1 & POINT_LIMIT) == 0)
 	  {
 		// get number of lives in life limit (3,6,9)
         lives = driver->BattleHUD.numLives;

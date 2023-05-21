@@ -40,7 +40,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread *saveTh)
     if ((save->flags & 1) == 0)
     {
         if (// If game is not paused
-            ((gGT->gameMode1 & 0xf) != 0) ||
+            ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0) ||
 
             // If driver is too far away from screen
             (0x8ffff < dist))

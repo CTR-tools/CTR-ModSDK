@@ -19,7 +19,7 @@ void DECOMP_MM_Title_Init(void)
 				(titleObj == NULL) && 
 				
 				// if you are in main menu
-				((gGT->gameMode1 & 0x2000) != 0)
+				((gGT->gameMode1 & MAIN_MENU) != 0)
 			) &&
 			(*(unsigned char*)0x800b5a1c != 2)
 		) &&

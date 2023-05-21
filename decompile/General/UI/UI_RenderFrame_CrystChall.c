@@ -29,7 +29,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   hudStructPtr = data.hudStructPtr[0];
 
   // If game is not paused
-  if ((gGT->gameMode1 & 0xf) == 0) {
+  if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) {
     //execute Jump meter and landing boost processes
     DECOMP_UI_JumpMeter_Update(player);
   }
@@ -60,7 +60,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 
 
   // If game is paused
-  if ((gGT->gameMode1 & 0xf) != 0) {
+  if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0) {
     return;
   }
 
@@ -147,15 +147,15 @@ LAB_800545e8:
 
   // quit if game is paused, or item is 
   // rolling, or not drawing roulette
-  if((gGT->gameMode1 & 0xf) != 0) return;
+  if((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0) return;
   if(player->itemRollTimer != 0) return;
-  if((gGT->gameMode1 & 0x800000) == 0) return;
+  if((gGT->gameMode1 & ROLLING_ITEM) == 0) return;
 
   // if not paused, item stopped rolling, and 
   // weapon roulette sound is playing, then
   // stop the sound and remove flag
   OtherFX_Stop2(0x5d);
-  gGT->gameMode1 &= ~(0x800000);
+  gGT->gameMode1 &= ~(ROLLING_ITEM);
   
   return;
 }

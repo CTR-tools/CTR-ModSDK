@@ -82,7 +82,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	#if 1
 	
 	// drop cutscene flag
-	gGT->gameMode1 &= ~(0x20000000);
+	gGT->gameMode1 &= ~(GAME_CUTSCENE);
 	
 	// battle
 	gGT->gameMode1 |= 0x20;
