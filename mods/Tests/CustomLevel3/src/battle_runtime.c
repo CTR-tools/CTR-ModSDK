@@ -65,7 +65,55 @@ struct WeaponData weaponData[] =
 			0,
 			0xA8000
 		}
-	}
+	},
+	
+	[4] =
+	{
+		.modelIndex = 0x47, // potion
+		.weaponID = 4,
+		.pos =
+		{
+			-0x48000,
+			0,
+			0x150000+0x18000
+		}
+	},
+
+	[5] =
+	{
+		.modelIndex = 0x27, // tnt
+		.weaponID = 3,
+		.pos =
+		{
+			-0x78000,
+			0,
+			0x150000+0x18000
+		}
+	},
+	
+	[6] =
+	{
+		.modelIndex = 0x3b, // bomb
+		.weaponID = 1,
+		.pos =
+		{
+			-0x48000,
+			0,
+			0x150000+0xA8000
+		}
+	},
+
+	[7] =
+	{
+		.modelIndex = 0x29, // missile
+		.weaponID = 2,
+		.pos =
+		{
+			-0x78000,
+			0,
+			0x150000+0xA8000
+		}
+	},
 };
 
 // Hard Code when you're done with prototyping
@@ -231,6 +279,32 @@ struct MenuRow NewRowsMM[3] =
 	}
 };
 
+struct MenuRow NewRowsEND[3] =
+{
+	[0] =
+	{
+		.stringIndex = 4, // retry
+		.rowOnPressUp = 0,
+		.rowOnPressDown = 1,
+		.rowOnPressLeft = 0,
+		.rowOnPressRight = 0,
+	},
+	
+	[1] =
+	{
+		.stringIndex = 3, // quit
+		.rowOnPressUp = 0,
+		.rowOnPressDown = 1,
+		.rowOnPressLeft = 1,
+		.rowOnPressRight = 1,
+	},
+	
+	[2] =
+	{
+		.stringIndex = 0xFFFF,
+	}
+};
+
 void RunUpdateHook()
 {
 	unsigned int loop;
@@ -242,6 +316,12 @@ void RunUpdateHook()
 	if(sdata->ptrActiveMenuBox == &OVR_230.menubox_mainMenu)
 	{
 		sdata->ptrActiveMenuBox->rows = &NewRowsMM[0];
+	}
+	
+	// battle end of race
+	if(sdata->ptrActiveMenuBox == 0x800A01B4)
+	{
+		sdata->ptrActiveMenuBox->rows = &NewRowsEND[0];
 	}
 	
 	// dont allow pressing Triangle from Battle Setup
