@@ -6,9 +6,6 @@ void FrameMS_RunUpdateHook()
 	int timer;
 	int p;
 
-	// Enable 60fps (USA Only)
-	*(unsigned char*)0x80037930 = 0;
-
 	string = (char*)0x8000FFF8;
 	timer = sdata->gGT->elapsedTimeMS;
 

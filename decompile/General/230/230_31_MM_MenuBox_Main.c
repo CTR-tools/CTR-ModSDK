@@ -110,10 +110,10 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
   }
   
   // clear flags from game mode
-  gGT->gameMode1 &= 0xefa5ffdf;
+  gGT->gameMode1 &= ~(BATTLE_MODE | ADVENTURE_MODE | TIME_TRIAL | ADVENTURE_ARENA | ARCADE_MODE | ADVENTURE_CUP);
   
   // clear more game mode flags
-  gGT->gameMode2 &= 0xffffffef;
+  gGT->gameMode2 &= ~(CUP_ANY_KIND);
   
   // set a flag that you're in main menu
   mainMenu->state |= 4;
@@ -127,12 +127,12 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
   // choose Adventure
   if (choose == 0x4c) 
   {
-    // Turn on Adventure Mode, turn off cheats
-	gGT->gameMode1 |= 0x80000;
-    gGT->gameMode2 &= 0xffbef1ff;
+    // Turn on Adventure Mode, turn off item cheats
+    gGT->gameMode1 |= ADVENTURE_MODE;
+    gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
     
     // menubox for new/load
-	mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_adventure;
+    mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_adventure;
     mainMenu->state |= 0x10;
     return;
   }
@@ -150,14 +150,14 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
     gGT->numPlyrNextGame = 1;
     
     // set game mode to Time Trial Mode
-    gGT->gameMode1 |= 0x20000;
-    gGT->gameMode2 &= 0xffbef1ff;
+    gGT->gameMode1 |= TIME_TRIAL;
+    gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
     return;
   }
   
   // if one-lap-race cheat is enabled
   // works in Arcade, VS, not Adv, not Time Trial
-  if ((gGT->gameMode2 & 0x800000) != 0) 
+  if ((gGT->gameMode2 & CHEAT_ONELAP) != 0) 
   {
     gGT->numLaps = 1;
   }
@@ -165,7 +165,7 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
   if (choose == 0x4e)
   {
 	// set game mode to Arcade Mode
-    gGT->gameMode1 |= 0x400000;
+    gGT->gameMode1 |= ARCADE_MODE;
 
 	// set next menuBox
 	mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_raceType;
@@ -188,7 +188,7 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
   	*(int*)0x800b5a08 = 2;
   
   	// set game mode to Battle Mode
-  	gGT->gameMode1 |= 0x20;
+  	gGT->gameMode1 |= BATTLE_MODE;
   
   	// set next menuBox to 2P,3P,4P
   	mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_players2P3P4P;

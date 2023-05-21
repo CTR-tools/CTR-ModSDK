@@ -8,3 +8,6 @@ common, exe, BOTS_SetRotation, -0x8, src/FrameMS_hookUpdate.s
 
 // Compile code to empty spaces in RDATA
 common, exe, rdata_free, 0x0, src/FrameMS_main.c
+
+// Enable 60fps (USA Only)
+926, exe, 0x80037930, 0x0, ../../../8bitnop.bin

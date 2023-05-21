@@ -11,7 +11,7 @@ void DECOMP_MM_Title_KillThread(void) {
     (title != NULL) &&
     (
       // if you are in main menu
-      (gGT->gameMode1 & 0x2000) != 0
+      (gGT->gameMode1 & MAIN_MENU) != 0
     )
   ) {
     // destroy six instances

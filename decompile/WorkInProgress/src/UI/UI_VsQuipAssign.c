@@ -68,7 +68,7 @@ void DECOMP_UI_VsQuipAssign(struct Driver* d,u_int *param_2,int param_3,int para
     timer = 0x96;
 
 	// if not battle mode (VS)
-    if ((gGT->gameMode1 & 0x20) == 0)
+    if ((gGT->gameMode1 & BATTLE_MODE) == 0)
 	{
 	  // 300 frames (10 seconds) for VS
       timer = 300;

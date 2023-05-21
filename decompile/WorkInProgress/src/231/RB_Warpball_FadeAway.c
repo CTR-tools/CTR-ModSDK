@@ -26,7 +26,7 @@ void DECOMP_RB_Warpball_FadeAway(struct Thread* t)
     }
 	
 	// remove active warpball flag
-   sdata->gGT->gameMode1 &= 0xffffefff;
+   sdata->gGT->gameMode1 &= ~(WARPBALL_HELD);
 	
 	// This thread is now dead
     t->flags |= 0x800;

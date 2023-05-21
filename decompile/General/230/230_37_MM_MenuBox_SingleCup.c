@@ -32,7 +32,7 @@ void DECOMP_MM_MenuBox_SingleCup(struct MenuBox* mb)
 	mb->state |= 0x14;
     
     // if mode is Arcade
-    if ((gGT->gameMode1 & 0x400000) != 0) 
+    if ((gGT->gameMode1 & ARCADE_MODE) != 0) 
     {
   	  // set next menuBox to 1P+2P select
       mb->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_players1P2P;

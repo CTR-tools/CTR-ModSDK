@@ -14,7 +14,7 @@ void DECOMP_RB_GenericMine_LInB(struct Instance *inst)
 
 	// if loaded Rocky Road or Nitro Court
 	// from outside crystal challenge, skip boxes
-    if ((gGT->gameMode1 & 0x8000000) == 0)
+    if ((gGT->gameMode1 & CRYSTAL_CHALLENGE) == 0)
 		return;
 	
     t =	

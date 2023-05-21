@@ -12,9 +12,6 @@ void SaveGameProgressToMemcardBuffer();
 #define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
 #define JMP(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
 
-#define FRAME 32
-#define SECOND (30 * FRAME)
-#define MINUTE (60 * SECOND)
 #define HOUR (60 * MINUTE)
 
 #define numLevels 21

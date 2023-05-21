@@ -53,7 +53,7 @@ void DECOMP_MM_ToggleRows_Difficulty(void)
 // waste of instructions
 #if 0
 		// If you're in Arcade mode
-		((gGT->gameMode1 & 0x400000) != 0) &&
+		((gGT->gameMode1 & ARCADE_MODE) != 0) &&
 #endif
 
 		// if you are in Arcade or VS cup

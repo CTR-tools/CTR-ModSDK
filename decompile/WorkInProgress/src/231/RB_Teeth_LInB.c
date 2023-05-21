@@ -9,7 +9,7 @@ void DECOMP_RB_Teeth_LInB(undefined4 unused,struct Instance* inst)
   inst->unk50 += 2;
   
   // If in relic race
-  if ((sdata->gGT->gameMode1 & 0x4000000) != 0) 
+  if ((sdata->gGT->gameMode1 & ARCADE_MODE0) != 0) 
   {
 	// enable access through a door (disable collision)
     sdata->doorAccessFlags |= 1;

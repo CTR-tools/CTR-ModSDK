@@ -176,11 +176,11 @@ LAB_800ac004:
 	
     MM_Title_KillThread();
 	
-    gGT->gameMode1 &= 0xefa5ffdf;
-    gGT->gameMode2 &= 0xffffffef;
+    gGT->gameMode1 &= ~(BATTLE_MODE | ADVENTURE_MODE | TIME_TRIAL | ADVENTURE_ARENA | ARCADE_MODE | ADVENTURE_CUP);
+    gGT->gameMode2 &= ~(CUP_ANY_KIND);
 	
 	// enable Arcade Mode
-    gGT->gameMode1 |= 0x400000;
+    gGT->gameMode1 |= ARCADE_MODE;
 	
 	// If you have not viewed Oxide cutscene yet
     if (gGT->boolSeenOxideIntro == 0) 

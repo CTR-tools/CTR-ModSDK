@@ -44,7 +44,7 @@ void CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, struct Tile
             ((d->actionsFlagSet & 0x100000) == 0) &&
 
             // If not drawing intro-race cutscene
-            ((gGT->gameMode1 & 0x40) == 0))
+            ((gGT->gameMode1 & START_OF_RACE) == 0))
 
         // If you are holding R2
         && ((pad[d->driverID].buttonsHeldCurrFrame & 0x200) != 0))
@@ -568,7 +568,7 @@ LAB_8001ab04:
         ((backupFlags & 0x204) != 0) ||
 
         // If drawing intro-race cutscene
-        ((gGT->gameMode1 & 0x40) != 0))
+        ((gGT->gameMode1 & START_OF_RACE) != 0))
     {
         // if not end-of-race battle
         if ((backupFlags & 4) == 0)
@@ -635,7 +635,7 @@ LAB_8001ab04:
                 {
                     // enable drawing HUD
                     gGT->hudFlags |= 1;
-                    gGT->gameMode1 &= 0xffffffbf;
+                    gGT->gameMode1 &= ~(START_OF_RACE);
                     gGT->hudFlags |= 0x20;
                 }
             }
@@ -729,7 +729,7 @@ LAB_8001ab04:
         if ((backupFlags & 0x200) == 0)
         {
             // If game is paused
-            if ((gGT->gameMode1 & 0xf) != 0)
+            if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0)
                 return;
 
             // decrement counter for fly-in camera

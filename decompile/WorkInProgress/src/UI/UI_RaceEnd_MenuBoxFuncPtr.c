@@ -193,7 +193,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox* menu)
               sdata->Loading.OnBegin.RemBitsConfig8 |= 8;
 
 			  // If you are in Adventure cup
-              if ((sdata->gGT->gameMode1 & 0x10000000) != 0)
+              if ((sdata->gGT->gameMode1 & ADVENTURE_CUP) != 0)
 			  {
 				// when loading is done, remove flags for
 				// adventure cup, relic race, and crystal challenge
