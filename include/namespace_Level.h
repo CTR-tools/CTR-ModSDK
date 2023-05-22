@@ -95,7 +95,7 @@ struct AnimTex
 	struct AnimTex* ptrNext;
 
 	// 0x4
-	short idk;
+	short numFrames;
 
 	// 0x6
 	short shrug;
