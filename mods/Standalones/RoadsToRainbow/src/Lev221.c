@@ -131,6 +131,7 @@ struct LevelFile
 	struct mesh_info mInfo;
 	struct IconGroup4 group4_ground;
 	struct IconGroup4 group4_ramp;
+	struct IconGroup4 group4_ramp_flip180;
 	struct SpawnType1 ptrSpawnType1;
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
@@ -208,6 +209,35 @@ struct LevelFile file =
 		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
 		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
 		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
+	},
+	
+	.group4_ramp_flip180 =
+	{
+		// 576_0_32_21_16_16_0.png		
+		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
+		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
+		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
+		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
+		
+		.texLayout[0].v0 = 16-1,
+		.texLayout[0].v1 = 16-1,
+		.texLayout[0].v2 = 0,
+		.texLayout[0].v3 = 0,
+		
+		.texLayout[1].v0 = 16-1,
+		.texLayout[1].v1 = 16-1,
+		.texLayout[1].v2 = 0,
+		.texLayout[1].v3 = 0,
+		
+		.texLayout[2].v0 = 16-1,
+		.texLayout[2].v1 = 16-1,
+		.texLayout[2].v2 = 0,
+		.texLayout[2].v3 = 0,
+		
+		.texLayout[3].v0 = 16-1,
+		.texLayout[3].v1 = 16-1,
+		.texLayout[3].v2 = 0,
+		.texLayout[3].v3 = 0,
 	},
 	
 	// this must exist, or else camera fly-in
@@ -289,10 +319,15 @@ struct LevelFile file =
 	NEW_BLOCK(27, group4_ground, -0x480, 0x300, NULL, 0x1800, 0x80, 0, 0xFF),
 	
 	// ramp
-	NEW_BLOCK(28, group4_ramp, -0xA80, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
-	NEW_BLOCK(29, group4_ramp, -0x180, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
-	NEW_BLOCK(30, group4_ramp, -0xA80, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
-	NEW_BLOCK(31, group4_ramp, -0x180, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	NEW_BLOCK(28, group4_ramp_flip180, -0xA80, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(29, group4_ramp_flip180, -0x180, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(30, group4_ramp_flip180, -0xA80, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	NEW_BLOCK(31, group4_ramp_flip180, -0x180, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	
+	.quadBlock[28].draw_order_high = 0x202,
+	.quadBlock[29].draw_order_high = 0x202,
+	.quadBlock[30].draw_order_high = 0x202,
+	.quadBlock[31].draw_order_high = 0x202,
 	
 	MAKE_RAMP(
 		28, 0x100, // index, height
