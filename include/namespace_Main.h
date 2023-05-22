@@ -252,13 +252,13 @@ struct GameTracker
 	struct
 	{
 		// 0x1b0c
-		int numStars;
+		short numStars;
 
-		// 0x1b10
+		// 0x1b0e
 		short unk[3];
 
-		// 1b16
-		short offsetOT;
+		// 1b14
+		int offsetOT;
 
 	} stars;
 
