@@ -130,6 +130,7 @@ struct LevelFile
 	struct Level level;
 	struct mesh_info mInfo;
 	struct IconGroup4 group4_ground;
+	struct IconGroup4 group4_ramp;
 	struct SpawnType1 ptrSpawnType1;
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
@@ -198,6 +199,15 @@ struct LevelFile file =
 		.texLayout[1] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
 		.texLayout[2] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
 		.texLayout[3] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
+	},
+	
+	.group4_ramp =
+	{
+		// 576_0_32_21_16_16_0.png		
+		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
+		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
+		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
+		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
 	},
 	
 	// this must exist, or else camera fly-in
@@ -279,10 +289,10 @@ struct LevelFile file =
 	NEW_BLOCK(27, group4_ground, -0x480, 0x300, NULL, 0x1800, 0x80, 0, 0xFF),
 	
 	// ramp
-	NEW_BLOCK(28, group4_ground, -0xA80, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
-	NEW_BLOCK(29, group4_ground, -0x180, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
-	NEW_BLOCK(30, group4_ground, -0xA80, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
-	NEW_BLOCK(31, group4_ground, -0x180, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	NEW_BLOCK(28, group4_ramp, -0xA80, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(29, group4_ramp, -0x180, 0xF00, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(30, group4_ramp, -0xA80, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	NEW_BLOCK(31, group4_ramp, -0x180, 0xF00, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
 	
 	MAKE_RAMP(
 		28, 0x100, // index, height
@@ -408,10 +418,10 @@ struct LevelFile file =
 	NEW_BLOCK(59, group4_ground, -0x480, 0x1500+0x300, NULL, 0x1800, 0xFF, 0xFF, 0xFF),
 	
 	// ramp
-	NEW_BLOCK(60, group4_ground, -0xA80, 0x1500-0x300, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
-	NEW_BLOCK(61, group4_ground, -0x180, 0x1500-0x300, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
-	NEW_BLOCK(62, group4_ground, -0xA80, 0x1500-0x300, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
-	NEW_BLOCK(63, group4_ground, -0x180, 0x1500-0x300, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	NEW_BLOCK(60, group4_ramp, -0xA80, 0x1500-0x300, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(61, group4_ramp, -0x180, 0x1500-0x300, NULL, 0x1800, 0xFF, 0xFF, 0xFF), // coll (1800)
+	NEW_BLOCK(62, group4_ramp, -0xA80, 0x1500-0x300, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
+	NEW_BLOCK(63, group4_ramp, -0x180, 0x1500-0x300, NULL, 0x1840, 0xFF, 0xFF, 0xFF), // turbo (1840)
 	
 	MAKE_RAMP(
 		60, 0x100, // index, height
