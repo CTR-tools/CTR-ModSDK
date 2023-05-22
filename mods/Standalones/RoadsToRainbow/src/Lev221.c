@@ -104,6 +104,16 @@
 		0x1971,  \
 	}
 
+// if clutX is 512 in VRAM, the clutX parameter is 32 (512>>4),
+// bitshifting must be done for that variable, consistent to PNG names
+#define ImageName_Blend(imgX, imgY, clutX, clutY, sizeX, sizeY, bpp, blend) \
+	{.clut =  ((clutX >> 0) << 0) | (clutY << 6), \
+	.tpage = ((imgX >> 6) << 0) | ((imgY >> 8) << 4) | (blend<<5) | (bpp<<7), \
+	.u0 = 0, .v0 = 0, \
+	.u1 = sizeX-1, .v1 = 0, \
+	.u2 = 0, .v2 = sizeY-1, \
+	.u3 = sizeX-1, .v3 = sizeY-1} \
+
 #define PTR_MAP_QUADBLOCK(x) \
 	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[0])-4,\
 	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[1])-4,\
@@ -181,60 +191,13 @@ struct LevelFile file =
 		.numVisData = 3, // can be anything non-zero
 	},
 	
-	// A quadblock can draw 32 textures,
 	.group4 =
 	{
-		// duplicate for low LOD
-		.texLayout[0] = 
-		{
-			.clut = getClut(512, 20),
-			.tpage = getTPage(0, TRANS_50, 512, 0),
-				
-			// coordinates within page
-			.u0 = 0, .v0 = 0,
-			.u1 = 15, .v1 = 0,
-			.u2 = 0, .v2 = 15,
-			.u3 = 15, .v3 = 15,
-		},
-
-		// duplicate for low LOD
-		.texLayout[1] = 
-		{
-			.clut = getClut(512, 20),
-			.tpage = getTPage(0, TRANS_50, 512, 0),
-				
-			// coordinates within page
-			.u0 = 0, .v0 = 0,
-			.u1 = 15, .v1 = 0,
-			.u2 = 0, .v2 = 15,
-			.u3 = 15, .v3 = 15,
-		},
-		
-		// duplicate for low LOD
-		.texLayout[2] = 
-		{
-			.clut = getClut(512, 20),
-			.tpage = getTPage(0, TRANS_50, 512, 0),
-				
-			// coordinates within page
-			.u0 = 0, .v0 = 0,
-			.u1 = 15, .v1 = 0,
-			.u2 = 0, .v2 = 15,
-			.u3 = 15, .v3 = 15,
-		},
-		
-		// drawn directly under player
-		.texLayout[3] = 
-		{			
-			.clut = getClut(512, 20),
-			.tpage = getTPage(0, TRANS_50, 512, 0),
-				
-			// coordinates within page
-			.u0 = 0, .v0 = 0,
-			.u1 = 15, .v1 = 0,
-			.u2 = 0, .v2 = 15,
-			.u3 = 15, .v3 = 15,
-		},
+		// 512_0_32_20_16_16_0.png		
+		.texLayout[0] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
+		.texLayout[1] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
+		.texLayout[2] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
+		.texLayout[3] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
 	},
 	
 	// this must exist, or else camera fly-in
