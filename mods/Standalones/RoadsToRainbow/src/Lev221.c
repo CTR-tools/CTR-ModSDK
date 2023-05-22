@@ -220,26 +220,6 @@ struct LevelFile file =
 		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
 		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
 		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
-		
-		//.texLayout[0].u0 = 32-1,
-		//.texLayout[0].u1 = 0,
-		//.texLayout[0].u2 = 32-1,
-		//.texLayout[0].u3 = 0,
-		//
-		//.texLayout[1].u0 = 32-1,
-		//.texLayout[1].u1 = 0,
-		//.texLayout[1].u2 = 32-1,
-		//.texLayout[1].u3 = 0,
-		
-		//.texLayout[2].u0 = 32-1,
-		//.texLayout[2].u1 = 0,
-		//.texLayout[2].u2 = 32-1,
-		//.texLayout[2].u3 = 0,
-		
-		//.texLayout[3].u0 = 32-1,
-		//.texLayout[3].u1 = 0,
-		//.texLayout[3].u2 = 32-1,
-		//.texLayout[3].u3 = 0,
 	},
 	
 	.group4_ramp_flip180 =
