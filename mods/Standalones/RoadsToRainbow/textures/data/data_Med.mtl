@@ -1,0 +1,8 @@
+newmtl 512_0_32_20_16_16_0
+map_Kd texMed\512_0_32_20_16_16_0.png
+
+newmtl 576_0_32_21_32_16_0
+map_Kd texMed\576_0_32_21_32_16_0.png
+
+newmtl default
+Map_Kd default.png

@@ -136,7 +136,7 @@ struct QuadBlock
 	u_short quadFlags;
 
 	// 0x14
-	int draw_order_low;
+	int draw_order_low; // actually for "med"
 
 	// 0x18
 	int draw_order_high;

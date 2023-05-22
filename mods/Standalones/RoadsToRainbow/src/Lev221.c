@@ -132,6 +132,8 @@ struct LevelFile
 	struct IconGroup4 group4_ground;
 	struct IconGroup4 group4_ramp;
 	struct IconGroup4 group4_ramp_flip180;
+	struct TextureLayout texlayout_ramp_low;
+	struct TextureLayout texlayout_ramp_low_flipV;
 	struct SpawnType1 ptrSpawnType1;
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
@@ -204,20 +206,40 @@ struct LevelFile file =
 	
 	.group4_ramp =
 	{
-		// 576_0_32_21_16_16_0.png		
-		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
-		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
-		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
-		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
+		// 576_0_32_21_32_16_0.png		
+		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
+		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
+		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
+		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
+		
+		//.texLayout[0].u0 = 32-1,
+		//.texLayout[0].u1 = 0,
+		//.texLayout[0].u2 = 32-1,
+		//.texLayout[0].u3 = 0,
+		//
+		//.texLayout[1].u0 = 32-1,
+		//.texLayout[1].u1 = 0,
+		//.texLayout[1].u2 = 32-1,
+		//.texLayout[1].u3 = 0,
+		
+		//.texLayout[2].u0 = 32-1,
+		//.texLayout[2].u1 = 0,
+		//.texLayout[2].u2 = 32-1,
+		//.texLayout[2].u3 = 0,
+		
+		//.texLayout[3].u0 = 32-1,
+		//.texLayout[3].u1 = 0,
+		//.texLayout[3].u2 = 32-1,
+		//.texLayout[3].u3 = 0,
 	},
 	
 	.group4_ramp_flip180 =
 	{
-		// 576_0_32_21_16_16_0.png		
-		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
-		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
-		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
-		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 16, 16, 0, TRANS_50),
+		// 576_0_32_21_32_16_0.png		
+		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
+		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
+		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
+		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
 		
 		.texLayout[0].v0 = 16-1,
 		.texLayout[0].v1 = 16-1,
@@ -239,6 +261,14 @@ struct LevelFile file =
 		.texLayout[3].v2 = 0,
 		.texLayout[3].v3 = 0,
 	},
+	
+	.texlayout_ramp_low 		= ImageName_Blend(640, 0, 32, 22, 12, 12, 0, TRANS_50),
+	.texlayout_ramp_low_flipV 	= ImageName_Blend(640, 0, 32, 22, 12, 12, 0, TRANS_50),
+	
+	.texlayout_ramp_low_flipV.v0 = 12-1,
+	.texlayout_ramp_low_flipV.v1 = 12-1,
+	.texlayout_ramp_low_flipV.v2 = 0,
+	.texlayout_ramp_low_flipV.v3 = 0,
 	
 	// this must exist, or else camera fly-in
 	// checks for "count" without nullptr check,
@@ -319,15 +349,20 @@ struct LevelFile file =
 	NEW_BLOCK(27, group4_ground, -0x480, 0x300, NULL, 0x1800, 0x80, 0, 0xFF),
 	
 	// ramp
-	NEW_BLOCK(28, group4_ramp_flip180, -0xA80, 0xF00, NULL, 0x9800, 0x80, 0x80, 0x80), // coll (1800)
-	NEW_BLOCK(29, group4_ramp_flip180, -0x180, 0xF00, NULL, 0x9800, 0x80, 0x80, 0x80), // coll (1800)
-	NEW_BLOCK(30, group4_ramp_flip180, -0xA80, 0xF00, NULL, 0x1840, 0x80, 0x80, 0x80), // turbo (1840)
-	NEW_BLOCK(31, group4_ramp_flip180, -0x180, 0xF00, NULL, 0x1840, 0x80, 0x80, 0x80), // turbo (1840)
+	NEW_BLOCK(28, group4_ramp, -0xA80, 0xF00, NULL, 0x9800, 0x80, 0x80, 0x80), // coll (1800)
+	NEW_BLOCK(29, group4_ramp, -0x180, 0xF00, NULL, 0x9800, 0x80, 0x80, 0x80), // coll (1800)
+	NEW_BLOCK(30, group4_ramp, -0xA80, 0xF00, NULL, 0x1840, 0x80, 0x80, 0x80), // turbo (1840)
+	NEW_BLOCK(31, group4_ramp, -0x180, 0xF00, NULL, 0x1840, 0x80, 0x80, 0x80), // turbo (1840)
+		
+	.quadBlock[28].draw_order_low = 0x380E000,
+	.quadBlock[29].draw_order_low = 0x380E000,
+	.quadBlock[30].draw_order_low = 0x380E000,
+	.quadBlock[31].draw_order_low = 0x380E000,
 	
-	.quadBlock[28].draw_order_high = 0x202,
-	.quadBlock[29].draw_order_high = 0x202,
-	.quadBlock[30].draw_order_high = 0x202,
-	.quadBlock[31].draw_order_high = 0x202,
+	.quadBlock[28].ptr_texture_low = OFFSETOF(struct LevelFile, texlayout_ramp_low)-4,
+	.quadBlock[29].ptr_texture_low = OFFSETOF(struct LevelFile, texlayout_ramp_low)-4,
+	.quadBlock[30].ptr_texture_low = OFFSETOF(struct LevelFile, texlayout_ramp_low)-4,
+	.quadBlock[31].ptr_texture_low = OFFSETOF(struct LevelFile, texlayout_ramp_low)-4,
 	
 	MAKE_RAMP(
 		28, 0x100, // index, height
@@ -453,10 +488,20 @@ struct LevelFile file =
 	NEW_BLOCK(59, group4_ground, -0x480, 0x1500+0x300, NULL, 0x1800, 0xFF, 0xFF, 0xFF),
 	
 	// ramp
-	NEW_BLOCK(60, group4_ramp, -0xA80, 0x1500-0x300, NULL, 0x9800, 0x80, 0x80, 0x80), // coll (1800)
-	NEW_BLOCK(61, group4_ramp, -0x180, 0x1500-0x300, NULL, 0x9800, 0x80, 0x80, 0x80), // coll (1800)
-	NEW_BLOCK(62, group4_ramp, -0xA80, 0x1500-0x300, NULL, 0x1840, 0x80, 0x80, 0x80), // turbo (1840)
-	NEW_BLOCK(63, group4_ramp, -0x180, 0x1500-0x300, NULL, 0x1840, 0x80, 0x80, 0x80), // turbo (1840)
+	NEW_BLOCK(60, group4_ramp_flip180, -0xA80, 0x1500-0x300, NULL, 0x9800, 0x80, 0x80, 0x80), // coll (1800)
+	NEW_BLOCK(61, group4_ramp_flip180, -0x180, 0x1500-0x300, NULL, 0x9800, 0x80, 0x80, 0x80), // coll (1800)
+	NEW_BLOCK(62, group4_ramp_flip180, -0xA80, 0x1500-0x300, NULL, 0x1840, 0x80, 0x80, 0x80), // turbo (1840)
+	NEW_BLOCK(63, group4_ramp_flip180, -0x180, 0x1500-0x300, NULL, 0x1840, 0x80, 0x80, 0x80), // turbo (1840)
+	
+	.quadBlock[60].draw_order_low = 0x380E000,
+	.quadBlock[61].draw_order_low = 0x380E000,
+	.quadBlock[62].draw_order_low = 0x380E000,
+	.quadBlock[63].draw_order_low = 0x380E000,
+	
+	.quadBlock[60].ptr_texture_low = OFFSETOF(struct LevelFile, texlayout_ramp_low_flipV)-4,
+	.quadBlock[61].ptr_texture_low = OFFSETOF(struct LevelFile, texlayout_ramp_low_flipV)-4,
+	.quadBlock[62].ptr_texture_low = OFFSETOF(struct LevelFile, texlayout_ramp_low_flipV)-4,
+	.quadBlock[63].ptr_texture_low = OFFSETOF(struct LevelFile, texlayout_ramp_low_flipV)-4,
 	
 	MAKE_RAMP(
 		60, 0x100, // index, height
