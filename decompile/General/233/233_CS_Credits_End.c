@@ -19,7 +19,7 @@ void CS_Credits_End()
 	{
 		levID = 0x19;
 		
-		gGT->gameMode1 |= 0x80000;
+		gGT->gameMode1 |= ADVENTURE_MODE;
 	}
 	
 	// go to scrapbook

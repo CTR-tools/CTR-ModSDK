@@ -85,7 +85,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	gGT->gameMode1 &= ~(GAME_CUTSCENE);
 	
 	// battle
-	gGT->gameMode1 |= 0x20;
+	gGT->gameMode1 |= BATTLE_MODE;
 	
 	// load 2P
 	gGT->numPlyrCurrGame = 4;
