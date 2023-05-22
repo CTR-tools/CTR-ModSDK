@@ -137,7 +137,7 @@ struct LevelFile
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
 	int VisMem_bspList_RenderListP4[3*2];
 	
-	int map[1000];
+	int map[(30+NUM_BLOCKS*6)+1];
 };
 
 struct LevelFile file =
@@ -184,62 +184,89 @@ struct LevelFile file =
 		// duplicate for low LOD
 		.texLayout[0] = 
 		{
-			.clut = (512 >> 10) | (0 >> 6),
-			.tpage = 0x4180 | (8) | (0<<4),
-			.u0 = 3, .v0 = 1,
-			.u1 = 3, .v1 = 3,
-			.u2 = 1, .v2 = 1,
-			.u3 = 1, .v3 = 3,	
+			// X(b6) Y(b10)
+			// store at 512x20
+			.clut = 
+				((512 >> 4)<<0) | 	// clutX=512	(aligned 16)		bits 0,1,2,3,4,5
+				(20 << 6),			// clutY=20		(aligned 1)			bits 6+
+			
+			.tpage = 
+				((512>>6)<<0) | // pageX=512 	(aligned 64)		bits 0,1,2,3
+				((0>>8)<<4) |	// pageY=0		(aligned 256)		bits 4
+				(0<<5) |		// blending=0	(50/50 blending) 	bits 5,6
+				(0<<7),			// bpp=0		(4bpp)				bits 7+
+				
+			// coordinates within page
+			.u0 = 15, .v0 = 0,
+			.u1 = 15, .v1 = 15,
+			.u2 = 0, .v2 = 0,
+			.u3 = 0, .v3 = 15,
 		},
 
 		// duplicate for low LOD
 		.texLayout[1] = 
 		{
-			.clut = (512 >> 10) | (0 >> 6),
-			.tpage = 0x4180 | (8) | (0<<4),
-			.u0 = 3, .v0 = 1,
-			.u1 = 3, .v1 = 3,
-			.u2 = 1, .v2 = 1,
-			.u3 = 1, .v3 = 3,	
+			// X(b6) Y(b10)
+			// store at 512x20
+			.clut = 
+				((512 >> 4)<<0) | 	// clutX=512	(aligned 16)		bits 0,1,2,3,4,5
+				(20 << 6),			// clutY=20		(aligned 1)			bits 6+
+			
+			.tpage = 
+				((512>>6)<<0) | // pageX=512 	(aligned 64)		bits 0,1,2,3
+				((0>>8)<<4) |	// pageY=0		(aligned 256)		bits 4
+				(0<<5) |		// blending=0	(50/50 blending) 	bits 5,6
+				(0<<7),			// bpp=0		(4bpp)				bits 7+
+				
+			// coordinates within page
+			.u0 = 15, .v0 = 0,
+			.u1 = 15, .v1 = 15,
+			.u2 = 0, .v2 = 0,
+			.u3 = 0, .v3 = 15,
 		},
 		
 		// duplicate for low LOD
 		.texLayout[2] = 
 		{
-			.clut = (512 >> 10) | (0 >> 6),
-			.tpage = 0x4180 | (8) | (0<<4),
-			.u0 = 3, .v0 = 1,
-			.u1 = 3, .v1 = 3,
-			.u2 = 1, .v2 = 1,
-			.u3 = 1, .v3 = 3,	
+			// X(b6) Y(b10)
+			// store at 512x20
+			.clut = 
+				((512 >> 4)<<0) | 	// clutX=512	(aligned 16)		bits 0,1,2,3,4,5
+				(20 << 6),			// clutY=20		(aligned 1)			bits 6+
+			
+			.tpage = 
+				((512>>6)<<0) | // pageX=512 	(aligned 64)		bits 0,1,2,3
+				((0>>8)<<4) |	// pageY=0		(aligned 256)		bits 4
+				(0<<5) |		// blending=0	(50/50 blending) 	bits 5,6
+				(0<<7),			// bpp=0		(4bpp)				bits 7+
+				
+			// coordinates within page
+			.u0 = 15, .v0 = 0,
+			.u1 = 15, .v1 = 15,
+			.u2 = 0, .v2 = 0,
+			.u3 = 0, .v3 = 15,
 		},
 		
 		// drawn directly under player
 		.texLayout[3] = 
-		{
-			// Change since first custom level,
-			// dont use 512,256, use 512,0,
-			// because DecalMP overwrites 512,256
-			
+		{			
 			// X(b6) Y(b10)
-			// row of 16 pixels, or row of 256 pixels,
-			// this is how it chooses what colors to use
-			.clut = (512 >> 10) | (0 >> 6), // was 256>>6 for 512,256
+			// store at 512x20
+			.clut = 
+				((512 >> 4)<<0) | 	// clutX=512	(aligned 16)		bits 0,1,2,3,4,5
+				(20 << 6),			// clutY=20		(aligned 1)			bits 6+
 			
-			// each page is 256x256 large
-			
-			// pageX(b4), 
-			// pageY(b1), 
-			// blending(b2), 
-			// bitDepth(b2), 
-			// restBits(b7)
-			.tpage = 0x4180 | (8) | (0<<4), // page = (2,1) (512,0) ------- 1<<4 was 512,256
-			
+			.tpage = 
+				((512>>6)<<0) | // pageX=512 	(aligned 64)		bits 0,1,2,3
+				((0>>8)<<4) |	// pageY=0		(aligned 256)		bits 4
+				(0<<5) |		// blending=0	(50/50 blending) 	bits 5,6
+				(0<<7),			// bpp=0		(4bpp)				bits 7+
+				
 			// coordinates within page
-			.u0 = 3, .v0 = 1,
-			.u1 = 3, .v1 = 3,
-			.u2 = 1, .v2 = 1,
-			.u3 = 1, .v3 = 3,			
+			.u0 = 15, .v0 = 0,
+			.u1 = 15, .v1 = 15,
+			.u2 = 0, .v2 = 0,
+			.u3 = 0, .v3 = 15,
 		},
 	},
 	

@@ -1,0 +1,5 @@
+newmtl 512_0_32_20_16_16_0
+map_Kd texLow\512_0_32_20_16_16_0.png
+
+newmtl default
+Map_Kd default.png
