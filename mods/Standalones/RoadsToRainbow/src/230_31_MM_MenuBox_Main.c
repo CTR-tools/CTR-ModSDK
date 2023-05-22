@@ -15,6 +15,13 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
 	//mainMenu->rows = &OVR_230.rows_mainMenu_WithScrapbook[0];
   //}
 
+  #if 1
+  char* info = "Road To Rainbow: Battle";
+  DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, ORANGE);
+  DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, ORANGE);
+  DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, ORANGE);
+  #endif
+
   MM_ParseCheatCodes();
   
   MM_ToggleRows_Difficulty();
