@@ -196,7 +196,7 @@ void RunInitHook()
 	// oxide station: 12c, 0, 1, 3FE, 0
 	// ND Box scene: 12c, 1, -1, 3FE, 0
 	
-	gGT->stars.numStars = 0x12C;
+	gGT->stars.numStars = 0x300;
 	gGT->stars.unk[0] = 0;
 	gGT->stars.unk[1] = 1;
 	gGT->stars.unk[2] = 0x3FE;
