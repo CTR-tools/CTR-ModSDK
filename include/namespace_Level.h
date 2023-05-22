@@ -67,6 +67,22 @@ enum LevelID
 	SCRAPBOOK
 };
 
+// transparent parameter of getTPage()
+enum BlendMode
+{
+	// 50% transparency
+	TRANS_50=0,
+
+	// additive blending
+	ADD=1,
+
+	// subtractive blending
+	SUBTRACT=2,
+
+	// additive blending on 25% transparency
+	ADD_25=3
+};
+
 // for drawing on quadblocks
 struct IconGroup4
 {

@@ -1,17 +1,17 @@
 // transparent parameter of DrawPoly funcs
-enum BlendMode
+enum BlendModeDecal
 {
 	// 50% transparency
-	TRANS_50=1,
+	TRANS_50_DECAL=1,
 
 	// additive blending
-	ADD=2,
+	ADD_DECAL=2,
 
 	// subtractive blending
-	SUBTRACT=3,
+	SUBTRACT_DECAL=3,
 
 	// additive blending on 25% transparency
-	ADD_25=4
+	ADD_25_DECAL=4
 };
 
 enum Font

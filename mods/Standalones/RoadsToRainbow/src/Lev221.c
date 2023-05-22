@@ -184,89 +184,53 @@ struct LevelFile file =
 		// duplicate for low LOD
 		.texLayout[0] = 
 		{
-			// X(b6) Y(b10)
-			// store at 512x20
-			.clut = 
-				((512 >> 4)<<0) | 	// clutX=512	(aligned 16)		bits 0,1,2,3,4,5
-				(20 << 6),			// clutY=20		(aligned 1)			bits 6+
-			
-			.tpage = 
-				((512>>6)<<0) | // pageX=512 	(aligned 64)		bits 0,1,2,3
-				((0>>8)<<4) |	// pageY=0		(aligned 256)		bits 4
-				(0<<5) |		// blending=0	(50/50 blending) 	bits 5,6
-				(0<<7),			// bpp=0		(4bpp)				bits 7+
+			.clut = getClut(512, 20),
+			.tpage = getTPage(0, TRANS_50, 512, 0),
 				
 			// coordinates within page
-			.u0 = 15, .v0 = 0,
-			.u1 = 15, .v1 = 15,
-			.u2 = 0, .v2 = 0,
-			.u3 = 0, .v3 = 15,
+			.u0 = 0, .v0 = 0,
+			.u1 = 15, .v1 = 0,
+			.u2 = 0, .v2 = 15,
+			.u3 = 15, .v3 = 15,
 		},
 
 		// duplicate for low LOD
 		.texLayout[1] = 
 		{
-			// X(b6) Y(b10)
-			// store at 512x20
-			.clut = 
-				((512 >> 4)<<0) | 	// clutX=512	(aligned 16)		bits 0,1,2,3,4,5
-				(20 << 6),			// clutY=20		(aligned 1)			bits 6+
-			
-			.tpage = 
-				((512>>6)<<0) | // pageX=512 	(aligned 64)		bits 0,1,2,3
-				((0>>8)<<4) |	// pageY=0		(aligned 256)		bits 4
-				(0<<5) |		// blending=0	(50/50 blending) 	bits 5,6
-				(0<<7),			// bpp=0		(4bpp)				bits 7+
+			.clut = getClut(512, 20),
+			.tpage = getTPage(0, TRANS_50, 512, 0),
 				
 			// coordinates within page
-			.u0 = 15, .v0 = 0,
-			.u1 = 15, .v1 = 15,
-			.u2 = 0, .v2 = 0,
-			.u3 = 0, .v3 = 15,
+			.u0 = 0, .v0 = 0,
+			.u1 = 15, .v1 = 0,
+			.u2 = 0, .v2 = 15,
+			.u3 = 15, .v3 = 15,
 		},
 		
 		// duplicate for low LOD
 		.texLayout[2] = 
 		{
-			// X(b6) Y(b10)
-			// store at 512x20
-			.clut = 
-				((512 >> 4)<<0) | 	// clutX=512	(aligned 16)		bits 0,1,2,3,4,5
-				(20 << 6),			// clutY=20		(aligned 1)			bits 6+
-			
-			.tpage = 
-				((512>>6)<<0) | // pageX=512 	(aligned 64)		bits 0,1,2,3
-				((0>>8)<<4) |	// pageY=0		(aligned 256)		bits 4
-				(0<<5) |		// blending=0	(50/50 blending) 	bits 5,6
-				(0<<7),			// bpp=0		(4bpp)				bits 7+
+			.clut = getClut(512, 20),
+			.tpage = getTPage(0, TRANS_50, 512, 0),
 				
 			// coordinates within page
-			.u0 = 15, .v0 = 0,
-			.u1 = 15, .v1 = 15,
-			.u2 = 0, .v2 = 0,
-			.u3 = 0, .v3 = 15,
+			.u0 = 0, .v0 = 0,
+			.u1 = 15, .v1 = 0,
+			.u2 = 0, .v2 = 15,
+			.u3 = 15, .v3 = 15,
 		},
 		
 		// drawn directly under player
 		.texLayout[3] = 
 		{			
-			// X(b6) Y(b10)
-			// store at 512x20
-			.clut = 
-				((512 >> 4)<<0) | 	// clutX=512	(aligned 16)		bits 0,1,2,3,4,5
-				(20 << 6),			// clutY=20		(aligned 1)			bits 6+
-			
-			.tpage = 
-				((512>>6)<<0) | // pageX=512 	(aligned 64)		bits 0,1,2,3
-				((0>>8)<<4) |	// pageY=0		(aligned 256)		bits 4
-				(0<<5) |		// blending=0	(50/50 blending) 	bits 5,6
-				(0<<7),			// bpp=0		(4bpp)				bits 7+
+			.clut = getClut(512, 20),
+			.tpage = getTPage(0, TRANS_50, 512, 0),
 				
 			// coordinates within page
-			.u0 = 15, .v0 = 0,
-			.u1 = 15, .v1 = 15,
-			.u2 = 0, .v2 = 0,
-			.u3 = 0, .v3 = 15,
+			.u0 = 0, .v0 = 0,
+			.u1 = 15, .v1 = 0,
+			.u2 = 0, .v2 = 15,
+			.u3 = 15, .v3 = 15,
 		},
 	},
 	
