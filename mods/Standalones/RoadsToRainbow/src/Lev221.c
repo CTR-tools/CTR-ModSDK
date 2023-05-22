@@ -49,7 +49,7 @@
 		.speedImpact = 0, \
 		\
 		.blockID = 0, \
-		.respawnIndex = -1, \
+		.respawnIndex = qIndex, \
 		.triNormalVecBitShift = 0x12, \
 		\
 		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4, \
@@ -86,6 +86,7 @@
 	.levVertex[9*qIndex+hi1].pos[1] = height, \
 	.levVertex[9*qIndex+hi2].pos[1] = height, \
 	.levVertex[9*qIndex+hi3].pos[1] = height, \
+	.quadBlock[qIndex].respawnIndex = -1, \
 	.quadBlock[qIndex].bbox.max[1] = height, \
 	.quadBlock[qIndex].triNormalVecDividend = \
 	{ \
@@ -181,6 +182,14 @@ struct LevelFile file =
 		
 		.clearColor[0].rgb = {0x0, 0x0, 0x28},
 		.clearColor[0].enable = 1,
+		
+		// go to kernel memory,
+		// read all zeros so you dont get mask-grabbed,
+		// otherwise it reads nullptr and kills you on quadblock 40/64
+		// cause 0x0c*0x28 is random data interpreted as "illegal shortcut",
+		// and 0x0c*0x40 goes from 8000c400 to 8000c700,
+		// we should use a proper implementation of the 0xC-byte struct later
+		.ptr_restart_points = 0x8000c400,
 	},
 	
 	.mInfo =
