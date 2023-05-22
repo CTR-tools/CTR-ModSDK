@@ -192,7 +192,16 @@ void RunInitHook()
 	if(gGT->levelID != 0x14) return;
 	
 	sdata->ptrActiveMenuBox = 0;
-
+	
+	// oxide station: 12c, 0, 1, 3FE, 0
+	// ND Box scene: 12c, 1, -1, 3FE, 0
+	
+	gGT->stars.numStars = 0x12C;
+	gGT->stars.unk[0] = 0;
+	gGT->stars.unk[1] = 1;
+	gGT->stars.unk[2] = 0x3FE;
+	gGT->stars.offsetOT = 0;
+	
 	// this is for tokens down below
 	rot[0] = 0x400;
 	rot[1] = 0; // no Y rotation

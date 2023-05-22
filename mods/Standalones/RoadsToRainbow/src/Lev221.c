@@ -163,7 +163,10 @@ struct LevelFile file =
 		.DriverSpawn[3].pos = {0,0,0x1500+0xA80},
 		.DriverSpawn[3].rot = {0,0x800-0x400,0},
 		
-		.ptrSpawnType1 = OFFSETOF(struct LevelFile, ptrSpawnType1)-4
+		.ptrSpawnType1 = OFFSETOF(struct LevelFile, ptrSpawnType1)-4,
+		
+		.clearColor[0].rgb = {0x0, 0x0, 0x28},
+		.clearColor[0].enable = 1,
 	},
 	
 	.mInfo =
