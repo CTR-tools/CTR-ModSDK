@@ -92,21 +92,28 @@ struct IconGroup4
 struct AnimTex
 {
 	// 0x0
+	// pointer to next AnimTex struct...
+	// cycles through the entirety of ptrarray
 	struct AnimTex* ptrNext;
 
 	// 0x4
 	short numFrames;
 
 	// 0x6
+	// related to timer
 	short shrug;
 
 	// 0x8
+	// related to timer
 	short lottashortshuh;
 
 	// 0xA
+	// current frame
 	u_short frameIndex;
 
 	// 0xC
+	// amount of elements in array is same as numFrames
+	// ptrarray[numFrames] leads to the ptrNext of some other AnimTex struct or something
 	struct AnimTex* ptrarray[1];
 };
 
