@@ -1632,19 +1632,23 @@ LAB_80013fbc:
 
     uVar8 = *(uint *)(iVar17 + 0x5b0);
     if ((uVar8 & 0xc0) == 0x40) {
-      uVar11 = psVar21[8];
+      
+	  // nav path index of (what?)
+	  uVar11 = psVar21[8];
+	  
       uVar20 = (uint)uVar11;
       uVar18 = (int)(uVar20 << 0x10) >> 0x1a;
       if (((int)(uVar20 << 0x10) >> 0x10 < 0xc00) && (uVar18 == (uint)*(byte *)(iVar17 + 0x627))) {
         *(uint *)(iVar17 + 0x5b0) = uVar8 | 0x80;
 
-		// related to nav path index
+		// list of drivers on each path
 		// LIST_RemoveMember (free or taken?)
         FUN_800317e4(&DAT_8008daf8 + (int)*(short *)(iVar17 + 0x5b8) * 0xc,iVar17 + 0x598);
 
 		// new nav path index
 		*(short *)(iVar17 + 0x5b8) = (short)uVar11 >> 10;
 
+		// list of drivers on each path
 		// LIST_AddFront (free or taken?)
         FUN_80031744(&DAT_8008daf8 + uVar18 * 0xc,iVar17 + 0x598);
 
@@ -1671,7 +1675,8 @@ LAB_800144a0:
         iVar3 = 1000;
         sVar7 = 1000;
 
-		// related to nav path index
+		// get driver object on list, the list of which driver is on which path
+		
 		// LIST_GetFirstItem
         iVar15 = FUN_800317d8(&DAT_8008daf8 + (int)*(short *)(iVar17 + 0x5b8) * 0xc);
 
