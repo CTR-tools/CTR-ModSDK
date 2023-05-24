@@ -404,6 +404,26 @@ struct SpawnType2
 	short* posCoords;
 };
 
+// need a better name for this,
+// also for track-select video,
+// progression data, player respawn, etc
+struct WarpballPathNode
+{
+	// 0x0
+	short pos[3];
+	
+	// 0x6
+	short distToFinish;
+	
+	// 0x8
+	char nextIndex_forward;
+	char nextIndex_left;
+	char nextIndex_backward;
+	char nextIndex_right;
+	
+	// 0xC -- size
+};
+
 struct Level
 {
 	// 0x0
@@ -538,7 +558,7 @@ struct Level
 	int cnt_restart_points;
 
 	// 0x14C
-	void* ptr_restart_points;
+	struct WarpballPathNode* ptr_restart_points;
 
 	// 0x150
 	char unk_150[0x10];
