@@ -7,6 +7,9 @@ struct NavFrame
 	char rot[4];
 
 	// 0xA
+	char data[0x8];
+	
+	// 0xA
 	// 0xC
 	
 	// 0xE - flags
@@ -15,10 +18,11 @@ struct NavFrame
 	
 	// 0x10 -
 	
-	// 0x12 - count of some kind
+	// 0x12
+	// how many nodes to go back, if AI hits killplane
+	char goBackCount;
 	
-	// search "+ 0x13" in BOTS.c
-	// 0x13 - flags (again)
+	// 0x13 - flags
 	// & 0x10 - need rampPhys
 	// & 0x20 - is reflective
 	// & 0xF - (if & 0x10) NavHeader rampPhys index
@@ -26,9 +30,9 @@ struct NavFrame
 	// & 0xF - (if not 0x10 and not 0x20)
 		// 15 levels of alpha,
 		// for darkening model in coco park tunnel)
+	char specialBits;
 	
 	// 0x14 - size of struct
-	char data[0xA];
 };
 
 struct NavHeader

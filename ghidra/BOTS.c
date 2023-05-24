@@ -1130,10 +1130,18 @@ void FUN_80013a70(int param_1)
   // get object from thread
   iVar8 = *(int *)(param_1 + 0x30);
 
-  iVar4 = strcmp();
+  // check for level "asphalt2"
+  // check for Tiny Arena
+  iVar4 = strcmp(gGT->levelName, 0x80010000);
+  
   bVar3 = false;
-  if (iVar4 == 0) {
+  
+  // if you're on Tiny Arena
+  if (iVar4 == 0) 
+  {
     iVar4 = 0xff;
+	
+	// edge-case override?
     if (*(char *)(iVar8 + 0x495) == -0x6c) {
       iVar4 = 0x84;
     }
@@ -1142,12 +1150,14 @@ void FUN_80013a70(int param_1)
         iVar4 = 0x80;
       }
     }
-    bVar3 = false;
+    
+	bVar3 = false;
     if (iVar4 != 0xff)
 	{
 	  // pointer to nav point
       uVar7 = *(uint *)(iVar8 + 0x5a4);
 
+	  // goBackCount
       uVar6 = (uint)*(byte *)(uVar7 + 0x12);
       bVar3 = (int)uVar6 < iVar4 + -1;
       while ((bVar3 || (iVar4 + 1U < uVar6)))
@@ -1172,13 +1182,19 @@ void FUN_80013a70(int param_1)
       bVar3 = true;
     }
   }
+  
+  // if not Tiny Arena, or goBackCount didn't happen
   if (!bVar3)
   {
 	// pointer to navFrame
     uVar6 = *(uint *)(iVar8 + 0x5a4);
 
+	// current nav point (player turned AI)
     cVar1 = *(char *)(iVar8 + 0x495);
-    cVar2 = *(char *)(uVar6 + 0x12);
+    
+	// goBackCount
+	cVar2 = *(char *)(uVar6 + 0x12);
+	
     while ((cVar2 == cVar1 || ((*(ushort *)(uVar6 + 0xe) & 0x4000) != 0)))
 	{
 	  // nav path index
