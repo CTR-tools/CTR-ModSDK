@@ -7,16 +7,28 @@ struct NavFrame
 	char rot[4];
 
 	// 0xA
-	char data[0x8];
+	char data[4];
 	
 	// 0xA
 	// 0xC
 	
 	// 0xE - flags
-	// bits 0,1,2 ???
-	// bits 3+: terrain
+	// bit 1 (0x1): TurboIncrement(normal turbo)
+	// bit 2 (0x2): skid front wheels
+	// bit 3 (0x4): skid back wheels
+	// bits 4,5,6,7: 15 terrains in 4 bits
+	// bit 8 (0x100) TurboIncrement(super turbo)
+	// bit 9 (0x200) ?
+	// 0x400: jumping
+	// 0x800: drift left
+	// 0x1000: drift right
+	// 0x2000: echo sound
+	// 0x4000: ???
+	// 0x8000: instance split-line
+	short flags;
 	
-	// 0x10 -
+	// 0x10
+	short pathIndexOfffff; // of what?
 	
 	// 0x12
 	// how many nodes to go back, if AI hits killplane

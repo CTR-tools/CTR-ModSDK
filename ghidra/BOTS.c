@@ -1631,21 +1631,27 @@ LAB_80013fbc:
     }
 
     uVar8 = *(uint *)(iVar17 + 0x5b0);
-    if ((uVar8 & 0xc0) == 0x40) {
-      
+    
+	if ((uVar8 & 0xc0) == 0x40) 
+	{  
+	  // offset 0x10 of NavFrame
 	  // nav path index of (what?)
 	  uVar11 = psVar21[8];
 	  
       uVar20 = (uint)uVar11;
-      uVar18 = (int)(uVar20 << 0x10) >> 0x1a;
-      if (((int)(uVar20 << 0x10) >> 0x10 < 0xc00) && (uVar18 == (uint)*(byte *)(iVar17 + 0x627))) {
+      
+	  // (6 bits)
+	  uVar18 = (int)(uVar20 << 0x10) >> 0x1a;
+	  
+      if (((int)(uVar20 << 0x10) >> 0x10 < 0xc00) && (uVar18 == (uint)*(byte *)(iVar17 + 0x627))) 
+	  {
         *(uint *)(iVar17 + 0x5b0) = uVar8 | 0x80;
 
 		// list of drivers on each path
 		// LIST_RemoveMember (free or taken?)
         FUN_800317e4(&DAT_8008daf8 + (int)*(short *)(iVar17 + 0x5b8) * 0xc,iVar17 + 0x598);
 
-		// new nav path index
+		// new nav path index (10 bits)
 		*(short *)(iVar17 + 0x5b8) = (short)uVar11 >> 10;
 
 		// list of drivers on each path
@@ -1715,10 +1721,13 @@ LAB_800144a0:
             iVar4 = iVar4 + (uint)*(ushort *)
                                    (*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) + 6) * 8;
           }
-          if (iVar4 < 0x200) {
+          if (iVar4 < 0x200) 
+		  {
+			// offset 0x10 NavFrame
             uVar11 = psVar21[8];
             uVar20 = (uint)uVar11;
-            if ((int)(uVar20 << 0x10) >> 0x10 < 0xc00)
+            
+			if ((int)(uVar20 << 0x10) >> 0x10 < 0xc00)
 			{
 			  // related to nav path index
 			  // LIST_RemoveMember (free or taken?)
@@ -2353,6 +2362,8 @@ LAB_8001509c:
     } while (iVar3 <= iVar15);
   }
   *(int *)(iVar17 + 0x5a8) = iVar4;
+  
+  // if & 2, actionFlags |= 0x800 (skid front wheels)
   uVar20 = (local_44 & 2) << 10;
 
   //uVar8 = actions flag set with its 12th, 13th and 17th flags turned off...
@@ -2362,11 +2373,14 @@ LAB_8001509c:
   //(means player 1 is not skidding on front or back wheels (12th and 13th bit), and not ? (17))
   *(uint *)(iVar17 + 0x2c8) = uVar8;
 
-  if ((local_44 & 0x2000) != 0) {
-    //build-up of Actions Flag set: player is ? (17th bit)
+  if ((local_44 & 0x2000) != 0) 
+  {
+    //build-up of Actions Flag set: echo sound (17th bit)
     uVar20 = uVar20 | 0x10000;
   }
-  if ((local_44 & 4) != 0) {
+  
+  if ((local_44 & 4) != 0) 
+  {
     //build-up of Actions Flag set: player is skidding on back wheels (13th bit)
     uVar8 = uVar8 | 0x1000;
   }
@@ -2825,20 +2839,29 @@ LAB_80015b98:
         if (16000 < *(int *)(iVar17 + 0x5d0)) {
           *(undefined4 *)(iVar17 + 0x5d0) = 16000;
         }
+		
+		// not drifting
         if ((local_44 & 0x1800) == 0) {
           //set 'AI drifting' constant to 0
           *(undefined2 *)(iVar17 + 0x5be) = 0;
           //set state of kart to normal
           *(undefined *)(iVar17 + 0x376) = 0;
         }
-        else {
+		
+		// drifting
+        else 
+		{
           //set state of kart to drifting
           *(undefined *)(iVar17 + 0x376) = 2;
+		  
+		  // drift left/right
+		  
           if ((local_44 & 0x800) == 0) {
             //set 'AI drifting' constant to 0x2AA
             *(undefined2 *)(iVar17 + 0x5be) = 0x2aa;
           }
-          else {
+          
+		  else {
             //set 'AI drifting' constant to 0xFD56
             *(undefined2 *)(iVar17 + 0x5be) = 0xfd56;
           }
@@ -3435,7 +3458,9 @@ LAB_8001686c:
     FUN_800135d8(param_1);
   }
   
-  if ((local_44 & 0x8000) != 0) {
+  if ((local_44 & 0x8000) != 0) 
+  {
+	// enable isntance split-line
     *(uint *)(iVar22 + 0x28) = *(uint *)(iVar22 + 0x28) | 0x2000;
   }
   
