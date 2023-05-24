@@ -7,7 +7,7 @@ struct NavFrame
 	char rot[4];
 
 	// 0xA
-	char data[4];
+	short unk[2];
 	
 	// 0xA
 	// 0xC
