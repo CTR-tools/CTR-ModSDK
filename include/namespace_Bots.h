@@ -37,6 +37,7 @@ struct NavHeader
 	short numPoints;
 
 	// 4
+	// either int at 0x4, or short at 0x6
 	int posY_firstNode;
 
 	// 8
