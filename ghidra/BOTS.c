@@ -2258,6 +2258,7 @@ LAB_80014094:
   iVar15 = iVar4 >> 8;
   local_30 = '\0';
   
+  // using rampPhys
   if ((*(byte *)((int)psVar19 + 0x13) & 0x10) != 0) {
     local_3c = (uint)*(byte *)((int)psVar19 + 0x13);
   }
@@ -2321,6 +2322,7 @@ LAB_8001509c:
       }
       iVar3 = (int)sVar7;
 	  
+	  // need rampPhys
       if ((*(byte *)((int)psVar19 + 0x13) & 0x10) != 0) 
 	  {
 		// bit-casts & 0xF, index for rampPhys in NavHeader

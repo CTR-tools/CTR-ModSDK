@@ -20,7 +20,7 @@ struct NavFrame
 	// search "+ 0x13" in BOTS.c
 	// 0x13 - flags (again)
 	// & 0xF - NavHeader rampPhys index
-	// & 0x10 ???
+	// & 0x10 - need rampPhys
 	// & 0x20 (is reflective)
 	// & 0x30 (not transparent)
 	// & 0xF 
