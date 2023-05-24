@@ -82,11 +82,14 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	// pointer to LEV
 	iVar9 = sdata->ptrLEV_DuringLoading;
 
+// only for battle maps in Time Trial mode
+#if 0
 	if((sdata->gGT->gameMode1 & TIME_TRIAL) != 0)
 	{
 		sdata->gGT->gameMode1 &= ~(TIME_TRIAL);
 		//sdata->gGT->gameMode1 |= ARCADE_MODE;
 	}
+#endif
 
 	// if game is loading
 	if (sdata->load_inProgress != 0)
