@@ -46,7 +46,7 @@ struct NavHeader
 
 	// 0xC
 	short rampPhys1[0x10]; // speedXZ? driver->0x5d4
-	short rampPhys2[0x20]; // speedY? driver->0x5d0
+	short rampPhys2[0x10]; // speedY? driver->0x5d0
 
 	// 0x4C
 	struct NavFrame frame[1];
