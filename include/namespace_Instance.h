@@ -6,6 +6,12 @@ struct ModelFrame
 	// size of frame depends on model
 };
 
+// used for compressed animations
+struct ModelDelta
+{
+	
+};
+
 struct ModelAnim
 {
 	char name[0x10];
@@ -16,7 +22,9 @@ struct ModelAnim
 	// 0x14
 	// same as model -> 0x30
 	// copied to instance -> 0xd8
-	unsigned int unkOffset0x14;
+	// used for compressed animations,
+	// or nullptr if animation is uncompressed
+	struct ModelDelta* modelDeltaArray;
 
 	// 0x18
 	// this is where the first frame starts
