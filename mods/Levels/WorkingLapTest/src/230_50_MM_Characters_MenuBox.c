@@ -109,7 +109,8 @@ void MM_Characters_MenuBox()
 		
 			gGT->currLEV = 0x14;
 		
-			if(gGT->numPlyrNextGame == 1)
+			// not battle
+			if((gGT->gameMode1 & 0x20) == 0)
 			{
 				// start loading
 				MainRaceTrack_RequestLoad(0x14);

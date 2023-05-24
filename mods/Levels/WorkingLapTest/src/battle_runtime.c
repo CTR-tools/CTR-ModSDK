@@ -262,18 +262,27 @@ void RunInitHook()
 
 }
 
-struct MenuRow NewRowsMM[2] =
+struct MenuRow NewRowsMM[3] =
 {
 	[0] =
 	{
 		.stringIndex = 0x4D, // time trial
 		.rowOnPressUp = 0,
-		.rowOnPressDown = 0,
+		.rowOnPressDown = 1,
 		.rowOnPressLeft = 0,
 		.rowOnPressRight = 0,
 	},
 	
 	[1] =
+	{
+		.stringIndex = 0x4F, // VS
+		.rowOnPressUp = 0,
+		.rowOnPressDown = 1,
+		.rowOnPressLeft = 0,
+		.rowOnPressRight = 0,
+	},
+	
+	[2] =
 	{
 		.stringIndex = 0xFFFF,
 	}
