@@ -19,11 +19,11 @@ struct NavFrame
 	
 	// search "+ 0x13" in BOTS.c
 	// 0x13 - flags (again)
-	// & 0xF - NavHeader rampPhys index
 	// & 0x10 - need rampPhys
-	// & 0x20 (is reflective)
-	// & 0x30 (not transparent)
-	// & 0xF 
+	// & 0x20 - is reflective
+	// & 0xF - (if & 0x10) NavHeader rampPhys index
+	// & 0xF - (if & 0x20) reflection variable
+	// & 0xF - (if not 0x10 and not 0x20)
 		// 15 levels of alpha,
 		// for darkening model in coco park tunnel)
 	

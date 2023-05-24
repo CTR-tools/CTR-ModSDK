@@ -2374,7 +2374,7 @@ LAB_8001509c:
   }
 
   if (
-		// if AI is transparent
+		// if nav point is not for rampPhys, and not for reflectiveness
 		((*(byte *)((int)psVar19 + 0x13) & 0x30) == 0) &&
 
 		// if this is not a ghost
