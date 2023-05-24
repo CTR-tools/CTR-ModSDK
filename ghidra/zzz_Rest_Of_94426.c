@@ -43222,6 +43222,7 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
 		  // vertex data of non-animated model
 		  puVar28 = *(uint **)(iVar26 + 0x24);
 
+		  // model->0x30
           *(undefined4 *)(unaff_s8 + 0xd4) = *(undefined4 *)(iVar26 + 0x30);
         }
 
@@ -43240,7 +43241,7 @@ void FUN_80070950(undefined4 param_1,undefined4 param_2,int param_3)
 		  // frame size
 		  uVar15 = (uint)*(ushort *)(iVar3 + 0x12);
 
-		  // model -> anim -> offset0x14
+		  // model -> anim -> ptrDelta
 		  *(undefined4 *)(unaff_s8 + 0xd4) = *(undefined4 *)(iVar3 + 0x14);
 
 		  // current animation frame
