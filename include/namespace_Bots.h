@@ -19,6 +19,7 @@ struct NavFrame
 	
 	// search "+ 0x13" in BOTS.c
 	// 0x13 - flags (again)
+	// & 0xF - NavHeader rampPhys index
 	// & 0x10 ???
 	// & 0x20 (is reflective)
 	// & 0x30 (not transparent)
@@ -44,7 +45,8 @@ struct NavHeader
 	struct NavFrame* last;
 
 	// 0xC
-	char data[0x40];
+	short rampPhys1[0x10]; // speedXZ? driver->0x5d4
+	short rampPhys2[0x20]; // speedY? driver->0x5d0
 
 	// 0x4C
 	struct NavFrame frame[1];

@@ -2321,9 +2321,12 @@ LAB_8001509c:
       }
       iVar3 = (int)sVar7;
 	  
-      if ((*(byte *)((int)psVar19 + 0x13) & 0x10) != 0) {
+      if ((*(byte *)((int)psVar19 + 0x13) & 0x10) != 0) 
+	  {
+		// bit-casts & 0xF, index for rampPhys in NavHeader
         local_3c = (uint)*(byte *)((int)psVar19 + 0x13);
       }
+	  
     } while (iVar3 <= iVar15);
   }
   *(int *)(iVar17 + 0x5a8) = iVar4;
@@ -3072,23 +3075,21 @@ LAB_800160f4:
   if (
 		((local_40 & 0x10) != 0) &&
 		((
+			// AI speed is fast
 			0x1c1f < *(int *)(iVar17 + 0x5d4) ||
 
-		// Player / AI structure + 0x4a shows driver index (0-7)
-
-			// If AI is oxide
+			// or if AI is oxide
 			((&DAT_80086e84)[*(byte *)(iVar17 + 0x4a)] == 0xf)
 		))
 	  )
   {
     iVar4 = (local_3c & 0xf) * 2;
 
-	// nav related
+	// nav related (AI speed Y?)
     *(int *)(iVar17 + 0x5d0) =
-         (int)*(short *)(*(int *)(&DAT_8008daec + (int)*(short *)(iVar17 + 0x5b8) * 4) + iVar4 +
-                        0x2c);
+         (int)*(short *)(*(int *)(&DAT_8008daec + (int)*(short *)(iVar17 + 0x5b8) * 4) + iVar4 + 0x2c);
 
-	// nav related
+	// nav related (AI speed XZ?)
     *(int *)(iVar17 + 0x5d4) =
          (int)*(short *)(*(int *)(&DAT_8008daec + (int)*(short *)(iVar17 + 0x5b8) * 4) + iVar4 + 0xc
                         );
