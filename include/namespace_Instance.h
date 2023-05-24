@@ -21,7 +21,7 @@ struct ModelAnim
 
 	// 0x14
 	// same as model -> 0x30
-	// copied to instance -> 0xd8
+	// copied to instance -> 0xd4
 	// used for compressed animations,
 	// or nullptr if animation is uncompressed
 	struct ModelDelta* modelDeltaArray;
