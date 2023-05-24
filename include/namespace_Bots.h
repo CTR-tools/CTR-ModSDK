@@ -22,7 +22,9 @@ struct NavFrame
 	// & 0x10 ???
 	// & 0x20 (is reflective)
 	// & 0x30 (not transparent)
-	// & 0xF (transparency bits)
+	// & 0xF 
+		// 15 levels of alpha,
+		// for darkening model in coco park tunnel)
 	
 	// 0x14 - size of struct
 	char data[0xA];
