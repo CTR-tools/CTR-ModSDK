@@ -37,7 +37,7 @@ struct NavHeader
 	short numPoints;
 
 	// 4
-	int unk_off4;
+	int posY_firstNode;
 
 	// 8
 	struct NavFrame* last;
