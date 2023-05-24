@@ -9,7 +9,8 @@ struct ModelFrame
 // used for compressed animations
 struct ModelDelta
 {
-	
+	int size; // number of INTs
+	int arr[1];
 };
 
 struct ModelAnim
