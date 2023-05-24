@@ -12,6 +12,7 @@ struct NavFrame
 	// 0xA
 	// 0xC
 	// two shorts, usually same as each other
+	// search for "[5]" and "[6]"
 	
 	// 0xE - flags
 	// bit 1 (0x1): TurboIncrement(normal turbo)

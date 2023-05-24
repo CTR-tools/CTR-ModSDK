@@ -2277,13 +2277,19 @@ LAB_80014094:
   *(int *)(iVar17 + 0x5f4) = *(int *)(iVar17 + 0x5f4) + (*(int *)(iVar17 + 0x5d0) * local_34 >> 5);
 
   //if player 1 is not on the ground
-  if ((*(uint *)(iVar17 + 0x2c8) & 1) == 0) {
-    sVar7 = psVar19[6];
+  if ((*(uint *)(iVar17 + 0x2c8) & 1) == 0) 
+  {  
+	// NavFrame offset 0xC
+	sVar7 = psVar19[6];
   }
+  
   //if player 1 is on the ground
-  else {
+  else 
+  {
+	// NavFrame offset 0xA
     sVar7 = psVar19[5];
   }
+  
   iVar3 = (int)sVar7;
   iVar15 = iVar4 >> 8;
   local_30 = '\0';
