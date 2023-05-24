@@ -2299,12 +2299,14 @@ LAB_80014094:
     local_3c = (uint)*(byte *)((int)psVar19 + 0x13);
   }
   
+  // for(iVar3 = [input]; iVar3 <= iVar15; iVar15 -= iVar3)
   if (iVar3 <= iVar15) {
     do {
 
 	  // set current nav point to next
       psVar19 = psVar21;
 
+	  // count how many times iVar15 is decremented
       iVar4 = iVar4 + iVar3 * -0x100;
 
 	  // nav path index
@@ -2313,6 +2315,7 @@ LAB_80014094:
 	  // set "new" next nav point to current + 20 bytes
       psVar21 = psVar19 + 10;
 
+	  // iVar15 -= iVar3
       iVar15 = iVar15 - iVar3;
 
 	  // if the address is out of bounds
@@ -2346,15 +2349,22 @@ LAB_80014094:
         uVar8 = 0xffffff3e;
       }
       *(uint *)(iVar17 + 0x5b0) = *(uint *)(iVar17 + 0x5b0) & uVar8;
-      if ((local_30 == '\0') && (0x9e < (byte)(*(char *)((int)psVar19 + 9) - 0x31U))) {
+      if ((local_30 == '\0') && (0x9e < (byte)(*(char *)((int)psVar19 + 9) - 0x31U))) 
+	  {
       	//if player 1 is not on the ground, skip next 3 lines of code
         if ((*(uint *)(iVar17 + 0x2c8) & 1) == 0) goto LAB_8001509c;
-        sVar7 = psVar19[5];
+        
+		// NavFrame offset 0xA
+		sVar7 = psVar19[5];
       }
-      else {
+      else 
+	  {
         local_30 = '\x01';
+
 LAB_8001509c:
-        sVar7 = psVar19[6];
+        
+		// NavFrame offset 0xC
+		sVar7 = psVar19[6];
       }
       iVar3 = (int)sVar7;
 	  
