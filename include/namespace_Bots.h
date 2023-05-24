@@ -4,12 +4,27 @@ struct NavFrame
 	short pos[3];
 
 	// 6
-	short rotX;
-
-	// 8
-	short rotZ;
+	char rot[4];
 
 	// 0xA
+	// 0xC
+	
+	// 0xE - flags
+	// bits 0,1,2 ???
+	// bits 3+: terrain
+	
+	// 0x10 -
+	
+	// 0x12 - count of some kind
+	
+	// search "+ 0x13" in BOTS.c
+	// 0x13 - flags (again)
+	// & 0x10 ???
+	// & 0x20 (is reflective)
+	// & 0x30 (not transparent)
+	// & 0xF (transparency bits)
+	
+	// 0x14 - size of struct
 	char data[0xA];
 };
 

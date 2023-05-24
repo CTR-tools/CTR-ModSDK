@@ -2257,9 +2257,11 @@ LAB_80014094:
   iVar3 = (int)sVar7;
   iVar15 = iVar4 >> 8;
   local_30 = '\0';
+  
   if ((*(byte *)((int)psVar19 + 0x13) & 0x10) != 0) {
     local_3c = (uint)*(byte *)((int)psVar19 + 0x13);
   }
+  
   if (iVar3 <= iVar15) {
     do {
 
@@ -2318,6 +2320,7 @@ LAB_8001509c:
         sVar7 = psVar19[6];
       }
       iVar3 = (int)sVar7;
+	  
       if ((*(byte *)((int)psVar19 + 0x13) & 0x10) != 0) {
         local_3c = (uint)*(byte *)((int)psVar19 + 0x13);
       }
@@ -2348,6 +2351,7 @@ LAB_8001509c:
   uVar12 = FUN_80057c68((uint)(*(byte *)(psVar19 + 7) >> 3));
   *(undefined4 *)(iVar17 + 0x358) = uVar12;
 
+  // if AI is over a reflective surface
   if ((*(byte *)((int)psVar19 + 0x13) & 0x20) != 0)
   {
     if ((*(byte *)((int)psVar19 + 0x13) & 0xf) == 0) {
@@ -2365,13 +2369,16 @@ LAB_8001509c:
   }
 
   if (
+		// if AI is transparent
 		((*(byte *)((int)psVar19 + 0x13) & 0x30) == 0) &&
 
-		// if this is a ghost
+		// if this is not a ghost
 		(*(short *)(param_1 + 0x44) != 0x4b)
 	  )
   {
-    iVar13 = ((uint)*(byte *)((int)psVar19 + 0x13) & 0xf) * 0x9c00;
+	// set transparency of AI (for water)
+	iVar13 = ((uint)*(byte *)((int)psVar19 + 0x13) & 0xf) * 0x9c00;
+	
     *(undefined2 *)(iVar17 + 0x508) = (short)((uint)*(ushort *)(iVar17 + 0x508) * 100 + iVar13 >> 8)
     ;
 
