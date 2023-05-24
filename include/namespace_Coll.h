@@ -123,7 +123,7 @@ struct ScratchpadStruct
 	struct mesh_info* ptr_mesh_info_2;
 	
 	// 0x48 
-	struct VisData* visDataHitbox;
+	struct BSP* bspHitbox;
 	
 	// 0x4c
 	// 1f800154
@@ -145,7 +145,7 @@ struct ScratchpadStruct
 	// 0xe4
 	// 0xe6
 	
-	// vec3, visData->0x10 - position (FUN_8001d0c4)
+	// vec3, bsp->0x10 - position (FUN_8001d0c4)
 	// 0xe8
 	// 0xea
 	// 0xec

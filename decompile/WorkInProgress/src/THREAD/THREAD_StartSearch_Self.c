@@ -1,6 +1,6 @@
 #include <common.h>
 
-void THREAD_PerVisData_CheckInstances();
+void THREAD_PerBspLeaf_CheckInstances();
 
 void DECOMP_THREAD_StartSearch_Self(struct ScratchpadStruct* param)
 {
@@ -19,9 +19,9 @@ void DECOMP_THREAD_StartSearch_Self(struct ScratchpadStruct* param)
   param->Union.ThBuckColl.max[2] = param->Input1.pos[2] + sVar1;
 
   COLL_SearchTree_FindX(
-	gGT->level1->ptr_mesh_info->ptrVisDataArray,
+	gGT->level1->ptr_mesh_info->bspRoot,
 	param->funcCallback,
-	THREAD_PerVisData_CheckInstances);
+	THREAD_PerBspLeaf_CheckInstances);
   
   return;
 }

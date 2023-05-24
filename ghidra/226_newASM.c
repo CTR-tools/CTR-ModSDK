@@ -207,7 +207,7 @@
      6::800a0e18 34 00 23 ac     sw         v1,offset DAT_1f800034(at)                       = ??
 	 
 	 // a0 = dereference (gGT + 0x1808 + v1),
-	 // first VisData (bsp node) in the linked list of this particular render list
+	 // first bsp (bsp node) in the linked list of this particular render list
      6::800a0e1c 00 00 04 8d     lw         a0,0x0(t0)
 	 
 	 // t0 = 800AB40C
@@ -404,7 +404,7 @@
                                                                                           OVR_226::800ab460(*)  
      
 	 // v1 = gGT+0x1808+0x4
-	 // v1 = VisData (bsp node)
+	 // v1 = bsp (bsp node)
 	 6::800a0ef4 04 00 83 8c     lw         v1,0x4(a0)
 	 
                              LAB_OVR_226__800a0ef8                           XREF[1]:     OVR_226::800a13f8(j)  
@@ -413,10 +413,10 @@
 	 6::800a0ef8 e3 ff 80 10     beq        a0,zero,LAB_OVR_226__800a0e88
      6::800a0efc 00 00 00 00     _nop
 	 
-	 // t8 = visData->ptrQuadblocks (v1->0x1c)
+	 // t8 = bsp->ptrQuadblocks (v1->0x1c)
      6::800a0f00 1c 00 78 8c     lw         t8,0x1c(v1)
 	 
-	 // t9 = visData->numQuadblocks (v1->0x18)
+	 // t9 = bsp->numQuadblocks (v1->0x18)
      6::800a0f04 18 00 79 8c     lw         t9,0x18(v1)
 	 
 	 // t2 = 0x1f8000c8 (visFaceList)
@@ -457,12 +457,12 @@
 	 // 0x1f8000c4 = visFaceList flag int
      6::800a0f30 c4 00 29 ac     sw         t1,0xc4(at)
 	 
-	 // first quadblock in a VisData (bsp node) is the lowest bit index,
+	 // first quadblock in a bsp (bsp node) is the lowest bit index,
 	 // all other quadblocks are sequential to this one. If the first index
 	 // is quadBlockID #3, then the next are guaranteed 4,5,6,7...
 	 // so we manipulate bit index without grabbing ID while looping through blocks
 	 
-	 // loop back here, for every quadblock in the visdata
+	 // loop back here, for every quadblock in the bsp
                              LAB_OVR_226__800a0f34                           XREF[1]:     OVR_226::800a13ec(j)  
      
 	 // v1 = 1f800030 (primMem->end)
@@ -973,21 +973,21 @@
 	 // if no quadblocks remain
 	 
 	 // a0 = dereference a0,
-	 // VisData = VisData->next
+	 // bsp = bsp->next
      6::800a13f4 00 00 84 8c     lw         a0,0x0(a0)
 	 
-	 // if not out of VisData, jmp back to main loop
+	 // if not out of bsp, jmp back to main loop
      6::800a13f8 bf fe 01 04     bgez       zero,LAB_OVR_226__800a0ef8
 	 
 	 // v1 = gGT+0x1808+0x4
-	 // v1 = VisData (bsp node)
+	 // v1 = bsp (bsp node)
      6::800a13fc 04 00 83 8c     _lw        v1,0x4(a0)
                              LAB_OVR_226__800a1400                           XREF[6]:     FUN_OVR_226__800a18c0:800a1934(j
                                                                                           FUN_OVR_226__800a18c0:800a193c(j
                                                                                           FUN_OVR_226__800a18c0:800a1970(j
                                                                                           OVR_226::800a1a7c(j), 
                                                                                           OVR_226::800a1a84(j), 
-     // if out of VisData, rendering is over, return to EXE                                                                                     OVR_226::800a1ab0(j)  
+     // if out of bsp, rendering is over, return to EXE                                                                                     OVR_226::800a1ab0(j)  
      6::800a1400 08 00 e0 03     jr         ra
      6::800a1404 00 00 00 00     _nop
 	 
@@ -1828,20 +1828,20 @@
 	 6::800a1e58 a4 01 29 ac     sw         t1,0x1a4(at)
      
 	 // v1? gGT + 1808 + (mainFunc loopIndex) + 0x4?
-	 // v1 is VisData, a BSP node
+	 // v1 is bsp, a BSP node
 	 6::800a1e5c 04 00 83 8c     lw         v1,0x4(a0)
      
-	 // loop until out of VisData
+	 // loop until out of bsp
                         LAB_OVR_226__800a1e60                           XREF[1]:     OVR_226::800a2218(j)  
      
 	 // if loop is finished, JMP somewhere
 	 6::800a1e60 ef 00 80 10     beq        a0,zero,LAB_OVR_226__800a2220
      6::800a1e64 00 00 00 00     _nop
      
-	 // t8 = visData->ptrQuadblocks, v1->0x1c
+	 // t8 = bsp->ptrQuadblocks, v1->0x1c
 	 6::800a1e68 1c 00 78 8c     lw         t8,0x1c(v1)
 	 
-	 // t9 = visData->numBlocks v1->0x18
+	 // t9 = bsp->numBlocks v1->0x18
      6::800a1e6c 18 00 79 8c     lw         t9,0x18(v1)
 	 
 	 // t2 = 0x1f8000c8 (visFaceList)
@@ -1869,7 +1869,7 @@
      6::800a1e8c 00 00 29 8d     lw         t1,0x0(t1)
 	 
 	 // quadblockID = quadblockID & 0x1f,
-	 // can't have more than 32 blocks in VisData
+	 // can't have more than 32 blocks in bsp
      6::800a1e90 1f 00 08 31     andi       t0,t0,0x1f
 	 
      6::800a1e94 bc 00 28 ac     sw         t0,0xbc(at)

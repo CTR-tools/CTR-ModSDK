@@ -117,13 +117,13 @@ void UndefinedFunction_800a0cbc
 
 	// 800a0ef4 -- ghidra can't understand the first one
 
-	// 800a1e30 -- quadblocks from visdata 	(lowest lod)
+	// 800a1e30 -- quadblocks from bsp 	(lowest lod)
 	// 800a2904 -- quadblocks from param1
-	// 800a36a8 -- quadblocks from visdata 	(mid-low)
+	// 800a36a8 -- quadblocks from bsp 	(mid-low)
 	// 800a417c -- quadblocks from param1
-	// 800a4fa0 -- quadblocks from visdata 	(mid-high)
+	// 800a4fa0 -- quadblocks from bsp 	(mid-high)
 	// 800a5e5c -- quadblocks from param1
-	// 800a6f40 -- quadblocks from visdata 	(highest lod)
+	// 800a6f40 -- quadblocks from bsp 	(highest lod)
 	// 800a7ba8 -- quadblocks from param1
 	// 800a97c8 -- quadblocks from param1
 
@@ -298,19 +298,19 @@ void FUN_800a1e30(int *param_1,undefined4 param_2,undefined4 param_3,int param_4
   *(undefined4 *)(in_at + 0x1a0) = **(undefined4 **)(in_at + 0x88);
   *(undefined4 *)(in_at + 0x1a4) = uVar9;
   
-  // visdata = [...]
+  // bsp = [...]
   iVar5 = param_1[1];
   
-  // loop linked list until no more visData
+  // loop linked list until no more bsp
   while (param_1 != (int *)0x0) 
   {
-	// ptrQuadBlock = visData->ptrQuadBlock
+	// ptrQuadBlock = bsp->ptrQuadBlock
     puVar18 = *(uint **)(iVar5 + 0x1c);
 	
 	// quadblock ID (0x3c)
     uVar4 = *(ushort *)(puVar18 + 0xf);
 	
-	// numQuadBlock = visData->numQuadBlock
+	// numQuadBlock = bsp->numQuadBlock
     *(undefined4 *)(in_at + 0x68) = *(undefined4 *)(iVar5 + 0x18);
     
 	puVar10 = (undefined4 *)((uVar4 >> 3 & 0x1fc) + *(int *)(in_at + 200));

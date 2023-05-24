@@ -68,7 +68,7 @@
 8001d6bc COLL_LevModelMeta
 8001d6ec COLL_Instance
 // extra function here in sep3?
-8001dd40 COLL_PerVisData_CheckInstances
+8001dd40 COLL_PerBspLeaf_CheckInstances
 8001deac COLL_CheckDriver_AI
 8001e080 COLL_CheckDriver_Player
 8001f1ec COLL_SearchTree_FindQuadblock_Touching
@@ -81,7 +81,7 @@
 // unknown 8001f9f8
 
 8001fb38 COLL_PerQuadblock_CheckTriangles_Touching
-8001fd0c COLL_PerVisData_CheckQuadblocks_Touching
+8001fd0c COLL_PerBspLeaf_CheckQuadblocks_Touching
 
 // unknown 8001fd98
 // unknown 8001fe0c
@@ -93,7 +93,7 @@
 // unknown 8002035c
 
 80020780 COLL_PerQuadblock_CheckTriangles_NearPlayer
-800209c4 COLL_PerVisData_CheckQuadblocks_NearPlayer
+800209c4 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
 
 // unknown 80020a50
 // unknown 80020b2c
@@ -656,7 +656,7 @@
 800412b4 THREAD_CollidePointWithBucket
 80041300 THREAD_SearchForModel
 
-80041368 THREAD_PerVisData_CheckInstances
+80041368 THREAD_PerBspLeaf_CheckInstances
 800414b0 THREAD_StartSearch_Self
 80041540 THREAD_CollideHitboxWithBucket
 
@@ -1064,7 +1064,7 @@
 
 // == 40 more functions, only stubbed in 926 ==
 
-8006e140 CreateRenderLists_1P2P
+8006e140 RenderLists_Init1P2P
 8006f95c ThTick_FastRET
 8006f9b4 ThTick_SetAndExec
 8006f9cc ThTick_Set

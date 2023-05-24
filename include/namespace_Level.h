@@ -117,7 +117,7 @@ struct AnimTex
 	struct AnimTex* ptrarray[1];
 };
 
-struct VisFromQuadBlock
+struct PVS
 {
 	int* visLeafSrc;
 	int* visFaceSrc;
@@ -162,7 +162,7 @@ struct QuadBlock
 	struct IconGroup4* ptr_texture_low;
 
 	// 0x44
-	struct VisFromQuadBlock* visFromQuadBlock;
+	struct PVS* pvs;
 
 	// 0x48
 	// explained in FUN_8001f2dc
@@ -172,7 +172,7 @@ struct QuadBlock
 };
 
 // BSP box that contains geometry
-struct VisData
+struct BSP
 {
 	// 0x0
 	u_short flag;
@@ -213,7 +213,7 @@ struct VisData
 			// the code keeps looping through the 
 			// array until it finds a 4-byte 0x00000000
 			// to determine end of list
-			struct VisData* ptrVisDataArray_InstHitboxes;
+			struct BSP* bspHitboxArray;
 
 			// 0x18
 			int numQuads;
@@ -355,9 +355,9 @@ struct VisMem
 	void* visSCVertSrc[4]; // copies to other
 
 	// 0x80-0x8F
-	// size = 8 * numVisData,
+	// size = 8 * numBspNodes,
 	// this is the memory where RenderLists exist,
-	// allows every VisData to link to another VisData
+	// allows every BSP to link to another BSP
 	void* bspList[4];
 };
 
@@ -382,10 +382,10 @@ struct mesh_info
 	int unk2;
 
 	// 0x18
-	struct VisData* ptrVisDataArray;
+	struct BSP* bspRoot;
 
 	// 0x1C
-	int numVisData;
+	int numBspNodes;
 
 	// 0x20 bytes large
 };

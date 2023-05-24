@@ -169,11 +169,11 @@ struct GameTracker
 		struct
 		{
 			void* ptrQuadBlocksRendered;
-			void* ptrVisDataLinkedList;
+			struct BSP** bspListStart;
 		} list[5];
 
 		// 0x28
-		void* ptrVisDataList_FullDynamic;
+		struct BSP** bspListStart_FullDynamic;
 		void* ptrQuadBlocksRendered_FullDynamic;
 
 		// 0x30 large
@@ -315,7 +315,7 @@ struct GameTracker
 	int unk1cac[5];
 
 	// 1cc0
-	int numVisDataLinks;
+	int bspLeafsDrawn;
 	
 	// 1cc4
 	int unk1cc4[6];

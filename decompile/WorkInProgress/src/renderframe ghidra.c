@@ -430,8 +430,8 @@ code_r0x800369d8:
 											 gGT->visMem1->visOVertList[0], gGT->visMem1->visOVertList[1]);
 			}
 			iVar15 = 0;
-			VisData_CopyJMPsToScratchpad();
-			gGT->numVisDataLinks = 0;
+			RenderLists_PreInit();
+			gGT->bspLeafsDrawn = 0;
 			iVar18 = 0x1808;
 			iVar19 = 0x168;
 			do {
@@ -440,18 +440,18 @@ code_r0x800369d8:
 				iVar10 = iVar18 - 0x20;
 				iVar18 = iVar18 + 0x30;
 				iVar19 = iVar19 + 0x110;
-				iVar20 = CreateRenderLists_1P2P
-													 ((struct VisData *)(&playstationVar23->ptrVertexArray)[2], *ppiVar12, 
+				iVar20 = RenderLists_Init1P2P
+													 ((struct BSP *)(&playstationVar23->ptrVertexArray)[2], *ppiVar12, 
 														(struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar20), 
 														(int)gGT->db[0].drawEnv.ofs + iVar10, ppiVar12[0x20], gGT->numPlyrCurrGame
 													 );
 				iVar15 = iVar15 + 1;
-				gGT->numVisDataLinks = gGT->numVisDataLinks + iVar20;
+				gGT->bspLeafsDrawn = gGT->bspLeafsDrawn + iVar20;
 			} while (iVar15 < 2);
 			iVar19 = 0;
 			iVar15 = 0x168;
 			DrawLevelOvr2P
-								(gGT->LevRenderLists, gGT->tileView, (struct VisData *)playstationVar23, 
+								(gGT->LevRenderLists, gGT->tileView, (struct BSP *)playstationVar23, 
 								 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], gGT->visMem1->visFaceList[1]
 								 , level->ptr_tex_waterEnvMap);
 			psVar17 = gGT;
@@ -505,15 +505,15 @@ code_r0x800369d8:
 					DAT_1f800028 = iVar18 >> 8;
 					DAT_1f80002c = DAT_1f800018 + 0x140;
 				}
-				VisData_CopyJMPsToScratchpad();
+				RenderLists_PreInit();
 				psVar14 = gGT->tileView;
-				iVar19 = CreateRenderLists_1P2P
-													 ((struct VisData *)(&playstationVar23->ptrVertexArray)[2], 
+				iVar19 = RenderLists_Init1P2P
+													 ((struct BSP *)(&playstationVar23->ptrVertexArray)[2], 
 														gGT->visMem1->visLeafList[0], psVar14, (u_int)gGT->LevRenderLists, 
 														gGT->visMem1->bspList[0], gGT->numPlyrCurrGame);
-				gGT->numVisDataLinks = iVar19;
+				gGT->bspLeafsDrawn = iVar19;
 				DrawLevelOvr1P
-									(gGT->LevRenderLists, psVar14, (struct VisData *)level->ptr_mesh_info, 
+									(gGT->LevRenderLists, psVar14, (struct BSP *)level->ptr_mesh_info, 
 									 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], 
 									 (int *)level->ptr_tex_waterEnvMap, in_stack_ffffffb0);
 				DrawSky_Full(level->ptr_skybox, psVar14, &gGT->backBuffer->primMem);
@@ -531,8 +531,8 @@ code_r0x800369d8:
 											 gGT->visMem1->visOVertList[2]);
 			}
 			iVar15 = 0;
-			VisData_CopyJMPsToScratchpad();
-			gGT->numVisDataLinks = 0;
+			RenderLists_PreInit();
+			gGT->bspLeafsDrawn = 0;
 			iVar18 = 0x1808;
 			iVar19 = 0x168;
 			do {
@@ -541,17 +541,17 @@ code_r0x800369d8:
 				ppiVar12 = gGT->visMem1->visLeafList + iVar15;
 				iVar18 = iVar18 + 0x30;
 				iVar19 = iVar19 + 0x110;
-				iVar20 = CreateRenderLists_3P4P
-													 ((struct VisData *)(&playstationVar23->ptrVertexArray)[2], *ppiVar12, 
+				iVar20 = RenderLists_Init3P4P
+													 ((struct BSP *)(&playstationVar23->ptrVertexArray)[2], *ppiVar12, 
 														(struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar20), 
 														(int)gGT->db[0].drawEnv.ofs + iVar10, ppiVar12[0x20]);
 				iVar15 = iVar15 + 1;
-				gGT->numVisDataLinks = gGT->numVisDataLinks + iVar20;
+				gGT->bspLeafsDrawn = gGT->bspLeafsDrawn + iVar20;
 			} while (iVar15 < 3);
 			iVar19 = 0;
 			iVar15 = 0x168;
 			DrawLevelOvr3P
-								(gGT->LevRenderLists, gGT->tileView, (struct VisData *)playstationVar23, 
+								(gGT->LevRenderLists, gGT->tileView, (struct BSP *)playstationVar23, 
 								 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], gGT->visMem1->visFaceList[1]
 								 , gGT->visMem1->visFaceList[2]);
 			psVar17 = gGT;
@@ -574,8 +574,8 @@ code_r0x800369d8:
 										 gGT->visMem1->visOVertList[2], gGT->visMem1->visOVertList[3]);
 			}
 			iVar15 = 0;
-			VisData_CopyJMPsToScratchpad();
-			gGT->numVisDataLinks = 0;
+			RenderLists_PreInit();
+			gGT->bspLeafsDrawn = 0;
 			iVar18 = 0x1808;
 			iVar19 = 0x168;
 			do {
@@ -584,17 +584,17 @@ code_r0x800369d8:
 				ppiVar12 = gGT->visMem1->visLeafList + iVar15;
 				iVar18 = iVar18 + 0x30;
 				iVar19 = iVar19 + 0x110;
-				iVar20 = CreateRenderLists_3P4P
-													 ((struct VisData *)(&playstationVar23->ptrVertexArray)[2], *ppiVar12, 
+				iVar20 = RenderLists_Init3P4P
+													 ((struct BSP *)(&playstationVar23->ptrVertexArray)[2], *ppiVar12, 
 														(struct TileView *)((int)gGT->db[0].drawEnv.ofs + iVar20), 
 														(int)gGT->db[0].drawEnv.ofs + iVar10, ppiVar12[0x20]);
 				iVar15 = iVar15 + 1;
-				gGT->numVisDataLinks = gGT->numVisDataLinks + iVar20;
+				gGT->bspLeafsDrawn = gGT->bspLeafsDrawn + iVar20;
 			} while (iVar15 < 4);
 			iVar19 = 0;
 			iVar15 = 0x168;
 			DrawLevelOvr4P
-								(gGT->LevRenderLists, gGT->tileView, (struct VisData *)playstationVar23, 
+								(gGT->LevRenderLists, gGT->tileView, (struct BSP *)playstationVar23, 
 								 &gGT->backBuffer->primMem, gGT->visMem1->visFaceList[0], gGT->visMem1->visFaceList[1]
 								 , gGT->visMem1->visFaceList[2]);
 			psVar17 = gGT;

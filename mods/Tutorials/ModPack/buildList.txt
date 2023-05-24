@@ -41,7 +41,7 @@ common, exe, EffectSfxRain_Reset, -0x8, ../../Tests/DebugFrustum/src/DF_JmpPrint
 // CharacterRandomizer already includes OverrideMPK
 
 common, exe, DecalMP_01, 0x0, ../../Patches/GraphicsUpgrade/src/JR_RA.s
-common, exe, CreateRenderLists_1P2P, 0x220, ../../Patches/GraphicsUpgrade/src/quadblock1P2P.s
+common, exe, RenderLists_Init1P2P, 0x220, ../../Patches/GraphicsUpgrade/src/quadblock1P2P.s
 
 // Now, to compile all of the functions and other mod code that goes in RDATA //
 

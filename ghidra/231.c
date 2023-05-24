@@ -845,13 +845,13 @@ undefined4 FUN_800ac4b8(int param_1)
 }
 
 // RB_Potion_OnShatter_TeethCallback
-// param_2 Lev Hitbox (VisData)
+// param_2 Lev Hitbox (bsp)
 void FUN_800ac5e8(undefined4 param_1,int param_2)
 
 {
   int iVar1;
   
-  // VisData->hitbox.instDef
+  // bsp->hitbox.instDef
   iVar1 = *(int *)(param_2 + 0x1c);
   
   if (
@@ -994,7 +994,7 @@ void FUN_800ac6b4(int param_1)
     FUN_800ad250(param_1,iVar6,iVar7);
   }
   
-  // did not hit VisData hitbox
+  // did not hit bsp hitbox
   if (DAT_1f80014a == 0) {
     if (DAT_1f800146 != 0) 
 	{
@@ -1073,7 +1073,7 @@ void FUN_800ac6b4(int param_1)
   // Potion_OnShatter_SearchTeeth fails
   // to open Teeth while the potion is airborne
   
-  // If hit VisData hitbox
+  // If hit bsp hitbox
   else {
     bVar1 = true;
     if (((((*DAT_1f800150 & 0x80) != 0) && (iVar4 = *(int *)(DAT_1f800150 + 0x1c), iVar4 != 0)) &&
@@ -2077,7 +2077,7 @@ void FUN_800ad92c(int param_1)
 
 // RB_Hazard_CollLevInst (tnt, potion, warpball, etc) (not hazard? moving explosive?)
 // param_1 - BSP result
-// param_2 - VisData (hitbox)
+// param_2 - bsp (hitbox)
 undefined4 FUN_800ad9ac(int param_1,undefined4 param_2)
 
 {
@@ -5795,7 +5795,7 @@ void FUN_800b1e90(int param_1,int param_2)
 
 // RB_Burst_CollLevInst (bsp callback)
 // param_1 - 1f800108
-// param_2 - VisData (hitbox)
+// param_2 - bsp (hitbox)
 void FUN_800b20a4(int param_1,int param_2)
 
 {
@@ -5803,7 +5803,7 @@ void FUN_800b20a4(int param_1,int param_2)
   int iVar2;
   int iVar3;
   
-  // VisData->hitbox.instDef
+  // bsp->hitbox.instDef
   iVar2 = *(int *)(param_2 + 0x1c);
   
   if (

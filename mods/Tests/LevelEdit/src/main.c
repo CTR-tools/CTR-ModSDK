@@ -236,29 +236,29 @@ void FindBSP()
 	int loop1;
 	int loop2;
 
-	int numVisData;
-	struct VisData* ptrVisDataArray;
+	int numBspNodes;
+	struct BSP* bspRoot;
 
 	int numQuadBlockInNode;
 	struct QuadBlock* ptrQuadBlockArray;
 
-	numVisData = sdata->gGT->level1->ptr_mesh_info->numVisData;
-	ptrVisDataArray = sdata->gGT->level1->ptr_mesh_info->ptrVisDataArray;
+	numBspNodes = sdata->gGT->level1->ptr_mesh_info->numBspNodes;
+	bspRoot = sdata->gGT->level1->ptr_mesh_info->bspRoot;
 
 	ptrQuadBlockArray = sdata->gGT->level1->ptr_mesh_info->ptrQuadBlockArray;
 
-	for(loop1 = 0; loop1 < numVisData; loop1++)
+	for(loop1 = 0; loop1 < numBspNodes; loop1++)
 	{
 		// skip if this is not a leaf node
-		if((ptrVisDataArray[loop1].flag & 1) == 0) continue;
+		if((bspRoot[loop1].flag & 1) == 0) continue;
 
 		// if leaf node
-		for(loop2 = 0; loop2 < ptrVisDataArray[loop1].data.leaf.numQuads; loop2++)
+		for(loop2 = 0; loop2 < bspRoot[loop1].data.leaf.numQuads; loop2++)
 		{
 			if
 				(
-					// this quadblock in visdata
-					&ptrVisDataArray[loop1].data.leaf.ptrQuadBlockArray[loop2]
+					// this quadblock in bsp
+					&bspRoot[loop1].data.leaf.ptrQuadBlockArray[loop2]
 
 					==
 
@@ -267,7 +267,7 @@ void FindBSP()
 				)
 			{
 				printf("Found block %03X in bsp node %03X\n", 0xE, loop1);
-				printf("Node %03X is at %08X\n", loop1, &ptrVisDataArray[loop1]);
+				printf("Node %03X is at %08X\n", loop1, &bspRoot[loop1]);
 			}
 		}
 	}
@@ -278,11 +278,11 @@ void RunInitHook()
 	int loop;
 	struct QuadBlock* ptrQuadBlockArray;
 	struct LevVertex* ptrVertexArray;
-	struct VisData* ptrVisDataArray;
+	struct BSP* bspRoot;
 
 	ptrQuadBlockArray = sdata->gGT->level1->ptr_mesh_info->ptrQuadBlockArray;
 	ptrVertexArray = sdata->gGT->level1->ptr_mesh_info->ptrVertexArray;
-	ptrVisDataArray = sdata->gGT->level1->ptr_mesh_info->ptrVisDataArray;
+	bspRoot = sdata->gGT->level1->ptr_mesh_info->bspRoot;
 
 	k1 = (struct MyData*)0x8000FFF0;
 
@@ -291,7 +291,7 @@ void RunInitHook()
 	k1->selectedVertex = -1;
 
 	// BSP node (found with FindBSP)
-	ptrVisDataArray[0x48].maxPos[1] = 0x200;
+	bspRoot[0x48].maxPos[1] = 0x200;
 
 	// center quadblock
 	ptrQuadBlockArray[0x90].bbox.max[1] = 0x200;
@@ -384,8 +384,8 @@ void RunInitHook()
 	ptrQuadBlockArray[0x1E].bbox.max[1] = SIZE;
 
 	// BSP node (found with FindBSP)
-	ptrVisDataArray[0x10].maxPos[1] = SIZE;
-	ptrVisDataArray[0xB].maxPos[1] = SIZE;
+	bspRoot[0x10].maxPos[1] = SIZE;
+	bspRoot[0xB].maxPos[1] = SIZE;
 
 
 	#if 1

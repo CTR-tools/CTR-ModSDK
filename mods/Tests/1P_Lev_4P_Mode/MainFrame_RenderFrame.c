@@ -874,12 +874,12 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		*(int*)0x1f800028 = *(int*)0x1f800028 >> 8; // 0x627
 	}
 	
-	VisData_CopyJMPsToScratchpad();
-	gGT->numVisDataLinks = 0;
+	RenderLists_PreInit();
+	gGT->bspLeafsDrawn = 0;
 	
-	gGT->numVisDataLinks += 
-	  CreateRenderLists_1P2P(
-		ptr_mesh_info->ptrVisDataArray,
+	gGT->bspLeafsDrawn += 
+	  RenderLists_Init1P2P(
+		ptr_mesh_info->bspRoot,
 		level1->visMem->visLeafList[0],
 		tileView,
 		&gGT->LevRenderLists[0],

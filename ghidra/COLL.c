@@ -16,7 +16,7 @@ undefined ** FUN_8001d094(uint param_1)
 
 // COLL_Instance
 // param_1 - 0x1f800108
-// param_2 - struct VisData* instanceHitbox
+// param_2 - struct BSP* instanceHitbox
 uint FUN_8001d0c4(short *param_1,byte *param_2)
 
 {
@@ -60,7 +60,7 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
     *(uint *)(param_1 + 0xe2) = uVar5;
     *(uint *)(param_1 + 0xe6) = uVar7;
 	
-	// visdata->0x10
+	// bsp->0x10
     sVar2 = *(short *)(param_2 + 0x10);
     *(undefined4 *)(param_1 + 0xea) = 0;
     iVar14 = (int)sVar2 - (int)param_1[8];
@@ -289,8 +289,8 @@ uint FUN_8001d0c4(short *param_1,byte *param_2)
 }
 
 
-// PerVisData_CheckInstances
-// param1 - VisData node
+// PerBspLeaf_CheckInstances
+// param1 - bsp node
 // param2 - 1f800108
 void FUN_8001d610(int param_1,int param_2)
 
@@ -300,10 +300,10 @@ void FUN_8001d610(int param_1,int param_2)
   int *piVar3;
   int *piVar4;
 
-  // VisData node, used for instance hitbox
+  // bsp node, used for instance hitbox
   piVar3 = *(int **)(param_1 + 0x14);
   
-  // if there are instances in this VisData
+  // if there are instances in this bsp
   if (piVar3 != (int *)0x0) 
   {
 	// check for null flag
@@ -341,17 +341,17 @@ void FUN_8001d610(int param_1,int param_2)
 							// if collision for instance is disabled
 							((*(byte *)piVar3 & 0x80) == 0) || 
 						
-							// if VisData_InstStuff.InstDef doesn't exist
+							// if bspHitbox.InstDef doesn't exist
 							(piVar4[5] == 0)
 						) ||
 						
 						// if data is valid
 						
-						// VisData_InstStuff.InstDef->Instance->flags, allows drawing
+						// bspHitbox.InstDef->Instance->flags, allows drawing
 						((*(uint *)(*(int *)(piVar4[5] + 0x2c) + 0x28) & 0xf) != 0)
 					) &&
 			
-				// compare visdata boundingbox to scratchpad boundingbox
+				// compare bsp boundingbox to scratchpad boundingbox
 				((*(short *)(param_2 + 0x30) <= *(short *)((int)piVar4 + 2) &&
 				(*(short *)(piVar4 + -1) <= *(short *)(param_2 + 0x36))))) &&
 				((*(short *)(param_2 + 0x32) <= *(short *)(piVar4 + 1) &&
@@ -469,7 +469,7 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
   *(undefined4 *)(param_3 + 0x62) = 0;
 
   // COLL_SearchTree_FindX, callback
-  // PerVisData_CheckInstances
+  // PerBspLeaf_CheckInstances
   FUN_8001ebec(*(undefined4 *)(*(int *)(param_3 + 0x16) + 0x18),param_3 + 0x18,FUN_8001d610,param_3)
   ;
   return;
@@ -594,7 +594,7 @@ void FUN_8001d944(int param_1,int param_2)
   if (((DAT_1f800146 == 0) && (DAT_1f800134 != 0)) && (*(int *)(DAT_1f800134 + 0x18) != 0))
   {
 	// COLL_SearchTree_FindX, callback
-	// COLL_PerVisData_CheckQuadblocks_Touching
+	// COLL_PerBspLeaf_CheckQuadblocks_Touching
     FUN_8001ebec(*(int *)(DAT_1f800134 + 0x18),&DAT_1f800138,FUN_8001f5f0,&DAT_1f800108);
   }
 
@@ -1581,7 +1581,7 @@ void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,in
       psVar1 = (short *)(iVar3 + 0x6e);
       iVar3 = iVar3 + -2;
 
-	  // ptrVisData
+	  // bspRoot[iVar7]
       iVar12 = ((int)*psVar1 & 0x3fffU) * 0x20 + iVar7;
 
 	  // If this is not a leaf node, break
@@ -1593,7 +1593,7 @@ void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,in
       _DAT_1f800068 = iVar14;
       DAT_1f80006c = iVar3;
 
-	  // COLL_PerVisData_CheckQuadblocks_Touching
+	  // COLL_PerBspLeaf_CheckQuadblocks_Touching
       FUN_8001f5f0(iVar12,param_3);
 
 	  iVar3 = DAT_1f80006c;
@@ -1605,7 +1605,7 @@ void FUN_8001eb0c(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,in
 
 
 // COLL_SearchTree_FindX
-// param1, pointer to visData
+// param1, pointer to bsp
 // param2, pointer to boundingbox
 // param3, callback if item collides with anything
 // param4, 1f800108
@@ -1635,13 +1635,13 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
   undefined4 unaff_retaddr;
   undefined auStackX0 [16];
 
-  // if level has no visData, quit
+  // if level has no bsp, quit
   if (param_1 == 0) {
     DAT_1f800030 = unaff_s0;
     return;
   }
 
-  // start array of VisDataIDs
+  // start array of bspIDs
   // inside scratchpad
   iVar6 = 0x1f800000;
 
@@ -1667,7 +1667,7 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
   _DAT_1f800058 = unaff_s8;
   DAT_1f80005c = unaff_retaddr;
 
-  // at start of loop, iVar9 is first VisData in LEV,
+  // at start of loop, iVar9 is first bsp in LEV,
   // which is the root node of the BSP tree
   do
   {
@@ -1677,7 +1677,7 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
 	// if left child exists
     if ((uVar8 + 1 & 0xffff) != 0)
 	{
-	  // set new VisData pointer, to left child
+	  // set new bsp pointer, to left child
       iVar9 = (uVar8 & 0x3fff) * 0x20 + param_1;
 
       if (
@@ -1709,7 +1709,7 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
 					) &&
 
 					(
-						// set ID list index to VisData left child ID,
+						// set ID list index to bsp left child ID,
 						// array starts 0x70 bytes after start of scratchpad
 						*(undefined2 *)(iVar6 + 0x70) = (short)uVar8,
 
@@ -1728,7 +1728,7 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
 	// if right child exists
     if ((int)uVar8 >> 0x10 != 0xffffffff)
 	{
-	  // set new VisData pointer, to right child
+	  // set new bsp pointer, to right child
       iVar9 = ((int)uVar8 >> 0x10 & 0x3fffU) * 0x20 + param_1;
 
       if (
@@ -1758,7 +1758,7 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
 								((int)sVar4 - (iVar7 >> 0x10) < 1)
 							) &&
 
-							// set ID list index to VisData right child ID,
+							// set ID list index to bsp right child ID,
 							// array starts 0x70 bytes after start of scratchpad
 							(*(undefined2 *)(iVar6 + 0x70) = (short)(uVar8 >> 0x10),
 
@@ -1787,7 +1787,7 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
       psVar1 = (short *)(iVar6 + 0x6e);
       iVar6 = iVar6 + -2;
 
-	  // ptrVisData of last index
+	  // pointer to last BSP node of last index
 	  iVar9 = ((int)*psVar1 & 0x3fffU) * 0x20 + param_1;
 
 	  // If this is not a leaf node, break
@@ -1800,7 +1800,7 @@ void FUN_8001ebec(int param_1,short *param_2,code *param_3,undefined4 param_4)
       DAT_1f80006c = iVar6;
 
 	  // function callback
-	  // iVar9 is VisData
+	  // iVar9 is bsp
       (*param_3)(iVar9,param_4);
 
 	  iVar6 = DAT_1f80006c;
@@ -2365,8 +2365,8 @@ void FUN_8001f41c(int param_1,int param_2)
 }
 
 
-// COLL_PerVisData_CheckQuadblocks_Touching
-// param_1 is VisData node
+// COLL_PerBspLeaf_CheckQuadblocks_Touching
+// param_1 is bsp node
 // param_2 is 0x1f800108
 void FUN_8001f5f0(uint *param_1,int param_2)
 
@@ -2374,7 +2374,7 @@ void FUN_8001f5f0(uint *param_1,int param_2)
   uint uVar1;
   uint uVar2;
 
-  // if visData flag is water
+  // if bsp flag is water
   if ((*param_1 & 2) != 0) {
     *(uint *)(param_2 + 0x1a4) = *(uint *)(param_2 + 0x1a4) | 0x8000;
   }
@@ -2401,7 +2401,7 @@ void FUN_8001f5f0(uint *param_1,int param_2)
 
   if ((*(ushort *)(param_2 + 0x22) & 1) != 0)
   {
-	// PerVisData_CheckInstances
+	// PerBspLeaf_CheckInstances
     FUN_8001d610(param_1,param_2);
   }
   return;
@@ -3049,8 +3049,8 @@ void FUN_80020064(int param_1,int param_2)
 }
 
 
-// COLL_PerVisData_CheckQuadblocks_NearPlayer
-// param_1 is VisData node
+// COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
+// param_1 is bsp node
 // param_2 is 0x1f800108
 void FUN_800202a8(uint *param_1,int param_2)
 
@@ -3058,7 +3058,7 @@ void FUN_800202a8(uint *param_1,int param_2)
   uint uVar1;
   uint uVar2;
 
-  // if visData flag is water
+  // if bsp flag is water
   if ((*param_1 & 2) != 0) {
     *(uint *)(param_2 + 0x1a4) = *(uint *)(param_2 + 0x1a4) | 0x8000;
   }
@@ -3085,7 +3085,7 @@ void FUN_800202a8(uint *param_1,int param_2)
 
   if ((*(ushort *)(param_2 + 0x22) & 1) != 0)
   {
-	// PerVisData_CheckInstances
+	// PerBspLeaf_CheckInstances
     FUN_8001d610(param_1,param_2);
   }
   return;
@@ -3351,12 +3351,12 @@ void FUN_80020410(undefined4 param_1,int param_2)
 			(iVar11 = **(int **)(PTR_DAT_8008d2ac + 0x160), iVar11 != 0)
 		) &&
 
-		// if mesh_info->visData exists
+		// if mesh_info->bsp exists
 		(iVar11 = *(int *)(iVar11 + 0x18), iVar11 != 0)
 	   )
 	{
 	  // COLL_SearchTree_FindX, callback 
-	  // COLL_PerVisData_CheckQuadblocks_NearPlayer
+	  // COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
       FUN_8001ebec(iVar11,&DAT_1f800138,FUN_800202a8,&DAT_1f800108);
     }
 

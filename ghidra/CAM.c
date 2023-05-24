@@ -904,7 +904,7 @@ void FUN_800188a8(short *param_1,int param_2,undefined4 param_3,short *param_4)
 			(iVar4 = **(int **)(puVar3 + 0x160), iVar4 == 0)
 		) ||
 
-		// if ptrVisDataArray is nullptr
+		// if bspRoot is nullptr
 		(*(int *)(iVar4 + 0x18) == 0)
 	 )
   {
@@ -912,7 +912,7 @@ void FUN_800188a8(short *param_1,int param_2,undefined4 param_3,short *param_4)
     *(undefined4 *)(param_1 + 0x16) = 0;
   }
 
-  // if VisDataArray is valid
+  // if bspRoot is valid
   else
   {
 	// short 0x16 -> byte 0x2c
@@ -929,7 +929,7 @@ void FUN_800188a8(short *param_1,int param_2,undefined4 param_3,short *param_4)
 			(param_1[0x1f] == 0) &&
 			(
 				// COLL_SearchTree_FindX, callback
-				// COLL_PerVisData_CheckQuadblocks_Touching
+				// COLL_PerBspLeaf_CheckQuadblocks_Touching
 				FUN_8001ebec(*(undefined4 *)(*(int *)(param_1 + 0x16) + 0x18),param_1 + 0x18,FUN_8001f5f0,
 						param_1), param_1[0x1f] == 0
 			)

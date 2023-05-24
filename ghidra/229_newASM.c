@@ -185,7 +185,7 @@
 	 // loop runs
 	 
 	 // t0 = renderLists+loopIndex
-	 // first VisData (bsp node) in the linked list of this particular render list
+	 // first bsp (bsp node) in the linked list of this particular render list
      9::800a0dd8 21 40 64 00     _addu      t0,v1,a0
 	 
 	 // a0 = t0 + 0x0 (P1's renderlists)
@@ -256,7 +256,7 @@
      9::800a0e38 04 64 29 25     addiu      t1,t1,0x6404
 	 
 	 // t0 = renderLists+loopIndex
-	 // first VisData (bsp node) in the linked list of this particular render list
+	 // first bsp (bsp node) in the linked list of this particular render list
      9::800a0e3c 21 40 64 00     addu       t0,v1,a0
 	 
 	 // a0 = t0 + 0x30 (P2's renderlists)
@@ -285,7 +285,7 @@
      9::800a0e60 00 00 00 00     nop
 	 
 	 // t0 = renderLists+loopIndex
-	 // first VisData (bsp node) in the linked list of this particular render list
+	 // first bsp (bsp node) in the linked list of this particular render list
      9::800a0e64 21 40 64 00     addu       t0,v1,a0
 	 
 	 // add 0x30 (go to P2 render lists, 0x30 away from P1)

@@ -33318,7 +33318,7 @@ void FUN_8006677c(int param_1,short *param_2)
         DAT_1f800128 = DAT_1f80010c;
 
 		// COLL_SearchTree_FindX, callback for touching quadblocks,
-		// COLL_PerVisData_CheckQuadblocks_Touching
+		// COLL_PerBspLeaf_CheckQuadblocks_Touching
         FUN_8001ebec(*(undefined4 *)(DAT_1f800134 + 0x18),&DAT_1f800138,FUN_8001f5f0,&DAT_1f800108);
 
 		// cur respawn = next respawn
@@ -42035,11 +42035,11 @@ void FUN_8006fe08(void)
 
 // WARNING: Globals starting with '_' overlap smaller symbols at the same address
 
-// CreateRenderLists_1P2P
-// param1 is lev->mesh_info->ptrVisDataArray
+// RenderLists_Init1P2P
+// param1 is lev->mesh_info->bspRoot
 // param2 is VisMem 0x00-0x0F (visLeafList)
 // param3 is tileView
-// param4 is pointer of linked list VisData (1808) to draw in 226
+// param4 is pointer of linked list bsp (1808) to draw in 226
 // param5 is VisMem 0x80-0x8F (bspList)
 // param6 is number of players
 undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int param_5,int param_6)
@@ -42126,7 +42126,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
   _DAT_1f800078 = *(undefined4 *)(param_3 + 0xc0);
   DAT_1f80007c = *(undefined4 *)(param_3 + 0xc4);
   
-  // jump pointers (stored on scratchpad from VisData_CopyJMPsToScratchpad),
+  // jump pointers (stored on scratchpad from RenderLists_PreInit),
   // given the index from tileView, which depends on direction camera faces
   DAT_1f8000ac = (&DAT_1f800084)[*(int *)(param_3 + 0xd0)];
   _DAT_1f8000b0 = (&DAT_1f800084)[*(int *)(param_3 + 0xd4)];
@@ -42137,7 +42137,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
   // VisMem 0x80-0x8F
   iVar7 = param_5;
 
-  // lev -> mesh -> visData
+  // lev -> mesh -> bsp
   puVar13 = param_1;
 
   DAT_1f800030 = unaff_s0;
@@ -42156,7 +42156,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
   // list is built and emptied
   do
   {
-	// Assume VisData branch, not leaf
+	// Assume bsp branch, not leaf
 
 	// leftChildID
     uVar14 = *(uint *)(puVar13 + 0xc);
@@ -42167,7 +42167,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 	// (if left child exists)
 	if (((uVar14 & 0x8000) == 0) &&
 	
-		// if visLeafList says this visData node is not a leaf
+		// if visLeafList says this bsp node is not a leaf
 		(*(int *)((uVar14 >> 3 & 0x7fc) + param_2) << (uVar14 & 0x1f) < 0)) {
 
 	  // leftChild = array + index * 0x10 (short ptr, 0x10 -> 0x20)
@@ -42231,7 +42231,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 	// (if right child exists)
     if ((-1 < (int)uVar16) &&
 	
-		// if visLeafList says this visData node is not a leaf
+		// if visLeafList says this bsp node is not a leaf
 		(*(int *)((uVar16 >> 3 & 0x7fc) + param_2) << (uVar16 & 0x1f) < 0)) {
 
 	  // rightChild = array + index * 0x10 (short ptr, 0x10 -> 0x20)
@@ -42293,7 +42293,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		return *(undefined4 *)(iVar4 + 0x80);
 		}
 		
-		// get child VisData index (and flags)
+		// get child bsp index (and flags)
 		psVar1 = (short *)(iVar5 + 0xc0);
 		
 		iVar5 = iVar5 + -0x10;
@@ -42301,7 +42301,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		// get just the index
 		uVar14 = (int)*psVar1 & 0x3fff;
 		
-		// pointer to VisData node
+		// pointer to bsp node
 		puVar13 = param_1 + uVar14 * 0x10;
 		
 		// If this is not a leaf node, break
@@ -42309,7 +42309,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		
 		// as long as we have leaf nodes, keep going...
 		
-		// VisData flag
+		// bsp flag
 		uVar3 = *puVar13;
 		
 
@@ -42365,15 +42365,15 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 		// == Leaf Node ==
 		
 		
-		// VisDataList_Water
+		// bspList_Water
         piVar18 = (int *)(param_4 + 0x24);
 		  
         if (
-			  // is VisData flag is not water	
+			  // is bsp flag is not water	
 			  ((uVar3 & 2) == 0) && 
 			  
 			  (
-			  	// VisDataList_DynamicSubdiv
+			  	// bspList_DynamicSubdiv
 			  	piVar18 = (int *)(param_4 + 0xc), 
 			  	
 			  	// if forcedDynamicSubdiv is disabled
@@ -42404,7 +42404,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
             iVar6 = gte_stSZ3();
 			
 			// anything min LOD to max LOD
-			// VisDataList_FullDynamic
+			// bspList_FullDynamic
             piVar18 = (int *)(param_4 + 0x28);
 			
             if (
@@ -42413,14 +42413,14 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 					(iVar6 - *(int *)(iVar4 + 0xa4) < 1) &&
 					(
 						(
-							// VisDataList_4x4
+							// bspList_4x4
 							piVar18 = (int *)(param_4 + 4), 
 							
 							// if forced 4x4 is disabled
 							(uVar3 & 0x80) == 0 &&
 						
 							(
-								// VisDataList_4x1
+								// bspList_4x1
 								piVar18 = (int *)(param_4 + 0x1c), 
 								
 								// if forced 4x1 is disabled
@@ -42431,7 +42431,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 				) &&
 				 
 				(
-					// VisDataList_4x2
+					// bspList_4x2
 					piVar18 = (int *)(param_4 + 0x14), 
 					
 					// if forced 4x2 is disabled
@@ -42443,28 +42443,28 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 			  // and all force-subdiv flags are disabled
 				
 			  // pick 4x1 - 4x4 depending on distance
-			  // VisDataList_DynamicSubdiv
+			  // bspList_DynamicSubdiv
 			  piVar18 = (int *)(param_4 + 0xc);
             }
           }
 		  
 		  // VisMem 0x80-0x8F (bspList)
-		  // linked list of VisData nodes
+		  // linked list of bsp nodes
 		  
 		  // region after quadblock int flags
-		  // vismem + VisData index * 8
+		  // vismem + bsp index * 8
           piVar15 = (int *)(uVar14 * 8 + iVar7);
 		  
-		  // get most recent addition to VisDataList
+		  // get most recent addition to bspList
           iVar17 = *piVar18;
 		  
-		  // VisDataList pointer = VisMem pointer
+		  // bspList pointer = VisMem pointer
           *(int **)piVar18 = piVar15;
 		  
 		  // 1f800080 count
           iVar6 = *(int *)(iVar4 + 0x80);
 
-		  // VisDataList->next = the former
+		  // bspList->next = the former
           *piVar15 = iVar17;
 
 		  // increment counter
@@ -42480,7 +42480,7 @@ undefined4 FUN_8006fe70(ushort *param_1,int param_2,int param_3,int param_4,int 
 }
 
 
-// part of FindVisData
+// part of RenderListInit
 void FUN_80070284(void)
 {	
         80070284 07 80 19 3c     lui        t9,0x8007
@@ -42490,7 +42490,7 @@ void FUN_80070284(void)
 
 
 // called from FUN_80070284,
-// which is part of FindVisData
+// which is part of RenderListInit
 void FUN_80070290(void)
 
 {
@@ -42498,7 +42498,7 @@ void FUN_80070290(void)
   int iVar1;
   int in_t8;
 
-  // point on VisData node hitbox
+  // point on bsp node hitbox
   gte_ldVXY0($gp);
   gte_ldVZ0(&fp);
   
@@ -42514,7 +42514,7 @@ void FUN_80070290(void)
   return;
 }
 
-// VisData_CopyJMPsToScratchpad
+// RenderLists_PreInit
 void FUN_800702d4(void)
 
 {
@@ -42552,11 +42552,11 @@ void FUN_80070308(void)
 
 
 
-// CreateRenderLists_3P4P
-// param1 is lev->mesh_info->ptrVisDataArray
+// RenderLists_Init3P4P
+// param1 is lev->mesh_info->bspRoot
 // param2 is VisMem 0x00-0x0F
 // param3 is tileView
-// param4 is pointer of linked list VisData (1808) to draw in 226
+// param4 is pointer of linked list bsp (1808) to draw in 226
 // param5 is VisMem 0x80-0x8F
 // param6 is number of players
 undefined4 FUN_80070388(ushort *param_1,int param_2,int param_3,int param_4,int param_5)
@@ -42637,7 +42637,7 @@ undefined4 FUN_80070388(ushort *param_1,int param_2,int param_3,int param_4,int 
   // VisMem 0x80 - 0x8F
   iVar7 = param_5;
   
-  // ptrVisDataArray
+  // bspRoot
   puVar13 = param_1;
   
   DAT_1f800030 = unaff_s0;
@@ -42694,7 +42694,7 @@ undefined4 FUN_80070388(ushort *param_1,int param_2,int param_3,int param_4,int 
       psVar1 = (short *)(iVar5 + 0xc0);
       iVar5 = iVar5 + -0x10;
 
-	  // VisData index
+	  // bsp index
 	  uVar14 = (int)*psVar1 & 0x3fff;
 
       puVar13 = param_1 + uVar14 * 0x10;
@@ -42704,7 +42704,7 @@ undefined4 FUN_80070388(ushort *param_1,int param_2,int param_3,int param_4,int 
 	  
 	  // as long as we have leaf nodes, keep going...
 
-	  // VisData flag
+	  // bsp flag
       uVar3 = *puVar13;
 	  
       iVar5 = FUN_80070284();
@@ -42717,15 +42717,15 @@ undefined4 FUN_80070388(ushort *param_1,int param_2,int param_3,int param_4,int 
 		if ((int)pcVar19 < 1) 
 		{
 		
-		  // VisDataList inside RenderList is not
+		  // bspList inside RenderList is not
 		  // the same in 3P4P as it is 1P2P, different offsets
 		  
-		  // VisDataList_Water (ocean)
+		  // bspList_Water (ocean)
           piVar18 = (int *)(param_4 + 0x14);
 		  
           if (
 				(
-					// if VisData flag is not water
+					// if bsp flag is not water
 					((uVar3 & 2) == 0) && 
 					
 					(

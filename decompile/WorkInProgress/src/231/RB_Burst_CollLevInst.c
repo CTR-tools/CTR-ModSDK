@@ -1,13 +1,13 @@
 #include <common.h>
 
-void DECOMP_RB_Burst_CollLevInst(struct ScratchpadStruct* sps,struct VisData* vis)
+void DECOMP_RB_Burst_CollLevInst(struct ScratchpadStruct* sps,struct BSP* bspHitbox)
 {
   short model;
   struct InstDef* instdef;
   struct Thread* meta;
   struct Instance* inst;
   
-  instdef = vis->data.hitbox.instDef;
+  instdef = bspHitbox->data.hitbox.instDef;
   
   if (
 		// if InstDef exists

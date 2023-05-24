@@ -370,7 +370,7 @@ LAB_800add14:
 	
     iVar8 = RB_Hazard_CollLevInst(&DAT_1f800108,t);
     
-	// if hit VisData hitbox
+	// if hit bsp hitbox
 	if (iVar8 == 1) 
 	{
 	  // copy/paste from Potion_InAir

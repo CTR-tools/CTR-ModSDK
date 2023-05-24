@@ -68,7 +68,7 @@
 // only stubbed in 926
 8001d094 COLL_LevModelMeta
 8001d0c4 COLL_Instance
-8001d610 COLL_PerVisData_CheckInstances
+8001d610 COLL_PerBspLeaf_CheckInstances
 8001d77c COLL_StartSearch_AI
 8001d944 COLL_StartSearch_Player
 8001eb0c COLL_SearchTree_FindQuadblock_Touching
@@ -78,14 +78,14 @@
 8001ef50 COLL_TestTriangle_FindAny
 8001f2dc COLL_TestTriangle_GetNormalVector
 8001f41c COLL_PerQuadblock_CheckTriangles_Touching
-8001f5f0 COLL_PerVisData_CheckQuadblocks_Touching
+8001f5f0 COLL_PerBspLeaf_CheckQuadblocks_Touching
 8001f67c COLL_TestQuadblock_TwoTris
 8001f6f0 COLL_TestQuadblock_EightTris
 8001f7f0 COLL_ResetScratchpadCache
 8001f928 COLL_TestTriangle_FindClosest_Subfunction1
 8001fc40 COLL_TestTriangle_FindClosest
 80020064 COLL_PerQuadblock_CheckTriangles_NearPlayer
-800202a8 COLL_PerVisData_CheckQuadblocks_NearPlayer
+800202a8 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
 80020334 COLL_TestTriangle_WithClosest
 80020410 COLL_StartSearch_NearPlayer
 80020c58 COLL_Scrub // GetImpact_Player
@@ -616,7 +616,7 @@
 8004228c THREAD_CollidePointWithSelf
 80042348 THREAD_CollidePointWithBucket
 80042394 THREAD_SearchForModel
-800423fc THREAD_PerVisData_CheckInstances
+800423fc THREAD_PerBspLeaf_CheckInstances
 80042544 THREAD_StartSearch_Self
 800425d4 THREAD_CollideHitboxWithBucket
 
@@ -1083,18 +1083,18 @@
 8006f9a8 RenderWeather
 8006fe08 TRIG_AngleSinCos_r16r17r18
 
-8006fe70 CreateRenderLists_1P2P
+8006fe70 RenderLists_Init1P2P
 
 
-// all related to Visdata->..
+// all related to BSP->..
 // unknown 80070284
 // unknown 80070290
-800702d4 VisData_CopyJMPsToScratchpad
+800702d4 RenderLists_PreInit
 // 8 more jmp pointers here...
 // probably the ones copied to scratchpad
 
 
-80070388 CreateRenderLists_3P4P
+80070388 RenderLists_Init3P4P
 
 
 80070720 RenderBucket_QueueLevInstances

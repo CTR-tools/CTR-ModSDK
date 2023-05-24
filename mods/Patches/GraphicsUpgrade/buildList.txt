@@ -11,4 +11,4 @@
 common, exe, LOAD_AppendQueue, 0x8, ../../Modules/OverrideMPK/src/numDriversPlusOne.s
 
 common, exe, DecalMP_01, 0x0, src/JR_RA.s
-common, exe, CreateRenderLists_1P2P, 0x220, src/quadblock1P2P.s
+common, exe, RenderLists_Init1P2P, 0x220, src/quadblock1P2P.s

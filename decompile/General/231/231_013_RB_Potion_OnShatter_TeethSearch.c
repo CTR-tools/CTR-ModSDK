@@ -1,6 +1,6 @@
 #include <common.h>
 
-int RB_Potion_OnShatter_TeethCallback(int unk, struct VisData* vd);
+int RB_Potion_OnShatter_TeethCallback(int unk, struct BSP* bspHitbox);
 
 // This is broken even in retail CTR,
 // cause teeth collision is detected 

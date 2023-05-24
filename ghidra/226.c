@@ -122,13 +122,13 @@ void FUN_800a0cbc (int param_1,int param_2,int param_3,int param_4,int param_5,u
 	// execution is in this order
 
 	// 800a0ef4 -- ghidra can't understand the first one
-	// 800a1e30 -- quadblocks from visdata 	(lowest lod)
+	// 800a1e30 -- quadblocks from bsp 	(lowest lod)
 	// 800a2904 -- quadblocks from param1
-	// 800a36a8 -- quadblocks from visdata 	(mid-low)
+	// 800a36a8 -- quadblocks from bsp 	(mid-low)
 	// 800a417c -- quadblocks from param1
-	// 800a4fa0 -- quadblocks from visdata 	(mid-high)
+	// 800a4fa0 -- quadblocks from bsp 	(mid-high)
 	// 800a5e5c -- quadblocks from param1
-	// 800a6f40 -- quadblocks from visdata 	(highest lod)
+	// 800a6f40 -- quadblocks from bsp 	(highest lod)
 	// 800a7ba8 -- quadblocks from param1
 	// 800a97c8 -- quadblocks from param1
 
@@ -1842,7 +1842,7 @@ uint * FUN_800a1ce0(void)
 }
 
 
-// draw quadblocks with visdata (lowest lod)
+// draw quadblocks with bsp (lowest lod)
 void FUN_800a1e30(int *param_1,undefined4 param_2,undefined4 param_3,int param_4)
 
 {
@@ -1880,19 +1880,19 @@ void FUN_800a1e30(int *param_1,undefined4 param_2,undefined4 param_3,int param_4
   *(undefined4 *)(in_at + 0x1a0) = **(undefined4 **)(in_at + 0x88);
   *(undefined4 *)(in_at + 0x1a4) = uVar10;
 
-  // visdata = [...]
+  // bsp = [...]
   iVar6 = param_1[1];
 
-  // loop linked list until no more visData
+  // loop linked list until no more bsp
   while (param_1 != (int *)0x0)
   {
-    // ptrQuadBlock = visData->ptrQuadBlock
+    // ptrQuadBlock = bsp->ptrQuadBlock
     puVar17 = *(uint **)(iVar6 + 0x1c);
 
 	// quadblock ID (0x3c)
     uVar5 = *(ushort *)(puVar17 + 0xf);
 
-    // numQuadBlock = visData->numQuadBlock
+    // numQuadBlock = bsp->numQuadBlock
     *(undefined4 *)(in_at + 0x68) = *(undefined4 *)(iVar6 + 0x18);
 
 	// VisMem + QuadBlockID >> 3
@@ -1920,7 +1920,7 @@ void FUN_800a1e30(int *param_1,undefined4 param_2,undefined4 param_3,int param_4
 	  // no more quadblock
 	  if ((int)uVar7 < 0) 
 	  {
-		// go to next VisData
+		// go to next bsp
         uVar7 = 0x1f;
         iVar6 = *(int *)(*(int *)(in_at + 0xc0) + 4);
         *(int *)(in_at + 0xc0) = *(int *)(in_at + 0xc0) + 4;
@@ -2230,7 +2230,7 @@ void FUN_800a1e30(int *param_1,undefined4 param_2,undefined4 param_3,int param_4
 
     } while (0 < iVar6);
 
-    // get next visData
+    // get next bsp
     param_1 = (int *)*param_1;
     iVar6 = param_1[1];
   }
@@ -4310,7 +4310,7 @@ void FUN_800a3680(void)
 }
 
 
-// draw quadblocks with visdata (mid-low)
+// draw quadblocks with bsp (mid-low)
 void FUN_800a36a8(int *param_1,undefined4 param_2,undefined4 param_3,int param_4)
 
 {
@@ -4337,19 +4337,19 @@ void FUN_800a36a8(int *param_1,undefined4 param_2,undefined4 param_3,int param_4
 
   *(undefined4 *)(in_at + 100) = 0x80096404;
 
-  // visdata = [...]
+  // bsp = [...]
   iVar4 = param_1[1];
 
-  // loop linked list until no more visData
+  // loop linked list until no more bsp
   while (param_1 != (int *)0x0)
   {
-    // ptrQuadBlock = visData->ptrQuadBlock
+    // ptrQuadBlock = bsp->ptrQuadBlock
     puVar14 = *(uint **)(iVar4 + 0x1c);
 
 	// quadblock ID (0x3c)
     uVar2 = *(ushort *)(puVar14 + 0xf);
 
-    // numQuadBlock = visData->numQuadBlock
+    // numQuadBlock = bsp->numQuadBlock
     *(undefined4 *)(in_at + 0x68) = *(undefined4 *)(iVar4 + 0x18);
 
     puVar9 = (undefined4 *)(((uint)(uVar2 >> 3) & 0x1fc) + *(int *)(in_at + 200));
@@ -4522,7 +4522,7 @@ LAB_800a3978:
 
     } while (0 < iVar4);
 
-    // Get next visData
+    // Get next bsp
     param_1 = (int *)*param_1;
     iVar4 = param_1[1];
   }
@@ -5631,7 +5631,7 @@ void FUN_800a4f78(void)
 }
 
 
-// draw quadblocks with visdata (mid-high)
+// draw quadblocks with bsp (mid-high)
 void FUN_800a4fa0(int *param_1,undefined4 param_2,undefined4 param_3,int param_4)
 
 {
@@ -5658,19 +5658,19 @@ void FUN_800a4fa0(int *param_1,undefined4 param_2,undefined4 param_3,int param_4
 
   *(undefined4 *)(in_at + 100) = 0x80096404;
 
-  // visdata = [...]
+  // bsp = [...]
   iVar4 = param_1[1];
 
-  // loop linked list until no more visData
+  // loop linked list until no more bsp
   while (param_1 != (int *)0x0)
   {
-    // ptrQuadBlock = visData->ptrQuadBlock
+    // ptrQuadBlock = bsp->ptrQuadBlock
     puVar14 = *(uint **)(iVar4 + 0x1c);
 
 	// quadblock ID (0x3c)
     uVar2 = *(ushort *)(puVar14 + 0xf);
 
-    // numQuadBlock = visData->numQuadBlock
+    // numQuadBlock = bsp->numQuadBlock
     *(undefined4 *)(in_at + 0x68) = *(undefined4 *)(iVar4 + 0x18);
 
     puVar9 = (undefined4 *)(((uint)(uVar2 >> 3) & 0x1fc) + *(int *)(in_at + 200));
@@ -5843,7 +5843,7 @@ LAB_800a5270:
 
     } while (0 < iVar4);
 
-    // get next visData
+    // get next bsp
     param_1 = (int *)*param_1;
     iVar4 = param_1[1];
   }
@@ -9683,19 +9683,19 @@ void FUN_800a6f40(int *param_1,undefined4 param_2,undefined4 param_3,int param_4
 
   *(undefined4 *)(in_at + 100) = 0x80096404;
 
-  // visData = [...]
+  // bsp = [...]
   iVar4 = param_1[1];
 
-  // loop linked list until no more visData
+  // loop linked list until no more bsp
   while (param_1 != (int *)0x0)
   {
-    // ptrQuadBlock = visData->ptrQuadBlock
+    // ptrQuadBlock = bsp->ptrQuadBlock
     puVar14 = *(uint **)(iVar4 + 0x1c);
 
 	// quadblock ID (0x3c)
     uVar2 = *(ushort *)(puVar14 + 0xf);
 
-    // numQuadBlock = visData->numQuadBlock
+    // numQuadBlock = bsp->numQuadBlock
     *(undefined4 *)(in_at + 0x68) = *(undefined4 *)(iVar4 + 0x18);
 
     puVar9 = (undefined4 *)(((uint)(uVar2 >> 3) & 0x1fc) + *(int *)(in_at + 200));
@@ -9913,7 +9913,7 @@ LAB_800a7210:
     // get next element in linked list
     param_1 = (int *)*param_1;
 	
-	// get VisData from element
+	// get bsp from element
     iVar4 = param_1[1];
   }
 

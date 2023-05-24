@@ -53,7 +53,7 @@
 		.triNormalVecBitShift = 0x12, \
 		\
 		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4, \
-		.visFromQuadBlock = OFFSETOF(struct LevelFile, visFromQuadBlock)-4, \
+		.pvs = OFFSETOF(struct LevelFile, pvs)-4, \
 		\
 		.triNormalVecDividend = \
 		{ \
@@ -121,7 +121,7 @@
 	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[2])-4,\
 	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[3])-4,\
 	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_low)-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].visFromQuadBlock)-4
+	OFFSETOF(struct LevelFile, quadBlock[x].pvs)-4
 
 #define NUM_BLOCKS 64
 
@@ -138,8 +138,8 @@ struct LevelFile
 	struct SpawnType1 ptrSpawnType1;
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
-	struct VisData visData[3];
-	struct VisFromQuadBlock visFromQuadBlock;
+	struct BSP bsp[3];
+	struct PVS pvs;
 	int visBitIndex[4];
 	struct VisMem visMem;
 	
@@ -200,8 +200,8 @@ struct LevelFile file =
 		.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4,
 		.ptrVertexArray = OFFSETOF(struct LevelFile, levVertex[0])-4, // no -4 for some reason?
 		.unk2 = 0, // idk, fine to leave null
-		.ptrVisDataArray = OFFSETOF(struct LevelFile, visData[0])-4,
-		.numVisData = 3, // can be anything non-zero
+		.bspRoot = OFFSETOF(struct LevelFile, bsp[0])-4,
+		.numBspNodes = 3, // can be anything non-zero
 	},
 	
 	.group4_ground =
@@ -557,9 +557,9 @@ struct LevelFile file =
 	.quadBlock[62].blockID = 64-30-1,
 	.quadBlock[63].blockID = 64-31-1,
 	
-	// ========== VisData ======================
+	// ========== bsp ======================
 	
-	.visData =
+	.bsp =
 	{
 		// root node
 		[0] =
@@ -602,7 +602,7 @@ struct LevelFile file =
 				.leaf =
 				{
 					.unk1 = 0,
-					.ptrVisDataArray_InstHitboxes = 0,
+					.bspHitboxArray = 0,
 					.numQuads = 32,
 					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[32])-4
 				}
@@ -626,7 +626,7 @@ struct LevelFile file =
 				.leaf =
 				{
 					.unk1 = 0,
-					.ptrVisDataArray_InstHitboxes = 0,
+					.bspHitboxArray = 0,
 					.numQuads = 32,
 					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
 				}
@@ -634,7 +634,7 @@ struct LevelFile file =
 		},
 	},
 	
-	.visFromQuadBlock =
+	.pvs =
 	{
 		.visLeafSrc = OFFSETOF(struct LevelFile, visBitIndex[0]),
 		.visFaceSrc = OFFSETOF(struct LevelFile, visBitIndex[0]),
@@ -672,14 +672,14 @@ struct LevelFile file =
 	},
 	
 	// initialize for leaf nodes only
-	.VisMem_bspList_RenderListP1[2*1+1] = OFFSETOF(struct LevelFile, visData[1])-4,
-	.VisMem_bspList_RenderListP2[2*1+1] = OFFSETOF(struct LevelFile, visData[1])-4,
-	.VisMem_bspList_RenderListP3[2*1+1] = OFFSETOF(struct LevelFile, visData[1])-4,
-	.VisMem_bspList_RenderListP4[2*1+1] = OFFSETOF(struct LevelFile, visData[1])-4,
-	.VisMem_bspList_RenderListP1[2*2+1] = OFFSETOF(struct LevelFile, visData[2])-4,
-	.VisMem_bspList_RenderListP2[2*2+1] = OFFSETOF(struct LevelFile, visData[2])-4,
-	.VisMem_bspList_RenderListP3[2*2+1] = OFFSETOF(struct LevelFile, visData[2])-4,
-	.VisMem_bspList_RenderListP4[2*2+1] = OFFSETOF(struct LevelFile, visData[2])-4,
+	.VisMem_bspList_RenderListP1[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
+	.VisMem_bspList_RenderListP2[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
+	.VisMem_bspList_RenderListP3[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
+	.VisMem_bspList_RenderListP4[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
+	.VisMem_bspList_RenderListP1[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
+	.VisMem_bspList_RenderListP2[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
+	.VisMem_bspList_RenderListP3[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
+	.VisMem_bspList_RenderListP4[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
 	
 	.map =
 	{
@@ -690,11 +690,11 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, level.ptrSpawnType1)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVertexArray)-4,
-		OFFSETOF(struct LevelFile, mInfo.ptrVisDataArray)-4,
-		OFFSETOF(struct LevelFile, visData[1].data.leaf.ptrQuadBlockArray)-4,
-		OFFSETOF(struct LevelFile, visData[2].data.leaf.ptrQuadBlockArray)-4,
-		OFFSETOF(struct LevelFile, visFromQuadBlock.visLeafSrc)-4,
-		OFFSETOF(struct LevelFile, visFromQuadBlock.visFaceSrc)-4,
+		OFFSETOF(struct LevelFile, mInfo.bspRoot)-4,
+		OFFSETOF(struct LevelFile, bsp[1].data.leaf.ptrQuadBlockArray)-4,
+		OFFSETOF(struct LevelFile, bsp[2].data.leaf.ptrQuadBlockArray)-4,
+		OFFSETOF(struct LevelFile, pvs.visLeafSrc)-4,
+		OFFSETOF(struct LevelFile, pvs.visFaceSrc)-4,
 		OFFSETOF(struct LevelFile, visMem.visLeafList[0])-4,
 		OFFSETOF(struct LevelFile, visMem.visLeafList[1])-4,
 		OFFSETOF(struct LevelFile, visMem.visLeafList[2])-4,

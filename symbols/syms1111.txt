@@ -78,7 +78,7 @@
 
 8001e550 COLL_LevModelMeta
 8001e580 COLL_Instance
-8001eacc COLL_PerVisData_CheckInstances
+8001eacc COLL_PerBspLeaf_CheckInstances
 8001ec38 COLL_CheckDriver_AI
 8001ee00 COLL_CheckDriver_Player
 8001ffc8 COLL_SearchTree_FindQuadblock_Touching
@@ -91,7 +91,7 @@
 // unknown 80020798
 
 800208d8 COLL_PerQuadblock_CheckTriangles_Touching
-80020aac COLL_PerVisData_CheckQuadblocks_Touching
+80020aac COLL_PerBspLeaf_CheckQuadblocks_Touching
 
 // unknown 80020b38
 // unknown 80020bac
@@ -103,7 +103,7 @@
 // unknown 800210fc
 
 80021520 COLL_PerQuadblock_CheckTriangles_NearPlayer
-80021764 COLL_PerVisData_CheckQuadblocks_NearPlayer
+80021764 COLL_PerBspLeaf_CheckQuadblocks_NearPlayer
 
 // unknown 800217f0
 // unknown 800218cc
@@ -671,7 +671,7 @@
 80043d24 THREAD_CollidePointWithBucket
 80043d70 THREAD_SearchForModel
 
-80043dd8 THREAD_PerVisData_CheckInstances
+80043dd8 THREAD_PerBspLeaf_CheckInstances
 80043f20 THREAD_StartSearch_Self
 80043fb0 THREAD_CollideHitboxWithBucket
 
@@ -1079,7 +1079,7 @@
 
 8006f5f0 SquareRoot0_stub
 8006f6c8 ApplyMatrixLV_stub
-80072e48 CreateRenderLists_1P2P
+80072e48 RenderLists_Init1P2P
 8007466c ThTick_FastRET
 800746c4 ThTick_SetAndExec
 800746dc ThTick_Set

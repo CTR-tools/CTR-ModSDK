@@ -1045,7 +1045,7 @@ void FUN_80035684(int param_1,int param_2)
 					uVar3,
 
 					 // June 1999 calls this "visLeafList"
-					 // ptr_mesh_info -> numVisData?
+					 // ptr_mesh_info -> numBSP?
                      (piVar6[7] + 0x1f >> 5) << 2);
       }
       else {
@@ -2874,11 +2874,11 @@ code_r0x800369d8:
 	  // loop counter
       iVar19 = 0;
 
-	  // VisData_CopyJMPsToScratchpad
+	  // RenderLists_PreInit
       FUN_800702d4();
 
 	  // offset 0x1CC0,
-	  // numVisDataLinks for all render lists of all players combined
+	  // bspLeafsDrawn for all render lists of all players combined
       param_1[0x730] = 0;
 
 	  // render lists
@@ -2908,10 +2908,10 @@ code_r0x800369d8:
 		// increment offset to next tileView struct
         iVar6 = iVar6 + 0x110;
 
-		// CreateRenderLists_1P2P
+		// RenderLists_Init1P2P
         iVar20 = FUN_8006fe70(
 
-						// LEV->mesh_info->ptrVisDataArray
+						// LEV->mesh_info->bspRoot
 						*(undefined4 *)(iVar22 + 0x18),
 
 						// Vismem 0x0-0xF
@@ -2933,7 +2933,7 @@ code_r0x800369d8:
 		iVar19 = iVar19 + 1;
 
 		// offset 0x1CC0,
-		// numVisDataLinks for all render lists of all players combined
+		// bspLeafsDrawn for all render lists of all players combined
         param_1[0x730] = param_1[0x730] + iVar20;
 
 	  } while (iVar19 < 2);
@@ -3098,7 +3098,7 @@ code_r0x800369d8:
             DAT_1f80002c = DAT_1f800018 + 0x140;
           }
 
-		  // VisData_CopyJMPsToScratchpad
+		  // RenderLists_PreInit
           FUN_800702d4();
 
 		  // param1 is PTR_DAT_8008d2ac
@@ -3107,12 +3107,12 @@ code_r0x800369d8:
           puVar18 = param_1 + 0x5a;
 
 		  // iVar22 is LEV->mesh_info,
-		  // iVar22+0x18 = LEV->mesh_info->ptrVisDataArray
+		  // iVar22+0x18 = LEV->mesh_info->bspRoot
 
-		  // CreateRenderLists_1P2P
+		  // RenderLists_Init1P2P
           uVar7 = FUN_8006fe70(
 
-						// LEV->mesh_info->ptrVisDataArray
+						// LEV->mesh_info->bspRoot
 						*(undefined4 *)(iVar22 + 0x18),
 
 						// Vismem 0x0-0xF
@@ -3131,7 +3131,7 @@ code_r0x800369d8:
 						(uint)*(byte *)(param_1 + 0x72a));
 
 		  // offset 0x1CC0,
-		  // numVisDataLinks for all render lists of all players combined
+		  // bspLeafsDrawn for all render lists of all players combined
           param_1[0x730] = uVar7;
 
 		  // draw 1p LEV geometry
@@ -3215,11 +3215,11 @@ code_r0x800369d8:
 		  // loop counter
           iVar19 = 0;
 
-		  // VisData_CopyJMPsToScratchpad
+		  // RenderLists_PreInit
           FUN_800702d4();
 
 		  // offset 0x1CC0,
-		  // numVisDataLinks for all render lists of all players combined
+		  // bspLeafsDrawn for all render lists of all players combined
           param_1[0x730] = 0;
 
 		  // 1808, render lists
@@ -3246,10 +3246,10 @@ code_r0x800369d8:
 			// increment offset to next tileView struct
             iVar6 = iVar6 + 0x110;
 
-			// CreateRenderLists_3P4P
+			// RenderLists_Init3P4P
             iVar20 = FUN_80070388(
 
-				// LEV->mesh_info->ptrVisDataArray
+				// LEV->mesh_info->bspRoot
 				*(undefined4 *)(iVar22 + 0x18),
 
 				// Vismem 0x0-0xF
@@ -3268,7 +3268,7 @@ code_r0x800369d8:
             iVar19 = iVar19 + 1;
 
 			// offset 0x1CC0,
-			// numVisDataLinks for all render lists of all players combined
+			// bspLeafsDrawn for all render lists of all players combined
             param_1[0x730] = param_1[0x730] + iVar20;
 
 		  } while (iVar19 < 3);
@@ -3372,11 +3372,11 @@ code_r0x800369d8:
 			// loop counter
             iVar19 = 0;
 
-			// VisData_CopyJMPsToScratchpad
+			// RenderLists_PreInit
             FUN_800702d4();
 
 			// offset 0x1CC0,
-			// numVisDataLinks for all render lists of all players combined
+			// bspLeafsDrawn for all render lists of all players combined
             param_1[0x730] = 0;
 
 			// render list
@@ -3403,10 +3403,10 @@ code_r0x800369d8:
 			  // increment pointer to next tileView structure
               iVar6 = iVar6 + 0x110;
 
-			  // CreateRenderLists_3P4P
+			  // RenderLists_Init3P4P
               iVar20 = FUN_80070388(
 
-					// LEV->mesh_info->ptrVisDataArray
+					// LEV->mesh_info->bspRoot
 					*(undefined4 *)(iVar22 + 0x18),
 
 					// Vismem 0x0-0xF
@@ -3425,7 +3425,7 @@ code_r0x800369d8:
               iVar19 = iVar19 + 1;
 
 			  // offset 0x1CC0,
-			  // numVisDataLinks for all render lists of all players combined
+			  // bspLeafsDrawn for all render lists of all players combined
               param_1[0x730] = param_1[0x730] + iVar20;
 
             } while (iVar19 < 4);

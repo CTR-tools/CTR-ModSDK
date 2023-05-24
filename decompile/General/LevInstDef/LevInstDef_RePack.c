@@ -18,11 +18,11 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 	{
 		qbCurr = &ptrQuadBlockArray[i];
 		
-		if(qbCurr->visFromQuadBlock != 0)
+		if(qbCurr->pvs != 0)
 		{
 			// loop through all instance pointers visible on quadblock
 			for(
-					visInstSrc = qbCurr->visFromQuadBlock->visInstSrc; 
+					visInstSrc = qbCurr->pvs->visInstSrc; 
 					visInstSrc[0] != 0; 
 					visInstSrc++
 				)

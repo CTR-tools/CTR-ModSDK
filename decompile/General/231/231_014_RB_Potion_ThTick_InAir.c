@@ -11,7 +11,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	short posBottom[3];
 	short posTop[3];
 	
-	struct VisData* visDataHitbox;
+	struct BSP* bspHitbox;
 	struct InstDef* instDef;
 	
 	#define SPS \
@@ -66,7 +66,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 		RB_GenericMine_ThDestroy(t,inst,mw);
 	}
 
-	// did not hit VisData hitbox
+	// did not hit BSP hitbox
 	if (SPS->boolDidTouchHitbox == 0) 
 	{
 		if (SPS->boolDidTouchQuadblock != 0) 
@@ -135,18 +135,18 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 		if (SPS->boolDidTouchQuadblock != 0) return;
 	} 
 	
-	// hit VisData hitbox, and instance is TEETH
+	// hit BSP hitbox, and instance is TEETH
 	else 
 	{
-		visDataHitbox = SPS->visDataHitbox;
+		bspHitbox = SPS->bspHitbox;
 		
 		if (
 			  (
-			  	// visData->flags hitbox
-			  	((visDataHitbox->flag & 0x80) != 0) && 
+			  	// bsp->flags & hitbox
+			  	((bspHitbox->flag & 0x80) != 0) && 
 			  	(
 			  		// hitbox contains instDef
-			  		instDef = visDataHitbox->data.hitbox.instDef, 
+			  		instDef = bspHitbox->data.hitbox.instDef, 
 			  		instDef != 0
 			  	)
 			  ) &&

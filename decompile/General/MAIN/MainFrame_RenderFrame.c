@@ -85,15 +85,15 @@ void DrawShadows_Main();
 void Torch_Main(void* particleList_heatWarp, struct TileView* tileView, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
 void TileView_FadeAllWindows();
 void AnimateWater2P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
-void VisData_CopyJMPsToScratchpad();
-int CreateRenderLists_1P2P(struct VisData* visData, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList, char numPlyr);
+void RenderLists_PreInit();
+int RenderLists_Init1P2P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList, char numPlyr);
 //void CAM_SkyboxGlow(short* param_1, struct TileView* camera, struct PrimMem* primMem, u_long* ptrOT);
 void AnimateWater1P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5);
 void AnimateQuad(int timer, int numSCVert, void* ptrSCVert, int* visSCVertList);
 void DrawSky_Full(void* skybox, struct TileView* tileView, struct PrimMem* primMem);
 void AnimateWater3P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7);
 void AnimateWater4P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7, int* param_8);
-int CreateRenderLists_3P4P(struct VisData* visData, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList);
+int RenderLists_Init3P4P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList);
 void UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT);
 void DecalMP_03(struct GameTracker* gGT);
 void DotLights_AudioAndVideo(struct GameTracker* gGT);
@@ -951,12 +951,12 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			*(int*)0x1f800028 = *(int*)0x1f800028 >> 8; // 0x627
 		}
 		
-		VisData_CopyJMPsToScratchpad();
-		gGT->numVisDataLinks = 0;
+		RenderLists_PreInit();
+		gGT->bspLeafsDrawn = 0;
 		
-		gGT->numVisDataLinks += 
-		  CreateRenderLists_1P2P(
-			ptr_mesh_info->ptrVisDataArray,
+		gGT->bspLeafsDrawn += 
+		  RenderLists_Init1P2P(
+			ptr_mesh_info->bspRoot,
 			level1->visMem->visLeafList[0],
 			tileView,
 			&gGT->LevRenderLists[0],
@@ -1000,14 +1000,14 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 				gGT->visMem1->visOVertList[1]);
 		}
 		
-		VisData_CopyJMPsToScratchpad();
-		gGT->numVisDataLinks = 0;
+		RenderLists_PreInit();
+		gGT->bspLeafsDrawn = 0;
 		
 		for(i = 0; i < numPlyrCurrGame; i++)
 		{
-			gGT->numVisDataLinks += 
-			  CreateRenderLists_1P2P(
-				ptr_mesh_info->ptrVisDataArray,
+			gGT->bspLeafsDrawn += 
+			  RenderLists_Init1P2P(
+				ptr_mesh_info->bspRoot,
 				level1->visMem->visLeafList[i],
 				&gGT->tileView[i],
 				&gGT->LevRenderLists[i],
@@ -1056,14 +1056,14 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		}
 	}
 	
-	VisData_CopyJMPsToScratchpad();
-	gGT->numVisDataLinks = 0;
+	RenderLists_PreInit();
+	gGT->bspLeafsDrawn = 0;
 	
 	for(i = 0; i < numPlyrCurrGame; i++)
 	{
-		gGT->numVisDataLinks += 
-		  CreateRenderLists_3P4P(
-			ptr_mesh_info->ptrVisDataArray,
+		gGT->bspLeafsDrawn += 
+		  RenderLists_Init3P4P(
+			ptr_mesh_info->bspRoot,
 			level1->visMem->visLeafList[i],
 			&gGT->tileView[i],
 			&gGT->LevRenderLists[i],

@@ -2502,7 +2502,7 @@ struct Data
 	// 8008a364 -- 8 jmp pointers for reflected tire drawing
 	// 8008a384 -- 0x80 bytes, tire sprite index for each rotation angle
 	// 8008a404 -- int last rotation?
-	// 8008a408 -- 8 jmp pointers for FindLevVisData
+	// 8008a408 -- 8 jmp pointers for RenderListInit
 	// 8008a428 -- 7 jmp pointers for RenderBucket
 	// 8008a444 -- 7 jmp pointers for RenderBucket
 

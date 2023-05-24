@@ -47,7 +47,7 @@ void DECOMP_THREAD_CollideHitboxWithBucket(struct Thread* collThread,struct Scra
 			param_2->Union.ThBuckColl.distance[0] = distX;
 			param_2->Union.ThBuckColl.distance[1] = distY;
 			param_2->Union.ThBuckColl.distance[2] = distZ;
-			param_2->Union.ThBuckColl.funcCallback(param_2,visDataHitbox);
+			param_2->Union.ThBuckColl.funcCallback(param_2,collThread);
           }
         }
 	  // thread = thread->sibling;
