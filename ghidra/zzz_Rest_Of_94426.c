@@ -34992,7 +34992,9 @@ void FUN_80068644(int param_1,int param_2)
     uVar9 = (_DAT_1f80010c & 0xffff) - ((int)((uint)uVar3 << 0x10) >> 0x1a);
     DAT_1f800198 = CONCAT22(DAT_1f80010a - sVar5,DAT_1f800108 - sVar4);
     DAT_1f80019c = DAT_1f80019c & 0xffff0000 | uVar9 & 0xffff;
-    setCopReg(2,in_zero,DAT_1f800190);
+    
+#if 0
+	setCopReg(2,in_zero,DAT_1f800190);
     setCopReg(2,in_at,DAT_1f800194);
     setCopReg(2,0x1f800190,_DAT_1f800108);
     setCopReg(2,uVar9,_DAT_1f80010c);
@@ -35000,13 +35002,21 @@ void FUN_80068644(int param_1,int param_2)
     setCopReg(2,uVar11,DAT_1f80019c);
 
 	// RTPT - Perspective Transformation (triple)
-	copFunction(2,0x280030);
+	gte_rtpt();
 
     DAT_1f8001a0 = getCopReg(2,0xc);
     DAT_1f8001a4 = getCopReg(2,0xd);
     DAT_1f8001a8 = getCopReg(2,0xe);
     DAT_1f8001ac = getCopReg(2,0x11);
-    iVar18 = 0;
+#else
+    gte_ldv01();
+    gte_ldv2();
+    gte_rtpt();
+    gte_stsxy3c();
+    gte_stSZ1();
+#endif
+	
+	iVar18 = 0;
     puVar12 = puVar19 + 0x11;
     puVar7 = &DAT_1f8001a0;
     psVar14 = &DAT_1f80010c;
@@ -35020,15 +35030,16 @@ void FUN_80068644(int param_1,int param_2)
       DAT_1f800194 = DAT_1f800194 & 0xffff0000 | (uint)(ushort)(*psVar15 + sVar6);
       DAT_1f800198 = CONCAT22(psVar14[3] - sVar5,*(short *)puVar17 - sVar4);
       DAT_1f80019c = DAT_1f80019c & 0xffff0000 | (uint)(ushort)(*psVar15 - sVar6);
-      setCopReg(2,in_zero,DAT_1f800190);
+      
+#if 0
+	  setCopReg(2,in_zero,DAT_1f800190);
       setCopReg(2,in_at,DAT_1f800194);
       setCopReg(2,0x1f800190,*puVar17);
       setCopReg(2,puVar16,puVar17[3]);
       setCopReg(2,puVar10,DAT_1f800198);
       setCopReg(2,puVar12,DAT_1f80019c);
 
-	  // RTPT - Perspective Transformation (triple)
-	  copFunction(2,0x280030);
+	  gte_rtpt();
 
 	  uVar9 = getCopReg(2,0xc);
       *puVar16 = uVar9;
@@ -35038,6 +35049,14 @@ void FUN_80068644(int param_1,int param_2)
       puVar16[2] = uVar9;
       uVar9 = getCopReg(2,0x11);
       puVar16[3] = uVar9;
+#else
+      gte_ldv01();
+      gte_ldv2();
+      gte_rtpt();
+      gte_stsxy3c();
+      gte_stSZ1();
+#endnif	  
+
       puVar12[-0x10] = 0xe1000a20;
       puVar12[-0xf] = 0x3a000000;
       puVar12[-0xd] = 0x7f1f3f;
@@ -36745,9 +36764,9 @@ code_r0x8006a52c:
         *(short *)(in_at + 0x1e) = sVar4;
         
 		// GTE
-		setCopControlWord(2,0xc000,(int)sVar3 << 0xf);
-        setCopControlWord(2,0xc800,(int)sVar4 << 0xf);
-        setCopControlWord(2,0xd000,uVar17);
+		gte_ldOFX((int)sVar3 << 0xf);
+		gte_ldOFY((int)sVar4 << 0xf);
+		gte_ldH(uVar17);
       }
 
 	  // instance flags, duplicate of 0x28
@@ -36868,17 +36887,17 @@ code_r0x8006a52c:
   }
   *(uint *)(in_at + 0x10c) = in_t3;
   (*unaff_s6)();
-  setCopReg(2,0,in_t0);
-  setCopReg(2,0x800,extraout_v1);
+  gte_ldVXY0(in_t0);
+  gte_ldVZ0(extraout_v1);
   (*unaff_s6)();
-  setCopReg(2,0x1000,in_t0);
-  setCopReg(2,0x1800,extraout_v1_00);
+  gte_ldVXY1(in_t0);
+  gte_ldVZ1(extraout_v1_00);
   uVar23 = (*unaff_s6)();
   in_v0 = (undefined4)uVar23;
-  setCopReg(2,0x2000,in_t0);
-  setCopReg(2,0x2800,(int)((ulonglong)uVar23 >> 0x20));
+  gte_ldVXY2(in_t0);
+  gte_ldVZ2((int)((ulonglong)uVar23 >> 0x20));
   in_t3 = *(uint *)(in_at + 0x10c);
-  copFunction(2,0x280030);
+  gte_rtpt_b();
   in_t9 = puVar21 + 1;
   do {
     uVar11 = in_t3 & 0x1ff;
@@ -36887,24 +36906,25 @@ code_r0x8006a52c:
       iVar12 = (&iStack4)[uVar11];
     }
     iVar7 = *(int *)(in_at + 0x1c);
-    uVar11 = getCopReg(2,0x7000);
-    iVar10 = getCopControlWord(2,0xf800);
+    uVar11 = gte_stSXY2();
+    iVar10 = gte_stFLAG();
     if (-1 < iVar10 << 0xd) {
-      if ((int)(in_t3 << 3) < 0) {
-        copFunction(2,0x1400006);
-        uVar13 = getCopReg(2,0xc000);
+      if ((int)(in_t3 << 3) < 0) 
+	  {
+        gte_nclip_b();
+        uVar13 = gte_stMAC0();
         if ((uVar13 == 0) ||
-           (uVar14 = getCopReg(2,0x6000),
+           (uVar14 = gte_stSXY0(),
            (int)(uVar13 ^ (int)*(short *)(in_at + 0x24) ^ in_t3 << 2) < 1)) goto LAB_8006a610;
       }
       else {
-        uVar14 = getCopReg(2,0x6000);
+        uVar14 = gte_stSXY0();
       }
-      uVar13 = getCopReg(2,0x6800);
-      copFunction(2,0x158002d);
+      uVar13 = gte_stSXY1();
+      gte_avsz3_b();
       uVar11 = ~(uVar14 - iVar7 | uVar13 - iVar7 | uVar11 - iVar7) | uVar14 & uVar11 & uVar13;
       if (-1 < (int)uVar11) {
-        uVar17 = getCopReg(2,0x18);
+        uVar17 = gte_stMAC0()
         *(undefined4 *)(in_at + 0x2c) = uVar17;
         if (-1 < (int)(uVar11 << 0x10)) {
           *(int *)(in_at + 0x50) = iVar12;
@@ -36921,16 +36941,16 @@ LAB_8006a610:
       uVar11 = in_t3 >> 0x10;
     } while (uVar11 == 0);
     if ((int)(in_t3 << 1) < 0) {
-      uVar17 = getCopReg(2,0x6000);
-      uVar18 = getCopReg(2,0x8800);
-      setCopReg(2,0x6800,uVar17);
-      setCopReg(2,0x9000,uVar18);
+      uVar17 = gte_stSXY0();
+      uVar18 = gte_stSZ1();
+      gte_ldSXY1(uVar17);
+      gte_ldSZ2(uVar18);
     }
     uVar23 = (*unaff_s6)();
     in_v0 = (undefined4)uVar23;
-    setCopReg(2,0,uVar11);
-    setCopReg(2,0x800,(int)((ulonglong)uVar23 >> 0x20));
-    copFunction(2,0x180001);
+    gte_ldVXY0(uVar11);
+    gte_ldVZ0((int)((ulonglong)uVar23 >> 0x20));
+    gte_rtps_b();
   } while( true );
 }
 
