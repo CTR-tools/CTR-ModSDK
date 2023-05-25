@@ -38202,12 +38202,14 @@ void FUN_8006bf30(void)
       *(char *)(in_at + 0x59) = cVar7;
       uVar1 = *(uint *)(in_at + 0x58);
     }
-    setCopReg(2,0,((uVar1 & in_t4) + *(int *)(in_at + 0x30)) * 4 & in_t5);
-    setCopReg(2,0x800,((uVar1 >> 8 & 0xff) + *(int *)(in_at + 0x34)) * 4);
-    copFunction(2,0x4a6012);
-    uVar5 = getCopReg(2,0x5800);
-    iVar10 = getCopReg(2,0x5000);
-    uVar1 = getCopReg(2,0x4800);
+
+    gte_ldVXY0(((uVar1 & in_t4) + *(int *)(in_at + 0x30)) * 4 & in_t5);
+    gte_ldVZ0(((uVar1 >> 8 & 0xff) + *(int *)(in_at + 0x34)) * 4);
+    gte_llv0();
+    uVar5 = gte_stIR3();
+    iVar10 = gte_stIR2();
+    uVar1 = gte_stIR1();
+	
     *(uint *)(iVar6 + 0x140) = iVar10 << 0x10 | uVar1 & 0xffff;
     *(undefined4 *)(iVar6 + 0x144) = uVar5;
   }
