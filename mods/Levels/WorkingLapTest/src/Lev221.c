@@ -175,7 +175,7 @@ struct LevelFile file =
 		
 		.DriverSpawn[2].pos = {0,0,0},
 		.DriverSpawn[2].rot = {0,0-0x400,0},
-	
+		
 		.DriverSpawn[3].pos = {0,0,0},
 		.DriverSpawn[3].rot = {0,0-0x400,0},
 		
@@ -184,6 +184,8 @@ struct LevelFile file =
 		.clearColor[0].rgb = {0x0, 0x0, 0x28},
 		.clearColor[0].enable = 1,
 		
+		// only non-zero for Race maps
+		// battle maps need array, but still set CNT to zero
 		.cnt_restart_points = 16,
 		.ptr_restart_points = OFFSETOF(struct LevelFile, noderespawnsthing[0])-4,
 	},
