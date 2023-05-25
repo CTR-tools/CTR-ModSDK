@@ -37548,10 +37548,9 @@ code_r0x8006b030:
         *(short *)(in_at + 0x1c) = sVar3;
         *(short *)(in_at + 0x1e) = sVar4;
         
-		// GTE
-        setCopControlWord(2,0xc000,(int)sVar3 << 0xf);
-        setCopControlWord(2,0xc800,(int)sVar4 << 0xf);
-        setCopControlWord(2,0xd000,uVar17);
+		gte_ldOFX((int)sVar3 << 0xf);
+		gte_ldOFY((int)sVar4 << 0xf);
+		gte_ldH(uVar17);
       }
 
 	  // instance flags, duplicate of 0x28
