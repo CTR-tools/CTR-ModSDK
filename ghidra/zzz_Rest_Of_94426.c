@@ -11768,18 +11768,10 @@ void FUN_8004f9d8(int param_1)
 												// something with Z position
           local_14 = local_14 & 0xffff0000 | (uint)*(ushort *)(*(int *)(iVar6 + 0x1c) + 0x4c);
           
-		  // put instance position on GTE
-		  setCopReg(2,in_zero,local_18);
-          setCopReg(2,in_at,local_14);
-
-		  // RTPS - Perspective Transformation (single)
-		  copFunction(2,0x180001);
-
-		  // get screenspace pos (x,y)
-		  uVar2 = getCopReg(2,0xe);
-		  
-		  // get depth on screen (I think?)
-          uVar16 = getCopControlWord(2,0xf800);
+          gte_ldv0(&local_18); // xyz local_18 and local_14
+          gte_rtps();
+          gte_stsxy(uVar2);
+          gte_stflg(uVar16);
 
 		  if ((uVar16 & 0x40000) == 0)
 		  {
@@ -11968,17 +11960,10 @@ LAB_8004fe8c:
   gte_SetRotMatrix(r0);
   gte_SetTransMatrix(r0);
   
-  // ldv0
-  // put driver pos on GTE
-  setCopReg(2,in_zero,local_30);
-  setCopReg(2,in_at,local_2c);
-
-  // RTPS - Perspective Transformation (single)
-  copFunction(2,0x180001);
-
-  // stsxy
-  // get driver screenspace pos
-  uVar3 = getCopReg(2,0xe);
+  gte_ldv0(&local_30);
+  gte_rtps();
+  gte_stsxy(uVar3);
+  
   uVar16 = 0xff;
 
   // if no missile or warpball is chasing this player
@@ -14284,14 +14269,14 @@ LAB_80052b00:
 
 		  local_48 = CONCAT22(local_3e - psVar17[1],local_40 - *psVar17);
           local_44 = local_3c - psVar17[2];
-          setCopControlWord(2,0,local_38);
-          setCopControlWord(2,0x800,(int)local_34);
-          setCopReg(2,0,local_48);
-          setCopReg(2,0x800,(int)local_44);
-
-		  copFunction(2,0x406012);
-
-		  iVar15 = getCopReg(2,0xc800);
+          		  
+          gte_ldR11R12(local_38);
+          gte_ldR13R21((int)local_34);
+          gte_ldVXY0(local_48);
+          gte_ldVZ0((int)local_44);
+          gte_mvmva(0,0,0,3,0);
+          iVar15 = gte_stMAC1();
+		  
           uVar1 = *(ushort *)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) + 6);
           iVar3 = (uint)(ushort)psVar17[3] * 8 + (iVar15 >> 0xc);
           iVar15 = (uint)uVar1 << 3;
@@ -20639,13 +20624,10 @@ void FUN_80059558(int param_1,undefined4 param_2)
   int iVar1;
   int iVar2;
   undefined4 uVar3;
-  int iVar4;
-  int iVar5;
-  undefined4 uVar6;
-  int iVar7;
-  undefined4 uVar8;
-
-  //if racer is on the ground and not in accel prevention
+  int unaff_s0;
+  int unaff_s1;
+  int unaff_s2;
+  
   if (((*(uint *)(param_1 + 0x2c8) & 1) != 0) && ((*(uint *)(param_1 + 0x2c8) & 8) == 0)) {
     iVar1 = (int)*(short *)(param_1 + 0x39e);
     if (iVar1 < 0) {
@@ -20654,80 +20636,69 @@ void FUN_80059558(int param_1,undefined4 param_2)
     if (iVar1 < 0x300) {
       iVar1 = (int)*(short *)(param_1 + 0x38e);
       if (iVar1 < 0) {
-        iVar1 = -iVar1;
+         iVar1 = -iVar1;
       }
       if (iVar1 < 0x300) {
-        return;
+         return;
       }
     }
     iVar1 = 2;
     if (*(char *)(param_1 + 0x376) == '\x02') {
       iVar1 = 4;
     }
-    while (iVar1 != 0) {
+    for (; iVar1 != 0; iVar1 = iVar1 + -1) {
       if (iVar1 == 3) {
-        setCopReg(2,0,0xa001e);
-        uVar3 = 0x28;
-        setCopReg(2,0x800,0x28);
+         gte_ldVXY0(0xa001e);
+         uVar3 = 0x28;
+         gte_ldVZ0(0x28);
+      }
+      else if (iVar1 < 4) {
+         if (iVar1 == 2) {
+           gte_ldVXY0(0xaffe2);
+           uVar3 = 0xffffffec;
+           gte_ldVZ0(0xffffffec);
+         }
+         else {
+LAB_80059674:
+           gte_ldVXY0(0xa001e);
+           uVar3 = 0xffffffec;
+           gte_ldVZ0(0xffffffec);
+         }
       }
       else {
-        if (iVar1 < 4) {
-          if (iVar1 == 2) {
-            setCopReg(2,0,0xaffe2);
-            uVar3 = 0xffffffec;
-            setCopReg(2,0x800,0xffffffec);
-          }
-          else {
-LAB_80059674:
-            setCopReg(2,0,0xa001e);
-            uVar3 = 0xffffffec;
-            setCopReg(2,0x800,0xffffffec);
-          }
-        }
-        else {
-          if (iVar1 != 4) goto LAB_80059674;
-          setCopReg(2,0,0xaffe2);
-          uVar3 = 0x28;
-          setCopReg(2,0x800,0x28);
-        }
+         if (iVar1 != 4) goto LAB_80059674;
+         gte_ldVXY0(0xaffe2);
+         uVar3 = 0x28;
+         gte_ldVZ0(0x28);
       }
-
-	  // rtv0     cop2 $0486012  v0 * rotmatrix
-      copFunction(2,0x486012);
-
-	  iVar4 = getCopReg(2,0xc800);
-      iVar5 = getCopReg(2,0xd000);
-      iVar7 = getCopReg(2,0xd800);
-
-	  // Create instance in particle pool
+      gte_rtv0();
+      read_mt(unaff_s0,unaff_s1,unaff_s2);
+	  
+	  // spawn particle
       iVar2 = FUN_80040308(0,*(undefined4 *)(PTR_DAT_8008d2ac + 0x2114),param_2,uVar3);
-
-	  if (iVar2 != 0)
+      
+	  if (iVar2 != 0) 
 	  {
-		// position variables
-        *(int *)(iVar2 + 0x24) = *(int *)(iVar2 + 0x24) + iVar4 * 0x100;
-        *(int *)(iVar2 + 0x2c) = *(int *)(iVar2 + 0x2c) + iVar5 * 0x100;
-        *(int *)(iVar2 + 0x34) = *(int *)(iVar2 + 0x34) + iVar7 * 0x100;
-
-		setCopReg(2,0,CONCAT22(*(undefined2 *)(iVar2 + 0x30),*(undefined2 *)(iVar2 + 0x28)));
-        setCopReg(2,0x800,(uint)*(ushort *)(iVar2 + 0x38));
-
-		// rtv0     cop2 $0486012  v0 * rotmatrix
-		copFunction(2,0x486012);
-
-		uVar3 = getCopReg(2,0xc800);
-        uVar6 = getCopReg(2,0xd000);
-        uVar8 = getCopReg(2,0xd800);
-        *(undefined2 *)(iVar2 + 0x28) = (short)uVar3;
-        *(undefined2 *)(iVar2 + 0x30) = (short)uVar6;
-        *(undefined2 *)(iVar2 + 0x38) = (short)uVar8;
-
+		 // edit positions
+         *(int *)(iVar2 + 0x24) = *(int *)(iVar2 + 0x24) + unaff_s0 * 0x100;
+         *(int *)(iVar2 + 0x2c) = *(int *)(iVar2 + 0x2c) + unaff_s1 * 0x100;
+         *(int *)(iVar2 + 0x34) = *(int *)(iVar2 + 0x34) + unaff_s2 * 0x100;
+         
+		 gte_ldVXY0(CONCAT22(*(undefined2 *)(iVar2 + 0x30),*(undefined2 *)(iVar2 + 0x28)));
+         gte_ldVZ0((uint)*(ushort *)(iVar2 + 0x38));
+         gte_rtv0();
+         read_mt(unaff_s0,unaff_s1,unaff_s2);
+         
+		 // edit velocity
+		 *(short *)(iVar2 + 0x28) = (short)unaff_s0;
+         *(short *)(iVar2 + 0x30) = (short)unaff_s1;
+         *(short *)(iVar2 + 0x38) = (short)unaff_s2;
+		 
 		// driver -> instSelf
-		*(undefined4 *)(iVar2 + 0x20) = *(undefined4 *)(param_1 + 0x1c);
-
-        *(undefined *)(iVar2 + 0x18) = *(undefined *)(*(int *)(param_1 + 0x1c) + 0x50);
+         *(undefined4 *)(iVar2 + 0x20) = *(undefined4 *)(param_1 + 0x1c);
+		 
+         *(undefined *)(iVar2 + 0x18) = *(undefined *)(*(int *)(param_1 + 0x1c) + 0x50);
       }
-      iVar1 = iVar1 + -1;
     }
   }
   return;
@@ -20737,20 +20708,14 @@ LAB_80059674:
 // param_1 is driver struct
 // param_2 is always 0x800896c8, particle data for sparks
 void FUN_80059780(int param_1,undefined4 param_2)
-
 {
   int iVar1;
   int iVar2;
   uint uVar3;
-  uint uVar4;
-  uint uVar5;
-  uint uVar6;
-  undefined4 uVar7;
-  uint uVar8;
-  undefined4 uVar9;
-  uint uVar10;
-  undefined4 uVar11;
-
+  uint unaff_s1;
+  uint unaff_s2;
+  uint unaff_s3;
+  
   if (*(short *)(param_1 + 0x39e) == 0) {
     iVar1 = (int)*(short *)(param_1 + 0x38e);
     if (iVar1 < 0) {
@@ -20762,105 +20727,81 @@ void FUN_80059780(int param_1,undefined4 param_2)
 LAB_800597d0:
 
 	// if time against wall is less than 15 seconds
-    if (*(short *)(param_1 + 0x50) < 0x1c2)
+    if (*(short *)(param_1 + 0x50) < 0x1c2) 
 	{
 	  // both gamepad vibration
       FUN_80026440(param_1,8,0);
-      FUN_800264c0(param_1,8,0x7f);
-
+      FUN_800264c0(param_1, 8, 0x7f);
+	  
 	  // increment time against wall
-	  *(short *)(param_1 + 0x50) = *(short *)(param_1 + 0x50) + 1;
-
-	  goto LAB_80059818;
+      *(short *)(param_1 + 0x50) = *(short *)(param_1 + 0x50) + 1;
+      goto LAB_80059818;
     }
   }
-
+  
   // reset time against wall to zero
   *(undefined2 *)(param_1 + 0x50) = 0;
-
+  uVar3 = param_2;
+  
 LAB_80059818:
   if (*(short *)(param_1 + 0x38e) < 0x201) {
     if (-0x201 < *(short *)(param_1 + 0x38e)) {
       return;
     }
-    setCopReg(2,0,0xa00de00);
-    setCopReg(2,0x800,0xffffec00);
-    setCopReg(2,0x1000,0xa002200);
-    setCopReg(2,0x1800,0xffffec00);
+    gte_ldVXY0(0xa00de00);
+    gte_ldVZ0(0xffffec00);
+    gte_ldVXY1(0xa002200);
+    gte_ldVZ1(0xffffec00);
   }
   else {
-    setCopReg(2,0,0xa00de00);
-    setCopReg(2,0x800,0x2800);
-    setCopReg(2,0x1000,0xa002200);
-    setCopReg(2,0x1800,0x2800);
+    gte_ldVXY0(0xa00de00);
+    gte_ldVZ0(0x2800);
+    gte_ldVXY1(0xa002200);
+    gte_ldVZ1(0x2800);
   }
-
-  // rtv0     cop2 $0486012  v0 * rotmatrix
-  copFunction(2,0x486012);
-
-  uVar6 = getCopReg(2,0xc800);
-  uVar8 = getCopReg(2,0xd000);
-  uVar10 = getCopReg(2,0xd800);
-
-  // rtv1     cop2 $048E012  v1 * rotmatrix
-  copFunction(2,0x48e012);
-
-  // get result
-  uVar3 = getCopReg(2,0xc800);
-  uVar4 = getCopReg(2,0xd000);
-  uVar5 = getCopReg(2,0xd800);
-  
-  setCopControlWord(2,0x4000,uVar6 & 0xffff | uVar8 << 0x10);
-  setCopControlWord(2,0x4800,uVar10 & 0xffff | uVar3 << 0x10);
-  setCopControlWord(2,0x5000,uVar4 & 0xffff | uVar5 << 0x10);
-  
-  // ldv0 vec3(driver->0x384) - vec3(driver->posCurr)
-  // direction from driver to the point of collision with wall
-  setCopReg(2,0,(int)*(short *)(param_1 + 900) * 0x100 - *(int *)(param_1 + 0x2d4) & 0xffffU |
-                ((int)*(short *)(param_1 + 0x386) * 0x100 - *(int *)(param_1 + 0x2d8)) * 0x10000);
-  setCopReg(2,0x800,(int)*(short *)(param_1 + 0x388) * 0x100 - *(int *)(param_1 + 0x2dc));
-
-  // llv0     cop2 $04A6012  v0 * light matrix
-  copFunction(2,0x4a6012);
-
-  iVar1 = getCopReg(2,0xc800);
-  iVar2 = getCopReg(2,0xd000);
+  gte_rtv0();
+  read_mt(unaff_s1,unaff_s2,unaff_s3);
+  gte_rtv1();
+  read_mt(uVar3,newVar1,newVar2);
+  gte_ldL11L12(unaff_s1 & 0xffff | unaff_s2 << 0x10);
+  gte_ldL13L21(unaff_s3 & 0xffff | uVar3 << 0x10);
+  gte_ldL22L23(newVar1 & 0xffff | newVar2 << 0x10);
+  gte_ldVXY0(*(short *)(param_1 + 900) * 0x100 - *(int *)(param_1 + 0x2d4) & 0xffffU |
+              (*(short *)(param_1 + 0x386) * 0x100 - *(int *)(param_1 + 0x2d8)) * 0x10000);
+  gte_ldVZ0(*(short *)(param_1 + 0x388) * 0x100 - *(int *)(param_1 + 0x2dc));
+  gte_llv0();
+  iVar1 = gte_stMAC1();
+  iVar2 = gte_stMAC2();
   if (iVar1 < iVar2) {
-    uVar6 = uVar3;
-    uVar8 = uVar4;
-    uVar10 = uVar5;
+    unaff_s1 = uVar3;
+    unaff_s2 = newVar1;
+    unaff_s3 = newVar2;
   }
-
+  
   // Create instance in particle pool
   iVar1 = FUN_80040308(0,*(undefined4 *)(PTR_DAT_8008d2ac + 0x2114),param_2);
-
-  if (iVar1 != 0)
+  if (iVar1 != 0) 
   {
 	// position variables
-    *(int *)(iVar1 + 0x24) = *(int *)(iVar1 + 0x24) + uVar6;
-    *(int *)(iVar1 + 0x34) = *(int *)(iVar1 + 0x34) + uVar10;
-    *(int *)(iVar1 + 0x2c) = *(int *)(iVar1 + 0x2c) + uVar8;
-
-    setCopReg(2,0,CONCAT22(*(undefined2 *)(iVar1 + 0x30),*(undefined2 *)(iVar1 + 0x28)));
-    setCopReg(2,0x800,(uint)*(ushort *)(iVar1 + 0x38));
-
-	// rtv0     cop2 $0486012  v0 * rotmatrix
-	copFunction(2,0x486012);
-
-	uVar7 = getCopReg(2,0xc800);
-    uVar9 = getCopReg(2,0xd000);
-    uVar11 = getCopReg(2,0xd800);
-	
-    *(undefined2 *)(iVar1 + 0x28) = (short)uVar7;
-    *(undefined2 *)(iVar1 + 0x30) = (short)uVar9;
-    *(undefined2 *)(iVar1 + 0x38) = (short)uVar11;
-
+    *(uint *)(iVar1 + 0x24) = *(int *)(iVar1 + 0x24) + unaff_s1;
+    *(uint *)(iVar1 + 0x34) = *(int *)(iVar1 + 0x34) + unaff_s3;
+    *(uint *)(iVar1 + 0x2c) = *(int *)(iVar1 + 0x2c) + unaff_s2;
+    
+	gte_ldVXY0(CONCAT22(*(undefined2 *)(iVar1 + 0x30),*(undefined2 *)(iVar1 + 0x28)));
+    gte_ldVZ0((uint)*(ushort *)(iVar1 + 0x38));
+    gte_rtv0();
+    read_mt(unaff_s1,unaff_s2,unaff_s3);
+    
+	// edit velocity
+	*(short *)(iVar1 + 0x28) = (short)unaff_s1;
+    *(short *)(iVar1 + 0x30) = (short)unaff_s2;
+    *(short *)(iVar1 + 0x38) = (short)unaff_s3;
+    
 	// driver -> instSelf
-    *(undefined4 *)(iVar1 + 0x20) = *(undefined4 *)(param_1 + 0x1c);
+	*(undefined4 *)(iVar1 + 0x20) = *(undefined4 *)(param_1 + 0x1c);
   }
   return;
 }
-
 
 // VehParticle_DriverMain (calls all other SpawnParticle functions)
 void FUN_80059a18(int param_1,int param_2)
