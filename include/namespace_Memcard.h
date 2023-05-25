@@ -340,4 +340,8 @@ _Static_assert(sizeof(struct HighScoreTrack) == 0x124);
 _Static_assert(sizeof(struct GameProgress) == 0x1494);
 _Static_assert(sizeof(struct AdvProgress) == 0x50);
 _Static_assert(sizeof(struct GhostProfile) == 0x34);
+#if BUILD >= UsaRetail
 _Static_assert(sizeof(struct GameOptions) == 0x28);
+#else
+_Static_assert(sizeof(struct GameOptions) == 0x24);
+#endif

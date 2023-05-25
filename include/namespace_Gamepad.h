@@ -218,7 +218,9 @@ struct RacingWheelData
 };
 
 _Static_assert(sizeof(struct GamepadBuffer) == 0x50);
-#if BUILD < EurRetail
+#if BUILD <= SepReview
+_Static_assert(sizeof(struct GamepadSystem) == 0x2D4);
+#elif BUILD < EurRetail
 _Static_assert(sizeof(struct GamepadSystem) == 0x31C);
 #else
 _Static_assert(sizeof(struct GamepadSystem) == 0x320);
