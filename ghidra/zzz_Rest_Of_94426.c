@@ -38035,7 +38035,6 @@ undefined8 FUN_8006bad0(void)
   return (int)in_v0 + iVar3;
 }
 
-// primitives for uncompressed animation
 void FUN_8006bbc0(void)
 {
   *(uint **)(in_at + 0x10c) = puVar27;
