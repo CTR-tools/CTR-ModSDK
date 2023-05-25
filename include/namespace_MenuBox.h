@@ -99,3 +99,10 @@ struct MenuBox
 	unsigned char theRest[8]; // extra size?
 	#endif
 };
+
+_Static_assert(sizeof(struct MenuRow) == 6);
+#if BUILD != SepReview
+_Static_assert(sizeof(struct MenuBox) == 0x2C);
+#else
+_Static_assert(sizeof(struct MenuBox) == 0x34);
+#endif

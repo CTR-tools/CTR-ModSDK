@@ -4747,3 +4747,7 @@ register struct sData* sdata asm("$gp");
 
 // SP
 // 801ff800 - 80200000
+
+_Static_assert(sizeof(struct Terrain) == 0x40);
+_Static_assert(sizeof(struct MetaDataLEV) == 0x18);
+_Static_assert(sizeof(struct MetaDataMODEL) == 0xC);

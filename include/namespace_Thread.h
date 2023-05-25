@@ -159,3 +159,5 @@ struct ThreadBucket
 
 	// size is 0x14
 };
+
+_Static_assert(sizeof(struct ThreadBucket) == 0x14);

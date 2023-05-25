@@ -1456,3 +1456,9 @@ struct Driver
 	// 0x668 - size of pool object, minus object pool pointers
 	// 0x670 - size of pool object
 };
+
+#if BUILD < EurRetail
+_Static_assert(sizeof(struct MetaPhys) == 0x1C);
+#else
+_Static_assert(sizeof(struct MetaPhys) == 0x20);
+#endif

@@ -215,3 +215,9 @@ struct Song
 	// 0x1c array of all cseq sequences in song
 	struct SongSeq* CseqSequences[0x18];
 };
+
+_Static_assert(sizeof(SpuReverbAttr) == 0x14);
+_Static_assert(sizeof(struct ChannelAttr) == 0x10);
+_Static_assert(sizeof(struct ChannelStats) == 0x20);
+_Static_assert(sizeof(struct SongSeq) == 0x1C);
+_Static_assert(sizeof(struct Song) == 0x7C);

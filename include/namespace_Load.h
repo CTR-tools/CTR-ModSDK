@@ -46,3 +46,5 @@ struct LoadQueueSlot
 
 	} callback;
 };
+
+_Static_assert(sizeof(struct LoadQueueSlot) == 0x18);

@@ -12,3 +12,5 @@ struct LinkedList
 	struct Item* last;
 	int count;
 };
+
+_Static_assert(sizeof(struct LinkedList) == 0xC);

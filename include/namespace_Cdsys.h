@@ -65,3 +65,5 @@ struct AudioMeta
 	char* name;
 
 };
+
+_Static_assert(sizeof(struct AudioMeta) == 8);

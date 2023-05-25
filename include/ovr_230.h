@@ -589,3 +589,7 @@ extern struct
 	int numFrames;
 	
 } OVR_230_VideoBSS;
+
+_Static_assert(sizeof(struct MainMenu_LevelRow) == 0x10);
+_Static_assert(sizeof(struct CharacterSelectMeta) == 0xC);
+_Static_assert(sizeof(struct TransitionMeta) == 0xA);

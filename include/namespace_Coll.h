@@ -197,3 +197,8 @@ struct ScratchpadStructExtended
 	
 	// 1f800400 end of memory
 };
+
+_Static_assert(sizeof(struct BoundingBox) == 0xC);
+_Static_assert(sizeof(struct BspSearchVertex) == 0x14);
+_Static_assert(sizeof(struct BspSearchTriangle) == 0xC);
+_Static_assert(sizeof(struct ScratchpadStruct) == 0x20C);

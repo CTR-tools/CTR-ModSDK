@@ -91,3 +91,5 @@ struct TileView
 
 	// 0x110 - end of struct
 };
+
+_Static_assert(sizeof(struct TileView) == 0x110);
