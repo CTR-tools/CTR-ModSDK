@@ -213,4 +213,8 @@ struct CameraDC
 };
 
 _Static_assert(sizeof(struct ZoomData) == 0x12);
+#if BUILD >= UsaRetail
 _Static_assert(sizeof(struct CameraDC) == 0xDC);
+#else
+_Static_assert(sizeof(struct CameraDC) == 0xC8);
+#endif
