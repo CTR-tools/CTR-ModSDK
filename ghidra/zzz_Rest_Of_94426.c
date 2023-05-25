@@ -8482,7 +8482,7 @@ void FUN_8004b94c(int param_1,int param_2,undefined4 param_3,int param_4)
   undefined4 in_t5;
   undefined4 in_t6;
 
-  uVar2 = getCopReg(2,0x7000);
+  uVar2 = gte_stSXY2();
   *(undefined4 *)(param_4 + 0x1c) = in_t3;
   *(undefined4 *)(param_4 + 0xc) = in_t4;
   *(undefined4 *)(param_4 + 4) = in_t5;
