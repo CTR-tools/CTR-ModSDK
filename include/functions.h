@@ -4,15 +4,15 @@
 
 // BOTS
 
-void BOTS_SetGlobalNavData(short index);
+void BOTS_SetGlobalNavData(u_short index);
 void BOTS_InitNavPath(struct GameTracker* gGT, short index);
 void BOTS_EmptyFunc();
 int BOTS_Adv_NumTimesLostEvent(int index);
 void BOTS_Adv_AdjustDifficulty();
 void BOTS_UpdateGlobals();
-void BOTS_SetRotation(int param_1, int param_2);
+void BOTS_SetRotation(struct Driver* driver_perhaps, int param_2);
 void BOTS_LevInstColl(int param_1);
-void BOTS_ThTick_EngineRevving(int param_1);
+void BOTS_ThTick_EngineRevving (struct Thread * thread, u_int param_2, u_char * param_3, u_int param_4);
 void BOTS_MaskGrab(int param_1);
 void BOTS_Killplane(int param_1);
 void BOTS_ThTick_Drive(struct Thread* thread);
