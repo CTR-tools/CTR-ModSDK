@@ -38987,7 +38987,6 @@ uint * FUN_8006c8e8(undefined4 param_1,uint param_2,uint *param_3)
 
 // Draw_KartGhost
 void FUN_8006c984(void)
-
 {
   bool bVar1;
   short sVar2;
@@ -39012,7 +39011,7 @@ void FUN_8006c984(void)
   undefined4 *puVar18;
   int iVar19;
   int unaff_retaddr;
-
+  
   uVar8 = *(uint *)(unaff_retaddr + 0x24);
   sVar5 = *(short *)(unaff_retaddr + 0x22);
   if (uVar8 == 0) {
@@ -39023,122 +39022,102 @@ void FUN_8006c984(void)
     *(undefined *)(in_at + 0x127) = 0x22;
     if (sVar5 == 0x1000) {
       while( true ) {
-        piVar9 = *(int **)(in_at + 4);
-        iVar19 = *piVar9;
-        iVar10 = piVar9[1];
-        *(int **)(in_at + 4) = piVar9 + 2;
-        if (iVar19 == 0) break;
-        iVar6 = *(int *)(iVar10 + 0x74);
-        iVar11 = *(int *)(in_at + 8);
-        *(int *)(in_at + 0x10) = iVar19;
-        *(int *)(in_at + 8) = iVar6;
-		
-		// tileView
-        if (iVar6 != iVar11) 
-		{
-		  // width, height, distToScreen
-          sVar5 = *(short *)(iVar6 + 0x20);
-          sVar2 = *(short *)(iVar6 + 0x22);
-          uVar15 = *(undefined4 *)(iVar6 + 0x18);
-		  
-		  // scratchpad
-          *(short *)(in_at + 0x1c) = sVar5;
-          *(short *)(in_at + 0x1e) = sVar2;
-          
-		  // GTE
-		  setCopControlWord(2,0xc000,(int)sVar5 << 0xf);
-          setCopControlWord(2,0xc800,(int)sVar2 << 0xf);
-          setCopControlWord(2,0xd000,uVar15);
-        }
-        uVar8 = *(uint *)(iVar10 + 0xb8);
-        sVar5 = *(short *)(iVar10 + 0xbc);
-        
-		if (((uVar8 & 0x40) != 0) && ((uVar8 & 0x80) == 0)) 
-		{
-		  // instance matrix
-          gte_ldR11R12(*(undefined4 *)(iVar10 + 0x78));
-          gte_ldR13R21(*(undefined4 *)(iVar10 + 0x7c));
-          gte_ldR22R23(*(undefined4 *)(iVar10 + 0x80));
-          gte_ldR31R32(*(undefined4 *)(iVar10 + 0x84));
-          gte_ldR33(*(undefined4 *)(iVar10 + 0x88));
-          
-		  gte_ldtr(
-			*(undefined4 *)(iVar10 + 0x8c),
-			*(undefined4 *)(iVar10 + 0x90),
-			*(undefined4 *)(iVar10 + 0x94)
-		  );
-          
-		  *(uint *)(in_at + 0x24) = uVar8;
-          *(int *)(in_at + 0x120) = (int)sVar5;
-          
-		  if ((uVar8 & 0x7000) != 0) 
-		  {
-			// instance matrix
-            gte_ldL11L12(*(undefined4 *)(iVar10 + 0x98));
-            gte_ldL13L21(*(undefined4 *)(iVar10 + 0x9c));
-            gte_ldL22L23(*(undefined4 *)(iVar10 + 0xa0));
-            gte_ldL31L32(*(undefined4 *)(iVar10 + 0xa4));
-            gte_ldL33(*(undefined4 *)(iVar10 + 0xa8));
-            
-			sVar5 = *(short *)(iVar10 + 0xbe);
-            uVar14 = *(undefined *)(iVar19 + 0x53);
-            uVar15 = *(undefined4 *)(iVar19 + 0x58);
-            *(short *)(in_at + 0x44) = sVar5;
-            *(short *)(in_at + 0xda) = sVar5;
-            *(short *)(in_at + 0xf2) = sVar5;
-            *(undefined *)(in_at + 0x48) = uVar14;
-            *(undefined4 *)(in_at + 0x4c) = uVar15;
-            *(int *)(in_at + 0x11c) = (int)sVar5 << 0x11;
-            *(undefined4 *)(in_at + 0xe0) = 0;
-            *(undefined4 *)(in_at + 0xf8) = 0;
-          }
-          psVar17 = *(short **)(iVar10 + 0xc4);
-          puVar16 = *(ushort **)(iVar10 + 0xc0);
-          if (psVar17 == (short *)0x0) {
-            uVar3 = puVar16[1];
-            uVar4 = puVar16[2];
-            *(ushort *)(in_at + 0x30) = *puVar16 & 0x7fff;
-            *(ushort *)(in_at + 0x32) = uVar3;
-            *(int *)(in_at + 0x34) = (int)(short)uVar4;
-          }
-          else {
-            *(ushort *)(in_at + 0x30) = *puVar16 + *psVar17;
-            *(ushort *)(in_at + 0x32) = puVar16[1] + psVar17[1];
-            *(int *)(in_at + 0x34) = ((int)(short)puVar16[2] + (int)psVar17[2]) * 2;
-          }
-          *(undefined4 *)(in_at + 0x58) = 0;
-          puVar18 = *(undefined4 **)(iVar10 + 0xd0);
-          iVar6 = **(int **)(iVar10 + 200);
-          puVar12 = (undefined4 *)(in_at + 0x140);
-          while (bVar1 = 0 < iVar6, iVar6 = iVar6 + -1, bVar1) {
-            uVar15 = *puVar18;
-            puVar18 = puVar18 + 1;
-            *puVar12 = uVar15;
-            puVar12 = puVar12 + 1;
-          }
-          (**(code **)(iVar19 + 0x5c))();
-          sVar5 = *(short *)(iVar10 + 0xde);
-          *(short *)(in_at + 0x134) = (short)((int)*(short *)(iVar10 + 0xdc) << 2);
-          *(short *)(in_at + 0x136) = (short)((int)sVar5 << 2);
-          uVar15 = *(undefined4 *)(iVar10 + 0xe4);
-          uVar13 = *(undefined4 *)(iVar10 + 0xe8);
-          pcVar7 = *(code **)(iVar10 + 0xec);
-          *(undefined4 *)(in_at + 0x38) = uVar15;
-          *(undefined4 *)(in_at + 0x3c) = uVar15;
-          *(undefined4 *)(in_at + 0x40) = uVar13;
-          in_v0 = (*pcVar7)(*(undefined4 *)(iVar19 + 100));
-        }
+         piVar9 = *(int **)(in_at + 4);
+         iVar19 = *piVar9;
+         iVar10 = piVar9[1];
+         *(int **)(in_at + 4) = piVar9 + 2;
+         if (iVar19 == 0) break;
+         iVar6 = *(int *)(iVar10 + 0x74);
+         iVar11 = *(int *)(in_at + 8);
+         *(int *)(in_at + 0x10) = iVar19;
+         *(int *)(in_at + 8) = iVar6;
+         if (iVar6 != iVar11) {
+           sVar5 = *(short *)(iVar6 + 0x20);
+           sVar2 = *(short *)(iVar6 + 0x22);
+           uVar15 = *(undefined4 *)(iVar6 + 0x18);
+           *(short *)(in_at + 0x1c) = sVar5;
+           *(short *)(in_at + 0x1e) = sVar2;
+           gte_ldOFX((int)sVar5 << 0xf);
+           gte_ldOFY((int)sVar2 << 0xf);
+           gte_ldH(uVar15);
+         }
+         uVar8 = *(uint *)(iVar10 + 0xb8);
+         sVar5 = *(short *)(iVar10 + 0xbc);
+         if (((uVar8 & 0x40) != 0) && ((uVar8 & 0x80) == 0)) {
+           gte_ldR11R12(*(undefined4 *)(iVar10 + 0x78));
+           gte_ldR13R21(*(undefined4 *)(iVar10 + 0x7c));
+           gte_ldR22R23(*(undefined4 *)(iVar10 + 0x80));
+           gte_ldR31R32(*(undefined4 *)(iVar10 + 0x84));
+           gte_ldR33(*(undefined4 *)(iVar10 + 0x88));
+           gte_ldtr(*(undefined4 *)(iVar10 + 0x8c),*(undefined4 *)(iVar10 + 0x90),
+                     *(undefined4 *)(iVar10 + 0x94));
+           *(uint *)(in_at + 0x24) = uVar8;
+           *(int *)(in_at + 0x120) = (int)sVar5;
+           if ((uVar8 & 0x7000) != 0) {
+             gte_ldL11L12(*(undefined4 *)(iVar10 + 0x98));
+             gte_ldL13L21(*(undefined4 *)(iVar10 + 0x9c));
+             gte_ldL22L23(*(undefined4 *)(iVar10 + 0xa0));
+             gte_ldL31L32(*(undefined4 *)(iVar10 + 0xa4));
+             gte_ldL33(*(undefined4 *)(iVar10 + 0xa8));
+             sVar5 = *(short *)(iVar10 + 0xbe);
+             uVar14 = *(undefined *)(iVar19 + 0x53);
+             uVar15 = *(undefined4 *)(iVar19 + 0x58);
+             *(short *)(in_at + 0x44) = sVar5;
+             *(short *)(in_at + 0xda) = sVar5;
+             *(short *)(in_at + 0xf2) = sVar5;
+             *(undefined *)(in_at + 0x48) = uVar14;
+             *(undefined4 *)(in_at + 0x4c) = uVar15;
+             *(int *)(in_at + 0x11c) = (int)sVar5 << 0x11;
+             *(undefined4 *)(in_at + 0xe0) = 0;
+             *(undefined4 *)(in_at + 0xf8) = 0;
+           }
+           psVar17 = *(short **)(iVar10 + 0xc4);
+           puVar16 = *(ushort **)(iVar10 + 0xc0);
+           if (psVar17 == (short *)0x0) {
+             uVar3 = puVar16[1];
+             uVar4 = puVar16[2];
+             *(ushort *)(in_at + 0x30) = *puVar16 & 0x7fff;
+             *(ushort *)(in_at + 0x32) = uVar3;
+             *(int *)(in_at + 0x34) = (int)(short)uVar4;
+           }
+           else {
+             *(ushort *)(in_at + 0x30) = *puVar16 + *psVar17;
+             *(ushort *)(in_at + 0x32) = puVar16[1] + psVar17[1];
+             *(int *)(in_at + 0x34) = ((int)(short)puVar16[2] + (int)psVar17[2]) * 2;
+           }
+           *(undefined4 *)(in_at + 0x58) = 0;
+           puVar18 = *(undefined4 **)(iVar10 + 0xd0);
+           iVar6 = **(int **)(iVar10 + 200);
+           puVar12 = (undefined4 *)(in_at + 0x140);
+           while (bVar1 = 0 < iVar6, iVar6 = iVar6 + -1, bVar1) {
+             uVar15 = *puVar18;
+             puVar18 = puVar18 + 1;
+             *puVar12 = uVar15;
+             puVar12 = puVar12 + 1;
+           }
+           (**(code **)(iVar19 + 0x5c))();
+           sVar5 = *(short *)(iVar10 + 0xde);
+           *(short *)(in_at + 0x134) = (short)((int)*(short *)(iVar10 + 0xdc) << 2);
+           *(short *)(in_at + 0x136) = (short)((int)sVar5 << 2);
+           uVar15 = *(undefined4 *)(iVar10 + 0xe4);
+           uVar13 = *(undefined4 *)(iVar10 + 0xe8);
+           pcVar7 = *(code **)(iVar10 + 0xec);
+           *(undefined4 *)(in_at + 0x38) = uVar15;
+           *(undefined4 *)(in_at + 0x3c) = uVar15;
+           *(undefined4 *)(in_at + 0x40) = uVar13;
+           in_v0 = (*pcVar7)(*(undefined4 *)(iVar19 + 100));
+         }
       }
       *(undefined4 *)(*(int *)(in_at + 0xc) + 0xc) = in_v0;
       return;
     }
   }
-  setCopReg(2,0x3000,0);
-  setCopControlWord(2,0xa800,uVar8 >> 0x10 & 0xff0);
-  setCopControlWord(2,0xb000,uVar8 >> 8 & 0xff0);
-                    /* WARNING: Could not recover jumptable at 0x8006c96c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
-  setCopControlWord(2,0xb800,uVar8 & 0xff0);
+  gte_ldRGB(0);
+  gte_ldRFC(uVar8 >> 0x10 & 0xff0);
+  gte_ldGFC(uVar8 >> 8 & 0xff0);
+                      /* WARNING: Could not recover jumptable at 0x8006c96c. Too many branches */
+                      /* WARNING: Treating indirect jump as call */
+  gte_ldBFC(uVar8 & 0xff0);
   (*UNRECOVERED_JUMPTABLE)();
   return;
 }
