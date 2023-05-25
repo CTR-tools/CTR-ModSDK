@@ -20804,152 +20804,164 @@ LAB_80059818:
 }
 
 // VehParticle_DriverMain (calls all other SpawnParticle functions)
-void FUN_80059a18(int param_1,int param_2)
+void FUN_80059a18(int param_1,int param_2,undefined *param_3,uint param_4)
 
 {
-  undefined uVar1;
-  byte bVar2;
+  byte bVar1;
+  short sVar2;
   short sVar3;
   short sVar4;
   short sVar5;
   short sVar6;
   short sVar7;
-  short sVar8;
-  short sVar9;
-  short sVar10;
-  short sVar11;
-  short sVar12;
-  ushort uVar13;
-  int iVar14;
-  int iVar15;
-  uint uVar16;
-  undefined4 uVar17;
-  undefined2 uVar18;
+  ushort uVar8;
+  int iVar9;
+  MATRIX *pMVar10;
+  int iVar11;
+  undefined *puVar12;
+  uint uVar13;
+  undefined4 uVar14;
+  undefined2 uVar15;
+  undefined4 in_t1;
+  int iVar16;
+  int iVar17;
+  VECTOR *r0;
+  int iVar18;
   undefined4 uVar19;
   int iVar20;
-  undefined4 uVar21;
+  undefined *puVar21;
   int iVar22;
-  char cVar23;
+  int iVar23;
   int iVar24;
-  undefined4 local_50;
-  undefined4 local_4c;
-  undefined4 local_48;
-  undefined4 local_40;
-  undefined4 local_3c;
-  undefined4 local_38;
+  char cVar25;
+  byte bVar26;
+  int iVar27;
+  undefined *puVar28;
+  undefined8 uVar29;
+  undefined auStack_68 [16];
+  undefined4 local_58;
   uint local_30;
-
+  
+  puVar28 = auStack_68;
+  
   // driver -> terrain meta
   iVar22 = *(int *)(param_2 + 0x358);
-
-  // get instance from thread
-  iVar24 = *(int *)(param_1 + 0x34);
-
-  // backup previous frame's skidmark flags, in the upper bits of itself
-  *(int *)(param_2 + 0x2c4) = (*(uint *)(param_2 + 0x2c4) & 0xfffff) << 4;
   
+  // get instance from thread
+  iVar27 = *(int *)(param_1 + 0x34);
+  
+  // backup previous frame's skidmark flags, in the upper bits of itself
+  *(uint *)(param_2 + 0x2c4) = (*(uint *)(param_2 + 0x2c4) & 0xfffff) << 4;
+  
+  // next slot (8-frame cycle)
   *(byte *)(param_2 + 0xc3) = *(char *)(param_2 + 0xc3) - 1U & 7;
+  
+  // terrain variables
   local_30 = *(uint *)(iVar22 + 4);
-  sVar3 = *(short *)(iVar22 + 0x30);
-
+  iVar23 = (int)*(short *)(iVar22 + 0x30);
+  
   // thread -> modelIndex == "player" of any kind
-  if (*(short *)(param_1 + 0x44) == 0x18) {
-    iVar20 = -1;
+  if (*(short *)(param_1 + 0x44) == 0x18) 
+  {
+    iVar18 = -1;
+    
     //if racer is on the ground and (?)
-    if (((*(uint *)(param_2 + 0x2c8) & 1) != 0) && ((local_30 & 0x20) == 0)) {
-      iVar20 = (int)*(short *)(iVar22 + 0x32);
+	if (((*(uint *)(param_2 + 0x2c8) & 1) != 0) && ((*(uint *)(iVar22 + 4) & 0x20) == 0)) {
+      iVar18 = (int)*(short *)(iVar22 + 0x32);
     }
-    iVar15 = (int)*(short *)(param_2 + 0x38e);
-    if (iVar15 < 0) {
-      iVar15 = -iVar15;
+	
+	// absolute value speedApprox
+    iVar11 = (int)*(short *)(param_2 + 0x38e);
+    if (iVar11 < 0) {
+      iVar11 = -iVar11;
     }
-
-    // Map value from [oldMin, oldMax] to [newMin, newMax]
-    // inverting newMin and newMax will give an inverse range mapping
-    iVar14 = FUN_80058f9c(iVar15,0,5000,0,200);
-
-    iVar15 = (int)*(short *)(param_2 + 0x38e);
-    if (iVar15 < 0) {
-      iVar15 = -iVar15;
+    
+	// volume
+    // Map value from [minSpeed, maxSpeed] to [minVol, maxVol]
+	iVar9 = FUN_80058f9c(iVar11,0,5000,0,200);
+	
+	// absolute value speedApprox
+    iVar11 = (int)*(short *)(param_2 + 0x38e);
+    if (iVar11 < 0) {
+      iVar11 = -iVar11;
     }
-
-    // Map value from [oldMin, oldMax] to [newMin, newMax]
-    // inverting newMin and newMax will give an inverse range mapping
-    iVar15 = FUN_80058f9c(iVar15,0,12000,0x6c,0xd2);
-
+    
 	// distortion
-    uVar16 = iVar15 << 8;
+    // Map value from [minSpeed, maxSpeed] to [minDistort, maxDistort]
+	iVar11 = FUN_80058f9c(iVar11,0,12000,0x6c,0xd2);
+	uVar13 = iVar11 << 8;
 
 	// if echo is required
-    if ((*(uint *)(param_2 + 0x2c8) & 0x10000) != 0)
+	if ((*(uint *)(param_2 + 0x2c8) & 0x10000) != 0) 
 	{
 	  // add echo
-      uVar16 = uVar16 | 0x1000000;
+      uVar13 = uVar13 | 0x1000000;
     }
-
+    
 	// driver audio
-    FUN_8002e690(param_2 + 0x304,iVar20,
-
+	FUN_8002e690(param_2 + 0x304,iVar18,
+	
 		// volume
-		iVar14 << 0x10 |
-
+		iVar9 << 0x10 | 
+		
 		// distortion
-		uVar16 |
-
+		uVar13 | 
+		
 		// L/R
 		0x80);
-
+	
 	// If this is human and not an AI
-    if ((*(uint *)(param_2 + 0x2c8) & 0x100000) == 0)
+    if ((*(uint *)(param_2 + 0x2c8) & 0x100000) == 0) 
 	{
-	  // get speedApprox
-      iVar20 = (int)*(short *)(param_2 + 0x38e);
-
-	  // absolute value
-      if (iVar20 < 0) {
-        iVar20 = -iVar20;
+	  // absolute value speedApprox
+      iVar18 = (int)*(short *)(param_2 + 0x38e);
+      if (iVar18 < 0) {
+         iVar18 = -iVar18;
       }
-
+	  
 	  // if speed high enough
-      if (0x200 < iVar20)
+      if (0x200 < iVar18) 
 	  {
 		// both gamepad vibration
         FUN_80026440(param_2,(uint)*(byte *)(iVar22 + 0x2c),(uint)*(byte *)(iVar22 + 0x2d));
         FUN_80026540(param_2,(uint)*(byte *)(iVar22 + 0x2e),(uint)*(byte *)(iVar22 + 0x2f));
       }
-
+      
       //if racer started touching the ground in this frame
-      if ((*(uint *)(param_2 + 0x2c8) & 2) != 0) {
-        iVar20 = (int)*(short *)(param_2 + 0x392);
-        if (iVar20 < 0) {
-          iVar20 = -iVar20;
+	  if ((*(uint *)(param_2 + 0x2c8) & 2) != 0) 
+	  {
+		// absolute value
+        iVar18 = (int)*(short *)(param_2 + 0x392);
+        if (iVar18 < 0) {
+          iVar18 = -iVar18;
         }
-
-        if (0x1600 < iVar20)
+        
+		if (0x1600 < iVar18) 
 		{
 		  // gamepad vibration
-          FUN_800264c0(param_2,3,0xff);
+          FUN_800264c0(param_2,3,0xFF);
         }
       }
     }
   }
-
+  
   // if numPlyrCurrGame is less than 2
-  if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 2)
+  if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 2) 
   {
-    iVar20 = (int)*(short *)(param_2 + 0x38c);
-    if (iVar20 < 0) {
-      iVar20 = -iVar20;
+	// absolute value
+    iVar18 = (int)*(short *)(param_2 + 0x38c);
+    if (iVar18 < 0) {
+      iVar18 = -iVar18;
     }
+	
     if (
 			// high speed
-			(0x500 < iVar20) &&
-
+			(0x500 < iVar18) && 
+			
 			// current terrain
 			(*(char *)(param_2 + 0xc2) == '\x0e')
-		)
+		) 
 	{
-
 	  // number of particles
 	  iVar20 = 10;
 
@@ -20957,25 +20969,25 @@ void FUN_80059a18(int param_1,int param_2)
       if ((*(uint *)(param_2 + 0x2c8) & 2) == 0)
 	  {
 		// Create instance in particle pool (land jump in mud)
-        iVar20 = FUN_80040308(0,*(undefined4 *)(PTR_DAT_8008d2ac + 0x2148),&DAT_8008980c);
+        iVar18 = FUN_80040308(0,*(undefined4 *)(PTR_DAT_8008d2ac + 0x2148),&DAT_8008980c);
 
-		if (iVar20 != 0) {
-          *(undefined *)(iVar20 + 0x18) = *(undefined *)(*(int *)(param_2 + 0x1c) + 0x50);
+		if (iVar18 != 0) {
+          *(undefined *)(iVar18 + 0x18) = *(undefined *)(*(int *)(param_2 + 0x1c) + 0x50);
 
 		  // driver -> instSelf
-          *(undefined4 *)(iVar20 + 0x20) = *(undefined4 *)(param_2 + 0x1c);
+          *(undefined4 *)(iVar18 + 0x20) = *(undefined4 *)(param_2 + 0x1c);
 
 		  // driverID
           uVar1 = *(undefined *)(param_2 + 0x4a);
 
-          *(int *)(iVar20 + 0x24) = *(int *)(iVar20 + 0x24) + (int)*(short *)(iVar20 + 0x28) * 0x10;
+          *(int *)(iVar18 + 0x24) = *(int *)(iVar18 + 0x24) + (int)*(short *)(iVar18 + 0x28) * 0x10;
 
 		  // driverID
-		  *(undefined *)(iVar20 + 0x19) = uVar1;
+		  *(undefined *)(iVar18 + 0x19) = uVar1;
 
-          *(int *)(iVar20 + 0x34) = *(int *)(iVar20 + 0x34) + (int)*(short *)(iVar20 + 0x38) * 0x10;
-          *(short *)(iVar20 + 0x2a) = *(short *)(iVar20 + 0x2a) - (*(short *)(iVar20 + 0x28) >> 4);
-          *(short *)(iVar20 + 0x3a) = *(short *)(iVar20 + 0x3a) - (*(short *)(iVar20 + 0x38) >> 4);
+          *(int *)(iVar18 + 0x34) = *(int *)(iVar18 + 0x34) + (int)*(short *)(iVar18 + 0x38) * 0x10;
+          *(short *)(iVar18 + 0x2a) = *(short *)(iVar18 + 0x2a) - (*(short *)(iVar18 + 0x28) >> 4);
+          *(short *)(iVar18 + 0x3a) = *(short *)(iVar18 + 0x3a) - (*(short *)(iVar18 + 0x38) >> 4);
         }
       }
 
@@ -20991,431 +21003,439 @@ void FUN_80059a18(int param_1,int param_2)
 			// driver -> instSelf
             *(undefined4 *)(iVar15 + 0x20) = *(undefined4 *)(param_2 + 0x1c);
 
+			// driverID
             uVar1 = *(undefined *)(param_2 + 0x4a);
-            *(int *)(iVar15 + 0x24) =
-                 *(int *)(iVar15 + 0x24) + (int)*(short *)(iVar15 + 0x28) * 0x10;
             *(undefined *)(iVar15 + 0x19) = uVar1;
-            *(int *)(iVar15 + 0x34) =
-                 *(int *)(iVar15 + 0x34) + (int)*(short *)(iVar15 + 0x38) * 0x10;
-            *(short *)(iVar15 + 0x2a) = *(short *)(iVar15 + 0x2a) - (*(short *)(iVar15 + 0x28) >> 4)
-            ;
-            *(short *)(iVar15 + 0x3a) = *(short *)(iVar15 + 0x3a) - (*(short *)(iVar15 + 0x38) >> 4)
-            ;
+			
+            *(int *)(iVar15 + 0x24) = *(int *)(iVar15 + 0x24) + (int)*(short *)(iVar15 + 0x28) * 0x10;
+            *(int *)(iVar15 + 0x34) = *(int *)(iVar15 + 0x34) + (int)*(short *)(iVar15 + 0x38) * 0x10;
+            *(short *)(iVar15 + 0x2a) = *(short *)(iVar15 + 0x2a) - (*(short *)(iVar15 + 0x28) >> 4);
+            *(short *)(iVar15 + 0x3a) = *(short *)(iVar15 + 0x3a) - (*(short *)(iVar15 + 0x38) >> 4);
           }
 
 		  // loop count
-          iVar20 = iVar20 + -1;
+          iVar18 = iVar18 + -1;
 
-        } while (iVar20 != 0);
+        } while (iVar18 != 0);
       }
     }
-
+	
 	// if numPlyrCurrGame is less than 2 (useless if?)
-    if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 2)
-	{
+    if ((byte)PTR_DAT_8008d2ac[0x1ca8] < 2) 
+	{ 
       //if racer started touching the ground in this frame
-      if (((local_30 & 0x40) != 0) && ((*(uint *)(param_2 + 0x2c8) & 2) != 0)) {
-
-		// get speedApprox
-		iVar20 = (int)*(short *)(param_2 + 0x38e);
-
-		// absolute value
-		if (iVar20 < 0) {
-          iVar20 = -iVar20;
-        }
-
-		// if speed is high enough
-        if (0x600 < iVar20) {
-          iVar20 = (int)*(short *)(param_2 + 0x392);
-          if (iVar20 < 0) {
-            iVar20 = -iVar20;
-          }
-          if (0x1600 < iVar20) 
-		  {
-			// instance -> matrix
-			r0 = (MATRIX *)(iVar24 + 0x30);
-			gte_SetRotMatrix(r0);
-			gte_SetTransMatrix(r0);
-
-			// VehParticle_Sparks_Ground
-            FUN_80059344(param_2,&DAT_80089584);
-          }
-        }
+	  if (((local_30 & 0x40) != 0) && ((*(uint *)(param_2 + 0x2c8) & 2) != 0))
+      {
+		 // absolute value speedApprox
+         iVar18 = (int)*(short *)(param_2 + 0x38e);
+         if (iVar18 < 0) {
+           iVar18 = -iVar18;
+         }
+		 
+		 // if speed is high enough
+         if (0x600 < iVar18) 
+		 {
+		   // absolute value
+           iVar18 = (int)*(short *)(param_2 + 0x392);
+           if (iVar18 < 0) {
+             iVar18 = -iVar18;
+           }
+		   
+           if (0x1600 < iVar18) 
+		   {
+			 // instance -> matrix
+             pMVar10 = (MATRIX *)(iVar27 + 0x30);
+             gte_SetRotMatrix(pMVar10);
+             gte_SetTransMatrix(pMVar10);
+			 
+			 // VehParticle_Sparks_Ground
+             FUN_80059344(param_2,&DAT_80089584);
+           }
+         }
       }
-
+	  
 	  // if terrain  has particle data
-      if (*(int *)(iVar22 + 0x18) != 0)
+      if (*(int *)(iVar22 + 0x18) != 0) 
 	  {
-		// instance -> matrix
-		r0 = (MATRIX *)(iVar24 + 0x30);
-		gte_SetRotMatrix(r0);
-		gte_SetTransMatrix(r0);
-
-		// particles even frame
-		iVar20 = *(int *)(iVar22 + 0x1c);
-
-		// if data is invalid, or odd-number frame
-        if ((iVar20 == 0) || ((*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 1) == 0))
-		{
-		  // particles odd frame
-          iVar20 = *(int *)(iVar22 + 0x18);
-        }
-
-		// VehParticle_Terrain_Ground
-		FUN_80059558(param_2,iVar20);
+		 // instance -> matrix
+		 pMVar10 = (MATRIX *)(iVar27 + 0x30);
+         gte_SetRotMatrix(pMVar10);
+         gte_SetTransMatrix(pMVar10);
+		 
+		 // particles even frame
+         iVar18 = *(int *)(iVar22 + 0x1c);
+		 
+		 // if data is invalid, or odd-number frame
+         if ((iVar18 == 0) || ((*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 1) == 0)) 
+		 {
+		   // particles odd frame
+           iVar18 = *(int *)(iVar22 + 0x18);
+         }
+		 
+		 // VehParticle_Terrain_Ground
+         FUN_80059558(param_2,iVar18);
       }
-
+	  
       if (
 			// if wall rubbing right now
 			(*(short *)(param_2 + 0x3fe) == 0xf0) &&
-
+			
 			// if you are not being mask grabbed
 			(*(char *)(param_2 + 0x376) != '\x05')
-		  )
+		 ) 
 	  {
-		// instance -> matrix
-		r0 = (MATRIX *)(iVar24 + 0x30);
-		gte_SetRotMatrix(r0);
-		gte_SetTransMatrix(r0);
-
-		// VehParticle_Sparks_Wall
-		FUN_80059780(param_2,&DAT_800896c8);
-
-		uVar21 = 0x14;
-
-		// increase engine volume
-        sVar12 = *(short *)(param_2 + 0x496) + 0x14;
-        *(short *)(param_2 + 0x496) = sVar12;
-
-		// max engine volume
-        if (0xff < sVar12) {
-          *(undefined2 *)(param_2 + 0x496) = 0xff;
-        }
+		 // instance -> matrix
+		 pMVar10 = (MATRIX *)(iVar27 + 0x30)
+		 gte_SetRotMatrix(pMVar10);
+         gte_SetTransMatrix(pMVar10);
+		 
+		 // VehParticle_Sparks_Wall
+         FUN_80059780(param_2,&DAT_800896c8);
+		 
+         uVar19 = 0x14;
+         
+		 // increase engine volume
+		 sVar7 = *(short *)(param_2 + 0x496) + 0x14;
+         *(short *)(param_2 + 0x496) = sVar7;
+         
+		 // max engine volume
+		 if (0xff < sVar7) {
+           *(undefined2 *)(param_2 + 0x496) = 0xff;
+         }
       }
-
+	  
 	  // if being mask grabbed
-      else
+      else 
 	  {
-        if (*(short *)(param_2 + 0x3fe) == 0)
-		{
-		  // reset time against wall
-          *(undefined2 *)(param_2 + 0x50) = 0;
-        }
-
-		// decrease engine volume
-        uVar13 = *(short *)(param_2 + 0x496) - 0x14;
-        *(ushort *)(param_2 + 0x496) = uVar13;
-
-		// minimum engine volume
-        if ((int)((uint)uVar13 << 0x10) < 0) {
-          *(undefined2 *)(param_2 + 0x496) = 0;
-        }
-
-        uVar21 = 0x14;
-        if (*(short *)(param_2 + 0x496) == 0) {
-          uVar21 = 0xffffffff;
-        }
+         if (*(short *)(param_2 + 0x3fe) == 0) 
+		 {
+		   // reset time against wall
+           *(undefined2 *)(param_2 + 0x50) = 0;
+         }
+		 
+		 // decrease engine volume
+         uVar8 = *(short *)(param_2 + 0x496) - 0x14;
+         *(ushort *)(param_2 + 0x496) = uVar8;
+         
+		 // minimum engine volume
+		 if ((int)((uint)uVar8 << 0x10) < 0) {
+           *(undefined2 *)(param_2 + 0x496) = 0;
+         }
+		 
+         uVar19 = 0x14;
+         if (*(short *)(param_2 + 0x496) == 0) {
+           uVar19 = 0xffffffff;
+         }
       }
-
+	  
 	  // thread -> modelIndex == "player" of any kind
-      if (*(short *)(param_1 + 0x44) == 0x18)
+      if (*(short *)(*(int *)(param_1 + 0x68) + 0x44) == 0x18) 
 	  {
-		// volume
-        uVar16 = (int)*(short *)(param_2 + 0x496) << 0x10;
-
-		// if echo is not requierd
-        if ((*(uint *)(param_2 + 0x2c8) & 0x10000) == 0)
-		{
-		  // volume, distortion, left/right
-          uVar16 = uVar16 | 0x8080;
-        }
-
-		// if echo
-        else
-		{
-		  // add echo, volume, distortion, left/right
-          uVar16 = uVar16 | 0x1008080;
-        }
-
-		// driver audio
-        FUN_8002e690(param_2 + 0x308,uVar21,uVar16);
+		 // volume
+         uVar13 = (int)*(short *)(param_2 + 0x496) << 0x10;
+         
+		 // if echo is not requierd
+		 if ((*(uint *)(param_2 + 0x2c8) & 0x10000) == 0) 
+		 {
+		   // volume, distortion, left/right
+           param_3 = (undefined *)(uVar13 | 0x8080);
+         }
+		 
+		 // if echo
+         else 
+		 {
+		   // add echo, volume, distortion, left/right
+           param_3 = (undefined *)(uVar13 | 0x1008080);
+         }
+		 
+		 // driver audio
+         FUN_8002e690(param_2 + 0x308,uVar19);
       }
     }
   }
-  if ((local_30 & 8) != 0)
+  
+  if ((local_30 & 8) != 0) 
   {
-	// driver is drifting (0x1000)
-	// driver is skidding (0x800)
+	// back wheel skid (0x1000)
+	// front wheel skid (0x800)
     *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x1800;
   }
-  bVar2 = *(byte *)(param_2 + 0x4c);
-  if (bVar2 == 1) {
-    //turn on 12th bit of Actions Flag set (means racer is leaving skid marks)
+  
+  bVar26 = *(byte *)(param_2 + 0x4c);
+  if (bVar26 == 1) 
+  {
+	// front wheel skid
     *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x800;
 LAB_8005a094:
-    //turn off 13th bit of Actions Flag set (means racer is not drifting)
+
+	// no back wheel skid
     *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) & 0xffffefff;
   }
-  else {
-    if ((bVar2 != 0) && (bVar2 < 4)) goto LAB_8005a094;
-  }
-
+  
+  else if ((bVar26 != 0) && (bVar26 < 4)) goto LAB_8005a094;
+  
   //if racer is not on the ground, not leaving skid marks on front or back tires
-  if (((*(uint *)(param_2 + 0x2c8) & 1) == 0) || ((*(uint *)(param_2 + 0x2c8) & 0x1800) == 0)) {
+  if (((*(uint *)(param_2 + 0x2c8) & 1) == 0) || ((*(uint *)(param_2 + 0x2c8) & 0x1800) == 0)) 
+  {
 LAB_8005a73c:
-
+    
 	// if driver sound exists
-    if (*(int *)(param_2 + 0x300) != 0)
+	puVar12 = *(undefined **)(param_2 + 0x300);
+    if (puVar12 != (undefined *)0x0) 
 	{
 	  // OtherFX_Stop1
       FUN_80028808();
-
+	  
 	  // erase sound
       *(undefined4 *)(param_2 + 0x300) = 0;
     }
   }
-
+  
   // if driver is on ground, and leaving skidmarks (or drift)
-  else
+  else 
   {
-	// get speedApprox
+	// absolute value speedApprox
     iVar22 = (int)*(short *)(param_2 + 0x38e);
-
-	// absolute value
     if (iVar22 < 0) {
       iVar22 = -iVar22;
     }
-
+	
 	// if speed is low
     if (iVar22 < 0x201) goto LAB_8005a73c;
-
+    
 	// if speed is high
-
+	
+	bVar26 = 0;
+	
 	// thread -> modelIndex == "player" of any kind
-    if (*(short *)(param_1 + 0x44) == 0x18) {
-      iVar20 = (int)*(char *)(param_2 + 0x4b);
-      if (iVar20 < 0) {
-        iVar20 = -iVar20;
-      }
-
-      // Map value from [oldMin, oldMax] to [newMin, newMax]
-      // inverting newMin and newMax will give an inverse range mapping
-      iVar15 = FUN_80058f9c(iVar22,2000,12000,0x14,0xaa);
-
-	  // approxSpeed
-      iVar22 = (int)*(short *)(param_2 + 0x38e);
-
+    if (*(short *)(param_1 + 0x44) == 0x18) 
+	{
 	  // absolute value
-      if (iVar22 < 0) {
-        iVar22 = -iVar22;
+      iVar18 = (int)*(char *)(param_2 + 0x4b);
+      if (iVar18 < 0) {
+         iVar18 = -iVar18;
       }
 
       // Map value from [oldMin, oldMax] to [newMin, newMax]
       // inverting newMin and newMax will give an inverse range mapping
-      iVar22 = FUN_80058f9c(iVar22,2000,12000,0x92,0x78);
-
+      iVar11 = FUN_80058f9c(iVar22,2000,12000,0x14,0xaa);
+      
+	  // absolute value speedApprox
+	  iVar22 = (int)*(short *)(param_2 + 0x38e);
+      if (iVar22 < 0) {
+         iVar22 = -iVar22;
+      }
+      
+      // Map value from [oldMin, oldMax] to [newMin, newMax]
+      // inverting newMin and newMax will give an inverse range mapping
+	  iVar22 = FUN_80058f9c(iVar22,2000,12000,0x92,0x78);
+      
+	  // or you are sliding
 	  if (*(char *)(param_2 + 0x376) == '\x02') {
-        iVar14 = (int)*(short *)(param_2 + 0x3d4);
-        if (iVar14 < 0) {
-          iVar14 = -iVar14;
-        }
-        iVar22 = iVar22 - iVar14;
-        if (iVar22 < 0) {
-          iVar22 = 0;
-        }
+         iVar9 = (int)*(short *)(param_2 + 0x3d4);
+         if (iVar9 < 0) {
+           iVar9 = -iVar9;
+         }
+         iVar22 = iVar22 - iVar9;
+         if (iVar22 < 0) {
+           iVar22 = 0;
+         }
       }
-      iVar22 = iVar22 + iVar20;
+      iVar22 = iVar22 + iVar18;
       if (0x92 < iVar22) {
-        iVar22 = 0x92;
+         iVar22 = 0x92;
       }
-
+      
 	  // distortion
-      uVar16 = iVar22 << 8;
-
-      // if echo is required
-      if ((*(uint *)(param_2 + 0x2c8) & 0x10000) != 0)
+	  uVar13 = iVar22 << 8;
+      
+	  // if echo is required
+	  if ((*(uint *)(param_2 + 0x2c8) & 0x10000) != 0) 
 	  {
-		// add echo
-        uVar16 = uVar16 | 0x1000000;
+		 // add echo
+         uVar13 = uVar13 | 0x1000000;
       }
-
+	  
+	  // driver audio
 	  FUN_8002e690(
 
 			// driver audio
 			param_2 + 0x300,
 
-			(int)sVar3,
+			(int)iVar23,
 
 			// volume
-			(iVar15 + (iVar20 >> 1)) * 0x10000 |
+			(iVar11 + (iVar18 >> 1)) * 0x10000 |
 
 			// echo + distort
-			uVar16 |
+			uVar13 |
 
 			// L/R with no safeguard
 			0x80U - ((int)((uint)*(byte *)(param_2 + 0x4b) << 0x18) >> 0x1a));
+	  
+	  
     }
-    if ((*(uint *)(iVar24 + 0x28) & 0x2000) == 0) {
-      cVar23 = *(char *)(iVar24 + 0x50);
+    if ((*(uint *)(iVar27 + 0x28) & 0x2000) == 0) {
+      cVar25 = *(char *)(iVar27 + 0x50);
     }
     else {
-      cVar23 = *(char *)(iVar24 + 0x51);
+      cVar25 = *(char *)(iVar27 + 0x51);
     }
-    cVar23 = cVar23 + '\x02';
-
+    cVar25 = cVar25 + '\x02';
+	
 	// Cosine(angle)
     FUN_8003d1c0((int)*(short *)(param_2 + 0x396));
-
-	// Sine(angle)
-	iVar22 = FUN_8003d184((int)*(short *)(param_2 + 0x396));
-
-	// Cosine(angle)
-	iVar20 = FUN_8003d1c0((int)*(short *)(param_2 + 0x396));
-
-	// Sine(angle)
-	FUN_8003d184((int)*(short *)(param_2 + 0x396));
-
-	// Cosine(angle)
-	iVar15 = FUN_8003d1c0((int)*(short *)(param_2 + 0x396));
-
-	// Sine(angle)
-	FUN_8003d184((int)*(short *)(param_2 + 0x396));
-
-	// Cosine(angle)
-	FUN_8003d1c0((int)*(short *)(param_2 + 0x396));
-
-	// Sine(angle)
-	iVar14 = FUN_8003d184((int)*(short *)(param_2 + 0x396));
-
-	// instance -> matrix
-	r0 = (MATRIX *)(iVar24 + 0x30);
-	gte_SetRotMatrix(r0);
-	gte_SetTransMatrix(r0);
 	
-    sVar3 = (short)(iVar15 * 10 >> 0xc);
-    sVar12 = (short)(iVar14 * -10 >> 0xc);
-    sVar6 = (short)(iVar15 * 10 >> 0xd);
-    sVar7 = (short)(iVar14 * -10 >> 0xd);
-    sVar10 = (short)(iVar22 * 0xf >> 0xc);
-    sVar11 = (short)(iVar20 * 0xf >> 0xc);
-    sVar8 = (short)(iVar22 * 0xf >> 0xd);
-    sVar9 = (short)(iVar20 * 0xf >> 0xd);
+	// Sine(angle)
+    iVar22 = FUN_8003d184((int)*(short *)(param_2 + 0x396));
+    iVar22 = iVar22 * 0xf;
+	
+	// Cosine(angle)
+    iVar23 = FUN_8003d1c0((int)*(short *)(param_2 + 0x396));
+	
+	// Sine(angle)
+    FUN_8003d184((int)*(short *)(param_2 + 0x396));
+	
+	// Cosine(angle)
+    iVar18 = FUN_8003d1c0((int)*(short *)(param_2 + 0x396));
+	
+	// Sine(angle)
+    FUN_8003d184((int)*(short *)(param_2 + 0x396));
+    iVar23 = iVar23 * 0xf;
+    iVar17 = iVar18 * 10 >> 0xc;
+	
+	// Cosine(angle)
+    FUN_8003d1c0((int)*(short *)(param_2 + 0x396));
+    puVar12 = (undefined *)(int)*(short *)(param_2 + 0x396);
+    iVar24 = iVar23 >> 0xc;
+	
+	// Sine(angle)
+    iVar18 = FUN_8003d184();
+    iVar20 = iVar22 >> 0xc;
+    iVar16 = iVar18 * -10 >> 0xc;
+	
+	// instance -> matrix
+    pMVar10 = (MATRIX *)(iVar27 + 0x30);
+    gte_SetRotMatrix(pMVar10);
+    gte_SetTransMatrix(pMVar10);
+	
+    iVar11 = iVar20 >> 1;
+    iVar18 = iVar24 >> 1;
+    uVar15 = (undefined2)in_t1;
+    iVar9 = iVar17 >> 1;
+    sVar5 = (short)iVar9;
+    sVar7 = (short)iVar17;
+    sVar3 = (short)iVar16;
+    sVar4 = (short)(iVar16 >> 1);
 	
     // front wheel skids
     if ((*(uint *)(param_2 + 0x2c8) & 0x800) != 0) 
 	{
 	  // enable skidmarks for first tire
       *(uint *)(param_2 + 0x2c4) = *(uint *)(param_2 + 0x2c4) | 1;
+	  
+      gte_ldVXY0(0xffe2);
+      gte_ldVZ0(0xffffffec);
+      gte_rt();
+      read_mt(param_3,in_t1,param_4);
       
-	  // ldv0
-	  setCopReg(2,0,0xffe2);
-      setCopReg(2,0x800,0xffffffec);
-
-	  // rtv0tr   cop2 $0480012  v0 * rotmatrix + tr vector
-      copFunction(2,0x480012);
-
-	  // get result
-      uVar21 = getCopReg(2,0xc800);
-      uVar19 = getCopReg(2,0xd000);
-      uVar17 = getCopReg(2,0xd800);
-	  
-      sVar4 = (short)uVar21 - sVar8;
-	  
+	  iVar16 = (int)param_3 - (iVar22 >> 0xd);
+      
 	  // skidmark index (0-7)
-      bVar2 = *(byte *)(param_2 + 0xc3);
+	  bVar1 = *(byte *)(param_2 + 0xc3);
 	  
-      sVar5 = (short)uVar17 - sVar9;
-      iVar22 = param_2 + (uint)bVar2 * 0x40;
+      iVar23 = param_4 - (iVar23 >> 0xd);
+      iVar22 = param_2 + (uint)bVar1 * 0x40;
+      sVar6 = (short)iVar16;
       
 	  // store to skidmark buffer
-	  *(short *)(iVar22 + 0xc4) = sVar4 + sVar3;
-      *(short *)(iVar22 + 200) = sVar5 + sVar12;
-      *(short *)(iVar22 + 0xcc) = sVar4 - sVar3;
+	  *(short *)(iVar22 + 0xc4) = sVar6 + sVar7;
 	  
-      uVar18 = (undefined2)uVar19;
-      *(undefined2 *)(iVar22 + 0xc6) = uVar18;
-      *(undefined2 *)(iVar22 + 0xce) = uVar18;
-      *(short *)(iVar22 + 0xd0) = sVar5 - sVar12;
-      *(char *)(iVar22 + 0xca) = cVar23;
-      if ((local_30 & 8) == 0) {
-        *(undefined *)(iVar22 + 0xcb) = 0;
+      sVar2 = (short)iVar23;
+      *(short *)(iVar22 + 200) = sVar2 + sVar3;
+      *(short *)(iVar22 + 0xcc) = sVar6 - sVar7;
+      *(undefined2 *)(iVar22 + 0xc6) = uVar15;
+      *(undefined2 *)(iVar22 + 0xce) = uVar15;
+      *(short *)(iVar22 + 0xd0) = sVar2 - sVar3;
+      *(char *)(iVar22 + 0xca) = cVar25;
+      
+	  if ((local_30 & 8) == 0) {
+         *(byte *)(iVar22 + 0xcb) = bVar26;
       }
       else {
-        *(undefined *)(iVar22 + 0xcb) = 1;
+         *(byte *)(iVar22 + 0xcb) = bVar26 | 1;
       }
+	  
+      iVar16 = iVar16 + iVar20;
+      iVar23 = iVar23 + iVar24;
 	  
 	  // previous skidmark index
-      uVar16 = (uint)bVar2 - 1 & 7;
-      iVar22 = param_2 + uVar16 * 0x40;
+      uVar13 = bVar1 - 1 & 7;
+      iVar22 = param_2 + uVar13 * 0x40;
 	  
 	  // record skidmark buffer
-      *(short *)(iVar22 + 0xc4) = sVar4 + sVar10 + sVar6;
-      *(undefined2 *)(iVar22 + 0xc6) = uVar18;
-      *(short *)(iVar22 + 200) = sVar5 + sVar11 + sVar7;
-      *(short *)(iVar22 + 0xcc) = (sVar4 + sVar10) - sVar6;
-      *(undefined2 *)(iVar22 + 0xce) = uVar18;
-      *(short *)(iVar22 + 0xd0) = (sVar5 + sVar11) - sVar7;
-      *(char *)(iVar22 + 0xca) = cVar23;
+      *(short *)(iVar22 + 0xc4) = (short)iVar16 + sVar5;
+      *(undefined2 *)(iVar22 + 0xc6) = uVar15;
+      *(short *)(iVar22 + 200) = (short)iVar23 + sVar4;
+      *(short *)(iVar22 + 0xcc) = (short)iVar16 - sVar5;
+      *(undefined2 *)(iVar22 + 0xce) = uVar15;
+      *(short *)(iVar22 + 0xd0) = (short)iVar23 - sVar4;
+      *(char *)(iVar22 + 0xca) = cVar25;
 	  
       if ((local_30 & 8) == 0) {
-        *(undefined *)(iVar22 + 0xcb) = 0;
+         *(byte *)(iVar22 + 0xcb) = bVar26;
       }
       else {
-        *(undefined *)(iVar22 + 0xcb) = 1;
+         *(byte *)(iVar22 + 0xcb) = bVar26 | 1;
       }
 	  
 	  // enable skidmarks for second tire
       *(uint *)(param_2 + 0x2c4) = *(uint *)(param_2 + 0x2c4) | 2;
 	  
-	  // ldv0
-      setCopReg(2,0,0x1e);
-      setCopReg(2,0x800,0xffffffec);
-
-	  // rtv0tr   cop2 $0480012  v0 * rotmatrix + tr vector
-      copFunction(2,0x480012);
-
-	  // get result
-      uVar21 = getCopReg(2,0xc800);
-      uVar19 = getCopReg(2,0xd000);
-      uVar17 = getCopReg(2,0xd800);
-	  
+      gte_ldVXY0(0x1e);
+      gte_ldVZ0(0xffffffec);
+      gte_rt();
+      read_mt(iVar16,in_t1,iVar23);
+      
 	  // next skidmark index
-      uVar16 = uVar16 + 1 & 7;
-      sVar4 = (short)uVar21 - sVar8;
-      sVar5 = (short)uVar17 - sVar9;
-      iVar22 = param_2 + uVar16 * 0x40;
+	  uVar13 = uVar13 + 1 & 7;
+      iVar22 = param_2 + uVar13 * 0x40;
 	  
 	  // skidmark data
-      *(short *)(iVar22 + 0xd4) = sVar4 + sVar3;
-      *(short *)(iVar22 + 0xd8) = sVar5 + sVar12;
-      *(short *)(iVar22 + 0xdc) = sVar4 - sVar3;
-      uVar18 = (undefined2)uVar19;
-      *(undefined2 *)(iVar22 + 0xd6) = uVar18;
-      *(undefined2 *)(iVar22 + 0xde) = uVar18;
-      *(short *)(iVar22 + 0xe0) = sVar5 - sVar12;
-      *(char *)(iVar22 + 0xda) = cVar23;
-      if ((local_30 & 8) == 0) {
-        *(undefined *)(iVar22 + 0xdb) = 0;
+      sVar6 = (short)(iVar16 - iVar11);
+      *(short *)(iVar22 + 0xd4) = sVar6 + sVar7;
+      sVar2 = (short)(iVar23 - iVar18);
+      *(short *)(iVar22 + 0xd8) = sVar2 + sVar3;
+      *(short *)(iVar22 + 0xdc) = sVar6 - sVar7;
+      *(undefined2 *)(iVar22 + 0xd6) = uVar15;
+      *(undefined2 *)(iVar22 + 0xde) = uVar15;
+      *(short *)(iVar22 + 0xe0) = sVar2 - sVar3;
+      *(char *)(iVar22 + 0xda) = cVar25;
+      if ((*(uint *)(puVar21 + 0x38) & 8) == 0) {
+         *(byte *)(iVar22 + 0xdb) = bVar26;
       }
       else {
-        *(undefined *)(iVar22 + 0xdb) = 1;
+         *(byte *)(iVar22 + 0xdb) = bVar26 | 1;
       }
-	  
+      param_3 = (undefined *)((iVar16 - iVar11) + iVar20);
+      param_4 = (iVar23 - iVar18) + iVar24;
+      
 	  // previous skidmark index
-      iVar22 = param_2 + (uVar16 - 1 & 7) * 0x40;
-	  
-      *(short *)(iVar22 + 0xd4) = sVar4 + sVar10 + sVar6;
-      *(undefined2 *)(iVar22 + 0xd6) = uVar18;
-      *(short *)(iVar22 + 0xd8) = sVar5 + sVar11 + sVar7;
-      *(short *)(iVar22 + 0xdc) = (sVar4 + sVar10) - sVar6;
-      *(undefined2 *)(iVar22 + 0xde) = uVar18;
-      *(short *)(iVar22 + 0xe0) = (sVar5 + sVar11) - sVar7;
-      *(char *)(iVar22 + 0xda) = cVar23;
-      if ((local_30 & 8) == 0) {
-        *(undefined *)(iVar22 + 0xdb) = 0;
+	  iVar22 = param_2 + (uVar13 - 1 & 7) * 0x40;
+      
+	  *(short *)(iVar22 + 0xd4) = (short)param_3 + sVar5;
+      puVar12 = param_3 + -iVar9;
+      *(undefined2 *)(iVar22 + 0xd6) = uVar15;
+      *(short *)(iVar22 + 0xd8) = (short)param_4 + sVar4;
+      *(short *)(iVar22 + 0xdc) = (short)puVar12;
+      *(undefined2 *)(iVar22 + 0xde) = uVar15;
+      *(short *)(iVar22 + 0xe0) = (short)param_4 - sVar4;
+      *(char *)(iVar22 + 0xda) = cVar25;
+      if ((*(uint *)(puVar21 + 0x38) & 8) == 0) {
+         *(byte *)(iVar22 + 0xdb) = bVar26;
       }
       else {
-        *(undefined *)(iVar22 + 0xdb) = 1;
+         *(byte *)(iVar22 + 0xdb) = bVar26 | 1;
       }
     }
 	
@@ -21424,286 +21444,229 @@ LAB_8005a73c:
 	{
 	  // enable skidmarks for third tire
       *(uint *)(param_2 + 0x2c4) = *(uint *)(param_2 + 0x2c4) | 4;
-      
-	  // ldv0
-	  setCopReg(2,0,0xffe2);
-      setCopReg(2,0x800,0x28);
-
-	  // rtv0tr   cop2 $0480012  v0 * rotmatrix + tr vector
-      copFunction(2,0x480012);
-
-      uVar21 = getCopReg(2,0xc800);
-      uVar19 = getCopReg(2,0xd000);
-      uVar17 = getCopReg(2,0xd800);
 	  
-      sVar4 = (short)uVar21 - sVar8;
-      bVar2 = *(byte *)(param_2 + 0xc3);
-      sVar5 = (short)uVar17 - sVar9;
-      iVar22 = param_2 + (uint)bVar2 * 0x40;
-      *(short *)(iVar22 + 0xe4) = sVar4 + sVar3;
-      *(short *)(iVar22 + 0xe8) = sVar5 + sVar12;
-      *(short *)(iVar22 + 0xec) = sVar4 - sVar3;
-      uVar18 = (undefined2)uVar19;
-      *(undefined2 *)(iVar22 + 0xe6) = uVar18;
-      *(undefined2 *)(iVar22 + 0xee) = uVar18;
-      *(short *)(iVar22 + 0xf0) = sVar5 - sVar12;
-      *(char *)(iVar22 + 0xea) = cVar23;
-      if ((local_30 & 8) == 0) {
-        *(undefined *)(iVar22 + 0xeb) = 0;
+      gte_ldVXY0(0xffe2);
+      gte_ldVZ0(0x28);
+      gte_rt();
+      read_mt(param_3,in_t1,param_4);
+      bVar1 = *(byte *)(param_2 + 0xc3);
+      iVar22 = param_2 + (uint)bVar1 * 0x40;
+      sVar6 = (short)((int)param_3 - iVar11);
+      *(short *)(iVar22 + 0xe4) = sVar6 + sVar7;
+      sVar2 = (short)(param_4 - iVar18);
+      *(short *)(iVar22 + 0xe8) = sVar2 + sVar3;
+      *(short *)(iVar22 + 0xec) = sVar6 - sVar7;
+      *(undefined2 *)(iVar22 + 0xe6) = uVar15;
+      *(undefined2 *)(iVar22 + 0xee) = uVar15;
+      *(short *)(iVar22 + 0xf0) = sVar2 - sVar3;
+      *(char *)(iVar22 + 0xea) = cVar25;
+      if ((*(uint *)(puVar21 + 0x38) & 8) == 0) {
+         *(byte *)(iVar22 + 0xeb) = bVar26;
       }
       else {
-        *(undefined *)(iVar22 + 0xeb) = 1;
+         *(byte *)(iVar22 + 0xeb) = bVar26 | 1;
       }
+      iVar23 = ((int)param_3 - iVar11) + iVar20;
+      iVar16 = (param_4 - iVar18) + iVar24;
 	  
 	  // next skidmark buffer
-      uVar16 = (uint)bVar2 - 1 & 7;
-      iVar22 = param_2 + uVar16 * 0x40;
-	  
-      *(short *)(iVar22 + 0xe4) = sVar4 + sVar10 + sVar6;
-      *(undefined2 *)(iVar22 + 0xe6) = uVar18;
-      *(short *)(iVar22 + 0xe8) = sVar5 + sVar11 + sVar7;
-      *(short *)(iVar22 + 0xec) = (sVar4 + sVar10) - sVar6;
-      *(undefined2 *)(iVar22 + 0xee) = uVar18;
-      *(short *)(iVar22 + 0xf0) = (sVar5 + sVar11) - sVar7;
-      *(char *)(iVar22 + 0xea) = cVar23;
-      if ((local_30 & 8) == 0) {
-        *(undefined *)(iVar22 + 0xeb) = 0;
+      uVar13 = bVar1 - 1 & 7;
+      iVar22 = param_2 + uVar13 * 0x40;
+      
+	  *(short *)(iVar22 + 0xe4) = (short)iVar23 + sVar5;
+      sVar6 = (short)iVar16;
+      *(undefined2 *)(iVar22 + 0xe6) = uVar15;
+      *(short *)(iVar22 + 0xe8) = sVar6 + sVar4;
+      *(short *)(iVar22 + 0xec) = (short)iVar23 - sVar5;
+      *(undefined2 *)(iVar22 + 0xee) = uVar15;
+      *(short *)(iVar22 + 0xf0) = sVar6 - sVar4;
+      *(char *)(iVar22 + 0xea) = cVar25;
+      if ((*(uint *)(puVar21 + 0x38) & 8) == 0) {
+         *(byte *)(iVar22 + 0xeb) = bVar26;
       }
       else {
-        *(undefined *)(iVar22 + 0xeb) = 1;
+         *(byte *)(iVar22 + 0xeb) = bVar26 | 1;
       }
 	  
 	  // enable skidmarks for fourth tire
       *(uint *)(param_2 + 0x2c4) = *(uint *)(param_2 + 0x2c4) | 8;
 	  
-	  // ldv0
-      setCopReg(2,0,0x1e);
-      setCopReg(2,0x800,0x28);
-
-	  // rtv0tr   cop2 $0480012  v0 * rotmatrix + tr vector
-      copFunction(2,0x480012);
-
-	  uVar21 = getCopReg(2,0xc800);
-      uVar19 = getCopReg(2,0xd000);
-      uVar17 = getCopReg(2,0xd800);
-	  
+      gte_ldVXY0(0x1e);
+      gte_ldVZ0(0x28);
+      gte_rt();
+      read_mt(iVar23,in_t1,iVar16);
+      
 	  // next skidmark buffer
-      uVar16 = uVar16 + 1 & 7;
+	  uVar13 = uVar13 + 1 & 7;
 	  
-      sVar8 = (short)uVar21 - sVar8;
-      sVar9 = (short)uVar17 - sVar9;
-      iVar22 = param_2 + uVar16 * 0x40;
-      *(short *)(iVar22 + 0xf4) = sVar8 + sVar3;
-      *(short *)(iVar22 + 0xf8) = sVar9 + sVar12;
-      *(short *)(iVar22 + 0xfc) = sVar8 - sVar3;
-      uVar18 = (undefined2)uVar19;
-      *(undefined2 *)(iVar22 + 0xf6) = uVar18;
-      *(undefined2 *)(iVar22 + 0xfe) = uVar18;
-      *(short *)(iVar22 + 0x100) = sVar9 - sVar12;
-      *(char *)(iVar22 + 0xfa) = cVar23;
-      if ((local_30 & 8) == 0) {
-        *(undefined *)(iVar22 + 0xfb) = 0;
+      sVar6 = sVar6 - (short)iVar18;
+      iVar22 = param_2 + uVar13 * 0x40;
+      sVar2 = (short)(iVar23 - iVar11);
+      *(short *)(iVar22 + 0xf4) = sVar2 + sVar7;
+      *(short *)(iVar22 + 0xf8) = sVar6 + sVar3;
+      *(short *)(iVar22 + 0xfc) = sVar2 - sVar7;
+      *(undefined2 *)(iVar22 + 0xf6) = uVar15;
+      *(undefined2 *)(iVar22 + 0xfe) = uVar15;
+      *(short *)(iVar22 + 0x100) = sVar6 - sVar3;
+      *(char *)(iVar22 + 0xfa) = cVar25;
+      if ((*(uint *)(puVar21 + 0x38) & 8) == 0) {
+         *(byte *)(iVar22 + 0xfb) = bVar26;
       }
       else {
-        *(undefined *)(iVar22 + 0xfb) = 1;
+         *(byte *)(iVar22 + 0xfb) = bVar26 | 1;
       }
-      iVar22 = param_2 + (uVar16 - 1 & 7) * 0x40;
-      *(short *)(iVar22 + 0xf4) = sVar8 + sVar10 + sVar6;
-      *(undefined2 *)(iVar22 + 0xf6) = uVar18;
-      *(short *)(iVar22 + 0xf8) = sVar9 + sVar11 + sVar7;
-      *(short *)(iVar22 + 0xfc) = (sVar8 + sVar10) - sVar6;
-      *(undefined2 *)(iVar22 + 0xfe) = uVar18;
-      *(short *)(iVar22 + 0x100) = (sVar9 + sVar11) - sVar7;
-      *(char *)(iVar22 + 0xfa) = cVar23;
-      if ((local_30 & 8) == 0) {
-        *(undefined *)(iVar22 + 0xfb) = 0;
+      iVar20 = (iVar23 - iVar11) + iVar20;
+      sVar6 = sVar6 + (short)iVar24;
+      iVar22 = param_2 + (uVar13 - 1 & 7) * 0x40;
+      *(short *)(iVar22 + 0xf4) = (short)iVar20 + sVar5;
+      puVar12 = (undefined *)(iVar20 - iVar9);
+      *(undefined2 *)(iVar22 + 0xf6) = uVar15;
+      *(short *)(iVar22 + 0xf8) = sVar6 + sVar4;
+      *(short *)(iVar22 + 0xfc) = (short)puVar12;
+      *(undefined2 *)(iVar22 + 0xfe) = uVar15;
+      *(short *)(iVar22 + 0x100) = sVar6 - sVar4;
+      *(char *)(iVar22 + 0xfa) = cVar25;
+      if ((*(uint *)(puVar21 + 0x38) & 8) == 0) {
+         *(byte *)(iVar22 + 0xfb) = bVar26;
       }
       else {
-        *(undefined *)(iVar22 + 0xfb) = 1;
+         *(byte *)(iVar22 + 0xfb) = bVar26 | 1;
       }
     }
   }
 
   // thread -> modelIndex == "robotcar" of any kind
-  if (*(short *)(param_1 + 0x44) == 0x3f)
+  if (*(short *)(*(int *)(puVar21 + 0x68) + 0x44) == 0x3f) 
   {
-    if (
-			// put each driver on alternates frames of 4 (0,1,2,3)
-			(*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 3) !=
-			((uint)*(byte *)(param_2 + 0x4a) & 3)
-		)
+	// put each driver on alternates frames of 4 (0,1,2,3)
+    uVar13 = *(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 3;
+    if (uVar13 != (*(byte *)(param_2 + 0x4a) & 3)) goto LAB_8005a9d8;
 
-	goto LAB_8005a9d8;
-	LAB_8005a858:
-
-	if (*(char *)(param_2 + 0x381) != '\0') goto LAB_8005a868;
+LAB_8005a858:
+    if (*(char *)(param_2 + 0x381) != '\0') goto LAB_8005a868;
   }
-
+  
   // else if "player"???
   else {
-    if (
-		(*(char *)(param_2 + 0x4fe) == '\x02') ||
-		(
-			(
-				// If numPlyrCurrGame is more than 1
-				// If this is a multiplayer game
-				1 < (byte)PTR_DAT_8008d2ac[0x1ca8] &&
-				(
-					(
-						(
-							// If numPlyrCurrGame is not 2
-							PTR_DAT_8008d2ac[0x1ca8] != 2 ||
-							(
-								// for 2P mode, make driver skids on alternating frames (0 or 1)
-								(*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 1) != (uint)*(byte *)(param_2 + 0x4a)
-							)
-						) &&
-						(
-							// for 3P or 4P mode, make skids on alternating frames of 4 (0,1,2,3)
-							(*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 3) != (uint)*(byte *)(param_2 + 0x4a))
-						)
-				)
-			)
-		)
-	   )
-    goto LAB_8005a9d8;
+    if ((*(char *)(param_2 + 0x4fe) == '\x02') ||
+       ((uVar13 = (uint)(byte)PTR_DAT_8008d2ac[0x1ca8], 1 < uVar13 &&
+         (((uVar13 != 2 ||
+           (uVar13 = (uint)*(byte *)(param_2 + 0x4a),
+           (*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 1) != uVar13)) &&
+          (uVar13 = (uint)*(byte *)(param_2 + 0x4a),
+          (*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 3) != uVar13)))))) goto LAB_8005a9d8;
+    puVar12 = PTR_DAT_8008d2ac;
     if (*(char *)(param_2 + 0x381) == '\0') {
-      if (
-			(
-				((int)*(short *)(param_2 + 0x3dc) < 0x81) ||
-
-				(
-					(int)(((uint)*(byte *)(param_2 + 0x477) + 2) * 0x20) <
-					(int)*(short *)(param_2 + 0x3dc)
-				)
-			) &&
-
-			(	
-				// THREAD_SearchForModel(thread->childThread, turbo fire)
-				iVar22 = FUN_80042394(*(undefined4 *)(param_1 + 0x14),0x2c),
-
-				// result found
-				iVar22 != 0
-			)
-		 )
-	  {
-		goto LAB_8005a9d8;
+      uVar13 = (uint)*(short *)(param_2 + 0x3dc);
+      if (((int)uVar13 < 0x81) || ((int)((*(byte *)(param_2 + 0x477) + 2) * 0x20) < (int)uVar13)) {
+         puVar12 = *(undefined **)(*(int *)(puVar21 + 0x68) + 0x14);
+         uVar29 = FUN_80042394(puVar12,0x2c);
+         uVar13 = (uint)((ulonglong)uVar29 >> 0x20);
+         if ((int)uVar29 != 0) goto LAB_8005a9d8;
       }
-	  goto LAB_8005a858;
+      goto LAB_8005a858;
     }
 LAB_8005a868:
     *(char *)(param_2 + 0x381) = *(char *)(param_2 + 0x381) + -1;
   }
   
-  // gte_setRotMatrix
-  setCopControlWord(2,0,*(undefined4 *)(iVar24 + 0x30));
-  setCopControlWord(2,0x800,*(undefined4 *)(iVar24 + 0x34));
-  setCopControlWord(2,0x1000,*(undefined4 *)(iVar24 + 0x38));
-  setCopControlWord(2,0x1800,*(undefined4 *)(iVar24 + 0x3c));
-  setCopControlWord(2,0x2000,*(undefined4 *)(iVar24 + 0x40));
+  // instance->matrix
+  pMVar10 = (MATRIX *)(iVar27 + 0x30);
+  gte_SetRotMatrix(pMVar10);
+  gte_ldVXY0(0x4000000);
+  gte_ldVZ0(0xfffffc00);
+  gte_rtv0();
+  read_mt(pMVar10,uVar13,puVar12);
   
-  // ldv0
-  setCopReg(2,0,0x4000000);
-  setCopReg(2,0x800,0xfffffc00);
-
-  // rtv0     cop2 $0486012  v0 * rotmatrix
-  copFunction(2,0x486012);
-
-  local_40 = getCopReg(2,0xc800);
-  local_3c = getCopReg(2,0xd000);
-  local_38 = getCopReg(2,0xd800);
+  *(MATRIX **)(puVar21 + 0x28) = pMVar10;
+  *(uint *)(puVar21 + 0x2c) = uVar13;
+  *(undefined **)(puVar21 + 0x30) = puVar12;
   
-  // ldv0
-  setCopReg(2,0,(int)*(short *)(iVar24 + 0x1c) * 9 >> 3 & 0xffffU |
-                ((int)*(short *)(iVar24 + 0x1e) * 7 >> 1) << 0x10);
-  setCopReg(2,0x800,(int)*(short *)(iVar24 + 0x20) * -0x38 >> 4);
-
-  // rtv0     cop2 $0486012  v0 * rotmatrix
-  copFunction(2,0x486012);
-
-  local_50 = getCopReg(2,0x19);
-  local_4c = getCopReg(2,0x1a);
-  local_48 = getCopReg(2,0x1b);
-
+  // instance scale (x,y,z)
+  gte_ldVXY0(*(short *)(iVar27 + 0x1c) * 9 >> 3 & 0xffffU |
+              (*(short *)(iVar27 + 0x1e) * 7 >> 1) << 0x10);
+  
+  gte_ldVZ0(*(short *)(iVar27 + 0x20) * -0x38 >> 4);
+  gte_rtv0();
+  
+  r0 = (VECTOR *)(puVar21 + 0x18);
+  gte_stlvnl(r0);
+  
+  puVar21 = puVar21 + 0x28;
+  
   // VehParticle_Exhaust
-  FUN_80059100(param_2,&local_50,&local_40);
-
-  // ldv0
-  setCopReg(2,0,(int)*(short *)(iVar24 + 0x1c) * -0x12 >> 4 & 0xffffU |
-                ((int)*(short *)(iVar24 + 0x1e) * 7 >> 1) << 0x10);
-  setCopReg(2,0x800,(int)*(short *)(iVar24 + 0x20) * -0x38 >> 4);
-
-  // rtv0     cop2 $0486012  v0 * rotmatrix
-  copFunction(2,0x486012);
-
-  local_50 = getCopReg(2,0x19);
-  local_4c = getCopReg(2,0x1a);
-  local_48 = getCopReg(2,0x1b);
-
+  FUN_80059100(param_2,r0,puVar21);
+  
+  // instance scale (x,y,z)
+  gte_ldVXY0(*(short *)(iVar27 + 0x1c) * -0x12 >> 4 & 0xffffU |
+              (*(short *)(iVar27 + 0x1e) * 7 >> 1) << 0x10);
+  gte_ldVZ0(*(short *)(iVar27 + 0x20) * -0x38 >> 4);
+  gte_rtv0();
+  
+  gte_stlvnl(r0);
+  
   // VehParticle_Exhaust
-  FUN_80059100(param_2,&local_50,&local_40);
+  FUN_80059100(param_2,r0,puVar21);
 
 LAB_8005a9d8:
 
   // if driver is burnt
-  if (*(short *)(param_2 + 0x402) != 0)
+  if (*(short *)(param_2 + 0x402) != 0) 
   {
     *(undefined2 *)(param_2 + 0x508) = 0x1000;
-
+	
 	// set alpha to max (draws black)
     *(undefined2 *)(*(int *)(param_2 + 0x1c) + 0x22) = 0x1000;
   }
-
+  
   // if driver is invisible
-  if (*(int *)(param_2 + 0x28) != 0)
+  if (*(int *)(param_2 + 0x28) != 0) 
   {
 	// set transparency to max
-    *(undefined2 *)(iVar24 + 0x22) = 0x1000;
+    *(undefined2 *)(iVar27 + 0x22) = 0x1000;
   }
-
+  
   //if racer is not driving normally and not drifting
-  if ((*(char *)(param_2 + 0x376) != '\0') && (*(char *)(param_2 + 0x376) != '\x02'))
+  if ((*(char *)(param_2 + 0x376) != '\0') && (*(char *)(param_2 + 0x376) != '\x02')) 
   {
     //turn off 20th bit of Actions Flag set (means racer is not in the air)
     *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) & 0xfff7ffff;
   }
-
+  
   //if racer is being mask grabbed or repositioned, or is on the ground
-  if (((uint)*(byte *)(param_2 + 0x376) - 4 < 2) || ((*(uint *)(param_2 + 0x2c8) & 1) != 0))
+  if ((*(byte *)(param_2 + 0x376) - 4 < 2) || ((*(uint *)(param_2 + 0x2c8) & 1) != 0)) 
   {
 	// GAMEPAD_Vib_2
-	FUN_800263fc(param_2,0x27,0);
-
-	if (*(short *)(param_2 + 0x3d4) == 0) {
+    FUN_800263fc(param_2,0x27,0);
+	
+    if (*(short *)(param_2 + 0x3d4) == 0) {
       return;
     }
     if ((*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 3) == 0) {
-      uVar21 = 0x27;
+      uVar19 = 0x27;
     }
     else {
-      uVar21 = 0xf0;
+      uVar19 = 0xf0;
     }
-    uVar17 = 0x100;
+    uVar14 = 0x100;
   }
   else {
     if (*(short *)(param_2 + 0x3fc) < 0x80) {
-      uVar21 = 0x12;
-      if ((*(char *)(param_2 + 0x4b) < '\0') || (uVar21 = 0x22, '\0' < *(char *)(param_2 + 0x4b)))
+      uVar19 = 0x12;
+      if ((*(char *)(param_2 + 0x4b) < '\0') || (uVar19 = 0x22, '\0' < *(char *)(param_2 + 0x4b))) 
 	  {
-		// GAMEPAD_Vib_1
-        FUN_800263a0(param_2,uVar21,0x20);
+		 // GAMEPAD_Vib_1
+         FUN_800263a0(param_2,uVar19,0x20);
       }
     }
-    uVar21 = 0;
-    uVar17 = uVar21;
+    uVar19 = 0;
+    uVar14 = uVar19;
   }
-
+ 
   // GAMEPAD_Vib_2
-  FUN_800263fc(param_2,uVar21,uVar17);
-
+  FUN_800263fc(param_2,uVar19,uVar14);
   return;
 }
-
 
 // param1 - driver
 // param2 - speed cap
@@ -23472,28 +23435,24 @@ void FUN_8005ca24(int param_1)
 	  // MATH_VectorNormalize
 	  FUN_8003d378(&local_20);
 
-	  puVar2 = PTR_DAT_8008d2ac;
       local_30 = CONCAT22((short)((uint)uVar4 >> 8) - psVar10[1],
                           (short)((uint)uVar3 >> 8) - *psVar10);
-      setCopControlWord(2,0,local_30);
-      setCopControlWord(2,0x800,(uVar5 >> 8 & 0xffff) - (uint)(ushort)psVar10[2] & 0xffff |
-                                ((int)((uint)*(ushort *)(param_1 + 0x314) << 0x10) >> 0x15) << 0x10)
-      ;
-      setCopControlWord(2,0x1000,(int)((uint)*(ushort *)(param_1 + 0x31a) << 0x10) >> 0x15 & 0xffffU
-                                 | ((int)((uint)*(ushort *)(param_1 + 800) << 0x10) >> 0x15) << 0x10
-                       );
-      setCopReg(2,in_zero,local_20);
-      setCopReg(2,in_at,local_1c);
+      gte_ldR11R12(local_30);
+      gte_ldR13R21((uint)(ushort)((short)((uint)uVar5 >> 8) - psVar10[2]) |
+                     ((int)((uint)*(ushort *)(param_1 + 0x314) << 0x10) >> 0x15) << 0x10);
+      gte_ldR22R23((int)((uint)*(ushort *)(param_1 + 0x31a) << 0x10) >> 0x15 & 0xffffU |
+                     ((int)((uint)*(ushort *)(param_1 + 800) << 0x10) >> 0x15) << 0x10);
+      gte_ldv0(&local_20);
+      gte_mvmva(0,0,0,3,0);
 
-      copFunction(2,0x406012);
-
-	  iVar7 = getCopReg(2,0xc800);
-      iVar9 = getCopReg(2,0xd000);
+      iVar7 = gte_stMAC1();
+      iVar9 = gte_stMAC2();
       iVar6 = (uint)(ushort)psVar10[3] * 8 + (iVar7 >> 0xc);
 
 	  // set new progress
       *(int *)(param_1 + 0x488) = iVar6;
 
+	  puVar2 = PTR_DAT_8008d2ac;
 	  uVar1 = *(ushort *)(*(int *)(*(int *)(puVar2 + 0x160) + 0x14c) + 6);
       iVar7 = (uint)uVar1 << 3;
       if (uVar1 == 0) {
@@ -31144,20 +31103,23 @@ LAB_800647d8:
 	gte_SetTransMatrix(puVar5 + 0x168 + 0x28);
     
 	// instance position on GTE
-	setCopReg(2,in_zero,local_30);
-    setCopReg(2,in_at,local_2c);
+	gte_ldv0(&local_30);
 
 	// RTPS - Perspective Transformation (single)
-	copFunction(2,0x180001);
+	gte_rtps();
 
 	// get screenspace pos of driver
-	uVar3 = getCopReg(2,0xe);
+	gte_stsxy(&uVar3);
+	
+	// X
     local_28 = (short)uVar3;
 
 	// set position of HUD element to position of driver (on screen)
 	*(short *)(param_3 + 0x4d4) =
          local_28 + *(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_3 + 0x4a) * 0x110 + 0x184);
-    sStack38 = (short)((uint)uVar3 >> 0x10);
+    
+	// Y
+	sStack38 = (short)((uint)uVar3 >> 0x10);
     *(short *)(param_3 + 0x4d6) =
          sStack38 + *(short *)(puVar4 + (uint)*(byte *)(param_3 + 0x4a) * 0x110 + 0x186) + -0x14;
 
