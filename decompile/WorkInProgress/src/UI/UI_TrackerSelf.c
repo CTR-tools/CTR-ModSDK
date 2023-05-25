@@ -120,14 +120,14 @@ LAB_8004fe8c:
   
   // ldv0
   // put driver pos on GTE
-  ldv0(local_30);
+  gte_ldv0(&local_30);
 
   // RTPS - Perspective Transformation (single)
-  rtps();
+  gte_rtps();
 
   // stsxy
   // get driver screenspace pos
-  stxy0(uVar3);
+  gte_stsxy(&uVar3);
   
   uVar16 = 0xff;
 
