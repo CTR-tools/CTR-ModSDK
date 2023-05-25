@@ -21,3 +21,5 @@ struct UiElement3D
 	
 	// 0x38 bytes
 };
+
+_Static_assert(sizeof(struct UiElement2D) == 4);

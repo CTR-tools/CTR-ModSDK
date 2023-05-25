@@ -127,3 +127,6 @@ struct ParticleEmitter
 	
 	// 0x24 bytes each
 };
+
+_Static_assert(sizeof(struct ParticleAxis) == 8);
+_Static_assert(sizeof(struct ParticleEmitter) == 0x24);

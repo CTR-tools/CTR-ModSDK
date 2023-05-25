@@ -170,6 +170,9 @@ struct IconGroup
 	// struct Icon icons[numIcons];
 };
 
+_Static_assert(sizeof(struct TextureLayout) == 0xC);
+_Static_assert(sizeof(struct Icon) == 0x20);
+
 #define setIconUV(p, icon) \
 	*(u_int*)&p->u0 = *(u_int*)&icon->texLayout.u0, \
 	*(u_int*)&p->u1 = *(u_int*)&icon->texLayout.u1, \

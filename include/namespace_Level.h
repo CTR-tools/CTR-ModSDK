@@ -608,3 +608,5 @@ struct Level
 	
 	char footer[0x60];
 };
+
+_Static_assert(sizeof(struct RainBuffer) == 0x30);

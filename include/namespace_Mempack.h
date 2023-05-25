@@ -30,3 +30,5 @@ struct Mempack
 
 	// 0x60 -- size of struct
 };
+
+_Static_assert(sizeof(struct Mempack) == 0x60);

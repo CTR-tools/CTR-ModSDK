@@ -211,3 +211,6 @@ struct CameraDC
 	// 0xC8 bytes large in sep3
 	// 0xDC bytes large in usaRetail
 };
+
+_Static_assert(sizeof(struct ZoomData) == 0x12);
+_Static_assert(sizeof(struct CameraDC) == 0xDC);

@@ -69,3 +69,6 @@ struct NavHeader
 	// 0x4C
 	struct NavFrame frame[1];
 };
+
+_Static_assert(sizeof(struct NavFrame) == 0x14);
+_Static_assert(sizeof(struct NavHeader) == 0x60);
