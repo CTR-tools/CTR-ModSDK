@@ -123,7 +123,7 @@ LAB_8004fe8c:
   ldv0(local_30);
 
   // RTPS - Perspective Transformation (single)
-  copFunction(2,0x180001);
+  rtps();
 
   // stsxy
   // get driver screenspace pos
