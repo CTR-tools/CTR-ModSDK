@@ -249,6 +249,9 @@ struct LevelFile file =
 	.quadBlock[0].blockID =  2-0-1,
 	.quadBlock[1].blockID =  2-1-1,
 	
+	.quadBlock[0].draw_order_low = 0x380E000,
+	.quadBlock[1].draw_order_low = 0x380E000,
+	
 	// ========== bsp ======================
 	
 	.bsp =
