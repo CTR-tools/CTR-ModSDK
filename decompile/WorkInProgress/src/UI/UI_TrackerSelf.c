@@ -120,15 +120,15 @@ LAB_8004fe8c:
   
   // ldv0
   // put driver pos on GTE
-  setCopReg(2,in_zero,local_30);
-  setCopReg(2,in_at,local_2c);
+  ldv0(local_30);
 
   // RTPS - Perspective Transformation (single)
   copFunction(2,0x180001);
 
   // stsxy
   // get driver screenspace pos
-  uVar3 = getCopReg(2,0xe);
+  stxy0(uVar3);
+  
   uVar16 = 0xff;
 
   // if no missile or warpball is chasing this player
