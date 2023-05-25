@@ -37147,10 +37147,9 @@ void FUN_8006aaa8(int *param_1,int param_2)
       *(short *)(iVar7 + 0x1c) = sVar3;
       *(short *)(iVar7 + 0x1e) = sVar4;
         
-	  // GTE
-      setCopControlWord(2,0xc000,(int)sVar3 << 0xf);
-      setCopControlWord(2,0xc800,(int)sVar4 << 0xf);
-      setCopControlWord(2,0xd000,uVar15);
+      gte_ldOFX((int)sVar3 << 0xf);
+      gte_ldOFY((int)sVar4 << 0xf);
+      gte_ldH(uVar15);
     }
 
 	// instance flags, duplicate of 0x28
