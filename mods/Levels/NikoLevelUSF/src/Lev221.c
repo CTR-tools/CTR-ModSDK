@@ -131,10 +131,7 @@ struct LevelFile
 	struct Level level;
 	struct mesh_info mInfo;
 	struct IconGroup4 group4_ground;
-	struct IconGroup4 group4_ramp;
-	struct IconGroup4 group4_ramp_flip180;
-	struct TextureLayout texlayout_ramp_low;
-	struct TextureLayout texlayout_ramp_low_flipV;
+	struct IconGroup4 group4_startLine;
 	struct SpawnType1 ptrSpawnType1;
 	struct WarpballPathNode noderespawnsthing[NUM_BLOCKS]; // all empty, this is a battle map
 	struct QuadBlock quadBlock[NUM_BLOCKS];
@@ -202,60 +199,26 @@ struct LevelFile file =
 		.numBspNodes = 3, // can be anything non-zero
 	},
 	
+	// .texLayout[0] = ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50),
+	// .texLayout[0] = ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50),
+	// .texLayout[0] = ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50),
+	// .texLayout[0] = ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50),
+	
 	.group4_ground =
-	{
-		// 512_0_32_20_16_16_0.png		
-		.texLayout[0] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
-		.texLayout[1] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
-		.texLayout[2] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
-		.texLayout[3] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50),
+	{	
+		.texLayout[0] = ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50),
+		.texLayout[1] = ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50),
+		.texLayout[2] = ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50),
+		.texLayout[3] = ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50),
 	},
 	
-	.group4_ramp =
-	{
-		// 576_0_32_21_32_16_0.png		
-		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
-		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
-		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
-		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
+	.group4_startLine =
+	{	
+		.texLayout[0] = ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50),
+		.texLayout[1] = ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50),
+		.texLayout[2] = ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50),
+		.texLayout[3] = ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50),
 	},
-	
-	.group4_ramp_flip180 =
-	{
-		// 576_0_32_21_32_16_0.png		
-		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
-		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
-		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
-		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50),
-		
-		.texLayout[0].v0 = 16-1,
-		.texLayout[0].v1 = 16-1,
-		.texLayout[0].v2 = 0,
-		.texLayout[0].v3 = 0,
-		
-		.texLayout[1].v0 = 16-1,
-		.texLayout[1].v1 = 16-1,
-		.texLayout[1].v2 = 0,
-		.texLayout[1].v3 = 0,
-		
-		.texLayout[2].v0 = 16-1,
-		.texLayout[2].v1 = 16-1,
-		.texLayout[2].v2 = 0,
-		.texLayout[2].v3 = 0,
-		
-		.texLayout[3].v0 = 16-1,
-		.texLayout[3].v1 = 16-1,
-		.texLayout[3].v2 = 0,
-		.texLayout[3].v3 = 0,
-	},
-	
-	.texlayout_ramp_low 		= ImageName_Blend(640, 0, 32, 22, 12, 12, 0, TRANS_50),
-	.texlayout_ramp_low_flipV 	= ImageName_Blend(640, 0, 32, 22, 12, 12, 0, TRANS_50),
-	
-	.texlayout_ramp_low_flipV.v0 = 12-1,
-	.texlayout_ramp_low_flipV.v1 = 12-1,
-	.texlayout_ramp_low_flipV.v2 = 0,
-	.texlayout_ramp_low_flipV.v3 = 0,
 	
 	// this must exist, or else camera fly-in
 	// checks for "count" without nullptr check,
@@ -280,8 +243,8 @@ struct LevelFile file =
 	// +x is left, not right
 	
 	// spawn
-	NEW_BLOCK(0, group4_ground, -0x180, 0, NULL, 0x1800, 0xFF, 0x0, 0x0),
-	NEW_BLOCK(1, group4_ground, 0x180, 0, NULL, 0x1800, 0xFF, 0x20, 0x0),
+	NEW_BLOCK(0, group4_ground, -0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(1, group4_startLine, 0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	.quadBlock[0].blockID =  2-0-1,
 	.quadBlock[1].blockID =  2-1-1,
