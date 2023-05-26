@@ -1,7 +1,7 @@
 #include <common.h>
 #include "../../levelBuilder.h"
 
-#define NUM_BLOCKS 58
+#define NUM_BLOCKS 64
 
 struct LevelFile
 {
@@ -490,10 +490,25 @@ struct LevelFile file =
 	SET_POSY_FLAT(54,-0x300),
 	SET_POSY_FLAT(55,-0x300),
 	
-	NEW_BLOCK(56, group4_placeHolder, 0xD80, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(57, group4_placeHolder, 0x1080, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(56, group4_placeHolder, 0xD80, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(57, group4_placeHolder, 0x1080, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	SET_POSY_FLAT(56,-0x300),
 	SET_POSY_FLAT(57,-0x300),
+	
+	NEW_BLOCK(58, group4_placeHolder, 0xD80, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(59, group4_placeHolder, 0x1080, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(58,-0x300),
+	SET_POSY_FLAT(59,-0x300),
+	
+	NEW_BLOCK(60, group4_placeHolder, 0xD80, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(61, group4_placeHolder, 0x1080, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(60,-0x300),
+	SET_POSY_FLAT(61,-0x300),
+	
+	NEW_BLOCK(62, group4_placeHolder, 0xD80, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(63, group4_placeHolder, 0x1080, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(62,-0x300),
+	SET_POSY_FLAT(63,-0x300),
 	
 	// for some reason required to move here?
 	.quadBlock[15].draw_order_low = 0x8380E000,
@@ -538,32 +553,38 @@ struct LevelFile file =
 	.quadBlock[30].blockID = 32-30-1,
 	.quadBlock[31].blockID = 32-31-1,
 	
-	.quadBlock[32].blockID = 58-32-1,
-	.quadBlock[33].blockID = 58-33-1,
-	.quadBlock[34].blockID = 58-34-1,
-	.quadBlock[35].blockID = 58-35-1,
-	.quadBlock[36].blockID = 58-36-1,
-	.quadBlock[37].blockID = 58-37-1,
-	.quadBlock[38].blockID = 58-38-1,
-	.quadBlock[39].blockID = 58-39-1,
-	.quadBlock[40].blockID = 58-40-1,
-	.quadBlock[41].blockID = 58-41-1,
-	.quadBlock[42].blockID = 58-42-1,
-	.quadBlock[43].blockID = 58-43-1,
-	.quadBlock[44].blockID = 58-44-1,
-	.quadBlock[45].blockID = 58-45-1,
-	.quadBlock[46].blockID = 58-46-1,
-	.quadBlock[47].blockID = 58-47-1,
-	.quadBlock[48].blockID = 58-48-1,
-	.quadBlock[49].blockID = 58-49-1,
-	.quadBlock[50].blockID = 58-50-1,
-	.quadBlock[51].blockID = 58-51-1,
-	.quadBlock[52].blockID = 58-52-1,
-	.quadBlock[53].blockID = 58-53-1,
-	.quadBlock[54].blockID = 58-54-1,
-	.quadBlock[55].blockID = 58-55-1,
-	.quadBlock[56].blockID = 58-56-1,
-	.quadBlock[57].blockID = 58-57-1,
+	.quadBlock[32].blockID = 64-32-1,
+	.quadBlock[33].blockID = 64-33-1,
+	.quadBlock[34].blockID = 64-34-1,
+	.quadBlock[35].blockID = 64-35-1,
+	.quadBlock[36].blockID = 64-36-1,
+	.quadBlock[37].blockID = 64-37-1,
+	.quadBlock[38].blockID = 64-38-1,
+	.quadBlock[39].blockID = 64-39-1,
+	.quadBlock[40].blockID = 64-40-1,
+	.quadBlock[41].blockID = 64-41-1,
+	.quadBlock[42].blockID = 64-42-1,
+	.quadBlock[43].blockID = 64-43-1,
+	.quadBlock[44].blockID = 64-44-1,
+	.quadBlock[45].blockID = 64-45-1,
+	.quadBlock[46].blockID = 64-46-1,
+	.quadBlock[47].blockID = 64-47-1,
+	.quadBlock[48].blockID = 64-48-1,
+	.quadBlock[49].blockID = 64-49-1,
+	.quadBlock[50].blockID = 64-50-1,
+	.quadBlock[51].blockID = 64-51-1,
+	.quadBlock[52].blockID = 64-52-1,
+	.quadBlock[53].blockID = 64-53-1,
+	.quadBlock[54].blockID = 64-54-1,
+	.quadBlock[55].blockID = 64-55-1,
+	.quadBlock[56].blockID = 64-56-1,
+	.quadBlock[57].blockID = 64-57-1,
+	.quadBlock[58].blockID = 64-58-1,
+	.quadBlock[59].blockID = 64-59-1,
+	.quadBlock[60].blockID = 64-60-1,
+	.quadBlock[61].blockID = 64-61-1,
+	.quadBlock[62].blockID = 64-62-1,
+	.quadBlock[63].blockID = 64-63-1,
 	
 	// ========== bsp ======================
 	
@@ -611,7 +632,7 @@ struct LevelFile file =
 				{
 					.unk1 = 0,
 					.bspHitboxArray = 0,
-					.numQuads = 26,
+					.numQuads = 32,
 					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[32])-4
 				}
 			}
@@ -781,6 +802,12 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(54),
 		PTR_MAP_QUADBLOCK(55),
 		PTR_MAP_QUADBLOCK(56),
-		PTR_MAP_QUADBLOCK(57)
+		PTR_MAP_QUADBLOCK(57),
+		PTR_MAP_QUADBLOCK(58),
+		PTR_MAP_QUADBLOCK(59),
+		PTR_MAP_QUADBLOCK(60),
+		PTR_MAP_QUADBLOCK(61),
+		PTR_MAP_QUADBLOCK(62),
+		PTR_MAP_QUADBLOCK(63),
 	},
 };
