@@ -10,6 +10,7 @@ struct LevelFile
 	struct Level level;
 	struct mesh_info mInfo;
 	struct IconGroup4 group4_ground;
+	struct IconGroup4 group4_ramp;
 	struct SpawnType1 spawnType1;
 	// struct AnimTex animtex;
 	struct CheckpointNode noderespawnsthing[16];
@@ -110,6 +111,15 @@ struct LevelFile file =
 		.texLayout[2] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // close
 		.texLayout[3] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // very close
 	},
+
+	.group4_ramp =
+	{
+		// 576_0_32_21_32_16_0.png		
+		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very far
+		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // far
+		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // close
+		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very close
+	},
 	
 	// this must exist, or else camera fly-in checks for "count" without nullptr check, and crashes dereferencing nullptr on real PSX
 	.spawnType1 =
@@ -118,10 +128,10 @@ struct LevelFile file =
 	},
 
 	// automatically-generated quadblock insertions courtesy of pngtotrack.py
-	                                                                           NEW_BLOCK(00, group4_ground, 0x0000, 0x0000, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(01, group4_ground, 0x0300, 0x0000, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                           
-	NEW_BLOCK(02, group4_ground, -0x300, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(03, group4_ground, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(04, group4_ground, 0x0300, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(05, group4_ground, 0x0600, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),
-	NEW_BLOCK(06, group4_ground, -0x300, 0x0600, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(07, group4_ground, 0x0600, 0x0600, NULL, 0x1800, 0xFF, 0x0, 0x0),
-	NEW_BLOCK(08, group4_ground, -0x300, 0x0900, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(09, group4_ground, 0x0600, 0x0900, NULL, 0x1800, 0xFF, 0x0, 0x0),
+	                                                                           NEW_BLOCK(0, group4_ground, 0x0000, 0x0000, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(1, group4_ground, 0x0300, 0x0000, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                           
+	NEW_BLOCK(2, group4_ground, -0x300, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(3, group4_ground, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(4, group4_ground, 0x0300, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(5, group4_ground, 0x0600, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),
+	NEW_BLOCK(6, group4_ground, -0x300, 0x0600, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(7, group4_ground, 0x0600, 0x0600, NULL, 0x1800, 0xFF, 0x0, 0x0),
+	NEW_BLOCK(8, group4_ground, -0x300, 0x0900, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(9, group4_ground, 0x0600, 0x0900, NULL, 0x1800, 0xFF, 0x0, 0x0),
 	NEW_BLOCK(10, group4_ground, -0x300, 0x0c00, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(11, group4_ground, 0x0600, 0x0c00, NULL, 0x1800, 0xFF, 0x0, 0x0),
 	NEW_BLOCK(12, group4_ground, -0x300, 0x0f00, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(13, group4_ground, 0x0600, 0x0f00, NULL, 0x1800, 0xFF, 0x0, 0x0),
 	NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(15, group4_ground, 0x0000, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(16, group4_ground, 0x0300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(17, group4_ground, 0x0600, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),
@@ -166,7 +176,7 @@ struct LevelFile file =
 	{
 		[0] =
 		{
-			.pos = {-0x300, 0, 0x300}, // same as quadblock 02
+			.pos = {-0x300, 0, 0x300}, // same as quadblock 2
 			.distToFinish = 0x200*15,
 			.nextIndex_forward = 1,
 			.nextIndex_left = -1,
@@ -175,7 +185,7 @@ struct LevelFile file =
 		},
 		[1] =
 		{
-			.pos = {-0x300, 0, 0x600}, // same as quadblock 06
+			.pos = {-0x300, 0, 0x600}, // same as quadblock 6
 			.distToFinish = 0x200*14,
 			.nextIndex_forward = 2,
 			.nextIndex_left = -1,
@@ -184,7 +194,7 @@ struct LevelFile file =
 		},
 		[2] =
 		{
-			.pos = {-0x300, 0, 0x300*3}, // same as quadblock 08
+			.pos = {-0x300, 0, 0x300*3}, // same as quadblock 8
 			.distToFinish = 0x200*13,
 			.nextIndex_forward = 3,
 			.nextIndex_left = -1,
@@ -265,7 +275,7 @@ struct LevelFile file =
 		},
 		[11] =
 		{
-			.pos = {0x600, 0, 0x300*3}, // same as quadblock 09
+			.pos = {0x600, 0, 0x300*3}, // same as quadblock 9
 			.distToFinish = 0x200*4,
 			.nextIndex_forward = 12,
 			.nextIndex_left = -1,
@@ -274,7 +284,7 @@ struct LevelFile file =
 		},
 		[12] =
 		{
-			.pos = {0x600, 0, 0x300*2}, // same as quadblock 07
+			.pos = {0x600, 0, 0x300*2}, // same as quadblock 7
 			.distToFinish = 0x200*3,
 			.nextIndex_forward = 13,
 			.nextIndex_left = -1,
@@ -283,7 +293,7 @@ struct LevelFile file =
 		},
 		[13] =
 		{
-			.pos = {0x600, 0, 0x300*1}, // same as quadblock 05
+			.pos = {0x600, 0, 0x300*1}, // same as quadblock 5
 			.distToFinish = 0x200*2,
 			.nextIndex_forward = 14,
 			.nextIndex_left = -1,
@@ -292,7 +302,7 @@ struct LevelFile file =
 		},
 		[14] =
 		{
-			.pos = {0x300, 0, 0x300*1}, // same as quadblock 04
+			.pos = {0x300, 0, 0x300*1}, // same as quadblock 4
 			.distToFinish = 0x200*1,
 			.nextIndex_forward = 15,
 			.nextIndex_left = -1,
@@ -301,7 +311,7 @@ struct LevelFile file =
 		},
 		[15] =
 		{
-			.pos = {0, 0, 0x300*1}, // same as quadblock 03
+			.pos = {0, 0, 0x300*1}, // same as quadblock 3
 			.distToFinish = 0x200*0,
 			.nextIndex_forward = 0,
 			.nextIndex_left = -1,
@@ -459,6 +469,7 @@ struct LevelFile file =
 	{
 		(31+NUM_BLOCKS*6)<<2,
 		
+		// 31
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
 		//OFFSETOF(struct LevelFile, level.ptr_anim_tex)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
@@ -497,6 +508,8 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*2+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*2+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*2+1])-4,
+
+		// (NUM_BLOCKS*6)
 		PTR_MAP_QUADBLOCK(0),
 		PTR_MAP_QUADBLOCK(1),
 		PTR_MAP_QUADBLOCK(2),
