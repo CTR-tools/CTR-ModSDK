@@ -27,7 +27,7 @@
 	{ \
 		.index = {9*qIndex+0,9*qIndex+1,9*qIndex+2,9*qIndex+3,9*qIndex+4,9*qIndex+5,9*qIndex+6,9*qIndex+7,9*qIndex+8}, \
 		.quadFlags = flagQ, \
-		.draw_order_low = 0, \
+		.draw_order_low = 0x80000000, \ /* double-sided render */ \
 		.draw_order_high = 0, \
 		.ptr_texture_mid = \
 		{ \
@@ -87,6 +87,7 @@
 	.levVertex[9*qIndex+hi3].pos[1] = height, \
 	.quadBlock[qIndex].respawnIndex = -1, \
 	.quadBlock[qIndex].bbox.max[1] = height, \
+	.quadBlock[qIndex].draw_order_low = 0x80000000, \
 	.quadBlock[qIndex].triNormalVecDividend = \
 	{ \
 		/* hi 2 */ \
