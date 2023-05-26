@@ -64,7 +64,7 @@ struct LevelFile file =
 		
 		.ptrSpawnType1 = OFFSETOF(struct LevelFile, ptrSpawnType1)-4,
 		
-		.clearColor[0].rgb = {0xFF, 0x40, 0x20},
+		.clearColor[0].rgb = {0x20, 0x10, 0x80},
 		.clearColor[0].enable = 1,
 		
 		.clearColor[1].rgb = {0x80, 0x20, 0x10},
