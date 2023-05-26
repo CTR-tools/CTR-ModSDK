@@ -413,6 +413,11 @@ struct LevelFile file =
 	.quadBlock[30].draw_order_low = 0x380E000,
 	.quadBlock[31].draw_order_low = 0x380E000,
 	
+	// turn into turbo, if flagsQ is 0x1840
+	// 1 for normal, 2 for super turbo
+	.quadBlock[30].terrain_type = 2,
+	.quadBlock[31].terrain_type = 1,
+	
 	MAKE_RAMP(
 		30, 0x180, // index, height
 		2,8,3, // low 3 vertices
@@ -441,11 +446,6 @@ struct LevelFile file =
 		2,8,3 // high 3 vertices
 	),
 	
-	// turn into turbo, if flagsQ is 0x1840
-	// 1 for normal, 2 for super turbo
-	.quadBlock[30].terrain_type = 2,
-	.quadBlock[31].terrain_type = 1,
-	
 	// ==== End of BSP block =====
 	
 	// flat, turn 90
@@ -457,10 +457,18 @@ struct LevelFile file =
 	NEW_BLOCK(37, group4_placeHolder, 0xA80, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// flat, turn 180
-	NEW_BLOCK(38, group4_placeHolder, 0xD80, 0x1E00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(39, group4_placeHolder, 0x1080, 0x1E00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(40, group4_placeHolder, 0xD80,  0x2100, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(41, group4_placeHolder, 0x1080,0x2100, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(38, group4_turbopad_green, 0xD80, 0x2100, NULL, 0x9800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(39, group4_turbopad_green, 0x1080, 0x2100, NULL, 0x9800, 0x80, 0x80, 0x80),
+	.quadBlock[38].draw_order_low = 0x380E000,
+	.quadBlock[39].draw_order_low = 0x380E000,
+	
+	NEW_BLOCK(40, group4_turbopad_green, 0xD80,  0x2100, NULL, 0x1840, 0x80, 0x80, 0x80),
+	NEW_BLOCK(41, group4_turbopad_green, 0x1080,0x2100, NULL, 0x1840, 0x80, 0x80, 0x80),
+	.quadBlock[40].draw_order_low = 0x380E000,
+	.quadBlock[41].draw_order_low = 0x380E000,
+	.quadBlock[40].terrain_type = 1,
+	.quadBlock[41].terrain_type = 1,
+	
 	NEW_BLOCK(42, group4_placeHolder, 0xD80,  0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(43, group4_placeHolder, 0x1080,0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(44, group4_placeHolder, 0xD80,  0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
@@ -481,11 +489,10 @@ struct LevelFile file =
 	SET_POSY_FLAT(50,-0x300),
 	SET_POSY_FLAT(51,-0x300),
 	
-	NEW_BLOCK(52, group4_placeHolder, 0xD80, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(53, group4_placeHolder, 0x1080, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(52, group4_placeHolder, 0xD80, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(53, group4_placeHolder, 0x1080, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	SET_POSY_FLAT(52,-0x300),
 	SET_POSY_FLAT(53,-0x300),
-	
 	
 	.quadBlock[0].blockID =  32-0-1,
 	.quadBlock[1].blockID =  32-1-1,
