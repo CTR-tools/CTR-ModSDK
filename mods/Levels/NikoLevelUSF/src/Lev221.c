@@ -1,127 +1,5 @@
 #include <common.h>
-
-#define OFFSETOF(TYPE, ELEMENT) ((unsigned int)&(((TYPE *)0)->ELEMENT))
-
-#define NEW_VERTEX(posX, posY, posZ, flag, colR, colG, colB) \
-{ \
-	.pos = {posX, posY, posZ}, \
-	.flags = flag, \
-	.color_hi = {colR, colG, colB, 0}, \
-	.color_lo = {colR, colG, colB, 0}, \
-}
-
-// can't change these, or else triNormalVec has to change
-#define sizeX 0x300
-#define sizeZ 0x300
-
-#define NEW_BLOCK(qIndex, group4, posX, posZ, flagV, flagQ, colR, colG, colB) \
-	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+1] = NEW_VERTEX(posX+sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+2] = NEW_VERTEX(posX-sizeX/2, 0, posZ+sizeZ/2, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+3] = NEW_VERTEX(posX+sizeX/2, 0, posZ+sizeZ/2, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+4] = NEW_VERTEX(posX, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+5] = NEW_VERTEX(posX-sizeX/2, 0, posZ, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+6] = NEW_VERTEX(posX, 0, posZ, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+7] = NEW_VERTEX(posX+sizeX/2, 0, posZ, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+8] = NEW_VERTEX(posX, 0, posZ+sizeZ/2, flagV, colR, colG, colB), \
-	.quadBlock[qIndex] = \
-	{ \
-		.index = {9*qIndex+0,9*qIndex+1,9*qIndex+2,9*qIndex+3,9*qIndex+4,9*qIndex+5,9*qIndex+6,9*qIndex+7,9*qIndex+8}, \
-		.quadFlags = flagQ, \
-		.draw_order_low = 0, \
-		.draw_order_high = 0, \
-		.ptr_texture_mid = \
-		{ \
-			OFFSETOF(struct LevelFile, group4.texLayout[0])-0x24-4, \
-			OFFSETOF(struct LevelFile, group4.texLayout[1])-0x24-4, \
-			OFFSETOF(struct LevelFile, group4.texLayout[2])-0x24-4, \
-			OFFSETOF(struct LevelFile, group4.texLayout[3])-0x24-4 \
-		}, \
-		\
-		.bbox = \
-		{ \
-			.min = {posX-sizeX/2, 0, posZ-sizeZ/2}, \
-			.max = {posX+sizeX/2, 0, posZ+sizeZ/2} \
-		}, \
-		.terrain_type = 0, \
-		.weather_intensity = 0, \
-		.weather_vanishRate = 0, \
-		.speedImpact = 0, \
-		\
-		.blockID = 0, \
-		.respawnIndex = qIndex, \
-		.triNormalVecBitShift = 0x12, \
-		\
-		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4, \
-		.pvs = OFFSETOF(struct LevelFile, pvs)-4, \
-		\
-		.triNormalVecDividend = \
-		{ \
-			/* hi 2 */ \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			\
-			/* lo 2 */ \
-			0x1C71, \
-			0x1C71, \
-		} \
-	}
-	
-// get vertex numbers from here:
-// posted by DCxDemo, 4/25/2020 2:44pm, in #ctr-mod-ideas
-// https://discord.com/channels/527135227546435584/534794647738908683/703677797440159744
-#define MAKE_RAMP(qIndex, height, low1, low2, low3, mid1, mid2, mid3, hi1, hi2, hi3) \
-	.levVertex[9*qIndex+low1].pos[1] = 0, \
-	.levVertex[9*qIndex+low2].pos[1] = 0, \
-	.levVertex[9*qIndex+low3].pos[1] = 0, \
-	.levVertex[9*qIndex+mid1].pos[1] = height/2, \
-	.levVertex[9*qIndex+mid2].pos[1] = height/2, \
-	.levVertex[9*qIndex+mid3].pos[1] = height/2, \
-	.levVertex[9*qIndex+hi1].pos[1] = height, \
-	.levVertex[9*qIndex+hi2].pos[1] = height, \
-	.levVertex[9*qIndex+hi3].pos[1] = height, \
-	.quadBlock[qIndex].respawnIndex = -1, \
-	.quadBlock[qIndex].bbox.max[1] = height, \
-	.quadBlock[qIndex].triNormalVecDividend = \
-	{ \
-		/* hi 2 */ \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		\
-		/* lo 2 */ \
-		0x1971,  \
-		0x1971,  \
-	}
-
-// if clutX is 512 in VRAM, the clutX parameter is 32 (512>>4),
-// bitshifting must be done for that variable, consistent to PNG names
-#define ImageName_Blend(imgX, imgY, clutX, clutY, sizeX, sizeY, bpp, blend) \
-	{.clut =  ((clutX >> 0) << 0) | (clutY << 6), \
-	.tpage = ((imgX >> 6) << 0) | ((imgY >> 8) << 4) | (blend<<5) | (bpp<<7), \
-	.u0 = 0, .v0 = 0, \
-	.u1 = sizeX-1, .v1 = 0, \
-	.u2 = 0, .v2 = sizeY-1, \
-	.u3 = sizeX-1, .v3 = sizeY-1} \
-
-#define PTR_MAP_QUADBLOCK(x) \
-	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[0])-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[1])-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[2])-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[3])-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_low)-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].pvs)-4
+#include "../../levelBuilder.h"
 
 #define NUM_BLOCKS 2
 
@@ -130,8 +8,10 @@ struct LevelFile
 	void* ptrMap;
 	struct Level level;
 	struct mesh_info mInfo;
-	struct IconGroup4 group4_ground;
-	struct IconGroup4 group4_startLine;
+	struct IconGroup4 group4_checkerEdge;
+	struct IconGroup4 group4_checkerCenter;
+	struct IconGroup4 group4_tileEdge;
+	struct IconGroup4 group4_tileCenter;
 	struct SpawnType1 ptrSpawnType1;
 	struct WarpballPathNode noderespawnsthing[NUM_BLOCKS]; // all empty, this is a battle map
 	struct QuadBlock quadBlock[NUM_BLOCKS];
@@ -199,30 +79,36 @@ struct LevelFile file =
 		.numBspNodes = 3, // can be anything non-zero
 	},
 	
-	#define CHECKER_EDGE__ ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50)
-	#define CHECKER_CENTER ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50)
-	#define TILE_EDGE_____ ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50)
-	#define TILE_CENTER___ ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50)
-	
-	// bottom-right
-	// bottom-left
-	// top-right
-	// top-left	
-	
-	.group4_ground.texLayout =
+	.group4_checkerEdge.texLayout =
 	{
-		TILE_EDGE_____,
-		TILE_CENTER___,
-		CHECKER_EDGE__,
-		CHECKER_CENTER
+		ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50), // very far
+		ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50), // far
+		ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50), // close
+		ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50)  // very close
 	},
 	
-	.group4_startLine.texLayout =
+	.group4_checkerCenter.texLayout =
 	{	
-		TILE_CENTER___,
-		TILE_EDGE_____,
-		CHECKER_CENTER,
-		CHECKER_EDGE__
+		ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50), // very far
+		ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50), // far
+		ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50), // close
+		ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50)  // very close
+	},
+	
+	.group4_tileEdge.texLayout =
+	{	
+		ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50), // very far
+		ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50), // far
+		ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50), // close
+		ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50)  // very close
+	},
+	
+	.group4_tileCenter.texLayout =
+	{	
+		ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50), // very far
+		ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50), // far
+		ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50), // close
+		ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50)  // very close
 	},
 	
 	// this must exist, or else camera fly-in
@@ -248,8 +134,12 @@ struct LevelFile file =
 	// +x is left, not right
 	
 	// spawn
-	NEW_BLOCK(0, group4_ground, -0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(1, group4_startLine, 0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(0, group4_tileEdge, -0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(1, group4_tileEdge, 0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	// top/bottom left/right assuming you're rotation is 0,0,0
+	TEX_2X2(0, group4_tileEdge, group4_tileCenter, group4_checkerEdge, group4_checkerCenter),
+	TEX_2X2(1, group4_tileCenter, group4_tileEdge, group4_checkerCenter, group4_checkerEdge),
 	
 	.quadBlock[0].blockID =  2-0-1,
 	.quadBlock[1].blockID =  2-1-1,
