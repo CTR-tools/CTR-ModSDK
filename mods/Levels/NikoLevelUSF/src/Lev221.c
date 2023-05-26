@@ -1,7 +1,7 @@
 #include <common.h>
 #include "../../levelBuilder.h"
 
-#define NUM_BLOCKS 20
+#define NUM_BLOCKS 54
 
 struct LevelFile
 {
@@ -346,14 +346,14 @@ struct LevelFile file =
 	NEW_BLOCK(19, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
-		18, -0x180, // index, height
+		18, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	MAKE_RAMP(
-		19, -0x180, // index, height
+		19, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
@@ -373,26 +373,151 @@ struct LevelFile file =
 		2,8,3 // high 3 vertices
 	),
 	
-	.quadBlock[0].blockID =  20-0-1,
-	.quadBlock[1].blockID =  20-1-1,
-	.quadBlock[2].blockID =  20-2-1,
-	.quadBlock[3].blockID =  20-3-1,
-	.quadBlock[4].blockID =  20-4-1,
-	.quadBlock[5].blockID =  20-5-1,
-	.quadBlock[6].blockID =  20-6-1,
-	.quadBlock[7].blockID =  20-7-1,
-	.quadBlock[8].blockID =  20-8-1,
-	.quadBlock[9].blockID =  20-9-1,
-	.quadBlock[10].blockID = 20-10-1,
-	.quadBlock[11].blockID = 20-11-1,
-	.quadBlock[12].blockID = 20-12-1,
-	.quadBlock[13].blockID = 20-13-1,
-	.quadBlock[14].blockID = 20-14-1,
-	.quadBlock[15].blockID = 20-15-1,
-	.quadBlock[16].blockID = 20-16-1,
-	.quadBlock[17].blockID = 20-17-1,
-	.quadBlock[18].blockID = 20-18-1,
-	.quadBlock[19].blockID = 20-19-1,
+	// flat, forward
+	NEW_BLOCK(20, group4_placeHolder, -0x180, 0x1E00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(21, group4_placeHolder, 0x180, 0x1E00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(22, group4_placeHolder, -0x180, 0x2100, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(23, group4_placeHolder, 0x180, 0x2100, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(24, group4_placeHolder, -0x180, 0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(25, group4_placeHolder, 0x180, 0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(26, group4_placeHolder, -0x180, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(27, group4_placeHolder, 0x180, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(28, group4_placeHolder, -0x180, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(29, group4_placeHolder, 0x180, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	// turbo on ramp-up(3/3)
+	NEW_BLOCK(30, group4_placeHolder, -0x180, 0x1B00, NULL, 0x1840, 0x80, 0x80, 0x80),
+	NEW_BLOCK(31, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1840, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		30, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		31, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		30, -0x180, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		31, -0x180, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	// turn into turbo, if flagsQ is 0x1840
+	// 1 for normal, 2 for super turbo
+	.quadBlock[30].terrain_type = 2,
+	.quadBlock[31].terrain_type = 2,
+	
+	// ==== End of BSP block =====
+	
+	// flat, turn 90
+	NEW_BLOCK(32, group4_placeHolder, 0x480, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(33, group4_placeHolder, 0x480, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(34, group4_placeHolder, 0x780, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80), // boost
+	NEW_BLOCK(35, group4_placeHolder, 0x780, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80), // boost
+	NEW_BLOCK(36, group4_placeHolder, 0xA80, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(37, group4_placeHolder, 0xA80, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	// flat, turn 180
+	NEW_BLOCK(38, group4_placeHolder, 0xD80, 0x1E00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(39, group4_placeHolder, 0x1080, 0x1E00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(40, group4_placeHolder, 0xD80,  0x2100, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(41, group4_placeHolder, 0x1080,0x2100, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(42, group4_placeHolder, 0xD80,  0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(43, group4_placeHolder, 0x1080,0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(44, group4_placeHolder, 0xD80,  0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(45, group4_placeHolder, 0x1080,0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(46, group4_placeHolder, 0xD80,  0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(47, group4_placeHolder, 0x1080,0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	// fall back down,
+	// here experiment with USF jump
+	
+	NEW_BLOCK(48, group4_placeHolder, 0xD80, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(49, group4_placeHolder, 0x1080, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(48,-0x300),
+	SET_POSY_FLAT(49,-0x300),
+	
+	NEW_BLOCK(50, group4_placeHolder, 0xD80, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(51, group4_placeHolder, 0x1080, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(50,-0x300),
+	SET_POSY_FLAT(51,-0x300),
+	
+	NEW_BLOCK(52, group4_placeHolder, 0xD80, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(53, group4_placeHolder, 0x1080, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(52,-0x300),
+	SET_POSY_FLAT(53,-0x300),
+	
+	
+	.quadBlock[0].blockID =  32-0-1,
+	.quadBlock[1].blockID =  32-1-1,
+	.quadBlock[2].blockID =  32-2-1,
+	.quadBlock[3].blockID =  32-3-1,
+	.quadBlock[4].blockID =  32-4-1,
+	.quadBlock[5].blockID =  32-5-1,
+	.quadBlock[6].blockID =  32-6-1,
+	.quadBlock[7].blockID =  32-7-1,
+	.quadBlock[8].blockID =  32-8-1,
+	.quadBlock[9].blockID =  32-9-1,
+	.quadBlock[10].blockID = 32-10-1,
+	.quadBlock[11].blockID = 32-11-1,
+	.quadBlock[12].blockID = 32-12-1,
+	.quadBlock[13].blockID = 32-13-1,
+	.quadBlock[14].blockID = 32-14-1,
+	.quadBlock[15].blockID = 32-15-1,
+	.quadBlock[16].blockID = 32-16-1,
+	.quadBlock[17].blockID = 32-17-1,
+	.quadBlock[18].blockID = 32-18-1,
+	.quadBlock[19].blockID = 32-19-1,
+	.quadBlock[20].blockID = 32-20-1,
+	.quadBlock[21].blockID = 32-21-1,
+	.quadBlock[22].blockID = 32-22-1,
+	.quadBlock[23].blockID = 32-23-1,
+	.quadBlock[24].blockID = 32-24-1,
+	.quadBlock[25].blockID = 32-25-1,
+	.quadBlock[26].blockID = 32-26-1,
+	.quadBlock[27].blockID = 32-27-1,
+	.quadBlock[28].blockID = 32-28-1,
+	.quadBlock[29].blockID = 32-29-1,
+	.quadBlock[30].blockID = 32-30-1,
+	.quadBlock[31].blockID = 32-31-1,
+	
+	.quadBlock[32].blockID = 54-32-1,
+	.quadBlock[33].blockID = 54-33-1,
+	.quadBlock[34].blockID = 54-34-1,
+	.quadBlock[35].blockID = 54-35-1,
+	.quadBlock[36].blockID = 54-36-1,
+	.quadBlock[37].blockID = 54-37-1,
+	.quadBlock[38].blockID = 54-38-1,
+	.quadBlock[39].blockID = 54-39-1,
+	.quadBlock[40].blockID = 54-40-1,
+	.quadBlock[41].blockID = 54-41-1,
+	.quadBlock[42].blockID = 54-42-1,
+	.quadBlock[43].blockID = 54-43-1,
+	.quadBlock[44].blockID = 54-44-1,
+	.quadBlock[45].blockID = 54-45-1,
+	.quadBlock[46].blockID = 54-46-1,
+	.quadBlock[47].blockID = 54-47-1,
+	.quadBlock[48].blockID = 54-48-1,
+	.quadBlock[49].blockID = 54-49-1,
+	.quadBlock[50].blockID = 54-50-1,
+	.quadBlock[51].blockID = 54-51-1,
+	.quadBlock[52].blockID = 54-50-1,
+	.quadBlock[53].blockID = 54-51-1,
 	
 	// ========== bsp ======================
 	
@@ -405,8 +530,8 @@ struct LevelFile file =
 			.id = 0,
 			.box =
 			{
-				.min = {-0x3000, -0x800, -0x3000},
-				.max = {0x3000, 0x066E, 0x3000}
+				.min = {-0x8000, -0x800, -0x8000},
+				.max = {0x8000, 0x066E, 0x8000}
 			},
 			
 			.data =
@@ -430,8 +555,8 @@ struct LevelFile file =
 			.box =
 			{
 				// random box that exists nowhere
-				.min = {-0x1100, -0x800, 0x2200},
-				.max = {0x1100, 0x400, 0x2500}
+				.min = {0x300, -0x800, -0x1100},
+				.max = {0x2100, 0x400, 0x4500}
 			},
 			
 			.data =
@@ -440,8 +565,8 @@ struct LevelFile file =
 				{
 					.unk1 = 0,
 					.bspHitboxArray = 0,
-					.numQuads = 0,
-					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
+					.numQuads = 22,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[32])-4
 				}
 			}
 		},
@@ -455,7 +580,7 @@ struct LevelFile file =
 			{
 				// random box that exists nowhere
 				.min = {-0x1100, -0x800, -0x1100},
-				.max = {0x1100, 0x400, 0x2100}
+				.max = {0x300, 0x400, 0x4500}
 			},
 			
 			.data =
@@ -464,7 +589,7 @@ struct LevelFile file =
 				{
 					.unk1 = 0,
 					.bspHitboxArray = 0,
-					.numQuads = 20,
+					.numQuads = 32,
 					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
 				}
 			}
@@ -573,5 +698,39 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(17),
 		PTR_MAP_QUADBLOCK(18),
 		PTR_MAP_QUADBLOCK(19),
+		PTR_MAP_QUADBLOCK(20),
+		PTR_MAP_QUADBLOCK(21),
+		PTR_MAP_QUADBLOCK(22),
+		PTR_MAP_QUADBLOCK(23),
+		PTR_MAP_QUADBLOCK(24),
+		PTR_MAP_QUADBLOCK(25),
+		PTR_MAP_QUADBLOCK(26),
+		PTR_MAP_QUADBLOCK(27),
+		PTR_MAP_QUADBLOCK(28),
+		PTR_MAP_QUADBLOCK(29),
+		PTR_MAP_QUADBLOCK(30),
+		PTR_MAP_QUADBLOCK(31),
+		PTR_MAP_QUADBLOCK(32),
+		PTR_MAP_QUADBLOCK(33),
+		PTR_MAP_QUADBLOCK(34),
+		PTR_MAP_QUADBLOCK(35),
+		PTR_MAP_QUADBLOCK(36),
+		PTR_MAP_QUADBLOCK(37),
+		PTR_MAP_QUADBLOCK(38),
+		PTR_MAP_QUADBLOCK(39),
+		PTR_MAP_QUADBLOCK(40),
+		PTR_MAP_QUADBLOCK(41),
+		PTR_MAP_QUADBLOCK(42),
+		PTR_MAP_QUADBLOCK(43),
+		PTR_MAP_QUADBLOCK(44),
+		PTR_MAP_QUADBLOCK(45),
+		PTR_MAP_QUADBLOCK(46),
+		PTR_MAP_QUADBLOCK(47),
+		PTR_MAP_QUADBLOCK(48),
+		PTR_MAP_QUADBLOCK(49),
+		PTR_MAP_QUADBLOCK(50),
+		PTR_MAP_QUADBLOCK(51),
+		PTR_MAP_QUADBLOCK(52),
+		PTR_MAP_QUADBLOCK(53),
 	},
 };
