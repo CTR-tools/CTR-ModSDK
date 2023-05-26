@@ -12,7 +12,7 @@ struct LevelFile
 	struct IconGroup4 group4_ground;
 	struct SpawnType1 spawnType1;
 	// struct AnimTex animtex;
-	struct WarpballPathNode noderespawnsthing[16];
+	struct CheckpointNode noderespawnsthing[16];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
 	struct BSP bsp[3];
