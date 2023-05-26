@@ -89,26 +89,26 @@ struct LevelFile file =
 	
 	.group4_checkerCenter.texLayout =
 	{	
-		ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50), // very far
-		ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50), // far
-		ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50), // close
-		ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50)  // very close
+		ImageName_Blend(528, 0, 32, 129, 64, 64, 0, TRANS_50), // very far
+		ImageName_Blend(528, 0, 32, 129, 64, 64, 0, TRANS_50), // far
+		ImageName_Blend(528, 0, 32, 129, 64, 64, 0, TRANS_50), // close
+		ImageName_Blend(528, 0, 32, 129, 64, 64, 0, TRANS_50)  // very close
 	},
 	
 	.group4_tileEdge.texLayout =
 	{	
-		ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50), // very far
-		ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50), // far
-		ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50), // close
-		ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50)  // very close
+		ImageName_Blend(544, 0, 32, 130, 64, 64, 0, TRANS_50), // very far
+		ImageName_Blend(544, 0, 32, 130, 64, 64, 0, TRANS_50), // far
+		ImageName_Blend(544, 0, 32, 130, 64, 64, 0, TRANS_50), // close
+		ImageName_Blend(544, 0, 32, 130, 64, 64, 0, TRANS_50)  // very close
 	},
 	
 	.group4_tileCenter.texLayout =
 	{	
-		ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50), // very far
-		ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50), // far
-		ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50), // close
-		ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50)  // very close
+		ImageName_Blend(560, 0, 32, 131, 64, 64, 0, TRANS_50), // very far
+		ImageName_Blend(560, 0, 32, 131, 64, 64, 0, TRANS_50), // far
+		ImageName_Blend(560, 0, 32, 131, 64, 64, 0, TRANS_50), // close
+		ImageName_Blend(560, 0, 32, 131, 64, 64, 0, TRANS_50)  // very close
 	},
 	
 	// this must exist, or else camera fly-in

@@ -109,10 +109,10 @@
 #define ImageName_Blend(imgX, imgY, clutX, clutY, sizeX, sizeY, bpp, blend) \
 	{.clut =  ((clutX >> 0) << 0) | (clutY << 6), \
 	.tpage = ((imgX >> 6) << 0) | ((imgY >> 8) << 4) | (blend<<5) | (bpp<<7), \
-	.u0 = 0, .v0 = 0, \
-	.u1 = sizeX-1, .v1 = 0, \
-	.u2 = 0, .v2 = sizeY-1, \
-	.u3 = sizeX-1, .v3 = sizeY-1} \
+	.u0 = ((imgX&0x3f)<<(2-bpp))+0, .v0 = (imgY&0xff)+0, \
+	.u1 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v1 = (imgY&0xff)+0, \
+	.u2 = ((imgX&0x3f)<<(2-bpp))+0, .v2 = (imgY&0xff)+sizeY-1, \
+	.u3 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v3 = (imgY&0xff)+sizeY-1} \
 	
 // top/bottom left/right assuming you're rotation is 0,0,0
 #define TEX_2X2(qIndex, BottomRight, BottomLeft, TopRight, TopLeft) \
