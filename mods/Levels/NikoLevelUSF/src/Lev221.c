@@ -159,10 +159,23 @@ struct LevelFile file =
 	NEW_BLOCK(2, group4_placeHolder, -0x180, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(3, group4_placeHolder, 0x180, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
+	// ramp, in front of spawn
+	//NEW_BLOCK(4, group4_placeHolder, -0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	//NEW_BLOCK(5, group4_placeHolder, 0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	//MAKE_RAMP(
+	//	4, 0x180, // index, height
+	//	0,4,1, // low 3 vertices
+	//	5,6,7, // mid 3 vertices
+	//	2,8,3 // high 3 vertices
+	//),
+	
 	.quadBlock[0].blockID =  4-0-1,
 	.quadBlock[1].blockID =  4-1-1,
 	.quadBlock[2].blockID =  4-2-1,
 	.quadBlock[3].blockID =  4-3-1,
+	//.quadBlock[4].blockID =  6-4-1,
+	//.quadBlock[5].blockID =  6-5-1,
 	
 	// ========== bsp ======================
 	
@@ -327,5 +340,7 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(1),
 		PTR_MAP_QUADBLOCK(2),
 		PTR_MAP_QUADBLOCK(3),
+		PTR_MAP_QUADBLOCK(5),
+		PTR_MAP_QUADBLOCK(6),
 	},
 };
