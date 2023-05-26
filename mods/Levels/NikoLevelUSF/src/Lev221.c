@@ -12,6 +12,8 @@ struct LevelFile
 	struct IconGroup4 group4_checkerCenter;
 	struct IconGroup4 group4_tileEdge;
 	struct IconGroup4 group4_tileCenter;
+	struct IconGroup4 group4_turbopad_green;
+	struct IconGroup4 group4_turbopad_gray;
 	struct IconGroup4 group4_placeHolder;
 	struct SpawnType1 ptrSpawnType1;
 	struct WarpballPathNode noderespawnsthing[NUM_BLOCKS]; // all empty, this is a battle map
@@ -126,6 +128,22 @@ struct LevelFile file =
 		ImageName_Blend(576, 0, 32, 132, 16, 16, 0, TRANS_50), // far
 		ImageName_Blend(576, 0, 32, 132, 16, 16, 0, TRANS_50), // close
 		ImageName_Blend(576, 0, 32, 132, 16, 16, 0, TRANS_50)  // very close
+	},
+	
+	.group4_turbopad_green.texLayout =
+	{
+		ImageName_Blend(640, 0, 32, 133, 32, 16, 0, TRANS_50), // very far
+		ImageName_Blend(640, 0, 32, 133, 32, 16, 0, TRANS_50), // far
+		ImageName_Blend(640, 0, 32, 133, 32, 16, 0, TRANS_50), // close
+		ImageName_Blend(640, 0, 32, 133, 32, 16, 0, TRANS_50)  // very close
+	},
+	
+	.group4_turbopad_gray.texLayout =
+	{
+		ImageName_Blend(704, 0, 32, 134, 32, 16, 0, TRANS_50), // very far
+		ImageName_Blend(704, 0, 32, 134, 32, 16, 0, TRANS_50), // far
+		ImageName_Blend(704, 0, 32, 134, 32, 16, 0, TRANS_50), // close
+		ImageName_Blend(704, 0, 32, 134, 32, 16, 0, TRANS_50)  // very close
 	},
 	
 	// this must exist, or else camera fly-in
@@ -275,11 +293,13 @@ struct LevelFile file =
 	SET_POSY_FLAT(12,-0x480),
 	SET_POSY_FLAT(13,-0x480),
 	
+	// move 12 to arrow sign
+	
 	// ===== need hole in bottom ======
 	
 	// ramp up (1/3)
 	NEW_BLOCK(14, group4_placeHolder, -0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(15, group4_placeHolder, 0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(15, group4_turbopad_green, 0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
 		14, 0x180, // index, height
@@ -342,8 +362,10 @@ struct LevelFile file =
 	),
 	
 	// ramp up (3/3)
-	NEW_BLOCK(18, group4_placeHolder, -0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(18, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(19, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	.quadBlock[18].draw_order_low = 0x380E000,
+	.quadBlock[19].draw_order_low = 0x380E000,
 	
 	MAKE_RAMP(
 		18, 0x180, // index, height
@@ -386,8 +408,10 @@ struct LevelFile file =
 	NEW_BLOCK(29, group4_placeHolder, 0x180, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// turbo on ramp-up(3/3)
-	NEW_BLOCK(30, group4_placeHolder, -0x180, 0x1B00, NULL, 0x1840, 0x80, 0x80, 0x80),
-	NEW_BLOCK(31, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1840, 0x80, 0x80, 0x80),
+	NEW_BLOCK(30, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x1840, 0x80, 0x80, 0x80),
+	NEW_BLOCK(31, group4_turbopad_green, 0x180, 0x1500, NULL, 0x1840, 0x80, 0x80, 0x80),
+	.quadBlock[30].draw_order_low = 0x380E000,
+	.quadBlock[31].draw_order_low = 0x380E000,
 	
 	MAKE_RAMP(
 		30, 0x180, // index, height
@@ -411,7 +435,7 @@ struct LevelFile file =
 	),
 	
 	SET_POSY_RAMP(
-		31, -0x180, 0x180, // index, height
+		31, -0x480, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
@@ -420,7 +444,7 @@ struct LevelFile file =
 	// turn into turbo, if flagsQ is 0x1840
 	// 1 for normal, 2 for super turbo
 	.quadBlock[30].terrain_type = 2,
-	.quadBlock[31].terrain_type = 2,
+	.quadBlock[31].terrain_type = 1,
 	
 	// ==== End of BSP block =====
 	
