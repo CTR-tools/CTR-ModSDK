@@ -943,7 +943,7 @@ LAB_8001e4d0:
 		  )
 	  {
 
-		// if quadblock (just touched) respawnIndex is invalid
+		// if quadblock (just touched) checkpointIndex is invalid
 		if (*(byte *)(iVar13 + 0x3e) == 0xff) {
 
 		  // Level ID on Adventure Arena
@@ -955,13 +955,13 @@ LAB_8001e4d0:
           }
         }
 
-		// if respawnIndex is valid
+		// if checkpointIndex is valid
 		else
 		{
 		  // level -> respawn points
           iVar13 = *(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) +
 
-					// respawnIndex * 0xc
+					// checkpointIndex * 0xc
                    (uint)*(byte *)(iVar13 + 0x3e) * 0xc;
 
           if (

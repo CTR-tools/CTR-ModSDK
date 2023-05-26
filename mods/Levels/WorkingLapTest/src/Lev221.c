@@ -2,6 +2,7 @@
 #include "../../levelBuilder.h"
 
 #define NUM_BLOCKS 20
+// #define NUM_ANIMTEX_FRAMES 10
 
 struct LevelFile
 {
@@ -9,11 +10,8 @@ struct LevelFile
 	struct Level level;
 	struct mesh_info mInfo;
 	struct IconGroup4 group4_ground;
-	struct IconGroup4 group4_ramp;
-	struct IconGroup4 group4_ramp_flip180;
-	struct TextureLayout texlayout_ramp_low;
-	struct TextureLayout texlayout_ramp_low_flipV;
-	struct SpawnType1 ptrSpawnType1;
+	struct SpawnType1 spawnType1;
+	// struct AnimTex animtex;
 	struct WarpballPathNode noderespawnsthing[16];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
@@ -34,17 +32,21 @@ struct LevelFile
 	int map[(31+NUM_BLOCKS*6)+1];
 };
 
+// for whatever reason it's necessary to offset every pointer by -4
 struct LevelFile file =
 {
+	// i don't know what the map section is, other than holding pointers for most level variables
 	.ptrMap = OFFSETOF(struct LevelFile, map[0])-4,
 	
+	// i don't know what the relation between all of these variables is, specifically
 	.level =
 	{
 		.ptr_mesh_info = OFFSETOF(struct LevelFile, mInfo)-4,
+		// .ptr_anim_tex = OFFSETOF(struct LevelFile, animtex)-4,
 		.visMem = OFFSETOF(struct LevelFile, visMem)-4,
 		
-		// warning, game will edit rotY by 0x400 after spawn
-		
+		// the game will add +0x400 to the Z rotation of spawn positions automatically
+		// we should probably look into why this even happens...
 		.DriverSpawn[0].pos = {0,0,0},
 		.DriverSpawn[0].rot = {0,0-0x400,0},
 		
@@ -57,151 +59,114 @@ struct LevelFile file =
 		.DriverSpawn[3].pos = {0,0,0},
 		.DriverSpawn[3].rot = {0,0-0x400,0},
 		
-		.ptrSpawnType1 = OFFSETOF(struct LevelFile, ptrSpawnType1)-4,
+		.ptrSpawnType1 = OFFSETOF(struct LevelFile, spawnType1)-4,
 		
 		.clearColor[0].rgb = {0x0, 0x0, 0x28},
 		.clearColor[0].enable = 1,
 		
-		// only non-zero for Race maps
-		// battle maps need array, but still set CNT to zero
+		// amount of respawn points in the track
+		// and pointer to respawn data itself
 		.cnt_restart_points = 16,
 		.ptr_restart_points = OFFSETOF(struct LevelFile, noderespawnsthing[0])-4,
 	},
 	
+	// pointers and amounts of variables
 	.mInfo =
 	{
 		.numQuadBlock = NUM_BLOCKS,
 		.numVertex = NUM_BLOCKS*9, // not really used
 		.unk1 = 0, // idk, fine to leave null
 		.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4,
-		.ptrVertexArray = OFFSETOF(struct LevelFile, levVertex[0])-4, // no -4 for some reason?
+		.ptrVertexArray = OFFSETOF(struct LevelFile, levVertex[0])-4,
 		.unk2 = 0, // idk, fine to leave null
 		.bspRoot = OFFSETOF(struct LevelFile, bsp[0])-4,
 		.numBspNodes = 3, // can be anything non-zero
 	},
+
+	/*
+	.animtex =
+	{
+		.ptrNext = 0,
+		.numFrames = NUM_ANIMTEX_FRAMES,
+		.shrug = 0,
+		.lottashortshuh = 0,
+		.frameIndex = 0,
+		.ptrarray[NUM_ANIMTEX_FRAMES] =
+		{
+			0, 0, 0, 0, 0,
+			0, 0, 0, 0, 0
+		},
+	}
+	*/
 	
+	// quadblock texture type
+	// see IconGroup4 in namespace_Decal.h
 	.group4_ground =
 	{
-		// 512_0_32_20_16_16_0.png		
+		// for these we just use the exact same texture name format as ctr_tools' texture ripper for where in VRAM the texture and its CLUT are located
+		// our singular texture is named 512_0_32_20_16_16_0.png, so that's what we use
 		.texLayout[0] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // very far
 		.texLayout[1] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // far
 		.texLayout[2] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // close
 		.texLayout[3] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // very close
 	},
 	
-	.group4_ramp =
-	{
-		// 576_0_32_21_32_16_0.png		
-		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very far
-		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // far
-		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // close
-		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very close
-	},
-	
-	.group4_ramp_flip180 =
-	{
-		// 576_0_32_21_32_16_0.png		
-		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very far
-		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // far
-		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // close
-		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very close
-		
-		.texLayout[0].v0 = 16-1,
-		.texLayout[0].v1 = 16-1,
-		.texLayout[0].v2 = 0,
-		.texLayout[0].v3 = 0,
-		
-		.texLayout[1].v0 = 16-1,
-		.texLayout[1].v1 = 16-1,
-		.texLayout[1].v2 = 0,
-		.texLayout[1].v3 = 0,
-		
-		.texLayout[2].v0 = 16-1,
-		.texLayout[2].v1 = 16-1,
-		.texLayout[2].v2 = 0,
-		.texLayout[2].v3 = 0,
-		
-		.texLayout[3].v0 = 16-1,
-		.texLayout[3].v1 = 16-1,
-		.texLayout[3].v2 = 0,
-		.texLayout[3].v3 = 0,
-	},
-	
-	.texlayout_ramp_low 		= ImageName_Blend(640, 0, 32, 22, 12, 12, 0, TRANS_50),
-	.texlayout_ramp_low_flipV 	= ImageName_Blend(640, 0, 32, 22, 12, 12, 0, TRANS_50),
-	
-	.texlayout_ramp_low_flipV.v0 = 12-1,
-	.texlayout_ramp_low_flipV.v1 = 12-1,
-	.texlayout_ramp_low_flipV.v2 = 0,
-	.texlayout_ramp_low_flipV.v3 = 0,
-	
-	// this must exist, or else camera fly-in
-	// checks for "count" without nullptr check,
-	// and crashes dereferencing nullptr on real PSX
-	.ptrSpawnType1 =
+	// this must exist, or else camera fly-in checks for "count" without nullptr check, and crashes dereferencing nullptr on real PSX
+	.spawnType1 =
 	{
 		.count = 0,
 	},
-	
-/*
-	// leave this commented out
-	NEW_BLOCK
-	(
-		0, group4_ground,	// index, texture
-		0x0, 0x0			// posX, posY (size is always 0x300 x 0x300)
-		NULL, 0x1800, 		// vertex flags, quadblock flags
-		0xFF, 0x00, 0x00	// colorRGB
-	),
-*/
-	
-	// +z is forward
-	// +x is left, not right
-                                                                           NEW_BLOCK(0, group4_ground, 0x0000, 0x0000, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(1, group4_ground, 0x0300, 0x0000, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                           
-NEW_BLOCK(2, group4_ground, -0x300, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(3, group4_ground, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(4, group4_ground, 0x0300, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(5, group4_ground, 0x0600, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),
-NEW_BLOCK(6, group4_ground, -0x300, 0x0600, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(7, group4_ground, 0x0600, 0x0600, NULL, 0x1800, 0xFF, 0x0, 0x0),
-NEW_BLOCK(8, group4_ground, -0x300, 0x0900, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(9, group4_ground, 0x0600, 0x0900, NULL, 0x1800, 0xFF, 0x0, 0x0),
-NEW_BLOCK(10, group4_ground, -0x300, 0x0c00, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(11, group4_ground, 0x0600, 0x0c00, NULL, 0x1800, 0xFF, 0x0, 0x0),
-NEW_BLOCK(12, group4_ground, -0x300, 0x0f00, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(13, group4_ground, 0x0600, 0x0f00, NULL, 0x1800, 0xFF, 0x0, 0x0),
-NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(15, group4_ground, 0x0000, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(16, group4_ground, 0x0300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(17, group4_ground, 0x0600, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),
-                                                                           NEW_BLOCK(18, group4_ground, 0x0000, 0x1500, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(19, group4_ground, 0x0300, 0x1500, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                           
 
-	#if 0
-	
-		0,1,
-		3,4,
-	2,			5
-	6,			7
-	8,			9
-	10,			11
-	12,			13
-	14,			17
-		15,16
-		18,19
-	
-	#endif
-	
-	.quadBlock[2].respawnIndex = 0,
-	.quadBlock[6].respawnIndex = 1,
-	.quadBlock[8].respawnIndex = 2,
-	.quadBlock[10].respawnIndex = 3,
-	.quadBlock[12].respawnIndex = 4,
-	.quadBlock[14].respawnIndex = 5,
-	.quadBlock[15].respawnIndex = 6,
-	.quadBlock[16].respawnIndex = 7,
-	.quadBlock[17].respawnIndex = 8,
-	.quadBlock[13].respawnIndex = 9,
-	.quadBlock[11].respawnIndex = 10,
-	.quadBlock[9].respawnIndex = 11,
-	.quadBlock[7].respawnIndex = 12,
-	.quadBlock[5].respawnIndex = 13,
-	.quadBlock[4].respawnIndex = 14,
-	.quadBlock[3].respawnIndex = 15,
+	// automatically-generated quadblock insertions courtesy of pngtotrack.py
+	                                                                           NEW_BLOCK(00, group4_ground, 0x0000, 0x0000, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(01, group4_ground, 0x0300, 0x0000, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                           
+	NEW_BLOCK(02, group4_ground, -0x300, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(03, group4_ground, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(04, group4_ground, 0x0300, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(05, group4_ground, 0x0600, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),
+	NEW_BLOCK(06, group4_ground, -0x300, 0x0600, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(07, group4_ground, 0x0600, 0x0600, NULL, 0x1800, 0xFF, 0x0, 0x0),
+	NEW_BLOCK(08, group4_ground, -0x300, 0x0900, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(09, group4_ground, 0x0600, 0x0900, NULL, 0x1800, 0xFF, 0x0, 0x0),
+	NEW_BLOCK(10, group4_ground, -0x300, 0x0c00, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(11, group4_ground, 0x0600, 0x0c00, NULL, 0x1800, 0xFF, 0x0, 0x0),
+	NEW_BLOCK(12, group4_ground, -0x300, 0x0f00, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(13, group4_ground, 0x0600, 0x0f00, NULL, 0x1800, 0xFF, 0x0, 0x0),
+	NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(15, group4_ground, 0x0000, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(16, group4_ground, 0x0300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(17, group4_ground, 0x0600, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),
+	                                                                           NEW_BLOCK(18, group4_ground, 0x0000, 0x1500, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(19, group4_ground, 0x0300, 0x1500, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                           
 
+	/*
+	
+	   00 01    
+	02 03 04 05 
+	06       07 
+	08       09 
+	10       11 
+	12       13 
+	14 15 16 17 
+	   18 19    
+	
+	*/
+	
+	// checkpoint and respawn indices
+	// starts at 2 and ends at 3, which are the first and last quadblocks in terms of progression respectively
+	// 0, 1, 18, and 19 aren't used for progression
+	.quadBlock[2].checkpointIndex = 0,
+	.quadBlock[6].checkpointIndex = 1,
+	.quadBlock[8].checkpointIndex = 2,
+	.quadBlock[10].checkpointIndex = 3,
+	.quadBlock[12].checkpointIndex = 4,
+	.quadBlock[14].checkpointIndex = 5,
+	.quadBlock[15].checkpointIndex = 6,
+	.quadBlock[16].checkpointIndex = 7,
+	.quadBlock[17].checkpointIndex = 8,
+	.quadBlock[13].checkpointIndex = 9,
+	.quadBlock[11].checkpointIndex = 10,
+	.quadBlock[9].checkpointIndex = 11,
+	.quadBlock[7].checkpointIndex = 12,
+	.quadBlock[5].checkpointIndex = 13,
+	.quadBlock[4].checkpointIndex = 14,
+	.quadBlock[3].checkpointIndex = 15,
+
+	// checkpoint and respawn data, split into 16 nodes
+	// the positions of each node are the same as certain quadblocks
 	.noderespawnsthing =
 	{
 		[0] =
 		{
-			.pos = {-0x300, 0, 0x300},
+			.pos = {-0x300, 0, 0x300}, // same as quadblock 02
 			.distToFinish = 0x200*15,
 			.nextIndex_forward = 1,
 			.nextIndex_left = -1,
@@ -210,7 +175,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[1] =
 		{
-			.pos = {-0x300, 0, 0x600},
+			.pos = {-0x300, 0, 0x600}, // same as quadblock 06
 			.distToFinish = 0x200*14,
 			.nextIndex_forward = 2,
 			.nextIndex_left = -1,
@@ -219,7 +184,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[2] =
 		{
-			.pos = {-0x300, 0, 0x300*3},
+			.pos = {-0x300, 0, 0x300*3}, // same as quadblock 08
 			.distToFinish = 0x200*13,
 			.nextIndex_forward = 3,
 			.nextIndex_left = -1,
@@ -228,7 +193,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[3] =
 		{
-			.pos = {-0x300, 0, 0x300*4},
+			.pos = {-0x300, 0, 0x300*4}, // same as quadblock 10
 			.distToFinish = 0x200*12,
 			.nextIndex_forward = 4,
 			.nextIndex_left = -1,
@@ -237,7 +202,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[4] =
 		{
-			.pos = {-0x300, 0, 0x300*5},
+			.pos = {-0x300, 0, 0x300*5}, // same as quadblock 12
 			.distToFinish = 0x200*11,
 			.nextIndex_forward = 5,
 			.nextIndex_left = -1,
@@ -246,7 +211,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[5] =
 		{
-			.pos = {-0x300, 0, 0x300*6},
+			.pos = {-0x300, 0, 0x300*6}, // same as quadblock 14
 			.distToFinish = 0x200*10,
 			.nextIndex_forward = 6,
 			.nextIndex_left = -1,
@@ -255,7 +220,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[6] =
 		{
-			.pos = {0, 0, 0x300*6},
+			.pos = {0, 0, 0x300*6}, // same as quadblock 15
 			.distToFinish = 0x200*9,
 			.nextIndex_forward = 7,
 			.nextIndex_left = -1,
@@ -264,7 +229,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[7] =
 		{
-			.pos = {0x300, 0, 0x300*6},
+			.pos = {0x300, 0, 0x300*6}, // same as quadblock 16
 			.distToFinish = 0x200*8,
 			.nextIndex_forward = 8,
 			.nextIndex_left = -1,
@@ -273,7 +238,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[8] =
 		{
-			.pos = {0x600, 0, 0x300*6},
+			.pos = {0x600, 0, 0x300*6}, // same as quadblock 17
 			.distToFinish = 0x200*7,
 			.nextIndex_forward = 9,
 			.nextIndex_left = -1,
@@ -282,7 +247,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[9] =
 		{
-			.pos = {0x600, 0, 0x300*5},
+			.pos = {0x600, 0, 0x300*5}, // same as quadblock 13
 			.distToFinish = 0x200*6,
 			.nextIndex_forward = 10,
 			.nextIndex_left = -1,
@@ -291,7 +256,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[10] =
 		{
-			.pos = {0x600, 0, 0x300*4},
+			.pos = {0x600, 0, 0x300*4}, // same as quadblock 11
 			.distToFinish = 0x200*5,
 			.nextIndex_forward = 11,
 			.nextIndex_left = -1,
@@ -300,7 +265,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[11] =
 		{
-			.pos = {0x600, 0, 0x300*3},
+			.pos = {0x600, 0, 0x300*3}, // same as quadblock 09
 			.distToFinish = 0x200*4,
 			.nextIndex_forward = 12,
 			.nextIndex_left = -1,
@@ -309,7 +274,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[12] =
 		{
-			.pos = {0x600, 0, 0x300*2},
+			.pos = {0x600, 0, 0x300*2}, // same as quadblock 07
 			.distToFinish = 0x200*3,
 			.nextIndex_forward = 13,
 			.nextIndex_left = -1,
@@ -318,7 +283,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[13] =
 		{
-			.pos = {0x600, 0, 0x300*1},
+			.pos = {0x600, 0, 0x300*1}, // same as quadblock 05
 			.distToFinish = 0x200*2,
 			.nextIndex_forward = 14,
 			.nextIndex_left = -1,
@@ -327,7 +292,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[14] =
 		{
-			.pos = {0x300, 0, 0x300*1},
+			.pos = {0x300, 0, 0x300*1}, // same as quadblock 04
 			.distToFinish = 0x200*1,
 			.nextIndex_forward = 15,
 			.nextIndex_left = -1,
@@ -336,7 +301,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 		},
 		[15] =
 		{
-			.pos = {0, 0, 0x300*1},
+			.pos = {0, 0, 0x300*1}, // same as quadblock 03
 			.distToFinish = 0x200*0,
 			.nextIndex_forward = 0,
 			.nextIndex_left = -1,
@@ -418,7 +383,7 @@ NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_B
 			}
 		},
 		
-		// leaf with 1 quadblock
+		// leaf with all of our quadblocks
 		[2] =
 		{
 			.flag = 1,

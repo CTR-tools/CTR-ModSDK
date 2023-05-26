@@ -155,7 +155,11 @@ struct QuadBlock
 
 	// 0x3C
 	short blockID;
-	char respawnIndex;
+
+	// used for checkpoint progression
+	// and also respawns
+	char checkpointIndex;
+	
 	char triNormalVecBitShift;
 
 	// 0x40
@@ -416,6 +420,7 @@ struct WarpballPathNode
 	short distToFinish;
 	
 	// 0x8
+	// these refer to respawn indices specifically
 	char nextIndex_forward;
 	char nextIndex_left;
 	char nextIndex_backward;
