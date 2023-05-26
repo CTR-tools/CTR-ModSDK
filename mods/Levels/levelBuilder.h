@@ -103,6 +103,32 @@
 		0x1971,  \
 		0x1971,  \
 	}
+	
+#define SET_POSY_FLAT(qIndex, posY) \
+	.levVertex[9*qIndex+0].pos[1] = posY, \
+	.levVertex[9*qIndex+1].pos[1] = posY, \
+	.levVertex[9*qIndex+2].pos[1] = posY, \
+	.levVertex[9*qIndex+3].pos[1] = posY, \
+	.levVertex[9*qIndex+4].pos[1] = posY, \
+	.levVertex[9*qIndex+5].pos[1] = posY, \
+	.levVertex[9*qIndex+6].pos[1] = posY, \
+	.levVertex[9*qIndex+7].pos[1] = posY, \
+	.levVertex[9*qIndex+8].pos[1] = posY, \
+	.quadBlock[qIndex].bbox.min[1] = posY, \
+	.quadBlock[qIndex].bbox.max[1] = posY
+	
+#define SET_POSY_RAMP(qIndex, posY, height, low1, low2, low3, mid1, mid2, mid3, hi1, hi2, hi3) \
+	.levVertex[9*qIndex+low1].pos[1] = posY, \
+	.levVertex[9*qIndex+low2].pos[1] = posY, \
+	.levVertex[9*qIndex+low3].pos[1] = posY, \
+	.levVertex[9*qIndex+mid1].pos[1] = posY+(height/2), \
+	.levVertex[9*qIndex+mid2].pos[1] = posY+(height/2), \
+	.levVertex[9*qIndex+mid3].pos[1] = posY+(height/2), \
+	.levVertex[9*qIndex+hi1].pos[1] = posY+height, \
+	.levVertex[9*qIndex+hi2].pos[1] = posY+height, \
+	.levVertex[9*qIndex+hi3].pos[1] = posY+height, \
+	.quadBlock[qIndex].bbox.min[1] = posY, \
+	.quadBlock[qIndex].bbox.max[1] = posY+height
 
 // if clutX is 512 in VRAM, the clutX parameter is 32 (512>>4),
 // bitshifting must be done for that variable, consistent to PNG names

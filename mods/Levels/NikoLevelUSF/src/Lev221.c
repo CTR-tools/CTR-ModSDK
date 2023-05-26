@@ -1,7 +1,7 @@
 #include <common.h>
 #include "../../levelBuilder.h"
 
-#define NUM_BLOCKS 6
+#define NUM_BLOCKS 20
 
 struct LevelFile
 {
@@ -67,7 +67,7 @@ struct LevelFile file =
 		.clearColor[0].rgb = {0xFF, 0x40, 0x20},
 		.clearColor[0].enable = 1,
 		
-		.clearColor[1].rgb = {0x40, 0xFF, 0x20},
+		.clearColor[1].rgb = {0x80, 0x20, 0x10},
 		.clearColor[1].enable = 1,
 		
 		// only non-zero for Race maps
@@ -164,30 +164,235 @@ struct LevelFile file =
 	NEW_BLOCK(2, group4_placeHolder, -0x180, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(3, group4_placeHolder, 0x180, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
-	// ramp, in front of spawn
+	// ramp down (1/3)
 	NEW_BLOCK(4, group4_placeHolder, -0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(5, group4_placeHolder, 0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
 		4, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		5, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		4, -0x180, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		5, -0x180, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	// ramp down (2/3)
+	NEW_BLOCK(6, group4_placeHolder, -0x180, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(7, group4_placeHolder, 0x180, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		6, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		7, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		6, -0x300, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		7, -0x300, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	// ramp down (3/3)
+	NEW_BLOCK(8, group4_placeHolder, -0x180, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(9, group4_placeHolder, 0x180, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		8, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		9, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		8, -0x480, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		9, -0x480, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	// === Edit LevVertex to put hole in left ==
+	// Make it a triangular hole between two quadblocks
+	
+	// bottom between ramps
+	NEW_BLOCK(10, group4_placeHolder, -0x180, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(11, group4_placeHolder, 0x180, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(10,-0x480),
+	SET_POSY_FLAT(11,-0x480),
+	
+	// bottom between ramps
+	NEW_BLOCK(12, group4_placeHolder, -0x180, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(13, group4_placeHolder, 0x180, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(12,-0x480),
+	SET_POSY_FLAT(13,-0x480),
+	
+	// ===== need hole in bottom ======
+	
+	// ramp up (1/3)
+	NEW_BLOCK(14, group4_placeHolder, -0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(15, group4_placeHolder, 0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		14, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	MAKE_RAMP(
-		5, 0x180, // index, height
+		15, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
-	.quadBlock[0].blockID =  6-0-1,
-	.quadBlock[1].blockID =  6-1-1,
-	.quadBlock[2].blockID =  6-2-1,
-	.quadBlock[3].blockID =  6-3-1,
-	.quadBlock[4].blockID =  6-4-1,
-	.quadBlock[5].blockID =  6-5-1,
+	SET_POSY_RAMP(
+		14, -0x480, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		15, -0x480, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	// ramp up (2/3)
+	NEW_BLOCK(16, group4_placeHolder, -0x180, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(17, group4_placeHolder, 0x180, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		16, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		17, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		16, -0x300, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		17, -0x300, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	// ramp up (3/3)
+	NEW_BLOCK(18, group4_placeHolder, -0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(19, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		18, -0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		19, -0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		18, -0x180, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		19, -0x180, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	.quadBlock[0].blockID =  20-0-1,
+	.quadBlock[1].blockID =  20-1-1,
+	.quadBlock[2].blockID =  20-2-1,
+	.quadBlock[3].blockID =  20-3-1,
+	.quadBlock[4].blockID =  20-4-1,
+	.quadBlock[5].blockID =  20-5-1,
+	.quadBlock[6].blockID =  20-6-1,
+	.quadBlock[7].blockID =  20-7-1,
+	.quadBlock[8].blockID =  20-8-1,
+	.quadBlock[9].blockID =  20-9-1,
+	.quadBlock[10].blockID = 20-10-1,
+	.quadBlock[11].blockID = 20-11-1,
+	.quadBlock[12].blockID = 20-12-1,
+	.quadBlock[13].blockID = 20-13-1,
+	.quadBlock[14].blockID = 20-14-1,
+	.quadBlock[15].blockID = 20-15-1,
+	.quadBlock[16].blockID = 20-16-1,
+	.quadBlock[17].blockID = 20-17-1,
+	.quadBlock[18].blockID = 20-18-1,
+	.quadBlock[19].blockID = 20-19-1,
 	
 	// ========== bsp ======================
 	
@@ -200,7 +405,7 @@ struct LevelFile file =
 			.id = 0,
 			.box =
 			{
-				.min = {-0x3000, 0xFFE4, -0x3000},
+				.min = {-0x3000, -0x800, -0x3000},
 				.max = {0x3000, 0x066E, 0x3000}
 			},
 			
@@ -225,7 +430,7 @@ struct LevelFile file =
 			.box =
 			{
 				// random box that exists nowhere
-				.min = {-0x1100, 0xFFE4, 0x1100},
+				.min = {-0x1100, -0x800, 0x2200},
 				.max = {0x1100, 0x400, 0x2500}
 			},
 			
@@ -249,8 +454,8 @@ struct LevelFile file =
 			.box =
 			{
 				// random box that exists nowhere
-				.min = {-0x1100, 0xFFE4, -0x1100},
-				.max = {0x1100, 0x400, 0x1100}
+				.min = {-0x1100, -0x800, -0x1100},
+				.max = {0x1100, 0x400, 0x2100}
 			},
 			
 			.data =
@@ -259,7 +464,7 @@ struct LevelFile file =
 				{
 					.unk1 = 0,
 					.bspHitboxArray = 0,
-					.numQuads = 6,
+					.numQuads = 20,
 					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
 				}
 			}
@@ -354,5 +559,19 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(3),
 		PTR_MAP_QUADBLOCK(4),
 		PTR_MAP_QUADBLOCK(5),
+		PTR_MAP_QUADBLOCK(6),
+		PTR_MAP_QUADBLOCK(7),
+		PTR_MAP_QUADBLOCK(8),
+		PTR_MAP_QUADBLOCK(9),
+		PTR_MAP_QUADBLOCK(10),
+		PTR_MAP_QUADBLOCK(11),
+		PTR_MAP_QUADBLOCK(12),
+		PTR_MAP_QUADBLOCK(13),
+		PTR_MAP_QUADBLOCK(14),
+		PTR_MAP_QUADBLOCK(15),
+		PTR_MAP_QUADBLOCK(16),
+		PTR_MAP_QUADBLOCK(17),
+		PTR_MAP_QUADBLOCK(18),
+		PTR_MAP_QUADBLOCK(19),
 	},
 };
