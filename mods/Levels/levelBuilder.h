@@ -1,4 +1,5 @@
 
+// get pointer to variable or struct in the level file
 #define OFFSETOF(TYPE, ELEMENT) ((unsigned int)&(((TYPE *)0)->ELEMENT))
 
 #define NEW_VERTEX(posX, posY, posZ, flag, colR, colG, colB) \
@@ -12,6 +13,25 @@
 // can't change these, or else triNormalVec has to change
 #define sizeX 0x300
 #define sizeZ 0x300
+
+/*
+	NEW_BLOCK
+	(
+		// index, texture
+		0, group4_ground,
+
+		// posX, posZ
+		// +z is forward, +x is left, not right
+		// size of a quadblock is always 0x300 x 0x300, as per the above macros
+		0x0, 0x0,
+
+		// vertex flags, quadblock flags
+		NULL, 0x1800,
+
+		// RGB color
+		0xFF, 0x00, 0x00
+	),
+*/
 
 #define NEW_BLOCK(qIndex, group4, posX, posZ, flagV, flagQ, colR, colG, colB) \
 	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
@@ -48,7 +68,7 @@
 		.speedImpact = 0, \
 		\
 		.blockID = 0, \
-		.respawnIndex = qIndex, \
+		.checkpointIndex = qIndex, \
 		.triNormalVecBitShift = 0x12, \
 		\
 		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4, \
@@ -85,7 +105,7 @@
 	.levVertex[9*qIndex+hi1].pos[1] = height, \
 	.levVertex[9*qIndex+hi2].pos[1] = height, \
 	.levVertex[9*qIndex+hi3].pos[1] = height, \
-	.quadBlock[qIndex].respawnIndex = -1, \
+	.quadBlock[qIndex].checkpointIndex = -1, \
 	.quadBlock[qIndex].bbox.max[1] = height, \
 	.quadBlock[qIndex].draw_order_low = 0x80000000, \
 	.quadBlock[qIndex].triNormalVecDividend = \

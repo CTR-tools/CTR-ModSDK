@@ -23392,11 +23392,11 @@ void FUN_8005ca24(int param_1)
 			// if quadblock exists
 			(iVar7 != 0) &&
 
-			// quadBlock -> respawnIndex is valid
+			// quadBlock -> checkpointIndex is valid
 			(*(char *)(iVar7 + 0x3e) != -1)
 		 )
 	  {
-		// quadblock -> respawnIndex
+		// quadblock -> checkpointIndex
         uVar11 = (ushort)*(byte *)(iVar7 + 0x3e);
       }
     }
@@ -23404,14 +23404,14 @@ void FUN_8005ca24(int param_1)
 	// If this is an AI
     else
 	{
-	  // duplicate of quadblock respawnIndex (AI-exclusive)
+	  // duplicate of quadblock checkpointIndex (AI-exclusive)
       uVar11 = (ushort)*(byte *)(param_1 + 0x60a);
     }
 
 	// if level has respawn points
     if ((*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x148) - 1U < 0xff) &&
 
-	   // respawnIndex is valid
+	   // checkpointIndex is valid
 	   (-1 < (int)(short)uVar11))
 	{
 	  // array of respawn points
@@ -23492,7 +23492,7 @@ void FUN_8005ca24(int param_1)
         *(uint *)(param_1 + 0x2c8) = *(uint *)(param_1 + 0x2c8) | 0x8000000;
       }
 
-	  // respawnIndex
+	  // checkpointIndex
       *(undefined *)(param_1 + 0x495) = (char)uVar11;
     }
   }
@@ -33059,7 +33059,7 @@ void FUN_8006677c(int param_1,short *param_2)
 			(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x14c) == 0)
 		) ||
 
-		// quadblock respawnIndex (0x3e)
+		// quadblock checkpointIndex (0x3e)
 		(*(char *)(param_2 + 0x1f) == -1))
   {
 	// respawn driver on the last "valid" quadblock they touched
@@ -33109,7 +33109,7 @@ void FUN_8006677c(int param_1,short *param_2)
 		 * 0x80;
   }
 
-  // if respawnIndex is not -1,
+  // if checkpointIndex is not -1,
   // and respawn points exist on LEV
   else
   {
@@ -33129,7 +33129,7 @@ void FUN_8006677c(int param_1,short *param_2)
 	// ground quadblock flags
     DAT_1f80012c = 0x1000;
 
-	// quadblock respawnIndex (0x3e)
+	// quadblock checkpointIndex (0x3e)
 	bVar1 = *(byte *)(param_2 + 0x1f);
 	
 	// lev -> respawn_points

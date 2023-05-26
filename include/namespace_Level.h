@@ -155,7 +155,11 @@ struct QuadBlock
 
 	// 0x3C
 	short blockID;
-	char respawnIndex;
+
+	// used for checkpoint progression
+	// and also respawns
+	char checkpointIndex;
+
 	char triNormalVecBitShift;
 
 	// 0x40
@@ -404,10 +408,11 @@ struct SpawnType2
 	short* posCoords;
 };
 
-// need a better name for this,
-// also for track-select video,
-// progression data, player respawn, etc
-struct WarpballPathNode
+// per-quadblock checkpoint node
+// each node holds the amount of distance to finish line as well as the index of the nodes that go before or after it
+// and position values, which are used for respawns as well as the warp orb path
+// they're also used for the track videos on the main menu!
+struct CheckpointNode
 {
 	// 0x0
 	short pos[3];
@@ -558,7 +563,7 @@ struct Level
 	int cnt_restart_points;
 
 	// 0x14C
-	struct WarpballPathNode* ptr_restart_points;
+	struct CheckpointNode* ptr_restart_points;
 
 	// 0x150
 	char unk_150[0x10];

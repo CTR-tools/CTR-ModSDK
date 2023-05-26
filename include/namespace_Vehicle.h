@@ -486,7 +486,7 @@ struct Driver
 	// 0x01000000 - behind start line
 	// 0x02000000 - race finished for this driver
 	// 0x04000000 - tracker chasing you
-	// 0x08000000 - ? respawnIndex-related
+	// 0x08000000 - ? checkpointIndex-related
 	// 0x10000000 - human-human collision
 	// ?
 	// ?

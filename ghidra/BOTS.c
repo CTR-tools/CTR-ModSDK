@@ -2707,7 +2707,7 @@ LAB_800156b0:
 	  // save quadblock height
       *(int *)(iVar17 + 0x2d0) = (int)DAT_1f800124._2_2_ << 8;
 
-	  // get respawnIndex from quadblock (mask grab)
+	  // get checkpointIndex from quadblock (mask grab)
 	  *(undefined *)(iVar17 + 0x60a) = *(undefined *)(DAT_1f800188 + 0x3e);
 
 	  // Rot_AxisAngle

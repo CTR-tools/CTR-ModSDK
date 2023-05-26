@@ -14,7 +14,7 @@ struct LevelFile
 	struct TextureLayout texlayout_ramp_low;
 	struct TextureLayout texlayout_ramp_low_flipV;
 	struct SpawnType1 ptrSpawnType1;
-	struct WarpballPathNode noderespawnsthing[NUM_BLOCKS]; // all empty, this is a battle map
+	struct CheckpointNode noderespawnsthing[NUM_BLOCKS]; // all empty, this is a battle map
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
 	struct BSP bsp[3];
