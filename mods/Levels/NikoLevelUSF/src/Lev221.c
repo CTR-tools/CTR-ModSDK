@@ -1,7 +1,7 @@
 #include <common.h>
 #include "../../levelBuilder.h"
 
-#define NUM_BLOCKS 54
+#define NUM_BLOCKS 58
 
 struct LevelFile
 {
@@ -488,10 +488,20 @@ struct LevelFile file =
 	SET_POSY_FLAT(50,-0x300),
 	SET_POSY_FLAT(51,-0x300),
 	
-	NEW_BLOCK(52, group4_placeHolder, 0xD80, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(53, group4_placeHolder, 0x1080, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(52, group4_placeHolder, 0xD80, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(53, group4_placeHolder, 0x1080, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
 	SET_POSY_FLAT(52,-0x300),
 	SET_POSY_FLAT(53,-0x300),
+	
+	NEW_BLOCK(54, group4_placeHolder, 0xD80, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(55, group4_placeHolder, 0x1080, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(54,-0x300),
+	SET_POSY_FLAT(55,-0x300),
+	
+	NEW_BLOCK(56, group4_placeHolder, 0xD80, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(57, group4_placeHolder, 0x1080, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(56,-0x300),
+	SET_POSY_FLAT(57,-0x300),
 	
 	.quadBlock[0].blockID =  32-0-1,
 	.quadBlock[1].blockID =  32-1-1,
@@ -526,28 +536,32 @@ struct LevelFile file =
 	.quadBlock[30].blockID = 32-30-1,
 	.quadBlock[31].blockID = 32-31-1,
 	
-	.quadBlock[32].blockID = 54-32-1,
-	.quadBlock[33].blockID = 54-33-1,
-	.quadBlock[34].blockID = 54-34-1,
-	.quadBlock[35].blockID = 54-35-1,
-	.quadBlock[36].blockID = 54-36-1,
-	.quadBlock[37].blockID = 54-37-1,
-	.quadBlock[38].blockID = 54-38-1,
-	.quadBlock[39].blockID = 54-39-1,
-	.quadBlock[40].blockID = 54-40-1,
-	.quadBlock[41].blockID = 54-41-1,
-	.quadBlock[42].blockID = 54-42-1,
-	.quadBlock[43].blockID = 54-43-1,
-	.quadBlock[44].blockID = 54-44-1,
-	.quadBlock[45].blockID = 54-45-1,
-	.quadBlock[46].blockID = 54-46-1,
-	.quadBlock[47].blockID = 54-47-1,
-	.quadBlock[48].blockID = 54-48-1,
-	.quadBlock[49].blockID = 54-49-1,
-	.quadBlock[50].blockID = 54-50-1,
-	.quadBlock[51].blockID = 54-51-1,
-	.quadBlock[52].blockID = 54-50-1,
-	.quadBlock[53].blockID = 54-51-1,
+	.quadBlock[32].blockID = 58-32-1,
+	.quadBlock[33].blockID = 58-33-1,
+	.quadBlock[34].blockID = 58-34-1,
+	.quadBlock[35].blockID = 58-35-1,
+	.quadBlock[36].blockID = 58-36-1,
+	.quadBlock[37].blockID = 58-37-1,
+	.quadBlock[38].blockID = 58-38-1,
+	.quadBlock[39].blockID = 58-39-1,
+	.quadBlock[40].blockID = 58-40-1,
+	.quadBlock[41].blockID = 58-41-1,
+	.quadBlock[42].blockID = 58-42-1,
+	.quadBlock[43].blockID = 58-43-1,
+	.quadBlock[44].blockID = 58-44-1,
+	.quadBlock[45].blockID = 58-45-1,
+	.quadBlock[46].blockID = 58-46-1,
+	.quadBlock[47].blockID = 58-47-1,
+	.quadBlock[48].blockID = 58-48-1,
+	.quadBlock[49].blockID = 58-49-1,
+	.quadBlock[50].blockID = 58-50-1,
+	.quadBlock[51].blockID = 58-51-1,
+	.quadBlock[52].blockID = 58-52-1,
+	.quadBlock[53].blockID = 58-53-1,
+	.quadBlock[54].blockID = 58-54-1,
+	.quadBlock[55].blockID = 58-55-1,
+	.quadBlock[56].blockID = 58-56-1,
+	.quadBlock[57].blockID = 58-57-1,
 	
 	// ========== bsp ======================
 	
@@ -595,7 +609,7 @@ struct LevelFile file =
 				{
 					.unk1 = 0,
 					.bspHitboxArray = 0,
-					.numQuads = 22,
+					.numQuads = 26,
 					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[32])-4
 				}
 			}
@@ -762,5 +776,9 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(51),
 		PTR_MAP_QUADBLOCK(52),
 		PTR_MAP_QUADBLOCK(53),
+		PTR_MAP_QUADBLOCK(54),
+		PTR_MAP_QUADBLOCK(55),
+		PTR_MAP_QUADBLOCK(56),
+		PTR_MAP_QUADBLOCK(57)
 	},
 };
