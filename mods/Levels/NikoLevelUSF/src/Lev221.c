@@ -300,8 +300,7 @@ struct LevelFile file =
 	
 	// ramp up (1/3)
 	NEW_BLOCK(14, group4_placeHolder, -0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(15, group4_turbopad_green, 0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
-	.quadBlock[15].draw_order_low = 0x380E000,
+	NEW_BLOCK(15, group4_turbopad_green, 0x180, 0x1500, NULL, 0x9800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
 		14, 0x180, // index, height
@@ -364,9 +363,8 @@ struct LevelFile file =
 	),
 	
 	// ramp up (3/3)
-	NEW_BLOCK(18, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(18, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x9800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(19, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	.quadBlock[18].draw_order_low = 0x380E000,
 	
 	MAKE_RAMP(
 		18, 0x180, // index, height
@@ -409,8 +407,6 @@ struct LevelFile file =
 	// turbo on ramp-up(3/3)
 	NEW_BLOCK(30, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x1840, 0x80, 0x80, 0x80),
 	NEW_BLOCK(31, group4_turbopad_green, 0x180, 0x1500, NULL, 0x1840, 0x80, 0x80, 0x80),
-	.quadBlock[30].draw_order_low = 0x380E000,
-	.quadBlock[31].draw_order_low = 0x380E000,
 	
 	// turn into turbo, if flagsQ is 0x1840
 	// 1 for normal, 2 for super turbo
@@ -458,13 +454,9 @@ struct LevelFile file =
 	// flat, turn 180
 	NEW_BLOCK(38, group4_turbopad_green, 0xD80, 0x2100, NULL, 0x9800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(39, group4_turbopad_green, 0x1080, 0x2100, NULL, 0x9800, 0x80, 0x80, 0x80),
-	.quadBlock[38].draw_order_low = 0x380E000,
-	.quadBlock[39].draw_order_low = 0x380E000,
 	
 	NEW_BLOCK(40, group4_turbopad_green, 0xD80,  0x2100, NULL, 0x1840, 0x80, 0x80, 0x80),
 	NEW_BLOCK(41, group4_turbopad_green, 0x1080,0x2100, NULL, 0x1840, 0x80, 0x80, 0x80),
-	.quadBlock[40].draw_order_low = 0x380E000,
-	.quadBlock[41].draw_order_low = 0x380E000,
 	.quadBlock[40].terrain_type = 1,
 	.quadBlock[41].terrain_type = 1,
 	
@@ -502,6 +494,16 @@ struct LevelFile file =
 	NEW_BLOCK(57, group4_placeHolder, 0x1080, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	SET_POSY_FLAT(56,-0x300),
 	SET_POSY_FLAT(57,-0x300),
+	
+	// for some reason required to move here?
+	.quadBlock[15].draw_order_low = 0x8380E000,
+	.quadBlock[18].draw_order_low = 0x8380E000,
+	.quadBlock[30].draw_order_low = 0x8380E000,
+	.quadBlock[31].draw_order_low = 0x8380E000,
+	.quadBlock[38].draw_order_low = 0x8380E000,
+	.quadBlock[39].draw_order_low = 0x8380E000,
+	.quadBlock[40].draw_order_low = 0x8380E000,
+	.quadBlock[41].draw_order_low = 0x8380E000,
 	
 	.quadBlock[0].blockID =  32-0-1,
 	.quadBlock[1].blockID =  32-1-1,
