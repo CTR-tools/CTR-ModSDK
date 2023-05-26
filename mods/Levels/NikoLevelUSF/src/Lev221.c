@@ -32,10 +32,10 @@
 		.draw_order_high = 0, \
 		.ptr_texture_mid = \
 		{ \
-			OFFSETOF(struct LevelFile, group4.texLayout[0])-4, \
-			OFFSETOF(struct LevelFile, group4.texLayout[1])-4, \
-			OFFSETOF(struct LevelFile, group4.texLayout[2])-4, \
-			OFFSETOF(struct LevelFile, group4.texLayout[3])-4 \
+			OFFSETOF(struct LevelFile, group4.texLayout[0])-0x24-4, \
+			OFFSETOF(struct LevelFile, group4.texLayout[1])-0x24-4, \
+			OFFSETOF(struct LevelFile, group4.texLayout[2])-0x24-4, \
+			OFFSETOF(struct LevelFile, group4.texLayout[3])-0x24-4 \
 		}, \
 		\
 		.bbox = \
@@ -199,30 +199,30 @@ struct LevelFile file =
 		.numBspNodes = 3, // can be anything non-zero
 	},
 	
-	// .texLayout[0] = ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50),
-	// .texLayout[0] = ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50),
-	// .texLayout[0] = ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50),
-	// .texLayout[0] = ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50),
+	#define CHECKER_EDGE__ ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50)
+	#define CHECKER_CENTER ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50)
+	#define TILE_EDGE_____ ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50)
+	#define TILE_CENTER___ ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50)
 	
-	// 2 1
-	// 0 3
+	// bottom-right
+	// bottom-left
+	// top-right
+	// top-left	
 	
-	.group4_ground =
-	{	
-		.texLayout[0] = ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50),
-		.texLayout[1] = ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50),
-		.texLayout[2] = ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50),
-		
-		// unusual, but this somehow draws 
-		.texLayout[3] = ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50),
+	.group4_ground.texLayout =
+	{
+		TILE_EDGE_____,
+		TILE_CENTER___,
+		CHECKER_EDGE__,
+		CHECKER_CENTER
 	},
 	
-	.group4_startLine =
+	.group4_startLine.texLayout =
 	{	
-		.texLayout[0] = ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50),
-		.texLayout[1] = ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50),
-		.texLayout[2] = ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50),
-		.texLayout[3] = ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50),
+		TILE_CENTER___,
+		TILE_EDGE_____,
+		CHECKER_CENTER,
+		CHECKER_EDGE__
 	},
 	
 	// this must exist, or else camera fly-in
@@ -249,13 +249,13 @@ struct LevelFile file =
 	
 	// spawn
 	NEW_BLOCK(0, group4_ground, -0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(1, group4_ground, 0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(1, group4_startLine, 0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	.quadBlock[0].blockID =  2-0-1,
 	.quadBlock[1].blockID =  2-1-1,
 	
 	.quadBlock[0].draw_order_low = 0x800000, // rotate checker
-	//.quadBlock[1].draw_order_low = 0x380E000,
+	.quadBlock[1].draw_order_low = 0x1044000, // rotation
 	
 	// ========== bsp ======================
 	
