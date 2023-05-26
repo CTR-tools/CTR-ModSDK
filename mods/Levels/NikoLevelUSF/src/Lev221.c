@@ -212,7 +212,9 @@ struct LevelFile file =
 		.texLayout[0] = ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50),
 		.texLayout[1] = ImageName_Blend(576, 0, 32, 129, 64, 64, 0, TRANS_50),
 		.texLayout[2] = ImageName_Blend(512, 0, 32, 128, 64, 64, 0, TRANS_50),
-		.texLayout[3] = ImageName_Blend(704, 0, 32, 131, 64, 64, 0, TRANS_50),
+		
+		// unusual, but this somehow draws 
+		.texLayout[3] = ImageName_Blend(640, 0, 32, 130, 64, 64, 0, TRANS_50),
 	},
 	
 	.group4_startLine =
