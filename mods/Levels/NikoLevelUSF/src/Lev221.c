@@ -1,7 +1,7 @@
 #include <common.h>
 #include "../../levelBuilder.h"
 
-#define NUM_BLOCKS 64
+#define NUM_BLOCKS 76
 
 struct LevelFile
 {
@@ -19,21 +19,21 @@ struct LevelFile
 	struct WarpballPathNode noderespawnsthing[NUM_BLOCKS]; // all empty, this is a battle map
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
-	struct BSP bsp[3];
+	struct BSP bsp[5];
 	struct PVS pvs;
 	int visBitIndex[4];
 	struct VisMem visMem;
 	
 	int VisMem_bitIndex_DstMemcpyP1[8]; // leave empty
-	int VisMem_bspList_RenderListP1[3*2];
+	int VisMem_bspList_RenderListP1[5*2];
 	int VisMem_bitIndex_DstMemcpyP2[8]; // leave empty
-	int VisMem_bspList_RenderListP2[3*2];
+	int VisMem_bspList_RenderListP2[5*2];
 	int VisMem_bitIndex_DstMemcpyP3[8]; // leave empty
-	int VisMem_bspList_RenderListP3[3*2];
+	int VisMem_bspList_RenderListP3[5*2];
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
-	int VisMem_bspList_RenderListP4[3*2];
+	int VisMem_bspList_RenderListP4[5*2];
 	
-	int map[(31+NUM_BLOCKS*6)+1];
+	int map[(36+NUM_BLOCKS*6)+1];
 };
 
 struct LevelFile file =
@@ -181,8 +181,8 @@ struct LevelFile file =
 	// top/bottom left/right assuming you're rotation is 0,0,0
 	TEX_2X2(0, group4_tileEdge, group4_tileCenter, group4_checkerEdge, group4_checkerCenter),
 	TEX_2X2(1, group4_tileCenter, group4_tileEdge, group4_checkerCenter, group4_checkerEdge),
-	.quadBlock[0].draw_order_low = 0x800000, // rotate checker
-	.quadBlock[1].draw_order_low = 0x1044000, // rotation
+	.quadBlock[0].draw_order_low = 0x80800000, // rotate checker
+	.quadBlock[1].draw_order_low = 0x81044000, // rotation
 	
 	// flat, in front of spawn
 	NEW_BLOCK(2, group4_placeHolder, -0x180, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
@@ -510,6 +510,92 @@ struct LevelFile file =
 	SET_POSY_FLAT(62,-0x300),
 	SET_POSY_FLAT(63,-0x300),
 	
+	// ====== End of BSP block =========
+	
+	NEW_BLOCK(64, group4_placeHolder, 0xD80, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(65, group4_placeHolder, 0x1080, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(64,-0x300),
+	SET_POSY_FLAT(65,-0x300),
+	
+	NEW_BLOCK(66, group4_placeHolder, 0xD80, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(67, group4_placeHolder, 0x1080, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(66,-0x300),
+	SET_POSY_FLAT(67,-0x300),
+	
+	NEW_BLOCK(68, group4_placeHolder, 0xD80, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(69, group4_placeHolder, 0x1080, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(68,-0x300),
+	SET_POSY_FLAT(69,-0x300),
+	
+	NEW_BLOCK(70, group4_placeHolder, 0xD80, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(71, group4_placeHolder, 0x1080, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(70,-0x300),
+	SET_POSY_FLAT(71,-0x300),
+	
+	// === Last turn, back to startline ===
+	
+	NEW_BLOCK(72, group4_placeHolder, 0xA80, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(73, group4_turbopad_gray, 0xA80, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		72, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		73, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		72, -0x300, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		73, -0x300, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	NEW_BLOCK(74, group4_turbopad_green, 0x780, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(75, group4_placeHolder, 0x780, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		74, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		75, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		74, -0x180, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		75, -0x180, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
 	// for some reason required to move here?
 	.quadBlock[15].draw_order_low = 0x8380E000,
 	.quadBlock[18].draw_order_low = 0x8380E000,
@@ -519,6 +605,8 @@ struct LevelFile file =
 	.quadBlock[39].draw_order_low = 0x8380E000,
 	.quadBlock[40].draw_order_low = 0x8380E000,
 	.quadBlock[41].draw_order_low = 0x8380E000,
+	.quadBlock[73].draw_order_low = 0x8380E000,
+	.quadBlock[75].draw_order_low = 0x8380E000,
 	
 	.quadBlock[0].blockID =  32-0-1,
 	.quadBlock[1].blockID =  32-1-1,
@@ -586,6 +674,19 @@ struct LevelFile file =
 	.quadBlock[62].blockID = 64-62-1,
 	.quadBlock[63].blockID = 64-63-1,
 	
+	.quadBlock[64].blockID = 76-64-1,
+	.quadBlock[65].blockID = 76-65-1,
+	.quadBlock[66].blockID = 76-66-1,
+	.quadBlock[67].blockID = 76-67-1,
+	.quadBlock[68].blockID = 76-68-1,
+	.quadBlock[69].blockID = 76-69-1,
+	.quadBlock[70].blockID = 76-70-1,
+	.quadBlock[71].blockID = 76-71-1,
+	.quadBlock[72].blockID = 76-72-1,
+	.quadBlock[73].blockID = 76-73-1,
+	.quadBlock[74].blockID = 76-74-1,
+	.quadBlock[75].blockID = 76-75-1,
+	
 	// ========== bsp ======================
 	
 	.bsp =
@@ -609,15 +710,15 @@ struct LevelFile file =
 					.axis = {0x1000, 0x0, 0x0, 0xFF40},
 					
 					// 0x4000 signifies leaf node
-					.childID = {0x4002, 0x4001},
+					.childID = {0x4002, 0x1},
 				}
 			}
 		},
 		
-		// leaf with nothing in it
+		// branch for side of map opposite to startline
 		[1] =
 		{
-			.flag = 0x1,
+			.flag = 0,
 			.id = 1,
 			.box =
 			{
@@ -628,17 +729,18 @@ struct LevelFile file =
 			
 			.data =
 			{
-				.leaf =
+				.branch =
 				{
-					.unk1 = 0,
-					.bspHitboxArray = 0,
-					.numQuads = 32,
-					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[32])-4
+					// need more info on this
+					.axis = {0, 0x0, 0x1000, 0xFF40},
+					
+					// 0x4000 signifies leaf node
+					.childID = {0x4003, 0x4004},
 				}
 			}
 		},
 		
-		// leaf with 1 quadblock
+		// leaf with startline
 		[2] =
 		{
 			.flag = 0x1,
@@ -658,6 +760,55 @@ struct LevelFile file =
 					.bspHitboxArray = 0,
 					.numQuads = 32,
 					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
+				}
+			}
+		},
+		
+		// leaf with u-turn and drop
+		[3] =
+		{
+			.flag = 0x1,
+			.id = 3,
+			.box =
+			{
+				// random box that exists nowhere
+				.min = {0x300, -0x800, 0x481},
+				.max = {0x2100, 0x400, 0x4500}
+			},
+			
+			.data =
+			{
+				.leaf =
+				{
+					.unk1 = 0,
+					.bspHitboxArray = 0,
+					.numQuads = 32,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[32])-4
+				}
+			}
+		},
+		
+		// leaf yet to come
+		[4] =
+		{
+			.flag = 0x1,
+			.id = 4,
+			.box =
+			{
+				// random box that exists nowhere
+				.min = {0x300, -0x800, -0x1100},
+				.max = {0x2100, 0x400, 0x47F}
+			},
+			
+			.data =
+			{
+				.leaf =
+				{
+					// empty, should be [64]
+					.unk1 = 0,
+					.bspHitboxArray = 0,
+					.numQuads = NUM_BLOCKS-64,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[64])-4
 				}
 			}
 		},
@@ -701,18 +852,22 @@ struct LevelFile file =
 	},
 	
 	// initialize for leaf nodes only
-	.VisMem_bspList_RenderListP1[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
-	.VisMem_bspList_RenderListP2[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
-	.VisMem_bspList_RenderListP3[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
-	.VisMem_bspList_RenderListP4[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
 	.VisMem_bspList_RenderListP1[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
 	.VisMem_bspList_RenderListP2[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
 	.VisMem_bspList_RenderListP3[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
 	.VisMem_bspList_RenderListP4[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
+	.VisMem_bspList_RenderListP1[2*3+1] = OFFSETOF(struct LevelFile, bsp[3])-4,
+	.VisMem_bspList_RenderListP2[2*3+1] = OFFSETOF(struct LevelFile, bsp[3])-4,
+	.VisMem_bspList_RenderListP3[2*3+1] = OFFSETOF(struct LevelFile, bsp[3])-4,
+	.VisMem_bspList_RenderListP4[2*3+1] = OFFSETOF(struct LevelFile, bsp[3])-4,
+	.VisMem_bspList_RenderListP1[2*4+1] = OFFSETOF(struct LevelFile, bsp[4])-4,
+	.VisMem_bspList_RenderListP2[2*4+1] = OFFSETOF(struct LevelFile, bsp[4])-4,
+	.VisMem_bspList_RenderListP3[2*4+1] = OFFSETOF(struct LevelFile, bsp[4])-4,
+	.VisMem_bspList_RenderListP4[2*4+1] = OFFSETOF(struct LevelFile, bsp[4])-4,
 	
 	.map =
 	{
-		(31+NUM_BLOCKS*6)<<2,
+		(36+NUM_BLOCKS*6)<<2,
 		
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
@@ -721,8 +876,9 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVertexArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.bspRoot)-4,
-		OFFSETOF(struct LevelFile, bsp[1].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, bsp[2].data.leaf.ptrQuadBlockArray)-4,
+		OFFSETOF(struct LevelFile, bsp[3].data.leaf.ptrQuadBlockArray)-4,
+		OFFSETOF(struct LevelFile, bsp[4].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, pvs.visLeafSrc)-4,
 		OFFSETOF(struct LevelFile, pvs.visFaceSrc)-4,
 		OFFSETOF(struct LevelFile, visMem.visLeafList[0])-4,
@@ -737,14 +893,18 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, visMem.bspList[1])-4,
 		OFFSETOF(struct LevelFile, visMem.bspList[2])-4,
 		OFFSETOF(struct LevelFile, visMem.bspList[3])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*1+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*1+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*1+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*1+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*2+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*2+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*2+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*2+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*3+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*3+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*3+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*4+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*4+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*4+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*4+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*4+1])-4,
 		PTR_MAP_QUADBLOCK(0),
 		PTR_MAP_QUADBLOCK(1),
 		PTR_MAP_QUADBLOCK(2),
@@ -809,5 +969,17 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(61),
 		PTR_MAP_QUADBLOCK(62),
 		PTR_MAP_QUADBLOCK(63),
+		PTR_MAP_QUADBLOCK(64),
+		PTR_MAP_QUADBLOCK(65),
+		PTR_MAP_QUADBLOCK(66),
+		PTR_MAP_QUADBLOCK(67),
+		PTR_MAP_QUADBLOCK(68),
+		PTR_MAP_QUADBLOCK(69),
+		PTR_MAP_QUADBLOCK(70),
+		PTR_MAP_QUADBLOCK(71),
+		PTR_MAP_QUADBLOCK(72),
+		PTR_MAP_QUADBLOCK(73),
+		PTR_MAP_QUADBLOCK(74),
+		PTR_MAP_QUADBLOCK(75),
 	},
 };
