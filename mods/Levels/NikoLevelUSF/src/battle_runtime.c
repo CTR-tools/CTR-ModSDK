@@ -23,7 +23,7 @@ void RunInitHook()
 	sdata->ptrActiveMenuBox = 0;
 }
 
-struct MenuRow NewRowsMM[3] =
+struct MenuRow NewRowsMM[2] =
 {
 	[0] =
 	{
@@ -35,15 +35,6 @@ struct MenuRow NewRowsMM[3] =
 	},
 	
 	[1] =
-	{
-		.stringIndex = 0x4F, // VS
-		.rowOnPressUp = 0,
-		.rowOnPressDown = 1,
-		.rowOnPressLeft = 1,
-		.rowOnPressRight = 1,
-	},
-	
-	[2] =
 	{
 		.stringIndex = 0xFFFF,
 	}

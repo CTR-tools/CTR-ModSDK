@@ -1,7 +1,7 @@
 #include <common.h>
 #include "../../levelBuilder.h"
 
-#define NUM_BLOCKS 4
+#define NUM_BLOCKS 6
 
 struct LevelFile
 {
@@ -45,16 +45,21 @@ struct LevelFile file =
 		
 		// warning, game will edit rotY by 0x400 after spawn
 		
-		.DriverSpawn[0].pos = {0x180,0,-0x80},
+		#if 0 // Arcade mode
+		.DriverSpawn[0].pos = {0x180,0,-0xc0},
 		.DriverSpawn[0].rot = {0,0-0x400,0},
+		#else // Simulate Time Trial Spawn
+		.DriverSpawn[0].pos = {0x80,0,-0xc0},
+		.DriverSpawn[0].rot = {0,0-0x400,0},
+		#endif
 		
-		.DriverSpawn[1].pos = {0x80,0,-0x80},
+		.DriverSpawn[1].pos = {0x80,0,-0xc0},
 		.DriverSpawn[1].rot = {0x40,0-0x400,0},
 		
-		.DriverSpawn[2].pos = {-0x80,0,-0x80},
+		.DriverSpawn[2].pos = {-0x80,0,-0xc0},
 		.DriverSpawn[2].rot = {-0x40,0-0x400,0},
 		
-		.DriverSpawn[3].pos = {-0x180,0,-0x80},
+		.DriverSpawn[3].pos = {-0x180,0,-0xc0},
 		.DriverSpawn[3].rot = {-0x80,0-0x400,0},
 		
 		.ptrSpawnType1 = OFFSETOF(struct LevelFile, ptrSpawnType1)-4,
@@ -160,22 +165,29 @@ struct LevelFile file =
 	NEW_BLOCK(3, group4_placeHolder, 0x180, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// ramp, in front of spawn
-	//NEW_BLOCK(4, group4_placeHolder, -0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	//NEW_BLOCK(5, group4_placeHolder, 0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(4, group4_placeHolder, -0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(5, group4_placeHolder, 0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
-	//MAKE_RAMP(
-	//	4, 0x180, // index, height
-	//	0,4,1, // low 3 vertices
-	//	5,6,7, // mid 3 vertices
-	//	2,8,3 // high 3 vertices
-	//),
+	MAKE_RAMP(
+		4, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
 	
-	.quadBlock[0].blockID =  4-0-1,
-	.quadBlock[1].blockID =  4-1-1,
-	.quadBlock[2].blockID =  4-2-1,
-	.quadBlock[3].blockID =  4-3-1,
-	//.quadBlock[4].blockID =  6-4-1,
-	//.quadBlock[5].blockID =  6-5-1,
+	MAKE_RAMP(
+		5, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	.quadBlock[0].blockID =  6-0-1,
+	.quadBlock[1].blockID =  6-1-1,
+	.quadBlock[2].blockID =  6-2-1,
+	.quadBlock[3].blockID =  6-3-1,
+	.quadBlock[4].blockID =  6-4-1,
+	.quadBlock[5].blockID =  6-5-1,
 	
 	// ========== bsp ======================
 	
@@ -247,7 +259,7 @@ struct LevelFile file =
 				{
 					.unk1 = 0,
 					.bspHitboxArray = 0,
-					.numQuads = 4,
+					.numQuads = 6,
 					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
 				}
 			}
@@ -340,7 +352,7 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(1),
 		PTR_MAP_QUADBLOCK(2),
 		PTR_MAP_QUADBLOCK(3),
+		PTR_MAP_QUADBLOCK(4),
 		PTR_MAP_QUADBLOCK(5),
-		PTR_MAP_QUADBLOCK(6),
 	},
 };
