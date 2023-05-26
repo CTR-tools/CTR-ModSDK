@@ -300,6 +300,7 @@ struct LevelFile file =
 	// ramp up (1/3)
 	NEW_BLOCK(14, group4_placeHolder, -0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(15, group4_turbopad_green, 0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	.quadBlock[15].draw_order_low = 0x380E000,
 	
 	MAKE_RAMP(
 		14, 0x180, // index, height
@@ -365,7 +366,6 @@ struct LevelFile file =
 	NEW_BLOCK(18, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(19, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	.quadBlock[18].draw_order_low = 0x380E000,
-	.quadBlock[19].draw_order_low = 0x380E000,
 	
 	MAKE_RAMP(
 		18, 0x180, // index, height
