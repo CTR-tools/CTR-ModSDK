@@ -447,7 +447,7 @@ extern struct
 	short colorIndexArray[2];
 
 	// 800b594c
-	char fill_MainMenu_LevelRowbattletracks_temporary[0x90];
+	char fill_MainMenu_LevelRowbattletracks_temporary[0x58];
 
 	// 800b594c unk flags
 
@@ -467,37 +467,60 @@ extern struct
 
 	// ============== Track Select DYN ====================
 
-	// 800b59a4 trackSelect changeTrack frame count
-	// 800b59a6 trackSelect changeTrack next track (or curr?)
-	// 800b59a8 trackSelect changeTrack next track (or curr?)
-	// 800b59aa trackSelect changeTrack direction
-	// 800b59ac trackSelect boolOpenLapBox
+	// 800b59a4 
+	short trackSel_changeTrack_frameCount;
+	// 800b59a6 
+	short trackSel_currTrack;
+	// 800b59a8 
+	short trackSel_nextTrack;
+	// 800b59aa 
+	short trackSel_direction;
+	// 800b59ac 
+	short trackSel_boolOpenLapBox;
 
-	// 800b59ae trackSelect transition state
-	// 800b59b0 trackSelect post-transition boolStart
-	// 800b59b2 trackSelect transitionFrames
+	// 800b59ae 
+	short trackSel_transitionState;
 	
-	// 800b59b4 trackSelect video frame count
-	// 800b59b6 trackSelect video boolAllocated
+	// 800b59b0 
+	short trackSel_postTransition_boolStart;
+	// 800b59b2 
+	short trackSel_transitionFrames;
+	
+	// 800b59b4 
+	short trackSel_video_frameCount;
+	// 800b59b6 
+	short trackSel_video_boolAllocated;
+
+	char trackSel_unkFill[4];
 	// 800b59b8 ??
 	// 800b59ba ???
 	
 	// ============== Cup Select DYN ========================
 	
-	// 800b59bc cupSelect transition state
-	// 800b59be cupSelect post-transition boolStart
-	// 800b59c0 cupSelect transition frames
+	// 800b59bc 
+	short cupSel_transitionState;
+	// 800b59be
+	short cupSel_postTransition_boolStart;
+	// 800b59c0
+	short cupSel_transitionFrames;
 	
 	// ============== Battle DYN ==========================
 	
-	// 800b59c2 battle transition state
-	// 800b59c4 battle post-transition boolStart
-	// 800b59c6 battle transition frames
-	
+	// 800b59c2
+	short battle_transitionState;
+	// 800b59c4
+	short battle_postTransition_boolStart;
+	// 800b59c6 
+	short battle_transitionFrames;
+
 	// =============== High Score DYN ===================
 	
-	// 800b59c8 highScore transition state
-	// 800b59ca highScore transition frames
+	// 800b59c8 
+	short highScore_transitionState;
+	// 800b59ca 
+	short highScore_transitionFrames;
+
+	char highScore_unk[16];
 	// ...
 	
 	// ============= Character Select DYN ====================
