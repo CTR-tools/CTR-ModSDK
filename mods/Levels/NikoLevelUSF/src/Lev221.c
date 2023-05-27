@@ -733,7 +733,7 @@ struct LevelFile file =
 			.id = 0,
 			.box =
 			{
-				.min = {-0x8000, -0x800, -0x8000},
+				.min = {-0x8000, -0x490, -0x8000},
 				.max = {0x8000, 0x066E, 0x8000}
 			},
 			
@@ -758,7 +758,7 @@ struct LevelFile file =
 			.box =
 			{
 				// random box that exists nowhere
-				.min = {0x300, -0x800, -0x1100},
+				.min = {0x300, -0x490, -0x1100},
 				.max = {0x2100, 0x400, 0x4500}
 			},
 			
@@ -783,7 +783,7 @@ struct LevelFile file =
 			.box =
 			{
 				// random box that exists nowhere
-				.min = {-0x1100, -0x800, -0x1100},
+				.min = {-0x1100, -0x490, -0x1100},
 				.max = {0x300, 0x400, 0x4500}
 			},
 			
@@ -807,7 +807,7 @@ struct LevelFile file =
 			.box =
 			{
 				// random box that exists nowhere
-				.min = {0x300, -0x800, 0x481},
+				.min = {0x300, -0x490, 0x481},
 				.max = {0x2100, 0x400, 0x4500}
 			},
 			
@@ -831,7 +831,7 @@ struct LevelFile file =
 			.box =
 			{
 				// random box that exists nowhere
-				.min = {0x300, -0x800, -0x1100},
+				.min = {0x300, -0x490, -0x1100},
 				.max = {0x2100, 0x400, 0x47F}
 			},
 			
