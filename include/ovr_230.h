@@ -81,7 +81,7 @@ struct TransitionMeta
 };
 
 // starts at 800ab9f0, overlay region 3
-extern struct
+struct Overlay_230
 {
 	// =========== 230 RDATA ============
 	
@@ -602,7 +602,9 @@ extern struct
 	
 	// 800b5a64 MM_Video_DecDCToutCallbackFunc
 	
-} OVR_230;
+};
+
+extern struct Overlay_230 OVR_230;
 
 // starts at 800b67ac
 extern struct
@@ -617,5 +619,7 @@ _Static_assert(sizeof(struct MainMenu_LevelRow) == 0x10);
 _Static_assert(sizeof(struct CharacterSelectMeta) == 0xC);
 _Static_assert(sizeof(struct TransitionMeta) == 0xA);
 
-//_Static_assert((u_int)OVR_230.colorIndexArray == 0x800b5948);
-//_Static_assert((u_int)&OVR_230.characterSelect_sizeY == 0x800b59dc);
+#define OFFSETOF_OVR230(ELEMENT) ((unsigned int)&(((struct Overlay_230 *)0x800ab9f0)->ELEMENT))
+_Static_assert(OFFSETOF_OVR230(colorIndexArray) == 0x800b5948);
+_Static_assert(OFFSETOF_OVR230(trackSel_changeTrack_frameCount) == 0x800b59a4);
+_Static_assert(OFFSETOF_OVR230(characterSelect_sizeY) == 0x800b59dc);
