@@ -767,9 +767,6 @@ void RunUpdateHook()
 	}
 }
 
-// https://www.geeksforgeeks.org/the-offsetof-macro/
-#define OFFSETOF(TYPE, ELEMENT) ((unsigned int)&(((TYPE *)0)->ELEMENT))
-
 struct Model_Custom m =
 {
 	// four models, one for each player

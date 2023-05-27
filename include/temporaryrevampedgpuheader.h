@@ -1,5 +1,3 @@
-#define force_inline static inline __attribute__((always_inline))
-
 force_inline void addPolyF3(u_long* ot, POLY_F3* p)
 {
 	p->tag = 0x4000000 | *ot;

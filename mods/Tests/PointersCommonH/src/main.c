@@ -85,7 +85,6 @@ struct x y[] =
 	// 1020 - 0x2594
 	TEST16(sizeof(struct GameTracker)),
 
-	#define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
 	TEST16(OFFSETOF(struct GameTracker, tileView_UI)),
 	TEST16(OFFSETOF(struct Driver, BattleHUD.teamID)),
 	TEST16(OFFSETOF(struct Driver, reserves)),

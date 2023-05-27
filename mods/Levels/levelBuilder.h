@@ -1,7 +1,3 @@
-
-// get pointer to variable or struct in the level file
-#define OFFSETOF(TYPE, ELEMENT) ((unsigned int)&(((TYPE *)0)->ELEMENT))
-
 #define NEW_VERTEX(posX, posY, posZ, flag, colR, colG, colB) \
 { \
 	.pos = {posX, posY, posZ}, \

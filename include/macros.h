@@ -23,3 +23,8 @@
 
 #define true 1
 #define false 0
+
+#define force_inline static inline __attribute__((always_inline))
+
+#define OFFSETOF(TYPE, ELEMENT) \
+	((unsigned int)&(((TYPE *)0)->ELEMENT))

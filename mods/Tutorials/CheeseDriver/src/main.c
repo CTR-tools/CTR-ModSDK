@@ -82,9 +82,6 @@ void RunInitHook()
 	m.h.ptrColor += (unsigned int)&m;
 }
 
-// https://www.geeksforgeeks.org/the-offsetof-macro/
-#define OFFSETOF(TYPE, ELEMENT) ((unsigned int)&(((TYPE *)0)->ELEMENT))
-
 struct Model_Custom m =
 {
 	.nameModel = "arrow3D_model",

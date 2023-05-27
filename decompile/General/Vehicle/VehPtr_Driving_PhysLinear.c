@@ -1147,23 +1147,23 @@ SkipSetSteer:
 	return;
 }
 
-#define OFFSETOF(TYPE, ELEMENT) (short)((unsigned int)&(((TYPE *)0)->ELEMENT))
+#define DriverPhysLinear_OFFSETOF(TYPE, ELEMENT) (short)((unsigned int)&(((TYPE *)0)->ELEMENT))
 short PhysLinear_DriverOffsets[14] =
 {
-	OFFSETOF(struct Driver, reserves),
-	OFFSETOF(struct Driver, set_0xF0_OnWallRub),
-	OFFSETOF(struct Driver, burnTimer),
-	OFFSETOF(struct Driver, squishTimer),
-	OFFSETOF(struct Driver, turbo_outsideTimer),
-	OFFSETOF(struct Driver, turbo_audioCooldown),
-	OFFSETOF(struct Driver, jump_ForcedMS),
-	OFFSETOF(struct Driver, jump_CooldownMS),
-	OFFSETOF(struct Driver, jump_unknown),
-	OFFSETOF(struct Driver, StartDriving_0x60),
-	OFFSETOF(struct Driver, StartRollback_0x280),
-	OFFSETOF(struct Driver, clockReceive),
-	OFFSETOF(struct Driver, mashingXMakesItBig),
-	OFFSETOF(struct Driver, invincibleTimer)
+	DriverPhysLinear_OFFSETOF(struct Driver, reserves),
+	DriverPhysLinear_OFFSETOF(struct Driver, set_0xF0_OnWallRub),
+	DriverPhysLinear_OFFSETOF(struct Driver, burnTimer),
+	DriverPhysLinear_OFFSETOF(struct Driver, squishTimer),
+	DriverPhysLinear_OFFSETOF(struct Driver, turbo_outsideTimer),
+	DriverPhysLinear_OFFSETOF(struct Driver, turbo_audioCooldown),
+	DriverPhysLinear_OFFSETOF(struct Driver, jump_ForcedMS),
+	DriverPhysLinear_OFFSETOF(struct Driver, jump_CooldownMS),
+	DriverPhysLinear_OFFSETOF(struct Driver, jump_unknown),
+	DriverPhysLinear_OFFSETOF(struct Driver, StartDriving_0x60),
+	DriverPhysLinear_OFFSETOF(struct Driver, StartRollback_0x280),
+	DriverPhysLinear_OFFSETOF(struct Driver, clockReceive),
+	DriverPhysLinear_OFFSETOF(struct Driver, mashingXMakesItBig),
+	DriverPhysLinear_OFFSETOF(struct Driver, invincibleTimer)
 };
 
 void PhysAngularFooter(struct Driver* driver)

@@ -616,3 +616,6 @@ extern struct
 _Static_assert(sizeof(struct MainMenu_LevelRow) == 0x10);
 _Static_assert(sizeof(struct CharacterSelectMeta) == 0xC);
 _Static_assert(sizeof(struct TransitionMeta) == 0xA);
+
+//_Static_assert((u_int)OVR_230.colorIndexArray == 0x800b5948);
+//_Static_assert((u_int)&OVR_230.characterSelect_sizeY == 0x800b59dc);
