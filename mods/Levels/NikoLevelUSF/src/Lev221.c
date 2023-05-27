@@ -1,7 +1,7 @@
 #include <common.h>
 #include "../../levelBuilder.h"
 
-#define NUM_BLOCKS 76
+#define NUM_BLOCKS 78
 
 struct LevelFile
 {
@@ -535,7 +535,7 @@ struct LevelFile file =
 	// === Last turn, back to startline ===
 	
 	NEW_BLOCK(72, group4_placeHolder, 0xA80, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(73, group4_turbopad_gray, 0xA80, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(73, group4_turbopad_gray, 0xA80, -0x600, NULL, 0x9800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
 		72, 0x180, // index, height
@@ -565,7 +565,7 @@ struct LevelFile file =
 		2,5,0 // high 3 vertices
 	),
 	
-	NEW_BLOCK(74, group4_turbopad_green, 0x780, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(74, group4_turbopad_green, 0x780, -0x300, NULL, 0x9800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(75, group4_placeHolder, 0x780, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
@@ -596,17 +596,50 @@ struct LevelFile file =
 		2,5,0 // high 3 vertices
 	),
 	
+	NEW_BLOCK(76, group4_turbopad_gray, 0xA80, -0x600, NULL, 0x1840, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		76, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		76, -0x300, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	NEW_BLOCK(77, group4_turbopad_green, 0x780, -0x300, NULL, 0x1840, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		77, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		77, -0x180, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	// turn into turbo, if flagsQ is 0x1840
+	// 1 for normal, 2 for super turbo
+	.quadBlock[76].terrain_type = 2,
+	.quadBlock[77].terrain_type = 1,
+	
 	// for some reason required to move here?
 	.quadBlock[15].draw_order_low = 0x8380E000,
 	.quadBlock[18].draw_order_low = 0x8380E000,
-	.quadBlock[30].draw_order_low = 0x8380E000,
-	.quadBlock[31].draw_order_low = 0x8380E000,
-	.quadBlock[38].draw_order_low = 0x8380E000,
-	.quadBlock[39].draw_order_low = 0x8380E000,
-	.quadBlock[40].draw_order_low = 0x8380E000,
-	.quadBlock[41].draw_order_low = 0x8380E000,
-	.quadBlock[73].draw_order_low = 0x8380E000,
-	.quadBlock[75].draw_order_low = 0x8380E000,
+	.quadBlock[38].draw_order_low = 0x81144500,
+	.quadBlock[39].draw_order_low = 0x81144500,
+	.quadBlock[73].draw_order_low = 0x83182100,
+	.quadBlock[74].draw_order_low = 0x83182100,
 	
 	.quadBlock[0].blockID =  32-0-1,
 	.quadBlock[1].blockID =  32-1-1,
@@ -674,18 +707,20 @@ struct LevelFile file =
 	.quadBlock[62].blockID = 64-62-1,
 	.quadBlock[63].blockID = 64-63-1,
 	
-	.quadBlock[64].blockID = 76-64-1,
-	.quadBlock[65].blockID = 76-65-1,
-	.quadBlock[66].blockID = 76-66-1,
-	.quadBlock[67].blockID = 76-67-1,
-	.quadBlock[68].blockID = 76-68-1,
-	.quadBlock[69].blockID = 76-69-1,
-	.quadBlock[70].blockID = 76-70-1,
-	.quadBlock[71].blockID = 76-71-1,
-	.quadBlock[72].blockID = 76-72-1,
-	.quadBlock[73].blockID = 76-73-1,
-	.quadBlock[74].blockID = 76-74-1,
-	.quadBlock[75].blockID = 76-75-1,
+	.quadBlock[64].blockID = 78-64-1,
+	.quadBlock[65].blockID = 78-65-1,
+	.quadBlock[66].blockID = 78-66-1,
+	.quadBlock[67].blockID = 78-67-1,
+	.quadBlock[68].blockID = 78-68-1,
+	.quadBlock[69].blockID = 78-69-1,
+	.quadBlock[70].blockID = 78-70-1,
+	.quadBlock[71].blockID = 78-71-1,
+	.quadBlock[72].blockID = 78-72-1,
+	.quadBlock[73].blockID = 78-73-1,
+	.quadBlock[74].blockID = 78-74-1,
+	.quadBlock[75].blockID = 78-75-1,
+	.quadBlock[76].blockID = 78-76-1,
+	.quadBlock[77].blockID = 78-77-1,
 	
 	// ========== bsp ======================
 	
@@ -981,5 +1016,7 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(73),
 		PTR_MAP_QUADBLOCK(74),
 		PTR_MAP_QUADBLOCK(75),
+		PTR_MAP_QUADBLOCK(76),
+		PTR_MAP_QUADBLOCK(77),
 	},
 };
