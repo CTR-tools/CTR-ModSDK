@@ -1,7 +1,140 @@
 #include <common.h>
 #include "../../levelBuilder.h"
 
-#define NUM_BLOCKS 78
+enum Bsp0
+{
+	Bsp0_FirstBlock=0,
+	
+	Bsp0_BehindStart1=0,
+	Bsp0_BehindStart2=1,
+	Bsp0_BehindStart3,
+	Bsp0_BehindStart4,
+	
+	Bsp0_StartLine1,
+	Bsp0_StartLine2,
+	
+	Bsp0_AfterStart1,
+	Bsp0_AfterStart2,
+	
+	Bsp0_DownRamp1,
+	Bsp0_DownRamp2,
+	Bsp0_DownRamp3,
+	Bsp0_DownRamp4,
+	Bsp0_DownRamp5,
+	Bsp0_DownRamp6,
+	
+	Bsp0_FlatDip1,
+	Bsp0_FlatDip2,
+	Bsp0_FlatDip3,
+	
+	Bsp0_UpRamp1,
+	Bsp0_UpRamp2_Turbo_9800,
+	Bsp0_UpRamp3,
+	Bsp0_UpRamp4,
+	Bsp0_UpRamp5_Turbo_9800,
+	Bsp0_UpRamp6,
+	Bsp0_UpRamp7_Turbo_1840,
+	Bsp0_UpRamp8_Turbo_1840,
+	
+	Bsp0_FlatTop1,
+	Bsp0_FlatTop2,
+	Bsp0_FlatTop3,
+	Bsp0_FlatTop4,
+	Bsp0_FlatTop5,
+	Bsp0_FlatTop6,
+	Bsp0_FlatTop7,
+	
+	Bsp0_Last=Bsp0_FlatTop7,
+	
+	Bsp0_BlockCount=Bsp0_Last+1
+};
+
+enum Bsp1
+{
+	Bsp1_FirstBlock=Bsp0_Last+1,
+	
+	Bsp1_TurnLeft1=Bsp1_FirstBlock,
+	Bsp1_TurnLeft2=Bsp1_FirstBlock+1,
+	Bsp1_TurnLeft3,
+	Bsp1_TurnLeft4,
+	Bsp1_TurnLeft5,
+	Bsp1_TurnLeft6,
+	
+	Bsp1_TurnBack1_Turbo_9800,
+	Bsp1_TurnBack2_Turbo_9800,
+	Bsp1_TurnBack3_Turbo_1840,
+	Bsp1_TurnBack4_Turbo_1840,
+	Bsp1_TurnBack5,
+	Bsp1_TurnBack6,
+	Bsp1_TurnBack7,
+	Bsp1_TurnBack8,
+	Bsp1_TurnBack9,
+	Bsp1_TurnBack10,
+	
+	// 16 so far
+	
+	Bsp1_StraightWay1,
+	Bsp1_StraightWay2,
+	Bsp1_StraightWay3,
+	Bsp1_StraightWay4,
+	Bsp1_StraightWay5,
+	Bsp1_StraightWay6,
+	Bsp1_StraightWay7,
+	Bsp1_StraightWay8,
+	Bsp1_StraightWay9,
+	Bsp1_StraightWay10,
+	Bsp1_StraightWay11,
+	Bsp1_StraightWay12,
+	Bsp1_StraightWay13,
+	Bsp1_StraightWay14,
+	Bsp1_StraightWay15,
+	Bsp1_StraightWay16,
+	
+	Bsp1_Last=Bsp1_StraightWay16,
+	
+	Bsp1_BlockCount=Bsp1_Last-Bsp0_Last
+};
+
+enum Bsp2
+{
+	Bsp2_FirstBlock=Bsp1_Last+1,
+	
+	Bsp2_StraightWay17=Bsp2_FirstBlock,
+	Bsp2_StraightWay18=Bsp2_FirstBlock+1,
+	Bsp2_StraightWay19,
+	Bsp2_StraightWay20,
+	Bsp2_StraightWay21,
+	Bsp2_StraightWay22,
+	Bsp2_StraightWay23,
+	Bsp2_StraightWay24,
+	
+	Bsp2_RampUp1,
+	Bsp2_RampUp2_Turbo_9800,
+	Bsp2_RampUp3_Turbo_9800,
+	Bsp2_RampUp4,
+	Bsp2_RampUp5_Turbo_1840,
+	Bsp2_RampUp6_Turbo_1840, // [77]
+	
+	Bsp2_Last=Bsp2_RampUp6_Turbo_1840,
+	
+	Bsp2_BlockCount=Bsp2_Last-Bsp1_Last,
+	
+	// must be in last bsp leaf
+	NUM_BLOCKS = Bsp2_Last+1
+};
+
+enum CheckPoint
+{
+	CPI_AfterSpawn=0,
+	CPI_DownRamp1=1,
+	CPI_FlatDip,
+	CPI_UpRamp1,
+	CPI_Turn180,
+	CPI_FlatRun,
+	CPI_UpRamp2,
+	CPI_OnSpawn,
+	NUM_CHECKPOINT
+};
 
 struct LevelFile
 {
@@ -16,7 +149,7 @@ struct LevelFile
 	struct IconGroup4 group4_turbopad_gray;
 	struct IconGroup4 group4_placeHolder;
 	struct SpawnType1 ptrSpawnType1;
-	struct CheckpointNode noderespawnsthing[NUM_BLOCKS]; // all empty, this is a battle map
+	struct CheckpointNode checkpointNodes[NUM_CHECKPOINT];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
 	struct BSP bsp[5];
@@ -74,8 +207,8 @@ struct LevelFile file =
 		
 		// only non-zero for Race maps
 		// battle maps need array, but still set CNT to zero
-		.cnt_restart_points = 7,
-		.ptr_restart_points = OFFSETOF(struct LevelFile, noderespawnsthing[0])-4,
+		.cnt_restart_points = NUM_CHECKPOINT,
+		.ptr_restart_points = OFFSETOF(struct LevelFile, checkpointNodes[0])-4,
 	},
 	
 	.mInfo =
@@ -169,460 +302,447 @@ struct LevelFile file =
 	// +x is left, not right
 	
 	// behind spawn
-	NEW_BLOCK(20, group4_placeHolder, -0x180, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(21, group4_placeHolder, 0x180, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(28, group4_placeHolder, -0x180, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(12, group4_placeHolder, 0x180, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_BehindStart1, group4_placeHolder, -0x180, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_BehindStart2, group4_placeHolder, 0x180, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_BehindStart3, group4_placeHolder, -0x180, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_BehindStart4, group4_placeHolder, 0x180, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// spawn
-	NEW_BLOCK(0, group4_tileEdge, -0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(1, group4_tileEdge, 0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_StartLine1, group4_tileEdge, -0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_StartLine2, group4_tileEdge, 0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// top/bottom left/right assuming you're rotation is 0,0,0
-	TEX_2X2(0, group4_tileEdge, group4_tileCenter, group4_checkerEdge, group4_checkerCenter),
-	TEX_2X2(1, group4_tileCenter, group4_tileEdge, group4_checkerCenter, group4_checkerEdge),
-	.quadBlock[0].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[1].draw_order_low = 0x81044000, // rotation
+	TEX_2X2(Bsp0_StartLine1, group4_tileEdge, group4_tileCenter, group4_checkerEdge, group4_checkerCenter),
+	TEX_2X2(Bsp0_StartLine2, group4_tileCenter, group4_tileEdge, group4_checkerCenter, group4_checkerEdge),
+	.quadBlock[Bsp0_StartLine1].draw_order_low = 0x80800000, // rotate checker
+	.quadBlock[Bsp0_StartLine2].draw_order_low = 0x81044000, // rotation
 	
 	// flat, in front of spawn
-	NEW_BLOCK(2, group4_placeHolder, -0x180, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(3, group4_placeHolder, 0x180, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_AfterStart1, group4_placeHolder, -0x180, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_AfterStart2, group4_placeHolder, 0x180, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// ramp down (1/3)
-	NEW_BLOCK(4, group4_placeHolder, -0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(5, group4_placeHolder, 0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_DownRamp1, group4_placeHolder, -0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_DownRamp2, group4_placeHolder, 0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
-		4, 0x180, // index, height
+		Bsp0_DownRamp1, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	MAKE_RAMP(
-		5, 0x180, // index, height
+		Bsp0_DownRamp2, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		4, -0x180, 0x180, // index, height
+		Bsp0_DownRamp1, -0x180, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		5, -0x180, 0x180, // index, height
+		Bsp0_DownRamp2, -0x180, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	// ramp down (2/3)
-	NEW_BLOCK(6, group4_placeHolder, -0x180, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(7, group4_placeHolder, 0x180, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_DownRamp3, group4_placeHolder, -0x180, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_DownRamp4, group4_placeHolder, 0x180, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
-		6, 0x180, // index, height
+		Bsp0_DownRamp3, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	MAKE_RAMP(
-		7, 0x180, // index, height
+		Bsp0_DownRamp4, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		6, -0x300, 0x180, // index, height
+		Bsp0_DownRamp3, -0x300, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		7, -0x300, 0x180, // index, height
+		Bsp0_DownRamp4, -0x300, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	// ramp down (3/3)
-	NEW_BLOCK(8, group4_placeHolder, -0x180, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(9, group4_placeHolder, 0x180, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_DownRamp5, group4_placeHolder, -0x180, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_DownRamp6, group4_placeHolder, 0x180, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
-		8, 0x180, // index, height
+		Bsp0_DownRamp5, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	MAKE_RAMP(
-		9, 0x180, // index, height
+		Bsp0_DownRamp6, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		8, -0x480, 0x180, // index, height
+		Bsp0_DownRamp5, -0x480, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		9, -0x480, 0x180, // index, height
+		Bsp0_DownRamp6, -0x480, 0x180, // index, height
 		2,8,3, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		0,4,1 // high 3 vertices
 	),
-	
-	// === Edit LevVertex to put hole in left ==
-	// Make it a triangular hole between two quadblocks
 	
 	// bottom between ramps
-	NEW_BLOCK(10, group4_placeHolder, -0x180, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(11, group4_placeHolder, 0x180, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(13, group4_placeHolder, 0x180, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(10,-0x480),
-	SET_POSY_FLAT(11,-0x480),
-	SET_POSY_FLAT(13,-0x480),
+	NEW_BLOCK(Bsp0_FlatDip1, group4_placeHolder, -0x180, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_FlatDip2, group4_placeHolder, 0x180, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_FlatDip3, group4_placeHolder, 0x180, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(Bsp0_FlatDip1,-0x480),
+	SET_POSY_FLAT(Bsp0_FlatDip2,-0x480),
+	SET_POSY_FLAT(Bsp0_FlatDip3,-0x480),
 	// 12 was moved -- intended hole for design
 	
 	// ===== need hole in bottom ======
 	
 	// ramp up (1/3)
-	NEW_BLOCK(14, group4_placeHolder, -0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(15, group4_turbopad_green, 0x180, 0x1500, NULL, 0x9800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_UpRamp1, group4_placeHolder, -0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_UpRamp2_Turbo_9800, group4_turbopad_green, 0x180, 0x1500, NULL, 0x9800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
-		14, 0x180, // index, height
+		Bsp0_UpRamp1, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	MAKE_RAMP(
-		15, 0x180, // index, height
+		Bsp0_UpRamp2_Turbo_9800, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		14, -0x480, 0x180, // index, height
+		Bsp0_UpRamp1, -0x480, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		15, -0x480, 0x180, // index, height
+		Bsp0_UpRamp2_Turbo_9800, -0x480, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	// ramp up (2/3)
-	NEW_BLOCK(16, group4_placeHolder, -0x180, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(17, group4_placeHolder, 0x180, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_UpRamp3, group4_placeHolder, -0x180, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_UpRamp4, group4_placeHolder, 0x180, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
-		16, 0x180, // index, height
+		Bsp0_UpRamp3, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	MAKE_RAMP(
-		17, 0x180, // index, height
+		Bsp0_UpRamp4, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		16, -0x300, 0x180, // index, height
+		Bsp0_UpRamp3, -0x300, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		17, -0x300, 0x180, // index, height
+		Bsp0_UpRamp4, -0x300, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	// ramp up (3/3)
-	NEW_BLOCK(18, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x9800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(19, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_UpRamp5_Turbo_9800, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x9800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_UpRamp6, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
-		18, 0x180, // index, height
+		Bsp0_UpRamp5_Turbo_9800, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	MAKE_RAMP(
-		19, 0x180, // index, height
+		Bsp0_UpRamp6, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		18, -0x180, 0x180, // index, height
+		Bsp0_UpRamp5_Turbo_9800, -0x180, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		19, -0x180, 0x180, // index, height
+		Bsp0_UpRamp6, -0x180, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	// turbo on ramp-up(3/3)
+	NEW_BLOCK(Bsp0_UpRamp7_Turbo_1840, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x1840, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_UpRamp8_Turbo_1840, group4_turbopad_green, 0x180, 0x1500, NULL, 0x1840, 0x80, 0x80, 0x80),
+	
+	// turn into turbo, if flagsQ is 0x1840
+	// 1 for normal, 2 for super turbo
+	.quadBlock[Bsp0_UpRamp7_Turbo_1840].terrain_type = 2,
+	.quadBlock[Bsp0_UpRamp8_Turbo_1840].terrain_type = 1,
+	
+	MAKE_RAMP(
+		Bsp0_UpRamp7_Turbo_1840, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		Bsp0_UpRamp8_Turbo_1840, 0x180, // index, height
+		2,8,3, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		0,4,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		Bsp0_UpRamp7_Turbo_1840, -0x180, 0x180, // index, height
+		0,4,1, // low 3 vertices
+		5,6,7, // mid 3 vertices
+		2,8,3 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		Bsp0_UpRamp8_Turbo_1840, -0x480, 0x180, // index, height
 		0,4,1, // low 3 vertices
 		5,6,7, // mid 3 vertices
 		2,8,3 // high 3 vertices
 	),
 	
 	// flat, forward
-	NEW_BLOCK(22, group4_placeHolder, -0x180, 0x2100, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(23, group4_placeHolder, 0x180, 0x2100, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(24, group4_placeHolder, -0x180, 0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(25, group4_placeHolder, 0x180, 0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(26, group4_placeHolder, -0x180, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(27, group4_placeHolder, 0x180, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
-	// 28 was moved
-	NEW_BLOCK(29, group4_placeHolder, 0x180, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	
-	// turbo on ramp-up(3/3)
-	NEW_BLOCK(30, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x1840, 0x80, 0x80, 0x80),
-	NEW_BLOCK(31, group4_turbopad_green, 0x180, 0x1500, NULL, 0x1840, 0x80, 0x80, 0x80),
-	
-	// turn into turbo, if flagsQ is 0x1840
-	// 1 for normal, 2 for super turbo
-	.quadBlock[30].terrain_type = 2,
-	.quadBlock[31].terrain_type = 1,
-	
-	MAKE_RAMP(
-		30, 0x180, // index, height
-		2,8,3, // low 3 vertices
-		5,6,7, // mid 3 vertices
-		0,4,1 // high 3 vertices
-	),
-	
-	MAKE_RAMP(
-		31, 0x180, // index, height
-		2,8,3, // low 3 vertices
-		5,6,7, // mid 3 vertices
-		0,4,1 // high 3 vertices
-	),
-	
-	SET_POSY_RAMP(
-		30, -0x180, 0x180, // index, height
-		0,4,1, // low 3 vertices
-		5,6,7, // mid 3 vertices
-		2,8,3 // high 3 vertices
-	),
-	
-	SET_POSY_RAMP(
-		31, -0x480, 0x180, // index, height
-		0,4,1, // low 3 vertices
-		5,6,7, // mid 3 vertices
-		2,8,3 // high 3 vertices
-	),
+	NEW_BLOCK(Bsp0_FlatTop1, group4_placeHolder, -0x180, 0x2100, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_FlatTop2, group4_placeHolder, 0x180, 0x2100, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_FlatTop3, group4_placeHolder, -0x180, 0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_FlatTop4, group4_placeHolder, 0x180, 0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_FlatTop5, group4_placeHolder, -0x180, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_FlatTop6, group4_placeHolder, 0x180, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp0_FlatTop7, group4_placeHolder, 0x180, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// ==== End of BSP block =====
 	
 	// flat, turn 90
-	NEW_BLOCK(32, group4_placeHolder, 0x480, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(33, group4_placeHolder, 0x480, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(34, group4_placeHolder, 0x780, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80), // boost
-	NEW_BLOCK(35, group4_placeHolder, 0x780, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80), // boost
-	NEW_BLOCK(36, group4_placeHolder, 0xA80, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(37, group4_placeHolder, 0xA80, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnLeft1, group4_placeHolder, 0x480, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnLeft2, group4_placeHolder, 0x480, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnLeft3, group4_placeHolder, 0x780, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80), // boost
+	NEW_BLOCK(Bsp1_TurnLeft4, group4_placeHolder, 0x780, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80), // boost
+	NEW_BLOCK(Bsp1_TurnLeft5, group4_placeHolder, 0xA80, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnLeft6, group4_placeHolder, 0xA80, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// flat, turn 180
-	NEW_BLOCK(38, group4_turbopad_green, 0xD80, 0x2100, NULL, 0x9800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(39, group4_turbopad_green, 0x1080, 0x2100, NULL, 0x9800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnBack1_Turbo_9800, group4_turbopad_green, 0xD80, 0x2100, NULL, 0x9800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnBack2_Turbo_9800, group4_turbopad_green, 0x1080, 0x2100, NULL, 0x9800, 0x80, 0x80, 0x80),
 	
-	NEW_BLOCK(40, group4_turbopad_green, 0xD80,  0x2100, NULL, 0x1840, 0x80, 0x80, 0x80),
-	NEW_BLOCK(41, group4_turbopad_green, 0x1080,0x2100, NULL, 0x1840, 0x80, 0x80, 0x80),
-	.quadBlock[40].terrain_type = 1,
-	.quadBlock[41].terrain_type = 1,
+	NEW_BLOCK(Bsp1_TurnBack3_Turbo_1840, group4_turbopad_green, 0xD80,  0x2100, NULL, 0x1840, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnBack4_Turbo_1840, group4_turbopad_green, 0x1080,0x2100, NULL, 0x1840, 0x80, 0x80, 0x80),
+	.quadBlock[Bsp1_TurnBack3_Turbo_1840].terrain_type = 1,
+	.quadBlock[Bsp1_TurnBack4_Turbo_1840].terrain_type = 1,
 	
-	NEW_BLOCK(42, group4_placeHolder, 0xD80,  0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(43, group4_placeHolder, 0x1080,0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(44, group4_placeHolder, 0xD80,  0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(45, group4_placeHolder, 0x1080,0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(46, group4_placeHolder, 0xD80,  0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(47, group4_placeHolder, 0x1080,0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnBack5, group4_placeHolder, 0xD80,  0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnBack6, group4_placeHolder, 0x1080,0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnBack7, group4_placeHolder, 0xD80,  0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnBack8, group4_placeHolder, 0x1080,0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnBack9, group4_placeHolder, 0xD80,  0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_TurnBack10, group4_placeHolder, 0x1080,0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// fall back down,
 	// here experiment with USF jump
 	
-	NEW_BLOCK(48, group4_placeHolder, 0xD80, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(49, group4_placeHolder, 0x1080, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(48,-0x300),
-	SET_POSY_FLAT(49,-0x300),
-	
-	NEW_BLOCK(50, group4_placeHolder, 0xD80, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(51, group4_placeHolder, 0x1080, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(50,-0x300),
-	SET_POSY_FLAT(51,-0x300),
-	
-	NEW_BLOCK(52, group4_placeHolder, 0xD80, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(53, group4_placeHolder, 0x1080, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(52,-0x300),
-	SET_POSY_FLAT(53,-0x300),
-	
-	NEW_BLOCK(54, group4_placeHolder, 0xD80, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(55, group4_placeHolder, 0x1080, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(54,-0x300),
-	SET_POSY_FLAT(55,-0x300),
-	
-	NEW_BLOCK(56, group4_placeHolder, 0xD80, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(57, group4_placeHolder, 0x1080, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(56,-0x300),
-	SET_POSY_FLAT(57,-0x300),
-	
-	NEW_BLOCK(58, group4_placeHolder, 0xD80, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(59, group4_placeHolder, 0x1080, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(58,-0x300),
-	SET_POSY_FLAT(59,-0x300),
-	
-	NEW_BLOCK(60, group4_placeHolder, 0xD80, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(61, group4_placeHolder, 0x1080, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(60,-0x300),
-	SET_POSY_FLAT(61,-0x300),
-	
-	NEW_BLOCK(62, group4_placeHolder, 0xD80, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(63, group4_placeHolder, 0x1080, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(62,-0x300),
-	SET_POSY_FLAT(63,-0x300),
+	NEW_BLOCK(Bsp1_StraightWay1, group4_placeHolder, 0xD80, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay2, group4_placeHolder, 0x1080, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay3, group4_placeHolder, 0xD80, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay4, group4_placeHolder, 0x1080, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay5, group4_placeHolder, 0xD80, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay6, group4_placeHolder, 0x1080, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay7, group4_placeHolder, 0xD80, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay8, group4_placeHolder, 0x1080, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay9, group4_placeHolder, 0xD80, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay10, group4_placeHolder, 0x1080, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay11, group4_placeHolder, 0xD80, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay12, group4_placeHolder, 0x1080, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay13, group4_placeHolder, 0xD80, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay14, group4_placeHolder, 0x1080, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay15, group4_placeHolder, 0xD80, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay16, group4_placeHolder, 0x1080, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	SET_POSY_FLAT(Bsp1_StraightWay1,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay2,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay3,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay4,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay5,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay6,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay7,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay8,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay9,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay10,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay11,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay12,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay13,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay14,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay15,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay16,-0x300),
 	
 	// ====== End of BSP block =========
 	
-	NEW_BLOCK(64, group4_placeHolder, 0xD80, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(65, group4_placeHolder, 0x1080, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(64,-0x300),
-	SET_POSY_FLAT(65,-0x300),
+	NEW_BLOCK(Bsp2_StraightWay17, group4_placeHolder, 0xD80, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_StraightWay18, group4_placeHolder, 0x1080, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_StraightWay19, group4_placeHolder, 0xD80, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_StraightWay20, group4_placeHolder, 0x1080, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_StraightWay21, group4_placeHolder, 0xD80, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_StraightWay22, group4_placeHolder, 0x1080, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_StraightWay23, group4_placeHolder, 0xD80, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_StraightWay24, group4_placeHolder, 0x1080, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
-	NEW_BLOCK(66, group4_placeHolder, 0xD80, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(67, group4_placeHolder, 0x1080, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(66,-0x300),
-	SET_POSY_FLAT(67,-0x300),
-	
-	NEW_BLOCK(68, group4_placeHolder, 0xD80, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(69, group4_placeHolder, 0x1080, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(68,-0x300),
-	SET_POSY_FLAT(69,-0x300),
-	
-	NEW_BLOCK(70, group4_placeHolder, 0xD80, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(71, group4_placeHolder, 0x1080, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	SET_POSY_FLAT(70,-0x300),
-	SET_POSY_FLAT(71,-0x300),
+	SET_POSY_FLAT(Bsp2_StraightWay17,-0x300),
+	SET_POSY_FLAT(Bsp2_StraightWay18,-0x300),
+	SET_POSY_FLAT(Bsp2_StraightWay19,-0x300),
+	SET_POSY_FLAT(Bsp2_StraightWay20,-0x300),
+	SET_POSY_FLAT(Bsp2_StraightWay21,-0x300),
+	SET_POSY_FLAT(Bsp2_StraightWay22,-0x300),
+	SET_POSY_FLAT(Bsp2_StraightWay23,-0x300),
+	SET_POSY_FLAT(Bsp2_StraightWay24,-0x300),
 	
 	// === Last turn, back to startline ===
 	
-	NEW_BLOCK(72, group4_placeHolder, 0xA80, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(73, group4_turbopad_gray, 0xA80, -0x600, NULL, 0x9800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_RampUp1, group4_placeHolder, 0xA80, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_RampUp2_Turbo_9800, group4_turbopad_gray, 0xA80, -0x600, NULL, 0x9800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
-		72, 0x180, // index, height
-		3,7,1, // low 3 vertices
-		8,6,4, // mid 3 vertices
-		2,5,0 // high 3 vertices
-	),
-	
-	MAKE_RAMP(
-		73, 0x180, // index, height
-		3,7,1, // low 3 vertices
-		8,6,4, // mid 3 vertices
-		2,5,0 // high 3 vertices
-	),
-	
-	SET_POSY_RAMP(
-		72, -0x300, 0x180, // index, height
-		3,7,1, // low 3 vertices
-		8,6,4, // mid 3 vertices
-		2,5,0 // high 3 vertices
-	),
-	
-	SET_POSY_RAMP(
-		73, -0x300, 0x180, // index, height
-		3,7,1, // low 3 vertices
-		8,6,4, // mid 3 vertices
-		2,5,0 // high 3 vertices
-	),
-	
-	NEW_BLOCK(74, group4_turbopad_green, 0x780, -0x300, NULL, 0x9800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(75, group4_placeHolder, 0x780, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	
-	MAKE_RAMP(
-		74, 0x180, // index, height
+		Bsp2_RampUp1, 0x180, // index, height
 		3,7,1, // low 3 vertices
 		8,6,4, // mid 3 vertices
 		2,5,0 // high 3 vertices
 	),
 	
 	MAKE_RAMP(
-		75, 0x180, // index, height
+		Bsp2_RampUp2_Turbo_9800, 0x180, // index, height
 		3,7,1, // low 3 vertices
 		8,6,4, // mid 3 vertices
 		2,5,0 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		74, -0x180, 0x180, // index, height
+		Bsp2_RampUp1, -0x300, 0x180, // index, height
 		3,7,1, // low 3 vertices
 		8,6,4, // mid 3 vertices
 		2,5,0 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		75, -0x180, 0x180, // index, height
+		Bsp2_RampUp2_Turbo_9800, -0x300, 0x180, // index, height
 		3,7,1, // low 3 vertices
 		8,6,4, // mid 3 vertices
 		2,5,0 // high 3 vertices
 	),
 	
-	NEW_BLOCK(76, group4_turbopad_gray, 0xA80, -0x600, NULL, 0x1840, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_RampUp3_Turbo_9800, group4_turbopad_green, 0x780, -0x300, NULL, 0x9800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_RampUp4, group4_placeHolder, 0x780, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
-		76, 0x180, // index, height
+		Bsp2_RampUp3_Turbo_9800, 0x180, // index, height
 		3,7,1, // low 3 vertices
 		8,6,4, // mid 3 vertices
 		2,5,0 // high 3 vertices
 	),
-	
-	SET_POSY_RAMP(
-		76, -0x300, 0x180, // index, height
-		3,7,1, // low 3 vertices
-		8,6,4, // mid 3 vertices
-		2,5,0 // high 3 vertices
-	),
-	
-	NEW_BLOCK(77, group4_turbopad_green, 0x780, -0x300, NULL, 0x1840, 0x80, 0x80, 0x80),
 	
 	MAKE_RAMP(
-		77, 0x180, // index, height
+		Bsp2_RampUp4, 0x180, // index, height
 		3,7,1, // low 3 vertices
 		8,6,4, // mid 3 vertices
 		2,5,0 // high 3 vertices
 	),
 	
 	SET_POSY_RAMP(
-		77, -0x180, 0x180, // index, height
+		Bsp2_RampUp3_Turbo_9800, -0x180, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		Bsp2_RampUp4, -0x180, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	NEW_BLOCK(Bsp2_RampUp5_Turbo_1840, group4_turbopad_gray, 0xA80, -0x600, NULL, 0x1840, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		Bsp2_RampUp5_Turbo_1840, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		Bsp2_RampUp5_Turbo_1840, -0x300, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	NEW_BLOCK(Bsp2_RampUp6_Turbo_1840, group4_turbopad_green, 0x780, -0x300, NULL, 0x1840, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		Bsp2_RampUp6_Turbo_1840, 0x180, // index, height
+		3,7,1, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		2,5,0 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		Bsp2_RampUp6_Turbo_1840, -0x180, 0x180, // index, height
 		3,7,1, // low 3 vertices
 		8,6,4, // mid 3 vertices
 		2,5,0 // high 3 vertices
@@ -630,242 +750,282 @@ struct LevelFile file =
 	
 	// turn into turbo, if flagsQ is 0x1840
 	// 1 for normal, 2 for super turbo
-	.quadBlock[76].terrain_type = 2,
-	.quadBlock[77].terrain_type = 1,
+	.quadBlock[Bsp2_RampUp5_Turbo_1840].terrain_type = 2,
+	.quadBlock[Bsp2_RampUp6_Turbo_1840].terrain_type = 1,
 	
 	// for some reason required to move here?
-	.quadBlock[15].draw_order_low = 0x8380E000,
-	.quadBlock[18].draw_order_low = 0x8380E000,
-	.quadBlock[38].draw_order_low = 0x81144500,
-	.quadBlock[39].draw_order_low = 0x81144500,
-	.quadBlock[73].draw_order_low = 0x83182100,
-	.quadBlock[74].draw_order_low = 0x83182100,
+	.quadBlock[Bsp0_UpRamp2_Turbo_9800].draw_order_low = 0x8380E000,
+	.quadBlock[Bsp0_UpRamp5_Turbo_9800].draw_order_low = 0x8380E000,
+	.quadBlock[Bsp1_TurnBack1_Turbo_9800].draw_order_low = 0x81144500,
+	.quadBlock[Bsp1_TurnBack2_Turbo_9800].draw_order_low = 0x81144500,
+	.quadBlock[Bsp2_RampUp2_Turbo_9800].draw_order_low = 0x83182100,
+	.quadBlock[Bsp2_RampUp3_Turbo_9800].draw_order_low = 0x83182100,
 	
-	.quadBlock[0].blockID =  32-0-1,
-	.quadBlock[1].blockID =  32-1-1,
-	.quadBlock[2].blockID =  32-2-1,
-	.quadBlock[3].blockID =  32-3-1,
-	.quadBlock[4].blockID =  32-4-1,
-	.quadBlock[5].blockID =  32-5-1,
-	.quadBlock[6].blockID =  32-6-1,
-	.quadBlock[7].blockID =  32-7-1,
-	.quadBlock[8].blockID =  32-8-1,
-	.quadBlock[9].blockID =  32-9-1,
-	.quadBlock[10].blockID = 32-10-1,
-	.quadBlock[11].blockID = 32-11-1,
-	.quadBlock[12].blockID = 32-12-1,
-	.quadBlock[13].blockID = 32-13-1,
-	.quadBlock[14].blockID = 32-14-1,
-	.quadBlock[15].blockID = 32-15-1,
-	.quadBlock[16].blockID = 32-16-1,
-	.quadBlock[17].blockID = 32-17-1,
-	.quadBlock[18].blockID = 32-18-1,
-	.quadBlock[19].blockID = 32-19-1,
-	.quadBlock[20].blockID = 32-20-1,
-	.quadBlock[21].blockID = 32-21-1,
-	.quadBlock[22].blockID = 32-22-1,
-	.quadBlock[23].blockID = 32-23-1,
-	.quadBlock[24].blockID = 32-24-1,
-	.quadBlock[25].blockID = 32-25-1,
-	.quadBlock[26].blockID = 32-26-1,
-	.quadBlock[27].blockID = 32-27-1,
-	.quadBlock[28].blockID = 32-28-1,
-	.quadBlock[29].blockID = 32-29-1,
-	.quadBlock[30].blockID = 32-30-1,
-	.quadBlock[31].blockID = 32-31-1,
+	#define SET_ID(y, x) .quadBlock[x].blockID = y-x
 	
-	.quadBlock[32].blockID = 64-32-1,
-	.quadBlock[33].blockID = 64-33-1,
-	.quadBlock[34].blockID = 64-34-1,
-	.quadBlock[35].blockID = 64-35-1,
-	.quadBlock[36].blockID = 64-36-1,
-	.quadBlock[37].blockID = 64-37-1,
-	.quadBlock[38].blockID = 64-38-1,
-	.quadBlock[39].blockID = 64-39-1,
-	.quadBlock[40].blockID = 64-40-1,
-	.quadBlock[41].blockID = 64-41-1,
-	.quadBlock[42].blockID = 64-42-1,
-	.quadBlock[43].blockID = 64-43-1,
-	.quadBlock[44].blockID = 64-44-1,
-	.quadBlock[45].blockID = 64-45-1,
-	.quadBlock[46].blockID = 64-46-1,
-	.quadBlock[47].blockID = 64-47-1,
-	.quadBlock[48].blockID = 64-48-1,
-	.quadBlock[49].blockID = 64-49-1,
-	.quadBlock[50].blockID = 64-50-1,
-	.quadBlock[51].blockID = 64-51-1,
-	.quadBlock[52].blockID = 64-52-1,
-	.quadBlock[53].blockID = 64-53-1,
-	.quadBlock[54].blockID = 64-54-1,
-	.quadBlock[55].blockID = 64-55-1,
-	.quadBlock[56].blockID = 64-56-1,
-	.quadBlock[57].blockID = 64-57-1,
-	.quadBlock[58].blockID = 64-58-1,
-	.quadBlock[59].blockID = 64-59-1,
-	.quadBlock[60].blockID = 64-60-1,
-	.quadBlock[61].blockID = 64-61-1,
-	.quadBlock[62].blockID = 64-62-1,
-	.quadBlock[63].blockID = 64-63-1,
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+0),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+1),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+2),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+3),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+4),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+5),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+6),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+7),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+8),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+9),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+10),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+11),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+12),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+13),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+14),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+15),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+16),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+17),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+18),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+19),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+20),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+21),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+22),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+23),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+24),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+25),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+26),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+27),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+28),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+29),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+30),
+	SET_ID(Bsp0_Last,Bsp0_FirstBlock+31),
 	
-	.quadBlock[64].blockID = 78-64-1,
-	.quadBlock[65].blockID = 78-65-1,
-	.quadBlock[66].blockID = 78-66-1,
-	.quadBlock[67].blockID = 78-67-1,
-	.quadBlock[68].blockID = 78-68-1,
-	.quadBlock[69].blockID = 78-69-1,
-	.quadBlock[70].blockID = 78-70-1,
-	.quadBlock[71].blockID = 78-71-1,
-	.quadBlock[72].blockID = 78-72-1,
-	.quadBlock[73].blockID = 78-73-1,
-	.quadBlock[74].blockID = 78-74-1,
-	.quadBlock[75].blockID = 78-75-1,
-	.quadBlock[76].blockID = 78-76-1,
-	.quadBlock[77].blockID = 78-77-1,
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+0),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+1),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+2),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+3),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+4),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+5),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+6),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+7),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+8),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+9),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+10),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+11),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+12),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+13),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+14),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+15),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+16),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+17),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+18),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+19),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+20),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+21),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+22),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+23),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+24),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+25),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+26),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+27),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+28),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+29),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+30),
+	SET_ID(Bsp1_Last,Bsp1_FirstBlock+31),
 	
-	.quadBlock[0].checkpointIndex = 6,
-	.quadBlock[1].checkpointIndex = 6,
-	.quadBlock[2].checkpointIndex = 0,
-	.quadBlock[3].checkpointIndex = 0,
-	.quadBlock[4].checkpointIndex = 1,
-	.quadBlock[5].checkpointIndex = 1,
-	.quadBlock[6].checkpointIndex = 2,
-	.quadBlock[7].checkpointIndex = 2,
-	.quadBlock[8].checkpointIndex = 3,
-	.quadBlock[9].checkpointIndex = 3,
-	.quadBlock[10].checkpointIndex = 4,
-	.quadBlock[11].checkpointIndex = 4,
-	.quadBlock[12].checkpointIndex = 5,
-	.quadBlock[13].checkpointIndex = 5,
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+0),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+1),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+2),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+3),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+4),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+5),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+6),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+7),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+8),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+9),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+10),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+11),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+12),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+13),
 	
-	.quadBlock[14].checkpointIndex = 6,
-	.quadBlock[15].checkpointIndex = 6,
-	.quadBlock[16].checkpointIndex = 6,
-	.quadBlock[17].checkpointIndex = 6,
-	.quadBlock[18].checkpointIndex = 6,
-	.quadBlock[19].checkpointIndex = 6,
-	.quadBlock[20].checkpointIndex = 6,
-	.quadBlock[21].checkpointIndex = 6,
-	.quadBlock[22].checkpointIndex = 6,
-	.quadBlock[23].checkpointIndex = 6,
-	.quadBlock[24].checkpointIndex = 6,
-	.quadBlock[25].checkpointIndex = 6,
-	.quadBlock[26].checkpointIndex = 6,
-	.quadBlock[27].checkpointIndex = 6,
-	.quadBlock[28].checkpointIndex = 6,
-	.quadBlock[29].checkpointIndex = 6,
-	.quadBlock[30].checkpointIndex = 6,
-	.quadBlock[31].checkpointIndex = 6,
-	.quadBlock[32].checkpointIndex = 6,
-	.quadBlock[33].checkpointIndex = 6,
-	.quadBlock[34].checkpointIndex = 6,
-	.quadBlock[35].checkpointIndex = 6,
-	.quadBlock[36].checkpointIndex = 6,
-	.quadBlock[37].checkpointIndex = 6,
-	.quadBlock[38].checkpointIndex = 6,
-	.quadBlock[39].checkpointIndex = 6,
-	.quadBlock[40].checkpointIndex = 6,
-	.quadBlock[41].checkpointIndex = 6,
-	.quadBlock[42].checkpointIndex = 6,
-	.quadBlock[43].checkpointIndex = 6,
-	.quadBlock[44].checkpointIndex = 6,
-	.quadBlock[45].checkpointIndex = 6,
-	.quadBlock[46].checkpointIndex = 6,
-	.quadBlock[47].checkpointIndex = 6,
-	.quadBlock[48].checkpointIndex = 6,
-	.quadBlock[49].checkpointIndex = 6,
-	.quadBlock[50].checkpointIndex = 6,
-	.quadBlock[51].checkpointIndex = 6,
-	.quadBlock[52].checkpointIndex = 6,
-	.quadBlock[53].checkpointIndex = 6,
-	.quadBlock[54].checkpointIndex = 6,
-	.quadBlock[55].checkpointIndex = 6,
-	.quadBlock[56].checkpointIndex = 6,
-	.quadBlock[57].checkpointIndex = 6,
-	.quadBlock[58].checkpointIndex = 6,
-	.quadBlock[59].checkpointIndex = 6,
-	.quadBlock[60].checkpointIndex = 6,
-	.quadBlock[61].checkpointIndex = 6,
-	.quadBlock[62].checkpointIndex = 6,
-	.quadBlock[63].checkpointIndex = 6,
-	.quadBlock[64].checkpointIndex = 6,
-	.quadBlock[65].checkpointIndex = 6,
-	.quadBlock[66].checkpointIndex = 6,
-	.quadBlock[67].checkpointIndex = 6,
-	.quadBlock[68].checkpointIndex = 6,
-	.quadBlock[69].checkpointIndex = 6,
-	.quadBlock[70].checkpointIndex = 6,
-	.quadBlock[71].checkpointIndex = 6,
-	.quadBlock[72].checkpointIndex = 6,
-	.quadBlock[73].checkpointIndex = 6,
-	.quadBlock[74].checkpointIndex = 6,
-	.quadBlock[75].checkpointIndex = 6,
-	.quadBlock[76].checkpointIndex = 6,
-	.quadBlock[77].checkpointIndex = 6,
+	#define SET_CHECKPOINT(cpi, block) \
+		.quadBlock[block].checkpointIndex = cpi
 	
-	.noderespawnsthing =
+	// startline must have last checkpoint (min dist)
+	SET_CHECKPOINT(CPI_OnSpawn, Bsp0_BehindStart1),
+	SET_CHECKPOINT(CPI_OnSpawn, Bsp0_BehindStart2),
+	SET_CHECKPOINT(CPI_OnSpawn, Bsp0_BehindStart3),
+	SET_CHECKPOINT(CPI_OnSpawn, Bsp0_BehindStart4),
+	SET_CHECKPOINT(CPI_OnSpawn, Bsp0_StartLine1),
+	SET_CHECKPOINT(CPI_OnSpawn, Bsp0_StartLine2),
+	
+	// right after startline must have first checkpoint (max dist)
+	SET_CHECKPOINT(CPI_AfterSpawn, Bsp0_AfterStart1),
+	SET_CHECKPOINT(CPI_AfterSpawn, Bsp0_AfterStart2),
+	
+	SET_CHECKPOINT(CPI_DownRamp1, Bsp0_DownRamp1),
+	SET_CHECKPOINT(CPI_DownRamp1, Bsp0_DownRamp2),
+	SET_CHECKPOINT(CPI_DownRamp1, Bsp0_DownRamp3),
+	SET_CHECKPOINT(CPI_DownRamp1, Bsp0_DownRamp4),
+	SET_CHECKPOINT(CPI_DownRamp1, Bsp0_DownRamp5),
+	SET_CHECKPOINT(CPI_DownRamp1, Bsp0_DownRamp6),
+	
+	SET_CHECKPOINT(CPI_FlatDip, Bsp0_FlatDip1),
+	SET_CHECKPOINT(CPI_FlatDip, Bsp0_FlatDip2),
+	SET_CHECKPOINT(CPI_FlatDip, Bsp0_FlatDip3),
+	
+	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp1),
+	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp2_Turbo_9800),
+	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp3),
+	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp4),
+	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp5_Turbo_9800),
+	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp6),
+	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp7_Turbo_1840),
+	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp8_Turbo_1840),
+	
+	SET_CHECKPOINT(CPI_Turn180, Bsp0_FlatTop1),
+	SET_CHECKPOINT(CPI_Turn180, Bsp0_FlatTop2),
+	SET_CHECKPOINT(CPI_Turn180, Bsp0_FlatTop3),
+	SET_CHECKPOINT(CPI_Turn180, Bsp0_FlatTop4),
+	SET_CHECKPOINT(CPI_Turn180, Bsp0_FlatTop5),
+	SET_CHECKPOINT(CPI_Turn180, Bsp0_FlatTop6),
+	SET_CHECKPOINT(CPI_Turn180, Bsp0_FlatTop7),
+	
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft1),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft2),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft3),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft4),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft5),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft6),
+	
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack1_Turbo_9800),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack2_Turbo_9800),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack3_Turbo_1840),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack4_Turbo_1840),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack5),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack6),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack7),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack8),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack9),
+	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack10),
+	
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay1),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay2),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay3),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay4),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay5),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay6),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay7),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay8),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay9),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay10),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay11),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay12),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay13),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay14),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay15),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay16),
+	
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay17),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay18),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay19),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay20),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay21),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay22),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay23),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay24),
+	
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp1),
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp2_Turbo_9800),
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp3_Turbo_9800),
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp4),
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp5_Turbo_1840),
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp6_Turbo_1840),
+	
+	#define DIST_PER_NODE 0x400
+	
+	.checkpointNodes =
 	{
 		// first node[0] is always the node
 		// after crossing startline, used to get track length
+		
+		[CPI_AfterSpawn] =
 		{
 			.pos = {0, 0, 0x300},
-			.distToFinish = 0x200*14,
-			.nextIndex_forward = 1,
+			.distToFinish = (NUM_CHECKPOINT-CPI_AfterSpawn-1)*DIST_PER_NODE+1,
+			.nextIndex_forward = CPI_DownRamp1,
 			.nextIndex_left = -1,
-			.nextIndex_backward = 6,
-			.nextIndex_right = -1,
-		},
-		{
-			.pos = {0, 0, 0x600},
-			.distToFinish = 0x200*13,
-			.nextIndex_forward = 2,
-			.nextIndex_left = -1,
-			.nextIndex_backward = 0,
-			.nextIndex_right = -1,
-		},
-		{
-			.pos = {0, 0, 0x900},
-			.distToFinish = 0x200*12,
-			.nextIndex_forward = 3,
-			.nextIndex_left = -1,
-			.nextIndex_backward = 1,
-			.nextIndex_right = -1,
-		},
-		{
-			.pos = {0, 0, 0xC00},
-			.distToFinish = 0x200*11,
-			.nextIndex_forward = 4,
-			.nextIndex_left = -1,
-			.nextIndex_backward = 2,
-			.nextIndex_right = -1,
-		},
-		{
-			.pos = {0, 0, 0xF00},
-			.distToFinish = 0x200*10,
-			.nextIndex_forward = 5,
-			.nextIndex_left = -1,
-			.nextIndex_backward = 3,
-			.nextIndex_right = -1,
-		},
-		{
-			.pos = {0, 0, 0x1200},
-			.distToFinish = 0x200*9,
-			.nextIndex_forward = 6,
-			.nextIndex_left = -1,
-			.nextIndex_backward = 4,
+			.nextIndex_backward = CPI_OnSpawn,
 			.nextIndex_right = -1,
 		},
 		
+		[CPI_DownRamp1] =
+		{
+			.pos = {0, -0x200, 0x900},
+			.distToFinish = (NUM_CHECKPOINT-CPI_DownRamp1-1)*DIST_PER_NODE+1,
+			.nextIndex_forward = CPI_FlatDip,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_AfterSpawn,
+			.nextIndex_right = -1,
+		},
 		
-		// last node ([6] here)
+		[CPI_FlatDip] =
+		{
+			.pos = {0x180, -0x500, 0xED4},
+			.distToFinish = (NUM_CHECKPOINT-CPI_FlatDip-1)*DIST_PER_NODE+1,
+			.nextIndex_forward = CPI_UpRamp1,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_DownRamp1,
+			.nextIndex_right = -1,
+		},
+		
+		[CPI_UpRamp1] =
+		{
+			.pos = {0, -0x200, 0x1800},
+			.distToFinish = (NUM_CHECKPOINT-CPI_UpRamp1-1)*DIST_PER_NODE+1,
+			.nextIndex_forward = CPI_Turn180,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_FlatDip,
+			.nextIndex_right = -1,
+		},
+		
+		[CPI_Turn180] =
+		{
+			.pos = {0x1A0, 0, 0x28A0},
+			.distToFinish = (NUM_CHECKPOINT-CPI_Turn180-1)*DIST_PER_NODE+1,
+			.nextIndex_forward = CPI_FlatRun,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_UpRamp1,
+			.nextIndex_right = -1,
+		},
+		
+		[CPI_FlatRun] =
+		{
+			.pos = {0xF00, -0x300, 0x1800},
+			.distToFinish = (NUM_CHECKPOINT-CPI_FlatRun-1)*DIST_PER_NODE+1,
+			.nextIndex_forward = CPI_UpRamp2,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_Turn180,
+			.nextIndex_right = -1,
+		},
+		
+		[CPI_UpRamp2] =
+		{
+			.pos = {0xF00, -0x300, -0x480},
+			.distToFinish = (NUM_CHECKPOINT-CPI_UpRamp2-1)*DIST_PER_NODE+1,
+			.nextIndex_forward = CPI_OnSpawn,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_FlatRun,
+			.nextIndex_right = -1,
+		},
+		
+		// last node,
 		// must be the spawn, with dist=1
+		[CPI_OnSpawn] =
 		{
 			.pos = {0, 0, 0},
-			.distToFinish = 1,
-			.nextIndex_forward = 0,
+			.distToFinish = (NUM_CHECKPOINT-CPI_OnSpawn-1)*DIST_PER_NODE+1,
+			.nextIndex_forward = CPI_AfterSpawn,
 			.nextIndex_left = -1,
-			.nextIndex_backward = 5,
+			.nextIndex_backward = CPI_UpRamp2,
 			.nextIndex_right = -1,
-		},
+		}
 	},
 	
 	// ========== bsp ======================
@@ -939,8 +1099,8 @@ struct LevelFile file =
 				{
 					.unk1 = 0,
 					.bspHitboxArray = 0,
-					.numQuads = 32,
-					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
+					.numQuads = Bsp0_BlockCount,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[Bsp0_FirstBlock])-4
 				}
 			}
 		},
@@ -963,8 +1123,8 @@ struct LevelFile file =
 				{
 					.unk1 = 0,
 					.bspHitboxArray = 0,
-					.numQuads = 32,
-					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[32])-4
+					.numQuads = Bsp1_BlockCount,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[Bsp1_FirstBlock])-4
 				}
 			}
 		},
@@ -988,8 +1148,8 @@ struct LevelFile file =
 					// empty, should be [64]
 					.unk1 = 0,
 					.bspHitboxArray = 0,
-					.numQuads = NUM_BLOCKS-64,
-					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[64])-4
+					.numQuads = Bsp2_BlockCount,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[Bsp2_FirstBlock])-4
 				}
 			}
 		},
