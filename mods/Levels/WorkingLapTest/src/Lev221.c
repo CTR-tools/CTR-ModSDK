@@ -2,7 +2,7 @@
 #include "../../levelBuilder.h"
 
 #define NUM_BLOCKS 20
-// #define NUM_ANIMTEX_FRAMES 10
+#define NUM_ANIMTEX_FRAMES 2
 
 struct LevelFile
 {
@@ -12,7 +12,7 @@ struct LevelFile
 	struct IconGroup4 group4_ground;
 	struct IconGroup4 group4_ramp;
 	struct SpawnType1 spawnType1;
-	// struct AnimTex animtex;
+	struct AnimTex animtex;
 	struct CheckpointNode noderespawnsthing[16];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
@@ -30,7 +30,7 @@ struct LevelFile
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
 	int VisMem_bspList_RenderListP4[3*2];
 	
-	int map[(31+NUM_BLOCKS*6)+1];
+	int map[(38+NUM_BLOCKS*6)+1];
 };
 
 // for whatever reason it's necessary to offset every pointer by -4
@@ -43,7 +43,7 @@ struct LevelFile file =
 	.level =
 	{
 		.ptr_mesh_info = OFFSETOF(struct LevelFile, mInfo)-4,
-		// .ptr_anim_tex = OFFSETOF(struct LevelFile, animtex)-4,
+		.ptr_anim_tex = OFFSETOF(struct LevelFile, animtex)-4,
 		.visMem = OFFSETOF(struct LevelFile, visMem)-4,
 		
 		// the game will add +0x400 to the Z rotation of spawn positions automatically
@@ -84,21 +84,19 @@ struct LevelFile file =
 		.numBspNodes = 3, // can be anything non-zero
 	},
 
-	/*
 	.animtex =
 	{
-		.ptrNext = 0,
+		.ptrNext = OFFSETOF(struct LevelFile, group4_ground)-4,
 		.numFrames = NUM_ANIMTEX_FRAMES,
 		.shrug = 0,
 		.lottashortshuh = 0,
-		.frameIndex = 0,
-		.ptrarray[NUM_ANIMTEX_FRAMES] =
+		.frameIndex = 1,
+		.ptrarray =
 		{
-			0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0
+			OFFSETOF(struct LevelFile, group4_ground.texLayout[0])-4,
+			OFFSETOF(struct LevelFile, group4_ramp.texLayout[0])-4,
 		},
-	}
-	*/
+	},
 	
 	// quadblock texture type
 	// see IconGroup4 in namespace_Decal.h
@@ -467,20 +465,20 @@ struct LevelFile file =
 	
 	.map =
 	{
-		(31+NUM_BLOCKS*6)<<2,
+		(38+NUM_BLOCKS*6)<<2,
 		
-		// 31
+		// 38
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
-		//OFFSETOF(struct LevelFile, level.ptr_anim_tex)-4,
+		OFFSETOF(struct LevelFile, level.ptr_anim_tex)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
 		OFFSETOF(struct LevelFile, level.ptrSpawnType1)-4,
 		OFFSETOF(struct LevelFile, level.ptr_restart_points)-4,
-		//OFFSETOF(struct LevelFile, animtex.ptrNext)-4,
-		//OFFSETOF(struct LevelFile, animtex.numFrames)-4,
-		//OFFSETOF(struct LevelFile, animtex.shrug)-4,
-		//OFFSETOF(struct LevelFile, animtex.lottashortshuh)-4,
-		//OFFSETOF(struct LevelFile, animtex.frameIndex)-4,
-		//OFFSETOF(struct LevelFile, animtex.ptrarray)-4,
+		OFFSETOF(struct LevelFile, animtex.ptrNext)-4,
+		OFFSETOF(struct LevelFile, animtex.numFrames)-4,
+		OFFSETOF(struct LevelFile, animtex.shrug)-4,
+		OFFSETOF(struct LevelFile, animtex.lottashortshuh)-4,
+		OFFSETOF(struct LevelFile, animtex.frameIndex)-4,
+		OFFSETOF(struct LevelFile, animtex.ptrarray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVertexArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.bspRoot)-4,
