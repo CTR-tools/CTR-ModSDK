@@ -106,11 +106,14 @@ enum Bsp2
 	Bsp2_TurnRight1,
 	Bsp2_TurnRight2,
 	Bsp2_TurnRight3,
-	Bsp2_TurnRight4,
+	Bsp2_TurnRight4_Turbo_9800,
+	Bsp2_TurnRightX_Turbo_1840,
 	Bsp2_TurnRight5,
 	Bsp2_TurnRight6,
 	Bsp2_TurnRight7,
-	//Bsp2_Middle, // turbo
+	
+	Bsp2_Middle_Turbo_9800,
+	Bsp2_Middle_Turbo_1840,
 	
 	Bsp2_TowardsRamp1,
 	Bsp2_TowardsRamp2,
@@ -122,14 +125,11 @@ enum Bsp2
 	Bsp2_RampUp3_Turbo_9800,
 	Bsp2_RampUp4,
 	Bsp2_RampUp5_Turbo_1840,
-	Bsp2_RampUp6_Turbo_1840, // [83]
+	Bsp2_RampUp6_Turbo_1840, // [85]
 	
-	// 20 blocks here:
-	// 1 more "right" (cut corner)
-	// 1 middle (turbo) + 1 inv
-	// 1 turbo on right side
-	// 7 more to connect other side (cut corner)
-	// 1 turbo other side
+	// 24 blocks here:
+	// +7 more to connect other side (cut corner)
+	// +1 (inv) turbo other side
 	
 	Bsp2_Last=Bsp2_RampUp6_Turbo_1840,
 	
@@ -660,10 +660,20 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp2_TurnRight1, group4_placeHolder, 0x1380, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight2, group4_placeHolder, 0x1380, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight3, group4_placeHolder, 0x1680, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp2_TurnRight4, group4_turbopad_green, 0x1680, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_TurnRight4_Turbo_9800, group4_turbopad_green, 0x1680, 0x600, NULL, 0x9800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_TurnRightX_Turbo_1840, group4_turbopad_green, 0x1680, 0x600, NULL, 0x1840, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight5, group4_placeHolder, 0x1980, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight6, group4_placeHolder, 0x1980, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight7, group4_placeHolder, 0x1C80, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	.quadBlock[Bsp2_TurnRightX_Turbo_1840].terrain_type = 1,
+	.quadBlock[Bsp2_TurnRight4_Turbo_9800].draw_order_low = 0x818c8400,
+	
+	NEW_BLOCK(Bsp2_Middle_Turbo_1840, group4_turbopad_green, 0x1C80, 0, NULL, 0x1840, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_Middle_Turbo_9800, group4_turbopad_green, 0x1C80, 0, NULL, 0x9800, 0x80, 0x80, 0x80),
+	
+	.quadBlock[Bsp2_Middle_Turbo_1840].terrain_type = 1,
+	.quadBlock[Bsp2_Middle_Turbo_9800].draw_order_low = 0,
 	
 	// middle block
 	
@@ -680,11 +690,15 @@ struct LevelFile file =
 	SET_POSY_FLAT(Bsp2_TurnRight1,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight2,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight3,-0x300),
-	SET_POSY_FLAT(Bsp2_TurnRight4,-0x300),
+	SET_POSY_FLAT(Bsp2_TurnRight4_Turbo_9800,-0x300),
+	SET_POSY_FLAT(Bsp2_TurnRightX_Turbo_1840,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight5,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight6,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight7,-0x300),
 	
+	SET_POSY_FLAT(Bsp2_Middle_Turbo_9800,-0x300),
+	SET_POSY_FLAT(Bsp2_Middle_Turbo_1840,-0x300),
+
 	SET_POSY_FLAT(Bsp2_TowardsRamp1,-0x300),
 	SET_POSY_FLAT(Bsp2_TowardsRamp2,-0x300),
 	SET_POSY_FLAT(Bsp2_TowardsRamp3,-0x300),
@@ -970,11 +984,14 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight1),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight2),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight3),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight4),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight4_Turbo_9800),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRightX_Turbo_1840),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight5),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight6),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight7),
-	//SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight8_Turbo_1840),
+	
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_Middle_Turbo_9800),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_Middle_Turbo_1840),
 	
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp1),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp2),
@@ -1385,5 +1402,12 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(86),
 		PTR_MAP_QUADBLOCK(87),
 		PTR_MAP_QUADBLOCK(88),
+		PTR_MAP_QUADBLOCK(89),
+		PTR_MAP_QUADBLOCK(90),
+		PTR_MAP_QUADBLOCK(91),
+		PTR_MAP_QUADBLOCK(92),
+		PTR_MAP_QUADBLOCK(93),
+		PTR_MAP_QUADBLOCK(94),
+		PTR_MAP_QUADBLOCK(95),
 	},
 };
