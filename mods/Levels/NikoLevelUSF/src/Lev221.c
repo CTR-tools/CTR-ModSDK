@@ -665,15 +665,11 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp2_TurnRight5, group4_placeHolder, 0x1980, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight6, group4_placeHolder, 0x1980, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight7, group4_placeHolder, 0x1C80, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	
 	.quadBlock[Bsp2_TurnRightX_Turbo_1840].terrain_type = 1,
-	.quadBlock[Bsp2_TurnRight4_Turbo_9800].draw_order_low = 0x818c8400,
 	
 	NEW_BLOCK(Bsp2_Middle_Turbo_1840, group4_turbopad_green, 0x1C80, 0, NULL, 0x1840, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_Middle_Turbo_9800, group4_turbopad_green, 0x1C80, 0, NULL, 0x9800, 0x80, 0x80, 0x80),
-	
 	.quadBlock[Bsp2_Middle_Turbo_1840].terrain_type = 1,
-	.quadBlock[Bsp2_Middle_Turbo_9800].draw_order_low = 0,
 	
 	// middle block
 	
@@ -805,16 +801,23 @@ struct LevelFile file =
 	.quadBlock[Bsp2_RampUp5_Turbo_1840].terrain_type = 2,
 	.quadBlock[Bsp2_RampUp6_Turbo_1840].terrain_type = 1,
 	
+	#define FACE_PosZ 0x8380E000
+	#define FACE_NegZ 0x81144500
+	#define FACE_PosX 0x818c8400
+	#define FACE_NegX 0x83182100
+	
 	// for some reason required to move here?
-	.quadBlock[Bsp0_UpRamp2_Turbo_9800].draw_order_low = 0x8380E000,
-	.quadBlock[Bsp0_UpRamp5_Turbo_9800].draw_order_low = 0x8380E000,
-	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].draw_order_low = 0x818c8400,
-	.quadBlock[Bsp1_TurnLeft4_Turbo_9800].draw_order_low = 0x818c8400,
-	.quadBlock[Bsp1_TurnBack1_Turbo_9800].draw_order_low = 0x81144500,
-	.quadBlock[Bsp1_TurnBack2_Turbo_9800].draw_order_low = 0x81144500,
-	.quadBlock[Bsp1_StraightWay11_Turbo_9800].draw_order_low = 0x81144500,
-	.quadBlock[Bsp2_RampUp2_Turbo_9800].draw_order_low = 0x83182100,
-	.quadBlock[Bsp2_RampUp3_Turbo_9800].draw_order_low = 0x83182100,
+	.quadBlock[Bsp0_UpRamp2_Turbo_9800].draw_order_low = FACE_PosZ,
+	.quadBlock[Bsp0_UpRamp5_Turbo_9800].draw_order_low = FACE_PosZ,
+	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].draw_order_low = FACE_PosX,
+	.quadBlock[Bsp1_TurnLeft4_Turbo_9800].draw_order_low = FACE_PosX,
+	.quadBlock[Bsp1_TurnBack1_Turbo_9800].draw_order_low = FACE_NegZ,
+	.quadBlock[Bsp1_TurnBack2_Turbo_9800].draw_order_low = FACE_NegZ,
+	.quadBlock[Bsp1_StraightWay11_Turbo_9800].draw_order_low = FACE_NegZ,
+	.quadBlock[Bsp2_RampUp2_Turbo_9800].draw_order_low = FACE_NegX,
+	.quadBlock[Bsp2_RampUp3_Turbo_9800].draw_order_low = FACE_NegX,
+	.quadBlock[Bsp2_TurnRight4_Turbo_9800].draw_order_low = FACE_PosX,
+	.quadBlock[Bsp2_Middle_Turbo_9800].draw_order_low = FACE_NegZ,
 	
 	#define SET_ID(y, x) .quadBlock[x].blockID = y-x
 	
