@@ -87,10 +87,10 @@ enum Bsp1
 	Bsp1_StraightWay10,
 	Bsp1_StraightWay11,
 	Bsp1_StraightWay12,
-	Bsp1_StraightWay13,
-	Bsp1_StraightWay14,
+	Bsp1_StraightWay13_Turbo_9800,
+	Bsp1_StraightWay14_Turbo_1840,
 	
-	Bsp1_Last=Bsp1_StraightWay14,
+	Bsp1_Last=Bsp1_StraightWay14_Turbo_1840,
 	
 	Bsp1_BlockCount=Bsp1_Last-Bsp0_Last
 };
@@ -615,8 +615,11 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp1_StraightWay10, group4_placeHolder, 0x1080, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp1_StraightWay11, group4_placeHolder, 0xD80, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp1_StraightWay12, group4_placeHolder, 0x1080, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay13, group4_placeHolder, 0xD80, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay14, group4_placeHolder, 0x1080, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	NEW_BLOCK(Bsp1_StraightWay13_Turbo_9800, group4_turbopad_green, 0xD80, 0x900, NULL, 0x9800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp1_StraightWay14_Turbo_1840, group4_turbopad_green, 0xD80, 0x900, NULL, 0x1840, 0x80, 0x80, 0x80),
+	.quadBlock[Bsp1_StraightWay14_Turbo_1840].terrain_type = 1,
+	
 	SET_POSY_FLAT(Bsp1_StraightWay1,-0x300),
 	SET_POSY_FLAT(Bsp1_StraightWay2,-0x300),
 	SET_POSY_FLAT(Bsp1_StraightWay3,-0x300),
@@ -629,8 +632,8 @@ struct LevelFile file =
 	SET_POSY_FLAT(Bsp1_StraightWay10,-0x300),
 	SET_POSY_FLAT(Bsp1_StraightWay11,-0x300),
 	SET_POSY_FLAT(Bsp1_StraightWay12,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay13,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay14,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay13_Turbo_9800,-0x300),
+	SET_POSY_FLAT(Bsp1_StraightWay14_Turbo_1840,-0x300),
 	
 	// ====== End of BSP block =========
 
@@ -760,10 +763,11 @@ struct LevelFile file =
 	// for some reason required to move here?
 	.quadBlock[Bsp0_UpRamp2_Turbo_9800].draw_order_low = 0x8380E000,
 	.quadBlock[Bsp0_UpRamp5_Turbo_9800].draw_order_low = 0x8380E000,
-	.quadBlock[Bsp1_TurnBack1_Turbo_9800].draw_order_low = 0x81144500,
-	.quadBlock[Bsp1_TurnBack2_Turbo_9800].draw_order_low = 0x81144500,
 	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].draw_order_low = 0x818c8400,
 	.quadBlock[Bsp1_TurnLeft4_Turbo_9800].draw_order_low = 0x818c8400,
+	.quadBlock[Bsp1_TurnBack1_Turbo_9800].draw_order_low = 0x81144500,
+	.quadBlock[Bsp1_TurnBack2_Turbo_9800].draw_order_low = 0x81144500,
+	.quadBlock[Bsp1_StraightWay13_Turbo_9800].draw_order_low = 0x81144500,
 	.quadBlock[Bsp2_RampUp2_Turbo_9800].draw_order_low = 0x83182100,
 	.quadBlock[Bsp2_RampUp3_Turbo_9800].draw_order_low = 0x83182100,
 	
@@ -925,8 +929,8 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay10),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay11),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay12),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay13),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay14),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay13_Turbo_9800),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay14_Turbo_1840),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay15),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay16),
 	
