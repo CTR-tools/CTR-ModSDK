@@ -6,6 +6,13 @@
 	.color_lo = {colR, colG, colB, 0}, \
 }
 
+enum BitsPerPixel
+{
+	BPP_4 = 0,
+	BPP_8 = 1,
+	BPP_16 = 2
+};
+
 // can't change these, or else triNormalVec has to change
 #define sizeX 0x300
 #define sizeZ 0x300
