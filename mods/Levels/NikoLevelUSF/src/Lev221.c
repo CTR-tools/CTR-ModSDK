@@ -245,7 +245,7 @@ struct LevelFile file =
 		.ptrVertexArray = OFFSETOF(struct LevelFile, levVertex[0])-4, // no -4 for some reason?
 		.unk2 = 0, // idk, fine to leave null
 		.bspRoot = OFFSETOF(struct LevelFile, bsp[0])-4,
-		.numBspNodes = 3, // can be anything non-zero
+		.numBspNodes = 5,
 	},
 	
 	.group4_checkerEdge.texLayout =
