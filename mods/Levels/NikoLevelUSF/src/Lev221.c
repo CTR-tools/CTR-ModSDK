@@ -105,6 +105,12 @@ enum Bsp2
 	// these move
 	Bsp2_TurnRight1,
 	Bsp2_TurnRight2,
+	Bsp2_TurnRight3,
+	Bsp2_TurnRight4,
+	Bsp2_TurnRight5,
+	Bsp2_TurnRight6,
+	Bsp2_TurnRight7,
+	//Bsp2_Middle, // turbo
 	
 	Bsp2_TowardsRamp1,
 	Bsp2_TowardsRamp2,
@@ -116,7 +122,14 @@ enum Bsp2
 	Bsp2_RampUp3_Turbo_9800,
 	Bsp2_RampUp4,
 	Bsp2_RampUp5_Turbo_1840,
-	Bsp2_RampUp6_Turbo_1840, // [79]
+	Bsp2_RampUp6_Turbo_1840, // [83]
+	
+	// 20 blocks here:
+	// 1 more "right" (cut corner)
+	// 1 middle (turbo) + 1 inv
+	// 1 turbo on right side
+	// 7 more to connect other side (cut corner)
+	// 1 turbo other side
 	
 	Bsp2_Last=Bsp2_RampUp6_Turbo_1840,
 	
@@ -646,6 +659,13 @@ struct LevelFile file =
 	
 	NEW_BLOCK(Bsp2_TurnRight1, group4_placeHolder, 0x1380, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight2, group4_placeHolder, 0x1380, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_TurnRight3, group4_placeHolder, 0x1680, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_TurnRight4, group4_turbopad_green, 0x1680, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_TurnRight5, group4_placeHolder, 0x1980, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_TurnRight6, group4_placeHolder, 0x1980, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_TurnRight7, group4_placeHolder, 0x1C80, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	// middle block
 	
 	NEW_BLOCK(Bsp2_TowardsRamp1, group4_placeHolder, 0xD80, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TowardsRamp2, group4_placeHolder, 0x1080, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
@@ -659,6 +679,11 @@ struct LevelFile file =
 	
 	SET_POSY_FLAT(Bsp2_TurnRight1,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight2,-0x300),
+	SET_POSY_FLAT(Bsp2_TurnRight3,-0x300),
+	SET_POSY_FLAT(Bsp2_TurnRight4,-0x300),
+	SET_POSY_FLAT(Bsp2_TurnRight5,-0x300),
+	SET_POSY_FLAT(Bsp2_TurnRight6,-0x300),
+	SET_POSY_FLAT(Bsp2_TurnRight7,-0x300),
 	
 	SET_POSY_FLAT(Bsp2_TowardsRamp1,-0x300),
 	SET_POSY_FLAT(Bsp2_TowardsRamp2,-0x300),
@@ -944,6 +969,13 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay18),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight1),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight2),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight3),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight4),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight5),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight6),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight7),
+	//SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight8_Turbo_1840),
+	
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp1),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp2),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp3),
@@ -1344,5 +1376,14 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(77),
 		PTR_MAP_QUADBLOCK(78),
 		PTR_MAP_QUADBLOCK(79),
+		PTR_MAP_QUADBLOCK(80),
+		PTR_MAP_QUADBLOCK(81),
+		PTR_MAP_QUADBLOCK(82),
+		PTR_MAP_QUADBLOCK(83),
+		PTR_MAP_QUADBLOCK(84),
+		PTR_MAP_QUADBLOCK(85),
+		PTR_MAP_QUADBLOCK(86),
+		PTR_MAP_QUADBLOCK(87),
+		PTR_MAP_QUADBLOCK(88),
 	},
 };
