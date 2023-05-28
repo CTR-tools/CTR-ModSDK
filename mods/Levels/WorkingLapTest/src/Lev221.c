@@ -11,6 +11,7 @@ struct LevelFile
 	struct mesh_info mInfo;
 	struct IconGroup4 group4_ground;
 	struct IconGroup4 group4_ramp;
+	struct IconGroup4 test_texture;
 	struct SpawnType1 spawnType1;
 	struct AnimTex animtex;
 	struct CheckpointNode noderespawnsthing[16];
@@ -62,8 +63,11 @@ struct LevelFile file =
 		
 		.ptrSpawnType1 = OFFSETOF(struct LevelFile, spawnType1)-4,
 		
-		.clearColor[0].rgb = {0x0, 0x0, 0x28},
+		.clearColor[0].rgb = {0x0, 0x0, 0x0},
 		.clearColor[0].enable = 1,
+
+		.clearColor[1].rgb = {0x0, 0x28, 0x0},
+		.clearColor[1].enable = 1,
 		
 		// amount of respawn points in the track
 		// and pointer to respawn data itself
@@ -104,19 +108,27 @@ struct LevelFile file =
 	{
 		// for these we just use the exact same texture name format as ctr_tools' texture ripper for where in VRAM the texture and its CLUT are located
 		// our singular texture is named 512_0_32_20_16_16_0.png, so that's what we use
-		.texLayout[0] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // very far
-		.texLayout[1] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // far
-		.texLayout[2] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // close
-		.texLayout[3] = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // very close
+		.texLayout[0] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
+		.texLayout[1] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
+		.texLayout[2] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
+		.texLayout[3] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very close
 	},
 
 	.group4_ramp =
 	{
 		// 576_0_32_21_32_16_0.png		
-		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very far
-		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // far
-		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // close
-		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very close
+		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // very far
+		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // far
+		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // close
+		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // very close
+	},
+
+	.test_texture =
+	{
+		.texLayout[0] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
+		.texLayout[1] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
+		.texLayout[2] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		.texLayout[3] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very close
 	},
 	
 	// this must exist, or else camera fly-in checks for "count" without nullptr check, and crashes dereferencing nullptr on real PSX
@@ -126,14 +138,14 @@ struct LevelFile file =
 	},
 
 	// automatically-generated quadblock insertions courtesy of pngtotrack.py
-	                                                                           NEW_BLOCK(0, group4_ground, 0x0000, 0x0000, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(1, group4_ground, 0x0300, 0x0000, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                           
-	NEW_BLOCK(2, group4_ground, -0x300, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(3, group4_ground, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(4, group4_ground, 0x0300, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(5, group4_ground, 0x0600, 0x0300, NULL, 0x1800, 0xFF, 0x0, 0x0),
-	NEW_BLOCK(6, group4_ground, -0x300, 0x0600, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(7, group4_ground, 0x0600, 0x0600, NULL, 0x1800, 0xFF, 0x0, 0x0),
-	NEW_BLOCK(8, group4_ground, -0x300, 0x0900, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(9, group4_ground, 0x0600, 0x0900, NULL, 0x1800, 0xFF, 0x0, 0x0),
-	NEW_BLOCK(10, group4_ground, -0x300, 0x0c00, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(11, group4_ground, 0x0600, 0x0c00, NULL, 0x1800, 0xFF, 0x0, 0x0),
-	NEW_BLOCK(12, group4_ground, -0x300, 0x0f00, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                                                                                                      NEW_BLOCK(13, group4_ground, 0x0600, 0x0f00, NULL, 0x1800, 0xFF, 0x0, 0x0),
-	NEW_BLOCK(14, group4_ground, -0x300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(15, group4_ground, 0x0000, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(16, group4_ground, 0x0300, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(17, group4_ground, 0x0600, 0x1200, NULL, 0x1800, 0xFF, 0x0, 0x0),
-	                                                                           NEW_BLOCK(18, group4_ground, 0x0000, 0x1500, NULL, 0x1800, 0xFF, 0x0, 0x0),NEW_BLOCK(19, group4_ground, 0x0300, 0x1500, NULL, 0x1800, 0xFF, 0x0, 0x0),                                                                           
+	                                                                           NEW_BLOCK(0, test_texture, 0x0000, 0x0000, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(1, test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
+	NEW_BLOCK(2, test_texture, -0x300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(3, test_texture, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(4, test_texture, 0x0300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(5, test_texture, 0x0600, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),
+	NEW_BLOCK(6, test_texture, -0x300, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(7, test_texture, 0x0600, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),
+	NEW_BLOCK(8, test_texture, -0x300, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(9, test_texture, 0x0600, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),
+	NEW_BLOCK(10, test_texture, -0x300, 0x0c00, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(11, test_texture, 0x0600, 0x0c00, NULL, 0x1800, 0x80, 0x40, 0x0),
+	NEW_BLOCK(12, test_texture, -0x300, 0x0f00, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(13, test_texture, 0x0600, 0x0f00, NULL, 0x1800, 0x80, 0x40, 0x0),
+	NEW_BLOCK(14, test_texture, -0x300, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(15, test_texture, 0x0000, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(16, test_texture, 0x0300, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(17, test_texture, 0x0600, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),
+	                                                                           NEW_BLOCK(18, test_texture, 0x0000, 0x1500, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(19, test_texture, 0x0300, 0x1500, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
 
 	/*
 	
