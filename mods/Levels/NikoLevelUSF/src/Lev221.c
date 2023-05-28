@@ -648,6 +648,15 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp0_FlatTop6, group4_placeHolder, 0x180, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp0_FlatTop7, group4_placeHolder, 0x180, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
+	TEX_2X2(Bsp0_FlatTop1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp0_FlatTop2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp0_FlatTop1].draw_order_low = 0x80800000, // rotate checker
+	.quadBlock[Bsp0_FlatTop2].draw_order_low = 0x81044000, // rotation
+	TEX_2X2(Bsp0_FlatTop3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp0_FlatTop4, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp0_FlatTop3].draw_order_low = 0x80800000, // rotate checker
+	.quadBlock[Bsp0_FlatTop4].draw_order_low = 0x81044000, // rotation
+	
 	// ==== End of BSP block =====
 	
 	// flat, turn 90
