@@ -847,6 +847,15 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp2_TowardsRamp3, group4_placeHolder, 0xD80, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TowardsRamp4, group4_placeHolder, 0x1080, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 
+	TEX_2X2(Bsp2_TowardsRamp4, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp2_TowardsRamp2, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp2_TowardsRamp4].draw_order_low = 0x80808100,
+	.quadBlock[Bsp2_TowardsRamp2].draw_order_low = 0x81984000,
+	TEX_2X2(Bsp2_TowardsRamp3, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp2_TowardsRamp1, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp2_TowardsRamp3].draw_order_low = 0x80808100,
+	.quadBlock[Bsp2_TowardsRamp1].draw_order_low = 0x81984000,
+
 	SET_POSY_FLAT(Bsp2_TowardsRamp1,-0x300),
 	SET_POSY_FLAT(Bsp2_TowardsRamp2,-0x300),
 	SET_POSY_FLAT(Bsp2_TowardsRamp3,-0x300),
