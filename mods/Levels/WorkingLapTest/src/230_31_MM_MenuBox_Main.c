@@ -10,16 +10,16 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
   //// if scrapbook is unlocked
   //if ((sdata->gameProgress.unlocks[0] & 0x10) != 0) 
   //{  
-	//// change OVR_230.rows_mainMenu_Basic
-	//// to OVR_230.rows_mainMenu_WithScrapbook
-	//mainMenu->rows = &OVR_230.rows_mainMenu_WithScrapbook[0];
+  //// change OVR_230.rows_mainMenu_Basic
+  //// to OVR_230.rows_mainMenu_WithScrapbook
+  //mainMenu->rows = &OVR_230.rows_mainMenu_WithScrapbook[0];
   //}
 
   #if 1
-  char* info = "WorkingTestLap";
-  DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, ORANGE);
-  DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, ORANGE);
-  DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, ORANGE);
+  char* info = "Time Trial Only";
+  DecalFont_DrawLine(info,    5, 197, FONT_SMALL, ORANGE);
+  DecalFont_DrawLine(__DATE__,  5, 206, FONT_SMALL, ORANGE);
+  DecalFont_DrawLine(__TIME__,  170, 206, FONT_SMALL, ORANGE);
   #endif
 
   MM_ParseCheatCodes();
@@ -32,30 +32,30 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
   if (mainMenu->unk1e == 1) 
   {
     MM_Title_MenuUpdate();
-	
+  
     if (
-		(
-			// If you are in main menu
-			(*(int*)0x800b5a1c == 1) && 
-			
-			// if "title" object exists
-			(*(int*)0x800b59a0 != NULL)
-		) &&
+    (
+      // If you are in main menu
+      (*(int*)0x800b5a1c == 1) && 
+      
+      // if "title" object exists
+      (*(int*)0x800b59a0 != NULL)
+    ) &&
         (0xe5 < *(int*)0x800b5a14)
-	   ) 
-	{
-	  // "TM" trademark string
+     ) 
+  {
+    // "TM" trademark string
       DecalFont_DrawLineOT(
-		sdata->lngStrings[0x244],0x10e,0x9c,FONT_SMALL,ORANGE,
+    sdata->lngStrings[0x244],0x10e,0x9c,FONT_SMALL,ORANGE,
         &gGT->backBuffer->otMem.startPlusFour[3]);
     }
     
-	#if 0
-	// DISABLED DEMO MODE
-	#endif
-	
-	// 900 = 30 seconds at 30fps
-	gGT->demoCountdownTimer = 900;
+  #if 0
+  // DISABLED DEMO MODE
+  #endif
+  
+  // 900 = 30 seconds at 30fps
+  gGT->demoCountdownTimer = 900;
   }
   
   MM_Title_Init();
@@ -74,14 +74,14 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
   // if "title" object exists
   if (titleObj != NULL) 
   {
-	// CameraPosOffset X
+  // CameraPosOffset X
     titleObj->cameraPosOffset[0] = 0;
   }
   
   // if you are at highest level of menu hierarchy
   if (mainMenu->unk1e != 0) 
   {
-	// leave the function
+  // leave the function
     return;
   }
   
@@ -148,60 +148,60 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
   
   if (choose == 0x4e)
   {
-	// set game mode to Arcade Mode
+  // set game mode to Arcade Mode
     gGT->gameMode1 |= ARCADE_MODE;
 
-	// set next menuBox
-	mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_raceType;
-	mainMenu->state |= 0x10;
-	return;
+  // set next menuBox
+  mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_raceType;
+  mainMenu->state |= 0x10;
+  return;
   }
   
   // if you entered VS mode
   if (choose == 0x4f) 
   {
-	// next menuBox is choosing single+cup
+  // next menuBox is choosing single+cup
     mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_raceType;
-	mainMenu->state |= 0x10;
-	return;
+  mainMenu->state |= 0x10;
+  return;
   }
   
   // if you chose Battle
   if (choose == 0x50) 
   {
-  	*(int*)0x800b5a08 = 2;
+    *(int*)0x800b5a08 = 2;
   
-  	// set game mode to Battle Mode
-  	gGT->gameMode1 |= BATTLE_MODE;
+    // set game mode to Battle Mode
+    gGT->gameMode1 |= BATTLE_MODE;
   
-  	// set next menuBox to 2P,3P,4P
-  	mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_players2P3P4P;
-  	mainMenu->state |= 0x10;
-  	return;
+    // set next menuBox to 2P,3P,4P
+    mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_players2P3P4P;
+    mainMenu->state |= 0x10;
+    return;
   }
 
   // if you chose High Score
   if (choose == 0x51) 
   {
-	// Set next stage to high score menu
+  // Set next stage to high score menu
     *(int*)0x800b59e0 = 3;
-	  
-	// Leave main menu hierarchy
-	*(int*)0x800b5a1c = 2;
-	
-	return;
+    
+  // Leave main menu hierarchy
+  *(int*)0x800b5a1c = 2;
+  
+  return;
   }
   
   // if you chose Scrapbook
   if (choose == 0x234) 
   {
-	// Set next stage to Scrapbook
+  // Set next stage to Scrapbook
     *(int*)0x800b59e0 = 5;
   
-	// Leave main menu hierarchy
-	*(int*)0x800b5a1c = 2;
-	
-	return;
+  // Leave main menu hierarchy
+  *(int*)0x800b5a1c = 2;
+  
+  return;
   }
 }
 
