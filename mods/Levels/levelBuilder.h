@@ -110,7 +110,6 @@ enum BitsPerPixel
 	.levVertex[9*qIndex+hi3].pos[1] = height, \
 	.quadBlock[qIndex].checkpointIndex = -1, \
 	.quadBlock[qIndex].bbox.max[1] = height, \
-	.quadBlock[qIndex].draw_order_low = 0x80000000, \
 	.quadBlock[qIndex].triNormalVecDividend = \
 	{ \
 		/* hi 2 */ \
