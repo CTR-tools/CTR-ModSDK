@@ -341,18 +341,18 @@ struct LevelFile file =
 	// top/bottom left/right assuming you're rotation is 0,0,0
 	TEX_2X2(Bsp0_BehindStart1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_BehindStart2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_BehindStart1].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[Bsp0_BehindStart2].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_BehindStart1].draw_order_low = 0x80800000,
+	.quadBlock[Bsp0_BehindStart2].draw_order_low = 0x81044000,
 	TEX_2X2(Bsp0_BehindStart3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_BehindStart4, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_BehindStart3].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[Bsp0_BehindStart4].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_BehindStart3].draw_order_low = 0x80800000,
+	.quadBlock[Bsp0_BehindStart4].draw_order_low = 0x81044000,
 	
 	// spawn
 	NEW_BLOCK(Bsp0_StartLine1, group4_tileEdge, -0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp0_StartLine2, group4_tileEdge, 0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
-	// top/bottom left/right assuming you're rotation is 0,0,0
+	// TR, TL, BR, BL assuming you're rotation is 0,0,0
 	TEX_2X2(Bsp0_StartLine1, group4_tileEdge, group4_tileCenter, group4_checkerEdge, group4_checkerCenter),
 	TEX_2X2(Bsp0_StartLine2, group4_tileCenter, group4_tileEdge, group4_checkerCenter, group4_checkerEdge),
 	.quadBlock[Bsp0_StartLine1].draw_order_low = 0x80800000, // rotate checker
@@ -364,8 +364,8 @@ struct LevelFile file =
 	
 	TEX_2X2(Bsp0_AfterStart1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_AfterStart2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_AfterStart1].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[Bsp0_AfterStart2].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_AfterStart1].draw_order_low = 0x80800000,
+	.quadBlock[Bsp0_AfterStart2].draw_order_low = 0x81044000,
 	
 	// ramp down (1/3)
 	NEW_BLOCK(Bsp0_DownRamp1, group4_placeHolder, -0x180, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
@@ -373,8 +373,8 @@ struct LevelFile file =
 	
 	TEX_2X2(Bsp0_DownRamp1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_DownRamp2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_DownRamp1].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[Bsp0_DownRamp2].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_DownRamp1].draw_order_low = 0x80800000,
+	.quadBlock[Bsp0_DownRamp2].draw_order_low = 0x81044000,
 	
 	MAKE_RAMP(
 		Bsp0_DownRamp1, 0x180, // index, height
@@ -410,8 +410,8 @@ struct LevelFile file =
 	
 	TEX_2X2(Bsp0_DownRamp3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_DownRamp4, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_DownRamp3].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[Bsp0_DownRamp4].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_DownRamp3].draw_order_low = 0x80800000,
+	.quadBlock[Bsp0_DownRamp4].draw_order_low = 0x81044000,
 	
 	MAKE_RAMP(
 		Bsp0_DownRamp3, 0x180, // index, height
@@ -447,8 +447,8 @@ struct LevelFile file =
 	
 	TEX_2X2(Bsp0_DownRamp5, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_DownRamp6, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_DownRamp5].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[Bsp0_DownRamp6].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_DownRamp5].draw_order_low = 0x80800000,
+	.quadBlock[Bsp0_DownRamp6].draw_order_low = 0x81044000,
 	
 	MAKE_RAMP(
 		Bsp0_DownRamp5, 0x180, // index, height
@@ -488,10 +488,10 @@ struct LevelFile file =
 	
 	TEX_2X2(Bsp0_FlatDip1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_FlatDip2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_FlatDip1].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[Bsp0_FlatDip2].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_FlatDip1].draw_order_low = 0x80800000,
+	.quadBlock[Bsp0_FlatDip2].draw_order_low = 0x81044000,
 	TEX_2X2(Bsp0_FlatDip3, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_FlatDip3].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_FlatDip3].draw_order_low = 0x81044000,
 	
 	// ramp up (1/3)
 	NEW_BLOCK(Bsp0_UpRamp1, group4_placeHolder, -0x180, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
@@ -499,7 +499,7 @@ struct LevelFile file =
 	.quadBlock[Bsp0_UpRamp2_Turbo_9800].draw_order_low = FACE_PosZ,
 	
 	TEX_2X2(Bsp0_UpRamp1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
-	.quadBlock[Bsp0_UpRamp1].draw_order_low = 0x80800000, // rotate checker
+	.quadBlock[Bsp0_UpRamp1].draw_order_low = 0x80800000,
 
 	MAKE_RAMP(
 		Bsp0_UpRamp1, 0x180, // index, height
@@ -535,8 +535,8 @@ struct LevelFile file =
 	
 	TEX_2X2(Bsp0_UpRamp3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_UpRamp4, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_UpRamp3].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[Bsp0_UpRamp4].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_UpRamp3].draw_order_low = 0x80800000,
+	.quadBlock[Bsp0_UpRamp4].draw_order_low = 0x81044000,
 	
 	MAKE_RAMP(
 		Bsp0_UpRamp3, 0x180, // index, height
@@ -572,7 +572,7 @@ struct LevelFile file =
 	.quadBlock[Bsp0_UpRamp5_Turbo_9800].draw_order_low = FACE_PosZ,
 	
 	TEX_2X2(Bsp0_UpRamp6, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_UpRamp6].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_UpRamp6].draw_order_low = 0x81044000,
 	
 	MAKE_RAMP(
 		Bsp0_UpRamp5_Turbo_9800, 0x180, // index, height
@@ -650,12 +650,12 @@ struct LevelFile file =
 	
 	TEX_2X2(Bsp0_FlatTop1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_FlatTop2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_FlatTop1].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[Bsp0_FlatTop2].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_FlatTop1].draw_order_low = 0x80800000,
+	.quadBlock[Bsp0_FlatTop2].draw_order_low = 0x81044000,
 	TEX_2X2(Bsp0_FlatTop3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_FlatTop4, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_FlatTop3].draw_order_low = 0x80800000, // rotate checker
-	.quadBlock[Bsp0_FlatTop4].draw_order_low = 0x81044000, // rotation
+	.quadBlock[Bsp0_FlatTop3].draw_order_low = 0x80800000,
+	.quadBlock[Bsp0_FlatTop4].draw_order_low = 0x81044000,
 	
 	// ==== End of BSP block =====
 	
@@ -664,15 +664,26 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp1_TurnLeft2, group4_placeHolder, 0x480, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp1_TurnLeft3_Turbo_9800, group4_turbopad_green, 0x780, 0x2700, NULL, 0x9800, 0x80, 0x80, 0x80), // boost
 	NEW_BLOCK(Bsp1_TurnLeft4_Turbo_9800, group4_turbopad_green, 0x780, 0x2A00, NULL, 0x9800, 0x80, 0x80, 0x80), // boost
+	NEW_BLOCK(Bsp1_TurnLeft5_Turbo_1840, group4_turbopad_green, 0x780, 0x2700, NULL, 0x1840, 0x80, 0x80, 0x80), // boost
+	NEW_BLOCK(Bsp1_TurnLeft6_Turbo_1840, group4_turbopad_green, 0x780, 0x2A00, NULL, 0x1840, 0x80, 0x80, 0x80), // boost
 	NEW_BLOCK(Bsp1_TurnLeft7, group4_placeHolder, 0xA80, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp1_TurnLeft8, group4_placeHolder, 0xA80, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].draw_order_low = FACE_PosX,
 	.quadBlock[Bsp1_TurnLeft4_Turbo_9800].draw_order_low = FACE_PosX,
-	
-	NEW_BLOCK(Bsp1_TurnLeft5_Turbo_1840, group4_turbopad_green, 0x780, 0x2700, NULL, 0x1840, 0x80, 0x80, 0x80), // boost
-	NEW_BLOCK(Bsp1_TurnLeft6_Turbo_1840, group4_turbopad_green, 0x780, 0x2A00, NULL, 0x1840, 0x80, 0x80, 0x80), // boost
 	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp1_TurnLeft6_Turbo_1840].terrain_type = 1,
+	
+	// TR, TL, BR, BL
+	TEX_2X2(Bsp1_TurnLeft1, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp1_TurnLeft2, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp1_TurnLeft1].draw_order_low = 0x80808100,
+	.quadBlock[Bsp1_TurnLeft2].draw_order_low = 0x81984000,
+	
+	// TR, TL, BR, BL
+	TEX_2X2(Bsp1_TurnLeft7, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp1_TurnLeft8, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp1_TurnLeft7].draw_order_low = 0x80808100,
+	.quadBlock[Bsp1_TurnLeft8].draw_order_low = 0x81984000,
 	
 	// flat, turn 180
 	NEW_BLOCK(Bsp1_TurnBack1_Turbo_9800, group4_turbopad_green, 0xD80, 0x2100, NULL, 0x9800, 0x80, 0x80, 0x80),
@@ -692,6 +703,11 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp1_TurnBack9, group4_placeHolder, 0xD80,  0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp1_TurnBack10, group4_placeHolder, 0x1080,0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
+	TEX_2X2(Bsp1_TurnBack5, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp1_TurnBack6, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp1_TurnBack5].draw_order_low = 0x80800000,
+	.quadBlock[Bsp1_TurnBack6].draw_order_low = 0x81044000,
+	
 	// fall back down,
 	// here experiment with USF jump
 	
@@ -706,6 +722,27 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp1_StraightWay9, group4_placeHolder, 0xD80, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp1_StraightWay10, group4_placeHolder, 0x1080, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
+	TEX_2X2(Bsp1_StraightWay1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp1_StraightWay2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp1_StraightWay1].draw_order_low = 0x80800000,
+	.quadBlock[Bsp1_StraightWay2].draw_order_low = 0x81044000,
+	TEX_2X2(Bsp1_StraightWay3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp1_StraightWay4, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp1_StraightWay3].draw_order_low = 0x80800000,
+	.quadBlock[Bsp1_StraightWay4].draw_order_low = 0x81044000,
+	TEX_2X2(Bsp1_StraightWay5, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp1_StraightWay6, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp1_StraightWay5].draw_order_low = 0x80800000,
+	.quadBlock[Bsp1_StraightWay6].draw_order_low = 0x81044000,
+	TEX_2X2(Bsp1_StraightWay7, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp1_StraightWay8, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp1_StraightWay7].draw_order_low = 0x80800000,
+	.quadBlock[Bsp1_StraightWay8].draw_order_low = 0x81044000,
+	TEX_2X2(Bsp1_StraightWay9, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp1_StraightWay10, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp1_StraightWay9].draw_order_low = 0x80800000,
+	.quadBlock[Bsp1_StraightWay10].draw_order_low = 0x81044000,
+	
 	NEW_BLOCK(Bsp1_StraightWay11_Turbo_9800, group4_turbopad_green, 0xD80, 0xC00, NULL, 0x9800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp1_StraightWay12_Turbo_1840, group4_turbopad_green, 0xD80, 0xC00, NULL, 0x1840, 0x80, 0x80, 0x80),
 	.quadBlock[Bsp1_StraightWay12_Turbo_1840].terrain_type = 1,
@@ -713,6 +750,11 @@ struct LevelFile file =
 	
 	NEW_BLOCK(Bsp1_StraightWay13, group4_placeHolder, 0xD80, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp1_StraightWay14, group4_placeHolder, 0x1080, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	TEX_2X2(Bsp1_StraightWay13, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp1_StraightWay14, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp1_StraightWay13].draw_order_low = 0x80800000,
+	.quadBlock[Bsp1_StraightWay14].draw_order_low = 0x81044000,
 	
 	SET_POSY_FLAT(Bsp1_StraightWay1,-0x300),
 	SET_POSY_FLAT(Bsp1_StraightWay2,-0x300),
@@ -752,6 +794,12 @@ struct LevelFile file =
 	.quadBlock[Bsp2_TurnRightX_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp2_TurnRight4_Turbo_9800].draw_order_low = FACE_PosX,
 	
+	// TR, TL, BR, BL
+	TEX_2X2(Bsp2_TurnRight1, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp2_TurnRight2, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp2_TurnRight1].draw_order_low = 0x80808100,
+	.quadBlock[Bsp2_TurnRight2].draw_order_low = 0x81984000,
+	
 	SET_POSY_FLAT(Bsp2_TurnRight1,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight2,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight3,-0x300),
@@ -779,6 +827,11 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp2_GoBack7, group4_placeHolder, 0x1380, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	.quadBlock[Bsp2_GoBackX_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp2_GoBack5_Turbo_9800].draw_order_low = FACE_NegX,
+	
+	TEX_2X2(Bsp2_GoBack7, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp2_GoBack6, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp2_GoBack7].draw_order_low = 0x80808100,
+	.quadBlock[Bsp2_GoBack6].draw_order_low = 0x81984000,
 	
 	SET_POSY_FLAT(Bsp2_GoBack1,-0x300),
 	SET_POSY_FLAT(Bsp2_GoBack2,-0x300),
