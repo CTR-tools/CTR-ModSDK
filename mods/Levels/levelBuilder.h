@@ -54,10 +54,10 @@ enum BitsPerPixel
 		.draw_order_high = 0, \
 		.ptr_texture_mid = \
 		{ \
-			OFFSETOF(struct LevelFile, group4)-4, \
-			OFFSETOF(struct LevelFile, group4)-4, \
-			OFFSETOF(struct LevelFile, group4)-4, \
-			OFFSETOF(struct LevelFile, group4)-4 \
+			(OFFSETOF(struct LevelFile, animtex)-4)|1, \
+			(OFFSETOF(struct LevelFile, group4)-4), \
+			(OFFSETOF(struct LevelFile, group4)-4), \
+			(OFFSETOF(struct LevelFile, group4)-4) \
 		}, \
 		\
 		.bbox = \
@@ -74,7 +74,7 @@ enum BitsPerPixel
 		.checkpointIndex = qIndex, \
 		.triNormalVecBitShift = 0x12, \
 		\
-		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4, \
+		.ptr_texture_low = (OFFSETOF(struct LevelFile, group4)-4), \
 		.pvs = OFFSETOF(struct LevelFile, pvs)-4, \
 		\
 		.triNormalVecDividend = \

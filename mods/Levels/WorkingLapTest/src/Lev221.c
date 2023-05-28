@@ -63,11 +63,8 @@ struct LevelFile file =
 		
 		.ptrSpawnType1 = OFFSETOF(struct LevelFile, spawnType1)-4,
 		
-		.clearColor[0].rgb = {0x0, 0x0, 0x0},
-		.clearColor[0].enable = 1,
-
-		.clearColor[1].rgb = {0x0, 0x28, 0x0},
-		.clearColor[1].enable = 1,
+		.clearColor[2].rgb = {0x0, 0x28, 0x0},
+		.clearColor[2].enable = true,
 		
 		// amount of respawn points in the track
 		// and pointer to respawn data itself
@@ -111,7 +108,7 @@ struct LevelFile file =
 		.texLayout[0] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
 		.texLayout[1] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
 		.texLayout[2] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-		.texLayout[3] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very close
+		.texLayout[3] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // mosaic (unused)
 	},
 
 	.group4_ramp =
@@ -120,7 +117,7 @@ struct LevelFile file =
 		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // very far
 		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // far
 		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // close
-		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // very close
+		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // mosaic (unused)
 	},
 
 	.test_texture =
@@ -128,7 +125,7 @@ struct LevelFile file =
 		.texLayout[0] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
 		.texLayout[1] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
 		.texLayout[2] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
-		.texLayout[3] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very close
+		.texLayout[3] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // mosaic (unused)
 	},
 	
 	// this must exist, or else camera fly-in checks for "count" without nullptr check, and crashes dereferencing nullptr on real PSX
@@ -138,7 +135,7 @@ struct LevelFile file =
 	},
 
 	// automatically-generated quadblock insertions courtesy of pngtotrack.py
-	                                                                           NEW_BLOCK(0, test_texture, 0x0000, 0x0000, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(1, test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
+	                                                                           NEW_BLOCK(0, group4_ground, 0x0000, 0x0000, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(1, test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
 	NEW_BLOCK(2, test_texture, -0x300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(3, test_texture, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(4, test_texture, 0x0300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(5, test_texture, 0x0600, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(6, test_texture, -0x300, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(7, test_texture, 0x0600, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(8, test_texture, -0x300, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(9, test_texture, 0x0600, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),
