@@ -83,10 +83,23 @@ enum BlendMode
 	ADD_25=3
 };
 
-// for drawing on quadblocks
+// textures used for a quad in a quadblock
+// for medium-level quadblock detailing there's three levels of detail for its textures
+// ctr-tools only rips the "near" texture level, but the idea is that the other two are to use lower-quality textures
+struct IconGroup3
+{
+	struct TextureLayout far;
+	struct TextureLayout middle;
+	struct TextureLayout near;
+};
+
+// same as IconGroup3, except contains TexLayout for High LOD mosaics (aka texMontage)
 struct IconGroup4
 {
-	struct TextureLayout texLayout[4];
+	struct TextureLayout far;
+	struct TextureLayout middle;
+	struct TextureLayout near;
+	struct TextureLayout mosaic;
 };
 
 struct AnimTex
@@ -142,7 +155,8 @@ struct QuadBlock
 	int draw_order_high;
 
 	// 0x1c
-	struct IconGroup4* ptr_texture_mid[4];
+	// ptr_texture_mid can point to IconGroup3, IconGroup4, or AnimTex structs
+	void* ptr_texture_mid[4];
 
 	// 0x2c
 	struct BoundingBox bbox;
@@ -163,7 +177,8 @@ struct QuadBlock
 	char triNormalVecBitShift;
 
 	// 0x40
-	struct IconGroup4* ptr_texture_low;
+	// ptr_texture_low can also point to IconGroup3, IconGroup4, or AnimTex structs
+	void* ptr_texture_low;
 
 	// 0x44
 	struct PVS* pvs;

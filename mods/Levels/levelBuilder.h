@@ -21,7 +21,7 @@ enum BitsPerPixel
 	NEW_BLOCK
 	(
 		// index, texture
-		0, group4_ground,
+		0, group3_ground,
 
 		// posX, posZ
 		// +z is forward, +x is left, not right
@@ -36,7 +36,7 @@ enum BitsPerPixel
 	),
 */
 
-#define NEW_BLOCK(qIndex, group4, posX, posZ, flagV, flagQ, colR, colG, colB) \
+#define NEW_BLOCK(qIndex, group3, posX, posZ, flagV, flagQ, colR, colG, colB) \
 	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
 	.levVertex[9*qIndex+1] = NEW_VERTEX(posX+sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
 	.levVertex[9*qIndex+2] = NEW_VERTEX(posX-sizeX/2, 0, posZ+sizeZ/2, flagV, colR, colG, colB),\
@@ -54,10 +54,10 @@ enum BitsPerPixel
 		.draw_order_high = 0, \
 		.ptr_texture_mid = \
 		{ \
-			(OFFSETOF(struct LevelFile, animtex)-4)|1, \
-			(OFFSETOF(struct LevelFile, group4)-4), \
-			(OFFSETOF(struct LevelFile, group4)-4), \
-			(OFFSETOF(struct LevelFile, group4)-4) \
+			OFFSETOF(struct LevelFile, group3)-4, \
+			OFFSETOF(struct LevelFile, group3)-4, \
+			OFFSETOF(struct LevelFile, group3)-4, \
+			OFFSETOF(struct LevelFile, group3)-4 \
 		}, \
 		\
 		.bbox = \
@@ -74,7 +74,7 @@ enum BitsPerPixel
 		.checkpointIndex = qIndex, \
 		.triNormalVecBitShift = 0x12, \
 		\
-		.ptr_texture_low = (OFFSETOF(struct LevelFile, group4)-4), \
+		.ptr_texture_low = OFFSETOF(struct LevelFile, group3)-4, \
 		.pvs = OFFSETOF(struct LevelFile, pvs)-4, \
 		\
 		.triNormalVecDividend = \

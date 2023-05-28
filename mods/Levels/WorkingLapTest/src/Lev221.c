@@ -9,11 +9,11 @@ struct LevelFile
 	void* ptrMap;
 	struct Level level;
 	struct mesh_info mInfo;
-	struct IconGroup4 group4_ground;
-	struct IconGroup4 group4_ramp;
+	struct IconGroup4 group3_ground;
+	struct IconGroup4 test_anim;
 	struct IconGroup4 test_texture;
-	struct SpawnType1 spawnType1;
 	struct AnimTex animtex;
+	struct SpawnType1 spawnType1;
 	struct CheckpointNode noderespawnsthing[16];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
@@ -31,7 +31,7 @@ struct LevelFile
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
 	int VisMem_bspList_RenderListP4[3*2];
 	
-	int map[(38+NUM_BLOCKS*6)+1];
+	int map[(32+NUM_BLOCKS*6)+1];
 };
 
 // for whatever reason it's necessary to offset every pointer by -4
@@ -44,8 +44,8 @@ struct LevelFile file =
 	.level =
 	{
 		.ptr_mesh_info = OFFSETOF(struct LevelFile, mInfo)-4,
-		.ptr_anim_tex = OFFSETOF(struct LevelFile, animtex)-4,
 		.visMem = OFFSETOF(struct LevelFile, visMem)-4,
+		.ptr_anim_tex = OFFSETOF(struct LevelFile, animtex)-4,
 		
 		// the game will add +0x400 to the Z rotation of spawn positions automatically
 		// we should probably look into why this even happens...
@@ -63,8 +63,15 @@ struct LevelFile file =
 		
 		.ptrSpawnType1 = OFFSETOF(struct LevelFile, spawnType1)-4,
 		
-		.clearColor[2].rgb = {0x0, 0x28, 0x0},
-		.clearColor[2].enable = true,
+		.configFlags = 1,
+
+		.glowGradient[0] =
+		{
+			.pointFrom = -0xF0,
+			.pointTo = -0x10,
+			.colorFrom = 0x8000,
+			.colorTo = 0,
+		},
 		
 		// amount of respawn points in the track
 		// and pointer to respawn data itself
@@ -84,48 +91,52 @@ struct LevelFile file =
 		.bspRoot = OFFSETOF(struct LevelFile, bsp[0])-4,
 		.numBspNodes = 3, // can be anything non-zero
 	},
-
-	.animtex =
-	{
-		.ptrNext = OFFSETOF(struct LevelFile, group4_ground)-4,
-		.numFrames = NUM_ANIMTEX_FRAMES,
-		.shrug = 0,
-		.lottashortshuh = 0,
-		.frameIndex = 1,
-		.ptrarray =
-		{
-			OFFSETOF(struct LevelFile, group4_ground.texLayout[0])-4,
-			OFFSETOF(struct LevelFile, group4_ramp.texLayout[0])-4,
-		},
-	},
 	
 	// quadblock texture type
-	// see IconGroup4 in namespace_Decal.h
-	.group4_ground =
+	// see IconGroup3 in namespace_Decal.h
+	.group3_ground =
 	{
 		// for these we just use the exact same texture name format as ctr_tools' texture ripper for where in VRAM the texture and its CLUT are located
 		// our singular texture is named 512_0_32_20_16_16_0.png, so that's what we use
-		.texLayout[0] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
-		.texLayout[1] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
-		.texLayout[2] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-		.texLayout[3] = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // mosaic (unused)
-	},
-
-	.group4_ramp =
-	{
-		// 576_0_32_21_32_16_0.png		
-		.texLayout[0] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // very far
-		.texLayout[1] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // far
-		.texLayout[2] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // close
-		.texLayout[3] = ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50), // mosaic (unused)
+		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
+		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
+		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
+		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 	},
 
 	.test_texture =
 	{
-		.texLayout[0] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
-		.texLayout[1] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
-		.texLayout[2] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
-		.texLayout[3] = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // mosaic (unused)
+		.far = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
+		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
+		.near = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+	},
+
+	.test_anim =
+	{
+		.far = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
+		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
+		.near = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+
+		.far.v0 = 0+5,
+		.far.v1 = 0+5,
+		.far.v2 = 31+5,
+		.far.v3 = 31+5,
+	},
+
+	.animtex =
+	{
+		.ptrNext = OFFSETOF(struct LevelFile, group3_ground)-4,
+		.numFrames = NUM_ANIMTEX_FRAMES,
+		.shrug = 0,
+		.lottashortshuh = 0,
+		.frameIndex = 0,
+		.ptrarray =
+		{
+			OFFSETOF(struct LevelFile, test_texture.far)-4,
+			OFFSETOF(struct LevelFile, test_anim.far)-4,
+		},
 	},
 	
 	// this must exist, or else camera fly-in checks for "count" without nullptr check, and crashes dereferencing nullptr on real PSX
@@ -135,7 +146,7 @@ struct LevelFile file =
 	},
 
 	// automatically-generated quadblock insertions courtesy of pngtotrack.py
-	                                                                           NEW_BLOCK(0, group4_ground, 0x0000, 0x0000, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(1, test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
+	                                                                           NEW_BLOCK(0, group3_ground, 0x0000, 0x0000, NULL, 0x1800, 0x80, 0x80, 0x80),NEW_BLOCK(1, test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
 	NEW_BLOCK(2, test_texture, -0x300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(3, test_texture, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(4, test_texture, 0x0300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(5, test_texture, 0x0600, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(6, test_texture, -0x300, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(7, test_texture, 0x0600, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(8, test_texture, -0x300, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(9, test_texture, 0x0600, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),
@@ -143,6 +154,11 @@ struct LevelFile file =
 	NEW_BLOCK(12, test_texture, -0x300, 0x0f00, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(13, test_texture, 0x0600, 0x0f00, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(14, test_texture, -0x300, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(15, test_texture, 0x0000, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(16, test_texture, 0x0300, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(17, test_texture, 0x0600, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),
 	                                                                           NEW_BLOCK(18, test_texture, 0x0000, 0x1500, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(19, test_texture, 0x0300, 0x1500, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
+
+	.quadBlock[0].ptr_texture_mid[0] = (OFFSETOF(struct LevelFile, animtex)-4)|1,
+	.quadBlock[0].ptr_texture_mid[1] = (OFFSETOF(struct LevelFile, animtex)-4)|1,
+	.quadBlock[0].ptr_texture_mid[2] = (OFFSETOF(struct LevelFile, animtex)-4)|1,
+	.quadBlock[0].ptr_texture_mid[3] = (OFFSETOF(struct LevelFile, animtex)-4)|1,
 
 	/*
 	
@@ -379,7 +395,7 @@ struct LevelFile file =
 		// leaf with nothing in it
 		[1] =
 		{
-			.flag = 1,
+			.flag = 0,
 			.id = 1,
 			.box =
 			{
@@ -403,7 +419,7 @@ struct LevelFile file =
 		// leaf with all of our quadblocks
 		[2] =
 		{
-			.flag = 1,
+			.flag = (1<<2)|1,
 			.id = 2,
 			.box =
 			{
@@ -474,20 +490,14 @@ struct LevelFile file =
 	
 	.map =
 	{
-		(38+NUM_BLOCKS*6)<<2,
+		(32+NUM_BLOCKS*6)<<2,
 		
-		// 38
+		// 32
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
-		OFFSETOF(struct LevelFile, level.ptr_anim_tex)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
+		OFFSETOF(struct LevelFile, level.ptr_anim_tex)-4,
 		OFFSETOF(struct LevelFile, level.ptrSpawnType1)-4,
 		OFFSETOF(struct LevelFile, level.ptr_restart_points)-4,
-		OFFSETOF(struct LevelFile, animtex.ptrNext)-4,
-		OFFSETOF(struct LevelFile, animtex.numFrames)-4,
-		OFFSETOF(struct LevelFile, animtex.shrug)-4,
-		OFFSETOF(struct LevelFile, animtex.lottashortshuh)-4,
-		OFFSETOF(struct LevelFile, animtex.frameIndex)-4,
-		OFFSETOF(struct LevelFile, animtex.ptrarray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVertexArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.bspRoot)-4,
