@@ -617,8 +617,6 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp1_StraightWay12, group4_placeHolder, 0x1080, 0xC00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp1_StraightWay13, group4_placeHolder, 0xD80, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp1_StraightWay14, group4_placeHolder, 0x1080, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp2_StraightWay15, group4_placeHolder, 0xD80, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp2_StraightWay16, group4_placeHolder, 0x1080, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	SET_POSY_FLAT(Bsp1_StraightWay1,-0x300),
 	SET_POSY_FLAT(Bsp1_StraightWay2,-0x300),
 	SET_POSY_FLAT(Bsp1_StraightWay3,-0x300),
@@ -633,11 +631,11 @@ struct LevelFile file =
 	SET_POSY_FLAT(Bsp1_StraightWay12,-0x300),
 	SET_POSY_FLAT(Bsp1_StraightWay13,-0x300),
 	SET_POSY_FLAT(Bsp1_StraightWay14,-0x300),
-	SET_POSY_FLAT(Bsp2_StraightWay15,-0x300),
-	SET_POSY_FLAT(Bsp2_StraightWay16,-0x300),
 	
 	// ====== End of BSP block =========
-	
+
+	NEW_BLOCK(Bsp2_StraightWay15, group4_placeHolder, 0xD80, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_StraightWay16, group4_placeHolder, 0x1080, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_StraightWay17, group4_placeHolder, 0xD80, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_StraightWay18, group4_placeHolder, 0x1080, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_StraightWay19, group4_placeHolder, 0xD80, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
@@ -647,6 +645,8 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp2_StraightWay23, group4_placeHolder, 0xD80, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_StraightWay24, group4_placeHolder, 0x1080, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
+	SET_POSY_FLAT(Bsp2_StraightWay15,-0x300),
+	SET_POSY_FLAT(Bsp2_StraightWay16,-0x300),
 	SET_POSY_FLAT(Bsp2_StraightWay17,-0x300),
 	SET_POSY_FLAT(Bsp2_StraightWay18,-0x300),
 	SET_POSY_FLAT(Bsp2_StraightWay19,-0x300),
