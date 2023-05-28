@@ -2,7 +2,6 @@
 #include "../../levelBuilder.h"
 
 #define NUM_BLOCKS 20
-#define NUM_ANIMTEX_FRAMES 2
 
 struct LevelFile
 {
@@ -128,7 +127,7 @@ struct LevelFile file =
 	.animtex =
 	{
 		.ptrNext = OFFSETOF(struct LevelFile, group3_ground)-4,
-		.numFrames = NUM_ANIMTEX_FRAMES,
+		.numFrames = 2,
 		.shrug = 0,
 		.lottashortshuh = 0,
 		.frameIndex = 0,
