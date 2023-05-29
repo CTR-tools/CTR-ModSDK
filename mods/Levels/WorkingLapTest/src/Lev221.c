@@ -8,10 +8,12 @@ struct LevelFile
 	void* ptrMap;
 	struct Level level;
 	struct mesh_info mInfo;
-	struct IconGroup4 group3_ground;
-	struct IconGroup4 test_anim;
 	struct IconGroup4 test_texture;
+	struct IconGroup3 test_anim;
+	struct IconGroup3 test_anim2;
+	struct IconGroup3 test_anim3;
 	struct AnimTex animtex;
+	struct AnimTex animtex2;
 	struct SpawnType1 spawnType1;
 	struct CheckpointNode noderespawnsthing[16];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
@@ -93,16 +95,6 @@ struct LevelFile file =
 	
 	// quadblock texture type
 	// see IconGroup3 in namespace_Decal.h
-	.group3_ground =
-	{
-		// for these we just use the exact same texture name format as ctr_tools' texture ripper for where in VRAM the texture and its CLUT are located
-		// our singular texture is named 512_0_32_20_16_16_0.png, so that's what we use
-		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
-		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
-		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-	},
-
 	.test_texture =
 	{
 		.far = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
@@ -116,25 +108,69 @@ struct LevelFile file =
 		.far = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
 		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
 		.near = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
-		.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		//.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
 
 		.far.v0 = 0+5,
 		.far.v1 = 0+5,
 		.far.v2 = 31+5,
 		.far.v3 = 31+5,
+		.middle.v0 = 0+5,
+		.middle.v1 = 0+5,
+		.middle.v2 = 31+5,
+		.middle.v3 = 31+5,
+		.near.v0 = 0+5,
+		.near.v1 = 0+5,
+		.near.v2 = 31+5,
+		.near.v3 = 31+5,
+		/*
+		.mosaic.v0 = 0+5,
+		.mosaic.v1 = 0+5,
+		.mosaic.v2 = 31+5,
+		.mosaic.v3 = 31+5,
+		*/
+	},
+
+	.test_anim2 =
+	{
+		.far = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
+		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
+		.near = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		//.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+	},
+
+	.test_anim3 =
+	{
+		.far = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
+		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
+		.near = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		//.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
 	},
 
 	.animtex =
 	{
-		.ptrNext = OFFSETOF(struct LevelFile, group3_ground)-4,
+		.ptrNext = OFFSETOF(struct LevelFile, test_anim3)-4,
 		.numFrames = 2,
 		.shrug = 0,
 		.lottashortshuh = 0,
 		.frameIndex = 0,
 		.ptrarray =
 		{
-			OFFSETOF(struct LevelFile, test_texture.far)-4,
-			OFFSETOF(struct LevelFile, test_anim.far)-4,
+			OFFSETOF(struct LevelFile, test_anim)-4,
+			OFFSETOF(struct LevelFile, test_anim2)-4,
+		},
+	},
+
+	.animtex2 =
+	{
+		.ptrNext = OFFSETOF(struct LevelFile, animtex)-4,
+		.numFrames = 2,
+		.shrug = 0,
+		.lottashortshuh = 0,
+		.frameIndex = 1,
+		.ptrarray =
+		{
+			OFFSETOF(struct LevelFile, test_anim)-4,
+			OFFSETOF(struct LevelFile, test_anim2)-4,
 		},
 	},
 	
@@ -145,7 +181,7 @@ struct LevelFile file =
 	},
 
 	// automatically-generated quadblock insertions courtesy of pngtotrack.py
-	                                                                           NEW_BLOCK(0, group3_ground, 0x0000, 0x0000, NULL, 0x1800, 0x80, 0x80, 0x80),NEW_BLOCK(1, test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
+	                                                                           NEW_BLOCK(0, test_anim3, 0x0000, 0x0000, NULL, 0x1800, 0x80, 0x80, 0x80),NEW_BLOCK(1, test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
 	NEW_BLOCK(2, test_texture, -0x300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(3, test_texture, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(4, test_texture, 0x0300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(5, test_texture, 0x0600, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(6, test_texture, -0x300, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(7, test_texture, 0x0600, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(8, test_texture, -0x300, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(9, test_texture, 0x0600, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),
@@ -442,8 +478,8 @@ struct LevelFile file =
 	
 	.pvs =
 	{
-		.visLeafSrc = OFFSETOF(struct LevelFile, visBitIndex[0]),
-		.visFaceSrc = OFFSETOF(struct LevelFile, visBitIndex[0]),
+		.visLeafSrc = OFFSETOF(struct LevelFile, visBitIndex[0])-4,
+		.visFaceSrc = OFFSETOF(struct LevelFile, visBitIndex[0])-4,
 		.visInstSrc = 0,
 		.visExtraSrc = 0,
 	},
