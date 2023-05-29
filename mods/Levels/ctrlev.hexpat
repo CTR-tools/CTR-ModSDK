@@ -471,11 +471,19 @@ struct Level
 	s8 footer[0x60];
 };
 
+Level LevelHeader @ 0x4;
+
 struct Map
 {
-	u32 numptrs;
-	//u32 ptrs[(LevelHeader.ptr_mesh_info.numQuadBlock*6)+1];
+	u32 numPtrs;
+
+	u32 numQB @ addressof(LevelHeader.ptr_mesh_info.data) [[hidden]];
+	u32 mapPtrsTotal = (this.numPtrs>>2) / 4;
+	u32 mapPtrsFirstSectionNum = ((this.numPtrs - ((numQB*6)<<2))>>2);
+	u32 mapPtrsSecondSectionNum = numQB*6;
+	
+	CTRLEVPtr<u32, u32> mapPtrsFirstSection[this.mapPtrsFirstSectionNum];
+	CTRLEVPtr<u32, u32> mapPtrsSecondSection[this.mapPtrsSecondSectionNum];
 };
 
-Map *ptrMap : u32 @ 0x0;
-Level LevelHeader @ 0x4;
+CTRLEVPtr<Map, u32> ptrMap @ 0x0;
