@@ -491,7 +491,6 @@ struct Map
 
 	mesh_info *mapPtrMeshInfo : u32 [[pointer_base("ctr_ptr_base")]];
 	CTRLEVPtr<u32, u32> mapPtrsGeneralSection[this.mapPtrsFirstSectionNum-1];
-	//CTRLEVPtr<u32, u32> mapPtrsSecondSection[this.mapPtrsSecondSectionNum];
 	SecondSection mapPtrsQuadBlockSection[numQB];
 };
 
