@@ -10,7 +10,7 @@
 
 //using BSP; --these crashed before
 
-fn ctr_ptr_base()
+fn ctr_ptr_base(auto thing)
 {
 	return 4;
 };
@@ -18,14 +18,13 @@ fn ctr_ptr_base()
 struct CTRLEVPtr<PointeeTy, PointerTy>
 {
 	PointerTy pointerValue [[no_unique_address, hidden]];
-	PointerTy pointerValue2 @ (addressof(pointerValue) + 4);
-	if (pointerValue2 == 0x0)
+	if (pointerValue == 0x0)
 	{
-		padding[sizeof(PointerTy)] @ (addressof(pointerValue) + 4);
+		padding[sizeof(PointerTy)];
 	}
 	else
 	{
-		PointeeTy *data : PointerTy @ (addressof(pointerValue) + 4);
+		PointeeTy *data : PointerTy [[pointer_base("ctr_ptr_base")]];
 	}
 };
 
@@ -478,5 +477,5 @@ struct Map
 	//u32 ptrs[(LevelHeader.ptr_mesh_info.numQuadBlock*6)+1];
 };
 
-u32 ptrMap @ 0x0;
+Map *ptrMap : u32 @ 0x0;
 Level LevelHeader @ 0x4;
