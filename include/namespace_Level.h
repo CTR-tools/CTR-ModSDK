@@ -302,6 +302,7 @@ struct WaterVert
 	struct OVert* w;
 };
 
+// used for rain and snow particles
 struct RainBuffer
 {
   // 0x0 (0x1a40)
@@ -322,10 +323,15 @@ struct RainBuffer
   short unk_22;
 
   // 0x20
+  // controls top color of particles
   unsigned int colorRGBA_top;
+
+  // 0x24
+  // controls bottom color of particles
   unsigned int colorRGBA_bottom;
 
   // 0x28
+  // controls how particles are drawn
   int renderMode[2];
 
   // 0x30 -- size of struct
@@ -447,63 +453,83 @@ struct CheckpointNode
 struct Level
 {
 	// 0x0
+	// pointer to mesh info
 	struct mesh_info* ptr_mesh_info;
 
 	// 0x4
+	// pointer to skybox (struct not yet known)
 	void* ptr_skybox;
 
 	// 0x8
+	// pointer to animated textures array
 	struct AnimTex* ptr_anim_tex;
 
 	// 0xc
+	// number of model instances in the level
+	// (i.e. every single box, fruit, etc.)
 	unsigned int numInstances;
 
 	// 0x10
-	// each one 0x40 bytes large
+	// points to the 1st entry of the array of model instances (?)
+	// each entry in the array is 0x40 bytes large
 	void* ptrInstDefs;
 
 	// 0x14
+	// number of actual models
 	unsigned int numModels;
 
 	// 0x18
+	// pointer to the array of pointers to models
 	struct Model** ptrModelsPtrArray;
 
 	// 0x1c
+	// unknown, extra bsp region
 	void* unk3;
 
 	// 0x20
+	// unknown, extra bsp region
 	void* unk4;
 
 	// 0x24
-	// converts back and forth, Inst to InstDef
+	// pointer to the array of pointers to model instances (?)
+	// converts back and forth, Instance to InstDef
 	struct InstDef** ptrInstDefPtrArray;
 
 	// 0x28
+	// unknown, extra bsp region
 	// related to water?
 	void* unk5;
 
 	// 0x2c
+	// assumed to be reserved
 	void* null1;
 
 	// 0x30
+	// assumed to be reserved
 	void* null2;
 
 	// 0x34
+	// number of vertices treated as water
 	int count_water;
 
 	// 0x38
+	// pointer to array of water entries
 	struct WaterVert* ptr_water;
 
 	// 0x3c
+	// leads to the icon pack header
 	void* ptr_named_tex;
 
 	// 0x40
+	// leads to the icon pack data
 	void* ptr_named_tex_array;
 
 	// 0x44
+	// pointer to environment map, used by water rendering
 	void* ptr_tex_waterEnvMap;
 
 	// 0x48
+	// used for additional skybox gradients (e.g. papu's pyramid)
 	struct
 	{
 		short pointFrom;
@@ -516,6 +542,7 @@ struct Level
 	} glowGradient[3];
 
 	// 0x6c
+	// array of 8 starting locations
 	struct
 	{
 		short pos[3];
@@ -523,29 +550,42 @@ struct Level
 	} DriverSpawn[8];
 
 	// 0xCC -- next
-	char unk_Lev_CC[0xC];
+	// unknown, extra bsp regions
+	void* unk_Lev_CC;
+	void* unk_Lev_D0;
+
+	// 0xD4
+	// assumed to be a pointer to low textures array, there is no number of entries though
+	void* ptrLowTexArray;
 
 	// 0xD8
-	// for fullscreen clears
+	// base background color, used to clear the screen
 	u_int clearColorRGBA;
 
 	// 0xDC
+	// toggles some level stuff
+	// & 1 = enables glowGradient skybox gradients
 	// & 2 = mask grab when underwater
+	// & 4 = toggles between water and animated vertices?
 	u_int configFlags;
 
 	// 0xE0
+	// pointer to string, date, assumed bsp compilation start
 	char* build_start;
 
 	// 0xE4
+	// pointer to string, date, assumed bsp compilation end
 	char* build_end;
 
 	// 0xE8
+	// pointer to string, assumed build type
 	char* build_type;
 
 	// 0xEC
 	char unk_EC[0x18];
 
 	// 0x104
+	// used for rain and snow
 	struct RainBuffer rainBuffer;
 
 	// 0x134
