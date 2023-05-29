@@ -105,10 +105,10 @@ struct LevelFile file =
 
 	.test_anim =
 	{
-		.far = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
-		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
-		.near = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
-		//.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
+		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
+		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
+		//.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 
 		.far.v0 = 0+5,
 		.far.v1 = 0+5,
@@ -132,18 +132,18 @@ struct LevelFile file =
 
 	.test_anim2 =
 	{
-		.far = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
-		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
-		.near = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
-		//.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
+		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
+		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
+		//.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 	},
 
 	.test_anim3 =
 	{
-		.far = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
-		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
-		.near = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
-		//.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
+		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
+		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
+		//.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 	},
 
 	.animtex =
