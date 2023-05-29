@@ -98,23 +98,23 @@ enum Bsp2
 	Bsp2_TurnRight1,
 	Bsp2_TurnRight2,
 	Bsp2_TurnRight3,
-	Bsp2_TurnRight4_Turbo_9800,
-	Bsp2_TurnRightX_Turbo_1840,
+	Bsp2_TurnRight4,
 	Bsp2_TurnRight5,
 	Bsp2_TurnRight6,
 	Bsp2_TurnRight7,
+	Bsp2_TurnRight8,
 	
 	Bsp2_Middle_Turbo_9800,
 	Bsp2_Middle_Turbo_1840,
 	
+	Bsp2_GoBack0,
 	Bsp2_GoBack1,
 	Bsp2_GoBack2,
 	Bsp2_GoBack3,
 	Bsp2_GoBack4,
-	Bsp2_GoBack5_Turbo_9800,
+	Bsp2_GoBack5,
 	Bsp2_GoBack6,
 	Bsp2_GoBack7,
-	Bsp2_GoBackX_Turbo_1840,
 	
 	Bsp2_TowardsRamp1,
 	Bsp2_TowardsRamp2,
@@ -803,14 +803,42 @@ struct LevelFile file =
 	
 	NEW_BLOCK(Bsp2_TurnRight1, group4_placeHolder, 0x1380, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight2, group4_placeHolder, 0x1380, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
 	NEW_BLOCK(Bsp2_TurnRight3, group4_placeHolder, 0x1680, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp2_TurnRight4_Turbo_9800, group4_turbopad_green, 0x1680, 0x600, NULL, 0x9800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp2_TurnRightX_Turbo_1840, group4_turbopad_green, 0x1680, 0x600, NULL, 0x1840, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_TurnRight4, group4_placeHolder, 0x1680, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		Bsp2_TurnRight3, 0x180, // index, height
+		2,5,0, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		3,7,1 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		Bsp2_TurnRight4, 0x180, // index, height
+		2,5,0, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		3,7,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		Bsp2_TurnRight3, -0x300, 0x180, // index, height
+		2,5,0, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		3,7,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		Bsp2_TurnRight4, -0x300, 0x180, // index, height
+		2,5,0, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		3,7,1 // high 3 vertices
+	),
+	
 	NEW_BLOCK(Bsp2_TurnRight5, group4_placeHolder, 0x1980, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight6, group4_placeHolder, 0x1980, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight7, group4_placeHolder, 0x1C80, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	.quadBlock[Bsp2_TurnRightX_Turbo_1840].terrain_type = 1,
-	.quadBlock[Bsp2_TurnRight4_Turbo_9800].draw_order_low = FACE_PosX,
+	NEW_BLOCK(Bsp2_TurnRight8, group4_placeHolder, 0x1C80, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// TR, TL, BR, BL
 	TEX_2X2(Bsp2_TurnRight1, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
@@ -820,43 +848,69 @@ struct LevelFile file =
 	
 	SET_POSY_FLAT(Bsp2_TurnRight1,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight2,-0x300),
-	SET_POSY_FLAT(Bsp2_TurnRight3,-0x300),
-	SET_POSY_FLAT(Bsp2_TurnRight4_Turbo_9800,-0x300),
-	SET_POSY_FLAT(Bsp2_TurnRightX_Turbo_1840,-0x300),
-	SET_POSY_FLAT(Bsp2_TurnRight5,-0x300),
-	SET_POSY_FLAT(Bsp2_TurnRight6,-0x300),
-	SET_POSY_FLAT(Bsp2_TurnRight7,-0x300),
+	
+	SET_POSY_FLAT(Bsp2_TurnRight5,-0x180),
+	SET_POSY_FLAT(Bsp2_TurnRight6,-0x180),
+	SET_POSY_FLAT(Bsp2_TurnRight7,-0x180),
+	SET_POSY_FLAT(Bsp2_TurnRight8,-0x180),
 	
 	NEW_BLOCK(Bsp2_Middle_Turbo_1840, group4_turbopad_green, 0x1C80, 0, NULL, 0x1840, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_Middle_Turbo_9800, group4_turbopad_green, 0x1C80, 0, NULL, 0x9800, 0x80, 0x80, 0x80),
 	.quadBlock[Bsp2_Middle_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp2_Middle_Turbo_9800].draw_order_low = FACE_NegZ,
 	
-	SET_POSY_FLAT(Bsp2_Middle_Turbo_9800,-0x300),
-	SET_POSY_FLAT(Bsp2_Middle_Turbo_1840,-0x300),
+	SET_POSY_FLAT(Bsp2_Middle_Turbo_9800,-0x180),
+	SET_POSY_FLAT(Bsp2_Middle_Turbo_1840,-0x180),
 	
-	NEW_BLOCK(Bsp2_GoBack1, group4_placeHolder, 0x1C80, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_GoBack0, group4_placeHolder, 0x1C80, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_GoBack1, group4_placeHolder, 0x1C80, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_GoBack2, group4_placeHolder, 0x1980, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_GoBack3, group4_placeHolder, 0x1980, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
 	NEW_BLOCK(Bsp2_GoBack4, group4_placeHolder, 0x1680, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp2_GoBack5_Turbo_9800, group4_turbopad_green, 0x1680, -0x600, NULL, 0x9800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp2_GoBackX_Turbo_1840, group4_turbopad_green, 0x1680, -0x600, NULL, 0x1840, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp2_GoBack5, group4_placeHolder, 0x1680, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	MAKE_RAMP(
+		Bsp2_GoBack4, 0x180, // index, height
+		2,5,0, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		3,7,1 // high 3 vertices
+	),
+	
+	MAKE_RAMP(
+		Bsp2_GoBack5, 0x180, // index, height
+		2,5,0, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		3,7,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		Bsp2_GoBack4, -0x300, 0x180, // index, height
+		2,5,0, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		3,7,1 // high 3 vertices
+	),
+	
+	SET_POSY_RAMP(
+		Bsp2_GoBack5, -0x300, 0x180, // index, height
+		2,5,0, // low 3 vertices
+		8,6,4, // mid 3 vertices
+		3,7,1 // high 3 vertices
+	),
+	
 	NEW_BLOCK(Bsp2_GoBack6, group4_placeHolder, 0x1380, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_GoBack7, group4_placeHolder, 0x1380, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
-	.quadBlock[Bsp2_GoBackX_Turbo_1840].terrain_type = 1,
-	.quadBlock[Bsp2_GoBack5_Turbo_9800].draw_order_low = FACE_NegX,
 	
 	TEX_2X2(Bsp2_GoBack7, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
 	TEX_2X2(Bsp2_GoBack6, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
 	.quadBlock[Bsp2_GoBack7].draw_order_low = 0x808100,
 	.quadBlock[Bsp2_GoBack6].draw_order_low = 0x1984000,
 	
-	SET_POSY_FLAT(Bsp2_GoBack1,-0x300),
-	SET_POSY_FLAT(Bsp2_GoBack2,-0x300),
-	SET_POSY_FLAT(Bsp2_GoBack3,-0x300),
-	SET_POSY_FLAT(Bsp2_GoBack4,-0x300),
-	SET_POSY_FLAT(Bsp2_GoBack5_Turbo_9800,-0x300),
-	SET_POSY_FLAT(Bsp2_GoBackX_Turbo_1840,-0x300),
+	SET_POSY_FLAT(Bsp2_GoBack0,-0x180),
+	SET_POSY_FLAT(Bsp2_GoBack1,-0x180),
+	SET_POSY_FLAT(Bsp2_GoBack2,-0x180),
+	SET_POSY_FLAT(Bsp2_GoBack3,-0x180),
+	
 	SET_POSY_FLAT(Bsp2_GoBack6,-0x300),
 	SET_POSY_FLAT(Bsp2_GoBack7,-0x300),
 	
@@ -1173,23 +1227,23 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight1),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight2),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight3),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight4_Turbo_9800),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRightX_Turbo_1840),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight4),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight5),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight6),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight7),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight8),
 	
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_Middle_Turbo_9800),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_Middle_Turbo_1840),
 	
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack0),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack1),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack2),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack3),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack4),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack5_Turbo_9800),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack5),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack6),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack7),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBackX_Turbo_1840),
 	
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp1),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp2),
@@ -1328,8 +1382,8 @@ struct LevelFile file =
 			.id = 1,
 			.box =
 			{
-				.min = {0x300, -0x490, -0x1100},
-				.max = {0x2100, 0x400, 0x4500}
+				.min = {0x300, -0x490, -0x800},
+				.max = {0x2100, 0x400, 0x2E00}
 			},
 			
 			.data =
@@ -1352,8 +1406,8 @@ struct LevelFile file =
 			.id = 2,
 			.box =
 			{
-				.min = {-0x300, -0x490, -0x1100},
-				.max = {0x300, 0x400, 0x4500}
+				.min = {-0x300, -0x490, -0x800},
+				.max = {0x300, 0x400, 0x2E00}
 			},
 			
 			.data =
@@ -1377,7 +1431,7 @@ struct LevelFile file =
 			.box =
 			{
 				.min = {0x300, -0x490, 0x781},
-				.max = {0x2100, 0x400, 0x4500}
+				.max = {0x2100, 0x400, 0x2E00}
 			},
 			
 			.data =
@@ -1399,7 +1453,7 @@ struct LevelFile file =
 			.id = 4,
 			.box =
 			{
-				.min = {0x300, -0x490, -0x1100},
+				.min = {0x300, -0x490, -0x800},
 				.max = {0x2100, 0x400, 0x77F}
 			},
 			
@@ -1423,7 +1477,7 @@ struct LevelFile file =
 			.id = 5,
 			.box =
 			{
-				.min = {-0x300, -0x490, -0x1100},
+				.min = {-0x300, -0x490, -0x800},
 				.max = {0x300, 0x400, 0x1D00} // see if that cuts it
 			},
 			
@@ -1447,7 +1501,7 @@ struct LevelFile file =
 			.box =
 			{
 				.min = {-0x300, -0x490, 0x1D00},
-				.max = {0x300, 0x400, 0x4500}
+				.max = {0x300, 0x400, 0x2E00}
 			},
 			
 			.data =
