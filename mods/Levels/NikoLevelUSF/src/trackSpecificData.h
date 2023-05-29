@@ -62,22 +62,7 @@ enum Bsp1
 	Bsp1_TurnBack9,
 	Bsp1_TurnBack10,
 	
-	Bsp1_StraightWay1,
-	Bsp1_StraightWay2,
-	Bsp1_StraightWay3,
-	Bsp1_StraightWay4,
-	Bsp1_StraightWay5,
-	Bsp1_StraightWay6,
-	Bsp1_StraightWay7,
-	Bsp1_StraightWay8,
-	Bsp1_StraightWay9,
-	Bsp1_StraightWay10,
-	Bsp1_StraightWay11_Turbo_9800,
-	Bsp1_StraightWay12_Turbo_1840,
-	Bsp1_StraightWay13,
-	Bsp1_StraightWay14,
-	
-	Bsp1_Last=Bsp1_StraightWay14,
+	Bsp1_Last=Bsp1_TurnBack10,
 	
 	Bsp1_BlockCount=Bsp1_Last-Bsp0_Last
 };
@@ -149,9 +134,33 @@ enum Bsp3
 	Bsp3_Last=Bsp3_FlatTop7,
 	
 	Bsp3_BlockCount=Bsp3_Last-Bsp2_Last,
+};
+
+enum Bsp4
+{
+	Bsp4_FirstBlock=Bsp3_Last+1,
+	
+	Bsp4_StraightWay1=Bsp4_FirstBlock,
+	Bsp4_StraightWay2,
+	Bsp4_StraightWay3,
+	Bsp4_StraightWay4,
+	Bsp4_StraightWay5,
+	Bsp4_StraightWay6,
+	Bsp4_StraightWay7,
+	Bsp4_StraightWay8,
+	Bsp4_StraightWay9,
+	Bsp4_StraightWay10,
+	Bsp4_StraightWay11_Turbo_9800,
+	Bsp4_StraightWay12_Turbo_1840,
+	Bsp4_StraightWay13,
+	Bsp4_StraightWay14,
+	
+	Bsp4_Last=Bsp4_StraightWay14,
+	
+	Bsp4_BlockCount=Bsp4_Last-Bsp3_Last,
 	
 	// must be in last bsp leaf
-	NUM_BLOCKS = Bsp3_Last+1
+	NUM_BLOCKS = Bsp4_Last+1
 };
 
 enum CheckPoint

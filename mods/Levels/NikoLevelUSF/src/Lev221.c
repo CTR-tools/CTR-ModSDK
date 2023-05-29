@@ -18,22 +18,22 @@ struct LevelFile
 	struct CheckpointNode checkpointNodes[NUM_CHECKPOINT];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
-	struct BSP bsp[7];
+	struct BSP bsp[9];
 	struct PVS pvs[NUM_PVS];
 	int leafList[2*NUM_PVS];
 	int faceList[5*NUM_PVS];
 	struct VisMem visMem;
 	
 	int VisMem_bitIndex_DstMemcpyP1[8]; // leave empty
-	int VisMem_bspList_RenderListP1[7*2];
+	int VisMem_bspList_RenderListP1[9*2];
 	int VisMem_bitIndex_DstMemcpyP2[8]; // leave empty
-	int VisMem_bspList_RenderListP2[7*2];
+	int VisMem_bspList_RenderListP2[9*2];
 	int VisMem_bitIndex_DstMemcpyP3[8]; // leave empty
-	int VisMem_bspList_RenderListP3[7*2];
+	int VisMem_bspList_RenderListP3[9*2];
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
-	int VisMem_bspList_RenderListP4[7*2];
+	int VisMem_bspList_RenderListP4[9*2];
 	
-	int map[(41+NUM_BLOCKS*6)+1];
+	int map[(46+NUM_BLOCKS*6)+1];
 };
 
 struct LevelFile file =
@@ -87,7 +87,7 @@ struct LevelFile file =
 		.ptrVertexArray = OFFSETOF(struct LevelFile, levVertex[0])-4, // no -4 for some reason?
 		.unk2 = 0, // idk, fine to leave null
 		.bspRoot = OFFSETOF(struct LevelFile, bsp[0])-4,
-		.numBspNodes = 7,
+		.numBspNodes = 9,
 	},
 	
 	.group4_checkerEdge.texLayout =
@@ -547,65 +547,65 @@ struct LevelFile file =
 	// fall back down,
 	// here experiment with USF jump
 	
-	NEW_BLOCK(Bsp1_StraightWay1, group4_placeHolder, 0xD80, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay2, group4_placeHolder, 0x1080, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay3, group4_placeHolder, 0xD80, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay4, group4_placeHolder, 0x1080, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay5, group4_placeHolder, 0xD80, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay6, group4_placeHolder, 0x1080, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay7, group4_placeHolder, 0xD80, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay8, group4_placeHolder, 0x1080, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay9, group4_placeHolder, 0xD80, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay10, group4_placeHolder, 0x1080, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay1, group4_placeHolder, 0xD80, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay2, group4_placeHolder, 0x1080, 0x1B00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay3, group4_placeHolder, 0xD80, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay4, group4_placeHolder, 0x1080, 0x1800, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay5, group4_placeHolder, 0xD80, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay6, group4_placeHolder, 0x1080, 0x1500, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay7, group4_placeHolder, 0xD80, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay8, group4_placeHolder, 0x1080, 0x1200, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay9, group4_placeHolder, 0xD80, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay10, group4_placeHolder, 0x1080, 0xF00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
-	TEX_2X2(Bsp1_StraightWay1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
-	TEX_2X2(Bsp1_StraightWay2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp1_StraightWay1].draw_order_low = 0x800000,
-	.quadBlock[Bsp1_StraightWay2].draw_order_low = 0x1044000,
-	TEX_2X2(Bsp1_StraightWay3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
-	TEX_2X2(Bsp1_StraightWay4, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp1_StraightWay3].draw_order_low = 0x800000,
-	.quadBlock[Bsp1_StraightWay4].draw_order_low = 0x1044000,
-	TEX_2X2(Bsp1_StraightWay5, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
-	TEX_2X2(Bsp1_StraightWay6, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp1_StraightWay5].draw_order_low = 0x800000,
-	.quadBlock[Bsp1_StraightWay6].draw_order_low = 0x1044000,
-	TEX_2X2(Bsp1_StraightWay7, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
-	TEX_2X2(Bsp1_StraightWay8, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp1_StraightWay7].draw_order_low = 0x800000,
-	.quadBlock[Bsp1_StraightWay8].draw_order_low = 0x1044000,
-	TEX_2X2(Bsp1_StraightWay9, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
-	TEX_2X2(Bsp1_StraightWay10, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp1_StraightWay9].draw_order_low = 0x800000,
-	.quadBlock[Bsp1_StraightWay10].draw_order_low = 0x1044000,
+	TEX_2X2(Bsp4_StraightWay1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp4_StraightWay2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp4_StraightWay1].draw_order_low = 0x800000,
+	.quadBlock[Bsp4_StraightWay2].draw_order_low = 0x1044000,
+	TEX_2X2(Bsp4_StraightWay3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp4_StraightWay4, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp4_StraightWay3].draw_order_low = 0x800000,
+	.quadBlock[Bsp4_StraightWay4].draw_order_low = 0x1044000,
+	TEX_2X2(Bsp4_StraightWay5, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp4_StraightWay6, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp4_StraightWay5].draw_order_low = 0x800000,
+	.quadBlock[Bsp4_StraightWay6].draw_order_low = 0x1044000,
+	TEX_2X2(Bsp4_StraightWay7, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp4_StraightWay8, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp4_StraightWay7].draw_order_low = 0x800000,
+	.quadBlock[Bsp4_StraightWay8].draw_order_low = 0x1044000,
+	TEX_2X2(Bsp4_StraightWay9, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp4_StraightWay10, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp4_StraightWay9].draw_order_low = 0x800000,
+	.quadBlock[Bsp4_StraightWay10].draw_order_low = 0x1044000,
 	
-	NEW_BLOCK(Bsp1_StraightWay11_Turbo_9800, group4_turbopad_green, 0xD80, 0xC00, NULL, 0x9800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay12_Turbo_1840, group4_turbopad_green, 0xD80, 0xC00, NULL, 0x1840, 0x80, 0x80, 0x80),
-	.quadBlock[Bsp1_StraightWay12_Turbo_1840].terrain_type = 1,
-	.quadBlock[Bsp1_StraightWay11_Turbo_9800].draw_order_low = FACE_NegZ,
+	NEW_BLOCK(Bsp4_StraightWay11_Turbo_9800, group4_turbopad_green, 0xD80, 0xC00, NULL, 0x9800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay12_Turbo_1840, group4_turbopad_green, 0xD80, 0xC00, NULL, 0x1840, 0x80, 0x80, 0x80),
+	.quadBlock[Bsp4_StraightWay12_Turbo_1840].terrain_type = 1,
+	.quadBlock[Bsp4_StraightWay11_Turbo_9800].draw_order_low = FACE_NegZ,
 	
-	NEW_BLOCK(Bsp1_StraightWay13, group4_placeHolder, 0xD80, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp1_StraightWay14, group4_placeHolder, 0x1080, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay13, group4_placeHolder, 0xD80, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp4_StraightWay14, group4_placeHolder, 0x1080, 0x900, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
-	TEX_2X2(Bsp1_StraightWay13, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
-	TEX_2X2(Bsp1_StraightWay14, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp1_StraightWay13].draw_order_low = 0x800000,
-	.quadBlock[Bsp1_StraightWay14].draw_order_low = 0x1044000,
+	TEX_2X2(Bsp4_StraightWay13, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp4_StraightWay14, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp4_StraightWay13].draw_order_low = 0x800000,
+	.quadBlock[Bsp4_StraightWay14].draw_order_low = 0x1044000,
 	
-	SET_POSY_FLAT(Bsp1_StraightWay1,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay2,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay3,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay4,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay5,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay6,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay7,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay8,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay9,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay10,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay11_Turbo_9800,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay12_Turbo_1840,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay13,-0x300),
-	SET_POSY_FLAT(Bsp1_StraightWay14,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay1,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay2,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay3,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay4,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay5,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay6,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay7,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay8,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay9,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay10,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay11_Turbo_9800,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay12_Turbo_1840,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay13,-0x300),
+	SET_POSY_FLAT(Bsp4_StraightWay14,-0x300),
 	
 	// ====== End of BSP block =========
 
@@ -899,15 +899,6 @@ struct LevelFile file =
 	SET_ID(Bsp0_Last,Bsp0_FirstBlock+21),
 	SET_ID(Bsp0_Last,Bsp0_FirstBlock+22),
 	SET_ID(Bsp0_Last,Bsp0_FirstBlock+23),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+24),
-	
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+0),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+1),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+2),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+3),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+4),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+5),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+6),
 	
 	SET_ID(Bsp1_Last,Bsp1_FirstBlock+0),
 	SET_ID(Bsp1_Last,Bsp1_FirstBlock+1),
@@ -927,20 +918,6 @@ struct LevelFile file =
 	SET_ID(Bsp1_Last,Bsp1_FirstBlock+15),
 	SET_ID(Bsp1_Last,Bsp1_FirstBlock+16),
 	SET_ID(Bsp1_Last,Bsp1_FirstBlock+17),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+18),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+19),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+20),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+21),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+22),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+23),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+24),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+25),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+26),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+27),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+28),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+29),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+30),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+31),
 	
 	SET_ID(Bsp2_Last,Bsp2_FirstBlock+0),
 	SET_ID(Bsp2_Last,Bsp2_FirstBlock+1),
@@ -956,6 +933,47 @@ struct LevelFile file =
 	SET_ID(Bsp2_Last,Bsp2_FirstBlock+11),
 	SET_ID(Bsp2_Last,Bsp2_FirstBlock+12),
 	SET_ID(Bsp2_Last,Bsp2_FirstBlock+13),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+14),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+15),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+16),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+17),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+18),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+19),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+20),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+21),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+22),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+23),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+24),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+25),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+26),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+27),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+28),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+29),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+30),
+	SET_ID(Bsp2_Last,Bsp2_FirstBlock+31),
+	
+	SET_ID(Bsp3_Last,Bsp3_FirstBlock+0),
+	SET_ID(Bsp3_Last,Bsp3_FirstBlock+1),
+	SET_ID(Bsp3_Last,Bsp3_FirstBlock+2),
+	SET_ID(Bsp3_Last,Bsp3_FirstBlock+3),
+	SET_ID(Bsp3_Last,Bsp3_FirstBlock+4),
+	SET_ID(Bsp3_Last,Bsp3_FirstBlock+5),
+	SET_ID(Bsp3_Last,Bsp3_FirstBlock+6),
+
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+0),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+1),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+2),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+3),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+4),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+5),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+6),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+7),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+8),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+9),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+10),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+11),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+12),
+	SET_ID(Bsp4_Last,Bsp4_FirstBlock+13),
 	
 	#define SET_CHECKPOINT(cpi, block) \
 		.quadBlock[block].checkpointIndex = cpi
@@ -992,14 +1010,6 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp7_Turbo_1840),
 	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp8_Turbo_1840),
 	
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop1),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop2),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop3),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop4),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop5),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop6),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop7),
-	
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft1),
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft2),
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft3_Turbo_9800),
@@ -1020,23 +1030,31 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack9),
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack10),
 	
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay1),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay2),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay3),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay4),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay5),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay6),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay7),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay8),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay9),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay10),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay11_Turbo_9800),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay12_Turbo_1840),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay13),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp1_StraightWay14),
+	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop1),
+	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop2),
+	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop3),
+	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop4),
+	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop5),
+	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop6),
+	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop7),
+	
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay1),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay2),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay3),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay4),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay5),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay6),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay7),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay8),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay9),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay10),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay11_Turbo_9800),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay12_Turbo_1840),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay13),
+	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay14),
+	
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay15),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay16),
-	
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay17),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay18),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight1),
@@ -1209,7 +1227,7 @@ struct LevelFile file =
 					.axis = {0, 0x0, 0x1000, 0xFF40},
 					
 					// 0x4000 signifies leaf node
-					.childID = {0x4003, 0x4004},
+					.childID = {0x3, 0x4004},
 				}
 			}
 		},
@@ -1241,7 +1259,7 @@ struct LevelFile file =
 		// leaf with u-turn and drop
 		[3] =
 		{
-			.flag = 0x1,
+			.flag = 0,
 			.id = 3,
 			.box =
 			{
@@ -1251,12 +1269,13 @@ struct LevelFile file =
 			
 			.data =
 			{
-				.leaf =
+				.branch =
 				{
-					.unk1 = 0,
-					.bspHitboxArray = 0,
-					.numQuads = Bsp1_BlockCount,
-					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[Bsp1_FirstBlock])-4
+					// need more info on this
+					.axis = {0, 0x0, 0x1000, 0xFF40},
+					
+					// 0x4000 signifies leaf node
+					.childID = {0x4007, 0x4008},
 				}
 			}
 		},
@@ -1330,6 +1349,50 @@ struct LevelFile file =
 				}
 			}
 		},
+
+		[7] =
+		{
+			.flag = 0x1,
+			.id = 7,
+			.box =
+			{
+				.min = {0x300, -0x490, 0x781},
+				.max = {0x2100, 0x400, 0x1F00}
+			},
+			
+			.data =
+			{
+				.leaf =
+				{
+					.unk1 = 0,
+					.bspHitboxArray = 0,
+					.numQuads = Bsp4_BlockCount,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[Bsp4_FirstBlock])-4
+				}
+			}
+		},
+		
+		[8] = 
+		{
+			.flag = 0x1,
+			.id = 8,
+			.box =
+			{
+				.min = {0x300, -0x490, 0x1F00},
+				.max = {0x2100, 0x400, 0x2E00}
+			},
+			
+			.data =
+			{
+				.leaf =
+				{
+					.unk1 = 0,
+					.bspHitboxArray = 0,
+					.numQuads = Bsp1_BlockCount,
+					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[Bsp1_FirstBlock])-4
+				}
+			}
+		}
 	},
 	
 	.leafList =
@@ -1379,26 +1442,34 @@ struct LevelFile file =
 	},
 	
 	// initialize for leaf nodes only
-	.VisMem_bspList_RenderListP1[2*3+1] = OFFSETOF(struct LevelFile, bsp[3])-4,
-	.VisMem_bspList_RenderListP2[2*3+1] = OFFSETOF(struct LevelFile, bsp[3])-4,
-	.VisMem_bspList_RenderListP3[2*3+1] = OFFSETOF(struct LevelFile, bsp[3])-4,
-	.VisMem_bspList_RenderListP4[2*3+1] = OFFSETOF(struct LevelFile, bsp[3])-4,
 	.VisMem_bspList_RenderListP1[2*4+1] = OFFSETOF(struct LevelFile, bsp[4])-4,
 	.VisMem_bspList_RenderListP2[2*4+1] = OFFSETOF(struct LevelFile, bsp[4])-4,
 	.VisMem_bspList_RenderListP3[2*4+1] = OFFSETOF(struct LevelFile, bsp[4])-4,
 	.VisMem_bspList_RenderListP4[2*4+1] = OFFSETOF(struct LevelFile, bsp[4])-4,
+	
 	.VisMem_bspList_RenderListP1[2*5+1] = OFFSETOF(struct LevelFile, bsp[5])-4,
 	.VisMem_bspList_RenderListP2[2*5+1] = OFFSETOF(struct LevelFile, bsp[5])-4,
 	.VisMem_bspList_RenderListP3[2*5+1] = OFFSETOF(struct LevelFile, bsp[5])-4,
 	.VisMem_bspList_RenderListP4[2*5+1] = OFFSETOF(struct LevelFile, bsp[5])-4,
+	
 	.VisMem_bspList_RenderListP1[2*6+1] = OFFSETOF(struct LevelFile, bsp[6])-4,
 	.VisMem_bspList_RenderListP2[2*6+1] = OFFSETOF(struct LevelFile, bsp[6])-4,
 	.VisMem_bspList_RenderListP3[2*6+1] = OFFSETOF(struct LevelFile, bsp[6])-4,
 	.VisMem_bspList_RenderListP4[2*6+1] = OFFSETOF(struct LevelFile, bsp[6])-4,
 	
+	.VisMem_bspList_RenderListP1[2*7+1] = OFFSETOF(struct LevelFile, bsp[7])-4,
+	.VisMem_bspList_RenderListP2[2*7+1] = OFFSETOF(struct LevelFile, bsp[7])-4,
+	.VisMem_bspList_RenderListP3[2*7+1] = OFFSETOF(struct LevelFile, bsp[7])-4,
+	.VisMem_bspList_RenderListP4[2*7+1] = OFFSETOF(struct LevelFile, bsp[7])-4,
+	
+	.VisMem_bspList_RenderListP1[2*8+1] = OFFSETOF(struct LevelFile, bsp[8])-4,
+	.VisMem_bspList_RenderListP2[2*8+1] = OFFSETOF(struct LevelFile, bsp[8])-4,
+	.VisMem_bspList_RenderListP3[2*8+1] = OFFSETOF(struct LevelFile, bsp[8])-4,
+	.VisMem_bspList_RenderListP4[2*8+1] = OFFSETOF(struct LevelFile, bsp[8])-4,
+	
 	.map =
 	{
-		(41+NUM_BLOCKS*6)<<2,
+		(46+NUM_BLOCKS*6)<<2,
 		
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
@@ -1407,10 +1478,11 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrVertexArray)-4,
 		OFFSETOF(struct LevelFile, mInfo.bspRoot)-4,
-		OFFSETOF(struct LevelFile, bsp[3].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, bsp[4].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, bsp[5].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, bsp[6].data.leaf.ptrQuadBlockArray)-4,
+		OFFSETOF(struct LevelFile, bsp[7].data.leaf.ptrQuadBlockArray)-4,
+		OFFSETOF(struct LevelFile, bsp[8].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, pvs[0].visLeafSrc)-4,
 		OFFSETOF(struct LevelFile, pvs[0].visFaceSrc)-4,
 		OFFSETOF(struct LevelFile, visMem.visLeafList[0])-4,
@@ -1425,10 +1497,6 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, visMem.bspList[1])-4,
 		OFFSETOF(struct LevelFile, visMem.bspList[2])-4,
 		OFFSETOF(struct LevelFile, visMem.bspList[3])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*3+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*3+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*3+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*4+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*4+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*4+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*4+1])-4,
@@ -1441,6 +1509,14 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*6+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*6+1])-4,
 		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*6+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*7+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*7+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*7+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*7+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*8+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*8+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*8+1])-4,
+		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*8+1])-4,
 		PTR_MAP_QUADBLOCK(0),
 		PTR_MAP_QUADBLOCK(1),
 		PTR_MAP_QUADBLOCK(2),

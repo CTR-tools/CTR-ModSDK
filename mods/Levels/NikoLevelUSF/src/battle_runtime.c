@@ -120,7 +120,10 @@ void RunUpdateHook()
 	
 	if(d->posCurr[0] > 0x30000)
 	{
-		for(loop = Bsp1_StraightWay1; loop <= Bsp2_Last; loop++)
+		for(loop = Bsp2_FirstBlock; loop <= Bsp2_Last; loop++)
+			firstQuad[loop].draw_order_low &= ~(0x80000000);
+		
+		for(loop = Bsp4_FirstBlock; loop <= Bsp4_Last; loop++)
 			firstQuad[loop].draw_order_low &= ~(0x80000000);
 		
 		for(loop = Bsp0_BehindStart1; loop <= Bsp0_UpRamp8_Turbo_1840; loop++)
@@ -129,7 +132,10 @@ void RunUpdateHook()
 	
 	else
 	{
-		for(loop = Bsp1_StraightWay1; loop <= Bsp2_Last; loop++)
+		for(loop = Bsp2_FirstBlock; loop <= Bsp2_Last; loop++)
+			firstQuad[loop].draw_order_low |= 0x80000000;	
+		
+		for(loop = Bsp4_FirstBlock; loop <= Bsp4_Last; loop++)
 			firstQuad[loop].draw_order_low |= 0x80000000;	
 
 		for(loop = Bsp0_BehindStart1; loop <= Bsp0_UpRamp8_Turbo_1840; loop++)
