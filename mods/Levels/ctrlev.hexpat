@@ -488,8 +488,7 @@ struct Map
 	u32 mapPtrsTotal = (this.numPtrs>>2) / 4;
 	u32 mapPtrsGeneralSectionNum = ((this.numPtrs - ((numQB*6)<<2))>>2);
 
-	mesh_info *mapPtrMeshInfo : u32 [[pointer_base("ctr_ptr_base")]];
-	CTRLEVPtr<u32, u32> mapPtrsGeneralSection[this.mapPtrsGeneralSectionNum-1];
+	CTRLEVPtr<u32, u32> mapPtrsGeneralSection[this.mapPtrsGeneralSectionNum];
 	QuadBlockSection mapPtrsQuadBlockSection[numQB];
 };
 
