@@ -473,6 +473,13 @@ struct Level
 
 Level LevelHeader @ 0x4;
 
+struct SecondSection
+{
+	CTRLEVPtr<u32, u32> ptr_texture_mid[4];
+	CTRLEVPtr<u32, u32> ptr_texture_low;
+	CTRLEVPtr<PVS, u32> pvs;
+};
+
 struct Map
 {
 	u32 numPtrs;
@@ -481,9 +488,11 @@ struct Map
 	u32 mapPtrsTotal = (this.numPtrs>>2) / 4;
 	u32 mapPtrsFirstSectionNum = ((this.numPtrs - ((numQB*6)<<2))>>2);
 	u32 mapPtrsSecondSectionNum = numQB*6;
-	
-	CTRLEVPtr<u32, u32> mapPtrsFirstSection[this.mapPtrsFirstSectionNum];
-	CTRLEVPtr<u32, u32> mapPtrsSecondSection[this.mapPtrsSecondSectionNum];
+
+	mesh_info *mapPtrMeshInfo : u32 [[pointer_base("ctr_ptr_base")]];
+	CTRLEVPtr<u32, u32> mapPtrsGeneralSection[this.mapPtrsFirstSectionNum-1];
+	//CTRLEVPtr<u32, u32> mapPtrsSecondSection[this.mapPtrsSecondSectionNum];
+	SecondSection mapPtrsQuadBlockSection[numQB];
 };
 
 CTRLEVPtr<Map, u32> ptrMap @ 0x0;
