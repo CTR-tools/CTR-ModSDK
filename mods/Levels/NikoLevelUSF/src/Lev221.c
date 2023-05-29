@@ -33,7 +33,7 @@ struct LevelFile
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
 	int VisMem_bspList_RenderListP4[7*2];
 	
-	int map[(43+NUM_BLOCKS*6)+1];
+	int map[(41+NUM_BLOCKS*6)+1];
 };
 
 struct LevelFile file =
@@ -957,28 +957,6 @@ struct LevelFile file =
 	SET_ID(Bsp2_Last,Bsp2_FirstBlock+12),
 	SET_ID(Bsp2_Last,Bsp2_FirstBlock+13),
 	
-	#define SET_PVS(PVS, block) \
-		.quadBlock[block].pvs = OFFSETOF(struct LevelFile, pvs[PVS])-4
-	
-	// leave out Ramp5 and Ramp6, let those draw all,
-	// otherwise these bits apply to both Leaf0 and Leaf1 (why?)
-	// which makes the 180 U-Turn not draw after the jump is done
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_DownRamp1),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_DownRamp2),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_DownRamp3),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_DownRamp4),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_DownRamp5),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_DownRamp6),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_FlatDip1),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_FlatDip2),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_FlatDip3),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_UpRamp1),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_UpRamp2_Turbo_9800),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_UpRamp3),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_UpRamp4),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_UpRamp7_Turbo_1840),
-	SET_PVS(PVS_DROPSTARTLINE, Bsp0_UpRamp8_Turbo_1840),
-	
 	#define SET_CHECKPOINT(cpi, block) \
 		.quadBlock[block].checkpointIndex = cpi
 	
@@ -1358,35 +1336,12 @@ struct LevelFile file =
 	{
 		// PVS_DROPNONE
 		-1,-1,
-		
-		// PVS_DROPSTARTLINE
-		-1,-1,
-		
-		// PVS_DROPDIP,
-		-1,-1,
 	},
 	
 	.faceList =
 	{
 		// PVS_DROPNONE
-		0,-1,-1,-1,-1,
-		
-		// PVS_DROPSTARTLINE
-		0,
-			// leaf 1
-			~(
-				// skip drawing all these
-				1<<Bsp0_BehindStart1 |
-				1<<Bsp0_BehindStart2 |
-				1<<Bsp0_BehindStart3 |
-				1<<Bsp0_BehindStart4 |
-				1<<Bsp0_StartLine1	 |
-				1<<Bsp0_StartLine2	 |
-				1<<Bsp0_AfterStart1  | 
-				1<<Bsp0_AfterStart2
-			),
-		
-			-1,-1,-1
+		-1,-1,-1,-1,-1,
 	},
 	
 	.pvs =
@@ -1395,22 +1350,6 @@ struct LevelFile file =
 		{
 			.visLeafSrc = OFFSETOF(struct LevelFile, leafList[2*PVS_DROPNONE]),
 			.visFaceSrc = OFFSETOF(struct LevelFile, faceList[5*PVS_DROPNONE]),
-			.visInstSrc = 0,
-			.visExtraSrc = 0,
-		},
-		
-		[PVS_DROPSTARTLINE] =
-		{
-			.visLeafSrc = OFFSETOF(struct LevelFile, leafList[2*PVS_DROPSTARTLINE]),
-			.visFaceSrc = OFFSETOF(struct LevelFile, faceList[5*PVS_DROPSTARTLINE]),
-			.visInstSrc = 0,
-			.visExtraSrc = 0,
-		},
-		
-		[PVS_DROPDIP] =
-		{
-			.visLeafSrc = OFFSETOF(struct LevelFile, leafList[2*PVS_DROPDIP]),
-			.visFaceSrc = OFFSETOF(struct LevelFile, faceList[5*PVS_DROPDIP]),
 			.visInstSrc = 0,
 			.visExtraSrc = 0,
 		},
@@ -1459,7 +1398,7 @@ struct LevelFile file =
 	
 	.map =
 	{
-		(43+NUM_BLOCKS*6)<<2,
+		(41+NUM_BLOCKS*6)<<2,
 		
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
@@ -1474,8 +1413,6 @@ struct LevelFile file =
 		OFFSETOF(struct LevelFile, bsp[6].data.leaf.ptrQuadBlockArray)-4,
 		OFFSETOF(struct LevelFile, pvs[0].visLeafSrc)-4,
 		OFFSETOF(struct LevelFile, pvs[0].visFaceSrc)-4,
-		OFFSETOF(struct LevelFile, pvs[1].visLeafSrc)-4,
-		OFFSETOF(struct LevelFile, pvs[1].visFaceSrc)-4,
 		OFFSETOF(struct LevelFile, visMem.visLeafList[0])-4,
 		OFFSETOF(struct LevelFile, visMem.visLeafList[1])-4,
 		OFFSETOF(struct LevelFile, visMem.visLeafList[2])-4,

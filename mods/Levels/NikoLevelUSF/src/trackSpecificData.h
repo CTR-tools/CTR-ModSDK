@@ -170,8 +170,6 @@ enum CheckPoint
 enum PVS_NODES
 {
 	PVS_DROPNONE,
-	PVS_DROPSTARTLINE,
-	PVS_DROPDIP,
 	NUM_PVS,
 };
 
