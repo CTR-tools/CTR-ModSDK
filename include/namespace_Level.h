@@ -136,10 +136,10 @@ struct QuadBlock
 	u_short quadFlags;
 
 	// 0x14
-	int draw_order_low; // actually for "med"
+	unsigned int draw_order_low; // actually for "med"
 
 	// 0x18
-	int draw_order_high;
+	unsigned int draw_order_high;
 
 	// 0x1c
 	struct IconGroup4* ptr_texture_mid[4];
