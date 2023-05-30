@@ -107,7 +107,7 @@ struct AnimTex
 	// 0x0
 	// pointer to next AnimTex struct...
 	// cycles through the entirety of ptrarray
-	struct AnimTex* ptrNext;
+	struct IconGroup4* ptrNext;
 
 	// 0x4
 	short numFrames;
