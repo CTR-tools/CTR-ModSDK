@@ -30,7 +30,7 @@ struct MenuRow NewRowsMM[2] =
 	{
 		.stringIndex = 0x4D, // time trial
 		.rowOnPressUp = 0,
-		.rowOnPressDown = 1,
+		.rowOnPressDown = 0,
 		.rowOnPressLeft = 0,
 		.rowOnPressRight = 0,
 	},
@@ -85,13 +85,20 @@ void RunUpdateHook()
 		sdata->ptrActiveMenuBox->rows = &NewRowsMM[0];
 	}
 	
-	// battle end of race
-	if(sdata->ptrActiveMenuBox == 0x800A01B4)
+	// time trial end of race
+	if(sdata->ptrActiveMenuBox == 0x800A04A4)
 	{
 		sdata->ptrActiveMenuBox->rows = &NewRowsEND[0];
 	}
 	
 	if(gGT->levelID != 0x14) return;
+	
+	// TT_EndEvent_DrawHighScore - JR RA
+	*(int*)0x8009f8c0 = 0x3E00008;
+	*(int*)0x8009f8c4 = 0;
+	
+	// disable end-of-race high score saving
+	gGT->unknownFlags_1d44 = 0;
 	
 	d = gGT->drivers[0];
 	
