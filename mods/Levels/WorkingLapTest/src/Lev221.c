@@ -9,9 +9,6 @@ struct LevelFile
 	struct Level level;
 	struct mesh_info mInfo;
 	struct IconGroup4 test_texture;
-	struct IconGroup4 test_anim;
-	struct IconGroup4 test_anim2;
-	struct AnimTex animtex;
 	struct SpawnType1 spawnType1;
 	struct CheckpointNode noderespawnsthing[16];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
@@ -30,7 +27,7 @@ struct LevelFile
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
 	int VisMem_bspList_RenderListP4[3*2];
 	
-	int map[(36+NUM_BLOCKS*6)+1];
+	int map[(31+NUM_BLOCKS*6)+1];
 };
 
 // for whatever reason it's necessary to offset every pointer by -4
@@ -44,7 +41,6 @@ struct LevelFile file =
 	{
 		.ptr_mesh_info = LEV_OFFSETOF(mInfo),
 		.visMem = LEV_OFFSETOF(visMem),
-		.ptr_anim_tex = LEV_OFFSETOF(animtex),
 		
 		// the game will add +0x400 to the Z rotation of spawn positions automatically
 		// we should probably look into why this even happens...
@@ -92,61 +88,13 @@ struct LevelFile file =
 	},
 	
 	// quadblock texture type
-	// see IconGroup3 in namespace_Decal.h
+	// see IconGroup4 in namespace_Decal.h
 	.test_texture =
 	{
 		.far =    ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
 		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
 		.near =   ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
 		.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
-	},
-
-	.test_anim =
-	{
-		.far =    ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
-		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
-		.near =   ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-
-		.far.v0 =    0,
-		.far.v1 =    0,
-		.far.v2 =    15-5,
-		.far.v3 =    15-5,
-		.middle.v0 = 0,
-		.middle.v1 = 0,
-		.middle.v2 = 15-5,
-		.middle.v3 = 15-5,
-		.near.v0 =   0,
-		.near.v1 =   0,
-		.near.v2 =   15-5,
-		.near.v3 =   15-5,
-		.mosaic.v0 = 0,
-		.mosaic.v1 = 0,
-		.mosaic.v2 = 15-5,
-		.mosaic.v3 = 15-5,
-	},
-
-	.test_anim2 =
-	{
-		.far =    ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
-		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
-		.near =   ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-	},
-
-	.animtex =
-	{
-		.ptrNext = LEV_OFFSETOF(test_anim),
-		.numFrames = 2,
-		.shrug = 0,
-		.lottashortshuh = 0,
-		.frameIndex = 0,
-		.ptrarray =
-		{
-			LEV_OFFSETOF(test_anim),
-			LEV_OFFSETOF(test_anim2),
-			LEV_OFFSETOF(animtex),
-		},
 	},
 	
 	// this must exist, or else camera fly-in checks for "count" without nullptr check, and crashes dereferencing nullptr on real PSX
@@ -156,16 +104,14 @@ struct LevelFile file =
 	},
 
 	// automatically-generated quadblock insertions courtesy of pngtotrack.py
-	                                                                              NEW_BLOCK(0, test_texture, 0x0000, 0x0000, NULL, 0x1800, RGBtoBGR(0x004080)),NEW_BLOCK(1,  test_texture, 0x0300, 0x0000, NULL, 0x1800,  RGBtoBGR(0xFF0000)),                                                                           
-	NEW_BLOCK(2,  test_texture, -0x300, 0x0300, NULL, 0x1800, RGBtoBGR(0x804000)),NEW_BLOCK(3, test_texture, 0x0000, 0x0300, NULL, 0x1800,           0xFFFFFF),NEW_BLOCK(4,  test_texture, 0x0300, 0x0300, NULL, 0x1800,  RGBtoBGR(0x804000)),NEW_BLOCK(5,  test_texture, 0x0600, 0x0300, NULL, 0x1800, RGBtoBGR(0x804000)),
+	                                                                              NEW_BLOCK(0, test_texture, 0x0000, 0x0000, NULL, 0x1800,          (0xFFFFFF)),NEW_BLOCK(1,  test_texture, 0x0300, 0x0000, NULL, 0x1800,         (0x000000)),                                                                           
+	NEW_BLOCK(2,  test_texture, -0x300, 0x0300, NULL, 0x1800, RGBtoBGR(0x804000)),NEW_BLOCK(3, test_texture, 0x0000, 0x0300, NULL, 0x1800,          (0xFFFFFF)),NEW_BLOCK(4,  test_texture, 0x0300, 0x0300, NULL, 0x1800, RGBtoBGR(0x804000)),NEW_BLOCK(5,  test_texture, 0x0600, 0x0300, NULL, 0x1800, RGBtoBGR(0x804000)),
 	NEW_BLOCK(6,  test_texture, -0x300, 0x0600, NULL, 0x1800, RGBtoBGR(0x804000)),                                                                                                                                                            NEW_BLOCK(7,  test_texture, 0x0600, 0x0600, NULL, 0x1800, RGBtoBGR(0x804000)),
 	NEW_BLOCK(8,  test_texture, -0x300, 0x0900, NULL, 0x1800, RGBtoBGR(0x804000)),                                                                                                                                                            NEW_BLOCK(9,  test_texture, 0x0600, 0x0900, NULL, 0x1800, RGBtoBGR(0x804000)),
 	NEW_BLOCK(10, test_texture, -0x300, 0x0c00, NULL, 0x1800, RGBtoBGR(0x804000)),                                                                                                                                                            NEW_BLOCK(11, test_texture, 0x0600, 0x0c00, NULL, 0x1800, RGBtoBGR(0x804000)),
 	NEW_BLOCK(12, test_texture, -0x300, 0x0f00, NULL, 0x1800, RGBtoBGR(0x804000)),                                                                                                                                                            NEW_BLOCK(13, test_texture, 0x0600, 0x0f00, NULL, 0x1800, RGBtoBGR(0x804000)),
 	NEW_BLOCK(14, test_texture, -0x300, 0x1200, NULL, 0x1800, RGBtoBGR(0x804000)),NEW_BLOCK(15, test_texture, 0x0000, 0x1200, NULL, 0x1800, RGBtoBGR(0x804000)),NEW_BLOCK(16, test_texture, 0x0300, 0x1200, NULL, 0x1800, RGBtoBGR(0x804000)),NEW_BLOCK(17, test_texture, 0x0600, 0x1200, NULL, 0x1800, RGBtoBGR(0x804000)),
 	                                                                              NEW_BLOCK(18, test_texture, 0x0000, 0x1500, NULL, 0x1800, RGBtoBGR(0x804000)),NEW_BLOCK(19, test_texture, 0x0300, 0x1500, NULL, 0x1800, RGBtoBGR(0x804000)),                                                                           
-
-	.quadBlock[0].ptr_texture_mid[0] = (LEV_OFFSETOF(animtex))|1,
 
 	/*
 	
@@ -497,16 +443,11 @@ struct LevelFile file =
 	
 	.map =
 	{
-		(36+NUM_BLOCKS*6)<<2,
+		(31+NUM_BLOCKS*6)<<2,
 		
-		// 36
+		// 31
 		LEV_OFFSETOF(level.ptr_mesh_info),
 		LEV_OFFSETOF(level.visMem),
-		LEV_OFFSETOF(level.ptr_anim_tex),
-		LEV_OFFSETOF(animtex.ptrNext),
-		LEV_OFFSETOF(animtex.ptrarray[0]),
-		LEV_OFFSETOF(animtex.ptrarray[1]),
-		LEV_OFFSETOF(animtex.ptrarray[2]),
 		LEV_OFFSETOF(level.ptrSpawnType1),
 		LEV_OFFSETOF(level.ptr_restart_points),
 		LEV_OFFSETOF(mInfo.ptrQuadBlockArray),
