@@ -686,6 +686,13 @@ struct LevelFile file =
 		3,7,1 // high 3 vertices
 	),
 	
+	TEX_2X2(Bsp2_TurnRight7, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp2_TurnRight7].draw_order_low = 0x1044000,
+	
+	// TODO: CORNER
+	//TEX_2X2(Bsp2_TurnRight8, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	//.quadBlock[Bsp2_TurnRight8].draw_order_low = 0x1044000,
+	
 	NEW_BLOCK(Bsp2_Middle_Turbo_1840, group4_turbopad_green, 0x1C80, 0, NULL, 0x1840, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_Middle_Turbo_9800, group4_turbopad_green, 0x1C80, 0, NULL, 0x9800, 0x80, 0x80, 0x80),
 	.quadBlock[Bsp2_Middle_Turbo_1840].terrain_type = 1,
@@ -905,6 +912,11 @@ struct LevelFile file =
 	// 1 for normal, 2 for super turbo
 	.quadBlock[Bsp2_RampUp5_Turbo_1840].terrain_type = 2,
 	.quadBlock[Bsp2_RampUp6_Turbo_1840].terrain_type = 1,
+	
+	TEX_2X2(Bsp2_RampUp4, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp2_RampUp1, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp2_RampUp4].draw_order_low = 0x808100,
+	.quadBlock[Bsp2_RampUp1].draw_order_low = 0x1984000,
 	
 	#define SET_ID(y, x) .quadBlock[x].blockID = y-x
 	
@@ -1249,7 +1261,7 @@ struct LevelFile file =
 			.box =
 			{
 				.min = {0x300, -0x490, -0x800},
-				.max = {0x2100, 0x400, 0x2E00}
+				.max = {0x2100, 0x100, 0x2E00}
 			},
 			
 			.data =
@@ -1273,7 +1285,7 @@ struct LevelFile file =
 			.box =
 			{
 				.min = {-0x300, -0x490, -0x800},
-				.max = {0x300, 0x400, 0x2E00}
+				.max = {0x300, 0x100, 0x2E00}
 			},
 			
 			.data =
@@ -1297,7 +1309,7 @@ struct LevelFile file =
 			.box =
 			{
 				.min = {0x300, -0x490, 0x781},
-				.max = {0x2100, 0x400, 0x2E00}
+				.max = {0x2100, 0x100, 0x2E00}
 			},
 			
 			.data =
@@ -1321,7 +1333,7 @@ struct LevelFile file =
 			.box =
 			{
 				.min = {0x300, -0x490, -0x800},
-				.max = {0x2100, 0x400, 0x77F}
+				.max = {0x2100, 0x100, 0x77F}
 			},
 			
 			.data =
@@ -1345,7 +1357,7 @@ struct LevelFile file =
 			.box =
 			{
 				.min = {-0x300, -0x490, -0x800},
-				.max = {0x300, 0x400, 0x1D00} // see if that cuts it
+				.max = {0x300, 0x100, 0x1D00} // see if that cuts it
 			},
 			
 			.data =
@@ -1367,8 +1379,8 @@ struct LevelFile file =
 			.id = 6,
 			.box =
 			{
-				.min = {-0x300, -0x490, 0x1D00},
-				.max = {0x300, 0x400, 0x2E00}
+				.min = {-0x300, -0x300, 0x1D00},
+				.max = {0x300, 0x100, 0x2E00}
 			},
 			
 			.data =
@@ -1389,8 +1401,8 @@ struct LevelFile file =
 			.id = 7,
 			.box =
 			{
-				.min = {0x300, -0x490, 0x781},
-				.max = {0x2100, 0x400, 0x1F00}
+				.min = {0xB00, -0x490, 0x781},
+				.max = {0x1300, -0x100, 0x1F00}
 			},
 			
 			.data =
@@ -1405,14 +1417,15 @@ struct LevelFile file =
 			}
 		},
 		
+		// leaf with end of 180 U-Turn
 		[8] = 
 		{
 			.flag = 0x1,
 			.id = 8,
 			.box =
 			{
-				.min = {0x300, -0x490, 0x1F00},
-				.max = {0x2100, 0x400, 0x2E00}
+				.min = {0x300, -0x300, 0x1F00},
+				.max = {0x1300, 0x100, 0x2E00}
 			},
 			
 			.data =
