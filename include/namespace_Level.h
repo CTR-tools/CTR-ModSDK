@@ -127,7 +127,7 @@ struct AnimTex
 	// 0xC
 	// amount of elements in array is same as numFrames
 	// ptrarray[numFrames] leads to the ptrNext of some other AnimTex struct or something
-	struct AnimTex* ptrarray[1];
+	struct IconGroup4* ptrarray[1];
 };
 
 struct PVS

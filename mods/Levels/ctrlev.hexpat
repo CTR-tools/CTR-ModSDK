@@ -6,7 +6,7 @@
 // CTR: Crash Team Racing level files
 // author Superstarxalien
 
-#pragma pattern_limit 200000
+#pragma pattern_limit 500000
 
 //using BSP; --these crashed before
 
@@ -273,6 +273,100 @@ struct BackgroundColor
 	s8 enable;
 };
 
+fn format_tpage_x(auto thing)
+{
+	return std::format("{0}", thing*64);
+};
+
+fn format_tpage_y(auto thing)
+{
+	return std::format("{0}", thing*256);
+};
+
+fn format_tpage_blend(auto thing)
+{
+	if (thing == 0)
+	{
+		return std::format("50% Opacity");
+	}
+	if (thing == 1)
+	{
+		return std::format("Additive");
+	}
+	if (thing == 2)
+	{
+		return std::format("Subtractive");
+	}
+	if (thing == 3)
+	{
+		return std::format("Additive, 25% Opacity");
+	}
+};
+
+fn format_tpage_bpp(auto thing)
+{
+	if (thing == 0)
+	{
+		return std::format("4bpp");
+	}
+	if (thing == 1)
+	{
+		return std::format("8bpp");
+	}
+	if (thing == 2)
+	{
+		return std::format("16bpp");
+	}
+};
+
+bitfield Tpage
+{
+	x : 4 [[format("format_tpage_x")]];
+	y : 1 [[format("format_tpage_y")]];
+	blend_mode : 2 [[format("format_tpage_blend")]];
+	bpp : 2 [[format("format_tpage_bpp")]];
+	rest : 7;
+};
+
+struct TextureLayout
+{
+	// 0x14
+	// top left corner
+	u8 u0;
+    u8 v0;
+
+	// 0x16
+	// holds X and Y with bit shifting
+	u16 clut;
+
+	// 0x18
+	// top right corner
+	u8 u1;
+	u8 v1;
+
+	// 0x1a
+	// holds X and Y with bit shifting
+	Tpage tpage;
+
+	// 0x1c
+	// bottom left corner
+	u8 u2;
+	u8 v2;
+
+	// 0x1e
+	// bottom right corner
+	u8 u3;
+	u8 v3;	
+};
+
+struct IconGroup4
+{
+	TextureLayout far;
+	TextureLayout middle;
+	TextureLayout near;
+	TextureLayout mosaic;
+};
+
 struct AnimTex
 {
 	// 0x0
@@ -298,7 +392,7 @@ struct AnimTex
 	// 0xC
 	// amount of elements in array is same as numFrames
 	// ptrarray[numFrames] leads to the ptrNext of some other AnimTex struct or something
-	CTRLEVPtr<u32, u32> ptrarray[this.numFrames];
+	CTRLEVPtr<IconGroup4, u32> ptrarray[this.numFrames];
 };
 
 struct Level
