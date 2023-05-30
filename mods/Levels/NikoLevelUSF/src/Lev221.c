@@ -556,6 +556,19 @@ struct LevelFile file =
 	.quadBlock[Bsp1_TurnBack5].draw_order_low = 0x800000,
 	.quadBlock[Bsp1_TurnBack6].draw_order_low = 0x1044000,
 	
+	TEX_2X2(Bsp1_TurnBack7, group4_tileCenter, group4_tileCenter, group4_tileCenter, group4_tileCenter),
+	.quadBlock[Bsp1_TurnBack7].draw_order_low = 0x1044000,
+	
+	TEX_2X2(Bsp1_TurnBack8, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp1_TurnBack8].draw_order_low = 0x1044000,
+	
+	TEX_2X2(Bsp1_TurnBack9, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp1_TurnBack9].draw_order_low = 0x1984000,
+	
+	// TODO: TurnBack10 corner
+	
+	// ======= End of BSP block =========
+	
 	// fall back down,
 	// here experiment with USF jump
 	
