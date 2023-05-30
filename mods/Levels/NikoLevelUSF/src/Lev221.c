@@ -184,10 +184,11 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp0_BehindStart4, group4_placeHolder, 0x180, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// BR, BL, TR, TL assuming you're rotation is 0,0,0
-	TEX_2X2(Bsp0_BehindStart1, group4_tileCorner, group4_tileCenter, group4_tileEdge, group4_tileCenter),
-	TEX_2X2(Bsp0_BehindStart2, group4_tileCenter, group4_tileCorner, group4_tileCenter, group4_tileEdge),
-	.quadBlock[Bsp0_BehindStart1].draw_order_low = 0x800100,
-	.quadBlock[Bsp0_BehindStart2].draw_order_low = 0x1044000,
+	TEX_2X2(Bsp0_BehindStart1, group4_tileCorner, group4_tileEdge, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp0_BehindStart2, group4_tileEdge, group4_tileCorner, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp0_BehindStart1].draw_order_low = 0x802100,
+	.quadBlock[Bsp0_BehindStart2].draw_order_low = 0x1044100,
+	
 	TEX_2X2(Bsp0_BehindStart3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_BehindStart4, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
 	.quadBlock[Bsp0_BehindStart3].draw_order_low = 0x800000,
