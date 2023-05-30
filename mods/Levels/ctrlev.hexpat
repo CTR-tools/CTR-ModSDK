@@ -55,10 +55,10 @@ struct LevVertex
 	u16 flags;
 
 	// 0x8
-	u8 color_hi[4];
+	type::RGBA8 color_hi;
 
 	// 0xC
-	u8 color_lo[4];
+	type::RGBA8 color_lo;
 
 	// 0x10 bytes large
 };
@@ -505,3 +505,4 @@ struct Map
 };
 
 CTRLEVPtr<Map, u32> ptrMap @ 0x0;
+LevVertex levVertexArray[(LevelHeader.ptr_mesh_info.data.numVertex)-1] @ (addressof(LevelHeader.ptr_mesh_info.data.ptrVertexArray.data) + 0x10);
