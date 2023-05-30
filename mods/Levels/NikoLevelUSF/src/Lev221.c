@@ -1101,15 +1101,25 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp7_Turbo_1840),
 	SET_CHECKPOINT(CPI_UpRamp1, Bsp0_UpRamp8_Turbo_1840),
 	
-	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft1),
-	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft2),
-	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft3_Turbo_9800),
-	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft4_Turbo_9800),
-	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft5_Turbo_1840),
-	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft6_Turbo_1840),
+	SET_CHECKPOINT(CPI_LandJump, Bsp3_FlatTop1),
+	SET_CHECKPOINT(CPI_LandJump, Bsp3_FlatTop2),
+	SET_CHECKPOINT(CPI_LandJump, Bsp3_FlatTop3),
+	SET_CHECKPOINT(CPI_LandJump, Bsp3_FlatTop4),
+	SET_CHECKPOINT(CPI_LandJump, Bsp3_FlatTop5),
+	SET_CHECKPOINT(CPI_LandJump, Bsp3_FlatTop6),
+	
+	SET_CHECKPOINT(CPI_Turn90, Bsp3_FlatTop7),
+	SET_CHECKPOINT(CPI_Turn90, Bsp3_FlatTop8),
+	
+	SET_CHECKPOINT(CPI_Turn90, Bsp1_TurnLeft1),
+	SET_CHECKPOINT(CPI_Turn90, Bsp1_TurnLeft2),
+	SET_CHECKPOINT(CPI_Turn90, Bsp1_TurnLeft3_Turbo_9800),
+	SET_CHECKPOINT(CPI_Turn90, Bsp1_TurnLeft4_Turbo_9800),
+	SET_CHECKPOINT(CPI_Turn90, Bsp1_TurnLeft5_Turbo_1840),
+	SET_CHECKPOINT(CPI_Turn90, Bsp1_TurnLeft6_Turbo_1840),
+	
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft7),
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnLeft8),
-	
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack1_Turbo_9800),
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack2_Turbo_9800),
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack3_Turbo_1840),
@@ -1120,15 +1130,7 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack8),
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack9),
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack10),
-	
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop1),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop2),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop3),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop4),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop5),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop6),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop7),
-	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop8),
+		
 	
 	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay1),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay2),
@@ -1145,35 +1147,36 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay13),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay14),
 	
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay15),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay16),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay17),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_StraightWay18),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight1),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight2),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight3),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight4),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight5),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight6),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight7),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TurnRight8),
+	SET_CHECKPOINT(CPI_Corner, Bsp2_StraightWay15),
+	SET_CHECKPOINT(CPI_Corner, Bsp2_StraightWay16),
+	SET_CHECKPOINT(CPI_Corner, Bsp2_StraightWay17),
+	SET_CHECKPOINT(CPI_Corner, Bsp2_StraightWay18),
+	SET_CHECKPOINT(CPI_Corner, Bsp2_TurnRight1),
+	SET_CHECKPOINT(CPI_Corner, Bsp2_TurnRight2),
 	
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_Middle_Turbo_9800),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_Middle_Turbo_1840),
+	SET_CHECKPOINT(CPI_PreTurbo, Bsp2_TurnRight3),
+	SET_CHECKPOINT(CPI_PreTurbo, Bsp2_TurnRight4),
+	SET_CHECKPOINT(CPI_PreTurbo, Bsp2_TurnRight5),
+	SET_CHECKPOINT(CPI_PreTurbo, Bsp2_TurnRight6),
+	SET_CHECKPOINT(CPI_PreTurbo, Bsp2_TurnRight7),
+	SET_CHECKPOINT(CPI_PreTurbo, Bsp2_TurnRight8),
 	
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack0),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack1),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack2),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack3),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack4),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack5),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack6),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_GoBack7),
+	SET_CHECKPOINT(CPI_PostTurbo, Bsp2_Middle_Turbo_9800),
+	SET_CHECKPOINT(CPI_PostTurbo, Bsp2_Middle_Turbo_1840),
 	
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp1),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp2),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp3),
-	SET_CHECKPOINT(CPI_FlatRun, Bsp2_TowardsRamp4),
+	SET_CHECKPOINT(CPI_PostTurbo, Bsp2_GoBack0),
+	SET_CHECKPOINT(CPI_PostTurbo, Bsp2_GoBack1),
+	SET_CHECKPOINT(CPI_PostTurbo, Bsp2_GoBack2),
+	SET_CHECKPOINT(CPI_PostTurbo, Bsp2_GoBack3),
+	SET_CHECKPOINT(CPI_PostTurbo, Bsp2_GoBack4),
+	SET_CHECKPOINT(CPI_PostTurbo, Bsp2_GoBack5),
+	
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_GoBack6),
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_GoBack7),
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_TowardsRamp1),
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_TowardsRamp2),
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_TowardsRamp3),
+	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_TowardsRamp4),
 	
 	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp1),
 	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp2_Turbo_9800),
@@ -1181,8 +1184,6 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp4),
 	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp5_Turbo_1840),
 	SET_CHECKPOINT(CPI_UpRamp2, Bsp2_RampUp6_Turbo_1840),
-	
-	#define DIST_PER_NODE 0x400
 	
 	.checkpointNodes =
 	{
@@ -1192,7 +1193,7 @@ struct LevelFile file =
 		[CPI_AfterSpawn] =
 		{
 			.pos = {0, 0, 0x300},
-			.distToFinish = (NUM_CHECKPOINT-CPI_AfterSpawn-1)*DIST_PER_NODE+1,
+			.distToFinish = 0x1C00,
 			.nextIndex_forward = CPI_DownRamp1,
 			.nextIndex_left = -1,
 			.nextIndex_backward = CPI_OnSpawn,
@@ -1202,7 +1203,7 @@ struct LevelFile file =
 		[CPI_DownRamp1] =
 		{
 			.pos = {0, -0x200, 0x900},
-			.distToFinish = (NUM_CHECKPOINT-CPI_DownRamp1-1)*DIST_PER_NODE+1,
+			.distToFinish = 0x1800,
 			.nextIndex_forward = CPI_FlatDip,
 			.nextIndex_left = -1,
 			.nextIndex_backward = CPI_AfterSpawn,
@@ -1212,7 +1213,7 @@ struct LevelFile file =
 		[CPI_FlatDip] =
 		{
 			.pos = {0x180, -0x480, 0xED4},
-			.distToFinish = (NUM_CHECKPOINT-CPI_FlatDip-1)*DIST_PER_NODE+1,
+			.distToFinish = 0x1400,
 			.nextIndex_forward = CPI_UpRamp1,
 			.nextIndex_left = -1,
 			.nextIndex_backward = CPI_DownRamp1,
@@ -1222,40 +1223,103 @@ struct LevelFile file =
 		[CPI_UpRamp1] =
 		{
 			.pos = {0, -0x200, 0x1800},
-			.distToFinish = (NUM_CHECKPOINT-CPI_UpRamp1-1)*DIST_PER_NODE+1,
-			.nextIndex_forward = CPI_Turn180,
+			.distToFinish = 0x1000,
+			.nextIndex_forward = CPI_LandJump,
 			.nextIndex_left = -1,
 			.nextIndex_backward = CPI_FlatDip,
 			.nextIndex_right = -1,
 		},
 		
-		[CPI_Turn180] =
+		[CPI_LandJump] =
 		{
-			.pos = {0x1A0, 0, 0x28A0},
-			.distToFinish = (NUM_CHECKPOINT-CPI_Turn180-1)*DIST_PER_NODE+1,
-			.nextIndex_forward = CPI_FlatRun,
+			.pos = {0x180, 0, 0x2200},
+			.distToFinish = 0xE00,
+			.nextIndex_forward = CPI_Turn90,
 			.nextIndex_left = -1,
 			.nextIndex_backward = CPI_UpRamp1,
+			.nextIndex_right = -1,
+		},
+		
+		
+		[CPI_Turn90] =
+		{
+			.pos = {0x180, 0, 0x2800},
+			.distToFinish = 0xC00,
+			.nextIndex_forward = CPI_Turn180,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_LandJump,
+			.nextIndex_right = -1,
+		},
+		
+		
+		[CPI_Turn180] =
+		{
+			.pos = {0xF00, 0, 0x2800},
+			.distToFinish = 0xA00,
+			.nextIndex_forward = CPI_FlatRun,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_Turn90,
 			.nextIndex_right = -1,
 		},
 		
 		[CPI_FlatRun] =
 		{
 			.pos = {0xF00, -0x300, 0x1800},
-			.distToFinish = (NUM_CHECKPOINT-CPI_FlatRun-1)*DIST_PER_NODE+1,
-			.nextIndex_forward = CPI_UpRamp2,
+			.distToFinish = 0x800,
+			.nextIndex_forward = CPI_Corner,
 			.nextIndex_left = -1,
 			.nextIndex_backward = CPI_Turn180,
+			.nextIndex_right = -1,
+		},
+		
+		[CPI_Corner] =
+		{
+			.pos = {0xF00, -0x300, 0x480},
+			.distToFinish = 0x7F0,
+			.nextIndex_forward = CPI_PreTurbo,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_FlatRun,
+			.nextIndex_right = -1,
+		},
+		
+		[CPI_PreTurbo] =
+		{
+			.pos = {0x1800, -0x300, 0x480},
+			.distToFinish = 0x5B0,
+			.nextIndex_forward = CPI_OnTurbo,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_Corner,
+			.nextIndex_right = -1,
+		},
+		
+		// dont spawn on here, just use it for FORWARD/BACKWARD
+		[CPI_OnTurbo] =
+		{
+			.pos = {0x1C80, -0x180, 0},
+			.distToFinish = 0x520,
+			.nextIndex_forward = CPI_PostTurbo,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_PreTurbo,
+			.nextIndex_right = -1,
+		},
+		
+		[CPI_PostTurbo] =
+		{
+			.pos = {0x1800, -0x300, -0x480},
+			.distToFinish = 0x490,
+			.nextIndex_forward = CPI_UpRamp2,
+			.nextIndex_left = -1,
+			.nextIndex_backward = CPI_OnTurbo,
 			.nextIndex_right = -1,
 		},
 		
 		[CPI_UpRamp2] =
 		{
 			.pos = {0xF00, -0x300, -0x480},
-			.distToFinish = (NUM_CHECKPOINT-CPI_UpRamp2-1)*DIST_PER_NODE+1,
+			.distToFinish = 0x400,
 			.nextIndex_forward = CPI_OnSpawn,
 			.nextIndex_left = -1,
-			.nextIndex_backward = CPI_FlatRun,
+			.nextIndex_backward = CPI_PostTurbo,
 			.nextIndex_right = -1,
 		},
 		
@@ -1264,7 +1328,7 @@ struct LevelFile file =
 		[CPI_OnSpawn] =
 		{
 			.pos = {0, 0, 0},
-			.distToFinish = (NUM_CHECKPOINT-CPI_OnSpawn-1)*DIST_PER_NODE+1,
+			.distToFinish = 1,
 			.nextIndex_forward = CPI_AfterSpawn,
 			.nextIndex_left = -1,
 			.nextIndex_backward = CPI_UpRamp2,
