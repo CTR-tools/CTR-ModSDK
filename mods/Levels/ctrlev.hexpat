@@ -238,11 +238,11 @@ struct RainBuffer
 
 	// 0x20
 	// controls top color of particles
-	u32 colorRGBA_top;
+	type::RGBA8 colorRGBA_top;
 
 	// 0x24
 	// controls bottom color of particles
-	u32 colorRGBA_bottom;
+	type::RGBA8 colorRGBA_bottom;
 
 	// 0x28
 	// controls how particles are drawn
@@ -258,8 +258,8 @@ struct Gradient
 	s16 pointTo;
 
 	// RGBA
-	u32 colorFrom;
-	u32 colorTo;
+	type::RGBA8 colorFrom;
+	type::RGBA8 colorTo;
 };
 
 struct Spawn
@@ -270,7 +270,7 @@ struct Spawn
 
 struct BackgroundColor
 {
-	s8 rgb[3];
+	type::RGB8 rgb;
 	s8 enable;
 };
 
@@ -371,7 +371,7 @@ struct Level
 
 	// 0xD8
 	// base background color, used to clear the screen
-	u32 clearColorRGBA;
+	type::RGBA8 clearColorRGBA;
 
 	// 0xDC
 	// toggles some level stuff
