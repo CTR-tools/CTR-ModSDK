@@ -130,8 +130,9 @@ enum Bsp3
 	Bsp3_FlatTop5,
 	Bsp3_FlatTop6,
 	Bsp3_FlatTop7,
+	Bsp3_FlatTop8,
 	
-	Bsp3_Last=Bsp3_FlatTop7,
+	Bsp3_Last=Bsp3_FlatTop8,
 	
 	Bsp3_BlockCount=Bsp3_Last-Bsp2_Last,
 };

@@ -482,7 +482,8 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp3_FlatTop4, group4_placeHolder, 0x180, 0x2400, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp3_FlatTop5, group4_placeHolder, -0x180, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp3_FlatTop6, group4_placeHolder, 0x180, 0x2700, NULL, 0x1800, 0x80, 0x80, 0x80),
-	NEW_BLOCK(Bsp3_FlatTop7, group4_placeHolder, 0x180, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp3_FlatTop7, group4_placeHolder, -0x180, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
+	NEW_BLOCK(Bsp3_FlatTop8, group4_placeHolder, 0x180, 0x2A00, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	TEX_2X2(Bsp3_FlatTop1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp3_FlatTop2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
@@ -493,12 +494,16 @@ struct LevelFile file =
 	.quadBlock[Bsp3_FlatTop3].draw_order_low = 0x800000,
 	.quadBlock[Bsp3_FlatTop4].draw_order_low = 0x1044000,
 	
-	//TEX_2X2(Bsp3_FlatTop5, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter), 	// TODO: CORNER
-	TEX_2X2(Bsp3_FlatTop6, group4_tileCenter, group4_tileCenter, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp3_FlatTop5, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	.quadBlock[Bsp3_FlatTop5].draw_order_low = 0x800000,
+	
+	TEX_2X2(Bsp3_FlatTop6, group4_tileCenter, group4_tileCenter, group4_tileCenter, group4_tileCenter),
 	.quadBlock[Bsp3_FlatTop6].draw_order_low = 0x1044000,
 	
-	//TEX_2X2(Bsp3_FlatTop7...) // TODO: CORNER
+	TEX_2X2(Bsp3_FlatTop8, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp3_FlatTop8].draw_order_low = 0x1984000,
+	
+	// TODO: FlatTop7 Corner
 	
 	// ==== End of BSP block =====
 	
@@ -1004,6 +1009,7 @@ struct LevelFile file =
 	SET_ID(Bsp3_Last,Bsp3_FirstBlock+4),
 	SET_ID(Bsp3_Last,Bsp3_FirstBlock+5),
 	SET_ID(Bsp3_Last,Bsp3_FirstBlock+6),
+	SET_ID(Bsp3_Last,Bsp3_FirstBlock+7),
 
 	SET_ID(Bsp4_Last,Bsp4_FirstBlock+0),
 	SET_ID(Bsp4_Last,Bsp4_FirstBlock+1),
@@ -1082,6 +1088,7 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop5),
 	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop6),
 	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop7),
+	SET_CHECKPOINT(CPI_Turn180, Bsp3_FlatTop8),
 	
 	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay1),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay2),
@@ -1659,5 +1666,6 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(93),
 		PTR_MAP_QUADBLOCK(94),
 		PTR_MAP_QUADBLOCK(95),
+		PTR_MAP_QUADBLOCK(97),
 	},
 };
