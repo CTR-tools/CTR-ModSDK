@@ -664,7 +664,9 @@ struct LevelFile file =
 	TEX_2X2(Bsp2_StraightWay16, group4_tileCenter, group4_tileCenter, group4_tileCenter, group4_tileCenter),
 	.quadBlock[Bsp2_StraightWay16].draw_order_low = 0x1044000,
 	
-	// TODO: Texture 17 CORNER
+	// BR, BL, TR, TL
+	TEX_2X2(Bsp2_StraightWay17, group4_tileCorner, group4_tileEdge, group4_tileEdge, group4_tileCenter),
+	.quadBlock[Bsp2_StraightWay17].draw_order_low = 0x808100,
 	
 	TEX_2X2(Bsp2_StraightWay18, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
 	.quadBlock[Bsp2_StraightWay18].draw_order_low = 0x808100,
