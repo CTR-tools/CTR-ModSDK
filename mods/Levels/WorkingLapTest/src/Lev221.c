@@ -11,7 +11,6 @@ struct LevelFile
 	struct IconGroup4 test_texture;
 	struct IconGroup4 test_anim;
 	struct IconGroup4 test_anim2;
-	struct IconGroup4 test_anim3;
 	struct AnimTex animtex;
 	struct SpawnType1 spawnType1;
 	struct CheckpointNode noderespawnsthing[16];
@@ -109,35 +108,27 @@ struct LevelFile file =
 		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 
-		.far.v0 = 0+5,
-		.far.v1 = 0+5,
-		.far.v2 = 31+5,
-		.far.v3 = 31+5,
-		.middle.v0 = 0+5,
-		.middle.v1 = 0+5,
-		.middle.v2 = 31+5,
-		.middle.v3 = 31+5,
-		.near.v0 = 0+5,
-		.near.v1 = 0+5,
-		.near.v2 = 31+5,
-		.near.v3 = 31+5,
+		.far.v0 = 0,
+		.far.v1 = 0,
+		.far.v2 = 15-5,
+		.far.v3 = 15-5,
+		.middle.v0 = 0,
+		.middle.v1 = 0,
+		.middle.v2 = 15-5,
+		.middle.v3 = 15-5,
+		.near.v0 = 0,
+		.near.v1 = 0,
+		.near.v2 = 15-5,
+		.near.v3 = 15-5,
 		
-		.mosaic.v0 = 0+5,
-		.mosaic.v1 = 0+5,
-		.mosaic.v2 = 31+5,
-		.mosaic.v3 = 31+5,
+		.mosaic.v0 = 0,
+		.mosaic.v1 = 0,
+		.mosaic.v2 = 15-5,
+		.mosaic.v3 = 15-5,
 		
 	},
 
 	.test_anim2 =
-	{
-		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
-		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
-		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-	},
-
-	.test_anim3 =
 	{
 		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
 		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
