@@ -183,10 +183,10 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp0_BehindStart3, group4_placeHolder, -0x180, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp0_BehindStart4, group4_placeHolder, 0x180, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
-	// top/bottom left/right assuming you're rotation is 0,0,0
-	TEX_2X2(Bsp0_BehindStart1, group4_tileCorner, group4_tileCenter, group4_tileEdge, group4_tileCenter), // TODO: CORNER
-	TEX_2X2(Bsp0_BehindStart2, group4_tileCenter, group4_tileCorner, group4_tileCenter, group4_tileEdge), // TODO: CORNER
-	.quadBlock[Bsp0_BehindStart1].draw_order_low = 0x800000,
+	// BR, BL, TR, TL assuming you're rotation is 0,0,0
+	TEX_2X2(Bsp0_BehindStart1, group4_tileCorner, group4_tileCenter, group4_tileEdge, group4_tileCenter),
+	TEX_2X2(Bsp0_BehindStart2, group4_tileCenter, group4_tileCorner, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp0_BehindStart1].draw_order_low = 0x800100,
 	.quadBlock[Bsp0_BehindStart2].draw_order_low = 0x1044000,
 	TEX_2X2(Bsp0_BehindStart3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
 	TEX_2X2(Bsp0_BehindStart4, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
@@ -197,7 +197,7 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp0_StartLine1, group4_tileEdge, -0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp0_StartLine2, group4_tileEdge, 0x180, 0, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
-	// TR, TL, BR, BL assuming you're rotation is 0,0,0
+	// BR, BL, TR, TL assuming you're rotation is 0,0,0
 	TEX_2X2(Bsp0_StartLine1, group4_tileEdge, group4_tileCenter, group4_checkerEdge, group4_checkerCenter),
 	TEX_2X2(Bsp0_StartLine2, group4_tileCenter, group4_tileEdge, group4_checkerCenter, group4_checkerEdge),
 	.quadBlock[Bsp0_StartLine1].draw_order_low = 0x800000, // rotate checker
@@ -512,7 +512,9 @@ struct LevelFile file =
 	TEX_2X2(Bsp3_FlatTop8, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
 	.quadBlock[Bsp3_FlatTop8].draw_order_low = 0x1984000,
 	
-	// TODO: FlatTop7 Corner
+	// BR, BL, TR, TL assuming you're rotation is 0,0,0
+	TEX_2X2(Bsp3_FlatTop7, group4_tileEdge, group4_tileCenter, group4_tileCorner, group4_tileEdge),
+	.quadBlock[Bsp3_FlatTop7].draw_order_low = 0x1800000,
 	
 	// ==== End of BSP block =====
 	
@@ -530,13 +532,13 @@ struct LevelFile file =
 	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp1_TurnLeft6_Turbo_1840].terrain_type = 1,
 	
-	// TR, TL, BR, BL
+	// BR, BL, TR, TL
 	TEX_2X2(Bsp1_TurnLeft1, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
 	TEX_2X2(Bsp1_TurnLeft2, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
 	.quadBlock[Bsp1_TurnLeft1].draw_order_low = 0x808100,
 	.quadBlock[Bsp1_TurnLeft2].draw_order_low = 0x1984000,
 	
-	// TR, TL, BR, BL
+	// BR, BL, TR, TL
 	TEX_2X2(Bsp1_TurnLeft7, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
 	TEX_2X2(Bsp1_TurnLeft8, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
 	.quadBlock[Bsp1_TurnLeft7].draw_order_low = 0x808100,
@@ -574,7 +576,9 @@ struct LevelFile file =
 	TEX_2X2(Bsp1_TurnBack9, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
 	.quadBlock[Bsp1_TurnBack9].draw_order_low = 0x1984000,
 	
-	// TODO: TurnBack10 corner
+	// BR, BL, TR, TL assuming you're rotation is 0,0,0
+	TEX_2X2(Bsp1_TurnBack10, group4_tileCenter, group4_tileEdge, group4_tileEdge, group4_tileCorner),
+	.quadBlock[Bsp1_TurnBack10].draw_order_low = 0x18c4000,
 	
 	// ======= End of BSP block =========
 	
@@ -673,7 +677,7 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp2_TurnRight7, group4_placeHolder, 0x1C80, 0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_TurnRight8, group4_placeHolder, 0x1C80, 0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
-	// TR, TL, BR, BL
+	// BR, BL, TR, TL
 	TEX_2X2(Bsp2_TurnRight1, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
 	TEX_2X2(Bsp2_TurnRight2, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
 	.quadBlock[Bsp2_TurnRight1].draw_order_low = 0x808100,
