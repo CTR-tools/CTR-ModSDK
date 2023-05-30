@@ -1,8 +1,11 @@
-newmtl 544_0_32_130_64_64_0
-map_Kd texMed\544_0_32_130_64_64_0.png
+newmtl 576_0_32_135_64_64_0
+map_Kd texMed\576_0_32_135_64_64_0.png
 
 newmtl 560_0_32_131_64_64_0
 map_Kd texMed\560_0_32_131_64_64_0.png
+
+newmtl 544_0_32_130_64_64_0
+map_Kd texMed\544_0_32_130_64_64_0.png
 
 newmtl 512_0_32_128_64_64_0
 map_Kd texMed\512_0_32_128_64_64_0.png
@@ -10,14 +13,14 @@ map_Kd texMed\512_0_32_128_64_64_0.png
 newmtl 528_0_32_129_64_64_0
 map_Kd texMed\528_0_32_129_64_64_0.png
 
-newmtl 576_0_32_132_16_16_0
-map_Kd texMed\576_0_32_132_16_16_0.png
+newmtl 596_0_32_133_32_16_0
+map_Kd texMed\596_0_32_133_32_16_0.png
 
-newmtl 704_0_32_134_32_16_0
-map_Kd texMed\704_0_32_134_32_16_0.png
+newmtl 604_0_32_134_32_16_0
+map_Kd texMed\604_0_32_134_32_16_0.png
 
-newmtl 640_0_32_133_32_16_0
-map_Kd texMed\640_0_32_133_32_16_0.png
+newmtl 592_0_32_132_16_16_0
+map_Kd texMed\592_0_32_132_16_16_0.png
 
 newmtl default
 Map_Kd default.png

@@ -11,6 +11,7 @@ struct LevelFile
 	struct IconGroup4 group4_checkerCenter;
 	struct IconGroup4 group4_tileEdge;
 	struct IconGroup4 group4_tileCenter;
+	struct IconGroup4 group4_tileCorner;
 	struct IconGroup4 group4_turbopad_green;
 	struct IconGroup4 group4_turbopad_gray;
 	struct IconGroup4 group4_placeHolder;
@@ -122,28 +123,36 @@ struct LevelFile file =
 		ImageName_Blend(560, 0, 32, 131, 64, 64, 0, TRANS_50)  // very close
 	},
 	
+	.group4_tileCorner.texLayout =
+	{
+		ImageName_Blend(576, 0, 32, 135, 64, 64, 0, TRANS_50), // very far
+		ImageName_Blend(576, 0, 32, 135, 64, 64, 0, TRANS_50), // far
+		ImageName_Blend(576, 0, 32, 135, 64, 64, 0, TRANS_50), // close
+		ImageName_Blend(576, 0, 32, 135, 64, 64, 0, TRANS_50)  // very close
+	},
+	
 	.group4_placeHolder.texLayout =
 	{
-		ImageName_Blend(576, 0, 32, 132, 16, 16, 0, TRANS_50), // very far
-		ImageName_Blend(576, 0, 32, 132, 16, 16, 0, TRANS_50), // far
-		ImageName_Blend(576, 0, 32, 132, 16, 16, 0, TRANS_50), // close
-		ImageName_Blend(576, 0, 32, 132, 16, 16, 0, TRANS_50)  // very close
+		ImageName_Blend(592, 0, 32, 132, 16, 16, 0, TRANS_50), // very far
+		ImageName_Blend(592, 0, 32, 132, 16, 16, 0, TRANS_50), // far
+		ImageName_Blend(592, 0, 32, 132, 16, 16, 0, TRANS_50), // close
+		ImageName_Blend(592, 0, 32, 132, 16, 16, 0, TRANS_50)  // very close
 	},
 	
 	.group4_turbopad_green.texLayout =
 	{
-		ImageName_Blend(640, 0, 32, 133, 32, 16, 0, TRANS_50), // very far
-		ImageName_Blend(640, 0, 32, 133, 32, 16, 0, TRANS_50), // far
-		ImageName_Blend(640, 0, 32, 133, 32, 16, 0, TRANS_50), // close
-		ImageName_Blend(640, 0, 32, 133, 32, 16, 0, TRANS_50)  // very close
+		ImageName_Blend(596, 0, 32, 133, 32, 16, 0, TRANS_50), // very far
+		ImageName_Blend(596, 0, 32, 133, 32, 16, 0, TRANS_50), // far
+		ImageName_Blend(596, 0, 32, 133, 32, 16, 0, TRANS_50), // close
+		ImageName_Blend(596, 0, 32, 133, 32, 16, 0, TRANS_50)  // very close
 	},
 	
 	.group4_turbopad_gray.texLayout =
 	{
-		ImageName_Blend(704, 0, 32, 134, 32, 16, 0, TRANS_50), // very far
-		ImageName_Blend(704, 0, 32, 134, 32, 16, 0, TRANS_50), // far
-		ImageName_Blend(704, 0, 32, 134, 32, 16, 0, TRANS_50), // close
-		ImageName_Blend(704, 0, 32, 134, 32, 16, 0, TRANS_50)  // very close
+		ImageName_Blend(604, 0, 32, 134, 32, 16, 0, TRANS_50), // very far
+		ImageName_Blend(604, 0, 32, 134, 32, 16, 0, TRANS_50), // far
+		ImageName_Blend(604, 0, 32, 134, 32, 16, 0, TRANS_50), // close
+		ImageName_Blend(604, 0, 32, 134, 32, 16, 0, TRANS_50)  // very close
 	},
 	
 	// this must exist, or else camera fly-in
@@ -175,8 +184,8 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp0_BehindStart4, group4_placeHolder, 0x180, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// top/bottom left/right assuming you're rotation is 0,0,0
-	//TEX_2X2(Bsp0_BehindStart1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter), // TODO: CORNER
-	//TEX_2X2(Bsp0_BehindStart2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge), // TODO: CORNER
+	TEX_2X2(Bsp0_BehindStart1, group4_tileCorner, group4_tileCenter, group4_tileEdge, group4_tileCenter), // TODO: CORNER
+	TEX_2X2(Bsp0_BehindStart2, group4_tileCenter, group4_tileCorner, group4_tileCenter, group4_tileEdge), // TODO: CORNER
 	.quadBlock[Bsp0_BehindStart1].draw_order_low = 0x800000,
 	.quadBlock[Bsp0_BehindStart2].draw_order_low = 0x1044000,
 	TEX_2X2(Bsp0_BehindStart3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
@@ -1690,6 +1699,7 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(93),
 		PTR_MAP_QUADBLOCK(94),
 		PTR_MAP_QUADBLOCK(95),
+		PTR_MAP_QUADBLOCK(96),
 		PTR_MAP_QUADBLOCK(97),
 	},
 };
