@@ -2,6 +2,7 @@
 #include <std/ptr.pat>
 #include <std/array.pat>
 #include <type/types/c.pat>
+#include <type/color.pat>
 
 // CTR: Crash Team Racing level files
 // author Superstarxalien
@@ -480,13 +481,24 @@ struct QuadBlockSection
 	CTRLEVPtr<PVS, u32> pvs;
 };
 
+fn format_mapNumPtrs(u32 mapNumPtrs)
+{
+	u32 numQB @ addressof(LevelHeader.ptr_mesh_info.data);
+	u32 mapPtrsTotal = mapNumPtrs >> 2;
+	u32 mapPtrsGeneralSectionNum = ((mapNumPtrs - ((numQB*6)<<2))>>2);
+	return std::format
+	(
+		"General: {0} | QuadBlock: {2} ({1} QuadBlocks) | Total: {3}",
+		mapPtrsGeneralSectionNum, numQB, numQB*6, mapPtrsTotal
+	);
+};
+
 struct Map
 {
-	u32 numPtrs;
+	u32 mapNumPtrs [[format("format_mapNumPtrs")]];
 
 	u32 numQB @ addressof(LevelHeader.ptr_mesh_info.data) [[hidden]];
-	u32 mapPtrsTotal = (this.numPtrs>>2) / 4;
-	u32 mapPtrsGeneralSectionNum = ((this.numPtrs - ((numQB*6)<<2))>>2);
+	u32 mapPtrsGeneralSectionNum = ((this.mapNumPtrs - ((numQB*6)<<2))>>2);
 
 	CTRLEVPtr<u32, u32> mapPtrsGeneralSection[this.mapPtrsGeneralSectionNum];
 	QuadBlockSection mapPtrsQuadBlockSection[numQB];
