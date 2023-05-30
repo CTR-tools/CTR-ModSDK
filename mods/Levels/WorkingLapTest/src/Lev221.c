@@ -37,14 +37,14 @@ struct LevelFile
 struct LevelFile file =
 {
 	// i don't know what the map section is, other than holding pointers for most level variables
-	.ptrMap = OFFSETOF(struct LevelFile, map[0])-4,
+	.ptrMap = LEV_OFFSETOF(map[0]),
 	
 	// i don't know what the relation between all of these variables is, specifically
 	.level =
 	{
-		.ptr_mesh_info = OFFSETOF(struct LevelFile, mInfo)-4,
-		.visMem = OFFSETOF(struct LevelFile, visMem)-4,
-		.ptr_anim_tex = OFFSETOF(struct LevelFile, animtex)-4,
+		.ptr_mesh_info = LEV_OFFSETOF(mInfo),
+		.visMem = LEV_OFFSETOF(visMem),
+		.ptr_anim_tex = LEV_OFFSETOF(animtex),
 		
 		// the game will add +0x400 to the Z rotation of spawn positions automatically
 		// we should probably look into why this even happens...
@@ -60,7 +60,7 @@ struct LevelFile file =
 		.DriverSpawn[3].pos = {0,0,0},
 		.DriverSpawn[3].rot = {0,0-0x400,0},
 		
-		.ptrSpawnType1 = OFFSETOF(struct LevelFile, spawnType1)-4,
+		.ptrSpawnType1 = LEV_OFFSETOF(spawnType1),
 		
 		.configFlags = 1,
 
@@ -75,7 +75,7 @@ struct LevelFile file =
 		// amount of respawn points in the track
 		// and pointer to respawn data itself
 		.cnt_restart_points = 16,
-		.ptr_restart_points = OFFSETOF(struct LevelFile, noderespawnsthing[0])-4,
+		.ptr_restart_points = LEV_OFFSETOF(noderespawnsthing[0]),
 	},
 	
 	// pointers and amounts of variables
@@ -84,10 +84,10 @@ struct LevelFile file =
 		.numQuadBlock = NUM_BLOCKS,
 		.numVertex = NUM_BLOCKS*9, // not really used
 		.unk1 = 0, // idk, fine to leave null
-		.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4,
-		.ptrVertexArray = OFFSETOF(struct LevelFile, levVertex[0])-4,
+		.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[0]),
+		.ptrVertexArray = LEV_OFFSETOF(levVertex[0]),
 		.unk2 = 0, // idk, fine to leave null
-		.bspRoot = OFFSETOF(struct LevelFile, bsp[0])-4,
+		.bspRoot = LEV_OFFSETOF(bsp[0]),
 		.numBspNodes = 3, // can be anything non-zero
 	},
 	
@@ -95,59 +95,57 @@ struct LevelFile file =
 	// see IconGroup3 in namespace_Decal.h
 	.test_texture =
 	{
-		.far = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
+		.far =    ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
 		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
-		.near = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		.near =   ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
 		.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
 	},
 
 	.test_anim =
 	{
-		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
+		.far =    ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
 		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
-		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
+		.near =   ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 
-		.far.v0 = 0,
-		.far.v1 = 0,
-		.far.v2 = 15-5,
-		.far.v3 = 15-5,
+		.far.v0 =    0,
+		.far.v1 =    0,
+		.far.v2 =    15-5,
+		.far.v3 =    15-5,
 		.middle.v0 = 0,
 		.middle.v1 = 0,
 		.middle.v2 = 15-5,
 		.middle.v3 = 15-5,
-		.near.v0 = 0,
-		.near.v1 = 0,
-		.near.v2 = 15-5,
-		.near.v3 = 15-5,
-		
+		.near.v0 =   0,
+		.near.v1 =   0,
+		.near.v2 =   15-5,
+		.near.v3 =   15-5,
 		.mosaic.v0 = 0,
 		.mosaic.v1 = 0,
 		.mosaic.v2 = 15-5,
 		.mosaic.v3 = 15-5,
-		
 	},
 
 	.test_anim2 =
 	{
-		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
+		.far =    ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
 		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
-		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
+		.near =   ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 	},
 
 	.animtex =
 	{
-		.ptrNext = OFFSETOF(struct LevelFile, test_anim)-4,
+		.ptrNext = LEV_OFFSETOF(test_anim),
 		.numFrames = 2,
 		.shrug = 0,
 		.lottashortshuh = 0,
 		.frameIndex = 0,
 		.ptrarray =
 		{
-			OFFSETOF(struct LevelFile, test_anim)-4,
-			OFFSETOF(struct LevelFile, test_anim2)-4,
-			OFFSETOF(struct LevelFile, animtex)-4,
+			LEV_OFFSETOF(test_anim),
+			LEV_OFFSETOF(test_anim2),
+			LEV_OFFSETOF(animtex),
 		},
 	},
 	
@@ -158,16 +156,16 @@ struct LevelFile file =
 	},
 
 	// automatically-generated quadblock insertions courtesy of pngtotrack.py
-	                                                                           NEW_BLOCK(0, test_texture, 0x0000, 0x0000, NULL, 0x1800, 0x80, 0x80, 0x80),NEW_BLOCK(1, test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
-	NEW_BLOCK(2, test_texture, -0x300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(3, test_texture, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(4, test_texture, 0x0300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(5, test_texture, 0x0600, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),
-	NEW_BLOCK(6, test_texture, -0x300, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(7, test_texture, 0x0600, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),
-	NEW_BLOCK(8, test_texture, -0x300, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(9, test_texture, 0x0600, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),
+	                                                                           NEW_BLOCK(0, test_texture, 0x0000, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x80),NEW_BLOCK(1,  test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x0,  0x0, 0xFF),                                                                           
+	NEW_BLOCK(2,  test_texture, -0x300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(3, test_texture, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(4,  test_texture, 0x0300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(5,  test_texture, 0x0600, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),
+	NEW_BLOCK(6,  test_texture, -0x300, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(7,  test_texture, 0x0600, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),
+	NEW_BLOCK(8,  test_texture, -0x300, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(9,  test_texture, 0x0600, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(10, test_texture, -0x300, 0x0c00, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(11, test_texture, 0x0600, 0x0c00, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(12, test_texture, -0x300, 0x0f00, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(13, test_texture, 0x0600, 0x0f00, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(14, test_texture, -0x300, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(15, test_texture, 0x0000, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(16, test_texture, 0x0300, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(17, test_texture, 0x0600, 0x1200, NULL, 0x1800, 0x80, 0x40, 0x0),
 	                                                                           NEW_BLOCK(18, test_texture, 0x0000, 0x1500, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(19, test_texture, 0x0300, 0x1500, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
 
-	.quadBlock[0].ptr_texture_mid[0] = (OFFSETOF(struct LevelFile, animtex)-4)|1,
+	.quadBlock[0].ptr_texture_mid[0] = (LEV_OFFSETOF(animtex))|1,
 
 	/*
 	
@@ -420,7 +418,7 @@ struct LevelFile file =
 					.unk1 = 0,
 					.bspHitboxArray = 0,
 					.numQuads = 0,
-					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
+					.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[0])
 				}
 			}
 		},
@@ -444,7 +442,7 @@ struct LevelFile file =
 					.unk1 = 0,
 					.bspHitboxArray = 0,
 					.numQuads = 20,
-					.ptrQuadBlockArray = OFFSETOF(struct LevelFile, quadBlock[0])-4
+					.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[0])
 				}
 			}
 		},
@@ -452,8 +450,8 @@ struct LevelFile file =
 	
 	.pvs =
 	{
-		.visLeafSrc = OFFSETOF(struct LevelFile, visBitIndex[0])-4,
-		.visFaceSrc = OFFSETOF(struct LevelFile, visBitIndex[0])-4,
+		.visLeafSrc = LEV_OFFSETOF(visBitIndex[0]),
+		.visFaceSrc = LEV_OFFSETOF(visBitIndex[0]),
 		.visInstSrc = 0,
 		.visExtraSrc = 0,
 	},
@@ -467,77 +465,77 @@ struct LevelFile file =
 	.visMem =
 	{
 		// P1
-		.visLeafList[0] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP1[0])-4,
-		.visFaceList[0] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP1[4])-4,
-		.bspList[0] = OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[0])-4,
+		.visLeafList[0] = LEV_OFFSETOF(VisMem_bitIndex_DstMemcpyP1[0]),
+		.visFaceList[0] = LEV_OFFSETOF(VisMem_bitIndex_DstMemcpyP1[4]),
+		.bspList[0] = LEV_OFFSETOF(VisMem_bspList_RenderListP1[0]),
 		
 		// P2
-		.visLeafList[1] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP2[0])-4,
-		.visFaceList[1] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP2[4])-4,
-		.bspList[1] = OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[0])-4,
+		.visLeafList[1] = LEV_OFFSETOF(VisMem_bitIndex_DstMemcpyP2[0]),
+		.visFaceList[1] = LEV_OFFSETOF(VisMem_bitIndex_DstMemcpyP2[4]),
+		.bspList[1] = LEV_OFFSETOF(VisMem_bspList_RenderListP2[0]),
 		
 		// P3
-		.visLeafList[2] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP3[0])-4,
-		.visFaceList[2] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP3[4])-4,
-		.bspList[2] = OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[0])-4,
+		.visLeafList[2] = LEV_OFFSETOF(VisMem_bitIndex_DstMemcpyP3[0]),
+		.visFaceList[2] = LEV_OFFSETOF(VisMem_bitIndex_DstMemcpyP3[4]),
+		.bspList[2] = LEV_OFFSETOF(VisMem_bspList_RenderListP3[0]),
 		
 		// P4
-		.visLeafList[3] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP4[0])-4,
-		.visFaceList[3] = OFFSETOF(struct LevelFile, VisMem_bitIndex_DstMemcpyP4[4])-4,
-		.bspList[3] = OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[0])-4,
+		.visLeafList[3] = LEV_OFFSETOF(VisMem_bitIndex_DstMemcpyP4[0]),
+		.visFaceList[3] = LEV_OFFSETOF(VisMem_bitIndex_DstMemcpyP4[4]),
+		.bspList[3] = LEV_OFFSETOF(VisMem_bspList_RenderListP4[0]),
 	},
 	
 	// initialize for leaf nodes only
-	.VisMem_bspList_RenderListP1[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
-	.VisMem_bspList_RenderListP2[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
-	.VisMem_bspList_RenderListP3[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
-	.VisMem_bspList_RenderListP4[2*1+1] = OFFSETOF(struct LevelFile, bsp[1])-4,
-	.VisMem_bspList_RenderListP1[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
-	.VisMem_bspList_RenderListP2[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
-	.VisMem_bspList_RenderListP3[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
-	.VisMem_bspList_RenderListP4[2*2+1] = OFFSETOF(struct LevelFile, bsp[2])-4,
+	.VisMem_bspList_RenderListP1[2*1+1] = LEV_OFFSETOF(bsp[1]),
+	.VisMem_bspList_RenderListP2[2*1+1] = LEV_OFFSETOF(bsp[1]),
+	.VisMem_bspList_RenderListP3[2*1+1] = LEV_OFFSETOF(bsp[1]),
+	.VisMem_bspList_RenderListP4[2*1+1] = LEV_OFFSETOF(bsp[1]),
+	.VisMem_bspList_RenderListP1[2*2+1] = LEV_OFFSETOF(bsp[2]),
+	.VisMem_bspList_RenderListP2[2*2+1] = LEV_OFFSETOF(bsp[2]),
+	.VisMem_bspList_RenderListP3[2*2+1] = LEV_OFFSETOF(bsp[2]),
+	.VisMem_bspList_RenderListP4[2*2+1] = LEV_OFFSETOF(bsp[2]),
 	
 	.map =
 	{
 		(36+NUM_BLOCKS*6)<<2,
 		
 		// 36
-		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
-		OFFSETOF(struct LevelFile, level.visMem)-4,
-		OFFSETOF(struct LevelFile, level.ptr_anim_tex)-4,
-		OFFSETOF(struct LevelFile, animtex.ptrNext)-4,
-		OFFSETOF(struct LevelFile, animtex.ptrarray[0])-4,
-		OFFSETOF(struct LevelFile, animtex.ptrarray[1])-4,
-		OFFSETOF(struct LevelFile, animtex.ptrarray[2])-4,
-		OFFSETOF(struct LevelFile, level.ptrSpawnType1)-4,
-		OFFSETOF(struct LevelFile, level.ptr_restart_points)-4,
-		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
-		OFFSETOF(struct LevelFile, mInfo.ptrVertexArray)-4,
-		OFFSETOF(struct LevelFile, mInfo.bspRoot)-4,
-		OFFSETOF(struct LevelFile, bsp[1].data.leaf.ptrQuadBlockArray)-4,
-		OFFSETOF(struct LevelFile, bsp[2].data.leaf.ptrQuadBlockArray)-4,
-		OFFSETOF(struct LevelFile, pvs.visLeafSrc)-4,
-		OFFSETOF(struct LevelFile, pvs.visFaceSrc)-4,
-		OFFSETOF(struct LevelFile, visMem.visLeafList[0])-4,
-		OFFSETOF(struct LevelFile, visMem.visLeafList[1])-4,
-		OFFSETOF(struct LevelFile, visMem.visLeafList[2])-4,
-		OFFSETOF(struct LevelFile, visMem.visLeafList[3])-4,
-		OFFSETOF(struct LevelFile, visMem.visFaceList[0])-4,
-		OFFSETOF(struct LevelFile, visMem.visFaceList[1])-4,
-		OFFSETOF(struct LevelFile, visMem.visFaceList[2])-4,
-		OFFSETOF(struct LevelFile, visMem.visFaceList[3])-4,
-		OFFSETOF(struct LevelFile, visMem.bspList[0])-4,
-		OFFSETOF(struct LevelFile, visMem.bspList[1])-4,
-		OFFSETOF(struct LevelFile, visMem.bspList[2])-4,
-		OFFSETOF(struct LevelFile, visMem.bspList[3])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*1+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*1+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*1+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*1+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP1[2*2+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP2[2*2+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP3[2*2+1])-4,
-		OFFSETOF(struct LevelFile, VisMem_bspList_RenderListP4[2*2+1])-4,
+		LEV_OFFSETOF(level.ptr_mesh_info),
+		LEV_OFFSETOF(level.visMem),
+		LEV_OFFSETOF(level.ptr_anim_tex),
+		LEV_OFFSETOF(animtex.ptrNext),
+		LEV_OFFSETOF(animtex.ptrarray[0]),
+		LEV_OFFSETOF(animtex.ptrarray[1]),
+		LEV_OFFSETOF(animtex.ptrarray[2]),
+		LEV_OFFSETOF(level.ptrSpawnType1),
+		LEV_OFFSETOF(level.ptr_restart_points),
+		LEV_OFFSETOF(mInfo.ptrQuadBlockArray),
+		LEV_OFFSETOF(mInfo.ptrVertexArray),
+		LEV_OFFSETOF(mInfo.bspRoot),
+		LEV_OFFSETOF(bsp[1].data.leaf.ptrQuadBlockArray),
+		LEV_OFFSETOF(bsp[2].data.leaf.ptrQuadBlockArray),
+		LEV_OFFSETOF(pvs.visLeafSrc),
+		LEV_OFFSETOF(pvs.visFaceSrc),
+		LEV_OFFSETOF(visMem.visLeafList[0]),
+		LEV_OFFSETOF(visMem.visLeafList[1]),
+		LEV_OFFSETOF(visMem.visLeafList[2]),
+		LEV_OFFSETOF(visMem.visLeafList[3]),
+		LEV_OFFSETOF(visMem.visFaceList[0]),
+		LEV_OFFSETOF(visMem.visFaceList[1]),
+		LEV_OFFSETOF(visMem.visFaceList[2]),
+		LEV_OFFSETOF(visMem.visFaceList[3]),
+		LEV_OFFSETOF(visMem.bspList[0]),
+		LEV_OFFSETOF(visMem.bspList[1]),
+		LEV_OFFSETOF(visMem.bspList[2]),
+		LEV_OFFSETOF(visMem.bspList[3]),
+		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*1+1]),
+		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*1+1]),
+		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*1+1]),
+		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*1+1]),
+		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*2+1]),
+		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*2+1]),
+		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*2+1]),
+		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*2+1]),
 
 		// (NUM_BLOCKS*6)
 		PTR_MAP_QUADBLOCK(0),

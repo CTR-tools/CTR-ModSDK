@@ -134,7 +134,7 @@ struct TextureLayout
 	// 0x1e
 	// bottom right corner
 	unsigned char u3;
-	unsigned char v3;	
+	unsigned char v3;
 };
 
 struct Icon

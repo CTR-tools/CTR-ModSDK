@@ -84,16 +84,7 @@ enum BlendMode
 };
 
 // textures used for a quad in a quadblock
-// for medium-level quadblock detailing there's three levels of detail for its textures
-// ctr-tools only rips the "near" texture level, but the idea is that the other two are to use lower-quality textures
-struct IconGroup3
-{
-	struct TextureLayout far;
-	struct TextureLayout middle;
-	struct TextureLayout near;
-};
-
-// same as IconGroup3, except contains TexLayout for High LOD mosaics (aka texMontage)
+// ctr-tools only rips the "near" and "mosaic" texture levels, but the idea is that middle and far are to use lower-quality textures
 struct IconGroup4
 {
 	struct TextureLayout far;
@@ -105,7 +96,7 @@ struct IconGroup4
 struct AnimTex
 {
 	// 0x0
-	// pointer to next AnimTex struct...
+	// pointer to IconGroup4 struct to be animated
 	// cycles through the entirety of ptrarray
 	struct IconGroup4* ptrNext;
 
@@ -126,7 +117,7 @@ struct AnimTex
 
 	// 0xC
 	// amount of elements in array is same as numFrames
-	// ptrarray[numFrames] leads to the ptrNext of some other AnimTex struct or something
+	// ptrarray[numFrames] leads to the next AnimTex struct in the ptr_anim_tex array
 	struct IconGroup4* ptrarray[3];
 };
 
@@ -155,7 +146,9 @@ struct QuadBlock
 	int draw_order_high;
 
 	// 0x1c
-	// ptr_texture_mid can point to IconGroup3, IconGroup4, or AnimTex structs
+	// used for the textures of all 4 quads in a medium-level quadblock
+	// usually points to IconGroup4, but can also point to AnimTex structs
+	// member 0 is 0,0 in xy, 1 is 1,0, 2 is 0,1, 3 is 1,1
 	void* ptr_texture_mid[4];
 
 	// 0x2c
@@ -177,7 +170,8 @@ struct QuadBlock
 	char triNormalVecBitShift;
 
 	// 0x40
-	// ptr_texture_low can also point to IconGroup3, IconGroup4, or AnimTex structs
+	// used for the texture of a quad in low level of detail
+	// the same as ptr_texture_mid, just not as an array
 	void* ptr_texture_low;
 
 	// 0x44
@@ -461,7 +455,7 @@ struct Level
 	void* ptr_skybox;
 
 	// 0x8
-	// pointer to animated textures array
+	// pointer to array of animated texture structs
 	struct AnimTex* ptr_anim_tex;
 
 	// 0xc

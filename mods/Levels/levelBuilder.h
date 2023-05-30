@@ -1,3 +1,5 @@
+#define LEV_OFFSETOF(ELEMENT) OFFSETOF(struct LevelFile, ELEMENT)-4
+
 #define NEW_VERTEX(posX, posY, posZ, flag, colR, colG, colB) \
 { \
 	.pos = {posX, posY, posZ}, \
