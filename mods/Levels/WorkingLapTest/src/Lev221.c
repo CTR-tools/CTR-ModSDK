@@ -30,7 +30,7 @@ struct LevelFile
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
 	int VisMem_bspList_RenderListP4[3*2];
 	
-	int map[(34+NUM_BLOCKS*6)+1];
+	int map[(35+NUM_BLOCKS*6)+1];
 };
 
 // for whatever reason it's necessary to offset every pointer by -4
@@ -499,12 +499,13 @@ struct LevelFile file =
 	
 	.map =
 	{
-		(34+NUM_BLOCKS*6)<<2,
+		(35+NUM_BLOCKS*6)<<2,
 		
-		// 34
+		// 35
 		OFFSETOF(struct LevelFile, level.ptr_mesh_info)-4,
 		OFFSETOF(struct LevelFile, level.visMem)-4,
 		OFFSETOF(struct LevelFile, level.ptr_anim_tex)-4,
+		OFFSETOF(struct LevelFile, animtex)-4,
 		OFFSETOF(struct LevelFile, level.ptrSpawnType1)-4,
 		OFFSETOF(struct LevelFile, level.ptr_restart_points)-4,
 		OFFSETOF(struct LevelFile, mInfo.ptrQuadBlockArray)-4,
