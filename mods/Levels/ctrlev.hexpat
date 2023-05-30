@@ -84,19 +84,19 @@ struct QuadBlock
 	BoundingBox bbox;
 
 	// 0x38
-	char terrain_type;
-	char weather_intensity;
-	char weather_vanishRate;
-	char speedImpact;
+	s8 terrain_type;
+	s8 weather_intensity;
+	s8 weather_vanishRate;
+	s8 speedImpact;
 
 	// 0x3C
 	short blockID;
 
 	// used for checkpoint progression
 	// and also respawns
-	char checkpointIndex;
+	s8 checkpointIndex;
 
-	char triNormalVecBitShift;
+	s8 triNormalVecBitShift;
 
 	// 0x40
 	// ptr_texture_low can also point to IconGroup3, IconGroup4, or AnimTex structs
@@ -273,6 +273,34 @@ struct BackgroundColor
 	s8 enable;
 };
 
+struct AnimTex
+{
+	// 0x0
+	// pointer to next AnimTex struct...
+	// cycles through the entirety of ptrarray
+	CTRLEVPtr<u32, u32> ptrNext;
+
+	// 0x4
+	short numFrames;
+
+	// 0x6
+	// related to timer
+	short shrug;
+
+	// 0x8
+	// related to timer
+	short lottashortshuh;
+
+	// 0xA
+	// current frame
+	u16 frameIndex;
+
+	// 0xC
+	// amount of elements in array is same as numFrames
+	// ptrarray[numFrames] leads to the ptrNext of some other AnimTex struct or something
+	CTRLEVPtr<u32, u32> ptrarray[this.numFrames];
+};
+
 struct Level
 {
 	// 0x0
@@ -285,7 +313,7 @@ struct Level
 
 	// 0x8
 	// pointer to animated textures array
-	u32 PTR_ptr_anim_tex;
+	CTRLEVPtr<AnimTex, u32> ptr_anim_tex;
 
 	// 0xc
 	// number of model instances in the level
