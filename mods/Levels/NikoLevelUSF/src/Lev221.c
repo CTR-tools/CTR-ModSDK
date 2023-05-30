@@ -1211,7 +1211,7 @@ struct LevelFile file =
 		
 		[CPI_FlatDip] =
 		{
-			.pos = {0x180, -0x500, 0xED4},
+			.pos = {0x180, -0x480, 0xED4},
 			.distToFinish = (NUM_CHECKPOINT-CPI_FlatDip-1)*DIST_PER_NODE+1,
 			.nextIndex_forward = CPI_UpRamp1,
 			.nextIndex_left = -1,
