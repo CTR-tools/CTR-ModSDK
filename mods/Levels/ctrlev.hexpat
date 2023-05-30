@@ -1,4 +1,3 @@
-#include <std/string.pat>
 #include <std/ptr.pat>
 #include <std/array.pat>
 #include <type/types/c.pat>
@@ -7,7 +6,7 @@
 // CTR: Crash Team Racing level files
 // author Superstarxalien
 
-#pragma eval_depth 512+256
+#pragma pattern_limit 200000
 
 //using BSP; --these crashed before
 
