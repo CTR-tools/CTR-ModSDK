@@ -18,7 +18,7 @@ void RunInitHook()
 	// set battle menubox to use adv cup rows
 	*(unsigned int*)(0x80084474 + 0xC) = 0x800844A0;
 	
-	if(gGT->levelID != 0x14) return;
+	if(gGT->levelID != PARKING_LOT) return;
 	
 	sdata->ptrActiveMenuBox = 0;
 }
@@ -85,6 +85,6 @@ void RunUpdateHook()
 		sdata->ptrActiveMenuBox->rows = &NewRowsEND[0];
 	}
 	
-	if(sdata->gGT->levelID != 0x14) return;
+	if(sdata->gGT->levelID != PARKING_LOT) return;
 }
 
