@@ -175,8 +175,8 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp0_BehindStart4, group4_placeHolder, 0x180, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
 	// top/bottom left/right assuming you're rotation is 0,0,0
-	TEX_2X2(Bsp0_BehindStart1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
-	TEX_2X2(Bsp0_BehindStart2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	//TEX_2X2(Bsp0_BehindStart1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter), // TODO: CORNER
+	//TEX_2X2(Bsp0_BehindStart2, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge), // TODO: CORNER
 	.quadBlock[Bsp0_BehindStart1].draw_order_low = 0x800000,
 	.quadBlock[Bsp0_BehindStart2].draw_order_low = 0x1044000,
 	TEX_2X2(Bsp0_BehindStart3, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
@@ -493,6 +493,13 @@ struct LevelFile file =
 	.quadBlock[Bsp3_FlatTop3].draw_order_low = 0x800000,
 	.quadBlock[Bsp3_FlatTop4].draw_order_low = 0x1044000,
 	
+	//TEX_2X2(Bsp3_FlatTop5, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter), 	// TODO: CORNER
+	TEX_2X2(Bsp3_FlatTop6, group4_tileCenter, group4_tileCenter, group4_tileCenter, group4_tileCenter),
+	.quadBlock[Bsp3_FlatTop5].draw_order_low = 0x800000,
+	.quadBlock[Bsp3_FlatTop6].draw_order_low = 0x1044000,
+	
+	//TEX_2X2(Bsp3_FlatTop7...) // TODO: CORNER
+	
 	// ==== End of BSP block =====
 	
 	// flat, turn 90
@@ -634,6 +641,16 @@ struct LevelFile file =
 	.quadBlock[Bsp2_TurnRight1].draw_order_low = 0x808100,
 	.quadBlock[Bsp2_TurnRight2].draw_order_low = 0x1984000,
 	
+	TEX_2X2(Bsp2_TurnRight3, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp2_TurnRight4, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp2_TurnRight3].draw_order_low = 0x808100,
+	.quadBlock[Bsp2_TurnRight4].draw_order_low = 0x1984000,
+	
+	TEX_2X2(Bsp2_TurnRight5, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp2_TurnRight6, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp2_TurnRight5].draw_order_low = 0x808100,
+	.quadBlock[Bsp2_TurnRight6].draw_order_low = 0x1984000,
+	
 	SET_POSY_FLAT(Bsp2_TurnRight1,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight2,-0x300),
 	SET_POSY_FLAT(Bsp2_TurnRight3,-0x300),
@@ -708,6 +725,22 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp2_GoBack3, group4_placeHolder, 0x1980, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_GoBack4, group4_placeHolder, 0x1680, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_GoBack5, group4_placeHolder, 0x1680, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
+	
+	TEX_2X2(Bsp2_GoBack0, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
+	.quadBlock[Bsp2_GoBack0].draw_order_low = 0x1044000,
+	
+	//TEX_2X2(Bsp2_GoBack1, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge), // TODO: CORNER
+	//.quadBlock[Bsp2_GoBack1].draw_order_low = 0x1984000,
+	
+	TEX_2X2(Bsp2_GoBack3, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp2_GoBack2, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp2_GoBack3].draw_order_low = 0x808100,
+	.quadBlock[Bsp2_GoBack2].draw_order_low = 0x1984000,
+	TEX_2X2(Bsp2_GoBack5, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
+	TEX_2X2(Bsp2_GoBack4, group4_tileCenter, group4_tileCenter, group4_tileEdge, group4_tileEdge),
+	.quadBlock[Bsp2_GoBack5].draw_order_low = 0x808100,
+	.quadBlock[Bsp2_GoBack4].draw_order_low = 0x1984000,
+	
 	NEW_BLOCK(Bsp2_GoBack6, group4_placeHolder, 0x1380, -0x300, NULL, 0x1800, 0x80, 0x80, 0x80),
 	NEW_BLOCK(Bsp2_GoBack7, group4_placeHolder, 0x1380, -0x600, NULL, 0x1800, 0x80, 0x80, 0x80),
 	
