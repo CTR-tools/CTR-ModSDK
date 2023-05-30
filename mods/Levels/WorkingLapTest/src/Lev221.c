@@ -9,11 +9,10 @@ struct LevelFile
 	struct Level level;
 	struct mesh_info mInfo;
 	struct IconGroup4 test_texture;
-	struct IconGroup3 test_anim;
-	struct IconGroup3 test_anim2;
-	struct IconGroup3 test_anim3;
+	struct IconGroup4 test_anim;
+	struct IconGroup4 test_anim2;
+	struct IconGroup4 test_anim3;
 	struct AnimTex animtex;
-	struct AnimTex animtex2;
 	struct SpawnType1 spawnType1;
 	struct CheckpointNode noderespawnsthing[16];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
@@ -108,7 +107,7 @@ struct LevelFile file =
 		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
 		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
 		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-		//.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
+		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 
 		.far.v0 = 0+5,
 		.far.v1 = 0+5,
@@ -122,12 +121,12 @@ struct LevelFile file =
 		.near.v1 = 0+5,
 		.near.v2 = 31+5,
 		.near.v3 = 31+5,
-		/*
+		
 		.mosaic.v0 = 0+5,
 		.mosaic.v1 = 0+5,
 		.mosaic.v2 = 31+5,
 		.mosaic.v3 = 31+5,
-		*/
+		
 	},
 
 	.test_anim2 =
@@ -135,7 +134,7 @@ struct LevelFile file =
 		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
 		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
 		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-		//.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
+		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 	},
 
 	.test_anim3 =
@@ -143,12 +142,12 @@ struct LevelFile file =
 		.far = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very far
 		.middle = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // far
 		.near = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
-		//.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
+		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 	},
 
 	.animtex =
 	{
-		.ptrNext = OFFSETOF(struct LevelFile, test_anim3)-4,
+		.ptrNext = OFFSETOF(struct LevelFile, test_anim)-4,
 		.numFrames = 2,
 		.shrug = 0,
 		.lottashortshuh = 0,
@@ -157,20 +156,7 @@ struct LevelFile file =
 		{
 			OFFSETOF(struct LevelFile, test_anim)-4,
 			OFFSETOF(struct LevelFile, test_anim2)-4,
-		},
-	},
-
-	.animtex2 =
-	{
-		.ptrNext = OFFSETOF(struct LevelFile, animtex)-4,
-		.numFrames = 2,
-		.shrug = 0,
-		.lottashortshuh = 0,
-		.frameIndex = 1,
-		.ptrarray =
-		{
-			OFFSETOF(struct LevelFile, test_anim)-4,
-			OFFSETOF(struct LevelFile, test_anim2)-4,
+			OFFSETOF(struct LevelFile, animtex)-4,
 		},
 	},
 	
@@ -181,7 +167,7 @@ struct LevelFile file =
 	},
 
 	// automatically-generated quadblock insertions courtesy of pngtotrack.py
-	                                                                           NEW_BLOCK(0, test_anim3, 0x0000, 0x0000, NULL, 0x1800, 0x80, 0x80, 0x80),NEW_BLOCK(1, test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
+	                                                                           NEW_BLOCK(0, test_texture, 0x0000, 0x0000, NULL, 0x1800, 0x80, 0x80, 0x80),NEW_BLOCK(1, test_texture, 0x0300, 0x0000, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
 	NEW_BLOCK(2, test_texture, -0x300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(3, test_texture, 0x0000, 0x0300, NULL, 0x1800, 0xFF, 0xFF, 0xFF),NEW_BLOCK(4, test_texture, 0x0300, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(5, test_texture, 0x0600, 0x0300, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(6, test_texture, -0x300, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(7, test_texture, 0x0600, 0x0600, NULL, 0x1800, 0x80, 0x40, 0x0),
 	NEW_BLOCK(8, test_texture, -0x300, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                                                                                                      NEW_BLOCK(9, test_texture, 0x0600, 0x0900, NULL, 0x1800, 0x80, 0x40, 0x0),
@@ -191,9 +177,6 @@ struct LevelFile file =
 	                                                                           NEW_BLOCK(18, test_texture, 0x0000, 0x1500, NULL, 0x1800, 0x80, 0x40, 0x0),NEW_BLOCK(19, test_texture, 0x0300, 0x1500, NULL, 0x1800, 0x80, 0x40, 0x0),                                                                           
 
 	.quadBlock[0].ptr_texture_mid[0] = (OFFSETOF(struct LevelFile, animtex)-4)|1,
-	.quadBlock[0].ptr_texture_mid[1] = (OFFSETOF(struct LevelFile, animtex)-4)|1,
-	.quadBlock[0].ptr_texture_mid[2] = (OFFSETOF(struct LevelFile, animtex)-4)|1,
-	.quadBlock[0].ptr_texture_mid[3] = (OFFSETOF(struct LevelFile, animtex)-4)|1,
 
 	/*
 	

@@ -626,5 +626,6 @@ struct Map
 };
 
 CTRLEVPtr<Map, u32> ptrMap @ 0x0;
-QuadBlock quadBlockArray[(LevelHeader.ptr_mesh_info.data.numQuadBlock)] @ (addressof(LevelHeader.ptr_mesh_info.data.ptrQuadBlockArray.data));
-LevVertex levVertexArray[(LevelHeader.ptr_mesh_info.data.numVertex)] @ (addressof(LevelHeader.ptr_mesh_info.data.ptrVertexArray.data));
+QuadBlock quadBlockArray[LevelHeader.ptr_mesh_info.data.numQuadBlock] @ addressof(LevelHeader.ptr_mesh_info.data.ptrQuadBlockArray.data);
+LevVertex levVertexArray[LevelHeader.ptr_mesh_info.data.numVertex] @ addressof(LevelHeader.ptr_mesh_info.data.ptrVertexArray.data);
+//AnimTex anim_tex_array[?] @ addressof(LevelHeader.ptr_anim_tex.data);
