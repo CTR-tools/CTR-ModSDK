@@ -28,3 +28,15 @@
 
 #define OFFSETOF(TYPE, ELEMENT) \
 	((unsigned int)&(((TYPE *)0)->ELEMENT))
+
+#define RGBtoBGR(color) \
+	((color & 0xFF0000) >> 16) | (color & 0xFF00) | ((color & 0xFF) << 16)
+
+#define GetRed(color) \
+	(color & 0xFF)
+
+#define GetGreen(color) \
+	(color & 0xFF00)>>8
+
+#define GetBlue(color) \
+	(color & 0xFF0000)>>16
