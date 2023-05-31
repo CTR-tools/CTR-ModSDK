@@ -18,7 +18,12 @@ void RunInitHook()
 	// set battle menubox to use adv cup rows
 	*(unsigned int*)(0x80084474 + 0xC) = 0x800844A0;
 	
-	if(gGT->levelID != PARKING_LOT) return;
+	// required for AI Nav, cause I dont have
+	// offsets [0xA] or [0xC] and it gets stuck
+	// in a loop, so this breaks the loop
+	*(int*)0x800150c0 = 0;
+	
+	if(gGT->levelID != 0x14) return;
 	
 	sdata->ptrActiveMenuBox = 0;
 }
@@ -29,7 +34,7 @@ struct MenuRow NewRowsMM[2] =
 	{
 		.stringIndex = 0x4D, // time trial
 		.rowOnPressUp = 0,
-		.rowOnPressDown = 1,
+		.rowOnPressDown = 0,
 		.rowOnPressLeft = 0,
 		.rowOnPressRight = 0,
 	},
@@ -71,7 +76,12 @@ void RunUpdateHook()
 	unsigned int loop;
 	unsigned int loop2;
 	short rot[3];
+	struct GameTracker* gGT;
+	struct Driver* d;
+	struct QuadBlock* firstQuad;
 	struct BattleGame* bg = 0x8000F000;
+	gGT = sdata->gGT;
+	firstQuad = gGT->level1->ptr_mesh_info->ptrQuadBlockArray;
 
 	// main menu
 	if(sdata->ptrActiveMenuBox == &OVR_230.menubox_mainMenu)
@@ -79,12 +89,74 @@ void RunUpdateHook()
 		sdata->ptrActiveMenuBox->rows = &NewRowsMM[0];
 	}
 	
-	// battle end of race
-	if(sdata->ptrActiveMenuBox == 0x800A01B4)
+	// time trial end of race
+	if(sdata->ptrActiveMenuBox == 0x800A04A4)
 	{
 		sdata->ptrActiveMenuBox->rows = &NewRowsEND[0];
 	}
 	
-	if(sdata->gGT->levelID != PARKING_LOT) return;
-}
+	if(gGT->levelID != 0x14) return;
+	
+	// TT_EndEvent_DrawHighScore - JR RA
+	*(int*)0x8009f8c0 = 0x3E00008;
+	*(int*)0x8009f8c4 = 0;
+	
+	// disable end-of-race high score saving
+	gGT->unknownFlags_1d44 = 0;
+	
+	d = gGT->drivers[0];
+	
+	#if 0
+	// get AI Nav data
+	printf("{.pos = {%d,%d,%d},.rot={%d,%d,%d,%d}},\n",
+		d->posCurr[0]/256, d->posCurr[1]/256, d->posCurr[2]/256,
+		d->rotCurr.x, d->rotCurr.y, d->rotCurr.z, d->rotCurr.w);
+	#endif
+	
+	// top 180-degree U-turn with 4 turbos,
+	// make them double-sided or single-sided
+	
+	// while on top of the surface, disable double-sided quads
+	if(d->posCurr[2] > 0x1D0000)
+	{
+		for(loop = Bsp3_FlatTop1; loop <= Bsp3_FlatTop7; loop++)
+			firstQuad[loop].draw_order_low &= ~(0x80000000);
+	
+		for(loop = Bsp1_TurnLeft1; loop <= Bsp1_TurnBack10; loop++)
+			firstQuad[loop].draw_order_low &= ~(0x80000000);
+	}
+	
+	// not on top of the surface, enable double-sided quads
+	else
+	{
+		for(loop = Bsp3_FlatTop1; loop <= Bsp3_FlatTop7; loop++)
+			firstQuad[loop].draw_order_low |= 0x80000000;
+	
+		for(loop = Bsp1_TurnLeft1; loop <= Bsp1_TurnBack10; loop++)
+			firstQuad[loop].draw_order_low |= 0x80000000;
+	}
+	
+	if(d->posCurr[0] > 0x30000)
+	{
+		for(loop = Bsp2_FirstBlock; loop <= Bsp2_Last; loop++)
+			firstQuad[loop].draw_order_low &= ~(0x80000000);
+		
+		for(loop = Bsp4_FirstBlock; loop <= Bsp4_Last; loop++)
+			firstQuad[loop].draw_order_low &= ~(0x80000000);
+		
+		for(loop = Bsp0_BehindStart1; loop <= Bsp0_UpRamp8_Turbo_1840; loop++)
+			firstQuad[loop].draw_order_low |= 0x80000000;
+	}
+	
+	else
+	{
+		for(loop = Bsp2_FirstBlock; loop <= Bsp2_Last; loop++)
+			firstQuad[loop].draw_order_low |= 0x80000000;	
+		
+		for(loop = Bsp4_FirstBlock; loop <= Bsp4_Last; loop++)
+			firstQuad[loop].draw_order_low |= 0x80000000;	
 
+		for(loop = Bsp0_BehindStart1; loop <= Bsp0_UpRamp8_Turbo_1840; loop++)
+			firstQuad[loop].draw_order_low &= ~(0x80000000);	
+	}
+}
