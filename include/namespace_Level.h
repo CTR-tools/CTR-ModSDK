@@ -118,7 +118,7 @@ struct AnimTex
 	// 0xC
 	// amount of elements in array is same as numFrames
 	// ptrarray[numFrames] leads to the next AnimTex struct in the ptr_anim_tex array
-	struct IconGroup4* ptrarray[3];
+	struct IconGroup4* ptrarray[0];
 };
 
 struct PVS

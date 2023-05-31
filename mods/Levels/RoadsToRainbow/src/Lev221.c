@@ -9,8 +9,10 @@ struct LevelFile
 	struct Level level;
 	struct mesh_info mInfo;
 	struct IconGroup4 group4_ground;
-	struct IconGroup4 group4_ramp;
-	struct IconGroup4 group4_ramp_flip180;
+	struct IconGroup4 turbo_pad[10];
+	struct IconGroup4 turbo_pad_flip180[10];
+	struct AnimTex turbo_pad_anim;
+	struct AnimTex turbo_pad_flip180_anim;
 	struct TextureLayout texlayout_ramp_low;
 	struct TextureLayout texlayout_ramp_low_flipV;
 	struct SpawnType1 ptrSpawnType1;
@@ -31,7 +33,7 @@ struct LevelFile
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
 	int VisMem_bspList_RenderListP4[3*2];
 	
-	int map[(31+NUM_BLOCKS*6)+1];
+	int map[(55+NUM_BLOCKS*6)+1];
 };
 
 struct LevelFile file =
@@ -42,6 +44,7 @@ struct LevelFile file =
 	{
 		.ptr_mesh_info = LEV_OFFSETOF(mInfo),
 		.visMem = LEV_OFFSETOF(visMem),
+		.ptr_anim_tex = LEV_OFFSETOF(turbo_pad_anim),
 		
 		// warning, game will edit rotY by 0x400 after spawn
 		
@@ -89,42 +92,48 @@ struct LevelFile file =
 		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, 0, TRANS_50), // very close
 	},
 	
-	.group4_ramp =
+	.turbo_pad =
 	{
-		// 576_0_32_21_32_16_0.png		
-		.far    = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very far
-		.middle = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // far
-		.near   = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // close
-		.mosaic = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very close
+		[0] =
+		{
+			// 576_0_32_21_32_16_0.png		
+			.far    = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very far
+			.middle = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // far
+			.near   = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // close
+			.mosaic = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very close
+		},
 	},
 	
-	.group4_ramp_flip180 =
+	.turbo_pad_flip180 =
 	{
-		// 576_0_32_21_32_16_0.png		
-		.far    = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very far
-		.middle = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // far
-		.near   = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // close
-		.mosaic = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very close
-		
-		.far.v0 = 16-1,
-		.far.v1 = 16-1,
-		.far.v2 = 0,
-		.far.v3 = 0,
-		
-		.middle.v0 = 16-1,
-		.middle.v1 = 16-1,
-		.middle.v2 = 0,
-		.middle.v3 = 0,
-		
-		.near.v0 = 16-1,
-		.near.v1 = 16-1,
-		.near.v2 = 0,
-		.near.v3 = 0,
-		
-		.mosaic.v0 = 16-1,
-		.mosaic.v1 = 16-1,
-		.mosaic.v2 = 0,
-		.mosaic.v3 = 0,
+		[0] =
+		{
+			// 576_0_32_21_32_16_0.png		
+			.far    = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very far
+			.middle = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // far
+			.near   = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // close
+			.mosaic = ImageName_Blend(576, 0, 32, 21, 32, 16, 0, TRANS_50), // very close
+			
+			.far.v0 = 16-1,
+			.far.v1 = 16-1,
+			.far.v2 = 0,
+			.far.v3 = 0,
+			
+			.middle.v0 = 16-1,
+			.middle.v1 = 16-1,
+			.middle.v2 = 0,
+			.middle.v3 = 0,
+			
+			.near.v0 = 16-1,
+			.near.v1 = 16-1,
+			.near.v2 = 0,
+			.near.v3 = 0,
+			
+			.mosaic.v0 = 16-1,
+			.mosaic.v1 = 16-1,
+			.mosaic.v2 = 0,
+			.mosaic.v3 = 0,
+		},
 	},
 	
 	.texlayout_ramp_low 	  = ImageName_Blend(640, 0, 32, 22, 12, 12, 0, TRANS_50),
@@ -134,6 +143,51 @@ struct LevelFile file =
 	.texlayout_ramp_low_flipV.v1 = 12-1,
 	.texlayout_ramp_low_flipV.v2 = 0,
 	.texlayout_ramp_low_flipV.v3 = 0,
+
+	.turbo_pad_anim =
+	{
+		.ptrNext = LEV_OFFSETOF(turbo_pad[0]),
+		.numFrames = 10,
+		.shrug = 0,
+		.lottashortshuh = 0,
+		.frameIndex = 0,
+		.ptrarray =
+		{
+			LEV_OFFSETOF(turbo_pad[0]),
+			LEV_OFFSETOF(turbo_pad[1]),
+			LEV_OFFSETOF(turbo_pad[2]),
+			LEV_OFFSETOF(turbo_pad[3]),
+			LEV_OFFSETOF(turbo_pad[4]),
+			LEV_OFFSETOF(turbo_pad[5]),
+			LEV_OFFSETOF(turbo_pad[6]),
+			LEV_OFFSETOF(turbo_pad[7]),
+			LEV_OFFSETOF(turbo_pad[8]),
+			LEV_OFFSETOF(turbo_pad[9]),
+		},
+	},
+
+	.turbo_pad_flip180_anim =
+	{
+		.ptrNext = LEV_OFFSETOF(turbo_pad_flip180[0]),
+		.numFrames = 10,
+		.shrug = 0,
+		.lottashortshuh = 0,
+		.frameIndex = 0,
+		.ptrarray =
+		{
+			LEV_OFFSETOF(turbo_pad_flip180[0]),
+			LEV_OFFSETOF(turbo_pad_flip180[1]),
+			LEV_OFFSETOF(turbo_pad_flip180[2]),
+			LEV_OFFSETOF(turbo_pad_flip180[3]),
+			LEV_OFFSETOF(turbo_pad_flip180[4]),
+			LEV_OFFSETOF(turbo_pad_flip180[5]),
+			LEV_OFFSETOF(turbo_pad_flip180[6]),
+			LEV_OFFSETOF(turbo_pad_flip180[7]),
+			LEV_OFFSETOF(turbo_pad_flip180[8]),
+			LEV_OFFSETOF(turbo_pad_flip180[9]),
+			LEV_OFFSETOF(turbo_pad_anim),
+		},
+	},
 	
 	// this must exist, or else camera fly-in
 	// checks for "count" without nullptr check,
@@ -203,10 +257,10 @@ struct LevelFile file =
 	NEW_BLOCK(27, group4_ground, -0x480, 0x300, NULL, 0x1800, RGBtoBGR(0x8000FF)),
 	
 	// ramp
-	NEW_BLOCK(28, group4_ramp, -0xA80, 0xF00, NULL, 0x9800, 0x808080), // coll (1800)
-	NEW_BLOCK(29, group4_ramp, -0x180, 0xF00, NULL, 0x9800, 0x808080), // coll (1800)
-	NEW_BLOCK(30, group4_ramp, -0xA80, 0xF00, NULL, 0x1840, 0x808080), // turbo (1840)
-	NEW_BLOCK(31, group4_ramp, -0x180, 0xF00, NULL, 0x1840, 0x808080), // turbo (1840)
+	NEW_BLOCK(28, turbo_pad_f1, -0xA80, 0xF00, NULL, 0x9800, 0x808080), // coll (1800)
+	NEW_BLOCK(29, turbo_pad_f1, -0x180, 0xF00, NULL, 0x9800, 0x808080), // coll (1800)
+	NEW_BLOCK(30, turbo_pad_f1, -0xA80, 0xF00, NULL, 0x1840, 0x808080), // turbo (1840)
+	NEW_BLOCK(31, turbo_pad_f1, -0x180, 0xF00, NULL, 0x1840, 0x808080), // turbo (1840)
 		
 	.quadBlock[28].draw_order_low = 0x380E000,
 	.quadBlock[29].draw_order_low = 0x380E000,
@@ -342,10 +396,10 @@ struct LevelFile file =
 	NEW_BLOCK(59, group4_ground, -0x480, 0x1500+0x300, NULL, 0x1800, 0xFFFFFF),
 	
 	// ramp
-	NEW_BLOCK(60, group4_ramp_flip180, -0xA80, 0x1500-0x300, NULL, 0x9800, 0x808080), // coll (1800)
-	NEW_BLOCK(61, group4_ramp_flip180, -0x180, 0x1500-0x300, NULL, 0x9800, 0x808080), // coll (1800)
-	NEW_BLOCK(62, group4_ramp_flip180, -0xA80, 0x1500-0x300, NULL, 0x1840, 0x808080), // turbo (1840)
-	NEW_BLOCK(63, group4_ramp_flip180, -0x180, 0x1500-0x300, NULL, 0x1840, 0x808080), // turbo (1840)
+	NEW_BLOCK(60, turbo_pad_flip180_f1, -0xA80, 0x1500-0x300, NULL, 0x9800, 0x808080), // coll (1800)
+	NEW_BLOCK(61, turbo_pad_flip180_f1, -0x180, 0x1500-0x300, NULL, 0x9800, 0x808080), // coll (1800)
+	NEW_BLOCK(62, turbo_pad_flip180_f1, -0xA80, 0x1500-0x300, NULL, 0x1840, 0x808080), // turbo (1840)
+	NEW_BLOCK(63, turbo_pad_flip180_f1, -0x180, 0x1500-0x300, NULL, 0x1840, 0x808080), // turbo (1840)
 	
 	.quadBlock[60].draw_order_low = 0x380E000,
 	.quadBlock[61].draw_order_low = 0x380E000,
@@ -548,15 +602,40 @@ struct LevelFile file =
 	
 	.map =
 	{
-		(31+NUM_BLOCKS*6)<<2,
+		(55+NUM_BLOCKS*6)<<2,
 		
+		// 55
 		LEV_OFFSETOF(level.ptr_mesh_info),
 		LEV_OFFSETOF(level.visMem),
+		LEV_OFFSETOF(level.ptr_anim_tex),
 		LEV_OFFSETOF(level.ptrSpawnType1),
 		LEV_OFFSETOF(level.ptr_restart_points),
 		LEV_OFFSETOF(mInfo.ptrQuadBlockArray),
 		LEV_OFFSETOF(mInfo.ptrVertexArray),
 		LEV_OFFSETOF(mInfo.bspRoot),
+		LEV_OFFSETOF(turbo_pad_anim.ptrNext),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[0]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[1]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[2]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[3]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[4]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[5]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[6]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[7]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[8]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[9]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrNext),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[0]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[1]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[2]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[3]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[4]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[5]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[6]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[7]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[8]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[9]),
+		LEV_OFFSETOF(turbo_pad_anim_flip180.ptrarray[10]),
 		LEV_OFFSETOF(bsp[1].data.leaf.ptrQuadBlockArray),
 		LEV_OFFSETOF(bsp[2].data.leaf.ptrQuadBlockArray),
 		LEV_OFFSETOF(pvs.visLeafSrc),
@@ -581,6 +660,8 @@ struct LevelFile file =
 		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*2+1]),
 		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*2+1]),
 		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*2+1]),
+
+		// (NUM_BLOCKS*6)
 		PTR_MAP_QUADBLOCK(0),
 		PTR_MAP_QUADBLOCK(1),
 		PTR_MAP_QUADBLOCK(2),
