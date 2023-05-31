@@ -4177,6 +4177,7 @@ struct sData
 	// 8008de34 -- EurRetail
 	// 80090ef0 -- JpnRetail
 	struct NavHeader blank_NavHeader;
+	struct NavFrame blank_NavFrame;
 
 	// 8008bf14 -- SepReview
 	// 8008dae0 -- UsaRetail

@@ -67,8 +67,8 @@ struct NavHeader
 	short rampPhys2[0x10]; // speedY? driver->0x5d0
 
 	// 0x4C
-	struct NavFrame frame[1];
+	struct NavFrame frame[0];
 };
 
 _Static_assert(sizeof(struct NavFrame) == 0x14);
-_Static_assert(sizeof(struct NavHeader) == 0x60);
+_Static_assert(sizeof(struct NavHeader) == 0x4c);

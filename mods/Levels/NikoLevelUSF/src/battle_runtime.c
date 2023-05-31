@@ -19,6 +19,11 @@ void RunInitHook()
 	// set battle menubox to use adv cup rows
 	*(unsigned int*)(0x80084474 + 0xC) = 0x800844A0;
 	
+	// required for AI Nav, cause I dont have
+	// offsets [0xA] or [0xC] and it gets stuck
+	// in a loop, so this breaks the loop
+	*(int*)0x800150c0 = 0;
+	
 	if(gGT->levelID != 0x14) return;
 	
 	sdata->ptrActiveMenuBox = 0;
@@ -101,6 +106,13 @@ void RunUpdateHook()
 	gGT->unknownFlags_1d44 = 0;
 	
 	d = gGT->drivers[0];
+	
+	#if 0
+	// get AI Nav data
+	printf("{.pos = {%d,%d,%d},.rot={%d,%d,%d,%d}},\n",
+		d->posCurr[0]/256, d->posCurr[1]/256, d->posCurr[2]/256,
+		d->rotCurr.x, d->rotCurr.y, d->rotCurr.z, d->rotCurr.w);
+	#endif
 	
 	// top 180-degree U-turn with 4 turbos,
 	// make them double-sided or single-sided
