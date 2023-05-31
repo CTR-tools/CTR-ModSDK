@@ -9,3 +9,6 @@
 // common, exe, MEMCARD_Save, 0x0, src/MEMCARD/MEMCARD_Save.c
 // common, exe, MEMCARD_unknown, 0x0, src/MEMCARD/MEMCARD_unknown.c
 // End of MEMCARD
+
+common, exe, CTR_CycleTex_LEV, 0x0, src/CTR_CycleTex_LEV_Hook.s
+common, exe, rdata_free, 0x0, ../General/CTR_CycleTex_LEV.c

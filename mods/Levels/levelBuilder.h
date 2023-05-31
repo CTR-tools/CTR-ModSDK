@@ -1,3 +1,5 @@
+#define LEV_OFFSETOF(ELEMENT) OFFSETOF(struct LevelFile, ELEMENT)-4
+
 #define NEW_VERTEX(posX, posY, posZ, flag, colR, colG, colB) \
 { \
 	.pos = {posX, posY, posZ}, \
@@ -21,7 +23,7 @@ enum BitsPerPixel
 	NEW_BLOCK
 	(
 		// index, texture
-		0, group4_ground,
+		0, texgroup_ground,
 
 		// posX, posZ
 		// +z is forward, +x is left, not right
@@ -32,20 +34,20 @@ enum BitsPerPixel
 		NULL, 0x1800,
 
 		// RGB color
-		0xFF, 0x00, 0x00
+		RGBtoBGR(0xFF0000),
 	),
 */
 
-#define NEW_BLOCK(qIndex, group4, posX, posZ, flagV, flagQ, colR, colG, colB) \
-	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+1] = NEW_VERTEX(posX+sizeX/2, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+2] = NEW_VERTEX(posX-sizeX/2, 0, posZ+sizeZ/2, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+3] = NEW_VERTEX(posX+sizeX/2, 0, posZ+sizeZ/2, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+4] = NEW_VERTEX(posX, 0, posZ-sizeZ/2, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+5] = NEW_VERTEX(posX-sizeX/2, 0, posZ, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+6] = NEW_VERTEX(posX, 0, posZ, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+7] = NEW_VERTEX(posX+sizeX/2, 0, posZ, flagV, colR, colG, colB),\
-	.levVertex[9*qIndex+8] = NEW_VERTEX(posX, 0, posZ+sizeZ/2, flagV, colR, colG, colB), \
+#define NEW_BLOCK(qIndex, texgroup, posX, posZ, flagV, flagQ, color) \
+	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\
+	.levVertex[9*qIndex+1] = NEW_VERTEX(posX+sizeX/2, 0, posZ-sizeZ/2, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\
+	.levVertex[9*qIndex+2] = NEW_VERTEX(posX-sizeX/2, 0, posZ+sizeZ/2, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\
+	.levVertex[9*qIndex+3] = NEW_VERTEX(posX+sizeX/2, 0, posZ+sizeZ/2, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\
+	.levVertex[9*qIndex+4] = NEW_VERTEX(posX, 0, posZ-sizeZ/2, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\
+	.levVertex[9*qIndex+5] = NEW_VERTEX(posX-sizeX/2, 0, posZ, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\
+	.levVertex[9*qIndex+6] = NEW_VERTEX(posX, 0, posZ, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\
+	.levVertex[9*qIndex+7] = NEW_VERTEX(posX+sizeX/2, 0, posZ, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\
+	.levVertex[9*qIndex+8] = NEW_VERTEX(posX, 0, posZ+sizeZ/2, flagV, GetRed(color), GetGreen(color), GetBlue(color)), \
 	.quadBlock[qIndex] = \
 	{ \
 		.index = {9*qIndex+0,9*qIndex+1,9*qIndex+2,9*qIndex+3,9*qIndex+4,9*qIndex+5,9*qIndex+6,9*qIndex+7,9*qIndex+8}, \
@@ -54,10 +56,10 @@ enum BitsPerPixel
 		.draw_order_high = 0, \
 		.ptr_texture_mid = \
 		{ \
-			OFFSETOF(struct LevelFile, group4)-4, \
-			OFFSETOF(struct LevelFile, group4)-4, \
-			OFFSETOF(struct LevelFile, group4)-4, \
-			OFFSETOF(struct LevelFile, group4)-4 \
+			LEV_OFFSETOF(texgroup), \
+			LEV_OFFSETOF(texgroup), \
+			LEV_OFFSETOF(texgroup), \
+			LEV_OFFSETOF(texgroup) \
 		}, \
 		\
 		.bbox = \
@@ -74,8 +76,8 @@ enum BitsPerPixel
 		.checkpointIndex = qIndex, \
 		.triNormalVecBitShift = 0x12, \
 		\
-		.ptr_texture_low = OFFSETOF(struct LevelFile, group4)-4, \
-		.pvs = OFFSETOF(struct LevelFile, pvs)-4, \
+		.ptr_texture_low = LEV_OFFSETOF(texgroup), \
+		.pvs = LEV_OFFSETOF(pvs), \
 		\
 		.triNormalVecDividend = \
 		{ \
@@ -167,16 +169,16 @@ enum BitsPerPixel
 #define TEX_2X2(qIndex, BottomRight, BottomLeft, TopRight, TopLeft) \
 	.quadBlock[qIndex].ptr_texture_mid = \
 	{ \
-		OFFSETOF(struct LevelFile, BottomRight)-4, \
-		OFFSETOF(struct LevelFile, BottomLeft)-4, \
-		OFFSETOF(struct LevelFile, TopRight)-4, \
-		OFFSETOF(struct LevelFile, TopLeft)-4 \
+		LEV_OFFSETOF(BottomRight), \
+		LEV_OFFSETOF(BottomLeft), \
+		LEV_OFFSETOF(TopRight), \
+		LEV_OFFSETOF(TopLeft) \
 	}
 
 #define PTR_MAP_QUADBLOCK(x) \
-	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[0])-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[1])-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[2])-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_mid[3])-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].ptr_texture_low)-4,\
-	OFFSETOF(struct LevelFile, quadBlock[x].pvs)-4
+	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[0]),\
+	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[1]),\
+	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[2]),\
+	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[3]),\
+	LEV_OFFSETOF(quadBlock[x].ptr_texture_low),\
+	LEV_OFFSETOF(quadBlock[x].pvs)
