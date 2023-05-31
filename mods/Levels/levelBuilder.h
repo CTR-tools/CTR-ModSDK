@@ -186,10 +186,10 @@ enum BitsPerPixel
 #define TurboPadImage(imgX, imgY, clutX, clutY, sizeX, sizeY, bpp, blend, scale) \
 	{.clut =  ((clutX >> 0) << 0) | (clutY << 6), \
 	.tpage = ((imgX >> 6) << 0) | ((imgY >> 8) << 4) | (blend<<5) | (bpp<<7), \
-	.u0 = ((imgX&0x3f)<<(2-bpp))+0, .v0 = ((imgY&0xff)+0)+2*scale, \
-	.u1 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v1 = ((imgY&0xff)+0)+2*scale, \
-	.u2 = ((imgX&0x3f)<<(2-bpp))+0, .v2 = ((imgY&0xff)+sizeY-1)+2*scale, \
-	.u3 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v3 = ((imgY&0xff)+sizeY-1)+2*scale} \
+	.u0 = ((imgX&0x3f)<<(2-bpp))+0, .v0 = ((imgY&0xff)+0)-2*scale, \
+	.u1 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v1 = ((imgY&0xff)+0)-2*scale, \
+	.u2 = ((imgX&0x3f)<<(2-bpp))+0, .v2 = ((imgY&0xff)+sizeY-1)-2*scale, \
+	.u3 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v3 = ((imgY&0xff)+sizeY-1)-2*scale} \
 
 #define TurboPadScroll(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale) \
 	{ \
