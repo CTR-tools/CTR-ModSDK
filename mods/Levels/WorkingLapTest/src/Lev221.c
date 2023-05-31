@@ -42,7 +42,7 @@ struct LevelFile file =
 		.ptr_mesh_info = LEV_OFFSETOF(mInfo),
 		.visMem = LEV_OFFSETOF(visMem),
 		
-		// the game will add +0x400 to the Z rotation of spawn positions automatically
+		// the game will add +0x400 to the yaw of spawn positions automatically
 		// we should probably look into why this even happens...
 		.DriverSpawn[0].pos = {0,0,0},
 		.DriverSpawn[0].rot = {0,0-0x400,0},
