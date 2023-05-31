@@ -455,7 +455,7 @@ struct Level
 
 	// 0x34
 	// number of vertices treated as water
-	s32 count_water;
+	s32 numWaterVertices;
 
 	// 0x38
 	// pointer to array of water entries

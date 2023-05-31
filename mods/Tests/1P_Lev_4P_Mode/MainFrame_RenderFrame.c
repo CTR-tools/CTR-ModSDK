@@ -810,7 +810,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	if((level1->configFlags & 4) == 0)
 	{
 		// assume OVert (no primitives generated here)
-		AnimateWater1P(gGT->timer, level1->count_water,
+		AnimateWater1P(gGT->timer, level1->numWaterVertices,
 			level1->ptr_water, level1->ptr_tex_waterEnvMap,
 			gGT->visMem1->visOVertList[0]);
 	}

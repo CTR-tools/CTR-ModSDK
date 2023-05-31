@@ -84,15 +84,15 @@ void DrawTires_Reflection(struct Thread* thread, struct PrimMem* primMem, char n
 void DrawShadows_Main();
 void Torch_Main(void* particleList_heatWarp, struct TileView* tileView, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
 void TileView_FadeAllWindows();
-void AnimateWater2P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
+void AnimateWater2P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
 void RenderLists_PreInit();
 int RenderLists_Init1P2P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList, char numPlyr);
 //void CAM_SkyboxGlow(short* param_1, struct TileView* camera, struct PrimMem* primMem, u_long* ptrOT);
-void AnimateWater1P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5);
+void AnimateWater1P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5);
 void AnimateQuad(int timer, int numSCVert, void* ptrSCVert, int* visSCVertList);
 void DrawSky_Full(void* skybox, struct TileView* tileView, struct PrimMem* primMem);
-void AnimateWater3P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7);
-void AnimateWater4P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7, int* param_8);
+void AnimateWater3P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7);
+void AnimateWater4P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7, int* param_8);
 int RenderLists_Init3P4P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList);
 void UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT);
 void DecalMP_03(struct GameTracker* gGT);
@@ -887,7 +887,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		if((level1->configFlags & 4) == 0)
 		{
 			// assume OVert (no primitives generated here)
-			AnimateWater1P(gGT->timer, level1->count_water,
+			AnimateWater1P(gGT->timer, level1->numWaterVertices,
 				level1->ptr_water, level1->ptr_tex_waterEnvMap,
 				gGT->visMem1->visOVertList[0]);
 		}
@@ -994,7 +994,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		if((level1->configFlags & 4) == 0)
 		{
 			// assume OVert (no primitives generated here)
-			AnimateWater2P(gGT->timer, level1->count_water,
+			AnimateWater2P(gGT->timer, level1->numWaterVertices,
 				level1->ptr_water, level1->ptr_tex_waterEnvMap,
 				gGT->visMem1->visOVertList[0],
 				gGT->visMem1->visOVertList[1]);
@@ -1037,7 +1037,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		if(numPlyrCurrGame == 3)
 		{
 			// assume OVert (no primitives generated here)
-			AnimateWater3P(gGT->timer, level1->count_water,
+			AnimateWater3P(gGT->timer, level1->numWaterVertices,
 				level1->ptr_water, level1->ptr_tex_waterEnvMap,
 				gGT->visMem1->visOVertList[0],
 				gGT->visMem1->visOVertList[1],
@@ -1047,7 +1047,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		else // 4P mode
 		{
 			// assume OVert (no primitives generated here)
-			AnimateWater4P(gGT->timer, level1->count_water,
+			AnimateWater4P(gGT->timer, level1->numWaterVertices,
 				level1->ptr_water, level1->ptr_tex_waterEnvMap,
 				gGT->visMem1->visOVertList[0],
 				gGT->visMem1->visOVertList[1],

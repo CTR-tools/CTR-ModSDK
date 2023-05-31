@@ -426,7 +426,7 @@ code_r0x800369d8:
 		if (bVar2 == 2) {
 			CTR_ClearRenderLists_1P2P(gGT, 2);
 			if ((level->configFlags & 4U) == 0) {
-				AnimateWater2P(gGT->timer, level->count_water, level->ptr_water, level->ptr_tex_waterEnvMap, 
+				AnimateWater2P(gGT->timer, level->numWaterVertices, level->ptr_water, level->ptr_tex_waterEnvMap, 
 											 gGT->visMem1->visOVertList[0], gGT->visMem1->visOVertList[1]);
 			}
 			iVar15 = 0;
@@ -470,7 +470,7 @@ code_r0x800369d8:
 			if (bVar2 == 1) {
 				CTR_ClearRenderLists_1P2P(gGT, 1);
 				if (((level->configFlags & 4U) == 0) && (level != (struct Level *)0x0)) {
-					AnimateWater1P(gGT->timer, level->count_water, level->ptr_water, level->ptr_tex_waterEnvMap, 
+					AnimateWater1P(gGT->timer, level->numWaterVertices, level->ptr_water, level->ptr_tex_waterEnvMap, 
 												 gGT->visMem1->visOVertList[0]);
 				}
 				else {
@@ -526,7 +526,7 @@ code_r0x800369d8:
 		else if (bVar2 == 3) {
 			CTR_ClearRenderLists_3P4P(gGT, 3);
 			if ((level->configFlags & 4U) == 0) {
-				AnimateWater3P(gGT->timer, level->count_water, level->ptr_water, level->ptr_tex_waterEnvMap, 
+				AnimateWater3P(gGT->timer, level->numWaterVertices, level->ptr_water, level->ptr_tex_waterEnvMap, 
 											 gGT->visMem1->visOVertList[0], gGT->visMem1->visOVertList[1], 
 											 gGT->visMem1->visOVertList[2]);
 			}
@@ -569,7 +569,7 @@ code_r0x800369d8:
 		else if (bVar2 == 4) {
 			CTR_ClearRenderLists_3P4P(gGT, 4);
 			if ((level->configFlags & 4U) == 0) {
-				AnimateWater4P(gGT->timer, level->count_water, level->ptr_water, level->ptr_tex_waterEnvMap, 
+				AnimateWater4P(gGT->timer, level->numWaterVertices, level->ptr_water, level->ptr_tex_waterEnvMap, 
 										 gGT->visMem1->visOVertList[0], gGT->visMem1->visOVertList[1], 
 										 gGT->visMem1->visOVertList[2], gGT->visMem1->visOVertList[3]);
 			}

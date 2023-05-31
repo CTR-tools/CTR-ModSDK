@@ -226,7 +226,7 @@ void DrawTires_Reflection(struct Thread* thread, struct PrimMem* primMem, char n
 void DrawShadows_Main();
 void Torch_Main(void* particleList_heatWarp, struct TileView* tileView, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
 void TileView_FadeAllWindows();
-void AnimateWater2P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
+void AnimateWater2P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
 void RenderLists_PreInit();
 int RenderLists_Init1P2P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList, char numPlyr);
 
@@ -235,11 +235,11 @@ void DrawLevelOvr2P(void* LevRenderList, struct TileView* tileView, struct BSP* 
 void DrawLevelOvr3P(void* LevRenderList, struct TileView* tileView, struct BSP* bspList, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* VisMem18, void* waterEnvMap);
 void DrawLevelOvr4P(void* LevRenderList, struct TileView* tileView, struct BSP* bspList, struct PrimMem* primMem, void* VisMem10, void* VisMem14, void* VisMem18, void* VisMem1C, void* waterEnvMap);
 
-void AnimateWater1P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5);
+void AnimateWater1P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5);
 void AnimateQuad(int timer, int numSCVert, void* ptrSCVert, int* visSCVertList);
 void DrawSky_Full(void* skybox, struct TileView* tileView, struct PrimMem* primMem);
-void AnimateWater3P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7);
-void AnimateWater4P(int timer, int count_water, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7, int* param_8);
+void AnimateWater3P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7);
+void AnimateWater4P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7, int* param_8);
 int RenderLists_Init3P4P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList);
 void UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT);
 void DecalMP_03(struct GameTracker* gGT);
