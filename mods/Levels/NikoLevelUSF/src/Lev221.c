@@ -71,10 +71,6 @@ struct LevelFile
 	struct IconGroup4 turbo_pad[10];
 	struct IconGroup4 super_turbo_pad[10];
 	struct IconGroup4 group4_placeHolder;
-	struct IconGroup4 ineedtogeneratethis1;
-	struct IconGroup4 ineedtogeneratethis2;
-	struct IconGroup4 ineedtogeneratethis3;
-	struct IconGroup4 ineedtogeneratethis4;
 	struct AnimTex_TurboPad1 turbo_pad_anim;
 	struct AnimTex_TurboPad2 super_turbo_pad_anim;
 	struct SpawnType1 ptrSpawnType1;
@@ -402,38 +398,6 @@ struct LevelFile file =
 			LEV_OFFSETOF(turbo_pad_anim),
 		},
 	},
-
-	.ineedtogeneratethis1 =
-	{
-		.far =    ImageName_Blend(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50),
-		.middle = ImageName_Blend(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50),
-		.near =   ImageName_Blend(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50),
-		.mosaic = ImageName_Blend(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50)
-	},
-
-	.ineedtogeneratethis2 =
-	{
-		.far =    ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50),
-		.middle = ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50),
-		.near =   ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50),
-		.mosaic = ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50)
-	},
-
-	.ineedtogeneratethis3 =
-	{
-		.far =    ImageName_Blend(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50),
-		.middle = ImageName_Blend(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50),
-		.near =   ImageName_Blend(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50),
-		.mosaic = ImageName_Blend(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50)
-	},
-
-	.ineedtogeneratethis4 =
-	{
-		.far =    ImageName_Blend(604, 0, 32, 134, 32, 16, BPP_4, TRANS_50),
-		.middle = ImageName_Blend(604, 0, 32, 134, 32, 16, BPP_4, TRANS_50),
-		.near =   ImageName_Blend(604, 0, 32, 134, 32, 16, BPP_4, TRANS_50),
-		.mosaic = ImageName_Blend(604, 0, 32, 134, 32, 16, BPP_4, TRANS_50)
-	},
 	
 	// this must exist, or else camera fly-in
 	// checks for "count" without nullptr check,
@@ -466,10 +430,10 @@ struct LevelFile file =
 	// +x is left, not right
 	
 	// behind spawn
-	NEW_BLOCK(Bsp0_BehindStart1, ineedtogeneratethis1, -0x180, -0x600, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp0_BehindStart2, ineedtogeneratethis2, 0x180, -0x600, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp0_BehindStart3, ineedtogeneratethis3, -0x180, -0x300, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp0_BehindStart4, ineedtogeneratethis4, 0x180, -0x300, NULL, 0x1800, 0x808080),
+	NEW_BLOCK(Bsp0_BehindStart1, group4_placeHolder, -0x180, -0x600, NULL, 0x1800, 0x808080),
+	NEW_BLOCK(Bsp0_BehindStart2, group4_placeHolder, 0x180, -0x600, NULL, 0x1800, 0x808080),
+	NEW_BLOCK(Bsp0_BehindStart3, group4_placeHolder, -0x180, -0x300, NULL, 0x1800, 0x808080),
+	NEW_BLOCK(Bsp0_BehindStart4, group4_placeHolder, 0x180, -0x300, NULL, 0x1800, 0x808080),
 	
 	// BR, BL, TR, TL assuming you're rotation is 0,0,0
 	TEX_2X2(Bsp0_BehindStart1, group4_tileCorner, group4_tileEdge, group4_tileEdge, group4_tileCenter),
