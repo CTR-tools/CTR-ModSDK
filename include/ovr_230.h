@@ -491,9 +491,10 @@ struct Overlay_230
 	// 800b59b6 
 	short trackSel_video_boolAllocated;
 
-	char trackSel_unkFill[4];
-	// 800b59b8 ??
+	// 800b59b8
+	short trackSel_video_state;
 	// 800b59ba ???
+	short trackSel_unk;
 	
 	// ============== Cup Select DYN ========================
 	
