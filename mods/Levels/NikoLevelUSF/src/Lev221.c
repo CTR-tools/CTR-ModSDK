@@ -15,6 +15,10 @@ struct LevelFile
 	struct IconGroup4 group4_turbopad_green;
 	struct IconGroup4 group4_turbopad_gray;
 	struct IconGroup4 group4_placeHolder;
+	struct IconGroup4 ineedtogeneratethis1;
+	struct IconGroup4 ineedtogeneratethis2;
+	struct IconGroup4 ineedtogeneratethis3;
+	struct IconGroup4 ineedtogeneratethis4;
 	struct SpawnType1 ptrSpawnType1;
 	struct CheckpointNode checkpointNodes[NUM_CHECKPOINT];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
