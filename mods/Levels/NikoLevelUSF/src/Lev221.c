@@ -96,7 +96,7 @@ struct LevelFile
 	struct NavHeader navHeader1;
 	struct NavFrame navFrame[650];
 	
-	int map[(72+NUM_BLOCKS*6)+1];
+	int map[(73+NUM_BLOCKS*6)+1];
 };
 
 struct LevelFile file =
@@ -807,10 +807,10 @@ struct LevelFile file =
 	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
 	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
 
-	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnLeft4_Turbo_9800].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnLeft4_Turbo_9800].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnLeft4_Turbo_9800].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnLeft4_Turbo_9800].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
 	
 	// BR, BL, TR, TL
 	TEX_2X2(Bsp1_TurnLeft1, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
@@ -1934,11 +1934,12 @@ struct LevelFile file =
 		
 	.map =
 	{
-		(72+NUM_BLOCKS*6)<<2,
+		(73+NUM_BLOCKS*6)<<2,
 		
-		// 72
+		// 73
 		LEV_OFFSETOF(level.ptr_mesh_info),
 		LEV_OFFSETOF(level.visMem),
+		LEV_OFFSETOF(level.ptr_anim_tex),
 		LEV_OFFSETOF(level.ptrSpawnType1),
 		LEV_OFFSETOF(level.ptr_restart_points),
 		LEV_OFFSETOF(level.LevNavHeader),
