@@ -2,6 +2,62 @@
 #include "../../levelBuilder.h"
 #include "trackSpecificData.h"
 
+struct AnimTex_TurboPad1
+{
+	// 0x0
+	// pointer to IconGroup4 struct to be animated
+	// cycles through the entirety of ptrarray
+	struct IconGroup4* ptrNext;
+
+	// 0x4
+	short numFrames;
+
+	// 0x6
+	// related to timer
+	short shrug;
+
+	// 0x8
+	// related to timer
+	short lottashortshuh;
+
+	// 0xA
+	// current frame
+	u_short frameIndex;
+
+	// 0xC
+	// amount of elements in array is same as numFrames
+	// ptrarray[numFrames] leads to the next AnimTex struct in the ptr_anim_tex array
+	struct IconGroup4* ptrarray[10];
+};
+
+struct AnimTex_TurboPad2
+{
+	// 0x0
+	// pointer to IconGroup4 struct to be animated
+	// cycles through the entirety of ptrarray
+	struct IconGroup4* ptrNext;
+
+	// 0x4
+	short numFrames;
+
+	// 0x6
+	// related to timer
+	short shrug;
+
+	// 0x8
+	// related to timer
+	short lottashortshuh;
+
+	// 0xA
+	// current frame
+	u_short frameIndex;
+
+	// 0xC
+	// amount of elements in array is same as numFrames
+	// ptrarray[numFrames] leads to the next AnimTex struct in the ptr_anim_tex array
+	struct IconGroup4* ptrarray[11];
+};
+
 struct LevelFile
 {
 	void* ptrMap;
@@ -12,13 +68,15 @@ struct LevelFile
 	struct IconGroup4 group4_tileEdge;
 	struct IconGroup4 group4_tileCenter;
 	struct IconGroup4 group4_tileCorner;
-	struct IconGroup4 group4_turbopad_green;
-	struct IconGroup4 group4_turbopad_gray;
+	struct IconGroup4 turbo_pad[10];
+	struct IconGroup4 super_turbo_pad[10];
 	struct IconGroup4 group4_placeHolder;
 	struct IconGroup4 ineedtogeneratethis1;
 	struct IconGroup4 ineedtogeneratethis2;
 	struct IconGroup4 ineedtogeneratethis3;
 	struct IconGroup4 ineedtogeneratethis4;
+	struct AnimTex_TurboPad1 turbo_pad_anim;
+	struct AnimTex_TurboPad2 super_turbo_pad_anim;
 	struct SpawnType1 ptrSpawnType1;
 	struct CheckpointNode checkpointNodes[NUM_CHECKPOINT];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
@@ -42,7 +100,7 @@ struct LevelFile
 	struct NavHeader navHeader1;
 	struct NavFrame navFrame[650];
 	
-	int map[(49+NUM_BLOCKS*6)+1];
+	int map[(72+NUM_BLOCKS*6)+1];
 };
 
 struct LevelFile file =
@@ -53,6 +111,7 @@ struct LevelFile file =
 	{
 		.ptr_mesh_info = LEV_OFFSETOF(mInfo),
 		.visMem = LEV_OFFSETOF(visMem),
+		.ptr_anim_tex = LEV_OFFSETOF(turbo_pad_anim),
 		
 		// the game will add +0x400 to the yaw of spawn positions automatically
 		// we should probably look into why this even happens...
@@ -150,15 +209,225 @@ struct LevelFile file =
 		.mosaic = ImageName_Blend(592, 0, 32, 132, 16, 16, BPP_4, TRANS_50)
 	},
 	
-	.group4_turbopad_green =
+	.turbo_pad =
+	{
+		[0] =
+		{
+			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 0),
+			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 0),
+			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 0),
+			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 0),
+		},
+		[1] =
+		{
+			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 2),
+			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 2),
+			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 2),
+			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 2),
+		},
+		[2] =
+		{
+			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 3),
+			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 3),
+			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 3),
+			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 3),
+		},
+		[3] =
+		{
+			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 5),
+			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 5),
+			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 5),
+			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 5),
+		},
+		[4] =
+		{
+			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 6),
+			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 6),
+			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 6),
+			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 6),
+		},
+		[5] =
+		{
+			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 8),
+			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 8),
+			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 8),
+			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 8),
+		},
+		[6] =
+		{
+			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 10),
+			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 10),
+			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 10),
+			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 10),
+		},
+		[7] =
+		{
+			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 11),
+			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 11),
+			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 11),
+			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 11),
+		},
+		[8] =
+		{
+			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 13),
+			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 13),
+			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 13),
+			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 13),
+		},
+		[9] =
+		{
+			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 14),
+			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 14),
+			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 14),
+			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 14),
+		},
+	},
+	
+	// texture made by Avery (@TheMagicJam)
+	.super_turbo_pad =
+	{
+		[0] =
+		{
+			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 0),
+			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 0),
+			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 0),
+			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 0),
+		},
+		[1] =
+		{
+			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 2),
+			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 2),
+			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 2),
+			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 2),
+		},
+		[2] =
+		{
+			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 3),
+			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 3),
+			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 3),
+			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 3),
+		},
+		[3] =
+		{
+			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 5),
+			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 5),
+			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 5),
+			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 5),
+		},
+		[4] =
+		{
+			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 6),
+			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 6),
+			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 6),
+			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 6),
+		},
+		[5] =
+		{
+			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 8),
+			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 8),
+			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 8),
+			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 8),
+		},
+		[6] =
+		{
+			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 10),
+			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 10),
+			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 10),
+			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 10),
+		},
+		[7] =
+		{
+			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 11),
+			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 11),
+			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 11),
+			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 11),
+		},
+		[8] =
+		{
+			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 13),
+			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 13),
+			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 13),
+			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 13),
+		},
+		[9] =
+		{
+			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 14),
+			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 14),
+			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 14),
+			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 14),
+		},
+	},
+
+	.turbo_pad_anim =
+	{
+		.ptrNext = LEV_OFFSETOF(turbo_pad[0]),
+		.numFrames = 10,
+		.shrug = 0,
+		.lottashortshuh = 0,
+		.frameIndex = 0,
+		.ptrarray =
+		{
+			LEV_OFFSETOF(turbo_pad[0]),
+			LEV_OFFSETOF(turbo_pad[1]),
+			LEV_OFFSETOF(turbo_pad[2]),
+			LEV_OFFSETOF(turbo_pad[3]),
+			LEV_OFFSETOF(turbo_pad[4]),
+			LEV_OFFSETOF(turbo_pad[5]),
+			LEV_OFFSETOF(turbo_pad[6]),
+			LEV_OFFSETOF(turbo_pad[7]),
+			LEV_OFFSETOF(turbo_pad[8]),
+			LEV_OFFSETOF(turbo_pad[9]),
+		},
+	},
+
+	.super_turbo_pad_anim =
+	{
+		.ptrNext = LEV_OFFSETOF(super_turbo_pad[0]),
+		.numFrames = 10,
+		.shrug = 0,
+		.lottashortshuh = 0,
+		.frameIndex = 0,
+		.ptrarray =
+		{
+			LEV_OFFSETOF(super_turbo_pad[0]),
+			LEV_OFFSETOF(super_turbo_pad[1]),
+			LEV_OFFSETOF(super_turbo_pad[2]),
+			LEV_OFFSETOF(super_turbo_pad[3]),
+			LEV_OFFSETOF(super_turbo_pad[4]),
+			LEV_OFFSETOF(super_turbo_pad[5]),
+			LEV_OFFSETOF(super_turbo_pad[6]),
+			LEV_OFFSETOF(super_turbo_pad[7]),
+			LEV_OFFSETOF(super_turbo_pad[8]),
+			LEV_OFFSETOF(super_turbo_pad[9]),
+			LEV_OFFSETOF(turbo_pad_anim),
+		},
+	},
+
+	.ineedtogeneratethis1 =
+	{
+		.far =    ImageName_Blend(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50),
+		.middle = ImageName_Blend(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50),
+		.near =   ImageName_Blend(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50),
+		.mosaic = ImageName_Blend(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50)
+	},
+
+	.ineedtogeneratethis2 =
 	{
 		.far =    ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50),
 		.middle = ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50),
 		.near =   ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50),
 		.mosaic = ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50)
 	},
-	
-	.group4_turbopad_gray =
+
+	.ineedtogeneratethis3 =
+	{
+		.far =    ImageName_Blend(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50),
+		.middle = ImageName_Blend(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50),
+		.near =   ImageName_Blend(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50),
+		.mosaic = ImageName_Blend(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50)
+	},
+
+	.ineedtogeneratethis4 =
 	{
 		.far =    ImageName_Blend(604, 0, 32, 134, 32, 16, BPP_4, TRANS_50),
 		.middle = ImageName_Blend(604, 0, 32, 134, 32, 16, BPP_4, TRANS_50),
@@ -197,10 +466,10 @@ struct LevelFile file =
 	// +x is left, not right
 	
 	// behind spawn
-	NEW_BLOCK(Bsp0_BehindStart1, group4_placeHolder, -0x180, -0x600, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp0_BehindStart2, group4_placeHolder, 0x180, -0x600, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp0_BehindStart3, group4_placeHolder, -0x180, -0x300, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp0_BehindStart4, group4_placeHolder, 0x180, -0x300, NULL, 0x1800, 0x808080),
+	NEW_BLOCK(Bsp0_BehindStart1, ineedtogeneratethis1, -0x180, -0x600, NULL, 0x1800, 0x808080),
+	NEW_BLOCK(Bsp0_BehindStart2, ineedtogeneratethis2, 0x180, -0x600, NULL, 0x1800, 0x808080),
+	NEW_BLOCK(Bsp0_BehindStart3, ineedtogeneratethis3, -0x180, -0x300, NULL, 0x1800, 0x808080),
+	NEW_BLOCK(Bsp0_BehindStart4, ineedtogeneratethis4, 0x180, -0x300, NULL, 0x1800, 0x808080),
 	
 	// BR, BL, TR, TL assuming you're rotation is 0,0,0
 	TEX_2X2(Bsp0_BehindStart1, group4_tileCorner, group4_tileEdge, group4_tileEdge, group4_tileCenter),
@@ -360,7 +629,7 @@ struct LevelFile file =
 	
 	// ramp up (1/3)
 	NEW_BLOCK(Bsp0_UpRamp1, group4_placeHolder, -0x180, 0x1500, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp0_UpRamp2_Turbo_9800, group4_turbopad_green, 0x180, 0x1500, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp0_UpRamp2_Turbo_9800, turbo_pad, 0x180, 0x1500, NULL, 0x9800, 0x808080),
 	.quadBlock[Bsp0_UpRamp2_Turbo_9800].draw_order_low = FACE_PosZ,
 	
 	TEX_2X2(Bsp0_UpRamp1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
@@ -432,7 +701,7 @@ struct LevelFile file =
 	),
 	
 	// ramp up (3/3)
-	NEW_BLOCK(Bsp0_UpRamp5_Turbo_9800, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp0_UpRamp5_Turbo_9800, super_turbo_pad, -0x180, 0x1B00, NULL, 0x9800, 0x808080),
 	NEW_BLOCK(Bsp0_UpRamp6, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1800, 0x808080),
 	.quadBlock[Bsp0_UpRamp5_Turbo_9800].draw_order_low = FACE_PosZ,
 	
@@ -468,8 +737,8 @@ struct LevelFile file =
 	),
 	
 	// turbo on ramp-up(3/3)
-	NEW_BLOCK(Bsp0_UpRamp7_Turbo_1840, group4_turbopad_gray, -0x180, 0x1B00, NULL, 0x1840, 0x808080),
-	NEW_BLOCK(Bsp0_UpRamp8_Turbo_1840, group4_turbopad_green, 0x180, 0x1500, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp0_UpRamp7_Turbo_1840, super_turbo_pad, -0x180, 0x1B00, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp0_UpRamp8_Turbo_1840, turbo_pad, 0x180, 0x1500, NULL, 0x1840, 0x808080),
 	
 	// turn into turbo, if flagsQ is 0x1840
 	// 1 for normal, 2 for super turbo
@@ -541,10 +810,10 @@ struct LevelFile file =
 	// flat, turn 90
 	NEW_BLOCK(Bsp1_TurnLeft1, group4_placeHolder, 0x480, 0x2700, NULL, 0x1800, 0x808080),
 	NEW_BLOCK(Bsp1_TurnLeft2, group4_placeHolder, 0x480, 0x2A00, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp1_TurnLeft3_Turbo_9800, group4_turbopad_green, 0x780, 0x2700, NULL, 0x9800, 0x808080), // boost
-	NEW_BLOCK(Bsp1_TurnLeft4_Turbo_9800, group4_turbopad_green, 0x780, 0x2A00, NULL, 0x9800, 0x808080), // boost
-	NEW_BLOCK(Bsp1_TurnLeft5_Turbo_1840, group4_turbopad_green, 0x780, 0x2700, NULL, 0x1840, 0x808080), // boost
-	NEW_BLOCK(Bsp1_TurnLeft6_Turbo_1840, group4_turbopad_green, 0x780, 0x2A00, NULL, 0x1840, 0x808080), // boost
+	NEW_BLOCK(Bsp1_TurnLeft3_Turbo_9800, turbo_pad, 0x780, 0x2700, NULL, 0x9800, 0x808080), // boost
+	NEW_BLOCK(Bsp1_TurnLeft4_Turbo_9800, turbo_pad, 0x780, 0x2A00, NULL, 0x9800, 0x808080), // boost
+	NEW_BLOCK(Bsp1_TurnLeft5_Turbo_1840, turbo_pad, 0x780, 0x2700, NULL, 0x1840, 0x808080), // boost
+	NEW_BLOCK(Bsp1_TurnLeft6_Turbo_1840, turbo_pad, 0x780, 0x2A00, NULL, 0x1840, 0x808080), // boost
 	NEW_BLOCK(Bsp1_TurnLeft7, group4_placeHolder, 0xA80, 0x2700, NULL, 0x1800, 0x808080),
 	NEW_BLOCK(Bsp1_TurnLeft8, group4_placeHolder, 0xA80, 0x2A00, NULL, 0x1800, 0x808080),
 	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].draw_order_low = FACE_PosX,
@@ -565,13 +834,13 @@ struct LevelFile file =
 	.quadBlock[Bsp1_TurnLeft8].draw_order_low = 0x1984000,
 	
 	// flat, turn 180
-	NEW_BLOCK(Bsp1_TurnBack1_Turbo_9800, group4_turbopad_green, 0xD80, 0x2100, NULL, 0x9800, 0x808080),
-	NEW_BLOCK(Bsp1_TurnBack2_Turbo_9800, group4_turbopad_green, 0x1080, 0x2100, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp1_TurnBack1_Turbo_9800, turbo_pad, 0xD80, 0x2100, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp1_TurnBack2_Turbo_9800, turbo_pad, 0x1080, 0x2100, NULL, 0x9800, 0x808080),
 	.quadBlock[Bsp1_TurnBack1_Turbo_9800].draw_order_low = FACE_NegZ,
 	.quadBlock[Bsp1_TurnBack2_Turbo_9800].draw_order_low = FACE_NegZ,
 	
-	NEW_BLOCK(Bsp1_TurnBack3_Turbo_1840, group4_turbopad_green, 0xD80,  0x2100, NULL, 0x1840, 0x808080),
-	NEW_BLOCK(Bsp1_TurnBack4_Turbo_1840, group4_turbopad_green, 0x1080,0x2100, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp1_TurnBack3_Turbo_1840, turbo_pad, 0xD80,  0x2100, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp1_TurnBack4_Turbo_1840, turbo_pad, 0x1080,0x2100, NULL, 0x1840, 0x808080),
 	.quadBlock[Bsp1_TurnBack3_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp1_TurnBack4_Turbo_1840].terrain_type = 1,
 	
@@ -637,8 +906,8 @@ struct LevelFile file =
 	.quadBlock[Bsp4_StraightWay9].draw_order_low = 0x800000,
 	.quadBlock[Bsp4_StraightWay10].draw_order_low = 0x1044000,
 	
-	NEW_BLOCK(Bsp4_StraightWay11_Turbo_9800, group4_turbopad_green, 0xD80, 0xC00, NULL, 0x9800, 0x808080),
-	NEW_BLOCK(Bsp4_StraightWay12_Turbo_1840, group4_turbopad_green, 0xD80, 0xC00, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp4_StraightWay11_Turbo_9800, turbo_pad, 0xD80, 0xC00, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp4_StraightWay12_Turbo_1840, turbo_pad, 0xD80, 0xC00, NULL, 0x1840, 0x808080),
 	.quadBlock[Bsp4_StraightWay12_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp4_StraightWay11_Turbo_9800].draw_order_low = FACE_NegZ,
 	
@@ -757,8 +1026,8 @@ struct LevelFile file =
 	TEX_2X2(Bsp2_TurnRight8, group4_tileCenter, group4_tileEdge, group4_tileEdge, group4_tileCorner),
 	.quadBlock[Bsp2_TurnRight8].draw_order_low = 0x18c4000,
 	
-	NEW_BLOCK(Bsp2_Middle_Turbo_1840, group4_turbopad_green, 0x1C80, 0, NULL, 0x1840, 0x808080),
-	NEW_BLOCK(Bsp2_Middle_Turbo_9800, group4_turbopad_green, 0x1C80, 0, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp2_Middle_Turbo_1840, turbo_pad, 0x1C80, 0, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp2_Middle_Turbo_9800, turbo_pad, 0x1C80, 0, NULL, 0x9800, 0x808080),
 	.quadBlock[Bsp2_Middle_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp2_Middle_Turbo_9800].draw_order_low = FACE_NegZ,
 	
@@ -877,7 +1146,7 @@ struct LevelFile file =
 	// === Last turn, back to startline ===
 	
 	NEW_BLOCK(Bsp2_RampUp1, group4_placeHolder, 0xA80, -0x300, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp2_RampUp2_Turbo_9800, group4_turbopad_gray, 0xA80, -0x600, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp2_RampUp2_Turbo_9800, super_turbo_pad, 0xA80, -0x600, NULL, 0x9800, 0x808080),
 	.quadBlock[Bsp2_RampUp2_Turbo_9800].draw_order_low = FACE_NegX,
 	
 	MAKE_RAMP(
@@ -908,7 +1177,7 @@ struct LevelFile file =
 		2,5,0 // high 3 vertices
 	),
 	
-	NEW_BLOCK(Bsp2_RampUp3_Turbo_9800, group4_turbopad_green, 0x780, -0x300, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp2_RampUp3_Turbo_9800, turbo_pad, 0x780, -0x300, NULL, 0x9800, 0x808080),
 	NEW_BLOCK(Bsp2_RampUp4, group4_placeHolder, 0x780, -0x600, NULL, 0x1800, 0x808080),
 	.quadBlock[Bsp2_RampUp3_Turbo_9800].draw_order_low = FACE_NegX,
 	
@@ -940,7 +1209,7 @@ struct LevelFile file =
 		2,5,0 // high 3 vertices
 	),
 	
-	NEW_BLOCK(Bsp2_RampUp5_Turbo_1840, group4_turbopad_gray, 0xA80, -0x600, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp2_RampUp5_Turbo_1840, super_turbo_pad, 0xA80, -0x600, NULL, 0x1840, 0x808080),
 	
 	MAKE_RAMP(
 		Bsp2_RampUp5_Turbo_1840, 0x180, // index, height
@@ -956,7 +1225,7 @@ struct LevelFile file =
 		2,5,0 // high 3 vertices
 	),
 	
-	NEW_BLOCK(Bsp2_RampUp6_Turbo_1840, group4_turbopad_green, 0x780, -0x300, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp2_RampUp6_Turbo_1840, turbo_pad, 0x780, -0x300, NULL, 0x1840, 0x808080),
 	
 	MAKE_RAMP(
 		Bsp2_RampUp6_Turbo_1840, 0x180, // index, height
@@ -1657,8 +1926,9 @@ struct LevelFile file =
 		
 	.map =
 	{
-		(49+NUM_BLOCKS*6)<<2,
+		(72+NUM_BLOCKS*6)<<2,
 		
+		// 72
 		LEV_OFFSETOF(level.ptr_mesh_info),
 		LEV_OFFSETOF(level.visMem),
 		LEV_OFFSETOF(level.ptrSpawnType1),
@@ -1667,6 +1937,29 @@ struct LevelFile file =
 		LEV_OFFSETOF(mInfo.ptrQuadBlockArray),
 		LEV_OFFSETOF(mInfo.ptrVertexArray),
 		LEV_OFFSETOF(mInfo.bspRoot),
+		LEV_OFFSETOF(turbo_pad_anim.ptrNext),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[0]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[1]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[2]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[3]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[4]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[5]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[6]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[7]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[8]),
+		LEV_OFFSETOF(turbo_pad_anim.ptrarray[9]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrNext),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[0]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[1]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[2]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[3]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[4]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[5]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[6]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[7]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[8]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[9]),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[10]),
 		LEV_OFFSETOF(bsp[4].data.leaf.ptrQuadBlockArray),
 		LEV_OFFSETOF(bsp[5].data.leaf.ptrQuadBlockArray),
 		LEV_OFFSETOF(bsp[6].data.leaf.ptrQuadBlockArray),
@@ -1708,6 +2001,8 @@ struct LevelFile file =
 		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*8+1]),
 		LEV_OFFSETOF(navHeader[0]),
 		LEV_OFFSETOF(navHeader1.last),
+
+		// NUM_BLOCKS*6
 		PTR_MAP_QUADBLOCK(0),
 		PTR_MAP_QUADBLOCK(1),
 		PTR_MAP_QUADBLOCK(2),
