@@ -198,3 +198,9 @@ enum BitsPerPixel
 		.near   = TurboPadImage(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale), \
 		.mosaic = TurboPadImage(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale), \
 	},
+
+#define SetQuadBlockAnimTex(qIndex, animtex) \
+	.quadBlock[qIndex].ptr_texture_mid[0] = LEV_OFFSETOF(animtex)|1, \
+	.quadBlock[qIndex].ptr_texture_mid[1] = LEV_OFFSETOF(animtex)|1, \
+	.quadBlock[qIndex].ptr_texture_mid[2] = LEV_OFFSETOF(animtex)|1, \
+	.quadBlock[qIndex].ptr_texture_mid[3] = LEV_OFFSETOF(animtex)|1

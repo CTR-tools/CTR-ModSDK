@@ -593,7 +593,12 @@ struct LevelFile file =
 	
 	// ramp up (1/3)
 	NEW_BLOCK(Bsp0_UpRamp1, group4_placeHolder, -0x180, 0x1500, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp0_UpRamp2_Turbo_9800, turbo_pad, 0x180, 0x1500, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp0_UpRamp2_Turbo_9800, group4_placeHolder, 0x180, 0x1500, NULL, 0x9800, 0x808080),
+	
+	.quadBlock[Bsp0_UpRamp2_Turbo_9800].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp2_Turbo_9800].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp2_Turbo_9800].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp2_Turbo_9800].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
 	.quadBlock[Bsp0_UpRamp2_Turbo_9800].draw_order_low = FACE_PosZ,
 	
 	TEX_2X2(Bsp0_UpRamp1, group4_tileEdge, group4_tileCenter, group4_tileEdge, group4_tileCenter),
@@ -665,8 +670,12 @@ struct LevelFile file =
 	),
 	
 	// ramp up (3/3)
-	NEW_BLOCK(Bsp0_UpRamp5_Turbo_9800, super_turbo_pad, -0x180, 0x1B00, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp0_UpRamp5_Turbo_9800, group4_placeHolder, -0x180, 0x1B00, NULL, 0x9800, 0x808080),
 	NEW_BLOCK(Bsp0_UpRamp6, group4_placeHolder, 0x180, 0x1B00, NULL, 0x1800, 0x808080),
+	.quadBlock[Bsp0_UpRamp5_Turbo_9800].ptr_texture_mid[0] = LEV_OFFSETOF(super_turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp5_Turbo_9800].ptr_texture_mid[1] = LEV_OFFSETOF(super_turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp5_Turbo_9800].ptr_texture_mid[2] = LEV_OFFSETOF(super_turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp5_Turbo_9800].ptr_texture_mid[3] = LEV_OFFSETOF(super_turbo_pad_anim)|1,
 	.quadBlock[Bsp0_UpRamp5_Turbo_9800].draw_order_low = FACE_PosZ,
 	
 	TEX_2X2(Bsp0_UpRamp6, group4_tileCenter, group4_tileEdge, group4_tileCenter, group4_tileEdge),
@@ -701,13 +710,21 @@ struct LevelFile file =
 	),
 	
 	// turbo on ramp-up(3/3)
-	NEW_BLOCK(Bsp0_UpRamp7_Turbo_1840, super_turbo_pad, -0x180, 0x1B00, NULL, 0x1840, 0x808080),
-	NEW_BLOCK(Bsp0_UpRamp8_Turbo_1840, turbo_pad, 0x180, 0x1500, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp0_UpRamp7_Turbo_1840, group4_placeHolder, -0x180, 0x1B00, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp0_UpRamp8_Turbo_1840, group4_placeHolder, 0x180, 0x1500, NULL, 0x1840, 0x808080),
 	
 	// turn into turbo, if flagsQ is 0x1840
 	// 1 for normal, 2 for super turbo
 	.quadBlock[Bsp0_UpRamp7_Turbo_1840].terrain_type = 2,
 	.quadBlock[Bsp0_UpRamp8_Turbo_1840].terrain_type = 1,
+	.quadBlock[Bsp0_UpRamp8_Turbo_1840].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp8_Turbo_1840].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp8_Turbo_1840].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp8_Turbo_1840].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp7_Turbo_1840].ptr_texture_mid[0] = LEV_OFFSETOF(super_turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp7_Turbo_1840].ptr_texture_mid[1] = LEV_OFFSETOF(super_turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp7_Turbo_1840].ptr_texture_mid[2] = LEV_OFFSETOF(super_turbo_pad_anim)|1,
+	.quadBlock[Bsp0_UpRamp7_Turbo_1840].ptr_texture_mid[3] = LEV_OFFSETOF(super_turbo_pad_anim)|1,
 	
 	MAKE_RAMP(
 		Bsp0_UpRamp7_Turbo_1840, 0x180, // index, height
@@ -774,16 +791,26 @@ struct LevelFile file =
 	// flat, turn 90
 	NEW_BLOCK(Bsp1_TurnLeft1, group4_placeHolder, 0x480, 0x2700, NULL, 0x1800, 0x808080),
 	NEW_BLOCK(Bsp1_TurnLeft2, group4_placeHolder, 0x480, 0x2A00, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp1_TurnLeft3_Turbo_9800, turbo_pad, 0x780, 0x2700, NULL, 0x9800, 0x808080), // boost
-	NEW_BLOCK(Bsp1_TurnLeft4_Turbo_9800, turbo_pad, 0x780, 0x2A00, NULL, 0x9800, 0x808080), // boost
-	NEW_BLOCK(Bsp1_TurnLeft5_Turbo_1840, turbo_pad, 0x780, 0x2700, NULL, 0x1840, 0x808080), // boost
-	NEW_BLOCK(Bsp1_TurnLeft6_Turbo_1840, turbo_pad, 0x780, 0x2A00, NULL, 0x1840, 0x808080), // boost
+	NEW_BLOCK(Bsp1_TurnLeft3_Turbo_9800, group4_placeHolder, 0x780, 0x2700, NULL, 0x9800, 0x808080), // boost
+	NEW_BLOCK(Bsp1_TurnLeft4_Turbo_9800, group4_placeHolder, 0x780, 0x2A00, NULL, 0x9800, 0x808080), // boost
+	NEW_BLOCK(Bsp1_TurnLeft5_Turbo_1840, group4_placeHolder, 0x780, 0x2700, NULL, 0x1840, 0x808080), // boost
+	NEW_BLOCK(Bsp1_TurnLeft6_Turbo_1840, group4_placeHolder, 0x780, 0x2A00, NULL, 0x1840, 0x808080), // boost
 	NEW_BLOCK(Bsp1_TurnLeft7, group4_placeHolder, 0xA80, 0x2700, NULL, 0x1800, 0x808080),
 	NEW_BLOCK(Bsp1_TurnLeft8, group4_placeHolder, 0xA80, 0x2A00, NULL, 0x1800, 0x808080),
 	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].draw_order_low = FACE_PosX,
 	.quadBlock[Bsp1_TurnLeft4_Turbo_9800].draw_order_low = FACE_PosX,
 	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp1_TurnLeft6_Turbo_1840].terrain_type = 1,
+
+	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnLeft3_Turbo_9800].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
+
+	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnLeft5_Turbo_1840].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
 	
 	// BR, BL, TR, TL
 	TEX_2X2(Bsp1_TurnLeft1, group4_tileEdge, group4_tileEdge, group4_tileCenter, group4_tileCenter),
@@ -798,13 +825,22 @@ struct LevelFile file =
 	.quadBlock[Bsp1_TurnLeft8].draw_order_low = 0x1984000,
 	
 	// flat, turn 180
-	NEW_BLOCK(Bsp1_TurnBack1_Turbo_9800, turbo_pad, 0xD80, 0x2100, NULL, 0x9800, 0x808080),
-	NEW_BLOCK(Bsp1_TurnBack2_Turbo_9800, turbo_pad, 0x1080, 0x2100, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp1_TurnBack1_Turbo_9800, group4_placeHolder, 0xD80, 0x2100, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp1_TurnBack2_Turbo_9800, group4_placeHolder, 0x1080, 0x2100, NULL, 0x9800, 0x808080),
 	.quadBlock[Bsp1_TurnBack1_Turbo_9800].draw_order_low = FACE_NegZ,
 	.quadBlock[Bsp1_TurnBack2_Turbo_9800].draw_order_low = FACE_NegZ,
+
+	.quadBlock[Bsp1_TurnBack1_Turbo_9800].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnBack1_Turbo_9800].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnBack1_Turbo_9800].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
+	.quadBlock[Bsp1_TurnBack1_Turbo_9800].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
+
+	SetQuadBlockAnimTex(Bsp1_TurnBack2_Turbo_9800, turbo_pad_anim),
 	
-	NEW_BLOCK(Bsp1_TurnBack3_Turbo_1840, turbo_pad, 0xD80,  0x2100, NULL, 0x1840, 0x808080),
-	NEW_BLOCK(Bsp1_TurnBack4_Turbo_1840, turbo_pad, 0x1080,0x2100, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp1_TurnBack3_Turbo_1840, group4_placeHolder, 0xD80,  0x2100, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp1_TurnBack4_Turbo_1840, group4_placeHolder, 0x1080,0x2100, NULL, 0x1840, 0x808080),
+	SetQuadBlockAnimTex(Bsp1_TurnBack3_Turbo_1840, turbo_pad_anim),
+	SetQuadBlockAnimTex(Bsp1_TurnBack4_Turbo_1840, turbo_pad_anim),
 	.quadBlock[Bsp1_TurnBack3_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp1_TurnBack4_Turbo_1840].terrain_type = 1,
 	
@@ -870,8 +906,10 @@ struct LevelFile file =
 	.quadBlock[Bsp4_StraightWay9].draw_order_low = 0x800000,
 	.quadBlock[Bsp4_StraightWay10].draw_order_low = 0x1044000,
 	
-	NEW_BLOCK(Bsp4_StraightWay11_Turbo_9800, turbo_pad, 0xD80, 0xC00, NULL, 0x9800, 0x808080),
-	NEW_BLOCK(Bsp4_StraightWay12_Turbo_1840, turbo_pad, 0xD80, 0xC00, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp4_StraightWay11_Turbo_9800, group4_placeHolder, 0xD80, 0xC00, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp4_StraightWay12_Turbo_1840, group4_placeHolder, 0xD80, 0xC00, NULL, 0x1840, 0x808080),
+	SetQuadBlockAnimTex(Bsp4_StraightWay11_Turbo_9800, turbo_pad_anim),
+	SetQuadBlockAnimTex(Bsp4_StraightWay12_Turbo_1840, turbo_pad_anim),
 	.quadBlock[Bsp4_StraightWay12_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp4_StraightWay11_Turbo_9800].draw_order_low = FACE_NegZ,
 	
@@ -990,8 +1028,10 @@ struct LevelFile file =
 	TEX_2X2(Bsp2_TurnRight8, group4_tileCenter, group4_tileEdge, group4_tileEdge, group4_tileCorner),
 	.quadBlock[Bsp2_TurnRight8].draw_order_low = 0x18c4000,
 	
-	NEW_BLOCK(Bsp2_Middle_Turbo_1840, turbo_pad, 0x1C80, 0, NULL, 0x1840, 0x808080),
-	NEW_BLOCK(Bsp2_Middle_Turbo_9800, turbo_pad, 0x1C80, 0, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp2_Middle_Turbo_1840, group4_placeHolder, 0x1C80, 0, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp2_Middle_Turbo_9800, group4_placeHolder, 0x1C80, 0, NULL, 0x9800, 0x808080),
+	SetQuadBlockAnimTex(Bsp2_Middle_Turbo_1840, turbo_pad_anim),
+	SetQuadBlockAnimTex(Bsp2_Middle_Turbo_9800, turbo_pad_anim),
 	.quadBlock[Bsp2_Middle_Turbo_1840].terrain_type = 1,
 	.quadBlock[Bsp2_Middle_Turbo_9800].draw_order_low = FACE_NegZ,
 	
@@ -1110,7 +1150,8 @@ struct LevelFile file =
 	// === Last turn, back to startline ===
 	
 	NEW_BLOCK(Bsp2_RampUp1, group4_placeHolder, 0xA80, -0x300, NULL, 0x1800, 0x808080),
-	NEW_BLOCK(Bsp2_RampUp2_Turbo_9800, super_turbo_pad, 0xA80, -0x600, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp2_RampUp2_Turbo_9800, group4_placeHolder, 0xA80, -0x600, NULL, 0x9800, 0x808080),
+	SetQuadBlockAnimTex(Bsp2_RampUp2_Turbo_9800, super_turbo_pad_anim),
 	.quadBlock[Bsp2_RampUp2_Turbo_9800].draw_order_low = FACE_NegX,
 	
 	MAKE_RAMP(
@@ -1141,8 +1182,9 @@ struct LevelFile file =
 		2,5,0 // high 3 vertices
 	),
 	
-	NEW_BLOCK(Bsp2_RampUp3_Turbo_9800, turbo_pad, 0x780, -0x300, NULL, 0x9800, 0x808080),
+	NEW_BLOCK(Bsp2_RampUp3_Turbo_9800, group4_placeHolder, 0x780, -0x300, NULL, 0x9800, 0x808080),
 	NEW_BLOCK(Bsp2_RampUp4, group4_placeHolder, 0x780, -0x600, NULL, 0x1800, 0x808080),
+	SetQuadBlockAnimTex(Bsp2_RampUp3_Turbo_9800, turbo_pad_anim),
 	.quadBlock[Bsp2_RampUp3_Turbo_9800].draw_order_low = FACE_NegX,
 	
 	MAKE_RAMP(
@@ -1173,7 +1215,8 @@ struct LevelFile file =
 		2,5,0 // high 3 vertices
 	),
 	
-	NEW_BLOCK(Bsp2_RampUp5_Turbo_1840, super_turbo_pad, 0xA80, -0x600, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp2_RampUp5_Turbo_1840, group4_placeHolder, 0xA80, -0x600, NULL, 0x1840, 0x808080),
+	SetQuadBlockAnimTex(Bsp2_RampUp5_Turbo_1840, super_turbo_pad_anim),
 	
 	MAKE_RAMP(
 		Bsp2_RampUp5_Turbo_1840, 0x180, // index, height
@@ -1189,7 +1232,8 @@ struct LevelFile file =
 		2,5,0 // high 3 vertices
 	),
 	
-	NEW_BLOCK(Bsp2_RampUp6_Turbo_1840, turbo_pad, 0x780, -0x300, NULL, 0x1840, 0x808080),
+	NEW_BLOCK(Bsp2_RampUp6_Turbo_1840, group4_placeHolder, 0x780, -0x300, NULL, 0x1840, 0x808080),
+	SetQuadBlockAnimTex(Bsp2_RampUp6_Turbo_1840, turbo_pad_anim),
 	
 	MAKE_RAMP(
 		Bsp2_RampUp6_Turbo_1840, 0x180, // index, height
