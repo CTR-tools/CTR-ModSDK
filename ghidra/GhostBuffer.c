@@ -568,9 +568,11 @@ void FUN_80027838(void)
           }
         }
       }
-      iVar6 = piVar7[0x99];
+      
+	  iVar6 = piVar7[0x99];
       *piVar7 = iVar6;
-      piVar7[1] = iVar6 + 0x28;
+      
+	  piVar7[1] = iVar6 + 0x28;
       uVar1 = *(ushort *)(iVar6 + 2);
       piVar7[0x98] = -0x21523f13;
       piVar7[2] = iVar6 + 0x28 + (uint)uVar1;
