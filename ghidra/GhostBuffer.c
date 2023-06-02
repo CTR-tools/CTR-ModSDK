@@ -158,6 +158,8 @@ void FUN_80026ed8(int param_1)
       pbVar16 = pbVar19;
       do {
         pbVar14 = pbVar13 + 1;
+		
+		// reached end of tape
         if ((byte *)piVar20[2] <= pbVar16) 
 		{
 		  // ->0x62C->0
@@ -279,6 +281,7 @@ LAB_80027304:
         pbVar19 = pbVar18;
         pbVar16 = pbVar17;
       } while (sVar6 < 2);
+	  
       iVar8 = ((int)piVar15 + (-0x50 - (int)piVar20) >> 4) + -1;
       piVar20[0x12] = iVar8;
       if (iVar8 < 0) {
