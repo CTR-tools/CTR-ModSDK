@@ -533,7 +533,7 @@ struct Level
 
 	// 0x40
 	// leads to the icon pack data
-	void* ptr_named_tex_array;
+	struct Icon* ptr_named_tex_array;
 
 	// 0x44
 	// pointer to environment map, used by water rendering
