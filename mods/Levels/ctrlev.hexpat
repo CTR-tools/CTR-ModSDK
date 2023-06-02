@@ -279,7 +279,7 @@ struct Model
 	short numHeaders;
 
 	// 0x14
-	CTRLEVPtr<ModelHeader, u32> headers;
+	CTRLEVPtr<ModelHeader, u32> headers[this.numHeaders];
 };
 
 struct Thread
@@ -373,6 +373,27 @@ struct Thread
 	// this struct is 0x48 bytes large
 };
 
+bitfield InstanceFlag
+{
+	DRAW_INSTANCE : 1;
+	POSSIBLY_COLLISION : 3;
+	PLAY_ANIMATION : 3;
+	HIDE_MODEL : 1;
+	TILEVIEW_EXISTS : 1;
+	PIXEL_LOD : 1;
+	SCREENSPACE_INSTANCE : 1;
+	UNKNOWN_1 : 2;
+	SPLIT_LINE : 1;
+	REFLECTIVE : 1;
+	REVERSE_CULL_DIRECTION : 1;
+	DRAW_TRANSPARENT : 1;
+	DISABLE_VCOLOR_USE_INSTCOLOR : 1;
+	UNKNOWN_2 : 4;
+	DRAW_HUGE : 1;
+	INVISIBLE_BEFORE_PAUSE : 1;
+	INVISIBLE_DURING_PAUSE : 1;
+};
+
 struct Instance
 {
 	// 0x0
@@ -413,7 +434,7 @@ struct Instance
 	// & 0x8000000 = draw huge
 	// & 0x10000000 = invisible before pause
 	// & 0x20000000 = invisible only during pause
-	u32 flags;
+	InstanceFlag flags;
 
 	// 0x2c
 	// comes from LEVs
@@ -502,7 +523,7 @@ struct InstDef
 	type::RGBA8 colorRGBA;
 
 	// 0x20 (0x28 - 8)
-	u32 flags;
+	InstanceFlag flags;
 
 	int unk24;
 	int unk28;
@@ -729,6 +750,44 @@ fn format_tpage_bpp(auto thing)
 	}
 };
 
+struct Skybox
+{
+	int numVertex;
+	CTRLEVPtr<LevVertex, u32> ptrVertex;
+	int numFaces[8];
+	CTRLEVPtr<s16, u32> ptrFaces[8];
+};
+
+struct Icon
+{
+	// https://github.com/DCxDemo/CTR-tools/blob/master/ctr-tools/CTRFramework/CTRFramework.Code/lev/TextureLayout.cs
+
+	// 0x0
+	char name[0x10] [[format("format_ctr_string")]];
+
+	// 0x10
+	int global_IconArray_Index;
+
+	TextureLayout texLayout;
+};
+
+struct IconGroup
+{
+	// 0x0
+	char name[16] [[format("format_ctr_string")]];
+
+	// 0x10
+	short groupID;
+
+	// 0x12
+	short numIcons;
+
+	// This is an array, not a pointer,
+	// see below...
+	// 0x14
+	CTRLEVPtr<Icon, u32> icons[this.numIcons];
+};
+
 struct Level
 {
 	// 0x0
@@ -737,7 +796,7 @@ struct Level
 
 	// 0x4
 	// pointer to skybox (struct not yet known)
-	CTRLEVPtr<u32, u32> ptr_skybox;
+	CTRLEVPtr<Skybox, u32> ptr_skybox;
 
 	// 0x8
 	// pointer to animated textures array
@@ -751,7 +810,7 @@ struct Level
 	// 0x10
 	// points to the 1st entry of the array of model instances (?)
 	// each entry in the array is 0x40 bytes large
-	CTRLEVPtr<InstDef, u32> PTR_ptrInstDefs;
+	CTRLEVPtr<InstDef, u32> ptrInstDefs;
 
 	// 0x14
 	// number of actual models
@@ -763,11 +822,11 @@ struct Level
 
 	// 0x1c
 	// unknown, extra bsp region
-	u32 PTR_unk3;
+	CTRLEVPtr<u32, u32>unk3;
 
 	// 0x20
 	// unknown, extra bsp region
-	u32 PTR_unk4;
+	CTRLEVPtr<u32, u32>unk4;
 
 	// 0x24
 	// pointer to the array of pointers to model instances (?)
@@ -777,15 +836,15 @@ struct Level
 	// 0x28
 	// unknown, extra bsp region
 	// related to water?
-	u32 PTR_unk5;
+	CTRLEVPtr<u32, u32>unk5;
 
 	// 0x2c
 	// assumed to be reserved
-	u32 PTR_null1;
+	CTRLEVPtr<u32, u32>null1;
 
 	// 0x30
 	// assumed to be reserved
-	u32 PTR_null2;
+	CTRLEVPtr<u32, u32>null2;
 
 	// 0x34
 	// number of vertices treated as water
@@ -793,19 +852,19 @@ struct Level
 
 	// 0x38
 	// pointer to array of water entries
-	u32 PTR_ptr_water;
+	CTRLEVPtr<u32, u32>ptr_water;
 
 	// 0x3c
 	// leads to the icon pack header
-	u32 PTR_ptr_named_tex;
+	CTRLEVPtr<u32, u32> ptr_named_tex;
 
 	// 0x40
 	// leads to the icon pack data
-	u32 PTR_ptr_named_tex_array;
+	CTRLEVPtr<Icon, u32>ptr_named_tex_array;
 
 	// 0x44
 	// pointer to environment map, used by water rendering
-	u32 PTR_ptr_tex_waterEnvMap;
+	CTRLEVPtr<u32, u32>ptr_tex_waterEnvMap;
 
 	// 0x48
 	// used for additional skybox gradients (e.g. papu's pyramid)
@@ -817,12 +876,12 @@ struct Level
 
 	// 0xCC -- next
 	// unknown, extra bsp regions
-	u32 PTR_unk_Lev_CC;
-	u32 PTR_unk_Lev_D0;
+	CTRLEVPtr<u32, u32>unk_Lev_CC;
+	CTRLEVPtr<u32, u32>unk_Lev_D0;
 
 	// 0xD4
 	// assumed to be a pointer to low textures array, there is no number of entries though
-	u32 PTR_ptrLowTexArray;
+	CTRLEVPtr<CTRLEVPtr<u32, u32>, u32>ptrLowTexArray;
 
 	// 0xD8
 	// base background color, used to clear the screen
@@ -855,7 +914,7 @@ struct Level
 	RainBuffer rainBuff;
 
 	// 0x134
-	u32 PTR_ptrSpawnType1;
+	CTRLEVPtr<u32, u32>ptrSpawnType1;
 
 	// spawn_arrays2 is for things
 	// like Seal, Minecart, etc,
@@ -865,7 +924,7 @@ struct Level
 	s32 numSpawnType2;
 
 	// 0x13C
-	u32 PTR_ptrSpawnType2;
+	CTRLEVPtr<u32, u32>ptrSpawnType2;
 
 	// spawn_arrays is for things
 	// N Gin Labs barrel, Snowball,
@@ -875,7 +934,7 @@ struct Level
 	s32 numSpawnType2_PosRot;
 
 	// 0x144
-	u32 PTR_ptrSpawnType2_PosRot;
+	CTRLEVPtr<u32, u32>ptrSpawnType2_PosRot;
 
 	// restart_points is for respawning
 	// driver on track after falling off
@@ -884,7 +943,7 @@ struct Level
 	s32 cnt_restart_points;
 
 	// 0x14C
-	u32 PTR_ptr_restart_points;
+	CTRLEVPtr<u32, u32>ptr_restart_points;
 
 	// 0x150
 	s8 unk_150[0x10];
@@ -903,7 +962,7 @@ struct Level
 	s32 numSCVert;
 
 	// 0x178
-	u32 PTR_ptrSCVert;
+	CTRLEVPtr<u32, u32>ptrSCVert;
 
 	// 0x17c - 0x182
 	s8 unkStarData[8];
@@ -922,7 +981,7 @@ struct Level
 	s32 unk_18C;
 
 	// 0x190
-	u32 PTR_visMem;
+	CTRLEVPtr<u32, u32>visMem;
 	
 	s8 footer[0x60];
 };
