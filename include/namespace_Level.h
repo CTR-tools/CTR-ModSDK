@@ -464,9 +464,9 @@ struct Level
 	unsigned int numInstances;
 
 	// 0x10
-	// points to the 1st entry of the array of model instances (?)
-	// each entry in the array is 0x40 bytes large
-	void* ptrInstDefs;
+	// points to the 1st entry of the array of InstDefs
+	// (whatever they are)
+	struct InstDef* ptrInstDefs;
 
 	// 0x14
 	// number of actual models
