@@ -453,11 +453,12 @@ struct Skybox
 
 	// each Vertex is 
 	//{
-	//  pos[3], col[3] ???? (DCxDemo knows)	
+	//  pos[4], col[4]	
 	//}
 
-	// each Face is vec4s(v1,v2,v3,0),
-	// being an index of ptrVertex
+	// each Face is vec4s(v1Off,v2Off,v3Off,renderMode),
+	// offsets of ptrVertex, divide offset by 0xC to get index,
+	// renderMode can be just 0000 and it'll work fine
 };
 
 struct Level
