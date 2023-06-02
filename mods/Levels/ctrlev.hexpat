@@ -37,7 +37,7 @@ fn format_ctr_string(auto thing)
 
 fn format_ctr_fixedpoint(short thing)
 {
-	return std::format("{0}", thing/4096);
+	return std::format("{0}", std::fxpt::to_fixed(thing, 24));
 };
 
 struct MatrixMatrix
@@ -144,12 +144,17 @@ bitfield Tpage
 	rest : 7;
 };
 
+fn format_texturelayout_v(u8 thing)
+{
+	return std::format("{0}", thing+(parent.clut));
+};
+
 struct TextureLayout
 {
 	// 0x14
 	// top left corner
 	u8 u0;
-    u8 v0;
+    u8 v0 [[format("format_texturelayout_v")]];
 
 	// 0x16
 	// holds X and Y with bit shifting
@@ -477,6 +482,11 @@ struct Instance
 	// struct is 0xFC bytes large (in 1P mode)
 };
 
+struct FixedPoint
+{
+	short [[format("format_ctr_fixedpoint")]];
+};
+
 struct InstDef
 {
 	// 0
@@ -486,7 +496,7 @@ struct InstDef
 	CTRLEVPtr<Model, u32> model;
 
 	// 0x14 (0x1c - 8)
-	short scale[4] [[format("format_ctr_fixedpoint")]];
+	FixedPoint scale[4];
 
 	// 0x1c (0x24 - 8)
 	type::RGBA8 colorRGBA;
