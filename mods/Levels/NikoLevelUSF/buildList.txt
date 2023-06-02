@@ -12,9 +12,6 @@ common, exe, LevInstDef_UnPack, 0x0, src/return1.c
 // disable map
 common, exe, UI_Map_DrawRawIcon, 0x0, src/return3.c
 
-// disable ghost memory
-common, exe, GhostBuffer_InitMemory, 0x0, src/return4.c
-
 // disable LevInstQueue
 // required? or just needed cause I messed up? crashes in relocate attempts
 common, exe, RenderBucket_QueueLevInstances, 0x0, src/disableQueueLevInst.c

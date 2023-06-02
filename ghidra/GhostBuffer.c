@@ -158,12 +158,17 @@ void FUN_80026ed8(int param_1)
       pbVar16 = pbVar19;
       do {
         pbVar14 = pbVar13 + 1;
-        if ((byte *)piVar20[2] <= pbVar16) {
+        if ((byte *)piVar20[2] <= pbVar16) 
+		{
+		  // ->0x62C->0
           iVar21 = *piVar20;
+		  
           *(undefined4 *)(iVar22 + 0x3a4) = *(undefined4 *)(iVar21 + 0xc);
           uVar5 = *(undefined2 *)(iVar21 + 8);
+		  
           //turn off 21st bit of Actions Flag set (means ?)
           *(uint *)(iVar22 + 0x2c8) = *(uint *)(iVar22 + 0x2c8) & 0xffefffff;
+		  
           *(undefined2 *)(iVar22 + 0x38e) = uVar5;
 
 		  // Turn Ghost into Robotcar
