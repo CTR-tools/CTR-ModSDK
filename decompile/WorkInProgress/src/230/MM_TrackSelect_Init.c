@@ -2,7 +2,7 @@
 
 void DECOMP_MM_TrackSelect_Init(void)
 {
-  struct MainMenu_LevelRow *currTrack;
+  struct MainMenu_LevelRow *selectMenu;
   short numTracks;
 
   // lap selection menu is closed by default
@@ -18,12 +18,12 @@ void DECOMP_MM_TrackSelect_Init(void)
   if ((sdata->gGT->gameMode1 & 0x20) != 0)
   {
     // set menu element to first battle track, Nitro Coutrt
-    currTrack = &OVR_230.battleTracks[0];
+    selectMenu = &OVR_230.battleTracks[0];
     // 7 battle tracks total
     numTracks = 7;
   }
   // otherwise set menu element to first arcade track, Crash Cove
-  currTrack = &OVR_230.arcadeTracks[0];
+  selectMenu = &OVR_230.arcadeTracks[0];
   // 18 arcade tracks total
   numTracks = 0x12;
 
@@ -34,7 +34,7 @@ void DECOMP_MM_TrackSelect_Init(void)
   }
 
   // Loop through all tracks until a unlocked track is found
-  while (MM_TrackSelect_boolTrackOpen(currTrack + OVR_230.menubox_trackSelect.rowSelected * 0x10) == false)
+  while (MM_TrackSelect_boolTrackOpen(selectMenu[OVR_230.menubox_trackSelect.rowSelected << 4]) == false)
   {
     OVR_230.menubox_trackSelect.rowSelected += 1;
 
