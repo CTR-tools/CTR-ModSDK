@@ -4,6 +4,50 @@
 struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 
+struct MenuRow NewRowsPAUSE[5] =
+{
+	[0] =
+	{
+		.stringIndex = 2, // resume
+		.rowOnPressUp = 0,
+		.rowOnPressDown = 1,
+		.rowOnPressLeft = 0,
+		.rowOnPressRight = 0,
+	},
+	
+	[1] =
+	{
+		.stringIndex = 1, // restart
+		.rowOnPressUp = 0,
+		.rowOnPressDown = 2,
+		.rowOnPressLeft = 1,
+		.rowOnPressRight = 1,
+	},
+	
+	[2] =
+	{
+		.stringIndex = 3, // quit
+		.rowOnPressUp = 1,
+		.rowOnPressDown = 3,
+		.rowOnPressLeft = 2,
+		.rowOnPressRight = 2,
+	},
+	
+	[3] =
+	{
+		.stringIndex = 0xE, // options
+		.rowOnPressUp = 2,
+		.rowOnPressDown = 3,
+		.rowOnPressLeft = 3,
+		.rowOnPressRight = 3,
+	},
+	
+	[4] =
+	{
+		.stringIndex = 0xFFFF,
+	}
+};
+
 void RunInitHook()
 {
 	unsigned int loop;
@@ -16,8 +60,8 @@ void RunInitHook()
 	struct BattleGame* bg = 0x8000F000;
 	gGT = sdata->gGT;
 	
-	// set battle menubox to use adv cup rows
-	*(unsigned int*)(0x80084474 + 0xC) = 0x800844A0;
+	// set arcade/TT menubox to use adv cup rows
+	*(unsigned int*)(0x80084510 + 0xC) = NewRowsPAUSE;
 	
 	// required for AI Nav, cause I dont have
 	// offsets [0xA] or [0xC] and it gets stuck
@@ -32,6 +76,9 @@ void RunInitHook()
 		sdata->boolPlayGhost = 0;
 		sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00);
 	}
+	
+	// wont clear itself?
+	sdata->ptrLoadSaveObj = 0;
 	
 	if(gGT->levelID != 0x14) return;
 	
@@ -100,7 +147,10 @@ void RunUpdateHook()
 	}
 	
 	// time trial end of race
-	if(sdata->ptrActiveMenuBox == 0x800A04A4)
+	if(
+		(sdata->ptrActiveMenuBox == 0x800a0458) ||
+		(sdata->ptrActiveMenuBox == 0x800A04A4)
+	  )
 	{
 		sdata->ptrActiveMenuBox->rows = &NewRowsEND[0];
 	}
