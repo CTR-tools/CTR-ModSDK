@@ -444,6 +444,22 @@ struct CheckpointNode
 	// 0xC -- size
 };
 
+struct Skybox
+{
+	int numVertex;
+	void* ptrVertex;
+	int numFaces[8];
+	short* ptrFaces[8];
+
+	// each Vertex is 
+	//{
+	//  pos[3], col[3] ???? (DCxDemo knows)	
+	//}
+
+	// each Face is vec4s(v1,v2,v3,0),
+	// being an index of ptrVertex
+};
+
 struct Level
 {
 	// 0x0
@@ -452,7 +468,7 @@ struct Level
 
 	// 0x4
 	// pointer to skybox (struct not yet known)
-	void* ptr_skybox;
+	struct Skybox* ptr_skybox;
 
 	// 0x8
 	// pointer to array of animated texture structs
