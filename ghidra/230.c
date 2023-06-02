@@ -724,7 +724,6 @@ void FUN_800ac6dc(void)
 				// model ptr related to main menu
 				*(int *)(PTR_DAT_8008d2ac + 0x2300) != 0 &&
 				
-				// LEV -> trial_data -> numPointers > 2
 				(2 < **(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))
 			)
 		)

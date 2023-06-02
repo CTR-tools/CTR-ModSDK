@@ -28,7 +28,6 @@ void DECOMP_MM_Title_Init(void)
 				// model ptr (Title blue Ring)
 				gGT->modelPtr[0x68] != 0 &&
 				
-				// LEV -> trial_data -> numPointers > 2
 				(2 < gGT->level1->ptrSpawnType1->count)
 			)
 		)

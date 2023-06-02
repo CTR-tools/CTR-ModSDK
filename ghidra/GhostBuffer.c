@@ -547,7 +547,7 @@ void FUN_80027838(void)
           if ((*(uint *)(&DAT_8008e814 + *(int *)(PTR_DAT_8008d2ac + 0x1a10) * 0x124) & 2) == 0)
 		  {
 			// assign n tropy ghost
-			// LEV -> trial_data -> ptr_tropy_ghost
+			// LEV -> ptrSpawn1 -> ptr_tropy_ghost
             piVar7[0x99] = *(int *)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) + 0x14);
           }
 
@@ -555,7 +555,7 @@ void FUN_80027838(void)
           else
 		  {
 			// assign oxide ghost
-			// LEV -> trial_data -> ptr_oxide_ghost
+			// LEV -> ptrSpawn1 -> ptr_oxide_ghost
             piVar7[0x99] = *(int *)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) + 0x18);
           }
         }

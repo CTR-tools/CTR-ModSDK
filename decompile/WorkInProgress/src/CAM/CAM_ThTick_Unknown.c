@@ -88,7 +88,7 @@ void CAM_ThTick(struct Thread *t)
 	}
 	if ((*(u_int *)((int)&cDC->bitCompressed_NormalVector_AndDriverIndex + 2) & 0x20) == 0)
 	goto switchD_8001b678_caseD_1;
-	piVar10 = sdata->gGT->level1->ptr_trial_data;
+	piVar10 = sdata->gGT->level1->ptrSpawnType1;
 	psVar18 = 0;
 	if (*piVar10 < 3) goto switchD_8001b678_caseD_1;
 	psVar16 = (short *)piVar10[3];

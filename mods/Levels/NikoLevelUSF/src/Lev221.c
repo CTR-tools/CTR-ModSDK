@@ -74,6 +74,8 @@ struct LevelFile
 	struct AnimTex_TurboPad1 turbo_pad_anim;
 	struct AnimTex_TurboPad2 super_turbo_pad_anim;
 	struct SpawnType1 ptrSpawnType1;
+	void* spawnType1Pointers[3];
+	short EndRaceCam[10];
 	struct CheckpointNode checkpointNodes[NUM_CHECKPOINT];
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
@@ -96,7 +98,7 @@ struct LevelFile
 	struct NavHeader navHeader1;
 	struct NavFrame navFrame[610];
 	
-	int map[(73+NUM_BLOCKS*6)+1];
+	int map[(74+NUM_BLOCKS*6)+1];
 };
 
 struct LevelFile file =
@@ -404,7 +406,37 @@ struct LevelFile file =
 	// and crashes dereferencing nullptr on real PSX
 	.ptrSpawnType1 =
 	{
-		.count = 0,
+		.count = 3,
+	},
+	
+	.spawnType1Pointers =
+	{
+		0,					// map
+		0,					// 231 spawns
+		LEV_OFFSETOF(EndRaceCam)
+		// camera path intro (fly-in)
+		// n tropy ghost
+		// n oxide ghost
+	},
+	
+	.EndRaceCam =
+	{
+		// number of cameras
+		2, 
+		
+		// camera1:
+			1, // start on respawnPoint[1],
+			4, // mode 4 (sit in pos, lookAt driver)
+			0x800,0x400,0x900,
+			
+		// only camera1 happens cause NavFrame
+		// has to encode which respawnPoint the AI is nearest to,
+		// will come back to this when we have a full editor
+			
+		// camera2:
+			2, // start on respawnPoint[6],
+			4, // mode 4 (sit in pos, lookAt driver)
+			0,0,0x1000,
 	},
 	
 /*
@@ -1940,15 +1972,16 @@ struct LevelFile file =
 		
 	.map =
 	{
-		(73+NUM_BLOCKS*6)<<2,
+		(74+NUM_BLOCKS*6)<<2,
 		
-		// 73
+		// 74
 		LEV_OFFSETOF(level.ptr_mesh_info),
 		LEV_OFFSETOF(level.visMem),
 		LEV_OFFSETOF(level.ptr_anim_tex),
 		LEV_OFFSETOF(level.ptrSpawnType1),
 		LEV_OFFSETOF(level.ptr_restart_points),
 		LEV_OFFSETOF(level.LevNavHeader),
+		LEV_OFFSETOF(spawnType1Pointers[2]),
 		LEV_OFFSETOF(mInfo.ptrQuadBlockArray),
 		LEV_OFFSETOF(mInfo.ptrVertexArray),
 		LEV_OFFSETOF(mInfo.bspRoot),

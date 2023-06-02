@@ -578,7 +578,6 @@ LAB_8001ab04:
             {
                 flyInDone = false;
 
-                // LEV -> trial_data -> numPointers,
                 // if fly-in data is not in LEV
                 if (gGT->level1->ptrSpawnType1->count < 4)
                 {
@@ -590,7 +589,6 @@ LAB_8001ab04:
                 // if fly-in data exists in LEV
                 else
                 {
-                    // LEV -> trial_data -> ptr_intro_cam
                     local_2c = gGT->level1->ptrSpawnType1->pointers[4];
                     local_26 = 0x8e;
                     local_28 = 0x96;

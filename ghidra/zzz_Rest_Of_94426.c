@@ -10042,10 +10042,10 @@ void FUN_8004d614(int param_1,int param_2,short param_3,short param_4,int param_
     }
   }
 
-  // LEV -> trial_data -> numPointers
+  // LEV -> ptrSpawn1 -> numPointers
   if (**(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) != 0)
   {
-	// LEV -> trial_data -> ptr_map
+	// LEV -> ptrSpawn1 -> ptr_map
     iVar9 = (*(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))[1];
   }
 
@@ -14428,10 +14428,10 @@ void FUN_80052f98(void)
     DAT_8008d000 = 8;
   }
 
-  // LEV -> trial_data . numPointers
+  // LEV -> ptrSpawn1 . numPointers
   if (**(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) != 0)
   {
-	// LEV -> trial_data . ptr_map
+	// LEV -> ptrSpawn1 . ptr_map
     iVar21 = (*(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))[1];
   }
 

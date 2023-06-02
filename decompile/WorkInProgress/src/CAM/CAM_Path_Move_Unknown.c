@@ -20,7 +20,6 @@ u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, sh
 
   if (index < currPos)
   {
-    // LEV -> trial_data -> ptr_intro_camera
     ptrCam = sdata->gGT->level1->ptrSpawnType1->pointers[3];
 
     uVar3 = (u_int)ptrCam[0];

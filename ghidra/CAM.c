@@ -1031,7 +1031,7 @@ undefined4 FUN_80018ba0(int param_1,ushort *param_2,ushort *param_3,ushort *para
 
     if (sVar4 < sVar1)
 	{
-	  // LEV -> trial_data -> ptr_intro_camera
+	  // LEV -> ptrSpawnType1 -> pointers[3]
       puVar5 = *(ushort **)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) + 0x10);
 
 	  uVar3 = (uint)*puVar5;
@@ -1165,7 +1165,7 @@ void FUN_80018e38(int param_1, int param_2)
   // If you're not in Battle Mode
   if ((((*(uint *)PTR_DAT_8008d2ac & 0x20) == 0) &&
 
-	  // LEV -> trial_data -> numPointers
+	  // LEV -> ptrSpawn1 -> numPointers
       (1 < **(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))) &&
 
 	  // if numPlyrCurrGame is less than 3
@@ -2423,7 +2423,7 @@ LAB_8001ab04:
       if ((uVar11 & 0x200) == 0) {
         bVar5 = false;
 
-		// LEV -> trial_data -> numPointers,
+		// LEV -> ptrSpawn1 -> numPointers,
 		// if fly-in data is not in LEV
         if (**(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) < 4)
 		{
@@ -2435,7 +2435,7 @@ LAB_8001ab04:
 		// if fly-in data exists in LEV
         else
 		{
-		  // LEV -> trial_data -> ptr_intro_cam
+		  // LEV -> ptrSpawn1 -> ptr_intro_cam
           local_2c = (*(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))[4];
           local_26 = 0x8e;
           local_28 = 0x96;
@@ -2789,10 +2789,10 @@ void FUN_8001b334(int param_1)
   
   psVar16 = (short *)0x0;
 
-  // LEV -> trial_data -> numPointers
+  // LEV -> ptrSpawnType1 -> numPointers
   if (**(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) < 3) goto switchD_8001b678_caseD_1;
 
-  // LEV -> trial_data -> ptr_post_cam
+  // LEV -> ptrSpawnType1 -> pointers[2]
   psVar12 = (short *)(*(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))[3];
 
   // number of nodes for end-of-race camera,

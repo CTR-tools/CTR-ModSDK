@@ -414,7 +414,7 @@ struct SpawnType1
 	int count;
 	
 	// more than 1, determined by "count"
-	void* pointers[1];
+	void* pointers[0];
 };
 
 struct SpawnType2

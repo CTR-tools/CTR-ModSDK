@@ -9241,7 +9241,7 @@ void FUN_800b5dd0(int param_1)
 	  // velZ from forward direction of Instance MATRIX
 	  puVar5[7] = *(short *)(param_1 + 0x40) >> 7;
 	  
-	  // config -> Level -> trial_data -> numPointers
+	  // gGT -> Level -> ptrSpawn1 -> numPointers
       if (0 < **(int **)(*(int *)(puVar2 + 0x160) + 0x134)) 
 	  {
 		// get length of instance's name
@@ -9825,7 +9825,7 @@ void FUN_800b6938(int param_1)
       DAT_800b6d48._2_2_ = 0x140;
       DAT_800b6d44._0_2_ = 0;
 	  
-	  // LEV -> trial_data -> numPointers
+	  // LEV -> ptrSpawn1 -> numPointers
       if (0 < **(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134)) {
         
 		// probably strlen
@@ -10923,7 +10923,7 @@ void FUN_800b7ecc(int param_1)
       *(short *)((int)puVar6 + 0x26) = sVar3;
 	  
       if (
-			// LEV -> trial_data -> numPointers
+			// LEV -> ptrSpawn1 -> numPointers
 			(0 < **(int **)(*(int *)(puVar1 + 0x160) + 0x134)) &&
 			
 			// get data depending on orcaID
@@ -11600,7 +11600,7 @@ void FUN_800b89a4(int param_1)
       DAT_800b8bf4._2_2_ = 0x1e0;
       DAT_800b8bf0._0_2_ = 0;
 	  
-	  // LEV -> trial_data -> numPointers
+	  // LEV -> ptrSpawn1 -> numPointers
       if (0 < **(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134)) 
 	  {
 		// strlen

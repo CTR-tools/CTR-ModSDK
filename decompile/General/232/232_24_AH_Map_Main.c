@@ -49,7 +49,6 @@ void DECOMP_AH_Map_Main(void)
   }
 #endif
   
-  // LEV -> trial_data -> numPointers
   if (gGT->level1->ptrSpawnType1->count != 0) 
   {
     hubPtrs = gGT->level1->ptrSpawnType1->pointers[0];

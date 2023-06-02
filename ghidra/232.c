@@ -5391,7 +5391,7 @@ void FUN_800b1c90(void)
     DAT_8008d000 = 8;
   }
   
-  // LEV -> trial_data -> numPointers
+  // LEV -> ptrSpawn1 -> numPointers
   if (**(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) != 0) {
     iVar3 = (*(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))[1];
   }
