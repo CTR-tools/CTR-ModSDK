@@ -107,11 +107,11 @@ void RunUpdateHook()
 	
 	d = gGT->drivers[0];
 	
-	#if 0
+	#if 1
 	// get AI Nav data
 	printf("{.pos = {%d,%d,%d},.rot={%d,%d,%d,%d}},\n",
 		d->posCurr[0]/256, d->posCurr[1]/256, d->posCurr[2]/256,
-		d->rotCurr.x, d->rotCurr.y, d->rotCurr.z, d->rotCurr.w);
+		d->rotCurr.x/16, d->rotCurr.y/16, d->rotCurr.z/16, d->rotCurr.w/16);
 	#endif
 	
 	// top 180-degree U-turn with 4 turbos,
