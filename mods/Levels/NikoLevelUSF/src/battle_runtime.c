@@ -24,6 +24,15 @@ void RunInitHook()
 	// in a loop, so this breaks the loop
 	*(int*)0x800150c0 = 0;
 	
+	// this should happen in main menu,
+	// but we skip the ghost selection
+	if(sdata->ptrGhostTapePlaying == 0)
+	{
+		LoadSave_ToggleMode(0x30);
+		sdata->boolPlayGhost = 0;
+		sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00);
+	}
+	
 	if(gGT->levelID != 0x14) return;
 	
 	sdata->ptrActiveMenuBox = 0;
@@ -102,8 +111,9 @@ void RunUpdateHook()
 	*(int*)0x8009f8c0 = 0x3E00008;
 	*(int*)0x8009f8c4 = 0;
 	
-	// disable end-of-race high score saving
-	gGT->unknownFlags_1d44 = 0;
+	// disable end-of-race high score saving,
+	// but &1 is needed for the ghosts to work
+	gGT->unknownFlags_1d44 = 1;
 	
 	d = gGT->drivers[0];
 	
