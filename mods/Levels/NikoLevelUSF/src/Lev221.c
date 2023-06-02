@@ -131,13 +131,33 @@ struct LevelFile file =
 		.DriverSpawn[3].pos = {-0x180,0,-0xc0},
 		.DriverSpawn[3].rot = {-0x80,0-0x400,0},
 		
+		.configFlags = 1,
+		
+		.glowGradient =
+		{
+			// top, bottom
+			0x20, 0x0,
+			
+			// top
+			0x801020, // blue
+			
+			// bottom
+			0x102080, // red
+		},
+		
 		.ptrSpawnType1 = LEV_OFFSETOF(ptrSpawnType1),
 		
-		.clearColor[0].rgb = {0x20, 0x10, 0x80},
+		// red
+		.clearColor[0].rgb = {0x80, 0x20, 0x10},
 		.clearColor[0].enable = 1,
 		
+		// red
 		.clearColor[1].rgb = {0x80, 0x20, 0x10},
 		.clearColor[1].enable = 1,
+		
+		// blue
+		.clearColor[2].rgb = {0x20, 0x10, 0x80},
+		.clearColor[2].enable = 1,
 		
 		// only non-zero for Race maps
 		// battle maps need array, but still set CNT to zero
