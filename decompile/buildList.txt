@@ -17,14 +17,14 @@ common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
 
 // 230 (incomplete)
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
-common, 230, MM_MENUBOX_Main, 0x0, General/230/230_31_MM_MENUBOX_Main.c
+common, 230, MM_MENUBOX_Main, 0x0, General/230/230_31_MM_MenuBox_Main.c
 common, 230, MM_ToggleRows_PlayerCount, 0x0, General/230/230_32_MM_ToggleRows_PlayerCount.c
-common, 230, MM_MENUBOX_1p2p, 0x0, General/230/230_33_MM_MENUBOX_1p2p.c
-common, 230, MM_MENUBOX_2p3p4p, 0x0, General/230/230_34_MM_MENUBOX_2p3p4p.c
+common, 230, MM_MENUBOX_1p2p, 0x0, General/230/230_33_MM_MenuBox_1p2p.c
+common, 230, MM_MENUBOX_2p3p4p, 0x0, General/230/230_34_MM_MenuBox_2p3p4p.c
 common, 230, MM_ToggleRows_Difficulty, 0x0, General/230/230_35_MM_ToggleRows_Difficulty.c
-common, 230, MM_MENUBOX_Difficulty, 0x0, General/230/230_36_MM_MENUBOX_Difficulty.c
-common, 230, MM_MENUBOX_SingleCup, 0x0, General/230/230_37_MM_MENUBOX_SingleCup.c
-common, 230, MM_MENUBOX_NewLoad, 0x0, General/230/230_38_MM_MENUBOX_NewLoad.c
+common, 230, MM_MENUBOX_Difficulty, 0x0, General/230/230_36_MM_MenuBox_Difficulty.c
+common, 230, MM_MENUBOX_SingleCup, 0x0, General/230/230_37_MM_MenuBox_SingleCup.c
+common, 230, MM_MENUBOX_NewLoad, 0x0, General/230/230_38_MM_MenuBox_NewLoad.c
 common, 230, MM_AdvNewLoad_GetMenuBox, 0x0, General/230/230_39_MM_AdvNewLoad_GetMenuBox.c
 common, 230, MM_Characters_AnimateColors, 0x0, General/230/230_40_MM_Characters_AnimateColors.c
 common, 230, MM_Characters_GetNextDriver, 0x0, General/230/230_41_MM_Characters_GetNextDriver.c
