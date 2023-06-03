@@ -36954,7 +36954,7 @@ LAB_8006a610:
   } while( true );
 }
 
-// animated model rendering related?
+// RenderBucket_UncompressAnimationFrame
 // called as funcPtr in register $s6 (r22)
 // from DrawFunc_Normal
 void FUN_8006a8e0(void)
@@ -37762,7 +37762,7 @@ LAB_8006b15c:
   } while( true );
 }
 
-// Draw_Uncompress2
+// RenderBucket_UncompressAnimationFrame_60fps
 void UndefinedFunction_8006b24c(void)
 
 {
