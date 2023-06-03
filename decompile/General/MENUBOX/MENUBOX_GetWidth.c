@@ -58,7 +58,7 @@ void DECOMP_MENUBOX_GetWidth(struct MenuBox* m, short* width, int boolCheckSubme
 		{
 			// recursively check height for more submenus
 			DECOMP_MENUBOX_GetWidth(
-				m->ptrNextMENUBOX_InHierarchy,
+				m->ptrNextMenuBox_InHierarchy,
 				width, 1);
 		}
 	}

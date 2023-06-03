@@ -11,7 +11,7 @@ void DECOMP_MM_MENUBOX_SingleCup(struct MenuBox* mb)
   
   if (row == -1) 
   {
-    mb->ptrPrevMENUBOX_InHierarchy->state &= 0xffffffeb;
+    mb->ptrPrevMenuBox_InHierarchy->state &= 0xffffffeb;
 	return;
   }
   
@@ -35,7 +35,7 @@ void DECOMP_MM_MENUBOX_SingleCup(struct MenuBox* mb)
     if ((gGT->gameMode1 & ARCADE_MODE) != 0) 
     {
   	  // set next menuBox to 1P+2P select
-      mb->ptrNextMENUBOX_InHierarchy = &OVR_230.menubox_players1P2P;
+      mb->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_players1P2P;
       *(int*)0x800b5a08 = 1;
       return;
     }
@@ -43,7 +43,7 @@ void DECOMP_MM_MENUBOX_SingleCup(struct MenuBox* mb)
     // if mode is VS
     
     // set next menuBox to 2P+3P+4P (vs or battle)
-    mb->ptrNextMENUBOX_InHierarchy = &OVR_230.menubox_players2P3P4P;
+    mb->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_players2P3P4P;
     *(int*)0x800b5a08 = 2;
   }
 }

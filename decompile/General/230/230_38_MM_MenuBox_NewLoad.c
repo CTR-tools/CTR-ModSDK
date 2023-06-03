@@ -8,7 +8,7 @@ void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox* mb)
   row = mb->rowSelected;
   
   if(row == -1)
-	  mb->ptrPrevMENUBOX_InHierarchy->state &= 0xffffffeb;
+	  mb->ptrPrevMenuBox_InHierarchy->state &= 0xffffffeb;
   
   if((unsigned char)row > 1) return;
   

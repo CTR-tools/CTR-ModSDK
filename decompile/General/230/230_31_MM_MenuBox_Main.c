@@ -76,7 +76,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
   
   MM_Title_Init();
   
-  // if drawing ptrNextMENUBOX_InHierarchy
+  // if drawing ptrNextMenuBox_InHierarchy
   if ((mainMenu->state & 0x10) != 0) {
     *(int*)0x800b5a14 = 1000;
   }
@@ -132,7 +132,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
     
     // menubox for new/load
-    mainMenu->ptrNextMENUBOX_InHierarchy = &OVR_230.menubox_adventure;
+    mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_adventure;
     mainMenu->state |= 0x10;
     return;
   }
@@ -168,7 +168,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
     gGT->gameMode1 |= ARCADE_MODE;
 
 	// set next menuBox
-	mainMenu->ptrNextMENUBOX_InHierarchy = &OVR_230.menubox_raceType;
+	mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_raceType;
 	mainMenu->state |= 0x10;
 	return;
   }
@@ -177,7 +177,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
   if (choose == 0x4f) 
   {
 	// next menuBox is choosing single+cup
-    mainMenu->ptrNextMENUBOX_InHierarchy = &OVR_230.menubox_raceType;
+    mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_raceType;
 	mainMenu->state |= 0x10;
 	return;
   }
@@ -191,7 +191,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
   	gGT->gameMode1 |= BATTLE_MODE;
   
   	// set next menuBox to 2P,3P,4P
-  	mainMenu->ptrNextMENUBOX_InHierarchy = &OVR_230.menubox_players2P3P4P;
+  	mainMenu->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_players2P3P4P;
   	mainMenu->state |= 0x10;
   	return;
   }

@@ -168,11 +168,11 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox* m)
 	if((m->state & 0x10) != 0)
 	{
 		// store self in the next
-		m->ptrNextMENUBOX_InHierarchy->ptrPrevMENUBOX_InHierarchy = m;
+		m->ptrNextMenuBox_InHierarchy->ptrPrevMenuBox_InHierarchy = m;
 		
 		// keep going till the bottom hierarchy level is hit,
 		// where m->state&4==0, cause not drawing "only title"
-		returnVal = DECOMP_MENUBOX_ProcessInput(m->ptrNextMENUBOX_InHierarchy);
+		returnVal = DECOMP_MENUBOX_ProcessInput(m->ptrNextMenuBox_InHierarchy);
 	}
 
 	return returnVal;

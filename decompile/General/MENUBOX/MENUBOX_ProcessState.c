@@ -39,7 +39,7 @@ void DECOMP_MENUBOX_ProcessState()
 		// get menubox at end of hierarchy, if there is hierarchy
 		while((currMenuBox->state & 0x10) != 0)
 		{
-			currMenuBox = (struct MenuBox*)currMenuBox->ptrNextMENUBOX_InHierarchy;
+			currMenuBox = (struct MenuBox*)currMenuBox->ptrNextMenuBox_InHierarchy;
 		}
 		
 		// remove "draw only title bar" from lowest hierarchy,
