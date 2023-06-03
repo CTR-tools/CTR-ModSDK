@@ -139,7 +139,7 @@ LAB_800ac004:
   case 1:
   
 	// Go to save/load
-    sdata->ptrDesiredMenuBox = &data.MenuBox_DrawSelfFourAdvProfiles;
+    sdata->ptrDesiredMenuBox = &data.MENUBOX_DrawSelfFourAdvProfiles;
 	
     MM_Title_CameraReset();
 	
@@ -242,7 +242,7 @@ LAB_800abfc0:
     MainRaceTrack_RequestLoad(iVar4);
 	
 	// make main menu disappear
-    MenuBox_Hide((struct MenuBox*)0x800b4540);
+    MENUBOX_Hide((struct MenuBox*)0x800b4540);
   }
   
 switchD_800abde8_caseD_6:

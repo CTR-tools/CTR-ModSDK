@@ -2,7 +2,7 @@
 #include <common.h>
 
 // Only used for drawing player comments
-void DECOMP_MenuBox_DrawQuip(char* comment,short posX,int posY,u_int sizeX,short fontType,
+void DECOMP_MENUBOX_DrawQuip(char* comment,short posX,int posY,u_int sizeX,short fontType,
                  int flags,short param_7)
 {
   int lineWidth;
@@ -32,6 +32,6 @@ void DECOMP_MenuBox_DrawQuip(char* comment,short posX,int posY,u_int sizeX,short
                 fontType, flags);
 
   // Draw 2D Menu rectangle background
-  MenuBox_DrawFullRect(&posX,(int)param_7, sdata->gGT->backBuffer->otMem.startPlusFour);
+  MENUBOX_DrawFullRect(&posX,(int)param_7, sdata->gGT->backBuffer->otMem.startPlusFour);
   return;
 }

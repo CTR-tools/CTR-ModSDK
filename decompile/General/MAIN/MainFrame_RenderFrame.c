@@ -31,13 +31,13 @@ void RenderSubmit(struct GameTracker* gGT);
 
 int LOAD_IsOpen_MainMenu();
 int MainFrame_HaveAllPads(short param_1);
-void MenuBox_DrawInnerRect(RECT* r, int flag, u_long* ot);
+void MENUBOX_DrawInnerRect(RECT* r, int flag, u_long* ot);
 void DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, u_long* ot);
 void ElimBG_HandleState(struct GameTracker* gGT);
 void MainFrame_VisMemFullFrame(struct GameTracker* gGT, struct Level* level);
 void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
-void MenuBox_CollectInput();
-void MenuBox_ProcessState();
+void MENUBOX_CollectInput();
+void MENUBOX_ProcessState();
 void TileView_UpdateFrustum(struct TileView* tileView);
 void EffectSfxRain_MakeSound(struct GameTracker* gGT);
 void RenderWeather(struct TileView* tileView, struct PrimMem* primMem, struct RainBuffer* rainBuffer, char numPlyr, int gameMode1);
@@ -130,12 +130,12 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
 		((gGT->gameMode1 & END_OF_RACE) != 0)
 	)
 	{
-		MenuBox_CollectInput();
+		MENUBOX_CollectInput();
 	}
 	
 	if(sdata->ptrActiveMenuBox != 0)
 		if(sdata->Loading.stage == -1)
-			MenuBox_ProcessState();
+			MENUBOX_ProcessState();
 		
 	RainLogic(gGT);
 	EffectSfxRain_MakeSound(gGT);
@@ -320,7 +320,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// add 3 pixels above, 3 pixels bellow
 	window.h += 6;
 		
-	MenuBox_DrawInnerRect(&window, 1, gGT->backBuffer->otMem.startPlusFour);
+	MENUBOX_DrawInnerRect(&window, 1, gGT->backBuffer->otMem.startPlusFour);
 }
 
 void DrawFinalLap(struct GameTracker* gGT)
@@ -1132,7 +1132,7 @@ void WindowBoxLines(struct GameTracker* gGT)
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		MenuBox_DrawOuterRect_LowLevel(
+		MENUBOX_DrawOuterRect_LowLevel(
 
 			// dimensions, thickness
 			&gGT->tileView[i].rect,4,2,

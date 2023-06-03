@@ -186,7 +186,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *param_1)
         for (uVar12 = 0; uVar12 < 4; uVar12++)
         {
             // Draw Icon of each track
-            MenuBox_DrawPolyGT4(gGT->ptrIcons[data.ArcadeCups[uVar4].CupTrack[uVar12].trackID],
+            MENUBOX_DrawPolyGT4(gGT->ptrIcons[data.ArcadeCups[uVar4].CupTrack[uVar12].trackID],
                                 (iVar10 + uVar6 * 0x54),
                                 (iVar13 + (uVar12 - ((int)(uVar12 << 0x10) >> 0x1f) >> 1) * 0x23),
 
@@ -222,7 +222,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *param_1)
         cupBox.x = 0x4e;
 
         // Draw 2D Menu rectangle background
-        MenuBox_DrawInnerRect(&cupBox, 0, gGT->backBuffer->otMem.startPlusFour);
+        MENUBOX_DrawInnerRect(&cupBox, 0, gGT->backBuffer->otMem.startPlusFour);
     }
     return;
 }

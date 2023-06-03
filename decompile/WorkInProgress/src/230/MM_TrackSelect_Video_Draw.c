@@ -79,7 +79,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *param_1, int bigfileOffset, int trac
     // This is the same function that draws Character icons
 
     // Draw Video icon
-    MenuBox_DrawPolyGT4(sdata->gGT->ptrIcons[*(short *)(bigfile_pos + 2)],
+    MENUBOX_DrawPolyGT4(sdata->gGT->ptrIcons[*(short *)(bigfile_pos + 2)],
                         (param_1->x + 3), (param_1->y + 2),
 
                         // pointer to PrimMem struct
@@ -114,7 +114,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *param_1, int bigfileOffset, int trac
   OVR_230.trackSel_unk = OVR_230.trackSel_video_state;
 
   // Draw 2D Menu rectangle background
-  MenuBox_DrawInnerRect(param_1, (int)(short)(param_5 | 1),
+  MENUBOX_DrawInnerRect(param_1, (int)(short)(param_5 | 1),
                         sdata->gGT->backBuffer->otMem.startPlusFour);
   return;
 }

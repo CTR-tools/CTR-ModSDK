@@ -4782,9 +4782,8 @@ void FUN_80038b5c(int param_1)
     return;
   }
 
-  // If you are not in racing wheel configuration,
-  // since you did not hit "return", you will
-  // continue with the rest of the Options menu
+  // For if you are not in racing wheel configuration
+  // Since you did not hit "return", you will continue with the rest of the Options menu
 
   // loop counter
   iVar13 = 0;

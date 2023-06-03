@@ -114,10 +114,10 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 	r.w = 448;
 	r.y = 62;
 	r.h = 2;
-	MenuBox_DrawOuterRect_Edge(&r, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long*)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	MENUBOX_DrawOuterRect_Edge(&r, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long*)(sdata->gGT->backBuffer->otMem).startPlusFour);
 	r.y = 39;
 	r.h = 130;
-	MenuBox_DrawInnerRect(&r, 0, (u_long*)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	MENUBOX_DrawInnerRect(&r, 0, (u_long*)(sdata->gGT->backBuffer->otMem).startPlusFour);
 	if ((sdata->buttonTapPerPlayer[0] & (BTN_UP | BTN_DOWN | BTN_LEFT | BTN_RIGHT)) == 0)
 	{
 		if ((sdata->buttonTapPerPlayer[0] & BTN_START) == 0)
@@ -178,7 +178,7 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 							soundID = 3;
 							local_38 = -1;
 						}
-						MenuBox_ClearInput();
+						MENUBOX_ClearInput();
 					}
 				}
 			}

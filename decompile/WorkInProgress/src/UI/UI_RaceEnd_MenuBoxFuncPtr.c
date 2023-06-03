@@ -23,7 +23,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox* menu)
       if (menu->unk1a * 6 + menu->rows != 9) {
 
 		// make MenuBox invisible
-		MenuBox_Hide(menu);
+		MENUBOX_Hide(menu);
       }
       sdata->framesSinceRaceEnded = 0;
       sdata->numIconsEOR = 1;

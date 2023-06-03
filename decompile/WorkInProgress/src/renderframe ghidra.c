@@ -88,7 +88,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 		local_40.x = -0x14;
 		local_40.w = 0x228;
 		local_40.y = data.errorPosY[sdata->errorMessagePosIndex] - 3;
-		MenuBox_DrawInnerRect(&local_40, 1, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+		MENUBOX_DrawInnerRect(&local_40, 1, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 	}
 	iVar15 = 0;
 	iVar18 = 0;
@@ -142,10 +142,10 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 		CTR_CycleTex_LEV((struct AnimTex *)level->ptr_anim_tex, gGT->timer);
 	}
 	if ((sdata->ptrActiveMenuBox != (struct MenuBox *)0x0) || ((sdata->gGT->gameMode1 & END_OF_RACE) != 0)) {
-		MenuBox_CollectInput();
+		MENUBOX_CollectInput();
 	}
 	if ((sdata->ptrActiveMenuBox != (struct MenuBox *)0x0) && (sdata->Loading.stage == -1)) {
-		MenuBox_ProcessState();
+		MENUBOX_ProcessState();
 	}
 	iVar19 = 0;
 	if (gGT->numPlyrCurrGame != '\0') {
@@ -642,7 +642,7 @@ code_r0x800369d8:
 					local_30.y = *(short *)((int)sdata->gGT->tileView[0].matrix_ViewProj.m[-2] + iVar15 + 2);
 					local_30.w = *(short *)((int)sdata->gGT->tileView[0].matrix_ViewProj.m[-2] + iVar15 + 4);
 					local_30.h = *(short *)((int)sdata->gGT->tileView[0].matrix_ViewProj.m[-1] + iVar15);
-					MenuBox_DrawOuterRect_LowLevel
+					MENUBOX_DrawOuterRect_LowLevel
 										(&local_30, 4, 2, 
 										 data.ptrColor[(sdata->gGT->drivers[iVar19]->BattleHUD).teamID + PLAYER_BLUE], 0, 
 										 (sdata->gGT->tileView_UI).ptrOT + 3);

@@ -106,7 +106,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
     sdata->numIconsEOR = gGT->numPlyrCurrGame + gGT->numBotsCurrGame;
 
     // clear gamepad input (for menus)
-    MenuBox_ClearInput();
+    MENUBOX_ClearInput();
   }
   if ((sdata->menuReadyToPass & 4) == 0) {
     local_38 = -0x32;
@@ -400,7 +400,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
       sdata->menuReadyToPass = sdata->menuReadyToPass | 8;
 
       // clear gamepad input (for menus)
-      MenuBox_ClearInput();
+      MENUBOX_ClearInput();
     }
   } else {
     sdata->numIconsEOR = 1;

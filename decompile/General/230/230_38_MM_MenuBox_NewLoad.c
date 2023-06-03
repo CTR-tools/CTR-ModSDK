@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MM_MenuBox_NewLoad(struct MenuBox* mb)
+void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox* mb)
 {
   short row;
   
@@ -8,7 +8,7 @@ void DECOMP_MM_MenuBox_NewLoad(struct MenuBox* mb)
   row = mb->rowSelected;
   
   if(row == -1)
-	  mb->ptrPrevMenuBox_InHierarchy->state &= 0xffffffeb;
+	  mb->ptrPrevMENUBOX_InHierarchy->state &= 0xffffffeb;
   
   if((unsigned char)row > 1) return;
   

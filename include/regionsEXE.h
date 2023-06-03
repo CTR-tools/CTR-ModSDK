@@ -4752,3 +4752,9 @@ register struct sData* sdata asm("$gp");
 _Static_assert(sizeof(struct Terrain) == 0x40);
 _Static_assert(sizeof(struct MetaDataLEV) == 0x18);
 _Static_assert(sizeof(struct MetaDataMODEL) == 0xC);
+
+#if BUILD == UsaRetail
+#define OFFSETOF_SDATA(ELEMENT) ((unsigned int)&(((struct sData *)0x8008cf6c)->ELEMENT))
+_Static_assert(OFFSETOF_SDATA(menuRow_quit[0]) == 0x800841BC);
+_Static_assert(OFFSETOF_SDATA(menuBox_quit) == 0x800841D0);
+#endif

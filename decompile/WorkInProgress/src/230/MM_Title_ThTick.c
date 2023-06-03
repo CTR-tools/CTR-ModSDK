@@ -32,7 +32,7 @@ int MM_Title_ThTick(struct Thread* title)
   if ((sdata->buttonTapPerPlayer[0] & 0x40070) != 0) 
   {
 	// clear gamepad input (for menus)
-    MenuBox_ClearInput();
+    MENUBOX_ClearInput();
 	
 	// set frame to 1000, skip the animation
     TITLE_FRAME = 1000;

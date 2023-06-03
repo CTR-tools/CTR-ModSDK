@@ -20,8 +20,8 @@ int UI_ConvertX_2(int x, int const_0x200);
 int UI_ConvertY_2(int y, int const_0x200);
 void DECOMP_UI_DrawNumCrystal(int x, int y, struct Driver* d);
 void UI_DrawLimitClock(short x, short y, short fontSize);
-void MenuBox_ClearInput();
-void MenuBox_Show(struct MenuBox*);
+void MENUBOX_ClearInput();
+void MENUBOX_Show(struct MenuBox*);
 void MainRaceTrack_RequestLoad(int);
 
 void DECOMP_CC_EndEvent_DrawMenu()
@@ -122,8 +122,8 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		
 		// if first frame of pressing X/O,
 		// open the Retry/ExitToMap menu
-		MenuBox_ClearInput();
-		MenuBox_Show(&menuBox221);
+		MENUBOX_ClearInput();
+		MENUBOX_Show(&menuBox221);
 		sdata->menuReadyToPass = 1;
 		return;
 	}
@@ -185,7 +185,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// unlock token and leave level
 	
 	// reset
-	MenuBox_ClearInput();
+	MENUBOX_ClearInput();
 	sdata->framesSinceRaceEnded = 0;
 	
 	// loading flags

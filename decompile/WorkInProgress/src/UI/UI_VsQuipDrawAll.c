@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MenuBox_DrawQuip(char*, short, short, short, short, int, short);
+void MENUBOX_DrawQuip(char*, short, short, short, short, int, short);
 
 void DECOMP_UI_VsQuipDrawAll(void) {
   short posX;
@@ -76,7 +76,7 @@ void DECOMP_UI_VsQuipDrawAll(void) {
         }
 
         // Draw the string with a box around it
-        MenuBox_DrawQuip(
+        MENUBOX_DrawQuip(
           // The string to print
           print,
 

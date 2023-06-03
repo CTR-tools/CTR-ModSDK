@@ -251,13 +251,13 @@ LAB_80035098:
 					((sdata->AnyPlayerTap & BTN_START) != 0)
 				)
 				{
-					MenuBox_ClearInput();
-					gGT->gameMode1 = gGT->gameMode1 & ~PAUSE_1;
+					MENUBOX_ClearInput();
+					gGT->gameMode1 &= ~PAUSE_1;
 					MainFrame_TogglePauseAudio(0);
 					OtherFX_Play(1, 1);
 					MainFreeze_SafeAdvDestroy();
 					ElimBG_Deactivate(gGT);
-					MenuBox_Hide(sdata->ptrActiveMenuBox);
+					MENUBOX_Hide(sdata->ptrActiveMenuBox);
 					gGT->cooldownFromUnpauseUntilPause = 5;
 				}
 			}
@@ -342,7 +342,7 @@ LAB_80035098:
 				{
 					*(u_short*)&sdata->unk_saveGame_related = 0;
 					LoadSave_ToggleMode(0x41);
-					MenuBox_Show(&data.menuBox_warning2);
+					MENUBOX_Show(&data.menuBox_warning2);
 					gGT->unknownFlags_1d44 |= AKU_SONG;
 					return;
 				}

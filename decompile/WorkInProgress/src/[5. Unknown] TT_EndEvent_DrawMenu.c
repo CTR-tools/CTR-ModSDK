@@ -313,7 +313,7 @@ LAB_800a03c0:
 		}
 	
 		// Draw end of race menu, see 221 and 222 for more info
-		MenuBox_Show(puVar2);
+		MENUBOX_Show(puVar2);
 	}
 	return;
 }

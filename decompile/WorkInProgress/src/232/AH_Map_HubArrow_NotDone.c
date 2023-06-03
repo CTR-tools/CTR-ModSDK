@@ -73,7 +73,7 @@ LAB_800b0fc0:
            (int)local_30[iVar2 + 2] + ((int*)0x800b4ec2)[iVar4];
     
 	}
-	MenuBox_DrawRwdTriangle(local_20,color,
+	MENUBOX_DrawRwdTriangle(local_20,color,
 	
 				// pointer to OT mem
 				sdata->gGT->tileView_UI.ptrOT,

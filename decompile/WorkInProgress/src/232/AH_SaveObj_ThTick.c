@@ -139,7 +139,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread *saveTh)
                         LoadSave_GetTrackID();
 
                         // enable menubox for green load/save screen
-                        MenuBox_Show(&data.menuBox_greenLoadSave);
+                        MENUBOX_Show(&data.menuBox_greenLoadSave);
                     }
 
                     // if it is time to return to player

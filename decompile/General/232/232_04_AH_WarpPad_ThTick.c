@@ -495,14 +495,14 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				// now opened
 				sdata->boolOpenTokenRelicMenu = 1;
 				
-				MenuBox_Show(0x800b4e50);
+				MENUBOX_Show(0x800b4e50);
 				
 				// dont load level
 				return;
 			}
 			
 			// if opened, but not closed yet
-			if((MenuBox_BoolHidden(0x800b4e50) & 0xffff) == 0)
+			if((MENUBOX_BoolHidden(0x800b4e50) & 0xffff) == 0)
 			{
 				// dont load level
 				return;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MM_MenuBox_Difficulty(struct MenuBox* mb)
+void DECOMP_MM_MENUBOX_Difficulty(struct MenuBox* mb)
 {
   short row;
   
@@ -8,7 +8,7 @@ void DECOMP_MM_MenuBox_Difficulty(struct MenuBox* mb)
   
   // if uninitialized
   if (row == -1) {
-    mb->ptrPrevMenuBox_InHierarchy->state &= 0xffffffeb;
+    mb->ptrPrevMENUBOX_InHierarchy->state &= 0xffffffeb;
   }
   
   else 

@@ -211,7 +211,7 @@ void MM_TrackSelect_MenuBox(struct MenuBox *param_1)
 
     LAB_800b04b8:
       // clear gamepad input (for menus)
-      MenuBox_ClearInput();
+      MENUBOX_ClearInput();
       goto LAB_800b05b8;
     }
   }
@@ -232,11 +232,11 @@ void MM_TrackSelect_MenuBox(struct MenuBox *param_1)
   // If you're in track selection menu
   if (OVR_230.trackSel_transitionState == 1)
   {
-    sVar7 = MenuBox_ProcessInput((struct MenuBox *)0x800b5594);
+    sVar7 = MENUBOX_ProcessInput((struct MenuBox *)0x800b5594);
   }
 
   // This function might alter b55ae to make sure it doesn't go out of bounds
-  MenuBox_DrawSelf((struct MenuBox *)0x800b5594,
+  MENUBOX_DrawSelf((struct MenuBox *)0x800b5594,
                    OVR_230.transitionMeta_trackSel[2].currX,
                    OVR_230.transitionMeta_trackSel[2].currY, 0xa4);
 
@@ -500,7 +500,7 @@ LAB_800b05b8:
     uVar15 = (u_int)numTracks;
 
     // Draw 2D Menu rectangle background
-    MenuBox_DrawInnerRect(&r, 0, gGT->backBuffer->otMem.startPlusFour);
+    MENUBOX_DrawInnerRect(&r, 0, gGT->backBuffer->otMem.startPlusFour);
 
     for (; (uVar8 & 0xffff) == 0; iVar10++)
     {

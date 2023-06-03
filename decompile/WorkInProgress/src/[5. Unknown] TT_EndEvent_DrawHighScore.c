@@ -104,7 +104,7 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 		UI_DrawRaceClock(&DAT_8009f700, (int)(((u_int)local_40 + 0x20) * 0x10000) >> 0x10, (iVar3 - 1) * 0x10000 >> 0x10, 2, 4);
 				 
 		// Draw Character Icon
-		MenuBox_DrawPolyGT4(sdata->gGT + (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)trackTime + 0x16) * 0x10) * 4 +
+		MENUBOX_DrawPolyGT4(sdata->gGT + (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)trackTime + 0x16) * 0x10) * 4 +
 									0x1eec),(int)(short)local_40, local_38 + (short)local_30,
 					
 					// pointer to PrimMem struct

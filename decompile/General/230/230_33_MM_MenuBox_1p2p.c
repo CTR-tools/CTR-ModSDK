@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MM_MenuBox_1p2p(struct MenuBox* mb)
+void DECOMP_MM_MENUBOX_1p2p(struct MenuBox* mb)
 
 {
   short row;
@@ -13,7 +13,7 @@ void DECOMP_MM_MenuBox_1p2p(struct MenuBox* mb)
   // if uninitialized
   if (row == -1) 
   {
-    mb->ptrPrevMenuBox_InHierarchy->state &= 0xffffffeb;
+    mb->ptrPrevMENUBOX_InHierarchy->state &= 0xffffffeb;
     
 	gGT->numPlyrNextGame = 1;
     
@@ -29,7 +29,7 @@ void DECOMP_MM_MenuBox_1p2p(struct MenuBox* mb)
 	  gGT->numPlyrNextGame = mb->rowSelected + 1;
 	  
 	  // go to difficulty box
-	  mb->ptrNextMenuBox_InHierarchy = &OVR_230.menubox_difficulty;
+	  mb->ptrNextMENUBOX_InHierarchy = &OVR_230.menubox_difficulty;
       
 	  mb->state|= 0x14;
 	  return;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MenuBox_ClearInput();
+void MENUBOX_ClearInput();
 
 void DECOMP_MENUBOX_Show(struct MenuBox* m)
 {
@@ -8,5 +8,5 @@ void DECOMP_MENUBOX_Show(struct MenuBox* m)
 	
 	m->state &= ~(0x1000);
 	
-	MenuBox_ClearInput();
+	MENUBOX_ClearInput();
 }

@@ -3,10 +3,10 @@
 void TitleFlag_SetCanDraw(int value);
 int TitleFlag_GetCanDraw();
 
-void MenuBox_Show(struct MenuBox* m);
-void MenuBox_DrawSelf(struct MenuBox* m, int, int, int);
-void MenuBox_ProcessInput(struct MenuBox* m);
-void MenuBox_GetWidth(struct MenuBox* m, RECT* r, int);
+void MENUBOX_Show(struct MenuBox* m);
+void MENUBOX_DrawSelf(struct MenuBox* m, int, int, int);
+void MENUBOX_ProcessInput(struct MenuBox* m);
+void MENUBOX_GetWidth(struct MenuBox* m, RECT* r, int);
 
 /*
 easy way to fix the menu storage bug
@@ -39,7 +39,7 @@ void DECOMP_MENUBOX_ProcessState()
 		// get menubox at end of hierarchy, if there is hierarchy
 		while((currMenuBox->state & 0x10) != 0)
 		{
-			currMenuBox = (struct MenuBox*)currMenuBox->ptrNextMenuBox_InHierarchy;
+			currMenuBox = (struct MenuBox*)currMenuBox->ptrNextMENUBOX_InHierarchy;
 		}
 		
 		// remove "draw only title bar" from lowest hierarchy,
@@ -60,17 +60,17 @@ void DECOMP_MENUBOX_ProcessState()
 	if((currMenuBox->state & 0x20) == 0)
 	{
 		// process button input for menu
-		MenuBox_ProcessInput(currMenuBox);
+		MENUBOX_ProcessInput(currMenuBox);
 		
 		// if MenuBox border is not invisible
 		if((currMenuBox->state & 0x2000) == 0)
 		{
 			// clear width, then get width
 			width = 0;
-			MenuBox_GetWidth(currMenuBox, &width, 1);
+			MENUBOX_GetWidth(currMenuBox, &width, 1);
 			
 			// draw
-			MenuBox_DrawSelf(currMenuBox, 0, 0, (int)width);
+			MENUBOX_DrawSelf(currMenuBox, 0, 0, (int)width);
 		}
 	}
 	
