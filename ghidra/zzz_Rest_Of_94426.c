@@ -36979,7 +36979,7 @@ void FUN_8006a8e0(void)
   uint *unaff_s7;
   uint *unaff_s8;
   
-  // bits: 0bXXXXXXXZZZZZZZZYYYYYYYYAAABBBCCC
+  // deltaArray bits: 0bXXXXXXXZZZZZZZZYYYYYYYYAAABBBCCC
   
   // temporal_x: >> 0x19
   // temporal_z: << 7 >> 0x18
