@@ -44,7 +44,6 @@ int* DecalGlobal_Find2(u_int* param_1, char* str);
 void Audio_SetState_Safe(int param_1);
 u_int TitleFlag_IsFullyOffScreen();
 void TitleFlag_BeginTransition(int param_1);
-void ElimBG_Deactivate(int param_1);
 void LOAD_Callback_MaskHints3D(struct LoadQueueSlot* lqs);
 void LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
 void LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
