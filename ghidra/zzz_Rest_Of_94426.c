@@ -37016,7 +37016,7 @@ void FUN_8006a8e0(void)
       // current_bits_difference = old_bits_left + bits_needed
       uVar7 = unaff_s3 + uVar3; // bits left in the temporal uint?
       
-	  // char temporal_x = (char)((int)temporalbits >> (bits_needed ^ 0x1f));
+	  // char temporal_x = (char)((int)temporalbits >> (AAA ^ 0x1f));
       cVar6 = (char)((int)unaff_s1 >> (uVar2 ^ 0x1f));
       
 	  // temporalBitData = temporalbits;
