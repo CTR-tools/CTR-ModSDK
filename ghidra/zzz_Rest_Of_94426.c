@@ -37133,9 +37133,14 @@ void FUN_8006a8e0(void)
       uVar1 = *(uint *)(in_at + 0x58);
     }
     
-	iVar9 = *(int *)(in_at + 0x34);
-    *(uint *)(iVar5 + 0x140) = ((uVar1 & in_t4) + *(int *)(in_at + 0x30)) * 4 & in_t5;
-    *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + iVar9) * 4;
+// from ghidra:
+//	iVar9 = *(int *)(in_at + 0x34);
+//    *(uint *)(iVar5 + 0x140) = ((uVar1 & in_t4) + *(int *)(in_at + 0x30)) * 4 & in_t5;
+//    *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + iVar9) * 4;
+
+	// store vertex XYZ on scratchpad
+    *(uint *)(iVar5 + 0x140) = ((uVar1 & in_t4) 	+ *(int *)(in_at + 0x30)) * 4 & in_t5;
+    *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + *(int *)(in_at + 0x34)) * 4;
   }
   if (-1 < (int)(in_t3 << 4)) {
     return;
