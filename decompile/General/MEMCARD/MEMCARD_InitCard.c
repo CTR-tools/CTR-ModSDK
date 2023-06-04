@@ -1,5 +1,9 @@
 #include <common.h>
 
+// bug in psn00bsdk headers,
+// should be 0x2000 instead of 0x200
+#define EvSpNEW		0x2000
+
 //- creates 8 events (4 per card?)
 //- calls InitCARD and StartCARD
 void MEMCARD_InitCard(void)
