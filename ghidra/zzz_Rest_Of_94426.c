@@ -36978,6 +36978,22 @@ void FUN_8006a8e0(void)
   uint uVar10;
   uint *unaff_s7;
   uint *unaff_s8;
+  
+  // bits: 0bXXXXXXXZZZZZZZZYYYYYYYYAAABBBCCC
+  
+  // temporal_x: >> 0x19
+  // temporal_z: << 7 >> 0x18
+  // temporal_y: << 0xF >> 0x18
+  
+  // This here is >>0x19
+  // 0bXXXXXXX 0000000000000000AAABBBCCC
+  
+  // This here is << 7
+  // 0bZZZZZZZZYYYYYYYYAAABBBCCC0000000
+  // << 7 >> 0x18
+  // 0bZZZZZZZZ
+  
+  // and so on
 
   iVar5 = (in_t3 >> 0xd & 0x7f8) + in_at;
   if (-1 < (int)(in_t3 << 5)) { // check that it is actually a compressed animation
@@ -36987,98 +37003,137 @@ void FUN_8006a8e0(void)
     else {
       // some variable names change and flip because variables are re-used( compiler optimisations? ). from: branch
 
-
       // uint delta = *deltaArray[0];
       uVar10 = *unaff_s8;
+
       // uint AAA = delta >> 6 & 7;
+	  // 0b0000000AAABBBCCC (16 bits)
       uVar2 = uVar10 >> 6 & 7; // AAA
+
       // uint bits_needed = AAA + 1;
       uVar3 = uVar2 + 1;
+	  
       // current_bits_difference = old_bits_left + bits_needed
       uVar7 = unaff_s3 + uVar3; // bits left in the temporal uint?
-      // char temporal_x = (char)((int)temporalbits >> (bits_needed ^ 0x1f));
+      
+	  // char temporal_x = (char)((int)temporalbits >> (bits_needed ^ 0x1f));
       cVar6 = (char)((int)unaff_s1 >> (uVar2 ^ 0x1f));
-      // temporalBitData = temporalbits;
+      
+	  // temporalBitData = temporalbits;
       uVar1 = unaff_s1;
-      // bits_read = current_bits_difference;
+      
+	  // bits_read = current_bits_difference;
       uVar8 = uVar7;
-      // if(current_bits_difference < 0)
+      
+	  // if(current_bits_difference < 0)
       if (0 < (int)uVar7) { // do we beed more bits from the temporalArray?
-        // temporalBitData = *temporalArray;
+        
+		// temporalBitData = *temporalArray;
         uVar1 = *unaff_s7;
-        // temporalArray = temporalArray + 1;
+        
+		// temporalArray = temporalArray + 1;
         unaff_s7 = unaff_s7 + 1;
-        // temporal_x = (char)((int)(temporalbits | temporalBitData >> (bits_needed - current_bits_difference & 0x1f)) >> (AAA ^ 0x1f));
+        
+		// temporal_x = (char)((int)(temporalbits | temporalBitData >> (bits_needed - current_bits_difference & 0x1f)) >> (AAA ^ 0x1f));
         cVar6 = (char)((int)(unaff_s1 | uVar1 >> (uVar3 - uVar7 & 0x1f)) >> (uVar2 ^ 0x1f));
-        // bits_read = current_bits_difference - 32;
+        
+		// bits_read = current_bits_difference - 32;
         uVar8 = uVar7 - 0x20; // bitstream bit pointer moved by 32 bits
-        // bits_needed = current_bits_difference;
+        
+		// bits_needed = current_bits_difference;
         uVar3 = uVar7;
       }
+	  
       // temporalBitData = temporalBitData << (bits_needed & 0x1f);
       uVar1 = uVar1 << (uVar3 & 0x1f); // injecting fresh new bits to temporalBitData
-      //if(AAA != 7)
+      
+	  //if(AAA != 7)
       if (uVar2 != 7) { //if not reset X-counter reset; but if is reset just pass delta.X( accumulator.X gets erased)
         // temporal_x = temporal_x + delta.X * 2 + accumulator.X
         cVar6 = cVar6 + (char)((int)uVar10 >> 0x19) * '\x02' + *(char *)(in_at + 0x58);
       }
+	  
       // accumulator.X = temporal_x;
       *(char *)(in_at + 0x58) = cVar6;
+	  
       // uint BBB = delta >> 3 & 7;
-      uVar4 = uVar10 >> 3 & 7; // BBB
-      // bits_needed = BBB + 1;
+      // 0b0000000AAABBBCCC
+	  uVar4 = uVar10 >> 3 & 7; // BBB
+      
+	  // bits_needed = BBB + 1;
       uVar2 = uVar4 + 1;
+	  
       // current_bits_difference = old_bits_left + bits_needed;
       uVar8 = uVar8 + uVar2;
+	  
       // bits_needed = temporalBitData;
       uVar3 = uVar1;
-      // bits_read = current_bits_difference;
+      
+	  // bits_read = current_bits_difference;
       uVar7 = uVar8;
-      // if(current_bits_difference < 0)
+      
+	  // if(current_bits_difference < 0)
       if (0 < (int)uVar8) { // do we beed more bits from the temporalArray?
-        // temporalBitData = *temporalArray;
+        
+		// temporalBitData = *temporalArray;
         uVar3 = *unaff_s7;
-        // temporalArray = temporalArray + 1;
+        
+		// temporalArray = temporalArray + 1;
         unaff_s7 = unaff_s7 + 1;
-        // temporalBitData = temporalBitData | temporalBitData >> (bits_needed - current_bits_difference & 0x1f);
+        
+		// temporalBitData = temporalBitData | temporalBitData >> (bits_needed - current_bits_difference & 0x1f);
         uVar1 = uVar1 | uVar3 >> (uVar2 - uVar8 & 0x1f);
-        // bits_read = current_bits_difference - 32;
+        
+		// bits_read = current_bits_difference - 32;
         uVar7 = uVar8 - 0x20;
-        // bits_needed = current_bits_difference;
+        
+		// bits_needed = current_bits_difference;
         uVar2 = uVar8;
       }
+	  
       // temporal_x = temporalBitData >> (BBB ^ 0x1f);
       cVar6 = (char)((int)uVar1 >> (uVar4 ^ 0x1f)); // xor may do the bit-reset, this may make accumulator-axis go to zero
-      // temporalBitData = temporalBitData << (bits_needed & 0x1f);
+      
+	  // temporalBitData = temporalBitData << (bits_needed & 0x1f);
       uVar3 = uVar3 << (uVar2 & 0x1f);
-      //if(BBB != 7)
+      
+	  //if(BBB != 7)
       if (uVar4 != 7) { //if not reset Z-counter reset; but if is reset just pass delta.Z( accumulator.Z gets zeroed)
         // temporal_z = (char)(temporal_z + (char)((delta << 7) >> 0x18)(delta.Z) + accumulator.Z);
         cVar6 = cVar6 + (char)((uVar10 << 7) >> 0x18) + *(char *)(in_at + 0x5a);
       }
+	  
       // accumulator.Z = temporal_z;
       *(char *)(in_at + 0x5a) = cVar6;
-      // uint CCC = delta & 7;
+      
+	  // uint CCC = delta & 7;
+      // 0b0000000AAABBBCCC
       uVar1 = uVar10 & 7; // CCC
-      // current_bits_difference = bits_read + CCC + 1
+      
+	  // current_bits_difference = bits_read + CCC + 1
       iVar9 = uVar7 + uVar1 + 1;
-      // if (0 < current_bits_difference) {
+      
+	  // if (0 < current_bits_difference) {
       if (0 < iVar9) { // check signed bit
         // temporalBitData = temporalBitData | (*temporalArray) >> ((CCC + 1) - current_bits_difference & 0x1f);
         uVar3 = uVar3 | *unaff_s7 >> ((uVar1 + 1) - iVar9 & 0x1f);
       }
-      // temporal_z = (char)((int)temporalBitData >> (CCC ^ 0x1f));
+      
+	  // temporal_z = (char)((int)temporalBitData >> (CCC ^ 0x1f));
       cVar6 = (char)((int)uVar3 >> (uVar1 ^ 0x1f)); // xor may do the bit-reset, i.e. this may make accumulator-axis go to zero
-      //if(CCC != 7)
+      
+	  //if(CCC != 7)
       if (uVar1 != 7) { //if not reset Y-counter reset; but if is reset just pass delta.Y( accumulator.Y gets zeroed)
         // temporal_y = (char)(temporal_y + (char)((delta << 15) >> 0x18)(delta.Y) + accumulator.Y);
         cVar6 = cVar6 + (char)((uVar10 << 0xf) >> 0x18) + *(char *)(in_at + 0x59);
       }
-      // accumulator.Z = temporal_z;
+      
+	  // accumulator.Z = temporal_z;
       *(char *)(in_at + 0x59) = cVar6;
       uVar1 = *(uint *)(in_at + 0x58);
     }
-    iVar9 = *(int *)(in_at + 0x34);
+    
+	iVar9 = *(int *)(in_at + 0x34);
     *(uint *)(iVar5 + 0x140) = ((uVar1 & in_t4) + *(int *)(in_at + 0x30)) * 4 & in_t5;
     *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + iVar9) * 4;
   }
