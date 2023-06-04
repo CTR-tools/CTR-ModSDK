@@ -37128,7 +37128,7 @@ void FUN_8006a8e0(void)
         cVar6 = cVar6 + (char)((uVar10 << 0xf) >> 0x18) + *(char *)(in_at + 0x59);
       }
       
-	  // accumulator.Z = temporal_z;
+	  // accumulator.Y = temporal_y;
       *(char *)(in_at + 0x59) = cVar6;
       uVar1 = *(uint *)(in_at + 0x58);
     }
