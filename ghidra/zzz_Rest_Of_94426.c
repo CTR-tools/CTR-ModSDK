@@ -37139,6 +37139,9 @@ void FUN_8006a8e0(void)
 //    *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + iVar9) * 4;
 
 	// store vertex XYZ on scratchpad
+	// iVar5->140 = $t0
+	// iVar5->144 = $v1
+	// t0 and v1 are put on GTE right after jr $ra
     *(uint *)(iVar5 + 0x140) = ((uVar1 & in_t4) 	+ *(int *)(in_at + 0x30)) * 4 & in_t5;
     *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + *(int *)(in_at + 0x34)) * 4;
   }
