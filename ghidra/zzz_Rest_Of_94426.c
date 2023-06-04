@@ -37146,6 +37146,9 @@ void FUN_8006a8e0(void)
 	// in_at + 30 (and 34) is the frame origin XYZ,
 	// set in DrawFunc_Normal before s6() funcPtr to this Decompress function
 	
+	// uVar1 & in_t4 	= XXX---YYY
+	// uVar1>>8&&0xFF	= ---ZZZ---
+	
     *(uint *)(iVar5 + 0x140) = ((uVar1 & in_t4) 	+ *(int *)(in_at + 0x30)) * 4 & in_t5;
     *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + *(int *)(in_at + 0x34)) * 4;
   }
