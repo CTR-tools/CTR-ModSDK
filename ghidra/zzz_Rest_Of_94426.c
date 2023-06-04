@@ -20628,46 +20628,83 @@ void FUN_80059558(int param_1,undefined4 param_2)
   int unaff_s1;
   int unaff_s2;
   
-  if (((*(uint *)(param_1 + 0x2c8) & 1) != 0) && ((*(uint *)(param_1 + 0x2c8) & 8) == 0)) {
+  if (
+		// touching quadblock
+		((*(uint *)(param_1 + 0x2c8) & 1) != 0) && 
+		
+		// not in accel prevention (not holding square)
+		((*(uint *)(param_1 + 0x2c8) & 8) == 0)
+	 ) 
+  {
+	// abs fireSpeed
     iVar1 = (int)*(short *)(param_1 + 0x39e);
     if (iVar1 < 0) {
       iVar1 = -iVar1;
     }
-    if (iVar1 < 0x300) {
+	
+    if (iVar1 < 0x300) 
+	{
+	  // abs speedApprox
       iVar1 = (int)*(short *)(param_1 + 0x38e);
       if (iVar1 < 0) {
          iVar1 = -iVar1;
       }
+	  
       if (iVar1 < 0x300) {
          return;
       }
     }
+	
+	// if moving quickly
+	
+	// 2 wheels spawn particles
     iVar1 = 2;
-    if (*(char *)(param_1 + 0x376) == '\x02') {
+	
+	// if sliding
+    if (*(char *)(param_1 + 0x376) == '\x02') 
+	{
+	  // 4 wheels spawn particles
       iVar1 = 4;
     }
-    for (; iVar1 != 0; iVar1 = iVar1 + -1) {
-      if (iVar1 == 3) {
+	
+	// spawn particles on wheels
+    for (; iVar1 != 0; iVar1 = iVar1 + -1) 
+	{
+	  // front tire
+      if (iVar1 == 3) 
+	  {
+		 // 0x1E, 0xA, 0x28
          gte_ldVXY0(0xa001e);
          uVar3 = 0x28;
          gte_ldVZ0(0x28);
       }
+	  
+	  // back wheels
       else if (iVar1 < 4) {
-         if (iVar1 == 2) {
+         if (iVar1 == 2) 
+		 {
+		   // -0x1E, 0xA, -0x28
            gte_ldVXY0(0xaffe2);
            uVar3 = 0xffffffec;
            gte_ldVZ0(0xffffffec);
          }
-         else {
+         else 
+		 {
 LAB_80059674:
+		   // 0x1E, 0xA, -0x28
            gte_ldVXY0(0xa001e);
            uVar3 = 0xffffffec;
            gte_ldVZ0(0xffffffec);
          }
       }
-      else {
+      
+	  // == 4, (front tire)
+	  else 
+	  {
          if (iVar1 != 4) goto LAB_80059674;
-         gte_ldVXY0(0xaffe2);
+         
+		 // -0x1E, 0xA, 0x28
+		 gte_ldVXY0(0xaffe2);
          uVar3 = 0x28;
          gte_ldVZ0(0x28);
       }
@@ -20716,14 +20753,19 @@ void FUN_80059780(int param_1,undefined4 param_2)
   uint unaff_s2;
   uint unaff_s3;
   
-  if (*(short *)(param_1 + 0x39e) == 0) {
+  // no fire speed
+  if (*(short *)(param_1 + 0x39e) == 0) 
+  {
     iVar1 = (int)*(short *)(param_1 + 0x38e);
     if (iVar1 < 0) {
       iVar1 = -iVar1;
     }
     if (0x200 < iVar1) goto LAB_800597d0;
   }
-  else {
+  
+  // fire speed
+  else 
+  {
 LAB_800597d0:
 
 	// if time against wall is less than 15 seconds
@@ -20744,32 +20786,49 @@ LAB_800597d0:
   uVar3 = param_2;
   
 LAB_80059818:
+  
   if (*(short *)(param_1 + 0x38e) < 0x201) {
     if (-0x201 < *(short *)(param_1 + 0x38e)) {
       return;
     }
+	
+	// -0x2200, 0xa00, -0x1400
     gte_ldVXY0(0xa00de00);
     gte_ldVZ0(0xffffec00);
+	
+	// 0x2200, 0xa00, -0x1400
     gte_ldVXY1(0xa002200);
     gte_ldVZ1(0xffffec00);
   }
-  else {
+  
+  else 
+  {
+	// -0x2200, 0xa00, 0x2800
     gte_ldVXY0(0xa00de00);
     gte_ldVZ0(0x2800);
+	
+	// 0x2200, 0xa00, 0x2800
     gte_ldVXY1(0xa002200);
     gte_ldVZ1(0x2800);
   }
+  
   gte_rtv0();
   read_mt(unaff_s1,unaff_s2,unaff_s3);
   gte_rtv1();
   read_mt(uVar3,newVar1,newVar2);
+  
+  // matrix
   gte_ldL11L12(unaff_s1 & 0xffff | unaff_s2 << 0x10);
   gte_ldL13L21(unaff_s3 & 0xffff | uVar3 << 0x10);
   gte_ldL22L23(newVar1 & 0xffff | newVar2 << 0x10);
+  
+  // driver->posWallColl - driver->posCurr
   gte_ldVXY0(*(short *)(param_1 + 900) * 0x100 - *(int *)(param_1 + 0x2d4) & 0xffffU |
               (*(short *)(param_1 + 0x386) * 0x100 - *(int *)(param_1 + 0x2d8)) * 0x10000);
   gte_ldVZ0(*(short *)(param_1 + 0x388) * 0x100 - *(int *)(param_1 + 0x2dc));
+  
   gte_llv0();
+  
   iVar1 = gte_stMAC1();
   iVar2 = gte_stMAC2();
   if (iVar1 < iVar2) {
