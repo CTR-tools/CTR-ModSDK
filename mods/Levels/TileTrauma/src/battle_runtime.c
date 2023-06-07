@@ -60,6 +60,12 @@ void RunInitHook()
 	struct BattleGame* bg = 0x8000F000;
 	gGT = sdata->gGT;
 	
+	// for Console only, disable ghosts
+	#if 0
+	*(int*)0x80027838 = 0x3E00008;
+	*(int*)0x8002783C = 0;
+	#endif
+	
 	// set arcade/TT menubox to use adv cup rows
 	*(unsigned int*)(0x80084510 + 0xC) = NewRowsPAUSE;
 	
