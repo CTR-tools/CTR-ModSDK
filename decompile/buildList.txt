@@ -17,14 +17,14 @@ common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
 
 // 230 (incomplete)
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
-common, 230, MM_MENUBOX_Main, 0x0, General/230/230_31_MM_MenuBox_Main.c
+common, 230, MM_MenuBox_Main, 0x0, General/230/230_31_MM_MenuBox_Main.c
 common, 230, MM_ToggleRows_PlayerCount, 0x0, General/230/230_32_MM_ToggleRows_PlayerCount.c
-common, 230, MM_MENUBOX_1p2p, 0x0, General/230/230_33_MM_MenuBox_1p2p.c
-common, 230, MM_MENUBOX_2p3p4p, 0x0, General/230/230_34_MM_MenuBox_2p3p4p.c
+common, 230, MM_MenuBox_1p2p, 0x0, General/230/230_33_MM_MenuBox_1p2p.c
+common, 230, MM_MenuBox_2p3p4p, 0x0, General/230/230_34_MM_MenuBox_2p3p4p.c
 common, 230, MM_ToggleRows_Difficulty, 0x0, General/230/230_35_MM_ToggleRows_Difficulty.c
-common, 230, MM_MENUBOX_Difficulty, 0x0, General/230/230_36_MM_MenuBox_Difficulty.c
-common, 230, MM_MENUBOX_SingleCup, 0x0, General/230/230_37_MM_MenuBox_SingleCup.c
-common, 230, MM_MENUBOX_NewLoad, 0x0, General/230/230_38_MM_MenuBox_NewLoad.c
+common, 230, MM_MenuBox_Difficulty, 0x0, General/230/230_36_MM_MenuBox_Difficulty.c
+common, 230, MM_MenuBox_SingleCup, 0x0, General/230/230_37_MM_MenuBox_SingleCup.c
+common, 230, MM_MenuBox_NewLoad, 0x0, General/230/230_38_MM_MenuBox_NewLoad.c
 common, 230, MM_AdvNewLoad_GetMenuBox, 0x0, General/230/230_39_MM_AdvNewLoad_GetMenuBox.c
 common, 230, MM_Characters_AnimateColors, 0x0, General/230/230_40_MM_Characters_AnimateColors.c
 common, 230, MM_Characters_GetNextDriver, 0x0, General/230/230_41_MM_Characters_GetNextDriver.c
@@ -329,23 +329,23 @@ common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK/MEMPACK_PopToState.c
 // MixRNG
 common, exe, MixRNG_Scramble, 0x0, General/MixRNG/MixRNG_Scramble.c
 
-// MENUBOX
+// MenuBox
 // skip several
-common, exe, MENUBOX_DrawOuterRect_Edge, 0x0, General/MENUBOX/MENUBOX_DrawOuterRect_Edge.c
-common, exe, MENUBOX_DrawOuterRect_LowLevel, 0x0, General/MENUBOX/MENUBOX_DrawOuterRect_LowLevel.c
-common, exe, MENUBOX_DrawTime, 0x0, General/MENUBOX/MENUBOX_DrawTime.c
+common, exe, MenuBox_DrawOuterRect_Edge, 0x0, General/MenuBox/MenuBox_DrawOuterRect_Edge.c
+common, exe, MenuBox_DrawOuterRect_LowLevel, 0x0, General/MenuBox/MenuBox_DrawOuterRect_LowLevel.c
+common, exe, MenuBox_DrawTime, 0x0, General/MenuBox/MenuBox_DrawTime.c
 // skip several
 // skip DrawBG
-common, exe, MENUBOX_GetHeight, 0x0, General/MENUBOX/MENUBOX_GetHeight.c
-common, exe, MENUBOX_GetWidth, 0x0, General/MENUBOX/MENUBOX_GetWidth.c
+common, exe, MenuBox_GetHeight, 0x0, General/MenuBox/MenuBox_GetHeight.c
+common, exe, MenuBox_GetWidth, 0x0, General/MenuBox/MenuBox_GetWidth.c
 // skip DrawSelf
-common, exe, MENUBOX_ClearInput, 0x0, General/MENUBOX/MENUBOX_ClearInput.c
-common, exe, MENUBOX_CollectInput, 0x0, General/MENUBOX/MENUBOX_CollectInput.c
+common, exe, MenuBox_ClearInput, 0x0, General/MenuBox/MenuBox_ClearInput.c
+common, exe, MenuBox_CollectInput, 0x0, General/MenuBox/MenuBox_CollectInput.c
 // skip ProcessInput (wip)
-common, exe, MENUBOX_ProcessState, 0x0, General/MENUBOX/MENUBOX_ProcessState.c
-common, exe, MENUBOX_Show, 0x0, General/MENUBOX/MENUBOX_Show.c
-common, exe, MENUBOX_Hide, 0x0, General/MENUBOX/MENUBOX_Hide.c
-common, exe, MENUBOX_BoolHidden, 0x0, General/MENUBOX/MENUBOX_BoolHidden.c
+common, exe, MenuBox_ProcessState, 0x0, General/MenuBox/MenuBox_ProcessState.c
+common, exe, MenuBox_Show, 0x0, General/MenuBox/MenuBox_Show.c
+common, exe, MenuBox_Hide, 0x0, General/MenuBox/MenuBox_Hide.c
+common, exe, MenuBox_BoolHidden, 0x0, General/MenuBox/MenuBox_BoolHidden.c
 
 // Title (?)
 common, exe, TitleOSK_DrawMenu, 0x0, General/TitleOSK_DrawMenu.c

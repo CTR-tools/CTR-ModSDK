@@ -692,28 +692,28 @@
 // no Draw_LoadingString
 80042ee4 TitleFlag_DrawSelf
 
-800438a8 MENUBOX_DrawPolyGT4
-80043940 MENUBOX_DrawOuterRect_Edge
-800439a8 MENUBOX_DrawTime
-80043ae4 MENUBOX_DrawRwdBlueRect_Subset
-80043c04 MENUBOX_DrawRwdBlueRect
-80043d98 MENUBOX_DrawRwdTriangle
-80043ee4 MENUBOX_DrawOuterRect_LowLevel
-80044000 MENUBOX_DrawOuterRect_HighLevel
-8004403c MENUBOX_DrawQuip
-8004419c MENUBOX_DrawInnerRect
+800438a8 MenuBox_DrawPolyGT4
+80043940 MenuBox_DrawOuterRect_Edge
+800439a8 MenuBox_DrawTime
+80043ae4 MenuBox_DrawRwdBlueRect_Subset
+80043c04 MenuBox_DrawRwdBlueRect
+80043d98 MenuBox_DrawRwdTriangle
+80043ee4 MenuBox_DrawOuterRect_LowLevel
+80044000 MenuBox_DrawOuterRect_HighLevel
+8004403c MenuBox_DrawQuip
+8004419c MenuBox_DrawInnerRect
 
-800443d8 MENUBOX_DrawFullRect
-800444dc MENUBOX_GetHeight
-800445e0 MENUBOX_GetWidth
-80044740 MENUBOX_DrawSelf
-80044d78 MENUBOX_ClearInput
-80044dcc MENUBOX_CollectInput
-80044eac MENUBOX_ProcessInput
-80045108 MENUBOX_ProcessState
-8004528c MENUBOX_Show
-800452c4 MENUBOX_Hide
-800452d8 MENUBOX_BoolHidden
+800443d8 MenuBox_DrawFullRect
+800444dc MenuBox_GetHeight
+800445e0 MenuBox_GetWidth
+80044740 MenuBox_DrawSelf
+80044d78 MenuBox_ClearInput
+80044dcc MenuBox_CollectInput
+80044eac MenuBox_ProcessInput
+80045108 MenuBox_ProcessState
+8004528c MenuBox_Show
+800452c4 MenuBox_Hide
+800452d8 MenuBox_BoolHidden
 
 800452ec GhostData_NumGhostsForLEV
 // unknown 80045370
@@ -1276,15 +1276,15 @@
 800ab604 MM_Title_KillThread
 // cheat codes in sep3 are in exe, not 231
 800ab6b4 MM_ParseCheatCodes
-800ab7e4 MM_MENUBOX_Main
+800ab7e4 MM_MenuBox_Main
 // MM_ToggleRows_PlayerCount not in sep3
-800abae0 MM_MENUBOX_1p2p
-800abb50 MM_MENUBOX_2p3p4p
+800abae0 MM_MenuBox_1p2p
+800abb50 MM_MenuBox_2p3p4p
 800abbc8 MM_ToggleRows_Difficulty
-800abcf4 MM_MENUBOX_Difficulty
-800abd78 MM_MENUBOX_SingleCup
-// MM_MENUBOX_Language only in europe
-800abe24 MM_MENUBOX_NewLoad
+800abcf4 MM_MenuBox_Difficulty
+800abd78 MM_MenuBox_SingleCup
+// MM_MenuBox_Language only in europe
+800abe24 MM_MenuBox_NewLoad
 800abeb4 MM_AdvNewLoad_GetMenuBox
 800abec0 MM_Characters_AnimateColors
 800abf80 MM_Characters_GetNextDriver

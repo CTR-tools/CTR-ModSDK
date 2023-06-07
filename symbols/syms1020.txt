@@ -692,28 +692,28 @@
 80044064 TitleFlag_DrawLoadingString
 800442ac TitleFlag_DrawSelf
 
-80044cbc MENUBOX_DrawPolyGT4
-80044d54 MENUBOX_DrawOuterRect_Edge
-80044dbc MENUBOX_DrawTime
-80044ef8 MENUBOX_DrawRwdBlueRect_Subset
-80045018 MENUBOX_DrawRwdBlueRect
-800451ac MENUBOX_DrawRwdTriangle
-800452f8 MENUBOX_DrawOuterRect_LowLevel
-80045414 MENUBOX_DrawOuterRect_HighLevel
-80045450 MENUBOX_DrawQuip
-80045574 MENUBOX_DrawInnerRect
+80044cbc MenuBox_DrawPolyGT4
+80044d54 MenuBox_DrawOuterRect_Edge
+80044dbc MenuBox_DrawTime
+80044ef8 MenuBox_DrawRwdBlueRect_Subset
+80045018 MenuBox_DrawRwdBlueRect
+800451ac MenuBox_DrawRwdTriangle
+800452f8 MenuBox_DrawOuterRect_LowLevel
+80045414 MenuBox_DrawOuterRect_HighLevel
+80045450 MenuBox_DrawQuip
+80045574 MenuBox_DrawInnerRect
 
-800457b0 MENUBOX_DrawFullRect
-800458e0 MENUBOX_GetHeight
-80045a14 MENUBOX_GetWidth
-80045b88 MENUBOX_DrawSelf
-800461f4 MENUBOX_ClearInput
-80046264 MENUBOX_CollectInput
-80046340 MENUBOX_ProcessInput
-80046618 MENUBOX_ProcessState
-8004679c MENUBOX_Show
-800467d4 MENUBOX_Hide
-800467e8 MENUBOX_BoolHidden
+800457b0 MenuBox_DrawFullRect
+800458e0 MenuBox_GetHeight
+80045a14 MenuBox_GetWidth
+80045b88 MenuBox_DrawSelf
+800461f4 MenuBox_ClearInput
+80046264 MenuBox_CollectInput
+80046340 MenuBox_ProcessInput
+80046618 MenuBox_ProcessState
+8004679c MenuBox_Show
+800467d4 MenuBox_Hide
+800467e8 MenuBox_BoolHidden
 
 800467fc GhostData_NumGhostsForLEV
 // unknown 80046880
@@ -1300,15 +1300,15 @@
 800ad260 MM_Cheat_OneLap
 800ad29c MM_Cheat_TurboCounter
 800ad2d8 MM_ParseCheatCodes
-800ad418 MM_MENUBOX_Main
+800ad418 MM_MenuBox_Main
 800ad890 MM_ToggleRows_PlayerCount // not in sep3
-800ad9a8 MM_MENUBOX_1p2p
-800ada30 MM_MENUBOX_2p3p4p
+800ad9a8 MM_MenuBox_1p2p
+800ada30 MM_MenuBox_2p3p4p
 800adac0 MM_ToggleRows_Difficulty
-800adbec MM_MENUBOX_Difficulty
-800adc70 MM_MENUBOX_SingleCup
-800add38 MM_MENUBOX_Language // only europe
-800addd0 MM_MENUBOX_NewLoad
+800adbec MM_MenuBox_Difficulty
+800adc70 MM_MenuBox_SingleCup
+800add38 MM_MenuBox_Language // only europe
+800addd0 MM_MenuBox_NewLoad
 800ade60 MM_AdvNewLoad_GetMenuBox
 800ade6c MM_Characters_AnimateColors
 800adf2c MM_Characters_GetNextDriver
