@@ -4753,10 +4753,12 @@ _Static_assert(sizeof(struct Terrain) == 0x40);
 _Static_assert(sizeof(struct MetaDataLEV) == 0x18);
 _Static_assert(sizeof(struct MetaDataMODEL) == 0xC);
 
+#ifndef DATA_DEV
 #if BUILD == UsaRetail
 #define OFFSETOF_SDATA(ELEMENT) ((unsigned int)&(((struct sData *)0x8008cf6c)->ELEMENT))
 #define OFFSETOF_DATA(ELEMENT) ((unsigned int)&(((struct Data *)0x80080ee0)->ELEMENT))
 
 _Static_assert(OFFSETOF_DATA(menuRow_quit[0]) == 0x800841BC);
 _Static_assert(OFFSETOF_DATA(menuBox_quit) == 0x800841D0);
+#endif
 #endif
