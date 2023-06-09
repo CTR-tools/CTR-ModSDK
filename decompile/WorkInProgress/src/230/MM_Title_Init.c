@@ -7,7 +7,7 @@ void DECOMP_MM_Title_Init(void)
   struct GameTracker* gGT = sdata->gGT;
   struct Thread* threadTitle;
   struct Instance* titleInst;
-  struct Title* titleObj = *(int*)0x800b59a0;
+  struct Title* titleObj = OVR_230.titleObj;
   int i;
   int *piVar8;
   int *piVar9;
@@ -40,7 +40,7 @@ void DECOMP_MM_Title_Init(void)
     gGT->tileView[0].distanceToScreen_CURR = 0x1c2;
 	
 	// pointer to Intro Cam, to view Crash holding Trophy in main menu
-    *(unsigned int *)0x800b5a34 = gGT->level1->ptrSpawnType1->pointers;
+    OVR_230.ptrIntroCam = gGT->level1->ptrSpawnType1->pointers;
     
 	// 0x24 = size
 	// 0 = no relation to param4	
@@ -70,7 +70,7 @@ void DECOMP_MM_Title_Init(void)
       piVar8 += 1;
 	  
       titleInst = INSTANCE_Birth3D(
-              (gGT->ptrModel[OVR_230.titleInstances[i].modelID]),OVR_230.s_title,threadTitle);
+              (gGT->modelPtr[OVR_230.titleInstances[i].modelID]),OVR_230.s_title,threadTitle);
       
 	  // store instance
 	  *piVar8 = titleInst;

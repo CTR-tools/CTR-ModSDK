@@ -1,10 +1,9 @@
 #include <common.h>
 
 void DECOMP_MM_Title_KillThread(void) {
+  char n;
   struct GameTracker * gGT = sdata->gGT;
-  struct Title * title = (struct Title * ) 0x800b59a0;
-  int iVar3;
-  u_int uVar4;
+  struct Title *title = OVR_230.titleObj;
 
   if (
     // if "title" object exists
@@ -15,11 +14,11 @@ void DECOMP_MM_Title_KillThread(void) {
     )
   ) {
     // destroy six instances
-    for (uVar4 = 0; uVar4 < 6; uVar4++) {
-      INSTANCE_Death(title->i[uVar4]);
+    for (n = 0; n < 6; n++) {
+      INSTANCE_Death(title->i[n]);
       // "title" object is now nullptr
-      title->i[uVar4] = NULL;
-      title->i[uVar4]->flags |= 0x800;
+      title->i[n] = NULL;
+      title->i[n]->flags |= 0x800;
     }
     title = NULL;
 
