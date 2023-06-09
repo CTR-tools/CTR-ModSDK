@@ -1,3 +1,53 @@
+// & 0x1 = draw instance
+// & 0x2, 0x4, 0x8 -- FUN_80030ad4 -- collision?
+// & 0xX0 = X=0 freezes animation, X=8 hides model, x=1-7 plays animations
+// & 0x80 = make invisible
+// & 0x100 = tileView exists
+// & 0x200 = pixel LOD?
+// & 0x400 = creditghost, screenspace instance
+// & 0x2000 = split-line
+// & 0x4000 = reflective
+// & 0x8000 = reverse cull direction
+// & 0x10000 = draw transparent (not for ghosts)
+// & 0x20000 = disable vertex color, specular lighting, use instance color
+// & 0x60000 = draw transparent (used by ghosts)
+// & 0x8000000 = draw huge
+// & 0x10000000 = invisible before pause
+// & 0x20000000 = invisible only during pause
+enum InstanceFlags
+{
+	DRAW_INSTANCE = 1,
+	//
+	//
+	//
+	//
+	//
+	//
+	HIDE_MODEL = 0x80,
+	TILEVIEW_EXISTS = 0x100,
+	PIXEL_LOD = 0x200,
+	SCREENSPACE_INSTANCE = 0x400,
+	//
+	//
+	SPLIT_LINE = 0x2000,
+	REFLECTIVE = 0x4000,
+	REVERSE_CULL_DIRECTION = 0x8000,
+	DRAW_TRANSPARENT = 0x10000,
+	DISABLE_VCOLOR_USE_INSTCOLOR = 0x20000,
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	//
+	DRAW_HUGE = 0x8000000,
+	INVISIBLE_BEFORE_PAUSE = 0x10000000,
+	INVISIBLE_DURING_PAUSE = 0x20000000
+};
+
 struct ModelFrame
 {
 	// origin
@@ -219,22 +269,7 @@ struct Instance
 	unsigned int colorRGBA;
 
 	// 0x28
-	// & 0x1 = draw instance
-	// & 0x2, 0x4, 0x8 -- FUN_80030ad4 -- collision?
-	// & 0xX0 = X=0 freezes animation, X=8 hides model, x=1-7 plays animations
-	// & 0x80 = make invisible
-	// & 0x100 = tileView exists
-	// & 0x200 = pixel LOD?
-	// & 0x400 = creditghost, screenspace instance
-	// & 0x2000 = split-line
-	// & 0x4000 = reflective
-	// & 0x8000 = reverse cull direction
-	// & 0x10000 = draw transparent (not for ghosts)
-	// & 0x20000 = disable vertex color, specular lighting, use instance color
-	// & 0x60000 = draw transparent (used by ghosts)
-	// & 0x8000000 = draw huge
-	// & 0x10000000 = invisible before pause
-	// & 0x20000000 = invisible only during pause
+	// see InstanceFlags enum
 	unsigned int flags;
 
 	// 0x2c
