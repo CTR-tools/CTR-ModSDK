@@ -50,7 +50,7 @@ void MainFreeze_ConfigDrawNPC105(short startX, short startY, short param_3, int 
 
         if (uVar6 != 0)
         {
-            MenuBox_DrawRwdTriangle(pos, colors, otMem, primMem);
+            MENUBOX_DrawRwdTriangle(pos, colors, otMem, primMem);
         }
 
         uVar6 += param_4;

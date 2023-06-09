@@ -8,7 +8,7 @@ void MM_Scrapbook_Init(void)
     TitleFlag_SetDrawOrder(1);
 
     // clear gamepad input (for menus)
-    MenuBox_ClearInput();
+    MENUBOX_ClearInput();
     return;
 }
 
@@ -174,7 +174,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             MainRaceTrack_RequestLoad(lev);
 
             // make menu disappear
-            MenuBox_Hide(mb);
+            MENUBOX_Hide(mb);
         }
         break;
     default:

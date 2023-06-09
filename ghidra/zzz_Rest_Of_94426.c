@@ -2673,7 +2673,7 @@ LAB_80044568:
 }
 
 
-// MenuBox_DrawPolyGT4
+// MENUBOX_DrawPolyGT4
 void FUN_80044ef8(int param_1)
 
 {
@@ -2688,7 +2688,7 @@ void FUN_80044ef8(int param_1)
 }
 
 
-// MenuBox_DrawOuterRect_Edge
+// MENUBOX_DrawOuterRect_Edge
 void FUN_80044f90(undefined4 param_1,undefined4 param_2,uint param_3,undefined4 param_4)
 {
   if ((param_3 & 0x20) == 0)
@@ -2768,7 +2768,7 @@ undefined * FUN_80044ff8(int param_1)
 }
 
 
-// MenuBox_DrawRwdBlueRect_Subset
+// MENUBOX_DrawRwdBlueRect_Subset
 void FUN_80045134(uint *param_1,uint *param_2,uint *param_3,int param_4)
 
 {
@@ -2802,7 +2802,7 @@ void FUN_80045134(uint *param_1,uint *param_2,uint *param_3,int param_4)
 }
 
 
-// MenuBox_DrawRwdBlueRect
+// MENUBOX_DrawRwdBlueRect
 // RaceWheelConfig + ArcadeDriverSelect
 void FUN_80045254(undefined2 *param_1,int param_2,undefined4 param_3,undefined4 param_4)
 
@@ -2836,7 +2836,7 @@ void FUN_80045254(undefined2 *param_1,int param_2,undefined4 param_3,undefined4 
       local_2c = local_30;
       local_24 = local_28;
 
-	  // MenuBox_DrawRwdBlueRect_Subset
+	  // MENUBOX_DrawRwdBlueRect_Subset
       FUN_80045134(&local_38,&local_30,param_3,param_4);
 
       iVar3 = iVar3 + 1;
@@ -2847,7 +2847,7 @@ void FUN_80045254(undefined2 *param_1,int param_2,undefined4 param_3,undefined4 
 }
 
 
-// MenuBox_DrawRwdTriangle
+// MENUBOX_DrawRwdTriangle
 // (square gorard icon, not actual triangle)
 void FUN_800453e8(undefined2 *param_1,undefined *param_2,void *param_3,int param_4)
 
@@ -2902,7 +2902,7 @@ void FUN_800453e8(undefined2 *param_1,undefined *param_2,void *param_3,int param
 // param2 is x offset from edge
 // param3 is y offset from edge
 // param4 is color
-// MenuBox_DrawOuterRect_LowLevel
+// MENUBOX_DrawOuterRect_LowLevel
 void FUN_80045534(short *param_1,short param_2,ushort param_3,undefined4 param_4,short param_5,
                  undefined4 param_6)
 
@@ -2928,14 +2928,14 @@ void FUN_80045534(short *param_1,short param_2,ushort param_3,undefined4 param_4
   local_22 = param_3;
 
   // Draw rectangle 1
-  // MenuBox_DrawOuterRect_Edge
+  // MENUBOX_DrawOuterRect_Edge
   FUN_80044f90(&local_28,param_4,iVar1,param_6);
 
   // 					sizeY - y offset from edge
   local_26 = local_26 + (param_1[3] - param_3);
 
   // Draw rectangle 2
-  // MenuBox_DrawOuterRect_Edge
+  // MENUBOX_DrawOuterRect_Edge
   FUN_80044f90(&local_28,param_4,iVar1,param_6);
 
   // startY + y offset from edge
@@ -2947,27 +2947,27 @@ void FUN_80045534(short *param_1,short param_2,ushort param_3,undefined4 param_4
   local_24 = param_2;
 
   // Draw rectangle 3
-  // MenuBox_DrawOuterRect_Edge
+  // MENUBOX_DrawOuterRect_Edge
   FUN_80044f90(&local_28,param_4,iVar1,param_6);
 
   //					sizeX - x offset frome edge
   local_28 = local_28 + (param_1[2] - param_2);
 
   // Draw rectangle 4
-  // MenuBox_DrawOuterRect_Edge
+  // MENUBOX_DrawOuterRect_Edge
   FUN_80044f90(&local_28,param_4,iVar1,param_6);
   return;
 }
 
 
 // Draw a 2D box made of four rectangles
-// MenuBox_DrawOuterRect_HighLevel
+// MENUBOX_DrawOuterRect_HighLevel
 // for colored boxes in battle mode
 void FUN_80045650(undefined4 param_1,undefined4 param_2,short param_3,undefined4 param_4)
 
 {
   // Draw a 2D box made of four rectangles
-  // MenuBox_DrawOuterRect_LowLevel
+  // MENUBOX_DrawOuterRect_LowLevel
   FUN_80045534(param_1,3,2,param_2,(int)param_3,param_4);
   return;
 }
@@ -3050,7 +3050,7 @@ void FUN_800457b0(undefined4 *param_1,ushort param_2,undefined4 param_3)
 
   if ((param_2 & 2) == 0)
   {
-	// MenuBox_DrawOuterRect_HighLevel (transparent)
+	// MENUBOX_DrawOuterRect_HighLevel (transparent)
     FUN_80045650(param_1,puVar1,(int)(short)(param_2 | 0x20),param_3);
   }
 
@@ -3179,7 +3179,7 @@ void FUN_800459ec(short *param_1,short *param_2)
     local_12 = 2;
     local_14 = param_2[2] + -6;
 
-	// MenuBox_DrawOuterRect_Edge (transparent)
+	// MENUBOX_DrawOuterRect_Edge (transparent)
     FUN_80044f90(&local_18,puVar1,(int)(short)(param_1[10] | 0x20),
                  *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
   }
@@ -3705,7 +3705,7 @@ LAB_80045e94:
 }
 
 
-// MenuBox_ClearInput
+// MENUBOX_ClearInput
 void FUN_80046404(void)
 
 {
@@ -3738,7 +3738,7 @@ void FUN_80046404(void)
 }
 
 
-// MenuBox_CollectInput
+// MENUBOX_CollectInput
 void FUN_80046458(void)
 
 {
@@ -3801,7 +3801,7 @@ void FUN_80046458(void)
 }
 
 
-// MenuBox_ProcessInput
+// MENUBOX_ProcessInput
 int FUN_80046534(int param_1)
 
 {
@@ -4042,7 +4042,7 @@ int FUN_80046534(int param_1)
   return (int)sVar1;
 }
 
-// MenuBox_ProcessState
+// MENUBOX_ProcessState
 // birth, life, and death of MenuBox
 void FUN_8004680c(void)
 
@@ -4097,7 +4097,7 @@ void FUN_8004680c(void)
 
   if ((*(uint *)(DAT_8008d908 + 8) & 0x20) == 0)
   {
-	// MenuBox_ProcessInput
+	// MENUBOX_ProcessInput
     FUN_80046534();
 
     if ((*(uint *)(DAT_8008d908 + 8) & 0x2000) == 0)
@@ -4140,7 +4140,7 @@ void FUN_8004680c(void)
 }
 
 
-// MenuBox_Show
+// MENUBOX_Show
 void FUN_80046990(int param_1)
 
 {
@@ -4158,7 +4158,7 @@ void FUN_80046990(int param_1)
 }
 
 
-// MenuBox_Hide
+// MENUBOX_Hide
 void FUN_800469c8(int param_1)
 
 {
@@ -4168,7 +4168,7 @@ void FUN_800469c8(int param_1)
   return;
 }
 
-// MenuBox_BoolHidden
+// MENUBOX_BoolHidden
 uint FUN_800469dc(int param_1)
 
 {
@@ -5549,7 +5549,7 @@ void FUN_80047ff8(int param_1,int param_2,int param_3,short param_4,short param_
     iVar9 = (int)local_4e;
 
 	// Character Icon
-	// MenuBox_DrawPolyGT4
+	// MENUBOX_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)(param_1 + 0x2a) * 0x10) * 4 +
@@ -6043,7 +6043,7 @@ void FUN_80048a30(int param_1,short param_2,short param_3,short param_4,undefine
     FUN_80022878(uVar1,(int)(short)(param_2 + 0x78),(int)(short)(param_3 + 10),1,0xffff8001);
 
 	// character icon
-	// MenuBox_DrawPolyGT4
+	// MENUBOX_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)(param_1 + 0x2a) * 0x10) * 4 +
@@ -6091,7 +6091,7 @@ void FUN_80048a30(int param_1,short param_2,short param_3,short param_4,undefine
 void FUN_80048da0(void)
 
 {
-  // offset 8 of MenuBox_DrawSelfFourAdvProfiles
+  // offset 8 of MENUBOX_DrawSelfFourAdvProfiles
   DAT_80085b90 = DAT_80085b90 | 0x800000;
 
   // offset 8 of menuBox_GhostSelection
@@ -6107,7 +6107,7 @@ void FUN_80048da0(void)
 void FUN_80048de4(void)
 
 {
-  // offset 8 of MenuBox_DrawSelfFourAdvProfiles
+  // offset 8 of MENUBOX_DrawSelfFourAdvProfiles
   DAT_80085b90 = DAT_80085b90 & 0xff7fffff;
 
   // offset 8 of menuBox_GhostSelection
@@ -7518,7 +7518,7 @@ LAB_800499e4:
 			// TransitionTo_MainMenu_Returning
             FUN_800b4334();
 
-			// GetMenuBox_AdvNewLoad
+			// GetMENUBOX_AdvNewLoad
 			iVar10 = FUN_800ad980();
 
             *(uint *)(iVar10 + 8) = *(uint *)(iVar10 + 8) & 0xfffffffb;
@@ -7857,7 +7857,7 @@ int FUN_8004aa60(ushort param_1)
   local_4e = 0x3e;
   local_4a = 2;
 
-  // MenuBox_DrawOuterRect_Edge (transparent)
+  // MENUBOX_DrawOuterRect_Edge (transparent)
   FUN_80044f90(&local_50,&DAT_8008d438,0x20,
                *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
   local_4e = 0x27;

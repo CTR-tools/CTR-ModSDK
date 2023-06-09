@@ -12,7 +12,7 @@ void DECOMP_MM_MENUBOX_2p3p4p(struct MenuBox * mb)
   // if uninitialized
   if (row == -1)
   {
-    mb->ptrPrevMenuBox_InHierarchy->state &= 0xffffffeb;
+    mb->ptrPrevBox_InHierarchy->state &= 0xffffffeb;
 
     gGT->numPlyrNextGame = 1;
 

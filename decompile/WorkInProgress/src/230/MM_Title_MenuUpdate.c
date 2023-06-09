@@ -141,7 +141,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   case 1:
 
     // Go to save/load
-    sdata->ptrDesiredMenuBox = &data.MenuBox_DrawSelfFourAdvProfiles;
+    sdata->ptrDesiredMenuBox = &data.MENUBOX_DrawSelfFourAdvProfiles;
 
     MM_Title_CameraReset();
 

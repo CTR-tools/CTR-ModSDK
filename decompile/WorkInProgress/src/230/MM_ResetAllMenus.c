@@ -11,8 +11,8 @@ void DECOMP_MM_ResetAllMenus(void)
         mb->state &= 0xffffffeb;
 
         // Reset ptrNext and ptrPrev
-        mb->ptrNextMenuBox_InHierarchy = 0;
-        mb->ptrPrevMenuBox_InHierarchy = 0;
+        mb->ptrNextBox_InHierarchy = 0;
+        mb->ptrPrevBox_InHierarchy = 0;
     }
 
     sdata->framesRemainingInMenu = 0xF;

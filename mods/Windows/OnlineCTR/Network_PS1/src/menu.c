@@ -72,8 +72,8 @@ struct MenuBox menuBox =
 	.width = 0,
 	.height = 0,
 	
-	.ptrNextMenuBox_InHierarchy = 0,
-	.ptrPrevMenuBox_InHierarchy = 0,
+	.ptrNextBox_InHierarchy = 0,
+	.ptrPrevBox_InHierarchy = 0,
 };
 
 void SetNames_Tracks()
@@ -195,7 +195,7 @@ void DrawClientCountStats()
 	DecalFont_DrawLine(message,0x8,0x28,FONT_SMALL,ORANGE);
 }
 
-void MenuBox_OnPressX_Track(struct MenuBox* b)
+void MENUBOX_OnPressX_Track(struct MenuBox* b)
 {
 	int i;
 	
@@ -203,7 +203,7 @@ void MenuBox_OnPressX_Track(struct MenuBox* b)
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
-	MenuBox_Hide(b);
+	MENUBOX_Hide(b);
 	sdata->ptrDesiredMenuBox = 0;
 	
 	sdata->gGT->levelID = (4 * octr->PageNumber) + b->rowSelected;
@@ -238,9 +238,9 @@ void StatePS1_Lobby_HostTrackPick()
 	{
 		octr->PageNumber = 0;
 		menuBox.rowSelected = 0;
-		menuBox.funcPtr = MenuBox_OnPressX_Track;
+		menuBox.funcPtr = MENUBOX_OnPressX_Track;
 		SetNames_Tracks();
-		MenuBox_Show(&menuBox);
+		MENUBOX_Show(&menuBox);
 	}
 	
 	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;
@@ -312,7 +312,7 @@ void DrawCharacterStats()
 	}
 }
 
-void MenuBox_OnPressX_Character(struct MenuBox* b)
+void MENUBOX_OnPressX_Character(struct MenuBox* b)
 {
 	int i;
 	
@@ -320,7 +320,7 @@ void MenuBox_OnPressX_Character(struct MenuBox* b)
 	struct OnlineCTR* octr = (struct OnlineCTR*)0x8000C000;
 	#endif
 	
-	MenuBox_Hide(b);
+	MENUBOX_Hide(b);
 	sdata->ptrDesiredMenuBox = 0;
 	
 	data.characterIDs[0] = (4 * octr->PageNumber) + b->rowSelected;
@@ -351,9 +351,9 @@ void StatePS1_Lobby_CharacterPick()
 	{
 		octr->PageNumber = 0;
 		menuBox.rowSelected = 0;
-		menuBox.funcPtr = MenuBox_OnPressX_Character;
+		menuBox.funcPtr = MENUBOX_OnPressX_Character;
 		SetNames_Characters();
-		MenuBox_Show(&menuBox);
+		MENUBOX_Show(&menuBox);
 	}
 	
 	buttons = sdata->gGamepads->gamepad[0].buttonsTapped;

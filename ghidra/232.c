@@ -153,7 +153,7 @@ void FUN_800abbdc(void)
 void FUN_800abd80(int param_1)
 
 {
-  // MenuBox_Hide
+  // MENUBOX_Hide
   FUN_800469c8();
   
   // If row selected is 0
@@ -4860,7 +4860,7 @@ LAB_800b0fc0:
     
 	} while (iVar1 * 0x10000 >> 0x10 < 3);
     
-	// MenuBox_DrawRwdTriangle
+	// MENUBOX_DrawRwdTriangle
 	FUN_800453e8(local_20,param_4,
 	
 				// pointer to OT mem
@@ -6068,7 +6068,7 @@ void FUN_800b1f78(int param_1,ushort param_2)
   local_e0[2] = (short)iVar11 + -0x14;
   local_e0[3] = 2;
   
-  // MenuBox_DrawOuterRect_Edge (transparent)
+  // MENUBOX_DrawOuterRect_Edge (transparent)
   FUN_80044f90(local_e0,&DAT_8008d438,0x20,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0)
               );
   
@@ -6545,7 +6545,7 @@ void FUN_800b3594(int param_1)
     local_2c = 0x21c;
     local_2a = 2;
 	
-    // MenuBox_DrawOuterRect_Edge (transparent)
+    // MENUBOX_DrawOuterRect_Edge (transparent)
     FUN_80044f90(&local_30,&DAT_8008d438,0x20,
                  *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
     
@@ -6771,7 +6771,7 @@ LAB_800b38cc:
   local_30 = -0x14;
   local_2c = 0x228;
   
-  // MenuBox_DrawOuterRect_Edge (transparent)
+  // MENUBOX_DrawOuterRect_Edge (transparent)
   FUN_80044f90(&local_30,&DAT_8008d438,0x20,
                *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
   local_2e = 0x28;
