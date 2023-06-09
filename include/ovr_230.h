@@ -519,9 +519,14 @@ struct Overlay_230
 	short highScore_transitionState;
 	// 800b59ca 
 	short highScore_transitionFrames;
-
-	char highScore_unk[16];
+	// 800b59cc 
+	char highScore_unk[12];
 	// ...
+
+	// =============== Scrapbook ===================
+	
+	// 800b59d8
+	int scrapbookState;
 	
 	// ============= Character Select DYN ====================
 
