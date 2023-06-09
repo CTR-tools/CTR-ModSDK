@@ -2,7 +2,7 @@
 
 void DECOMP_MM_Title_CameraReset(void)
 {
-  struct Title* title = (struct Title*)0x800b59a0;
+  struct Title* title = OVR_230.titleObj;
 
   if (title!= NULL) 
   {

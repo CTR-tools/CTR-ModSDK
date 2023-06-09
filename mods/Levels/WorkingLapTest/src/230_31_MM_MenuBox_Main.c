@@ -39,7 +39,7 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
       (*(int*)0x800b5a1c == 1) && 
       
       // if "title" object exists
-      (*(int*)0x800b59a0 != NULL)
+      (OVR_230.titleObj != NULL)
     ) &&
         (0xe5 < *(int*)0x800b5a14)
      ) 
@@ -69,7 +69,7 @@ void DECOMP_MM_MenuBox_Main(struct MenuBox* mainMenu)
     return;
   }
   
-  struct Title* titleObj = *(int*)0x800b59a0;
+  struct Title* titleObj = OVR_230.titleObj;
 
   // if "title" object exists
   if (titleObj != NULL) 

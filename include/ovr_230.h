@@ -447,7 +447,7 @@ struct Overlay_230
 	short colorIndexArray[2];
 
 	// 800b594c
-	char fill_MainMenu_LevelRowbattletracks_temporary[0x58];
+	char fill_MainMenu_LevelRowbattletracks_temporary[0x54];
 
 	// 800b594c unk flags
 
@@ -461,9 +461,8 @@ struct Overlay_230
 	// 800B599C highScore trackNext
 	// 800B599E highScore rowNext
 
-
-	// 800b59a0 title object
-
+	// 800b59a0
+	struct Title* titleObj;
 
 	// ============== Track Select DYN ====================
 
@@ -520,16 +519,21 @@ struct Overlay_230
 	short highScore_transitionState;
 	// 800b59ca 
 	short highScore_transitionFrames;
-
-	char highScore_unk[16];
+	// 800b59cc 
+	char highScore_unk[12];
 	// ...
+
+	// =============== Scrapbook ===================
+	
+	// 800b59d8
+	int scrapbookState;
 	
 	// ============= Character Select DYN ====================
 
 	// 0x800b59dc
 	int characterSelect_sizeY;
 	
-	int unkE0;
+	int desiredMenu;
 
 	// 0x800b59e4 -- UsaRetail
 	// 0x800b6288 -- EurRetail
@@ -582,13 +586,14 @@ struct Overlay_230
 	int characterSelect_sizeX;
 
 	// 800b5a34
-	int unkPtr1;
+	int ptrIntroCam;
 	
 	// 800b5a38
 	int textPos;
 
 	// 800b5a3c
 	struct TransitionMeta* ptrTransitionMeta;
+	// 800b5a40
 	int countMeta0xD;
 
 	// 800b5a44

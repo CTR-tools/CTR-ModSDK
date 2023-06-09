@@ -2,7 +2,6 @@
 
 void MM_TrackSelect_MenuBox(struct MenuBox *param_1)
 {
-  struct GameTracker *gGT = sdata->gGT;
   char bVar1;
   char bVar2;
   char bVar3;
@@ -16,18 +15,18 @@ void MM_TrackSelect_MenuBox(struct MenuBox *param_1)
   int iVar10;
   int iVar11;
   int *piVar12;
-  short sVar13;
   u_int uVar14;
   u_int uVar15;
-  u_short uVar16;
   int iVar17;
   int iVar18;
-  struct MainMenu_LevelRow *selectMenu;
   RECT r;
   RECT q;
   RECT p;
   u_int local_44;
   short numTracks;
+
+  struct MainMenu_LevelRow *selectMenu;
+  struct GameTracker *gGT = sdata->gGT;
 
   elapsedFrames = OVR_230.trackSel_transitionFrames;
 
@@ -301,15 +300,14 @@ LAB_800b05b8:
     uVar14 = 1;
   }
 
-  iVar18 = 0;
-
   MM_TrackSelect_Video_State(uVar14);
 
   uVar15 = (u_int)numTracks;
   sVar7 = param_1->rowSelected;
   gGT->currLEV = selectMenu[sVar7 << 4].levID;
   iVar9 = (int)sVar7 + -1;
-  do
+
+  for (iVar18 = 0; iVar18 < 4; iVar18++)
   {
     do
     {
@@ -321,11 +319,11 @@ LAB_800b05b8:
 
       uVar8 = MM_TrackSelect_boolTrackOpen(selectMenu[iVar10 << 4].levID);
 
-      iVar9 = iVar10 + -1;
+      iVar9 = iVar10 - 1;
     } while ((uVar8 & 0xffff) == 0);
-    iVar18 = iVar18 + 1;
-    iVar9 = iVar10 + -1;
-  } while (iVar18 * 0x10000 >> 0x10 < 4);
+
+    iVar9 = iVar10 - 1;
+  }
   iVar18 = 0;
   iVar9 = 0;
 
@@ -340,6 +338,8 @@ LAB_800b05b8:
       uVar15 = uVar15 + (((3 - OVR_230.trackSel_changeTrack_frameCount) * 0x73) / 3) * (int)OVR_230.trackSel_direction;
     }
 
+    // This is just MATH_Cos and Math_Sin 
+    #if 0
     // approximate trigonometry
     sVar7 = (short)data.trigApprox[uVar15];
     iVar9 = data.trigApprox[uVar15] >> 0x10;
@@ -368,21 +368,20 @@ LAB_800b05b8:
         iVar17 = -iVar17;
       }
     }
+    #endif
     r.w = 0x100;
     r.h = 0x19;
 
     // posX of track list
     // 800b5546 is for transition in and out
-    iVar11 = (u_int)OVR_230.transitionMeta_trackSel[0].currX + (iVar11 * 0x19 >> 9) + -0xb4;
-
-    sVar13 = (short)iVar11;
+    iVar11 = (u_int)OVR_230.transitionMeta_trackSel[0].currX + (MATH_Cos(uVar15) * 0x19 >> 9) + -0xb4;
 
     // posY of track list
     // 800b5548 is for transition in and out
-    iVar9 = (u_int)OVR_230.transitionMeta_trackSel[0].currY + (iVar17 * 200 >> 0xc);
+    iVar9 = (u_int)OVR_230.transitionMeta_trackSel[0].currY + (MATH_Sin(uVar15) * 200 >> 0xc);
 
     sVar7 = (short)iVar9 + 0x60;
-    r.x = sVar13;
+    r.x = (short)iVar11;
     r.y = sVar7;
 
     // if you are in time trial mode
@@ -408,12 +407,9 @@ LAB_800b05b8:
 
             ((int *)0x8008e814)[gGT->levelID * 0x49 +
 
-                                    // array of bit indices (01 for tropy, 02 for oxide)
-                                    (u_int)((u_short *)0x800b55c8)[iVar17] >>
-                                5]
-
-                >> (((u_short *)0x800b55c8)[iVar17] & 1) !=
-            0)
+                  // array of bit indices (01 for tropy, 02 for oxide)
+                  (u_int)((u_short *)0x800b55c8)[iVar17] >> 5] >>
+                  (((u_short *)0x800b55c8)[iVar17] & 1) != 0)
         {
           // 0x0E: driver_9 (papu) (yellow)
           // 0x16: silver
@@ -422,7 +418,7 @@ LAB_800b05b8:
           piVar12 = data.ptrColor[((u_short *)0x800b55c4)[iVar17] << 2];
 
           DecalHUD_DrawPolyGT4(gGT->iconGroup[5]->icons[7],
-                               (int)sVar13 + 0x104, (int)sVar7 + iVar17 * 8 + 4,
+                               iVar11 + 0x104, (int)sVar7 + iVar17 * 8 + 4,
 
                                // pointer to PrimMem struct
                                &gGT->backBuffer->primMem,
@@ -456,8 +452,8 @@ LAB_800b05b8:
     // Draw string
     DecalFont_DrawLine(
         sdata->lngStrings[data.metaDataLEV[selectMenu[iVar10 << 4].levID].name_LNG],
-        (iVar11 + 8) * 0x10000 >> 0x10,
-        (iVar9 + 0x65) * 0x10000 >> 0x10,
+        (iVar11 + 8),
+        (iVar9 + 0x65),
         1, 0);
 
     if ((OVR_230.trackSel_changeTrack_frameCount == 0) && ((short)iVar18 == 4))
@@ -482,8 +478,10 @@ LAB_800b05b8:
           }
 
           // "GHOST DATA EXISTS"
-          DecalFont_DrawLine(sdata->lngStrings[0x1ac], (iVar11 + 0x80) * 0x10000 >> 0x10,
-                             (iVar9 + 0x76) * 0x10000 >> 0x10, 2, uVar14);
+          DecalFont_DrawLine(sdata->lngStrings[0x1ac], 
+            (iVar11 + 0x80),
+            (iVar9 + 0x76),
+            2, uVar14);
         }
       }
       q.x = r.x + 6;
@@ -502,16 +500,15 @@ LAB_800b05b8:
     // Draw 2D Menu rectangle background
     MENUBOX_DrawInnerRect(&r, 0, gGT->backBuffer->otMem.startPlusFour);
 
-    for (; (uVar8 & 0xffff) == 0; iVar10++)
+    do
     {
-
-      if ((int)uVar15 <= iVar10 * 0x10000 >> 0x10)
+      if (uVar15 <= iVar10)
       {
         iVar10 = 0;
       }
-
       uVar8 = MM_TrackSelect_boolTrackOpen(selectMenu[iVar10 << 4]);
-    }
+      iVar10++;
+    } while ((uVar8 & 0xffff) == 0);
 
     iVar18 = iVar18 + 1;
     iVar9 = iVar18 * 0x10000;
@@ -554,7 +551,7 @@ LAB_800b05b8:
 
         p.h = CONCAT22(100, (short)local_44);
         p.w = CONCAT22(p._2_2_ + 0x22 + (OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[0].currY) + 0x49,
-                            p.x + (OVR_230.transitionMeta_trackSel[2].currX - OVR_230.transitionMeta_trackSel[0].currX));
+                       p.x + (OVR_230.transitionMeta_trackSel[2].currX - OVR_230.transitionMeta_trackSel[0].currX));
 
         // icon data
         bVar1 = gGT->ptrIcons[selectMenu[param_1->rowSelected << 4].mapTextureID]->texLayout.v2;
