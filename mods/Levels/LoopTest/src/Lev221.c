@@ -227,17 +227,21 @@ struct LevelFile file =
 	// +z is forward
 	// +x is left, not right
 	
+	// == Reverb Flag (0x80) ==
+	// makes it a "little" easier to get to top,
+	// uncertain if it makes a difference
+	
 	// spawn
 	NEW_BLOCK(0, group4_ground, -0x180, 0, NULL, 0x1800, RGBtoBGR(0xFF0000)),
 	NEW_BLOCK(1, group4_ground, 0x180, 0, NULL, 0x1800, RGBtoBGR(0xFF2000)),
 	
 	// forward
-	NEW_BLOCK(2, group4_ground, -0x180, 0x300, NULL, 0x1800, RGBtoBGR(0xFF2000)),
-	NEW_BLOCK(3, group4_ground, 0x180, 0x300, NULL, 0x1800, RGBtoBGR(0xFF4000)),
+	NEW_BLOCK(2, group4_ground, -0x180, 0x300, NULL, 0x1880, RGBtoBGR(0xFF2000)),
+	NEW_BLOCK(3, group4_ground, 0x180, 0x300, NULL, 0x1880, RGBtoBGR(0xFF4000)),
 	
 	// forward
-	NEW_BLOCK(4, group4_ground, -0x180, 0x600, NULL, 0x1800, RGBtoBGR(0xFF4000)),
-	NEW_BLOCK(5, group4_ground, 0x180, 0x600, NULL, 0x1800, RGBtoBGR(0xFF6000)),
+	NEW_BLOCK(4, group4_ground, -0x180, 0x600, NULL, 0x1880, RGBtoBGR(0xFF4000)),
+	NEW_BLOCK(5, group4_ground, 0x180, 0x600, NULL, 0x1880, RGBtoBGR(0xFF6000)),
 	
 	MAKE_RAMP(
 		4, 0x180,
@@ -254,8 +258,8 @@ struct LevelFile file =
 	),
 	
 	// forward
-	NEW_BLOCK(6, group4_ground, -0x180, 0x900, NULL, 0x1800, RGBtoBGR(0xFF6000)),
-	NEW_BLOCK(7, group4_ground, 0x180, 0x900, NULL, 0x1800, RGBtoBGR(0xFF8000)),
+	NEW_BLOCK(6, group4_ground, -0x180, 0x900, NULL, 0x1880, RGBtoBGR(0xFF6000)),
+	NEW_BLOCK(7, group4_ground, 0x180, 0x900, NULL, 0x1880, RGBtoBGR(0xFF8000)),
 	
 	// == Do NOT do MAKE_RAMP, just SetPosY ==
 	// This way, the normal vector is still 0x1971, not 0x1C71
