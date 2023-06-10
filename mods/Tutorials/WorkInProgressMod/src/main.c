@@ -1,6 +1,6 @@
 #include <common.h>
 
-int mike = 0;
+int isSelectPause = 0;
 
 RECT r =
 {
@@ -12,15 +12,18 @@ RECT r =
 
 int Hello_Main()
 {
-	if(sdata->gGT->numPlyrCurrGame == 1)
-	{
-		if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_SELECT) mike = (mike + 1) % 2;
+	struct GameTracker* gGT = sdata->gGT;
 
-		if (mike)
+	if (gGT->numPlyrCurrGame == 1)
+	{
+		if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_SELECT)
+			isSelectPause = (isSelectPause + 1) % 2;
+
+		if (isSelectPause)
 		{
 			DecalFont_DrawLine("and so it begins", 10, 190, FONT_SMALL, COCO_MAGENTA);
-			MENUBOX_DrawInnerRect(&r, 4, (u_long*)(sdata->gGT->backBuffer->otMem).startPlusFour);
-			MainFreeze_SafeAdvDestroy();
+
+			//MENUBOX_DrawInnerRect(&r, 4, (u_long*)(gGT->backBuffer->otMem).startPlusFour);
 		}
 	}
 }
