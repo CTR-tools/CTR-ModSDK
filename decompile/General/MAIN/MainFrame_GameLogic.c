@@ -240,7 +240,7 @@ LAB_80035098:
 	{
 		if ((bVar1) || ((gGT->gameMode1 & PAUSE_ALL) != 0))
 		{
-			if (gGT->cooldownfromPauseUntilUnpause == '\0')
+			if (gGT->cooldownfromPauseUntilUnpause == 0)
 			{
 				if
 				(
