@@ -194,7 +194,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			{
 				LAB_80053260:
 				// If game is not paused
-				if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+				if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 				{
 					//execute Jump meter and landing boost processes
 					DECOMP_UI_JumpMeter_Update(playerStruct);
@@ -206,7 +206,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			else
 			{
 				// If game is not paused
-				if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+				if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 				{
 					// Player / AI structure + 0x4a shows driver index (0-7)
 					// This is a pointer to each player's tileView buffer
@@ -285,7 +285,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			}
 
 			// If game is not paused
-			if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+			if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 			{
 				if (playerStruct->PickupWumpaHUD.numCollected != 0)
 				{
@@ -1190,7 +1190,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	(
 		(
 			// If game is not paused
-			((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) &&
+			((gGT->gameMode1 & PAUSE_ALL) == 0) &&
 			
 			//item roll is done
 			(!bVar3)

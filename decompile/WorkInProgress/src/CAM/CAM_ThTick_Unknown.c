@@ -404,7 +404,7 @@ LAB_8001c128:
 							if
 							(
 								(sdata->gGT->level1->cnt_restart_points != 0) &&
-								((sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+								((sdata->gGT->gameMode1 & PAUSE_ALL) == 0)
 							)
 							{
 								uVar7 = CAM_FollowDriver_TrackPath((struct CameraDC *)cDC, &DAT_1f800390, (int)*(short *)((int)cDC->idpp[0].m2.t + 6), 1);

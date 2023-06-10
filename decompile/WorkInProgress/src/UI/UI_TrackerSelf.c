@@ -187,7 +187,7 @@ LAB_8004fe8c:
     if (gGT->timer % beep_rate == 0) {
 
 	  // If game is not paused
-      if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+      if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	  {
 		// OtherFX_Play "homing in" sound
         OtherFX_Play(0x56,1);

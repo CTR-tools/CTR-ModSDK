@@ -22,7 +22,7 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 	struct Thread* psVar12;
 	
 	bVar1 = true;
-	if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+	if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	{
 		bVar1 = false;
 		tileView = gGT->tileView;
@@ -77,7 +77,7 @@ LAB_80034e74:
 		{
 			gGT->elapsedTimeMS = 0x40;
 		}
-		if ((gGT->gameMode1_prevFrame & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0)
+		if ((gGT->gameMode1_prevFrame & PAUSE_ALL) != 0)
 		{
 			gGT->elapsedTimeMS = 0x20;
 		}
@@ -218,7 +218,7 @@ LAB_80035098:
 	uVar5 = LOAD_IsOpen_RacingOrBattle();
 	if (uVar5 != 0)
 	{
-		if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+		if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 		{
 			RB_Bubbles_RoosTubes();
 		}
@@ -228,7 +228,7 @@ LAB_80035098:
 		}
 	}
 	THREAD_CheckAllForDead();
-	if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+	if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	{
 		Audio_Update1();
 	}
@@ -238,7 +238,7 @@ LAB_80035098:
 	uVar3 = gGT->gameMode1;
 	if ((uVar3 & END_OF_RACE) == 0)
 	{
-		if ((bVar1) || ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0))
+		if ((bVar1) || ((gGT->gameMode1 & PAUSE_ALL) != 0))
 		{
 			if (gGT->cooldownfromPauseUntilUnpause == '\0')
 			{
@@ -293,7 +293,7 @@ LAB_80035098:
 								(
 									(
 										uVar3 = MainFrame_HaveAllPads((u_short)(u_char)gGT->numPlyrNextGame),
-										(uVar3 & 0xffff) == 0 && ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+										(uVar3 & 0xffff) == 0 && ((gGT->gameMode1 & PAUSE_ALL) == 0)
 									)
 								)
 							) ||
