@@ -1,6 +1,6 @@
-// 296+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 361 rewritten so far
+// 312+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 381 rewritten so far
 
-// 296 for every 'common' and ','
+// 312 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -329,23 +329,23 @@ common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK/MEMPACK_PopToState.c
 // MixRNG
 common, exe, MixRNG_Scramble, 0x0, General/MixRNG/MixRNG_Scramble.c
 
-// MENUBOX
+// MenuBox
 // skip several
-common, exe, MENUBOX_DrawOuterRect_Edge, 0x0, General/MENUBOX/MENUBOX_DrawOuterRect_Edge.c
-common, exe, MENUBOX_DrawOuterRect_LowLevel, 0x0, General/MENUBOX/MENUBOX_DrawOuterRect_LowLevel.c
-common, exe, MENUBOX_DrawTime, 0x0, General/MENUBOX/MENUBOX_DrawTime.c
+common, exe, MENUBOX_DrawOuterRect_Edge, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_Edge.c
+common, exe, MENUBOX_DrawOuterRect_LowLevel, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_LowLevel.c
+common, exe, MENUBOX_DrawTime, 0x0, General/MenuBox/MENUBOX_DrawTime.c
 // skip several
 // skip DrawBG
-common, exe, MENUBOX_GetHeight, 0x0, General/MENUBOX/MENUBOX_GetHeight.c
-common, exe, MENUBOX_GetWidth, 0x0, General/MENUBOX/MENUBOX_GetWidth.c
+common, exe, MENUBOX_GetHeight, 0x0, General/MenuBox/MENUBOX_GetHeight.c
+common, exe, MENUBOX_GetWidth, 0x0, General/MenuBox/MENUBOX_GetWidth.c
 // skip DrawSelf
-common, exe, MENUBOX_ClearInput, 0x0, General/MENUBOX/MENUBOX_ClearInput.c
-common, exe, MENUBOX_CollectInput, 0x0, General/MENUBOX/MENUBOX_CollectInput.c
+common, exe, MENUBOX_ClearInput, 0x0, General/MenuBox/MENUBOX_ClearInput.c
+common, exe, MENUBOX_CollectInput, 0x0, General/MenuBox/MENUBOX_CollectInput.c
 // skip ProcessInput (wip)
-common, exe, MENUBOX_ProcessState, 0x0, General/MENUBOX/MENUBOX_ProcessState.c
-common, exe, MENUBOX_Show, 0x0, General/MENUBOX/MENUBOX_Show.c
-common, exe, MENUBOX_Hide, 0x0, General/MENUBOX/MENUBOX_Hide.c
-common, exe, MENUBOX_BoolHidden, 0x0, General/MENUBOX/MENUBOX_BoolHidden.c
+common, exe, MENUBOX_ProcessState, 0x0, General/MenuBox/MENUBOX_ProcessState.c
+common, exe, MENUBOX_Show, 0x0, General/MenuBox/MENUBOX_Show.c
+common, exe, MENUBOX_Hide, 0x0, General/MenuBox/MENUBOX_Hide.c
+common, exe, MENUBOX_BoolHidden, 0x0, General/MenuBox/MENUBOX_BoolHidden.c
 
 // Title (?)
 common, exe, TitleOSK_DrawMenu, 0x0, General/TitleOSK_DrawMenu.c

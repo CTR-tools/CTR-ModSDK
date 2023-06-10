@@ -4,7 +4,7 @@ struct Driver* VehInit_Player(int index);
 void VehInit_TeleportAll(struct GameTracker* gGT, int flag);
 struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
-void MenuBox_ClearInput();
+void MENUBOX_ClearInput();
 void UI_DrawDriverIcon(struct Icon* icon, short posX, int posY, struct PrimMem* primMem, void *ot, u_char semitransparencyEnabled, short scale, u_int vcolorAndCode);
 
 struct Ball
@@ -148,7 +148,7 @@ void DrawObjective()
 	DecalFont_DrawLine("player standing", 				0x100, 0x60+40,	FONT_SMALL, (CENTER_TEXT | ORANGE));
 
 	// Draw background box ========================
-	MenuBox_DrawInnerRect(&window1,0,sdata->gGT->backBuffer->otMem.startPlusFour);
+	MENUBOX_DrawInnerRect(&window1,0,sdata->gGT->backBuffer->otMem.startPlusFour);
 
 	buttons = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
 
@@ -156,7 +156,7 @@ void DrawObjective()
     if (buttons & BTN_CROSS)
 	{
 		// clear button input (for menus)
-		MenuBox_ClearInput();
+		MENUBOX_ClearInput();
 
 		// set traffic lights to drop
 		sdata->gGT->trafficLightsTimer = 3840;

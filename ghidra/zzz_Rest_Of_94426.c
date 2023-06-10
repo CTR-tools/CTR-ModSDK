@@ -2673,7 +2673,7 @@ LAB_80044568:
 }
 
 
-// MenuBox_DrawPolyGT4
+// MENUBOX_DrawPolyGT4
 void FUN_80044ef8(int param_1)
 
 {
@@ -2688,7 +2688,7 @@ void FUN_80044ef8(int param_1)
 }
 
 
-// MenuBox_DrawOuterRect_Edge
+// MENUBOX_DrawOuterRect_Edge
 void FUN_80044f90(undefined4 param_1,undefined4 param_2,uint param_3,undefined4 param_4)
 {
   if ((param_3 & 0x20) == 0)
@@ -2768,7 +2768,7 @@ undefined * FUN_80044ff8(int param_1)
 }
 
 
-// MenuBox_DrawRwdBlueRect_Subset
+// MENUBOX_DrawRwdBlueRect_Subset
 void FUN_80045134(uint *param_1,uint *param_2,uint *param_3,int param_4)
 
 {
@@ -2802,7 +2802,7 @@ void FUN_80045134(uint *param_1,uint *param_2,uint *param_3,int param_4)
 }
 
 
-// MenuBox_DrawRwdBlueRect
+// MENUBOX_DrawRwdBlueRect
 // RaceWheelConfig + ArcadeDriverSelect
 void FUN_80045254(undefined2 *param_1,int param_2,undefined4 param_3,undefined4 param_4)
 
@@ -2836,7 +2836,7 @@ void FUN_80045254(undefined2 *param_1,int param_2,undefined4 param_3,undefined4 
       local_2c = local_30;
       local_24 = local_28;
 
-	  // MenuBox_DrawRwdBlueRect_Subset
+	  // MENUBOX_DrawRwdBlueRect_Subset
       FUN_80045134(&local_38,&local_30,param_3,param_4);
 
       iVar3 = iVar3 + 1;
@@ -2847,7 +2847,7 @@ void FUN_80045254(undefined2 *param_1,int param_2,undefined4 param_3,undefined4 
 }
 
 
-// MenuBox_DrawRwdTriangle
+// MENUBOX_DrawRwdTriangle
 // (square gorard icon, not actual triangle)
 void FUN_800453e8(undefined2 *param_1,undefined *param_2,void *param_3,int param_4)
 
@@ -2902,7 +2902,7 @@ void FUN_800453e8(undefined2 *param_1,undefined *param_2,void *param_3,int param
 // param2 is x offset from edge
 // param3 is y offset from edge
 // param4 is color
-// MenuBox_DrawOuterRect_LowLevel
+// MENUBOX_DrawOuterRect_LowLevel
 void FUN_80045534(short *param_1,short param_2,ushort param_3,undefined4 param_4,short param_5,
                  undefined4 param_6)
 
@@ -2928,14 +2928,14 @@ void FUN_80045534(short *param_1,short param_2,ushort param_3,undefined4 param_4
   local_22 = param_3;
 
   // Draw rectangle 1
-  // MenuBox_DrawOuterRect_Edge
+  // MENUBOX_DrawOuterRect_Edge
   FUN_80044f90(&local_28,param_4,iVar1,param_6);
 
   // 					sizeY - y offset from edge
   local_26 = local_26 + (param_1[3] - param_3);
 
   // Draw rectangle 2
-  // MenuBox_DrawOuterRect_Edge
+  // MENUBOX_DrawOuterRect_Edge
   FUN_80044f90(&local_28,param_4,iVar1,param_6);
 
   // startY + y offset from edge
@@ -2947,27 +2947,27 @@ void FUN_80045534(short *param_1,short param_2,ushort param_3,undefined4 param_4
   local_24 = param_2;
 
   // Draw rectangle 3
-  // MenuBox_DrawOuterRect_Edge
+  // MENUBOX_DrawOuterRect_Edge
   FUN_80044f90(&local_28,param_4,iVar1,param_6);
 
   //					sizeX - x offset frome edge
   local_28 = local_28 + (param_1[2] - param_2);
 
   // Draw rectangle 4
-  // MenuBox_DrawOuterRect_Edge
+  // MENUBOX_DrawOuterRect_Edge
   FUN_80044f90(&local_28,param_4,iVar1,param_6);
   return;
 }
 
 
 // Draw a 2D box made of four rectangles
-// MenuBox_DrawOuterRect_HighLevel
+// MENUBOX_DrawOuterRect_HighLevel
 // for colored boxes in battle mode
 void FUN_80045650(undefined4 param_1,undefined4 param_2,short param_3,undefined4 param_4)
 
 {
   // Draw a 2D box made of four rectangles
-  // MenuBox_DrawOuterRect_LowLevel
+  // MENUBOX_DrawOuterRect_LowLevel
   FUN_80045534(param_1,3,2,param_2,(int)param_3,param_4);
   return;
 }
@@ -3050,7 +3050,7 @@ void FUN_800457b0(undefined4 *param_1,ushort param_2,undefined4 param_3)
 
   if ((param_2 & 2) == 0)
   {
-	// MenuBox_DrawOuterRect_HighLevel (transparent)
+	// MENUBOX_DrawOuterRect_HighLevel (transparent)
     FUN_80045650(param_1,puVar1,(int)(short)(param_2 | 0x20),param_3);
   }
 
@@ -3179,7 +3179,7 @@ void FUN_800459ec(short *param_1,short *param_2)
     local_12 = 2;
     local_14 = param_2[2] + -6;
 
-	// MenuBox_DrawOuterRect_Edge (transparent)
+	// MENUBOX_DrawOuterRect_Edge (transparent)
     FUN_80044f90(&local_18,puVar1,(int)(short)(param_1[10] | 0x20),
                  *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
   }
@@ -3705,7 +3705,7 @@ LAB_80045e94:
 }
 
 
-// MenuBox_ClearInput
+// MENUBOX_ClearInput
 void FUN_80046404(void)
 
 {
@@ -3738,7 +3738,7 @@ void FUN_80046404(void)
 }
 
 
-// MenuBox_CollectInput
+// MENUBOX_CollectInput
 void FUN_80046458(void)
 
 {
@@ -3801,7 +3801,7 @@ void FUN_80046458(void)
 }
 
 
-// MenuBox_ProcessInput
+// MENUBOX_ProcessInput
 int FUN_80046534(int param_1)
 
 {
@@ -4042,7 +4042,7 @@ int FUN_80046534(int param_1)
   return (int)sVar1;
 }
 
-// MenuBox_ProcessState
+// MENUBOX_ProcessState
 // birth, life, and death of MenuBox
 void FUN_8004680c(void)
 
@@ -4097,7 +4097,7 @@ void FUN_8004680c(void)
 
   if ((*(uint *)(DAT_8008d908 + 8) & 0x20) == 0)
   {
-	// MenuBox_ProcessInput
+	// MENUBOX_ProcessInput
     FUN_80046534();
 
     if ((*(uint *)(DAT_8008d908 + 8) & 0x2000) == 0)
@@ -4140,7 +4140,7 @@ void FUN_8004680c(void)
 }
 
 
-// MenuBox_Show
+// MENUBOX_Show
 void FUN_80046990(int param_1)
 
 {
@@ -4158,7 +4158,7 @@ void FUN_80046990(int param_1)
 }
 
 
-// MenuBox_Hide
+// MENUBOX_Hide
 void FUN_800469c8(int param_1)
 
 {
@@ -4168,7 +4168,7 @@ void FUN_800469c8(int param_1)
   return;
 }
 
-// MenuBox_BoolHidden
+// MENUBOX_BoolHidden
 uint FUN_800469dc(int param_1)
 
 {
@@ -5549,7 +5549,7 @@ void FUN_80047ff8(int param_1,int param_2,int param_3,short param_4,short param_
     iVar9 = (int)local_4e;
 
 	// Character Icon
-	// MenuBox_DrawPolyGT4
+	// MENUBOX_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)(param_1 + 0x2a) * 0x10) * 4 +
@@ -6043,7 +6043,7 @@ void FUN_80048a30(int param_1,short param_2,short param_3,short param_4,undefine
     FUN_80022878(uVar1,(int)(short)(param_2 + 0x78),(int)(short)(param_3 + 10),1,0xffff8001);
 
 	// character icon
-	// MenuBox_DrawPolyGT4
+	// MENUBOX_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)(param_1 + 0x2a) * 0x10) * 4 +
@@ -6091,7 +6091,7 @@ void FUN_80048a30(int param_1,short param_2,short param_3,short param_4,undefine
 void FUN_80048da0(void)
 
 {
-  // offset 8 of MenuBox_DrawSelfFourAdvProfiles
+  // offset 8 of MENUBOX_DrawSelfFourAdvProfiles
   DAT_80085b90 = DAT_80085b90 | 0x800000;
 
   // offset 8 of menuBox_GhostSelection
@@ -6107,7 +6107,7 @@ void FUN_80048da0(void)
 void FUN_80048de4(void)
 
 {
-  // offset 8 of MenuBox_DrawSelfFourAdvProfiles
+  // offset 8 of MENUBOX_DrawSelfFourAdvProfiles
   DAT_80085b90 = DAT_80085b90 & 0xff7fffff;
 
   // offset 8 of menuBox_GhostSelection
@@ -7518,7 +7518,7 @@ LAB_800499e4:
 			// TransitionTo_MainMenu_Returning
             FUN_800b4334();
 
-			// GetMenuBox_AdvNewLoad
+			// GetMENUBOX_AdvNewLoad
 			iVar10 = FUN_800ad980();
 
             *(uint *)(iVar10 + 8) = *(uint *)(iVar10 + 8) & 0xfffffffb;
@@ -7857,7 +7857,7 @@ int FUN_8004aa60(ushort param_1)
   local_4e = 0x3e;
   local_4a = 2;
 
-  // MenuBox_DrawOuterRect_Edge (transparent)
+  // MENUBOX_DrawOuterRect_Edge (transparent)
   FUN_80044f90(&local_50,&DAT_8008d438,0x20,
                *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
   local_4e = 0x27;
@@ -20628,46 +20628,83 @@ void FUN_80059558(int param_1,undefined4 param_2)
   int unaff_s1;
   int unaff_s2;
   
-  if (((*(uint *)(param_1 + 0x2c8) & 1) != 0) && ((*(uint *)(param_1 + 0x2c8) & 8) == 0)) {
+  if (
+		// touching quadblock
+		((*(uint *)(param_1 + 0x2c8) & 1) != 0) && 
+		
+		// not in accel prevention (not holding square)
+		((*(uint *)(param_1 + 0x2c8) & 8) == 0)
+	 ) 
+  {
+	// abs fireSpeed
     iVar1 = (int)*(short *)(param_1 + 0x39e);
     if (iVar1 < 0) {
       iVar1 = -iVar1;
     }
-    if (iVar1 < 0x300) {
+	
+    if (iVar1 < 0x300) 
+	{
+	  // abs speedApprox
       iVar1 = (int)*(short *)(param_1 + 0x38e);
       if (iVar1 < 0) {
          iVar1 = -iVar1;
       }
+	  
       if (iVar1 < 0x300) {
          return;
       }
     }
+	
+	// if moving quickly
+	
+	// 2 wheels spawn particles
     iVar1 = 2;
-    if (*(char *)(param_1 + 0x376) == '\x02') {
+	
+	// if sliding
+    if (*(char *)(param_1 + 0x376) == '\x02') 
+	{
+	  // 4 wheels spawn particles
       iVar1 = 4;
     }
-    for (; iVar1 != 0; iVar1 = iVar1 + -1) {
-      if (iVar1 == 3) {
+	
+	// spawn particles on wheels
+    for (; iVar1 != 0; iVar1 = iVar1 + -1) 
+	{
+	  // front tire
+      if (iVar1 == 3) 
+	  {
+		 // 0x1E, 0xA, 0x28
          gte_ldVXY0(0xa001e);
          uVar3 = 0x28;
          gte_ldVZ0(0x28);
       }
+	  
+	  // back wheels
       else if (iVar1 < 4) {
-         if (iVar1 == 2) {
+         if (iVar1 == 2) 
+		 {
+		   // -0x1E, 0xA, -0x28
            gte_ldVXY0(0xaffe2);
            uVar3 = 0xffffffec;
            gte_ldVZ0(0xffffffec);
          }
-         else {
+         else 
+		 {
 LAB_80059674:
+		   // 0x1E, 0xA, -0x28
            gte_ldVXY0(0xa001e);
            uVar3 = 0xffffffec;
            gte_ldVZ0(0xffffffec);
          }
       }
-      else {
+      
+	  // == 4, (front tire)
+	  else 
+	  {
          if (iVar1 != 4) goto LAB_80059674;
-         gte_ldVXY0(0xaffe2);
+         
+		 // -0x1E, 0xA, 0x28
+		 gte_ldVXY0(0xaffe2);
          uVar3 = 0x28;
          gte_ldVZ0(0x28);
       }
@@ -20716,14 +20753,19 @@ void FUN_80059780(int param_1,undefined4 param_2)
   uint unaff_s2;
   uint unaff_s3;
   
-  if (*(short *)(param_1 + 0x39e) == 0) {
+  // no fire speed
+  if (*(short *)(param_1 + 0x39e) == 0) 
+  {
     iVar1 = (int)*(short *)(param_1 + 0x38e);
     if (iVar1 < 0) {
       iVar1 = -iVar1;
     }
     if (0x200 < iVar1) goto LAB_800597d0;
   }
-  else {
+  
+  // fire speed
+  else 
+  {
 LAB_800597d0:
 
 	// if time against wall is less than 15 seconds
@@ -20744,32 +20786,49 @@ LAB_800597d0:
   uVar3 = param_2;
   
 LAB_80059818:
+  
   if (*(short *)(param_1 + 0x38e) < 0x201) {
     if (-0x201 < *(short *)(param_1 + 0x38e)) {
       return;
     }
+	
+	// -0x2200, 0xa00, -0x1400
     gte_ldVXY0(0xa00de00);
     gte_ldVZ0(0xffffec00);
+	
+	// 0x2200, 0xa00, -0x1400
     gte_ldVXY1(0xa002200);
     gte_ldVZ1(0xffffec00);
   }
-  else {
+  
+  else 
+  {
+	// -0x2200, 0xa00, 0x2800
     gte_ldVXY0(0xa00de00);
     gte_ldVZ0(0x2800);
+	
+	// 0x2200, 0xa00, 0x2800
     gte_ldVXY1(0xa002200);
     gte_ldVZ1(0x2800);
   }
+  
   gte_rtv0();
   read_mt(unaff_s1,unaff_s2,unaff_s3);
   gte_rtv1();
   read_mt(uVar3,newVar1,newVar2);
+  
+  // matrix
   gte_ldL11L12(unaff_s1 & 0xffff | unaff_s2 << 0x10);
   gte_ldL13L21(unaff_s3 & 0xffff | uVar3 << 0x10);
   gte_ldL22L23(newVar1 & 0xffff | newVar2 << 0x10);
+  
+  // driver->posWallColl - driver->posCurr
   gte_ldVXY0(*(short *)(param_1 + 900) * 0x100 - *(int *)(param_1 + 0x2d4) & 0xffffU |
               (*(short *)(param_1 + 0x386) * 0x100 - *(int *)(param_1 + 0x2d8)) * 0x10000);
   gte_ldVZ0(*(short *)(param_1 + 0x388) * 0x100 - *(int *)(param_1 + 0x2dc));
+  
   gte_llv0();
+  
   iVar1 = gte_stMAC1();
   iVar2 = gte_stMAC2();
   if (iVar1 < iVar2) {
@@ -36954,7 +37013,7 @@ LAB_8006a610:
   } while( true );
 }
 
-// animated model rendering related?
+// RenderBucket_UncompressAnimationFrame
 // called as funcPtr in register $s6 (r22)
 // from DrawFunc_Normal
 void FUN_8006a8e0(void)
@@ -36978,6 +37037,22 @@ void FUN_8006a8e0(void)
   uint uVar10;
   uint *unaff_s7;
   uint *unaff_s8;
+  
+  // deltaArray bits: 0bXXXXXXXZZZZZZZZYYYYYYYYAAABBBCCC
+  
+  // temporal_x: >> 0x19
+  // temporal_z: << 7 >> 0x18
+  // temporal_y: << 0xF >> 0x18
+  
+  // This here is >>0x19
+  // 0bXXXXXXX 0000000000000000AAABBBCCC
+  
+  // This here is << 7
+  // 0bZZZZZZZZYYYYYYYYAAABBBCCC0000000
+  // << 7 >> 0x18
+  // 0bZZZZZZZZ
+  
+  // and so on
 
   iVar5 = (in_t3 >> 0xd & 0x7f8) + in_at;
   if (-1 < (int)(in_t3 << 5)) { // check that it is actually a compressed animation
@@ -36987,100 +37062,154 @@ void FUN_8006a8e0(void)
     else {
       // some variable names change and flip because variables are re-used( compiler optimisations? ). from: branch
 
-
       // uint delta = *deltaArray[0];
       uVar10 = *unaff_s8;
+
       // uint AAA = delta >> 6 & 7;
+	  // 0b0000000AAABBBCCC (16 bits)
       uVar2 = uVar10 >> 6 & 7; // AAA
+
       // uint bits_needed = AAA + 1;
       uVar3 = uVar2 + 1;
+	  
       // current_bits_difference = old_bits_left + bits_needed
       uVar7 = unaff_s3 + uVar3; // bits left in the temporal uint?
-      // char temporal_x = (char)((int)temporalbits >> (bits_needed ^ 0x1f));
+      
+	  // char temporal_x = (char)((int)temporalbits >> (AAA ^ 0x1f));
       cVar6 = (char)((int)unaff_s1 >> (uVar2 ^ 0x1f));
-      // temporalBitData = temporalbits;
+      
+	  // temporalBitData = temporalbits;
       uVar1 = unaff_s1;
-      // bits_read = current_bits_difference;
+      
+	  // bits_read = current_bits_difference;
       uVar8 = uVar7;
-      // if(current_bits_difference < 0)
+      
+	  // if(current_bits_difference < 0)
       if (0 < (int)uVar7) { // do we beed more bits from the temporalArray?
-        // temporalBitData = *temporalArray;
+        
+		// temporalBitData = *temporalArray;
         uVar1 = *unaff_s7;
-        // temporalArray = temporalArray + 1;
+        
+		// temporalArray = temporalArray + 1;
         unaff_s7 = unaff_s7 + 1;
-        // temporal_x = (char)((int)(temporalbits | temporalBitData >> (bits_needed - current_bits_difference & 0x1f)) >> (AAA ^ 0x1f));
+        
+		// temporal_x = (char)((int)(temporalbits | temporalBitData >> (bits_needed - current_bits_difference & 0x1f)) >> (AAA ^ 0x1f));
         cVar6 = (char)((int)(unaff_s1 | uVar1 >> (uVar3 - uVar7 & 0x1f)) >> (uVar2 ^ 0x1f));
-        // bits_read = current_bits_difference - 32;
+        
+		// bits_read = current_bits_difference - 32;
         uVar8 = uVar7 - 0x20; // bitstream bit pointer moved by 32 bits
-        // bits_needed = current_bits_difference;
+        
+		// bits_needed = current_bits_difference;
         uVar3 = uVar7;
       }
+	  
       // temporalBitData = temporalBitData << (bits_needed & 0x1f);
       uVar1 = uVar1 << (uVar3 & 0x1f); // injecting fresh new bits to temporalBitData
-      //if(AAA != 7)
+      
+	  //if(AAA != 7)
       if (uVar2 != 7) { //if not reset X-counter reset; but if is reset just pass delta.X( accumulator.X gets erased)
         // temporal_x = temporal_x + delta.X * 2 + accumulator.X
         cVar6 = cVar6 + (char)((int)uVar10 >> 0x19) * '\x02' + *(char *)(in_at + 0x58);
       }
+	  
       // accumulator.X = temporal_x;
       *(char *)(in_at + 0x58) = cVar6;
+	  
       // uint BBB = delta >> 3 & 7;
-      uVar4 = uVar10 >> 3 & 7; // BBB
-      // bits_needed = BBB + 1;
+      // 0b0000000AAABBBCCC
+	  uVar4 = uVar10 >> 3 & 7; // BBB
+      
+	  // bits_needed = BBB + 1;
       uVar2 = uVar4 + 1;
+	  
       // current_bits_difference = old_bits_left + bits_needed;
       uVar8 = uVar8 + uVar2;
+	  
       // bits_needed = temporalBitData;
       uVar3 = uVar1;
-      // bits_read = current_bits_difference;
+      
+	  // bits_read = current_bits_difference;
       uVar7 = uVar8;
-      // if(current_bits_difference < 0)
+      
+	  // if(current_bits_difference < 0)
       if (0 < (int)uVar8) { // do we beed more bits from the temporalArray?
-        // temporalBitData = *temporalArray;
+        
+		// temporalBitData = *temporalArray;
         uVar3 = *unaff_s7;
-        // temporalArray = temporalArray + 1;
+        
+		// temporalArray = temporalArray + 1;
         unaff_s7 = unaff_s7 + 1;
-        // temporalBitData = temporalBitData | temporalBitData >> (bits_needed - current_bits_difference & 0x1f);
+        
+		// temporalBitData = temporalBitData | temporalBitData >> (bits_needed - current_bits_difference & 0x1f);
         uVar1 = uVar1 | uVar3 >> (uVar2 - uVar8 & 0x1f);
-        // bits_read = current_bits_difference - 32;
+        
+		// bits_read = current_bits_difference - 32;
         uVar7 = uVar8 - 0x20;
-        // bits_needed = current_bits_difference;
+        
+		// bits_needed = current_bits_difference;
         uVar2 = uVar8;
       }
+	  
       // temporal_x = temporalBitData >> (BBB ^ 0x1f);
       cVar6 = (char)((int)uVar1 >> (uVar4 ^ 0x1f)); // xor may do the bit-reset, this may make accumulator-axis go to zero
-      // temporalBitData = temporalBitData << (bits_needed & 0x1f);
+      
+	  // temporalBitData = temporalBitData << (bits_needed & 0x1f);
       uVar3 = uVar3 << (uVar2 & 0x1f);
-      //if(BBB != 7)
+      
+	  //if(BBB != 7)
       if (uVar4 != 7) { //if not reset Z-counter reset; but if is reset just pass delta.Z( accumulator.Z gets zeroed)
         // temporal_z = (char)(temporal_z + (char)((delta << 7) >> 0x18)(delta.Z) + accumulator.Z);
         cVar6 = cVar6 + (char)((uVar10 << 7) >> 0x18) + *(char *)(in_at + 0x5a);
       }
+	  
       // accumulator.Z = temporal_z;
       *(char *)(in_at + 0x5a) = cVar6;
-      // uint CCC = delta & 7;
+      
+	  // uint CCC = delta & 7;
+      // 0b0000000AAABBBCCC
       uVar1 = uVar10 & 7; // CCC
-      // current_bits_difference = bits_read + CCC + 1
+      
+	  // current_bits_difference = bits_read + CCC + 1
       iVar9 = uVar7 + uVar1 + 1;
-      // if (0 < current_bits_difference) {
+      
+	  // if (0 < current_bits_difference) {
       if (0 < iVar9) { // check signed bit
         // temporalBitData = temporalBitData | (*temporalArray) >> ((CCC + 1) - current_bits_difference & 0x1f);
         uVar3 = uVar3 | *unaff_s7 >> ((uVar1 + 1) - iVar9 & 0x1f);
       }
-      // temporal_z = (char)((int)temporalBitData >> (CCC ^ 0x1f));
+      
+	  // temporal_z = (char)((int)temporalBitData >> (CCC ^ 0x1f));
       cVar6 = (char)((int)uVar3 >> (uVar1 ^ 0x1f)); // xor may do the bit-reset, i.e. this may make accumulator-axis go to zero
-      //if(CCC != 7)
+      
+	  //if(CCC != 7)
       if (uVar1 != 7) { //if not reset Y-counter reset; but if is reset just pass delta.Y( accumulator.Y gets zeroed)
         // temporal_y = (char)(temporal_y + (char)((delta << 15) >> 0x18)(delta.Y) + accumulator.Y);
         cVar6 = cVar6 + (char)((uVar10 << 0xf) >> 0x18) + *(char *)(in_at + 0x59);
       }
-      // accumulator.Z = temporal_z;
+      
+	  // accumulator.Y = temporal_y;
       *(char *)(in_at + 0x59) = cVar6;
       uVar1 = *(uint *)(in_at + 0x58);
     }
-    iVar9 = *(int *)(in_at + 0x34);
-    *(uint *)(iVar5 + 0x140) = ((uVar1 & in_t4) + *(int *)(in_at + 0x30)) * 4 & in_t5;
-    *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + iVar9) * 4;
+    
+// from ghidra:
+//	iVar9 = *(int *)(in_at + 0x34);
+//    *(uint *)(iVar5 + 0x140) = ((uVar1 & in_t4) + *(int *)(in_at + 0x30)) * 4 & in_t5;
+//    *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + iVar9) * 4;
+
+	// store vertex XYZ on scratchpad
+	// iVar5->140 = $t0
+	// iVar5->144 = $v1
+	// t0 and v1 are put on GTE right after jr $ra
+	
+	// in_at + 30 (and 34) is the frame origin XYZ,
+	// set in DrawFunc_Normal before s6() funcPtr to this Decompress function
+	
+	// uVar1 & in_t4 	= XXX---YYY
+	// uVar1>>8&0xFF	= ---ZZZ---
+	
+    *(uint *)(iVar5 + 0x140) = ((uVar1 & in_t4) 	+ *(int *)(in_at + 0x30)) * 4 & in_t5;
+    *(uint *)(iVar5 + 0x144) = ((uVar1 >> 8 & 0xff) + *(int *)(in_at + 0x34)) * 4;
   }
   if (-1 < (int)(in_t3 << 4)) {
     return;
@@ -37762,7 +37891,7 @@ LAB_8006b15c:
   } while( true );
 }
 
-// Draw_Uncompress2
+// RenderBucket_UncompressAnimationFrame_60fps
 void UndefinedFunction_8006b24c(void)
 
 {

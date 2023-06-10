@@ -386,7 +386,7 @@ switchD_80038f90_caseD_9:
 	local_80.y = sVar4 + 0x2b;
 	local_80.w = 0x17c;
 	local_80.h = 2;
-	MenuBox_DrawOuterRect_Edge(&local_80, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	MENUBOX_DrawOuterRect_Edge(&local_80, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 	local_80.x = 0x38;
 	local_80.w = 400;
 	local_80.h = 0x87 - local_68;
@@ -396,7 +396,7 @@ switchD_80038f90_caseD_9:
 	{
 		OtherFX_Play(1, 1);
 		OptionsMenu_TestSound(0, 0);
-		MenuBox_ClearInput();
+		MENUBOX_ClearInput();
 		sdata->numIconsEOR = MainFreeze_GetMenuBox();
 	}
 	// WARNING: Read-only address (ram, 0x8008d950) is written

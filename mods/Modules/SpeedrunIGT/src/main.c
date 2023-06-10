@@ -2,7 +2,7 @@
 
 void Torch_Subset1();
 void MEMCARD_SetIcon(int id);
-void MenuBox_DrawInnerRect(RECT* r, int flag, u_long* ot);
+void MENUBOX_DrawInnerRect(RECT* r, int flag, u_long* ot);
 void LoadSave_StartMemcardAction(int action);
 
 // to do: make header for IGT funcs
@@ -400,7 +400,7 @@ void DrawMenu()
             DecalFont_DrawLine(s_editorTime, 370, 18 + 9 * i, FONT_SMALL, rowColor);
     }
     DecalFont_DrawLine(s_saveSplits, 254, 207, FONT_SMALL, ORANGE | CENTER_TEXT);
-    MenuBox_DrawInnerRect(&menuWindow, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
+    MENUBOX_DrawInnerRect(&menuWindow, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 }
 
 // Our mod begins here

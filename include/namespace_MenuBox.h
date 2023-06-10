@@ -39,7 +39,7 @@ struct MenuBox
 	// & 1, centers posY
 	// & 2, centers posX
 	// & 4, draw only title bar
-	// & 0x10, draw ptrNextMenuBox_InHierarchy
+	// & 0x10, draw ptrNextBox_InHierarchy
 	// & 0x20, disable menubox input, allow menubox funcptrz
 	// & 0x40, show only highlighted row
 	// & 0x28, main menu character select (better meaning)?
@@ -86,10 +86,10 @@ struct MenuBox
 	short height;
 
 	// 0x24
-	struct MenuBox* ptrNextMenuBox_InHierarchy;
+	struct MenuBox* ptrNextBox_InHierarchy;
 
 	// 0x28
-	struct MenuBox* ptrPrevMenuBox_InHierarchy;
+	struct MenuBox* ptrPrevBox_InHierarchy;
 
 	// End of struct
 	// in UsaRetail, full struct

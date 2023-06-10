@@ -5,7 +5,7 @@ void DECOMP_MM_Title_SetTrophyDPP(void)
 {
   struct Instance* iVar1;
   struct Instance* iVar2;
-  struct Title* titleObj = (struct Title*)0x800b59a0;
+  struct Title* titleObj = OVR_230.titleObj;
   
   // if title object exists
   if (titleObj != NULL) 

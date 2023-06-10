@@ -63,7 +63,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 		return;
 	}
 	sdata->gGT->cooldownFromUnpauseUntilPause = 5;
-	MenuBox_Hide(mb);
+	MENUBOX_Hide(mb);
 	MainFreeze_SafeAdvDestroy();
 	psVar2 = sdata->gGT;
 	uVar3 = sdata->Loading.OnComplete.RemBitsConfig0;

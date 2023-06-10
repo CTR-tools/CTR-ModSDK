@@ -29,7 +29,7 @@ void CustomSplit()
 			tileView = &sdata->gGT->tileView[i];
 
 			// Draw a 2D box made of four rectangles
-			MenuBox_DrawOuterRect_LowLevel(
+			MENUBOX_DrawOuterRect_LowLevel(
 
 				// dimensions, thickness
 				(RECT*)&tileView->rect.x,4,2,

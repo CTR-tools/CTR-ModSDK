@@ -1317,7 +1317,7 @@ LAB_800acfc4:
 }
 
 
-// MM_MenuBox_Main
+// MM_MENUBOX_Main
 void FUN_800acff4(int param_1)
 
 {
@@ -1420,7 +1420,7 @@ void FUN_800acff4(int param_1)
   // MM_Title_Init
   FUN_800ac6dc();
   
-  // if drawing ptrNextMenuBox_InHierarchy
+  // if drawing ptrNextBox_InHierarchy
   if ((*(uint *)(param_1 + 8) & 0x10) != 0) {
     DAT_800b5a14 = 1000;
   }
@@ -1676,7 +1676,7 @@ void FUN_800ad448(void)
   return;
 }
 
-// MM_MenuBox_1p2p
+// MM_MENUBOX_1p2p
 void FUN_800AD560(int param_1)
 
 {
@@ -1715,7 +1715,7 @@ void FUN_800AD560(int param_1)
   return;
 }
 
-// MM_MenuBox_2p3p4p
+// MM_MENUBOX_2p3p4p
 void FUN_800AD5E8(int param_1)
 
 {
@@ -1815,7 +1815,7 @@ void FUN_800ad678(void)
   return;
 }
 
-// MM_MenuBox_Difficulty
+// MM_MENUBOX_Difficulty
 void FUN_800AD7A4(int param_1)
 
 {
@@ -1847,7 +1847,7 @@ void FUN_800AD7A4(int param_1)
   return;
 }
 
-// MM_MenuBox_SingleCup
+// MM_MENUBOX_SingleCup
 void FUN_800AD828(int param_1)
 
 {
@@ -1903,7 +1903,7 @@ void FUN_800AD828(int param_1)
   return;
 }
 
-// MM_MenuBox_NewLoad
+// MM_MENUBOX_NewLoad
 void FUN_800ad8f0(int param_1)
 
 {
@@ -2779,7 +2779,7 @@ void FUN_800ae6b0(void)
 
 
 // character selection menu, 
-// MenuBox_FuncPtr for menuBox: 0x800b46b4;
+// MENUBOX_FuncPtr for menuBox: 0x800b46b4;
 
 // MM_Characters_MenuBox
 void FUN_800ae74c(void)
@@ -3332,7 +3332,7 @@ LAB_800aec08:
         puVar12 = &DAT_800b538c;
       }
 	  
-	  // MenuBox_DrawOuterRect_HighLevel (solid)
+	  // MENUBOX_DrawOuterRect_HighLevel (solid)
       FUN_80045650(&local_80,puVar12,0,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
       
 	  // increment loop counter
@@ -3395,7 +3395,7 @@ LAB_800aec08:
       iVar8 = (int)(short)iVar24 * 10 + DAT_800b5a3c;
       
 	  // Draw Character Icon
-	  // MenuBox_DrawPolyGT4
+	  // MENUBOX_DrawPolyGT4
 	  FUN_80044ef8(*(undefined4 *)
                     (PTR_DAT_8008d2ac +
                     (int)*(short *)(&DAT_80086d8c + (int)psVar18[3] * 0x10) * 4 + 0x1eec),
@@ -3589,7 +3589,7 @@ LAB_800aec08:
 	  // MM_Characters_AnimateColors
 	  FUN_800ad98c(&local_68,uVar25,((int)(short)DAT_8008d934 >> (uVar25 & 0x1f) ^ 1U) & 1);
       
-	  // MenuBox_DrawOuterRect_HighLevel (solid)
+	  // MENUBOX_DrawOuterRect_HighLevel (solid)
 	  FUN_80045650(&local_60,&local_68,0,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
       
 	  iVar8 = 0;
@@ -3606,7 +3606,7 @@ LAB_800aec08:
           local_54 = CONCAT22((short)((uint)local_54 >> 0x10) + -4,(short)local_54 + -6);
           local_66 = local_66 & 0xff00 | (ushort)(byte)((int)((uint)(byte)local_66 << 2) / 5);
           
-		  // MenuBox_DrawOuterRect_HighLevel (solid)
+		  // MENUBOX_DrawOuterRect_HighLevel (solid)
 		  FUN_80045650(&local_58,&local_68,0,
                        *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
           
@@ -3620,7 +3620,7 @@ LAB_800aec08:
       
 	  local_60 = 0;
 	  
-	  // MenuBox_DrawRwdBlueRect
+	  // MENUBOX_DrawRwdBlueRect
       FUN_80045254(&local_60,&DAT_800b5398,
                    *(int *)(PTR_DAT_8008d2ac + (int)(short)iVar24 * 0x110 + 0x25c) + 0xffc,
 				   
@@ -3798,7 +3798,7 @@ void FUN_800afaf0(short *param_1,int param_2,int param_3,int param_4,ushort para
 	// This is the same function that draws Character icons
 	  
 	// Draw Video icon
-	// MenuBox_DrawPolyGT4
+	// MENUBOX_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(((param_3 << 0x10) >> 0xc) + param_2 + 2) * 4 + 0x1eec),
@@ -4978,7 +4978,7 @@ void FUN_800b0eec(int param_1)
         iVar8 = (int)(uVar12 << 0x10) >> 0x10;
 		
 		// Draw Icon of each track
-		// MenuBox_DrawPolyGT4
+		// MENUBOX_DrawPolyGT4
         FUN_80044ef8(*(undefined4 *)
                       (PTR_DAT_8008d2ac +
                       (int)(short)(&DAT_8008414c)[(int)(short)uVar4 * 9 + iVar8 * 2] * 4 + 0x1eec),
@@ -6396,7 +6396,7 @@ void FUN_800b2fbc(ushort param_1,uint param_2,uint param_3,uint param_4)
                (int)((DAT_800b5926 + uVar11 + 0x4a) * 0x10000) >> 0x10,2,0);
     
 	// Character Icon
-	// MenuBox_DrawPolyGT4
+	// MENUBOX_DrawPolyGT4
 	FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)puVar10 + 0x16) * 0x10) * 4 +
@@ -6429,7 +6429,7 @@ void FUN_800b2fbc(ushort param_1,uint param_2,uint param_3,uint param_4)
     puVar5 = puVar10 + iVar1 * 6 + 6;
 	
 	// Character Icon
-	// MenuBox_DrawPolyGT4
+	// MENUBOX_DrawPolyGT4
     FUN_80044ef8(*(undefined4 *)
                   (PTR_DAT_8008d2ac +
                   (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)puVar5 + 0x16) * 0x10) * 4 +

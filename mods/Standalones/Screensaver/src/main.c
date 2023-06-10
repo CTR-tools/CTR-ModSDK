@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MenuBox_DrawInnerRect(RECT* r, int flag, void* ot);
+void MENUBOX_DrawInnerRect(RECT* r, int flag, void* ot);
 void UI_VsQuipDrawAll();
 void MM_JumpTo_Scrapbook();
 void MainRaceTrack_RequestLoad(int level);
@@ -241,7 +241,7 @@ void RunUpdateHook()
 	}
 	
 	// These background boxes are the same used in Battle/VS End-Of-Race comments
-	MenuBox_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
+	MENUBOX_DrawInnerRect(&window1,1,sdata->gGT->backBuffer->otMem.startPlusFour);
 	
 	
 	

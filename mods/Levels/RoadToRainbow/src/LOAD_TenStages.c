@@ -44,7 +44,6 @@ int* DecalGlobal_Find2(u_int* param_1, char* str);
 void Audio_SetState_Safe(int param_1);
 u_int TitleFlag_IsFullyOffScreen();
 void TitleFlag_BeginTransition(int param_1);
-void ElimBG_Deactivate(int param_1);
 void LOAD_Callback_MaskHints3D(struct LoadQueueSlot* lqs);
 void LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
 void LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
@@ -81,9 +80,9 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 	// pointer to LEV
 	iVar9 = sdata->ptrLEV_DuringLoading;
-
+	
 // only for battle maps in Time Trial mode
-#if 0
+#if 1
 	if((sdata->gGT->gameMode1 & TIME_TRIAL) != 0)
 	{
 		sdata->gGT->gameMode1 &= ~(TIME_TRIAL);

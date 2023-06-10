@@ -13,7 +13,7 @@ void DECOMP_MM_MENUBOX_1p2p(struct MenuBox* mb)
   // if uninitialized
   if (row == -1) 
   {
-    mb->ptrPrevMENUBOX_InHierarchy->state &= 0xffffffeb;
+    mb->ptrPrevBox_InHierarchy->state &= 0xffffffeb;
     
 	gGT->numPlyrNextGame = 1;
     
@@ -29,7 +29,7 @@ void DECOMP_MM_MENUBOX_1p2p(struct MenuBox* mb)
 	  gGT->numPlyrNextGame = mb->rowSelected + 1;
 	  
 	  // go to difficulty box
-	  mb->ptrNextMENUBOX_InHierarchy = &OVR_230.menubox_difficulty;
+	  mb->ptrNextBox_InHierarchy = &OVR_230.menubox_difficulty;
       
 	  mb->state|= 0x14;
 	  return;
