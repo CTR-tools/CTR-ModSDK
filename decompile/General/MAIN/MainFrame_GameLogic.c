@@ -283,7 +283,7 @@ LAB_80035098:
 				)
 			)
 			{
-				for(iVar4 = 0; iVar4 <  gGT->numPlyrCurrGame; iVar4++)
+				for(iVar4 = 0; iVar4 < gGT->numPlyrCurrGame; iVar4++)
 				{
 					if
 					(
@@ -306,7 +306,6 @@ LAB_80035098:
 						MainFreeze_IfPressStart();
 						gGT->cooldownfromPauseUntilUnpause = 5;
 					}
-					iVar4 = iVar4 + 1;
 				}
 			}
 		}
