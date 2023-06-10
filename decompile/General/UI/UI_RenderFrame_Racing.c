@@ -472,7 +472,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 			// if you're in battle mode, while not paused
 			// and you do not have a life limit
-			if ((gGT->gameMode1 & (LIFE_LIMIT | BATTLE_MODE | PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == BATTLE_MODE)
+			if ((gGT->gameMode1 & (LIFE_LIMIT | BATTLE_MODE | PAUSE_ALL)) == BATTLE_MODE)
 			{
 				// If the animation for adding points is over
 				if (playerStruct->BattleHUD.cooldown == 0)

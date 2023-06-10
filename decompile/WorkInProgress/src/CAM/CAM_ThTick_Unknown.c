@@ -45,7 +45,7 @@ void CAM_ThTick(struct Thread *t)
 	(
 		(
 			(
-				((sdata->gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU | START_OF_RACE | PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) &&
+				((sdata->gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU | START_OF_RACE | PAUSE_ALL)) == 0) &&
 				((((int)&d->instSelf->thread + 2) + 0x2c) == 0)
 			) &&
 			((d->actionsFlagSet & 0x100000) == 0)
