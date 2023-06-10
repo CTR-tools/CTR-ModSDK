@@ -1,14 +1,5 @@
 #include <common.h>
-
-int isSelectPause = 0;
-
-RECT r =
-{
-	.x = 32,
-	.w = 448,
-	.y = 39,
-	.h = 130,
-};
+#include "header.h"
 
 void MyMainFreeze(struct GameTracker* gGT)
 {
@@ -38,10 +29,10 @@ void MyMainFreeze(struct GameTracker* gGT)
 		gGT->gameMode1 |= PAUSE_1;
 
 		// set row selected to the top row
-		((struct MenuBox *)MainFreeze_GetMenuBox())->rowSelected = 0;
+		//((struct MenuBox *)MainFreeze_GetMenuBox())->rowSelected = 0;
 
 		// make menu visible
-		MENUBOX_Show((struct MenuBox *)MainFreeze_GetMenuBox());
+		MENUBOX_Show(&MyMenuBox);
 
 		// pause audio
 		MainFrame_TogglePauseAudio(1);
@@ -132,6 +123,9 @@ void daisy(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 
 int Hello_Main()
 {
+	struct GameTracker* gGT = sdata->gGT;
+	struct GamepadSystem* gGamepads = sdata->gGamepads;
+
 	if (gGT->numPlyrCurrGame == 1)
 	{
 		/*
@@ -146,6 +140,6 @@ int Hello_Main()
 			//MENUBOX_DrawInnerRect(&r, 4, (u_long*)(gGT->backBuffer->otMem).startPlusFour);
 		}
 
-		daisy(sdata->gGT, sdata->gGamepads);
+		daisy(gGT, gGamepads);
 	}
 }
