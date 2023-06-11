@@ -565,8 +565,8 @@ struct Driver
 	// variables sneaked in-between
 
 	// 0x360
-	// always reset to {0,0x1000,0} in OnApplyForces,
-	// before StartSearch overwrites it
+	// used in PhysLinear, reset in OnApplyForces, calculated in StartSearch,
+	// all three are funcPtrs in the driver struct, in that order of operation
 	short AxisAngle1_normalVec[3];
 
 	// 0x366
