@@ -565,6 +565,8 @@ struct Driver
 	// variables sneaked in-between
 
 	// 0x360
+	// always reset to {0,0x1000,0} in OnApplyForces,
+	// before StartSearch overwrites it
 	short AxisAngle1_normalVec[3];
 
 	// 0x366
