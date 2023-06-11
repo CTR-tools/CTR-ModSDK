@@ -261,8 +261,19 @@ struct LevelFile file =
 	NEW_BLOCK(6, group4_ground, -0x180, 0x900, NULL, 0x1880, RGBtoBGR(0xFF6000)),
 	NEW_BLOCK(7, group4_ground, 0x180, 0x900, NULL, 0x1880, RGBtoBGR(0xFF8000)),
 	
-	// == Do NOT do MAKE_RAMP, just SetPosY ==
-	// This way, the normal vector is still 0x1971, not 0x1C71
+	MAKE_RAMP(
+		6, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	MAKE_RAMP(
+		7, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
 	
 	SET_POSY_RAMP(
 		6, 0x180, 0x300,
@@ -278,23 +289,60 @@ struct LevelFile file =
 		2,8,3
 	),
 	
-#define SET_WALL(qIndex) \
-	.levVertex[9*qIndex+0].pos[2] = 0x780, \
-	.levVertex[9*qIndex+1].pos[2] = 0x780, \
-	.levVertex[9*qIndex+2].pos[2] = 0x780, \
-	.levVertex[9*qIndex+3].pos[2] = 0x780, \
-	.levVertex[9*qIndex+4].pos[2] = 0x780, \
-	.levVertex[9*qIndex+5].pos[2] = 0x780, \
-	.levVertex[9*qIndex+6].pos[2] = 0x780, \
-	.levVertex[9*qIndex+7].pos[2] = 0x780, \
-	.levVertex[9*qIndex+8].pos[2] = 0x780
+	.levVertex[9*6+0].pos[2] = 0x780,
+	.levVertex[9*6+4].pos[2] = 0x780,
+	.levVertex[9*6+1].pos[2] = 0x780,
+	.levVertex[9*6+5].pos[2] = 0x840,
+	.levVertex[9*6+6].pos[2] = 0x840,
+	.levVertex[9*6+7].pos[2] = 0x840,
+	.levVertex[9*6+2].pos[2] = 0x900,
+	.levVertex[9*6+8].pos[2] = 0x900,
+	.levVertex[9*6+3].pos[2] = 0x900,
 	
-	SET_WALL(6),
-	SET_WALL(7),
+	.levVertex[9*7+0].pos[2] = 0x780,
+	.levVertex[9*7+4].pos[2] = 0x780,
+	.levVertex[9*7+1].pos[2] = 0x780,
+	.levVertex[9*7+5].pos[2] = 0x840,
+	.levVertex[9*7+6].pos[2] = 0x840,
+	.levVertex[9*7+7].pos[2] = 0x840,
+	.levVertex[9*7+2].pos[2] = 0x900,
+	.levVertex[9*7+8].pos[2] = 0x900,
+	.levVertex[9*7+3].pos[2] = 0x900,
 	
 	// forward
-	NEW_BLOCK(8, group4_ground, -0x180, 0xC00, NULL, 0x1800, RGBtoBGR(0xFF8000)),
-	NEW_BLOCK(9, group4_ground, 0x180, 0xC00, NULL, 0x1800, RGBtoBGR(0xFF8000)),
+	NEW_BLOCK(8, group4_ground, -0x180, 0x900, NULL, 0x1800, RGBtoBGR(0xFF8000)),
+	NEW_BLOCK(9, group4_ground, 0x180, 0x900, NULL, 0x1800, RGBtoBGR(0xFF8000)),
+	
+	// == Do NOT do MAKE_RAMP, just SetPosY ==
+	// This way, the normal vector is still 0x1971, not 0x1C71
+	
+	SET_POSY_RAMP(
+		8, 0x480, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	SET_POSY_RAMP(
+		9, 0x480, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+#define SET_WALL(qIndex) \
+	.levVertex[9*qIndex+0].pos[2] = 0x900, \
+	.levVertex[9*qIndex+1].pos[2] = 0x900, \
+	.levVertex[9*qIndex+2].pos[2] = 0x900, \
+	.levVertex[9*qIndex+3].pos[2] = 0x900, \
+	.levVertex[9*qIndex+4].pos[2] = 0x900, \
+	.levVertex[9*qIndex+5].pos[2] = 0x900, \
+	.levVertex[9*qIndex+6].pos[2] = 0x900, \
+	.levVertex[9*qIndex+7].pos[2] = 0x900, \
+	.levVertex[9*qIndex+8].pos[2] = 0x900
+	
+	SET_WALL(8),
+	SET_WALL(9),
 	
 	// right
 	NEW_BLOCK(10, group4_ground, -0x480, 0x900, NULL, 0x1800, RGBtoBGR(0xFF8000)),
@@ -606,7 +654,7 @@ struct LevelFile file =
 			.box =
 			{
 				.min = {-0x3000, 0xFFE4, -0x3000},
-				.max = {0x3000, 0x066E, 0x3000}
+				.max = {0x3000, 0x466E, 0x3000}
 			},
 			
 			.data =
@@ -631,7 +679,7 @@ struct LevelFile file =
 			{
 				// random box that exists nowhere
 				.min = {-0x1100, 0xFFE4, 0x1100},
-				.max = {0x1100, 0x400, 0x2500}
+				.max = {0x1100, 0x4400, 0x2500}
 			},
 			
 			.data =
@@ -655,7 +703,7 @@ struct LevelFile file =
 			{
 				// random box that exists nowhere
 				.min = {-0x1100, 0xFFE4, -0x1100},
-				.max = {0x1100, 0x400, 0x1100}
+				.max = {0x1100, 0x4400, 0x1100}
 			},
 			
 			.data =
