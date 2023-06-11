@@ -2,5 +2,5 @@
 
 int DECOMP_MENUBOX_BoolHidden(struct MenuBox* m)
 {
-	return ((m->state & 0x1000) != 0);
+	return ((m->state & NEEDS_TO_CLOSE) != 0);
 }

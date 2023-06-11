@@ -9,11 +9,13 @@ enum MenuBoxFlags
 	// menu will be centered on these coordinates
 	CENTER_ON_COORDS = 3,
 
-	// menu will display a single row that changes as you press a direction
-	// kind of like scrolling
+	// only draws the menu's title
 	ONLY_DRAW_TITLE = 4,
 	// 8
-	NEXT_IN_HIERARCHY = 0x10,
+
+	// allows drawing another menu box while a menu box is being drawn
+	// position is automatically derived from originating menubox, so cascading windows are easier
+	DRAW_NEXT_MENU_IN_HIERARCHY = 0x10,
 	DISABLE_INPUT_ALLOW_FUNCPTRS = 0x20,
 
 	// menu will display a single row that changes as you press a direction
@@ -21,7 +23,7 @@ enum MenuBoxFlags
 	SHOW_ONLY_HIGHLIT_ROW = 0x40,
 
 	// instead of the big font, menu will use the small font
-	USE_SMALL_FONT_IN_ROWS = 0x80,
+	USE_SMALL_FONT = 0x80,
 	// 0x100
 	// 0x200
 	EXECUTE_FUNCPTR = 0x400,

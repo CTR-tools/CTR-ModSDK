@@ -9,17 +9,17 @@ void DECOMP_MENUBOX_GetHeight(struct MenuBox* m, short* height, int boolCheckSub
 	lineHeight = data.font_charPixHeight[FONT_SMALL];
 	
 	// if small text disabled
-	if((m->state & 0x80) == 0)
+	if((m->state & USE_SMALL_FONT) == 0)
 	{
 		// height of big line
 		lineHeight = data.font_charPixHeight[FONT_BIG] + 3;
 	}
 	
 	// if not showing only highlighted row
-	if((m->state & 0x40) == 0)
+	if((m->state & SHOW_ONLY_HIGHLIT_ROW) == 0)
 	{
 		// if not only drawing title bar
-		if((m->state & 4) == 0)
+		if((m->state & ONLY_DRAW_TITLE) == 0)
 		{
 			// add rows
 			for(row = m->rows; row->stringIndex != -1; row++)
@@ -45,7 +45,7 @@ void DECOMP_MENUBOX_GetHeight(struct MenuBox* m, short* height, int boolCheckSub
 	if(m->stringIndexTitle != -1)
 	{
 		// if not drawing title big
-		if((m->state & 0x4000) == 0)
+		if((m->state & BIG_TEXT_IN_TITLE) == 0)
 		{
 			*height += lineHeight + 6;
 		}
@@ -59,7 +59,7 @@ void DECOMP_MENUBOX_GetHeight(struct MenuBox* m, short* height, int boolCheckSub
 	}
 	
 	// if submenu needs to be drawn
-	if((m->state & 0x10) != 0)
+	if((m->state & NEXT_IN_HIERARCHY) != 0)
 	{
 		if(boolCheckSubmenu != 0)
 		{

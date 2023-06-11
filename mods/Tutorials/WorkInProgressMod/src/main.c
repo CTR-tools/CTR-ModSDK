@@ -51,18 +51,11 @@ void daisy(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 
 	if (!(gGT->gameMode1 & END_OF_RACE))
 	{
-		/*
 		if (gGT->gameMode1 & PAUSE_ALL)
 		{
 			if (gGT->cooldownfromPauseUntilUnpause == 0)
 			{
-				if
-				(
-					(
-						(sdata->ptrActiveMenuBox != &data.menuBox_optionsMenu_racingWheel) &&
-						(sdata->ptrActiveMenuBox != (struct MenuBox*)0x800b518c)
-					) && (sdata->AnyPlayerTap & BTN_SELECT) // only changes I made to this portion of GameLogic so far
-				)
+				if (sdata->AnyPlayerTap & BTN_SELECT) // only changes I made to this portion of GameLogic so far
 				{
 					MENUBOX_ClearInput();
 					gGT->gameMode1 &= ~PAUSE_1;
@@ -75,7 +68,7 @@ void daisy(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 				}
 			}
 		}
-		else */if (gGT->cooldownFromUnpauseUntilPause == 0)
+		else if (gGT->cooldownFromUnpauseUntilPause == 0)
 		{
 			if
 			(
@@ -196,6 +189,17 @@ void eggplant(struct GameTracker* gGT)
 	DecalFont_DrawLine(string16, 6 + 150, 10 + 10*15, FONT_SMALL, COCO_MAGENTA);
 	DecalFont_DrawLine(string17, 6 + 150, 10 + 10*16, FONT_SMALL, COCO_MAGENTA);
 	DecalFont_DrawLine(string18, 6 + 150, 10 + 10*17, FONT_SMALL, COCO_MAGENTA);
+}
+
+void heyguys(struct MenuBox* m)
+{
+	u_short stringIndex = m->rows[m->rowSelected].stringIndex;
+
+	if (stringIndex == 70)
+	{
+		sdata->ptrActiveMenuBox = &MyMenuBox2;
+		return;
+	}
 }
 
 int Hello_Main()

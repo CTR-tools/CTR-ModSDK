@@ -51,7 +51,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *menu)
     }
 
     // get string from row selected
-    string = *(u_short *)(menu->rowSelected * 6 + (int)menu->rows);
+    string = menu->rows[menu->rowSelected].stringIndex;
 
     // String 0xE: Options
     if (string == 0xe)
