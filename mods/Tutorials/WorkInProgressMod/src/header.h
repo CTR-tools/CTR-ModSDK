@@ -12,7 +12,7 @@ struct MenuRow MyMenuBoxRows[] =
 {
 	[0] =
 	{
-		.stringIndex = 0,
+		.stringIndex = 69,
 
 		.rowOnPressUp    = 1,
 		.rowOnPressDown  = 0,
@@ -28,18 +28,27 @@ struct MenuRow MyMenuBoxRows[] =
 		.rowOnPressLeft  = 1,
 		.rowOnPressRight = 0,
 	},
+	// END OF MENU
+	{
+		.stringIndex = 0xFFFF,
+
+		.rowOnPressUp = 0,
+		.rowOnPressDown = 0,
+		.rowOnPressLeft = 0,
+		.rowOnPressRight = 0,
+	}
 };
 
 struct MenuBox MyMenuBox =
 {
-	.stringIndexTitle = 0,
+	.stringIndexTitle = 45,
 
-	.posX_curr = 10,
-	.posY_curr = 10,
+	.posX_curr = SCREEN_WIDTH/2,
+	.posY_curr = SCREEN_HEIGHT/2,
 
 	.unk1 = 0,
 
-	.state = (CENTER_X | CENTER_Y),
+	.state = (CENTER_ON_COORDS),
 
 	.rows = MyMenuBoxRows,
 
@@ -47,8 +56,8 @@ struct MenuBox MyMenuBox =
 
 	.drawStyle = 0,
 
-	.posX_prev = 10,
-	.posY_prev = 10,
+	.posX_prev = 0,
+	.posY_prev = 0,
 
 	.rowSelected = 0,
 
@@ -58,6 +67,6 @@ struct MenuBox MyMenuBox =
 	.width = 448,
 	.height = 130,
 
-	.ptrNextBox_InHierarchy = 0,
-	.ptrPrevBox_InHierarchy = 0,
+	.ptrNextBox_InHierarchy = &MyMenuBox,
+	.ptrPrevBox_InHierarchy = &MyMenuBox,
 };
