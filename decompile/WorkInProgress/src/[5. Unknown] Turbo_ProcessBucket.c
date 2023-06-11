@@ -1,24 +1,24 @@
+#include <common.h>
+
 // Turbo_ProcessBucket
 void DECOMP_Turbo_ProcessBucket(struct Thread* turboThread)
 {
 	u_short uVar1;
-	u_char *puVar2;
-	u_char *puVar3;
 	int driverInstance;
 	u_int uVar5;
 	struct Instance* threadInstance;
 	struct Instance* objectInstance;
+	struct GameTracker* gameTracker;
 	int i;
 
-	puVar2 = sdata->gGT;
-
+	gameTracker = sdata->gGT;
 	// if first thread is valid
 	if (turboThread != 0)
 	{
 		// loop through all threads
 		do
 		{
-			puVar3 = sdata->gGT;
+			
 
 			// get instance from thread
 			threadInstance = turboThread->inst;
@@ -32,7 +32,7 @@ void DECOMP_Turbo_ProcessBucket(struct Thread* turboThread)
 			i = 0;
 
 			// numPlyrCurrGame is not zero
-			if (puVar2->numPlyrCurrGame != '\0') 
+			if (gameTracker->numPlyrCurrGame > 0) 
 			{
 				// each InstDrawPerPlayer
 				// for i = 0; i < numPlyrCurrGame; i++
@@ -66,7 +66,7 @@ void DECOMP_Turbo_ProcessBucket(struct Thread* turboThread)
 					i = i + 1;
 					driverInstance = (int)driverInstance + 0x88;
 			
-				} while (i < puVar3->numPlyrCurrGame);
+				} while (i < gameTracker->numPlyrCurrGame);
 			}
 
 		// go to next thread
