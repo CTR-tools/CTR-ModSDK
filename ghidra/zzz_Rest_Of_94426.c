@@ -19274,7 +19274,7 @@ LAB_80058158:
   // loop counter
   iVar14 = 0;
 
-  // backup AxisAngle
+  // set all normal vectors to spawn
   *(undefined2 *)(param_1 + 0x360) = *(undefined2 *)(param_1 + 0x370);
   *(undefined2 *)(param_1 + 0x368) = *(undefined2 *)(param_1 + 0x370);
   *(undefined2 *)(param_1 + 0x362) = *(undefined2 *)(param_1 + 0x372);
@@ -19287,7 +19287,7 @@ LAB_80058158:
   // for iVar14 = 0; iVar14 < 1; iVar14++
   do
   {
-	// backup of backup of AxisAngle
+	// set normal vector to spawn
     *(undefined2 *)(iVar9 + 0x378) = *(undefined2 *)(param_1 + 0x368);
     *(undefined2 *)(iVar9 + 0x37a) = *(undefined2 *)(param_1 + 0x36a);
 	iVar14 = iVar14 + 1; // increment loop counter
