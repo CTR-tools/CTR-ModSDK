@@ -24928,6 +24928,7 @@ void FUN_8005ea60(undefined4 param_1,int param_2)
   // OnGravity
   FUN_8005e214(param_2,param_2 + 0x88);
 
+  // normalVec = {0, 0x1000, ...}
   *(undefined4 *)(param_2 + 0xa4) = 0x10000000;
   
   // normalVec = {0, 0x1000, ...}
@@ -24936,6 +24937,7 @@ void FUN_8005ea60(undefined4 param_1,int param_2)
   // driver is not touching quadblock
   *(undefined4 *)(param_2 + 0xa0) = 0;
 
+  // normalVec = {... ..., 0}
   *(undefined2 *)(param_2 + 0xa8) = 0;
   
   // normalVec = {... ..., 0}
