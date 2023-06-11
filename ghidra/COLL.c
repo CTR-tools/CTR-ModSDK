@@ -1161,7 +1161,10 @@ LAB_8001e340:
     }
     iVar9 = 6;
   }
+  
   iVar13 = 8 - iVar9;
+  
+  // lerp: 25% of curr normalVec + 75% of desired normalVec
   local_30 = iVar9 * *(short *)(param_2 + 0x368) + iVar13 * *(short *)(param_2 + 0xa4) >> 3;
   local_2c = iVar9 * *(short *)(param_2 + 0x36a) + iVar13 * *(short *)(param_2 + 0xa6) >> 3;
   local_28 = iVar9 * *(short *)(param_2 + 0x36c) + iVar13 * *(short *)(param_2 + 0xa8) >> 3;
