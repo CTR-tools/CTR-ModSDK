@@ -696,7 +696,8 @@ void FUN_8001d944(int param_1,int param_2)
         }
       }
     }
-    iVar15 = (int)*(short *)(param_2 + 0x370) * 5 + (int)DAT_1f800178 * 3;
+    
+	iVar15 = (int)*(short *)(param_2 + 0x370) * 5 + (int)DAT_1f800178 * 3;
     iVar14 = (int)*(short *)(param_2 + 0x372) * 5 + (int)DAT_1f80017a * 3;
     iVar13 = (int)*(short *)(param_2 + 0x374) * 5 + (int)(short)DAT_1f80017c * 3;
 
