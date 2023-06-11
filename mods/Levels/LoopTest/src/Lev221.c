@@ -310,8 +310,8 @@ struct LevelFile file =
 	.levVertex[9*7+3].pos[2] = 0x900,
 	
 	// forward
-	NEW_BLOCK(8, group4_ground, -0x180, 0x900, NULL, 0x1800, RGBtoBGR(0xFF8000)),
-	NEW_BLOCK(9, group4_ground, 0x180, 0x900, NULL, 0x1800, RGBtoBGR(0xFF8000)),
+	NEW_BLOCK(8, group4_ground, -0x180, 0x900, NULL, 0x1880, RGBtoBGR(0xFF8000)),
+	NEW_BLOCK(9, group4_ground, 0x180, 0x900, NULL, 0x1880, RGBtoBGR(0xFF8000)),
 	
 	// == Do NOT do MAKE_RAMP, just SetPosY ==
 	// This way, the normal vector is still 0x1971, not 0x1C71
