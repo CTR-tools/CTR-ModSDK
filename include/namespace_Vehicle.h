@@ -413,9 +413,9 @@ struct Driver
 	// 0x60 - OnAudio, engine sounds (always same)
 	// 0x64 - OnPhysAngular
 	// 0x68 - OnApplyForces
-	// 0x6C - OnCollide_QuadblockTouch
+	// 0x6C - Coll_StartSearch_Player
 	// 0x70 - OnCollide_Drivers
-	// 0x74 - OnCollide_QuadblockNear
+	// 0x74 - Coll_StartSearch_NearPlayer
 	// 0x78 - OnWeapon (jump related?)
 	// 0x7C - OnRender (pos, rot, scale)
 	// 0x80 - OnAnimate
