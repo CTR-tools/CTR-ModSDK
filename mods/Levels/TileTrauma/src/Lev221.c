@@ -1418,14 +1418,14 @@ struct LevelFile file =
 		.quadBlock[block].checkpointIndex = cpi
 	
 	// ERROR: NMZ Alert!
-	// Checkpoint[0] is reserved for the quadblocks that touch the startline from behind,
-	// Checkpoint[1] is reserved for the quadblocks that touch the startline from the front
+	// Checkpoint[last] is reserved for the quadblocks that touch the startline from behind,
+	// Checkpoint[0] is reserved for the quadblocks that touch the startline from the front
 	// The game is rigged not to grab someone on either of these checkpoints for any reason
 	
-	// By putting BehindStart1-4 on Checkpoint[0],
+	// By putting BehindStart1-4 on Checkpoint[last],
 	// jumping from DownRamp1 and landing on BehindStart1-4
 	// will be too far to determine crossing the line backwards,
-	// and checkpoint[0] can't mask-grab for illegal shortcut distance,
+	// and checkpoint[last] can't mask-grab for illegal shortcut distance,
 	// therefore the lap becomes valid and the race is won in 12 seconds,
 	// same mistake as Papu Pyramid
 	
