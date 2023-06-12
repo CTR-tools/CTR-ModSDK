@@ -1417,6 +1417,21 @@ struct LevelFile file =
 	#define SET_CHECKPOINT(cpi, block) \
 		.quadBlock[block].checkpointIndex = cpi
 	
+	// ERROR: NMZ Alert!
+	// Checkpoint[0] is reserved for the quadblocks that touch the startline from behind,
+	// Checkpoint[1] is reserved for the quadblocks that touch the startline from the front
+	// The game is rigged not to grab someone on either of these checkpoints for any reason
+	
+	// By putting BehindStart1-4 on Checkpoint[0],
+	// jumping from DownRamp1 and landing on BehindStart1-4
+	// will be too far to determine crossing the line backwards,
+	// and checkpoint[0] can't mask-grab for illegal shortcut distance,
+	// therefore the lap becomes valid and the race is won in 12 seconds,
+	// same mistake as Hot Air Skyway
+	
+	// To fix NMZ, make a new checkpoint for BehindStart1-4,
+	// Dont fix it though, let this be a lesson for all future maps
+	
 	// startline must have last checkpoint (min dist)
 	SET_CHECKPOINT(CPI_OnSpawn, Bsp0_BehindStart1),
 	SET_CHECKPOINT(CPI_OnSpawn, Bsp0_BehindStart2),
