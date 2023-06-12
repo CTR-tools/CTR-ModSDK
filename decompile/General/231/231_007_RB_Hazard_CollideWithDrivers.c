@@ -51,11 +51,7 @@ struct Instance* RB_Hazard_CollideWithDrivers(
 		distCheck = dist[0] + dist[2];
 		
 		// to be more optimal, just do weaponInst->thread->funcThTick == GenericMine_ThTick
-		if (
-				((unsigned int)modelID - 0x46 < 2) ||	// red or green potion
-				(modelID == 6) ||						// Nitro
-				(modelID == 0x27) 						// TNT
-			)
+		if (ModelIsBeaker(modelID) || ModelIsExplosive(modelID))
 		{
 			// upgrade to 2D collision to 3D sphere
 			distCheck += dist[1];

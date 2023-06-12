@@ -86,16 +86,7 @@ int DECOMP_RB_Crystal_LInC(
 	// wumpa fruit or crystal can be grabbed
 	// by player, or robotcar, and there's no
 	// AIs in Crystal Challenge anyway
-	if (
-			// not DYNAMIC_PLAYER
-			(modelID != 0x18) && 
-			
-			// not DYNAMIC_ROBOT_CAR
-			(modelID != 0x3f)
-		)
-	{
-		return 0;
-	}
+	if (ModelIsPlayerOrAI(modelID)) return 0;
 	
 	// kill crystal thread
 	if(LevInst->thread != 0)

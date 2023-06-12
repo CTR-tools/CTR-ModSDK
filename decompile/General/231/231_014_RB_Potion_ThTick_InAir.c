@@ -152,7 +152,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 			  ) &&
 			  
 			  // instDef->modelID == TEETH
-			  (instDef->modelID == 0x70) && 
+			  (CheckModelID(instDef->modelID, STATIC_TEETH)) && 
 			  
 			  // instDef->instance exists
 			  (instDef->ptrInstance != 0)

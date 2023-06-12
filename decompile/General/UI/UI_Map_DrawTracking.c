@@ -16,7 +16,7 @@ void DECOMP_UI_Map_DrawTracking(int ptrMap,struct Thread* bucket)
 	inst = bucket->inst;
 	
 	// instance -> model -> modelID != warpball
-	if (inst->model->id != 0x36) continue;
+	if (CheckModelID(inst->model->id, DYNAMIC_WARPBALL) == false) continue;
 	
 	// == only draw warpball ==
 	

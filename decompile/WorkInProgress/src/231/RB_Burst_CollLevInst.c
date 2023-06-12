@@ -2,7 +2,7 @@
 
 void DECOMP_RB_Burst_CollLevInst(struct ScratchpadStruct* sps,struct BSP* bspHitbox)
 {
-  short model;
+  short modelID;
   struct InstDef* instdef;
   struct Thread* meta;
   struct Instance* inst;
@@ -16,14 +16,14 @@ void DECOMP_RB_Burst_CollLevInst(struct ScratchpadStruct* sps,struct BSP* bspHit
 		(inst = instdef->ptrInstance, inst != NULL)
 	  ) 
   {
-    model = instdef->modelID;
+    modelID = instdef->modelID;
     
-	if (6 < model) 
+	if (6 < modelID) 
 	{
 	  // check 7 and 8,
 	  // 7: PU_FRUIT_CRATE
 	  // 8: PU_RANDOM_CRATE (weapon box)
-      if (model < 9) 
+      if (modelID < 9) 
 	  {
         meta = COLL_LevModelMeta();
 		
@@ -38,7 +38,7 @@ void DECOMP_RB_Burst_CollLevInst(struct ScratchpadStruct* sps,struct BSP* bspHit
       else 
 	  {
 		// modelID == teeth
-        if (model == 0x70) 
+        if (CheckModelID(modelID, STATIC_TEETH)) 
 		{
           RB_Teeth_OpenDoor(inst);
         }

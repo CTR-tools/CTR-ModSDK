@@ -30,7 +30,7 @@ void DECOMP_RB_Blowup_Init(struct Instance* weaponInst)
   shockwaveInst->matrix.t[2] = weaponInst->matrix.t[2];
   
   // if instance -> model -> modelID == tnt
-  if (weaponInst->model->id == 0x27) 
+  if (CheckModelID(weaponInst->model->id, STATIC_CRATE_TNT)) 
   {
 	// red
     color = 0xad10000;
@@ -52,7 +52,7 @@ void DECOMP_RB_Blowup_Init(struct Instance* weaponInst)
   num_model = 0x45;
   
   // if instance -> model -> modelID == tnt
-  if (weaponInst->model->id == 0x27) 
+  if (CheckModelID(weaponInst->model->id, STATIC_CRATE_TNT)) 
   {
 	// red shockwave
     num_model = 0x44;

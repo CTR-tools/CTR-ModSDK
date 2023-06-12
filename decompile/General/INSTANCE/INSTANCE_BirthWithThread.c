@@ -13,7 +13,7 @@ struct Instance* INSTANCE_BirthWithThread(
 	
 	m = gGT->modelPtr[modelID];
 	
-	if(m == 0)
+	if(CheckModelID(modelID, NOFUNC))
 	{
 		// June 1999
 		// printf("INSTANCE_BirthWithThread: object type %d not found!\n",param_1);

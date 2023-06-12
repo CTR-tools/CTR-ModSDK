@@ -14,8 +14,7 @@ int RB_Potion_OnShatter_TeethCallback(int unk, struct BSP* bspHitbox)
 	teethInst = instDef->ptrInstance;
 	if(teethInst == 0) return;
 	
-	// STATIC_TEETH
-	if(instDef->modelID != 0x70) return;
+	if (CheckModelID(instDef->modelID, STATIC_TEETH) == false) return;
 
 	RB_Teeth_OpenDoor(teethInst);
 }

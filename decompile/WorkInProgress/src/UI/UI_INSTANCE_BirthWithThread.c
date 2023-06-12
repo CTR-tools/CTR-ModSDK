@@ -71,7 +71,7 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
 	  modelID = model->id;
 
 	  // if this is a gem
-	  if (modelID == 0x5f) {
+	  if (CheckModelID(modelID, STATIC_GEM)) {
         color = 0x6c08080;
 LAB_8004cc4c:
         puVar12[0x14] = 0xf368;
@@ -86,13 +86,13 @@ LAB_8004cc58:
       else
 	  {
 		// relic
-        if (modelID == 0x61) {
+        if (CheckModelID(modelID, STATIC_RELIC)) {
           color = 0x60a5ff0;
           goto LAB_8004cc4c;
         }
 
 		// crystal
-        if (modelID == 0x60) {
+        if (CheckModelID(modelID, STATIC_CRYSTAL)) {
           puVar12[0x14] = 0xf4a0;
           puVar12[0x15] = 0xb60;
           color = 0xd22fff0;
@@ -101,7 +101,7 @@ LAB_8004cc58:
         }
 
 		// key
-        if (modelID == 99) {
+        if (CheckModelID(modelID, STATIC_KEY)) {
           color = 0xdca6000;
           goto LAB_8004cc4c;
         }
@@ -117,7 +117,7 @@ LAB_8004cc58:
           modelID = model->id;
 
 		  // letter C
-          if (modelID == 0x93) {
+          if (CheckModelID(modelID, STATIC_C)) {
             uVar5 = 0xfffc;
 LAB_8004ccc8:
             puVar12[0x18] = uVar5;
@@ -125,7 +125,7 @@ LAB_8004ccc8:
           else
 		  {
 			// letter T
-            if (modelID == 0x94)
+            if (CheckModelID(modelID, STATIC_T))
 			{
               puVar12[0x18] = 0;
             }
@@ -133,7 +133,7 @@ LAB_8004ccc8:
 			else
 			{
 			  // letter R
-              if (modelID == 0x95) {
+              if (CheckModelID(modelID, STATIC_R)) {
                 uVar5 = 4;
                 goto LAB_8004ccc8;
               }
@@ -149,7 +149,7 @@ LAB_8004ccc8:
         else
 		{
 		  // token model
-          if (modelID == 0x7d)
+          if (CheckModelID(modelID, STATIC_TOKEN))
 		  {
 			// get AdvCup ID from level metadata
             int advCupID = data.metaDataLEV[sdata->gGT->levelID].ctrTokenGroupID;

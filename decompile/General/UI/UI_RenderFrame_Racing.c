@@ -364,8 +364,9 @@ void DECOMP_UI_RenderFrame_Racing()
 				ptrHudT = sdata->ptrHudT;
 				if (playerStruct->PickupLetterHUD.cooldown != 0)
 				{
+					int modelID = playerStruct->PickupLetterHUD.modelID;
 					// C-Letter
-					if (playerStruct->PickupLetterHUD.modelID == 0x93)
+					if (CheckModelID(modelID, STATIC_C))
 					{
 						// make visible
 						*(u_int *)&ptrHudC->flags &= 0xffffff7f;
@@ -381,7 +382,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					else
 					{
 						// not T-Letter
-						if (playerStruct->PickupLetterHUD.modelID != 0x94)
+						if (CheckModelID(modelID, STATIC_T))
 						{
 							// R-Letter
 

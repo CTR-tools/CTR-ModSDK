@@ -43,7 +43,7 @@ int RB_Hazard_ThCollide_Generic(struct Thread* thread)
 	else
 	{
 		// nitro
-		if(modelID == 6)
+		if(CheckModelID(modelID, STATIC_CRATE_NITRO))
 		{
 			// shatter sound
 			soundID = 0x3f;
@@ -52,7 +52,7 @@ int RB_Hazard_ThCollide_Generic(struct Thread* thread)
 		else
 		{
 			// if not TNT
-			if(modelID != 0x27)
+			if(!CheckModelID(modelID, STATIC_CRATE_TNT))
 			{
 				return 1;
 			}

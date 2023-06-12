@@ -1,4 +1,5 @@
 #include <gccHeaders.h>
+#include <stdbool.h>
 #include <macros.h>
 
 // =============================
@@ -43,6 +44,9 @@
 
 // should not be here
 #include <namespace_Main.h>
+
+//must be after Main namespace
+#include <namespace_ModelID.h>
 
 // TileView should be here
 

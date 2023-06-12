@@ -21,7 +21,9 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket) {
   // if numPlyrCurrGame is 1
   if (gGT->numPlyrCurrGame == 1) {
     // if instance->model->modelID is not timebox
-    if (inst->model->id != 0x5c) {
+    // TODO: 0x5c is crate 1, shouldnt check for the 1,2 and 3?
+    // in case just call ModelIsAnyTimeCrate(int modelID)
+    if (CheckModelID(inst->model->id, STATIC_TIME_CRATE_01)) {
       // If player's wumpa is less than 10
       if (gGT->drivers[0]->numWumpas < 10) {
         // no shine

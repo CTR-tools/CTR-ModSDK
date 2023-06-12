@@ -39,12 +39,7 @@ struct Driver* RB_CrateAny_GetDriver(struct Thread* t, struct ScratchpadStruct* 
 	hitModelID_cast = hitModelID & 0x7fff;
 	
 	// if moving explosive
-	if(
-		(hitModelID_cast == 0x3b) || // bomb
-		(hitModelID_cast == 0x29) || // missile
-		(hitModelID_cast == 0x56) || // blue shield
-		(hitModelID_cast == 0x5e)    // green shield
-	)
+	if(ModelIsShield(hitModelID_cast) || ModelIsBombOrMissile(hitModelID_cast))
 	{
 		// get driver that used the weapon
 		driver = 
@@ -463,13 +458,13 @@ int DECOMP_RB_CrateTime_LInC(
 	
 	driver->numTimeCrates++;
 	
-	if(modelID == 0x5C)
+	if(CheckModelID(modelID, STATIC_TIME_CRATE_01))
 	{
 		gGT->frozenTimeRemaining += 0x3C0;
 		gGT->timeCrateTypeSmashed = 1;
 	}
 	
-	else if(modelID == 0x64)
+	else if(CheckModelID(modelID, STATIC_TIME_CRATE_02))
 	{
 		gGT->frozenTimeRemaining += 0x780;
 		gGT->timeCrateTypeSmashed = 2;

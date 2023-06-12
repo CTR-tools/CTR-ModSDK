@@ -12,22 +12,22 @@ void DECOMP_AH_WarpPad_SpinRewards(struct Instance* pad, struct WarpPad* wp,shor
   modelID = pad->model->id;
   
   // if not trophy
-  if (modelID != 0x62) 
+  if (CheckModelID(modelID, STATIC_TROPHY)) 
   {
 	// Gem
-    if (modelID == 0x5f) {
+    if (CheckModelID(modelID, STATIC_GEM)) {
       ratio = wp->specLightGem[0];
     }
     else 
 	{
 	  // Relic
-      if (modelID == 0x61) {
+      if (CheckModelID(modelID, STATIC_RELIC)) {
         ratio = wp->specLightRelic[0];
       }
       else 
 	  {
 		// if not token
-        if (modelID != 0x7d) goto LAB_800abe94;
+        if (CheckModelID(modelID, STATIC_TOKEN) == false) goto LAB_800abe94;
 		
 		// if it is a token
         ratio = wp->specLightToken[0];

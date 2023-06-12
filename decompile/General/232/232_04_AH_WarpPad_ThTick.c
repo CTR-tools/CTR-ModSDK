@@ -257,24 +257,24 @@ void AH_WarpPad_ThTick(struct Thread* t)
 		modelID = InstArr0->model->id;
 				
 		// Trophy has no specular light
-		if(modelID == 0x62) return;
+		if(CheckModelID(modelID, STATIC_TROPHY)) return;
 				
 		// Relic
-		if(modelID == 0x61) 
+		if(CheckModelID(modelID, STATIC_RELIC)) 
 		{
 			Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &warppadObj->specLightRelic[0]);
 			return;
 		}
 		
 		// Token
-		if(modelID == 0x7d) 
+		if(CheckModelID(modelID, STATIC_TOKEN)) 
 		{
 			Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &warppadObj->specLightToken[0]);
 			return;
 		}
 		
 		// If Gem, change colors every 2 seconds
-		if(modelID == 0x5f)
+		if(CheckModelID(modelID, STATIC_GEM))
 		{
 			i = (gGT->timer / 0x3C) % 5;
 			
@@ -426,13 +426,13 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				rewardScale2 = 0x2000;
 	
 				// not token
-				if(modelID != 0x7d)
+				if(CheckModelID(modelID, STATIC_TOKEN) == false)
 				{
 					// trophy
 					rewardScale2 = 0x2800;
 					
 					// relic
-					if(modelID == 0x61)
+					if(CheckModelID(modelID, STATIC_RELIC))
 					{
 						rewardScale2 = 0x1800;
 					}

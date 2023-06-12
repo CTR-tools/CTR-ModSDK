@@ -7,7 +7,7 @@ unsigned short DECOMP_RB_Hazard_CollLevInst(struct ScratchpadStruct* sps,struct 
   struct InstDef* iVar1;
   struct Instance* iVar4;
   unsigned short uVar2;
-  int modelId;
+  int modelID;
   
   if (((sps->bspHitbox->flag & 0x80) != 0) &&
       (iVar1 = sps->bspHitbox->data.hitbox.instDef, iVar1 != NULL)) &&
@@ -15,9 +15,9 @@ unsigned short DECOMP_RB_Hazard_CollLevInst(struct ScratchpadStruct* sps,struct 
 	 (iVar4 = iVar1->ptrInstance, iVar4 != NULL)) 
   {
 	// get modelID from InstDef
-    modelId = iVar4->model->id;
+    modelID = iVar4->model->id;
 	
-    iVar1 = COLL_LevModelMeta(modelId);
+    iVar1 = COLL_LevModelMeta(modelID);
 	
 	// if LInC is not nullptr
     if ((*(code **)(iVar1 + 8) != NULL)) 
@@ -27,23 +27,23 @@ unsigned short DECOMP_RB_Hazard_CollLevInst(struct ScratchpadStruct* sps,struct 
       uVar2 = (**(code **)(iVar1 + 8))(iVar4,th,sps);
 	  
 	  // if not PU_WUMPA_FRUIT
-      if (modelId != 2) 
-	  {
-		// useless
-        if (modelId < 2) {
-          return uVar2;
+      if (CheckModelID(modelID, PU_WUMPA_FRUIT)) 
+      {
+      // useless
+          if (modelID < 2) {
+            return uVar2;
+          }
+      
+      // anything except for
+      // 7: PU_FRUIT_CRATE,
+      // 8: PU_RANDOM_CRATE (weapon box)
+          if (8 < modelID) {
+            return uVar2;
+          }
+          if (modelID < 7) {
+            return uVar2;
+          }
         }
-		
-		// anything except for
-		// 7: PU_FRUIT_CRATE,
-		// 8: PU_RANDOM_CRATE (weapon box)
-        if (8 < modelId) {
-          return uVar2;
-        }
-        if (modelId < 7) {
-          return uVar2;
-        }
-      }
       return 0;
     }
   }

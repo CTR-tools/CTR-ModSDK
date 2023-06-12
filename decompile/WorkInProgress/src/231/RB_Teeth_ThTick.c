@@ -99,7 +99,7 @@ LAB_800b9ff8:
   SPS->Input1.hitRadius = 0x300;
   SPS->Input1.hitRadiusSquared = 0x90000;
   
-  SPS->Input1.modelID = 0x70;
+  SPS->Input1.modelID = STATIC_TEETH;
   
   SPS->Union.ThBuckColl.thread = t;
   SPS->Union.ThBuckColl.funcCallback = RB_Teeth_BSP_Callback;

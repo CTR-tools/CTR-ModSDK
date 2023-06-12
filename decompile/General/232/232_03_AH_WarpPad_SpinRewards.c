@@ -18,19 +18,19 @@ void AH_WarpPad_SpinRewards(
 	modelID = prizeInst->model->id;
 	
 	// no specLight on trophy
-	if(modelID == 0x62) 
+	if(CheckModelID(modelID, STATIC_TROPHY)) 
 		goto SpinReward;
 	
 	// gem
-	else if(modelID == 0x5f) 
+	else if(CheckModelID(modelID, STATIC_GEM)) 
 		specLight = &warppadObj->specLightGem[0];
 	
 	// relic
-	else if(modelID == 0x61) 
+	else if(CheckModelID(modelID, STATIC_RELIC)) 
 		specLight = &warppadObj->specLightRelic[0];
 	
 	// token
-	else if(modelID == 0x7d) 
+	else if(CheckModelID(modelID, STATIC_TOKEN)) 
 		specLight = &warppadObj->specLightToken[0];
 	
 	Vector_SpecLightSpin3D(

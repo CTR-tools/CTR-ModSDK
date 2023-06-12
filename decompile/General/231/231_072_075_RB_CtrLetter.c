@@ -81,7 +81,7 @@ int DECOMP_RB_CtrLetter_LInC(
 	
 	// if crystal did not collide with 
 	// DYNAMIC_PLAYER, quit function
-	if (modelID != 0x18) return 0;
+	if (CheckModelID(modelID, DYNAMIC_PLAYER)) return 0;
 	
 	// handle scale
 	if(letterInst->scale[0] == 0) return 0;
