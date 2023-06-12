@@ -1427,7 +1427,7 @@ struct LevelFile file =
 	// will be too far to determine crossing the line backwards,
 	// and checkpoint[0] can't mask-grab for illegal shortcut distance,
 	// therefore the lap becomes valid and the race is won in 12 seconds,
-	// same mistake as Hot Air Skyway
+	// same mistake as Papu Pyramid
 	
 	// To fix NMZ, make a new checkpoint for BehindStart1-4,
 	// Dont fix it though, let this be a lesson for all future maps
