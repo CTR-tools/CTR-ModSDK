@@ -1419,7 +1419,7 @@ struct LevelFile file =
 	
 	// ERROR: NMZ Alert!
 	// Checkpoint[last] is reserved for the quadblocks that touch the startline from behind,
-	// Checkpoint[0] is reserved for the quadblocks that touch the startline from the front
+	// Checkpoint[0]    is reserved for the quadblocks that touch the startline from the front
 	// The game is rigged not to grab someone on either of these checkpoints for any reason
 	
 	// By putting BehindStart1-4 on Checkpoint[last],
