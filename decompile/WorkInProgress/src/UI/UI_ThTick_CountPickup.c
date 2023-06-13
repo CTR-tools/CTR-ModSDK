@@ -21,7 +21,7 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket) {
   // if numPlyrCurrGame is 1
   if (gGT->numPlyrCurrGame == 1) {
     // if instance->model->modelID is not timebox
-    if (inst->model->id != 0x5c) {
+    if (inst->model->id != STATIC_TIME_CRATE_01) {
       // If player's wumpa is less than 10
       if (gGT->drivers[0]->numWumpas < 10) {
         // no shine
@@ -39,7 +39,7 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket) {
     LAB_8004c7a4:
 
       // if HUD item is not timecrate
-      if (inst->model->id != 0x5c) {
+      if (inst->model->id != STATIC_TIME_CRATE_01) {
         // rotation speed 0x80
         rotSpd = obj->rot[1] + 0x80;
         goto LAB_8004c7d4;

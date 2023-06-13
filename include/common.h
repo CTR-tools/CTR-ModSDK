@@ -25,6 +25,8 @@
 #include <namespace_Level.h>
 #include <namespace_List.h>
 
+#include <namespace_ModelID.h>
+
 // should not be here
 #include <namespace_JitPool.h>
 
@@ -43,6 +45,7 @@
 
 // should not be here
 #include <namespace_Main.h>
+
 
 // TileView should be here
 

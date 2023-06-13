@@ -43,7 +43,7 @@ int RB_Hazard_ThCollide_Generic(struct Thread* thread)
 	else
 	{
 		// nitro
-		if(modelID == 6)
+		if(modelID == PU_EXPLOSIVE_CRATE)
 		{
 			// shatter sound
 			soundID = 0x3f;
