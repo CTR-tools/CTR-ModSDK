@@ -1,0 +1,18 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Main Menu Mod, Adv difficulty
+926, 230, MM_EndOfFile, 0x0, src/MM_AdvDifficulty.c
+926, 230, MM_MENUBOX_NewLoad, 0x0, src/MM_MENUBOX_NewLoad.c
+926, 230, MM_MENUBOX_1p2p, 0x0, src/MM_MENUBOX_1p2p.c
+
+// Hooks
+common, exe, __main, 0x68, src/hookEntry.s
+
+// Modify Warppad
+// common, 232, AH_WarpPad_LInB, 0x0, src/AH_WarpPad_LInB.c
+
+// Compile code to empty spaces in RDATA
+common, exe, rdata_free, 0x0, src/main.c
