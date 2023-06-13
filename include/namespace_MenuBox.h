@@ -1,3 +1,50 @@
+enum MenuBoxFlags
+{
+	// menu's X position will be used to center it horizontally
+	CENTER_ON_X = 1,
+
+	// menu's Y position will be used to center it vertically
+	CENTER_ON_Y = 2,
+
+	// menu will be centered on these coordinates
+	CENTER_ON_COORDS = 3,
+
+	// only draws the menu's title
+	ONLY_DRAW_TITLE = 4,
+	// 8
+
+	// allows drawing another menu box while a menu box is being drawn
+	// position is automatically derived from originating menubox, so cascading windows are easier
+	DRAW_NEXT_MENU_IN_HIERARCHY = 0x10,
+	DISABLE_INPUT_ALLOW_FUNCPTRS = 0x20,
+
+	// menu will display a single row that changes as you press a direction
+	// kind of like scrolling
+	SHOW_ONLY_HIGHLIT_ROW = 0x40,
+
+	// instead of the big font, menu will use the small font
+	USE_SMALL_FONT = 0x80,
+	// 0x100
+	// 0x200
+	EXECUTE_FUNCPTR = 0x400,
+	// 0x800
+	NEEDS_TO_CLOSE = 0x1000,
+	INVISIBLE = 0x2000,
+
+	// title will use big text
+	// to be used in conjunction with "USE_SMALL_FONT_IN_ROWS"
+	BIG_TEXT_IN_TITLE = 0x4000,
+	ALL_PLAYERS_USE_MENU = 0x8000,
+	// 0x10000
+	// 0x20000
+	// 0x40000
+	// 0x80000
+	MENU_IS_TOP_OF_HIERARCHY = 0x100000,
+	// 0x200000
+	// 0x400000
+	MUTE_SOUND_OF_MOVING_CURSOR = 0x800000
+};
+
 struct MenuRow
 {
 	// can have values above 0xFF,
