@@ -463,13 +463,13 @@ int DECOMP_RB_CrateTime_LInC(
 	
 	driver->numTimeCrates++;
 	
-	if(modelID == 0x5C)
+	if(modelID == STATIC_TIME_CRATE_01)
 	{
 		gGT->frozenTimeRemaining += 0x3C0;
 		gGT->timeCrateTypeSmashed = 1;
 	}
 	
-	else if(modelID == 0x64)
+	else if(modelID == STATIC_TIME_CRATE_02)
 	{
 		gGT->frozenTimeRemaining += 0x780;
 		gGT->timeCrateTypeSmashed = 2;
