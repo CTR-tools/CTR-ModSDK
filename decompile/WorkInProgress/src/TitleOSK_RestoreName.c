@@ -1,6 +1,6 @@
 #include <common.h>
 
-void TitleOSK_RestoreName(short param_1)
+void DECOMP_TitleOSK_RestoreName(short param_1)
 {
   short cursor;
 
@@ -19,9 +19,6 @@ void TitleOSK_RestoreName(short param_1)
 	// move cursor to 'save' button
     cursor = 0x3e9;
   }
-
   // set cursor position of OSK
   sdata->gGT->TitleOSK_CursorPosition = cursor;
-
-  return;
 }
