@@ -1,10 +1,6 @@
 #include <common.h>
 
-int TitleFlag_IsFullyOffScreen();
-void TitleFlag_BeginTransition(int param_1);
-
 void DECOMP_MainRaceTrack_RequestLoad(short levelID)
-
 {
   // Turn off HUD
   sdata->gGT->hudFlags &= 0xfe;

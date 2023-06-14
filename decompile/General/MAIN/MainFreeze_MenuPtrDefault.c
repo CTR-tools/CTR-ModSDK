@@ -2,20 +2,15 @@
 
 void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 {
-	int levID;
+	int levID = 0;
 	u_short stringID;
 	u_int gameMode;
 
 	struct GameTracker* gGT = sdata->gGT;
 	gameMode = gGT->gameMode1;
 
-	// if you have not waited 5 frames
-	// since the game was paused
-	if (gGT->cooldownfromPauseUntilUnpause != 0)
-	{
-		// quit
-		return;
-	}
+	// if you have not waited 5 frames since the game was paused then quit
+	if (gGT->cooldownfromPauseUntilUnpause != 0) return;
 
 	// assume 5 frames have passed since paused
 
@@ -29,18 +24,17 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			mb->drawStyle |= 0x100;
 		}
 
-		// If you're not in Adventure Arena
 		if
 		(
-			(gameMode & ADVENTURE_ARENA) == 0 ||
+			!(gameMode & ADVENTURE_ARENA) ||
 			// mb is closing
-			(mb->state & NEEDS_TO_CLOSE) != 0
+			(mb->state & NEEDS_TO_CLOSE)
 		)
 		{
 			return;
 		}
 
-		// quit adv hub is not loaded
+		// quit adv hub if it's not loaded
 		if (LOAD_IsOpen_AdvHub() == 0)
 			return;
 
@@ -48,21 +42,19 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 
 		return;
 	}
-	if (mb->rowSelected < 0)
-	{
-		return;
-	}
 
-	// get stringID from row selected
+	if (mb->rowSelected < 0) return;
+
+	// get stringID from selected row
 	stringID = mb->rows[mb->rowSelected].stringIndex;
 
 	// stringID 14: "OPTIONS"
 	if (stringID == 14)
 	{
-		// Set desired MenuBox to Options
-		sdata->ptrActiveMenuBox = &data.mbBox_optionsMenu_racingWheel;
+		// Set MenuBox to Options
+		sdata->ptrDesiredMenuBox = &data.menuBox_optionsMenu_racingWheel;
 
-		data.mbBox_optionsMenu_racingWheel.unk1 = 8;
+		data.menuBox_optionsMenu_racingWheel.rowSelected = 8;
 		return;
 	}
 
@@ -70,24 +62,24 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 	// stringID 12: "UKA UKA HINTS"
 	if (stringID == 11 || stringID == 12)
 	{
-		// Hints mb
-		sdata->ptrActiveMenuBox = (struct MenuBox *)0x800b518c;
+		// Set MenuBox to Hints
+		sdata->ptrDesiredMenuBox = (struct MenuBox *)0x800b518c;
 		return;
 	}
 
 	// stringID 3: "QUIT"
 	if (stringID == 3)
 	{
-		// Set active MenuBox to Quit
-		sdata->ptrActiveMenuBox = &data.mbBox_quit;
-		data.mbBox_quit.rowSelected = 1;
+		// Set MenuBox to Quit
+		sdata->ptrDesiredMenuBox = &data.menuBox_quit;
+		data.menuBox_quit.rowSelected = 1;
 		return;
 	}
 
 	// must wait 5 frames until next pause
 	gGT->cooldownFromUnpauseUntilPause = 5;
 
-	// make MenuBox invisible
+	// hide MenuBox
 	MENUBOX_Hide(mb);
 
 	MainFreeze_SafeAdvDestroy();
@@ -102,7 +94,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 		// stringID 4: "RETRY"
 		case 3:
 
-			// Unpause game
+			// get rid of pause flag
 			gGT->gameMode1 &= ~PAUSE_1;
 
 			if (TitleFlag_IsFullyOffScreen() == 1)
@@ -139,41 +131,40 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 		// stringID 2: "RESUME"
 		case 1:
 
-			// deactivate pause??
+			// unpause game
 			ElimBG_Deactivate(gGT);
-
-			// Unpause game
 			gGT->gameMode1 &= ~PAUSE_1;
 
 			// unpause audio
 			MainFrame_TogglePauseAudio(0);
 
+			// play pause/unpause sound
 			OtherFX_Play(1, 1);
 			return;
 
-		// stringID 0x5: "CHANGE CHARACTER"
+		// stringID 5: "CHANGE CHARACTER"
 		case 4:
 
-			// Erase ghost of previous race from RAM
+			// erase ghost of previous race from RAM
 			GhostBuffer_Destroy();
 
-			// main mb
+			// set level ID to main menu
 			levID = MAIN_MENU_LEVEL;
 
-			// Return to character selection
+			// return to character selection
 			sdata->mainMenuState = 1;
 
 			// when loading is done, add bit for "in mb"
 			sdata->Loading.OnBegin.AddBitsConfig0 |= 0x2000;
 
-			// Unpause game
+			// get rid of pause flag
 			gGT->gameMode1 &= ~PAUSE_1;
 			break;
 
 		// stringID 6: "CHANGE LEVEL"
 		case 5:
 
-			// Erase ghost of previous race from RAM
+			// erase ghost of previous race from RAM
 			GhostBuffer_Destroy();
 
 			// level ID of main mb
@@ -186,14 +177,14 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			// add bit for "in mb"
 			sdata->Loading.OnBegin.AddBitsConfig0 |= 0x2000;
 
-			// Unpause game
+			// get rid of pause flag
 			gGT->gameMode1 &= ~PAUSE_1;
 			break;
 
 		// stringID 10: "CHANGE SETUP"
 		case 9:
 
-			// levelID of main mb
+			// set level ID to main menu
 			levID = MAIN_MENU_LEVEL;
 
 			// return to battle setup
@@ -203,7 +194,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			// add bit for "in mb"
 			sdata->Loading.OnBegin.AddBitsConfig0 |= 0x2000;
 
-			// Unpause game
+			// get rid of pause flag
 			gGT->gameMode1 &= ~PAUSE_1;
 			break;
 
@@ -222,7 +213,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			// remove bit for CTR Token Challenge
 			sdata->Loading.OnBegin.RemBitsConfig8 |= 8;
 
-			// Unpause game
+			// get rid of pause flag
 			gGT->gameMode1 &= ~PAUSE_1;
 
 			// If you are not in Adventure cup
@@ -230,29 +221,25 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			{
 				// 0x80000000
 				// If you're in Boss Mode
-				if (gameMode < 0)
+				if ((int)gameMode < 0)
 				{
-					// when loading is done remove bit for
-					// Boss Race, relic, and crystal challenge
+					// when loading is done remove bit for Boss Race, relic, and crystal challenge
 					sdata->Loading.OnBegin.RemBitsConfig0 |= 0x8c000000;
 
-					// When loading is done
-					// add bit to spawn driver near boss door
+					// When loading is done add bit to spawn driver near boss door
 					sdata->Loading.OnBegin.AddBitsConfig8 |= 1;
 				}
 
-				// set iVar3 to level you were in previously
+				// set levID to level you were in previously
 				levID = gGT->prevLEV;
 			}
 
 			// If you're in Adventure Cup
 			else
 			{
-				// Level ID of Gem stone Valley
 				levID = GEM_STONE_VALLEY;
 
-				// when loading is done remove bits for
-				// Adventure Cup, relic, and crystal challenge
+				// when loading is done remove bits for Adventure Cup, relic, and crystal challenge
 				sdata->Loading.OnBegin.RemBitsConfig0 |= 0x1c000000;
 
 				// Level ID

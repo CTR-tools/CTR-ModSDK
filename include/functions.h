@@ -266,3 +266,8 @@ void MENUBOX_Show(struct MenuBox* m);
 int DecalFont_GetLineWidth(char* str, short fontType);
 void MENUBOX_DrawOuterRect_Edge(RECT* r, u_int rgb, u_int param_3, u_long* otMem);
 void MENUBOX_DrawInnerRect(RECT* r, int unk, u_long* ot);
+void AH_Pause_Update();
+u_int TitleFlag_IsFullyOffScreen();
+void TitleFlag_BeginTransition(int param_1);
+void GhostBuffer_Destroy();
+void MainRaceTrack_RequestLoad(short levelID);
