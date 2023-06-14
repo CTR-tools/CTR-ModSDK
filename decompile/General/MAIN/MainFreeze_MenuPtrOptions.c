@@ -30,7 +30,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 	u_short local_a8 [4];
 	u_short local_a0 [4];
 	RECT local_98;
-	short local_90 [3];
+	short local_90 [8];
 	RECT local_80;
 	struct GameTracker *gametrack;
 	short local_70;
@@ -291,6 +291,9 @@ switchD_80038f90_caseD_9:
 		local_90[0] = sVar3 + 0x38;
 		local_90[1] = sVar8 + 0x3a;
 		local_90[2] = sVar3 + local_38 + 0x38;
+		local_90[3] = sVar8 + 0x30;
+		local_90[4] = local_90[2];
+		local_90[5] = local_90[1];
 		MENUBOX_DrawRwdTriangle(local_90, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 		DecalFont_DrawLine(sdata->lngStrings[data.Options_StringIDs_Audio[i]], 0x4c, (short)((u_int)((i * 10 + iVar7 + 0x32) * 0x10000) >> 0x10), 2, 0);
 		iVar10 = iVar10 + 1;
