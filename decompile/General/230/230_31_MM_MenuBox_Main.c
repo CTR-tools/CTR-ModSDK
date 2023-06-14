@@ -44,7 +44,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
         &gGT->backBuffer->otMem.startPlusFour[3]);
     }
     
-	if ((OVR_230.menubox_mainMenu.state & 0x10) == 0) 
+	if ((OVR_230.menubox_mainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0) 
 	{
       gGT->numPlyrNextGame = 1;
 	  

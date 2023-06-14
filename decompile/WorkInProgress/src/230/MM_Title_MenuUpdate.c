@@ -46,7 +46,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
       goto END_FUNCTION;
     }
 
-    OVR_230.menubox_mainMenu.state &= 0xffffffdf | 0x400;
+    OVR_230.menubox_mainMenu.state &= 0xffffffdf | BIG_TEXT_IN_TITLE;
 
     MM_TransitionInOut((u_short *)0x800b4864, OVR_230.countMeta0xD, *(int *)0x800b4844);
 
