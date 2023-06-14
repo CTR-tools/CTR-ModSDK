@@ -18,7 +18,7 @@ void MyMenuBoxFuncPtr(struct MenuBox* m);
 struct MenuBox myBox =
 {
 	.stringIndexTitle = -1,
-	.state = 0x28,
+	.state = MAIN_MENU_CHARACTER_SELECT,
 	.funcPtr = (void*)MyMenuBoxFuncPtr,
 	.unk6 = 1,
 };

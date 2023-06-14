@@ -21,7 +21,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *param_1)
     {
         OVR_230.cupSel_postTransition_boolStart = (param_1->rowSelected != -1);
         OVR_230.cupSel_transitionState = 2;
-        OVR_230.menubox_cupSelect.state &= 0xfffffbff | 0x20;
+        OVR_230.menubox_cupSelect.state &= 0xfffffbff | DISABLE_MENUBOX_INPUT;
         return;
     }
 
@@ -44,7 +44,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *param_1)
             {
                 // menu is now in focus
                 OVR_230.cupSel_transitionState = 1;
-                OVR_230.menubox_cupSelect.state &= 0xffffffdf | 0x400;
+                OVR_230.menubox_cupSelect.state &= 0xffffffdf | EXECUTE_MENUBOX_FUNCPTR;
             }
         }
         // if transitioning out

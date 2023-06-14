@@ -4,7 +4,7 @@ void DECOMP_MM_CupSelect_Init(void)
 {
   // disable 0x400 (dont exec funcptr)
   // enable 0x20 (allow exec funcptr, and block input
-  OVR_230.menubox_cupSelect.state &= 0xfffffbff | 0x20;
+  OVR_230.menubox_cupSelect.state &= 0xfffffbff | DISABLE_MENUBOX_INPUT;
   
   // reset transition data
   OVR_230.cupSel_transitionState = 0;

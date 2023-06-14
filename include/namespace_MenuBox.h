@@ -22,6 +22,31 @@ struct MenuRow
 	char rowOnPressRight;
 };
 
+
+// Menu states definition,
+// ending with _?? must be discovered
+enum MENU_STATE
+{
+    CENTERS_POSY = 0x1,
+    CENTERS_POSX = 0x2,
+    DRAW_ONLY_TITLE_BAR = 0x4,
+    DRAWPTR_NEXTBOX_IN_HIERARCHY = 0x10,
+    DISABLE_MENUBOX_INPUT = 0x20,
+    SHOW_ONLY_HIGHLIGHTED_ROW = 0x40,
+    MAIN_MENU_CHARACTER_SELECT = 0x28,
+    TINY_TEXT_IN_ROWS = 0x80,
+    EXECUTE_MENUBOX_FUNCPTR = 0x400,
+    USED_IN_221_MENU_?? = 0x800,
+	WHEN_RACING_?? = 0x803,
+    NEEDS_TO_CLOSE = 0x1000,
+    INVISIBLE = 0x2000,
+    BIG_TEXT_IN_TITLE = 0x4000,
+    ANYONE_CAN_USE_MENU = 0x8000,
+    TOP_OF_MENU_HIERARCHY = 0x100000,
+    MUTE_SOUND_OF_MOVING_CURSOR = 0x800000
+
+};
+
 struct MenuBox
 {
 	// 0x0
@@ -52,7 +77,7 @@ struct MenuBox
 	// & 0x8000, anyone can use menu
 	// & 0x100000, top of menu hierarchy
 	// & 0x800000, mute sound of moving cursor
-	unsigned int state;
+	u_int state;
 
 	// 0xC
 	struct MenuRow* rows;

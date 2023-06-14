@@ -239,7 +239,7 @@ struct MenuBox menuBox221 =
 	
 	.unk1 = 0,
 	
-	.state = 0x803,
+	.state = WHEN_RACING_??,
 	.rows = menuRows221,
 	.funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
 	.drawStyle = 4,
