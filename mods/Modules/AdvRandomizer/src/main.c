@@ -1,76 +1,34 @@
 #include <common.h>
 
+#define SHUFFLE_AMOUNT 100
+
 int MixRNG_Scramble();
-void LOAD_Callback_Overlay_230();
-void LOAD_Callback_Overlay_232();
 
-short pads[];
+short pads[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 101, 102, 103, 104, 105};
 
-void NewCallback230()
+void Shuffle_array(short *arr, short size)
 {
-    sdata->lngStrings[0x17d] = "EXPERT";
-    LOAD_Callback_Overlay_230();
-}
+    short i, temp;
+    char k, j;
 
-void NewCallback232()
-{
-    u_short add = 0x2008;
-    u_short modifier = sdata->gGT->arcadeDifficulty;
-    *(short *)0x80012846 = add;
-    *(short *)0x80012844 = modifier;
-    *(short *)0x800127b2 = add;
-    *(short *)0x800127b0 = modifier;
-    *(short *)0x800126ba = add;
-    *(short *)0x800126b8 = modifier;
-    *(short *)0x8001272a = add;
-    *(short *)0x80012728 = modifier;
-    LOAD_Callback_Overlay_232();
+    for (short i = 0; i < SHUFFLE_AMOUNT; i++)
+    {
+        MixRNG_Scramble();
+        k = (sdata->randomNumber >> 8) % size;
+        MixRNG_Scramble();
+        j = (sdata->randomNumber >> 8) % size;
+        temp = arr[j];
+        arr[j] = arr[k];
+        arr[k] = temp;
+    }
 }
 
 void RunEntryHook()
 {
-    #if 0
-    char i, j, k;
-    short temp;
-    char offset, range;
+    char i;
+    char offsets[] = {0, 18, 22, 27};
+    const char numRanges = 3;
 
-    /* Total num of pads = 27
-    18 Trophy Tracks
-    4 Crystal tracks
-    5 Gem Cups
-    */
-    char offsets[] = {27, 22, 17, 0};
-    char ranges[] = {5, 4, 18};
-
-    // Fill them up first
-    for (i = 0; i < 27; i++)
-    {
-        // Gem cup IDs
-        if (i > 21)
-            pads[i] = 101 + (i - 22);
-        else
-            pads[i] = i;
-    }
-
-    // Shuffle all types of pads within their ranges
-    for (i = 0; i < 3; i++)
-    {
-        offset = offsets[i];
-        range = ranges[i];
-        for (j = offset; j >= (offset - range) + 1; j--)
-        {
-            MixRNG_Scramble();
-            k = ((RCNT_GetTime_Total() & 0xf) + (sdata->randomNumber >> 8)) % range;
-            k = offset - k;
-
-            temp = pads[j];
-            pads[j] = pads[k];
-            pads[k] = temp;
-            printf("%d\n",pads[k]);
-        }
-    }
-    #endif
-    // for difficulty modifier
-    data.overlayCallbackFuncs[0] = NewCallback230; // menus
-    data.overlayCallbackFuncs[2] = NewCallback232; // modify values
+    for (i = 0; i < numRanges; i++)
+        Shuffle_array(&pads[offsets[i]], offsets[i + 1] - offsets[i]);
 }
