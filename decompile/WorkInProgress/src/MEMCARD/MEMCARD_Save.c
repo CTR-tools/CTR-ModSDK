@@ -1,7 +1,8 @@
 #include <common.h>
 
+// NOTE: param6 is unused and passed as 0 from the only caller to this function. Kept in to not mess up $sp allocation
 uint8_t MEMCARD_Save(int slotIdx, char *name,
-                     char *param_3, uint8_t *ptrData, int fileSize)
+                     char *param_3, uint8_t *ptrData, int fileSize, unsigned int param6)
 
 {
 
@@ -12,11 +13,24 @@ uint8_t MEMCARD_Save(int slotIdx, char *name,
 
     // this will always return 0, no need to check
     MEMCARD_NewTask(slotIdx, name, ptrData, fileSize);
-    // NOTE: if condition discarded because it will always eval to false
+    
+    // NOTE: Commented out because param6 always 0, will always eval to false
+    /*
+    if (((param6 & 1) == 0) && (1 < sdata->memcardIconSize + fileSize * 2 + 0x1fff >> 0xd))
+        {
+            DAT_800857a3 = (byte)(sdata->memcardIconSize + fileSize + 0x1fff >> 0xd);
+            sdata->memcardStatusFlags = sdata->memcardStatusFlags | 4;
+        }
+        else
+        {
+    */
     sdata->memcardStatusFlags = sdata->memcardStatusFlags & 0xfffffffb;
     ((uint8_t *)data.memcardIcon_PsyqHand)[3] = ((sdata->memcardIconSize + fileSize * 2 + 0x1fff) >> 0xd) & 0xFF;
+    /*
+        }
+    */
 
-    // NOTE: Something most likely wrong here
+    // NOTE: Something most likely wrong here, should it be short and set hi and lo bytes?
     for (int i = 0; i < 64; i += 2)
     {
         ((int *)((uint8_t *)data.memcardIcon_PsyqHand + 4))[i] = 0x81;
