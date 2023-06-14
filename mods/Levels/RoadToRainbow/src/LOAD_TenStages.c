@@ -171,7 +171,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			}
 			
 			// credits
-			else if(levelID >= CREDITS_LEVEL)
+			else if(levelID >= CREDITS_CRASH)
 			{
 				// enable cutscene flag
 				gGT->gameMode1 |= GAME_CUTSCENE;
