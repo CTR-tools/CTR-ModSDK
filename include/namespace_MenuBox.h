@@ -28,6 +28,8 @@ enum MenuBoxFlags
 	// 0x200
 	EXECUTE_FUNCPTR = 0x400,
 	// 0x800
+
+	// needs a better name, apparently it's for when it's closed/closing
 	NEEDS_TO_CLOSE = 0x1000,
 	INVISIBLE = 0x2000,
 
