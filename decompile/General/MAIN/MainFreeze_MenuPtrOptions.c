@@ -395,7 +395,7 @@ switchD_80038f90_caseD_9:
 	local_80.h = 0x87 - local_68;
 	local_80.y = sVar4 + 0x14;
 	MENUBOX_DrawInnerRect(&local_80, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
-	if ((local_70 != 0) || ((sdata->AnyPlayerTap & 0x41020) != 0))
+	if ((local_70 != 0) || ((sdata->AnyPlayerTap & (BTN_TRIANGLE | BTN_START | BTN_SQUARE_one)) != 0))
 	{
 		OtherFX_Play(1, 1);
 		OptionsMenu_TestSound(0, 0);
