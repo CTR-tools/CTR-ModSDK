@@ -2,9 +2,10 @@
 1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
 1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
 
-// Hooks
-common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
+// Blue Fire Hook
+common, exe, BOTS_SetRotation, -0x8, ../BlueFire/src/hookUpdate.s
 
+// Keep U-Turn reserves stuff
 // Erasing the original reserve cancelation if, so that we can run our own code
 926, exe, VehPtr_Driving_PhysLinear, 0xA30, src/hookReserveCancelation.s
 926, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
@@ -14,8 +15,6 @@ common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
 1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
 
 // Binary edits
-// Turbo pad to STP
-common, exe, OnCollide_Drivers, 0xB9, assets/TurboPadToSTP.bin
 // Standardize turbo pad reserves
 common, exe, OnCollide_Drivers, 0xA4, assets/StandardizeTurboPadReserves.bin
 
@@ -101,4 +100,4 @@ common, exe, OnCollide_Drivers, 0xA4, assets/StandardizeTurboPadReserves.bin
 common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_AllowUSFStacking.c
 
 // Compile code to empty spaces in RDATA
-common, exe, rdata_free, 0x0, src/main.c
+common, exe, rdata_free, 0x0, src/KeepU-TurnReserves.c ../BlueFire/src/main.c

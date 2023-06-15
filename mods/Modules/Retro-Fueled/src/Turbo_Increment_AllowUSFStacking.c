@@ -1,5 +1,7 @@
 #include <common.h>
 
+extern u_int RF_blueFireMode;
+
 void GhostBuffer_RecordBoosts(int reserves, u_char type, int fireLevel);
 void Turbo_Audio(struct Driver* driver, int param_2);
 struct Instance* INSTANCE_BirthWithThread(int m, char* name, u_int param_3, u_int param_4, void* func, u_int param_6, struct Thread* t);
@@ -7,12 +9,6 @@ void Turbo_ThTick(int param_1);
 void Turbo_ThDestroy();
 struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
 void GAMEPAD_Vib_4(struct Driver* driver, u_int param_2, int param_3);
-
-// Type 0 - startline boost
-// Type 2 - hang time or powerslide
-// Type 4 (AND = 1) - turbo pad
-// Type 8 (AND = 1) - boost powerup
-// Type 0x10 (AND = 4) - super engine
 
 // param1 - driver
 // param2 - reserves to add
@@ -36,7 +32,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	if
 	(
 		// if this is a turbo pad
-		((type & 4) != 0) &&
+		(type & 4) &&
 		
 		// racer is in accel prevention (holding square)
 		((driver->actionsFlagSet & 8) != 0)
@@ -154,8 +150,8 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// make flame disappear after
 			// 	- powerslide: two frames (quick death)
 			//	- all others: 255 frames (slowly die out)
-			if ((type & 2) != 0)	count = 2;
-			else					count = 0xff;
+			if (type & 2) count = 2;
+			else          count = 0xff;
 			turboObj->fireDisappearCountdown = count;
 	
 			// if modelIndex == "player" of any kind
@@ -200,7 +196,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		turboThread->flags &= 0xfffff7ff;
 	
 		// turbo pad
-		if ((type & 4) != 0)
+		if (type & 4)
 		{
 			// only increase counter on the first frame of turbo pad
 			
@@ -274,6 +270,18 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// speed cap has been raised
 			(driver->reserves == 0) ||
 			(driver->fireSpeedCap < (short)newFireSpeedCap)
+		) || RF_blueFireMode < 1 &&
+
+		// OR
+
+		// you have USF, and boosted on a non-STP,
+		// resize fire to lose size
+		(
+			// Current speed cap is greater than 0x1000
+			// AND
+			// You are not on a super turbo pad
+			(int)driver->const_SacredFireSpeed < (int)driver->fireSpeedCap &&
+			((driver->stepFlagSet & 2) == 0)
 		)
 	)
 	
