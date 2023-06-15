@@ -1,73 +1,78 @@
-#define ROW_EASY       0
-#define ROW_MEDIUM     1
-#define ROW_HARD       2
+#define MENU_ROW(NAME, STRING_INDEX, UP, DOWN, LEFT, RIGHT) \
+    [NAME] = { \
+        .stringIndex = STRING_INDEX, \
+        .rowOnPressUp = UP, \
+        .rowOnPressDown = DOWN, \
+        .rowOnPressLeft = LEFT, \
+        .rowOnPressRight = RIGHT \
+    }
+
+#define FINALIZER_ROW \
+    { \
+        .stringIndex = -1, \
+        .rowOnPressUp = 0, \
+        .rowOnPressDown = 0, \
+        .rowOnPressLeft = 0, \
+        .rowOnPressRight = 0 \
+    }
+
+#define ROW_EASY 0
+#define ROW_MEDIUM 1
+#define ROW_HARD 2
 #define ROW_SUPER_HARD 3
 #define ROW_ULTRA_HARD 4
 #define EXD_VALID_ROWS 5
 
-void MM_ExtraDifficulty(struct MenuBox*);
-
 struct MenuRow rows_extraDifficulty[] =
 {
-	[ROW_EASY] =
-	{
-		.stringIndex = 346,
-		.rowOnPressUp = ROW_EASY,
-		.rowOnPressDown = ROW_MEDIUM,
-		.rowOnPressLeft = ROW_EASY,
-		.rowOnPressRight = ROW_EASY
-	},
-	[ROW_MEDIUM] =
-	{
-		.stringIndex = 347,
-		.rowOnPressUp = ROW_EASY,
-		.rowOnPressDown = ROW_HARD,
-		.rowOnPressLeft = ROW_MEDIUM,
-		.rowOnPressRight = ROW_MEDIUM
-	},
-	[ROW_HARD] =
-	{
-		.stringIndex = 348,
-		.rowOnPressUp = ROW_MEDIUM,
-		.rowOnPressDown = ROW_SUPER_HARD,
-		.rowOnPressLeft = ROW_HARD,
-		.rowOnPressRight = ROW_HARD
-	},
-	[ROW_SUPER_HARD] =
-	{
-		.stringIndex = 588,
-		.rowOnPressUp = ROW_HARD,
-		.rowOnPressDown = ROW_ULTRA_HARD,
-		.rowOnPressLeft = ROW_SUPER_HARD,
-		.rowOnPressRight = ROW_SUPER_HARD
-	},
-	[ROW_ULTRA_HARD] =
-	{
-		.stringIndex = 589,
-		.rowOnPressUp = ROW_SUPER_HARD,
-		.rowOnPressDown = ROW_ULTRA_HARD,
-		.rowOnPressLeft = ROW_ULTRA_HARD,
-		.rowOnPressRight = ROW_ULTRA_HARD
-	},
-	// finalizer
-	{
-		.stringIndex = -1,
-		.rowOnPressUp = 0,
-		.rowOnPressDown = 0,
-		.rowOnPressLeft = 0,
-		.rowOnPressRight = 0
-	}
+    MENU_ROW(ROW_EASY, 346, ROW_EASY, ROW_MEDIUM, ROW_EASY, ROW_EASY),
+    MENU_ROW(ROW_MEDIUM, 347, ROW_EASY, ROW_HARD, ROW_MEDIUM, ROW_MEDIUM),
+    MENU_ROW(ROW_HARD, 348, ROW_MEDIUM, ROW_SUPER_HARD, ROW_HARD, ROW_HARD),
+    MENU_ROW(ROW_SUPER_HARD, 588, ROW_HARD, ROW_ULTRA_HARD, ROW_SUPER_HARD, ROW_SUPER_HARD),
+    MENU_ROW(ROW_ULTRA_HARD, 589, ROW_SUPER_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD),
+    FINALIZER_ROW
+};
+
+#define ROW_ADV_CLASSIC 0
+#define ROW_ADV_EASY 1
+#define ROW_ADV_MEDIUM 2
+#define ROW_ADV_HARD 3
+#define ROW_ADV_SUPER_HARD 4
+#define ROW_ADV_ULTRA_HARD 5
+
+struct MenuRow rows_advDifficulty[] =
+{
+    MENU_ROW(ROW_ADV_CLASSIC, 590, ROW_ADV_CLASSIC, ROW_ADV_EASY, ROW_ADV_CLASSIC, ROW_ADV_CLASSIC),
+    MENU_ROW(ROW_ADV_EASY, 346, ROW_ADV_CLASSIC, ROW_ADV_MEDIUM, ROW_ADV_EASY, ROW_ADV_EASY),
+    MENU_ROW(ROW_ADV_MEDIUM, 347, ROW_ADV_EASY, ROW_ADV_HARD, ROW_ADV_MEDIUM, ROW_ADV_MEDIUM),
+    MENU_ROW(ROW_ADV_HARD, 348, ROW_ADV_MEDIUM, ROW_ADV_SUPER_HARD, ROW_ADV_HARD, ROW_ADV_HARD),
+    MENU_ROW(ROW_ADV_SUPER_HARD, 588, ROW_ADV_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_SUPER_HARD, ROW_ADV_SUPER_HARD),
+    MENU_ROW(ROW_ADV_ULTRA_HARD, 589, ROW_ADV_SUPER_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_ULTRA_HARD),
+    FINALIZER_ROW
 };
 
 struct MenuBox extra_difficulty =
 {
-	.stringIndexTitle = 345,
-	.posX_curr = 0,
-	.posY_curr = 0,
-	.unk1 = 0,
-	.state = CENTER_ON_X | USE_SMALL_FONT | BIG_TEXT_IN_TITLE,
-	.rows = rows_extraDifficulty,
-	.funcPtr = MM_ExtraDifficulty,
-	.width = 171,
-	.height = 86
+    .stringIndexTitle = 345,
+    .posX_curr = 0,
+    .posY_curr = 0,
+    .unk1 = 0,
+    .state = CENTER_ON_X | USE_SMALL_FONT | BIG_TEXT_IN_TITLE,
+    .rows = rows_extraDifficulty,
+    .funcPtr = MM_ExtraDifficulty,
+    .width = 171,
+    .height = 86
+};
+
+struct MenuBox adv_difficulty =
+{
+    .stringIndexTitle = 345,
+    .posX_curr = 0,
+    .posY_curr = 0,
+    .unk1 = 0,
+    .state = CENTER_ON_X | USE_SMALL_FONT | BIG_TEXT_IN_TITLE,
+    .rows = rows_advDifficulty,
+    .funcPtr = MM_ExtraDifficulty,
+    .width = 171,
+    .height = 86
 };
