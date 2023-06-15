@@ -8,6 +8,6 @@ void DECOMP_MM_HighScore_Text3D(char *string, int posX, int posY, short font, u_
     DecalFont_DrawLine(string, posX, posY, font, flags);
 
     // draw the same string in a different place
-    DecalFont_DrawLine(string, (posX + 3), (posY + 1), font, (flags & 0xc000 | 0x15));
+    DecalFont_DrawLine(string, (posX + 3), (posY + 1), font, flags & (END_AT_X | CENTER_TEXT | BLACK));
     return;
 }
