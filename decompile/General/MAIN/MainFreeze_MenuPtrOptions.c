@@ -14,24 +14,36 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 	short sVar8;
 	short *psVar9;
 	int iVar10;
-	char **ppcVar11;
+	char **volumeModeString;
+	char **dualshockVibrateString;
 	u_short areThereRacingWheels;
-	int highlitRow;
+	int selectedRow;
 	int iVar12;
 	int i;
 	u_int uVar13;
 	int iVar14;
+
+	// ???
 	u_short auStackY131246 [32767];
 	u_short auStackY65712 [4];
 	u_short auStackY65704 [4];
 	u_short auStackY65696 [32756];
+
 	u_short uVar15;
 	u_short local_b0 [4];
 	u_short local_a8 [4];
 	u_short local_a0 [4];
-	RECT local_98;
-	short local_90 [8];
-	RECT local_80;
+
+	// used for the volume sliders
+	RECT volumeSliderBar;
+	RECT volumeSliderBarOutline;
+	short volumeSliderTriangle [8];
+
+	// extra menubox details
+	RECT glowingcursor;
+	RECT titleSeparatorLine;
+	RECT menuBoxBG;
+	
 	struct GameTracker *gametrack;
 	short local_70;
 	u_short local_68;
@@ -150,14 +162,14 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 			case 0:
 			case 1:
 			case 2:
-				highlitRow = (int)gametrack->db[0].drawEnv.clip.y;
-				OptionsMenu_TestSound(highlitRow, 1);
+				selectedRow = (int)gametrack->db[0].drawEnv.clip.y;
+				OptionsMenu_TestSound(selectedRow, 1);
 				if ((sdata->AnyPlayerHold & 4) == 0)
 				{
 					if ((sdata->AnyPlayerHold & 8) != 0)
 					{
 						// get value of volume slider
-						uVar6 = howl_VolumeGet(highlitRow);
+						uVar6 = howl_VolumeGet(selectedRow);
 						// add to the slider
 						uVar6 = (uVar6 & 0xff) + 4;
 						// set slider maximum value to 0xFF
@@ -165,23 +177,23 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 						{
 							uVar6 = 0xff;
 						}
-						howl_VolumeSet(highlitRow, (char)uVar6);
+						howl_VolumeSet(selectedRow, (char)uVar6);
 					}
 				}
 				else
 				{
-					uVar6 = howl_VolumeGet(highlitRow);
+					uVar6 = howl_VolumeGet(selectedRow);
 					i = (uVar6 & 0xff) - 4;
 					if (i < 0)
 					{
 						i = 0;
 					}
-					howl_VolumeSet(highlitRow, (char)i);
+					howl_VolumeSet(selectedRow, i);
 				}
 				break;
 			case 3:
 				OptionsMenu_TestSound(0, 0);
-				if ((sdata->AnyPlayerTap & 0x50) != 0)
+				if (sdata->AnyPlayerTap & (BTN_CIRCLE | BTN_CROSS_one))
 				{
 					OtherFX_Play(1, 1);
 					cVar5 = howl_ModeGet();
@@ -193,7 +205,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 			case 6:
 			case 7:
 				OptionsMenu_TestSound(0, 0);
-				if ((sdata->AnyPlayerTap & 0x50) != 0)
+				if (sdata->AnyPlayerTap & (BTN_CIRCLE | BTN_CROSS_one))
 				{
 					uVar6 = gametrack->db[0].drawEnv.clip.y;
 					OtherFX_Play(1, 1);
@@ -213,7 +225,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 				break;
 			case 8:
 				OptionsMenu_TestSound(0, 0);
-				if ((sdata->AnyPlayerTap & 0x50) != 0)
+				if (sdata->AnyPlayerTap & (BTN_CIRCLE | BTN_CROSS_one))
 				{
 					OtherFX_Play(1, 1);
 					local_70 = 1;
@@ -260,7 +272,10 @@ switchD_80038f90_caseD_9:
 		i = uVar13 * 0x10000;
 	} while ((uVar13 & 0xffff) < 3);
 	iVar10 = 0;
+	
+	// "OPTIONS"
 	DecalFont_DrawLine(sdata->lngStrings[324], 0x100, (short)((u_int)((iVar7 + 0x1a) * 0x10000) >> 0x10), FONT_BIG, (CENTER_TEXT | ORANGE));
+
 	i = 0x17c - (iVar12 + 0x1e);
 	local_38 = (short)i;
 	local_30 = (i * 0x10000 >> 0x10) + -5;
@@ -278,42 +293,53 @@ switchD_80038f90_caseD_9:
 		}
 		sVar3 = (short)(iVar12 + 0x1e);
 		sVar1 = sVar3 + (short)((u_int)iVar14 >> 8) + 0x38;
-		local_98.x = sVar1 + 1;
-		local_98.y = sVar8 + 0x30;
-		local_98.w = 3;
-		local_98.h = 10;
-		CTR_Box_DrawSolidBox(&local_98, (u_int *)(data.Options_VolumeSlider_Colors + 0xc), (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
-		local_98.y = sVar8 + 0x2f;
-		local_98.w = 5;
-		local_98.h = 0xc;
-		local_98.x = sVar1;
-		CTR_Box_DrawSolidBox(&local_98, (u_int *)(data.Options_VolumeSlider_Colors + 0x10), (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
-		local_90[0] = sVar3 + 0x38;
-		local_90[1] = sVar8 + 0x3a;
-		local_90[2] = sVar3 + local_38 + 0x38;
-		local_90[3] = sVar8 + 0x30;
-		local_90[4] = local_90[2];
-		local_90[5] = local_90[1];
-		MENUBOX_DrawRwdTriangle(local_90, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
+		volumeSliderBar.x = sVar1 + 1;
+		volumeSliderBar.y = sVar8 + 0x30;
+		volumeSliderBar.w = 3;
+		volumeSliderBar.h = 10;
+		CTR_Box_DrawSolidBox(&volumeSliderBar, (u_int *)(data.Options_VolumeSlider_Colors + 0xc), (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
+		volumeSliderBarOutline.y = sVar8 + 0x2f;
+		volumeSliderBarOutline.w = 5;
+		volumeSliderBarOutline.h = 0xc;
+		volumeSliderBarOutline.x = sVar1;
+		CTR_Box_DrawSolidBox(&volumeSliderBarOutline, (u_int *)(data.Options_VolumeSlider_Colors + 0x10), (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
+		volumeSliderTriangle[0] = sVar3 + 0x38;
+		volumeSliderTriangle[1] = sVar8 + 0x3a;
+		volumeSliderTriangle[2] = sVar3 + local_38 + 0x38;
+		volumeSliderTriangle[3] = sVar8 + 0x30;
+		volumeSliderTriangle[4] = volumeSliderTriangle[2];
+		volumeSliderTriangle[5] = volumeSliderTriangle[1];
+		MENUBOX_DrawRwdTriangle(volumeSliderTriangle, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
+		
+		// "FX:" "MUSIC:" "VOICE:"
 		DecalFont_DrawLine(sdata->lngStrings[data.Options_StringIDs_Audio[i]], 0x4c, (short)((u_int)((i * 10 + iVar7 + 0x32) * 0x10000) >> 0x10), 2, ORANGE);
+
 		iVar10 = iVar10 + 1;
 		i = iVar10 * 0x10000;
 	} while (iVar10 * 0x10000 >> 0x10 < 3);
+
+	// "MODE:"
 	DecalFont_DrawLine(sdata->lngStrings[332], 0x4c, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), FONT_SMALL, ORANGE);
+
 	cVar5 = howl_ModeGet();
 	if (cVar5 == '\0')
 	{
-		ppcVar11 = &sdata->lngStrings[333];
+		// "MONO"
+		volumeModeString = &sdata->lngStrings[333];
 	}
 	else
 	{
-		ppcVar11 = &sdata->lngStrings[334];
+		// "STEREO"
+		volumeModeString = &sdata->lngStrings[334];
 	}
-	DecalFont_DrawLine(*ppcVar11, 0x1b4, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), FONT_SMALL, (END_AT_X | WHITE));
+	DecalFont_DrawLine(*volumeModeString, 0x1b4, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), FONT_SMALL, (END_AT_X | WHITE));
+
 	areThereRacingWheels = numRacingWheels;
 	if (numRacingWheels != 0)
 	{
+		// "DUAL SHOCK:"
 		DecalFont_DrawLine(sdata->lngStrings[330], 0x4c, (short)((u_int)((iVar7 + 0x5a) * 0x10000) >> 0x10), FONT_SMALL, ORANGE);
+
 		i = DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Gamepads[2]], 2);
 		iVar10 = DecalFont_GetLineWidth(sdata->lngStrings[326], 2);
 		iVar12 = DecalFont_GetLineWidth(sdata->lngStrings[325], 2);
@@ -345,21 +371,24 @@ switchD_80038f90_caseD_9:
 				{
 					uVar15 = ORANGE;
 				}
+				// "CONTROLLER 1", "CONTROLLER 2", "CONTROLLER 1A", "CONTROLLER 1B", "CONTROLLER 1C", "CONTROLLER 1D"
 				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)((uVar13 + gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], (short)((u_int)(iVar12 * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), FONT_SMALL, uVar15);
 				if ((sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_Vibration_PerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0)
 				{
-					ppcVar11 = &sdata->lngStrings[325];
+					// "VIBRATE ON"
+					dualshockVibrateString = &sdata->lngStrings[325];
 				}
 				else
 				{
-					ppcVar11 = &sdata->lngStrings[326];
+					// "VIBRATE OFF"
+					dualshockVibrateString = &sdata->lngStrings[326];
 				}
 				uVar15 = GRAY;
 				if ((!bVar2) && (uVar15 = RED, (sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_Vibration_PerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0))
 				{
 					uVar15 = WHITE;
 				}
-				DecalFont_DrawLine(*ppcVar11, (short)((u_int)((iVar12 + i + 10) * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), FONT_SMALL, uVar15);
+				DecalFont_DrawLine(*dualshockVibrateString, (short)((u_int)((iVar12 + i + 10) * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), FONT_SMALL, uVar15);
 				iVar14 = iVar14 + 1;
 				iVar10 = iVar14 * 0x10000;
 			} while (iVar14 * 0x10000 < (int)((u_int)numRacingWheels << 0x10));
@@ -380,21 +409,25 @@ switchD_80038f90_caseD_9:
 		}
 	}
 	DecalFont_DrawLine(sdata->lngStrings[331], 0x4c, (short)(((iVar7 + 0x8c) - (u_int)local_68) * 0x10000 >> 0x10), FONT_SMALL, ORANGE);
-	local_80.x = 0x4a;
-	local_80.w = 0x16c;
-	local_80.y = data.Options_HighlightBar_PosY[gametrack->db[0].drawEnv.clip.y][0] + sVar4 + 0x14;
-	local_80.h = data.Options_HighlightBar_PosY[gametrack->db[0].drawEnv.clip.y][1];
-	CTR_Box_DrawClearBox(&local_80, &sdata->menuRowHighlight_Normal, 1, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
-	local_80.x = 0x42;
-	local_80.y = sVar4 + 0x2b;
-	local_80.w = 0x17c;
-	local_80.h = 2;
-	MENUBOX_DrawOuterRect_Edge(&local_80, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
-	local_80.x = 0x38;
-	local_80.w = 400;
-	local_80.h = 0x87 - local_68;
-	local_80.y = sVar4 + 0x14;
-	MENUBOX_DrawInnerRect(&local_80, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+
+	glowingcursor.x = 0x4a;
+	glowingcursor.w = 0x16c;
+	glowingcursor.y = data.Options_HighlightBar_PosY[gametrack->db[0].drawEnv.clip.y][0] + sVar4 + 0x14;
+	glowingcursor.h = data.Options_HighlightBar_PosY[gametrack->db[0].drawEnv.clip.y][1];
+	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
+
+	titleSeparatorLine.x = 66;
+	titleSeparatorLine.y = sVar4 + 43;
+	titleSeparatorLine.w = 380;
+	titleSeparatorLine.h = 2;
+	MENUBOX_DrawOuterRect_Edge(&titleSeparatorLine, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+
+	menuBoxBG.x = 0x38;
+	menuBoxBG.w = 400;
+	menuBoxBG.h = 0x87 - local_68;
+	menuBoxBG.y = sVar4 + 0x14;
+	MENUBOX_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+
 	if ((local_70 != 0) || ((sdata->AnyPlayerTap & (BTN_TRIANGLE | BTN_START | BTN_SQUARE_one)) != 0))
 	{
 		OtherFX_Play(1, 1);
