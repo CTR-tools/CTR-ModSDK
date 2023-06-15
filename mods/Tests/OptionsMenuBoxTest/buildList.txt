@@ -1,0 +1,13 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Compile the code in the empty space in RDATA
+common, exe, rdata_free, 0x0, src/main.c src/MainFreeze_MenuPtrOptions.c
+common, exe, MainFreeze_MenuPtrOptions, 0x0, src/MainFreeze_MenuPtrOptions_Hook.s
+
+// Compile the ASM injection that will load our code
+// ASM injections for loading modded functions are typically done at the "jr ra" or "return" instruction of a function, which is 8 bytes away from the start of the function that follows it
+// Hooked at the end of BOTS_UpdateGlobals, which will make the code run every frame at all times, excluding the loading screen
+common, exe, BOTS_SetRotation, -0x8, src/hook.s
