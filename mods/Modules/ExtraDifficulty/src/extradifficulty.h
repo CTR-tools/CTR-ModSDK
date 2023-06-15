@@ -33,24 +33,6 @@ struct MenuRow rows_extraDifficulty[] =
     FINALIZER_ROW
 };
 
-#define ROW_ADV_CLASSIC 0
-#define ROW_ADV_EASY 1
-#define ROW_ADV_MEDIUM 2
-#define ROW_ADV_HARD 3
-#define ROW_ADV_SUPER_HARD 4
-#define ROW_ADV_ULTRA_HARD 5
-
-struct MenuRow rows_advDifficulty[] =
-{
-    MENU_ROW(ROW_ADV_CLASSIC, 590, ROW_ADV_CLASSIC, ROW_ADV_EASY, ROW_ADV_CLASSIC, ROW_ADV_CLASSIC),
-    MENU_ROW(ROW_ADV_EASY, 346, ROW_ADV_CLASSIC, ROW_ADV_MEDIUM, ROW_ADV_EASY, ROW_ADV_EASY),
-    MENU_ROW(ROW_ADV_MEDIUM, 347, ROW_ADV_EASY, ROW_ADV_HARD, ROW_ADV_MEDIUM, ROW_ADV_MEDIUM),
-    MENU_ROW(ROW_ADV_HARD, 348, ROW_ADV_MEDIUM, ROW_ADV_SUPER_HARD, ROW_ADV_HARD, ROW_ADV_HARD),
-    MENU_ROW(ROW_ADV_SUPER_HARD, 588, ROW_ADV_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_SUPER_HARD, ROW_ADV_SUPER_HARD),
-    MENU_ROW(ROW_ADV_ULTRA_HARD, 589, ROW_ADV_SUPER_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_ULTRA_HARD),
-    FINALIZER_ROW
-};
-
 struct MenuBox extra_difficulty =
 {
     .stringIndexTitle = 345,
@@ -59,19 +41,6 @@ struct MenuBox extra_difficulty =
     .unk1 = 0,
     .state = CENTER_ON_X | USE_SMALL_FONT | BIG_TEXT_IN_TITLE,
     .rows = rows_extraDifficulty,
-    .funcPtr = MM_ExtraDifficulty,
-    .width = 171,
-    .height = 86
-};
-
-struct MenuBox adv_difficulty =
-{
-    .stringIndexTitle = 345,
-    .posX_curr = 0,
-    .posY_curr = 0,
-    .unk1 = 0,
-    .state = CENTER_ON_X | USE_SMALL_FONT | BIG_TEXT_IN_TITLE,
-    .rows = rows_advDifficulty,
     .funcPtr = MM_ExtraDifficulty,
     .width = 171,
     .height = 86
