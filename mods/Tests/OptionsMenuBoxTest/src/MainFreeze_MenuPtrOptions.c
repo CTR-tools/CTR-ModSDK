@@ -430,8 +430,7 @@ switchD_80038f90_caseD_9:
 	glowingcursor.h = data.Options_HighlightBar_PosY[gametrack->db[0].drawEnv.clip.y][1];
 	if (gametrack->db[0].drawEnv.clip.y == 9)
 	{
-		glowingcursor.y = data.Options_HighlightBar_PosY[8][0] + sVar4 + 0x14 + (10 * NUM_ADDED_ENTRIES);
-		glowingcursor.h = data.Options_HighlightBar_PosY[8][1];
+		glowingcursor.y = data.Options_HighlightBar_PosY[8][0] + sVar4 + 0x14 + 10;
 	}
 	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 
