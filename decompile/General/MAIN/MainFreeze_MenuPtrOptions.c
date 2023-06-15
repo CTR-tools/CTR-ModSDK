@@ -149,9 +149,9 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 		*(u_short *)&gametrack->frontBuffer = uVar6 | 0x100;
 	}
 	local_68 = areThereRacingWheels;
-	if ((sdata->AnyPlayerTap & 1) == 0)
+	if ((sdata->AnyPlayerTap & BTN_UP) == 0)
 	{
-		if ((sdata->AnyPlayerTap & 2) == 0)
+		if ((sdata->AnyPlayerTap & BTN_DOWN) == 0)
 		{
 			// Do the same for all 3 sliders in Options menu
 			// 0: FX slider
