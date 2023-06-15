@@ -260,7 +260,7 @@ switchD_80038f90_caseD_9:
 		i = uVar13 * 0x10000;
 	} while ((uVar13 & 0xffff) < 3);
 	iVar10 = 0;
-	DecalFont_DrawLine(sdata->lngStrings[0x144], 0x100, (short)((u_int)((iVar7 + 0x1a) * 0x10000) >> 0x10), 1, 0x8000);
+	DecalFont_DrawLine(sdata->lngStrings[324], 0x100, (short)((u_int)((iVar7 + 0x1a) * 0x10000) >> 0x10), FONT_BIG, (CENTER_TEXT | ORANGE));
 	i = 0x17c - (iVar12 + 0x1e);
 	local_38 = (short)i;
 	local_30 = (i * 0x10000 >> 0x10) + -5;
@@ -295,28 +295,28 @@ switchD_80038f90_caseD_9:
 		local_90[4] = local_90[2];
 		local_90[5] = local_90[1];
 		MENUBOX_DrawRwdTriangle(local_90, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
-		DecalFont_DrawLine(sdata->lngStrings[data.Options_StringIDs_Audio[i]], 0x4c, (short)((u_int)((i * 10 + iVar7 + 0x32) * 0x10000) >> 0x10), 2, 0);
+		DecalFont_DrawLine(sdata->lngStrings[data.Options_StringIDs_Audio[i]], 0x4c, (short)((u_int)((i * 10 + iVar7 + 0x32) * 0x10000) >> 0x10), 2, ORANGE);
 		iVar10 = iVar10 + 1;
 		i = iVar10 * 0x10000;
 	} while (iVar10 * 0x10000 >> 0x10 < 3);
-	DecalFont_DrawLine(sdata->lngStrings[0x14c], 0x4c, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), 2, 0);
+	DecalFont_DrawLine(sdata->lngStrings[332], 0x4c, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), FONT_SMALL, ORANGE);
 	cVar5 = howl_ModeGet();
 	if (cVar5 == '\0')
 	{
-		ppcVar11 = sdata->lngStrings + 0x14d;
+		ppcVar11 = &sdata->lngStrings[333];
 	}
 	else
 	{
-		ppcVar11 = sdata->lngStrings + 0x14e;
+		ppcVar11 = &sdata->lngStrings[334];
 	}
-	DecalFont_DrawLine(*ppcVar11, 0x1b4, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), 2, 0x4004);
+	DecalFont_DrawLine(*ppcVar11, 0x1b4, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), FONT_SMALL, (END_AT_X | WHITE));
 	areThereRacingWheels = numRacingWheels;
 	if (numRacingWheels != 0)
 	{
-		DecalFont_DrawLine(sdata->lngStrings[0x14a], 0x4c, (short)((u_int)((iVar7 + 0x5a) * 0x10000) >> 0x10), 2, 0);
+		DecalFont_DrawLine(sdata->lngStrings[330], 0x4c, (short)((u_int)((iVar7 + 0x5a) * 0x10000) >> 0x10), FONT_SMALL, ORANGE);
 		i = DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Gamepads[2]], 2);
-		iVar10 = DecalFont_GetLineWidth(sdata->lngStrings[0x146], 2);
-		iVar12 = DecalFont_GetLineWidth(sdata->lngStrings[0x145], 2);
+		iVar10 = DecalFont_GetLineWidth(sdata->lngStrings[326], 2);
+		iVar12 = DecalFont_GetLineWidth(sdata->lngStrings[325], 2);
 		iVar14 = 0;
 		if (iVar12 << 0x10 < iVar10 << 0x10)
 		{
@@ -339,27 +339,27 @@ switchD_80038f90_caseD_9:
 				}
 				if (bVar2)
 				{
-					uVar15 = 0x17;
+					uVar15 = GRAY;
 				}
 				else
 				{
-					uVar15 = 0;
+					uVar15 = ORANGE;
 				}
-				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)((uVar13 + gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], (short)((u_int)(iVar12 * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), 2, uVar15);
+				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)((uVar13 + gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], (short)((u_int)(iVar12 * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), FONT_SMALL, uVar15);
 				if ((sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_Vibration_PerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0)
 				{
-					ppcVar11 = sdata->lngStrings + 0x145;
+					ppcVar11 = &sdata->lngStrings[325];
 				}
 				else
 				{
-					ppcVar11 = sdata->lngStrings + 0x146;
+					ppcVar11 = &sdata->lngStrings[326];
 				}
-				uVar15 = 0x17;
-				if ((!bVar2) && (uVar15 = 3, (sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_Vibration_PerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0))
+				uVar15 = GRAY;
+				if ((!bVar2) && (uVar15 = RED, (sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_Vibration_PerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0))
 				{
-					uVar15 = 4;
+					uVar15 = WHITE;
 				}
-				DecalFont_DrawLine(*ppcVar11, (short)((u_int)((iVar12 + i + 10) * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), 2, uVar15);
+				DecalFont_DrawLine(*ppcVar11, (short)((u_int)((iVar12 + i + 10) * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), FONT_SMALL, uVar15);
 				iVar14 = iVar14 + 1;
 				iVar10 = iVar14 * 0x10000;
 			} while (iVar14 * 0x10000 < (int)((u_int)numRacingWheels << 0x10));
@@ -369,17 +369,17 @@ switchD_80038f90_caseD_9:
 	if (iVar12 != 0)
 	{
 		i = 0;
-		DecalFont_DrawLine(sdata->lngStrings[0x150], 0x4c, (short)(((u_int)local_60 + iVar7 + 0x5a) * 0x10000 >> 0x10), 2, 0);
+		DecalFont_DrawLine(sdata->lngStrings[336], 0x4c, (short)(((u_int)local_60 + iVar7 + 0x5a) * 0x10000 >> 0x10), FONT_SMALL, ORANGE);
 		if (0 < iVar12)
 		{
 			do
 			{
-				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)(((u_int)local_b0[(short)i] + (u_int)gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], 0x100, (short)((iVar7 + (u_int)local_60 + (short)i * 10 + 100) * 0x10000 >> 0x10), 2, 0x8000);
+				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)(((u_int)local_b0[(short)i] + (u_int)gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], 0x100, (short)((iVar7 + (u_int)local_60 + (short)i * 10 + 100) * 0x10000 >> 0x10), FONT_SMALL, (CENTER_TEXT | ORANGE));
 				i = i + 1;
 			} while (i * 0x10000 >> 0x10 < iVar12);
 		}
 	}
-	DecalFont_DrawLine(sdata->lngStrings[0x14b], 0x4c, (short)(((iVar7 + 0x8c) - (u_int)local_68) * 0x10000 >> 0x10), 2, 0);
+	DecalFont_DrawLine(sdata->lngStrings[331], 0x4c, (short)(((iVar7 + 0x8c) - (u_int)local_68) * 0x10000 >> 0x10), FONT_SMALL, ORANGE);
 	local_80.x = 0x4a;
 	local_80.w = 0x16c;
 	local_80.y = data.Options_HighlightBar_PosY[gametrack->db[0].drawEnv.clip.y][0] + sVar4 + 0x14;
