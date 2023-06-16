@@ -33,6 +33,8 @@ struct MenuRow rows_extraDifficulty[] =
     FINALIZER_ROW
 };
 
+void MM_ExtraDifficulty(struct MenuBox* mb);
+
 struct MenuBox extra_difficulty =
 {
     .stringIndexTitle = 345,
