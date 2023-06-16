@@ -1,7 +1,5 @@
 #include <common.h>
 
-// WARNING: Type propagation algorithm not settling
-
 void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 {
 	short sVar1;
@@ -44,7 +42,6 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 	RECT titleSeparatorLine;
 	RECT menuBoxBG;
 	
-	struct GameTracker *gametrack;
 	short local_70;
 	u_short local_68;
 	u_short local_60;
@@ -53,12 +50,10 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 	u_short gamepadSlotBufferMeta1;
 	short local_38;
 	int local_30;
-	struct GameTracker *gametrack2;
 	
 	local_70 = 0;
 	numRacingWheels = 0;
 	gamepadSlotBufferMeta1 = (u_short)(sdata->gGamepads->slotBuffer[0].meta[1] == -0x80) << 1;
-	gametrack = gGT;
 	MainFreeze_SafeAdvDestroy();
 	iVar12 = 0;
 	numAnalogGamepads = 0;
@@ -141,12 +136,11 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 			iVar10 = (u_int)numAnalogGamepads << 0x10;
 		} while (i * 0x10000 < iVar10);
 	}
-	gametrack2 = sdata->gGT;
-	uVar6 = *(u_short *)&gametrack->frontBuffer & 0xfeff;
-	*(u_short *)&gametrack->frontBuffer = uVar6;
-	if (2 < gametrack2->numPlyrCurrGame)
+	uVar6 = *(u_short *)&gGT->frontBuffer & 0xfeff;
+	*(u_short *)&gGT->frontBuffer = uVar6;
+	if (2 < gGT->numPlyrCurrGame)
 	{
-		*(u_short *)&gametrack->frontBuffer = uVar6 | 0x100;
+		*(u_short *)&gGT->frontBuffer = uVar6 | 0x100;
 	}
 	local_68 = areThereRacingWheels;
 	if ((sdata->AnyPlayerTap & BTN_UP) == 0)
@@ -157,12 +151,12 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 			// 0: FX slider
 			// 1: Music slider
 			// 2: Voice slider
-			switch(gametrack->db[0].drawEnv.clip.y)
+			switch(gGT->db[0].drawEnv.clip.y)
 			{
 			case 0:
 			case 1:
 			case 2:
-				selectedRow = (int)gametrack->db[0].drawEnv.clip.y;
+				selectedRow = (int)gGT->db[0].drawEnv.clip.y;
 				OptionsMenu_TestSound(selectedRow, 1);
 				if ((sdata->AnyPlayerHold & 4) == 0)
 				{
@@ -207,7 +201,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 				OptionsMenu_TestSound(0, 0);
 				if (sdata->AnyPlayerTap & (BTN_CIRCLE | BTN_CROSS_one))
 				{
-					uVar6 = gametrack->db[0].drawEnv.clip.y;
+					uVar6 = gGT->db[0].drawEnv.clip.y;
 					OtherFX_Play(1, 1);
 					i = (int)((uVar6 - 4) * 0x10000) >> 0x10;
 					// if the row you selected is for configuring a racing wheel gamepad
@@ -234,11 +228,11 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 			goto switchD_80038f90_caseD_9;
 		}
 		OtherFX_Play(0, 1);
-		sVar8 = gametrack->db[0].drawEnv.clip.y + 1;
-		gametrack->db[0].drawEnv.clip.y = sVar8;
+		sVar8 = gGT->db[0].drawEnv.clip.y + 1;
+		gGT->db[0].drawEnv.clip.y = sVar8;
 		if (8 < sVar8)
 		{
-			gametrack->db[0].drawEnv.clip.y = 0;
+			gGT->db[0].drawEnv.clip.y = 0;
 			goto switchD_80038f90_caseD_9;
 		}
 		if ((int)sVar8 < (int)(sdata->gGT->numPlyrCurrGame + 4)) goto switchD_80038f90_caseD_9;
@@ -246,18 +240,18 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 	else
 	{
 		OtherFX_Play(0, 1);
-		sVar8 = gametrack->db[0].drawEnv.clip.y + -1;
-		gametrack->db[0].drawEnv.clip.y = sVar8;
+		sVar8 = gGT->db[0].drawEnv.clip.y + -1;
+		gGT->db[0].drawEnv.clip.y = sVar8;
 		if (-1 < sVar8)
 		{
 			if (sVar8 == 7)
 			{
-				gametrack->db[0].drawEnv.clip.y = sdata->gGT->numPlyrCurrGame + 3;
+				gGT->db[0].drawEnv.clip.y = sdata->gGT->numPlyrCurrGame + 3;
 			}
 			goto switchD_80038f90_caseD_9;
 		}
 	}
-	gametrack->db[0].drawEnv.clip.y = 8;
+	gGT->db[0].drawEnv.clip.y = 8;
 switchD_80038f90_caseD_9:
 	uVar13 = 0;
 	i = 0;
@@ -408,12 +402,13 @@ switchD_80038f90_caseD_9:
 			} while (i * 0x10000 >> 0x10 < iVar12);
 		}
 	}
+	// "EXIT"
 	DecalFont_DrawLine(sdata->lngStrings[331], 0x4c, (short)(((iVar7 + 0x8c) - (u_int)local_68) * 0x10000 >> 0x10), FONT_SMALL, ORANGE);
 
 	glowingcursor.x = 0x4a;
 	glowingcursor.w = 0x16c;
-	glowingcursor.y = data.Options_HighlightBar_PosY[gametrack->db[0].drawEnv.clip.y][0] + sVar4 + 0x14;
-	glowingcursor.h = data.Options_HighlightBar_PosY[gametrack->db[0].drawEnv.clip.y][1];
+	glowingcursor.y = data.Options_HighlightBar_PosY[gGT->db[0].drawEnv.clip.y][0] + sVar4 + 0x14;
+	glowingcursor.h = data.Options_HighlightBar_PosY[gGT->db[0].drawEnv.clip.y][1];
 	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 
 	titleSeparatorLine.x = 66;
@@ -435,10 +430,5 @@ switchD_80038f90_caseD_9:
 		MENUBOX_ClearInput();
 		sdata->ptrDesiredMenuBox = MainFreeze_GetMenuBox();
 	}
-	// WARNING: Read-only address (ram, 0x8008d950) is written
-	// WARNING: Read-only address (ram, 0x8008d974) is written
-	// WARNING: Read-only address (ram, 0x8009d2ac) is written
-	// WARNING: Read-only address (ram, 0x8009d2b0) is written
-	// WARNING: Read-only address (ram, 0x8009d878) is written
 	return;
 }
