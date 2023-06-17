@@ -1,2 +1,2 @@
 .set noreorder
-j GetGarage
+j AH_Rand
