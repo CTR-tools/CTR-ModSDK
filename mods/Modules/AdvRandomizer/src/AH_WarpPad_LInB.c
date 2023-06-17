@@ -1,4 +1,5 @@
 #include <common.h>
+#define RANDOM_MODE 1
 
 extern short newPads[];
 
@@ -82,19 +83,12 @@ void AH_WarpPad_LInB(struct Instance *inst)
 	{
 		levelID = levelID * 10 + inst->name[i] - '0';
 	}
-	swap = (levelID > 22) ? pads[levelID - 79] : pads[levelID];
+	swap = (levelID > 22) ? newPads[levelID - 79] : newPads[levelID];
 
-	switch (RANDOM_MODE)
-	{
-		case 1:
-			warppadObj->levelID = swap;
-			break;
-		case 2:
-			levelID = swap;
-		default:
-			warppadObj->levelID = levelID;
-			break;
-	}
+	if (RANDOM_MODE)
+		warppadObj->levelID = swap;
+	
+	warppadObj->levelID = levelID;
 
 	unlockItem_numNeeded = -1;
 
