@@ -4,11 +4,6 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 {
 	MainFreeze_SafeAdvDestroy();
 
-	u_int uVar6 = *(u_short *)&gGT->frontBuffer & 0xfeff;
-	*(u_short *)&gGT->frontBuffer = uVar6;
-
-	gGT->db[0].drawEnv.clip.y = 0;
-
 	RECT glowingcursor;
 	RECT menuBoxBG;
 
