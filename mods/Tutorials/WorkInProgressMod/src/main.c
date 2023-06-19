@@ -1,5 +1,5 @@
 #include <common.h>
-#include "header.h"
+#include "menubox.h"
 
 void MyMainFreeze(struct GameTracker* gGT)
 {
