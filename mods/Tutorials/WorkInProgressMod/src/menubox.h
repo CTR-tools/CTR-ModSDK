@@ -17,7 +17,7 @@ struct MenuBox MyMenuBox =
 
 	.unk1 = 0,
 
-	.state = (DISABLE_INPUT_ALLOW_FUNCPTRS | USE_SMALL_FONT | CENTER_ON_COORDS),
+	.state = (DISABLE_INPUT_ALLOW_FUNCPTRS | 0x800 | USE_SMALL_FONT | CENTER_ON_COORDS),
 
 	.rows = 0,
 
@@ -31,7 +31,7 @@ struct MenuBox MyMenuBox =
 	.rowSelected = 0,
 
 	.unk1a = 0,
-	.unk1e = 0,
+	.unk1e = 1,
 
 	.width = 448,
 	.height = 130,
