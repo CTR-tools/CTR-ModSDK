@@ -1,4 +1,4 @@
-#include "..\..\..\mods\include\helper_menu_box.h"
+#include "..\..\..\include\helper_menu_box.h"
 
 
 #define ROW_EASY 0
