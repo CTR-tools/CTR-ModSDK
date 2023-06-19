@@ -111,6 +111,19 @@ void daisy(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 	}
 }
 
+int Hello_Main()
+{
+	struct GameTracker* gGT = sdata->gGT;
+	struct GamepadSystem* gGamepads = sdata->gGamepads;
+
+	if (gGT->numPlyrCurrGame == 1)
+	{
+		daisy(gGT, gGamepads);
+		//eggplant(gGT);
+	}
+}
+
+/*
 void eggplant(struct GameTracker* gGT)
 {
 	//string1[]  = "         ";
@@ -190,38 +203,4 @@ void eggplant(struct GameTracker* gGT)
 	DecalFont_DrawLine(string17, 6 + 150, 10 + 10*16, FONT_SMALL, COCO_MAGENTA);
 	DecalFont_DrawLine(string18, 6 + 150, 10 + 10*17, FONT_SMALL, COCO_MAGENTA);
 }
-
-void heyguys(struct MenuBox* m)
-{
-	u_short stringIndex = m->rows[m->rowSelected].stringIndex;
-
-	if (stringIndex == 70)
-	{
-		sdata->ptrActiveMenuBox = &MyMenuBox2;
-		return;
-	}
-}
-
-int Hello_Main()
-{
-	struct GameTracker* gGT = sdata->gGT;
-	struct GamepadSystem* gGamepads = sdata->gGamepads;
-
-	if (gGT->numPlyrCurrGame == 1)
-	{
-		/*
-		if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_SELECT)
-			isSelectPause = (isSelectPause + 1) % 2;
-		*/
-
-		if (isSelectPause)
-		{
-			DecalFont_DrawLine("and so it begins", 10, 190, FONT_SMALL, COCO_MAGENTA);
-
-			//MENUBOX_DrawInnerRect(&r, 4, (u_long*)(gGT->backBuffer->otMem).startPlusFour);
-		}
-
-		daisy(gGT, gGamepads);
-		eggplant(gGT);
-	}
-}
+*/
