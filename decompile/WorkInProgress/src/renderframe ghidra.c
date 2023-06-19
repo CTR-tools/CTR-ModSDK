@@ -43,7 +43,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 	uVar5 = LOAD_IsOpen_MainMenu();
 	if ((uVar5 != 0) && (sdata->ptrActiveMenuBox == &OVR_230.menubox_mainMenu))
 	{
-		bool_menubox_mainMenuState = (OVR_230.menubox_mainMenu.state & 0x10) == 0;
+		bool_menubox_mainMenuState = (OVR_230.menubox_mainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0;
 	}
 	if
 	(

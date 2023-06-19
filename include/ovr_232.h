@@ -12,6 +12,10 @@ struct BossGarageDoor
 	// 0x14 bytes large
 };
 
+struct AdvPause {
+
+};
+
 struct WoodDoor
 {
 	struct Instance* otherDoor;

@@ -175,7 +175,7 @@ int MM_Title_ThTick(struct Thread* title)
   if (0xf5 < TITLE_FRAME) 
   {
 	// animation is over
-    OVR_230.menubox_mainMenu.state &= 0xffffffdf | 0x400;
+    OVR_230.menubox_mainMenu.state &= 0xffffffdf | BIG_TEXT_IN_TITLE;
 	
 	// dont increment index
     timer = TITLE_FRAME;

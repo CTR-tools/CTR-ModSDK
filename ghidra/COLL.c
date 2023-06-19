@@ -696,7 +696,8 @@ void FUN_8001d944(int param_1,int param_2)
         }
       }
     }
-    iVar15 = (int)*(short *)(param_2 + 0x370) * 5 + (int)DAT_1f800178 * 3;
+    
+	iVar15 = (int)*(short *)(param_2 + 0x370) * 5 + (int)DAT_1f800178 * 3;
     iVar14 = (int)*(short *)(param_2 + 0x372) * 5 + (int)DAT_1f80017a * 3;
     iVar13 = (int)*(short *)(param_2 + 0x374) * 5 + (int)(short)DAT_1f80017c * 3;
 
@@ -1161,7 +1162,10 @@ LAB_8001e340:
     }
     iVar9 = 6;
   }
+  
   iVar13 = 8 - iVar9;
+  
+  // lerp: 25% of curr normalVec + 75% of desired normalVec
   local_30 = iVar9 * *(short *)(param_2 + 0x368) + iVar13 * *(short *)(param_2 + 0xa4) >> 3;
   local_2c = iVar9 * *(short *)(param_2 + 0x36a) + iVar13 * *(short *)(param_2 + 0xa6) >> 3;
   local_28 = iVar9 * *(short *)(param_2 + 0x36c) + iVar13 * *(short *)(param_2 + 0xa8) >> 3;
@@ -3125,9 +3129,9 @@ void FUN_80020334(int param_1,int param_2,int param_3)
   }
 
   // if this function is being called from the 
-  // loop of 15 calls, from OnCollide_QuadblockNear
+  // loop of 15 calls, from COLL_StartSearch_Player
 
-  // since start of OnCollide_QuadblockNear, check all existing
+  // since start of COLL_StartSearch_Player, check all existing
   // records of quadblock and triangle, so far
   iVar3 = *(int *)(param_3 + 0x2c0) + -1;
   

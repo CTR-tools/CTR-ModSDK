@@ -53,8 +53,8 @@ struct Instance* RB_Hazard_CollideWithDrivers(
 		// to be more optimal, just do weaponInst->thread->funcThTick == GenericMine_ThTick
 		if (
 				((unsigned int)modelID - 0x46 < 2) ||	// red or green potion
-				(modelID == 6) ||						// Nitro
-				(modelID == 0x27) 						// TNT
+				(modelID == PU_EXPLOSIVE_CRATE) ||						// Nitro
+				(modelID == STATIC_CRATE_TNT) 						// TNT
 			)
 		{
 			// upgrade to 2D collision to 3D sphere
