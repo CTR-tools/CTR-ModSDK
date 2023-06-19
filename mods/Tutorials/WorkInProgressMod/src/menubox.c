@@ -35,8 +35,14 @@ void heyguys(struct GameTracker* gGT)
 	sprintf(metaPhysIDString, "%d\n", metaPhysID);
 
 	DecalFont_DrawLine(driverClassString[*driverClass], SCREEN_WIDTH/2, SCREEN_HEIGHT/4, FONT_BIG, (CENTER_TEXT | ORANGE)); // draw current metaPhys value
-	DecalFont_DrawLine(metaPhysIDString, SCREEN_WIDTH/2, SCREEN_HEIGHT/3, FONT_BIG, (CENTER_TEXT | ORANGE));
-	DecalFont_DrawLine(metaPhys, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, FONT_BIG, (CENTER_TEXT | ORANGE)); // draw current metaPhys value
+	u_int metaPhysColor = ORANGE;
+	if
+	(
+		metaPhysID == 9 || metaPhysID == 11 || metaPhysID == 12 || metaPhysID == 18 ||
+		metaPhysID == 20 || metaPhysID == 21 || metaPhysID == 22 || metaPhysID == 42 || metaPhysID == 61
+	) metaPhysColor = BLUE;
+	DecalFont_DrawLine(metaPhysIDString, SCREEN_WIDTH/2, SCREEN_HEIGHT/3, FONT_BIG, (CENTER_TEXT | metaPhysColor));
+	DecalFont_DrawLine(metaPhys, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, FONT_BIG, (CENTER_TEXT | metaPhysColor)); // draw current metaPhys value
 
 	// draw glowing cursor
 	glowingcursor.x = 40;
