@@ -3,6 +3,8 @@
 1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
 1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
 
+//Cheat code is mandatory for menuboxmain for some reason
+926, 230, MM_ParseCheatCodes, 0x0, src/230_09_30_MM_CheatCodes.c 
 926, 230, MM_EndOfFile, 0x0, src/MM_BossBattle.c
-926, 230, DECOMP_MM_MENUBOX_Main, 0x0, src/230_31_MM_MENUBOX_Main.c
+926, 230, MM_MENUBOX_Main, 0x0, src/230_31_MM_MENUBOX_Main.c
 926, bigfilelangenlng, 0x0, 0x0, assets/NTSC-U.lng

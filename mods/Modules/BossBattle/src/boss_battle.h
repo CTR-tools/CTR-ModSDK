@@ -12,13 +12,15 @@ struct MenuRow rows_boss[] =
     FINALIZER_ROW
 };
 
+void MM_MenuBox_BossBattle(struct MenuBox* mb);
+
 struct MenuBox boss_battle_menu =
 {
     .stringIndexTitle = 345,
     .posX_curr = 0,
     .posY_curr = 0,
     .unk1 = 0,
-    .state = CENTER_ON_X | USE_SMALL_FONT | BIG_TEXT_IN_TITLE,
+    .state = CENTER_ON_X | BIG_TEXT_IN_TITLE,
     .rows = rows_boss,
     .funcPtr = MM_MenuBox_BossBattle,
     .width = 171,
