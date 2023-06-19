@@ -2,6 +2,7 @@
 
 // byte budget
 // 840/1108
+
 extern struct MenuBox boss_battle_menu;
 
 void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
