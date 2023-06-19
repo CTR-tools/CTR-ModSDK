@@ -6,7 +6,7 @@ RECT r =
 	.h = 130,
 };
 
-void heyguys(struct GameTracker*);
+void heyguys(struct MenuBox*);
 
 struct MenuBox MyMenuBox =
 {
