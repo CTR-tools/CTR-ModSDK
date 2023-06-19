@@ -1,6 +1,5 @@
 #include <common.h>
 
-extern RECT r;
 u_int metaPhysID = 0;
 
 force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int buttonsTapped)
@@ -33,7 +32,8 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int
 
 force_inline void DisplayMenuBox(struct GameTracker* gGT, int* driverClass)
 {
-	RECT glowingcursor;
+	extern RECT r;
+	extern RECT glowingcursor;
 	char metaPhys[] = "         ";
 	char metaPhysIDString[] = "     ";
 	
@@ -63,17 +63,12 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT, int* driverClass)
 	DecalFont_DrawLine(metaPhysIDString, SCREEN_WIDTH/2, SCREEN_HEIGHT/3, FONT_BIG, (CENTER_TEXT | metaPhysColor)); // display current metaPhys ID
 	DecalFont_DrawLine(metaPhys, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, FONT_BIG, (CENTER_TEXT | metaPhysColor)); // display current metaPhys value
 
-	// draw glowing cursor
-	glowingcursor.x = 40;
-	glowingcursor.w = 40;
-	glowingcursor.y = 128;
-	glowingcursor.h = 50;
-	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem);
+	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
 
 	MENUBOX_DrawInnerRect(&r, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
 }
 
-// the main function
+// the MenuBox function
 void heyguys(struct MenuBox*)
 {
 	MainFreeze_SafeAdvDestroy(); // probably mandatory

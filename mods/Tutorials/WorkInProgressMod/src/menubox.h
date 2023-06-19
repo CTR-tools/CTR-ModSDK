@@ -6,6 +6,14 @@ RECT r =
 	.h = 130,
 };
 
+RECT glowingcursor =
+{
+	.x = 40,
+	.w = 40,
+	.y = 128,
+	.h = 50,
+};
+
 void heyguys(struct MenuBox*);
 
 struct MenuBox MyMenuBox =
