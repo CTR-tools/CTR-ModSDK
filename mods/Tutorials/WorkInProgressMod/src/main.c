@@ -51,24 +51,7 @@ void daisy(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 
 	if (!(gGT->gameMode1 & END_OF_RACE))
 	{
-		if (gGT->gameMode1 & PAUSE_ALL)
-		{
-			if (gGT->cooldownfromPauseUntilUnpause == 0)
-			{
-				if (sdata->AnyPlayerTap & BTN_SELECT) // only changes I made to this portion of GameLogic so far
-				{
-					MENUBOX_ClearInput();
-					gGT->gameMode1 &= ~PAUSE_1;
-					MainFrame_TogglePauseAudio(0);
-					OtherFX_Play(1, 1);
-					MainFreeze_SafeAdvDestroy();
-					ElimBG_Deactivate(gGT);
-					MENUBOX_Hide(sdata->ptrActiveMenuBox);
-					gGT->cooldownFromUnpauseUntilPause = 5;
-				}
-			}
-		}
-		else if (gGT->cooldownFromUnpauseUntilPause == 0)
+		if (gGT->cooldownFromUnpauseUntilPause == 0)
 		{
 			if
 			(
