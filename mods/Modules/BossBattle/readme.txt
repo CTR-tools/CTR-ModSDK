@@ -1,0 +1,1 @@
+Adds "Super Hard", the cheat code-exclusive difficulty, and "Ultra Hard", the GameShark difficulty cheat made by Niko (https://www.youtube.com/watch?v=L1qPStFE_AY), to the Arcade mode difficulty selection menu. By Faradise and Superstarxalien.
