@@ -55,7 +55,7 @@ void DECOMP_AH_Map_Main(void)
   }
   
   // if game is not paused
-  if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) 
+  if ((gGT->gameMode1 & PAUSE_ALL) == 0) 
   {
 	// Jump meter and landing boost
     DECOMP_UI_JumpMeter_Update(advDriver);

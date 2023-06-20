@@ -1,6 +1,6 @@
 #include <common.h>
 
-
+#include "boss_battle.h"
 
 void MM_MenuBox_BossBattle(struct MenuBox* mb)
 
