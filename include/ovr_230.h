@@ -533,6 +533,7 @@ struct Overlay_230
 	// 0x800b59dc
 	int characterSelect_sizeY;
 	
+	// 0x800b59e0
 	int desiredMenu;
 
 	// 0x800b59e4 -- UsaRetail

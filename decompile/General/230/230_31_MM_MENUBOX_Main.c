@@ -185,7 +185,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
   // if you chose Battle
   if (choose == 0x50) 
   {
-  	*(int*)0x800b5a08 = 2;
+  	OVR_230.transitionState = 2;
   
   	// set game mode to Battle Mode
   	gGT->gameMode1 |= BATTLE_MODE;

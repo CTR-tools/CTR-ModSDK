@@ -19,8 +19,8 @@ void DECOMP_MM_MENUBOX_Difficulty(struct MenuBox* mb)
 	  // set difficulty to value, from array of fixed difficulty values
       sdata->gGT->arcadeDifficulty = OVR_230.cupDifficultySpeed[row];
       
-	  *(int*)0x800b5a1c = 2;
-	  *(int*)0x800b59e0 = 2;
+	  OVR_230.MM_State = 2;
+	  OVR_230.desiredMenu = 2;
       
 	  mb->state |= 4;
       return;

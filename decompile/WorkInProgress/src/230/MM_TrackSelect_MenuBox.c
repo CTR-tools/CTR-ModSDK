@@ -95,7 +95,7 @@ void MM_TrackSelect_MenuBox(struct MenuBox *param_1)
         {
           // allocate room at the end of RAM for ghosts
 
-          sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00, s_loaded_ghost_data_800aba44);
+          sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00, OVR_230.s_loaded_ghost_data);
 
           memset(sdata->ptrGhostTapePlaying, 0, 0x28);
 
@@ -515,12 +515,15 @@ LAB_800b05b8:
     if (8 < iVar18 * 0x10000 >> 0x10)
     {
       local_44 = 0x4b00b0;
-      p._0_2_ = OVR_230.transitionMeta_trackSel->currX + 0x134;
-      p._2_2_ = OVR_230.transitionMeta_trackSel->currY + 0x3a;
+	  
+	  // posX of "SELECT LEVEL"
+      p.x = OVR_230.transitionMeta_trackSel->currX + 0x134;
+      
+	  // posY of "SELECT LEVEL"
+	  // near-top if map exists, near-mid if no map
+	  p.y = OVR_230.transitionMeta_trackSel->currY + 0x3a;
       if (-1 < selectMenu[param_1->rowSelected << 4].mapTextureID)
-      {
-        p._2_2_ = OVR_230.transitionMeta_trackSel->currY + 5;
-      }
+        p.y = OVR_230.transitionMeta_trackSel->currY + 5;
 
       // _OVR_230.trackSel_boolOpenLapBox is the boolean to show
       // the selection menu for number of laps:
@@ -532,26 +535,33 @@ LAB_800b05b8:
         // "SELECT"
         DecalFont_DrawLine(sdata->lngStrings[0x1a4],
                            (OVR_230.transitionMeta_trackSel[2].currX + 0x18c),
-                           (int)(OVR_230.transitionMeta_trackSel[2].currY + (u_int)p._2_2_),
+                           (int)(OVR_230.transitionMeta_trackSel[2].currY + (u_int)p.y),
                            1, 0xffff8000);
 
         // "LEVEL"
         DecalFont_DrawLine(sdata->lngStrings[0x1a8],
                            (OVR_230.transitionMeta_trackSel[2].currX + 0x18c),
-                           (OVR_230.transitionMeta_trackSel[2].currY + (u_int)p._2_2_ + 0x10),
+                           (OVR_230.transitionMeta_trackSel[2].currY + (u_int)p.y + 0x10),
                            1, 0xffff8000);
       }
-      p.x = CONCAT22(p._2_2_ + 0x22, (short)p.x);
-      if (
+	  
+	  // next, draw the map icon, below "SELECT LEVEL",
+	  // exactly 0x22 (34) pixels below the text
+      p.y += 0x22;
+	  
+	  if (
           (-1 < selectMenu[param_1->rowSelected << 4].mapTextureID) &&
 
           // If lap selection menu is closed
           (OVR_230.trackSel_boolOpenLapBox == 0))
       {
 
-        p.h = CONCAT22(100, (short)local_44);
-        p.w = CONCAT22(p._2_2_ + 0x22 + (OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[0].currY) + 0x49,
-                       p.x + (OVR_230.transitionMeta_trackSel[2].currX - OVR_230.transitionMeta_trackSel[0].currX));
+		// this is not the same rect
+        //p.h = CONCAT22(100, (short)local_44);
+        
+		p.w = p.x + (OVR_230.transitionMeta_trackSel[2].currX - OVR_230.transitionMeta_trackSel[0].currX);
+		
+		p.h = p.y /*+ 0x22*/ + (OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[0].currY) + 0x49;
 
         // icon data
         bVar1 = gGT->ptrIcons[selectMenu[param_1->rowSelected << 4].mapTextureID]->texLayout.v2;
