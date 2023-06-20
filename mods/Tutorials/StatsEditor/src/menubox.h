@@ -54,7 +54,7 @@ RECT glowingcursor =
 	.h = 21,
 };
 
-void heyguys(struct MenuBox*);
+void StatsEditor(struct MenuBox*);
 
 struct MenuBox MyMenuBox =
 {
@@ -69,7 +69,7 @@ struct MenuBox MyMenuBox =
 
 	.rows = 0,
 
-	.funcPtr = heyguys,
+	.funcPtr = StatsEditor,
 
 	.drawStyle = 0,
 

@@ -148,7 +148,7 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT, int* driverClass)
 }
 
 // the MenuBox function
-void heyguys(struct MenuBox* mb)
+void StatsEditor(struct MenuBox* mb)
 {
 	MainFreeze_SafeAdvDestroy(); // probably mandatory
 

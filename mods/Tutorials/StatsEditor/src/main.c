@@ -1,6 +1,7 @@
 #include <common.h>
 #include "menubox.h"
 
+// an extension of SelectPause
 void MyMainFreeze(struct GameTracker* gGT)
 {
 	// Check conditions for pausing the game
@@ -42,8 +43,8 @@ void MyMainFreeze(struct GameTracker* gGT)
 	}
 }
 
-// I don't really know what to name this function
-void daisy(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
+// handles stuff that happens when you press select to pause the game
+void SelectPause(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	int isTitleFlagFullyOnScreen = 0;
 	int isGamepadConnected = GAMEPAD_GetNumConnected(gGamepads);
@@ -101,13 +102,13 @@ int Hello_Main()
 
 	if (gGT->numPlyrCurrGame == 1)
 	{
-		daisy(gGT, gGamepads);
-		//eggplant(gGT);
+		SelectPause(gGT, gGamepads);
+		//MenuBoxInfodump(gGT);
 	}
 }
 
 /*
-void eggplant(struct GameTracker* gGT)
+void MenuBoxInfodump(struct GameTracker* gGT)
 {
 	//string1[]  = "         ";
 	char string2[]  = "         ";
