@@ -59,7 +59,7 @@ void DECOMP_MENUBOX_GetHeight(struct MenuBox* m, short* height, int boolCheckSub
 	}
 	
 	// if submenu needs to be drawn
-	if((m->state & NEXT_IN_HIERARCHY) != 0)
+	if((m->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)
 	{
 		if(boolCheckSubmenu != 0)
 		{
