@@ -39,7 +39,7 @@ void MM_MenuBox_BossBattle(struct MenuBox* mb)
     {
   	  // set next menuBox to 1P+2P select
       mb->ptrNextBox_InHierarchy = &OVR_230.menubox_players1P2P;  //menubox_players1P2P;
-      *(int*)0x800b5a08 = 1;
+      OVR_230.transitionState = 1;
       return;
     }
     
@@ -48,7 +48,7 @@ void MM_MenuBox_BossBattle(struct MenuBox* mb)
     
     // set next menuBox to 2P+3P+4P (vs or battle)
     mb->ptrNextBox_InHierarchy = &OVR_230.menubox_players2P3P4P;
-    *(int*)0x800b5a08 = 2;
+    OVR_230.transitionState = 2;
   }
 }
  
