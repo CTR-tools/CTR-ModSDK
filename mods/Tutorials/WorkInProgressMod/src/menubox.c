@@ -11,6 +11,43 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int
 	if (buttonsTapped & BTN_L2) *driverClass = (*driverClass + 3) % 4;
 	if (buttonsTapped & BTN_R2) *driverClass = (*driverClass + 1) % 4;
 
+	if (buttonsTapped & BTN_LEFT) digitSelected = (digitSelected + 1) % 5;
+	if (buttonsTapped & BTN_RIGHT) digitSelected = (digitSelected + 4) % 5;
+
+	switch(digitSelected)
+	{
+		case 0:
+			if (buttonsTapped & BTN_UP)
+				data.metaPhys[metaPhysID].value[*driverClass] += 1;
+			if (buttonsTapped & BTN_DOWN)
+				data.metaPhys[metaPhysID].value[*driverClass] -= 1;
+			break;
+		case 1:
+			if (buttonsTapped & BTN_UP)
+				data.metaPhys[metaPhysID].value[*driverClass] += 10;
+			if (buttonsTapped & BTN_DOWN)
+				data.metaPhys[metaPhysID].value[*driverClass] -= 10;
+			break;
+		case 2:
+			if (buttonsTapped & BTN_UP)
+				data.metaPhys[metaPhysID].value[*driverClass] += 100;
+			if (buttonsTapped & BTN_DOWN)
+				data.metaPhys[metaPhysID].value[*driverClass] -= 100;
+			break;
+		case 3:
+			if (buttonsTapped & BTN_UP)
+				data.metaPhys[metaPhysID].value[*driverClass] += 1000;
+			if (buttonsTapped & BTN_DOWN)
+				data.metaPhys[metaPhysID].value[*driverClass] -= 1000;
+			break;
+		case 4:
+			if (buttonsTapped & BTN_UP)
+				data.metaPhys[metaPhysID].value[*driverClass] += 10000;
+			if (buttonsTapped & BTN_DOWN)
+				data.metaPhys[metaPhysID].value[*driverClass] -= 10000;
+			break;
+	}
+
 	if (gGT->gameMode1 & PAUSE_ALL)
 	{
 		if (gGT->cooldownfromPauseUntilUnpause == 0)
@@ -34,24 +71,46 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int
 force_inline void DrawNumbers(struct GameTracker* gGT, int* driverClass, u_int color)
 {
 	extern RECT ones;
+	extern RECT tens;
+	extern RECT hundreds;
+	extern RECT thousands;
+	extern RECT ten_thousands;
 	extern RECT glowingcursor;
-	u_int cursorX[5] = {ones.x + 3, 0, 0, 0, 0};
-	u_int cursorY[5] = {ones.y + 2, 0, 0, 0, 0};
+	u_int cursorX[5] = {ones.x + 3, tens.x + 3, hundreds.x + 3, thousands.x + 3, ten_thousands.x + 3};
 
-	char metaPhys[] = "         ";
+	char metaPhysOnes[] = "  ";
+	char metaPhysTens[] = "  ";
+	char metaPhysHundreds[] = "  ";
+	char metaPhysThousands[] = "  ";
+	char metaPhysTen_Thousands[] = "  ";
 
-	u_int value = data.metaPhys[metaPhysID].value[*driverClass] % 10;
+	u_int onesValue = data.metaPhys[metaPhysID].value[*driverClass] % 10;
+	u_int tensValue = (data.metaPhys[metaPhysID].value[*driverClass]/10) % 10;
+	u_int hundredsValue = (data.metaPhys[metaPhysID].value[*driverClass]/100) % 10;
+	u_int thousandsValue = (data.metaPhys[metaPhysID].value[*driverClass]/1000) % 10;
+	u_int ten_thousandsValue = (data.metaPhys[metaPhysID].value[*driverClass]/10000) % 10;
 
-	sprintf(metaPhys, "%d\n", value);
+	sprintf(metaPhysOnes, "%d\n", onesValue);
+	sprintf(metaPhysTens, "%d\n", tensValue);
+	sprintf(metaPhysHundreds, "%d\n", hundredsValue);
+	sprintf(metaPhysThousands, "%d\n", thousandsValue);
+	sprintf(metaPhysTen_Thousands, "%d\n", ten_thousandsValue);
 
-	DecalFont_DrawLine(metaPhys, ones.x+5, ones.y+5, FONT_BIG, color);
+	DecalFont_DrawLine(metaPhysOnes, ones.x+5, SCREEN_HEIGHT/2 + 5, FONT_BIG, color);
+	DecalFont_DrawLine(metaPhysTens, tens.x+5, SCREEN_HEIGHT/2 + 5, FONT_BIG, color);
+	DecalFont_DrawLine(metaPhysHundreds, hundreds.x+5, SCREEN_HEIGHT/2 + 5, FONT_BIG, color);
+	DecalFont_DrawLine(metaPhysThousands, thousands.x+5, SCREEN_HEIGHT/2 + 5, FONT_BIG, color);
+	DecalFont_DrawLine(metaPhysTen_Thousands, ten_thousands.x+5, SCREEN_HEIGHT/2 + 5, FONT_BIG, color);
 
 	glowingcursor.x = cursorX[digitSelected];
-	glowingcursor.y = cursorY[digitSelected];
 
 	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
 
 	MENUBOX_DrawInnerRect(&ones, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
+	MENUBOX_DrawInnerRect(&tens, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
+	MENUBOX_DrawInnerRect(&hundreds, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
+	MENUBOX_DrawInnerRect(&thousands, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
+	MENUBOX_DrawInnerRect(&ten_thousands, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
 }
 
 force_inline void DisplayMenuBox(struct GameTracker* gGT, int* driverClass)

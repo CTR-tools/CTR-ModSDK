@@ -8,7 +8,39 @@ RECT r =
 
 RECT ones =
 {
-	.x = SCREEN_WIDTH/2 + SCREEN_WIDTH/8,
+	.x = SCREEN_WIDTH/2 + 27 + 27,
+	.y = SCREEN_HEIGHT/2,
+	.w = 15+10,
+	.h = 15+10
+};
+
+RECT tens =
+{
+	.x = SCREEN_WIDTH/2 + 27,
+	.y = SCREEN_HEIGHT/2,
+	.w = 15+10,
+	.h = 15+10
+};
+
+RECT hundreds =
+{
+	.x = SCREEN_WIDTH/2,
+	.y = SCREEN_HEIGHT/2,
+	.w = 15+10,
+	.h = 15+10
+};
+
+RECT thousands =
+{
+	.x = SCREEN_WIDTH/2 - 27,
+	.y = SCREEN_HEIGHT/2,
+	.w = 15+10,
+	.h = 15+10
+};
+
+RECT ten_thousands =
+{
+	.x = SCREEN_WIDTH/2 - 27 - 27,
 	.y = SCREEN_HEIGHT/2,
 	.w = 15+10,
 	.h = 15+10
@@ -17,7 +49,7 @@ RECT ones =
 RECT glowingcursor =
 {
 	.x = 0,
-	.y = 0,
+	.y = SCREEN_HEIGHT/2 + 2,
 	.w = 19,
 	.h = 21,
 };
