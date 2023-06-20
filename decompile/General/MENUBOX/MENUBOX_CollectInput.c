@@ -10,7 +10,7 @@ void DECOMP_MENUBOX_CollectInput()
 	
 	// what "actually" is the logic here? what gets set, when?
 	// this contradicts logic in MENUBOX_ProcessInput where only P1 is listened to
-	if((sdata->activeSubMenu == 0) || (numListen = 4, (sdata->activeSubMenu->state & 0x8000) != 0))
+	if((sdata->activeSubMenu == 0) || (numListen = 4, (sdata->activeSubMenu->state & ALL_PLAYERS_USE_MENU) != 0))
 	{
 		numListen = sdata->gGT->numPlyrNextGame;
 	}

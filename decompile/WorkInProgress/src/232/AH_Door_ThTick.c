@@ -204,7 +204,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
     }
 
     // If the game is paused
-    if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0)
+    if ((gGT->gameMode1 & PAUSE_ALL) != 0)
     {
       goto LAB_800b0404;
     }

@@ -279,3 +279,4 @@ short howl_VolumeGet (int volumeType);
 void howl_ModeSet (char volumeMode);
 char howl_ModeGet();
 void MENUBOX_DrawRwdTriangle (short * position, char * color, u_long * otMem, struct PrimMem * primMem);
+void MainFreeze_MenuPtrOptions(struct GameTracker* gGT);

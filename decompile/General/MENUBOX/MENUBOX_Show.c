@@ -6,7 +6,7 @@ void DECOMP_MENUBOX_Show(struct MenuBox* m)
 {
 	sdata->ptrActiveMenuBox = m;
 	
-	m->state &= ~(0x1000);
+	m->state &= ~NEEDS_TO_CLOSE;
 	
 	MENUBOX_ClearInput();
 }
