@@ -1,17 +1,25 @@
 RECT r =
 {
 	.x = 32,
-	.w = 448,
 	.y = 39,
+	.w = 448,
 	.h = 130,
+};
+
+RECT ones =
+{
+	.x = SCREEN_WIDTH/2 + SCREEN_WIDTH/8,
+	.y = SCREEN_HEIGHT/2,
+	.w = 15+10,
+	.h = 15+10
 };
 
 RECT glowingcursor =
 {
-	.x = 40,
-	.w = 40,
-	.y = 128,
-	.h = 50,
+	.x = 0,
+	.y = 0,
+	.w = 19,
+	.h = 21,
 };
 
 void heyguys(struct MenuBox*);
