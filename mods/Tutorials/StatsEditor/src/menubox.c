@@ -54,7 +54,9 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int
 		{
 			if (buttonsTapped & (BTN_SELECT | BTN_START))
 			{
-				VehInit_SetConsts(gGT->drivers[0]);
+				VehInit_SetConsts(gGT->drivers[0]); // needed so the stat edit and class switch can actually happen
+
+				// other stuff taken from the original game code (see MainFrame_GameLogic)
 				MENUBOX_ClearInput();
 				gGT->gameMode1 &= ~PAUSE_1;
 				MainFrame_TogglePauseAudio(0);
