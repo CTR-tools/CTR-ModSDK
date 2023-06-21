@@ -58,7 +58,7 @@ int FUN_8003ddac(void)
             MEMCARD_SkipEvents();
             while (_card_clear(sdata->memcardSlot) != 1)
                 ;
-            event = FUN_8003dae4();
+            event = MEMCARD_WaitForHwEvent();
             if (event == 0)
             {
                 sdata->unk_card_8008D404 = 2;
