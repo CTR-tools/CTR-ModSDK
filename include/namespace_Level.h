@@ -436,10 +436,10 @@ struct CheckpointNode
 	short distToFinish;
 	
 	// 0x8
-	char nextIndex_forward;
-	char nextIndex_left;
-	char nextIndex_backward;
-	char nextIndex_right;
+	unsigned char nextIndex_forward;
+	unsigned char nextIndex_left;
+	unsigned char nextIndex_backward;
+	unsigned char nextIndex_right;
 	
 	// 0xC -- size
 };
