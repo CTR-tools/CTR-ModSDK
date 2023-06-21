@@ -29,7 +29,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   hudStructPtr = data.hudStructPtr[0];
 
   // If game is not paused
-  if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) {
+  if ((gGT->gameMode1 & PAUSE_ALL) == 0) {
     //execute Jump meter and landing boost processes
     DECOMP_UI_JumpMeter_Update(player);
   }
@@ -60,7 +60,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 
 
   // If game is paused
-  if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0) {
+  if ((gGT->gameMode1 & PAUSE_ALL) != 0) {
     return;
   }
 
@@ -147,7 +147,7 @@ LAB_800545e8:
 
   // quit if game is paused, or item is 
   // rolling, or not drawing roulette
-  if((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0) return;
+  if((gGT->gameMode1 & PAUSE_ALL) != 0) return;
   if(player->itemRollTimer != 0) return;
   if((gGT->gameMode1 & ROLLING_ITEM) == 0) return;
 

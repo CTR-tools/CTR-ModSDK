@@ -27,7 +27,7 @@ int LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType)
 		return 0x21e + (levelID-OXIDE_ENDING)*2 + fileType;
 	
 	if(levelID <= CREDITS_MEGUMI)
-		return 0x222 + (levelID-CREDITS_LEVEL)*3 + fileType;
+		return 0x222 + (levelID-CREDITS_CRASH)*3 + fileType;
 	
 	// SCRAPBOOK
 	return 0x25e + fileType;

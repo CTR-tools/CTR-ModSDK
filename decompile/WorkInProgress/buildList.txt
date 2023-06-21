@@ -9,5 +9,6 @@ common, exe, MEMCARD_Save, 0x0, src/MEMCARD/MEMCARD_Save.c
 // DONE (Needs review)
 // common, exe, MEMCARD_Load, 0x0, src/MEMCARD/MEMCARD_Load.c
 // End of MEMCARD
-// common, exe, CTR_CycleTex_LEV, 0x0, src/CTR_CycleTex_LEV_Hook.s
-// common, exe, rdata_free, 0x0, ../General/CTR_CycleTex_LEV.c
+
+common, exe, MainFreeze_MenuPtrOptions, 0x0, src/MainFreeze_MenuPtrOptions_Hook.s
+common, exe, rdata_free, 0x0, src/MainFreeze_MenuPtrOptions.c

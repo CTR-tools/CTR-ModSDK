@@ -2,62 +2,6 @@
 #include "../../levelBuilder.h"
 #include "trackSpecificData.h"
 
-struct AnimTex_TurboPad1
-{
-	// 0x0
-	// pointer to IconGroup4 struct to be animated
-	// cycles through the entirety of ptrarray
-	struct IconGroup4* ptrNext;
-
-	// 0x4
-	short numFrames;
-
-	// 0x6
-	// related to timer
-	short shrug;
-
-	// 0x8
-	// related to timer
-	short lottashortshuh;
-
-	// 0xA
-	// current frame
-	u_short frameIndex;
-
-	// 0xC
-	// amount of elements in array is same as numFrames
-	// ptrarray[numFrames] leads to the next AnimTex struct in the ptr_anim_tex array
-	struct IconGroup4* ptrarray[10];
-};
-
-struct AnimTex_TurboPad2
-{
-	// 0x0
-	// pointer to IconGroup4 struct to be animated
-	// cycles through the entirety of ptrarray
-	struct IconGroup4* ptrNext;
-
-	// 0x4
-	short numFrames;
-
-	// 0x6
-	// related to timer
-	short shrug;
-
-	// 0x8
-	// related to timer
-	short lottashortshuh;
-
-	// 0xA
-	// current frame
-	u_short frameIndex;
-
-	// 0xC
-	// amount of elements in array is same as numFrames
-	// ptrarray[numFrames] leads to the next AnimTex struct in the ptr_anim_tex array
-	struct IconGroup4* ptrarray[11];
-};
-
 struct LevelFile
 {
 	void* ptrMap;
@@ -71,8 +15,10 @@ struct LevelFile
 	struct IconGroup4 turbo_pad[10];
 	struct IconGroup4 super_turbo_pad[10];
 	struct IconGroup4 group4_placeHolder;
-	struct AnimTex_TurboPad1 turbo_pad_anim;
-	struct AnimTex_TurboPad2 super_turbo_pad_anim;
+	struct AnimTex turbo_pad_anim;
+	struct IconGroup4* TPA_ptrarray[10];
+	struct AnimTex super_turbo_pad_anim;
+	struct IconGroup4* STPA_ptrarray[11];
 	struct SpawnType1 ptrSpawnType1;
 	void* spawnType1Pointers[3];
 	short EndRaceCam[10];
@@ -383,19 +329,20 @@ struct LevelFile file =
 		.shrug = 0,
 		.lottashortshuh = 0,
 		.frameIndex = 0,
-		.ptrarray =
-		{
-			LEV_OFFSETOF(turbo_pad[0]),
-			LEV_OFFSETOF(turbo_pad[1]),
-			LEV_OFFSETOF(turbo_pad[2]),
-			LEV_OFFSETOF(turbo_pad[3]),
-			LEV_OFFSETOF(turbo_pad[4]),
-			LEV_OFFSETOF(turbo_pad[5]),
-			LEV_OFFSETOF(turbo_pad[6]),
-			LEV_OFFSETOF(turbo_pad[7]),
-			LEV_OFFSETOF(turbo_pad[8]),
-			LEV_OFFSETOF(turbo_pad[9]),
-		},
+	},
+	
+	.TPA_ptrarray =
+	{
+		LEV_OFFSETOF(turbo_pad[0]),
+		LEV_OFFSETOF(turbo_pad[1]),
+		LEV_OFFSETOF(turbo_pad[2]),
+		LEV_OFFSETOF(turbo_pad[3]),
+		LEV_OFFSETOF(turbo_pad[4]),
+		LEV_OFFSETOF(turbo_pad[5]),
+		LEV_OFFSETOF(turbo_pad[6]),
+		LEV_OFFSETOF(turbo_pad[7]),
+		LEV_OFFSETOF(turbo_pad[8]),
+		LEV_OFFSETOF(turbo_pad[9]),
 	},
 
 	.super_turbo_pad_anim =
@@ -405,20 +352,21 @@ struct LevelFile file =
 		.shrug = 0,
 		.lottashortshuh = 0,
 		.frameIndex = 0,
-		.ptrarray =
-		{
-			LEV_OFFSETOF(super_turbo_pad[0]),
-			LEV_OFFSETOF(super_turbo_pad[1]),
-			LEV_OFFSETOF(super_turbo_pad[2]),
-			LEV_OFFSETOF(super_turbo_pad[3]),
-			LEV_OFFSETOF(super_turbo_pad[4]),
-			LEV_OFFSETOF(super_turbo_pad[5]),
-			LEV_OFFSETOF(super_turbo_pad[6]),
-			LEV_OFFSETOF(super_turbo_pad[7]),
-			LEV_OFFSETOF(super_turbo_pad[8]),
-			LEV_OFFSETOF(super_turbo_pad[9]),
-			LEV_OFFSETOF(turbo_pad_anim),
-		},
+	},
+	
+	.STPA_ptrarray =
+	{
+		LEV_OFFSETOF(super_turbo_pad[0]),
+		LEV_OFFSETOF(super_turbo_pad[1]),
+		LEV_OFFSETOF(super_turbo_pad[2]),
+		LEV_OFFSETOF(super_turbo_pad[3]),
+		LEV_OFFSETOF(super_turbo_pad[4]),
+		LEV_OFFSETOF(super_turbo_pad[5]),
+		LEV_OFFSETOF(super_turbo_pad[6]),
+		LEV_OFFSETOF(super_turbo_pad[7]),
+		LEV_OFFSETOF(super_turbo_pad[8]),
+		LEV_OFFSETOF(super_turbo_pad[9]),
+		LEV_OFFSETOF(turbo_pad_anim),
 	},
 	
 	// this must exist, or else camera fly-in
@@ -1417,6 +1365,21 @@ struct LevelFile file =
 	#define SET_CHECKPOINT(cpi, block) \
 		.quadBlock[block].checkpointIndex = cpi
 	
+	// ERROR: NMZ Alert!
+	// Checkpoint[last] is reserved for the quadblocks that touch the startline from behind,
+	// Checkpoint[0]    is reserved for the quadblocks that touch the startline from the front
+	// The game is rigged not to grab someone on either of these checkpoints for any reason
+	
+	// By putting BehindStart1-4 on Checkpoint[last],
+	// jumping from DownRamp1 and landing on BehindStart1-4
+	// will be too far to determine crossing the line backwards,
+	// and checkpoint[last] can't mask-grab for illegal shortcut distance,
+	// therefore the lap becomes valid and the race is won in 12 seconds,
+	// same mistake as Papu Pyramid
+	
+	// To fix NMZ, make a new checkpoint for BehindStart1-4,
+	// Dont fix it though, let this be a lesson for all future maps
+	
 	// startline must have last checkpoint (min dist)
 	SET_CHECKPOINT(CPI_OnSpawn, Bsp0_BehindStart1),
 	SET_CHECKPOINT(CPI_OnSpawn, Bsp0_BehindStart2),
@@ -2006,28 +1969,28 @@ struct LevelFile file =
 		LEV_OFFSETOF(mInfo.ptrVertexArray),
 		LEV_OFFSETOF(mInfo.bspRoot),
 		LEV_OFFSETOF(turbo_pad_anim.ptrNext),
-		LEV_OFFSETOF(turbo_pad_anim.ptrarray[0]),
-		LEV_OFFSETOF(turbo_pad_anim.ptrarray[1]),
-		LEV_OFFSETOF(turbo_pad_anim.ptrarray[2]),
-		LEV_OFFSETOF(turbo_pad_anim.ptrarray[3]),
-		LEV_OFFSETOF(turbo_pad_anim.ptrarray[4]),
-		LEV_OFFSETOF(turbo_pad_anim.ptrarray[5]),
-		LEV_OFFSETOF(turbo_pad_anim.ptrarray[6]),
-		LEV_OFFSETOF(turbo_pad_anim.ptrarray[7]),
-		LEV_OFFSETOF(turbo_pad_anim.ptrarray[8]),
-		LEV_OFFSETOF(turbo_pad_anim.ptrarray[9]),
+		LEV_OFFSETOF(TPA_ptrarray[0]),
+		LEV_OFFSETOF(TPA_ptrarray[1]),
+		LEV_OFFSETOF(TPA_ptrarray[2]),
+		LEV_OFFSETOF(TPA_ptrarray[3]),
+		LEV_OFFSETOF(TPA_ptrarray[4]),
+		LEV_OFFSETOF(TPA_ptrarray[5]),
+		LEV_OFFSETOF(TPA_ptrarray[6]),
+		LEV_OFFSETOF(TPA_ptrarray[7]),
+		LEV_OFFSETOF(TPA_ptrarray[8]),
+		LEV_OFFSETOF(TPA_ptrarray[9]),
 		LEV_OFFSETOF(super_turbo_pad_anim.ptrNext),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[0]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[1]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[2]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[3]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[4]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[5]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[6]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[7]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[8]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[9]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrarray[10]),
+		LEV_OFFSETOF(STPA_ptrarray[0]),
+		LEV_OFFSETOF(STPA_ptrarray[1]),
+		LEV_OFFSETOF(STPA_ptrarray[2]),
+		LEV_OFFSETOF(STPA_ptrarray[3]),
+		LEV_OFFSETOF(STPA_ptrarray[4]),
+		LEV_OFFSETOF(STPA_ptrarray[5]),
+		LEV_OFFSETOF(STPA_ptrarray[6]),
+		LEV_OFFSETOF(STPA_ptrarray[7]),
+		LEV_OFFSETOF(STPA_ptrarray[8]),
+		LEV_OFFSETOF(STPA_ptrarray[9]),
+		LEV_OFFSETOF(STPA_ptrarray[10]),
 		LEV_OFFSETOF(bsp[4].data.leaf.ptrQuadBlockArray),
 		LEV_OFFSETOF(bsp[5].data.leaf.ptrQuadBlockArray),
 		LEV_OFFSETOF(bsp[6].data.leaf.ptrQuadBlockArray),

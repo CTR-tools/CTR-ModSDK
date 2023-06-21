@@ -1,8 +1,11 @@
 #include <common.h>
 
-void DECOMP_MM_MENUBOX_SingleCup(struct MenuBox* mb)
+#include "boss_battle.h"
+
+void MM_MenuBox_BossBattle(struct MenuBox* mb)
 
 {
+  
   short row;
   struct GameTracker* gGT;
   
@@ -16,13 +19,13 @@ void DECOMP_MM_MENUBOX_SingleCup(struct MenuBox* mb)
   }
   
   
-  if ((unsigned char)row < 2)
+  if ((unsigned char)row < 3)
   { 
     // disable Cup mode
     gGT->gameMode2 &= 0xffffffef;
     
     // if you choose cup mode
-    if (mb->rowSelected != 0) 
+    if (mb->rowSelected == 1) 
     {
   	  // enable cup mode
       gGT->gameMode2 &= 0xffffffef; 
@@ -35,10 +38,11 @@ void DECOMP_MM_MENUBOX_SingleCup(struct MenuBox* mb)
     if ((gGT->gameMode1 & ARCADE_MODE) != 0) 
     {
   	  // set next menuBox to 1P+2P select
-      mb->ptrNextBox_InHierarchy = &OVR_230.menubox_players1P2P;
+      mb->ptrNextBox_InHierarchy = &OVR_230.menubox_players1P2P;  //menubox_players1P2P;
       *(int*)0x800b5a08 = 1;
       return;
     }
+    
     
     // if mode is VS
     

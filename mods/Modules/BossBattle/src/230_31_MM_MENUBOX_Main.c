@@ -3,6 +3,8 @@
 // byte budget
 // 840/1108
 
+extern struct MenuBox boss_battle_menu;
+
 void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 {
   int choose;
@@ -168,7 +170,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
     gGT->gameMode1 |= ARCADE_MODE;
 
 	// set next menuBox
-	mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_raceType;
+	mainMenu->ptrNextBox_InHierarchy = &boss_battle_menu; //tjos line will go to new boss battle mode
 	mainMenu->state |= 0x10;
 	return;
   }

@@ -43,7 +43,7 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 	uVar5 = LOAD_IsOpen_MainMenu();
 	if ((uVar5 != 0) && (sdata->ptrActiveMenuBox == &OVR_230.menubox_mainMenu))
 	{
-		bool_menubox_mainMenuState = (OVR_230.menubox_mainMenu.state & 0x10) == 0;
+		bool_menubox_mainMenuState = (OVR_230.menubox_mainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0;
 	}
 	if
 	(
@@ -187,14 +187,14 @@ void MainFrame_RenderFrame(struct GameTracker *gGT)
 	sdata->menuRowHighlight_Green = (iVar19 + 0xa0) * 0x100 | 0x400040;
 	if (((gGT->renderFlags & 2) != 0) && ((u_char)sdata->gGT->numPlyrCurrGame < 2)) {
 		RenderWeather(sdata->gGT->tileView, &sdata->gGT->backBuffer->primMem, sdata->gGT->rainBuffer, 
-									sdata->gGT->numPlyrCurrGame, sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+									sdata->gGT->numPlyrCurrGame, sdata->gGT->gameMode1 & PAUSE_ALL);
 	}
 	if (((gGT->renderFlags & 4) != 0) && (iVar19 = 0, 0 < (int)sdata->gGT->numWinners)) {
 		iVar15 = 0;
 		do {
 			DrawConfetti(sdata->gGT->tileView + *(int *)((int)sdata->gGT->winnerIndex + iVar15), 
 									 &sdata->gGT->backBuffer->primMem, &sdata->gGT->confetti, 
-									 sdata->gGT->frameTimer_Confetti, sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+									 sdata->gGT->frameTimer_Confetti, sdata->gGT->gameMode1 & PAUSE_ALL);
 			iVar19 = iVar19 + 1;
 			iVar15 = iVar19 * 4;
 		} while (iVar19 < (int)sdata->gGT->numWinners);
@@ -296,7 +296,7 @@ LAB_800367d4:
 	if (((gGT->renderFlags & 0x10) != 0) && ((u_char)sdata->gGT->numPlyrCurrGame < 3)) {
 		RedBeaker_RenderRain
 							(gGT->tileView, &gGT->backBuffer->primMem, &(sdata->gGT->JitPools).rain, 
-							 sdata->gGT->numPlyrCurrGame, sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+							 sdata->gGT->numPlyrCurrGame, sdata->gGT->gameMode1 & PAUSE_ALL);
 	}
 	uVar5 = LOAD_IsOpen_Podiums();
 	if ((uVar5 != 0) && (sdata->gGT->levelID == NAUGHTY_DOG_CRATE)) {
@@ -311,7 +311,7 @@ LAB_800367d4:
 											 (gGT->cameraDC, (u_long *)&sdata->gGT->backBuffer->otMem, 
 												sdata->gGT->ptrRenderBucketInstance, 
 												(char *)(u_int)(u_char)sdata->LOD[uVar6], sdata->gGT->numPlyrCurrGame, 
-												sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+												sdata->gGT->gameMode1 & PAUSE_ALL);
 		uVar6 = (u_char)sdata->gGT->numPlyrCurrGame - 1;
 		if ((sdata->gGT->gameMode1 & RELIC_RACE) != 0) {
 			uVar6 = uVar6 | 4;
@@ -321,7 +321,7 @@ LAB_800367d4:
 											 ((sdata->gGT->JitPools).instance.taken.first, 
 												(u_long *)&sdata->gGT->backBuffer->otMem, pvVar8, 
 												(char *)(u_int)(u_char)sdata->LOD[uVar6], sdata->gGT->numPlyrCurrGame, 
-												sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+												sdata->gGT->gameMode1 & PAUSE_ALL);
 		*puVar9 = 0;
 	}
 	if ((gGT->renderFlags & 0x200) != 0) {
@@ -712,7 +712,7 @@ code_r0x800369d8:
 			}
 		}
 		if (sdata->Loading.stage == -1) {
-			if ((sdata->gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) {
+			if ((sdata->gGT->gameMode1 & PAUSE_ALL) == 0) {
 				RobotcarWeapons_Update();
 			}
 			StartLine_Update();
