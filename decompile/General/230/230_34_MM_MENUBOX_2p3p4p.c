@@ -26,7 +26,7 @@ void DECOMP_MM_MENUBOX_2p3p4p(struct MenuBox * mb)
       // row 0 is 2P, row 1 is 3P, row 2 is 4P
       gGT->numPlyrNextGame = mb->rowSelected + 2;
 
-      *(int*) 0x800b5a1c = 2;
+      OVR_230.MM_State = 2;
       *(int*) 0x800b59e0 = 2;
 
       mb->state |= 4;
