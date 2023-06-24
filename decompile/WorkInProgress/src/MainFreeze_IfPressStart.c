@@ -17,20 +17,19 @@ void DECOMP_MainFreeze_IfPressStart(void)
         (sdata->AkuAkuHintState == 0) &&
 
         // if not in a menu, time trial, and not paused yet
-        (sdata->ptrActiveMenuBox == 0 && (gameMode & (END_OF_RACE | PAUSE_ALL)) == 0) &&
+        (sdata->ptrActiveMenuBox == 0 && (gGT->gameMode1 & (END_OF_RACE | PAUSE_ALL)) == 0) &&
 
         // not in Main Menu and not in Demo Mode
-        (gGT->levelID != MAIN_MENU_LEVEL && ((gameMode & GAME_CUTSCENE) == 0 && gGT->boolDemoMode == 0)) &&
+        (gGT->levelID != MAIN_MENU_LEVEL && ((gGT->gameMode1 & GAME_CUTSCENE) == 0 && gGT->boolDemoMode == 0)) &&
 
         // if game is not loading and not in a cutscene where you can't move
-        (gGT->levelID > OXIDE_ENDING) && (sdata->load_inProgress == 0 && (gGT->gameMode2 & 4) == 0)
-    )
+        ((1 < (gGT->levelID - OXIDE_ENDING) && (sdata->load_inProgress == 0 && (!(gGT->gameMode2 & 4)))) == 0))
     {
         // pause the game
         gGT->gameMode1 |= PAUSE_1;
 
         // set row selected to the top row
-        struct MenuBox* mb = MainFreeze_GetMenuBox();
+        struct MenuBox *mb = MainFreeze_GetMenuBox();
         mb->rowSelected = 0;
 
         // make menu visible
