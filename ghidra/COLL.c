@@ -2200,7 +2200,7 @@ void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
             (int)param_3[1] - (int)*(short *)((int)param_2 + 2),
             (int)param_3[2] - (int)*(short *)(param_2 + 1));
   
-  // 0 for low-poly, 2 for high-poly
+  // 2 for low-poly, 0 for high-poly
   uVar1 = (uint)*(byte *)(param_1 + 0x1ab);
   
   // quadblock offset 0x3f
@@ -2424,7 +2424,7 @@ void FUN_8001f67c(int param_1,int param_2)
   // quadblock offset 0x3f
   uVar1 = *(undefined *)(param_2 + 0x3f);
   
-  // always 2 for high poly
+  // always 2 for low poly (big block)
   *(undefined *)(param_1 + 0x1ab) = 2;
   
   *(undefined *)(param_1 + 0x1aa) = uVar1;
@@ -2454,7 +2454,7 @@ void FUN_8001f6f0(int param_1,int param_2)
   // quadblock offset 0x3f
   uVar1 = *(undefined *)(param_2 + 0x3f);
   
-  // always 0 for low poly
+  // always 0 for high poly (small block)
   *(undefined *)(param_1 + 0x1ab) = 0;
   
   *(undefined *)(param_1 + 0x1aa) = uVar1;
