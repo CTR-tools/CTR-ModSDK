@@ -2,7 +2,6 @@
 
 void AA_EndEvent_DisplayTime(short driverId, short param_2)
 {
-
 	struct GameTracker *gGT;
 	struct Driver *driver;
 	struct UiElement2D **hudArray;
@@ -24,7 +23,7 @@ void AA_EndEvent_DisplayTime(short driverId, short param_2)
 	gGT = sdata->gGT;
 	numPlyr = gGT->numPlyrCurrGame;
 	driver = gGT->drivers[driverId];
-	hudArray = sdata->hudStructPtr[numPlyr - 1];
+	hudArray = data.hudStructPtr[numPlyr - 1];
 	hud = hudArray[driverId];
 
 	// Lap time box height
@@ -35,11 +34,11 @@ void AA_EndEvent_DisplayTime(short driverId, short param_2)
 		r.h = 0x49;
 		break;
 	case 5:
-		r.h = 0x44;
+		r.h = 0x39;
 		break;
 	default:
 		// default height for 1/3 laps.
-		r.h = 0x39;
+		r.h = 0x44;
 		break;
 	}
 
@@ -62,7 +61,7 @@ void AA_EndEvent_DisplayTime(short driverId, short param_2)
 
 	if (
 		// if player ended race less than 110 frames ago
-		(framesElapsed < 0x6e) &&
+		(framesElapsed < 110) &&
 
 		// If you press Cross or Circle
 		((sdata->AnyPlayerTap & 0x50) != 0) &&
@@ -71,7 +70,7 @@ void AA_EndEvent_DisplayTime(short driverId, short param_2)
 		(numPlyr == 1))
 	{
 		// Assume race ended 110 frames ago
-		framesElapsed = 0x6e;
+		framesElapsed = 110;
 
 		sdata->numIconsEOR = numPlyr + gGT->numBotsNextGame;
 
@@ -118,7 +117,7 @@ void AA_EndEvent_DisplayTime(short driverId, short param_2)
 	driver->BigNumber[0]->matrix.t[1] = posXY[1];
 
 	// interpolate fly-in
-	UI_Lerp2D_Linear(&posXY[0], hud[5].y, 0, 0x1e00, 0, currFrame, 0x1e);
+	UI_Lerp2D_Linear(&posXY[0], hud[5].y, 0, 0x1e00, 0, framesElapsed, 0x1e);
 
 	// Set scale of Big Number in HUD
 	driver->BigNumber[0]->scale[0] = posXY[0];
@@ -128,7 +127,7 @@ void AA_EndEvent_DisplayTime(short driverId, short param_2)
 	if (tenseconds)
 	{
 		lerpStartX = 0x78;
-		lerpStartY = sVar1; // Not sure why either
+		lerpStartY = sVar1;
 		lerpEndX = -0x3c;
 		currFrame = framesElapsed - 300 + param_2;
 		endFrame = 0xf;
@@ -163,7 +162,7 @@ void AA_EndEvent_DisplayTime(short driverId, short param_2)
 		endFrame = 0x1e;
 	}
 
-	UI_Lerp2D_Linear(&posXY[0], lerpStartX, sVar2, lerpEndX, lerpEndY, currFrame, endFrame);
+	UI_Lerp2D_Linear(&posXY[0], lerpStartX, sVar2, lerpEndX, sVar2, currFrame, endFrame);
 	UI_DrawRaceClock(posXY[0], posXY[1], 1, driver);
 
 	// "TOTAL"
