@@ -41,6 +41,9 @@ struct GameProgress
 #define CHECK_ADV_BIT(rewards, bitIndex) \
 	((rewards[bitIndex>>5] >> (bitIndex & 0x1f)) & 1)
 
+#define UNLOCK_ADV_BIT(rewards, bitIndex) \
+	(rewards[(bitIndex >> 5)] |= (1 << (bitIndex & 0x1f)))
+
 struct AdvProgress
 {
 	// 8008fba4
