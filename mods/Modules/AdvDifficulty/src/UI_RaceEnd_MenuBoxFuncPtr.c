@@ -23,21 +23,21 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
     {
       option = menu->rows[menu->rowSelected].stringIndex;
       // if not "save ghost"
-      if (option != 9 || option !=7)
+      if (option != 9 || option != 7)
       {
         // make MenuBox invisible
-        MENUBOX_Hide(menu);
+        menu->state |= NEEDS_TO_CLOSE;
+        sdata->framesSinceRaceEnded = 0;
+        sdata->numIconsEOR = 1;
       }
-
-      sdata->framesSinceRaceEnded = 0;
-      sdata->numIconsEOR = 1;
-
       switch (option)
       {
       case 7:
         // Change Difficulty
-        if (gGT->gameMode1 & TIME_TRIAL) return;
+        if (gGT->gameMode1 & TIME_TRIAL)
+          return;
         sdata->ptrActiveMenuBox = (gGT->gameMode1 & ARCADE_MODE) ? &retry_arcadeDifficulty : &new_retryExitToMap;
+        sdata->ptrActiveMenuBox->state &= ~NEEDS_TO_CLOSE;
         return;
       case 6:
         // Change level
@@ -75,7 +75,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
         ghostTape = sdata->GhostRecording.ptrGhost;
         ghostPlaying = sdata->ptrGhostTapePlaying;
 
-        if ((((u_int) *ghostTape | (u_int)*ghostPlaying ) & 3) == 0)
+        if ((((u_int)*ghostTape | (u_int)*ghostPlaying) & 3) == 0)
         {
           // Copy ghost recording buffer
           do
