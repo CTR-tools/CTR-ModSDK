@@ -15,6 +15,7 @@ common, exe, MainInit_Drivers, 0x50, src/hookBots.s
 // End of Race menu mod
 926, exe, UI_RaceEnd_MenuBoxFuncPtr, 0x0, src/UI_RaceEnd_MenuBoxFuncPtr.c
 926, exe, 0x80086314, 0x0, src/new_retryExitToMap.c
+926, 222, AA_EndEvent_DrawMenu, 0x0, ../../../decompile/WorkInProgress/src/222/AA_EndEvent_DrawMenu.c
 926, 222, AA_EndOfFile, 0x0, src/struct_222.c
 926, 222, 0x800a0b64, 0x0, src/new_retryArcade.c
 
