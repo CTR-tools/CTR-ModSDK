@@ -1,5 +1,6 @@
 #include <common.h>
-#include "menubox.h"
+
+extern struct MenuBox MyMenuBox;
 
 // an extension of SelectPause
 void MyMainFreeze(struct GameTracker* gGT)

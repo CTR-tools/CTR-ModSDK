@@ -1,4 +1,5 @@
 #include <common.h>
+#include "menubox.h"
 
 u_int metaPhysID = 0;
 u_int digitSelected = 0;
@@ -72,12 +73,6 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int
 
 force_inline void DrawNumbers(struct GameTracker* gGT, int* driverClass, u_int color)
 {
-	extern RECT ones;
-	extern RECT tens;
-	extern RECT hundreds;
-	extern RECT thousands;
-	extern RECT ten_thousands;
-	extern RECT glowingcursor;
 	u_int cursorX[5] = {ones.x + 3, tens.x + 3, hundreds.x + 3, thousands.x + 3, ten_thousands.x + 3};
 
 	char metaPhysOnes[] = "  ";
@@ -117,7 +112,6 @@ force_inline void DrawNumbers(struct GameTracker* gGT, int* driverClass, u_int c
 
 force_inline void DisplayMenuBox(struct GameTracker* gGT, int* driverClass)
 {
-	extern RECT r;
 	char metaPhysIDString[] = "     ";
 	
 	char* driverClassString[4] =
