@@ -20,3 +20,7 @@ common, exe, BOTS_SetRotation, -0x8, src/hook.s
 
 // Compile modified VehInit_SetConsts
 926, exe, VehInit_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
+
+// ExpandedFont //
+
+926, exe, DecalFont_DrawLineStrlen, 0x0, ../../Modules/ExpandedFont/src/addquotationmarks.c
