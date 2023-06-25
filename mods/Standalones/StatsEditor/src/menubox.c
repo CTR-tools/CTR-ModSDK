@@ -6,15 +6,28 @@ u_int digitSelected = 0;
 
 force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int buttonsTapped)
 {
+	// Triangle: Print class values to console log
+	if (buttonsTapped & BTN_TRIANGLE)
+	{
+		for(int i = 0; i < 65; i++)
+		{
+			printf("%s - %s - %d\n", sdata->lngStrings[1 + *driverClass], sdata->lngStrings[10 + i], data.metaPhys[i].value[*driverClass]);
+		}
+	}
+
+	// L1 & R1: switch stat
 	if (buttonsTapped & BTN_L1) metaPhysID = (metaPhysID + 64) % 65;
 	if (buttonsTapped & BTN_R1) metaPhysID = (metaPhysID + 1) % 65;
 
+	// L2 & R2: change driver class
 	if (buttonsTapped & BTN_L2) *driverClass = (*driverClass + 3) % 4;
 	if (buttonsTapped & BTN_R2) *driverClass = (*driverClass + 1) % 4;
 
+	// Left & Right: switch stat value digit
 	if (buttonsTapped & BTN_LEFT) digitSelected = (digitSelected + 1) % 5;
 	if (buttonsTapped & BTN_RIGHT) digitSelected = (digitSelected + 4) % 5;
 
+	// Up & Down: increment/decrement stat value
 	switch(digitSelected)
 	{
 		case 0:
@@ -49,6 +62,7 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int
 			break;
 	}
 
+	// Select: open and close menu (can also be closed with Start)
 	if (gGT->gameMode1 & PAUSE_ALL)
 	{
 		if (gGT->cooldownfromPauseUntilUnpause == 0)
