@@ -57,15 +57,18 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int
 			{
 				VehInit_SetConsts(gGT->drivers[0]); // needed so the stat edit and class switch can actually happen
 
-				// other stuff taken from the original game code (see MainFrame_GameLogic)
-				MENUBOX_ClearInput();
-				gGT->gameMode1 &= ~PAUSE_1;
-				MainFrame_TogglePauseAudio(0);
-				OtherFX_Play(1, 1);
-				MainFreeze_SafeAdvDestroy();
-				ElimBG_Deactivate(gGT);
-				MENUBOX_Hide(sdata->ptrActiveMenuBox);
-				gGT->cooldownFromUnpauseUntilPause = 5;
+				if (buttonsTapped & BTN_SELECT)
+				{
+					// other stuff taken from the original game code (see MainFrame_GameLogic)
+					MENUBOX_ClearInput();
+					gGT->gameMode1 &= ~PAUSE_1;
+					MainFrame_TogglePauseAudio(0);
+					OtherFX_Play(1, 1);
+					MainFreeze_SafeAdvDestroy();
+					ElimBG_Deactivate(gGT);
+					MENUBOX_Hide(sdata->ptrActiveMenuBox);
+					gGT->cooldownFromUnpauseUntilPause = 5;
+				}
 			}
 		}
 	}
