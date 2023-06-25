@@ -1,6 +1,6 @@
 #include <common.h>
 
-void AA_EndEvent_DrawMenu(void)
+void DECOMP_AA_EndEvent_DrawMenu(void)
 {
 	struct GameTracker *gGT;
 	struct Driver *driver;

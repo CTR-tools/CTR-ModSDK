@@ -1,6 +1,6 @@
 #include <common.h>
 
-void AA_EndEvent_DisplayTime(short driverId, short param_2)
+void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 {
 	struct GameTracker *gGT;
 	struct Driver *driver;
