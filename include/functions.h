@@ -544,7 +544,7 @@ void LOAD_Hub_SwapNow();
 void LOAD_Hub_Main(struct BigHeader* bigfile);
 void LOAD_OvrLOD(int param_1);
 void LOAD_OvrEndRace(u_int* param_1);
-void LOAD_OvrThreads(u_int param_1)
+void LOAD_OvrThreads(u_int param_1);
 int LOAD_GetAdvPackIndex();
 int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile);
 void LOAD_TalkingMask(int, int);
@@ -815,7 +815,7 @@ void LoadSave_StartMemcardAction(int action);
 
 //LoadFromCard_GameProgressAndOptions()
 void unk80047d64();
-void LoadSave_LoadProfileFromHub_MenuBoxFuncPtr(struct MenuBox* mb)
+void LoadSave_LoadProfileFromHub_MenuBoxFuncPtr(struct MenuBox* mb);
 //LoadSave_ThTick()
 //LoadSave_PrintInteger()
 //LoadSave_UI_ConvertX()
