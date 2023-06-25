@@ -38,9 +38,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
           return;
         nextMenu = (gGT->gameMode1 & ARCADE_MODE) ? &End_arcadeDifficulty : &End_AdvRaceDifficulty;
         nextMenu->posY_curr = (gGT->numPlyrCurrGame == 1)? 170 : 108;
-        nextMenu->state &= ~NEEDS_TO_CLOSE;
-        nextMenu->ptrPrevBox_InHierarchy = menu;
-        sdata->ptrActiveMenuBox = nextMenu;
+        MENUBOX_Show(nextMenu);
         return;
       case 6:
         // Change level

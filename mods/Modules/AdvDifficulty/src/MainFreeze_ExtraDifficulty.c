@@ -42,7 +42,8 @@ void MainFreeze_Difficulty(struct MenuBox *mb)
     }
     gGT->arcadeDifficulty = arcadeDifficulty;
 
-    if (gameMode & ADVENTURE_ARENA){
+    if (gameMode & ADVENTURE_ARENA)
+    {
         sdata->ptrDesiredMenuBox = pause;
         return;
     }
@@ -64,10 +65,16 @@ void Retry_Difficulty(struct MenuBox *mb)
 {
     struct GameTracker *gGT = sdata->gGT;
     u_int gameMode = gGT->gameMode1;
+    struct MenuBox *endmenu;
 
     if (sdata->AnyPlayerTap & BTN_TRIANGLE)
     {
-        sdata->ptrActiveMenuBox = mb->ptrPrevBox_InHierarchy;
+        if ((gameMode & ADVENTURE_MODE) != 0)
+            endmenu = &data.menuBox_Retry_ExitToMap;
+        else
+            endmenu = (gGT->numPlyrCurrGame == 1) ? (struct MenuBox *)0x800a0b58 : (struct MenuBox *)0x800a0b84;
+
+        MENUBOX_Show(endmenu);
         return;
     }
 
@@ -130,8 +137,8 @@ struct MenuRow new_advRace[] =
     {
         MENU_ROW(2, 4, 1, 0, 0),
         MENU_ROW(1, 0, 2, 1, 1),
-        MENU_ROW(7, 1, 2, 1, 1),
-        MENU_ROW(14, 2, 3, 3, 3),
+        MENU_ROW(7, 1, 3, 2, 2),
+        MENU_ROW(14, 2, 4, 3, 3),
         MENU_ROW(13, 3, 0, 4, 4),
         FINALIZER_ROW};
 
