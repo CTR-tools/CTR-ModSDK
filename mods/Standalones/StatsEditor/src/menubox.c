@@ -4,6 +4,11 @@
 u_int metaPhysID = 0;
 u_int digitSelected = 0;
 
+force_inline int abs(int value)
+{
+	return (value < 0) ? (-value) : value;
+}
+
 force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int buttonsTapped)
 {
 	// Triangle: Print class values to console log
@@ -104,11 +109,16 @@ force_inline void DrawNumbers(struct GameTracker* gGT, int* driverClass, u_int c
 	u_int thousandsValue = (data.metaPhys[metaPhysID].value[*driverClass]/1000) % 10;
 	u_int ten_thousandsValue = (data.metaPhys[metaPhysID].value[*driverClass]/10000) % 10;
 
-	sprintf(metaPhysOnes, "%d\n", onesValue);
-	sprintf(metaPhysTens, "%d\n", tensValue);
-	sprintf(metaPhysHundreds, "%d\n", hundredsValue);
-	sprintf(metaPhysThousands, "%d\n", thousandsValue);
-	sprintf(metaPhysTen_Thousands, "%d\n", ten_thousandsValue);
+	sprintf(metaPhysOnes, "%d\n", abs(onesValue));
+	sprintf(metaPhysTens, "%d\n", abs(tensValue));
+	sprintf(metaPhysHundreds, "%d\n", abs(hundredsValue));
+	sprintf(metaPhysThousands, "%d\n", abs(thousandsValue));
+	sprintf(metaPhysTen_Thousands, "%d\n", abs(ten_thousandsValue));
+
+	if (data.metaPhys[metaPhysID].value[*driverClass] < 0)
+	{
+		DecalFont_DrawLine("-", ten_thousands.x+5 - 27, ones.y + 5, FONT_BIG, color);
+	}
 
 	DecalFont_DrawLine(metaPhysOnes, ones.x+5, ones.y + 5, FONT_BIG, color);
 	DecalFont_DrawLine(metaPhysTens, tens.x+5, ones.y + 5, FONT_BIG, color);
