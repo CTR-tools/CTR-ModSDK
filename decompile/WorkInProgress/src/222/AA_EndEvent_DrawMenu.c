@@ -16,6 +16,7 @@ void AA_EndEvent_DrawMenu(void)
 	char numPlyr;
 	char totalPlyr;
 	short t;
+	short elapsedFrames;
 	short posXY[2];
 	short txtPos[2];
 	short levSpawn;
@@ -26,7 +27,7 @@ void AA_EndEvent_DrawMenu(void)
 	short lerpEndY;
 	short lerpFrames;
 	short currFrame;
-	u_int txtColor;
+	u_int uVar10;
 	u_int bitIndex;
 
 	gGT = sdata->gGT;
@@ -41,9 +42,11 @@ void AA_EndEvent_DrawMenu(void)
 
 	hudArray = data.hudStructPtr[gGT->numPlyrCurrGame - 1];
 
-	// count frames
-	if (sdata->framesSinceRaceEnded < 900)
-		sdata->framesSinceRaceEnded++;
+	// count frames if hasn't been 30 seconds
+	if (elapsedFrames < 900)
+		elapsedFrames = sdata->framesSinceRaceEnded + 1;
+
+	sdata->framesSinceRaceEnded = elapsedFrames;
 
 	if (driver->BigNumber[0]->scale[0] != 0x1e00)
 	{
@@ -51,6 +54,10 @@ void AA_EndEvent_DrawMenu(void)
 		driver->BigNumber[0]->scale[1] = 0;
 		driver->BigNumber[0]->scale[2] = 0;
 	}
+
+	// if not in Token mode, these won't be used until later;
+	lerpStartY = 0;
+	lerpEndY = 0;
 
 	// if adventure mode
 	if ((gGT->gameMode1 & ADVENTURE_MODE) != 0)
@@ -66,14 +73,14 @@ void AA_EndEvent_DrawMenu(void)
 			if (CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
 				// first 10 seconds, lerp closer to center of screen
-				if (sdata->framesSinceRaceEnded < 301)
+				if (elapsedFrames < 301)
 				{
 					lerpStartX = data.hud_1P_P1[0x24].x;
 					lerpStartY = data.hud_1P_P1[0x24].y;
 					lerpEndX = data.hud_1P_P1[0x24].x + 0x10;
 					lerpEndY = data.hud_1P_P1[0x24].y + 0x10;
 					lerpFrames = 8;
-					currFrame = sdata->framesSinceRaceEnded;
+					currFrame = elapsedFrames;
 				}
 
 				// past 10 seconds, lerp off screen
@@ -84,7 +91,7 @@ void AA_EndEvent_DrawMenu(void)
 					lerpEndX = -400;
 					lerpEndY = lerpStartY;
 					lerpFrames = 10;
-					currFrame = sdata->framesSinceRaceEnded - 300;
+					currFrame = elapsedFrames - 300;
 				}
 
 				UI_Lerp2D_Linear(
@@ -106,20 +113,28 @@ void AA_EndEvent_DrawMenu(void)
 			{
 				// what on earth does it do with this?
 				hudC->scale[0] -= (hudC->scale[0] < 0x800) ? 0x800 : 0x401;
+				*(int *)&posXY[0] = *(int *)&data.hud_1P_P1[0x24];
 
-				if (sdata->framesSinceRaceEnded < 231)
+				if (elapsedFrames < 231)
 				{
-					if (sdata->framesSinceRaceEnded < 141)
+					if (elapsedFrames < 141)
 					{
 						lerpStartX = data.hud_1P_P1[0x24].x;
 						lerpStartY = data.hud_1P_P1[0x24].y;
 						lerpEndX = data.hud_1P_P1[0x24].x + 0x10;
 						lerpEndY = data.hud_1P_P1[0x24].y + 0x10;
 						lerpFrames = 8;
-						currFrame = sdata->framesSinceRaceEnded;
-
-						UI_Lerp2D_Linear(&txtPos[0], 0x264, 0xa6, 0x100, 0xa6, sdata->framesSinceRaceEnded - 0x8c, 8);
+						currFrame = elapsedFrames;
+						goto OVR_222_8009fd28;
 					}
+
+					UI_Lerp2D_Linear(&posXY[0],
+									 data.hud_1P_P1[0x24].x + 0x10,
+									 data.hud_1P_P1[0x24].y + 0x10,
+									 data.hud_1P_P1[0x24].x - 0x10,
+									 data.hud_1P_P1[0x24].x + 0x50,
+									 elapsedFrames - 0x8c,
+									 8);
 
 					if (hudC->scale[0] == 0x800)
 						OtherFX_Play(0x67, 1);
@@ -143,12 +158,12 @@ void AA_EndEvent_DrawMenu(void)
 					lerpEndX = -400;
 					lerpEndY = lerpStartY;
 					lerpFrames = 10;
-					currFrame = sdata->framesSinceRaceEnded - 230;
-					UI_Lerp2D_Linear(&txtPos[0], 0x100, 0xa6, -150, 0xa6, sdata->framesSinceRaceEnded - 0x32, 8);
+					currFrame = elapsedFrames - 230;
+				OVR_222_8009fd28:
+					UI_Lerp2D_Linear(
+						&posXY[0], lerpStartX, lerpStartY,
+						lerpEndX, lerpEndY, currFrame, lerpFrames);
 				}
-				UI_Lerp2D_Linear(
-					&posXY[0], lerpStartX, lerpStartY,
-					lerpEndX, lerpEndY, currFrame, lerpFrames);
 
 				hudC->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
 				hudC->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
@@ -165,29 +180,45 @@ void AA_EndEvent_DrawMenu(void)
 				hudToken->matrix.t[1] = UI_ConvertX_2(posXY[0] + 0x18, 0x200);
 
 				// if time has passed, and token is not full scale
-				if (0x8c < sdata->framesSinceRaceEnded && hudToken->scale[0] < 0x2001)
+				if (elapsedFrames > 140 && hudToken->scale[0] < 0x2001)
 				{
+					// vec3s
 					// make token grow on all 3 axis
 					hudToken->scale[0] += 0x200;
 					hudToken->scale[1] += 0x200;
 					hudToken->scale[2] += 0x200;
 				}
 
-				txtColor = (gGT->timer & 1) ? 0xffff8003 : 0xffff8004;
-				// CTR TOKEN AWARDED
-				DecalFont_DrawLine(sdata->lngStrings[0x16f], txtPos[0], txtPos[1], 1, txtColor);
+				if (elapsedFrames < 231)
+				{
+					if (elapsedFrames > 140)
+					{
+						UI_Lerp2D_Linear(&txtPos[0], 0x264, 0xa6, 0x100, 0xa6, elapsedFrames - 140, 8);
+						goto OVR_222_8009ff60;
+					}
+				}
+				else
+				{
+					UI_Lerp2D_Linear(&txtPos[0], 0x100, 0xa6, -150, 0xa6, elapsedFrames - 50, 8);
+				OVR_222_8009ff60:
+					uVar10 = (gGT->timer & 1) ? 0xffff8003 : 0xffff8004;
+					// CTR TOKEN AWARDED
+					DecalFont_DrawLine(sdata->lngStrings[0x16f], txtPos[0], txtPos[1], 1, uVar10);
+				}
+				// not used anymore, used for time buffer
+				lerpStartY = 120;
+				lerpEndY = 160;
 			}
 		}
-
 		// if did not win
 		else
 		{
-			if (sdata->framesSinceRaceEnded < 900)
+			if (elapsedFrames < 900)
 			{
 				hudInst = hudC;
 				for (i = 0; i < 3; i++)
 				{
-					if ((hudInst->flags & 0x80) == 0 && (sdata->framesSinceRaceEnded > (i * 6) && -300 < hudInst->matrix.t[1]))
+					if ((hudInst->flags & 0x80) == 0 && (elapsedFrames > (i * 6) && -300 < hudInst->matrix.t[1]))
 					{
 						letter = hudInst->thread->object;
 						// move X position
@@ -216,22 +247,24 @@ void AA_EndEvent_DrawMenu(void)
 		return;
 
 	for (i = 0; i < numPlyr; i++)
+	{
 		// Draw how much time it took to finish laps and race
-		AA_EndEvent_DisplayTime(i, 160);
+		AA_EndEvent_DisplayTime(i, lerpEndY);
+	}
 
-	if ( // If race ended more 1 second ago
-		0x1d > sdata->framesSinceRaceEnded)
+	// If it hasn't been 1 second from race ended
+	if (elapsedFrames < 29)
 		return;
 
 	// If there is one player
 	if (numPlyr == 1)
 	{
 		// start counting time 1 second after race ends
-		t = (sdata->framesSinceRaceEnded & 0xffff) - 30;
+		t = (elapsedFrames & 0xffff) - 30;
 
 		if (
 			// Every 0.5 seconds or so
-			(((t % 10) & 0xffff) == 0) &&
+			((t % 10 & 0xffff) == 0) &&
 
 			// sdata->numIconsEOR is the number of icons being
 			// drawn on the end-of-race menu in 1P mode
@@ -244,33 +277,37 @@ void AA_EndEvent_DrawMenu(void)
 		}
 
 		// if you are drawing any player icons
-		if (0 < sdata->numIconsEOR)
-		{	
+		if (sdata->numIconsEOR)
+		{
 			// loop through all the driver icons
-			for (i = 0; i < numPlyr; i++)
+			for (i = 0; i < sdata->numIconsEOR; i++)
 			{
-				
-				int iVar11 = gGT->tileView[0].rect.x + 
-							(gGT->tileView[0].rect.w - totalPlyr * 56 + 12) / 2 + (i * 56);
 
-				if (140 < sdata->framesSinceRaceEnded)
+				int iVar11 = gGT->tileView[0].rect.x +
+							 (gGT->tileView[0].rect.w - totalPlyr * 56 + 12) / 2 + (i * 56);
+
+				if (300 - lerpEndY < elapsedFrames)
 				{
 					lerpStartX = iVar11;
-					lerpStartY = -100;
-					currFrame = sdata->framesSinceRaceEnded - 140;
+					lerpEndX = -100;
+					currFrame = (elapsedFrames - 300) + lerpEndY;
 				}
 				else
 				{
 					lerpStartX = 0x218;
-					lerpStartY = iVar11;
+					lerpEndX = iVar11;
 					currFrame = t;
 				}
 
+				t -= 10;
+
 				// interpolate fly-in
-				UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, lerpFrames);
+				UI_Lerp2D_Linear(&posXY[0], lerpStartX, 0x60, lerpEndX, 0x60, currFrame, 10);
+
+				*(char *)0x8009f700 = (char)i + '1';
 
 				// print a single character, a number 1-8,
-				DecalFont_DrawLine((i + '1'), posXY[0] + 0x20, 0x5f, 2, 4);
+				DecalFont_DrawLine((char *)0x8009f700, posXY[0] + 0x20, 0x5f, 2, 4);
 
 				// Draw the driver's character icon
 				UI_DrawDriverIcon(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->driversInRaceOrder[i]->driverID]].iconID],
@@ -288,15 +325,15 @@ void AA_EndEvent_DrawMenu(void)
 		}
 	}
 
-	if (sdata->framesSinceRaceEnded < 0xe6)
+	// 0x78 + 0x6e = 0xe6 (230) frames waited for Token Race
+	if (elapsedFrames < lerpStartY + 110)
 		return;
-
 	if (
 		// If you are in Adventure cup
-		((gGT->gameMode1 & ADVENTURE_CUP) == 0) ||
+		((gGT->gameMode1 & ADVENTURE_CUP) != 0) ||
 
 		// If you are in Arcade or VS cup
-		((gGT->gameMode2 & CUP_ANY_KIND) == 0))
+		((gGT->gameMode2 & CUP_ANY_KIND) != 0))
 	{
 		// but text near middle of screen
 		short posX = (numPlyr < 2) ? 0xbe : 100;
@@ -333,25 +370,9 @@ void AA_EndEvent_DrawMenu(void)
 			// dont make it draw twice
 			return;
 
-		struct MenuBox *mb;
-		// If you are in 1P Arcade
-		if (numPlyr == 1)
-		{
-			// give pointer to end-of-race menu buffer,
-			// this one is near bottom of screen
-			mb = (struct MenuBox *)0x800a0b58;
-		}
+		// End of Race based on number of players (1 or more)
+		struct MenuBox *mb = (numPlyr == 1) ? (struct MenuBox *)0x800a0b58 : (struct MenuBox *)0x800a0b84;
 
-		// If you are in 2P Arcade
-		else
-		{
-			// give pointer to end-of-race menu buffer,
-			// this one is near middle of screen
-			mb = (struct MenuBox *)0x800a0b84;
-		}
-
-		// pass the menu buffer pointer to the render
-		// system, so it can draw the menu, both box and rows
 		MENUBOX_Show(mb);
 
 		// record that the menu is drawing
@@ -473,4 +494,3 @@ void AA_EndEvent_DrawMenu(void)
 	MainRaceTrack_RequestLoad(levSpawn);
 	return;
 }
- 
