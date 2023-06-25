@@ -93,11 +93,11 @@ force_inline void DrawNumbers(struct GameTracker* gGT, int* driverClass, u_int c
 	sprintf(metaPhysThousands, "%d\n", thousandsValue);
 	sprintf(metaPhysTen_Thousands, "%d\n", ten_thousandsValue);
 
-	DecalFont_DrawLine(metaPhysOnes, ones.x+5, SCREEN_HEIGHT/2 + 5, FONT_BIG, color);
-	DecalFont_DrawLine(metaPhysTens, tens.x+5, SCREEN_HEIGHT/2 + 5, FONT_BIG, color);
-	DecalFont_DrawLine(metaPhysHundreds, hundreds.x+5, SCREEN_HEIGHT/2 + 5, FONT_BIG, color);
-	DecalFont_DrawLine(metaPhysThousands, thousands.x+5, SCREEN_HEIGHT/2 + 5, FONT_BIG, color);
-	DecalFont_DrawLine(metaPhysTen_Thousands, ten_thousands.x+5, SCREEN_HEIGHT/2 + 5, FONT_BIG, color);
+	DecalFont_DrawLine(metaPhysOnes, ones.x+5, ones.y + 5, FONT_BIG, color);
+	DecalFont_DrawLine(metaPhysTens, tens.x+5, ones.y + 5, FONT_BIG, color);
+	DecalFont_DrawLine(metaPhysHundreds, hundreds.x+5, ones.y + 5, FONT_BIG, color);
+	DecalFont_DrawLine(metaPhysThousands, thousands.x+5, ones.y + 5, FONT_BIG, color);
+	DecalFont_DrawLine(metaPhysTen_Thousands, ten_thousands.x+5, ones.y + 5, FONT_BIG, color);
 
 	glowingcursor.x = cursorX[digitSelected];
 
@@ -112,7 +112,7 @@ force_inline void DrawNumbers(struct GameTracker* gGT, int* driverClass, u_int c
 
 force_inline void DisplayMenuBox(struct GameTracker* gGT, int* driverClass)
 {
-	char metaPhysIDString[] = "     ";
+	char metaPhysIDString[] = " ";
 	
 	char* driverClassString[4] =
 	{
@@ -135,7 +135,7 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT, int* driverClass)
 
 	sprintf(metaPhysIDString, "%d\n", metaPhysID);
 
-	DecalFont_DrawLine(driverClassString[*driverClass], SCREEN_WIDTH/2, SCREEN_HEIGHT/4, FONT_BIG, (CENTER_TEXT | ORANGE)); // display current driver class
+	DecalFont_DrawLine(driverClassString[*driverClass], SCREEN_WIDTH/2, SCREEN_HEIGHT/4, FONT_SMALL, (CENTER_TEXT | ORANGE)); // display current driver class
 	DecalFont_DrawLine(metaPhysIDString, SCREEN_WIDTH/2, SCREEN_HEIGHT/3, FONT_BIG, (CENTER_TEXT | metaPhysColor)); // display current metaPhys ID
 
 	DrawNumbers(gGT, driverClass, metaPhysColor);
