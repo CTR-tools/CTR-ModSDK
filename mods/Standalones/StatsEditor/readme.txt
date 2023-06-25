@@ -1,8 +1,14 @@
-an awesome mod by Superstarxalien that adds a UI interface for editing any of the game's 65 stats across the first 4 classes
-penta is not implemented yet i'm lazy...
-press select to bring up the menu
-L1 and R1 to select stat to edit, L2 and R2 to switch class
-up and down is to edit the digit
-stats that are blue are stats that are different across classes, there's really only 9 unique stats per class
+Mod that adds a UI interface for editing any of the game's 65 stats across the game's playable character classes, including the Europe and Japan-exclusive stat class for Penta Penguin.
 
-work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress work in progress 
+Although the game has 65 stats, only 9 of them are different across classes. These stats are marked with blue text.
+
+Controls:
+
+Select: open and close menu (can also be closed with Start)
+L1 & R1: switch stat
+L2 & R2: change driver class
+Left & Right: switch stat value digit
+Up & Down: increment/decrement stat value
+Triangle: Print class values to console log
+
+By Superstarxalien.
