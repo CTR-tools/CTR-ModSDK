@@ -1,6 +1,112 @@
 #include <common.h>
 #include "macro.h"
 
+void MainFreeze_Difficulty(struct MenuBox *mb)
+{
+    MainFreeze_SafeAdvDestroy();
+    struct GameTracker *gGT = sdata->gGT;
+    u_int gameMode = gGT->gameMode1;
+    struct MenuBox *pause = MainFreeze_GetMenuBox();
+
+    if (sdata->AnyPlayerTap & BTN_TRIANGLE)
+    {
+        sdata->ptrDesiredMenuBox = pause;
+        return;
+    }
+
+    if (!(sdata->AnyPlayerTap & (BTN_CROSS | BTN_CIRCLE)))
+        return;
+
+    char validRows = (gameMode & ARCADE_MODE) ? 5 : 6;
+    short row = mb->rowSelected;
+
+    if (row >= validRows)
+        return;
+
+    u_short string = mb->rows[row].stringIndex;
+    short arcadeDifficulty = 0;
+    switch (string)
+    {
+    case 590:
+        arcadeDifficulty = 0;
+        break;
+    case 588:
+        arcadeDifficulty = 0x140;
+        break;
+    case 589:
+        arcadeDifficulty = 0x280;
+        break;
+    default:
+        arcadeDifficulty = OVR_230.cupDifficultySpeed[string - 346];
+        break;
+    }
+    gGT->arcadeDifficulty = arcadeDifficulty;
+
+    if (gameMode & ADVENTURE_ARENA){
+        sdata->ptrDesiredMenuBox = pause;
+        return;
+    }
+
+    gGT->gameMode1 &= ~PAUSE_1;
+
+    if (TitleFlag_IsFullyOffScreen())
+        TitleFlag_BeginTransition(1);
+
+    if (sdata->boolPlayGhost || sdata->ptrGhostTapePlaying)
+    {
+        data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
+    }
+    sdata->Loading.stage = -5;
+    mb->state |= NEEDS_TO_CLOSE;
+}
+
+void Retry_Difficulty(struct MenuBox *mb)
+{
+    struct GameTracker *gGT = sdata->gGT;
+    u_int gameMode = gGT->gameMode1;
+
+    if (sdata->AnyPlayerTap & BTN_TRIANGLE)
+    {
+        sdata->ptrActiveMenuBox = mb->ptrPrevBox_InHierarchy;
+        return;
+    }
+
+    if (!(sdata->AnyPlayerTap & (BTN_CROSS | BTN_CIRCLE)))
+        return;
+
+    char validRows = (gameMode & ARCADE_MODE) ? 5 : 6;
+    short row = mb->rowSelected;
+
+    if (row >= validRows)
+        return;
+
+    u_short string = mb->rows[row].stringIndex;
+    short arcadeDifficulty = 0;
+    switch (string)
+    {
+    case 590:
+        arcadeDifficulty = 0;
+        break;
+    case 588:
+        arcadeDifficulty = 0x140;
+        break;
+    case 589:
+        arcadeDifficulty = 0x280;
+        break;
+    default:
+        arcadeDifficulty = OVR_230.cupDifficultySpeed[string - 346];
+        break;
+    }
+    gGT->arcadeDifficulty = arcadeDifficulty;
+    gGT->hudFlags &= 0xfe;
+
+    if (TitleFlag_IsFullyOffScreen())
+        TitleFlag_BeginTransition(1);
+
+    sdata->Loading.stage = -5;
+    mb->state |= NEEDS_TO_CLOSE;
+}
+
 struct MenuRow rows_advDifficulty[] =
     {
         [0] = MENU_ROW(590, ROW_ADV_CLASSIC, ROW_ADV_EASY, ROW_ADV_CLASSIC, ROW_ADV_CLASSIC),
@@ -39,121 +145,6 @@ struct MenuRow new_arcadeRace[] =
         MENU_ROW(14, 4, 6, 5, 5),
         MENU_ROW(3, 5, 0, 6, 6),
         FINALIZER_ROW};
-
-struct MenuRow new_retryAdv[] =
-{
-        MENU_ROW(4, 2, 1, 0, 0),
-        MENU_ROW(7, 0, 2, 1, 1),
-        MENU_ROW(13, 1, 0, 2, 2),
-        FINALIZER_ROW
-};
-
-void MainFreeze_Difficulty(struct MenuBox *mb)
-{
-    MainFreeze_SafeAdvDestroy();
-    struct GameTracker *gGT = sdata->gGT;
-    u_int gameMode = gGT->gameMode1;
-    struct MenuBox* pause = MainFreeze_GetMenuBox();
-
-    if (sdata->AnyPlayerTap & BTN_TRIANGLE)
-    {
-        sdata->ptrDesiredMenuBox = pause;
-        return;
-    }
-
-    if (!(sdata->AnyPlayerTap & (BTN_CROSS | BTN_CIRCLE)))
-        return;
-
-    char validRows = (gameMode & ARCADE_MODE) ? 5 : 6;
-    short row = mb->rowSelected;
-
-    if (row >= validRows)
-        return;
-
-    u_short string = mb->rows[row].stringIndex;
-    short arcadeDifficulty = 0;
-    switch (string)
-    {
-    case 590:
-        arcadeDifficulty = 0;
-        break;
-    case 588:
-        arcadeDifficulty = 0x140;
-        break;
-    case 589:
-        arcadeDifficulty = 0x280;
-        break;
-    default:
-        arcadeDifficulty = OVR_230.cupDifficultySpeed[string - 346];
-        break;
-    }
-    gGT->arcadeDifficulty = arcadeDifficulty;
-    
-    if (gameMode & ADVENTURE_ARENA)
-    {
-        sdata->ptrDesiredMenuBox = pause;
-        return;
-    }
-   
-    gGT->gameMode1 &= ~PAUSE_1;
-
-    if (TitleFlag_IsFullyOffScreen())
-        TitleFlag_BeginTransition(1);
-
-    if (sdata->boolPlayGhost || sdata->ptrGhostTapePlaying)
-    {
-        data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
-    }
-    sdata->Loading.stage = -5;
-    mb->state |= NEEDS_TO_CLOSE;
-}
-
-void Retry_Difficulty(struct MenuBox *mb)
-{
-    struct GameTracker *gGT = sdata->gGT;
-    u_int gameMode = gGT->gameMode1;
-
-    if (sdata->AnyPlayerTap & BTN_TRIANGLE)
-    {
-        sdata->ptrActiveMenuBox = (gameMode & ARCADE_MODE)? (struct MenuBox*)0x800a0b58 : &data.menuBox_Retry_ExitToMap; 
-        return;
-    }
-
-    if (!(sdata->AnyPlayerTap & (BTN_CROSS | BTN_CIRCLE)))
-        return;
-
-    char validRows = (gameMode & ARCADE_MODE) ? 5 : 6;
-    short row = mb->rowSelected;
-
-    if (row >= validRows)
-        return;
-
-    u_short string = mb->rows[row].stringIndex;
-    short arcadeDifficulty = 0;
-    switch (string)
-    {
-    case 590:
-        arcadeDifficulty = 0;
-        break;
-    case 588:
-        arcadeDifficulty = 0x140;
-        break;
-    case 589:
-        arcadeDifficulty = 0x280;
-        break;
-    default:
-        arcadeDifficulty = OVR_230.cupDifficultySpeed[string - 346];
-        break;
-    }
-    gGT->arcadeDifficulty = arcadeDifficulty;
-    gGT->hudFlags &= 0xfe;
-
-    if (TitleFlag_IsFullyOffScreen())
-        TitleFlag_BeginTransition(1);
-        
-    sdata->Loading.stage = -5;
-    mb->state |= NEEDS_TO_CLOSE;
-}
 
 struct MenuBox AdvMainFreeze_Difficulty = {
     .stringIndexTitle = 345,
