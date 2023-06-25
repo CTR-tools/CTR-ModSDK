@@ -31,8 +31,11 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* dri
 				data.metaPhys[i].value[*driverClass]
 			);
 			#endif
+			OtherFX_Play(0x6a, 1);
 		}
 	}
+
+	if (buttonsTapped & (BTN_L1 | BTN_R1 | BTN_L2 | BTN_R2 | BTN_UP | BTN_DOWN | BTN_LEFT | BTN_RIGHT)) OtherFX_Play(0, 1);
 
 	// L1 & R1: switch stat
 	if (buttonsTapped & BTN_L1) metaPhysID = (metaPhysID + 64) % 65;
