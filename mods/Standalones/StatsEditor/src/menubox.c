@@ -9,14 +9,28 @@ force_inline int abs(int value)
 	return (value < 0) ? (-value) : value;
 }
 
-force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int buttonsTapped)
+force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* driverClass, u_int buttonsTapped)
 {
 	// Triangle: Print class values to console log
 	if (buttonsTapped & BTN_TRIANGLE)
 	{
 		for(int i = 0; i < 65; i++)
 		{
-			printf("%s - %s - %d\n", sdata->lngStrings[1 + *driverClass], sdata->lngStrings[10 + i], data.metaPhys[i].value[*driverClass]);
+			#if BUILD == UsaRetail
+			printf
+			(
+				"%s - %s - %d\n", sdata->lngStrings[588 + *driverClass],
+				sdata->lngStrings[593 + i],
+				*(int*)((int)&data.metaPhys[i].size + *driverClass * 4) // fix for USAPentaUnlimited
+			);
+			#else
+			printf
+			(
+				"%s - %s - %d\n", sdata->lngStrings[588 + *driverClass],
+				sdata->lngStrings[593 + i],
+				data.metaPhys[i].value[*driverClass]
+			);
+			#endif
 		}
 	}
 
@@ -25,8 +39,8 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int
 	if (buttonsTapped & BTN_R1) metaPhysID = (metaPhysID + 1) % 65;
 
 	// L2 & R2: change driver class
-	if (buttonsTapped & BTN_L2) *driverClass = (*driverClass + 3) % 4;
-	if (buttonsTapped & BTN_R2) *driverClass = (*driverClass + 1) % 4;
+	if (buttonsTapped & BTN_L2) *driverClass = (*driverClass + 4) % 5;
+	if (buttonsTapped & BTN_R2) *driverClass = (*driverClass + 1) % 5;
 
 	// Left & Right: switch stat value digit
 	if (buttonsTapped & BTN_LEFT) digitSelected = (digitSelected + 1) % 5;
@@ -37,33 +51,33 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int
 	{
 		case 0:
 			if (buttonsTapped & BTN_UP)
-				data.metaPhys[metaPhysID].value[*driverClass] += 1;
+				metaPhys[*driverClass] += 1;
 			if (buttonsTapped & BTN_DOWN)
-				data.metaPhys[metaPhysID].value[*driverClass] -= 1;
+				metaPhys[*driverClass] -= 1;
 			break;
 		case 1:
 			if (buttonsTapped & BTN_UP)
-				data.metaPhys[metaPhysID].value[*driverClass] += 10;
+				metaPhys[*driverClass] += 10;
 			if (buttonsTapped & BTN_DOWN)
-				data.metaPhys[metaPhysID].value[*driverClass] -= 10;
+				metaPhys[*driverClass] -= 10;
 			break;
 		case 2:
 			if (buttonsTapped & BTN_UP)
-				data.metaPhys[metaPhysID].value[*driverClass] += 100;
+				metaPhys[*driverClass] += 100;
 			if (buttonsTapped & BTN_DOWN)
-				data.metaPhys[metaPhysID].value[*driverClass] -= 100;
+				metaPhys[*driverClass] -= 100;
 			break;
 		case 3:
 			if (buttonsTapped & BTN_UP)
-				data.metaPhys[metaPhysID].value[*driverClass] += 1000;
+				metaPhys[*driverClass] += 1000;
 			if (buttonsTapped & BTN_DOWN)
-				data.metaPhys[metaPhysID].value[*driverClass] -= 1000;
+				metaPhys[*driverClass] -= 1000;
 			break;
 		case 4:
 			if (buttonsTapped & BTN_UP)
-				data.metaPhys[metaPhysID].value[*driverClass] += 10000;
+				metaPhys[*driverClass] += 10000;
 			if (buttonsTapped & BTN_DOWN)
-				data.metaPhys[metaPhysID].value[*driverClass] -= 10000;
+				metaPhys[*driverClass] -= 10000;
 			break;
 	}
 
@@ -93,7 +107,7 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* driverClass, u_int
 	}
 }
 
-force_inline void DrawNumbers(struct GameTracker* gGT, int* driverClass, u_int color)
+force_inline void DrawNumbers(struct GameTracker* gGT, int* metaPhys, int* driverClass, u_int color)
 {
 	u_int cursorX[5] = {ones.x + 3, tens.x + 3, hundreds.x + 3, thousands.x + 3, ten_thousands.x + 3};
 
@@ -103,11 +117,11 @@ force_inline void DrawNumbers(struct GameTracker* gGT, int* driverClass, u_int c
 	char metaPhysThousands[] = "  ";
 	char metaPhysTen_Thousands[] = "  ";
 
-	u_int onesValue = data.metaPhys[metaPhysID].value[*driverClass] % 10;
-	u_int tensValue = (data.metaPhys[metaPhysID].value[*driverClass]/10) % 10;
-	u_int hundredsValue = (data.metaPhys[metaPhysID].value[*driverClass]/100) % 10;
-	u_int thousandsValue = (data.metaPhys[metaPhysID].value[*driverClass]/1000) % 10;
-	u_int ten_thousandsValue = (data.metaPhys[metaPhysID].value[*driverClass]/10000) % 10;
+	u_int onesValue = metaPhys[*driverClass] % 10;
+	u_int tensValue = (metaPhys[*driverClass]/10) % 10;
+	u_int hundredsValue = (metaPhys[*driverClass]/100) % 10;
+	u_int thousandsValue = (metaPhys[*driverClass]/1000) % 10;
+	u_int ten_thousandsValue = (metaPhys[*driverClass]/10000) % 10;
 
 	sprintf(metaPhysOnes, "%d\n", abs(onesValue));
 	sprintf(metaPhysTens, "%d\n", abs(tensValue));
@@ -115,7 +129,7 @@ force_inline void DrawNumbers(struct GameTracker* gGT, int* driverClass, u_int c
 	sprintf(metaPhysThousands, "%d\n", abs(thousandsValue));
 	sprintf(metaPhysTen_Thousands, "%d\n", abs(ten_thousandsValue));
 
-	if (data.metaPhys[metaPhysID].value[*driverClass] < 0)
+	if (metaPhys[*driverClass] < 0)
 	{
 		DecalFont_DrawLine("-", ten_thousands.x+5 - 27, ones.y + 5, FONT_BIG, color);
 	}
@@ -137,19 +151,8 @@ force_inline void DrawNumbers(struct GameTracker* gGT, int* driverClass, u_int c
 	MENUBOX_DrawInnerRect(&ten_thousands, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
 }
 
-force_inline void DisplayMenuBox(struct GameTracker* gGT, int* driverClass)
+force_inline void DisplayMenuBox(struct GameTracker* gGT, int* metaPhys, int* driverClass)
 {
-	char metaPhysIDString[] = " ";
-	
-	char* driverClassString[4] =
-	{
-		"BALANCED",
-		"ACCELERATION",
-		"SPEED",
-		"TURN",
-		//"UNLIMITED"
-	};
-
 	// driver stats that differ between classes are colored blue
 	// only 9 stats are in this category
 	u_int metaPhysColor = ORANGE;
@@ -160,12 +163,10 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT, int* driverClass)
 	)
 		metaPhysColor = BLUE;
 
-	sprintf(metaPhysIDString, "%d\n", metaPhysID);
+	DecalFont_DrawLine(sdata->lngStrings[588 + *driverClass], SCREEN_WIDTH/2, SCREEN_HEIGHT/4, FONT_SMALL, (CENTER_TEXT | ORANGE)); // display current driver class
+	DecalFont_DrawLine(sdata->lngStrings[593 + metaPhysID], SCREEN_WIDTH/2, SCREEN_HEIGHT/3, FONT_SMALL, (CENTER_TEXT | metaPhysColor)); // display current metaPhys ID
 
-	DecalFont_DrawLine(driverClassString[*driverClass], SCREEN_WIDTH/2, SCREEN_HEIGHT/4, FONT_SMALL, (CENTER_TEXT | ORANGE)); // display current driver class
-	DecalFont_DrawLine(metaPhysIDString, SCREEN_WIDTH/2, SCREEN_HEIGHT/3, FONT_BIG, (CENTER_TEXT | metaPhysColor)); // display current metaPhys ID
-
-	DrawNumbers(gGT, driverClass, metaPhysColor);
+	DrawNumbers(gGT, metaPhys, driverClass, metaPhysColor);
 
 	MENUBOX_DrawInnerRect(&r, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
 }
@@ -175,6 +176,12 @@ void StatsEditor(struct MenuBox* mb)
 {
 	MainFreeze_SafeAdvDestroy(); // probably mandatory
 
-	ProcessInputs(sdata->gGT, &data.MetaDataCharacters[data.characterIDs[0]].engineID, sdata->gGamepads->gamepad[0].buttonsTapped);
-	DisplayMenuBox(sdata->gGT, &data.MetaDataCharacters[data.characterIDs[0]].engineID);
+	#if BUILD == UsaRetail
+		int* metaPhys = &data.metaPhys[metaPhysID].size; // fix for USAPentaUnlimited
+	#else
+		int* metaPhys = data.metaPhys[metaPhysID].value;
+	#endif
+
+	ProcessInputs(sdata->gGT, metaPhys, &data.MetaDataCharacters[data.characterIDs[0]].engineID, sdata->gGamepads->gamepad[0].buttonsTapped);
+	DisplayMenuBox(sdata->gGT, metaPhys, &data.MetaDataCharacters[data.characterIDs[0]].engineID);
 }
