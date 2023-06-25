@@ -11,4 +11,6 @@ Left & Right: switch stat value digit
 Up & Down: increment/decrement stat value
 Triangle: Print class values to console log
 
+Currently only works properly in NTSC-U.
+
 By Superstarxalien.
