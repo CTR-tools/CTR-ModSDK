@@ -1,7 +1,5 @@
 #include <common.h>
 
-void MainFreeze_ConfigDrawArrows(int posX, int posY, char* str);
-
 static char bal[] = "Balanced";
 static char acc[] = "Acceleration";
 static char trn[] = "Turning";

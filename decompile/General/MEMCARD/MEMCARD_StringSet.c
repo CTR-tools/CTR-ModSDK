@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MEMCARD_StringSet(char *dstString, int slotIdx, char *srcString)
+void DECOMP_MEMCARD_StringSet(char *dstString, int slotIdx, char *srcString)
 
 {
   MEMCARD_StringInit(slotIdx, dstString);

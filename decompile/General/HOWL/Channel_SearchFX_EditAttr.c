@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct ChannelStats* Channel_SearchFX_EditAttr(
+struct ChannelStats* DECOMP_Channel_SearchFX_EditAttr(
 	int type, int soundID, int updateFlags, 
 	struct ChannelAttr* attr)
 {

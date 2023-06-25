@@ -1,7 +1,5 @@
 #include <common.h>
 
-void* MEMPACK_AllocMem(int size, char* name);
-struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
 void ConvertRotToMatrix(MATRIX* m, short* rot);
 
 struct PortalTest

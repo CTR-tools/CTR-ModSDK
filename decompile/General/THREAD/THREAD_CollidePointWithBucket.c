@@ -1,6 +1,6 @@
 #include <common.h>
 
-void THREAD_CollidePointWithBucket(struct Thread* th, short* vec3_pos)
+void DECOMP_THREAD_CollidePointWithBucket(struct Thread* th, short* vec3_pos)
 {
 	struct Thread* other;
 	

@@ -1,9 +1,6 @@
 #include <common.h>
 #include "tex.h"
 
-// To do: make header
-void* LOAD_ReadFile_NoCallback(const char* file, void* addr, int unk);
-
 TexData * texData;
 
 int characterIndex[NUM_CHARACTERS] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};

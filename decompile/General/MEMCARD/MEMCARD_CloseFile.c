@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MEMCARD_CloseFile(void)
+void DECOMP_MEMCARD_CloseFile(void)
 {
     // // NOTE: this impl 4 bytes over byte budget
     // if (sdata->memcard_fd != -1)

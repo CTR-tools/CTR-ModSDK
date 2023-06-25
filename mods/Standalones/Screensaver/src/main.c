@@ -1,9 +1,6 @@
 #include <common.h>
 
-void MENUBOX_DrawInnerRect(RECT* r, int flag, void* ot);
-void UI_VsQuipDrawAll();
 void MM_JumpTo_Scrapbook();
-void MainRaceTrack_RequestLoad(int level);
 
 RECT window1 = {0, 0, 400, 130};
 char options[14] = "\0";

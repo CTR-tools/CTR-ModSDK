@@ -1,7 +1,5 @@
 #include <common.h>
 
-void THREAD_PerBspLeaf_CheckInstances();
-
 void DECOMP_THREAD_StartSearch_Self(struct ScratchpadStruct* param)
 {
   struct GameTracker* gGT = sdata->gGT;

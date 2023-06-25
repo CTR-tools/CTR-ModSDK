@@ -1,7 +1,5 @@
 #include <common.h>
 
-void Voiceline_RequestPlay(int, short, int);
-
 void DECOMP_Turbo_Audio(struct Driver* driver, int speed_cap) 
 {
     u_int distortion;

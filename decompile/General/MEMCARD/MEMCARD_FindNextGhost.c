@@ -1,6 +1,6 @@
 #include <common.h>
 
-char *MEMCARD_FindNextGhost(void)
+char *DECOMP_MEMCARD_FindNextGhost(void)
 {
     struct DIRENTRY *nextEntry;
     struct DIRENTRY someEntry;

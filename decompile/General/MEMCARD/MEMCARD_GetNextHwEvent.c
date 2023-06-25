@@ -1,7 +1,7 @@
 #include <common.h>
 
 // TODO: Use enum, see MEMCARD_GetNextSwEvent
-uint8_t MEMCARD_GetNextHwEvent(void)
+uint8_t DECOMP_MEMCARD_GetNextHwEvent(void)
 {
     if (TestEvent(sdata->HwCARD_EvSpIOE))
     {

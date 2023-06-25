@@ -1,8 +1,5 @@
 #include <common.h>
 
-void UI_ThTick_Reward(struct Thread*);
-void UI_ThTick_CountPickup(struct Thread*);
-
 int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6)
 
 {

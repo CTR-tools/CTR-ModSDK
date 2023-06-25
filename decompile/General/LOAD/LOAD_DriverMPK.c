@@ -1,8 +1,5 @@
 #include <common.h>
 
-void LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, unsigned int callback);
-void LOAD_Robots1P(int p1);
-void LOAD_Robots2P(int bigfile, int p1, int p2, int callback);
 
 void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 {

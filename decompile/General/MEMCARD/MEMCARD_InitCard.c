@@ -2,7 +2,7 @@
 
 //- creates 8 events (4 per card?)
 //- calls InitCARD and StartCARD
-void MEMCARD_InitCard(void)
+void DECOMP_MEMCARD_InitCard(void)
 
 {
     // This section was copy/pasted by Naughty Dog,

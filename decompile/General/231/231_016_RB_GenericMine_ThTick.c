@@ -2,7 +2,6 @@
 
 void RB_TNT_ThTick_ThrowOnHead();
 void RB_TNT_ThTick_ThrowOffHead();
-void THREAD_DestroyInstance();
 void RB_Hazard_ThCollide_Generic();
 void RB_Potion_ThTick_InAir();
 

@@ -9,9 +9,6 @@ void ClearDriverPool(struct JitPool* ap);
 void ANTICHIP_CheckFraud_Entry();
 #endif
 
-// only in builds 926+
-int MainDB_GetClipSize(int levID, int numPlyrCurrGame);
-
 // MainInit_JitPoolsNew
 void MainInit_JitPoolsNew_New(struct GameTracker* gGT)
 {

@@ -1,8 +1,5 @@
 #include <common.h>
 
-void CAM_ThTick();
-struct Thread* THREAD_BirthWithObject();
-
 void DECOMP_CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct TileView* tileView)
 {
 	// Naughty Dog debug printf

@@ -1,8 +1,6 @@
 #include <common.h>
 
-void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver);
-
-void VehPtr_Drifting_PhysLinear(struct Thread *thread, struct Driver *driver)
+void DECOMP_VehPtr_Drifting_PhysLinear(struct Thread *thread, struct Driver *driver)
 {
 	struct GameTracker* gGT;
 	

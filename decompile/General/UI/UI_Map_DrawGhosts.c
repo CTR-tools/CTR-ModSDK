@@ -1,6 +1,6 @@
 #include <common.h>
 
-void UI_Map_DrawGhosts(int ptrMap,struct Thread* bucket)
+void DECOMP_UI_Map_DrawGhosts(int ptrMap,struct Thread* bucket)
 {
   int color;
   struct Driver* d;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainFrame_RenderFrame(struct GameTracker *gGT)
+void DECOMP_MainFrame_RenderFrame(struct GameTracker *gGT)
 {
 	int *piVar1;
 	u_char bVar2;

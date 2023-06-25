@@ -3,7 +3,7 @@
 // param_3:
 // 0 - normal
 // 1 - echo
-void OtherFX_Play_Echo(unsigned int soundID, int flags, int echoFlag)
+void DECOMP_OtherFX_Play_Echo(unsigned int soundID, int flags, int echoFlag)
 {
 	// ff8080:
 	// 0x00 - no echo

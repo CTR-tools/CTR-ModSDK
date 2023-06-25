@@ -1,6 +1,6 @@
 #include <common.h>
 
-uint8_t MEMCARD_GetInfo(int slotIdx)
+uint8_t DECOMP_MEMCARD_GetInfo(int slotIdx)
 
 {
     if (sdata->unk_card_8008D404 == 0)

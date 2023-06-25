@@ -1,6 +1,6 @@
 #include <common.h>
 
-u_int LoadSave_InputLogic(struct MenuBox *mb, short param_2, u_int confirm)
+u_int DECOMP_LoadSave_InputLogic(struct MenuBox *mb, short param_2, u_int confirm)
 {
     u_int uVar5 = 0;
     u_int tap = sdata->buttonTapPerPlayer[0];

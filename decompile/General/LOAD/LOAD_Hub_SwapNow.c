@@ -1,6 +1,6 @@
 #include <common.h>
 
-void LOAD_Hub_SwapNow()
+void DECOMP_LOAD_Hub_SwapNow()
 {
 	struct Level* level1;
 	struct VisMem* visMem;

@@ -1,12 +1,5 @@
 #include <common.h>
 
-struct Driver* VehInit_Player(int index);
-void VehInit_TeleportAll(struct GameTracker* gGT, int flag);
-struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
-void ConvertRotToMatrix(MATRIX* m, short* rot);
-void MENUBOX_ClearInput();
-void UI_DrawDriverIcon(struct Icon* icon, short posX, int posY, struct PrimMem* primMem, void *ot, u_char semitransparencyEnabled, short scale, u_int vcolorAndCode);
-
 struct Ball
 {
 	struct Instance* inst;

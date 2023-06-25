@@ -1,6 +1,6 @@
 #include <common.h>
 
-void THREAD_DestroyTracker(struct Thread* t)
+void DECOMP_THREAD_DestroyTracker(struct Thread* t)
 {
 	struct GameTracker* gGT = sdata->gGT;
 	

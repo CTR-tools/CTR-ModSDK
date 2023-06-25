@@ -1,8 +1,5 @@
 #include <common.h>
 
-void VehPtr_Freeze_Init(struct Thread *, struct Driver *);
-void VehPtr_Driving_Init(struct Thread *, struct Driver *);
-
 void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
 {
   char doorIsOpen;

@@ -1,8 +1,5 @@
 #include <common.h>
 
-void TitleFlag_SetFullyOnScreen();
-void TitleFlag_SetCanDraw(int enable);
-
 // replace call to FullyOffScreen in main(), with this
 void MyFlagFunc()
 {

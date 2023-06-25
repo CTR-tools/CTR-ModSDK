@@ -2,7 +2,7 @@
 
 // param2 = BASCUS-94426G* 
 // TODO: 4 bytes over budget
-char *MEMCARD_FindFirstGhost(int slotIdx, char *srcString)
+char *DECOMP_MEMCARD_FindFirstGhost(int slotIdx, char *srcString)
 {
     if (sdata->unk_card_8008D404)
     {

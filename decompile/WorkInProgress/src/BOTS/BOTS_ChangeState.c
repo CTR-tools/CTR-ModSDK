@@ -1,7 +1,7 @@
 #include <common.h>
 
 // param4 - reason
-undefined4 BOTS_ChangeState(struct Driver *driverVictim, int damageType, struct Driver *driverAttacker, int damageReason)
+undefined4 DECOMP_BOTS_ChangeState(struct Driver *driverVictim, int damageType, struct Driver *driverAttacker, int damageReason)
 {
   int iVar2;
 

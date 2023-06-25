@@ -1,7 +1,5 @@
 #include <common.h>
 
-int MixRNG_Scramble();
-
 enum ItemSet
 {
 	ITEMSET_Race1=0,

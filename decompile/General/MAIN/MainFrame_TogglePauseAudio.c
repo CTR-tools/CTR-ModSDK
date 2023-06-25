@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainFrame_TogglePauseAudio(int bool_pause)
+void DECOMP_MainFrame_TogglePauseAudio(int bool_pause)
 {
 	if (bool_pause == 0)
 	{

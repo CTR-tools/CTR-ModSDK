@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainFreeze_ConfigDrawNPC105(short startX, short startY, short param_3, int param_4, short param_5, char *color, u_long *otMem, struct PrimMem *primMem)
+void DECOMP_MainFreeze_ConfigDrawNPC105(short startX, short startY, short param_3, int param_4, short param_5, char *color, u_long *otMem, struct PrimMem *primMem)
 {
     u_int angle;
     u_int uVar6;

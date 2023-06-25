@@ -1,6 +1,6 @@
 #include <common.h> 
 
-void LoadSave_MuteCursors(void)
+void DECOMP_LoadSave_MuteCursors(void)
 {
   data.MENUBOX_DrawSelfFourAdvProfiles.state |= 0x800000;
 
@@ -10,7 +10,7 @@ void LoadSave_MuteCursors(void)
   return;
 }
 
-void LoadSave_UnMuteCursors(void)
+void DECOMP_LoadSave_UnMuteCursors(void)
 {
   data.MENUBOX_DrawSelfFourAdvProfiles.state &= 0xff7fffff;
 

@@ -1,8 +1,5 @@
 #include <common.h>
 
-void CAM_EndOfRace(struct CameraDC* camDC, struct Driver* d);
-void CDSYS_XAPlay(int category, int index);
-
 // hook end of CAM_EndOfRace,
 // leave this as JAL hook, dont change to JR/JMP hook,
 // cause CAM_EndOfRace happens on first frame of demo mode,

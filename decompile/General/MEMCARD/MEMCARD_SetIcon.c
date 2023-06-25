@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MEMCARD_SetIcon(int icon)
+void DECOMP_MEMCARD_SetIcon(int icon)
 {
 	int* dst;
 	int* src;

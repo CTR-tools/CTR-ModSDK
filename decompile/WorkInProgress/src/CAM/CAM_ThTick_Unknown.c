@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CAM_ThTick(struct Thread *t)
+void DECOMP_CAM_ThTick(struct Thread *t)
 {
 	char bVar1;
 	struct GameTracker *psVar2;

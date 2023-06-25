@@ -1,9 +1,5 @@
 #include <common.h>
 
-void MainGameEnd_Initialize(short);
-void UI_Lerp2D_HUD(short*, short, short, short, short, int, short);
-void UI_DrawLimitClock(short, short, short);
-void UI_Weapon_DrawSelf(short, short, short, struct Driver*);
 void DECOMP_UI_DrawNumRelic(short, short);
 void DECOMP_UI_DrawNumKey(short, short);
 void DECOMP_UI_DrawNumTrophy(short, short);
@@ -13,7 +9,6 @@ void DECOMP_UI_DrawSpeedBG(short, short, struct Driver*);
 void DECOMP_UI_JumpMeter_Update(struct Driver*);
 void DECOMP_UI_JumpMeter_Draw(short, short, struct Driver*);
 void DECOMP_UI_DrawSlideMeter(short, short, struct Driver*);
-void VehPtr_Freeze_Init(struct Thread*,struct Driver*);
 
 // 692 by default, budget 768
 

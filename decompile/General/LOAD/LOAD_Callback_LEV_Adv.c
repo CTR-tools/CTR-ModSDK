@@ -1,7 +1,5 @@
 #include <common.h>
 
-void LOAD_RunPtrMap(struct Level* origin,void* map,int size);
-void MEMPACK_SwapPacks(int system);
 void MEMPACK_ClearHighMem();
 
 void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs)

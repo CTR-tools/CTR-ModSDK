@@ -2,8 +2,6 @@
 #define RANDOM_MODE 1
 #define SHUFFLE_AMOUNT 100
 
-int MixRNG_Scramble();
-
 short newPads[27] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 101, 102, 103, 104, 105};
 
 void Shuffle_array(short *arr, short size)

@@ -1,10 +1,6 @@
 #include "../p_rom.h"
 
-void Torch_Subset1();
-void Torch_Subset4();
-void Torch_Subset7();
 void VehInit_SetConsts(struct Driver* d);
-int MATH_FastSqrt(int dist, int unk);
 
 #define NumbersToString Torch_Subset1
 #define SaveState Torch_Subset4
@@ -48,10 +44,6 @@ enum ButtonsExtra
 	BTN_FLY = BTN_CROSS | BTN_R2 | BTN_SQUARE,
 	BTN_ENGINE_SWAP = BTN_UP | BTN_R2,
 };
-
-
-// Declaring functions to use as variables
-void * Weapon_Mask_UseWeapon(int param_1,int param_2);
 
 void BackupInstructions()
 {

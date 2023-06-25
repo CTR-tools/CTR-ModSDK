@@ -1,9 +1,5 @@
 #include <common.h>
 
-void Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
-void THREAD_CollidePointWithBucket(struct Thread* thread, u_short* param_2);
-void DriverCrash_AnyTwoCars(struct Thread* thread, u_short* param_2, int* param_3);
-
 // OnCollide_Drivers
 // handle collision with turbo pads and robotcars
 void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)

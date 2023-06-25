@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CseqMusic_ChangeVolume(int songID, int p2, int p3)
+void DECOMP_CseqMusic_ChangeVolume(int songID, int p2, int p3)
 {
 	int i;
 	struct Song* song;

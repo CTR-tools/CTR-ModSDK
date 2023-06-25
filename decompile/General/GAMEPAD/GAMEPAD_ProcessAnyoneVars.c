@@ -9,7 +9,7 @@ void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads)
 
   // determine which buttons are held this frame,
   // store a backup of "currFrame" into "lastFrame"
-  uVar1 = GAMEPAD_ProcessHold();
+  uVar1 = GAMEPAD_ProcessHold(gGamepads);
 
   // handle mapping of D-Pad and
   // analog stick values onto each other

@@ -1,7 +1,5 @@
 #include "../p_rom.h"
 
-void MainFrame_TogglePauseAudio(int enable);
-
 void SaveState()
 {
 	int i;

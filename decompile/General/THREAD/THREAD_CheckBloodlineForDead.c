@@ -1,6 +1,6 @@
 #include <common.h>
 
-void THREAD_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th)
+void DECOMP_THREAD_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th)
 {
 	while(th != 0)
 	{

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void THREAD_PerBspLeaf_CheckInstances(struct BSP* bspLeaf, struct ScratchpadStruct* param_2)
+void DECOMP_THREAD_PerBspLeaf_CheckInstances(struct BSP* bspLeaf, struct ScratchpadStruct* param_2)
 {
   int distX, distY, distZ;
   struct BSP* bspHitbox;

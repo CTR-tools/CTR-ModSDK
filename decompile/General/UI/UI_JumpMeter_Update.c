@@ -1,6 +1,5 @@
 #include <common.h>
 
-void Voiceline_RequestPlay(u_int, u_int, u_int);
 void Turbo_Increment(struct Driver * , int, u_int, int);
 void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
 

@@ -29,7 +29,7 @@ void RenderVSYNC(struct GameTracker* gGT);
 void RenderFMV();
 void RenderSubmit(struct GameTracker* gGT);
 
-void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
+void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	struct Level* lev = gGT->level1;
 	

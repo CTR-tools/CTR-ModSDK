@@ -1,8 +1,5 @@
 #include <common.h>
 
-u_char* MENUBOX_DrawTime(int milliseconds);
-void MainGameEnd_Initialize();
-
 // countdown clock, used for Battle Mode and Crystal Challenge
 void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 {

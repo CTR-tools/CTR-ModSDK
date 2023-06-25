@@ -9,10 +9,6 @@
 // particles when driving on grass
 // etc
 
-void BOTS_Driver_Init(int slot);
-void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
-void VehParticle_DriverMain(struct Thread* t, struct Driver* d);
-
 void RunInitHook(void)
 {
 	// Disable collision

@@ -1,7 +1,7 @@
 #include <common.h>
 
 // NOTE: unused function?
-uint8_t MEMCARD_EraseFile(int slotIdx, char *srcString)
+uint8_t DECOMP_MEMCARD_EraseFile(int slotIdx, char *srcString)
 {
     if (sdata->unk_card_8008D404)
         return 1;

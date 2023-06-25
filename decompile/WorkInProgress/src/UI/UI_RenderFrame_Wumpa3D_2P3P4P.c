@@ -1,6 +1,5 @@
 #include <common.h>
 
-void TileView_SetDrawEnv_DecalMP(u_long*, struct DB*, short, short, short, short, short, short, short, short);
 void CTR_CycleTex_2p3p4pWumpaHUD(int, int, int);
 
 void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)

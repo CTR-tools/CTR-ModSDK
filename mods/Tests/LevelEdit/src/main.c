@@ -1,9 +1,5 @@
 #include <common.h>
 
-void ConvertRotToMatrix(MATRIX* m, short* rot);
-void VehPtr_Driving_Init(struct Thread* t, struct Driver* d);
-void VehPtr_MaskGrab_Init(struct Thread* t, struct Driver* d);
-
 #define NUM_PLAYERS 4
 
 struct MyData

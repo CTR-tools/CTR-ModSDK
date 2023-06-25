@@ -14,10 +14,10 @@ struct Particle
 	struct Particle* prev;
 
 	// 0x8
-	void* ptrIconArray;
+	struct Icon* ptrIconArray;
 
 	// 0xC
-	void* ptrIconGroup;
+	struct IconGroup* ptrIconGroup;
 
 	// 0x10 (short)
 	short framesLeftInLife;

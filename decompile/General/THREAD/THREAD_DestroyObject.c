@@ -1,6 +1,6 @@
 #include <common.h>
 
-void THREAD_DestroyObject(void* object, int threadFlags)
+void DECOMP_THREAD_DestroyObject(void* object, int threadFlags)
 {
 	struct JitPool* allPools; 
 	struct JitPool* myPool;

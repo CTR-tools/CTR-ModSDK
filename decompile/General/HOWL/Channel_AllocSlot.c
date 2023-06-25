@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct ChannelStats* Channel_AllocSlot(
+struct ChannelStats* DECOMP_Channel_AllocSlot(
 	int flags,
 	struct ChannelAttr* attr)
 {

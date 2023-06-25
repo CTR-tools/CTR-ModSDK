@@ -2159,7 +2159,6 @@ struct Data
 	// 8008626c
 	char unk_between_hudStructPtr_menuRow_arcadeEndRace[0x94];
 
-	#if 0
 	// 8008626c - related to missile or warpball chasing player
 
 	// 8008628c - else ^^
@@ -2182,7 +2181,6 @@ struct Data
 	// 0 for missile, 1 for warpball, for every "player" being tracked
 
 	// 0x80086300 -- end
-	#endif
 
 	// ============================================================================
 

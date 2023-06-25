@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CAM_StartLine_FlyIn(int *param_1, int maxFrames, int frame, short *desiredPos, short *desiredRot)
+void DECOMP_CAM_StartLine_FlyIn(int *param_1, int maxFrames, int frame, short *desiredPos, short *desiredRot)
 {
   struct Level *lev = sdata->gGT->level1;
   short sVar1;

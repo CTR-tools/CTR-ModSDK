@@ -1,8 +1,5 @@
 #include <common.h>
 
-struct Driver* VehInit_Player(int id);
-void VehInit_TeleportAll(struct GameTracker* gGT, int flag);
-
 #define NUM_PLAYERS 8
 
 void RunInitHook()

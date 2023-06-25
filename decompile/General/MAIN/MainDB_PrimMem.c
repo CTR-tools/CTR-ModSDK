@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainDB_PrimMem(struct PrimMem* primMem, u_int size)
+void DECOMP_MainDB_PrimMem(struct PrimMem* primMem, u_int size)
 {
 	void* pvVar1;
 	

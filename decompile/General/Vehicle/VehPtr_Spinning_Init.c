@@ -3,16 +3,10 @@
 void DECOMP_VehPtr_Spinning_InitSetUpdate(struct Thread* t, struct Driver* d);
 void DECOMP_VehPtr_Spinning_Update();
 void DECOMP_VehPtr_Spinning_PhysLinear();
-void VehPtr_Driving_Audio();
 void DECOMP_VehPtr_Spinning_PhysAngular();
 void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
-void OnCollide_Drivers();
 void COLL_StartSearch_Player();
-void Player_JumpAndFriction();
-void OnRender();
-void OnAnimate_Spinning();
-void VehParticle_DriverMain();
 
 void* PlayerSpinningFuncTable[0xD] =
 {

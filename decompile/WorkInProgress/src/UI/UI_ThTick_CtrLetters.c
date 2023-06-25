@@ -1,7 +1,5 @@
 #include <common.h>
 
-void TitleFlag_IsTransitioning();
-
 // Handle CTR letters in HUD
 void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
 

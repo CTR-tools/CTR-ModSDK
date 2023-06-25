@@ -1,12 +1,10 @@
 #include <common.h>
 
-void MainDrawCb_Vsync();
-void MainDrawCb_DrawSync();
 void StateZero();
 
 //#define FastBoot
 
-u_int main()
+u_int DECOMP_main()
 {
 	struct GameTracker* gGT;
 	

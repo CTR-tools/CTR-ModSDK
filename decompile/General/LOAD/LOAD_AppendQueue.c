@@ -1,6 +1,6 @@
 #include <common.h>
 
-void LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void* callback)
+void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void* callback)
 {
 	struct LoadQueueSlot* lqs;
 	

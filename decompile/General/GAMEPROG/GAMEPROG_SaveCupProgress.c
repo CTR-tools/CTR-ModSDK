@@ -4,7 +4,7 @@
 #define CHECK_PROG_BIT(rewards, bitIndex) \
 	((rewards[bitIndex>>5] >> (bitIndex & 0x1f)) & 1) != 0
 
-void GAMEPROG_SaveCupProgress()
+void DECOMP_GAMEPROG_SaveCupProgress()
 {
 	int i;
 	int* prog;

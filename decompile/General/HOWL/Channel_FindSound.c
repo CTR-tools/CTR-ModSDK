@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct ChannelStats* Channel_FindSound(int soundID)
+struct ChannelStats* DECOMP_Channel_FindSound(int soundID)
 {
 	struct ChannelStats* stats = 
 		sdata->channelTaken.first;

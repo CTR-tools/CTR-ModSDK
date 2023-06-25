@@ -1,10 +1,7 @@
 #include <common.h>
 
-int THREAD_BirthWithObject(u_int, u_int, char*, int);
 void CS_Podium_Stand_Init(u_short *);
 void CS_Podium_Prize_Init(u_int, char*, short *);
-short howl_VolumeGet(int volumeType);
-void VehPtr_Freeze_Init(struct Thread* t, struct Driver* d);
 int CS_Thread_Init(u_int, char*, short *, short, u_int);
 void CS_Podium_Camera_ThTick(int param_1);
 

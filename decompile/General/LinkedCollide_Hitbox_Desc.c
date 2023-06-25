@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct Instance* LinkedCollide_Hitbox_Desc(struct HitboxDesc* objBoxDesc) {
+struct Instance* DECOMP_LinkedCollide_Hitbox_Desc(struct HitboxDesc* objBoxDesc) {
   struct Instance* thInst;
   int diff_y;
   MATRIX thInstMatrix;

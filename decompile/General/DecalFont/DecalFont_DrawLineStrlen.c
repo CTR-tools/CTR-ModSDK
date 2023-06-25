@@ -1,7 +1,5 @@
 #include <common.h>
 
-int DecalFont_GetLineWidthStrlen(char* str, short len, short fontType);
-
 #if BUILD == JpnRetail
 u_int DecalFont_boolRacingWheel();
 #endif

@@ -1,8 +1,5 @@
 #include <common.h>
 
-// To do: add a header
-void UI_SaveLapTime(int lapID, int time, int driverID);
-
 // used for both finished lap time and current race time
 void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Driver* driver)
 {

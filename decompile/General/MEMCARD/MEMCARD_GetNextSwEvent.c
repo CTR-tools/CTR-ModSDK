@@ -1,7 +1,7 @@
 #include <common.h>
 
 // TODO: Use an enum instead of returning ints
-uint8_t MEMCARD_GetNextSwEvent(void)
+uint8_t DECOMP_MEMCARD_GetNextSwEvent(void)
 {
     if (TestEvent(sdata->SwCARD_EvSpIOE))
     {

@@ -1,6 +1,6 @@
 #include <common.h>
 
-unsigned int MEMCARD_CRC16(unsigned int crc, int nextByte)
+unsigned int DECOMP_MEMCARD_CRC16(unsigned int crc, int nextByte)
 {
 	int i;
 	int bitCheck;

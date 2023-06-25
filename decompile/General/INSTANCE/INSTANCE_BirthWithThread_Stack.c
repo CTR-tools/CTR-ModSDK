@@ -1,7 +1,7 @@
 #include <common.h>
 
 // used for every explosion
-struct Instance* INSTANCE_BirthWithThread_Stack(int* spArr)
+struct Instance* DECOMP_INSTANCE_BirthWithThread_Stack(int* spArr)
 {
 	// spArr = array on $sp (stack pointer)
 	

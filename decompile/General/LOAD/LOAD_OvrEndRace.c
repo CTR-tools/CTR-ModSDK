@@ -1,8 +1,6 @@
 #include <common.h>
 
 void OVR_Region1();
-void LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void* callback);
-void LOAD_Callback_Overlay_Generic();
 
 // DLL loaded = param_1 + 221
 void DECOMP_LOAD_OvrEndRace(unsigned int param_1)

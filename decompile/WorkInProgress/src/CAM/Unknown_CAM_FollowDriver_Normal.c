@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, struct TileView *view, int scratchpad, struct ZoomData *zoom)
+void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, struct TileView *view, int scratchpad, struct ZoomData *zoom)
 {
     struct GameTracker *gGT = sdata->gGT;
     struct GamepadBuffer *pad = &sdata->gGamepads->gamepad;

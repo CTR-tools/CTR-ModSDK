@@ -1,6 +1,6 @@
 #include <common.h>
 
-void THREAD_DestroySelf(struct Thread* t)
+void DECOMP_THREAD_DestroySelf(struct Thread* t)
 {
 	// thread must exist
 	if(t == 0) return;

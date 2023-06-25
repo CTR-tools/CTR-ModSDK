@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MEMCARD_ChecksumSave(unsigned char* saveBytes, int len)
+void DECOMP_MEMCARD_ChecksumSave(unsigned char* saveBytes, int len)
 {
 	int i;
 	int crc = 0;

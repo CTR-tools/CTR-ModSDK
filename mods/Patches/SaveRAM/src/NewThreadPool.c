@@ -2,11 +2,8 @@
 
 // To do: add header
 
-void PadInitMtap();
-void howl_InitGlobals(); // 80029988
-void Vector_BakeMatrixTable(); // 80057884
+void PadInitMtap(); // 80029988
 void MainInit_StringToLevID();
-void MEMCARD_InitCard();
 void MEMPACK_Init();
 
 // room for 3 threads

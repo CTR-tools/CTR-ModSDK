@@ -1,9 +1,5 @@
 #include <common.h>
 
-int MapToRange(int, int, int, int, int);
-int MATH_Cos(int);
-int MATH_Sin(int);
-
 void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
 
 {

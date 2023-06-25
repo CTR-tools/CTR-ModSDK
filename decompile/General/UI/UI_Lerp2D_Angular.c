@@ -1,7 +1,5 @@
 #include <common.h>
 
-int MATH_Sin(unsigned int angle);
-
 // used for character icons in races
 // get position of icon based on a circular motion to move the driver up or down in the ranks
 // param1 = pointer to (x,y) position

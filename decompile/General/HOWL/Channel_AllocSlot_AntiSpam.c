@@ -1,12 +1,8 @@
 #include <common.h>
 
-struct ChannelStats* Channel_AllocSlot(
-	int flags,
-	struct ChannelAttr* attr);
-
 void Channel_DestroySelf(struct ChannelStats* stats);
 
-struct ChannelStats* Channel_AllocSlot_AntiSpam(
+struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 	short soundID,
 	char boolUseAntiSpam,
 	int flags,

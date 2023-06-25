@@ -1,7 +1,5 @@
 #include <common.h>
 
-void VehPtr_Freeze_Init(short, int);
-
 void DECOMP_AH_MaskHint_Start(short hintId, u_short bool_interruptWarppad)
 {
   u_int uVar1;

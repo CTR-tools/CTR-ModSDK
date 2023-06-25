@@ -3,8 +3,6 @@
 // To do:
 // podiums are not tested
 
-void LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, unsigned int callback);
-void LOAD_Robots1P(int characterID);
 
 void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 {

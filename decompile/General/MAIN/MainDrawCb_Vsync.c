@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainDrawCb_Vsync()
+void DECOMP_MainDrawCb_Vsync()
 {
 	struct GameTracker* gGT;
 	

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Tawna_Init(struct GameTracker * gGT)
+void DECOMP_Tawna_Init(struct GameTracker * gGT)
 {
   struct Driver* driver;
   char index;

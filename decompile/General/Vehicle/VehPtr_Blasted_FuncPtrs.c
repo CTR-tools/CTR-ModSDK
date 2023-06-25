@@ -3,8 +3,6 @@
 // budget: 0x208 (520)
 // curr:
 
-void VehPtr_Driving_Init(struct Thread* t, struct Driver* d);
-
 void DECOMP_VehPtr_Blasted_Update(struct Thread *thread, struct Driver *driver)
 {
 	if (driver->NoInputTimer != 0) return;
@@ -33,9 +31,6 @@ void DECOMP_VehPtr_Blasted_PhysLinear(struct Thread *thread, struct Driver *driv
 	
 	return;
 }
-
-int InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
-void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
 
 void DECOMP_VehPtr_Blasted_PhysAngular(struct Thread *thread, struct Driver *driver)
 {

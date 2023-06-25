@@ -1,7 +1,5 @@
 #include <common.h>
 
-void VehPtr_Freeze_Init(struct Thread* t, struct Driver* d);
-
 // Request Aku Hint, doesn't start till FUN_800b3dd8
 // hintId:
 //	0x00 - Welcome to Adventure Arena

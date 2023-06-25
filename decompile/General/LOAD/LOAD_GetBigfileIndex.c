@@ -1,6 +1,6 @@
 #include <common.h>
 
-int LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType)
+int DECOMP_LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType)
 {
 	// === Wow we need a bigfile enum ===
 

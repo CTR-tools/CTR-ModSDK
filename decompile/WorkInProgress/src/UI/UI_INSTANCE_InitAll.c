@@ -1,10 +1,5 @@
 #include <common.h>
 
-void UI_ThTick_Reward(struct Thread*);
-void UI_ThTick_CountPickup(struct Thread*);
-void UI_ThTick_CtrLetters(struct Thread*);
-void UI_ThTick_big1(struct Thread*);
-
 void DECOMP_UI_INSTANCE_InitAll(void)
 {
   struct GameTracker *gGT;

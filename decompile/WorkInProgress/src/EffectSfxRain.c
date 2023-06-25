@@ -2,7 +2,7 @@
 // but is related to rain sounds, no proof of name
 
 // this func handle rain on tiger temple and cortex castle
-void EffectSfxRain_MakeSound(struct GameTracker *gGT) {
+void DECOMP_EffectSfxRain_MakeSound(struct GameTracker *gGT) {
   int i, lev;
   unsigned int rained;
 

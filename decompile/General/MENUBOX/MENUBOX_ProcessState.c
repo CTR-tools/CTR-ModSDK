@@ -1,13 +1,5 @@
 #include <common.h>
 
-void TitleFlag_SetCanDraw(int value);
-int TitleFlag_GetCanDraw();
-
-void MENUBOX_Show(struct MenuBox* m);
-void MENUBOX_DrawSelf(struct MenuBox* m, int, int, int);
-void MENUBOX_ProcessInput(struct MenuBox* m);
-void MENUBOX_GetWidth(struct MenuBox* m, RECT* r, int);
-
 /*
 easy way to fix the menu storage bug
 Top half is checking for a new menu, bottom half is updating menu logic, 

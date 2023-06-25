@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GAMEPROG_AdvPercent(struct AdvProgress* adv)
+void DECOMP_GAMEPROG_AdvPercent(struct AdvProgress* adv)
 {
 	int i;
 	int percent;

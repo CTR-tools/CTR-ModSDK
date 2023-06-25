@@ -1,6 +1,6 @@
 #include <common.h> 
 
-void Smart_ExitCriticalSection(void)
+void DECOMP_Smart_ExitCriticalSection(void)
 {
   if (
 		// if you're already in a critical section
