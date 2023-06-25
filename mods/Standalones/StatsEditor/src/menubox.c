@@ -19,14 +19,14 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* dri
 			#if BUILD == UsaRetail
 			printf
 			(
-				"%s - %s - %d\n", sdata->lngStrings[588 + *driverClass],
+				"%s - %s: %d\n", sdata->lngStrings[588 + *driverClass],
 				sdata->lngStrings[593 + i],
 				*(int*)((int)&data.metaPhys[i].size + *driverClass * 4) // fix for USAPentaUnlimited
 			);
 			#else
 			printf
 			(
-				"%s - %s - %d\n", sdata->lngStrings[588 + *driverClass],
+				"%s - %s: %d\n", sdata->lngStrings[588 + *driverClass],
 				sdata->lngStrings[593 + i],
 				data.metaPhys[i].value[*driverClass]
 			);
