@@ -1,21 +1,11 @@
 #include <common.h>
 
-void CDSYS_XAPauseRequest();
-void MEMPACK_PopToState(int id);
-void LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs);
-int MEMPACK_PushState();
 void MM_JumpTo_Title_FirstTime();
 void MM_JumpTo_Characters();
 void MM_JumpTo_TrackSelect();
 void MM_JumpTo_BattleSetup();
 void CS_Garage_Init();
 void MM_JumpTo_Scrapbook(struct BigHeader* bigfile);
-void CseqMusic_StopAll();
-void MEMPACK_NewPack_StartEnd(void* start, int size);
-u_int MEMPACK_GetFreeBytes();
-void* MEMPACK_AllocHighMem(int allocSize);
-u_int TitleFlag_IsFullyOffScreen();
-void TitleFlag_BeginTransition(int param_1);
 
 // LOAD_TenStages
 // loadingStage is loading stage

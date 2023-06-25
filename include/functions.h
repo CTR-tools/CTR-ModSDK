@@ -408,7 +408,7 @@ void CseqMusic_StopAll();
 
 	// Even more OtherFX...
 
-	void OtherFX_DriverTurbo(u_int* param_1, u_int param_2, u_int param_3);
+	//void OtherFX_DriverTurbo(u_int* param_1, u_int param_2, u_int param_3);
 	void OtherFX_Stop_Safe(int* param_1);
 	//OtherFX_DriverCrashing()
 
@@ -506,6 +506,11 @@ void LOAD_Callback_Overlay_230();
 void LOAD_Callback_Overlay_231();
 void LOAD_Callback_Overlay_232();
 void LOAD_Callback_Overlay_233();
+void LOAD_Callback_MaskHints3D(struct LoadQueueSlot* lqs);
+void LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
+void LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
+void LOAD_Callback_LEV_Adv(struct LoadQueueSlot* lqs);
+void LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 //LOAD_HubCallback()
 void LOAD_GlobalModelPtrs_MPK();
 void LOAD_HubSwapPtrs(struct GameTracker* gGT);
@@ -568,7 +573,7 @@ void MainDrawCb_Vsync();
 // MainFrame
 
 void MainFrame_TogglePauseAudio(int bool_pause);
-void MainFrame_ResetDB(struct GameTracker* gGT);
+//void MainFrame_ResetDB(struct GameTracker* gGT);
 void MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void MainFrame_VisMemFullFrame(struct GameTracker* gGT, struct Level* level);
 void MainFrame_InitVideoSTR(u_int boolPlayVideoStr, RECT* r, short posX, short posY);
@@ -592,7 +597,7 @@ void MainFreeze_IfPressStart();
 
 //MainGameEnd_SoloRaceGetReward()
 //MainGameEnd_SoloRaceSaveHighScore()
-void MainGameEnd_Initialize(short);
+//void MainGameEnd_Initialize(short);
 
 // MainGameStart (?)
 
@@ -679,7 +684,7 @@ uint8_t MEMCARD_EraseFile(int slotIdx, char *srcString);
 void MEMPACK_Init(int ramSize);
 void MEMPACK_SwapPacks(int index);
 void MEMPACK_NewPack_StartEnd(void* start, int size);
-int MEMPACK_GetFreeBytes();
+u_int MEMPACK_GetFreeBytes();
 void* MEMPACK_AllocMem(int allocSize); // also has a second parameter? --Super
 void* MEMPACK_AllocHighMem(int allocSize);
 void MEMPACK_ClearHighMem();
@@ -763,7 +768,7 @@ void TileView_FadeAllWindows();
 //TitleFlag_MoveModels()
 u_int TitleFlag_IsFullyOnScreen();
 u_int TitleFlag_IsFullyOffScreen();
-void TitleFlag_IsTransitioning();
+u_int TitleFlag_IsTransitioning();
 //TitleFlag_SetDrawOrder()
 void TitleFlag_BeginTransition(int param_1);
 void TitleFlag_SetFullyOnScreen();
