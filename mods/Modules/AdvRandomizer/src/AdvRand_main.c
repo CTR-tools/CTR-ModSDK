@@ -22,8 +22,8 @@ void Shuffle_array(short *arr, short size)
 void AH_Rand(void)
 {
     char i;
-    char offsets[] = {0, 18, 22, 27};
-    const char numRanges = 3;
+    char offsets[] = {0, 16, 18, 22, 27};
+    const char numRanges = 4;
 
     if (!RANDOM_MODE)
         return;

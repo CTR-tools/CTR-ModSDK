@@ -1,6 +1,8 @@
 #include <common.h>
 #include "macro.h"
 
+short difficulty[] = {0, 0x50, 0xa0, 0xf0, 0x140, 0x280};
+
 void MainFreeze_Difficulty(struct MenuBox *mb)
 {
     MainFreeze_SafeAdvDestroy();
@@ -23,24 +25,7 @@ void MainFreeze_Difficulty(struct MenuBox *mb)
     if (row >= validRows)
         return;
 
-    u_short string = mb->rows[row].stringIndex;
-    short arcadeDifficulty = 0;
-    switch (string)
-    {
-    case 590:
-        arcadeDifficulty = 0;
-        break;
-    case 588:
-        arcadeDifficulty = 0x140;
-        break;
-    case 589:
-        arcadeDifficulty = 0x280;
-        break;
-    default:
-        arcadeDifficulty = OVR_230.cupDifficultySpeed[string - 346];
-        break;
-    }
-    gGT->arcadeDifficulty = arcadeDifficulty;
+    gGT->arcadeDifficulty = (mb->rows[0].stringIndex != 346) ? difficulty[row] : difficulty[row+1];
 
     if (gameMode & ADVENTURE_ARENA)
     {
@@ -87,24 +72,7 @@ void Retry_Difficulty(struct MenuBox *mb)
     if (row >= validRows)
         return;
 
-    u_short string = mb->rows[row].stringIndex;
-    short arcadeDifficulty = 0;
-    switch (string)
-    {
-    case 590:
-        arcadeDifficulty = 0;
-        break;
-    case 588:
-        arcadeDifficulty = 0x140;
-        break;
-    case 589:
-        arcadeDifficulty = 0x280;
-        break;
-    default:
-        arcadeDifficulty = OVR_230.cupDifficultySpeed[string - 346];
-        break;
-    }
-    gGT->arcadeDifficulty = arcadeDifficulty;
+    gGT->arcadeDifficulty = (mb->rows[0].stringIndex != 346) ? difficulty[row] : difficulty[row+1];
     gGT->hudFlags &= 0xfe;
 
     if (TitleFlag_IsFullyOffScreen())
@@ -133,6 +101,15 @@ struct MenuRow rows_extraDifficulty[] =
         [4] = MENU_ROW(589, ROW_SUPER_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD),
         [5] = FINALIZER_ROW};
 
+struct MenuRow new_advHub[] =
+    {
+        MENU_ROW(2, 4, 1, 0, 0),
+        MENU_ROW(11, 0, 2, 1, 1),
+        MENU_ROW(7, 1, 3, 2, 2),
+        MENU_ROW(14, 2, 4, 3, 3),
+        MENU_ROW(3, 3, 0, 4, 4),
+        FINALIZER_ROW};
+
 struct MenuRow new_advRace[] =
     {
         MENU_ROW(2, 4, 1, 0, 0),
@@ -152,6 +129,17 @@ struct MenuRow new_arcadeRace[] =
         MENU_ROW(14, 4, 6, 5, 5),
         MENU_ROW(3, 5, 0, 6, 6),
         FINALIZER_ROW};
+
+struct MenuBox AdvHubDifficulty = {
+    .stringIndexTitle = 345,
+    .posX_curr = 256,
+    .posY_curr = 108,
+    .unk1 = 0,
+    .state = CENTER_ON_COORDS | ALL_PLAYERS_USE_MENU | USE_SMALL_FONT | BIG_TEXT_IN_TITLE | EXECUTE_FUNCPTR,
+    .rows = rows_advDifficulty,
+    .funcPtr = MainFreeze_Difficulty,
+    .width = 209,
+    .height = 74};
 
 struct MenuBox AdvMainFreeze_Difficulty = {
     .stringIndexTitle = 345,

@@ -9,9 +9,6 @@ common, exe, MainInit_Drivers, 0x50, src/hookBots.s
 // Default pause mod
 926, exe, MainFreeze_MenuPtrDefault, 0x0, src/MainFreeze_MenuPtrDefault.c
 
-// Pause glitch fix?
-926, exe, MainFreeze_IfPressStart, 0x0, src/MainFreeze_IfPressStart.c
-
 // End of Race menu mod
 926, exe, UI_RaceEnd_MenuBoxFuncPtr, 0x0, src/UI_RaceEnd_MenuBoxFuncPtr.c
 926, exe, 0x80086314, 0x0, src/new_retryExitToMap.c
@@ -27,7 +24,6 @@ common, exe, MainInit_Drivers, 0x50, src/hookBots.s
 
 // Adventure Hub Difficulty Option
 926, exe, 0x80084394, 0x0, src/new_AdvHub.c
-926, 232, AH_EndOfFile, 0x0, src/AH_AdvDifficulty.c
 
 // Race Pause Menu Difficulty Option
 926, exe, 0x800843e0, 0x0, src/new_AdvRace.c
