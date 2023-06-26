@@ -85,10 +85,10 @@ void AH_WarpPad_LInB(struct Instance *inst)
 	}
 	swap = (levelID > 22) ? newPads[levelID - 79] : newPads[levelID];
 
+	warppadObj->levelID = levelID;
+
 	if (RANDOM_MODE)
 		warppadObj->levelID = swap;
-	
-	warppadObj->levelID = levelID;
 
 	unlockItem_numNeeded = -1;
 

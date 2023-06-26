@@ -7,7 +7,7 @@ extern struct MenuRow rows_extraDifficulty[];
 
 void MM_AdvDifficulty(struct MenuBox *mb)
 {
-	short row = mb->rowSelected;
+	char row = mb->rowSelected;
 	struct MenuBox *prevBox = mb->ptrPrevBox_InHierarchy;
 
 	// if uninitialized
@@ -17,7 +17,7 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 		return;
 	}
 
-	int arcadeDifficulty = 0;
+	short arcadeDifficulty = 0;
 
 	// if you are in Adventure menu
 	if (prevBox == &OVR_230.menubox_adventure && row < 6)
@@ -34,7 +34,7 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 			arcadeDifficulty = 0x280;
 			break;
 		default:
-			arcadeDifficulty = OVR_230.cupDifficultySpeed[row + 1];
+			arcadeDifficulty = OVR_230.cupDifficultySpeed[row-1];
 			break;
 		}
 		OVR_230.desiredMenu = 0;
