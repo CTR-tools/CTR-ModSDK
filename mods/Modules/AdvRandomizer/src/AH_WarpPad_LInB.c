@@ -83,12 +83,8 @@ void AH_WarpPad_LInB(struct Instance *inst)
 	{
 		levelID = levelID * 10 + inst->name[i] - '0';
 	}
+
 	swap = (levelID > 22) ? newPads[levelID - 79] : newPads[levelID];
-
-	warppadObj->levelID = levelID;
-
-	if (RANDOM_MODE)
-		warppadObj->levelID = swap;
 
 	unlockItem_numNeeded = -1;
 
@@ -100,7 +96,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		// can we just do gGT->levelID-0x19?
 
 		// if trophy owned
-		if (CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) != 0)
+		if (CHECK_ADV_BIT(sdata->advProgress.rewards, (swap + 6)) != 0)
 		{
 		GetKeysRequirement:
 			arrKeysNeeded = 0x800b4e7c;
@@ -233,7 +229,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 			t->modelIndex = 2;
 
 			// if trophy not owned
-			if (CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) == 0)
+			if (CHECK_ADV_BIT(sdata->advProgress.rewards, (swap + 6)) == 0)
 			{
 				// open for trophy
 				t->modelIndex = 1;
@@ -248,7 +244,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 			}
 
 			// if token not owned
-			if (CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) == 0)
+			if (CHECK_ADV_BIT(sdata->advProgress.rewards, (swap + 0x4c)) == 0)
 			{
 				// open for relic/token
 				if (t->modelIndex != 1)
@@ -287,7 +283,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 
 			// if relic not owned
 			if (levelID < 0x12) // check this cause of "goto BattleTrack"
-				if (CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x16)) == 0)
+				if (CHECK_ADV_BIT(sdata->advProgress.rewards, (swap + 0x16)) == 0)
 				{
 					// SlideCol/TurboTrack
 					if (levelID >= 0x10)
@@ -344,7 +340,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		else if (levelID < 0x19)
 		{
 			battleTrackArr = 0x800aba3c;
-			i = battleTrackArr[levelID - 0x12] + 0x6f;
+			i = battleTrackArr[swap - 0x12] + 0x6f;
 
 			// already unlocked
 			t->modelIndex = 2;
@@ -362,7 +358,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		else
 		{
 			// bit index of gem
-			i = (levelID - 100) + 0x6a;
+			i = (swap - 100) + 0x6a;
 
 			// if gem is already unlocked, quit
 			if (CHECK_ADV_BIT(sdata->advProgress.rewards, i) != 0)
@@ -583,4 +579,9 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		newInst->model->headers[i].flags |= 1;
 
 	warppadObj->inst[WPIS_CLOSED_1S] = newInst;
+
+	warppadObj->levelID = levelID;
+
+	if (RANDOM_MODE)
+		warppadObj->levelID = swap;
 }
