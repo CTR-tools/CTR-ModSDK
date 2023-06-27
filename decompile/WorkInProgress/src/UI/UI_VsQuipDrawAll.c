@@ -1,7 +1,5 @@
 #include <common.h>
 
-void MENUBOX_DrawQuip(char*, short, short, short, short, int, short);
-
 void DECOMP_UI_VsQuipDrawAll(void) {
   short posX;
   short posY;

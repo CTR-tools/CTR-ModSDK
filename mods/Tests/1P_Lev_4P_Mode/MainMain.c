@@ -1,7 +1,5 @@
 #include <common.h>
 
-void MainDrawCb_Vsync();
-void MainDrawCb_DrawSync();
 void StateZero();
 
 //#define FastBoot
@@ -254,7 +252,7 @@ u_int main()
 						// Check value of traffic lights
 						(-960 < gGT->trafficLightsTimer) &&
 						// if not drawing intro race cutscene and if not paused
-						((gGT->gameMode1 & (START_OF_RACE | PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+						((gGT->gameMode1 & (START_OF_RACE | PAUSE_ALL)) == 0)
 					) &&
 					(
 						// amount of milliseconds on Traffic Lights - elapsed milliseconds per frame, ~32

@@ -1,6 +1,5 @@
 #include <common.h>
 
-void LOAD_StringToUpper(u_char *param_1);
 void CDSYS_SetMode_StreamData();
 
 // Read file on disc, store in buffer

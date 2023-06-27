@@ -3,8 +3,6 @@
 // budget 0x228 (552 bytes)
 
 void DECOMP_VehPtr_Crashing_PhysAngular(struct Thread* t, struct Driver* d);
-void VehPtr_StopSpin_Init(struct Thread* t, struct Driver* d);
-void VehPtr_Driving_PhysLinear(struct Thread* t, struct Driver* d);
 
 void DECOMP_VehPtr_LastSpin_Update(struct Thread* t, struct Driver* d)
 {

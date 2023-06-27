@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CseqMusic_Stop(int songID)
+void DECOMP_CseqMusic_Stop(int songID)
 {
 	int i;
 	struct Song* song;

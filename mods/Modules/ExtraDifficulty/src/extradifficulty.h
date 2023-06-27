@@ -1,20 +1,5 @@
-#define MENU_ROW(NAME, STRING_INDEX, UP, DOWN, LEFT, RIGHT) \
-    [NAME] = { \
-        .stringIndex = STRING_INDEX, \
-        .rowOnPressUp = UP, \
-        .rowOnPressDown = DOWN, \
-        .rowOnPressLeft = LEFT, \
-        .rowOnPressRight = RIGHT \
-    }
+#include "..\..\..\include\helper_menu_box.h"
 
-#define FINALIZER_ROW \
-    { \
-        .stringIndex = -1, \
-        .rowOnPressUp = 0, \
-        .rowOnPressDown = 0, \
-        .rowOnPressLeft = 0, \
-        .rowOnPressRight = 0 \
-    }
 
 #define ROW_EASY 0
 #define ROW_MEDIUM 1
@@ -32,6 +17,8 @@ struct MenuRow rows_extraDifficulty[] =
     MENU_ROW(ROW_ULTRA_HARD, 589, ROW_SUPER_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD),
     FINALIZER_ROW
 };
+
+void MM_ExtraDifficulty(struct MenuBox* mb);
 
 struct MenuBox extra_difficulty =
 {

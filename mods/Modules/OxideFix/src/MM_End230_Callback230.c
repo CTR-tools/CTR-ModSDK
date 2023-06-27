@@ -4,7 +4,6 @@ void MM_EndOfFile();
 void MM_JumpTo_Scrapbook();
 void MM_Characters_RestoreIDs();
 void MM_Characters_MenuBox();
-void LOAD_RunPtrMap(char* file, void* map, int numPtrs);
 
 // other parts of End230
 extern unsigned char icons1p2p[];

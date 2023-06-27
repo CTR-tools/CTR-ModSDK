@@ -3,15 +3,6 @@
 // budget: 4624
 // curr: 4380
 
-void GAMEPAD_Vib_4(struct Driver* driver, u_int param_2, int param_3);
-void Player_SetHeldItem(struct Driver* driver);
-int Player_StickReturnToRest(int param_1, u_int param_2, struct RacingWheelData* param_3);
-int Player_GetBaseSpeed(struct Driver* driver);
-void Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
-int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
-int Player_StickGetStrengthAbsolute(int param_1, u_int param_2, struct RacingWheelData* param_3);
-int InterpBySpeed(int param_1,int param_2,int param_3);
-
 // see the bottom of this file
 extern short PhysLinear_DriverOffsets[14];
 

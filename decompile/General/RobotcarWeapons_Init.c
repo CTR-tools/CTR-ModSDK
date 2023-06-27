@@ -9,7 +9,7 @@ void DECOMP_RobotcarWeapons_Init(void)
   hub = data.metaDataLEV[lev].hubID;
 
   // If Level ID is Oxide Station
-  if (lev == 0xd) {
+  if (lev == OXIDE_STATION) {
     hub = 0;
   }
 

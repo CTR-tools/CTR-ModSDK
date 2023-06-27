@@ -1,16 +1,11 @@
 #include <common.h>
 
 void DECOMP_VehPtr_Crashing_PhysLinear();
-void VehPtr_Driving_Audio();
 void DECOMP_VehPtr_Crashing_PhysAngular();
 void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
-void OnCollide_Drivers();
 void COLL_StartSearch_Player();
-void Player_JumpAndFriction();
-void OnRender();
 void DECOMP_VehPtr_Crashing_Animate();
-void VehParticle_DriverMain();
 
 // budget, 0x120 bytes, 288 bytes
 

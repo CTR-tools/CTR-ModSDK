@@ -1,6 +1,6 @@
 #include <common.H>
 
-void MENUBOX_ProcessState(void)
+void DECOMP_MENUBOX_ProcessState(void)
 {
     void (*func)(struct MenuBox* m);
     u_int currState;

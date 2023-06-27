@@ -1,59 +1,16 @@
 #include <common.h>
 
-void Cutscene_VolumeBackup();
-void CDSYS_XAPauseRequest();
-void MEMPACK_SwapPacks(int index);
-int MainInit_StringToLevID(char* str);
-void MEMPACK_PopToState(int id);
-u_int LOAD_VramFile(struct BigHeader* bigfile, u_int fileIndex, u_int* destination, u_int* sizePtr, int callback);
-void LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs);
-void MainInit_VRAMDisplay();
-int MEMPACK_PushState();
-void MainInit_PrimMem(u_int* param_1);
-void MainInit_OTMem(u_int* param_1);
-void MainInit_JitPoolsNew(u_int* param_1);
-void LOAD_OvrEndRace(u_int* param_1);
-void LOAD_OvrLOD(int param_1);
-void LOAD_OvrThreads(u_int param_1);
-void Music_Restart();
 void MM_JumpTo_Title_FirstTime();
 void MM_JumpTo_Characters();
 void MM_JumpTo_TrackSelect();
 void MM_JumpTo_BattleSetup();
 void CS_Garage_Init();
 void MM_JumpTo_Scrapbook(struct BigHeader* bigfile);
-void LOAD_DriverMPK(struct BigHeader* bigfile, int levelLOD, void* callback);
-void LibraryOfModels_Clear(struct GameTracker* gGT);
-void LOAD_GlobalModelPtrs_MPK();
-void DecalGlobal_Clear(struct GameTracker* gGT);
-void DecalGlobal_Store(struct GameTracker* gGT, struct Icon* icon); // second parameter might be wrong --Super
-void Music_Stop();
-void CseqMusic_StopAll();
-void Music_LoadBanks();
-u_int Music_AsyncParseBanks();
-void Cutscene_VolumeRestore();
-void MEMPACK_NewPack_StartEnd(void* start, int size);
-u_int LOAD_GetAdvPackIndex();
-int MEMPACK_GetFreeBytes();
-void* MEMPACK_AllocHighMem(int allocSize);
-void LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, unsigned int callback);
-void DebugFont_Init(struct GameTracker* gGT);
-void LibraryOfModels_Store(struct GameTracker* gGT, int param_2, int* param_3);
-int* DecalGlobal_Find1(struct Level* level, char* str);
-int* DecalGlobal_Find2(u_int* param_1, char* str);
-void Audio_SetState_Safe(int param_1);
-u_int TitleFlag_IsFullyOffScreen();
-void TitleFlag_BeginTransition(int param_1);
-void LOAD_Callback_MaskHints3D(struct LoadQueueSlot* lqs);
-void LOAD_Callback_Podiums(struct LoadQueueSlot* lqs);
-void LOAD_Callback_LEV(struct LoadQueueSlot* lqs);
-void LOAD_Callback_LEV_Adv(struct LoadQueueSlot* lqs);
-void LOAD_Callback_DriverModels(struct LoadQueueSlot* lqs);
 
 // LOAD_TenStages
 // loadingStage is loading stage
 // bigfile is the Pointer to "cd position of bigfile"
-int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
+int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
 {
 	u_char numPlyrNextGame;
 	short sVar4;

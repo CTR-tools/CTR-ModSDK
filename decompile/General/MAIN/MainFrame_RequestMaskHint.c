@@ -1,7 +1,5 @@
 #include <common.h>
 
-void VehPtr_Freeze_Init(struct Thread* t, struct Driver* d);
-
 // Request Aku Hint, doesn't start till FUN_800b3dd8
 // hintId:
 //	0x00 - Welcome to Adventure Arena
@@ -25,7 +23,7 @@ void DECOMP_MainFrame_RequestMaskHint(short hintId, char interruptWarpPad)
 {
   struct GameTracker* gGT = sdata->gGT;
 	
-  if (((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) &&
+  if (((gGT->gameMode1 & PAUSE_ALL) == 0) &&
 		(sdata->AkuHint_RequestedHint == -1))
   {
     sdata->AkuAkuHintState = 1;

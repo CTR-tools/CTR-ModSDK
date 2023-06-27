@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainDrawCb_DrawSync()
+void DECOMP_MainDrawCb_DrawSync()
 {
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;

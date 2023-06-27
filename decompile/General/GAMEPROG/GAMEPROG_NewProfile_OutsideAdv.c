@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GAMEPROG_NewProfile_OutsideAdv(struct GameProgress* gameProg)
+void DECOMP_GAMEPROG_NewProfile_OutsideAdv(struct GameProgress* gameProg)
 {
 	// GameOptions is probably a struct "inside"
 	// of GameProgress, still working on it

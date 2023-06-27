@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MEMCARD_GetFreeBytes(int slotIdx)
+void DECOMP_MEMCARD_GetFreeBytes(int slotIdx)
 {
   struct DIRENTRY *firstEntry;
   struct DIRENTRY entry;

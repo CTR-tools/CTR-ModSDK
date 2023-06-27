@@ -1,13 +1,5 @@
 #include <common.h>
 
-void GhostBuffer_RecordBoosts(int reserves, u_char type, int fireLevel);
-void Turbo_Audio(struct Driver* driver, int param_2);
-struct Instance* INSTANCE_BirthWithThread(int m, char* name, u_int param_3, u_int param_4, void* func, u_int param_6, struct Thread* t);
-void Turbo_ThTick(int param_1);
-void Turbo_ThDestroy();
-struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
-void GAMEPAD_Vib_4(struct Driver* driver, u_int param_2, int param_3);
-
 // param1 - driver
 // param2 - reserves to add
 // param3 - add type

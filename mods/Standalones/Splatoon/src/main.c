@@ -33,15 +33,6 @@
 	// If P4 spawns and moves directly backward,
 	// the game freezes, this only happens with P4
 
-
-void MainRaceTrack_RequestLoad(int levID);
-void ConvertRotToMatrix(MATRIX* m, short* rot);
-void MENUBOX_DrawInnerRect(RECT* r, int flag, void* ot);
-void CAM_ThTick(struct Thread* t);
-void UI_DrawSlideMeter(int x, int y, struct Driver* d);
-void Driver_ConvertVectorsToSpeed(struct Driver* d, int* v);
-int MATH_Cos(int angle);
-int MATH_Sin(int angle);
 int ratan2(int x, int y);
 
 struct MainGameStruct

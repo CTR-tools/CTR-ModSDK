@@ -16,8 +16,6 @@
 #define LETTER_O (BTN_CIRCLE & 0xff)
 #define LETTER_X (BTN_CROSS  & 0xff)
 
-void MainKillGame_LaunchSpyro2();
-
 struct Cheat
 {
 	// 0x0

@@ -1,5 +1,5 @@
 
-void CAM_SkyboxGlow(short *param_1,struct Camera110 *camera,struct PrimMem *primMem,u_long *ptrOT)
+void DECOMP_CAM_SkyboxGlow(short *param_1,struct Camera110 *camera,struct PrimMem *primMem,u_long *ptrOT)
 
 {
 	int sin;

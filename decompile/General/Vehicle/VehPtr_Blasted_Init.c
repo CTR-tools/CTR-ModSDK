@@ -17,7 +17,6 @@ void Player_JumpAndFriction(struct Thread* thread, struct Driver* driver);
 void OnRender(struct Thread* thread, struct Driver* driver);
 void DECOMP_VehPtr_Blasted_Animate(struct Thread* thread, struct Driver* driver);
 void VehParticle_DriverMain(struct Thread* thread, struct Driver* driver);
-void GAMEPAD_Vib_1(struct Driver* driver, char param_2, u_short param_3);
 
 void* PlayerBlastedFuncTable[0xD] =
 {

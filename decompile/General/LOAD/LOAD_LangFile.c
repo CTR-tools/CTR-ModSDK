@@ -9,7 +9,7 @@ struct LngFile
 
 // param_1 - Pointer to "cd position of bigfile"
 // param_2 - language index - 0 ja, 1 en, 2 en2, 3 fr, 4 de, 5 it, 6 es, 7 ne
-void LOAD_LangFile(int bigfilePtr, int lang)
+void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 {
 	struct LngFile* lngFile;
 	int size;

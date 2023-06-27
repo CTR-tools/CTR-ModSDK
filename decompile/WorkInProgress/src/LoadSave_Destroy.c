@@ -1,6 +1,6 @@
 #include <common.h>
 
-void LoadSave_Destroy(void)
+void DECOMP_LoadSave_Destroy(void)
 {
     char i;
     struct Thread *t;

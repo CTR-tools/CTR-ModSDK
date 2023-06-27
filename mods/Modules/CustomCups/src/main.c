@@ -6,7 +6,6 @@
 #define ADDR_230 0x800AB9F0
 
 void MENUBOX_DrawInnerRect(RECT* r, int flag, u_long* ot);
-void MixRNG_Scramble();
 int RCNT_GetTime_Total();
 void MM_JumpTo_Scrapbook();
 

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void LoadSave_LoadProfileFromHub_MenuBoxFuncPtr(struct MenuBox* mb)
+void DECOMP_LoadSave_LoadProfileFromHub_MenuBoxFuncPtr(struct MenuBox* mb)
 {
   struct GameTracker* gGT = sdata->gGT;
 

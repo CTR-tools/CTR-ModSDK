@@ -1,10 +1,5 @@
 #include <common.h>
 
-void Torch_Subset1();
-void MEMCARD_SetIcon(int id);
-void MENUBOX_DrawInnerRect(RECT* r, int flag, u_long* ot);
-void LoadSave_StartMemcardAction(int action);
-
 // to do: make header for IGT funcs
 void SerializeSplits(char deserialize);
 void SaveGameProgressToMemcardBuffer();
@@ -491,12 +486,7 @@ void RunUpdateHook()
 	#endif
 }
 
-void EffectSfxRain_Reset();
-void INSTANCE_Birth2D();
-void MainFrame_RequestMaskHint();
 void AA_EndEvent_DisplayTime();
-void MainInit_FinalizeInit();
-void VehInit_TeleportAll();
 
 void AllocDriversHook_BeforeTeleport()
 {

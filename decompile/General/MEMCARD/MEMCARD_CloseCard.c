@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MEMCARD_CloseCard(void)
+void DECOMP_MEMCARD_CloseCard(void)
 {
     // This function was copy/pasted by Naughty Dog,
     // psx\sample\memcard\CARD\CARD.C lines 355 to 365

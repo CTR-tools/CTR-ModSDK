@@ -1,8 +1,6 @@
 #include <common.h>
 
-void LOAD_LevelFile(int levelID);
-
-void MainRaceTrack_StartLoad(short levelID)
+void DECOMP_MainRaceTrack_StartLoad(short levelID)
 
 {
   // clear backup,

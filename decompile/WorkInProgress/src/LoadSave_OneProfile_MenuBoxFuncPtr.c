@@ -1,6 +1,6 @@
 #include <common.h>
 
-void LoadSave_OneProfile_MenuBoxFuncPtr(struct MenuBox *mb)
+void DECOMP_LoadSave_OneProfile_MenuBoxFuncPtr(struct MenuBox *mb)
 {
     // if have not chosen any option
     // if you see current profile, and load/save/delete/exit rows

@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct Driver* BOTS_Driver_Init(int driverID)
+struct Driver* DECOMP_BOTS_Driver_Init(int driverID)
 {
 	int pathIndex;
 	int numPoints;

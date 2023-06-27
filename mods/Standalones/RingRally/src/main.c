@@ -28,16 +28,9 @@ char s_endString[] = "Press * to play again";
 // At some point, they should all be declared anyway
 void CC_EndEvent_DrawMenu();
 void CAM_FollowDriver_Normal(int param_1,int param_2,short *param_3,int param_4,short *param_5);
-int LOAD_TenStages(unsigned int param_1,int param_2,unsigned int param_3);
-void UI_RenderFrame_CrystChall(void);
 
 void MainUpdateLoop();
 void InjectRetroFueled();
-
-// Original CTR functions
-void VehPtr_Freeze_Init();
-void ConvertRotToMatrix(MATRIX* m, short* rot);
-struct INSTANCE* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
 
 void KillCrystals()
 {
@@ -74,11 +67,6 @@ void EndCrystalChallenge(void)
 		sdata->mainGameState = 2;
 	}
 }
-
-// Declarations for RF
-void Turbo_Increment(int param_1,int param_2,unsigned int param_3,int param_4);
-void OnCollide_Drivers(int param_1,int param_2);
-void VehPtr_Driving_PhysLinear(int param_1,int param_2);
 
 // To do: Make the new RF with blue fire,
 // work modularly with other mods (like this one)

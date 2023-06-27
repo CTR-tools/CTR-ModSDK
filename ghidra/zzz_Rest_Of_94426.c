@@ -17718,9 +17718,13 @@ LAB_80056678:
 
   FUN_80022878(acStack112,(int)(short)local_58,(int)(((uint)local_56 + 0x11) * 0x10000) >> 0x10,2,
                0xffff8000);
+			   
+  // increment numIconsEOR every 10 frames
   if ((DAT_8008d52c == (DAT_8008d52c / 10) * 10) && (DAT_8008d570 < iVar17)) {
     DAT_8008d570 = DAT_8008d570 + 1;
   }
+  
+  // loop through numIconsEOR to draw them all
   local_8c = 0;
   if (0 < DAT_8008d570) {
     local_90 = 0;

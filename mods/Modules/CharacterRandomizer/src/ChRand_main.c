@@ -1,6 +1,5 @@
 #include <common.h>
 
-void MixRNG_Scramble();
 int RCNT_GetTime_Total();
 
 char ChRand_Repeat(int index, int character)

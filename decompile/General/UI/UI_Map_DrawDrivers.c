@@ -1,6 +1,6 @@
 #include <common.h>
 
-void UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
+void DECOMP_UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 
 {
   int kartColor;

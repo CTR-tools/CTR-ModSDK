@@ -1,6 +1,5 @@
 #include <common.h>
 
-int LOAD_GetAdvPackIndex();
 void LOAD_Callback_Podiums();
 
 void HookAppendLoadingQueue()

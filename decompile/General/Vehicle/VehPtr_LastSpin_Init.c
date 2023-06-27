@@ -2,16 +2,10 @@
 
 void DECOMP_VehPtr_LastSpin_Update();
 void DECOMP_VehPtr_LastSpin_PhysLinear();
-void VehPtr_Driving_Audio();
 void DECOMP_VehPtr_LastSpin_PhysAngular();
 void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
-void OnCollide_Drivers();
 void COLL_StartSearch_Player();
-void Player_JumpAndFriction();
-void OnRender();
-void OnAnimate_LastSpin();
-void VehParticle_DriverMain();
 
 void* PlayerLastSpinFuncTable[0xD] =
 {

@@ -1,10 +1,5 @@
 #include <common.h>
 
-int MEMPACK_PushState();
-u_long* LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, u_int fileIndex, u_int* destination, u_int* sizePtr, int callback);
-void LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
-void MEMPACK_PopState();
-
 // In Aug 5 prototype, this is called LOAD_VramFile
 // basically loads ctr texture file to vram in 3 different ways based on callback value
 // bigfile = bigFilePtr

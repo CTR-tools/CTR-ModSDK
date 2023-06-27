@@ -1,6 +1,6 @@
 #include <common.h>
 
-void LOAD_Hub_SwapNow()
+void DECOMP_LOAD_Hub_SwapNow()
 {
 	struct Level* level1;
 	struct VisMem* visMem;
@@ -18,7 +18,7 @@ void LOAD_Hub_SwapNow()
 	// ptrintf("gGT->level2 = 0x%08x\n",gGT->level2);
 	// ptrintf("SWAPPING 1...\n");
 	
-	LevInstDef_RePack(gGT->level1->ptr_mesh_info);
+	LevInstDef_RePack(gGT->level1->ptr_mesh_info, 0);
 	
 	// Aug 5
 	// ptrintf("SWAPPING 2...\n");

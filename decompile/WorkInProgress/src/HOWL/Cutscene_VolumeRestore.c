@@ -1,6 +1,6 @@
 #include <common.h> 
 
-void Cutscene_VolumeRestore(void)
+void DECOMP_Cutscene_VolumeRestore(void)
 {
   // enter critical section
   Smart_EnterCriticalSection();

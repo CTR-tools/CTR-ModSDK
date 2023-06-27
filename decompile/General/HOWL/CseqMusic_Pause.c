@@ -1,7 +1,7 @@
 #include <common.h>
 
 // pause all songs
-void CseqMusic_Pause()
+void DECOMP_CseqMusic_Pause()
 {
 	int i;
 	struct Song* song;

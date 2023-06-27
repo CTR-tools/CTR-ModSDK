@@ -1,8 +1,6 @@
 #include <common.h>
 
 void OVR_Region2();
-void LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void* callback);
-void LOAD_Callback_Overlay_Generic();
 
 // param_1 = numPlyrCurrGame {1,2,3,4}
 void DECOMP_LOAD_OvrLOD(unsigned int param_1)

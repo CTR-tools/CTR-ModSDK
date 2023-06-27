@@ -1,8 +1,6 @@
 #include <common.h>
 
 // To do: add a header
-void UI_WeaponBG_AnimateShine();
-void UI_DrawRankedDrivers();
 void DECOMP_UI_JumpMeter_Update(struct Driver*);
 void DECOMP_UI_DrawSpeedNeedle(short, short, struct Driver*);
 void DECOMP_UI_JumpMeter_Draw(short, short, struct Driver*);
@@ -10,26 +8,8 @@ void DECOMP_UI_DrawSlideMeter(short, short, struct Driver*);
 void DECOMP_UI_DrawSpeedBG();
 void DECOMP_UI_DrawNumWumpa(int, int, struct Driver*);
 void DECOMP_UI_DrawNumTimebox(int, int, struct Driver*);
-int LOAD_IsOpen_RacingOrBattle();
 void RB_Player_ModifyWumpa(struct Driver*, int);
-void UI_Lerp2D_HUD(short *, short, short, short, short, int, short);
-int UI_ConvertX_2(int, int);
-int UI_ConvertY_2(int, int);
-void UI_Weapon_DrawSelf(short, short, short, struct Driver*);
-void UI_DrawLapCount(short, short, u_int, struct Driver*);
-void UI_DrawBattleScores(int, int, struct Driver*);
 void AA_EndEvent_DisplayTime(u_short, short);
-void UI_DrawPosSuffix(short, short, struct Driver*, short);
-void UI_TrackerSelf(struct Driver*);
-void UI_BattleDrawHeadArrows(struct Driver*);
-void UI_Weapon_DrawBG(short, short, short, struct Driver*);
-void UI_DrawRaceClock(u_short paramX, u_short, u_int, struct Driver*);
-int DecalFont_GetLineWidth(char*, short);
-void UI_DrawLimitClock(short, short, short);
-void UI_Map_DrawDrivers(void*, struct Thread*, short *);
-void UI_Map_DrawGhosts(void*, struct Thread*);
-void UI_Map_DrawTracking(void*, struct Thread*);
-void UI_Map_DrawMap(struct Icon*, struct Icon*, short, short, struct PrimMem*, u_long*, u_int);
 
 void DECOMP_UI_RenderFrame_Racing()
 {
@@ -194,7 +174,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			{
 				LAB_80053260:
 				// If game is not paused
-				if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+				if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 				{
 					//execute Jump meter and landing boost processes
 					DECOMP_UI_JumpMeter_Update(playerStruct);
@@ -206,7 +186,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			else
 			{
 				// If game is not paused
-				if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+				if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 				{
 					// Player / AI structure + 0x4a shows driver index (0-7)
 					// This is a pointer to each player's tileView buffer
@@ -285,7 +265,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			}
 
 			// If game is not paused
-			if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+			if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 			{
 				if (playerStruct->PickupWumpaHUD.numCollected != 0)
 				{
@@ -472,7 +452,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 			// if you're in battle mode, while not paused
 			// and you do not have a life limit
-			if ((gGT->gameMode1 & (LIFE_LIMIT | BATTLE_MODE | PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == BATTLE_MODE)
+			if ((gGT->gameMode1 & (LIFE_LIMIT | BATTLE_MODE | PAUSE_ALL)) == BATTLE_MODE)
 			{
 				// If the animation for adding points is over
 				if (playerStruct->BattleHUD.cooldown == 0)
@@ -1190,7 +1170,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	(
 		(
 			// If game is not paused
-			((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) &&
+			((gGT->gameMode1 & PAUSE_ALL) == 0) &&
 			
 			//item roll is done
 			(!bVar3)

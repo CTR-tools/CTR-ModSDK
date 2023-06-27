@@ -1,6 +1,5 @@
 #include <common.h>
 
-int DecalFont_GetLineWidthStrlen(char* str, short len, short fontType);
 void DecalHUD_DrawPolyGT4_Expanded(struct Icon* icon, u_int posX, int posY, struct PrimMem* primMem, u_long* ot, u_int topLeftColor, u_int topRightColor, u_int bottomLeftColor, u_int bottomRightColor, short scale, u_char scaleX, u_char scaleY, u_short rot, u_char mirrorX);
 
 short font_EurDiacriticalTilde[0xC] = {0, 0, 0, 2, -11, 0xc00, 2, -5, 0xc00, 2, -11, 0xc00};

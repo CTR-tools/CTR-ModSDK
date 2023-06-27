@@ -5,14 +5,6 @@
 
 void MM_Title_CameraMove(int a, int b);
 u_int MM_Video_DecodeFrame();
-void LOAD_Callback_Overlay_230();
-void LOAD_Callback_Overlay_231();
-void LOAD_Callback_Overlay_232();
-void LOAD_Callback_Overlay_233();
-int LOAD_IsOpen_Podiums();
-int LOAD_IsOpen_MainMenu();
-void INSTANCE_Birth(struct Instance* i, struct Model* m, char* name, struct Thread* t, int flags);
-void INSTANCE_LevInitAll(struct InstDef* instDef, int num);
 int PatchPE(struct ParticleEmitter* pe);
 
 // jal hook, call og function if needed

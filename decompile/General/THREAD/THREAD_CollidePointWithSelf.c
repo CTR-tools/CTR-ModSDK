@@ -18,7 +18,7 @@ struct Need_New_Name
 	short padding;
 };
 
-void THREAD_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf)
+void DECOMP_THREAD_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf)
 {
 	struct Instance* inst;
 	int distX;

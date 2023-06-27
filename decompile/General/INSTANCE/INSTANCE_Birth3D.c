@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct Instance* INSTANCE_Birth3D(
+struct Instance* DECOMP_INSTANCE_Birth3D(
 	struct Model* model, char* name, struct Thread* th)
 {
 	struct Instance* inst =

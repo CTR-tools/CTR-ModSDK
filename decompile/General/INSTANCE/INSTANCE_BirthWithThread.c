@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct Instance* INSTANCE_BirthWithThread(
+struct Instance* DECOMP_INSTANCE_BirthWithThread(
 	int modelID, char* name, int poolType, int bucket,
 	void* funcThTick, int objSize, struct Thread* parent)
 {

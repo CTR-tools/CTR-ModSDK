@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, struct TileView *view, int scratchpad, struct ZoomData *zoom)
+void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, struct TileView *view, int scratchpad, struct ZoomData *zoom)
 {
     struct GameTracker *gGT = sdata->gGT;
     struct GamepadBuffer *pad = &sdata->gGamepads->gamepad;
@@ -727,7 +727,7 @@ LAB_8001ab04:
         if ((backupFlags & 0x200) == 0)
         {
             // If game is paused
-            if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0)
+            if ((gGT->gameMode1 & PAUSE_ALL) != 0)
                 return;
 
             // decrement counter for fly-in camera

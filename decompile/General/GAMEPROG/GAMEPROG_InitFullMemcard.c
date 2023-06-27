@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GAMEPROG_InitFullMemcard(struct MemcardProfile* mcp)
+void DECOMP_GAMEPROG_InitFullMemcard(struct MemcardProfile* mcp)
 {
 	int i;
 	

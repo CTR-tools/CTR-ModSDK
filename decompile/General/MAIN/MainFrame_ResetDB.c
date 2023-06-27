@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainFrame_ResetDB(struct GameTracker* gGT)
+void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 {
 	struct GameTracker* psVar1;
 	int iVar2;

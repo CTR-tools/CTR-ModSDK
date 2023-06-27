@@ -1,7 +1,5 @@
 #include "../p_rom.h"
 
-void MainFrame_TogglePauseAudio(int enable);
-
 // can potentially move back to subset6
 void LoadState()
 {

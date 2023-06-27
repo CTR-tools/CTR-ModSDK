@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Channel_SetVolume(
+void DECOMP_Channel_SetVolume(
 	struct ChannelAttr* attr,
 	int volume, int LR)
 {

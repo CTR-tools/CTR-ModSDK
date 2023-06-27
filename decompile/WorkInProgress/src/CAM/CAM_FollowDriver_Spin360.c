@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CAM_FollowDriver_Spin360(struct CameraDC* cDC, short param_2, struct Driver* d, short* desiredPos, short* desiredRot)
+void DECOMP_CAM_FollowDriver_Spin360(struct CameraDC* cDC, short param_2, struct Driver* d, short* desiredPos, short* desiredRot)
 {
   int ratio;
   short posX;

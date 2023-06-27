@@ -130,7 +130,6 @@ PlayChewSound:
 							
 					if(particle != 0)
 					{
-						void Particle_FuncPtr_SpitTire();
 						particle->funcPtr = Particle_FuncPtr_SpitTire;
 						particle->driverInst = plantInst;
 						

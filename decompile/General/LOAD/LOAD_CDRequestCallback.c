@@ -1,6 +1,6 @@
 #include <common.h>
 
-void LOAD_CDRequestCallback(struct LoadQueueSlot* lqs)
+void DECOMP_LOAD_CDRequestCallback(struct LoadQueueSlot* lqs)
 {
 	sdata->queueReady = 1;
 	

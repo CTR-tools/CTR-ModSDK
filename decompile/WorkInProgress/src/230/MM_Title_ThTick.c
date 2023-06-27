@@ -2,10 +2,7 @@
 
 #define TITLE_FRAME *(int*)0x800b5a14
 
-void MATH_VectorNormalize(short(*)[3]);
-void ConvertRotToMatrix_Transpose(MATRIX(*)[32], short(*)[3]);
-
-int MM_Title_ThTick(struct Thread* title)
+int DECOMP_MM_Title_ThTick(struct Thread* title)
 {
   short animFram;
   struct GameTracker *gGT;

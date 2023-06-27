@@ -3,13 +3,6 @@
 // byte budget: 1996
 // current size: 1948
 
-int InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
-int MapToRange(int param_1, int param_2, int param_3, int param_4, int param_5);
-int Player_Driving_LerpToForwards(struct Driver* driver, int param_2, int param_3, int param_4);
-void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
-int Player_SteerAccel(int param_1, int param_2, int param_3, u_int param_4, u_int param_5, u_int param_6);
-void CameraSlack_PhysAngular (struct Driver* driver);
-
 void DECOMP_VehPtr_Driving_PhysAngular(struct Thread* thread, struct Driver* driver)
 {
 	int speedApprox;

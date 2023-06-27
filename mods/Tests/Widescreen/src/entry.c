@@ -1,9 +1,5 @@
 #include <common.h>
 
-void DecalMP_01();
-void DecalMP_02();
-void DecalMP_03();
-
 void RunEntryHook()
 {
   int i;

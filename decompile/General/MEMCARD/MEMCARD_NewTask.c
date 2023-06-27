@@ -1,7 +1,7 @@
 #include <common.h>
 
 // NOTE: Always returns 0, should it become a void fn?
-int MEMCARD_NewTask(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFileSize)
+int DECOMP_MEMCARD_NewTask(int slotIdx, char *name, uint8_t *ptrMemcard, int memcardFileSize)
 {
     sdata->memcardSlot = slotIdx;
 

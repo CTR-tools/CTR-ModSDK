@@ -1,7 +1,7 @@
 #include <common.h>
 
 // Initialize car engine audio system for one driver
-char EngineAudio_InitOnce(u_int soundID,u_int flags)
+char DECOMP_EngineAudio_InitOnce(u_int soundID,u_int flags)
 
 {
   struct ChannelStats* channel;

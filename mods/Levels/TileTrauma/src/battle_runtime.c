@@ -1,9 +1,6 @@
 #include <common.h>
 #include "trackSpecificData.h"
 
-struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
-void ConvertRotToMatrix(MATRIX* m, short* rot);
-
 struct MenuRow NewRowsPAUSE[5] =
 {
 	[0] =

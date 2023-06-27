@@ -2,7 +2,7 @@
 
 // only used by flamejet and PapuPyramidPlant for hitbox collision,
 // also used by missile, probably hitbox again
-MATRIX* MATH_HitboxMatrix(MATRIX* output, MATRIX* input)
+MATRIX* DECOMP_MATH_HitboxMatrix(MATRIX* output, MATRIX* input)
 
 {
   short sVar1;
@@ -40,7 +40,7 @@ MATRIX* MATH_HitboxMatrix(MATRIX* output, MATRIX* input)
   return;
 }
 
-void MATH_VectorLength(VECTOR* input)
+void DECOMP_MATH_VectorLength(VECTOR* input)
 {
   unsigned int uVar1;
 
@@ -55,7 +55,7 @@ void MATH_VectorLength(VECTOR* input)
   return;
 }
 
-int MATH_VectorNormalize(VECTOR* input)
+int DECOMP_MATH_VectorNormalize(VECTOR* input)
 {
   int length;
 
@@ -76,7 +76,7 @@ int MATH_VectorNormalize(VECTOR* input)
 }
 
 // Inspired by Spyro 2 USA demo, with 94426 variable names
-void MATH_MatrixMul(MATRIX* output, MATRIX* input,VECTOR* rotate)
+void DECOMP_MATH_MatrixMul(MATRIX* output, MATRIX* input,VECTOR* rotate)
 {
   MatrixRotate(output, input, rotate);
   ApplyMatrixLV(input,rotate->vx,(VECTOR *)(output->t[0]));

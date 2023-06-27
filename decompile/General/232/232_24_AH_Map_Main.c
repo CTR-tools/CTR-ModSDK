@@ -55,7 +55,7 @@ void DECOMP_AH_Map_Main(void)
   }
   
   // if game is not paused
-  if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) 
+  if ((gGT->gameMode1 & PAUSE_ALL) == 0) 
   {
 	// Jump meter and landing boost
     DECOMP_UI_JumpMeter_Update(advDriver);
@@ -67,7 +67,7 @@ void DECOMP_AH_Map_Main(void)
     local_1e[0] = 0;
     *(int*)0x800b5670 = 0;
 	
-    UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0],&local_20);
+    UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread,&local_20);
 	
     AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5],&local_1e[0]);
 	

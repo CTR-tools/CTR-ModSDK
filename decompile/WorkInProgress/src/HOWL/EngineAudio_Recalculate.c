@@ -1,6 +1,6 @@
 #include <common.h>
 
-short EngineAudio_Recalculate(u_int soundID,u_int sfx)
+short DECOMP_EngineAudio_Recalculate(u_int soundID,u_int sfx)
 {
   int iVar1;
   u_int distortion = sfx >> 8;

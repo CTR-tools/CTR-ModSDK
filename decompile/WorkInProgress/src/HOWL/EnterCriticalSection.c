@@ -1,6 +1,6 @@
 #include <common.h> 
 
-void Smart_EnterCriticalSection(void)
+void DECOMP_Smart_EnterCriticalSection(void)
 {
   char alreadyEntered;
   int iVar2;

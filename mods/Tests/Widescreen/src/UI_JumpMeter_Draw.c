@@ -1,6 +1,5 @@
 #include <common.h>
 
-void DebugFont_DrawNumbers(int param_1, u_int param_2, int param_3);
 void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem);
 
 void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)

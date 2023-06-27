@@ -1,0 +1,37 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Hooks
+common, exe, MainInit_Drivers, 0x50, src/hookBots.s
+
+// Default pause mod
+926, exe, MainFreeze_MenuPtrDefault, 0x0, src/MainFreeze_MenuPtrDefault.c
+
+// Pause glitch fix?
+926, exe, MainFreeze_IfPressStart, 0x0, src/MainFreeze_IfPressStart.c
+
+// End of Race menu mod
+926, exe, UI_RaceEnd_MenuBoxFuncPtr, 0x0, src/UI_RaceEnd_MenuBoxFuncPtr.c
+926, exe, 0x80086314, 0x0, src/new_retryExitToMap.c
+926, 222, 0x800a0b64, 0x0, src/new_retryArcade.c
+926, 222, 0x800a0b90, 0x0, src/new_retryArcade2p.c
+926, 222, AA_EndOfFile, 0x0, src/struct_222.c
+
+// Main Menu Mod, Adv difficulty
+926, 230, MM_EndOfFile, 0x0, src/MM_AdvDifficulty.c
+926, 230, MM_MENUBOX_NewLoad, 0x0, src/MM_MENUBOX_NewLoad.c
+926, 230, MM_MENUBOX_1p2p, 0x0, ../ExtraDifficulty/src/MM_MENUBOX_1p2p.c
+926, bigfilelangenlng, 0x0, 0x0, assets/NTSC-U.lng
+
+// Adventure Hub Difficulty Option
+926, exe, 0x80084394, 0x0, src/new_AdvHub.c
+926, 232, AH_EndOfFile, 0x0, src/AH_AdvDifficulty.c
+
+// Race Pause Menu Difficulty Option
+926, exe, 0x800843e0, 0x0, src/new_AdvRace.c
+926, exe, 0x8008451c, 0x0, src/new_ArcadeRace.c
+
+// Compile code to empty spaces in RDATA
+common, exe, rdata_free, 0x0, src/MainFreeze_ExtraDifficulty.c src/AdvAdjust.c

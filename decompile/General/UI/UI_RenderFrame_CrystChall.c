@@ -1,9 +1,5 @@
 #include <common.h>
 
-void MainGameEnd_Initialize(short);
-void UI_Lerp2D_HUD(short*, short, short, short, short, int, short);
-void UI_DrawLimitClock(short, short, short);
-void UI_Weapon_DrawSelf(short, short, short, struct Driver*);
 void DECOMP_UI_DrawNumRelic(short, short);
 void DECOMP_UI_DrawNumKey(short, short);
 void DECOMP_UI_DrawNumTrophy(short, short);
@@ -13,7 +9,6 @@ void DECOMP_UI_DrawSpeedBG(short, short, struct Driver*);
 void DECOMP_UI_JumpMeter_Update(struct Driver*);
 void DECOMP_UI_JumpMeter_Draw(short, short, struct Driver*);
 void DECOMP_UI_DrawSlideMeter(short, short, struct Driver*);
-void VehPtr_Freeze_Init(struct Thread*,struct Driver*);
 
 // 692 by default, budget 768
 
@@ -29,7 +24,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   hudStructPtr = data.hudStructPtr[0];
 
   // If game is not paused
-  if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) {
+  if ((gGT->gameMode1 & PAUSE_ALL) == 0) {
     //execute Jump meter and landing boost processes
     DECOMP_UI_JumpMeter_Update(player);
   }
@@ -60,7 +55,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 
 
   // If game is paused
-  if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0) {
+  if ((gGT->gameMode1 & PAUSE_ALL) != 0) {
     return;
   }
 
@@ -147,7 +142,7 @@ LAB_800545e8:
 
   // quit if game is paused, or item is 
   // rolling, or not drawing roulette
-  if((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) != 0) return;
+  if((gGT->gameMode1 & PAUSE_ALL) != 0) return;
   if(player->itemRollTimer != 0) return;
   if((gGT->gameMode1 & ROLLING_ITEM) == 0) return;
 

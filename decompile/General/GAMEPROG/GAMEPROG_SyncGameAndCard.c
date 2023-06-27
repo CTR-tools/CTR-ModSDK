@@ -4,7 +4,7 @@
 // If a new memory card is plugged in with progress 
 // that differs from the game, this combines the progress 
 // of both. However, this bugs unlocking N Tropy, maybe more
-void GAMEPROG_SyncGameAndCard(
+void DECOMP_GAMEPROG_SyncGameAndCard(
 	struct GameProgress* memcardProg,
 	struct GameProgress* currentProg)
 {

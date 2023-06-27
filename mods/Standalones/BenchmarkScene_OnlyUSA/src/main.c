@@ -26,9 +26,6 @@
 
 // Original CTR functions
 void ConvertRotToMatrix(MATRIX* m, short* rot);
-void* MEMPACK_AllocMem(int size, char* name);
-struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
-void LIST_AddFront(struct LinkedList* L, void* item);
 
 struct Benchmark
 {

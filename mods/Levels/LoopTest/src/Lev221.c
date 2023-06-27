@@ -332,14 +332,30 @@ struct LevelFile file =
 	
 #define SET_WALL(qIndex) \
 	.levVertex[9*qIndex+0].pos[2] = 0x900, \
-	.levVertex[9*qIndex+1].pos[2] = 0x900, \
-	.levVertex[9*qIndex+2].pos[2] = 0x900, \
-	.levVertex[9*qIndex+3].pos[2] = 0x900, \
 	.levVertex[9*qIndex+4].pos[2] = 0x900, \
-	.levVertex[9*qIndex+5].pos[2] = 0x900, \
-	.levVertex[9*qIndex+6].pos[2] = 0x900, \
-	.levVertex[9*qIndex+7].pos[2] = 0x900, \
-	.levVertex[9*qIndex+8].pos[2] = 0x900
+	.levVertex[9*qIndex+1].pos[2] = 0x900, \
+	.levVertex[9*qIndex+5].pos[2] = 0x930, \
+	.levVertex[9*qIndex+6].pos[2] = 0x930, \
+	.levVertex[9*qIndex+7].pos[2] = 0x930, \
+	.levVertex[9*qIndex+2].pos[2] = 0x960, \
+	.levVertex[9*qIndex+8].pos[2] = 0x960, \
+	.levVertex[9*qIndex+3].pos[2] = 0x960, \
+	.quadBlock[qIndex].triNormalVecDividend = \
+	{ \
+		/* hi 2 */ \
+		0x1C39, \
+		0x1C39, \
+		0x1C39, \
+		0x1C39, \
+		0x1C39, \
+		0x1C39, \
+		0x1C39, \
+		0x1C39, \
+		\
+		/* lo 2 */ \
+		0x1C39, \
+		0x1C39, \
+	} \
 	
 	SET_WALL(8),
 	SET_WALL(9),

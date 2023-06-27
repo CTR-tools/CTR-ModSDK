@@ -1,9 +1,5 @@
 #include <common.h>
 
-void LOAD_Robots1P(int characterP1);
-void VehInit_TeleportAll(struct GameTracker* gGT, int flag);
-struct Driver* VehInit_Player(int id);
-
 #define NUM_PLAYERS 4
 
 struct MyData

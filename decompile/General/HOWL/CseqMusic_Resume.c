@@ -1,7 +1,7 @@
 #include <common.h>
 
 // resume all songs
-void CseqMusic_Resume()
+void DECOMP_CseqMusic_Resume()
 {
 	int i;
 	struct Song* song;

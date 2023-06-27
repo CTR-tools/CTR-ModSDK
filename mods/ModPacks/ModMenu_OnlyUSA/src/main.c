@@ -1,7 +1,5 @@
 #include <common.h>
 
-void MENUBOX_DrawInnerRect(RECT* r, int flag, void* ot);
-
 int boolShow = 1;
 RECT window1 = {0, 0, 300, 130};
 RECT window2 = {0, 150, 480, 64};

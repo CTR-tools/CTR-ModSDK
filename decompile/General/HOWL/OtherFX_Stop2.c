@@ -1,7 +1,7 @@
 #include <common.h>
 
 // all instances of soundID
-void OtherFX_Stop2(int soundID_count)
+void DECOMP_OtherFX_Stop2(int soundID_count)
 {
 	Smart_EnterCriticalSection();
 	

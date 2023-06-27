@@ -1,7 +1,5 @@
 #include <common.h>
 
-void ConvertRotToMatrix(MATRIX* m, short* rot);
-
 // TileView_SetMatrixVP -- CameraMatrix, and ViewProj
 void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
 {

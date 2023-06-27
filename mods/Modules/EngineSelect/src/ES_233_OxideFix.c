@@ -1,6 +1,5 @@
 #include <common.h>
 
-void MainFreeze_ConfigDrawArrows(int posX, int posY, char* str);
 void CS_Garage_Init();
 
 static char bal[] = "Balanced";

@@ -3,8 +3,6 @@
 // USA Only cause of MEMPACK_Init,
 // shouldn't be hard to fix that
 
-void CTR_ErrorScreen(char r, char g, char b);
-
 // this disables the Torch namespace,
 // freeing the memory for whatever we want
 void Torch_Main()

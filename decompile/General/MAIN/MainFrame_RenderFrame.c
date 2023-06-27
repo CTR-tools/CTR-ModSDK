@@ -29,44 +29,16 @@ void RenderVSYNC(struct GameTracker* gGT);
 void RenderFMV();
 void RenderSubmit(struct GameTracker* gGT);
 
-int LOAD_IsOpen_MainMenu();
-int MainFrame_HaveAllPads(short param_1);
-void MENUBOX_DrawInnerRect(RECT* r, int flag, u_long* ot);
-void DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, u_long* ot);
-void ElimBG_HandleState(struct GameTracker* gGT);
-void MainFrame_VisMemFullFrame(struct GameTracker* gGT, struct Level* level);
-void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
-void MENUBOX_CollectInput();
-void MENUBOX_ProcessState();
-void TileView_UpdateFrustum(struct TileView* tileView);
-void EffectSfxRain_MakeSound(struct GameTracker* gGT);
-void RenderWeather(struct TileView* tileView, struct PrimMem* primMem, struct RainBuffer* rainBuffer, char numPlyr, int gameMode1);
-void DrawConfetti(struct TileView* tileView, struct PrimMem* primMem, void* confetti, int frameTimer, int gameMode1);
-void RenderStars(struct TileView* tileView, struct PrimMem* primMem, void* stars, char numPlyr);
-void DecalMP_01(struct GameTracker* gGT);
+// original CTR funcs
 void UI_CupStandings_InputAndDraw();
-void UI_RenderFrame_Racing();
-void UI_RenderFrame_CrystChall();
 void VB_EndEvent_DrawMenu();
 void RR_EndEvent_DrawMenu();
 void AA_EndEvent_DrawMenu();
 void TT_EndEvent_DrawMenu();
 void CC_EndEvent_DrawMenu();
-void LOAD_OvrThreads(u_int param_1);
-int LOAD_IsOpen_AdvHub();
-void UI_RenderFrame_AdvHub();
 void AH_Map_Main();
 void AH_MaskHint_Start(short requestedHint, short bool_interruptWarppad);
-void INSTANCE_LevDelayedLInBs(void* instDefs, u_int numInstances);
-void UI_RaceStart_IntroText1P();
-void RedBeaker_RenderRain(struct TileView* tileView, struct PrimMem* primMem, struct JitPool* rain, char numPlyr, int gameMode1);
-int LOAD_IsOpen_Podiums();
 void CS_BoxScene_InstanceSplitLines();
-void* RenderBucket_QueueLevInstances(struct CameraDC* cDC, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
-void* RenderBucket_QueueNonLevInstances(struct Item* item, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
-void Particle_RenderList(struct TileView* tileView, void* particleList);
-void TileView_SetDrawEnv_Normal(u_long* ot, struct TileView* tileView, struct DB* backBuffer, short* param_4, u_char param_5);
-void DecalMP_02(struct GameTracker* gGT);
 void RB_Player_ToggleInvisible();
 void RB_Player_ToggleFlicker();
 void RB_Burst_ProcessBucket(struct Thread* thread);
@@ -75,39 +47,11 @@ void RB_Spider_DrawWebs(struct Thread* thread, struct TileView* tileView);
 void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 void AH_WarpPad_AllWarppadNum();
-void Turbo_ProcessBucket(struct Thread* turboThread);
-void DrawSkidMarks_Main(struct Thread* thread, struct TileView* tileView);
 void MM_Title_SetTrophyDPP();
-void RenderBucket_Execute(void* param_1, struct PrimMem* param_2);
-void DrawTires_Solid(struct Thread* thread, struct PrimMem* primMem, char numPlyr);
-void DrawTires_Reflection(struct Thread* thread, struct PrimMem* primMem, char numPlyr);
-void DrawShadows_Main();
-void Torch_Main(void* particleList_heatWarp, struct TileView* tileView, struct PrimMem* primMem, char numPlyr, int swapchainIndex);
-void TileView_FadeAllWindows();
-void AnimateWater2P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6);
-void RenderLists_PreInit();
-int RenderLists_Init1P2P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList, char numPlyr);
-//void CAM_SkyboxGlow(short* param_1, struct TileView* camera, struct PrimMem* primMem, u_long* ptrOT);
-void AnimateWater1P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5);
-void AnimateQuad(int timer, int numSCVert, void* ptrSCVert, int* visSCVertList);
-void DrawSky_Full(void* skybox, struct TileView* tileView, struct PrimMem* primMem);
-void AnimateWater3P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7);
-void AnimateWater4P(int timer, int numWaterVertices, struct WaterVert* waterVert, void* waterEnvMap, int* param_5, int* param_6, int* param_7, int* param_8);
-int RenderLists_Init3P4P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList);
-void UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT);
-void DecalMP_03(struct GameTracker* gGT);
-void DotLights_AudioAndVideo(struct GameTracker* gGT);
-void RobotcarWeapons_Update();
-void StartLine_Update();
-void unk80047d64();
-//void CAM_ClearScreen(struct GameTracker* gGT);
-void TitleFlag_DrawSelf();
-int RCNT_GetTime_Total();
 void BreakDraw();
 u_int MM_Video_CheckIfFinished(int param_1);
-int RCNT_GetTime_Elapsed(int time, void* param_2);
 
-void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
+void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	struct Level* lev = gGT->level1;
 	
@@ -204,7 +148,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
     if (sdata->Loading.stage == -1) {
 
 	  // If game is not paused
-      if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+      if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	  {
 		RobotcarWeapons_Update();
       }
@@ -456,7 +400,7 @@ void RenderAllWeather(struct GameTracker* gGT)
 		&gGT->backBuffer->primMem,
 		&gGT->rainBuffer[0],
 		numPlyrCurrGame,
-		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+		gGT->gameMode1 & PAUSE_ALL);
 }
 
 void RenderAllConfetti(struct GameTracker* gGT)
@@ -477,7 +421,7 @@ void RenderAllConfetti(struct GameTracker* gGT)
 			&gGT->backBuffer->primMem,
 			&gGT->confetti,
 			gGT->frameTimer_Confetti,
-			gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+			gGT->gameMode1 & PAUSE_ALL);
 	}
 }
 
@@ -677,7 +621,7 @@ void RenderAllBeakerRain(struct GameTracker* gGT)
 		&gGT->backBuffer->primMem,
 		&gGT->JitPools.rain,
 		numPlyrCurrGame,
-		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+		gGT->gameMode1 & PAUSE_ALL);
 }
 
 void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
@@ -712,7 +656,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 		gGT->ptrRenderBucketInstance,
 		sdata->LOD[lod],
 		numPlyrCurrGame,
-		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+		gGT->gameMode1 & PAUSE_ALL);
 		
 	RBI = RenderBucket_QueueNonLevInstances(
 		gGT->JitPools.instance.taken.first,
@@ -720,7 +664,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 		RBI,
 		sdata->LOD[lod],
 		numPlyrCurrGame,
-		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+		gGT->gameMode1 & PAUSE_ALL);
 		
 	// Aug prototype
 #if 0

@@ -13,10 +13,10 @@ void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox* mb)
   if((unsigned char)row > 1) return;
   
   // if Load was chosen
-  *(int*)0x800b59e0 = row;
+  OVR_230.desiredMenu = row;
   
   // MM_Title transitioning out
-  *(int*)0x800b5a1c = 2;
+  OVR_230.MM_State = 2;
   
   mb->state |= 4;
   return;

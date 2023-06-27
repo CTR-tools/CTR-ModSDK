@@ -40,3 +40,9 @@
 
 #define GetBlue(color) \
 	(color & 0xFF0000)>>16
+
+#define aspectratioupsample(int) \
+	(int*7)/4
+
+#define aspectratiodownsample(int) \
+	(int*4)/7

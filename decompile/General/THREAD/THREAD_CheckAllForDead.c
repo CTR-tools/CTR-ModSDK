@@ -1,6 +1,6 @@
 #include <common.h>
 
-void THREAD_CheckAllForDead()
+void DECOMP_THREAD_CheckAllForDead()
 {
 	int i;
 	

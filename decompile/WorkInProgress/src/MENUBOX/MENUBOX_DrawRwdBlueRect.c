@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MENUBOX_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct PrimMem *primMem)
+void DECOMP_MENUBOX_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct PrimMem *primMem)
 {
   POLY_G4 *p = (POLY_G4 *)primMem->curr;
 
@@ -23,7 +23,7 @@ void MENUBOX_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct P
   }
 }
 
-void MENUBOX_DrawRwdBlueRect(RECT *rect, char *metas, u_long *ot, struct PrimMem *primMem)
+void DECOMP_MENUBOX_DrawRwdBlueRect(RECT *rect, char *metas, u_long *ot, struct PrimMem *primMem)
 {
     short pos[4];
     int gradient[2];

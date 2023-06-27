@@ -1,6 +1,5 @@
 #include <common.h>
 
-int DecalFont_GetLineWidthStrlen(char* str, short len, short fontType);
 void DecalFont_DrawLineStrlen(char* str, short len, int posX, int posY, short fontType, int flags);
 
 int DECOMP_DecalFont_DrawMultiLineStrlen(char *str, short len, short posX, short posY, short maxPixLen, short fontType, short flags)

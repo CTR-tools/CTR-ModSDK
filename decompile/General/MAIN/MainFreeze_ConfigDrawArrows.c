@@ -1,8 +1,5 @@
 #include <common.h>
 
-// To do: add a header
-int DecalFont_GetLineWidth(char*, short);
-
 void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str)
 {
 	int lineWidth;

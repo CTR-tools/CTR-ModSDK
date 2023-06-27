@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainDrawCb_Vsync()
+void DECOMP_MainDrawCb_Vsync()
 {
 	struct GameTracker* gGT;
 	
@@ -9,7 +9,7 @@ void MainDrawCb_Vsync()
 	gGT = sdata->gGT;
 	gGT->frameTimer_VsyncCallback++;
 	gGT->vSync_between_drawSync++;
-	if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0) gGT->frameTimer_Confetti++;
+	if ((gGT->gameMode1 & PAUSE_ALL) == 0) gGT->frameTimer_Confetti++;
 
 	// 1 unit = 1/16th millisecond
 	// 1 second = ~16,000 units

@@ -102,7 +102,6 @@ void CameraHook();
 // At some point, they should all be declared anyway
 void FUN_8001a0bc(int param_1,int param_2,short *param_3,int param_4,short *param_5);
 void Init_Camera(unsigned int *param_1,unsigned int param_2,unsigned int param_3,unsigned int param_4);
-int LOAD_TenStages(unsigned int param_1,int param_2,unsigned int param_3);
 void DrawCrystalChallHUD_Game(void);
 void InjectCameraHook();
 void MainUpdateLoop();

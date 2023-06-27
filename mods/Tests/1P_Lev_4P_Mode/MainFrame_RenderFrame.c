@@ -29,7 +29,7 @@ void RenderVSYNC(struct GameTracker* gGT);
 void RenderFMV();
 void RenderSubmit(struct GameTracker* gGT);
 
-void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
+void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	struct Level* lev = gGT->level1;
 	
@@ -129,7 +129,7 @@ void MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamep
     if (sdata->Loading.stage == -1) {
 
 	  // If game is not paused
-      if ((gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4)) == 0)
+      if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	  {
 		RobotcarWeapons_Update();
       }
@@ -381,7 +381,7 @@ void RenderAllWeather(struct GameTracker* gGT)
 		&gGT->backBuffer->primMem,
 		&gGT->rainBuffer[0],
 		numPlyrCurrGame,
-		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+		gGT->gameMode1 & PAUSE_ALL);
 }
 
 void RenderAllConfetti(struct GameTracker* gGT)
@@ -402,7 +402,7 @@ void RenderAllConfetti(struct GameTracker* gGT)
 			&gGT->backBuffer->primMem,
 			&gGT->confetti,
 			gGT->frameTimer_Confetti,
-			gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+			gGT->gameMode1 & PAUSE_ALL);
 	}
 }
 
@@ -602,7 +602,7 @@ void RenderAllBeakerRain(struct GameTracker* gGT)
 		&gGT->backBuffer->primMem,
 		&gGT->JitPools.rain,
 		numPlyrCurrGame,
-		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+		gGT->gameMode1 & PAUSE_ALL);
 }
 
 void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
@@ -637,7 +637,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 		gGT->ptrRenderBucketInstance,
 		sdata->LOD[lod],
 		numPlyrCurrGame,
-		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+		gGT->gameMode1 & PAUSE_ALL);
 		
 	RBI = RenderBucket_QueueNonLevInstances(
 		gGT->JitPools.instance.taken.first,
@@ -645,7 +645,7 @@ void RenderBucket_QueueAllInstances(struct GameTracker* gGT)
 		RBI,
 		sdata->LOD[lod],
 		numPlyrCurrGame,
-		gGT->gameMode1 & (PAUSE_1 | PAUSE_2 | PAUSE_3 | PAUSE_4));
+		gGT->gameMode1 & PAUSE_ALL);
 		
 	// Aug prototype
 #if 0

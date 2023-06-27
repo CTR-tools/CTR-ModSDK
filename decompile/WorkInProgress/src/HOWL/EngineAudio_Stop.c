@@ -1,6 +1,6 @@
 #include <common.h>
 
-void EngineAudio_Stop(u_int soundID)
+void DECOMP_EngineAudio_Stop(u_int soundID)
 {
   if ((sdata->boolAudioEnabled != 0) &&
 	((soundID & 0xffff) < (sdata->ptrHowlHeader + 0x18)))

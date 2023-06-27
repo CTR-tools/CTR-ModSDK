@@ -1,7 +1,5 @@
 #include <common.h>
 
-void* LOAD_ReadFile_NoCallback(const char* file, void* addr, int unk);
-
 struct Textures
 {
 	char * image;

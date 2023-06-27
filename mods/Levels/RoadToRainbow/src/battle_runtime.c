@@ -1,8 +1,5 @@
 #include <common.h>
 
-struct Instance* INSTANCE_Birth3D(struct Model* m, char* name, struct Thread* t);
-void ConvertRotToMatrix(MATRIX* m, short* rot);
-
 struct WeaponData
 {
 	int pos[3];

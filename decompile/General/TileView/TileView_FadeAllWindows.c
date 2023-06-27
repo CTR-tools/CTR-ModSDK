@@ -1,7 +1,5 @@
 #include <common.h>
 
-void TileView_FadeOneWindow(struct TileView* window);
-
 void DECOMP_TileView_FadeAllWindows()
 {
 	int i;
