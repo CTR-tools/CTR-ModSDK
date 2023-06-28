@@ -106,7 +106,7 @@ LAB_80022598:
 			// current character
 			character = str;
 		
-			iconScale = 0x1000;
+			iconScale = FP(1.0);
 
 			#if BUILD > UsaRetail
 			iconStruct = 0;
