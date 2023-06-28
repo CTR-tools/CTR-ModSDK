@@ -116,7 +116,7 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 			*(u_int *)(PTR_DAT_8008d2ac + 0x147c),
 
 			uRam800a04d0,uRam800a04d0,uRam800a04d0,uRam800a04d0,
-			1, FP(1.0)
+			TRANS_50_DECAL, FP(1.0)
 		);
 				 
 	// Draw Name, which is 4 bytes after pointer to Time (puVar6)

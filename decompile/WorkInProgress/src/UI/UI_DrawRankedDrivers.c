@@ -397,7 +397,7 @@ void DECOMP_UI_DrawRankedDrivers(void) {
               // color data
               local_2c, local_2c, local_2c, local_2c,
 
-              1, FP(8/13));
+              TRANS_50_DECAL, FP(8/13));
 
             *puVar16 = uVar11;
             puVar16 = puVar16 + 1;
@@ -481,7 +481,7 @@ void DECOMP_UI_DrawRankedDrivers(void) {
                 // pointer to OT memory
                 gGT->tileView_UI.ptrOT,
 
-                1, FP(2/3) - FP(1/8), 1);
+                TRANS_50_DECAL, FP(2/3) - FP(1/8), 1);
             }
           }
           // go to next warp ball
