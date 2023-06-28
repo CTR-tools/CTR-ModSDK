@@ -660,7 +660,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						local_74,
 						local_70,
 
-						0, 0x1000
+						0, FP(1.0)
 					);
 				}
 			}
