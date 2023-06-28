@@ -525,7 +525,7 @@ void MM_Characters_MenuBox()
 				&gGT->backBuffer->primMem,
 				gGT->tileView_UI.ptrOT,
 
-				iconColor, iconColor, iconColor, iconColor, 1, 0x1000
+				iconColor, iconColor, iconColor, iconColor, 1, FP(1.0)
 			);
 		}
 		

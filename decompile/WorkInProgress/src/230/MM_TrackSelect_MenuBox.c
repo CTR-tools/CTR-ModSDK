@@ -432,7 +432,7 @@ LAB_800b05b8:
                                piVar12[2],
                                piVar12[3],
 
-                               0, 0x1000);
+                               0, FP(1.0));
         }
       }
       // restore levelID
