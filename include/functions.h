@@ -135,10 +135,10 @@ int* DecalGlobal_Find2(u_int* param_1, char* str);
 
 // DecalHUD
 
-void DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale);
-void DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, char rot);
-void DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, int scale);
-void DecalHUD_Arrow2D(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char transparency, int scale, u_short rot);
+void DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);
+void DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, char rot);
+void DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
+void DecalHUD_Arrow2D(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char transparency, short scale, u_short rot);
 
 // DecalMP
 
@@ -782,7 +782,7 @@ void TitleFlag_DrawSelf();
 
 // MENUBOX
 
-void MenuBox_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, int scale);
+void MenuBox_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
 void MENUBOX_DrawOuterRect_Edge(RECT* r, u_int rgb, u_int param_3, u_long* otMem);
 u_char* MENUBOX_DrawTime(int milliseconds);
 void MENUBOX_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct PrimMem *primMem);
@@ -890,7 +890,7 @@ void UI_Map_DrawTracking(int ptrMap,struct Thread* bucket);
 //void UI_WeaponBG_AnimateShine();
 //UI_WeaponBG_DrawShine()
 //UI_TrackerBG()
-void UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, u_int color);
+void UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, u_int color);
 void UI_Lerp2D_Angular(short* ptrPos, short drawnPosition, short absolutePosition, short frameCounter);
 void UI_Lerp2D_HUD(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);
 void UI_Lerp2D_Linear(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);

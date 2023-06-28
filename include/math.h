@@ -9,8 +9,8 @@
 
 short FP_Div(short a, short b); // see fp.c
 
-// to be used with fixed point values already converted to integer form
-// e.g. FP_Mult(0x1000, 0x2000) or FP_Mult(FP(1), FP(2))
+// at least one of the operands needs to be a fixed point value converted to integer form
+// e.g. FP_Mult(0x1000, 0x2000) or FP_Mult(FP(1), FP(2)) or FP_Mult(3, FP(0.75))
 force_inline short FP_Mult(short x, short y)
 {
 	int result = x;
