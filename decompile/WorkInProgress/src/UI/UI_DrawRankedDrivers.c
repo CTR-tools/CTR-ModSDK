@@ -481,7 +481,7 @@ void DECOMP_UI_DrawRankedDrivers(void) {
                 // pointer to OT memory
                 gGT->tileView_UI.ptrOT,
 
-                1, FP(13/24), 1);
+                1, FP(2/3) - FP(1/8), 1);
             }
           }
           // go to next warp ball
