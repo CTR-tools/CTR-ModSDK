@@ -1,14 +1,3 @@
-// 4 bytes over budget
-// common, exe, MEMCARD_FindFirstGhost, 0x0, src/MEMCARD/MEMCARD_FindFirstGhost.c
-// 8 bytes over budget
-// common, exe, MEMCARD_WaitForHwEvent, 0x0, src/MEMCARD/MEMCARD_WaitForHwEvent.c
-// DONE (Errors)
-common, exe, MEMCARD_Save, 0x0, src/MEMCARD/MEMCARD_Save.c
-// DONE (?)
-// common, exe, MEMCARD_unknown, 0x0, src/MEMCARD/MEMCARD_unknown.c
-// DONE (Needs review)
-// common, exe, MEMCARD_Load, 0x0, src/MEMCARD/MEMCARD_Load.c
-// End of MEMCARD
 
-common, exe, MainFreeze_MenuPtrOptions, 0x0, src/MainFreeze_MenuPtrOptions_Hook.s
-common, exe, rdata_free, 0x0, src/MainFreeze_MenuPtrOptions.c
+common, exe, MM_TrackSelect_MenuBox, 0x0, src/MM_TrackSelect_MenuBox_Hook.s
+common, exe, rdata_free, 0x0, src/230/MM_TrackSelect_MenuBox.c
