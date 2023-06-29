@@ -161,6 +161,6 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 				// OTMem
 				otMem,
 
-				1,(int)scale,1);
+				TRANS_50_DECAL,(int)scale,1);
   return;
 }

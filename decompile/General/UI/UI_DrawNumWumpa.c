@@ -62,7 +62,7 @@ void DECOMP_UI_DrawNumWumpa(int param_1,int param_2,struct Driver* d)
 			data.ptrColor[ORANGE][2],
 			data.ptrColor[ORANGE][3],
 	
-			0,0x1000);
+			0,FP(1.0));
 	}
   }
   return;

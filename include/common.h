@@ -55,4 +55,5 @@
 #include <ovr_233.h>
 #include <regionsEXE.h>
 #include <functions.h>
-#include <temporaryrevampedgpuheader.h>
+#include <gpu.h>
+#include <math.h>

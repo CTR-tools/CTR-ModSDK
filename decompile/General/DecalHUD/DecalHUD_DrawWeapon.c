@@ -2,7 +2,7 @@
 
 #define EDUCATIONAL_BUG_IF 0
 
-void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, int scale, char rot)
+void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, char rot)
 {
 	#if BUILD > SepReview
 		if (!icon) return;
@@ -13,10 +13,10 @@ void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struc
 
 	unsigned int width = icon->texLayout.u1 - icon->texLayout.u0;
 	unsigned int height = icon->texLayout.v2 - icon->texLayout.v0;
-	unsigned int rightX = posX + (width * scale / 0x1000);
-	unsigned int bottomY = posY + (height * scale / 0x1000);
-	unsigned int sidewaysX = posX + (height * scale / 0x1000);
-	unsigned int sidewaysY = posY + (width * scale / 0x1000);
+	unsigned int rightX = posX + FP_Mult(width, scale);
+	unsigned int bottomY = posY + FP_Mult(height, scale);
+	unsigned int sidewaysX = posX + FP_Mult(height, scale);
+	unsigned int sidewaysY = posY + FP_Mult(width, scale);
 
 	// instead of psn00bsdk's setXY4, this function uses a custom-made macro that resembles the compiler optimization used in the original code
 	// the X and Y fields of the primitive will be dereferenced as combined 32-bit integers for each vertex

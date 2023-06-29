@@ -173,7 +173,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *param_1)
                                      piVar7[0], piVar7[1],
                                      piVar7[2], piVar7[3],
 
-                                     0, 0x1000);
+                                     0, FP(1.0));
             }
             iVar11 = iVar5 * 0x10000;
         }
@@ -200,7 +200,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *param_1)
                                 OVR_230.cupSel_Color,
                                 OVR_230.cupSel_Color,
                                 OVR_230.cupSel_Color,
-                                0, 0x800);
+                                0, FP(0.5));
 
             // determine if loop iteration is even or odd
             uVar6 = uVar12 & 1;

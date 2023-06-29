@@ -43,7 +43,7 @@ void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str)
 		*colorPtr[2],
 		*colorPtr[3],
 
-		0, 0x1000, 0x800
+		0, FP(1.0), 0x800
 	);
 
 	// Draw right arrow
@@ -66,7 +66,7 @@ void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str)
 		*colorPtr[2],
 		*colorPtr[3],
 
-		0, 0x1000, 0
+		0, FP(1.0), 0
 	);
 
 	return;

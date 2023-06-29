@@ -38,6 +38,6 @@ void Hello_Main()
 			check include/namespace_Decal.h
 		*/
 		DecalFont_DrawLine(RegionString, 10, height, FONT_SMALL, ORANGE);
-		DecalFont_DrawLine("Hello Worm!", 10, height - 10, FONT_SMALL, ORANGE);
+		DecalFont_DrawLine("Hello World!", 10, height - 10, FONT_SMALL, ORANGE);
 	}
 }

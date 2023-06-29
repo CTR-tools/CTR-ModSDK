@@ -84,9 +84,9 @@ DrawLights:
 
       tileView = &gGT->tileView[playerIndex];
 
-	  scale = 0x800;
-	  if(gGT->numPlyrCurrGame == 1) scale = 0x1000;
-	  if(gGT->numPlyrCurrGame == 2) scale = 0xaaa;
+	  scale = FP(0.5);
+	  if(gGT->numPlyrCurrGame == 1) scale = FP(1.0);
+	  if(gGT->numPlyrCurrGame == 2) scale = FP(2/3);
 
 	  // pointer to first traffic light icon
       icon = gGT->trafficLightIcon[0];
@@ -94,7 +94,7 @@ DrawLights:
 	  // distance between each light,
 	  // adjusted sizeX,
 	  // (icon endX - icon startX) * scale / 0x1000
-      sizeX = (int)((icon->texLayout.u1 - icon->texLayout.u0) * scale) >> 0xc;
+      sizeX = (int)FP_Mult((icon->texLayout.u1 - icon->texLayout.u0), scale);
 
 	  // posX of first light
 	  // (window sizeX/2) - (light sizeX*2)
@@ -103,12 +103,11 @@ DrawLights:
 	  // posY
 	  newPosY =
 				// screen sizeY is used to scale original posY
-				((((int)(tileView->rect.h) / 3) * 0x10000 >> 0x10) * sortaPosY >> 0xc) -
+				(FP_Mult((((int)(tileView->rect.h) / 3) * 0x10000 >> 0x10), sortaPosY)) -
 
 			    // adjusted icon sizeY,
 				(
-					// sizeY * scale / 0x1000
-					(int)((icon->texLayout.v2 - icon->texLayout.v0) * scale) >> 0xc
+					(int)FP_Mult((icon->texLayout.v2 - icon->texLayout.v0), scale)
 				);
 
 	  for(lightIndex = 0; lightIndex < 4; lightIndex ++)

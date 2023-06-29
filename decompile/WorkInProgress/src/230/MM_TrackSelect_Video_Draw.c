@@ -88,7 +88,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *param_1, int bigfileOffset, int trac
                         // pointer to OT mem
                         sdata->gGT->tileView_UI.ptrOT,
 
-                        (u_int *)0x800b55c0, (u_int *)0x800b55c0, (u_int *)0x800b55c0, (u_int *)0x800b55c0, 0, 0x1000);
+                        (u_int *)0x800b55c0, (u_int *)0x800b55c0, (u_int *)0x800b55c0, (u_int *)0x800b55c0, 0, FP(1.0));
   }
 
   if (OVR_230.trackSel_unk == 1)

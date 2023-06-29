@@ -104,16 +104,20 @@ void FUN_8009f8c0(short param_1, int param_2, short param_3)
 		UI_DrawRaceClock(&DAT_8009f700, (int)(((u_int)local_40 + 0x20) * 0x10000) >> 0x10, (iVar3 - 1) * 0x10000 >> 0x10, 2, 4);
 				 
 		// Draw Character Icon
-		MENUBOX_DrawPolyGT4(sdata->gGT + (int)*(short *)(&DAT_80086d8c + (int)*(short *)((int)trackTime + 0x16) * 0x10) * 4 +
-									0x1eec),(int)(short)local_40, local_38 + (short)local_30,
+		MENUBOX_DrawPolyGT4
+		(
+			sdata->gGT + (int)(*(short *)(&DAT_80086d8c + (int)*(short *)((int)trackTime + 0x16) * 0x10) * 4 + 0x1eec),
+			(int)(short)local_40, local_38 + (short)local_30,
 					
-					// pointer to PrimMem struct
-								 *(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
+			// pointer to PrimMem struct
+			*(int *)(PTR_DAT_8008d2ac + 0x10) + 0x74,
 				 
-				 // pointer to OT mem
-				 *(u_int *)(PTR_DAT_8008d2ac + 0x147c)
-				 
-								 ,uRam800a04d0,uRam800a04d0,uRam800a04d0,uRam800a04d0,1,0x1000);
+			// pointer to OT mem
+			*(u_int *)(PTR_DAT_8008d2ac + 0x147c),
+
+			uRam800a04d0,uRam800a04d0,uRam800a04d0,uRam800a04d0,
+			TRANS_50_DECAL, FP(1.0)
+		);
 				 
 	// Draw Name, which is 4 bytes after pointer to Time (puVar6)
 		UI_DrawRaceClock(trackTime + 1,local_34,iVar3 * 0x10000 >> 0x10,3,(int)UI_DrawRaceClockFlags);
