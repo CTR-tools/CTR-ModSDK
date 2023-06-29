@@ -1,9 +1,11 @@
 #include <common.h>
 
-void MM_Characters_RestoreIDs();
 void MM_TransitionInOut(struct TransitionMeta*, int, int);
+void MM_Characters_RestoreIDs();
+void MM_Battle_Init();
+char MM_TrackSelect_boolTrackOpen(short);
 
-void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *param_1)
+void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 {
 	char bVar1;
 	char bVar2;
@@ -44,7 +46,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *param_1)
 			sdata->errorMessagePosIndex = 1;
 
 			// if you are in Battle mode
-			if ((gGT->gameMode1 & 0x20) != 0)
+			if ((gGT->gameMode1 & BATTLE_MODE) != 0)
 			{
 				// make error message posY appear
 				// near top of screen
@@ -83,7 +85,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *param_1)
 				// if track has been chosen
 
 				// if you are in battle mode
-				if ((gGT->gameMode1 & 0x20) != 0)
+				if ((gGT->gameMode1 & BATTLE_MODE) != 0)
 				{
 					// open weapon selection menu
 					sdata->ptrDesiredMenuBox = &OVR_230.menubox_battleWeapons;
@@ -94,7 +96,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *param_1)
 				// if you are not in battle mode
 
 				// if you are in time trial mode
-				if ((gGT->gameMode1 & 0x20000) != 0)
+				if ((gGT->gameMode1 & MAIN_MENU) != 0)
 				{
 					// allocate room at the end of RAM for ghosts
 
@@ -128,18 +130,18 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *param_1)
 	sVar7 = OVR_230.trackSel_transitionState;
 
 	// if you are in battle mode
-	if ((gGT->gameMode1 & 0x20) != 0)
+	if ((gGT->gameMode1 & BATTLE_MODE) != 0)
 	{
-		selectMenu = &OVR_230.battleTracks[0];
+		selectMenu = OVR_230.battleTracks;
 
 		numTracks = 7;
 	}
 
-	selectMenu = &OVR_230.arcadeTracks[0];
+	selectMenu = OVR_230.arcadeTracks;
 
 	numTracks = 18;
 
-	currTrack = param_1->rowSelected;
+	currTrack = mb->rowSelected;
 
 	// if you're not loading a LEV
 	if (OVR_230.trackSel_changeTrack_frameCount == 0)
@@ -153,7 +155,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *param_1)
 				// change track sound
 				OtherFX_Play(0, 1);
 				// look for unlocked track
-				while (!MM_TrackSelect_boolTrackOpen(selectMenu[currTrack << 4]))
+				while (!MM_TrackSelect_boolTrackOpen(selectMenu[currTrack << 4].levID))
 				{
 					// if index is negative
 					if (currTrack < 0)
@@ -167,7 +169,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *param_1)
 				// change track sound
 				OtherFX_Play(0, 1);
 				// look for unlocked track
-				while (!MM_TrackSelect_boolTrackOpen(selectMenu[currTrack << 4]))
+				while (!MM_TrackSelect_boolTrackOpen(selectMenu[currTrack << 4].levID))
 				{
 					// if you go beyond max number of tracks
 					if (currTrack >= numTracks)
@@ -274,7 +276,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *param_1)
 	}
 
 	// If "One Lap Race" Cheat is enabled
-	if ((gGT->gameMode2 & 0x800000) != 0)
+	if ((gGT->gameMode2 & CHEAT_ONELAP) != 0)
 	{
 		// Set number of Laps to 1
 		gGT->numLaps = 1;
@@ -286,7 +288,7 @@ LAB_800b05b8:
 	iVar9 = OVR_230.trackSel_changeTrack_frameCount + -1;
 	if ((0 < OVR_230.trackSel_changeTrack_frameCount) && (OVR_230.trackSel_changeTrack_frameCount = iVar9, iVar9 == 0))
 	{
-		param_1->rowSelected = OVR_230.trackSel_nextTrack;
+		mb->rowSelected = OVR_230.trackSel_nextTrack;
 	}
 
 	// not transitioning
@@ -306,7 +308,7 @@ LAB_800b05b8:
 	MM_TrackSelect_Video_State(uVar14);
 
 	uVar15 = (u_int)numTracks;
-	sVar7 = param_1->rowSelected;
+	sVar7 = mb->rowSelected;
 	gGT->currLEV = selectMenu[sVar7 << 4].levID;
 	iVar9 = (int)sVar7 + -1;
 
@@ -388,7 +390,7 @@ LAB_800b05b8:
 		r.y = sVar7;
 
 		// if you are in time trial mode
-		if ((gGT->gameMode1 & 0x20000) != 0)
+		if ((gGT->gameMode1 & MAIN_MENU) != 0)
 		{
 			// backup level ID
 			sVar5 = gGT->levelID;
@@ -462,7 +464,7 @@ LAB_800b05b8:
 		if ((OVR_230.trackSel_changeTrack_frameCount == 0) && ((short)iVar18 == 4))
 		{
 			// if you are in time trial mode
-			if ((gGT->gameMode1 & 0x20000) != 0)
+			if ((gGT->gameMode1 & MAIN_MENU) != 0)
 			{
 				// Check if this track has Ghost Data
 				uVar15 = GhostData_NumGhostsForLEV(selectMenu[iVar10 << 4].levID);
@@ -509,7 +511,7 @@ LAB_800b05b8:
 			{
 				iVar10 = 0;
 			}
-			uVar8 = MM_TrackSelect_boolTrackOpen(selectMenu[iVar10 << 4]);
+			uVar8 = MM_TrackSelect_boolTrackOpen(selectMenu[iVar10 << 4].levID);
 			iVar10++;
 		} while ((uVar8 & 0xffff) == 0);
 
@@ -525,7 +527,7 @@ LAB_800b05b8:
 		// posY of "SELECT LEVEL"
 		// near-top if map exists, near-mid if no map
 		p.y = OVR_230.transitionMeta_trackSel->currY + 0x3a;
-			if (-1 < selectMenu[param_1->rowSelected << 4].mapTextureID)
+			if (-1 < selectMenu[mb->rowSelected << 4].mapTextureID)
 				p.y = OVR_230.transitionMeta_trackSel->currY + 5;
 
 			// _OVR_230.trackSel_boolOpenLapBox is the boolean to show
@@ -553,7 +555,7 @@ LAB_800b05b8:
 			p.y += 0x22;
 		
 		if (
-					(-1 < selectMenu[param_1->rowSelected << 4].mapTextureID) &&
+					(-1 < selectMenu[mb->rowSelected << 4].mapTextureID) &&
 
 					// If lap selection menu is closed
 					(OVR_230.trackSel_boolOpenLapBox == 0))
@@ -567,13 +569,13 @@ LAB_800b05b8:
 		p.h = p.y /*+ 0x22*/ + (OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[0].currY) + 0x49;
 
 				// icon data
-				bVar1 = gGT->ptrIcons[selectMenu[param_1->rowSelected << 4].mapTextureID]->texLayout.v2;
-				bVar2 = gGT->ptrIcons[selectMenu[param_1->rowSelected << 4].mapTextureID]->texLayout.v0;
-				bVar3 = gGT->ptrIcons[(selectMenu[param_1->rowSelected << 4].mapTextureID + 1)]->texLayout.v2;
-				bVar4 = gGT->ptrIcons[(selectMenu[param_1->rowSelected << 4].mapTextureID + 1)]->texLayout.v0;
+				bVar1 = gGT->ptrIcons[selectMenu[mb->rowSelected << 4].mapTextureID]->texLayout.v2;
+				bVar2 = gGT->ptrIcons[selectMenu[mb->rowSelected << 4].mapTextureID]->texLayout.v0;
+				bVar3 = gGT->ptrIcons[(selectMenu[mb->rowSelected << 4].mapTextureID + 1)]->texLayout.v2;
+				bVar4 = gGT->ptrIcons[(selectMenu[mb->rowSelected << 4].mapTextureID + 1)]->texLayout.v0;
 
-				iVar9 = (gGT->ptrIcons[selectMenu[param_1->rowSelected << 4].mapTextureID]->texLayout.u1 -
-								 gGT->ptrIcons[selectMenu[param_1->rowSelected << 4].mapTextureID]->texLayout.u0);
+				iVar9 = (gGT->ptrIcons[selectMenu[mb->rowSelected << 4].mapTextureID]->texLayout.u1 -
+								 gGT->ptrIcons[selectMenu[mb->rowSelected << 4].mapTextureID]->texLayout.u0);
 
 				// draw six track minimaps on menu
 				// map 1 is the regular color, which is white
@@ -589,10 +591,10 @@ LAB_800b05b8:
 					UI_Map_DrawMap(
 
 							// top half
-							gGT->ptrIcons[selectMenu[param_1->rowSelected << 4].mapTextureID],
+							gGT->ptrIcons[selectMenu[mb->rowSelected << 4].mapTextureID],
 
 							// bottom half
-							gGT->ptrIcons[(selectMenu[param_1->rowSelected << 4].mapTextureID + 1)],
+							gGT->ptrIcons[(selectMenu[mb->rowSelected << 4].mapTextureID + 1)],
 
 							// X
 							(int)((short *)0x800b55cc)[iVar18 * 3] + (int)(short)p.w +

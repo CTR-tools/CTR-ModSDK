@@ -686,7 +686,7 @@ void MEMPACK_SwapPacks(int index);
 void MEMPACK_NewPack_StartEnd(void* start, int size);
 u_int MEMPACK_GetFreeBytes();
 void* MEMPACK_AllocMem(int allocSize); // also has a second parameter? --Super
-void* MEMPACK_AllocHighMem(int allocSize);
+void* MEMPACK_AllocHighMem(int allocSize, char*);
 void MEMPACK_ClearHighMem();
 void* MEMPACK_ReallocMem(int allocSize);
 int MEMPACK_PushState();
@@ -798,7 +798,7 @@ void MENUBOX_GetWidth(struct MenuBox* m, RECT* r, int);
 void MENUBOX_DrawSelf(struct MenuBox* m, int, int, int);
 void MENUBOX_ClearInput();
 void MENUBOX_CollectInput();
-void MENUBOX_ProcessInput(struct MenuBox* m);
+//void MENUBOX_ProcessInput(struct MenuBox* m);
 void MENUBOX_ProcessState();
 void MENUBOX_Show(struct MenuBox* m);
 void MENUBOX_Hide(struct MenuBox* m);
