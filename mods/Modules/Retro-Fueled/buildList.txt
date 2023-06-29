@@ -14,10 +14,6 @@ common, exe, BOTS_SetRotation, -0x8, ../BlueFire/src/hookUpdate.s
 1111, exe, VehPtr_Driving_PhysLinear, 0xA4C, src/hookReserveCancelation.s
 1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
 
-// Binary edits
-// Standardize turbo pad reserves
-common, exe, OnCollide_Drivers, 0xA4, assets/StandardizeTurboPadReserves.bin
-
 // Modify Turbo_Increment function to allow for USF stacking
 common, exe, Turbo_Increment, 0x0, src/AllowUSFStacking.c
 
