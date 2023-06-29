@@ -10,5 +10,9 @@ common, 233, 0x800b8590, 0x0, src/hookGarage.s
 common, 232, AH_WarpPad_LInB, 0x0, src/AH_WarpPad_LInB.c
 common, 232, AH_WarpPad_ThTick, 0x0, src/AH_WarpPad_ThTick.c
 
+// Modify Adv Hub Garage
+common, 232, AH_Garage_LInB, 0x0, src/AH_Garage_LInB.c
+common, 232, AH_Garage_ThTick, 0x0, src/AH_Garage_ThTick.c
+
 // Compile code to empty spaces in RDATA
 common, exe, rdata_free, 0x0, src/AdvRand_main.c 

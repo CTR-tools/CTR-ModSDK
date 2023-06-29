@@ -3,6 +3,7 @@
 #define SHUFFLE_AMOUNT 100
 
 short newPads[27] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 101, 102, 103, 104, 105};
+short newHubs[5] = {0, 1, 2, 3, 4};
 
 void Shuffle_array(short *arr, short size)
 {
@@ -28,17 +29,8 @@ void AH_Rand(void)
     if (!RANDOM_MODE)
         return;
 
-    // switch (RANDOM_MODE)
-    // {
-    // case 1:
     for (i = 0; i < numRanges; i++)
         Shuffle_array(&newPads[offsets[i]], offsets[i + 1] - offsets[i]);
-    //     break;
-    // case 2:
-    //     for (i = 0; i < numRanges; i++)
-    //         Shuffle_array(&newPads[0], offsets[3]);
-    //     break;
-    // default:
-    //     break;
-    // }
+
+    Shuffle_array(&newHubs[1], 4);
 }

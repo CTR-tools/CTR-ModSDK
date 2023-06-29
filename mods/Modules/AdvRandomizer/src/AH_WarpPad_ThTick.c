@@ -3,6 +3,8 @@
 
 // budget: 4992
 
+char AH_MaskHint_boolCanSpawn(void);
+
 void AH_WarpPad_ThTick(struct Thread* t)
 {
 	int i;
@@ -13,6 +15,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	struct Instance* warppadInst;
 	struct Instance** visInstSrc;
 	struct Instance** instArr;
+	struct MenuBox* padMenu;
 	
 	struct Driver* driver;
 	struct Instance* driverInst;
@@ -44,6 +47,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	warppadObj = t->object;
 	warppadInst = t->inst;
 	visInstSrc = gGT->cameraDC[0].visInstSrc;
+	padMenu = (struct MenuBox *)0x800b4e50;
 	
 	while(visInstSrc[0] != 0)
 	{
@@ -119,7 +123,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			*(short*)0x800b4e86 = levelID;
 			
 			// if not giving Aku Hint
-			if(sdata->AkuAkuHintState == 0 || RANDOM_MODE == 0)
+			if(sdata->AkuAkuHintState == 0 && !RANDOM_MODE)
 			{
 				// default
 				if(levelID < 100)
@@ -496,14 +500,14 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				// now opened
 				sdata->boolOpenTokenRelicMenu = 1;
 				
-				MENUBOX_Show(0x800b4e50);
+				MENUBOX_Show(padMenu);
 				
 				// dont load level
 				return;
 			}
 			
 			// if opened, but not closed yet
-			if((MENUBOX_BoolHidden(0x800b4e50) & 0xffff) == 0)
+			if((MENUBOX_BoolHidden(padMenu) & 0xffff) == 0)
 			{
 				// dont load level
 				return;

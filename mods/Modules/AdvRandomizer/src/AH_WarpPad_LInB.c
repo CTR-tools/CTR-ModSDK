@@ -86,20 +86,21 @@ void AH_WarpPad_LInB(struct Instance *inst)
 
 	swap = (levelID > 22) ? newPads[levelID - 79] : newPads[levelID];
 
+	warppadObj->levelID = levelID;
+
+	if (RANDOM_MODE)
+		warppadObj->levelID = swap;
+
 	unlockItem_numNeeded = -1;
 
 	// Trophy Track
 	if (levelID < 0x10)
 	{
-		// optimization idea:
-		// instead of data.metaDataLEV[levelID].hubID
-		// can we just do gGT->levelID-0x19?
-
 		// if trophy owned
 		if (CHECK_ADV_BIT(sdata->advProgress.rewards, (swap + 6)) != 0)
 		{
 		GetKeysRequirement:
-			arrKeysNeeded = 0x800b4e7c;
+			arrKeysNeeded = (short*)0x800b4e7c;
 
 			// keys needed to unlock track again
 			unlockItem_modelID = 99;
@@ -117,8 +118,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		}
 	}
 
-	// Slide Col
-	else if (levelID == 0x10)
+	else if (levelID == SLIDE_COLISEUM)
 	{
 		// number relics needed to open
 		unlockItem_modelID = 0x61;
@@ -126,8 +126,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		unlockItem_numNeeded = 10;
 	}
 
-	// Turbo Track
-	else if (levelID == 0x11)
+	else if (levelID == TURBO_TRACK)
 	{
 		// number gems needed to open
 		unlockItem_modelID = 0x5f;
@@ -141,7 +140,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 	}
 
 	// battle maps
-	else if (levelID < 0x19)
+	else if (levelID < GEM_STONE_VALLEY)
 	{
 		goto GetKeysRequirement;
 	}
@@ -259,7 +258,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 				newInst->scale[1] = 0x2000;
 				newInst->scale[2] = 0x2000;
 
-				i = data.metaDataLEV[levelID].ctrTokenGroupID;
+				i = data.metaDataLEV[swap].ctrTokenGroupID;
 
 				// token color
 				newInst->colorRGBA =
@@ -377,7 +376,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 			// specular lighting
 			newInst->flags |= 0x20000;
 
-			i = levelID - 100;
+			i = swap - 100;
 
 			// token color
 			newInst->colorRGBA =
@@ -579,9 +578,4 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		newInst->model->headers[i].flags |= 1;
 
 	warppadObj->inst[WPIS_CLOSED_1S] = newInst;
-
-	warppadObj->levelID = levelID;
-
-	if (RANDOM_MODE)
-		warppadObj->levelID = swap;
 }
