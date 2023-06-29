@@ -101,6 +101,14 @@ struct MenuRow rows_extraDifficulty[] =
         [4] = MENU_ROW(589, ROW_SUPER_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD),
         [5] = FINALIZER_ROW};
 
+struct MenuRow new_retryAdv[] =
+{
+        MENU_ROW(4, 2, 1, 0, 0),
+        MENU_ROW(7, 0, 2, 1, 1),
+        MENU_ROW(13, 1, 0, 2, 2),
+        FINALIZER_ROW
+};
+
 struct MenuRow new_advHub[] =
     {
         MENU_ROW(2, 4, 1, 0, 0),
