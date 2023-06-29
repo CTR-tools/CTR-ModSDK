@@ -35,12 +35,17 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 	elapsedFrames = OVR_230.trackSel_transitionFrames;
 
+	printf("j\n");
+
 	// if you are not in track selection menu
 	if (OVR_230.trackSel_transitionState != 1)
 	{
+		printf("h\n");
+
 		// if transitioning in
 		if (OVR_230.trackSel_transitionState == 0)
 		{
+			printf("number 1\n");
 			// make error message posY appear
 			// near bottom of screen
 			sdata->errorMessagePosIndex = 1;
@@ -67,6 +72,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		// transitioning out
 		else if (OVR_230.trackSel_transitionState == 2)
 		{
+			printf("number 2\n");
 			MM_TransitionInOut(&OVR_230.transitionMeta_trackSel[0], elapsedFrames, 8);
 
 			elapsedFrames++;
@@ -100,6 +106,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				{
 					// allocate room at the end of RAM for ghosts
 
+					printf("numbe 3\n");
 					sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00, OVR_230.s_loaded_ghost_data);
 
 					memset(sdata->ptrGhostTapePlaying, 0, 0x28);
@@ -129,6 +136,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	OVR_230.trackSel_transitionFrames = elapsedFrames;
 	sVar7 = OVR_230.trackSel_transitionState;
 
+	printf("number 4\n");
 	// if you are in battle mode
 	if ((gGT->gameMode1 & BATTLE_MODE) != 0)
 	{
@@ -143,9 +151,11 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 	currTrack = mb->rowSelected;
 
+	printf("number 5\n");
 	// if you're not loading a LEV
 	if (OVR_230.trackSel_changeTrack_frameCount == 0)
 	{
+		printf("number 6\n");
 		// if lap selection menu is closed
 		if (OVR_230.trackSel_boolOpenLapBox == 0)
 		{
