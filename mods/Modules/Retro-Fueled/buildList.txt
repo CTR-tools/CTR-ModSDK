@@ -19,7 +19,10 @@ common, exe, BOTS_SetRotation, -0x8, ../BlueFire/src/hookUpdate.s
 common, exe, OnCollide_Drivers, 0xA4, assets/StandardizeTurboPadReserves.bin
 
 // Modify Turbo_Increment function to allow for USF stacking
-common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_AllowUSFStacking.c
+common, exe, Turbo_Increment, 0x0, src/AllowUSFStacking.c
+
+// Modify OnCollide_Drivers function for enabling or disabling the STP cheat
+common, exe, OnCollide_Drivers, 0x0, src/OopsAllSuperTurboPads.c
 
 // Compile code to empty spaces in RDATA
-common, exe, rdata_free, 0x0, src/KeepU-TurnReserves.c ../../Modules/BlueFire/src/main.c
+common, exe, rdata_free, 0x0, src/KeepU-TurnReserves.c src/BlueFireModeInt.c ../../Modules/BlueFire/src/main.c
