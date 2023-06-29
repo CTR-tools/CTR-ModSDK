@@ -5,14 +5,6 @@ void Retry_Difficulty(struct MenuBox*);
 extern struct MenuRow rows_extraDifficulty[];
 extern struct MenuRow rows_advDifficulty[];
 
-struct MenuRow new_retryAdv[] =
-{
-        MENU_ROW(4, 2, 1, 0, 0),
-        MENU_ROW(7, 0, 2, 1, 1),
-        MENU_ROW(13, 1, 0, 2, 2),
-        FINALIZER_ROW
-};
-
 struct MenuRow new_retryArcade[] = 
 {
     MENU_ROW(4, 4, 1, 0, 0),

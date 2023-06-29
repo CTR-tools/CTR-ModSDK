@@ -34,7 +34,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
       {
       case 7:
         // Change Difficulty
-        if (gGT->gameMode1 & TIME_TRIAL)
+        if (gGT->gameMode1 & (TIME_TRIAL|RELIC_RACE))
           return;
         nextMenu = (gGT->gameMode1 & ARCADE_MODE) ? &End_arcadeDifficulty : &End_AdvRaceDifficulty;
         nextMenu->posY_curr = (gGT->numPlyrCurrGame == 1)? 170 : 108;
