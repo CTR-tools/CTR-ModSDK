@@ -22,4 +22,4 @@ common, exe, OnCollide_Drivers, 0xA4, assets/StandardizeTurboPadReserves.bin
 common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_AllowUSFStacking.c
 
 // Compile code to empty spaces in RDATA
-common, exe, rdata_free, 0x0, src/KeepU-TurnReserves.c ../BlueFire/src/main.c
+common, exe, rdata_free, 0x0, src/KeepU-TurnReserves.c ../../Modules/BlueFire/src/main.c
