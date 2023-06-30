@@ -1,5 +1,4 @@
-#ifndef CTR_MATH_H
-#define CTR_MATH_H
+#pragma once
 
 // trigonometry //
 
@@ -45,4 +44,12 @@ force_inline int abs(int value)
 	return (value < 0) ? (-value) : value;
 }
 
-#endif
+force_inline int max(int a, int b)
+{
+	return (a > b) ? a : b;
+}
+
+force_inline int min(int a, int b)
+{
+	return (a < b) ? a : b;
+}
