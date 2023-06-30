@@ -1,5 +1,4 @@
-#ifndef CTR_GPU_H
-#define CTR_GPU_H
+#pragma once
 
 force_inline void addPolyF3(u_long* ot, POLY_F3* p)
 {
@@ -196,5 +195,3 @@ force_inline void addFill(u_long* ot, FILL* p)
 	(((P_COLOR *) &((p)->r1))->color = (rgb1)), \
 	(((P_COLOR *) &((p)->r2))->color = (rgb2)), \
 	(((P_COLOR *) &((p)->r3))->color = (rgb3))
-
-#endif
