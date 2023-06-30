@@ -643,8 +643,8 @@ void MainStats_RestartRaceCountLoss();
 
 // MATH
 
-int MATH_Sin(int angle);
-int MATH_Cos(int angle);
+int MATH_Sin(u_int angle);
+int MATH_Cos(u_int angle);
 int MATH_FastSqrt(int dist, int unk);
 MATRIX* MATH_HitboxMatrix(MATRIX* output, MATRIX* input);
 void MATH_VectorLength(VECTOR* input);
