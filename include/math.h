@@ -1,8 +1,13 @@
 #ifndef CTR_MATH_H
-
 #define CTR_MATH_H
 
 // trigonometry //
+
+struct TrigTable
+{
+    short cos;
+    short sin;
+};
 
 #define ANG_TWO_PI 0x1000        // 360
 #define ANG_PI (ANG_TWO_PI / 2)  // 180
