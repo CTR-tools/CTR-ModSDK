@@ -1833,7 +1833,7 @@ struct Data
 
 	// 0x800845a0
 	// trigonometry approximation table (1kb)
-	unsigned int trigApprox[0x400];
+	struct TrigTable trigApprox[0x400];
 
 	// 0x800855A0
 	int memcardIcon_CrashHead[0x40];
