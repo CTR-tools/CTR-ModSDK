@@ -1,4 +1,4 @@
-﻿PAUSED
+PAUSED
 RESTART
 RESUME
 QUIT
@@ -593,53 +593,53 @@ TURN
 UNLIMITED
 1. GRAVITY
 2. JUMP HEIGHT
-3. "AccelSlide"
-4. "AccelFriction"
-5. "Sliding"
-6. "DeaccelFriction"
+3. "AccelFriction_Perpendicular"
+4. "AccelFriction_Forward"
+5. "NoAccelFriction_Perpendicular"
+6. "NoPedalFriction_Forward"
 7. "BrakingFriction"
-8. "DriftOpening"
+8. "DriftOpening/DriftCurve"
 9. "DriftFriction"
-10. "accel_noReserves"
-11. "accel_withReserves"
-12. "character_Speed"
+10. "ACCELERATION_NO_RESERVES"
+11. "ACCELERATION_WITH_RESERVES"
+12. "Speed"
 13. "negativeSpeedometerOffset"
 14. "maxSpeed_SingleTurbo"
 15. "maxSpeed_SacredFire"
-16. "reserveSpeed"
+16. "reserveSpeed/BackwardSpeed"
 17. "maskSpeed"
 18. "DamagedSpeed"
-19. "character_Turn"
+19. Turn Speed?
 20. "reverseTurningSpeed"
 21. "turnSpeedDecreaseStat"
-22. "turningInputResponseStat"
+22. Turning Input Delay?
 23. "PreTurbo"
-24. ???
+24. "TerminalVelocity"
 25. ???
-26. ???
-27. ???
-28. ???
-29. ???
-30. ???
+26. "SteerAccel_Stage4_FirstFrame"
+27. "SteerAccel_Stage2_FirstFrame"
+28. "SteerAccel_Stage2_FrameLength"
+29. "SteerAccel_Stage1_MaxSteer"
+30. "SteerAccel_Stage1_MinSteer"
 31. ???
 32. ???
-33. ???
-34. ???
+33. "modelRotVelMax"
+34. "modelRotVelMin"
 35. ???
 36. ???
 37. ???
 38. ???
-39. ???
-40. ???
-41. ???
-42. ???
-43. ???
+39. "turnResistMin"
+40. "turnResistMax"
+41. Outside Drift Steer Velocity?
+42. Inside Drift Steer Velocity?
+43. Inside Drift Angle?
 44. ???
 45. ???
-46. ???
+46. "Drifting_FramesTillSpinout"
 47. ???
 48. ???
-49. ???
+49. Drift Camera Rotation Rate?
 50. ???
 51. ???
 52. ???
@@ -647,12 +647,12 @@ UNLIMITED
 54. ???
 55. ???
 56. ???
-57. ???
-58. ???
-59. ???
+57. "turboMaxRoom"
+58. Time until slide turbo is possible?
+59. Maximum Reserves Gain?
 60. ???
 61. ???
 62. ???
 63. ???
 64. ???
-65. ???
+65. AUGUST PROTOTYPE ANTI-PIRACY KEY
