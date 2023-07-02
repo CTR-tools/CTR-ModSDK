@@ -890,6 +890,8 @@ struct Driver
 	
 	// 0x448 - 0x1B
 	char const_SteerAccel_Stage2_FrameLength;
+
+	// not part of metaPhys
 	char boolFirstFrameSinceEngineRevving;
 	
 	// 0x44a - 0x1C
@@ -919,7 +921,9 @@ struct Driver
 	char unk457; // 0x22
 	char unk458; // 0x23
 	char unk459; // 0x24
-	short unk45a; // 0x25
+	char unk45a; // 0x25
+
+	char unk45b; // unused? skips straight to 0x45c
 
 	// 0x45c, 0x45d - 0x26, 0x27
 	// resist turning at low speed
@@ -934,9 +938,9 @@ struct Driver
 	
 	// all VehPtr_Drifting_PhysAngular
 	// or VehPtr_Drifting_Finalize
-	char unk460; // 0x2A
-	char unk461; // 0x2B
-	char unk462; // 0x2C
+	char unk460; // 0x460 - 0x2A
+	char unk461; // 0x461 - 0x2B
+	char unk462; // 0x462 - 0x2C
 	
 	// 0x463 - 0x2D
 	char const_Drifting_FramesTillSpinout;
