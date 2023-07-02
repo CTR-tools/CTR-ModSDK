@@ -941,34 +941,32 @@ struct Driver
 	// 0x463 - 0x2D
 	char const_Drifting_FramesTillSpinout;
 	
-	// impact turning?
-	short unk464;
-	short unk466;
-	
-	// 0x468
+	// 0x464, 0x466, 0x468 - 0x2E, 0x2F, 0x30
+	short unk464; // impact turning?
+	short unk466; // impact turning?
 	short const_Drifting_CameraSpinRate;
+
+	// 0x46A, 0x46B - 0x31, 0x32
 	char unk46a;
 	char unk46b;
-	int unk46c;
+
+	// 0x46C, 0x46E, 0x470, 0x472, 0x474 - 0x33, 0x34, 0x35, 0x36, 0x37
+	short unk46c;
+	short unk46e;
 	short unk470;
 	short unk472;
 	short unk474;
 
-	// 0x476
-	// point where turbo meter is empty
-	char const_turboMaxRoom;
-
-	// 0x477
-	// point where turbo turns red
-	char const_turboLowRoomWarning;
-
-	// 0x478
+	// 0x476, 0x477, 0x478, 0x479, 0x47A - 0x38, 0x39, 0x3A, 0x3B, 0x3C
+	char const_turboMaxRoom;        // point where turbo meter is empty
+	char const_turboLowRoomWarning; // point where turbo turns red
 	char const_turboFullBarReserveGain;
-	
-	// 0x479
 	char unk479; // 582 related
 	char unk47A; // 582 related
-	char unk47B;
+
+	char unk47B; // unused? metaphys skips straight to 0x47C
+
+	// 0x47C, 0x47E, 0x480 - 0x3D, 0x3E, 0x3F
 	short unk47C;
 	short unk47E;
 	short unk480;
@@ -980,7 +978,7 @@ struct Driver
 	// 1st, 2nd, 3rd, etc
 	short driverRank;
 
-	// 0x484
+	// 0x484 - MetaPhys stat no. 0x40
 	// Used in Aug4 and Aug14
 	int const_prototypeKey;
 
