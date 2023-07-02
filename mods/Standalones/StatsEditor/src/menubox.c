@@ -75,15 +75,15 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* dri
 			metaPhys[*driverClass] -= increase;
 			
 			#if BUILD == UsaRetail
-				if ((data.metaPhys[metaPhysID].DriverOffset == 1) && metaPhys[*driverClass] > 256)
-					metaPhys[*driverClass] = 255;
+				if ((data.metaPhys[metaPhysID].DriverOffset == 1) && metaPhys[*driverClass] < -129)
+					metaPhys[*driverClass] = -128;
 				if ((data.metaPhys[metaPhysID].DriverOffset == 2) && metaPhys[*driverClass] > 65536)
 					metaPhys[*driverClass] = 65535;
 			#else
-				if ((data.metaPhys[metaPhysID].size == 1) && metaPhys[*driverClass] < -256)
-					metaPhys[*driverClass] = -255;
-				if ((data.metaPhys[metaPhysID].size == 2) && metaPhys[*driverClass] < -65536)
-					metaPhys[*driverClass] = -65535;
+				if ((data.metaPhys[metaPhysID].size == 1) && metaPhys[*driverClass] < -129)
+					metaPhys[*driverClass] = -128;
+				if ((data.metaPhys[metaPhysID].size == 2) && metaPhys[*driverClass] < -32769)
+					metaPhys[*driverClass] = -32768;
 			#endif
 		}
 	}
