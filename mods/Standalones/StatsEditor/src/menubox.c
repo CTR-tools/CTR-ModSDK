@@ -57,20 +57,34 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* dri
 		{
 			metaPhys[*driverClass] += increase;
 
-			if ((data.metaPhys[*driverClass].size == 1) && metaPhys[*driverClass] > 256)
-				metaPhys[*driverClass] = 255;
-			if ((data.metaPhys[*driverClass].size == 2) && metaPhys[*driverClass] > 65536)
-				metaPhys[*driverClass] = 65535;
+			#if BUILD == UsaRetail
+				if ((data.metaPhys[metaPhysID].DriverOffset == 1) && metaPhys[*driverClass] > 256)
+					metaPhys[*driverClass] = 255;
+				if ((data.metaPhys[metaPhysID].DriverOffset == 2) && metaPhys[*driverClass] > 65536)
+					metaPhys[*driverClass] = 65535;
+			#else
+				if ((data.metaPhys[metaPhysID].size == 1) && metaPhys[*driverClass] > 256)
+					metaPhys[*driverClass] = 255;
+				if ((data.metaPhys[metaPhysID].size == 2) && metaPhys[*driverClass] > 65536)
+					metaPhys[*driverClass] = 65535;
+			#endif
 		}
 
 		if (buttonsTapped & BTN_DOWN)
 		{
 			metaPhys[*driverClass] -= increase;
 			
-			if ((data.metaPhys[*driverClass].size == 1) && metaPhys[*driverClass] < -256)
-				metaPhys[*driverClass] = -255;
-			if ((data.metaPhys[*driverClass].size == 2) && metaPhys[*driverClass] < -65536)
-				metaPhys[*driverClass] = -65535;
+			#if BUILD == UsaRetail
+				if ((data.metaPhys[metaPhysID].DriverOffset == 1) && metaPhys[*driverClass] > 256)
+					metaPhys[*driverClass] = 255;
+				if ((data.metaPhys[metaPhysID].DriverOffset == 2) && metaPhys[*driverClass] > 65536)
+					metaPhys[*driverClass] = 65535;
+			#else
+				if ((data.metaPhys[metaPhysID].size == 1) && metaPhys[*driverClass] < -256)
+					metaPhys[*driverClass] = -255;
+				if ((data.metaPhys[metaPhysID].size == 2) && metaPhys[*driverClass] < -65536)
+					metaPhys[*driverClass] = -65535;
+			#endif
 		}
 	}
 
