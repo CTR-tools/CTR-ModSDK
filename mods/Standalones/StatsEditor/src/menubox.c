@@ -44,39 +44,34 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* dri
 	if (buttonsTapped & BTN_LEFT) digitSelected = (digitSelected + 1) % 5;
 	if (buttonsTapped & BTN_RIGHT) digitSelected = (digitSelected + 4) % 5;
 
-	// Up & Down: increment/decrement stat value
-	switch(digitSelected)
+	int increase = 1;
+
+	if (buttonsTapped & (BTN_UP | BTN_DOWN))
 	{
-		case 0:
-			if (buttonsTapped & BTN_UP)
-				metaPhys[*driverClass] += 1;
-			if (buttonsTapped & BTN_DOWN)
-				metaPhys[*driverClass] -= 1;
-			break;
-		case 1:
-			if (buttonsTapped & BTN_UP)
-				metaPhys[*driverClass] += 10;
-			if (buttonsTapped & BTN_DOWN)
-				metaPhys[*driverClass] -= 10;
-			break;
-		case 2:
-			if (buttonsTapped & BTN_UP)
-				metaPhys[*driverClass] += 100;
-			if (buttonsTapped & BTN_DOWN)
-				metaPhys[*driverClass] -= 100;
-			break;
-		case 3:
-			if (buttonsTapped & BTN_UP)
-				metaPhys[*driverClass] += 1000;
-			if (buttonsTapped & BTN_DOWN)
-				metaPhys[*driverClass] -= 1000;
-			break;
-		case 4:
-			if (buttonsTapped & BTN_UP)
-				metaPhys[*driverClass] += 10000;
-			if (buttonsTapped & BTN_DOWN)
-				metaPhys[*driverClass] -= 10000;
-			break;
+		for(int i = 0; i < digitSelected; i++)
+		{
+			increase *= 10;
+		}
+
+		if (buttonsTapped & BTN_UP)
+		{
+			metaPhys[*driverClass] += increase;
+
+			if ((data.metaPhys[*driverClass].size == 1) && metaPhys[*driverClass] > 256)
+				metaPhys[*driverClass] = 255;
+			if ((data.metaPhys[*driverClass].size == 2) && metaPhys[*driverClass] > 65536)
+				metaPhys[*driverClass] = 65535;
+		}
+
+		if (buttonsTapped & BTN_DOWN)
+		{
+			metaPhys[*driverClass] -= increase;
+			
+			if ((data.metaPhys[*driverClass].size == 1) && metaPhys[*driverClass] < -256)
+				metaPhys[*driverClass] = -255;
+			if ((data.metaPhys[*driverClass].size == 2) && metaPhys[*driverClass] < -65536)
+				metaPhys[*driverClass] = -65535;
+		}
 	}
 
 	// Select: open and close menu (can also be closed with Start)
