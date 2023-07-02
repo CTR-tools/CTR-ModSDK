@@ -53,7 +53,7 @@
 #include <ovr_231.h>
 #include <ovr_232.h>
 #include <ovr_233.h>
+#include <math.h>
 #include <regionsEXE.h>
 #include <functions.h>
 #include <gpu.h>
-#include <math.h>
