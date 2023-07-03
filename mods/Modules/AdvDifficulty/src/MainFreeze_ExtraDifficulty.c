@@ -2,8 +2,9 @@
 #include "macro.h"
 
 short difficulty[] = {0, 0x50, 0xa0, 0xf0, 0x140, 0x280};
+extern struct MenuBox new_retryExitToMap;
 
-void MainFreeze_Difficulty(struct MenuBox *mb)
+void MenuBoxFuncPtr_Difficulty(struct MenuBox *mb)
 {
     MainFreeze_SafeAdvDestroy();
     struct GameTracker *gGT = sdata->gGT;
@@ -12,48 +13,12 @@ void MainFreeze_Difficulty(struct MenuBox *mb)
 
     if (sdata->AnyPlayerTap & BTN_TRIANGLE)
     {
-        sdata->ptrDesiredMenuBox = pause;
-        return;
-    }
-
-    if (!(sdata->AnyPlayerTap & (BTN_CROSS | BTN_CIRCLE)))
-        return;
-
-    char validRows = (gameMode & ARCADE_MODE) ? 5 : 6;
-    short row = mb->rowSelected;
-
-    if (row >= validRows)
-        return;
-
-    gGT->arcadeDifficulty = (mb->rows[0].stringIndex != 346) ? difficulty[row] : difficulty[row+1];
-
-    if (gameMode & ADVENTURE_ARENA)
-    {
-        sdata->ptrDesiredMenuBox = pause;
-        return;
-    }
-
-    gGT->gameMode1 &= ~PAUSE_1;
-
-    if (TitleFlag_IsFullyOffScreen())
-        TitleFlag_BeginTransition(1);
-
-    if (sdata->boolPlayGhost || sdata->ptrGhostTapePlaying)
-    {
-        data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
-    }
-    sdata->Loading.stage = -5;
-    mb->state |= NEEDS_TO_CLOSE;
-}
-
-void Retry_Difficulty(struct MenuBox *mb)
-{
-    struct GameTracker *gGT = sdata->gGT;
-    u_int gameMode = gGT->gameMode1;
-    struct MenuBox *endmenu;
-
-    if (sdata->AnyPlayerTap & BTN_TRIANGLE)
-    {
+        if (!(gameMode & END_OF_RACE))
+        {
+            sdata->ptrDesiredMenuBox = pause;
+            return;
+        }
+        struct MenuBox *endmenu;
         if ((gameMode & ADVENTURE_MODE) != 0)
             endmenu = &data.menuBox_Retry_ExitToMap;
         else
@@ -72,8 +37,27 @@ void Retry_Difficulty(struct MenuBox *mb)
     if (row >= validRows)
         return;
 
-    gGT->arcadeDifficulty = (mb->rows[0].stringIndex != 346) ? difficulty[row] : difficulty[row+1];
-    gGT->hudFlags &= 0xfe;
+    gGT->arcadeDifficulty = (mb->rows[0].stringIndex != 346) ? difficulty[row] : difficulty[row + 1];
+
+    if (gameMode & ADVENTURE_ARENA)
+    {
+        sdata->ptrDesiredMenuBox = pause;
+        return;
+    }
+    
+    if (gameMode & END_OF_RACE)
+    {
+        gGT->hudFlags &= 0xfe;
+    }
+    else
+    {
+        gGT->gameMode1 &= ~PAUSE_1;
+
+        if (sdata->boolPlayGhost || sdata->ptrGhostTapePlaying)
+        {
+            data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
+        }
+    }
 
     if (TitleFlag_IsFullyOffScreen())
         TitleFlag_BeginTransition(1);
@@ -100,14 +84,6 @@ struct MenuRow rows_extraDifficulty[] =
         [3] = MENU_ROW(588, ROW_HARD, ROW_ULTRA_HARD, ROW_SUPER_HARD, ROW_SUPER_HARD),
         [4] = MENU_ROW(589, ROW_SUPER_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD),
         [5] = FINALIZER_ROW};
-
-struct MenuRow new_retryAdv[] =
-{
-        MENU_ROW(4, 2, 1, 0, 0),
-        MENU_ROW(7, 0, 2, 1, 1),
-        MENU_ROW(13, 1, 0, 2, 2),
-        FINALIZER_ROW
-};
 
 struct MenuRow new_advHub[] =
     {
@@ -145,7 +121,7 @@ struct MenuBox AdvHubDifficulty = {
     .unk1 = 0,
     .state = CENTER_ON_COORDS | ALL_PLAYERS_USE_MENU | USE_SMALL_FONT | BIG_TEXT_IN_TITLE | EXECUTE_FUNCPTR,
     .rows = rows_advDifficulty,
-    .funcPtr = MainFreeze_Difficulty,
+    .funcPtr = MenuBoxFuncPtr_Difficulty,
     .width = 209,
     .height = 74};
 
@@ -156,7 +132,7 @@ struct MenuBox AdvMainFreeze_Difficulty = {
     .unk1 = 0,
     .state = CENTER_ON_COORDS | ALL_PLAYERS_USE_MENU | USE_SMALL_FONT | BIG_TEXT_IN_TITLE | EXECUTE_FUNCPTR,
     .rows = rows_advDifficulty,
-    .funcPtr = MainFreeze_Difficulty,
+    .funcPtr = MenuBoxFuncPtr_Difficulty,
     .width = 209,
     .height = 74};
 
@@ -167,6 +143,22 @@ struct MenuBox arcadeMainFreeze_Difficulty = {
     .unk1 = 0,
     .state = CENTER_ON_COORDS | ALL_PLAYERS_USE_MENU | USE_SMALL_FONT | BIG_TEXT_IN_TITLE | EXECUTE_FUNCPTR,
     .rows = rows_extraDifficulty,
-    .funcPtr = MainFreeze_Difficulty,
+    .funcPtr = MenuBoxFuncPtr_Difficulty,
     .width = 209,
     .height = 74};
+
+void GetMenuDifficulty(struct MenuBox *mb)
+{ // not optimized at all, but it saves space.
+    struct GameTracker *gGT = sdata->gGT;
+    u_int gamemode = gGT->gameMode1;
+    if (mb == &data.menuBox_advHub)
+        new_advHub[1].stringIndex = (Weapon_Mask_boolGoodGuy(gGT->drivers[0]) & 1) ? 11 : 12;
+    if (mb == &data.menuBox_advRace)
+        mb->rows = (gamemode & (RELIC_RACE | CRYSTAL_CHALLENGE)) ? &data.menuRow_advRace[0] : &new_advRace[0];
+    if (mb == &data.menuBox_arcadeRace)
+        mb->rows = (gamemode & TIME_TRIAL) ? &data.menuRow_arcadeRace[0] : &new_arcadeRace[0];
+    if (mb == &data.menuBox_Retry_ExitToMap)
+    {
+        MENUBOX_Show(&new_retryExitToMap);
+    }
+}

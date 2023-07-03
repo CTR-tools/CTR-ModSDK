@@ -11,9 +11,9 @@ common, exe, MainInit_Drivers, 0x50, src/hookBots.s
 
 // End of Race menu mod
 926, exe, UI_RaceEnd_MenuBoxFuncPtr, 0x0, src/UI_RaceEnd_MenuBoxFuncPtr.c
-926, exe, 0x80086314, 0x0, src/new_retryExitToMap.c
 926, 222, 0x800a0b64, 0x0, src/new_retryArcade.c
 926, 222, 0x800a0b90, 0x0, src/new_retryArcade2p.c
+926, 222, AA_EndEvent_DisplayTime, -0x48, src/hookEnd.s
 926, 222, AA_EndOfFile, 0x0, src/struct_222.c
 
 // Main Menu Mod, Adv difficulty
@@ -26,8 +26,7 @@ common, exe, MainInit_Drivers, 0x50, src/hookBots.s
 926, exe, 0x80084394, 0x0, src/new_AdvHub.c
 
 // Race Pause Menu Difficulty Option
-926, exe, 0x800843e0, 0x0, src/new_AdvRace.c
-926, exe, 0x8008451c, 0x0, src/new_ArcadeRace.c
+926, exe, MainFreeze_GetMenuBox, 0x0, src/MainFreeze_GetMenuBox.c
 
 // Compile code to empty spaces in RDATA
 common, exe, rdata_free, 0x0, src/MainFreeze_ExtraDifficulty.c src/AdvAdjust.c
