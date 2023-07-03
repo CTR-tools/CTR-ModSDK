@@ -1,5 +1,12 @@
 #include <common.h>
 
+/*
+Ghidra name: FUN_8009f704
+Status: Done
+Byte budget: 308/444
+Called in:
+  - 224.c
+*/
 void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceClockFlags)
 {
 	struct GameTracker* gGT;
@@ -17,7 +24,7 @@ void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceC
 	UI_Lerp2D_Linear(&pos[0], (paramX - (0x88 - textWidth) / 2), paramY, (paramX - (0x88 - textWidth) / 2), paramY, sdata->framesSinceRaceEnded, 0x14);
 
 	// "YOUR TIME"
-	DecalFont_DrawLine(sdata->lngStrings[0xc5], paramX, ((u_int)pos[1] - 0x4c), FONT_BIG, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine(sdata->lngStrings[197], paramX, ((u_int)pos[1] - 0x4c), FONT_BIG, (CENTER_TEXT | ORANGE));
 
 	UI_DrawRaceClock(pos[0], pos[1], UI_DrawRaceClockFlags, d);
 

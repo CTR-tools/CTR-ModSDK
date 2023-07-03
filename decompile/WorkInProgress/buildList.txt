@@ -1,3 +1,7 @@
 
 common, 230, MM_TrackSelect_MenuBox, 0x0, src/MM_TrackSelect_MenuBox_Hook.s
 common, exe, rdata_free, 0x0, src/230/MM_TrackSelect_MenuBox.c
+
+//common, exe, TT_EndEvent_DisplayTime, 0x0, src/224/TT_EndEvent_DisplayTime.c
+//common, exe, TT_EndEvent_DrawMenu, 0x0, src/224/TT_EndEvent_DrawMenu.c
+//common, exe, TT_EndEvent_DrawHighScore, 0x0, src/224/TT_EndEvent_DrawHighScore.c
