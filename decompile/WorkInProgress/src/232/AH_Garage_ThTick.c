@@ -2,55 +2,47 @@
 
 void AH_Garage_Open(struct ScratchpadStruct *, struct Thread *);
 
-void DECOMP_AH_Garage_ThTick(struct Thread *garageTh)
+void DECOMP_AH_Garage_ThTick(struct Thread *t)
 {
     char bossIsOpen, i;
-    u_int uVar3;
-    int iVar4;
-    int lev;
-    int hub;
-    u_int uVar5;
+    char levelID;
+    char hubID;
+    int top;
+    int move;
     int ratio;
-    int iVar6;
-    int iVar7;
+    int bottom;
+    short *check;
+    u_int bitIndex;
+    u_int uVar5;
     u_int uVar8;
     int dist[3];
     int pos[3];
-    short bossTracks[6];
-    short bossID[6];
-    short bossLNG[6];
+    short *bossTracks;
+    short *bossIDs;
+    short *bossLNG;
     struct BossGarageDoor *garage;
-    struct Instance *garageInst;
-    struct Instance *drInst;
-    struct GameTracker *gGT = sdata->gGT;
+    struct Instance *inst;
+    struct Instance *drv_inst;
+    struct GameTracker *gGT;
+    struct AdvProgress *adv;
 
     // == OVR_232.h globals ==
     // array track to load boss
-    bossTracks = DAT_800aba4c;
-    local_5c = DAT_800aba50;
-    local_58 = DAT_800aba54;
-
+    bossTracks = (short *)0x800aba4c;
     // bossID
-    bossID = DAT_800aba58;
-    local_4c = DAT_800aba5c;
-    local_48 = DAT_800aba60;
-
+    bossIDs = (short *)0x800aba58;
     // string for LNG
-    bossLNG = DAT_800aba58;
-    local_3c = DAT_800aba5c;
-    local_38 = DAT_800aba60;
+    bossLNG = bossIDs;
 
     bossIsOpen = true;
 
-    garage = garageTh->object;
-
-    garageInst = garageTh->inst;
-
-    drInst = gGT->drivers[0]->instSelf;
-
-    lev = gGT->levelID;
-
-    hub = lev + -0x19; // or we can use data.MetaDataLev[lev].hubID
+    gGT = sdata->gGT;
+    adv = &sdata->advProgress;
+    garage = t->object;
+    inst = t->inst;
+    drv_inst = gGT->drivers[0]->instSelf;
+    levelID = gGT->levelID;
+    hubID = levelID - 0x19;
 
     // if door is not opening or closing
     if (garage->direction == 0)
@@ -58,32 +50,22 @@ void DECOMP_AH_Garage_ThTick(struct Thread *garageTh)
         // if door is fully closed
         if (garage->cooldown == 0)
         {
-            uVar5 = 0xffcfdfff;
-            uVar3 = garageInst->flags | 0x1000;
+            inst->flags &= (0xffcfdfff | 0x1000);
+            inst->flags |= 0x1000;
         }
 
         // if door is not fully closed
         else
         {
             // subtract frame timer
-            iVar4 = garage->cooldown - gGT->elapsedTimeMS;
-            garage->cooldown = iVar4;
+            garage->cooldown -= gGT->elapsedTimeMS;
 
             // if countdown is not done, dont close door
-            if (0 < iVar4)
+            if (garage->cooldown > 0)
                 goto LAB_800aeb6c;
 
-            // if you are not in gemstone valley
-            // play sound of normal boss door opening
-            uVar8 = 0x95;
-
-            // Level ID
-            // if you are in Gemstone Valley
-            if (lev == 0x19)
-            {
-                // play sound of oxide door opening
-                uVar8 = 0x96;
-            }
+            // play sound of normal boss door opening, except for Oxide
+            uVar8 = (levelID == GEM_STONE_VALLEY) ? 0x96 : 0x95;
 
             // Play sound
             OtherFX_Play(uVar8, 1);
@@ -94,108 +76,85 @@ void DECOMP_AH_Garage_ThTick(struct Thread *garageTh)
             // door is closing
             garage->direction = -1;
 
-            uVar3 = garageInst->flags;
-            uVar5 = 0xffffff7f;
+            inst->flags &= 0xffffff7f;
         }
-        garageInst->flags = uVar3 & uVar5;
     }
     // if door is opening or closing
     else
     {
-        // increment animation by 0x20 in either direction
-        iVar4 = garageInst->matrix.t[1] + garage->direction * 0x20;
-        garageInst->matrix.t[1] = iVar4;
+        // Increment animation by 0x20 in either direction
+        move = inst->matrix.t[1] + garage->direction * 0x20;
+        inst->matrix.t[1] = move;
 
-        iVar6 = garageInst->instDef->pos[1];
+        top = inst->instDef->pos[1] + 0x300;
+        bottom = inst->instDef->pos[1];
 
-        // if door gone past the top (height=0x300)
-        if (iVar6 + 0x300 < iVar4)
+        // If the door has gone past the top (height=0x300)
+        if (move > top)
         {
-            // dont go higher than top
-            garageInst->matrix.t[1] = iVar6 + 0x300;
+            // Set position to the top
+            inst->matrix.t[1] = top;
 
-            // door is now open (not moving)
+            // Door is now open (not moving)
             garage->direction = 0;
 
-            // cooldown, 2 seconds
+            // Cooldown for 2 seconds
             garage->cooldown = 0x780;
 
-            // make invisible
-            garageInst->flags |= 0x80;
+            // Make invisible
+            inst->flags |= 0x80;
         }
-
-        // if not past top
-        else
+        // If the door has gone past the bottom
+        else if (move < bottom)
         {
-            // if door has gone past bottom
-            if (iVar4 < iVar6)
-            {
-                // dont go lower than bottom
-                garageInst->matrix.t[1] = iVar6;
+            // Set position to the bottom
+            inst->matrix.t[1] = bottom;
 
-                garage->direction = 0;
+            garage->direction = 0;
 
-                garage->cooldown = 0;
+            garage->cooldown = 0;
 
-                // enable door collision
-                sdata->doorAccessFlags &= 0xfffffffe;
-            }
-
-            // if not past bottom, and not past top
-            else
-            {
-                // if garagetop instance exists
-                if (garage->garageTopInst != 0)
-                {
-                    // rotation of garagetop
-                    *(short *)((int)garage + 0xc) += (short)garage->direction * 0x40;
-
-                    ConvertRotToMatrix(&garage->garageTopInst->matrix, (short *)((int)garage + 0xc));
-                }
-            }
+            // Enable door collision
+            sdata->doorAccessFlags &= 0xfffffffe;
         }
-        garageInst->flags &= 0xffffefff | 0x302000;
+        // If the door is between the top and bottom positions
+        else if (garage->garageTopInst != 0)
+        {
+            // Update rotation of garagetop
+            garage->rot[0] += (short)garage->direction * 0x40;
+            ConvertRotToMatrix(&garage->garageTopInst->matrix, &garage->rot[0]);
+        }
+
+        inst->flags &= 0xffffefff | 0x302000;
     }
 
 LAB_800aeb6c:
 
     // If you're in Gemstone Valley
-    if (lev == 0x19)
+    if (levelID == GEM_STONE_VALLEY)
     {
         // ripper roo boss key
-        uVar3 = 0x5e;
+        bitIndex = 0x5e;
 
         // check four boss keys
         for (i = 0; i < 4; i++)
         {
-
-            if (sdata->advProgress.rewards[(int)uVar5 >> 5] >> (uVar5 & 1) == 0)
-            {
-                // boss is not open
+            if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
                 goto LAB_800aebd0;
-            }
-
-            // next bit = loop index + 0x5f
-            uVar3 = i + 0x5f;
+            bitIndex++;
         }
     }
     // If you're not in Gemstone Valley
     else
     {
-        iVar6 = (lev + -0x1a) * 8;
-
+        check = &data.advTrackIDs_orderOfTrophies[(levelID - 0x1a) * 4];
         // check all four tracks on hub
         for (i = 0; i < 4; i++)
         {
             // if any trophy on this hub is not unlocked
-            if ((sdata->advProgress.rewards[((int)data.advTrackIDs_orderOfTrophies[iVar6] + 6U) >> 5] >>
-                     ((int)data.advTrackIDs_orderOfTrophies[iVar6]) + 6U &
-                 1) == 0)
-            {
+            if (CHECK_ADV_BIT(adv->rewards, check[i] + 6) == 0)
                 // boss is not open
                 goto LAB_800aebd0;
-            }
-            iVar6 += 2;
         }
     }
     goto LAB_800aec34;
@@ -204,9 +163,9 @@ LAB_800aebd0:
     bossIsOpen = false;
 
 LAB_800aec34:
-    iVar4 = drInst->matrix.t[0] - garageInst->instDef->pos[0];
-    iVar6 = drInst->matrix.t[1] - garageInst->instDef->pos[1];
-    iVar7 = drInst->matrix.t[2] - garageInst->instDef->pos[2];
+    dist[0] = drv_inst->matrix.t[0] - inst->instDef->pos[0];
+    dist[1] = drv_inst->matrix.t[1] - inst->instDef->pos[1];
+    dist[2] = drv_inst->matrix.t[2] - inst->instDef->pos[2];
 
     // if in a state where you're seeing the boss key open an adv door,
     // or some other kind of cutscene where you can't move
@@ -214,7 +173,7 @@ LAB_800aec34:
         return;
 
     // check distance
-    if (0x143fff < iVar4 * iVar4 + iVar6 * iVar6 + iVar7 * iVar7)
+    if (0x143fff < dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2])
         goto LAB_800aede0;
 
     RECT view = gGT->tileView[0].rect;
@@ -225,43 +184,33 @@ LAB_800aec34:
         // draw string, lng_challenge
         DecalFont_DrawLine(
 
-        sdata->lngStrings[(int)data.lng_challenge[((int)&bossLNG + (hub * 2) * 2)]],
+            sdata->lngStrings[data.lng_challenge[bossLNG[hubID]]],
 
-        
-        (short)((view.x + view.w << 0x10) >> 0x11),
-        (short)((view.y + view.h) + -0x1e),
-        1, 0xffff8000);
+            (view.x + view.w >> 1),
+            ((view.y + view.h) - 0x1e),
+            1, 0xffff8000);
     }
-    
+
     if (bossIsOpen)
         goto LAB_800aede8;
 
     // if this is gemstone valley
-    if (lev == 0x19)
+    if (levelID == 0x19)
     {
         // if hint is not unlocked "need 4 keys for oxide"
         if ((sdata->advProgress.rewards[3] & 0x4000000) == 0)
-        {
             // HintID: need four keys to race oxide
             uVar8 = 4;
-
-        LAB_800aedd4:
-
-            MainFrame_RequestMaskHint(uVar8, 0);
-        }
     }
     // not gemstone valley
     else
     {
         //  if hint is not unlocked "to access this boss garage..."
         if ((sdata->advProgress.rewards[3] & 0x2000000) == 0)
-        {
             // HintID: need four trophies to enter boss
             uVar8 = 3;
-
-            goto LAB_800aedd4;
-        }
     }
+    MainFrame_RequestMaskHint(uVar8, 0);
 
 LAB_800aede0:
 
@@ -273,31 +222,31 @@ LAB_800aede8:
 #define SPS \
     ((struct ScratchpadStruct *)0x1f800108)
 
-    SPS->Input1.pos[0] = garageInst->instDef->pos[0];
-    SPS->Input1.pos[1] = garageInst->instDef->pos[1];
-    SPS->Input1.pos[2] = garageInst->instDef->pos[2];
+    SPS->Input1.pos[0] = inst->instDef->pos[0];
+    SPS->Input1.pos[1] = inst->instDef->pos[1];
+    SPS->Input1.pos[2] = inst->instDef->pos[2];
     SPS->Input1.hitRadius = 0x300;
     SPS->Input1.hitRadiusSquared = 0x90000;
     SPS->Input1.modelID = 0x73;
 
-    SPS->Union.ThBuckColl.thread = garageTh;
+    SPS->Union.ThBuckColl.thread = t;
     SPS->Union.ThBuckColl.funcCallback = AH_Garage_Open;
 
     // Open garage door when player gets within radius of door
-    THREAD_CollideHitboxWithBucket(gGT->threadBuckets[PLAYER], SPS, 0);
+    THREAD_CollideHitboxWithBucket(gGT->threadBuckets[PLAYER].thread, SPS, 0);
 
-    ratio = MATH_Sin((int)garageInst->instDef->rot[1]);
+    ratio = MATH_Sin((int)inst->instDef->rot[1]);
 
-    pos[0] = (int)garageInst->instDef->pos[0] + (ratio * -0x280 >> 0xc);
-    pos[1] = (int)garageInst->instDef->pos[1];
+    pos[0] = (int)inst->instDef->pos[0] + (ratio * -0x280 >> 0xc);
+    pos[1] = (int)inst->instDef->pos[1];
 
-    ratio = MATH_Cos((int)garageInst->instDef->rot[1]);
+    ratio = MATH_Cos((int)inst->instDef->rot[1]);
 
-    pos[2] = (int)garageInst->instDef->pos[2] + (ratio * -0x280 >> 0xc);
+    pos[2] = (int)inst->instDef->pos[2] + (ratio * -0x280 >> 0xc);
 
-    dist[0] = drInst->matrix.t[0] - pos[0];
-    dist[1] = drInst->matrix.t[1] - pos[1];
-    dist[2] = drInst->matrix.t[2] - pos[2];
+    dist[0] = drv_inst->matrix.t[0] - pos[0];
+    dist[1] = drv_inst->matrix.t[1] - pos[1];
+    dist[2] = drv_inst->matrix.t[2] - pos[2];
 
     if (dist[0] * dist[0] + dist[1] * dist[1] + dist[2] * dist[2] < 0x40000)
     {
@@ -307,17 +256,16 @@ LAB_800aede8:
     if (gGT->tileView_UI.fadeFromBlack_currentValue == 0)
     {
         // when loading is done, remove flag for In Adventure Arena
-        sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
+        sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_ARENA;
 
         // when loading is done, add flag for Boss Mode
-        sdata->Loading.OnBegin.AddBitsConfig0 |= 0x80000000;
+        sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_BOSS;
 
         if (
-            // If you're in Gemstone Valley
-            (lev == 0x19) &&
+            (levelID == GEM_STONE_VALLEY) &&
 
             // If you have all 18 relics
-            (gGT->currAdvProfile.numRelics == 0x12))
+            (gGT->currAdvProfile.numRelics == 18))
         {
             // set string index (0-5) to "N Oxide's Final Challenge"
             gGT->bossID = 5;
@@ -325,17 +273,14 @@ LAB_800aede8:
 
         else
         {
-            gGT->bossID = (int)*(short *)((int)&bossID + hub) * 2;
+            gGT->bossID = bossIDs[hubID];
         }
 
         // Set the boss character (P2)
-        data.characterIDs[1] = 
-        data.metaDataLEV[
-            (int)*(short *)((int)&bossTracks + hub * 2) // can't these just use `lev`?
-        ].characterID_Boss;
+        data.characterIDs[1] = data.metaDataLEV[levelID].characterID_Boss;
 
         TitleFlag_SetDrawOrder(1);
-        MainRaceTrack_RequestLoad((int)*(short *)((int)&bossTracks + hub * 2));
+        MainRaceTrack_RequestLoad(bossTracks[hubID]);
     }
     return;
 }

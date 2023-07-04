@@ -3,47 +3,49 @@
 void AH_Garage_ThTick(struct Thread *);
 void AH_Garage_ThDestroy(struct Thread *);
 
-void DECOMP_AH_Garage_LInB(struct Instance *garageInst)
+void DECOMP_AH_Garage_LInB(struct Instance *inst)
 {
     char bossIsOpen, i;
-    u_int uVar5;
-    int iVar6;
-    int lev;
+    short * check;
+    u_int bitIndex;
+    int levelID;
     int ratio;
-    struct Thread* garageTh;
-    struct Instance* garageTopInst;
-    struct BossGarageDoor* garage;
+    struct AdvProgress *adv;
+    struct Thread *t;
+    struct Instance *garageTop;
+    struct BossGarageDoor *garage;
 
+    adv = &sdata->advProgress;
     bossIsOpen = true;
-    lev = sdata->gGT->levelID;
+    levelID = sdata->gGT->levelID;
 
-    if (garageInst->thread != NULL) return;
-
-    // 0x14 = size
-    // 0 = no relation to param4
-    // 0x300 = SmallStackPool
-    // 0x3 = static thread bucket
-    garageTh = THREAD_BirthWithObject(0x140303, AH_Garage_ThTick, s_garage_800aba64, 0);
-
-    garageInst->thread = garageTh;
-
-    // if the thread failed to build
-    if (garageTh == NULL)
-    {
+    if (inst->thread != NULL)
         return;
-    }
 
-    garage = garageTh->object;
+    t = THREAD_BirthWithObject(
+        SIZE_RELATIVE_POOL_BUCKET(
+            sizeof(struct BossGarageDoor),
+            NONE,
+            SMALL,
+            STATIC),
+        AH_Garage_ThTick, // behavior
+        (char*)0x800aba64, // debug name
+        0                 // thread relative
+    );
 
-    garageTh->inst = garageInst;
+    if (t == NULL)
+        return;
 
-    garageTh->funcThDestroy = AH_Garage_ThDestroy;
-
+    inst->thread = t;
+    t->inst = inst;
+    t->funcThDestroy = AH_Garage_ThDestroy;
+    
+    garage = t->object;
     garage->direction = 0;
     garage->cooldown = 0;
 
     // if it is Oxide's Door
-    if (garageInst->model->id == 0x77)
+    if (inst->model->id == 0x77)
     {
         garage->garageTopInst = NULL;
     }
@@ -53,55 +55,44 @@ void DECOMP_AH_Garage_LInB(struct Instance *garageInst)
     {
         // make a "garagetop" to make door appear to roll up
 
-        garageTopInst = INSTANCE_Birth3D(sdata->gGT->modelPtr[0x8e], s_garagetop_800aba6c, garageTh);
+        garageTop = INSTANCE_Birth3D(sdata->gGT->modelPtr[0x8e],(char*)0x800aba6c, t);
 
         // copy rotation from one instance to the other
-        garageTopInst->matrix.m[0][0] = garageInst->matrix.m[0][0];
-        garageTopInst->matrix.m[0][2] = garageInst->matrix.m[0][2];
-        garageTopInst->matrix.m[1][1] = garageInst->matrix.m[1][1];
-        garageTopInst->matrix.m[2][0] = garageInst->matrix.m[2][0];
-        garageTopInst->matrix.m[2][2] = garageInst->matrix.m[2][2];
+        garageTop->matrix.m[0][0] = inst->matrix.m[0][0];
+        garageTop->matrix.m[0][2] = inst->matrix.m[0][2];
+        garageTop->matrix.m[1][1] = inst->matrix.m[1][1];
+        garageTop->matrix.m[2][0] = inst->matrix.m[2][0];
+        garageTop->matrix.m[2][2] = inst->matrix.m[2][2];
 
-        // set position from Garage instance
-        garageTopInst->matrix.t[0] = garageInst->matrix.t[0];
-        garageTopInst->matrix.t[1] = garageInst->matrix.t[1];
-        garageTopInst->matrix.t[2] = garageInst->matrix.t[2];
+        // copy position from Garage instance
+        memcpy(&garageTop->matrix.t[0], &inst->matrix.t[0], sizeof(int)*3);
 
-        ratio = MATH_Sin((int)garageInst->instDef->rot[1]);
+        ratio = MATH_Sin((int)inst->instDef->rot[1]);
 
         // continue setting GarageTop position
-        garageTopInst->matrix.t[0] = garageInst->matrix.t[0] + (ratio * 0x4c >> 0xc);
-        garageTopInst->matrix.t[1] = garageInst->matrix.t[1] + 0x300;
+        garageTop->matrix.t[0] = inst->matrix.t[0] + (ratio * 0x4c >> 0xc);
+        garageTop->matrix.t[1] = inst->matrix.t[1] + 0x300;
 
-        ratio = MATH_Cos((int)garageInst->instDef->rot[1]);
+        ratio = MATH_Cos((int)inst->instDef->rot[1]);
 
         // continue setting GarageTop position
-        garageTopInst->matrix.t[2] = garageInst->matrix.t[2] + (ratio * 0x4c >> 0xc);
+        garageTop->matrix.t[2] = inst->matrix.t[2] + (ratio * 0x4c >> 0xc);
 
-        garageTopInst->unk50 = 0xfe;
+        garageTop->unk50 = 0xfe;
 
-        garage->garageTopInst = garageTopInst;
+        garage->garageTopInst = garageTop;
     }
 
-    // If you're in Gemstone Valley
-    if (lev == 0x19)
+    if (levelID == GEM_STONE_VALLEY)
     {
-
         // ripper roo boss key
-        uVar5 = 0x5e;
-
+        bitIndex = 0x63;
         // check four boss keys
         for (i = 0; i < 4; i++)
         {
-
-            if (sdata->advProgress.rewards[(int)uVar5 >> 5] >> (uVar5 & 1) == 0)
-            {
-                // boss is not open
-                goto LAB_800af2b8;
-            }
-
-            // next bit = loop index + 0x5f
-            uVar5 = i + 0x5f;
+            if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
+                goto GarageLocked;
+            bitIndex++;
         }
         bossIsOpen = true;
     }
@@ -109,64 +100,37 @@ void DECOMP_AH_Garage_LInB(struct Instance *garageInst)
     // if not gemstone valley
     else
     {
-        iVar6 = (lev + -0x1a) * 8;
-
+        check = &data.advTrackIDs_orderOfTrophies[(levelID - 0x1a) * 4];
         // check all four tracks on hub
         for (i = 0; i < 4; i++)
         {
             // if any trophy on this hub is not unlocked
-            if ((sdata->advProgress.rewards[((int)data.advTrackIDs_orderOfTrophies[iVar6] + 6U) >> 5] >>
-                     ((int)data.advTrackIDs_orderOfTrophies[iVar6]) + 6U & 1) == 0)
-            {
+            if (CHECK_ADV_BIT(adv->rewards, check[i] + 6) == 0)
                 // boss is not open
-                goto LAB_800af2b8;
-            }
-            iVar6 += 2;
+                goto GarageLocked;
         }
     }
 
     // if boss is open
     if (bossIsOpen)
     {
-        // check if boss was NOT beaten on this hub
-        if (((u_int)sdata->advProgress.rewards
-
-                     // BeatBossPrize, bit index in profile,
-                     // convert bit index to byte index
-                     [(int)data.BeatBossPrize[lev + -0x19] >> 0x5] >>
-
-                 // from the byte, find the bit within the byte
-                 data.BeatBossPrize[lev + -0x19] & 1) == 0)
-        {
-            // if boss was not beaten
-            garageTh->modelIndex = 1;
-        }
-
-        else
-        {
-            // if boss was beaten
-            garageTh->modelIndex = 2;
-        }
+        // check if boss was NOT beaten on this hub (levelID - 0x19)
+        bitIndex = data.BeatBossPrize[levelID - 0x19];
+        t->modelIndex = (CHECK_ADV_BIT(adv->rewards, bitIndex) != 0) ? 2 : 1;
     }
 
     // if boss is not open
     else
     {
-LAB_800af2b8:
-        garageTh->modelIndex = 0;
+    GarageLocked:
+        // locked
+        t->modelIndex = 0;
     }
 
-    garage->rot[0] = garageInst->instDef->rot[0];
-    garage->rot[1] = garageInst->instDef->rot[1];
-    garage->rot[2] = garageInst->instDef->rot[2];
+    memcpy(garage->rot, inst->instDef->rot, sizeof(short)*3);
 
-    garageInst->unk50 = 1;
-
-    garageInst->unk51 = garageInst->unk50;
-
-    garageInst->unk53 = 0;
-
-    garageInst->vertSplit = garageInst->instDef->pos[1] + 0x300;
-
-    return;
+    inst->unk50 = 1;
+    inst->unk51 = inst->unk50;
+    inst->unk53 = 0;
+    inst->vertSplit = inst->instDef->pos[1] + 0x300;
 }

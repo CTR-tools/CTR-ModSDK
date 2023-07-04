@@ -1,56 +1,62 @@
 #include <common.h>
 
-void AH_Door_ThTick(struct Thread*);
-void AH_Door_ThDestroy(struct Thread*);
+void AH_Door_ThTick(struct Thread *);
+void AH_Door_ThDestroy(struct Thread *);
 
-void DECOMP_AH_Door_LInB(struct Instance* doorInst)
+void DECOMP_AH_Door_LInB(struct Instance *inst)
 {
   char i;
   char doorID;
   short sVar2;
   char doorIsOpen;
-  int lev;
+  int levelID;
   int ratio;
   short leftRot[3];
   short rightRot[3];
 
-  struct GameTracker* gGT = sdata->gGT;
-  struct Thread* doorTh;
-  struct Instance* otherDoorInst;
-  struct Model* model;
-  struct ModelHeader* headers;
-  struct WoodDoor* door;
+  struct GameTracker *gGT;
+  struct Thread *t;
+  struct Instance *otherDoorInst;
+  struct Model *m;
+  struct ModelHeader *headers;
+  struct WoodDoor *door;
   int *piVar6; // Instance? Object?
 
-  lev = gGT->levelID;
+  gGT = sdata->gGT;
+  levelID = gGT->levelID;
 
   // If this Instance already has a thread
-  if (doorInst->thread)
+  if (inst->thread != NULL)
     return;
 
-  // 0x38 = size
-  // 0 = no relation to param4
-  // 0x300 = SmallStackPool
-  // 0x3 = static thread bucket
-  doorTh = THREAD_BirthWithObject(0x380303, AH_Door_ThTick, &DAT_800abaa4, 0);
+  t = THREAD_BirthWithObject(
+      SIZE_RELATIVE_POOL_BUCKET(
+          0x38,
+          NONE,
+          SMALL,
+          STATIC),
+      AH_Door_ThTick,     // behavior
+      (char *)0x800abaa4, // debug name
+      0                   // thread relative
+  );
 
-  doorInst->thread = doorTh;
+  inst->thread = t;
 
   // if the thread failed to build
-  if (doorTh == NULL)
+  if (t == NULL)
     return;
 
-  door = doorTh->object;
+  door = t->object;
 
-  doorTh->inst = doorInst;
+  t->inst = inst;
 
-  doorTh->funcThDestroy = AH_Door_ThDestroy;
+  t->funcThDestroy = AH_Door_ThDestroy;
 
   piVar6 = *(short *)((int)door + 0xc);
 
   // this instance is always the left-hand door,
   // and every left-hand door has one key hole
-  doorInst->flags |= 0x1000;
+  inst->flags |= 0x1000;
 
   for (i = 3; i > -1; i--)
   {
@@ -72,7 +78,7 @@ void DECOMP_AH_Door_LInB(struct Instance* doorInst)
   *(short *)(door + 0xd) = 0;
 
   // doorID
-  doorID = doorInst->name[5];
+  doorID = inst->name[5];
 
   for (i = 5; doorID != NULL; i++)
   {
@@ -80,31 +86,31 @@ void DECOMP_AH_Door_LInB(struct Instance* doorInst)
 
     // get door ID from string
     *(short *)(door + 0xd) = sVar2 * 10;
-    *(short *)(door + 0xd) = sVar2 * 10 + (*(char *)(doorInst + (short)doorTh + 8) - 0x30);
+    *(short *)(door + 0xd) = sVar2 * 10 + (*(char *)(inst + (short)t + 8) - 0x30);
 
-    doorID = *(char *)(doorInst + i + 8);
+    doorID = *(char *)(inst + i + 8);
   }
 
   // Level ID is Glacier Park
-  if (lev == 0x1c)
+  if (levelID == 0x1c)
   {
     // door with two key holes
-    model = gGT->modelPtr[0xb5];
+    m = gGT->modelPtr[0xb5];
   }
   // Level ID is not Glacier Park
   else
   {
     if (
         // Level ID is N Sanity Beach
-        (lev == 0x1a) &&
+        (levelID == 0x1a) &&
 
         // doorID == 5
         (*(short *)(door + 0xd) == 5))
     {
       // door with no key holes
-      model = sdata->gGT->modelPtr[0xa7];
+      m = sdata->gGT->modelPtr[0xa7];
 
-      #if 0
+#if 0
       // if it does not exist
       if (model == NULL)
       {
@@ -117,14 +123,14 @@ void DECOMP_AH_Door_LInB(struct Instance* doorInst)
 
         goto LAB_800b08b4;
       }
-      #endif
+#endif
     }
     // if not that door
     else
     {
       // STATIC_DOOR
       // door with one key hole
-      doorTh = sdata->gGT->modelPtr[0x7a];
+      t = sdata->gGT->modelPtr[0x7a];
     }
   }
 
@@ -132,7 +138,7 @@ void DECOMP_AH_Door_LInB(struct Instance* doorInst)
   // "door"
 
   // INSTANCE_Birth3D -- ptrModel, name, thread
-  otherDoorInst = INSTANCE_Birth3D(doorTh, &DAT_800abaa4);
+  otherDoorInst = INSTANCE_Birth3D(t, (char*)0x800abaa4);
 
   // spawn instance of right-hand door,
   // which is not in LEV file, only built in thread
@@ -145,14 +151,14 @@ LAB_800b08b4:
 
   // copy full matrix (position and rotation)
   // from left-hand door to right-hand door
-  otherDoorInst->matrix.m[0][0] = doorInst->matrix.m[0][0];
-  otherDoorInst->matrix.m[0][2] = doorInst->matrix.m[0][2];
-  otherDoorInst->matrix.m[1][1] = doorInst->matrix.m[1][1];
-  otherDoorInst->matrix.m[2][0] = doorInst->matrix.m[2][0];
-  otherDoorInst->matrix.m[2][2] = doorInst->matrix.m[2][2];
-  otherDoorInst->matrix.t[0] = doorInst->matrix.t[0];
-  otherDoorInst->matrix.t[1] = doorInst->matrix.t[1];
-  otherDoorInst->matrix.t[2] = doorInst->matrix.t[2];
+  otherDoorInst->matrix.m[0][0] = inst->matrix.m[0][0];
+  otherDoorInst->matrix.m[0][2] = inst->matrix.m[0][2];
+  otherDoorInst->matrix.m[1][1] = inst->matrix.m[1][1];
+  otherDoorInst->matrix.m[2][0] = inst->matrix.m[2][0];
+  otherDoorInst->matrix.m[2][2] = inst->matrix.m[2][2];
+  otherDoorInst->matrix.t[0] = inst->matrix.t[0];
+  otherDoorInst->matrix.t[1] = inst->matrix.t[1];
+  otherDoorInst->matrix.t[2] = inst->matrix.t[2];
 
   // set scaleX to -0x1000
   otherDoorInst->scale[0] = 0xf000;
@@ -160,18 +166,18 @@ LAB_800b08b4:
   // reverse culling
   otherDoorInst->flags |= 0x8000;
 
-  ratio = MATH_Cos((int)doorInst->instDef->rot[1]);
+  ratio = MATH_Cos((int)inst->instDef->rot[1]);
 
   otherDoorInst->matrix.t[0] += (ratio * 0x600 >> 0xc);
 
-  otherDoorInst->matrix.t[1] = doorInst->matrix.t[1];
+  otherDoorInst->matrix.t[1] = inst->matrix.t[1];
 
-  ratio = MATH_Sin((int)(int)doorInst->instDef->rot[1]);
+  ratio = MATH_Sin((int)(int)inst->instDef->rot[1]);
 
   otherDoorInst->matrix.t[2] += (ratio * 0x600 >> 0xc);
 
   // both doors always face camera
-  headers = doorInst->model->headers;
+  headers = inst->model->headers;
 
   headers->flags |= 2;
 
@@ -181,19 +187,19 @@ LAB_800b08b4:
 
   if (
       // Level ID is N Sanity Beach, check door to Gemstone Valley
-      (lev == 0x1a && *(short *)(door + 0xd) == 4 && ((sdata->advProgress.rewards[3] & 0x40) != 0)) ||
+      (levelID == N_SANITY_BEACH && *(short *)(door + 0xd) == 4 && ((sdata->advProgress.rewards[3] & 0x40) != 0)) ||
 
       // Level ID is N Sanity Beach, check door to Glacier Park
-      (lev == 0x1a && *(short *)(door + 0xd) == 5 && ((sdata->advProgress.rewards[3] & 0x10) != 0)) ||
+      (levelID == N_SANITY_BEACH && *(short *)(door + 0xd) == 5 && ((sdata->advProgress.rewards[3] & 0x10) != 0)) ||
 
       // Level ID is Gemstone Valley, check door to Cup room
-      (lev == 0x19 && ((sdata->advProgress.rewards[3] & 0x20) != 0)) ||
+      (levelID == GEM_STONE_VALLEY && ((sdata->advProgress.rewards[3] & 0x20) != 0)) ||
 
       // Level ID is Lost Ruins, check door to Glacier Park
-      (lev == 0x1b && ((sdata->advProgress.rewards[3] & 0x80) != 0)) ||
+      (levelID == THE_LOST_RUINS && ((sdata->advProgress.rewards[3] & 0x80) != 0)) ||
 
       // Level ID is Glacier Park, check door to Citadel City
-      (doorIsOpen = false, lev == 0x1c) && ((sdata->advProgress.rewards[3] & 0x100) != 0))
+      (doorIsOpen = false, levelID == GLACIER_PARK) && ((sdata->advProgress.rewards[3] & 0x100) != 0))
   {
     // door has already been opened
     doorIsOpen = true;
@@ -206,17 +212,17 @@ LAB_800b08b4:
     *(short *)((int)door + 0x16) = 0x400;
 
     leftRot[0] = *(short *)((int)door + 0x14);
-    leftRot[1] = doorInst->instDef->rot[1] + *(short *)((int)door + 0x16);
+    leftRot[1] = inst->instDef->rot[1] + *(short *)((int)door + 0x16);
     leftRot[2] = *(short *)((int)door + 0x18);
 
     rightRot[0] = *(short *)((int)door + 0x14);
-    rightRot[1] = doorInst->instDef->rot[1] - *(short *)((int)door + 0x16);
+    rightRot[1] = inst->instDef->rot[1] - *(short *)((int)door + 0x16);
     rightRot[2] = *(short *)((int)door + 0x18);
 
     // make matrices for both doors rotated open
 
     // convert 3 rotation shorts into rotation matrix
-    ConvertRotToMatrix(&doorInst->matrix, &leftRot);
+    ConvertRotToMatrix(&inst->matrix, &leftRot);
 
     // convert 3 rotation shorts into rotation matrix
     ConvertRotToMatrix(&otherDoorInst->matrix, &rightRot);
