@@ -1,33 +1,24 @@
 #include <common.h>
 
-void DECOMP_UI_DrawPosSuffix(short posX,short posY,struct Driver* d,short flags)
+void DECOMP_UI_DrawPosSuffix(short posX, short posY, struct Driver *d, short flags)
 {
   int currRank;
-  struct GameTracker* gGT = sdata->gGT;
+  struct GameTracker *gGT = sdata->gGT;
 
   // If you're not in Battle Mode
-  if ((gGT->gameMode1 & BATTLE_MODE) == 0) 
-  {
+  if ((gGT->gameMode1 & BATTLE_MODE) == 0)
     // Get the rank you're in (1st, 2nd, 3rd, etc)
-	currRank = d->driverRank;
-  }
-
-  // If you are in Battle Mode
+    currRank = d->driverRank;
   else
-  {
-	// get the rank that the battle team is in
+    // get the rank that the battle team is in
     currRank = gGT->battleSetup.finishedRankOfEachTeam[d->BattleHUD.teamID];
-  }
 
   // Draw the suffix of your current position
-  DecalFont_DrawLine(sdata->lngStrings[data.stringIndexSuffix[currRank]],
-               (int)posX,(int)posY,FONT_BIG,(int)flags);
+  DecalFont_DrawLine(sdata->lngStrings[data.stringIndexSuffix[currRank]], posX, posY, FONT_BIG, flags);
 
   // If pointer to instance of "Big Number" is valid
   if (d->BigNumber[0] != 0)
-  {
-	// Set [something] to position in race + 0x100
+    // Set [something] to position in race + 0x100
     d->BigNumber[0]->matrix.t[2] = (d->driverRank + 0x100);
-  }
   return;
 }
