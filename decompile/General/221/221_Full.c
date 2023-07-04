@@ -147,7 +147,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		FONT_BIG, (CENTER_TEXT | ORANGE));
 
 	// make token visible
-	tokenInst->flags &= ~(0x80);
+	tokenInst->flags &= ~(HIDE_MODEL);
 
 	tokenInst->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
 	tokenInst->matrix.t[1] = UI_ConvertY_2(0xA2-0x18, 0x200);
@@ -192,7 +192,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	sdata->Loading.OnBegin.RemBitsConfig0 |= CRYSTAL_CHALLENGE;
 	
 	// unlock token
-	adv->rewards[bitIndex>>5] |= (1<<(bitIndex&0x1f));
+	UNLOCK_ADV_BIT(adv->rewards,bitIndex);
 	
 	// go back to adv hub
 	MainRaceTrack_RequestLoad(gGT->prevLEV);
