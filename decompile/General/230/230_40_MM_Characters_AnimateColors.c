@@ -16,7 +16,7 @@ void DECOMP_MM_Characters_AnimateColors(unsigned char *colorData, short playerID
     trigApproximationIndex = sdata->frameCounter * 0x100 + playerID * 0x400;
 
     // approximate trigonometry
-    trigApprox = data.trigApprox[trigApproximationIndex & 0x3ff];
+    trigApprox = *(u_int*)&data.trigApprox[trigApproximationIndex & 0x3ff];
 
     if ((trigApproximationIndex & 0x400) == 0) {
       trigApprox = trigApprox << 0x10;
