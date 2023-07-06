@@ -15,6 +15,10 @@ common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels
 // 221
 common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
 
+// 224 (incomplete)
+common, 224, TT_EndEvent_DisplayTime, 0x0, General/224/TT_EndEvent_DisplayTime.c
+common, 224, TT_EndEvent_DrawHighScore, 0x0, General/224/TT_EndEvent_DrawHighScore.c
+
 // 230 (incomplete)
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
 common, 230, MM_MENUBOX_Main, 0x0, General/230/230_31_MM_MENUBOX_Main.c
