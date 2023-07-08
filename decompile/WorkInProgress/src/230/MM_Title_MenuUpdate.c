@@ -38,7 +38,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // if you are transitioning in
 
     // if not done watching C-T-R letters
-    if (OVR_230.unkTimerMM < 0xe6)
+    if (OVR_230.unkTimerMM < 230)
     {
       OVR_230.countMeta0xD = OVR_230.title_OtherStuff[0];
 
@@ -46,7 +46,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
       goto END_FUNCTION;
     }
 
-    OVR_230.menubox_mainMenu.state &= 0xffffffdf | BIG_TEXT_IN_TITLE;
+    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS) | BIG_TEXT_IN_TITLE;
 
     MM_TransitionInOut((u_short *)0x800b4864, OVR_230.countMeta0xD, *(int *)0x800b4844);
 

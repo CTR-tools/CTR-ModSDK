@@ -36,10 +36,10 @@ int DECOMP_MM_Title_ThTick(struct Thread* title)
   }
   
   // if frame is more than 230
-  if (0xe6 < timer) 
+  if (230 < timer) 
   {
 	// cap to 230
-    timer = 0xe6;
+    timer = 230;
   }
   
   // play 8 sounds, one on each frame
@@ -94,17 +94,17 @@ int DECOMP_MM_Title_ThTick(struct Thread* title)
 	{
 	  // if frame is anywhere in the two seconds
 	  // that the trophy is in the air
-      if (timer - 0x8a < 0x3e) 
+      if (timer - 138 < 62) 
 	  {
 		// make invisible
         titleInst->flags = titleInst->flags | 0x80;
       }
       
 	  // otherwise
-	  else if (199 < (short)timer) 
+	  else if (199 < timer) 
 	  {
 		// play frame index, based on total animation frame
-		titleInst->animFrame = timer + -200;
+		titleInst->animFrame = timer - 200;
 		
 		// set animation to 1
 		titleInst->animIndex = 1;
@@ -168,11 +168,10 @@ int DECOMP_MM_Title_ThTick(struct Thread* title)
   // increment frame counter
   timer = TITLE_FRAME + 1;
   
-  // if more than 245 frames have passed
-  if (0xf5 < TITLE_FRAME) 
+  if (245 < TITLE_FRAME) 
   {
 	// animation is over
-    OVR_230.menubox_mainMenu.state &= 0xffffffdf | BIG_TEXT_IN_TITLE;
+    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS) | BIG_TEXT_IN_TITLE;
 	
 	// dont increment index
     timer = TITLE_FRAME;

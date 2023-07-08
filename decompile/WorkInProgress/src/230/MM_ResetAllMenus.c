@@ -8,7 +8,7 @@ void DECOMP_MM_ResetAllMenus(void)
 
         // Close menubox
         mb->state |= 8;
-        mb->state &= 0xffffffeb;
+        mb->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
 
         // Reset ptrNext and ptrPrev
         mb->ptrNextBox_InHierarchy = 0;
