@@ -9,7 +9,7 @@ void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox *mb)
 
   if (row == -1) 
   {
-    mb->ptrPrevBox_InHierarchy->state &= 0xffffffeb;
+    mb->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
     return;
   }
 
@@ -22,7 +22,17 @@ void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox *mb)
   // if Load was chosen
   else
   {
+    #if BUILD == UsaRetail
     OVR_230.desiredMenu = row;
     OVR_230.MM_State = 2; // transitioning out
+    #endif
+    #if BUILD == EurRetail
+    *(int*)0x800b6284 = row;
+    *(int*)0x800b62c0 = 2; // transitioning out
+    #endif
+    #if BUILD == JpnRetail
+    *(int*)0x800b9ab4 = row;
+    *(int*)0x800b9ac8 = 2; // transitioning out
+    #endif
   }
 }

@@ -43,7 +43,7 @@ struct MenuBox End_arcadeDifficulty = {
     .unk1 = 0,
     .state = CENTER_ON_COORDS | USE_SMALL_FONT | EXECUTE_FUNCPTR,
     .rows = rows_extraDifficulty,
-    .funcPtr =MenuBoxFuncPtr_Difficulty,
+    .funcPtr = MenuBoxFuncPtr_Difficulty,
     .width = 209,
     .height = 74
 };

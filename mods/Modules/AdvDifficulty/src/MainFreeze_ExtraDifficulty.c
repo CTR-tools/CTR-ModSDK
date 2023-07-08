@@ -22,7 +22,15 @@ void MenuBoxFuncPtr_Difficulty(struct MenuBox *mb)
         if ((gameMode & ADVENTURE_MODE) != 0)
             endmenu = &data.menuBox_Retry_ExitToMap;
         else
+            #if BUILD == UsaRetail
             endmenu = (gGT->numPlyrCurrGame == 1) ? (struct MenuBox *)0x800a0b58 : (struct MenuBox *)0x800a0b84;
+            #endif
+            #if BUILD == EurRetail
+            endmenu = (gGT->numPlyrCurrGame == 1) ? (struct MenuBox *)0x800a0f9c : (struct MenuBox *)0x800a0fc8;
+            #endif
+            #if BUILD == JpnRetail
+            endmenu = (gGT->numPlyrCurrGame == 1) ? (struct MenuBox *)0x800a4138 : (struct MenuBox *)0x800a4164;
+            #endif
 
         MENUBOX_Show(endmenu);
         return;
@@ -66,6 +74,8 @@ void MenuBoxFuncPtr_Difficulty(struct MenuBox *mb)
     mb->state |= NEEDS_TO_CLOSE;
 }
 
+#if BUILD == UsaRetail
+
 struct MenuRow rows_advDifficulty[] =
     {
         [0] = MENU_ROW(590, ROW_ADV_CLASSIC, ROW_ADV_EASY, ROW_ADV_CLASSIC, ROW_ADV_CLASSIC),
@@ -76,6 +86,7 @@ struct MenuRow rows_advDifficulty[] =
         [5] = MENU_ROW(589, ROW_ADV_SUPER_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_ULTRA_HARD),
         [6] = FINALIZER_ROW};
 
+
 struct MenuRow rows_extraDifficulty[] =
     {
         [0] = MENU_ROW(346, ROW_EASY, ROW_MEDIUM, ROW_EASY, ROW_EASY),
@@ -84,6 +95,31 @@ struct MenuRow rows_extraDifficulty[] =
         [3] = MENU_ROW(588, ROW_HARD, ROW_ULTRA_HARD, ROW_SUPER_HARD, ROW_SUPER_HARD),
         [4] = MENU_ROW(589, ROW_SUPER_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD),
         [5] = FINALIZER_ROW};
+
+#endif
+
+#if BUILD >= EurRetail
+
+struct MenuRow rows_advDifficulty[] =
+    {
+        [0] = MENU_ROW(598, ROW_ADV_CLASSIC, ROW_ADV_EASY, ROW_ADV_CLASSIC, ROW_ADV_CLASSIC),
+        [1] = MENU_ROW(346, ROW_ADV_CLASSIC, ROW_ADV_MEDIUM, ROW_ADV_EASY, ROW_ADV_EASY),
+        [2] = MENU_ROW(347, ROW_ADV_EASY, ROW_ADV_HARD, ROW_ADV_MEDIUM, ROW_ADV_MEDIUM),
+        [3] = MENU_ROW(348, ROW_ADV_MEDIUM, ROW_ADV_SUPER_HARD, ROW_ADV_HARD, ROW_ADV_HARD),
+        [4] = MENU_ROW(596, ROW_ADV_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_SUPER_HARD, ROW_ADV_SUPER_HARD),
+        [5] = MENU_ROW(597, ROW_ADV_SUPER_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_ULTRA_HARD, ROW_ADV_ULTRA_HARD),
+        [6] = FINALIZER_ROW};
+
+struct MenuRow rows_extraDifficulty[] =
+    {
+        [0] = MENU_ROW(346, ROW_EASY, ROW_MEDIUM, ROW_EASY, ROW_EASY),
+        [1] = MENU_ROW(347, ROW_EASY, ROW_HARD, ROW_MEDIUM, ROW_MEDIUM),
+        [2] = MENU_ROW(348, ROW_MEDIUM, ROW_SUPER_HARD, ROW_HARD, ROW_HARD),
+        [3] = MENU_ROW(596, ROW_HARD, ROW_ULTRA_HARD, ROW_SUPER_HARD, ROW_SUPER_HARD),
+        [4] = MENU_ROW(597, ROW_SUPER_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD, ROW_ULTRA_HARD),
+        [5] = FINALIZER_ROW};
+
+#endif
 
 struct MenuRow new_advHub[] =
     {

@@ -117,7 +117,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
         sdata->ptrActiveMenuBox = &data.menuBox_GhostSelection;
         return;
 
-      case 0xd:
+      case 13:
         // Exit To Map
         // when loading is done, add flag for "In Adventure Arena"
         sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_ARENA;
@@ -132,7 +132,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
           sdata->Loading.OnBegin.RemBitsConfig0 |= (ADVENTURE_CUP | RELIC_RACE | CRYSTAL_CHALLENGE);
 
           // load Gemstone valley LEV
-          MainRaceTrack_RequestLoad(0x19);
+          MainRaceTrack_RequestLoad(GEM_STONE_VALLEY);
           return;
         }
 
@@ -154,7 +154,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
         MainRaceTrack_RequestLoad(gGT->prevLEV);
         return;
 
-      case 0xc9:
+      case 201:
         // Press X to continue
         sdata->menuReadyToPass |= 1;
         return;
