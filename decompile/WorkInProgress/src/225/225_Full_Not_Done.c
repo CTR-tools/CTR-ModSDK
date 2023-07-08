@@ -349,7 +349,7 @@ void VB_EndEvent_DrawMenu(void)
 
 void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *);
 
-struct MenuRow menuRows225_versus[3] =
+struct MenuRow menuRows225_versus[5] =
     {
         // Retry
         {
@@ -406,7 +406,7 @@ struct MenuBox menuBox225_versus =
         // rest of variables all default zero
 };
 
-struct MenuRow menuRows225_battle[3] =
+struct MenuRow menuRows225_battle[6] =
     {
         // Retry
         {
