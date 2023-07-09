@@ -21,12 +21,6 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 	u_int uVar13;
 	int iVar14;
 
-	// ???
-	u_short auStackY131246 [32767];
-	u_short auStackY65712 [4];
-	u_short auStackY65704 [4];
-	u_short auStackY65696 [32756];
-
 	u_short uVar15;
 	u_short local_b0 [4];
 	u_short local_a8 [4];
