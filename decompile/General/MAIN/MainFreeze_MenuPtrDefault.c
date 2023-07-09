@@ -82,6 +82,9 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 	// hide MenuBox
 	MENUBOX_Hide(mb);
 
+	// get rid of pause flag
+	gGT->gameMode1 &= ~PAUSE_1;
+
 	MainFreeze_SafeAdvDestroy();
 
 	// careful, it's stringID MINUS one
@@ -93,8 +96,8 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 		// stringID 4: "RETRY"
 		case 4:
 
-			// get rid of pause flag
-			gGT->gameMode1 &= ~PAUSE_1;
+			// restart race
+			sdata->Loading.stage = -5;
 
 			if (TitleFlag_IsFullyOffScreen() == 1)
 			{
@@ -103,28 +106,14 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			}
 
 			// if you are not showing a ghost during a race
-			if (sdata->boolPlayGhost == 0)
-			{
-				// restart race
-				sdata->Loading.stage = -5;
-				return;
-			}
+			if (sdata->boolPlayGhost == 0) return;
 
 			// If the ghost playing buffer is nullptr
-			if (sdata->ptrGhostTapePlaying == 0)
-			{
-				// restart race
-				sdata->Loading.stage = -5;
-				return;
-			}
+			if (sdata->ptrGhostTapePlaying == 0) return;
 
-			// At this point, we are certain there is a ghost buffer so you must be in time trial mode
-
-			// Make P2 the character that is saved in the header of the ghost that you will see in the race
+			// Make P2 the character that is saved in the header of the 
+			// ghost that you will see in the race
 			data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
-
-			// restart race
-			sdata->Loading.stage = -5;
 			return;
 
 		// stringID 2: "RESUME"
@@ -132,7 +121,6 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 
 			// unpause game
 			ElimBG_Deactivate(gGT);
-			gGT->gameMode1 &= ~PAUSE_1;
 
 			// unpause audio
 			MainFrame_TogglePauseAudio(0);
@@ -236,11 +224,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			break;
 	}
 	
-	// get rid of pause flag
-	gGT->gameMode1 &= ~PAUSE_1;
-	
 	// load level ID
 	MainRaceTrack_RequestLoad(levID);
-	
 	return;
 }
