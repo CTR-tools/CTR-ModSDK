@@ -271,15 +271,15 @@ void RunHook_Callback230()
 	struct MenuBox *mb = (struct MenuBox *)(MM_JumpTo_Scrapbook +
 
 #if BUILD == SepReview
-											0x2C4
+	0x2C4
 #elif BUILD == UsaRetail
-											0x284
+	0x284
 #elif BUILD == JpnTrial
-											0x270
+	0x270
 #elif BUILD == EurRetail
-											0x300
+	0x300
 #elif BUILD == JpnRetail
-											0x290
+	0x290
 #else
 #error RunHook_Callback230 needs a macro for MenuBox
 #endif
