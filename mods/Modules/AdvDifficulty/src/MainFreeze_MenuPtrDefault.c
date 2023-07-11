@@ -67,26 +67,22 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *mb)
 
 	gGT->cooldownFromUnpauseUntilPause = 5;
 	MENUBOX_Hide(mb);
+	gGT->gameMode1 &= ~PAUSE_1;
 	MainFreeze_SafeAdvDestroy();
 
 	switch (stringID)
 	{
 	case 1: // "RESTART"
 	case 4: // "RETRY"
-		gGT->gameMode1 &= ~PAUSE_1;
+		sdata->Loading.stage = -5;
 		if (TitleFlag_IsFullyOffScreen() == 1)
 			TitleFlag_BeginTransition(1);
 		if (!sdata->boolPlayGhost || !sdata->ptrGhostTapePlaying)
-		{
-			sdata->Loading.stage = -5;
 			return;
-		}
 		data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
-		sdata->Loading.stage = -5;
 		return;
 	case 2: // "RESUME"
 		ElimBG_Deactivate(gGT);
-		gGT->gameMode1 &= ~PAUSE_1;
 		MainFrame_TogglePauseAudio(0);
 		OtherFX_Play(1, 1);
 		return;
@@ -96,18 +92,16 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *mb)
 	case 10: // "CHANGE SETUP"
 		sdata->mainMenuState = (stringID == 10) ? (stringID - 7) : (stringID - 4);
 		sdata->Loading.OnBegin.AddBitsConfig0 |= MAIN_MENU;
-		gGT->gameMode1 &= ~PAUSE_1;
 		break;
 	case 13: // "EXIT TO MAP"
 		sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_ARENA;
 		sdata->Loading.OnBegin.RemBitsConfig0 |= (RELIC_RACE | CRYSTAL_CHALLENGE);
 		sdata->Loading.OnBegin.RemBitsConfig8 |= TOKEN_RACE;
-		gGT->gameMode1 &= ~PAUSE_1;
 		if ((gameMode & ADVENTURE_CUP) == 0)
 		{
-			if (gameMode < 0) // BOSS Race
+			if ((int)gameMode < 0) // BOSS Race
 			{
-				sdata->Loading.OnBegin.RemBitsConfig0 |= (ADVENTURE_BOSS | RELIC_RACE | CRYSTAL_CHALLENGE);
+				sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_BOSS;
 				sdata->Loading.OnBegin.AddBitsConfig8 |= 1;
 			}
 			level_to_load = gGT->prevLEV;
@@ -117,6 +111,8 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *mb)
 			level_to_load = GEM_STONE_VALLEY;
 			gGT->levelID = gGT->cup.cupID + 100;
 		}
+	default:
+		break;
 	}
 	MainRaceTrack_RequestLoad(level_to_load);
 }

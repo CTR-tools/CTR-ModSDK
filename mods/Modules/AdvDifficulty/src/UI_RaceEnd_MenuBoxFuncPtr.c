@@ -19,7 +19,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
   gGT = sdata->gGT;
   if (menu->unk1e == 0)
   {
-    if (-1 < menu->unk1a)
+    if (-1 < menu->rowSelected)
     {
       option = menu->rows[menu->rowSelected].stringIndex;
       // if not "save ghost"

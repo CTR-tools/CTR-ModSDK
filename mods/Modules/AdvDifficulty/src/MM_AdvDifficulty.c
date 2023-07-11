@@ -33,7 +33,7 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 	if (prevBox == 0x800b4dfc && row < 6)
 	#endif
 	#if BUILD == JpnRetail
-	if (prevBox == 0x800b7fc4 && row < 6)
+	if (prevBox == 0x800b810c && row < 6)
 	#endif
 	{
 		switch (row)
@@ -64,7 +64,7 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 			arcadeDifficulty = cupDifficulty[row-1];
 			break;
 		}
-		*(int*)0x800b9ab4 = 0;
+		*(int*)0x800b9a8c = 0;
 		#endif
 	}
 	// if you are in Arcade menu
@@ -95,7 +95,7 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 			arcadeDifficulty = cupDifficulty[row];
 			break;
 		}
-		*(int*)0x800b9ab4 = 2;
+		*(int*)0x800b9a8c = 2;
 		#endif
 	}
 	sdata->gGT->arcadeDifficulty = arcadeDifficulty;
@@ -113,7 +113,11 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 
 struct MenuBox extra_difficulty =
     {
-        .stringIndexTitle = 345,
+        #if BUILD == JpnRetail
+        .stringIndexTitle = 354,
+		#else
+		.stringIndexTitle = 345,
+		#endif
         .posX_curr = 0,
         .posY_curr = 0,
         .unk1 = 0,
@@ -121,11 +125,16 @@ struct MenuBox extra_difficulty =
         .rows = rows_extraDifficulty,
         .funcPtr = MM_AdvDifficulty,
         .width = 171,
-        .height = 86};
+        .height = 86
+		};
 
 struct MenuBox adv_difficulty =
     {
-        .stringIndexTitle = 345,
+		#if BUILD == JpnRetail
+        .stringIndexTitle = 354,
+		#else
+		.stringIndexTitle = 345,
+		#endif
         .posX_curr = 0,
         .posY_curr = 0,
         .unk1 = 0,
@@ -133,4 +142,5 @@ struct MenuBox adv_difficulty =
         .rows = rows_advDifficulty,
         .funcPtr = MM_AdvDifficulty,
         .width = 171,
-        .height = 86};
+        .height = 86
+		};

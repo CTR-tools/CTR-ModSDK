@@ -25,7 +25,11 @@ struct MenuRow new_retryAdv[] =
 };
 
 struct MenuBox End_AdvRaceDifficulty = {
+    #if BUILD == JpnRetail
+    .stringIndexTitle = 354,
+    #else
     .stringIndexTitle = 345,
+    #endif
     .posX_curr = 256,
     .posY_curr = 170,
     .unk1 = 0,
@@ -37,7 +41,11 @@ struct MenuBox End_AdvRaceDifficulty = {
 };
 
 struct MenuBox End_arcadeDifficulty = {
+    #if BUILD == JpnRetail
+    .stringIndexTitle = 354,
+    #else
     .stringIndexTitle = 345,
+    #endif
     .posX_curr = 256,
     .posY_curr = 170,
     .unk1 = 0,
