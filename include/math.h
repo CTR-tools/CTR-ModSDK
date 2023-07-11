@@ -4,8 +4,8 @@
 
 struct TrigTable
 {
-    short cos;
     short sin;
+    short cos;
 };
 
 #define ANG_TWO_PI 0x1000        // 360
