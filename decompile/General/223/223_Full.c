@@ -254,7 +254,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 	char auStack72[16];
 	char auStack56[24];
 
-	// pointer to player structure
+	gGT = sdata->gGT;
 	d = gGT->drivers[0];
 	relic = sdata->ptrRelic;
 
@@ -295,33 +295,25 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 		gGT->unknownFlags_1d44 |= 2;
 	}
 
-	// if race ended less than 80 frames ago
-	if ((framesElapsed - 21 < 59) &&
-
-		// If the amount of time crates you collected is not equal to
-		(d->numTimeCrates !=
-
-		 // the amount of time crates in this level
-		 gGT->timeCratesInLEV))
+	// if didn't get all crates in level
+	if(d->numTimeCrates != gGT->timeCratesInLEV)
 	{
-		// advance timer to 140 frames, since we can skip the amount of time
-		// that would have been taken to draw "PERFECT" text
-		framesElapsed = 140;
-	}
-
-	// if race ended less than 250 frames ago
-	if ((framesElapsed - 21 < 229) && ((gGT->unknownFlags_1d44 & 0x2000000) == 0) &&
-
-		// If the amount of time crates you collected is not equal to
-		(d->numTimeCrates !=
-
-		 // the amount of time crates in this level
-		 gGT->timeCratesInLEV))
-	{
-		// advance timer to 370 frames, since we can skip the amount of time
-		// that would have been taken to draw the animation
-		// to deduct 10 seconds from the relic timer
-		framesElapsed = 370;
+		// if race ended 59-80 frames ago
+		if ((u_int)(framesElapsed - 21) < 59)
+		{
+			// advance timer to 140 frames, since we can skip the amount of time
+			// that would have been taken to draw "PERFECT" text
+			framesElapsed = 140;
+		}
+	
+		// if race ended 229-250 frames ago
+		if (((u_int)(framesElapsed - 21) < 229) && ((gGT->unknownFlags_1d44 & 0x2000000) == 0))
+		{
+			// advance timer to 370 frames, since we can skip the amount of time
+			// that would have been taken to draw the animation
+			// to deduct 10 seconds from the relic timer
+			framesElapsed = 370;
+		}
 	}
 
 	// if 16.333 sec hasn't passed yet
@@ -426,20 +418,16 @@ LAB_800a0594:
 	sdata->ptrTimebox1->matrix.t[1] = UI_ConvertY_2(pos[1], 0x100);
 
 	// Draw 'x' before number of crates
-	DecalFont_DrawLine(str_x, pos[0] + 0x14, pos[1] - 10, 2, 0);
+	DecalFont_DrawLine(&str_x, pos[0] + 0x14, pos[1] - 10, 2, 0);
 
 	// %2.02d/%ld: Amount of crates you collected / Total number of crates
-	sprintf(auStack72, str_format, d->numTimeCrates, gGT->timeCratesInLEV);
+	sprintf(auStack72, &str_format[0], d->numTimeCrates, gGT->timeCratesInLEV);
 
 	// Draw amount of crates collected
 	DecalFont_DrawLine(auStack72, pos[0] + 0x21, pos[1] - 0xe, 1, 0);
 
-	// If the amount of time crates you collected is equal to
-	if // If the amount of time crates you collected is equal to
-		(d->numTimeCrates ==
-
-		 // the amount of time crates in this level
-		 gGT->timeCratesInLEV)
+	// if collected all time boxes in level
+	if (d->numTimeCrates == gGT->timeCratesInLEV)
 	{
 		// -10
 		sprintf(auStack56, &str_negInt);
@@ -475,7 +463,7 @@ LAB_800a0594:
 		{
 			// if race ended, not within range of 0x8c and 0x8c+0x6d,
 			// if not within range of 140-249
-			if (109 < framesElapsed - 140)
+			if (109 < (u_int)(framesElapsed - 140))
 				goto LAB_800a096c;
 
 			if (framesElapsed > 159)
