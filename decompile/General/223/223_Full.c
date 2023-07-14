@@ -116,7 +116,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 	// 8008e6f4 is where all high scores are saved
 	// 0x49*4 = 0x124, size of each HighScoreTrack
 	// 0x24*4 = sizeof(highScoreEntry)*6, which changes from Time Trial to Relic
-	scoreEntry = &sdata->gameProgress.highScoreTracks[gGT->levelID].scoreEntry[mode];
+	scoreEntry = &sdata->gameProgress.highScoreTracks[gGT->levelID].scoreEntry[6*mode];
 
 	// interpolate fly-in
 	UI_Lerp2D_HUD(&pos[0], startX, startY, startX, startY, sdata->framesSinceRaceEnded, 0x14);
@@ -130,13 +130,14 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 	{
 		// default color, not flashing
 		timeColor = 0;
-		nameColor = scoreEntry->characterID + 5;
+		nameColor = scoreEntry[i+1].characterID + 5;
 
 		// If this loop index is a new high score
 		if (gGT->newHighScoreIndex == i)
 		{
 			// make name color flash every odd frame
-			nameColor = (gGT->timer & 2) ? 4 : scoreEntry->characterID + 5;
+			nameColor = (gGT->timer & 2) ? 4 : nameColor;
+			
 			// flash color of time
 			timeColor = ((gGT->timer & 2) << 1);
 		}
@@ -153,8 +154,8 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 
 		u_int *iconColor = 0x800a0cb4;
 
-		// Draw Character Icon
-		MENUBOX_DrawPolyGT4(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[i]->driverID]].iconID],
+		// Draw Character Icon 
+		MENUBOX_DrawPolyGT4(gGT->ptrIcons[data.MetaDataCharacters[scoreEntry[i+1].characterID].iconID],
 							startX - 0x52, timebox_Y,
 
 							// pointer to PrimMem struct
@@ -162,13 +163,13 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 
 							// pointer to OT mem
 							gGT->tileView_UI.ptrOT,
-							iconColor, iconColor, iconColor, iconColor, 1, 0x1000);
+							*iconColor, *iconColor, *iconColor, *iconColor, 1, 0x1000);
 
 		// Draw Name
-		DecalFont_DrawLine(scoreEntry->name, timebox_X, timebox_Y, 3, nameColor);
+		DecalFont_DrawLine(scoreEntry[i+1].name, timebox_X, timebox_Y, 3, nameColor);
 
 		// Draw time
-		DecalFont_DrawLine(MENUBOX_DrawTime(scoreEntry->time), timebox_X, timebox_Y + 0x11, 2, timeColor);
+		DecalFont_DrawLine(MENUBOX_DrawTime(scoreEntry[i+1].time), timebox_X, timebox_Y + 0x11, 2, timeColor);
 
 		// If this loop index is a new high score
 		if (gGT->newHighScoreIndex == i)
@@ -202,7 +203,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 			timeColor = 0xffff8004;
 		}
 		// make a string for best lap
-		timeString = MENUBOX_DrawTime(scoreEntry->time);
+		timeString = MENUBOX_DrawTime(scoreEntry[0].time);
 	}
 	// If this is Relic Mode
 	else
