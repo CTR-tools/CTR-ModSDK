@@ -286,10 +286,8 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 		// increment frame counter
 		sdata->framesSinceRaceEnded++;
 	}
-	// copy to local frame counter
-	framesElapsed = sdata->framesSinceRaceEnded;
 
-	if (509 < framesElapsed)
+	if (509 < sdata->framesSinceRaceEnded)
 	{
 		// start drawing the high score menu that shows the top 5 best times
 		gGT->unknownFlags_1d44 |= 2;
@@ -299,22 +297,25 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 	if(d->numTimeCrates != gGT->timeCratesInLEV)
 	{
 		// if race ended 59-80 frames ago
-		if ((u_int)(framesElapsed - 21) < 59)
+		if ((u_int)(sdata->framesSinceRaceEnded - 21) < 59)
 		{
 			// advance timer to 140 frames, since we can skip the amount of time
 			// that would have been taken to draw "PERFECT" text
-			framesElapsed = 140;
+			sdata->framesSinceRaceEnded = 140;
 		}
 	
 		// if race ended 229-250 frames ago
-		if (((u_int)(framesElapsed - 21) < 229) && ((gGT->unknownFlags_1d44 & 0x2000000) == 0))
+		if (((u_int)(sdata->framesSinceRaceEnded - 21) < 229) && ((gGT->unknownFlags_1d44 & 0x2000000) == 0))
 		{
 			// advance timer to 370 frames, since we can skip the amount of time
 			// that would have been taken to draw the animation
 			// to deduct 10 seconds from the relic timer
-			framesElapsed = 370;
+			sdata->framesSinceRaceEnded = 370;
 		}
 	}
+
+	// copy to local frame counter
+	framesElapsed = sdata->framesSinceRaceEnded;
 
 	// if 16.333 sec hasn't passed yet
 	boolEarly = framesElapsed < 491;
