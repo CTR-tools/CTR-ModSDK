@@ -14,6 +14,7 @@ common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels
 
 // 221
 common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
+common, 223, RR_EndEvent_UnlockAward, 0x0, General/223/223_Full.c
 
 // 224 (incomplete)
 common, 224, TT_EndEvent_DisplayTime, 0x0, General/224/TT_EndEvent_DisplayTime.c

@@ -506,7 +506,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 					
 					if((gameMode1 & RELIC_RACE) != 0)
 					{
-						RR_EndEvent_DrawMenu();
+						DECOMP_RR_EndEvent_DrawMenu();
 						return;
 					}
 					
@@ -518,7 +518,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 					
 					if((gameMode1 & CRYSTAL_CHALLENGE) != 0)
 					{
-						CC_EndEvent_DrawMenu();
+						DECOMP_CC_EndEvent_DrawMenu();
 						return;
 					}
 					

@@ -5,22 +5,22 @@
 	((rewards[bitIndex >> 5] >> (bitIndex & 0x1f)) & 1) != 0
 
 // 8009f700
-int str_number;
+int str_number = 0x20; // " \0"
 
 // 8009f704
-int str_x;
+int str_x = 'x';
 
 // 8009f708
-char str_format[0xC];
+char str_format[0xC] = "%2.02d/%ld\0";
 
 // 8009f714
-int str_negInt;
+int str_negInt = "-10\0";
 
 // 8009f718
-int str_posInt;
+int str_posInt = "-%d\0";
 
 // 8009f71c
-void RR_EndEvent_UnlockAward()
+void DECOMP_RR_EndEvent_UnlockAward()
 {
 	int i;
 	struct Driver *driver;
@@ -82,17 +82,17 @@ void RR_EndEvent_UnlockAward()
 		// == Gold or Platinum ==
 
 		// store globally... 8008d9b0
-		data.relicTime_1min = relicTime / 0xe100;
-		data.relicTime_10sec = (relicTime / 0x2580) % 6;
-		data.relicTime_1sec = (relicTime / 0x3c0) % 10;
-		data.relicTime_1ms = ((relicTime * 100) / 0x3c0) % 10;
+		sdata->relicTime_1min = relicTime / 0xe100;
+		sdata->relicTime_10sec = (relicTime / 0x2580) % 6;
+		sdata->relicTime_1sec = (relicTime / 0x3c0) % 10;
+		sdata->relicTime_1ms = ((relicTime * 100) / 0x3c0) % 10;
 
 		// [Not Done]
-		data.relicTime_10ms = 0;
+		sdata->relicTime_10ms = 0;
 	}
 }
 
-void RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
+void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 {
 	// This is different from High Score in Main Menu because Main Menu
 	// does not show the rank icons '1', '2', '3', '4', '5'
@@ -106,7 +106,7 @@ void RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 	short pos[2];
 	short timebox_X;
 	short timebox_Y;
-	ushort currRowY;
+	u_short currRowY;
 	RECT box;
 
 	gGT = sdata->gGT;
@@ -116,10 +116,10 @@ void RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 	// 8008e6f4 is where all high scores are saved
 	// 0x49*4 = 0x124, size of each HighScoreTrack
 	// 0x24*4 = sizeof(highScoreEntry)*6, which changes from Time Trial to Relic
-	scoreEntry = &sdata->gameProgress->highScoreTracks[gGT->levelID].scoreEntry[mode];
+	scoreEntry = &sdata->gameProgress.highScoreTracks[gGT->levelID].scoreEntry[mode];
 
 	// interpolate fly-in
-	UI_Lerp2D_HUD(&pos, startX, startY, startX, startY, sdata->framesSinceRaceEnded, 0x14);
+	UI_Lerp2D_HUD(&pos[0], startX, startY, startX, startY, sdata->framesSinceRaceEnded, 0x14);
 
 	// "BEST TIMES"
 	DecalFont_DrawLine(sdata->lngStrings[0x171], pos[0], pos[1], 1, 0xffff8000);
@@ -210,7 +210,7 @@ void RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 		// "YOUR TIME"
 		DecalFont_DrawLine(sdata->lngStrings[0xC5], startX, startY + 0x95, 1, 0xffff8000);
 		// make a string for your current track time
-		timeString = MENUBOX_DrawTime(gGT->drivers[0].timeElapsedInRace);
+		timeString = MENUBOX_DrawTime(gGT->drivers[0]->timeElapsedInRace);
 		// color
 		timeColor = 0xffff8000;
 	}
@@ -227,7 +227,7 @@ void RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 	MENUBOX_DrawInnerRect(&box, 4, gGT->backBuffer->otMem.startPlusFour);
 }
 
-void RR_EndEvent_DrawMenu(void)
+void DECOMP_RR_EndEvent_DrawMenu(void)
 {
 	struct GameTracker *gGT;
 	struct AdvProgress *adv;
@@ -250,8 +250,8 @@ void RR_EndEvent_DrawMenu(void)
 	int endY;
 	int startFrame;
 	int uVar11;
-	undefined auStack72[16];
-	undefined auStack56[24];
+	char auStack72[16];
+	char auStack56[24];
 
 	// pointer to player structure
 	d = gGT->drivers[0];
@@ -340,7 +340,7 @@ void RR_EndEvent_DrawMenu(void)
 	}
 
 	// interpolate fly-in
-	UI_Lerp2D_HUD(&pos, startX, 0x32, 0x100, endY, startFrame, 0x14);
+	UI_Lerp2D_HUD(&pos[0], startX, 0x32, 0x100, endY, startFrame, 0x14);
 
 	UI_DrawRaceClock(pos[0], pos[1] - 8, 1, d);
 	if ((gGT->unknownFlags_1d44 & 0x2000000) != 0)
@@ -379,7 +379,7 @@ void RR_EndEvent_DrawMenu(void)
 		}
 		startY = UI_ConvertY_2(0xa2, 0x100);
 
-		UI_Lerp2D_HUD(&pos, startX, startY, endX, startY, startFrame, 0x14);
+		UI_Lerp2D_HUD(&pos[0], startX, startY, endX, startY, startFrame, 0x14);
 	}
 
 LAB_800a0594:
@@ -401,7 +401,7 @@ LAB_800a0594:
 	}
 
 	// interpolate fly-in
-	UI_Lerp2D_HUD(&pos, startX, 0x20, 0x100, endY, startFrame, 0x14);
+	UI_Lerp2D_HUD(&pos[0], startX, 0x20, 0x100, endY, startFrame, 0x14);
 
 	// if race ended less than 16.333 seconds ago
 	if (boolEarly)
@@ -419,7 +419,7 @@ LAB_800a0594:
 	}
 
 	// interpolate fly-in
-	UI_Lerp2D_HUD(&pos, 200, 0x79, endX, 0x79, startFrame, 0x14);
+	UI_Lerp2D_HUD(&pos[0], 200, 0x79, endX, 0x79, startFrame, 0x14);
 
 	sdata->ptrTimebox1->matrix.t[0] = UI_ConvertX_2(pos[0], 0x100);
 	sdata->ptrTimebox1->matrix.t[1] = UI_ConvertY_2(pos[1], 0x100);
@@ -440,17 +440,15 @@ LAB_800a0594:
 		 // the amount of time crates in this level
 		 gGT->timeCratesInLEV)
 	{
-		// -%d
-		// print negative sign in front of integer
-
-		sprintf(auStack56, str_negInt);
+		// -10
+		sprintf(auStack56, &str_negInt);
 
 		if (framesElapsed < 249)
 		{
 			if (79 < framesElapsed)
 			{
 				// interpolate fly-in
-				UI_Lerp2D_HUD(&pos, -0x96, 0x8a, 0x100, 0x8a, framesElapsed - 80, 0x14);
+				UI_Lerp2D_HUD(&pos[0], -0x96, 0x8a, 0x100, 0x8a, framesElapsed - 80, 0x14);
 
 				if (framesElapsed == 0x50)
 				{
@@ -465,7 +463,7 @@ LAB_800a0594:
 		else
 		{
 			// interpolate fly-in
-			UI_Lerp2D_HUD(&pos, 0x100, 0x8a, 0x296, 0x8a, framesElapsed - 250, 0x14);
+			UI_Lerp2D_HUD(&pos[0], 0x100, 0x8a, 0x296, 0x8a, framesElapsed - 250, 0x14);
 
 		LAB_800a07f8:
 			// "PERFECT"
@@ -491,6 +489,8 @@ LAB_800a0594:
 					d->timeElapsedInRace -= 960;
 					OtherFX_Play(99, 1);
 				}
+				
+				// "-%d"
 				sprintf(auStack56, &str_posInt, startFrame);
 			}
 
@@ -507,7 +507,7 @@ LAB_800a0594:
 		}
 
 		// interpolate fly-in
-		UI_Lerp2D_HUD(&pos, startX, uVar11, 0x199, endY, framesElapsed - 140, 0x14);
+		UI_Lerp2D_HUD(&pos[0], startX, uVar11, 0x199, endY, framesElapsed - 140, 0x14);
 
 		// Draw String
 		DecalFont_DrawLine(auStack56, pos[0], pos[1], 1, txtColor);
@@ -526,7 +526,7 @@ LAB_800a096c:
 
 	LAB_800a0a64:
 		// interpolate fly-in
-		UI_Lerp2D_HUD(&pos, startX, 0x50, sVar6, 0x50, startFrame, 0x14);
+		UI_Lerp2D_HUD(&pos[0], startX, 0x50, sVar6, 0x50, startFrame, 0x14);
 		// "RELIC AWARDED!"
 		DecalFont_DrawLine(sdata->lngStrings[0x160], pos[0], pos[1], 1, txtColor);
 	}
@@ -579,7 +579,7 @@ LAB_800a096c:
 		}
 
 		// Interpolate fly-in
-		UI_Lerp2D_HUD(&pos, startX, 0x50, sVar6, 0x50, startFrame, 0x14);
+		UI_Lerp2D_HUD(&pos[0], startX, 0x50, sVar6, 0x50, startFrame, 0x14);
 
 		// "NEW HIGH SCORE!"
 		DecalFont_DrawLine(sdata->lngStrings[0x161], pos[0], pos[1], 1, txtColor);
@@ -593,14 +593,14 @@ LAB_800a0b58:
 	if (490 < framesElapsed)
 	{
 		// Interpolate, vertical fly-out??
-		UI_Lerp2D_HUD(&pos, -0xa, 0xc, -0xa, -0x58, framesElapsed - 490, 0x14);
+		UI_Lerp2D_HUD(&pos[0], -0xa, 0xc, -0xa, -0x58, framesElapsed - 490, 0x14);
 	}
 
 	// This is actually a RECT on the stack
 	box.x = 0xfff6;
 	box.y = pos[1];
 	box.w = 0x214;
-	bow.h = 0x3b;
+	box.h = 0x3b;
 
 	// Draw 2D Menu rectangle background
 	MENUBOX_DrawInnerRect(&box, 0, gGT->backBuffer->otMem.startPlusFour);
@@ -612,7 +612,7 @@ LAB_800a0b58:
 		 (509 < sdata->framesSinceRaceEnded)) &&
 		((gGT->unknownFlags_1d44 & 0x8000000) == 0))
 	{
-		RR_EndEvent_DrawHighScore(0x100, 10, 1);
+		DECOMP_RR_EndEvent_DrawHighScore(0x100, 10, 1);
 
 		// PRESS * TO CONTINUE
 		DecalFont_DrawLine(sdata->lngStrings[0xc9], 0x100, 0xbe, 1, 0xffff8000);

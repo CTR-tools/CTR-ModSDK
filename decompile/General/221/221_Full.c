@@ -196,6 +196,8 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	
 	// go back to adv hub
 	MainRaceTrack_RequestLoad(gGT->prevLEV);
+	
+	return;
 }
 
 void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox*);

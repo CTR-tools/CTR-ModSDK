@@ -663,9 +663,7 @@ LAB_800a0594:
       *(int *)(PTR_DAT_8008d2ac + 0x1e2c)) 
   {
 	// 0x8009f714
-	// -%d
-	// print negative sign in front of integer
-	  
+	// -10
     sprintf(auStack56,&DAT_8009f714);
 	
 	// if race ended less than 249 frames ago
@@ -732,7 +730,7 @@ LAB_800a07f8:
         }
 		
 		// 0x8009f718
-		// %d
+		// -%d
         sprintf(auStack56,&DAT_8009f718,(int)sVar3);
       }
       uVar7 = 0x296;
