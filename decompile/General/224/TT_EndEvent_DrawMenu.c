@@ -3,7 +3,7 @@
 /*
 Ghidra name: FUN_8009fdc8
 Status: In-Progress (OVER BUDGET)
-Byte budget: 1204/1040
+Byte budget: 1180/1040
 Called in:
   - 224.c
   - MAIN.c
@@ -81,21 +81,28 @@ AddStuff:
 	// between 91 and 900 frames (3-30)
 	if (framesSinceRaceEnded < 901)
 	{
+	
+		// first transition is race clock
+		framesSinceRaceEnded -= 90;
+		
 		// race time
-		UI_Lerp2D_Linear(&pos[0], -0x64, 90, 0x100, 90, framesSinceRaceEnded - 90, 0x14);
+		UI_Lerp2D_Linear(&pos[0], -0x64, 90, 0x100, 90, framesSinceRaceEnded, 0x14);
 		TT_EndEvent_DisplayTime((int)pos[0], pos[1], sdata->flags_timeTrialEndOfRace);
 		
 		// Blink Orange/White
 		startX_also_strFlags = (gGT->timer & 1) ? 0xffff8000 : 0xffff8004;
 	
-		// If the race ended more than 120 frames ago (4 seconds)
-		// Start moving "new high score" onto the screen, if necessary
-		if ((framesSinceRaceEnded > 120) &&
+	
+		
+		// "new high score" 1 second later
+		framesSinceRaceEnded -= 30;
+	
+		if ((framesSinceRaceEnded > 0) &&
 	
 			// if there is a new high score
 			gGT->newHighScoreIndex > -1)
 		{
-			UI_Lerp2D_Linear(&pos[0], 0x264, 122, 0x100, 122, framesSinceRaceEnded - 120, 0x14);
+			UI_Lerp2D_Linear(&pos[0], 0x264, 122, 0x100, 122, framesSinceRaceEnded, 0x14);
 			
 			// "NEW HIGH SCORE!"
 			DecalFont_DrawLine(lngStrings[353], (int)pos[0], (int)pos[1], 1, startX_also_strFlags);
@@ -103,14 +110,18 @@ AddStuff:
 			// Total time should flash
 			sdata->flags_timeTrialEndOfRace |= (1<<2);
 		}
+		
+		
+		
+		// "new best lap" 1 second later
+		framesSinceRaceEnded -= 30;
 	
-		// If race ended more than 150 frames ago (5 seconds)
-		if ((framesSinceRaceEnded > 150) &&
+		if ((framesSinceRaceEnded > 0) &&
 		
 			// if got new best lap
 			((unknownFlags_1d44 & 0x4000000) != 0))
 		{
-			UI_Lerp2D_Linear(&pos[0], -0x64, 142, 0x100, 142, framesSinceRaceEnded - 150, 0x14);
+			UI_Lerp2D_Linear(&pos[0], -0x64, 142, 0x100, 142, framesSinceRaceEnded, 0x14);
 			
 			// NEW BEST LAP!
 			DecalFont_DrawLine(lngStrings[370], (int)pos[0], (int)pos[1], 1, startX_also_strFlags);
@@ -118,14 +129,18 @@ AddStuff:
 			// make the best row start flashing
 			sdata->flags_timeTrialEndOfRace |= (gGT->lapIndexNewBest + 1) << 3;
 		}
-	
-		// If race ended more than 180 frames ago (6 seconds)
-		if ((framesSinceRaceEnded > 180) &&
+
+
+
+		// "n tropy" 1 second later
+		framesSinceRaceEnded -= 30;
+
+		if ((framesSinceRaceEnded > 0) &&
 			
 			// if just open, or beat, n tropy
 			((unknownFlags_1d44 & 0x10008000) != 0))
 		{
-			UI_Lerp2D_Linear(&pos[0], 0x264, 162, 0x100, 162, framesSinceRaceEnded - 180, 0x14);
+			UI_Lerp2D_Linear(&pos[0], 0x264, 162, 0x100, 162, framesSinceRaceEnded, 0x14);
 		
 			char *nTropyString;
 		
@@ -140,6 +155,9 @@ AddStuff:
 			// Draw the "N Tropy" related string
 			DecalFont_DrawLine(nTropyString, (int)pos[0], (int)pos[1], 1, startX_also_strFlags);
 		}
+	
+	
+	
 	
 		// PRESS * TO CONTINUE
 		DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
