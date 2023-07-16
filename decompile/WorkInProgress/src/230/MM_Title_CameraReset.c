@@ -6,8 +6,7 @@ void DECOMP_MM_Title_CameraReset(void)
 
   if (title!= NULL) 
   {
-	// CameraPosOffset X
-    title->cameraPosOffset[0] = 0x7D0;
+    title->cameraPosOffset[0] = 2000;
   }
   return;
 }
