@@ -165,12 +165,18 @@ AddStuff:
         {
 			if ((unknownFlags_1d44 & 0x8000000) == 0)
 			{
+	
+				// ====== Draw High Score ===========
+				
+				// 900-1002
 				if (framesSinceRaceEnded < 1002)
 				{
 					startX_also_strFlags = -0x96;
 					endX = 0x80;
 					framesSinceRaceEnded -= 0x385;
 				}
+				
+				// 1002-1017
 				else
 				{
 					startX_also_strFlags = 0x80;
@@ -179,35 +185,44 @@ AddStuff:
 				}
 	
 				UI_Lerp2D_Linear(&pos[0], startX_also_strFlags, 10, endX, 10, framesSinceRaceEnded, 0x14);
-	
 				TT_EndEvent_DrawHighScore(pos[0], (int)pos[1], 0);
 	
+	
+				// ====== Draw Your Time ===========
+	
+	
+				// 900-1002
 				if (sdata->framesSinceRaceEnded < 1002)
 				{
 					startX_also_strFlags = 0x296;
 					endX = 0x180;
-					framesSinceRaceEnded = sdata->framesSinceRaceEnded - 0x385;
 				}
+				
+				// 1002-1017
 				else
 				{
 					startX_also_strFlags = 0x180;
 					endX = 0x296;
-					framesSinceRaceEnded = sdata->framesSinceRaceEnded - 0x3e9;
 				}
 	
 				UI_Lerp2D_Linear(&pos[0], startX_also_strFlags, 0x82, endX, 0x82, framesSinceRaceEnded, 0x14);
-	
 				TT_EndEvent_DisplayTime((int)pos[0], pos[1], sdata->flags_timeTrialEndOfRace);
+	
 	
 				// PRESS * TO CONTINUE
 				DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
+	
+	
+				// ==== Pause Timer until Press X =======
+	
 	
 				// Cross or Circle, or if timer drags on too long
 				if (((sdata->AnyPlayerTap & 0x50) != 0) && (sdata->framesSinceRaceEnded < 1002))
 				{
 					sdata->framesSinceRaceEnded = 1001;
 					
-					// unpause frame counter
+					// unpause frame counter,
+					// which then counts up to 1018 for transition-out
 					sdata->menuReadyToPass |= 0x10;
 				}
 			}
