@@ -3,7 +3,7 @@
 /*
 Ghidra name: FUN_8009fdc8
 Status: In-Progress (OVER BUDGET)
-Byte budget: 1180/1040
+Byte budget: 1176/1040
 Called in:
   - 224.c
   - MAIN.c
@@ -208,8 +208,9 @@ AddStuff:
 			// ====== Draw Your Time ===========
 	
 	
-			// 900-1002
-			if (sdata->framesSinceRaceEnded < 1002)
+			// 900-1002,
+			// sneaky IF to save instructions
+			if (endX == 0x80)
 			{
 				startX_also_strFlags = 0x296;
 				endX = 0x180;
