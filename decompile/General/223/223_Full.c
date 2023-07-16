@@ -7,18 +7,6 @@
 // 8009f700
 int str_number = 0x20; // " \0"
 
-// 8009f704
-int str_x = 'x';
-
-// 8009f708
-char str_format[0xC] = "%2.02d/%ld\0";
-
-// 8009f714
-int str_negInt = "-10\0";
-
-// 8009f718
-int str_posInt = "-%d\0";
-
 // 8009f71c
 void DECOMP_RR_EndEvent_UnlockAward()
 {
@@ -150,7 +138,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 		str_number = (char)i + '1';
 
 		// Draw String for Rank ('1', '2', '3', '4', '5')
-		DecalFont_DrawLine(str_number, startX - 0x32, timebox_Y - 1, 2, 4);
+		DecalFont_DrawLine(&str_number, startX - 0x32, timebox_Y - 1, 2, 4);
 
 		u_int *iconColor = 0x800a0cb4;
 
@@ -210,8 +198,10 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 	{
 		// "YOUR TIME"
 		DecalFont_DrawLine(sdata->lngStrings[0xC5], startX, startY + 0x95, 1, 0xffff8000);
+		
 		// make a string for your current track time
 		timeString = MENUBOX_DrawTime(gGT->drivers[0]->timeElapsedInRace);
+		
 		// color
 		timeColor = 0xffff8000;
 	}
@@ -257,11 +247,10 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 	gGT = sdata->gGT;
 	d = gGT->drivers[0];
 	relic = sdata->ptrRelic;
-
-	// swap color of text depending on if timer
-	// has an even or odd number, sVar10 is used
-	// to draw "PERFECT" string
-
+	adv = &sdata->advProgress;
+	
+	d->numTimeCrates = gGT->timeCratesInLEV;
+	
 	// change color
 	txtColor = (gGT->timer & 1) ? 0xffff8000 : 0xffff8004;
 
@@ -419,19 +408,19 @@ LAB_800a0594:
 	sdata->ptrTimebox1->matrix.t[1] = UI_ConvertY_2(pos[1], 0x100);
 
 	// Draw 'x' before number of crates
-	DecalFont_DrawLine(&str_x, pos[0] + 0x14, pos[1] - 10, 2, 0);
+	DecalFont_DrawLine("x", pos[0] + 0x14, pos[1] - 10, 2, 0);
 
 	// %2.02d/%ld: Amount of crates you collected / Total number of crates
-	sprintf(auStack72, &str_format[0], d->numTimeCrates, gGT->timeCratesInLEV);
+	sprintf(auStack72, "%2.02d/%ld", d->numTimeCrates, gGT->timeCratesInLEV);
 
 	// Draw amount of crates collected
 	DecalFont_DrawLine(auStack72, pos[0] + 0x21, pos[1] - 0xe, 1, 0);
 
 	// if collected all time boxes in level
-	if (d->numTimeCrates == gGT->timeCratesInLEV)
+	if(d->numTimeCrates == gGT->timeCratesInLEV)
 	{
 		// -10
-		sprintf(auStack56, &str_negInt);
+		sprintf(auStack56, "-10");
 
 		if (framesElapsed < 249)
 		{
@@ -467,12 +456,14 @@ LAB_800a0594:
 			if (109 < (u_int)(framesElapsed - 140))
 				goto LAB_800a096c;
 
-			if (framesElapsed > 159)
+			if (framesElapsed >= 160)
 			{
-				startFrame = (160 - framesElapsed) / 5;
-				if (startFrame < 0)
-					startFrame = 0;
-				else if (startFrame != 10 && (160 - framesElapsed) % 5 == 0)
+				startFrame = (framesElapsed - 160) / 5;
+				
+				if (startFrame > 10)
+					startFrame = 10;
+				
+				else if (startFrame != 0 && ((framesElapsed - 160) % 5 == 0))
 				{
 					// reduce the number of frames it took for the player to finish the race
 					// by 0x3c0, which is 960, which is 30fps * 32ms, or one full second
@@ -481,7 +472,7 @@ LAB_800a0594:
 				}
 				
 				// "-%d"
-				sprintf(auStack56, &str_posInt, startFrame);
+				sprintf(auStack56, "-%d", 10-startFrame);
 			}
 
 			startX = 0x296;
