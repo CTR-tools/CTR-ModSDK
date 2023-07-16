@@ -255,7 +255,8 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 	relic = sdata->ptrRelic;
 	adv = &sdata->advProgress;
 	
-	d->numTimeCrates = gGT->timeCratesInLEV;
+	// testing
+	//d->numTimeCrates = gGT->timeCratesInLEV;
 	
 	// change color
 	txtColor = (gGT->timer & 1) ? 0xffff8000 : 0xffff8004;
