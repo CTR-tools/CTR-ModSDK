@@ -496,6 +496,9 @@ void RenderAllHUD(struct GameTracker* gGT)
 				// drawing end of race
 				else
 				{
+					// this works cause they all share the same address
+					void OVR_Region1();
+					
 					if((gGT->gameMode2 & CUP_ANY_KIND) != 0)
 					{
 						// disable drawing hud,
@@ -506,19 +509,19 @@ void RenderAllHUD(struct GameTracker* gGT)
 					
 					if((gameMode1 & RELIC_RACE) != 0)
 					{
-						DECOMP_RR_EndEvent_DrawMenu();
+						OVR_Region1();
 						return;
 					}
 					
 					if((gameMode1 & TIME_TRIAL) != 0)
 					{
-						TT_EndEvent_DrawMenu();
+						OVR_Region1();
 						return;
 					}
 					
 					if((gameMode1 & CRYSTAL_CHALLENGE) != 0)
 					{
-						DECOMP_CC_EndEvent_DrawMenu();
+						OVR_Region1();
 						return;
 					}
 					

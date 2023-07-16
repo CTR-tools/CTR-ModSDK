@@ -1,4 +1,4 @@
-// 316+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+2 = 387 rewritten so far
+// 316+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+2+2 = 387 rewritten so far
 
 // 316 for every 'common' and ','
 // additions for every file that has multiple functions,
@@ -7,20 +7,17 @@
 // 10 for the eleven UI functions
 // +1 for DebugFont
 // +2 for 223
+// +2 for 224
 
 // functions bigger than their originals
 common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
 common, exe, MATH_Sin, 0x0, General/MATH/MATH_Sin_hook.s
 common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels_Store_hook.s
 
-// 221
-common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
-common, 223, RR_EndEvent_UnlockAward, 0x0, General/223/223_Full.c
-
-// 224 (incomplete)
-common, 224, TT_EndEvent_DisplayTime, 0x0, General/224/TT_EndEvent_DisplayTime.c
-common, 224, TT_EndEvent_DrawHighScore, 0x0, General/224/TT_EndEvent_DrawHighScore.c
-common, 224, TT_EndEvent_DrawMenu, 0x0, General/224/TT_EndEvent_DrawMenu.c
+// OVR1 (need 222, 225)
+common, 221, OVR_Region1, 0x0, General/221/221_Full.c
+common, 223, OVR_Region1, 0x0, General/223/223_Full.c
+common, 224, OVR_Region1, 0x0, General/224/224_Full.c
 
 // 230 (incomplete)
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
