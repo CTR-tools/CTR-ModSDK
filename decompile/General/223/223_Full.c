@@ -119,7 +119,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 	scoreEntry = &sdata->gameProgress.highScoreTracks[gGT->levelID].scoreEntry[6*mode];
 
 	// interpolate fly-in
-	UI_Lerp2D_HUD(&pos[0], startX, startY, startX, startY, sdata->framesSinceRaceEnded, 0x14);
+	UI_Lerp2D_Linear(&pos[0], startX, startY, startX, startY, sdata->framesSinceRaceEnded, 0x14);
 
 	// "BEST TIMES"
 	DecalFont_DrawLine(sdata->lngStrings[0x171], pos[0], pos[1], 1, 0xffff8000);
@@ -334,7 +334,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 	}
 
 	// interpolate fly-in
-	UI_Lerp2D_HUD(&pos[0], startX, 0x32, 0x100, endY, startFrame, 0x14);
+	UI_Lerp2D_Linear(&pos[0], startX, 0x32, 0x100, endY, startFrame, 0x14);
 
 	UI_DrawRaceClock(pos[0], pos[1] - 8, 1, d);
 	if ((gGT->unknownFlags_1d44 & 0x2000000) != 0)
@@ -373,7 +373,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 		}
 		startY = UI_ConvertY_2(0xa2, 0x100);
 
-		UI_Lerp2D_HUD(&pos[0], startX, startY, endX, startY, startFrame, 0x14);
+		UI_Lerp2D_Linear(&pos[0], startX, startY, endX, startY, startFrame, 0x14);
 	}
 
 LAB_800a0594:
@@ -395,7 +395,7 @@ LAB_800a0594:
 	}
 
 	// interpolate fly-in
-	UI_Lerp2D_HUD(&pos[0], startX, 0x20, 0x100, endY, startFrame, 0x14);
+	UI_Lerp2D_Linear(&pos[0], startX, 0x20, 0x100, endY, startFrame, 0x14);
 
 	// if race ended less than 16.333 seconds ago
 	if (boolEarly)
@@ -413,7 +413,7 @@ LAB_800a0594:
 	}
 
 	// interpolate fly-in
-	UI_Lerp2D_HUD(&pos[0], 200, 0x79, endX, 0x79, startFrame, 0x14);
+	UI_Lerp2D_Linear(&pos[0], 200, 0x79, endX, 0x79, startFrame, 0x14);
 
 	sdata->ptrTimebox1->matrix.t[0] = UI_ConvertX_2(pos[0], 0x100);
 	sdata->ptrTimebox1->matrix.t[1] = UI_ConvertY_2(pos[1], 0x100);
@@ -438,7 +438,7 @@ LAB_800a0594:
 			if (79 < framesElapsed)
 			{
 				// interpolate fly-in
-				UI_Lerp2D_HUD(&pos[0], -0x96, 0x8a, 0x100, 0x8a, framesElapsed - 80, 0x14);
+				UI_Lerp2D_Linear(&pos[0], -0x96, 0x8a, 0x100, 0x8a, framesElapsed - 80, 0x14);
 
 				if (framesElapsed == 0x50)
 				{
@@ -453,7 +453,7 @@ LAB_800a0594:
 		else
 		{
 			// interpolate fly-in
-			UI_Lerp2D_HUD(&pos[0], 0x100, 0x8a, 0x296, 0x8a, framesElapsed - 250, 0x14);
+			UI_Lerp2D_Linear(&pos[0], 0x100, 0x8a, 0x296, 0x8a, framesElapsed - 250, 0x14);
 
 		LAB_800a07f8:
 			// "PERFECT"
@@ -497,7 +497,7 @@ LAB_800a0594:
 		}
 
 		// interpolate fly-in
-		UI_Lerp2D_HUD(&pos[0], startX, uVar11, 0x199, endY, framesElapsed - 140, 0x14);
+		UI_Lerp2D_Linear(&pos[0], startX, uVar11, 0x199, endY, framesElapsed - 140, 0x14);
 
 		// Draw String
 		DecalFont_DrawLine(auStack56, pos[0], pos[1], 1, txtColor);
@@ -516,7 +516,7 @@ LAB_800a096c:
 
 	LAB_800a0a64:
 		// interpolate fly-in
-		UI_Lerp2D_HUD(&pos[0], startX, 0x50, sVar6, 0x50, startFrame, 0x14);
+		UI_Lerp2D_Linear(&pos[0], startX, 0x50, sVar6, 0x50, startFrame, 0x14);
 		// "RELIC AWARDED!"
 		DecalFont_DrawLine(sdata->lngStrings[0x160], pos[0], pos[1], 1, txtColor);
 	}
@@ -569,7 +569,7 @@ LAB_800a096c:
 		}
 
 		// Interpolate fly-in
-		UI_Lerp2D_HUD(&pos[0], startX, 0x50, sVar6, 0x50, startFrame, 0x14);
+		UI_Lerp2D_Linear(&pos[0], startX, 0x50, sVar6, 0x50, startFrame, 0x14);
 
 		// "NEW HIGH SCORE!"
 		DecalFont_DrawLine(sdata->lngStrings[0x161], pos[0], pos[1], 1, txtColor);
@@ -583,7 +583,7 @@ LAB_800a0b58:
 	if (490 < framesElapsed)
 	{
 		// Interpolate, vertical fly-out??
-		UI_Lerp2D_HUD(&pos[0], -0xa, 0xc, -0xa, -0x58, framesElapsed - 490, 0x14);
+		UI_Lerp2D_Linear(&pos[0], -0xa, 0xc, -0xa, -0x58, framesElapsed - 490, 0x14);
 	}
 
 	// This is actually a RECT on the stack
