@@ -101,9 +101,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 	timebox_X = startX - 0x1f;
 	currRowY = 0;
 
-	// 8008e6f4 is where all high scores are saved
-	// 0x49*4 = 0x124, size of each HighScoreTrack
-	// 0x24*4 = sizeof(highScoreEntry)*6, which changes from Time Trial to Relic
+	// 12 entries per track, 6 for Time Trial and 6 for Relic Race
 	scoreEntry = &sdata->gameProgress.highScoreTracks[gGT->levelID].scoreEntry[6*mode];
 
 	// interpolate fly-in
@@ -140,7 +138,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 		// Draw String for Rank ('1', '2', '3', '4', '5')
 		DecalFont_DrawLine(&str_number, startX - 0x32, timebox_Y - 1, 2, 4);
 
-		u_int *iconColor = 0x800a0cb4;
+		u_int iconColor = 0x808080;
 
 		// Draw Character Icon 
 		MENUBOX_DrawPolyGT4(gGT->ptrIcons[data.MetaDataCharacters[scoreEntry[i+1].characterID].iconID],
@@ -151,7 +149,12 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 
 							// pointer to OT mem
 							gGT->tileView_UI.ptrOT,
-							*iconColor, *iconColor, *iconColor, *iconColor, 1, 0x1000);
+							
+							// color of each corner
+							iconColor, iconColor, 
+							iconColor, iconColor, 
+							
+							1, 0x1000);
 
 		// Draw Name
 		DecalFont_DrawLine(scoreEntry[i+1].name, timebox_X, timebox_Y, 3, nameColor);
@@ -180,10 +183,12 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 	// If this is Time Trial Mode
 	if (mode == 0)
 	{
-		// "BEST LAP"
-		DecalFont_DrawLine(sdata->lngStrings[0x170], startX, startY + 0x95, 1, 0xffff8000);
 		// Change the way text flickers
 		timeColor = 0xffff8000;
+		
+		// "BEST LAP"
+		DecalFont_DrawLine(sdata->lngStrings[0x170], startX, startY + 0x95, 1, timeColor);
+		
 		// If you got a new best lap
 		if (((gGT->unknownFlags_1d44 & 0x4000000) != 0) &&
 			((gGT->timer & 2) != 0))
@@ -193,6 +198,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY, short mode)
 		// make a string for best lap
 		timeString = MENUBOX_DrawTime(scoreEntry[0].time);
 	}
+	
 	// If this is Relic Mode
 	else
 	{
