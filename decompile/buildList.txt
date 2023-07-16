@@ -1,11 +1,12 @@
-// 312+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 381 rewritten so far
+// 316+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+2 = 387 rewritten so far
 
-// 312 for every 'common' and ','
+// 316 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
 // 10 for the eleven UI functions
 // +1 for DebugFont
+// +2 for 223
 
 // functions bigger than their originals
 common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
