@@ -20,6 +20,7 @@ common, 223, RR_EndEvent_UnlockAward, 0x0, General/223/223_Full.c
 // 224 (incomplete)
 common, 224, TT_EndEvent_DisplayTime, 0x0, General/224/TT_EndEvent_DisplayTime.c
 common, 224, TT_EndEvent_DrawHighScore, 0x0, General/224/TT_EndEvent_DrawHighScore.c
+common, 224, TT_EndEvent_DrawMenu, 0x0, General/224/TT_EndEvent_DrawMenu.c
 
 // 230 (incomplete)
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
