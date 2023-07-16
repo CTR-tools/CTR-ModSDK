@@ -3,7 +3,7 @@
 /*
 Ghidra name: FUN_8009fdc8
 Status: In-Progress (OVER BUDGET)
-Byte budget: 1176/1040
+Byte budget: 1144/1040
 Called in:
   - 224.c
   - MAIN.c
@@ -77,6 +77,13 @@ AddStuff:
 		
 		return;
     }
+
+	// 91-1017 frames (do NOT put return at the end)
+	if (framesSinceRaceEnded < 1017)
+	{
+		// PRESS * TO CONTINUE
+		DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
+	}
 
 	// between 91 and 900 frames (3-30)
 	if (framesSinceRaceEnded < 901)
@@ -157,11 +164,6 @@ AddStuff:
 		}
 	
 	
-	
-	
-		// PRESS * TO CONTINUE
-		DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
-	
 		// If you press Cross or Circle
 		if ((sdata->AnyPlayerTap & 0x50) != 0)
 		{
@@ -227,13 +229,8 @@ AddStuff:
 			TT_EndEvent_DisplayTime((int)pos[0], pos[1], sdata->flags_timeTrialEndOfRace);
 	
 	
-			// PRESS * TO CONTINUE
-			DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
-	
-	
+
 			// ==== Pause Timer until Press X =======
-	
-	
 			// Cross or Circle, or if timer drags on too long
 			if (((sdata->AnyPlayerTap & 0x50) != 0) && (sdata->framesSinceRaceEnded < 1002))
 			{
