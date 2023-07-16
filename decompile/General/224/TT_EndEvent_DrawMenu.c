@@ -3,7 +3,7 @@
 /*
 Ghidra name: FUN_8009fdc8
 Status: In-Progress (OVER BUDGET)
-Byte budget: 1208/1040
+Byte budget: 1196/1040
 Called in:
   - 224.c
   - MAIN.c
@@ -49,7 +49,8 @@ AddStuff:
 		// and then the later "if > 900" wont happen
         if ((unknownFlags_1d44 & 0x8000000) == 0)
         {
-			// between 1001 and 1018, frame counter is paused until &0x10
+			// between 1001 and 1018, frame counter is paused until &0x10,
+			// that's 15 frames between lerp high score off-screen, and showing MenuBox
             if ((sdata->framesSinceRaceEnded < 1018) && ((sdata->menuReadyToPass & 0x10) != 0)) goto AddStuff;
             if (sdata->framesSinceRaceEnded < 1001) goto AddStuff;
         }
@@ -58,63 +59,7 @@ AddStuff:
     // copy the frame counter variable
     framesSinceRaceEnded = sdata->framesSinceRaceEnded;
 
-	// if need to show high scores
-    if (sdata->framesSinceRaceEnded > 900) // 30 seconds
-    {
-        // start drawing the high score menu that shows the top 5 best times
-        gGT->unknownFlags_1d44 |= 2;
-
-        if ((framesSinceRaceEnded < 1017) && ((unknownFlags_1d44 & 0x8000000) == 0))
-        {
-            if (framesSinceRaceEnded < 1002)
-            {
-                startX_also_strFlags = -0x96;
-                endX = 0x80;
-                framesSinceRaceEnded -= 0x385;
-            }
-            else
-            {
-                startX_also_strFlags = 0x80;
-                endX = -0x96;
-                framesSinceRaceEnded -= 0x3e9;
-            }
-
-            UI_Lerp2D_Linear(&pos[0], startX_also_strFlags, 10, endX, 10, framesSinceRaceEnded, 0x14);
-
-            TT_EndEvent_DrawHighScore(pos[0], (int)pos[1], 0);
-
-            if (sdata->framesSinceRaceEnded < 1002)
-            {
-                startX_also_strFlags = 0x296;
-                endX = 0x180;
-                framesSinceRaceEnded = sdata->framesSinceRaceEnded - 0x385;
-            }
-            else
-            {
-                startX_also_strFlags = 0x180;
-                endX = 0x296;
-                framesSinceRaceEnded = sdata->framesSinceRaceEnded - 0x3e9;
-            }
-
-            UI_Lerp2D_Linear(&pos[0], startX_also_strFlags, 0x82, endX, 0x82, framesSinceRaceEnded, 0x14);
-
-            TT_EndEvent_DisplayTime((int)pos[0], pos[1], sdata->flags_timeTrialEndOfRace);
-
-            // PRESS * TO CONTINUE
-            DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
-
-            // Cross or Circle, or if timer drags on too long
-            if (((sdata->AnyPlayerTap & 0x50) != 0) && (sdata->framesSinceRaceEnded < 1002))
-            {
-                sdata->framesSinceRaceEnded = 1001;
-				
-				// unpause frame counter
-                sdata->menuReadyToPass |= 0x10;
-            }
-        }
-    }
-
-    else if (sdata->framesSinceRaceEnded < 91)
+	if (sdata->framesSinceRaceEnded < 91)
     {
 		// no lerp, just sit on-screen
         startX_also_strFlags = 0x14;
@@ -131,7 +76,7 @@ AddStuff:
     }
 
 	// between 91 and 900 frames (3-30)
-	else
+	else if (sdata->framesSinceRaceEnded < 901)
 	{
 		// Blink Orange/White
 		startX_also_strFlags = (gGT->timer & 1) ? 0xffff8000 : 0xffff8004;
@@ -210,30 +155,93 @@ AddStuff:
 		}
 	}
 
-	if ((sdata->menuReadyToPass & 1) == 1) return;
-	if (sdata->framesSinceRaceEnded <= 1016) return;
+	// 901 or more (30 secs)
+    else
+    {
+        // start drawing the high score menu that shows the top 5 best times
+        gGT->unknownFlags_1d44 |= 2;
 
-	// Stop drawing high scores, and record that menuBox is shown
-	sdata->menuReadyToPass = sdata->menuReadyToPass & 0xffffffef | 1;
+        if (framesSinceRaceEnded < 1017)
+        {
+			if ((unknownFlags_1d44 & 0x8000000) == 0)
+			{
+				if (framesSinceRaceEnded < 1002)
+				{
+					startX_also_strFlags = -0x96;
+					endX = 0x80;
+					framesSinceRaceEnded -= 0x385;
+				}
+				else
+				{
+					startX_also_strFlags = 0x80;
+					endX = -0x96;
+					framesSinceRaceEnded -= 0x3e9;
+				}
 	
-	sdata->flags_timeTrialEndOfRace = 0;
+				UI_Lerp2D_Linear(&pos[0], startX_also_strFlags, 10, endX, 10, framesSinceRaceEnded, 0x14);
 	
-	// If ghost is not too big to save
-	if (!sdata->boolGhostTooBigToSave)
+				TT_EndEvent_DrawHighScore(pos[0], (int)pos[1], 0);
+	
+				if (sdata->framesSinceRaceEnded < 1002)
+				{
+					startX_also_strFlags = 0x296;
+					endX = 0x180;
+					framesSinceRaceEnded = sdata->framesSinceRaceEnded - 0x385;
+				}
+				else
+				{
+					startX_also_strFlags = 0x180;
+					endX = 0x296;
+					framesSinceRaceEnded = sdata->framesSinceRaceEnded - 0x3e9;
+				}
+	
+				UI_Lerp2D_Linear(&pos[0], startX_also_strFlags, 0x82, endX, 0x82, framesSinceRaceEnded, 0x14);
+	
+				TT_EndEvent_DisplayTime((int)pos[0], pos[1], sdata->flags_timeTrialEndOfRace);
+	
+				// PRESS * TO CONTINUE
+				DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
+	
+				// Cross or Circle, or if timer drags on too long
+				if (((sdata->AnyPlayerTap & 0x50) != 0) && (sdata->framesSinceRaceEnded < 1002))
+				{
+					sdata->framesSinceRaceEnded = 1001;
+					
+					// unpause frame counter
+					sdata->menuReadyToPass |= 0x10;
+				}
+			}
+    
+			// let 0.5s pass before showing MenuBox
+			return;
+		}
+    }
+	
+	// if not showing menu yet
+	if ((sdata->menuReadyToPass & 1) == 0)
 	{
-		// Show end of race menu with "Save Ghost" option
-		ptrMenuBox = (struct MenuBox *)0x800a0458;
+		// start showing menubox
+		sdata->menuReadyToPass = sdata->menuReadyToPass & 0xffffffef | 1;
+		
+		sdata->flags_timeTrialEndOfRace = 0;
+		
+		// If ghost is not too big to save
+		if (!sdata->boolGhostTooBigToSave)
+		{
+			// Show end of race menu with "Save Ghost" option
+			ptrMenuBox = (struct MenuBox *)0x800a0458;
+		}
+		
+		// If ghost is too big to save
+		else
+		{
+			// Show end of race menu without "Save Ghost" option
+			ptrMenuBox = (struct MenuBox *)0x800a04a4;
+		}
+		
+		// Draw end of race menu, see 221 and 222 for more info
+		MENUBOX_Show(ptrMenuBox);
 	}
-	
-	// If ghost is too big to save
-	else
-	{
-		// Show end of race menu without "Save Ghost" option
-		ptrMenuBox = (struct MenuBox *)0x800a04a4;
-	}
-	
-	// Draw end of race menu, see 221 and 222 for more info
-	MENUBOX_Show(ptrMenuBox);
 
     return;
 }
