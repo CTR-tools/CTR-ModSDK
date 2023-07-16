@@ -532,7 +532,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 					}
 					
 					// only remaining option
-					VB_EndEvent_DrawMenu();
+					DECOMP_VB_EndEvent_DrawMenu();
 					return;
 				}
 			}
