@@ -6095,6 +6095,7 @@ void FUN_80039fa8(int param_1)
 		// set lap ID (0,1,2) to flash, because it is new best lap
 		*(int *)(puVar3 + 0x1d40) = iVar7 >> 0x10;
 
+		// start drawing OSK, and... ?
         *(uint *)(puVar3 + 0x1d44) = *(uint *)(puVar3 + 0x1d44) | 0x8c000000;
       }
 
