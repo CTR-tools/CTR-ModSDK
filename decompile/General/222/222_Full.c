@@ -99,10 +99,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					lerpFrames = 10;
 					currFrame = elapsedFrames - 300;
 				}
-
-				UI_Lerp2D_Linear(
-					&posXY[0], lerpStartX, lerpStartY,
-					lerpEndX, lerpEndY, currFrame, lerpFrames);
 			}
 
 			// if won for the first time
@@ -112,49 +108,30 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				hudC->scale[0] -= (hudC->scale[0] < 0x800) ? 0x800 : 0x401;
 				*(int *)&posXY[0] = *(int *)&data.hud_1P_P1[0x24];
 
-				if (elapsedFrames > 140)
+				if (elapsedFrames > 230)
 				{
-					UI_Lerp2D_Linear(&posXY[0],
-									 lerpStartX + 0x10,
-									 lerpStartY + 0x10,
-									 lerpStartX - 0x10,
-									 lerpStartY + 0x50,
-									 elapsedFrames - 140,
-									 8);
-
-					if (hudC->scale[0] == 0x800)
-						OtherFX_Play(0x67, 1);
-
-					if (posXY[0] != lerpStartX - 0x10)
-					{
-						hudInst = hudC;
-						for (i = 0; i < 3; i++)
-						{
-							hudInst->scale[0] += 0x400;
-							hudInst->scale[1] += 0x400;
-							hudInst->scale[2] += 0x400;
-							hudInst = (int)hudInst + 4;
-						}
-					}
+					currFrame = elapsedFrames - 230;
+					lerpStartX = lerpStartX + 0x10;
+					lerpStartY = lerpStartY + 0x50;
+					lerpEndX = -400;
+					lerpEndY = lerpStartY;
+					lerpFrames = 10;
 				}
-				
-				else
+
+				else if (elapsedFrames > 140)
 				{
-					if (elapsedFrames > 230)
-					{
-						lerpStartX = lerpStartX + 0x10;
-						lerpStartY = lerpStartY + 0x50;
-						lerpEndX = -400;
-						lerpEndY = lerpStartY;
-						lerpFrames = 10;
-						currFrame = elapsedFrames - 230;
-					}
-					
-					UI_Lerp2D_Linear(
-						&posXY[0], lerpStartX, lerpStartY,
-						lerpEndX, lerpEndY, currFrame, lerpFrames);
+					currFrame = elapsedFrames - 140;
+					lerpStartX = lerpStartX + 0x10;
+					lerpStartY = lerpStartY + 0x10;
+					lerpEndX = lerpStartX - 0x20;
+					lerpEndY = lerpStartY + 0x40;
+					lerpFrames = 8;
 				}
 			}
+			
+			UI_Lerp2D_Linear(
+				&posXY[0], lerpStartX, lerpStartY,
+				lerpEndX, lerpEndY, currFrame, lerpFrames);
 			
 			hudC->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
 			hudC->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
@@ -167,7 +144,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			
 			// continuation of the above "else"
 			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
-			{
+			{	
 				hudR->unk50 = 1;
 				hudToken->flags &= ~(HIDE_MODEL | DRAW_INSTANCE);
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
@@ -177,6 +154,22 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				{
 					if (elapsedFrames > 140)
 					{
+						if (hudC->scale[0] == 0x800)
+							OtherFX_Play(0x67, 1);
+	
+						lerpStartX = data.hud_1P_P1[0x24].x;
+						if (posXY[0] != lerpStartX - 0x10)
+						{
+							hudInst = hudC;
+							for (i = 0; i < 3; i++)
+							{
+								hudInst->scale[0] += 0x400;
+								hudInst->scale[1] += 0x400;
+								hudInst->scale[2] += 0x400;
+								hudInst = (int)hudInst + 4;
+							}
+						}
+						
 						if(hudToken->scale[0] < 0x2001)
 						{
 							hudToken->scale[0] += 0x200;
@@ -459,8 +452,11 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	{
 		// 6th bit of adventure profile is where trophies start
 		bitIndex = gGT->levelID + 6;
-		// go to podium with trophy
-		gGT->podiumRewardID = 0x62;
+		if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
+		{
+			// go to podium with trophy
+			gGT->podiumRewardID = 0x62;
+		}
 	}
 
 	// If you haven't unlocked this reward
