@@ -230,7 +230,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 
           // string for each player rank and count from standings (0x1e80)
           sprintf(acStack160, "%d%s-%2.02ld", iVar2,
-                  (sdata->lngStrings[((int *)0x800a0200)[iVar10]]),
+                  sdata->lngStrings[((int *)0x800a0200)[iVar10]],
                   (gGT->standingsPoints[gGT->battleSetup.unk1dc8[iVar12] * 3 + iVar10]));
 
           // Draw string
