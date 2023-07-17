@@ -87,7 +87,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   }
 
   // Disable drawing lines between multiplayer screens
-  gGT->hudFlags = ~(0x8000);
+  gGT->hudFlags &= ~(0x8000);
 
   TitleFlag_SetFullyOnScreen();
 
@@ -104,7 +104,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   }
 
   // fly-in interpolation
-  UI_Lerp2D_HUD(&pos[0], 0x296, uVar13, uVar7, uVar13, iVar11, 5);
+  UI_Lerp2D_Linear(&pos[0], 0x296, uVar13, uVar7, uVar13, iVar11, 5);
 
   iVar14 = uVar13 + 0x28;
 
@@ -140,7 +140,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       }
 
       // fly-in interpolation
-      UI_Lerp2D_HUD(&pos[0], 0x296, sVar5, uVar7, sVar5, iVar10, 5);
+      UI_Lerp2D_Linear(&pos[0], 0x296, sVar5, uVar7, sVar5, iVar10, 5);
 
       sVar9 = 0;
 
@@ -255,7 +255,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       iStack48 = iStack48 + 5;
       iStack44 = iStack44 + 5;
       sStack80 = gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar12]];
-      sprintf(acStack160, (char *)0x8009f710, sVar1 + 1, sdata->lngStrings[((int *)0x800a0200)[sVar1]]);
+      sprintf(acStack160, "%d%s", sVar1 + 1, sdata->lngStrings[((int *)0x800a0200)[sVar1]]);
 
       // Draw String
       DecalFont_DrawLine(acStack160, (pos - 0x24), (uStack112 + 5), 1, 0xffff8000);
@@ -264,79 +264,77 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
     }
   }
 
-  if (numPlyr)
+  for (uVar13 = 0; uVar13 < numPlyr; uVar13++)
   {
-    for (uVar13 = 0; uVar13 < numPlyr; uVar13++)
+    // get pointer to instance of Big Number in HUD
+    bigNum = gGT->drivers[uVar13]->BigNumber[0];
+    view = &gGT->tileView[uVar13];
+
+    // if the pointer is valid
+    if (bigNum != NULL)
     {
-      // get pointer to instance of Big Number in HUD
-      bigNum = gGT->drivers[uVar13]->BigNumber[0];
-      view = &gGT->tileView[uVar13];
+      // clear the scale
+      bigNum->scale[0] = 0;
+      bigNum->scale[1] = 0;
+      bigNum->scale[2] = 0;
+    }
 
-      // if the pointer is valid
-      if (bigNum != NULL)
+    if (sStack104 == 0)
+    {
+      // if this is not battle mode, get first place racer, else get battle winner
+      uVar3 = ((gGT->gameMode1 & 0x20) == 0) ? gGT->driversInRaceOrder[0]->driverID : gGT->winnerIndex[0];
+
+      if (uVar3 != uVar13)
+        goto LAB_8009ff4c;
+      sStack104 = 1;
+
+      if (
+          // If there are two players
+          (numPlyr == 2) &&
+
+          // something in camera buffer
+          (0x100 < view->rect.w))
       {
-        // clear the scale
-        bigNum->scale[0] = 0;
-        bigNum->scale[1] = 0;
-        bigNum->scale[2] = 0;
+        view->rect.w -= 0xc;
+        view->distanceToScreen_CURR = 0x80;
       }
 
-      if (sStack104 == 0)
+      // first tileView buffer is at 0x168,
+      // so this is ~0x20 bytes into tileViews
+
+      // fly-in interpolation
+      UI_Lerp2D_Linear(&pos[0], view->rect.x, view->rect.y, 0x14, 0xc, sdata->framesSinceRaceEnded, 25);
+
+      box.x = pos[0] - 3;
+      box.y = pos[1] - 2;
+      box.w = view->rect.w + 6;
+      box.h = view->rect.h + 4;
+
+      MENUBOX_DrawOuterRect_HighLevel(&box, sdata->battleSetup_Color_UI_1, 0, gGT->backBuffer->otMem.startPlusFour);
+
+      // first tileView buffer is at 0x168,
+      // so this is ~0x20 bytes into tileViews
+
+      view->rect.x = pos[0];
+      view->rect.y = pos[1];
+    }
+    else
+    {
+    LAB_8009ff4c:
+
+      // first tileView buffer is at 0x168,
+      // so this is ~0x20 bytes into tileViews
+
+      if (0 < view->rect.w)
       {
-        // if this is not battle mode, get first place racer, else get battle winner
-        uVar3 = ((gGT->gameMode1 & 0x20) == 0) ? gGT->driversInRaceOrder[0]->driverID : gGT->winnerIndex[0];
-
-        if (uVar3 != uVar13)
-          goto LAB_8009ff4c;
-        sStack104 = 1;
-
-        if (
-            // If there are two players
-            (numPlyr == 2) &&
-
-            // something in camera buffer
-            (0x100 < view->rect.w))
-        {
-          view->rect.w -= 0xc;
-          view->distanceToScreen_CURR = 0x80;
-        }
-
-        // first tileView buffer is at 0x168,
-        // so this is ~0x20 bytes into tileViews
-
-        // fly-in interpolation
-        UI_Lerp2D_HUD(&pos[0], view->rect.x, view->rect.y, 0x14, 0xc, sdata->framesSinceRaceEnded, 25);
-
-        box.x = pos[0] - 3;
-        box.y = pos[1] - 2;
-        box.w = view->rect.w + 6;
-        box.h = view->rect.h + 4;
-
-        MENUBOX_DrawOuterRect_HighLevel(&box, sdata->battleSetup_Color_UI_1, 0, gGT->backBuffer->otMem.startPlusFour);
-
-        // first tileView buffer is at 0x168,
-        // so this is ~0x20 bytes into tileViews
-
-        view->rect.x = pos[0];
-        view->rect.y = pos[1];
-      }
-      else
-      {
-      LAB_8009ff4c:
-
-        // first tileView buffer is at 0x168,
-        // so this is ~0x20 bytes into tileViews
-
-        if (0 < view->rect.w)
-        {
-          view->rect.x += 5;
-          view->rect.y += 3;
-          view->rect.w -= 10;
-          view->rect.h -= 6;
-        }
+        view->rect.x += 5;
+        view->rect.y += 3;
+        view->rect.w -= 10;
+        view->rect.h -= 6;
       }
     }
   }
+	
   if (((sdata->menuReadyToPass & 1) == 0) && (25 < sdata->framesSinceRaceEnded))
   {
     // if you're in battle mode.
