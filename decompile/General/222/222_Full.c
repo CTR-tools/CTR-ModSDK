@@ -103,15 +103,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				UI_Lerp2D_Linear(
 					&posXY[0], lerpStartX, lerpStartY,
 					lerpEndX, lerpEndY, currFrame, lerpFrames);
-
-				hudC->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
-				hudC->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
-
-				hudT->matrix.t[0] = UI_ConvertX_2(posXY[0] + 0x1d, 0x200);
-				hudT->matrix.t[1] = UI_ConvertY_2(posXY[1] - 1, 0x200);
-
-				hudR->matrix.t[0] = UI_ConvertX_2(posXY[0] + 0x3a, 0x200);
-				hudR->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
 			}
 
 			// if won for the first time
@@ -163,16 +154,20 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 						&posXY[0], lerpStartX, lerpStartY,
 						lerpEndX, lerpEndY, currFrame, lerpFrames);
 				}
+			}
+			
+			hudC->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
+			hudC->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
 
-				hudC->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
-				hudC->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
+			hudT->matrix.t[0] = UI_ConvertX_2(posXY[0] + 0x1d, 0x200);
+			hudT->matrix.t[1] = UI_ConvertY_2(posXY[1] - 1, 0x200);
 
-				hudT->matrix.t[0] = UI_ConvertX_2(posXY[0] + 0x1d, 0x200);
-				hudT->matrix.t[1] = UI_ConvertY_2(posXY[1] - 1, 0x200);
-
-				hudR->matrix.t[0] = UI_ConvertX_2(posXY[0] + 0x3a, 0x200);
-				hudR->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
-				
+			hudR->matrix.t[0] = UI_ConvertX_2(posXY[0] + 0x3a, 0x200);
+			hudR->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
+			
+			// continuation of the above "else"
+			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
+			{
 				hudR->unk50 = 1;
 				hudToken->flags &= ~(HIDE_MODEL | DRAW_INSTANCE);
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
