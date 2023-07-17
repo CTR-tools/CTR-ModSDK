@@ -47,7 +47,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	hudToken = sdata->ptrToken;
 	bigNum = driver->BigNumber[0];
 
-	hudArray = data.hudStructPtr[gGT->numPlyrCurrGame - 1];
+	hudArray = data.hudStructPtr[numPlyr - 1];
 
 	elapsedFrames = sdata->framesSinceRaceEnded;
 
@@ -134,7 +134,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					if (hudC->scale[0] == 0x800)
 						OtherFX_Play(0x67, 1);
 
-					if (posXY[0] != data.hud_1P_P1[0x24].x - 0x10)
+					if (posXY[0] != lerpStartX - 0x10)
 					{
 						hudInst = hudC;
 						for (i = 0; i < 3; i++)
@@ -172,26 +172,23 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 				hudR->matrix.t[0] = UI_ConvertX_2(posXY[0] + 0x3a, 0x200);
 				hudR->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
+				
 				hudR->unk50 = 1;
-
 				hudToken->flags &= ~(HIDE_MODEL | DRAW_INSTANCE);
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
 				hudToken->matrix.t[1] = UI_ConvertX_2(posXY[0] + 0x18, 0x200);
-
-				// if time has passed, and token is not full scale
-				if (elapsedFrames > 140 && hudToken->scale[0] < 0x2001)
-				{
-					// vec3s
-					// make token grow on all 3 axis
-					hudToken->scale[0] += 0x200;
-					hudToken->scale[1] += 0x200;
-					hudToken->scale[2] += 0x200;
-				}
 
 				if (elapsedFrames < 231)
 				{
 					if (elapsedFrames > 140)
 					{
+						if(hudToken->scale[0] < 0x2001)
+						{
+							hudToken->scale[0] += 0x200;
+							hudToken->scale[1] += 0x200;
+							hudToken->scale[2] += 0x200;
+						}
+						
 						UI_Lerp2D_Linear(&txtPos[0], 0x264, 0xa6, 0x100, 0xa6, elapsedFrames - 140, 8);
 						goto OVR_222_8009ff60;
 					}
