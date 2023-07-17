@@ -574,8 +574,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	// If not
 	else
 	{
-		lerpStartY = UI_ConvertX_2(hud[4].x, hud[5].x);
-		lerpStartX = lerpStartY;
+		lerpStartX = UI_ConvertX_2(hud[4].x, hud[5].x);
 		lerpStartY = UI_ConvertY_2(hud[4].y, hud[5].x);
 		currFrame = framesElapsed;
 		lerpEndX = -0xae;
