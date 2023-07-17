@@ -47,6 +47,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   memset(asStack128, 0, 8);
   
   sStack72 = 0;
+  gGT = sdata->gGT;
   numPlyr = gGT->numPlyrCurrGame;
 
   if (sdata->framesSinceRaceEnded < 0xf0)
@@ -75,14 +76,12 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
     uStack96 = gGT->battleSetup.numTeams;
 
     // if you don't have zero players
-    if (numPlyr)
+    for (iVar11 = 0; iVar11 < numPlyr; iVar11++)
     {
-      for (iVar11 = 0; iVar11 < numPlyr; iVar11++)
-      {
-        // increment something based on which team each player is on
-        asStack128[gGT->drivers[iVar11]->BattleHUD.teamID]++;
-      }
+      // increment something based on which team each player is on
+      asStack128[gGT->drivers[iVar11]->BattleHUD.teamID]++;
     }
+
     uVar13 = 0xd8 - ((gGT->battleSetup.unk1dc8[0] + -1) * 10 + numPlyr * 0x1a + 0x28) >> 1;
   }
 
@@ -116,7 +115,9 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 
   iVar10 = uStack96;
   iVar11 = 0;
-  if (0 < iVar10)
+  
+  // needs work, infinite loop happens
+  #if 0
   {
     iStack60 = iVar10;
     iStack56 = iVar10 + -2;
@@ -263,6 +264,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       iVar12 = iVar12 + 4;
     }
   }
+  #endif
 
   for (uVar13 = 0; uVar13 < numPlyr; uVar13++)
   {
