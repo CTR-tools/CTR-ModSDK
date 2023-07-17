@@ -1,5 +1,10 @@
 #include <common.h>
 
+static int str_number = 0x20; // " \0"
+extern struct MenuBox menuBox222_arcade;
+
+void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2);
+
 void DECOMP_AA_EndEvent_DrawMenu(void)
 {
 	struct GameTracker *gGT;
@@ -9,8 +14,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	struct Instance *hudC;
 	struct Instance *hudT;
 	struct Instance *hudR;
+	struct Instance* hudInst;
 	struct Instance *hudToken;
-	struct Instance *hudInst;
+	struct Instance* bigNum;
 	struct CtrLetter *letter;
 	char i;
 	char numPlyr;
@@ -39,8 +45,11 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	hudT = sdata->ptrHudT;
 	hudR = sdata->ptrHudR;
 	hudToken = sdata->ptrToken;
+	bigNum = driver->BigNumber[0];
 
 	hudArray = data.hudStructPtr[gGT->numPlyrCurrGame - 1];
+
+	elapsedFrames = sdata->framesSinceRaceEnded;
 
 	// count frames if hasn't been 30 seconds
 	if (elapsedFrames < 900)
@@ -48,11 +57,11 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 	sdata->framesSinceRaceEnded = elapsedFrames;
 
-	if (driver->BigNumber[0]->scale[0] != 0x1e00)
+	if (bigNum->scale[0] != 0x1e00)
 	{
-		driver->BigNumber[0]->scale[0] = 0;
-		driver->BigNumber[0]->scale[1] = 0;
-		driver->BigNumber[0]->scale[2] = 0;
+		bigNum->scale[0] = 0;
+		bigNum->scale[1] = 0;
+		bigNum->scale[2] = 0;
 	}
 
 	// if not in Token mode, these won't be used until later;
@@ -68,26 +77,23 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			(driver->driverRank == 0) &&
 			(driver->PickupLetterHUD.numCollected == 3))
 		{
+			// default for both win and lose
+			lerpStartX = data.hud_1P_P1[0x24].x;
+			lerpStartY = data.hud_1P_P1[0x24].y;
+			lerpEndX = lerpStartX + 0x10;
+			lerpEndY = lerpStartY + 0x10;
+			lerpFrames = 8;
+			currFrame = elapsedFrames;
+			
 			// if token was already won
 			bitIndex = gGT->levelID + 0x4C;
 			if (CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
 			{
-				// first 10 seconds, lerp closer to center of screen
-				if (elapsedFrames < 301)
-				{
-					lerpStartX = data.hud_1P_P1[0x24].x;
-					lerpStartY = data.hud_1P_P1[0x24].y;
-					lerpEndX = data.hud_1P_P1[0x24].x + 0x10;
-					lerpEndY = data.hud_1P_P1[0x24].y + 0x10;
-					lerpFrames = 8;
-					currFrame = elapsedFrames;
-				}
-
 				// past 10 seconds, lerp off screen
-				else
+				if (elapsedFrames > 300)
 				{
-					lerpStartX = data.hud_1P_P1[0x24].x + 0x10;
-					lerpStartY = data.hud_1P_P1[0x24].y + 0x10;
+					lerpStartX = lerpStartX + 0x10;
+					lerpStartY = lerpStartY + 0x10;
 					lerpEndX = -400;
 					lerpEndY = lerpStartY;
 					lerpFrames = 10;
@@ -115,25 +121,14 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				hudC->scale[0] -= (hudC->scale[0] < 0x800) ? 0x800 : 0x401;
 				*(int *)&posXY[0] = *(int *)&data.hud_1P_P1[0x24];
 
-				if (elapsedFrames < 231)
+				if (elapsedFrames > 140)
 				{
-					if (elapsedFrames < 141)
-					{
-						lerpStartX = data.hud_1P_P1[0x24].x;
-						lerpStartY = data.hud_1P_P1[0x24].y;
-						lerpEndX = data.hud_1P_P1[0x24].x + 0x10;
-						lerpEndY = data.hud_1P_P1[0x24].y + 0x10;
-						lerpFrames = 8;
-						currFrame = elapsedFrames;
-						goto OVR_222_8009fd28;
-					}
-
 					UI_Lerp2D_Linear(&posXY[0],
-									 data.hud_1P_P1[0x24].x + 0x10,
-									 data.hud_1P_P1[0x24].y + 0x10,
-									 data.hud_1P_P1[0x24].x - 0x10,
-									 data.hud_1P_P1[0x24].x + 0x50,
-									 elapsedFrames - 0x8c,
+									 lerpStartX + 0x10,
+									 lerpStartY + 0x10,
+									 lerpStartX - 0x10,
+									 lerpStartY + 0x50,
+									 elapsedFrames - 140,
 									 8);
 
 					if (hudC->scale[0] == 0x800)
@@ -151,15 +146,19 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 						}
 					}
 				}
+				
 				else
 				{
-					lerpStartX = data.hud_1P_P1[0x24].x + 0x10;
-					lerpStartY = data.hud_1P_P1[0x24].y + 0x50;
-					lerpEndX = -400;
-					lerpEndY = lerpStartY;
-					lerpFrames = 10;
-					currFrame = elapsedFrames - 230;
-				OVR_222_8009fd28:
+					if (elapsedFrames > 230)
+					{
+						lerpStartX = lerpStartX + 0x10;
+						lerpStartY = lerpStartY + 0x50;
+						lerpEndX = -400;
+						lerpEndY = lerpStartY;
+						lerpFrames = 10;
+						currFrame = elapsedFrames - 230;
+					}
+					
 					UI_Lerp2D_Linear(
 						&posXY[0], lerpStartX, lerpStartY,
 						lerpEndX, lerpEndY, currFrame, lerpFrames);
@@ -239,17 +238,10 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		}
 	}
 
-	// The rest of the function happens regardless
-	// if you are in Adventure or Arcade 1P mode
-
-	// if there are not zero players
-	if (!numPlyr)
-		return;
-
 	for (i = 0; i < numPlyr; i++)
 	{
 		// Draw how much time it took to finish laps and race
-		AA_EndEvent_DisplayTime(i, lerpEndY);
+		DECOMP_AA_EndEvent_DisplayTime(i, lerpEndY);
 	}
 
 	// If it hasn't been 1 second from race ended
@@ -304,10 +296,10 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				// interpolate fly-in
 				UI_Lerp2D_Linear(&posXY[0], lerpStartX, 0x60, lerpEndX, 0x60, currFrame, 10);
 
-				*(char *)0x8009f700 = (char)i + '1';
+				str_number = (char)i + '1';
 
 				// print a single character, a number 1-8,
-				DecalFont_DrawLine((char *)0x8009f700, posXY[0] + 0x20, 0x5f, 2, 4);
+				DecalFont_DrawLine(&str_number, posXY[0] + 0x20, 0x5f, 2, 4);
 
 				// Draw the driver's character icon
 				UI_DrawDriverIcon(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->driversInRaceOrder[i]->driverID]].iconID],
@@ -362,18 +354,17 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		return;
 	}
 
+	// if the menu is already drawing
+	if (sdata->menuReadyToPass & 1)
+		return;
+
 	// If you're in Arcade mode
 	if ((gGT->gameMode1 & ARCADE_MODE) != 0)
 	{
-		// if the menu is already drawing
-		if (sdata->menuReadyToPass & 1)
-			// dont make it draw twice
-			return;
-
 		// End of Race based on number of players (1 or more)
-		struct MenuBox *mb = (numPlyr == 1) ? (struct MenuBox *)0x800a0b58 : (struct MenuBox *)0x800a0b84;
+		menuBox222_arcade.posY_curr = (numPlyr == 1) ? 170 : 108;
 
-		MENUBOX_Show(mb);
+		MENUBOX_Show(&menuBox222_arcade);
 
 		// record that the menu is drawing
 		sdata->menuReadyToPass |= 1;
@@ -382,9 +373,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 	// If you are in adventure mode
 	if ((gGT->gameMode1 & ADVENTURE_MODE) == 0)
-		return;
-	// if menu is not drawn already
-	if ((sdata->menuReadyToPass & 1) != 0)
 		return;
 
 	// PRESS * TO CONTINUE
@@ -397,6 +385,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	// clear gamepad input
 	MENUBOX_ClearInput();
 
+	// if event was not won
 	if (driver->driverRank > 0)
 	{
 		// pass pointer to menu buffer that shows Retry / Exit To Map,
@@ -416,6 +405,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 	// when loading is done, add flag for "In Adventure Arena"
 	sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_ARENA;
+
+	// Load the levelID for Adventure Hub that you came from
+	levSpawn = gGT->prevLEV;
 
 	// If you are in boss mode
 	if (gGT->gameMode1 < 0)
@@ -440,10 +432,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		// If you have 4 keys (only here if you beat oxide)
 		else
 		{
-			// 6f is where purple CTR tokens are, not sure what this does
-			// ghidra fail? should be 0x5e?
-
-			// bitIndex = gGT->bossID + 0x6f;
+			// goes to bits after purple gem, cause bossID is 5 or 6
+			bitIndex = gGT->bossID + 0x6f;
 
 			// Go to podium, with no key (0x38 = empty)
 			gGT->podiumRewardID = 0x38;
@@ -452,12 +442,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				sdata->advProgress.rewards[3] |= 0x80004;
 		}
 
-		if (
-			// If Level ID is Hot Air Skyway
-			(gGT->levelID == 7) &&
-
-			// If you are at podium after winning a Key
-			((gGT->podiumRewardID) == 99))
+		// hot air skyway
+		if (gGT->levelID == 7)
 		{
 			// If you just beat Pinstripe
 			// Load gemstone valley
@@ -484,8 +470,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		// go to podium with trophy
 		gGT->podiumRewardID = 0x62;
 	}
-	// Load the levelID for Adventure Hub that you came from
-	levSpawn = gGT->prevLEV;
 
 	// If you haven't unlocked this reward
 	if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
@@ -494,3 +478,246 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	MainRaceTrack_RequestLoad(levSpawn);
 	return;
 }
+
+void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
+{
+	struct GameTracker *gGT;
+	struct Driver *driver;
+	struct UiElement2D **hudArray;
+	struct UiElement2D *hud;
+	struct Instance* bigNum;
+	char numPlyr, tenseconds;
+	short framesElapsed;
+	short lerpStartY;
+	short lerpEndY;
+	short lerpStartX;
+	short lerpEndX;
+	short currFrame;
+	short width;
+	short sVar1;
+	short sVar2;
+	short endFrame;
+	short *posXY;
+	RECT r;
+
+	gGT = sdata->gGT;
+	numPlyr = gGT->numPlyrCurrGame;
+	driver = gGT->drivers[driverId];
+	hudArray = data.hudStructPtr[numPlyr - 1];
+	hud = hudArray[driverId];
+	bigNum = driver->BigNumber[0];
+
+	// Lap time box height
+	switch (gGT->numLaps)
+	{
+	// based on number of laps
+	case 7:
+		r.h = 0x49;
+		break;
+	case 5:
+		r.h = 0x39;
+		break;
+	default:
+		// default height for 1/3 laps.
+		r.h = 0x44;
+		break;
+	}
+
+	// If this is player 2
+	lerpEndY = 0x41;
+	sVar1 = 0x89;
+	sVar2 = 0xc3;
+
+	// If this is player 1
+	if (driverId == 0)
+	{
+		lerpEndY = -0x3d;
+		sVar1 = 9;
+		sVar2 = 0x3e;
+	}
+
+	// increment counter for number of frames since the player ended the race
+	framesElapsed = driver->framesSinceRaceEnded_forThisDriver;
+	framesElapsed++;
+
+	if (
+		// if player ended race less than 110 frames ago
+		(framesElapsed < 110) &&
+
+		// If you press Cross or Circle
+		((sdata->AnyPlayerTap & 0x50) != 0) &&
+
+		// only one player
+		(numPlyr == 1))
+	{
+		// Assume race ended 110 frames ago
+		framesElapsed = 110;
+
+		sdata->numIconsEOR = numPlyr + gGT->numBotsNextGame;
+
+		// clear gamepad input (for menus)
+		MENUBOX_ClearInput();
+	}
+
+	// What is param2???
+
+	// Prior to 300 frames,
+	// Big number, Lap times, and Icons are all on screen
+
+	// After 300 frames
+	// They are all gone
+
+	tenseconds = (300 - param_2 < framesElapsed);
+
+	// If race ended more than 10 seconds ago.
+	if (tenseconds)
+	{
+		lerpStartY = UI_ConvertX_2(0xffffff9c, hudArray[driverId]->x + 0x14);
+		lerpStartX = -0xae;
+		lerpEndX = lerpStartY;
+		endFrame = 0xf;
+		currFrame = framesElapsed + -300 + param_2;
+		lerpStartY = lerpEndY;
+	}
+	// If not
+	else
+	{
+		lerpStartY = UI_ConvertX_2(hud[4].x, hud[5].x);
+		lerpStartX = lerpStartY;
+		lerpStartY = UI_ConvertY_2(hud[4].y, hud[5].x);
+		currFrame = framesElapsed;
+		lerpEndX = -0xae;
+		endFrame = 0x1e;
+	}
+
+	// interpolate fly-in
+	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, endFrame);
+
+	// Set X and Y position of Big Number
+	bigNum->matrix.t[0] = posXY[0];
+	bigNum->matrix.t[1] = posXY[1];
+
+	// interpolate fly-in
+	UI_Lerp2D_Linear(&posXY[0], hud[5].y, 0, 0x1e00, 0, framesElapsed, 0x1e);
+
+	// Set scale of Big Number in HUD
+	bigNum->scale[0] = posXY[0];
+	bigNum->scale[1] = posXY[0];
+	bigNum->scale[2] = posXY[0];
+
+	if (tenseconds)
+	{
+		lerpStartX = 0x78;
+		lerpStartY = sVar1;
+		lerpEndX = -0x3c;
+		currFrame = framesElapsed - 300 + param_2;
+		endFrame = 0xf;
+	}
+
+	else
+	{
+		lerpStartX = hud[10].x;
+		lerpStartY = hud[10].y;
+		lerpEndX = 0x78;
+		currFrame = framesElapsed;
+		endFrame = 0x1e;
+	}
+
+	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, sVar1, currFrame, endFrame);
+
+	UI_DrawPosSuffix(posXY[0], posXY[1], driver, 0);
+
+	if (tenseconds)
+	{
+		lerpStartX = 0x150;
+		lerpEndX = 0x27c;
+		currFrame = framesElapsed - 300 + param_2;
+		endFrame = 0xf;
+	}
+
+	else
+	{
+		lerpStartX = 0x218;
+		lerpEndX = 0x150;
+		currFrame = framesElapsed;
+		endFrame = 0x1e;
+	}
+
+	UI_Lerp2D_Linear(&posXY[0], lerpStartX, sVar2, lerpEndX, sVar2, currFrame, endFrame);
+	UI_DrawRaceClock(posXY[0], posXY[1], 1, driver);
+
+	// "TOTAL"
+	width = DecalFont_GetLineWidth(sdata->lngStrings[0xc4], 1);
+
+	// calculate top left corner position
+	r.x = (posXY[0] - width) + -6;
+	r.y = (posXY[1] - r.h) + 0xd;
+
+	// calculate size of box
+	r.w = width + 0x94;
+	r.h += 6;
+
+	// Draw 2D Menu rectangle background
+	MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
+	driver->framesSinceRaceEnded_forThisDriver = framesElapsed;
+	return;
+}
+
+void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *);
+
+struct MenuRow menuRows222_arcade[5] =
+    {
+        // Retry
+        {
+            .stringIndex = 4,
+            .rowOnPressUp = 0,
+            .rowOnPressDown = 1,
+            .rowOnPressLeft = 0,
+            .rowOnPressRight = 0,
+        },
+        // Change Level
+        {
+            .stringIndex = 6,
+            .rowOnPressUp = 0,
+            .rowOnPressDown = 2,
+            .rowOnPressLeft = 1,
+            .rowOnPressRight = 1,
+        },
+        // Change Character
+        {
+            .stringIndex = 5,
+            .rowOnPressUp = 1,
+            .rowOnPressDown = 3,
+            .rowOnPressLeft = 2,
+            .rowOnPressRight = 2,
+        },
+        // Quit
+        {
+            .stringIndex = 3,
+            .rowOnPressUp = 2,
+            .rowOnPressDown = 3,
+            .rowOnPressLeft = 3,
+            .rowOnPressRight = 3,
+        },
+        // NULL, end of menu
+        {
+            .stringIndex = 0xFFFF,
+            .rowOnPressUp = 0,
+            .rowOnPressDown = 0,
+            .rowOnPressLeft = 0,
+            .rowOnPressRight = 0,
+        }
+    };
+
+struct MenuBox menuBox222_arcade =
+    {
+        .stringIndexTitle = 0xFFFF,
+        .posX_curr = 256,
+        .posY_curr = 170,
+        .unk1 = 0,
+        .state = (0x800 | USE_SMALL_FONT | CENTER_ON_COORDS), // 0x883
+        .rows = menuRows222_arcade,
+        .funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+        .drawStyle = 4,
+        // rest of variables all default zero
+};

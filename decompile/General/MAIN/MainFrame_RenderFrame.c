@@ -507,32 +507,8 @@ void RenderAllHUD(struct GameTracker* gGT)
 						return;
 					}
 					
-					if((gameMode1 & RELIC_RACE) != 0)
-					{
-						OVR_Region1();
-						return;
-					}
-					
-					if((gameMode1 & TIME_TRIAL) != 0)
-					{
-						OVR_Region1();
-						return;
-					}
-					
-					if((gameMode1 & CRYSTAL_CHALLENGE) != 0)
-					{
-						OVR_Region1();
-						return;
-					}
-					
-					if((gameMode1 & (ADVENTURE_MODE | ARCADE_MODE)) != 0)
-					{
-						AA_EndEvent_DrawMenu();
-						return;
-					}
-					
-					// only remaining option
-					DECOMP_VB_EndEvent_DrawMenu();
+					// all 221-225 overlays
+					OVR_Region1();
 					return;
 				}
 			}

@@ -1,4 +1,4 @@
-// 316+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+2+2 = 387 rewritten so far
+// 316+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+2 = 387 rewritten so far
 
 // 316 for every 'common' and ','
 // additions for every file that has multiple functions,
@@ -6,6 +6,7 @@
 // most other additions for 231
 // 10 for the eleven UI functions
 // +1 for DebugFont
+// +1 for 222
 // +2 for 223
 // +2 for 224
 
@@ -16,6 +17,7 @@ common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels
 
 // OVR1 (need 222, 225)
 common, 221, OVR_Region1, 0x0, General/221/221_Full.c
+common, 222, OVR_Region1, 0x0, General/222/222_Full.c
 common, 223, OVR_Region1, 0x0, General/223/223_Full.c
 common, 224, OVR_Region1, 0x0, General/224/224_Full.c
 common, 225, OVR_Region1, 0x0, General/225/225_Full.c
