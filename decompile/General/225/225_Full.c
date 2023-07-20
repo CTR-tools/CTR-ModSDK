@@ -82,7 +82,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       asStack128[gGT->drivers[iVar11]->BattleHUD.teamID]++;
     }
 
-    uVar13 = 0xd8 - ((gGT->battleSetup.unk1dc8[0] + -1) * 10 + numPlyr * 0x1a + 0x28) >> 1;
+    uVar13 = 0xd8 - ((gGT->battleSetup.numTeams + -1) * 10 + numPlyr * 0x1a + 0x28) >> 1;
   }
 
   // Disable drawing lines between multiplayer screens
@@ -147,7 +147,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       // If you are not in battle mode
       if ((gGT->gameMode1 & 0x20) == 0)
       {
-        uStack112 = ((u_short *)0x800a01e0)[(uStack88 >> 1) + iStack56 * 10];
+        uStack112 = ((u_short *)0x800a01e0)[uStack88 + iStack56 * 5];
         // Draw character icon
         DecalHUD_DrawPolyFT4(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[iVar11]->driverID]].iconID],
 
@@ -228,6 +228,8 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
             uVar7 = 0x4003;
           }
 
+          iVar2 = iVar10 + 1;
+		  
           // string for each player rank and count from standings (0x1e80)
           sprintf(acStack160, "%d%s-%2.02ld", iVar2,
                   sdata->lngStrings[((short *)0x800a0200)[iVar10]],
@@ -262,7 +264,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       // Draw String
       DecalFont_DrawLine(acStack160, (pos - 0x24), (uStack112 + 5), 1, 0xffff8000);
 
-      iVar12 = iVar12 + 4;
+      iVar12 = iVar12 + 1;
     }
   }
 
