@@ -86,7 +86,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   }
 
   // Disable drawing lines between multiplayer screens
-  gGT->hudFlags &= ~(0x8000);
+  gGT->renderFlags &= ~(0x8000);
 
   TitleFlag_SetFullyOnScreen();
 
@@ -116,8 +116,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   iVar10 = uStack96;
   iVar11 = 0;
   
-  // needs work, infinite loop happens
-  #if 0
   {
     iStack60 = iVar10;
     iStack56 = iVar10 + -2;
@@ -125,8 +123,9 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
     uStack52 = (u_int)(iVar10 < 3);
     iStack48 = 0x1e;
     iStack44 = 5;
+	
     for (iVar11 = 0; iVar11 < iStack60; iVar11++)
-    {
+    {	
       sVar1 = asStack128[gGT->battleSetup.unk1dc8[iVar12]];
       sVar5 = (short)iVar14;
       if (iStack48 < sdata->framesSinceRaceEnded)
@@ -163,14 +162,13 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 
                              1, 0x1000);
       }
-      // if VERSUS mode
+      
+	  // if battle mode
       else
       {
         iVar10 = sVar1 * 0x1b0000;
         uStack112 = (sVar5 + (short)((iVar10 >> 0x10) - (iVar10 >> 0x1f) >> 1)) - 0xd;
 
-        // if there are players
-        if (numPlyr)
         {
           // loop through all players
           for (iVar10 = 0; iVar10 < numPlyr; iVar10++)
@@ -196,6 +194,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
         }
         iVar14 = sVar1 * 0x1b + iVar14 + 10;
       }
+	  
       uStack88 = uStack88 + 1;
       sVar1 = 2;
       if (uStack52 == 0)
@@ -231,7 +230,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 
           // string for each player rank and count from standings (0x1e80)
           sprintf(acStack160, "%d%s-%2.02ld", iVar2,
-                  sdata->lngStrings[((int *)0x800a0200)[iVar10]],
+                  sdata->lngStrings[((short *)0x800a0200)[iVar10]],
                   (gGT->standingsPoints[gGT->battleSetup.unk1dc8[iVar12] * 3 + iVar10]));
 
           // Draw string
@@ -253,10 +252,12 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       {
         sVar1 = (short)iVar11;
       }
+	  
       iStack48 = iStack48 + 5;
       iStack44 = iStack44 + 5;
-      sStack80 = gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar12]];
-      sprintf(acStack160, "%d%s", sVar1 + 1, sdata->lngStrings[((int *)0x800a0200)[sVar1]]);
+	  
+	  sStack80 = gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar12]];
+      sprintf(acStack160, "%d%s", sVar1 + 1, sdata->lngStrings[((short *)0x800a0200)[sVar1]]);
 
       // Draw String
       DecalFont_DrawLine(acStack160, (pos - 0x24), (uStack112 + 5), 1, 0xffff8000);
@@ -264,7 +265,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       iVar12 = iVar12 + 4;
     }
   }
-  #endif
 
   for (uVar13 = 0; uVar13 < numPlyr; uVar13++)
   {
