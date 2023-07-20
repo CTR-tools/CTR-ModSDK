@@ -3,6 +3,24 @@
 extern struct MenuBox menuBox225_versus;
 extern struct MenuBox menuBox225_battle;
 
+enum VsPosY
+{
+	VsPosY_TITLE = 0,
+	VsPosY_P1,
+	VsPosY_P2,
+	VsPosY_P3,
+	VsPosY_P4,
+	VsPosY_NUM
+};
+
+// 2P, 3P, 4P
+short VsPosY_Config[3*VsPosY_NUM] =
+{
+	0x32, 0x5a, 0x82, 0, 0,		// 2P
+	0x1e, 0x46, 0x6e, 0x96, 0,	// 3P
+	0xa, 0x35, 0x5b, 0x81, 0xa7	// 4P
+};
+
 void DECOMP_VB_EndEvent_DrawMenu(void)
 {
   struct GameTracker *gGT;
@@ -35,10 +53,10 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   short sStack80;
   short sStack72;
   int iStack60;
-  int iStack56;
   u_int uStack52;
   int iStack48;
   int iStack44;
+  int VsConfigIndex;
 
   sStack104 = 0;
   uStack88 = 1;
@@ -49,6 +67,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   sStack72 = 0;
   gGT = sdata->gGT;
   numPlyr = gGT->numPlyrCurrGame;
+  VsConfigIndex = numPlyr-2;
 
   if (sdata->framesSinceRaceEnded < 0xf0)
   {
@@ -67,7 +86,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
     // number of battle teams
     uStack96 = numPlyr;
 
-    uVar13 = ((short *)0x800a01e0)[numPlyr - 2];
+    uVar13 = VsPosY_Config[VsPosY_NUM*VsConfigIndex + VsPosY_TITLE];
   }
   // if you are in battle mode
   else
@@ -118,7 +137,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   
   {
     iStack60 = iVar10;
-    iStack56 = iVar10 + -2;
     iVar12 = 0;
     uStack52 = (u_int)(iVar10 < 3);
     iStack48 = 0x1e;
@@ -147,7 +165,8 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       // If you are not in battle mode
       if ((gGT->gameMode1 & 0x20) == 0)
       {
-        uStack112 = ((u_short *)0x800a01e0)[uStack88 + iStack56 * 5];
+        uStack112 = VsPosY_Config[VsPosY_NUM*VsConfigIndex + uStack88];
+		
         // Draw character icon
         DecalHUD_DrawPolyFT4(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[iVar11]->driverID]].iconID],
 
