@@ -472,11 +472,6 @@ void DECOMP_MM_ParseCheatCodes()
 	DecalFont_DrawLine("31%", 		285, 206, FONT_SMALL, ORANGE);
 	#endif
 	
-	#if 0
-	DecalFont_DrawLine("No DotLights", 	325, 197, FONT_SMALL, RED);
-	DecalFont_DrawLine("No RenderFrame",325, 206, FONT_SMALL, RED);
-	#endif
-	
 	gpad = &sdata->gGamepads->gamepad[0];
 	
 	// if not holding L1 and R1
