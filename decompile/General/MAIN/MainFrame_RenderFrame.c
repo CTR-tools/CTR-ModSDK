@@ -1182,6 +1182,12 @@ void RenderDispEnv_UI(struct GameTracker* gGT)
 		tileView, gGT->backBuffer, 0, 0);
 }
 
+// force code to re-check RAM during the loop, cause the compiler 
+// doesn't know what IRQs are, and wont re-check RAM by default,
+// causing a 10fps bug where the game could normally go 60+, such 
+// as the blizzard bluff tunnel. Bug replicates in DuckStation,
+// but not no$psx and not redux.
+__attribute__((optimize("O0")))
 void RenderVSYNC(struct GameTracker* gGT)
 {	
 	// render checkered flag
