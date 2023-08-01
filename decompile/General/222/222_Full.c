@@ -9,31 +9,33 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 {
 	struct GameTracker *gGT;
 	struct Driver *driver;
-	struct UiElement2D *hudArray;
+	struct UiElement2D *hudCTR;
 	struct AdvProgress *adv;
 	struct Instance *hudC;
 	struct Instance *hudT;
 	struct Instance *hudR;
-	struct Instance* hudInst;
 	struct Instance *hudToken;
-	struct Instance* bigNum;
 	struct CtrLetter *letter;
 	char i;
+	char tokenUnlock;
 	char numPlyr;
 	char totalPlyr;
 	short t;
 	short elapsedFrames;
-	short posXY[2];
+	short letterPos[2];
 	short txtPos[2];
 	short levSpawn;
 
 	short lerpStartX;
+	short txtStartX;
 	short lerpStartY;
 	short lerpEndX;
+	short txtEndX;
 	short lerpEndY;
 	short lerpFrames;
 	short currFrame;
-	u_int uVar10;
+	u_int scaleDown;
+	u_int txtColor;
 	u_int bitIndex;
 
 	gGT = sdata->gGT;
@@ -44,10 +46,10 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	hudC = sdata->ptrHudC;
 	hudT = sdata->ptrHudT;
 	hudR = sdata->ptrHudR;
+	struct Instance *hudLetters[3] = {hudC, hudT, hudR};
 	hudToken = sdata->ptrToken;
-	bigNum = driver->BigNumber[0];
 
-	hudArray = data.hudStructPtr[numPlyr - 1];
+	hudCTR = &data.hud_1P_P1[0x24];
 
 	elapsedFrames = sdata->framesSinceRaceEnded;
 
@@ -57,166 +59,173 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 	sdata->framesSinceRaceEnded = elapsedFrames;
 
-	if (bigNum->scale[0] != 0x1e00)
+	if (driver->BigNumber[0]->scale[0] != 0x1e00)
 	{
-		bigNum->scale[0] = 0;
-		bigNum->scale[1] = 0;
-		bigNum->scale[2] = 0;
+		driver->BigNumber[1]->scale[0] = 0;
+		driver->BigNumber[1]->scale[1] = 0;
+		driver->BigNumber[1]->scale[2] = 0;
 	}
 
 	// if not in Token mode, these won't be used until later;
 	lerpStartY = 0;
 	lerpEndY = 0;
 
-	// if adventure mode
+	// If you're in Adventure Mode
 	if ((gGT->gameMode1 & ADVENTURE_MODE) != 0)
 	{
-		// won C-T-R challenge,
-		// placed 1st and got all letters
-		if (
-			(driver->driverRank == 0) &&
-			(driver->PickupLetterHUD.numCollected == 3))
+		
+		// If you won the race, and you have all 3 letters (C, T, and R)
+		if ((driver->driverRank == 0) && (driver->PickupLetterHUD.numCollected == 3))
 		{
-			// default for both win and lose
-			lerpStartX = data.hud_1P_P1[0x24].x;
-			lerpStartY = data.hud_1P_P1[0x24].y;
-			lerpEndX = lerpStartX + 0x10;
-			lerpEndY = lerpStartY + 0x10;
-			lerpFrames = 8;
-			currFrame = elapsedFrames;
-			
-			// if token was already won
+			// If you have not unlocked this CTR Token
 			bitIndex = gGT->levelID + 0x4C;
-			if (CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
+			*(int *)&letterPos[0] = *(int *)&hudCTR[0];
+			if ((CHECK_ADV_BIT(adv->rewards, bitIndex) & 1) == 0)
 			{
-				// past 10 seconds, lerp off screen
-				if (elapsedFrames > 300)
+				scaleDown = hudC->scale[0];
+				scaleDown -= (scaleDown < 0x800) ? 0x800 : 0x401;
+				scaleDown = scaleDown >> 10;
+
+				// frames since race ended
+				if (elapsedFrames < 231)
 				{
-					lerpStartX = lerpStartX + 0x10;
-					lerpStartY = lerpStartY + 0x10;
+					if (elapsedFrames < 141)
+					{
+						lerpStartX = hudCTR->x;
+						lerpStartY = hudCTR->y;
+						lerpEndX = lerpStartX + 0x10;
+						lerpEndY = lerpStartY + 0x10;
+						lerpFrames = 8;
+						currFrame = elapsedFrames;
+						goto INTERPOLATE;
+					}
+					UI_Lerp2D_Linear(&letterPos[0],
+									 hudCTR->x + 0x10,
+									 hudCTR->y + 0x10,
+									 hudCTR->x - 0x10,
+									 hudCTR->y + 0x50,
+									 elapsedFrames - 140, 8);
+
+					if (hudC->scale[0] == 0x800)
+						OtherFX_Play(0x67, 1);
+
+					// increment hudc scale and hudtoken scale
+					if (letterPos[0] != (hudCTR->x - 0x10))
+					{
+						for (i = 0; i < 3; i++)
+						{
+							hudLetters[i]->scale[0] += 0x400;
+							hudLetters[i]->scale[1] += 0x400;
+							hudLetters[i]->scale[2] += 0x400;
+						}
+					}
+				}
+				else
+				{
+					lerpStartX = hudCTR->x + 0x10;
+					lerpStartY = hudCTR->y + 0x50;
 					lerpEndX = -400;
 					lerpEndY = lerpStartY;
-					lerpFrames = 10;
-					currFrame = elapsedFrames - 300;
-				}
-			}
-
-			// if won for the first time
-			else
-			{
-				// what on earth does it do with this?
-				hudC->scale[0] -= (hudC->scale[0] < 0x800) ? 0x800 : 0x401;
-				*(int *)&posXY[0] = *(int *)&data.hud_1P_P1[0x24];
-
-				if (elapsedFrames > 230)
-				{
 					currFrame = elapsedFrames - 230;
-					lerpStartX = lerpStartX + 0x10;
-					lerpStartY = lerpStartY + 0x50;
-					lerpEndX = -400;
-					lerpEndY = lerpStartY;
-					lerpFrames = 10;
+
+				INTERPOLATE:
+					UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, lerpFrames);
 				}
 
-				else if (elapsedFrames > 140)
+				for (i = 0; i < 3; i++)
 				{
-					currFrame = elapsedFrames - 140;
-					lerpStartX = lerpStartX + 0x10;
-					lerpStartY = lerpStartY + 0x10;
-					lerpEndX = lerpStartX - 0x20;
-					lerpEndY = lerpStartY + 0x40;
-					lerpFrames = 8;
+					hudLetters[i]->matrix.t[0] = UI_ConvertX_2(letterPos[0] + (scaleDown * (i * 12)) + (i * 29), 0x200);
+					hudLetters[i]->matrix.t[1] = UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
 				}
-			}
-			
-			UI_Lerp2D_Linear(
-				&posXY[0], lerpStartX, lerpStartY,
-				lerpEndX, lerpEndY, currFrame, lerpFrames);
-			
-			hudC->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
-			hudC->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
 
-			hudT->matrix.t[0] = UI_ConvertX_2(posXY[0] + 0x1d, 0x200);
-			hudT->matrix.t[1] = UI_ConvertY_2(posXY[1] - 1, 0x200);
-
-			hudR->matrix.t[0] = UI_ConvertX_2(posXY[0] + 0x3a, 0x200);
-			hudR->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
-			
-			// continuation of the above "else"
-			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
-			{	
-				hudR->unk50 = 1;
-				hudToken->flags &= ~(HIDE_MODEL | DRAW_INSTANCE);
+				hudToken->flags &= ~HIDE_MODEL;
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
-				hudToken->matrix.t[1] = UI_ConvertX_2(posXY[0] + 0x18, 0x200);
+				hudToken->matrix.t[1] = UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
+
+				// If time has passed and token is not full scale
+				if (elapsedFrames > 140 && hudToken->scale[0] < 0x2001)
+				{
+					hudToken->scale[0] += 0x200;
+					hudToken->scale[1] += 0x200;
+					hudToken->scale[2] += 0x200;
+				}
 
 				if (elapsedFrames < 231)
 				{
 					if (elapsedFrames > 140)
 					{
-						if (hudC->scale[0] == 0x800)
-							OtherFX_Play(0x67, 1);
-	
-						lerpStartX = data.hud_1P_P1[0x24].x;
-						if (posXY[0] != lerpStartX - 0x10)
-						{
-							hudInst = hudC;
-							for (i = 0; i < 3; i++)
-							{
-								hudInst->scale[0] += 0x400;
-								hudInst->scale[1] += 0x400;
-								hudInst->scale[2] += 0x400;
-								hudInst = (int)hudInst + 4;
-							}
-						}
-						
-						if(hudToken->scale[0] < 0x2001)
-						{
-							hudToken->scale[0] += 0x200;
-							hudToken->scale[1] += 0x200;
-							hudToken->scale[2] += 0x200;
-						}
-						
-						UI_Lerp2D_Linear(&txtPos[0], 0x264, 0xa6, 0x100, 0xa6, elapsedFrames - 140, 8);
-						goto OVR_222_8009ff60;
+						txtStartX = 0x264;
+						txtEndX = 0x100;
+						currFrame = elapsedFrames - 140;
+						goto PRINT_TEXT;
 					}
 				}
 				else
 				{
-					UI_Lerp2D_Linear(&txtPos[0], 0x100, 0xa6, -150, 0xa6, elapsedFrames - 50, 8);
-				OVR_222_8009ff60:
-					uVar10 = (gGT->timer & 1) ? 0xffff8003 : 0xffff8004;
+					txtStartX = 0x100;
+					txtEndX = -150;
+					currFrame = elapsedFrames - 50;
+				PRINT_TEXT:
+					UI_Lerp2D_Linear(&txtPos[0], txtStartX, 0xA6, txtEndX, 0xA6, currFrame, 8);
+					// Flash colors depending on even or odd frame
+					txtColor = (gGT->timer & 1) ? 0xFFFF8003 : 0xFFFF8004;
 					// CTR TOKEN AWARDED
-					DecalFont_DrawLine(sdata->lngStrings[0x16f], txtPos[0], txtPos[1], 1, uVar10);
+					DecalFont_DrawLine(sdata->lngStrings[0x16F], txtPos[0], txtPos[1], 1, txtColor);
 				}
-				// not used anymore, used for time buffer
 				lerpStartY = 120;
 				lerpEndY = 160;
 			}
+			// If you already have this CTR Token unlocked
+			else
+			{
+				if (elapsedFrames > 301)
+				{
+					lerpStartX = hudCTR->x;
+					lerpStartY = hudCTR->y;
+					lerpEndX = lerpStartX + 0x10;
+					lerpEndY = lerpStartY + 0x10;
+					currFrame = elapsedFrames;
+					lerpFrames = 8;
+				}
+				else
+				{
+					lerpStartX = hudCTR->x + 0x10;
+					lerpStartY = hudCTR->y + 0x10;
+					lerpEndX = -400;
+					lerpEndY = lerpStartY;
+					currFrame = elapsedFrames - 300;
+					lerpFrames = 10;
+				}
+				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, lerpFrames);
+
+				for (i = 0; i < 3; i++)
+				{
+					hudLetters[i]->matrix.t[0] = UI_ConvertX_2(letterPos[0] + (i * 29), 0x200);
+					hudLetters[i]->matrix.t[1] = UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
+				}
+			}
 		}
-		// if did not win
+		// If you did not collect all 3 letters (C, T, and R), or you lost the race
 		else
 		{
 			if (elapsedFrames < 900)
 			{
-				hudInst = hudC;
 				for (i = 0; i < 3; i++)
 				{
-					if ((hudInst->flags & 0x80) == 0 && (elapsedFrames > (i * 6) && -300 < hudInst->matrix.t[1]))
+					if (((hudLetters[i]->flags & HIDE_MODEL) == 0) &&
+						(-300 < hudLetters[i]->matrix.t[1]))
 					{
-						letter = hudInst->thread->object;
+						letter = hudLetters[i]->thread->object;
 						// move X position
-						hudInst->matrix.t[0] += letter->rot[0];
-
+						hudLetters[i]->matrix.t[0] += letter->velX;
 						// make the letter fall off the screen
-						hudInst->matrix.t[1] -= letter->rot[1];
+						hudLetters[i]->matrix.t[1] -= letter->velY;
 
-						if (-0x14 < letter->rot[1])
+						if (-0x14 < letter->velY)
 						{
-							letter->rot[1] -= 2;
+							letter->velY -= 2;
 						}
 					}
-					hudInst = (int)hudInst + 4;
 				}
 			}
 			driver->PickupLetterHUD.numCollected = 0;
@@ -279,17 +288,17 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				t -= 10;
 
 				// interpolate fly-in
-				UI_Lerp2D_Linear(&posXY[0], lerpStartX, 0x60, lerpEndX, 0x60, currFrame, 10);
+				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, 0x60, lerpEndX, 0x60, currFrame, 10);
 
 				str_number = (char)i + '1';
 
 				// print a single character, a number 1-8,
-				DecalFont_DrawLine(&str_number, posXY[0] + 0x20, 0x5f, 2, 4);
+				DecalFont_DrawLine(&str_number, letterPos[0] + 0x20, 0x5f, 2, 4);
 
 				// Draw the driver's character icon
 				UI_DrawDriverIcon(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->driversInRaceOrder[i]->driverID]].iconID],
 
-								  posXY[0], 0x60,
+								  letterPos[0], 0x60,
 
 								  // pointer to PrimMem struct
 								  &gGT->backBuffer->primMem,
@@ -436,7 +445,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		}
 	}
 	// if you are in token race
-	else if (gGT->gameMode2 & TOKEN_RACE != 0)
+	else if ((gGT->gameMode2 & 0x8) != 0)
 	{
 		// If you have collected 3 letters (C, T, and R)
 		if (driver->PickupLetterHUD.numCollected == 3)
@@ -464,7 +473,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		UNLOCK_ADV_BIT(adv->rewards, bitIndex);
 
 	MainRaceTrack_RequestLoad(levSpawn);
-	return;
 }
 
 void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
@@ -473,7 +481,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	struct Driver *driver;
 	struct UiElement2D **hudArray;
 	struct UiElement2D *hud;
-	struct Instance* bigNum;
+	struct Instance *bigNum;
 	char numPlyr, tenseconds;
 	short framesElapsed;
 	short lerpStartY;
@@ -492,7 +500,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	numPlyr = gGT->numPlyrCurrGame;
 	driver = gGT->drivers[driverId];
 	hudArray = data.hudStructPtr[numPlyr - 1];
-	hud = hudArray[driverId];
+	hud = &hudArray[driverId * 0x28];
 	bigNum = driver->BigNumber[0];
 
 	// Lap time box height
@@ -560,11 +568,11 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	// If race ended more than 10 seconds ago.
 	if (tenseconds)
 	{
-		lerpStartY = UI_ConvertX_2(0xffffff9c, hudArray[driverId]->x + 0x14);
+		lerpStartY = UI_ConvertX_2(-100, hud[5].x);
 		lerpStartX = -0xae;
 		lerpEndX = lerpStartY;
 		endFrame = 0xf;
-		currFrame = framesElapsed + -300 + param_2;
+		currFrame = framesElapsed - 300 + param_2;
 		lerpStartY = lerpEndY;
 	}
 	// If not
@@ -585,7 +593,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	bigNum->matrix.t[1] = posXY[1];
 
 	// interpolate fly-in
-	UI_Lerp2D_Linear(&posXY[0], hud[5].y, 0, 0x1e00, 0, framesElapsed, 0x1e);
+	UI_Lerp2D_Linear(&posXY[0], hud[5].y, 0, 0x1e00, 0, framesElapsed, 30);
 
 	// Set scale of Big Number in HUD
 	bigNum->scale[0] = posXY[0];
@@ -600,7 +608,6 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		currFrame = framesElapsed - 300 + param_2;
 		endFrame = 0xf;
 	}
-
 	else
 	{
 		lerpStartX = hud[10].x;
@@ -653,58 +660,57 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *);
 
 struct MenuRow menuRows222_arcade[5] =
-    {
-        // Retry
-        {
-            .stringIndex = 4,
-            .rowOnPressUp = 0,
-            .rowOnPressDown = 1,
-            .rowOnPressLeft = 0,
-            .rowOnPressRight = 0,
-        },
-        // Change Level
-        {
-            .stringIndex = 6,
-            .rowOnPressUp = 0,
-            .rowOnPressDown = 2,
-            .rowOnPressLeft = 1,
-            .rowOnPressRight = 1,
-        },
-        // Change Character
-        {
-            .stringIndex = 5,
-            .rowOnPressUp = 1,
-            .rowOnPressDown = 3,
-            .rowOnPressLeft = 2,
-            .rowOnPressRight = 2,
-        },
-        // Quit
-        {
-            .stringIndex = 3,
-            .rowOnPressUp = 2,
-            .rowOnPressDown = 3,
-            .rowOnPressLeft = 3,
-            .rowOnPressRight = 3,
-        },
-        // NULL, end of menu
-        {
-            .stringIndex = 0xFFFF,
-            .rowOnPressUp = 0,
-            .rowOnPressDown = 0,
-            .rowOnPressLeft = 0,
-            .rowOnPressRight = 0,
-        }
-    };
+	{
+		// Retry
+		{
+			.stringIndex = 4,
+			.rowOnPressUp = 0,
+			.rowOnPressDown = 1,
+			.rowOnPressLeft = 0,
+			.rowOnPressRight = 0,
+		},
+		// Change Level
+		{
+			.stringIndex = 6,
+			.rowOnPressUp = 0,
+			.rowOnPressDown = 2,
+			.rowOnPressLeft = 1,
+			.rowOnPressRight = 1,
+		},
+		// Change Character
+		{
+			.stringIndex = 5,
+			.rowOnPressUp = 1,
+			.rowOnPressDown = 3,
+			.rowOnPressLeft = 2,
+			.rowOnPressRight = 2,
+		},
+		// Quit
+		{
+			.stringIndex = 3,
+			.rowOnPressUp = 2,
+			.rowOnPressDown = 3,
+			.rowOnPressLeft = 3,
+			.rowOnPressRight = 3,
+		},
+		// NULL, end of menu
+		{
+			.stringIndex = 0xFFFF,
+			.rowOnPressUp = 0,
+			.rowOnPressDown = 0,
+			.rowOnPressLeft = 0,
+			.rowOnPressRight = 0,
+		}};
 
 struct MenuBox menuBox222_arcade =
-    {
-        .stringIndexTitle = 0xFFFF,
-        .posX_curr = 256,
-        .posY_curr = 170,
-        .unk1 = 0,
-        .state = (0x800 | USE_SMALL_FONT | CENTER_ON_COORDS), // 0x883
-        .rows = menuRows222_arcade,
-        .funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
-        .drawStyle = 4,
-        // rest of variables all default zero
+	{
+		.stringIndexTitle = 0xFFFF,
+		.posX_curr = 256,
+		.posY_curr = 170,
+		.unk1 = 0,
+		.state = (0x800 | USE_SMALL_FONT | CENTER_ON_COORDS), // 0x883
+		.rows = menuRows222_arcade,
+		.funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+		.drawStyle = 4,
+		// rest of variables all default zero
 };
