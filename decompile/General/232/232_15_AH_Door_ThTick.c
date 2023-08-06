@@ -43,19 +43,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
   lev = gGT->levelID;
 
   // check if the door that the player approached is open
-  if (
-      // If you are on N Sanity Beach
-      (lev == 0x1a && (
-        // 0x40 -> Door open from Beach to Glacier
-        (doorID == 4 && ((sdata->advProgress.rewards[3] & 0x40) != 0)) ||
-        // 0x10 -> Door open from Beach to Gemstone Valley
-        (doorID == 5 && ((sdata->advProgress.rewards[3] & 0x10) != 0)))) ||
-      // Check Gemstone Valley and the door to Gem Cup room
-      (lev == 0x19 && ((sdata->advProgress.rewards[3] & 0x20) != 0)) ||
-      // Check Lost Ruins and the door to Glacier Park
-      (lev == 0x1b && ((sdata->advProgress.rewards[3] & 0x80) != 0)) ||
-      // Check Glacier Park and the door to Citadel City
-      (lev == 0x1c && ((sdata->advProgress.rewards[3] & 0x100) != 0)))
+  if (door->doorRot[1] == 0x400)
   {
     // door is open
     doorIsOpen = true;
@@ -411,64 +399,59 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
 
   // == door is opening ==
 
-  // if doors are less than 90 degrees open
-  if(door->doorRot[1] < 0x400)
-  {
-	door->doorRot[1] += 0x10;
-	
-	// right-hand door rot[x,y,z]
-	desiredRot[0] = door->doorRot[0];
-	desiredRot[1] = doorInst->instDef->rot[1] - door->doorRot[1];
-	desiredRot[2] = door->doorRot[2];
-	ConvertRotToMatrix(&door->otherDoor->matrix, &desiredRot[0]);
-	
-	// left-hand door rot[x,y,z]
-	desiredRot[1] = doorInst->instDef->rot[1] + door->doorRot[1];
-	ConvertRotToMatrix(&doorInst->matrix, &desiredRot[0]);
-	
-	// if less than 11 frames have passed,
-	// decrease key scale, then quit function
-	if (door->keyShrinkFrame < 0xb)
-	{
-		scaler = (short*)0x800aba8c;
-		
-		// loop through 4 keys
-		for (i = 0; i < 4; i++)
-		{
-			keyInst = door->keyInst[i];
-			// if instance exists
-			if (keyInst != NULL)
-			{
-				// decrease scale of key
-				keyInst->scale[0] = scaler[door->keyShrinkFrame];
-				keyInst->scale[1] = scaler[door->keyShrinkFrame];
-				keyInst->scale[2] = scaler[door->keyShrinkFrame];
-			}
-		}
-	
-		door->keyShrinkFrame++;
-	
-		return;
-	}
-	
-	// if 11 or more frames have passed,
-	// destroy four key instances.
-	
-	// loop through 4 keys
-	for (i = 0; i < 4; i++)
-	{
-		if(door->keyInst[i] != NULL)
-		{
-			INSTANCE_Death(door->keyInst[i]);
-			door->keyInst[i] = NULL;
-		}
-	}
-	
-	return;
-  }
-
-  // == More than 90 degrees open ==
+  door->doorRot[1] += 0x10;
   
+  // right-hand door rot[x,y,z]
+  desiredRot[0] = door->doorRot[0];
+  desiredRot[1] = doorInst->instDef->rot[1] - door->doorRot[1];
+  desiredRot[2] = door->doorRot[2];
+  ConvertRotToMatrix(&door->otherDoor->matrix, &desiredRot[0]);
+  
+  // left-hand door rot[x,y,z]
+  desiredRot[1] = doorInst->instDef->rot[1] + door->doorRot[1];
+  ConvertRotToMatrix(&doorInst->matrix, &desiredRot[0]);
+  
+  // if less than 11 frames have passed,
+  // decrease key scale, then quit function
+  if (door->keyShrinkFrame < 0xb)
+  {
+  	scaler = (short*)0x800aba8c;
+  	
+  	// loop through 4 keys
+  	for (i = 0; i < 4; i++)
+  	{
+  		keyInst = door->keyInst[i];
+  		// if instance exists
+  		if (keyInst != NULL)
+  		{
+  			// decrease scale of key
+  			keyInst->scale[0] = scaler[door->keyShrinkFrame];
+  			keyInst->scale[1] = scaler[door->keyShrinkFrame];
+  			keyInst->scale[2] = scaler[door->keyShrinkFrame];
+  		}
+  	}
+  
+  	door->keyShrinkFrame++;
+  
+  	return;
+  }
+	
+  // loop through 4 keys
+  for (i = 0; i < 4; i++)
+  {
+  	if(door->keyInst[i] != NULL)
+  	{
+  		INSTANCE_Death(door->keyInst[i]);
+  		door->keyInst[i] = NULL;
+  	}
+  }
+	
+  // if not last frame of opening door
+  if(door->doorRot[1] < 0x400) return;
+  
+  
+  // == Door is fully open ==
+    
   if (
       // if this is N Sane Beach
       ((lev == 0x1a) &&
