@@ -194,6 +194,8 @@ LAB_800aec34:
     if (bossIsOpen)
         goto LAB_800aede8;
 
+	uVar8 = 0;
+
     // if this is gemstone valley
     if (levelID == 0x19)
     {
@@ -210,7 +212,9 @@ LAB_800aec34:
             // HintID: need four trophies to enter boss
             uVar8 = 3;
     }
-    MainFrame_RequestMaskHint(uVar8, 0);
+	
+	if(uVar8 != 0)
+		MainFrame_RequestMaskHint(uVar8, 0);
 
 LAB_800aede0:
 
