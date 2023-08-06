@@ -35,7 +35,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         // go to Load State
         OVR_230.scrapbookState = 1;
 
-        mb->state &= 0xffffefff;
+        mb->state &= ~NEEDS_TO_CLOSE;
 
         Audio_SetState_Safe(1);
 

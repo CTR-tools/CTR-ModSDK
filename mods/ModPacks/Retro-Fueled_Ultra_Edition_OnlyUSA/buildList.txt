@@ -1,20 +1,44 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
 // AdvDifficulty //
 common, exe, MainInit_Drivers, 0x50,  ../../Modules/AdvDifficulty/src/hookBots.s
 
 // Pause Menu Difficulty Mod
-926, exe, MainFreeze_MenuPtrDefault, 0x0, ../../Modules/AdvDifficulty/src/MainFreeze_MenuPtrDefault.c
+common, exe, MainFreeze_MenuPtrDefault, 0x0, ../../Modules/AdvDifficulty/src/MainFreeze_MenuPtrDefault.c
+common, exe, MainFreeze_GetMenuBox, 0x0, ../../Modules/AdvDifficulty/src/MainFreeze_GetMenuBox.c
 
 // End of Race menu mod
-926, exe, UI_RaceEnd_MenuBoxFuncPtr, 0x0, ../../Modules/AdvDifficulty/src/UI_RaceEnd_MenuBoxFuncPtr.c
+common, exe, UI_RaceEnd_MenuBoxFuncPtr, 0x0, ../../Modules/AdvDifficulty/src/UI_RaceEnd_MenuBoxFuncPtr.c
 926, 222, 0x800a0b64, 0x0, ../../Modules/AdvDifficulty/src/new_retryArcade.c
 926, 222, 0x800a0b90, 0x0, ../../Modules/AdvDifficulty/src/new_retryArcade2p.c
-926, 222, AA_EndEvent_DisplayTime, -0x48, ../../Modules/AdvDifficulty/src/hookEnd.s
+1020, 222, 0x800a0fa8, 0x0, ../../Modules/AdvDifficulty/src/new_retryArcade.c
+1020, 222, 0x800a0dd4, 0x0, ../../Modules/AdvDifficulty/src/new_retryArcade2p.c
+1111, 222, 0x800a4144, 0x0, ../../Modules/AdvDifficulty/src/new_retryArcade.c
+1111, 222, 0x800a4170, 0x0, ../../Modules/AdvDifficulty/src/new_retryArcade2p.c
+common, 222, AA_EndEvent_DisplayTime, -0x48, ../../Modules/AdvDifficulty/src/hookEnd.s
 926, 222, AA_EndOfFile, 0x0, ../../Modules/AdvDifficulty/src/struct_222.c
+1020, 222, AA_EndOfFile, 0x0, ../../Modules/AdvDifficulty/src/struct_222.c
+
+// Adventure Hub Difficulty Option
+926, exe, 0x80084394, 0x0, ../../Modules/AdvDifficulty/src/new_AdvHub.c
+1020, exe, 0x80084630, 0x0, ../../Modules/AdvDifficulty/src/new_AdvHub.c
+1111, exe, 0x800875e0, 0x0, ../../Modules/AdvDifficulty/src/new_AdvHub.c
 
 // Main Menu Mod
-926, 230, MM_MENUBOX_NewLoad, 0x0, ../../Modules/AdvDifficulty/src/MM_MENUBOX_NewLoad.c
-926, 230, MM_MENUBOX_1p2p, 0x0, ../../Modules/ExtraDifficulty/src/MM_MENUBOX_1p2p.c
-926, bigfilelangenlng, 0x0, 0x0, ../../Tests/CTRIndonesian/assets/NTSC-U.lng
+common, 230, MM_MENUBOX_NewLoad, 0x0, ../../Modules/AdvDifficulty/src/MM_MENUBOX_NewLoad.c
+common, 230, MM_MENUBOX_1p2p, 0x0, ../../Modules/ExtraDifficulty/src/MM_MENUBOX_1p2p.c
+1111, 230, 0x800b8846, 0x0, ../../Modules/AdvDifficulty/src/jpn_menubox_adjust.bin
+926, bigfilelangenlng, 0x0, 0x0, ../../Modules/AdvDifficulty/assets/NTSC-U.lng
+1020, bigfilelangdelng, 0x0, 0x0, ../../Modules/AdvDifficulty/assets/PAL-DE.lng
+1020, bigfilelangenlng, 0x0, 0x0, ../../Modules/AdvDifficulty/assets/PAL-EN.lng
+1020, bigfilelangeslng, 0x0, 0x0, ../../Modules/AdvDifficulty/assets/PAL-ES.lng
+1020, bigfilelangfrlng, 0x0, 0x0, ../../Modules/AdvDifficulty/assets/PAL-FR.lng
+1020, bigfilelangitlng, 0x0, 0x0, ../../Modules/AdvDifficulty/assets/PAL-IT.lng
+1020, bigfilelangnelng, 0x0, 0x0, ../../Modules/AdvDifficulty/assets/PAL-NE.lng
+1020, bigfilelanguklng, 0x0, 0x0, ../../Modules/AdvDifficulty/assets/PAL-UK.lng
+1111, bigfilelangjalng, 0x0, 0x0, ../../Modules/AdvDifficulty/assets/NTSC-J.lng
 
 // ReservesMeter //
 
@@ -162,4 +186,6 @@ common, 230, MM_TrackSelect_Video_SetDefaults, -0x8, ../../Modules/EngineSelect/
 common, 230, MM_EndOfFile, 0x0, ../../Modules/EngineSelect/src/ES_230.c ../../Modules/AdvDifficulty/src/MM_AdvDifficulty.c
 
 // Compile code to empty spaces in RDATA //
-common, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c  ../../Modules/AdvDifficulty/src/MainFreeze_ExtraDifficulty.c ../../Modules/AdvDifficulty/src/AdvAdjust.c ../../Modules/ReservesMeter/src/main.c
+926, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c  ../../Modules/AdvDifficulty/src/MainFreeze_ExtraDifficulty.c ../../Modules/AdvDifficulty/src/AdvAdjust.c ../../Modules/ReservesMeter/src/main.c
+1020, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c  ../../Modules/AdvDifficulty/src/MainFreeze_ExtraDifficulty.c ../../Modules/AdvDifficulty/src/AdvAdjust.c ../../Modules/ReservesMeter/src/main.c
+1111, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c  ../../Modules/AdvDifficulty/src/MainFreeze_ExtraDifficulty.c ../../Modules/AdvDifficulty/src/AdvAdjust.c ../../Modules/AdvDifficulty/src/struct_222.c ../../Modules/ReservesMeter/src/main.c

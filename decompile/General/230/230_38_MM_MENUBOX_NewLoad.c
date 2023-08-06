@@ -8,7 +8,7 @@ void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox* mb)
   row = mb->rowSelected;
   
   if(row == -1)
-	  mb->ptrPrevBox_InHierarchy->state &= 0xffffffeb;
+	  mb->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
   
   if((unsigned char)row > 1) return;
   

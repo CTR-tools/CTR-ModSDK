@@ -124,7 +124,7 @@ struct MenuBox
 	short rowSelected;
 
 	// 0x1c
-	short unk1a;
+	short unk1c;
 
 	// 0x1e
 	// no idea, used in save/load

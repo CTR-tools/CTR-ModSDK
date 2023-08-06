@@ -19,7 +19,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
   if (menu->unk1e == 0)
   {
 
-    if (-1 < menu->unk1a)
+    if (-1 < menu->rowSelected)
     {
       if (menu->unk1a * 6 + menu->rows != 9)
       {
