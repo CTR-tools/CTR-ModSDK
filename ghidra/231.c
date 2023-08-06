@@ -2098,10 +2098,10 @@ undefined4 FUN_800ad9ac(int param_1,undefined4 param_2)
 	// ThreadMeta
     iVar1 = FUN_8001d094(iVar3);
 	
-	// if funcLevThreadsBirth is not nullptr
+	// if LThC is not nullptr
     if ((iVar1 != 0) && (*(code **)(iVar1 + 8) != (code *)0x0)) 
 	{		
-	  // execute funcLevThreadsBirth, make thread for this instance
+	  // execute LThC, make thread for this instance
 	  // upon collision with the instance, let it run thread->funcThCollide
       uVar2 = (**(code **)(iVar1 + 8))(iVar4,param_2,param_1);
 	  
@@ -13074,8 +13074,7 @@ undefined4 FUN_800ba0c8(int param_1,int param_2,short *param_3)
   
   // This is the door you can shoot in tiger temple
   
-  // If not in relic race, ignore the function,
-  // there are no weapons to activate door anyways
+  // Only continue if not in relic race
   if ((*(uint *)PTR_DAT_8008d2ac & 0x4000000) == 0) 
   {
 	 // get thread for this instance

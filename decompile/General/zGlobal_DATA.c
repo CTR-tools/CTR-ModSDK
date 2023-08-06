@@ -29,8 +29,8 @@ void DECOMP_RB_CtrLetter_LInB();
 void DECOMP_RB_CtrLetter_LInC();
 void DECOMP_RB_Crystal_LInB();
 void DECOMP_RB_Crystal_LInC();
-void RB_Teeth_LInB();
-void RB_Teeth_LInC();
+void DECOMP_RB_Teeth_LInB();
+void DECOMP_RB_Teeth_LInC();
 
 void AH_Door_LInB();
 void AH_Sign_LInB();
@@ -608,7 +608,7 @@ struct Data data =
 		SET_MDM(0,0,0),
 		
 		// 0x70 - STATIC_TEETH
-		SET_MDM(0,RB_Teeth_LInB,RB_Teeth_LInC),
+		SET_MDM(0,DECOMP_RB_Teeth_LInB,DECOMP_RB_Teeth_LInC),
 		
 		// 0x71 - STATIC_STARTTEXT
 		SET_MDM(0,0/*RB_StartText_LInB*/,0),

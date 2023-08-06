@@ -112,12 +112,12 @@ struct MetaDataMODEL
 	// Level Instance Birth
 	// callback after converting
 	// Lev InstDef to Lev Instance
-	void* LInB;
+	void (*LInB)(struct Instance* inst);
 	
 	// Level Instance Collision
 	// callback after detecting
 	// Lev BSP hitbox collision
-	void* LInC;
+	void (*LInC)(struct Instance *i, struct Thread *t, struct ScratchpadStruct* sps);
 };
 
 

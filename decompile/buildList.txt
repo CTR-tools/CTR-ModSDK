@@ -1,6 +1,6 @@
-// 324+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+2 = 398 rewritten so far
+// 325+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 403 rewritten so far
 
-// 324 for every 'common' and ','
+// 325 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -70,6 +70,8 @@ common, 231, RB_TNT_ThTick_ThrowOnHead, 0x0, General/231/231_020_RB_TNT_ThTick_T
 common, 231, RB_Player_ToggleInvisible, 0x0, General/231/231_039_RB_Player_ToggleInvisible.c
 common, 231, RB_Player_ToggleFlicker, 0x0, General/231/231_040_RB_Player_ToggleFlicker.c
 
+common, 231, RB_Burst_CollLevInst, 0x0, General/231/231_050_RB_Burst_CollLevInst.c
+
 common, 231, RB_Baron_ThTick, 0x0, General/231/231_054_055_RB_Baron.c
 common, 231, RB_Blade_ThTick, 0x0, General/231/231_056_057_RB_Blade.c
 common, 231, RB_Bubbles_RoosTubes, 0x0, General/231/231_058_RB_Bubbles_RoosTubes.c
@@ -90,7 +92,7 @@ common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_108_111_RB_Seal.c
 common, 231, RB_Snowball_ThTick, 0x0, General/231/231_112_113_RB_Snowball.c
 // skip Spider, 
 // skip StartText (unused) 
-// skip Teeth
+common, 231, RB_Teeth_LInB, 0x0, General/231/231_120_124_RB_Teeth.c
 common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
 
 // 232 (incomplete)

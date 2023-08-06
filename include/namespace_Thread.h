@@ -100,7 +100,7 @@ struct Thread
 	void (*funcThCollide)(struct Thread* self);
 
 	// 0x2c
-	void* funcThTick;
+	void (*funcThTick)(struct Thread* self);
 
 	// This would be 9900C for players, or a pointer
 	// to a camera, etc
