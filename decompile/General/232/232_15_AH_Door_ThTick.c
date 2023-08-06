@@ -156,7 +156,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
       // if player is far from the door
       (0x8ffff < dist) &&
       // flags
-      ((*(u_short *)((int)door + 0x1c) & 0x10) == 0))
+      ((door->camFlags & 0x10) == 0))
   {
     return;
   }
@@ -197,12 +197,12 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
 
   // if camera is not transitioning out (yet),
   // while keys are still spinning in air
-  if ((*(u_short *)((int)door + 0x1c) & 1) == 0)
+  if ((door->camFlags & 1) == 0)
   {
-
-    if (*(short *)((int)door + 0x1e) != 0)
+    if (door->camTimer != 0)
     {
-      *(short *)((int)door + 0x1e) += -1;
+      door->camTimer--;
+	  
       goto LAB_800b0404;
     }
 
@@ -217,10 +217,10 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
     driver->funcPtrs[0] = VehPtr_Freeze_Init;
 
     // flags
-    *(u_short *)((int)door + 0x1c) |= 0x10;
+    door->camFlags |= 0x10;
 
     // if timer is less than four full seconds
-    if (*(short *)((int)door + 0x26) < 0x78)
+    if (door->frameCount_doorOpenAnim < 0x78)
     {
       if (driver->speedApprox < 0x80)
       {
@@ -249,7 +249,10 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
               // specular lighting
               keyInst->flags |= 0x20000;
 
-              *(short *)((int)door + 9*4) += 1;
+			  // unused
+			  #if 0
+              door->frameCount_unused++;
+			  #endif
 
               driverInst = driver->instSelf;
 
@@ -274,7 +277,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
           }
 
           // Make a backup of HUD variable
-          *(char *)((int)door + 8*4) = gGT->hudFlags;
+          door->hudFlags = (char)gGT->hudFlags;
 
           // Disable HUD
           gGT->hudFlags = 0;
@@ -285,7 +288,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
         // if more than zero
         if (0 < numKeys)
         {
-          piVar16 = (int*)((int)door + 10*4);
+          piVar16 = &door->keyRot[0];
 
           // loop through all keys
           for (i = 0; i < numKeys; i++)
@@ -320,11 +323,11 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
                   iVar17 += 0x1f;
                 }
 
-                ratio = MATH_Sin(*(short *)((int)door + 0xc*4) + iVar18);
+                ratio = MATH_Sin(door->keyOrbit + iVar18);
 
                 keyInst->matrix.t[0] = driver->instSelf->matrix.t[0] + ((iVar17 >> 5) * ratio >> 0xc);
 
-                ratio = MATH_Cos(*(short *)((int)door + 0xc*4) + iVar18);
+                ratio = MATH_Cos(door->keyOrbit + iVar18);
 
                 keyInst->matrix.t[2] = driver->instSelf->matrix.t[2] + ((iVar17 >> 5) * ratio >> 0xc);
               }
@@ -339,23 +342,17 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
           }
         }
 		
-		// keyRot X and Z
-        *(short *)((int)door + 10*4) = 0;
-        *(short *)((int)door + 0xb*4) = 0;
+        door->keyRot[0] = 0;
+        door->keyRot[1] += 0x40;
+        door->keyRot[2] = 0;
 
-        // increment frame counter
-        *(short *)((int)door + 0x26) += 1;
+        door->keyOrbit += 0x10;
 
-        // keyRot Y
-        *(short *)((int)door + 0x2a) += 0x40;
-		
-        *(short *)((int)door + 0xc*4) += 0x10;
+        door->frameCount_doorOpenAnim++;
 
-        // play four distorted "token unlock" sounds,
-        // then play some dramatic sound, then play
-        // sound of doors creeking open
+        // Sound effects when keys float in air
 
-        switch (*(short *)((int)door + 0x26))
+        switch (door->frameCount_doorOpenAnim)
         {
         case 0x0A:
           OtherFX_Play_LowLevel(0x67, 1, 0xff7680);
@@ -373,12 +370,15 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
           // unlock door sound
           OtherFX_Play(0x93, 1);
           break;
-        default:
-          // doors "creek" open
+        
+		default:
+		
+		  // if not last frame
+          if (door->frameCount_doorOpenAnim != 0x78)
+		    goto LAB_800b0404;
+		
+          // on last frame, doors "creek" open
           OtherFX_Play(0x94, 1);
-
-          if (*(short *)((int)door + 0x26) != 0x78)
-            goto LAB_800b0404;
           break;
         }
       }
