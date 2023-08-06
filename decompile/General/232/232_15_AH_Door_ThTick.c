@@ -402,6 +402,8 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
     // desired posY for transition
     desiredPos[1] = doorInst->matrix.t[1] + 0x17a;
 
+	ratio = MATH_Sin((int)doorInst->instDef->rot[1]);
+
 	i = MATH_Sin((int)doorInst->instDef->rot[1] + 0x400);
 
     // desired posZ for transition
