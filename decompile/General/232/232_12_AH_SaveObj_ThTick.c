@@ -189,7 +189,7 @@ LAB_800af72c:
         else
         {
             // get square root to have "true" distance
-            iVar7 = SquareRoot0(iVar7);
+            iVar7 = SquareRoot0_stub(dist);
 
 
             // multiply by 1.5f

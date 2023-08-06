@@ -105,6 +105,9 @@ common, 232, AH_Garage_ThDestroy, 0x0, General/232/232_07_AH_Garage_ThDestroy.c
 common, 232, AH_Garage_Open, 0x0, General/232/232_08_AH_Garage_Open.c
 common, 232, AH_Garage_ThTick, 0x0, General/232/232_09_AH_Garage_ThTick.c
 common, 232, AH_Garage_LInB, 0x0, General/232/232_10_AH_Garage_LInB.c
+common, 232, AH_SaveObj_ThDestroy, 0x0, General/232/232_11_AH_SaveObj_ThDestroy.c
+common, 232, AH_SaveObj_ThTick, 0x0, General/232/232_12_AH_SaveObj_ThTick.c
+common, 232, AH_SaveObj_LInB, 0x0, General/232/232_13_AH_SaveObj_LInB.c
 common, 232, AH_Door_ThDestroy, 0x0, General/232/232_14_AH_Door_ThDestroy.c
 common, 232, AH_Door_ThTick, 0x0, General/232/232_15_AH_Door_ThTick.c
 common, 232, AH_Door_LInB, 0x0, General/232/232_16_AH_Door_LInB.c

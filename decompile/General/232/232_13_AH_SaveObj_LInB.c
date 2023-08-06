@@ -19,7 +19,7 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst)
         // 0 = no relation to param4
         // 0x300 = SmallStackPool
         // 0x3 = static thread bucket
-        saveTh = THREAD_BirthWithObject(0xc0303, AH_SaveObj_ThTick, s_saveobj_800aba78, 0);
+        saveTh = THREAD_BirthWithObject(0xc0303, AH_SaveObj_ThTick, 0, 0);
 
         savInst->thread = saveTh;
 
@@ -50,7 +50,7 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst)
             // DAT_800aba80
             // "scan"
 
-            inst = INSTANCE_Birth3D(gGT->modelPtr[0x78], &DAT_800aba80);
+            inst = INSTANCE_Birth3D(gGT->modelPtr[0x78], 0, 0);
 
             inst->matrix.m[0][0] = savInst->matrix.m[0][0];
             inst->matrix.m[0][2] = savInst->matrix.m[0][2];

@@ -8,7 +8,7 @@ void DECOMP_AH_SaveObj_ThDestroy(struct Thread *saveTh)
 
     if (save->inst != NULL)
     {
-        INSTANCE_Death();
+        INSTANCE_Death(save->inst);
         save->inst = NULL;
     }
     return;
