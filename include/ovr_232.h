@@ -16,6 +16,14 @@ struct AdvPause {
 
 };
 
+enum WoodDoorCamFlags
+{
+	WdCam_FlyingOut = 1,
+	WdCam_FullyOut = 2, // unused
+	WdCam_FlyingIn = 4, // unused
+	WdCam_CutscenePlaying = 0x10
+};
+
 struct WoodDoor
 {
 	struct Instance* otherDoor;
@@ -26,7 +34,7 @@ struct WoodDoor
 	
 	// 0x1c (7)
 	short camFlags;
-	short camTimer;
+	short camTimer_unused;
 	
 	// 0x20 (8)
 	int hudFlags;
@@ -40,7 +48,7 @@ struct WoodDoor
 	
 	// 0x30 (12)
 	short keyOrbit;
-	short keyGrowFrame;
+	short keyShrinkFrame;
 	
 	// 0x34
 	int doorID;

@@ -12,7 +12,6 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
   short doorID;
   short lev;
   short numKeys;
-  u_short doorFlags;
   u_short hintId;
   u_int chkRewards;
   int i;
@@ -25,7 +24,6 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
   int iVar18;
   short desiredPos[3];
   short desiredRot[3];
-  short otherRot[3];
   short* scaler;
 
   struct GameTracker* gGT = sdata->gGT;
@@ -152,11 +150,13 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
     return;
   }
 
+  // == if door is closed ==
+
   if (
       // if player is far from the door
       (0x8ffff < dist) &&
       // flags
-      ((door->camFlags & 0x10) == 0))
+      ((door->camFlags & WdCam_CutscenePlaying) == 0))
   {
     return;
   }
@@ -192,32 +192,28 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
       // Aku Hint "You must have two boss keys"
       hintId = 0x12;
     }
+	
+	// request hint and quit
     goto joined_r0x800b06ec;
   }
 
-  // if camera is not transitioning out (yet),
-  // while keys are still spinning in air
-  if ((door->camFlags & 1) == 0)
-  {
-    if (door->camTimer != 0)
-    {
-      door->camTimer--;
-	  
-      goto LAB_800b0404;
-    }
+  // == door is closed, ready to unlock ==
 
+  // if camera is not transitioning out (yet),
+  // while keys are spinning in air (4 seconds)
+  if ((door->camFlags & WdCam_FlyingOut) == 0)
+  {
     // If the game is paused
     if ((gGT->gameMode1 & 0xf) != 0)
     {
-      goto LAB_800b0404;
+      return;
     }
 
     // If you are here, game must not be paused
 
     driver->funcPtrs[0] = VehPtr_Freeze_Init;
 
-    // flags
-    door->camFlags |= 0x10;
+    door->camFlags |= WdCam_CutscenePlaying;
 
     // if timer is less than four full seconds
     if (door->frameCount_doorOpenAnim < 0x78)
@@ -248,11 +244,6 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
 
               // specular lighting
               keyInst->flags |= 0x20000;
-
-			  // unused
-			  #if 0
-              door->frameCount_unused++;
-			  #endif
 
               driverInst = driver->instSelf;
 
@@ -288,8 +279,6 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
         // if more than zero
         if (0 < numKeys)
         {
-          piVar16 = &door->keyRot[0];
-
           // loop through all keys
           for (i = 0; i < numKeys; i++)
           {
@@ -332,6 +321,8 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
                 keyInst->matrix.t[2] = driver->instSelf->matrix.t[2] + ((iVar17 >> 5) * ratio >> 0xc);
               }
 
+			  piVar16 = &door->keyRot[0];
+
 			  // desiredPos is actually specLightDir in this case, variable re-use
               Vector_SpecLightSpin3D(keyInst, piVar16, &desiredPos[0]);
 
@@ -370,23 +361,19 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
           // unlock door sound
           OtherFX_Play(0x93, 1);
           break;
-        
-		default:
-		
-		  // if not last frame
-          if (door->frameCount_doorOpenAnim != 0x78)
-		    goto LAB_800b0404;
-		
+		case 0x78:
           // on last frame, doors "creek" open
           OtherFX_Play(0x94, 1);
           break;
+		
+		default:
+		  break;
         }
       }
-      goto LAB_800b0404;
+      return;
     }
 
-    // After four full seconds,
-    // start the camera zoom-out
+    // == After 4 seconds ==
 
     ratio = MATH_Cos((int)doorInst->instDef->rot[1]);
 
@@ -417,160 +404,117 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
     GAMEPAD_Vib_2(driver, 0, 0);
 
     // start camera out transition (in "else" below)
-    doorFlags = *(u_short *)((int)door + 7*4) | 1;
+    door->camFlags |= WdCam_FlyingOut;
+	
+	return;
   }
-  // if camera is transitioning out,
-  // after keys are done spinning in air
-  else
-  {
-    // set transition out to take two full seconds (can't patch?)
-    *(short *)((int)door + 0x1e) = 0x3c;
 
-    if (((cDC->flags & 0x200) != 0) || ((*(u_short *)((int)door + 7*4) & 4) != 0))
-    {
-      if (((cDC->flags & 0x800) != 0) && ((*(u_short *)((int)door + 7*4) & 2) == 0))
-      {
-        *(u_short *)((int)door + 7*4) |= 2;
-      }
-      goto LAB_800b0404;
-    }
-
-    driver->funcPtrs[0] = VehPtr_Driving_Init;
-
-    doorFlags = *(u_short *)((int)door + 7*4) | 4;
-  }
-  *(u_short *)((int)door + 7*4) = doorFlags;
-
-LAB_800b0404:
-
-  if ((*(u_short *)((int)door + 7*4) & 1) == 0)
-    return;
-
-  // if doors are 90 degrees open,
-  // then allow passage, and quit function
-  if (0x3ff < *(short *)((int)door + 0x16))
-  {
-
-    if (
-        // if this is N Sane Beach
-        ((lev == 0x1a) &&
-
-         // if this is door #4 (beach -> glacier)
-         (doorID == 4)) ||
-
-        // if this is lost ruins (ruins -> glacier)
-        (lev == 0x1b))
-    {
-      // open all doors to glacier
-      sdata->advProgress.rewards[3] |= 0xc0;
-    }
-    else
-    {
-      if (
-          // if this is N Sane Beach
-          (lev == 0x1a) &&
-
-          // Door #5 (beach -> ruins)
-          (doorID == 5))
-      {
-        // record that door is open
-        sdata->advProgress.rewards[3] |= 0x10;
-      }
-      else
-      {
-        // Gemstone valley (cup door)
-        if (lev == 0x19)
-        {
-          // record that door is open
-          sdata->advProgress.rewards[3] |= 0x20;
-        }
-
-        // Glacier Park (glacier -> citadel)
-        else
-        {
-          // record that door is open
-          sdata->advProgress.rewards[3] |= 0x100;
-        }
-      }
-    }
-    cDC->flags |= 0x400;
-
-    driver->funcPtrs[0] = VehPtr_Driving_Init;
-
-    *(u_short *)((int)door + 7*4) &= 0xffef | 4;
-
-    // bring HUD back
-    gGT->hudFlags = *(char *)((int)door + 8*4);
-
-    return;
-  }
+  // == door is opening ==
 
   // if doors are less than 90 degrees open
+  if(door->doorRot[1] < 0x400)
+  {
+	door->doorRot[1] += 0x10;
+	
+	// right-hand door rot[x,y,z]
+	desiredRot[0] = door->doorRot[0];
+	desiredRot[1] = doorInst->instDef->rot[1] - door->doorRot[1];
+	desiredRot[2] = door->doorRot[2];
+	ConvertRotToMatrix(&door->otherDoor->matrix, &desiredRot[0]);
+	
+	// left-hand door rot[x,y,z]
+	desiredRot[1] = doorInst->instDef->rot[1] + door->doorRot[1];
+	ConvertRotToMatrix(&doorInst->matrix, &desiredRot[0]);
+	
+	// if less than 11 frames have passed,
+	// decrease key scale, then quit function
+	if (door->keyShrinkFrame < 0xb)
+	{
+		scaler = (short*)0x800aba8c;
+		
+		// loop through 4 keys
+		for (i = 0; i < 4; i++)
+		{
+			keyInst = door->keyInst[i];
+			// if instance exists
+			if (keyInst != NULL)
+			{
+				// decrease scale of key
+				keyInst->scale[0] = scaler[door->keyShrinkFrame];
+				keyInst->scale[1] = scaler[door->keyShrinkFrame];
+				keyInst->scale[2] = scaler[door->keyShrinkFrame];
+			}
+		}
+	
+		door->keyShrinkFrame++;
+	
+		return;
+	}
+	
+	// if 11 or more frames have passed,
+	// destroy four key instances.
+	
+	// loop through 4 keys
+	for (i = 0; i < 4; i++)
+	{
+		if(door->keyInst[i] != NULL)
+		{
+			INSTANCE_Death(door->keyInst[i]);
+			door->keyInst[i] = NULL;
+		}
+	}
+	
+	return;
+  }
 
-  scaler = (short*)0x800aba8c;
+  // == More than 90 degrees open ==
   
-  // scaler[1] = DAT_800aba90;
-  // scaler[2] = DAT_800aba94;
-  // scaler[3] = DAT_800aba98;
-  // scaler[4] = DAT_800aba9c;
-  // scaler[5] = DAT_800abaa0;
-
-  // right-hand door rotX
-  desiredRot[0] = *(short *)((int)door + 5*4);
-
-  // increase opening rotation
-  *(short *)((int)door + 0x16) += 0x10;
-
-  // right-hand door rotY and rotZ
-  desiredRot[1] = doorInst->instDef->rot[1] - *(short *)((int)door + 0x16);
-  desiredRot[2] = *(short *)((int)door + 6*4);
-
-  // left-hand door rot[x,y,z]
-  otherRot[0] = *(short *)((int)door + 5*4);
-  otherRot[1] = doorInst->instDef->rot[1] + *(short *)((int)door + 0x16);
-  otherRot[2] = *(short *)((int)door + 6*4);
-
-  // convert 3 rotation shorts into rotation matrix
-  ConvertRotToMatrix(&doorInst->matrix, &otherRot[0]);
-
-  // convert 3 rotation shorts into rotation matrix
-  ConvertRotToMatrix(&door->otherDoor->matrix, &desiredRot[0]);
-
-  // if less than 11 frames have passed,
-  // decrease key scale, then quit function
-  if (*(short *)((int)door + 0x32) < 0xb)
+  if (
+      // if this is N Sane Beach
+      ((lev == 0x1a) &&
+  
+       // if this is door #4 (beach -> glacier)
+       (doorID == 4)) ||
+  
+      // if this is lost ruins (ruins -> glacier)
+      (lev == 0x1b))
   {
-    // loop through 4 keys
-    for (i = 0; i < 4; i++)
-    {
-      keyInst = door->keyInst[i];
-      // if instance exists
-      if (keyInst != NULL)
-      {
-        // decrease scale of key,
-        // by using array of values per frame
-        // scale = short array[door->numFrame]
-        keyInst->scale[0] = scaler[(int)*(short *)((int)door + 0x32)];
-        keyInst->scale[1] = scaler[(int)*(short *)((int)door + 0x32)];
-        keyInst->scale[2] = scaler[(int)*(short *)((int)door + 0x32)];
-      }
-    }
-
-    // increase Numframe
-    *(short *)((int)door + 0x32) += 1;
-
-    return;
+    // open all doors to glacier
+    sdata->advProgress.rewards[3] |= 0xc0;
   }
-
-  // if 11 or more frames have passed,
-  // destroy four key instances.
-
-  // loop through 4 keys
-  for (i = 0; i < 4; i++)
+  
+  else if (
+        // if this is N Sane Beach
+        (lev == 0x1a) &&
+  
+        // Door #5 (beach -> ruins)
+        (doorID == 5))
   {
-    INSTANCE_Death(door->keyInst[i]);
-    door->keyInst[i] = NULL;
+    // record that door is open
+    sdata->advProgress.rewards[3] |= 0x10;
   }
-
-  return;
+    
+  // Gemstone valley (cup door)
+  else if (lev == 0x19)
+  {
+    // record that door is open
+    sdata->advProgress.rewards[3] |= 0x20;
+  }
+    
+  // Glacier Park (glacier -> citadel)
+  else
+  {
+    // record that door is open
+    sdata->advProgress.rewards[3] |= 0x100;
+  }
+  	
+  cDC->flags |= 0x400;
+  
+  driver->funcPtrs[0] = VehPtr_Driving_Init;
+  
+  // cutscene over
+  door->camFlags &= ~(0x10);
+  
+  // bring HUD back
+  gGT->hudFlags = (char)door->hudFlags;
 }

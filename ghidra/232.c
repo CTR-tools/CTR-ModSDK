@@ -4428,6 +4428,7 @@ void FUN_800b072c(int param_1)
   // frame timer
   *(undefined2 *)((int)piVar11 + 0x26) = 0;
   
+  // keyShrinkFrame
   *(undefined2 *)((int)piVar11 + 0x32) = 0;
   
   // another vec3
