@@ -14,10 +14,12 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     struct Thread *t;
     struct Instance *garageTop;
     struct BossGarageDoor *garage;
+	struct GameTracker* gGT;
 
+	gGT = sdata->gGT;
     adv = &sdata->advProgress;
     bossIsOpen = true;
-    levelID = sdata->gGT->levelID;
+    levelID = gGT->levelID;
 
     if (inst->thread != NULL)
         return;
@@ -29,7 +31,7 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
             SMALL,
             STATIC),
         AH_Garage_ThTick, // behavior
-        (char*)0x800aba64, // debug name
+        0, 				  // debug name
         0                 // thread relative
     );
 
@@ -55,17 +57,17 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     {
         // make a "garagetop" to make door appear to roll up
 
-        garageTop = INSTANCE_Birth3D(sdata->gGT->modelPtr[0x8e],(char*)0x800aba6c, t);
+        garageTop = INSTANCE_Birth3D(gGT->modelPtr[0x8e],0, t);
 
-        // copy rotation from one instance to the other
-        garageTop->matrix.m[0][0] = inst->matrix.m[0][0];
-        garageTop->matrix.m[0][2] = inst->matrix.m[0][2];
-        garageTop->matrix.m[1][1] = inst->matrix.m[1][1];
-        garageTop->matrix.m[2][0] = inst->matrix.m[2][0];
+        // copy matrix from one instance to the other
+        *(int*)&garageTop->matrix.m[0][0] = *(int*)&inst->matrix.m[0][0];
+        *(int*)&garageTop->matrix.m[0][2] = *(int*)&inst->matrix.m[0][2];
+        *(int*)&garageTop->matrix.m[1][1] = *(int*)&inst->matrix.m[1][1];
+        *(int*)&garageTop->matrix.m[2][0] = *(int*)&inst->matrix.m[2][0];
         garageTop->matrix.m[2][2] = inst->matrix.m[2][2];
-
-        // copy position from Garage instance
-        memcpy(&garageTop->matrix.t[0], &inst->matrix.t[0], sizeof(int)*3);
+		garageTop->matrix.t[0] = inst->matrix.t[0];
+		garageTop->matrix.t[1] = inst->matrix.t[1];
+		garageTop->matrix.t[2] = inst->matrix.t[2];
 
         ratio = MATH_Sin((int)inst->instDef->rot[1]);
 

@@ -276,11 +276,14 @@ LAB_800aede8:
             gGT->bossID = bossIDs[hubID];
         }
 
+		// new levelID
+		levelID = bossTracks[hubID];
+
         // Set the boss character (P2)
         data.characterIDs[1] = data.metaDataLEV[levelID].characterID_Boss;
 
         TitleFlag_SetDrawOrder(1);
-        MainRaceTrack_RequestLoad(bossTracks[hubID]);
+        MainRaceTrack_RequestLoad(levelID);
     }
     return;
 }
