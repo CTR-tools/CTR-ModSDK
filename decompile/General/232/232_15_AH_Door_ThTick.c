@@ -357,7 +357,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
 
         switch (*(short *)((int)door + 0x26))
         {
-        case 0x10:
+        case 0x0A:
           OtherFX_Play_LowLevel(0x67, 1, 0xff7680);
           break;
         case 0x0F:
@@ -370,11 +370,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
           OtherFX_Play_LowLevel(0x67, 1, 0xc39480);
           break;
         case 0x50:
-          // sound of hub doors unlocking ??
-          // or just a dramatic sound ??
-
-          // point is it's right before doors
-          // "creek" open
+          // unlock door sound
           OtherFX_Play(0x93, 1);
           break;
         default:
