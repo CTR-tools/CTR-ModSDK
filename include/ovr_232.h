@@ -22,6 +22,9 @@ struct WoodDoor
 	struct Instance* keyInst[4];
 	
 	// 0x14
+	char unk20[0x20];
+	
+	// 0x14
 	// short vec4[4]
 	
 	// 0x1C

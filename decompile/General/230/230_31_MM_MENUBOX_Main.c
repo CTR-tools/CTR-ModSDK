@@ -116,7 +116,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   mainMenu->state |= ONLY_DRAW_TITLE;
 
   // number of laps is 3 otherwise 1 if cheat is enabled
-  gGT->numLaps = (gGT->gameMode2 & CHEAT_ONELAP == 0)3 : 1;
+  gGT->numLaps = ((gGT->gameMode2 & CHEAT_ONELAP) == 0) ? 3 : 1;
 
   // get LNG index of row selected
   row = mainMenu->rows[mainMenu->rowSelected].stringIndex;
