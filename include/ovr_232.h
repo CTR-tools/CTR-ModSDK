@@ -21,22 +21,26 @@ struct WoodDoor
 	struct Instance* otherDoor;
 	struct Instance* keyInst[4];
 	
-	// 0x14
-	char unk20[0x20];
+	// 0x14 (5)
+	short doorRot[4];
 	
-	// 0x14
-	// short vec4[4]
+	// 0x1c (7)
+	short camFlags;
+	short camTimer;
 	
-	// 0x1C
-	// 0x1E
-	// specLightDir[4] ??
+	// 0x20 (8)
+	int hudFlags;
 	
-	// 0x24
+	// 0x24 (9)
+	short frameCount_unused;
+	short frameCount_doorOpenAnim;
 	
+	// 0x28 (10)
+	short keyRot[4];
 	
-	// 0x30
-	// increments by 16 per frame
-	// makes keys move in circular motion
+	// 0x30 (12)
+	short keyOrbit;
+	short keyGrowFrame;
 	
 	// 0x34
 	int doorID;

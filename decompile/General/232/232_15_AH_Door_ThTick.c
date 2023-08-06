@@ -224,6 +224,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
     {
       if (driver->speedApprox < 0x80)
       {
+		// Actually, specLightDir
         desiredPos[0] = -0xc98;
         desiredPos[1] = 0x99f;
         desiredPos[2] = 0x232;
@@ -231,7 +232,6 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
         // if keys are not spawned, create them
         if (door->keyInst[0] == NULL)
         {
-
           // if number of keys is more than zero
           if (numKeys != 0)
           {
@@ -329,7 +329,8 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
                 keyInst->matrix.t[2] = driver->instSelf->matrix.t[2] + ((iVar17 >> 5) * ratio >> 0xc);
               }
 
-              Vector_SpecLightSpin3D(keyInst, piVar16, &desiredPos);
+			  // desiredPos is actually specLightDir in this case, variable re-use
+              Vector_SpecLightSpin3D(keyInst, piVar16, &desiredPos[0]);
 
               // convert 3 rotation shorts into rotation matrix
               ConvertRotToMatrix(&keyInst->matrix, piVar16);
@@ -337,14 +338,17 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
             door->keyInst[i] = keyInst;
           }
         }
+		
+		// keyRot X and Z
         *(short *)((int)door + 10*4) = 0;
         *(short *)((int)door + 0xb*4) = 0;
 
         // increment frame counter
         *(short *)((int)door + 0x26) += 1;
 
-        // spin rate of key
+        // keyRot Y
         *(short *)((int)door + 0x2a) += 0x40;
+		
         *(short *)((int)door + 0xc*4) += 0x10;
 
         // play four distorted "token unlock" sounds,
