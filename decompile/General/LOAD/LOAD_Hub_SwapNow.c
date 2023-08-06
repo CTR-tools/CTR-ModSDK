@@ -18,7 +18,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 	// ptrintf("gGT->level2 = 0x%08x\n",gGT->level2);
 	// ptrintf("SWAPPING 1...\n");
 	
-	LevInstDef_RePack(gGT->level1->ptr_mesh_info, 0);
+	LevInstDef_RePack(gGT->level1->ptr_mesh_info, 1);
 	
 	// Aug 5
 	// ptrintf("SWAPPING 2...\n");
