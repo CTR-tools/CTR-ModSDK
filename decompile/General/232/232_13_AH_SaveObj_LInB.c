@@ -15,11 +15,13 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst)
     // if this Instance's thread is not valid
     if (savInst->thread == NULL)
     {
-        // 0xc = size
-        // 0 = no relation to param4
-        // 0x300 = SmallStackPool
-        // 0x3 = static thread bucket
-        saveTh = THREAD_BirthWithObject(0xc0303, AH_SaveObj_ThTick, 0, 0);
+        saveTh = THREAD_BirthWithObject(
+			SIZE_RELATIVE_POOL_BUCKET(
+				sizeof(struct SaveObj),
+				NONE,
+				SMALL,
+				STATIC),
+			AH_SaveObj_ThTick, 0, 0);
 
         savInst->thread = saveTh;
 
