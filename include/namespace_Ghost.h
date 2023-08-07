@@ -9,6 +9,7 @@ struct GhostTape
 	void* ptrEnd;	// gh->0x28 + gh->size
 	
 	// 0xC
+	char data[0x260-0xC];
 	
 	// 0x260
 	int constDEADC0ED;
