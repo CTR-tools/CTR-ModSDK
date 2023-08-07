@@ -3995,13 +3995,19 @@ struct sData
 	// 80090d88 -- JpnRetail
 	int boolPlayGhost;
 
+	// 8008d95c
+	char data18_aaa[0x10];
+
 	// 8008d960
 	// char teamOfEachPlayer[4];
-
-	// 8008d95c
-	char data18_aaa[0x14];
+	
+	// 8008d964
+	// unknown
 
 	// 8008d968 boolWipeMemcard (why?)
+	
+	// 8008d96c
+	int advProfileIndex;
 
 	// 8008d970
 	// frame timer for color animation:
