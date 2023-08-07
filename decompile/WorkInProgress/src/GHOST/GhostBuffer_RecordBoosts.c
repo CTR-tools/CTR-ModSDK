@@ -35,8 +35,7 @@ void GhostBuffer_RecordBoosts(int addReserve,char type,int speedCap)
     puVar1[4] = (char)((u_int)speedCap >> 8);
     puVar1[5] = (char)speedCap;
 
-	// increment recording offset by 5 bytes
-	sdata->GhostRecording.ptrCurrOffset = (int)sdata->GhostRecording.ptrCurrOffset + 6;
+	sdata->GhostRecording.ptrCurrOffset += 6;
   }
   return;
 }

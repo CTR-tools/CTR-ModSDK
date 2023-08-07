@@ -4301,15 +4301,15 @@ struct sData
 		// 8008fbf8
 		// beginning of recording buffer,
 		// after ghost header
-		void* ptrStartOffset;
+		char* ptrStartOffset;
 
 		// 8008fbfc
 		// max address a ghost can record to
-		void* ptrEndOffset;
+		char* ptrEndOffset;
 
 		// 8008fc00
 		// current "end", where you append buffer
-		void* ptrCurrOffset;
+		char* ptrCurrOffset;
 
 		// DAT_8008fc04
 		// Used to update velocity
@@ -4342,8 +4342,8 @@ struct sData
 		short unk_8fc1e;
 
 		// 8008fc20
-		int animationID;
-		int animationFrame;
+		int animFrame;
+		int animIndex;
 		u_int instanceFlags;
 
 	} GhostRecording;

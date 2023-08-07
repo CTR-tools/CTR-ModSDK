@@ -5,7 +5,6 @@ void GhostBuffer_RecordStats(short raceFinished)
   char *pbVar1;
   int iVar3;
   int iVar4;
-  char *pbVar5;
   int iVar6;
   struct Instance* iVar7;
   struct Driver* iVar8;
@@ -73,64 +72,39 @@ void GhostBuffer_RecordStats(short raceFinished)
     // Time elapsed since last 0x80 buffer
 	iVar9 = sdata->GhostRecoding.timeElapsedInRace - sdata->GhostRecoding.timeOfLast80buffer;
 
+	// get pointer to current recording char in buffer
+    pbVar1 = sdata->GhostRecording.ptrCurrOffset;
 
 	if (
 			// if animation frame changed
-			(sdata->GhostRecoding.animationID != iVar7->animFrame) ||
+			(sdata->GhostRecoding.animFrame != iVar7->animFrame) ||
 
 			// if animation changed
-			(sdata->GhostRecoding.animationFrame != iVar7->animIndex)
+			(sdata->GhostRecoding.animIndex != iVar7->animIndex)
 		)
 	{
-	  // 0x81-style chunks are 3 chars long (including 0x81)
+	  sdata->GhostRecoding.animFrame = iVar7->animFrame;
+	  sdata->GhostRecoding.animIndex = iVar7->animIndex;
 
-	  // Write to recording buffer
-      *sdata->GhostRecording.ptrCurrOffset = 0x81;
+      pbVar1[0] = 0x81;
+	  pbVar1[1] = iVar7->animIndex;
+	  pbVar1[2] = iVar7->animFrame;
 
-	  // prepare to advance the recording offset by 1 char
-      pbVar5 = (int)sdata->GhostRecording.ptrCurrOffset + 1;
-
-	  // animation frame
-      sdata->GhostRecoding.animationFrame = iVar7->animFrame;
-
-	  // prepare to advance the recording offset by 2 chars
-	  pbVar1 = (int)sdata->GhostRecording.ptrCurrOffset + 2;
-
-	  // advance the recording offset by 1 char
-      sdata->GhostRecording.ptrCurrOffset = pbVar5;
-
-	  // Write to recording buffer
-      *pbVar1 = (char)iVar7->animFrame;
-
-	  // get animation
-      sdata->GhostRecoding.animationFrame = iVar7->animIndex;
-
-	  // Write to recording buffer
-	  *pbVar5 = iVar7->animIndex;
-
-	  // Advance the recording buffer by two chars
-      sdata->GhostRecording.ptrCurrOffset = (int)sdata->GhostRecording.ptrCurrOffset + 2;
+      sdata->GhostRecording.ptrCurrOffset += 3;
     }
 
 	// If there is a change in instance flags,
 	// determine if driver is split by water or mud
     if ((iVar7->flags & 0x2000) != (sdata->GhostRecording.instanceFlags & 0x2000))
 	{
-	  // 0x83-style chunks are 2 chars long (including 0x83)
-
-	  // Write to recording buffer
-      *sdata->GhostRecording.ptrCurrOffset = 0x83;
+      pbVar1[0] = 0x83;
 
 	  // Record the instance flags
 	  // determine if driver is split by water or mud
-      sdata->GhostRecording.ptrCurrOffset[1] = (char)(iVar7->flags >> 0xd) & 1;
+      pbVar1[1] = (char)(iVar7->flags >> 0xd) & 1;
 
-	  // increment recording offset by 2
-      sdata->GhostRecording.ptrCurrOffset = (int)sdata->GhostRecording.ptrCurrOffset + 2;
+      sdata->GhostRecording.ptrCurrOffset += 2;
     }
-
-	// get pointer to current recording char in buffer
-    pbVar1 = sdata->GhostRecording.ptrCurrOffset;
 
 	// This if-statment was rewritten from the original Ghidra output,
 	// be aware that it may not be accurate, go back to original output
@@ -164,13 +138,10 @@ void GhostBuffer_RecordStats(short raceFinished)
 	  // If there is no change in position
       if (((sdata->GhostRecording.VelX == 0) && (sdata->GhostRecording.VelY == 0)) && (sdata->GhostRecording.VelZ == 0))
 	  {
-		// 0x84-style buffers are 1 char long (just 0x84, means do nothing)
-
 		// Record that you are doing nothing
-        *sdata->GhostRecording.ptrCurrOffset = 0x84;
+        pbVar1[0] = 0x84;
 
-		// increment recording offset by one char
-        sdata->GhostRecording.ptrCurrOffset = (int)sdata->GhostRecording.ptrCurrOffset + 1;
+        sdata->GhostRecording.ptrCurrOffset += 1;
       }
 
 	  // If you are moving
@@ -180,15 +151,9 @@ void GhostBuffer_RecordStats(short raceFinished)
 		// "no opcode" means "assume velocity"
 
 		// Write velX to buffer
-        *sdata->GhostRecording.ptrCurrOffset = (char)sdata->GhostRecording.VelX;
-
-		// Write velY to buffer
+        pbVar1[0] = (char)sdata->GhostRecording.VelX;
         pbVar1[1] = (char)sdata->GhostRecording.VelY;
-
-		// Write velZ to buffer
         pbVar1[2] = (char)sdata->GhostRecording.VelZ;
-
-		// rotation
         pbVar1[3] = (char)(iVar8->rotCurr.y >> 4);
         pbVar1[4] = (char)(iVar8->rotCurr.z >> 4);
 
@@ -206,25 +171,21 @@ void GhostBuffer_RecordStats(short raceFinished)
 	  // 0x80-style chunks are 11 chars long (including 0x80)
 
 	  // Write to ghost recording buffer
-      *sdata->GhostRecording.ptrCurrOffset = 0x80;
+      pbVar1[0] = 0x80;
 
-	  // Advance the recording by one char
-      sdata->GhostRecording.ptrCurrOffset = (int)sdata->GhostRecording.ptrCurrOffset + 1;
+	  // flipping endians
 
 	  // Write 2-char X position
-      *sdata->GhostRecording.ptrCurrOffset = (char)(iVar4 >> 8);
-      local_10 = (char)iVar4;
-      pbVar1[2] = local_10;
+      pbVar1[1] = (char)(iVar4 >> 8);
+      pbVar1[2] = (char)iVar4;
 
 	  // Write 2-char Y position
       pbVar1[3] = (char)(iVar3 >> 8);
-      local_e = (char)iVar3;
-      pbVar1[4] = local_e;
+      pbVar1[4] = (char)iVar3;
 
 	  // Write 2-char Z position
 	  pbVar1[5] = (char)(iVar6 >> 8);
-      local_c = (char)iVar6;
-      pbVar1[6] = local_c;
+      pbVar1[6] = (char)iVar6;
 
 	  // Write 2-char ???
 	  // related to time
@@ -235,8 +196,7 @@ void GhostBuffer_RecordStats(short raceFinished)
 	  pbVar1[9] = (char)(iVar8->rotCurr.y >> 4);
       pbVar1[10] = (char)(iVar8->rotCurr.z >> 4);
 
-	  // Increment recording offset by 10 chars
-      sdata->GhostRecording.ptrCurrOffset = (int)sdata->GhostRecording.ptrCurrOffset + 10;
+      sdata->GhostRecording.ptrCurrOffset += 11;
 
 	  // Time of last 0x80 buffer
       sdata->GhostRecording.timeOfLast80buffer = sdata->GhostRecording.timeElapsedInRace;
