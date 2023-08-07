@@ -569,13 +569,20 @@ void FUN_80027838(void)
         }
       }
       
+	  // ghostTape->0x0 = ptrGhostHeader
 	  iVar6 = piVar7[0x99];
       *piVar7 = iVar6;
       
+	  // ghostTape->ptrStart = ptrGhostHeader->0x28
 	  piVar7[1] = iVar6 + 0x28;
+	  
+	  // size = ptrGhostHeader->size
       uVar1 = *(ushort *)(iVar6 + 2);
+	  
       piVar7[0x98] = -0x21523f13;
-      piVar7[2] = iVar6 + 0x28 + (uint)uVar1;
+      
+	  // ghostTape->ptrEnd = ptrGhostHeader->0x28 + size
+	  piVar7[2] = iVar6 + 0x28 + (uint)uVar1;
 
 	  // only do this one time in a loop that executes twice,
 	  // first ghost (index zero) is a ghost made by the player,

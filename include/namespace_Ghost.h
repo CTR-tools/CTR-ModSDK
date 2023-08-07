@@ -1,3 +1,17 @@
+// GhostTape is 0x268 large
+// GhostRecBuf is 0x3e00
+
+struct GhostTape
+{
+	struct GhostHeader* gh;
+	void* ptrGhostBuffer; // gh->0x28
+	
+	// 0x264
+	struct GhostHeader* gh_again; // duplicate?
+	
+	// 0x268 bytes large
+}
+
 struct GhostHeader
 {
 	// 0x0

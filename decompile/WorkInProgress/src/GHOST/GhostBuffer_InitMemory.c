@@ -78,12 +78,19 @@ void GhostBuffer_InitMemory(void)
 				}
 			}
 
+			// ghostTape->0x0 = ptrGhostHeader
 			iVar2 = piVar7[0x99];
 			*piVar7 = iVar2;
 
+			// ghostTape->ptrStart = ptrGhostHeader->0x28
 			piVar7[1] = iVar2 + 0x28;
+			
+			// size = ptrGhostHeader->size
 			uVar1 = *(u_short *)(iVar2 + 2);
+			
 			piVar7[0x98] = -0x21523f13;
+			
+			// ghostTape->ptrEnd = ptrGhostHeader->0x28 + size
 			piVar7[2] = iVar2 + 0x28 + (u_int)uVar1;
 
 			// only do this one time in a loop that executes twice,
