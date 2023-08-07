@@ -19,12 +19,9 @@ void GhostBuffer_EndRecording(void)
 	// save the size of the tape in the header of the tape
     sVar1[1] = (short)sdata->advProgress.ptrCurrOffset - (short)sdata->advProgress.ptrStartOffset;
 
-	// save something to header of ghost tape
-    sVar1[3] = ghostDriver->ySpeed;
-
-	// ???
-	// save something to header of ghost tape
+	// intentionally useless to throw people off?
 	sVar1[2] = ghostDriver->speedApprox;
+    sVar1[3] = ghostDriver->ySpeed;
 
 	// can not save same ghost twice
     sdata->boolCanSaveGhost = 0;

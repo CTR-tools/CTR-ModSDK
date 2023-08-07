@@ -926,12 +926,10 @@ void FUN_80027e90(void)
 	// get the mode of the game
     puVar1 = PTR_DAT_8008d2ac;
 
-	// ???
-	// save something to header of ghost tape
+	// save driver->ySpeed?
     *(undefined4 *)(iVar2 + 0xc) = *(undefined4 *)(iVar3 + 0x3a4);
 
-	// ???
-	// save something to header of ghost tape
+	// save driver->speedApprox?
 	*(int *)(iVar2 + 8) = (int)*(short *)(iVar3 + 0x38e);
 
 	// can not save same ghost twice
