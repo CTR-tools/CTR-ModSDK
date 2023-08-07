@@ -579,6 +579,7 @@ void FUN_80027838(void)
 	  // size = ptrGhostHeader->size
       uVar1 = *(ushort *)(iVar6 + 2);
 	  
+	  // 0xDEADC0ED
       piVar7[0x98] = -0x21523f13;
       
 	  // ghostTape->ptrEnd = ptrGhostHeader->0x28 + size

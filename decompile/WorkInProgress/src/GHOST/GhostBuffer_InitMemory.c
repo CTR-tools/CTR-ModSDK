@@ -88,6 +88,7 @@ void GhostBuffer_InitMemory(void)
 			// size = ptrGhostHeader->size
 			uVar1 = *(u_short *)(iVar2 + 2);
 			
+			// 0xDEADC0ED
 			piVar7[0x98] = -0x21523f13;
 			
 			// ghostTape->ptrEnd = ptrGhostHeader->0x28 + size
