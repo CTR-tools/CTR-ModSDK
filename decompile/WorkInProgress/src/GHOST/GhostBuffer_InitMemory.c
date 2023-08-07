@@ -137,7 +137,7 @@ void GhostBuffer_InitMemory(void)
 			ghostDriver->driverID = i + 1;
 
 			// Driver + 0x62C = ptr ghost tape
-			*(int *)(ghostDriver + 0x18b) = sdata->ptrGhostTape[i];
+			*(int *)((int)ghostDriver + 0x62c) = sdata->ptrGhostTape[i];
 
 			uVar3 = Driver_SearchModelByString(data.MetaDataCharacters[data.characterIDs[i + 1]].name_Debug);
 
