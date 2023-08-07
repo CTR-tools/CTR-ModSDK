@@ -589,8 +589,7 @@ void FUN_80027838(void)
 	  // second ghost (index one) is N Tropy or Oxide
       if ((short)iVar8 == 1)
 	  {
-		// set timer to the amount of time it takes for this ghost to finish race,
-		// this timer is used to determine if you beat N Tropy or Oxide
+		// ptrGhostHeader->timeElapsedInRace
         *(undefined4 *)(PTR_DAT_8008d2ac + 0x1d78) = *(undefined4 *)(*piVar7 + 0x10);
       }
 
