@@ -4296,7 +4296,7 @@ struct sData
 		// 8008fbf4
 		// Start of entire ghost,
 		// first byte of header
-		void* ptrGhost;
+		struct GhostHeader* ptrGhost;
 
 		// 8008fbf8
 		// beginning of recording buffer,

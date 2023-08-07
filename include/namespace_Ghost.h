@@ -39,7 +39,12 @@ struct GhostHeader
 	// 0x10
 	int timeElapsedInRace;
 	
-	// 0x14 - ??
+	// 0x14
+	// try fresh-boot time trial, dereference 8008fbf4, 
+	// you'll see it's all zeros, beat the race, double-deref 8008d754,
+	// and it's still all zeros, could be accident, or a throw-off.
+	// Only time this is non-zero is if pre-existing memory isn't wiped
+	char emptyPadding[0x14];
 	
 	// 0x28 bytes large
 };
