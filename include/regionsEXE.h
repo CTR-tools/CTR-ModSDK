@@ -3532,7 +3532,7 @@ struct sData
 	void* ptrGhostTape[2];
 
 	// 8008d754
-	struct GhostHeader* ghostPlyrPlaying;
+	struct GhostHeader* ptrGhostTapePlaying;
 
 	// 8008d758
 	int boolCanSaveGhost;
