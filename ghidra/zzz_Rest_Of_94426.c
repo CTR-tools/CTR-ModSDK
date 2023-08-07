@@ -10459,8 +10459,10 @@ void FUN_8004dee8(undefined4 param_1,int param_2)
   {
 	// loop through all ghosts
     do {
-      //if you have beaten Nefarious Tropy
-      if (*(short *)(*(int *)(param_2 + 0x30) + 0x632) != 0) {
+      
+	  // if ghost is initialized
+      if (*(short *)(*(int *)(param_2 + 0x30) + 0x632) != 0) 
+	  {
         if (*(short *)(*(int *)(param_2 + 0x30) + 0x630) == 0) {
           uVar1 = 6;
           //if the number of elapsed frames since boot is odd

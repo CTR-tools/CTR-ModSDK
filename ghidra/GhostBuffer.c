@@ -97,7 +97,11 @@ void FUN_80026ed8(int param_1)
 		) ||
 		(
 			(
+				// if ghostTape->end == ghostTape->start (or curr),
+				// either ghost reached the end, or ghost is empty
 				*(int *)(*(int *)(iVar22 + 0x62c) + 8) == *(int *)(*(int *)(iVar22 + 0x62c) + 4) ||
+				
+				// ghost is not initialized
 				(*(short *)(iVar22 + 0x632) == 0)
 			)
 		)
@@ -162,15 +166,20 @@ void FUN_80026ed8(int param_1)
 		// reached end of tape
         if ((byte *)piVar20[2] <= pbVar16) 
 		{
+		  // ghostHeader
 		  // ->0x62C->0
           iVar21 = *piVar20;
 		  
+		  // ghostHeader->ySpeed
           *(undefined4 *)(iVar22 + 0x3a4) = *(undefined4 *)(iVar21 + 0xc);
-          uVar5 = *(undefined2 *)(iVar21 + 8);
+          
+		  // ghostHeader->speedApprox
+		  uVar5 = *(undefined2 *)(iVar21 + 8);
 		  
           //turn off 21st bit of Actions Flag set (means ?)
           *(uint *)(iVar22 + 0x2c8) = *(uint *)(iVar22 + 0x2c8) & 0xffefffff;
 		  
+		  // speedApprox
           *(undefined2 *)(iVar22 + 0x38e) = uVar5;
 
 		  // Turn Ghost into Robotcar
@@ -747,9 +756,11 @@ void FUN_80027b88(void)
 
 	//if there is a racer 2 struct pointer and
     if (((iVar8 != 0) &&
-       //two pointers offseted from racer 2 struct pointer are not the same and
+       
+	   // if ghostTape->end != ghostTape->start (or curr),
        (*(int *)(*(int *)(iVar8 + 0x62c) + 8) != *(int *)(*(int *)(iVar8 + 0x62c) + 4))) &&
-       (((*(short *)(iVar8 + 0x630) == 0 &&
+       
+	   (((*(short *)(iVar8 + 0x630) == 0 &&
 
 	   // bool playGhostDuringRace
        (DAT_8008d958 != 0)) ||
@@ -768,8 +779,11 @@ void FUN_80027b88(void)
       *(undefined4 *)(iVar7 + 0x20) = 0;
       *(undefined4 *)(iVar7 + 0x40) = 0;
       *(undefined4 *)(iVar7 + 0x3c) = 0;
+	  
+	  // curr = start?
       *(undefined4 *)(iVar7 + 0xc) = *(undefined4 *)(iVar7 + 4);
-      uVar1 = *(ushort *)(iVar8 + 0x630);
+      
+	  uVar1 = *(ushort *)(iVar8 + 0x630);
 
 	  // ghosts are drawing (your own, or tropy/oxide)
 	  DAT_8008d740 = 1;
@@ -777,8 +791,9 @@ void FUN_80027b88(void)
 	  // ghost initialized
       *(undefined2 *)(iVar8 + 0x632) = 1;
 	  
-      
+      // ghost has not started race
 	  *(undefined2 *)(iVar8 + 0x634) = 0;
+	  
       iVar5 = (uint)uVar1 + 1;
       if (uVar1 == 0) {
 LAB_80027cfc:

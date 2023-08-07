@@ -3,14 +3,21 @@
 
 struct GhostTape
 {
+	// 0x0
 	struct GhostHeader* gh;
-	void* ptrGhostBuffer; // gh->0x28
+	void* ptrStart; // gh->0x28
+	void* ptrEnd;	// gh->0x28 + gh->size
+	
+	// 0xC
+	
+	// 0x260
+	int constDEADC0ED;
 	
 	// 0x264
 	struct GhostHeader* gh_again; // duplicate?
 	
 	// 0x268 bytes large
-}
+};
 
 struct GhostHeader
 {

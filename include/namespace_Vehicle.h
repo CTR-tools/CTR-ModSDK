@@ -1445,10 +1445,10 @@ struct Driver
 	// ghostID
 
 	// 0x632
-	// ??
+	// short boolGhostInitialized
 
 	// 0x634
-	// short boolStartedGhost
+	// short boolGhostStarted
 
 	// 0x638
 	// end of ghost struct (as determined by memset)
