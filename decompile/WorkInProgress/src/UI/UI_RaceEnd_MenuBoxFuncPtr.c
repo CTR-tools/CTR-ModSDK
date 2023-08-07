@@ -7,9 +7,9 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
   struct GameTracker *gGT;
   u_int uVar3;
   int iVar4;
-  struct GhostRecording *GhostBufferEnd;
-  struct GhostRecording *ghostRec;
-  struct GhostRecording *ghostReplay;
+  void *GhostBufferEnd;
+  struct GhostHeader *ghRecording;
+  struct GhostHeader *ghPlaying;
   u_short style;
   void *startOffs;
   void *endOffs;
@@ -80,13 +80,16 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
             GhostBufferEnd = (int)sdata->GhostRecording.ptrGhost + 0xf80;
 
             // Ghost recording buffer
-            ghostRec = sdata->GhostRecording.ptrGhost;
+            ghRecording = sdata->GhostRecording.ptrGhost;
 
             // Ghost replay buffer (to watch while you drive)
-            ghostReplay = sdata->ptrGhostTapePlaying;
+            ghPlaying = sdata->ptrGhostTapePlaying;
 
-            if ((((u_int)*ghostRec | (u_int)*ghostReplay) & 3) == 0)
+            if (((ghRecording->magic | ghPlaying->magic) & 3) == 0)
             {
+			  int* ghostRec = (int*)ghRecording;
+			  int* ghostReplay = (int*)ghPlaying;
+				
               // Copy ghost recording buffer
               do
               {
