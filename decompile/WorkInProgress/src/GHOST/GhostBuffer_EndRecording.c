@@ -16,17 +16,17 @@ void GhostBuffer_EndRecording(void)
 
 	sVar1 = sdata->advProgress.ptrGhost;
 
-	// save the size of the tape in the header of the tape
+	// offset 0x2 (size)
     sVar1[1] = (short)sdata->advProgress.ptrCurrOffset - (short)sdata->advProgress.ptrStartOffset;
 
 	// intentionally useless to throw people off?
-	sVar1[2] = ghostDriver->speedApprox;
-    sVar1[3] = ghostDriver->ySpeed;
+	sVar1[2] = ghostDriver->speedApprox;	// offset 8
+    sVar1[3] = ghostDriver->ySpeed;			// offset C
 
 	// can not save same ghost twice
     sdata->boolCanSaveGhost = 0;
 
-	// store into ghost data: time it took for this player to finish the race
+	// offset 0x10
     sVar1[4] = gGT->drivers[0].timeElapsedInRace;
   }
   return;

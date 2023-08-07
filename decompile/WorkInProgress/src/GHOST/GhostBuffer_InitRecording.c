@@ -12,9 +12,10 @@ void GhostBuffer_InitRecording(void)
   // pointer to first Player thread, -> object
   ghostDriver = gGT.threadbuckets[0]->thread->object;
 
-  // Save level ID in the header of the ghost tape
+  // offset 0x4
   *(short *)(sdata->advProgress.ptrGhost + 4) = gGT->levelID;
 
+  // offset 0x0 and 0x1
   *puVar1 = 0xfc;
   puVar1[1] = 0xff;
 
@@ -27,6 +28,7 @@ void GhostBuffer_InitRecording(void)
 
   // Player / AI structure + 0x4a shows driver index (0-7)
 
+  // offset 0x6
   *(short *)(puVar1 + 6) = data.characterIDs[ghostDriver->driverID];
 
   // set offset of ghost recording to start of ghost recording

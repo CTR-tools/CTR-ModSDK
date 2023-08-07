@@ -18,6 +18,7 @@
 #include <namespace_Decal.h>
 #include <namespace_Display.h>
 #include <namespace_Gamepad.h>
+#include <namespace_Ghost.h>
 #include <namespace_Howl.h>
 #include <namespace_Instance.h>
 
