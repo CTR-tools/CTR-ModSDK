@@ -56,6 +56,7 @@ void FUN_80026ed8(int param_1)
 		// if timer is not zero (max 180 for 6 seconds 30fps)
 		(DAT_8008d748 != 0) &&
 
+		// ghost made by human
 		(*(short *)(iVar22 + 0x630) == 0)
 	 )
   {
@@ -97,7 +98,7 @@ void FUN_80026ed8(int param_1)
 		) ||
 		(
 			(
-				// if ghostTape->end == ghostTape->start (or curr),
+				// if ghostTape->end == ghostTape->start,
 				// either ghost reached the end, or ghost is empty
 				*(int *)(*(int *)(iVar22 + 0x62c) + 8) == *(int *)(*(int *)(iVar22 + 0x62c) + 4) ||
 				
@@ -757,13 +758,16 @@ void FUN_80027b88(void)
 	//if there is a racer 2 struct pointer and
     if (((iVar8 != 0) &&
        
-	   // if ghostTape->end != ghostTape->start (or curr),
+	   // if ghostTape->end != ghostTape->start,
        (*(int *)(*(int *)(iVar8 + 0x62c) + 8) != *(int *)(*(int *)(iVar8 + 0x62c) + 4))) &&
        
+	   // ghost made by human
 	   (((*(short *)(iVar8 + 0x630) == 0 &&
 
 	   // bool playGhostDuringRace
        (DAT_8008d958 != 0)) ||
+	   
+	   // ghost is N Tropy / Oxide
        ((*(short *)(iVar8 + 0x630) == 1 &&
 
 	   // if timeTrialFlags for this track show [ n tropy open+unbeated ]
@@ -827,9 +831,12 @@ LAB_80027cfc:
       //give 2p ghost wheels (wheel size = 0xCCC)
       *(undefined2 *)(iVar8 + 4) = uVar3;
 
+	  // ghost is made by human
       if (*(short *)(iVar8 + 0x630) == 0) {
         pcVar4 = s_ghost0_8008d050;
       }
+	  
+	  // ghost is n tropy / oxide
       else {
         pcVar4 = s_ghost1_8008d048;
       }

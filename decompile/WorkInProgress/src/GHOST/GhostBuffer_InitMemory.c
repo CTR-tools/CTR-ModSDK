@@ -129,7 +129,7 @@ void GhostBuffer_InitMemory(void)
 			memset(ghostDriver, 0, 0x638);
 
 			// Driver + 0x630 = ghostID
-			*(short *)(ghostDriver + 0x18c) = i;
+			*(short *)((int)ghostDriver + 0x630) = i;
 
 			// ghost not initialized
 			*(short *)((int)ghostDriver + 0x632) = 0;
