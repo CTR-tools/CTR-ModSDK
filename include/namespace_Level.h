@@ -413,7 +413,13 @@ struct SpawnType1
 {
 	int count;
 	
-	// more than 1, determined by "count"
+	// [0] - map icon
+	// [1] - level spawn data (seal, plant, etc)
+	// [2] - end-of-race camera data
+	// [3] - camera point-path (fly-in, and adv garage)
+	// [4] - GhostHeader* n tropy
+	// [5] - GhostHeader* oxide
+	// [6] - credits
 	void* pointers[0];
 };
 
