@@ -158,7 +158,7 @@ void GhostBuffer_RecordStats(short raceFinished)
         pbVar1[4] = (char)(iVar8->rotCurr.z >> 4);
 
 		// advance the recording offset by 5 chars
-		sdata->GhostRecording.ptrCurrOffset = (int)sdata->GhostRecording.ptrCurrOffset + 5;
+		sdata->GhostRecording.ptrCurrOffset += 5;
       }
     }
 
