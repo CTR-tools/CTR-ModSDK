@@ -37,7 +37,7 @@ void GhostBuffer_InitMemory(void)
 		sdata->GhostRecording.ptrStartOffset = (int)sdata->GhostRecording.ptrGhost + 0x28;
 
 		// pointer to end of recording
-		sdata->GhostRecording.ptrEndOffset = (int)sdata->GhostRecording.ptrGhost + 0x3df;
+		sdata->GhostRecording.ptrEndOffset = (int)sdata->GhostRecording.ptrGhost + 0x3dfc;
 
 		// Allocate room for two ghost tapes,
 		// one for N Tropy / Oxide
