@@ -133,8 +133,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     MM_Title_CameraReset();
     MM_Title_KillThread();
 
-    // Load lev 40, adventure character selection screen
-    MainRaceTrack_RequestLoad(0x28);
+    MainRaceTrack_RequestLoad(ADVENTURE_CHARACTER_SELECT);
     break;
 
   // adventure save/load
@@ -209,7 +208,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
       for (iVar4 = 0; iVar4 < 8; iVar4++)
       {
         // set character ID
-        data.characterIDs[iVar4] = seenDemo;
+        data.characterIDs[iVar4] = seenDemo & 7;
 
         // iterate character ID
         seenDemo++;
@@ -237,8 +236,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // go to scrapbook
     sdata->mainMenuState = 5;
 
-    // Lev 64, Scrapbook
-    iVar4 = 0x40;
+    iVar4 = SCRAPBOOK;
   LAB_800abfc0:
 
     // Load level
