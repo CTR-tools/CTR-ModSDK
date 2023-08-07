@@ -68,7 +68,7 @@ void MenuBoxFuncPtr_Difficulty(struct MenuBox *mb)
 
         if (sdata->boolPlayGhost || sdata->ptrGhostTapePlaying)
         {
-            data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
+            data.characterIDs[1] = sdata->ptrGhostTapePlaying->characterID;
         }
     }
 

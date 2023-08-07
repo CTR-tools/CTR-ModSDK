@@ -16,4 +16,8 @@ struct GhostHeader
 	
 	// 0x10
 	int timeElapsedInRace;
+	
+	// 0x14 - ??
+	
+	// 0x28 bytes large
 };

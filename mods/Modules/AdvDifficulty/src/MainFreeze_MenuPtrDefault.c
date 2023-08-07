@@ -79,7 +79,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *mb)
 			TitleFlag_BeginTransition(1);
 		if (!sdata->boolPlayGhost || !sdata->ptrGhostTapePlaying)
 			return;
-		data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
+		data.characterIDs[1] = sdata->ptrGhostTapePlaying->characterID;
 		return;
 	case 2: // "RESUME"
 		ElimBG_Deactivate(gGT);

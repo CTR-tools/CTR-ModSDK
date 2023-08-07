@@ -91,7 +91,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
 
         // Make P2 the character that is saved in the
         // header of the ghost that you will see in the race
-        data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
+        data.characterIDs[1] = sdata->ptrGhostTapePlaying->characterID;
 
         // no ghosts are drawing
         sdata->boolGhostsDrawing = 0;

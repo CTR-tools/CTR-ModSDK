@@ -113,7 +113,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 
 			// Make P2 the character that is saved in the header of the 
 			// ghost that you will see in the race
-			data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
+			data.characterIDs[1] = sdata->ptrGhostTapePlaying->characterID;
 			return;
 
 		// stringID 2: "RESUME"
