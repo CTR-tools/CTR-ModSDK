@@ -161,6 +161,10 @@ void FUN_80026ed8(int param_1)
       piVar20[0xf] = piVar20[6];
       pbVar13 = pbVar19 + 3;
       pbVar16 = pbVar19;
+	  
+	  // move two opcodes in advance,
+	  // if driver is within two opcodes of 
+	  // ending the race, then become Robotcar
       do {
         pbVar14 = pbVar13 + 1;
 		
@@ -168,7 +172,7 @@ void FUN_80026ed8(int param_1)
         if ((byte *)piVar20[2] <= pbVar16) 
 		{
 		  // ghostHeader
-		  // ->0x62C->0
+		  // driver ->0x62C->0
           iVar21 = *piVar20;
 		  
 		  // ghostHeader->ySpeed
