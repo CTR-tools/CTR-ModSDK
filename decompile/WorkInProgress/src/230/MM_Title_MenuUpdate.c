@@ -200,7 +200,8 @@ void DECOMP_MM_Title_MenuUpdate(void)
       // number of times you've seen Demo Mode,
       seenDemo = sdata->demoModeIndex;
 
-      gGT->demoCountdownTimer = 0x708;
+	  // 60 seconds
+      gGT->demoCountdownTimer = 1800;
 
       // use the number of time's you've seen
       // Demo Mode, to decide the order of characters
