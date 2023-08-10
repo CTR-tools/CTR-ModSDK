@@ -61,12 +61,13 @@ void Garage_Enter(char charId)
       garageSounds = &sdata->garageSoundPool[i];
 	  audioPtr = &garageSounds->audioPtr;
 	  
+      garageSounds->gsp_prev = GSP_GONE;
+      garageSounds->volume = 0;
+	  
 	  // if this character is in focus
       if (i == charId)
 	  {
         garageSounds->gsp_curr = GSP_CENTER;
-        garageSounds->gsp_prev = GSP_GONE;
-        garageSounds->volume = 0;
 
 		// Balance Left/Right
         garageSounds->LR = 0x80;
@@ -81,8 +82,6 @@ void Garage_Enter(char charId)
 	  else if (i == charLeft)
 	  {
         garageSounds->gsp_curr = GSP_LEFT;
-        garageSounds->gsp_prev = GSP_GONE;
-        garageSounds->volume = 0;
 
 		// 75% left, 25% right
         garageSounds->LR = 0x3c;
@@ -97,8 +96,6 @@ void Garage_Enter(char charId)
       else if (i == charRight)
 	  {
         garageSounds->gsp_curr = GSP_RIGHT;
-        garageSounds->gsp_prev = GSP_GONE;
-        garageSounds->volume = 0;
 	  
 	  	// 25% left, 75% right
         garageSounds->LR = 0xc3;
@@ -114,8 +111,6 @@ void Garage_Enter(char charId)
       else
 	  {
         garageSounds->gsp_curr = GSP_GONE;
-        garageSounds->gsp_prev = GSP_GONE;
-        garageSounds->volume = 0;
         garageSounds->LR = 0x80;
       }
 	  
@@ -179,14 +174,12 @@ void Garage_LerpFX(void)
   struct garageSoundPool* garageSounds;
   short sVar5;
   short sVar6;
-  char* puVar7;
+  int* puVar7;
   char i;
 
   for (i = 0; i < 8; i++) 
   {
-    
     garageSounds = &sdata->garageSoundPool[i];
-    puVar7 = &sdata->garageSoundPool[i].audioPtr;
 
     cVar1 = garageSounds->gsp_curr;
 	
@@ -273,7 +266,7 @@ void Garage_LerpFX(void)
       if (sdata->garageSoundIDs[i] != 0) 
 	  {
         OtherFX_RecycleNew(
-            *puVar7,
+            garageSounds->audioPtr,
             sdata->garageSoundIDs[i],
             (int)garageSounds->volume << 0x10 | (int)garageSounds->LR | 0x8000U
             );
@@ -286,7 +279,7 @@ void Garage_LerpFX(void)
             garageSounds->gsp_curr == GSP_GONE
         ))
 	  {
-        OtherFX_RecycleMute(*puVar7);
+        OtherFX_RecycleMute(garageSounds->audioPtr);
       }
     }
   } 
