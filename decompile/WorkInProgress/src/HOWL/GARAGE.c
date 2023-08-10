@@ -212,37 +212,61 @@ void Garage_Idle2(void)
 	// if change is desired, lerp properties
     if ((sVar5 != garageSounds->LR) || (sVar6 != garageSounds->volume)) 
 	{
-      if (sVar6 != garageSounds->volume) {
-        sVar3 = garageSounds->volume + 8;
-        if (garageSounds->volume < sVar6) {
+	  // desired audio change
+      if (sVar6 != garageSounds->volume) 
+	  {
+		// lerp up
+        if (garageSounds->volume < sVar6) 
+		{
+		  sVar3 = garageSounds->volume + 8;
           garageSounds->volume = sVar3;
           bVar2 = sVar6 < sVar3;
         }
-        else {
+        
+		// lerp down
+		else 
+		{
           sVar3 = garageSounds->volume + -8;
           garageSounds->volume = sVar3;
           bVar2 = sVar3 < sVar6;
         }
-        if (bVar2) {
+        
+		// lock on
+		if (bVar2) 
+		{
           garageSounds->volume = sVar6;
         }
+		
       }
-      if (sVar5 != garageSounds->LR) {
-        sVar3 = garageSounds->LR + 2;
-        if (garageSounds->LR < sVar5) {
+      
+	  // desired LR change
+	  if (sVar5 != garageSounds->LR) 
+	  {
+		// lerp up
+        if (garageSounds->LR < sVar5) 
+		{
+		  sVar3 = garageSounds->LR + 2;
           garageSounds->LR = sVar3;
           bVar2 = (sVar5 < sVar3);
         }
-        else {
+		
+		// lerp down
+        else 
+		{
           sVar3 = garageSounds->LR + -2;
           garageSounds->LR = sVar3;
           bVar2 = (sVar3 < sVar5);
         }
-        if (bVar2) {
+        
+		// lock on
+		if (bVar2) 
+		{
           garageSounds->LR = sVar5;
         }
       }
-      if (sdata.Garage_Idle2[i] != 0) {
+	  
+      if (sdata.Garage_Idle2[i] != 0) 
+	  {
         OtherFX_RecycleNew(
             *puVar7,
             sdata.Garage_Idle2[i],
@@ -254,10 +278,9 @@ void Garage_Idle2(void)
       if (((sVar5 == garageSounds->LR) && (sVar6 == garageSounds->volume)) &&
         (
             garageSounds->gsp_prev = garageSounds->gsp_curr,
-            garageSounds->gsp_curr == 3
+            garageSounds->gsp_curr == GSP_GONE
         ))
 	  {
-		// 
         OtherFX_RecycleMute(*puVar7);
       }
     }
