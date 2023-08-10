@@ -4509,6 +4509,7 @@ struct sData
 	// eight members, each 0xc
 	struct
 	{
+		// enum GarageSoundPos
 		char data[0xC];
 	} garageSoundPool[8];
 	#endif

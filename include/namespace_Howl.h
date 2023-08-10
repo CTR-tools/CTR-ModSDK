@@ -216,6 +216,15 @@ struct Song
 	struct SongSeq* CseqSequences[0x18];
 };
 
+enum GarageSoundPos
+{
+	GSP_CENTER = 0,
+	GSP_LEFT,
+	GSP_RIGHT,
+	GSP_TOO_FAR,
+	GSP_NUM
+};
+
 _Static_assert(sizeof(SpuReverbAttr) == 0x14);
 _Static_assert(sizeof(struct ChannelAttr) == 0x10);
 _Static_assert(sizeof(struct ChannelStats) == 0x20);

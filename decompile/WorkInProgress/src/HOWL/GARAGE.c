@@ -185,21 +185,31 @@ void Garage_Idle2(void)
   puVar7 = &sdata.garageSoundPool[i].data[8];
 
     cVar1 = garageSounds->data[0];
+	
+	// center
     if (cVar1 == 0) {
       sVar6 = 0xff;
       sVar5 = 0x80;
     }
-    else {
+    else 
+	{
+	  // left
       if (cVar1 == 1) {
         sVar6 = 100;
         sVar5 = 0x3c;
       }
-      else {
+      else 
+	  {
         sVar6 = 0;
-        if (cVar1 == 2) {
+        
+		// right
+		if (cVar1 == 2) 
+		{
           sVar6 = 100;
           sVar5 = 0xc3;
         }
+		
+		// too far away
         else {
           sVar5 = garageSounds->data[4];
         }

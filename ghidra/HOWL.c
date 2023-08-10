@@ -8959,22 +8959,32 @@ void FUN_800304b8(void)
   // for iVar8 = 0; iVar8 < 8; iVar8++
   do {
     cVar1 = *pcVar4;
+	
+	// center
     if (cVar1 == '\0') {
       sVar6 = 0xff;
       sVar5 = 0x80;
     }
-    else {
+    else 
+	{
+	  // left
       if (cVar1 == '\x01') {
         sVar6 = 100;
         sVar5 = 0x3c;
       }
-      else {
+      else 
+	  {
         sVar6 = 0;
-        if (cVar1 == '\x02') {
+        
+		// right
+		if (cVar1 == '\x02') {
           sVar6 = 100;
           sVar5 = 0xc3;
         }
-        else {
+
+		// too far
+        else 
+		{
           sVar5 = *(short *)(pcVar4 + 4);
         }
       }
