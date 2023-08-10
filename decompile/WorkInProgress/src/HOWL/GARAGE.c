@@ -11,11 +11,11 @@ void Garage_Init(void)
   for (i = 0; i < 8; i++)
   {
     garageSounds = &sdata->garageSoundPool[i];
-    garageSounds->data[0] = 3;
-    garageSounds->data[1] = 3;
-    garageSounds->data[2] = 0;
-    garageSounds->data[4] = 0;
-    garageSounds->data[8] = 0;
+    garageSounds->gsp_curr = GSP_GONE;
+    garageSounds->gsp_prev = GSP_GONE;
+    garageSounds->volume = 0;
+    garageSounds->LR = 0;
+    garageSounds->audioPtr = 0;
   }
   return;
 }
@@ -24,10 +24,10 @@ void Garage_Enter(char charId)
 {
   struct garageSoundPool* garageSounds;
   char* idle;
-  char* puVar4;
   char i;
   char charRight;
   char charLeft;
+  int* audioPtr;
 
   // if characterID is valid
   if (charId < 8)
@@ -58,71 +58,69 @@ void Garage_Enter(char charId)
 	// loop through all characters in garage
 	for (i = 0; i < 8; i++)
 	{
-    puVar4 = &sdata->garageSoundPool[i].data[8];
-    garageSounds = &sdata->garageSoundPool[i];
+      garageSounds = &sdata->garageSoundPool[i];
+	  audioPtr = &garageSounds->audioPtr;
+	  
 	  // if this character is in focus
       if (i == charId)
 	  {
-        garageSounds->data[0] = 0;
-        garageSounds->data[1] = 3;
-        garageSounds->data[2] = 0;
+        garageSounds->gsp_curr = GSP_CENTER;
+        garageSounds->gsp_prev = GSP_GONE;
+        garageSounds->volume = 0;
 
 		// Balance Left/Right
-        garageSounds->data[4] = 0x80;
+        garageSounds->LR = 0x80;
 
-		if (idle[i] == 0) goto LAB_800303bc;
-        OtherFX_RecycleNew(puVar4,(u_int)idle[i],(int)garageSounds->data[2] << 0x10 | 0x8080);
-      }
+		if (idle[i] != 0) {
+		  OtherFX_RecycleNew(audioPtr,(u_int)idle[i],(int)garageSounds->volume << 0x10 | 0x8080);
+		  continue;
+		}
+	  }
 
-	  else
+	  // if this character is to the left
+	  else if (i == charLeft)
 	  {
-		// if this character is to the left
-        if (i == charLeft)
-		{
-          garageSounds->data[0] = 1;
-          garageSounds->data[1] = 3;
-          garageSounds->data[2] = 0;
+        garageSounds->gsp_curr = GSP_LEFT;
+        garageSounds->gsp_prev = GSP_GONE;
+        garageSounds->volume = 0;
 
-		  // 75% left, 25% right
-          garageSounds->data[4] = 0x3c;
+		// 75% left, 25% right
+        garageSounds->LR = 0x3c;
 
-		  if (idle[i] != 0) {
-            OtherFX_RecycleNew(puVar4,(u_int)idle[i],(int)garageSounds->data[2] << 0x10 | 0x803c);
-            goto LAB_800303c4;
-          }
+		if (idle[i] != 0) {
+          OtherFX_RecycleNew(audioPtr,(u_int)idle[i],(int)garageSounds->volume << 0x10 | 0x803c);
+          continue;
         }
-        else
-		{
-		  // if this character is to the right
-          if (i == charRight)
-		  {
-            garageSounds->data[0] = 2;
-            garageSounds->data[1] = 3;
-            garageSounds->data[2] = 0;
-
-			// 25% left, 75% right
-            garageSounds->data[4] = 0xc3;
-
-			if (idle[i] != 0) {
-              OtherFX_RecycleNew(puVar4,(u_int)idle[i],(int)garageSounds->data[2] << 0x10 | 0x80c3);
-              goto LAB_800303c4;
-            }
-          }
-
-		  // if this character is too far away
-		  // to make any sound at all
-          else
-		  {
-            garageSounds->data[0] = 3;
-            garageSounds->data[1] = 3;
-            garageSounds->data[2] = 0;
-            garageSounds->data[4] = 0x80;
-          }
-        }
-LAB_800303bc:
-        *puVar4 = 0;
       }
-LAB_800303c4:
+		
+	  // if this character is to the right
+      else if (i == charRight)
+	  {
+        garageSounds->gsp_curr = GSP_RIGHT;
+        garageSounds->gsp_prev = GSP_GONE;
+        garageSounds->volume = 0;
+	  
+	  	// 25% left, 75% right
+        garageSounds->LR = 0xc3;
+	  
+	  	if (idle[i] != 0) {
+          OtherFX_RecycleNew(audioPtr,(u_int)idle[i],(int)garageSounds->volume << 0x10 | 0x80c3);
+          continue;
+        }
+      }
+	  
+	  // if this character is too far away
+	  // to make any sound at all
+      else
+	  {
+        garageSounds->gsp_curr = GSP_GONE;
+        garageSounds->gsp_prev = GSP_GONE;
+        garageSounds->volume = 0;
+        garageSounds->LR = 0x80;
+      }
+	  
+      *audioPtr = 0;
+
     } 
   }
   return;
@@ -157,10 +155,10 @@ void Garage_Idle1(u_int soundId, char charId)
     OtherFX_Play_LowLevel(soundId & 0xffff,1,
 
 				 // volume
-                 sdata->garageSoundPool[charId].data[2] << 0x10 |
+                 sdata->garageSoundPool[charId].volume << 0x10 |
 
 				 // left/right
-                 sdata->garageSoundPool[charId].data[4]
+                 sdata->garageSoundPool[charId].LR
 
 				 // distortion
 				 | 0x8000);
@@ -182,9 +180,9 @@ void Garage_Idle2(void)
   for (i = 0; i < 8; i++) {
     
   garageSounds = &sdata.garageSoundPool[i];
-  puVar7 = &sdata.garageSoundPool[i].data[8];
+  puVar7 = &sdata.garageSoundPool[i].audioPtr;
 
-    cVar1 = garageSounds->data[0];
+    cVar1 = garageSounds->gsp_curr;
 	
 	// center
     if (cVar1 == 0) {
@@ -211,52 +209,52 @@ void Garage_Idle2(void)
 		
 		// too far away
         else {
-          sVar5 = garageSounds->data[4];
+          sVar5 = garageSounds->LR;
         }
       }
     }
-    if ((sVar5 != garageSounds->data[4]) || (sVar6 != garageSounds->data[2])) {
-      if (sVar6 != garageSounds->data[2]) {
-        sVar3 = garageSounds->data[2] + 8;
-        if (garageSounds->data[2] < sVar6) {
-          garageSounds->data[2] = sVar3;
+    if ((sVar5 != garageSounds->LR) || (sVar6 != garageSounds->volume)) {
+      if (sVar6 != garageSounds->volume) {
+        sVar3 = garageSounds->volume + 8;
+        if (garageSounds->volume < sVar6) {
+          garageSounds->volume = sVar3;
           bVar2 = sVar6 < sVar3;
         }
         else {
-          sVar3 = garageSounds->data[2] + -8;
-          garageSounds->data[2] = sVar3;
+          sVar3 = garageSounds->volume + -8;
+          garageSounds->volume = sVar3;
           bVar2 = sVar3 < sVar6;
         }
         if (bVar2) {
-          garageSounds->data[2] = sVar6;
+          garageSounds->volume = sVar6;
         }
       }
-      if (sVar5 != garageSounds->data[4]) {
-        sVar3 = garageSounds->data[4] + 2;
-        if (garageSounds->data[4] < sVar5) {
-          garageSounds->data[4] = sVar3;
+      if (sVar5 != garageSounds->LR) {
+        sVar3 = garageSounds->LR + 2;
+        if (garageSounds->LR < sVar5) {
+          garageSounds->LR = sVar3;
           bVar2 = (sVar5 < sVar3);
         }
         else {
-          sVar3 = garageSounds->data[4] + -2;
-          garageSounds->data[4] = sVar3;
+          sVar3 = garageSounds->LR + -2;
+          garageSounds->LR = sVar3;
           bVar2 = (sVar3 < sVar5);
         }
         if (bVar2) {
-          garageSounds->data[4] = sVar5;
+          garageSounds->LR = sVar5;
         }
       }
       if (sdata.Garage_Idle2[i] != 0) {
         OtherFX_RecycleNew(
             *puVar7,
             sdata.Garage_Idle2[i],
-            (int)garageSounds->data[2] << 0x10 | (int)garageSounds->data[4] | 0x8000U
+            (int)garageSounds->volume << 0x10 | (int)garageSounds->LR | 0x8000U
             );
       }
-      if (((sVar5 == garageSounds->data[4]) && (sVar6 == garageSounds->data[2])) &&
+      if (((sVar5 == garageSounds->LR) && (sVar6 == garageSounds->volume)) &&
         (
-            garageSounds->data[1] = garageSounds->data[0],
-            garageSounds->data[0] == 3
+            garageSounds->gsp_prev = garageSounds->gsp_curr,
+            garageSounds->gsp_curr == 3
         ))
 	  {
 		// 
@@ -303,34 +301,34 @@ void Garage_MoveLR(int desiredId)
     garageSounds = &sdata.garageSoundPool[i];
 	  // character in focus
       if (i == desiredId) {
-        garageSounds->data[0] = 0;
+        garageSounds->gsp_curr = GSP_CENTER;
       }
       else
 	  {
 		// left ID
         if (i == charLeft)
 		{
-          if (garageSounds->data[0] == 3)
+          if (garageSounds->gsp_curr == 3)
 		  {
 			// 75% left, 25% right
-            garageSounds->data[4] = 0x3c;
+            garageSounds->LR = 0x3c;
           }
-          garageSounds->data[0] = 1;
+          garageSounds->gsp_curr = GSP_LEFT;
         }
         else
 		{
 		  // right ID
           if (i == charRight)
 		  {
-            if (garageSounds->data[0] == 3)
+            if (garageSounds->gsp_curr == 3)
 			{
 			  // 25% left, 75% right
-              garageSounds->data[4] = 0xc3;
+              garageSounds->LR = 0xc3;
             }
-            garageSounds->data[0] = 2;
+            garageSounds->gsp_curr = GSP_RIGHT;
           }
           else {
-            garageSounds->data[0] = 3;
+            garageSounds->gsp_curr = GSP_GONE;
           }
         }
       }
@@ -341,16 +339,12 @@ void Garage_MoveLR(int desiredId)
 
 void Garage_Leave(void)
 {
-  struct garageSoundPool* garageSounds;
-  char i;
+  int i;
 
-  // loop 8 times
-  for (i = 7; i > -1; i--)
+  for (i = 0; i < 8; i++)
   {
-    // start from the last sound pool (8)
-    garageSounds = sdata->garageSoundPool[i];
-	// write
-    garageSounds->data[0] = 3;
+    sdata->garageSoundPool[i].gsp_curr = GSP_GONE;
   }
+  
   return;
 }

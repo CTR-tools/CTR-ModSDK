@@ -221,7 +221,7 @@ enum GarageSoundPos
 	GSP_CENTER = 0,
 	GSP_LEFT,
 	GSP_RIGHT,
-	GSP_TOO_FAR,
+	GSP_GONE,
 	GSP_NUM
 };
 
