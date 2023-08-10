@@ -177,43 +177,41 @@ void Garage_Idle2(void)
   char* puVar7;
   char i;
 
-  for (i = 0; i < 8; i++) {
+  for (i = 0; i < 8; i++) 
+  {
     
-  garageSounds = &sdata.garageSoundPool[i];
-  puVar7 = &sdata.garageSoundPool[i].audioPtr;
+    garageSounds = &sdata.garageSoundPool[i];
+    puVar7 = &sdata.garageSoundPool[i].audioPtr;
 
     cVar1 = garageSounds->gsp_curr;
 	
-	// center
-    if (cVar1 == 0) {
+	if (cVar1 == GSP_CENTER) 
+	{
       sVar6 = 0xff;
       sVar5 = 0x80;
     }
+    
+	else if (cVar1 == GSP_LEFT) 
+	{
+      sVar6 = 100;
+      sVar5 = 0x3c;
+    }
+    
+	else if (cVar1 == GSP_RIGHT) 
+	{
+      sVar6 = 100;
+      sVar5 = 0xc3;
+    }
+	
     else 
 	{
-	  // left
-      if (cVar1 == 1) {
-        sVar6 = 100;
-        sVar5 = 0x3c;
-      }
-      else 
-	  {
-        sVar6 = 0;
-        
-		// right
-		if (cVar1 == 2) 
-		{
-          sVar6 = 100;
-          sVar5 = 0xc3;
-        }
-		
-		// too far away
-        else {
-          sVar5 = garageSounds->LR;
-        }
-      }
+	  sVar6 = 0;
+      sVar5 = garageSounds->LR;
     }
-    if ((sVar5 != garageSounds->LR) || (sVar6 != garageSounds->volume)) {
+
+	// if change is desired, lerp properties
+    if ((sVar5 != garageSounds->LR) || (sVar6 != garageSounds->volume)) 
+	{
       if (sVar6 != garageSounds->volume) {
         sVar3 = garageSounds->volume + 8;
         if (garageSounds->volume < sVar6) {
@@ -251,6 +249,8 @@ void Garage_Idle2(void)
             (int)garageSounds->volume << 0x10 | (int)garageSounds->LR | 0x8000U
             );
       }
+	  
+	  // if desired properties have been reached
       if (((sVar5 == garageSounds->LR) && (sVar6 == garageSounds->volume)) &&
         (
             garageSounds->gsp_prev = garageSounds->gsp_curr,

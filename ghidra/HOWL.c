@@ -8998,7 +8998,10 @@ void FUN_800304b8(void)
         }
       }
     }
-    if ((sVar5 != *(short *)(pcVar4 + 4)) || (sVar6 != *(short *)(pcVar4 + 2))) {
+	
+	// desired change
+    if ((sVar5 != *(short *)(pcVar4 + 4)) || (sVar6 != *(short *)(pcVar4 + 2))) 
+	{
       if (sVar6 != *(short *)(pcVar4 + 2)) {
         sVar3 = *(short *)(pcVar4 + 2) + 8;
         if (*(short *)(pcVar4 + 2) < sVar6) {
@@ -9033,6 +9036,8 @@ void FUN_800304b8(void)
         FUN_8002e690(puVar7,(uint)(byte)(&DAT_8008d080)[iVar8],
                      (int)*(short *)(pcVar4 + 2) << 0x10 | (int)*(short *)(pcVar4 + 4) | 0x8000U);
       }
+	  
+	  // change is finished
       if (((sVar5 == *(short *)(pcVar4 + 4)) && (sVar6 == *(short *)(pcVar4 + 2))) &&
          (pcVar4[1] = *pcVar4, *pcVar4 == '\x03'))
 	  {
