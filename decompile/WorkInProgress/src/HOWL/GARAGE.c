@@ -130,9 +130,14 @@ void Garage_Idle1(u_int soundId, char charId)
 {
   int random = sdata->audioRNG
 
-  if (charId < 8) {
+  if (charId < 8) 
+  {
+	// if sound == BIRD_RANDOM
     if (soundId == 0xf6)
 	{
+	  // pick a new sound, 0xF3, 0xF4, or 0xF5,
+	  // one of three different bird noises near Pura
+		
       random = ((random >> 3) + random * 0x20000000) * 5 + 1;
 
 	  soundId =

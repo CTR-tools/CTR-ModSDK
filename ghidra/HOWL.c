@@ -8908,9 +8908,14 @@ LAB_800303c4:
 void FUN_80030404(uint param_1,int param_2)
 
 {
-  if (param_2 < 8) {
+  if (param_2 < 8) 
+  {
+	// if sound == BIRD_RANDOM
     if (param_1 == 0xf6)
 	{
+	  // pick a new sound, 0xF3, 0xF4, or 0xF5,
+	  // one of three different bird noises near Pura
+		
       DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
 
 	  param_1 =
