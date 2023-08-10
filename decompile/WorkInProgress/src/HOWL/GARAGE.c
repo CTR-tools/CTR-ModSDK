@@ -326,39 +326,39 @@ void Garage_MoveLR(int desiredId)
 	// loop through 8 characters
     for (i = 0; i < 8; i++)
 	{
-    garageSounds = &sdata->garageSoundPool[i];
+      garageSounds = &sdata->garageSoundPool[i];
+	  
 	  // character in focus
-      if (i == desiredId) {
+      if (i == desiredId) 
+	  {
         garageSounds->gsp_curr = GSP_CENTER;
       }
-      else
+	  
+      else if (i == charLeft)
 	  {
-		// left ID
-        if (i == charLeft)
-		{
-          if (garageSounds->gsp_curr == 3)
-		  {
-			// 75% left, 25% right
-            garageSounds->LR = 0x3c;
-          }
-          garageSounds->gsp_curr = GSP_LEFT;
+        if (garageSounds->gsp_curr == GSP_GONE)
+	    {
+	  	  // 75% left, 25% right
+          garageSounds->LR = 0x3c;
         }
-        else
+		
+        garageSounds->gsp_curr = GSP_LEFT;
+      }
+      
+	  else if (i == charRight)
+	  {
+        if (garageSounds->gsp_curr == GSP_GONE)
 		{
-		  // right ID
-          if (i == charRight)
-		  {
-            if (garageSounds->gsp_curr == 3)
-			{
-			  // 25% left, 75% right
-              garageSounds->LR = 0xc3;
-            }
-            garageSounds->gsp_curr = GSP_RIGHT;
-          }
-          else {
-            garageSounds->gsp_curr = GSP_GONE;
-          }
+		 // 25% left, 75% right
+          garageSounds->LR = 0xc3;
         }
+         
+		garageSounds->gsp_curr = GSP_RIGHT;
+      }
+          
+	  else 
+	  {
+        garageSounds->gsp_curr = GSP_GONE;
       }
     } 
   }
