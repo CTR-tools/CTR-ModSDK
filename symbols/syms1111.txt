@@ -375,8 +375,8 @@
 800301b0 GTE_AudioLR_Driver
 8003023c GTE_GetSquaredLength
 
-80030274 OtherFX_DriverTurbo
-80030308 OtherFX_Stop_Safe
+80030274 OtherFX_RecycleNew
+80030308 OtherFX_RecycleMute
 80030344 OtherFX_DriverCrashing
 800303a0 GTE_GetSquaredDistance
 

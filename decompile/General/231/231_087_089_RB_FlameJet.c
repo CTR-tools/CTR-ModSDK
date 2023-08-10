@@ -152,7 +152,7 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 	else if(fjObj->cycleTimer == 0x2d)
 	{
 		if(fjObj->audioPtr != 0)
-			OtherFX_Stop_Safe(&fjObj->audioPtr);
+			OtherFX_RecycleMute(&fjObj->audioPtr);
 	}
 	
 	// repeat cycle every 105 (3.5s)

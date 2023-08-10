@@ -408,8 +408,8 @@ void CseqMusic_StopAll();
 
 	// Even more OtherFX...
 
-	//void OtherFX_DriverTurbo(u_int* param_1, u_int param_2, u_int param_3);
-	void OtherFX_Stop_Safe(int* param_1);
+	//void OtherFX_RecycleNew(u_int* param_1, u_int param_2, u_int param_3);
+	void OtherFX_RecycleMute(int* param_1);
 	//OtherFX_DriverCrashing()
 
 	// uh...

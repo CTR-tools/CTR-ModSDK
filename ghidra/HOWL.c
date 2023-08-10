@@ -3314,7 +3314,7 @@ void FUN_8002b208(int param_1,int param_2)
         if ((DAT_8008d798 == 2) && (DAT_8008d7a0 != 0))
 		{
 		  // OtherFX_Stop1 (specific instance of soundID)
-          FUN_80028808();
+          FUN_80028808(DAT_8008d7a0);
           DAT_8008d7a0 = 0;
         }
       }
@@ -6996,32 +6996,41 @@ int FUN_8002e658(undefined4 *param_1)
 }
 
 
-
+// OtherFX_RecycleNew
+// param1 - soundID_countCount
+// param2 - newSoundID
+// param3 - modify
 void FUN_8002e690(uint *param_1,uint param_2,undefined4 param_3)
 
 {
   uint uVar1;
 
   if (
-		// if audioPtr is valid
+		// if soundID_soundCount is playing
 		(*param_1 != 0) &&
 
+		// if soundID doesn't match new ID
 		((*param_1 & 0xffff) != param_2)
 	  )
   {
 	// OtherFX_Stop1
-    FUN_80028808();
+    FUN_80028808(*param_1);
     *param_1 = 0;
   }
 
+  // if newSound != -1
   if (param_2 != 0xffffffff)
   {
+	// if this is a new sound
     if (*param_1 == 0)
 	{
 	  // OtherFX_Play_LowLevel
       uVar1 = FUN_800284d0(param_2 & 0xffff,0,param_3);
       *param_1 = uVar1;
     }
+	
+	// if not a new sound,
+	// modification of old sound
     else
 	{
 	  // OtherFX_Modify
@@ -7032,14 +7041,14 @@ void FUN_8002e690(uint *param_1,uint param_2,undefined4 param_3)
 }
 
 
-// OtherFX_Stop_Safe
+// OtherFX_RecycleMute
 void FUN_8002e724(int *param_1)
 
 {
   if (*param_1 != 0)
   {
 	// OtherFX_Stop1
-    FUN_80028808();
+    FUN_80028808(*param_1);
     *param_1 = 0;
   }
   return;
@@ -7149,7 +7158,7 @@ void FUN_8002e84c(uint *param_1,uint param_2,int param_3)
     if ((*param_1 != 0) && ((*param_1 & 0xffff) != param_2))
 	{
 	  // OtherFX_Stop1
-      FUN_80028808();
+      FUN_80028808(*param_1);
       *param_1 = 0;
     }
 
@@ -7224,7 +7233,7 @@ void FUN_8002e84c(uint *param_1,uint param_2,int param_3)
     if (*param_1 != 0)
 	{
 	  // OtherFX_Stop1
-      FUN_80028808();
+      FUN_80028808(*param_1);
       *param_1 = 0;
     }
   }
@@ -7918,7 +7927,7 @@ void FUN_8002f31c(uint *param_1,uint param_2,int param_3)
   if ((*param_1 != 0) && ((*param_1 & 0xffff) != param_2))
   {
 	// OtherFX_Stop1
-    FUN_80028808();
+    FUN_80028808(*param_1);
 
     *param_1 = 0;
   }
@@ -9027,7 +9036,7 @@ void FUN_800304b8(void)
       if (((sVar5 == *(short *)(pcVar4 + 4)) && (sVar6 == *(short *)(pcVar4 + 2))) &&
          (pcVar4[1] = *pcVar4, *pcVar4 == '\x03'))
 	  {
-		// OtherFX_Stop_Safe
+		// OtherFX_RecycleMute
         FUN_8002e724(puVar7);
       }
     }

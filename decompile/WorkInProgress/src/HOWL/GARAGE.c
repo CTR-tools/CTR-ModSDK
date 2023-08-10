@@ -71,7 +71,7 @@ void Garage_Enter(char charId)
         garageSounds->data[4] = 0x80;
 
 		if (idle[i] == 0) goto LAB_800303bc;
-        OtherFX_DriverTurbo(puVar4,(u_int)idle[i],(int)garageSounds->data[2] << 0x10 | 0x8080);
+        OtherFX_RecycleNew(puVar4,(u_int)idle[i],(int)garageSounds->data[2] << 0x10 | 0x8080);
       }
 
 	  else
@@ -87,7 +87,7 @@ void Garage_Enter(char charId)
           garageSounds->data[4] = 0x3c;
 
 		  if (idle[i] != 0) {
-            OtherFX_DriverTurbo(puVar4,(u_int)idle[i],(int)garageSounds->data[2] << 0x10 | 0x803c);
+            OtherFX_RecycleNew(puVar4,(u_int)idle[i],(int)garageSounds->data[2] << 0x10 | 0x803c);
             goto LAB_800303c4;
           }
         }
@@ -104,7 +104,7 @@ void Garage_Enter(char charId)
             garageSounds->data[4] = 0xc3;
 
 			if (idle[i] != 0) {
-              OtherFX_DriverTurbo(puVar4,(u_int)idle[i],(int)garageSounds->data[2] << 0x10 | 0x80c3);
+              OtherFX_RecycleNew(puVar4,(u_int)idle[i],(int)garageSounds->data[2] << 0x10 | 0x80c3);
               goto LAB_800303c4;
             }
           }
@@ -247,7 +247,7 @@ void Garage_Idle2(void)
         }
       }
       if (sdata.Garage_Idle2[i] != 0) {
-        OtherFX_DriverTurbo(
+        OtherFX_RecycleNew(
             *puVar7,
             sdata.Garage_Idle2[i],
             (int)garageSounds->data[2] << 0x10 | (int)garageSounds->data[4] | 0x8000U
@@ -260,7 +260,7 @@ void Garage_Idle2(void)
         ))
 	  {
 		// 
-        OtherFX_Stop_Safe(*puVar7);
+        OtherFX_RecycleMute(*puVar7);
       }
     }
   } 

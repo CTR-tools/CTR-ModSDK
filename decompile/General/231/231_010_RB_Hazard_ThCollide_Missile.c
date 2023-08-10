@@ -19,7 +19,7 @@ int RB_Hazard_ThCollide_Missile(struct Thread* thread)
 		thread->flags |= 0x800;
 
 		// stop audio of moving
-		OtherFX_Stop_Safe(&tw->audioPtr);
+		OtherFX_RecycleMute(&tw->audioPtr);
 
 		// get driver
 		driver = tw->driverTarget;
