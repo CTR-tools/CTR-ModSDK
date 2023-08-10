@@ -71,8 +71,6 @@ void GhostBuffer_InitMemory(void)
 		tape->constDEADC0ED = 0xDEADC0ED;
 		tape->ptrStart = &gh->recordBuffer[0];
 		tape->ptrEnd = &gh->recordBuffer[gh->size];
-		
-		printf("%08x, %08x\n", gh, tape->ptrEnd);
 
 		// if n tropy / oxide
 		if (i == 1)
