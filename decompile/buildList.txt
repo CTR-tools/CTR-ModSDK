@@ -195,7 +195,7 @@ common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPt
 common, exe, GhostBuffer_InitMemory, 0x0, General/GHOST/GhostBuffer_InitMemory.c
 common, exe, GhostBuffer_InitRecording, 0x0, General/GHOST/GhostBuffer_InitRecording.c
 common, exe, GhostBuffer_EndRecording, 0x0, General/GHOST/GhostBuffer_EndRecording.c
-//common, exe, GhostBuffer_RecordStats, 0x0, General/GHOST/GhostBuffer_RecordStats.c
+common, exe, GhostBuffer_RecordStats, 0x0, General/GHOST/GhostBuffer_RecordStats.c
 common, exe, GhostBuffer_RecordBoosts, 0x0, General/GHOST/GhostBuffer_RecordBoosts.c
 
 // HOWL

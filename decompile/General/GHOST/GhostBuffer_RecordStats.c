@@ -89,21 +89,19 @@ void GhostBuffer_RecordStats(short raceFinished)
       pbVar1[0] = 0x81;
 	  pbVar1[1] = iVar7->animIndex;
 	  pbVar1[2] = iVar7->animFrame;
-
-      sdata->GhostRecording.ptrCurrOffset += 3;
+	  pbVar1 += 3;
     }
 
 	// If there is a change in instance flags,
 	// determine if driver is split by water or mud
     if ((iVar7->flags & 0x2000) != (sdata->GhostRecording.instanceFlags & 0x2000))
 	{
-      pbVar1[0] = 0x83;
-
 	  // Record the instance flags
 	  // determine if driver is split by water or mud
+		
+      pbVar1[0] = 0x83;
       pbVar1[1] = (char)(iVar7->flags >> 0xd) & 1;
-
-      sdata->GhostRecording.ptrCurrOffset += 2;
+	  pbVar1 += 2;
     }
 
 	// This if-statment was rewritten from the original Ghidra output,
@@ -140,8 +138,7 @@ void GhostBuffer_RecordStats(short raceFinished)
 	  {
 		// Record that you are doing nothing
         pbVar1[0] = 0x84;
-
-        sdata->GhostRecording.ptrCurrOffset += 1;
+		pbVar1 += 1;
       }
 
 	  // If you are moving
@@ -156,9 +153,7 @@ void GhostBuffer_RecordStats(short raceFinished)
         pbVar1[2] = (char)sdata->GhostRecording.VelZ;
         pbVar1[3] = (char)(iVar8->rotCurr.y >> 4);
         pbVar1[4] = (char)(iVar8->rotCurr.z >> 4);
-
-		// advance the recording offset by 5 chars
-		sdata->GhostRecording.ptrCurrOffset += 5;
+		pbVar1 += 5;
       }
     }
 
@@ -196,7 +191,7 @@ void GhostBuffer_RecordStats(short raceFinished)
 	  pbVar1[9] = (char)(iVar8->rotCurr.y >> 4);
       pbVar1[10] = (char)(iVar8->rotCurr.z >> 4);
 
-      sdata->GhostRecording.ptrCurrOffset += 11;
+      pbVar1 += 11;
 
 	  // Time of last 0x80 buffer
       sdata->GhostRecording.timeOfLast80buffer = sdata->GhostRecording.timeElapsedInRace;
@@ -209,7 +204,7 @@ void GhostBuffer_RecordStats(short raceFinished)
 			// if offset of ghost-recording buffer exceeds
 			// the maximum size of a ghost that can be recorded
 			// (if you're one frame away from max capacity)
-			((u_int)sdata->GhostRecording.ptrEndOffset < (u_int)sdata->GhostRecording.ptrCurrOffset + 0x40) &&
+			((u_int)sdata->GhostRecording.ptrEndOffset < (u_int)pbVar1 + 0x40) &&
 
 			// bool canSaveGhost
 			(sdata->boolCanSaveGhost = 0,
@@ -236,6 +231,9 @@ void GhostBuffer_RecordStats(short raceFinished)
     sdata->GhostRecording.VelX = (short)iVar4;
     sdata->GhostRecording.VelY = (short)iVar3;
     sdata->GhostRecording.VelZ = (short)iVar6;
+	
+	// save incremeneted pointer
+	sdata->GhostRecording.ptrCurrOffset = pbVar1;
   }
 
   // Increment frame counter
