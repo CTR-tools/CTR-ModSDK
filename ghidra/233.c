@@ -1318,7 +1318,7 @@ LAB_800ad8ec:
     if (*(int *)(PTR_DAT_8008d2ac + 0x1a10) == 0x28) {
       if (param_1 != 0) 
 	  {
-		// Garage_Idle1
+		// Garage_PlayFX
         FUN_80030404(*(undefined4 *)(psVar14 + 6),
                      (int)*(short *)(*(int *)(param_1 + 0x18) + 0x10) + -0xce);
       }
