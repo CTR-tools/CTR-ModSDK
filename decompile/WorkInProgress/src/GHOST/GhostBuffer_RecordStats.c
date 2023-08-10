@@ -50,7 +50,7 @@ void GhostBuffer_RecordStats(short raceFinished)
 		(raceFinished != 0) ||
 
 		// This is true every 8 frames
-		((sdata->countEightFrames & 7) == 0)
+		((sdata->GhostRecording.countEightFrames & 7) == 0)
 	  )
   {
 
@@ -70,21 +70,21 @@ void GhostBuffer_RecordStats(short raceFinished)
     sdata->GhostRecording.VelZ = (short)iVar6 - sdata->GhostRecording.VelZ;
 
     // Time elapsed since last 0x80 buffer
-	iVar9 = sdata->GhostRecoding.timeElapsedInRace - sdata->GhostRecoding.timeOfLast80buffer;
+	iVar9 = sdata->GhostRecording.timeElapsedInRace - sdata->GhostRecording.timeOfLast80buffer;
 
 	// get pointer to current recording char in buffer
     pbVar1 = sdata->GhostRecording.ptrCurrOffset;
 
 	if (
 			// if animation frame changed
-			(sdata->GhostRecoding.animFrame != iVar7->animFrame) ||
+			(sdata->GhostRecording.animFrame != iVar7->animFrame) ||
 
 			// if animation changed
-			(sdata->GhostRecoding.animIndex != iVar7->animIndex)
+			(sdata->GhostRecording.animIndex != iVar7->animIndex)
 		)
 	{
-	  sdata->GhostRecoding.animFrame = iVar7->animFrame;
-	  sdata->GhostRecoding.animIndex = iVar7->animIndex;
+	  sdata->GhostRecording.animFrame = iVar7->animFrame;
+	  sdata->GhostRecording.animIndex = iVar7->animIndex;
 
       pbVar1[0] = 0x81;
 	  pbVar1[1] = iVar7->animIndex;
@@ -209,7 +209,7 @@ void GhostBuffer_RecordStats(short raceFinished)
 			// if offset of ghost-recording buffer exceeds
 			// the maximum size of a ghost that can be recorded
 			// (if you're one frame away from max capacity)
-			(sdata->GhostRecording.ptrEndOffset < (int)sdata->GhostRecording.ptrCurrOffset + 0x40) &&
+			((u_int)sdata->GhostRecording.ptrEndOffset < (u_int)sdata->GhostRecording.ptrCurrOffset + 0x40) &&
 
 			// bool canSaveGhost
 			(sdata->boolCanSaveGhost = 0,
@@ -239,7 +239,7 @@ void GhostBuffer_RecordStats(short raceFinished)
   }
 
   // Increment frame counter
-  sdata->countEightFrames = sdata->countEightFrames++;
+  sdata->GhostRecording.countEightFrames++;
 
   // Increment race timer by elapsed milliseconds per frame, ~32
   sdata->GhostRecording.timeElapsedInRace += gGT->elapsedTimeMS;
