@@ -2698,8 +2698,8 @@ struct sData
 
 	#if BUILD >= UsaRetail
 	// 8008d080
-	// used in Garage_Idle2
-	char Garage_Idle2[8];
+	// used in Garage_LerpFX
+	char Garage_LerpFX[8];
 	#endif
 	
 	// ============================

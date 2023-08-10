@@ -441,8 +441,8 @@ void CseqMusic_StopAll();
 
 	void Garage_Init();
 	void Garage_Enter(char characterID);
-	void Garage_Idle1(u_int soundID, char characterID);
-	void Garage_Idle2();
+	void Garage_PlayFX(u_int soundID, char characterID);
+	void Garage_LerpFX();
 	void Garage_MoveLR(int desiredID);
 	void Garage_Leave();
 

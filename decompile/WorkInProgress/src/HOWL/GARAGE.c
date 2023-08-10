@@ -52,7 +52,7 @@ void Garage_Enter(char charId)
       charRight = 0;
     }
     
-    idle = &sdata->Garage_Idle2;
+    idle = &sdata->Garage_LerpFX;
     
 
 	// loop through all characters in garage
@@ -126,7 +126,7 @@ void Garage_Enter(char charId)
   return;
 }
 
-void Garage_Idle1(u_int soundId, char charId)
+void Garage_PlayFX(u_int soundId, char charId)
 {
   int random = sdata->audioRNG
 
@@ -171,7 +171,7 @@ void Garage_Idle1(u_int soundId, char charId)
   return;
 }
 
-void Garage_Idle2(void)
+void Garage_LerpFX(void)
 {
   char cVar1;
   char bVar2;
@@ -270,11 +270,11 @@ void Garage_Idle2(void)
         }
       }
 	  
-      if (sdata.Garage_Idle2[i] != 0) 
+      if (sdata.Garage_LerpFX[i] != 0) 
 	  {
         OtherFX_RecycleNew(
             *puVar7,
-            sdata.Garage_Idle2[i],
+            sdata.Garage_LerpFX[i],
             (int)garageSounds->volume << 0x10 | (int)garageSounds->LR | 0x8000U
             );
       }

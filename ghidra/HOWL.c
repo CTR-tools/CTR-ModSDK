@@ -5838,7 +5838,7 @@ void FUN_8002d67c(void)
     }
     break;
   case 7:
-	// Garage_Idle2
+	// Garage_LerpFX
     FUN_800304b8();
     break;
   case 8:
@@ -8904,7 +8904,7 @@ LAB_800303c4:
 }
 
 
-// Garage_Idle1
+// Garage_PlayFX
 void FUN_80030404(uint param_1,int param_2)
 
 {
@@ -8951,7 +8951,7 @@ void FUN_80030404(uint param_1,int param_2)
 }
 
 
-// Garage_Idle2
+// Garage_LerpFX
 void FUN_800304b8(void)
 
 {

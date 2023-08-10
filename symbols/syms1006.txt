@@ -396,8 +396,8 @@
 // Garage is not in Sep3
 800317d4 Garage_Init
 80031830 Garage_Enter
-800319d0 Garage_Idle1
-80031a84 Garage_Idle2
+800319d0 Garage_PlayFX
+80031a84 Garage_LerpFX
 // Garage_MoveLR
 80031d18 Garage_Leave
 
