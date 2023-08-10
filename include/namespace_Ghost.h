@@ -46,5 +46,6 @@ struct GhostHeader
 	// Only time this is non-zero is if pre-existing memory isn't wiped
 	char emptyPadding[0x14];
 	
-	// 0x28 bytes large
+	// 0x28
+	char recordBuffer[0]; // yes, zero bytes
 };

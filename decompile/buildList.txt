@@ -1,6 +1,6 @@
-// 328+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 406 rewritten so far
+// 331+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 409 rewritten so far
 
-// 328 for every 'common' and ','
+// 331 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -190,6 +190,12 @@ common, exe, GAMEPROG_SaveCupProgress, 0x0, General/GAMEPROG/GAMEPROG_SaveCupPro
 common, exe, GAMEPROG_SyncGameAndCard, 0x0, General/GAMEPROG/GAMEPROG_SyncGameAndCard.c
 common, exe, GAMEPROG_NewGame_OnBoot, 0x0, General/GAMEPROG/GAMEPROG_NewGame_OnBoot.c
 common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c
+
+// GHOST
+common, exe, GhostBuffer_InitMemory, 0x0, General/GHOST/GhostBuffer_InitMemory.c
+common, exe, GhostBuffer_InitRecording, 0x0, General/GHOST/GhostBuffer_InitRecording.c
+common, exe, GhostBuffer_EndRecording, 0x0, General/GHOST/GhostBuffer_EndRecording.c
+common, exe, GhostBuffer_RecordBoosts, 0x0, General/GHOST/GhostBuffer_RecordBoosts.c
 
 // HOWL
 common, exe, OtherFX_Play, 0x0, General/HOWL/OtherFX_Play.c

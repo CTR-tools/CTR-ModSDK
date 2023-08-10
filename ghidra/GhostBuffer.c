@@ -659,7 +659,7 @@ void FUN_80027838(void)
 	  // Driver + 0x62C = ptr ghost tape
       piVar7[0x18b] = iVar4;
 
-	  // Driver_SearchModelByString
+	  // VehInit_GetModelByName
       uVar3 = FUN_80058948((&PTR_s_crash_80086d84)[(int)(short)(&DAT_80086e84)[(int)sVar5 + 1] * 4])
       ;
 
@@ -820,7 +820,7 @@ LAB_80027cfc:
 	  // character ID
       psVar6 = (short *)((int)&DAT_80086e84 + (iVar5 >> 0xf));
 
-	  // Driver_SearchModelByString
+	  // VehInit_GetModelByName
       uVar2 = FUN_80058948((&PTR_s_crash_80086d84)[(int)*psVar6 * 4]);
 
 	  // set scale of wheels to zero

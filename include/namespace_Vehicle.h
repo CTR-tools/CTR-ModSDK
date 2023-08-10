@@ -1439,7 +1439,7 @@ struct Driver
 	// 0x62C - 0x670 reserved for ghost
 
 	// 0x62C
-	// ptrGhostTape
+	// struct GhostTape* tape;
 
 	// 0x630
 	// ghostID

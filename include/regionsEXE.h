@@ -4327,7 +4327,7 @@ struct sData
 		int timeElapsedInRace;
 
 		// 8008fc14
-		int framesSinceLastGhostWritting1E;
+		int boostCooldown1E;
 
 		// 8008fc18
 		short VelX;

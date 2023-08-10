@@ -40,8 +40,8 @@ void GhostBuffer_RecordStats(short raceFinished)
       return;
     }
   }
-  if (sdata->framesSinceLastGhostWritting1E != 0) {
-    sdata->framesSinceLastGhostWritting1E--;
+  if (sdata->GhostRecording.boostCooldown1E != 0) {
+    sdata->GhostRecording.boostCooldown1E--;
   }
 
   if (

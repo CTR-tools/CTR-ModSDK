@@ -80,6 +80,8 @@ struct x y[] =
 	TEST16(&sdata_static.mempack),
 	TEST16(&sdata_static.numGhostProfilesSaved),
 
+	TEST16(&sdata_static.GhostRecording.boostCooldown1E),
+
 	// 926 - 0x2584
 	// 1006 - 0x258C
 	// 1020 - 0x2594

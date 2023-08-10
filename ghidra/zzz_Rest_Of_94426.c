@@ -20071,7 +20071,7 @@ void FUN_80058d2c(int param_1,int param_2)
     sVar1 = (&DAT_80086e84)[param_2];
   }
 
-  // Driver_SearchModelByString
+  // VehInit_GetModelByName
   uVar3 = FUN_80058948((&PTR_s_crash_80086d84)[(int)sVar1 * 4]);
 
   // INSTANCE_Birth3D -- ptrModel, name, thread

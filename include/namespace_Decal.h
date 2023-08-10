@@ -161,13 +161,8 @@ struct IconGroup
 	// 0x12
 	short numIcons;
 
-	// This is an array, not a pointer,
-	// see below...
 	// 0x14
-	struct Icon* icons[1];
-
-	// So it really looks like this
-	// struct Icon icons[numIcons];
+	struct Icon* icons[0]; // yes, zero
 };
 
 _Static_assert(sizeof(struct TextureLayout) == 0xC);
