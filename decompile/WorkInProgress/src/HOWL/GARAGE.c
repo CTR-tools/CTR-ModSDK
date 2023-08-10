@@ -23,7 +23,7 @@ void Garage_Init(void)
 void Garage_Enter(char charId)
 {
   struct garageSoundPool* garageSounds;
-  char* idle;
+  char* soundIDs;
   char i;
   char charRight;
   char charLeft;
@@ -52,7 +52,7 @@ void Garage_Enter(char charId)
       charRight = 0;
     }
     
-    idle = &sdata->Garage_LerpFX;
+    soundIDs = &sdata->garageSoundIDs;
     
 
 	// loop through all characters in garage
@@ -71,8 +71,8 @@ void Garage_Enter(char charId)
 		// Balance Left/Right
         garageSounds->LR = 0x80;
 
-		if (idle[i] != 0) {
-		  OtherFX_RecycleNew(audioPtr,(u_int)idle[i],(int)garageSounds->volume << 0x10 | 0x8080);
+		if (soundIDs[i] != 0) {
+		  OtherFX_RecycleNew(audioPtr,(u_int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x8080);
 		  continue;
 		}
 	  }
@@ -87,8 +87,8 @@ void Garage_Enter(char charId)
 		// 75% left, 25% right
         garageSounds->LR = 0x3c;
 
-		if (idle[i] != 0) {
-          OtherFX_RecycleNew(audioPtr,(u_int)idle[i],(int)garageSounds->volume << 0x10 | 0x803c);
+		if (soundIDs[i] != 0) {
+          OtherFX_RecycleNew(audioPtr,(u_int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x803c);
           continue;
         }
       }
@@ -103,8 +103,8 @@ void Garage_Enter(char charId)
 	  	// 25% left, 75% right
         garageSounds->LR = 0xc3;
 	  
-	  	if (idle[i] != 0) {
-          OtherFX_RecycleNew(audioPtr,(u_int)idle[i],(int)garageSounds->volume << 0x10 | 0x80c3);
+	  	if (soundIDs[i] != 0) {
+          OtherFX_RecycleNew(audioPtr,(u_int)soundIDs[i],(int)garageSounds->volume << 0x10 | 0x80c3);
           continue;
         }
       }
@@ -185,8 +185,8 @@ void Garage_LerpFX(void)
   for (i = 0; i < 8; i++) 
   {
     
-    garageSounds = &sdata.garageSoundPool[i];
-    puVar7 = &sdata.garageSoundPool[i].audioPtr;
+    garageSounds = &sdata->garageSoundPool[i];
+    puVar7 = &sdata->garageSoundPool[i].audioPtr;
 
     cVar1 = garageSounds->gsp_curr;
 	
@@ -270,11 +270,11 @@ void Garage_LerpFX(void)
         }
       }
 	  
-      if (sdata.Garage_LerpFX[i] != 0) 
+      if (sdata->garageSoundIDs[i] != 0) 
 	  {
         OtherFX_RecycleNew(
             *puVar7,
-            sdata.Garage_LerpFX[i],
+            sdata->garageSoundIDs[i],
             (int)garageSounds->volume << 0x10 | (int)garageSounds->LR | 0x8000U
             );
       }
@@ -326,7 +326,7 @@ void Garage_MoveLR(int desiredId)
 	// loop through 8 characters
     for (i = 0; i < 8; i++)
 	{
-    garageSounds = &sdata.garageSoundPool[i];
+    garageSounds = &sdata->garageSoundPool[i];
 	  // character in focus
       if (i == desiredId) {
         garageSounds->gsp_curr = GSP_CENTER;
