@@ -116,7 +116,7 @@ void GhostBuffer_RecordStats(short raceFinished)
 		  (raceFinished == 0) &&
 
 		  // false once every 16 frames
-		  (sdata->GhostRecording.countSixteenFrames & 0x1f) &&
+		  ((sdata->GhostRecording.countSixteenFrames & 0x1f) != 0) &&
 
 		  // If velX is small enough for one char
 		  (sdata->GhostRecording.VelX < 0x80) &&
