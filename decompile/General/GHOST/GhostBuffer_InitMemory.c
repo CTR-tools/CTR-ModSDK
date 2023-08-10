@@ -69,8 +69,10 @@ void GhostBuffer_InitMemory(void)
 		tape->gh = gh;
 		tape->gh_again = gh;
 		tape->constDEADC0ED = 0xDEADC0ED;
-		tape->ptrStart = gh->recordBuffer[0];
-		tape->ptrEnd = gh->recordBuffer[gh->size];
+		tape->ptrStart = &gh->recordBuffer[0];
+		tape->ptrEnd = &gh->recordBuffer[gh->size];
+		
+		printf("%08x, %08x\n", gh, tape->ptrEnd);
 
 		// if n tropy / oxide
 		if (i == 1)
@@ -137,7 +139,7 @@ void GhostBuffer_InitMemory(void)
 
 		ghostDriver->instSelf = inst;
 
-		VehInit_TireSprites(ghostDriver);
+		VehInit_TireSprites(t);
 		VehInit_SetConsts(ghostDriver);
 
 		// driver is an AI
