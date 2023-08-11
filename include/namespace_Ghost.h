@@ -19,7 +19,7 @@ struct GhostTape
 	// elapsed time in race "so far"
 	
 	// 0x18
-	char data[0x18];
+	char data[0x28];
 	
 	// 0x40
 	struct
@@ -32,10 +32,11 @@ struct GhostTape
 		// 0xa
 		short unk[3];
 		
-	} PosNode[2];
+	} PosNode[0x21];
 	
-	// 0x60
-	char unk200[0x200];
+	// 0x250
+	// another PosNode?
+	char unk10[0x10];
 	
 	// 0x260
 	int constDEADC0ED;

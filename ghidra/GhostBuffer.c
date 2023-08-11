@@ -365,10 +365,13 @@ LAB_80027304:
       uVar9 = 0;
     }
     
+	// iVar7 is always between 0x00 and 0x1F,
+	// see $s6 on 800273bc for more info
+	
 	// position
 	piVar15 = piVar20 + iVar7 * 4 + 0x14;
 	
-	// velocity
+	// velocity = pos[iVar7+1] - pos[iVar7]
     local_38 = (int)*(short *)(piVar15 + 4) - (int)*(short *)piVar15;
     local_34 = (int)*(short *)((int)piVar15 + 0x12) - (int)*(short *)((int)piVar15 + 2);
     local_30 = (int)*(short *)(piVar15 + 5) - (int)*(short *)(piVar15 + 1);
