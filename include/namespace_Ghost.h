@@ -18,6 +18,9 @@ struct GhostTape
 	// 0x18 and 0x40
 	// elapsed time in race "so far"
 	
+	// 0x4C
+	// set to 0xFFFF
+	
 	// 0x18
 	char data[0x38];
 	
