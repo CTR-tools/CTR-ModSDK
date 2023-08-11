@@ -173,9 +173,9 @@ void FUN_80026ed8(int param_1)
 	  pbVar13 = pbVar19 + 3;
       pbVar16 = pbVar19;
 	  
-	  // move two opcodes in advance,
-	  // if driver is within two opcodes of 
-	  // ending the race, then become Robotcar
+	  // move two POSITION(0x80) opcodes in advance,
+	  // use next two positions, and other ghost data,
+	  // to interpolate between points
       do {
         pbVar14 = pbVar13 + 1;
 		
@@ -235,7 +235,9 @@ void FUN_80026ed8(int param_1)
             *(undefined2 *)((int)ppbVar12 + -6) = 0;
             *(ushort *)(ppbVar12 + -1) = (ushort)pbVar13[6] << 4;
             *(short *)((int)ppbVar12 + -2) = (ushort)pbVar13[7] << 4;
-            if (sVar6 == 1) 
+            
+			// if 2nd position opcode
+			if (sVar6 == 1) 
 			{
 			  // get time (big endian) from position message
               bVar1 = pbVar13[4];
@@ -248,6 +250,7 @@ void FUN_80026ed8(int param_1)
               piVar20[0x10] = iVar8;
             }
             
+			// count position opcodes
 			sVar6 = sVar6 + 1;
 			
 			// advance curr
