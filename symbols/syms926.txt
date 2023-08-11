@@ -192,6 +192,7 @@
 80026ed8 GhostReplay_ThTick
 80027838 GhostReplay_Init1
 80027b88 GhostReplay_Init2
+
 80027df4 GhostTape_Start
 80027e90 GhostTape_End
 80027f20 GhostTape_WriteMoves
