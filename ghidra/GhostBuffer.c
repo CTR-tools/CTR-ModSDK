@@ -153,6 +153,7 @@ void FUN_80026ed8(int param_1)
 	// offset 0x50
 	piVar15 = piVar20 + 0x14;
     
+	// elapsedTime < time in race
 	if (piVar20[0x10] <= iVar7) 
 	{
       sVar6 = 0;
@@ -234,11 +235,15 @@ void FUN_80026ed8(int param_1)
             *(undefined2 *)((int)ppbVar12 + -6) = 0;
             *(ushort *)(ppbVar12 + -1) = (ushort)pbVar13[6] << 4;
             *(short *)((int)ppbVar12 + -2) = (ushort)pbVar13[7] << 4;
-            if (sVar6 == 1) {
+            if (sVar6 == 1) 
+			{
+			  // get time (big endian) from position message
               bVar1 = pbVar13[4];
               bVar2 = pbVar13[5];
               *(byte **)(piVar20 + 3) = pbVar16;
               iVar8 = piVar20[6] + (int)CONCAT11(bVar1,bVar2);
+			  
+			  // elapsedTime
               piVar20[6] = iVar8;
               piVar20[0x10] = iVar8;
             }
