@@ -10,22 +10,39 @@ struct GhostTape
 	void* ptrCurr;
 	
 	// 0x10
-	int unk;
+	int unk10;
 	
 	// 0x14
-	int timeElapsedInRace; // full race length
-	
-	// 0x18 and 0x40
-	// elapsed time in race "so far"
-	
-	// 0x48
-	// constVal0x20 (elapsed time per frame)
-	
-	// 0x4C
-	// int packetID
+	int timeElapsedInRace;
 	
 	// 0x18
-	char data[0x38];
+	int timeInPacket32_backup;
+	
+	// 0x1c
+	int unk1C;
+	int unk20;
+	
+	// 0x24
+	// all in GhostBuffer_InitDriver
+	short unk1[3];
+	short unk2[3];
+	short unk3[3];
+	short unk4[3];
+	
+	// 0x3C
+	int timeInPacket01;
+	
+	// 0x40
+	int timeInPacket32;
+	
+	// 0x44
+	int timeBetweenPackets;
+	
+	// 0x48
+	int numPacketsInArray;
+	
+	// 0x4C
+	int packetID;
 	
 	// 0x50
 	struct

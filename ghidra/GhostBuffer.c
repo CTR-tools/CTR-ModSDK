@@ -153,7 +153,8 @@ void FUN_80026ed8(int param_1)
 	// offset 0x50
 	piVar15 = piVar20 + 0x14;
     
-	// elapsedTime < time in race
+	// timeInPacket32 < time in race,
+	// flush and rewrite cached GhostPackets array
 	if (piVar20[0x10] <= iVar7) 
 	{
       sVar6 = 0;
@@ -167,6 +168,7 @@ void FUN_80026ed8(int param_1)
 	  // ghostTape->0x4c
       *(undefined2 *)(piVar20 + 0x13) = 0xffff;
       
+	  // timeInPacket01 = timeInPacket32_backup
 	  piVar20[0xf] = piVar20[6];
       
 	  // tape curr
@@ -174,8 +176,7 @@ void FUN_80026ed8(int param_1)
       pbVar16 = pbVar19;
 	  
 	  // move two POSITION(0x80) opcodes in advance,
-	  // use next two positions, and other ghost data,
-	  // to interpolate between points
+	  // combine with velocity to make GhostPackets cache
       do {
         pbVar14 = pbVar13 + 1;
 		
@@ -338,27 +339,31 @@ LAB_80027304:
         pbVar16 = pbVar17;
       } while (sVar6 < 2);
 	  
+	  // number of packets in array
       iVar8 = ((int)piVar15 + (-0x50 - (int)piVar20) >> 4) + -1;
       piVar20[0x12] = iVar8;
       if (iVar8 < 0) {
         piVar20[0x12] = 1;
       }
 	  
-	  // totalTime - elapsedTimeSoFar
+	  // timeBetweenPackets = timeInPacket32 - timeInPacket01
       piVar20[0x11] = piVar20[0x10] - piVar20[0xf];
       if (piVar20[0x10] - piVar20[0xf] == 0) {
         piVar20[0x11] = 1;
       }
     }
 	
-	// elapsedMS per frame (32)
+	// number of packets
     iVar11 = piVar20[0x12];
 	
+	// timeBetweenPackets
     iVar8 = piVar20[0x11];
-    
-	// time difference
+	
+	// scaledNum = elapsedTimeInRace - timeInPacket01
 	iVar7 = (iVar7 - piVar20[0xf]) * iVar11 * 0x1000;
-    uVar9 = iVar7 / iVar8;
+    
+	// scaledNum / timeBetweenPackets
+	uVar9 = iVar7 / iVar8;
     
 	if (iVar8 == 0) {
       trap(0x1c00);
@@ -370,7 +375,10 @@ LAB_80027304:
 	// packet index
     iVar7 = (int)uVar9 >> 0xc;
     
+	// percentage between two packets,
+	// 100% = 0x1000
 	uVar9 = uVar9 & 0xfff;
+	
     if (iVar11 <= iVar7) {
       iVar7 = iVar11 + -1;
       uVar9 = 0;
@@ -422,6 +430,7 @@ LAB_80027304:
     *(ushort *)(iVar22 + 0x2ee) = local_3e;
     *(ushort *)(iVar22 + 0x2f0) = local_3c;
 
+	// parse buffer for animation/render data
     if (*(short *)(piVar20 + 0x13) < iVar7) 
 	{
 	  // offset 0x5C
@@ -919,9 +928,11 @@ LAB_80027cfc:
       FUN_80026ed8(iVar9);
 
       *(undefined4 *)(iVar7 + 0x20) = 0;
-      *(undefined2 *)(iVar7 + 0x2a) = *(undefined2 *)(iVar7 + 0x24);
+      
+	  *(undefined2 *)(iVar7 + 0x2a) = *(undefined2 *)(iVar7 + 0x24);
       *(undefined2 *)(iVar7 + 0x2c) = *(undefined2 *)(iVar7 + 0x26);
       *(undefined2 *)(iVar7 + 0x2e) = *(undefined2 *)(iVar7 + 0x28);
+	  
       *(undefined2 *)(iVar7 + 0x36) = *(undefined2 *)(iVar7 + 0x30);
       *(undefined2 *)(iVar7 + 0x38) = *(undefined2 *)(iVar7 + 0x32);
       *(undefined2 *)(iVar7 + 0x3a) = *(undefined2 *)(iVar7 + 0x34);
