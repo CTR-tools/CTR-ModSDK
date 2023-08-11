@@ -343,23 +343,34 @@ LAB_80027304:
       if (iVar8 < 0) {
         piVar20[0x12] = 1;
       }
+	  
+	  // totalTime - elapsedTimeSoFar
       piVar20[0x11] = piVar20[0x10] - piVar20[0xf];
       if (piVar20[0x10] - piVar20[0xf] == 0) {
         piVar20[0x11] = 1;
       }
     }
+	
+	// elapsedMS per frame (32)
     iVar11 = piVar20[0x12];
+	
     iVar8 = piVar20[0x11];
-    iVar7 = (iVar7 - piVar20[0xf]) * iVar11 * 0x1000;
+    
+	// time difference
+	iVar7 = (iVar7 - piVar20[0xf]) * iVar11 * 0x1000;
     uVar9 = iVar7 / iVar8;
-    if (iVar8 == 0) {
+    
+	if (iVar8 == 0) {
       trap(0x1c00);
     }
     if ((iVar8 == -1) && (iVar7 == -0x80000000)) {
       trap(0x1800);
     }
+	
+	// packet index
     iVar7 = (int)uVar9 >> 0xc;
-    uVar9 = uVar9 & 0xfff;
+    
+	uVar9 = uVar9 & 0xfff;
     if (iVar11 <= iVar7) {
       iVar7 = iVar11 + -1;
       uVar9 = 0;
@@ -532,7 +543,10 @@ LAB_80027658:
 		// Have the ghost do nothing
         case 0x84:
           sVar6 = *(short *)(piVar20 + 0x13);
+		  
 LAB_80027754:
+
+		  // increment counter for Position, Velocity, and Null(0x84)
           *(short *)(piVar20 + 0x13) = sVar6 + 1;
         }
         pbVar13 = pbVar19;
