@@ -720,8 +720,9 @@ struct Driver
 	short turbo_audioCooldown;
 
 	// 0x3E2
-	// needs to be signed to preserve saffi-fire bug
-	short reserves;
+	// needs to be unsigned, so "< 0" breaks,
+	// giving infinite reserves, prevents "-= elapsedMS"
+	unsigned short reserves;
 
 	// 0x3E4
 	short fireSpeedCap;

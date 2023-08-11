@@ -83,8 +83,11 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	for(i = 0; i < 14; i++)
 	{
 		short* val = (short*)((int)driver + (int)PhysLinear_DriverOffsets[i]);
-		*val -= msPerFrame;
-		if(*val < 0) *val = 0;
+		if(*val > 0)
+		{
+			*val -= msPerFrame;
+			if(*val < 0) *val = 0;
+		}
 	}
 	
 	if(driver->reserves > 0) driver->timeSpentUsingReserves += msPerFrame;

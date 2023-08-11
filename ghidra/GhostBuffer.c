@@ -86,31 +86,27 @@ void FUN_80026ed8(int param_1)
   }
 
   if (
-		(
-			(
-				// if no ghosts are drawing
-				(DAT_8008d740 == 0) ||
+		// if no ghosts are drawing
+		(DAT_8008d740 == 0) ||
 
-				// if PauseAllThreads is enabled
-				((*(uint *)PTR_DAT_8008d2ac & 0x10) != 0)
-			) ||
-			(iVar22 == 0)
-		) ||
-		(
-			(
-				// if ghostTape->end == ghostTape->start,
-				// either ghost reached the end, or ghost is empty
-				*(int *)(*(int *)(iVar22 + 0x62c) + 8) == *(int *)(*(int *)(iVar22 + 0x62c) + 4) ||
-				
-				// ghost is not initialized
-				(*(short *)(iVar22 + 0x632) == 0)
-			)
-		)
+		// if PauseAllThreads is enabled
+		((*(uint *)PTR_DAT_8008d2ac & 0x10) != 0) ||
+		
+		// driver == nullptr
+		(iVar22 == 0) ||
+		
+		// if ghostTape->end == ghostTape->start,
+		// either ghost reached the end, or ghost is empty
+		*(int *)(*(int *)(iVar22 + 0x62c) + 8) == *(int *)(*(int *)(iVar22 + 0x62c) + 4) ||
+		
+		// ghost is not initialized
+		(*(short *)(iVar22 + 0x632) == 0)
 	 )
   {
 	// make invisible
     *(uint *)(iVar21 + 0x28) = *(uint *)(iVar21 + 0x28) | 0x80;
   }
+  
   else
   {
 	// decrease reserves ~32ms,
