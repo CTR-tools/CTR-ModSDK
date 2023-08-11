@@ -24,15 +24,17 @@ struct GhostTape
 	// 0x50
 	struct
 	{
-		// 0x0
+		// just position,
+		// or union for several packets?
+		
 		short pos[3];
 		short time;
 		char rot[2];
-		
-		// 0xa
 		short unkA;
 		
 		void* bufferPacket;
+		
+		// 0x10 -- size of packet
 		
 	} GhostPackets[0x21];
 	
