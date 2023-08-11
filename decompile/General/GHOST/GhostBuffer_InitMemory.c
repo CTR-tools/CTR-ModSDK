@@ -97,16 +97,10 @@ void GhostBuffer_InitMemory(void)
 		// ghost drivers are 0x638 bytes large
 		memset(ghostDriver, 0, 0x638);
 
-		// Driver + 0x630 = ghostID
-		*(short *)((int)ghostDriver + 0x630) = i;
-
-		// ghost not initialized
-		*(short *)((int)ghostDriver + 0x632) = 0;
-
+		ghostDriver->ghostID = i;
 		ghostDriver->driverID = i + 1;
-
-		// Driver + 0x62C = ptr ghost tape
-		*(int *)((int)ghostDriver + 0x62c) = tape;
+		ghostDriver->ghostBoolInit = 0;
+		ghostDriver->ghostTape = tape;
 
 		uVar3 = VehInit_GetModelByName(data.MetaDataCharacters[data.characterIDs[i]].name_Debug);
 

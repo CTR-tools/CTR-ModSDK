@@ -1373,29 +1373,36 @@ struct Driver
 	// === Robotcar and Ghost ===
 
 	// 0x598
-	// unknown
+	int unk598;
+	int unk59c;
+	int unk5a0;
 
 	// 0x5a4
-	// pointer to NavFrame
-
+	struct NavFrame* botNavFrame;
+	
+	int unk5a8;
+	int unk5ac;
+	
 	// 0x5b0
 	// unsigned int flags
 	// & 0x010 - is blasted? Something to do with damage
 	// & 0x100 - camera spectates this AI
 	// & 0x200 - race started for AI
+	int botFlags;
 
 	// 0x5b4
 	// acceleration from start-line
+	int botAccel;
 
 	// 0x5b8
 	// short path index
-
-	// 0x5ba
-	// short ???
+	short botPath;
+	short unk5ba;
 
 	// 0x5bc
 	// incline rotXZ
 	// probably only for AIs
+	char unk5bc[0x50];
 	
 	// 0x5d4
 	// AI speed
@@ -1404,29 +1411,34 @@ struct Driver
 	// AI progress // max recorded value = 60
 
 	// 0x60c
-	// short estimatePos[3]
+	short estimatePos[3];
 	
 	// 0x612
-	// char estimateRotNav[3]
-	// char estimateRotCurrY;
+	char estimateRotNav[3];
+	char estimateRotCurrY;
 
 	// 0x616
-	// short distToNextNavXYZ
+	short distToNextNavXYZ;
 	
 	// 0x618
-	// short distToNextNavXZ
+	short distToNextNavXZ;
 	
 	// 0x61A
-	// ???
+	short unk61a;
+	int unk61c;
 	
 	// 0x620
-	// MaskHeadWeapon* maskObj;
+	struct MaskHeadWeapon* maskObj;
 	
 	// 0x624
-	// short weaponCooldown
+	short weaponCooldown;
 
 	// 0x626
 	// short ??? // Something set when blasted ?
+	short unk626;
+	
+	// 0x628
+	int unk628;
 
 	// ===========================================
 
@@ -1438,16 +1450,17 @@ struct Driver
 	// 0x62C - 0x670 reserved for ghost
 
 	// 0x62C
-	// struct GhostTape* tape;
+	struct GhostTape* ghostTape;
 
 	// 0x630
-	// ghostID
+	short ghostID;
 
 	// 0x632
-	// short boolGhostInitialized
+	short ghostBoolInit;
 
 	// 0x634
-	// short boolGhostStarted
+	short ghostBoolStarted;
+	short unk636;
 
 	// 0x638
 	// end of ghost struct (as determined by memset)
@@ -1464,4 +1477,5 @@ struct Driver
 _Static_assert(sizeof(struct MetaPhys) == 0x1C);
 #else
 _Static_assert(sizeof(struct MetaPhys) == 0x20);
+_Static_assert(sizeof(struct Driver) == 0x638);
 #endif
