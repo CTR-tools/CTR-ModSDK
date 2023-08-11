@@ -65,7 +65,7 @@ void DECOMP_GhostBuffer_ThTick(struct Thread* t)
 		if(gGT->trafficLightsTimer < 0)
 		{
 			d->ghostBoolStarted = 1;
-			*(short*)d->ghostTape->data[0x40] = -1;
+			tape->data[0x40] = -1;
 		}
 	}
 	
