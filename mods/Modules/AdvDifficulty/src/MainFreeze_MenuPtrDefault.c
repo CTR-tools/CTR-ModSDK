@@ -77,7 +77,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *mb)
 		sdata->Loading.stage = -5;
 		if (TitleFlag_IsFullyOffScreen() == 1)
 			TitleFlag_BeginTransition(1);
-		if (!sdata->boolPlayGhost || !sdata->ptrGhostTapePlaying)
+		if (!sdata->boolReplayHumanGhost || !sdata->ptrGhostTapePlaying)
 			return;
 		data.characterIDs[1] = sdata->ptrGhostTapePlaying->characterID;
 		return;

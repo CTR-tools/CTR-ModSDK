@@ -69,7 +69,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
         if ((gGT->unknownFlags_1d44 & 1) == 0)
           return;
 
-        sdata->boolPlayGhost = 1;
+        sdata->boolReplayHumanGhost = 1;
 
         GhostBufferEnd = (int)sdata->GhostRecording.ptrGhost + 0x3e00;
         ghostTape = sdata->GhostRecording.ptrGhost;

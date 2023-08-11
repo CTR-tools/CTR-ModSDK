@@ -106,7 +106,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			}
 
 			// if you are not showing a ghost during a race
-			if (sdata->boolPlayGhost == 0) return;
+			if (sdata->boolReplayHumanGhost == 0) return;
 
 			// If the ghost playing buffer is nullptr
 			if (sdata->ptrGhostTapePlaying == 0) return;

@@ -110,7 +110,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 					memset(sdata->ptrGhostTapePlaying, 0, 0x28);
 
 					// by default, dont show ghost in race
-					sdata->boolPlayGhost = 0;
+					sdata->boolReplayHumanGhost = 0;
 
 					LoadSave_ToggleMode(0x30);
 

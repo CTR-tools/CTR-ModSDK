@@ -66,7 +66,7 @@ void MenuBoxFuncPtr_Difficulty(struct MenuBox *mb)
     {
         gGT->gameMode1 &= ~PAUSE_1;
 
-        if (sdata->boolPlayGhost || sdata->ptrGhostTapePlaying)
+        if (sdata->boolReplayHumanGhost || sdata->ptrGhostTapePlaying)
         {
             data.characterIDs[1] = sdata->ptrGhostTapePlaying->characterID;
         }

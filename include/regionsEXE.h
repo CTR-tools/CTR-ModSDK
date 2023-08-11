@@ -3993,7 +3993,7 @@ struct sData
 	// 8008c8b0 -- JpnTrial
 	// 8008dD0C -- EurRetail
 	// 80090d88 -- JpnRetail
-	int boolPlayGhost;
+	int boolReplayHumanGhost;
 
 	// 8008d95c
 	char data18_aaa[0x10];

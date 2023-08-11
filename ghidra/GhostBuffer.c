@@ -843,7 +843,7 @@ void FUN_80027b88(void)
 	   // ghost made by human
 	   (((*(short *)(iVar8 + 0x630) == 0 &&
 
-	   // bool playGhostDuringRace
+	   // boolReplayHumanGhost
        (DAT_8008d958 != 0)) ||
 	   
 	   // ghost is N Tropy / Oxide
@@ -897,6 +897,8 @@ LAB_80027cfc:
 
 	  // VehInit_GetModelByName
       uVar2 = FUN_80058948((&PTR_s_crash_80086d84)[(int)*psVar6 * 4]);
+	  
+	  printf("%08x\n", uVar2);
 
 	  // set scale of wheels to zero
       uVar3 = 0;

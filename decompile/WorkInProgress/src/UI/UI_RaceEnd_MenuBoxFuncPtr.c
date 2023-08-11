@@ -75,7 +75,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
               return;
             }
 
-            sdata->boolPlayGhost = 1;
+            sdata->boolReplayHumanGhost = 1;
 
             GhostBufferEnd = (int)sdata->GhostRecording.ptrGhost + 0xf80;
 

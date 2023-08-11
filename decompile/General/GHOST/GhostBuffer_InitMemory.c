@@ -13,9 +13,11 @@ void GhostBuffer_InitMemory(void)
 	struct Instance *wakeInst;
 	struct Driver *ghostDriver;
 	struct Model* wake;
+	int timeTrialFlags;
 	
 	struct GhostHeader* gh;
 	struct GhostTape* tape;
+	int charID;
 	
 	struct GameTracker *gGT = sdata->gGT;
 	sdata->boolCanSaveGhost = 0;
@@ -44,18 +46,30 @@ void GhostBuffer_InitMemory(void)
 		// first ghost pointer is a ghost loaded by player
 		if (i == 0)
 		{
+			// if not playing a human ghost, skip this ghost
+			if (sdata->boolReplayHumanGhost == 0) continue;
+			
 			// assign the ghost you loaded
 			gh = sdata->ptrGhostTapePlaying;
+			
+			charID = 1;
 		}
 
 		// second ghost pointer is n tropy or oxide
 		else
 		{
+			timeTrialFlags = sdata->gameProgress.highScoreTracks[gGT->levelID].timeTrialFlags;
+			
+			// if not opened N Tropy, skip this ghost
+			if ((timeTrialFlags & 1) == 0) continue;
+			
 			// If you have not beaten N Tropy
-			if ((sdata->gameProgress.highScoreTracks[gGT->levelID].timeTrialFlags & 2) == 0)
+			if ((timeTrialFlags & 2) == 0)
 			{
 				// assign n tropy ghost
 				gh = gGT->level1->ptrSpawnType1->pointers[4];
+				
+				charID = 2;
 			}
 
 			// If you have beaten N Tropy
@@ -63,6 +77,8 @@ void GhostBuffer_InitMemory(void)
 			{
 				// assign oxide ghost
 				gh = gGT->level1->ptrSpawnType1->pointers[5];
+				
+				charID = 3;
 			}
 		}
 
@@ -78,36 +94,34 @@ void GhostBuffer_InitMemory(void)
 			gGT->timeToBeatInTimeTrial_ForCurrentEvent = gh->timeElapsedInRace;
 		}
 
+		// characterID and model
+		charID = data.characterIDs[charID];
+		uVar3 = VehInit_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
+
+		inst = INSTANCE_Birth3D(uVar3, 0, 0);
+		inst->unk51 = 0xc;
+		inst->flags |= 0x4000000;
+
 		// "ghost"
 		// 0x4 = size
 		// 0 = no relation to param4
 		// 0x100 flag = LargeStackPool
 		// 0x2 = ghost thread bucket
 		t = THREAD_BirthWithObject(0x40102, GhostBuffer_ThTick, 0, 0);
-
-		// Get the pointer to ghost that is attached to thread
-		ghostDriver = t->object;
-
-		// set modelID to "ghost of any kind"
-		t->modelIndex = 0x4b;
-
-		// allow this thread to ignore all collisions
-		t->flags |= 0x1000;
-
+		t->modelIndex = 0x4b;	// ghost
+		t->flags |= 0x1000;		// ignore collisions
+		
+		t->inst = inst;
+		inst->thread = t;
+		
 		// ghost drivers are 0x638 bytes large
+		ghostDriver = t->object;
 		memset(ghostDriver, 0, 0x638);
-
 		ghostDriver->ghostID = i;
 		ghostDriver->driverID = i + 1;
 		ghostDriver->ghostBoolInit = 0;
 		ghostDriver->ghostTape = tape;
-
-		uVar3 = VehInit_GetModelByName(data.MetaDataCharacters[data.characterIDs[i]].name_Debug);
-
-		uVar3 = INSTANCE_Birth3D(uVar3, 0, t);
-
-		// give instance to thread
-		t->inst = uVar3;
+		ghostDriver->instSelf = inst;
 
 		// Ptr Model "Wake"
 		wake = gGT->modelPtr[0x43];
@@ -125,14 +139,11 @@ void GhostBuffer_InitMemory(void)
 			}
 		}
 
-		inst = t->inst;
-		inst->unk51 = 0xc;
-		inst->flags |= 0x4000000;
-
-		ghostDriver->instSelf = inst;
-
 		VehInit_TireSprites(t);
 		VehInit_SetConsts(ghostDriver);
+		
+		if(charID == 0xF)
+			ghostDriver->wheelSize = 0;
 
 		// driver is an AI
 		ghostDriver->actionsFlagSet |= 0x100000;

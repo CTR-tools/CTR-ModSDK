@@ -17130,7 +17130,7 @@ void FUN_80055c90(int param_1)
               return;
             }
 
-			// bool playGhostDuringRace
+			// boolReplayHumanGhost
             DAT_8008d958 = 1;
 
             puVar5 = DAT_8008fbf4 + 0xf80;
