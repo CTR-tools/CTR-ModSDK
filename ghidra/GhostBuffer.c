@@ -422,7 +422,9 @@ LAB_80027304:
     *(ushort *)(iVar22 + 0x2ee) = local_3e;
     *(ushort *)(iVar22 + 0x2f0) = local_3c;
 
-    if (*(short *)(piVar20 + 0x13) < iVar7) {
+    if (*(short *)(piVar20 + 0x13) < iVar7) 
+	{
+	  // offset 0x5C
       pbVar13 = (byte *)piVar20[iVar7 * 4 + 0x17];
       do {
         if ((byte *)piVar20[2] <= pbVar13) break;
