@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_GhostBuffer_ThTick(struct Thread* t)
+void DECOMP_GhostReplay_ThTick(struct Thread* t)
 {
 	struct Driver* d;
 	struct GhostTape* tape;

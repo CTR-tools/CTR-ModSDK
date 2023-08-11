@@ -88,7 +88,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *mb)
 		return;
 	case 5: // "CHANGE CHARACTER"
 	case 6: // "CHANGE LEVEL"
-		GhostBuffer_Destroy();
+		GhostTape_Destroy();
 	case 10: // "CHANGE SETUP"
 		sdata->mainMenuState = (stringID == 10) ? (stringID - 7) : (stringID - 4);
 		sdata->Loading.OnBegin.AddBitsConfig0 |= MAIN_MENU;

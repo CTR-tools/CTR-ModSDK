@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_GhostBuffer_Destroy()
+void DECOMP_GhostTape_Destroy()
 {
 	if(sdata->ptrGhostTapePlaying != 0)
 	{

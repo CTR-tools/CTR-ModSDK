@@ -6926,7 +6926,7 @@ LAB_8003a71c:
 			)
 		   )
 		{
-          // GhostBuffer_EndRecording
+          // GhostTape_End
 		  FUN_80027e90();
 
           *(uint *)(PTR_DAT_8008d2ac + 0x1d44) = *(uint *)(PTR_DAT_8008d2ac + 0x1d44) | 1;
@@ -7571,7 +7571,7 @@ void FUN_8003b6d0(uint *param_1)
     FUN_80012598();
   }
 
-  // GhostBuffer_InitMemory
+  // GhostReplay_Init1
   FUN_80027838();
 
   // Check if 231 dll is loaded
@@ -7764,10 +7764,10 @@ void FUN_8003b6d0(uint *param_1)
   // basically, if you're in time trial gameplay
   if ((*(uint *)PTR_DAT_8008d2ac & 0x20022000) == 0x20000)
   {
-	// GhostBuffer_InitDriver
+	// GhostReplay_Init2
     FUN_80027b88();
 
-	// GhostBuffer_InitRecording
+	// GhostTape_Start
     FUN_80027df4();
   }
   return;

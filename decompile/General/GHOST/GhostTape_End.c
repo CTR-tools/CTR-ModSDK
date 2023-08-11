@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GhostBuffer_EndRecording(void)
+void GhostTape_End(void)
 {
   struct Driver* d;
   struct GhostHeader* gh;
@@ -13,7 +13,7 @@ void GhostBuffer_EndRecording(void)
   sdata->boolCanSaveGhost = 0;
     
   // Write the last chunk of ghost data
-  GhostBuffer_RecordStats(1);
+  GhostTape_WriteMoves(1);
 
   d = gGT->drivers[0];
   gh = sdata->GhostRecording.ptrGhost;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GhostBuffer_RecordStats(short raceFinished)
+void GhostTape_WriteMoves(short raceFinished)
 {
   char *pbVar1;
   int iVar3;
@@ -36,7 +36,7 @@ void GhostBuffer_RecordStats(short raceFinished)
 	// If you're in End-Of-Race menu
     if ((gameMode & 0x200000) != 0)
 	{
-      GhostBuffer_EndRecording();
+      GhostTape_End();
       return;
     }
   }

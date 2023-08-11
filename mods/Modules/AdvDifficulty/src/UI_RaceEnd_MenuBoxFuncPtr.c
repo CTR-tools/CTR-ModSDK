@@ -43,7 +43,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
       case 6:
         // Change level
         // Erase ghost of previous race from RAM
-        GhostBuffer_Destroy();
+        GhostTape_Destroy();
         // go back to track selection
         sdata->mainMenuState = 2;
         break;
@@ -101,7 +101,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
       case 3:
         // Quit
         // Erase ghost of previous race from RAM
-        GhostBuffer_Destroy();
+        GhostTape_Destroy();
         // go back to main menu
         sdata->mainMenuState = 0;
         // load LEV of main menu

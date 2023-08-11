@@ -209,13 +209,13 @@ void GAMEPROG_GetPtrHighScoreTrack();
 
 // GhostBuffer
 
-//void GhostBuffer_ThTick();
-//GhostBuffer_InitMemory()
-//GhostBuffer_InitRecording()
-//GhostBuffer_EndRecording()
-void GhostBuffer_RecordStats(short param_1);
-void GhostBuffer_RecordBoosts(int reserves, u_char type, int fireLevel);
-void GhostBuffer_Destroy();
+//void GhostReplay_ThTick();
+//GhostReplay_Init1()
+//GhostTape_Start()
+//GhostTape_End()
+void GhostTape_WriteMoves(short param_1);
+void GhostTape_WriteBoosts(int reserves, u_char type, int fireLevel);
+void GhostTape_Destroy();
 
 // OtherFX
 

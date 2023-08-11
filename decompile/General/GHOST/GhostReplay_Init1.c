@@ -1,8 +1,8 @@
 #include <common.h>
 
-void GhostBuffer_ThTick(struct Thread *);
+void GhostReplay_ThTick(struct Thread *);
 
-void GhostBuffer_InitMemory(void)
+void GhostReplay_Init1(void)
 {
 	char i;
 	u_short uVar1;
@@ -81,12 +81,20 @@ void GhostBuffer_InitMemory(void)
 				charID = 3;
 			}
 		}
+		
+		sdata->boolGhostsDrawing = 1;
 
 		tape->gh = gh;
 		tape->gh_again = gh;
 		tape->constDEADC0ED = 0xDEADC0ED;
 		tape->ptrStart = &gh->recordBuffer[0];
 		tape->ptrEnd = &gh->recordBuffer[gh->size];
+		tape->ptrCurr = tape->ptrStart;
+		tape->timeElapsedInRace = 0;
+		tape->timeInPacket32_backup = 0;
+		tape->unk20 = 0;
+		tape->timeInPacket01 = 0;
+		tape->timeInPacket32 = 0;
 
 		// if n tropy / oxide
 		if (i == 1)
@@ -100,14 +108,14 @@ void GhostBuffer_InitMemory(void)
 
 		inst = INSTANCE_Birth3D(uVar3, 0, 0);
 		inst->unk51 = 0xc;
-		inst->flags |= 0x4000000;
+		inst->flags = 7;
 
 		// "ghost"
 		// 0x4 = size
 		// 0 = no relation to param4
 		// 0x100 flag = LargeStackPool
 		// 0x2 = ghost thread bucket
-		t = THREAD_BirthWithObject(0x40102, GhostBuffer_ThTick, 0, 0);
+		t = THREAD_BirthWithObject(0x40102, GhostReplay_ThTick, 0, 0);
 		t->modelIndex = 0x4b;	// ghost
 		t->flags |= 0x1000;		// ignore collisions
 		
@@ -119,9 +127,11 @@ void GhostBuffer_InitMemory(void)
 		memset(ghostDriver, 0, 0x638);
 		ghostDriver->ghostID = i;
 		ghostDriver->driverID = i + 1;
-		ghostDriver->ghostBoolInit = 0;
+		ghostDriver->ghostBoolInit = 1;
+		ghostDriver->ghostBoolStarted = 0;
 		ghostDriver->ghostTape = tape;
 		ghostDriver->instSelf = inst;
+		ghostDriver->actionsFlagSet |= 0x100000; // AI driver
 
 		// Ptr Model "Wake"
 		wake = gGT->modelPtr[0x43];
@@ -144,12 +154,13 @@ void GhostBuffer_InitMemory(void)
 		
 		if(charID == 0xF)
 			ghostDriver->wheelSize = 0;
-
-		// driver is an AI
-		ghostDriver->actionsFlagSet |= 0x100000;
-
+		
 		// pointer to TrTire, for transparent tires
 		ghostDriver->wheelSprites = &gGT->iconGroup[0xc]->icons[0];
+		
+		// advance ghost by one frame,
+		// just so Oxide doesn't block your view
+		GhostReplay_ThTick(t);
 	}
 		
 	return;

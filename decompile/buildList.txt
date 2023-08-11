@@ -192,13 +192,13 @@ common, exe, GAMEPROG_NewGame_OnBoot, 0x0, General/GAMEPROG/GAMEPROG_NewGame_OnB
 common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c
 
 // GHOST
-common, exe, GhostBuffer_InitMemory, 0x0, General/GHOST/GhostBuffer_InitMemory.c
-common, exe, GhostBuffer_InitDriver, 0x0, General/GHOST/GhostBuffer_InitDriver.c
-common, exe, GhostBuffer_InitRecording, 0x0, General/GHOST/GhostBuffer_InitRecording.c
-common, exe, GhostBuffer_EndRecording, 0x0, General/GHOST/GhostBuffer_EndRecording.c
-common, exe, GhostBuffer_RecordStats, 0x0, General/GHOST/GhostBuffer_RecordStats.c
-common, exe, GhostBuffer_RecordBoosts, 0x0, General/GHOST/GhostBuffer_RecordBoosts.c
-common, exe, GhostBuffer_Destroy, 0x0, General/GHOST/GhostBuffer_Destroy.c
+common, exe, GhostReplay_Init1, 0x0, General/GHOST/GhostReplay_Init1.c
+common, exe, GhostReplay_Init2, 0x0, General/GHOST/GhostReplay_Init2.c
+common, exe, GhostTape_Start, 0x0, General/GHOST/GhostTape_Start.c
+common, exe, GhostTape_End, 0x0, General/GHOST/GhostTape_End.c
+common, exe, GhostTape_WriteMoves, 0x0, General/GHOST/GhostTape_WriteMoves.c
+common, exe, GhostTape_WriteBoosts, 0x0, General/GHOST/GhostTape_WriteBoosts.c
+common, exe, GhostTape_Destroy, 0x0, General/GHOST/GhostTape_Destroy.c
 
 // HOWL
 common, exe, OtherFX_Play, 0x0, General/HOWL/OtherFX_Play.c

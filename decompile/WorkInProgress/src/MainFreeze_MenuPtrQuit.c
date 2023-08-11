@@ -11,7 +11,7 @@ void DECOMP_MainFreeze_MenuPtrQuit(struct MenuBox *menu)
         if (row == 0)
         {
             // Erase ghost of previous race from RAM
-            GhostBuffer_Destroy();
+            GhostTape_Destroy();
 
             // Add bit for "in menu" when loading is done
             sdata->Loading.OnBegin.AddBitsConfig0 |= MAIN_MENU;

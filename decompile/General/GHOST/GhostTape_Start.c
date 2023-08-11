@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GhostBuffer_InitRecording(void)
+void GhostTape_Start(void)
 {
   struct GhostHeader* gh;
   struct Driver* d;

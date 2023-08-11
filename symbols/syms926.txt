@@ -189,14 +189,14 @@
 80026e48 GAMEPROG_NewGame_OnBoot
 80026e80 GAMEPROG_GetPtrHighScoreTrack
 
-80026ed8 GhostBuffer_ThTick
-80027838 GhostBuffer_InitMemory
-80027b88 GhostBuffer_InitDriver
-80027df4 GhostBuffer_InitRecording
-80027e90 GhostBuffer_EndRecording
-80027f20 GhostBuffer_RecordStats
-8002838c GhostBuffer_RecordBoosts
-80028410 GhostBuffer_Destroy
+80026ed8 GhostReplay_ThTick
+80027838 GhostReplay_Init1
+80027b88 GhostReplay_Init2
+80027df4 GhostTape_Start
+80027e90 GhostTape_End
+80027f20 GhostTape_WriteMoves
+8002838c GhostTape_WriteBoosts
+80028410 GhostTape_Destroy
 
 // === Everything below "Ghost" is "Howl"
 

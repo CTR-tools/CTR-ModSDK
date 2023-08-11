@@ -124,11 +124,11 @@ void RunUpdateHook()
 		ghostTh = gGT->threadBuckets[GHOST].thread;
 
 		// if transparency is disabled
-		if (*(char*)(GhostBuffer_ThTick + 0x1B8) == 0)
+		if (*(char*)(GhostReplay_ThTick + 0x1B8) == 0)
 		{
 			// set "lui" to set 6,
 			// so that flag added is 0x60000
-			*(char*)(GhostBuffer_ThTick + 0x1B8) = 6;
+			*(char*)(GhostReplay_ThTick + 0x1B8) = 6;
 
 			// loop until you get nullptr
 			while(ghostTh != 0)
@@ -152,7 +152,7 @@ void RunUpdateHook()
 		else
 		{
 			// Remove it
-			*(char*)(GhostBuffer_ThTick + 0x1B8) = 0;
+			*(char*)(GhostReplay_ThTick + 0x1B8) = 0;
 
 			// loop until you get nullptr
 			while(ghostTh != 0)
@@ -187,10 +187,10 @@ void RunUpdateHook()
 		{
 			// if ghost is paused, then resume
 			if(ghostTh->funcThTick == 0)
-				ghostTh->funcThTick = GhostBuffer_ThTick;
+				ghostTh->funcThTick = GhostReplay_ThTick;
 
 			// if ghost is running, then pause
-			else if(ghostTh->funcThTick == GhostBuffer_ThTick)
+			else if(ghostTh->funcThTick == GhostReplay_ThTick)
 				ghostTh->funcThTick = 0;
 
 			// if this is a "robotcar", which is caused

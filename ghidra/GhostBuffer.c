@@ -2,7 +2,7 @@
 // because of other "ghost"-related functions
 // elsewhere in the game
 
-// GhostBuffer_ThTick
+// GhostReplay_ThTick
 void FUN_80026ed8(int param_1)
 
 {
@@ -575,7 +575,7 @@ LAB_80027754:
 }
 
 
-// GhostBuffer_InitMemory
+// GhostReplay_Init1
 void FUN_80027838(void)
 
 {
@@ -801,7 +801,7 @@ void FUN_80027838(void)
   return;
 }
 
-// GhostBuffer_InitDriver
+// GhostReplay_Init2
 void FUN_80027b88(void)
 
 {
@@ -926,7 +926,7 @@ LAB_80027cfc:
 	  // add ghost to instance pool, given modelID of driver
       FUN_80030778(iVar10,uVar2,pcVar4,*(undefined4 *)(iVar10 + 0x6c),7);
 
-	  // First execution of GhostBuffer_ThTick
+	  // First execution of GhostReplay_ThTick
       FUN_80026ed8(iVar9);
 
       *(undefined4 *)(iVar7 + 0x20) = 0;
@@ -945,7 +945,7 @@ LAB_80027cfc:
   } while( true );
 }
 
-// GhostBuffer_InitRecording
+// GhostTape_Start
 void FUN_80027df4(void)
 
 {
@@ -1011,7 +1011,7 @@ void FUN_80027df4(void)
   return;
 }
 
-// GhostBuffer_EndRecording
+// GhostTape_End
 void FUN_80027e90(void)
 
 {
@@ -1052,7 +1052,7 @@ void FUN_80027e90(void)
   return;
 }
 
-// GhostBuffer_RecordStats
+// GhostTape_WriteMoves
 void FUN_80027f20(short param_1)
 
 {
@@ -1093,7 +1093,7 @@ void FUN_80027f20(short param_1)
 	// If you're in End-Of-Race menu
     if ((*(uint *)PTR_DAT_8008d2ac & 0x200000) != 0)
 	{
-	  // GhostBuffer_EndRecording
+	  // GhostTape_End
       FUN_80027e90();
       return;
     }
@@ -1348,7 +1348,7 @@ void FUN_80027f20(short param_1)
   return;
 }
 
-// GhostBuffer_RecordBoosts
+// GhostTape_WriteBoosts
 // param1 - reserves to add
 // param2 - add type (increment or set)
 // param3 - speed cap
@@ -1399,7 +1399,7 @@ void FUN_8002838c(undefined4 param_1,byte param_2,undefined4 param_3)
 }
 
 // Erase ghost of previous race from RAM
-// GhostBuffer_Destroy
+// GhostTape_Destroy
 void FUN_80028410(void)
 
 {

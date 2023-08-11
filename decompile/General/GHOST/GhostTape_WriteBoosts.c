@@ -3,7 +3,7 @@
 // param1 - reserves to add
 // param2 - add type (increment or set)
 // param3 - speed cap
-void GhostBuffer_RecordBoosts(int addReserve,u_char type,int speedCap)
+void GhostTape_WriteBoosts(int addReserve,u_char type,int speedCap)
 {
   char *puVar1;
 

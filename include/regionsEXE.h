@@ -832,7 +832,7 @@ struct rData
 	char s_ghost_record_buffer[0x14];
 
 	// 80011094
-	char s_ghost_tape[0xC];
+	char s_GhostTape_[0xC];
 
 	// 800110A0
 	void* jumpPointers2[0xB]; // 0x2C bytes

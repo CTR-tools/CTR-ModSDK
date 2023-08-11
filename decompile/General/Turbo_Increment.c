@@ -44,7 +44,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	)
 	{
 		// Add Reserves to ghost buffer
-		GhostBuffer_RecordBoosts(reserves, (u_char)type, fireLevel);
+		GhostTape_WriteBoosts(reserves, (u_char)type, fireLevel);
 	}
 
 	kartState = driver->kartState;
