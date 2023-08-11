@@ -149,14 +149,24 @@ void FUN_80026ed8(int param_1)
     if (iVar7 < 0) {
       iVar7 = 0;
     }
-    piVar15 = piVar20 + 0x14;
-    if (piVar20[0x10] <= iVar7) {
+    
+	piVar15 = piVar20 + 0x14;
+    
+	if (piVar20[0x10] <= iVar7) 
+	{
       sVar6 = 0;
-      ppbVar12 = (byte **)(piVar20 + 0x17);
+      
+	  // ghostTape->0x5c
+	  ppbVar12 = (byte **)(piVar20 + 0x17);
+	  
       pbVar19 = (byte *)piVar20[3];
+	  
+	  // ghostTape->0x4c
       *(undefined2 *)(piVar20 + 0x13) = 0xffff;
-      piVar20[0xf] = piVar20[6];
-      pbVar13 = pbVar19 + 3;
+      
+	  piVar20[0xf] = piVar20[6];
+      
+	  pbVar13 = pbVar19 + 3;
       pbVar16 = pbVar19;
 	  
 	  // move two opcodes in advance,
