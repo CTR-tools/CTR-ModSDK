@@ -344,7 +344,6 @@ common, exe, MEMCARD_GetNextHwEvent, 0x0, General/MEMCARD/MEMCARD_GetNextHwEvent
 common, exe, MEMCARD_Format, 0x0, General/MEMCARD/MEMCARD_Format.c
 common, exe, MEMCARD_EraseFile, 0x0, General/MEMCARD/MEMCARD_EraseFile.c
 common, exe, MEMCARD_SkipEvents, 0x0, General/MEMCARD/MEMCARD_SkipEvents.c
-common, exe, MEMCARD_FindNextGhost, 0x0, General/MEMCARD/MEMCARD_FindNextGhost.c
 common, exe, MEMCARD_IsFile, 0x0, General/MEMCARD/MEMCARD_IsFile.c
 common, exe, MEMCARD_WaitForHwEvent, 0x0, General/MEMCARD/MEMCARD_WaitForHwEvent.c
 common, exe, MEMCARD_WriteFile, 0x0, General/MEMCARD/MEMCARD_WriteFile.c
