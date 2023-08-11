@@ -4507,24 +4507,7 @@ struct sData
 	#if BUILD >= UsaRetail
 	// 800962E4
 	// eight members, each 0xc
-	struct
-	{
-		// enum GarageSoundPos
-		char gsp_curr;
-		char gsp_prev;
-		
-		// 0x2
-		short volume;
-		
-		// 0x4
-		int LR;
-		
-		// 0x8
-		void* audioPtr;
-		
-		// 0xC - size of each member
-		
-	} garageSoundPool[8];
+	struct GarageFX garageSoundPool[8];
 	#endif
 
 	// 800962E4 to 80096338 ^^ from FUN_8003074c

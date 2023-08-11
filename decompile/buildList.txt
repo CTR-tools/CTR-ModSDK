@@ -223,6 +223,14 @@ common, exe, Channel_SearchFX_Destroy, 0x0, General/HOWL/Channel_SearchFX_Destro
 common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/Channel_DestroyAll_LowLevel.c
 // skip last two "channel" functions
 
+// HOWL_Garage
+common, exe, Garage_Init, 0x0, General/HOWL/Garage_Init.c
+common, exe, Garage_Enter, 0x0, General/HOWL/Garage_Enter.c
+common, exe, Garage_PlayFX, 0x0, General/HOWL/Garage_PlayFX.c
+common, exe, Garage_LerpFX, 0x0, General/HOWL/Garage_LerpFX.c
+common, exe, Garage_MoveLR, 0x0, General/HOWL/Garage_MoveLR.c
+common, exe, Garage_Leave, 0x0, General/HOWL/Garage_Leave.c
+
 // INSTANCE
 common, exe, INSTANCE_Birth, 0x0, General/INSTANCE/INSTANCE_Birth.c
 common, exe, INSTANCE_Birth3D, 0x0, General/INSTANCE/INSTANCE_Birth3D.c

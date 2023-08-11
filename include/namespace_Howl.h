@@ -225,6 +225,24 @@ enum GarageSoundPos
 	GSP_NUM
 };
 
+struct GarageFX
+{
+	// enum GarageSoundPos
+	char gsp_curr;
+	char gsp_prev;
+	
+	// 0x2
+	short volume;
+	
+	// 0x4
+	int LR;
+	
+	// 0x8
+	void* audioPtr;
+	
+	// 0xC - size of each member
+};
+
 _Static_assert(sizeof(SpuReverbAttr) == 0x14);
 _Static_assert(sizeof(struct ChannelAttr) == 0x10);
 _Static_assert(sizeof(struct ChannelStats) == 0x20);
