@@ -10,7 +10,13 @@ struct GhostTape
 	void* ptrCurr;
 	
 	// 0x10
-	char data[0x250];
+	int unk;
+	
+	// 0x14
+	int timeElapsedInRace;
+	
+	// 0x18
+	char data[0x248];
 	
 	// 0x260
 	int constDEADC0ED;

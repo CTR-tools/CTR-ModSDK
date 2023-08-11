@@ -867,8 +867,7 @@ LAB_80027cfc:
 	  // add ghost to instance pool, given modelID of driver
       FUN_80030778(iVar10,uVar2,pcVar4,*(undefined4 *)(iVar10 + 0x6c),7);
 
-	  // execute ghost per-frame function,
-	  // with the pointer to ghost thread
+	  // First execution of GhostBuffer_ThTick
       FUN_80026ed8(iVar9);
 
       *(undefined4 *)(iVar7 + 0x20) = 0;
