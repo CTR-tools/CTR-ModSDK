@@ -226,15 +226,27 @@ void FUN_80026ed8(int param_1)
 
 		  // position data
           case 0x80:
+		  
+			// ghost->0x50
             local_48 = (short)((int)((uint)CONCAT11(*pbVar17,pbVar13[-1]) << 0x10) >> 0xd);
             *(short *)piVar15 = local_48;
+			
+			// ghost->0x52
             local_46 = (short)((int)((uint)CONCAT11(*pbVar13,*pbVar14) << 0x10) >> 0xd);
             *(short *)((int)ppbVar12 + -10) = local_46;
+			
+			// ghost->0x54
             local_44 = (short)((int)((uint)CONCAT11(pbVar13[2],pbVar13[3]) << 0x10) >> 0xd);
             *(short *)(ppbVar12 + -2) = local_44;
+			
+			// ghost->0x56
             *(undefined2 *)((int)ppbVar12 + -6) = 0;
+			
+			// ghost->0x58
             *(ushort *)(ppbVar12 + -1) = (ushort)pbVar13[6] << 4;
-            *(short *)((int)ppbVar12 + -2) = (ushort)pbVar13[7] << 4;
+            
+			// ghost->0x5a
+			*(short *)((int)ppbVar12 + -2) = (ushort)pbVar13[7] << 4;
             
 			// if 2nd position opcode
 			if (sVar6 == 1) 
@@ -245,7 +257,7 @@ void FUN_80026ed8(int param_1)
               *(byte **)(piVar20 + 3) = pbVar16;
               iVar8 = piVar20[6] + (int)CONCAT11(bVar1,bVar2);
 			  
-			  // elapsedTime
+			  // elapsedTime (ghost->0x18 and ghost->0x40)
               piVar20[6] = iVar8;
               piVar20[0x10] = iVar8;
             }
@@ -286,9 +298,12 @@ void FUN_80026ed8(int param_1)
             *(short *)piVar15 = local_48;
             *(short *)((int)ppbVar12 + -10) = local_46;
             *ppbVar12 = pbVar19;
+			
+			// next position = previous position
             *(undefined2 *)(ppbVar12 + -1) = *(undefined2 *)(ppbVar12 + -5);
             *(undefined2 *)((int)ppbVar12 + -2) = *(undefined2 *)((int)ppbVar12 + -0x12);
             *(undefined2 *)((int)ppbVar12 + -6) = *(undefined2 *)((int)ppbVar12 + -0x16);
+			
             *(short *)(ppbVar12 + -2) = local_44;
             goto LAB_80027304;
           }
