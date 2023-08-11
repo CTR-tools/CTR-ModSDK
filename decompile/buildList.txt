@@ -197,6 +197,7 @@ common, exe, GhostBuffer_InitRecording, 0x0, General/GHOST/GhostBuffer_InitRecor
 common, exe, GhostBuffer_EndRecording, 0x0, General/GHOST/GhostBuffer_EndRecording.c
 common, exe, GhostBuffer_RecordStats, 0x0, General/GHOST/GhostBuffer_RecordStats.c
 common, exe, GhostBuffer_RecordBoosts, 0x0, General/GHOST/GhostBuffer_RecordBoosts.c
+common, exe, GhostBuffer_Destroy, 0x0, General/GHOST/GhostBuffer_Destroy.c
 
 // HOWL
 common, exe, OtherFX_Play, 0x0, General/HOWL/OtherFX_Play.c
