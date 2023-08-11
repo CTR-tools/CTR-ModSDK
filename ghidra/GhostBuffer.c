@@ -144,6 +144,7 @@ void FUN_80026ed8(int param_1)
 		// add transparency
 		| 0x60000;
 
+	// ghostTape offset 0x14
 	iVar7 = piVar20[5];
     if (iVar7 < 0) {
       iVar7 = 0;
