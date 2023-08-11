@@ -23,7 +23,7 @@ struct GhostTape
 	int unk20;
 	
 	// 0x24
-	// all in GhostBuffer_InitDriver
+	// all in GhostBuffer_InitDriver, unused?
 	short unk1[3];
 	short unk2[3];
 	short unk3[3];

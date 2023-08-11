@@ -7764,11 +7764,10 @@ void FUN_8003b6d0(uint *param_1)
   // basically, if you're in time trial gameplay
   if ((*(uint *)PTR_DAT_8008d2ac & 0x20022000) == 0x20000)
   {
-	// initialize all ghost instances,
-	// assuming threads are already born
+	// GhostBuffer_InitDriver
     FUN_80027b88();
 
-	// initialize ghost recording system
+	// GhostBuffer_InitRecording
     FUN_80027df4();
   }
   return;
