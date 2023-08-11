@@ -150,6 +150,7 @@ void FUN_80026ed8(int param_1)
       iVar7 = 0;
     }
     
+	// offset 0x50
 	piVar15 = piVar20 + 0x14;
     
 	if (piVar20[0x10] <= iVar7) 
