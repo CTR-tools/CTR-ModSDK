@@ -20,6 +20,8 @@ void GhostReplay_Init1(void)
 	int charID;
 	
 	struct GameTracker *gGT = sdata->gGT;
+	
+	// This has to run from MainInit_Drivers
 	sdata->boolCanSaveGhost = 0;
 	sdata->boolGhostsDrawing = 0;
 
@@ -28,13 +30,14 @@ void GhostReplay_Init1(void)
 	
 	// === Record Buffer ===
 	
-	gh = MEMPACK_AllocMem(0x3e00/*, "ghost record buffer"*/);
+	// In the future, this can move to GhostTape_Start, when byte budget allows
 	
+	gh = MEMPACK_AllocMem(0x3e00/*, "ghost record buffer"*/);
 	sdata->GhostRecording.ptrGhost = gh;
 	sdata->GhostRecording.ptrStartOffset = &gh->recordBuffer[0];
 	sdata->GhostRecording.ptrEndOffset = &gh->recordBuffer[0x3DD4];
 
-	// === Play Buffer ===
+	// === Replay Buffer ===
 	// 0: human ghost
 	// 1: N Tropy / Oxide ghost
 
