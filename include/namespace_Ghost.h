@@ -7,9 +7,10 @@ struct GhostTape
 	struct GhostHeader* gh;
 	void* ptrStart; // gh->0x28
 	void* ptrEnd;	// gh->0x28 + gh->size
+	void* ptrCurr;
 	
-	// 0xC
-	char data[0x254];
+	// 0x10
+	char data[0x250];
 	
 	// 0x260
 	int constDEADC0ED;
