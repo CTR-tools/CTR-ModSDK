@@ -5,8 +5,10 @@ void DECOMP_GhostReplay_ThTick(struct Thread* t)
 	struct Driver* d;
 	struct GhostTape* tape;
 	struct Instance* inst;
-	int color;
 	struct GameTracker* gGT;
+	
+	int color;
+	int time;
 	
 	d = t->object;
 	if(d == NULL) return;
@@ -72,5 +74,12 @@ void DECOMP_GhostReplay_ThTick(struct Thread* t)
 	d->alphaScale = 0xa00;
 	inst->flags = (inst->flags & 0xfff8ff7f) | 0x60000;
 
-	// ghostTape offset 0x14
+	time = tape->timeElapsedInRace;
+	if(time < 0) time = 0;
+	
+	// flush and rewrite GhostPackets cache
+	if(tape->timeInPacket32 < time)
+	{
+		
+	}
 }
