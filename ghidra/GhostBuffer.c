@@ -159,6 +159,7 @@ void FUN_80026ed8(int param_1)
 	  // ghostTape->0x5c
 	  ppbVar12 = (byte **)(piVar20 + 0x17);
 	  
+	  // ghostTape->curr
       pbVar19 = (byte *)piVar20[3];
 	  
 	  // ghostTape->0x4c
@@ -166,6 +167,7 @@ void FUN_80026ed8(int param_1)
       
 	  piVar20[0xf] = piVar20[6];
       
+	  // tape curr
 	  pbVar13 = pbVar19 + 3;
       pbVar16 = pbVar19;
 	  
@@ -207,6 +209,8 @@ void FUN_80026ed8(int param_1)
           *(uint *)(param_1 + 0x1c) = *(uint *)(param_1 + 0x1c) | 0x1000;
           return;
         }
+		
+		// advance curr
         uVar9 = (uint)*pbVar16;
         pbVar17 = pbVar16 + 1;
 
@@ -237,9 +241,13 @@ void FUN_80026ed8(int param_1)
               piVar20[6] = iVar8;
               piVar20[0x10] = iVar8;
             }
-            sVar6 = sVar6 + 1;
+            
+			sVar6 = sVar6 + 1;
+			
+			// advance curr
             pbVar14 = pbVar13 + 0xb;
             pbVar18 = pbVar16 + 0xb;
+			
             *ppbVar12 = pbVar19;
             ppbVar12 = ppbVar12 + 4;
             piVar15 = piVar15 + 4;
@@ -289,8 +297,11 @@ void FUN_80026ed8(int param_1)
           *(short *)(ppbVar12 + -2) = local_44;
           *(undefined2 *)((int)ppbVar12 + -6) = 0;
           *(ushort *)(ppbVar12 + -1) = (ushort)*pbVar13 << 4;
+		  
+		  // advance curr
           bVar1 = *pbVar14;
           pbVar14 = pbVar13 + 5;
+		  
           *ppbVar12 = pbVar19;
           *(short *)((int)ppbVar12 + -2) = (ushort)bVar1 << 4;
 LAB_80027304:
