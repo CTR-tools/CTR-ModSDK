@@ -349,12 +349,17 @@ LAB_80027304:
       iVar7 = iVar11 + -1;
       uVar9 = 0;
     }
-    piVar15 = piVar20 + iVar7 * 4 + 0x14;
+    
+	// position
+	piVar15 = piVar20 + iVar7 * 4 + 0x14;
+	
+	// velocity
     local_38 = (int)*(short *)(piVar15 + 4) - (int)*(short *)piVar15;
     local_34 = (int)*(short *)((int)piVar15 + 0x12) - (int)*(short *)((int)piVar15 + 2);
     local_30 = (int)*(short *)(piVar15 + 5) - (int)*(short *)(piVar15 + 1);
 
 	// instance position
+	// lerp between two position opcodes
 	*(int *)(iVar21 + 0x44) = (int)*(short *)piVar15 + ((int)(local_38 * uVar9) >> 0xc);
     *(int *)(iVar21 + 0x48) = (int)*(short *)((int)piVar15 + 2) + ((int)(local_34 * uVar9) >> 0xc);
     *(int *)(iVar21 + 0x4c) = (int)*(short *)(piVar15 + 1) + ((int)(local_30 * uVar9) >> 0xc);
