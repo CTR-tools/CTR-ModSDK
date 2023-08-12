@@ -7,12 +7,12 @@ void DECOMP_GhostReplay_ThTick(struct Thread* t)
 	struct Instance* inst;
 	struct GameTracker* gGT;
 	struct GhostHeader* gh;
-	short endian;
 	
 	int i;
 	int color;
 	int time;
-	char* ptrCurr;
+	int endian;
+	unsigned char* ptrCurr;
 	
 	d = t->object;
 	if(d == NULL) return;
@@ -120,7 +120,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread* t)
 			}
 			
 			// opcode 0x80 - 0x84
-			if((((u_char)ptrCurr[0] + 0x80) & 0xff) < 5)
+			if(((ptrCurr[0] + 0x80) & 0xff) < 5)
 			{
 				switch((u_char)ptrCurr[0])
 				{
@@ -129,27 +129,32 @@ void DECOMP_GhostReplay_ThTick(struct Thread* t)
 					printf("Position %08x\n", ptrCurr);
 					
 					// posX
-					endian = ((u_char)ptrCurr[1]<<8) | ptrCurr[2];
-					inst->matrix.t[0] = endian;
+					endian = (ptrCurr[1]<<8) | ptrCurr[2];
+					inst->matrix.t[0] = (endian << 0x10) >> 0xd;
 					d->posCurr[0] = inst->matrix.t[0] << 8;
 					
 					// posY
-					endian = ((u_char)ptrCurr[3]<<8) | ptrCurr[4];
-					inst->matrix.t[1] = endian;
+					endian = (ptrCurr[3]<<8) | ptrCurr[4];
+					inst->matrix.t[1] = (endian << 0x10) >> 0xd;
 					d->posCurr[1] = inst->matrix.t[1] << 8;
 					
 					// posZ
-					endian = ((u_char)ptrCurr[5]<<8) | ptrCurr[6];
-					inst->matrix.t[2] = endian;
+					endian = (ptrCurr[5]<<8) | ptrCurr[6];
+					inst->matrix.t[2] = (endian << 0x10) >> 0xd;
 					d->posCurr[2] = inst->matrix.t[2] << 8;
 					
 					// rotY, rotZ
 					endian = ptrCurr[9] >> 4;
 					endian = ptrCurr[10] >> 4;
 					
-					if(i == 1) 
+					// temporary
+					if(i == 0)
+					//if(i == 1) 
 					{
-						endian = ((u_char)ptrCurr[7]<<8) | ptrCurr[8];
+						// temporary
+						i = 3;
+						
+						endian = (ptrCurr[7]<<8) | ptrCurr[8];
 				
 						tape->timeInPacket32_backup += endian;
 						tape->timeInPacket32 = tape->timeInPacket32_backup;
