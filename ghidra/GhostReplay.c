@@ -190,13 +190,13 @@ void FUN_80026ed8(int param_1)
 		  // ghostHeader->speedApprox
 		  uVar5 = *(undefined2 *)(iVar21 + 8);
 		  
-          //turn off 21st bit of Actions Flag set (means ?)
+          // driver is not AI anymore
           *(uint *)(iVar22 + 0x2c8) = *(uint *)(iVar22 + 0x2c8) & 0xffefffff;
 		  
 		  // speedApprox
           *(undefined2 *)(iVar22 + 0x38e) = uVar5;
 
-		  // Turn Ghost into Robotcar
+		  // BOTS_Driver_Convert
           FUN_80017318(iVar22);
 
 		  // BOTS_ThTick_Drive

@@ -192,6 +192,7 @@ common, exe, GAMEPROG_NewGame_OnBoot, 0x0, General/GAMEPROG/GAMEPROG_NewGame_OnB
 common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c
 
 // GHOST
+//ommon, exe, GhostReplay_ThTick, 0x0, General/GHOST/GhostReplay_ThTick.c
 common, exe, GhostReplay_Init1, 0x0, General/GHOST/GhostReplay_Init1.c
 common, exe, GhostReplay_Init2, 0x0, General/GHOST/GhostReplay_Init2.c
 common, exe, GhostTape_Start, 0x0, General/GHOST/GhostTape_Start.c
