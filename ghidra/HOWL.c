@@ -2363,7 +2363,7 @@ void FUN_8002a28c(int param_1)
 			// ChannelAttr
 			auStack32,
 
-			// note->pitch
+			// note->pitchIndex
 			*(undefined *)(iVar3 + 1),
 
 			// note->volume
