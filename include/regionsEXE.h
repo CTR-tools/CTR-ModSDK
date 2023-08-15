@@ -3626,7 +3626,7 @@ struct sData
 	int ptrHowlHeader;
 
 	// 8008d7c4
-	int ptrCseqShortSamples;
+	struct SampleDrums* ptrCseqShortSamples;
 
 	// 8008d7c8
 	int ptrCseqData;
@@ -3653,7 +3653,7 @@ struct sData
 	short* howl_banks;
 
 	// 8008d7e8
-	int ptrCseqLongSamples;
+	struct SampleInstrument* ptrCseqLongSamples;
 
 	// 8008bc2c sep3
 	// 8008d7ec usaRetail
