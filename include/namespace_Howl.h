@@ -169,6 +169,12 @@ struct SongSeq
 	// 0x9 - distort too?
 
 	// 0xb - songPoolIndex
+	
+	// time until next note is played
+	// 0xc - int NoteLength
+	// 0x10 - int NoteTimeElapsed
+	
+	// 0x14
 
 	// 0x18 - void* currentNote
 	// pointer to cseqSongData,
