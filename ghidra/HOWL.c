@@ -2157,7 +2157,7 @@ void FUN_80029f24(byte *param_1)
 // howl_InitChannelAttr_Music
 // param1 - SongSeq
 // param2 - ChannelAttr
-// param3 - drumsID
+// param3 - note->pitch, or drums sampleID
 // param4 - channel volume
 void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 
@@ -2176,13 +2176,13 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 	// ptrCseqLongSamples[SongSeq->instrumentID]
     iVar4 = DAT_8008d7e8 + (uint)param_1[3] * 0xc;
 
-	// howl_InstrumentPitch
+	// howl_InstrumentPitch(longSample->pitch, note->pitch, SongSeq->distort)
 	uVar3 = FUN_8002991c((uint)*(ushort *)(iVar4 + 4),param_3,(uint)param_1[8]);
 
 	// volume of Music
     uVar5 = (uint)DAT_8008d7b8;
 
-	// ChannelAttr->spuStartAddr = howl_spuAddrs[longSample->spuAddr] << 3
+	// ChannelAttr->spuStartAddr = howl_spuAddrs[longSample->sampleID] << 3
     *param_2 = (uint)*(ushort *)((uint)*(ushort *)(iVar4 + 6) * 4 + DAT_8008d7dc) << 3;
 
 	// channelAttr->ADSR = sample->ADSR
@@ -2362,10 +2362,10 @@ void FUN_8002a28c(int param_1)
 			// ChannelAttr
 			auStack32,
 
-			// drums
+			// note->pitch
 			*(undefined *)(iVar3 + 1),
 
-			// volume
+			// note->volume
 			*(undefined *)(iVar3 + 2)
 		);
 

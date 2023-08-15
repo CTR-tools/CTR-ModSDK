@@ -247,7 +247,7 @@ struct SongOpcode
 	
 	// 0x1
 	//		opcode01: sampleID
-	//		opcode05: sampleID
+	//		opcode05: pitch
 	//		opcode06: volume
 	//		opcode07: distort
 	//		opcode08: reverb
