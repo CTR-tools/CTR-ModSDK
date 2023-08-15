@@ -3614,7 +3614,7 @@ struct sData
 	int ptrCseqHeader;
 
 	// 8008d7b4
-	int ptrCseqSequence;
+	short* ptrCseqSongStartOffset;
 
 	// 8008d7b8
 	int vol_Music;
@@ -3629,7 +3629,7 @@ struct sData
 	struct SampleDrums* ptrCseqShortSamples;
 
 	// 8008d7c8
-	int ptrCseqData;
+	int ptrCseqSongData;
 
 	// 8008d7cc
 	int boolStereoEnabled;

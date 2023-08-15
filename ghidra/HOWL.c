@@ -1802,24 +1802,24 @@ void FUN_80029ab4(int param_1)
   /*
   //makes more sense to be moved here from the end:
 
-  //pointer to cseq start
+  // ptrCseqHeader
   DAT_8008d7b0 = param_1;
 
-  //pointer to long samples array (instruments)
-  //previous + sizeof(header)
+  // ptrCseqLongSamples (instruments)
+  // previous + sizeof(header)
   DAT_8008d7e8 = param_1 + 8;
   */
 
-  //pointer to short samples array (drums)
-  //previous + numLongSamples * sizeof(longSample)
+  // ptrCseqShortSamples (drums)
+  // previous + numLongSamples * sizeof(longSample)
   DAT_8008d7c4 = param_1 + 8 + (uint)*(byte *)(param_1 + 4) * 0xc;
 
-  // ptrCseqSequence (table of offsets to actual cseq data)
+  // ptrCseqSongStartOffset
   //previous + numShortSamples * sizeof(shortSample)
   DAT_8008d7b4 = DAT_8008d7c4 + (uint)*(byte *)(param_1 + 5) * 8;
 
-  // cseqData
-  //previous + numSequences * 2
+  // ptrCseqSongData
+  //previous + numSongs * 2
   DAT_8008d7c8 = DAT_8008d7b4 + (uint)*(ushort *)(param_1 + 6) * 2;
 
   // align data up by 4
@@ -2616,7 +2616,7 @@ void FUN_8002a6cc(int param_1,short param_2)
 {
   undefined4 uVar1;
 
-  // ptrCseqData[ptrCseqSequence[song->id]]
+  // ptrCseqSongData[ptrCseqSongStartOffset[song->id]]
   param_2 = *(short *)(DAT_8008d7c8 +
                        (uint)*(ushort *)((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4) + 2) +
             param_2;
@@ -2647,12 +2647,12 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
 
   *param_1 = 1;
 
-  // ptrCseqSequence
+  // ptrCseqSongStartOffset
   iVar9 = DAT_8008d7b4;
 
   *(ushort *)(param_1 + 2) = param_2;
 
-  // ptrCseqData[ptrCseqSequence[song->id]]
+  // ptrCseqSongData[ptrCseqSongStartOffset[song->id]]
   iVar9 = DAT_8008d7c8 + (uint)*(ushort *)((uint)param_2 * 2 + iVar9);
 
   if (param_5 != (uint *)0x0) {
@@ -2791,7 +2791,7 @@ void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 {
   int iVar1;
 
-  // ptrCseqData[ptrCseqSequence[song->id]]
+  // ptrCseqSongData[ptrCseqSongStartOffset[song->id]]
   if (param_2 < (int)(uint)*(byte *)(DAT_8008d7c8 +
                                      (uint)*(ushort *)
                                             ((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4) + 1)
@@ -2822,7 +2822,7 @@ void FUN_8002aa44(int param_1,uint *param_2,undefined4 param_3)
   int iVar2;
   int iVar3;
 
-  // ptrCseqData[ptrCseqSequence[song->id]]
+  // ptrCseqSongData[ptrCseqSongStartOffset[song->id]]
   iVar3 = DAT_8008d7c8 + (uint)*(ushort *)((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4);
 
   if (param_2 != (uint *)0x0) {
