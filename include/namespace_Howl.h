@@ -212,7 +212,7 @@ struct SampleInstrument
 	short basePitch;
 
 	// 0x6
-	short sampleID;
+	short spuIndex;
 
 	// 0x8
 	short ad;
@@ -231,7 +231,7 @@ struct SampleDrums
 	short pitch;
 
 	// 0x4
-	short sampleID;
+	short spuIndex;
 
 	// 0x6
 	short alwaysZero;
@@ -246,14 +246,13 @@ struct SongOpcode
 	// unk
 	
 	// 0x1
-	//		opcode01: sampleID
-	//		opcode05: pitchIndex
+	//		opcode01: pitchIndex_drumIndex
+	//		opcode05: pitchIndex_drumIndex
 	//		opcode06: volume
 	//		opcode07: distort
 	//		opcode08: reverb
 	//		opcode09: instrumentID
 	//		opcode0a: distortion
-	// 		sampleID
 	
 	// 0x2
 	// 		opcode05: volume

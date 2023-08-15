@@ -269,7 +269,7 @@ undefined4 FUN_800284d0(uint param_1,byte param_2,uint param_3)
 				// get pointer to cseq audio, given soundID from param1
 				pbVar5 = (byte *)(DAT_8008d7d8 + uVar4 * 8),
 
-				// spu addresses
+				// ChannelAttr->spuStartAddr = howl_spuAddrs[otherFX->spuIndex] << 3
 				*(short *)((uint)*(ushort *)(pbVar5 + 4) * 4 + DAT_8008d7dc) != 0
 			)
 		)
@@ -529,7 +529,7 @@ uint FUN_80028880(uint param_1,uint param_2)
 	  // metaEngineFX
       iVar1 = DAT_8008d7d0 + param_1 * 8;
 
-	  // spu addresses
+	  // ChannelAttr->spuStartAddr = howl_spuAddrs[engineFX->spuIndex] << 3
       if (*(short *)((uint)*(ushort *)(iVar1 + 6) * 4 + DAT_8008d7dc) != 0)
 	  {
 		// distort
@@ -2105,7 +2105,7 @@ void FUN_80029e18(int param_1)
 			)
 			&&
 			
-			// sequence->sampleID == note->sampleID
+			// sequence->index == note->index
 			(*(char *)((int)piVar1 + 0xd) == *(char *)(iVar3 + 1))
 		  )
 	 {
@@ -2158,7 +2158,7 @@ void FUN_80029f24(byte *param_1)
 // howl_InitChannelAttr_Music
 // param1 - SongSeq
 // param2 - ChannelAttr
-// param3 - note->pitch, or drums sampleID
+// param3 - note->pitchIndex, or note->drumsIndex
 // param4 - channel volume
 void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 
@@ -2183,7 +2183,7 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 	// volume of Music
     uVar5 = (uint)DAT_8008d7b8;
 
-	// ChannelAttr->spuStartAddr = howl_spuAddrs[longSample->sampleID] << 3
+	// ChannelAttr->spuStartAddr = howl_spuAddrs[longSample->spuIndex] << 3
     *param_2 = (uint)*(ushort *)((uint)*(ushort *)(iVar4 + 6) * 4 + DAT_8008d7dc) << 3;
 
 	// channelAttr->ADSR = sample->ADSR
@@ -2231,8 +2231,7 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
               );
     }
 
-	// ptr -> drums -> sampleID
-	// spu addresses
+	// ChannelAttr->spuStartAddr = howl_spuAddrs[shortSample->spuIndex] << 3
     uVar2 = *(ushort *)((uint)*(ushort *)(iVar4 + 4) * 4 + DAT_8008d7dc);
 
 	// ADSR
@@ -4547,7 +4546,7 @@ void FUN_8002c34c(int param_1,int *param_2,int param_3,undefined4 param_4,int pa
   // channelAttr 0x8, pitch
   *(undefined2 *)(param_2 + 2) = uVar2;
 
-  // spu addresses
+  // ChannelAttr->spuStartAddr = howl_spuAddrs[engineFX->spuIndex] << 3
   uVar1 = *(ushort *)((uint)*(ushort *)(param_1 + 6) * 4 + DAT_8008d7dc);
 
   // ADSR
@@ -4600,7 +4599,7 @@ void FUN_8002c424(byte *param_1,int *param_2,int param_3,undefined4 param_4,int 
   // pitch
   *(undefined2 *)(param_2 + 2) = uVar3;
 
-  // spu addresses
+  // ChannelAttr->spuStartAddr = howl_spuAddrs[otherFX->spuIndex] << 3
   uVar2 = *(ushort *)((uint)*(ushort *)(param_1 + 4) * 4 + DAT_8008d7dc);
 
   // ADSR
