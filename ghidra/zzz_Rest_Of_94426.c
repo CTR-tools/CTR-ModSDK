@@ -25216,10 +25216,21 @@ LAB_8005ef64:
         }
         *(short *)(param_2 + 0x410) = sVar5;
       }
-      if ((*(int *)(param_2 + 0x18) != 0) &&
-         (iVar9 = (int)*(short *)(*(int *)(param_2 + 0x18) + 0x1e), iVar9 < 2500)) {
+	  
+      if (
+		  // driver->instTntRecv
+		  (*(int *)(param_2 + 0x18) != 0) &&
+		
+		   // driver->instTntRecv->scale[1] < 2500
+           (
+			iVar9 = (int)*(short *)(*(int *)(param_2 + 0x18) + 0x1e), 
+			iVar9 < 2500
+		   )
+		 ) 
+	  {
         iVar6 = iVar6 + (iVar9 + -0x800) * 2;
       }
+	  
       iVar11 = (int)*(short *)(param_2 + 0x40c);
       iVar9 = iVar6;
       if (iVar6 < 0) {
