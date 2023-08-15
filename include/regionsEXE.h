@@ -3635,7 +3635,7 @@ struct sData
 	int boolStereoEnabled;
 
 	// 8008d7d0
-	int howl_metaEngineFX;
+	struct EngineFX* howl_metaEngineFX;
 
 	// 8008d7d4
 	int howl_endOfHeader;
@@ -3647,10 +3647,10 @@ struct sData
 	int* howl_spuAddrs;
 
 	// 8008d7e0
-	int howl_cseqs;
+	short* howl_cseqs;
 
 	// 8008d7e4
-	int howl_banks;
+	short* howl_banks;
 
 	// 8008d7e8
 	int ptrCseqLongSamples;

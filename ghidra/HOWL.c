@@ -4463,6 +4463,7 @@ void FUN_8002c208(void)
 
 
 // howl_InitChannelAttr_EngineFX
+// param_1 EngineFX*
 // param_2 ChannelAttr
 // param_3 volume
 // param_4 LR

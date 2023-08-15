@@ -18,7 +18,9 @@ short DECOMP_EngineAudio_Recalculate(u_int soundID,u_int sfx)
     return 0;
   }
 
-  channel = sdata->howl_metaEngineFX + (soundID & 0xffff) * 8;
+  // === Use EngineFX* not Channel* for this ===
+
+  channel = &sdata->howl_metaEngineFX[soundID & 0xffff];
 
   // if numPlyrCurrGame is 2
   if (sdata->gGT->numPlyrCurrGame == 2) {
