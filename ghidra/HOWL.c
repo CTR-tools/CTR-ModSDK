@@ -2182,7 +2182,7 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 	// volume of Music
     uVar5 = (uint)DAT_8008d7b8;
 
-	// howl_spuAddrs[longSample->spuAddr] << 3
+	// ChannelAttr->spuStartAddr = howl_spuAddrs[longSample->spuAddr] << 3
     *param_2 = (uint)*(ushort *)((uint)*(ushort *)(iVar4 + 6) * 4 + DAT_8008d7dc) << 3;
 
 	// channelAttr->ADSR = sample->ADSR
