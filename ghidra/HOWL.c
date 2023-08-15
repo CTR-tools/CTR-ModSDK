@@ -2628,8 +2628,7 @@ void FUN_8002a6cc(int param_1,short param_2)
 {
   undefined4 uVar1;
 
-  // ptrCseqData
-  // ptrCseqSequence
+  // ptrCseqData[ptrCseqSequence[song->id]]
   param_2 = *(short *)(DAT_8008d7c8 +
                        (uint)*(ushort *)((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4) + 2) +
             param_2;
@@ -2665,7 +2664,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
 
   *(ushort *)(param_1 + 2) = param_2;
 
-  // ptrCseqData
+  // ptrCseqData[ptrCseqSequence[song->id]]
   iVar9 = DAT_8008d7c8 + (uint)*(ushort *)((uint)param_2 * 2 + iVar9);
 
   if (param_5 != (uint *)0x0) {
@@ -2804,8 +2803,7 @@ void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 {
   int iVar1;
 
-  // ptrCseqData
-  // ptrCseqSequence
+  // ptrCseqData[ptrCseqSequence[song->id]]
   if (param_2 < (int)(uint)*(byte *)(DAT_8008d7c8 +
                                      (uint)*(ushort *)
                                             ((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4) + 1)
@@ -2828,7 +2826,7 @@ void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 
 
 // SongPool_AdvHub2
-// param1 - song pool member
+// param1 - Song* member
 void FUN_8002aa44(int param_1,uint *param_2,undefined4 param_3)
 
 {
@@ -2836,8 +2834,7 @@ void FUN_8002aa44(int param_1,uint *param_2,undefined4 param_3)
   int iVar2;
   int iVar3;
 
-  // ptrCseqData
-  // ptrCseqSequence
+  // ptrCseqData[ptrCseqSequence[song->id]]
   iVar3 = DAT_8008d7c8 + (uint)*(ushort *)((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4);
 
   if (param_2 != (uint *)0x0) {
