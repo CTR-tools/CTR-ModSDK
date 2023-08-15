@@ -4096,8 +4096,11 @@ void FUN_8002bbac(void)
               *(uint *)(pbVar6 + 0x10) = uVar4;
 
               if (uVar5 <= uVar4) {
-                do {
+                do 
+				{
                   if ((*pbVar6 & 1) == 0) break;
+				  
+				  // sequence->noteTimeElapsed
                   *(uint *)(pbVar6 + 0x10) = *(int *)(pbVar6 + 0x10) - uVar5;
 
 				  // pbVar6 is the cseq struct
