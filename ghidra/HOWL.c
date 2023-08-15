@@ -1669,6 +1669,7 @@ void FUN_800298e4(void)
 // howl_InstrumentPitch
 // param_1 longSamplePitch
 // param_2 shortSampleIndex (drums)
+// param_3 songPitch
 uint FUN_8002991c(int param_1,int param_2,uint param_3)
 
 {
