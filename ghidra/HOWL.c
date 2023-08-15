@@ -2047,12 +2047,7 @@ void FUN_80029dc0(void)
   return;
 }
 
-//this looks like reading variable length time delta, as found in midi format
-//refer to: http://www.ccarh.org/courses/253/handout/vlv/
-//param_1 - pointer to read from
-//returns pointer after parsing (like is we parsed 3 bytes it will be param_1 + 3)
-//param_2 - pointer to tempo
-//howl_ReadTimeDelta
+// currNote, note->elapsedNoteLength
 byte * FUN_80029dcc(byte *param_1,uint *param_2)
 
 {
@@ -2768,10 +2763,11 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
 		// void* firstNote
         *(byte **)(pbVar4 + 0x14) = pbVar5 + 2;
         
+		// note->songPoolIndex
 		pbVar4[0xb] = bVar1;
 
 		// howl_ReadTimeDelta
-		// firstNote, Song->elapsedNoteLength
+		// firstNote, note->elapsedNoteLength
         uVar3 = FUN_80029dcc(pbVar5 + 2,pbVar4 + 0xc);
 
 		// void* currNote
@@ -4127,7 +4123,7 @@ void FUN_8002bbac(void)
                       }
 
 					  // howl_ReadTimeDelta
-					  // xxx, Song->tempo
+					  // currNote, note->elapsedNoteLength
                       uVar3 = FUN_80029dcc(iVar2,pbVar6 + 0xc);
 
 					  *(undefined4 *)(pbVar6 + 0x18) = uVar3;
