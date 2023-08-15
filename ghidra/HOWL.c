@@ -4067,6 +4067,8 @@ void FUN_8002bbac(void)
 
             uVar5 = (uint)pbVar6[5];
             uVar4 = (uint)pbVar6[6];
+			
+			// if current != desired
             if (uVar5 != uVar4) {
               if (uVar5 < uVar4) {
                 bVar8 = (byte)(uVar5 + pbVar6[7]);
@@ -4086,9 +4088,10 @@ void FUN_8002bbac(void)
 			// if sequence is playing
 			if ((*pbVar6 & 1) != 0)
 			{
+			  // sequence->noteLength
               uVar5 = *(uint *)(pbVar6 + 0xc);
 
-			  // increment ??? by tempo
+			  // sequence->noteTimeElapsed
               uVar4 = *(int *)(pbVar6 + 0x10) + uVar11;
               *(uint *)(pbVar6 + 0x10) = uVar4;
 
@@ -4099,7 +4102,7 @@ void FUN_8002bbac(void)
 
 				  // pbVar6 is the cseq struct
 
-				  // bVar8 is cseq opcode index
+				  // sequence->currNote->opcode
                   bVar8 = **(byte **)(pbVar6 + 0x18);
 
 				  // if opcode is valid
@@ -4113,11 +4116,13 @@ void FUN_8002bbac(void)
                     if ((bVar7 & 1) != 0) {
                       if ((bVar7 & 8) == 0)
 					  {
-						// increment opcode by pointer?
+						// sequence->currNote += noteSize[noteType]
                         iVar2 = *(int *)(pbVar6 + 0x18) + *(int *)(&DAT_80083030 + (uint)bVar8 * 4);
                         *(int *)(pbVar6 + 0x18) = iVar2;
                       }
-                      else {
+                      else 
+					  {
+						// sequence->firstNote
                         iVar2 = *(int *)(pbVar6 + 0x14);
                         *pbVar6 = bVar7 & 0xf7;
                       }

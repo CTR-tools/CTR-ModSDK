@@ -157,16 +157,21 @@ struct SongSeq
 	// parameter for every cseq opcode,
 	// same struct as SongPool->CseqSequences
 
-	// 0x0 - flags
+	// 0x0 - opcode
 	// 0x1 - soundID (from Sound_Play)
 
 	// 0x3 - instrumentID (SampleInstrument*)
 	// 0x4 - reverb
+	
+	// one is curr, one is desired
 	// 0x5 - volume of sequence
 	// 0x6 - volume too? See SongPool_AdvHub1
+	// 0x7 - stepRate
 	
+	// one is curr, one is desired
 	// 0x8 - distort
 	// 0x9 - distort too?
+	// 0xA - stepRate
 
 	// 0xb - songPoolIndex
 	
