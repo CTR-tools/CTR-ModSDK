@@ -169,8 +169,9 @@ struct SongSeq
 
 	// 0xb - songPoolIndex
 
-	// 0x18 - pointer to "initData" in opcode5_noteon,
-	// first byte of that "initData" is opcodeIndex
+	// 0x18 - void* currentNote
+	// pointer to cseqSongData,
+	// increments as new notes play
 
 	char data[0x1c];
 };
