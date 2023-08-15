@@ -2760,15 +2760,21 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
         pbVar4[10] = 0;
         
 		bVar1 = param_1[1];
+		
+		// noteLength and elapsedNoteTime
         *(undefined4 *)(pbVar4 + 0xc) = 0;
         *(undefined4 *)(pbVar4 + 0x10) = 0;
+		
+		// void* firstNote
         *(byte **)(pbVar4 + 0x14) = pbVar5 + 2;
-        pbVar4[0xb] = bVar1;
+        
+		pbVar4[0xb] = bVar1;
 
 		// howl_ReadTimeDelta
-		// xxx, Song->tempo
+		// firstNote, Song->elapsedNoteLength
         uVar3 = FUN_80029dcc(pbVar5 + 2,pbVar4 + 0xc);
 
+		// void* currNote
 		*(undefined4 *)(pbVar4 + 0x18) = uVar3;
 		
 		// save pointer to songSeq in songPool->CseqSequences

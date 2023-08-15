@@ -174,7 +174,7 @@ struct SongSeq
 	// 0xc - int NoteLength
 	// 0x10 - int NoteTimeElapsed
 	
-	// 0x14
+	// 0x14 - void* firstNote
 
 	// 0x18 - void* currentNote
 	// pointer to cseqSongData,
