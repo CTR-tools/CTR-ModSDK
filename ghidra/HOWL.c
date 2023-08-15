@@ -2737,20 +2737,29 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
         pbVar4[3] = 0;
         pbVar4[4] = 0;
         pbVar4[2] = bVar1;
+		
+		// volume
         if ((param_5 == (uint *)0x0) ||
            (((uint)*(byte *)(param_5[1] + iVar6) & *(uint *)(param_1 + 4)) != 0)) {
           pbVar4[5] = 0xff;
           pbVar4[6] = 0xff;
         }
+		
+		// volume
         else {
           pbVar4[5] = 0;
           pbVar4[6] = 0;
         }
+		
         pbVar4[7] = 1;
+		
+		// two distortions?
         pbVar4[8] = 0x80;
         pbVar4[9] = 0x80;
+		
         pbVar4[10] = 0;
-        bVar1 = param_1[1];
+        
+		bVar1 = param_1[1];
         *(undefined4 *)(pbVar4 + 0xc) = 0;
         *(undefined4 *)(pbVar4 + 0x10) = 0;
         *(byte **)(pbVar4 + 0x14) = pbVar5 + 2;

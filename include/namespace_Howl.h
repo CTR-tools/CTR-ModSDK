@@ -166,6 +166,7 @@ struct SongSeq
 	// 0x6 - volume too? See SongPool_AdvHub1
 	
 	// 0x8 - distort
+	// 0x9 - distort too?
 
 	// 0xb - songPoolIndex
 
