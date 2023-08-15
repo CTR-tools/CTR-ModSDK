@@ -2173,7 +2173,7 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 
   if ((*param_1 & 4) == 0)
   {
-	// instruments sequence (0xc bytes each)
+	// ptrCseqLongSamples[SongSeq->instrumentID]
     iVar4 = DAT_8008d7e8 + (uint)param_1[3] * 0xc;
 
 	// howl_InstrumentPitch
