@@ -1814,11 +1814,11 @@ void FUN_80029ab4(int param_1)
   //previous + numLongSamples * sizeof(longSample)
   DAT_8008d7c4 = param_1 + 8 + (uint)*(byte *)(param_1 + 4) * 0xc;
 
-  //pointer to sequences (table of offsets to actual cseq data)
+  // ptrCseqSequence (table of offsets to actual cseq data)
   //previous + numShortSamples * sizeof(shortSample)
   DAT_8008d7b4 = DAT_8008d7c4 + (uint)*(byte *)(param_1 + 5) * 8;
 
-  //pointer (footer, bottom of howl)???
+  // cseqData
   //previous + numSequences * 2
   DAT_8008d7c8 = DAT_8008d7b4 + (uint)*(ushort *)(param_1 + 6) * 2;
 
