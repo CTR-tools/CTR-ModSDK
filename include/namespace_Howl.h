@@ -104,6 +104,17 @@ struct ChannelStats
 	int startFrame;
 };
 
+struct CseqHeader
+{
+	int unk;
+	
+	// 0x4
+	char numLongSamples;
+	char numShortSamples;
+	char numSongs;
+	char filler;
+}
+
 struct SampleInstrument
 {
 	// 0x0
