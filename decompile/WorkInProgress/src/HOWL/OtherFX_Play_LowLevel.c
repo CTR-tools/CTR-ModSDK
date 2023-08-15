@@ -6,7 +6,7 @@ short DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int flags
   struct ChannelStats* channel;
   int count;
   short id;
-  char *ptrCseq;
+  struct OtherFX* ptrOtherFX;
   u_int distortion = flags >> 8;
   u_int volume = flags >> 0x10;
   u_short echo = flags >> 0x18;
@@ -22,14 +22,14 @@ short DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int flags
 			(id < (sdata->ptrHowlHeader + 0x14)) &&
 			(
 				// get pointer to cseq audio, given soundID
-				ptrCseq = (sdata->howl_metaOtherFX + id * 8),
+				ptrOtherFX = &sdata->howl_metaOtherFX[id],
 
 				// spu addresses
-				(ptrCseq[4] * 4 + sdata->howl_spuAddrs) != 0
+				sdata->howl_spuAddrs[ptrOtherFX->spuIndex] != 0
 			)
         )
 	{
-      howl_InitChannelAttr_OtherFX(ptrCseq, channelAttr, volume, flags & 0xff, distortion);
+      howl_InitChannelAttr_OtherFX(ptrOtherFX, channelAttr, volume, flags & 0xff, distortion);
 
       Smart_EnterCriticalSection();
 
@@ -48,7 +48,7 @@ short DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int flags
 		// if free channel slot was found
 		if (channel != 0)
 		{
-          if ((*ptrCseq & 2) != 0) {
+          if ((ptrOtherFX->flags & 2) != 0) {
             channel->flags |= 4;
           }
 
@@ -66,7 +66,7 @@ short DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int flags
           channel->LeftRight = flags;
 
 		  // duration
-          channel->timeLeft = ptrCseq[6];
+          channel->timeLeft = ptrOtherFX->duration;
 
           count = CountSounds();
 

@@ -2970,6 +2970,10 @@ void FUN_8002acb8(int param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 
 // UpdateChannelVol_OtherFX
+// param_1 - OtherFX*
+// param_2 - ChannelAttr*
+// param_3 - volume
+// param_4 - LR
 void FUN_8002ad04(byte *param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 {
@@ -4511,6 +4515,7 @@ void FUN_8002c34c(int param_1,int *param_2,int param_3,undefined4 param_4,int pa
 }
 
 // howl_InitChannelAttr_OtherFX
+// param_1 OtherFX*
 // param_2 ChannelAttr
 void FUN_8002c424(byte *param_1,int *param_2,int param_3,undefined4 param_4,int param_5)
 

@@ -4,7 +4,7 @@ u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags) {
     struct ChannelStats* channel;
     struct ChannelAttr channelAttr;
     char modify;
-    char* ptrCseq;
+    struct OtherFX* ptrOtherFX;
     u_int distort;
     u_int volume;
     u_short echo;
@@ -20,26 +20,26 @@ u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags) {
     } 
 
     // metaOtherFX
-    ptrCseq = (sdata->howl_metaOtherFX + (soundId & 0xffff) * 8);
+    ptrOtherFX = &sdata->howl_metaOtherFX[soundId & 0xffff];
     volume = flags >> 0x10 & 0xff;
     distort = flags >> 8 & 0xff;
     echo = flags >> 0x18;
 
     // volume of FX
     modify = sdata->vol_FX;
-    if ((ptrCseq[0] & 4) != 0) {
+    if ((ptrOtherFX->flags & 4) != 0) {
         // volume of Voice
         modify = sdata->vol_Voice;
     }
     if (distort == 0x80) {
-        channelAttr.pitch = ptrCseq[2];
+        channelAttr.pitch = ptrOtherFX->pitch;
     } else {
-        channelAttr.pitch = ptrCseq[2] * (data.distortConst_OtherFX[distort] >> 0x10);
+        channelAttr.pitch = ptrOtherFX->pitch * (data.distortConst_OtherFX[distort] >> 0x10);
     }
 
     channelAttr.reverb = echo;
 
-    Channel_SetVolume(&channelAttr, modify * ptrCseq[1] * volume >> 10, flags & 0xff);
+    Channel_SetVolume(&channelAttr, modify * ptrOtherFX->volume * volume >> 10, flags & 0xff);
 
     channelAttr.reverb = echo;
 

@@ -243,6 +243,24 @@ struct GarageFX
 	// 0xC - size of each member
 };
 
+struct OtherFX
+{
+	// 0x0
+	char flags;
+	char volume;
+	
+	// 0x2
+	short pitch;
+	
+	// 0x4
+	short spuIndex;
+	
+	// 0x6
+	short duration;
+
+	// 0x8 -- size
+};
+
 _Static_assert(sizeof(SpuReverbAttr) == 0x14);
 _Static_assert(sizeof(struct ChannelAttr) == 0x10);
 _Static_assert(sizeof(struct ChannelStats) == 0x20);

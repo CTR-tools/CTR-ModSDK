@@ -3641,10 +3641,10 @@ struct sData
 	int howl_endOfHeader;
 
 	// 8008d7d8
-	int howl_metaOtherFX;
+	struct OtherFX* howl_metaOtherFX;
 
 	// 8008d7dc
-	int howl_spuAddrs;
+	int* howl_spuAddrs;
 
 	// 8008d7e0
 	int howl_cseqs;
