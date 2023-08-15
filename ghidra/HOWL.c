@@ -2079,6 +2079,7 @@ void FUN_80029e18(int param_1)
   int *piVar2;
   int iVar3;
 
+  // sequence->currNote
   iVar3 = *(int *)(param_1 + 0x18);
 
   // channel taken
@@ -2348,6 +2349,7 @@ void FUN_8002a28c(int param_1)
 		((&DAT_80095d9c)[(uint)*(byte *)(param_1 + 0xb) * 0x7c] != '\0')
 	 )
   {
+	// sequence->currNote
     iVar3 = *(int *)(param_1 + 0x18);
 
 	// howl_InitChannelAttr_Music
