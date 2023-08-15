@@ -2719,6 +2719,8 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
     puVar7 = puVar7 + 1;
   }
   iVar6 = 0;
+  
+  // add new SongSeqs to song playing
   if (*(byte *)(iVar9 + 1) != 0) {
     do {
       pbVar5 = (byte *)((int)puVar7 + (uint)*puVar8);
@@ -2763,7 +2765,11 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
         uVar3 = FUN_80029dcc(pbVar5 + 2,pbVar4 + 0xc);
 
 		*(undefined4 *)(pbVar4 + 0x18) = uVar3;
+		
+		// save pointer to songSeq in songPool->CseqSequences
         *(byte **)(param_1 + (uint)(byte)param_1[0x1b] * 4 + 0x1c) = pbVar4;
+		
+		// increment number of sequences playing
         param_1[0x1b] = param_1[0x1b] + '\x01';
       }
       iVar6 = iVar6 + 1;
