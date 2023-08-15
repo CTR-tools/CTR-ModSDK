@@ -2483,6 +2483,7 @@ void FUN_8002a400(int param_1)
 void FUN_8002a494(int param_1)
 
 {
+  // SongSeq->instrumentID = SongSeq->currNote->instrumentID
   *(undefined *)(param_1 + 3) = *(undefined *)(*(int *)(param_1 + 0x18) + 1);
   return;
 }

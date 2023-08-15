@@ -160,7 +160,7 @@ struct SongSeq
 	// 0x0 - flags
 	// 0x1 - soundID (from Sound_Play)
 
-	// 0x3 - instruments index
+	// 0x3 - instrumentID
 	// 0x4 - reverb
 	// 0x5 - volume of sequence
 	// 0x6 - volume too? See SongPool_AdvHub1
