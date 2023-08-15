@@ -4068,7 +4068,7 @@ void FUN_8002bbac(void)
             uVar5 = (uint)pbVar6[5];
             uVar4 = (uint)pbVar6[6];
 			
-			// if current != desired
+			// if current != desired, lerp by stepRate
             if (uVar5 != uVar4) {
               if (uVar5 < uVar4) {
                 bVar8 = (byte)(uVar5 + pbVar6[7]);
