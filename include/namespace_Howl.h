@@ -163,6 +163,7 @@ struct SongSeq
 	// 0x3 - instruments index
 	// 0x4 - reverb
 	// 0x5 - volume of sequence
+	// 0x6 - volume too? See SongPool_AdvHub1
 	
 	// 0x8 - distort
 
