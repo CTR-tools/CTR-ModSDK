@@ -145,10 +145,19 @@ struct SampleDrums
 	// 0x8 -- end of struct
 };
 
+// AKA: SongNote
 struct SongOpcode
 {
-	// unk size,
-	// from SongSeq 0x18
+	// 0x0
+	// unk
+	
+	// 0x1
+	// sampleID
+	
+	// 0x2
+	// volume
+	
+	// size -- unk
 };
 
 struct SongSeq

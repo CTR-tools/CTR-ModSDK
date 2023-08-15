@@ -2103,6 +2103,8 @@ void FUN_80029e18(int param_1)
 				(piVar1[6] == (uint)*(byte *)(param_1 + 1))
 			)
 			&&
+			
+			// sequence->sampleID == note->sampleID
 			(*(char *)((int)piVar1 + 0xd) == *(char *)(iVar3 + 1))
 		  )
 	 {
