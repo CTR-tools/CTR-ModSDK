@@ -2582,7 +2582,7 @@ byte * FUN_8002a63c(void)
   // loop counter is zero
   iVar2 = 0;
 
-  // channel pool
+  // song seqs
   pbVar1 = &DAT_800902cc;
 
   // for iVar2 = 0; iVar2 < 0x18 (24); iVar2++
@@ -5000,7 +5000,7 @@ void FUN_8002c918(void)
   // loop counter
   vNum = 0;
 
-  // channel pool
+  // song seqs
   puVar1 = &DAT_800902cc;
 
   // for vNum = 0; vNum < 0x18 (24); vNum++
