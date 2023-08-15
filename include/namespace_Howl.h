@@ -70,13 +70,15 @@ struct ChannelStats
 	// Type (0=engineFX,1=otherFX,2=music)
 	char type;
 
+	// === Union ===
+
 	// 0xc
 	// ??? set in "noteon"
 	char unk2;
 
 	// 0xd
 	// drums
-	char shortSampleIndex;
+	char shortSampleIndex; // or "pitch" for longSample?
 
 	// 0xe
 	char echo;

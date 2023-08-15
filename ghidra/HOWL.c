@@ -1672,11 +1672,7 @@ void FUN_800298e4(void)
   return;
 }
 
-
-// howl_InstrumentPitch
-// param_1 longSamplePitch
-// param_2 shortSampleIndex (drums)
-// param_3 songDistort
+// howl_InstrumentPitch(longSample->pitch, note->pitch, SongSeq->distort)
 uint FUN_8002991c(int param_1,int param_2,uint param_3)
 
 {
