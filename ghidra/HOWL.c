@@ -1030,6 +1030,7 @@ void FUN_80028f34(ushort param_1,uint param_2)
 
 // CseqMusic_ChangeTempo
 // param_1 song index to change
+// param_2 tempo
 void FUN_80029008(ushort param_1,undefined4 param_2)
 
 {
@@ -2613,6 +2614,7 @@ uint FUN_8002a678(short param_1,short param_2,short param_3)
 
 
 // SongPool_ChangeTempo
+// song, and tempo
 void FUN_8002a6cc(int param_1,short param_2)
 
 {
@@ -2790,7 +2792,7 @@ void FUN_8002a9d8(int param_1,undefined param_2,undefined param_3,int param_4)
 
 // SongPool_AdvHub1
 // param1 - song pool member
-// param2 - cseq index
+// param2 - cseqID
 // param3 - volume of cseq
 void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 
@@ -2821,6 +2823,7 @@ void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 
 // SongPool_AdvHub2
 // param1 - Song* member
+// param2 - 8008D068
 void FUN_8002aa44(int param_1,uint *param_2,undefined4 param_3)
 
 {
