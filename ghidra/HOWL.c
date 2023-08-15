@@ -1822,21 +1822,9 @@ void FUN_80029ab4(int param_1)
   //previous + numSequences * 2
   DAT_8008d7c8 = DAT_8008d7b4 + (uint)*(ushort *)(param_1 + 6) * 2;
 
-  //here goes some pro alignment
-
-  //if bit0 is set, skip byte
-  if ((DAT_8008d7c8 & 1) != 0)
-  {
-	// ptrCseqData
-    DAT_8008d7c8 = DAT_8008d7c8 + 1;
-  }
-
-  //if bit1 is set, skip 2 more bytes
-  if ((DAT_8008d7c8 & 2) != 0)
-  {
-	// ptrCseqData
-    DAT_8008d7c8 = DAT_8008d7c8 + 2;
-  }
+  // align data up by 4
+  if ((DAT_8008d7c8 & 1) != 0) DAT_8008d7c8 = DAT_8008d7c8 + 1;
+  if ((DAT_8008d7c8 & 2) != 0) DAT_8008d7c8 = DAT_8008d7c8 + 2;
 
   //pointer to cseq start
   DAT_8008d7b0 = param_1;
