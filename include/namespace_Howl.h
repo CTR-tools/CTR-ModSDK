@@ -104,6 +104,89 @@ struct ChannelStats
 	int startFrame;
 };
 
+enum GarageSoundPos
+{
+	GSP_CENTER = 0,
+	GSP_LEFT,
+	GSP_RIGHT,
+	GSP_GONE,
+	GSP_NUM
+};
+
+struct GarageFX
+{
+	// enum GarageSoundPos
+	char gsp_curr;
+	char gsp_prev;
+	
+	// 0x2
+	short volume;
+	
+	// 0x4
+	int LR;
+	
+	// 0x8
+	void* audioPtr;
+	
+	// 0xC - size of each member
+};
+
+struct OtherFX
+{
+	// 0x0
+	char flags;
+	char volume;
+	
+	// 0x2
+	short pitch;
+	
+	// 0x4
+	short spuIndex;
+	
+	// 0x6
+	short duration;
+
+	// 0x8 -- size
+};
+
+struct EngineFX
+{
+	// 0x0
+	char flags;
+	char volume;
+	
+	// 0x2
+	short pitch;
+	
+	// 0x4
+	short unk;
+	
+	// 0x6
+	short spuIndex;
+	
+	// 0x8 -- size
+};
+
+struct HowlHeader
+{
+	int magic;
+	int version;
+	int unk1;
+	int unk2;
+	
+	// 0x10
+	int numSpuAddrs;
+	int numOtherFX;
+	int numEngineFX;
+	int numBanks;
+	
+	// 0x20
+	int numSequences;
+	int size;
+	
+	// 0x28 -- size
+};
+
 struct CseqHeader
 {
 	int unk;
@@ -258,69 +341,6 @@ struct Song
 
 	// 0x1c array of all cseq sequences in song
 	struct SongSeq* CseqSequences[0x18];
-};
-
-enum GarageSoundPos
-{
-	GSP_CENTER = 0,
-	GSP_LEFT,
-	GSP_RIGHT,
-	GSP_GONE,
-	GSP_NUM
-};
-
-struct GarageFX
-{
-	// enum GarageSoundPos
-	char gsp_curr;
-	char gsp_prev;
-	
-	// 0x2
-	short volume;
-	
-	// 0x4
-	int LR;
-	
-	// 0x8
-	void* audioPtr;
-	
-	// 0xC - size of each member
-};
-
-struct OtherFX
-{
-	// 0x0
-	char flags;
-	char volume;
-	
-	// 0x2
-	short pitch;
-	
-	// 0x4
-	short spuIndex;
-	
-	// 0x6
-	short duration;
-
-	// 0x8 -- size
-};
-
-struct EngineFX
-{
-	// 0x0
-	char flags;
-	char volume;
-	
-	// 0x2
-	short pitch;
-	
-	// 0x4
-	short unk;
-	
-	// 0x6
-	short spuIndex;
-	
-	// 0x8 -- size
 };
 
 _Static_assert(sizeof(SpuReverbAttr) == 0x14);
