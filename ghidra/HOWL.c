@@ -2535,10 +2535,14 @@ void FUN_8002a4a8(byte *param_1)
 		// drum samples (0x8 bytes each)
         iVar2 = DAT_8008d7c4 + (uint)*(byte *)((int)piVar3 + 0xd) * 8;
 
-		if (param_1[8] == 0x80) {
+		if (param_1[8] == 0x80) 
+		{
+		  // ChannelAttr[channel->ID].pitch
           (&DAT_8008fcd4)[(uint)*(byte *)((int)piVar3 + 9) * 8] = *(undefined2 *)(iVar2 + 2);
         }
-        else {
+        else 
+		{
+		  // ChannelAttr[channel->ID].pitch
           (&DAT_8008fcd4)[(uint)*(byte *)((int)piVar3 + 9) * 8] =
                (short)((uint)*(ushort *)(iVar2 + 2) * *(int *)(&DAT_800829ac + (uint)param_1[8] * 4)
                       >> 0x10);
