@@ -764,6 +764,8 @@ void FUN_80028bbc(ushort param_1)
 
 
 // CseqMusic_Start
+// param_1 - SongID (playing)
+// param_2 - tempo
 undefined4 FUN_80028c78(ushort param_1,undefined4 param_2,
 			undefined4 param_3,undefined4 param_4,
             undefined4 param_5)
@@ -2048,7 +2050,7 @@ void FUN_80029dc0(void)
 //refer to: http://www.ccarh.org/courses/253/handout/vlv/
 //param_1 - pointer to read from
 //returns pointer after parsing (like is we parsed 3 bytes it will be param_1 + 3)
-//param_2 - place to save parsed result
+//param_2 - pointer to tempo
 //howl_ReadTimeDelta
 byte * FUN_80029dcc(byte *param_1,uint *param_2)
 
@@ -2631,6 +2633,9 @@ void FUN_8002a6cc(int param_1,short param_2)
 
 
 // SongPool_Start
+// param_1 - songPool pointer
+// param_2 - SongID (playing)
+// param_3 - tempo
 void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,uint *param_5,
                  undefined4 param_6)
 
@@ -2749,6 +2754,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
         pbVar4[0xb] = bVar1;
 
 		// howl_ReadTimeDelta
+		// xxx, Song->tempo
         uVar3 = FUN_80029dcc(pbVar5 + 2,pbVar4 + 0xc);
 
 		*(undefined4 *)(pbVar4 + 0x18) = uVar3;
@@ -4102,6 +4108,7 @@ void FUN_8002bbac(void)
                       }
 
 					  // howl_ReadTimeDelta
+					  // xxx, Song->tempo
                       uVar3 = FUN_80029dcc(iVar2,pbVar6 + 0xc);
 
 					  *(undefined4 *)(pbVar6 + 0x18) = uVar3;
@@ -6777,6 +6784,8 @@ void FUN_8002e338(void)
 
 
 // Music_Adjust
+// param_1 - SongID (playing)
+// param_2 - tempo
 void FUN_8002e350(uint param_1,int param_2,undefined4 param_3,undefined4 param_4)
 {
   // if cseq music can play
