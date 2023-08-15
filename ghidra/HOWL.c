@@ -4990,10 +4990,12 @@ void FUN_8002c918(void)
     *(undefined2 *)(puVar2 + 1) = 0x80ff;
     *(undefined2 *)((int)puVar2 + 6) = 0x1fc2;
 
+	// clear rest of channelAttr to 0xFFFF
 	*(undefined2 *)(puVar2 + 2) = 0xffff;
     *(undefined2 *)((int)puVar2 + 10) = 0xffff;
     *(undefined2 *)(puVar2 + 3) = 0xffff;
     *(undefined2 *)((int)puVar2 + 0xe) = 0xffff;
+	
     puVar2 = puVar2 + 4;
     puVar3 = puVar3 + 1;
 
