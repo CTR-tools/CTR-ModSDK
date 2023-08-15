@@ -158,7 +158,7 @@ struct SongSeq
 	// same struct as SongPool->CseqSequences
 
 	// 0x0 - opcode
-	// 0x1 - 
+	// 0x1 - soundID
 
 	// 0x3 - instrumentID (SampleInstrument*)
 	// 0x4 - reverb
