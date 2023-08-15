@@ -2720,7 +2720,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
     do {
       pbVar5 = (byte *)((int)puVar7 + (uint)*puVar8);
 
-	  // SongPool_FindFreeChannel
+	  // SongSeq* pbVar4 = SongPool_FindFreeChannel
       pbVar4 = (byte *)FUN_8002a63c();
 
 	  // if a free channel was found
