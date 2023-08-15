@@ -1672,12 +1672,17 @@ void FUN_800298e4(void)
   return;
 }
 
-// howl_InstrumentPitch(longSample->pitch, note->pitch, SongSeq->distort)
+// howl_InstrumentPitch(longSample->basePitch, note->pitchIndex, SongSeq->distort)
 uint FUN_8002991c(int param_1,int param_2,uint param_3)
 
 {
   uint uVar1;
 
+  // param_3
+  // (>> 0) & 0x40 - distortion
+  // (>> 6) & 0xXX - pitch/octave?
+
+  // noteFrequency
   uVar1 = (uint)*(ushort *)
 			(&DAT_80082eac + (param_2 + ((int)param_3 >> 6) + -2) * 2) 
 			* param_1 >> 0xc;
@@ -2172,7 +2177,7 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 	// ptrCseqLongSamples[SongSeq->instrumentID]
     iVar4 = DAT_8008d7e8 + (uint)param_1[3] * 0xc;
 
-	// howl_InstrumentPitch(longSample->pitch, note->pitch, SongSeq->distort)
+	// howl_InstrumentPitch(longSample->basePitch, note->pitchIndex, SongSeq->distort)
 	uVar3 = FUN_8002991c((uint)*(ushort *)(iVar4 + 4),param_3,(uint)param_1[8]);
 
 	// volume of Music
@@ -2512,10 +2517,10 @@ void FUN_8002a4a8(byte *param_1)
 		// howl_InstrumentPitch
         uVar1 = FUN_8002991c(
 
-			// instrument sequence (0xc bytes each), offset 4 (pitch)
+			// SampleInstrument[seq->instrumentID].basePitch
 			(uint)*(ushort *)(DAT_8008d7e8 + (uint)param_1[3] * 0xc + 4),
 
-			// shortSampleIndex
+			// note->pitchIndex
 			(uint)*(byte *)((int)piVar3 + 0xd),
 
 			// distortion

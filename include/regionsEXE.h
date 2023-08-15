@@ -1483,7 +1483,9 @@ struct Data
 	unsigned char volumeLR[0x100];
 
 	// 80082eac -- UsaRetail
-	char unk_between_volumeLR_pitch[0xD8];
+	// for notes ABCDEFG, and if all 
+	// are set to the same value, all notes are the same
+	short noteFrequency[0x6C];
 
 	// 80082f84
 	// array of data for Instrument Pitch
