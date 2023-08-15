@@ -152,10 +152,17 @@ struct SongOpcode
 	// unk
 	
 	// 0x1
-	// sampleID
+	//		opcode01: sampleID
+	//		opcode05: sampleID
+	//		opcode06: volume
+	//		opcode07: distort
+	//		opcode08: reverb
+	//		opcode09: instrumentID
+	//		opcode0a: distortion
+	// 		sampleID
 	
 	// 0x2
-	// volume
+	// 		opcode05: volume
 	
 	// size -- unk
 };

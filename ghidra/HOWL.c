@@ -2420,8 +2420,9 @@ void FUN_8002a28c(int param_1)
 void FUN_8002a3a8(int param_1)
 
 {
+  // sequence->volume = note->volume
   *(undefined *)(param_1 + 5) = *(undefined *)(*(int *)(param_1 + 0x18) + 1);
-  FUN_8002a170();
+  FUN_8002a170(param_1);
   return;
 }
 
@@ -2430,8 +2431,9 @@ void FUN_8002a3a8(int param_1)
 void FUN_8002a3d4(int param_1)
 
 {
+  // sequence->distort = note->distort
   *(undefined *)(param_1 + 9) = *(undefined *)(*(int *)(param_1 + 0x18) + 1);
-  FUN_8002a170();
+  FUN_8002a170(param_1);
   return;
 }
 
@@ -2442,6 +2444,7 @@ void FUN_8002a400(int param_1)
   int *piVar1;
   int iVar2;
 
+  // sequence->currNote
   iVar2 = *(int *)(param_1 + 0x18);
 
   // channel taken
@@ -2461,7 +2464,7 @@ void FUN_8002a400(int param_1)
 			(piVar1[6] == (uint)*(byte *)(param_1 + 1))
 		 )
 	 {
-
+		// set reverb
 		(&DAT_8008fcd6)[(uint)*(byte *)((int)piVar1 + 9) * 8] =
 			(ushort)*(byte *)(iVar2 + 1);
 
@@ -2496,6 +2499,7 @@ void FUN_8002a4a8(byte *param_1)
   int iVar2;
   int *piVar3;
 
+  // distortion
   param_1[8] = *(byte *)(*(int *)(param_1 + 0x18) + 1);
 
   // channel taken
