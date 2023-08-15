@@ -164,7 +164,7 @@ struct SongSeq
 	// 0x4 - reverb
 	// 0x5 - volume of sequence
 	
-	// 0x8 - pitch (or distort)
+	// 0x8 - distort
 
 	// 0xb - songPoolIndex
 

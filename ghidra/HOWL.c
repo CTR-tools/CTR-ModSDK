@@ -414,11 +414,15 @@ undefined4 FUN_80028690(uint param_1,uint param_2)
 	  // volume of Voice
       bVar1 = DAT_8008d7bc;
     }
+	
+	// no distortion
     if (uVar5 == 0x80)
 	{
 	  // channelAttr offset 0x8
       channelAttr.pitch = *(undefined2 *)(pbVar4 + 2);
     }
+	
+	// distortion
     else
 	{
 	  // channelAttr offset 0x8
@@ -1669,7 +1673,7 @@ void FUN_800298e4(void)
 // howl_InstrumentPitch
 // param_1 longSamplePitch
 // param_2 shortSampleIndex (drums)
-// param_3 songPitch (or distort)
+// param_3 songDistort
 uint FUN_8002991c(int param_1,int param_2,uint param_3)
 
 {
@@ -2221,11 +2225,14 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 	// drums sequence (0x8 each)
     iVar4 = DAT_8008d7c4 + param_3 * 8;
 
+	// no distortion
     if (param_1[8] == 0x80)
 	{
 	  // drums -> pitch
       uVar3 = *(undefined2 *)(iVar4 + 2);
     }
+	
+	// distortion
     else
 	{
 	  // drums -> pitch ...
@@ -2521,6 +2528,7 @@ void FUN_8002a4a8(byte *param_1)
 			// shortSampleIndex
 			(uint)*(byte *)((int)piVar3 + 0xd),
 
+			// distortion
 			(uint)param_1[8]
 		);
 
@@ -2535,11 +2543,14 @@ void FUN_8002a4a8(byte *param_1)
 		// drum samples (0x8 bytes each)
         iVar2 = DAT_8008d7c4 + (uint)*(byte *)((int)piVar3 + 0xd) * 8;
 
+		// no distortion
 		if (param_1[8] == 0x80) 
 		{
 		  // ChannelAttr[channel->ID].pitch
           (&DAT_8008fcd4)[(uint)*(byte *)((int)piVar3 + 9) * 8] = *(undefined2 *)(iVar2 + 2);
         }
+		
+		// distortion
         else 
 		{
 		  // ChannelAttr[channel->ID].pitch
@@ -4523,6 +4534,7 @@ void FUN_8002c34c(int param_1,int *param_2,int param_3,undefined4 param_4,int pa
 // howl_InitChannelAttr_OtherFX
 // param_1 OtherFX*
 // param_2 ChannelAttr
+// param_5 distortion
 void FUN_8002c424(byte *param_1,int *param_2,int param_3,undefined4 param_4,int param_5)
 
 {
@@ -4537,11 +4549,15 @@ void FUN_8002c424(byte *param_1,int *param_2,int param_3,undefined4 param_4,int 
 	  // volume of Voice
     bVar1 = DAT_8008d7bc;
   }
+  
+  // no distortion
   if (param_5 == 0x80)
   {
 	// pitch
     uVar3 = *(undefined2 *)(param_1 + 2);
   }
+  
+  // distortion
   else
   {
 	// pitch

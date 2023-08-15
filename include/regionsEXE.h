@@ -1488,9 +1488,9 @@ struct Data
 	// 80082f84
 	// array of data for Instrument Pitch
 	#if BUILD <= SepReview
-	short pitch[0x80];
+	short distortConst_Music[0x80];
 	#else
-	short pitch[0x40];
+	short distortConst_Music[0x40];
 	#endif
 
 	#if BUILD == JpnRetail
