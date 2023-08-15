@@ -12,7 +12,7 @@ undefined4 FUN_80034960(undefined4 param_1,int param_2)
 
     // if 3 or 4 players
     if (2 < param_2) {
-      return 0x9c4;
+      return 2500;
     }
     break;
 
@@ -22,7 +22,7 @@ undefined4 FUN_80034960(undefined4 param_1,int param_2)
 
   // if mystery caves
   case 9:
-    return 0x9c4;
+    return 2500;
 
   // main menu
   case 0x27:

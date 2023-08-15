@@ -25217,7 +25217,7 @@ LAB_8005ef64:
         *(short *)(param_2 + 0x410) = sVar5;
       }
       if ((*(int *)(param_2 + 0x18) != 0) &&
-         (iVar9 = (int)*(short *)(*(int *)(param_2 + 0x18) + 0x1e), iVar9 < 0x9c4)) {
+         (iVar9 = (int)*(short *)(*(int *)(param_2 + 0x18) + 0x1e), iVar9 < 2500)) {
         iVar6 = iVar6 + (iVar9 + -0x800) * 2;
       }
       iVar11 = (int)*(short *)(param_2 + 0x40c);
@@ -35909,7 +35909,7 @@ void FUN_800693c8(int param_1)
       *(uint *)(*piVar9 + 0x28) = *(uint *)(*piVar9 + 0x28) & 0xffffff7f;
     }
 
-	if (*(ushort *)(iVar11 + 0x22) < 0x9c4)
+	if (*(ushort *)(iVar11 + 0x22) < 2500)
 	{
 	  // gamepad vibration
       FUN_80026440(iVar12,4,4);

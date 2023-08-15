@@ -155,7 +155,7 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 		turbo->inst->flags = turbo->inst->flags & 0xffffff7f;
 	}
 	
-	if (instance->alphaScale < 0x9c4)
+	if (instance->alphaScale < 2500)
 	{
 		// gamepad vibration
 		GAMEPAD_Vib_3(driver, 4, 4);
