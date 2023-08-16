@@ -1,6 +1,6 @@
 #include <common.h>
 
-// Bug in Crash Cove audio
+// Bug in Adventure->CrashCove, and in Arcade->DragonMines
 int DECOMP_Bank_AssignSpuAddrs()
 {
 	int i;
