@@ -1411,14 +1411,14 @@ uint FUN_800293b8(void)
 			// if not specified
             if (*psVar5 == 0)
 			{
-			  // set to spu allocator
+			  // spuAddrs->spuAddr = alloc
               *psVar5 = (short)DAT_8008d770;
             }
 
 			// index
 			iVar3 = iVar3 + 1;
 
-			// increment allocator by size
+			// increment allocator by spuAddrs->size
             DAT_8008d770._0_2_ = (short)DAT_8008d770 + psVar5[1];
 
           } while (iVar3 < (int)(uint)*DAT_8008d784);
@@ -1549,7 +1549,7 @@ void FUN_80029730(ushort param_1,short param_2)
 			(*puVar2 < (ushort)(param_1 + param_2))
 		 )
 	  {
-		// erase address
+		// SpuAddrEntry->spuAddr
         *puVar2 = 0;
       }
 
