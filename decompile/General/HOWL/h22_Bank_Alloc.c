@@ -36,4 +36,5 @@ int DECOMP_Bank_Alloc(int bankID, struct Bank* ptrBank)
 	sdata->bankLoadStage = 0;
 	
 	sdata->ptrSampleBlock1 = sdata->ptrSampleBlock2;
+	return 1;
 }

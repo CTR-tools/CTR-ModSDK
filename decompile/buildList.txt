@@ -225,6 +225,12 @@ common, exe, CseqMusic_StopAll, 0x0, General/HOWL/h20_CseqMusic_StopAll.c
 common, exe, Bank_ResetAllocator, 0x0, General/HOWL/h21_Bank_ResetAllocator.c
 common, exe, Bank_Alloc, 0x0, General/HOWL/h22_Bank_Alloc.c
 common, exe, Bank_AssignSpuAddrs, 0x0, General/HOWL/h23_Bank_AssignSpuAddrs.c
+common, exe, Bank_Destroy, 0x0, General/HOWL/h24_Bank_Destroy.c
+common, exe, Bank_ClearInRange, 0x0, General/HOWL/h25_Bank_ClearInRange.c
+common, exe, Bank_Load, 0x0, General/HOWL/h26_Bank_Load.c
+common, exe, Bank_DestroyLast, 0x0, General/HOWL/h27_Bank_DestroyLast.c
+common, exe, Bank_DestroyUntilIndex, 0x0, General/HOWL/h28_Bank_DestroyUntilIndex.c
+common, exe, Bank_DestroyAll, 0x0, General/HOWL/h29_Bank_DestroyAll.c
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c

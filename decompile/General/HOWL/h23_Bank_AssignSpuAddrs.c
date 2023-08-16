@@ -1,5 +1,6 @@
 #include <common.h>
 
+// Bug in Crash Cove audio
 int DECOMP_Bank_AssignSpuAddrs()
 {
 	int i;

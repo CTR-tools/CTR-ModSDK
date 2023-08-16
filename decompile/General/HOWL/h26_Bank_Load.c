@@ -7,11 +7,15 @@ int DECOMP_Bank_Load(int bankID, struct Bank* ptrBank)
 	// if out of banks, quit
 	if(numBanks >= 8) return 0;
 	
-	// should this happen after next IF?
+	// Naughty Dog Bug?
 	sdata->bank[numBanks].bankID = bankID;
 	
 	// if bank is in use, quit
 	if((sdata->bank[numBanks].flags & 3) != 0) return 0;
 	
-	// === Call Bank_Alloc ===
+	ptrBank = &sdata->bank[numBanks];
+	if(Bank_Alloc(bankID, ptrBank) == 0) return 0;
+	
+	ptrBank->bankID = sdata->numAudioBanks++;
+	return 1;
 }
