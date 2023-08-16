@@ -1319,17 +1319,27 @@ uint FUN_800293b8(void)
   short *psVar5;
   ulong addr;
 
+  // Stage 0: Load To RAM (first half)
+  // Stage 1: Load To RAM (second half), and assign SpuEntry
+  // Stage 2: Spu Transfer Start
+  // Stage 3: Spu Transfer Complete
+  // Stage 4: Finish
+
+
+  // Stage 4: Finish
   if (DAT_8008d774 == 4) {
     uVar1 = 1;
   }
-  else {
+  else 
+  {
+	// bankLoadStage 1: load to RAM, and assign SpuEntry
     if (DAT_8008d774 == 1)
 	{
 	  // howl_loadDataFromCd_RetryOnError
       iVar2 = FUN_8003266c();
       if (iVar2 != 0)
 	  {
-		// audioAllocSize
+		// reset audioAllocSize
         DAT_8008d764 = 0;
 
         iVar2 = 0;
@@ -1339,7 +1349,8 @@ uint FUN_800293b8(void)
 		{
           iVar3 = 0;
 
-		  // loop through all samples
+		  // loop through all samples,
+		  // recalculate audioAllocSize for all "loaded" samples
           do
 		  {
 			// index
@@ -1367,21 +1378,29 @@ uint FUN_800293b8(void)
 
           } while (iVar2 < (int)(uint)*DAT_8008d784);
         }
-        if (DAT_8008d77c == 0) {
+        
+		if (DAT_8008d77c == 0) 
+		{
+		  // ptrLastBank.max
           *(undefined2 *)(DAT_8008d780 + 6) = (short)(DAT_8008d764 >> 3);
         }
-        else {
+        else 
+		{
+		  // ptrLastBank.max
           if (*(ushort *)(DAT_8008d780 + 6) < DAT_8008d764) {
             DAT_8008d774 = 4;
             return 1;
           }
         }
+		
+		// align up allocation
         DAT_8008d768 = DAT_8008d764 + 0x7ff >> 0xb;
 
 		// MEMPACK_ReallocMem
         FUN_8003e94c((DAT_8008d764 + 0x7ff & 0xfffff800) + 0x800);
 
-		// DAT_80095e7c is CdlFile for Kart.HWL
+		// read new SampleBlock #2 to RAM
+		// DAT_80095e7c is CdlFile for Kart.HWL,
         iVar2 = FUN_80032594(&DAT_80095e7c,DAT_8008d788 + 0x800,DAT_8008d778 + 1,DAT_8008d768);
 
 		if (iVar2 == 0) {
@@ -1398,6 +1417,8 @@ uint FUN_800293b8(void)
         iVar2 = DAT_8008d7dc;
 
         iVar3 = 0;
+
+		// === Assign SpuEntry for all "new" samples ===
 
 		// if there are samples in the block
         if (*DAT_8008d784 != 0)
@@ -1426,11 +1447,14 @@ uint FUN_800293b8(void)
         DAT_8008d774 = 2;
       }
     }
-    else {
+    else 
+	{
       if (DAT_8008d774 < 2) {
         if (
+				// Stage 0: Load to RAM
 				(DAT_8008d774 == 0) &&
 				(
+					// read new SampleBlock #1 to RAM
 					// DAT_80095e7c is CdlFile for Kart.HWL
 					iVar2 = FUN_80032594(&DAT_80095e7c,DAT_8008d788,DAT_8008d778,1),
 
@@ -1438,28 +1462,36 @@ uint FUN_800293b8(void)
 				)
 			)
 		{
+		  // go to Stage 1
           DAT_8008d774 = 1;
         }
       }
-      else {
+      else 
+	  {
+		// Stage 2: Spu Transfer Start
         if (DAT_8008d774 == 2)
 		{
 		  // howl_loadDataFromCd_RetryOnError
           iVar2 = FUN_8003266c();
-          if (iVar2 != 0) {
+          if (iVar2 != 0) 
+		  {
+			// ptrLastBank->min
             addr = (uint)*(ushort *)(DAT_8008d780 + 4) * 8;
 
-			// if less than 516,096
-			// (spu has 512kb memory)
-            if (addr + DAT_8008d764 < 0x7e000) {
+			// addr+audioAllocSize (start + size) < spu 512kb memory
+            if (addr + DAT_8008d764 < 0x7e000) 
+			{
+			  // send RAM to SPU
               SpuSetTransferStartAddr(addr);
               SpuRead((uchar *)(DAT_8008d788 + 0x800),DAT_8008d764);
             }
             DAT_8008d774 = 3;
           }
         }
-        else {
+        else 
+		{
           if (
+				// Stage 3: Spu Transfer Complete
 				(DAT_8008d774 == 3) &&
 
 				// (0) = SPU_TRANSFER_PEEK

@@ -355,6 +355,29 @@ struct SpuAddrEntry
 	short spuSize;
 };
 
+struct Bank
+{
+	// 0x0
+	short bankID;
+
+	// 0x2
+	u_short flags;
+
+	// min and max are ranges used in FUN_80029730,
+	// range for what kind of data?
+
+	// could also be offset 0x4 as base index,
+	// and offset 0x6 as number of elements
+
+	// 0x4
+	short min;
+
+	// 0x6
+	short max;
+
+	// 8 elements of 8-byte struct
+};
+
 _Static_assert(sizeof(SpuReverbAttr) == 0x14);
 _Static_assert(sizeof(struct ChannelAttr) == 0x10);
 _Static_assert(sizeof(struct ChannelStats) == 0x20);
