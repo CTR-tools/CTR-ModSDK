@@ -222,6 +222,9 @@ common, exe, CseqMusic_ChangeTempo, 0x0, General/HOWL/h17_CseqMusic_ChangeTempo.
 common, exe, CseqMusic_AdvHubSwap, 0x0, General/HOWL/h18_CseqMusic_AdvHubSwap.c
 common, exe, CseqMusic_Stop, 0x0, General/HOWL/h19_CseqMusic_Stop.c
 common, exe, CseqMusic_StopAll, 0x0, General/HOWL/h20_CseqMusic_StopAll.c
+common, exe, Bank_ResetAllocator, 0x0, General/HOWL/h21_Bank_ResetAllocator.c
+common, exe, Bank_Alloc, 0x0, General/HOWL/h22_Bank_Alloc.c
+common, exe, Bank_AssignSpuAddrs, 0x0, General/HOWL/h23_Bank_AssignSpuAddrs.c
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c

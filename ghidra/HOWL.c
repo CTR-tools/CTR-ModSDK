@@ -1258,6 +1258,7 @@ void FUN_800292e0(void)
 
 
 // Bank_Alloc
+// param1 - bankID
 undefined4 FUN_800292fc(uint param_1,int param_2)
 
 {
@@ -1400,8 +1401,12 @@ uint FUN_800293b8(void)
 		// MEMPACK_ReallocMem
         FUN_8003e94c((DAT_8008d764 + 0x7ff & 0xfffff800) + 0x800);
 
+		// howl_loadDataFromCd
 		// read new SampleBlock #2 to RAM
 		// DAT_80095e7c is CdlFile for Kart.HWL,
+		// DAT_8008d788+0x800 is the destination to load to
+		// DAT_8008d778 is offset of HWL where bank is
+		// DAT_8008d768 is numSectors to load
         iVar2 = FUN_80032594(&DAT_80095e7c,DAT_8008d788 + 0x800,DAT_8008d778 + 1,DAT_8008d768);
 
 		if (iVar2 == 0) {
@@ -1455,8 +1460,12 @@ uint FUN_800293b8(void)
 				// Stage 0: Load to RAM
 				(DAT_8008d774 == 0) &&
 				(
+					// howl_loadDataFromCd
 					// read new SampleBlock #1 to RAM
 					// DAT_80095e7c is CdlFile for Kart.HWL
+					// DAT_8008d788 is the destination to load to
+					// DAT_8008d778 is offset of HWL where bank is
+					// load just 1 sector
 					iVar2 = FUN_80032594(&DAT_80095e7c,DAT_8008d788,DAT_8008d778,1),
 
 					iVar2 != 0
@@ -1615,13 +1624,17 @@ undefined4 FUN_800297a0(ushort param_1,byte *param_2)
                     // numAudioBanks
                     uVar2 = (uint)DAT_8008d76c,
 
-                    // bank[numBanks].bankID == param_1
+                    // bank[numBanks].bankID = param_1
                     *(ushort *)(&DAT_8008fc2c + uVar2 * 8) = param_1,
 
 					// flags
                     (*(ushort *)(&DAT_8008fc2e + uVar2 * 8) & 3) == 0
                 )
         ) &&
+
+		// === Ghidra Fail ===
+		// dont pass param_2, pass this: (&DAT_8008fc2c + uVar2 * 8),
+		// ghidra misses it cause $a1 is set too early from the function call
 
 		// Bank_Alloc
         (iVar3 = FUN_800292fc((uint)param_1, param_2), iVar3 != 0)
@@ -1809,16 +1822,16 @@ void FUN_80029a50(int param_1)
     // metaEngineFX = metaOtherFX + ...
     DAT_8008d7d0 = DAT_8008d7d8 + *(int *)(param_1 + 0x14) * 8;
 
-    // howl_banks = metaEngineFX + ...
+    // howl_bankOffsets = metaEngineFX + ...
     DAT_8008d7e4 = DAT_8008d7d0 + *(int *)(param_1 + 0x18) * 8;
 
-    // howl_cseqs = howl_banks + howlHeader->cnt_banks * 2
+    // howl_songOffsets = howl_bankOffsets + howlHeader->cnt_banks * 2
     DAT_8008d7e0 = DAT_8008d7e4 + *(int *)(param_1 + 0x1c) * 2;
 
 	// howl_header
     DAT_8008d7c0 = param_1;
 
-    // howl_endOfHeader = howl_cseqs + howlHeader->cnt_seqs * 2
+    // howl_endOfHeader = howl_songOffsets + howlHeader->cnt_songs * 2
     DAT_8008d7d4 = DAT_8008d7e0 + *(int *)(param_1 + 0x20) * 2;
 
 	// howl_spuAddrs = array of SPU addresses
@@ -2021,8 +2034,9 @@ uint FUN_80029ca4(void)
       if (
 			(iVar2 != 0) &&
 			(
+				// howl_loadDataFromCd
 				// DAT_80095e7c is CdlFile for Kart.HWL
-				// DAT_8008d7a8 is pointer to song
+				// DAT_8008d7a8 is sectorOffset
 				iVar2 = FUN_80032594(&DAT_80095e7c,&DAT_80090d84,DAT_8008d7a8 + 1,
                                (DAT_80090584 + 0x7ffU >> 0xb) - 1),
 
@@ -2041,7 +2055,7 @@ uint FUN_80029ca4(void)
 				(
 					// DAT_80095e7c is CdlFile for Kart.HWL
 					// DAT_80090584 cseq data
-					// DAT_8008d7a8 is pointer to song
+					// DAT_8008d7a8 sectorOffset
 					iVar2 = FUN_80032594(&DAT_80095e7c,&DAT_80090584,DAT_8008d7a8,1),
 
 					iVar2 != 0

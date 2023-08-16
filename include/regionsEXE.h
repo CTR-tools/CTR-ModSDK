@@ -3557,7 +3557,7 @@ struct sData
 
 	// 8008d770
 	// spu address of some type
-	int initAt_202;
+	int audioAllocPtr;
 
 	// 8008d774
 	int bankLoadStage;
@@ -3566,16 +3566,16 @@ struct sData
 	int bankSectorOffset;
 
 	// 8008d77C
-	int unk_8008d77C;
+	int bankFlags;
 
 	// 8008d780
 	struct Bank* ptrLastBank;
 
 	// 8008d784
-	int ptrSampleBlock1;
+	struct SampleBlockHeader* ptrSampleBlock1;
 
 	// 8008d788
-	int ptrSampleBlock2;
+	struct SampleBlockHeader* ptrSampleBlock2;
 
 	// 8008d78c
 	int criticalSectionCount;
@@ -3648,10 +3648,10 @@ struct sData
 	struct SpuAddrEntry* howl_spuAddrs;
 
 	// 8008d7e0
-	short* howl_cseqs;
+	short* howl_songOffsets;
 
 	// 8008d7e4
-	short* howl_banks;
+	short* howl_bankOffsets;
 
 	// 8008d7e8
 	struct SampleInstrument* ptrCseqLongSamples;

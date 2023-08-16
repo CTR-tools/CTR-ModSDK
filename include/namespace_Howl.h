@@ -351,8 +351,8 @@ struct SampleBlockHeader
 
 struct SpuAddrEntry
 {
-	short spuAddr;
-	short spuSize;
+	unsigned short spuAddr;
+	unsigned short spuSize;
 };
 
 struct Bank
