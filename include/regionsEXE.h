@@ -3646,7 +3646,7 @@ struct sData
 	struct OtherFX* howl_metaOtherFX;
 
 	// 8008d7dc
-	int* howl_spuAddrs;
+	struct SpuAddrEntry* howl_spuAddrs;
 
 	// 8008d7e0
 	short* howl_cseqs;

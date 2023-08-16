@@ -1350,12 +1350,12 @@ uint FUN_800293b8(void)
 
                            (uint)*(ushort *)
 
-
+							  // howl_spuAddrs[sampleBlockHeader->spuIndex[iVar3]].size
 							  (
 								// sampleBlock->???->size?
 								(uint)*(ushort *)((int)DAT_8008d784 + iVar3 + 2) * 4 +
 
-								// spu addresses
+								// howl_spuAddrs[ ^^^ ].size
 								DAT_8008d7dc + 2
 							  )
 
@@ -1394,7 +1394,7 @@ uint FUN_800293b8(void)
           DAT_8008d770._0_2_ = *(short *)(DAT_8008d780 + 4);
         }
 
-		// spu addresses
+		// howl_spuAddrs
         iVar2 = DAT_8008d7dc;
 
         iVar3 = 0;
@@ -1405,7 +1405,7 @@ uint FUN_800293b8(void)
 		  // loop through all samples in the block
           do
 		  {
-			// intended destination of sample in SPU
+			// howl_spuAddrs[sampleBlock->spuIndex[iVar3]]
             psVar5 = (short *)((uint)DAT_8008d784[iVar3 + 1] * 4 + iVar2);
 
 			// if not specified
@@ -1532,7 +1532,7 @@ void FUN_80029730(ushort param_1,short param_2)
 
   uVar3 = 0;
 
-  // spu addresses
+  // howl_spuAddrs
   puVar2 = DAT_8008d7dc;
 
   // howlHeader->numSpuAddrs
@@ -1787,7 +1787,7 @@ void FUN_80029a50(int param_1)
     // howl_endOfHeader = howl_cseqs + howlHeader->cnt_seqs * 2
     DAT_8008d7d4 = DAT_8008d7e0 + *(int *)(param_1 + 0x20) * 2;
 
-	// array of SPU addresses
+	// howl_spuAddrs = array of SPU addresses
     DAT_8008d7dc = param_1 + 0x28;
 
 	return;

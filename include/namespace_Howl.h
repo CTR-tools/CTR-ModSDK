@@ -342,6 +342,19 @@ struct Song
 	struct SongSeq* CseqSequences[0x18];
 };
 
+struct SampleBlockHeader
+{
+	short numSamples;
+	
+	short spuIndex[0];
+};
+
+struct SpuAddrEntry
+{
+	short spuAddr;
+	short spuSize;
+};
+
 _Static_assert(sizeof(SpuReverbAttr) == 0x14);
 _Static_assert(sizeof(struct ChannelAttr) == 0x10);
 _Static_assert(sizeof(struct ChannelStats) == 0x20);
