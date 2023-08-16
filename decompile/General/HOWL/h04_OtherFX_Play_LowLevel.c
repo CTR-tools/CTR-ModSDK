@@ -28,6 +28,8 @@ int DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int flags)
   
   howl_InitChannelAttr_OtherFX(ptrOtherFX, &channelAttr, volume, LR, distortion);
   
+  channelAttr.reverb = echo;
+  
   Smart_EnterCriticalSection();
   
   // does this ever happen?

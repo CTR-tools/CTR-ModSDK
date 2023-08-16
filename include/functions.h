@@ -220,9 +220,9 @@ void GhostTape_Destroy();
 // OtherFX
 
 short CountSounds();
-void OtherFX_Play(unsigned int soundID, int flags);
+int OtherFX_Play(unsigned int soundID, int flags);
 void OtherFX_Play_Echo(unsigned int soundID, int flags, int echoFlag);
-void OtherFX_Play_LowLevel(u_int soundID, u_char flags1, u_int flags2);
+int OtherFX_Play_LowLevel(u_int soundID, u_char flags1, u_int flags2);
 //OtherFX_Modify()
 void OtherFX_Stop1(int soundID_count);
 void OtherFX_Stop2(int soundID_count);
