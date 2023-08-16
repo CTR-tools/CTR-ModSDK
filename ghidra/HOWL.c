@@ -1766,7 +1766,7 @@ uint FUN_80029988(undefined4 param_1)
 }
 
 
-// loads howl header values (calculates pointers to all arrays)
+// howl_ParseHeader
 void FUN_80029a50(int param_1)
 {
     // metaOtherFX = ptrSpuAddrs + howlHeader->numSpuAddrs
