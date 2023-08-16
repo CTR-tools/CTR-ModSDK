@@ -213,16 +213,15 @@ common, exe, EngineAudio_InitOnce, 0x0, General/HOWL/h08_EngineAudio_InitOnce.c
 common, exe, EngineAudio_Recalculate, 0x0, General/HOWL/h09_EngineAudio_Recalculate.c
 common, exe, EngineAudio_Stop, 0x0, General/HOWL/h10_EngineAudio_Stop.c
 common, exe, SetReverbMode, 0x0, General/HOWL/h11_SetReverbMode.c
-
-common, exe, CseqMusic_Start, 0x0, General/HOWL/CseqMusic_Start.c
-common, exe, CseqMusic_Pause, 0x0, General/HOWL/CseqMusic_Pause.c
-common, exe, CseqMusic_Resume, 0x0, General/HOWL/CseqMusic_Resume.c
-common, exe, CseqMusic_ChangeVolume, 0x0, General/HOWL/CseqMusic_ChangeVolume.c
-common, exe, CseqMusic_Restart, 0x0, General/HOWL/CseqMusic_Restart.c
-common, exe, CseqMusic_ChangeTempo, 0x0, General/HOWL/CseqMusic_ChangeTempo.c
-// skip AdvHub cseqMusic temporarily, tired
-common, exe, CseqMusic_Stop, 0x0, General/HOWL/CseqMusic_Stop.c
-common, exe, CseqMusic_StopAll, 0x0, General/HOWL/CseqMusic_StopAll.c
+common, exe, CseqMusic_Start, 0x0, General/HOWL/h12_CseqMusic_Start.c
+common, exe, CseqMusic_Pause, 0x0, General/HOWL/h13_CseqMusic_Pause.c
+common, exe, CseqMusic_Resume, 0x0, General/HOWL/h14_CseqMusic_Resume.c
+common, exe, CseqMusic_ChangeVolume, 0x0, General/HOWL/h15_CseqMusic_ChangeVolume.c
+common, exe, CseqMusic_Restart, 0x0, General/HOWL/h16_CseqMusic_Restart.c
+common, exe, CseqMusic_ChangeTempo, 0x0, General/HOWL/h17_CseqMusic_ChangeTempo.c
+common, exe, CseqMusic_AdvHubSwap, 0x0, General/HOWL/h18_CseqMusic_AdvHubSwap.c
+common, exe, CseqMusic_Stop, 0x0, General/HOWL/h19_CseqMusic_Stop.c
+common, exe, CseqMusic_StopAll, 0x0, General/HOWL/h20_CseqMusic_StopAll.c
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c

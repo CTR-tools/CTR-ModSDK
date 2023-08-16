@@ -3612,7 +3612,7 @@ struct sData
 	int vol_FX;
 
 	// 8008d7b0
-	int ptrCseqHeader;
+	struct CseqHeader* ptrCseqHeader;
 
 	// 8008d7b4
 	short* ptrCseqSongStartOffset;
