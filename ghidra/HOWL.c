@@ -1908,7 +1908,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 			)
 		  )
 	  {
-        // parse howl header
+        // howl_ParseHeader
         FUN_80029a50(piVar2);
 
         // reallocate for full howl header size
