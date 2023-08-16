@@ -196,7 +196,7 @@ struct CseqHeader
 	char numShortSamples;
 	char numSongs;
 	char filler;
-}
+};
 
 struct SampleInstrument
 {

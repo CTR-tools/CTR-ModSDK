@@ -283,7 +283,7 @@ undefined4 FUN_800284d0(uint param_1,byte param_2,uint param_3)
 	  // howl_InitChannelAttr_OtherFX
       FUN_8002c424(
 
-	    // ???
+	    // metaOtherFX
 		pbVar5,
 
 		// &ChannelAttr

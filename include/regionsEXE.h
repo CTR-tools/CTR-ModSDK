@@ -3540,7 +3540,6 @@ struct sData
 	int boolCanSaveGhost;
 
 	// 8008d75c
-	// for what purpose?
 	int countSounds;
 
 	// 8008bba4 sep3
@@ -3625,7 +3624,7 @@ struct sData
 	int vol_Voice;
 
 	// 8008d7c0
-	int ptrHowlHeader;
+	struct HowlHeader* ptrHowlHeader;
 
 	// 8008d7c4
 	struct SampleDrums* ptrCseqShortSamples;
