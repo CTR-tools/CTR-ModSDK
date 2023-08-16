@@ -269,7 +269,7 @@ undefined4 FUN_800284d0(uint param_1,byte param_2,uint param_3)
 				// get pointer to cseq audio, given soundID from param1
 				pbVar5 = (byte *)(DAT_8008d7d8 + uVar4 * 8),
 
-				// ChannelAttr->spuStartAddr = howl_spuAddrs[otherFX->spuIndex] << 3
+				// howl_spuAddrs[otherFX->spuIndex] != 0
 				*(short *)((uint)*(ushort *)(pbVar5 + 4) * 4 + DAT_8008d7dc) != 0
 			)
 		)
