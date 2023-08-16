@@ -135,7 +135,7 @@ struct OtherFX
 {
 	// 0x0
 	char flags;
-	char volume;
+	unsigned char volume;
 	
 	// 0x2
 	short pitch;
@@ -153,7 +153,7 @@ struct EngineFX
 {
 	// 0x0
 	char flags;
-	char volume;
+	unsigned char volume;
 	
 	// 0x2
 	short pitch;
@@ -202,7 +202,7 @@ struct SampleInstrument
 {
 	// 0x0
 	char alwaysOne;
-	char volume;
+	unsigned char volume;
 
 	// 0x2
 	short alwaysZero;
@@ -225,7 +225,7 @@ struct SampleDrums
 {
 	// 0x0
 	char alwaysOne;
-	char volume;
+	unsigned char volume;
 
 	// 0x2
 	short pitch;

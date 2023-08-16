@@ -206,9 +206,9 @@ common, exe, CountSounds, 0x0, General/HOWL/h01_CountSounds.c
 common, exe, OtherFX_Play, 0x0, General/HOWL/h02_OtherFX_Play.c
 common, exe, OtherFX_Play_Echo, 0x0, General/HOWL/h03_OtherFX_Play_Echo.c
 common, exe, OtherFX_Play_LowLevel, 0x0, General/HOWL/h04_OtherFX_Play_LowLevel.c
-
-common, exe, OtherFX_Stop1, 0x0, General/HOWL/OtherFX_Stop1.c
-common, exe, OtherFX_Stop2, 0x0, General/HOWL/OtherFX_Stop2.c
+common, exe, OtherFX_Modify, 0x0, General/HOWL/h05_OtherFX_Modify.c
+common, exe, OtherFX_Stop1, 0x0, General/HOWL/h06_OtherFX_Stop1.c
+common, exe, OtherFX_Stop2, 0x0, General/HOWL/h07_OtherFX_Stop2.c
 
 common, exe, CseqMusic_Start, 0x0, General/HOWL/CseqMusic_Start.c
 common, exe, CseqMusic_Pause, 0x0, General/HOWL/CseqMusic_Pause.c
