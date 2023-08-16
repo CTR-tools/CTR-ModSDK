@@ -3648,10 +3648,10 @@ struct sData
 	struct SpuAddrEntry* howl_spuAddrs;
 
 	// 8008d7e0
-	short* howl_songOffsets;
+	unsigned short* howl_songOffsets;
 
 	// 8008d7e4
-	short* howl_bankOffsets;
+	unsigned short* howl_bankOffsets;
 
 	// 8008d7e8
 	struct SampleInstrument* ptrCseqLongSamples;

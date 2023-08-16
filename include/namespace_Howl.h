@@ -370,10 +370,10 @@ struct Bank
 	// and offset 0x6 as number of elements
 
 	// 0x4
-	short min;
+	unsigned short min;
 
 	// 0x6
-	short max;
+	unsigned short max;
 
 	// 8 elements of 8-byte struct
 };
