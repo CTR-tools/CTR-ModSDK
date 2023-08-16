@@ -1250,7 +1250,8 @@ void FUN_800292e0(void)
   // set address
   DAT_8008d770 = 0x202;
 
-  // set bank loading stage
+  // Stage 4: Finished,
+  // resets to stage 0 when Bank_Alloc is called
   DAT_8008d774 = 4;
   return;
 }
