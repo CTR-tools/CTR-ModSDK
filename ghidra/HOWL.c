@@ -508,7 +508,7 @@ void FUN_80028844(uint param_1)
 }
 
 
-// Initialize car engine audio system for one driver
+// EngineAudio_InitOnce
 uint FUN_80028880(uint param_1,uint param_2)
 
 {

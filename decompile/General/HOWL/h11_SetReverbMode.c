@@ -10,12 +10,13 @@ void SetReverbMode(u_short newReverbMode)
             SpuSetReverbModeDepth(0, 0);
             SpuSetReverb(1);
 
-            SpuSetReverbModeParam(data.reverbParams[newReverbMode]);
+            SpuSetReverbModeParam(&data.reverbParams[newReverbMode]);
 
             SpuSetReverbModeDepth(data.reverbParams[newReverbMode].depth.left, data.reverbParams[newReverbMode].depth.right);
 
             sdata->curReverb = newReverbMode;
         }
+		return;
     }
     else if (sdata->curReverb != 5)
     {

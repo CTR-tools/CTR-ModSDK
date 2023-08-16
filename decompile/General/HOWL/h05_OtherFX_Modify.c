@@ -8,6 +8,7 @@ u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags) {
     u_int distort;
     u_int volume;
     u_short echo;
+	u_short LR;
 
 	if (sdata->boolAudioEnabled == 0) return 0;
 
@@ -20,6 +21,7 @@ u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags) {
     volume = flags >> 0x10 & 0xff;
     distort = flags >> 8 & 0xff;
     echo = flags >> 0x18;
+	LR = flags & 0xff;
 
     // volume of FX
     modify = sdata->vol_FX;
@@ -40,26 +42,24 @@ u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags) {
         channelAttr.pitch = ptrOtherFX->pitch * data.distortConst_OtherFX[distort] >> 0x10;
     }
 
-    channelAttr.reverb = echo;
-
-    Channel_SetVolume(&channelAttr, modify * ptrOtherFX->volume * volume >> 10, flags & 0xff);
-
+    Channel_SetVolume(&channelAttr, modify * ptrOtherFX->volume * volume >> 10, LR);
     channelAttr.reverb = echo;
 
     Smart_EnterCriticalSection();
 
     // 1 - otherFX
+	// soundID & 0xffffffff, search for specific instance
     channel = Channel_SearchFX_EditAttr(1, soundId, 0x70, &channelAttr);
 
-    if (channel != NULL) {
-        channel->echo = (char)echo;
-        channel->vol = (char)volume;
-        channel->distort = (char)distort;
-        channel->LeftRight = (char)(flags & 0xff);
+    if (channel != 0) 
+	{
+        channel->echo = echo;
+        channel->vol = volume;
+        channel->distort = distort;
+        channel->LeftRight = LR;
     }
 
     Smart_ExitCriticalSection();
 	
-    // return success
     return 1;
 }
