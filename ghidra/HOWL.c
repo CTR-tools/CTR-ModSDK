@@ -1507,7 +1507,8 @@ void FUN_800296c4(int param_1)
 
     if ((uVar1 & 1) == 0)
 	{
-	  // move SPU allocator back to bank->min
+	  // move SPU allocator back to bank->min,
+	  // this works cause Bank_Destroy is always used on "last" bank
       DAT_8008d770 = (uint)*(ushort *)(param_1 + 4);
     }
 
