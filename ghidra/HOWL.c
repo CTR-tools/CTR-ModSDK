@@ -1803,9 +1803,10 @@ uint FUN_80029988(undefined4 param_1)
 	// Voiceline_PoolInit
     FUN_8002c918();
 
+	// Voiceline_SetDefaults
     FUN_8002d2b0();
 
-	// param_1 is \SOUNDS\KART.HWL;1
+	// howl_LoadHeader("\SOUNDS\KART.HWL;1")
     iVar1 = FUN_80029b2c(param_1);
 
     uVar2 = (uint)(iVar1 != 0);
