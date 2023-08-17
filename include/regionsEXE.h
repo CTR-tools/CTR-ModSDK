@@ -3638,7 +3638,7 @@ struct sData
 	struct EngineFX* howl_metaEngineFX;
 
 	// 8008d7d4
-	int howl_endOfHeader;
+	int howl_endOfHowl;
 
 	// 8008d7d8
 	struct OtherFX* howl_metaOtherFX;

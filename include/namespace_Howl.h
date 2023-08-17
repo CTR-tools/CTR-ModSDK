@@ -184,6 +184,9 @@ struct HowlHeader
 	int numSequences;
 	int size;
 	
+	// just for howl_ParseHeader
+	short spuAddrs[0];
+	
 	// 0x28 -- size
 };
 
