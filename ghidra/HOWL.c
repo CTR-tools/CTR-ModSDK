@@ -1743,7 +1743,7 @@ uint FUN_8002991c(int param_1,int param_2,uint param_3)
 }
 
 
-// param_1 is \SOUNDS\KART.HWL;1
+// howl_InitGlobals("\SOUNDS\KART.HWL;1")
 uint FUN_80029988(undefined4 param_1)
 
 {
