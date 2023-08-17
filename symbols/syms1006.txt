@@ -266,7 +266,7 @@
 8002ae34 howl_InstrumentPitch
 8002aea0 howl_InitGlobals
 8002af68 howl_ParseHeader
-8002afcc howl_ParseCesqHeader
+8002afcc howl_ParseCseqHeader
 8002b044 howl_LoadHeader
 8002b158 howl_SetSong
 8002b1bc howl_LoadSong

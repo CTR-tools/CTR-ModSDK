@@ -268,7 +268,7 @@ void CseqMusic_StopAll();
 	//howl_InstrumentPitch()
 	void howl_InitGlobals(char* howlFilepath);
 	//howl_ParseHeader()
-	//howl_ParseCesqHeader()
+	//howl_ParseCseqHeader()
 	//howl_LoadHeader()
 	//howl_SetSong()
 	//howl_LoadSong()
