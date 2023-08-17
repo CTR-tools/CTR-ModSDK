@@ -3665,6 +3665,10 @@ struct sData
 	// 8008d7ee
 	short voicelineCooldown;
 
+	// 8008bc30 sep3
+	// 8008d7f0 usaRetail
+	// int unkAudioState;
+
 	// 8008d800
 	// end of sData (due to alignment)
 
@@ -3679,10 +3683,12 @@ struct sData
 
 	// 8008d818
 	// engine audio for AIs
-
-	// 8008bc30 sep3
-	// 8008d7f0 usaRetail
-	// audio state (song playing?)
+	
+	// 8008d820
+	// array of 8
+	
+	// 8008d828
+	// array of 8
 
 	#if BUILD == SepReview
 	char unk_beforeVoicelineBool[0x44];
