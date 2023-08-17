@@ -1762,8 +1762,13 @@ uint FUN_80029988(undefined4 param_1)
 	// Set default volume for Voice
     DAT_8008d7bc = 0xff;
 
+	// OptionSlider_BoolPlay
     DAT_8008d794 = 0;
+	
+	// OptionSlider_Index
     DAT_8008d798 = 0;
+	
+	// OptionSlider_soundID
     DAT_8008d7a0 = 0;
 
 	// Set Audio Mode to "Stereo" by default
@@ -1775,6 +1780,7 @@ uint FUN_80029988(undefined4 param_1)
 	// volume copy does not exist
     DAT_8008d79f = 0;
 
+	// cseqLoadingStage
     DAT_8008d7a4 = 3;
 
 	// initialize Sound Processor,
@@ -3359,10 +3365,10 @@ void FUN_8002b208(int param_1,int param_2)
   uint uVar4;
 
   if (
-
+		// OptionSlider_BoolPlay
 		(DAT_8008d794 != 0) &&
 
-		// if new row != old row
+		// if new row != old OptionSlider_Index
 		(param_1 != DAT_8008d798)
 	  )
   {
@@ -3389,7 +3395,9 @@ void FUN_8002b208(int param_1,int param_2)
         FUN_800291a0(1);
       }
     }
-    else {
+    else 
+	{
+	  // row index
       if (DAT_8008d798 < 2) {
         if (DAT_8008d798 == 0)
 		{
@@ -3407,12 +3415,15 @@ void FUN_8002b208(int param_1,int param_2)
       }
     }
   }
+  
+  // change in OptionSlider_BoolPlay
   if ((param_2 != DAT_8008d794) ||
      (iVar2 = DAT_8008d794, iVar1 = DAT_8008d798, param_1 != DAT_8008d798)) {
 
 	// if sound is stopping
 	if (param_2 == 0)
 	{
+	  // music row
       if (DAT_8008d798 == 1)
 	  {
 		// Music_GetHighestSongPlayIndex
@@ -3439,6 +3450,8 @@ void FUN_8002b208(int param_1,int param_2)
         if (DAT_8008d798 < 2) {
           iVar2 = param_2;
           iVar1 = param_1;
+		  
+		  // FX row
           if (DAT_8008d798 == 0)
 		  {
 			// OtherFX_Stop2
@@ -3450,12 +3463,16 @@ void FUN_8002b208(int param_1,int param_2)
         else {
           iVar2 = param_2;
           iVar1 = param_1;
+		  
+		  // voice row
           if ((DAT_8008d798 == 2) && (iVar2 = param_2, iVar1 = param_1, DAT_8008d7a0 != 0))
 		  {
 			// OtherFX_Stop2
             FUN_80028808();
 
+			// OptionSlider_soundID
             DAT_8008d7a0 = 0;
+			
             iVar2 = param_2;
             iVar1 = param_1;
           }
@@ -3500,7 +3517,11 @@ void FUN_8002b208(int param_1,int param_2)
       }
     }
   }
+  
+  // OptionSlider_Index
   DAT_8008d798 = iVar1;
+  
+  // OptionSlider_BoolPlay
   DAT_8008d794 = iVar2;
 
   // If you are hovering over the "Voice" slider
@@ -3532,7 +3553,7 @@ void FUN_8002b208(int param_1,int param_2)
                 + 0x2c;
       }
 
-	  // OtherFX_Play
+	  // OtherFX_Play, save OptionSlider_soundID
       DAT_8008d7a0 = FUN_80028468(uVar4 & 0xffff,0);
     }
   }

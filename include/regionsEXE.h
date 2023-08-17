@@ -1490,9 +1490,9 @@ struct Data
 	// 80082f84
 	// array of data for Instrument Pitch
 	#if BUILD <= SepReview
-	short distortConst_Music[0x80];
+	unsigned short distortConst_Music[0x80];
 	#else
-	short distortConst_Music[0x40];
+	unsigned short distortConst_Music[0x40];
 	#endif
 
 	#if BUILD == JpnRetail
@@ -3584,8 +3584,8 @@ struct sData
 	int numBackup_ChannelStats;
 
 	// 8008d794 -- both OptionsSliders related
-	int unk_8008d794;
-	int unk_8008d798;
+	int OptionSlider_BoolPlay;
+	int OptionSlider_Index;
 
 	#if BUILD >= UsaRetail
 	// 8008d79c
@@ -3599,8 +3599,7 @@ struct sData
 	#endif
 
 	// 8008d7a0
-	// some sound ID?
-	int unk_8008d7a0;
+	int OptionSlider_soundID;
 
 	// 8008d7a4
 	int cseqLoadingStage;
