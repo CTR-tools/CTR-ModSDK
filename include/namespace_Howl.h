@@ -182,7 +182,7 @@ struct HowlHeader
 	
 	// 0x20
 	int numSequences;
-	int size;
+	int headerSize;
 	
 	// 0x28 -- size
 };

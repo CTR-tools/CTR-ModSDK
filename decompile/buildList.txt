@@ -235,6 +235,7 @@ common, exe, howl_InstrumentPitch, 0x0, General/HOWL/h30_howl_InstrumentPitch.c
 common, exe, howl_InitGlobals, 0x0, General/HOWL/h31_howl_InitGlobals.c
 common, exe, howl_ParseHeader, 0x0, General/HOWL/h32_howl_ParseHeader.c
 common, exe, howl_ParseCseqHeader, 0x0, General/HOWL/h33_howl_ParseCseqHeader.c
+common, exe, howl_LoadHeader, 0x0, General/HOWL/h34_howl_LoadHeader.c
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c

@@ -1941,6 +1941,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 	{
       //get size of howl header data
       iVar1 = piVar2[9];
+	  
       // calculate number of sectors occupied by header
       iVar3 = iVar1 + 0x827 >> 0xb;
 
@@ -1965,8 +1966,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
         // howl_ParseHeader
         FUN_80029a50(piVar2);
 
-        // reallocate for full howl header size
-		    // MEMPACK_ReallocMem
+        // MEMPACK_ReallocMem for full howl header size
         FUN_8003e94c(iVar1 + 0x28);
         return 1;
       }

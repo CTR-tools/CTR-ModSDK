@@ -1,6 +1,6 @@
 #include <common.h>
 
-void howl_ParseHeader(struct HowlHeader* hh)
+void DECOMP_howl_ParseHeader(struct HowlHeader* hh)
 {
 	unsigned int addr = hh;
 	

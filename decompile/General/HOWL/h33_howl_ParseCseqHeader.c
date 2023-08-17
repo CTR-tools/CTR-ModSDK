@@ -1,6 +1,6 @@
 #include <common.h>
 
-void howl_ParseCseqHeader(struct CseqHeader* ch)
+void DECOMP_howl_ParseCseqHeader(struct CseqHeader* ch)
 {
 	unsigned int addr = ch;
 	
