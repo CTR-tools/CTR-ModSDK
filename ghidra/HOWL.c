@@ -1991,13 +1991,15 @@ undefined4 FUN_80029c40(uint param_1)
   }
 
   // If audio is enabled
-  else {
-    //wipe pointer to howl_ParseCseqHeader
+  else 
+  {  
+	//wipe pointer to howl_ParseCseqHeader
     FUN_80029dc0();
+	
     //set loading state = 0 (start loading cseq)
     DAT_8008d7a4 = 0;
 
-	// Get pointer to song, given song ID
+	// howl_songOffsets[songID]
     DAT_8008d7a8 = (uint)*(ushort *)((param_1 & 0xffff) * 2 + DAT_8008d7e0);
   }
   return 1;
