@@ -270,7 +270,7 @@
 8002b044 howl_LoadHeader
 8002b158 howl_SetSong
 8002b1bc howl_LoadSong
-8002b2d8 howl_ErasePtrCesqHeader
+8002b2d8 howl_ErasePtrCseqHeader
 8002b2e4 howl_ReadTimeDelta
 8002b330 cseq_opcode01_noteoff
 8002b43c cseq_opcode03

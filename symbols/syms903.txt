@@ -259,7 +259,7 @@
 800296cc howl_LoadHeader
 800297e0 howl_SetSong
 80029844 howl_LoadSong
-80029960 howl_ErasePtrCesqHeader
+80029960 howl_ErasePtrCseqHeader
 8002996c howl_ReadTimeDelta
 800299b8 cseq_opcode01_noteoff
 80029ac4 cseq_opcode03

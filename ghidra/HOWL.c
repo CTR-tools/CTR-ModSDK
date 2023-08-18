@@ -1993,7 +1993,8 @@ undefined4 FUN_80029c40(uint param_1)
   // If audio is enabled
   else 
   {  
-	//wipe pointer to howl_ParseCseqHeader
+	// howl_ErasePtrCseqHeader,
+	// song can not play anymore, loading next song
     FUN_80029dc0();
 	
     //set loading state = 0 (start loading cseq)
@@ -2092,15 +2093,17 @@ uint FUN_80029ca4(void)
 
 
 
-// wipe ptrCseqHeader
+// howl_ErasePtrCseqHeader
 void FUN_80029dc0(void)
 
 {
-  // ptrCseqHeader
+  // sdata->ptrCseqHeader,
+  // now song can't play anymore
   DAT_8008d7b0 = 0;
   return;
 }
 
+// howl_ReadTimeDelta
 // currNote, note->elapsedNoteLength
 byte * FUN_80029dcc(byte *param_1,uint *param_2)
 
@@ -2124,6 +2127,11 @@ byte * FUN_80029dcc(byte *param_1,uint *param_2)
   return pbVar3;
 }
 
+// exists, but empty, see array at 80083004
+void cseq_opcode00()
+{
+	return;
+}
 
 // cseq_opcode01_noteoff
 void FUN_80029e18(int param_1)
@@ -2186,6 +2194,11 @@ void FUN_80029e18(int param_1)
   return;
 }
 
+// exists, but empty, see array at 80083004
+void cseq_opcode02()
+{
+	return;
+}
 
 // cseq_opcode03
 void FUN_80029f24(byte *param_1)
@@ -2207,6 +2220,11 @@ void FUN_80029f24(byte *param_1)
   return;
 }
 
+// exists, but empty, see array at 80083004
+void cseq_opcode04()
+{
+	return;
+}
 
 // howl_InitChannelAttr_Music
 // param1 - SongSeq
