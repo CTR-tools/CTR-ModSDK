@@ -2836,7 +2836,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
 		
         pbVar4[7] = 1;
 		
-		// two distortions?
+		// distortion and LR
         pbVar4[8] = 0x80;
         pbVar4[9] = 0x80;
 		
@@ -2880,12 +2880,18 @@ void FUN_8002a9d8(int param_1,undefined param_2,undefined param_3,int param_4)
 
 {
   // never?
-  if (param_4 != 0) {
+  if (param_4 != 0) 
+  {
+	// change curr volume "immediately" without fade
     *(undefined *)(param_1 + 0x18) = param_2;
   }
 
+  // desired volume
   *(undefined *)(param_1 + 0x19) = param_2;
+  
+  // stepRate
   *(undefined *)(param_1 + 0x1a) = param_3;
+  
   return;
 }
 

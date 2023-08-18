@@ -267,6 +267,7 @@ struct SongSeq
 
 	// 0x0 
 	// & 2 - song loops
+	// & 4 - instrument or drums
 	// & 8 - restart song
 	char flags;
 	
@@ -283,24 +284,24 @@ struct SongSeq
 	// one is curr, one is desired
 	
 	// 0x5
-	char vol1;
+	unsigned char vol_Curr;
 	
 	// 0x6
-	char vol2;
+	unsigned char vol_New;
 	
 	// 0x7
-	char volStepRate;
+	char vol_StepRate;
 	
 	// one is curr, one is desired
 	
 	// 0x8
-	char distort1;
+	char distort;
 	
 	// 0x9
-	char distort2;
+	char LR;
 	
 	// 0xA
-	char distortStepRate;
+	char unk0A;
 
 	// 0xb 
 	char songPoolIndex;
@@ -351,12 +352,10 @@ struct Song
 	// time spent playing
 	int timeSpentPlaying;
 
-	// used for changing music volume
-	// over the course of a second
 	// 0x18 = vol_Curr
-	// 0x19 = vol_Next
-	// 0x1a = another volume?
-	char volumeFadeSettings[3];
+	unsigned char vol_Curr;
+	unsigned char vol_New;
+	char vol_StepRate;
 
 	// 0x1b
 	char numSequences;
