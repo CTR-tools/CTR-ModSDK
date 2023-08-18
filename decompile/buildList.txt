@@ -243,6 +243,7 @@ common, exe, howl_GetNextNote, 0x0, General/HOWL/h38_howl_GetNextNote.c
 common, exe, cseq_opcode01_noteoff, 0x0, General/HOWL/h39_cseq_opcode01_noteoff.c
 common, exe, cseq_opcode03, 0x0, General/HOWL/h40_cseq_opcode03.c
 common, exe, howl_InitChannelAttr_Music, 0x0, General/HOWL/h41_howl_InitChannelAttr_Music.c
+common, exe, cseq_opcode_from06and07, 0x0, General/HOWL/h42_cseq_opcode_from06and07.c
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c
