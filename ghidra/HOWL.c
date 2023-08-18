@@ -2112,7 +2112,10 @@ byte * FUN_80029dcc(byte *param_1,uint *param_2)
   uint uVar2;
   byte *pbVar3;
 
+  // SongNote offset 0x0
   uVar2 = (uint)*param_1;
+  
+  // loop until... what?
   pbVar3 = param_1 + 1;
   if ((*param_1 & 0x80) != 0)
   {
@@ -2123,7 +2126,10 @@ byte * FUN_80029dcc(byte *param_1,uint *param_2)
       uVar2 = uVar2 * 0x80 + ((uint)bVar1 & 0x7f);
     } while ((bVar1 & 0x80) != 0);
   }
+  
+  // update elapsedNoteLength
   *param_2 = uVar2;
+  
   return pbVar3;
 }
 
