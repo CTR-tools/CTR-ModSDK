@@ -2249,6 +2249,7 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
   // songPoolIndex
   bVar1 = param_1[0xb];
 
+  // instrument
   if ((*param_1 & 4) == 0)
   {
 	// ptrCseqLongSamples[SongSeq->instrumentID]
@@ -2286,6 +2287,8 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 			// instrument volume
 			 * (uint)*(byte *)(iVar4 + 1);
   }
+  
+  // drums
   else
   {
 	// drums sequence (0x8 each)
@@ -3064,19 +3067,28 @@ undefined4 FUN_8002ac94(void)
 
 
 // UpdateChannelVol_EngineFX
+// EngineFX*, ChannelAttr*, vol, LR
 void FUN_8002acb8(int param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 {
   // Channel_SetVolume
   FUN_8002b540(
+	
+	// channelAttr
 	param_2,
 
 	// volume of FX
 	(uint)DAT_8008d7ac *
+	
+		// engineFX->vol
 		(uint)*(byte *)(param_1 + 1) *
+		
+		// vol
 		param_3 >> 10,
 
-	param_4);
+		// LR
+		param_4);
+		
   return;
 }
 
@@ -3107,6 +3119,7 @@ void FUN_8002ad04(byte *param_1,undefined4 param_2,int param_3,undefined4 param_
 
 
 // UpdateChannelVol_Music
+// SongSeq* ChanneAttr* vol LR
 void FUN_8002ad70(byte *param_1,undefined4 param_2,int param_3,int param_4)
 
 {
@@ -3169,9 +3182,19 @@ void FUN_8002ae64(void)
         (&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] | 0x40;
 
 		// UpdateChannelVol_EngineFX
-        FUN_8002acb8(DAT_8008d7d0 + (uint)*(ushort *)(piVar1 + 6) * 8,
-                     &DAT_8008fccc + (uint)*(byte *)((int)piVar1 + 9) * 4,
-                     (uint)*(byte *)((int)piVar1 + 0xf),(uint)*(byte *)((int)piVar1 + 0x11));
+        FUN_8002acb8(
+		
+			// howl_metaEngineFX[channelStats->soundID]
+			DAT_8008d7d0 + (uint)*(ushort *)(piVar1 + 6) * 8,
+            
+			// channelAttrCurr[channelStats->channelID]
+			&DAT_8008fccc + (uint)*(byte *)((int)piVar1 + 9) * 4,
+			
+			// channelStats->vol
+			(uint)*(byte *)((int)piVar1 + 0xf),
+			
+			// channelStats->LR
+			(uint)*(byte *)((int)piVar1 + 0x11));
       }
       else
 	  {
