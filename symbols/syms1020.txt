@@ -259,7 +259,7 @@
 80029d34 howl_SetSong
 80029d98 howl_LoadSong
 80029eb4 howl_ErasePtrCseqHeader
-80029ec0 howl_ReadTimeDelta
+80029ec0 howl_GetNextNote
 80029f0c cseq_opcode01_noteoff
 8002a018 cseq_opcode03
 8002a074 howl_InitChannelAttr_Music

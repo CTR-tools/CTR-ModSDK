@@ -2103,7 +2103,7 @@ void FUN_80029dc0(void)
   return;
 }
 
-// howl_ReadTimeDelta
+// howl_GetNextNote
 // currNote, note->elapsedNoteLength
 byte * FUN_80029dcc(byte *param_1,uint *param_2)
 
@@ -2850,7 +2850,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
 		// note->songPoolIndex
 		pbVar4[0xb] = bVar1;
 
-		// howl_ReadTimeDelta
+		// howl_GetNextNote
 		// firstNote, note->elapsedNoteLength
         uVar3 = FUN_80029dcc(pbVar5 + 2,pbVar4 + 0xc);
 
@@ -4232,7 +4232,7 @@ void FUN_8002bbac(void)
                         *pbVar6 = bVar7 & 0xf7;
                       }
 
-					  // howl_ReadTimeDelta
+					  // howl_GetNextNote
 					  // currNote, note->NoteLength
                       uVar3 = FUN_80029dcc(iVar2,pbVar6 + 0xc);
 

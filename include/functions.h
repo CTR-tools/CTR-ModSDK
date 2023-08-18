@@ -273,7 +273,7 @@ void CseqMusic_StopAll();
 	//howl_SetSong()
 	//howl_LoadSong()
 	//howl_ErasePtrCseqHeader()
-	//howl_ReadTimeDelta()
+	//howl_GetNextNote()
 
 	// cseq opcode
 
