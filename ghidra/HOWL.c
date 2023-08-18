@@ -2600,7 +2600,7 @@ void FUN_8002a4a8(byte *param_1)
 			// SampleInstrument[seq->instrumentID].basePitch
 			(uint)*(ushort *)(DAT_8008d7e8 + (uint)param_1[3] * 0xc + 4),
 
-			// note->pitchIndex
+			// stats->pitchIndex
 			(uint)*(byte *)((int)piVar3 + 0xd),
 
 			// distortion
