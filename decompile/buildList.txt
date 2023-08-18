@@ -247,6 +247,8 @@ common, exe, cseq_opcode_from06and07, 0x0, General/HOWL/h42_cseq_opcode_from06an
 common, exe, cseq_opcode05_noteon, 0x0, General/HOWL/h43_cseq_opcode05_noteon.c
 common, exe, cseq_opcode06, 0x0, General/HOWL/h44_cseq_opcode06.c
 common, exe, cseq_opcode07, 0x0, General/HOWL/h45_cseq_opcode07.c
+common, exe, cseq_opcode08, 0x0, General/HOWL/h46_cseq_opcode08.c
+common, exe, cseq_opcode09, 0x0, General/HOWL/h47_cseq_opcode09.c
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c

@@ -4,7 +4,7 @@
 void DECOMP_cseq_opcode_from06and07(struct SongSeq* seq)
 {
 	struct ChannelStats* curr;
-	char* currNote = seq->currNote;
+	unsigned char* currNote = seq->currNote;
 	int soundID = seq->soundID;
 	int songIndex = seq->songPoolIndex;
 	

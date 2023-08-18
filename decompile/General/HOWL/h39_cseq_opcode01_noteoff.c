@@ -3,7 +3,7 @@
 void DECOMP_cseq_opcode01_noteoff(struct SongSeq* seq)
 {
 	struct ChannelStats* curr;
-	char* currNote = seq->currNote;
+	unsigned char* currNote = seq->currNote;
 	int soundID = seq->soundID;
 	
 	for(
