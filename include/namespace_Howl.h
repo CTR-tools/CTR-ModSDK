@@ -189,7 +189,7 @@ struct HowlHeader
 
 struct CseqHeader
 {
-	int unk;
+	int songSize;
 	
 	// 0x4
 	char numLongSamples;

@@ -3602,10 +3602,10 @@ struct sData
 	int OptionSlider_soundID;
 
 	// 8008d7a4
-	int cseqLoadingStage;
+	int songLoadStage;
 
 	// 8008d7a8
-	int songOffsetInSectors;
+	int songSectorOffset;
 
 	// 8008d7ac
 	int vol_FX;

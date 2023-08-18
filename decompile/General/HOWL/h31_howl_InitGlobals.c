@@ -18,7 +18,7 @@ void DECOMP_howl_InitGlobals(char* filename)
 	
 	sdata->boolStereoEnabled = 1;
 	sdata->boolStoringVolume = 0;
-	sdata->cseqLoadingStage = 3;
+	sdata->songLoadStage = 3;
 	
 	SpuInit();
 	SpuSetTransferMode(0);

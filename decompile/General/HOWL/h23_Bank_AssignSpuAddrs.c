@@ -123,8 +123,8 @@ int DECOMP_Bank_AssignSpuAddrs()
 	// Stage 2: Spu Transfer Start
 	if(sdata->bankLoadStage == 2)
 	{
-		ret = howl_loadDataFromCd_RetryOnError();
-		if(ret == 0) return 0;
+		if(howl_loadDataFromCd_RetryOnError() == 0)
+			return 0;
 		
 		int spuAddrStart = sdata->ptrLastBank->min * 8;
 		

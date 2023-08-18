@@ -1780,7 +1780,7 @@ uint FUN_80029988(undefined4 param_1)
 	// volume copy does not exist
     DAT_8008d79f = 0;
 
-	// cseqLoadingStage
+	// songLoadStage
     DAT_8008d7a4 = 3;
 
 	// initialize Sound Processor,
