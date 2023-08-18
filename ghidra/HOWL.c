@@ -1980,7 +1980,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 }
 
 
-// Set the Song ID
+// howl_SetSong
 undefined4 FUN_80029c40(uint param_1)
 
 {
@@ -2006,10 +2006,6 @@ undefined4 FUN_80029c40(uint param_1)
 }
 
 
-
-//loads song in multiple steps based on global state variable
-//returns true if song is fully loaded, false if loading is in process
-//should be called in a do { howl_loadSong() } while (result != false) loop
 //howl_loadSong
 uint FUN_80029ca4(void)
 
@@ -6430,17 +6426,19 @@ void FUN_8002dd24(void)
 
   } while (iVar1 == 0);
 
-  // Set Song ID to intro
+  // howl_SetSong
   FUN_80029c40(0x1c);
 
-  do {
+  do 
+  {
+	// howl_LoadSong
     iVar1 = FUN_80029ca4();
   } while (iVar1 == 0);
   return;
 }
 
 
-
+// Music_LoadBanks
 void FUN_8002dd74(void)
 
 {
@@ -6853,13 +6851,19 @@ LAB_8002e2f4:
     }
     cVar2 = '\x04';
     break;
+	
   case '\x04':
-    iVar3 = FUN_80029ca4();
+    
+	// howl_LoadSong
+	iVar3 = FUN_80029ca4();
+	
     cVar2 = '\x05';
     if (iVar3 == 0) goto switchD_8002de8c_caseD_5;
     break;
+  
   default:
     return 1;
+  
   case -0xbad1ab1f:
     goto switchD_8002de8c_caseD_5;
   }

@@ -7,7 +7,6 @@ int DECOMP_Bank_Load(int bankID, struct Bank* ptrBank)
 	// if out of banks, quit
 	if(numBanks >= 8) return 0;
 	
-	// Naughty Dog Bug?
 	sdata->bank[numBanks].bankID = bankID;
 	
 	// if bank is in use, quit
