@@ -69,7 +69,7 @@ int DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int flags)
   channel->echo = echo;
   channel->vol = volume;
   channel->distort = distortion;
-  channel->LeftRight = LR;
+  channel->LR = LR;
   channel->timeLeft = ptrOtherFX->duration;
   
   // soundID, shift in CountSounds for 

@@ -39,7 +39,7 @@ char DECOMP_EngineAudio_InitOnce(u_int soundID,u_int flags)
     channel->echo = echo;
     channel->vol = volume;
     channel->distort = distortion;
-    channel->LeftRight = LR;
+    channel->LR = LR;
     channel->timeLeft = 0;
     channel->soundID = soundID;
     channel->flags |= 4;

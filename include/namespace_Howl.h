@@ -82,13 +82,13 @@ struct ChannelStats
 	char echo;
 
 	// 0xf
-	char vol;
+	unsigned char vol;
 
 	// 0x10
-	char distort;
+	unsigned char distort;
 
 	// 0x11
-	char LeftRight;
+	unsigned char LR;
 
 	// 0x12
 	char unk6[0x4];

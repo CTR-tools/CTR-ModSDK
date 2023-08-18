@@ -11,7 +11,7 @@ void EngineSound_Player(struct Driver *driver)
     u_int distort;
     int iVar8;
     u_int uVar9;
-    u_int leftRight;
+    u_int LR;
     u_short uVar11;
     int iVar12;
 
@@ -35,20 +35,20 @@ void EngineSound_Player(struct Driver *driver)
         distort = MapToRange(driver->fill_3B6[1], 0, driver->const_SpeedometerScale_ClassStat, 0x3c, 200);
 
         // Left/Right
-        leftRight = 0x80 - ((int)((u_int) * (u_short *)(driver + 6) << 0x10) >> 0x13);
+        LR = 0x80 - ((int)((u_int) * (u_short *)(driver + 6) << 0x10) >> 0x13);
 
         // farthest to the left possible
-        if (leftRight < 0x40)
+        if (LR < 0x40)
         {
-            leftRight = 0x40;
+            LR = 0x40;
         }
 
         // farthest to the right possible
         else
         {
-            if (0xc0 < leftRight)
+            if (0xc0 < LR)
             {
-                leftRight = 0xc0;
+                LR = 0xc0;
             }
         }
 
@@ -59,7 +59,7 @@ void EngineSound_Player(struct Driver *driver)
         distort = (distort & 0xff) << 8;
 
         // balance L/R
-        leftRight = leftRight & 0xff;
+        LR = LR & 0xff;
 
         // if echo required
         if ((driver->actionsFlagSet & 0x10000) != 0)
@@ -85,20 +85,20 @@ void EngineSound_Player(struct Driver *driver)
             distort = MapToRange(driver->fill_3B6[1], 0, driver->const_SpeedometerScale_ClassStat, 0x3c, 200);
 
             // left/right
-            leftRight = 0x80 - ((int)((u_int) * (u_short *)(driver + 6) << 0x10) >> 0x13);
+            LR = 0x80 - ((int)((u_int) * (u_short *)(driver + 6) << 0x10) >> 0x13);
 
             // farthest left you can go
-            if (leftRight < 0x40)
+            if (LR < 0x40)
             {
-                leftRight = 0x40;
+                LR = 0x40;
             }
 
             // farthest right you can go
             else
             {
-                if (0xc0 < leftRight)
+                if (0xc0 < LR)
                 {
-                    leftRight = 0xc0;
+                    LR = 0xc0;
                 }
             }
 
@@ -109,7 +109,7 @@ void EngineSound_Player(struct Driver *driver)
             distort = (distort & 0xff) << 8;
 
             // balance L/R
-            leftRight = leftRight & 0xff;
+            LR = LR & 0xff;
 
             // if echo effect is required
             if ((driver->actionsFlagSet & 0x10000) != 0)
@@ -299,20 +299,20 @@ void EngineSound_Player(struct Driver *driver)
             }
 
             // balance L/R
-            leftRight = 0x80 - ((int)((u_int) * (u_short *)(driver + 6) << 0x10) >> 0x13);
+            LR = 0x80 - ((int)((u_int) * (u_short *)(driver + 6) << 0x10) >> 0x13);
 
             // farthest possible left
-            if (leftRight < 0x40)
+            if (LR < 0x40)
             {
-                leftRight = 0x40;
+                LR = 0x40;
             }
 
             // farthest possible right
             else
             {
-                if (0xc0 < leftRight)
+                if (0xc0 < LR)
                 {
-                    leftRight = 0xc0;
+                    LR = 0xc0;
                 }
             }
 
@@ -323,7 +323,7 @@ void EngineSound_Player(struct Driver *driver)
             distort = (distort & 0xff) << 8;
 
             // L/R
-            leftRight = leftRight & 0xff;
+            LR = LR & 0xff;
 
             // if echo effect is requierd
             if ((driver->actionsFlagSet & 0x10000) != 0)

@@ -2464,7 +2464,7 @@ void FUN_8002a28c(int param_1)
       *(undefined *)(iVar2 + 0xb) = 2;
 
       *(undefined *)(iVar2 + 0xc) = 0;		// ???
-      *(undefined *)(iVar2 + 10) = uVar1;	// ??? iVar3 + 2
+      *(undefined *)(iVar2 + 10) = uVar1;	// ???
 
 	  // echo
       *(undefined *)(iVar2 + 0xe) = *(undefined *)(param_1 + 4);

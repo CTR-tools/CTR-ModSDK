@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_EngineSound_AI(struct Driver *param_1, struct Driver *param_2, int param_3, int param_4, int param_5, uint leftRight)
+void DECOMP_EngineSound_AI(struct Driver *param_1, struct Driver *param_2, int param_3, int param_4, int param_5, uint LR)
 {
   short fill;
   int approxSpd;
@@ -101,11 +101,11 @@ void DECOMP_EngineSound_AI(struct Driver *param_1, struct Driver *param_2, int p
     distort = 0xff;
 
   // L/R min
-  if (leftRight < 0)
-    leftRight = 0;
+  if (LR < 0)
+    LR = 0;
   // L/R max
-  else if (0xff < leftRight)
-    leftRight = 0xff;
+  else if (0xff < LR)
+    LR = 0xff;
 
   // distortion
   distort = distort << 8;
@@ -121,5 +121,5 @@ void DECOMP_EngineSound_AI(struct Driver *param_1, struct Driver *param_2, int p
                           // distortion
                           distort |
                           // L/R
-                          leftRight);
+                          LR);
 }

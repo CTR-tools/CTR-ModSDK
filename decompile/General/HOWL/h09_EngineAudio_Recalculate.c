@@ -63,7 +63,7 @@ short DECOMP_EngineAudio_Recalculate(u_int soundID,u_int sfx)
     channel->echo = echo;
     channel->vol = volume;
     channel->distort = distortion;
-    channel->LeftRight = LR;
+    channel->LR = LR;
   }
 
   Smart_ExitCriticalSection();

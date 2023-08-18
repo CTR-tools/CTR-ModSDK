@@ -56,7 +56,7 @@ u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags) {
         channel->echo = echo;
         channel->vol = volume;
         channel->distort = distort;
-        channel->LeftRight = LR;
+        channel->LR = LR;
     }
 
     Smart_ExitCriticalSection();

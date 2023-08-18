@@ -355,7 +355,7 @@ void CseqMusic_StopAll();
 	// this is the last of ho- got em
 
 	void howl_PlayAudio_Update();
-	void howl_InitChannelAttr_EngineFX(struct ChannelStats* channel, struct ChannelAttr* attr, int volume, int leftRight, int distortion);
+	void howl_InitChannelAttr_EngineFX(struct ChannelStats* channel, struct ChannelAttr* attr, int volume, int LR, int distortion);
 	void howl_InitChannelAttr_OtherFX(char* ptrCseq, struct ChannelAttr* attr, int volume, int param_4, int distortion);
 	void howl_PauseAudio();
 	//howl_UnPauseChannel()
