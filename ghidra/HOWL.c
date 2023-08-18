@@ -4118,11 +4118,13 @@ void FUN_8002bbac(void)
 	  {
         uVar5 = (uint)(byte)(&DAT_80095d9c)[iVar12];
 
-		// [something] + tempo
+		// songPool->0x10 + songPool->tempo
         uVar4 = *(int *)((int)&DAT_80095d94 + iVar12) + *(int *)((int)&DAT_80095d90 + iVar12);
         uVar11 = uVar4 >> 0x10;
 
+		// songPool->0x10
 		*(uint *)((int)&DAT_80095d94 + iVar12) = uVar4;
+		
         bVar8 = (&DAT_80095d9d)[iVar12];
         uVar4 = (uint)bVar8;
 
@@ -4194,6 +4196,7 @@ void FUN_8002bbac(void)
               uVar4 = *(int *)(pbVar6 + 0x10) + uVar11;
               *(uint *)(pbVar6 + 0x10) = uVar4;
 
+			  // while noteLength < noteTimeElapsed
               if (uVar5 <= uVar4) {
                 do 
 				{
@@ -4230,13 +4233,17 @@ void FUN_8002bbac(void)
                       }
 
 					  // howl_ReadTimeDelta
-					  // currNote, note->elapsedNoteLength
+					  // currNote, note->NoteLength
                       uVar3 = FUN_80029dcc(iVar2,pbVar6 + 0xc);
 
 					  *(undefined4 *)(pbVar6 + 0x18) = uVar3;
                     }
                   }
+				  
+				  // note->NoteLength
                   uVar5 = *(uint *)(pbVar6 + 0xc);
+				
+				// while noteLength < noteTimeElapsed
                 } while (uVar5 <= *(uint *)(pbVar6 + 0x10));
               }
             }
