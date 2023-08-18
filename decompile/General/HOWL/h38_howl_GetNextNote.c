@@ -1,6 +1,9 @@
 #include <common.h>
 
-char* howl_GetNextNote(char* currNote, int* noteLen)
+// read DCxDemo's commments on this:
+// https://discord.com/channels/527135227546435584/637616020177289236/1141975626035777536
+
+char* DECOMP_howl_GetNextNote(char* currNote, int* noteLen)
 {
 	int var1;
 	

@@ -2168,6 +2168,7 @@ void FUN_80029e18(int param_1)
 				// channelStats->type == music
 				(*(char *)((int)piVar1 + 0xb) == '\x02') &&
 
+				// channelStats->soundID == sequence->soundID
 				(piVar1[6] == (uint)*(byte *)(param_1 + 1))
 			)
 			&&

@@ -262,39 +262,60 @@ struct SongOpcode
 
 struct SongSeq
 {
-	// this struct is passed as
-	// parameter for every cseq opcode,
-	// same struct as SongPool->CseqSequences
+	// pointer in SongPool->CseqSequences
+	// stored in global array 800902cc songSeq[NUM_SFX_CHANNELS]
 
-	// 0x0 - opcode
-	// 0x1 - soundID
+	// 0x0 
+	char opcode;
+	
+	// 0x1 
+	char soundID;
+	char unk;
 
-	// 0x3 - instrumentID (SampleInstrument*)
-	// 0x4 - reverb
+	// 0x3 (SampleInstrument*)
+	char instrumentID;
+	
+	// 0x4
+	char reverb;
 	
 	// one is curr, one is desired
-	// 0x5 - volume of sequence
-	// 0x6 - volume too? See SongPool_AdvHub1
-	// 0x7 - stepRate
+	
+	// 0x5
+	char vol1;
+	
+	// 0x6
+	char vol2;
+	
+	// 0x7
+	char volStepRate;
 	
 	// one is curr, one is desired
-	// 0x8 - distort
-	// 0x9 - distort too?
-	// 0xA - stepRate
-
-	// 0xb - songPoolIndex
 	
-	// time until next note is played
-	// 0xc - int NoteLength
-	// 0x10 - int NoteTimeElapsed
+	// 0x8
+	char distort1;
 	
-	// 0x14 - void* firstNote
+	// 0x9
+	char distort2;
+	
+	// 0xA
+	char distortStepRate;
 
-	// 0x18 - void* currentNote
-	// pointer to cseqSongData,
-	// increments as new notes play
+	// 0xb 
+	char songPoolIndex;
+	
+	// 0xc (time until next note is played)
+	int NoteLength;
+	
+	// 0x10 
+	int NoteTimeElapsed;
+	
+	// 0x14 
+	void* firstNote;
 
-	char data[0x1c];
+	// 0x18 
+	void* currNote;
+	
+	// 0x1C -- size
 };
 
 // 80095D84

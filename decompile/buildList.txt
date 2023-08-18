@@ -1,6 +1,6 @@
-// 359+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 437 rewritten so far
+// 364+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 442 rewritten so far
 
-// 359 for every 'common' and ','
+// 364 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -240,6 +240,7 @@ common, exe, howl_SetSong, 0x0, General/HOWL/h35_howl_SetSong.c
 common, exe, howl_LoadSong, 0x0, General/HOWL/h36_howl_LoadSong.c
 common, exe, howl_ErasePtrCseqHeader, 0x0, General/HOWL/h37_howl_ErasePtrCseqHeader.c
 common, exe, howl_GetNextNote, 0x0, General/HOWL/h38_howl_GetNextNote.c
+common, exe, cseq_opcode01_noteoff, 0x0, General/HOWL/h39_cseq_opcode01_noteoff.c
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c
