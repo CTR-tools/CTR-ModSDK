@@ -243,7 +243,7 @@ struct SampleDrums
 struct SongOpcode
 {
 	// 0x0
-	// unk
+	// opcodeID (0x0 - 0xA)
 	
 	// 0x1
 	//		opcode01: pitchIndex_drumIndex
@@ -266,7 +266,9 @@ struct SongSeq
 	// stored in global array 800902cc songSeq[NUM_SFX_CHANNELS]
 
 	// 0x0 
-	char opcode;
+	// & 2 - song loops
+	// & 8 - restart song
+	char flags;
 	
 	// 0x1 
 	char soundID;

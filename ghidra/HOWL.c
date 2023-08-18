@@ -4241,18 +4241,26 @@ void FUN_8002bbac(void)
 					// pass cseq structure as parameter
                     (*(code *)(&PTR_LAB_80083004)[(uint)bVar8])(pbVar6);
 
+					// seq->flags
                     bVar7 = *pbVar6;
-                    if ((bVar7 & 1) != 0) {
+					
+                    if ((bVar7 & 1) != 0) 
+					{
+					  // if song not restarting (opcode03)
                       if ((bVar7 & 8) == 0)
 					  {
 						// sequence->currNote += noteSize[noteType]
                         iVar2 = *(int *)(pbVar6 + 0x18) + *(int *)(&DAT_80083030 + (uint)bVar8 * 4);
                         *(int *)(pbVar6 + 0x18) = iVar2;
                       }
-                      else 
+                      
+					  // if song restarting (opcode03)
+					  else 
 					  {
 						// sequence->firstNote
                         iVar2 = *(int *)(pbVar6 + 0x14);
+						
+						// remove flag
                         *pbVar6 = bVar7 & 0xf7;
                       }
 
