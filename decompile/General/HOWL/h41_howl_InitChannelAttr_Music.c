@@ -4,8 +4,14 @@ void DECOMP_howl_InitChannelAttr_Music(
 	struct SongSeq* seq, struct ChannelAttr* attr, int index, int channelVol)
 {
 	int pitch;
-	int sampleVol;
+	unsigned int sampleVol;
 	int songIndex = seq->songPoolIndex;
+	
+	sampleVol = (
+					sdata->vol_Music *
+					sdata->songPool[songIndex].vol_Curr *
+					seq->vol_Curr
+				) >> 10;
 	
 	// instrument
 	if((seq->flags & 4) == 0)
@@ -21,14 +27,7 @@ void DECOMP_howl_InitChannelAttr_Music(
 		attr->ad = longSample->ad;
 		attr->sr = longSample->sr;
 		
-		sampleVol = 
-			(
-				(int)(
-					(u_int)sdata->vol_Music *
-					(u_int)sdata->songPool[songIndex].vol_Curr *
-					(u_int)seq->vol_Curr
-				) >> 10
-			) * (u_int)longSample->volume;
+		sampleVol *= (u_int)longSample->volume;
 	}
 	
 	// drums
@@ -37,12 +36,15 @@ void DECOMP_howl_InitChannelAttr_Music(
 		struct SampleDrums* shortSample =
 			&sdata->ptrCseqShortSamples[index];
 			
-		// if( == 0x80)
+		if(seq->distort == 0x80)
 		{
 			pitch = shortSample->pitch;
 		}
 		
-		//else {}
+		else
+		{
+			pitch = shortSample->pitch * data.distortConst_OtherFX[seq->distort] >> 0x10;
+		}
 		
 		attr->spuStartAddr = sdata->howl_spuAddrs[shortSample->spuIndex].spuAddr << 3;
 		
@@ -50,16 +52,7 @@ void DECOMP_howl_InitChannelAttr_Music(
 		attr->ad = 0x80ff;
 		attr->sr = 0x1fc2;
 		
-		sampleVol = 
-			(
-				(int)(
-					(u_int)sdata->vol_Music *
-					(u_int)sdata->songPool[songIndex].vol_Curr *
-					(u_int)seq->vol_Curr
-				) >> 10
-			) * (u_int)shortSample->volume;
-		
-		return;
+		sampleVol *= (u_int)shortSample->volume;
 	}
 	
 	Channel_SetVolume(attr, (u_int)(sampleVol*channelVol) >> 0xf, seq->LR);

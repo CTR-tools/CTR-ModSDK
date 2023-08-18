@@ -295,10 +295,10 @@ struct SongSeq
 	// one is curr, one is desired
 	
 	// 0x8
-	char distort;
+	unsigned char distort;
 	
 	// 0x9
-	char LR;
+	unsigned char LR;
 	
 	// 0xA
 	char unk0A;
