@@ -4236,6 +4236,7 @@ void FUN_8002bbac(void)
 					  // currNote, note->NoteLength
                       uVar3 = FUN_80029dcc(iVar2,pbVar6 + 0xc);
 
+					  // update currNote
 					  *(undefined4 *)(pbVar6 + 0x18) = uVar3;
                     }
                   }
