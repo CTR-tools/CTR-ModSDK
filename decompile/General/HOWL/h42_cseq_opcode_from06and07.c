@@ -1,7 +1,7 @@
 #include <common.h>
 
 // change volume
-void cseq_opcode_from06and07(struct SongSeq* seq)
+void DECOMP_cseq_opcode_from06and07(struct SongSeq* seq)
 {
 	struct ChannelStats* curr;
 	char* currNote = seq->currNote;

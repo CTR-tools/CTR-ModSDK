@@ -1,6 +1,6 @@
 #include <common.h>
 
-void cseq_opcode05_noteon(struct SongSeq* seq)
+void DECOMP_cseq_opcode05_noteon(struct SongSeq* seq)
 {
 	unsigned char* currNote;
 	int songIndex = seq->songPoolIndex;
