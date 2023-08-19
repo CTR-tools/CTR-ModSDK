@@ -2713,7 +2713,10 @@ void FUN_8002a6cc(int param_1,short param_2)
 
   // SongPool_CalculateTempo
   uVar1 = FUN_8002a678(0x3c,(int)*(short *)(param_1 + 8),(int)param_2);
+  
+  // new tempo
   *(undefined4 *)(param_1 + 0xc) = uVar1;
+  
   return;
 }
 
