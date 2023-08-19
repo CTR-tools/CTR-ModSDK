@@ -2682,17 +2682,9 @@ byte * FUN_8002a63c(void)
 
 
 // SongPool_CalculateTempo
+// const (dec)60, tpqn, bpm
 uint FUN_8002a678(short param_1,short param_2,short param_3)
 {
-  // param1:
-  // 0x3c (60) = normal
-  // 120 = half speed
-  // 30 = double speed
-  
-  // 0x3c, 0x78, 0xA0 -- main menu
-  // 0x3c, 0x1E0, 0xB9 -- Slide Col
-  // 0x3c, 0x1E0, 0xCD -- Slide Col Final Lap
-
   if ((int)param_1 == 0) {
     trap(0x1c00);
   }
@@ -2713,6 +2705,7 @@ void FUN_8002a6cc(int param_1,short param_2)
                        (uint)*(ushort *)((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4) + 2) +
             param_2;
 
+  // beats per minute (bpm)
   *(short *)(param_1 + 10) = param_2;
 
   // SongPool_CalculateTempo

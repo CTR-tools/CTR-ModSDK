@@ -249,7 +249,7 @@ struct CseqSongHeader
 {
 	// 0x0
 	char unk;
-	char songID;	// different ID for every song in CTR
+	char numSeqs;
 	
 	// 0x2
 	short bpm; 		// beats per minute
@@ -257,7 +257,9 @@ struct CseqSongHeader
 	// 0x4
 	short tpqn; 	// ticks per quarter note
 	
-	// array of SongNote comes after this
+	// size of numSeqs
+	// each seq is an array of SongNote
+	short seqOffsetArr[0];
 };
 
 // AKA: SongNote
@@ -366,7 +368,7 @@ struct Song
 
 	// 0xA
 	// beats per minute
-	short unkA;
+	short bpm;
 
 	// 0xC
 	int tempo;

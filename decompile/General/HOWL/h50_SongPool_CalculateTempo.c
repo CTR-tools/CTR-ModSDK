@@ -1,6 +1,6 @@
 #include <common.h>
 
-int DECOMP_SongPool_CalculateTempo(int p1, int p2, int p3)
-{
-	return ( ( (p2 * p3) / 0x3c) << 0x10 ) / p1;
+int DECOMP_SongPool_CalculateTempo(int const60, int tpqn, int bpm)
+{	
+	return ( ( (tpqn * bpm) / 60) << 0x10 ) / const60;
 }
