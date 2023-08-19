@@ -371,7 +371,7 @@ struct Song
 	short id;
 
 	// 0x4
-	int unk4;
+	int AdvHubSongBits;
 
 	// 0x8
 	// ticks per quarter note

@@ -765,7 +765,10 @@ void FUN_80028bbc(ushort param_1)
 
 // CseqMusic_Start
 // param_1 - SongID (playing)
-// param_2 - tempo
+// param_2 - deltaBPM
+// param_3 - 8008d068 for AdvHub
+// param_4 - advHub song bits
+// param_5 - boolLoopAtEnd
 undefined4 FUN_80028c78(ushort param_1,undefined4 param_2,
 			undefined4 param_3,undefined4 param_4,
             undefined4 param_5)
@@ -2721,7 +2724,10 @@ void FUN_8002a6cc(int param_1,short param_2)
 // SongPool_Start
 // param_1 - songPool pointer
 // param_2 - SongID (playing)
-// param_3 - tempo
+// param_3 - deltaBPM
+// param_4 - boolLoopAtEnd
+// param_5 - 8008D068 for AdvHub
+// param_6 - advHub song bits
 void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,uint *param_5,
                  undefined4 param_6)
 
@@ -2736,20 +2742,28 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
   ushort *puVar8;
   int iVar9;
 
+  // song->flags, now playing
   *param_1 = 1;
 
   // ptrCseqSongStartOffset
   iVar9 = DAT_8008d7b4;
 
+  // song->id
   *(ushort *)(param_1 + 2) = param_2;
 
   // ptrCseqSongData[ptrCseqSongStartOffset[song->id]]
   iVar9 = DAT_8008d7c8 + (uint)*(ushort *)((uint)param_2 * 2 + iVar9);
 
+  // if AdvHub
   if (param_5 != (uint *)0x0) {
-    if (*param_5 != (uint)*(byte *)(iVar9 + 1)) {
+    
+	// CseqSongHeader->numSeqs
+	if (*param_5 != (uint)*(byte *)(iVar9 + 1)) 
+	{
       return;
     }
+	
+	// advHub song bits
     *(undefined4 *)(param_1 + 4) = param_6;
   }
   
@@ -2766,6 +2780,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
   uVar3 = FUN_8002a678(0x3c,(int)*(short *)(param_1 + 8),(int)param_3);
   *(undefined4 *)(param_1 + 0xc) = uVar3;
 
+  // song->0x10, song->timeSpentPlaying
   *(undefined4 *)(param_1 + 0x10) = 0;
   *(undefined4 *)(param_1 + 0x14) = 0;
 
@@ -3598,7 +3613,7 @@ void FUN_8002b208(int param_1,int param_2)
             uVar3 = 2;
           }
 
-		  // CseqMusic_Start
+		  // CseqMusic_Start (loopAtEnd)
           FUN_80028c78(uVar3,0,0,0,1);
 
           iVar2 = param_2;
@@ -7000,7 +7015,9 @@ void FUN_8002e338(void)
 
 // Music_Adjust
 // param_1 - SongID (playing)
-// param_2 - tempo
+// param_2 - deltaBPM
+// param_3 - 8008d068 for AdvHub
+// param_4 - advHub song bits
 void FUN_8002e350(uint param_1,int param_2,undefined4 param_3,undefined4 param_4)
 {
   // if cseq music can play
@@ -7030,7 +7047,7 @@ void FUN_8002e350(uint param_1,int param_2,undefined4 param_3,undefined4 param_4
   // if new SongID
   if (DAT_8008d810 != param_1)
   {
-	// CseqMusic_Start
+	// CseqMusic_Start (loopAtEnd)
     FUN_80028c78(param_1,param_2,param_3,param_4,1);
 
 	// boolPlayCseqMusic = true

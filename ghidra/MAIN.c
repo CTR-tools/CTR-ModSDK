@@ -8881,7 +8881,7 @@ undefined4 main(void)
 	  // CseqMusic_StopAll
       FUN_80029258();
 
-	  // CseqMusic_Start
+	  // CseqMusic_Start (no loop at end)
 	  FUN_80028c78(0,0,0,0,0);
 
 	  // Music_Start
