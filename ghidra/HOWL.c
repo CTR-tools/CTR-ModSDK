@@ -2795,20 +2795,35 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
   param_1[0x1a] = 1;
   param_1[0x1b] = 0;
   
+  // &CseqSongHeader->seqOffsetArr[0]
   puVar8 = (ushort *)(iVar9 + 6);
   
+  // &CseqSongHeader->seqOffsetArr[CseqSongHeader->numSeqs]
   puVar7 = puVar8 + *(byte *)(iVar9 + 1);
+  
+  // align up by 2
   if (((uint)puVar7 & 1) != 0) {
     puVar7 = (ushort *)((int)puVar7 + 1);
   }
+  
+  // align up by 4
   if (((uint)puVar7 & 2) != 0) {
     puVar7 = puVar7 + 1;
   }
+  
+  
+  // puVar7 is now the first byte after
+  // the seqOffsetArr, so all offsets are
+  // relative to this address
+  
+  
   iVar6 = 0;
   
   // add new SongSeqs to song playing
   if (*(byte *)(iVar9 + 1) != 0) {
-    do {
+    do 
+	{
+	  // songNoteHeader = puVar7[CseqSongHeader->seqOffsetArr[iVar6]]
       pbVar5 = (byte *)((int)puVar7 + (uint)*puVar8);
 
 	  // SongSeq* pbVar4 = SongPool_FindFreeChannel
@@ -2820,6 +2835,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
 		// seq is now playing
         *pbVar4 = 1;
 		
+		// songNoteHeader->0x0
         if ((*pbVar5 & 1) != 0) 
 		{
 		  // seq now playing, and (instrument/drums)
@@ -2832,6 +2848,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
           *pbVar4 = *pbVar4 | 2;
         }
         
+		// songNoteHeader->0x1
 		bVar1 = pbVar5[1];
         
 		// instrumentID and reverb
@@ -2861,13 +2878,14 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
 		
         pbVar4[10] = 0;
         
+		// song->id
 		bVar1 = param_1[1];
 		
 		// noteLength and elapsedNoteTime
         *(undefined4 *)(pbVar4 + 0xc) = 0;
         *(undefined4 *)(pbVar4 + 0x10) = 0;
 		
-		// void* firstNote
+		// void* firstNote = &SongNoteHeader->notes[0]
         *(byte **)(pbVar4 + 0x14) = pbVar5 + 2;
         
 		// note->songPoolIndex

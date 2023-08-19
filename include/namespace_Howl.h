@@ -262,6 +262,17 @@ struct CseqSongHeader
 	short seqOffsetArr[0];
 };
 
+// right before first note
+struct SongNoteHeader
+{
+	// instrument or drums
+	char flags;
+	
+	char unk;
+	
+	char notes[0];
+};
+
 // AKA: SongNote
 struct SongOpcode
 {
