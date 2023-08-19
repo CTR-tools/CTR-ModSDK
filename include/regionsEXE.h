@@ -3629,7 +3629,7 @@ struct sData
 	struct SampleDrums* ptrCseqShortSamples;
 
 	// 8008d7c8
-	int ptrCseqSongData;
+	char* ptrCseqSongData;
 
 	// 8008d7cc
 	int boolStereoEnabled;

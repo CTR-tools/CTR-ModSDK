@@ -252,6 +252,7 @@ common, exe, cseq_opcode09, 0x0, General/HOWL/h47_cseq_opcode09.c
 common, exe, cseq_opcode0a, 0x0, General/HOWL/h48_cseq_opcode0a.c
 common, exe, SongPool_FindFreeChannel, 0x0, General/HOWL/h49_SongPool_FindFreeChannel.c
 common, exe, SongPool_CalculateTempo, 0x0, General/HOWL/h50_SongPool_CalculateTempo.c
+common, exe, SongPool_ChangeTempo, 0x0, General/HOWL/h51_SongPool_ChangeTempo.c
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c
