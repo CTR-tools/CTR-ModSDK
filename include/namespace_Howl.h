@@ -187,6 +187,11 @@ struct HowlHeader
 	// 0x28 -- size
 };
 
+// Start of a Cseq Pack,
+// contains CseqHeader, 
+// then SampleInstrument array, 
+// then ShortSamples array, 
+// then songs (CseqSongHeader + Seq/Note array)
 struct CseqHeader
 {
 	int songSize;
@@ -237,6 +242,22 @@ struct SampleDrums
 	short alwaysZero;
 
 	// 0x8 -- end of struct
+};
+
+// inside CseqPack (after CseqHeader, Instrument Array, and Drums Array)
+struct CseqSongHeader
+{
+	// 0x0
+	char unk;
+	char songID;	// different ID for every song in CTR
+	
+	// 0x2
+	short bpm; 		// beats per minute
+	
+	// 0x4
+	short tpqn; 	// ticks per quarter note
+	
+	// array of SongNote comes after this
 };
 
 // AKA: SongNote
@@ -323,6 +344,8 @@ struct SongSeq
 };
 
 // 80095D84
+// Song in SongPool,
+// not a song in HOWL file, need renaming
 struct Song
 {
 	// 0x0
@@ -338,9 +361,11 @@ struct Song
 	int unk4;
 
 	// 0x8
-	short unk8;
+	// ticks per quarter note
+	short tpqn;
 
 	// 0xA
+	// beats per minute
 	short unkA;
 
 	// 0xC

@@ -2760,10 +2760,12 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
     *(undefined4 *)(param_1 + 4) = param_6;
   }
   
-  // song->0x8 = iVar9->4
+  // iVar9 = CseqSongHeader
+  
+  // song->0x8 = iVar9->4 (tpqn)
   *(undefined2 *)(param_1 + 8) = *(undefined2 *)(iVar9 + 4);
   
-  // song->0xA += iVar9->2
+  // song->0xA += iVar9->2 (bpm)
   param_3 = *(short *)(iVar9 + 2) + param_3;
   *(short *)(param_1 + 10) = param_3;
 
