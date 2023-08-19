@@ -266,6 +266,7 @@ struct SongSeq
 	// stored in global array 800902cc songSeq[NUM_SFX_CHANNELS]
 
 	// 0x0 
+	// & 1 - playing
 	// & 2 - song loops
 	// & 4 - instrument or drums
 	// & 8 - restart song

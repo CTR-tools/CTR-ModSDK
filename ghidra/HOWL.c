@@ -2788,7 +2788,9 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
 
   param_1[0x1a] = 1;
   param_1[0x1b] = 0;
+  
   puVar8 = (ushort *)(iVar9 + 6);
+  
   puVar7 = puVar8 + *(byte *)(iVar9 + 1);
   if (((uint)puVar7 & 1) != 0) {
     puVar7 = (ushort *)((int)puVar7 + 1);
@@ -2809,16 +2811,27 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
 	  // if a free channel was found
       if (pbVar4 != (byte *)0x0)
 	  {
+		// seq is now playing
         *pbVar4 = 1;
-        if ((*pbVar5 & 1) != 0) {
+		
+        if ((*pbVar5 & 1) != 0) 
+		{
+		  // seq now playing, and (instrument/drums)
           *pbVar4 = 5;
         }
-        if (param_4 != 0) {
+        
+		if (param_4 != 0) 
+		{
+		  // song loops at the end
           *pbVar4 = *pbVar4 | 2;
         }
-        bVar1 = pbVar5[1];
-        pbVar4[3] = 0;
+        
+		bVar1 = pbVar5[1];
+        
+		// instrumentID and reverb
+		pbVar4[3] = 0;
         pbVar4[4] = 0;
+		
         pbVar4[2] = bVar1;
 		
 		// volume
