@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct SongSeq* SongPool_FindFreeChannel()
+struct SongSeq* DECOMP_SongPool_FindFreeChannel()
 {
 	struct SongSeq* seq;
 	
