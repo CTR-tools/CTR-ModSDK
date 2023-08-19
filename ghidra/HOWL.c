@@ -2688,6 +2688,10 @@ uint FUN_8002a678(short param_1,short param_2,short param_3)
   // 0x3c (60) = normal
   // 120 = half speed
   // 30 = double speed
+  
+  // 0x3c, 0x78, 0xA0 -- main menu
+  // 0x3c, 0x1E0, 0xB9 -- Slide Col
+  // 0x3c, 0x1E0, 0xCD -- Slide Col Final Lap
 
   if ((int)param_1 == 0) {
     trap(0x1c00);
@@ -2755,7 +2759,11 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
     }
     *(undefined4 *)(param_1 + 4) = param_6;
   }
+  
+  // song->0x8 = iVar9->4
   *(undefined2 *)(param_1 + 8) = *(undefined2 *)(iVar9 + 4);
+  
+  // song->0xA += iVar9->2
   param_3 = *(short *)(iVar9 + 2) + param_3;
   *(short *)(param_1 + 10) = param_3;
 
