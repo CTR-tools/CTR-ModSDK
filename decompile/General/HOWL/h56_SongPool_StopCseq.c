@@ -14,14 +14,14 @@ void DECOMP_SongPool_StopCseq(struct SongSeq* seq)
 		// type != MUSIC
 		if(curr->type != 2) continue;
 		
-		if(curr->soundID != seq->soundID) continue;
+		if(curr->soundID != (int)seq->soundID) continue;
 		
 		// enable OFF(1) flag, disable ON(2) flag
 		flagPtr = &sdata->ChannelUpdateFlags[curr->channelID];
 		*flagPtr |= 1;
 		*flagPtr &= ~(2);
 		
-		curr->flags &= 0xfe;
+		*(u_char*)&curr->flags &= 0xfe;
 		
 		// recycle: remove from taken, put on free
 		LIST_RemoveMember(&sdata->channelTaken.first, curr);
@@ -29,5 +29,5 @@ void DECOMP_SongPool_StopCseq(struct SongSeq* seq)
 	}
 	
 	// not playing
-	seq->flags &= 0xfe;
+	*(u_char*)&seq->flags &= 0xfe;
 }

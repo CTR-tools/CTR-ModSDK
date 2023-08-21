@@ -307,7 +307,7 @@ struct SongSeq
 	char flags;
 	
 	// 0x1 
-	char soundID;
+	unsigned char soundID;
 	char unk;
 
 	// 0x3 (SampleInstrument*)
