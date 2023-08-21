@@ -126,7 +126,7 @@ void SongPool_Start(
 		seqCurr->firstNote = &cnhCurr->notes[0];
 		
 		seqCurr->currNote = 
-			howl_GetNextNote(seqCurr->firstNote, seqCurr->NoteLength);
+			howl_GetNextNote(seqCurr->firstNote, &seqCurr->NoteLength);
 			
 		song->CseqSequences[song->numSequences++] = seqCurr;
 	}
