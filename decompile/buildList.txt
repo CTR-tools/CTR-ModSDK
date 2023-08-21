@@ -257,6 +257,7 @@ common, exe, SongPool_Start, 0x0, General/HOWL/h52_SongPool_Start.c
 common, exe, SongPool_Volume, 0x0, General/HOWL/h53_SongPool_Volume.c
 common, exe, SongPool_AdvHub1, 0x0, General/HOWL/h54_SongPool_AdvHub1.c
 common, exe, SongPool_AdvHub2, 0x0, General/HOWL/h55_SongPool_AdvHub2.c
+common, exe, SongPool_StopCseq, 0x0, General/HOWL/h56_SongPool_StopCseq.c
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c

@@ -53,8 +53,9 @@ struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 void Channel_DestroySelf(struct ChannelStats* stats)
 {
 	// set channel to OFF, and remove PLAYING bit
-	sdata->ChannelUpdateFlags[stats->channelID] |= 1;
-	sdata->ChannelUpdateFlags[stats->channelID] &= ~(2);
+	u_int* flagPtr = &sdata->ChannelUpdateFlags[stats->channelID];
+	*flagPtr |= 1;
+	*flagPtr &= ~(2);
 	
 	stats->flags &= 0xfe;
 	

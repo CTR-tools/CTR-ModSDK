@@ -1,10 +1,8 @@
 #include <common.h>
 
-void DECOMP_cseq_opcode01_noteoff(struct SongSeq* seq)
+void DECOMP_SongPool_StopCseq(struct SongSeq* seq)
 {
 	struct ChannelStats* curr;
-	unsigned char* currNote = seq->currNote;
-	int soundID = seq->soundID;
 	u_int* flagPtr;
 	
 	for(
@@ -16,19 +14,20 @@ void DECOMP_cseq_opcode01_noteoff(struct SongSeq* seq)
 		// type != MUSIC
 		if(curr->type != 2) continue;
 		
-		// not the sound needed to turn off
-		if(curr->soundID != soundID) continue;
-		
-		// need a struct for Note offset 0x1
-		if(curr->drumIndex_pitchIndex != currNote[1]) continue;
+		if(curr->soundID != seq->soundID) continue;
 		
 		// enable OFF(1) flag, disable ON(2) flag
 		flagPtr = &sdata->ChannelUpdateFlags[curr->channelID];
 		*flagPtr |= 1;
 		*flagPtr &= ~(2);
 		
+		curr->flags &= 0xfe;
+		
 		// recycle: remove from taken, put on free
 		LIST_RemoveMember(&sdata->channelTaken.first, curr);
 		LIST_AddBack(&sdata->channelFree.first, curr);
 	}
+	
+	// not playing
+	seq->flags &= 0xfe;
 }

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void SongPool_AdvHub2(struct Song* song, struct SongSet* songSet, int songSetActiveBits)
+void DECOMP_SongPool_AdvHub2(struct Song* song, struct SongSet* songSet, int songSetActiveBits)
 {
 	int i;
 	int vol;
