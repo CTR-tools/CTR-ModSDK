@@ -1,0 +1,17 @@
+#include <common.h>
+
+void SongPool_StopAllCseq(struct Song* song)
+{
+	int i;
+	
+	// if song is not playing, skip
+	if((song->flags & 1) == 0) return;
+	
+	// stop song
+	song->flags &= 0xfe;
+	
+	for(i = 0; i < song->numSequences; i++)
+	{
+		SongPool_StopCseq(song->CseqSequences[i]);
+	}
+}
