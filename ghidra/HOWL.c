@@ -3123,7 +3123,7 @@ void FUN_8002ac0c(byte *param_1)
 }
 
 
-// Disable Audio
+// howl_Disable
 undefined4 FUN_8002ac94(void)
 
 {
