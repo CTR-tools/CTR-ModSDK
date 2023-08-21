@@ -14,7 +14,13 @@ void DECOMP_SongPool_StopCseq(struct SongSeq* seq)
 		// type != MUSIC
 		if(curr->type != 2) continue;
 		
+		// This line doesn't work, ND Box -> Loading screen
+		// does not stpo "all" sounds, unless commented out.
+		// Without this line, the game can't stop "individual"
+		// music sequences, but the game never does that anyway
+		#if 0
 		if(curr->soundID != (int)seq->soundID) continue;
+		#endif
 		
 		// enable OFF(1) flag, disable ON(2) flag
 		flagPtr = &sdata->ChannelUpdateFlags[curr->channelID];
