@@ -767,7 +767,7 @@ void FUN_80028bbc(ushort param_1)
 // param_1 - SongID (playing)
 // param_2 - deltaBPM
 // param_3 - 8008d068 for AdvHub
-// param_4 - advHub song bits
+// param_4 - songSetActiveBits
 // param_5 - boolLoopAtEnd
 undefined4 FUN_80028c78(ushort param_1,undefined4 param_2,
 			undefined4 param_3,undefined4 param_4,
@@ -2727,7 +2727,7 @@ void FUN_8002a6cc(int param_1,short param_2)
 // param_3 - deltaBPM
 // param_4 - boolLoopAtEnd
 // param_5 - 8008D068 for AdvHub
-// param_6 - advHub song bits
+// param_6 - songSetActiveBits
 void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,uint *param_5,
                  undefined4 param_6)
 
@@ -2763,7 +2763,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
       return;
     }
 	
-	// advHub song bits
+	// songSetActiveBits
     *(undefined4 *)(param_1 + 4) = param_6;
   }
   
@@ -2772,7 +2772,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
   // song->0x8 = iVar9->4 (tpqn)
   *(undefined2 *)(param_1 + 8) = *(undefined2 *)(iVar9 + 4);
   
-  // song->0xA += iVar9->2 (bpm)
+  // song->0xA = iVar9->2 (bpm) + deltaBPM
   param_3 = *(short *)(iVar9 + 2) + param_3;
   *(short *)(param_1 + 10) = param_3;
 
@@ -7020,7 +7020,7 @@ void FUN_8002e338(void)
 // param_1 - SongID (playing)
 // param_2 - deltaBPM
 // param_3 - 8008d068 for AdvHub
-// param_4 - advHub song bits
+// param_4 - songSetActiveBits
 void FUN_8002e350(uint param_1,int param_2,undefined4 param_3,undefined4 param_4)
 {
   // if cseq music can play

@@ -299,7 +299,12 @@ void CseqMusic_StopAll();
 	//SongPool_FindFreeChannel()
 	//SongPool_CalculateTempo()
 	void SongPool_ChangeTempo(struct Song* song, short p2);
-	void SongPool_Start(struct Song* song, u_short songID, short param_3, int param_4, u_int* param_5, int param_6);
+	
+	void SongPool_Start(
+		struct Song* song, int songID, int deltaBPM,
+		int boolLoopAtEnd, struct SongSet* songSet, int songSetActiveBits);
+
+	
 	void SongPool_Volume(struct Song* song, char param_2, char param_3, int param_4);
 	//SongPool_AdvHub1()
 	//SongPool_AdvHub2()

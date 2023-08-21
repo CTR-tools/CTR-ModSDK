@@ -371,7 +371,7 @@ struct Song
 	short id;
 
 	// 0x4
-	int AdvHubSongBits;
+	int songSetActiveBits;
 
 	// 0x8
 	// ticks per quarter note
@@ -406,7 +406,7 @@ struct Song
 struct SongSet
 {
 	int numSeqs;
-	char* ptrBits;
+	char* ptrSongSetBits;
 };
 
 struct SampleBlockHeader
