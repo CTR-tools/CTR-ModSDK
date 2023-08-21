@@ -59,7 +59,7 @@ void SongPool_Start(
 		song->vol_New = 0xbe;
 	}
 	
-	song->vol_StepRate = 0;
+	song->vol_StepRate = 1;
 	song->numSequences = 0;
 	
 	// first note header comes after end of CseqSongHeader
