@@ -1,6 +1,6 @@
 #include <common.h>
 
-void SongPool_Start(
+void DECOMP_SongPool_Start(
 	struct Song* song, int songID, int deltaBPM,
 	int boolLoopAtEnd, struct SongSet* songSet, int songSetActiveBits)
 {

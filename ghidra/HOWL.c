@@ -1090,6 +1090,9 @@ void FUN_80029008(ushort param_1,undefined4 param_2)
 
 
 // CseqMusic_AdvHubSwap
+// param1 - songID
+// param2 - songSet
+// param3 - songSetActiveBits
 void FUN_800290cc(ushort param_1,undefined4 param_2,undefined4 param_3)
 
 {
@@ -2955,12 +2958,13 @@ void FUN_8002a9d8(int param_1,undefined param_2,undefined param_3,int param_4)
 // param1 - song pool member
 // param2 - cseqID
 // param3 - volume of cseq
+// param4 - boolImm
 void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 
 {
   int iVar1;
 
-  // ptrCseqSongData[ptrCseqSongStartOffset[song->id]]
+  // ptrCseqSongData[ptrCseqSongStartOffset[song->id]] -> numSeqs
   if (param_2 < (int)(uint)*(byte *)(DAT_8008d7c8 +
                                      (uint)*(ushort *)
                                             ((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4) + 1)
@@ -2972,10 +2976,11 @@ void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 	// never?
 	if (param_4 != 0)
 	{
+	  // vol_Curr
       *(undefined *)(iVar1 + 5) = param_3;
     }
 
-	// volume of cseq samples
+	// vol_New
     *(undefined *)(iVar1 + 6) = param_3;
   }
   return;
@@ -2984,7 +2989,8 @@ void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 
 // SongPool_AdvHub2
 // param1 - Song* member
-// param2 - 8008D068
+// param2 - songSet
+// param3 - songSetActiveBits
 void FUN_8002aa44(int param_1,uint *param_2,undefined4 param_3)
 
 {
@@ -2995,15 +3001,19 @@ void FUN_8002aa44(int param_1,uint *param_2,undefined4 param_3)
   // ptrCseqSongData[ptrCseqSongStartOffset[song->id]]
   iVar3 = DAT_8008d7c8 + (uint)*(ushort *)((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4);
 
-  if (param_2 != (uint *)0x0) {
+  if (param_2 != (uint *)0x0) 
+  {
+	// if(songSet->numSeqs != csh->numSeqs)
     if (*param_2 != (uint)*(byte *)(iVar3 + 1)) {
       return;
     }
+	
+	// song->songSetActiveBits = songSetActiveBits;
     *(undefined4 *)(param_1 + 4) = param_3;
   }
   iVar2 = 0;
 
-  // if cseq -> numLongSamples != 0
+  // if csh->numSeqs != 0
   if (*(char *)(iVar3 + 1) != '\0')
   {
 	// loop through all Cseq music on all adv hub tracks
