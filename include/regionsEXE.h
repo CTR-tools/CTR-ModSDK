@@ -2677,14 +2677,8 @@ struct sData
 
 #ifndef SDATA_DEV
 
-	// 8008D068
-	// given to SongPool_Start as param_5,
-	// passed as pointer, should just pass by value
-	int AdvHubSong_constVal_0x14;
-
-	// 8008D06C (ptr to 800838f4)
-	// AdvHub song bits (for music swap)
-	void* AdvHubSong_ptrBits;
+	// 8008D068, 8008D06C
+	struct SongSet advHubSongSet;
 
 	// 8008d070
 	char reverbModeBossID[8];

@@ -403,6 +403,12 @@ struct Song
 	struct SongSeq* CseqSequences[0x18];
 };
 
+struct SongSet
+{
+	int numSeqs;
+	char* ptrBits;
+};
+
 struct SampleBlockHeader
 {
 	short numSamples;

@@ -2807,7 +2807,10 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
     param_1[0x19] = 0xbe;
   }
 
+  // vol_StepRate
   param_1[0x1a] = 1;
+  
+  // numSequences
   param_1[0x1b] = 0;
   
   // &CseqSongHeader->seqOffsetArr[0]
