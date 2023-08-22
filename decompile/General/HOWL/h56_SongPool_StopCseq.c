@@ -35,5 +35,5 @@ void DECOMP_SongPool_StopCseq(struct SongSeq* seq)
 	}
 	
 	// not playing
-	*(u_char*)&seq->flags &= ~(1);
+	seq->flags &= ~(1);
 }
