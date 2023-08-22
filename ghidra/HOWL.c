@@ -2899,7 +2899,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
 		
         pbVar4[10] = 0;
         
-		// song->id
+		// song->songPoolIndex
 		bVar1 = param_1[1];
 		
 		// noteLength and elapsedNoteTime

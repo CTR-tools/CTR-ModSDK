@@ -27,7 +27,7 @@ void DECOMP_SongPool_StopCseq(struct SongSeq* seq)
 		*flagPtr |= 1;
 		*flagPtr &= ~(2);
 		
-		*(u_char*)&curr->flags &= 0xfe;
+		*(u_char*)&curr->flags &= ~(1);
 		
 		// recycle: remove from taken, put on free
 		LIST_RemoveMember(&sdata->channelTaken.first, curr);
@@ -35,5 +35,5 @@ void DECOMP_SongPool_StopCseq(struct SongSeq* seq)
 	}
 	
 	// not playing
-	*(u_char*)&seq->flags &= 0xfe;
+	*(u_char*)&seq->flags &= ~(1);
 }

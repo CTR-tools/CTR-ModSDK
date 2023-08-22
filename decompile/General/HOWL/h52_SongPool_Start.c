@@ -118,7 +118,7 @@ void DECOMP_SongPool_Start(
 		seqCurr->LR = 0x80;
 		
 		seqCurr->unk0A = 0;
-		seqCurr->songPoolIndex = song->id;
+		seqCurr->songPoolIndex = song->songPoolIndex;
 		
 		seqCurr->NoteLength = 0;
 		seqCurr->NoteTimeElapsed = 0;

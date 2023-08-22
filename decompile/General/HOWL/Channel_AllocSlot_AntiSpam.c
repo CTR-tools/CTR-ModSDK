@@ -57,7 +57,7 @@ void Channel_DestroySelf(struct ChannelStats* stats)
 	*flagPtr |= 1;
 	*flagPtr &= ~(2);
 	
-	stats->flags &= 0xfe;
+	stats->flags &= ~(1);
 	
 	// recycle
 	LIST_RemoveMember(&sdata->channelTaken, stats);

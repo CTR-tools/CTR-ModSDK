@@ -11,9 +11,7 @@ void DECOMP_CseqMusic_Restart(int songID, int p2)
 	#if 0
 	if(sdata->boolAudioEnabled == 0) return;
 	if(sdata->ptrCseqHeader == 0) return;
-	
-	// To do: cseq header struct, DCxDemo probably has it
-	if(*(unsigned short*)(sdata->ptrCseqHeader + 6) <= songID) return;
+	if(sdata->ptrCseqHeader->numSongs <= songID) return;
 	#endif
 	
 	Smart_EnterCriticalSection();

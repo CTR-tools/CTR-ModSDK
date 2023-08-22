@@ -365,9 +365,13 @@ struct Song
 	// & 1 = Playing
 	// & 2 = Paused (can be &3 in menus)
 	// & 4 = needs to stop
-	unsigned short flags;
+	unsigned char flags;
+
+	// 0x1
+	char songPoolIndex;
 
 	// 0x2
+	// songID out of all songs in RAM
 	short id;
 
 	// 0x4

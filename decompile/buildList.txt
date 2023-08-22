@@ -253,7 +253,7 @@ common, exe, cseq_opcode0a, 0x0, General/HOWL/h48_cseq_opcode0a.c
 common, exe, SongPool_FindFreeChannel, 0x0, General/HOWL/h49_SongPool_FindFreeChannel.c
 common, exe, SongPool_CalculateTempo, 0x0, General/HOWL/h50_SongPool_CalculateTempo.c
 common, exe, SongPool_ChangeTempo, 0x0, General/HOWL/h51_SongPool_ChangeTempo.c
-//ommon, exe, SongPool_Start, 0x0, General/HOWL/h52_SongPool_Start.c == Oxide Intro Coco/Pura no music ==
+common, exe, SongPool_Start, 0x0, General/HOWL/h52_SongPool_Start.c
 common, exe, SongPool_Volume, 0x0, General/HOWL/h53_SongPool_Volume.c
 common, exe, SongPool_AdvHub1, 0x0, General/HOWL/h54_SongPool_AdvHub1.c
 common, exe, SongPool_AdvHub2, 0x0, General/HOWL/h55_SongPool_AdvHub2.c

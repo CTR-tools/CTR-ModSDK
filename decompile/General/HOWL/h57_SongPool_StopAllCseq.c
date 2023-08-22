@@ -8,7 +8,7 @@ void DECOMP_SongPool_StopAllCseq(struct Song* song)
 	if((song->flags & 1) == 0) return;
 	
 	// stop song
-	song->flags &= 0xfe;
+	song->flags &= ~(1);
 	
 	for(i = 0; i < song->numSequences; i++)
 	{
