@@ -46,7 +46,6 @@ void DECOMP_Garage_LerpFX(void)
 	// if change is desired, lerp properties
     if ((sVar5 != LR) || (sVar6 != volume)) 
 	{
-
 	  // desired audio change
       if (sVar6 != volume) 
 	  {

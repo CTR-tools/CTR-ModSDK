@@ -280,7 +280,7 @@ common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/Channel_DestroyAll_L
 common, exe, Garage_Init, 0x0, General/HOWL/Garage_Init.c
 common, exe, Garage_Enter, 0x0, General/HOWL/Garage_Enter.c
 common, exe, Garage_PlayFX, 0x0, General/HOWL/Garage_PlayFX.c
-//ommon, exe, Garage_LerpFX, 0x0, General/HOWL/Garage_LerpFX.c === Over Budget ===
+//ommon, exe, Garage_LerpFX, 0x0, General/HOWL/Garage_LerpFX.c
 common, exe, Garage_MoveLR, 0x0, General/HOWL/Garage_MoveLR.c
 common, exe, Garage_Leave, 0x0, General/HOWL/Garage_Leave.c
 
