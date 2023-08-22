@@ -7136,7 +7136,7 @@ void FUN_8002e4c0(void)
 }
 
 
-// part of game boot, loading, and Spyro 2 launch
+// Music_Stop
 void FUN_8002e4ec(void)
 {
   // if music is playing
