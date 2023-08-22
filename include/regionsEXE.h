@@ -2663,7 +2663,7 @@ struct sData
 	char s_ghost0[8];
 
 	// 8008D058
-	int audioRNG;
+	unsigned int audioRNG;
 
 	// 8008D05C
 	int boolAudioEnabled;

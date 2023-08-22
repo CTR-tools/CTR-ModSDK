@@ -9190,8 +9190,8 @@ void FUN_80030404(uint param_1,int param_2)
 		
       DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
 
+	  // soundId = (random%3) + 0xf3;
 	  param_1 =
-				// optimized way to get 1% of something?
 				(
 					// 100%
 					DAT_8008d058 -
