@@ -40,56 +40,50 @@ void DECOMP_Garage_LerpFX(void)
       sVar5 = garageSounds->LR;
     }
 
-	LR = garageSounds->LR;
 	volume = garageSounds->volume;
+	LR = garageSounds->LR;
 
 	// if change is desired, lerp properties
     if ((sVar5 != LR) || (sVar6 != volume)) 
 	{
+
 	  // desired audio change
       if (sVar6 != volume) 
 	  {
-		// lerp up
-        if (volume < sVar6) 
-		{
-		  volume += 8;
-          if(volume > sVar6)
-			  volume = sVar6;
-        }
-        
-		// lerp down
-		else 
-		{
-          volume -= 8;
-          if(volume < sVar6)
-			  volume = sVar6;
-        }
+		// lerp up or down
+		cVar1 = -8;
+        if (volume < sVar6) cVar1 = 8;
+		volume += cVar1;
 		
-		garageSounds->volume = volume;
+		if(
+			((volume-sVar6) < 8) &&
+			((volume-sVar6) > -8)
+		  )
+		{
+			volume = sVar6;
+		}
       }
       
 	  // desired LR change
 	  if (sVar5 != LR) 
 	  {
-		// lerp up
-        if (LR < sVar5) 
-		{
-		  LR += 2;
-          if(LR > sVar5)
-			  LR = sVar5;
-        }
+		// lerp up or down
+		cVar1 = -2;
+        if (LR < sVar5) cVar1 = 2;
+		LR += cVar1;
 		
-		// lerp down
-        else 
+		if(
+			((LR-sVar5) < 2) &&
+			((LR-sVar5) > -2)
+		  )
 		{
-          LR -= 2;
-          if(LR < sVar5)
-			  LR = sVar5;
-        }
-		
-		garageSounds->LR = LR;
+			LR = sVar5;
+		}
       }
 	  
+	  garageSounds->volume = volume;
+	  garageSounds->LR = LR;
+
       if (sdata->garageSoundIDs[i] != 0) 
 	  {
         OtherFX_RecycleNew(
