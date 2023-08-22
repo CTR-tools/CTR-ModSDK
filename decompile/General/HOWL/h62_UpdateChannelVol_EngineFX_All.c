@@ -1,6 +1,6 @@
 #include <common.h>
 
-void UpdateChannelVol_EngineFX_All()
+void DECOMP_UpdateChannelVol_EngineFX_All()
 {
 	struct ChannelStats* curr;
 	u_int* flagPtr;

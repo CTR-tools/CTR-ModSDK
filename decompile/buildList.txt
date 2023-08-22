@@ -264,7 +264,8 @@ common, exe, UpdateChannelVol_EngineFX, 0x0, General/HOWL/h59_UpdateChannelVol_E
 common, exe, UpdateChannelVol_OtherFX, 0x0, General/HOWL/h60_UpdateChannelVol_OtherFX.c
 common, exe, UpdateChannelVol_Music, 0x0, General/HOWL/h61_UpdateChannelVol_Music.c
 common, exe, UpdateChannelVol_EngineFX_All, 0x0, General/HOWL/h62_UpdateChannelVol_EngineFX_All.c
-
+common, exe, UpdateChannelVol_Music_All, 0x0, General/HOWL/h63_UpdateChannelVol_Music_All.c
+common, exe, UpdateChannelVol_OtherFX_All, 0x0, General/HOWL/h64_UpdateChannelVol_OtherFX_All.c
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c
