@@ -1,6 +1,6 @@
-// 383+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 461 rewritten so far
+// 387+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 465 rewritten so far
 
-// 383 for every 'common' and ','
+// 387 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -260,6 +260,11 @@ common, exe, SongPool_AdvHub2, 0x0, General/HOWL/h55_SongPool_AdvHub2.c
 common, exe, SongPool_StopCseq, 0x0, General/HOWL/h56_SongPool_StopCseq.c
 common, exe, SongPool_StopAllCseq, 0x0, General/HOWL/h57_SongPool_StopAllCseq.c
 common, exe, howl_Disable, 0x0, General/HOWL/h58_howl_Disable.c
+common, exe, UpdateChannelVol_EngineFX, 0x0, General/HOWL/h59_UpdateChannelVol_EngineFX.c
+common, exe, UpdateChannelVol_OtherFX, 0x0, General/HOWL/h60_UpdateChannelVol_OtherFX.c
+common, exe, UpdateChannelVol_Music, 0x0, General/HOWL/h61_UpdateChannelVol_Music.c
+common, exe, UpdateChannelVol_EngineFX_All, 0x0, General/HOWL/h62_UpdateChannelVol_EngineFX_All.c
+
 
 common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
 common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c
