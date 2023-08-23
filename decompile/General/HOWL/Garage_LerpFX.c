@@ -43,54 +43,64 @@ void DECOMP_Garage_LerpFX(void)
 	volume = garageSounds->volume;
 	LR = garageSounds->LR;
 
-	// if change is desired, lerp properties
-    if ((sVar5 != LR) || (sVar6 != volume)) 
-	{
-	  // desired audio change
-      if (sVar6 != volume) 
-	  {
-		// lerp up or down
-		cVar1 = -8;
-        if (volume < sVar6) cVar1 = 8;
-		volume += cVar1;
-		
-		if(
-			((volume-sVar6) < 8) &&
-			((volume-sVar6) > -8)
-		  )
-		{
-			volume = sVar6;
-		}
-      }
-      
-	  // desired LR change
-	  if (sVar5 != LR) 
-	  {
-		// lerp up or down
-		cVar1 = -2;
-        if (LR < sVar5) cVar1 = 2;
-		LR += cVar1;
-		
-		if(
-			((LR-sVar5) < 2) &&
-			((LR-sVar5) > -2)
-		  )
-		{
-			LR = sVar5;
-		}
-      }
-	  
-	  garageSounds->volume = volume;
-	  garageSounds->LR = LR;
+	// no change in volume or LR
+	cVar1 = 0;
 
-      if (sdata->garageSoundIDs[i] != 0) 
+
+	// desired audio change
+    if (sVar6 != volume) 
+	{
+	  // lerp up or down
+	  cVar1 = -8;
+      if (volume < sVar6) cVar1 = 8;
+	  volume += cVar1;
+	
+	  if(
+	  	((volume-sVar6) < 8) &&
+	  	((volume-sVar6) > -8)
+	    )
 	  {
-        OtherFX_RecycleNew(
-            garageSounds->audioPtr,
-            sdata->garageSoundIDs[i],
-            (int)volume << 0x10 | (int)LR | 0x8000U
-            );
-      }
+	  	volume = sVar6;
+	  }
+	  
+	  // change detected
+	  cVar1 = 1;
+    }
+    
+	// desired LR change
+	if (sVar5 != LR) 
+	{
+	  // lerp up or down
+	  cVar1 = -2;
+      if (LR < sVar5) cVar1 = 2;
+	  LR += cVar1;
+	  
+	  if(
+	  	((LR-sVar5) < 2) &&
+	  	((LR-sVar5) > -2)
+	    )
+	  {
+	  	LR = sVar5;
+	  }
+	  
+	  // change detected
+	  cVar1 = 1;
+    }
+	
+	// if no change, quit
+	if(cVar1 == 0) return;
+	
+	garageSounds->volume = volume;
+	garageSounds->LR = LR;
+
+    if (sdata->garageSoundIDs[i] != 0) 
+	{
+      OtherFX_RecycleNew(
+          garageSounds->audioPtr,
+          sdata->garageSoundIDs[i],
+          (int)volume << 0x10 | (int)LR | 0x8000U
+          );
+    }
 	  
 	  // if desired properties have been reached
       if (((sVar5 == LR) && (sVar6 == volume)) &&
@@ -101,7 +111,6 @@ void DECOMP_Garage_LerpFX(void)
 	  {
         OtherFX_RecycleMute(garageSounds->audioPtr);
       }
-    }
   } 
   return;
 }
