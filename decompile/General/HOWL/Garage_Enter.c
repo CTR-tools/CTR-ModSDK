@@ -3,7 +3,7 @@
 void DECOMP_Garage_Enter(char charId)
 {
   struct GarageFX* garageSounds;
-  char* soundIDs;
+  unsigned char* soundIDs;
   char i;
   char charRight;
   char charLeft;

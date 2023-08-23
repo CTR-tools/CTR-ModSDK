@@ -2695,7 +2695,7 @@ struct sData
 	#if BUILD >= UsaRetail
 	// 8008d080
 	// used in Garage_LerpFX
-	char garageSoundIDs[8];
+	unsigned char garageSoundIDs[8];
 	#endif
 	
 	// ============================

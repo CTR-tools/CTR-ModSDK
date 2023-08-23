@@ -3,16 +3,17 @@
 void DECOMP_Garage_LerpFX(void)
 {
   int cVar1;
-  struct GarageFX* garageSounds;
   short sVar5;
   short sVar6;
   short volume;
   short LR;
   int i;
+  
+  struct GarageFX* garageSounds;
+  garageSounds = &sdata->garageSoundPool[0];
 
-  for (i = 0; i < 8; i++) 
+  for (i = 0; i < 8; i++, garageSounds++) 
   {
-    garageSounds = &sdata->garageSoundPool[i];
 
     cVar1 = garageSounds->gsp_curr;
 	
@@ -95,7 +96,7 @@ void DECOMP_Garage_LerpFX(void)
     if (sdata->garageSoundIDs[i] != 0) 
 	{
       OtherFX_RecycleNew(
-          garageSounds->audioPtr,
+          &garageSounds->audioPtr,
           sdata->garageSoundIDs[i],
           (int)volume << 0x10 | (int)LR | 0x8000U
           );
@@ -108,7 +109,7 @@ void DECOMP_Garage_LerpFX(void)
           garageSounds->gsp_curr == GSP_GONE
       ))
 	{
-      OtherFX_RecycleMute(garageSounds->audioPtr);
+      OtherFX_RecycleMute(&garageSounds->audioPtr);
     }
   } 
   return;
