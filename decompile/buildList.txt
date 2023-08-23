@@ -1,6 +1,6 @@
-// 393+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 471 rewritten so far
+// 394+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 472 rewritten so far
 
-// 393 for every 'common' and ','
+// 394 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -266,6 +266,7 @@ common, exe, UpdateChannelVol_Music, 0x0, General/HOWL/h61_UpdateChannelVol_Musi
 common, exe, UpdateChannelVol_EngineFX_All, 0x0, General/HOWL/h62_UpdateChannelVol_EngineFX_All.c
 common, exe, UpdateChannelVol_Music_All, 0x0, General/HOWL/h63_UpdateChannelVol_Music_All.c
 common, exe, UpdateChannelVol_OtherFX_All, 0x0, General/HOWL/h64_UpdateChannelVol_OtherFX_All.c
+common, exe, howl_VolumeGet, 0x0, General/HOWL/h65_howl_VolumeGet.c
 
 common, exe, Smart_EnterCriticalSection, 0x0, General/HOWL/hz_h70_Smart_EnterCriticalSection.c
 common, exe, Smart_ExitCriticalSection, 0x0, General/HOWL/hz_h71_Smart_ExitCriticalSection.c
