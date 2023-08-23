@@ -1,6 +1,6 @@
-// 394+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 472 rewritten so far
+// 396+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 474 rewritten so far
 
-// 394 for every 'common' and ','
+// 396 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -279,6 +279,9 @@ common, exe, Channel_SearchFX_EditAttr, 0x0, General/HOWL/Channel_SearchFX_EditA
 common, exe, Channel_SearchFX_Destroy, 0x0, General/HOWL/Channel_SearchFX_Destroy.c
 common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/Channel_DestroyAll_LowLevel.c
 // skip last two "channel" functions
+
+common, exe, Cutscene_VolumeBackup, 0x0, General/HOWL/Cutscene_VolumeBackup.c
+common, exe, Cutscene_VolumeRestore, 0x0, General/HOWL/Cutscene_VolumeRestore.c
 
 // HOWL_Garage
 common, exe, Garage_Init, 0x0, General/HOWL/Garage_Init.c
