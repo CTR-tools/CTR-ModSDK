@@ -22,5 +22,5 @@ void DECOMP_UpdateChannelVol_Music(
 			sdata->ptrCseqShortSamples[index].volume;
 	}
 	
-	Channel_SetVolume(songSeq, (newVol * sampleVol * vol) >> 0xf, songSeq->LR);
+	Channel_SetVolume(attr, (newVol * sampleVol * vol) >> 0xf, songSeq->LR);
 }
