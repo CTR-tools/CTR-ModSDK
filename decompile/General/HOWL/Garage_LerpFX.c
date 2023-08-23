@@ -102,15 +102,15 @@ void DECOMP_Garage_LerpFX(void)
           );
     }
 	  
-	  // if desired properties have been reached
-      if (((sVar5 == LR) && (sVar6 == volume)) &&
-        (
-            garageSounds->gsp_prev = garageSounds->gsp_curr,
-            garageSounds->gsp_curr == GSP_GONE
-        ))
-	  {
-        OtherFX_RecycleMute(garageSounds->audioPtr);
-      }
+	// if desired properties have been reached
+    if (((sVar5 == LR) && (sVar6 == volume)) &&
+      (
+          garageSounds->gsp_prev = garageSounds->gsp_curr,
+          garageSounds->gsp_curr == GSP_GONE
+      ))
+	{
+      OtherFX_RecycleMute(garageSounds->audioPtr);
+    }
   } 
   return;
 }
