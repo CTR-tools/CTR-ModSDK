@@ -45,8 +45,18 @@ struct GhostTape
 	int packetID;
 	
 	// 0x50
-	struct
-	{
+	GhostPacket packets[0x21];
+	
+	// 0x260
+	int constDEADC0ED;
+	
+	// 0x264
+	struct GhostHeader* gh_again; // duplicate?
+	
+	// 0x268 bytes large
+};
+
+typedef struct {
 		// just position,
 		// or union for several packets?
 		
@@ -59,16 +69,7 @@ struct GhostTape
 		
 		// 0x10 -- size of packet
 		
-	} GhostPackets[0x21];
-	
-	// 0x260
-	int constDEADC0ED;
-	
-	// 0x264
-	struct GhostHeader* gh_again; // duplicate?
-	
-	// 0x268 bytes large
-};
+} GhostPacket;
 
 struct GhostHeader
 {
