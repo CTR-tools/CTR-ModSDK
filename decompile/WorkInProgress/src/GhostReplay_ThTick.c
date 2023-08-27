@@ -72,7 +72,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread* t)
 		if(gGT->trafficLightsTimer < 1)
 		{
 			d->ghostBoolStarted = 1;
-			tape->timeInPacket32 = -1;
+			tape->packetID = -1;
 		}
 	}
 	

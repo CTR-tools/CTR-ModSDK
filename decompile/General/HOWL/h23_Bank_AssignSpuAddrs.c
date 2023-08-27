@@ -1,6 +1,5 @@
 #include <common.h>
 
-// Bug in Adventure->CrashCove, and in Arcade->DragonMines
 int DECOMP_Bank_AssignSpuAddrs()
 {
 	int i;
@@ -100,6 +99,11 @@ int DECOMP_Bank_AssignSpuAddrs()
 		
 		struct SpuAddrEntry* sae;
 		
+		#if 0
+		printf("New\n");
+		printf("%08x\n", sdata->audioAllocPtr);
+		#endif
+		
 		for(i = 0; i < sdata->ptrSampleBlock1->numSamples; i++)
 		{	
 			sae =
@@ -113,6 +117,10 @@ int DECOMP_Bank_AssignSpuAddrs()
 				sae->spuAddr = sdata->audioAllocPtr;
 			}
 			sdata->audioAllocPtr += sae->spuSize;
+			
+			#if 0
+			printf("%08x\n", sdata->audioAllocPtr);
+			#endif
 		}
 		
 		sdata->bankLoadStage++;
@@ -126,7 +134,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 		if(howl_loadDataFromCd_RetryOnError() == 0)
 			return 0;
 		
-		int spuAddrStart = sdata->ptrLastBank->min * 8;
+		int spuAddrStart = (unsigned int)sdata->ptrLastBank->min * 8;
 		
 		// 0x7e000 = 512kb SPU memory
 		if(spuAddrStart + sdata->audioAllocSize < 0x7e000)
@@ -141,14 +149,18 @@ int DECOMP_Bank_AssignSpuAddrs()
 		return 0;
 	}
 	
-	// Stage 2: Spu Transfer End
+	// Stage 3: Spu Transfer End
 	if(sdata->bankLoadStage == 3)
 	{
 		if(SpuIsTransferCompleted(SPU_TRANSFER_PEEK) == 0)
 			return 0;
 		
-		if(sdata->bankFlags == 0)
-			sdata->audioAllocPtr += sdata->audioAllocSize >> 3;
+		// This is clearly in ghdira, but causes a
+		// Bug in Adventure->CrashCove, and in Arcade->DragonMines
+		// so what's happening?
+		
+		//if(sdata->bankFlags == 0)
+		//	sdata->audioAllocPtr += sdata->audioAllocSize >> 3;
 		
 		sdata->ptrLastBank->flags |= 2;
 		

@@ -224,7 +224,7 @@ common, exe, CseqMusic_Stop, 0x0, General/HOWL/h19_CseqMusic_Stop.c
 common, exe, CseqMusic_StopAll, 0x0, General/HOWL/h20_CseqMusic_StopAll.c
 common, exe, Bank_ResetAllocator, 0x0, General/HOWL/h21_Bank_ResetAllocator.c
 common, exe, Bank_Alloc, 0x0, General/HOWL/h22_Bank_Alloc.c
-//ommon, exe, Bank_AssignSpuAddrs, 0x0, General/HOWL/h23_Bank_AssignSpuAddrs.c == Allocator Bug ==
+common, exe, Bank_AssignSpuAddrs, 0x0, General/HOWL/h23_Bank_AssignSpuAddrs.c == Allocator Bug ==
 common, exe, Bank_Destroy, 0x0, General/HOWL/h24_Bank_Destroy.c
 common, exe, Bank_ClearInRange, 0x0, General/HOWL/h25_Bank_ClearInRange.c
 common, exe, Bank_Load, 0x0, General/HOWL/h26_Bank_Load.c
