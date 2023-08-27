@@ -125,6 +125,7 @@ void FUN_80026ed8(int param_1)
 	  // now the ghost is started
       *(undefined2 *)(iVar22 + 0x634) = 1;
 	  
+	  // packetID
       *(undefined2 *)(*(int *)(iVar22 + 0x62c) + 0x4c) = 0xffff;
     }
 
