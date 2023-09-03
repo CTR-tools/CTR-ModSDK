@@ -17,13 +17,6 @@ void GhostReplay_ThTick(struct Thread *t) {
   int packetIdx;
   uint uVar9;
   uint delta;
-  byte **ppbVar12;
-  byte *pbVar13;
-  byte *pbVar14;
-  int *piVar15;
-  byte *pbVar16;
-  byte *pbVar17;
-  byte *pbVar18;
   byte *pbVar19;
   struct GhostTape *tape;
   struct Instance *inst;
@@ -37,6 +30,10 @@ void GhostReplay_ThTick(struct Thread *t) {
   short local_rot[3]; // ushort?
   int timeInRace;
   int scaledNum;
+  
+  
+  // piVar15 and ppbVar12
+  struct GhostPacket* packet;
 
   d = t->object;
   tape = d->ghostTape;
@@ -80,7 +77,7 @@ void GhostReplay_ThTick(struct Thread *t) {
 
   if ((gGT->trafficLightsTimer < 1) && (d->ghostBoolStarted == 0)) {
     d->ghostBoolStarted = 1;
-    tape->packetID = 0xffff;
+    tape->packetID = -1;
   }
 
   inst->alphaScale = 0xa00;
@@ -95,33 +92,23 @@ void GhostReplay_ThTick(struct Thread *t) {
 
   // offset 0x50
   // piVar15 = tape + 0x14; packets[0]?
-  piVar15 = tape->packets;
+  piVar15 = &tape->packets[0];
 
   // flush and rewrite cached GhostPackets array
   if (tape->timeInPacket32 <= timeInRace) {
     sVar6 = 0;
 
-    // ghostTape->0x5c
-    ppbVar12 = (byte **)(tape + 0x17);
-    // tape->packets[0].unkA;
+    pbVar19 = tape->ptrCurr;
 
-    //   pbVar19 = (byte *)tape[3];
-    pbVar19 = (char *)tape->ptrCurr;
-
-    tape->packetID = 0xffff;
+    tape->packetID = -1;
     tape->timeInPacket01 = tape->timeInPacket32_backup;
-
-    // tape curr
-    pbVar13 = pbVar19 + 3;
-    pbVar16 = pbVar19;
 
     // move two POSITION(0x80) opcodes in advance,
     // combine with velocity to make GhostPackets cache
     do {
-      pbVar14 = pbVar13 + 1;
 
       // reached end of tape
-      if ((char *)tape->ptrEnd <= pbVar16) {
+      if ((char *)tape->ptrEnd <= pbVar19) {
         // ghostHeader
         // driver ->0x62C->0
         // TODO: ghostHeader??
@@ -147,14 +134,10 @@ void GhostReplay_ThTick(struct Thread *t) {
         return;
       }
 
-      // advance curr
-      uVar9 = (uint)*pbVar16;
-      pbVar17 = pbVar16 + 1;
-
       // if opcode is seen
-      if ((uVar9 + 0x80 & 0xff) < 5) {
-        pbVar18 = pbVar19;
-
+      uVar9 = (uint)pbVar19[0];
+      if ((uVar9 + 0x80 & 0xff) < 5) 
+	  {
         switch (uVar9) {
 
           // position data
@@ -162,36 +145,37 @@ void GhostReplay_ThTick(struct Thread *t) {
 
           // ghost->0x50
           local_48 =
-              (short)((int)((uint)CONCAT11(*pbVar17, pbVar13[-1]) << 0x10) >>
+              (short)((int)((uint)CONCAT11(pbVar19[1], pbVar19[2]) << 0x10) >>
                       0xd);
-          *(short *)piVar15 = local_48;
+          packet->pos[0] = local_48;
 
           // ghost->0x52
           local_46 =
-              (short)((int)((uint)CONCAT11(*pbVar13, *pbVar14) << 0x10) >> 0xd);
-          *(short *)((int)ppbVar12 + -10) = local_46;
+              (short)((int)((uint)CONCAT11(pbVar19[3], pbVar19[4]) << 0x10) >> 0xd);
+          packet->pos[1] = local_46;
 
           // ghost->0x54
           local_44 =
-              (short)((int)((uint)CONCAT11(pbVar13[2], pbVar13[3]) << 0x10) >>
+              (short)((int)((uint)CONCAT11(pbVar19[5], pbVar19[6]) << 0x10) >>
                       0xd);
-          *(short *)(ppbVar12 + -2) = local_44;
+          packet->pos[2] = local_44;
 
           // ghost->0x56
-          *(undefined2 *)((int)ppbVar12 + -6) = 0;
+          packet->time = 0;
 
           // ghost->0x58
-          *(ushort *)(ppbVar12 + -1) = (ushort)pbVar13[6] << 4;
+          packet->rot[0] = (ushort)pbVar19[9] << 4;
 
           // ghost->0x5a
-          *(short *)((int)ppbVar12 + -2) = (ushort)pbVar13[7] << 4;
+          packet->rot[1] = (ushort)pbVar19[10] << 4;
 
           // if 2nd position opcode
           if (sVar6 == 1) {
             // get time (big endian) from position message
-            bVar1 = pbVar13[4];
-            bVar2 = pbVar13[5];
-            *(byte **)(tape + 3) = pbVar16;
+            bVar1 = pbVar19[7];
+            bVar2 = pbVar19[8];
+            tape->ptrCurr = pbVar19;
+			
             // elapsedTime (ghost->0x18 and ghost->0x40)
             tape->timeInPacket32_backup =
                 tape->timeInPacket32_backup + (int)CONCAT11(bVar1, bVar2);
@@ -202,83 +186,73 @@ void GhostReplay_ThTick(struct Thread *t) {
           // count position opcodes
           sVar6++;
 
-          // advance curr
-          pbVar14 = pbVar13 + 0xb;
-          pbVar18 = pbVar16 + 0xb;
-
-          *ppbVar12 = pbVar19;
-          ppbVar12 = ppbVar12 + 4;
-          piVar15 = piVar15 + 4;
-          pbVar17 = pbVar18;
+		  packet->bufferPacket = pbVar19;
+		  pbVar19 += 11;
+		  packet++;
+		  
           break;
 
           // animation flags
         case 0x81:
-          pbVar14 = pbVar13 + 3;
-          pbVar17 = pbVar16 + 3;
+          pbVar19 += 3;
           break;
 
           // boost flags
         case 0x82:
-          pbVar14 = pbVar13 + 6;
-          pbVar17 = pbVar16 + 6;
+          pbVar19 += 6;
           break;
 
           // instance flags
         case 0x83:
-          pbVar14 = pbVar13 + 2;
-          pbVar17 = pbVar16 + 2;
+          pbVar19 += 2;
           break;
 
           // driver does nothing
         case 0x84:
-          *(short *)piVar15 = local_48;
-          *(short *)((int)ppbVar12 + -10) = local_46;
-          *ppbVar12 = pbVar19;
+          packet->pos[0] = local_48;
+          packet->pos[1] = local_46;
+          packet->pos[2] = local_44;
+          
+		  packet[0].time = packet[-1].time;
+		  packet[0].rot[0] = packet[-1].rot[0];
+		  packet[0].rot[1] = packet[-1].rot[1];
 
-          // next position = previous position
-          *(undefined2 *)(ppbVar12 + -1) = *(undefined2 *)(ppbVar12 + -5);
-          *(undefined2 *)((int)ppbVar12 + -2) =
-              *(undefined2 *)((int)ppbVar12 + -0x12);
-          *(undefined2 *)((int)ppbVar12 + -6) =
-              *(undefined2 *)((int)ppbVar12 + -0x16);
-
-          *(short *)(ppbVar12 + -2) = local_44;
-          goto LAB_80027304;
+		  packet->bufferPacket = pbVar19;
+		  pbVar19 += 1;
+		  packet++;
+		  break;
         }
       }
 
       // if no opcode, assume 5 bytes of velocity
-      else {
-        local_48 += (short)((int)(uVar9 << 0x18) >> 0x15);
-        *(short *)piVar15 = local_48;
-        bVar1 = *pbVar17;
-        pbVar17 = pbVar16 + 5;
-        local_46 += (short)(char)bVar1 * 8;
-        *(short *)((int)ppbVar12 + -10) = local_46;
-        local_44 += (short)(char)pbVar13[-1] * 8;
-        *(short *)(ppbVar12 + -2) = local_44;
-        *(undefined2 *)((int)ppbVar12 + -6) = 0;
-        *(ushort *)(ppbVar12 + -1) = (ushort)*pbVar13 << 4;
+      else 
+	  {
+        local_48 += pbVar19[0] * 8;
+		local_46 += pbVar19[1] * 8;
+		local_44 += pbVar19[2] * 8;
+		
+        packet->pos[0] = local_48;
+        packet->pos[1] = local_46;
+        packet->pos[2] = local_44;
+        
+		packet->time = 0;
+		
+        packet->rot[0] = pbVar19[3] << 4;
+        packet->rot[1] = pbVar19[4] << 4;
 
-        // advance curr
-        bVar1 = *pbVar14;
-        pbVar14 = pbVar13 + 5;
-
-        *ppbVar12 = pbVar19;
-        *(short *)((int)ppbVar12 + -2) = (ushort)bVar1 << 4;
-      LAB_80027304:
-        piVar15 = piVar15 + 4;
-        ppbVar12 = ppbVar12 + 4;
-        pbVar18 = pbVar17;
+        packet->bufferPacket = pbVar19;
+		pbVar19 += 5;
+		packet++;
+		
       }
-      pbVar13 = pbVar14;
-      pbVar19 = pbVar18;
-      pbVar16 = pbVar17;
     } while (sVar6 < 2);
 
-    // number of packets in array
-    tape->numPacketsInArray = ((int)piVar15 + (-0x50 - (int)tape) >> 4) - 1;
+    tape->numPacketsInArray = 
+		((unsigned int)packet - (unsigned int)&tape->packets[0]) >> 4;
+
+	// needed?
+	//tape->numPacketsInArray -= 1;
+		
     if (tape->numPacketsInArray < 0) {
       tape->numPacketsInArray = 1;
     }
@@ -351,77 +325,83 @@ void GhostReplay_ThTick(struct Thread *t) {
   d->rotCurr.z = local_rot[2];
 
   // offset 0x5C
-  pbVar13 = (byte *)tape[packetIdx * 4 + 0x17];
-  // parse buffer for animation/render data
-  // tape->packets[packetIdx +1].pos[1];?
-  while (*(short *)(tape + 0x13) < packetIdx) {
-    if ((byte *)tape[2] <= pbVar13)
-      break;
-    pbVar19 = pbVar13 + 1;
+  pbVar19 = tape->packets[packetIdx].bufferPacket;
 
+  while (tape->packetID < packetIdx) 
+  {
+    if (tape->ptrEnd <= pbVar19)
+      break;
+  
     // if write outside expected tags (0x80 - 0x84)
-    if (4 < ((uint)*pbVar13 + 0x80 & 0xff)) {
+    if (4 < (pbVar19[0] + 0x80 & 0xff)) 
+	{
       // assume velocity data, 5 bytes large
 
-      sVar6 = *(short *)(tape + 0x13);
-      pbVar19 = pbVar13 + 5;
+      sVar6 = tape->packetID;
+      pbVar19 += 5;
       goto LAB_80027754;
     }
 
-    switch ((uint)*pbVar13) {
+    switch (pbVar19[0]) {
 
       // Apply position and rotation to ghost
     case 0x80:
-      sVar6 = *(short *)(tape + 0x13);
-      pbVar19 = pbVar13 + 0xb;
+      sVar6 = tape->packetID;
+      pbVar19 += 0xb;
       goto LAB_80027754;
 
       // Apply Animation to ghost (type and frame)
     case 0x81:
 
-      if (INSTANCE_GetNumAnimFrames(inst, (uint)*pbVar19) < 1) {
+      if (INSTANCE_GetNumAnimFrames(inst, (uint)pbVar19[1]) < 1) {
         inst->animIndex = 0;
       } else {
-        inst->animIndex = *pbVar19;
+        inst->animIndex = pbVar19[1];
       }
 
-      if (pbVar13[2] == 0) {
+      if (pbVar19[2] == 0) 
+	  {
         if (INSTANCE_GetNumAnimFrames(inst, inst->animIndex) - 1 > 0)
           goto LAB_80027658;
+	  
       LAB_80027674:
         sVar6 = INSTANCE_GetNumAnimFrames(inst, inst->animIndex);
         sVar6++;
       LAB_80027684:
         inst->animFrame = sVar6;
-      } else {
+      } 
+	  
+	  else 
+	  {
         if (INSTANCE_GetNumAnimFrames(inst, inst->animIndex) - 1 <=
-            (int)(uint)pbVar13[2])
+            (int)(uint)pbVar19[2])
           goto LAB_80027674;
+		  
       LAB_80027658:
         sVar6 = 0;
-        if (pbVar13[2] == 0)
+        if (pbVar19[2] == 0)
           goto LAB_80027684;
 
-        inst->animFrame = (ushort)pbVar13[2];
+        inst->animFrame = (ushort)pbVar19[2];
       }
-      pbVar19 = pbVar13 + 3;
+      pbVar19 += 3;
       break;
 
       // Apply a boost to the ghost
     case 0x82:
 
-      // two bytes reserves
-      bVar1 = *pbVar19;
-      bVar2 = pbVar13[2];
-
       if (((gGT->trafficLightsTimer < 1) &&
            ((gGT->gameMode1 & START_OF_RACE) == 0)) &&
-          TitleFlag_IsFullyOnScreen() == 0) {
-        Turbo_Increment(d, (int)CONCAT11(bVar1, bVar2), (uint)pbVar13[3],
-                        // two bytes fire level
-                        (int)CONCAT11(pbVar13[4], pbVar13[5]));
+          TitleFlag_IsFullyOnScreen() == 0) 
+	  {
+        Turbo_Increment(
+			d, 
+			
+			(int)CONCAT11(pbVar19[1], pbVar19[2]), 
+			(uint)pbVar19[3],
+            (int)CONCAT11(pbVar19[4], pbVar19[5]));
       }
-      pbVar19 = pbVar13 + 6;
+      pbVar19 += 6;
       break;
 
       // Have the ghost read Instance flags
@@ -430,22 +410,22 @@ void GhostReplay_ThTick(struct Thread *t) {
       // remove a flag from instance
       inst->flags &= 0xffffdfff;
 
-      if (*pbVar19 != 0) {
+      if (pbVar19[1] != 0) {
         inst->flags |= SPLIT_LINE;
       }
-      pbVar19 = pbVar13 + 2;
+      pbVar19 += 2;
       break;
 
       // Have the ghost do nothing
     case 0x84:
       sVar6 = tape->packetID;
+	  pbVar19++;
 
     LAB_80027754:
 
       // increment counter for Position, Velocity, and Null(0x84)
       tape->packetID = sVar6 + 1;
     }
-    pbVar13 = pbVar19;
   }
 
   if (gGT->trafficLightsTimer < 1) {
