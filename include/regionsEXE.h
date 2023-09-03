@@ -1530,9 +1530,10 @@ struct Data
 	int voiceData[0x10];
 
 	// 800838dc -- UsaRetail
-	short voiceID[0x16];
+	short voiceID[0xC];
 
-	// 800838f4 somewhere?
+	// 800838f4
+	unsigned char advHubSongSetBytes[0x14];
 
 	#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
 	char unkBetween_voiceID_nTropyXA[0x14];
