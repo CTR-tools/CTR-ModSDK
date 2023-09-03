@@ -3586,7 +3586,7 @@ struct sData
 	short currentVolume;
 
 	// 8008d79e
-	char storedVolume;
+	unsigned char storedVolume;
 
 	// 8008d79f
 	char boolStoringVolume;

@@ -5,12 +5,9 @@ void DECOMP_Cutscene_VolumeBackup(void)
   // enter critical section
   Smart_EnterCriticalSection();
 
-    // make a copy of FX volume
-    sdata->currentVolume = howl_VolumeGet(0);
-
     // make another copy volume of FX and clamp to 0x100
-    sdata->storedVolume = sdata->currentVolume;
-    sdata->currentVolume &= 0xff;
+    sdata->storedVolume = howl_VolumeGet(0);
+    sdata->currentVolume = sdata->currentVolume;
 
     // copy exists
     sdata->boolStoringVolume = 1;
