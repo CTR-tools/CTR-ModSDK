@@ -1264,23 +1264,20 @@ struct Data
 	// 80081070
 	struct AudioMeta audioData[3];
 
-	// 80081088
-	// modelID (0-0xe2) is used to access array
-	struct MetaDataMODEL MetaDataModels
-
 	// June 1999 - 0x5a
-
-	// EuroDemo53, Jpn D26, both spyros,
-	// all have 0x5c
-
-	// search "NO_FUNC" and see number
+	// EuroDemo, Jpn D26, both Spyro2 - 0x5c
 	#if BUILD == AugReview
-		[0xaf];
+		#define NUM_MDM 0xaf // Aug 4, Aug 14?
 	#elif BUILD == SepReview
-		[0xde];
+		#define NUM_MDM 0xde
 	#elif BUILD >= UsaRetail
-		[0xe2];
+		#define NUM_MDM 0xe2
+	#else
+		#error Unknown MDM
 	#endif
+
+	// 80081088
+	struct MetaDataMODEL MetaDataModels[NUM_MDM];
 	
 	// 8007fce0 -- SepReview
 	// 80081B20 -- UsaRetail
