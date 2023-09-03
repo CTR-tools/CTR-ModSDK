@@ -1,116 +1,59 @@
 #include <common.h>
 
-void DECOMP_Garage_LerpFX(void)
-{
-  int cVar1;
-  short sVar5;
-  short sVar6;
-  short volume;
-  short LR;
-  int i;
-  
-  struct GarageFX* garageSounds;
-  garageSounds = &sdata->garageSoundPool[0];
+/**
+ * @brief Byte budget: 408/476
+ * FUN_800304b8
+ */
+void DECOMP_Garage_LerpFX(void) {
+  struct GarageFX *garageSounds = sdata->garageSoundPool;
+  void **audioPtrRef;
 
-  for (i = 0; i < 8; i++, garageSounds++) 
-  {
+  for (int i = 0; i < 8; ++i, ++garageSounds) {
+    short targetVolume, targetLR;
+    char cVar1 = garageSounds->gsp_curr;
 
-    cVar1 = garageSounds->gsp_curr;
-	
-	if (cVar1 == GSP_CENTER) 
-	{
-      sVar6 = 0xff;
-      sVar5 = 0x80;
-    }
-    
-	else if (cVar1 == GSP_LEFT) 
-	{
-      sVar6 = 100;
-      sVar5 = 0x3c;
-    }
-    
-	else if (cVar1 == GSP_RIGHT) 
-	{
-      sVar6 = 100;
-      sVar5 = 0xc3;
-    }
-	
-    else 
-	{
-	  sVar6 = 0;
-      sVar5 = garageSounds->LR;
+    if (cVar1 == GSP_CENTER) {
+      targetVolume = 0xff;
+      targetLR = 0x80;
+    } else if (cVar1 == GSP_LEFT) {
+      targetVolume = 100;
+      targetLR = 0x3c;
+    } else if (cVar1 == GSP_RIGHT) {
+      targetVolume = 100;
+      targetLR = 0xc3;
+    } else {
+      targetVolume = 0;
+      targetLR = garageSounds->LR;
     }
 
-	volume = garageSounds->volume;
-	LR = garageSounds->LR;
+    if (targetVolume != garageSounds->volume) {
+      short delta = (garageSounds->volume < targetVolume) ? 8 : -8;
+      garageSounds->volume += delta;
+      if ((delta > 0 && garageSounds->volume > targetVolume) ||
+          (delta < 0 && garageSounds->volume < targetVolume)) {
+        garageSounds->volume = targetVolume;
+      }
+    }
 
-	// no change in volume or LR
-	cVar1 = 0;
+    if (targetLR != garageSounds->LR) {
+      short delta = (garageSounds->LR < targetLR) ? 2 : -2;
+      garageSounds->LR += delta;
+      if ((delta > 0 && garageSounds->LR > targetLR) ||
+          (delta < 0 && garageSounds->LR < targetLR)) {
+        garageSounds->LR = targetLR;
+      }
+    }
 
-	// desired audio change
-    if (sVar6 != volume) 
-	{
-	  // lerp up or down
-	  cVar1 = -8;
-      if (volume < sVar6) cVar1 = 8;
-	  volume += cVar1;
-	
-	  if(
-	  	((volume-sVar6) < 8) &&
-	  	((volume-sVar6) > -8)
-	    )
-	  {
-	  	volume = sVar6;
-	  }
-	  
-	  // change detected
-	  cVar1 = 1;
+    audioPtrRef = &garageSounds->audioPtr;
+    if (sdata->garageSoundIDs[i] != 0) {
+      OtherFX_RecycleNew(audioPtrRef, sdata->garageSoundIDs[i],
+                         ((int)garageSounds->volume << 0x10) |
+                             (int)garageSounds->LR | 0x8000U);
     }
-    
-	// desired LR change
-	if (sVar5 != LR) 
-	{
-	  // lerp up or down
-	  cVar1 = -2;
-      if (LR < sVar5) cVar1 = 2;
-	  LR += cVar1;
-	  
-	  if(
-	  	((LR-sVar5) < 2) &&
-	  	((LR-sVar5) > -2)
-	    )
-	  {
-	  	LR = sVar5;
-	  }
-	  
-	  // change detected
-	  cVar1 = 1;
-    }
-	
-	// if no change, quit
-	if(cVar1 == 0) return;
-	
-	garageSounds->volume = volume;
-	garageSounds->LR = LR;
 
-    if (sdata->garageSoundIDs[i] != 0) 
-	{
-      OtherFX_RecycleNew(
-          &garageSounds->audioPtr,
-          sdata->garageSoundIDs[i],
-          (int)volume << 0x10 | (int)LR | 0x8000U
-          );
+    if (targetLR == garageSounds->LR && targetVolume == garageSounds->volume &&
+        garageSounds->gsp_curr == GSP_GONE) {
+      OtherFX_RecycleMute(audioPtrRef);
     }
-	  
-	// if desired properties have been reached
-    if (((sVar5 == LR) && (sVar6 == volume)) &&
-      (
-          garageSounds->gsp_prev = garageSounds->gsp_curr,
-          garageSounds->gsp_curr == GSP_GONE
-      ))
-	{
-      OtherFX_RecycleMute(&garageSounds->audioPtr);
-    }
-  } 
-  return;
+  }
 }
