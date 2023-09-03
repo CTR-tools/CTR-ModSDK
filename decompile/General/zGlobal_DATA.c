@@ -1018,4 +1018,20 @@ struct Data data =
 		{0x40FF, 0x40FF, 0xC0, 0xC0},				// ORANGE_RED
 		#endif
 	},
+	
+	.ptrColor =
+	{
+		&data.colors[0][0], &data.colors[1][0], &data.colors[2][0], &data.colors[3][0],
+		&data.colors[4][0], &data.colors[5][0], &data.colors[6][0], &data.colors[7][0],
+		&data.colors[8][0], &data.colors[9][0], &data.colors[10][0], &data.colors[11][0],
+		&data.colors[12][0], &data.colors[13][0], &data.colors[14][0], &data.colors[15][0],
+		&data.colors[16][0], &data.colors[17][0], &data.colors[18][0], &data.colors[19][0],
+		&data.colors[20][0], &data.colors[21][0], &data.colors[22][0], &data.colors[23][0],
+		&data.colors[24][0], &data.colors[25][0], &data.colors[26][0], &data.colors[27][0],
+		&data.colors[28][0], &data.colors[29][0], &data.colors[30][0], &data.colors[31][0],
+		
+		#if BUILD >= UsaRetail
+		&data.colors[32][0], &data.colors[33][0], &data.colors[34][0],
+		#endif
+	},
 };

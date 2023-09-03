@@ -1299,16 +1299,16 @@ struct Data
 	// 0x230 bytes of colors
 	unsigned int colors[NUM_COLORS][4];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 8007ff00 -- SepReview	0x20
 	// 80081D70 -- UsaRetail	0x23
 	// 80080dd4 -- JpnTrial		0x23
 	// 800822a4 -- EurRetail	0x23
 	// 800850e4 -- JpnRetail	0x23
 	int* ptrColor[NUM_COLORS];
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 8007FF80 -- SepReview
 	// 80081dfc -- UsaRetail
