@@ -1,6 +1,21 @@
 // GhostTape is 0x268 large
 // GhostRecBuf is 0x3e00
 
+typedef struct {
+		// just position,
+		// or union for several packets?
+		
+		short pos[3];
+		short time;
+		char rot[2];
+		short unkA;
+		
+		void* bufferPacket;
+		
+		// 0x10 -- size of packet
+		
+} GhostPacket;
+
 struct GhostTape
 {
 	// 0x0
@@ -45,21 +60,7 @@ struct GhostTape
 	int packetID;
 	
 	// 0x50
-	struct
-	{
-		// just position,
-		// or union for several packets?
-		
-		short pos[3];
-		short time;
-		char rot[2];
-		short unkA;
-		
-		void* bufferPacket;
-		
-		// 0x10 -- size of packet
-		
-	} GhostPackets[0x21];
+	GhostPacket packets[0x21];
 	
 	// 0x260
 	int constDEADC0ED;
@@ -69,6 +70,7 @@ struct GhostTape
 	
 	// 0x268 bytes large
 };
+
 
 struct GhostHeader
 {
