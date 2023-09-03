@@ -37,6 +37,5 @@ void DECOMP_UpdateChannelVol_EngineFX_All()
 				&sdata->channelAttrCurr[curr->channelID],
 				curr->vol, curr->LR);
 		}
-		
 	}
 }
