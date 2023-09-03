@@ -1282,10 +1282,6 @@ struct Data
 		[0xe2];
 	#endif
 	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 8007fce0 -- SepReview
 	// 80081B20 -- UsaRetail
 	// 80080b84 -- JpnTrial
@@ -1297,6 +1293,10 @@ struct Data
 
 	// 80081B30
 	void* ptrRenderedQuadblockDestination_again[4];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	#if BUILD == SepReview
 		#define NUM_COLORS 0x20

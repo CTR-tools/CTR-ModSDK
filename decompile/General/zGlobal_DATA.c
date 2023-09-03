@@ -954,5 +954,21 @@ struct Data data =
 		
 		// 0xe1 - STATIC_GNORMALZ
 		SET_MDM(0,AH_Sign_LInB,0),
-	}
+	},
+
+	.ptrRenderedQuadblockDestination_forEachPlayer =
+	{
+		&sdata_static.quadBlocksRendered[0],
+		&sdata_static.quadBlocksRendered[0x40],
+		&sdata_static.quadBlocksRendered[0x80],
+		&sdata_static.quadBlocksRendered[0xC0]
+	},
+	
+	.ptrRenderedQuadblockDestination_again =
+	{
+		&sdata_static.quadBlocksRendered[0],
+		&sdata_static.quadBlocksRendered[0x40],
+		&sdata_static.quadBlocksRendered[0x80],
+		&sdata_static.quadBlocksRendered[0xC0]
+	},
 };
