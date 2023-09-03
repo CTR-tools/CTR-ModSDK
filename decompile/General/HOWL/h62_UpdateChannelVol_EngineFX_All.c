@@ -17,11 +17,14 @@ void DECOMP_UpdateChannelVol_EngineFX_All()
 		// update volume
 		sdata->ChannelUpdateFlags[curr->channelID] |= 0x40;
 		
+		// just the sound, not the instance of sound
+		int soundID = curr->soundID & 0xffff;
+		
 		// type == EngineFX
 		if(curr->type == 0)
 		{
 			UpdateChannelVol_EngineFX(
-				&sdata->howl_metaEngineFX[curr->soundID],
+				&sdata->howl_metaEngineFX[soundID],
 				&sdata->channelAttrCurr[curr->channelID],
 				curr->vol, curr->LR);
 		}
@@ -30,7 +33,7 @@ void DECOMP_UpdateChannelVol_EngineFX_All()
 		else
 		{
 			UpdateChannelVol_OtherFX(
-				&sdata->howl_metaOtherFX[curr->soundID],
+				&sdata->howl_metaOtherFX[soundID],
 				&sdata->channelAttrCurr[curr->channelID],
 				curr->vol, curr->LR);
 		}
