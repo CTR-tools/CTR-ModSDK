@@ -1531,13 +1531,15 @@ struct Data
 
 	// 800838dc -- UsaRetail
 	short voiceID[0xC];
-
-	// 800838f4
-	unsigned char advHubSongSetBytes[0x14];
-
+	
 	#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
-	char unkBetween_voiceID_nTropyXA[0x14];
+	// JpnRetail, FUN_8002e940(Voiceline_StartPlay), 80086b74
+	short unkBetween_voiceID_SongSetBytes[10];
 	#endif
+
+	// 800838f4 -- UsaRetail
+	// 80086b88 -- JpnRetail
+	unsigned char advHubSongSetBytes[0x14];
 
 	// 80081b84 -- SepReview
 	// 80083908 -- UsaRetail
@@ -2678,7 +2680,8 @@ struct sData
 
 #ifndef SDATA_DEV
 
-	// 8008D068, 8008D06C
+	// 8008D068 -- UsaRetail (and 8008D06C)
+	// 80090470 -- JpnRetail
 	struct SongSet advHubSongSet;
 
 	// 8008d070
