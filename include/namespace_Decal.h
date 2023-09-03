@@ -66,7 +66,7 @@ enum Colors
 	DINGODILE_OLIVE,
 	POLAR_CYAN,
 	PURA_VIOLET,
-	PINSTRIPE_PALE_DARK_BLUE,
+	PINSTRIPE_PALE_DARK_BLUE, // different in sep3
 	PAPU_YELLOW,
 	ROO_ORANGE,
 	JOE_COLOR,
@@ -98,9 +98,13 @@ enum Colors
 	LIGHT_GREEN,
 	FOREST_GREEN,
 	CREDITS_FADE, // written dynamically while credits are running, makes text fade to black bg
+	
+	// Only in USA, EUR, JPN, not Sep3
+	#if BUILD >= UsaRetail
 	BLUE,
 	LIME_GREEN,
 	ORANGE_RED,
+	#endif
 
 	// total amount of enum entries
 	NUM_COLORS

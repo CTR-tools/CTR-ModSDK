@@ -103,27 +103,37 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 	if ((gGT->gameMode1 & PAUSE_ALL) == 0) {
 	
 		// If you're not in Battle Mode
-		if ((gGT->gameMode1 & BATTLE_MODE) == 0) {
+		if ((gGT->gameMode1 & BATTLE_MODE) == 0) 
+		{
+			// random item
 			iconID = rand();
 			iconID = iconID + ((iconID / 6 + (iconID >> 0x1f) >> 1) - (iconID >> 0x1f)) * -0xc;
+			
+			// replace spring with turbo
 			if (iconID == 5) goto LAB_800508ec;
 		}
-		else {
+		
+		// if Battle Mode
+		else 
+		{
+			// random item
 			iconID = rand();
 			iconID = iconID % 0xe;
+			
+			// replace spring
 			if (iconID == 5) {
-		B_800508ec:
-			iconID = 0;
+		LAB_800508ec:
+				iconID = 0;
 			}
-			else {
-			if (iconID == 8) {
+			
+			// replace clock
+			else if (iconID == 8) {
 				iconID = 1;
 			}
-			else {
-				if (iconID == 9) {
+			
+			// replace warpball
+			else if (iconID == 9) {
 				iconID = 3;
-				}
-			}
 			}
 		}
 	}

@@ -1291,16 +1291,6 @@ struct Data
 	// 80081B30
 	void* ptrRenderedQuadblockDestination_again[4];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
-	#if BUILD == SepReview
-		#define NUM_COLORS 0x20
-	#elif BUILD >= UsaRetail
-		#define NUM_COLORS 0x23
-	#endif
-
 	// 8007FD00 -- SepReview
 	// 80081B40 -- UsaRetail
 	// 80080BA4 -- JpnTrial
@@ -1308,6 +1298,10 @@ struct Data
 	// 80084EB4 -- JpnRetail
 	// 0x230 bytes of colors
 	unsigned int colors[NUM_COLORS][4];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 8007ff00 -- SepReview	0x20
 	// 80081D70 -- UsaRetail	0x23
