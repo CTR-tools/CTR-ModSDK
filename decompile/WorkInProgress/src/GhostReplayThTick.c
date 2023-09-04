@@ -11,27 +11,22 @@ void GhostReplay_ThTick(struct Thread *t) {
   struct GhostTape *tape;
   struct GameTracker *gGT;
   struct GhostHeader *gh;
-  byte bVar1;
-  byte bVar2;
-  short sVar6;
+  short opcodePos;
   int packetIdx;
   unsigned int scaledPacketIdx;
   unsigned int interpolationFactor;
   unsigned int delta;
-  byte *pbVar19;
+  char *packetPtr;
   struct GhostTape *tape;
   struct Instance *inst;
   struct Driver *d;
   struct GameTracker *gGT;
   struct GhostPacket *packet;
-  // TODO: This will most likely be an array of [3]
-  short local_48;
-  short local_46;
-  short local_44;
   int velocity[3];    // short?
   short local_rot[3]; // ushort?
   int timeInRace;
   int scaledNum;
+  int color;
 
   d = t->object;
   tape = d->ghostTape;
@@ -44,16 +39,16 @@ void GhostReplay_ThTick(struct Thread *t) {
   if (
       // 6-second timer != 0, and ghost made by human
       (sdata->ghostOverflowTextTimer != 0) && (d->ghostID == 0)) {
-    sVar6 = 0xFFFF8004;
+    color = 0xFFFF8004;
     if (sdata->ghostOverflowTextTimer & 1) {
-      sVar6 = 0xFFFF8003;
+      color = 0xFFFF8003;
     }
 
     // GHOST DATA OVERFLOW
-    DecalFont_DrawLine(sdata->lngStrings[361], 0x100, 0x28, 2, (int)sVar6);
+    DecalFont_DrawLine(sdata->lngStrings[361], 0x100, 0x28, 2, color);
 
     // CAN NOT SAVE GHOST DATA
-    DecalFont_DrawLine(sdata->lngStrings[362], 0x100, 0x32, 2, (int)sVar6);
+    DecalFont_DrawLine(sdata->lngStrings[362], 0x100, 0x32, 2, color);
 
     sdata->ghostOverflowTextTimer--;
   }
@@ -87,19 +82,19 @@ void GhostReplay_ThTick(struct Thread *t) {
 
   // flush and rewrite cached GhostPackets array
   if (tape->timeInPacket32 <= timeInRace) {
-    sVar6 = 0;
-
-    pbVar19 = tape->ptrCurr;
+    opcodePos = 0;
+    packetPtr = tape->ptrCurr;
+    short tmpPos[3] = {0};
 
     tape->packetID = -1;
     tape->timeInPacket01 = tape->timeInPacket32_backup;
 
     // move two POSITION(0x80) opcodes in advance,
     // combine with velocity to make GhostPackets cache
-    do {
+    while (opcodePos < 2) {
 
       // reached end of tape
-      if ((char *)tape->ptrEnd <= pbVar19) {
+      if ((char *)tape->ptrEnd <= packetPtr) {
         // ghostHeader
         // driver ->0x62C->0
         // TODO: ghostHeader??
@@ -126,79 +121,68 @@ void GhostReplay_ThTick(struct Thread *t) {
       }
 
       // if opcode is seen
-      uint uVar9 = (uint)pbVar19[0];
-      if ((uVar9 + 0x80 & 0xff) < 5) {
-        switch (uVar9) {
+      u_int opcode = (uint)packetPtr[0];
+      if ((opcode + 0x80 & 0xff) < 5) {
+        switch (opcode) {
 
         case 0x80: // position data
+          for (int i = 0; i < 3; ++i) {
+            // Little Endian to Big Endian
+            u_short rawValue =
+                // TODO: check if i*2 or just i?
+                (u_short)((packetPtr[1 + i * 2] << 8) | packetPtr[2 + i * 2]);
 
-          // TODO: Create array[3]for local_48, 46, 44
-          local_48 =
-              (short)((int)((uint)CONCAT11(pbVar19[1], pbVar19[2]) << 0x10) >>
-                      0xd);
-          packet->pos[0] = local_48;
-
-          local_46 =
-              (short)((int)((uint)CONCAT11(pbVar19[3], pbVar19[4]) << 0x10) >>
-                      0xd);
-          packet->pos[1] = local_46;
-
-          local_44 =
-              (short)((int)((uint)CONCAT11(pbVar19[5], pbVar19[6]) << 0x10) >>
-                      0xd);
-          packet->pos[2] = local_44;
+            // TODO: Type casting
+            tmpPos[i] = (short)(((int)((u_int)rawValue << 0x10)) >> 0xd);
+            packet->pos[i] = tmpPos[i];
+          }
 
           packet->time = 0;
 
-          packet->rot[0] = (ushort)pbVar19[9] << 4;
-          packet->rot[1] = (ushort)pbVar19[10] << 4;
+          packet->rot[0] = (u_short)packetPtr[9] << 4;
+          packet->rot[1] = (u_short)packetPtr[10] << 4;
 
           // if 2nd position opcode
-          if (sVar6 == 1) {
-            // get time (big endian) from position message
-            bVar1 = pbVar19[7];
-            bVar2 = pbVar19[8];
-            tape->ptrCurr = pbVar19;
-
-            // elapsedTime (ghost->0x18 and ghost->0x40)
-            tape->timeInPacket32_backup =
-                tape->timeInPacket32_backup + (int)CONCAT11(bVar1, bVar2);
-            tape->timeInPacket32 =
-                tape->timeInPacket32_backup + (int)CONCAT11(bVar1, bVar2);
+          if (opcodePos == 1) {
+            // Get time (big endian) from position message
+            u_short bigEndianTime = (packetPtr[7] << 8) | packetPtr[8];
+            tape->ptrCurr = packetPtr;
+            tape->timeInPacket32_backup += bigEndianTime;
+            tape->timeInPacket32 += bigEndianTime;
           }
 
           // count position opcodes
-          sVar6++;
+          opcodePos++;
 
-          packet->bufferPacket = pbVar19;
-          pbVar19 += 11;
+          packet->bufferPacket = packetPtr;
+          packetPtr += 11;
           packet++;
 
           break;
 
         case 0x81: // animation flags
-          pbVar19 += 3;
+          packetPtr += 3;
           break;
 
         case 0x82: // boost flags
-          pbVar19 += 6;
+          packetPtr += 6;
           break;
 
         case 0x83: // instance flags
-          pbVar19 += 2;
+          packetPtr += 2;
           break;
 
         case 0x84: // driver does nothing
-          packet->pos[0] = local_48;
-          packet->pos[1] = local_46;
-          packet->pos[2] = local_44;
+          for (int i = 0; i < 3; ++i) {
+            packet->pos[i] = tmpPos[i];
+          }
 
           packet[0].time = packet[-1].time;
           packet[0].rot[0] = packet[-1].rot[0];
           packet[0].rot[1] = packet[-1].rot[1];
 
-          packet->bufferPacket = pbVar19;
-          pbVar19 += 1;
+          packet->bufferPacket = packetPtr;
+          packetPtr += 1;
           packet++;
           break;
         }
@@ -206,24 +190,21 @@ void GhostReplay_ThTick(struct Thread *t) {
 
       // if no opcode, assume 5 bytes of velocity
       else {
-        local_48 += pbVar19[0] * 8;
-        local_46 += pbVar19[1] * 8;
-        local_44 += pbVar19[2] * 8;
-
-        packet->pos[0] = local_48;
-        packet->pos[1] = local_46;
-        packet->pos[2] = local_44;
+        for (int i = 0; i < 3; ++i) {
+          tmpPos[i] += packetPtr[i] * 8;
+          packet->pos[i] = tmpPos[i];
+        }
 
         packet->time = 0;
 
-        packet->rot[0] = pbVar19[3] << 4;
-        packet->rot[1] = pbVar19[4] << 4;
+        packet->rot[0] = packetPtr[3] << 4;
+        packet->rot[1] = packetPtr[4] << 4;
 
-        packet->bufferPacket = pbVar19;
-        pbVar19 += 5;
+        packet->bufferPacket = packetPtr;
+        packetPtr += 5;
         packet++;
       }
-    } while (sVar6 < 2);
+    }
 
     tape->numPacketsInArray =
         ((unsigned int)packet - (unsigned int)&tape->packets[0]) >> 4;
@@ -304,8 +285,8 @@ void GhostReplay_ThTick(struct Thread *t) {
   d->rotCurr.y = local_rot[1];
   d->rotCurr.z = local_rot[2];
 
-  // TODO: type? 
-  uint8_t *buffer = (uint8_t *)tape->packets[packetIdx].bufferPacket;
+  // TODO: type?
+  u_short *buffer = (u_short *)tape->packets[packetIdx].bufferPacket;
 
   while (tape->packetID < packetIdx) {
     if (tape->ptrEnd <= buffer)
