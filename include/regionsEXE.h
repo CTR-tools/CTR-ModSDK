@@ -1350,10 +1350,6 @@ struct Data
 	// punctuation, like period and colon
 	short font_puncPixWidth[FONT_NUM];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80080578 -- SepReview
 	// 80082378 -- UsaRetail
 	// 800813dc -- JpnTrial
@@ -1420,7 +1416,7 @@ struct Data
 	// The extra characters are " ¡ ¿ º and ~ used as diacritical (e.g. Ñ)
 
 	// 80082948 -- EurRetail
-	// width, height, icon scale in that order, same as unkWidthHeightOffsets except with 3 variables
+	// width, height, icon scale in that order, same as font_indentPixDimensions except with 3 variables
 	#if BUILD == EurRetail
 	short font_EurDiacriticalTilde[FONT_NUM * 3];
 
@@ -1435,13 +1431,17 @@ struct Data
 	// 80082998 -- EurRetail
 	short font_EurPixWidthExtra[FONT_NUM];
 	#endif
-
+	
 	// 80080684 -- SepReview
 	// 80082488 -- UsaRetail
 	// 800815b4 -- JpnTrial
 	// 800829a0 -- EurRetail
 	// 800858d0 -- JpnRetail
-	char PauseImageData[0x20];
+	unsigned short pauseScreenStrip[0x10];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 800824a8 -- UsaRetail
 	char unk_gamepadData[0xA0];

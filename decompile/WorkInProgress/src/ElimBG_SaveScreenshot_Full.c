@@ -94,6 +94,6 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
 	local_30.w = 0x10;
 	local_30.x = 0x200;
 	local_30.h = 1;
-	LoadImage(&local_30, sdata->PauseImageData);
+	LoadImage(&local_30, sdata->pauseScreenStrip);
 	return;
 }
