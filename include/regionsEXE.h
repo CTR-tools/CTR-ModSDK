@@ -1305,10 +1305,6 @@ struct Data
 	// 800822a4 -- EurRetail	0x23
 	// 800850e4 -- JpnRetail	0x23
 	int* ptrColor[NUM_COLORS];
-	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
 
 	// 8007FF80 -- SepReview
 	// 80081dfc -- UsaRetail
@@ -1316,15 +1312,15 @@ struct Data
 	// 80082330 -- EurRetail
 	// 80085170 -- JpnRetail
 	#if BUILD == SepReview
-	short ghostScrambleData[0x2ae + 0x42];
+	unsigned short ghostScrambleData[0x2ae + 0x42];
 	#elif BUILD == UsaRetail
-	short ghostScrambleData[0x2ae];
+	unsigned short ghostScrambleData[0x2ae];
 	#elif BUILD == JpnTrial
-	short ghostScrambleData[0x2ae];
+	unsigned short ghostScrambleData[0x2ae];
 	#elif BUILD == EurRetail
-	short ghostScrambleData[0x2ae + 6];
+	unsigned short ghostScrambleData[0x2ae + 6];
 	#elif BUILD == JpnRetail
-	short ghostScrambleData[0x2ae + 6];
+	unsigned short ghostScrambleData[0x2ae + 6];
 	#endif
 
 	// 80082358 -- UsaRetail
@@ -1353,6 +1349,10 @@ struct Data
 	// 800856f0 -- JpnRetail
 	// punctuation, like period and colon
 	short font_puncPixWidth[FONT_NUM];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80080578 -- SepReview
 	// 80082378 -- UsaRetail
