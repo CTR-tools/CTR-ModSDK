@@ -1394,7 +1394,7 @@ struct Data
 	// 800814d4 -- JpnTrial
 	// 80082930 -- EurRetail
 	// 800857f0 -- JpnRetail
-	char unk_dataHere[FONT_NUM * 2];
+	char font_indentIconID[FONT_NUM * 2];
 
 	// 80080678 -- SepReview
 	// 80082478 -- UsaRetail
@@ -1402,7 +1402,7 @@ struct Data
 	// 80082938 -- EurRetail
 	// 800857f8 -- JpnRetail
 	// 0x8 is debug width, 0xA is debug height, 0xC is small width, 0xE is small height, so on
-	short font_unkWidthHeightOffsets
+	short font_indentPixDimensions
 	#if BUILD == SepReview
 	[(FONT_NUM-1) * 2]; // Naughty Dog typo
 	#elif BUILD >= UsaRetail

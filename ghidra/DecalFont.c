@@ -215,14 +215,11 @@ LAB_80022598:
         }
       }
 	  
+	  // indentation ascii characters (unused)
       if (bVar1 < 3) 
 	  {
-		// go to asm address 800226b8, that's SLTI
-		// does a breakpoint at 800226c8 (after SLTI) ever hit?
-		  
-		// this is definitely 80082470,
-		// iconID is F3 or F4, meaning?
-        uVar8 = (uint)*(byte *)(uVar4 + iVar2 + -0x7ff7db91);
+		// iconID
+        uVar8 = (uint)*(byte *)(uVar4 + iVar2 + 0x80082470);
         
 		// dimensions
 		sVar6 = *(short *)(&DAT_80082478 + iVar12);

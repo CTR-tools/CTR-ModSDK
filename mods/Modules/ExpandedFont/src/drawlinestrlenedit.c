@@ -209,18 +209,18 @@ LAB_80022598:
 				if (*character < 3) 
 				{
 					charLength = 0;
-					iconID = data.unk_dataHere[fontType * 2 + *character - 1];
+					iconID = data.font_indentIconID[fontType * 2 + *character - 1];
 					
 					#if BUILD == EurRetail
-					fontDataPointer = &data.font_unkWidthHeightOffsets[0];
+					fontDataPointer = &data.font_indentPixDimensions[0];
 
 					LoadExtraCharacterOffsets:
 					pixWidthExtra = fontDataPointer[fontType * 2];
 					pixHeightExtra = fontDataPointer[(fontType * 2) + 1];
 
 					#else
-					pixWidthExtra = data.font_unkWidthHeightOffsets[fontType * 2];
-					pixHeightExtra = data.font_unkWidthHeightOffsets[(fontType * 2) + 1];
+					pixWidthExtra = data.font_indentPixDimensions[fontType * 2];
+					pixHeightExtra = data.font_indentPixDimensions[(fontType * 2) + 1];
 					#endif
 				}
 				else
