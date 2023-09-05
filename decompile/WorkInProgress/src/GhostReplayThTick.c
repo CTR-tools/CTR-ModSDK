@@ -17,10 +17,8 @@ void GhostReplay_ThTick(struct Thread *t) {
   unsigned int interpolationFactor;
   unsigned int delta;
   char *packetPtr;
-  struct GhostTape *tape;
   struct Instance *inst;
   struct Driver *d;
-  struct GameTracker *gGT;
   struct GhostPacket *packet;
   int velocity[3];    // short?
   short local_rot[3]; // ushort?
@@ -95,19 +93,11 @@ void GhostReplay_ThTick(struct Thread *t) {
 
       // reached end of tape
       if ((char *)tape->ptrEnd <= packetPtr) {
-        // ghostHeader
-        // driver ->0x62C->0
-        // TODO: ghostHeader??
-        inst = *tape;
+        gh = tape->gh;
 
-        // ghostHeader->ySpeed
-        d->ySpeed = *(undefined4 *)(inst + 0xc);
-
-        // driver is not AI anymore
-        d->actionsFlagSet &= 0xffefffff;
-
-        // ghostHeader->speedApprox
-        d->speedApprox = *(undefined2 *)(inst + 8);
+        d->ySpeed = gh->ySpeed;
+        d->actionsFlagSet &= 0xffefffff; // driver is not AI anymore
+        d->speedApprox = gh->speedApprox;
 
         BOTS_Driver_Convert(d);
         BOTS_ThTick_Drive(t);
@@ -121,7 +111,7 @@ void GhostReplay_ThTick(struct Thread *t) {
       }
 
       // if opcode is seen
-      u_int opcode = (uint)packetPtr[0];
+      u_int opcode = (u_int)packetPtr[0];
       if ((opcode + 0x80 & 0xff) < 5) {
         switch (opcode) {
 
@@ -242,8 +232,8 @@ void GhostReplay_ThTick(struct Thread *t) {
   }
 
   // Ptrs to current and next packets for better readability
-  GhostPacket *currentPacket = &tape->packets[packetIdx];
-  GhostPacket *nextPacket = &tape->packets[packetIdx + 1];
+  struct GhostPacket *currentPacket = &tape->packets[packetIdx];
+  struct GhostPacket *nextPacket = &tape->packets[packetIdx + 1];
 
   velocity[0] = (int)nextPacket->pos[0] - (int)currentPacket->pos[0];
   velocity[1] = (int)nextPacket->pos[1] - (int)currentPacket->pos[1];
@@ -275,7 +265,7 @@ void GhostReplay_ThTick(struct Thread *t) {
       currentPacket->time + (short)((int)(delta * interpolationFactor) >> 0xC) &
       0xFFF;
 
-  ConvertRotToMatrix(&inst->matrix, &local_rot);
+  ConvertRotToMatrix(&inst->matrix, local_rot);
 
   d->posCurr[0] = inst->matrix.t[0] << 8;
   d->posCurr[1] = inst->matrix.t[1] << 8;
@@ -289,7 +279,7 @@ void GhostReplay_ThTick(struct Thread *t) {
   u_short *buffer = (u_short *)tape->packets[packetIdx].bufferPacket;
 
   while (tape->packetID < packetIdx) {
-    if (tape->ptrEnd <= buffer)
+    if ((u_short *)tape->ptrEnd <= buffer)
       break;
 
     uint8_t opcode = buffer[0];
