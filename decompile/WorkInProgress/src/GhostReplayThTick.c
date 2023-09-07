@@ -2,7 +2,7 @@
 
 // TODO: RENAME FILE TO GhostReplay_ThTick
 /**
- * @brief Byte Budget: 2400
+ * @brief Byte Budget: 1672/2400
  * FUN_80026ed8
  *
  * @param t ptr to thread
@@ -16,7 +16,7 @@ void GhostReplay_ThTick(struct Thread *t) {
   unsigned int scaledPacketIdx;
   unsigned int interpolationFactor;
   unsigned int delta;
-  char *packetPtr;
+  unsigned char *packetPtr;
   struct Instance *inst;
   struct Driver *d;
   struct GhostPacket *packet;
@@ -34,9 +34,9 @@ void GhostReplay_ThTick(struct Thread *t) {
   inst->scale[1] = 0xccc;
   inst->scale[2] = 0xccc;
 
-  if (
-      // 6-second timer != 0, and ghost made by human
-      (sdata->ghostOverflowTextTimer != 0) && (d->ghostID == 0)) {
+  // 6-second timer != 0, and ghost made by human
+  if ((sdata->ghostOverflowTextTimer != 0) && (d->ghostID == 0)) 
+  {
     color = 0xFFFF8004;
     if (sdata->ghostOverflowTextTimer & 1) {
       color = 0xFFFF8003;
@@ -55,7 +55,7 @@ void GhostReplay_ThTick(struct Thread *t) {
 
   if ((sdata->boolGhostsDrawing == 0) || (gGT->gameMode1 & PAUSE_THREADS) ||
       // driver == nullptr
-      (d == 0) || tape->ptrEnd == tape->ptrStart || (d->ghostBoolInit == 0)) {
+      (d == 0) || (tape->ptrEnd == tape->ptrStart) || (d->ghostBoolInit == 0)) {
     inst->flags |= HIDE_MODEL;
     return;
   }
@@ -77,6 +77,8 @@ void GhostReplay_ThTick(struct Thread *t) {
   inst->flags = (inst->flags & 0xfff8ff7f) | GHOST_DRAW_TRANSPARENT;
 
   timeInRace = tape->timeElapsedInRace >= 0 ? tape->timeElapsedInRace : 0;
+  
+  packet = &tape->packets[0];
 
   // flush and rewrite cached GhostPackets array
   if (tape->timeInPacket32 <= timeInRace) {
@@ -215,12 +217,14 @@ void GhostReplay_ThTick(struct Thread *t) {
   scaledNum =
       (timeInRace - tape->timeInPacket01) * tape->numPacketsInArray * 0x1000;
 
+#if 0
   if (tape->timeBetweenPackets == 0) {
     trap(0x1c00);
   }
   if ((tape->timeBetweenPackets == -1) && (scaledNum == -0x80000000)) {
     trap(0x1800);
   }
+#endif
 
   scaledPacketIdx = scaledNum / tape->timeBetweenPackets;
   packetIdx = (int)scaledPacketIdx >> 0xc;
