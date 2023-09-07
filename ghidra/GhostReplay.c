@@ -399,17 +399,22 @@ LAB_80027304:
     *(int *)(iVar21 + 0x48) = (int)*(short *)((int)piVar15 + 2) + ((int)(local_34 * uVar9) >> 0xc);
     *(int *)(iVar21 + 0x4c) = (int)*(short *)(piVar15 + 1) + ((int)(local_30 * uVar9) >> 0xc);
 
+	// Rotation
 	uVar10 = (int)*(short *)((int)piVar15 + 0x16) - (int)*(short *)((int)piVar15 + 6) & 0xfff;
     if (0x7ff < uVar10) {
       uVar10 = uVar10 - 0x1000;
     }
     local_40 = *(short *)((int)piVar15 + 6) + (short)((int)(uVar10 * uVar9) >> 0xc) & 0xfff;
-    uVar10 = (int)*(short *)(piVar15 + 6) - (int)*(short *)(piVar15 + 2) & 0xfff;
+    
+	// Rotation
+	uVar10 = (int)*(short *)(piVar15 + 6) - (int)*(short *)(piVar15 + 2) & 0xfff;
     if (0x7ff < uVar10) {
       uVar10 = uVar10 - 0x1000;
     }
     local_3e = *(short *)(piVar15 + 2) + (short)((int)(uVar10 * uVar9) >> 0xc) & 0xfff;
-    uVar10 = (int)*(short *)((int)piVar15 + 0x1a) - (int)*(short *)((int)piVar15 + 10) & 0xfff;
+    
+	// Rotation
+	uVar10 = (int)*(short *)((int)piVar15 + 0x1a) - (int)*(short *)((int)piVar15 + 10) & 0xfff;
     if (0x7ff < uVar10) {
       uVar10 = uVar10 - 0x1000;
     }

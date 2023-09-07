@@ -118,13 +118,12 @@ void GhostReplay_ThTick(struct Thread *t) {
         switch (opcode) {
 
         case 0x80: // position data
-          for (int i = 0; i < 3; ++i) {
+          for (int i = 0; i < 3; ++i) 
+		  {
             // Little Endian to Big Endian
             u_short rawValue =
-                // TODO: check if i*2 or just i?
                 (u_short)((packetPtr[1 + i * 2] << 8) | packetPtr[2 + i * 2]);
 
-            // TODO: Type casting
             tmpPos[i] = (short)(((int)((u_int)rawValue << 0x10)) >> 0xd);
             packet->pos[i] = tmpPos[i];
           }
@@ -183,7 +182,7 @@ void GhostReplay_ThTick(struct Thread *t) {
       // if no opcode, assume 5 bytes of velocity
       else {
         for (int i = 0; i < 3; ++i) {
-          tmpPos[i] += packetPtr[i] * 8;
+          tmpPos[i] += (short)((char)packetPtr[i]) * 8;
           packet->pos[i] = tmpPos[i];
         }
 
@@ -201,8 +200,7 @@ void GhostReplay_ThTick(struct Thread *t) {
     tape->numPacketsInArray =
         ((unsigned int)packet - (unsigned int)&tape->packets[0]) >> 4;
 
-    // needed?
-    // tape->numPacketsInArray -= 1;
+    tape->numPacketsInArray -= 1;
 
     if (tape->numPacketsInArray < 0) {
       tape->numPacketsInArray = 1;
@@ -243,6 +241,8 @@ void GhostReplay_ThTick(struct Thread *t) {
   velocity[1] = (int)nextPacket->pos[1] - (int)currentPacket->pos[1];
   velocity[2] = (int)nextPacket->pos[2] - (int)currentPacket->pos[2];
 
+  printf("%d %d %d %d\n", packetIdx, velocity[0], velocity[1], velocity[2]);
+
   inst->matrix.t[0] =
       currentPacket->pos[0] + ((velocity[0] * interpolationFactor) >> 0xC);
   inst->matrix.t[1] =
@@ -257,16 +257,16 @@ void GhostReplay_ThTick(struct Thread *t) {
                      (short)((int)(delta * interpolationFactor) >> 0xC) &
                  0xFFF;
 
-  delta = ((int)currentPacket->rot[0] - (int)currentPacket->pos[2]) & 0xFFF;
+  delta = ((int)currentPacket->rot[1] - (int)currentPacket->rot[1]) & 0xFFF;
   delta = (delta > 0x7FF) ? (delta - 0x1000) : delta;
-  local_rot[1] = currentPacket->pos[2] +
+  local_rot[1] = currentPacket->rot[1] +
                      (short)((int)(delta * interpolationFactor) >> 0xC) &
                  0xFFF;
 
-  delta = ((int)nextPacket->rot[1] - (int)currentPacket->time) & 0xFFF;
+  delta = ((int)nextPacket->rot[2] - (int)currentPacket->rot[2]) & 0xFFF;
   delta = (delta > 0x7FF) ? (delta - 0x1000) : delta;
-  local_rot[2] =
-      currentPacket->time + (short)((int)(delta * interpolationFactor) >> 0xC) &
+  local_rot[2] = currentPacket->rot[1] + 
+					(short)((int)(delta * interpolationFactor) >> 0xC) &
       0xFFF;
 
   ConvertRotToMatrix(&inst->matrix, local_rot);
