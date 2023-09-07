@@ -94,7 +94,7 @@ void GhostReplay_ThTick(struct Thread *t) {
     while (opcodePos < 2) {
 
       // reached end of tape
-      if ((char *)tape->ptrEnd <= packetPtr) {
+      if (tape->ptrEnd <= packetPtr) {
         gh = tape->gh;
 
         d->ySpeed = gh->ySpeed;
@@ -281,11 +281,10 @@ void GhostReplay_ThTick(struct Thread *t) {
   d->rotCurr.y = local_rot[1];
   d->rotCurr.z = local_rot[2];
 
-  // TODO: type?
-  u_short *buffer = (u_short *)tape->packets[packetIdx].bufferPacket;
+  unsigned char* buffer = tape->packets[packetIdx].bufferPacket;
 
   while (tape->packetID < packetIdx) {
-    if ((u_short *)tape->ptrEnd <= buffer)
+    if (tape->ptrEnd <= buffer)
       break;
 
     uint8_t opcode = buffer[0];
