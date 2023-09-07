@@ -242,8 +242,6 @@ void GhostReplay_ThTick(struct Thread *t) {
   velocity[1] = (int)nextPacket->pos[1] - (int)currentPacket->pos[1];
   velocity[2] = (int)nextPacket->pos[2] - (int)currentPacket->pos[2];
 
-  printf("%d %d %d %d\n", packetIdx, velocity[0], velocity[1], velocity[2]);
-
   inst->matrix.t[0] =
       currentPacket->pos[0] + ((velocity[0] * interpolationFactor) >> 0xC);
   inst->matrix.t[1] =
