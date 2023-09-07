@@ -188,8 +188,9 @@ void GhostReplay_ThTick(struct Thread *t) {
 
         packet->time = 0;
 
-        packet->rot[0] = packetPtr[3] << 4;
-        packet->rot[1] = packetPtr[4] << 4;
+		// yes, this is right
+        packet->rot[1] = packetPtr[3] << 4;
+        packet->rot[0] = packetPtr[4] << 4;
 
         packet->bufferPacket = packetPtr;
         packetPtr += 5;
@@ -263,11 +264,14 @@ void GhostReplay_ThTick(struct Thread *t) {
                      (short)((int)(delta * interpolationFactor) >> 0xC) &
                  0xFFF;
 
+#if 0
   delta = ((int)nextPacket->rot[2] - (int)currentPacket->rot[2]) & 0xFFF;
   delta = (delta > 0x7FF) ? (delta - 0x1000) : delta;
-  local_rot[2] = currentPacket->rot[1] + 
+  local_rot[2] = currentPacket->rot[2] + 
 					(short)((int)(delta * interpolationFactor) >> 0xC) &
       0xFFF;
+#endif
+  local_rot[2] = 0;
 
   ConvertRotToMatrix(&inst->matrix, local_rot);
 
