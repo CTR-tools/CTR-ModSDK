@@ -130,8 +130,9 @@ void GhostReplay_ThTick(struct Thread *t) {
 
           packet->time = 0;
 
-          packet->rot[0] = (u_short)packetPtr[9] << 4;
-          packet->rot[1] = (u_short)packetPtr[10] << 4;
+		  // yes, this is correct
+          packet->rot[1] = (u_short)packetPtr[9] << 4;
+          packet->rot[0] = (u_short)packetPtr[10] << 4;
 
           // if 2nd position opcode
           if (opcodePos == 1) {
@@ -256,7 +257,7 @@ void GhostReplay_ThTick(struct Thread *t) {
                      (short)((int)(delta * interpolationFactor) >> 0xC) &
                  0xFFF;
 
-  delta = ((int)currentPacket->rot[1] - (int)currentPacket->rot[1]) & 0xFFF;
+  delta = ((int)nextPacket->rot[1] - (int)currentPacket->rot[1]) & 0xFFF;
   delta = (delta > 0x7FF) ? (delta - 0x1000) : delta;
   local_rot[1] = currentPacket->rot[1] +
                      (short)((int)(delta * interpolationFactor) >> 0xC) &
@@ -281,7 +282,7 @@ void GhostReplay_ThTick(struct Thread *t) {
   d->rotCurr.y = local_rot[1];
   d->rotCurr.z = local_rot[2];
 
-  unsigned char* buffer = tape->packets[packetIdx].bufferPacket;
+  unsigned char* buffer = tape->packets[tape->packetID].bufferPacket;
 
   while (tape->packetID < packetIdx) {
     if (tape->ptrEnd <= buffer)
