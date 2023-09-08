@@ -73,7 +73,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	// If you're in Adventure Mode
 	if ((gGT->gameMode1 & ADVENTURE_MODE) != 0)
 	{
-		
 		// If you won the race, and you have all 3 letters (C, T, and R)
 		if ((driver->driverRank == 0) && (driver->PickupLetterHUD.numCollected == 3))
 		{
@@ -262,52 +261,48 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			sdata->numIconsEOR++;
 		}
 
-		// if you are drawing any player icons
-		if (sdata->numIconsEOR)
+		// loop through all the driver icons
+		for (i = 0; i < sdata->numIconsEOR; i++)
 		{
-			// loop through all the driver icons
-			for (i = 0; i < sdata->numIconsEOR; i++)
+
+			int iVar11 = gGT->tileView[0].rect.x +
+						 (gGT->tileView[0].rect.w - totalPlyr * 56 + 12) / 2 + (i * 56);
+
+			if (300 - lerpEndY < elapsedFrames)
 			{
-
-				int iVar11 = gGT->tileView[0].rect.x +
-							 (gGT->tileView[0].rect.w - totalPlyr * 56 + 12) / 2 + (i * 56);
-
-				if (300 - lerpEndY < elapsedFrames)
-				{
-					lerpStartX = iVar11;
-					lerpEndX = -100;
-					currFrame = (elapsedFrames - 300) + lerpEndY;
-				}
-				else
-				{
-					lerpStartX = 0x218;
-					lerpEndX = iVar11;
-					currFrame = t;
-				}
-
-				t -= 10;
-
-				// interpolate fly-in
-				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, 0x60, lerpEndX, 0x60, currFrame, 10);
-
-				str_number = (char)i + '1';
-
-				// print a single character, a number 1-8,
-				DecalFont_DrawLine(&str_number, letterPos[0] + 0x20, 0x5f, 2, 4);
-
-				// Draw the driver's character icon
-				UI_DrawDriverIcon(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->driversInRaceOrder[i]->driverID]].iconID],
-
-								  letterPos[0], 0x60,
-
-								  // pointer to PrimMem struct
-								  &gGT->backBuffer->primMem,
-
-								  // pointer to OT mem
-								  gGT->tileView_UI.ptrOT,
-
-								  1, 0x1000, 0x808080);
+				lerpStartX = iVar11;
+				lerpEndX = -100;
+				currFrame = (elapsedFrames - 300) + lerpEndY;
 			}
+			else
+			{
+				lerpStartX = 0x218;
+				lerpEndX = iVar11;
+				currFrame = t;
+			}
+
+			t -= 10;
+
+			// interpolate fly-in
+			UI_Lerp2D_Linear(&letterPos[0], lerpStartX, 0x60, lerpEndX, 0x60, currFrame, 10);
+
+			str_number = (char)i + '1';
+
+			// print a single character, a number 1-8,
+			DecalFont_DrawLine(&str_number, letterPos[0] + 0x20, 0x5f, 2, 4);
+
+			// Draw the driver's character icon
+			UI_DrawDriverIcon(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->driversInRaceOrder[i]->driverID]].iconID],
+
+							  letterPos[0], 0x60,
+
+							  // pointer to PrimMem struct
+							  &gGT->backBuffer->primMem,
+
+							  // pointer to OT mem
+							  gGT->tileView_UI.ptrOT,
+
+							  1, 0x1000, 0x808080);
 		}
 	}
 
@@ -533,8 +528,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	}
 
 	// increment counter for number of frames since the player ended the race
+	driver->framesSinceRaceEnded_forThisDriver++;
 	framesElapsed = driver->framesSinceRaceEnded_forThisDriver;
-	framesElapsed++;
 
 	if (
 		// if player ended race less than 110 frames ago
@@ -548,6 +543,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	{
 		// Assume race ended 110 frames ago
 		framesElapsed = 110;
+		sdata->framesSinceRaceEnded = framesElapsed;
+		driver->framesSinceRaceEnded_forThisDriver = framesElapsed;
 
 		sdata->numIconsEOR = numPlyr + gGT->numBotsNextGame;
 
@@ -653,7 +650,6 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 
 	// Draw 2D Menu rectangle background
 	MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
-	driver->framesSinceRaceEnded_forThisDriver = framesElapsed;
 	return;
 }
 
