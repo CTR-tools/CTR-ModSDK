@@ -14,7 +14,7 @@ void GhostReplay_ThTick(struct Thread *t) {
   short opcodePos;
   int packetIdx;
   unsigned int scaledPacketIdx;
-  unsigned int interpolationFactor;
+  unsigned short interpolationFactor;
   unsigned int delta;
   unsigned char *packetPtr;
   struct Instance *inst;
