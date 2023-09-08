@@ -282,62 +282,65 @@ void GhostReplay_ThTick(struct Thread *t) {
   d->rotCurr.y = local_rot[1];
   d->rotCurr.z = local_rot[2];
 
-  unsigned char* buffer = tape->packets[tape->packetID].bufferPacket;
+  unsigned char* buffer = tape->packets[packetIdx].bufferPacket;
 
+  //printf("%d %d\n", tape->packetID, packetIdx);
   while (tape->packetID < packetIdx) {
     if (tape->ptrEnd <= buffer)
       break;
 
     uint8_t opcode = buffer[0];
 
-    if (4 < (opcode + 0x80 & 0xFF)) {
+    if (4 < (opcode + 0x80 & 0xFF)) 
+	{
+	  printf("Vel\n");
       buffer += 5; // Skip velocity data, assumed to be 5 bytes
-    } else {
+	  tape->packetID++;
+    } 
+	
+	else 
+	{
+	  printf("%08x\n", opcode);
+		
       switch (opcode) {
       case 0x80:       // Position and Rotation
         buffer += 0xB; // Skip 11 bytes of position and rotation data
+		tape->packetID++;
         break;
 
       case 0x81: // Animation
-      {
         int numAnimFrames = INSTANCE_GetNumAnimFrames(inst, buffer[1]);
         inst->animIndex = (numAnimFrames < 1) ? 0 : buffer[1];
         inst->animFrame = (buffer[2] == 0 || numAnimFrames <= buffer[2])
                               ? numAnimFrames
                               : buffer[2];
-      }
         buffer += 3;
         break;
 
       case 0x82: // Boost
-      {
         if (gGT->trafficLightsTimer < 1 &&
             (gGT->gameMode1 & START_OF_RACE) == 0 &&
             TitleFlag_IsFullyOnScreen() == 0) {
           Turbo_Increment(d, (int)(buffer[1] << 8 | buffer[2]), buffer[3],
                           (int)(buffer[4] << 8 | buffer[5]));
         }
-      }
         buffer += 6;
         break;
 
       case 0x83: // Instance Flags
-      {
         inst->flags &= 0xFFFFDFFF; // Reset flag
         if (buffer[1] != 0) {
           inst->flags |= SPLIT_LINE;
         }
-      }
         buffer += 2;
         break;
 
       case 0x84: // No-Op
         buffer += 1;
+		tape->packetID++;
         break;
       }
     }
-
-    tape->packetID++;
   }
 
   if (gGT->trafficLightsTimer < 1) {
