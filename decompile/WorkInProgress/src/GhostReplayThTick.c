@@ -2,7 +2,7 @@
 
 // TODO: RENAME FILE TO GhostReplay_ThTick
 /**
- * @brief Byte Budget: 1672/2400
+ * @brief Byte Budget: 2068/2400
  * FUN_80026ed8
  *
  * @param t ptr to thread
@@ -81,7 +81,8 @@ void GhostReplay_ThTick(struct Thread *t) {
   packet = &tape->packets[0];
 
   // flush and rewrite cached GhostPackets array
-  if (tape->timeInPacket32 <= timeInRace) {
+  if (tape->timeInPacket32 <= timeInRace) 
+  {  
     opcodePos = 0;
     packetPtr = tape->ptrCurr;
     short tmpPos[3] = {0};
@@ -293,10 +294,7 @@ void GhostReplay_ThTick(struct Thread *t) {
   unsigned char* buffer = tape->packets[packetIdx].bufferPacket;
 
   while (tape->packetID < packetIdx) 
-  {
-	printf("%d %d, %08x\n", tape->packetID, packetIdx, buffer);
-	
-	  
+  {  
     if (tape->ptrEnd <= buffer)
       break;
 
@@ -304,15 +302,12 @@ void GhostReplay_ThTick(struct Thread *t) {
 
     if (4 < (opcode + 0x80 & 0xFF)) 
 	{
-	  printf("Vel\n");
       buffer += 5; // Skip velocity data, assumed to be 5 bytes
 	  tape->packetID++;
     } 
 	
 	else 
 	{
-	  printf("%08x\n", opcode);
-		
       switch (opcode) {
       case 0x80:       // Position and Rotation
         buffer += 0xB; // Skip 11 bytes of position and rotation data
