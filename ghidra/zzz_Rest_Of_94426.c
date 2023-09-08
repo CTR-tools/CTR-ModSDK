@@ -29716,6 +29716,8 @@ LAB_800632cc:
     }
     *(short *)(param_2 + 0x3c6) = *(short *)(param_2 + 0x3c6) + sVar5;
   }
+  
+  // numFramesDrifting (negative if switchway)
   iVar12 = (int)*(short *)(param_2 + 0x580);
   if (iVar12 < 0) {
     iVar12 = -iVar12;
@@ -29743,13 +29745,16 @@ LAB_800632cc:
   else {
     *(undefined2 *)(param_2 + 0x3d8) = 0;
   }
+  
   iVar12 = (int)*(short *)(param_2 + 0x3d4);
   if (iVar12 < 0) {
     iVar12 = -iVar12;
   }
+  
   if (0x32 < iVar12) {
     *(undefined2 *)(param_2 + 0x3d8) = 0;
   }
+  
   if (*(short *)(param_2 + 0x3d8) == 0) {
     *(undefined2 *)(param_2 + 0x3d6) = 10;
     if (0 < *(short *)(param_2 + 0x3d4)) {
@@ -29985,7 +29990,7 @@ void FUN_8006364c(undefined4 param_1,int param_2)
   else {
 
     if (
-			// If your drift counter is less than the constant that makes you "spin out" from too much drift
+			// drift counter counts backwards during switchway drift: did switchway too long?
 			((int)*(short *)(param_2 + 0x580) < (int)-(uint)*(byte *)(param_2 + 0x463)) ||
 
 			((
