@@ -16,14 +16,17 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	struct Instance *hudR;
 	struct Instance *hudToken;
 	struct CtrLetter *letter;
+	
 	char i;
 	char tokenUnlock;
 	char numPlyr;
 	char totalPlyr;
-	short t;
-	short elapsedFrames;
+	
 	short letterPos[2];
 	short txtPos[2];
+	
+	short t;
+	short elapsedFrames;
 	short levSpawn;
 
 	short lerpStartX;
@@ -76,6 +79,15 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		// If you won the race, and you have all 3 letters (C, T, and R)
 		if ((driver->driverRank == 0) && (driver->PickupLetterHUD.numCollected == 3))
 		{
+			// lerp C-T-R letters closer to center by 16 pixels
+			// default (unlocking and frames < 140) or (already unlocked and frames < 300)
+			lerpStartX = hudCTR->x;
+			lerpStartY = hudCTR->y;
+			lerpEndX = lerpStartX + 0x10;
+			lerpEndY = lerpStartY + 0x10;
+			currFrame = elapsedFrames;
+			lerpFrames = 8;
+			
 			// If you have not unlocked this CTR Token
 			bitIndex = gGT->levelID + 0x4C;
 			*(int *)&letterPos[0] = *(int *)&hudCTR[0];
@@ -85,31 +97,38 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				scaleDown -= (scaleDown < 0x800) ? 0x800 : 0x401;
 				scaleDown = scaleDown >> 10;
 
-				// frames since race ended
-				if (elapsedFrames < 231)
+				// lerp letters off-screen
+				if (elapsedFrames > 230)
 				{
-					if (elapsedFrames < 141)
-					{
-						lerpStartX = hudCTR->x;
-						lerpStartY = hudCTR->y;
-						lerpEndX = lerpStartX + 0x10;
-						lerpEndY = lerpStartY + 0x10;
-						lerpFrames = 8;
-						currFrame = elapsedFrames;
-						goto INTERPOLATE;
-					}
-					UI_Lerp2D_Linear(&letterPos[0],
-									 hudCTR->x + 0x10,
-									 hudCTR->y + 0x10,
-									 hudCTR->x - 0x10,
-									 hudCTR->y + 0x50,
-									 elapsedFrames - 140, 8);
+					currFrame = elapsedFrames - 230;
+					
+					lerpStartX += 0x10;
+					lerpStartY += 0x50;
+					lerpEndX = -400;
+					lerpEndY = lerpStartY;
+				}
 
+				// lerp letters to center
+				else if (elapsedFrames > 140)
+				{
+					currFrame = elapsedFrames - 140;
+					
+					lerpStartX += 0x10;
+					lerpStartY += 0x10;
+					lerpEndX = hudCTR->x - 0x10;
+					lerpEndY = hudCTR->y + 0x50;
+					
+					if (hudToken->scale[0] < 0x2001)
+					{
+						hudToken->scale[0] += 0x200;
+						hudToken->scale[1] += 0x200;
+						hudToken->scale[2] += 0x200;
+					}
+	
 					if (hudC->scale[0] == 0x800)
 						OtherFX_Play(0x67, 1);
 
-					// increment hudc scale and hudtoken scale
-					if (letterPos[0] != (hudCTR->x - 0x10))
+					if (hudLetters[0]->scale[0] < 0x2200)
 					{
 						for (i = 0; i < 3; i++)
 						{
@@ -118,90 +137,54 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 							hudLetters[i]->scale[2] += 0x400;
 						}
 					}
+					
+					// Naughty Dog Bug: This was supposed to lerp off-screen at elapsedFrames > 230,
+					// but they passed "elapsedFrames-50" instead of "elapsedFrames-230", kills effect.
+					//	txtStartX = 0x100;
+					//	txtEndX = -150;
+					//	currFrame = elapsedFrames - 50;
+					
+					// lerp on-screen: CTR TOKEN AWARDED
+					txtStartX = 0x264;
+					txtEndX = 0x100;
+					UI_Lerp2D_Linear(&txtPos[0], txtStartX, 0xA6, txtEndX, 0xA6, currFrame, 8);
+					txtColor = (gGT->timer & 1) ? 0xFFFF8003 : 0xFFFF8004;
+					DecalFont_DrawLine(sdata->lngStrings[0x16F], txtPos[0], txtPos[1], 1, txtColor);
 				}
-				else
-				{
-					lerpStartX = hudCTR->x + 0x10;
-					lerpStartY = hudCTR->y + 0x50;
-					lerpEndX = -400;
-					lerpEndY = lerpStartY;
-					currFrame = elapsedFrames - 230;
 
-				INTERPOLATE:
-					UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, lerpFrames);
-				}
-
-				for (i = 0; i < 3; i++)
-				{
-					hudLetters[i]->matrix.t[0] = UI_ConvertX_2(letterPos[0] + (scaleDown * (i * 12)) + (i * 29), 0x200);
-					hudLetters[i]->matrix.t[1] = UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
-				}
+				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, 8);
 
 				hudToken->flags &= ~HIDE_MODEL;
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
 				hudToken->matrix.t[1] = UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
-
-				// If time has passed and token is not full scale
-				if (elapsedFrames > 140 && hudToken->scale[0] < 0x2001)
-				{
-					hudToken->scale[0] += 0x200;
-					hudToken->scale[1] += 0x200;
-					hudToken->scale[2] += 0x200;
-				}
-
-				if (elapsedFrames < 231)
-				{
-					if (elapsedFrames > 140)
-					{
-						txtStartX = 0x264;
-						txtEndX = 0x100;
-						currFrame = elapsedFrames - 140;
-						goto PRINT_TEXT;
-					}
-				}
-				else
-				{
-					txtStartX = 0x100;
-					txtEndX = -150;
-					currFrame = elapsedFrames - 50;
-				PRINT_TEXT:
-					UI_Lerp2D_Linear(&txtPos[0], txtStartX, 0xA6, txtEndX, 0xA6, currFrame, 8);
-					// Flash colors depending on even or odd frame
-					txtColor = (gGT->timer & 1) ? 0xFFFF8003 : 0xFFFF8004;
-					// CTR TOKEN AWARDED
-					DecalFont_DrawLine(sdata->lngStrings[0x16F], txtPos[0], txtPos[1], 1, txtColor);
-				}
+					
 				lerpStartY = 120;
 				lerpEndY = 160;
 			}
+			
 			// If you already have this CTR Token unlocked
 			else
 			{
-				if (elapsedFrames > 301)
+				// or <= ?
+				if (elapsedFrames > 300)
 				{
-					lerpStartX = hudCTR->x;
-					lerpStartY = hudCTR->y;
-					lerpEndX = lerpStartX + 0x10;
-					lerpEndY = lerpStartY + 0x10;
-					currFrame = elapsedFrames;
-					lerpFrames = 8;
-				}
-				else
-				{
+					currFrame = elapsedFrames - 300;
+					
 					lerpStartX = hudCTR->x + 0x10;
 					lerpStartY = hudCTR->y + 0x10;
 					lerpEndX = -400;
 					lerpEndY = lerpStartY;
-					currFrame = elapsedFrames - 300;
 					lerpFrames = 10;
 				}
 				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, lerpFrames);
-
-				for (i = 0; i < 3; i++)
-				{
-					hudLetters[i]->matrix.t[0] = UI_ConvertX_2(letterPos[0] + (i * 29), 0x200);
-					hudLetters[i]->matrix.t[1] = UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
-				}
+				
+				scaleDown = 0;
+			}
+			
+			for (i = 0; i < 3; i++)
+			{
+				hudLetters[i]->matrix.t[0] = UI_ConvertX_2(letterPos[0] + (scaleDown * (i * 12)) + (i * 29), 0x200);
+				hudLetters[i]->matrix.t[1] = UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
 			}
 		}
 		// If you did not collect all 3 letters (C, T, and R), or you lost the race
@@ -268,11 +251,11 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			int iVar11 = gGT->tileView[0].rect.x +
 						 (gGT->tileView[0].rect.w - totalPlyr * 56 + 12) / 2 + (i * 56);
 
-			if (300 - lerpEndY < elapsedFrames)
+			if (elapsedFrames + lerpEndY > 300)
 			{
 				lerpStartX = iVar11;
 				lerpEndX = -100;
-				currFrame = (elapsedFrames - 300) + lerpEndY;
+				currFrame = elapsedFrames + lerpEndY - 300;
 			}
 			else
 			{
@@ -488,7 +471,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	short sVar1;
 	short sVar2;
 	short endFrame;
-	short *posXY;
+	short posXY[2];
 	RECT r;
 
 	gGT = sdata->gGT;
@@ -552,34 +535,32 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		MENUBOX_ClearInput();
 	}
 
-	// What is param2???
-
-	// Prior to 300 frames,
-	// Big number, Lap times, and Icons are all on screen
-
-	// After 300 frames
-	// They are all gone
-
-	tenseconds = (300 - param_2 < framesElapsed);
+	tenseconds = (framesElapsed + param_2 > 300);
 
 	// If race ended more than 10 seconds ago.
 	if (tenseconds)
 	{
+		currFrame = framesElapsed + param_2 - 300;
+		endFrame = 0xf;
+		
 		lerpStartY = UI_ConvertX_2(-100, hud[5].x);
 		lerpStartX = -0xae;
 		lerpEndX = lerpStartY;
-		endFrame = 0xf;
-		currFrame = framesElapsed - 300 + param_2;
 		lerpStartY = lerpEndY;
+		
+		// optimization
+		if(currFrame > endFrame) return;
 	}
+	
 	// If not
 	else
 	{
+		currFrame = framesElapsed;
+		endFrame = 0x1e;
+		
 		lerpStartX = UI_ConvertX_2(hud[4].x, hud[5].x);
 		lerpStartY = UI_ConvertY_2(hud[4].y, hud[5].x);
-		currFrame = framesElapsed;
 		lerpEndX = -0xae;
-		endFrame = 0x1e;
 	}
 
 	// interpolate fly-in
@@ -602,16 +583,12 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpStartX = 0x78;
 		lerpStartY = sVar1;
 		lerpEndX = -0x3c;
-		currFrame = framesElapsed - 300 + param_2;
-		endFrame = 0xf;
 	}
 	else
 	{
 		lerpStartX = hud[10].x;
 		lerpStartY = hud[10].y;
 		lerpEndX = 0x78;
-		currFrame = framesElapsed;
-		endFrame = 0x1e;
 	}
 
 	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, sVar1, currFrame, endFrame);
@@ -622,16 +599,12 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	{
 		lerpStartX = 0x150;
 		lerpEndX = 0x27c;
-		currFrame = framesElapsed - 300 + param_2;
-		endFrame = 0xf;
 	}
 
 	else
 	{
 		lerpStartX = 0x218;
 		lerpEndX = 0x150;
-		currFrame = framesElapsed;
-		endFrame = 0x1e;
 	}
 
 	UI_Lerp2D_Linear(&posXY[0], lerpStartX, sVar2, lerpEndX, sVar2, currFrame, endFrame);
