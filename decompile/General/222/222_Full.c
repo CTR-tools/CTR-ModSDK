@@ -187,30 +187,38 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				hudLetters[i]->matrix.t[1] = UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
 			}
 		}
-		// If you did not collect all 3 letters (C, T, and R), or you lost the race
-		else
+		
+		// If you did not collect all 3 letters (C, T, and R), or you lost the race,
+		// do this for the first 30 seconds (900 frames)
+		else if (elapsedFrames < 900)
 		{
-			if (elapsedFrames < 900)
+			driver->PickupLetterHUD.numCollected = 0;
+			
+			for (i = 0; i < 3; i++)
 			{
-				for (i = 0; i < 3; i++)
+				if (
+						// letter is visible
+						((hudLetters[i]->flags & HIDE_MODEL) == 0) &&
+					
+						// delay letter (6 frames apart)
+						(elapsedFrames > (6*i)) &&
+					
+						// letter not fully off-screen
+						(-300 < hudLetters[i]->matrix.t[1])
+					)
 				{
-					if (((hudLetters[i]->flags & HIDE_MODEL) == 0) &&
-						(-300 < hudLetters[i]->matrix.t[1]))
-					{
-						letter = hudLetters[i]->thread->object;
-						// move X position
-						hudLetters[i]->matrix.t[0] += letter->velX;
-						// make the letter fall off the screen
-						hudLetters[i]->matrix.t[1] -= letter->velY;
+					letter = hudLetters[i]->thread->object;
+					// move X position
+					hudLetters[i]->matrix.t[0] += letter->velX;
+					// make the letter fall off the screen
+					hudLetters[i]->matrix.t[1] -= letter->velY;
 
-						if (-0x14 < letter->velY)
-						{
-							letter->velY -= 2;
-						}
+					if (-0x14 < letter->velY)
+					{
+						letter->velY -= 2;
 					}
 				}
 			}
-			driver->PickupLetterHUD.numCollected = 0;
 		}
 	}
 
