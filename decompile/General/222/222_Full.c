@@ -398,28 +398,36 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		// when loading is done, remove flag for Boss Mode
 		sdata->Loading.OnBegin.RemBitsConfig0 |= ADVENTURE_BOSS;
 
-		// bit offset 0x5e is where progress holds keys
-		// This checks if you've unlocked a key,
-		// by getting bit offset, converting that
-		// to integer offset, and remainder
+		// bitIndex of keys unlocked, and boss beaten
 		bitIndex = gGT->bossID + 0x5e;
 
 		// If the number of keys you have is less than 4
 		if (gGT->bossID < 4)
-			// Go to Podium after returning to Adventure Hub
-			gGT->podiumRewardID = 99; // key
+		{
+			// only if first time beating boss
+			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
+			{
+				// Go to Podium after returning to Adventure Hub
+				gGT->podiumRewardID = 99; // key
+			}
+		}
 
 		// If you have 4 keys (only here if you beat oxide)
 		else
 		{
-			// goes to bits after purple gem, cause bossID is 5 or 6
-			bitIndex = gGT->bossID + 0x6f;
-
-			// Go to podium, with no key (0x38 = empty)
+			// Always go to podium after oxide, 
+			// with no key (0x38 = empty)
 			gGT->podiumRewardID = 0x38;
 
-			if ((sdata->advProgress.rewards[3] & 4) == 0)
-				sdata->advProgress.rewards[3] |= 0x80004;
+			// assume oxide beaten 1st time
+			sdata->advProgress.rewards[3] |= 0x80004;
+
+			// if beaten oxide 2nd time
+			if(gGT->bossID == 6)
+			{
+				// beat 2nd time
+				sdata->advProgress.rewards[3] |= 0x100008;
+			}
 		}
 
 		// hot air skyway
@@ -447,6 +455,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	{
 		// 6th bit of adventure profile is where trophies start
 		bitIndex = gGT->levelID + 6;
+
+		// if first time unlocking trophy
 		if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
 		{
 			// go to podium with trophy
@@ -454,9 +464,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		}
 	}
 
-	// If you haven't unlocked this reward
-	if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
-		UNLOCK_ADV_BIT(adv->rewards, bitIndex);
+	// Unlock reward
+	UNLOCK_ADV_BIT(adv->rewards, bitIndex);
 
 	MainRaceTrack_RequestLoad(levSpawn);
 }
