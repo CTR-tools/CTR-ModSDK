@@ -14,13 +14,12 @@ void GhostReplay_ThTick(struct Thread *t) {
   short opcodePos;
   int packetIdx;
   unsigned int scaledPacketIdx;
-  unsigned short interpolationFactor;
+  unsigned short lerp4096;
   unsigned int delta;
   unsigned char *packetPtr;
   struct Instance *inst;
   struct Driver *d;
   struct GhostPacket *packet;
-  int velocity[3];    // short?
   short local_rot[3]; // ushort?
   int timeInRace;
   int scaledNum;
@@ -235,49 +234,43 @@ void GhostReplay_ThTick(struct Thread *t) {
   }
 #endif
 
+  // 0% = 0,
+  // 100% = 0x1000 (4096)
   scaledPacketIdx = scaledNum / tape->timeBetweenPackets;
   packetIdx = (int)scaledPacketIdx >> 0xc;
-  interpolationFactor = scaledPacketIdx & 0xfff;
+  lerp4096 = scaledPacketIdx & 0xfff;
 
   if (tape->numPacketsInArray <= packetIdx) {
     packetIdx = tape->numPacketsInArray - 1;
-    interpolationFactor = 0;
+    lerp4096 = 0;
   }
 
   // Ptrs to current and next packets for better readability
-  struct GhostPacket *currentPacket = &tape->packets[packetIdx];
+  struct GhostPacket *currPacket = &tape->packets[packetIdx];
   struct GhostPacket *nextPacket = &tape->packets[packetIdx + 1];
 
-  velocity[0] = (int)nextPacket->pos[0] - (int)currentPacket->pos[0];
-  velocity[1] = (int)nextPacket->pos[1] - (int)currentPacket->pos[1];
-  velocity[2] = (int)nextPacket->pos[2] - (int)currentPacket->pos[2];
+  int vel[3];
+  vel[0] = (int)nextPacket->pos[0] - (int)currPacket->pos[0];
+  vel[1] = (int)nextPacket->pos[1] - (int)currPacket->pos[1];
+  vel[2] = (int)nextPacket->pos[2] - (int)currPacket->pos[2];
 
-  inst->matrix.t[0] =
-      currentPacket->pos[0] + ((velocity[0] * interpolationFactor) >> 0xC);
-  inst->matrix.t[1] =
-      currentPacket->pos[1] + ((velocity[1] * interpolationFactor) >> 0xC);
-  inst->matrix.t[2] =
-      currentPacket->pos[2] + ((velocity[2] * interpolationFactor) >> 0xC);
+  inst->matrix.t[0] = currPacket->pos[0] + ((velocity[0] * lerp4096) >> 0xC);
+  inst->matrix.t[1] = currPacket->pos[1] + ((velocity[1] * lerp4096) >> 0xC);
+  inst->matrix.t[2] = currPacket->pos[2] + ((velocity[2] * lerp4096) >> 0xC);
 
   // Calculate delta + perform 12-bit wrapping and lerp
-  delta = ((int)nextPacket->rot[0] - (int)currentPacket->rot[0]) & 0xFFF;
-  delta = (delta > 0x7FF) ? (delta - 0x1000) : delta;
-  local_rot[0] = currentPacket->rot[0] +
-                     (short)((int)(delta * interpolationFactor) >> 0xC) &
-                 0xFFF;
+  delta = ((int)nextPacket->rot[0] - (int)currPacket->rot[0]) & 0xFFF;
+  if (delta > 0x7FF) delta -= 0x1000;
+  local_rot[0] = currPacket->rot[0] + ((delta * lerp4096) >> 0xC) & 0xFFF;
 
-  delta = ((int)nextPacket->rot[1] - (int)currentPacket->rot[1]) & 0xFFF;
-  delta = (delta > 0x7FF) ? (delta - 0x1000) : delta;
-  local_rot[1] = currentPacket->rot[1] +
-                     (short)((int)(delta * interpolationFactor) >> 0xC) &
-                 0xFFF;
+  delta = ((int)nextPacket->rot[1] - (int)currPacket->rot[1]) & 0xFFF;
+  if (delta > 0x7FF) delta -= 0x1000;
+  local_rot[1] = currPacket->rot[1] + ((delta * lerp4096) >> 0xC) & 0xFFF;
 
 #if 0
-  delta = ((int)nextPacket->rot[2] - (int)currentPacket->rot[2]) & 0xFFF;
-  delta = (delta > 0x7FF) ? (delta - 0x1000) : delta;
-  local_rot[2] = currentPacket->rot[2] + 
-					(short)((int)(delta * interpolationFactor) >> 0xC) &
-      0xFFF;
+  delta = ((int)nextPacket->rot[2] - (int)currPacket->rot[2]) & 0xFFF;
+  if (delta > 0x7FF) delta -= 0x1000;
+  local_rot[2] = currPacket->rot[2] + ((delta * lerp4096) >> 0xC) & 0xFFF;
 #endif
   local_rot[2] = 0;
 
