@@ -157,7 +157,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				hudToken->flags &= ~HIDE_MODEL;
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
 				hudToken->matrix.t[1] = UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
-					
+				
+				// variable reuse, frame timers
 				lerpStartY = 120;
 				lerpEndY = 160;
 			}
@@ -178,8 +179,11 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				}
 				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, lerpFrames);
 				
-				scaleDown = 0;
+				// variable reuse, frame timers
+				lerpStartY = 0;
 				lerpEndY = 0;
+				
+				scaleDown = 0;
 			}
 			
 			for (i = 0; i < 3; i++)
