@@ -265,18 +265,19 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 				rdata.s_timeString_empty[6] = sdata->LapTimes.p1_Ms10s[iVar5] + '0';
 				rdata.s_timeString_empty[7] = sdata->LapTimes.p1_Ms1s[iVar5] + '0';
 
+				// default
+				stringColor_but_its_also_relicColor = PERIWINKLE;
+
 				if
 				(
-					(
-						// if this is lap 1, and if lap 1 should flash
-						((numLaps == 0) && ((flags & 8) != 0)) ||
+					// if this is lap 1, and if lap 1 should flash
+					((numLaps == 0) && ((flags & 8) != 0)) ||
 
-						// if this is lap 2, and if lap 2 should flash
-						((numLaps == 1 && ((flags & 0x10) != 0)))
-					) ||
-
+					// if this is lap 2, and if lap 2 should flash
+					((numLaps == 1) && ((flags & 0x10) != 0)) ||
+					
 					// if this is lap 3, and if lap 3 should flash
-					((stringColor_but_its_also_relicColor = PERIWINKLE, numLaps == 2 && ((flags & 0x20) != 0)))
+					((numLaps == 2) && ((flags & 0x20) != 0))
 				)
 				{
 					// Change color based on frame counter

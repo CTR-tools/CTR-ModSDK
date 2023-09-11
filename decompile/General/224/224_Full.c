@@ -78,13 +78,6 @@ AddStuff:
 		return;
     }
 
-	// 91-1017 frames (do NOT put return at the end)
-	if (framesSinceRaceEnded < 1017)
-	{
-		// PRESS * TO CONTINUE
-		DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
-	}
-
 	// between 91 and 900 frames (3-30)
 	if (framesSinceRaceEnded < 901)
 	{
@@ -134,7 +127,7 @@ AddStuff:
 			DecalFont_DrawLine(lngStrings[370], (int)pos[0], (int)pos[1], 1, startX_also_strFlags);
 			
 			// make the best row start flashing
-			sdata->flags_timeTrialEndOfRace |= (gGT->lapIndexNewBest + 1) << 3;
+			sdata->flags_timeTrialEndOfRace |= 1 << (3 + gGT->lapIndexNewBest);
 		}
 
 
@@ -163,6 +156,8 @@ AddStuff:
 			DecalFont_DrawLine(nTropyString, (int)pos[0], (int)pos[1], 1, startX_also_strFlags);
 		}
 	
+		// PRESS * TO CONTINUE
+		DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
 	
 		// If you press Cross or Circle
 		if ((sdata->AnyPlayerTap & 0x50) != 0)
@@ -228,7 +223,8 @@ AddStuff:
 			UI_Lerp2D_Linear(&pos[0], startX_also_strFlags, 0x82, endX, 0x82, framesSinceRaceEnded, 0x14);
 			DECOMP_TT_EndEvent_DisplayTime((int)pos[0], pos[1], sdata->flags_timeTrialEndOfRace);
 	
-	
+			// PRESS * TO CONTINUE
+			DecalFont_DrawLine(lngStrings[201], 0x100, 0xbe, 1, 0xffff8000);
 
 			// ==== Pause Timer until Press X =======
 			// Cross or Circle, or if timer drags on too long
