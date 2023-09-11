@@ -179,6 +179,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, lerpFrames);
 				
 				scaleDown = 0;
+				lerpEndY = 0;
 			}
 			
 			for (i = 0; i < 3; i++)
