@@ -208,8 +208,10 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					)
 				{
 					letter = hudLetters[i]->thread->object;
-					// move X position
-					hudLetters[i]->matrix.t[0] += letter->velX;
+					
+					// move X position (yes, C-Letter only, Naughty Dog bug?)
+					hudLetters[0]->matrix.t[0] += letter->velX;
+					
 					// make the letter fall off the screen
 					hudLetters[i]->matrix.t[1] -= letter->velY;
 
