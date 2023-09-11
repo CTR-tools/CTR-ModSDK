@@ -797,6 +797,7 @@ void FUN_80042c04(short *param_1)
 
   // param1 is short* so double offsets,
   // offsets 0x28 - 0x48 is for ViewProj matrix
+  // offsets 0x48 - 0x68 is for Transpose matrix
   *(uint *)(param_1 + 0x2e) = uVar1;
   *(uint *)(param_1 + 0x1e) = uVar1;
   *(int *)(param_1 + 0x30) = -iVar13;

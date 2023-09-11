@@ -492,6 +492,10 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			// if never opened
 			if(sdata->boolOpenTokenRelicMenu == 0)
 			{
+				// menubox->0x1a (row)
+				*(short*)0x800b4e6a =
+					(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) != 0);
+				
 				// now opened
 				sdata->boolOpenTokenRelicMenu = 1;
 				

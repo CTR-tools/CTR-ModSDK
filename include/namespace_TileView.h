@@ -46,7 +46,7 @@ struct TileView
 	// 0x28
 	MATRIX matrix_ViewProj;
 
-	// 0x48 (built in TileView_SetMatrixVP, never used)
+	// 0x48 (Warppad Lightning during Driver Warp effect)
 	MATRIX matrix_CameraTranspose;
 
 	// 0x68 (GTE_AudioLR_Inst, Vector_SpecLightSpin3D)

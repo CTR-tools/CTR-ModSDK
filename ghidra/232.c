@@ -979,9 +979,10 @@ LAB_800ac860:
 						((*(uint *)PTR_DAT_8008d2ac & 0x100000) != 0)
 				   ) 
 				{
+				  // menubox->0x1a (row)
                   DAT_800b4e6a =
 				  
-						// 0x8fba4 is where the adventure profile (currently loaded) begins
+						// check if token is unlocked, then row = 1 (relic race)
                        (ushort)((uint)(&DAT_8008fba4)[(int)(iVar7 + 0x4cU) >> 5] >>
                                (iVar7 + 0x4cU & 0x1f)) & 1;
 							   
