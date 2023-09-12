@@ -32,7 +32,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 	int iVar9;
 	struct Level* lev;
 	u_int gameMode1; //-- redundant
-	u_char hudFlags;
+	u_char modelFirst;
 	int iVar12;
 	char *levelNamePtr;
 	u_char* moremoredata; //-- redundant
@@ -648,22 +648,21 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				LOAD_AppendQueue(bigfile, 3, iVar9 + 0x16b, 0, 0);
 
 				// podium first place
-				hudFlags = gGT->podium_modelIndex_First;
+				modelFirst = gGT->podium_modelIndex_First;
 
 				if
 				(
 					// if this exists
-					(hudFlags != 0) && 
+					(modelFirst != 0) && 
 				
 					// if not 0x7e + 0xF
 					// if not oxide
-					(hudFlags != 0x8d)
+					(modelFirst != 0x8d)
 			 	)
 				{
 					// add something to loading queue
 					// '2' for dram
-					// the hudFlags pointer dereferencing here is scuffed --Super
-					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)hudFlags - 0x7e) * 2 + 0x16d, &data.podiumModel_firstPlace, 0xfffffffe);
+					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)modelFirst - 0x7e) * 2 + 0x16d, &data.podiumModel_firstPlace, 0xfffffffe);
 				}
 
 				// podium second place exists
