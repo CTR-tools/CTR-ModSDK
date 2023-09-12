@@ -416,6 +416,14 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			{
 				// Go to Podium after returning to Adventure Hub
 				gGT->podiumRewardID = 99; // key
+				
+				// hot air skyway
+				if (gGT->levelID == 7)
+				{
+					// If you just beat Pinstripe
+					// Load gemstone valley
+					levSpawn = 0x19;
+				}
 			}
 		}
 
@@ -435,14 +443,6 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				// beat 2nd time
 				sdata->advProgress.rewards[3] |= 0x100008;
 			}
-		}
-
-		// hot air skyway
-		if (gGT->levelID == 7)
-		{
-			// If you just beat Pinstripe
-			// Load gemstone valley
-			levSpawn = 0x19;
 		}
 	}
 	// if you are in token race
