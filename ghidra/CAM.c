@@ -2698,10 +2698,9 @@ void FUN_8001b334(int param_1)
   // tileView from cameraDC, offset 0x48
   psVar19 = (short *)piVar18[0x12];
 
-  // if camera is frozen, quit (character select)
-  if ((piVar18[0x1c] & 0x8000U) != 0) {
+  // if cameraDC->0x70 & 0x8000 (freecam)
+  if ((piVar18[0x1c] & 0x8000U) != 0) 
     return;
-  }
 
   if (
 		(
