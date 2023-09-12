@@ -15615,7 +15615,7 @@ void FUN_8005435c(void)
       *(uint *)(iVar3 + 0x2c8) = *(uint *)(iVar3 + 0x2c8) | 0x2000000;
 
 	  // MainGameEnd_Initialize
-      FUN_8003a3fc(0x42);
+      FUN_8003a3fc();
     }
 
 	// OtherFX_Play
