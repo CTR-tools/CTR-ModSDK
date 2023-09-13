@@ -337,7 +337,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       box.w = view->rect.w + 6;
       box.h = view->rect.h + 4;
 
-      MENUBOX_DrawOuterRect_HighLevel(&box, sdata->battleSetup_Color_UI_1, 0, gGT->backBuffer->otMem.startPlusFour);
+      MENUBOX_DrawOuterRect_HighLevel(&box, &sdata->battleSetup_Color_UI_1, 0, gGT->backBuffer->otMem.startPlusFour);
 
       // first tileView buffer is at 0x168,
       // so this is ~0x20 bytes into tileViews

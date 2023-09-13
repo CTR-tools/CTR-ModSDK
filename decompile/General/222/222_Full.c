@@ -312,7 +312,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		((gGT->gameMode1 & ADVENTURE_CUP) != 0) ||
 
 		// If you are in Arcade or VS cup
-		((gGT->gameMode2 & CUP_ANY_KIND) != 0))
+		((gGT->gameMode2 & CUP_ANY_KIND) != 0)
+	   )
 	{
 		// but text near middle of screen
 		short posX = (numPlyr < 2) ? 0xbe : 100;

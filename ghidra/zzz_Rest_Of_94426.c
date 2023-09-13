@@ -43653,12 +43653,13 @@ void FUN_800716ec(int param_1,code *UNRECOVERED_JUMPTABLE)
   // Set per-frame funcPtr
   *(code **)(param_1 + 0x2c) = UNRECOVERED_JUMPTABLE;
 
-  // Execute the weapon's function pointer
-  // with JR $a1
-  (*UNRECOVERED_JUMPTABLE)();
-  
+  // lw $sp 1F8000D4
+
   // $ra is set to 80071678 and executes
   // when the thread is finished
+
+  // Execute the weapon's function pointer
+  // with JR $a1
 }
 
 

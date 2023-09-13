@@ -496,10 +496,11 @@ void RenderAllHUD(struct GameTracker* gGT)
 				// drawing end of race
 				else
 				{
-					// this works cause they all share the same address
-					void OVR_Region1();
-					
-					if((gGT->gameMode2 & CUP_ANY_KIND) != 0)
+					if(
+						// VS mode, and Cup
+						((gGT->gameMode1 & ARCADE_MODE) == 0) && 
+						((gGT->gameMode2 & CUP_ANY_KIND) != 0)
+					  )
 					{
 						// disable drawing hud,
 						// enable drawing "standings"
@@ -507,7 +508,9 @@ void RenderAllHUD(struct GameTracker* gGT)
 						return;
 					}
 					
-					// all 221-225 overlays
+					// all 221-225 overlays share the same
+					// function address, so call as one func
+					void OVR_Region1();
 					OVR_Region1();
 					return;
 				}
