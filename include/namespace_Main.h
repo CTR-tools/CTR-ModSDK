@@ -529,7 +529,7 @@ struct GameTracker
 	int numTeams;
 
 	// 1de0
-	char unk_afterTeams[0x10];
+	int unk_afterTeams[4];
 
 	// 1df0
 	int numWeapons;
