@@ -14,18 +14,14 @@ void DECOMP_RB_TNT_ThTick_ThrowOffHead(struct Thread* t)
   
   inst->matrix.t[1] += mw->velocity[1] * (gGT->elapsedTimeMS >> 5);
 
-  // decrease velocity by time, this is artificial gravity (negative acceleration)
+  if (mw->stopFallAtY == 0x3fff) 
+    mw->stopFallAtY = mw->driverTarget->instSelf->matrix.t[1];
+
+  // decrease velocity (artificial gravity)
   mw->velocity[1] -= ((gGT->elapsedTimeMS << 2) >> 5);
-  
-  // terminal velocity
   if (mw->velocity[1] < -0x60) mw->velocity[1] = -0x60;
-	
-  if (mw->maxHeight == 0x3fff) 
-  {
-    mw->maxHeight = mw->driverTarget->instSelf->matrix.t[1];
-  }
   
-  if (inst->matrix.t[1] > mw->maxHeight) return; 
+  if (inst->matrix.t[1] > mw->stopFallAtY) return; 
   
   // plays tnt explosion sound 3D
   PlaySound3D(0x3d,inst);

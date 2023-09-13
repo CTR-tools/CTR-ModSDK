@@ -91,7 +91,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 				mw->velocity[1] = 0;
 				mw->velocity[2] = 0;
 	
-				mw->maxHeight = inst->matrix.t[1];
+				mw->stopFallAtY = inst->matrix.t[1];
 	
 				// remove "thrown" flag 
 				mw->extraFlags &= 0xfffd;

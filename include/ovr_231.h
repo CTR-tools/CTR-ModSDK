@@ -153,7 +153,7 @@ struct MineWeapon
 
 	// 0x12
 	// used by tnt, and potion_inAir
-	short maxHeight;
+	short stopFallAtY;
 
 	// 0x14
 	// causes explosion if != 0,

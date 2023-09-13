@@ -1724,14 +1724,14 @@ void FUN_800ad310(int param_1)
   // instance -> thread -> object (tnt)
   piVar2 = *(int **)(*(int *)(iVar1 + 0x6c) + 0x30);
   
+  // inst->matrix.t[1]
   *(int *)(iVar1 + 0x48) =
        *(int *)(iVar1 + 0x48) +
        ((int)*(short *)((int)piVar2 + 0xe) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5);
-	   
+  
+  // stopFallAtY
   if (*(short *)((int)piVar2 + 0x12) == 0x3fff) 
-  {
     *(undefined2 *)((int)piVar2 + 0x12) = *(undefined2 *)(*(int *)(*piVar2 + 0x1c) + 0x48);
-  }
   
   if (*(int *)(iVar1 + 0x48) <= (int)*(short *)((int)piVar2 + 0x12)) 
   {
@@ -1755,6 +1755,8 @@ void FUN_800ad310(int param_1)
 	// tntObject -> driver -> tntRecv = 0
     *(undefined4 *)(*piVar2 + 0x18) = 0;
   }
+  
+  // decrease velocity (artificial gravity)
   iVar1 = (uint)*(ushort *)((int)piVar2 + 0xe) - ((*(int *)(PTR_DAT_8008d2ac + 0x1d04) << 2) >> 5);
   *(undefined2 *)((int)piVar2 + 0xe) = (short)iVar1;
   if (iVar1 * 0x10000 >> 0x10 < -0x60) {
