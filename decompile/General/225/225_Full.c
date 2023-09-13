@@ -168,7 +168,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
         uStack112 = VsPosY_Config[VsPosY_NUM*VsConfigIndex + uStack88];
 		
         // Draw character icon
-        DecalHUD_DrawPolyFT4(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[iVar11]->driverID]].iconID],
+        DecalHUD_DrawPolyFT4(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[gGT->battleSetup.unk1dc8[iVar12]]->driverID]].iconID],
 
                              // Position X and Position Y
                              pos[0], uStack112,
@@ -193,12 +193,12 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           for (iVar10 = 0; iVar10 < numPlyr; iVar10++)
           {
             // player -> battleTeam == (teamID)
-            if (gGT->drivers[0]->BattleHUD.teamID == gGT->battleSetup.unk1dc8[iVar12])
+            if (gGT->drivers[iVar10]->BattleHUD.teamID == gGT->battleSetup.unk1dc8[iVar12])
             {
               iVar6 = sVar9;
               sVar9 = sVar9 + 1;
 
-              DecalHUD_DrawPolyFT4(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[iVar11]->driverID]].iconID],
+              DecalHUD_DrawPolyFT4(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[iVar10]->driverID]].iconID],
                                    pos[0], sVar5 + iVar6 * 0x1b,
 
                                    // pointer to PrimMem struct
@@ -302,6 +302,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       bigNum->scale[2] = 0;
     }
 
+	// Winner not found
     if (sStack104 == 0)
     {
       // if this is not battle mode, get first place racer, else get battle winner
@@ -309,6 +310,9 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 
       if (uVar3 != uVar13)
         goto LAB_8009ff4c;
+	
+	  // === TileView is the winner ===
+	
       sStack104 = 1;
 
       if (
@@ -341,8 +345,12 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       view->rect.x = pos[0];
       view->rect.y = pos[1];
     }
+	
+	// === Winner already found ===
     else
     {
+		
+	// === TileView is not winner ===
     LAB_8009ff4c:
 
       // first tileView buffer is at 0x168,
