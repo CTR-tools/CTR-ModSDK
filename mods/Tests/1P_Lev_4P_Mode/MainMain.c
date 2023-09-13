@@ -53,31 +53,18 @@ u_int main()
 				// Disable End-Of-Race menu
 				gGT->gameMode1 &= ~END_OF_RACE;
 
-				// Main Menu Level ID
-				if (gGT->levelID == 39)
+				if (gGT->levelID == MAIN_MENU_LEVEL)
 				{
-					LAB_8003ca68:
-					iVar8 = TitleFlag_IsFullyOffScreen();
-					if (iVar8 != 0)
-					{
+					if (TitleFlag_IsFullyOffScreen() != 0)
 						TitleFlag_SetFullyOnScreen();
-					}
 				}
 				
-				// if not main menu
 				else
 				{
-					iVar8 = TitleFlag_IsFullyOnScreen();
-					if (iVar8 == 0)
-					{
-						// If you are drawing main menu, set fully on screen
-						if (gGT->levelID == 39) goto LAB_8003ca68;
-					}
-					else
-					{
+					if (TitleFlag_IsFullyOnScreen() != 0)
 						TitleFlag_BeginTransition(2);
-					}
 				}
+				
 				EffectSfxRain_Reset(gGT);
 				GAMEPROG_GetPtrHighScoreTrack();
 				MainInit_FinalizeInit(gGT);
@@ -128,17 +115,16 @@ u_int main()
 				// if loading is not finished
 				if (sdata->Loading.stage != -1)
 				{
-					iVar8 = TitleFlag_IsFullyOnScreen();
 					if
 					(
-						// wait for flag to be fully on-screen before starting to load the game
-						((iVar8 == 1) ||
-						// If Level ID is Naughty Dog Box
-						(gGT->levelID == 0x29)) || (sdata->pause_state != 0)
+						(TitleFlag_IsFullyOnScreen() == 1) ||	
+						(gGT->levelID == NAUGHTY_DOG_CRATE) || 
+						(sdata->pause_state != 0)
 					)
 					{
 						gGT->gameMode1 |= LOADING;
 					}
+					
 					iVar8 = sdata->Loading.stage;
 
 					// elapsed milliseconds per frame, locked 32 here
@@ -148,8 +134,7 @@ u_int main()
 					// if loading is finished, but still in "loading mode", and if pools dont need to be reset (maybe for credits?)
 					if (iVar8 == -5)
 					{
-						iVar8 = TitleFlag_IsFullyOnScreen();
-						if (iVar8 == 1)
+						if (TitleFlag_IsFullyOnScreen() == 1)
 						{
 							// set game state to 2 to initialize the world
 							// does not initialize pools
@@ -208,14 +193,13 @@ u_int main()
 							gGT->gameMode1 &= ~LOADING;
 							break;
 						}
-						iVar8 = TitleFlag_IsFullyOnScreen();
+
 						RemBitsConfig8 = sdata->Loading.OnBegin.RemBitsConfig8;
 						AddBitsConfig8 = sdata->Loading.OnBegin.AddBitsConfig8;
 						RemBitsConfig0 = sdata->Loading.OnBegin.RemBitsConfig0;
 						AddBitsConfig0 = sdata->Loading.OnBegin.AddBitsConfig0;
 						
-						// wait for flag to be fully on-screen
-						if (iVar8 == 1)
+						if (TitleFlag_IsFullyOnScreen() == 1)
 						{
 							sdata->Loading.OnBegin.AddBitsConfig0 = 0;
 							sdata->Loading.OnBegin.RemBitsConfig0 = 0;
@@ -226,23 +210,16 @@ u_int main()
 
 							gGT->hudFlags &= 0xf7;
 
-							iVar8 = sdata->Loading.Lev_ID_To_Load;
-
 							gameMode1 = gGT->gameMode1;
 							gGT->gameMode2 = gameMode2 | AddBitsConfig8;
 							gGT->gameMode1 = gameMode1 | AddBitsConfig0;
 							gGT->gameMode1 = (gameMode1 | AddBitsConfig0) & ~RemBitsConfig0;
 							gGT->gameMode2 = (gameMode2 | AddBitsConfig8) & ~RemBitsConfig8;
-							MainRaceTrack_StartLoad(iVar8);
+							MainRaceTrack_StartLoad(sdata->Loading.Lev_ID_To_Load);
 						}
-						else
-						{
-							iVar8 = TitleFlag_IsFullyOffScreen();
-							if (iVar8 == 1)
-							{
-								TitleFlag_BeginTransition(1);
-							}
-						}
+
+						else if (TitleFlag_IsFullyOffScreen() == 1)
+							TitleFlag_BeginTransition(1);
 					}
 				}
 				LAB_8003ccf8:
