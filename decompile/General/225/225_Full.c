@@ -281,7 +281,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       sprintf(acStack160, "%d%s", sVar1 + 1, sdata->lngStrings[((short *)0x800a0200)[sVar1]]);
 
       // Draw String
-      DecalFont_DrawLine(acStack160, (pos - 0x24), (uStack112 + 5), 1, 0xffff8000);
+      DecalFont_DrawLine(acStack160, (pos[0] - 0x24), (uStack112 + 5), 1, 0xffff8000);
 
       iVar12 = iVar12 + 1;
     }
