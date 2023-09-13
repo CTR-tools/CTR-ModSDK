@@ -66,22 +66,27 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 		RB_GenericMine_ThDestroy(t,inst,mw);
 	}
 
+	int iVar4;
+	int iVar5;
+
 	// did not hit BSP hitbox
 	if (SPS->boolDidTouchHitbox == 0) 
 	{
 		if (SPS->boolDidTouchQuadblock != 0) 
 		{
 			Rot_AxisAngle(&inst->matrix, &SPS->unk4C[0x24],0);
-	
-			// if inst is 0x30 units above quadblock or more
-			if (SPS->Union.QuadBlockColl.hitPos[1] + 0x30 < inst->matrix.t[1]) 
+
+			iVar4 = SPS->Union.QuadBlockColl.hitPos[1];
+			iVar5 = inst->matrix.t[1];
+
+			if (iVar4 + 0x30 < iVar5) 
 				return;
-	
+
 			// if no cooldown
 			if (mw->cooldown == 0)
 			{
 				// set position to where quadblock was hit
-				inst->matrix.t[1] = SPS->Union.QuadBlockColl.hitPos[1];
+				inst->matrix.t[1] = iVar4;
 	
 				// reset cooldown (3.84s)
 				mw->cooldown = 0xf00;
@@ -101,23 +106,14 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 				return;
 			}
 			
-			// backup posY
-			int temp = inst->matrix.t[1];
-			
-			// === Maybe this isn't Hitbox Min ===
-			// === Maybe overwritten as impact position ===
-			
 			// if instance is under hitPos, move up
-			if (inst->matrix.t[1] <= SPS->Union.QuadBlockColl.hitPos[1]) 
-				inst->matrix.t[1] = SPS->Union.QuadBlockColl.hitPos[1];
+			if (iVar5 <= iVar4) 
+				inst->matrix.t[1] = iVar4;
 			
 			// if distance to move back to quadblock < velocity
-			if ((inst->matrix.t[1] - temp) + 0x28 <= mw->velocity[1]) {
-				return;
-			}
+			if (mw->velocity[1] < (inst->matrix.t[1] - iVar5) + 0x28)
+				mw->velocity[1] = (inst->matrix.t[1] - iVar5) + 0x28;
 			
-			// increase velocity
-			mw->velocity[1] = (inst->matrix.t[1] - temp) + 0x28;
 			return;
 		}
 
