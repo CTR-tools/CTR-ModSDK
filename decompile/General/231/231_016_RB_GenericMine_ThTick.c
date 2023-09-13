@@ -79,7 +79,8 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   }
   
   // increment posY by velY * time
-  inst->matrix.t[1] += mw->velocity[1] * (gGT->elapsedTimeMS >> 5);
+  // do NOT use parenthesis
+  inst->matrix.t[1] += mw->velocity[1] * gGT->elapsedTimeMS >> 5;
   
   if (inst->matrix.t[1] < mw->stopFallAtY) {
     inst->matrix.t[1] = mw->stopFallAtY;
