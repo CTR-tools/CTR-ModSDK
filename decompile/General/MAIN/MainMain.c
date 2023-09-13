@@ -299,18 +299,13 @@ u_int DECOMP_main()
 					// check to see if time ran out
 					if (gGT->demoCountdownTimer < 1)
 					{
-						// leave demo mode
+						// leave demo mode, go to main menu
 						gGT->boolDemoMode = 0;
-
-						// set number of players to 1
 						gGT->numPlyrNextGame = 1;
-
-						// go to main menu
 						sdata->mainMenuState = 0;
 
-						// load LEV of main menu
 						LAB_8003ce08:
-						MainRaceTrack_RequestLoad(39);
+						MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 					}
 					
 					// if time remains on the timer
