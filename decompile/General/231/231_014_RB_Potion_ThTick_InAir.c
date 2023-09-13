@@ -88,21 +88,14 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 				// set position to where quadblock was hit
 				inst->matrix.t[1] = iVar4;
 	
-				// reset cooldown (3.84s)
-				mw->cooldown = 0xf00;
-				
-				// reset velocity
+				mw->stopFallAtY = iVar4;
+				mw->cooldown = 0xf00;	// 3.84s
 				mw->velocity[0] = 0;
 				mw->velocity[1] = 0;
 				mw->velocity[2] = 0;
-	
-				mw->stopFallAtY = inst->matrix.t[1];
-	
-				// remove "thrown" flag 
-				mw->extraFlags &= 0xfffd;
+				mw->extraFlags &= 0xfffd; 	// remove "thrown" flag 
 	
 				ThTick_SetAndExec(t, RB_GenericMine_ThTick);
-	
 				return;
 			}
 			
