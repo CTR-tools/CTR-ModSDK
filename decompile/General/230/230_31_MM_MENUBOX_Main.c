@@ -5,16 +5,12 @@
 
 void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 {
-  short row;
+  short choose;
   struct GameTracker *gGT = sdata->gGT;
 
-  // if scrapbook is unlocked
-  if ((sdata->gameProgress.unlocks[0] & 0x10) != 0)
-  {
-    // change OVR_230.rows_mainMenu_Basic
-    // to OVR_230.rows_mainMenu_WithScrapbook
+  // if scrapbook is unlocked, change "rows" to extended array
+  if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
     mainMenu->rows = &OVR_230.rows_mainMenu_WithScrapbook[0];
-  }
 
   DECOMP_MM_ParseCheatCodes();
 
@@ -27,11 +23,12 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   {
     MM_Title_MenuUpdate();
 
-    if ( // If you are in main menu
-        ((OVR_230.MM_State == 1) &&
-         // if "title" object exists
-         (OVR_230.titleObj != NULL)) &&
-        (229 < OVR_230.unkTimerMM))
+    if (
+		// main menu, "title" exists, and timer >= 230
+		(OVR_230.MM_State == 1) &&
+		(OVR_230.titleObj != NULL) &&
+		(229 < OVR_230.unkTimerMM)
+	   )
     {
       // "TM" trademark string
       DecalFont_DrawLineOT(
@@ -76,6 +73,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   {
     OVR_230.unkTimerMM = 1000;
   }
+  
   // if funcPtr is null
   if ((mainMenu->state & EXECUTE_FUNCPTR) == 0)
   {
@@ -115,16 +113,17 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
   mainMenu->state |= ONLY_DRAW_TITLE;
 
-  // number of laps is 3 otherwise 1 if cheat is enabled
-  gGT->numLaps = ((gGT->gameMode2 & CHEAT_ONELAP) == 0) ? 3 : 1;
+  // Default to 3,
+  // this intentionally disables the 1-lap cheat
+  // in Time Trial and Adventure, DONT change it
+  gGT->numLaps = 3;
 
   // get LNG index of row selected
-  row = mainMenu->rows[mainMenu->rowSelected].stringIndex;
+  choose = mainMenu->rows[mainMenu->rowSelected].stringIndex;
 
-  switch (row)
-  {
   // Adventure Mode
-  case 76:
+  if (choose == 0x4c)
+  {
     // Turn on Adventure Mode, turn off item cheats
     gGT->gameMode1 |= ADVENTURE_MODE;
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
@@ -133,8 +132,11 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_adventure;
     mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
     return;
+  }
+  
   // Time Trial
-  case 77:
+  if (choose == 0x4d)
+  {
     // Leave main menu hierarchy
     OVR_230.MM_State = 2;
 
@@ -148,8 +150,17 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     gGT->gameMode1 |= TIME_TRIAL;
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
     return;
+  }
+  
+  // DONT change, should only work in Arcade, and VS
+  if ((gGT->gameMode2 & CHEAT_ONELAP) != 0) 
+  {
+    gGT->numLaps = 1;
+  }
+  
   // Arcade Mode
-  case 78:
+  if (choose == 0x4e)
+  {
     // set game mode to Arcade Mode
     gGT->gameMode1 |= ARCADE_MODE;
 
@@ -157,14 +168,20 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_raceType;
     mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
     return;
+  }
+  
   // Versus
-  case 79:
+  if (choose == 0x4f)
+  {
     // next menuBox is choosing single+cup
     mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_raceType;
     mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
     return;
+  }
+  
   // Battle
-  case 80:
+  if (choose == 0x50)
+  {
     OVR_230.transitionState = 2;
 
     // set game mode to Battle Mode
@@ -174,8 +191,11 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_players2P3P4P;
     mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
     return;
+  }
+  
   // High Score
-  case 81:
+  if (choose == 0x51)
+  {
     // Set next stage to high score menu
     OVR_230.desiredMenu = 3;
 
@@ -183,9 +203,12 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     OVR_230.MM_State = 2;
 
     return;
+  }
+  
   // Scrapbook
-  case 564:
-    // Set next stage to Scrapbook
+  if (choose == 0x234) 
+  {
+	// Set next stage to Scrapbook
     OVR_230.desiredMenu = 5;
 
     // Leave main menu hierarchy
