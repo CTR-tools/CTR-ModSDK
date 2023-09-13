@@ -292,18 +292,12 @@ u_int DECOMP_main()
 				{
 					// All this code is for the 30-second timer within Demo Mode
 					// To see 30-second timer in Main Menu, go to FUN_00001604 in 230.c
-
-					// 0x1edc is a countdown the timer
 					// pressing (or holding) any button sets it to zero
 
-					// Get the current value of the countdown timer
-					iVar8 = gGT->demoCountdownTimer;
-
-					// subtract one frame
-					gGT->demoCountdownTimer = iVar8 - 1;
+					gGT->demoCountdownTimer--;
 
 					// check to see if time ran out
-					if (iVar8 - 1 < 1)
+					if (gGT->demoCountdownTimer < 1)
 					{
 						// leave demo mode
 						gGT->boolDemoMode = 0;
