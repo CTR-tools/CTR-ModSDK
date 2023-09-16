@@ -139,7 +139,7 @@ void FUN_8001c470(void)
 	local_10[0] = CdlModeSpeed;
 	CdControl(CdlSetmode, local_10, 0);
 
-
+	// XA_State
 	DAT_8008d708 = 0;
 
 	// stream mode is now data
@@ -190,6 +190,7 @@ void FUN_8001c4f4(void)
 	// set stream mode to audio
 	DAT_8008d6ac = 1;
 
+	// XA_State
     DAT_8008d708 = 0;
 
 	// called when CdControl is complete
@@ -240,7 +241,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
       //get current lang string (ENG, JPN, etc)
       ppcVar5 = &PTR_DAT_80081050 + param_1;
 
-    //update xa file paths
+	  //update xa file paths
       strncpy(s_ENG_XNF_1_80081000,*ppcVar5,3);
       strncpy(s_ENG_EXTRA_S00_XA_1_80081024,*ppcVar5,3);
       strncpy(s_ENG_GAME_S00_XA_1_8008103c,*ppcVar5,3);
