@@ -42,11 +42,8 @@ struct XNF
 	// 0x44
 	int firstSongIndex[CDSYS_XA_NUM_TYPES];
 
-	// The number '1' is the
-	// total number of XA files
-	// all entries are 0002xxxx
 	// 0x54
-	int XaCdPos[1];
+	int XaCdPos[0];
 };
 
 struct AudioMeta

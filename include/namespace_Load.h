@@ -10,7 +10,7 @@ struct BigHeader
 	int numEntry;
 
 	// "numEntry" number of entries
-	struct BigEntry entry[1];
+	struct BigEntry entry[0];
 };
 
 struct LoadQueueSlot
