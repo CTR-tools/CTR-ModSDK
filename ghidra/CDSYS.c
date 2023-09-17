@@ -82,6 +82,7 @@ undefined4 FUN_8001c360(int param_1)
   // XA_MaxSampleValInArr
   DAT_8008d6f4 = 0;
   
+  // irqAddr
   DAT_8008d6c4 = 0;
   
   // unused
@@ -532,10 +533,15 @@ half.
 void FUN_8001c984(void)
 
 {
-  if (DAT_8008d6c4 == 0) {
-    DAT_8008d6c4 = 0x200;
+  // irqAddr
+  if (DAT_8008d6c4 == 0) 
+  {
+    // irqAddr
+	DAT_8008d6c4 = 0x200;
   }
-  else {
+  else 
+  {
+	// irqAddr
     DAT_8008d6c4 = 0;
   }
 
@@ -581,6 +587,7 @@ void FUN_8001c9e4(void)
   SpuSetTransferCallback(FUN_8001c984);
   SpuSetIRQCallback(FUN_8001c8e4);
 
+  // irqAddr
   DAT_8008d6c4 = 0x200;
   
   // unused
