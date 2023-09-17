@@ -149,6 +149,7 @@ common, exe, CDSYS_GetFilePosInt, 0x0, General/CDSYS/CDSYS_c02_GetFilePosInt.c
 common, exe, CDSYS_SetMode_StreamData, 0x0, General/CDSYS/CDSYS_c03_SetMode_StreamData.c
 common, exe, CDSYS_SetMode_StreamAudio, 0x0, General/CDSYS/CDSYS_c04_SetMode_StreamAudio.c
 common, exe, CDSYS_SetXAToLang, 0x0, General/CDSYS/CDSYS_c05_SetXAToLang.c
+common, exe, CDSYS_XaCallbackCdSync, 0x0, General/CDSYS/CDSYS_c06_XaCallbackCdSync.c
 
 common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_XAGetNumTracks.c
 common, exe, CDSYS_XAGetTrackLength, 0x0, General/CDSYS/CDSYS_XAGetTrackLength.c
