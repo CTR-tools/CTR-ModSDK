@@ -426,9 +426,7 @@
 80031a78 LOAD_Callback_LEV
 80031aa4 LOAD_Callback_LEV_Adv		// from TenStage
 80031b00 LOAD_Callback_DriverModels
-
 80031b14 LOAD_HubCallback			// real ND name (for async hubs)
-
 80031b50 LOAD_GlobalModelPtrs_MPK
 80031bdc LOAD_HubSwapPtrs
 80031c1c LOAD_StringToUpper
