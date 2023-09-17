@@ -9,16 +9,13 @@ void CDSYS_SetMode_StreamData()
 	// quit if using parallel
 	if(sdata->boolUseDisc == 0) return;
 	
-	// if already in StreamData mode
-	if(sdata->discMode == 0) return;
+	if(sdata->discMode == DM_DATA) return;
 	
 	// if XAs "might" be in play, cause XNF loaded
 	if(sdata->bool_XnfLoaded != 0)
 	{
 		// force stop, and cancel callbacks
 		CDSYS_XAPauseForce();
-		CdSyncCallback(0);
-		CdReadyCallback((CdlCB)0x0);
 	}
 	
 	// https://www.cybdyn-systems.com.au/forum/viewtopic.php?t=1956
@@ -30,7 +27,10 @@ void CDSYS_SetMode_StreamData()
 	// Set Mode to Data
 	buf[0] = CdlModeSpeed;
 	CdControl(CdlSetmode, buf, 0);
-	sdata->discMode = 0;
-	
+
+	sdata->discMode = DM_DATA;	
 	sdata->XA_State = 0;
+	
+	CdSyncCallback(0);
+	CdReadyCallback(0);
 }

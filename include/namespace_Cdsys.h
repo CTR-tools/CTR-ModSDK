@@ -11,6 +11,12 @@ enum XA_TYPE
 	CDSYS_XA_NUM_TYPES
 };
 
+enum DiscMode
+{
+	DM_DATA,
+	DM_AUDIO
+};
+
 struct XNF
 {
 	// 0x0
