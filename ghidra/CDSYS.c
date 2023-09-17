@@ -34,7 +34,7 @@ undefined4 FUN_8001c360(int param_1)
   // stream mode is null
   DAT_8008d6ac = 0xffffffff;
 
-  // bool_XAs_Loaded
+  // bool_XnfLoaded
   DAT_8008d6b4 = 0;
 
   // XA_State
@@ -153,7 +153,7 @@ void FUN_8001c470(void)
 		(DAT_8008d6ac != 0)
 	 )
   {
-	// bool_XAs_Loaded
+	// bool_XnfLoaded
     if (DAT_8008d6b4 != 0)
 	{
 	  // CDSYS_PauseForce
@@ -176,7 +176,7 @@ void FUN_8001c470(void)
 	// stream mode is now data
     DAT_8008d6ac = 0;
 
-	// bool_XAs_Loaded
+	// bool_XnfLoaded
     if (DAT_8008d6b4 != 0)
 	{
 	  // called when CdControl is complete
@@ -201,7 +201,7 @@ void FUN_8001c4f4(void)
 			// If you are using CD instead of parallel port
 			(DAT_8008d6b0 != 0) &&
 
-			// bool_XAs_Loaded
+			// bool_XnfLoaded
 			(DAT_8008d6b4 != 0)
 		) &&
 
@@ -263,7 +263,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
     //check lang id overflow. what's interesting is that the id is not checked during lang file loading
     if (param_1 < 8)
 	{
-	  // bool_XAs_Loaded
+	  // bool_XnfLoaded
       DAT_8008d6b4 = 0;
 
 	  // CDSYS_SetMode_StreamData
@@ -378,7 +378,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
 			// if all "types" are loaded
             if (DAT_8008d6dc <= iVar9)
 			{
-			  // bool_XAs_Loaded
+			  // bool_XnfLoaded
               DAT_8008d6b4 = 1;
               return 1;
             }
@@ -765,7 +765,7 @@ LAB_8001cd00:
   // if you are using CD instead of parallel
   else
   {
-	// bool_XAs_Loaded
+	// bool_XnfLoaded
     if (DAT_8008d6b4 != 0)
 	{
 	  // three XA categories, 0,1,2
@@ -842,7 +842,7 @@ int FUN_8001cd20(int param_1,int param_2)
 		// if you are using CD instead of parallel port
 		(DAT_8008d6b0 != 0) &&
 
-		// bool_XAs_Loaded
+		// bool_XnfLoaded
 		(DAT_8008d6b4 != 0)
 	 )
   {
@@ -978,7 +978,7 @@ undefined4 FUN_8001cdb4(int param_1,int param_2)
 
   // Only continue if you are on CD
 
-  // bool_XAs_Loaded
+  // bool_XnfLoaded
   if (DAT_8008d6b4 != 0)
   {
 	// if category is invalid
@@ -1108,7 +1108,7 @@ void FUN_8001cf98(void)
 			// If you are using CD and not parallel port
 			(DAT_8008d6b0 != 0) &&
 
-			// bool_XAs_Loaded
+			// bool_XnfLoaded
 			(DAT_8008d6b4 != 0)
 		) &&
 
@@ -1140,7 +1140,7 @@ void FUN_8001cfec(void)
 			// If you are using CD and not parallel port
 			(DAT_8008d6b0 != 0) &&
 
-			// bool_XAs_Loaded
+			// bool_XnfLoaded
 			(DAT_8008d6b4 != 0)
 		) &&
 

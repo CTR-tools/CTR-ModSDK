@@ -3386,12 +3386,12 @@ struct sData
 	int boolUseDisc;
 
 	// 8008d6b4
-	int bool_XAs_Loaded;
+	int bool_XnfLoaded;
 
 	// 8008d6b8
 	// = 0, most of the time
 	// = 1, finished, set on IRQ
-	int bool_XA_finished;
+	int XA_boolFinished;
 
 	// 8008d6bc
 	int XA_SampleMaxIndex1;

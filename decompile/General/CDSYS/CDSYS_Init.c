@@ -18,12 +18,10 @@ void DECOMP_CDSYS_Init(int boolUseDisc)
 	CdSetDebug(1);
 	
 	sdata->discMode = -1;
-	
-	sdata->bool_XAs_Loaded = 0;
+	sdata->bool_XnfLoaded = 0;
 	
 	sdata->XA_State = 0;
-	
-	sdata->bool_XA_finished = 0;
+	sdata->XA_boolFinished = 0;
 	
 	sdata->countFail_CdSyncCallback = 0;
 	sdata->countPass_CdReadyCallback = 0;
