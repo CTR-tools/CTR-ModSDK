@@ -5,7 +5,7 @@ void StateZero();
 //#define FastBoot
 
 u_int DECOMP_main()
-{
+{	
 	struct GameTracker* gGT;
 	
 	u_int AddBitsConfig0;
@@ -18,6 +18,11 @@ u_int DECOMP_main()
 	u_int uVar12;
 	
 	gGT = sdata->gGT;
+	
+#ifdef REBUILD_PS1
+printf("PS1 Rebuild effort: %08x\n", gGT);
+while(1) {}
+#else
 	
 	__main();
 
@@ -392,8 +397,10 @@ u_int DECOMP_main()
 			#endif
 		}
 	} while( true );
+#endif
 }
 
+#ifndef REBUILD_PS1
 // by separating this, it can be 
 // overwritten dynamically (oxide fix)
 void StateZero()
@@ -577,3 +584,4 @@ void StateZero()
 	gGT->gameMode1 |= LOADING;
 	gGT->clockEffectEnabled = *clockEffect & 0xfffe;
 }
+#endif
