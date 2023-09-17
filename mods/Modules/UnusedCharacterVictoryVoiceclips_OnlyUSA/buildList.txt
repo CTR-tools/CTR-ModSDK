@@ -5,7 +5,7 @@
 
 // Hooks
 common, exe, BOTS_Driver_Convert, 0x244, src/hookEndRace.s
-common, exe, CDSYS_IRQ_Callback, -0x8, src/hookCdReadyCallback.s
+common, exe, CDSYS_SpuCallbackIRQ, -0x8, src/hookCdReadyCallback.s
 
 // Compile code to empty spaces in RDATA
 common, exe, rdata_free, 0x0, src/main.c

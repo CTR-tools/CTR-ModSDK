@@ -50,13 +50,13 @@
 8001ca28 CDSYS_SetMode_StreamData
 8001caac CDSYS_SetMode_StreamAudio
 8001cb24 CDSYS_SetXAToLang			// real ND name
-8001cdd8 CDSYS_CdSyncCallback
-8001ce30 CDSYS_CdReadyCallback
-8001cf18 CDSYS_IRQ_Callback
-8001cfb8 CDSYS_Transfer_Callback
-8001d018 CDSYS_IRQ_Enable
-8001d098 CDSYS_IRQ_Disable
-8001d0cc CDSYS_ParseSpuData
+8001cdd8 CDSYS_XaCallbackCdSync
+8001ce30 CDSYS_XaCallbackCdReady
+8001cf18 CDSYS_SpuCallbackIRQ
+8001cfb8 CDSYS_SpuCallbackTransfer
+8001d018 CDSYS_SpuEnableIRQ
+8001d098 CDSYS_SpuDisableIRQ
+8001d0cc CDSYS_SpuGetMaxSample
 8001d214 CDSYS_XAGetNumTracks
 8001d24c CDSYS_XASeek				// real ND name
 8001d354 CDSYS_XAGetTrackLength

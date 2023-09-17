@@ -392,7 +392,7 @@ LAB_8001c654:
   return uVar2;
 }
 
-// CDSYS_CdSyncCallback
+// CDSYS_XaCallbackCdSync
 void FUN_8001c7a4(char param_1)
 
 {
@@ -418,7 +418,7 @@ void FUN_8001c7a4(char param_1)
   return;
 }
 
-// CDSYS_CdReadyCallback
+// CDSYS_XaCallbackCdReady
 void FUN_8001c7fc(char param_1)
 
 {
@@ -474,7 +474,7 @@ void FUN_8001c7fc(char param_1)
 }
 
 
-// CDSYS_IRQ_Callback
+// CDSYS_SpuCallbackIRQ
 void FUN_8001c8e4(void)
 
 {
@@ -529,7 +529,7 @@ half.
 }
 
 
-// CDSYS_Transfer_Callback
+// CDSYS_SpuCallbackTransfer
 void FUN_8001c984(void)
 
 {
@@ -555,14 +555,14 @@ void FUN_8001c984(void)
   // countPass_CdTransferCallback
   DAT_8008d6d8 = DAT_8008d6d8 + 1;
 
-  // CDSYS_ParseSpuData
+  // CDSYS_SpuGetMaxSample
   FUN_8001ca98();
 
   return;
 }
 
 
-// CDSYS_IRQ_Enable
+// CDSYS_SpuEnableIRQ
 void FUN_8001c9e4(void)
 
 {
@@ -604,7 +604,7 @@ void FUN_8001c9e4(void)
 }
 
 
-// CDSYS_IRQ_Disable
+// CDSYS_SpuDisableIRQ
 void FUN_8001ca64(void)
 
 {
@@ -619,7 +619,7 @@ void FUN_8001ca64(void)
 }
 
 
-// CDSYS_ParseSpuData
+// CDSYS_SpuGetMaxSample
 void FUN_8001ca98(void)
 
 {
@@ -1086,7 +1086,7 @@ undefined4 FUN_8001cdb4(int param_1,int param_2)
 
     if (iVar2 == 1)
 	{
-	  // CDSYS_IRQ_Enable
+	  // CDSYS_SpuEnableIRQ
       FUN_8001c9e4();
 
       return 1;
@@ -1156,10 +1156,10 @@ void FUN_8001cfec(void)
     DAT_8008d708 = 0;
 
 	// cancel interrupt request
-	// (useless, cause it is called in CDSYS_IRQ_Disable anyway)
+	// (useless, cause it is called in CDSYS_SpuDisableIRQ anyway)
     SpuSetIRQ(0);
 
-	// CDSYS_IRQ_Disable
+	// CDSYS_SpuDisableIRQ
 	FUN_8001ca64();
 
 	// '\t' = 9 = CdlPause
