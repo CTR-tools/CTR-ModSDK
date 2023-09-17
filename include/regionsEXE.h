@@ -3383,7 +3383,7 @@ struct sData
 	// 80090ad8 -- JpnRetail
 	// 0 for parallel port
 	// 1 for CD
-	int useDisc;
+	int boolUseDisc;
 
 	// 8008d6b4
 	int bool_XAs_Loaded;
@@ -3394,11 +3394,14 @@ struct sData
 	int bool_XA_finished;
 
 	// 8008d6bc
-	int unk_xa_data[2];
-
+	int XA_SampleMaxIndex1;
+	
+	// 8008d6c0
+	int XA_SampleMaxIndex2;
+	
 	// 8008d6c4
-	int irqAddr; // either 0x0 or 0x200
-
+	int irqAddr;
+	
 	// 8008d6c8
 	int XA_VolumeDeduct;
 
@@ -3409,7 +3412,7 @@ struct sData
 	int* ptrArray_firstSongIndex;
 
 	// 8008d6d4
-	int CD_currPos;
+	int XA_CurrPos;
 
 	// 8008d6d8
 	int countPass_CdTransferCallback;
@@ -3427,11 +3430,11 @@ struct sData
 
 	// 8008bb30 -- SepReview
 	// 8008d6e8 -- UsaRetail
-	struct XaSize* ptr_XNF_XA_Entries;
+	struct XaSize* XA_EntrySizeArr;
 
 	#if BUILD >= UsaRetail
 	// 8008d6ec
-	int frame_of_XA_Pause;
+	int XA_PausePos;
 	#endif
 
 	// 8008bb34 -- SepReview
@@ -3448,7 +3451,7 @@ struct sData
 	int* ptrArray_NumXAs;
 
 	// 8008d700
-	int unk_8008d700;
+	int unused_8008d700;
 
 	// 8008d704
 	int countPass_CdReadyCallback;
@@ -3457,7 +3460,7 @@ struct sData
 	int XA_State;
 
 	// 8008d70c
-	int musicVol_bitShifted;
+	int XA_VolumeBitshift;
 
 	// 8008d710
 	int XA_EndPos;
@@ -4222,11 +4225,10 @@ struct sData
 	// 400 bytes, 100 ints
 	int unused400[100];
 
-	// 8008e6b8
-	CdlFILE cdlFile_CdReady;
+	// 8008e6b8 (half of a CdlFILE struct)
+	int cdlFile_CdReady[4];
 	
-	// array of 3 ints
-	// 8008e6c8
+	// 8008e6c8 array of 3 ints
 	int XA_MaxSampleValArr[3];
 
 	#if BUILD == SepReview

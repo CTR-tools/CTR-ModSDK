@@ -12,7 +12,7 @@ undefined4 FUN_8001c360(int param_1)
   // boolDebugMachine = false?
   DAT_8008e528 = 0;
 
-  // bool useDisc
+  // bool boolUseDisc
   DAT_8008d6b0 = param_1;
 
   // If you are using disc
@@ -70,7 +70,7 @@ undefined4 FUN_8001c360(int param_1)
   // XA_EndPos
   DAT_8008d710 = 0;
   
-  // musicVol_bitShifted
+  // XA_VolumeBitshift
   DAT_8008d70c = 0;
   
   // XA_VolumeDeduct
@@ -88,10 +88,10 @@ undefined4 FUN_8001c360(int param_1)
   // unused
   DAT_8008d700 = 0;
   
-  // CD_currPos
+  // XA_CurrPos
   DAT_8008d6d4 = 0;
   
-  // frame_of_XA_Pause
+  // XA_PausePos
   DAT_8008d6ec = 0;
 
   // CDSYS_SetMode_StreamData
@@ -145,7 +145,7 @@ void FUN_8001c470(void)
   u_char local_10 [8];
 
   if (
-		// bool useDisc
+		// bool boolUseDisc
 		// if you are using CD instead of parallel port
 		(DAT_8008d6b0 != 0) &&
 
@@ -425,7 +425,7 @@ void FUN_8001c7fc(char param_1)
   // if result == CdlDataReady
   if (param_1 == '\x01')
   {
-	// cdlFile_CdReady
+	// cdlFile_CdReady (half of a CdlFILE struct)
     CdGetSector(&DAT_8008e6b8,3);
     DAT_8008d6d4 = CdPosToInt((CdlLOC *)&DAT_8008e6b8);
 
@@ -433,7 +433,7 @@ void FUN_8001c7fc(char param_1)
 			// if XA is queued to start (CD seeking?)
 			(DAT_8008d708 == 2) &&
 
-			// if CD_CurrPos is more than XA_StartPos
+			// if XA_CurrPos is more than XA_StartPos
 			(DAT_8008d6f0 <= DAT_8008d6d4)
 		)
 	{
@@ -448,7 +448,7 @@ void FUN_8001c7fc(char param_1)
 			// if XA is playing
 			(DAT_8008d708 == 3) &&
 
-			// if CD_CurrPos is more than XA_EndPos
+			// if XA_CurrPos is more than XA_EndPos
 			(DAT_8008d710 < DAT_8008d6d4)
 		)
 	{
@@ -859,7 +859,7 @@ int FUN_8001cd20(int param_1,int param_2)
     if (param_2 < iVar1) 
 	{
 	/*
-		sdata->ptr_XNF_XA_Entries[
+		sdata->XA_EntrySizeArr[
 				sdata->ptrArray_firstSongIndex[categoryID] +
 				audioTrackID
 			].XaBytes;
