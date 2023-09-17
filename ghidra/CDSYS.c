@@ -807,7 +807,14 @@ int FUN_8001cd20(int param_1,int param_2)
     iVar1 = FUN_8001cbe0(param_1);
 
 	// if audioTrackID is within bounds
-    if (param_2 < iVar1) {
+    if (param_2 < iVar1) 
+	{
+	/*
+		sdata->ptr_XNF_XA_Entries[
+				sdata->ptrArray_firstSongIndex[categoryID] +
+				audioTrackID
+			].XaBytes;
+	*/
       return (int)*(short *)(DAT_8008d6e8 + *(int *)(param_1 * 4 + DAT_8008d6d0) * 4 + param_2 * 4 +
                             2);
     }
