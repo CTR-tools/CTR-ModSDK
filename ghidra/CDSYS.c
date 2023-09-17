@@ -316,7 +316,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
 
 		  // not an array of 3 ints,
 		  // array of a huge ton of data
-		  // ptrXA_data
+		  // ptrArray_XaCdPos
           DAT_8008d718 = piVar3 + 0x11;
 
           iVar9 = 0;
@@ -327,7 +327,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
 		  // byte - digit char indices to swap (00)
 		  // short - null
 
-		  // &sdata->audioData[0]
+		  // &sdata->audioMeta[0]
           pbVar7 = &DAT_80081070;
 
 		  // pointer to actual XA entries (big array of uint (byte[4])),
@@ -859,7 +859,7 @@ int FUN_8001cd20(int param_1,int param_2)
     if (param_2 < iVar1) 
 	{
 	/*
-		sdata->XA_EntrySizeArr[
+		sdata->ptrArray_XaSize[
 				sdata->ptrArray_firstSongIndex[categoryID] +
 				audioTrackID
 			].XaBytes;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CDSYS_SetMode_StreamAudio()
+void DECOMP_CDSYS_SetMode_StreamAudio()
 {
 	char buf[8];
 

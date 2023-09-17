@@ -233,7 +233,7 @@ struct Data data =
 		sdata_static.s_DCH
 	},
 	
-	.audioData[0] =
+	.audioMeta[0] =
 	{
 		.stringIndex_char1 = 0xB,
 		.stringIndex_char2 = 0xC,
@@ -241,7 +241,7 @@ struct Data data =
 		.name = data.s_XA_MUSIC
 	},
 	
-	.audioData[1] =
+	.audioMeta[1] =
 	{
 		.stringIndex_char1 = 0xF,
 		.stringIndex_char2 = 0x10,
@@ -249,7 +249,7 @@ struct Data data =
 		.name = data.s_XA_ENG_EXTRA
 	},
 	
-	.audioData[2] =
+	.audioMeta[2] =
 	{
 		.stringIndex_char1 = 0xE,
 		.stringIndex_char2 = 0xF,

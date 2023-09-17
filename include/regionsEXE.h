@@ -1262,7 +1262,7 @@ struct Data
 	char* xaLanguagePtrs[8];
 
 	// 80081070
-	struct AudioMeta audioData[3];
+	struct AudioMeta audioMeta[3];
 
 	// June 1999 - 0x5a
 	// EuroDemo, Jpn D26, both Spyro2 - 0x5c
@@ -3430,7 +3430,7 @@ struct sData
 
 	// 8008bb30 -- SepReview
 	// 8008d6e8 -- UsaRetail
-	struct XaSize* XA_EntrySizeArr;
+	struct XaSize* ptrArray_XaSize;
 
 	#if BUILD >= UsaRetail
 	// 8008d6ec

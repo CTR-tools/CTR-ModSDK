@@ -2,7 +2,7 @@
 
 void CDSYS_XAPauseForce();
 
-void CDSYS_SetMode_StreamData()
+void DECOMP_CDSYS_SetMode_StreamData()
 {
 	char buf[8];
 

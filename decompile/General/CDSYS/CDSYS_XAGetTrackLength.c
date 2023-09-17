@@ -7,7 +7,7 @@ int DECOMP_CDSYS_XAGetTrackLength(int categoryID, int audioTrackID)
 	if(categoryID > 2) return 0;
 	if(audioTrackID >= CDSYS_XAGetNumTracks(categoryID)) return 0;
 
-	return sdata->XA_EntrySizeArr[
+	return sdata->ptrArray_XaSize[
 				sdata->ptrArray_firstSongIndex[categoryID] +
 				audioTrackID
 			].XaBytes;

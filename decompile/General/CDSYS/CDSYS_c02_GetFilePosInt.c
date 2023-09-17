@@ -1,6 +1,6 @@
 #include <common.h>
 
-u_int CDSYS_GetFilePosInt(char* fileString, int* filePos)
+u_int DECOMP_CDSYS_GetFilePosInt(char* fileString, int* filePos)
 {
 	CdlFILE cdlFile;
 	
