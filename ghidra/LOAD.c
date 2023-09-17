@@ -279,7 +279,7 @@ void FUN_80031bdc(int param_1)
 }
 
 
-// capitalize string
+// LOAD_StringToUpper
 void FUN_80031c1c(byte *param_1)
 
 {
@@ -797,7 +797,7 @@ u_long * FUN_80032344(char *param_1,u_long *param_2,u_long *param_3)
   CdlFILE CStack56;
   u_char auStack32 [8];
 
-  // capitalize string
+  // LOAD_StringToUpper
   FUN_80031c1c(param_1);
 
   // CDSYS_SetMode_StreamData
@@ -872,7 +872,7 @@ uint FUN_80032438(char *param_1,CdlFILE *param_2)
 	// CDSYS_SetMode_StreamData
     FUN_8001c470();
 
-	// capitalize the string
+	// LOAD_StringToUpper
     FUN_80031c1c(param_1);
 
 	// cpVar2 and param_2 are the same
