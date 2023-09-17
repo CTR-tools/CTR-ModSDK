@@ -165,7 +165,7 @@ void FUN_80031b00(int param_1)
 
 // Sep review copy calls this
 // LOAD_HubCallback
-void FUN_80031b14(void)
+void FUN_80031b14(int param_1)
 
 {
   short *psVar1;
@@ -173,7 +173,8 @@ void FUN_80031b14(void)
   // game is done loading
   DAT_8008d0a4 = 0;
 
-  FUN_80031aa4();
+  // LOAD_Callback_LEV_Adv
+  FUN_80031aa4(param_1);
 
   // swap 1 and 2 during adventure mode
   psVar1 = (short *)(PTR_DAT_8008d2ac + 0x254a);

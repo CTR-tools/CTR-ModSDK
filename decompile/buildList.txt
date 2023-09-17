@@ -357,7 +357,8 @@ common, exe, LOAD_Callback_Podiums, 0x0, General/LOAD/LOAD_A07_Callback_Podiums.
 common, exe, LOAD_Callback_LEV, 0x0, General/LOAD/LOAD_A08_Callback_LEV.c
 common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD/LOAD_A09_Callback_LEV_Adv.c
 common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD/LOAD_A10_Callback_DriverModels.c
-// skip HubCallback, GlobalModelPtrs_MPK, 
+common, exe, LOAD_HubCallback, 0x0, General/LOAD/LOAD_A11_HubCallback.c
+// skip GlobalModelPtrs_MPK, 
 common, exe, LOAD_HubSwapPtrs, 0x0, General/LOAD/LOAD_A13_HubSwapPtrs.c
 // skip LOAD_StringToUpper, LOAD_InitCD, LOAD_ReadDirectory, LOAD_DramFileCallback,
 // skip LOAD_DramFile, LOAD_VramFileCallback, LOAD_VramFile, LOAD_ReadFileASyncCallback,
