@@ -144,8 +144,9 @@ common, exe, CAM_SetDesiredPosRot, 0x0, General/CAMERA/CAM_SetDesiredPosRot.c
 common, exe, CAM_StartOfRace, 0x0, General/CAMERA/CAM_StartOfRace.c
 
 // CDSYS
-common, exe, CDSYS_Init, 0x0, General/CDSYS/CDSYS_Init.c
-common, exe, CDSYS_GetFilePosInt, 0x0, General/CDSYS/GetFilePosInt.c
+common, exe, CDSYS_Init, 0x0, General/CDSYS/CDSYS_c01_Init.c
+common, exe, CDSYS_GetFilePosInt, 0x0, General/CDSYS/CDSYS_c02_GetFilePosInt.c
+common, exe, CDSYS_SetMode_StreamData, 0x0, General/CDSYS/CDSYS_c03_SetMode_StreamData.c
 
 common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_XAGetNumTracks.c
 common, exe, CDSYS_XAGetTrackLength, 0x0, General/CDSYS/CDSYS_XAGetTrackLength.c

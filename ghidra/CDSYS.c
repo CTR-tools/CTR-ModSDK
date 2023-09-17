@@ -145,7 +145,7 @@ void FUN_8001c470(void)
   u_char local_10 [8];
 
   if (
-		// bool boolUseDisc
+		// boolUseDisc
 		// if you are using CD instead of parallel port
 		(DAT_8008d6b0 != 0) &&
 
@@ -156,7 +156,7 @@ void FUN_8001c470(void)
 	// bool_XnfLoaded
     if (DAT_8008d6b4 != 0)
 	{
-	  // CDSYS_PauseForce
+	  // CDSYS_XAPauseForce
       FUN_8001cfec();
     }
 
@@ -1079,7 +1079,7 @@ undefined4 FUN_8001cdb4(int param_1,int param_2)
 	// As of now, XA plays indefinitely, until CdReadyCallback
 	// determines the current CD position is past the end position,
 	// and then when IRQ determines the SPU is done playing the last
-	// of the XA, CDSYS_PauseForce is called to stop playing XA.
+	// of the XA, CDSYS_XAPauseForce is called to stop playing XA.
 
 	// Emulators with no IRQ support will keep playing random
 	// XA audio on the disc infinitely, and never reach ND Box
@@ -1131,7 +1131,7 @@ void FUN_8001cf98(void)
 }
 
 
-// CDSYS_PauseForce
+// CDSYS_XAPauseForce
 void FUN_8001cfec(void)
 
 {
@@ -1179,7 +1179,7 @@ void FUN_8001d06c(void)
   // if XA is finished (according to IRQ)
   if (DAT_8008d6b8 != 0)
   {
-	// CDSYS_PauseForce
+	// CDSYS_XAPauseForce
     FUN_8001cfec();
   }
   return;
