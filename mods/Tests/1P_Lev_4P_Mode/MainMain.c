@@ -4,7 +4,7 @@ void StateZero();
 
 //#define FastBoot
 
-u_int main()
+u_int DECOMP_main()
 {
 	struct GameTracker* gGT;
 	
