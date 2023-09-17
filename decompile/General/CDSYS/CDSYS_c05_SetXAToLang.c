@@ -29,9 +29,7 @@ void DECOMP_CDSYS_SetXAToLang(int lang)
 	if(xnf->version != 102) return;
 	
 	sdata->xa_numTypes = xnf->numTypes;
-	
-	// early demos had 4
-	if(sdata->xa_numTypes != 3) return;
+	if(sdata->xa_numTypes != CDSYS_XA_NUM_TYPES) return;
 	
 	sdata->ptrArray_NumXAs = &xnf->numXA[0];
 	sdata->ptrArray_firstXaIndex = &xnf->firstXaIndex[0];

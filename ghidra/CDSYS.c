@@ -1013,7 +1013,7 @@ undefined4 FUN_8001cdb4(int param_1,int param_2)
     if (DAT_8008d6ac != 1)
 	{
 	  // CDSYS_SetMode_StreamAudio
-      FUN_8001c4f4(5);
+      FUN_8001c4f4();
     }
 
 	// XA_State

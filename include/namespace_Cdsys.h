@@ -53,7 +53,8 @@ struct XNF
 
 struct XaSize
 {
-	short XaIndex;
+	char XaIndex;
+	char XaPrefix;
 	short XaBytes;
 };
 

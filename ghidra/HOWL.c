@@ -6219,7 +6219,7 @@ void FUN_8002d67c(void)
 	  // high distToFinish
       if (2000 < *(int *)(iVar3 + 0x488))
 	  {
-		// CDSYS_XASeek
+		// CDSYS_XASeek (FINAL LAP! music)
         FUN_8001cc18(1,0,6);
       }
       DAT_8008d7fc = '\0';
@@ -6345,7 +6345,7 @@ void FUN_8002d67c(void)
 	  // high distToFinish
       if (2000 < *(int *)(iVar3 + 0x488))
 	  {
-		// CDSYS_XASeek
+		// CDSYS_XASeek (Victory Fanfare music)
         FUN_8001cc18(1,0,4);
       }
       DAT_8008d7fc = '\0';

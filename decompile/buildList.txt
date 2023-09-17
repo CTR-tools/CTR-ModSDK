@@ -157,8 +157,9 @@ common, exe, CDSYS_SpuEnableIRQ, 0x0, General/CDSYS/CDSYS_c10_SpuEnableIRQ.c
 common, exe, CDSYS_SpuDisableIRQ, 0x0, General/CDSYS/CDSYS_c11_SpuDisableIRQ.c
 // skip CDSYS_SpuGetMaxSample
 common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_c13_XAGetNumTracks.c
-// skip CDSYS_XASeek
+common, exe, CDSYS_XASeek, 0x0, General/CDSYS/CDSYS_c14_XASeek.c
 common, exe, CDSYS_XAGetTrackLength, 0x0, General/CDSYS/CDSYS_c15_XAGetTrackLength.c
+common, exe, CDSYS_XAPlay, 0x0, General/CDSYS/CDSYS_c16_XAPlay.c
 
 // CTR
 common, exe, CTR_CycleTex_LEV, 0x0, General/CTR_CycleTex_LEV.c
