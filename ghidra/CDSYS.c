@@ -73,7 +73,9 @@ undefined4 FUN_8001c360(int param_1)
   // musicVol_bitShifted
   DAT_8008d70c = 0;
   
+  // XA_VolumeDeduct
   DAT_8008d6c8 = 0;
+  
   DAT_8008d714 = 0;
   DAT_8008d6f4 = 0;
   DAT_8008d6c4 = 0;
@@ -621,14 +623,20 @@ void FUN_8001ca98(void)
   // if you are using CD instead of parallel port
   if (DAT_8008d6b0 != 0) {
     uVar2 = 0x100;
+	
+	// if irqAddr == 0x0, range {0x0 - 0x100}
     if (DAT_8008d6c4 == 0) {
       uVar2 = 0;
       uVar7 = 0x100;
     }
-    else {
+    
+	// otherwise, range {0x100 - 0x200}
+	else 
+	{
       uVar7 = 0x200;
     }
 
+	// curr < end
 	if (uVar2 < uVar7)
 	{
 	  // decoded SPU data

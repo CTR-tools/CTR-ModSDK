@@ -3394,7 +3394,13 @@ struct sData
 	int bool_XA_finished;
 
 	// 8008d6bc
-	char unk_xa_data[0x10];
+	int unk_xa_data[2];
+
+	// 8008d6c4
+	int irqAddr; // either 0x0 or 0x200
+
+	// 8008d6c8
+	int XA_VolumeDeduct;
 
 	// 8008d6cc
 	int* ptrArray_numSongs;
@@ -4219,10 +4225,15 @@ struct sData
 
 	// 8008E6B8
 	// 8008e6b8 CdLoc (which is an int)
-	// 8008d6bc counter
-	// 8008d6c0 counter (0-3)
-	// 8008d6c4 offset (0 or 0x200)
-	// 8008e6c8 array of 3 ints
+	// 8008e6bc 
+	// 8008e6c0 
+	// 8008e6c4
+	
+	// array of 3 ints
+	// 8008e6c8 
+	// 8008e6cc
+	// 8008e6d0
+	
 	char cdsysUnk[0x1C];
 
 	#if BUILD == SepReview
