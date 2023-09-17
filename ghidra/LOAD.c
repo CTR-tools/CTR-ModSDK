@@ -1191,7 +1191,6 @@ void FUN_80032700(undefined4 param_1,uint param_2,uint param_3,undefined4 param_
   DAT_80086e8e = (ushort)pbVar6[3];
 
   //add to load queue from range 324=packs\2P_arcade\*.mpk
-  // '1' for dram
   FUN_80032d30(param_1,2,iVar4 + 0x144,0,param_4);
   return;
 }

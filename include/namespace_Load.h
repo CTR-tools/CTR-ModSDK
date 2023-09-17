@@ -13,6 +13,18 @@ struct BigHeader
 	struct BigEntry entry[0];
 };
 
+enum LoadType
+{
+	// ordinary read to ram
+	LT_RAW = 1,
+	
+	// read with pointer map at the end
+	LT_DRAM = 2,
+	
+	// read with vram transfer
+	LT_VRAM = 3
+};
+
 struct LoadQueueSlot
 {
 	// 0x0

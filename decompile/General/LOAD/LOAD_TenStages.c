@@ -472,16 +472,14 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 						(gGT->levelID, sdata->levelLOD, 0);
 
 			// adds VRAM to loading queue
-			// second parameter '3' means vram
-			LOAD_AppendQueue(bigfile, 3, uVar16, 0, 0);
+			LOAD_AppendQueue(bigfile, LT_VRAM, uVar16, 0, 0);
 
 			// bigfile index, 1 = lev
 			uVar16 = LOAD_GetBigfileIndex
 					(gGT->levelID, sdata->levelLOD, 1);
 
 			// adds LEV to loading queue
-			// '2' means dram
-			LOAD_AppendQueue(bigfile, 2, uVar16, 0, &LOAD_Callback_LEV);
+			LOAD_AppendQueue(bigfile, LT_DRAM, uVar16, 0, &LOAD_Callback_LEV);
 
 			// if level ID is AdvHub or Cutscene
 			if ((gGT->gameMode2 & LEV_SWAP) != 0)
@@ -491,8 +489,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 						(gGT->levelID, sdata->levelLOD, 2);
 
 				// adds PTR map to loading queue
-				// '1' means readFile, load to PatchMem
-				LOAD_AppendQueue(bigfile, 1, uVar6, sdata->PatchMem_Ptr, LOAD_Callback_LEV_Adv);
+				LOAD_AppendQueue(bigfile, LT_RAW, uVar6, sdata->PatchMem_Ptr, LOAD_Callback_LEV_Adv);
 			}
 			
 			break;
@@ -611,9 +608,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// game is now loading
 				sdata->load_inProgress = 1;
 
-				// add something to loading queue
-				// '3' for vram
-				LOAD_AppendQueue(bigfile, 3, iVar9 + 0x16b, 0, 0);
+				// add vram to queue
+				LOAD_AppendQueue(bigfile, LT_VRAM, iVar9 + 0x16b, 0, 0);
 
 				// podium first place
 				modelFirst = gGT->podium_modelIndex_First;
@@ -628,42 +624,33 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					(modelFirst != 0x8d)
 			 	)
 				{
-					// add something to loading queue
-					// '2' for dram
-					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)modelFirst - 0x7e) * 2 + 0x16d, &data.podiumModel_firstPlace, 0xfffffffe);
+					LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)modelFirst - 0x7e) * 2 + 0x16d, &data.podiumModel_firstPlace, 0xfffffffe);
 				}
 
 				// podium second place exists
 				if (gGT->podium_modelIndex_Second != 0)
 				{
-					// adds to loading queue
-					// '2' for dram
-					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_Second - 0x7e) * 2 + 0x18d, &data.podiumModel_secondPlace, 0xfffffffe);
+					LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_Second - 0x7e) * 2 + 0x18d, &data.podiumModel_secondPlace, 0xfffffffe);
 				}
 			
 				// podium third place exists
 				if (gGT->podium_modelIndex_Third != 0)
 				{
-					// add something to loading queue
-					// '2' for dram
-					LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_Third - 0x7e) * 2 + 0x18d, &data.podiumModel_thirdPlace, 0xfffffffe);
+					LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_Third - 0x7e) * 2 + 0x18d, &data.podiumModel_thirdPlace, 0xfffffffe);
 				}
 
 				// add TAWNA to loading queue
-				// '2' for dram
-				LOAD_AppendQueue(bigfile, 2, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_tawna - 0x8f) * 2 + 0x1ad, &data.podiumModel_tawna, 0xfffffffe);
+				LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_tawna - 0x8f) * 2 + 0x1ad, &data.podiumModel_tawna, 0xfffffffe);
 
 				// if 0x7e+5 (dingo)
 				if (gGT->podium_modelIndex_First == 0x83)
 				{
 					// add "DingoFire" to loading queue
-					// '2' for dram
-					LOAD_AppendQueue(bigfile, 2, iVar9 + 0x1bd, &data.podiumModel_dingoFire, 0xfffffffe);
+					LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + 0x1bd, &data.podiumModel_dingoFire, 0xfffffffe);
 				}
 
 				// add Podium
-				// '2' for dram
-				LOAD_AppendQueue(bigfile, 2, iVar9 + 0x1bf, 0, &LOAD_Callback_Podiums);
+				LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + 0x1bf, 0, &LOAD_Callback_Podiums);
 
 				// Disable LEV instances on Adv Hub, for podium scene
 				gGT->gameMode2 = gGT->gameMode2 | 0x100;

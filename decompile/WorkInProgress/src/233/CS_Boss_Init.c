@@ -28,8 +28,7 @@ void CS_Boss_Init(int* cutscene)
 
     if (cutscene)
     {
-        // add to load queue, '3' means vram
-        LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, 3, cutscene[0] - 1 + index, 0, 0);
+        LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_VRAM, cutscene[0] - 1 + index, 0, 0);
     }
 
     piVar4 = cutscene + 2;
@@ -37,11 +36,10 @@ void CS_Boss_Init(int* cutscene)
     {
         if (piVar4[i - 1])
         {
-            // add to load queue, '2' means dram
-            LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, 2, piVar4[i - 1] - 1 + index, ptrDestination, 0xfffffffe);
+            LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_DRAM, piVar4[i - 1] - 1 + index, ptrDestination, 0xfffffffe);
         }
         ptrDestination -= 1;
     }
-    // add to load queue, '2' means dram
-    LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, 2, cutscene[1] - 1 + index, 0, 0x800ae81c);
+	
+    LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_DRAM, cutscene[1] - 1 + index, 0, 0x800ae81c);
 }

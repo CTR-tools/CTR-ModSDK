@@ -11,8 +11,7 @@ void DECOMP_LOAD_OvrLOD(unsigned int param_1)
     sdata->load_inProgress = 1;
 
 	// LOD overlay 226-229 (numPlyrCurrGame + 0xe1)
-	// second parameter '1' means readfile
-    LOAD_AppendQueue(sdata->ptrBigfileCdPos_2,1,(param_1 + 0xe1),&OVR_Region2,&LOAD_Callback_Overlay_Generic);
+    LOAD_AppendQueue(sdata->ptrBigfileCdPos_2,LT_RAW,(param_1 + 0xe1),&OVR_Region2,&LOAD_Callback_Overlay_Generic);
 
 	// save ID, and reload next overlay (sector read invalidation)
 	sdata->gGT->overlayIndex_LOD = (char)(param_1 - 1U);

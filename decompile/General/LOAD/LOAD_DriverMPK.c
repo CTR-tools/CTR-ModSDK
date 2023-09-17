@@ -20,13 +20,13 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		for(i = 0; i < 3; i++)
 		{
 			// low lod CTR model
-			LOAD_AppendQueue(param_1,2,
+			LOAD_AppendQueue(param_1,LT_DRAM,
 				data.characterIDs[i] + (base-0xf2)+0x14c,
 				&data.driverModel_lowLOD[i],0xfffffffe);
 		}
 
 		// load 4P MPK of fourth player
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[i] + (base-0xf2)+0x15c,
 			0,param_3);
 
@@ -43,7 +43,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	  )
 	{
 		// adv mpk
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[0] + (base-0xf2)+0x114,
 			0,param_3);
 
@@ -53,12 +53,12 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	if((sdata->gGT->gameMode1 & (ADVENTURE_BOSS | RELIC_RACE | TIME_TRIAL)) != 0)
 	{
 		// high lod model
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[0] + (base-0xf2)+0xf2,
 			&data.driverModel_lowLOD[0],0xfffffffe);
 
 		// time trial mpk
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[1] + (base-0xf2)+0x124,
 			0,param_3);
 
@@ -74,12 +74,12 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		)
 	{
 		// high lod model
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[0] + (base-0xf2)+0xf2,
 			&data.driverModel_lowLOD[0],0xfffffffe);
 
 		// pack of four AIs with bosses
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			(base-0xf2)+0x14b,
 			0,param_3);
 
@@ -98,7 +98,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		LOAD_Robots1P(data.characterIDs[0]);
 
 		// arcade mpk
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[0] + (base-0xf2)+0x104,
 			0,param_3);
 
@@ -111,7 +111,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		for(i = 0; i < 2; i++)
 		{
 			// low lod CTR model
-			LOAD_AppendQueue(param_1,2,
+			LOAD_AppendQueue(param_1,LT_DRAM,
 				data.characterIDs[i] + (base-0xf2)+0x134,
 				&data.driverModel_lowLOD[i],0xfffffffe);
 		}

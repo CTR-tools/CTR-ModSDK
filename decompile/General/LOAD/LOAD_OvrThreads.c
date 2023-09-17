@@ -16,8 +16,7 @@ void DECOMP_LOAD_OvrThreads(unsigned int param_1)
         // sdata->gGT->overlayIndex_Threads = 0xff;
 
 		// Threads overlay 230-233
-		// second parameter '1' means readfile
-        LOAD_AppendQueue(sdata->ptrBigfileCdPos_2,1,(param_1+0xe6),&OVR_Region3,data.overlayCallbackFuncs[param_1]);
+        LOAD_AppendQueue(sdata->ptrBigfileCdPos_2,LT_RAW,(param_1+0xe6),&OVR_Region3,data.overlayCallbackFuncs[param_1]);
     }
     return;
 }
