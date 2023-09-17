@@ -890,7 +890,7 @@ uint FUN_80032438(char *param_1,CdlFILE *param_2)
 // param_1 is the address to CdlFile of Kart.HWL
 // param_2 is allocation of 0x800 bytes
 
-// howl_readSectorSync
+// LOAD_HowlOneSector
 undefined4 FUN_80032498(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
 
 {
@@ -962,7 +962,7 @@ void FUN_8003254c(char param_1)
 // param_2 - pointer to load data to
 // param_3 - offset from the beginning of file in sectors
 // param_4 - number of sectors to load
-// howl_loadDataFromCd
+// LOAD_HowlSectorChainStart
 uint FUN_80032594(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
 
 {
@@ -979,7 +979,7 @@ uint FUN_80032594(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
   }
   else
   {
-	// save parameters for howl_loadDataFromCd_RetryOnError
+	// save parameters for LOAD_HowlSectorChainEnd
 
     // this seems to be some 5 int howl struct at DAT_8008d840, 1st int being current loading status
     DAT_8008d844 = param_1;
@@ -1034,7 +1034,7 @@ uint FUN_80032594(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
 //loads pending data from cd
 //basically wrapper for FUN_80032594
 
-// howl_loadDataFromCd_RetryOnError
+// LOAD_HowlSectorChainEnd
 uint FUN_8003266c(void)
 
 {

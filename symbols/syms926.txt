@@ -442,12 +442,10 @@
 800321b4 LOAD_ReadFile				// real ND name
 80032344 LOAD_ReadFile_NoCallback
 80032438 LOAD_FindFile
-
-80032498 howl_readSectorSync
-8003254c howl_cdReadCallback
-80032594 howl_loadDataFromCd
-8003266c howl_loadDataFromCd_RetryOnError
-
+80032498 LOAD_HowlOneSector
+8003254c LOAD_HowlCallback
+80032594 LOAD_HowlSectorChainStart
+8003266c LOAD_HowlSectorChainEnd
 800326b4 LOAD_RunPtrMap
 80032700 LOAD_Robots2P
 800327dc LOAD_Robots1P

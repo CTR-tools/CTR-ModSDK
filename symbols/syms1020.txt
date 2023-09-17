@@ -457,10 +457,10 @@
 
 80032728 LOAD_FindFile
 
-80032788 howl_readSectorSync
-8003283c howl_cdReadCallback
-80032884 howl_loadDataFromCd
-8003295c howl_loadDataFromCd_RetryOnError
+80032788 LOAD_HowlOneSector
+8003283c LOAD_HowlCallback
+80032884 LOAD_HowlSectorChainStart
+8003295c LOAD_HowlSectorChainEnd
 800329a4 LOAD_RunPtrMap
 
 800329f0 LOAD_Robots2P

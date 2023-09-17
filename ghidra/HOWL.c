@@ -1343,7 +1343,7 @@ uint FUN_800293b8(void)
 	// bankLoadStage 1: load to RAM, and assign SpuEntry
     if (DAT_8008d774 == 1)
 	{
-	  // howl_loadDataFromCd_RetryOnError
+	  // LOAD_HowlSectorChainEnd
       iVar2 = FUN_8003266c();
       if (iVar2 != 0)
 	  {
@@ -1407,7 +1407,7 @@ uint FUN_800293b8(void)
 		// MEMPACK_ReallocMem
         FUN_8003e94c((DAT_8008d764 + 0x7ff & 0xfffff800) + 0x800);
 
-		// howl_loadDataFromCd
+		// LOAD_HowlSectorChainStart
 		// read new SampleBlock #2 to RAM
 		// DAT_80095e7c is CdlFile for Kart.HWL,
 		// DAT_8008d788+0x800 is the destination to load to
@@ -1466,7 +1466,7 @@ uint FUN_800293b8(void)
 				// Stage 0: Load to RAM
 				(DAT_8008d774 == 0) &&
 				(
-					// howl_loadDataFromCd
+					// LOAD_HowlSectorChainStart
 					// read new SampleBlock #1 to RAM
 					// DAT_80095e7c is CdlFile for Kart.HWL
 					// DAT_8008d788 is the destination to load to
@@ -1487,7 +1487,7 @@ uint FUN_800293b8(void)
 		// Stage 2: Spu Transfer Start
         if (DAT_8008d774 == 2)
 		{
-		  // howl_loadDataFromCd_RetryOnError
+		  // LOAD_HowlSectorChainEnd
           iVar2 = FUN_8003266c();
           if (iVar2 != 0) 
 		  {
@@ -1933,7 +1933,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 						// Give CdlFile of Kart.HWL,
 						// Give pointer of 0x800 allocation
 
-						// howl_readSectorSync
+						// LOAD_HowlOneSector
 						iVar1 = FUN_80032498(&DAT_80095e7c,piVar2,0,1),
 						iVar1 != 0
 					)
@@ -1963,7 +1963,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 				// so it loads after the last byte of sector
 				// asm - addiu      a1,s1,0x800
 
-				// howl_readSectorSync
+				// LOAD_HowlOneSector
 				iVar3 = FUN_80032498(&DAT_80095e7c,piVar2 + 0x200,1,iVar3 + -1),
 				iVar3 != 0
 			)
@@ -2041,12 +2041,12 @@ uint FUN_80029ca4(void)
     //case state 1 - load cseq data (loads filesize / 0x800 - 1 sector)
     if (DAT_8008d7a4 == 1)
 	{
-	  // howl_loadDataFromCd_RetryOnError
+	  // LOAD_HowlSectorChainEnd
       iVar2 = FUN_8003266c();
       if (
 			(iVar2 != 0) &&
 			(
-				// howl_loadDataFromCd
+				// LOAD_HowlSectorChainStart
 				// DAT_80095e7c is CdlFile for Kart.HWL
 				// DAT_8008d7a8 is sectorOffset
 				iVar2 = FUN_80032594(&DAT_80095e7c,&DAT_80090d84,DAT_8008d7a8 + 1,
@@ -2080,7 +2080,7 @@ uint FUN_80029ca4(void)
 
 	    //case state = 2 - parse header
 		//(or anything greater than 3, basically case default)
-		// howl_loadDataFromCd_RetryOnError
+		// LOAD_HowlSectorChainEnd
         if ((DAT_8008d7a4 == 2) && (iVar2 = FUN_8003266c(), iVar2 != 0))
 		{
 		  // parse cseq header

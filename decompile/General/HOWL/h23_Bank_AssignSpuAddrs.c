@@ -14,7 +14,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 	// Stage 0: Load to RAM (1/2)
 	if(sdata->bankLoadStage == 0)
 	{
-		ret = howl_loadDataFromCd
+		ret = LOAD_HowlSectorChainStart
 				(
 					&sdata->KartHWL_CdLoc,  // CdLoc of HOWL
 					sdata->ptrSampleBlock2, // destination in RAM for banks
@@ -34,7 +34,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 	// Stage 1: Load to RAM (2/2) and assign SPU Addrs
 	if(sdata->bankLoadStage == 1)
 	{
-		if(howl_loadDataFromCd_RetryOnError() == 0)
+		if(LOAD_HowlSectorChainEnd() == 0)
 			return 0;
 		
 		sdata->audioAllocSize = 0;
@@ -76,7 +76,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 		
 		MEMPACK_ReallocMem((sdata->audioAllocSize + 0x7ff & 0xfffff800) + 0x800);
 		
-		ret = howl_loadDataFromCd
+		ret = LOAD_HowlSectorChainStart
 				(
 					&sdata->KartHWL_CdLoc,  				// CdLoc of HOWL
 					(int)sdata->ptrSampleBlock2 + 0x800,	// destination
@@ -131,7 +131,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 	// Stage 2: Spu Transfer Start
 	if(sdata->bankLoadStage == 2)
 	{
-		if(howl_loadDataFromCd_RetryOnError() == 0)
+		if(LOAD_HowlSectorChainEnd() == 0)
 			return 0;
 		
 		int spuAddrStart = (unsigned int)sdata->ptrLastBank->min * 8;
