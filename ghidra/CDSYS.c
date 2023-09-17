@@ -780,6 +780,7 @@ LAB_8001cd00:
   return uVar1;
 }
 
+// CDSYS_XAGetTrackLength
 // assumed to return sample length from XINF XA entry
 // param1 - xa type (game, music, extra)
 // param2 - xa audioTrackID

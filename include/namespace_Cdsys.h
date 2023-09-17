@@ -22,13 +22,11 @@ struct XNF
 	// 0x8
 	int numTypes;
 
-
 	// 0xC
 	int numXAs_total;
 
 	// 0x10
 	int numAudioTracks_total;
-
 
 	// 0x14
 	int numXA[CDSYS_XA_NUM_TYPES];
@@ -43,7 +41,14 @@ struct XNF
 	int firstSongIndex[CDSYS_XA_NUM_TYPES];
 
 	// 0x54
+	// size = numXAs_total
 	int XaCdPos[0];
+};
+
+struct XaSize
+{
+	short XaIndex;
+	short XaBytes;
 };
 
 struct AudioMeta

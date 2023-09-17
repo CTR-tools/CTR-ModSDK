@@ -3421,7 +3421,7 @@ struct sData
 
 	// 8008bb30 -- SepReview
 	// 8008d6e8 -- UsaRetail
-	int** ptr_XNF_XA_Entries;
+	struct XaSize* ptr_XNF_XA_Entries;
 
 	#if BUILD >= UsaRetail
 	// 8008d6ec
