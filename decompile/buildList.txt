@@ -160,6 +160,9 @@ common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_c13_XAGetNumTracks.c
 common, exe, CDSYS_XASeek, 0x0, General/CDSYS/CDSYS_c14_XASeek.c
 common, exe, CDSYS_XAGetTrackLength, 0x0, General/CDSYS/CDSYS_c15_XAGetTrackLength.c
 common, exe, CDSYS_XAPlay, 0x0, General/CDSYS/CDSYS_c16_XAPlay.c
+common, exe, CDSYS_XAPauseRequest, 0x0, General/CDSYS/CDSYS_c17_XAPauseRequest.c
+common, exe, CDSYS_XAPauseForce, 0x0, General/CDSYS/CDSYS_c18_XAPauseForce.c
+common, exe, CDSYS_XAPauseAtEnd, 0x0, General/CDSYS/CDSYS_c19_XAPauseAtEnd.c
 
 // CTR
 common, exe, CTR_CycleTex_LEV, 0x0, General/CTR_CycleTex_LEV.c
