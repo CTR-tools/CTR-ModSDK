@@ -15,7 +15,6 @@ struct BigHeader
 
 struct LoadQueueSlot
 {
-
 	// 0x0
 	struct BigHeader* ptrBigfileCdPos;
 

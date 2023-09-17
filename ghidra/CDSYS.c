@@ -37,30 +37,52 @@ undefined4 FUN_8001c360(int param_1)
   // bool_XAs_Loaded
   DAT_8008d6b4 = 0;
 
+  // XA_State
   DAT_8008d708 = 0;
 
   // XA is not finished (nor started)
   DAT_8008d6b8 = 0;
 
+  // countFail_CdSyncCallback
   DAT_8008d720 = 0;
+  
+  // countPass_CdReadyCallback
   DAT_8008d704 = 0;
+  
+  // countFail_CdReadyCallback
   DAT_8008d724 = 0;
+  
+  // XA_CurrOffset
   DAT_8008d6f8 = 0;
 
   // countPass_CdTransferCallback
   DAT_8008d6d8 = 0;
 
+  // XA_Playing_Category
   DAT_8008d6e4 = 0;
+  
+  // XA_Playing_Index
   DAT_8008d6e0 = 0;
+  
+  // XA_StartPos
   DAT_8008d6f0 = 0;
+  
+  // XA_EndPos
   DAT_8008d710 = 0;
+  
+  // musicVol_bitShifted
   DAT_8008d70c = 0;
+  
   DAT_8008d6c8 = 0;
   DAT_8008d714 = 0;
   DAT_8008d6f4 = 0;
   DAT_8008d6c4 = 0;
   DAT_8008d700 = 0;
+  
+  // CD_currPos
   DAT_8008d6d4 = 0;
+  
+  // frame_of_XA_Pause
   DAT_8008d6ec = 0;
 
   // CDSYS_SetMode_StreamData
