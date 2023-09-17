@@ -11,7 +11,7 @@ void DECOMP_CDSYS_XAPauseForce()
 	
 	// dont call SpuSetIRQ here, 
 	// it's called in SpuDisableIRQ anyway
-	CDSYS_SpuDisableIRQ();
+	DECOMP_CDSYS_SpuDisableIRQ();
 	
 	CdControl(CdlPause, 0, 0);
 	

@@ -19,12 +19,9 @@ u_int DECOMP_main()
 	
 	gGT = sdata->gGT;
 	
-#ifdef REBUILD_PS1
-printf("PS1 Rebuild effort: %08x\n", gGT);
-while(1) {}
-#else
-	
+#ifndef REBUILD_PS1	
 	__main();
+#endif
 
 	do
 	{
@@ -37,8 +34,10 @@ while(1) {}
 		}
 		#endif
 
+#ifndef REBUILD_PS1
 		LOAD_NextQueuedFile();
-		CDSYS_XAPauseAtEnd();
+#endif
+		DECOMP_CDSYS_XAPauseAtEnd();
 
 		switch(sdata->mainGameState)
 		{
@@ -47,6 +46,7 @@ while(1) {}
 				StateZero();
 				break;
 
+#ifndef REBUILD_PS1
 			// Happens on first frame that loading ends
 			case 1:
 			
@@ -366,6 +366,7 @@ while(1) {}
 					AH_MaskHint_Update();
 				}
 				break;
+			#endif
 
 			#if 0
 			// In theory, this is left over from the demos, 
@@ -397,10 +398,8 @@ while(1) {}
 			#endif
 		}
 	} while( true );
-#endif
 }
 
-#ifndef REBUILD_PS1
 // by separating this, it can be 
 // overwritten dynamically (oxide fix)
 void StateZero()
@@ -418,18 +417,22 @@ void StateZero()
 	ResetCallback();
 	
 	// We have 2mb RAM total
-	MEMPACK_Init(0x800000);
+	DECOMP_MEMPACK_Init(0x800000);
 	
+#ifndef REBUILD_PS1
 	// also sets debug variables to "off"
 	LOAD_InitCD();
 	
 	// Without this, checkered flag will draw one frame after the copyright page draws, then go away once Naughty Dog Box scene is ready
 	TitleFlag_SetFullyOffScreen();
+#endif
 	
 	ResetGraph(0);
 	SetGraphDebug(0);
 	
+#ifndef REBUILD_PS1
 	MainInit_VRAMClear();
+#endif
 	
 	SetDispMask(1);
 	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
@@ -476,6 +479,7 @@ void StateZero()
 	// traffic light countdown timer, set to negative one second
 	gGT->trafficLightsTimer = 0xfffffc40;
 	
+#ifndef REBUILD_PS1
 	RCNT_Init();
 	
 	// set callback and save callback
@@ -574,6 +578,7 @@ void StateZero()
 	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
 	// Add a bookmark before loading (param_3 is 0 in the call)
 	LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, &vramSize, 0xffffffff);
+#endif
 	
 	sdata->mainGameState = 3;
 	
@@ -583,5 +588,9 @@ void StateZero()
 	clockEffect = &gGT->clockEffectEnabled;
 	gGT->gameMode1 |= LOADING;
 	gGT->clockEffectEnabled = *clockEffect & 0xfffe;
-}
+	
+#ifdef REBUILD_PS1
+	printf("End of Rebuild_PS1\n%s\n%s\n", __DATE__, __TIME__);
+	while(1) {}
 #endif
+}

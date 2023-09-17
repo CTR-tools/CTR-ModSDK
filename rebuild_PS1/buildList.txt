@@ -1,2 +1,2 @@
 common, exe, start, 0x0, ../decompile/General/psyq_start.c
-common, exe, 0x80010000, 0x0, ../decompile/General/MAIN/MainMain.c, game.bin
+common, exe, 0x80010000, 0x0, ../decompile/General/MAIN/MainMain.c ../decompile/General/CDSYS/CDSYS_c19_XAPauseAtEnd.c ../decompile/General/CDSYS/CDSYS_c18_XAPauseForce.c ../decompile/General/CDSYS/CDSYS_c11_SpuDisableIRQ.c ../decompile/General/MEMPACK/MEMPACK_Init.c, game.bin
