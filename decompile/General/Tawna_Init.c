@@ -1,52 +1,76 @@
 #include <common.h>
 
-void DECOMP_Tawna_Init(struct GameTracker * gGT)
+void DECOMP_Tawna_Init(struct GameTracker *gGT)
 {
-  struct Driver* driver;
-  char index;
-  char rank;
+  struct Driver *driver;
   char i;
+  char rank;
+  char index;
 
-  // default podium values
+  // Default podium values
   gGT->podium_modelIndex_First = 0;
   gGT->podium_modelIndex_Second = 0;
   gGT->podium_modelIndex_Third = 0;
 
-  // STATIC_TAWNA1
-  gGT->podium_modelIndex_tawna = 0x8f;
-
-  for (i = 0; i < 8; i++) {
-    // pointer to player structure
+  for (i = 0; i < 8; i++)
+  {
+    // Pointer to player structure
     driver = gGT->drivers[i];
-    // if address is not nullptr
-    if (driver != NULL) {
-      // 0 = 1st place, 1 = 2nd place, 2 = 3rd place, etc
-      rank = driver->driverRank;
 
-      // If the current driver is in 2nd place
-      if (rank == 1) {
-        gGT->podium_modelIndex_Second = data.characterIDs[driver->driverID] + 0x7e;
-      } else if (rank == 0) {
-        // first place
-        index = data.characterIDs[driver->driverID];
-        gGT->podium_modelIndex_First = index + 0x7e;
-        switch (index) {
+    if (driver == NULL) continue;
+    
+    // 0 = 1st place, 1 = 2nd place, 2 = 3rd place, etc
+    rank = driver->driverRank;
+    index = data.characterIDs[driver->driverID];
+
+	if (rank == 0)
+    {
+      // First place
+      gGT->podium_modelIndex_First = index + 0x7e;
+      
+	  // Set podium_modelIndex_tawna based on char index
+      switch (index)
+      {
+		// Crash + Coco
         case 0:
-          // STATIC_TAWNA2
+        case 3:
+          // STATIC_TAWNA2 (Isabella)
           gGT->podium_modelIndex_tawna = 0x90;
           break;
-        case 0x7f:
-          // STATIC_TAWNA3
-          gGT->podium_modelIndex_tawna = 0x92;
-          break;
-        case 0x7d:
-          // STATIC_TAWNA4
+        
+		// Polar + Pura
+		case 6:
+        case 7:
+          // STATIC_TAWNA3 (Liz)
           gGT->podium_modelIndex_tawna = 0x91;
-        }
-      } else if (rank == 2) {
-        // third place
-        gGT->podium_modelIndex_Third = data.characterIDs[driver->driverID] + 0x7e;
+          break;
+		
+		// Cortex + NGin
+		case 1:
+        case 4:
+          // STATIC_TAWNA4 (Megumi)
+          gGT->podium_modelIndex_tawna = 0x92;
+		  break;
+		
+	    default:
+		  // STATIC_TAWNA1 (Ami)
+		  gGT->podium_modelIndex_tawna = 0x8f;
+          break;
       }
+	
+	  continue;
     }
+
+    if (rank == 1)
+    {
+      gGT->podium_modelIndex_Second = index + 0x7e;
+	  continue;
+	}
+    
+    else if (rank == 2)
+    {
+      gGT->podium_modelIndex_Third = index + 0x7e;
+	  continue;
+	}
   }
 }
