@@ -3740,7 +3740,7 @@ struct sData
 	struct BigHeader* ptrBigfile1;
 
 	// 8008d870
-	// ptr to array of model pointers
+	// ptr to array of model pointers (real ND name)
 	int** PLYROBJECTLIST;
 
 	// 8008d874
