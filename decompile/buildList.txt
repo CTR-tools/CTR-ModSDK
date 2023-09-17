@@ -347,35 +347,44 @@ common, exe, LinkedCollide_Hitbox_Desc, 0x0, General/LinkedCollide_Hitbox_Desc.c
 
 
 // LOAD
-common, exe, LOAD_AppendQueue, 0x0, General/LOAD/LOAD_AppendQueue.c
-common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_Callback_Overlay_Generic.c
-common, exe, LOAD_Callback_Overlay_230, 0x0, General/LOAD/LOAD_Callback_Overlay_230.c
-common, exe, LOAD_Callback_Overlay_231, 0x0, General/LOAD/LOAD_Callback_Overlay_231.c
-common, exe, LOAD_Callback_Overlay_232, 0x0, General/LOAD/LOAD_Callback_Overlay_232.c
-common, exe, LOAD_Callback_Overlay_233, 0x0, General/LOAD/LOAD_Callback_Overlay_233.c
-common, exe, LOAD_Callback_MaskHints3D, 0x0, General/LOAD/LOAD_Callback_MaskHints3D.c
-common, exe, LOAD_Callback_Podiums, 0x0, General/LOAD/LOAD_Callback_Podiums.c
-common, exe, LOAD_Callback_LEV, 0x0, General/LOAD/LOAD_Callback_LEV.c
-common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD/LOAD_Callback_LEV_Adv.c
-common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD/LOAD_Callback_DriverModels.c
-common, exe, LOAD_CDRequestCallback, 0x0, General/LOAD/LOAD_CDRequestCallback.c
-common, exe, LOAD_DriverMPK, 0x0, General/LOAD/LOAD_DriverMPK.c
-common, exe, LOAD_GetAdvPackIndex, 0x0, General/LOAD/LOAD_GetAdvPackIndex.c
-common, exe, LOAD_GetBigfileIndex, 0x0, General/LOAD/LOAD_GetBigfileIndex.c
-common, exe, LOAD_HubSwapPtrs, 0x0, General/LOAD/LOAD_HubSwapPtrs.c
-common, exe, LOAD_Hub_SwapNow, 0x0, General/LOAD/LOAD_Hub_SwapNow.c
-common, exe, LOAD_IsOpen_AdvHub, 0x0, General/LOAD/LOAD_IsOpen_AdvHub.c
-common, exe, LOAD_IsOpen_MainMenu, 0x0, General/LOAD/LOAD_IsOpen_MainMenu.c
-common, exe, LOAD_IsOpen_Podiums, 0x0, General/LOAD/LOAD_IsOpen_Podiums.c
-common, exe, LOAD_IsOpen_RacingOrBattle, 0x0, General/LOAD/LOAD_IsOpen_RacingOrBattle.c
-common, exe, LOAD_LangFile, 0x0, General/LOAD/LOAD_LangFile.c
-common, exe, LOAD_LevelFile, 0x0, General/LOAD/LOAD_LevelFile.c
-common, exe, LOAD_NextQueuedFile, 0x0, General/LOAD/LOAD_NextQueuedFile.c
-common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_OvrLOD.c
-common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_OvrEndRace.c
-common, exe, LOAD_OvrThreads, 0x0, General/LOAD/LOAD_OvrThreads.c
-common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_ReadFile.c
-common, exe, LOAD_TenStages, 0x0, General/LOAD/LOAD_TenStages.c
+common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_A01_Callback_Overlay_Generic.c
+common, exe, LOAD_Callback_Overlay_230, 0x0, General/LOAD/LOAD_A02_Callback_Overlay_230.c
+common, exe, LOAD_Callback_Overlay_231, 0x0, General/LOAD/LOAD_A03_Callback_Overlay_231.c
+common, exe, LOAD_Callback_Overlay_232, 0x0, General/LOAD/LOAD_A04_Callback_Overlay_232.c
+common, exe, LOAD_Callback_Overlay_233, 0x0, General/LOAD/LOAD_A05_Callback_Overlay_233.c
+common, exe, LOAD_Callback_MaskHints3D, 0x0, General/LOAD/LOAD_A06_Callback_MaskHints3D.c
+common, exe, LOAD_Callback_Podiums, 0x0, General/LOAD/LOAD_A07_Callback_Podiums.c
+common, exe, LOAD_Callback_LEV, 0x0, General/LOAD/LOAD_A08_Callback_LEV.c
+common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD/LOAD_A09_Callback_LEV_Adv.c
+common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD/LOAD_A10_Callback_DriverModels.c
+// skip HubCallback, GlobalModelPtrs_MPK, 
+common, exe, LOAD_HubSwapPtrs, 0x0, General/LOAD/LOAD_A13_HubSwapPtrs.c
+// skip LOAD_StringToUpper, LOAD_InitCD, LOAD_ReadDirectory, LOAD_DramFileCallback,
+// skip LOAD_DramFile, LOAD_VramFileCallback, LOAD_VramFile, LOAD_ReadFileASyncCallback,
+common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_A22_ReadFile.c
+// skip LOAD_ReadFile_NoCallback, LOAD_FindFile, LOAD_HowlOneSector, 
+// skip LOAD_HowlCallback, LOAD_HowlSectorChainStart, LOAD_HowlSectorChainEnd, LOAD_RunPtrMap
+// skip LOAD_Robots2P, LOAD_Robots1P
+common, exe, LOAD_DriverMPK, 0x0, General/LOAD/LOAD_A32_DriverMPK.c
+common, exe, LOAD_LangFile, 0x0, General/LOAD/LOAD_A33_LangFile.c
+common, exe, LOAD_GetBigfileIndex, 0x0, General/LOAD/LOAD_A34_GetBigfileIndex.c
+common, exe, LOAD_AppendQueue, 0x0, General/LOAD/LOAD_A35_AppendQueue.c
+common, exe, LOAD_CDRequestCallback, 0x0, General/LOAD/LOAD_A36_CDRequestCallback.c
+common, exe, LOAD_NextQueuedFile, 0x0, General/LOAD/LOAD_A37_NextQueuedFile.c
+// skip LOAD_Hub_ReadFile, 
+common, exe, LOAD_Hub_SwapNow, 0x0, General/LOAD/LOAD_A39_Hub_SwapNow.c
+// skip LOAD_Hub_Main
+common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_A41_OvrLOD.c
+common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_A42_OvrEndRace.c
+common, exe, LOAD_OvrThreads, 0x0, General/LOAD/LOAD_A43_OvrThreads.c
+common, exe, LOAD_GetAdvPackIndex, 0x0, General/LOAD/LOAD_A44_GetAdvPackIndex.c
+common, exe, LOAD_TenStages, 0x0, General/LOAD/LOAD_A45_TenStages.c
+// skip TalkingMask
+common, exe, LOAD_LevelFile, 0x0, General/LOAD/LOAD_A47_LevelFile.c
+common, exe, LOAD_IsOpen_RacingOrBattle, 0x0, General/LOAD/LOAD_A48_IsOpen_RacingOrBattle.c
+common, exe, LOAD_IsOpen_MainMenu, 0x0, General/LOAD/LOAD_A49_IsOpen_MainMenu.c
+common, exe, LOAD_IsOpen_AdvHub, 0x0, General/LOAD/LOAD_A50_IsOpen_AdvHub.c
+common, exe, LOAD_IsOpen_Podiums, 0x0, General/LOAD/LOAD_A51_IsOpen_Podiums.c
 
 // MAIN
 common, exe, MainDB_GetClipSize, 0x0, General/MAIN/MainDB_GetClipSize.c
