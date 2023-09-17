@@ -151,6 +151,10 @@ common, exe, CDSYS_SetMode_StreamAudio, 0x0, General/CDSYS/CDSYS_c04_SetMode_Str
 common, exe, CDSYS_SetXAToLang, 0x0, General/CDSYS/CDSYS_c05_SetXAToLang.c
 common, exe, CDSYS_XaCallbackCdSync, 0x0, General/CDSYS/CDSYS_c06_XaCallbackCdSync.c
 common, exe, CDSYS_XaCallbackCdReady, 0x0, General/CDSYS/CDSYS_c07_XaCallbackCdReady.c
+common, exe, CDSYS_SpuCallbackIRQ, 0x0, General/CDSYS/CDSYS_c08_SpuCallbackIRQ.c
+common, exe, CDSYS_SpuCallbackTransfer, 0x0, General/CDSYS/CDSYS_c09_SpuCallbackTransfer.c
+common, exe, CDSYS_SpuEnableIRQ, 0x0, General/CDSYS/CDSYS_c10_SpuEnableIRQ.c
+common, exe, CDSYS_SpuDisableIRQ, 0x0, General/CDSYS/CDSYS_c11_SpuDisableIRQ.c
 
 common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_XAGetNumTracks.c
 common, exe, CDSYS_XAGetTrackLength, 0x0, General/CDSYS/CDSYS_XAGetTrackLength.c

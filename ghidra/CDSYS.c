@@ -490,6 +490,7 @@ code specifying which half of the buffer is currently being written to, so you c
 half.
   */
 
+  // 5 = SPU_CDONLY
   SpuReadDecodedData((SpuDecodedData *)&DAT_8008dd28,5);
 
   if (
