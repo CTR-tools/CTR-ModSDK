@@ -3439,7 +3439,7 @@ struct sData
 	int XA_StartPos;
 
 	// 8008d6f4
-	int unk_8008d6f4;
+	int XA_MaxSampleValInArr;
 
 	// 8008d6f8
 	int XA_CurrOffset;
@@ -3463,8 +3463,7 @@ struct sData
 	int XA_EndPos;
 
 	// 8008d714
-	// max of some kind
-	int unk_8008d714;
+	int XA_MaxSampleVal;
 
 	// 8008d718
 	int* ptrArray_XaCdPos;
@@ -4223,18 +4222,12 @@ struct sData
 	// 400 bytes, 100 ints
 	int unused400[100];
 
-	// 8008E6B8
-	// 8008e6b8 CdLoc (which is an int)
-	// 8008e6bc 
-	// 8008e6c0 
-	// 8008e6c4
+	// 8008e6b8
+	CdlFILE cdlFile_CdReady;
 	
 	// array of 3 ints
-	// 8008e6c8 
-	// 8008e6cc
-	// 8008e6d0
-	
-	char cdsysUnk[0x1C];
+	// 8008e6c8
+	int XA_MaxSampleValArr[3];
 
 	#if BUILD == SepReview
 	// 8008d308

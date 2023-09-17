@@ -76,9 +76,15 @@ undefined4 FUN_8001c360(int param_1)
   // XA_VolumeDeduct
   DAT_8008d6c8 = 0;
   
+  // XA_MaxSampleVal
   DAT_8008d714 = 0;
+  
+  // XA_MaxSampleValInArr
   DAT_8008d6f4 = 0;
+  
   DAT_8008d6c4 = 0;
+  
+  // unused
   DAT_8008d700 = 0;
   
   // CD_currPos
@@ -418,7 +424,7 @@ void FUN_8001c7fc(char param_1)
   // if result == CdlDataReady
   if (param_1 == '\x01')
   {
-	// current position of CD
+	// cdlFile_CdReady
     CdGetSector(&DAT_8008e6b8,3);
     DAT_8008d6d4 = CdPosToInt((CdlLOC *)&DAT_8008e6b8);
 
@@ -576,6 +582,8 @@ void FUN_8001c9e4(void)
   SpuSetIRQCallback(FUN_8001c8e4);
 
   DAT_8008d6c4 = 0x200;
+  
+  // unused
   DAT_8008d700 = 0;
 
   // interrupt SPU when this address
@@ -670,11 +678,15 @@ void FUN_8001ca98(void)
 	// save max
 	DAT_8008d714 = (int)sVar8;
 
+	// XA_MaxSampleValArr
     piVar5 = &DAT_8008e6c8 + DAT_8008d6bc;
+	
     DAT_8008d6bc = DAT_8008d6bc + 1;
     bVar1 = 2 < DAT_8008d6bc;
-    *piVar5 = DAT_8008d714;
-    if (bVar1) {
+    
+	*piVar5 = DAT_8008d714;
+    
+	if (bVar1) {
       DAT_8008d6bc = 0;
     }
     if (DAT_8008d6c0 < 3) {
@@ -695,7 +707,7 @@ void FUN_8001ca98(void)
           iVar4 = 8;
         }
 
-		// find another max
+		// XA_MaxSampleValInArr
         if (DAT_8008d6f4 < *(int *)((int)&DAT_8008e6c8 + iVar4)) {
           DAT_8008d6f4 = *(int *)((int)&DAT_8008e6c8 + iVar4);
         }
@@ -1037,10 +1049,16 @@ undefined4 FUN_8001cdb4(int param_1,int param_2)
 	// convert StartPosInt, to a real position
     CdIntToPos(DAT_8008d6f0,aCStack24);
 
+	// XA_MaxSampleVal
 	DAT_8008d714 = 0;
+	
+	// XA_MaxSampleValInArr
     DAT_8008d6f4 = 0;
+	
+	// unused
     DAT_8008d700 = 0;
-    DAT_8008d704 = 0;
+    
+	DAT_8008d704 = 0;
     DAT_8008d724 = 0;
     DAT_8008d6f8 = 0;
 
