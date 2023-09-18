@@ -1088,7 +1088,7 @@ void FUN_800326b4(int param_1,int *param_2,int param_3)
 }
 
 
-// Set AIs for 2P Arcade,
+// LOAD_Robots2P
 // and load MPK for AI models
 // param_1 bigfile
 // param_2 = P1 Character ID
@@ -1200,7 +1200,7 @@ void FUN_80032700(undefined4 param_1,uint param_2,uint param_3,undefined4 param_
 }
 
 
-// Set Character IDs of AIs
+// LOAD_Robots1P
 // param_1 will always be P1 Character ID
 void FUN_800327dc(int param_1)
 {
