@@ -387,7 +387,7 @@ common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_A42_OvrEndRace.c
 common, exe, LOAD_OvrThreads, 0x0, General/LOAD/LOAD_A43_OvrThreads.c
 common, exe, LOAD_GetAdvPackIndex, 0x0, General/LOAD/LOAD_A44_GetAdvPackIndex.c
 common, exe, LOAD_TenStages, 0x0, General/LOAD/LOAD_A45_TenStages.c
-// skip TalkingMask
+common, exe, LOAD_TalkingMask, 0x0, General/LOAD/LOAD_A46_TalkingMask.c
 common, exe, LOAD_LevelFile, 0x0, General/LOAD/LOAD_A47_LevelFile.c
 common, exe, LOAD_IsOpen_RacingOrBattle, 0x0, General/LOAD/LOAD_A48_IsOpen_RacingOrBattle.c
 common, exe, LOAD_IsOpen_MainMenu, 0x0, General/LOAD/LOAD_A49_IsOpen_MainMenu.c

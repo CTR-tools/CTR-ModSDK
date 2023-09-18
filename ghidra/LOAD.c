@@ -3353,19 +3353,16 @@ void FUN_800347d0(int param_1,int param_2)
   *(undefined2 *)(PTR_DAT_8008d2ac + param_1 * 2 + 0x254c) = 0xffff;
 
   // change active allocation system to ???
-  FUN_8003e80c();
+  FUN_8003e80c(param_1);
 
   // MEMPACK_ClearLowMem
   FUN_8003e9b8();
 
-  // aku or uka file index
+  // different variation of aku/uka
   iVar1 = (param_1 + -1) * 2;
 
   // Game is now loading
   DAT_8008d0a4 = 1;
-
-  // iVar1 alters LOD
-  // param2*4 alters aku vs uka
 
   // load the vram for 3D mask hints
   // DAT_8008d09c is the Pointer to "cd position of bigfile"
