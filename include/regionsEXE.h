@@ -3704,12 +3704,12 @@ struct sData
 
 	// 8008d840
 	// need to rename, can be -1, 0, 1
-	int boolLoadKartHWL;
+	int howlChainState;
 
 	// 8008d844
 	// save parameters so you can
 	// call the function over and over
-	int funcParams[4];
+	int howlChainParams[4];
 
 	// 8008d854
 	void* ptrHubAlloc;
