@@ -485,7 +485,7 @@ FUN_80031e00(undefined4 param_1,undefined4 param_2,undefined4 *param_3,undefined
   else {
     if (param_5 == -2)
 	{
-		// This function is called LOAD_ReadFile
+		// LOAD_ReadFile
 		local_1c = FUN_800321b4(param_1,2,param_2,0,param_4,FUN_80031d30);
 
 		DAT_80083a48 = local_1c;
@@ -493,7 +493,7 @@ FUN_80031e00(undefined4 param_1,undefined4 param_2,undefined4 *param_3,undefined
     }
     else
 	{
-		// This function is called LOAD_ReadFile
+		// LOAD_ReadFile
 		local_1c = FUN_800321b4(param_1,2,param_2,param_3,param_4,FUN_80031d30);
     }
   }
