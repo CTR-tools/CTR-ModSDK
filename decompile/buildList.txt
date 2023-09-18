@@ -369,7 +369,8 @@ common, exe, LOAD_VramFileCallback, 0x0, General/LOAD/LOAD_A19_VramFileCallback.
 common, exe, LOAD_VramFile, 0x0, General/LOAD/LOAD_A20_VramFile.c
 //ommon, exe, LOAD_ReadFileASyncCallback, 0x0, General/LOAD/LOAD_A21_ReadFileASyncCallback.c ============ Broken ===========
 common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_A22_ReadFile.c
-// skip LOAD_ReadFile_NoCallback, LOAD_FindFile, LOAD_HowlOneSector, 
+common, exe, LOAD_ReadFile_NoCallback, 0x0, General/LOAD/LOAD_A23_ReadFile_NoCallback.c
+// skip LOAD_FindFile, LOAD_HowlOneSector, 
 // skip LOAD_HowlCallback, LOAD_HowlSectorChainStart, LOAD_HowlSectorChainEnd, LOAD_RunPtrMap
 // skip LOAD_Robots2P, LOAD_Robots1P
 common, exe, LOAD_DriverMPK, 0x0, General/LOAD/LOAD_A32_DriverMPK.c
