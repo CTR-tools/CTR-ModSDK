@@ -893,6 +893,8 @@ uint FUN_80032438(char *param_1,CdlFILE *param_2)
 // only called from howl_LoadHeader
 // param_1 is the address to CdlFile of Kart.HWL
 // param_2 is allocation of 0x800 bytes
+// param_3 is firstSector
+// param_4 is numSector
 
 // LOAD_HowlOneSector
 undefined4 FUN_80032498(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
@@ -947,7 +949,7 @@ void FUN_8003254c(char param_1)
   // disable callback
   CdReadCallback(0);
 
-  //if psyq cdread status 2 (success?), set howl loading status to 0
+  // result == CdlComplete
   if (param_1 == '\x02') {
     DAT_8008d840 = 0;
   }
