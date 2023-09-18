@@ -1753,11 +1753,12 @@ void FUN_80032ffc(undefined4 param_1,int param_2,int param_3)
   // If this sub-mempack does not already have this LEV loaded, then load it
   if ((int)*(short *)(PTR_DAT_8008d2ac + param_3 * 2 + 0x254c) != param_2)
   {
-	// erase mask hint model pointer (why?)
+	// erase mask hint model pointer,
+	// different hubs need different mask
     DAT_8008d0f0 = 0;
 
-	// change active allocation system to ???
-    FUN_8003e80c();
+	// change active allocation
+    FUN_8003e80c(param_3);
 
 	// MEMPACK_ClearLowMem
     FUN_8003e9b8();
@@ -3347,7 +3348,7 @@ void FUN_800347d0(int param_1,int param_2)
 {
   int iVar1;
 
-  // erase mask hint model pointer (why?)
+  // erase mask hint model pointer
   DAT_8008d0f0 = 0;
 
   *(undefined2 *)(PTR_DAT_8008d2ac + param_1 * 2 + 0x254c) = 0xffff;
@@ -3388,7 +3389,7 @@ void FUN_80034874(undefined4 param_1)
 
   puVar1 = PTR_DAT_8008d2ac;
 
-  // erase mask hint model pointer (why?)
+  // erase mask hint model pointer
   DAT_8008d0f0 = 0;
 
   // Turn off HUD
