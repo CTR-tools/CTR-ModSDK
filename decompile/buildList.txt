@@ -367,7 +367,7 @@ common, exe, LOAD_DramFileCallback, 0x0, General/LOAD/LOAD_A17_DramFileCallback.
 common, exe, LOAD_DramFile, 0x0, General/LOAD/LOAD_A18_DramFile.c
 common, exe, LOAD_VramFileCallback, 0x0, General/LOAD/LOAD_A19_VramFileCallback.c
 common, exe, LOAD_VramFile, 0x0, General/LOAD/LOAD_A20_VramFile.c
-//ommon, exe, LOAD_ReadFileASyncCallback, 0x0, General/LOAD/LOAD_A21_ReadFileASyncCallback.c ============ Broken ===========
+common, exe, LOAD_ReadFileASyncCallback, 0x0, General/LOAD/LOAD_A21_ReadFileASyncCallback.c
 common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_A22_ReadFile.c
 common, exe, LOAD_ReadFile_NoCallback, 0x0, General/LOAD/LOAD_A23_ReadFile_NoCallback.c
 common, exe, LOAD_FindFile, 0x0, General/LOAD/LOAD_A24_FindFile.c

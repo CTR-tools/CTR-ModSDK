@@ -17,9 +17,9 @@ void DECOMP_LOAD_ReadFileASyncCallback(char result)
 		}
 		
 		// callback
-		if(lqs->callback.funcPtr != 0)
+		if(sdata->ReadFileAsyncCallbackFuncPtr != 0)
 		{
-			(*lqs->callback.funcPtr)(lqs);
+			(*sdata->ReadFileAsyncCallbackFuncPtr)(lqs);
 		}
 	}
 	
