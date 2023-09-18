@@ -365,7 +365,7 @@ common, exe, LOAD_InitCD, 0x0, General/LOAD/LOAD_A15_InitCD.c
 common, exe, LOAD_ReadDirectory, 0x0, General/LOAD/LOAD_A16_ReadDirectory.c
 common, exe, LOAD_DramFileCallback, 0x0, General/LOAD/LOAD_A17_DramFileCallback.c
 common, exe, LOAD_DramFile, 0x0, General/LOAD/LOAD_A18_DramFile.c
-// skip LOAD_DramFile, LOAD_VramFileCallback, LOAD_VramFile, LOAD_ReadFileASyncCallback,
+// skip LOAD_VramFileCallback, LOAD_VramFile, LOAD_ReadFileASyncCallback,
 common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_A22_ReadFile.c
 // skip LOAD_ReadFile_NoCallback, LOAD_FindFile, LOAD_HowlOneSector, 
 // skip LOAD_HowlCallback, LOAD_HowlSectorChainStart, LOAD_HowlSectorChainEnd, LOAD_RunPtrMap
