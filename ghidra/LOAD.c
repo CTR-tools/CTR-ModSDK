@@ -907,6 +907,7 @@ undefined4 FUN_80032498(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
   // CDSYS_SetMode_StreamData
   FUN_8001c470();
 
+  // (numSectors * 0x800 - cdlFile.size) < 0x800
   if ((param_3 + param_4) * 0x800 - (int)param_1[1] < 0x800) {
 
 	// Get CD Position of Kart.HWL
