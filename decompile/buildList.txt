@@ -381,7 +381,7 @@ common, exe, LOAD_CDRequestCallback, 0x0, General/LOAD/LOAD_A36_CDRequestCallbac
 common, exe, LOAD_NextQueuedFile, 0x0, General/LOAD/LOAD_A37_NextQueuedFile.c
 // skip LOAD_Hub_ReadFile, 
 common, exe, LOAD_Hub_SwapNow, 0x0, General/LOAD/LOAD_A39_Hub_SwapNow.c
-// skip LOAD_Hub_Main
+common, exe, LOAD_Hub_Main, 0x0, General/LOAD/LOAD_A40_Hub_Main.c
 common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_A41_OvrLOD.c
 common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_A42_OvrEndRace.c
 common, exe, LOAD_OvrThreads, 0x0, General/LOAD/LOAD_A43_OvrThreads.c
