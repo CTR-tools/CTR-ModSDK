@@ -19,6 +19,17 @@ struct DramPointerMap
 	int offsets[0];
 };
 
+struct VramHeader
+{
+	char data[0xC];
+	
+	// 0xC
+	RECT rect;
+	
+	// 0x14
+	char pixels[0];
+};
+
 enum LoadType
 {
 	// ordinary read to ram

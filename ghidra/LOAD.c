@@ -501,10 +501,10 @@ FUN_80031e00(undefined4 param_1,undefined4 param_2,undefined4 *param_3,undefined
 }
 
 
-//loads TIMs from ctr texture file to vram
-//ctr texture file is either a single TIM, or multiple TIMS with a header
-//https://github.com/CTR-tools/CTR-tools/blob/master/formats/txt_vram.txt
-//param_1 = pointer to file queue slot
+// LOAD_VramFileCallback
+// ctr texture file is either a single TIM, or multiple TIMS with a header
+// https://github.com/CTR-tools/CTR-tools/blob/master/formats/txt_vram.txt
+// param_1 = pointer to file queue slot
 void FUN_80031ee4(int param_1)
 
 {
@@ -535,11 +535,11 @@ void FUN_80031ee4(int param_1)
       while (iVar3 != 0) {
 
         //read rect and load to vram (psy-q func)
-        local_18 = *(undefined2 *)(piVar2 + 3);
+        local_18 = *(undefined2 *)((int)piVar2 + 0xc);
         local_16 = *(undefined2 *)((int)piVar2 + 0xe);
-        local_14 = *(undefined2 *)(piVar2 + 4);
+        local_14 = *(undefined2 *)((int)piVar2 + 0x10);
         local_12 = *(undefined2 *)((int)piVar2 + 0x12);
-        LoadImage(&local_18,piVar2 + 5);
+        LoadImage(&local_18,(int)piVar2 + 0x14);
 
         //calulate pointers for next iteration
         iVar1 = iVar3 >> 2;
@@ -552,11 +552,11 @@ void FUN_80031ee4(int param_1)
       //only 1 TIM in this file
 
       //read rect and load to vram (psy-q func)
-      local_18 = *(undefined2 *)(piVar2 + 3);
+      local_18 = *(undefined2 *)((int)piVar2 + 0xc);
       local_16 = *(undefined2 *)((int)piVar2 + 0xe);
-      local_14 = *(undefined2 *)(piVar2 + 4);
+      local_14 = *(undefined2 *)((int)piVar2 + 0x10);
       local_12 = *(undefined2 *)((int)piVar2 + 0x12);
-      LoadImage(&local_18,piVar2 + 5);
+      LoadImage(&local_18,(int)piVar2 + 0x14);
     }
   }
 
