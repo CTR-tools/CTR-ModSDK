@@ -371,7 +371,8 @@ common, exe, LOAD_VramFile, 0x0, General/LOAD/LOAD_A20_VramFile.c
 common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_A22_ReadFile.c
 common, exe, LOAD_ReadFile_NoCallback, 0x0, General/LOAD/LOAD_A23_ReadFile_NoCallback.c
 common, exe, LOAD_FindFile, 0x0, General/LOAD/LOAD_A24_FindFile.c
-// skip LOAD_HowlOneSector, LOAD_HowlCallback, 
+common, exe, LOAD_HowlHeaderSectors, 0x0, General/LOAD/LOAD_A25_HowlHeaderSectors.c
+common, exe, LOAD_HowlCallback, 0x0, General/LOAD/LOAD_A26_HowlCallback.c
 // skip LOAD_HowlSectorChainStart, LOAD_HowlSectorChainEnd
 common, exe, LOAD_RunPtrMap, 0x0, General/LOAD/LOAD_A29_RunPtrMap.c
 common, exe, LOAD_Robots2P, 0x0, General/LOAD/LOAD_A30_Robots2P.c

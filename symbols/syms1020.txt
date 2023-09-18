@@ -457,7 +457,7 @@
 
 80032728 LOAD_FindFile
 
-80032788 LOAD_HowlOneSector
+80032788 LOAD_HowlHeaderSectors
 8003283c LOAD_HowlCallback
 80032884 LOAD_HowlSectorChainStart
 8003295c LOAD_HowlSectorChainEnd

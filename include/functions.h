@@ -533,7 +533,7 @@ void* LOAD_ReadFile_NoCallback(char* file, void* addr, int* size);
 
 // these are the last howl functions ever
 
-//LOAD_HowlOneSector()
+//LOAD_HowlHeaderSectors()
 //LOAD_HowlCallback()
 //LOAD_HowlSectorChainStart()
 //LOAD_HowlSectorChainEnd()

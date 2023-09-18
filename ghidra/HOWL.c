@@ -1933,7 +1933,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 						// Give CdlFile of Kart.HWL,
 						// Give pointer of 0x800 allocation
 
-						// LOAD_HowlOneSector
+						// LOAD_HowlHeaderSectors
 						iVar1 = FUN_80032498(&DAT_80095e7c,piVar2,0,1),
 						iVar1 != 0
 					)
@@ -1963,7 +1963,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 				// so it loads after the last byte of sector
 				// asm - addiu      a1,s1,0x800
 
-				// LOAD_HowlOneSector
+				// LOAD_HowlHeaderSectors
 				iVar3 = FUN_80032498(&DAT_80095e7c,piVar2 + 0x200,1,iVar3 + -1),
 				iVar3 != 0
 			)

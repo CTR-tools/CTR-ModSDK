@@ -17,7 +17,7 @@ void DECOMP_howl_LoadHeader(char* filename)
 	if (alloc != 0)
 	{
 		// read sector #1 of HOWL, just for header
-		ret = LOAD_HowlOneSector(
+		ret = LOAD_HowlHeaderSectors(
 					&sdata->KartHWL_CdLoc, alloc, 0, 1);
 	
 		if(
@@ -45,7 +45,7 @@ void DECOMP_howl_LoadHeader(char* filename)
 					// if header needs a more sectors loaded,
 					// like CTR-U which needs 3 sectors
 					(
-						ret = LOAD_HowlOneSector(
+						ret = LOAD_HowlHeaderSectors(
 							&sdata->KartHWL_CdLoc, (int)alloc+0x800, 1, numSector-1),
 							
 						ret != 0

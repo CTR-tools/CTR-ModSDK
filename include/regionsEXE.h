@@ -3703,7 +3703,8 @@ struct sData
 	short levelID;
 
 	// 8008d840
-	int boolLoadKartHWL; // I think???
+	// need to rename, can be -1, 0, 1
+	int boolLoadKartHWL;
 
 	// 8008d844
 	// save parameters so you can

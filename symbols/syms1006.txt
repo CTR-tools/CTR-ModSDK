@@ -469,7 +469,7 @@
 
 80033a04 LOAD_FindFile
 
-80033a64 LOAD_HowlOneSector
+80033a64 LOAD_HowlHeaderSectors
 80033b18 LOAD_HowlCallback
 80033b60 LOAD_HowlSectorChainStart
 80033c38 LOAD_HowlSectorChainEnd

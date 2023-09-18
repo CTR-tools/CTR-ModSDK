@@ -892,11 +892,11 @@ uint FUN_80032438(char *param_1,CdlFILE *param_2)
 // same as 80032594, but doesn't store params and calls CdReadSync
 // only called from howl_LoadHeader
 // param_1 is the address to CdlFile of Kart.HWL
-// param_2 is allocation of 0x800 bytes
+// param_2 is ptrDestination
 // param_3 is firstSector
 // param_4 is numSector
 
-// LOAD_HowlOneSector
+// LOAD_HowlHeaderSectors
 undefined4 FUN_80032498(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
 
 {
@@ -943,7 +943,7 @@ undefined4 FUN_80032498(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
 }
 
 
-// howl cd reading callback
+// LOAD_HowlCallback
 void FUN_8003254c(char param_1)
 
 {
