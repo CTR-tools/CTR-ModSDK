@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CDSYS_XAPauseForce();
+void DECOMP_CDSYS_XAPauseForce();
 
 void DECOMP_CDSYS_SetMode_StreamData()
 {
@@ -15,7 +15,7 @@ void DECOMP_CDSYS_SetMode_StreamData()
 	if(sdata->bool_XnfLoaded != 0)
 	{
 		// force stop, and cancel callbacks
-		CDSYS_XAPauseForce();
+		DECOMP_CDSYS_XAPauseForce();
 	}
 	
 	// https://www.cybdyn-systems.com.au/forum/viewtopic.php?t=1956

@@ -4,7 +4,7 @@ int DECOMP_LOAD_HowlHeaderSectors(CdlFILE* cdlFileHWL, void* ptrDestination, int
 {
 	CdlLOC loc;
 	
-	CDSYS_SetMode_StreamData();
+	DECOMP_CDSYS_SetMode_StreamData();
 	
 	// If reading out of file bounds, quit
 	if ( ((firstSector+numSector)*0x800 - cdlFileHWL->size) >= 0x800 )

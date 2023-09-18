@@ -5,7 +5,7 @@ void DECOMP_howl_InitGlobals(char* filename)
 	if(sdata->boolAudioEnabled == 1) return;
 	sdata->boolAudioEnabled = 1;
 
-	howl_LoadHeader(filename);
+	DECOMP_howl_LoadHeader(filename);
 
 	sdata->vol_FX = 215;
 	sdata->vol_Music = 175;
@@ -30,6 +30,8 @@ void DECOMP_howl_InitGlobals(char* filename)
 	SpuSetCommonCDMix(1);
     SpuSetCommonCDVolume(0,0);
 	
+#ifndef Rebuild_PS1
 	Voiceline_PoolInit();
 	Voiceline_SetDefaults();
+#endif
 }

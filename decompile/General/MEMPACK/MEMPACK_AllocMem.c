@@ -1,5 +1,6 @@
 #include <common.h>
 
+int DECOMP_MEMPACK_GetFreeBytes();
 void CTR_ErrorScreen(char r, char g, char b);
 
 void* DECOMP_MEMPACK_AllocMem(int allocSize)
@@ -12,7 +13,7 @@ void* DECOMP_MEMPACK_AllocMem(int allocSize)
 	ptrMempack = sdata->PtrMempack;
 
 	// if out of memory
-	if(MEMPACK_GetFreeBytes() < allocSize)
+	if(DECOMP_MEMPACK_GetFreeBytes() < allocSize)
 	{
 		CTR_ErrorScreen(0xFF,0,0);
 

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void LOAD_DramFileCallback(struct LoadQueueSlot* lqs)
+void DECOMP_LOAD_DramFileCallback(struct LoadQueueSlot* lqs)
 {
 	char* fileBuf = lqs->ptrDestination;
 	
@@ -22,14 +22,14 @@ void LOAD_DramFileCallback(struct LoadQueueSlot* lqs)
 			
 			struct DramPointerMap* dpm = &realFileBuf[ptrMapOffset];
 		
-			LOAD_RunPtrMap(realFileBuf, &dpm->offsets[0], dpm->numBytes>>2);
+			DECOMP_LOAD_RunPtrMap(realFileBuf, &dpm->offsets[0], dpm->numBytes>>2);
 			
 			// if overly allocated
 			if(lqs->flags & 1)
 			{
 				// undo allocation, allocate "needed" size,
 				// ptrMapOffset+4 equals the filesize
-				MEMPACK_ReallocMem(ptrMapOffset+4);
+				DECOMP_MEMPACK_ReallocMem(ptrMapOffset+4);
 			}
 		}
 	}

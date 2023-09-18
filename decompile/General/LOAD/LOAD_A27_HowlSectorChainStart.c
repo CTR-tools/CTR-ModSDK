@@ -13,7 +13,7 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 	sdata->howlChainParams[2] = (int)firstSector;
 	sdata->howlChainParams[3] = (int)numSector;
 	
-	CDSYS_SetMode_StreamData();
+	DECOMP_CDSYS_SetMode_StreamData();
 	
 	// If reading out of file bounds, quit
 	if ( ((firstSector+numSector)*0x800 - cdlFileHWL->size) >= 0x800 )

@@ -1,5 +1,7 @@
 #include <common.h>
 
+void DECOMP_CDSYS_SpuDisableIRQ();
+
 void DECOMP_CDSYS_XAPauseForce()
 {
 	if(sdata->boolUseDisc == 0) return;

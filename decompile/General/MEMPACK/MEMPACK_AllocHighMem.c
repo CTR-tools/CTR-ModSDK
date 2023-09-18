@@ -1,11 +1,13 @@
 #include <common.h>
 
+int DECOMP_MEMPACK_GetFreeBytes();
+
 void* DECOMP_MEMPACK_AllocHighMem(int allocSize)
 {
 	int newLastFreeByte;
 
 	// if out of memory
-	while(MEMPACK_GetFreeBytes() < allocSize)
+	while(DECOMP_MEMPACK_GetFreeBytes() < allocSize)
 	{
 		// enter infinite loop
 	}

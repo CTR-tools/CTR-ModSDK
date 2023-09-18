@@ -48,10 +48,12 @@ void DECOMP_CDSYS_Init(int boolUseDisc)
 	sdata->XA_CurrPos = 0;
 	sdata->XA_PausePos = 0;
 	
-	CDSYS_SetMode_StreamData();
+	DECOMP_CDSYS_SetMode_StreamData();
 	
 	// 1 - English
-	CDSYS_SetXAToLang(1);
+	DECOMP_CDSYS_SetXAToLang(1);
 	
+#ifndef REBUILD_PS1
 	Voiceline_PoolClear();
+#endif
 }

@@ -8,14 +8,14 @@ void DECOMP_CDSYS_XAPlay(int categoryID, int xaID)
 	if(sdata->boolUseDisc == 0) return;
 	if(sdata->bool_XnfLoaded == 0) return;
 	if(categoryID >= CDSYS_XA_NUM_TYPES) return;
-	if(xaID > CDSYS_XAGetNumTracks(categoryID)) return;
+	if(xaID > DECOMP_CDSYS_XAGetNumTracks(categoryID)) return;
 	
 	#if 0
 	// If game is loading, play error sound
 	#endif
 	
 	if(sdata->discMode != DM_AUDIO)
-		CDSYS_SetMode_StreamAudio();
+		DECOMP_CDSYS_SetMode_StreamAudio();
 	
 	int vol = sdata->vol_Voice;
 	if(categoryID == CDSYS_XA_TYPE_MUSIC)
@@ -61,6 +61,6 @@ void DECOMP_CDSYS_XAPlay(int categoryID, int xaID)
 		// XA audio on the disc infinitely, and never reach ND Box
 	
 		sdata->XA_State = 2;
-		CDSYS_SpuEnableIRQ();
+		DECOMP_CDSYS_SpuEnableIRQ();
 	}
 }

@@ -18,6 +18,6 @@ void DECOMP_MainDrawCb_Vsync()
 	ResetRCnt(0xf2000001);
 
 	howl_PlayAudio_Update();
-	GAMEPAD_CheckUnplugged(sdata->gGamepads);
+	GAMEPAD_CheckUnplugged(sdata->gGamepads);	
 	return;
 }

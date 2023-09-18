@@ -4,8 +4,8 @@ void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int*
 {
 	CdlFILE cdlFile;
 	
-	LOAD_StringToUpper(filename);
-	CDSYS_SetMode_StreamData();
+	DECOMP_LOAD_StringToUpper(filename);
+	DECOMP_CDSYS_SetMode_StreamData();
 	
 	if(CdSearchFile(&cdlFile, filename) == 0) 
 		return 0;
@@ -14,7 +14,7 @@ void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int*
 	
 	if(ptrDestination == 0)
 	{
-		ptrDestination = MEMPACK_AllocMem(cdlFile.size + 0x7ff & 0xfffff800/*, fileName*/);
+		ptrDestination = DECOMP_MEMPACK_AllocMem(cdlFile.size + 0x7ff & 0xfffff800/*, fileName*/);
 		
 		if(ptrDestination == 0)
 			return 0;
@@ -24,7 +24,7 @@ void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int*
 	CdControl(CdlSetloc, &cdlFile, buf);
 	
 	// only allocate "needed" bytes
-	MEMPACK_ReallocMem(cdlFile.size);
+	DECOMP_MEMPACK_ReallocMem(cdlFile.size);
 	
 	if(CdRead((cdlFile.size + 0x7ff)>>0xb, ptrDestination, 0x80) == 0) 
 		return 0;

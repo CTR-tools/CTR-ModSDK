@@ -10,14 +10,14 @@ void DECOMP_CDSYS_SetXAToLang(int lang)
 	if(lang >= 8) return;
 	
 	sdata->bool_XnfLoaded = 0;
-	CDSYS_SetMode_StreamData();
+	DECOMP_CDSYS_SetMode_StreamData();
 	
 	data.xaLanguagePtrs[lang];
 	strncpy(&data.s_XA_ENG_XNF[4],		xaLang, 4);
 	strncpy(&data.s_XA_ENG_EXTRA[4],	xaLang, 4);
 	strncpy(&data.s_XA_ENG_GAME[4],		xaLang, 4);
 	
-	xnf = LOAD_ReadFile_NoCallback(data.s_XA_ENG_XNF, 0, &fileSize);
+	xnf = DECOMP_LOAD_ReadFile_NoCallback(data.s_XA_ENG_XNF, 0, &fileSize);
 	
 	// read error
 	if(xnf == 0) return;
@@ -51,7 +51,7 @@ void DECOMP_CDSYS_SetXAToLang(int lang)
 			int* returnPtr_xaCdPos = &sdata->ptrArray_XaCdPos[firstXaIndex + xaID];
 			
 			// quit on error to find XA file
-			if(CDSYS_GetFilePosInt(am->name, returnPtr_xaCdPos) == 0)
+			if(DECOMP_CDSYS_GetFilePosInt(am->name, returnPtr_xaCdPos) == 0)
 				return;
 		}
 	}

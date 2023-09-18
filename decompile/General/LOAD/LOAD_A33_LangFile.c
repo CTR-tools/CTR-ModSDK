@@ -21,11 +21,11 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 	if(sdata->lngFile == 0)
 	{
 		sdata->lngFile = 
-			MEMPACK_AllocMem(sdata->langBufferSize /* "lang buffer" */);
+			DECOMP_MEMPACK_AllocMem(sdata->langBufferSize /* "lang buffer" */);
 	}
 	
 	lngFile =
-		LOAD_ReadFile(bigfilePtr, 1, 0xEA + lang, sdata->lngFile, &size, 0);
+		DECOMP_LOAD_ReadFile(bigfilePtr, 1, 0xEA + lang, sdata->lngFile, &size, 0);
 		
 	// This is not ReadFileAsync, this is ReadFile,
 	// so the program halts until completion of read

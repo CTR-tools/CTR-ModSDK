@@ -57,7 +57,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				Cutscene_VolumeBackup();
 			}
 
-			CDSYS_XAPauseRequest();
+			DECOMP_CDSYS_XAPauseRequest();
 
 			// if first boot (SCEA + Copyright + ND Box)
 			if (sdata->boolFirstBoot != 0)

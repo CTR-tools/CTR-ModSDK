@@ -34,9 +34,7 @@ u_int DECOMP_main()
 		}
 		#endif
 
-#ifndef REBUILD_PS1
-		LOAD_NextQueuedFile();
-#endif
+		DECOMP_LOAD_NextQueuedFile();
 		DECOMP_CDSYS_XAPauseAtEnd();
 
 		switch(sdata->mainGameState)
@@ -419,10 +417,10 @@ void StateZero()
 	// We have 2mb RAM total
 	DECOMP_MEMPACK_Init(0x800000);
 	
-#ifndef REBUILD_PS1
 	// also sets debug variables to "off"
-	LOAD_InitCD();
+	DECOMP_LOAD_InitCD();
 	
+#ifndef REBUILD_PS1
 	// Without this, checkered flag will draw one frame after the copyright page draws, then go away once Naughty Dog Box scene is ready
 	TitleFlag_SetFullyOffScreen();
 #endif
@@ -496,17 +494,20 @@ void StateZero()
 	VSync(0);
 	
 	GAMEPAD_GetNumConnected(sdata->gGamepads);
+#endif
 	
 	// Get CD Position fo BIGFILE
-	sdata->ptrBigfile1 = LOAD_ReadDirectory(rdata.s_PathTo_Bigfile);
+	sdata->ptrBigfile1 = DECOMP_LOAD_ReadDirectory(rdata.s_PathTo_Bigfile);
 	
 	#ifndef FastBoot
 	// Load Language
 	// takes 1 as hard-coded parameter for English
 	// PAL SCES02105 has this same function (different name), and calls it multiple times
-	LOAD_LangFile(sdata->ptrBigfile1, 1);
+	DECOMP_LOAD_LangFile(sdata->ptrBigfile1, 1);
 	
+#ifndef REBUILD_PS1
 	GAMEPROG_NewGame_OnBoot();
+#endif
 	
 	gGT->overlayIndex_null_notUsed = 0;
 	#endif
@@ -542,34 +543,44 @@ void StateZero()
 	
 	#ifndef FastBoot
 	// Load Intro TIM for "SCEA Presents" from VRAM file
-	LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
+	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
+	
+#ifndef REBUILD_PS1
 	MainInit_VRAMDisplay();
+#endif
+	
 	#endif
 	
+#ifndef REBUILD_PS1
 	// \SOUNDS\KART.HWL;1
 	// enable audio if not already enabled
-	howl_InitGlobals(data.kartHwlPath);
+	DECOMP_howl_InitGlobals(data.kartHwlPath);
 	
-	VSyncCallback(MainDrawCb_Vsync);
+	void DECOMP_MainDrawCb_Vsync();
+	VSyncCallback(DECOMP_MainDrawCb_Vsync);
+#endif
 	
 	#ifndef FastBoot
+#ifndef REBUILD_PS1
 	Music_SetIntro();
 	CseqMusic_StopAll();
 	CseqMusic_Start(0, 0, 0, 0, 0);
 	Music_Start(0);
 	
-	// CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
 	// "Start your engines, for Sony Computer..."
-	CDSYS_XAPlay(1, 0x50);
+	DECOMP_CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
 	while (sdata->XA_State != 0)
 	{
 		// WARNING: Read-only address (ram, 0x8008d888) is written
-		CDSYS_XAPauseAtEnd();
+		DECOMP_CDSYS_XAPauseAtEnd();
 	}
+#endif
 	#endif
 	
+#ifndef REBUILD_PS1
 	// WARNING: Read-only address (ram, 0x8008d888) is written
 	DecalGlobal_Clear(gGT);
+#endif
 	
 	// This loads UI textures (shared.vrm)
 	// This includes traffic lights, font, and more
@@ -577,8 +588,7 @@ void StateZero()
 	// 	the area between 2 screen buffers and top right corner in vram
 	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
 	// Add a bookmark before loading (param_3 is 0 in the call)
-	LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, &vramSize, 0xffffffff);
-#endif
+	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, &vramSize, 0xffffffff);
 	
 	sdata->mainGameState = 3;
 	

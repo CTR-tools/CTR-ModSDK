@@ -1,6 +1,7 @@
 #include <common.h>
 
-void CDSYS_SetMode_StreamData();
+void DECOMP_CDSYS_SetMode_StreamData();
+void DECOMP_LOAD_ReadFileASyncCallback();
 
 u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, u_long *destination, int *size, void * callback)
 {
@@ -19,7 +20,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 
 	pcVar4 = (CdlCB)0x0;
 
-	CDSYS_SetMode_StreamData();
+	DECOMP_CDSYS_SetMode_StreamData();
 
 	uVar5 = 0;
 
@@ -38,7 +39,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 		data.currSlot.flags = data.currSlot.flags | 1;
 
 		// MEMPACK_AllocMem
-		buf = (u_long *)MEMPACK_AllocMem(*size + 0x7ffU & 0xfffff800); // "FILE"
+		buf = (u_long *)DECOMP_MEMPACK_AllocMem(*size + 0x7ffU & 0xfffff800); // "FILE"
 
 		// if allocation failed
 		if (buf == (u_long *)0x0)
@@ -74,7 +75,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 		{
 			// Save the function pointer address
 			sdata->ReadFileAsyncCallbackFuncPtr = callback;
-			pcVar4 = (CdlCB)&LOAD_ReadFileASyncCallback;
+			pcVar4 = (CdlCB)&DECOMP_LOAD_ReadFileASyncCallback;
 		}
 
 		// Save this function as a callback,
@@ -92,7 +93,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 
 	if ((callback == 0) && (destination == (u_long *)0x0))
 	{
-		MEMPACK_ReallocMem(*size);
+		DECOMP_MEMPACK_ReallocMem(*size);
 	}
 	return buf;
 }

@@ -5,11 +5,11 @@ void* DECOMP_LOAD_ReadDirectory(char* filename)
 	CdlFILE cdlFile;
 	char buf[8];
 	
-	CDSYS_SetMode_StreamData();
+	DECOMP_CDSYS_SetMode_StreamData();
 	
 	if(CdSearchFile(&cdlFile, filename) == 0) return 0;
 	
-	struct BigHeader* bh = MEMPACK_AllocMem(0x4000/*, filename*/);
+	struct BigHeader* bh = DECOMP_MEMPACK_AllocMem(0x4000/*, filename*/);
 	
 	CdControl(CdlSetloc, &cdlFile, buf);
 	
@@ -22,7 +22,7 @@ void* DECOMP_LOAD_ReadDirectory(char* filename)
 	bh->cdpos = CdPosToInt(&cdlFile);
 	
 	// undo allocation of 0x4000, only use "needed" size
-	MEMPACK_ReallocMem(
+	DECOMP_MEMPACK_ReallocMem(
 		offsetof(struct BigHeader, entry) + 
 		sizeof(struct BigEntry) * bh->numEntry
 	);

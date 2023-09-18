@@ -10,7 +10,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 	// stall until load is done
 	while(gGT->level2 == 0)
 	{
-		LOAD_NextQueuedFile();
+		DECOMP_LOAD_NextQueuedFile();
 		VSync(0);
 	}
 	

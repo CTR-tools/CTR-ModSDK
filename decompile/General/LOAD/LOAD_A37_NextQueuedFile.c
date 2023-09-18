@@ -1,6 +1,8 @@
 #include <common.h>
 
-void LOAD_NextQueuedFile()
+void DECOMP_LOAD_CDRequestCallback();
+
+void DECOMP_LOAD_NextQueuedFile()
 {
 	if(
 		(sdata->queueReady != 0) &&
@@ -33,19 +35,19 @@ void LOAD_NextQueuedFile()
 		if(curr->type == LT_RAW)
 		{
 			curr->ptrDestination =
-				LOAD_ReadFile(
+				DECOMP_LOAD_ReadFile(
 					curr->ptrBigfileCdPos,
 					LT_RAW,
 					curr->subfileIndex,
 					curr->ptrDestination,
 					&curr->size,
-					LOAD_CDRequestCallback);
+					DECOMP_LOAD_CDRequestCallback);
 		}
 		
 		else if(curr->type == LT_DRAM)
 		{
 			curr->ptrDestination =
-				LOAD_DramFile(
+				DECOMP_LOAD_DramFile(
 					curr->ptrBigfileCdPos,
 					curr->subfileIndex,
 					curr->ptrDestination,
@@ -56,7 +58,7 @@ void LOAD_NextQueuedFile()
 		else if(curr->type == LT_VRAM)
 		{
 			curr->ptrDestination =
-				LOAD_VramFile(
+				DECOMP_LOAD_VramFile(
 					curr->ptrBigfileCdPos,
 					curr->subfileIndex,
 					curr->ptrDestination,
@@ -88,7 +90,7 @@ void LOAD_NextQueuedFile()
 		// some other place to store Readfile
 		if(curr->flags & 1)
 		{
-			MEMPACK_PopState();
+			DECOMP_MEMPACK_PopState();
 		}
 		
 		sdata->queueReady = 1;

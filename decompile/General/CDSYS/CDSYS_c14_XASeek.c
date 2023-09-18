@@ -8,10 +8,10 @@ void DECOMP_CDSYS_XASeek(int boolCdControl, int categoryID, int xaID)
 	if(sdata->boolUseDisc == 0) return;
 	if(sdata->bool_XnfLoaded == 0) return;
 	if(categoryID >= CDSYS_XA_NUM_TYPES) return;
-	if(xaID > CDSYS_XAGetNumTracks(categoryID)) return;
+	if(xaID > DECOMP_CDSYS_XAGetNumTracks(categoryID)) return;
 	
 	if(sdata->discMode != DM_AUDIO)
-		CDSYS_SetMode_StreamAudio();
+		DECOMP_CDSYS_SetMode_StreamAudio();
 	
 	struct XaSize* xas = &sdata->ptrArray_XaSize[sdata->ptrArray_firstSongIndex[categoryID]+xaID];
 	int sum = sdata->ptrArray_XaCdPos[sdata->ptrArray_firstXaIndex[categoryID] + xas->XaPrefix];
