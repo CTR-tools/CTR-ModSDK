@@ -309,6 +309,7 @@ void FUN_80031c1c(byte *param_1)
 
 // Aug 5 says
 // "CD Init Error!"
+// LOAD_InitCD
 void FUN_80031c58(void)
 
 {

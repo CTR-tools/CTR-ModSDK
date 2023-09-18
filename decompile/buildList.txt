@@ -361,7 +361,8 @@ common, exe, LOAD_HubCallback, 0x0, General/LOAD/LOAD_A11_HubCallback.c
 common, exe, LOAD_GlobalModelPtrs_MPK, 0x0, General/LOAD/LOAD_A12_GlobalModelPtrs_MPK.c
 common, exe, LOAD_HubSwapPtrs, 0x0, General/LOAD/LOAD_A13_HubSwapPtrs.c
 common, exe, LOAD_StringToUpper, 0x0, General/LOAD/LOAD_A14_StringToUpper.c
-// skip LOAD_InitCD, LOAD_ReadDirectory, LOAD_DramFileCallback,
+common, exe, LOAD_InitCD, 0x0, General/LOAD/LOAD_A15_InitCD.c
+// skip LOAD_ReadDirectory, LOAD_DramFileCallback,
 // skip LOAD_DramFile, LOAD_VramFileCallback, LOAD_VramFile, LOAD_ReadFileASyncCallback,
 common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_A22_ReadFile.c
 // skip LOAD_ReadFile_NoCallback, LOAD_FindFile, LOAD_HowlOneSector, 
