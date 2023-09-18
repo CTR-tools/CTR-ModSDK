@@ -30,6 +30,13 @@ struct VramHeader
 	char pixels[0];
 };
 
+enum LevVramIndex
+{
+	LVI_VRAM = 0,
+	LVI_LEV = 1,
+	LVI_PTR = 2,
+};
+
 enum LoadType
 {
 	// ordinary read to ram

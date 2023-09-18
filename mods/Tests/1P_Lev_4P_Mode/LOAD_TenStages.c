@@ -474,7 +474,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			// bigfile index, 0 = vram
 			uVar16 = LOAD_GetBigfileIndex
-						(gGT->levelID, 1, 0);
+						(gGT->levelID, 1, LVI_VRAM);
 
 			// adds VRAM to loading queue
 			// second parameter '3' means vram
@@ -482,7 +482,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 
 			// bigfile index, 1 = lev
 			uVar16 = LOAD_GetBigfileIndex
-					(gGT->levelID, 1, 1);
+					(gGT->levelID, 1, LVI_LEV);
 
 			// adds LEV to loading queue
 			// '2' means dram
@@ -493,7 +493,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			{
 				// bigfile index, 2 = PTR
 				uVar6 = LOAD_GetBigfileIndex
-						(gGT->levelID, 1, 2);
+						(gGT->levelID, 1, LVI_PTR);
 
 				// adds PTR map to loading queue
 				// '1' means readFile, load to PatchMem

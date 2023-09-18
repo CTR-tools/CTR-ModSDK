@@ -498,14 +498,14 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 			{
 				// bigfile index, 0 = vram
 				uVar16 = LOAD_GetBigfileIndex
-							(gGT->levelID, sdata->levelLOD, 0);
+							(gGT->levelID, sdata->levelLOD, LVI_VRAM);
 	
 				// adds VRAM to loading queue
 				LOAD_AppendQueue(bigfile, LT_VRAM, uVar16, 0, 0);
 	
 				// bigfile index, 1 = lev
 				uVar16 = LOAD_GetBigfileIndex
-						(gGT->levelID, sdata->levelLOD, 1);
+						(gGT->levelID, sdata->levelLOD, LVI_LEV);
 	
 				// adds LEV to loading queue
 				LOAD_AppendQueue(bigfile, LT_DRAM, uVar16, 0, &LOAD_Callback_LEV);
@@ -515,7 +515,7 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				{
 					// bigfile index, 2 = PTR
 					uVar6 = LOAD_GetBigfileIndex
-							(gGT->levelID, sdata->levelLOD, 2);
+							(gGT->levelID, sdata->levelLOD, LVI_PTR);
 	
 					// adds PTR map to loading queue
 					LOAD_AppendQueue(bigfile, LT_RAW, uVar6, sdata->PatchMem_Ptr, LOAD_Callback_LEV_Adv);
