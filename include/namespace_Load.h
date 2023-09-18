@@ -13,6 +13,12 @@ struct BigHeader
 	struct BigEntry entry[0];
 };
 
+struct DramPointerMap
+{
+	int numBytes;
+	int offsets[0];
+};
+
 enum LoadType
 {
 	// ordinary read to ram

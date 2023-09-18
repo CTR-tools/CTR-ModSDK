@@ -408,7 +408,7 @@ void FUN_80031d30(int param_1)
 	  // LOAD_RunPtrMap
       FUN_800326b4(piVar1 + 1,piVar2 + 1,*piVar2 >> 2);
 
-	  // if this needs to be erased
+	  // if overly allocated
       if ((*(ushort *)(param_1 + 4) & 1) != 0)
 	  {
 		// MEMPACK_ReallocMem
