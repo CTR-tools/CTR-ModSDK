@@ -1168,7 +1168,7 @@
 
 800753AC CdRead
 80075548 CdReadSync
-8007564C CheckCallback
+8007564C CdReadCallback
 // unknown 80075660 ??
 80075870 ResetCallback
 

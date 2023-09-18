@@ -1185,7 +1185,7 @@
 
 8007a6bc CdRead
 8007a858 CdReadSync
-8007a95c CheckCallback // <-- this is probably CdReadCallback. checkCallback doesn't have any args.
+8007a95c CdReadCallback
 
 // extra function only in japan retail
 

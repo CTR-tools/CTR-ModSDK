@@ -1180,7 +1180,7 @@
 
 800764EC CdRead
 80076688 CdReadSync
-8007678C CheckCallback // <-- this is probably CdReadCallback. checkCallback doesn't have any args.
+8007678C CdReadCallback
 
 800767A0 SetGeomScreen
 800767B0 SetGeomOffset

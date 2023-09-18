@@ -655,7 +655,9 @@ void FUN_80032110(char param_1)
   // function, because we will execute now
   CdReadCallback(0);
 
-  if (param_1 == '\x02') {
+  // result == CdlComplete
+  if (param_1 == '\x02') 
+  {
     if ((DAT_80083a40 & 1) != 0)
 	{
 	  // MEMPACK_ReallocMem

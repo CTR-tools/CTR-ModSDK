@@ -1170,7 +1170,7 @@
 
 80077028 CdRead
 800771c4 CdReadSync
-800772c8 CheckCallback // <-- this is probably CdReadCallback. checkCallback doesn't have any args.
+800772c8 CdReadCallback
 800772dc ResetCallback
 8007730c InterruptCallback
 8007733c DMACallback

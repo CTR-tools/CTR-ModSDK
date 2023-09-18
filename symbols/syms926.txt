@@ -1235,7 +1235,7 @@
 // unknown 80076d28 ------ called by lib funcs
 80076f10 CdRead
 800770ac CdReadSync
-800771b0 CheckCallback // <-- this is probably CdReadCallback. checkCallback doesn't have any args.
+800771b0 CdReadCallback
 800771c4 ResetCallback
 800771f4 InterruptCallback
 80077224 DMACallback
