@@ -592,7 +592,7 @@ FUN_80031fdc(undefined4 param_1,undefined4 param_2,undefined4 *param_3,undefined
   //if we're not given the address to use, create new temporary place to load
   if (param_3 == (undefined4 *)0x0) {
 
-	// add a bookmark
+	// MEMPACK_PushState
     FUN_8003e978();
   }
 
