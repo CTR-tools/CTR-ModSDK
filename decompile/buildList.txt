@@ -372,7 +372,8 @@ common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_A22_ReadFile.c
 common, exe, LOAD_ReadFile_NoCallback, 0x0, General/LOAD/LOAD_A23_ReadFile_NoCallback.c
 common, exe, LOAD_FindFile, 0x0, General/LOAD/LOAD_A24_FindFile.c
 // skip LOAD_HowlOneSector, LOAD_HowlCallback, LOAD_HowlSectorChainStart, 
-// skip LOAD_HowlSectorChainEnd, LOAD_RunPtrMap, LOAD_Robots2P
+// skip LOAD_HowlSectorChainEnd, LOAD_RunPtrMap
+common, exe, LOAD_Robots2P, 0x0, General/LOAD/LOAD_A30_Robots2P.c
 common, exe, LOAD_Robots1P, 0x0, General/LOAD/LOAD_A31_Robots1P.c
 common, exe, LOAD_DriverMPK, 0x0, General/LOAD/LOAD_A32_DriverMPK.c
 common, exe, LOAD_LangFile, 0x0, General/LOAD/LOAD_A33_LangFile.c
