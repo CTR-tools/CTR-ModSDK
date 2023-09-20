@@ -1,4 +1,5 @@
-//#define REBUILD_PS1
+#ifndef COMMON_H
+#define COMMON_H
 
 #include <gccHeaders.h>
 #include <macros.h>
@@ -59,4 +60,7 @@
 #include <math.h>
 #include <regionsEXE.h>
 #include <functions.h>
+#include <decomp_functions.h>
 #include <gpu.h>
+
+#endif

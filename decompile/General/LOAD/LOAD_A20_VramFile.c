@@ -1,10 +1,5 @@
 #include <common.h>
 
-void DECOMP_MEMPACK_PopState();
-void DECOMP_MEMPACK_PushState();
-void DECOMP_LOAD_VramFileCallback();
-void* DECOMP_LOAD_ReadFile(int ptr, int type, int index, void* ptrDest, int* size, int callback);
-
 void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int* size, int callbackOrFlags)
 {
 	struct LoadQueueSlot lqs;

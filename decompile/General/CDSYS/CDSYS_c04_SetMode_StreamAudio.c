@@ -1,8 +1,5 @@
 #include <common.h>
 
-void DECOMP_CDSYS_XaCallbackCdSync();
-void DECOMP_CDSYS_XaCallbackCdReady();
-
 void DECOMP_CDSYS_SetMode_StreamAudio()
 {
 	char buf[8];

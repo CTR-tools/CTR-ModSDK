@@ -1,9 +1,6 @@
 #include <common.h>
 
-void DECOMP_CDSYS_SetMode_StreamData();
-void DECOMP_LOAD_ReadFileASyncCallback();
-
-u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, u_long *destination, int *size, void * callback)
+void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void *destination, int *size, void * callback)
 {
 	// param1 is the Pointer to CD position of BIGFILE
 
@@ -12,7 +9,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 	int iVar3;
 	CdlCB pcVar4;
 	int uVar5;
-	u_long *buf;
+	void *buf;
 	CdlLOC aCStack56[2];
 	u_char auStack48[8];
 
@@ -31,7 +28,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 	CdIntToPos(bigfile->cdpos + bigfile->entry[subfileIndex].offset, aCStack56);
 
 	// if a destination pointer is not given
-	if (destination == (u_long *)0x0)
+	if (destination == (void *)0x0)
 	{
 		// set flag that we used MEMPACK_AllocMem
 		// to store this ReadFile somewhere random
@@ -39,13 +36,13 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 		data.currSlot.flags = data.currSlot.flags | 1;
 
 		// MEMPACK_AllocMem
-		buf = (u_long *)DECOMP_MEMPACK_AllocMem(*size + 0x7ffU & 0xfffff800); // "FILE"
+		buf = (void *)DECOMP_MEMPACK_AllocMem(*size + 0x7ffU & 0xfffff800); // "FILE"
 
 		// if allocation failed
-		if (buf == (u_long *)0x0)
+		if (buf == (void *)0x0)
 		{
 			// function  failed
-			return (u_long *)0;
+			return (void *)0;
 		}
 	}
 
@@ -91,7 +88,7 @@ u_long * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int sub
 		}
 	}
 
-	if ((callback == 0) && (destination == (u_long *)0x0))
+	if ((callback == 0) && (destination == (void *)0x0))
 	{
 		DECOMP_MEMPACK_ReallocMem(*size);
 	}
