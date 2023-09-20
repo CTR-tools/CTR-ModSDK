@@ -428,17 +428,13 @@ void StateZero()
 	ResetGraph(0);
 	SetGraphDebug(0);
 	
-#ifndef REBUILD_PS1
-	MainInit_VRAMClear();
-#endif
-	
+	DECOMP_MainInit_VRAMClear();
+
 	SetDispMask(1);
 	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
 	SetDefDrawEnv(&gGT->db[1].drawEnv, 0, 0x128, 0x200, 0xd8);
 	SetDefDispEnv(&gGT->db[0].dispEnv, 0, 0x128, 0x200, 0xd8);
 	SetDefDispEnv(&gGT->db[1].dispEnv, 0, 0, 0x200, 0xd8);
-	
-	gGT->db[0].drawEnv.isbg = 1;
 	
 	gGT->db[0].dispEnv.screen.x = 0;
 	gGT->db[0].dispEnv.screen.y = 0xc;
@@ -450,6 +446,7 @@ void StateZero()
 	gGT->db[1].dispEnv.screen.w = 0x100;
 	gGT->db[1].dispEnv.screen.h = 0xd8;
 	
+	gGT->db[0].drawEnv.isbg = 1;
 	gGT->db[0].drawEnv.r0 = 0;
 	gGT->db[0].drawEnv.g0 = 0;
 	gGT->db[0].drawEnv.b0 = 0;

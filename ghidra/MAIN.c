@@ -8465,7 +8465,7 @@ void FUN_8003c248(void)
 }
 
 
-// refresh screen during Intro
+// MainInit_VRAMDisplay
 void FUN_8003c310(void)
 
 {
