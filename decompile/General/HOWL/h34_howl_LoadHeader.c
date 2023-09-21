@@ -7,17 +7,17 @@ void DECOMP_howl_LoadHeader(char* filename)
 	int numSector;
 	int ret;
 	
-	if (LOAD_FindFile(filename, &sdata->KartHWL_CdLoc) == 0) return;
+	if (DECOMP_LOAD_FindFile(filename, &sdata->KartHWL_CdLoc) == 0) return;
 	
-	MEMPACK_PushState();
+	DECOMP_MEMPACK_PushState();
 	
 	// allocate room for one sector
-	alloc = MEMPACK_AllocMem(0x800/*, filename*/);
+	alloc = DECOMP_MEMPACK_AllocMem(0x800/*, filename*/);
 	
 	if (alloc != 0)
 	{
 		// read sector #1 of HOWL, just for header
-		ret = LOAD_HowlHeaderSectors(
+		ret = DECOMP_LOAD_HowlHeaderSectors(
 					&sdata->KartHWL_CdLoc, alloc, 0, 1);
 	
 		if(
@@ -36,7 +36,7 @@ void DECOMP_howl_LoadHeader(char* filename)
 						
 			// align up for sector size
 			numSector = (howlHeaderSize + 0x800 - 1) >> 0xb;
-			MEMPACK_ReallocMem(numSector << 0xb);
+			DECOMP_MEMPACK_ReallocMem(numSector << 0xb);
 			
 			if (
 					// if header fit in one sector, just continue
@@ -45,7 +45,7 @@ void DECOMP_howl_LoadHeader(char* filename)
 					// if header needs a more sectors loaded,
 					// like CTR-U which needs 3 sectors
 					(
-						ret = LOAD_HowlHeaderSectors(
+						ret = DECOMP_LOAD_HowlHeaderSectors(
 							&sdata->KartHWL_CdLoc, (int)alloc+0x800, 1, numSector-1),
 							
 						ret != 0
@@ -53,11 +53,11 @@ void DECOMP_howl_LoadHeader(char* filename)
 				)
 			{
 				// initilaize header and pointer table
-				howl_ParseHeader(alloc);
+				DECOMP_howl_ParseHeader(alloc);
 					
 				// reallocate room just howlHeader + pointerTable,
 				// deallocate sector-alignment padding
-				MEMPACK_ReallocMem(howlHeaderSize);
+				DECOMP_MEMPACK_ReallocMem(howlHeaderSize);
 					
 				//do NOT PopState
 				return;
@@ -65,5 +65,5 @@ void DECOMP_howl_LoadHeader(char* filename)
 		}
 	}
 	
-	MEMPACK_PopState();
+	DECOMP_MEMPACK_PopState();
 }

@@ -545,12 +545,10 @@ void StateZero()
 	
 	#endif
 	
-#ifndef REBUILD_PS1
 	// \SOUNDS\KART.HWL;1
-	// enable audio if not already enabled
 	DECOMP_howl_InitGlobals(data.kartHwlPath);
 	
-	void DECOMP_MainDrawCb_Vsync();
+#ifndef REBUILD_PS1
 	VSyncCallback(DECOMP_MainDrawCb_Vsync);
 #endif
 	
@@ -560,6 +558,7 @@ void StateZero()
 	CseqMusic_StopAll();
 	CseqMusic_Start(0, 0, 0, 0, 0);
 	Music_Start(0);
+#endif
 	
 	// "Start your engines, for Sony Computer..."
 	DECOMP_CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
@@ -568,7 +567,6 @@ void StateZero()
 		// WARNING: Read-only address (ram, 0x8008d888) is written
 		DECOMP_CDSYS_XAPauseAtEnd();
 	}
-#endif
 	#endif
 	
 #ifndef REBUILD_PS1

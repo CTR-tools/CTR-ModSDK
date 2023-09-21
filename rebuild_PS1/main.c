@@ -25,6 +25,34 @@
 #include "../decompile/General/CDSYS/CDSYS_c18_XAPauseForce.c" 
 #include "../decompile/General/CDSYS/CDSYS_c19_XAPauseAtEnd.c" 
 
+#include "../decompile/General/HOWL/h31_howl_InitGlobals.c"
+#include "../decompile/General/HOWL/h32_howl_ParseHeader.c"
+#include "../decompile/General/HOWL/h33_howl_ParseCseqHeader.c"
+#include "../decompile/General/HOWL/h34_howl_LoadHeader.c"
+
+#include "../decompile/General/LOAD/LOAD_A14_StringToUpper.c" 
+#include "../decompile/General/LOAD/LOAD_A15_InitCD.c" 
+#include "../decompile/General/LOAD/LOAD_A16_ReadDirectory.c" 
+#include "../decompile/General/LOAD/LOAD_A17_DramFileCallback.c"
+#include "../decompile/General/LOAD/LOAD_A18_DramFile.c"
+#include "../decompile/General/LOAD/LOAD_A19_VramFileCallback.c"
+#include "../decompile/General/LOAD/LOAD_A20_VramFile.c" 
+#include "../decompile/General/LOAD/LOAD_A21_ReadFileASyncCallback.c"
+#include "../decompile/General/LOAD/LOAD_A22_ReadFile.c"
+#include "../decompile/General/LOAD/LOAD_A23_ReadFile_NoCallback.c"
+#include "../decompile/General/LOAD/LOAD_A24_FindFile.c"
+#include "../decompile/General/LOAD/LOAD_A25_HowlHeaderSectors.c"
+// hole
+#include "../decompile/General/LOAD/LOAD_A29_RunPtrMap.c"
+// hole
+#include "../decompile/General/LOAD/LOAD_A33_LangFile.c"
+// hole
+#include "../decompile/General/LOAD/LOAD_A36_CDRequestCallback.c"
+#include "../decompile/General/LOAD/LOAD_A37_NextQueuedFile.c"
+
+#include "../decompile/General/MAIN/MainDrawCb_DrawSync.c"
+#include "../decompile/General/MAIN/MainDrawCb_VSync.c"
+
 #include "../decompile/General/MEMPACK/MEMPACK_Init.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_SwapPacks.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_NewPack_StartEnd.c" 
@@ -37,18 +65,3 @@
 #include "../decompile/General/MEMPACK/MEMPACK_ClearLowMem.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_PopState.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_PopToState.c" 
-
-#include "../decompile/General/LOAD/LOAD_A29_RunPtrMap.c" 
-#include "../decompile/General/LOAD/LOAD_A17_DramFileCallback.c" 
-#include "../decompile/General/LOAD/LOAD_A19_VramFileCallback.c" 
-#include "../decompile/General/LOAD/LOAD_A21_ReadFileASyncCallback.c" 
-#include "../decompile/General/LOAD/LOAD_A36_CDRequestCallback.c" 
-#include "../decompile/General/LOAD/LOAD_A22_ReadFile.c" 
-#include "../decompile/General/LOAD/LOAD_A18_DramFile.c" 
-#include "../decompile/General/LOAD/LOAD_A20_VramFile.c" 
-#include "../decompile/General/LOAD/LOAD_A37_NextQueuedFile.c" 
-#include "../decompile/General/LOAD/LOAD_A15_InitCD.c" 
-#include "../decompile/General/LOAD/LOAD_A14_StringToUpper.c" 
-#include "../decompile/General/LOAD/LOAD_A16_ReadDirectory.c" 
-#include "../decompile/General/LOAD/LOAD_A23_ReadFile_NoCallback.c" 
-#include "../decompile/General/LOAD/LOAD_A33_LangFile.c"
