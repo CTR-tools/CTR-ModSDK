@@ -51,7 +51,6 @@
 #include "../decompile/General/LOAD/LOAD_A37_NextQueuedFile.c"
 
 #include "../decompile/General/MAIN/MainDrawCb_DrawSync.c"
-#include "../decompile/General/MAIN/MainDrawCb_VSync.c"
 
 #include "../decompile/General/MEMPACK/MEMPACK_Init.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_SwapPacks.c" 
