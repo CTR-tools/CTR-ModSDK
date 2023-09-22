@@ -553,7 +553,6 @@ void StateZero()
 	// Load Intro TIM for "SCEA Presents" from VRAM file
 	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
 	DECOMP_MainInit_VRAMDisplay();
-	
 	#endif
 	
 	// \SOUNDS\KART.HWL;1

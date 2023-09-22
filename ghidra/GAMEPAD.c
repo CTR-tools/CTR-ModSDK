@@ -230,6 +230,8 @@ void FUN_80025410(int param_1)
 			// 1 - PadStateFindPad
 			// and many more...
             uVar2 = PadGetState(uVar4);
+			
+			// GAMEPAD_ProcessState
             FUN_800252a0(iVar6,uVar2,uVar4);
           }
 
