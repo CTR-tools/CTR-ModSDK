@@ -26,6 +26,7 @@
 #include "../decompile/General/CDSYS/CDSYS_c19_XAPauseAtEnd.c" 
 
 #include "../decompile/General/GAMEPAD/GAMEPAD_Init.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_GetNumConnected.c"
 
 #include "../decompile/General/HOWL/h31_howl_InitGlobals.c"
 #include "../decompile/General/HOWL/h32_howl_ParseHeader.c"

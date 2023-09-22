@@ -484,17 +484,11 @@ void StateZero()
 	ExitCriticalSection();
 	
 	DECOMP_MEMCARD_InitCard();
-	
 	VSync(0);
-	
 	DECOMP_GAMEPAD_Init(sdata->gGamepads);
-	
 	VSync(0);
-	
-#ifndef REBUILD_PS1
-	GAMEPAD_GetNumConnected(sdata->gGamepads);
-#endif
-	
+	DECOMP_GAMEPAD_GetNumConnected(sdata->gGamepads);
+
 	// Get CD Position fo BIGFILE
 	sdata->ptrBigfile1 = DECOMP_LOAD_ReadDirectory(rdata.s_PathTo_Bigfile);
 	
