@@ -25,6 +25,8 @@
 #include "../decompile/General/CDSYS/CDSYS_c18_XAPauseForce.c" 
 #include "../decompile/General/CDSYS/CDSYS_c19_XAPauseAtEnd.c" 
 
+#include "../decompile/General/DecalGlobal/DecalGlobal_Clear.c"
+
 #include "../decompile/General/GAMEPAD/GAMEPAD_Init.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_GetNumConnected.c"
 

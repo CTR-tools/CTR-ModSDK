@@ -560,9 +560,7 @@ void StateZero()
 	}
 	#endif
 	
-#ifndef REBUILD_PS1
-	DecalGlobal_Clear(gGT);
-#endif
+	DECOMP_DecalGlobal_Clear(gGT);
 	
 	// This loads UI textures (shared.vrm)
 	// This includes traffic lights, font, and more
