@@ -28,6 +28,15 @@
 #include "../decompile/General/GAMEPAD/GAMEPAD_Init.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_GetNumConnected.c"
 
+#include "../decompile/General/GAMEPROG/GAMEPROG_ResetHighScores.c"
+// skip
+#include "../decompile/General/GAMEPROG/GAMEPROG_NewProfile_OutsideAdv.c"
+// skip
+#include "../decompile/General/GAMEPROG/GAMEPROG_NewProfile_InsideAdv.c"
+// skip
+#include "../decompile/General/GAMEPROG/GAMEPROG_NewGame_OnBoot.c"
+#include "../decompile/General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c"
+
 #include "../decompile/General/HOWL/h31_howl_InitGlobals.c"
 #include "../decompile/General/HOWL/h32_howl_ParseHeader.c"
 #include "../decompile/General/HOWL/h33_howl_ParseCseqHeader.c"

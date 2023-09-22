@@ -493,15 +493,10 @@ void StateZero()
 	sdata->ptrBigfile1 = DECOMP_LOAD_ReadDirectory(rdata.s_PathTo_Bigfile);
 	
 	#ifndef FastBoot
-	// Load Language
-	// takes 1 as hard-coded parameter for English
-	// PAL SCES02105 has this same function (different name), and calls it multiple times
+	// English=1
+	// PAL SCES02105 calls it multiple times
 	DECOMP_LOAD_LangFile(sdata->ptrBigfile1, 1);
-	
-#ifndef REBUILD_PS1
-	GAMEPROG_NewGame_OnBoot();
-#endif
-	
+	DECOMP_GAMEPROG_NewGame_OnBoot();
 	gGT->overlayIndex_null_notUsed = 0;
 	#endif
 	
