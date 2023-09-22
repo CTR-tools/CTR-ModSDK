@@ -103,20 +103,18 @@ struct GamepadBuffer
 	short framesSinceLastInput;
 
 	// 0x2A
-	short unk_0x2A;
-
-	// 0x2A
-	// char motor[2] -- again?
+	char motorCurr[2];
+	
+	// 0x2C
+	char motorStepRate[2];
 
 	// 0x2E
-	// [0] for left,
-	// [1] for right
-	// char motor[2];
+	char motorPrev[2];
 
-	// 0x2C
+	// 0x30
 	// probably all these are in
 	// FUN_80025e18, and FUN_800252a0
-	char data18[0x18];
+	char data14[0x14];
 
 	// 0x44
 	char unk_44_countdown;
