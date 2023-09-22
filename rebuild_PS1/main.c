@@ -63,6 +63,8 @@
 // hole
 #include "../decompile/General/LOAD/LOAD_A36_CDRequestCallback.c"
 #include "../decompile/General/LOAD/LOAD_A37_NextQueuedFile.c"
+// hole
+#include "../decompile/General/LOAD/LOAD_A45_TenStages.c"
 
 #include "../decompile/General/MAIN/MainDrawCb_DrawSync.c"
 

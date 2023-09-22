@@ -111,6 +111,7 @@ u_int DECOMP_main()
 				LevInstDef_RePack(gGT->level1->ptr_mesh_info, 0);
 				sdata->mainGameState = 1;
 				break;
+#endif
 
 			// Main Gameplay Update
 			// Makes up all normal interaction with the game
@@ -120,7 +121,9 @@ u_int DECOMP_main()
 				{
 					if
 					(
-						(TitleFlag_IsFullyOnScreen() == 1) ||	
+					#ifndef REBUILD_PS1
+						(TitleFlag_IsFullyOnScreen() == 1) ||
+					#endif
 						(gGT->levelID == NAUGHTY_DOG_CRATE) || 
 						(sdata->pause_state != 0)
 					)
@@ -137,6 +140,7 @@ u_int DECOMP_main()
 					// if loading is finished, but still in "loading mode", and if pools dont need to be reset (maybe for credits?)
 					if (iVar8 == -5)
 					{
+					#ifndef REBUILD_PS1
 						if (TitleFlag_IsFullyOnScreen() == 1)
 						{
 							// set game state to 2 to initialize the world
@@ -150,6 +154,7 @@ u_int DECOMP_main()
 							gGT->gameMode1 &= ~LOADING;
 							break;
 						}
+					#endif
 					}
 					
 					// if something is being loaded
@@ -167,12 +172,22 @@ u_int DECOMP_main()
 							}
 							else
 							{
-								sdata->Loading.stage = LOAD_TenStages(gGT, iVar8, sdata->ptrBigfile1);
+								sdata->Loading.stage = DECOMP_LOAD_TenStages(gGT, iVar8, sdata->ptrBigfile1);
+								
+								#ifdef REBUILD_PS1
+								printf("\n\n\nLoadStage: %d\n", sdata->Loading.stage);
+								#endif
+								
+								#ifdef REBUILD_PS1
+									printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
+									while(1) {}
+								#endif
 								
 								// if did not just complete loading stage 9, skip logic to load VLC, skip logic to end loading, skip logic if "if == -4", goto rendering.
 								// We can skip rendering by changing BNE on 0x8003cca0 to "bne v0, v1, 8003cf3c"
 								if (sdata->Loading.stage != -2) goto LAB_8003ccf8;
 								
+								#ifndef REBUILD_PS1				
 								// if stage 9 of loading was just finished
 								if
 								(
@@ -187,6 +202,7 @@ u_int DECOMP_main()
 									sdata->Loading.stage = -6;
 									break;
 								}
+								#endif
 							}
 							// loading is finished
 							sdata->Loading.stage = -1;
@@ -202,6 +218,7 @@ u_int DECOMP_main()
 						RemBitsConfig0 = sdata->Loading.OnBegin.RemBitsConfig0;
 						AddBitsConfig0 = sdata->Loading.OnBegin.AddBitsConfig0;
 						
+						#ifndef REBUILD_PS1
 						if (TitleFlag_IsFullyOnScreen() == 1)
 						{
 							sdata->Loading.OnBegin.AddBitsConfig0 = 0;
@@ -223,6 +240,7 @@ u_int DECOMP_main()
 						
 						else if (TitleFlag_IsFullyOffScreen() == 1)
 							TitleFlag_BeginTransition(1);
+						#endif
 					}
 				}
 				LAB_8003ccf8:
@@ -250,6 +268,8 @@ u_int DECOMP_main()
 
 				// frame counter, not represented in common.h currently
 				sdata->frameCounter++;
+
+#ifndef REBUILD_PS1
 
 				// Process all gamepad input
 				GAMEPAD_ProcessAnyoneVars(sdata->gGamepads);
@@ -364,7 +384,7 @@ u_int DECOMP_main()
 					AH_MaskHint_Update();
 				}
 				break;
-			#endif
+#endif
 
 			#if 0
 			// In theory, this is left over from the demos, 
@@ -578,9 +598,4 @@ void StateZero()
 	clockEffect = &gGT->clockEffectEnabled;
 	gGT->gameMode1 |= LOADING;
 	gGT->clockEffectEnabled = *clockEffect & 0xfffe;
-	
-#ifdef REBUILD_PS1
-	printf("End of Rebuild_PS1\n%s\n%s\n", __DATE__, __TIME__);
-	while(1) {}
-#endif
 }

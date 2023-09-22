@@ -30,7 +30,7 @@ void DECOMP_howl_InitGlobals(char* filename)
 	SpuSetCommonCDMix(1);
     SpuSetCommonCDVolume(0,0);
 	
-#ifndef Rebuild_PS1
+#ifndef REBUILD_PS1
 	Voiceline_PoolInit();
 	Voiceline_SetDefaults();
 #endif

@@ -7,9 +7,6 @@ void MM_JumpTo_BattleSetup();
 void CS_Garage_Init();
 void MM_JumpTo_Scrapbook(struct BigHeader* bigfile);
 
-// LOAD_TenStages
-// loadingStage is loading stage
-// bigfile is the Pointer to "cd position of bigfile"
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
 {
 	u_char numPlyrNextGame;
@@ -50,13 +47,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	{
 		case 0:
 		{
-
+#ifndef REBUILD_PS1
 			// if level is not AdvGarage or Naughty Dog Box Scene
 			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
 				Cutscene_VolumeBackup();
 			}
-
+#endif
 			DECOMP_CDSYS_XAPauseRequest();
 
 			// if first boot (SCEA + Copyright + ND Box)
@@ -65,8 +62,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				sdata->boolFirstBoot = 0;
 
 				// Load Intro TIM for Copyright Page from VRAM file
-				LOAD_VramFile(bigfile, 0x1fe, 0, &vramSize, 0xffffffff);
-				MainInit_VRAMDisplay();
+				DECOMP_LOAD_VramFile(bigfile, 0x1fe, 0, &vramSize, 0xffffffff);
+				DECOMP_MainInit_VRAMDisplay();
 
 				gGT->db[0].drawEnv.isbg = 0;
 				gGT->db[1].drawEnv.isbg = 0;
@@ -77,15 +74,15 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				// change active allocation system to #1
 				// used for whole game (except adventure arena)
-				MEMPACK_SwapPacks(0);
+				DECOMP_MEMPACK_SwapPacks(0);
 
 				// erase all memory loaded after first boot
-				MEMPACK_PopToState(sdata->bookmarkID);
+				DECOMP_MEMPACK_PopToState(sdata->bookmarkID);
 			}
 
 			// pop back here for every load, after first load,
 			// this permanently reserves LNG, bigfile header, etc
-			sdata->bookmarkID = MEMPACK_PushState();
+			sdata->bookmarkID = DECOMP_MEMPACK_PushState();
 
 			// Turn off HUD
 			gGT->hudFlags &= 0xfe;
@@ -213,8 +210,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				sdata->levelLOD = 8;
 			}
 			
-			void DECOMP_MainInit_PrimMem(void* gGT);
-			void DECOMP_MainInit_OTMem(void* gGT);
+#ifndef REBUILD_PS1
+			
 			DECOMP_MainInit_PrimMem(gGT);
 			DECOMP_MainInit_OTMem(gGT);
 
@@ -228,8 +225,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// (now, at beginning of mempack)
 				MainInit_JitPoolsNew(gGT);
 			}
+#endif
 			break;
 		}
+
+#ifndef REBUILD_PS1
 		case 1:
 		{
 			// if XA has not paused since CDSYS_XAPauseRequest in stage #0,
@@ -495,7 +495,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			break;
 		}
 		case 7:
-
+		{
 			// get level pointer
 			lev = sdata->ptrLEV_DuringLoading;
 
@@ -657,8 +657,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			}
 			
 			break;
+		}
 		case 8:
-
+		{
 			// If you're in Adventure Arena
 			if
 			(
@@ -757,10 +758,11 @@ LAB_800346b0:
 
 			if (iVar9 - 0x2aU < 2) goto LAB_800346b0;
 			break;
+		}
 		case 9:
+		{
 			if (sdata->XA_State != 2)
 			{
-
 				if
 				(
 
@@ -813,6 +815,8 @@ LAB_800346b0:
 				// signify end of load
 				return -2;
 			}
+		}
+#endif
 		default:
 			return loadingStage;
 	}

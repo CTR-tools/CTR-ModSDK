@@ -10,9 +10,13 @@ void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfil
 void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int* size, int callbackOrFlags);
 void* DECOMP_LOAD_ReadDirectory(char* filename);
 void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int* size);
+int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile);
 
 void DECOMP_MainDrawCb_Vsync();
 void DECOMP_MainDrawCb_DrawSync();
+
+void DECOMP_MainInit_PrimMem(struct GameTracker* gGT);
+void DECOMP_MainInit_OTMem(struct GameTracker* gGT);
 
 void* DECOMP_MEMPACK_AllocMem(int size);
 void* DECOMP_MEMPACK_ReallocMem(int size);
