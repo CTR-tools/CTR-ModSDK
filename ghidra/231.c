@@ -5025,7 +5025,7 @@ void FUN_800b1220(int param_1)
     *(undefined2 *)(*(int *)(*(int *)(param_1 + 0x4a0) + 0x30) + 4) = 0x1e00;
     
 	// random number
-	iVar1 = FUN_8003ea28(0x42);
+	iVar1 = FUN_8003ea28();
 	
 	// random (related to driver offset 0x50a)
     *(undefined2 *)(*(int *)(*(int *)(param_1 + 0x4a0) + 0x30) + 6) = (short)((iVar1 % 400) / 100);

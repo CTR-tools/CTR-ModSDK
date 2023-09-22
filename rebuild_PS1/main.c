@@ -25,6 +25,8 @@
 #include "../decompile/General/CDSYS/CDSYS_c18_XAPauseForce.c" 
 #include "../decompile/General/CDSYS/CDSYS_c19_XAPauseAtEnd.c" 
 
+#include "../decompile/General/GAMEPAD/GAMEPAD_Init.c"
+
 #include "../decompile/General/HOWL/h31_howl_InitGlobals.c"
 #include "../decompile/General/HOWL/h32_howl_ParseHeader.c"
 #include "../decompile/General/HOWL/h33_howl_ParseCseqHeader.c"
@@ -51,6 +53,8 @@
 #include "../decompile/General/LOAD/LOAD_A37_NextQueuedFile.c"
 
 #include "../decompile/General/MAIN/MainDrawCb_DrawSync.c"
+
+#include "../decompile/General/MEMCARD/MEMCARD_InitCard.c"
 
 #include "../decompile/General/MEMPACK/MEMPACK_Init.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_SwapPacks.c" 

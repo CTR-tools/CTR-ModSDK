@@ -12,6 +12,7 @@ void* DECOMP_LOAD_ReadDirectory(char* filename);
 void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int* size);
 
 void DECOMP_MainDrawCb_Vsync();
+void DECOMP_MainDrawCb_DrawSync();
 
 void* DECOMP_MEMPACK_AllocMem(int size);
 void* DECOMP_MEMPACK_ReallocMem(int size);

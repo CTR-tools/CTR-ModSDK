@@ -476,20 +476,22 @@ void StateZero()
 	
 #ifndef REBUILD_PS1
 	RCNT_Init();
+#endif
 	
 	// set callback and save callback
 	EnterCriticalSection();
-	sdata->MainDrawCb_DrawSyncPtr = DrawSyncCallback(&MainDrawCb_DrawSync);
+	sdata->MainDrawCb_DrawSyncPtr = DrawSyncCallback(&DECOMP_MainDrawCb_DrawSync);
 	ExitCriticalSection();
 	
-	MEMCARD_InitCard();
+	DECOMP_MEMCARD_InitCard();
 	
 	VSync(0);
 	
-	GAMEPAD_Init(sdata->gGamepads);
+	DECOMP_GAMEPAD_Init(sdata->gGamepads);
 	
 	VSync(0);
 	
+#ifndef REBUILD_PS1
 	GAMEPAD_GetNumConnected(sdata->gGamepads);
 #endif
 	
