@@ -8214,7 +8214,13 @@ int FUN_8004b3a4(void)
   // which is less than 0.006 seconds
   if (lVar1 < 100)
   {
-	// do nothing?
+	// update, cause vsyncCallback
+	// already changed it since setting
+	// iVar2 the first time
+	
+	// Check assembly, make sure
+	// this actually updates, try 
+	// Redhotbr's "volatile" idea
     iVar2 = DAT_8008d988;
   }
 
