@@ -509,7 +509,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			if (gGT->level1 != 0)
 			{
 				// Load Icons and IconGroups from LEV
-				DecalGlobal_Store(gGT, gGT->level1->ptr_named_tex);
+				DecalGlobal_Store(gGT, gGT->level1->levTexLookup);
 			}
 
 			DebugFont_Init(gGT);

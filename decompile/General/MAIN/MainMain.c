@@ -561,7 +561,6 @@ void StateZero()
 	#endif
 	
 #ifndef REBUILD_PS1
-	// WARNING: Read-only address (ram, 0x8008d888) is written
 	DecalGlobal_Clear(gGT);
 #endif
 	

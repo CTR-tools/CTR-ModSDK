@@ -180,6 +180,10 @@ common, exe, DecalFont_DrawMultiLineStrlen, 0x0, General/DecalFont/DecalFont_Dra
 common, exe, DecalFont_DrawMultiLine, 0x0, General/DecalFont/DecalFont_DrawMultiLine.c
 common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont/DecalFont_GetLineWidthStrlen.c
 
+// DecalGlobal
+common, exe, DecalGlobal_Clear, 0x0, General/DecalGlobal/DecalGlobal_Clear.c
+common, exe, DecalGlobal_Store, 0x0, General/DecalGlobal/DecalGlobal_Store.c
+
 // DecalHUD
 common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyFT4.c
 common, exe, DecalHUD_DrawWeapon, 0x0, General/DecalHUD/DecalHUD_DrawWeapon.c

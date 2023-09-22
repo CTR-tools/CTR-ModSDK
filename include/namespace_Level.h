@@ -467,6 +467,14 @@ struct Skybox
 	// renderMode can be just 0000 and it'll work fine
 };
 
+struct LevTexLookup
+{
+	int numIcon;
+	struct Icon* firstIcon;
+	int numIconGroup;
+	struct IconGroup** firstIconGroupPtr;
+};
+
 struct Level
 {
 	// 0x0
@@ -535,7 +543,7 @@ struct Level
 
 	// 0x3c
 	// leads to the icon pack header
-	void* ptr_named_tex;
+	struct LevTexLookup* levTexLookup;
 
 	// 0x40
 	// leads to the icon pack data

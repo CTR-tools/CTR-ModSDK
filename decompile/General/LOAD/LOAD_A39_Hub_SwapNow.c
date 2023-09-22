@@ -73,7 +73,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 			
 		LevInstDef_UnPack(level1->ptr_mesh_info);
 		
-		DecalGlobal_Store(gGT, level1->ptr_named_tex);
+		DecalGlobal_Store(gGT, level1->levTexLookup);
 	}
 	
 	MEMPACK_SwapPacks(gGT->activeMempackIndex);
