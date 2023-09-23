@@ -57,6 +57,11 @@ void DECOMP_Channel_ParseSongToChannels()
 				// song is over
 				if((song->flags & 4) != 0)
 				{
+					// temporary
+					#if 1
+					while(1) {}
+					#endif
+					
 					// remove flag
 					song->flags &= ~(4);
 					
@@ -112,6 +117,8 @@ void DECOMP_Channel_ParseSongToChannels()
 				
 				// === need to work on this variable naming ===
  				
+				printf("%d %d\n", seq->NoteLength, seq->NoteTimeElapsed);
+				
 				while(seq->NoteLength <= seq->NoteTimeElapsed)
 				{	
 					// if reached end, quit
@@ -136,8 +143,10 @@ void DECOMP_Channel_ParseSongToChannels()
 					// if song restarting (opcode03)
 					if((seq->flags & 8) != 0)
 					{
+						#if 0
 						seq->flags &= ~(8);
 						seq->currNote = seq->firstNote;
+						#endif
 					}
 					
 					// if song not restarting (opcode03)
