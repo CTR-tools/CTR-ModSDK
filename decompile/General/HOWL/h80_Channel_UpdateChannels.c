@@ -140,7 +140,7 @@ void DECOMP_Channel_UpdateChannels()
 			if(reverb != cur->reverb)
 			{
 				cur->reverb = reverb;
-				SpuSetReverbVoice(reverb!=0, reverb);
+				SpuSetReverbVoice(reverb!=0, 1<<vNum);
 			}
 		}
 		
