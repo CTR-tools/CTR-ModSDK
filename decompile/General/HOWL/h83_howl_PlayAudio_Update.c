@@ -2,6 +2,7 @@
 
 void DECOMP_howl_PlayAudio_Update()
 {
+	int* ptrFlag;
 	struct ChannelStats* curr;
 	
 	if(sdata->boolAudioEnabled != 0)
@@ -29,8 +30,9 @@ void DECOMP_howl_PlayAudio_Update()
 				
 				if(curr->timeLeft < 1)
 				{
-					sdata->ChannelUpdateFlags[curr->channelID] |= 1;
-					sdata->ChannelUpdateFlags[curr->channelID] &= ~(2);
+					ptrFlag = &sdata->ChannelUpdateFlags[curr->channelID];
+					*ptrFlag |= 1;
+					*ptrFlag &= ~(2);
 					
 					curr->flags &= ~(1);
 					
