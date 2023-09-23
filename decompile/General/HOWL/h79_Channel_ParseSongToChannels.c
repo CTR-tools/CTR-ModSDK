@@ -130,25 +130,24 @@ void DECOMP_Channel_ParseSongToChannels()
 					// this is OG until DATA is rewritten
 					(*data.opcodeFunc[opcode])(seq);
 					
-					// if sequence is playing
-					if((seq->flags & 1) != 0)
+					// if reached end, quit
+					if((seq->flags & 1) == 0) break;
+					
+					// if song restarting (opcode03)
+					if((seq->flags & 8) != 0)
 					{
-						// if song restarting (opcode03)
-						if((seq->flags & 8) != 0)
-						{
-							seq->flags &= ~(8);
-							seq->currNote = seq->firstNote;
-						}
-						
-						// if song not restarting (opcode03)
-						else
-						{
-							seq->currNote += data.opcodeOffset[opcode];
-						}
-						
-						seq->currNote = 
-							howl_GetNextNote(seq->currNote, &seq->NoteLength);
+						seq->flags &= ~(8);
+						seq->currNote = seq->firstNote;
 					}
+					
+					// if song not restarting (opcode03)
+					else
+					{
+						seq->currNote += data.opcodeOffset[opcode];
+					}
+					
+					seq->currNote = 
+						howl_GetNextNote(seq->currNote, &seq->NoteLength);
 				}
 			}
 		}
