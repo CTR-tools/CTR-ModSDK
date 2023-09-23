@@ -302,7 +302,7 @@ common, exe, Channel_AllocSlot, 0x0, General/HOWL/h75_Channel_AllocSlot.c
 common, exe, Channel_SearchFX_EditAttr, 0x0, General/HOWL/h76_Channel_SearchFX_EditAttr.c
 common, exe, Channel_SearchFX_Destroy, 0x0, General/HOWL/h77_Channel_SearchFX_Destroy.c
 common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/h78_Channel_DestroyAll_LowLevel.c
-
+common, exe, Channel_ParseSongToChannels, 0x0, General/HOWL/h79_Channel_ParseSongToChannels.c
 // skip last two "channel" functions
 
 common, exe, Cutscene_VolumeBackup, 0x0, General/HOWL/Cutscene_VolumeBackup.c

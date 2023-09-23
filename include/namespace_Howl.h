@@ -347,11 +347,13 @@ struct SongSeq
 	// 0x10 
 	int NoteTimeElapsed;
 	
-	// 0x14 
-	void* firstNote;
+	// 0x14
+	// SongOpcode
+	char* firstNote;
 
-	// 0x18 
-	void* currNote;
+	// 0x18
+	// SongOpcode
+	char* currNote;
 	
 	// 0x1C -- size
 };
@@ -392,7 +394,6 @@ struct Song
 	int unk10;
 
 	// 0x14
-	// time spent playing
 	int timeSpentPlaying;
 
 	// 0x18 = vol_Curr

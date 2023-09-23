@@ -1497,7 +1497,7 @@ struct Data
 	// 80082130 -- JpnTrial
 	// 8008351c -- EurRetail
 	// 800864c4 -- JpnRetail
-	void* opcodeFunc[0xb];
+	void (*opcodeFunc[0xb])(struct SongSeq*);
 
 	// 800812ac -- SepReview
 	// 80083030 -- UsaRetail

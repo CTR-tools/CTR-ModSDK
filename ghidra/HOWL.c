@@ -4211,6 +4211,7 @@ void FUN_8002bbac(void)
 			((*pbVar9 & 2) == 0)
 		  )
 	  {
+		// vol_Curr
         uVar5 = (uint)(byte)(&DAT_80095d9c)[iVar12];
 
 		// songPool->0x10 + songPool->tempo
@@ -4220,6 +4221,7 @@ void FUN_8002bbac(void)
 		// songPool->0x10
 		*(uint *)((int)&DAT_80095d94 + iVar12) = uVar4;
 		
+		// vol_New
         bVar8 = (&DAT_80095d9d)[iVar12];
         uVar4 = (uint)bVar8;
 
@@ -4227,16 +4229,29 @@ void FUN_8002bbac(void)
         *(int *)((int)&DAT_80095d98 + iVar12) =
 		*(int *)((int)&DAT_80095d98 + iVar12) + uVar11;
 
+		// self = (short)self
         *(uint *)((int)&DAT_80095d94 + iVar12) = (uint)*(ushort *)((int)&DAT_80095d94 + iVar12);
-        if (uVar5 != uVar4) {
-          if (uVar5 < uVar4) {
+        
+		// vol_Curr != vol_New
+		if (uVar5 != uVar4) 
+		{
+		  // vol_Curr < vol_New
+          if (uVar5 < uVar4) 
+		  {
+			// increase
             bVar7 = (byte)(uVar5 + (byte)(&DAT_80095d9e)[iVar12]);
             bVar1 = uVar4 < uVar5 + (byte)(&DAT_80095d9e)[iVar12];
           }
-          else {
+		  
+		  // vol_Curr > vol_New
+          else 
+		  {
+			// decrease
             bVar7 = (byte)(uVar5 - (byte)(&DAT_80095d9e)[iVar12]);
             bVar1 = (int)(uVar5 - (byte)(&DAT_80095d9e)[iVar12]) < (int)uVar4;
           }
+		  
+		  // reached desired volume, and if song over
           if ((bVar1) && (bVar7 = bVar8, (*pbVar9 & 4) != 0))
 		  {
 			// SongPool_StopAllCseq
@@ -4247,9 +4262,14 @@ void FUN_8002bbac(void)
 
             *pbVar9 = *pbVar9 & 0xfb;
           }
+		  
+		  // new vol_Curr
           (&DAT_80095d9c)[iVar12] = bVar7;
+		  
+		  // volumeChanged
           bVar1 = true;
         }
+		
         iVar10 = 0;
 
 		// song numSequences
@@ -4336,7 +4356,7 @@ void FUN_8002bbac(void)
                       }
 
 					  // howl_GetNextNote
-					  // currNote, note->NoteLength
+					  // currNote, sequence->NoteLength
                       uVar3 = FUN_80029dcc(iVar2,pbVar6 + 0xc);
 
 					  // update currNote
@@ -4344,7 +4364,7 @@ void FUN_8002bbac(void)
                     }
                   }
 				  
-				  // note->NoteLength
+				  // sequence->NoteLength
                   uVar5 = *(uint *)(pbVar6 + 0xc);
 				
 				// while noteLength < noteTimeElapsed
