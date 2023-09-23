@@ -13,7 +13,7 @@ void DECOMP_howl_InitChannelAttr_EngineFX(
 	short pitch = engineFX->pitch;
 	
 	if(distort != 0x80)
-		pitch = ((int)pitch * (int)data.distortConst_Engine[distort]) >> 0x10;
+		pitch = ((unsigned int)pitch * data.distortConst_Engine[distort]) >> 0x10;
 	
 	attr->pitch = pitch;
 	

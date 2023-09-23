@@ -8,8 +8,9 @@ struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 	int flags,
 	struct ChannelAttr* attr)
 {
+	int backupNext;
 	struct ChannelAttr* newAttr;
-	struct ChannelStats* stats;
+	struct ChannelStats* curr;
 	
 	// with AntiSpam, a new sound started within
 	// 10 frames of another, will replace the older
@@ -18,32 +19,34 @@ struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 	// of each other will play until they all finish
 	
 	if(boolUseAntiSpam == 1)
-	{
-		stats = (struct ChannelStats*)sdata->channelTaken.first;
-		
-		while(stats != 0)
+	{	
+		for(
+			curr = sdata->channelTaken.first;
+			curr != 0;
+			curr = backupNext
+		)
 		{
+			backupNext = curr->next;
+			
 			if(
 				// type == OtherFX
-				(stats->type == 1) &&
+				(curr->type == 1) &&
 			
 				// matching ID
-				((short)stats->soundID == soundID)
+				((short)curr->soundID == soundID)
 			)
 			{
 				int duration = 
 				sdata->gGT->frameTimer_MainFrame_ResetDB -
-				stats->startFrame;
+				curr->startFrame;
 				
 				// if started within 10 frames, cancel old and start new,
 				// otherwise you'll allocate too many sounds and overflow
 				if(duration < 10)
 				{
-					Channel_DestroySelf(stats);
+					Channel_DestroySelf(curr);
 				}
 			}
-			
-			stats = stats->next;
 		}
 	}
 	

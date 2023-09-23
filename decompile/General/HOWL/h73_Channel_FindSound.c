@@ -2,24 +2,28 @@
 
 struct ChannelStats* DECOMP_Channel_FindSound(int soundID)
 {
-	struct ChannelStats* stats = 
-		sdata->channelTaken.first;
+	int backupNext;
+	struct ChannelStats* curr;
 		
-	while(stats != 0)
+	for(
+		curr = sdata->channelTaken.first;
+		curr != 0;
+		curr = backupNext
+	)
 	{
+		backupNext = curr->next;
+		
 		if(
 			// type == OtherFX
-			(stats->type == 1) &&
+			(curr->type == 1) &&
 		
 			// matching ID
-			(stats->soundID == soundID)
+			(curr->soundID == soundID)
 		)
 		{
 			// sound already playing
 			return 1;
 		}
-		
-		stats = stats->next;
 	}
 	
 	// sound not playing

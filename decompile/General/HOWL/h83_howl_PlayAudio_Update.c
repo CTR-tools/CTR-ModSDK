@@ -3,6 +3,7 @@
 void DECOMP_howl_PlayAudio_Update()
 {
 	int* ptrFlag;
+	int backupNext;
 	struct ChannelStats* curr;
 	
 	if(sdata->boolAudioEnabled != 0)
@@ -19,10 +20,14 @@ void DECOMP_howl_PlayAudio_Update()
 			sdata->criticalSectionCount = 0;
 		}
 		
-		curr = sdata->channelTaken.first;
-		
-		while(curr != 0)
+		for(
+				curr = sdata->channelTaken.first;
+				curr != 0;
+				curr = backupNext
+			)
 		{
+			backupNext = curr->next;
+		
 			// if sound is on a timer (not stacatto)
 			if((curr->flags & 4) == 0)
 			{
@@ -40,8 +45,6 @@ void DECOMP_howl_PlayAudio_Update()
 					LIST_AddBack(&sdata->channelFree, curr);
 				}
 			}
-			
-			curr = curr->next;
 		}
 		
 		Channel_ParseSongToChannels();

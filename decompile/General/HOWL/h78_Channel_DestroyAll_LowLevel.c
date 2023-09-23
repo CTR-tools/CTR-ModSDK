@@ -6,20 +6,20 @@ void Channel_DestroySelf(struct ChannelStats* stats);
 // param_2 0: destroy music, 1: keep music
 void DECOMP_Channel_DestroyAll_LowLevel(int opt1, int boolKeepMusic, char type)
 {	
-	struct ChannelStats* stats = 
-		sdata->channelTaken.first;
+	int backupNext;
+	struct ChannelStats* curr;
 	
-	struct ChannelStats* nextStats;
-	
-	while(stats != 0)
+	for(
+			curr = sdata->channelTaken.first;
+			curr != 0;
+			curr = backupNext
+		)
 	{
-		// do this before DestroySelf to get
-		// next "taken", otherwise you get next "free"
-		nextStats = stats->next;
+		backupNext = curr->next;
 		
 		if(
 			// destroy if not music
-			(stats->type != type) ||
+			(curr->type != type) ||
 		
 			// override and remove music too
 			(boolKeepMusic == 0)
@@ -31,18 +31,16 @@ void DECOMP_Channel_DestroyAll_LowLevel(int opt1, int boolKeepMusic, char type)
 				
 				(
 					// if not otherFX, erase
-					(stats->type != 1) ||
+					(curr->type != 1) ||
 					
 					// if otherFX and not menu sounds,
 					// cause those should ring out
-					((short)stats->soundID > 5)
+					((short)curr->soundID > 5)
 				)
 			)
 			{
-				Channel_DestroySelf(stats);
+				Channel_DestroySelf(curr);
 			}
 		}
-		
-		stats = nextStats;
 	}
 }

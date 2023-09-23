@@ -3,6 +3,7 @@
 void DECOMP_cseq_opcode0a(struct SongSeq* seq)
 {
 	int pitch;
+	int backupNext;
 	struct ChannelStats* curr;
 	int soundID = seq->soundID;
 	
@@ -12,9 +13,11 @@ void DECOMP_cseq_opcode0a(struct SongSeq* seq)
 	for(
 			curr = sdata->channelTaken.first;
 			curr != 0;
-			curr = curr->next
+			curr = backupNext
 		)
 	{
+		backupNext = curr->next;
+		
 		// type != MUSIC
 		if(curr->type != 2) continue;
 		

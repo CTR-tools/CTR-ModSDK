@@ -8,27 +8,31 @@ void Channel_DestroySelf(struct ChannelStats* stats);
 struct ChannelStats* DECOMP_Channel_SearchFX_Destroy(
 	int type, int soundID, int flags)
 {	
-	struct ChannelStats* stats = 
-		sdata->channelTaken.first;
+	int backupNext;
+	struct ChannelStats* curr;
 		
-	while(stats != 0)
+	for(
+			curr = sdata->channelTaken.first;
+			curr != 0;
+			curr = backupNext
+		)
 	{
+		backupNext = curr->next;
+		
 		if(
 			// matching type
-			(stats->type == type) &&
+			(curr->type == type) &&
 		
 			// matching ID and bit-shifted soundCount
-			((stats->soundID & flags) == (soundID & flags))
+			((curr->soundID & flags) == (soundID & flags))
 		)
 		{
-			Channel_DestroySelf(stats);
+			Channel_DestroySelf(curr);
 			
 			// OG code does this, but what if
 			// there's multiple of the same sound?
-			return stats;
+			return curr;
 		}
-		
-		stats = stats->next;
 	}
 	
 	// sound not playing

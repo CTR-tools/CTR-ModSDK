@@ -134,17 +134,17 @@ struct GarageFX
 struct OtherFX
 {
 	// 0x0
-	char flags;
+	unsigned char flags;
 	unsigned char volume;
 	
 	// 0x2
-	short pitch;
+	unsigned short pitch;
 	
 	// 0x4
-	short spuIndex;
+	unsigned short spuIndex;
 	
 	// 0x6
-	short duration;
+	unsigned short duration;
 
 	// 0x8 -- size
 };
@@ -152,17 +152,17 @@ struct OtherFX
 struct EngineFX
 {
 	// 0x0
-	char flags;
+	unsigned char flags;
 	unsigned char volume;
 	
 	// 0x2
-	short pitch;
+	unsigned short pitch;
 	
 	// 0x4
-	short unk;
+	unsigned short unk;
 	
 	// 0x6
-	short spuIndex;
+	unsigned short spuIndex;
 	
 	// 0x8 -- size
 };

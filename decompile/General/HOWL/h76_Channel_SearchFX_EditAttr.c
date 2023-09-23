@@ -6,24 +6,30 @@ struct ChannelStats* DECOMP_Channel_SearchFX_EditAttr(
 {
 	struct ChannelAttr* editAttr;
 	
-	struct ChannelStats* stats = 
-		sdata->channelTaken.first;
+	int backupNext;
+	struct ChannelStats* curr;
 		
-	while(stats != 0)
+	for(
+			curr = sdata->channelTaken.first;
+			curr != 0;
+			curr = backupNext
+		)
 	{
+		backupNext = curr->next;
+		
 		if(
 			// matching type
-			(stats->type == type) &&
+			(curr->type == type) &&
 		
 			// matching ID
-			(stats->soundID == soundID)
+			(curr->soundID == soundID)
 		)
 		{
 			// update flags
-			sdata->ChannelUpdateFlags[stats->channelID] |= updateFlags;
+			sdata->ChannelUpdateFlags[curr->channelID] |= updateFlags;
 			
 			// edit ChanenlAttr
-			editAttr = &sdata->channelAttrNew[stats->channelID];
+			editAttr = &sdata->channelAttrNew[curr->channelID];
 			
 			// change in spu addr
 			if((updateFlags & 0x4) != 0)
@@ -60,10 +66,8 @@ struct ChannelStats* DECOMP_Channel_SearchFX_EditAttr(
 			
 			// OG code does this, but what if
 			// there's multiple of the same sound?
-			return stats;
+			return curr;
 		}
-		
-		stats = stats->next;
 	}
 	
 	// sound not playing

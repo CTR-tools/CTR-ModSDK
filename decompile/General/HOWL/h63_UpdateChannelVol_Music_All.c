@@ -2,15 +2,17 @@
 
 void DECOMP_UpdateChannelVol_Music_All()
 {
+	int backupNext;
 	struct ChannelStats* curr;
-	u_int* flagPtr;
 	
 	for(
 			curr = sdata->channelTaken.first;
 			curr != 0;
-			curr = curr->next
+			curr = backupNext
 		)
 	{
+		backupNext = curr->next;
+		
 		// type != MUSIC, skip
 		if(curr->type != 2) continue;
 		
