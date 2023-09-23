@@ -4229,7 +4229,7 @@ void FUN_8002bbac(void)
         *(int *)((int)&DAT_80095d98 + iVar12) =
 		*(int *)((int)&DAT_80095d98 + iVar12) + uVar11;
 
-		// self = (short)self
+		// self = (unsigned short)self
         *(uint *)((int)&DAT_80095d94 + iVar12) = (uint)*(ushort *)((int)&DAT_80095d94 + iVar12);
         
 		// vol_Curr != vol_New

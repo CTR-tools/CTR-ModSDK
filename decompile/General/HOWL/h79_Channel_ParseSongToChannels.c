@@ -26,8 +26,10 @@ void DECOMP_Channel_ParseSongToChannels()
 		
 		// song playing offset?
 		song->unk10 += song->tempo;
-		song->timeSpentPlaying += song->unk10 >> 0x10;
-		song->unk10 = (short)song->unk10;
+		int unk10_total = song->unk10;
+		
+		song->timeSpentPlaying += unk10_total >> 0x10;
+		song->unk10 = (unsigned short)unk10_total;
 
 		int volCurr = song->vol_Curr;
 		int volNew = song->vol_New;
@@ -57,12 +59,6 @@ void DECOMP_Channel_ParseSongToChannels()
 				// song is over
 				if((song->flags & 4) != 0)
 				{
-					// temporary
-					#if 1
-					while(1) {}
-					#endif
-					
-					// remove flag
 					song->flags &= ~(4);
 					
 					SongPool_StopAllCseq(song);
@@ -113,11 +109,9 @@ void DECOMP_Channel_ParseSongToChannels()
 			// if sequence is playing
 			if((seq->flags & 1) != 0)
 			{
-				seq->NoteTimeElapsed += song->unk10 >> 0x10;
+				seq->NoteTimeElapsed += unk10_total >> 0x10;
 				
 				// === need to work on this variable naming ===
- 				
-				printf("%d %d\n", seq->NoteLength, seq->NoteTimeElapsed);
 				
 				while(seq->NoteLength <= seq->NoteTimeElapsed)
 				{	
@@ -143,10 +137,9 @@ void DECOMP_Channel_ParseSongToChannels()
 					// if song restarting (opcode03)
 					if((seq->flags & 8) != 0)
 					{
-						#if 0
 						seq->flags &= ~(8);
+						
 						seq->currNote = seq->firstNote;
-						#endif
 					}
 					
 					// if song not restarting (opcode03)
