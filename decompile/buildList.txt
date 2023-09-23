@@ -293,17 +293,16 @@ common, exe, howl_VolumeSet, 0x0, General/HOWL/h66_howl_VolumeSet.c
 common, exe, howl_ModeGet, 0x0, General/HOWL/h67_howl_ModeGet.c
 common, exe, howl_ModeSet, 0x0, General/HOWL/h68_howl_ModeSet.c
 common, exe, OptionsMenu_TestSound, 0x0, General/HOWL/h69_OptionsMenu_TestSound.c
+common, exe, Smart_EnterCriticalSection, 0x0, General/HOWL/h70_Smart_EnterCriticalSection.c
+common, exe, Smart_ExitCriticalSection, 0x0, General/HOWL/h71_Smart_ExitCriticalSection.c
+common, exe, Channel_SetVolume, 0x0, General/HOWL/h72_Channel_SetVolume.c
+common, exe, Channel_FindSound, 0x0, General/HOWL/h73_Channel_FindSound.c
+common, exe, Channel_AllocSlot_AntiSpam, 0x0, General/HOWL/h74_Channel_AllocSlot_AntiSpam.c
+common, exe, Channel_AllocSlot, 0x0, General/HOWL/h75_Channel_AllocSlot.c
+common, exe, Channel_SearchFX_EditAttr, 0x0, General/HOWL/h76_Channel_SearchFX_EditAttr.c
+common, exe, Channel_SearchFX_Destroy, 0x0, General/HOWL/h77_Channel_SearchFX_Destroy.c
+common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/h78_Channel_DestroyAll_LowLevel.c
 
-common, exe, Smart_EnterCriticalSection, 0x0, General/HOWL/hz_h70_Smart_EnterCriticalSection.c
-common, exe, Smart_ExitCriticalSection, 0x0, General/HOWL/hz_h71_Smart_ExitCriticalSection.c
-
-common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
-common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c
-common, exe, Channel_AllocSlot_AntiSpam, 0x0, General/HOWL/Channel_AllocSlot_AntiSpam.c
-common, exe, Channel_AllocSlot, 0x0, General/HOWL/Channel_AllocSlot.c
-common, exe, Channel_SearchFX_EditAttr, 0x0, General/HOWL/Channel_SearchFX_EditAttr.c
-common, exe, Channel_SearchFX_Destroy, 0x0, General/HOWL/Channel_SearchFX_Destroy.c
-common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/Channel_DestroyAll_LowLevel.c
 // skip last two "channel" functions
 
 common, exe, Cutscene_VolumeBackup, 0x0, General/HOWL/Cutscene_VolumeBackup.c
