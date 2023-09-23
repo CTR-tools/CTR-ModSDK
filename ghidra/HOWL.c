@@ -4689,8 +4689,7 @@ void FUN_8002c208(void)
       ppiVar3 = (int **)*ppiVar1;
 
       if (
-			// if sound is not ???,
-			// basically, if sound is on a timer
+			// if sound is on a timer (not stacatto)
 			((*(byte *)(ppiVar1 + 2) & 4) == 0) &&
 
 			(

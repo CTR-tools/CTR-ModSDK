@@ -306,6 +306,7 @@ common, exe, Channel_ParseSongToChannels, 0x0, General/HOWL/h79_Channel_ParseSon
 common, exe, Channel_UpdateChannels, 0x0, General/HOWL/h80_Channel_UpdateChannels.c
 common, exe, Cutscene_VolumeBackup, 0x0, General/HOWL/h81_Cutscene_VolumeBackup.c
 common, exe, Cutscene_VolumeRestore, 0x0, General/HOWL/h82_Cutscene_VolumeRestore.c
+common, exe, howl_PlayAudio_Update, 0x0, General/HOWL/h83_howl_PlayAudio_Update.c
 
 // HOWL_Garage
 common, exe, Garage_Init, 0x0, General/HOWL/Garage_Init.c
