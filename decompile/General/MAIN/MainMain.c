@@ -540,11 +540,13 @@ void StateZero()
 	RenderBucket_InitDepthGTE();
 	Vector_BakeMatrixTable();
 	
-	gGT->overlayIndex_EndOfRace = 0xff;
 	gGT->swapchainIndex = 0;
 	gGT->backBuffer = &gGT->db[0];
+	
+	gGT->overlayIndex_EndOfRace = 0xff;
 	gGT->overlayIndex_LOD = 0xff;
 	gGT->overlayIndex_Threads = 0xff;
+	
 	PutDispEnv(&gGT->db[1].dispEnv);
 	PutDrawEnv(&gGT->db[1].drawEnv);
 	DrawSync(0);

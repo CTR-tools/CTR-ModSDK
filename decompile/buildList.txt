@@ -289,6 +289,7 @@ common, exe, UpdateChannelVol_EngineFX_All, 0x0, General/HOWL/h62_UpdateChannelV
 common, exe, UpdateChannelVol_Music_All, 0x0, General/HOWL/h63_UpdateChannelVol_Music_All.c
 common, exe, UpdateChannelVol_OtherFX_All, 0x0, General/HOWL/h64_UpdateChannelVol_OtherFX_All.c
 common, exe, howl_VolumeGet, 0x0, General/HOWL/h65_howl_VolumeGet.c
+common, exe, howl_VolumeSet, 0x0, General/HOWL/h66_howl_VolumeSet.c
 
 common, exe, Smart_EnterCriticalSection, 0x0, General/HOWL/hz_h70_Smart_EnterCriticalSection.c
 common, exe, Smart_ExitCriticalSection, 0x0, General/HOWL/hz_h71_Smart_ExitCriticalSection.c

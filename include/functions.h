@@ -327,7 +327,7 @@ void CseqMusic_StopAll();
 	// not even the last of howl
 
 	short howl_VolumeGet(int volumeType);
-	void howl_VolumeSet(int volumeType, char volume);
+	void howl_VolumeSet(int volumeType, unsigned char volume);
 	char howl_ModeGet();
 	void howl_ModeSet(char volumeMode);
 
