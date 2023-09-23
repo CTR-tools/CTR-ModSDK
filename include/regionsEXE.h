@@ -4371,11 +4371,11 @@ struct sData
 
 	// 8008fccc
 	// backed up every time Curr changes
-	struct ChannelAttr channelAttrCurr[NUM_SFX_CHANNELS];
+	struct ChannelAttr channelAttrNew[NUM_SFX_CHANNELS];
 
 	// 8008fe4c
 	// backed up every time Curr changes
-	struct ChannelAttr channelAttrPrev[NUM_SFX_CHANNELS];
+	struct ChannelAttr channelAttrCur[NUM_SFX_CHANNELS];
 
 	// 8008FFCC
 	// backed up during pause

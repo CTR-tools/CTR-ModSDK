@@ -27,7 +27,7 @@ void DECOMP_cseq_opcode_from06and07(struct SongSeq* seq)
 		if(curr->soundID != soundID) continue;
 		
 		Channel_SetVolume(
-				&sdata->channelAttrCurr[curr->channelID],
+				&sdata->channelAttrNew[curr->channelID],
 				(sampleVol * curr->vol) >> 0x12,
 				seq->LR
 			);

@@ -23,7 +23,7 @@ struct ChannelStats* DECOMP_Channel_SearchFX_EditAttr(
 			sdata->ChannelUpdateFlags[stats->channelID] |= updateFlags;
 			
 			// edit ChanenlAttr
-			editAttr = &sdata->channelAttrCurr[stats->channelID];
+			editAttr = &sdata->channelAttrNew[stats->channelID];
 			
 			// change in spu addr
 			if((updateFlags & 0x4) != 0)

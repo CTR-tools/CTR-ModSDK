@@ -3259,7 +3259,7 @@ void FUN_8002ae64(void)
 			// howl_metaEngineFX[channelStats->soundID]
 			DAT_8008d7d0 + (uint)*(ushort *)(piVar1 + 6) * 8,
             
-			// channelAttrCurr[channelStats->channelID]
+			// channelAttrNew[channelStats->channelID]
 			&DAT_8008fccc + (uint)*(byte *)((int)piVar1 + 9) * 4,
 			
 			// channelStats->vol
@@ -4501,13 +4501,16 @@ void FUN_8002be9c(void)
 			// ADSR needs to change
 			((uVar4 & 8) != 0) &&
 
+			// change in adsr
 			(*(int *)(&DAT_8008fe50 + vNum * 8) != (&DAT_8008fcd0)[vNum * 4])
 		  )
 	  {
+		// set new adsr
         pitch = *(ushort *)(&DAT_8008fcd0 + vNum * 4);
         (&DAT_8008fe50)[vNum * 8] = pitch;
         uVar1 = *(ushort *)((int)&DAT_8008fcd0 + vNum * 0x10 + 2);
         (&DAT_8008fe52)[vNum * 8] = uVar1;
+		
         if ((short)pitch < 0) {
           local_38 = 5;
         }

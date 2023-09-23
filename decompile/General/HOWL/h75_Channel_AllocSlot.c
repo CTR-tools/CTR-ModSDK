@@ -22,7 +22,7 @@ struct ChannelStats* DECOMP_Channel_AllocSlot(
 	sdata->ChannelUpdateFlags[stats->channelID] |= (flags | 2);
 	
 	// make new ChanenlAttr
-	newAttr = &sdata->channelAttrCurr[stats->channelID];
+	newAttr = &sdata->channelAttrNew[stats->channelID];
 	
 	// copy all 0x10 bytes in ChannelAttr
 	for(i = 0; i < 4; i++)

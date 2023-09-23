@@ -50,7 +50,7 @@ void DECOMP_cseq_opcode0a(struct SongSeq* seq)
 		}
 	
 		// save pitch
-		sdata->channelAttrCurr[curr->channelID].pitch = pitch;
+		sdata->channelAttrNew[curr->channelID].pitch = pitch;
 		
 		// update pitch
 		sdata->ChannelUpdateFlags[curr->channelID] |= 0x10;

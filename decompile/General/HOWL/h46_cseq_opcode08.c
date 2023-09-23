@@ -19,7 +19,7 @@ void DECOMP_cseq_opcode08(struct SongSeq* seq)
 		if(curr->soundID != soundID) continue;
 		
 		// set reverb
-		sdata->channelAttrCurr[curr->channelID].reverb = currNote[1];
+		sdata->channelAttrNew[curr->channelID].reverb = currNote[1];
 		
 		// update Reverb (reverberation = echo)
 		sdata->ChannelUpdateFlags[curr->channelID] |= 0x20;

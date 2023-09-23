@@ -25,7 +25,7 @@ void DECOMP_UpdateChannelVol_EngineFX_All()
 		{
 			UpdateChannelVol_EngineFX(
 				&sdata->howl_metaEngineFX[soundID],
-				&sdata->channelAttrCurr[curr->channelID],
+				&sdata->channelAttrNew[curr->channelID],
 				curr->vol, curr->LR);
 		}
 		
@@ -34,7 +34,7 @@ void DECOMP_UpdateChannelVol_EngineFX_All()
 		{
 			UpdateChannelVol_OtherFX(
 				&sdata->howl_metaOtherFX[soundID],
-				&sdata->channelAttrCurr[curr->channelID],
+				&sdata->channelAttrNew[curr->channelID],
 				curr->vol, curr->LR);
 		}
 	}
