@@ -308,6 +308,7 @@ common, exe, Cutscene_VolumeBackup, 0x0, General/HOWL/h81_Cutscene_VolumeBackup.
 common, exe, Cutscene_VolumeRestore, 0x0, General/HOWL/h82_Cutscene_VolumeRestore.c
 common, exe, howl_PlayAudio_Update, 0x0, General/HOWL/h83_howl_PlayAudio_Update.c
 common, exe, howl_InitChannelAttr_EngineFX, 0x0, General/HOWL/h84_howl_InitChannelAttr_EngineFX.c
+common, exe, howl_InitChannelAttr_OtherFX, 0x0, General/HOWL/h85_howl_InitChannelAttr_OtherFX.c
 
 // HOWL_Garage
 common, exe, Garage_Init, 0x0, General/HOWL/Garage_Init.c
