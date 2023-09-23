@@ -304,9 +304,8 @@ common, exe, Channel_SearchFX_Destroy, 0x0, General/HOWL/h77_Channel_SearchFX_De
 common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/h78_Channel_DestroyAll_LowLevel.c
 common, exe, Channel_ParseSongToChannels, 0x0, General/HOWL/h79_Channel_ParseSongToChannels.c
 common, exe, Channel_UpdateChannels, 0x0, General/HOWL/h80_Channel_UpdateChannels.c
-
-common, exe, Cutscene_VolumeBackup, 0x0, General/HOWL/Cutscene_VolumeBackup.c
-common, exe, Cutscene_VolumeRestore, 0x0, General/HOWL/Cutscene_VolumeRestore.c
+common, exe, Cutscene_VolumeBackup, 0x0, General/HOWL/h81_Cutscene_VolumeBackup.c
+common, exe, Cutscene_VolumeRestore, 0x0, General/HOWL/h82_Cutscene_VolumeRestore.c
 
 // HOWL_Garage
 common, exe, Garage_Init, 0x0, General/HOWL/Garage_Init.c
