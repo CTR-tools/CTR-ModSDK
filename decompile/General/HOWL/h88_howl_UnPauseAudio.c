@@ -42,7 +42,7 @@ void DECOMP_howl_UnPauseAudio()
 	}
 	Smart_ExitCriticalSection();
 	
-	//CseqMusic_Resume();
+	CseqMusic_Resume();
 	
 	sdata->numBackup_ChannelStats = 0;
 }
