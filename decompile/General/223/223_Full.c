@@ -10,6 +10,89 @@ static int str_number = 0x20; // " \0"
 void DECOMP_RR_EndEvent_UnlockAward();
 void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY);
 
+// required to start on 8009f71c until we rewrite MainGameEnd_Initialize
+void JunkPadding223()
+{
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+	asm("nop");
+}
+void DECOMP_RR_EndEvent_UnlockAward()
+{
+	int i;
+	struct Driver *driver;
+	struct GameTracker *gGT;
+	int raceTime;
+	int timeDeduct;
+	int bitIndex;
+	struct AdvProgress *adv;
+	int levelID;
+	int relicTime;
+
+	gGT = sdata->gGT;
+	driver = gGT->drivers[0];
+	raceTime = driver->timeElapsedInRace;
+	adv = &sdata->advProgress;
+	levelID = gGT->levelID;
+
+	// 10 seconds for getting all crates
+	if (driver->numTimeCrates == gGT->timeCratesInLEV)
+		raceTime -= 0x2580;
+
+	for (i = 0; i < 3; i++)
+	{
+		relicTime = data.RelicTime[levelID * 3 + i];
+
+		// if driver did not beat relic time, check next relic
+		if (raceTime > relicTime)
+			continue;
+
+		bitIndex = 0x16 + 0x12 * i;
+
+		// if relic already unlocked, check next relic
+		if (CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
+			continue;
+
+		// == beat relic, and unlocked relic ==
+
+		// unlock
+		UNLOCK_ADV_BIT(adv->rewards, bitIndex);
+
+		// relic model
+		gGT->podiumRewardID = 0x61;
+
+		gGT->unknownFlags_1d44 |= 0x2000000;
+
+		// unlocked sapphire
+		// do not make this an AND (&&) if statement
+		if (i == 0)
+		{
+			if (gGT->levelID == TURBO_TRACK)
+			{
+				// unlock turbo track
+				sdata->gameProgress.unlocks[0] |= 2;
+			}
+
+			continue;
+		}
+
+		// == Gold or Platinum ==
+
+		// store globally... 8008d9b0
+		sdata->relicTime_1min = relicTime / 0xe100;
+		sdata->relicTime_10sec = (relicTime / 0x2580) % 6;
+		sdata->relicTime_1sec = (relicTime / 0x3c0) % 10;
+		sdata->relicTime_1ms = ((relicTime * 100) / 0x3c0) % 10;
+
+		// [Not Done]
+		sdata->relicTime_10ms = 0;
+	}
+}
+
 void DECOMP_RR_EndEvent_DrawMenu(void)
 {
 	struct GameTracker *gGT;
@@ -69,7 +152,7 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 		sdata->framesSinceRaceEnded++;
 	}
 
-	if (509 < sdata->framesSinceRaceEnded)
+	if (sdata->framesSinceRaceEnded > 509)
 	{
 		// start drawing the high score menu that shows the top 5 best times
 		gGT->unknownFlags_1d44 |= 2;
@@ -404,78 +487,6 @@ LAB_800a0b58:
 		}
 	}
 	sdata->framesSinceRaceEnded = framesElapsed;
-}
-
-void DECOMP_RR_EndEvent_UnlockAward()
-{
-	int i;
-	struct Driver *driver;
-	struct GameTracker *gGT;
-	int raceTime;
-	int timeDeduct;
-	int bitIndex;
-	struct AdvProgress *adv;
-	int levelID;
-	int relicTime;
-
-	gGT = sdata->gGT;
-	driver = gGT->drivers[0];
-	raceTime = driver->timeElapsedInRace;
-	adv = &sdata->advProgress;
-	levelID = gGT->levelID;
-
-	// 10 seconds for getting all crates
-	if (driver->numTimeCrates == gGT->timeCratesInLEV)
-		raceTime -= 0x2580;
-
-	for (i = 0; i < 3; i++)
-	{
-		relicTime = data.RelicTime[levelID * 3 + i];
-
-		// if driver did not beat relic time, check next relic
-		if (raceTime > relicTime)
-			continue;
-
-		bitIndex = 0x16 + 0x12 * i;
-
-		// if relic already unlocked, check next relic
-		if (CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
-			continue;
-
-		// == beat relic, and unlocked relic ==
-
-		// unlock
-		UNLOCK_ADV_BIT(adv->rewards, bitIndex);
-
-		// relic model
-		gGT->podiumRewardID = 0x61;
-
-		gGT->unknownFlags_1d44 |= 0x2000000;
-
-		// unlocked sapphire
-		// do not make this an AND (&&) if statement
-		if (i == 0)
-		{
-			if (gGT->levelID == TURBO_TRACK)
-			{
-				// unlock turbo track
-				sdata->gameProgress.unlocks[0] |= 2;
-			}
-
-			continue;
-		}
-
-		// == Gold or Platinum ==
-
-		// store globally... 8008d9b0
-		sdata->relicTime_1min = relicTime / 0xe100;
-		sdata->relicTime_10sec = (relicTime / 0x2580) % 6;
-		sdata->relicTime_1sec = (relicTime / 0x3c0) % 10;
-		sdata->relicTime_1ms = ((relicTime * 100) / 0x3c0) % 10;
-
-		// [Not Done]
-		sdata->relicTime_10ms = 0;
-	}
 }
 
 // same in TT and RR, but not the same in Main Menu

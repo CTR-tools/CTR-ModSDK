@@ -508,10 +508,22 @@ void RenderAllHUD(struct GameTracker* gGT)
 						return;
 					}
 					
-					// all 221-225 overlays share the same
-					// function address, so call as one func
-					void OVR_Region1();
-					OVR_Region1();
+					// temporary, until we rewrite MainGameEnd_Initialize
+					if((gGT->gameMode1 & RELIC_RACE) == 0)
+					{
+						// all 221-225 overlays share the same
+						// function address, so call as one func
+						void OVR_Region1();
+						OVR_Region1();
+					}
+					
+					// except relic, until we rewrite MainGameEnd_Initialize
+					else
+					{
+						void DECOMP_RR_EndEvent_DrawMenu();
+						DECOMP_RR_EndEvent_DrawMenu();
+					}
+					
 					return;
 				}
 			}
