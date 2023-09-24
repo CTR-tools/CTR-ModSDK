@@ -311,7 +311,7 @@ common, exe, howl_InitChannelAttr_EngineFX, 0x0, General/HOWL/h84_howl_InitChann
 common, exe, howl_InitChannelAttr_OtherFX, 0x0, General/HOWL/h85_howl_InitChannelAttr_OtherFX.c
 common, exe, howl_PauseAudio, 0x0, General/HOWL/h86_howl_PauseAudio.c
 common, exe, howl_UnPauseChannel, 0x0, General/HOWL/h87_howl_UnPauseChannel.c
-//ommon, exe, howl_UnPauseAudio, 0x0, General/HOWL/h88_howl_UnPauseAudio.c
+common, exe, howl_UnPauseAudio, 0x0, General/HOWL/h88_howl_UnPauseAudio.c
 
 // HOWL_Garage
 common, exe, Garage_Init, 0x0, General/HOWL/Garage_Init.c
