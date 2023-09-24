@@ -5,6 +5,7 @@ void DECOMP_howl_PlayAudio_Update()
 	int* ptrFlag;
 	int backupNext;
 	struct ChannelStats* curr;
+	u_char statFlags;
 	
 	if(sdata->boolAudioEnabled != 0)
 	{
@@ -28,23 +29,21 @@ void DECOMP_howl_PlayAudio_Update()
 		{
 			backupNext = curr->next;
 		
-			// if sound is on a timer (not stacatto)
-			if((curr->flags & 4) == 0)
-			{
-				curr->timeLeft -= 5;
+			// if sound is stacatto (has no timer)
+			statFlags = curr->flags;
+			if((statFlags & 4) != 0) continue;
+			
+			curr->timeLeft -= 5;	
+			if(curr->timeLeft > 0) continue;
 				
-				if(curr->timeLeft < 1)
-				{
-					ptrFlag = &sdata->ChannelUpdateFlags[curr->channelID];
-					*ptrFlag |= 1;
-					*ptrFlag &= ~(2);
+			ptrFlag = &sdata->ChannelUpdateFlags[curr->channelID];
+			*ptrFlag |= 1;
+			*ptrFlag &= ~(2);
 					
-					curr->flags &= ~(1);
+			curr->flags = statFlags & ~(1);
 					
-					LIST_RemoveMember(&sdata->channelTaken, curr);
-					LIST_AddBack(&sdata->channelFree, curr);
-				}
-			}
+			LIST_RemoveMember(&sdata->channelTaken, curr);
+			LIST_AddBack(&sdata->channelFree, curr);
 		}
 		
 		Channel_ParseSongToChannels();
