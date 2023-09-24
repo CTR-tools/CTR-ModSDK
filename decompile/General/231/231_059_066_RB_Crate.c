@@ -395,7 +395,7 @@ int DECOMP_RB_CrateFruit_LInC(
 		driver->PickupWumpaHUD.numCollected = newWumpa;
 		
 		tileView = &sdata->gGT->tileView[driver->driverID];
-		RB_Fruit_GetScreenCoords(tileView, crateInst, &posScreen[0]);
+		RB_Fruit_GetScreenCoords(tileView, driver->instSelf, &posScreen[0]);
 		
 		// screenPosX
 		driver->PickupWumpaHUD.startX = 
