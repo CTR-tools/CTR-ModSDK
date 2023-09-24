@@ -560,15 +560,21 @@ LAB_80040bf8:
 
   bVar8 = pbVar12[2];
   uVar5 = (uint)bVar8;
-  if (bVar8 == 100) {
+  if (bVar8 == 100) 
+  {
+	// weapon (tnt)
     uVar5 = 3;
   }
   else {
-    if (bVar8 == 0x65) {
+    if (bVar8 == 0x65) 
+	{
+	  // weapon (bomb)
       uVar5 = 1;
     }
     else {
-      if (bVar8 == 0x66) {
+      if (bVar8 == 0x66) 
+	  {
+		// weapon (potion)
         uVar5 = 4;
       }
       else {
@@ -588,8 +594,11 @@ LAB_80040d9c:
     sVar11 = DAT_8008d42c + 1;
     if (DAT_8008d42c < 5) goto LAB_80040da0;
     bVar8 = pbVar12[2];
-    if (bVar8 == 100) {
+    if (bVar8 == 100) 
+	{
+	  // weapon (tnt)
       uVar5 = 3;
+	  
       if (pbVar12[1] != 3) {
         pbVar12[1] = 3;
         DAT_8008d42c = 5;
@@ -599,13 +608,19 @@ LAB_80040d9c:
       }
     }
     else {
-      if (bVar8 == 0x65) {
+      if (bVar8 == 0x65) 
+	  {
+		// weapon (bomb)
         uVar5 = 1;
-        if ((uVar3 & 1) == 0) {
+        
+		if ((uVar3 & 1) == 0) {
           *(ushort *)(pbVar12 + 6) = uVar3 | 1;
           DAT_8008d42c = 5;
+		  
+		  // weapon (tnt)
           uVar5 = 3;
-          sVar11 = DAT_8008d42c;
+          
+		  sVar11 = DAT_8008d42c;
           goto LAB_80040da0;
         }
         *(ushort *)(pbVar12 + 6) = uVar3 & 0xfffe;
@@ -613,33 +628,54 @@ LAB_80040d9c:
       }
       sVar11 = DAT_8008d42c;
       if (bVar8 != 0x66) goto LAB_80040da0;
+	  
+	  // weapon (potion)
       uVar5 = 4;
-      if (pbVar12[1] != 3) {
+      
+	  if (pbVar12[1] != 3) {
         pbVar12[1] = 3;
         DAT_8008d42c = 5;
-        *(ushort *)(pbVar12 + 6) = *(ushort *)(pbVar12 + 6) | 1;
-        sVar11 = DAT_8008d42c;
+        
+		// give 10 wumpa
+		*(ushort *)(pbVar12 + 6) = *(ushort *)(pbVar12 + 6) | 1;
+        
+		sVar11 = DAT_8008d42c;
         goto LAB_80040da0;
       }
     }
+	
     pbVar12[1] = 2;
     DAT_8008d42c = 0;
-    *(ushort *)(pbVar12 + 6) = *(ushort *)(pbVar12 + 6) & 0xfffe;
-    sVar11 = DAT_8008d42c;
+    
+	// dont use 10 wumpa
+	*(ushort *)(pbVar12 + 6) = *(ushort *)(pbVar12 + 6) & 0xfffe;
+    
+	sVar11 = DAT_8008d42c;
   }
+  
 LAB_80040da0:
   DAT_8008d42c = sVar11;
   bVar8 = pbVar12[1];
   uVar3 = (ushort)(bVar8 == 2);
   uVar9 = 0;
-  if (-1 < (int)(uVar5 << 0x10)) {
+  if (-1 < (int)(uVar5 << 0x10)) 
+  {
+	// backup numWumpa
     uVar1 = *(undefined *)(iVar13 + 0x30);
-    if ((*(ushort *)(pbVar12 + 6) & 1) != 0) {
+    
+	if ((*(ushort *)(pbVar12 + 6) & 1) != 0) 
+	{
+	  // 10 wumpa
       uVar9 = 10;
     }
+	
+	// wumpa
     *(undefined *)(iVar13 + 0x30) = uVar9;
-    *(undefined *)(iVar13 + 0x36) = (char)uVar5;
-    if ((uVar5 - 3 & 0xffff) < 2)
+    
+	// weaponID
+	*(undefined *)(iVar13 + 0x36) = (char)uVar5;
+    
+	if ((uVar5 - 3 & 0xffff) < 2)
 	{
 	  // Player / AI structure + 0x4a shows driver index (0-7)
 
