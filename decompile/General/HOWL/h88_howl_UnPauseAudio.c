@@ -16,7 +16,7 @@ void DECOMP_howl_UnPauseAudio()
 	Smart_EnterCriticalSection();
 	for(
 			i = 0, curr = sdata->channelFree.first;
-			i < sdata->numBackup_ChannelStats, curr != 0;
+			i < sdata->numBackup_ChannelStats;
 			i++, curr = backupNext
 		)
 	{
@@ -38,10 +38,11 @@ void DECOMP_howl_UnPauseAudio()
 		LIST_AddBack(&sdata->channelTaken, curr);
 	
 		howl_UnPauseChannel(curr);
+		printf("%08x %08x\n", backupNext, curr->next);
 	}
 	Smart_ExitCriticalSection();
 	
-	CseqMusic_Resume();
+	//CseqMusic_Resume();
 	
 	sdata->numBackup_ChannelStats = 0;
 }
