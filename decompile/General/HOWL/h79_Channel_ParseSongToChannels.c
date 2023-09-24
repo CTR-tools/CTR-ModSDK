@@ -102,7 +102,7 @@ void DECOMP_Channel_ParseSongToChannels()
 					volStepped = volNew;
 				}
 				
-				song->vol_Curr = volStepped;
+				seq->vol_Curr = volStepped;
 				boolVolumeChange = 1;
 			}
 			
