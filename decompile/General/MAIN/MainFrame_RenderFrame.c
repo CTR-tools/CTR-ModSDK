@@ -114,47 +114,51 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderAllHeatParticles(gGT);
 	
 	TileView_FadeAllWindows();
-	RenderAllLevelGeometry(gGT);
-	RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
-	MultiplayerWumpaHUD(gGT);
 	
-	#if 0
-	// Multiplayer Pixel LOD Part 3
-	#endif
-	
-	if(
-		// if not cutscene
-		// if not in adventure arena
-		// if not in main menu
-		((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA | MAIN_MENU)) == 0) &&
-		
-		// if loading is 100% finished
-		(sdata->Loading.stage != -4)
-	)
+	if((gGT->renderFlags & 1) != 0)
 	{
-		// in DotLights.c
-		void DotLights(struct GameTracker* gGT);
-		DotLights(gGT);
-	
-		if((gGT->renderFlags & 0x8000) != 0)
+		RenderAllLevelGeometry(gGT);
+		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
+		MultiplayerWumpaHUD(gGT);
+		
+		#if 0
+		// Multiplayer Pixel LOD Part 3
+		#endif
+		
+		if(
+			// if not cutscene
+			// if not in adventure arena
+			// if not in main menu
+			((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA | MAIN_MENU)) == 0) &&
+			
+			// if loading is 100% finished
+			(sdata->Loading.stage != -4)
+		)
 		{
-			WindowBoxLines(gGT);
-			WindowDivsionLines(gGT);
+			// in DotLights.c
+			void DotLights(struct GameTracker* gGT);
+			DotLights(gGT);
+		
+			if((gGT->renderFlags & 0x8000) != 0)
+			{
+				WindowBoxLines(gGT);
+				WindowDivsionLines(gGT);
+			}
+		
 		}
+		
+		// if game is not loading
+		if (sdata->Loading.stage == -1) 
+		{
+			// If game is not paused
+			if ((gGT->gameMode1 & PAUSE_ALL) == 0)
+			{
+				RobotcarWeapons_Update();
+			}
 	
+			StartLine_Update();
+		}
 	}
-	
-	// if game is not loading
-    if (sdata->Loading.stage == -1) {
-
-	  // If game is not paused
-      if ((gGT->gameMode1 & PAUSE_ALL) == 0)
-	  {
-		RobotcarWeapons_Update();
-      }
-
-	  StartLine_Update();
-    }
 
 	// If in main menu, or in adventure arena,
 	// or in End-Of-Race menu
@@ -806,8 +810,6 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	struct Level* level1;
 	struct TileView* tileView;
 	struct mesh_info* ptr_mesh_info;
-	
-	if((gGT->renderFlags & 1) == 0) return;
 	
 	level1 = gGT->level1;
 	if(level1 == 0) return;

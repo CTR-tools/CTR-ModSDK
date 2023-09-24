@@ -1898,7 +1898,7 @@ void FUN_80035e70(uint *param_1)
   // if LEV exists
   if (piVar21 != (int *)0x0)
   {
-	// get pointer to LEV info
+	// get pointer to LEV mesh_info
     iVar22 = *piVar21;
   }
 
@@ -2846,7 +2846,7 @@ code_r0x800369d8:
 		// gGT->256c & drawLev
 		((param_1[0x95b] & 1) != 0) &&
 
-		// if LEV info is valid
+		// if LEV mesh_info is valid
 		(iVar22 != 0)
 	 )
   {

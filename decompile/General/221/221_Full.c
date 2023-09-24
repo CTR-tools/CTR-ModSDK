@@ -34,10 +34,29 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	struct Instance* tokenInst;
 	int growVal;
 	int bitIndex;
+	int levelID;
 	
 	gGT = sdata->gGT;
+	levelID = gGT->levelID;
 	driver = gGT->drivers[0];
-	bitIndex = hub[gGT->levelID-0x12]+0x6f;
+	
+	// if someone is doing "Dingo Bingo"
+	if(levelID == 0)
+	{
+		// emulate an $sp exploit that jumped
+		// out of bounds, into the $sp of another function,
+		// which forced the OG game to read camera position
+		bitIndex = gGT->tileView[0].pos[2];
+	}
+	
+	// if you're not screwing around
+	else
+	{
+		bitIndex = hub[gGT->levelID-0x12];
+	}
+	
+	// first purple token at 0x6f
+	bitIndex += 0x6f;
 	
 	adv = &sdata->advProgress;
 	boolLose = driver->numCrystals < gGT->numCrystalsInLEV;
