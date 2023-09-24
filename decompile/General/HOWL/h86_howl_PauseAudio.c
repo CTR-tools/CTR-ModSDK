@@ -5,12 +5,15 @@ void DECOMP_howl_PauseAudio()
 	int* ptrFlag;
 	int backupNext;
 	struct ChannelStats* curr;
+	struct ChannelStats* pausedStats;
 	
 	CDSYS_XAPauseRequest();
 	
 	// if already paused, quit
 	if(sdata->numBackup_ChannelStats != 0)
 		return;
+	
+	pausedStats = &sdata->channelStatsCurr[0];
 	
 	CseqMusic_Pause();
 	
@@ -28,10 +31,10 @@ void DECOMP_howl_PauseAudio()
 		*ptrFlag &= ~(2);
 		
 		// psx's kernel memcpy does NOT work inside "critical" sections
-		int* dest = &sdata->channelStatsCurr[sdata->numBackup_ChannelStats];
+		int* dest = pausedStats++;
 		int* src = curr;
-		dest[0] = src[0];
-		dest[1] = src[1];
+		
+		// skip first two, which are pointers
 		dest[2] = src[2];
 		dest[3] = src[3];
 		dest[4] = src[4];
