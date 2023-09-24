@@ -8,68 +8,70 @@ void DECOMP_OptionsMenu_TestSound(int newRow, int newBoolPlay)
 	sdata->OptionSlider_Index = newRow;
 	sdata->OptionSlider_BoolPlay = newBoolPlay;
 	
-	// if row changed
-	if(oldRow != newRow)
+	if(
+		(oldBoolPlay != 0) &&
+		((oldRow != newRow) || (newBoolPlay == 0))
+	  )
 	{
-		// if "was" playing
-		if(oldBoolPlay != 0)
+		// FX row
+		if(oldRow == 0)
 		{
-			// FX row
-			if(oldRow == 0)
-			{
-				OtherFX_Stop2(0x48);
-			}
-			
-			// Music row
-			else if(oldRow == 1)
-			{
-				// end Aku or Uka song
-				// 0=level, 1=aku, 2=uka
-				
-				if(Music_GetHighestSongPlayIndex() == 1)
-				{
-					CseqMusic_Stop(2);
-				}
-				
-				else
-				{
-					CseqMusic_Stop(1);
-				}
-			}
-		
-			// Voice row
-			else if(oldRow == 2)
-			{
-				if(sdata->OptionSlider_soundID != 0)
-				{
-					OtherFX_Stop1(sdata->OptionSlider_soundID);
-					sdata->OptionSlider_soundID = 0;
-				}
-			}
+			OtherFX_Stop2(0x48);
 		}
 		
-		if(newBoolPlay != 0)
+		// Music row
+		else if(oldRow == 1)
 		{
-			// FX row
-			if(newRow == 0)
+			// end Aku or Uka song
+			// 0=level, 1=aku, 2=uka
+			
+			if(Music_GetHighestSongPlayIndex() == 1)
 			{
-				OtherFX_Play(0x48, 0);
+				CseqMusic_Stop(2);
 			}
 			
-			// Music row
-			else if(newRow == 1)
+			else
 			{
-				// end Aku or Uka song
-				// 0=level, 1=aku, 2=uka
-				
-				int val = 1;
-				if(Music_GetHighestSongPlayIndex() == 1)
-					val = 2;
-				
-				CseqMusic_Start(val,0,0,0,1);
+				CseqMusic_Stop(1);
+			}
+		}
+	
+		// Voice row
+		else if(oldRow == 2)
+		{
+			if(sdata->OptionSlider_soundID != 0)
+			{
+				OtherFX_Stop1(sdata->OptionSlider_soundID);
+				sdata->OptionSlider_soundID = 0;
 			}
 		}
 	}
+	
+	if(
+		(newBoolPlay != 0) &&
+		((oldRow != newRow) || (oldBoolPlay == 0))
+	  )
+	{
+		// FX row
+		if(newRow == 0)
+		{
+			OtherFX_Play(0x48, 0);
+		}
+		
+		// Music row
+		else if(newRow == 1)
+		{
+			// end Aku or Uka song
+			// 0=level, 1=aku, 2=uka
+			
+			int val = 1;
+			if(Music_GetHighestSongPlayIndex() == 1)
+				val = 2;
+			
+			CseqMusic_Start(val,0,0,0,1);
+		}
+	}
+	
 	
 	// Voice row
 	if(newRow == 2)
