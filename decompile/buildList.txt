@@ -519,6 +519,18 @@ common, exe, TileView_SetPsyqGeom, 0x0, General/TileView/TileView_SetPsyqGeom.c
 common, exe, TileView_UpdateFrustum, 0x0, General/TileView/TileView_UpdateFrustum.c
 common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
 
+// TitleFlag
+common, exe, TitleFlag_MoveModels, 0x0, General/TitleFlag/TitleFlag_t01_MoveModels.c
+common, exe, TitleFlag_IsFullyOnScreen, 0x0, General/TitleFlag/TitleFlag_t02_IsFullyOnScreen.c
+common, exe, TitleFlag_IsFullyOffScreen, 0x0, General/TitleFlag/TitleFlag_t03_IsFullyOffScreen.c
+common, exe, TitleFlag_IsTransitioning, 0x0, General/TitleFlag/TitleFlag_t04_IsTransitioning.c
+common, exe, TitleFlag_SetDrawOrder, 0x0, General/TitleFlag/TitleFlag_t05_SetDrawOrder.c
+common, exe, TitleFlag_BeginTransition, 0x0, General/TitleFlag/TitleFlag_t06_BeginTransition.c
+common, exe, TitleFlag_SetFullyOnScreen, 0x0, General/TitleFlag/TitleFlag_t07_SetFullyOnScreen.c
+common, exe, TitleFlag_SetFullyOffScreen, 0x0, General/TitleFlag/TitleFlag_t08_SetFullyOffScreen.c
+common, exe, TitleFlag_SetCanDraw, 0x0, General/TitleFlag/TitleFlag_t09_SetCanDraw.c
+common, exe, TitleFlag_GetCanDraw, 0x0, General/TitleFlag/TitleFlag_t10_GetCanDraw.c
+
 // UI
 common, exe, UI_ConvertX_2, 0x0, General/UI/UI_ConvertX_2.c
 common, exe, UI_ConvertY_2, 0x0, General/UI/UI_ConvertY_2.c
@@ -527,7 +539,6 @@ common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
 // note to self, still need UI_DrawRankedDrivers,
 // squish 11 functions
 common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_DrawNumWumpa.c General/UI/UI_DrawNumKey.c General/UI/UI_DrawNumRelic.c General/UI/UI_DrawNumTrophy.c General/UI/UI_DrawNumCrystal.c General/UI/UI_DrawNumTimebox.c General/UI/UI_DrawSpeedBG.c General/UI/UI_DrawSpeedNeedle.c General/UI/UI_JumpMeter_Draw.c General/UI/UI_JumpMeter_Update.c General/UI/UI_DrawSlideMeter.c, UI_ElevenFuncs.bin
-
 
 common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_DrawPosSuffix.c
 common, exe, UI_Map_GetIconPos, 0x0, General/UI/UI_Map_GetIconPos.c

@@ -3089,7 +3089,8 @@ struct sData
 	short unk_CheckFlag2;
 
 	// 8008d44c
-	int TitleFlag_DrawOrder;
+	short TitleFlag_DrawOrder;
+	short padding_8008d44e;
 
 	// does it exist in Sep3?
 	// 8008d450
