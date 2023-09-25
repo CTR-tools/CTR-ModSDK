@@ -20,7 +20,7 @@ void DECOMP_UpdateChannelVol_Music_All()
 		sdata->ChannelUpdateFlags[curr->channelID] |= 0x40;
 		
 		UpdateChannelVol_Music(
-			&sdata->songSeq[curr->soundID],
+			&sdata->songSeq[curr->soundID & 0xffff],
 			&sdata->channelAttrNew[curr->channelID],
 			curr->drumIndex_pitchIndex, curr->vol);
 	}

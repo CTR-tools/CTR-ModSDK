@@ -20,7 +20,7 @@ void DECOMP_UpdateChannelVol_OtherFX_All()
 		sdata->ChannelUpdateFlags[curr->channelID] |= 0x40;
 		
 		UpdateChannelVol_OtherFX(
-			&sdata->howl_metaOtherFX[curr->soundID],
+			&sdata->howl_metaOtherFX[curr->soundID & 0xffff],
 			&sdata->channelAttrNew[curr->channelID],
 			curr->vol, curr->LR);
 	}
