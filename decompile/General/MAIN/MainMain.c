@@ -121,9 +121,7 @@ u_int DECOMP_main()
 				{
 					if
 					(
-					#ifndef REBUILD_PS1
-						(TitleFlag_IsFullyOnScreen() == 1) ||
-					#endif
+						(DECOMP_TitleFlag_IsFullyOnScreen() == 1) ||
 						(gGT->levelID == NAUGHTY_DOG_CRATE) || 
 						(sdata->pause_state != 0)
 					)
@@ -140,8 +138,7 @@ u_int DECOMP_main()
 					// if loading is finished, but still in "loading mode", and if pools dont need to be reset (maybe for credits?)
 					if (iVar8 == -5)
 					{
-					#ifndef REBUILD_PS1
-						if (TitleFlag_IsFullyOnScreen() == 1)
+						if (DECOMP_TitleFlag_IsFullyOnScreen() == 1)
 						{
 							// set game state to 2 to initialize the world
 							// does not initialize pools
@@ -154,7 +151,6 @@ u_int DECOMP_main()
 							gGT->gameMode1 &= ~LOADING;
 							break;
 						}
-					#endif
 					}
 					
 					// if something is being loaded
@@ -218,8 +214,7 @@ u_int DECOMP_main()
 						RemBitsConfig0 = sdata->Loading.OnBegin.RemBitsConfig0;
 						AddBitsConfig0 = sdata->Loading.OnBegin.AddBitsConfig0;
 						
-						#ifndef REBUILD_PS1
-						if (TitleFlag_IsFullyOnScreen() == 1)
+						if (DECOMP_TitleFlag_IsFullyOnScreen() == 1)
 						{
 							sdata->Loading.OnBegin.AddBitsConfig0 = 0;
 							sdata->Loading.OnBegin.RemBitsConfig0 = 0;
@@ -235,12 +230,14 @@ u_int DECOMP_main()
 							gGT->gameMode1 = gameMode1 | AddBitsConfig0;
 							gGT->gameMode1 = (gameMode1 | AddBitsConfig0) & ~RemBitsConfig0;
 							gGT->gameMode2 = (gameMode2 | AddBitsConfig8) & ~RemBitsConfig8;
+							
+							#ifndef REBUILD_PS1
 							MainRaceTrack_StartLoad(sdata->Loading.Lev_ID_To_Load);
+							#endif
 						}
 						
-						else if (TitleFlag_IsFullyOffScreen() == 1)
-							TitleFlag_BeginTransition(1);
-						#endif
+						else if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)
+							DECOMP_TitleFlag_BeginTransition(1);
 					}
 				}
 				LAB_8003ccf8:
@@ -440,10 +437,9 @@ void StateZero()
 	// also sets debug variables to "off"
 	DECOMP_LOAD_InitCD();
 	
-#ifndef REBUILD_PS1
-	// Without this, checkered flag will draw one frame after the copyright page draws, then go away once Naughty Dog Box scene is ready
-	TitleFlag_SetFullyOffScreen();
-#endif
+	// Without this, checkered flag will draw one frame after 
+	// the copyright page draws, then go off-screen at ND Box
+	DECOMP_TitleFlag_SetFullyOffScreen();
 	
 	ResetGraph(0);
 	SetGraphDebug(0);

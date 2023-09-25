@@ -81,4 +81,15 @@
 #include "../decompile/General/MEMPACK/MEMPACK_PushState.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_ClearLowMem.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_PopState.c" 
-#include "../decompile/General/MEMPACK/MEMPACK_PopToState.c" 
+#include "../decompile/General/MEMPACK/MEMPACK_PopToState.c"
+
+// skip TitleFlag_t01
+#include "../decompile/General/TitleFlag/TitleFlag_t02_IsFullyOnScreen.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t03_IsFullyOffScreen.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t04_IsTransitioning.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t05_SetDrawOrder.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t06_BeginTransition.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t07_SetFullyOnScreen.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t08_SetFullyOffScreen.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t09_SetCanDraw.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t10_GetCanDraw.c"
