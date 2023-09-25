@@ -490,10 +490,8 @@ void StateZero()
 	// traffic light countdown timer, set to negative one second
 	gGT->trafficLightsTimer = 0xfffffc40;
 	
-#ifndef REBUILD_PS1
-	RCNT_Init();
-#endif
-	
+	DECOMP_RCNT_Init();
+
 	// set callback and save callback
 	EnterCriticalSection();
 	sdata->MainDrawCb_DrawSyncPtr = DrawSyncCallback(&DECOMP_MainDrawCb_DrawSync);

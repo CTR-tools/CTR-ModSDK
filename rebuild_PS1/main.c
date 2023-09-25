@@ -93,3 +93,6 @@
 #include "../decompile/General/TitleFlag/TitleFlag_t08_SetFullyOffScreen.c"
 #include "../decompile/General/TitleFlag/TitleFlag_t09_SetCanDraw.c"
 #include "../decompile/General/TitleFlag/TitleFlag_t10_GetCanDraw.c"
+
+// RCNT (watch namespace, not alphabetical)
+#include "../decompile/General/RCNT/RCNT_Init.c"
