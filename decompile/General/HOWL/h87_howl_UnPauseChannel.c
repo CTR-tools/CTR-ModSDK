@@ -3,15 +3,17 @@
 void DECOMP_howl_UnPauseChannel(struct ChannelStats* stats)
 {
 	int type;
+	int soundID;
 	struct ChannelAttr attr;
 
 	type = stats->type;
+	soundID = stats->soundID & 0xffff;
 	
 	// engineFX
 	if(type == 0)
 	{
 		howl_InitChannelAttr_EngineFX(
-			&sdata->howl_metaEngineFX[stats->soundID],
+			&sdata->howl_metaEngineFX[soundID],
 			&attr, stats->vol, stats->LR, stats->distort);
 	}
 	
@@ -19,7 +21,7 @@ void DECOMP_howl_UnPauseChannel(struct ChannelStats* stats)
 	else if(type == 1)
 	{
 		howl_InitChannelAttr_OtherFX(
-			&sdata->howl_metaOtherFX[stats->soundID],
+			&sdata->howl_metaOtherFX[soundID],
 			&attr, stats->vol, stats->LR, stats->distort);
 	}
 	
@@ -27,7 +29,7 @@ void DECOMP_howl_UnPauseChannel(struct ChannelStats* stats)
 	else // type == 2
 	{
 		howl_InitChannelAttr_Music(
-			&sdata->songSeq[stats->soundID],
+			&sdata->songSeq[soundID],
 			&attr, stats->drumIndex_pitchIndex, stats->vol);
 	}
 	
