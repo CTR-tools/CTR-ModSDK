@@ -51,22 +51,23 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	hudR = sdata->ptrHudR;
 	struct Instance *hudLetters[3] = {hudC, hudT, hudR};
 	hudToken = sdata->ptrToken;
-
 	hudCTR = &data.hud_1P_P1[0x24];
 
 	elapsedFrames = sdata->framesSinceRaceEnded;
 
 	// count frames if hasn't been 30 seconds
 	if (elapsedFrames < 900)
-		elapsedFrames = sdata->framesSinceRaceEnded + 1;
+		elapsedFrames++;
 
 	sdata->framesSinceRaceEnded = elapsedFrames;
 
 	if (driver->BigNumber[0]->scale[0] != 0x1e00)
 	{
-		driver->BigNumber[1]->scale[0] = 0;
-		driver->BigNumber[1]->scale[1] = 0;
-		driver->BigNumber[1]->scale[2] = 0;
+		struct Instance* bigNum1 = driver->BigNumber[1];
+		
+		bigNum1->scale[0] = 0;
+		bigNum1->scale[1] = 0;
+		bigNum1->scale[2] = 0;
 	}
 
 	// if not in Token mode, these won't be used until later;
@@ -458,18 +459,17 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			sdata->Loading.OnBegin.RemBitsConfig8 |= TOKEN_RACE;
 		}
 	}
-	// if you are in trophy race
-	else
+		
+	// if trophy is not won,
+	// do NOT overwrite "bitIndex" or it breaks optimization,
+	// Dingo Bingo needs to win trophy and token in the same race
+	if (CHECK_ADV_BIT(adv->rewards, (gGT->levelID + 6)) == 0)
 	{
-		// 6th bit of adventure profile is where trophies start
-		bitIndex = gGT->levelID + 6;
-
-		// if first time unlocking trophy
-		if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
-		{
-			// go to podium with trophy
-			gGT->podiumRewardID = 0x62;
-		}
+		// unlock tropy
+		UNLOCK_ADV_BIT(adv->rewards, (gGT->levelID + 6));
+		
+		// go to podium with trophy
+		gGT->podiumRewardID = 0x62;
 	}
 
 	// Unlock reward
