@@ -350,7 +350,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 	sps->Input1.modelID = hitModelID_cast;
 	
 	// block if needed
-	RB_CrateAny_CheckBlockage(crateThread, hitModelID_cast, sps->Union.ThBuckColl.thread);
+	RB_CrateAny_CheckBlockage(crateThread, hitModelID_cast, collidingTh);
 	
 	// means no thread born?
 	return 0;
@@ -432,7 +432,7 @@ int DECOMP_RB_CrateFruit_LInC(
 	sps->Input1.modelID = hitModelID_cast;
 	
 	// block if needed
-	RB_CrateAny_CheckBlockage(crateThread, hitModelID_cast, sps->Union.ThBuckColl.thread);
+	RB_CrateAny_CheckBlockage(crateThread, hitModelID_cast, collidingTh);
 	
 	// means no thread born?
 	return 0;
