@@ -92,7 +92,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			// If you have not unlocked this CTR Token
 			bitIndex = gGT->levelID + 0x4C;
 			*(int *)&letterPos[0] = *(int *)&hudCTR[0];
-			if ((CHECK_ADV_BIT(adv->rewards, bitIndex) & 1) == 0)
+			if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
 			{
 				scaleDown = hudC->scale[0];
 				scaleDown -= (scaleDown < 0x800) ? 0x800 : 0x401;
@@ -437,13 +437,13 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			gGT->podiumRewardID = 0x38;
 
 			// assume oxide beaten 1st time
-			sdata->advProgress.rewards[3] |= 0x80004;
+			adv->rewards[3] |= 0x80004;
 
 			// if beaten oxide 2nd time
 			if(gGT->bossID == 6)
 			{
 				// beat 2nd time
-				sdata->advProgress.rewards[3] |= 0x100008;
+				adv->rewards[3] |= 0x100008;
 			}
 		}
 	}
@@ -459,21 +459,21 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			sdata->Loading.OnBegin.RemBitsConfig8 |= TOKEN_RACE;
 		}
 	}
-		
+
+	// Unlock reward
+	UNLOCK_ADV_BIT(adv->rewards, bitIndex);
+
 	// if trophy is not won,
-	// do NOT overwrite "bitIndex" or it breaks optimization,
 	// Dingo Bingo needs to win trophy and token in the same race
-	if (CHECK_ADV_BIT(adv->rewards, (gGT->levelID + 6)) == 0)
+	bitIndex = gGT->levelID + 6;
+	if (CHECK_ADV_BIT(adv->rewards, bitIndex) == 0)
 	{
 		// unlock tropy
-		UNLOCK_ADV_BIT(adv->rewards, (gGT->levelID + 6));
+		UNLOCK_ADV_BIT(adv->rewards, bitIndex);
 		
 		// go to podium with trophy
 		gGT->podiumRewardID = 0x62;
 	}
-
-	// Unlock reward
-	UNLOCK_ADV_BIT(adv->rewards, bitIndex);
 
 	MainRaceTrack_RequestLoad(levSpawn);
 }
