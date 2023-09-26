@@ -45,13 +45,13 @@ void DECOMP_RR_EndEvent_UnlockAward()
 
 	for (i = 0; i < 3; i++)
 	{
-		relicTime = data.RelicTime[levelID * 3 + i];
+		relicTime = data.RelicTime[levelID*3 + i];
 
 		// if driver did not beat relic time, check next relic
 		if (raceTime > relicTime)
 			continue;
 
-		bitIndex = 0x16 + 0x12 * i;
+		bitIndex = 0x16 + 0x12*i + levelID;
 
 		// if relic already unlocked, check next relic
 		if (CHECK_ADV_BIT(adv->rewards, bitIndex) != 0)
@@ -136,10 +136,15 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 
 	// set color of relic in Instance
 	relic->colorRGBA =
-		// check if platinum is unlocked
+	
+		// check if platinum is unlocked, set platinum color
 		(CHECK_ADV_BIT(adv->rewards, bitIndex)) ? 0xffede90 :
-												// check if gold is unlocked
-			((CHECK_ADV_BIT(adv->rewards, bitIndex - 0x12)) ? 0xd8d2090 : 0);
+		
+		// check if gold is unlocked, set gold color
+		(CHECK_ADV_BIT(adv->rewards, (bitIndex - 0x12) )) ? 0xd8d2090 : 
+		
+		// if sapphire, keep original color
+		relic->colorRGBA;
 
 	sdata->ptrTimebox1->scale[0] = 0x300;
 	sdata->ptrTimebox1->scale[1] = 0x300;
