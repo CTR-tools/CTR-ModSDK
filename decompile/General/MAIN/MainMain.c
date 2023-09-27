@@ -213,7 +213,7 @@ u_int DECOMP_main()
 						// If just finished loading stage 9
 						if (sdata->Loading.stage == -2)
 						{
-							#ifndef REBUILD_PS1				
+							#ifndef REBUILD_PS1
 							if
 							(
 								(gGT->levelID == MAIN_MENU_LEVEL) ||
@@ -234,7 +234,12 @@ FinishLoading:
 							// remove LOADING... flag from gGT
 							sdata->Loading.stage = -1;
 							sdata->mainGameState = 1;
-							gGT->gameMode1 &= ~LOADING;							
+							gGT->gameMode1 &= ~LOADING;
+
+							#ifdef REBUILD_PS1
+							sdata->mainGameState = 3;
+							#endif
+							
 							break;
 						}
 						
