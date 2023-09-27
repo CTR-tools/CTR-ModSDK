@@ -55,6 +55,8 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 {
 	struct Level* lev = gGT->level1;
 	
+#ifndef REBUILD_PS1
+	
 	DrawControllerError(gGT, gGamepads);
 	DrawFinalLap(gGT);
 	ElimBG_HandleState(gGT);
@@ -165,6 +167,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	if ((gGT->gameMode1 & (ADVENTURE_ARENA | END_OF_RACE | MAIN_MENU)) != 0) {
 		unk80047d64();
 	}
+#endif
 	
 	// clear swapchain
 	if (
@@ -175,21 +178,26 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 			)
 		)
 	{
-		CAM_ClearScreen(gGT);
+		DECOMP_CAM_ClearScreen(gGT);
 	}
 	
+#ifndef REBUILD_PS1
 	if ((gGT->renderFlags & 0x1000) != 0)
 	{
 		TitleFlag_DrawSelf();
 	}
 
 	RenderDispEnv_UI(gGT);
+#endif
 	
 	gGT->countTotalTime = 
 		RCNT_GetTime_Total();
 	
 	RenderVSYNC(gGT);
+	
+#ifndef REBUILD_PS1
 	RenderFMV();
+#endif
 	
 	gGT->countTotalTime =
 		RCNT_GetTime_Elapsed(gGT->countTotalTime,0);
@@ -197,6 +205,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderSubmit(gGT);
 }
 
+#ifndef REBUILD_PS1
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	int posY;
@@ -1198,6 +1207,7 @@ void RenderDispEnv_UI(struct GameTracker* gGT)
 		&tileView->ptrOT[4],
 		tileView, gGT->backBuffer, 0, 0);
 }
+#endif
 
 // force code to re-check RAM during the loop, cause the compiler 
 // doesn't know what IRQs are, and wont re-check RAM by default,
@@ -1238,6 +1248,7 @@ void RenderVSYNC(struct GameTracker* gGT)
 	}
 }
 
+#ifndef REBUILD_PS1
 void RenderFMV()
 {
 	if(sdata->boolPlayVideoSTR == 1)
@@ -1252,6 +1263,7 @@ void RenderFMV()
 		DrawSync(0);
 	}
 }
+#endif
 
 void RenderSubmit(struct GameTracker* gGT)
 {		

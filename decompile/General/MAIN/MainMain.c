@@ -234,14 +234,7 @@ FinishLoading:
 							// remove LOADING... flag from gGT
 							sdata->Loading.stage = -1;
 							sdata->mainGameState = 1;
-							gGT->gameMode1 &= ~LOADING;
-							
-							#ifdef REBUILD_PS1
-							printf("Finished Loading\n");
-							printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
-							while(1) {}
-							#endif
-							
+							gGT->gameMode1 &= ~LOADING;							
 							break;
 						}
 						
@@ -279,9 +272,9 @@ FinishLoading:
 				sdata->frameCounter++;
 
 #ifndef REBUILD_PS1
-
 				// Process all gamepad input
 				GAMEPAD_ProcessAnyoneVars(sdata->gGamepads);
+#endif
 
 				#ifdef FastBoot
 				// disable spawn
@@ -307,7 +300,7 @@ FinishLoading:
 				#endif
 
 				// Start new frame (ClearOTagR)
-				MainFrame_ResetDB(gGT, sdata->gGamepads);
+				DECOMP_MainFrame_ResetDB(gGT, sdata->gGamepads);
 
 				if
 				(
@@ -337,7 +330,9 @@ FinishLoading:
 						sdata->mainMenuState = 0;
 
 						LAB_8003ce08:
+#ifndef REBUILD_PS1
 						MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+#endif
 					}
 					
 					// if time remains on the timer
@@ -366,15 +361,18 @@ FinishLoading:
 						uVar12 = 100;
 					}
 
+#ifndef REBUILD_PS1
 					// "DEMO MODE\rPRESS ANY BUTTON TO EXIT"
 					DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
+#endif
 				}
 				
+#ifndef REBUILD_PS1
 				if ((gGT->gameMode1 & LOADING) == 0)
 				{
 					MainFrame_GameLogic(gGT, sdata->gGamepads);
 				}
-				
+#endif
 				// If you are in demo mode
 				if (gGT->boolDemoMode != '\0')
 				{
@@ -385,8 +383,15 @@ FinishLoading:
 				// reset vsync calls between drawsync
 				gGT->vSync_between_drawSync = 0;
 
-				MainFrame_RenderFrame(gGT, sdata->gGamepads);
+#if 0
+				DecalFont_DrawLine("Hello World", 0x100, 0x23, 0x200, 2, 0xffff8000);
+printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
+while(1) {}
+#endif
 
+				DECOMP_MainFrame_RenderFrame(gGT, sdata->gGamepads);
+
+#ifndef REBUILD_PS1
 				// if mask is talking in Adventure Hub
 				if (sdata->boolDraw3D_AdvMask != 0)
 				{

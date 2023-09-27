@@ -4,6 +4,8 @@
 
 #include "../decompile/General/MAIN/MainMain.c"
 
+#include "../decompile/General/CAMERA/CAM_ClearScreen.c"
+
 #include "../decompile/General/CDSYS/CDSYS_c01_Init.c" 
 #include "../decompile/General/CDSYS/CDSYS_c02_GetFilePosInt.c" 
 #include "../decompile/General/CDSYS/CDSYS_c03_SetMode_StreamData.c" 
@@ -92,6 +94,8 @@
 #include "../decompile/General/MAIN/MainDB_PrimMem.c"
 #include "../decompile/General/MAIN/MainDrawCb_DrawSync.c"
 #include "../decompile/General/MAIN/MainDrawCb_Vsync.c"
+#include "../decompile/General/MAIN/MainFrame_RenderFrame.c"
+#include "../decompile/General/MAIN/MainFrame_ResetDB.c"
 #include "../decompile/General/MAIN/MainInit_OTMem.c"
 #include "../decompile/General/MAIN/MainInit_PrimMem.c"
 #include "../decompile/General/MAIN/MainInit_VRAMClear.c" 

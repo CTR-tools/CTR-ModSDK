@@ -9,9 +9,11 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 	struct DB* db;
 	int ot_tileView_UI;
 	
+#ifndef REBUILD_PS1
 	// check if new adv hub should be loaded,
 	// this was a random place for ND to put it
 	LOAD_Hub_Main(sdata->ptrBigfile1);
+#endif
 	
 	gGT->swapchainIndex = 1 - gGT->swapchainIndex;
 	gGT->backBuffer = &gGT->db[gGT->swapchainIndex];
@@ -25,18 +27,23 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 	db->primMem.unk1 = 0;
 	db->otMem.curr = db->otMem.start;
 	
+// These functions literally do nothing,
+// even in the OG game, they're empty
+#if 0
 	CTR_EmptyFunc_MainFrame_ResetDB();
 	DecalGlobal_EmptyFunc_MainFrame_ResetDB();
+#endif
+	
 	ClearOTagR(ot_tileView_UI, gGT->numPlyrCurrGame << 10 | 6);
 	
 	for(iVar4 = 0; iVar4 < gGT->numPlyrCurrGame; iVar4++)
 	{
-			iVar2 = (u_int)(u_char)psVar1->numPlyrCurrGame - iVar4;
+		iVar2 = (u_int)(u_char)psVar1->numPlyrCurrGame - iVar4;
 			
-			gGT->tileView[iVar4].ptrOT = 
-				(int)ot_tileView_UI + 
-				(gGT->numPlyrCurrGame - iVar4 - 1) * 0x1000 
-				+ 0x18;
+		gGT->tileView[iVar4].ptrOT = 
+			(int)ot_tileView_UI + 
+			(gGT->numPlyrCurrGame - iVar4 - 1) * 0x1000 
+			+ 0x18;
 	}
 	
 	for(iVar4; iVar4 < 4; iVar4++)
