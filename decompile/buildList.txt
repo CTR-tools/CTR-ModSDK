@@ -518,6 +518,7 @@ common, exe, TileView_SetMatrixVP, 0x0, General/TileView/TileView_SetMatrixVP.c
 common, exe, TileView_SetPsyqGeom, 0x0, General/TileView/TileView_SetPsyqGeom.c
 common, exe, TileView_UpdateFrustum, 0x0, General/TileView/TileView_UpdateFrustum.c
 common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
+common, exe, TileView_SetDrawEnv_Normal, 0x0, General/TileView/TileView_SetDrawEnv_Normal.c
 
 // TitleFlag
 common, exe, TitleFlag_MoveModels, 0x0, General/TitleFlag/TitleFlag_t01_MoveModels.c

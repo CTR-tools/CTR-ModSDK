@@ -672,7 +672,7 @@ void FUN_80042a8c(void *param_1,int param_2,undefined4 *param_3,short *param_4,u
     sStack102 = param_4[1];
   }
 
-  // drawEnv.dtd (always zero)
+  // drawEnv.isbg (always zero)
   local_58 = param_5;
 
   // gGT->backBuffer->primMem.curr
