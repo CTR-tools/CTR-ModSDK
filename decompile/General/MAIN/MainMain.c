@@ -384,6 +384,7 @@ FinishLoading:
 				gGT->vSync_between_drawSync = 0;
 
 #ifdef REBUILD_PS1
+				// need to rewrite TileView_SetDrawEnv_Normal
 				if(sdata->Loading.stage == -1)
 				{
 					char text[100];
