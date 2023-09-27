@@ -359,14 +359,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// clear and reset
 			DecalGlobal_Clear(gGT);
 
-			if ((sdata->ptrMPK == 0) || (*(int*)sdata->ptrMPK == 0))
+			gGT->mpkIcons = 0;
+			if (sdata->ptrMPK != 0)
 			{
-				gGT->mpkIcons = 0;
-			}
-			else 
-			{
-				DecalGlobal_Store(gGT, *(int*)sdata->ptrMPK);
 				gGT->mpkIcons = *(int*)sdata->ptrMPK;
+				
+				if(gGT->mpkIcons != 0)
+					DecalGlobal_Store(gGT, gGT->mpkIcons);
 			}
 
 			// if level is not AdvGarage or Naughty Dog Box Scene
