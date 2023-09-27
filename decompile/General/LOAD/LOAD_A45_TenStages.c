@@ -651,15 +651,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 			break;
 		}
-
 		case 8:
-		{
-#ifdef REBUILD_PS1
-			printf("Reached Stage 8\n");
-			printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
-			while(1) {}
-#else
-			
+		{			
 			// If you're in Adventure Arena
 			if
 			(
@@ -702,7 +695,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				// change active allocation system
 				// Swap 1 and 2 while on adventure map
-				MEMPACK_SwapPacks((int)gGT->activeMempackIndex);
+				DECOMP_MEMPACK_SwapPacks((int)gGT->activeMempackIndex);
 			}
 
 			// Level ID
@@ -713,9 +706,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				uVar16 = 7;
 LAB_800346b0:
-
-			Audio_SetState_Safe(uVar16);
-
+#ifndef REBUILD_PS1
+				Audio_SetState_Safe(uVar16);
+#endif
 				return loadingStage + 1;
 			}
 
@@ -757,11 +750,8 @@ LAB_800346b0:
 			uVar16 = 1;
 
 			if (iVar9 - 0x2aU < 2) goto LAB_800346b0;
-#endif
 			break;
 		}
-
-#ifndef REBUILD_PS1
 		case 9:
 		{
 			if (sdata->XA_State != 2)
@@ -801,11 +791,11 @@ LAB_800346b0:
 					// enable pause menu? Or enable 3D cars on track?
 					gGT->renderFlags = gGT->renderFlags & 0x1000 | 0x20;
 
-					iVar9 = TitleFlag_IsFullyOffScreen();
+					iVar9 = DECOMP_TitleFlag_IsFullyOffScreen();
 					if (iVar9 == 1)
 					{
 						// checkered flag, begin transition on-screen
-						TitleFlag_BeginTransition(1);
+						DECOMP_TitleFlag_BeginTransition(1);
 					}
 				}
 				gGT->hudFlags = gGT->hudFlags | 8;
@@ -819,7 +809,6 @@ LAB_800346b0:
 				return -2;
 			}
 		}
-#endif
 		default:
 			return loadingStage;
 	}

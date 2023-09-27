@@ -116,7 +116,7 @@ u_int DECOMP_main()
 			// Main Gameplay Update
 			// Makes up all normal interaction with the game
 			case 3:
-				// if loading is not finished
+				// if loading, or gameplay interrupted
 				if (sdata->Loading.stage != -1)
 				{
 					if
@@ -135,75 +135,42 @@ u_int DECOMP_main()
 					// impacts speed of flag wave during "loading...", but does not impact speed of flying text
 					gGT->elapsedTimeMS = 32;
 					
-					// if loading is finished, but still in "loading mode", and if pools dont need to be reset (maybe for credits?)
+					// if loading VLC
+					if (iVar8 == -6)
+					{
+						// if VLC is not loaded, quit
+						// we know when it's done from a load callback
+						if (sdata->bool_IsLoaded_VlcTable != 1) break;
+						
+						// if == 1, finish the loading
+						goto FinishLoading;
+					}
+					
+					// if restarting race
 					if (iVar8 == -5)
 					{
 						if (DECOMP_TitleFlag_IsFullyOnScreen() == 1)
 						{
-							// set game state to 2 to initialize the world
-							// does not initialize pools
+							// reinitialize world,
+							// does not reinitialize pools
 							sdata->mainGameState = 2;
 
-							// nothing is being loaded anymore
+							// no loading, and no interruption
 							sdata->Loading.stage = -1;
 							
 							// Turn off the "Loading..." flag
 							gGT->gameMode1 &= ~LOADING;
 							break;
 						}
+						
+						// if not fully on-screen, do not BREAK,
+						// keep rendering the scene
 					}
 					
-					// if something is being loaded
-					else
+					// if waiting for checkered flag to cover screen,
+					// right before loading the next requested level
+					else if (iVar8 == -4)
 					{
-						// if not waiting for checkered flag to cover screen
-						if (iVar8 != -4)
-						{
-							// if loading VLC
-							if (iVar8 == -6)
-							{
-								// if VLC is not loaded, quit
-								// we know when it's done from a load callback
-								if (sdata->bool_IsLoaded_VlcTable != 1) break;
-							}
-							else
-							{
-								sdata->Loading.stage = DECOMP_LOAD_TenStages(gGT, iVar8, sdata->ptrBigfile1);
-								
-								#ifdef REBUILD_PS1
-								//printf("LoadStage: %d\n", sdata->Loading.stage);
-								#endif
-								
-								// if did not just complete loading stage 9, skip logic to load VLC, skip logic to end loading, skip logic if "if == -4", goto rendering.
-								// We can skip rendering by changing BNE on 0x8003cca0 to "bne v0, v1, 8003cf3c"
-								if (sdata->Loading.stage != -2) goto LAB_8003ccf8;
-								
-								#ifndef REBUILD_PS1				
-								// if stage 9 of loading was just finished
-								if
-								(
-									// If you're in main menu
-									(gGT->levelID == MAIN_MENU_LEVEL) ||
-									// If you're in scrapbook
-									(gGT->levelID == SCRAPBOOK)
-								)
-								{
-									MainLoadVLC();
-									// start loading VLC (scroll up to iVar8 == -6)
-									sdata->Loading.stage = -6;
-									break;
-								}
-								#endif
-							}
-							// loading is finished
-							sdata->Loading.stage = -1;
-							// set game state to 1, to initialize world, as well as initialize all pools
-							sdata->mainGameState = 1;
-							// remove "Loading..." flag from gGT
-							gGT->gameMode1 &= ~LOADING;
-							break;
-						}
-
 						RemBitsConfig8 = sdata->Loading.OnBegin.RemBitsConfig8;
 						AddBitsConfig8 = sdata->Loading.OnBegin.AddBitsConfig8;
 						RemBitsConfig0 = sdata->Loading.OnBegin.RemBitsConfig0;
@@ -233,9 +200,59 @@ u_int DECOMP_main()
 						
 						else if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)
 							DECOMP_TitleFlag_BeginTransition(1);
+						
+						// do not BREAK, 
+						// keep rendering the scene
+					}
+					
+					// if something is being loaded
+					else
+					{
+						sdata->Loading.stage = DECOMP_LOAD_TenStages(gGT, iVar8, sdata->ptrBigfile1);
+							
+						// If just finished loading stage 9
+						if (sdata->Loading.stage == -2)
+						{
+							#ifndef REBUILD_PS1				
+							if
+							(
+								(gGT->levelID == MAIN_MENU_LEVEL) ||
+								(gGT->levelID == SCRAPBOOK)
+							)
+							{
+								MainLoadVLC();
+								
+								// start loading VLC (scroll up to iVar8 == -6)
+								sdata->Loading.stage = -6;
+								break;
+							}
+							#endif
+							
+FinishLoading:
+							// loading is finished,
+							// initialize world and pools,
+							// remove LOADING... flag from gGT
+							sdata->Loading.stage = -1;
+							sdata->mainGameState = 1;
+							gGT->gameMode1 &= ~LOADING;
+							
+							#ifdef REBUILD_PS1
+							printf("Finished Loading\n");
+							printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
+							while(1) {}
+							#endif
+							
+							break;
+						}
+						
+						// else, do not BREAK,
+						// keep rendering the scene
+						// which is the checkered flag
 					}
 				}
-				LAB_8003ccf8:
+
+// =========== Main Game Loop ======================
+
 				if
 				(
 					(
