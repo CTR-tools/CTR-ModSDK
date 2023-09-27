@@ -383,10 +383,13 @@ FinishLoading:
 				// reset vsync calls between drawsync
 				gGT->vSync_between_drawSync = 0;
 
-#if 0
-				DecalFont_DrawLine("Hello World", 0x100, 0x23, 0x200, 2, 0xffff8000);
-printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
-while(1) {}
+#ifdef REBUILD_PS1
+				if(sdata->Loading.stage == -1)
+				{
+					char text[100];
+					sprintf(text, "Hello World: %d\n", sdata->lastPathIndex++); // pick random variable
+					DecalFont_DrawLine(text, 0x100, 0x23, 2, 0xffff8000);
+				}
 #endif
 
 				DECOMP_MainFrame_RenderFrame(gGT, sdata->gGamepads);
