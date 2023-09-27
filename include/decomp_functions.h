@@ -10,6 +10,7 @@ void DECOMP_LOAD_Callback_Overlay_231();
 void DECOMP_LOAD_Callback_Overlay_232();
 void DECOMP_LOAD_Callback_Overlay_233();
 void DECOMP_LOAD_Callback_DriverModels();
+void DECOMP_LOAD_Callback_Podiums();
 void DECOMP_LOAD_Callback_LEV();
 void DECOMP_LOAD_Callback_LEV_Adv();
 void DECOMP_LOAD_VramFileCallback();

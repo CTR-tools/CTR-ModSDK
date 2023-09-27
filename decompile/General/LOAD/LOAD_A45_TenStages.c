@@ -502,12 +502,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				DECOMP_DecalGlobal_Store(gGT, gGT->level1->levTexLookup);
 			}
 
-#ifdef REBUILD_PS1
-			printf("Reached Stage 7\n");
-			printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
-			while(1) {}
-#else
-
+#ifndef REBUILD_PS1
 			DebugFont_Init(gGT);
 
 			// if level is not nullptr
@@ -563,6 +558,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				uVar16 = DecalGlobal_Find2(piVar15, rdata.s_lightgreenon);
 				gGT->trafficLightIcon[3] = uVar16;
 			}
+			
 			gGT->gameMode1_prevFrame = 1;
 
 			if
@@ -580,12 +576,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				return loadingStage + 1;
 			}
-			iVar9 = 7;
-
+#endif
+			
 			// podium reward
 			if (gGT->podiumRewardID != 0)
 			{
 				// clear all podium model pointers
+				iVar9 = 7;
 				puVar8 = &data.podiumModel_podiumStands;
 				do
 				{
@@ -595,17 +592,17 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				} while (iVar9 > -1);
 			
 				// Get Memory Allocation System Index
-				iVar9 = LOAD_GetAdvPackIndex();
+				iVar9 = DECOMP_LOAD_GetAdvPackIndex();
 
 				// change active allocation system
 				// Swap 1 and 2 while on adventure map
-				MEMPACK_SwapPacks(3 - gGT->activeMempackIndex);
+				DECOMP_MEMPACK_SwapPacks(3 - gGT->activeMempackIndex);
 
 				// game is now loading
 				sdata->load_inProgress = 1;
 
 				// add vram to queue
-				LOAD_AppendQueue(bigfile, LT_VRAM, iVar9 + 0x16b, 0, 0);
+				DECOMP_LOAD_AppendQueue(bigfile, LT_VRAM, iVar9 + 0x16b, 0, 0);
 
 				// podium first place
 				modelFirst = gGT->podium_modelIndex_First;
@@ -620,43 +617,49 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					(modelFirst != 0x8d)
 			 	)
 				{
-					LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)modelFirst - 0x7e) * 2 + 0x16d, &data.podiumModel_firstPlace, 0xfffffffe);
+					DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)modelFirst - 0x7e) * 2 + 0x16d, &data.podiumModel_firstPlace, 0xfffffffe);
 				}
 
 				// podium second place exists
 				if (gGT->podium_modelIndex_Second != 0)
 				{
-					LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_Second - 0x7e) * 2 + 0x18d, &data.podiumModel_secondPlace, 0xfffffffe);
+					DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_Second - 0x7e) * 2 + 0x18d, &data.podiumModel_secondPlace, 0xfffffffe);
 				}
 			
 				// podium third place exists
 				if (gGT->podium_modelIndex_Third != 0)
 				{
-					LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_Third - 0x7e) * 2 + 0x18d, &data.podiumModel_thirdPlace, 0xfffffffe);
+					DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_Third - 0x7e) * 2 + 0x18d, &data.podiumModel_thirdPlace, 0xfffffffe);
 				}
 
 				// add TAWNA to loading queue
-				LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_tawna - 0x8f) * 2 + 0x1ad, &data.podiumModel_tawna, 0xfffffffe);
+				DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_tawna - 0x8f) * 2 + 0x1ad, &data.podiumModel_tawna, 0xfffffffe);
 
 				// if 0x7e+5 (dingo)
 				if (gGT->podium_modelIndex_First == 0x83)
 				{
 					// add "DingoFire" to loading queue
-					LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + 0x1bd, &data.podiumModel_dingoFire, 0xfffffffe);
+					DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + 0x1bd, &data.podiumModel_dingoFire, 0xfffffffe);
 				}
 
 				// add Podium
-				LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + 0x1bf, 0, &LOAD_Callback_Podiums);
+				DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + 0x1bf, 0, &DECOMP_LOAD_Callback_Podiums);
 
 				// Disable LEV instances on Adv Hub, for podium scene
 				gGT->gameMode2 = gGT->gameMode2 | 0x100;
 			}
-#endif
+
 			break;
 		}
-#ifndef REBUILD_PS1
+
 		case 8:
 		{
+#ifdef REBUILD_PS1
+			printf("Reached Stage 8\n");
+			printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
+			while(1) {}
+#else
+			
 			// If you're in Adventure Arena
 			if
 			(
@@ -754,8 +757,11 @@ LAB_800346b0:
 			uVar16 = 1;
 
 			if (iVar9 - 0x2aU < 2) goto LAB_800346b0;
+#endif
 			break;
 		}
+
+#ifndef REBUILD_PS1
 		case 9:
 		{
 			if (sdata->XA_State != 2)

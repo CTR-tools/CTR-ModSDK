@@ -52,6 +52,7 @@
 #include "../decompile/General/LOAD/LOAD_A04_Callback_Overlay_232.c"
 #include "../decompile/General/LOAD/LOAD_A05_Callback_Overlay_233.c"
 // hole
+#include "../decompile/General/LOAD/LOAD_A07_Callback_Podiums.c"
 #include "../decompile/General/LOAD/LOAD_A08_Callback_LEV.c"
 #include "../decompile/General/LOAD/LOAD_A09_Callback_LEV_Adv.c"
 #include "../decompile/General/LOAD/LOAD_A10_Callback_DriverModels.c"
