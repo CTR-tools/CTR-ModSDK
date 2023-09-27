@@ -18,6 +18,6 @@ void DECOMP_LOAD_GlobalModelPtrs_MPK()
 	
 	if(sdata->PLYROBJECTLIST != 0)
 	{
-		LibraryOfModels_Store(gGT, -1, sdata->PLYROBJECTLIST);
+		DECOMP_LibraryOfModels_Store(gGT, -1, sdata->PLYROBJECTLIST);
 	}
 }

@@ -10,6 +10,8 @@ void DECOMP_LOAD_Callback_Overlay_231();
 void DECOMP_LOAD_Callback_Overlay_232();
 void DECOMP_LOAD_Callback_Overlay_233();
 void DECOMP_LOAD_Callback_DriverModels();
+void DECOMP_LOAD_Callback_LEV();
+void DECOMP_LOAD_Callback_LEV_Adv();
 void DECOMP_LOAD_VramFileCallback();
 void DECOMP_LOAD_ReadFileASyncCallback(char result);
 void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void* destination, int *size, void * callback);
@@ -26,5 +28,7 @@ void DECOMP_MainInit_OTMem(struct GameTracker* gGT);
 
 void* DECOMP_MEMPACK_AllocMem(int size);
 void* DECOMP_MEMPACK_ReallocMem(int size);
+void* DECOMP_MEMPACK_AllocHighMem(int allocSize);
+int DECOMP_MEMPACK_GetFreeBytes();
 void DECOMP_MEMPACK_PopState();
 int DECOMP_MEMPACK_PushState();

@@ -1,7 +1,5 @@
 #include <common.h>
 
-int DECOMP_MEMPACK_GetFreeBytes();
-
 void* DECOMP_MEMPACK_AllocHighMem(int allocSize)
 {
 	int newLastFreeByte;

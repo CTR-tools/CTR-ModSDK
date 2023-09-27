@@ -24,6 +24,7 @@
 #include "../decompile/General/CDSYS/CDSYS_c19_XAPauseAtEnd.c" 
 
 #include "../decompile/General/DecalGlobal/DecalGlobal_Clear.c"
+#include "../decompile/General/DecalGlobal/DecalGlobal_Store.c"
 
 #include "../decompile/General/GAMEPAD/GAMEPAD_Init.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_GetNumConnected.c"
@@ -42,13 +43,20 @@
 #include "../decompile/General/HOWL/h33_howl_ParseCseqHeader.c"
 #include "../decompile/General/HOWL/h34_howl_LoadHeader.c"
 
+#include "../decompile/General/LibraryOfModels/LibraryOfModels_Clear.c"
+#include "../decompile/General/LibraryOfModels/LibraryOfModels_Store.c"
+
 #include "../decompile/General/LOAD/LOAD_A01_Callback_Overlay_Generic.c"
 #include "../decompile/General/LOAD/LOAD_A02_Callback_Overlay_230.c"
 #include "../decompile/General/LOAD/LOAD_A03_Callback_Overlay_231.c"
 #include "../decompile/General/LOAD/LOAD_A04_Callback_Overlay_232.c"
 #include "../decompile/General/LOAD/LOAD_A05_Callback_Overlay_233.c"
 // hole
+#include "../decompile/General/LOAD/LOAD_A08_Callback_LEV.c"
+#include "../decompile/General/LOAD/LOAD_A09_Callback_LEV_Adv.c"
 #include "../decompile/General/LOAD/LOAD_A10_Callback_DriverModels.c"
+// hole
+#include "../decompile/General/LOAD/LOAD_A12_GlobalModelPtrs_MPK.c"
 // hole
 #include "../decompile/General/LOAD/LOAD_A14_StringToUpper.c" 
 #include "../decompile/General/LOAD/LOAD_A15_InitCD.c" 
@@ -68,7 +76,7 @@
 #include "../decompile/General/LOAD/LOAD_A31_Robots1P.c"
 #include "../decompile/General/LOAD/LOAD_A32_DriverMPK.c"
 #include "../decompile/General/LOAD/LOAD_A33_LangFile.c"
-// hole
+#include "../decompile/General/LOAD/LOAD_A34_GetBigfileIndex.c"
 #include "../decompile/General/LOAD/LOAD_A35_AppendQueue.c"
 #include "../decompile/General/LOAD/LOAD_A36_CDRequestCallback.c"
 #include "../decompile/General/LOAD/LOAD_A37_NextQueuedFile.c"
@@ -76,7 +84,7 @@
 #include "../decompile/General/LOAD/LOAD_A41_OvrLOD.c"
 #include "../decompile/General/LOAD/LOAD_A42_OvrEndRace.c"
 #include "../decompile/General/LOAD/LOAD_A43_OvrThreads.c"
-// hole
+#include "../decompile/General/LOAD/LOAD_A44_GetAdvPackIndex.c"
 #include "../decompile/General/LOAD/LOAD_A45_TenStages.c"
 
 #include "../decompile/General/MAIN/MainDB_OTMem.c"

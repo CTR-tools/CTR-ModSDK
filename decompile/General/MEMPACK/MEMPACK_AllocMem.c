@@ -1,6 +1,5 @@
 #include <common.h>
 
-int DECOMP_MEMPACK_GetFreeBytes();
 void CTR_ErrorScreen(char r, char g, char b);
 
 void* DECOMP_MEMPACK_AllocMem(int allocSize)

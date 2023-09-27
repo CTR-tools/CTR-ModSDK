@@ -342,20 +342,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		{
 			sdata->PLYROBJECTLIST = (unsigned int)sdata->ptrMPK + 4;
 			if (sdata->ptrMPK == 0) sdata->PLYROBJECTLIST = 0;
-			
-			#ifdef REBUILD_PS1
-			printf("Reached Stage 5\n");
-			printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
-			while(1) {}
-			
-			#else
-			
+						
 			// clear and reset
-			LibraryOfModels_Clear(gGT);
-			LOAD_GlobalModelPtrs_MPK();
+			DECOMP_LibraryOfModels_Clear(gGT);
+			DECOMP_LOAD_GlobalModelPtrs_MPK();
 
 			// clear and reset
-			DecalGlobal_Clear(gGT);
+			DECOMP_DecalGlobal_Clear(gGT);
 
 			gGT->mpkIcons = 0;
 			if (sdata->ptrMPK != 0)
@@ -363,9 +356,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				gGT->mpkIcons = *(int*)sdata->ptrMPK;
 				
 				if(gGT->mpkIcons != 0)
-					DecalGlobal_Store(gGT, gGT->mpkIcons);
+					DECOMP_DecalGlobal_Store(gGT, gGT->mpkIcons);
 			}
-
+			
+			#ifndef REBUILD_PS1
 			// if level is not AdvGarage or Naughty Dog Box Scene
 			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
@@ -373,16 +367,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				CseqMusic_StopAll();
 				Music_LoadBanks();
 			}
-			
 			#endif
 			
 			break;
 		}
-		
-
-#ifndef REBUILD_PS1
 		case 6:
-		{
+		{			
+#ifndef REBUILD_PS1		
 			// if level is not AdvGarage or Naughty Dog Box Scene
 			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
@@ -396,7 +387,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				Cutscene_VolumeRestore();
 			}
-
+#endif
 			// == banks are done parsing ===
 			
 			// loop through models
@@ -425,18 +416,18 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				}
 
 				// Allocate room for LEV swapping
-				iVar5 = MEMPACK_AllocMem(iVar9 + iVar12); // "HUB ALLOC"
+				iVar5 = DECOMP_MEMPACK_AllocMem(iVar9 + iVar12); // "HUB ALLOC"
 				sdata->ptrHubAlloc = iVar5;
 
 				// Change active allocation system to #2
 				// pack = [hubAlloc, hubAlloc+size1]
-				MEMPACK_SwapPacks(1);
-				MEMPACK_NewPack_StartEnd(iVar5, iVar9);
+				DECOMP_MEMPACK_SwapPacks(1);
+				DECOMP_MEMPACK_NewPack_StartEnd(iVar5, iVar9);
 
 				// Change active allocation system to #3
 				// pack = [hubAlloc+size1, hubAlloc+size1+size2]
-				MEMPACK_SwapPacks(2);
-				MEMPACK_NewPack_StartEnd(iVar5 + iVar9, iVar12);
+				DECOMP_MEMPACK_SwapPacks(2);
+				DECOMP_MEMPACK_NewPack_StartEnd(iVar5 + iVar9, iVar12);
 
 				// Intro cutscene with oxide spaceship and all racers
 				if ((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
@@ -449,7 +440,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				else
 				{
 					// Get 1 or 2, depending on map
-					sVar4 = LOAD_GetAdvPackIndex();
+					sVar4 = DECOMP_LOAD_GetAdvPackIndex();
 
 					// Then swap:
 					// Turn 1 into 2
@@ -465,41 +456,38 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// the rest of memory will load pointer maps,
 				// loaded at HighMem in main pack, end of RAM,
 				// so the pointer maps dont bloat subpacks
-				MEMPACK_SwapPacks(0);
-				sdata->PatchMem_Size = MEMPACK_GetFreeBytes();
-				sdata->PatchMem_Ptr = MEMPACK_AllocHighMem(sdata->PatchMem_Size); //, "Patch Table Memory");
+				DECOMP_MEMPACK_SwapPacks(0);
+				sdata->PatchMem_Size = DECOMP_MEMPACK_GetFreeBytes();
+				sdata->PatchMem_Ptr = DECOMP_MEMPACK_AllocHighMem(sdata->PatchMem_Size); //, "Patch Table Memory");
 
 				// make all futuere allocations in subpacks
-				MEMPACK_SwapPacks(gGT->activeMempackIndex);
+				DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
 			}
 
 			// game is now loading
 			sdata->load_inProgress = 1;
 
-			// bigfile index, 0 = vram
-			uVar16 = LOAD_GetBigfileIndex
-						(gGT->levelID, sdata->levelLOD, LVI_VRAM);
+			// add VRAM to loading queue
+			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_VRAM);
+			DECOMP_LOAD_AppendQueue(bigfile, LT_VRAM, uVar16, 0, 0);
 
-			// adds VRAM to loading queue
-			LOAD_AppendQueue(bigfile, LT_VRAM, uVar16, 0, 0);
-
-			// bigfile index, 1 = lev
-			uVar16 = LOAD_GetBigfileIndex
-					(gGT->levelID, sdata->levelLOD, LVI_LEV);
-
-			// adds LEV to loading queue
-			LOAD_AppendQueue(bigfile, LT_DRAM, uVar16, 0, &LOAD_Callback_LEV);
+			// add LEV to loading queue
+			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_LEV);
+			DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, uVar16, 0, &DECOMP_LOAD_Callback_LEV);
 
 			// if level ID is AdvHub or Cutscene
 			if ((gGT->gameMode2 & LEV_SWAP) != 0)
 			{
-				// bigfile index, 2 = PTR
-				uVar6 = LOAD_GetBigfileIndex
-						(gGT->levelID, sdata->levelLOD, LVI_PTR);
-
-				// adds PTR map to loading queue
-				LOAD_AppendQueue(bigfile, LT_RAW, uVar6, sdata->PatchMem_Ptr, LOAD_Callback_LEV_Adv);
+				// add PTR file to loading queue
+				uVar6 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_PTR);
+				DECOMP_LOAD_AppendQueue(bigfile, LT_RAW, uVar6, sdata->PatchMem_Ptr, &DECOMP_LOAD_Callback_LEV_Adv);
 			}
+			
+#ifdef REBUILD_PS1
+			printf("End Stage 6\n");
+			printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
+			while(1) {}
+#endif
 			
 			break;
 		}
@@ -518,8 +506,14 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			if (gGT->level1 != 0)
 			{
 				// Load Icons and IconGroups from LEV
-				DecalGlobal_Store(gGT, gGT->level1->levTexLookup);
+				DECOMP_DecalGlobal_Store(gGT, gGT->level1->levTexLookup);
 			}
+
+#ifdef REBUILD_PS1
+			printf("Reached Stage 7\n");
+			printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
+			while(1) {}
+#else
 
 			DebugFont_Init(gGT);
 
@@ -664,9 +658,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// Disable LEV instances on Adv Hub, for podium scene
 				gGT->gameMode2 = gGT->gameMode2 | 0x100;
 			}
-			
+#endif
 			break;
 		}
+#ifndef REBUILD_PS1
 		case 8:
 		{
 			// If you're in Adventure Arena

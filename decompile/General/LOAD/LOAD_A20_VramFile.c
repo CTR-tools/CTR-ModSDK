@@ -37,7 +37,7 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 	
 	if(callbackOrFlags == -2)
 	{
-		void* ptrDest = DECOMP_LOAD_ReadFile(bigfilePtr, LT_VRAM, subfileIndex, 0, size, DECOMP_LOAD_VramFileCallback);
+		void* ptrDest = DECOMP_LOAD_ReadFile(bigfilePtr, LT_VRAM, subfileIndex, 0, size, &DECOMP_LOAD_VramFileCallback);
 		
 		*ptrDestination = ptrDest;
 		data.currSlot.ptrDestination = ptrDest;
@@ -47,5 +47,5 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 	
 	// valid callback
 	
-	return DECOMP_LOAD_ReadFile(bigfilePtr, LT_VRAM, subfileIndex, ptrDestination, size, DECOMP_LOAD_VramFileCallback);
+	return DECOMP_LOAD_ReadFile(bigfilePtr, LT_VRAM, subfileIndex, ptrDestination, size, &DECOMP_LOAD_VramFileCallback);
 }
