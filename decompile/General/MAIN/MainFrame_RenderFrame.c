@@ -186,9 +186,9 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	{
 		TitleFlag_DrawSelf();
 	}
+#endif
 
 	RenderDispEnv_UI(gGT);
-#endif
 	
 	gGT->countTotalTime = 
 		RCNT_GetTime_Total();
@@ -699,6 +699,7 @@ void RenderAllNormalParticles(struct GameTracker* gGT)
 			gGT->particleList_ordinary);
 	}
 }
+#endif
 
 void RenderDispEnv_World(struct GameTracker* gGT)
 {
@@ -707,12 +708,13 @@ void RenderDispEnv_World(struct GameTracker* gGT)
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		tileView = &gGT->tileView[i];
-		TileView_SetDrawEnv_Normal(
+		DECOMP_TileView_SetDrawEnv_Normal(
 			&tileView->ptrOT[0x3ff],
 			tileView, gGT->backBuffer, 0, 0);
 	}
 }
 
+#ifndef REBUILD_PS1
 // I need a better name
 void RenderAllFlag0x40(struct GameTracker* gGT)
 {
@@ -1198,16 +1200,16 @@ void WindowDivsionLines(struct GameTracker* gGT)
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
 }
+#endif
 
 void RenderDispEnv_UI(struct GameTracker* gGT)
 {
 	struct TileView* tileView = &gGT->tileView_UI;
 	
-	TileView_SetDrawEnv_Normal(
+	DECOMP_TileView_SetDrawEnv_Normal(
 		&tileView->ptrOT[4],
 		tileView, gGT->backBuffer, 0, 0);
 }
-#endif
 
 // force code to re-check RAM during the loop, cause the compiler 
 // doesn't know what IRQs are, and wont re-check RAM by default,
