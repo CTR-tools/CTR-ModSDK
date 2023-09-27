@@ -116,6 +116,8 @@
 #include "../decompile/General/MEMPACK/MEMPACK_PopState.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_PopToState.c"
 
+#include "../decompile/General/TileView/TileView_Init.c"
+#include "../decompile/General/TileView/TileView_SetPsyqGeom.c"
 #include "../decompile/General/TileView/TileView_SetDrawEnv_Normal.c"
 
 // skip TitleFlag_t01

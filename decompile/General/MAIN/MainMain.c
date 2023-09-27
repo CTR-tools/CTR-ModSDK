@@ -384,7 +384,16 @@ FinishLoading:
 				gGT->vSync_between_drawSync = 0;
 
 #ifdef REBUILD_PS1
-				// need to rewrite TileView_SetDrawEnv_Normal
+				// need to rewrite MainInit_FinalizeInit to get TileViewInit
+				DECOMP_TileView_Init(&gGT->tileView[0], 0, 1);
+				DECOMP_TileView_Init(&gGT->tileView[1], 1, 1);
+				DECOMP_TileView_Init(&gGT->tileView[2], 2, 1);
+				DECOMP_TileView_Init(&gGT->tileView[3], 3, 1);
+				
+				DECOMP_TileView_Init(&gGT->tileView_UI, 0, 1);
+				gGT->tileView_UI.rot[0] = 0x800;
+				DECOMP_TileView_SetPsyqGeom(&gGT->tileView_UI);
+				
 				if(sdata->Loading.stage == -1)
 				{
 					char text[100];
