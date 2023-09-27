@@ -2769,8 +2769,6 @@ struct sData
 	// 8008d0bc
 	int boolFirstBoot;
 
-#ifndef SDATA_DEV
-
 	// 8008D0C0
 	char s_ndi[4];
 	char s_ending[8];
@@ -2856,6 +2854,8 @@ struct sData
 	char s_battle3[8];
 	char s_battle2[8];
 	char s_battle1[8];
+
+#ifndef SDATA_DEV
 
 	char s_secret2[8];
 	char s_secret1[8];

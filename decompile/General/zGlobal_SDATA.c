@@ -139,5 +139,70 @@ struct sData sdata_static =
 		0,2,4,4,6,6,6,6
 	},
 	
-	.boolFirstBoot = 1
+	.boolFirstBoot = 1,
+	
+	.s_ndi = "ndi",
+	.s_ending = "ending",
+	.s_intro = "intro",
+	.s_screen = "screen",
+	.s_garage = "garage",
+	.s_hub = "hub",
+	.s_credit = "credit",
+	
+	.modelMaskHints3D = 0,
+	
+	.mainGameState = 0,
+	
+	.Loading =
+	{
+		.stage = -1,
+		
+		// MAIN MENU LEVEL
+		.Lev_ID_To_Load = 0x27,
+		
+		// OnBegin is all zeros
+	},
+	
+	.numLngStrings = 0,
+	
+	.s_credit9 = "credit9",
+	.s_credit8 = "credit8",
+	.s_credit7 = "credit7",
+	.s_credit6 = "credit6",
+	.s_credit5 = "credit5",
+	.s_credit4 = "credit4",
+	.s_credit3 = "credit3",
+	.s_credit2 = "credit2",
+	.s_credit1 = "credit1",
+	
+	.s_ending2 = "ending2",
+	.s_ending1 = "ending1",
+	
+	.s_ndi_needToRename = "ndi",
+	
+	.s_garage1 = "garage1",
+	
+	.s_intro9 = "intro9",
+	.s_intro8 = "intro8",
+	.s_intro7 = "intro7",
+	.s_intro6 = "intro6",
+	.s_intro5 = "intro5",
+	.s_intro4 = "intro4",
+	.s_intro3 = "intro3",
+	.s_intro2 = "intro2",
+	.s_intro1 = "intro1",
+	
+	.s_hub5 = "hub5",
+	.s_hub4 = "hub4",
+	.s_hub3 = "hub3",
+	.s_hub2 = "hub2",
+	.s_hub1 = "hub1",
+	
+	.s_battle7 = "battle7",
+	.s_battle6 = "battle6",
+	.s_battle5 = "battle5",
+	.s_battle4 = "battle4",
+	.s_battle3 = "battle3",
+	.s_battle2 = "battle2",
+	.s_battle1 = "battle1",
 };
