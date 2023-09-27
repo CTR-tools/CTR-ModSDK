@@ -2855,8 +2855,6 @@ struct sData
 	char s_battle2[8];
 	char s_battle1[8];
 
-#ifndef SDATA_DEV
-
 	char s_secret2[8];
 	char s_secret1[8];
 	char s_space[8];
@@ -2873,6 +2871,8 @@ struct sData
 	char s_desert2[8];
 	char s_proto9[8];
 	char s_proto8[8];
+
+#ifndef SDATA_DEV
 
 	// 8008d2a0
 	unsigned short finalLapTextTimer[4];
