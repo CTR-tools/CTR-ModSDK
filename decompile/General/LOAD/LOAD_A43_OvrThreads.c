@@ -4,10 +4,6 @@ void OVR_Region3();
 
 // temporary, till DATA and SDATA are done
 #ifdef REBUILD_PS1
-void DECOMP_LOAD_Callback_Overlay_230();
-void DECOMP_LOAD_Callback_Overlay_231();
-void DECOMP_LOAD_Callback_Overlay_232();
-void DECOMP_LOAD_Callback_Overlay_233();
 int overlayCallbackFuncs[4] =
 {
 	DECOMP_LOAD_Callback_Overlay_230,

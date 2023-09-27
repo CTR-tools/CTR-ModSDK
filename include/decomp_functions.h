@@ -5,6 +5,11 @@ void DECOMP_CDSYS_XaCallbackCdReady(char result);
 void DECOMP_CDSYS_SetMode_StreamData();
 
 void DECOMP_LOAD_Callback_Overlay_Generic();
+void DECOMP_LOAD_Callback_Overlay_230();
+void DECOMP_LOAD_Callback_Overlay_231();
+void DECOMP_LOAD_Callback_Overlay_232();
+void DECOMP_LOAD_Callback_Overlay_233();
+void DECOMP_LOAD_Callback_DriverModels();
 void DECOMP_LOAD_VramFileCallback();
 void DECOMP_LOAD_ReadFileASyncCallback(char result);
 void* DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfileIndex, void* destination, int *size, void * callback);

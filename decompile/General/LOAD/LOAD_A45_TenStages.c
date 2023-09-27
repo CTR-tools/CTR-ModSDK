@@ -335,22 +335,20 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			data.driverModel_lowLOD[0] = 0;
 			data.driverModel_lowLOD[1] = 0;
 			data.driverModel_lowLOD[2] = 0;
-			
-			#ifdef REBUILD_PS1
-			printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
-			while(1) {}
-			#else
-			LOAD_DriverMPK(bigfile, sdata->levelLOD, &LOAD_Callback_DriverModels);
-			#endif
-			
+			DECOMP_LOAD_DriverMPK(bigfile, sdata->levelLOD, &DECOMP_LOAD_Callback_DriverModels);
 			break;
 		}
-
-#ifndef REBUILD_PS1
 		case 5:
 		{
 			sdata->PLYROBJECTLIST = (unsigned int)sdata->ptrMPK + 4;
 			if (sdata->ptrMPK == 0) sdata->PLYROBJECTLIST = 0;
+			
+			#ifdef REBUILD_PS1
+			printf("Reached Stage 5\n");
+			printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
+			while(1) {}
+			
+			#else
 			
 			// clear and reset
 			LibraryOfModels_Clear(gGT);
@@ -376,8 +374,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				Music_LoadBanks();
 			}
 			
+			#endif
+			
 			break;
 		}
+		
+
+#ifndef REBUILD_PS1
 		case 6:
 		{
 			// if level is not AdvGarage or Naughty Dog Box Scene

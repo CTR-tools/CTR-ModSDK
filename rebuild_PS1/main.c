@@ -48,6 +48,8 @@
 #include "../decompile/General/LOAD/LOAD_A04_Callback_Overlay_232.c"
 #include "../decompile/General/LOAD/LOAD_A05_Callback_Overlay_233.c"
 // hole
+#include "../decompile/General/LOAD/LOAD_A10_Callback_DriverModels.c"
+// hole
 #include "../decompile/General/LOAD/LOAD_A14_StringToUpper.c" 
 #include "../decompile/General/LOAD/LOAD_A15_InitCD.c" 
 #include "../decompile/General/LOAD/LOAD_A16_ReadDirectory.c" 
@@ -62,7 +64,9 @@
 #include "../decompile/General/LOAD/LOAD_A25_HowlHeaderSectors.c"
 // hole
 #include "../decompile/General/LOAD/LOAD_A29_RunPtrMap.c"
-// hole
+#include "../decompile/General/LOAD/LOAD_A30_Robots2P.c"
+#include "../decompile/General/LOAD/LOAD_A31_Robots1P.c"
+#include "../decompile/General/LOAD/LOAD_A32_DriverMPK.c"
 #include "../decompile/General/LOAD/LOAD_A33_LangFile.c"
 // hole
 #include "../decompile/General/LOAD/LOAD_A35_AppendQueue.c"
