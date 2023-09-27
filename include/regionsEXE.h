@@ -2872,8 +2872,6 @@ struct sData
 	char s_proto9[8];
 	char s_proto8[8];
 
-#ifndef SDATA_DEV
-
 	// 8008d2a0
 	unsigned short finalLapTextTimer[4];
 
@@ -2936,6 +2934,8 @@ struct sData
 	// 8008d2d8
 	// one for RaceWheel, one for Namco
 	int unk_drawingRaceWheelRects[2];
+
+#ifndef SDATA_DEV
 
 	// 8008d2e0
 	// one for RaceWheel, one for Namco

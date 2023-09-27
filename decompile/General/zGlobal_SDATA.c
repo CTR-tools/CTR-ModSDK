@@ -222,4 +222,33 @@ struct sData sdata_static =
 	.s_desert2 = "desert2",
 	.s_proto9 = "proto9",
 	.s_proto8 = "proto8",
+	
+	// all zeros
+	.finalLapTextTimer = {},
+	
+	#if BUILD >= UsaRetail
+	.TurboDisplayPos_Only1P = 0,
+	.numPlayersFinishedRace = 0,
+	#endif
+	
+	// comment until struct is complete
+	//.gGT = &sdata_static.gameTracker,
+	//.gGamepads = &sdata_static.gamepadSystem,
+	.gGT = 0x80096b20,
+	.gGamepads = 0x80096804,
+	
+	.vsyncTillFlip = 0,
+	
+	.s_PrimMem = "PrimMem",
+	.s_OTMem = "OTMem",
+	
+	.boolPlayVideoSTR = 0,
+	
+	.AkuHint_RequestedHint = -1,
+	.AkuHint_boolInterruptWarppad = 0,
+	
+	.LOD = {1,2,4,4,8,8,8,8},
+	
+	// one for RaceWheel, one for Namco
+	.unk_drawingRaceWheelRects = {0x3C, 0x64},
 };
