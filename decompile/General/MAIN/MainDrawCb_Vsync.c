@@ -17,7 +17,9 @@ void DECOMP_MainDrawCb_Vsync()
 	sdata->rcnt_elapsedUnits_betweenVsyncs += GetRCnt(0xf2000001);
 	ResetRCnt(0xf2000001);
 
+#ifndef REBUILD_PS1
 	howl_PlayAudio_Update();
 	GAMEPAD_CheckUnplugged(sdata->gGamepads);	
+#endif
 	return;
 }

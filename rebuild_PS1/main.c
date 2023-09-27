@@ -90,6 +90,7 @@
 #include "../decompile/General/MAIN/MainDB_OTMem.c"
 #include "../decompile/General/MAIN/MainDB_PrimMem.c"
 #include "../decompile/General/MAIN/MainDrawCb_DrawSync.c"
+#include "../decompile/General/MAIN/MainDrawCb_Vsync.c"
 #include "../decompile/General/MAIN/MainInit_OTMem.c"
 #include "../decompile/General/MAIN/MainInit_PrimMem.c"
 #include "../decompile/General/MAIN/MainInit_VRAMClear.c" 

@@ -481,14 +481,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// add PTR file to loading queue
 				uVar6 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_PTR);
 				DECOMP_LOAD_AppendQueue(bigfile, LT_RAW, uVar6, sdata->PatchMem_Ptr, &DECOMP_LOAD_Callback_LEV_Adv);
-			}
-			
-#ifdef REBUILD_PS1
-			printf("End Stage 6\n");
-			printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
-			while(1) {}
-#endif
-			
+			}			
 			break;
 		}
 		case 7:

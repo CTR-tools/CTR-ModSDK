@@ -3,7 +3,7 @@
 void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestination, int* size, int callbackOrFlags)
 {
 	struct LoadQueueSlot lqs;
-	
+
 	// SCEA Presents, Copyright, UI Textures
 	if(ptrDestination == 0)
 	{

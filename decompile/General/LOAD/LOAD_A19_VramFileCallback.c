@@ -3,7 +3,7 @@
 void DECOMP_LOAD_VramFileCallback(struct LoadQueueSlot* lqs)
 {	
 	int* vramBuf = lqs->ptrDestination;
-	
+
 	if(vramBuf != 0)
 	{
 		struct VramHeader* vh = vramBuf;

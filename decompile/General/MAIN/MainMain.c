@@ -171,7 +171,7 @@ u_int DECOMP_main()
 								sdata->Loading.stage = DECOMP_LOAD_TenStages(gGT, iVar8, sdata->ptrBigfile1);
 								
 								#ifdef REBUILD_PS1
-								printf("LoadStage: %d\n", sdata->Loading.stage);
+								//printf("LoadStage: %d\n", sdata->Loading.stage);
 								#endif
 								
 								// if did not just complete loading stage 9, skip logic to load VLC, skip logic to end loading, skip logic if "if == -4", goto rendering.
@@ -549,9 +549,7 @@ void StateZero()
 	// \SOUNDS\KART.HWL;1
 	DECOMP_howl_InitGlobals(data.kartHwlPath);
 	
-#ifndef REBUILD_PS1
 	VSyncCallback(DECOMP_MainDrawCb_Vsync);
-#endif
 	
 	#ifndef FastBoot
 #ifndef REBUILD_PS1
