@@ -2685,8 +2685,6 @@ struct sData
 	char Eur_ExtraBytes[8];
 	#endif
 
-#ifndef SDATA_DEV
-
 	#if BUILD >= UsaRetail
 	// 8008d080
 	// used in Garage_LerpFX
@@ -2770,6 +2768,8 @@ struct sData
 
 	// 8008d0bc
 	int boolFirstBoot;
+
+#ifndef SDATA_DEV
 
 	// 8008D0C0
 	char s_ndi[4];

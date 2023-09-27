@@ -100,5 +100,44 @@ struct sData sdata_static =
 		
 		// padding
 		0,0
-	}
+	},
+	
+	#if BUILD >= UsaRetail
+	.garageSoundIDs =
+	{
+		0xDC, 0xDF, 0, 0xE7, 0, 0xEE, 0xF0, 0
+	},
+	#endif
+	
+	.ptrMPK = 0,
+	.ptrLEV_DuringLoading = 0,
+	.PatchMem_Ptr = 0,
+	
+	#if BUILD >= UsaRetail
+	.PatchMem_Size = 0,
+	#endif
+	
+	.bookmarkID = 0,
+	.ptrBigfileCdPos_2 = 0,
+	
+	.queueReady = 1,
+	.queueRetry = 0,
+	.queueLength = 0,
+	.UnusedPadding1 = 0,
+	
+	.load_inProgress = 0,
+	.frameWhenLoadingFinished = 0,
+	
+	.s_FILE = "FILE",
+	
+	#if BUILD >= EurRetail
+	.lngFile = 0,
+	#endif
+	
+	.levBigLodIndex =
+	{
+		0,2,4,4,6,6,6,6
+	},
+	
+	.boolFirstBoot = 1
 };
