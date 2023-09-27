@@ -2669,8 +2669,6 @@ struct sData
 	// 80090468 -- JpnRetail
 	char s_HOWL[8];
 
-#ifndef SDATA_DEV
-
 	// 8008D068 -- UsaRetail (and 8008D06C)
 	// 80090470 -- JpnRetail
 	struct SongSet advHubSongSet;
@@ -2686,6 +2684,8 @@ struct sData
 	// extra 8 bytes
 	char Eur_ExtraBytes[8];
 	#endif
+
+#ifndef SDATA_DEV
 
 	#if BUILD >= UsaRetail
 	// 8008d080

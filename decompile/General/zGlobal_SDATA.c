@@ -79,4 +79,26 @@ struct sData sdata_static =
 	.audioRNG = 0x15A37E63,
 	.boolAudioEnabled = 0,
 	.s_HOWL = "HOWL",
+	
+	.advHubSongSet =
+	{
+		.numSeqs = 0x14,
+		.ptrSongSetBits = &data.advHubSongSetBytes[0],
+	},
+	
+	.reverbModeBossID =
+	{
+		3,1,1,0,3,3,
+		
+		// padding
+		0,0
+	},
+	
+	.songBankBossID =
+	{
+		0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1E,
+		
+		// padding
+		0,0
+	}
 };
