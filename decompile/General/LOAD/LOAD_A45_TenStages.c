@@ -5,7 +5,7 @@ void MM_JumpTo_Characters();
 void MM_JumpTo_TrackSelect();
 void MM_JumpTo_BattleSetup();
 void CS_Garage_Init();
-void MM_JumpTo_Scrapbook(struct BigHeader* bigfile);
+void MM_JumpTo_Scrapbook();
 
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
 {
@@ -209,9 +209,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				sdata->levelLOD = 8;
 			}
-			
-#ifndef REBUILD_PS1
-			
+						
 			DECOMP_MainInit_PrimMem(gGT);
 			DECOMP_MainInit_OTMem(gGT);
 
@@ -222,14 +220,13 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				((gGT->gameMode2 & CREDITS) != 0)
 			)
 			{
+#ifndef REBUILD_PS1
 				// (now, at beginning of mempack)
 				MainInit_JitPoolsNew(gGT);
-			}
 #endif
+			}
 			break;
 		}
-
-#ifndef REBUILD_PS1
 		case 1:
 		{
 			// if XA has not paused since CDSYS_XAPauseRequest in stage #0,
@@ -264,12 +261,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			else 
 				ovrRegion1 = 4;
 		
-			LOAD_OvrEndRace(ovrRegion1);
+			DECOMP_LOAD_OvrEndRace(ovrRegion1);
 			break;
 		}
 		case 2:
 		{
-			LOAD_OvrLOD(gGT->numPlyrCurrGame);
+			DECOMP_LOAD_OvrLOD(gGT->numPlyrCurrGame);
 			break;
 		}	
 		case 3:
@@ -304,11 +301,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				ovrRegion3 = 3;
 			}
 			
-			LOAD_OvrThreads(ovrRegion3);
+			DECOMP_LOAD_OvrThreads(ovrRegion3);
 			break;
 		}
 		case 4:
 		{
+			#ifndef REBUILD_PS1
 			// if level is not AdvGarage or Naughty Dog Box Scene
 			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
@@ -326,9 +324,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					case 2:	MM_JumpTo_TrackSelect();		break;
 					case 3:	MM_JumpTo_BattleSetup();		break; 
 					case 4:	CS_Garage_Init();				break;
-					case 5:	MM_JumpTo_Scrapbook(bigfile);	break;
+					case 5:	MM_JumpTo_Scrapbook();			break;
 				}
 			}
+			#endif
 			
 			sdata->ptrMPK = 0;
 			sdata->load_inProgress = 1;
@@ -337,9 +336,17 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			data.driverModel_lowLOD[1] = 0;
 			data.driverModel_lowLOD[2] = 0;
 			
+			#ifdef REBUILD_PS1
+			printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
+			while(1) {}
+			#else
 			LOAD_DriverMPK(bigfile, sdata->levelLOD, &LOAD_Callback_DriverModels);
+			#endif
+			
 			break;
 		}
+
+#ifndef REBUILD_PS1
 		case 5:
 		{
 			sdata->PLYROBJECTLIST = (unsigned int)sdata->ptrMPK + 4;

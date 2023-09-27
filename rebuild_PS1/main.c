@@ -3,8 +3,6 @@
 #include <common.h>
 
 #include "../decompile/General/MAIN/MainMain.c"
-#include "../decompile/General/MAIN/MainInit_VRAMClear.c" 
-#include "../decompile/General/MAIN/MainInit_VRAMDisplay.c" 
 
 #include "../decompile/General/CDSYS/CDSYS_c01_Init.c" 
 #include "../decompile/General/CDSYS/CDSYS_c02_GetFilePosInt.c" 
@@ -44,6 +42,12 @@
 #include "../decompile/General/HOWL/h33_howl_ParseCseqHeader.c"
 #include "../decompile/General/HOWL/h34_howl_LoadHeader.c"
 
+#include "../decompile/General/LOAD/LOAD_A01_Callback_Overlay_Generic.c"
+#include "../decompile/General/LOAD/LOAD_A02_Callback_Overlay_230.c"
+#include "../decompile/General/LOAD/LOAD_A03_Callback_Overlay_231.c"
+#include "../decompile/General/LOAD/LOAD_A04_Callback_Overlay_232.c"
+#include "../decompile/General/LOAD/LOAD_A05_Callback_Overlay_233.c"
+// hole
 #include "../decompile/General/LOAD/LOAD_A14_StringToUpper.c" 
 #include "../decompile/General/LOAD/LOAD_A15_InitCD.c" 
 #include "../decompile/General/LOAD/LOAD_A16_ReadDirectory.c" 
@@ -61,12 +65,23 @@
 // hole
 #include "../decompile/General/LOAD/LOAD_A33_LangFile.c"
 // hole
+#include "../decompile/General/LOAD/LOAD_A35_AppendQueue.c"
 #include "../decompile/General/LOAD/LOAD_A36_CDRequestCallback.c"
 #include "../decompile/General/LOAD/LOAD_A37_NextQueuedFile.c"
 // hole
+#include "../decompile/General/LOAD/LOAD_A41_OvrLOD.c"
+#include "../decompile/General/LOAD/LOAD_A42_OvrEndRace.c"
+#include "../decompile/General/LOAD/LOAD_A43_OvrThreads.c"
+// hole
 #include "../decompile/General/LOAD/LOAD_A45_TenStages.c"
 
+#include "../decompile/General/MAIN/MainDB_OTMem.c"
+#include "../decompile/General/MAIN/MainDB_PrimMem.c"
 #include "../decompile/General/MAIN/MainDrawCb_DrawSync.c"
+#include "../decompile/General/MAIN/MainInit_OTMem.c"
+#include "../decompile/General/MAIN/MainInit_PrimMem.c"
+#include "../decompile/General/MAIN/MainInit_VRAMClear.c" 
+#include "../decompile/General/MAIN/MainInit_VRAMDisplay.c" 
 
 #include "../decompile/General/MEMCARD/MEMCARD_InitCard.c"
 

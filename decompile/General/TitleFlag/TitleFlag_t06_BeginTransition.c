@@ -15,7 +15,7 @@ void DECOMP_TitleFlag_BeginTransition(int direction)
     // Begin Transition off-screen
     else if (direction == 2)
     {
-        TitleFlag_SetDrawOrder(0);
+        DECOMP_TitleFlag_SetDrawOrder(0);
 
         sdata->TitleFlag_Position = 0;
 

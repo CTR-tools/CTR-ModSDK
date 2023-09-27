@@ -2,6 +2,21 @@
 
 void OVR_Region3();
 
+// temporary, till DATA and SDATA are done
+#ifdef REBUILD_PS1
+void DECOMP_LOAD_Callback_Overlay_230();
+void DECOMP_LOAD_Callback_Overlay_231();
+void DECOMP_LOAD_Callback_Overlay_232();
+void DECOMP_LOAD_Callback_Overlay_233();
+int overlayCallbackFuncs[4] =
+{
+	DECOMP_LOAD_Callback_Overlay_230,
+	DECOMP_LOAD_Callback_Overlay_231,
+	DECOMP_LOAD_Callback_Overlay_232,
+	DECOMP_LOAD_Callback_Overlay_233
+};
+#endif
+
 // DLL loaded = param_1 + 230
 void DECOMP_LOAD_OvrThreads(unsigned int param_1)
 {
@@ -16,7 +31,17 @@ void DECOMP_LOAD_OvrThreads(unsigned int param_1)
         // sdata->gGT->overlayIndex_Threads = 0xff;
 
 		// Threads overlay 230-233
-        LOAD_AppendQueue(sdata->ptrBigfileCdPos_2,LT_RAW,(param_1+0xe6),&OVR_Region3,data.overlayCallbackFuncs[param_1]);
+        DECOMP_LOAD_AppendQueue(
+			sdata->ptrBigfileCdPos_2,LT_RAW,
+			(param_1+0xe6),&OVR_Region3,
+		
+			// temporary, till DATA and SDATA are done
+			#ifdef REBUILD_PS1
+			overlayCallbackFuncs[param_1]
+			#else
+			data.overlayCallbackFuncs[param_1]
+			#endif
+		);
     }
     return;
 }

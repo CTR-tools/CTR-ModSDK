@@ -171,12 +171,7 @@ u_int DECOMP_main()
 								sdata->Loading.stage = DECOMP_LOAD_TenStages(gGT, iVar8, sdata->ptrBigfile1);
 								
 								#ifdef REBUILD_PS1
-								printf("\n\n\nLoadStage: %d\n", sdata->Loading.stage);
-								#endif
-								
-								#ifdef REBUILD_PS1
-									printf("End of REBUILD_PS1\n%s\n%s\n", __DATE__, __TIME__);
-									while(1) {}
+								printf("LoadStage: %d\n", sdata->Loading.stage);
 								#endif
 								
 								// if did not just complete loading stage 9, skip logic to load VLC, skip logic to end loading, skip logic if "if == -4", goto rendering.
@@ -380,8 +375,8 @@ u_int DECOMP_main()
 				{
 					AH_MaskHint_Update();
 				}
-				break;
 #endif
+				break;
 
 			#if 0
 			// In theory, this is left over from the demos, 
