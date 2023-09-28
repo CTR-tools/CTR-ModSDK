@@ -3080,73 +3080,150 @@ struct sData
 	// 8008d446
 	short unk_CheckFlag1;
 
-	// 8008d448
+	// 8008b8a8 Sep3
+	// 8008d448 UsaRetail
 	short TitleFlag_CanDraw;
 
 	// 8008d44a
 	short unk_CheckFlag2;
 
-	// 8008d44c
+	// 8008b8ac Sep3
+	// 8008d44c UsaRetail
 	short TitleFlag_DrawOrder;
 	short padding_8008d44e;
 
-	// does it exist in Sep3?
+#ifndef SDATA_DEV
+
+#if BUILD >= UsaRetail
 	// 8008d450
 	int TitleFlag_LoadingTextAnimFrame;
 
-#ifndef SDATA_DEV
-
 	// 8008d454
-	// transitioning flag
+	int TitleFlag_Transition;
+#endif
 
-	// 8008d458
-	// some kind of elapsed time in TitleFlag
+	// 8008b8b0 Sep3
+	// 8008d458 UsaRetail
+	// 8008c3b8 JpnTrial
+	// 8008d7f8 EurRetail
+	// 8009086c JpnRetail
+	int TitleFlag_ElapsedTime;
 	
-	// 8008d460
-	// DrawSolidBox
-
-	// 8008d454
-	#if BUILD == UsaRetail
-	char data94_afterRand[0x58];
-	#elif BUILD == JpnTrial || BUILD == SepReview
-	char data9C_afterRand[0x50];
-	// Eur and Jpn
-	#elif BUILD >= EurRetail
-	char data98_afterRand[0x5C];
+#if BUILD == SepReview
+	int TitleFlag_unknown;
+#endif
+	
+	// 8008b8b8 Sep3
+	// 8008d45c UsaRetail
+	// 8008c3bc JpnTrial
+	// 8008d7fc EurRetail
+	// 80090870 JpnRetail
+	int TitleFlag_CopyLoadStage;
+	
+	// 8008b8bc Sep3	
+	// 8008d460 UsaRetail	
+	// 8008c3c0 JpnTrial
+	// 8008d800 EurRetail
+	// 80090874 JpnRetail
+	int DrawSolidBoxData[3];
+	
+	int strcatData1;
+	#if BUILD == EurRetail
+	int strcatData2;
 	#endif
-	// ===========
 
-	// 8008d474
+	// 8008b8cc Sep3
+	// 8008d470 UsaRetail
+	// 8008c3d0 JpnTrial
+	// 8008d814 EurRetail
+	// 80090884 JpnRetail
+	int ptrToMemcardBuffer1;
+
+	// 8008b8d0 Sep3
+	// 8008d474 UsaRetail
+	// 8008c3d4 JpnTrial
+	// 8008d818 EurRetail
+	// 80090888 JpnRetail
 	// pointer to memcard bytes (again?) 800992E4
+	void* ptrToMemcardBuffer2;
+	
+	int unk8008d478;
 	
 	// 8008d47c
-	// 4 shorts for LoadSave profiles
+	short LoadSave_SpinRateY[4];
 
-	// 8008d490
+	// 8008d484
+	char stringFormat1[8];
+	char stringFormat2[4];
+
+	// 8008b8ec sep3	
+	// 8008d490 UsaRetail
+	// 8008c3f0 JpnTrial
+	// 8008d834 EurRetail
+	// 800908a4 JpnRetail
 	// grey color (80 80 80)
+	int greyColor;
 
 	// 8008d494
 	// green color (20 c0 20)
+	int greenColor;
 
 	// 8008d498
-	// black color (00 00 00)
+	// black color (25 00 00)
 	// used as inverse "filter out 'nothing' "
 	// to draw clear profile
+	int darkColor;
 
 	// 8008d49c
 	// red color drawn on ghost profile, (a0 a0 00)
 	// when it cannot be selected, due to wrong track
-	// "filter out 'all but red' "
+	int redColor;
+	
+	// 8008b8fc sep3
+	// 8008d4a0 UsaRetail
+	// 8008c400 JpnTrial
+	// 8008d844 EurRetail
+	// 800908b4 JpnRetail
+	int ghostIconColor;
 
-	// 8008d4ac
-	char str_underscore[4];
+	// 8008b900 sep3
+	// 8008d4a4	usaRetail
+	// 8008c404 jpnTrial
+	// 8008d848 EurRetail
+	// 800908b8	JpnRetail
+	#if BUILD == SepReview
+	char unk_BeforeTokenMenu[0x8];
+	#elif BUILD == UsaRetail
+	char unk_BeforeTokenMenu[0xC];
+	#elif BUILD == JpnTrial
+	char unk_BeforeTokenMenu[4];
+	#elif BUILD == EurRetail
+	char unk_BeforeTokenMenu[0xC];
+	#elif BUILD == JpnRetail
+	char unk_BeforeTokenMenu[0x10];
+	#endif
+
+	#if 0
+	// 8008b904 Sep3
+	// 8008d4ac UsaRetail
+	// -------- JpnTrial
+	// 8008d850 EurRetail
+	// 800908c4 JpnRetail
+	// char str_underscore[4];
+
+	// 8008d4a4 UsaRetail
+	// RECT loadSaveRect;
+	#endif
 
 	// 8008d4b0
 	// check if CTR Token/Relic adv menubox is open or not
 	int boolOpenTokenRelicMenu;
 
-	// 8008d4b4
-	// ptr to 8009ad18 (tileView) for multiplayer wumpa
+	// 8008b90c Sep3
+	// 8008d4b4 UsaRetail -- ptr to 8009ad18 (tileView) for multiplayer wumpa
+	// 8008c40c JpnTrial
+	// 8008d858 EurRetail
+	// 800908cc JpnRetail
 	int ptrTileViewUI;
 
 	// 8008d4b8
