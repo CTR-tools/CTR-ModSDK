@@ -1506,16 +1506,13 @@ struct Data
 	// 800864f0 -- JpnRetail
 	int opcodeOffset[0xb];
 	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-	
 	// 8008305c
+	// 0x84 for UsaRetail, 0x60 for JpnRetail and beyond
 	struct
 	{
 		short index
 		#if BUILD <= UsaRetail
-		[0x16];
+		[0x16]; // contains 0x13 numbers
 		#elif BUILD >= JpnTrial
 		[0x10];
 		#endif
@@ -1526,7 +1523,7 @@ struct Data
 			int num;
 		} voiceSet
 		#if BUILD <= UsaRetail
-		[11];
+		[0xb];
 		#elif BUILD >= JpnTrial
 		[8];
 		#endif
@@ -1539,6 +1536,10 @@ struct Data
 	// 80083b74 -- EurRetail
 	// 80086b1c -- JpnRetail
 	int voiceSetPtr[0x10];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 800838dc -- UsaRetail
 	short voiceID[0xC];

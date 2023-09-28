@@ -1854,4 +1854,450 @@ struct Data data =
 	{
 		0x01, 0x02, 0x02, 0x01, 0x02, 0x03, 0x02, 0x02, 0x02, 0x02, 0x02
 	},
+	
+	.voiceData =
+	{
+		[0] =
+		{
+			.index =
+			{
+				0, 1, 2, 3,
+				4, 5, 6, 7,
+				8, 9, 10, 11,
+				12, 13, 14, 15,
+				16, 0, 17, 0, 18, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[0].index[0], 2},
+				{&data.voiceData[0].index[2], 2},
+				{&data.voiceData[0].index[4], 2},
+				{&data.voiceData[0].index[6], 2},
+				{&data.voiceData[0].index[8], 2},
+				{&data.voiceData[0].index[10], 2},
+				{&data.voiceData[0].index[12], 2},
+				{&data.voiceData[0].index[14], 2},
+				{&data.voiceData[0].index[16], 1},
+				{&data.voiceData[0].index[18], 1},
+				{&data.voiceData[0].index[20], 1},
+			}
+		},
+		[1] =
+		{
+			.index =
+			{
+				19, 20, 21, 22,
+				23, 24, 25, 26,
+				27, 28, 29, 30,
+				31, 32, 33, 34,
+				35, 0, 36, 0, 37, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[1].index[0], 2},
+				{&data.voiceData[1].index[2], 2},
+				{&data.voiceData[1].index[4], 2},
+				{&data.voiceData[1].index[6], 2},
+				{&data.voiceData[1].index[8], 2},
+				{&data.voiceData[1].index[10], 2},
+				{&data.voiceData[1].index[12], 2},
+				{&data.voiceData[1].index[14], 2},
+				{&data.voiceData[1].index[16], 1},
+				{&data.voiceData[1].index[18], 1},
+				{&data.voiceData[1].index[20], 1},
+			}
+		},
+		[2] =
+		{
+			.index =
+			{
+				38, 39, 40, 41,
+				42, 43, 44, 45,
+				46, 47, 48, 49,
+				50, 51, 52, 53,
+				54, 0, 55, 0, 56, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[2].index[0], 2},
+				{&data.voiceData[2].index[2], 2},
+				{&data.voiceData[2].index[4], 2},
+				{&data.voiceData[2].index[6], 2},
+				{&data.voiceData[2].index[8], 2},
+				{&data.voiceData[2].index[10], 2},
+				{&data.voiceData[2].index[12], 2},
+				{&data.voiceData[2].index[14], 2},
+				{&data.voiceData[2].index[16], 1},
+				{&data.voiceData[2].index[18], 1},
+				{&data.voiceData[2].index[20], 1},
+			}
+		},
+		[3] =
+		{
+			.index =
+			{
+				57, 58, 59, 60,
+				61, 62, 63, 64,
+				65, 66, 67, 68,
+				69, 70, 71, 72,
+				73, 0, 74, 0, 75, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[3].index[0], 2},
+				{&data.voiceData[3].index[2], 2},
+				{&data.voiceData[3].index[4], 2},
+				{&data.voiceData[3].index[6], 2},
+				{&data.voiceData[3].index[8], 2},
+				{&data.voiceData[3].index[10], 2},
+				{&data.voiceData[3].index[12], 2},
+				{&data.voiceData[3].index[14], 2},
+				{&data.voiceData[3].index[16], 1},
+				{&data.voiceData[3].index[18], 1},
+				{&data.voiceData[3].index[20], 1},
+			}
+		},
+		[4] =
+		{
+			.index =
+			{
+				76, 77, 78, 79,
+				80, 81, 82, 83,
+				84, 85, 86, 87,
+				88, 89, 90, 91,
+				92, 0, 93, 0, 94, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[4].index[0], 2},
+				{&data.voiceData[4].index[2], 2},
+				{&data.voiceData[4].index[4], 2},
+				{&data.voiceData[4].index[6], 2},
+				{&data.voiceData[4].index[8], 2},
+				{&data.voiceData[4].index[10], 2},
+				{&data.voiceData[4].index[12], 2},
+				{&data.voiceData[4].index[14], 2},
+				{&data.voiceData[4].index[16], 1},
+				{&data.voiceData[4].index[18], 1},
+				{&data.voiceData[4].index[20], 1},
+			}
+		},
+		[5] =
+		{
+			.index =
+			{
+				95, 96, 97, 98,
+				99, 100, 101, 102,
+				103, 104, 105, 106,
+				107, 108, 109, 110,
+				111, 0, 112, 0, 113, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[5].index[0], 2},
+				{&data.voiceData[5].index[2], 2},
+				{&data.voiceData[5].index[4], 2},
+				{&data.voiceData[5].index[6], 2},
+				{&data.voiceData[5].index[8], 2},
+				{&data.voiceData[5].index[10], 2},
+				{&data.voiceData[5].index[12], 2},
+				{&data.voiceData[5].index[14], 2},
+				{&data.voiceData[5].index[16], 1},
+				{&data.voiceData[5].index[18], 1},
+				{&data.voiceData[5].index[20], 1},
+			}
+		},
+		[6] =
+		{
+			.index =
+			{
+				114, 115, 116, 117,
+				118, 119, 120, 121,
+				122, 123, 124, 125,
+				126, 127, 128, 129,
+				130, 0, 131, 0, 132, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[6].index[0], 2},
+				{&data.voiceData[6].index[2], 2},
+				{&data.voiceData[6].index[4], 2},
+				{&data.voiceData[6].index[6], 2},
+				{&data.voiceData[6].index[8], 2},
+				{&data.voiceData[6].index[10], 2},
+				{&data.voiceData[6].index[12], 2},
+				{&data.voiceData[6].index[14], 2},
+				{&data.voiceData[6].index[16], 1},
+				{&data.voiceData[6].index[18], 1},
+				{&data.voiceData[6].index[20], 1},
+			}
+		},
+		[7] =
+		{
+			.index =
+			{
+				133, 134, 135, 136,
+				137, 138, 139, 140,
+				141, 142, 143, 144,
+				145, 146, 147, 148,
+				149, 0, 150, 0, 151, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[7].index[0], 2},
+				{&data.voiceData[7].index[2], 2},
+				{&data.voiceData[7].index[4], 2},
+				{&data.voiceData[7].index[6], 2},
+				{&data.voiceData[7].index[8], 2},
+				{&data.voiceData[7].index[10], 2},
+				{&data.voiceData[7].index[12], 2},
+				{&data.voiceData[7].index[14], 2},
+				{&data.voiceData[7].index[16], 1},
+				{&data.voiceData[7].index[18], 1},
+				{&data.voiceData[7].index[20], 1},
+			}
+		},
+		[8] =
+		{
+			.index =
+			{
+				152, 153, 154, 155,
+				156, 157, 158, 159,
+				160, 161, 162, 163,
+				164, 165, 166, 167,
+				168, 0, 169, 0, 170, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[8].index[0], 2},
+				{&data.voiceData[8].index[2], 2},
+				{&data.voiceData[8].index[4], 2},
+				{&data.voiceData[8].index[6], 2},
+				{&data.voiceData[8].index[8], 2},
+				{&data.voiceData[8].index[10], 2},
+				{&data.voiceData[8].index[12], 2},
+				{&data.voiceData[8].index[14], 2},
+				{&data.voiceData[8].index[16], 1},
+				{&data.voiceData[8].index[18], 1},
+				{&data.voiceData[8].index[20], 1},
+			}
+		},
+		[9] =
+		{
+			.index =
+			{
+				171, 172, 173, 174,
+				175, 176, 177, 178,
+				179, 180, 181, 182,
+				183, 184, 185, 186,
+				187, 0, 188, 0, 189, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[9].index[0], 2},
+				{&data.voiceData[9].index[2], 2},
+				{&data.voiceData[9].index[4], 2},
+				{&data.voiceData[9].index[6], 2},
+				{&data.voiceData[9].index[8], 2},
+				{&data.voiceData[9].index[10], 2},
+				{&data.voiceData[9].index[12], 2},
+				{&data.voiceData[9].index[14], 2},
+				{&data.voiceData[9].index[16], 1},
+				{&data.voiceData[9].index[18], 1},
+				{&data.voiceData[9].index[20], 1},
+			}
+		},
+		
+		// This one breaks the pattern,
+		// index is out of order
+		[10] =
+		{
+			.index =
+			{
+				0xc8, 0xc9, 0xc0, 0xc1,
+				0xc2, 0xc3, 0xc4, 0xc5,
+				0xc6, 0xc7, 0xc8, 0xc9,
+				0xcA, 0xcB, 0xcC, 0xcD,
+				0xcE, 0, 0xcF, 0, 0xd0, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[10].index[0], 2},
+				{&data.voiceData[10].index[2], 2},
+				{&data.voiceData[10].index[4], 2},
+				{&data.voiceData[10].index[6], 2},
+				{&data.voiceData[10].index[8], 2},
+				{&data.voiceData[10].index[10], 2},
+				{&data.voiceData[10].index[12], 2},
+				{&data.voiceData[10].index[14], 2},
+				{&data.voiceData[10].index[16], 1},
+				{&data.voiceData[10].index[18], 1},
+				{&data.voiceData[10].index[20], 1},
+			}
+		},
+		
+		[11] =
+		{
+			.index =
+			{
+				209, 210, 211, 212,
+				213, 214, 215, 216,
+				217, 218, 219, 220,
+				221, 222, 223, 224,
+				225, 0, 226, 0, 227, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[11].index[0], 2},
+				{&data.voiceData[11].index[2], 2},
+				{&data.voiceData[11].index[4], 2},
+				{&data.voiceData[11].index[6], 2},
+				{&data.voiceData[11].index[8], 2},
+				{&data.voiceData[11].index[10], 2},
+				{&data.voiceData[11].index[12], 2},
+				{&data.voiceData[11].index[14], 2},
+				{&data.voiceData[11].index[16], 1},
+				{&data.voiceData[11].index[18], 1},
+				{&data.voiceData[11].index[20], 1},
+			}
+		},
+		[12] =
+		{
+			.index =
+			{
+				228, 229, 230, 231,
+				232, 233, 234, 235,
+				236, 237, 238, 239,
+				240, 241, 242, 243,
+				244, 0, 245, 0, 246, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[12].index[0], 2},
+				{&data.voiceData[12].index[2], 2},
+				{&data.voiceData[12].index[4], 2},
+				{&data.voiceData[12].index[6], 2},
+				{&data.voiceData[12].index[8], 2},
+				{&data.voiceData[12].index[10], 2},
+				{&data.voiceData[12].index[12], 2},
+				{&data.voiceData[12].index[14], 2},
+				{&data.voiceData[12].index[16], 1},
+				{&data.voiceData[12].index[18], 1},
+				{&data.voiceData[12].index[20], 1},
+			}
+		},
+		[13] =
+		{
+			.index =
+			{
+				247, 248, 249, 250,
+				251, 252, 253, 254,
+				255, 256, 257, 258,
+				259, 260, 261, 262,
+				263, 0, 264, 0, 265, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[13].index[0], 2},
+				{&data.voiceData[13].index[2], 2},
+				{&data.voiceData[13].index[4], 2},
+				{&data.voiceData[13].index[6], 2},
+				{&data.voiceData[13].index[8], 2},
+				{&data.voiceData[13].index[10], 2},
+				{&data.voiceData[13].index[12], 2},
+				{&data.voiceData[13].index[14], 2},
+				{&data.voiceData[13].index[16], 1},
+				{&data.voiceData[13].index[18], 1},
+				{&data.voiceData[13].index[20], 1},
+			}
+		},
+		[14] =
+		{
+			.index =
+			{
+				266, 267, 268, 269,
+				270, 271, 272, 273,
+				274, 275, 276, 277,
+				278, 279, 280, 281,
+				282, 0, 283, 0, 284, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[14].index[0], 2},
+				{&data.voiceData[14].index[2], 2},
+				{&data.voiceData[14].index[4], 2},
+				{&data.voiceData[14].index[6], 2},
+				{&data.voiceData[14].index[8], 2},
+				{&data.voiceData[14].index[10], 2},
+				{&data.voiceData[14].index[12], 2},
+				{&data.voiceData[14].index[14], 2},
+				{&data.voiceData[14].index[16], 1},
+				{&data.voiceData[14].index[18], 1},
+				{&data.voiceData[14].index[20], 1},
+			}
+		},
+		[15] =
+		{
+			.index =
+			{
+				285, 286, 287, 288,
+				289, 290, 291, 292,
+				293, 294, 295, 296,
+				297, 298, 299, 300,
+				301, 0, 302, 0, 303, 0
+			},
+			
+			.voiceSet =
+			{
+				{&data.voiceData[15].index[0], 2},
+				{&data.voiceData[15].index[2], 2},
+				{&data.voiceData[15].index[4], 2},
+				{&data.voiceData[15].index[6], 2},
+				{&data.voiceData[15].index[8], 2},
+				{&data.voiceData[15].index[10], 2},
+				{&data.voiceData[15].index[12], 2},
+				{&data.voiceData[15].index[14], 2},
+				{&data.voiceData[15].index[16], 1},
+				{&data.voiceData[15].index[18], 1},
+				{&data.voiceData[15].index[20], 1},
+			}
+		}
+	},
+
+	.voiceSetPtr =
+	{
+		&data.voiceData[0].voiceSet,
+		&data.voiceData[1].voiceSet,
+		&data.voiceData[2].voiceSet,
+		&data.voiceData[3].voiceSet,
+		&data.voiceData[4].voiceSet,
+		&data.voiceData[5].voiceSet,
+		&data.voiceData[6].voiceSet,
+		&data.voiceData[7].voiceSet,
+		&data.voiceData[8].voiceSet,
+		&data.voiceData[9].voiceSet,
+		&data.voiceData[10].voiceSet,
+		&data.voiceData[11].voiceSet,
+		&data.voiceData[12].voiceSet,
+		&data.voiceData[13].voiceSet,
+		&data.voiceData[14].voiceSet,
+		&data.voiceData[15].voiceSet
+	}
+	
+	// .voiceID
 };
