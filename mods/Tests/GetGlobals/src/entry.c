@@ -3,12 +3,12 @@
 void RunEntryHook()
 {
 	int num = 0;
-	while(num < 0x100)
+	while(num < 9*12)
 	{
-		for(int i = 0; i < 0x10; i++)
+		for(int i = 0; i < 12; i++)
 		{
-			printf("0x%X, ", 
-				data.distortConst_OtherFX[num]
+			printf("0x%04X, ", 
+				data.noteFrequency[num]
 			); 
 			
 			num++;

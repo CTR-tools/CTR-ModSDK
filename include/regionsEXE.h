@@ -1466,10 +1466,6 @@ struct Data
 	// 800829ac
 	int distortConst_OtherFX[0x100];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80080fa8 -- SepReview
 	// 80082dac -- UsaRetail
 	// 80081ed8 -- JpnTrial
@@ -1480,7 +1476,11 @@ struct Data
 	// 80082eac -- UsaRetail
 	// for notes ABCDEFG, and if all 
 	// are set to the same value, all notes are the same
-	short noteFrequency[0x6C];
+	unsigned short noteFrequency[0x6C];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80082f84
 	// array of data for Instrument Pitch
