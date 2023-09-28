@@ -1509,12 +1509,12 @@ struct Data
 // for rewriting structs in decompile,
 // zGlobal_DATA.c
 #ifndef DATA_DEV
-
+	
 	// 8008305c
 	#if BUILD <= UsaRetail
-	unsigned char opcodeData[0xC0*0xb];
+	unsigned char voiceData[0x10*0x84];
 	#elif BUILD >= JpnTrial
-	unsigned char opcodeData[0xC0*0x8];
+	unsigned char voiceData[0x10*0x60];
 	#endif
 
 	// 80081b18 -- SepReview
@@ -1522,7 +1522,7 @@ struct Data
 	// 80082788 -- JpnTrial
 	// 80083b74 -- EurRetail
 	// 80086b1c -- JpnRetail
-	int voiceData[0x10];
+	int voicePtr[0x10];
 
 	// 800838dc -- UsaRetail
 	short voiceID[0xC];
