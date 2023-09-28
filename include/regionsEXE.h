@@ -1511,18 +1511,34 @@ struct Data
 #ifndef DATA_DEV
 	
 	// 8008305c
-	#if BUILD <= UsaRetail
-	unsigned char voiceData[0x10*0x84];
-	#elif BUILD >= JpnTrial
-	unsigned char voiceData[0x10*0x60];
-	#endif
+	struct
+	{
+		short index
+		#if BUILD <= UsaRetail
+		[0x16];
+		#elif BUILD >= JpnTrial
+		[0x10];
+		#endif
+		
+		struct
+		{
+			void* ptr;
+			int num;
+		} voiceSet
+		#if BUILD <= UsaRetail
+		[11];
+		#elif BUILD >= JpnTrial
+		[8];
+		#endif
+		
+	} voiceData[0x10];
 
 	// 80081b18 -- SepReview
 	// 8008389c -- UsaRetail
 	// 80082788 -- JpnTrial
 	// 80083b74 -- EurRetail
 	// 80086b1c -- JpnRetail
-	int voicePtr[0x10];
+	int voiceSetPtr[0x10];
 
 	// 800838dc -- UsaRetail
 	short voiceID[0xC];
