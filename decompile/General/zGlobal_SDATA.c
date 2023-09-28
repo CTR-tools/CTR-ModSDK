@@ -416,4 +416,28 @@ struct sData sdata_static =
 	{
 		0x18003e0, 0x180020, 0x1000320, 0x180020
 	},
+	
+	.Battle_EndOfRace =
+	{
+		.Flags_PressX = 0,
+		.textFlags1_2P = 0x350100,
+		.textFlags2_2P = 0x430100,
+	},
+	
+	.numIconsEOR = 1,
+	
+	.s_additionInt = "+%d",
+	
+	.UnlockBitIndex =
+	{
+		.CupCompletion_curr = {0xc, 0x10, 0x14, 0},
+		.CupCompletion_prev = {0x18, 0x1c, 0x20, 0},
+		.UnlockBattleMap = {2, 3, 4, 0},
+	},
+	
+	.unk_UsedIn_FUN_80057884 = 0,
+	
+	.s_NOSCRUB = "NOSCRUB",
+	.s_ROAD = "ROAD",
+	.s_SANDBAG = "SANDBAG",
 };

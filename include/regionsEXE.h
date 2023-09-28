@@ -3294,8 +3294,6 @@ struct sData
 	// 8008d554
 	// one for each player
 	int multiplayerWumpaHudData[4];
-	
-#ifndef SDATA_DEV
 
 	// 8008d564
 	struct
@@ -3351,6 +3349,7 @@ struct sData
 	char s_NOSCRUB[8];
 	char s_ROAD[8];
 	char s_SANDBAG[8];
+#ifndef SDATA_DEV
 	char s_RUBBER[8];
 	char s_SOILD[8];
 	char s_mud[4];
