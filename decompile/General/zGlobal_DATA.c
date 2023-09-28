@@ -2297,7 +2297,17 @@ struct Data data =
 		&data.voiceData[13].voiceSet,
 		&data.voiceData[14].voiceSet,
 		&data.voiceData[15].voiceSet
-	}
+	},
 	
-	// .voiceID
+	.voiceID =
+	{
+		4, 1, 5, 2, 1, 1, 1, 3, 6, 6,
+		7, 7, 7, 7, 7, 4, 0, 0, 0, 0,
+		0, 8, 8, 8
+	},
+	
+	//.advHubSongSetBytes =
+	//{
+		
+	//}
 };

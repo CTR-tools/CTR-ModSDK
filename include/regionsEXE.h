@@ -1537,17 +1537,17 @@ struct Data
 	// 80086b1c -- JpnRetail
 	int voiceSetPtr[0x10];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 800838dc -- UsaRetail
-	short voiceID[0xC];
+	unsigned char voiceID[0x18];
 	
 	#if (BUILD == JpnTrial) || (BUILD == JpnRetail)
 	// JpnRetail, FUN_8002e940(Voiceline_StartPlay), 80086b74
 	short unkBetween_voiceID_SongSetBytes[10];
 	#endif
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 800838f4 -- UsaRetail
 	// 80086b88 -- JpnRetail
