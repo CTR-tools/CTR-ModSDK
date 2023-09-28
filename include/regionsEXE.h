@@ -3092,8 +3092,6 @@ struct sData
 	short TitleFlag_DrawOrder;
 	short padding_8008d44e;
 
-#ifndef SDATA_DEV
-
 #if BUILD >= UsaRetail
 	// 8008d450
 	int TitleFlag_LoadingTextAnimFrame;
@@ -3127,7 +3125,7 @@ struct sData
 	// 80090874 JpnRetail
 	int DrawSolidBoxData[3];
 	
-	int strcatData1;
+	char strcatData1_colon[4];
 	#if BUILD == EurRetail
 	int strcatData2;
 	#endif
@@ -3148,6 +3146,8 @@ struct sData
 	void* ptrToMemcardBuffer2;
 	
 	int unk8008d478;
+	
+#ifndef SDATA_DEV
 	
 	// 8008d47c
 	short LoadSave_SpinRateY[4];
@@ -3193,8 +3193,17 @@ struct sData
 	// 800908b8	JpnRetail
 	#if BUILD == SepReview
 	char unk_BeforeTokenMenu[0x8];
+	
 	#elif BUILD == UsaRetail
-	char unk_BeforeTokenMenu[0xC];
+	char unk_BeforeTokenMenu[0x8];
+	
+	// 8008b904 Sep3
+	// 8008d4ac UsaRetail
+	// -------- JpnTrial
+	// 8008d850 EurRetail
+	// 800908c4 JpnRetail
+	char str_underscore[4];
+	
 	#elif BUILD == JpnTrial
 	char unk_BeforeTokenMenu[4];
 	#elif BUILD == EurRetail
@@ -3203,19 +3212,11 @@ struct sData
 	char unk_BeforeTokenMenu[0x10];
 	#endif
 
-	#if 0
-	// 8008b904 Sep3
-	// 8008d4ac UsaRetail
-	// -------- JpnTrial
-	// 8008d850 EurRetail
-	// 800908c4 JpnRetail
-	// char str_underscore[4];
-
-	// 8008d4a4 UsaRetail
-	// RECT loadSaveRect;
-	#endif
-
-	// 8008d4b0
+	// 8008b908 Sep3
+	// 8008d4b0 UsaRetail
+	// 8008c408 JpnTrial
+	// 8008d854 EurRetail
+	// 800908c8 JpnRetail
 	// check if CTR Token/Relic adv menubox is open or not
 	int boolOpenTokenRelicMenu;
 

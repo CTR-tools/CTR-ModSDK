@@ -331,11 +331,31 @@ struct sData sdata_static =
 	
 	.TitleFlag_AnimationType = 0,
 	.TitleFlag_Position = 0,
-	.unk_CheckFlag1 = 0x12c,
+	.unk_CheckFlag1 = 300,
 	.TitleFlag_CanDraw = 1,
 	.unk_CheckFlag2 = 0,
 	.TitleFlag_DrawOrder = 0,
 	.padding_8008d44e = 0,
 	
+#if BUILD >= UsaRetail
 	.TitleFlag_LoadingTextAnimFrame = -1,
+	.TitleFlag_Transition = 0,
+#endif
+
+	.TitleFlag_ElapsedTime = 0,
+	.TitleFlag_CopyLoadStage = -1,
+	
+	.DrawSolidBoxData = {0, 0xc0c0c0, 0},
+	
+	.strcatData1_colon = ":",
+	
+	// Hard-code is required,
+	// cause the structs are in BSS, therefore excluded 
+	// by SDATA, so the zeros dont bloat the EXE
+	
+	//.ptrToMemcardBuffer1 = &sdata_static.????,
+	.ptrToMemcardBuffer1 = 0x800992e4,
+	.ptrToMemcardBuffer2 = 0x800992e4,
+	
+	.unk8008d478 = 0x50002,
 };
