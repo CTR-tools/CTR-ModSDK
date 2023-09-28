@@ -1545,10 +1545,6 @@ struct Data
 	short unkBetween_voiceID_SongSetBytes[10];
 	#endif
 	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 800838f4 -- UsaRetail
 	// 80086b88 -- JpnRetail
 	unsigned char advHubSongSetBytes[0x14];
@@ -1559,6 +1555,10 @@ struct Data
 	// 80083be0 -- EurRetail
 	// 80086b9c -- JpnRetail
 	short nTropyXA[6];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80083914
 	char reverbMode[0x38];
