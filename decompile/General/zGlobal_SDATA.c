@@ -358,4 +358,43 @@ struct sData sdata_static =
 	.ptrToMemcardBuffer2 = 0x800992e4,
 	
 	.unk8008d478 = 0x50002,
+	
+	.LoadSave_SpinRateY = {64, -47, 51, 0},
+	
+	.stringFormat1 = "%02ld",
+	.stringFormat2 = "%ld",
+	.greyColor = 0x808080,
+	.greenColor = 0x20c020,
+	.darkColor = 0x25,
+	.redColor = 0xA0A000,
+	.ghostIconColor = 0x808080,
+	
+	.unk_BeforeTokenMenu =
+	{
+		0xEC, 0xFF,	// -20
+		0x14, 0x0,	// 20
+		0x28, 0x2,	// 552
+		0xAA, 0x0	// 170
+	},
+	
+	.str_underscore = "_",
+	
+	.boolOpenTokenRelicMenu = 0,
+	.ptrTileViewUI = 0,
+	.ptrThreadFruitDisp = 0,
+	.menuReadyToPass = 0,
+	
+	.s_token = "token",
+	.s_relic1 = "relic1",
+	.s_key1 = "key1",
+	.s_trophy1 = "trophy1",
+	.s_big1 = "big1",
+	.s_hudc = "hudc",
+	.s_hudt = "hudt",
+	.s_hudr = "hudr",
+	
+	
+	
+	
+	
 };

@@ -3147,8 +3147,6 @@ struct sData
 	
 	int unk8008d478;
 	
-#ifndef SDATA_DEV
-	
 	// 8008d47c
 	short LoadSave_SpinRateY[4];
 
@@ -3247,6 +3245,8 @@ struct sData
 	char s_hudc[8];
 	char s_hudt[8];
 	char s_hudr[8];
+	
+#ifndef SDATA_DEV
 
 	// 8008d500
 	int unknownWhatThisIs;
