@@ -1457,10 +1457,6 @@ struct Data
 	SpuReverbAttr reverbParams[6]; // 6*0x14 = 0x78
 	#endif
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// distort = [0, 0xff],
 	// one value for each distortion
 
@@ -1469,6 +1465,10 @@ struct Data
 
 	// 800829ac
 	int distortConst_OtherFX[0x100];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80080fa8 -- SepReview
 	// 80082dac -- UsaRetail
