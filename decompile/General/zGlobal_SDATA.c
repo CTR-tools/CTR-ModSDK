@@ -251,4 +251,58 @@ struct sData sdata_static =
 	
 	// one for RaceWheel, one for Namco
 	.unk_drawingRaceWheelRects = {0x3C, 0x64},
+	
+	.posY_MultiLine = {0x92, 0xA0},
+	
+	.posY_Arrows = {0x81, 0x8F},
+	
+	.unk_RaceWheelConfig = {0x320, -1, -1},
+	
+	.s_ot0 = "ot[0]",
+	.s_ot1 = "ot[1]",
+	.s_PLAYER = "PLAYER",
+	.s_PLYR = "PLYR",
+	.s_ROBOT = "ROBOT",
+	.s_RBOT = "RBOT",
+	.s_STATIC = "STATIC",
+	.s_STAT = "STAT",
+	.s_MINE = "MINE",
+	.s_WARPPAD = "WARPPAD",
+	.s_WRPD = "WRPD",
+	.s_TRKG = "TRKG",
+	.s_BURST = "BURST",
+	.s_BRST = "BRST",
+	.s_BLOWUP = "BLOWUP",
+	.s_BLWP = "BLWP",
+	.s_TURBO_again = "TURBO",
+	.s_TRBO = "TRBO",
+	.s_SPIDER = "SPIDER",
+	.s_SPDR = "SPDR",
+	.s_FLWR = "FLWR",
+	.s_STXT = "STXT",
+	.s_OTHER = "OTHER",
+	.s_OTHR = "OTHR",
+	.s_AKUAKU = "AKUAKU",
+	.s_AKUU = "AKUU",
+	.s_CAMERA = "CAMERA",
+	.s_CAMR = "CAMR",
+	.s_HUD = "HUD",
+	.s_THUD = "THUD",
+	.s_PAUSE = "PAUSE",
+	.s_PAUS = "PAUS",
+	
+	.MainDrawCb_DrawSyncPtr = 0,
+	.ptrVlcTable = 0,
+	.bool_IsLoaded_VlcTable = 0,
+	
+	#if BUILD >= JpnTrial
+	.region = "XXXX",
+	#endif
+	
+	.unk_card_8008D404 = 0,
+	.memcard_ptrStart = 0,
+	.memcard_fd = -1,
+	.memcard_remainingAttempts = 8,
+	.s_memcardDirHeader = "bu00:",
+	.s_AnyFile = "*",
 };

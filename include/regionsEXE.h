@@ -2935,8 +2935,6 @@ struct sData
 	// one for RaceWheel, one for Namco
 	int unk_drawingRaceWheelRects[2];
 
-#ifndef SDATA_DEV
-
 	// 8008d2e0
 	// one for RaceWheel, one for Namco
 	int posY_MultiLine[2];
@@ -3031,6 +3029,8 @@ struct sData
 
 	// 8008d41c
 	char s_AnyFile[4];
+
+#ifndef SDATA_DEV
 
 	// 8008e0bc -- Aug14
 	// 8008b880 -- SepReview
