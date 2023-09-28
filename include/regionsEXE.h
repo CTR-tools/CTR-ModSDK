@@ -1478,10 +1478,6 @@ struct Data
 	// are set to the same value, all notes are the same
 	unsigned short noteFrequency[0x6C];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80082f84
 	// array of data for Instrument Pitch
 	#if BUILD <= SepReview
@@ -1495,6 +1491,10 @@ struct Data
 	// SpuReverbAttr is 0x14 bytes, another five of those?
 	char unkJpnRetail_between_pitch_opcodeFunc[5*0x14];
 	#endif
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80081280 -- SepReview
 	// 80083004 -- UsaRetail
