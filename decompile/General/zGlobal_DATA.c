@@ -1701,5 +1701,50 @@ struct Data data =
 		{
 			// null terminator
 		},
-	}
+	},
+	
+	.reverbParams =
+	{
+		{
+			.mask = 1,
+			.mode = 0x109,
+			.depth = {0x2DFF, 0x2DFF},
+			.delay = 0,
+			.feedback = 0
+		},
+		
+		{
+			.mask = 1,
+			.mode = 0x101,
+			.depth = {0x4FFF, 0x4FFF},
+			.delay = 0,
+			.feedback = 0
+		},
+		
+		{
+			.mask = 1,
+			.mode = 0x103,
+			.depth = {0x37FF, 0x37FF},
+			.delay = 0,
+			.feedback = 0
+		},
+		
+		{
+			.mask = 1,
+			.mode = 0x103,
+			.depth = {0x37FF, 0x37FF},
+			.delay = 0,
+			.feedback = 0
+		},
+		
+		{
+			.mask = 1,
+			.mode = 0x102,
+			.depth = {0x37FF, 0x37FF},
+			.delay = 0,
+			.feedback = 0
+		},
+	},
+	
+	// .distortConst_Engine
 };

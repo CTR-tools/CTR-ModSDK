@@ -1446,10 +1446,6 @@ struct Data
 		int output;
 	} gamepadMapBtn[20];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80080744 -- SepReview	7C4
 	// 80082548 -- UsaRetail	74C
 	// 80081674 -- JpnTrial		814
@@ -1460,6 +1456,10 @@ struct Data
 	#else
 	SpuReverbAttr reverbParams[6]; // 6*0x14 = 0x78
 	#endif
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// distort = [0, 0xff],
 	// one value for each distortion
