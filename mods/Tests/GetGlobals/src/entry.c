@@ -2,14 +2,25 @@
 
 void RunEntryHook()
 {
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	
 	int num = 0;
-	while(num < 0x14)
+	while(num < 0x84)
 	{
-		printf("0x%02x, ",
-			data.advHubSongSetBytes[num]);
+		for(int i = 0; i < 8; i++)
+		{
+			printf("0x%02x, ",
+				data.levAmbientSound[num]);
 		
-		num++;
+			num++;
+		}
+		
+		printf("\n");
 	}
 	
+	printf("\n");
+	printf("\n");
 	printf("\n");
 }

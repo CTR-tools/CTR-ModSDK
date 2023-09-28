@@ -1556,10 +1556,6 @@ struct Data
 	// 80086b9c -- JpnRetail
 	short nTropyXA[6];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80083914
 	char reverbMode[0x38];
 
@@ -1570,7 +1566,7 @@ struct Data
 	char levBank_Song[0x20];
 
 	// 8008398c
-	void* levAmbientSound[0x21];
+	unsigned char levAmbientSound[0x84];
 
 	// 80081c8c -- SepReview
 	// 80083a10 -- UsaRetail
@@ -1599,6 +1595,10 @@ struct Data
 
 	// 80083a3c
 	struct LoadQueueSlot currSlot;
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80083a54
 	// see FUN_80032700
