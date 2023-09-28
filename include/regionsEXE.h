@@ -1439,12 +1439,16 @@ struct Data
 	// 800858d0 -- JpnRetail
 	unsigned short pauseScreenStrip[0x10];
 
+	// 800824a8 -- UsaRetail
+	struct
+	{
+		char input[4];
+		int output;
+	} gamepadMapBtn[20];
+
 // for rewriting structs in decompile,
 // zGlobal_DATA.c
 #ifndef DATA_DEV
-
-	// 800824a8 -- UsaRetail
-	char unk_gamepadData[0xA0];
 
 	// 80080744 -- SepReview	7C4
 	// 80082548 -- UsaRetail	74C

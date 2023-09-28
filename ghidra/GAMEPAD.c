@@ -531,6 +531,9 @@ uint FUN_80025718(int param_1)
           }
         }
 		
+		// gamepadMapBtn to map RawInput enum
+		// to Buttons enum, to support different
+		// types of controllers
         puVar2 = &DAT_800824a8;
         uVar1 = DAT_800824a8;
         while (uVar1 != 0) {

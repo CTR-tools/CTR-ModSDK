@@ -1553,4 +1553,153 @@ struct Data data =
 		0xB1F2, 0xBA13, 0xBE34, 0xC675,
 		0xCA96, 0xD2B7, 0xD6F8, 0xDF19,
 	},
+	
+	.gamepadMapBtn =
+	{
+		{
+			// RAW_BTN_UP = 0x10
+			.input = {0, 0x10, 0, 0x10},
+			
+			.output = BTN_UP
+		},
+		
+		{
+			// RAW_BTN_DOWN = 0x40
+			.input = {0, 0x40, 0, 0x40},
+			
+			.output = BTN_DOWN
+		},
+		
+		{
+			// RAW_BTN_LEFT = 0x80
+			.input = {0, 0x80, 0, 0x80},
+			
+			.output = BTN_LEFT
+		},
+		
+		{
+			// RAW_BTN_RIGHT = 0x20
+			.input = {0, 0x20, 0, 0x20},
+			
+			.output = BTN_RIGHT
+		},
+		
+		{
+			// RAW_BTN_TRIANGLE = 0x1000
+			.input = {0x10, 0, 8, 0},
+			
+			.output = BTN_TRIANGLE
+		},
+		
+		{
+			// RAW_BTN_CROSS = 0x4000
+			.input = {0x40, 0, 0x40, 0},
+			
+			.output = BTN_CROSS_one
+		},
+		
+		{
+			// RAW_BTN_SQUARE = 0x8000
+			.input = {0x80, 0, 0x4, 0},
+			
+			.output = BTN_SQUARE_one
+		},
+		
+		{
+			// RAW_BTN_CIRCLE = 0x2000
+			.input = {0x20, 0, 0x20, 0},
+			
+			.output = BTN_CIRCLE
+		},
+		
+		{
+			// RAW_BTN_L2 = 0x100
+			.input = {1, 0, 1, 0},
+			
+			.output = BTN_L2_one
+		},
+		
+		// remove ND duplicate
+		#if 0
+		{
+			// RAW_BTN_L2 = 0x100
+			.input = {1, 0, 1, 0},
+			
+			.output = BTN_L2_two
+		},
+		#endif
+		
+		{
+			// RAW_BTN_R2 = 0x200
+			.input = {2, 0, 0x80, 0},
+			
+			.output = BTN_R2
+		},
+		
+		{
+			// RAW_BTN_START = 8
+			.input = {0, 8, 0, 8},
+			
+			.output = BTN_START
+		},
+		
+		{
+			// RAW_BTN_SELECT = 1
+			.input = {0, 1, 0, 1},
+			
+			.output = BTN_SELECT
+		},
+		
+		// remove ND duplicate
+		#if 0
+		{
+			// RAW_BTN_CROSS = 0x4000
+			.input = {0x40, 0, 0x40, 0},
+			
+			.output = BTN_CROSS_two
+		},
+		#endif
+		
+		// remove ND duplicate
+		#if 0
+		{
+			// RAW_BTN_SQUARE = 0x8000
+			.input = {0x80, 0, 4, 0},
+			
+			.output = BTN_SQUARE_two
+		},
+		#endif
+		
+		{
+			// RAW_BTN_L1 = 0x400
+			.input = {4, 0, 2, 0},
+			
+			.output = BTN_L1
+		},
+		
+		{
+			// RAW_BTN_R1 = 0x800
+			.input = {8, 0, 0x10, 0},
+			
+			.output = BTN_R1
+		},
+		
+		{
+			// RAW_BTN_L3 = 0x2
+			.input = {0, 2, 0, 2},
+			
+			.output = BTN_L3
+		},
+		
+		{
+			// RAW_BTN_R3 = 0x4
+			.input = {0, 4, 0, 4},
+			
+			.output = BTN_R3
+		},
+		
+		{
+			// null terminator
+		},
+	}
 };
