@@ -3245,8 +3245,6 @@ struct sData
 	char s_hudc[8];
 	char s_hudt[8];
 	char s_hudr[8];
-	
-#ifndef SDATA_DEV
 
 	// 8008d500
 	int unknownWhatThisIs;
@@ -3296,6 +3294,8 @@ struct sData
 	// 8008d554
 	// one for each player
 	int multiplayerWumpaHudData[4];
+	
+#ifndef SDATA_DEV
 
 	// 8008d564
 	struct

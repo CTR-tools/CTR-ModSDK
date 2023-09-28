@@ -393,8 +393,27 @@ struct sData sdata_static =
 	.s_hudt = "hudt",
 	.s_hudr = "hudr",
 	
+	.unknownWhatThisIs = 0x908000,
+	.raceClockStr = " :  :  ",
+	.s_Ln = "l ",
+	.s_int = "%d",
+	.s_intDividing = "%d/%d",
+	.s_printDividing = " / ",
+	.s_longInt = "%ld",
+	.s_spacebar = " ",
+	.s_x = "x",
 	
+	.framesSinceRaceEnded = 0,
 	
+	.s_subtractLongInt = "-%ld",
+	.s_additionLongInt = "+%ld",
+	.s_subtractInt = "-%d",
+	.s_999 = "999 ",
+	.s_intSpace = "%d ",
+	.s_str = "%s",
 	
-	
+	.multiplayerWumpaHudData = 
+	{
+		0x18003e0, 0x180020, 0x1000320, 0x180020
+	},
 };
