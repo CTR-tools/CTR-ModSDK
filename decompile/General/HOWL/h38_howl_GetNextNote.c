@@ -21,3 +21,8 @@ char* DECOMP_howl_GetNextNote(char* currNote, int* noteLen)
 	*noteLen = var1;
 	return currNote+1;
 }
+
+void DECOMP_cseq_opcode00_empty()
+{
+	// left empty by ND
+}

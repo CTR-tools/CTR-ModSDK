@@ -16,3 +16,8 @@ void DECOMP_cseq_opcode03(struct SongSeq* seq)
 		seq->flags |= 8;
 	}
 }
+
+void DECOMP_cseq_opcode04_empty()
+{
+	// left empty by ND
+}

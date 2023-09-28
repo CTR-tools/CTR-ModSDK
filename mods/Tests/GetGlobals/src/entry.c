@@ -3,12 +3,12 @@
 void RunEntryHook()
 {
 	int num = 0;
-	while(num < 0x40)
+	while(num < 0xb)
 	{
-		for(int i = 0; i < 8; i++)
+		for(int i = 0; i < 0xb; i++)
 		{
-			printf("0x%04X, ", 
-				data.distortConst_Music[num]
+			printf("0x%02X, ", 
+				data.opcodeOffset[num]
 			); 
 			
 			num++;

@@ -35,3 +35,8 @@ void DECOMP_cseq_opcode01_noteoff(struct SongSeq* seq)
 		LIST_AddBack(&sdata->channelFree, curr);
 	}
 }
+
+void DECOMP_cseq_opcode02_empty()
+{
+	// left empty by ND
+}

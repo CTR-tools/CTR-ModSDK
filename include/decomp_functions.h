@@ -4,6 +4,19 @@ void DECOMP_CDSYS_XaCallbackCdSync(char result);
 void DECOMP_CDSYS_XaCallbackCdReady(char result);
 void DECOMP_CDSYS_SetMode_StreamData();
 
+// howl
+void DECOMP_cseq_opcode00_empty(); // should remove
+void DECOMP_cseq_opcode01_noteoff();
+void DECOMP_cseq_opcode02_empty(); // should remove
+void DECOMP_cseq_opcode03();
+void DECOMP_cseq_opcode04_empty(); // should remove
+void DECOMP_cseq_opcode05_noteon();
+void DECOMP_cseq_opcode06();
+void DECOMP_cseq_opcode07();
+void DECOMP_cseq_opcode08();
+void DECOMP_cseq_opcode09();
+void DECOMP_cseq_opcode0a();
+
 void DECOMP_LOAD_Callback_Overlay_Generic();
 void DECOMP_LOAD_Callback_Overlay_230();
 void DECOMP_LOAD_Callback_Overlay_231();

@@ -2512,7 +2512,6 @@ void FUN_8002a3a8(int param_1)
   return;
 }
 
-
 // cseq_opcode07
 void FUN_8002a3d4(int param_1)
 

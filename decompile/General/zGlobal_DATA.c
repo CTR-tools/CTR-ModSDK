@@ -1835,5 +1835,23 @@ struct Data data =
 	},
 	#endif
 	
-	// .opcodeFunc
+	.opcodeFunc =
+	{
+		DECOMP_cseq_opcode00_empty, // should remove
+		DECOMP_cseq_opcode01_noteoff,
+		DECOMP_cseq_opcode02_empty, // should remove
+		DECOMP_cseq_opcode03,
+		DECOMP_cseq_opcode04_empty, // should remove
+		DECOMP_cseq_opcode05_noteon,
+		DECOMP_cseq_opcode06,
+		DECOMP_cseq_opcode07,
+		DECOMP_cseq_opcode08,
+		DECOMP_cseq_opcode09,
+		DECOMP_cseq_opcode0a
+	},
+	
+	.opcodeOffset = 
+	{
+		0x01, 0x02, 0x02, 0x01, 0x02, 0x03, 0x02, 0x02, 0x02, 0x02, 0x02
+	},
 };

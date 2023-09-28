@@ -1492,10 +1492,6 @@ struct Data
 	char unkJpnRetail_between_pitch_opcodeFunc[5*0x14];
 	#endif
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80081280 -- SepReview
 	// 80083004 -- UsaRetail
 	// 80082130 -- JpnTrial
@@ -1509,12 +1505,16 @@ struct Data
 	// 80083548 -- EurRetail
 	// 800864f0 -- JpnRetail
 	int opcodeOffset[0xb];
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 8008305c
 	#if BUILD <= UsaRetail
-	char opcodeData[0xC0*0xb];
+	unsigned char opcodeData[0xC0*0xb];
 	#elif BUILD >= JpnTrial
-	char opcodeData[0xC0*0x8];
+	unsigned char opcodeData[0xC0*0x8];
 	#endif
 
 	// 80081b18 -- SepReview
