@@ -231,7 +231,10 @@ struct sData sdata_static =
 	.numPlayersFinishedRace = 0,
 	#endif
 	
-	// comment until struct is complete
+	// Hard-code is required,
+	// cause the structs are in BSS, therefore excluded 
+	// by SDATA, so the zeros dont bloat the EXE
+	
 	//.gGT = &sdata_static.gameTracker,
 	//.gGamepads = &sdata_static.gamepadSystem,
 	.gGT = 0x80096b20,
