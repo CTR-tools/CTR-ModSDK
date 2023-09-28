@@ -3349,7 +3349,6 @@ struct sData
 	char s_NOSCRUB[8];
 	char s_ROAD[8];
 	char s_SANDBAG[8];
-#ifndef SDATA_DEV
 	char s_RUBBER[8];
 	char s_SOILD[8];
 	char s_mud[4];
@@ -3378,8 +3377,11 @@ struct sData
 
 	// 8008d660
 	char s_head[8];
-	
-// #ifndef SDATA_DEV
+
+// Do NOT move this, this prevents the EXE
+// from getting bloated with zeros. All BSS
+// will default to zero in RAM after EXE loads	
+#ifndef SDATA_DEV
 
 	// BSS is still addressed by $gp,
 	// so they share SDATA struct,
