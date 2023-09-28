@@ -1,4 +1,7 @@
+
+// Only PS1 Rebuild, not PC Rebuild
 #define SDATA_DEV 1
+
 #include <common.h>
 
 struct sData sdata_static =
@@ -308,4 +311,31 @@ struct sData sdata_static =
 	.memcard_remainingAttempts = 8,
 	.s_memcardDirHeader = "bu00:",
 	.s_AnyFile = "*",
+	
+	// Hard-code is required,
+	// cause the structs are in BSS, therefore excluded 
+	// by SDATA, so the zeros dont bloat the EXE
+	
+	//.PtrMempack = &sdata_static.mempack[0],
+	.PtrMempack = 0x800990E4,
+	
+	.randomNumber = 100,
+	.unk_8008d428 = 0,
+	.unk_8008d42C = 0,
+	
+	.battleSetupExpandMenu = -1,
+	.battleSetupRowHighlighted = 5,
+	.battleSetupWeaponHighlighted = 0,
+	.battleSetup_Color_UI_1 = 0x405000,
+	.battleSetup_Color_UI_2 = 0x60A000,
+	
+	.TitleFlag_AnimationType = 0,
+	.TitleFlag_Position = 0,
+	.unk_CheckFlag1 = 0x12c,
+	.TitleFlag_CanDraw = 1,
+	.unk_CheckFlag2 = 0,
+	.TitleFlag_DrawOrder = 0,
+	.padding_8008d44e = 0,
+	
+	.TitleFlag_LoadingTextAnimFrame = -1,
 };

@@ -3030,8 +3030,6 @@ struct sData
 	// 8008d41c
 	char s_AnyFile[4];
 
-#ifndef SDATA_DEV
-
 	// 8008e0bc -- Aug14
 	// 8008b880 -- SepReview
 	// 8008d420 -- UsaRetail
@@ -3095,6 +3093,8 @@ struct sData
 	// does it exist in Sep3?
 	// 8008d450
 	int TitleFlag_LoadingTextAnimFrame;
+
+#ifndef SDATA_DEV
 
 	// 8008d454
 	// transitioning flag
