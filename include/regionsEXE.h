@@ -1596,13 +1596,13 @@ struct Data
 	// 80083a3c
 	struct LoadQueueSlot currSlot;
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80083a54
 	// see FUN_80032700
 	char characterIDs_2P_AIs[0x1C];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80083A70
 	// funcptrs callback 230,231,232,233

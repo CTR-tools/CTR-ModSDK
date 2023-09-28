@@ -2393,5 +2393,27 @@ struct Data data =
 		.callback.flags = 0
 	},
 	
-	// .characterIDs_2P_AIs
+	.characterIDs_2P_AIs =
+	{
+		// polar, ngin, tiny, coco
+		6, 4, 2, 3,
+		
+		// crash, polar, coco, dingo
+		0, 6, 3, 5,
+		
+		// crash, polar, cortex, tiny
+		0, 6, 1, 2,
+		
+		// crash, polar, ngin, pura
+		0, 6, 4, 7,
+		
+		// cortex, tiny, coco, dingo
+		1, 2, 3, 5,
+		
+		// ngin, pura, coco, dingo
+		4, 7, 3, 5,
+		
+		// ngin, pura cortex, coco
+		4, 7, 1, 2,
+	}
 };
