@@ -4151,7 +4151,7 @@ struct sData
 
 	// 8008d988
 	// root counter
-	int rcnt_elapsedUnits_betweenVsyncs;
+	int rcnt_elapsedUnits_total;
 
 	// 8008d98C
 	u_int flags_timeTrialEndOfRace;
