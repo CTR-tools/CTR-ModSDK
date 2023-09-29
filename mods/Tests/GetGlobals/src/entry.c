@@ -7,12 +7,13 @@ void RunEntryHook()
 	printf("\n");
 	
 	int num = 0;
-	while(num < 0x3c)
+	while(num < 9)
 	{
-		for(int i = 0; i < 8; i++)
+		//for(int i = 0; i < 2; i++)
 		{
-			printf("0x%02x, ",
-				data.unkNamcoGamepad[num]);
+			printf("0x%04x, 0x%04x,",
+				data.Options_HighlightBar[num].posY,
+				data.Options_HighlightBar[num].sizeY);
 		
 			num++;
 		}

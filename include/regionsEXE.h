@@ -1771,16 +1771,16 @@ struct Data
 	// outer vertical bars (black)
 	char Options_VolumeSlider_Colors[0x14];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x80084344
 	struct
 	{
-		short posY;
-		short sizeY;
+		unsigned short posY;
+		unsigned short sizeY;
 	} Options_HighlightBar[9];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x800825A8 -- SepReview
 	// 0x80084368 -- UsaRetail
