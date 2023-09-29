@@ -152,7 +152,7 @@ LAB_800aeb6c:
     // If you're not in Gemstone Valley
     else
     {
-        check = &data.advTrackIDs_orderOfTrophies[(levelID - 0x1a) * 4];
+        check = &data.advHubTrackIDs[(levelID - 0x1a) * 4];
         // check all four tracks on hub
         for (i = 0; i < 4; i++)
         {

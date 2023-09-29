@@ -102,7 +102,7 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     // if not gemstone valley
     else
     {
-        check = &data.advTrackIDs_orderOfTrophies[(levelID - 0x1a) * 4];
+        check = &data.advHubTrackIDs[(levelID - 0x1a) * 4];
         // check all four tracks on hub
         for (i = 0; i < 4; i++)
         {

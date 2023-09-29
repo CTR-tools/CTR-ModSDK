@@ -1626,13 +1626,9 @@ struct Data
 	// 5 cups, 4 tracks each
 	int advCupTrackIDs[5*4];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 800840f4 -- UsaRetail
 	// array of track IDs in Adv, in order of trophies
-	short advTrackIDs_orderOfTrophies[16];
+	short advHubTrackIDs[16];
 
 	// 80084114 -- UsaRetail
 	struct
@@ -1649,6 +1645,10 @@ struct Data
 	// 1 - papu's challenge
 	// ...
 	short lng_challenge[6];
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80084148 -- UsaRetail
 	struct

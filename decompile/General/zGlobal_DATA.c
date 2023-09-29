@@ -3168,8 +3168,41 @@ struct Data data =
 		ROO_TUBES, PAPU_PYRAMID, DRAGON_MINES, HOT_AIR_SKYWAY
 	},
 	
-	//.advTrackIDs_orderOfTrophies =
-	//{
+	.advHubTrackIDs =
+	{
+		// N Sane Beach
+		CRASH_COVE, ROO_TUBES, MYSTERY_CAVES, SEWER_SPEEDWAY,
 		
-	//}
+		// Lost Ruins
+		TIGER_TEMPLE, COCO_PARK, DINGO_CANYON, PAPU_PYRAMID,
+		
+		// Glacier Park
+		BLIZZARD_BLUFF, DRAGON_MINES, POLAR_PASS, TINY_ARENA,
+		
+		// Citadel City
+		CORTEX_CASTLE, HOT_AIR_SKYWAY, N_GIN_LABS, OXIDE_STATION
+	},
+	
+	.AdvCups =
+	{
+		// Red Gem Cup
+		{0xB9, {0x6c, 8, 8}},
+		
+		// Green Gem Cup
+		{0xBA, {8, 0x6c, 8}},
+		
+		// Blue Gem Cup
+		{0xBB, {0, 0, 0x80}},
+		
+		// Yellow Gem Cup
+		{0xBC, {0x80, 0x80, 0}},
+		
+		// Purple Gem Cup
+		{0xBD, {0x6c, 8, 0x6c}},
+	},
+	
+	.lng_challenge = 
+	{
+		0x163, 0x164, 0x165, 0x166, 0x167, 0x168
+	},
 };
