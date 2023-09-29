@@ -1720,17 +1720,14 @@ struct Data
 	// 80083158 -- JpnTrial
 	// 80084530 -- EurRetail
 	// 800874e0 -- JpnRetail
-	#if BUILD == SepReview
+	#if BUILD <= SepReview
 	// Remember MenuBox is bigger in SepReview
-	char data_preAdvHub[0xA0];
-	#elif BUILD == JpnTrial
-	char data_preAdvHub[0xB4]; // UsaRetail + JpnTrial
-	#elif BUILD >= EurRetail
-	char data_preAdvHub[0x78]; // EurRetail + JpnRetail
+	char data_preAdvHub[0x64];
 	
-	#elif BUILD == UsaRetail
+	// UsaRetail, JpnTrial, EurRetail, JpnRetail
+	#else
 
-	// block should be 0xB4 bytes
+	// block should be 0x78 bytes
 
 	// 80084258
 	// racing wheel config option strings
@@ -1748,10 +1745,12 @@ struct Data
 	// 800842B8
 	char raceConfig_colors_blueRect[0x17];
 	char raceConfig_blueRect_height;
-
-	// 800842D0
-	// EurRetail is 0x3c bytes less than JpnTrial,
-	// was this removed in EurRetail and JpnRetail?
+	#endif
+	
+	#if BUILD <= JpnTrial
+	// 80082510 - Sep3
+	// 800842D0 - UsaRetail
+	// 800831d0 - JpnTrial
 	char unkNamcoGamepad[0x3c];
 	#endif
 
