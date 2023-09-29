@@ -1722,15 +1722,15 @@ struct Data
 	// 800874e0 -- JpnRetail
 	#if BUILD == SepReview
 	// Remember MenuBox is bigger in SepReview
-	char data_preAdvHub[0xFC];
+	char data_preAdvHub[0xA0];
 	#elif BUILD == JpnTrial
-	char data_preAdvHub[0x110]; // UsaRetail + JpnTrial
+	char data_preAdvHub[0xB4]; // UsaRetail + JpnTrial
 	#elif BUILD >= EurRetail
-	char data_preAdvHub[0xD4]; // EurRetail + JpnRetail
+	char data_preAdvHub[0x78]; // EurRetail + JpnRetail
 	
 	#elif BUILD == UsaRetail
 
-	// block should be 0x110 bytes
+	// block should be 0xB4 bytes
 
 	// 80084258
 	// racing wheel config option strings
@@ -1752,6 +1752,7 @@ struct Data
 	// 800842D0
 	// related to namco gamepad
 	char unkNamcoGamepad[0x3c];
+	#endif
 
 	// 8008254c -- sep3
 	// 8008430c -- UsaRetail
@@ -1778,12 +1779,6 @@ struct Data
 	// First 4 bytes are row1 pos, then row1 height
 	// Next 4 bytes are row2 pos, then row2 height, etc
 	short Options_HighlightBar_PosY[9][2];
-
-	// That array is 9*2*2 bytes long, which
-	// brings us to 80084368, the end of the hole
-	#endif
-
-	// ============================================
 
 	// 0x800825A8 -- SepReview
 	// 0x80084368 -- UsaRetail
