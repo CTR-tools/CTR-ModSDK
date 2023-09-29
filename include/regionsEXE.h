@@ -1622,13 +1622,13 @@ struct Data
 	// etc
 	short BeatBossPrize[6];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 800840a4 -- UsaRetail
 	// 5 cups, 4 tracks each
 	int advCupTrackIDs[5*4];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 800840f4 -- UsaRetail
 	// array of track IDs in Adv, in order of trophies

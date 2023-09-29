@@ -3148,5 +3148,28 @@ struct Data data =
 	.BeatBossPrize =
 	{
 		0x62, 0x5E, 0x5F, 0x60, 0x61
-	}
+	},
+	
+	.advCupTrackIDs =
+	{
+		// Red Gem Cup
+		CRASH_COVE, MYSTERY_CAVES, BLIZZARD_BLUFF, PAPU_PYRAMID,
+		
+		// Green Gem Cup
+		ROO_TUBES, COCO_PARK, POLAR_PASS, CORTEX_CASTLE,
+		
+		// Blue Gem Cup
+		TIGER_TEMPLE, SEWER_SPEEDWAY, DRAGON_MINES, N_GIN_LABS,
+		
+		// Yellow Gem Cup
+		DINGO_CANYON, TINY_ARENA, HOT_AIR_SKYWAY, OXIDE_STATION,
+		
+		// Purple Gem Cup
+		ROO_TUBES, PAPU_PYRAMID, DRAGON_MINES, HOT_AIR_SKYWAY
+	},
+	
+	//.advTrackIDs_orderOfTrophies =
+	//{
+		
+	//}
 };
