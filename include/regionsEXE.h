@@ -56,7 +56,8 @@ struct Terrain
 struct MetaDataLEV
 {
 	// 0x0
-	int hubID;
+	short hubID;
+	short padding;
 	// 0 - gemstone
 	// 1 - n sanity
 	// 2 - lost ruin
@@ -1600,10 +1601,6 @@ struct Data
 	// see FUN_80032700
 	char characterIDs_2P_AIs[0x1C];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80083A70
 	// funcptrs callback 230,231,232,233
 	// 230 = 800319f4
@@ -1624,6 +1621,10 @@ struct Data
 	// [1] (n sanity) = 0x5E (ripper roo key)
 	// etc
 	short BeatBossPrize[6];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 800840a4 -- UsaRetail
 	// 5 cups, 4 tracks each

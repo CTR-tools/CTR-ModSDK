@@ -2415,5 +2415,738 @@ struct Data data =
 		
 		// ngin, pura cortex, coco
 		4, 7, 1, 2,
+	},
+	
+	.overlayCallbackFuncs =
+	{
+		DECOMP_LOAD_Callback_Overlay_230,
+		DECOMP_LOAD_Callback_Overlay_231,
+		DECOMP_LOAD_Callback_Overlay_232,
+		DECOMP_LOAD_Callback_Overlay_233
+	},
+	
+	// leave name_Debug out, dont need it
+	.metaDataLEV =
+	{
+		[0] =
+		{
+			.hubID = 2,
+			//.name_Debug = 0x8008d298,
+			.name_LNG = 110,
+			.timeTrial = 110400,
+			.numTrophiesToOpen = 7,
+			.ctrTokenGroupID = 3,
+			.characterID_Boss = -1,
+			.characterID_Champion = 5
+		},
+		[1] =
+		{
+			.hubID = 3,
+			//.name_Debug = 0x8008d290,
+			.name_LNG = 111,
+			.timeTrial = 110400,
+			.numTrophiesToOpen = 9,
+			.ctrTokenGroupID = 2,
+			.characterID_Boss = 11,
+			.characterID_Champion = 11
+		},
+		[2] =
+		{
+			.hubID = 3,
+			//.name_Debug = 0x8008d288,
+			.name_LNG = 112,
+			.timeTrial = 106560,
+			.numTrophiesToOpen = 8,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = 13
+		},
+		[3] =
+		{
+			.hubID = 1,
+			//.name_Debug = 0x8008d280,
+			.name_LNG = 113,
+			.timeTrial = 103680,
+			.numTrophiesToOpen = 0,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = 0
+		},
+		[4] =
+		{
+			.hubID = 2,
+			//.name_Debug = 0x8008d278,
+			.name_LNG = 114,
+			.timeTrial = 130560,
+			.numTrophiesToOpen = 4,
+			.ctrTokenGroupID = 2,
+			.characterID_Boss = -1,
+			.characterID_Champion = 7
+		},
+		[5] =
+		{
+			.hubID = 2,
+			//.name_Debug = 0x8008d270,
+			.name_LNG = 115,
+			.timeTrial = 127680,
+			.numTrophiesToOpen = 6,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = 9,
+			.characterID_Champion = 9
+		},
+		[6] =
+		{
+			.hubID = 1,
+			//.name_Debug = 0x8008d268,
+			.name_LNG = 116,
+			.timeTrial = 105600,
+			.numTrophiesToOpen = 0,
+			.ctrTokenGroupID = 1,
+			.characterID_Boss = 10,
+			.characterID_Champion = 10
+		},
+		[7] =
+		{
+			.hubID = 4,
+			//.name_Debug = 0x8008d260,
+			.name_LNG = 117,
+			.timeTrial = 208320,
+			.numTrophiesToOpen = 14,
+			.ctrTokenGroupID = 3,
+			.characterID_Boss = 8,
+			.characterID_Champion = 8
+		},
+		[8] =
+		{
+			.hubID = 1,
+			//.name_Debug = 0x8008d258,
+			.name_LNG = 118,
+			.timeTrial = 138240,
+			.numTrophiesToOpen = 3,
+			.ctrTokenGroupID = 2,
+			.characterID_Boss = -1,
+			.characterID_Champion = 12
+		},
+		[9] =
+		{
+			.hubID = 1,
+			//.name_Debug = 0x8008d250,
+			.name_LNG = 119,
+			.timeTrial = 145920,
+			.numTrophiesToOpen = 1,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = 14
+		},
+		[10] =
+		{
+			.hubID = 4,
+			//.name_Debug = 0x8008d248,
+			.name_LNG = 120,
+			.timeTrial = 157440,
+			.numTrophiesToOpen = 12,
+			.ctrTokenGroupID = 1,
+			.characterID_Boss = -1,
+			.characterID_Champion = 1
+		},
+		[11] =
+		{
+			.hubID = 4,
+			//.name_Debug = 0x8008d240,
+			.name_LNG = 121,
+			.timeTrial = 177600,
+			.numTrophiesToOpen = 12,
+			.ctrTokenGroupID = 2,
+			.characterID_Boss = -1,
+			.characterID_Champion = 4
+		},
+		[12] =
+		{
+			.hubID = 3,
+			//.name_Debug = 0x8008d238,
+			.name_LNG = 122,
+			.timeTrial = 188160,
+			.numTrophiesToOpen = 10,
+			.ctrTokenGroupID = 1,
+			.characterID_Boss = -1,
+			.characterID_Champion = 6
+		},
+		[13] =
+		{
+			.hubID = 4,
+			//.name_Debug = 0x8008d230,
+			.name_LNG = 123,
+			.timeTrial = 204480,
+			.numTrophiesToOpen = 15,
+			.ctrTokenGroupID = 3,
+			.characterID_Boss = 15,
+			.characterID_Champion = 15
+		},
+		[14] =
+		{
+			.hubID = 2,
+			//.name_Debug = 0x8001138c,
+			.name_LNG = 124,
+			.timeTrial = 103680,
+			.numTrophiesToOpen = 4,
+			.ctrTokenGroupID = 1,
+			.characterID_Boss = -1,
+			.characterID_Champion = 3
+		},
+		[15] =
+		{
+			.hubID = 3,
+			//.name_Debug = 0x80011380,
+			.name_LNG = 125,
+			.timeTrial = 232320,
+			.numTrophiesToOpen = 11,
+			.ctrTokenGroupID = 3,
+			.characterID_Boss = -1,
+			.characterID_Champion = 2
+		},
+		[16] =
+		{
+			.hubID = 0,
+			//.name_Debug = 0x8008d228,
+			.name_LNG = 126,
+			.timeTrial = 138240,
+			.numTrophiesToOpen = 10,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = 0
+		},
+		[17] =
+		{
+			.hubID = 0,
+			//.name_Debug = 0x8008d220,
+			.name_LNG = 127,
+			.timeTrial = 144000,
+			.numTrophiesToOpen = 15,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = 0
+		},
+		[18] =
+		{
+			.hubID = 4,
+			//.name_Debug = 0x8008d218,
+			.name_LNG = 98,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 4,
+			.ctrTokenGroupID = 4,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[19] =
+		{
+			.hubID = 2,
+			//.name_Debug = 0x8008d210,
+			.name_LNG = 99,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 4,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[20] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d208,
+			.name_LNG = 100,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 0,
+			.ctrTokenGroupID = 4,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[21] =
+		{
+			.hubID = 1,
+			//.name_Debug = 0x8008d200,
+			.name_LNG = 101,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 1,
+			.ctrTokenGroupID = 4,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[22] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1f8,
+			.name_LNG = 102,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 0,
+			.ctrTokenGroupID = 4,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[23] =
+		{
+			.hubID = 3,
+			//.name_Debug = 0x8008d1f0,
+			.name_LNG = 103,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 3,
+			.ctrTokenGroupID = 4,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[24] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1e8,
+			.name_LNG = 104,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 0,
+			.ctrTokenGroupID = 4,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[25] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1e0,
+			.name_LNG = 128,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 0,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[26] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1d8,
+			.name_LNG = 129,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 0,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[27] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1d0,
+			.name_LNG = 130,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 0,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[28] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1c8,
+			.name_LNG = 131,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 1,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[29] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1c0,
+			.name_LNG = 132,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[30] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1b8,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[31] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1b0,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[32] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1a8,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[33] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d1a0,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[34] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d198,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[35] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d190,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[36] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d188,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[37] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d180,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[38] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d178,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[39] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x80011374,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[40] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d170,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[41] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d16c,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[42] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d164,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[43] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d15c,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[44] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d154,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[45] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d14c,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[46] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d144,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[47] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d13c,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[48] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d134,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[49] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d12c,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[50] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d124,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[51] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d11c,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[52] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8008d114,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[53] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x80011368,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[54] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8001135c,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[55] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x80011350,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[56] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x80011344,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[57] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x80011338,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[58] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x8001132c,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[59] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x80011320,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[60] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x80011314,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[61] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x80011308,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[62] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x800112fc,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[63] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x800112f0,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+		[64] =
+		{
+			.hubID = -1,
+			//.name_Debug = 0x800112e4,
+			.name_LNG = 0,
+			.timeTrial = 172800,
+			.numTrophiesToOpen = 2,
+			.ctrTokenGroupID = 0,
+			.characterID_Boss = -1,
+			.characterID_Champion = -1
+		},
+	},
+
+	.BeatBossPrize =
+	{
+		0x62, 0x5E, 0x5F, 0x60, 0x61
 	}
 };
