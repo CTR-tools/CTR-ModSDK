@@ -1701,11 +1701,10 @@ struct Data
 	// not in Sep3, after PtrClipBuffer is 0,3,6,9
 	#if BUILD >= UsaRetail
 	
-	// === One of these is removed in JpnRetail ===
-	// one of the lngIndex[6] arrays is missing
-	
-	// 80084238
-	short lngIndex_unused_multiplayerDirections[6];
+		#if BUILD <= JpnRetail
+		// 80084238
+		short lngIndex_unused_multiplayerDirections[6];
+		#endif
 
 	// 80084244
 	short lngIndex_gamepadUnplugged[6];
@@ -1719,16 +1718,14 @@ struct Data
 	// 80084258 -- UsaRetail
 	// 80083158 -- JpnTrial
 	// 80084530 -- EurRetail
-	// 800874ec -- JpnRetail
+	// 800874e0 -- JpnRetail
 	#if BUILD == SepReview
 	// Remember MenuBox is bigger in SepReview
 	char data_preAdvHub[0xFC];
 	#elif BUILD == JpnTrial
-	char data_preAdvHub[0x110];
-	#elif BUILD == EurRetail
-	char data_preAdvHub[0xD4];
-	#elif BUILD == JpnRetail
-	char data_preAdvHub[0xC8];
+	char data_preAdvHub[0x110]; // UsaRetail + JpnTrial
+	#elif BUILD >= EurRetail
+	char data_preAdvHub[0xD4]; // EurRetail + JpnRetail
 	
 	#elif BUILD == UsaRetail
 
