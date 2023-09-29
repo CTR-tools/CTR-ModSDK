@@ -1710,11 +1710,6 @@ struct Data
 	short errorPosY[4];
 	#endif
 
-
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 800824ac -- SepReview
 	// 80084258 -- UsaRetail
 	// 80083158 -- JpnTrial
@@ -1739,21 +1734,20 @@ struct Data
 	// number of options on each page of race wheel config
 	
 	// 80084258
-	char raceConfig_unk80084258[0x54];
+	unsigned char raceConfig_unk80084258[0x54];
 
 	// 800842ac
-	char raceConfig_colors_arrows[0xc];
+	unsigned char raceConfig_colors_arrows[0xc];
 
 	// 800842B8
-	char raceConfig_colors_blueRect[0x17];
-	char raceConfig_blueRect_height;
+	unsigned char raceConfig_colors_blueRect[0x18];
 	#endif
 	
 	#if BUILD <= JpnTrial
 	// 80082510 - Sep3
 	// 800842D0 - UsaRetail
 	// 800831d0 - JpnTrial
-	char unkNamcoGamepad[0x3c];
+	unsigned char unkNamcoGamepad[0x3c];
 	#endif
 
 	// 8008254c -- sep3
@@ -1762,6 +1756,10 @@ struct Data
 	// 800845a8 -- EurRetail
 	// 80087558 -- JpnRetail
 	int gGT_gameMode1_Vibration_PerPlayer[4];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 8008431c
 	// Controller 1, 2, 1A, 1B, 1C, 1D

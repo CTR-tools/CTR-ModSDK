@@ -2823,7 +2823,7 @@ void FUN_80045254(undefined2 *param_1,int param_2,undefined4 param_3,undefined4 
   local_38 = *param_1;
   local_34 = param_1[2];
   iVar3 = 0;
-  if (*(char *)(param_2 + 3) != 'd') {
+  if (*(char *)(param_2 + 3) != 0x64) {
     iVar1 = 0;
     do {
       puVar2 = (undefined4 *)((iVar1 >> 0xe) + param_2);
@@ -2842,7 +2842,7 @@ void FUN_80045254(undefined2 *param_1,int param_2,undefined4 param_3,undefined4 
 
       iVar3 = iVar3 + 1;
       iVar1 = iVar3 * 0x10000;
-    } while (*(char *)((iVar3 * 0x10000 >> 0xe) + param_2 + 3) != 'd');
+    } while (*(char *)((iVar3 * 0x10000 >> 0xe) + param_2 + 3) != 0x64);
   }
   return;
 }

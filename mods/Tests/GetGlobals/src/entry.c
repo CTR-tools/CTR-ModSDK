@@ -7,12 +7,12 @@ void RunEntryHook()
 	printf("\n");
 	
 	int num = 0;
-	while(num < 0x84)
+	while(num < 0x3c)
 	{
 		for(int i = 0; i < 8; i++)
 		{
 			printf("0x%02x, ",
-				data.levAmbientSound[num]);
+				data.unkNamcoGamepad[num]);
 		
 			num++;
 		}
