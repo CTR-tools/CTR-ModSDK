@@ -1646,10 +1646,6 @@ struct Data
 	// ...
 	short lng_challenge[6];
 	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80084148 -- UsaRetail
 	struct
 	{
@@ -1667,6 +1663,10 @@ struct Data
 		} CupTrack[4];
 
 	} ArcadeCups[4];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x2C bytes large
 	// 8008240C -- SepReview

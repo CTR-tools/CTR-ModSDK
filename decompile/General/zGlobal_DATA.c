@@ -3205,4 +3205,52 @@ struct Data data =
 	{
 		0x163, 0x164, 0x165, 0x166, 0x167, 0x168
 	},
+	
+	.ArcadeCups = 
+	{
+		// Wumpa Cup
+		{
+			.lngIndex_CupName = 0xC0,
+			.CupTrack =
+			{
+				0x3, 0x51, // Crash Cove
+				0x4, 0x59, // Tiger Temple
+				0x2, 0x4F, // Blizzard Bluff
+				0xE, 0x43 // Coco Park
+			}
+		},
+		
+		{
+			.lngIndex_CupName = 0xC1,
+			.CupTrack =
+			{
+				0x6, 0x5B, // Roo Tubes
+				0x0, 0x53, // Dingo Canyon
+				0x1, 0x54, // Dragon Mines
+				0x8, 0x57 // Sewer Speedway
+			}
+		},
+		
+		{
+			.lngIndex_CupName = 0xC2,
+			.CupTrack =
+			{
+				0x9, 0x4e, // Mystery Caves
+				0x5, 0x5A, // Papu Pyramid
+				0xA, 0x4D, // Cortex Castle
+				0xF, 0x44 // Tiny Arena
+			}
+		},
+		
+		{
+			.lngIndex_CupName = 0xC3,
+			.CupTrack =
+			{
+				0xC, 0x50, // Polar Pass
+				0xB, 0x52, // N Gin Labs
+				0x7, 0x4C, // Hot Air Skyway
+				0x10, 0x55 // Slide Col
+			}
+		}
+	}
 };
