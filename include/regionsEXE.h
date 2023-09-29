@@ -1739,7 +1739,7 @@ struct Data
 	// number of options on each page of race wheel config
 	
 	// 80084258
-	char unk80084258[0x54];
+	char raceConfig_unk80084258[0x54];
 
 	// 800842ac
 	char raceConfig_colors_arrows[0xc];
