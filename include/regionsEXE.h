@@ -1700,6 +1700,10 @@ struct Data
 
 	// not in Sep3, after PtrClipBuffer is 0,3,6,9
 	#if BUILD >= UsaRetail
+	
+	// === One of these is removed in JpnRetail ===
+	// one of the lngIndex[6] arrays is missing
+	
 	// 80084238
 	short lngIndex_unused_multiplayerDirections[6];
 
@@ -1711,7 +1715,11 @@ struct Data
 	short errorPosY[4];
 	#endif
 
-	// 80084250
+	// 800824ac -- SepReview
+	// 80084258 -- UsaRetail
+	// 80083158 -- JpnTrial
+	// 80084530 -- EurRetail
+	// 800874ec -- JpnRetail
 	#if BUILD == SepReview
 	// Remember MenuBox is bigger in SepReview
 	char data_preAdvHub[0xFC];
