@@ -1698,30 +1698,33 @@ struct Data
 // zGlobal_DATA.c
 #ifndef DATA_DEV
 
+	// not in Sep3, after PtrClipBuffer is 0,3,6,9
+	#if BUILD >= UsaRetail
 	// 80084238
 	short lngIndex_unused_multiplayerDirections[6];
 
 	// 80084244
 	short lngIndex_gamepadUnplugged[6];
+	
+	// 80084250 (start of hole)
+	// heights that "gamepad unplugged can be at
+	short errorPosY[4];
+	#endif
 
 	// 80084250
 	#if BUILD == SepReview
 	// Remember MenuBox is bigger in SepReview
-	char data_preAdvHub[0xE4];
+	char data_preAdvHub[0xFC];
 	#elif BUILD == JpnTrial
-	char data_preAdvHub[0x118];
+	char data_preAdvHub[0x110];
 	#elif BUILD == EurRetail
-	char data_preAdvHub[0xDC];
+	char data_preAdvHub[0xD4];
 	#elif BUILD == JpnRetail
-	char data_preAdvHub[0xD0];
+	char data_preAdvHub[0xC8];
 	
 	#elif BUILD == UsaRetail
 
-	// block should be 0x118 bytes
-
-	// 80084250 (start of hole)
-	// heights that "gamepad unplugged can be at
-	short errorPosY[4];
+	// block should be 0x110 bytes
 
 	// 80084258
 	// racing wheel config option strings
