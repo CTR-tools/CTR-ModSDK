@@ -208,7 +208,7 @@ struct GamepadSystem
 struct RacingWheelData
 {
 	// 0x0
-	short gamepadCenter;
+	unsigned short gamepadCenter;
 
 	// 0x2
 	short deadZone;

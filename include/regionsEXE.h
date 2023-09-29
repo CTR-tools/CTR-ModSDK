@@ -1664,10 +1664,6 @@ struct Data
 
 	} ArcadeCups[4];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x2C bytes large
 	// 8008240C -- SepReview
 	// 80084190 -- UsaRetail
@@ -1687,7 +1683,7 @@ struct Data
 	// 800841FC -- 24 bytes (0x18)
 	struct RacingWheelData rwd[4];
 	#endif
-
+	
 	// 80084214
 	char kartHwlPath[0x14];
 
@@ -1697,6 +1693,10 @@ struct Data
 	// 80084500 -- EurRetail
 	// 800874bc -- JpnRetail
 	void* PtrClipBuffer[4];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80084238
 	short lngIndex_unused_multiplayerDirections[6];

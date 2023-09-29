@@ -3252,5 +3252,53 @@ struct Data data =
 				0x10, 0x55 // Slide Col
 			}
 		}
-	}
+	},
+	
+	.menuBox_optionsMenu_racingWheel =
+	{
+		.stringIndexTitle = -1,
+		.posX_curr = 0x100,
+		.posY_curr = 0x6c,
+		.unk1 = 0,
+		.state = 0x88A3,
+		.rows = 0,
+		.funcPtr = 0x80038b5c,
+		.drawStyle = 4,
+		
+		// the rest initializes as zeros
+	},
+	
+	.menuRow_quit =
+	{
+		{0xD2, 0, 1, 0, 0}, // YES
+		{0xD3, 0, 1, 1, 1}, // NO
+		{-1,   0, 0, 0, 0} // NULL
+	},
+	
+	.menuBox_quit =
+	{
+		.stringIndexTitle = 3,
+		.posX_curr = 0x100,
+		.posY_curr = 0x6c,
+		.unk1 = 0,
+		.state = 0x8C83,
+		.rows = &data.menuRow_quit[0],
+		.funcPtr = 0x80039908,
+		.drawStyle = 4,
+		
+		// the rest initializes as zeros
+	},
+	
+	.rwd =
+	{
+		{0x80, 7, 0x5F},
+		{0x80, 7, 0x5F},
+		{0x80, 7, 0x5F},
+		{0x80, 7, 0x5F}
+	},
+	
+	.kartHwlPath = "\\sounds\\kart.hwl;1",
+	
+	// empty
+	.PtrClipBuffer = {}
 };
