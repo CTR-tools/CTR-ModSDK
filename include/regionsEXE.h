@@ -1694,10 +1694,6 @@ struct Data
 	// 800874bc -- JpnRetail
 	void* PtrClipBuffer[4];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// not in Sep3, after PtrClipBuffer is 0,3,6,9
 	#if BUILD >= UsaRetail
 	
@@ -1709,10 +1705,15 @@ struct Data
 	// 80084244
 	short lngIndex_gamepadUnplugged[6];
 	
-	// 80084250 (start of hole)
-	// heights that "gamepad unplugged can be at
+	// 80084250
+	// heights that "gamepad unplugged" can be at
 	short errorPosY[4];
 	#endif
+
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 800824ac -- SepReview
 	// 80084258 -- UsaRetail

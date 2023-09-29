@@ -3300,5 +3300,23 @@ struct Data data =
 	.kartHwlPath = "\\sounds\\kart.hwl;1",
 	
 	// empty
-	.PtrClipBuffer = {}
+	.PtrClipBuffer = {},
+	
+	#if BUILD >= UsaRetail
+		#if BUILD <= JpnRetail
+		.lngIndex_unused_multiplayerDirections =
+		{
+			0x25, 0x26, 0x27, 
+			0x28, 0x29, 0x2A
+		},
+		#endif
+		
+	.lngIndex_gamepadUnplugged =
+	{
+		0x1F, 0x20, 0x21, 
+		0x22, 0x23, 0x24
+	},
+	
+	.errorPosY = {0x46, 0x8C, 0x14, 0}
+	#endif
 };
