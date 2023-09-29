@@ -1737,6 +1737,8 @@ struct Data
 
 	// 80084290
 	// number of options on each page of race wheel config
+	
+	// 80084258
 	char unk80084258[0x54];
 
 	// 800842ac
