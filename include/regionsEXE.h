@@ -1753,7 +1753,11 @@ struct Data
 	// related to namco gamepad
 	char unkNamcoGamepad[0x3c];
 
+	// 8008254c -- sep3
 	// 8008430c -- UsaRetail
+	// 8008320c -- JpnTrial
+	// 800845a8 -- EurRetail
+	// 80087558 -- JpnRetail
 	int gGT_gameMode1_Vibration_PerPlayer[4];
 
 	// 8008431c
