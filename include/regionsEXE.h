@@ -1776,9 +1776,11 @@ struct Data
 #ifndef DATA_DEV
 
 	// 0x80084344
-	// First 4 bytes are row1 pos, then row1 height
-	// Next 4 bytes are row2 pos, then row2 height, etc
-	short Options_HighlightBar_PosY[9][2];
+	struct
+	{
+		short posY;
+		short sizeY;
+	} Options_HighlightBar[9];
 
 	// 0x800825A8 -- SepReview
 	// 0x80084368 -- UsaRetail
