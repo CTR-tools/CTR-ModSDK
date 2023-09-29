@@ -1750,7 +1750,8 @@ struct Data
 	char raceConfig_blueRect_height;
 
 	// 800842D0
-	// related to namco gamepad
+	// EurRetail is 0x3c bytes less than JpnTrial,
+	// was this removed in EurRetail and JpnRetail?
 	char unkNamcoGamepad[0x3c];
 	#endif
 
