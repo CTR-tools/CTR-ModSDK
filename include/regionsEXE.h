@@ -1757,10 +1757,6 @@ struct Data
 	// 80087558 -- JpnRetail
 	int gGT_gameMode1_Vibration_PerPlayer[4];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 8008431c
 	// Controller 1, 2, 1A, 1B, 1C, 1D
 	short Options_StringIDs_Gamepads[6];
@@ -1774,6 +1770,10 @@ struct Data
 	// vertical bar (white),
 	// outer vertical bars (black)
 	char Options_VolumeSlider_Colors[0x14];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x80084344
 	// First 4 bytes are row1 pos, then row1 height
