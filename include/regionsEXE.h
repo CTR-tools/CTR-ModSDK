@@ -1848,10 +1848,6 @@ struct Data
 
 	} bitIndex_timeTrialFlags_flashingText;
 	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x8008454C
 	// 1P, 2P, 4P
 	// LEV 0 - 0x19 (0x1c for alignment)
@@ -1862,6 +1858,10 @@ struct Data
 	// 0x800845a0
 	// trigonometry approximation table (1kb)
 	struct TrigTable trigApprox[0x400];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x800855A0
 	int memcardIcon_CrashHead[0x40];

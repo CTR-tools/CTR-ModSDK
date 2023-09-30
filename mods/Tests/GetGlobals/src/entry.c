@@ -7,13 +7,14 @@ void RunEntryHook()
 	printf("\n");
 	
 	int num = 0;
-	while(num < 9)
+	while(num < 0x400)
 	{
-		//for(int i = 0; i < 2; i++)
+		for(int i = 0; i < 8; i++)
 		{
-			printf("0x%04x, 0x%04x,",
-				data.Options_HighlightBar[num].posY,
-				data.Options_HighlightBar[num].sizeY);
+			printf("{0x%04x, 0x%04x}, ",
+				(unsigned short)data.trigApprox[num].sin,
+				(unsigned short)data.trigApprox[num].cos
+				);
 		
 			num++;
 		}
