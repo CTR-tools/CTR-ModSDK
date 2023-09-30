@@ -1859,10 +1859,6 @@ struct Data
 	// trigonometry approximation table (1kb)
 	struct TrigTable trigApprox[0x400];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x800855A0
 	int memcardIcon_CrashHead[0x40];
 
@@ -1871,6 +1867,10 @@ struct Data
 
 	// 0x800857A0
 	int memcardIcon_PsyqHand[0x40];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	#if 0
 

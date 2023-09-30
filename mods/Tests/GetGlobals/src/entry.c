@@ -7,13 +7,12 @@ void RunEntryHook()
 	printf("\n");
 	
 	int num = 0;
-	while(num < 0x400)
+	while(num < 0x40)
 	{
 		for(int i = 0; i < 8; i++)
 		{
-			printf("{0x%04x, 0x%04x}, ",
-				(unsigned short)data.trigApprox[num].sin,
-				(unsigned short)data.trigApprox[num].cos
+			printf("0x%08x, ",
+				(unsigned int)data.memcardIcon_PsyqHand[num]
 				);
 		
 			num++;
