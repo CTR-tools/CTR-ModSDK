@@ -1778,10 +1778,6 @@ struct Data
 		unsigned short sizeY;
 	} Options_HighlightBar[9];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x800825A8 -- SepReview
 	// 0x80084368 -- UsaRetail
 	// 0x80083268 -- JpnTrial
@@ -1829,7 +1825,7 @@ struct Data
 	// 0x800847AC -- EurRetail
 	// 0x8008775C -- JpnRetail
 	struct MenuBox menuBox_arcadeRace;
-
+	
 	// 0x8008453C
 	struct
 	{
@@ -1851,6 +1847,10 @@ struct Data
 		int nOxideOpen; // 2
 
 	} bitIndex_timeTrialFlags_flashingText;
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x8008454C
 	// 1P, 2P, 4P

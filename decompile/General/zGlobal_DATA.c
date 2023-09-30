@@ -3401,4 +3401,145 @@ struct Data data =
 		{0x006d, 0x0009}, // Controller 4
 		{0x0077, 0x0009}, // Exit
 	},
+	
+	.menuRow_advHub =
+	{
+		{0x2, 3, 1, 0, 0}, // RESUME
+		{0xB, 0, 2, 1, 1}, // AKU AKU HINTS
+		{0x3, 1, 3, 2, 2}, // QUIT
+		{0xE, 2, 0, 3, 3}, // OPTIONS
+		{-1,  0, 0, 0, 0}  // NULL
+	},
+	
+	.menuBox_advHub =
+	{
+		.stringIndexTitle = -1,
+		.posX_curr = 0x100,
+		.posY_curr = 0xAF,
+		.unk1 = 0,
+		.state = 0x8C83,
+		.rows = &data.menuRow_advHub[0],
+		.funcPtr = 0x80039a44,
+		.drawStyle = 4,
+	},
+	
+	.menuRow_advRace =
+	{
+		{0x2, 3, 1, 0, 0}, // RESUME
+		{0x1, 0, 2, 1, 1}, // RESTART
+		{0xD, 1, 3, 2, 2}, // EXIT TO MAP
+		{0xE, 2, 0, 3, 3}, // OPTIONS
+		{-1,  0, 0, 0, 0}  // NULL
+	},
+	
+	.menuBox_advRace =
+	{
+		.stringIndexTitle = 0, // PAUSED
+		.posX_curr = 0x100,
+		.posY_curr = 0x6c,
+		.unk1 = 0,
+		.state = 0xc883,
+		.rows = &data.menuRow_advRace[0],
+		.funcPtr = 0x80039a44,
+		.drawStyle = 4,
+	},
+	
+	.menuRow_advCup =
+	{
+		{0x2, 2, 1, 0, 0}, // RESUME
+		{0xD, 0, 2, 1, 1}, // EXIT TO MAP
+		{0xE, 1, 0, 2, 2}, // OPTIONS
+		{-1,  0, 0, 0, 0}  // NULL
+	},
+	
+	.menuBox_advCup =
+	{
+		.stringIndexTitle = 0, // PAUSED
+		.posX_curr = 0x100,
+		.posY_curr = 0x6c,
+		.unk1 = 0,
+		.state = 0xc883,
+		.rows = &data.menuRow_advCup[0],
+		.funcPtr = 0x80039a44,
+		.drawStyle = 6,
+	},
+	
+	.menuRow_battle =
+	{
+		{0x2, 6, 1, 0, 0}, // RESUME
+		{0x1, 0, 2, 1, 1}, // RESTART
+		{0x5, 1, 3, 2, 2}, // CHANGE CHARACTER
+		{0x6, 2, 4, 3, 3}, // CHANGE LEVEL
+		{0xA, 3, 5, 4, 4}, // CHANGE SETUP
+		{0x3, 4, 6, 5, 5}, // QUIT
+		{0xE, 5, 0, 6, 6}, // OPTIONS
+		{-1,  0, 0, 0, 0}  // NULL
+	},
+	
+	.menuBox_battle =
+	{
+		.stringIndexTitle = 0, // PAUSED
+		.posX_curr = 0x100,
+		.posY_curr = 0x6c,
+		.unk1 = 0,
+		.state = 0xcc83,
+		.rows = &data.menuRow_battle[0],
+		.funcPtr = 0x80039a44,
+		.drawStyle = 4,
+	},
+	
+	.menuRow_arcadeCup =
+	{
+		{0x2, 2, 1, 0, 0}, // RESUME
+		{0x3, 0, 2, 1, 1}, // QUIT
+		{0xE, 1, 0, 2, 2}, // OPTIONS
+		{-1,  0, 0, 0, 0}  // NULL
+	},
+	
+	.menuBox_arcadeCup =
+	{
+		.stringIndexTitle = 0, // PAUSED
+		.posX_curr = 0x100,
+		.posY_curr = 0x6c,
+		.unk1 = 0,
+		.state = 0xcc83,
+		.rows = &data.menuRow_arcadeCup[0],
+		.funcPtr = 0x80039a44,
+		.drawStyle = 4,
+	},
+	
+	.menuRow_arcadeRace =
+	{
+		{0x2, 5, 1, 0, 0}, // RESUME
+		{0x1, 0, 2, 1, 1}, // RESTART
+		{0x5, 1, 3, 2, 2}, // CHANGE CHARACTER
+		{0x6, 2, 4, 3, 3}, // CHANGE LEVEL
+		{0x3, 3, 5, 4, 4}, // QUIT
+		{0xE, 4, 0, 5, 5}, // OPTIONS
+		{-1,  0, 0, 0, 0}  // NULL
+	},
+	
+	.menuBox_arcadeRace =
+	{
+		.stringIndexTitle = 0, // PAUSED
+		.posX_curr = 0x100,
+		.posY_curr = 0x6c,
+		.unk1 = 0,
+		.state = 0xcc83,
+		.rows = &data.menuRow_arcadeRace[0],
+		.funcPtr = 0x80039a44,
+		.drawStyle = 4,
+	},
+	
+	.bitIndex_timeTrialFlags_saveData =
+	{
+		.nTropyOpen = 1,
+		.nOxideOpen = 2,
+	},
+	
+	.bitIndex_timeTrialFlags_flashingText =
+	{
+		.nTropyOpen = 0x8000000 | 0x800000,
+		.nOxideOpen = 0x8000000 | 0x10000000,
+	}
 };
