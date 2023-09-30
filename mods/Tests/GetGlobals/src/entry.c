@@ -7,12 +7,12 @@ void RunEntryHook()
 	printf("\n");
 	
 	int num = 0;
-	while(num < 0x40)
+	while(num < 0x140)
 	{
-		for(int i = 0; i < 8; i++)
+		for(int i = 0; i < 16; i++)
 		{
-			printf("0x%08x, ",
-				(unsigned int)data.memcardIcon_PsyqHand[num]
+			printf("0x%02x, ",
+				(unsigned char)data.data144_beforeSaveDataString[num]
 				);
 		
 			num++;
