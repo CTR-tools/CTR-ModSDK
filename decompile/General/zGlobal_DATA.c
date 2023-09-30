@@ -3740,7 +3740,8 @@ struct Data data =
 		// offset0: track progress until next
 		// offset1: flags (0x2 = throw papu/joe) (0x3 = place normally)
 		// offset2: weaopn type (0x64=tnt, 0x65=bomb, 0x66=potion, 0xf=what?)
-		// offset4: weapon cooldown
+		// offset4: (2-byte short) weapon cooldown
+		// offset6: (0=no juice) (1=juice) (2=random)
 		// offset7: unused
 		
 		// Oxide
