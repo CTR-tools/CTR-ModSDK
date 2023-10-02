@@ -22,7 +22,7 @@ void BOTS_UpdateGlobals()
     {
       bestDriver = pDriver;
 
-      if (bestDriver->actionsFlagSet & 0x100000 > 0)
+      if ((bestDriver->actionsFlagSet & 0x100000) != 0)
       {
         bestDriver = sdata->bestHumanRank;
         sdata->bestRobotRank = pDriver;
