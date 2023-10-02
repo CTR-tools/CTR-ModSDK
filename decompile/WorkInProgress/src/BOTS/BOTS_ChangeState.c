@@ -114,11 +114,11 @@ int DECOMP_BOTS_ChangeState(
     if ((victim->botFlags & 2) == 0)
     {
       *(int *)(victim + 0x5d4) = *(int *)(victim + 0x5d4) >> 3;
-      *(int *)(victim + 0x5f4) = *(int *)(victim + 0x5f4) + 0x4000;
+      victim->ai_posBackup[1] += 0x4000;
     }
 
     // AI is not in progress cooldown
-    *(int *)(victim + 0x604) = 0;
+	victim->ai_progress_cooldown = 0;
 
     // Kart Emote ID = 0
     victim->matrixArray = 0;

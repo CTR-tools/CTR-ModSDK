@@ -3,7 +3,6 @@
 struct Driver * DECOMP_BOTS_Driver_Init(char driverId)
 {
   char i;
-  char valid;
   char navIndex;
   short numPoints;
   int tempPath;
@@ -14,14 +13,11 @@ struct Driver * DECOMP_BOTS_Driver_Init(char driverId)
   // driver pointer, nullptr
   d = NULL;
 
-  // by default, assume no path found for this driver
-  valid = false;
-
   // nav path index of this driver
   navIndex = sdata->driver_pathIndexIDs[driverId];
 
   // number of nav points on path
-  numPoints = sdata->NavPath_ptrHeader[navIndex << 2]->numPoints;
+  numPoints = sdata->NavPath_ptrHeader[navIndex]->numPoints;
 
   // set loop index to path index
   i = navIndex;
@@ -55,34 +51,20 @@ struct Driver * DECOMP_BOTS_Driver_Init(char driverId)
     // if we looped through all 3 paths and found zero
     // nav points on every path, then return nullptr driver
     if (tempPath == navIndex)
-      goto END_SECTION;
+      return 0;
 
     // number of nav points on temporary path index
     numPoints = sdata->NavPath_ptrHeader[tempPath]->numPoints;
   }
 
-  // a good path was found
-  valid = true;
-
-END_SECTION:
-
-  // if at least one valid nav path
-  // is found, then spawn the AIs
-  if (valid)
-  {
-    t =
-        THREAD_BirthWithObject(
-            // creation flags
+	t = THREAD_BirthWithObject(
             SIZE_RELATIVE_POOL_BUCKET(
                 sizeof(struct Driver), // 0x62c
                 NONE,
                 LARGE,
                 ROBOT),
 
-            BOTS_ThTick_Drive, // behavior
-            "robotcar",        // debug name
-            0                  // thread relative
-        );
+            BOTS_ThTick_Drive, 0, 0);
 
     // Grab the pointer to the AI attached to the thread
     d = t->object;
@@ -93,8 +75,7 @@ END_SECTION:
     VehInit_NonGhost(t, driverId);
 
     // pointer to structure of each player, given param1 car ID
-    *(undefined4 *)(sdata->gGT + driverId * 4 + 0x24ec) = t->object;
-    ;
+    sdata->gGT->drivers[driverId] = t->object;
 
     // set thread-> modelIndex to DYNAMIC_ROBOT_CAR
     t->modelIndex = 0x3f;
@@ -115,6 +96,6 @@ END_SECTION:
     sdata->gGT->numBotsNextGame++;
 
     BOTS_GotoStartingLine(d);
-  }
-  return d;
+	
+	return d;
 }

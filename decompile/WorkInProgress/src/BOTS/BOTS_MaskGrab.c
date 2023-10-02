@@ -81,17 +81,10 @@ void DECOMP_BOTS_MaskGrab(struct Thread *botThread)
         botThread->flags &= 0xffffefff;
     }
 
-    // posX
-    bot->posCurr[0] = *(int *)(bot + 0x5f0);
-
-    // posY
-    // bot->posCurr[1] = *(int *)(bot + 0x5f4);  redundant?
-
-    // posZ
-    bot->posCurr[2] = *(int *)(bot + 0x5f8);
-
     // posY, plus height to be dropped from
-    bot->posCurr[1] = *(int *)(bot + 0x5f4) + 0x10000;
+    bot->posCurr[0] = bot->ai_posBackup[0];
+    bot->posCurr[2] = bot->ai_posBackup[2];
+    bot->posCurr[1] = bot->bot->ai_posBackup[1] + 0x10000;
 
     mask = Weapon_Mask_UseWeapon(bot, 1);
 

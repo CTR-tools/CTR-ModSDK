@@ -11,7 +11,7 @@ void DECOMP_BOTS_ThTick_EngineRevving(struct Thread* botThread)
   maskObj = bot->maskObj;
 
   // if AI is being mask grabbed
-  if (*(int *)(bot + 0x5f4) < bot->posCurr[1])
+  if (bot->ai_posBackup[1] < bot->posCurr[1])
   {
     bot->posCurr[1] -= ((sdata->gGT->elapsedTimeMS << 9) >> 5);
 

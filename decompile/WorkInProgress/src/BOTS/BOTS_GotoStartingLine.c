@@ -25,9 +25,9 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver *d)
   *(int *)(d + 0x5d0) = 0;
   *(int *)(d + 0x5cc) = 0;
 
-  *(int *)(d + 0x5f0) = d->posCurr[0];
-  *(int *)(d + 0x5f4) = d->posCurr[1];
-  *(int *)(d + 0x5f8) = d->posCurr[2];
+  d->ai_posBackup[0] = d->posCurr[0];
+  d->ai_posBackup[1] = d->posCurr[1];
+  d->ai_posBackup[2] = d->posCurr[2];
 
   d->unk5a8 = 0;
 
@@ -58,11 +58,11 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver *d)
   rotY = (short)d->estimateRotNav[1] << 4;
 
   // every possible Y rotation
-  *(short *)(d + 0x608) = rotY;
+  d->ai_rotY_608 = rotY;
   d->angle = rotY;
   d->rotCurr.y = rotY;
   d->rotPrev.y = rotY;
-  *(short *)(d + 0x5fe) = rotY;
+  d->ai_rot4[1] = rotY;
 
   // acceleration from start-line to full speed
   d->botAccel = accelDuration * accel;
