@@ -3076,7 +3076,9 @@ struct sData
 	int randomNumber;
 
 	// 8008d428
-	int unk_8008d428;
+	short unk_8008d428;
+
+	short unk_8008d42a;
 
 	// 8008d42C
 	int unk_8008d42C;

@@ -5,6 +5,30 @@ struct unknown233
 	int unknown3;
 };
 
+struct CutsceneObj 
+{
+	// 0x10
+	short metadata;
+
+	// 0x12
+	short unk12;
+
+	// 0x16
+	unsigned short flags;
+	> determines time or frame animation
+
+	// 0x32
+	// ptr to subtitle text in LANG
+	// -1 to disable
+	int ptrSubs;
+
+	// 0x38
+	short prevOpcode;
+
+	//  0x40
+	short currOpcode;
+}
+
 extern struct
 {
 	char fill_beginning[4];

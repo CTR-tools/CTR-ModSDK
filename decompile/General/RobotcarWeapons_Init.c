@@ -17,7 +17,7 @@ void DECOMP_RobotcarWeapons_Init(void)
   {
 	// set pointer to boss weapon meta
   // sdata->bossWeaponMeta = data.bossWeaponMetaPtr[hub]
-    *(unsigned int*)0x8008d8e8 = ((unsigned int*)0x800859d0)[hub];
+    *(unsigned int*)0x8008d8e8 = data.bossWeaponMetaPtr[hub];
   }
   return;
 }
