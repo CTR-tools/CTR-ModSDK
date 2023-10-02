@@ -1,7 +1,9 @@
 #include <common.h>
 
 // param4 - reason
-int DECOMP_BOTS_ChangeState(struct Driver *victim, int damageType, struct Driver *attacker, int damageReason)
+int DECOMP_BOTS_ChangeState(
+	struct Driver *victim, int damageType, 
+	struct Driver *attacker, int damageReason)
 {
   int newSpeed;
 
@@ -103,6 +105,7 @@ int DECOMP_BOTS_ChangeState(struct Driver *victim, int damageType, struct Driver
     victim->turbo_outsideTimer = 0;
 
     *(int *)(victim + 0x5cc) = 0; // 0x8008DC40 //0x0FF1FEB6
+	
     // VelY of AI when blasted (const 0x300),
     // to throw them into the air
     *(int *)(victim + 0x5d0) = sdata->AI_VelY_WhenBlasted_0x3000; // change y-velocity
@@ -203,29 +206,22 @@ int DECOMP_BOTS_ChangeState(struct Driver *victim, int damageType, struct Driver
 
   if ((attacker != 0) && (damageType != 0))
   {
-    *(char *)(attacker + 0x559) += 1;
-    if (damageReason == 3)
+    attacker->numTimesAttacking++;
+    
+	if (damageReason == 3)
     {
-      *(char *)(attacker + 0x557) += 1;
+      attacker->numTimesMissileHitSomeone++;
     }
-    else
-    {
-      if (damageReason < 4)
-      {
-        if (damageReason == 1)
-        {
-          *(char *)(attacker + 0x55a) += 1;
-        }
-      }
-      else
-      {
-        if (damageReason != 4)
-        {
-          return 1;
-        }
-        *(char *)(attacker + 0x556) += 1;
-      }
-    }
+	
+    else if (damageReason == 1)
+	{
+		attacker->numTimesBombsHitSomeone++;
+	}
+	
+    else if (damageReason == 4)
+	{
+		attacker->numTimesMovingPotionHitSomeone++;
+	}
   }
   return 1;
 }

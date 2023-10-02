@@ -82,11 +82,11 @@ void DECOMP_BOTS_SetRotation(struct Driver* bot, short param_2)
   sVar2 = (ushort)param_1->estimateRotNav[1] << 4;
 
   // All these offsets = Y rotation
-  *(short *)(bot + 0x608) = sVar2;
+  bot->ai_rotY_608 = sVar2;
   bot->angle = sVar2;
   bot->rotCurr.y = sVar2;
   bot->rotPrev.y = sVar2;
-  *(short *)(bot + 0x5fe) = sVar2;
+  bot->ai_rot4[1] = sVar2;
 
   bot->botFlags |= 1;
   return;

@@ -1402,13 +1402,25 @@ struct Driver
 	// 0x5bc
 	// incline rotXZ
 	// probably only for AIs
-	char unk5bc[0x50];
+	char unk5bc[0x34];
 	
 	// 0x5d4
 	// AI speed
 	
+	// 0x5f0
+	int ai_posBackup[3];
+	
+	// 0x5fc
+	short ai_rot4[4];
+	
 	// 0x604
-	// AI progress // max recorded value = 60
+	int ai_progress_cooldown;
+
+	// 0x608
+	short ai_rotY_608;
+	
+	// 0x60a
+	short ai_quadblock_checkpointIndex;
 
 	// 0x60c
 	short estimatePos[3];
