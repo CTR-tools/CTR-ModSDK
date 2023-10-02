@@ -121,6 +121,26 @@ struct MetaDataMODEL
 	void (*LInC)(struct Instance *i, struct Thread *t, struct ScratchpadStruct* sps);
 };
 
+struct MetaDataBOSS
+{
+	// 0x0
+	// where this section starts
+	unsigned char trackCheckpoint;
+	
+	// 2=throw, 3=normal
+	unsigned char throwFlag;
+	
+	// 0x64=tnt, 0x65=bomb, 0x66=potion, 0xf=what?
+	unsigned char weaponType;
+	unsigned char unk1;
+	
+	// 0x4
+	unsigned short weaponCooldown;
+	
+	// 0x6
+	// (0=no juice) (1=juice) (2=random)
+	unsigned short juiceFlag;
+};
 
 // always starts at address 0x80010000,
 // which is 0x800 bytes into the EXE file
@@ -1868,38 +1888,33 @@ struct Data
 	// 0x800857A0
 	int memcardIcon_PsyqHand[0x40];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
-	#if 0
-
 	// 0x800858A0
-	// different bosses have different sizes
-	char bossWeaponMeta[5][x];
-
-	// boss meta?
-	// 0x800859d0 array of 5 elements
-	// [0] = 0x800858A0 - oxide (0x70) -- swap weapons as track progresses
-	// [1] = 0x80085910 - roo (0x30)
-	// [2] = 0x80085940 - papu (0x30)
-	// [3] = 0x80085970 - joe (0x30)
-	// [4] = 0x800859A0 - pinstripe (0x30)
-
+	struct MetaDataBOSS BossWeaponOxide[7*2];
+	
+	// 0x80085910
+	struct MetaDataBOSS BossWeaponRoo[3*2];
+	
+	// 0x80085940
+	struct MetaDataBOSS BossWeaponPapu[3*2];
+	
+	// 0x80085970
+	struct MetaDataBOSS BossWeaponJoe[3*2];
+	
+	// 0x800859A0
+	struct MetaDataBOSS BossWeaponPinstripe[3*2];
+	
 	// 0x800859d0
-	void* bossWeaponMetaPtr[5];
-
-	// 800859E4 -- next byte
-
-	#else
-	char data144_beforeSaveDataString[0x144];
-	#endif
+	struct MetaDataBOSS* bossWeaponMetaPtr[5];
 
 	#if BUILD == SepReview
 	// Maybe there's more menuBox structs???
 	// between menus and here there's 0x1C bytes
 	char extraSepReviewAfterMenus[0x1C];
 	#endif
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// address 0x800859E4
 	// size 0x14

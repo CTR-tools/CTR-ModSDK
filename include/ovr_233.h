@@ -15,19 +15,26 @@ struct CutsceneObj
 
 	// 0x16
 	unsigned short flags;
-	> determines time or frame animation
+	// determines time or frame animation
 
 	// 0x32
 	// ptr to subtitle text in LANG
 	// -1 to disable
-	int ptrSubs;
+	
+	// int ptrSubs;
 
+	// ^^ can not have "int" on offset 0x32,
+	// this is probably a "short"
+
+
+	#if 0
 	// 0x38
 	short prevOpcode;
 
 	//  0x40
 	short currOpcode;
-}
+	#endif
+};
 
 extern struct
 {
