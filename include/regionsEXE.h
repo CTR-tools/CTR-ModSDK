@@ -2009,7 +2009,7 @@ struct Data
 	// 80085B2C
 	// [0] = 0x13C - FINISHED!
 	// [1,2,3] = 0xFFFF
-	int lngIndex_unkPurpose[4];
+	int lngIndex_FinishOrLoser[4];
 
 	// 80085B3C
 	struct MenuRow menuRow_greenLoadSave[5];
