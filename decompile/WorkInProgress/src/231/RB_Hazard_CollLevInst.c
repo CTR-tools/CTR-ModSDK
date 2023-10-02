@@ -1,55 +1,42 @@
 #include <common.h>
+
 //  (tnt, potion, warpball, etc) (not hazard? moving explosive?)
-// param_1 - BSP result
-// param_2 - thread
-unsigned short DECOMP_RB_Hazard_CollLevInst(struct ScratchpadStruct* sps,struct Thread* th)
+
+unsigned short DECOMP_RB_Hazard_CollLevInst(struct ScratchpadStruct *sps, struct Thread *th)
 {
-  struct InstDef* iVar1;
-  struct Instance* iVar4;
-  unsigned short uVar2;
-  int modelId;
-  
-  if (((sps->bspHitbox->flag & 0x80) != 0) &&
-      (iVar1 = sps->bspHitbox->data.hitbox.instDef, iVar1 != NULL)) &&
-     
-	 (iVar4 = iVar1->ptrInstance, iVar4 != NULL)) 
+  unsigned short flag;
+  short model;
+  struct Instance *inst;
+  struct InstanceDef *instdef;
+  struct MetaDataMODEL *meta;
+
+  // Check if the hitbox flag has the collision bit set and if InstDef is not NULL
+  if ((sps->bspHitbox->flag & 0x80) &&
+      (instdef = sps->bspHitbox->data.hitbox.instDef) != NULL)
   {
-	// get modelID from InstDef
-    modelId = iVar4->model->id;
-	
-    iVar1 = COLL_LevModelMeta(modelId);
-	
-	// if LInC is not nullptr
-    if ((*(code **)(iVar1 + 8) != NULL)) 
-	{		
-	  // execute LInC, make thread for this instance
-	  // upon collision with the instance, let it run thread->funcThCollide
-      uVar2 = (**(code **)(iVar1 + 8))(iVar4,th,sps);
-	  
-	  // if not PU_WUMPA_FRUIT
-      if (modelId != 2) 
-	  {
-		// useless
-        if (modelId < 2) {
-          return uVar2;
-        }
-		
-		// anything except for
-		// 7: PU_FRUIT_CRATE,
-		// 8: PU_RANDOM_CRATE (weapon box)
-        if (8 < modelId) {
-          return uVar2;
-        }
-        if (modelId < 7) {
-          return uVar2;
+    inst = instdef->ptrInstace;
+    model = inst->model->id;
+
+    // Get the metadata for the model
+    meta = COLL_LevModelMeta(model);
+
+    // Check if LInC is not nullptr
+    if (meta->LInC != NULL)
+    {
+      // Execute LInC, create a thread for this instance, and let it run thread->funcThCollide upon collision
+      flag = meta->LInC(inst, th, sps);
+
+      if (model != PU_WUMPA_FRUIT)
+      {
+        if (model > PU_RANDOM_CRATE || model < PU_RANDOM_CRATE)
+        {
+          return flag;
         }
       }
       return 0;
     }
   }
-  
   // make potion open teeth,
   // or make warpball turn around
   return 1;
 }
- 

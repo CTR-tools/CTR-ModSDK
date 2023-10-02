@@ -26,12 +26,12 @@ void CS_Boss_Init(int* cutscene)
 
     sdata->load_inProgress = 1;
 
-    if (cutscene)
+    if (cutscene[0])
     {
         LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_VRAM, cutscene[0] - 1 + index, 0, 0);
     }
 
-    piVar4 = cutscene + 2;
+    piVar4 = cutscene[2];
     for (i = 1; 0 < i; i--)
     {
         if (piVar4[i - 1])

@@ -109,7 +109,7 @@ LAB_800ae744:
     }
 
     // if cutscene is over
-    if (*(char *)0x800b7760 != 0)
+    if (OVR_233.isCutsceneOver != 0)
     {
         // This thread is now dead
         t->flags |= 0x800;

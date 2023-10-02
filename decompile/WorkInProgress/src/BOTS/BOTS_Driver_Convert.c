@@ -1,6 +1,7 @@
 #include <common.h>
 
-void DECOMP_BOTS_Driver_Convert(struct Driver *d) {
+void DECOMP_BOTS_Driver_Convert(struct Driver *d)
+{
   struct GameTracker *gGT = sdata->gGT;
   char validPath;
   short numPoints;
@@ -9,17 +10,18 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d) {
   unsigned int actionFlag;
 
   // if this racer is not an AI (player)
-  if ((d->actionFlagsSet & 0x100000) == 0) {
+  if ((d->actionFlagsSet & 0x100000) == 0)
+  {
 
     UI_RaceEnd_GetDriverClock(d);
+    
+    validPath = 0;
 
     // nav path index of this driver
     pathIndex = sdata->driver_pathIndexIDs[d->driverID];
 
-    validPath = 0;
-
     // number of nav points on this path
-    numPoints = sdata->NavPath_ptrHeader[pathIndex]->numPoints);
+    numPoints = sdata->NavPath_ptrHeader[pathIndex]->numPoints;
 
     // ============
 
@@ -29,11 +31,14 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d) {
     // ============
 
     // if invalid path
-    if (numPoints == 0) {
+    if (numPoints == 0)
+    {
       // check all paths
-      for (i = 0; i < 3; i++) {
+      for (i = 0; i < 3; i++)
+      {
         // quit loop when found
-        if (sdata->NavPath_ptrHeader[i]->numPoints != 0) {
+        if (sdata->NavPath_ptrHeader[i]->numPoints != 0)
+        {
           // valid path data was found
           validPath = 1;
           break;
@@ -41,20 +46,21 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d) {
       }
     }
 
-  LAB_800173e4:
+  END_SECTION:
 
     // if valid path data was found
-    if (validPath) {
+    if (validPath)
+    {
       // 0x94 chunk in driver struct?
       memset(*(int *)(d + 0x598), 0, 0x94);
 
       // path index
-      pathIndex = i * 4;
+      pathIndex = i;
 
       *(int *)(d + 0x5d0) = d->ySpeed;
 
       // nav path index
-      *(short *)(d + 0x5b8) = pathIndex;
+      d->botPath = pathIndex;
 
       // AI speed
       *(int *)(d + 0x5d4) = d->speedApprox;
@@ -62,31 +68,31 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d) {
       // pointer to first navFrame on path
       navFrame = sdata->NavPath_ptrNavFrameArray[pathIndex];
 
-      *(int *)(d + 0x5a8) = 0;
+      d->unk5a8 = 0;
       d->unknownDimension2Curr = 0;
       d->multiDrift = 0;
       d->ampTurnState = 0;
       d->set_0xF0_OnWallRub = 0;
 
       // current navFrame
-      *(int *)(d + 0x5a4) = navFrame;
+      d->botNavFrame = navFrame;
 
-      // driver -> instance -> thread -> funcThTick =
       d->instSelf->thread->funcThTick = BOTS_ThTick_Drive;
 
       // if you are in battle mode
-      if ((gGT->gameMode1 & BATTLE_MODE) != 0) {
+      if ((gGT->gameMode1 & BATTLE_MODE) != 0)
+      {
         // pointer to each AI Path Header
-        piVar8 = &sdata->NavPath_ptrHeader[iVar10];
+        struct NavHeader* ptrNav = sdata->NavPath_ptrHeader[pathIndex];
 
         // set the X, Y, and Z positions
-        d->posCurr[0] = (int)piVar8->frame->pos[0] << 8;
-        d->posCurr[1] = (int)piVar8->frame->pos[1] << 8;
-        d->posCurr[2] = (int)piVar8->frame->pos[2] << 8;
+        d->posCurr[0] = (int)ptrNav->frame->pos[0] << 8;
+        d->posCurr[1] = (int)ptrNav->frame->pos[1] << 8;
+        d->posCurr[2] = (int)ptrNav->frame->pos[2] << 8;
       }
 
       // (free or taken?)
-      LIST_AddFront(&DAT_8008daf8[pathIndex], *(int *)(d + 0x598));
+      LIST_AddFront(sdata->unk_NavRelated[pathIndex], d->unk598);
 
       BOTS_SetRotation(d, 0);
 
@@ -99,12 +105,14 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d) {
 
       // if previous value of actions flag set had 26th flag on (means racer
       // finished the race)
-      if ((actionFlag & 0x2000000) != 0) {
+      if ((actionFlag & 0x2000000) != 0)
+      {
         CAM_EndOfRace(gGT->cameraDC[d->driverID], d);
       }
 
       // Kart state:
-      switch (d->kartState) {
+      switch (d->kartState)
+      {
         // if racer is spinning
       case 3:
         navFrame = 1;
