@@ -6,6 +6,7 @@
 /// @param timer
 void CTR_CycleTex_AllModels(int numModels, struct Model** pModelArray, int timer)
 {
+    //TODO: it's exactly 8 bytes over the budget, which is these 2 vars
     struct Model * pModel;
     struct ModelHeader * pHeader;
 
