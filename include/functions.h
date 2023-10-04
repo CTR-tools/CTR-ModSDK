@@ -101,7 +101,7 @@ void CTR_Box_DrawClearBox(RECT* r, u_int* rgb, int param_3, u_long* otMem, struc
 void CTR_Box_DrawSolidBox(RECT* r, u_int* rgb, u_long* otMem, struct PrimMem* primMem);
 void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
 //void CTR_CycleTex_Model(void* animtex, int timer);
-void CTR_CycleTex_AllModels(int param_1, struct Model* model, u_int param_3);
+void CTR_CycleTex_AllModels(int numModels, struct Model** pModelArray, int timer);
 //CTR_CycleTex_2p3p4pWumpaHUD();
 void CTR_ClearRenderLists_1P2P(struct GameTracker* gGT, int numPlyrCurrGame);
 void CTR_ClearRenderLists_3P4P(struct GameTracker* gGT, int numPlyrCurrGame);
