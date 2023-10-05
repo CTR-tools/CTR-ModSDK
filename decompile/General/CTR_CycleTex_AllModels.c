@@ -6,7 +6,6 @@
 /// @param timer
 void CTR_CycleTex_AllModels(int numModels, struct Model** pModelArray, int timer)
 {
-    //TODO: it's exactly 8 bytes over the budget, which is these 2 vars
     struct Model * pModel;
     struct ModelHeader * pHeader;
 
@@ -18,18 +17,15 @@ void CTR_CycleTex_AllModels(int numModels, struct Model** pModelArray, int timer
         // get model pointer and validate
         if (pModel = *pModelArray, pModel == NULL) return;
 
-        //get current model first header
-        pHeader = pModel->headers;
-
         //iterate over all model headers
-        for (int i = 0; i < pModel->numHeaders; i++)
+        for (pHeader = pModel->headers; pHeader < pModel->headers + pModel->numHeaders; pHeader++)
         {
             // if anim tex data is present and some flag is not set
             // TODO: update unk4 name in ModelHeader
             // TODO: replace value 2 with a flag name
-            if (pHeader[i].unk4 != NULL && (pHeader[i].flags & 2) == 0 )
+            if (pHeader->unk4 != NULL && (pHeader->flags & 2) == 0 )
             {
-                CTR_CycleTex_Model(pHeader[i].unk4, timer);
+                CTR_CycleTex_Model(pHeader->unk4, timer);
             }
         }
 
