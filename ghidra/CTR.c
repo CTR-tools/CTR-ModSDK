@@ -261,6 +261,7 @@ void FUN_80021984(undefined4 *param_1,int param_2)
 
 // CTR_CycleTex_Model
 // animates non-lev textures on a single model
+// param_1 = animtex, param_2 = timer
 void FUN_80021a20(undefined4 *param_1,int param_2)
 
 {
@@ -270,21 +271,41 @@ void FUN_80021a20(undefined4 *param_1,int param_2)
   undefined4 *puVar4;
   int iVar5;
 
+  //active frame texture ptr - first field of the struct
   puVar1 = (undefined4 *)*param_1;
+
+  //store animtex ptr
   puVar4 = param_1;
+
+  //the list ends with the pointer to the first animtex struct, so we loop until its euqal to the passed ptr 
   while (puVar1 != param_1) {
+    //num frames
     iVar2 = (int)*(short *)(puVar4 + 1);
+
+    //timer math
     iVar3 = param_2 + *(short *)((int)puVar4 + 6) >> ((int)*(short *)(puVar4 + 2) & 0x1fU);
+
+    //current frame
     iVar5 = iVar3 % iVar2;
+
+    //exceptions
     if (iVar2 == 0) {
       trap(0x1c00);
     }
     if ((iVar2 == -1) && (iVar3 == -0x80000000)) {
       trap(0x1800);
     }
+
+    //store current frame to the animtex
     *(undefined2 *)((int)puVar4 + 10) = (short)iVar5;
+
+    //copy framearray[curFrame] ptr to active frame texture
     *(undefined4 *)*puVar4 = *(undefined4 *)((int)puVar4 + ((iVar5 << 0x10) >> 0xe) + 0xc);
+
+    //skip to the next struct (12 + 4 * numFrames) 
     puVar4 = puVar4 + (int)*(short *)(puVar4 + 1) + 3;
+    
+    //get next struct first field value
     puVar1 = (undefined4 *)*puVar4;
   }
   return;
