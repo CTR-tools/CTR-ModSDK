@@ -5,35 +5,82 @@ struct unknown233
 	int unknown3;
 };
 
-struct CutsceneObj 
+struct CutsceneObj
 {
-	// 0x10
-	short metadata;
+	// 0x0
+	struct IconGroup* ptrIcons;
+	// 0x4
+	short unk4;
+	// 0x6
+	short unk6;
 
-	// 0x12
-	short unk12;
+	/* 0x8
+	jittery number? color?
+	usually has value of 0x2e808080 */
+	int unk8;
+
+	// 0xC
+	short unk_C;
+	// 0xE
+	short unk_E;
+
+	// 0x10
+	int* metadata;
+
+	// 0x14
+	short unk14;	
 
 	// 0x16
-	unsigned short flags;
 	// determines time or frame animation
+	unsigned short flags;
 
-	// 0x32
-	// ptr to subtitle text in LANG
-	// -1 to disable
-	
-	// int ptrSubs;
+	int unk18;
 
-	// ^^ can not have "int" on offset 0x32,
-	// this is probably a "short"
+	short unk1c;
+	short unk1e;
+	short unk20;
+	short unk22;
+	short unk24;
+	short unk26;
+	short unk28;
+
+	// 0x2a
+	short scaleSpeed;
+	// 0x2c 
+	short desiredScale;
+
+	struct
+	{
+		// 0x2e
+		short textPos[2];
+
+		// 0x32
+		// index to subtitle text in LNG
+		// -1 to disable
+		short lngIndex;
+
+		// 0x34
+		short font;
+
+		// 0x36
+		short colors;
+
+	} Subtitles;
 
 
 	#if 0
 	// 0x38
-	short prevOpcode;
+	char* currOpcode[2];
+	// 0x40
+	char* prevOpcode;
 
-	//  0x40
-	short currOpcode;
+	// 0x44
+	u_char unk44[4];
+	// 0x48
+	int unk48;
 	#endif
+
+	// size is supposedly 0x60, some things are still missing
 };
 
 extern struct

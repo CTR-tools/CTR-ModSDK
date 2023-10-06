@@ -2,30 +2,27 @@
 
 void CS_Thread_ThTick(struct Thread*);
 
-struct Thread* DECOMP_CS_Thread_Init(uint param_1, int param_2, short *param_3, short param_4, int param_5)
+struct Thread* DECOMP_CS_Thread_Init(short modelID, char* name, short *param_3, short param_4, struct Thread* parent)
 {
     int in_zero;
     int in_at;
     struct Thread *t;
-    undefined **ppuVar2;
-    int iVar3;
-    undefined *puVar4;
+    u_char **ppuVar2;
+    char level;
+    char offset;
+    u_char *puVar4;
     struct GameTracker* gGT = sdata->gGT;
-    int iVar5;
-    int iVar6;
-    u_int threadBucket;
-    int *piVar8;
+    short* meta;
+    u_int bucket;
+    struct CutsceneObj* cs;
     struct Instance* inst;
 
     // if this is IntroCam
-    if (param_1 == 0)
+    if (modelID == NOFUNC)
     {
         inst = NULL;
 
-        // thread for
-        t =
-            THREAD_BirthWithObject(
-                // creation flags
+        t = THREAD_BirthWithObject(
                 SIZE_RELATIVE_POOL_BUCKET(
                     0x60,
                     NONE,
@@ -33,96 +30,85 @@ struct Thread* DECOMP_CS_Thread_Init(uint param_1, int param_2, short *param_3, 
                     CAMERA),
 
                 CS_Thread_ThTick, // behavior
-                param_2,          // debug name
-                param_5           // thread relative
+                name,               // debug name
+                parent              // thread relative
             );
 
         // quit if thread creation failed
-        if (t == NULL)
-        {
-            return 0;
-        }
+        if (t == NULL) return 0;
     }
     // if this is not IntroCam
     else
     {
-        // "other" thread bucket
-        threadBucket = 0xd;
+        bucket = OTHER;
 
-        if (param_1 - 199 < 2)
+        if (modelID - NDI_KART6 < 2)
         {
-            // "aku aku" thread bucket
-            threadBucket = 0xe;
+            bucket = AKUAKU;
         }
 
-        if (param_1 - 0xc1 < 4)
+        if (modelID - NDI_KART0 < 4)
         {
-            // ghost thread bucket
-            threadBucket = 2;
+            bucket = GHOST;
         }
 
         // create a thread, return instance,
         // this one is for a different pool than prev
 
         inst = INSTANCE_BirthWithThread(
-            param_1, 
-            param_2, 
-            MEDIUM, 
-            threadBucket, 
-            CS_Thread_ThTick, 
-            0x60, 
-            param_5
+            modelID,            
+            name,               // debug name
+            MEDIUM,             // stackpool
+            bucket,             // threadbucket
+            CS_Thread_ThTick,   // behavior
+            0x60,               // size
+            parent              // parent thread
         );
 
         // quit if it failed
-        if (inst == NULL)
-        {
-            return 0;
-        }
+        if (inst == NULL) return 0;
 
         // get the thread
         t = inst->thread;
 
         // set funcThDestroy to remove instance from instance pool
-        t->funcThDestroy = THREAD_DestroyInstance;
+        t->funcThDestroy = THREAD_DestroyInstance();
     }
 
-    // get object attached to thread
-    
     // cutscene obj
-    piVar8 = t->object;
+    cs = t->object;
 
-    *(int **)(piVar8 + 4) = piVar8 + 0x13;
-    piVar8[0x12] = 0;
-    piVar8[0x10] = -1;
+    cs->metadata = (int*)(cs + 0x13);
+    cs->unk48 = 0;
+    cs->prevOpcode = -1; // 0xFFFFFFFF
 
     // disable subtitles?
     // all cutscene threads have same object?
-    *(short *)((int)piVar8 + 0x32) = 0xffff;
+    cs->Subtitles.lngIndex = 0xffff;
 
     // if this is IntroCam
-    if (param_1 == 0)
+    if (modelID == NOFUNC)
     {
-        iVar3 = gGT->levelID;
+        level = gGT->levelID;
 
         // Naughty Dog Box
-        if (iVar3 == 0x29)
+        if (level == NAUGHTY_DOG_CRATE)
         {
-            puVar4 = &DAT_800b4990;
+            puVar4 = 0x800b4990;
         }
         else
         {
             // any%
-            if (iVar3 == 0x2a)
+            if (level == OXIDE_ENDING)
             {
-                puVar4 = &DAT_800b46fc;
+                puVar4 = 0x800b46fc;
             }
             else
             {
                 // 101%
-                if (iVar3 == 0x2b)
+                if (level == OXIDE_TRUE_ENDING)
                 {
-                    puVar4 = &DAT_800b472c;
+                    puVar4 = 0x800b472c;
                 }
                 // oxide intro, or credits
                 else
@@ -133,7 +119,7 @@ struct Thread* DECOMP_CS_Thread_Init(uint param_1, int param_2, short *param_3, 
                     {
                         // this is for oxide intro
                         ppuVar2 = &PTR_DAT_800b45bc_800b46d8;
-                        iVar3 = (iVar3 + -0x1e) * 4;
+                        offset = (level + -0x1e) * 4;
                     }
 
                     // if going to credits
@@ -141,88 +127,82 @@ struct Thread* DECOMP_CS_Thread_Init(uint param_1, int param_2, short *param_3, 
                     {
                         // this is for credits
                         ppuVar2 = &PTR_DAT_800b474c_800b4928;
-                        iVar3 = (iVar3 + -0x2c) * 4;
+                        offset = (level + -0x2c) * 4;
                     }
                 LAB_800af5d8:
 
                     // array + byte offset
-                    puVar4 = *(undefined **)(iVar3 + (int)ppuVar2);
+                    puVar4 = *(u_char **)(offset + ppuVar2);
                 }
             }
         }
     }
-
     // if this is not IntroCam
     else
     {
         // if modelID >= NDI_BOX_BOX_01
-        if (0xb5 < (int)param_1)
+        if (NDI_BOX_BOX_01 < modelID)
         {
             // if modelID is between 0xb6 and 0xb6+0x2b,
             // anything titled "NDI_"
-            if (param_1 - 0xb6 < 0x2b)
+            if (modelID - NDI_BOX_BOX_01 < 0x2b)
             {
-                puVar4 = (&PTR_DAT_800b49b8_800b5a7c)[param_1 - 0xb6];
+                puVar4 = (&PTR_DAT_800b49b8_800b5a7c)[modelID - NDI_BOX_BOX_01];
             }
-
             // if model ID == 0xE1, STATIC_GNORMALZ
             else
             {
-                puVar4 = &DAT_800b2e28;
+                puVar4 = 0x800b2e28;
             }
-
-            CS_ScriptCmd_OpcodeAt(piVar8, puVar4);
+            CS_ScriptCmd_OpcodeAt(cs, puVar4);
 
             // NDI_KART 0,1,2,3
-            if (param_1 - 0xc1 < 4)
+            if (modelID - NDI_KART0 < 4)
             {
-                piVar8[0x12] = param_1 * 8 + -0x7ff492d8;
+                cs[0x12] = modelID * 8 + -0x7ff492d8;
             }
             goto LAB_800af5ec;
         }
 
         // Boss Heads
-        if (param_1 - 0xa9 < 5)
+        if (modelID - STATIC_PINHEAD < 5)
         {
-            puVar4 = &DAT_800b2e28;
+            puVar4 = 0x800b2e28;
         }
 
         else
         {
-            // STATIC_DINGOFIRE
-            if (param_1 == 0xaf)
+            if (modelID == STATIC_DINGOFIRE)
             {
-                puVar4 = &DAT_800b2e40;
+                puVar4 = 0x800b2e40;
             }
             else
             {
                 // if this is a TAWNA dancer of any type
-                if (param_1 - 0x8f < 4)
+                if (modelID - STATIC_TAWNA1 < 4)
                 {
                     // if not credits
                     if ((gGT->gameMode2 & CREDITS) == 0)
                     {
-                        puVar4 = &DAT_800b17b4;
+                        puVar4 = 0x800b17b4;
                     }
-
                     // if credits
                     else
                     {
-                        puVar4 = &DAT_800b17dc;
+                        puVar4 = 0x800b17dc;
                     }
                 }
                 else
                 {
                     // if driver STATIC_DANCE model ID
-                    if (param_1 - 0x7e < 0x10)
+                    if (modelID - STATIC_CRASHDANCE < 0x10)
                     {
                         // if this is the driver in first place
-                        if (param_1 == gGT->podium_modelIndex_First)
+                        if (modelID == gGT->podium_modelIndex_First)
                         {
                             // win models
                             ppuVar2 = &PTR_DAT_800b180c_800b2e78;
                         }
-
                         // if not in first place
                         else
                         {
@@ -231,29 +211,25 @@ struct Thread* DECOMP_CS_Thread_Init(uint param_1, int param_2, short *param_3, 
                         }
 
                         // byte-offset in array
-                        iVar3 = (param_1 - 0x7e) * 4;
+                        offset = (modelID - 0x7e) * 4;
 
                         goto LAB_800af5d8;
                     }
-                    puVar4 = &DAT_800b2e28;
+                    puVar4 = 0x800b2e28;
                 }
             }
         }
     }
 
-    CS_ScriptCmd_OpcodeAt(piVar8, puVar4);
+    CS_ScriptCmd_OpcodeAt(cs, puVar4);
 
 LAB_800af5ec:
 
-    piVar8[6] = *(int *)(piVar8[4] + 8);
+    meta = (short*)cs->metadata;
 
-    // Random number
-    iVar3 = MixRNG_Scramble();
+    cs->unk18 = (int)meta[4];
 
-    iVar5 = piVar8[4];
-    *(short *)(piVar8 + 5) =
-        *(short *)(iVar5 + 4) +
-        (short)((int)((iVar3 >> 2 & 0xfffU) * (((int)*(short *)(iVar5 + 6) - (int)*(short *)(iVar5 + 4)) + 1)) >> 0xc);
+    cs->unk14 = meta[2] + (short)(((MixRNG_Scramble() >> 2 & 0xfffU) * ((meta[3] - meta[2]) + 1)) >> 0xc);
 
     if (inst != 0)
     {
@@ -261,14 +237,11 @@ LAB_800af5ec:
         setCopReg(2, in_at, *(int *)(param_3 + 6));
 
         // llv0     cop2 $04A6012  v0 * light matrix
-        copFunction(2, 0x4a6012);
+        gte_llv0(2, 0x4a6012);
 
-        iVar6 = getCopReg(2, 0xc800);
-        iVar3 = getCopReg(2, 0xd000);
-        iVar5 = getCopReg(2, 0xd800);
-        inst->matrix.t[0] = iVar6 + param_3[0];
-        inst->matrix.t[1] = iVar3 + param_3[1];
-        inst->matrix.t[2] = iVar5 + param_3[2];
+        inst->matrix.t[0] = getCopReg(2, 0xc800) + param_3[0];
+        inst->matrix.t[1] = getCopReg(2, 0xd000) + param_3[1];
+        inst->matrix.t[2] = getCopReg(2, 0xd800) + param_3[2];
 
         // if level is not naughty dog box scene
         if (gGT->levelID != 0x29)
@@ -292,29 +265,28 @@ LAB_800af5ec:
         // convert 3 rotation shorts into rotation matrix
         ConvertRotToMatrix(inst->matrix.m[0][0], param_3 + 0xc);
 
-        *(ushort *)(piVar8 + 7) = param_3[0xd] & 0xfff;
-        *(ushort *)(piVar8 + 8) = param_3[0xc] & 0xfff;
-        *(ushort *)((int)piVar8 + 0x22) = param_3[0xd] & 0xfff;
-        *(ushort *)(piVar8 + 9) = param_3[0xe] & 0xfff;
+        cs->unk1c = param_3[0xd] & 0xfff;
+        cs->unk20 = param_3[0xc] & 0xfff;
+        cs->unk22 = param_3[0xd] & 0xfff;
+        cs->unk24 = param_3[0xe] & 0xfff;
     }
-    *(undefined *)(piVar8 + 0x11) = 0xff;
+
+    cs->unk44[0] = 0xff;
     
-    *(short *)(piVar8 + 10) = 0;
-    *(short *)((int)piVar8 + 0x1e) = 0;
-    *(short *)((int)piVar8 + 0x16) = 0;
-    *(short *)((int)piVar8 + 0x2a) = 0;
-    *(short *)(piVar8 + 0xb) = 0x2800;
+    cs->unk28 = 0;
+    cs->unk1e = 0;
+    cs->flags = 0;
+    cs->scaleSpeed = 0;
+    cs->desiredScale = 0x2800;
 
-    inst = gGT->iconGroup[0];
-
-    *(short *)(piVar8 + 1) = 0;
-    *(short *)((int)piVar8 + 6) = 0;
-    piVar8[2] = 0x2e808080;
-    *(short *)(piVar8 + 3) = 0;
-    *(short *)((int)piVar8 + 0xe) = 0;
+    cs->unk4 = 0;
+    cs->unk6 = 0;
+    cs->unk8 = 0x2e808080;
+    cs->unk_C = 0;
+    cs->unk_E = 0;
 
     // set ptrIcons, iconGroup->icons
-    *piVar8 = inst + 0x14;
+    cs->ptrIcons = sdata->gGT->iconGroup[5];
 
     return t;
 }
