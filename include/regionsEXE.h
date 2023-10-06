@@ -1912,10 +1912,6 @@ struct Data
 	char extraSepReviewAfterMenus[0x1C];
 	#endif
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// address 0x800859E4
 	// size 0x14
 	// BASCUS-94426-SLOTS
@@ -1928,7 +1924,7 @@ struct Data
 		char data28_afterSlots[0x28];
 		#elif BUILD == UsaRetail || BUILD == EurRetail || BUILD == JpnRetail
 		// 0x800859F8
-		char data38[0x38];
+		unsigned char data38[0x38];
 		#endif
 
 		// Something changed in JPN
@@ -1964,6 +1960,10 @@ struct Data
 	// has internal pointer to 80043b30,
 	// which loads a LEV from track selection
 	struct MenuBox menuBox_TitleBeginTrack;
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80083d40 -- SepReview -- remember MenuBoxes are larger
 	// 80085AC0 -- UsaRetail
