@@ -3849,7 +3849,17 @@ struct Data data =
 		.stringIndexTitle = -1,
 		.state = 0x20, // no input, just funcPtr
 		.funcPtr = 0x80043B30
-	}
+	},
 	
-	// matrixTitleFlag
+	.matrixTitleFlag =
+	{
+		.m =
+		{
+			{0xF16D, 0xFD56, 0xF9F9},
+			{0xEA, 0xF734, 0x1A9},
+			{0xF99E, 0x214, 0xE84},
+		},
+		
+		.t = {0,0,0}
+	}
 };

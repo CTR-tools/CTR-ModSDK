@@ -1961,10 +1961,6 @@ struct Data
 	// which loads a LEV from track selection
 	struct MenuBox menuBox_TitleBeginTrack;
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80083d40 -- SepReview -- remember MenuBoxes are larger
 	// 80085AC0 -- UsaRetail
 	// 800849b0 -- JpnTrial
@@ -1972,6 +1968,10 @@ struct Data
 	// 80088d24 -- JpnRetail
 	// MATRIX struct at 80085AC0
 	MATRIX matrixTitleFlag;
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80085AE0
 	int checkerFlagVariables[5];
