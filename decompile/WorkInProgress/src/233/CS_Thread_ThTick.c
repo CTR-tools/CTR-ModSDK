@@ -7,14 +7,14 @@ void CS_Thread_ThTick(struct Thread *t)
     struct Instance *inst;
     RECT box;
 
-    int iVar5; // Cutscene obj
+    struct CutsceneObj * cs; // Cutscene obj
 
-    iVar5 = t->object;
+    cs = t->object;
     gGT = sdata->gGT;
 
     if (
         // if cutscene thread needs to die
-        (CS_Thread_UseOpcode(t->inst, iVar5) != NULL) &&
+        (CS_Thread_UseOpcode(t->inst, cs) != NULL) &&
 
         // thread is now dead
         (t->flags |= 0x800,
@@ -32,7 +32,7 @@ void CS_Thread_ThTick(struct Thread *t)
     CS_Thread_Particles(t);
 
     // if this is a time animation, not a frame animation
-    if ((*(u_short *)(iVar5 + 0x16) & 0x40) != 0)
+    if ((cs->flags & 0x40) != 0)
     {
         //
         CS_Thread_InterpolateFramesMS(t);
@@ -52,7 +52,7 @@ void CS_Thread_ThTick(struct Thread *t)
             // if parent thread exists
             (t->parentThread != 0) &&
             // some flag
-            ((*(u_short *)(iVar5 + 0x16) & 4) == 0))
+            ((cs->flags & 4) == 0))
         {
             parentInst = t->parentThread->inst;
 
@@ -64,7 +64,7 @@ void CS_Thread_ThTick(struct Thread *t)
             inst->matrix.t[2] = parentInst->matrix.t[2] + SPS->Input1.pos[2];
 
             // some flag
-            if ((*(u_short *)(iVar5 + 0x16) & 0x10) == 0)
+            if ((cs->flags & 0x10) == 0)
             {
                 // convert 3 rotation shorts into rotation matrix
                 ConvertRotToMatrix(&inst->matrix.m[0][0], &SPS->Union.ThBuckColl.distance[0]);
@@ -72,7 +72,7 @@ void CS_Thread_ThTick(struct Thread *t)
         }
 
         // cutscene obj flag
-        if ((*(u_short *)(iVar5 + 0x16) & 8) != 0)
+        if ((cs->flags & 8) != 0)
         {
             CS_Instance_GetFrameData(inst, inst->animIndex, inst->animFrame, &box, 0, 0);
 
@@ -82,7 +82,7 @@ void CS_Thread_ThTick(struct Thread *t)
                 goto LAB_800ae744;
         }
         // flag
-        if (((*(u_short *)(iVar5 + 0x16) & 2) != 0) &&
+        if (((cs->flags & 2) != 0) &&
             (inst->alphaScale = 0, (gGT->timer & 1) != 0))
         {
             inst->alphaScale = (MixRNG_Scramble() & 0x7ff) + 0x400;
@@ -91,18 +91,18 @@ void CS_Thread_ThTick(struct Thread *t)
 
 LAB_800ae744:
     // if pointer to subtitles exists
-    if (0 < *(short *)(iVar5 + 0x32))
+    if (0 < cs->Subtitles.index)
     {
         // Ripper Roo's cutscene subtitles
 
-        box.h = DecalFont_DrawMultiLine(sdata->lngStrings[*(short *)(iVar5 + 0x32)],
-                                        *(short *)(iVar5 + 0x2e), *(short *)(iVar5 + 0x30),
+        box.h = DecalFont_DrawMultiLine(sdata->lngStrings[cs->Subtitles.lngIndex],
+                                        cs->Subtitles.textPos[0], cs->Subtitles.textPos[1],
                                         0x1cc,
-                                        *(short *)(iVar5 + 0x34), *(short *)(iVar5 + 0x36));
+                                        cs->Subtitles.font, cs->Subtitles.colors);
         box.w = 0x1d8;
-        box.x = *(short *)(iVar5 + 0x2e) - 236;
-        box.h = +8;
-        box.y = *(short *)(iVar5 + 0x30) - 4;
+        box.x = cs->Subtitles.textPos[0] - 236;
+        box.h =+ 8;
+        box.y = cs->Subtitles.textPos[1] - 4;
 
         // Draw 2D Menu rectangle background
         MENUBOX_DrawInnerRect(&box, 4, gGT->backBuffer->otMem.startPlusFour);
