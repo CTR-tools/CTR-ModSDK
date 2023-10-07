@@ -6085,4 +6085,6 @@ struct Data data =
 		{&data.matArr12[0], 0x4},
 		{&data.matArr13[0], 0x4},
 	}
+	
+	// ...
 };
