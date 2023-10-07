@@ -10,7 +10,6 @@ void RunEntryHook()
 	{
 		for(int i = 0; i < 0x10; i++)
 		{
-			printf(".name_Debug = 0x%08x,\n", data.MetaDataCharacters[i].name_Debug);
 		}
 		
 		printf("\n");
