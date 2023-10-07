@@ -3973,4 +3973,45 @@ struct Data data =
 	
 	.unk_80085d0c_LoadSave =
 	{0x155, 0xF55, 0, 0},
+	
+	.lngIndex_LoadSave =
+	{0xDC, 0xDD, 0xDA, 0xDB},
+	
+	// same as saveGame
+	.menuRow_overwrite =
+	{
+		{0xD2, 0, 1, 0, 0}, // YES
+		{0xD3, 0, 1, 1, 1}, // NO
+		{-1,  0, 0, 0, 0}  // NULL
+	},
+	
+	.menuBox_overwrite_adv =
+	{
+		.stringIndexTitle = 0xD1, // overwrite?
+		.posX_curr = 0x100,
+		.posY_curr = 0x86,
+		.unk1 = 0,
+		.state = 0x8A1,
+		.rows = &data.menuRow_overwrite[0],
+		.funcPtr = 0,
+		.drawStyle = 0x10, // GREEN
+	},
+	
+	.menuBox_overwrite_ghost =
+	{
+		.stringIndexTitle = 0xD1, // overwrite?
+		.posX_curr = 0x100,
+		.posY_curr = 0x82,
+		.unk1 = 0,
+		.state = 0x8A1,
+		.rows = &data.menuRow_overwrite[0],
+		.funcPtr = 0,
+		.drawStyle = 0, // NORMAL
+	},
+	
+	.lngStringsSaveLoadDelete =
+	{
+		0xD6, 0xD7, 0xD4, 
+		0xD5, 0xD8, 0xD9
+	},
 };

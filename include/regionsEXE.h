@@ -2085,10 +2085,6 @@ struct Data
 	// MetaDataSaveLoad, but usage is unknown
 	short unk_80085d0c_LoadSave[4];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80085d14
 	short lngIndex_LoadSave[4];
 
@@ -2108,6 +2104,10 @@ struct Data
 	// 80084058 -- SepReview
 	// 80085D88 -- UsaRetail
 	short lngStringsSaveLoadDelete[6];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// A.B.C.D... all the way to Z and then numbers,
 	// used in high score "Enter Your Name" window
