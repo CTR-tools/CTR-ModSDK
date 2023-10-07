@@ -2267,10 +2267,6 @@ struct Data
 	// FUN_8005045c
 	short stringIndexSuffix[8];
 	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x8008644C
 	// FUN_80050654
 	short battleScoreColor[4][4];
@@ -2285,9 +2281,9 @@ struct Data
 	// 0x800864DC
 	// LNG index for end-of-race comments
 	#if BUILD >= JpnTrial
-	char data830[0x830];
+	unsigned char data830[0x830];
 	#elif BUILD >= SepReview
-	char data850[0x850];
+	unsigned char data850[0x850];
 	#endif
 
 	#if 0
@@ -2343,6 +2339,10 @@ struct Data
 	// 0x80086d64
 	// 9, 6, 3, 1, 0, 0, 0, 0
 	int cupPointsPerPosition[8];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x80086d84
 	// Copy one row into another
