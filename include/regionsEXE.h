@@ -2006,10 +2006,6 @@ struct Data
 	// [1,2,3] = 0xFFFF
 	int lngIndex_FinishOrLoser[4];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80085B3C
 	struct MenuRow menuRow_greenLoadSave[5];
 
@@ -2055,6 +2051,10 @@ struct Data
 	// 80085ed4 -- EurRetail
 	// 80088e9c -- JpnRetail
 	struct MenuBox menuBox_LoadProfileFromHub;
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x80085C64
 	// appear in save/load screen

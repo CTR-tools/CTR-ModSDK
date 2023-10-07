@@ -3894,5 +3894,61 @@ struct Data data =
 		0xFFFF,
 		0xFFFF,
 		0xFFFF
-	}
+	},
+	
+	.menuRow_greenLoadSave =
+	{
+		{0xCB, 0, 1, 0, 0}, // LOAD
+		{0xCC, 0, 2, 1, 1}, // SAVE
+		{0xCD, 1, 3, 2, 2}, // DELETE
+		{0xCE, 2, 3, 3, 3}, // EXIT
+		{-1,  0, 0, 0, 0}  // NULL
+	},
+	
+	.menuBox_greenLoadSave =
+	{
+		.stringIndexTitle = -1,
+		.posX_curr = 0x100,
+		.posY_curr = 0x7A,
+		.unk1 = 0,
+		.state = 0xC81,
+		.rows = &data.menuRow_greenLoadSave[0],
+		.funcPtr = 0x80048960,
+		.drawStyle = 0x10, // GREEN
+	},
+	
+	.menuBox_FourAdvProfiles =
+	{
+		.stringIndexTitle = -1,
+		.state = 0x2820,
+		.funcPtr = 0x800490c4,
+	},
+	
+	.menuBox_GhostSelection =
+	{
+		.stringIndexTitle = -1,
+		.state = 0x2820,
+		.funcPtr = 0x800490c4,
+	},
+	
+	.menuBox_warning2 =
+	{
+		.stringIndexTitle = -1,
+		.state = 0x2820,
+		.funcPtr = 0x800490c4,
+	},
+	
+	.menuBox_OSK =
+	{
+		.stringIndexTitle = -1,
+		.state = 0x820,
+		.funcPtr = 0x8004b144,
+	},
+	
+	.menuBox_LoadProfileFromHub =
+	{
+		.stringIndexTitle = -1,
+		.state = 0x20,
+		.funcPtr = 0x80047da8,
+	},
 };
