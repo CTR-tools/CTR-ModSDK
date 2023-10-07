@@ -7,11 +7,11 @@ void RunEntryHook()
 	printf("\n");
 	
 	int num = 0;
-	while(num < 0x38)
+	while(num < 0x94)
 	{
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < 8; i++)
 		{
-			printf("0x%02x, ", data.data38[num]);
+			printf("0x%02x, ", data.unk_between_hudStructPtr_menuRow_arcadeEndRace[num]);
 		
 			num++;
 		}

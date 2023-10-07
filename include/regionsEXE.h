@@ -2105,10 +2105,6 @@ struct Data
 	// 80085D88 -- UsaRetail
 	short lngStringsSaveLoadDelete[6];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// A.B.C.D... all the way to Z and then numbers,
 	// used in high score "Enter Your Name" window
 	// 80085D94 -- UsaRetail
@@ -2176,7 +2172,7 @@ struct Data
 	// 26 - timeCrateNum_Pos
 	// 27 - ???
 	// 28 - num elements
-
+	
 	struct UiElement2D hud_1P_P1[0x28];
 
 	struct UiElement2D hud_2P_P1[0x28];
@@ -2199,7 +2195,7 @@ struct Data
 
 	// consistent hole on all versions
 	// 8008626c
-	char unk_between_hudStructPtr_menuRow_arcadeEndRace[0x94];
+	unsigned char unk_between_hudStructPtr_menuRow_arcadeEndRace[0x94];
 
 	// 8008626c - related to missile or warpball chasing player
 
@@ -2237,6 +2233,10 @@ struct Data
 
 	// 0x80086314
 	struct MenuBox menuBox_Retry_ExitToMap;
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// SepReview -- 0x80084618
 	// UsaRetail -- 0x80086340
