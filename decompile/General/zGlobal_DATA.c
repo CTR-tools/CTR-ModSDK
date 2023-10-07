@@ -4402,4 +4402,145 @@ struct Data data =
 	{
 		9,6,3,1,0,0,0,0
 	},
+	
+	// By default, can NOT remove rdata name_Debug,
+	// the strings are needed for model lookup
+	.MetaDataCharacters =
+	{
+		[0] =
+		{
+			.name_Debug = &rdata.s_crash[0],
+			.name_LNG_long = 44,
+			.name_LNG_short = 60,
+			.iconID = 32,
+			.engineID = 0,
+		},
+		[1] =
+		{
+			.name_Debug = &rdata.s_cortex[0],
+			.name_LNG_long = 45,
+			.name_LNG_short = 61,
+			.iconID = 33,
+			.engineID = 0,
+		},
+		[2] =
+		{
+			.name_Debug = &rdata.s_tiny[0],
+			.name_LNG_long = 46,
+			.name_LNG_short = 62,
+			.iconID = 34,
+			.engineID = 2,
+		},
+		[3] =
+		{
+			.name_Debug = &rdata.s_coco[0],
+			.name_LNG_long = 47,
+			.name_LNG_short = 63,
+			.iconID = 35,
+			.engineID = 1,
+		},
+		[4] =
+		{
+			.name_Debug = &rdata.s_ngin[0],
+			.name_LNG_long = 48,
+			.name_LNG_short = 64,
+			.iconID = 36,
+			.engineID = 1,
+		},
+		[5] =
+		{
+			.name_Debug = &rdata.s_dingo[0],
+			.name_LNG_long = 49,
+			.name_LNG_short = 65,
+			.iconID = 37,
+			.engineID = 2,
+		},
+		[6] =
+		{
+			.name_Debug = &rdata.s_polar[0],
+			.name_LNG_long = 50,
+			.name_LNG_short = 66,
+			.iconID = 38,
+			.engineID = 3,
+		},
+		[7] =
+		{
+			.name_Debug = &rdata.s_pura[0],
+			.name_LNG_long = 51,
+			.name_LNG_short = 67,
+			.iconID = 39,
+			.engineID = 3,
+		},
+		[8] =
+		{
+			.name_Debug = &rdata.s_pinstripe[0],
+			.name_LNG_long = 52,
+			.name_LNG_short = 68,
+			.iconID = 43,
+			.engineID = 1,
+		},
+		[9] =
+		{
+			.name_Debug = &rdata.s_papu[0],
+			.name_LNG_long = 53,
+			.name_LNG_short = 69,
+			.iconID = 41,
+			.engineID = 2,
+		},
+		[10] =
+		{
+			.name_Debug = &rdata.s_roo[0],
+			.name_LNG_long = 54,
+			.name_LNG_short = 70,
+			.iconID = 40,
+			.engineID = 3,
+		},
+		[11] =
+		{
+			.name_Debug = &rdata.s_joe[0],
+			.name_LNG_long = 55,
+			.name_LNG_short = 71,
+			.iconID = 42,
+			.engineID = 0,
+		},
+		[12] =
+		{
+			.name_Debug = &rdata.s_ntropy[0],
+			.name_LNG_long = 56,
+			.name_LNG_short = 72,
+			.iconID = 44,
+			.engineID = 2,
+		},
+		[13] =
+		{
+			.name_Debug = &rdata.s_pen[0],
+			.name_LNG_long = 58,
+			.name_LNG_short = 74,
+			.iconID = 53,
+			.engineID = 3,
+		},
+		[14] =
+		{
+			.name_Debug = &rdata.s_fake[0],
+			.name_LNG_long = 59,
+			.name_LNG_short = 75,
+			.iconID = 54,
+			.engineID = 0,
+		},
+		[15] =
+		{
+			.name_Debug = &rdata.s_oxide[0],
+			.name_LNG_long = 57,
+			.name_LNG_short = 73,
+			.iconID = 55,
+			.engineID = 0,
+		}
+	},
+
+	.characterIDs =
+	{
+		0,1,2,3,4,5,6,7
+	},
+
+	// matArr01
 };

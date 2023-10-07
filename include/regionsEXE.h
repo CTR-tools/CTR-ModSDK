@@ -2340,10 +2340,6 @@ struct Data
 	// 9, 6, 3, 1, 0, 0, 0, 0
 	int cupPointsPerPosition[8];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x80086d84
 	// Copy one row into another
 	// to make duplicates of icons
@@ -2383,6 +2379,10 @@ struct Data
 	// 0x80087100 -- EurRetail
 	// 0x8008a184 -- JpnRetail
 	short characterIDs[8];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x80086e94
 	// bakedGteMath[0] is blank,
