@@ -4200,4 +4200,20 @@ struct Data data =
 		0x0001af40, 0x000189c0, 0x00017700, 
 		0x000189c0, 0x00015900, 0x00012840, 
 	},
+	
+	.playerIconAdvMap =
+	{
+		.unk_playerAdvMap = {0, 0xFFF8, 0xFFF8},
+		.unk2_playerAdvMap = {8, 8, 8},
+		
+		.vertCol1 = {0xFFFF, 0xFF, 0xFF},
+		.vertCol2 = {0xFFFF80, 0xFF, 0xFF},
+	},
+	
+	.stringIndexSuffix =
+	{
+		// st, nd, rd, th, th, th...
+		0x19, 0x1A, 0x1B, 
+		0x1C, 0x1C, 0x1C, 0x1C, 0x1C
+	},
 };

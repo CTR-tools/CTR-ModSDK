@@ -2246,10 +2246,6 @@ struct Data
 	char sep3_234[0x234];
 	#endif
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// SepReview -- 0x80084924
 	// UsaRetail -- 0x80086418
 	struct
@@ -2270,6 +2266,10 @@ struct Data
 	// 0x8008643C
 	// FUN_8005045c
 	short stringIndexSuffix[8];
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x8008644C
 	// FUN_80050654
