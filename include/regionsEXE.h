@@ -2234,10 +2234,6 @@ struct Data
 	// 0x80086314
 	struct MenuBox menuBox_Retry_ExitToMap;
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// SepReview -- 0x80084618
 	// UsaRetail -- 0x80086340
 	int RelicTime[3 * 18];
@@ -2249,6 +2245,10 @@ struct Data
 	// are these all zeros???
 	char sep3_234[0x234];
 	#endif
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// SepReview -- 0x80084924
 	// UsaRetail -- 0x80086418
