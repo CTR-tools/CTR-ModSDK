@@ -1,3 +1,12 @@
+
+// Hacky matrix for baked data
+struct MatrixND
+{
+	short m[3][3];
+	short extraShort; // the heck is this?
+	int t[3];
+};
+
 struct Terrain
 {
 	// 0
@@ -2380,34 +2389,30 @@ struct Data
 	// 0x8008a184 -- JpnRetail
 	short characterIDs[8];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x80086e94
 	// bakedGteMath[0] is blank,
 	// all the rest correspond
-	MATRIX matArr01[0xB]; // hit ground, pop wheelie
-	MATRIX matArr02[0x1]; // in wheelie
-	MATRIX matArr03[0x9]; // from wheelie, back to ground
-	MATRIX matArr04[0x10]; // crashing, and falling
-	MATRIX matArr05[0xF]; // squish, pop back up
-	MATRIX matArr06[0x1B]; // blasted
+	struct MatrixND matArr01[0xB]; // hit ground, pop wheelie
+	struct MatrixND matArr02[0x1]; // in wheelie
+	struct MatrixND matArr03[0x9]; // from wheelie, back to ground
+	struct MatrixND matArr04[0x10]; // crashing, and falling
+	struct MatrixND matArr05[0xF]; // squish, pop back up
+	struct MatrixND matArr06[0x1B]; // blasted
 	
 	// jump animations
-	MATRIX matArr07[0x4]; // Crash Bandicoot jump
-	MATRIX matArr08[0x4]; // cortex
-	MATRIX matArr09[0x4]; // tiny
-	MATRIX matArr0A[0x4];
-	MATRIX matArr0B[0x4]; // ...
-	MATRIX matArr0C[0x4];
-	MATRIX matArr0D[0x4];
-	MATRIX matArr0E[0x4];
-	MATRIX matArr0F[0x4];
-	MATRIX matArr10[0x4];
-	MATRIX matArr11[0x4];
-	MATRIX matArr12[0x4];
-	MATRIX matArr13[0x4]; // N Tropy jump
+	struct MatrixND matArr07[0x4]; // Crash Bandicoot jump
+	struct MatrixND matArr08[0x4]; // cortex
+	struct MatrixND matArr09[0x4]; // tiny
+	struct MatrixND matArr0A[0x4];
+	struct MatrixND matArr0B[0x4]; // ...
+	struct MatrixND matArr0C[0x4];
+	struct MatrixND matArr0D[0x4];
+	struct MatrixND matArr0E[0x4];
+	struct MatrixND matArr0F[0x4];
+	struct MatrixND matArr10[0x4];
+	struct MatrixND matArr11[0x4];
+	struct MatrixND matArr12[0x4];
+	struct MatrixND matArr13[0x4]; // N Tropy jump
 
 	// ^^^
 	// (0xD) penta uses ripper roo
@@ -2420,6 +2425,10 @@ struct Data
 		void* physEntry;
 		int numEntries;
 	} bakedGteMath[0x14];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 	
 	// 0x80087f94
 	struct
