@@ -155,3 +155,68 @@ void Particle_UpdateAllParticles(void)
 	Particle_UpdateList(gGT->particleList_heatWarp,gGT->particleList_heatWarp);
   }
 }
+
+int Particle_BitwiseClampByte(int *param_1)
+{
+  int iVar1 = *param_1;
+
+  // min value
+  if (iVar1 < 0)
+  {
+    iVar1 = 0;
+    param_1[0] = 0;
+  }
+  else if (0xff00 < iVar1)
+  {
+    iVar1 = 0xff00;
+    param_1[0] = 0xff00;
+  }
+
+  // shift down a byte
+  return iVar1 >> 8;
+}
+
+// called from RenderList and CreateInstance
+u_int Particle_SetColors(u_int param_1, u_int param_2, int param_3)
+{
+  u_int rgba;
+
+  if ((param_1 & 0x80) == 0)
+  {
+    // draw white
+    rgba = 0x1000000;
+
+    if ((param_2 & 0x80) != 0)
+    {
+        // draw white, with alpha clipping
+        rgba = 0x3000000;
+    }
+  }
+  else
+  {
+    // red
+    rgba = Particle_BitwiseClampByte(param_3 + 0x5c);
+
+    if ((param_1 & 0x100) != 0)
+    {
+      // green
+      rgba |= Particle_BitwiseClampByte(param_3 + 0x64) << 8;
+    }
+
+    if ((param_1 & 0x200) != 0)
+    {
+      // blue
+      rgba |= Particle_BitwiseClampByte(param_3 + 0x6c) << 16;
+    }
+
+    if ((param_2 & 0x80) != 0)
+    {
+        // enable alpha clipping
+        rgba |= 0x2000000;
+    }
+  }
+
+  // returns 0xXXBBGGRR
+  // BB for blue, GG for green, RR for red, XX for flags
+  return rgba;
+}
