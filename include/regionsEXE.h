@@ -2052,10 +2052,6 @@ struct Data
 	// 80088e9c -- JpnRetail
 	struct MenuBox menuBox_LoadProfileFromHub;
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x80085C64
 	// appear in save/load screen
 	struct
@@ -2088,6 +2084,10 @@ struct Data
 	// used in the same function as
 	// MetaDataSaveLoad, but usage is unknown
 	short unk_80085d0c_LoadSave[4];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80085d14
 	short lngIndex_LoadSave[4];
