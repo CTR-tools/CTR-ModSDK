@@ -2015,7 +2015,7 @@ struct Data
 
 	// 80083dcc -- SepReview	0x58 (from messageScreens)
 	// 80085b5c -- UsaRetail	0x58 (from messageScreens)
-	// 80084a38 -- JpnTrial		0x44 (from unk_afterFlagBeforeLng)
+	// 80084a38 -- JpnTrial		0x44 (from messageScreens)
 	// 80085df8 -- EurRetail	0x58 (from messageScreens)
 	// 80088dc0 -- JpnRetail	0x58 (from messageScreens)
 	// menuBox for green save/load screen
@@ -2030,7 +2030,7 @@ struct Data
 	// 80083e20 -- SepReview
 	// 80085b88 -- UsaRetail
 	// menuBox to draw adventure profiles
-	struct MenuBox MENUBOX_DrawSelfFourAdvProfiles;
+	struct MenuBox menuBox_FourAdvProfiles;
 
 	// 80083e54 -- SepReview
 	// 80085bb4 -- UsaRetail

@@ -47,7 +47,7 @@ void DECOMP_TitleOSK_MenuBoxFuncPtr(struct MenuBox *mb)
       // Set Load/Save to New Adventure mode
       LoadSave_ToggleMode(1);
       // Change active menuBox to draw four adv profiles
-      sdata->ptrDesiredMenuBox = &data.MENUBOX_DrawSelfFourAdvProfiles;
+      sdata->ptrDesiredMenuBox = &data.menuBox_FourAdvProfiles;
     }
   }
 }
