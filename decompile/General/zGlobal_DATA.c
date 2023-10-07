@@ -4179,6 +4179,8 @@ struct Data data =
 	
 	.RelicTime =
 	{
+		// one row per track,
+		// sapphire, gold, plat
 		0x00013ec0, 0x000102c0, 0x0000c6c0, 
 		0x00014a00, 0x00010a40, 0x0000ca80, 
 		0x00015180, 0x0000ff00, 0x0000a8c0, 
