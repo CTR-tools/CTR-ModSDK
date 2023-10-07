@@ -1969,20 +1969,15 @@ struct Data
 	// MATRIX struct at 80085AC0
 	MATRIX matrixTitleFlag;
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80085AE0
 	int checkerFlagVariables[5];
-
 
 	#if BUILD >= UsaRetail
 	// 80085AF4 -- UsaRetail
 	// 800849e4 -- JpnTrial
 	// 80085d90 -- EurRetail
 	// 80088d58 -- JpnRetail
-	char PlayerCommentBoxParams[4][4];
+	short PlayerCommentBoxParams[8];
 	#endif
 
 	// 80083D74 -- SepReview
@@ -2010,6 +2005,10 @@ struct Data
 	// [0] = 0x13C - FINISHED!
 	// [1,2,3] = 0xFFFF
 	int lngIndex_FinishOrLoser[4];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80085B3C
 	struct MenuRow menuRow_greenLoadSave[5];

@@ -3256,7 +3256,7 @@ struct Data data =
 	
 	.menuBox_optionsMenu_racingWheel =
 	{
-		.stringIndexTitle = -1,
+		.stringIndexTitle = 0xFFFF,
 		.posX_curr = 0x100,
 		.posY_curr = 0x6c,
 		.unk1 = 0,
@@ -3413,7 +3413,7 @@ struct Data data =
 	
 	.menuBox_advHub =
 	{
-		.stringIndexTitle = -1,
+		.stringIndexTitle = 0xFFFF,
 		.posX_curr = 0x100,
 		.posY_curr = 0xAF,
 		.unk1 = 0,
@@ -3846,7 +3846,7 @@ struct Data data =
 	
 	.menuBox_TitleBeginTrack =
 	{
-		.stringIndexTitle = -1,
+		.stringIndexTitle = 0xFFFF,
 		.state = 0x20, // no input, just funcPtr
 		.funcPtr = 0x80043B30
 	},
@@ -3861,5 +3861,38 @@ struct Data data =
 		},
 		
 		.t = {0,0,0}
+	},
+	
+	.checkerFlagVariables =
+	{
+		0, 0x96, 0, 0xB4, 0
+	},
+	
+	.PlayerCommentBoxParams =
+	{
+		0, 0x19, 0xD, 0x13,
+		0, 0x5, 0x3, 0x2
+	},
+	
+	.messageScreens =
+	{
+		0x1010f, 
+		0x10118, 
+		0x100e1, 
+		0x100ea, 
+		0x100f3, 
+		0x105, 
+		0x10121, 
+		0x1012a, 
+		0x1ffff, 
+		0x10133, 
+	},
+	
+	.lngIndex_FinishOrLoser =
+	{
+		0x13C, // FINISHED!
+		0xFFFF,
+		0xFFFF,
+		0xFFFF
 	}
 };
