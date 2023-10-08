@@ -7516,5 +7516,740 @@ struct Data data =
 		[7] = {},
 	},
 	
-	// .NextOne
+	.emSet_GroundSparks =
+	{
+		[0] =
+		{
+				.flags = 1,
+				.initOffset = 12,
+				.InitTypes.FuncInit =
+				{
+						.particle_funcPtr = 0x00000000,
+						.particle_colorFlags = 0x58a2,
+						.particle_lifespan = 0x0008,
+						.particle_Type = 0,
+				}
+		},
+		[1] =
+		{
+				.flags = 18,
+				.initOffset = 0,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 0,
+								.velocity = -500,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 1000,
+								.accel = 0,
+						}
+				}
+		},
+		[2] =
+		{
+				.flags = 18,
+				.initOffset = 2,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 0,
+								.velocity = -500,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 1000,
+								.accel = 0,
+						}
+				}
+		},
+		[3] =
+		{
+				.flags = 55,
+				.initOffset = 1,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 2048,
+								.velocity = 1000,
+								.accel = -300,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 800,
+								.accel = 100,
+						}
+				}
+		},
+		[4] =
+		{
+				.flags = 17,
+				.initOffset = 5,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 131072,
+								.velocity = 0,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 200,
+								.accel = 0,
+						}
+				}
+		},
+		[5] =
+		{
+				.flags = 3,
+				.initOffset = 7,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 65280,
+								.velocity = -7680,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		[6] =
+		{
+				.flags = 3,
+				.initOffset = 8,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 65280,
+								.velocity = -7680,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		[7] =
+		{
+				.flags = 3,
+				.initOffset = 9,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 32768,
+								.velocity = -3840,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		
+		// null
+		[8] = {},
+	},
+	
+	.emSet_WallSparks =
+	{
+		[0] =
+		{
+				.flags = 1,
+				.initOffset = 12,
+				.InitTypes.FuncInit =
+				{
+						.particle_funcPtr = 0x00000000,
+						.particle_colorFlags = 0x58a2,
+						.particle_lifespan = 0x0008,
+						.particle_Type = 0,
+				}
+		},
+		[1] =
+		{
+				.flags = 18,
+				.initOffset = 0,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 0,
+								.velocity = -500,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 1000,
+								.accel = 0,
+						}
+				}
+		},
+		[2] =
+		{
+				.flags = 18,
+				.initOffset = 2,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 0,
+								.velocity = -500,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 1000,
+								.accel = 0,
+						}
+				}
+		},
+		[3] =
+		{
+				.flags = 22,
+				.initOffset = 1,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 0,
+								.velocity = 2000,
+								.accel = -200,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 400,
+								.accel = 0,
+						}
+				}
+		},
+		[4] =
+		{
+				.flags = 1,
+				.initOffset = 5,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 131072,
+								.velocity = 0,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		[5] =
+		{
+				.flags = 3,
+				.initOffset = 7,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 65280,
+								.velocity = -2048,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		[6] =
+		{
+				.flags = 3,
+				.initOffset = 8,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 65280,
+								.velocity = -3072,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		[7] =
+		{
+				.flags = 1,
+				.initOffset = 9,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 1,
+								.velocity = 0,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		
+		// null
+		[8] = {},
+	},
+	
+	.emSet_MudSplash =
+	{
+		[0] =
+		{
+				.flags = 1,
+				.initOffset = 12,
+				.InitTypes.FuncInit =
+				{
+						.particle_funcPtr = 0x00000000,
+						.particle_colorFlags = 0x8880,
+						.particle_lifespan = 0x000f,
+						.particle_Type = 0,
+				}
+		},
+		[1] =
+		{
+				.flags = 27,
+				.initOffset = 0,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = -512,
+								.velocity = -512,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 1024,
+								.velocity = 1024,
+								.accel = 0,
+						}
+				}
+		},
+		[2] =
+		{
+				.flags = 27,
+				.initOffset = 2,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = -512,
+								.velocity = -512,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 1024,
+								.velocity = 1024,
+								.accel = 0,
+						}
+				}
+		},
+		[3] =
+		{
+				.flags = 62,
+				.initOffset = 1,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 0,
+								.velocity = 1536,
+								.accel = -200,
+						},
+						.rngSeed =
+						{
+								.startVal = 2048,
+								.velocity = 128,
+								.accel = -60,
+						}
+				}
+		},
+		[4] =
+		{
+				.flags = 11,
+				.initOffset = 5,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 2048,
+								.velocity = -100,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 300,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		[5] =
+		{
+				.flags = 19,
+				.initOffset = 4,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 4096,
+								.velocity = -128,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 512,
+								.accel = 0,
+						}
+				}
+		},
+		[6] =
+		{
+				.flags = 1,
+				.initOffset = 7,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 16384,
+								.velocity = 0,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		[7] =
+		{
+				.flags = 1,
+				.initOffset = 8,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 9216,
+								.velocity = 0,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		[8] =
+		{
+				.flags = 1,
+				.initOffset = 9,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 4352,
+								.velocity = 0,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		
+		// null
+		[9] = {},
+	},
+	
+	.emSet_BurnSmoke =
+	{
+		[0] =
+		{
+				.flags = 1,
+				.initOffset = 12,
+				.InitTypes.FuncInit =
+				{
+						.particle_funcPtr = 0x00000000,
+						.particle_colorFlags = 0x08c2,
+						.particle_lifespan = 0x000a,
+						.particle_Type = 0,
+				}
+		},
+		[1] =
+		{
+				.flags = 27,
+				.initOffset = 0,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = -8192,
+								.velocity = -2048,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 16384,
+								.velocity = 4096,
+								.accel = 0,
+						}
+				}
+		},
+		[2] =
+		{
+				.flags = 27,
+				.initOffset = 1,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 4096,
+								.velocity = -2048,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 8192,
+								.velocity = 4096,
+								.accel = 0,
+						}
+				}
+		},
+		[3] =
+		{
+				.flags = 27,
+				.initOffset = 2,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = -8192,
+								.velocity = -2048,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 16384,
+								.velocity = 4096,
+								.accel = 0,
+						}
+				}
+		},
+		[4] =
+		{
+				.flags = 9,
+				.initOffset = 5,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 4096,
+								.velocity = 0,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 300,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		[5] =
+		{
+				.flags = 9,
+				.initOffset = 4,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 50,
+								.velocity = 0,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = -100,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		[6] =
+		{
+				.flags = 3,
+				.initOffset = 7,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 32768,
+								.velocity = -3072,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 0,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		
+		// null
+		[7] = {},
+	},
+	
+	.emSet_Falling =
+	{
+		[0] =
+		{
+				.flags = 1,
+				.initOffset = 12,
+				.InitTypes.FuncInit =
+				{
+						.particle_funcPtr = 0x00000000,
+						.particle_colorFlags = 0x88a0,
+						.particle_lifespan = 0x000f,
+						.particle_Type = 0,
+				}
+		},
+		[1] =
+		{
+				.flags = 27,
+				.initOffset = 0,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = -8192,
+								.velocity = -2048,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 16384,
+								.velocity = 4096,
+								.accel = 0,
+						}
+				}
+		},
+		[2] =
+		{
+				.flags = 27,
+				.initOffset = 2,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = -8192,
+								.velocity = -2048,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 16384,
+								.velocity = 4096,
+								.accel = 0,
+						}
+				}
+		},
+		[3] =
+		{
+				.flags = 62,
+				.initOffset = 1,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 0,
+								.velocity = 4096,
+								.accel = -600,
+						},
+						.rngSeed =
+						{
+								.startVal = 2048,
+								.velocity = 2048,
+								.accel = -200,
+						}
+				}
+		},
+		[4] =
+		{
+				.flags = 9,
+				.initOffset = 5,
+				.InitTypes.AxisInit =
+				{
+						.baseValue =
+						{
+								.startVal = 1024,
+								.velocity = 0,
+								.accel = 0,
+						},
+						.rngSeed =
+						{
+								.startVal = 300,
+								.velocity = 0,
+								.accel = 0,
+						}
+				}
+		},
+		
+		// null
+		[5] = {},
+	},
+	
+	//.RNG_itemSetRace1 = {}
 };

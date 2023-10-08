@@ -2480,10 +2480,6 @@ struct Data
 	// 80089464, nullify to remove AI exhaust, or players in 3P+4P mode
 	struct ParticleEmitter emSet_Exhaust_Low[8];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80089584, nullify to remove Ground sparks
 	struct ParticleEmitter emSet_GroundSparks[9];
 
@@ -2498,6 +2494,10 @@ struct Data
 
 	// 80089a94, nullify to remove "falling" particles, when you splash in water or something
 	struct ParticleEmitter emSet_Falling[6];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// refer to chart
 	// https://media.discordapp.net/attachments/637616020177289236/982513721354092564/unknown.png?width=602&height=431
