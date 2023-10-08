@@ -2451,13 +2451,13 @@ struct Data
 		// last valid index is 6, so 7 elements
 	} MetaDataScrub[7];
 	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x80088004
 	// MetaDataTerrain offset 0x18
 	struct ParticleEmitter emSet_Terrain[0x22];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x800884CC
 	struct Terrain MetaDataTerrain[0x15];
