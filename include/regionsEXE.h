@@ -2469,22 +2469,10 @@ struct Data
 	// 0x8008BD0C -- JpnRetail
 	struct MetaPhys metaPhys[65]; // 0x71C bytes total
 
-	// particle emission meta,
-	// each divided into 0x24-byte subsets,
-	// the last subset in any set is all zeros (recurrsion, like MenuRow)
-
 	// 80089128, nullify to remove Player bubble exhaust underwater in 1P mode
 	struct ParticleEmitter emSet_Exhaust_Water[7];
 
 	// 80089224
-	// [0] - color
-	// [1] - off=0 (posX)
-	// [2] - off=1 (posY)
-	// [3] - off=2 (posZ)
-	// [4] - off=5 (scale)
-	// [5] - off=7 (colorR, which is also alpha)
-	// [6] - off=4
-	// [7] - null
 	struct ParticleEmitter emSet_Exhaust_High[8];
 
 	// 80089344, nullify to remove Player exhaust in 2P mode
