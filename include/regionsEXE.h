@@ -2473,6 +2473,14 @@ struct Data
 	struct ParticleEmitter emSet_Exhaust_Water[7];
 
 	// 80089224
+	// [0] - color
+	// [1] - off=0 (posX)
+	// [2] - off=1 (posY)
+	// [3] - off=2 (posZ)
+	// [4] - off=5 (scale)
+	// [5] - off=7 (colorR, which is also alpha)
+	// [6] - off=4
+	// [7] - null
 	struct ParticleEmitter emSet_Exhaust_High[8];
 
 	// 80089344, nullify to remove Player exhaust in 2P mode
