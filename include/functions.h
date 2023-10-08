@@ -463,7 +463,7 @@ struct Instance* INSTANCE_BirthWithThread_Stack(int* spArr);
 void INSTANCE_Death(struct Instance* inst);
 void INSTANCE_LevInitAll(struct InstDef* instDef, int num);
 void INSTANCE_LevDelayedLInBs(void* instDefs, u_int numInstances);
-u_short INSTANCE_GetNumAnimFrames(struct Instance*, int param_2);
+u_short INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex);
 
 // JitPool
 
