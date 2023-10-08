@@ -3418,15 +3418,13 @@ struct sData
 	// 8008d660
 	char s_head[8];
 
-// Do NOT move this, this prevents the EXE
-// from getting bloated with zeros. All BSS
-// will default to zero in RAM after EXE loads	
-#ifndef SDATA_DEV
+// This prevents the EXE file from getting 
+// bloated with zeros, bss gets zero'd from
+// entry function of the game
+#ifndef NO_BSS
 
 	// BSS is still addressed by $gp,
 	// so they share SDATA struct,
-	// but #ifndef SDATA_DEV should 
-	// never touch BSS
 
 	// ===== BSS Region ========
 
@@ -4804,7 +4802,7 @@ struct sData
 
 	// 8009f6fc end of BSS
 	
-// SDATA_DEV
+// NO_BSS
 #endif
 };
 

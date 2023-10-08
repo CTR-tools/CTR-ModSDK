@@ -1,6 +1,6 @@
 
 // Only PS1 Rebuild, not PC Rebuild
-#define SDATA_DEV 1
+#define NO_BSS 1
 
 #include <common.h>
 
