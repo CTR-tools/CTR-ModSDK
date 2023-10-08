@@ -6099,6 +6099,7 @@ struct Data data =
 	
 	.emSet_Terrain =
 	{
+		// "dirt" L/R
 		[0] =
 		{
 			.flags = 1,
@@ -6235,6 +6236,7 @@ struct Data data =
 		// null terminator
 		[7] = {},
 		
+		// "grass" left
 		[8] =
 		{
 			.flags = 1,
@@ -6405,6 +6407,7 @@ struct Data data =
 		// null terminator
 		[17] = {},
 		
+		// "grass" right
 		[18] =
 		{
 			.flags = 1,
@@ -6575,6 +6578,7 @@ struct Data data =
 		// null terminator
 		[27] = {},
 		
+		// "snow" L/R
 		[28] =
 		{
 				.flags = 1,
