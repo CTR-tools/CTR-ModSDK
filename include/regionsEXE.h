@@ -2461,16 +2461,16 @@ struct Data
 	// 0x800884CC
 	struct Terrain MetaDataTerrain[0x15];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 0x80086f18 -- SepReview
 	// 0x80088A0C -- UsaRetail
 	// 0x80087860 -- JpnTrial
 	// 0x80088C88 -- EurRetail
 	// 0x8008BD0C -- JpnRetail
 	struct MetaPhys metaPhys[65]; // 0x71C bytes total
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80089128, nullify to remove Player bubble exhaust underwater in 1P mode
 	struct ParticleEmitter emSet_Exhaust_Water[7];

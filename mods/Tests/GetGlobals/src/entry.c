@@ -6,7 +6,16 @@ void RunEntryHook()
 	printf("\n");
 	printf("\n");
 
-	// template
+	for(int i = 0; i < NUM_PHYS_TYPES; i++)
+	{
+		printf("{0, 0x%02x, %d, %d, %d, %d, %d},\n",
+			data.metaPhys[i].DriverOffset,
+			data.metaPhys[i].size,
+			data.metaPhys[i].value[0],
+			data.metaPhys[i].value[1],
+			data.metaPhys[i].value[2],
+			data.metaPhys[i].value[3]);
+	}
 
 	printf("\n");
 	printf("\n");
