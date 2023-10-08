@@ -2515,10 +2515,6 @@ struct Data
 
 	// 80089bf0, Itemset for Battle Mode
 	char RNG_itemSetBattleDefault[0x14];
-	
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
 
 	// 80089c04, nullify to remove warpball particles
 	struct ParticleEmitter emSet_Warpball[0xB];
@@ -2533,9 +2529,7 @@ struct Data
 	struct ParticleEmitter emSet_Warppad[0x8];
 
 	// 8008a2a0
-	int placeholder_lastByte;
-
-	char endPadding[0x2CB0];
+	// int placeholder_lastByte;
 
 	// 8008a2a0 -- confetti data
 	// 8008a344 -- 8 jmp pointers for normal tire drawing
@@ -2560,8 +2554,6 @@ struct Data
 	// 8008c05c -- pointer to first exe function
 
 	// 8008cf6b -- end of Data
-// DATA_DEV
-#endif
 };
 
 // 0x8008D218 -- Early June? PizzaHut USA
@@ -4863,12 +4855,10 @@ _Static_assert(sizeof(struct Terrain) == 0x40);
 _Static_assert(sizeof(struct MetaDataLEV) == 0x18);
 _Static_assert(sizeof(struct MetaDataMODEL) == 0xC);
 
-#ifndef DATA_DEV
 #if BUILD == UsaRetail
 #define OFFSETOF_SDATA(ELEMENT) ((unsigned int)&(((struct sData *)0x8008cf6c)->ELEMENT))
 #define OFFSETOF_DATA(ELEMENT) ((unsigned int)&(((struct Data *)0x80080ee0)->ELEMENT))
 
 _Static_assert(OFFSETOF_DATA(menuRow_quit[0]) == 0x800841BC);
 _Static_assert(OFFSETOF_DATA(menuBox_quit) == 0x800841D0);
-#endif
 #endif
