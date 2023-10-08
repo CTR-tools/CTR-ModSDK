@@ -2425,10 +2425,6 @@ struct Data
 		void* physEntry;
 		int numEntries;
 	} bakedGteMath[0x14];
-
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
 	
 	// 0x80087f94
 	struct
@@ -2454,6 +2450,10 @@ struct Data
 
 		// last valid index is 6, so 7 elements
 	} MetaDataScrub[7];
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 0x80088004
 	// MetaDataTerrain offset 0x18
