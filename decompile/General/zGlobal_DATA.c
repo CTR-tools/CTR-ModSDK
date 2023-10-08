@@ -6097,10 +6097,8 @@ struct Data data =
 		{0, 0x3, 0x3E800, 700},
 	},
 	
-	.emSet_Terrain =
+	.emSet_DirtLR =
 	{
-		// "dirt" L/R
-		[0] =
 		{
 			.flags = 1,
 			.initOffset = 12,
@@ -6112,7 +6110,7 @@ struct Data data =
 					.particle_Type = 0,
 			}
 		},
-		[1] =
+
 		{
 			.flags = 27,
 			.initOffset = 0,
@@ -6132,7 +6130,7 @@ struct Data data =
 					}
 			}
 		},
-		[2] =
+
 		{
 			.flags = 27,
 			.initOffset = 2,
@@ -6152,7 +6150,7 @@ struct Data data =
 					}
 			}
 		},
-		[3] =
+
 		{
 			.flags = 23,
 			.initOffset = 1,
@@ -6172,7 +6170,7 @@ struct Data data =
 					}
 			}
 		},
-		[4] =
+
 		{
 			.flags = 3,
 			.initOffset = 7,
@@ -6192,7 +6190,7 @@ struct Data data =
 					}
 			}
 		},
-		[5] =
+
 		{
 			.flags = 3,
 			.initOffset = 8,
@@ -6212,7 +6210,7 @@ struct Data data =
 					}
 			}
 		},
-		[6] =
+
 		{
 			.flags = 1,
 			.initOffset = 9,
@@ -6234,10 +6232,11 @@ struct Data data =
 		},
 		
 		// null terminator
-		[7] = {},
-		
-		// "grass" left
-		[8] =
+		{},
+	},
+	
+	.emSet_GrassL =
+	{
 		{
 			.flags = 1,
 			.initOffset = 12,
@@ -6249,7 +6248,7 @@ struct Data data =
 					.particle_Type = 0,
 			}
 		},
-		[9] =
+
 		{
 			.flags = 27,
 			.initOffset = 0,
@@ -6269,7 +6268,7 @@ struct Data data =
 					}
 			}
 		},
-		[10] =
+
 		{
 			.flags = 27,
 			.initOffset = 2,
@@ -6289,7 +6288,7 @@ struct Data data =
 					}
 			}
 		},
-		[11] =
+
 		{
 			.flags = 23,
 			.initOffset = 1,
@@ -6309,7 +6308,7 @@ struct Data data =
 					}
 			}
 		},
-		[12] =
+
 		{
 			.flags = 64,
 			.initOffset = 1,
@@ -6323,7 +6322,7 @@ struct Data data =
 				1, 0, 0, 2
 			}
 		},
-		[13] =
+
 		{
 			.flags = 1,
 			.initOffset = 5,
@@ -6343,7 +6342,7 @@ struct Data data =
 					}
 			}
 		},
-		[14] =
+
 		{
 			.flags = 1,
 			.initOffset = 7,
@@ -6363,7 +6362,7 @@ struct Data data =
 					}
 			}
 		},
-		[15] =
+
 		{
 			.flags = 1,
 			.initOffset = 8,
@@ -6383,7 +6382,7 @@ struct Data data =
 					}
 			}
 		},
-		[16] =
+
 		{
 			.flags = 0,
 			.initOffset = 9,
@@ -6405,10 +6404,11 @@ struct Data data =
 		},
 		
 		// null terminator
-		[17] = {},
+		{},
+	},
 		
-		// "grass" right
-		[18] =
+	.emSet_GrassR =
+	{
 		{
 			.flags = 1,
 			.initOffset = 12,
@@ -6420,7 +6420,7 @@ struct Data data =
 					.particle_Type = 0,
 			}
 		},
-		[19] =
+
 		{
 			.flags = 27,
 			.initOffset = 0,
@@ -6440,7 +6440,7 @@ struct Data data =
 					}
 			}
 		},
-		[20] =
+
 		{
 			.flags = 27,
 			.initOffset = 2,
@@ -6460,7 +6460,7 @@ struct Data data =
 					}
 			}
 		},
-		[21] =
+
 		{
 			.flags = 23,
 			.initOffset = 1,
@@ -6480,7 +6480,7 @@ struct Data data =
 					}
 			}
 		},
-		[22] =
+
 		{
 			.flags = 64,
 			.initOffset = 1,
@@ -6494,7 +6494,7 @@ struct Data data =
 				1, 0, 0, 2
 			}
 		},
-		[23] =
+
 		{
 			.flags = 1,
 			.initOffset = 5,
@@ -6514,7 +6514,7 @@ struct Data data =
 					}
 			}
 		},
-		[24] =
+
 		{
 			.flags = 1,
 			.initOffset = 7,
@@ -6534,7 +6534,7 @@ struct Data data =
 					}
 			}
 		},
-		[25] =
+
 		{
 			.flags = 1,
 			.initOffset = 8,
@@ -6554,7 +6554,7 @@ struct Data data =
 					}
 			}
 		},
-		[26] =
+
 		{
 			.flags = 0,
 			.initOffset = 9,
@@ -6576,10 +6576,11 @@ struct Data data =
 		},
 		
 		// null terminator
-		[27] = {},
-		
-		// "snow" L/R
-		[28] =
+		{},
+	},
+	
+	.emSet_SnowLR =
+	{
 		{
 				.flags = 1,
 				.initOffset = 12,
@@ -6591,7 +6592,7 @@ struct Data data =
 						.particle_Type = 0,
 				}
 		},
-		[29] =
+
 		{
 				.flags = 27,
 				.initOffset = 0,
@@ -6611,7 +6612,7 @@ struct Data data =
 						}
 				}
 		},
-		[30] =
+
 		{
 				.flags = 27,
 				.initOffset = 2,
@@ -6631,7 +6632,7 @@ struct Data data =
 						}
 				}
 		},
-		[31] =
+
 		{
 				.flags = 23,
 				.initOffset = 1,
@@ -6651,7 +6652,7 @@ struct Data data =
 						}
 				}
 		},
-		[32] =
+
 		{
 				.flags = 1,
 				.initOffset = 7,
@@ -6673,7 +6674,7 @@ struct Data data =
 		},
 		
 		// null terminator
-		[33] = {},
+		{},
 	}
 
 	// MetaDataTerrain
