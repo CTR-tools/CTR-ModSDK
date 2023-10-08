@@ -2495,10 +2495,6 @@ struct Data
 	// 80089a94, nullify to remove "falling" particles, when you splash in water or something
 	struct ParticleEmitter emSet_Falling[6];
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// refer to chart
 	// https://media.discordapp.net/attachments/637616020177289236/982513721354092564/unknown.png?width=602&height=431
 
@@ -2519,6 +2515,10 @@ struct Data
 
 	// 80089bf0, Itemset for Battle Mode
 	char RNG_itemSetBattleDefault[0x14];
+	
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80089c04, nullify to remove warpball particles
 	struct ParticleEmitter emSet_Warpball[0xB];
