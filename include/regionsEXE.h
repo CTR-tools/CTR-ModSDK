@@ -2468,10 +2468,6 @@ struct Data
 	// 0x8008BD0C -- JpnRetail
 	struct MetaPhys metaPhys[65]; // 0x71C bytes total
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80089128, nullify to remove Player bubble exhaust underwater in 1P mode
 	struct ParticleEmitter emSet_Exhaust_Water[7];
 
@@ -2483,6 +2479,10 @@ struct Data
 
 	// 80089464, nullify to remove AI exhaust, or players in 3P+4P mode
 	struct ParticleEmitter emSet_Exhaust_Low[8];
+
+// for rewriting structs in decompile,
+// zGlobal_DATA.c
+#ifndef DATA_DEV
 
 	// 80089584, nullify to remove Ground sparks
 	struct ParticleEmitter emSet_GroundSparks[9];
