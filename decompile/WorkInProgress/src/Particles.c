@@ -13,12 +13,12 @@ void Particle_FuncPtr_PotionShatter(struct Particle *p)
     // Get random number
     rng = MixRNG_Scramble();
 
-    p->axis[0].velocity = rng + (rng / 800) * -800 + -400;
+    p->axis[0].velocity = rng + (rng / 800) * -800 - 400;
 
     // Get random number
     rng = MixRNG_Scramble();
 
-    p->axis[2].velocity = rng + (rng / 800) * -800 + -400;
+    p->axis[2].velocity = rng + (rng / 800) * -800 - 400;
 
     // Get random number
     rng = MixRNG_Scramble();
@@ -38,14 +38,14 @@ LAB_8003ebc8:
   {
     if (0 < p->axis[8].startVal)
     {
-      p->axis[8].startVal = p->axis[8].startVal + -0x1200;
+      p->axis[8].startVal = p->axis[8].startVal - 0x1200;
     }
   }
   else
   {
     if (0 < p->axis[7].startVal)
     {
-      p->axis[7].startVal = p->axis[7].startVal + -0x1200;
+      p->axis[7].startVal = p->axis[7].startVal - 0x1200;
     }
   }
 }
@@ -60,14 +60,14 @@ void Particle_FuncPtr_SpitTire(struct Particle *p)
     // Get random number
     rng = MixRNG_Scramble();
 
-    p->axis[0].velocity = rng + (rng / 0x1640) * -0x1640 + -0xb20;
+    p->axis[0].velocity = rng + (rng / 0x1640) * -0x1640 - 0xb20;
 
     // Get random number
     rng = MixRNG_Scramble();
 
     iVar2 = p->axis[5].startVal;
 
-    p->axis[2].velocity = rng + (rng / 0x1640) * -0x1640 + -0xb20;
+    p->axis[2].velocity = rng + (rng / 0x1640) * -0x1640 - 0xb20;
     if (iVar2 == 0x1000)
     {
       // Get random number
