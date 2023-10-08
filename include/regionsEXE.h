@@ -55,7 +55,7 @@ struct Terrain
 	short sound;
 
 	// 0x34 ?
-	int unk_0x34[2];
+	unsigned short unk_0x34[4];
 
 	// 0x3C
 	// (old korky comments ???)
@@ -2458,12 +2458,12 @@ struct Data
 	struct ParticleEmitter emSet_GrassR[10];
 	struct ParticleEmitter emSet_SnowLR[6];
 
+	// 0x800884CC
+	struct Terrain MetaDataTerrain[0x15];
+
 // for rewriting structs in decompile,
 // zGlobal_DATA.c
 #ifndef DATA_DEV
-
-	// 0x800884CC
-	struct Terrain MetaDataTerrain[0x15];
 
 	// 0x80086f18 -- SepReview
 	// 0x80088A0C -- UsaRetail
