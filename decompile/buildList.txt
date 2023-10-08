@@ -168,6 +168,7 @@ common, exe, CDSYS_XAPauseAtEnd, 0x0, General/CDSYS/CDSYS_c19_XAPauseAtEnd.c
 common, exe, CTR_CycleTex_LEV, 0x0, General/CTR_CycleTex_LEV.c
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
 common, exe, CTR_CycleTex_AllModels, 0x0, General/CTR_CycleTex_AllModels.c
+common, exe, CTR_CycleTex_Model, 0x0, General/CTR_CycleTex_Model.c
 
 // DebugFont
 common, exe, DebugFont_Init, 0x0, General/DebugFont/DebugFont_Init.c General/DebugFont/DebugFont_DrawNumbers, DebugFont.bin

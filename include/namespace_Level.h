@@ -93,6 +93,24 @@ struct IconGroup4
 	struct TextureLayout mosaic;
 };
 
+// Same as AnimTex below
+// TODO: move this to AnimTex
+struct CustomAnimTex
+{
+	// 0x0
+	int* ptrActiveFrame;
+	// 0x4
+	short totalFrames;
+ 	// 0x6
+	short frameDuration;
+	// 0x8
+	short shiftFactor;
+	// 0xA
+	u_short currentFrame;
+	// 0xC
+	int* ptrFrameArray[0];
+};
+
 struct AnimTex
 {
 	// 0x0
