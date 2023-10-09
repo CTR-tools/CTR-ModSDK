@@ -17,6 +17,8 @@ void DECOMP_cseq_opcode08();
 void DECOMP_cseq_opcode09();
 void DECOMP_cseq_opcode0a();
 
+int DECOMP_DecalFont_DrawMultiLine(char* str, int posX, int posY, int maxPixLen, short fontType, int flags);
+
 void DECOMP_LOAD_Callback_Overlay_Generic();
 void DECOMP_LOAD_Callback_Overlay_230();
 void DECOMP_LOAD_Callback_Overlay_231();

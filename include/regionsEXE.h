@@ -1,3 +1,12 @@
+
+// Hacky matrix for baked data
+struct MatrixND
+{
+	short m[3][3];
+	short extraShort; // the heck is this?
+	int t[3];
+};
+
 struct Terrain
 {
 	// 0
@@ -46,7 +55,7 @@ struct Terrain
 	short sound;
 
 	// 0x34 ?
-	int unk_0x34[2];
+	unsigned short unk_0x34[4];
 
 	// 0x3C
 	// (old korky comments ???)
@@ -1969,20 +1978,15 @@ struct Data
 	// MATRIX struct at 80085AC0
 	MATRIX matrixTitleFlag;
 
-// for rewriting structs in decompile,
-// zGlobal_DATA.c
-#ifndef DATA_DEV
-
 	// 80085AE0
 	int checkerFlagVariables[5];
-
 
 	#if BUILD >= UsaRetail
 	// 80085AF4 -- UsaRetail
 	// 800849e4 -- JpnTrial
 	// 80085d90 -- EurRetail
 	// 80088d58 -- JpnRetail
-	char PlayerCommentBoxParams[4][4];
+	short PlayerCommentBoxParams[8];
 	#endif
 
 	// 80083D74 -- SepReview
@@ -2016,7 +2020,7 @@ struct Data
 
 	// 80083dcc -- SepReview	0x58 (from messageScreens)
 	// 80085b5c -- UsaRetail	0x58 (from messageScreens)
-	// 80084a38 -- JpnTrial		0x44 (from unk_afterFlagBeforeLng)
+	// 80084a38 -- JpnTrial		0x44 (from messageScreens)
 	// 80085df8 -- EurRetail	0x58 (from messageScreens)
 	// 80088dc0 -- JpnRetail	0x58 (from messageScreens)
 	// menuBox for green save/load screen
@@ -2031,7 +2035,7 @@ struct Data
 	// 80083e20 -- SepReview
 	// 80085b88 -- UsaRetail
 	// menuBox to draw adventure profiles
-	struct MenuBox MENUBOX_DrawSelfFourAdvProfiles;
+	struct MenuBox menuBox_FourAdvProfiles;
 
 	// 80083e54 -- SepReview
 	// 80085bb4 -- UsaRetail
@@ -2177,7 +2181,7 @@ struct Data
 	// 26 - timeCrateNum_Pos
 	// 27 - ???
 	// 28 - num elements
-
+	
 	struct UiElement2D hud_1P_P1[0x28];
 
 	struct UiElement2D hud_2P_P1[0x28];
@@ -2200,7 +2204,7 @@ struct Data
 
 	// consistent hole on all versions
 	// 8008626c
-	char unk_between_hudStructPtr_menuRow_arcadeEndRace[0x94];
+	unsigned char unk_between_hudStructPtr_menuRow_arcadeEndRace[0x94];
 
 	// 8008626c - related to missile or warpball chasing player
 
@@ -2271,7 +2275,7 @@ struct Data
 	// 0x8008643C
 	// FUN_8005045c
 	short stringIndexSuffix[8];
-
+	
 	// 0x8008644C
 	// FUN_80050654
 	short battleScoreColor[4][4];
@@ -2286,9 +2290,9 @@ struct Data
 	// 0x800864DC
 	// LNG index for end-of-race comments
 	#if BUILD >= JpnTrial
-	char data830[0x830];
+	unsigned char data830[0x830];
 	#elif BUILD >= SepReview
-	char data850[0x850];
+	unsigned char data850[0x850];
 	#endif
 
 	#if 0
@@ -2388,27 +2392,27 @@ struct Data
 	// 0x80086e94
 	// bakedGteMath[0] is blank,
 	// all the rest correspond
-	MATRIX matArr01[0xB]; // hit ground, pop wheelie
-	MATRIX matArr02[0x1]; // in wheelie
-	MATRIX matArr03[0x9]; // from wheelie, back to ground
-	MATRIX matArr04[0x10]; // crashing, and falling
-	MATRIX matArr05[0xF]; // squish, pop back up
-	MATRIX matArr06[0x1B]; // blasted
+	struct MatrixND matArr01[0xB]; // hit ground, pop wheelie
+	struct MatrixND matArr02[0x1]; // in wheelie
+	struct MatrixND matArr03[0x9]; // from wheelie, back to ground
+	struct MatrixND matArr04[0x10]; // crashing, and falling
+	struct MatrixND matArr05[0xF]; // squish, pop back up
+	struct MatrixND matArr06[0x1B]; // blasted
 	
 	// jump animations
-	MATRIX matArr07[0x4]; // Crash Bandicoot jump
-	MATRIX matArr08[0x4]; // cortex
-	MATRIX matArr09[0x4]; // tiny
-	MATRIX matArr0A[0x4];
-	MATRIX matArr0B[0x4]; // ...
-	MATRIX matArr0C[0x4];
-	MATRIX matArr0D[0x4];
-	MATRIX matArr0E[0x4];
-	MATRIX matArr0F[0x4];
-	MATRIX matArr10[0x4];
-	MATRIX matArr11[0x4];
-	MATRIX matArr12[0x4];
-	MATRIX matArr13[0x4]; // N Tropy jump
+	struct MatrixND matArr07[0x4]; // Crash Bandicoot jump
+	struct MatrixND matArr08[0x4]; // cortex
+	struct MatrixND matArr09[0x4]; // tiny
+	struct MatrixND matArr0A[0x4];
+	struct MatrixND matArr0B[0x4]; // ...
+	struct MatrixND matArr0C[0x4];
+	struct MatrixND matArr0D[0x4];
+	struct MatrixND matArr0E[0x4];
+	struct MatrixND matArr0F[0x4];
+	struct MatrixND matArr10[0x4];
+	struct MatrixND matArr11[0x4];
+	struct MatrixND matArr12[0x4];
+	struct MatrixND matArr13[0x4]; // N Tropy jump
 
 	// ^^^
 	// (0xD) penta uses ripper roo
@@ -2446,10 +2450,13 @@ struct Data
 
 		// last valid index is 6, so 7 elements
 	} MetaDataScrub[7];
-
+	
 	// 0x80088004
 	// MetaDataTerrain offset 0x18
-	struct ParticleEmitter emSet_Terrain[0x22];
+	struct ParticleEmitter emSet_DirtLR[8];
+	struct ParticleEmitter emSet_GrassL[10];
+	struct ParticleEmitter emSet_GrassR[10];
+	struct ParticleEmitter emSet_SnowLR[6];
 
 	// 0x800884CC
 	struct Terrain MetaDataTerrain[0x15];
@@ -2461,22 +2468,10 @@ struct Data
 	// 0x8008BD0C -- JpnRetail
 	struct MetaPhys metaPhys[65]; // 0x71C bytes total
 
-	// particle emission meta,
-	// each divided into 0x24-byte subsets,
-	// the last subset in any set is all zeros (recurrsion, like MenuRow)
-
 	// 80089128, nullify to remove Player bubble exhaust underwater in 1P mode
 	struct ParticleEmitter emSet_Exhaust_Water[7];
 
 	// 80089224
-	// [0] - color
-	// [1] - off=0 (posX)
-	// [2] - off=1 (posY)
-	// [3] - off=2 (posZ)
-	// [4] - off=5 (scale)
-	// [5] - off=7 (colorR, which is also alpha)
-	// [6] - off=4
-	// [7] - null
 	struct ParticleEmitter emSet_Exhaust_High[8];
 
 	// 80089344, nullify to remove Player exhaust in 2P mode
@@ -2534,9 +2529,7 @@ struct Data
 	struct ParticleEmitter emSet_Warppad[0x8];
 
 	// 8008a2a0
-	int placeholder_lastByte;
-
-	char endPadding[0x2CB0];
+	// int placeholder_lastByte;
 
 	// 8008a2a0 -- confetti data
 	// 8008a344 -- 8 jmp pointers for normal tire drawing
@@ -2561,8 +2554,6 @@ struct Data
 	// 8008c05c -- pointer to first exe function
 
 	// 8008cf6b -- end of Data
-// DATA_DEV
-#endif
 };
 
 // 0x8008D218 -- Early June? PizzaHut USA
@@ -3427,15 +3418,13 @@ struct sData
 	// 8008d660
 	char s_head[8];
 
-// Do NOT move this, this prevents the EXE
-// from getting bloated with zeros. All BSS
-// will default to zero in RAM after EXE loads	
-#ifndef SDATA_DEV
+// This prevents the EXE file from getting 
+// bloated with zeros, bss gets zero'd from
+// entry function of the game
+#ifndef NO_BSS
 
 	// BSS is still addressed by $gp,
 	// so they share SDATA struct,
-	// but #ifndef SDATA_DEV should 
-	// never touch BSS
 
 	// ===== BSS Region ========
 
@@ -4813,7 +4802,7 @@ struct sData
 
 	// 8009f6fc end of BSS
 	
-// SDATA_DEV
+// NO_BSS
 #endif
 };
 
@@ -4864,12 +4853,10 @@ _Static_assert(sizeof(struct Terrain) == 0x40);
 _Static_assert(sizeof(struct MetaDataLEV) == 0x18);
 _Static_assert(sizeof(struct MetaDataMODEL) == 0xC);
 
-#ifndef DATA_DEV
 #if BUILD == UsaRetail
 #define OFFSETOF_SDATA(ELEMENT) ((unsigned int)&(((struct sData *)0x8008cf6c)->ELEMENT))
 #define OFFSETOF_DATA(ELEMENT) ((unsigned int)&(((struct Data *)0x80080ee0)->ELEMENT))
 
 _Static_assert(OFFSETOF_DATA(menuRow_quit[0]) == 0x800841BC);
 _Static_assert(OFFSETOF_DATA(menuBox_quit) == 0x800841D0);
-#endif
 #endif

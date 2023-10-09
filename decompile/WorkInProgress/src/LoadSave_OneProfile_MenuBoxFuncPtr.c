@@ -23,7 +23,7 @@ void DECOMP_LoadSave_OneProfile_MenuBoxFuncPtr(struct MenuBox *mb)
         LoadSave_ToggleMode((row | 0x20));
 
         // Set MenuBox to a menu box that draws four adv profiles
-        sdata->ptrDesiredMenuBox = &data.MENUBOX_DrawSelfFourAdvProfiles;
+        sdata->ptrDesiredMenuBox = &data.menuBox_FourAdvProfiles;
         return;
     }
 

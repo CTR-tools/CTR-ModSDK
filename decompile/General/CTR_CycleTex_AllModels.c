@@ -9,7 +9,7 @@ void CTR_CycleTex_AllModels(int numModels, struct Model** pModelArray, int timer
     struct Model * pModel;
     struct ModelHeader * pHeader;
 
-    //validate params
+    // validate params
     if (pModelArray == NULL || numModels == 0) return;
 
     do {

@@ -100,7 +100,7 @@ void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem)
 void CTR_Box_DrawClearBox(RECT* r, u_int* rgb, int param_3, u_long* otMem, struct PrimMem* primMem);
 void CTR_Box_DrawSolidBox(RECT* r, u_int* rgb, u_long* otMem, struct PrimMem* primMem);
 void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
-//void CTR_CycleTex_Model(void* animtex, int timer);
+void CTR_CycleTex_Model(struct CustomAnimTex* pAnimTexArray, int timer);
 void CTR_CycleTex_AllModels(int numModels, struct Model** pModelArray, int timer);
 //CTR_CycleTex_2p3p4pWumpaHUD();
 void CTR_ClearRenderLists_1P2P(struct GameTracker* gGT, int numPlyrCurrGame);
@@ -168,7 +168,7 @@ void ElimBG_SaveScreenshot_Chunk(void *img1,void *img2,int param_3);
 void ElimBG_SaveScreenshot_Full(struct GameTracker* gGT);
 void ElimBG_Activate(struct GameTracker* gGT);
 void ElimBG_ToggleInstance(struct Instance* inst, int boolGameIsPaused);
-void ElimBG_ToggleAllInstances(struct Instance* inst, int boolGameIsPaused);
+void ElimBG_ToggleAllInstances(struct GameTracker* gGT, int boolGameIsPaused);
 void ElimBG_HandleState(struct GameTracker* gGT);
 void ElimBG_Deactivate(struct GameTracker* gGT);
 
@@ -463,7 +463,7 @@ struct Instance* INSTANCE_BirthWithThread_Stack(int* spArr);
 void INSTANCE_Death(struct Instance* inst);
 void INSTANCE_LevInitAll(struct InstDef* instDef, int num);
 void INSTANCE_LevDelayedLInBs(void* instDefs, u_int numInstances);
-u_short INSTANCE_GetNumAnimFrames(struct Instance*, int param_2);
+u_short INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex);
 
 // JitPool
 

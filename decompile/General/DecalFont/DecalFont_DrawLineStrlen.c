@@ -41,6 +41,8 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char *str, short len, int posX, short pos
 	int japanPtrColor;
 	int iVar9;
 	#endif
+	
+	struct GameTracker* gGT = sdata->gGT;
 
 	// If you do not want text centered
 	if ((flags & 0x8000) == 0)
@@ -55,13 +57,13 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char *str, short len, int posX, short pos
 		// If you want text to "end" here
 
 		// subtract X position by result
-		alterX = DecalFont_GetLineWidthStrlen(str, len, fontType);
+		alterX = DECOMP_DecalFont_GetLineWidthStrlen(str, len, fontType);
 	}
 
 	// If you do want text centered
 	else
 	{
-		alterX = DecalFont_GetLineWidthStrlen(str, len, fontType);
+		alterX = DECOMP_DecalFont_GetLineWidthStrlen(str, len, fontType);
 
 		// Subtract X position by half of length
 		alterX = (alterX << 0x10) >> 0x11;
@@ -108,7 +110,7 @@ LAB_80022598:
 		
 			iconScale = FP(1.0);
 
-			#if BUILD > UsaRetail
+			#if BUILD >= JpnTrial
 			iconStruct = 0;
 
 			#if BUILD == EurRetail
@@ -328,17 +330,17 @@ LAB_80022598:
 					}
 
 					// if icon index is less than
-					if ((iconID & 0xffff) < sdata->gGT->iconGroup[iconGroupID]->numIcons)
+					if ((iconID & 0xffff) < gGT->iconGroup[iconGroupID]->numIcons)
 					{
-						DecalHUD_DrawPolyGT4
+						DECOMP_DecalHUD_DrawPolyGT4
 						(
-							sdata->gGT->iconGroup[iconGroupID]->icons[iconID & 0xffff],
+							gGT->iconGroup[iconGroupID]->icons[iconID & 0xffff],
 
 							posX + pixWidthExtra,
 							posY + pixHeightExtra,
 
-							&sdata->gGT->backBuffer->primMem,
-							sdata->gGT->tileView_UI.ptrOT,
+							&gGT->backBuffer->primMem,
+							gGT->tileView_UI.ptrOT,
 
 							ptrColor[0],
 							ptrColor[1],
@@ -478,33 +480,33 @@ LAB_80022598:
 					#if BUILD > UsaRetail
 					
 					// if icon struct somehow doesn't exist then use fallback
-					if (!iconStruct)
+					if (iconStruct == 0)
 					{
 						#if BUILD != EurRetail
-						if ((iconIDBackup & 0xffff) < sdata->gGT->iconGroup[iconGroupID]->numIcons)
+						if ((iconIDBackup & 0xffff) < gGT->iconGroup[iconGroupID]->numIcons)
 						{
-							iconStruct = sdata->gGT->iconGroup[iconGroupID]->icons[iconIDBackup];
+							iconStruct = gGT->iconGroup[iconGroupID]->icons[iconIDBackup];
 						}
 						#else
-						if (iconID < sdata->gGT->iconGroup[iconGroupID]->numIcons)
+						if (iconID < gGT->iconGroup[iconGroupID]->numIcons)
 						{
-							iconStruct = sdata->gGT->iconGroup[iconGroupID]->icons[iconID];
+							iconStruct = gGT->iconGroup[iconGroupID]->icons[iconID];
 						}
 						#endif
 					}
-					if (iconStruct)
+					if (iconStruct != 0)
 					{
 						#if BUILD != EurRetail
 
-						DecalHUD_DrawPolyGT4
+						DECOMP_DecalHUD_DrawPolyGT4
 						(
 							iconStruct,
 							
 							posX + pixWidthExtra,
 							posY + pixHeightExtra,
 
-							&sdata->gGT->backBuffer->primMem,
-							sdata->gGT->tileView_UI.ptrOT,
+							&gGT->backBuffer->primMem,
+							gGT->tileView_UI.ptrOT,
 
 							ptrColor[0],
 							ptrColor[1],
@@ -520,15 +522,15 @@ LAB_80022598:
 						{
 							if (rotateCharacter)
 							{
-								DecalHUD_Arrow2D
+								DECOMP_DecalHUD_Arrow2D
 								(
 									iconStruct,
 									
 									posX + pixWidthExtra,
 									posY + pixHeightExtra,
 
-									&sdata->gGT->backBuffer->primMem,
-									sdata->gGT->tileView_UI.ptrOT,
+									&gGT->backBuffer->primMem,
+									gGT->tileView_UI.ptrOT,
 
 									ptrColor[2],
 									ptrColor[3],
@@ -540,15 +542,15 @@ LAB_80022598:
 							}
 							else
 							{
-								DecalHUD_DrawPolyGT4
+								DECOMP_DecalHUD_DrawPolyGT4
 								(
 									iconStruct,
 									
 									posX + pixWidthExtra,
 									posY + pixHeightExtra,
 
-									&sdata->gGT->backBuffer->primMem,
-									sdata->gGT->tileView_UI.ptrOT,
+									&gGT->backBuffer->primMem,
+									gGT->tileView_UI.ptrOT,
 
 									ptrColor[0],
 									ptrColor[1],
