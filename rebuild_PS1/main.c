@@ -25,6 +25,14 @@
 #include "../decompile/General/CDSYS/CDSYS_c18_XAPauseForce.c" 
 #include "../decompile/General/CDSYS/CDSYS_c19_XAPauseAtEnd.c" 
 
+#include "../decompile/General/DecalFont/DecalFont_GetLineWidth.c"
+#include "../decompile/General/DecalFont/DecalFont_DrawLineStrlen.c"
+#include "../decompile/General/DecalFont/DecalFont_DrawLine.c"
+#include "../decompile/General/DecalFont/DecalFont_DrawLineOT.c"
+#include "../decompile/General/DecalFont/DecalFont_DrawMultiLineStrlen.c"
+#include "../decompile/General/DecalFont/DecalFont_DrawMultiLine.c"
+#include "../decompile/General/DecalFont/DecalFont_GetLineWidthStrlen.c"
+
 #include "../decompile/General/DecalGlobal/DecalGlobal_Clear.c"
 #include "../decompile/General/DecalGlobal/DecalGlobal_Store.c"
 

@@ -110,7 +110,7 @@ LAB_80022598:
 		
 			iconScale = FP(1.0);
 
-			#if BUILD > UsaRetail
+			#if BUILD >= JpnTrial
 			iconStruct = 0;
 
 			#if BUILD == EurRetail
