@@ -459,6 +459,9 @@ struct InstDrawPerPlayer
 	// 0xd8 - LOD index (0,1,2,3)
 	int lodIndex;
 
+    // 0xdc
+    short unkDC[2];
+
 	// 0xe0 - pointer to LOD ModelHeader
 	struct ModelHeader* mh;
 
