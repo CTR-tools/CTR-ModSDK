@@ -1,6 +1,6 @@
 #include <common.h>
 
-void ElimBG_ToggleInstance(struct Instance* inst, int boolGameIsPaused)
+void DECOMP_ElimBG_ToggleInstance(struct Instance* inst, char boolGameIsPaused)
 {
 	u_int flags;
 	
@@ -19,7 +19,7 @@ void ElimBG_ToggleInstance(struct Instance* inst, int boolGameIsPaused)
 
 		return;
 	}
+
 	if ((inst->flags & (INVISIBLE_BEFORE_PAUSE | INVISIBLE_DURING_PAUSE)) == INVISIBLE_DURING_PAUSE)
 		inst->flags &= ~(INVISIBLE_DURING_PAUSE | HIDE_MODEL);
-	return;
 }

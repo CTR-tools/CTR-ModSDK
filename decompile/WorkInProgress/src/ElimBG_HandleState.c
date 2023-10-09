@@ -1,126 +1,160 @@
 #include <common.h>
 
-void DECOMP_ElimBG_HandleState(struct GameTracker* gGT)
+void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
 {
-	u_char *puVar1;
-	u_int *puVar2;
-	short sVar3;
-	short sVar4;
-	struct GameTracker *psVar5;
-	u_char uVar6;
-	int iVar7;
-	int iVar8;
-	POLY_FT4 *p;
-	u_int uVar9;
-	u_char uVar10;
-	u_int uVar11;
-	int iVar12;
-	u_char auStack48 [4];
-	u_char auStack44 [4];
-	u_char auStack40 [4];
-	u_int uStack36;
-	
-	psVar5 = sdata->gGT;
-	if (sdata->pause_state == 3)
-	{
-		puVar1 = auStack48 + 3;
-		uVar11 = (u_int)puVar1 & 3;
-		*(u_int *)(puVar1 + -uVar11) = *(u_int *)(puVar1 + -uVar11) & -1 << (uVar11 + 1) * 8 | 0x200U >> (3 - uVar11) * 8;
-		auStack48 = 0x200;
-		puVar1 = auStack44 + 3;
-		uVar11 = (u_int)puVar1 & 3;
-		*(u_int *)(puVar1 + -uVar11) = *(u_int *)(puVar1 + -uVar11) & -1 << (uVar11 + 1) * 8 | 0x1000040U >> (3 - uVar11) * 8;
-		auStack44 = 0x1000040;
-		puVar1 = auStack40 + 3;
-		uVar11 = (u_int)puVar1 & 3;
-		*(u_int *)(puVar1 + -uVar11) = *(u_int *)(puVar1 + -uVar11) & -1 << (uVar11 + 1) * 8 | 0x240U >> (3 - uVar11) * 8;
-		auStack40 = 0x240;
-		uVar11 = (int)&uStack36 + 3U & 3;
-		puVar2 = (u_int *)(((int)&uStack36 + 3U) - uVar11);
-		*puVar2 = *puVar2 & -1 << (uVar11 + 1) * 8 | 0x1000040U >> (3 - uVar11) * 8;
-		uStack36 = 0x1000040;
-		LoadImage((RECT *)auStack48, sdata->pause_VRAM_Backup_PrimMem[0]);
-		LoadImage((RECT *)auStack40, sdata->pause_VRAM_Backup_PrimMem[1]);
-		DrawSync(0);
-		gGT->db[0].primMem.end = (void *)((int)sdata->pause_VRAM_Backup_PrimMem[0] + 0x8000);
-		gGT->db[1].primMem.end = (void *)((int)sdata->pause_VRAM_Backup_PrimMem[1] + 0x8000);
-		ElimBG_ToggleAllInstances(gGT, 0);
-		sdata->pause_state = 0;
-	}
-	else if (sdata->pause_state != 0)
-	{
-		if (sdata->pause_state == 1)
-		{
-			gGT->renderFlags = gGT->renderFlags & 0x1000 | 0x20;
-			psVar5->hudFlags = psVar5->hudFlags & 0xf6;
-			ElimBG_SaveScreenshot_Full(gGT);
-			ElimBG_ToggleAllInstances(gGT, 1);
-			sdata->pause_state = 2;
-		}
-		iVar12 = 0;
-		do
-		{
-			uVar11 = 0;
-			sVar3 = (short)iVar12;
-			do
-			{
-				p = (POLY_FT4 *)(gGT->backBuffer->primMem).curr;
-				(gGT->backBuffer->primMem).curr = p + 1;
-				*(u_char *)((int)&p->tag + 3) = 9;
-				p->code = 0x2c;
-				sVar4 = (short)uVar11;
-				p->b0 = 0x80;
-				p->g0 = 0x80;
-				p->r0 = 0x80;
-				p->x0 = sVar3;
-				p->y0 = sVar4;
-				p->x1 = sVar3 + 0x80;
-				p->y1 = sVar4;
-				p->x2 = sVar3;
-				p->y2 = sVar4 + 0x10;
-				p->x3 = sVar3 + 0x80;
-				p->y3 = sVar4 + 0x10;
-				iVar7 = iVar12;
-				if (iVar12 < 0)
-				{
-					iVar7 = iVar12 + 3;
-				}
-				uVar9 = (iVar7 >> 2) + 0x200;
-				iVar7 = (int)(uVar9 & 0x3ff) >> 6;
-				p->tpage = (ushort)((int)(uVar11 & 0x100) >> 4) | (ushort)iVar7 | (ushort)((uVar11 & 0x200) << 2);
-				p->clut = 0x3fe0;
-				iVar8 = (uVar9 + iVar7 * -0x40) * 4;
-				uVar10 = (u_char)uVar11;
-				p->v0 = uVar10;
-				uVar6 = (u_char)iVar8;
-				p->u0 = uVar6;
-				if (iVar8 + 0x80 < 0x100)
-				{
-					p->u1 = uVar6 + 0x80;
-				}
-				else
-				{
-					p->u1 = 0xff;
-				}
-				iVar7 = (uVar9 + iVar7 * -0x40) * 4;
-				p->v2 = uVar10 + 0x10;
-				p->v1 = uVar10;
-				uVar6 = (u_char)iVar7;
-				p->u2 = uVar6;
-				if (iVar7 + 0x80 < 0x100)
-				{
-					p->u3 = uVar6 + 0x80;
-				}
-				else
-				{
-					p->u3 = 0xff;
-				}
-				uVar11 = uVar11 + 0x10;
-				p->v3 = (u_char)uVar11;
-				AddPrim((void *)((int)(gameTracker->tileView_UI).ptrOT + 0x10), p);
-			} while ((int)uVar11 < 0xd8);
-			iVar12 = iVar12 + 0x80;
-		} while (iVar12 < 0x200);
-	}
-	return;
+  short sVar1;
+  short sVar2;
+  char cVar4;
+  int iVar5;
+  int iVar6;
+  POLY_FT4 *p;
+  u_int uVar7;
+  char cVar8;
+  u_int uVar9;
+  int iVar10;
+  u_int local_30[2];
+  u_int local_28[2];
+
+  // if this is last frame of pause
+  if (sdata->pause_state == 3)
+  {
+  local_30[0] = 0x200;
+  local_30[1] = 0x1000040;
+  local_28[0] = 0x240;
+  local_28[1] = 0x1000040;
+
+  // load from RAM, back to VRAM
+  LoadImage(&local_30, sdata->pause_VRAM_Backup_PrimMem[0]);
+  LoadImage(&local_28, sdata->pause_VRAM_Backup_PrimMem[1]);
+
+  DrawSync(0);
+
+  // restore gGT->DB[0,1].primMem.end
+  gGT->db[0].otMem.start = sdata->pause_VRAM_Backup_PrimMem[0] + 0x8000;
+  gGT->db[1].otMem.start = sdata->pause_VRAM_Backup_PrimMem[1] + 0x8000;
+
+  // Enable all instances
+  DECOMP_ElimBG_ToggleAllInstances(gGT, 0);
+
+  // game is not paused anymore
+  sdata->pause_state = 0;
+  }
+  // if this is not last frame of paus
+  // if game is paused at all
+  else if (sdata->pause_state != 0)
+  {
+      // if this is the first frame of pause
+      if (sdata->pause_state == 1)
+      {
+        // allow rendering of checkered flag, add rendering of RenderBucket,
+        // so that Adv Pause instances can render, after non-pause instances are disabled
+        gGT->renderFlags &= 0x1000 | 0x20;
+
+        gGT->hudFlags &= 0xf6;
+
+        DECOMP_ElimBG_SaveScreenshot_Full(gGT);
+
+        // Disable all instances
+        // (prevent PrimMem from overwriting VRAM backup)
+        DECOMP_ElimBG_ToggleAllInstances(gGT, 1);
+
+        // you are now ready to draw the screenshot
+        sdata->pause_state = 2;
+      }
+      // rest of the function is for drawing screenshot
+      iVar10 = 0;
+      do
+      {
+        uVar9 = 0;
+        sVar1 = (short)iVar10;
+        do
+        {
+          // backBuffer->primMem.curr
+          p = (POLY_FT4 *)gGT->backBuffer->primMem.curr;
+
+          // increment primMem by size of primitive
+          gGT->backBuffer->primMem.curr = p + 1;
+
+          setPolyFT4(p);
+
+          sVar2 = (short)uVar9;
+
+          // RGB
+          setRGB0(p, 0x80, 0x80, 0x80);
+
+          // four (x,y) positions
+          setXY4(p,sVar1,sVar2, sVar1 + 0x80, sVar2, sVar1,sVar2 + 0x10, sVar1 +0x80, sVar2+0x10);
+          
+          iVar5 = iVar10;
+          if (iVar10 < 0)
+          {
+            iVar5 = iVar10 + 3;
+          }
+          uVar7 = (iVar5 >> 2) + 0x200;
+          iVar5 = (int)(uVar7 & 0x3ff) >> 6;
+
+          // tpage
+          p->tpage =
+          ((uVar9 & 0x100) >> 4) | (u_short)iVar5 | ((uVar9 & 0x200) << 2);
+
+          // clut
+          setClut(p, 0x3fe0);
+
+          iVar6 = (uVar7 + iVar5 * -0x40) * 4;
+
+          // v0
+          p->v0 = (char)uVar9;
+
+          // u0
+          p->u0 = (char)iVar6;
+
+          if (iVar6 + 0x80 < 0x100)
+          {
+            // u1
+            p->u1 = cVar4 + -0x80;
+          }
+          else
+          {
+            // u1
+            p->u1 = 0xff;
+          }
+
+          // u2
+          iVar5 = (uVar7 + iVar5 * -0x40) * 4;
+
+          // v2
+          p->v2 = cVar8 + 0x10;
+
+          // v1
+          p->v1 = cVar8;
+
+          // u2
+          p->u2 = (char)iVar5;
+
+          if (iVar5 + 0x80 < 0x100)
+          {
+            // u3
+            p->u3 = cVar4 + -0x80;
+          }
+          else
+          {
+            // u3
+            p->u3 = 0xff;
+          }
+
+          // v3 = v0 + 0x10
+          p->v3 = (char) uVar9 + 0x10;
+
+          // pointer to OT mem, and pointer to primitive
+          AddPrim(&gGT->tileView_UI.ptrOT[3], p);
+
+          // while v0 (tex coord Y) < screensize
+        } while ((int)uVar9 < 0xd8);
+
+        // increment u0
+        iVar10 = iVar10 + 0x80;
+
+        // while u0 (tex coord X) < screensize
+      } while (iVar10 < 0x200);
+  }
 }

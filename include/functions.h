@@ -780,9 +780,9 @@ void TitleFlag_SetFullyOnScreen();
 void TitleFlag_SetFullyOffScreen();
 void TitleFlag_SetCanDraw(int enable);
 int TitleFlag_GetCanDraw();
-//TitleFlag_GetOT()
+u_long* TitleFlag_GetOT();
 void TitleFlag_ResetTextAnim();
-//TitleFlag_DrawLoadingString()
+void TitleFlag_DrawLoadingString();
 void TitleFlag_DrawSelf();
 
 // MENUBOX

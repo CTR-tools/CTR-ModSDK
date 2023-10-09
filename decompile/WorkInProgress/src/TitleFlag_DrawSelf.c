@@ -60,7 +60,7 @@ void DECOMP_TitleFlag_DrawSelf(void)
 
   struct TitleFlag* flag;
 
-  struct TrigTable* approxTable = &data.trigApprox[0];
+  struct TrigTable* approxTable = data.trigApprox;
 
   // don't draw
   if (sdata->TitleFlag_CanDraw == 0) return;
@@ -87,9 +87,17 @@ DRAW_FLAG:
   // get ptr OTMem
   ot = (u_long*)TitleFlag_GetOT();
 
-  gte_SetRotMatrix((MATRIX *)0x80085ac0);
-  gte_SetTransMatrix((MATRIX *)0x80085ac0);
+  gte_SetRotMatrix(&data.matrixTitleFlag);
+  gte_SetTransMatrix(&data.matrixTitleFlag);
   gte_SetGeomOffset(0x100, 0x78);
+
+  #define gte_ldH( r0 ) __asm__ volatile ( \
+    "lhu   $12, 0(  %0  );" \
+    "ctc2  $12, $31;"       \
+    :                       \
+    : "r" ( r0 )            \
+    : "$12" )
+
   gte_ldH(0x100);
 
   p = NULL;
@@ -110,7 +118,7 @@ DRAW_FLAG:
     data.checkerFlagVariables[0] += 0x200;
 
     // approximate trigonometry
-    approx[0] = approxTable[data.checkerFlagVariables[0] & 0x3ff];
+    approx[0] = *(u_int*)&approxTable[data.checkerFlagVariables[0] & 0x3ff];
 
     if ((data.checkerFlagVariables[0] & 0x400) == 0)
     {
@@ -126,7 +134,7 @@ DRAW_FLAG:
     data.checkerFlagVariables[2] += 200;
 
     // approximate trigonometry
-    approx[0] = approxTable[data.checkerFlagVariables[2] & 0x3ff];
+    approx[0] = *(u_int*)&approxTable[data.checkerFlagVariables[2] & 0x3ff];
 
     if ((data.checkerFlagVariables[2] & 0x400) == 0)
     {
@@ -142,7 +150,7 @@ DRAW_FLAG:
   }
 
   // approximate trigonometry
-  approx[0] = approxTable[uVar14 & 0x3ff];
+  approx[0] = *(u_int*)&approxTable[uVar14 & 0x3ff];
 
   if ((uVar14 & 0x400) == 0)
   {
@@ -157,7 +165,7 @@ DRAW_FLAG:
   uVar14 = uVar14 + 0xc80;
 
   // approximate trigonometry
-  approx[1] = approxTable[uVar14 & 0x3ff];
+  approx[1] = *(u_int*)&approxTable[uVar14 & 0x3ff];
 
   if ((uVar14 & 0x400) == 0)
   {
@@ -193,8 +201,8 @@ DRAW_FLAG:
   {
     for (j = 0; j < 3; j++)
     {
-      vect = flag->vectors[j];
-      approx[1] = approxTable[uVar16 & 0x3ff];
+      vect = &flag->vectors[j];
+      approx[1] = *(u_int*)&approxTable[uVar16 & 0x3ff];
       if ((uVar16 & 0x400) == 0)
       {
         approx[1] = approx[1] << 0x10;
@@ -209,7 +217,7 @@ DRAW_FLAG:
       uVar16 += 300;
     }
 
-    gte_ldv3(flag->pos[0], flag->pos[1].vx, flag->pos[2].vx);
+    gte_ldv3(flag->pos[0].vx, flag->pos[1].vx, flag->pos[2].vx);
     gte_rtpt();
 
     flag->pos[0].vy += 0x11a;
@@ -223,8 +231,8 @@ DRAW_FLAG:
 
   uVar14 = 0x80008000;
   tileRGB[0] = flag->rgba[0];
-  flag->colorRGB[0] = &flag->rgba[0];
-  flag->vectors[0] = &flag->pos[0];
+  flag->colorRGB[0] = (u_int)flag->rgba[0];
+  flag->vectors[0] = flag->pos[0];
 
   // screen dimensions
   dimensions = 0xd80200;
@@ -257,7 +265,7 @@ DRAW_FLAG:
       flag->var28 = uVar16;
 
       // approximate trigonometry
-      approx[0] = approxTable[uVar16 & 0x3ff];
+      approx[0] = *(u_int*)&approxTable[uVar16 & 0x3ff];
 
       if ((uVar16 & 0x400) == 0)
       {
@@ -275,7 +283,7 @@ DRAW_FLAG:
       flag->waveAngle = uVar16;
 
       // approximate trigonometry
-      approx[0] = approxTable[uVar16 & 0x3ff];
+      approx[0] = *(u_int*)&approxTable[uVar16 & 0x3ff];
 
       if ((uVar16 & 0x400) == 0)
       {
@@ -291,7 +299,7 @@ DRAW_FLAG:
     }
 
     // approximate trigonometry
-    approx[0] = approxTable[uVar12 & 0x3ff];
+    approx[0] = *(u_int*)&approxTable[uVar12 & 0x3ff];
 
     if ((uVar12 & 0x400) == 0)
     {
@@ -306,7 +314,7 @@ DRAW_FLAG:
     uVar12 = uVar12 + 0xc80;
 
     // approximate trigonometry
-    approx[1] = approxTable[uVar12 & 0x3ff];
+    approx[1] = *(u_int*)&approxTable[uVar12 & 0x3ff];
 
     if ((uVar12 & 0x400) == 0)
     {
@@ -334,10 +342,10 @@ DRAW_FLAG:
 
     for (i = 0; i < 3; i++)
     {
-      vect = flag->vectors[i];
+      vect = &flag->vectors[i];
 
       // approximate trigonometry
-      approx[1] = approxTable[uVar17 & 0x3ff];
+      approx[1] = *(u_int*)&approxTable[uVar17 & 0x3ff];
 
       if ((uVar17 & 0x400) == 0)
       {
@@ -369,10 +377,10 @@ DRAW_FLAG:
         {
           for (i = 0; i < 3; i++)
           {
-            vect = flag->vectors[i];
+            vect = &flag->vectors[i];
 
             // approximate trigonometry
-            approx[1] = approxTable[uVar17 & 0x3ff];
+            approx[1] = *(u_int*)&approxTable[uVar17 & 0x3ff];
 
             if ((uVar17 & 0x400) == 0)
             {
@@ -411,7 +419,7 @@ DRAW_FLAG:
             ((dimensions - bottom[0] & dimensions - bottom[1] & uVar14 & uVar14 & dimensions - top[0] & uVar14 & dimensions - top[1]) == 0))
         {
           backDB = sdata->gGT->backBuffer;
-          p = backDB->primMem.curr;
+          p = (POLY_G4*)backDB->primMem.curr;
 
           // if room is remaining
           if (p <= (u_long*) backDB->primMem.endMin100)
@@ -422,7 +430,7 @@ DRAW_FLAG:
           if (p == NULL) return;
 
           // white tile
-          if (((column >> 2) + (l >> 2) & 1U) == 0)
+          if (((column >> 2) + (j >> 2) & 1U) == 0)
           {
             // RGB 1 and 3
             tileRGB[0] = (u_char)(tileRGB[0] * 0x82 + (0x2000 - tileRGB[0]) * 0xff >> 0xd);
@@ -438,7 +446,7 @@ DRAW_FLAG:
 
             // RGB 0 and 2
             // color black = iVar22 * 0x69 + (0x2000 - iVar22) * 0xa0 >> 0xd;
-            tileRGB[0] = (u_char)flag->colorRGB;
+            tileRGB[0] = (u_char)flag->colorRGB[0];
           }
 
           flag->rgba[0] = tileRGB[0];
