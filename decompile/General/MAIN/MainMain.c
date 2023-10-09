@@ -44,36 +44,39 @@ u_int DECOMP_main()
 				StateZero();
 				break;
 
-#ifndef REBUILD_PS1
 			// Happens on first frame that loading ends
 			case 1:
 			
+#ifndef REBUILD_PS1
 				// deactivate pause
 				ElimBG_Deactivate(gGT);
 				MainStats_RestartRaceCountLoss();
 				Voiceline_ClearTimeStamp();
+#endif
 				
 				// Disable End-Of-Race menu
 				gGT->gameMode1 &= ~END_OF_RACE;
 
 				if (gGT->levelID == MAIN_MENU_LEVEL)
 				{
-					if (TitleFlag_IsFullyOffScreen() != 0)
-						TitleFlag_SetFullyOnScreen();
+					if (DECOMP_TitleFlag_IsFullyOffScreen() != 0)
+						DECOMP_TitleFlag_SetFullyOnScreen();
 				}
 				
 				else
 				{
-					if (TitleFlag_IsFullyOnScreen() != 0)
-						TitleFlag_BeginTransition(2);
+					if (DECOMP_TitleFlag_IsFullyOnScreen() != 0)
+						DECOMP_TitleFlag_BeginTransition(2);
 				}
 				
+#ifndef REBUILD_PS1
 				EffectSfxRain_Reset(gGT);
 				GAMEPROG_GetPtrHighScoreTrack();
 				MainInit_FinalizeInit(gGT);
 				GAMEPAD_GetNumConnected(sdata->gGamepads);
 				sdata->boolSoundPaused = 0;
 				VehInit_EngineAudio_AllPlayers();
+#endif
 				
 				// 9 = intro cutscene
 				// 10 = traffic lights
@@ -95,7 +98,9 @@ u_int DECOMP_main()
 					)
 				)
 				{
+#ifndef REBUILD_PS1
 					Audio_SetState_Safe(uVar12);
+#endif
 				}
 				sdata->mainGameState = 3;
 				gGT->clockEffectEnabled &= 0xfffe;
@@ -103,15 +108,17 @@ u_int DECOMP_main()
 
 			// Reset stage, reset music
 			case 2:
+#ifndef REBUILD_PS1
 				Audio_SetState_Safe(1);
 				MEMPACK_PopState();
 				
 				// ignore threads, because we PopState, 
 				// so the threadpool will reset anyway
 				LevInstDef_RePack(gGT->level1->ptr_mesh_info, 0);
+#endif
+				
 				sdata->mainGameState = 1;
 				break;
-#endif
 
 			// Main Gameplay Update
 			// Makes up all normal interaction with the game
@@ -234,12 +241,7 @@ FinishLoading:
 							// remove LOADING... flag from gGT
 							sdata->Loading.stage = -1;
 							sdata->mainGameState = 1;
-							gGT->gameMode1 &= ~LOADING;
-
-							#ifdef REBUILD_PS1
-							sdata->mainGameState = 3;
-							#endif
-							
+							gGT->gameMode1 &= ~LOADING;							
 							break;
 						}
 						
