@@ -44,7 +44,7 @@ void DECOMP_ElimBG_HandleState(struct GameTracker* gGT)
 		DrawSync(0);
 		gGT->db[0].primMem.end = (void *)((int)sdata->pause_VRAM_Backup_PrimMem[0] + 0x8000);
 		gGT->db[1].primMem.end = (void *)((int)sdata->pause_VRAM_Backup_PrimMem[1] + 0x8000);
-		ElimBG_ToggleAllInstances((struct Instance *)gGT, 0);
+		ElimBG_ToggleAllInstances(gGT, 0);
 		sdata->pause_state = 0;
 	}
 	else if (sdata->pause_state != 0)
@@ -54,7 +54,7 @@ void DECOMP_ElimBG_HandleState(struct GameTracker* gGT)
 			gGT->renderFlags = gGT->renderFlags & 0x1000 | 0x20;
 			psVar5->hudFlags = psVar5->hudFlags & 0xf6;
 			ElimBG_SaveScreenshot_Full(gGT);
-			ElimBG_ToggleAllInstances((struct Instance *)gGT, 1);
+			ElimBG_ToggleAllInstances(gGT, 1);
 			sdata->pause_state = 2;
 		}
 		iVar12 = 0;

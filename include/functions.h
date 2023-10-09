@@ -168,7 +168,7 @@ void ElimBG_SaveScreenshot_Chunk(void *img1,void *img2,int param_3);
 void ElimBG_SaveScreenshot_Full(struct GameTracker* gGT);
 void ElimBG_Activate(struct GameTracker* gGT);
 void ElimBG_ToggleInstance(struct Instance* inst, int boolGameIsPaused);
-void ElimBG_ToggleAllInstances(struct Instance* inst, int boolGameIsPaused);
+void ElimBG_ToggleAllInstances(struct GameTracker* gGT, int boolGameIsPaused);
 void ElimBG_HandleState(struct GameTracker* gGT);
 void ElimBG_Deactivate(struct GameTracker* gGT);
 
