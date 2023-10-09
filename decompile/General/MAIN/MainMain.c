@@ -404,8 +404,9 @@ FinishLoading:
 					char text[100];
 					sprintf(text, "Hello World: %d\n", sdata->lastPathIndex++); // pick random variable
 					DECOMP_DecalFont_DrawLine(text, 0x100, 0x23, 2, 0xffff8000);
-										// "DEMO MODE\rPRESS ANY BUTTON TO EXIT"
-					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, 100, 0x200, 2, 0xffff8000);
+					
+					gGT->level1->clearColor[0].enable = 1;
+					gGT->level1->clearColor[1].enable = 1;
 				}
 #endif
 
