@@ -368,10 +368,8 @@ FinishLoading:
 						uVar12 = 100;
 					}
 
-#ifndef REBUILD_PS1
 					// "DEMO MODE\rPRESS ANY BUTTON TO EXIT"
-					DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
-#endif
+					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
 				}
 				
 #ifndef REBUILD_PS1
@@ -405,7 +403,9 @@ FinishLoading:
 				{
 					char text[100];
 					sprintf(text, "Hello World: %d\n", sdata->lastPathIndex++); // pick random variable
-					DecalFont_DrawLine(text, 0x100, 0x23, 2, 0xffff8000);
+					DECOMP_DecalFont_DrawLine(text, 0x100, 0x23, 2, 0xffff8000);
+										// "DEMO MODE\rPRESS ANY BUTTON TO EXIT"
+					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, 100, 0x200, 2, 0xffff8000);
 				}
 #endif
 

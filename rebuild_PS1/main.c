@@ -36,6 +36,9 @@
 #include "../decompile/General/DecalGlobal/DecalGlobal_Clear.c"
 #include "../decompile/General/DecalGlobal/DecalGlobal_Store.c"
 
+#include "../decompile/General/DecalHUD/DecalHUD_DrawPolyGT4.c"
+#include "../decompile/General/DecalHUD/DecalHUD_Arrow2D.c"
+
 #include "../decompile/General/GAMEPAD/GAMEPAD_Init.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_GetNumConnected.c"
 
