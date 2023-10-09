@@ -2,5 +2,5 @@
 
 int DECOMP_DecalFont_GetLineWidth(char* str, short fontType)
 {
-	return DecalFont_GetLineWidthStrlen(str, -1, fontType);
+	return DECOMP_DecalFont_GetLineWidthStrlen(str, -1, fontType);
 }
