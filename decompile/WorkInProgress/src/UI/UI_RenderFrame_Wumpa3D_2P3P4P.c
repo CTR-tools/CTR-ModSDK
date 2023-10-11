@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CTR_CycleTex_2p3p4pWumpaHUD(int, int, int);
+void CTR_CycleTex_2p3p4pWumpaHUD(u_long*, u_long*, int);
 
 void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
 {
@@ -58,7 +58,7 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
     if ((iVar6 != 0) && ((decalMP->ptrOT) != 0))
 	{
       CTR_CycleTex_2p3p4pWumpaHUD(
-        gGT->tileView->matrix_ViewProj.m[2][1] + 0xffc,
+        gGT->tileView[0].ptrOT[0x3ff],
         iVar6, 
         ((int)(decalMP->ptrOT) - iVar6 >> 2) + 1);
     }
