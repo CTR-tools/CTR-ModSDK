@@ -9,7 +9,6 @@ void MM_JumpTo_Title_Returning(void)
   OVR_230.MM_State = 3;
   
   OVR_230.countMeta0xD = OVR_230.title_OtherStuff[0];
-  return;
 }
 
 void MM_JumpTo_Title_FirstTime(void)
@@ -42,7 +41,6 @@ void MM_JumpTo_Title_FirstTime(void)
   
   gGT->gameMode1 &= 0xfffdffff;
   
-  return;
 }
 
 void MM_JumpTo_BattleSetup(void)
@@ -53,7 +51,6 @@ void MM_JumpTo_BattleSetup(void)
   OVR_230.menubox_battleWeapons.state &= ~(ONLY_DRAW_TITLE);
   
   MM_Battle_Init();
-  return;
 }
 
 void MM_JumpTo_TrackSelect(void)
@@ -65,7 +62,6 @@ void MM_JumpTo_TrackSelect(void)
   
   // MM_TrackSelect_Init
   MM_TrackSelect_Init();
-  return;
 }
 
 
@@ -77,7 +73,6 @@ void MM_JumpTo_Characters(void)
   OVR_230.menubox_characterSelect.state &= ~(ONLY_DRAW_TITLE);
   
   MM_Characters_RestoreIDs();
-  return;
 }
 
 void MM_JumpTo_Scrapbook(void)
@@ -88,5 +83,4 @@ void MM_JumpTo_Scrapbook(void)
   OVR_230.menubox_scrapbook.state &= ~(ONLY_DRAW_TITLE);
   
   MM_Scrapbook_Init();
-  return;
 }

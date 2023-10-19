@@ -16,5 +16,4 @@ void DECOMP_MM_ResetAllMenus(void)
     }
 
     sdata->framesRemainingInMenu = 0xF;
-    return
 }
