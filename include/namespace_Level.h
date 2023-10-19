@@ -691,7 +691,7 @@ struct Level
 	void* ptrSCVert;
 
 	// 0x17c - 0x182
-	char unkStarData[0x8];
+	short unkStarData[4];
 
 	// split-lines
 	// for ice, mud, water

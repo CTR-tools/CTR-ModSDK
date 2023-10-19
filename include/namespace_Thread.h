@@ -155,7 +155,7 @@ struct ThreadBucket
 	int boolCantPause;
 
 	// 0x10
-	int unk2;
+	char unk2[4];
 
 	// size is 0x14
 };
