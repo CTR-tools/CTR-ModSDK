@@ -13,13 +13,11 @@ void DECOMP_MM_TrackSelect_Video_State(int state)
 	}
 
     // if player sees a track icon AND track icon has been seen for 20+ frames
-	if (OVR_230.trackSel_video_state == 1 && OVR_230.trackSel_video_frameCount > 0x14)
+	if (OVR_230.trackSel_video_state == 1 && OVR_230.trackSel_video_frameCount > 20)
 	{
         // increase frame count
 	    OVR_230.trackSel_video_frameCount++;
 		// allocate video memory, prepare to play video
 		OVR_230.trackSel_video_state = 2;
 	}
-
-	return;
 }
