@@ -166,9 +166,9 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
     // threadBuckets.hud
     gGT->threadBuckets[HUD].s_longName = 0x8008d3dc;  // HUD
     gGT->threadBuckets[HUD].s_shortName = 0x8008d3e0; // THUD
-    
+
     // threadBuckets.pause
-    gGT->threadBuckets[PAUSE].s_longName = 0x8008d3e8; // PAUSE
+    gGT->threadBuckets[PAUSE].s_longName = 0x8008d3e8;  // PAUSE
     gGT->threadBuckets[PAUSE].s_shortName = 0x8008d3f0; // PAUS
 
     // starttext threads can pause
@@ -227,11 +227,10 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
 
     for (i = 0; i < 12; i++)
     {
-        gGT[0x16c] = 0;
-        *(short *)(gGT + 0x16a) = 1000;
-        gGT[0x1ad] = 0;
-        gGT[0x1ae] = 0;
-        gGT = gGT + 0x4a;
+        gGT->DecalMP[i].inst = NULL;
+        *(short *)&gGT->DecalMP[i].data[0] = 1000;
+        gGT->DecalMP[i]->data2[0x100] = 0;
+        gGT->DecalMP[i]->data2[0x110] = 0;
     }
 
     // erase everything in all pools
@@ -310,8 +309,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
                 if (
                     // If not in main menu (character selection, track selection, any part of it)
                     ((gGT->gameMode1 & MAIN_MENU) == 0) ||
-                    (i < 1)
-                    )
+                    (i < 1))
                 {
                     // remove frozen camera flag
                     gGT->cameraDC[0].flags &= 0xffff7fff;
@@ -355,9 +353,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
             (gGT->boolDemoMode != 0) &&
             (
                 // if numPlyrCurrGame is not zero
-                sdata->gGT->numPlyrCurrGame != 0
-            )
-            )
+                sdata->gGT->numPlyrCurrGame != 0))
         {
             for (i = 0; i < gGT->numPlyrCurrGame; i++)
             {
@@ -371,14 +367,14 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
     ThTick_RunBucket(gGT->threadBuckets[CAMERA].thread);
 
     // lev -> clearColor rgb
-    sdata->LevClearColorRGB[0] = (u_int) (char*)(gGT->level1->clearColorRGBA)[0];
-    sdata->LevClearColorRGB[1] = (u_int) (char*)(gGT->level1->clearColorRGBA)[1];
-    sdata->LevClearColorRGB[2] = (u_int) (char*)(gGT->level1->clearColorRGBA)[2];
+    sdata->LevClearColorRGB[0] = (u_int)(char *)(gGT->level1->clearColorRGBA)[0];
+    sdata->LevClearColorRGB[1] = (u_int)(char *)(gGT->level1->clearColorRGBA)[1];
+    sdata->LevClearColorRGB[2] = (u_int)(char *)(gGT->level1->clearColorRGBA)[2];
 
     if (((gGT->numPlyrCurrGame == 1) &&
          // top half disabled
-        (gGT->level1->clearColor[0].enable != 0)) &&
-         // bottom half disabled
+         (gGT->level1->clearColor[0].enable != 0)) &&
+        // bottom half disabled
         (gGT->level1->clearColor[1].enable != 0))
     {
         // set isbg of both DBs to false
@@ -392,9 +388,9 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
         gGT->db[1].drawEnv.isbg = 1;
     }
 
-    *(int*)&gGT->db[0].drawEnv.r0 = gGT->level1->clearColorRGBA;
+    *(int *)&gGT->db[0].drawEnv.r0 = gGT->level1->clearColorRGBA;
 
-    *(int*)&gGT->db[1].drawEnv.r0 = gGT->level1->clearColorRGBA;
+    *(int *)&gGT->db[1].drawEnv.r0 = gGT->level1->clearColorRGBA;
 
     if (
         // if LEV pointer is valid
@@ -430,6 +426,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
 
     numPlyr = gGT->numPlyrCurrGame;
 
+    #if 0
     if (numPlyr == 0)
     {
         trap(0x1c00);
@@ -438,6 +435,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
     {
         trap(0x1800);
     }
+    #endif
 
     // number of stars per screen = number of stars in level, divided by number of players
     gGT->stars.numStars = (short)(lev1->unkStarData[0] / numPlyr);
@@ -455,14 +453,12 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
     // confetti VelY is negative, to move downward
     gGT->confetti.velY = 0xfffffff6;
 
-    puVar3 = sdata->gGT + 0xc; // swapchain index?
+    // puVar3 = sdata->gGT + 0xc; // swapchain index?
 
     // clear array of confetti winners (?)
-    for (i = 3; i > -1; i--)
+    for (i = 3; i >= 0; i--)
     {
-        // 0x2558 - 0xC = 0x254c though
-        *(int*)(puVar3 + 0x2558) = 0;
-        puVar3 = puVar3 + -4;
+        gGT->winnerIndex[i] = 0;
     }
 
     BOTS_EmptyFunc();
