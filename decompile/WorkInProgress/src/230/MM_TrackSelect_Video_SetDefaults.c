@@ -20,5 +20,4 @@ void DECOMP_MM_TrackSelect_Video_SetDefaults(void)
   
   OVR_230.trackSel_video_state = 1;
   OVR_230.trackSel_unk = 1;
-  return;
 }

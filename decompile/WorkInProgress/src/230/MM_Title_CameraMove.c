@@ -29,5 +29,4 @@ void DECOMP_MM_Title_CameraMove(struct Title *title, short frameIndex)
      gGT->tileView[0].rot[0] = introCam[3] + (short)(OVR_230.titleCameraPosRot[8] * transition >> 12);
      gGT->tileView[0].rot[1] = introCam[4] + (short)(OVR_230.titleCameraPosRot[10] * transition >> 12);
      gGT->tileView[0].rot[2] = introCam[5] + (short)(OVR_230.titleCameraPosRot[12] * transition >> 12);
-     return;
 }

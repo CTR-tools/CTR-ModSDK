@@ -278,5 +278,4 @@ END_FUNCTION:
   OVR_230.menubox_raceType.posY_curr = OVR_230.title_OtherStuff[0x32] + OVR_230.title_OtherStuff[0x40];
   OVR_230.menubox_adventure.posX_curr = OVR_230.title_OtherStuff[0x2C] + OVR_230.title_OtherStuff[0x34];
   OVR_230.menubox_adventure.posY_curr = OVR_230.title_OtherStuff[0x2E] + OVR_230.title_OtherStuff[0x36];
-  return;
 }

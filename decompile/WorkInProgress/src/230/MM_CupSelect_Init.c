@@ -9,6 +9,4 @@ void DECOMP_MM_CupSelect_Init(void)
   // reset transition data
   OVR_230.cupSel_transitionState = 0;
   OVR_230.cupSel_transitionFrames = 0xc;
-  
-  return;
 }

@@ -9,5 +9,5 @@ void DECOMP_MM_HighScore_Text3D(char *string, int posX, int posY, short font, u_
 
     // draw the same string in a different place
     DecalFont_DrawLine(string, (posX + 3), (posY + 1), font, flags & (END_AT_X | CENTER_TEXT | BLACK));
-    return;
+
 }

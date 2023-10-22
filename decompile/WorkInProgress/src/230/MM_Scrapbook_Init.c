@@ -9,7 +9,6 @@ void MM_Scrapbook_Init(void)
 
     // clear gamepad input (for menus)
     MENUBOX_ClearInput();
-    return;
 }
 
 void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
@@ -81,7 +80,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             return;
         }
 
-        goto LAB_800b4224;
+        goto GO_BACK;
 
         // Actually play the movie
     case 2:
@@ -95,9 +94,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
                 gGT->db[1 - gGT->swapchainIndex].drawEnv.ofs[0],
 
                 // gGT->DB[nextFrame].ofs[Y]
-                gGT->db[1 - gGT->swapchainIndex].drawEnv.ofs[1] + 4)
-                
-                == 0)
+                gGT->db[1 - gGT->swapchainIndex].drawEnv.ofs[1] + 4) == 0)
         {
             VSync(0);
         }
@@ -137,7 +134,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             // checkered flag, begin transition on-screen
             TitleFlag_BeginTransition(1);
         }
-    LAB_800b4224:
+    GO_BACK:
 
         // return to gameplay
         OVR_230.scrapbookState = 4;
@@ -162,12 +159,11 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
                 sdata->mainMenuState = 0;
 
                 // main menu
-                lev = 0x27;
+                lev = MAIN_MENU_LEVEL;
             }
             else
             {
-                // gemstone valley
-                lev = 0x19;
+                lev = GEM_STONE_VALLEY;
             }
 
             // load level ID
@@ -180,5 +176,4 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     default:
         return;
     }
-    return;
 }

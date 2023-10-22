@@ -23,7 +23,7 @@ void DECOMP_MM_Title_Init(void)
           (2 < gGT->level1->ptrSpawnType1->count))))
   {
 
-    // CameraDC, freecam mode
+    // freecam mode
     gGT->cameraDC->cameraMode = 3;
 
     gGT->tileView[0].distanceToScreen_CURR = 450;
