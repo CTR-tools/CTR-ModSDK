@@ -136,10 +136,14 @@ struct GameTracker
 		struct Instance* inst;
 
 		// 0xC
-		char data2[0x11C];
+		char data2[0x100];
 
-		// 0x10C + 0x110
-		// both related to OT
+		// 0x10C and 0x110
+		int ptrOT1;
+		int ptrOT2;
+
+		// 0x114
+		char data3[0x14];
 
 		// 0x120
 		// InstDrawPerPlayer ID

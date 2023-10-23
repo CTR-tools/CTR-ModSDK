@@ -167,8 +167,9 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
     {
         gGT->DecalMP[i].inst = NULL;
         *(short *)&gGT->DecalMP[i].data[0] = 1000;
-        gGT->DecalMP[i]->data2[0x100] = 0;
-        gGT->DecalMP[i]->data2[0x110] = 0;
+        
+		gGT->DecalMP[i]->ptrOT1 = 0;
+		gGT->DecalMP[i]->ptrOT2 = 0;
     }
 
     // erase everything in all pools
