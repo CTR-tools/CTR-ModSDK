@@ -431,6 +431,7 @@ common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefa
 common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
 common, exe, MainInit_PrimMem, 0x0, General/MAIN/MainInit_PrimMem.c
 common, exe, MainInit_OTMem, 0x0, General/MAIN/MainInit_OTMem.c
+common, exe, MainInit_FinalizeInit, 0x0, General/MAIN/MainInit_FinalizeInit.c
 common, exe, MainInit_VRAMClear, 0x0, General/MAIN/MainInit_VRAMClear.c
 common, exe, MainInit_VRAMDisplay, 0x0, General/MAIN/MainInit_VRAMDisplay.c
 common, exe, main, 0x0, General/MAIN/MainMain.c
