@@ -72,7 +72,11 @@ u_int DECOMP_main()
 #ifndef REBUILD_PS1
 				EffectSfxRain_Reset(gGT);
 				GAMEPROG_GetPtrHighScoreTrack();
-				MainInit_FinalizeInit(gGT);
+#endif
+				
+				DECOMP_MainInit_FinalizeInit(gGT);
+				
+#ifndef REBUILD_PS1				
 				GAMEPAD_GetNumConnected(sdata->gGamepads);
 				sdata->boolSoundPaused = 0;
 				VehInit_EngineAudio_AllPlayers();
@@ -389,21 +393,18 @@ FinishLoading:
 				gGT->vSync_between_drawSync = 0;
 
 #ifdef REBUILD_PS1
-				// need to rewrite MainInit_FinalizeInit to get TileViewInit
-				DECOMP_TileView_Init(&gGT->tileView[0], 0, 1);
-				DECOMP_TileView_Init(&gGT->tileView[1], 1, 1);
-				DECOMP_TileView_Init(&gGT->tileView[2], 2, 1);
-				DECOMP_TileView_Init(&gGT->tileView[3], 3, 1);
-				
-				DECOMP_TileView_Init(&gGT->tileView_UI, 0, 1);
-				gGT->tileView_UI.rot[0] = 0x800;
-				DECOMP_TileView_SetPsyqGeom(&gGT->tileView_UI);
 				
 				if(sdata->Loading.stage == -1)
 				{
 					char text[100];
-					sprintf(text, "Hello World: %d\n", sdata->lastPathIndex++); // pick random variable
+					sprintf(text, "Hello World: %d", 
+								sdata->lastPathIndex++); // pick random variable
+					
 					DECOMP_DecalFont_DrawLine(text, 0x100, 0x23, 2, 0xffff8000);
+					
+					
+					DECOMP_DecalFont_DrawLine(__DATE__, 0x100, 0x80, 2, 0xffff8000);
+					DECOMP_DecalFont_DrawLine(__TIME__, 0x100, 0xA0, 2, 0xffff8000);
 					
 					gGT->level1->clearColor[0].enable = 1;
 					gGT->level1->clearColor[1].enable = 1;

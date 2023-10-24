@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainInit_FinalizeInit(struct GameTracker *gGT)
+void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 {
     int i;
     int numPlyr;
@@ -17,7 +17,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
     sdata->doorAccessFlags = 0;
 
     // add a bookmark
-    MEMPACK_PushState();
+    DECOMP_MEMPACK_PushState();
 
     gGT->tileView[0].distanceToScreen_PREV = 0x100;
     gGT->tileView[0].distanceToScreen_CURR = 0x100;
@@ -172,6 +172,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
 		gGT->DecalMP[i].ptrOT2 = 0;
     }
 
+#ifndef REBUILD_PS1
     MainInit_JitPoolsReset(gGT);
 
     // 0x1d7c
@@ -180,6 +181,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
         gGT->numLaps * 8;
 
     MainInit_Drivers(gGT);
+#endif
 
     // assume 1P fov
     numPlyr = 1;
@@ -191,17 +193,21 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
     }
 
     // Initialize four TileView, 4 main screens
-    TileView_Init(&gGT->tileView[0], 0, numPlyr);
-    TileView_Init(&gGT->tileView[1], 1, numPlyr);
-    TileView_Init(&gGT->tileView[2], 2, numPlyr);
-    TileView_Init(&gGT->tileView[3], 3, numPlyr);
+    DECOMP_TileView_Init(&gGT->tileView[0], 0, numPlyr);
+    DECOMP_TileView_Init(&gGT->tileView[1], 1, numPlyr);
+    DECOMP_TileView_Init(&gGT->tileView[2], 2, numPlyr);
+    DECOMP_TileView_Init(&gGT->tileView[3], 3, numPlyr);
 
     // Initialize TileView UI
     view = &gGT->tileView_UI;
-    TileView_Init(view, 0, 1);
+    DECOMP_TileView_Init(view, 0, 1);
     view->rot[0] = 0x800;
-    TileView_SetPsyqGeom(view);
-    TileView_SetMatrixVP(view);
+    DECOMP_TileView_SetPsyqGeom(view);
+    
+// ConvertRotToMatrix not done
+#ifndef REBUILD_PS1
+	TileView_SetMatrixVP(view);
+#endif
 
     if ((gGT->hudFlags & 2) != 0)
     {
@@ -228,7 +234,12 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
 
         if (i < gGT->numPlyrCurrGame)
         {
+
+// dont have CAM_Init or 
+// THREAD_BirthWithInstance merged	
+#ifndef REBUILD_PS1
             CAM_Init(&gGT->cameraDC[i], i, d, &gGT->tileView[i]);
+#endif
 
 			// freeze camera of P1, only in main menu
             if (
@@ -252,6 +263,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
         gGT->demoCountdownTimer = 900;
     }
 
+#ifndef REBUILD_PS1
     // copy InstDef to InstancePool
     INSTANCE_LevInitAll(lev1->ptrInstDefs, lev1->numInstances);
 
@@ -271,7 +283,9 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
 
     // execute all camera thread update functions
     ThTick_RunBucket(gGT->threadBuckets[CAMERA].thread);
+#endif
 
+// dont write unused variables
 #if 0
     // lev -> clearColor rgb
     sdata->LevClearColorRGB[0] = (u_int)(char *)(lev1->clearColorRGBA)[0];
@@ -279,6 +293,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
     sdata->LevClearColorRGB[2] = (u_int)(char *)(lev1->clearColorRGBA)[2];
 #endif
 
+	// is this used?
     *(int *)&gGT->db[0].drawEnv.isbg = lev1->clearColorRGBA<<8;
     *(int *)&gGT->db[1].drawEnv.isbg = lev1->clearColorRGBA<<8;
 
@@ -299,6 +314,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
         gGT->db[1].drawEnv.isbg = 1;
     }
 
+#ifndef REBUILD_PS1
     if (lev1 != NULL)
 		if (lev1->ptr_mesh_info != NULL)
 			LevInstDef_UnPack(lev1->ptr_mesh_info);
@@ -313,6 +329,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
         lev1->ptr_water,
         lev1->ptr_tex_waterEnvMap,
         lev1->unk5);
+#endif
 
     gGT->tileView_UI.fadeFromBlack_desiredResult = 0x1000;
     gGT->tileView_UI.fade_step = 0x200;
@@ -340,6 +357,7 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
     BOTS_EmptyFunc();
 #endif
 
+#ifndef REBUILD_PS1
     if ((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
 		if (gGT->podiumRewardID != 0)
 			CS_Podium_FullScene_Init();
@@ -356,4 +374,5 @@ void MainInit_FinalizeInit(struct GameTracker *gGT)
     }
 
     RobotcarWeapons_Init();
+#endif
 }

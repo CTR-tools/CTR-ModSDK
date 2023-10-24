@@ -109,6 +109,7 @@
 #include "../decompile/General/MAIN/MainFrame_ResetDB.c"
 #include "../decompile/General/MAIN/MainInit_OTMem.c"
 #include "../decompile/General/MAIN/MainInit_PrimMem.c"
+#include "../decompile/General/MAIN/MainInit_FinalizeInit.c"
 #include "../decompile/General/MAIN/MainInit_VRAMClear.c" 
 #include "../decompile/General/MAIN/MainInit_VRAMDisplay.c" 
 
