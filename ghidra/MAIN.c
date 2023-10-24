@@ -7096,6 +7096,7 @@ void FUN_8003b008(int param_1)
         trap(0x1800);
       }
 
+	  // gGT->rainBuffer[i].numParticles_curr
       *(int *)(iVar5 + 0x1a40) = *(int *)(iVar5 + 0x1a40) / (int)(uint)bVar1;
 
 	  // if there are zero screens, crash the game
@@ -7112,6 +7113,7 @@ void FUN_8003b008(int param_1)
 	  // next screen
 	  iVar6 = iVar6 + 1;
 
+	  // gGT->rainBuffer[i].numParticles_max
       *(undefined2 *)(iVar5 + 0x1a44) =
            (short)((int)(uint)*(ushort *)(iVar5 + 0x1a44) / (int)(uint)bVar1);
 
