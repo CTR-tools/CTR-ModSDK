@@ -475,8 +475,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			uVar16 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_LEV);
 			DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, uVar16, 0, &DECOMP_LOAD_Callback_LEV);
 
-			// if level ID is AdvHub or Cutscene
-			if ((gGT->gameMode2 & LEV_SWAP) != 0)
+			// if level ID is AdvHub or Credits
+			if (
+					// 25-38 or 44-63
+					((u_int)(gGT->levelID-0x19) < 0xe) ||
+					((u_int)(gGT->levelID-0x2c) < 0x14)
+				)
 			{
 				// add PTR file to loading queue
 				uVar6 = DECOMP_LOAD_GetBigfileIndex(gGT->levelID, sdata->levelLOD, LVI_PTR);

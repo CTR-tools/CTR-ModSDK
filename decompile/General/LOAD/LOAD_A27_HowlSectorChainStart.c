@@ -5,7 +5,7 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 	CdlLOC loc;
 	
 	if(numSector == 0) 
-		return 0;
+		return 1;
 	
 	// backup, so chain can use it later
 	sdata->howlChainParams[0] = (int)cdlFileHWL;
