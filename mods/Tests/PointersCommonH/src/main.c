@@ -40,7 +40,7 @@ struct x y[] =
 	TEST16(&data.advCupStringIndex),
 	TEST16(&data.characterIDs),
 	TEST16(&data.metaPhys),
-	TEST16(&data.placeholder_lastByte),
+	//TEST16(&data.placeholder_lastByte),
 
 	TEST16(&sdata_static),
 	TEST16(&sdata_static.s_camera),
@@ -91,5 +91,6 @@ struct x y[] =
 	TEST16(OFFSETOF(struct Driver, BattleHUD.teamID)),
 	TEST16(OFFSETOF(struct Driver, reserves)),
 	TEST16(OFFSETOF(struct Driver, numTimesMaskGrab)),
-	TEST16(OFFSETOF(struct Turbo, fireVisibilityCooldown))
+	TEST16(OFFSETOF(struct Turbo, fireVisibilityCooldown)),
+	TEST16(OFFSETOF(struct Instance, idpp[0].mh))
 };

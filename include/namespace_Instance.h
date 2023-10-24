@@ -438,7 +438,7 @@ struct InstDrawPerPlayer
 
 	// all get set in FUN_80070950
 	// 0xb8 - copy of 0x28 (prev frame?) (flags per player?)
-	u_int unkb8[2];
+	int unkb8[2];
 
 	// 0xc0 - origin of cur frame
 	// 0xc4 - origin of next frame
@@ -474,8 +474,7 @@ struct InstDrawPerPlayer
 	// 0xf4
 	short specLight[4];
 
-	// 0xfc
-	struct Instance* birth2D;
+	// 0xfc = end of struct
 
 	// 0x74 + 0x88 = 0xFC
 	// 0x88 = size of struct
