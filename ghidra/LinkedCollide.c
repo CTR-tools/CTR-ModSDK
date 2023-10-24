@@ -26,8 +26,10 @@ int FUN_800314e0(int param_1,undefined4 param_2,int param_3,uint param_4)
       iVar2 = *(int *)(iVar4 + 0x48) - *(int *)(param_1 + 0x48);
       iVar1 = *(int *)(iVar4 + 0x4c) - *(int *)(param_1 + 0x4c);
 
-	  // check for a particular model, which has cylinderical collision
-      if (*(short *)(*(int *)(param_1 + 0x18) + 0x10) == 0x21) {
+	  // if Minecart
+      if (*(short *)(*(int *)(param_1 + 0x18) + 0x10) == 0x21) 
+	  {
+		// Cylinder collision
         if (((uint)(iVar3 * iVar3 + iVar1 * iVar1) < param_4) && (-0x20 < iVar2)) {
           return iVar4;
         }
