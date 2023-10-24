@@ -291,11 +291,11 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     sdata->LevClearColorRGB[0] = (u_int)(char *)(lev1->clearColorRGBA)[0];
     sdata->LevClearColorRGB[1] = (u_int)(char *)(lev1->clearColorRGBA)[1];
     sdata->LevClearColorRGB[2] = (u_int)(char *)(lev1->clearColorRGBA)[2];
+#endif
 
-	// only for early CTR prototypes, but the code was left in USA Retail
+	// Used in Coco Park, encoded as Blue
     *(int *)&gGT->db[0].drawEnv.isbg = lev1->clearColorRGBA<<8;
     *(int *)&gGT->db[1].drawEnv.isbg = lev1->clearColorRGBA<<8;
-#endif
 
     if (
 		(gGT->numPlyrCurrGame == 1) &&
