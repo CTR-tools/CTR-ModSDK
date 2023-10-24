@@ -602,7 +602,8 @@ struct Level
 	void* ptrLowTexArray;
 
 	// 0xD8
-	// base background color, used to clear the screen
+	// Early Prototype method of clearing screen,
+	// always zero, replaced by offset 0x160 "clearColor[3]"
 	u_int clearColorRGBA;
 
 	// 0xDC
