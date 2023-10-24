@@ -1,6 +1,6 @@
-// 472+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 550 rewritten so far
+// 475+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 553 rewritten so far
 
-// 472 for every 'common' and ','
+// 475 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -574,6 +574,9 @@ common, exe, UI_RenderFrame_CrystChall, 0x0, General/UI/UI_RenderFrame_CrystChal
 common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
 
+// VEH Init
+common, exe, VehInit_SetConsts, 0x0, General/Vehicle/VehInit_SetConsts.c
+common, exe, VehInit_TeleportAll, 0x0, General/Vehicle/VehInit_TeleportAll.c
 
 // VEH PTR
 common, exe, VehPtr_Crashing_PhysAngular, 0x0, General/Vehicle/VehPtr_Crashing_FuncPtrs.c
