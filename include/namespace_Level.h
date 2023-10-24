@@ -603,7 +603,8 @@ struct Level
 
 	// 0xD8
 	// Early Prototype method of clearing screen,
-	// always zero, replaced by offset 0x160 "clearColor[3]"
+	// replaced by offset 0x160 "clearColor[3]",
+	// still encoded as Blue for Coco Park
 	u_int clearColorRGBA;
 
 	// 0xDC
