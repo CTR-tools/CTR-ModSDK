@@ -236,7 +236,7 @@ int DECOMP_RB_Teeth_LInC(struct Instance *teethInst, struct Thread *t, struct Sc
     // If in relic race, ignore the function,
     // there are no weapons to activate door anyways
     if ((sdata->gGT->gameMode1 & RELIC_RACE) != 0)
-        return;
+        return 2;
         
     teethTh = teethInst->thread;
     d = t->object;
