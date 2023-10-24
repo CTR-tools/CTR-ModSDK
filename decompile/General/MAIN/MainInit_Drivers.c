@@ -1,7 +1,6 @@
-
 #include <common.h>
 
-void MainInit_Drivers(struct GameTracker *gGT)
+void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 {
     char i;
     char numPlyrCurrGame = gGT->numPlyrCurrGame;

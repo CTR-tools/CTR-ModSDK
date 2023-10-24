@@ -1,6 +1,6 @@
-// 476+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 553 rewritten so far
+// 477+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 555 rewritten so far
 
-// 476 for every 'common' and ','
+// 477 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -430,6 +430,7 @@ common, exe, MainFrame_TogglePauseAudio, 0x0, General/MAIN/MainFrame_TogglePause
 common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefault.c
 common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
 common, exe, MainInit_PrimMem, 0x0, General/MAIN/MainInit_PrimMem.c
+common, exe, MainInit_JitPoolsReset, 0x0, General/MAIN/MainInit_JitPoolsReset.c
 common, exe, MainInit_OTMem, 0x0, General/MAIN/MainInit_OTMem.c
 common, exe, MainInit_Drivers, 0x0, General/MAIN/MainInit_Drivers.c
 common, exe, MainInit_FinalizeInit, 0x0, General/MAIN/MainInit_FinalizeInit.c
