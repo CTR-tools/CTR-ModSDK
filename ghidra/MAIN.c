@@ -7085,30 +7085,24 @@ void FUN_8003b008(int param_1)
         puVar4 = puVar4 + 4;
       } while (puVar3 != (undefined4 *)(iVar2 + 0x134));
 
-	  // if there are zero screens, crash the game
+	  // numPlyrCurrGame
       bVar1 = *(byte *)(param_1 + 0x1ca8);
-      if (bVar1 == 0) {
-        trap(0x1c00);
-      }
-
-	  // if there are -1 screens, crash the game
-      if (((uint)bVar1 == 0xffffffff) && (*(int *)(iVar5 + 0x1a40) == -0x80000000)) {
-        trap(0x1800);
-      }
+	  
+	  #if 0 // do not rewrite
+      if (bVar1 == 0) trap(0x1c00);
+	  if (((uint)bVar1 == 0xffffffff) && (*(int *)(iVar5 + 0x1a40) == -0x80000000)) trap(0x1800);
+	  #endif
 
 	  // gGT->rainBuffer[i].numParticles_curr
       *(int *)(iVar5 + 0x1a40) = *(int *)(iVar5 + 0x1a40) / (int)(uint)bVar1;
 
-	  // if there are zero screens, crash the game
+	  // numPlyrCurrGame
 	  bVar1 = *(byte *)(param_1 + 0x1ca8);
-      if (bVar1 == 0) {
-        trap(0x1c00);
-      }
-
-	  // if there are -1 screens, crash the game
-      if (((uint)bVar1 == 0xffffffff) && ((uint)*(ushort *)(iVar5 + 0x1a44) == 0x80000000)) {
-        trap(0x1800);
-      }
+      
+	  #if 0 // do not rewrite
+	  if (bVar1 == 0) trap(0x1c00);
+	  if (((uint)bVar1 == 0xffffffff) && ((uint)*(ushort *)(iVar5 + 0x1a44) == 0x80000000)) trap(0x1800);
+      #endif
 
 	  // next screen
 	  iVar6 = iVar6 + 1;
