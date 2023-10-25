@@ -4,6 +4,7 @@ void MainInit_RainBuffer(struct GameTracker *gGT)
 {
     char i;
     char numPlyr;
+    int* src, dst;
     struct RainBuffer *levelBuffer;
     struct RainBuffer *globalBuffer;
 
@@ -12,7 +13,6 @@ void MainInit_RainBuffer(struct GameTracker *gGT)
     // if numPlyrCurrGame is not zero
     if (numPlyr)
     {
-        
         // copy rain buffer from level, to player's global rain buffer
         levelBuffer = &gGT->level1->rainBuffer;
         
@@ -21,7 +21,18 @@ void MainInit_RainBuffer(struct GameTracker *gGT)
             // Rain Buffer
             globalBuffer = &gGT->rainBuffer[i];
 
-            memcpy(globalBuffer, levelBuffer, sizeof(struct RainBuffer));
+            src = (int*)levelBuffer;
+            dst = (int*)globalBuffer;
+
+            while(src != ((int)levelBuffer + sizeof(struct RainBuffer)))
+            {  
+                dst[0] = src[0];
+                dst[1] = src[1];
+                dst[2] = src[2];
+                dst[3] = src[3];
+                src += 4;
+                dst += 4;
+            }
 
             // if there are zero screens, crash the game
             if (!numPlyr)
