@@ -1,8 +1,0 @@
-newmtl 592_0_32_132_16_16_0
-map_Kd texLow\592_0_32_132_16_16_0.png
-
-newmtl 544_0_32_130_64_64_0
-map_Kd texLow\544_0_32_130_64_64_0.png
-
-newmtl default
-Map_Kd default.png

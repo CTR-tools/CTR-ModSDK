@@ -159,9 +159,25 @@ enum Bsp4
 	Bsp4_Last=Bsp4_StraightWay14,
 	
 	Bsp4_BlockCount=Bsp4_Last-Bsp3_Last,
+};
+
+// for scrolling textures
+enum BspINV
+{
+	BspINV_FirstBlock=Bsp4_Last+1,
+	
+
+	BspINV_Turbo1=BspINV_FirstBlock,
+	BspINV_Turbo2,
+	BspINV_Stp1,
+	BspINV_Stp2,
+	
+	BspINV_Last=BspINV_Stp2,
+	
+	BspINV_BlockCount=BspINV_Last-Bsp4_Last,
 	
 	// must be in last bsp leaf
-	NUM_BLOCKS = Bsp4_Last+1
+	NUM_BLOCKS = BspINV_Last+1
 };
 
 enum CheckPoint

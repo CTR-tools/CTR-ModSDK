@@ -14,6 +14,8 @@ struct LevelFile
 	struct IconGroup4 group4_tileCorner;
 	struct IconGroup4 turbo_pad[10];
 	struct IconGroup4 super_turbo_pad[10];
+	struct IconGroup4 turbo_pad_dup;
+	struct IconGroup4 super_turbo_pad_dup;
 	struct IconGroup4 group4_placeHolder;
 	struct AnimTex turbo_pad_anim;
 	struct IconGroup4* TPA_ptrarray[10];
@@ -247,6 +249,14 @@ struct LevelFile file =
 		},
 	},
 	
+	.turbo_pad_dup =
+	{
+		.far    = ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50),
+		.middle = ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50),
+		.near   = ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50),
+		.mosaic = ImageName_Blend(596, 0, 32, 133, 32, 16, BPP_4, TRANS_50),	
+	},
+	
 	// texture made by Avery (@TheMagicJam)
 	.super_turbo_pad =
 	{
@@ -320,6 +330,14 @@ struct LevelFile file =
 			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 14),
 			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 14),
 		},
+	},
+	
+	.super_turbo_pad_dup =
+	{
+		.far    = ImageName_Blend(604, 0, 32, 134, 32, 16, BPP_4, TRANS_50),
+		.middle = ImageName_Blend(604, 0, 32, 134, 32, 16, BPP_4, TRANS_50),
+		.near   = ImageName_Blend(604, 0, 32, 134, 32, 16, BPP_4, TRANS_50),
+		.mosaic = ImageName_Blend(604, 0, 32, 134, 32, 16, BPP_4, TRANS_50),
 	},
 
 	.turbo_pad_anim =
@@ -1259,6 +1277,12 @@ struct LevelFile file =
 	.quadBlock[Bsp2_RampUp4].draw_order_low = 0x808100,
 	.quadBlock[Bsp2_RampUp1].draw_order_low = 0x1984000,
 	
+	// These dont go on BSP, and dont use SetID
+	NEW_BLOCK(BspINV_FirstBlock+0, turbo_pad[0], 		0xFFFF, 0xFFFF, NULL, 0, 0x808080),
+	NEW_BLOCK(BspINV_FirstBlock+1, super_turbo_pad[0], 	0xFFFF, 0xFFFF, NULL, 0, 0x808080),
+	NEW_BLOCK(BspINV_FirstBlock+2, turbo_pad_dup, 		0xFFFF, 0xFFFF, NULL, 0, 0x808080),
+	NEW_BLOCK(BspINV_FirstBlock+3, super_turbo_pad_dup, 0xFFFF, 0xFFFF, NULL, 0, 0x808080),
+	
 	#define SET_ID(y, x) .quadBlock[x].blockID = y-x
 	
 	SET_ID(Bsp0_Last,Bsp0_FirstBlock+0),
@@ -2132,5 +2156,9 @@ struct LevelFile file =
 		PTR_MAP_QUADBLOCK(95),
 		PTR_MAP_QUADBLOCK(96),
 		PTR_MAP_QUADBLOCK(97),
+		PTR_MAP_QUADBLOCK(98),
+		PTR_MAP_QUADBLOCK(99),
+		PTR_MAP_QUADBLOCK(100),
+		PTR_MAP_QUADBLOCK(101),
 	},
 };
