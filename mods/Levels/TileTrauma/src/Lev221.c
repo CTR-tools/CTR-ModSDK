@@ -1940,7 +1940,7 @@ struct LevelFile file =
 	.navHeader1 =
 	{
 		.magicNumber = -0x1303,
-		.numPoints = 609,
+		.numPoints = 608,
 		.posY_firstNode = 0,
 		.last = LEV_OFFSETOF(navFrame[608]),
 		
