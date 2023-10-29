@@ -1278,10 +1278,10 @@ struct LevelFile file =
 	.quadBlock[Bsp2_RampUp1].draw_order_low = 0x1984000,
 	
 	// These dont go on BSP, and dont use SetID
-	NEW_BLOCK(BspINV_FirstBlock+0, turbo_pad[0], 		0xFFFF, 0xFFFF, NULL, 0, 0x808080),
-	NEW_BLOCK(BspINV_FirstBlock+1, super_turbo_pad[0], 	0xFFFF, 0xFFFF, NULL, 0, 0x808080),
-	NEW_BLOCK(BspINV_FirstBlock+2, turbo_pad_dup, 		0xFFFF, 0xFFFF, NULL, 0, 0x808080),
-	NEW_BLOCK(BspINV_FirstBlock+3, super_turbo_pad_dup, 0xFFFF, 0xFFFF, NULL, 0, 0x808080),
+	NEW_BLOCK(BspINV_FirstBlock+0, turbo_pad[0], 		0x6FFF, 0x6FFF, NULL, 0, 0x808080),
+	NEW_BLOCK(BspINV_FirstBlock+1, super_turbo_pad[0], 	0x6FFF, 0x6FFF, NULL, 0, 0x808080),
+	NEW_BLOCK(BspINV_FirstBlock+2, turbo_pad_dup, 		0x6FFF, 0x6FFF, NULL, 0, 0x808080),
+	NEW_BLOCK(BspINV_FirstBlock+3, super_turbo_pad_dup, 0x6FFF, 0x6FFF, NULL, 0, 0x808080),
 	
 	#define SET_ID(y, x) .quadBlock[x].blockID = y-x
 	
@@ -1786,7 +1786,6 @@ struct LevelFile file =
 			{
 				.leaf =
 				{
-					// empty, should be [64]
 					.unk1 = 0,
 					.bspHitboxArray = 0,
 					.numQuads = Bsp2_BlockCount,
