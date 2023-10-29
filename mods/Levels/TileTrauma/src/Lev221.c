@@ -42,7 +42,7 @@ struct LevelFile
 	
 	struct NavHeader* navHeader[3];
 	struct NavHeader navHeader1;
-	struct NavFrame navFrame[610];
+	struct NavFrame navFrame[609];
 	
 	int map[(74+NUM_BLOCKS*6)+1];
 };
@@ -1940,9 +1940,9 @@ struct LevelFile file =
 	.navHeader1 =
 	{
 		.magicNumber = -0x1303,
-		.numPoints = 610,
+		.numPoints = 609,
 		.posY_firstNode = 0,
-		.last = LEV_OFFSETOF(navFrame[609]),
+		.last = LEV_OFFSETOF(navFrame[608]),
 		
 		// rampPhys
 	},
