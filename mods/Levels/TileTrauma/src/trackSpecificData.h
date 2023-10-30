@@ -201,7 +201,7 @@ enum CheckPoint
 
 enum PVS_NODES
 {
-	PVS_DROPNONE,
+	PVS_DROPNONE=0,
 	NUM_PVS,
 };
 
