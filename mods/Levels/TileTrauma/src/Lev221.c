@@ -1620,8 +1620,8 @@ struct LevelFile file =
 	{
 		[PVS_DROPNONE] =
 		{
-			.visLeafSrc = OFFSETOF(struct LevelFile, leafList[2*PVS_DROPNONE]),
-			.visFaceSrc = OFFSETOF(struct LevelFile, faceList[5*PVS_DROPNONE]),
+			.visLeafSrc = LEV_OFFSETOF(leafList[2*PVS_DROPNONE]),
+			.visFaceSrc = LEV_OFFSETOF(faceList[5*PVS_DROPNONE]),
 			.visInstSrc = 0,
 			.visExtraSrc = 0,
 		},
