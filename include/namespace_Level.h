@@ -700,7 +700,7 @@ struct Level
 	char splitLines[4];
 
 	// 0x188
-	struct NavHeader** LevNavHeader;
+	struct NavHeader** LevNavTable;
 
 	// 0x18C
 	// used in FUN_80060630

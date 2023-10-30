@@ -3,7 +3,7 @@
 void DECOMP_BOTS_InitNavPath(struct GameTracker* gGT, short index)
 {
 	// if level has no data
-	if(gGT->level1->LevNavHeader == 0)
+	if(gGT->level1->LevNavTable == 0)
 	{
 		// use a template, which cancels AIs
 		sdata->NavPath_ptrHeader[index] = &sdata->blank_NavHeader;
@@ -17,7 +17,7 @@ void DECOMP_BOTS_InitNavPath(struct GameTracker* gGT, short index)
 	else
 	{
 		// grab the data
-		sdata->NavPath_ptrHeader[index] = gGT->level1->LevNavHeader[index];
+		sdata->NavPath_ptrHeader[index] = gGT->level1->LevNavTable[index];
 		sdata->NavPath_ptrNavFrameArray[index] = &sdata->NavPath_ptrHeader[index]->frame[0];
 
 		// if data is outdated

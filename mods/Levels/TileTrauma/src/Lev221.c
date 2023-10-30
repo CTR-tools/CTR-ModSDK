@@ -42,7 +42,7 @@ struct LevelFile
 	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
 	int VisMem_bspList_RenderListP4[9*2];
 	
-	struct NavHeader* navHeader[3];
+	struct NavHeader* navTable[3];
 	struct NavHeader navHeader1;
 	struct NavFrame navFrame[609];
 	
@@ -112,7 +112,7 @@ struct LevelFile file =
 		.cnt_restart_points = NUM_CHECKPOINT,
 		.ptr_restart_points = LEV_OFFSETOF(checkpointNodes[0]),
 		
-		.LevNavHeader = LEV_OFFSETOF(navHeader[0]),
+		.LevNavTable = LEV_OFFSETOF(navTable[0]),
 	},
 	
 	.mInfo =
@@ -1666,7 +1666,7 @@ struct LevelFile file =
 	.VisMem_bspList_RenderListP3[2*8+1] = LEV_OFFSETOF(bsp[8]),
 	.VisMem_bspList_RenderListP4[2*8+1] = LEV_OFFSETOF(bsp[8]),
 	
-	.navHeader = {LEV_OFFSETOF(navHeader1), 0, 0},
+	.navTable = {LEV_OFFSETOF(navHeader1), 0, 0},
 	
 	.navHeader1 =
 	{
@@ -1686,22 +1686,17 @@ struct LevelFile file =
 		
 	.map =
 	{
-		(74)<<2,
+		// if a pointer is not patched by LevelPatcher,
+		// add the pointer to the map like this:
 		
-		// 74
-		LEV_OFFSETOF(level.ptr_mesh_info),
-		LEV_OFFSETOF(level.visMem),
-		LEV_OFFSETOF(level.ptr_anim_tex),
-		LEV_OFFSETOF(level.ptrSpawnType1),
-		LEV_OFFSETOF(level.ptr_restart_points),
-		LEV_OFFSETOF(level.LevNavHeader),
+		//LEV_OFFSETOF(level.ptr_mesh_info),
+		
+		(63)<<2,
+		
+		// 63		
 		LEV_OFFSETOF(spawnType1Pointers[2]),
-		LEV_OFFSETOF(mInfo.ptrQuadBlockArray),
-		LEV_OFFSETOF(mInfo.ptrVertexArray),
-		LEV_OFFSETOF(mInfo.bspRoot),
-		LEV_OFFSETOF(navHeader[0]),
-		LEV_OFFSETOF(navHeader1.last),
 		
+		// read level->ptr_anim_tex to start parsing
 		LEV_OFFSETOF(turbo_pad_anim.ptrNext),
 		LEV_OFFSETOF(TPA_ptrarray[0]),
 		LEV_OFFSETOF(TPA_ptrarray[1]),
@@ -1725,8 +1720,10 @@ struct LevelFile file =
 		LEV_OFFSETOF(STPA_ptrarray[8]),
 		LEV_OFFSETOF(STPA_ptrarray[9]),
 		LEV_OFFSETOF(STPA_ptrarray[10]),
+		
 		LEV_OFFSETOF(pvs[0].visLeafSrc),
 		LEV_OFFSETOF(pvs[0].visFaceSrc),
+		
 		LEV_OFFSETOF(visMem.visLeafList[0]),
 		LEV_OFFSETOF(visMem.visLeafList[1]),
 		LEV_OFFSETOF(visMem.visLeafList[2]),

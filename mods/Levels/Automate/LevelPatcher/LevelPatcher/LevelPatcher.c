@@ -144,29 +144,133 @@ int main(int argc, char** argv)
 		return;
 	}
 
-	// MeshInfo = Level->0x0
-	char* meshInfo =	&levelPtr[	*(int*)&levelPtr[0]		];
-	
-	// QuadBlockArr = meshInfo->0xC
-	char* quadBlockArr =&levelPtr[	*(int*)&meshInfo[0xC]	];
-
-	// QuadBlockCount = meshInfo->0x0
-	int quadBlockCount = *(int*)&meshInfo[0];
-
-	// bspArr = meshInfo->0x18
-	char* bspArr =		&levelPtr[	*(int*)&meshInfo[0x18]	];
-
-	// bspCount = meshInfo->0x1C
-	int bspCount = *(int*)&meshInfo[0x1C];
-
-	SetBlockIDs(quadBlockArr, quadBlockCount);
-	SetBspBoxes(levelPtr, quadBlockArr, bspArr, bspArr);
-
 	char* ptrMap = &levelPtr[*(int*)&fileBuf[0]];
 
 	int ptr_Count = *(int*)&ptrMap[0] >> 2;
 	int* ptr_Arr = &ptrMap[4];
 
+	char* meshInfo;
+	char* quadBlockArr;
+	char* bspArr;
+
+	int quadBlockCount, bspCount;
+
+	meshInfo = &levelPtr[*(int*)&levelPtr[0]];
+	quadBlockArr = &levelPtr[*(int*)&meshInfo[0xC]];
+	quadBlockCount = *(int*)&meshInfo[0];
+	bspArr = &levelPtr[*(int*)&meshInfo[0x18]];
+	bspCount = *(int*)&meshInfo[0x1C];
+
+	// level->0x0
+	int offsetPtrMeshInfo = *(int*)&levelPtr[0];
+	if (offsetPtrMeshInfo != 0)
+	{
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&levelPtr[0] - (int)levelPtr;
+		sz += 1 * 4;
+
+		// meshInfo->0xC
+		int offsetPtrQuadblock = *(int*)&meshInfo[0xC];
+		if (offsetPtrQuadblock != 0)
+		{
+			*(int*)&ptr_Arr[ptr_Count++] = (int)&meshInfo[0xC] - (int)levelPtr;
+			sz += 1 * 4;
+		}
+
+		// meshInfo->0x10
+		int offsetPtrVertex = *(int*)&meshInfo[0x10];
+		if (offsetPtrVertex != 0)
+		{
+			*(int*)&ptr_Arr[ptr_Count++] = (int)&meshInfo[0x10] - (int)levelPtr;
+			sz += 1 * 4;
+		}
+
+		// meshInfo->0x18
+		int offsetPtrBSP = *(int*)&meshInfo[0x18];
+		if (offsetPtrBSP != 0)
+		{
+			*(int*)&ptr_Arr[ptr_Count++] = (int)&meshInfo[0x18] - (int)levelPtr;
+			sz += 1 * 4;
+		}
+	}
+
+	// level->0x4
+	int offsetPtrSkybox = *(int*)&levelPtr[4];
+	if (offsetPtrSkybox != 0)
+	{
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&levelPtr[4] - (int)levelPtr;
+		sz += 1 * 4;
+	}
+
+	// level->0x8
+	int offsetPtrAnimTex = *(int*)&levelPtr[8];
+	if (offsetPtrAnimTex != 0)
+	{
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&levelPtr[8] - (int)levelPtr;
+		sz += 1 * 4;
+	}
+
+	// level->0x134
+	int offsetPtrSpawn1 = *(int*)&levelPtr[0x134];
+	if (offsetPtrSpawn1 != 0)
+	{
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&levelPtr[0x134] - (int)levelPtr;
+		sz += 1 * 4;
+	}
+
+	// level->0x14c
+	int offsetPtrCheckpoint = *(int*)&levelPtr[0x14c];
+	if (offsetPtrCheckpoint != 0)
+	{
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&levelPtr[0x14c] - (int)levelPtr;
+		sz += 1 * 4;
+	}
+
+	// level->0x188
+	int offsetPtrNavTable = *(int*)&levelPtr[0x188];
+	if (offsetPtrNavTable != 0)
+	{
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&levelPtr[0x188] - (int)levelPtr;
+		sz += 1 * 4;
+
+		// NavTable: Array of 3 NavHeader pointers
+		char* NavTable = &levelPtr[*(int*)&levelPtr[0x188]];
+		for (int i = 0; i < 3; i++)
+		{
+			// If NavHeader is valid
+			int offsetPtrNav = *(int*)&NavTable[4*i];
+			if (offsetPtrNav != 0)
+			{
+				// Patch NavHeader
+				*(int*)&ptr_Arr[ptr_Count++] = (int)&NavTable[4 * i] - (int)levelPtr;
+				sz += 1 * 4;
+
+				char* NavHeader = &levelPtr[*(int*)&NavTable[4 * i]];
+
+				// Patch NavHeader->last
+				int offsetNavFrameLast = *(int*)&NavHeader[8];
+				if (offsetNavFrameLast != 0)
+				{
+					*(int*)&ptr_Arr[ptr_Count++] = (int)&NavHeader[8] - (int)levelPtr;
+					sz += 1 * 4;
+				}
+			}
+		}
+	}
+
+	// level->0x190
+	int offsetPtrVisMem = *(int*)&levelPtr[0x190];
+	if (offsetPtrVisMem != 0)
+	{
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&levelPtr[0x190] - (int)levelPtr;
+		sz += 1 * 4;
+	}
+
+	// skip level->0x10, 0x18, 0x24, 0x38, 0x3c, 0x40, 0x44, 
+	// 0xD4, 0xE0, 0xE4, 0xE8, 0x13C, 0x144, 
+	
+	SetBlockIDs(quadBlockArr, quadBlockCount);
+	SetBspBoxes(levelPtr, quadBlockArr, bspArr, bspArr);
+	
 	for (int i = 0; i < quadBlockCount; i++)
 	{
 		*(int*)&ptr_Arr[ptr_Count++] = (int)&quadBlockArr[i * 0x5C + 0x1c] - (int)levelPtr;
@@ -175,12 +279,14 @@ int main(int argc, char** argv)
 		*(int*)&ptr_Arr[ptr_Count++] = (int)&quadBlockArr[i * 0x5C + 0x28] - (int)levelPtr;
 		*(int*)&ptr_Arr[ptr_Count++] = (int)&quadBlockArr[i * 0x5C + 0x40] - (int)levelPtr;
 		*(int*)&ptr_Arr[ptr_Count++] = (int)&quadBlockArr[i * 0x5C + 0x44] - (int)levelPtr;
-
+	
 		// increase file size
 		sz += 6 * 4;
 	}
 
+	// Finalize
 	*(int*)&ptrMap[0] = ptr_Count << 2;
+	printf("%d\n", ptr_Count);
 
 #if 0
 	int testCount = 0;
