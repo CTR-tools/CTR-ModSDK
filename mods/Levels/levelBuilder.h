@@ -60,25 +60,6 @@ enum Split
 #define sizeX 0x300
 #define sizeZ 0x300
 
-/*
-	NEW_BLOCK
-	(
-		// index, texture
-		0, texgroup_ground,
-
-		// posX, posZ
-		// +z is forward, +x is left, not right
-		// size of a quadblock is always 0x300 x 0x300, as per the above macros
-		0x0, 0x0,
-
-		// vertex flags, quadblock flags
-		NULL, 0x1800,
-
-		// RGB color
-		RGBtoBGR(0xFF0000),
-	),
-*/
-
 #define NEW_BLOCK(qIndex, texgroup, posX, posZ, flagV, flagQ, color) \
 	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\
 	.levVertex[9*qIndex+1] = NEW_VERTEX(posX+sizeX/2, 0, posZ-sizeZ/2, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\

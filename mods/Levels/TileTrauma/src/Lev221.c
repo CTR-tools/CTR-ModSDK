@@ -46,7 +46,7 @@ struct LevelFile
 	struct NavHeader navHeader1;
 	struct NavFrame navFrame[609];
 	
-	int map[(74+NUM_BLOCKS*6)+1];
+	int map[(74)+1];
 };
 
 struct LevelFile file =
@@ -424,26 +424,7 @@ struct LevelFile file =
 			4, // mode 4 (sit in pos, lookAt driver)
 			0,0,0x1000,
 	},
-	
-/*
-	NEW_BLOCK
-	(
-		// index, texture
-		0, texgroup_ground,
-
-		// posX, posZ
-		// +z is forward, +x is left, not right
-		// size of a quadblock is always 0x300 x 0x300, see "levelBuilder.h"
-		0x0, 0x0,
-
-		// vertex flags, quadblock flags
-		NULL, 0x1800,
-
-		// RGB color
-		RGBtoBGR(0xFF0000),
-	),
-*/
-	
+		
 	// +z is forward
 	// +x is left, not right
 	
@@ -1362,8 +1343,7 @@ struct LevelFile file =
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack8),
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack9),
 	SET_CHECKPOINT(CPI_Turn180, Bsp1_TurnBack10),
-		
-	
+
 	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay1),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay2),
 	SET_CHECKPOINT(CPI_FlatRun, Bsp4_StraightWay3),
@@ -1706,7 +1686,7 @@ struct LevelFile file =
 		
 	.map =
 	{
-		(74+NUM_BLOCKS*6)<<2,
+		(74)<<2,
 		
 		// 74
 		LEV_OFFSETOF(level.ptr_mesh_info),
@@ -1719,6 +1699,9 @@ struct LevelFile file =
 		LEV_OFFSETOF(mInfo.ptrQuadBlockArray),
 		LEV_OFFSETOF(mInfo.ptrVertexArray),
 		LEV_OFFSETOF(mInfo.bspRoot),
+		LEV_OFFSETOF(navHeader[0]),
+		LEV_OFFSETOF(navHeader1.last),
+		
 		LEV_OFFSETOF(turbo_pad_anim.ptrNext),
 		LEV_OFFSETOF(TPA_ptrarray[0]),
 		LEV_OFFSETOF(TPA_ptrarray[1]),
@@ -1742,11 +1725,6 @@ struct LevelFile file =
 		LEV_OFFSETOF(STPA_ptrarray[8]),
 		LEV_OFFSETOF(STPA_ptrarray[9]),
 		LEV_OFFSETOF(STPA_ptrarray[10]),
-		LEV_OFFSETOF(bsp[4].data.leaf.ptrQuadBlockArray),
-		LEV_OFFSETOF(bsp[5].data.leaf.ptrQuadBlockArray),
-		LEV_OFFSETOF(bsp[6].data.leaf.ptrQuadBlockArray),
-		LEV_OFFSETOF(bsp[7].data.leaf.ptrQuadBlockArray),
-		LEV_OFFSETOF(bsp[8].data.leaf.ptrQuadBlockArray),
 		LEV_OFFSETOF(pvs[0].visLeafSrc),
 		LEV_OFFSETOF(pvs[0].visFaceSrc),
 		LEV_OFFSETOF(visMem.visLeafList[0]),
@@ -1761,6 +1739,13 @@ struct LevelFile file =
 		LEV_OFFSETOF(visMem.bspList[1]),
 		LEV_OFFSETOF(visMem.bspList[2]),
 		LEV_OFFSETOF(visMem.bspList[3]),
+		
+		// leaf nodes
+		LEV_OFFSETOF(bsp[4].data.leaf.ptrQuadBlockArray),
+		LEV_OFFSETOF(bsp[5].data.leaf.ptrQuadBlockArray),
+		LEV_OFFSETOF(bsp[6].data.leaf.ptrQuadBlockArray),
+		LEV_OFFSETOF(bsp[7].data.leaf.ptrQuadBlockArray),
+		LEV_OFFSETOF(bsp[8].data.leaf.ptrQuadBlockArray),
 		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*4+1]),
 		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*4+1]),
 		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*4+1]),
@@ -1781,111 +1766,5 @@ struct LevelFile file =
 		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*8+1]),
 		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*8+1]),
 		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*8+1]),
-		LEV_OFFSETOF(navHeader[0]),
-		LEV_OFFSETOF(navHeader1.last),
-
-		// NUM_BLOCKS*6
-		PTR_MAP_QUADBLOCK(0),
-		PTR_MAP_QUADBLOCK(1),
-		PTR_MAP_QUADBLOCK(2),
-		PTR_MAP_QUADBLOCK(3),
-		PTR_MAP_QUADBLOCK(4),
-		PTR_MAP_QUADBLOCK(5),
-		PTR_MAP_QUADBLOCK(6),
-		PTR_MAP_QUADBLOCK(7),
-		PTR_MAP_QUADBLOCK(8),
-		PTR_MAP_QUADBLOCK(9),
-		PTR_MAP_QUADBLOCK(10),
-		PTR_MAP_QUADBLOCK(11),
-		PTR_MAP_QUADBLOCK(12),
-		PTR_MAP_QUADBLOCK(13),
-		PTR_MAP_QUADBLOCK(14),
-		PTR_MAP_QUADBLOCK(15),
-		PTR_MAP_QUADBLOCK(16),
-		PTR_MAP_QUADBLOCK(17),
-		PTR_MAP_QUADBLOCK(18),
-		PTR_MAP_QUADBLOCK(19),
-		PTR_MAP_QUADBLOCK(20),
-		PTR_MAP_QUADBLOCK(21),
-		PTR_MAP_QUADBLOCK(22),
-		PTR_MAP_QUADBLOCK(23),
-		PTR_MAP_QUADBLOCK(24),
-		PTR_MAP_QUADBLOCK(25),
-		PTR_MAP_QUADBLOCK(26),
-		PTR_MAP_QUADBLOCK(27),
-		PTR_MAP_QUADBLOCK(28),
-		PTR_MAP_QUADBLOCK(29),
-		PTR_MAP_QUADBLOCK(30),
-		PTR_MAP_QUADBLOCK(31),
-		PTR_MAP_QUADBLOCK(32),
-		PTR_MAP_QUADBLOCK(33),
-		PTR_MAP_QUADBLOCK(34),
-		PTR_MAP_QUADBLOCK(35),
-		PTR_MAP_QUADBLOCK(36),
-		PTR_MAP_QUADBLOCK(37),
-		PTR_MAP_QUADBLOCK(38),
-		PTR_MAP_QUADBLOCK(39),
-		PTR_MAP_QUADBLOCK(40),
-		PTR_MAP_QUADBLOCK(41),
-		PTR_MAP_QUADBLOCK(42),
-		PTR_MAP_QUADBLOCK(43),
-		PTR_MAP_QUADBLOCK(44),
-		PTR_MAP_QUADBLOCK(45),
-		PTR_MAP_QUADBLOCK(46),
-		PTR_MAP_QUADBLOCK(47),
-		PTR_MAP_QUADBLOCK(48),
-		PTR_MAP_QUADBLOCK(49),
-		PTR_MAP_QUADBLOCK(50),
-		PTR_MAP_QUADBLOCK(51),
-		PTR_MAP_QUADBLOCK(52),
-		PTR_MAP_QUADBLOCK(53),
-		PTR_MAP_QUADBLOCK(54),
-		PTR_MAP_QUADBLOCK(55),
-		PTR_MAP_QUADBLOCK(56),
-		PTR_MAP_QUADBLOCK(57),
-		PTR_MAP_QUADBLOCK(58),
-		PTR_MAP_QUADBLOCK(59),
-		PTR_MAP_QUADBLOCK(60),
-		PTR_MAP_QUADBLOCK(61),
-		PTR_MAP_QUADBLOCK(62),
-		PTR_MAP_QUADBLOCK(63),
-		PTR_MAP_QUADBLOCK(64),
-		PTR_MAP_QUADBLOCK(65),
-		PTR_MAP_QUADBLOCK(66),
-		PTR_MAP_QUADBLOCK(67),
-		PTR_MAP_QUADBLOCK(68),
-		PTR_MAP_QUADBLOCK(69),
-		PTR_MAP_QUADBLOCK(70),
-		PTR_MAP_QUADBLOCK(71),
-		PTR_MAP_QUADBLOCK(72),
-		PTR_MAP_QUADBLOCK(73),
-		PTR_MAP_QUADBLOCK(74),
-		PTR_MAP_QUADBLOCK(75),
-		PTR_MAP_QUADBLOCK(76),
-		PTR_MAP_QUADBLOCK(77),
-		PTR_MAP_QUADBLOCK(78),
-		PTR_MAP_QUADBLOCK(79),
-		PTR_MAP_QUADBLOCK(80),
-		PTR_MAP_QUADBLOCK(81),
-		PTR_MAP_QUADBLOCK(82),
-		PTR_MAP_QUADBLOCK(83),
-		PTR_MAP_QUADBLOCK(84),
-		PTR_MAP_QUADBLOCK(85),
-		PTR_MAP_QUADBLOCK(86),
-		PTR_MAP_QUADBLOCK(87),
-		PTR_MAP_QUADBLOCK(88),
-		PTR_MAP_QUADBLOCK(89),
-		PTR_MAP_QUADBLOCK(90),
-		PTR_MAP_QUADBLOCK(91),
-		PTR_MAP_QUADBLOCK(92),
-		PTR_MAP_QUADBLOCK(93),
-		PTR_MAP_QUADBLOCK(94),
-		PTR_MAP_QUADBLOCK(95),
-		PTR_MAP_QUADBLOCK(96),
-		PTR_MAP_QUADBLOCK(97),
-		PTR_MAP_QUADBLOCK(98),
-		PTR_MAP_QUADBLOCK(99),
-		PTR_MAP_QUADBLOCK(100),
-		PTR_MAP_QUADBLOCK(101),
 	},
 };

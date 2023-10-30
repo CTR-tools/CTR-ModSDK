@@ -162,6 +162,26 @@ int main(int argc, char** argv)
 	SetBlockIDs(quadBlockArr, quadBlockCount);
 	SetBspBoxes(levelPtr, quadBlockArr, bspArr, bspArr);
 
+	char* ptrMap = &levelPtr[*(int*)&fileBuf[0]];
+
+	int ptr_Count = *(int*)&ptrMap[0] >> 2;
+	int* ptr_Arr = &ptrMap[4];
+
+	for (int i = 0; i < quadBlockCount; i++)
+	{
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&quadBlockArr[i * 0x5C + 0x1c] - (int)levelPtr;
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&quadBlockArr[i * 0x5C + 0x20] - (int)levelPtr;
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&quadBlockArr[i * 0x5C + 0x24] - (int)levelPtr;
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&quadBlockArr[i * 0x5C + 0x28] - (int)levelPtr;
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&quadBlockArr[i * 0x5C + 0x40] - (int)levelPtr;
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&quadBlockArr[i * 0x5C + 0x44] - (int)levelPtr;
+
+		// increase file size
+		sz += 6 * 4;
+	}
+
+	*(int*)&ptrMap[0] = ptr_Count << 2;
+
 #if 0
 	int testCount = 0;
 	for (int i = 0; i < bspCount; i++)
