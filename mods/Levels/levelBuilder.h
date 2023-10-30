@@ -15,6 +15,47 @@ enum BitsPerPixel
 	BPP_16 = 2
 };
 
+enum Split
+{
+	SPLIT_X,
+	SPLIT_Y,
+	SPLIT_Z
+};
+
+#define BSP_BRANCH(ID, AXIS, CHILD1, CHILD2) \
+[ID] = \
+{ \
+	.flag = 0, \
+	.id = ID, \
+	.data = \
+	{ \
+		.branch = \
+		{ \
+			.axis = { \
+				AXIS == SPLIT_X ? 0x1000 : 0, \
+				AXIS == SPLIT_Y ? 0x1000 : 0, \
+				AXIS == SPLIT_Z ? 0x1000 : 0, 0xFF40 \
+			}, \
+			.childID = {CHILD1, CHILD2}, \
+		} \
+	} \
+}
+
+#define BSP_LEAF(ID, FIRST, COUNT) \
+[ID] = \
+{ \
+	.flag = 1, \
+	.id = ID, \
+	.data = \
+	{ \
+		.leaf = \
+		{ \
+			.numQuads = COUNT, \
+			.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[FIRST]) \
+		} \
+	} \
+}
+
 // can't change these, or else triNormalVec has to change
 #define sizeX 0x300
 #define sizeZ 0x300

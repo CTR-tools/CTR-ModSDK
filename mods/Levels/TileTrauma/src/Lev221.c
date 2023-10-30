@@ -1283,109 +1283,6 @@ struct LevelFile file =
 	NEW_BLOCK(BspINV_FirstBlock+2, turbo_pad_dup, 		0x6FFF, 0x6FFF, NULL, 0, 0x808080),
 	NEW_BLOCK(BspINV_FirstBlock+3, super_turbo_pad_dup, 0x6FFF, 0x6FFF, NULL, 0, 0x808080),
 	
-	#define SET_ID(y, x) .quadBlock[x].blockID = y-x
-	
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+0),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+1),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+2),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+3),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+4),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+5),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+6),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+7),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+8),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+9),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+10),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+11),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+12),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+13),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+14),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+15),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+16),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+17),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+18),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+19),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+20),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+21),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+22),
-	SET_ID(Bsp0_Last,Bsp0_FirstBlock+23),
-	
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+0),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+1),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+2),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+3),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+4),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+5),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+6),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+7),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+8),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+9),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+10),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+11),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+12),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+13),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+14),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+15),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+16),
-	SET_ID(Bsp1_Last,Bsp1_FirstBlock+17),
-	
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+0),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+1),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+2),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+3),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+4),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+5),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+6),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+7),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+8),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+9),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+10),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+11),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+12),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+13),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+14),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+15),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+16),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+17),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+18),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+19),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+20),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+21),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+22),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+23),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+24),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+25),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+26),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+27),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+28),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+29),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+30),
-	SET_ID(Bsp2_Last,Bsp2_FirstBlock+31),
-	
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+0),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+1),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+2),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+3),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+4),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+5),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+6),
-	SET_ID(Bsp3_Last,Bsp3_FirstBlock+7),
-
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+0),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+1),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+2),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+3),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+4),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+5),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+6),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+7),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+8),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+9),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+10),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+11),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+12),
-	SET_ID(Bsp4_Last,Bsp4_FirstBlock+13),
-	
 	#define SET_CHECKPOINT(cpi, block) \
 		.quadBlock[block].checkpointIndex = cpi
 	
@@ -1675,215 +1572,36 @@ struct LevelFile file =
 	
 	.bsp =
 	{
-		// root node
-		[0] =
-		{
-			.flag = 0,
-			.id = 0,
-			.box =
-			{
-				.min = {-0x8000, -0x490, -0x8000},
-				.max = {0x8000, 0x066E, 0x8000}
-			},
-			
-			.data =
-			{
-				.branch =
-				{
-					// need more info on this
-					.axis = {0x1000, 0x0, 0x0, 0xFF40},
-					
-					// 0x4000 signifies leaf node
-					.childID = {0x2, 0x1},
-				}
-			}
-		},
+		// root node, SplitX
+		// children: Straightway+EndUTurn+EndTrack, Startline+StartUTurn
+		BSP_BRANCH(0, SPLIT_X, 0x1, 0x2),
 		
-		// branch for side of map opposite to startline
-		[1] =
-		{
-			.flag = 0,
-			.id = 1,
-			.box =
-			{
-				.min = {0x300, -0x490, -0x800},
-				.max = {0x2100, 0x100, 0x2E00}
-			},
-			
-			.data =
-			{
-				.branch =
-				{
-					// need more info on this
-					.axis = {0, 0x0, 0x1000, 0xFF40},
-					
-					// 0x4000 signifies leaf node
-					.childID = {0x3, 0x4004},
-				}
-			}
-		},
+		// Straightway+EndUTurn+EndTrack, SplitZ
+		// children: Straightway+EndUTurn, EndTrack
+		BSP_BRANCH(1, SPLIT_Z, 0x3, 0x4),
 		
-		// branch for startline side
-		[2] =
-		{
-			.flag = 0,
-			.id = 2,
-			.box =
-			{
-				.min = {-0x300, -0x490, -0x800},
-				.max = {0x300, 0x100, 0x2E00}
-			},
-			
-			.data =
-			{
-				.branch =
-				{
-					// need more info on this
-					.axis = {0, 0x0, 0x1000, 0xFF40},
-					
-					// 0x4000 signifies leaf node
-					.childID = {0x4005, 0x4006},
-				}
-			}
-		},
+		// Startline+StartUTurn, SplitZ,
+		// children: Startline, StartUTurn
+		BSP_BRANCH(2, SPLIT_Z, 0x5, 0x6),
 		
-		// leaf with u-turn and drop
-		[3] =
-		{
-			.flag = 0,
-			.id = 3,
-			.box =
-			{
-				.min = {0x300, -0x490, 0x781},
-				.max = {0x2100, 0x100, 0x2E00}
-			},
-			
-			.data =
-			{
-				.branch =
-				{
-					// need more info on this
-					.axis = {0, 0x0, 0x1000, 0xFF40},
-					
-					// 0x4000 signifies leaf node
-					.childID = {0x4007, 0x4008},
-				}
-			}
-		},
+		// Straightway+EndUTurn, SplitZ,
+		// children: Straightway, EndUTurn, 
+		BSP_BRANCH(3, SPLIT_Z, 0x7, 0x8),
 		
-		// leaf yet to come
-		[4] =
-		{
-			.flag = 0x1,
-			.id = 4,
-			.box =
-			{
-				.min = {0x300, -0x490, -0x800},
-				.max = {0x2100, 0x100, 0x77F}
-			},
-			
-			.data =
-			{
-				.leaf =
-				{
-					.unk1 = 0,
-					.bspHitboxArray = 0,
-					.numQuads = Bsp2_BlockCount,
-					.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[Bsp2_FirstBlock])
-				}
-			}
-		},
+		// EndTrack
+		BSP_LEAF(4, Bsp2_FirstBlock, Bsp2_BlockCount),
 	
-		// leaf with startline
-		[5] =
-		{
-			.flag = 0x1,
-			.id = 5,
-			.box =
-			{
-				.min = {-0x300, -0x490, -0x800},
-				.max = {0x300, 0x100, 0x1D00} // see if that cuts it
-			},
-			
-			.data =
-			{
-				.leaf =
-				{
-					.unk1 = 0,
-					.bspHitboxArray = 0,
-					.numQuads = Bsp0_BlockCount,
-					.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[Bsp0_FirstBlock])
-				}
-			}
-		},
+		// Startline
+		BSP_LEAF(5, Bsp0_FirstBlock, Bsp0_BlockCount),
 		
-		// leaf with start of 180 U-Turn
-		[6] =
-		{
-			.flag = 0x1,
-			.id = 6,
-			.box =
-			{
-				.min = {-0x300, -0x300, 0x1D00},
-				.max = {0x300, 0x100, 0x2E00}
-			},
-			
-			.data =
-			{
-				.leaf =
-				{
-					.unk1 = 0,
-					.bspHitboxArray = 0,
-					.numQuads = Bsp3_BlockCount,
-					.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[Bsp3_FirstBlock])
-				}
-			}
-		},
+		// StartUTurn
+		BSP_LEAF(6, Bsp3_FirstBlock, Bsp3_BlockCount),
 
-		[7] =
-		{
-			.flag = 0x1,
-			.id = 7,
-			.box =
-			{
-				.min = {0xB00, -0x490, 0x781},
-				.max = {0x1300, -0x100, 0x1F00}
-			},
-			
-			.data =
-			{
-				.leaf =
-				{
-					.unk1 = 0,
-					.bspHitboxArray = 0,
-					.numQuads = Bsp4_BlockCount,
-					.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[Bsp4_FirstBlock])
-				}
-			}
-		},
+		// Straightway
+		BSP_LEAF(7, Bsp4_FirstBlock, Bsp4_BlockCount),
 		
-		// leaf with end of 180 U-Turn
-		[8] = 
-		{
-			.flag = 0x1,
-			.id = 8,
-			.box =
-			{
-				.min = {0x300, -0x300, 0x1F00},
-				.max = {0x1300, 0x100, 0x2E00}
-			},
-			
-			.data =
-			{
-				.leaf =
-				{
-					.unk1 = 0,
-					.bspHitboxArray = 0,
-					.numQuads = Bsp1_BlockCount,
-					.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[Bsp1_FirstBlock])
-				}
-			}
-		}
+		// EndUTurn
+		BSP_LEAF(8, Bsp1_FirstBlock, Bsp1_BlockCount),
 	},
 	
 	.leafList =
