@@ -55,7 +55,7 @@ struct LevelFile
 	struct NavHeader navHeader1;
 	struct NavFrame navFrame[609];
 	
-	int map[(74)+1];
+	int map[(3)+1];
 };
 
 struct LevelFile file =
