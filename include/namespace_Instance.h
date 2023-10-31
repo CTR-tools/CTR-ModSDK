@@ -367,7 +367,7 @@ struct ModelHeader
 	struct ModelAnim** ptrAnimations;
 
 	// 0x3C
-	unsigned int unk4;
+	struct AnimTex* animtex;
 };
 
 // https://github.com/DCxDemo/CTR-tools/blob/master/formats/txt_ctr.txt

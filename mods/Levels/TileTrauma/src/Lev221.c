@@ -17,10 +17,15 @@ struct LevelFile
 	struct IconGroup4 turbo_pad_dup;
 	struct IconGroup4 super_turbo_pad_dup;
 	struct IconGroup4 group4_placeHolder;
+	
+	// ptrArray MUST come after AnimTex to work
 	struct AnimTex turbo_pad_anim;
 	struct IconGroup4* TPA_ptrarray[10];
+	
+	// ptrArray MUST come after AnimTex to work
 	struct AnimTex super_turbo_pad_anim;
 	struct IconGroup4* STPA_ptrarray[11];
+	
 	struct SpawnType1 ptrSpawnType1;
 	void* spawnType1Pointers[3];
 	short EndRaceCam[10];
@@ -342,10 +347,10 @@ struct LevelFile file =
 
 	.turbo_pad_anim =
 	{
-		.ptrNext = LEV_OFFSETOF(turbo_pad[0]),
+		.ptrActiveTex = LEV_OFFSETOF(turbo_pad[0]),
 		.numFrames = 10,
-		.shrug = 0,
-		.lottashortshuh = 0,
+		.frameDuration = 0,
+		.shiftFactor = 0,
 		.frameIndex = 0,
 	},
 	
@@ -365,10 +370,10 @@ struct LevelFile file =
 
 	.super_turbo_pad_anim =
 	{
-		.ptrNext = LEV_OFFSETOF(super_turbo_pad[0]),
+		.ptrActiveTex = LEV_OFFSETOF(super_turbo_pad[0]),
 		.numFrames = 10,
-		.shrug = 0,
-		.lottashortshuh = 0,
+		.frameDuration = 0,
+		.shiftFactor = 0,
 		.frameIndex = 0,
 	},
 	
@@ -1691,13 +1696,13 @@ struct LevelFile file =
 		
 		//LEV_OFFSETOF(level.ptr_mesh_info),
 		
-		(63)<<2,
+		(62)<<2,
 		
 		// 63		
 		LEV_OFFSETOF(spawnType1Pointers[2]),
 		
 		// read level->ptr_anim_tex to start parsing
-		LEV_OFFSETOF(turbo_pad_anim.ptrNext),
+		LEV_OFFSETOF(turbo_pad_anim.ptrActiveTex),
 		LEV_OFFSETOF(TPA_ptrarray[0]),
 		LEV_OFFSETOF(TPA_ptrarray[1]),
 		LEV_OFFSETOF(TPA_ptrarray[2]),
@@ -1708,7 +1713,7 @@ struct LevelFile file =
 		LEV_OFFSETOF(TPA_ptrarray[7]),
 		LEV_OFFSETOF(TPA_ptrarray[8]),
 		LEV_OFFSETOF(TPA_ptrarray[9]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrNext),
+		LEV_OFFSETOF(super_turbo_pad_anim.ptrActiveTex),
 		LEV_OFFSETOF(STPA_ptrarray[0]),
 		LEV_OFFSETOF(STPA_ptrarray[1]),
 		LEV_OFFSETOF(STPA_ptrarray[2]),

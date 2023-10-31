@@ -15,11 +15,11 @@ struct AnimTex_TurboPad
 
 	// 0x6
 	// related to timer
-	short shrug;
+	short frameDuration;
 
 	// 0x8
 	// related to timer
-	short lottashortshuh;
+	short shiftFactor;
 
 	// 0xA
 	// current frame
@@ -197,8 +197,8 @@ struct LevelFile file =
 	{
 		.ptrNext = LEV_OFFSETOF(turbo_pad[0]),
 		.numFrames = 10,
-		.shrug = 0,
-		.lottashortshuh = 0,
+		.frameDuration = 0,
+		.shiftFactor = 0,
 		.frameIndex = 0,
 		.ptrarray =
 		{

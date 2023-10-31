@@ -20,7 +20,7 @@ void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer)
 		// (usually ten frames, 1/3 second)
 		iVar2 = ptrCurr->idk;
 
-		iVar3 = timer + ptrCurr->shrug >> (ptrCurr->lottashortshuh & 0x1f);
+		iVar3 = timer + ptrCurr->frameDuration >> (ptrCurr->shiftFactor & 0x1f);
 
 		// get frame in current scroll
 		currentFrame = iVar3 % iVar2;

@@ -2,20 +2,21 @@
 
 void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer)
 {
-	struct AnimTex *ptrNext;
-	struct AnimTex *ptrCurr;
-	int iVar3;
-	int currentFrame;
+	int frameIndex;
+	struct AnimTex* curAnimTex = animtex;
 	
-	ptrNext = animtex->ptrNext;
-	ptrCurr = animtex;
-	while (ptrNext != animtex)
+	// iterate over All AnimTex's in a row,
+	// last one loops back to the beginning, could've also just been a null terminator
+	while (*(int*)curAnimTex != animtex)
 	{
-		iVar3 = timer + ptrCurr->shrug >> ((int)ptrCurr->lottashortshuh & 0x1fU);
-		currentFrame = iVar3 % ptrCurr->numFrames;
-		ptrCurr->frameIndex = currentFrame;
-		ptrCurr->ptrNext = ptrCurr->ptrarray[currentFrame]; // wait, this gets overwritten entirely the next line...
-		ptrCurr = &ptrCurr->ptrarray[ptrCurr->numFrames];
-		ptrNext = ptrCurr->ptrNext;
+		frameIndex = timer + curAnimTex->frameDuration >> 
+						((int)curAnimTex->shiftFactor & 0x1fU);
+						
+		frameIndex = frameIndex % curAnimTex->numFrames;
+		curAnimTex->frameIndex = frameIndex;
+		curAnimTex->ptrActiveTex = curAnimTex->ptrarray[frameIndex];
+		
+		// Go to next AnimTex, which comes after this AnimTex's ptrarray
+		curAnimTex = &curAnimTex->ptrarray[curAnimTex->numFrames];
 	}
 }

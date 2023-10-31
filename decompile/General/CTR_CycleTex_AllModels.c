@@ -4,33 +4,25 @@
 /// @param numModels - number of models to process. negative value means loops until NULL is met
 /// @param pModels - pointer to array of model pointers
 /// @param timer
-void CTR_CycleTex_AllModels(int numModels, struct Model** pModelArray, int timer)
+void CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer)
 {
     struct Model * pModel;
     struct ModelHeader * pHeader;
 
-    // validate params
-    if (pModelArray == NULL || numModels == 0) return;
-
-    do {
-
-        // get model pointer and validate
-        if (pModel = *pModelArray, pModel == NULL) return;
-
+    for(int i = 0; i < numModels; i++)
+	{
+		pModel = pModelArray[i];
+		if(pModel == 0) return;
+		
         //iterate over all model headers
-        for (pHeader = pModel->headers; pHeader < pModel->headers + pModel->numHeaders; pHeader++)
+        for (int j = 0; j < pModel->numHeaders; j++)
         {
-            // if anim tex data is present and some flag is not set
-            // TODO: update unk4 name in ModelHeader
-            // TODO: replace value 2 with a flag name
-            if (pHeader->unk4 != NULL && (pHeader->flags & 2) == 0 )
+			pHeader = &pModel->headers[j];
+			
+            if ((pHeader->animtex != NULL) && ((pHeader->flags & 2) == 0) )
             {
-                CTR_CycleTex_Model(pHeader->unk4, timer);
+                CTR_CycleTex_Model(pHeader->animtex, timer);
             }
         }
-
-        numModels--;
-        pModelArray++;
-
-    } while (numModels != 0);
+    }
 }
