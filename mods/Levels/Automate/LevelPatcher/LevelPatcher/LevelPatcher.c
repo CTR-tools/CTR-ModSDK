@@ -188,8 +188,23 @@ int main(int argc, char** argv)
 		int offsetPtrBSP = *(int*)&meshInfo[0x18];
 		if (offsetPtrBSP != 0)
 		{
+			// patch BSP
 			*(int*)&ptr_Arr[ptr_Count++] = (int)&meshInfo[0x18] - (int)levelPtr;
 			sz += 1 * 4;
+
+			// patch BSP leaf nodes
+			for (int i = 0; i < bspCount; i++)
+			{
+				char* newBspArr = &bspArr[0x20 * i];
+
+				// skip if not a leaf node
+				if ((*(short*)&newBspArr[0] & 1) == 0)
+					continue;
+
+				// patch leaf node
+				*(int*)&ptr_Arr[ptr_Count++] = (int)&newBspArr[0x1c] - (int)levelPtr;
+				sz += 1 * 4;
+			}
 		}
 	}
 
@@ -287,35 +302,6 @@ int main(int argc, char** argv)
 	// Finalize
 	*(int*)&ptrMap[0] = ptr_Count << 2;
 	printf("%d\n", ptr_Count);
-
-#if 0
-	int testCount = 0;
-	for (int i = 0; i < bspCount; i++)
-	{
-		char* newBspArr = &bspArr[0x20*i];
-
-		// skip if not a leaf node
-		if ((*(short*)&newBspArr[0] & 1) == 0)
-			continue;
-
-		int numBlock =	*(int*)&newBspArr[0x18];
-		char* newBlockArr = &levelPtr[	*(int*)&newBspArr[0x1C]	];
-
-		int firstIndex = ((int)newBlockArr - (int)quadBlockArr)/0x5c;
-		int lastIndex = firstIndex + numBlock - 1;
-
-		for (int j = 0; j < numBlock; j++)
-		{
-			*(short*)&newBlockArr[0x5c * j + 0x3C] = lastIndex - j;
-
-			printf("BlockID -- NEW: %d\n", 
-				lastIndex - j);
-		}
-
-		printf("\n");
-	}
-#endif
-
 
 	// === #if 0 for testing ===
 #if 1

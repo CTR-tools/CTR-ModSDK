@@ -1697,9 +1697,9 @@ struct LevelFile file =
 		
 		//LEV_OFFSETOF(level.ptr_mesh_info),
 		
-		(63)<<2,
+		(58)<<2,
 		
-		// 63		
+		// 58		
 		LEV_OFFSETOF(spawnType1Pointers[2]),
 		
 		// read level->ptr_anim_tex to start parsing
@@ -1745,12 +1745,6 @@ struct LevelFile file =
 		LEV_OFFSETOF(visMem.bspList[1]),
 		LEV_OFFSETOF(visMem.bspList[2]),
 		LEV_OFFSETOF(visMem.bspList[3]),
-		
-		LEV_OFFSETOF(bsp[4].data.leaf.ptrQuadBlockArray),
-		LEV_OFFSETOF(bsp[5].data.leaf.ptrQuadBlockArray),
-		LEV_OFFSETOF(bsp[6].data.leaf.ptrQuadBlockArray),
-		LEV_OFFSETOF(bsp[7].data.leaf.ptrQuadBlockArray),
-		LEV_OFFSETOF(bsp[8].data.leaf.ptrQuadBlockArray),
 		
 		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*4+1]),
 		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*4+1]),
