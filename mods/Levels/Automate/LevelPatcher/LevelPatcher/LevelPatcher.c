@@ -222,6 +222,32 @@ int main(int argc, char** argv)
 	{
 		*(int*)&ptr_Arr[ptr_Count++] = (int)&levelPtr[8] - (int)levelPtr;
 		sz += 1 * 4;
+
+		char* animTex = &levelPtr[*(int*)&levelPtr[8]];
+
+		// null terminator is a pointer back to the start,
+		// do NOT forget to put that in the level
+		while(*(int*)animTex != *(int*)&levelPtr[8])
+		{
+			*(int*)&ptr_Arr[ptr_Count++] = (int)&animTex[0] - (int)levelPtr;
+			sz += 1 * 4;
+
+			short numFrames = *(short*)&animTex[4];
+			
+			// animTex header is 0xC bytes large, before ptrArray
+			animTex += 0xC;
+
+			for (int i = 0; i < numFrames; i++)
+			{
+				*(int*)&ptr_Arr[ptr_Count++] = (int)&animTex[0] - (int)levelPtr;
+				sz += 1 * 4;
+				animTex += 4;
+			}
+		}
+
+		// patch null terminator
+		*(int*)&ptr_Arr[ptr_Count++] = (int)&animTex[0] - (int)levelPtr;
+		sz += 1 * 4;
 	}
 
 	// level->0x134

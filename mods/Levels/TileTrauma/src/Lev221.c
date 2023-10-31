@@ -1697,35 +1697,10 @@ struct LevelFile file =
 		
 		//LEV_OFFSETOF(level.ptr_mesh_info),
 		
-		(58)<<2,
+		(35)<<2,
 		
-		// 58		
+		// 35		
 		LEV_OFFSETOF(spawnType1Pointers[2]),
-		
-		// read level->ptr_anim_tex to start parsing
-		LEV_OFFSETOF(turbo_pad_anim.ptrActiveTex),
-		LEV_OFFSETOF(TPA_ptrarray[0]),
-		LEV_OFFSETOF(TPA_ptrarray[1]),
-		LEV_OFFSETOF(TPA_ptrarray[2]),
-		LEV_OFFSETOF(TPA_ptrarray[3]),
-		LEV_OFFSETOF(TPA_ptrarray[4]),
-		LEV_OFFSETOF(TPA_ptrarray[5]),
-		LEV_OFFSETOF(TPA_ptrarray[6]),
-		LEV_OFFSETOF(TPA_ptrarray[7]),
-		LEV_OFFSETOF(TPA_ptrarray[8]),
-		LEV_OFFSETOF(TPA_ptrarray[9]),
-		LEV_OFFSETOF(super_turbo_pad_anim.ptrActiveTex),
-		LEV_OFFSETOF(STPA_ptrarray[0]),
-		LEV_OFFSETOF(STPA_ptrarray[1]),
-		LEV_OFFSETOF(STPA_ptrarray[2]),
-		LEV_OFFSETOF(STPA_ptrarray[3]),
-		LEV_OFFSETOF(STPA_ptrarray[4]),
-		LEV_OFFSETOF(STPA_ptrarray[5]),
-		LEV_OFFSETOF(STPA_ptrarray[6]),
-		LEV_OFFSETOF(STPA_ptrarray[7]),
-		LEV_OFFSETOF(STPA_ptrarray[8]),
-		LEV_OFFSETOF(STPA_ptrarray[9]),
-		LEV_OFFSETOF(STPA_ptrarray[10]),
 		
 		LEV_OFFSETOF(pvs[0].visLeafSrc),
 		LEV_OFFSETOF(pvs[0].visFaceSrc),
