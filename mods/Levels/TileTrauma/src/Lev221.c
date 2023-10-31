@@ -18,11 +18,11 @@ struct LevelFile
 	struct IconGroup4 super_turbo_pad_dup;
 	struct IconGroup4 group4_placeHolder;
 	
-	// ptrArray MUST come after AnimTex to work
+	// Required by CycleTex_LEV:
+	// After AnimTex is ptrarray, after ptrarray is next AnimTex,
+	// last ptrarray ends with pointer to first AnimTex
 	struct AnimTex turbo_pad_anim;
 	struct IconGroup4* TPA_ptrarray[10];
-	
-	// ptrArray MUST come after AnimTex to work
 	struct AnimTex super_turbo_pad_anim;
 	struct IconGroup4* STPA_ptrarray[11];
 	
@@ -1696,7 +1696,7 @@ struct LevelFile file =
 		
 		//LEV_OFFSETOF(level.ptr_mesh_info),
 		
-		(62)<<2,
+		(63)<<2,
 		
 		// 63		
 		LEV_OFFSETOF(spawnType1Pointers[2]),
