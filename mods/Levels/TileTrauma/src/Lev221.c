@@ -19,6 +19,7 @@ struct LevelFile
 	struct IconGroup4 group4_placeHolder;
 	
 	// Required by CycleTex_LEV:
+	// first AnimTex is stored at level->ptr_anim_tex
 	// After AnimTex is ptrarray, after ptrarray is next AnimTex,
 	// last ptrarray ends with pointer to first AnimTex
 	struct AnimTex turbo_pad_anim;
