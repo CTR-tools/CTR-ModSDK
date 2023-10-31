@@ -39,13 +39,16 @@ struct LevelFile
 	int faceList[5*NUM_PVS];
 	struct VisMem visMem;
 	
-	int VisMem_bitIndex_DstMemcpyP1[8]; // leave empty
+	// leave empty
+	// DstMemcpy must be big for PVS to copy into,
+	// RenderList must be big enough for 2 pointers to all BSP nodes
+	int VisMem_bitIndex_DstMemcpyP1[8];
 	int VisMem_bspList_RenderListP1[9*2];
-	int VisMem_bitIndex_DstMemcpyP2[8]; // leave empty
+	int VisMem_bitIndex_DstMemcpyP2[8];
 	int VisMem_bspList_RenderListP2[9*2];
-	int VisMem_bitIndex_DstMemcpyP3[8]; // leave empty
+	int VisMem_bitIndex_DstMemcpyP3[8];
 	int VisMem_bspList_RenderListP3[9*2];
-	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
+	int VisMem_bitIndex_DstMemcpyP4[8];
 	int VisMem_bspList_RenderListP4[9*2];
 	
 	struct NavHeader* navTable[3];
@@ -183,76 +186,30 @@ struct LevelFile file =
 	
 	.turbo_pad =
 	{
-		[0] =
-		{
-			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 0),
-			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 0),
-			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 0),
-			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 0),
-		},
-		[1] =
-		{
-			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 2),
-			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 2),
-			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 2),
-			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 2),
-		},
-		[2] =
-		{
-			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 3),
-			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 3),
-			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 3),
-			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 3),
-		},
-		[3] =
-		{
-			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 5),
-			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 5),
-			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 5),
-			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 5),
-		},
-		[4] =
-		{
-			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 6),
-			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 6),
-			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 6),
-			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 6),
-		},
-		[5] =
-		{
-			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 8),
-			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 8),
-			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 8),
-			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 8),
-		},
-		[6] =
-		{
-			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 10),
-			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 10),
-			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 10),
-			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 10),
-		},
-		[7] =
-		{
-			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 11),
-			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 11),
-			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 11),
-			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 11),
-		},
-		[8] =
-		{
-			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 13),
-			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 13),
-			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 13),
-			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 13),
-		},
-		[9] =
-		{
-			.far    = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 14),
-			.middle = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 14),
-			.near   = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 14),
-			.mosaic = TurboPadImage(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, 14),
-		},
+		// Dont move to LevelBuilder.h,
+		// This changes depending on the level
+		
+		#define SAME_TURBO_SINGLE(XX) \
+		ImageName_Scroll(596, 16, 32, 133, 32, 16, BPP_4, TRANS_50, XX)
+		
+		#define SAME_TURBO_GROUP(XX) \
+		{ \
+			.far    = SAME_TURBO_SINGLE(XX), \
+			.middle = SAME_TURBO_SINGLE(XX), \
+			.near   = SAME_TURBO_SINGLE(XX), \
+			.mosaic = SAME_TURBO_SINGLE(XX), \
+		}
+		
+		[0] = SAME_TURBO_GROUP(0),
+		[1] = SAME_TURBO_GROUP(2),
+		[2] = SAME_TURBO_GROUP(3),
+		[3] = SAME_TURBO_GROUP(5),
+		[4] = SAME_TURBO_GROUP(6),
+		[5] = SAME_TURBO_GROUP(8),
+		[6] = SAME_TURBO_GROUP(10),
+		[7] = SAME_TURBO_GROUP(11),
+		[8] = SAME_TURBO_GROUP(13),
+		[9] = SAME_TURBO_GROUP(14),
 	},
 	
 	.turbo_pad_dup =
@@ -266,76 +223,30 @@ struct LevelFile file =
 	// texture made by Avery (@TheMagicJam)
 	.super_turbo_pad =
 	{
-		[0] =
-		{
-			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 0),
-			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 0),
-			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 0),
-			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 0),
-		},
-		[1] =
-		{
-			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 2),
-			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 2),
-			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 2),
-			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 2),
-		},
-		[2] =
-		{
-			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 3),
-			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 3),
-			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 3),
-			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 3),
-		},
-		[3] =
-		{
-			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 5),
-			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 5),
-			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 5),
-			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 5),
-		},
-		[4] =
-		{
-			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 6),
-			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 6),
-			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 6),
-			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 6),
-		},
-		[5] =
-		{
-			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 8),
-			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 8),
-			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 8),
-			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 8),
-		},
-		[6] =
-		{
-			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 10),
-			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 10),
-			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 10),
-			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 10),
-		},
-		[7] =
-		{
-			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 11),
-			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 11),
-			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 11),
-			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 11),
-		},
-		[8] =
-		{
-			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 13),
-			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 13),
-			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 13),
-			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 13),
-		},
-		[9] =
-		{
-			.far    = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 14),
-			.middle = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 14),
-			.near   = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 14),
-			.mosaic = TurboPadImage(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, 14),
-		},
+		// Dont move to LevelBuilder.h,
+		// This changes depending on the level
+		
+		#define SAME_SUPERTURBO_SINGLE(XX) \
+		ImageName_Scroll(604, 16, 32, 134, 32, 16, BPP_4, TRANS_50, XX)
+		
+		#define SAME_SUPERTURBO_GROUP(XX) \
+		{ \
+			.far    = SAME_SUPERTURBO_SINGLE(XX), \
+			.middle = SAME_SUPERTURBO_SINGLE(XX), \
+			.near   = SAME_SUPERTURBO_SINGLE(XX), \
+			.mosaic = SAME_SUPERTURBO_SINGLE(XX), \
+		}
+		
+		[0] = SAME_SUPERTURBO_GROUP(0),
+		[1] = SAME_SUPERTURBO_GROUP(2),
+		[2] = SAME_SUPERTURBO_GROUP(3),
+		[3] = SAME_SUPERTURBO_GROUP(5),
+		[4] = SAME_SUPERTURBO_GROUP(6),
+		[5] = SAME_SUPERTURBO_GROUP(8),
+		[6] = SAME_SUPERTURBO_GROUP(10),
+		[7] = SAME_SUPERTURBO_GROUP(11),
+		[8] = SAME_SUPERTURBO_GROUP(13),
+		[9] = SAME_SUPERTURBO_GROUP(14),
 	},
 	
 	.super_turbo_pad_dup =
@@ -1608,8 +1519,8 @@ struct LevelFile file =
 	
 	.faceList =
 	{
-		// PVS_DROPNONE
-		0b11111111111111111111111111111111,-1,-1,-1,-1,
+		// PVS_DROPNONE (-1 = 0b11111111111111111111111111111111)
+		-1,-1,-1,-1,-1,
 	},
 	
 	.pvs =
@@ -1646,32 +1557,6 @@ struct LevelFile file =
 		.bspList[3] = LEV_OFFSETOF(VisMem_bspList_RenderListP4[0]),
 	},
 	
-	// initialize for leaf nodes only
-	.VisMem_bspList_RenderListP1[2*4+1] = LEV_OFFSETOF(bsp[4]),
-	.VisMem_bspList_RenderListP2[2*4+1] = LEV_OFFSETOF(bsp[4]),
-	.VisMem_bspList_RenderListP3[2*4+1] = LEV_OFFSETOF(bsp[4]),
-	.VisMem_bspList_RenderListP4[2*4+1] = LEV_OFFSETOF(bsp[4]),
-	
-	.VisMem_bspList_RenderListP1[2*5+1] = LEV_OFFSETOF(bsp[5]),
-	.VisMem_bspList_RenderListP2[2*5+1] = LEV_OFFSETOF(bsp[5]),
-	.VisMem_bspList_RenderListP3[2*5+1] = LEV_OFFSETOF(bsp[5]),
-	.VisMem_bspList_RenderListP4[2*5+1] = LEV_OFFSETOF(bsp[5]),
-	
-	.VisMem_bspList_RenderListP1[2*6+1] = LEV_OFFSETOF(bsp[6]),
-	.VisMem_bspList_RenderListP2[2*6+1] = LEV_OFFSETOF(bsp[6]),
-	.VisMem_bspList_RenderListP3[2*6+1] = LEV_OFFSETOF(bsp[6]),
-	.VisMem_bspList_RenderListP4[2*6+1] = LEV_OFFSETOF(bsp[6]),
-	
-	.VisMem_bspList_RenderListP1[2*7+1] = LEV_OFFSETOF(bsp[7]),
-	.VisMem_bspList_RenderListP2[2*7+1] = LEV_OFFSETOF(bsp[7]),
-	.VisMem_bspList_RenderListP3[2*7+1] = LEV_OFFSETOF(bsp[7]),
-	.VisMem_bspList_RenderListP4[2*7+1] = LEV_OFFSETOF(bsp[7]),
-	
-	.VisMem_bspList_RenderListP1[2*8+1] = LEV_OFFSETOF(bsp[8]),
-	.VisMem_bspList_RenderListP2[2*8+1] = LEV_OFFSETOF(bsp[8]),
-	.VisMem_bspList_RenderListP3[2*8+1] = LEV_OFFSETOF(bsp[8]),
-	.VisMem_bspList_RenderListP4[2*8+1] = LEV_OFFSETOF(bsp[8]),
-	
 	.navTable = {LEV_OFFSETOF(navHeader1), 0, 0},
 	
 	.navHeader1 =
@@ -1695,51 +1580,11 @@ struct LevelFile file =
 		// if a pointer is not patched by LevelPatcher,
 		// add the pointer to the map like this:
 		
-		//LEV_OFFSETOF(level.ptr_mesh_info),
+		// 3 pointers
+		(3)<<2,
 		
-		(35)<<2,
-		
-		// 35		
 		LEV_OFFSETOF(spawnType1Pointers[2]),
-		
 		LEV_OFFSETOF(pvs[0].visLeafSrc),
 		LEV_OFFSETOF(pvs[0].visFaceSrc),
-		
-		LEV_OFFSETOF(visMem.visLeafList[0]),
-		LEV_OFFSETOF(visMem.visLeafList[1]),
-		LEV_OFFSETOF(visMem.visLeafList[2]),
-		LEV_OFFSETOF(visMem.visLeafList[3]),
-		LEV_OFFSETOF(visMem.visFaceList[0]),
-		LEV_OFFSETOF(visMem.visFaceList[1]),
-		LEV_OFFSETOF(visMem.visFaceList[2]),
-		LEV_OFFSETOF(visMem.visFaceList[3]),
-		
-		// == Next Batch to Automate ==
-		
-		LEV_OFFSETOF(visMem.bspList[0]),
-		LEV_OFFSETOF(visMem.bspList[1]),
-		LEV_OFFSETOF(visMem.bspList[2]),
-		LEV_OFFSETOF(visMem.bspList[3]),
-		
-		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*4+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*4+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*4+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*4+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*5+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*5+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*5+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*5+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*6+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*6+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*6+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*6+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*7+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*7+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*7+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*7+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*8+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*8+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*8+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*8+1]),
 	},
 };

@@ -304,6 +304,43 @@ int main(int argc, char** argv)
 	{
 		*(int*)&ptr_Arr[ptr_Count++] = (int)&levelPtr[0x190] - (int)levelPtr;
 		sz += 1 * 4;
+
+		char* visMem = &levelPtr[*(int*)&levelPtr[0x190]];
+
+		// visLeafList -> bspList
+		for (int i = 0; i < 0x90; i+=4)
+		{
+			if (*(int*)&visMem[i] != 0)
+			{
+				*(int*)&ptr_Arr[ptr_Count++] = (int)&visMem[i] - (int)levelPtr;
+				sz += 1 * 4;
+			}
+		}
+
+		for (int i = 0; i < 4; i++)
+		{
+			if (*(int*)&visMem[0x80 + 4 * i] != 0)
+			{
+				char* bspList = &levelPtr[*(int*)&visMem[0x80 + 4 * i]];
+
+				// do BSP leafs
+				for (int j = 0; j < bspCount; j++)
+				{
+					char* newBspArr = &bspArr[0x20 * j];
+
+					// skip if not a leaf node
+					if ((*(short*)&newBspArr[0] & 1) == 0)
+						continue;
+
+					// pointer to BSP node in BSP list
+					*(int*)&bspList[8 * j + 4] = (int)&bspArr[0x20 * j] - (int)levelPtr;
+
+					// patch pointer in BSP list
+					*(int*)&ptr_Arr[ptr_Count++] = (int)&bspList[8 * j + 4] - (int)levelPtr;
+					sz += 1 * 4;
+				}
+			}
+		}
 	}
 
 	// skip level->0x10, 0x18, 0x24, 0x38, 0x3c, 0x40, 0x44, 
@@ -327,7 +364,7 @@ int main(int argc, char** argv)
 
 	// Finalize
 	*(int*)&ptrMap[0] = ptr_Count << 2;
-	printf("%d\n", ptr_Count);
+	printf("NumPointers: %d\n", ptr_Count);
 
 	// === #if 0 for testing ===
 #if 1

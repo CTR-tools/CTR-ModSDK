@@ -187,6 +187,15 @@ enum Split
 	.u2 = ((imgX&0x3f)<<(2-bpp))+0, .v2 = (imgY&0xff)+sizeY-1, \
 	.u3 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v3 = (imgY&0xff)+sizeY-1} \
 	
+#define ImageName_Scroll(imgX, imgY, clutX, clutY, sizeX, sizeY, bpp, blend, scale) \
+	{.clut =  ((clutX >> 0) << 0) | (clutY << 6), \
+	.tpage = ((imgX >> 6) << 0) | ((imgY >> 8) << 4) | (blend<<5) | (bpp<<7), \
+	.u0 = ((imgX&0x3f)<<(2-bpp))+0, .v0 = ((imgY&0xff)+0)-scale, \
+	.u1 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v1 = ((imgY&0xff)+0)-scale, \
+	.u2 = ((imgX&0x3f)<<(2-bpp))+0, .v2 = ((imgY&0xff)+sizeY-1)-scale, \
+	.u3 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v3 = ((imgY&0xff)+sizeY-1)-scale} \
+
+	
 // top/bottom left/right assuming you're rotation is 0,0,0
 #define TEX_2X2(qIndex, BottomRight, BottomLeft, TopRight, TopLeft) \
 	.quadBlock[qIndex].ptr_texture_mid = \
@@ -196,30 +205,6 @@ enum Split
 		LEV_OFFSETOF(TopRight), \
 		LEV_OFFSETOF(TopLeft) \
 	}
-
-#define PTR_MAP_QUADBLOCK(x) \
-	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[0]),\
-	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[1]),\
-	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[2]),\
-	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[3]),\
-	LEV_OFFSETOF(quadBlock[x].ptr_texture_low),\
-	LEV_OFFSETOF(quadBlock[x].pvs)
-
-#define TurboPadImage(imgX, imgY, clutX, clutY, sizeX, sizeY, bpp, blend, scale) \
-	{.clut =  ((clutX >> 0) << 0) | (clutY << 6), \
-	.tpage = ((imgX >> 6) << 0) | ((imgY >> 8) << 4) | (blend<<5) | (bpp<<7), \
-	.u0 = ((imgX&0x3f)<<(2-bpp))+0, .v0 = ((imgY&0xff)+0)-scale, \
-	.u1 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v1 = ((imgY&0xff)+0)-scale, \
-	.u2 = ((imgX&0x3f)<<(2-bpp))+0, .v2 = ((imgY&0xff)+sizeY-1)-scale, \
-	.u3 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v3 = ((imgY&0xff)+sizeY-1)-scale} \
-
-#define TurboPadScroll(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale) \
-	{ \
-		.far    = TurboPadImage(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale), \
-		.middle = TurboPadImage(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale), \
-		.near   = TurboPadImage(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale), \
-		.mosaic = TurboPadImage(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale), \
-	},
 
 #define SetQuadBlockAnimTex(qIndex, animtex) \
 	.quadBlock[qIndex].ptr_texture_mid[0] = LEV_OFFSETOF(animtex)|1, \
