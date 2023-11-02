@@ -3,6 +3,8 @@
 #include <math.h>
 #include <Windows.h>
 
+#define SHIFT_HARD 8
+
 char GetTriSize(char* quadBlcokArr, char* vertexArr, int id, int n1, int n2, int n3)
 {
 	// ======== Copy ================
@@ -26,15 +28,15 @@ char GetTriSize(char* quadBlcokArr, char* vertexArr, int id, int n1, int n2, int
 	cross_P[1] = vect_A[2] * vect_B[0] - vect_A[0] * vect_B[2];
 	cross_P[2] = vect_A[0] * vect_B[1] - vect_A[1] * vect_B[0];
 
-	cross_P[0] = cross_P[0] >> 8;
-	cross_P[1] = cross_P[1] >> 8;
-	cross_P[2] = cross_P[2] >> 8;
+	cross_P[0] = cross_P[0] >> SHIFT_HARD;
+	cross_P[1] = cross_P[1] >> SHIFT_HARD;
+	cross_P[2] = cross_P[2] >> SHIFT_HARD;
 
 	int len = (int)sqrt(
 		(cross_P[0] * cross_P[0]) +
 		(cross_P[1] * cross_P[1]) +
 		(cross_P[2] * cross_P[2])
-	) << 8;
+	) << SHIFT_HARD;
 
 	// ======== Copy ================
 
@@ -65,19 +67,25 @@ short GetTriNorm(char* quadBlcokArr, char* vertexArr, int id, int n1, int n2, in
 	cross_P[1] = vect_A[2] * vect_B[0] - vect_A[0] * vect_B[2];
 	cross_P[2] = vect_A[0] * vect_B[1] - vect_A[1] * vect_B[0];
 
-	cross_P[0] = cross_P[0] >> 8;
-	cross_P[1] = cross_P[1] >> 8;
-	cross_P[2] = cross_P[2] >> 8;
+	cross_P[0] = cross_P[0] >> SHIFT_HARD;
+	cross_P[1] = cross_P[1] >> SHIFT_HARD;
+	cross_P[2] = cross_P[2] >> SHIFT_HARD;
 
 	int len = (int)sqrt(
 		(cross_P[0] * cross_P[0]) +
 		(cross_P[1] * cross_P[1]) +
 		(cross_P[2] * cross_P[2])
-	) << 8;
+	) << SHIFT_HARD;
 
 	// ======== Copy ================
 
 	int top = 0x1000 << *(char*)&quadBlock[0x3f];
+
+	// fail-safe for quadblocks that have zero size,
+	// used to make textures load in TexLayout
+	if (len == 0) return 0;
+
+	// real result
 	return top / len;
 }
 
@@ -108,19 +116,25 @@ short GetTriNorm_LOWPOLY(char* quadBlcokArr, char* vertexArr, int id, int n1, in
 	cross_P[1] = vect_A[2] * vect_B[0] - vect_A[0] * vect_B[2];
 	cross_P[2] = vect_A[0] * vect_B[1] - vect_A[1] * vect_B[0];
 
-	cross_P[0] = cross_P[0] >> 8;
-	cross_P[1] = cross_P[1] >> 8;
-	cross_P[2] = cross_P[2] >> 8;
+	cross_P[0] = cross_P[0] >> SHIFT_HARD;
+	cross_P[1] = cross_P[1] >> SHIFT_HARD;
+	cross_P[2] = cross_P[2] >> SHIFT_HARD;
 
 	int len = (int)sqrt(
 		(cross_P[0] * cross_P[0]) +
 		(cross_P[1] * cross_P[1]) +
 		(cross_P[2] * cross_P[2])
-	) << 8;
+	) << SHIFT_HARD;
 
 	// ======== Copy ================
 
 	int top = 0x1000 << *(char*)&quadBlock[0x3f];
+
+	// fail-safe for quadblocks that have zero size,
+	// used to make textures load in TexLayout
+	if (len == 0) return 0;
+
+	// real result
 	return top / len;
 }
 
@@ -481,9 +495,7 @@ int main(int argc, char** argv)
 		//if ((i & 0x1f) == 0) printf("\n");
 		//printf("%d ", id);
 
-// not working yet
-#if 0
-		*(short*)&quadBlockArr[0x5C * i + 0x3F] = GetTriSize(quadBlockArr, vertexArr, i, 0, 4, 5);
+		*(char*)&quadBlockArr[0x5C * i + 0x3F] = GetTriSize(quadBlockArr, vertexArr, i, 0, 4, 5);
 
 		*(short*)&quadBlockArr[0x5C * i + 0x48] = GetTriNorm(quadBlockArr, vertexArr, i, 0, 4, 5);
 		*(short*)&quadBlockArr[0x5C * i + 0x4A] = GetTriNorm(quadBlockArr, vertexArr, i, 4, 6, 5);
@@ -496,7 +508,15 @@ int main(int argc, char** argv)
 
 		*(short*)&quadBlockArr[0x5C * i + 0x58] = GetTriNorm_LOWPOLY(quadBlockArr, vertexArr, i, 0, 1, 2);
 		*(short*)&quadBlockArr[0x5C * i + 0x5A] = GetTriNorm_LOWPOLY(quadBlockArr, vertexArr, i, 1, 3, 2);
-#endif
+
+		if (*(char*)&quadBlockArr[0x5C * i + 0x3F] != 0x12)
+			printf("3F: %02x\n", *(char*)&quadBlockArr[0x5C * i + 0x3F]);
+
+		if (*(short*)&quadBlockArr[0x5C * i + 0x48] != 0x1c71)
+			printf("48: %04x, %d\n", *(short*)&quadBlockArr[0x5C * i + 0x48], i);
+
+		if (*(short*)&quadBlockArr[0x5C * i + 0x58] != 0x1c71)
+			printf("58: %04x, %d\n", *(short*)&quadBlockArr[0x5C * i + 0x58], i);
 	}
 
 	// Finalize

@@ -99,24 +99,7 @@ enum Split
 		.triNormalVecBitShift = 0x12, \
 		\
 		.ptr_texture_low = LEV_OFFSETOF(texgroup), \
-		.pvs = LEV_OFFSETOF(pvs), \
-		\
-		.triNormalVecDividend = \
-		{ \
-			/* hi 2 */ \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			\
-			/* lo 2 */ \
-			0x1C71, \
-			0x1C71, \
-		} \
+		.pvs = LEV_OFFSETOF(pvs) \
 	}
 	
 // get vertex numbers from here:
@@ -133,23 +116,7 @@ enum Split
 	.levVertex[9*qIndex+hi2].pos[1] = height, \
 	.levVertex[9*qIndex+hi3].pos[1] = height, \
 	.quadBlock[qIndex].checkpointIndex = -1, \
-	.quadBlock[qIndex].bbox.max[1] = height, \
-	.quadBlock[qIndex].triNormalVecDividend = \
-	{ \
-		/* hi 2 */ \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		\
-		/* lo 2 */ \
-		0x1971,  \
-		0x1971,  \
-	}
+	.quadBlock[qIndex].bbox.max[1] = height
 	
 #define SET_POSY_FLAT(qIndex, posY) \
 	.levVertex[9*qIndex+0].pos[1] = posY, \
