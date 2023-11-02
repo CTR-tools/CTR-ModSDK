@@ -8,7 +8,7 @@ copy ..\output\Lev221c.bin .\data.lev
 copy ..\..\Automate\blankVRAM_dontErase.vrm .\data.vrm
 
 :: Patch Level with Automation
-:: TO DO
+..\..\Automate\LevelPatcher\Debug\LevelPatcher.exe %cd%\data.lev
 
 :: Generate Layout
 ..\..\Automate\model_reader.exe .\data.lev
@@ -17,7 +17,7 @@ copy ..\..\Automate\blankVRAM_dontErase.vrm .\data.vrm
 ..\..\Automate\vrmtool.exe .\data.vrm
 
 :: Submit Level File
-:: TO DO
+copy .\data.lev ..\output\Lev221c.bin
 
 :: Submit VRAM File
 copy .\data.vrm ..\src\dataVRAM.bin
