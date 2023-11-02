@@ -1,61 +1,61 @@
+// Only for generating LEV files
+#pragma GCC diagnostic ignored "-Wint-conversion"
+#pragma GCC diagnostic ignored "-Woverride-init"
+#pragma GCC diagnostic ignored "-Woverflow"
+
 #include <common.h>
 #include "../../levelBuilder.h"
 
-#define NUM_BLOCKS 64
-
-struct AnimTex_TurboPad
-{
-	// 0x0
-	// pointer to IconGroup4 struct to be animated
-	// cycles through the entirety of ptrarray
-	struct IconGroup4* ptrNext;
-
-	// 0x4
-	short numFrames;
-
-	// 0x6
-	// related to timer
-	short frameDuration;
-
-	// 0x8
-	// related to timer
-	short shiftFactor;
-
-	// 0xA
-	// current frame
-	u_short frameIndex;
-
-	// 0xC
-	// amount of elements in array is same as numFrames
-	// ptrarray[numFrames] leads to the next AnimTex struct in the ptr_anim_tex array
-	struct IconGroup4* ptrarray[11];
-};
+#define NUM_BLOCKS 66
 
 struct LevelFile
 {
 	void* ptrMap;
 	struct Level level;
 	struct mesh_info mInfo;
+	
+	// NonScroll "High" textures
 	struct IconGroup4 group4_ground;
-	struct IconGroup4 turbo_pad[10];
-	struct AnimTex_TurboPad turbo_pad_anim;
+	
+	// NonScroll "Low" textures
 	struct TextureLayout texlayout_ramp_low;
+	
+	// Scroll textures, one "duplicate" per set,
+	// Duplicate MUST have higher texY than original
+	struct IconGroup4 turbo_pad[10];
+	struct IconGroup4 turbo_pad_dup;
+	
+	// CycleTex_LEV requires data in THIS order
+	struct AnimTex turbo_pad_anim;
+	struct IconGroup4* TPA_ptrarray[10];
+	void* animTexTerminator;
+	
+	// SpawnData
 	struct SpawnType1 ptrSpawnType1;
-	struct CheckpointNode noderespawnsthing[NUM_BLOCKS]; // all empty, this is a battle map
+	
+	// Geometry
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
+	
+	// Checkpoints
+	struct CheckpointNode noderespawnsthing[NUM_BLOCKS]; // all empty, this is a battle map
+	
+	// Visibility
 	struct BSP bsp[3];
 	struct PVS pvs;
 	int visBitIndex[4];
 	struct VisMem visMem;
 	
-	int VisMem_bitIndex_DstMemcpyP1[8]; // leave empty
+	// leave empty
+	// DstMemcpy must be big for PVS to copy into,
+	// RenderList must be big enough for 2 pointers to all BSP nodes
+	int VisMem_bitIndex_DstMemcpyP1[8];
 	int VisMem_bspList_RenderListP1[3*2];
-	int VisMem_bitIndex_DstMemcpyP2[8]; // leave empty
+	int VisMem_bitIndex_DstMemcpyP2[8];
 	int VisMem_bspList_RenderListP2[3*2];
-	int VisMem_bitIndex_DstMemcpyP3[8]; // leave empty
+	int VisMem_bitIndex_DstMemcpyP3[8];
 	int VisMem_bspList_RenderListP3[3*2];
-	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
+	int VisMem_bitIndex_DstMemcpyP4[8];
 	int VisMem_bspList_RenderListP4[3*2];
 	
 	int map[3];
@@ -116,6 +116,8 @@ struct LevelFile file =
 		.near   = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // close
 		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very close
 	},
+	
+	.texlayout_ramp_low = ImageName_Blend(640, 0, 32, 22, 12, 12, BPP_4, TRANS_50),
 
 	.turbo_pad =
 	{
@@ -123,7 +125,7 @@ struct LevelFile file =
 		// This changes depending on the level
 		
 		#define SAME_TURBO_SINGLE(XX) \
-		ImageName_Scroll(576, 100, 32, 21, 32, 16, BPP_4, TRANS_50, XX)
+		ImageName_Scroll(576, 16, 32, 21, 32, 16, BPP_4, TRANS_50, XX)
 		
 		#define SAME_TURBO_GROUP(XX) \
 		{ \
@@ -145,30 +147,41 @@ struct LevelFile file =
 		[9] = SAME_TURBO_GROUP(14),
 	},
 	
-	.texlayout_ramp_low = ImageName_Blend(640, 0, 32, 22, 12, 12, BPP_4, TRANS_50),
-
+	.turbo_pad_dup =
+	{
+		.far	= ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50),
+		.middle	= ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50),
+		.near	= ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50),
+		.mosaic	= ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50),
+	},
+	
 	.turbo_pad_anim =
 	{
-		.ptrNext = LEV_OFFSETOF(turbo_pad[0]),
+		.ptrActiveTex = LEV_OFFSETOF(turbo_pad[0]),
 		.numFrames = 10,
 		.frameDuration = 0,
 		.shiftFactor = 0,
 		.frameIndex = 0,
-		.ptrarray =
-		{
-			LEV_OFFSETOF(turbo_pad[0]),
-			LEV_OFFSETOF(turbo_pad[1]),
-			LEV_OFFSETOF(turbo_pad[2]),
-			LEV_OFFSETOF(turbo_pad[3]),
-			LEV_OFFSETOF(turbo_pad[4]),
-			LEV_OFFSETOF(turbo_pad[5]),
-			LEV_OFFSETOF(turbo_pad[6]),
-			LEV_OFFSETOF(turbo_pad[7]),
-			LEV_OFFSETOF(turbo_pad[8]),
-			LEV_OFFSETOF(turbo_pad[9]),
-			LEV_OFFSETOF(turbo_pad_anim),
-		},
 	},
+	
+	.TPA_ptrarray =
+	{
+		LEV_OFFSETOF(turbo_pad[0]),
+		LEV_OFFSETOF(turbo_pad[1]),
+		LEV_OFFSETOF(turbo_pad[2]),
+		LEV_OFFSETOF(turbo_pad[3]),
+		LEV_OFFSETOF(turbo_pad[4]),
+		LEV_OFFSETOF(turbo_pad[5]),
+		LEV_OFFSETOF(turbo_pad[6]),
+		LEV_OFFSETOF(turbo_pad[7]),
+		LEV_OFFSETOF(turbo_pad[8]),
+		LEV_OFFSETOF(turbo_pad[9]),
+	},
+	
+	// CycleTex_LEV uses pointer to first AnimTex
+	// to symbolize the end of the final ptrArray
+	.animTexTerminator = 
+		LEV_OFFSETOF(turbo_pad_anim),
 	
 	// this must exist, or else camera fly-in
 	// checks for "count" without nullptr check,
@@ -432,6 +445,10 @@ struct LevelFile file =
 	// turn into turbo, if flagsQ is 0x1840
 	.quadBlock[62].terrain_type = 1,
 	.quadBlock[63].terrain_type = 1,
+	
+	// invisible, not on BSP
+	NEW_BLOCK(64, turbo_pad[0], 		0x6FFF, 0x6FFF, NULL, 0, 0x808080),
+	NEW_BLOCK(65, turbo_pad_dup, 		0x6FFF, 0x6FFF, NULL, 0, 0x808080),
 	
 	// ========== bsp ======================
 	

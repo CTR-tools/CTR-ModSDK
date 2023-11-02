@@ -1,3 +1,8 @@
+// Only for generating LEV files
+#pragma GCC diagnostic ignored "-Wint-conversion"
+#pragma GCC diagnostic ignored "-Woverride-init"
+#pragma GCC diagnostic ignored "-Woverflow"
+
 #include <common.h>
 #include "../../levelBuilder.h"
 #include "trackSpecificData.h"
@@ -7,32 +12,45 @@ struct LevelFile
 	void* ptrMap;
 	struct Level level;
 	struct mesh_info mInfo;
+	
+	// NonScroll "High" textures
 	struct IconGroup4 group4_checkerEdge;
 	struct IconGroup4 group4_checkerCenter;
 	struct IconGroup4 group4_tileEdge;
 	struct IconGroup4 group4_tileCenter;
 	struct IconGroup4 group4_tileCorner;
+	struct IconGroup4 group4_placeHolder;
+	
+	// NonScroll "Low" textures
+	// TODO: See RoadToRainbow
+	
+	// Scroll textures, one "duplicate" per set,
+	// Duplicate MUST have higher texY than original
 	struct IconGroup4 turbo_pad[10];
 	struct IconGroup4 super_turbo_pad[10];
 	struct IconGroup4 turbo_pad_dup;
 	struct IconGroup4 super_turbo_pad_dup;
-	struct IconGroup4 group4_placeHolder;
 	
-	// Required by CycleTex_LEV:
-	// first AnimTex is stored at level->ptr_anim_tex
-	// After AnimTex is ptrarray, after ptrarray is next AnimTex,
-	// last ptrarray ends with pointer to first AnimTex
+	// CycleTex_LEV requires data in THIS order
 	struct AnimTex turbo_pad_anim;
 	struct IconGroup4* TPA_ptrarray[10];
 	struct AnimTex super_turbo_pad_anim;
-	struct IconGroup4* STPA_ptrarray[11];
+	struct IconGroup4* STPA_ptrarray[10];
+	void* animTexTerminator;
 	
+	// SpawnData
 	struct SpawnType1 ptrSpawnType1;
 	void* spawnType1Pointers[3];
 	short EndRaceCam[10];
-	struct CheckpointNode checkpointNodes[NUM_CHECKPOINT];
+	
+	// Geometry
 	struct QuadBlock quadBlock[NUM_BLOCKS];
 	struct LevVertex levVertex[NUM_BLOCKS*9];
+	
+	// Checkpoints
+	struct CheckpointNode checkpointNodes[NUM_CHECKPOINT];
+	
+	// Visibility
 	struct BSP bsp[9];
 	struct PVS pvs[NUM_PVS];
 	int leafList[2*NUM_PVS];
@@ -300,9 +318,13 @@ struct LevelFile file =
 		LEV_OFFSETOF(super_turbo_pad[6]),
 		LEV_OFFSETOF(super_turbo_pad[7]),
 		LEV_OFFSETOF(super_turbo_pad[8]),
-		LEV_OFFSETOF(super_turbo_pad[9]),
-		LEV_OFFSETOF(turbo_pad_anim),
+		LEV_OFFSETOF(super_turbo_pad[9])
 	},
+	
+	// CycleTex_LEV uses pointer to first AnimTex
+	// to symbolize the end of the final ptrArray
+	.animTexTerminator = 
+		LEV_OFFSETOF(turbo_pad_anim),
 	
 	// this must exist, or else camera fly-in
 	// checks for "count" without nullptr check,

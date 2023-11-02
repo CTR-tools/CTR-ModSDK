@@ -1,3 +1,8 @@
+// Only for generating LEV files
+#pragma GCC diagnostic ignored "-Wint-conversion"
+#pragma GCC diagnostic ignored "-Woverride-init"
+#pragma GCC diagnostic ignored "-Woverflow"
+
 #include <common.h>
 #include "../../levelBuilder.h"
 
@@ -94,10 +99,10 @@ struct LevelFile file =
 	// see IconGroup4 in namespace_Decal.h
 	.test_texture =
 	{
-		.far =    ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
-		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
-		.near =   ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
-		.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		.far =    ImageName_Blend(512, 0, 32, 128, 32, 32, BPP_4, ADD), // very far
+		.middle = ImageName_Blend(512, 0, 32, 128, 32, 32, BPP_4, ADD), // far
+		.near =   ImageName_Blend(512, 0, 32, 128, 32, 32, BPP_4, ADD), // close
+		.mosaic = ImageName_Blend(512, 0, 32, 128, 32, 32, BPP_4, ADD), // close
 	},
 	
 	// this must exist, or else camera fly-in checks for "count" without nullptr check, and crashes dereferencing nullptr on real PSX
