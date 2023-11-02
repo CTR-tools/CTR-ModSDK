@@ -463,8 +463,8 @@ struct LevelFile file =
 	
 	.pvs =
 	{
-		.visLeafSrc = OFFSETOF(struct LevelFile, visBitIndex[0]),
-		.visFaceSrc = OFFSETOF(struct LevelFile, visBitIndex[0]),
+		.visLeafSrc = LEV_OFFSETOF(visBitIndex[0]),
+		.visFaceSrc = LEV_OFFSETOF(visBitIndex[0]),
 		.visInstSrc = 0,
 		.visExtraSrc = 0,
 	},
