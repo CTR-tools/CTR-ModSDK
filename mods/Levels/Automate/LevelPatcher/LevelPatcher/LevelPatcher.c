@@ -508,15 +508,6 @@ int main(int argc, char** argv)
 
 		*(short*)&quadBlockArr[0x5C * i + 0x58] = GetTriNorm_LOWPOLY(quadBlockArr, vertexArr, i, 0, 1, 2);
 		*(short*)&quadBlockArr[0x5C * i + 0x5A] = GetTriNorm_LOWPOLY(quadBlockArr, vertexArr, i, 1, 3, 2);
-
-		if (*(char*)&quadBlockArr[0x5C * i + 0x3F] != 0x12)
-			printf("3F: %02x\n", *(char*)&quadBlockArr[0x5C * i + 0x3F]);
-
-		if (*(short*)&quadBlockArr[0x5C * i + 0x48] != 0x1c71)
-			printf("48: %04x, %d\n", *(short*)&quadBlockArr[0x5C * i + 0x48], i);
-
-		if (*(short*)&quadBlockArr[0x5C * i + 0x58] != 0x1c71)
-			printf("58: %04x, %d\n", *(short*)&quadBlockArr[0x5C * i + 0x58], i);
 	}
 
 	// Finalize
