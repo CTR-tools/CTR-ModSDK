@@ -495,8 +495,8 @@ int main(int argc, char** argv)
 		//if ((i & 0x1f) == 0) printf("\n");
 		//printf("%d ", id);
 
+		// Normal Vectors
 		*(char*)&quadBlockArr[0x5C * i + 0x3F] = GetTriSize(quadBlockArr, vertexArr, i, 0, 4, 5);
-
 		*(short*)&quadBlockArr[0x5C * i + 0x48] = GetTriNorm(quadBlockArr, vertexArr, i, 0, 4, 5);
 		*(short*)&quadBlockArr[0x5C * i + 0x4A] = GetTriNorm(quadBlockArr, vertexArr, i, 4, 6, 5);
 		*(short*)&quadBlockArr[0x5C * i + 0x4C] = GetTriNorm(quadBlockArr, vertexArr, i, 6, 4, 1);
@@ -505,9 +505,30 @@ int main(int argc, char** argv)
 		*(short*)&quadBlockArr[0x5C * i + 0x52] = GetTriNorm(quadBlockArr, vertexArr, i, 7, 3, 8);
 		*(short*)&quadBlockArr[0x5C * i + 0x54] = GetTriNorm(quadBlockArr, vertexArr, i, 1, 7, 6);
 		*(short*)&quadBlockArr[0x5C * i + 0x56] = GetTriNorm(quadBlockArr, vertexArr, i, 2, 6, 8);
-
 		*(short*)&quadBlockArr[0x5C * i + 0x58] = GetTriNorm_LOWPOLY(quadBlockArr, vertexArr, i, 0, 1, 2);
 		*(short*)&quadBlockArr[0x5C * i + 0x5A] = GetTriNorm_LOWPOLY(quadBlockArr, vertexArr, i, 1, 3, 2);
+
+		// Bounding Box
+		struct BoundingBox* bspBox;
+		bspBox = &quadBlockArr[0x5c*i + 0x2C];
+		bspBox->min[0] = 0x7FFF;
+		bspBox->min[1] = 0x7FFF;
+		bspBox->min[2] = 0x7FFF;
+		bspBox->max[0] = -0x7FFF;
+		bspBox->max[1] = -0x7FFF;
+		bspBox->max[2] = -0x7FFF;
+
+		struct BoundingBox* qbBox;
+		for (int j = 0; j < 9; j++)
+		{
+			short* vertData = &vertexArr[0x10 * *(short*)&quadBlockArr[0x5c*i + 2*j]];
+
+			for (int j = 0; j < 3; j++)
+			{
+				if (vertData[j] < bspBox->min[j]) bspBox->min[j] = vertData[j];
+				if (vertData[j] > bspBox->max[j]) bspBox->max[j] = vertData[j];
+			}
+		}
 	}
 
 	// Finalize

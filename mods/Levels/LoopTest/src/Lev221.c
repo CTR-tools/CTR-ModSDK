@@ -17,19 +17,6 @@ struct LevelFile
 	// NonScroll "High" textures
 	struct IconGroup4 group4_ground;
 	
-	// NonScroll "Low" textures
-	struct TextureLayout texlayout_ramp_low;
-	
-	// Scroll textures, one "duplicate" per set,
-	// Duplicate MUST have higher texY than original
-	struct IconGroup4 turbo_pad[10];
-	struct IconGroup4 turbo_pad_dup;
-	
-	// CycleTex_LEV requires data in THIS order
-	struct AnimTex turbo_pad_anim;
-	struct IconGroup4* TPA_ptrarray[10];
-	void* animTexTerminator;
-	
 	// SpawnData
 	struct SpawnType1 ptrSpawnType1;
 	
@@ -69,7 +56,6 @@ struct LevelFile file =
 	{
 		.ptr_mesh_info = LEV_OFFSETOF(mInfo),
 		.visMem = LEV_OFFSETOF(visMem),
-		.ptr_anim_tex = LEV_OFFSETOF(turbo_pad_anim),
 		
 		// the game will add +0x400 to the yaw of spawn positions automatically
 		// we should probably look into why this even happens...
@@ -117,72 +103,6 @@ struct LevelFile file =
 		.mosaic = ImageName_Blend(512, 0, 32, 20, 16, 16, BPP_4, TRANS_50), // very close
 	},
 	
-	.texlayout_ramp_low = ImageName_Blend(640, 0, 32, 22, 12, 12, BPP_4, TRANS_50),
-
-	.turbo_pad =
-	{
-		// Dont move to LevelBuilder.h,
-		// This changes depending on the level
-		
-		#define SAME_TURBO_SINGLE(XX) \
-		ImageName_Scroll(576, 16, 32, 21, 32, 16, BPP_4, TRANS_50, XX)
-		
-		#define SAME_TURBO_GROUP(XX) \
-		{ \
-			.far    = SAME_TURBO_SINGLE(XX), \
-			.middle = SAME_TURBO_SINGLE(XX), \
-			.near   = SAME_TURBO_SINGLE(XX), \
-			.mosaic = SAME_TURBO_SINGLE(XX), \
-		}
-		
-		[0] = SAME_TURBO_GROUP(0),
-		[1] = SAME_TURBO_GROUP(2),
-		[2] = SAME_TURBO_GROUP(3),
-		[3] = SAME_TURBO_GROUP(5),
-		[4] = SAME_TURBO_GROUP(6),
-		[5] = SAME_TURBO_GROUP(8),
-		[6] = SAME_TURBO_GROUP(10),
-		[7] = SAME_TURBO_GROUP(11),
-		[8] = SAME_TURBO_GROUP(13),
-		[9] = SAME_TURBO_GROUP(14),
-	},
-	
-	.turbo_pad_dup =
-	{
-		.far	= ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50),
-		.middle	= ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50),
-		.near	= ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50),
-		.mosaic	= ImageName_Blend(576, 0, 32, 21, 32, 16, BPP_4, TRANS_50),
-	},
-	
-	.turbo_pad_anim =
-	{
-		.ptrActiveTex = LEV_OFFSETOF(turbo_pad[0]),
-		.numFrames = 10,
-		.frameDuration = 0,
-		.shiftFactor = 0,
-		.frameIndex = 0,
-	},
-	
-	.TPA_ptrarray =
-	{
-		LEV_OFFSETOF(turbo_pad[0]),
-		LEV_OFFSETOF(turbo_pad[1]),
-		LEV_OFFSETOF(turbo_pad[2]),
-		LEV_OFFSETOF(turbo_pad[3]),
-		LEV_OFFSETOF(turbo_pad[4]),
-		LEV_OFFSETOF(turbo_pad[5]),
-		LEV_OFFSETOF(turbo_pad[6]),
-		LEV_OFFSETOF(turbo_pad[7]),
-		LEV_OFFSETOF(turbo_pad[8]),
-		LEV_OFFSETOF(turbo_pad[9]),
-	},
-	
-	// CycleTex_LEV uses pointer to first AnimTex
-	// to symbolize the end of the final ptrArray
-	.animTexTerminator = 
-		LEV_OFFSETOF(turbo_pad_anim),
-	
 	// this must exist, or else camera fly-in
 	// checks for "count" without nullptr check,
 	// and crashes dereferencing nullptr on real PSX
@@ -202,9 +122,11 @@ struct LevelFile file =
 	NEW_BLOCK(2, group4_ground, -0x180, 0x300, NULL, 0x1800, RGBtoBGR(0xFF2000)),
 	NEW_BLOCK(3, group4_ground, 0x180, 0x300, NULL, 0x1800, RGBtoBGR(0xFF4000)),
 	
-// forward
+	// forward
 	NEW_BLOCK(4, group4_ground, -0x180, 0x600, NULL, 0x1880, RGBtoBGR(0xFF4000)),
 	NEW_BLOCK(5, group4_ground, 0x180, 0x600, NULL, 0x1880, RGBtoBGR(0xFF6000)),
+	
+	// ====== Start Ramp =========
 	
 	MAKE_RAMP(
 		4, 0x300,
@@ -220,9 +142,28 @@ struct LevelFile file =
 		2,8,3
 	),
 	
+	.levVertex[9*4+5].pos[1] = 0xC0,
+	.levVertex[9*4+6].pos[1] = 0xC0,
+	.levVertex[9*4+7].pos[1] = 0xC0,
+	
+	.levVertex[9*5+5].pos[1] = 0xC0,
+	.levVertex[9*5+6].pos[1] = 0xC0,
+	.levVertex[9*5+7].pos[1] = 0xC0,
+	
+	.levVertex[9*4+2].pos[1] = 0x240,
+	.levVertex[9*4+8].pos[1] = 0x240,
+	.levVertex[9*4+3].pos[1] = 0x240,
+	
+	.levVertex[9*5+2].pos[1] = 0x240,
+	.levVertex[9*5+8].pos[1] = 0x240,
+	.levVertex[9*5+3].pos[1] = 0x240,
+	
+	// ======== Wall ==========
+	
 	// forward
-	NEW_BLOCK(6, group4_ground, -0x180, 0x900, NULL, 0x1880, RGBtoBGR(0xFF6000)),
-	NEW_BLOCK(7, group4_ground, 0x180, 0x900, NULL, 0x1880, RGBtoBGR(0xFF8000)),
+	// do NOT set Z, cause it'll overwrite in a few lines
+	NEW_BLOCK(6, group4_ground, -0x180, 0, NULL, 0x1880, RGBtoBGR(0xFF6000)),
+	NEW_BLOCK(7, group4_ground, 0x180, 0, NULL, 0x1880, RGBtoBGR(0xFF8000)),
 	
 	MAKE_RAMP(
 		6, 0x300,
@@ -239,14 +180,14 @@ struct LevelFile file =
 	),
 	
 	SET_POSY_RAMP(
-		6, 0x300, 0x300,
+		6, 0x240, 0x300,
 		0,4,1, // low
 		5,6,7, // mid
 		2,8,3 // hi
 	),
 	
 	SET_POSY_RAMP(
-		7, 0x300, 0x300,
+		7, 0x240, 0x300,
 		0,4,1,
 		5,6,7,
 		2,8,3
@@ -255,89 +196,283 @@ struct LevelFile file =
 	.levVertex[9*6+0].pos[2] = 0x780,
 	.levVertex[9*6+4].pos[2] = 0x780,
 	.levVertex[9*6+1].pos[2] = 0x780,
-	.levVertex[9*6+5].pos[2] = 0x840,
-	.levVertex[9*6+6].pos[2] = 0x840,
-	.levVertex[9*6+7].pos[2] = 0x840,
-	.levVertex[9*6+2].pos[2] = 0x900,
-	.levVertex[9*6+8].pos[2] = 0x900,
-	.levVertex[9*6+3].pos[2] = 0x900,
+	.levVertex[9*6+5].pos[2] = 0x7E0,
+	.levVertex[9*6+6].pos[2] = 0x7E0,
+	.levVertex[9*6+7].pos[2] = 0x7E0,
+	.levVertex[9*6+2].pos[2] = 0x840,
+	.levVertex[9*6+8].pos[2] = 0x840,
+	.levVertex[9*6+3].pos[2] = 0x840,
 	
 	.levVertex[9*7+0].pos[2] = 0x780,
 	.levVertex[9*7+4].pos[2] = 0x780,
 	.levVertex[9*7+1].pos[2] = 0x780,
-	.levVertex[9*7+5].pos[2] = 0x840,
-	.levVertex[9*7+6].pos[2] = 0x840,
-	.levVertex[9*7+7].pos[2] = 0x840,
-	.levVertex[9*7+2].pos[2] = 0x900,
-	.levVertex[9*7+8].pos[2] = 0x900,
-	.levVertex[9*7+3].pos[2] = 0x900,
+	.levVertex[9*7+5].pos[2] = 0x7E0,
+	.levVertex[9*7+6].pos[2] = 0x7E0,
+	.levVertex[9*7+7].pos[2] = 0x7E0,
+	.levVertex[9*7+2].pos[2] = 0x840,
+	.levVertex[9*7+8].pos[2] = 0x840,
+	.levVertex[9*7+3].pos[2] = 0x840,
 	
 	// forward
-	NEW_BLOCK(8, group4_ground, -0x180, 0x900, NULL, 0x1880, RGBtoBGR(0xFF8000)),
-	NEW_BLOCK(9, group4_ground, 0x180, 0x900, NULL, 0x1880, RGBtoBGR(0xFF8000)),
+	// do NOT set Z, cause it'll overwrite in a few lines
+	NEW_BLOCK(8, group4_ground, -0x180, 0, NULL, 0x1880, RGBtoBGR(0xFF8000)),
+	NEW_BLOCK(9, group4_ground, 0x180, 0, NULL, 0x1880, RGBtoBGR(0xFF8000)),
+
+	MAKE_RAMP(
+		8, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
 	
-	// == Do NOT do MAKE_RAMP, just SetPosY ==
-	// This way, the normal vector is still 0x1971, not 0x1C71
+	MAKE_RAMP(
+		9, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
 	
 	SET_POSY_RAMP(
-		8, 0x600, 0x300,
+		8, 0x540, 0x300,
 		0,4,1, // low
 		5,6,7, // mid
 		2,8,3 // hi
 	),
 	
 	SET_POSY_RAMP(
-		9, 0x600, 0x300,
+		9, 0x540, 0x300,
 		0,4,1,
 		5,6,7,
 		2,8,3
 	),
 	
-#define SET_WALL(qIndex) \
-	.levVertex[9*qIndex+0].pos[2] = 0x900, \
-	.levVertex[9*qIndex+4].pos[2] = 0x900, \
-	.levVertex[9*qIndex+1].pos[2] = 0x900, \
-	.levVertex[9*qIndex+5].pos[2] = 0x930, \
-	.levVertex[9*qIndex+6].pos[2] = 0x930, \
-	.levVertex[9*qIndex+7].pos[2] = 0x930, \
-	.levVertex[9*qIndex+2].pos[2] = 0x960, \
-	.levVertex[9*qIndex+8].pos[2] = 0x960, \
-	.levVertex[9*qIndex+3].pos[2] = 0x960, \
-	.quadBlock[qIndex].triNormalVecDividend = \
-	{ \
-		/* hi 2 */ \
-		0x1C39, \
-		0x1C39, \
-		0x1C39, \
-		0x1C39, \
-		0x1C39, \
-		0x1C39, \
-		0x1C39, \
-		0x1C39, \
-		\
-		/* lo 2 */ \
-		0x1C39, \
-		0x1C39, \
-	} \
+	.levVertex[9*8+0].pos[2] = 0x840,
+	.levVertex[9*8+4].pos[2] = 0x840,
+	.levVertex[9*8+1].pos[2] = 0x840,
+	.levVertex[9*8+5].pos[2] = 0x8A0,
+	.levVertex[9*8+6].pos[2] = 0x8A0,
+	.levVertex[9*8+7].pos[2] = 0x8A0,
+	.levVertex[9*8+2].pos[2] = 0x900,
+	.levVertex[9*8+8].pos[2] = 0x900,
+	.levVertex[9*8+3].pos[2] = 0x900,
 	
-	SET_WALL(8),
-	SET_WALL(9),
+	.levVertex[9*9+0].pos[2] = 0x840,
+	.levVertex[9*9+4].pos[2] = 0x840,
+	.levVertex[9*9+1].pos[2] = 0x840,
+	.levVertex[9*9+5].pos[2] = 0x8A0,
+	.levVertex[9*9+6].pos[2] = 0x8A0,
+	.levVertex[9*9+7].pos[2] = 0x8A0,
+	.levVertex[9*9+2].pos[2] = 0x900,
+	.levVertex[9*9+8].pos[2] = 0x900,
+	.levVertex[9*9+3].pos[2] = 0x900,
 	
 	// right
-	NEW_BLOCK(10, group4_ground, -0x480, 0x900, NULL, 0x1800, RGBtoBGR(0xFF8000)),
-	NEW_BLOCK(11, group4_ground, -0x480, 0xC00, NULL, 0x1800, RGBtoBGR(0x00FF00)),
+	NEW_BLOCK(10, group4_ground, -0x480, 0, NULL, 0x1800, RGBtoBGR(0xFF8000)),
+	NEW_BLOCK(11, group4_ground, -0x780, 0, NULL, 0x1800, RGBtoBGR(0x00FF00)),
+	
+	MAKE_RAMP(
+		10, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	MAKE_RAMP(
+		11, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	SET_POSY_RAMP(
+		10, 0x240, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	SET_POSY_RAMP(
+		11, 0x240, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	.levVertex[9*10+0].pos[2] = 0x780,
+	.levVertex[9*10+4].pos[2] = 0x780,
+	.levVertex[9*10+1].pos[2] = 0x780,
+	.levVertex[9*10+5].pos[2] = 0x7E0,
+	.levVertex[9*10+6].pos[2] = 0x7E0,
+	.levVertex[9*10+7].pos[2] = 0x7E0,
+	.levVertex[9*10+2].pos[2] = 0x840,
+	.levVertex[9*10+8].pos[2] = 0x840,
+	.levVertex[9*10+3].pos[2] = 0x840,
+	
+	.levVertex[9*11+0].pos[2] = 0x780,
+	.levVertex[9*11+4].pos[2] = 0x780,
+	.levVertex[9*11+1].pos[2] = 0x780,
+	.levVertex[9*11+5].pos[2] = 0x7E0,
+	.levVertex[9*11+6].pos[2] = 0x7E0,
+	.levVertex[9*11+7].pos[2] = 0x7E0,
+	.levVertex[9*11+2].pos[2] = 0x840,
+	.levVertex[9*11+8].pos[2] = 0x840,
+	.levVertex[9*11+3].pos[2] = 0x840,
 	
 	// right
-	NEW_BLOCK(12, group4_ground, -0x780, 0x900, NULL, 0x1800, RGBtoBGR(0x00FF00)),
-	NEW_BLOCK(13, group4_ground, -0x780, 0xC00, NULL, 0x1800, RGBtoBGR(0x00FF20)),
+	NEW_BLOCK(12, group4_ground, -0x480, 0, NULL, 0x1800, RGBtoBGR(0x00FF00)),
+	NEW_BLOCK(13, group4_ground, -0x780, 0, NULL, 0x1800, RGBtoBGR(0x00FF20)),
+	
+	MAKE_RAMP(
+		12, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	MAKE_RAMP(
+		13, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	SET_POSY_RAMP(
+		12, 0x540, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	SET_POSY_RAMP(
+		13, 0x540, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	.levVertex[9*12+0].pos[2] = 0x840,
+	.levVertex[9*12+4].pos[2] = 0x840,
+	.levVertex[9*12+1].pos[2] = 0x840,
+	.levVertex[9*12+5].pos[2] = 0x8A0,
+	.levVertex[9*12+6].pos[2] = 0x8A0,
+	.levVertex[9*12+7].pos[2] = 0x8A0,
+	.levVertex[9*12+2].pos[2] = 0x900,
+	.levVertex[9*12+8].pos[2] = 0x900,
+	.levVertex[9*12+3].pos[2] = 0x900,
+	
+	.levVertex[9*13+0].pos[2] = 0x840,
+	.levVertex[9*13+4].pos[2] = 0x840,
+	.levVertex[9*13+1].pos[2] = 0x840,
+	.levVertex[9*13+5].pos[2] = 0x8A0,
+	.levVertex[9*13+6].pos[2] = 0x8A0,
+	.levVertex[9*13+7].pos[2] = 0x8A0,
+	.levVertex[9*13+2].pos[2] = 0x900,
+	.levVertex[9*13+8].pos[2] = 0x900,
+	.levVertex[9*13+3].pos[2] = 0x900,
 	
 	// right
 	NEW_BLOCK(14, group4_ground, -0xA80, 0x900, NULL, 0x1800, RGBtoBGR(0x00FF20)),
-	NEW_BLOCK(15, group4_ground, -0xA80, 0xC00, NULL, 0x1800, RGBtoBGR(0x00FF40)),
+	NEW_BLOCK(15, group4_ground, -0xD80, 0xC00, NULL, 0x1800, RGBtoBGR(0x00FF40)),
+	
+	MAKE_RAMP(
+		14, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	MAKE_RAMP(
+		15, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	SET_POSY_RAMP(
+		14, 0x240, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	SET_POSY_RAMP(
+		15, 0x240, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	.levVertex[9*14+0].pos[2] = 0x780,
+	.levVertex[9*14+4].pos[2] = 0x780,
+	.levVertex[9*14+1].pos[2] = 0x780,
+	.levVertex[9*14+5].pos[2] = 0x7E0,
+	.levVertex[9*14+6].pos[2] = 0x7E0,
+	.levVertex[9*14+7].pos[2] = 0x7E0,
+	.levVertex[9*14+2].pos[2] = 0x840,
+	.levVertex[9*14+8].pos[2] = 0x840,
+	.levVertex[9*14+3].pos[2] = 0x840,
+	
+	.levVertex[9*15+0].pos[2] = 0x780,
+	.levVertex[9*15+4].pos[2] = 0x780,
+	.levVertex[9*15+1].pos[2] = 0x780,
+	.levVertex[9*15+5].pos[2] = 0x7E0,
+	.levVertex[9*15+6].pos[2] = 0x7E0,
+	.levVertex[9*15+7].pos[2] = 0x7E0,
+	.levVertex[9*15+2].pos[2] = 0x840,
+	.levVertex[9*15+8].pos[2] = 0x840,
+	.levVertex[9*15+3].pos[2] = 0x840,
 	
 	// right
-	NEW_BLOCK(16, group4_ground, -0xD80, 0x900, NULL, 0x1800, RGBtoBGR(0x00FF40)),
+	NEW_BLOCK(16, group4_ground, -0xA80, 0x900, NULL, 0x1800, RGBtoBGR(0x00FF40)),
 	NEW_BLOCK(17, group4_ground, -0xD80, 0xC00, NULL, 0x1800, RGBtoBGR(0x00FF60)),
+	
+	MAKE_RAMP(
+		16, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	MAKE_RAMP(
+		17, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	SET_POSY_RAMP(
+		16, 0x540, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	SET_POSY_RAMP(
+		17, 0x540, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	.levVertex[9*16+0].pos[2] = 0x840,
+	.levVertex[9*16+4].pos[2] = 0x840,
+	.levVertex[9*16+1].pos[2] = 0x840,
+	.levVertex[9*16+5].pos[2] = 0x8A0,
+	.levVertex[9*16+6].pos[2] = 0x8A0,
+	.levVertex[9*16+7].pos[2] = 0x8A0,
+	.levVertex[9*16+2].pos[2] = 0x900,
+	.levVertex[9*16+8].pos[2] = 0x900,
+	.levVertex[9*16+3].pos[2] = 0x900,
+	
+	.levVertex[9*17+0].pos[2] = 0x840,
+	.levVertex[9*17+4].pos[2] = 0x840,
+	.levVertex[9*17+1].pos[2] = 0x840,
+	.levVertex[9*17+5].pos[2] = 0x8A0,
+	.levVertex[9*17+6].pos[2] = 0x8A0,
+	.levVertex[9*17+7].pos[2] = 0x8A0,
+	.levVertex[9*17+2].pos[2] = 0x900,
+	.levVertex[9*17+8].pos[2] = 0x900,
+	.levVertex[9*17+3].pos[2] = 0x900,
 	
 	// down
 	NEW_BLOCK(18, group4_ground, -0xA80, 0x600, NULL, 0x1800, RGBtoBGR(0x00FF60)),
@@ -359,84 +494,11 @@ struct LevelFile file =
 	NEW_BLOCK(26, group4_ground, -0x480, 0, NULL, 0x1800, RGBtoBGR(0x6000FF)),
 	NEW_BLOCK(27, group4_ground, -0x480, 0x300, NULL, 0x1800, RGBtoBGR(0x8000FF)),
 	
-	// ramp
-	NEW_BLOCK(28, group4_ground, -0xA80, 0xF00, NULL, 0x9800, 0x808080), // coll (1800)
-	NEW_BLOCK(29, group4_ground, -0x180, 0xF00, NULL, 0x9800, 0x808080), // coll (1800)
-	NEW_BLOCK(30, group4_ground, -0xA80, 0xF00, NULL, 0x1840, 0x808080), // turbo (1840)
-	NEW_BLOCK(31, group4_ground, -0x180, 0xF00, NULL, 0x1840, 0x808080), // turbo (1840)
-		
-	.quadBlock[28].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[28].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[28].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[28].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
-
-	.quadBlock[29].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[29].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[29].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[29].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
-
-	.quadBlock[30].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[30].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[30].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[30].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
-
-	.quadBlock[31].ptr_texture_mid[0] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[31].ptr_texture_mid[1] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[31].ptr_texture_mid[2] = LEV_OFFSETOF(turbo_pad_anim)|1,
-	.quadBlock[31].ptr_texture_mid[3] = LEV_OFFSETOF(turbo_pad_anim)|1,
-
-	// see NikoLevelUSF/trackSpecificData.h
-	.quadBlock[28].draw_order_low = 0x380E000,
-	.quadBlock[29].draw_order_low = 0x380E000,
-	.quadBlock[30].draw_order_low = 0x380E000,
-	.quadBlock[31].draw_order_low = 0x380E000,
-	
-	.quadBlock[28].ptr_texture_low = LEV_OFFSETOF(texlayout_ramp_low),
-	.quadBlock[29].ptr_texture_low = LEV_OFFSETOF(texlayout_ramp_low),
-	.quadBlock[30].ptr_texture_low = LEV_OFFSETOF(texlayout_ramp_low),
-	.quadBlock[31].ptr_texture_low = LEV_OFFSETOF(texlayout_ramp_low),
-	
-	MAKE_RAMP(
-		28, 0x100, // index, height
-		0,4,1, // low 3 vertices
-		5,6,7, // mid 3 vertices
-		2,8,3 // high 3 vertices
-	),
-	
-	MAKE_RAMP(
-		29, 0x100,
-		0,4,1,
-		5,6,7,
-		2,8,3
-	),
-	
-	MAKE_RAMP(
-		30, 0x100,
-		0,4,1,
-		5,6,7,
-		2,8,3
-	),
-	
-	MAKE_RAMP(
-		31, 0x100,
-		0,4,1,
-		5,6,7,
-		2,8,3
-	),
-		
-	// turn into turbo, if flagsQ is 0x1840
-	.quadBlock[30].terrain_type = 1,
-	.quadBlock[31].terrain_type = 1,
-	
 	// ========== Other Side Of Map ======================
 	
 	// spawn
-	NEW_BLOCK(32, group4_ground, -0x180, 0x1500+0, NULL, 0x1800, 0x303030),
-	NEW_BLOCK(33, group4_ground, 0x180, 0x1500+0, NULL, 0x1800, 0x606060),
-	
-	// invisible, not on BSP
-	NEW_BLOCK(34, turbo_pad[0], 		0x6FFF, 0x6FFF, NULL, 0, 0x808080),
-	NEW_BLOCK(35, turbo_pad_dup, 		0x6FFF, 0x6FFF, NULL, 0, 0x808080),
+	NEW_BLOCK(28, group4_ground, -0x180, 0x1500+0, NULL, 0x1800, 0x303030),
+	NEW_BLOCK(29, group4_ground, 0x180, 0x1500+0, NULL, 0x1800, 0x606060),
 	
 	// ========== bsp ======================
 	
@@ -445,8 +507,8 @@ struct LevelFile file =
 		// root node
 		BSP_BRANCH(0, SPLIT_X, 0x1, 0x2),
 		
-		BSP_LEAF(1, 32, 2),
-		BSP_LEAF(2, 0, 32),
+		BSP_LEAF(1, 28, 2),
+		BSP_LEAF(2, 0, 28),
 	},
 	
 	.pvs =
