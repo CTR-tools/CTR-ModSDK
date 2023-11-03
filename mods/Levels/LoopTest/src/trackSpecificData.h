@@ -26,11 +26,16 @@ enum Bsp0
 	Bsp0_DownRamp2,
 	Bsp0_DownRamp3,
 	Bsp0_DownRamp4,
+	Bsp0_DownRamp5,
+	Bsp0_DownRamp6,
+	Bsp0_DownRamp7,
+	Bsp0_DownRamp8,
 	
-	Bsp0_Last=Bsp0_DownRamp4,
+	Bsp0_Last=Bsp0_DownRamp8,
 	
 	Bsp0_BlockCount=Bsp0_Last-Bsp0_FirstBlock+1
 };
+_Static_assert(Bsp0_BlockCount <= 32);
 
 enum Bsp1
 {
@@ -58,6 +63,7 @@ enum Bsp1
 	
 	Bsp1_BlockCount=Bsp1_Last-Bsp1_FirstBlock+1
 };
+_Static_assert(Bsp1_BlockCount <= 32);
 
 enum Bsp2
 {
@@ -75,9 +81,24 @@ enum Bsp2
 	Bsp2_Block_4_1,
 	Bsp2_Block_4_2,
 	Bsp2_Block_4_3,
+	Bsp2_Block_5_1,
+	Bsp2_Block_5_2,
+	Bsp2_Block_6_1,
+	Bsp2_Block_6_2,
 	
-	Bsp2_Last=Bsp2_Block_4_3,
+	// U-Turn into WALL
+	Bsp2_RampU1,
+	Bsp2_RampU2,
+	Bsp2_RampU3,
+	Bsp2_RampU4,
+	Bsp2_RampU5,
+	Bsp2_RampU6,
+	Bsp2_RampU7,
+	Bsp2_RampU8,
+	
+	Bsp2_Last=Bsp2_RampU8,
 	
 	Bsp2_BlockCount=Bsp2_Last-Bsp2_FirstBlock+1,
 	NUM_BLOCKS=Bsp2_Last+1
 };
+_Static_assert(Bsp2_BlockCount <= 32);

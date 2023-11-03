@@ -83,10 +83,16 @@ void RunUpdateHook()
 	d = gGT->drivers[0];
 	button = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
 	
-	if((button & BTN_SELECT) != 0)
+	if((button & (BTN_SELECT|BTN_L1)) == (BTN_SELECT|BTN_L1))
 	{
-		d->reserves = 0x7FFF;
-		DecalFont_DrawLine("Max Reserves", 	5, 206, FONT_SMALL, ORANGE);
+		// 0x100 for normal turbo pad
+		Turbo_Increment(d, 9000, 5, 0x100);
+	}
+	
+	else if((button & (BTN_SELECT|BTN_R1)) == (BTN_SELECT|BTN_R1))
+	{
+		// 0x800 for super turbo pad
+		Turbo_Increment(d, 9000, 5, 0x800);
 	}
 
 	// main menu

@@ -133,7 +133,6 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp0_Ocean3, group4_ground, -0xD80, -0x300, NULL, 0x1800, RGBtoBGR(0x6077FF)),
 	NEW_BLOCK(Bsp0_Ocean4, group4_ground, -0xD80, -0x600, NULL, 0x1800, RGBtoBGR(0x8077FF)),
 	
-	
 	// down ramp towards upramp
 	NEW_BLOCK(Bsp0_DownRamp1, group4_ground, -0x180, -0x300, NULL, 0x1800, 0x303030),
 	NEW_BLOCK(Bsp0_DownRamp2, group4_ground, 0x180, -0x300, NULL, 0x1800, 0x606060),
@@ -183,6 +182,19 @@ struct LevelFile file =
 		5,6,7,
 		0,4,1
 	),
+	
+	// down ramp towards upramp
+	NEW_BLOCK(Bsp0_DownRamp5, group4_ground, -0x180, -0x900, NULL, 0x1800, RGBtoBGR(0x603030)),
+	NEW_BLOCK(Bsp0_DownRamp6, group4_ground, 0x180, -0x900, NULL, 0x1800, RGBtoBGR(0xC06060)),
+	
+	SET_POSY_FLAT(Bsp0_DownRamp5, 0x300),
+	SET_POSY_FLAT(Bsp0_DownRamp6, 0x300),
+	
+	NEW_BLOCK(Bsp0_DownRamp7, group4_ground, -0x180, -0xC00, NULL, 0x1800, RGBtoBGR(0x603030)),
+	NEW_BLOCK(Bsp0_DownRamp8, group4_ground, 0x180, -0xC00, NULL, 0x1800, RGBtoBGR(0xC06060)),
+	
+	SET_POSY_FLAT(Bsp0_DownRamp7, 0x300),
+	SET_POSY_FLAT(Bsp0_DownRamp8, 0x300),
 	
 	// ====== Wall Section =========
 	
@@ -638,6 +650,72 @@ struct LevelFile file =
 		5,6,7,
 		0,4,1
 	),
+	
+	NEW_BLOCK(Bsp2_Block_5_1, group4_ground, 0x1380, 0x300, NULL, 0x1800, RGBtoBGR(0x6060C0)),
+	NEW_BLOCK(Bsp2_Block_6_1, group4_ground, 0x1080, 0x300, NULL, 0x1800, RGBtoBGR(0x303030)),	
+	NEW_BLOCK(Bsp2_Block_5_2, group4_ground, 0x1380, 0, NULL, 0x1800, RGBtoBGR(0x6060C0)),
+	NEW_BLOCK(Bsp2_Block_6_2, group4_ground, 0x1080, 0, NULL, 0x1800, RGBtoBGR(0x303030)),
+	
+	// U-Turn into WALL
+	NEW_BLOCK(Bsp2_RampU1, group4_ground, 0xA80, 0x600, NULL, 0x1800, 0x303030),
+	NEW_BLOCK(Bsp2_RampU2, group4_ground, 0xD80, 0x600, NULL, 0x1800, 0x606060),
+	
+	MAKE_RAMP(
+		Bsp2_RampU1, 0x180,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	MAKE_RAMP(
+		Bsp2_RampU2, 0x180,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	NEW_BLOCK(Bsp2_RampU3, group4_ground, 0xA80, 0x900, NULL, 0x1800, 0x303030),
+	NEW_BLOCK(Bsp2_RampU4, group4_ground, 0xD80, 0x900, NULL, 0x1800, 0x606060),
+	
+	MAKE_RAMP(
+		Bsp2_RampU3, 0x180,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	MAKE_RAMP(
+		Bsp2_RampU4, 0x180,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	SET_POSY_RAMP(
+		Bsp2_RampU3, 0x180, 0x180,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	SET_POSY_RAMP(
+		Bsp2_RampU4, 0x180, 0x180,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	NEW_BLOCK(Bsp2_RampU5, group4_ground, 0xA80, 0xC00, NULL, 0x1800, 0x306030),
+	NEW_BLOCK(Bsp2_RampU6, group4_ground, 0xD80, 0xC00, NULL, 0x1800, 0x60C060),
+	
+	SET_POSY_FLAT(Bsp2_RampU5, 0x300),
+	SET_POSY_FLAT(Bsp2_RampU6, 0x300),
+	
+	NEW_BLOCK(Bsp2_RampU7, group4_ground, 0xA80, 0xF00, NULL, 0x1800, 0x306030),
+	NEW_BLOCK(Bsp2_RampU8, group4_ground, 0xD80, 0xF00, NULL, 0x1800, 0x60C060),
+	
+	SET_POSY_FLAT(Bsp2_RampU7, 0x300),
+	SET_POSY_FLAT(Bsp2_RampU8, 0x300),
 	
 	// ========== bsp ======================
 	
