@@ -128,6 +128,12 @@ struct LevelFile file =
 	NEW_BLOCK(Bsp0_Blue3, group4_ground, -0x480, 0, NULL, 0x1800, RGBtoBGR(0x6000FF)),
 	NEW_BLOCK(Bsp0_Blue4, group4_ground, -0x480, 0x300, NULL, 0x1800, RGBtoBGR(0x8000FF)),
 	
+	NEW_BLOCK(Bsp0_Ocean1, group4_ground, -0xA80, -0x300, NULL, 0x1800, RGBtoBGR(0x4077FF)),
+	NEW_BLOCK(Bsp0_Ocean2, group4_ground, -0xA80, -0x600, NULL, 0x1800, RGBtoBGR(0x6077FF)),
+	NEW_BLOCK(Bsp0_Ocean3, group4_ground, -0xD80, -0x300, NULL, 0x1800, RGBtoBGR(0x6077FF)),
+	NEW_BLOCK(Bsp0_Ocean4, group4_ground, -0xD80, -0x600, NULL, 0x1800, RGBtoBGR(0x8077FF)),
+	
+	
 	// down ramp towards upramp
 	NEW_BLOCK(Bsp0_DownRamp1, group4_ground, -0x180, -0x300, NULL, 0x1800, 0x303030),
 	NEW_BLOCK(Bsp0_DownRamp2, group4_ground, 0x180, -0x300, NULL, 0x1800, 0x606060),
@@ -319,6 +325,33 @@ struct LevelFile file =
 	.levVertex[9*Bsp1_Wall4+2].pos[2] = 0x900,
 	.levVertex[9*Bsp1_Wall4+8].pos[2] = 0x900,
 	.levVertex[9*Bsp1_Wall4+3].pos[2] = 0x900,
+	
+	// test perfectly 90-degree wall
+	NEW_BLOCK(Bsp1_90deg, group4_ground, 0x180, 0, NULL, 0x1880, RGBtoBGR(0x707070)),
+	
+	MAKE_RAMP(
+		Bsp1_90deg, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	SET_POSY_RAMP(
+		Bsp1_90deg, 0x840, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	.levVertex[9*Bsp1_90deg+0].pos[2] = 0x900,
+	.levVertex[9*Bsp1_90deg+4].pos[2] = 0x900,
+	.levVertex[9*Bsp1_90deg+1].pos[2] = 0x900,
+	.levVertex[9*Bsp1_90deg+5].pos[2] = 0x900,
+	.levVertex[9*Bsp1_90deg+6].pos[2] = 0x900,
+	.levVertex[9*Bsp1_90deg+7].pos[2] = 0x900,
+	.levVertex[9*Bsp1_90deg+2].pos[2] = 0x900,
+	.levVertex[9*Bsp1_90deg+8].pos[2] = 0x900,
+	.levVertex[9*Bsp1_90deg+3].pos[2] = 0x900,
 	
 	// right
 	NEW_BLOCK(Bsp1_Wall5, group4_ground, -0x480, 0, NULL, 0x1800, RGBtoBGR(0xFF8000)),

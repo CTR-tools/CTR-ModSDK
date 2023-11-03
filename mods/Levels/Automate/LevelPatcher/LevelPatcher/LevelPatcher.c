@@ -473,10 +473,7 @@ int main(int argc, char** argv)
 
 	// skip level->0x10, 0x18, 0x24, 0x38, 0x3c, 0x40, 0x44, 
 	// 0xD4, 0xE0, 0xE4, 0xE8, 0x13C, 0x144, 
-	
-	// dont inline this
-	SetBspBoxes(levelPtr, quadBlockArr, bspArr, bspArr);
-	
+		
 	// all quadblocks
 	for (int i = 0; i < quadBlockCount; i++)
 	{
@@ -520,7 +517,7 @@ int main(int argc, char** argv)
 
 		for (int j = 0; j < 9; j++)
 		{
-			short* vertData = &vertexArr[0x10 * *(short*)&quadBlockArr[0x5c*i + 2*j]];
+			short* vertData = &vertexArr[*(short*)&quadBlockArr[0x5c*i + 2*j] * 0x10];
 
 			for (int k = 0; k < 3; k++)
 			{
@@ -529,6 +526,10 @@ int main(int argc, char** argv)
 			}
 		}
 	}
+
+	// dont inline this, also make sure this call is AFTER
+	// the generation of quadblock BoundingBox (in above for-loop)
+	SetBspBoxes(levelPtr, quadBlockArr, bspArr, bspArr);
 
 	// Finalize
 	*(int*)&ptrMap[0] = ptr_Count << 2;

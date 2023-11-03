@@ -17,6 +17,11 @@ enum Bsp0
 	Bsp0_Blue3,
 	Bsp0_Blue4,
 	
+	Bsp0_Ocean1,
+	Bsp0_Ocean2,
+	Bsp0_Ocean3,
+	Bsp0_Ocean4,
+	
 	Bsp0_DownRamp1,
 	Bsp0_DownRamp2,
 	Bsp0_DownRamp3,
@@ -47,8 +52,9 @@ enum Bsp1
 	Bsp1_Wall12,
 	Bsp1_RampDown1,
 	Bsp1_RampDown2,
+	Bsp1_90deg,
 	
-	Bsp1_Last=Bsp1_RampDown2,
+	Bsp1_Last=Bsp1_90deg,
 	
 	Bsp1_BlockCount=Bsp1_Last-Bsp1_FirstBlock+1
 };
