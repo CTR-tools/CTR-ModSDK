@@ -9,7 +9,6 @@ void RunInitHook()
 	struct Thread* th;
 	struct InstDef* def;
 	struct GameTracker* gGT;
-	struct BattleGame* bg = 0x8000F000;
 	gGT = sdata->gGT;
 	
 	// set battle menubox to use adv cup rows
@@ -77,7 +76,18 @@ void RunUpdateHook()
 	unsigned int loop;
 	unsigned int loop2;
 	short rot[3];
-	struct BattleGame* bg = 0x8000F000;
+	int button;
+	struct GameTracker* gGT;
+	struct Driver* d;
+	gGT = sdata->gGT;
+	d = gGT->drivers[0];
+	button = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
+	
+	if((button & BTN_SELECT) != 0)
+	{
+		d->reserves = 0x7FFF;
+		DecalFont_DrawLine("Max Reserves", 	5, 206, FONT_SMALL, ORANGE);
+	}
 
 	// main menu
 	if(sdata->ptrActiveMenuBox == &OVR_230.menubox_mainMenu)
@@ -99,11 +109,5 @@ void RunUpdateHook()
 	{
 		sdata->ptrDesiredMenuBox = &OVR_230.menubox_characterSelect;
 	}
-	
-	// ======= IF Press Select =============
-	// driver->0x39C = 0x6400
-	// driver->0x39E = 0x6400
-	// driver->0x3E4 = 0x6400
-	// driver->0x3E2 = 0x7777
 }
 

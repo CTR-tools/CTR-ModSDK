@@ -16,7 +16,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
   //}
 
   #if 1
-  char* info = "Road To Rainbow: Battle";
+  char* info = "Private Test For Hypnoshark";
   DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, ORANGE);
   DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, ORANGE);
   DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, ORANGE);

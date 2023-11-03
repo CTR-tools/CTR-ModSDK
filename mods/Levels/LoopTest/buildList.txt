@@ -19,8 +19,8 @@ common, exe, UI_Map_DrawRawIcon, 0x0, src/return3.c
 // required? or just needed cause I messed up? crashes in relocate attempts
 common, exe, RenderBucket_QueueLevInstances, 0x0, src/disableQueueLevInst.c
 
-// Battle weapons
-common, exe, BOTS_SetRotation, -0x8, src/battle_hookUpdate.s
+// Use MainFrame_RenderFrame so this updates during pause screen
+common, exe, MainFreeze_ConfigDrawNPC105, -0x8, src/battle_hookUpdate.s
 common, exe, MainInit_StringToLevID, -0x8, src/battle_hookInit.s
 common, exe, rdata_free, 0x0, src/battle_runtime.c
 

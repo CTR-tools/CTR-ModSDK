@@ -478,6 +478,36 @@ struct LevelFile file =
 	NEW_BLOCK(18, group4_ground, -0xA80, 0x600, NULL, 0x1800, RGBtoBGR(0x00FF60)),
 	NEW_BLOCK(19, group4_ground, -0xD80, 0x600, NULL, 0x1800, RGBtoBGR(0x00FF80)),
 	
+	MAKE_RAMP(
+		18, 0x300,
+		0,4,1, // low
+		5,6,7, // mid
+		2,8,3 // hi
+	),
+	
+	MAKE_RAMP(
+		19, 0x300,
+		0,4,1,
+		5,6,7,
+		2,8,3
+	),
+	
+	.levVertex[9*18+5].pos[1] = 0xC0,
+	.levVertex[9*18+6].pos[1] = 0xC0,
+	.levVertex[9*18+7].pos[1] = 0xC0,
+	
+	.levVertex[9*19+5].pos[1] = 0xC0,
+	.levVertex[9*19+6].pos[1] = 0xC0,
+	.levVertex[9*19+7].pos[1] = 0xC0,
+	
+	.levVertex[9*18+2].pos[1] = 0x240,
+	.levVertex[9*18+8].pos[1] = 0x240,
+	.levVertex[9*18+3].pos[1] = 0x240,
+	
+	.levVertex[9*19+2].pos[1] = 0x240,
+	.levVertex[9*19+8].pos[1] = 0x240,
+	.levVertex[9*19+3].pos[1] = 0x240,
+	
 	// down
 	NEW_BLOCK(20, group4_ground, -0xA80, 0x300, NULL, 0x1800, RGBtoBGR(0x0000FF)),
 	NEW_BLOCK(21, group4_ground, -0xD80, 0x300, NULL, 0x1800, RGBtoBGR(0x2000FF)),
