@@ -518,15 +518,14 @@ int main(int argc, char** argv)
 		bspBox->max[1] = -0x7FFF;
 		bspBox->max[2] = -0x7FFF;
 
-		struct BoundingBox* qbBox;
 		for (int j = 0; j < 9; j++)
 		{
 			short* vertData = &vertexArr[0x10 * *(short*)&quadBlockArr[0x5c*i + 2*j]];
 
-			for (int j = 0; j < 3; j++)
+			for (int k = 0; k < 3; k++)
 			{
-				if (vertData[j] < bspBox->min[j]) bspBox->min[j] = vertData[j];
-				if (vertData[j] > bspBox->max[j]) bspBox->max[j] = vertData[j];
+				if (vertData[k] < bspBox->min[k]) bspBox->min[k] = vertData[k];
+				if (vertData[k] > bspBox->max[k]) bspBox->max[k] = vertData[k];
 			}
 		}
 	}

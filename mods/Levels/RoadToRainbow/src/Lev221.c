@@ -105,7 +105,7 @@ struct LevelFile file =
 		.ptrVertexArray = LEV_OFFSETOF(levVertex[0]),
 		.unk2 = 0, // idk, fine to leave null
 		.bspRoot = LEV_OFFSETOF(bsp[0]),
-		.numBspNodes = 3, // can be anything non-zero
+		.numBspNodes = 3,
 	},
 	
 	.group4_ground =
