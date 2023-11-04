@@ -9,13 +9,6 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 	char row = mb->rowSelected;
 	struct MenuBox *prevBox = mb->ptrPrevBox_InHierarchy;
 
-	#if BUILD == EurRetail
-	short * cupDifficulty = (short*)0x800b5518;
-	#endif
-	#if BUILD == JpnRetail
-	short * cupDifficulty = (short*)0x800b8d78;
-	#endif
-
 	// if uninitialized
 	if (row == -1)
 	{
@@ -25,16 +18,7 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 
 	short arcadeDifficulty = 0;
 
-	// if you are in Adventure menu
-	#if BUILD == UsaRetail
 	if (prevBox == &OVR_230.menubox_adventure && row < 6)
-	#endif
-	#if BUILD == EurRetail
-	if (prevBox == 0x800b4dfc && row < 6)
-	#endif
-	#if BUILD == JpnRetail
-	if (prevBox == 0x800b810c && row < 6)
-	#endif
 	{
 		switch (row)
 		{
@@ -48,24 +32,10 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 			arcadeDifficulty = 0x280;
 			break;
 		default:
-		#if BUILD == UsaRetail
 			arcadeDifficulty = OVR_230.cupDifficultySpeed[row-1];
 			break;
 		}
 		OVR_230.desiredMenu = 0;
-		#endif
-		#if BUILD == EurRetail
-			arcadeDifficulty = cupDifficulty[row-1];
-			break;
-		}
-		*(int*)0x800b6284 = 0;
-		#endif
-		#if BUILD == JpnRetail
-			arcadeDifficulty = cupDifficulty[row-1];
-			break;
-		}
-		*(int*)0x800b9a8c = 0;
-		#endif
 	}
 	// if you are in Arcade menu
 	else if (row < 5)
@@ -79,35 +49,13 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 			arcadeDifficulty = 0x280;
 			break;
 		default:
-		#if BUILD == UsaRetail
 			arcadeDifficulty = OVR_230.cupDifficultySpeed[row];
 			break;
 		}
 		OVR_230.desiredMenu = 2;
-		#endif
-		#if BUILD == EurRetail
-			arcadeDifficulty = cupDifficulty[row];
-			break;
-		}
-		*(int*)0x800b6284 = 2;
-		#endif
-		#if BUILD == JpnRetail
-			arcadeDifficulty = cupDifficulty[row];
-			break;
-		}
-		*(int*)0x800b9a8c = 2;
-		#endif
 	}
 	sdata->gGT->arcadeDifficulty = arcadeDifficulty;
-	#if BUILD == UsaRetail
 	OVR_230.MM_State = 2;
-	#endif
-	#if BUILD == EurRetail
-	*(int*)0x800b62c0 = 2;
-	#endif
-	#if BUILD == JpnRetail
-	*(int*)0x800b9ac8 = 2;
-	#endif
 	mb->state |= ONLY_DRAW_TITLE;
 }
 

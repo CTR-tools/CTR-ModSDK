@@ -45,7 +45,7 @@ void DECOMP_MM_TrackSelect_Init(void)
     }
   }
 
-  OVR_230.trackSel_nextTrack = OVR_230.menubox_trackSelect.rowSelected;
+  OVR_230.trackSel_currTrack = OVR_230.menubox_trackSelect.rowSelected;
 
   MM_TrackSelect_Video_SetDefaults();
 }
