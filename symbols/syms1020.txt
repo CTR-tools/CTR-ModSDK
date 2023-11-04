@@ -558,7 +558,7 @@
 8003cd40 MainRaceTrack_StartLoad
 8003cd84 MainRaceTrack_RequestLoad
 
-// MainStats_ClearBattleVS
+8003cde8 MainStats_ClearBattleVS
 8003ce2c MainStats_RestartRaceCountLoss
 
 // End of MAIN ^^^
@@ -1063,6 +1063,7 @@
 // == 40 more functions, only stubbed in 926 ==
 
 8006c730 SquareRoot0_stub
+8006c79c RngDeadCoed
 8006c808 ApplyMatrixLV_stub
 8006ff88 RenderLists_Init1P2P
 800717ac ThTick_FastRET
@@ -1326,7 +1327,7 @@
 800affd0 MM_TrackSelect_Video_Draw
 800b0450 MM_TrackSelect_boolTrackOpen
 800b04c8 MM_TrackSelect_Init
-800b05cc MM_TrackSelect_MenuBox
+800b05d4 MM_TrackSelect_MenuBox
 800b1438 MM_TrackSelect_GetMenuBox
 800b1444 MM_CupSelect_Init
 800b1478 MM_CupSelect_MenuBox
@@ -1340,7 +1341,8 @@
 800b3f00 MM_HighScore_MenuBox
 800b45cc MM_Scrapbook_Init
 800b45fc MM_Scrapbook_PlayMovie
-800b4898 MM_ResetAllMenus
+800b4898 MM_MENUBOX_LanguageBoot
+800b49b4 MM_ResetAllMenus
 800b4a38 MM_JumpTo_Title_Returning
 800b4a68 MM_JumpTo_Title_FirstTime
 800b4b2c MM_JumpTo_BattleSetup
