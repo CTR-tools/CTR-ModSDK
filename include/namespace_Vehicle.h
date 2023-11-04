@@ -546,12 +546,12 @@ struct Driver
 	// 0x350
 	// continues updating while driver is airborne,
 	// used for VisMem (sometimes?)
-	struct Quadblock* underDriver;
+	struct QuadBlock* underDriver;
 
 	// 0x354
 	// last "valid" quadblock the driver touched
 	// used for mask grab if next block is invalid
-	struct Quadblock* lastValid;
+	struct QuadBlock* lastValid;
 
 	// 0x358
 	// is it ice, gravel, or what?

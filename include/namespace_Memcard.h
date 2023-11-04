@@ -29,7 +29,8 @@ struct GameProgress
 	// 8008e6e8
 	unsigned int unknown;
 
-	// 8008e6ec
+	// 8008e6ec - UsaRetail
+	// 8008eaa0 - EurRetail
 	// characters, tracks, cups, scrapbook
 	unsigned int unlocks[2];
 

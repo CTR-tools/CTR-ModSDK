@@ -2845,7 +2845,8 @@ struct sData
 
 	} Loading;
 
-	// 8008d110
+	// 8008d110 - UsaRetail
+	// 8008d4a8 - EurRetail
 	int numLngStrings; // 0 in exe
 
 	// 8008d114
@@ -2936,6 +2937,7 @@ struct sData
 	struct GameTracker* gGT; // real ND name
 
 	// 8008d2b0 -- UsaRetail
+	// 8008d648 -- EurRetail
 	// 800906bc -- JpnRetail
 	struct GamepadSystem* gGamepads;
 
@@ -3428,7 +3430,8 @@ struct sData
 
 	// ===== BSS Region ========
 
-	// 8008d668
+	// 8008d668 - UsaRetail
+	// 8008da1c - EurRetail
 	// used for RNG
 	int const_0x30215400;
 	int const_0x493583fe;
@@ -3882,7 +3885,10 @@ struct sData
 
 	#if BUILD == EurRetail
 	// 8008dc30 -- EurRetail
-	int unkHole_between_gamepadID_vramRect;
+	// Initialized as false (0)
+	// if already set as true (1) before main menu, 
+	// loads English as default and language menu is skipped
+	int boolLangChosen;
 	#endif
 
 	// 8008bcb8 -- SepReview
@@ -4053,7 +4059,8 @@ struct sData
 	// 8008d920
 	int uselessLapRowCopy;
 
-	// 8008d924
+	// 8008d924 -- UsaRetail
+	// 8008dcd8 -- EurRetail
 	// Becomes nullptr after ptrActiveMenuBox is set
 	struct MenuBox* ptrDesiredMenuBox;
 
@@ -4103,11 +4110,12 @@ struct sData
 	// 8008bd84 -- SepReview
 	// 8008d950 -- UsaRetail
 	// 8008c8a8 -- JpnTrial
-	// 8008dD04 -- EurRetail
+	// 8008dd04 -- EurRetail
 	// 80090d80 -- JpnRetail
 	int AnyPlayerTap;
 
-	// 8008d954
+	// 8008d954 - UsaRetail
+	// 8008dd08 - EurRetail
 	struct MenuBox* activeSubMenu;
 
 	// 8008bd8c -- SepReview
@@ -4142,7 +4150,7 @@ struct sData
 	// 8008bda8 -- SepReview
 	// 8008d974 -- UsaRetail
 	// 8008c8cc -- JpnTrial
-	// 8008dD28 -- EurRetail
+	// 8008dd28 -- EurRetail
 	// 80090da4 -- JpnRetail
 	int AnyPlayerHold;
 
