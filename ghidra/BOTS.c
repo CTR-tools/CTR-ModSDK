@@ -2318,10 +2318,10 @@ LAB_80014094:
 	  // iVar15 -= iVar3
       iVar15 = iVar15 - iVar3;
 
-	  // if the address is out of bounds
+	  // new nav > NavPath_ptrHeader[x]->last
       if (*(short **)(*(int *)(&DAT_8008daec + iVar13) + 8) <= psVar21)
 	  {
-		// back to first nav point in array
+		// new nav = NavPath_ptrNavFrameArray[x]
         psVar21 = *(short **)(&DAT_8008dae0 + iVar13);
       }
 
