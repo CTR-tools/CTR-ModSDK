@@ -219,7 +219,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		LAB_800b0424:
 			// 3 frames of moving track list
 			OVR_230.trackSel_changeTrack_frameCount = 3;
-			OVR_230.trackSel_nextTrack = currTrack;
+			OVR_230.trackSel_currTrack = currTrack;
 
 		LAB_800b04b8:
 			// clear gamepad input (for menus)
@@ -296,7 +296,7 @@ LAB_800b05b8:
 	iVar9 = OVR_230.trackSel_changeTrack_frameCount + -1;
 	if ((0 < OVR_230.trackSel_changeTrack_frameCount) && (OVR_230.trackSel_changeTrack_frameCount = iVar9, iVar9 == 0))
 	{
-		mb->rowSelected = OVR_230.trackSel_nextTrack;
+		mb->rowSelected = OVR_230.trackSel_currTrack;
 	}
 
 	// not transitioning
@@ -627,7 +627,7 @@ LAB_800b05b8:
 				}
 			}
 			MM_TrackSelect_Video_Draw(
-					&p, selectMenu, (int)(short)OVR_230.trackSel_nextTrack,
+					&p, selectMenu, (int)(short)OVR_230.trackSel_currTrack,
 					(u_int)(OVR_230.trackSel_transitionState == 2), 0);
 			return;
 		}

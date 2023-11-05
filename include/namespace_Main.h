@@ -77,6 +77,7 @@ enum GameMode2
 	// & 0x4000000 - INC_TROPHY
 	
 	CHEAT_TURBOCOUNT = 0x8000000
+	// & 0x10000000 - LNG_CHANGE (EurRetail Only)
 };
 
 // real ND name
@@ -307,7 +308,7 @@ struct GameTracker
 	// 1c40 -- SepReview
 	// 1ca8 -- UsaRetail, JpnTrial
 	// 1cb0 -- EurRetail, JpnRetail
-	
+
 	// 1ca8, 1ca9
 	char numPlyrCurrGame;
 	char numPlyrNextGame;
