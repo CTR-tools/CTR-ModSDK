@@ -275,7 +275,7 @@ void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceC
 	UI_Lerp2D_Linear(&pos[0], (paramX - (0x88 - textWidth) / 2), paramY, (paramX - (0x88 - textWidth) / 2), paramY, sdata->framesSinceRaceEnded, 0x14);
 
 	// "YOUR TIME"
-	DecalFont_DrawLine(sdata->lngStrings[197], paramX, ((u_int)pos[1] - 0x4c), FONT_BIG, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine(sdata->lngStrings[197], paramX, ((u_int)pos[1] - 0x4c), FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 	UI_DrawRaceClock(pos[0], pos[1], UI_DrawRaceClockFlags, d);
 

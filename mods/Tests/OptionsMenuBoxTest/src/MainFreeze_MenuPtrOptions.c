@@ -285,7 +285,7 @@ switchD_80038f90_caseD_9:
 	iVar10 = 0;
 	
 	// "OPTIONS"
-	DecalFont_DrawLine(sdata->lngStrings[324], 0x100, (short)((u_int)((iVar7 + 0x1a) * 0x10000) >> 0x10), FONT_BIG, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine(sdata->lngStrings[324], 0x100, (short)((u_int)((iVar7 + 0x1a) * 0x10000) >> 0x10), FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 	i = 0x17c - (iVar12 + 0x1e);
 	local_38 = (short)i;
@@ -343,7 +343,7 @@ switchD_80038f90_caseD_9:
 		// "STEREO"
 		volumeModeString = &sdata->lngStrings[334];
 	}
-	DecalFont_DrawLine(*volumeModeString, 0x1b4, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), FONT_SMALL, (END_AT_X | WHITE));
+	DecalFont_DrawLine(*volumeModeString, 0x1b4, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), FONT_SMALL, (JUSTIFY_RIGHT | WHITE));
 
 	areThereRacingWheels = numRacingWheels;
 	if (numRacingWheels != 0)
@@ -414,7 +414,7 @@ switchD_80038f90_caseD_9:
 		{
 			do
 			{
-				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)(((u_int)local_b0[(short)i] + (u_int)gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], 0x100, (short)((iVar7 + (u_int)local_60 + (short)i * 10 + 100) * 0x10000 >> 0x10), FONT_SMALL, (CENTER_TEXT | ORANGE));
+				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)(((u_int)local_b0[(short)i] + (u_int)gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], 0x100, (short)((iVar7 + (u_int)local_60 + (short)i * 10 + 100) * 0x10000 >> 0x10), FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 				i = i + 1;
 			} while (i * 0x10000 >> 0x10 < iVar12);
 		}

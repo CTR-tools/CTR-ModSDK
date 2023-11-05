@@ -135,9 +135,9 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 
 		// this particular snippet is for drawing the TOTAL text in the time trial lap results screen before it flashes, at which point it moves from the left to the center of the screen
 		// if global game timer is on an odd number (in which case this condition doesn't execute) then set string to end at posX of next DrawLine and use data.ptrColor[WHITE]
-		if (((flags & 4) == 0) || (strFlags_but_its_also_posY = (END_AT_X | WHITE), (gGT->timer & 2) != 0))
+		if (((flags & 4) == 0) || (strFlags_but_its_also_posY = (JUSTIFY_RIGHT | WHITE), (gGT->timer & 2) != 0))
 		{
-			strFlags_but_its_also_posY = (END_AT_X | ORANGE);
+			strFlags_but_its_also_posY = (JUSTIFY_RIGHT | ORANGE);
 		}
 	}
 
@@ -322,10 +322,10 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 					lapTextHeight = (short *)(&data.font_charPixHeight[lapFontType]);
 
 					// draw string
-					DecalFont_DrawLine(local_38, unbitshiftTextPosX, (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (END_AT_X | RED));
+					DecalFont_DrawLine(local_38, unbitshiftTextPosX, (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
 
 					// LAP
-					DecalFont_DrawLine(sdata->lngStrings[0x18], (int)(((u_int)textPosX - (u_int)data.font_charPixWidth[lapFontType])), (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (END_AT_X | RED));
+					DecalFont_DrawLine(sdata->lngStrings[0x18], (int)(((u_int)textPosX - (u_int)data.font_charPixWidth[lapFontType])), (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
 
 					stringColor = (int)(short)stringColor_but_its_also_relicColor;
 					iVar7 = (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10;
@@ -415,7 +415,7 @@ LAB_8004f378:
 
 	else
 	{
-		stringColor_but_its_also_relicColor = stringColor_but_its_also_relicColor | END_AT_X;
+		stringColor_but_its_also_relicColor = stringColor_but_its_also_relicColor | JUSTIFY_RIGHT;
 		sVar1 = textPosY - 0x11;
 		strFlags_but_its_also_posY = sVar1;
 		uVar11 = textPosX + 0x11;
@@ -434,6 +434,6 @@ LAB_8004f378:
 	sdata->raceClockStr[3] = sdata->relicTime_1sec + '0';
 	sdata->raceClockStr[5] = sdata->relicTime_10ms + '0';
 	sdata->raceClockStr[6] = sdata->relicTime_1ms + '0';
-	DecalFont_DrawLine(sdata->raceClockStr, (int)(short)uVar11, (int)strFlags_but_its_also_posY, FONT_BIG, (int)(short)(stringColor_but_its_also_relicColor & (0xffff ^ END_AT_X)));
+	DecalFont_DrawLine(sdata->raceClockStr, (int)(short)uVar11, (int)strFlags_but_its_also_posY, FONT_BIG, (int)(short)(stringColor_but_its_also_relicColor & (0xffff ^ JUSTIFY_RIGHT)));
 	return;
 }

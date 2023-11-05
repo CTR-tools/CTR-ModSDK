@@ -121,7 +121,7 @@ void Gte_PrintInt(char* fmt, int i)
 	sprintf(name1, fmt, i);
 
 	DecalFont_DrawLine(name1,
-		k1->Screen_posX, k1->Screen_posY, FONT_SMALL, (CENTER_TEXT | ORANGE));
+		k1->Screen_posX, k1->Screen_posY, FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 }
 
 void QuadblockNumbers()

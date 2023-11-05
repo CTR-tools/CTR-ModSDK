@@ -230,15 +230,15 @@ void DrawIGT()
   if (igt->splitFadeTimer > 0)
   {
       if (s_frozenTime[0] == ' ')
-          DecalFont_DrawLine(&s_frozenTime[2], 256, 17, FONT_SMALL, igt->splitColor | CENTER_TEXT);
+          DecalFont_DrawLine(&s_frozenTime[2], 256, 17, FONT_SMALL, igt->splitColor | JUSTIFY_CENTER);
       else
-          DecalFont_DrawLine(s_frozenTime, 256, 17, FONT_SMALL, igt->splitColor | CENTER_TEXT);
+          DecalFont_DrawLine(s_frozenTime, 256, 17, FONT_SMALL, igt->splitColor | JUSTIFY_CENTER);
       igt->splitFadeTimer--;
   }
   if (s_totalTime[0] == ' ')
-      DecalFont_DrawLine(&s_totalTime[2], 256, 8, FONT_SMALL, ORANGE | CENTER_TEXT);
+      DecalFont_DrawLine(&s_totalTime[2], 256, 8, FONT_SMALL, ORANGE | JUSTIFY_CENTER);
   else
-      DecalFont_DrawLine(s_totalTime, 256, 8, FONT_SMALL, ORANGE | CENTER_TEXT);
+      DecalFont_DrawLine(s_totalTime, 256, 8, FONT_SMALL, ORANGE | JUSTIFY_CENTER);
 
   // restore OT
   gGT->tileView_UI.ptrOT = backupOT;
@@ -394,7 +394,7 @@ void DrawMenu()
         else
             DecalFont_DrawLine(s_editorTime, 370, 18 + 9 * i, FONT_SMALL, rowColor);
     }
-    DecalFont_DrawLine(s_saveSplits, 254, 207, FONT_SMALL, ORANGE | CENTER_TEXT);
+    DecalFont_DrawLine(s_saveSplits, 254, 207, FONT_SMALL, ORANGE | JUSTIFY_CENTER);
     MENUBOX_DrawInnerRect(&menuWindow, 1, sdata->gGT->backBuffer->otMem.startPlusFour);
 }
 

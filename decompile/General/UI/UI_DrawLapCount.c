@@ -27,10 +27,10 @@ void DECOMP_UI_DrawLapCount(short posX,int posY,int param_3,struct Driver* d)
   if (numPlyrCurrGame < 3)
   {
     // LAP
-    DecalFont_DrawLine(sdata->lngStrings[0x60/4],posX,posY,FONT_SMALL,(END_AT_X | PERIWINKLE));
+    DecalFont_DrawLine(sdata->lngStrings[0x60/4],posX,posY,FONT_SMALL,(JUSTIFY_RIGHT | PERIWINKLE));
 
     type = FONT_BIG;
-    flags = (END_AT_X | PERIWINKLE);
+    flags = (JUSTIFY_RIGHT | PERIWINKLE);
 	
   	#if 0
   	// OG game used sprintf in 1P/2P mode,

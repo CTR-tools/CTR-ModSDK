@@ -38,7 +38,7 @@ void AdvBosses_HookGarageUI()
 			0x100,					// midpoint
 			0xc8,					// near bottom
 			FONT_SMALL,				// small text
-			(CENTER_TEXT | ORANGE)	// center
+			(JUSTIFY_CENTER | ORANGE)	// center
 		);
 	}
 }

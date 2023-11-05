@@ -90,7 +90,7 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 			}
 		}
 	}
-	DecalFont_DrawLine(sdata->lngStrings[318], 256, 44, FONT_BIG, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine(sdata->lngStrings[318], 256, 44, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 	DecalFont_DrawLine(sdata->gGT->currNameEntered, 192, 68, FONT_BIG, WHITE);
 	if ((sdata->titleoskunknown & 2) && (currNameLength < 16))
 	{
@@ -103,7 +103,7 @@ short DECOMP_TitleOSK_DrawMenu(u_short string)
 	{
 		strColorBlink2 = (sdata->titleoskunknown & 1) << 2;
 	}
-	DecalFont_DrawLine(sdata->lngStrings[stringCopy], 472, 150, FONT_BIG, (END_AT_X | strColorBlink2));
+	DecalFont_DrawLine(sdata->lngStrings[stringCopy], 472, 150, FONT_BIG, (JUSTIFY_RIGHT | strColorBlink2));
 	strColorBlink = 0;
 	if (cursorPosition2 == 1000)
 	{

@@ -36,10 +36,10 @@ enum Font
 enum FontFlags
 {
 	// end text at X position
-	END_AT_X=0x4000,
+	JUSTIFY_RIGHT=0x4000,
 
 	// center text
-	CENTER_TEXT=0x8000
+	JUSTIFY_CENTER=0x8000
 };
 
 // text color gradients corresponding to ptrColors
