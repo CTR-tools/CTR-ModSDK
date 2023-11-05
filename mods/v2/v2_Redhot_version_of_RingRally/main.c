@@ -232,8 +232,8 @@ void EndCrystalChallenge(void)
 		// Drawing strings in the menu
 		DecalFont_DrawLine(menu.selectCharStr, 93, 50, FONT_BIG, menu.stringColors[0]);
 		// the track string comes from the TRACKS file in the folder RINGRALLY
-		DecalFont_DrawLine((char *) ((int) tracks + tracks[menu.currTrack].name), 260, 70, FONT_BIG, (menu.stringColors[1] | CENTER_TEXT));
-		DecalFont_DrawLine(menu.playStr, 260, 106, FONT_BIG, (menu.stringColors[2] | CENTER_TEXT));
+		DecalFont_DrawLine((char *) ((int) tracks + tracks[menu.currTrack].name), 260, 70, FONT_BIG, (menu.stringColors[1] | JUSTIFY_CENTER));
+		DecalFont_DrawLine(menu.playStr, 260, 106, FONT_BIG, (menu.stringColors[2] | JUSTIFY_CENTER));
 		DecalFont_DrawLine(menu.helpStr[0], 93, 126, FONT_SMALL, RED);
 		DecalFont_DrawLine(menu.helpStr[1], 93, 134, FONT_SMALL, RED);
 
@@ -287,7 +287,7 @@ void EndCrystalChallenge(void)
 	else {
 
 		// Draw your Personal Best
-		DecalFont_DrawLine(pbStr, 0x100, 12, FONT_BIG, (CENTER_TEXT | ORANGE));
+		DecalFont_DrawLine(pbStr, 0x100, 12, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 		// if you beat your personal best
 		if (ggv.beatPb) {
@@ -296,7 +296,7 @@ void EndCrystalChallenge(void)
 			newRecordColor = (newRecordColor + 1) & 0x1;
 
 			// draw a NEW RECORD!!! congratulating the player
-			DecalFont_DrawLine(newRecordStr, 0x100, 139, FONT_BIG, newRecordColor | CENTER_TEXT);
+			DecalFont_DrawLine(newRecordStr, 0x100, 139, FONT_BIG, newRecordColor | JUSTIFY_CENTER);
 		}
 
 		// Draw your score
@@ -309,10 +309,10 @@ void EndCrystalChallenge(void)
 		DecalFont_DrawLine(lapsStrFinal, 140, 45, FONT_BIG, PERIWINKLE);
 
 		// Draw instructions for restart
-		DecalFont_DrawLine(s_endStr, 0x100, 0xB0, FONT_SMALL, (CENTER_TEXT | ORANGE));
+		DecalFont_DrawLine(s_endStr, 0x100, 0xB0, FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 
 		// Draw instructions to change character and/or track
-		DecalFont_DrawLine(gotoMenuStr, 0x100, 0xC0, FONT_SMALL, (CENTER_TEXT | ORANGE));
+		DecalFont_DrawLine(gotoMenuStr, 0x100, 0xC0, FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 
 		// draw invi box to show the record time
 		DrawBox2D(&recordWindow, 4, semiGlobal.gameConfig.backBuffer->otMem.startPlusFour);

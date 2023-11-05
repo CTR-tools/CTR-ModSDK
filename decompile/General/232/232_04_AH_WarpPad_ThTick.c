@@ -139,7 +139,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 					warppadLNG,
 					gGT->tileView[0].rect.x + gGT->tileView[0].rect.w/2,
 					gGT->tileView[0].rect.x + gGT->tileView[0].rect.h - 30,
-					FONT_BIG, (CENTER_TEXT | ORANGE)
+					FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 				);
 			}
 			

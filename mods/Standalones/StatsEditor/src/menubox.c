@@ -170,8 +170,8 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT, int* metaPhys, int* dr
 	)
 		metaPhysColor = BLUE;
 
-	DecalFont_DrawLine(sdata->lngStrings[588 + *driverClass], SCREEN_WIDTH/2, SCREEN_HEIGHT/4, FONT_SMALL, (CENTER_TEXT | ORANGE)); // display current driver class
-	DecalFont_DrawLine(sdata->lngStrings[593 + metaPhysID], SCREEN_WIDTH/2, SCREEN_HEIGHT/3, FONT_SMALL, (CENTER_TEXT | metaPhysColor)); // display current metaPhys ID
+	DecalFont_DrawLine(sdata->lngStrings[588 + *driverClass], SCREEN_WIDTH/2, SCREEN_HEIGHT/4, FONT_SMALL, (JUSTIFY_CENTER | ORANGE)); // display current driver class
+	DecalFont_DrawLine(sdata->lngStrings[593 + metaPhysID], SCREEN_WIDTH/2, SCREEN_HEIGHT/3, FONT_SMALL, (JUSTIFY_CENTER | metaPhysColor)); // display current metaPhys ID
 
 	DrawNumbers(gGT, metaPhys, driverClass, metaPhysColor);
 

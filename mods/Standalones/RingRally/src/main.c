@@ -52,13 +52,13 @@ void EndCrystalChallenge(void)
 	KillCrystals();
 
 	// Draw number of rings
-	DecalFont_DrawLine(ringsStr, 0x100,0x68,FONT_SMALL,(CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine(ringsStr, 0x100,0x68,FONT_SMALL,(JUSTIFY_CENTER | ORANGE));
 
 	// Draw number of lapsStr
-	DecalFont_DrawLine(lapsStr, 0x100,0x70,FONT_BIG,(CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine(lapsStr, 0x100,0x70,FONT_BIG,(JUSTIFY_CENTER | ORANGE));
 
 	// Draw instructions for restart
-	DecalFont_DrawLine(s_endString, 0x100, 0xa0, FONT_SMALL, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine(s_endString, 0x100, 0xa0, FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 
 	// If you press Cross or Circle
 	if(sdata->AnyPlayerTap & 0x50)

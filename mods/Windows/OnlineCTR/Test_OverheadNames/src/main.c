@@ -46,7 +46,7 @@ void RunUpdateHook()
 		gte_stsxy(&ptrDest->Screen_posX);
 
 		DecalFont_DrawLine(names[i],
-			ptrDest->Screen_posX, ptrDest->Screen_posY-0x14, FONT_SMALL, (CENTER_TEXT | ORANGE));
+			ptrDest->Screen_posX, ptrDest->Screen_posY-0x14, FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 	}
 }
 

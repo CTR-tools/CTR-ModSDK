@@ -104,7 +104,7 @@ void HookCups(int *param_1)
 		0x100,
 		0x4,
 		FONT_SMALL,
-		(CENTER_TEXT | ORANGE));
+		(JUSTIFY_CENTER | ORANGE));
 
 	buttonTap = sdata->gGamepads->gamepad[0].buttonsTapped;
 
@@ -203,14 +203,14 @@ void HookCups(int *param_1)
 			0x100,
 			0xD2,
 			FONT_SMALL,
-			(CENTER_TEXT | PERIWINKLE));
+			(JUSTIFY_CENTER | PERIWINKLE));
 
 		DecalFont_DrawLine(
 			"PRESS R1 TO RANDOMOMIZE",
 			0x100,
 			0xDA,
 			FONT_SMALL,
-			(CENTER_TEXT | PERIWINKLE));
+			(JUSTIFY_CENTER | PERIWINKLE));
 
 		// Draw background box ========================
 		if (cc->modifiedCup == 0)

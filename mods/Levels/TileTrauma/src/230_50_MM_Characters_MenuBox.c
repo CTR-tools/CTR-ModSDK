@@ -140,7 +140,7 @@ void MM_Characters_MenuBox()
 				sdata->lngStrings[96],
 				OVR_230.ptrTransitionMeta[15].currX + 0x9c,
 				OVR_230.ptrTransitionMeta[15].currY + 0x14,
-				FONT_BIG, (CENTER_TEXT | ORANGE)
+				FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 			);
 			characterSelectType = FONT_BIG;
 		
@@ -163,7 +163,7 @@ void MM_Characters_MenuBox()
 				sdata->lngStrings[96],
 				OVR_230.ptrTransitionMeta[15].currX + 0xfc,
 				OVR_230.ptrTransitionMeta[15].currY + 8,
-				FONT_CREDITS, (CENTER_TEXT | ORANGE)
+				FONT_CREDITS, (JUSTIFY_CENTER | ORANGE)
 			);
 			characterSelectType = FONT_CREDITS;
 		
@@ -192,7 +192,7 @@ void MM_Characters_MenuBox()
 	}
 	
 	// Draw String
-	DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, (CENTER_TEXT | ORANGE));
+	DecalFont_DrawLine(characterSelectString, posX, posY, characterSelectType, (JUSTIFY_CENTER | ORANGE));
 	
 	dontDrawSelectCharacter:
 
@@ -610,7 +610,7 @@ void MM_Characters_MenuBox()
 				(
 					sdata->lngStrings[data.MetaDataCharacters[csm_Active->characterID].name_LNG_long],
 					(int)((((struct TransitionMeta*)iVar8)->currX + OVR_230.characterSelect_ptrWindowXY[j * 2] + (((int)((u_int)OVR_230.characterSelect_sizeX << 0x10) >> 0x10) - ((int)((u_int)OVR_230.characterSelect_sizeX << 0x10) >> 0x1f) >> 1)) * 0x10000) >> 0x10,
-					(int)sVar6, fontType, (CENTER_TEXT | ORANGE)
+					(int)sVar6, fontType, (JUSTIFY_CENTER | ORANGE)
 				);
 			}
 			
