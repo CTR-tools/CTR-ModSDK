@@ -7,7 +7,6 @@ u_int DECOMP_DecalFont_boolRacingWheel()
 	char* ptrRawInput;
 	u_int result;
 	
-	/*
 	ptrRawInput = sdata->gGamepads->gamepad[0]->ptrRawInput;
 	result = 0;
 	// check if raw input pointers for other gamepads don't exist
@@ -40,8 +39,7 @@ u_int DECOMP_DecalFont_boolRacingWheel()
 		)
 	)
 	{
-		*/
 		result = 1;
-	//}
+	}
 	return result;
 }
