@@ -13,3 +13,8 @@
 #define BUILD 926
 #define RECT PSX_RECT
 #include "../rebuild_PS1/main.c"
+
+int main()
+{
+	return DECOMP_main();
+}
