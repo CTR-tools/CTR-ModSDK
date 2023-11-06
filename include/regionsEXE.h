@@ -4374,14 +4374,10 @@ struct sData
 	// 8008d650 -- JpnTrial
 	// icon struct used for DrawLineStrlen in the japanese builds
 	struct Icon font_icon;
-	// arrays of u_ints containing:
-	// X1, Y1, paletteXY
-	// X2, Y2, pageXY
-	// X3, Y3, X4, Y4
-	// for the two japanese font icon groups, and the 0x18th icon in the small group
-	u_int font_jfontBigIconData[3];
-	u_int font_jfontSmallIconData[3];
-	u_int font_jfontSmall0x18IconData[3];
+	// TextureLayout structs for the two japanese font icon groups, and the 0x18th icon in the small group
+	struct TextureLayout font_jfontBigIconData;
+	struct TextureLayout font_jfontSmallIconData;
+	struct TextureLayout font_jfontSmall0x18IconData;
 	#endif
 
 	// size 0x1494

@@ -84,7 +84,7 @@ enum Colors
 
 	// gray #808080, identical to fake crash's
 	// the neutral vertex color for the PSX
-	// used for sprites that don't need coloring as a result
+	// used for sprites that don't need coloring, as a result
 	GRAY,
 
 	// colors assigned to each player in multiplayer modes
