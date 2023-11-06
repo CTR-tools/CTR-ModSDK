@@ -567,10 +567,9 @@ struct Instance
 	// see set in FUN_800abab0 (231)
 	int bitCompressed_NormalVector_AndDriverIndex;
 
-	// end of "main" Instance
-
 	// 0x74
-	struct InstDrawPerPlayer idpp[0];
-
-	// struct is 0xFC bytes large (in 1P mode)
+	//struct InstDrawPerPlayer idpp[0];
 };
+
+#define INST_GETIDPP(x) \
+	((unsigned int)x + sizeof(struct Instance))

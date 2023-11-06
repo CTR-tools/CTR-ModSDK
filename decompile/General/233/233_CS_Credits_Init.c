@@ -92,7 +92,8 @@ void CS_Credits_Init()
 		
 		inst->flags |= 0x400;
 		
-		inst->idpp[0].tileView = &gGT->tileView_UI;
+		struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
+		idpp[0].tileView = &gGT->tileView_UI;
 		
 		#if 0
 		// OG game erases other idpp's, but just ignore it

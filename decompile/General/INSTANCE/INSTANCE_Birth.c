@@ -38,10 +38,12 @@ void DECOMP_INSTANCE_Birth(
 	inst->thread = th;
 	inst->bitCompressed_NormalVector_AndDriverIndex = 0;
 	
+	struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
+	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		inst->idpp[i].tileView = &gGT->tileView[i];
-		inst->idpp[i].mh = 0;
-		inst->idpp[i].unkb8[0] = 0;
+		idpp[i].tileView = &gGT->tileView[i];
+		idpp[i].mh = 0;
+		idpp[i].unkb8[0] = 0;
 	}
 }
