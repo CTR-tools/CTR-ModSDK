@@ -81,7 +81,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies />
+      <AdditionalDependencies>C:\VulkanSDK\1.3.261.1\Lib\vulkan-1.lib;Valkyrie.lib;SDL2-staticd.lib;SDL2maind.lib;opengl32.lib;d3d9.lib;d3d11.lib;d3d12.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;gdi32.lib;winmm.lib;imm32.lib;ole32.lib;oleaut32.lib;version.lib;uuid.lib;advapi32.lib;setupapi.lib;dinput8.lib;shell32.lib;winspool.lib;comdlg32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Niko\Desktop\KAIN2\Build\Build_Win32\External\SDL\Debug;C:\Users\Niko\Desktop\KAIN2\Build\Build_Win32\External\libValkyrie\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -99,7 +100,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies />
+      <AdditionalDependencies>C:\VulkanSDK\1.3.261.1\Lib\vulkan-1.lib;Valkyrie.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Niko\Desktop\KAIN2\Build\Build_Win32\External\SDL\Debug;C:\Users\Niko\Desktop\KAIN2\Build\Build_Win32\External\libValkyrie\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
