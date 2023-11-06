@@ -462,11 +462,9 @@ void StateZero()
 	
 	memset(gGT, 0, sizeof(struct GameTracker));
 	
-#ifndef REBUILD_PC
 	// Set Video Mode to NTSC
 	SetVideoMode(0);
 	ResetCallback();
-#endif
 	
 	// We have 2mb RAM total
 	DECOMP_MEMPACK_Init(0x800000);
@@ -478,10 +476,8 @@ void StateZero()
 	// the copyright page draws, then go off-screen at ND Box
 	DECOMP_TitleFlag_SetFullyOffScreen();
 	
-#ifndef REBUILD_PC
 	ResetGraph(0);
 	SetGraphDebug(0);
-#endif
 	
 	DECOMP_MainInit_VRAMClear();
 
@@ -568,15 +564,9 @@ void StateZero()
 	gGT->numPlyrNextGame = 1;
 	#endif
 	
-#ifndef REBUILD_PC
 	InitGeom();
-	
-	// width / 2, and height / 2
-	SetGeomOffset(0x100, 0x78);
-	
-	// "distance" to screen, alters FOV
-	SetGeomScreen(0x140);
-#endif
+	SetGeomOffset(0x100, 0x78);	// width/2, height/2
+	SetGeomScreen(0x140);		// "distance" to screen, alters FOV
 	
 #ifndef REBUILD_PS1
 	RenderBucket_InitDepthGTE();
