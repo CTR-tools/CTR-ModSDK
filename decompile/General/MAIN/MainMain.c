@@ -311,7 +311,7 @@ FinishLoading:
 				#endif
 
 				// Start new frame (ClearOTagR)
-				DECOMP_MainFrame_ResetDB(gGT, sdata->gGamepads);
+				DECOMP_MainFrame_ResetDB(gGT);
 
 				if
 				(

@@ -38,7 +38,7 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 	
 	for(iVar4 = 0; iVar4 < gGT->numPlyrCurrGame; iVar4++)
 	{
-		iVar2 = (u_int)(u_char)psVar1->numPlyrCurrGame - iVar4;
+		iVar2 = (u_int)(u_char)gGT->numPlyrCurrGame - iVar4;
 			
 		gGT->tileView[iVar4].ptrOT = 
 			(int)ot_tileView_UI + 
