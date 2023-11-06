@@ -19,7 +19,7 @@ void DECOMP_LOAD_Hub_ReadFile(int bigfilePtr, int levID, int packID)
 	sdata->modelMaskHints3D = 0;
 	sdata->load_inProgress = 1;
 	
-	MEMPACK_SwapPacks(packID);
+	DECOMP_MEMPACK_SwapPacks(packID);
 	MEMPACK_ClearLowMem();
 	
 	iVar2 = LOAD_GetBigfileIndex(levID, 1, LVI_VRAM);

@@ -7,5 +7,5 @@ void DECOMP_LOAD_HubCallback(struct LoadQueueSlot* lqs)
 	
 	struct GameTracker* gGT = sdata->gGT;	
 	gGT->level2 = sdata->ptrLEV_DuringLoading;
-	MEMPACK_SwapPacks(gGT->activeMempackIndex);
+	DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
 }

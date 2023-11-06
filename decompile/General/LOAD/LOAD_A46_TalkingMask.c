@@ -9,7 +9,7 @@ void DECOMP_LOAD_TalkingMask(int packID, int maskID)
 	
 	sdata->gGT->levID_in_each_mempack[packID] = -1;
 	
-	MEMPACK_SwapPacks(packID);
+	DECOMP_MEMPACK_SwapPacks(packID);
 	
 	MEMPACK_ClearLowMem();
 	

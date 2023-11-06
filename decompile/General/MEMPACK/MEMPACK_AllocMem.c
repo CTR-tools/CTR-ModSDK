@@ -1,7 +1,5 @@
 #include <common.h>
 
-void CTR_ErrorScreen(char r, char g, char b);
-
 void* DECOMP_MEMPACK_AllocMem(int allocSize)
 {
 	int firstFreeByte;
@@ -14,7 +12,7 @@ void* DECOMP_MEMPACK_AllocMem(int allocSize)
 	// if out of memory
 	if(DECOMP_MEMPACK_GetFreeBytes() < allocSize)
 	{
-		CTR_ErrorScreen(0xFF,0,0);
+		DECOMP_CTR_ErrorScreen(0xFF,0,0);
 
 		// infinite loop
 		for(;;) {}

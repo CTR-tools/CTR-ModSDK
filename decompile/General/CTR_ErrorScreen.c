@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DISPLAY_Swap();
-
 void DECOMP_CTR_ErrorScreen(char r, char g, char b)
 {
 	TILE p;
@@ -11,7 +9,7 @@ void DECOMP_CTR_ErrorScreen(char r, char g, char b)
 	{
 		DrawSync(0);
 		VSync(0);
-		DISPLAY_Swap();
+		DECOMP_DISPLAY_Swap();
 
 		// save a little asm
 		if(i == 2) return;

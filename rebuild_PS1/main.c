@@ -25,6 +25,8 @@
 #include "../decompile/General/CDSYS/CDSYS_c18_XAPauseForce.c" 
 #include "../decompile/General/CDSYS/CDSYS_c19_XAPauseAtEnd.c" 
 
+#include "../decompile/General/CTR_ErrorScreen.c"
+
 #include "../decompile/General/DecalFont/DecalFont_GetLineWidth.c"
 #include "../decompile/General/DecalFont/DecalFont_DrawLineStrlen.c"
 #include "../decompile/General/DecalFont/DecalFont_DrawLine.c"
@@ -39,6 +41,8 @@
 #include "../decompile/General/DecalHUD/DecalHUD_DrawPolyGT4.c"
 #include "../decompile/General/DecalHUD/DecalHUD_Arrow2D.c"
 
+#include "../decompile/General/DISPLAY/DISPLAY_Swap.c"
+
 #include "../decompile/General/GAMEPAD/GAMEPAD_Init.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_GetNumConnected.c"
 
@@ -51,6 +55,7 @@
 #include "../decompile/General/GAMEPROG/GAMEPROG_NewGame_OnBoot.c"
 #include "../decompile/General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c"
 
+#include "../decompile/General/HOWL/h11_SetReverbMode.c"
 #include "../decompile/General/HOWL/h31_howl_InitGlobals.c"
 #include "../decompile/General/HOWL/h32_howl_ParseHeader.c"
 #include "../decompile/General/HOWL/h33_howl_ParseCseqHeader.c"

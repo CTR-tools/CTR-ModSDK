@@ -12,7 +12,7 @@ void DECOMP_CDSYS_SetXAToLang(int lang)
 	sdata->bool_XnfLoaded = 0;
 	DECOMP_CDSYS_SetMode_StreamData();
 	
-	data.xaLanguagePtrs[lang];
+	xaLang = data.xaLanguagePtrs[lang];
 	strncpy(&data.s_XA_ENG_XNF[4],		xaLang, 4);
 	strncpy(&data.s_XA_ENG_EXTRA[4],	xaLang, 4);
 	strncpy(&data.s_XA_ENG_GAME[4],		xaLang, 4);

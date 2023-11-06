@@ -4,6 +4,8 @@ void DECOMP_CDSYS_XaCallbackCdSync(char result);
 void DECOMP_CDSYS_XaCallbackCdReady(char result);
 void DECOMP_CDSYS_SetMode_StreamData();
 
+void DECOMP_CTR_ErrorScreen(char r, char g, char b);
+
 // howl
 void DECOMP_cseq_opcode00_empty(); // should remove
 void DECOMP_cseq_opcode01_noteoff();

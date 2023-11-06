@@ -207,12 +207,12 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 // ConvertRotToMatrix not done
 #ifndef REBUILD_PS1
 	TileView_SetMatrixVP(view);
-#endif
 
     if ((gGT->hudFlags & 2) != 0)
     {
         UI_INSTANCE_InitAll();
     }
+#endif
 
     gGT->unk1cac[4] = 2;
 

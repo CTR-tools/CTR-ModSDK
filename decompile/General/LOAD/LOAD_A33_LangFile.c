@@ -20,7 +20,7 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang)
 
 #if BUILD == EurRetail
 	// This is (probably) to turn the screen black for a bit until lng is loaded.
-	CTR_ErrorScreen(0, 0, 0);
+	DECOMP_CTR_ErrorScreen(0, 0, 0);
 	VSync(0);
 #endif
 

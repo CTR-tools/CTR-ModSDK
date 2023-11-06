@@ -76,7 +76,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 		DecalGlobal_Store(gGT, level1->levTexLookup);
 	}
 	
-	MEMPACK_SwapPacks(gGT->activeMempackIndex);
+	DECOMP_MEMPACK_SwapPacks(gGT->activeMempackIndex);
 	
 	MainInit_VisMem(gGT);
 	

@@ -190,17 +190,19 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 	RenderDispEnv_UI(gGT);
 	
+#ifndef REBUILD_PS1
 	gGT->countTotalTime = 
 		RCNT_GetTime_Total();
+#endif
 	
 	RenderVSYNC(gGT);
 	
 #ifndef REBUILD_PS1
 	RenderFMV();
-#endif
 	
 	gGT->countTotalTime =
 		RCNT_GetTime_Elapsed(gGT->countTotalTime,0);
+#endif
 	
 	RenderSubmit(gGT);
 }

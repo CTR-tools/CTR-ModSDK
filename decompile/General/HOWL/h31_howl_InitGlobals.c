@@ -24,7 +24,7 @@ void DECOMP_howl_InitGlobals(char* filename)
 	SpuSetTransferMode(0);
 	SpuSetCommonMasterVolume(0x3fff,0x3fff);
 	
-	SetReverbMode(5);
+	DECOMP_SetReverbMode(5);
 	
 	SpuSetCommonCDReverb(0);
 	SpuSetCommonCDMix(1);

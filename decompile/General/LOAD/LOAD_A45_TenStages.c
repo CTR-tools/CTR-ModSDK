@@ -806,8 +806,10 @@ LAB_800346b0:
 				gGT->framesInThisLEV = 0;
 				gGT->msInThisLEV = 0;
 
+#ifndef REBUILD_PS1
 				// deactivate pause
 				ElimBG_Deactivate(gGT);
+#endif
 
 				// signify end of load
 				return -2;

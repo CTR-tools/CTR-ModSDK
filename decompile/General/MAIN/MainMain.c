@@ -566,8 +566,10 @@ void StateZero()
 	// "distance" to screen, alters FOV
 	SetGeomScreen(0x140);
 	
+#ifndef REBUILD_PS1
 	RenderBucket_InitDepthGTE();
 	Vector_BakeMatrixTable();
+#endif
 	
 	gGT->swapchainIndex = 0;
 	gGT->backBuffer = &gGT->db[0];
