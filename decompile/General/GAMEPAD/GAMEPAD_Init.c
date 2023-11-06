@@ -5,8 +5,10 @@ void DECOMP_GAMEPAD_Init(struct GamepadSystem* gGamepads)
   int i;
   struct GamepadBuffer* pad;
 	
+#ifndef REBUILD_PC
   PadInitMtap(&gGamepads->slotBuffer[0],&gGamepads->slotBuffer[1]);
   PadStartCom();
+#endif
 
   for (i = 0; i < 8; i++)
   {
