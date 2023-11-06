@@ -26,8 +26,10 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
         RB_MinePool_Init();
     }
 
-    // spawn all players
-    for (i = 0; i < numPlyrCurrGame; i++)
+    // Spawn all players,
+	// This MUST be in reverse order,
+	// because of threadBucket linked list order
+    for (i = numPlyrCurrGame-1; i >= 0; i--)
     {
 		gGT->drivers[i] = VehInit_Player(i);
     }
