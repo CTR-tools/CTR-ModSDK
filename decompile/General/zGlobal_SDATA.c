@@ -9,11 +9,13 @@ struct sData sdata_static =
 {
 	.langBufferSize = 0x3F04,
 	
-	//.unkPtr_8008da48 = &sdata_static.unk_data1c_1[0],
-	//.unkPtr_8008da64 = &sdata_static.unk_data1c_2[0],
-	
+#if NO_BSS
 	.unkPtr_8008da48 = 0x8008da48,
 	.unkPtr_8008da64 = 0x8008da64,
+#else
+	.unkPtr_8008da48 = &sdata_static.unk_data1c_1[0],
+	.unkPtr_8008da64 = &sdata_static.unk_data1c_2[0],
+#endif
 	
 	.driver_pathIndexIDs =
 	{
@@ -235,14 +237,13 @@ struct sData sdata_static =
 	.numPlayersFinishedRace = 0,
 	#endif
 	
-	// Hard-code is required,
-	// cause the structs are in BSS, therefore excluded 
-	// by SDATA, so the zeros dont bloat the EXE
-	
-	//.gGT = &sdata_static.gameTracker,
-	//.gGamepads = &sdata_static.gamepadSystem,
+#if NO_BSS
 	.gGT = 0x80096b20,
 	.gGamepads = 0x80096804,
+#else
+	.gGT = &sdata_static.gameTracker,
+	.gGamepads = &sdata_static.gamepadSystem,
+#endif
 	
 	.vsyncTillFlip = 0,
 	
@@ -313,13 +314,12 @@ struct sData sdata_static =
 	.s_memcardDirHeader = "bu00:",
 	.s_AnyFile = "*",
 	
-	// Hard-code is required,
-	// cause the structs are in BSS, therefore excluded 
-	// by SDATA, so the zeros dont bloat the EXE
-	
-	//.PtrMempack = &sdata_static.mempack[0],
+#if NO_BSS
 	.PtrMempack = 0x800990E4,
-	
+#else
+	.PtrMempack = &sdata_static.mempack[0],
+#endif
+
 	.randomNumber = 100,
 	.unk_8008d428 = 0,
 	.unk_8008d42C = 0,
@@ -350,13 +350,13 @@ struct sData sdata_static =
 	
 	.strcatData1_colon = ":",
 	
-	// Hard-code is required,
-	// cause the structs are in BSS, therefore excluded 
-	// by SDATA, so the zeros dont bloat the EXE
-	
-	//.ptrToMemcardBuffer1 = &sdata_static.????,
+#if NO_BSS
 	.ptrToMemcardBuffer1 = 0x800992e4,
 	.ptrToMemcardBuffer2 = 0x800992e4,
+#else
+	.ptrToMemcardBuffer1 = &sdata_static.memcardBytes[0],
+	.ptrToMemcardBuffer2 = &sdata_static.memcardBytes[0],
+#endif
 	
 	.unk8008d478 = 0x50002,
 	
