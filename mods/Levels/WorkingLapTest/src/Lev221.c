@@ -38,13 +38,10 @@ struct LevelFile
 	int map[(3)+1];
 };
 
-// for whatever reason it's necessary to offset every pointer by -4
 struct LevelFile file =
 {
-	// i don't know what the map section is, other than holding pointers for most level variables
 	.ptrMap = LEV_OFFSETOF(map[0]),
 	
-	// i don't know what the relation between all of these variables is, specifically
 	.level =
 	{
 		.ptr_mesh_info = LEV_OFFSETOF(mInfo),
