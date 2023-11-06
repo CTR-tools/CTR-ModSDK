@@ -157,9 +157,9 @@ void GhostReplay_Init1(void)
 		
 		if(charID == 0xF)
 			ghostDriver->wheelSize = 0;
-		
+
 		// pointer to TrTire, for transparent tires
-		ghostDriver->wheelSprites = &gGT->iconGroup[0xc]->icons[0];
+		ghostDriver->wheelSprites = ICONGROUP_GETICONS(&gGT->iconGroup[0xc]);
 		
 		// advance ghost by one frame,
 		// just so Oxide doesn't block your view

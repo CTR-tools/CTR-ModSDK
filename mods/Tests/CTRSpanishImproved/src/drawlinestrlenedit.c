@@ -403,8 +403,11 @@ LAB_80022598:
 					if (!iconStruct)
 					{
 						if (iconID < sdata->gGT->iconGroup[iconGroupID]->numIcons)
-						{
-							iconStruct = sdata->gGT->iconGroup[iconGroupID]->icons[iconID];
+						{							
+							struct Icon** iconPtrArray =
+								ICONGROUP_GETICONS(sdata->gGT->iconGroup[iconGroupID]);
+							
+							iconStruct = iconPtrArray[iconID];
 						}
 					}
 					if (iconStruct)

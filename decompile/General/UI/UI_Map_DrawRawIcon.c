@@ -18,8 +18,11 @@ void DECOMP_UI_Map_DrawRawIcon(
 
   ptrColor = data.ptrColor[colorID];
 
+  struct Icon** iconPtrArray =
+  	ICONGROUP_GETICONS(sdata->gGT->iconGroup[5]);
+
   DecalHUD_DrawPolyGT4(
-	gGT->iconGroup[5]->icons[iconID],
+	iconPtrArray[iconID],
 	posX, posY,
 	&gGT->backBuffer->primMem,
 	gGT->tileView_UI.ptrOT,

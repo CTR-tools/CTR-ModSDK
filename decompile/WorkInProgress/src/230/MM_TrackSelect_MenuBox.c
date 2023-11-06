@@ -430,22 +430,25 @@ LAB_800b05b8:
 					// pointer to color data of star
 					piVar12 = data.ptrColor[((u_short *)0x800b55c4)[iVar17] << 2];
 
-					DecalHUD_DrawPolyGT4(gGT->iconGroup[5]->icons[7],
-															 iVar11 + 0x104, (int)sVar7 + iVar17 * 8 + 4,
+					struct Icon** iconPtrArray =
+						ICONGROUP_GETICONS(gGT->iconGroup[5]);
 
-															 // pointer to PrimMem struct
-															 &gGT->backBuffer->primMem,
+					DecalHUD_DrawPolyGT4(iconPtrArray[7],
+						iVar11 + 0x104, (int)sVar7 + iVar17 * 8 + 4,
 
-															 // pointer to OT mem
-															 gGT->tileView_UI.ptrOT,
+						// pointer to PrimMem struct
+						&gGT->backBuffer->primMem,
 
-															 // color data
-															 piVar12[0],
-															 piVar12[1],
-															 piVar12[2],
-															 piVar12[3],
+						// pointer to OT mem
+						gGT->tileView_UI.ptrOT,
 
-															 0, FP(1.0));
+						// color data
+						piVar12[0],
+						piVar12[1],
+						piVar12[2],
+						piVar12[3],
+
+						0, FP(1.0));
 				}
 			}
 			// restore levelID

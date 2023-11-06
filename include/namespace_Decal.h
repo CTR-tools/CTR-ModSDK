@@ -166,8 +166,10 @@ struct IconGroup
 	short numIcons;
 
 	// 0x14
-	struct Icon* icons[0]; // yes, zero
+	//struct Icon* icons[0];
 };
+#define ICONGROUP_GETICONS(x) \
+	((unsigned int)x + sizeof(struct IconGroup))
 
 _Static_assert(sizeof(struct TextureLayout) == 0xC);
 _Static_assert(sizeof(struct Icon) == 0x20);

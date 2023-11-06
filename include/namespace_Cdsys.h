@@ -48,8 +48,10 @@ struct XNF
 
 	// 0x54
 	// size = numXAs_total
-	int XaCdPos[0];
+	//int XaCdPos[0];
 };
+#define XNF_GETXACDPOS(x) \
+	((unsigned int)x + sizeof(struct XNF))
 
 struct XaSize
 {

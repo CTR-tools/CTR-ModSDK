@@ -5,6 +5,7 @@ void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str)
 	int lineWidth;
 	int color;
 	u_char **colorPtr;
+	struct GameTracker* gGT = sdata->gGT;
 
 	// orange color
 	color = 0;
@@ -23,19 +24,22 @@ void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str)
 	// get color data
 	colorPtr = (u_char **)&data.ptrColor[color];
 
+	struct Icon** iconPtrArray =
+		ICONGROUP_GETICONS(gGT->iconGroup[4]);
+
 	// Draw left arrow
 	DecalHUD_Arrow2D
 	(
 		// largeFont
-		sdata->gGT->iconGroup[4]->icons[0x38],
+		iconPtrArray[0x38],
 
 		(offsetX - lineWidth) - 0x14, (int)offsetY + 7,
 
 		// pointer to PrimMem struct
-		&sdata->gGT->backBuffer->primMem,
+		&gGT->backBuffer->primMem,
 
 		// pointer to OT memory
-		sdata->gGT->tileView_UI.ptrOT,
+		gGT->tileView_UI.ptrOT,
 
 		// color data
 		*colorPtr[0],
@@ -50,15 +54,15 @@ void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str)
 	DecalHUD_Arrow2D
 	(
 		// largeFont
-		sdata->gGT->iconGroup[4]->icons[0x38],
+		iconPtrArray[0x38],
 
 		(offsetX + lineWidth) + 0x12 , (int)offsetY + 7,
 
 		// pointer to PrimMem struct
-		&sdata->gGT->backBuffer->primMem,
+		&gGT->backBuffer->primMem,
 
 		// pointer to OT memory
-		sdata->gGT->tileView_UI.ptrOT,
+		gGT->tileView_UI.ptrOT,
 
 		// color data
 		*colorPtr[0],

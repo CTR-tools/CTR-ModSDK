@@ -7,10 +7,17 @@ void DECOMP_DecalFont_SetJfontDimensions()
 	struct Icon* jfontBig;
 	struct Icon* jfontSmall;
 	struct Icon* jfontSmall0x18;
+	struct GameTracker* gGT = sdata->gGT;
 	
-	jfontBig = sdata->gGT->iconGroup[0xe]->icons[0];
-	jfontSmall = sdata->gGT->iconGroup[0xf]->icons[0];
-	jfontSmall0x18 = sdata->gGT->iconGroup[0xf]->icons[0x18];
+	struct Icon** iconPtrArray;
+	
+	iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[0xE]);
+	jfontBig = iconPtrArray[0];
+	
+	iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[0xF]);
+	jfontSmall = iconPtrArray[0];
+	jfontSmall0x18 = iconPtrArray[0x18];
+	
 	sdata->font_jfontBigIconData[0] = *(u_int*)&jfontBig->texLayout.u0;
 	sdata->font_jfontBigIconData[1] = *(u_int*)&jfontBig->texLayout.u1;
 	sdata->font_jfontBigIconData[2] = *(u_int*)&jfontBig->texLayout.u2;

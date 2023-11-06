@@ -137,7 +137,7 @@ void RunUpdateHook()
 				driver_Looping = (struct Driver*)ghostTh->object;
 
 				// set tires to trtireAnim, which means "transparent"
-				driver_Looping->wheelSprites = &gGT->iconGroup[0xC]->icons[0];
+				driver_Looping->wheelSprites = ICONGROUP_GETICONS(gGT->iconGroup[0xC]);
 
 				// change instance to transparent
 				ghostTh->inst->flags =
@@ -161,7 +161,7 @@ void RunUpdateHook()
 				driver_Looping = (struct Driver*)ghostTh->object;
 
 				// make them solid
-				driver_Looping->wheelSprites = &gGT->iconGroup[0]->icons[0];
+				driver_Looping->wheelSprites = ICONGROUP_GETICONS(gGT->iconGroup[0]);
 
 				// change instance to solid
 				ghostTh->inst->flags =

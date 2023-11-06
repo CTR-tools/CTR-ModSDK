@@ -137,7 +137,10 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
 
                 starColor = data.ptrColor[((OVR_230.cupSel_StarColorIndex[starIndex]) >> 2)];
 
-                DecalHUD_DrawPolyGT4(gGT->iconGroup[5]->icons[7],
+				struct Icon** iconPtrArray =
+					ICONGROUP_GETICONS(gGT->iconGroup[5]);
+
+                DecalHUD_DrawPolyGT4(iconPtrArray[7],
                                      (startX + (cupIndex & 1) * 0xCA - 0x16),
                                      (startY + ((starIndex >> 4) + 0x10)),
 

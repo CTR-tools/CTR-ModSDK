@@ -322,11 +322,14 @@ void DECOMP_UI_RenderFrame_Racing()
 						// set timer value
 						playerStruct->PickupWumpaHUD.cooldown = partTimeVariable1;
 					}
-
+					
+					struct Icon** iconPtrArray =
+						ICONGROUP_GETICONS(gGT->iconGroup[0xB]);
+			
 					// "wumpaposter" icon group
 					DecalHUD_DrawPolyFT4
 					(
-						gGT->iconGroup[0xB]->icons[0],
+						iconPtrArray[0],
 						(int)wumpaModel_Pos[0],
 						(int)wumpaModel_Pos[1],
 

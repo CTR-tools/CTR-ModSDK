@@ -308,9 +308,12 @@ void CS_Garage_MenuBoxFuncPtr(void)
     // Color data
     ppuVar18 = &data.ptrColor[iVar7];
 
+	struct Icon** iconPtrArray =
+		ICONGROUP_GETICONS(gGT->iconGroup[4]);
+
     // Draw arrow pointing Left
     DecalHUD_Arrow2D(
-        sdata->gGT->iconGroup[4]->icons[0x38],
+        iconPtrArray[0x38],
         0xec - iVar17,
         0xbb,
 
@@ -325,7 +328,7 @@ void CS_Garage_MenuBoxFuncPtr(void)
 
     // Draw arrow pointing Right
     DecalHUD_Arrow2D(
-        sdata->gGT->iconGroup[4]->icons[0x38],
+        iconPtrArray[0x38],
         iVar17 + 0x112,
         0xbb,
 

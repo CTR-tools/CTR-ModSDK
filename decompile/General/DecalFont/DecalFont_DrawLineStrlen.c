@@ -332,9 +332,12 @@ LAB_80022598:
 					// if icon index is less than
 					if ((iconID & 0xffff) < gGT->iconGroup[iconGroupID]->numIcons)
 					{
+						struct Icon** iconPtrArray =
+							ICONGROUP_GETICONS(gGT->iconGroup[iconGroupID]);
+						
 						DECOMP_DecalHUD_DrawPolyGT4
-						(
-							gGT->iconGroup[iconGroupID]->icons[iconID & 0xffff],
+						(						
+							iconPtrArray[iconID & 0xffff],
 
 							posX + pixWidthExtra,
 							posY + pixHeightExtra,
@@ -482,15 +485,18 @@ LAB_80022598:
 					// if icon struct somehow doesn't exist then use fallback
 					if (iconStruct == 0)
 					{
+						struct Icon** iconPtrArray =
+							ICONGROUP_GETICONS(gGT->iconGroup[iconGroupID]);
+						
 						#if BUILD != EurRetail
 						if ((iconIDBackup & 0xffff) < gGT->iconGroup[iconGroupID]->numIcons)
 						{
-							iconStruct = gGT->iconGroup[iconGroupID]->icons[iconIDBackup];
+							iconStruct = iconPtrArray[iconIDBackup];
 						}
 						#else
 						if (iconID < gGT->iconGroup[iconGroupID]->numIcons)
 						{
-							iconStruct = gGT->iconGroup[iconGroupID]->icons[iconID];
+							iconStruct = iconPtrArray[iconID];
 						}
 						#endif
 					}
