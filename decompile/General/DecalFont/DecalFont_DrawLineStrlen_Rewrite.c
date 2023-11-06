@@ -7,12 +7,12 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 	// text is justified left by default
 	if (flags & (JUSTIFY_CENTER | JUSTIFY_RIGHT))
 	{
-		int alignX = DECOMP_DecalFont_GetLineWidthStrlen(str, len, fontType);
+		int alignX = DecalFont_GetLineWidthStrlen(str, len, fontType);
 
 		if (flags & JUSTIFY_CENTER) alignX /= 2;
-	}
 
-	posX -= alignX;
+		posX -= alignX;
+	}
 
 	// bug fix exclusive to versions after USA Retail
 	#if BUILD >= JpnTrial
@@ -37,7 +37,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 		#if BUILD == EurRetail
 
 			int numCharacters = 1;
-			int rotateCharacter = false;
+			int upsideDownCharacter = false;
 
 		#endif
 
@@ -175,25 +175,27 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 			// the following characters make use of additional width and height padding
 			if (*strcopy < 3 || *strcopy == '#' || *strcopy == '$' || *strcopy == '&')
 			{
+				short* characterExtraDimensionsArray = 0;
+
 				if (*strcopy < 3)
 				{
 					// Japanese dakuten and handakuten
 					// unused in NTSC-U and PAL
 					charWidth = 0;
 					iconID = data.font_indentIconID[fontType * 2 + *strcopy - 1];
-					characterExtraDimensionsArray = &data.font_indentPixDimensions[0];
+					characterExtraDimensionsArray = data.font_indentPixDimensions;
 				}
 				if (*strcopy == '#')
 				{
 					// Inverted exclamation mark, used in the Spanish language
-					rotateCharacter = true;
+					upsideDownCharacter = true;
 					iconID = 0x25;
 					characterExtraDimensionsArray = data.font_EurInvertedExclamationMarkData;
 				}
 				if (*strcopy == '$')
 				{
 					// Inverted question mark, used in the Spanish language
-					rotateCharacter = true;
+					upsideDownCharacter = true;
 					iconID = 0x2e;
 					characterExtraDimensionsArray = data.font_EurInvertedExclamationMarkData;
 				}
@@ -231,7 +233,9 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 			#elif BUILD == JpnTrial || BUILD == JpnRetail
 
 				// defined here as a fallback for if the character in question isn't kana
-				u_short kanaID = iconID
+				u_short kanaID = iconID;
+
+				struct Icon* iconStruct = 0;
 
 				// if icon ID goes over 0x7f, then this is a japanese character (i.e. kana)
 				if (iconID > 0x7f)
@@ -247,8 +251,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 
 					iconGroupID = kanaIconGroupID;
 
-					// icon struct, see common.h
-					struct Icon* iconStruct = &sdata->font_icon;
+					iconStruct = &sdata->font_icon;
 
 					if (kanaIconGroupID == 14)
 					{
@@ -261,8 +264,8 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 
 						short whateverThisIs_big = kanaID / 2 & 0x10;
 
-						sdata->font_icon.texLayout.v0 = whateverThisIs + 8;
-						sdata->font_icon.texLayout.v2 = whateverThisIs + 23;
+						sdata->font_icon.texLayout.v0 = whateverThisIs_big + 8;
+						sdata->font_icon.texLayout.v2 = whateverThisIs_big + 23;
 
 						sdata->font_icon.texLayout.tpage = sdata->font_jfontBigIconData.tpage + ((kanaID < 0x40) ^ 1);
 
@@ -314,8 +317,8 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 							sdata->font_icon.texLayout.v2 = data.font_X1Y1data[kanaID * 2] * 8 + 15;
 
 							sdata->font_icon.texLayout.v1 = sdata->font_icon.texLayout.v0;
-							sdata->font_icon.texLayout.x2 = sdata->font_icon.texLayout.x0;
-							sdata->font_icon.texLayout.x3 = sdata->font_icon.texLayout.x1;
+							sdata->font_icon.texLayout.u2 = sdata->font_icon.texLayout.u0;
+							sdata->font_icon.texLayout.u3 = sdata->font_icon.texLayout.u1;
 							sdata->font_icon.texLayout.v3 = sdata->font_icon.texLayout.v2;
 						}
 					}
@@ -329,7 +332,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 				{
 					struct Icon** iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[iconGroupID]);
 
-					DECOMP_DecalHUD_DrawPolyGT4
+					DecalHUD_DrawPolyGT4
 					(						
 						iconPtrArray[iconID],
 
@@ -348,7 +351,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 					);
 				}
 
-			#elif BUILD == JpnTrial || JpnRetail
+			#elif BUILD == JpnTrial || BUILD == JpnRetail
 
 				if (iconStruct == 0)
 				{
@@ -357,7 +360,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 				}
 				if (iconStruct != 0)
 				{
-					DECOMP_DecalHUD_DrawPolyGT4
+					DecalHUD_DrawPolyGT4
 					(						
 						iconStruct,
 
@@ -378,11 +381,13 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 
 			#else // i.e. european build
 
+				struct Icon** iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[iconGroupID]);
+
 				for(; numCharacters > 0; numCharacters--, pixWidthExtra += data.font_EurPixWidthExtra[fontType])
 				{
-					if (rotateCharacter)
+					if (upsideDownCharacter)
 					{
-						DECOMP_DecalHUD_Arrow2D
+						DecalHUD_Arrow2D
 						(
 							iconPtrArray[iconID],
 							
@@ -402,7 +407,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 					}
 					else
 					{
-						DECOMP_DecalHUD_DrawPolyGT4
+						DecalHUD_DrawPolyGT4
 						(
 							iconPtrArray[iconID],
 							

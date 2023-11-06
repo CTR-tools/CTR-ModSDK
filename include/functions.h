@@ -117,6 +117,9 @@ void DebugFont_DrawNumbers(int param_1, u_int param_2, int param_3);
 
 // DecalFont
 
+#if BUILD == JpnRetail
+	u_int DecalFont_boolRacingWheel();
+#endif
 int DecalFont_GetLineWidthStrlen(char* str, short len, short fontType);
 int DecalFont_GetLineWidth(char* str, short fontType);
 void DecalFont_DrawLineStrlen(char* str, short len, int posX, int posY, short fontType, int flags);
