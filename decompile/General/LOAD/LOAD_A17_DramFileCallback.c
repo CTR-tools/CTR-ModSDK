@@ -22,7 +22,7 @@ void DECOMP_LOAD_DramFileCallback(struct LoadQueueSlot* lqs)
 			
 			struct DramPointerMap* dpm = &realFileBuf[ptrMapOffset];
 		
-			DECOMP_LOAD_RunPtrMap(realFileBuf, &dpm->offsets[0], dpm->numBytes>>2);
+			DECOMP_LOAD_RunPtrMap(realFileBuf, (int*)DRAM_GETOFFSETS(dpm), dpm->numBytes>>2);
 			
 			// if overly allocated
 			if(lqs->flags & 1)

@@ -105,16 +105,17 @@ void CS_Credits_Init()
 	memcpy(creditsDst, CLH, CLH->size);
 	
 	creditsBSS->numStrings = creditsDst->numStrings;
-	creditsBSS->ptrStrings = creditsDst->ptrStrings;
+	
+	char** ptrStrings = CREDITSHEADER_GETSTRINGS(creditsDst);
 	
 	for(i = 0; i < creditsBSS->numStrings; i++)
 	{
-		creditsDst->ptrStrings[i] =
-		((unsigned int)creditsDst->ptrStrings[i] + (unsigned int)creditsDst);
+		ptrStrings[i] =
+		((unsigned int)ptrStrings[i] + (unsigned int)creditsDst);
 	}
 	
 	creditsObj->credits_posY = 340;
-	creditsObj->credits_topString = creditsDst->ptrStrings[0x14];
+	creditsObj->credits_topString = ptrStrings[0x14];
 }
 
 // temporary workaround

@@ -23,7 +23,7 @@ void* DECOMP_LOAD_ReadDirectory(char* filename)
 	
 	// undo allocation of 0x4000, only use "needed" size
 	DECOMP_MEMPACK_ReallocMem(
-		offsetof(struct BigHeader, entry) + 
+		sizeof(struct BigHeader) + 
 		sizeof(struct BigEntry) * bh->numEntry
 	);
 	

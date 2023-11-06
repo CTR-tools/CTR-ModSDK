@@ -10,14 +10,20 @@ struct BigHeader
 	int numEntry;
 
 	// "numEntry" number of entries
-	struct BigEntry entry[0];
+	//struct BigEntry entry[0];
 };
+#define BIG_GETENTRY(x) \
+	((unsigned int)x + sizeof(struct BigHeader))
 
 struct DramPointerMap
 {
 	int numBytes;
-	int offsets[0];
+	
+	//int offsets[0];
 };
+
+#define DRAM_GETOFFSETS(x) \
+	((unsigned int)x + sizeof(struct DramPointerMap))
 
 struct VramHeader
 {
@@ -27,8 +33,11 @@ struct VramHeader
 	RECT rect;
 	
 	// 0x14
-	char pixels[0];
+	//char pixels[0];
 };
+
+#define VRAMHEADER_GETPIXLES(x) \
+	((unsigned int)x + sizeof(struct VramHeader))
 
 enum LevVramIndex
 {

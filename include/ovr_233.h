@@ -203,9 +203,13 @@ struct CreditsLevHeader
 {
 	int size;
 	int numStrings;
-	char* ptrStrings[0];
+	
+	//char* ptrStrings[0];
 };
 
+#define CREDITSHEADER_GETSTRINGS(x) \
+	((unsigned int)x + sizeof(struct CreditsLevHeader))
+	
 struct CreditsObj
 {
 	// 800b94bc (000) 

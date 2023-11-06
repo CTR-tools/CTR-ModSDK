@@ -21,11 +21,13 @@ void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfi
 
 	uVar5 = 0;
 
+	struct BigEntry* entry = BIG_GETENTRY(bigfile);
+
 	// get size of file from bigfile header
-	*size = bigfile->entry[subfileIndex].size;
+	*size = entry[subfileIndex].size;
 
 	// bigfile cdpos + subfileOffset
-	CdIntToPos(bigfile->cdpos + bigfile->entry[subfileIndex].offset, aCStack56);
+	CdIntToPos(bigfile->cdpos + entry[subfileIndex].offset, aCStack56);
 
 	// if a destination pointer is not given
 	if (destination == (void *)0x0)
