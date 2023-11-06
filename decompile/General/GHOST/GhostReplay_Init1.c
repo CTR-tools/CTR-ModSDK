@@ -68,21 +68,19 @@ void GhostReplay_Init1(void)
 			// if not opened N Tropy, skip this ghost
 			if ((timeTrialFlags & 1) == 0) continue;
 			
+			void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+			
 			// If you have not beaten N Tropy
 			if ((timeTrialFlags & 2) == 0)
 			{
-				// assign n tropy ghost
-				gh = gGT->level1->ptrSpawnType1->pointers[4];
-				
+				gh = pointers[ST1_NTROPY];	
 				charID = 2;
 			}
 
 			// If you have beaten N Tropy
 			else
 			{
-				// assign oxide ghost
-				gh = gGT->level1->ptrSpawnType1->pointers[5];
-				
+				gh = pointers[ST1_NOXIDE];	
 				charID = 3;
 			}
 		}

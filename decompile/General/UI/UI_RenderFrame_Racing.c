@@ -139,7 +139,8 @@ void DECOMP_UI_RenderFrame_Racing()
 
 	if (gGT->level1->ptrSpawnType1 != 0)
 	{
-		levPtrMap = gGT->level1->ptrSpawnType1->pointers[0];
+		void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+		levPtrMap = pointers[ST1_MAP];
 	}
 
 	// If you are not in Relic Race, and not in battle mode,

@@ -20,7 +20,7 @@ u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, sh
 
   if (index < currPos)
   {
-    ptrCam = sdata->gGT->level1->ptrSpawnType1->pointers[3];
+    ptrCam = sdata->gGT->level1->ptrSpawnType1->pointers[ST1_CAMERA_PATH];
 
     uVar3 = (u_int)ptrCam[0];
     uVar7 = ptrCam[1];

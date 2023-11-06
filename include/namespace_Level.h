@@ -113,10 +113,13 @@ struct AnimTex
 	u_short frameIndex;
 
 	// 0xC
-	// amount of elements in array is same as numFrames
-	// ptrarray[numFrames] leads to the next AnimTex struct in the ptr_anim_tex array
-	struct IconGroup4* ptrarray[0];
+	// size = numFrames
+	// After this array is the next AnimTex
+	//struct IconGroup4* ptrarray[0];
 };
+
+#define ANIMTEX_GETARRAY(x) \
+	((unsigned int)x + sizeof(struct AnimTex))
 
 struct PVS
 {
@@ -406,19 +409,25 @@ struct mesh_info
 	// 0x20 bytes large
 };
 
+enum ST1
+{
+	ST1_MAP=0,
+	ST1_SPAWN=1,
+	ST1_CAMERA_EOR,
+	ST1_CAMERA_PATH,
+	ST1_NTROPY,
+	ST1_NOXIDE,
+	ST1_CREDITS
+};
+
 struct SpawnType1
 {
 	int count;
 	
-	// [0] - map icon
-	// [1] - level spawn data (seal, plant, etc)
-	// [2] - end-of-race camera data
-	// [3] - camera point-path (fly-in, and adv garage)
-	// [4] - GhostHeader* n tropy
-	// [5] - GhostHeader* oxide
-	// [6] - credits
-	void* pointers[0];
+	//void* pointers[0];
 };
+#define ST1_GETPOINTERS(x) \
+	((unsigned int)x + sizeof(struct SpawnType1))
 
 struct SpawnType2
 {

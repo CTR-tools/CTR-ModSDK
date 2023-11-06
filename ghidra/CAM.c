@@ -1031,7 +1031,7 @@ undefined4 FUN_80018ba0(int param_1,ushort *param_2,ushort *param_3,ushort *para
 
     if (sVar4 < sVar1)
 	{
-	  // LEV -> ptrSpawnType1 -> pointers[3]
+	  // LEV -> ptrSpawnType1 -> pointers[3] -- ST1_CAMERA_PATH
       puVar5 = *(ushort **)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) + 0x10);
 
 	  uVar3 = (uint)*puVar5;
@@ -2791,7 +2791,7 @@ void FUN_8001b334(int param_1)
   // LEV -> ptrSpawnType1 -> numPointers
   if (**(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) < 3) goto switchD_8001b678_caseD_1;
 
-  // LEV -> ptrSpawnType1 -> pointers[2]
+  // LEV -> ptrSpawnType1 -> pointers[2] -- ST1_CAMERA_EOR
   psVar12 = (short *)(*(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))[3];
 
   // number of nodes for end-of-race camera,

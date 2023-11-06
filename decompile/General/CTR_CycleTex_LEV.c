@@ -14,9 +14,13 @@ void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer)
 						
 		frameIndex = frameIndex % curAnimTex->numFrames;
 		curAnimTex->frameIndex = frameIndex;
-		curAnimTex->ptrActiveTex = curAnimTex->ptrarray[frameIndex];
+		
+		struct IconGroup4** ptrArray = ANIMTEX_GETARRAY(curAnimTex);
+		
+		// Save new frame
+		curAnimTex->ptrActiveTex = ptrArray[frameIndex];
 		
 		// Go to next AnimTex, which comes after this AnimTex's ptrarray
-		curAnimTex = &curAnimTex->ptrarray[curAnimTex->numFrames];
+		curAnimTex = &ptrArray[curAnimTex->numFrames];
 	}
 }

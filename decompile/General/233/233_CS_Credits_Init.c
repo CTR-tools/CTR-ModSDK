@@ -25,7 +25,9 @@ void CS_Credits_Init()
 	gGT = sdata->gGT;
 	advProg = &sdata->advProgress;
 	creditsObj = &creditsBSS->creditsObj;
-	CLH = gGT->level1->ptrSpawnType1->pointers[6];
+	
+	void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+	CLH = pointers[ST1_CREDITS];
 	
 	creditsBSS->DancerThread = 0;
 	

@@ -457,7 +457,8 @@ void DECOMP_RB_Plant_LInB(struct Instance* inst)
 	if(ptrSpawnType1->count > 0)
 	{
 		// puts plants on separate cycles
-		metaArray = (short*)ptrSpawnType1->pointers[1];
+		void** pointers = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
+		metaArray = (short*)pointers[ST1_SPAWN];
 		
 		plantID = inst->name[6] - '0';
 		t->cooldownFrameCount = metaArray[plantID*2+0];
