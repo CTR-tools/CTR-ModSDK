@@ -68,9 +68,6 @@
 #endif
 
 #include <decomp_functions.h>
-
-#ifndef REBUILD_PC
 #include <gpu.h>
-#endif
 
 #endif

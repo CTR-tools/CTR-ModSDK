@@ -24,7 +24,11 @@
 #define true 1
 #define false 0
 
+#ifndef REBUILD_PC
 #define force_inline static inline __attribute__((always_inline))
+#else
+#define force_inline static
+#endif
 
 #define OFFSETOF(TYPE, ELEMENT) \
 	((unsigned int)&(((TYPE *)0)->ELEMENT))
