@@ -1369,7 +1369,7 @@ uint FUN_800293b8(void)
 
                            (uint)*(ushort *)
 
-							  // howl_spuAddrs[sampleBlockHeader->spuIndex[iVar3]].size
+							  // howl_spuAddrs[sampleBlockHeader->spuIndexArr[iVar3]].size
 							  (
 								// sampleBlock->???->size?
 								(uint)*(ushort *)((int)DAT_8008d784 + iVar3 + 2) * 4 +
@@ -1438,7 +1438,7 @@ uint FUN_800293b8(void)
 		  // loop through all samples in the block
           do
 		  {
-			// howl_spuAddrs[sampleBlock->spuIndex[iVar3]]
+			// howl_spuAddrs[sampleBlock->spuIndexArr[iVar3]]
             psVar5 = (short *)((uint)DAT_8008d784[iVar3 + 1] * 4 + iVar2);
 
 			// if not specified

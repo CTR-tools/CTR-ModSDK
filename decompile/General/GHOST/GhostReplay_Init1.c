@@ -18,6 +18,7 @@ void GhostReplay_Init1(void)
 	struct GhostHeader* gh;
 	struct GhostTape* tape;
 	int charID;
+	char* recordBuffer;
 	
 	struct GameTracker *gGT = sdata->gGT;
 	
@@ -33,9 +34,10 @@ void GhostReplay_Init1(void)
 	// In the future, this can move to GhostTape_Start, when byte budget allows
 	
 	gh = MEMPACK_AllocMem(0x3e00/*, "ghost record buffer"*/);
+	recordBuffer = GHOSTHEADER_GETRECORDBUFFER(gh);
 	sdata->GhostRecording.ptrGhost = gh;
-	sdata->GhostRecording.ptrStartOffset = &gh->recordBuffer[0];
-	sdata->GhostRecording.ptrEndOffset = &gh->recordBuffer[0x3DD4];
+	sdata->GhostRecording.ptrStartOffset = &recordBuffer[0];
+	sdata->GhostRecording.ptrEndOffset = &recordBuffer[0x3DD4];
 
 	// === Replay Buffer ===
 	// 0: human ghost
@@ -86,12 +88,13 @@ void GhostReplay_Init1(void)
 		}
 		
 		sdata->boolGhostsDrawing = 1;
+		recordBuffer = GHOSTHEADER_GETRECORDBUFFER(gh);
 
 		tape->gh = gh;
 		tape->gh_again = gh;
 		tape->constDEADC0ED = 0xDEADC0ED;
-		tape->ptrStart = &gh->recordBuffer[0];
-		tape->ptrEnd = &gh->recordBuffer[gh->size];
+		tape->ptrStart = &recordBuffer[0];
+		tape->ptrEnd = &recordBuffer[gh->size];
 		tape->ptrCurr = tape->ptrStart;
 		tape->timeElapsedInRace = 0;
 		tape->timeInPacket32_backup = 0;

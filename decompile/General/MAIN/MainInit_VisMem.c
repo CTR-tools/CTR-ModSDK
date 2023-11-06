@@ -5,7 +5,7 @@ void DECOMP_MainInit_VisMem(struct GameTracker* gGT) {
 	struct VisMem* visMem = gGT->level1->visMem;
 	if(visMem == NULL) return;
 
-	visMem = gGT->visMem1;
+	gGT->visMem1 = visMem;
     for (int i = 0; i < gGT->numPlyrCurrGame; i++) 
 	{
         visMem->visLeafSrc[i] = 0;

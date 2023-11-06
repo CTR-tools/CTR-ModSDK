@@ -62,9 +62,11 @@ void DECOMP_SongPool_Start(
 	song->vol_StepRate = 1;
 	song->numSequences = 0;
 	
+	short* seqOffsetArr = SONGHEADER_GETSEQOFFARR(csh);
+	
 	// first note header comes after end of CseqSongHeader
 	// and the full array of seqOffsets within the header
-	cnhFirst = &csh->seqOffsetArr[csh->numSeqs];
+	cnhFirst = &seqOffsetArr[csh->numSeqs];
 	
 	// align up by 4
 	if(((int)cnhFirst & 2) != 0) cnhFirst += 2;
@@ -72,7 +74,7 @@ void DECOMP_SongPool_Start(
 	
 	for(i = 0; i < csh->numSeqs; i++)
 	{
-		cnhCurr = &cnhFirst[csh->seqOffsetArr[i]];
+		cnhCurr = &cnhFirst[seqOffsetArr[i]];
 		
 		seqCurr = SongPool_FindFreeChannel();
 		if(seqCurr == NULL) continue;
@@ -123,7 +125,7 @@ void DECOMP_SongPool_Start(
 		seqCurr->NoteLength = 0;
 		seqCurr->NoteTimeElapsed = 0;
 		
-		seqCurr->firstNote = &cnhCurr->notes[0];
+		seqCurr->firstNote = NOTEHEADER_GETNOTES(cnhCurr);
 		
 		seqCurr->currNote = 
 			howl_GetNextNote(seqCurr->firstNote, &seqCurr->NoteLength);

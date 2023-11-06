@@ -41,11 +41,8 @@ int DECOMP_Bank_AssignSpuAddrs()
 		
 		for(i = 0; i < sdata->ptrSampleBlock1->numSamples; i++)
 		{
-			sdata->audioAllocSize +=
-				sdata->howl_spuAddrs
-				[
-					sdata->ptrSampleBlock1->spuIndex[i]
-				].spuSize;
+			short* spuIndexArr = SBHEADER_GETARR(sdata->ptrSampleBlock1);
+			sdata->audioAllocSize += sdata->howl_spuAddrs[spuIndexArr[i]].spuSize;
 		}
 		
 		// convert bit-shifted count to 
@@ -106,11 +103,8 @@ int DECOMP_Bank_AssignSpuAddrs()
 		
 		for(i = 0; i < sdata->ptrSampleBlock1->numSamples; i++)
 		{	
-			sae =
-				&sdata->howl_spuAddrs
-				[
-					sdata->ptrSampleBlock1->spuIndex[i]
-				];
+			short* spuIndexArr = SBHEADER_GETARR(sdata->ptrSampleBlock1);
+			sae = &sdata->howl_spuAddrs[spuIndexArr[i]];
 				
 			if(sae->spuAddr == 0)
 			{

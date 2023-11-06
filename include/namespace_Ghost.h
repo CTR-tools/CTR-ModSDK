@@ -98,5 +98,8 @@ struct GhostHeader
 	char emptyPadding[0x14];
 	
 	// 0x28
-	char recordBuffer[0]; // yes, zero bytes
+	//char recordBuffer[0]; // yes, zero bytes
 };
+
+#define GHOSTHEADER_GETRECORDBUFFER(x) \
+	((unsigned int)x + sizeof(struct GhostHeader))
