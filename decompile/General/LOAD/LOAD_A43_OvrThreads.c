@@ -19,6 +19,8 @@ void DECOMP_LOAD_OvrThreads(unsigned int param_1)
 	// if new Threads overlay needs to load
     if ((unsigned int) sdata->gGT->overlayIndex_Threads != param_1)
     {
+
+#ifndef REBUILD_PC
         sdata->load_inProgress = 1;
 
 		// gets overwritten in overlay callback,
@@ -38,6 +40,9 @@ void DECOMP_LOAD_OvrThreads(unsigned int param_1)
 			data.overlayCallbackFuncs[param_1]
 			#endif
 		);
+#else
+		sdata->gGT->overlayIndex_Threads = param_1;
+#endif
     }
     return;
 }
