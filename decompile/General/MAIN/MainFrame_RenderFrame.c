@@ -48,7 +48,6 @@ void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 void AH_WarpPad_AllWarppadNum();
 void MM_Title_SetTrophyDPP();
-void BreakDraw();
 u_int MM_Video_CheckIfFinished(int param_1);
 
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)

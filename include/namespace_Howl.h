@@ -7,6 +7,7 @@ struct SndVolume
 };
 #endif
 
+#ifndef REBUILD_PC
 // from TOMB5, not from psyq
 // https://github.com/TOMB5/TOMB5/blob/master/EMULATOR/LIBSPU.H
 typedef struct {
@@ -19,6 +20,7 @@ typedef struct {
     long delay;			/* Delay Time  (ECHO, DELAY only)   */
     long feedback;		/* Feedback    (ECHO only)          */
 } SpuReverbAttr;
+#endif
 
 // similar to SndRegisterAttr in psyq libsnd.h
 struct ChannelAttr
@@ -277,6 +279,7 @@ struct SongNoteHeader
 #define NOTEHEADER_GETNOTES(x) \
 	((unsigned int)x + sizeof(struct SongNoteHeader))
 
+#if 0
 // AKA: SongNote
 struct SongOpcode
 {
@@ -297,6 +300,7 @@ struct SongOpcode
 	
 	// size -- unk
 };
+#endif
 
 struct SongSeq
 {

@@ -4810,6 +4810,7 @@ struct sData
 #endif
 };
 
+#ifndef REBUILD_PC
 // ".rData"
 // ram:80010000-ram:800123df
 // constant, initialized by compiler
@@ -4837,6 +4838,11 @@ extern struct BSS bss;
 
 // optimal use for modding
 register struct sData* sdata asm("$gp");
+#else
+struct Data data;
+struct sData sdata_static;
+struct sData* sdata = &sdata_static;
+#endif
 
 // OVR1
 // 8009f6fc - 800a0cb8

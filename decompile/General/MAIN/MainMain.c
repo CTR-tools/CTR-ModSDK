@@ -340,7 +340,7 @@ FinishLoading:
 						gGT->numPlyrNextGame = 1;
 						sdata->mainMenuState = 0;
 
-						LAB_8003ce08:
+						LAB_8003ce08: ;
 #ifndef REBUILD_PS1
 						MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 #endif
@@ -538,8 +538,14 @@ void StateZero()
 	VSync(0);
 	DECOMP_GAMEPAD_GetNumConnected(sdata->gGamepads);
 
+#ifndef REBUILD_PC
+#define BIGPATH rdata.s_PathTo_Bigfile
+#else
+#define BIGPATH "\\BIGFILE.BIG;1"
+#endif
+
 	// Get CD Position fo BIGFILE
-	sdata->ptrBigfile1 = DECOMP_LOAD_ReadDirectory(rdata.s_PathTo_Bigfile);
+	sdata->ptrBigfile1 = DECOMP_LOAD_ReadDirectory(BIGPATH);
 	
 	#ifndef FastBoot
 	// English=1

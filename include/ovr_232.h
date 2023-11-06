@@ -12,9 +12,11 @@ struct BossGarageDoor
 	// 0x14 bytes large
 };
 
+#if 0
 struct AdvPause {
 
 };
+#endif
 
 enum WoodDoorCamFlags
 {

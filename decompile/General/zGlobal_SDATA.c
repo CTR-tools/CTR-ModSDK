@@ -1,7 +1,7 @@
 
-// Only PS1 Rebuild, not PC Rebuild,
-// also need to fix pointers in sdata_static for PC Rebuild
+#ifndef REBUILD_PC
 #define NO_BSS 1
+#endif
 
 #include <common.h>
 

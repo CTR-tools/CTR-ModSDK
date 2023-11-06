@@ -288,6 +288,7 @@ struct OVert
 
 	// 2 bytes large,
 	// always in pairs of two
+	short data[2];
 };
 
 struct WaterVert

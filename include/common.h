@@ -1,7 +1,10 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#ifndef REBUILD_PC
 #include <gccHeaders.h>
+#endif
+
 #include <macros.h>
 #include <stdbool.h>
 
@@ -59,8 +62,15 @@
 #include <ovr_233.h>
 #include <math.h>
 #include <regionsEXE.h>
+
+#ifndef REBUILD_PC
 #include <functions.h>
+#endif
+
 #include <decomp_functions.h>
+
+#ifndef REBUILD_PC
 #include <gpu.h>
+#endif
 
 #endif

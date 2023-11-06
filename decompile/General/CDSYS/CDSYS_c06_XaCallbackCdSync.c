@@ -6,7 +6,7 @@ void DECOMP_CDSYS_XaCallbackCdSync(char result)
 	
 	if(result == CdlComplete)
 	{
-		comstr = CdComstr() - 0x15;
+		comstr = CdComstr(result) - 0x15;
 		
 		if(comstr < 2)
 		{

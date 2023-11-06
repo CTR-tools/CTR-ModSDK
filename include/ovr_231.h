@@ -250,10 +250,12 @@ struct CtrLetter
 	// 0x8 bytes large
 };
 
+#if 0
 struct StartBanner
 {
 	// 0x4 bytes large
 };
+#endif
 
 struct Armadillo
 {
@@ -349,10 +351,12 @@ struct FlameJet
 	// 0x14 bytes large
 };
 
+#if 0
 struct Fruit
 {
 	// 0x4 bytes large
 };
+#endif
 
 struct Minecart
 {
