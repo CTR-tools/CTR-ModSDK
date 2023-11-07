@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINSG
 #define REBUILD_PC
-#define USE_32_BIT_ADDR
 #include "Library/LIBCD.H"
 #include "Library/LIBGPU.H"
 #include "Library/LIBSPU.H"
