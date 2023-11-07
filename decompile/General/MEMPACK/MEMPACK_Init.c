@@ -17,6 +17,7 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	//			ghidra wont read
 #ifdef REBUILD_PC
 	ptrMempack->start = &memory[0];
+	memset(memory, 0, 2*1024*1024);
 #else
 	ptrMempack->start = (void *)0x800ba9f0;
 #endif

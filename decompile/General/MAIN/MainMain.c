@@ -478,10 +478,7 @@ void StateZero()
 	
 	ResetGraph(0);
 	SetGraphDebug(0);
-	
-#ifndef REBUILD_PC
 	DECOMP_MainInit_VRAMClear();
-#endif
 
 	SetDispMask(1);
 	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
@@ -607,11 +604,15 @@ void StateZero()
 	
 	// "Start your engines, for Sony Computer..."
 	DECOMP_CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
+
+#ifndef REBUILD_PC
 	while (sdata->XA_State != 0)
 	{
 		// WARNING: Read-only address (ram, 0x8008d888) is written
 		DECOMP_CDSYS_XAPauseAtEnd();
 	}
+#endif
+
 	#endif
 	
 	DECOMP_DecalGlobal_Clear(gGT);

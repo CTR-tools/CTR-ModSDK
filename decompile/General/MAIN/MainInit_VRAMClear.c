@@ -1,13 +1,24 @@
 #include <common.h>
 
+#ifdef REBUILD_PC
+struct
+{
+	int a;
+	short b1, b2, c, d, e, f;
+} commands;
+#endif
+
 void DECOMP_MainInit_VRAMClear()
 {
 	DRAWENV drawEnv;
+
+#ifndef REBUILD_PC
 	struct
 	{
 		int a;
 		short b1, b2, c, d, e, f;
 	} commands;
+#endif
 	
 	SetDefDrawEnv(&drawEnv,0,0,0x400,0x200);
 	drawEnv.dfe = '\x01';

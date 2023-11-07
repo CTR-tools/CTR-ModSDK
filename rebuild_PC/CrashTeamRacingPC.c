@@ -36,5 +36,8 @@ int main()
 	void PsyX_Initialise(char* appName, int width, int height, int fullscreen);
 	PsyX_Initialise("CTRPC", 640, 480, 0);
 
+	void PsyX_CDFS_Init(const char* imageFileName, int track /*= 0*/, int sectorSize /*= 0*/);
+	PsyX_CDFS_Init("ctr-u.bin", 0, 0);
+
 	return DECOMP_main();
 }

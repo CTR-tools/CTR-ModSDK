@@ -64,7 +64,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// Load Intro TIM for Copyright Page from VRAM file
 				DECOMP_LOAD_VramFile(bigfile, 0x1fe, 0, &vramSize, 0xffffffff);
 				DECOMP_MainInit_VRAMDisplay();
-
+				
 				gGT->db[0].drawEnv.isbg = 0;
 				gGT->db[1].drawEnv.isbg = 0;
 			}

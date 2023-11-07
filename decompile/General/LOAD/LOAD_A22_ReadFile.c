@@ -60,6 +60,9 @@ void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfi
 	while ((uVar5 == 0 || (!bVar1)))
 	{
 		uVar5 = CdControl(CdlSetloc, (u_char *)aCStack56, auStack48);
+#ifdef REBUILD_PC
+		uVar5 = 1;
+#endif
 
 		// If no callback function pointer is given
 		if (callback == 0)
