@@ -97,3 +97,4 @@ void DECOMP_TitleFlag_BeginTransition(int direction);
 void DECOMP_TitleFlag_SetFullyOnScreen();
 void DECOMP_TitleFlag_SetFullyOffScreen();
 void DECOMP_RCNT_Init();
+void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short posY, short fontType, int flags);
