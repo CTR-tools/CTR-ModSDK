@@ -1,5 +1,9 @@
 #include <common.h>
 
+#ifdef REBUILD_PC
+char memory[2*1024*1024];
+#endif
+
 void DECOMP_MEMPACK_Init(int ramSize)
 {
 	struct Mempack* ptrMempack;
@@ -11,7 +15,11 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	// To Do: make this dynamic depending on OVR Region 3,
 	// 			like it is in the original assembly that
 	//			ghidra wont read
+#ifdef REBUILD_PC
+	ptrMempack->start = &memory[0];
+#else
 	ptrMempack->start = (void *)0x800ba9f0;
+#endif
 
 	// Set pointer to end of CTR Memory allocation
 	// It adds so much so that it becomes 801FF800

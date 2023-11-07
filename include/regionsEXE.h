@@ -4810,12 +4810,13 @@ struct sData
 #endif
 };
 
-#ifndef REBUILD_PC
 // ".rData"
 // ram:80010000-ram:800123df
 // constant, initialized by compiler
 // switch jmp pointers, string parameters, etc
+#ifndef REBUILD_PC
 extern struct rData rdata;
+#endif
 
 // .text
 // ram:800123e0-ram:8008099f
@@ -4836,11 +4837,10 @@ extern struct sData sdata_static;
 // 0x8008d668 - 0x8009f6fc
 extern struct BSS bss;
 
+#ifndef REBUILD_PC
 // optimal use for modding
 register struct sData* sdata asm("$gp");
 #else
-struct Data data;
-struct sData sdata_static;
 struct sData* sdata = &sdata_static;
 #endif
 

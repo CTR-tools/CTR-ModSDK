@@ -256,6 +256,7 @@ struct Data data =
 		.name = data.s_XA_ENG_GAME
 	},
 	
+#ifndef REBUILD_PC
 	.MetaDataModels =
 	{
 		// 0x00 - NO_FUNC
@@ -954,6 +955,7 @@ struct Data data =
 		// 0xe1 - STATIC_GNORMALZ
 		SET_MDM(0,AH_Sign_LInB,0),
 	},
+#endif
 
 	.ptrRenderedQuadblockDestination_forEachPlayer =
 	{
@@ -1697,9 +1699,7 @@ struct Data data =
 			.output = BTN_R3
 		},
 		
-		{
-			// null terminator
-		},
+		//{} - null
 	},
 	
 	.reverbParams =
@@ -1834,6 +1834,7 @@ struct Data data =
 	},
 	#endif
 	
+#ifndef REBUILD_PC
 	.opcodeFunc =
 	{
 		DECOMP_cseq_opcode00_empty, // should remove
@@ -1848,6 +1849,7 @@ struct Data data =
 		DECOMP_cseq_opcode09,
 		DECOMP_cseq_opcode0a
 	},
+#endif
 	
 	.opcodeOffset = 
 	{
@@ -3299,7 +3301,7 @@ struct Data data =
 	.kartHwlPath = "\\sounds\\kart.hwl;1",
 	
 	// empty
-	.PtrClipBuffer = {},
+	//.PtrClipBuffer = {},
 	
 	#if BUILD >= UsaRetail
 		#if BUILD <= JpnRetail
@@ -4402,6 +4404,7 @@ struct Data data =
 		9,6,3,1,0,0,0,0
 	},
 	
+#ifndef REBUILD_PC
 	// By default, can NOT remove rdata name_Debug,
 	// the strings are needed for model lookup
 	.MetaDataCharacters =
@@ -4535,6 +4538,7 @@ struct Data data =
 			.engineID = 0,
 		}
 	},
+#endif
 
 	.characterIDs =
 	{
@@ -6061,7 +6065,7 @@ struct Data data =
 	.bakedGteMath =
 	{
 		// first one is empty
-		{},
+		{0, 0},
 		
 		{&data.matArr01[0], 0xB},
 		{&data.matArr02[0], 0x1},
@@ -6231,7 +6235,7 @@ struct Data data =
 		},
 		
 		// null terminator
-		{},
+		//{},
 	},
 	
 	.emSet_GrassL =
@@ -6403,7 +6407,7 @@ struct Data data =
 		},
 		
 		// null terminator
-		{},
+		//{},
 	},
 		
 	.emSet_GrassR =
@@ -6575,7 +6579,7 @@ struct Data data =
 		},
 		
 		// null terminator
-		{},
+		//{},
 	},
 	
 	.emSet_SnowLR =
@@ -6673,7 +6677,7 @@ struct Data data =
 		},
 		
 		// null terminator
-		{},
+		//{},
 	},
 
 	.MetaDataTerrain =
@@ -7095,7 +7099,7 @@ struct Data data =
 		},
 		
 		// null
-		[6] = {},
+		//[6] = {},
 	},
 	
 	.emSet_Exhaust_High = 
@@ -7234,7 +7238,7 @@ struct Data data =
 		},
 		
 		// null
-		[7] = {},
+		//[7] = {},
 	},
 	
 	.emSet_Exhaust_Med = 
@@ -7373,7 +7377,7 @@ struct Data data =
 		},
 		
 		// null
-		[7] = {},
+		//[7] = {},
 	},
 	
 	.emSet_Exhaust_Low = 
@@ -7512,7 +7516,7 @@ struct Data data =
 		},
 		
 		// null
-		[7] = {},
+		//[7] = {},
 	},
 	
 	.emSet_GroundSparks =
@@ -7671,7 +7675,7 @@ struct Data data =
 		},
 		
 		// null
-		[8] = {},
+		//[8] = {},
 	},
 	
 	.emSet_WallSparks =
@@ -7830,7 +7834,7 @@ struct Data data =
 		},
 		
 		// null
-		[8] = {},
+		//[8] = {},
 	},
 	
 	.emSet_MudSplash =
@@ -8009,7 +8013,7 @@ struct Data data =
 		},
 		
 		// null
-		[9] = {},
+		//[9] = {},
 	},
 	
 	.emSet_BurnSmoke =
@@ -8148,7 +8152,7 @@ struct Data data =
 		},
 		
 		// null
-		[7] = {},
+		//[7] = {},
 	},
 	
 	.emSet_Falling =
@@ -8247,7 +8251,7 @@ struct Data data =
 		},
 		
 		// null
-		[5] = {},
+		//[5] = {},
 	},
 	
 	.RNG_itemSetRace1 = 
@@ -8508,7 +8512,7 @@ struct Data data =
 		},
 		
 		// null
-		[10] = {},
+		//[10] = {},
 	},
 	
 	// 0x1C
@@ -8648,7 +8652,7 @@ struct Data data =
 		},
 		
 		// null
-		[7] = {},
+		//[7] = {},
 		
 		[8] =
 		{
@@ -8824,7 +8828,7 @@ struct Data data =
 		},
 		
 		// null
-		[17] = {},
+		//[17] = {},
 		
 		[18] =
 		{
@@ -9000,7 +9004,7 @@ struct Data data =
 		},
 		
 		// null
-		[27] = {}
+		//[27] = {}
 	},
 	
 	// 0x8
@@ -9140,7 +9144,7 @@ struct Data data =
 		},
 		
 		// null
-		[7] = {},
+		//[7] = {},
 	},
 	
 	// .confetti = {}

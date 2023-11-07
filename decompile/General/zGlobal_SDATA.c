@@ -68,7 +68,7 @@ struct sData sdata_static =
 	
 	.trafficLightsTimer_prevFrame = 0,
 	
-	.pause_VRAM_Backup_PrimMem = {},
+	//.pause_VRAM_Backup_PrimMem = {},
 	.pause_backup_renderFlags = 0,
 	.pause_state = 0,
 	
@@ -230,7 +230,7 @@ struct sData sdata_static =
 	.s_proto8 = "proto8",
 	
 	// all zeros
-	.finalLapTextTimer = {},
+	//.finalLapTextTimer = {},
 	
 	#if BUILD >= UsaRetail
 	.TurboDisplayPos_Only1P = 0,
