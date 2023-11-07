@@ -96,7 +96,9 @@ void DECOMP_LOAD_NextQueuedFile()
 		// some other place to store Readfile
 		if(curr->flags & 1)
 		{
+#ifndef REBUILD_PC
 			DECOMP_MEMPACK_PopState();
+#endif
 		}
 		
 		sdata->queueReady = 1;
