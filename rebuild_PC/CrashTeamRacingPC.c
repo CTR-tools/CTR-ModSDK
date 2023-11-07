@@ -39,5 +39,12 @@ int main()
 	void PsyX_CDFS_Init(const char* imageFileName, int track /*= 0*/, int sectorSize /*= 0*/);
 	PsyX_CDFS_Init("ctr-u.bin", 0, 0);
 
+	void PsyX_SetSwapInterval(int);
+	void PsyX_EnableSwapInterval(int);
+
+	// set to 30 FPS VSync
+	PsyX_SetSwapInterval(2);
+	PsyX_EnableSwapInterval(1);
+
 	return DECOMP_main();
 }
