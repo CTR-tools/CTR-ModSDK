@@ -67,8 +67,9 @@ void DECOMP_LOAD_NextQueuedFile()
 		}
 		
 		sdata->queueLength--;
+
+#ifndef REBUILD_PC
 	}
-	
 	if(
 		// two frames after end of loading
 		(sdata->frameWhenLoadingFinished != 0) &&
@@ -76,6 +77,11 @@ void DECOMP_LOAD_NextQueuedFile()
 	)
 	{
 		struct LoadQueueSlot* curr = &data.currSlot;
+#endif
+
+#ifdef REBUILD_PC
+		DECOMP_LOAD_ReadFileASyncCallback(CdlComplete);
+#endif
 		
 		// Use callback if present
 		if(curr->callback.funcPtr != 0)

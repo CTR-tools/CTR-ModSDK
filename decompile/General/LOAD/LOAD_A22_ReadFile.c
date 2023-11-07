@@ -86,7 +86,10 @@ void * DECOMP_LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, int subfi
 
 		uVar2 = CdRead(*size + 0x7ffU >> 0xb,buf,0x80);
 		uVar5 = uVar5 & uVar2;
+
+#ifndef REBUILD_PC
 		if (callback == 0)
+#endif
 		{
 			iVar3 = CdReadSync(0,(u_char *)0x0);
 			bVar1 = iVar3 == 0;
