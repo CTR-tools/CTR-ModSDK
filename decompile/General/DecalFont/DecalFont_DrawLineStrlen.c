@@ -7,7 +7,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 	// text is justified left by default
 	if (flags & (JUSTIFY_CENTER | JUSTIFY_RIGHT))
 	{
-		int alignX = DecalFont_GetLineWidthStrlen(str, len, fontType);
+		int alignX = DECOMP_DecalFont_GetLineWidthStrlen(str, len, fontType);
 
 		if (flags & JUSTIFY_CENTER) alignX /= 2;
 
@@ -333,7 +333,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 				{
 					struct Icon** iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[iconGroupID]);
 
-					DecalHUD_DrawPolyGT4
+					DECOMP_DecalHUD_DrawPolyGT4
 					(						
 						iconPtrArray[iconID],
 
