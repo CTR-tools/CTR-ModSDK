@@ -82,7 +82,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 				// japan retail adds support for the Mad Catz MC2 Racing Wheel (probably the best thing Naughty Dog added to this version to be honest)
 				// this replaces the regular face button characters with ones that match the buttons on the steering wheel and recolors them accordingly
 
-				short isRacingWheel = DecalFont_boolRacingWheel();
+				short isRacingWheel = DECOMP_DecalFont_boolRacingWheel();
 
 				if (!(isRacingWheel))
 				{
@@ -361,7 +361,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 				}
 				if (iconStruct != 0)
 				{
-					DecalHUD_DrawPolyGT4
+					DECOMP_DecalHUD_DrawPolyGT4
 					(						
 						iconStruct,
 
@@ -388,7 +388,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 				{
 					if (upsideDownCharacter)
 					{
-						DecalHUD_Arrow2D
+						DECOMP_DecalHUD_Arrow2D
 						(
 							iconPtrArray[iconID],
 							
@@ -408,7 +408,7 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 					}
 					else
 					{
-						DecalHUD_DrawPolyGT4
+						DECOMP_DecalHUD_DrawPolyGT4
 						(
 							iconPtrArray[iconID],
 							
