@@ -31,8 +31,6 @@ void DECOMP_CDSYS_SetMode_StreamData()
 	sdata->discMode = DM_DATA;	
 	sdata->XA_State = 0;
 	
-#ifndef REBUILD_PC
 	CdSyncCallback(0);
 	CdReadyCallback(0);
-#endif
 }

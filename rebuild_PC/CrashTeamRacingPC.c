@@ -33,5 +33,8 @@ void SpuSetCommonCDReverb(long cd_reverb) {}
 
 int main()
 {
+	void PsyX_Initialise(char* appName, int width, int height, int fullscreen);
+	PsyX_Initialise("CTRPC", 640, 480, 0);
+
 	return DECOMP_main();
 }

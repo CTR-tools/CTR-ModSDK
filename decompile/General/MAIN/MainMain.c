@@ -479,7 +479,9 @@ void StateZero()
 	ResetGraph(0);
 	SetGraphDebug(0);
 	
+#ifndef REBUILD_PC
 	DECOMP_MainInit_VRAMClear();
+#endif
 
 	SetDispMask(1);
 	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
