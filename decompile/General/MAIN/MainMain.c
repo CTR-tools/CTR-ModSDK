@@ -398,15 +398,9 @@ FinishLoading:
 				{
 					gGT->level1->clearColor[0].enable = 1;
 					gGT->level1->clearColor[1].enable = 1;
-
-					char text[100];
-					sprintf(text, "Hello World: %d", 
-								sdata->lastPathIndex++); // pick random variable
 					
-					DECOMP_DecalFont_DrawLine(text, 0x100, 0x23, 2, 0xffff8000);
-					
-					DECOMP_DecalFont_DrawLine(__DATE__, 0x100, 0x80, 2, 0xffff8000);
-					DECOMP_DecalFont_DrawLine(__TIME__, 0x100, 0x90, 2, 0xffff8000);
+					DECOMP_DecalFont_DrawLine(__DATE__, 0x100, 0xA0, 2, 0xffff8000);
+					DECOMP_DecalFont_DrawLine(__TIME__, 0x100, 0xA8, 2, 0xffff8000);
 				}
 #endif
 

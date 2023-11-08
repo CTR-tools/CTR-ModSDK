@@ -57,7 +57,11 @@ void DECOMP_TitleFlag_DrawSelf()
 		{
 			sdata->TitleFlag_LoadingTextAnimFrame = 0;
 		}
+
+// temporary test for PC port "LOADING..."
+#ifndef REBUILD_PS1
 		if (sdata->TitleFlag_LoadingTextAnimFrame < 0) goto LAB_80044568;
+#endif
 	}
 
 	DECOMP_TitleFlag_DrawLoadingString();
