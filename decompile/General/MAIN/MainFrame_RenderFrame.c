@@ -180,12 +180,10 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		DECOMP_CAM_ClearScreen(gGT);
 	}
 	
-#ifndef REBUILD_PS1
 	if ((gGT->renderFlags & 0x1000) != 0)
 	{
-		TitleFlag_DrawSelf();
+		DECOMP_TitleFlag_DrawSelf();
 	}
-#endif
 
 	RenderDispEnv_UI(gGT);
 	

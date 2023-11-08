@@ -147,6 +147,10 @@
 #include "../decompile/General/TitleFlag/TitleFlag_t08_SetFullyOffScreen.c"
 #include "../decompile/General/TitleFlag/TitleFlag_t09_SetCanDraw.c"
 #include "../decompile/General/TitleFlag/TitleFlag_t10_GetCanDraw.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t11_GetOT.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t12_ResetTextAnim.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t13_DrawLoadingString.c"
+#include "../decompile/General/TitleFlag/TitleFlag_t14_DrawSelf.c"
 
 // RCNT (watch namespace, not alphabetical)
 #include "../decompile/General/RCNT/RCNT_Init.c"

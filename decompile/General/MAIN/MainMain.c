@@ -565,8 +565,12 @@ void StateZero()
 	gGT->overlayIndex_null_notUsed = 0;
 	#endif
 	
+#ifdef REBUILD_PS1
+	gGT->levelID = MAIN_MENU_LEVEL;
+#else
 	// set level ID to naughty dog box
 	gGT->levelID = NAUGHTY_DOG_CRATE;
+#endif
 	
 	#ifdef FastBoot
 	gGT->levelID = N_GIN_LABS;

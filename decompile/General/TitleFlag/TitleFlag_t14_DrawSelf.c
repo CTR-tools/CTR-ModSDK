@@ -1,5 +1,10 @@
 #include <common.h>
 
+#ifdef REBUILD_PC
+u_char auStack_88 [96];
+int scratchpadBuf[0x1000];
+#endif
+
 void DECOMP_TitleFlag_DrawSelf()
 {
 	char bVar1;
@@ -32,8 +37,11 @@ void DECOMP_TitleFlag_DrawSelf()
 	u_char *puVar26;
 	u_char *puVar27;
 	int iVar28;
-	u_char auStack_88 [96];
 	struct GameTracker* gGT = sdata->gGT;
+	
+	#ifndef REBUILD_PC
+	u_char auStack_88 [96];
+	#endif
 	
 	puVar26 = &sdata->langBufferSize;
 	puVar27 = auStack_88;
@@ -52,15 +60,16 @@ void DECOMP_TitleFlag_DrawSelf()
 		if (sdata->TitleFlag_LoadingTextAnimFrame < 0) goto LAB_80044568;
 	}
 
-	TitleFlag_DrawLoadingString();
+	DECOMP_TitleFlag_DrawLoadingString();
 LAB_80044568:
 	sdata->TitleFlag_CopyLoadStage = sdata->Loading.stage;
-	puVar3 = (u_int *)TitleFlag_GetOT();
+	puVar3 = (u_int *)DECOMP_TitleFlag_GetOT();
 	
 	gte_SetRotMatrix(&data.matrixTitleFlag);
 	gte_SetTransMatrix(&data.matrixTitleFlag);
 	gte_SetGeomOffset(0x100,0x78);
 	
+#ifndef REBUILD_PC
 	#define gte_ldH( r0 ) __asm__ volatile ( \
 		"lhu   $12, 0(  %0  );" \
 		"ctc2  $12, $31;"       \
@@ -69,10 +78,18 @@ LAB_80044568:
 		: "$12" )
 
 	gte_ldH(0x100);
-	
+#endif
+
 	iVar28 = data.checkerFlagVariables[3] * gGT->elapsedTimeMS;
 	puVar20 = 0;
+	
+#ifdef REBUILD_PC
+	r0_00 = &scratchpadBuf[0];
+	memset(&scratchpadBuf[0], 0, 0x1000*4);
+	memset(&auStack_88[0], 0, 96);
+#else
 	r0_00 = 0x1f800000;
+#endif
 	uVar25 = 1;
 	uVar18 = *(int *)(puVar26 + 0x4ec) >> 5;
 	*(u_int *)(puVar27 + 0x4c) = uVar18;
@@ -196,9 +213,17 @@ LAB_80044568:
 
 	do
 	{
-		puVar21 = (u_int *)(uVar25 * 0x78 + 0x1f7ffffc);
+		
+#ifdef REBUILD_PC
+		puVar21 = &scratchpadBuf[(uVar25 * 0x78/4)-1];
 		uVar25 = uVar25 ^ 1;
-		puVar23 = (u_int *)(uVar25 * 0x78 + 0x1f800000);
+		puVar23 = &scratchpadBuf[(uVar25 * 0x78/4)-0];
+#else
+		puVar21 = (u_int *)((0x1f800000 + uVar25 * 0x78) - 4);
+		uVar25 = uVar25 ^ 1;
+		puVar23 = (u_int *)(0x1f800000 + uVar25 * 0x78);
+#endif		
+	
 		uVar19 = *(int *)(puVar27 + 0x4c) + 0x100;
 		uVar18 = *(int *)(puVar27 + 0x38) + *(int *)(puVar27 + 0x34) * 0x40;
 		uVar10 = (int)uVar18 >> 5;
