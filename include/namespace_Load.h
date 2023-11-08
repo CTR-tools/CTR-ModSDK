@@ -33,7 +33,7 @@ struct VramHeader
 	RECT rect;
 	
 	// 0x14
-	//char pixels[0];
+	//u_char pixels[0];
 };
 
 #define VRAMHEADER_GETPIXLES(x) \
