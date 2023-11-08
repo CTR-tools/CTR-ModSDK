@@ -18,6 +18,10 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	
 	ptrMempack->endOfAllocator = &memory[2*1024*1024 - 4];
 	ptrMempack->lastFreeByte = &memory[2*1024*1024 - 4];
+
+	// if outside of 24-bit range, clean and rebuild exe
+	if ((unsigned int)ptrMempack->lastFreeByte > 0xffffff)
+		exit(0);
 #else
 	
 	// start of memory allocation system
