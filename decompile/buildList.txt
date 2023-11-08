@@ -1,6 +1,6 @@
-// 478+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 556 rewritten so far
+// 481+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 559 rewritten so far
 
-// 478 for every 'common' and ','
+// 481 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -540,6 +540,7 @@ common, exe, TitleFlag_SetFullyOffScreen, 0x0, General/TitleFlag/TitleFlag_t08_S
 common, exe, TitleFlag_SetCanDraw, 0x0, General/TitleFlag/TitleFlag_t09_SetCanDraw.c
 common, exe, TitleFlag_GetCanDraw, 0x0, General/TitleFlag/TitleFlag_t10_GetCanDraw.c
 common, exe, TitleFlag_GetOT, 0x0, General/TitleFlag/TitleFlag_t11_GetOT.c
+common, exe, TitleFlag_ResetTextAnim, 0x0, General/TitleFlag/TitleFlag_t12_ResetTextAnim.c
 common, exe, TitleFlag_DrawSelf, 0x0, General/TitleFlag/TitleFlag_t14_DrawSelf.c
 
 // RCNT (watch out for namespace name, not alphabetical)
