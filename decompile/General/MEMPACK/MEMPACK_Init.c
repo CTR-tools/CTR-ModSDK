@@ -12,16 +12,16 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	ptrMempack = sdata->PtrMempack;
 
 #ifdef REBUILD_PC
+
 	// must be a 24-bit address
+	// Visual Studio -> Properties -> Linker -> Advanced -> 
+	// Base Address, Randomized Base Address, Fixed Base Address
 	ptrMempack->start = &memory[0];
 	memset(memory, 0, 2*1024*1024);
 	
 	ptrMempack->endOfAllocator = &memory[2*1024*1024 - 4];
 	ptrMempack->lastFreeByte = &memory[2*1024*1024 - 4];
 
-	// if outside of 24-bit range, clean and rebuild exe
-	if ((unsigned int)ptrMempack->lastFreeByte > 0xffffff)
-		exit(0);
 #else
 	
 	// start of memory allocation system
