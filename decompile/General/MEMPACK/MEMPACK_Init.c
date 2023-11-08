@@ -12,6 +12,7 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	ptrMempack = sdata->PtrMempack;
 
 #ifdef REBUILD_PC
+	// must be a 24-bit address
 	ptrMempack->start = &memory[0];
 	memset(memory, 0, 2*1024*1024);
 	
