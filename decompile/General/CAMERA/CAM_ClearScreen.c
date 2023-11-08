@@ -68,6 +68,17 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
 	// and if splitline is below top of screen (so top quad exists)
     if ((level1->clearColor[0].enable != 0) && (0 < iVar7))
     {
+#ifdef REBUILD_PC
+      RECT16 r;
+      r.x = x;
+      r.y = y;
+      r.w = w;
+      r.h = iVar7;
+      ClearImage(&r,
+          level1->clearColor[0].rgb[0],
+          level1->clearColor[0].rgb[1],
+          level1->clearColor[0].rgb[2]);
+#else
       tile->x0 = x;
 	  tile->y0 = y;
       tile->w = w; 
@@ -80,12 +91,24 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
       *(unsigned int*)endOT = (unsigned int)tile & 0xffffff;
 	  
 	  tile++;
+#endif
     }
 
     // if bottom-half clear color exists,
 	// and if splitline is above bottom of screen (so bottom quad exists)
     if ((level1->clearColor[1].enable != 0) && (iVar7 < h))
     {
+#ifdef REBUILD_PC
+      RECT16 r;
+      r.x = x;
+      r.y = y+iVar7;
+      r.w = w;
+      r.h = h-iVar7;
+      ClearImage(&r,
+          level1->clearColor[1].rgb[0],
+          level1->clearColor[1].rgb[1],
+          level1->clearColor[1].rgb[2]);
+#else
       tile->x0 = x;
 	  tile->y0 = y + iVar7;
       tile->w = w; 
@@ -98,6 +121,7 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
       *(unsigned int*)endOT = (unsigned int)tile & 0xffffff;
 
 	  tile++;
+#endif
     }
   }
   

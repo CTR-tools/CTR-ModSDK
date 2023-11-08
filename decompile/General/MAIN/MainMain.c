@@ -396,6 +396,9 @@ FinishLoading:
 				
 				if(sdata->Loading.stage == -1)
 				{
+					gGT->level1->clearColor[0].enable = 1;
+					gGT->level1->clearColor[1].enable = 1;
+
 					char text[100];
 					sprintf(text, "Hello World: %d", 
 								sdata->lastPathIndex++); // pick random variable
