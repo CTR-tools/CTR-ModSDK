@@ -1299,6 +1299,10 @@ void RenderSubmit(struct GameTracker* gGT)
 	gGT->bool_DrawOTag_InProgress = 1;
 	
 	DrawOTag(&gGT->tileView[0].ptrOT[0x3ff]);
+
+#ifdef REBUILD_PC
+	PsyX_EndScene();
+#endif
 	
 	gGT->frameTimer_notPaused = gGT->frameTimer_VsyncCallback;
 }

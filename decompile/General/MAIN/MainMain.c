@@ -224,7 +224,7 @@ u_int DECOMP_main()
 						// If just finished loading stage 9
 						if (sdata->Loading.stage == -2)
 						{
-							#ifndef REBUILD_PS1
+#ifndef REBUILD_PS1
 							if
 							(
 								(gGT->levelID == MAIN_MENU_LEVEL) ||
@@ -410,15 +410,7 @@ FinishLoading:
 				}
 #endif
 
-#ifdef REBUILD_PC
-				char PsyX_BeginScene();
-				PsyX_BeginScene();
-#endif
 				DECOMP_MainFrame_RenderFrame(gGT, sdata->gGamepads);
-#ifdef REBUILD_PC
-				void PsyX_EndScene();
-				PsyX_EndScene();
-#endif
 
 #ifndef REBUILD_PS1
 				// if mask is talking in Adventure Hub

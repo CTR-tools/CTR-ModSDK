@@ -35,7 +35,7 @@ void DECOMP_TileView_SetDrawEnv_Normal(
 	void* p = backBuffer->primMem.curr;
 	if(p <= backBuffer->primMem.endMin100)
 	{
-		backBuffer->primMem.curr = (unsigned int)backBuffer->primMem.curr + 0x40;
+		backBuffer->primMem.curr = (unsigned int)backBuffer->primMem.curr + sizeof(DR_ENV);
 		
 		SetDrawEnv(p, &newDrawEnv);
 

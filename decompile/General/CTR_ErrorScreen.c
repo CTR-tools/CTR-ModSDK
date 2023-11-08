@@ -16,11 +16,7 @@ void DECOMP_CTR_ErrorScreen(char r, char g, char b)
 
 		// prim code = 0 (cause bitshifted),
 		// with bit-flag parameter '2'
-		p.code = 2;
-
-		// len = 03, addr = 0xffffff,
-		// this is the first, and last, primitive
-		p.tag = 0x3ffffff;
+		setTile(&p);
 
 		p.x0 = sdata->gGT->frontBuffer->drawEnv.clip.x;
 		p.y0 = sdata->gGT->frontBuffer->drawEnv.clip.y;

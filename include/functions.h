@@ -24,7 +24,7 @@ void BOTS_Driver_Convert(struct Driver* driver);
 
 // CAM
 
-void CAM_SkyboxGlow(short* param_1, struct TileView* camera, struct PrimMem* primMem, u_long* ptrOT);
+void CAM_SkyboxGlow(short* param_1, struct TileView* camera, struct PrimMem* primMem, OTTYPE* ptrOT);
 void CAM_ClearScreen(struct GameTracker* gGT);
 void CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct TileView* tileView);
 void CAM_FindClosestQuadblock(short* scratchpad, struct CameraDC* cDC, struct Driver* d, short* param_4);
@@ -95,10 +95,10 @@ u_int COLL_Scrub(struct Driver* d, struct Thread* t, int param_3, int param_4, i
 
 // CTR
 
-void CTR_Box_DrawWirePrims(u_short x, u_short y, u_short u, u_short v, u_char r, u_char g, u_char b, u_long* otMem, struct PrimMem* primMem);
-void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem);
-void CTR_Box_DrawClearBox(RECT* r, u_int* rgb, int param_3, u_long* otMem, struct PrimMem* primMem);
-void CTR_Box_DrawSolidBox(RECT* r, u_int* rgb, u_long* otMem, struct PrimMem* primMem);
+void CTR_Box_DrawWirePrims(u_short x, u_short y, u_short u, u_short v, u_char r, u_char g, u_char b, OTTYPE* otMem, struct PrimMem* primMem);
+void CTR_Box_DrawWireBox(RECT* r, int* unk, OTTYPE* ot, struct PrimMem* primMem);
+void CTR_Box_DrawClearBox(RECT* r, u_int* rgb, int param_3, OTTYPE* otMem, struct PrimMem* primMem);
+void CTR_Box_DrawSolidBox(RECT* r, u_int* rgb, OTTYPE* otMem, struct PrimMem* primMem);
 void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
 void CTR_CycleTex_Model(struct AnimTex* pAnimTexArray, int timer);
 void CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer);
@@ -124,7 +124,7 @@ int DecalFont_GetLineWidthStrlen(char* str, short len, short fontType);
 int DecalFont_GetLineWidth(char* str, short fontType);
 void DecalFont_DrawLineStrlen(char* str, short len, int posX, int posY, short fontType, int flags);
 void DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
-void DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, u_long* ot);
+void DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, OTTYPE* ot);
 int DecalFont_DrawMultiLineStrlen(char *str, short len, short posX, short posY, short maxPixLen, short fontType, short flags);
 int DecalFont_DrawMultiLine(char* str, int posX, int posY, int maxPixLen, short fontType, int flags);
 
@@ -138,10 +138,10 @@ int* DecalGlobal_Find2(u_int* param_1, char* str);
 
 // DecalHUD
 
-void DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);
-void DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, char rot);
-void DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
-void DecalHUD_Arrow2D(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long *otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char transparency, short scale, u_short rot);
+void DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, OTTYPE* ot, char transparency, short scale);
+void DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, OTTYPE* ot, char transparency, short scale, char rot);
+void DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, OTTYPE* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
+void DecalHUD_Arrow2D(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, OTTYPE*otMemPtr, u_int color1, u_int color2, u_int color3, u_int color4, char transparency, short scale, u_short rot);
 
 // DecalMP
 
@@ -753,8 +753,8 @@ void THREAD_CollideHitboxWithBucket(struct Thread* param_1, struct ScratchpadStr
 
 void TileView_Init(struct TileView* tileView, int id, int total);
 //TileView_SetPsyqGeom()
-void TileView_SetDrawEnv_DecalMP(u_long*, struct DB*, short, short, short, short, short, short, short, short);
-void TileView_SetDrawEnv_Normal(u_long* ot, struct TileView* tileView, struct DB* backBuffer, short* param_4, u_char param_5);
+void TileView_SetDrawEnv_DecalMP(OTTYPE*, struct DB*, short, short, short, short, short, short, short, short);
+void TileView_SetDrawEnv_Normal(OTTYPE* ot, struct TileView* tileView, struct DB* backBuffer, short* param_4, u_char param_5);
 void TileView_SetMatrixVP(struct TileView* tileView);
 //TileView_SetFrustumPlane()
 void TileView_UpdateFrustum(struct TileView* tileView);
@@ -783,24 +783,24 @@ void TitleFlag_SetFullyOnScreen();
 void TitleFlag_SetFullyOffScreen();
 void TitleFlag_SetCanDraw(int enable);
 int TitleFlag_GetCanDraw();
-u_long* TitleFlag_GetOT();
+OTTYPE* TitleFlag_GetOT();
 void TitleFlag_ResetTextAnim();
 void TitleFlag_DrawLoadingString();
 void TitleFlag_DrawSelf();
 
 // MENUBOX
 
-void MenuBox_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
-void MENUBOX_DrawOuterRect_Edge(RECT* r, u_int rgb, u_int param_3, u_long* otMem);
+void MenuBox_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, OTTYPE* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
+void MENUBOX_DrawOuterRect_Edge(RECT* r, u_int rgb, u_int param_3, OTTYPE* otMem);
 u_char* MENUBOX_DrawTime(int milliseconds);
 void MENUBOX_DrawRwdBlueRect_Subset(short *pos, int *color, u_long *ot, struct PrimMem *primMem);
 void MENUBOX_DrawRwdBlueRect(RECT *rect, char *metas, u_long *ot, struct PrimMem *primMem);
 void MENUBOX_DrawRwdTriangle (short * position, char * color, u_long * otMem, struct PrimMem * primMem);
-void MENUBOX_DrawOuterRect_LowLevel(RECT* r, short x, u_short y, u_int* rgb, short param_5, u_long* otMem);
-void MENUBOX_DrawOuterRect_HighLevel(RECT* r, u_int* rgb, u_int param_3, u_long* otMem);
+void MENUBOX_DrawOuterRect_LowLevel(RECT* r, short x, u_short y, u_int* rgb, short param_5, OTTYPE* otMem);
+void MENUBOX_DrawOuterRect_HighLevel(RECT* r, u_int* rgb, u_int param_3, OTTYPE* otMem);
 void MENUBOX_DrawQuip(char*, short, short, short, short, int, short);
-void MENUBOX_DrawInnerRect(RECT* r, int flag, u_long* ot);
-void MENUBOX_DrawFullRect(RECT* r, short param_2, u_long* otMem);
+void MENUBOX_DrawInnerRect(RECT* r, int flag, OTTYPE* ot);
+void MENUBOX_DrawFullRect(RECT* r, short param_2, OTTYPE* otMem);
 //MENUBOX_GetHeight()
 void MENUBOX_GetWidth(struct MenuBox* m, RECT* r, int);
 void MENUBOX_DrawSelf(struct MenuBox* m, int, int, int);
@@ -888,7 +888,7 @@ int UI_ConvertX_2(int oldPosX,int newPosX);
 int UI_ConvertY_2(int oldPosY,int newPosY);
 //UI_INSTANCE_BirthWithThread()
 void UI_INSTANCE_InitAll();
-void UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);
+void UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, OTTYPE* otMem, u_int colorID);
 void UI_Map_GetIconPos(short* ptrMap,int* posX,int* posY);
 void UI_Map_DrawAdvPlayer(int ptrMap,int *matrix,int unused1,int unused2,short param_5,short param_6);
 void UI_Map_DrawRawIcon(int ptrMap,int *param_2,int iconID,int colorID,int unused,short scale);
@@ -898,7 +898,7 @@ void UI_Map_DrawTracking(int ptrMap,struct Thread* bucket);
 //void UI_WeaponBG_AnimateShine();
 //UI_WeaponBG_DrawShine()
 //UI_TrackerBG()
-void UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, u_int color);
+void UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, OTTYPE* ot, char transparency, short scale, u_int color);
 void UI_Lerp2D_Angular(short* ptrPos, short drawnPosition, short absolutePosition, short frameCounter);
 void UI_Lerp2D_HUD(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);
 void UI_Lerp2D_Linear(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);
@@ -1159,8 +1159,8 @@ void RenderWeather(struct TileView* tileView, struct PrimMem* primMem, struct Ra
 int RenderLists_Init1P2P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList, char numPlyr);
 void RenderLists_PreInit();
 int RenderLists_Init3P4P(struct BSP* bspRoot, int* visLeafList, struct TileView* tileView, u_int LevRenderList, void* bspList);
-void* RenderBucket_QueueLevInstances(struct CameraDC* cDC, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
-void* RenderBucket_QueueNonLevInstances(struct Item* item, u_long* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
+void* RenderBucket_QueueLevInstances(struct CameraDC* cDC, OTTYPE* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
+void* RenderBucket_QueueNonLevInstances(struct Item* item, OTTYPE* otMem, void* rbi, char* lod, char numPlyr, int gameMode1);
 //RenderBucket_QueueDraw()
 void ThTick_RunBucket(struct Thread* thread);
 //ThTick_FastRET()

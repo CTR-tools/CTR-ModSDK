@@ -1,9 +1,51 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#ifndef REBUILD_PC
+#ifdef REBUILD_PC
+#include <psx/types.h>
+#include <psx/libetc.h>
+#include <psx/libgte.h>
+#include <psx/libgpu.h>
+#include <psx/libspu.h>
+#include <psx/libcd.h>
+#include <psx/libapi.h>
+#include <psx/strings.h>
+#include <psx/inline_c.h>
+#include <PsyX/PsyX_public.h>
+#include <PsyX/PsyX_globals.h>
+
+#define _Static_assert(x) ;
+#define __attribute__(x) ;
+
+#else
 #include <gccHeaders.h>
 #endif
+
+// TODO: special compat header START
+
+// Necessary types
+// It's size should match P_LEN*4
+#ifndef REBUILD_PC
+typedef int intptr_t;
+typedef u_long OTTYPE;
+
+typedef short VERTTYPE;
+
+#define RECT16 RECT
+
+#else
+
+#define RECT RECT16
+
+#if defined(_M_X64) || defined(__amd64__)
+typedef OT_TAG OTTYPE;
+#else
+typedef unsigned long long OTTYPE;
+#endif
+
+#endif
+
+// TODO: special compat header END
 
 #include <macros.h>
 #include <stdbool.h>

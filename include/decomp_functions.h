@@ -13,7 +13,7 @@ void DECOMP_CTR_ErrorScreen(char r, char g, char b);
 void DECOMP_DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
 int DECOMP_DecalFont_DrawMultiLine(char* str, int posX, int posY, int maxPixLen, short fontType, int flags);
 void DECOMP_DecalGlobal_Clear(struct GameTracker* gGT);
-void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
+void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, OTTYPE* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
 
 void DECOMP_DISPLAY_Swap(void);
 

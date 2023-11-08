@@ -4,7 +4,7 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 {
 	struct GameTracker* psVar1;
 	int iVar2;
-	u_long* puVar3;
+	OTTYPE* puVar3;
 	int iVar4;
 	struct DB* db;
 	int ot_tileView_UI;
@@ -37,7 +37,7 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 	DecalGlobal_EmptyFunc_MainFrame_ResetDB();
 #endif
 	
-	ClearOTagR(ot_tileView_UI, gGT->numPlyrCurrGame << 10 | 6);
+	ClearOTagR(ot_tileView_UI, gGT->numPlyrCurrGame * 1024 + 6);
 	
 	for(iVar4 = 0; iVar4 < gGT->numPlyrCurrGame; iVar4++)
 	{
@@ -58,7 +58,7 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 			+ 0x18;
 	}
 	
-	puVar3 = (int)ot_tileView_UI + 4;
+	puVar3 = (int)ot_tileView_UI + sizeof(OTTYPE);
 	gGT->tileView_UI.ptrOT = puVar3;
 	db->otMem.startPlusFour = puVar3;
 	return;

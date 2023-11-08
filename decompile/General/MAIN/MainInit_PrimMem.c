@@ -103,11 +103,11 @@ void DECOMP_MainInit_OTMem(struct GameTracker* gGT)
 	size = 0x3000;
 	
 EndFunc:
-	DECOMP_MainDB_OTMem(&gGT->db[0].otMem, size);
-	DECOMP_MainDB_OTMem(&gGT->db[1].otMem, size);
+	DECOMP_MainDB_OTMem(&gGT->db[0].otMem, size * P_LEN);
+	DECOMP_MainDB_OTMem(&gGT->db[1].otMem, size * P_LEN);
 	
 	// 0x1000 per player, plus 0x18 for linking
-	size = ((gGT->numPlyrCurrGame) << 0xC) | 0x18;
+	size = (gGT->numPlyrCurrGame * 1024 + 6) * sizeof(OTTYPE);
 	gGT->ot_tileView_UI[0] = DECOMP_MEMPACK_AllocMem(size); // "ot1"
 	gGT->ot_tileView_UI[1] = DECOMP_MEMPACK_AllocMem(size); // "ot2"
 }

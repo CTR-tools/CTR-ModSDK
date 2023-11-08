@@ -1,9 +1,9 @@
 #include <common.h>
 
-void DECOMP_DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, u_long* ot)
+void DECOMP_DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, OTTYPE* ot)
 {
 	struct GameTracker* gGT;
-	u_long * backupOT;
+	OTTYPE* backupOT;
 	
 	gGT = sdata->gGT;
 	

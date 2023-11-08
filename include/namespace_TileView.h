@@ -73,7 +73,7 @@ struct TileView
 
 	// 0xF4
 	// u_long* is the type in the psn00b header
-	u_long* ptrOT;
+	OTTYPE* ptrOT;
 
 	// 0xF8 also OT,
 	// only pixel LOD, what's the difference
