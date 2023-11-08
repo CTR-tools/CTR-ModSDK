@@ -6,11 +6,17 @@ int DECOMP_TitleFlag_GetOT(void)
     int iVar2;
     struct GameTracker* gGT = sdata->gGT;
 	
-	void* otDrawFirst_FarthestDepth;
-	void* otDrawLast_ClosestDepth;
+	int* otDrawFirst_FarthestDepth;
+	int* otDrawLast_ClosestDepth;
 	
 	otDrawFirst_FarthestDepth = &gGT->tileView[0].ptrOT[0x3FF];
 	otDrawLast_ClosestDepth = gGT->ot_tileView_UI[gGT->swapchainIndex];
+	
+	// on PC, the gGT->tileView[X].ptrOT
+	// is not connected to the main swapchain OT
+	#ifdef REBUILD_PC
+	otDrawFirst_FarthestDepth = &otDrawLast_ClosestDepth[5];
+	#endif
 
     if (sdata->unk_CheckFlag2 == 0)
     {
