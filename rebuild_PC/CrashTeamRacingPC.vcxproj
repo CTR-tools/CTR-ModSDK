@@ -93,15 +93,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Niko\Desktop\KAIN2\External\libValkyrie;C:\Users\Niko\Desktop\CTR\psx-modding-toolchain\games\CTR-ModSDK\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\libValkyrie;$(ProjectDir)\..\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\VulkanSDK\1.3.261.1\Lib\vulkan-1.lib;Valkyrie.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\Niko\Desktop\KAIN2\Build\Build_Win32\External\SDL\Debug;C:\Users\Niko\Desktop\KAIN2\Build\Build_Win32\External\libValkyrie\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PsyCross.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)</AdditionalLibraryDirectories>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

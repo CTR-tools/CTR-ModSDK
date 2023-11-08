@@ -39,10 +39,12 @@ force_inline short FP_Mult(short x, short y)
 
 // misc //
 
+#ifndef REBUILD_PC
 force_inline int abs(int value)
 {
 	return (value < 0) ? (-value) : value;
 }
+#endif
 
 force_inline int max(int a, int b)
 {
