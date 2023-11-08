@@ -15,7 +15,10 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 	LOAD_Hub_Main(sdata->ptrBigfile1);
 #endif
 	
+#ifndef REBUILD_PC
 	gGT->swapchainIndex = 1 - gGT->swapchainIndex;
+#endif
+	
 	gGT->backBuffer = &gGT->db[gGT->swapchainIndex];
 	gGT->frameTimer_MainFrame_ResetDB++;
 	

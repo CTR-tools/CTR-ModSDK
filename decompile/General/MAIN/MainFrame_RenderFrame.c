@@ -1228,6 +1228,10 @@ void RenderVSYNC(struct GameTracker* gGT)
 
 	while(1)
 	{
+#ifdef REBUILD_PC
+		DrawSync(0);
+#endif
+		
 		if(
 			// if DrawOTag finished
 			(gGT->bool_DrawOTag_InProgress == 0) &&
@@ -1240,6 +1244,7 @@ void RenderVSYNC(struct GameTracker* gGT)
 			return;
 		}
 		
+#ifndef REBUILD_PC
 		// if more than 6 VSYNCs passed since
 		// the last successful draw, FPS < 10fps
 		if(gGT->vSync_between_drawSync > 6)
@@ -1248,6 +1253,7 @@ void RenderVSYNC(struct GameTracker* gGT)
 			BreakDraw();
 			return;
 		}
+#endif
 	}
 }
 

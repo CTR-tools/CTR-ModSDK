@@ -43,8 +43,8 @@ int main()
 	void PsyX_EnableSwapInterval(int);
 
 	// set to 30 FPS VSync
-	//PsyX_SetSwapInterval(2);
-	//PsyX_EnableSwapInterval(1);
+	PsyX_SetSwapInterval(2);
+	PsyX_EnableSwapInterval(1);
 
 	return DECOMP_main();
 }
