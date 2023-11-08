@@ -1,8 +1,6 @@
 #ifndef	TYPES_H
 #define	TYPES_H
 
-#include "PsyX/PsyX_config.h"
-
 #include <stdint.h>
 #include <stddef.h>
 

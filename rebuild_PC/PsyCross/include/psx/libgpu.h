@@ -180,7 +180,7 @@ extern	int (*GPU_printf)(const char *fmt, ...);
   * Primitive Handling Macros
   */
 
-#if defined(USE_EXTENDED_PRIM_POINTERS)
+#if USE_EXTENDED_PRIM_POINTERS
 
 #define isendprim(p) 		((((P_TAG *)(p))->addr) == &prim_terminator)
 #define nextPrim(p)  		(void *)(((P_TAG *)(p))->addr)
@@ -204,9 +204,9 @@ extern	int (*GPU_printf)(const char *fmt, ...);
 #define getlen(p)    		(u_char)(((P_TAG *)(p))->len)
 #define getcode(p)   		(u_char)(((P_TAG *)(p))->code)
 
-#if defined(USE_PGXP) && defined(USE_EXTENDED_PRIM_POINTERS)
+#if USE_PGXP && USE_EXTENDED_PRIM_POINTERS
 #define setpgxpindex(p, i)	(((P_TAG *)(p))->pgxp_index = (u_short)(i))
-#define addPrim(ot, p)		setaddr(p, getaddr(ot)), setaddr(ot, p), setpgxpindex(p, PGXP_GetIndex())
+#define addPrim(ot, p)		setaddr(p, getaddr(ot)), setaddr(ot, p), setpgxpindex(p, PGXP_GetIndex(1))
 #else
 #define addPrim(ot, p)		setaddr(p, getaddr(ot)), setaddr(ot, p)
 #endif
@@ -242,7 +242,7 @@ extern	int (*GPU_printf)(const char *fmt, ...);
 		((0xe1000000)|((dtd)?0x0200:0)| \
 		((dfe)?0x0400:0)|((tpage)&0x9ff))
 
-#if defined(USE_EXTENDED_PRIM_POINTERS)
+#if USE_EXTENDED_PRIM_POINTERS
 #define setDrawTPage(p, dfe, dtd, tpage)	\
 	setlen(p, 1),	\
 	((u_long *)(p))[2] = _get_mode(dfe, dtd, tpage)
@@ -281,7 +281,7 @@ extern	int (*GPU_printf)(const char *fmt, ...);
 		((u_long *)p)[1] = 0xe6000000|(pbw?0x01:0),	\
 		((u_long *)p)[2] = 0
 
-#if defined(USE_EXTENDED_PRIM_POINTERS)
+#if USE_EXTENDED_PRIM_POINTERS
 #define setDrawMode(p, dfe, dtd, tpage, tw) 		\
 		setlen(p, 3),					\
 		((u_long *)p)[2] = _get_mode(dfe, dtd, tpage),	\
@@ -335,7 +335,7 @@ typedef struct _RECT16 {
 
 // Psy-X custom struct to handle polygons
 
-#if defined(USE_EXTENDED_PRIM_POINTERS)
+#if USE_EXTENDED_PRIM_POINTERS
 
 #if defined(_M_X64) || defined(__amd64__)
 
@@ -636,7 +636,7 @@ typedef struct {
 
 typedef struct {
 	DECLARE_P_ADDR
-	u_long  code[1];
+	u_long  code[2];
 } DR_PSYX_TEX;
 
 /*
@@ -720,6 +720,9 @@ typedef struct {
 extern "C" {
 #endif
 
+#if USE_EXTENDED_PRIM_POINTERS
+extern OT_TAG prim_terminator;
+#endif
 
 #ifdef LoadImage
 #undef LoadImage
@@ -730,7 +733,7 @@ extern "C" {
  */
 #ifndef _FNTPRINT_
 #define _FNTPRINT_
-extern int FntPrint(char* text, ...);
+extern int FntPrint(char* fmt, ...);
 #endif /* _FNTPRINT_ */
 #ifndef _KANJIFNTPRINT_
 #define _KANJIFNTPRINT_
@@ -768,7 +771,7 @@ extern int SetGraphDebug(int level);
 extern int StoreImage(RECT16 *rect, u_long *p);
 extern u_long *ClearOTag(u_long *ot, int n);
 extern u_long *ClearOTagR(u_long *ot, int n);
-extern u_long *FntFlush(int id);
+extern u_long *FntFlush();
 extern u_long *KanjiFntFlush(int id);
 extern u_long DrawSyncCallback(void (*func)(void));
 extern u_short GetClut(int x, int y);
@@ -789,7 +792,7 @@ extern void DumpDispEnv(DISPENV *env);
 extern void DumpDrawEnv(DRAWENV *env);
 extern void DumpOTag(u_long *p);
 extern void DumpTPage(u_short tpage);
-extern void FntLoad(int tx, int ty);
+extern void FntLoad(int x, int y);
 extern void SetDispMask(int mask);
 extern void SetDrawArea(DR_AREA *p, RECT16 *r);
 extern void SetDrawEnv(DR_ENV *dr_env, DRAWENV *env);
@@ -843,7 +846,7 @@ extern void GetDrawEnv2(DR_ENV *p);
 * PSY-X commands
 */
 
-extern void SetPsyXTexture(DR_PSYX_TEX *p, uint grTextureId);
+extern void SetPsyXTexture(DR_PSYX_TEX *p, uint grTextureId, int width, int height);
 
 
 #if defined(_LANGUAGE_C_PLUS_PLUS)||defined(__cplusplus)||defined(c_plusplus)

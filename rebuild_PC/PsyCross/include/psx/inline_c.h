@@ -543,7 +543,7 @@ extern int doCOP2(int op);
 		*(ushort*)((char*)(r0)+6) = MFC2(10) & 0xFFFF; \
 		*(ushort*)((char*)(r0)+12) = MFC2(11) & 0xFFFF;}
 
-#if defined(USE_PGXP)
+#if USE_PGXP
 
 // swc2 14
 #define gte_stsxy( r0 ) \

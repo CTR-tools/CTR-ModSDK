@@ -70,6 +70,7 @@ extern MATRIX* RotMatrixX(long r, MATRIX *m);
 extern MATRIX* RotMatrixY(long r, MATRIX *m);
 extern MATRIX* RotMatrixZ(long r, MATRIX *m);
 extern MATRIX* TransMatrix(MATRIX* m, VECTOR* v);
+extern MATRIX* CompMatrix(MATRIX* m0, MATRIX* m1, MATRIX* m2);
 extern MATRIX* ScaleMatrix(MATRIX* m, VECTOR* v);
 extern MATRIX* MulRotMatrix(MATRIX* m0);
 extern void ColorDpq(VECTOR* v0, CVECTOR* v1, long p, CVECTOR* v2);

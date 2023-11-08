@@ -1,6 +1,8 @@
 #ifndef EMULATOR_H
 #define EMULATOR_H
 
+#include "PsyX/PsyX_config.h"
+
 /*
  * Platform specific emulator setup
  */
@@ -20,6 +22,8 @@
 
 #if defined(RENDERER_OGL) || defined(RENDERER_OGLES)
 #   define USE_OPENGL 1
+#else
+#   define USE_OPENGL 0
 #endif
 
 #if OGLES_VERSION == 2
@@ -104,7 +108,7 @@
 #pragma pack(push,1)
 typedef struct
 {
-#if defined(USE_PGXP)
+#if USE_PGXP
 	float		x, y, page, clut;
 	float		z, scr_h, ofsX, ofsY;
 #else
@@ -140,7 +144,9 @@ typedef enum
 {
 	TF_4_BIT,
 	TF_8_BIT,
-	TF_16_BIT
+	TF_16_BIT,
+
+	TF_32_BIT_RGBA		// custom texture
 } TexFormat;
 
 #define MAX_NUM_POLY_BUFFER_VERTICES (32768)
@@ -187,6 +193,7 @@ extern void			GR_SetOffscreenState(const RECT16* offscreenRect, int enable);
 extern void			GR_SetupClipMode(const RECT16* clipRect, int enable);
 extern void			GR_SetViewPort(int x, int y, int width, int height);
 extern void			GR_SetTexture(TextureID texture, TexFormat texFormat);
+extern void			GR_SetOverrideTextureSize(int width, int height);
 extern void			GR_SetWireframe(int enable);
 
 extern void			GR_DestroyTexture(TextureID texture);
