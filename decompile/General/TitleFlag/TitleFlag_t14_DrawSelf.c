@@ -57,8 +57,8 @@ LAB_80044568:
 	sdata->TitleFlag_CopyLoadStage = sdata->Loading.stage;
 	puVar3 = (u_int *)TitleFlag_GetOT();
 	
-	gte_SetRotMatrix(&sdata->matrixTitleFlag);
-	gte_SetTransMatrix(&sdata->matrixTitleFlag);
+	gte_SetRotMatrix(&data.matrixTitleFlag);
+	gte_SetTransMatrix(&data.matrixTitleFlag);
 	gte_SetGeomOffset(0x100,0x78);
 	
 	#define gte_ldH( r0 ) __asm__ volatile ( \

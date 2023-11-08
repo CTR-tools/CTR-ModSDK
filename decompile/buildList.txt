@@ -541,6 +541,7 @@ common, exe, TitleFlag_SetCanDraw, 0x0, General/TitleFlag/TitleFlag_t09_SetCanDr
 common, exe, TitleFlag_GetCanDraw, 0x0, General/TitleFlag/TitleFlag_t10_GetCanDraw.c
 common, exe, TitleFlag_GetOT, 0x0, General/TitleFlag/TitleFlag_t11_GetOT.c
 common, exe, TitleFlag_ResetTextAnim, 0x0, General/TitleFlag/TitleFlag_t12_ResetTextAnim.c
+common, exe, TitleFlag_DrawLoadingString, 0x0, General/TitleFlag/TitleFlag_t13_DrawLoadingString.c
 common, exe, TitleFlag_DrawSelf, 0x0, General/TitleFlag/TitleFlag_t14_DrawSelf.c
 
 // RCNT (watch out for namespace name, not alphabetical)
