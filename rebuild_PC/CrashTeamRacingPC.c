@@ -4,6 +4,7 @@
 #include "Library/LIBGPU.H"
 #include "Library/LIBSPU.H"
 #include "Library/KERNEL.H"
+#include "psx/inline_c.h"
 #define u_char unsigned char
 #define u_short unsigned short
 #define u_int unsigned int
