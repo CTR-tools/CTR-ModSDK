@@ -539,6 +539,8 @@ common, exe, TitleFlag_SetFullyOnScreen, 0x0, General/TitleFlag/TitleFlag_t07_Se
 common, exe, TitleFlag_SetFullyOffScreen, 0x0, General/TitleFlag/TitleFlag_t08_SetFullyOffScreen.c
 common, exe, TitleFlag_SetCanDraw, 0x0, General/TitleFlag/TitleFlag_t09_SetCanDraw.c
 common, exe, TitleFlag_GetCanDraw, 0x0, General/TitleFlag/TitleFlag_t10_GetCanDraw.c
+common, exe, TitleFlag_GetOT, 0x0, General/TitleFlag/TitleFlag_t11_GetOT.c
+common, exe, TitleFlag_DrawSelf, 0x0, General/TitleFlag/TitleFlag_t14_DrawSelf.c
 
 // RCNT (watch out for namespace name, not alphabetical)
 common, exe, RCNT_Init, 0x0, General/RCNT/RCNT_Init.c
