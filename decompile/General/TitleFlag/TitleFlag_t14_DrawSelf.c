@@ -110,6 +110,8 @@ LAB_80044568:
 
 		// Range: [1.0, 2.0]
 		iVar28 = DECOMP_MATH_Sin(data.checkerFlagVariables[0]) + 0xfff;
+
+		// Range: [16, 32] + 0x96
 		data.checkerFlagVariables[1] = (iVar28 * 0x20 >> 0xd) + 0x96;
 
 
@@ -118,6 +120,8 @@ LAB_80044568:
 
 		// Range: [1.0, 2.0]
 		iVar28 = DECOMP_MATH_Sin(data.checkerFlagVariables[2]) + 0xfff;
+
+		// Range: [32, 64] + 0xb4
 		data.checkerFlagVariables[3] = (iVar28 * 0x40 >> 0xd) + 0xb4;
 	}
 
@@ -208,6 +212,8 @@ LAB_80044568:
 
 			// Range: [1.0, 2.0]
 			iVar6 = DECOMP_MATH_Sin(uVar18) + 0xfff;
+
+			// Range: [16, 32] + 0x96
 			copy1 = (iVar6 * 0x20 >> 0xd) + 0x96;
 
 			uVar18 = copy2 + 200;
@@ -215,6 +221,8 @@ LAB_80044568:
 
 			// Range: [1.0, 2.0]
 			iVar6 = DECOMP_MATH_Sin(uVar18) + 0xfff;
+
+			// Range: [32, 64] + 0xb4
 			copy3 = (iVar6 * 0x40 >> 0xd) + 0xb4;
 		}
 
