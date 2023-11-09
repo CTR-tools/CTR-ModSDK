@@ -1224,12 +1224,15 @@ void RenderVSYNC(struct GameTracker* gGT)
 		VSync(0);
 	}
 
+	while(1)
+	{
+
 #ifdef REBUILD_PC
+		// must be called in the loop,
+		// or else it wont properly sync
 		DrawSync(0);
 #endif
-
-	while(1)
-	{		
+		
 		if(
 			// if DrawOTag finished
 			(gGT->bool_DrawOTag_InProgress == 0) &&
