@@ -145,12 +145,15 @@ LAB_80044568:
 	pos[1].vx = sVar2;
 	pos[2].vx = sVar2;
 
-	iVar24 = 0;
-	for (iVar5 = 0, pSVar11 = &pos[0]; iVar24 < 10; iVar24++, r0_00 += 3)
+	for (iVar24 = 0; iVar24 < 10; iVar24++)
 	{
-		for (; iVar5 < 3; uVar18 += 300, iVar5++, pSVar11++)
+		for (
+				iVar5 = 0, pSVar11 = &pos[0]; 
+				iVar5 < 3; 
+				iVar5++, pSVar11++)
 		{
 			iVar6 = DECOMP_MATH_Sin(uVar18);
+			uVar18 += 300;
 
 			pSVar11->vz = (short)iVar28 + (short)((iVar6 + 0xfff) * 0x20 >> 0xd);
 		}
@@ -161,6 +164,7 @@ LAB_80044568:
 		pos[1].vy += 0x11a;
 		pos[2].vy += 0x11a;
 		gte_stsxy3(r0_00, r0_00 + 1, r0_00 + 2);
+		r0_00 += 3;
 	}
 
 	iVar5 = 1;
@@ -231,18 +235,17 @@ LAB_80044568:
 		pos[2].vx += 100;
 		iVar6 = ((iVar6 + 0xfff) * copy1 >> 0xd) + 0x280;
 
-		iVar15 = 0;
-		iVar17 = &pos[0];
-		for (; iVar15 < 3; uVar19 += 300, iVar15++, iVar17 += 8)
+		for (
+				iVar15 = 0, iVar17 = &pos[0]; 
+				iVar15 < 3; 
+				iVar15++, iVar17 += 8
+			)
 		{
 			iVar7 = DECOMP_MATH_Sin(uVar19);
+			uVar19 += 300;
 
 			// change all vector posZ
 			*(short*)(iVar17 + 4) = (short)iVar6 + (short)((iVar7 + 0xfff) * 0x20 >> 0xd);
-
-			uVar19 = uVar19 + 300;
-			iVar15 = iVar15 + 1;
-			iVar17 = iVar17 + 8;
 		}
 
 		gte_ldv3(&pos[0], &pos[1], &pos[2]);
@@ -254,21 +257,21 @@ LAB_80044568:
 			if (iVar7 < 0xb)
 			{
 				gte_stsxy3((long*)(puVar21 + 1), (long*)(puVar21 + 2), (long*)(puVar21 + 3));
-				iVar17 = 0;
+
 				if (iVar7 < 10)
 				{
-					iVar13 = &pos[0];
-					do
+					for (
+							iVar17 = 0, iVar13 = &pos[0];
+							iVar17 < 3;
+							iVar17++, iVar13 += 8
+						)
 					{
 						iVar8 = DECOMP_MATH_Sin(uVar19);
+						uVar19 = uVar19 + 300;
 
 						// change all vector posZ
 						*(short*)(iVar13 + 4) = (short)iVar6 + (short)((iVar8 + 0xfff) * 0x20 >> 0xd);
-						
-						uVar19 = uVar19 + 300;
-						iVar17 = iVar17 + 1;
-						iVar13 = iVar13 + 8;
-					} while (iVar17 < 3);
+					}
 
 					pos[0].vy += 0x11a;
 					pos[1].vy += 0x11a;
