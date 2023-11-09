@@ -252,6 +252,8 @@ LAB_80044568:
 		gte_rtpt();
 
 		iVar15 = 0;
+
+		// horizontal strips
 		for (iVar7 = 1; iVar7 < 10; iVar7++)
 		{
 			if (iVar7 < 0xb)
@@ -295,6 +297,8 @@ LAB_80044568:
 				  )
 				{
 					psVar9 = gGT->backBuffer;
+
+					// POLY_G4
 					puVar14 = (u_int*)(psVar9->primMem).curr;
 					if (puVar14 <= (psVar9->primMem).endMin100)
 					{
@@ -305,30 +309,44 @@ LAB_80044568:
 					{
 						return;
 					}
+
+					// white tile
 					if (((iVar5 >> 2) + (iVar15 >> 2) & 1U) == 0)
 					{
 						puVar27[0x40] = (char)(iVar24 * 0x82 + (0x2000 - iVar24) * 0xff >> 0xd);
 						puVar27[0x41] = (u_char)(*(int*)(puVar27 + 0x48) * -0x7d + 0x1fe000 >> 0xd);
 					}
+
+					// black tile
 					else
 					{
 						puVar27[0x41] = (u_char)(*(int*)(puVar27 + 0x48) * -0x37 + 0x140000 >> 0xd);
 						puVar27[0x40] = puVar27[0x58];
 					}
+
+					// positions
 					puVar20[2] = *puVar23;
 					puVar20[6] = puVar23[1];
 					puVar20[4] = *puVar21;
 					puVar20[8] = puVar21[1];
+
+					// color
 					uVar10 = (u_int)(u_char)puVar27[0x40];
 					uVar10 = uVar10 | uVar10 << 0x10 | uVar10 << 8;
 					puVar20[1] = uVar10;
 					puVar20[5] = uVar10;
-					uVar10 = (u_int)(u_char)puVar27[0x41];
+					
+					// prim/code
 					*(u_char*)((int)puVar20 + 3) = 8;
 					*(u_char*)((int)puVar20 + 7) = 0x38;
+
+					// color
+					uVar10 = (u_int)(u_char)puVar27[0x41];
 					uVar10 = uVar10 | uVar10 << 0x10 | uVar10 << 8;
 					puVar20[3] = uVar10;
 					puVar20[7] = uVar10;
+
+					// Prim/OT
 					*puVar20 = *puVar20 & 0xff000000 | *puVar3 & 0xffffff;
 					*puVar3 = *puVar3 & 0xff000000 | (u_int)puVar20 & 0xffffff;
 				}
