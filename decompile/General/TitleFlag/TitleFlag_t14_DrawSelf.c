@@ -7,10 +7,8 @@ int scratchpadBuf[0x1000];
 
 void DECOMP_TitleFlag_DrawSelf()
 {
-	char bVar1;
 	short sVar2;
 	u_long* puVar3;
-	u_char uVar4;
 	int iVar5;
 	int iVar6;
 	int iVar7;
@@ -18,12 +16,10 @@ void DECOMP_TitleFlag_DrawSelf()
 	struct DB* psVar9;
 	u_int uVar10;
 	SVECTOR* pSVar11;
-	u_int uVar12;
 	int iVar13;
 	u_int* puVar14;
 	int iVar15;
 	u_int uVar16;
-	SVECTOR* r0;
 	int iVar17;
 	u_int uVar18;
 	u_int uVar19;
@@ -40,6 +36,17 @@ void DECOMP_TitleFlag_DrawSelf()
 #ifndef REBUILD_PC
 	u_char auStack_88[96];
 #endif
+
+	// 0x10, 0x18, 0x20
+	SVECTOR pos[3];
+
+	// 0x28, 0x2C, 0x30, 0x34, 0x38
+	// copies of data.checkeredFlag[X]
+	int copy0;
+	int copy1;
+	int copy2;
+	int copy3;
+	int copy4;
 
 	puVar27 = auStack_88;
 
@@ -127,19 +134,18 @@ LAB_80044568:
 	iVar28 = (iVar28 + 0xfff) * data.checkerFlagVariables[1];
 	iVar28 = (iVar28 >> 0xd) + 0x280;
 	
-	*(u_short*)(puVar27 + 0x12) = 0xfc72;
-	*(u_short*)(puVar27 + 0x1a) = 0xfcd0;
-	*(u_short*)(puVar27 + 0x22) = 0xfd2e;
+	pos[0].vy = 0xfc72;
+	pos[1].vy = 0xfcd0;
+	pos[2].vy = 0xfd2e;
 	
 	sVar2 = sdata->TitleFlag_Position;
 	sVar2 = -0xbbe - sVar2;
-	*(short*)(puVar27 + 0x10) = sVar2;
-	*(short*)(puVar27 + 0x18) = sVar2;
-	*(short*)(puVar27 + 0x20) = sVar2;
+	pos[0].vx = sVar2;
+	pos[1].vx = sVar2;
+	pos[2].vx = sVar2;
 
 	iVar24 = 0;
-	r0 = (SVECTOR*)(puVar27 + 0x10);
-	for (iVar5 = 0, pSVar11 = r0; iVar24 < 10; iVar24++, r0_00 += 3)
+	for (iVar5 = 0, pSVar11 = &pos[0]; iVar24 < 10; iVar24++, r0_00 += 3)
 	{
 		for (; iVar5 < 3; uVar18 += 300, iVar5++, pSVar11++)
 		{
@@ -148,11 +154,11 @@ LAB_80044568:
 			pSVar11->vz = (short)iVar28 + (short)((iVar6 + 0xfff) * 0x20 >> 0xd);
 		}
 
-		gte_ldv3(r0, (SVECTOR*)(puVar27 + 0x18), (SVECTOR*)(puVar27 + 0x20));
+		gte_ldv3(&pos[0], &pos[1], &pos[2]);
 		gte_rtpt();
-		*(short*)(puVar27 + 0x12) = *(short*)(puVar27 + 0x12) + 0x11a;
-		*(short*)(puVar27 + 0x22) = *(short*)(puVar27 + 0x22) + 0x11a;
-		*(short*)(puVar27 + 0x1a) = *(short*)(puVar27 + 0x1a) + 0x11a;
+		pos[0].vy += 0x11a;
+		pos[1].vy += 0x11a;
+		pos[2].vy += 0x11a;
 		gte_stsxy3(r0_00, r0_00 + 1, r0_00 + 2);
 	}
 
@@ -160,13 +166,16 @@ LAB_80044568:
 	uVar16 = 0x80008000;
 	iVar24 = *(int*)(puVar27 + 0x48);
 	*(u_char**)(puVar27 + 0x50) = puVar27 + 0x48;
-	*(u_char**)(puVar27 + 0x5c) = puVar27 + 0x10;
+	*(u_char**)(puVar27 + 0x5c) = &pos[0];
+
+	// screen size
 	iVar28 = 0xd80200;
-	*(u_int*)(puVar27 + 0x28) = data.checkerFlagVariables[0];
-	*(int*)(puVar27 + 0x2c) = data.checkerFlagVariables[1];
-	*(u_int*)(puVar27 + 0x30) = data.checkerFlagVariables[2];
-	*(int*)(puVar27 + 0x34) = data.checkerFlagVariables[3];
-	*(u_int*)(puVar27 + 0x38) = data.checkerFlagVariables[4];
+
+	copy0 = data.checkerFlagVariables[0];
+	copy1 = data.checkerFlagVariables[1];
+	copy2 = data.checkerFlagVariables[2];
+	copy3 = data.checkerFlagVariables[3];
+	copy4 = data.checkerFlagVariables[4];
 
 	do
 	{
@@ -182,26 +191,28 @@ LAB_80044568:
 #endif		
 
 		uVar19 = *(int*)(puVar27 + 0x4c) + 0x100;
-		uVar18 = *(int*)(puVar27 + 0x38) + *(int*)(puVar27 + 0x34) * 0x40;
+		uVar18 = copy4 + copy3 * 0x40;
 		uVar10 = (int)uVar18 >> 5;
 		*(u_int*)(puVar27 + 0x4c) = uVar19;
-		*(u_int*)(puVar27 + 0x38) = uVar18;
+		copy4 = uVar18;
 		if (0xfff < uVar10)
 		{
 			uVar10 = (int)(uVar18 & 0x1ffff) >> 5;
-			*(u_int*)(puVar27 + 0x38) = uVar18 & 0x1ffff;
-			uVar18 = *(int*)(puVar27 + 0x28) + 0x200;
-			*(u_int*)(puVar27 + 0x28) = uVar18;
+			copy4 = uVar18 & 0x1ffff;
+			
+			uVar18 = copy0 + 0x200;
+			copy0 = uVar18;
 
 			iVar6 = DECOMP_MATH_Sin(uVar18);
 
-			*(int*)(puVar27 + 0x2c) = ((iVar6 + 0xfff) * 0x20 >> 0xd) + 0x96;
-			uVar18 = *(int*)(puVar27 + 0x30) + 200;
-			*(u_int*)(puVar27 + 0x30) = uVar18;
+			copy1 = ((iVar6 + 0xfff) * 0x20 >> 0xd) + 0x96;
+
+			uVar18 = copy2 + 200;
+			copy2 = uVar18;
 
 			iVar6 = DECOMP_MATH_Sin(uVar18);
 
-			*(int*)(puVar27 + 0x34) = ((iVar6 + 0xfff) * 0x40 >> 0xd) + 0xb4;
+			copy3 = ((iVar6 + 0xfff) * 0x40 >> 0xd) + 0xb4;
 		}
 
 		iVar6 = DECOMP_MATH_Sin(uVar10);
@@ -214,13 +225,13 @@ LAB_80044568:
 		iVar15 = 0;
 		iVar17 = *(int*)(puVar27 + 0x5c);
 		**(int**)(puVar27 + 0x50) = iVar7 + 0xfff;
-		*(u_short*)(puVar27 + 0x12) = 0xfc72;
-		*(u_short*)(puVar27 + 0x1a) = 0xfcd0;
-		*(u_short*)(puVar27 + 0x22) = 0xfd2e;
-		*(short*)(puVar27 + 0x10) = *(short*)(puVar27 + 0x10) + 100;
-		*(short*)(puVar27 + 0x18) = *(short*)(puVar27 + 0x18) + 100;
-		*(short*)(puVar27 + 0x20) = *(short*)(puVar27 + 0x20) + 100;
-		iVar6 = ((iVar6 + 0xfff) * *(int*)(puVar27 + 0x2c) >> 0xd) + 0x280;
+		pos[0].vy = 0xfc72;
+		pos[1].vy = 0xfcd0;
+		pos[2].vy = 0xfd2e;
+		pos[0].vx += 100;
+		pos[1].vx += 100;
+		pos[2].vx += 100;
+		iVar6 = ((iVar6 + 0xfff) * copy1 >> 0xd) + 0x280;
 
 		for (; iVar15 < 3; uVar19 += 300, iVar15++, iVar17 += 8)
 		{
@@ -232,7 +243,7 @@ LAB_80044568:
 			iVar17 = iVar17 + 8;
 		}
 
-		gte_ldv3(*(SVECTOR**)(puVar27 + 0x5c), (SVECTOR*)(puVar27 + 0x18), (SVECTOR*)(puVar27 + 0x20));
+		gte_ldv3(*(SVECTOR**)(puVar27 + 0x5c), &pos[1], &pos[2]);
 		gte_rtpt();
 
 		iVar15 = 0;
@@ -255,10 +266,10 @@ LAB_80044568:
 						iVar13 = iVar13 + 8;
 					} while (iVar17 < 3);
 
-					*(short*)(puVar27 + 0x12) = *(short*)(puVar27 + 0x12) + 0x11a;
-					*(short*)(puVar27 + 0x22) = *(short*)(puVar27 + 0x22) + 0x11a;
-					*(short*)(puVar27 + 0x1a) = *(short*)(puVar27 + 0x1a) + 0x11a;
-					gte_ldv3(*(SVECTOR**)(puVar27 + 0x5c), (SVECTOR*)(puVar27 + 0x18), (SVECTOR*)(puVar27 + 0x20));
+					pos[0].vy += 0x11a;
+					pos[1].vy += 0x11a;
+					pos[2].vy += 0x11a;
+					gte_ldv3(*(SVECTOR**)(puVar27 + 0x5c), &pos[1], &pos[2]);
 					gte_rtpt();
 				}
 			}
@@ -290,14 +301,13 @@ LAB_80044568:
 					if (((iVar5 >> 2) + (iVar15 >> 2) & 1U) == 0)
 					{
 						puVar27[0x40] = (char)(iVar24 * 0x82 + (0x2000 - iVar24) * 0xff >> 0xd);
-						uVar4 = (u_char)(*(int*)(puVar27 + 0x48) * -0x7d + 0x1fe000 >> 0xd);
+						puVar27[0x41] = (u_char)(*(int*)(puVar27 + 0x48) * -0x7d + 0x1fe000 >> 0xd);
 					}
 					else
 					{
-						uVar4 = (u_char)(*(int*)(puVar27 + 0x48) * -0x37 + 0x140000 >> 0xd);
+						puVar27[0x41] = (u_char)(*(int*)(puVar27 + 0x48) * -0x37 + 0x140000 >> 0xd);
 						puVar27[0x40] = puVar27[0x58];
 					}
-					puVar27[0x41] = uVar4;
 					puVar20[2] = *puVar23;
 					puVar20[6] = puVar23[1];
 					puVar20[4] = *puVar21;
