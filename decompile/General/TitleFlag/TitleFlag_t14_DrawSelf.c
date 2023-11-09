@@ -42,6 +42,7 @@ void DECOMP_TitleFlag_DrawSelf()
 
 	// 0x28, 0x2C, 0x30, 0x34, 0x38
 	// copies of data.checkeredFlag[X]
+	// unk1, unk2, waveAngle, brightness, darkness
 	int copy0;
 	int copy1;
 	int copy2;
