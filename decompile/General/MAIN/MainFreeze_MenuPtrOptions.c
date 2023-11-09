@@ -403,7 +403,7 @@ switchD_80038f90_caseD_9:
 	glowingcursor.w = 0x16c;
 	glowingcursor.y = data.Options_HighlightBar_PosY[mb->rowSelected][0] + sVar4 + 0x14;
 	glowingcursor.h = data.Options_HighlightBar_PosY[mb->rowSelected][1];
-	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
+	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 
 	titleSeparatorLine.x = 66;
 	titleSeparatorLine.y = sVar4 + 43;

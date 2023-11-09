@@ -95,7 +95,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
         if (mb[10] & 0x10U)
             highlightColor = &sdata->menuRowHighlight_Green;
 
-        CTR_Box_DrawClearBox(&rectX, highlightColor, 1, gGT->backBuffer->otMem.startPlusFour, &gGT->backBuffer->primMem);
+        CTR_Box_DrawClearBox(&rectX, highlightColor, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour, &gGT->backBuffer->primMem);
     }
 
     if (mb->state & DRAW_NEXT_MENU_IN_HIERARCHY)

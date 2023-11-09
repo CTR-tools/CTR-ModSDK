@@ -383,7 +383,7 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 			box.h = 0x1a;
 
 			// Draw a rectangle to highlight your time on the "Best Times" list
-			CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, 1,
+			CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
 								 // pointer to OT mem
 								 gGT->tileView_UI.ptrOT,
 								 // pointer to PrimMem struct

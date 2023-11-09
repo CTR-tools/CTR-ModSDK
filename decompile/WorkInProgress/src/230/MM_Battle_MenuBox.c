@@ -772,7 +772,7 @@ LAB_800b25f0:
         local_50 = OVR_230.transitionMeta_battle[4].currX + 0x9c;
         local_4e = OVR_230.transitionMeta_battle[4].currY + sVar20 + 3;
 
-        CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, 1,
+        CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
 
                              gGT->backBuffer->otMem.startPlusFour,
 
@@ -929,7 +929,7 @@ LAB_800b25f0:
         local_60[3] = 0x20;
         local_60[1] = local_3e + (sdata->battleSetupRowHighlighted - 3) * 0x20 + 2;
 
-        CTR_Box_DrawClearBox(local_60, &sdata->menuRowHighlight_Normal, 1,
+        CTR_Box_DrawClearBox(local_60, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
                              gGT->backBuffer->otMem.startPlusFour,
 
                              // pointer to PrimMem struct
@@ -941,7 +941,7 @@ LAB_800b25f0:
     local_58.w = local_3c - 6;
     local_58.h = local_3a - 4;
 
-    CTR_Box_DrawClearBox(local_58, &OVR_230.color3[0], 1,
+    CTR_Box_DrawClearBox(local_58, &OVR_230.color3[0], TRANS_50_DECAL,
                          gGT->backBuffer->otMem.startPlusFour,
 
                          // pointer to PrimMem struct

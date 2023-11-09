@@ -95,7 +95,7 @@ void AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
         box.y = (short)iVar11 + 0x4e;
         box.h = 0x11;
 
-        CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, 1, gGT->backBuffer->otMem.startPlusFour,
+        CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour,
 
                              // pointer to PrimMem struct
                              &gGT->backBuffer->primMem);
@@ -311,7 +311,7 @@ LAB_800b38cc:
     box.y = (mb->rowSelected - *(short *)0x800b5664) * 0x10 + 0x4f;
     box.h = 0x11;
 
-    CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, 1,
+    CTR_Box_DrawClearBox(&box, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
                          gGT->backBuffer->otMem.startPlusFour,
 
                          // pointer to PrimMem struct
