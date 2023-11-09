@@ -287,7 +287,6 @@ LAB_80044568:
 				puVar21++;
 			}
 			uVar18 = (u_int)(iVar15 == 0);
-			*(int*)(puVar27 + 0x58) = iVar24 * 0x69 + (0x2000 - iVar24) * 0xa0 >> 0xd;
 
 			for (; (int)uVar18 < 3; puVar23++, puVar21++, uVar18++, iVar15++)
 			{
@@ -321,7 +320,7 @@ LAB_80044568:
 					else
 					{
 						puVar27[0x41] = (u_char)(*(int*)(puVar27 + 0x48) * -0x37 + 0x140000 >> 0xd);
-						puVar27[0x40] = puVar27[0x58];
+						puVar27[0x40] = (char)(iVar24 * 0x69 + (0x2000 - iVar24) * 0xa0 >> 0xd);
 					}
 
 					// positions
