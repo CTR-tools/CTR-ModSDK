@@ -104,30 +104,34 @@ LAB_80044568:
 		data.checkerFlagVariables[4] = data.checkerFlagVariables[4] & 0x1ffff;
 		uVar16 = (int)data.checkerFlagVariables[4] >> 5;
 
+
 		// += 45 degrees
 		data.checkerFlagVariables[0] += 0x200;
-		iVar28 = DECOMP_MATH_Sin(data.checkerFlagVariables[0]);
 
-		data.checkerFlagVariables[1] = ((iVar28 + 0xfff) * 0x20 >> 0xd) + 0x96;
+		// Range: [1.0, 2.0]
+		iVar28 = DECOMP_MATH_Sin(data.checkerFlagVariables[0]) + 0xfff;
+		data.checkerFlagVariables[1] = (iVar28 * 0x20 >> 0xd) + 0x96;
+
 
 		// += 18 degrees
 		data.checkerFlagVariables[2] = data.checkerFlagVariables[2] + 200;
-		iVar28 = DECOMP_MATH_Sin(data.checkerFlagVariables[2]);
 
-		data.checkerFlagVariables[3] = ((iVar28 + 0xfff) * 0x40 >> 0xd) + 0xb4;
+		// Range: [1.0, 2.0]
+		iVar28 = DECOMP_MATH_Sin(data.checkerFlagVariables[2]) + 0xfff;
+		data.checkerFlagVariables[3] = (iVar28 * 0x40 >> 0xd) + 0xb4;
 	}
 
-	iVar28 = DECOMP_MATH_Sin(uVar16);
+	// Range: [1.0, 2.0]
+	iVar28 = DECOMP_MATH_Sin(uVar16) + 0xfff;
+	iVar28 = iVar28 * data.checkerFlagVariables[1];
+	iVar28 = (iVar28 >> 0xd) + 0x280;
 
 	// 280 degrees (3/4 of 360)
 	uVar16 += 0xc80;
 
-	iVar5 = DECOMP_MATH_Sin(uVar16);
-
-	color = iVar5 + 0xfff;
-
-	iVar28 = (iVar28 + 0xfff) * data.checkerFlagVariables[1];
-	iVar28 = (iVar28 >> 0xd) + 0x280;
+	// Range: [1.0, 2.0]
+	iVar5 = DECOMP_MATH_Sin(uVar16) + 0xfff;
+	color = iVar5;
 	
 	pos[0].vy = 0xfc72;
 	pos[1].vy = 0xfcd0;
@@ -146,10 +150,11 @@ LAB_80044568:
 				iVar5 < 3; 
 				iVar5++, pSVar11++)
 		{
-			iVar6 = DECOMP_MATH_Sin(uVar18);
+			// Range: [1.0, 2.0]
+			iVar6 = DECOMP_MATH_Sin(uVar18) + 0xfff;
 			uVar18 += 300;
 
-			pSVar11->vz = (short)iVar28 + (short)((iVar6 + 0xfff) * 0x20 >> 0xd);
+			pSVar11->vz = (short)iVar28 + (short)(iVar6 * 0x20 >> 0xd);
 		}
 
 		gte_ldv3(&pos[0], &pos[1], &pos[2]);
@@ -201,25 +206,28 @@ LAB_80044568:
 			uVar18 = copy0 + 0x200;
 			copy0 = uVar18;
 
-			iVar6 = DECOMP_MATH_Sin(uVar18);
-
-			copy1 = ((iVar6 + 0xfff) * 0x20 >> 0xd) + 0x96;
+			// Range: [1.0, 2.0]
+			iVar6 = DECOMP_MATH_Sin(uVar18) + 0xfff;
+			copy1 = (iVar6 * 0x20 >> 0xd) + 0x96;
 
 			uVar18 = copy2 + 200;
 			copy2 = uVar18;
 
-			iVar6 = DECOMP_MATH_Sin(uVar18);
-
-			copy3 = ((iVar6 + 0xfff) * 0x40 >> 0xd) + 0xb4;
+			// Range: [1.0, 2.0]
+			iVar6 = DECOMP_MATH_Sin(uVar18) + 0xfff;
+			copy3 = (iVar6 * 0x40 >> 0xd) + 0xb4;
 		}
 
-		iVar6 = DECOMP_MATH_Sin(uVar10);
+		// Range: [1.0, 2.0]
+		iVar6 = DECOMP_MATH_Sin(uVar10) + 0xfff;
+		iVar6 = (iVar6 * copy1 >> 0xd) + 0x280;
 
 		// 280 degrees
 		uVar10 += 0xc80;
 
-		iVar7 = DECOMP_MATH_Sin(uVar10);
-		color = iVar7 + 0xfff;
+		// range: [1.0, 2.0]
+		iVar7 = DECOMP_MATH_Sin(uVar10) + 0xfff;
+		color = iVar7;
 
 		pos[0].vy = 0xfc72;
 		pos[1].vy = 0xfcd0;
@@ -227,7 +235,6 @@ LAB_80044568:
 		pos[0].vx += 100;
 		pos[1].vx += 100;
 		pos[2].vx += 100;
-		iVar6 = ((iVar6 + 0xfff) * copy1 >> 0xd) + 0x280;
 
 		for (
 				iVar15 = 0, iVar17 = &pos[0]; 
@@ -235,11 +242,12 @@ LAB_80044568:
 				iVar15++, iVar17 += 8
 			)
 		{
-			iVar7 = DECOMP_MATH_Sin(uVar19);
+			// Range: [1.0, 2.0]
+			iVar7 = DECOMP_MATH_Sin(uVar19) + 0xfff;
 			uVar19 += 300;
 
 			// change all vector posZ
-			*(short*)(iVar17 + 4) = (short)iVar6 + (short)((iVar7 + 0xfff) * 0x20 >> 0xd);
+			*(short*)(iVar17 + 4) = (short)iVar6 + (short)(iVar7 * 0x20 >> 0xd);
 		}
 
 		gte_ldv3(&pos[0], &pos[1], &pos[2]);
@@ -262,11 +270,12 @@ LAB_80044568:
 							iVar17++, iVar13 += 8
 						)
 					{
-						iVar8 = DECOMP_MATH_Sin(uVar19);
+						// Range: [1.0, 2.0]
+						iVar8 = DECOMP_MATH_Sin(uVar19) + 0xfff;
 						uVar19 = uVar19 + 300;
 
 						// change all vector posZ
-						*(short*)(iVar13 + 4) = (short)iVar6 + (short)((iVar8 + 0xfff) * 0x20 >> 0xd);
+						*(short*)(iVar13 + 4) = (short)iVar6 + (short)(iVar8 * 0x20 >> 0xd);
 					}
 
 					pos[0].vy += 0x11a;
