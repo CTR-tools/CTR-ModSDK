@@ -319,8 +319,8 @@ LAB_80044568:
 					// black tile
 					else
 					{
-						puVar27[0x41] = (u_char)(*(int*)(puVar27 + 0x48) * -0x37 + 0x140000 >> 0xd);
 						puVar27[0x40] = (char)(iVar24 * 0x69 + (0x2000 - iVar24) * 0xa0 >> 0xd);
+						puVar27[0x41] = (u_char)(*(int*)(puVar27 + 0x48) * -0x37 + 0x140000 >> 0xd);
 					}
 
 					// positions
