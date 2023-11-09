@@ -72,6 +72,9 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker* gGT);
 void DECOMP_MainInit_VRAMClear();
 void DECOMP_MainInit_VRAMDisplay();
 
+int DECOMP_MATH_Sin(u_int angle);
+int DECOMP_MATH_Cos(u_int angle);
+
 void DECOMP_MEMCARD_InitCard(void);
 void DECOMP_MEMPACK_Init(int ramSize);
 void DECOMP_MEMPACK_SwapPacks(int index);

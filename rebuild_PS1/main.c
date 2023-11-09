@@ -118,6 +118,9 @@
 #include "../decompile/General/MAIN/MainInit_VRAMClear.c" 
 #include "../decompile/General/MAIN/MainInit_VRAMDisplay.c" 
 
+#include "../decompile/General/MATH/MATH_Sin.c"
+#include "../decompile/General/MATH/MATH_Cos.c"
+
 #include "../decompile/General/MEMCARD/MEMCARD_InitCard.c"
 
 #include "../decompile/General/MEMPACK/MEMPACK_Init.c" 
