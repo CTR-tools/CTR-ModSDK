@@ -309,18 +309,21 @@ LAB_80044568:
 						return;
 					}
 
+					char colorRight;
+					char colorLeft;
+
 					// white tile
 					if (((iVar5 >> 2) + (iVar15 >> 2) & 1U) == 0)
 					{
-						puVar27[0x40] = (char)(iVar24 * 0x82 + (0x2000 - iVar24) * 0xff >> 0xd);
-						puVar27[0x41] = (u_char)(*(int*)(puVar27 + 0x48) * -0x7d + 0x1fe000 >> 0xd);
+						colorRight = (iVar24 * 0x82 + (0x2000 - iVar24) * 0xff >> 0xd);
+						colorLeft = (*(int*)(puVar27 + 0x48) * -0x7d + 0x1fe000 >> 0xd);
 					}
 
 					// black tile
 					else
 					{
-						puVar27[0x40] = (char)(iVar24 * 0x69 + (0x2000 - iVar24) * 0xa0 >> 0xd);
-						puVar27[0x41] = (u_char)(*(int*)(puVar27 + 0x48) * -0x37 + 0x140000 >> 0xd);
+						colorRight = (iVar24 * 0x69 + (0x2000 - iVar24) * 0xa0 >> 0xd);
+						colorLeft = (*(int*)(puVar27 + 0x48) * -0x37 + 0x140000 >> 0xd);
 					}
 
 					// positions
@@ -330,7 +333,7 @@ LAB_80044568:
 					puVar20[8] = puVar21[1];
 
 					// color
-					uVar10 = (u_int)(u_char)puVar27[0x40];
+					uVar10 = (u_int)(u_char)colorRight;
 					uVar10 = uVar10 | uVar10 << 0x10 | uVar10 << 8;
 					puVar20[1] = uVar10;
 					puVar20[5] = uVar10;
@@ -340,7 +343,7 @@ LAB_80044568:
 					*(u_char*)((int)puVar20 + 7) = 0x38;
 
 					// color
-					uVar10 = (u_int)(u_char)puVar27[0x41];
+					uVar10 = (u_int)(u_char)colorLeft;
 					uVar10 = uVar10 | uVar10 << 0x10 | uVar10 << 8;
 					puVar20[3] = uVar10;
 					puVar20[7] = uVar10;
