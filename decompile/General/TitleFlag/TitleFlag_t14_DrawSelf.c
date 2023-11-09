@@ -49,6 +49,9 @@ void DECOMP_TitleFlag_DrawSelf()
 	int copy3;
 	int copy4;
 
+	int time;
+	int color;
+
 	puVar27 = auStack_88;
 
 	if (sdata->TitleFlag_CanDraw == 0)
@@ -101,7 +104,7 @@ LAB_80044568:
 #endif
 	uVar25 = 1;
 	uVar18 = sdata->TitleFlag_ElapsedTime >> 5;
-	*(u_int*)(puVar27 + 0x4c) = uVar18;
+	time = uVar18;
 	data.checkerFlagVariables[4] = data.checkerFlagVariables[4] + iVar28;
 	uVar16 = (int)data.checkerFlagVariables[4] >> 5;
 
@@ -130,7 +133,7 @@ LAB_80044568:
 
 	iVar5 = DECOMP_MATH_Sin(uVar16);
 
-	*(int*)(puVar27 + 0x48) = iVar5 + 0xfff;
+	color = iVar5 + 0xfff;
 
 	iVar28 = (iVar28 + 0xfff) * data.checkerFlagVariables[1];
 	iVar28 = (iVar28 >> 0xd) + 0x280;
@@ -169,8 +172,7 @@ LAB_80044568:
 
 	iVar5 = 1;
 	uVar16 = 0x80008000;
-	iVar24 = *(int*)(puVar27 + 0x48);
-	*(u_char**)(puVar27 + 0x50) = puVar27 + 0x48;
+	iVar24 = color;
 
 	// screen size
 	iVar28 = 0xd80200;
@@ -194,10 +196,11 @@ LAB_80044568:
 		puVar23 = (u_int*)(0x1f800000 + uVar25 * 0x78);
 #endif		
 
-		uVar19 = *(int*)(puVar27 + 0x4c) + 0x100;
+		uVar19 = time + 0x100;
+		time = uVar19;
+
 		uVar18 = copy4 + copy3 * 0x40;
 		uVar10 = (int)uVar18 >> 5;
-		*(u_int*)(puVar27 + 0x4c) = uVar19;
 		copy4 = uVar18;
 		if (0xfff < uVar10)
 		{
@@ -225,7 +228,7 @@ LAB_80044568:
 		uVar10 += 0xc80;
 
 		iVar7 = DECOMP_MATH_Sin(uVar10);
-		**(int**)(puVar27 + 0x50) = iVar7 + 0xfff;
+		color = iVar7 + 0xfff;
 
 		pos[0].vy = 0xfc72;
 		pos[1].vy = 0xfcd0;
@@ -316,14 +319,14 @@ LAB_80044568:
 					if (((iVar5 >> 2) + (iVar15 >> 2) & 1U) == 0)
 					{
 						colorRight = (iVar24 * 0x82 + (0x2000 - iVar24) * 0xff >> 0xd);
-						colorLeft = (*(int*)(puVar27 + 0x48) * -0x7d + 0x1fe000 >> 0xd);
+						colorLeft = (color * -0x7d + 0x1fe000 >> 0xd);
 					}
 
 					// black tile
 					else
 					{
 						colorRight = (iVar24 * 0x69 + (0x2000 - iVar24) * 0xa0 >> 0xd);
-						colorLeft = (*(int*)(puVar27 + 0x48) * -0x37 + 0x140000 >> 0xd);
+						colorLeft = (color * -0x37 + 0x140000 >> 0xd);
 					}
 
 					// positions
@@ -355,7 +358,7 @@ LAB_80044568:
 			}
 		}
 
-		iVar24 = *(int*)(puVar27 + 0x48);
+		iVar24 = color;
 		iVar5 = iVar5 + 1;
 		if (0x22 < iVar5)
 		{
