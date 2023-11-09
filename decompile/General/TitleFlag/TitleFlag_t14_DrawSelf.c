@@ -1,7 +1,6 @@
 #include <common.h>
 
 #ifdef REBUILD_PC
-u_char auStack_88[96];
 int scratchpadBuf[0x1000];
 #endif
 
@@ -29,13 +28,8 @@ void DECOMP_TitleFlag_DrawSelf()
 	u_int* puVar23;
 	int iVar24;
 	u_int uVar25;
-	u_char* puVar27;
 	int iVar28;
 	struct GameTracker* gGT = sdata->gGT;
-
-#ifndef REBUILD_PC
-	u_char auStack_88[96];
-#endif
 
 	// 0x10, 0x18, 0x20
 	SVECTOR pos[3];
@@ -51,8 +45,6 @@ void DECOMP_TitleFlag_DrawSelf()
 
 	int time;
 	int color;
-
-	puVar27 = auStack_88;
 
 	if (sdata->TitleFlag_CanDraw == 0)
 	{
@@ -98,7 +90,6 @@ LAB_80044568:
 #ifdef REBUILD_PC
 	r0_00 = &scratchpadBuf[0];
 	memset(&scratchpadBuf[0], 0, 0x1000 * 4);
-	memset(&auStack_88[0], 0, 96);
 #else
 	r0_00 = 0x1f800000;
 #endif
