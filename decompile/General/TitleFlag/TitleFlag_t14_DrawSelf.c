@@ -167,7 +167,6 @@ LAB_80044568:
 	uVar16 = 0x80008000;
 	iVar24 = *(int*)(puVar27 + 0x48);
 	*(u_char**)(puVar27 + 0x50) = puVar27 + 0x48;
-	*(u_char**)(puVar27 + 0x5c) = &pos[0];
 
 	// screen size
 	iVar28 = 0xd80200;
@@ -222,10 +221,8 @@ LAB_80044568:
 		uVar10 += 0xc80;
 
 		iVar7 = DECOMP_MATH_Sin(uVar10);
-
-		iVar15 = 0;
-		iVar17 = *(int*)(puVar27 + 0x5c);
 		**(int**)(puVar27 + 0x50) = iVar7 + 0xfff;
+
 		pos[0].vy = 0xfc72;
 		pos[1].vy = 0xfcd0;
 		pos[2].vy = 0xfd2e;
@@ -234,17 +231,21 @@ LAB_80044568:
 		pos[2].vx += 100;
 		iVar6 = ((iVar6 + 0xfff) * copy1 >> 0xd) + 0x280;
 
+		iVar15 = 0;
+		iVar17 = &pos[0];
 		for (; iVar15 < 3; uVar19 += 300, iVar15++, iVar17 += 8)
 		{
 			iVar7 = DECOMP_MATH_Sin(uVar19);
 
+			// change all vector posZ
 			*(short*)(iVar17 + 4) = (short)iVar6 + (short)((iVar7 + 0xfff) * 0x20 >> 0xd);
+
 			uVar19 = uVar19 + 300;
 			iVar15 = iVar15 + 1;
 			iVar17 = iVar17 + 8;
 		}
 
-		gte_ldv3(*(SVECTOR**)(puVar27 + 0x5c), &pos[1], &pos[2]);
+		gte_ldv3(&pos[0], &pos[1], &pos[2]);
 		gte_rtpt();
 
 		iVar15 = 0;
@@ -256,12 +257,14 @@ LAB_80044568:
 				iVar17 = 0;
 				if (iVar7 < 10)
 				{
-					iVar13 = *(int*)(puVar27 + 0x5c);
+					iVar13 = &pos[0];
 					do
 					{
 						iVar8 = DECOMP_MATH_Sin(uVar19);
 
+						// change all vector posZ
 						*(short*)(iVar13 + 4) = (short)iVar6 + (short)((iVar8 + 0xfff) * 0x20 >> 0xd);
+						
 						uVar19 = uVar19 + 300;
 						iVar17 = iVar17 + 1;
 						iVar13 = iVar13 + 8;
@@ -270,7 +273,7 @@ LAB_80044568:
 					pos[0].vy += 0x11a;
 					pos[1].vy += 0x11a;
 					pos[2].vy += 0x11a;
-					gte_ldv3(*(SVECTOR**)(puVar27 + 0x5c), &pos[1], &pos[2]);
+					gte_ldv3(&pos[0], &pos[1], &pos[2]);
 					gte_rtpt();
 				}
 			}
