@@ -72,17 +72,7 @@ LAB_80044568:
 	gte_SetRotMatrix(&data.matrixTitleFlag);
 	gte_SetTransMatrix(&data.matrixTitleFlag);
 	gte_SetGeomOffset(0x100, 0x78);
-
-#ifndef REBUILD_PC
-#define gte_ldH( r0 ) __asm__ volatile ( \
-		"lhu   $12, 0(  %0  );" \
-		"ctc2  $12, $31;"       \
-		:                       \
-		: "r" ( r0 )            \
-		: "$12" )
-
-	gte_ldH(0x100);
-#endif
+	gte_SetGeomScreen(0x100);
 
 	iVar28 = data.checkerFlagVariables[3] * gGT->elapsedTimeMS;
 	puVar20 = 0;
