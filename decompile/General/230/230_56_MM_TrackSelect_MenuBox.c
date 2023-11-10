@@ -401,7 +401,7 @@ LAB_800b05b8:
 		r.y = sVar7;
 
 		// if you are in time trial mode
-		if ((gGT->gameMode1 & MAIN_MENU) != 0)
+		if ((gGT->gameMode1 & TIME_TRIAL) != 0)
 		{
 			// backup level ID
 			sVar5 = gGT->levelID;
@@ -610,7 +610,7 @@ LAB_800b05b8:
 									(iVar9 - (iVar9 >> 0xf) >> 1),
 
 							// Y
-							(int)((short *)0x800b55ce)[iVar18 * 3] + (int)p.w +
+							(int)((short *)0x800b55ce)[iVar18 * 3] + (int)p.h +
 									((p.h >> 0x10) - (p.h >> 0x1f) >> 1) +
 									(iVar10 - (iVar10 >> 0xf) >> 1),
 
