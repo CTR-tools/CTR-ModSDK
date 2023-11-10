@@ -1,26 +1,27 @@
 #include <common.h>
 
-void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, int bigfileOffset, int trackIndex, int param_4, u_short param_5)
+void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectMenu, int trackIndex, int param_4, u_short param_5)
 {
   u_char u0;
   u_char v0;
   u_short tpage;
-  int bigfile_pos;
   struct GameTracker* gGT = sdata->gGT;
+  struct BigHeader* bh = sdata->ptrBigfileCdPos_2;
+  struct BigEntry* entry = BIG_GETENTRY(bh);
+  int videoID;
 
-  // bigfile offset of "this" track video
-  bigfile_pos = (trackIndex >> 4) + bigfileOffset;
+  selectMenu = &selectMenu[trackIndex];
+  videoID = selectMenu->videoID;
 
-  if ((
-    (sdata->ptrBigfileCdPos_2[*(int *)(bigfile_pos + 8) * 2 + 3] == 0) || 
-
-    ((r->x < 0)) || (r->y < 0)) ||
-
-    // compare values, against screen resolution,
-    // check if video is off-screen (and should not play)
-    ((0x200 < r->x + r->w || (0xd8 < r->y + r->h))
-      
-    ))
+  if (
+		(entry[videoID].size == 0) || 
+		
+		// Video off-screen
+		(r->x < 0) || 
+		(r->y < 0) ||
+		((r->x + r->w) > 0x200) || 
+		((r->y + r->h) > 0xd8) 
+    )
   {
     // draw icon
     OVR_230.trackSel_video_state = 1;
@@ -45,32 +46,38 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, int bigfileOffset, int trackIndex
       }
 
       // CD position of video, and numFrames
-      MM_Video_StartStream(* sdata->ptrBigfileCdPos_2 + sdata->ptrBigfileCdPos_2[*(int *)(bigfile_pos + 8) * 2 + 2], *(short *)(bigfile_pos + 0xc));
+      MM_Video_StartStream(bh->cdpos + entry[videoID].offset, selectMenu->videoLength);
     }
+	
     if (((OVR_230.trackSel_unk == 3) || (OVR_230.trackSel_video_state == 3)) || (OVR_230.trackSel_video_state == 2))
     {
       tpage = gGT->ptrIcons[0x3f]->texLayout.tpage;
       u0 = gGT->ptrIcons[0x3f]->texLayout.u0;
       v0 = gGT->ptrIcons[0x3f]->texLayout.v0;
 
-      if ((MM_Video_DecodeFrame() == 1) && (OVR_230.trackSel_video_state == 2))
+	  int ret = 
+		MM_Video_DecodeFrame(
+			gGT->db[1-gGT->swapchainIndex].drawEnv.ofs[0] + (r->x + 3),
+			gGT->db[1-gGT->swapchainIndex].drawEnv.ofs[1] + (r->y + 2)	  
+		);
+
+      if ((ret == 1) && (OVR_230.trackSel_video_state == 2))
       {
         OVR_230.trackSel_video_state = 3;
       }
       if (OVR_230.trackSel_unk == 3)
       {
-
         // RECT position (x,y)
         sdata->videoSTR_src_vramRect.x = (u_short)u0 + (tpage & 0xf) * 0x40 + 3;
         sdata->videoSTR_src_vramRect.y = (u_short)v0 + (tpage & 0x10) * 0x10 + (short)(((u_int)tpage & 0x800) >> 2) + 2;
 
         // RECT size (w,h)
         sdata->videoSTR_src_vramRect.w = 0xaa;
-        sdata->videoSTR_src_vramRect.y = 0x47;
+        sdata->videoSTR_src_vramRect.h = 0x47;
 
         // VRAM destination (x,y) on swapchain image
-        sdata->videoSTR_dst_vramX = *(short *)(gGT->db[gGT->swapchainIndex] + 0x74) + (r->x + 3);
-        sdata->videoSTR_dst_vramY = *(short *)(gGT->db[gGT->swapchainIndex] + 0x76) + (r->y + 2);
+        sdata->videoSTR_dst_vramX = gGT->db[gGT->swapchainIndex].dispEnv.disp.x + (r->x + 3);
+        sdata->videoSTR_dst_vramY = gGT->db[gGT->swapchainIndex].dispEnv.disp.y + (r->y + 2);
 
         // enable video copy, give src and dst
         MainFrame_InitVideoSTR(1, &sdata->videoSTR_src_vramRect.x, sdata->videoSTR_dst_vramX, sdata->videoSTR_dst_vramY);
@@ -84,7 +91,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, int bigfileOffset, int trackIndex
     // This is the same function that draws Character icons
 
     // Draw Video icon
-    MENUBOX_DrawPolyGT4(gGT->ptrIcons[*(short *)(bigfile_pos + 2)],
+    MENUBOX_DrawPolyGT4(gGT->ptrIcons[selectMenu->videoThumbnail],
                         (r->x + 3), (r->y + 2),
 
                         // pointer to PrimMem struct
@@ -93,7 +100,11 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, int bigfileOffset, int trackIndex
                         // pointer to OT mem
                         gGT->tileView_UI.ptrOT,
 
-                        (u_int *)0x800b55c0, (u_int *)0x800b55c0, (u_int *)0x800b55c0, (u_int *)0x800b55c0, 0, FP(1.0));
+                        *(int*)0x800b55c0,
+						*(int*)0x800b55c0,
+						*(int*)0x800b55c0,
+						*(int*)0x800b55c0,
+						0, FP(1.0));
   }
 
   if (OVR_230.trackSel_unk == 1)

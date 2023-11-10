@@ -3,7 +3,7 @@
 void MM_TransitionInOut(struct TransitionMeta*, int, int);
 void MM_Characters_RestoreIDs();
 void MM_Battle_Init();
-char MM_TrackSelect_boolTrackOpen(short);
+char MM_TrackSelect_boolTrackOpen(void*);
 
 void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 {
@@ -138,12 +138,12 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	// if you are in battle mode
 	if ((gGT->gameMode1 & BATTLE_MODE) != 0)
 	{
-		selectMenu = OVR_230.battleTracks;
+		selectMenu = &OVR_230.battleTracks[0];
 
 		numTracks = 7;
 	}
 
-	selectMenu = OVR_230.arcadeTracks;
+	selectMenu = &OVR_230.arcadeTracks[0];
 
 	numTracks = 18;
 
@@ -163,7 +163,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// change track sound
 				OtherFX_Play(0, 1);
 				// look for unlocked track
-				while (!MM_TrackSelect_boolTrackOpen(selectMenu[currTrack << 4].levID))
+				while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]))
 				{
 					// if index is negative
 					if (currTrack < 0)
@@ -177,7 +177,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// change track sound
 				OtherFX_Play(0, 1);
 				// look for unlocked track
-				while (!MM_TrackSelect_boolTrackOpen(selectMenu[currTrack << 4].levID))
+				while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]))
 				{
 					// if you go beyond max number of tracks
 					if (currTrack >= numTracks)
@@ -317,7 +317,7 @@ LAB_800b05b8:
 
 	uVar15 = (u_int)numTracks;
 	sVar7 = mb->rowSelected;
-	gGT->currLEV = selectMenu[sVar7 << 4].levID;
+	gGT->currLEV = selectMenu[sVar7].levID;
 	iVar9 = (int)sVar7 + -1;
 
 	for (iVar18 = 0; iVar18 < 4; iVar18++)
@@ -330,7 +330,7 @@ LAB_800b05b8:
 				iVar10 = uVar15 - 1;
 			}
 
-			uVar8 = MM_TrackSelect_boolTrackOpen(selectMenu[iVar10 << 4].levID);
+			uVar8 = MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
 
 			iVar9 = iVar10 - 1;
 		} while ((uVar8 & 0xffff) == 0);
@@ -408,7 +408,7 @@ LAB_800b05b8:
 			for (iVar17 = 0; iVar17 < 2; iVar17++)
 			{
 				// set level ID to the level you're hovering on, in the main menu
-				gGT->levelID = selectMenu[iVar10 << 4].levID;
+				gGT->levelID = selectMenu[iVar10].levID;
 
 				// (useless?)
 				GAMEPROG_GetPtrHighScoreTrack();
@@ -467,7 +467,7 @@ LAB_800b05b8:
 
 		// Draw string
 		DecalFont_DrawLine(
-				sdata->lngStrings[data.metaDataLEV[selectMenu[iVar10 << 4].levID].name_LNG],
+				sdata->lngStrings[data.metaDataLEV[selectMenu[iVar10].levID].name_LNG],
 				(iVar11 + 8),
 				(iVar9 + 0x65),
 				1, 0);
@@ -478,7 +478,7 @@ LAB_800b05b8:
 			if ((gGT->gameMode1 & MAIN_MENU) != 0)
 			{
 				// Check if this track has Ghost Data
-				uVar15 = GhostData_NumGhostsForLEV(selectMenu[iVar10 << 4].levID);
+				uVar15 = GhostData_NumGhostsForLEV(selectMenu[iVar10].levID);
 
 				// If this track has Ghost Data
 				if ((uVar15 & 0xffff) != 0)
@@ -522,7 +522,7 @@ LAB_800b05b8:
 			{
 				iVar10 = 0;
 			}
-			uVar8 = MM_TrackSelect_boolTrackOpen(selectMenu[iVar10 << 4].levID);
+			uVar8 = MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
 			iVar10++;
 		} while ((uVar8 & 0xffff) == 0);
 
@@ -538,7 +538,7 @@ LAB_800b05b8:
 		// posY of "SELECT LEVEL"
 		// near-top if map exists, near-mid if no map
 		p.y = OVR_230.transitionMeta_trackSel->currY + 0x3a;
-			if (-1 < selectMenu[mb->rowSelected << 4].mapTextureID)
+			if (-1 < selectMenu[mb->rowSelected].mapTextureID)
 				p.y = OVR_230.transitionMeta_trackSel->currY + 5;
 
 			// _OVR_230.trackSel_boolOpenLapBox is the boolean to show
@@ -566,7 +566,7 @@ LAB_800b05b8:
 			p.y += 0x22;
 		
 		if (
-					(-1 < selectMenu[mb->rowSelected << 4].mapTextureID) &&
+					(-1 < selectMenu[mb->rowSelected].mapTextureID) &&
 
 					// If lap selection menu is closed
 					(OVR_230.trackSel_boolOpenLapBox == 0))
@@ -580,13 +580,13 @@ LAB_800b05b8:
 		p.h = p.y /*+ 0x22*/ + (OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[0].currY) + 0x49;
 
 				// icon data
-				bVar1 = gGT->ptrIcons[selectMenu[mb->rowSelected << 4].mapTextureID]->texLayout.v2;
-				bVar2 = gGT->ptrIcons[selectMenu[mb->rowSelected << 4].mapTextureID]->texLayout.v0;
-				bVar3 = gGT->ptrIcons[(selectMenu[mb->rowSelected << 4].mapTextureID + 1)]->texLayout.v2;
-				bVar4 = gGT->ptrIcons[(selectMenu[mb->rowSelected << 4].mapTextureID + 1)]->texLayout.v0;
+				bVar1 = gGT->ptrIcons[selectMenu[mb->rowSelected].mapTextureID]->texLayout.v2;
+				bVar2 = gGT->ptrIcons[selectMenu[mb->rowSelected].mapTextureID]->texLayout.v0;
+				bVar3 = gGT->ptrIcons[(selectMenu[mb->rowSelected].mapTextureID + 1)]->texLayout.v2;
+				bVar4 = gGT->ptrIcons[(selectMenu[mb->rowSelected].mapTextureID + 1)]->texLayout.v0;
 
-				iVar9 = (gGT->ptrIcons[selectMenu[mb->rowSelected << 4].mapTextureID]->texLayout.u1 -
-								 gGT->ptrIcons[selectMenu[mb->rowSelected << 4].mapTextureID]->texLayout.u0);
+				iVar9 = (gGT->ptrIcons[selectMenu[mb->rowSelected].mapTextureID]->texLayout.u1 -
+								 gGT->ptrIcons[selectMenu[mb->rowSelected].mapTextureID]->texLayout.u0);
 
 				// draw six track minimaps on menu
 				// map 1 is the regular color, which is white
@@ -602,10 +602,10 @@ LAB_800b05b8:
 					UI_Map_DrawMap(
 
 							// top half
-							gGT->ptrIcons[selectMenu[mb->rowSelected << 4].mapTextureID],
+							gGT->ptrIcons[selectMenu[mb->rowSelected].mapTextureID],
 
 							// bottom half
-							gGT->ptrIcons[(selectMenu[mb->rowSelected << 4].mapTextureID + 1)],
+							gGT->ptrIcons[(selectMenu[mb->rowSelected].mapTextureID + 1)],
 
 							// X
 							(int)((short *)0x800b55cc)[iVar18 * 3] + (int)(short)p.w +

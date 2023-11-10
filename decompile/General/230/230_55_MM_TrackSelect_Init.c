@@ -34,7 +34,7 @@ void DECOMP_MM_TrackSelect_Init(void)
   }
 
   // Loop through all tracks until an unlocked track is found
-  while (!MM_TrackSelect_boolTrackOpen(selectMenu[OVR_230.menubox_trackSelect.rowSelected << 4]))
+  while (!MM_TrackSelect_boolTrackOpen(&selectMenu[OVR_230.menubox_trackSelect.rowSelected]))
   {
     OVR_230.menubox_trackSelect.rowSelected++;
 

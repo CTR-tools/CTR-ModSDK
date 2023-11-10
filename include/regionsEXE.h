@@ -2764,7 +2764,7 @@ struct sData
 	int bookmarkID;
 
 	// 8008d09c
-	int ptrBigfileCdPos_2;
+	struct BigHeader* ptrBigfileCdPos_2;
 
 	// 8008b4fc -- SepReview
 	// 8008d0a0 -- UsaRetail

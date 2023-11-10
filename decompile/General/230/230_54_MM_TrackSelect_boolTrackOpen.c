@@ -1,8 +1,8 @@
 #include <common.h>
 
-char DECOMP_MM_TrackSelect_boolTrackOpen(int levelID)
+char DECOMP_MM_TrackSelect_boolTrackOpen(struct MainMenu_LevelRow* menuSelect)
 {
-	short flag = *(short *)(levelID + 6);
+	short flag = menuSelect->unlock;
 	char unlocked = false;
 		
 	if (

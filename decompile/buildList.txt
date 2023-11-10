@@ -47,6 +47,12 @@ common, 230, MM_Characters_PreventOverlap, 0x0, General/230/230_47_MM_Characters
 common, 230, MM_Characters_RestoreIDs, 0x0, General/230/230_48_MM_Characters_RestoreIDs.c
 common, 230, MM_Characters_HideDrivers, 0x0, General/230/230_49_MM_Characters_HideDrivers.c
 common, 230, MM_Characters_MenuBox, 0x0, General/230/230_50_MM_Characters_MenuBox.c
+common, 230, MM_TrackSelect_Video_SetDefaults, 0x0, General/230/230_51_MM_TrackSelect_Video_SetDefaults.c
+common, 230, MM_TrackSelect_Video_State, 0x0, General/230/230_52_MM_TrackSelect_Video_State.c
+//common, 230, MM_TrackSelect_Video_Draw, 0x0, General/230/230_53_MM_TrackSelect_Video_Draw.c
+common, 230, MM_TrackSelect_boolTrackOpen, 0x0, General/230/230_54_MM_TrackSelect_boolTrackOpen.c
+common, 230, MM_TrackSelect_Init, 0x0, General/230/230_55_MM_TrackSelect_Init.c
+//common, 230, MM_TrackSelect_MenuBox, 0x0, General/230/230_56_MM_TrackSelect_MenuBox.c
 
 // 231 (incomplete)
 // skip first two
