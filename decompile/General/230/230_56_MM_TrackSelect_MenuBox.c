@@ -35,17 +35,12 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 	elapsedFrames = OVR_230.trackSel_transitionFrames;
 
-	printf("j\n");
-
 	// if you are not in track selection menu
 	if (OVR_230.trackSel_transitionState != 1)
 	{
-		printf("h\n");
-
 		// if transitioning in
 		if (OVR_230.trackSel_transitionState == 0)
 		{
-			printf("number 1\n");
 			// make error message posY appear
 			// near bottom of screen
 			sdata->errorMessagePosIndex = 1;
@@ -72,7 +67,6 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		// transitioning out
 		else if (OVR_230.trackSel_transitionState == 2)
 		{
-			printf("number 2\n");
 			MM_TransitionInOut(&OVR_230.transitionMeta_trackSel[0], elapsedFrames, 8);
 
 			elapsedFrames++;
@@ -134,7 +128,6 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	OVR_230.trackSel_transitionFrames = elapsedFrames;
 	sVar7 = OVR_230.trackSel_transitionState;
 
-	printf("number 4\n");
 	// if you are in battle mode
 	if ((gGT->gameMode1 & BATTLE_MODE) != 0)
 	{
@@ -149,45 +142,55 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 	currTrack = mb->rowSelected;
 
-	printf("number 5\n");
 	// if you're not loading a LEV
 	if (OVR_230.trackSel_changeTrack_frameCount == 0)
 	{
-		printf("number 6\n");
 		// if lap selection menu is closed
 		if (OVR_230.trackSel_boolOpenLapBox == 0)
 		{
 			switch (sdata->buttonTapPerPlayer[0] & (BTN_UP | BTN_DOWN | BTN_TRIANGLE | BTN_SQUARE | BTN_CROSS | BTN_CIRCLE))
 			{
+				
 			case BTN_UP:
+				
 				// change track sound
 				OtherFX_Play(0, 1);
+				
 				// look for unlocked track
-				while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]))
+				do
 				{
+					currTrack--;
+					
 					// if index is negative
 					if (currTrack < 0)
 						// set to the last track
 						currTrack = numTracks - 1;
-					currTrack--;
-				}
+					
+				} while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
+				
 				OVR_230.trackSel_direction = 1;
 				goto LAB_800b0424;
+			
 			case BTN_DOWN:
+				
 				// change track sound
 				OtherFX_Play(0, 1);
+				
 				// look for unlocked track
-				while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]))
+				do
 				{
+					currTrack++;
+					
 					// if you go beyond max number of tracks
 					if (currTrack >= numTracks)
 						// set to the first trrack
 						currTrack = 0;
 
-					currTrack++;
-				}
+				} while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
+				
 				OVR_230.trackSel_direction = -1;
 				goto LAB_800b0424;
+			
 			case BTN_CROSS:
 			case BTN_CIRCLE:
 				// "enter/confirm" sound
@@ -260,8 +263,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	// Lap Row = 1 -> 5
 	// Lap Row = 2 -> 7
 
-	gGT->numLaps = ((short *)0x800b5574)[*(char *)0x800b55ae << 1];
-
+	gGT->numLaps = ((short *)0x800b5574)[*(char *)0x800b55ae];
+	
 	// if it is time to start the race
 	if (sVar7 == 1)
 	{
@@ -413,27 +416,21 @@ LAB_800b05b8:
 				// (useless?)
 				GAMEPROG_GetPtrHighScoreTrack();
 
+				int timeTrialFlags = sdata->gameProgress.highScoreTracks[gGT->levelID].timeTrialFlags;
+
 				// if star is earned
-				if (
-						// GameProgress.highScoreTracks (8008e6f4)
-						// + 0x120 (offset of flags in track) = 8008e814
-
-						((int *)0x8008e814)[gGT->levelID * 0x49 +
-
-									// array of bit indices (01 for tropy, 02 for oxide)
-									(u_int)((u_short *)0x800b55c8)[iVar17] >> 5] >>
-									(((u_short *)0x800b55c8)[iVar17] & 1) != 0)
+				if ((timeTrialFlags & ((u_short *)0x800b55c8)[iVar17]) != 0)
 				{
 					// 0x0E: driver_9 (papu) (yellow)
 					// 0x16: silver
 
 					// pointer to color data of star
-					piVar12 = data.ptrColor[((u_short *)0x800b55c4)[iVar17] << 2];
+					piVar12 = data.ptrColor[((u_short *)0x800b55c4)[iVar17]];
 
 					struct Icon** iconPtrArray =
 						ICONGROUP_GETICONS(gGT->iconGroup[5]);
 
-					DecalHUD_DrawPolyGT4(iconPtrArray[7],
+					DecalHUD_DrawPolyGT4(iconPtrArray[0x37],
 						iVar11 + 0x104, (int)sVar7 + iVar17 * 8 + 4,
 
 						// pointer to PrimMem struct
@@ -464,7 +461,7 @@ LAB_800b05b8:
 		// + 0x18 -> "p"
 		// + 0x18 -> "q"
 		// and so on
-
+		
 		// Draw string
 		DecalFont_DrawLine(
 				sdata->lngStrings[data.metaDataLEV[selectMenu[iVar10].levID].name_LNG],
@@ -549,13 +546,13 @@ LAB_800b05b8:
 			if (OVR_230.trackSel_boolOpenLapBox == 0)
 			{
 				// "SELECT"
-				DecalFont_DrawLine(sdata->lngStrings[363],
+				DecalFont_DrawLine(sdata->lngStrings[0x69],
 													 (OVR_230.transitionMeta_trackSel[2].currX + 0x18c),
 													 (int)(OVR_230.transitionMeta_trackSel[2].currY + (u_int)p.y),
 													 1, 0xffff8000);
 
 				// "LEVEL"
-				DecalFont_DrawLine(sdata->lngStrings[0x1a8],
+				DecalFont_DrawLine(sdata->lngStrings[0x6a],
 													 (OVR_230.transitionMeta_trackSel[2].currX + 0x18c),
 													 (OVR_230.transitionMeta_trackSel[2].currY + (u_int)p.y + 0x10),
 													 1, 0xffff8000);
