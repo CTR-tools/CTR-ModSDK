@@ -591,8 +591,8 @@ ACCELERATION
 SPEED
 TURN
 UNLIMITED
-1. GRAVITY
-2. JUMP HEIGHT
+1. Gravity
+2. Jump Height
 3. "AccelFriction_Perpendicular"
 4. "AccelFriction_Forward"
 5. "NoAccelFriction_Perpendicular"
@@ -600,8 +600,8 @@ UNLIMITED
 7. "BrakingFriction"
 8. "DriftOpening/DriftCurve"
 9. "DriftFriction"
-10. "ACCELERATION_NO_RESERVES"
-11. "ACCELERATION_WITH_RESERVES"
+10. Acceleration (No Boost)
+10. Acceleration (With Boost)
 12. "Speed"
 13. "negativeSpeedometerOffset"
 14. "maxSpeed_SingleTurbo"
