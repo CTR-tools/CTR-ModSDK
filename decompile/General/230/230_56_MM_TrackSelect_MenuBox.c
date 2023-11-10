@@ -547,14 +547,14 @@ LAB_800b05b8:
 			{
 				// "SELECT"
 				DecalFont_DrawLine(sdata->lngStrings[0x69],
-													 (OVR_230.transitionMeta_trackSel[2].currX + 0x18c),
-													 (int)(OVR_230.transitionMeta_trackSel[2].currY + (u_int)p.y),
+													 (OVR_230.transitionMeta_trackSel[3].currX + 0x18c),
+													 (int)(OVR_230.transitionMeta_trackSel[3].currY + (u_int)p.y),
 													 1, 0xffff8000);
 
 				// "LEVEL"
 				DecalFont_DrawLine(sdata->lngStrings[0x6a],
-													 (OVR_230.transitionMeta_trackSel[2].currX + 0x18c),
-													 (OVR_230.transitionMeta_trackSel[2].currY + (u_int)p.y + 0x10),
+													 (OVR_230.transitionMeta_trackSel[3].currX + 0x18c),
+													 (OVR_230.transitionMeta_trackSel[3].currY + (u_int)p.y + 0x10),
 													 1, 0xffff8000);
 			}
 		
@@ -569,21 +569,24 @@ LAB_800b05b8:
 					(OVR_230.trackSel_boolOpenLapBox == 0))
 			{
 
-		// this is not the same rect
+				// this is not the same rect
 				//p.h = CONCAT22(100, (short)local_44);
 				
-		p.w = p.x + (OVR_230.transitionMeta_trackSel[2].currX - OVR_230.transitionMeta_trackSel[0].currX);
+		p.w = p.x + (OVR_230.transitionMeta_trackSel[2].currX - OVR_230.transitionMeta_trackSel[1].currX);
 		
-		p.h = p.y /*+ 0x22*/ + (OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[0].currY) + 0x49;
+		p.h = p.y + (OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[1].currY) + 0x49+0x22;
+
+				int mapID = selectMenu[mb->rowSelected].mapTextureID;
+				struct Icon* iconMap0 = gGT->ptrIcons[mapID+0];
+				struct Icon* iconMap1 = gGT->ptrIcons[mapID+1];
 
 				// icon data
-				bVar1 = gGT->ptrIcons[selectMenu[mb->rowSelected].mapTextureID]->texLayout.v2;
-				bVar2 = gGT->ptrIcons[selectMenu[mb->rowSelected].mapTextureID]->texLayout.v0;
-				bVar3 = gGT->ptrIcons[(selectMenu[mb->rowSelected].mapTextureID + 1)]->texLayout.v2;
-				bVar4 = gGT->ptrIcons[(selectMenu[mb->rowSelected].mapTextureID + 1)]->texLayout.v0;
+				bVar1 = iconMap0->texLayout.v2;
+				bVar2 = iconMap0->texLayout.v0;
+				bVar3 = iconMap1->texLayout.v2;
+				bVar4 = iconMap1->texLayout.v0;
 
-				iVar9 = (gGT->ptrIcons[selectMenu[mb->rowSelected].mapTextureID]->texLayout.u1 -
-								 gGT->ptrIcons[selectMenu[mb->rowSelected].mapTextureID]->texLayout.u0);
+				iVar9 = (iconMap0->texLayout.u1 - iconMap0->texLayout.u0);
 
 				// draw six track minimaps on menu
 				// map 1 is the regular color, which is white
@@ -599,10 +602,10 @@ LAB_800b05b8:
 					UI_Map_DrawMap(
 
 							// top half
-							gGT->ptrIcons[selectMenu[mb->rowSelected].mapTextureID],
+							iconMap0,
 
 							// bottom half
-							gGT->ptrIcons[(selectMenu[mb->rowSelected].mapTextureID + 1)],
+							iconMap1,
 
 							// X
 							(int)((short *)0x800b55cc)[iVar18 * 3] + (int)(short)p.w +
