@@ -1,3 +1,10 @@
+enum TransitionState
+{
+	ENTERING_MENU,
+	IN_MENU,
+	EXITING_MENU,
+};
+
 // MainMenu
 struct Title
 {
