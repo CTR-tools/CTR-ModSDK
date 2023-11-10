@@ -55,11 +55,8 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
       u0 = gGT->ptrIcons[0x3f]->texLayout.u0;
       v0 = gGT->ptrIcons[0x3f]->texLayout.v0;
 
-	  int ret = 
-		MM_Video_DecodeFrame(
-			gGT->db[1-gGT->swapchainIndex].drawEnv.ofs[0] + (r->x + 3),
-			gGT->db[1-gGT->swapchainIndex].drawEnv.ofs[1] + (r->y + 2)	  
-		);
+	  // Decode off-screen
+	  int ret = MM_Video_DecodeFrame(512, 0);
 
       if ((ret == 1) && (OVR_230.trackSel_video_state == 2))
       {
