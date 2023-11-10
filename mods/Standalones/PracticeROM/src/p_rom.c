@@ -109,9 +109,9 @@ void DrawSlotString()
 		p_rom->slotString[5] = '0' + p_rom->slot + 1;
 
 	if (p_rom->lagDuration)
-		DecalFont_DrawLine(p_rom->slotString, 256, 39, FONT_SMALL, ORANGE | CENTER_TEXT);
+		DecalFont_DrawLine(p_rom->slotString, 256, 39, FONT_SMALL, ORANGE | JUSTIFY_CENTER);
 	else
-		DecalFont_DrawLine(p_rom->slotString, 256, 22, FONT_SMALL, ORANGE | CENTER_TEXT);
+		DecalFont_DrawLine(p_rom->slotString, 256, 22, FONT_SMALL, ORANGE | JUSTIFY_CENTER);
 }
 
 void ResetLag()
@@ -128,14 +128,14 @@ void DrawLag()
 
 	if (ms > msFrame)
 	{
-		DecalFont_DrawLine(s_ms, 256, 8, FONT_SMALL, RED | CENTER_TEXT);
+		DecalFont_DrawLine(s_ms, 256, 8, FONT_SMALL, RED | JUSTIFY_CENTER);
 		p_rom->lagFrames++;
 		p_rom->lagTime += (ms - msFrame);
 		p_rom->lagDuration = textDuration;
 	}
 	else
 	{
-		DecalFont_DrawLine(s_ms, 256, 8, FONT_SMALL, ORANGE | CENTER_TEXT);
+		DecalFont_DrawLine(s_ms, 256, 8, FONT_SMALL, ORANGE | JUSTIFY_CENTER);
 		if (p_rom->lagDuration)
 			p_rom->lagDuration--;
 		else
@@ -232,10 +232,15 @@ void Ghostify(char becomeGhost)
 {
 	struct Turbo * turboObj;
 	struct Thread * fireThread;
+	struct GameTracker* gGT = sdata->gGT;
+	struct Icon** ptrIconArray;
+	
 	if (becomeGhost)
-		sdata->gameTracker.drivers[0]->wheelSprites = &sdata->gameTracker.iconGroup[0xC]->icons[0];
+		ptrIconArray = ICONGROUP_GETICONS(sdata->gGT->iconGroup[0xC]);
 	else
-		sdata->gameTracker.drivers[0]->wheelSprites = &sdata->gameTracker.iconGroup[0x0]->icons[0];
+		ptrIconArray = ICONGROUP_GETICONS(sdata->gGT->iconGroup[0]);
+
+	gGT->drivers[0]->wheelSprites = ptrIconArray;
 
 	Instance_Ghostify(sdata->gameTracker.drivers[0]->instSelf, 1, becomeGhost);
 

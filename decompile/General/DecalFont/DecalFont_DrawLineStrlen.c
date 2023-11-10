@@ -1,510 +1,422 @@
 #include <common.h>
 
-#if BUILD == JpnRetail
-u_int DecalFont_boolRacingWheel();
-#endif
-
-void DECOMP_DecalFont_DrawLineStrlen(u_char *str, short len, int posX, short posY, short fontType, int flags)
+void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short posY, short fontType, int flags)
 {
-	u_char* character;
-	int alterX;
-	int iconGroupID;
-	int japaneseIconGroupID;
-	short pixWidthExtra;
-	short pixHeightExtra;
-	u_short iconID;
-	int* ptrColor;
-	short iconScale;
-	int charLength;
+	struct GameTracker* gGT = sdata->gGT;
 
-	#if BUILD > UsaRetail
-	u_char* nextCharacter;
-	u_char* nextNextCharacter;
-	struct Icon* iconStruct;
-	#endif
-
-	#if BUILD == EurRetail
-	u_char rotateCharacter;
-	u_short* fontDataPointer;
-	int iVar13;
-	#endif
-
-	#if BUILD == JpnTrial || BUILD == JpnRetail
-	u_short iconIDBackup;
-	u_short finalIconID;
-	char cVar5;
-	u_char unknownY;
-	#endif
-
-	#if BUILD == JpnRetail
-	u_int isRacingWheel;
-	int japanPtrColor;
-	int iVar9;
-	#endif
-
-	// If you do not want text centered
-	if ((flags & 0x8000) == 0)
+	// text is justified left by default
+	if (flags & (JUSTIFY_CENTER | JUSTIFY_RIGHT))
 	{
-		// If you dont want text to "end" at the given X position
-		if ((flags & 0x4000) == 0)
-		{
-			// make the text "start" at the given X position
-			goto LAB_80022598;
-		}
+		int alignX = DECOMP_DecalFont_GetLineWidthStrlen(str, len, fontType);
 
-		// If you want text to "end" here
+		if (flags & JUSTIFY_CENTER) alignX /= 2;
 
-		// subtract X position by result
-		alterX = DecalFont_GetLineWidthStrlen(str, len, fontType);
+		posX -= alignX;
 	}
 
-	// If you do want text centered
-	else
-	{
-		alterX = DecalFont_GetLineWidthStrlen(str, len, fontType);
+	// bug fix exclusive to versions after USA Retail
+	#if BUILD >= JpnTrial
 
-		// Subtract X position by half of length
-		alterX = (alterX << 0x10) >> 0x11;
-	}
+		flags &= 0x7ff;
 
-	// subtract posX for alignment
-	posX = posX - alterX;
+	#else
 
-LAB_80022598:
+		flags &= 0xfff;
 
-	#if BUILD > UsaRetail
-	flags &= 0x7ff;
 	#endif
 
-	// At this point, posX may or may not have
-	// been modified, depending on preference
-
-	// Draw string, starting at posX = posX
-
-	if (*str != 0)
+	for(*str != 0; *str != 0 && len != 0; str++, len--)
 	{
-		do
-		{
-			pixWidthExtra = 0;
-			if (len == 0)
-			{
-				return;
-			}
-			iconID = 0xff;
-			pixHeightExtra = 0;
+		u_char* strcopy = str;
+		u_short iconID = 0xff;
+		short charWidth = data.font_charPixWidth[fontType];
+		short pixWidthExtra = 0;
+		short pixHeightExtra = 0;
+		short iconScale = FP(1.0);
 
-			// get vertex color for character
-			ptrColor = data.ptrColor
-			#if BUILD <= UsaRetail
-				[flags & 0xfff];
-			#else
-				[flags];
-			#endif
+		#if BUILD == EurRetail
 
-			charLength = data.font_charPixWidth[fontType];
+			int numCharacters = 1;
+			int upsideDownCharacter = false;
 
-			// current character
-			character = str;
-		
-			iconScale = FP(1.0);
+		#endif
 
-			#if BUILD > UsaRetail
-			iconStruct = 0;
+		int* ptrColor = data.ptrColor[flags];
 
-			#if BUILD == EurRetail
-				iVar13 = 1;
-				rotateCharacter = 0;
-				iconGroupID = 0;
-			#endif
+		#if BUILD >= JpnTrial
 
-			if (*character == '~')
+			if (*strcopy == '~')
 			{
 				// if the current character in the string is a tilde, delete the next two characters and color the rest of the word depending on the characters being deleted
 				// used with numbers according to the color ID, e.g. ~01 gives the blue-ish gray color seen in the race lap count
-				// a hacky implementation of in-line coloring but a cool one nonetheless
 
-				nextCharacter = str + 1;
-				nextNextCharacter = str + 2;
+				u_char* strnext = str + 1;
+				u_char* strnextnext = str + 2;
 				str += 2;
 				len -= 2;
-				flags = (*nextNextCharacter + (*nextCharacter - 0x30) * 10) - 0x30;
-				charLength = 0;
+				flags = (*strnextnext + (*strnext - 0x30) * 10) - 0x30;
+				charWidth = 0;
+
+				continue;
 			}
 
-			else
+		#endif
+
+		if (*strcopy == ':' || *strcopy == '.') charWidth = data.font_puncPixWidth[fontType];
+
+		// if the character is one of the PSX buttons
+		// @ is circle, [ is square, ^ is triangle, * is X
+		if ((((*strcopy == '@') || (*strcopy == '[')) || (*strcopy == '^')) || (*strcopy == '*'))
+		{
+			#if BUILD != JpnRetail
+
+				iconScale = data.font_buttonScale[fontType];
+				pixHeightExtra = data.font_buttonPixHeight[fontType];
+				charWidth = data.font_charPixWidth[fontType] + data.font_buttonPixWidth[fontType];
+
+				// use neutral vertex color for button characters
+				ptrColor = data.ptrColor[GRAY];
+
+			#else
+
+				// japan retail adds support for the Mad Catz MC2 Racing Wheel (probably the best thing Naughty Dog added to this version to be honest)
+				// this replaces the regular face button characters with ones that match the buttons on the steering wheel and recolors them accordingly
+
+				short isRacingWheel = DECOMP_DecalFont_boolRacingWheel();
+
+				if (!(isRacingWheel))
+				{
+					iconScale = data.font_buttonScale[fontType];
+					pixHeightExtra = data.font_buttonPixHeight[fontType];
+					charWidth = data.font_charPixWidth[fontType] + data.font_buttonPixWidth[fontType];
+
+					// use neutral vertex color for button characters
+					ptrColor = data.ptrColor[GRAY];
+				}
+				else
+				{
+					// note: the Mad Catz MC2 Racing Wheel does not use the traditional PSX buttons
+					// it uses A, B, 1, and 2 instead
+					int racingWheelButtonColor = PERIWINKLE;
+
+					if (*strcopy == '@') *strcopy = 'A';
+					if (*strcopy == '^') *strcopy = 'B';
+
+					if (*strcopy == '*' || *strcopy == '[')
+					{
+						if (*strcopy == '*') *strcopy = '1';
+						if (*strcopy == '[') *strcopy = '2';
+
+						racingWheelButtonColor = RED;
+					}
+
+					ptrColor = data.ptrColor[racingWheelButtonColor];
+				}
+
+			#endif
+		}
+
+		// Set character sprite (icon) IDs
+		// The first 0x21 (counting 0) ASCII characters don't have icon IDs assigned to them
+		// Europe has additional characters composed of existing characters rearranged to resemble new ones
+		// USA Retail and prototypes have placeholder data for additional characters found in the Japanese versions
+
+		#if BUILD != EurRetail
+
+			// ascii characters + japanese characters
+			// 0xE0 characters from 0x20 to 0x100
+			// TO DO: figure out why the cast to u_int is necessary --Super
+			if (((u_int)*strcopy - 0x21) < 0xdf)
 			{
+				// get iconID based on ascii character
+				iconID = data.font_characterIconID[*strcopy - 0x21];
+			}
+
+			// Japanese dakuten and handakuten
+			// unused in NTSC-U and PAL
+			if (*strcopy < 3)
+			{
+				charWidth = 0;
+				iconID = data.font_indentIconID[fontType * 2 + *strcopy - 1];
+				pixWidthExtra = data.font_indentPixDimensions[fontType * 2];
+				pixHeightExtra = data.font_indentPixDimensions[(fontType * 2) + 1];
+			}
+
+		#else
+
+			// europe only has 0x60 characters
+			if (((u_int)*strcopy - 0x21) < 0x5f)
+			{
+				// get iconID based on ascii character
+				iconID = data.font_characterIconID[*strcopy - 0x21];
+			}
+
+			if (*strcopy == '')
+			{
+				// The tilde as a diacritical mark
+				// It's implemented in CTR using the underscore character, shrunk down and placed above the character that follows
+				// Seen in the Spanish language for the Ñ, although because of the above mentioned you can use it on anything
+				
+				iconID = 0x2f;
+				pixWidthExtra = data.font_EurDiacriticalTilde[fontType * 3];
+				pixHeightExtra = data.font_EurDiacriticalTilde[(fontType * 3) + 1];
+				iconScale = data.font_EurDiacriticalTilde[(fontType * 3) + 2];
+				charWidth = 0;
+			}
+			if (*strcopy == '"')
+			{
+				// Quotation mark
+				// Unlike the other new characters its representing character is actually used for a quotation mark
+				// Quotation marks in the PAL version are two apostrophes joined together
+				iconID = 0x24;
+				numCharacters = 2;
+				pixWidthExtra = data.font_EurQuotationMarkWidth[fontType];
+			}
+
+			// the following characters make use of additional width and height padding
+			if (*strcopy < 3 || *strcopy == '#' || *strcopy == '$' || *strcopy == '&')
+			{
+				short* characterExtraDimensionsArray = 0;
+
+				if (*strcopy < 3)
+				{
+					// Japanese dakuten and handakuten
+					// unused in NTSC-U and PAL
+					charWidth = 0;
+					iconID = data.font_indentIconID[fontType * 2 + *strcopy - 1];
+					characterExtraDimensionsArray = data.font_indentPixDimensions;
+				}
+				if (*strcopy == '#')
+				{
+					// Inverted exclamation mark, used in the Spanish language
+					upsideDownCharacter = true;
+					iconID = 0x25;
+					characterExtraDimensionsArray = data.font_EurInvertedExclamationMarkData;
+				}
+				if (*strcopy == '$')
+				{
+					// Inverted question mark, used in the Spanish language
+					upsideDownCharacter = true;
+					iconID = 0x2e;
+					characterExtraDimensionsArray = data.font_EurInvertedExclamationMarkData;
+				}
+				if (*strcopy == '&')
+				{
+					// Upwards period
+					// Supposed to be the ordinal indicator character in Spanish and French
+					iconID = 0x2c;
+					characterExtraDimensionsArray = data.font_EurOrdinalIndicatorData;
+				}
+
+				pixWidthExtra = characterExtraDimensionsArray[fontType * 2];
+				pixHeightExtra = characterExtraDimensionsArray[(fontType * 2) + 1];
+			}
+
+		#endif
+
+		// if iconID is valid
+		if (iconID != 0xff)
+		{
+			short iconGroupID = data.font_IconGroupID[fontType];
+
+			#if BUILD <= UsaRetail
+
+				// incomplete implementation of japanese font, unused
+				// see below for more details
+				if (iconID > 0x7f)
+				{
+					iconID -= 0x80;
+					short kanaIconGroupID = 15;
+					if (iconGroupID == 4) kanaIconGroupID = 14;
+					iconGroupID = kanaIconGroupID;
+				}
+
+			#elif BUILD == JpnTrial || BUILD == JpnRetail
+
+				// defined here as a fallback for if the character in question isn't kana
+				u_short kanaID = iconID;
+
+				struct Icon* iconStruct = 0;
+
+				// if icon ID goes over 0x7f, then this is a japanese character (i.e. kana)
+				if (iconID > 0x7f)
+				{
+					// kana icon IDs are in a separate icon group from other font characters
+					u_short kanaID = iconID - 0x80;
+
+					// the "big" and "small" font icon groups for kana are 14 and 15 respectively
+					short kanaIconGroupID = 15;
+
+					// if icon group is non-japanese big font, set to japanese
+					if (iconGroupID == 4) kanaIconGroupID = 14;
+
+					iconGroupID = kanaIconGroupID;
+
+					iconStruct = &sdata->font_icon;
+
+					if (kanaIconGroupID == 14)
+					{
+						sdata->font_icon.texLayout.clut = sdata->font_jfontBigIconData.clut;
+
+						if (kanaID & 1) sdata->font_icon.texLayout.clut += 0x40;
+
+						sdata->font_icon.texLayout.u0 = kanaID * 8 & 0xf0;
+						sdata->font_icon.texLayout.u1 = sdata->font_icon.texLayout.u0 + 15;
+
+						short whateverThisIs_big = kanaID / 2 & 0x10;
+
+						sdata->font_icon.texLayout.v0 = whateverThisIs_big + 8;
+						sdata->font_icon.texLayout.v2 = whateverThisIs_big + 23;
+
+						sdata->font_icon.texLayout.tpage = sdata->font_jfontBigIconData.tpage + ((kanaID < 0x40) ^ 1);
+
+						sdata->font_icon.texLayout.v1 = sdata->font_icon.texLayout.v0;
+						sdata->font_icon.texLayout.u2 = sdata->font_icon.texLayout.u0;
+						sdata->font_icon.texLayout.u3 = sdata->font_icon.texLayout.u1;
+						sdata->font_icon.texLayout.v3 = sdata->font_icon.texLayout.v2;
+					}
+					else // i.e. small font
+					{
+						if (kanaID < 24)
+						{
+							sdata->font_icon.texLayout.clut = sdata->font_jfontSmallIconData.clut;
+
+							if (kanaID & 1) sdata->font_icon.texLayout.clut += 0x40;
+
+							sdata->font_icon.texLayout.tpage = sdata->font_jfontSmallIconData.tpage;
+
+							short whateverThisIs_small = ((kanaID & 0xfe) + kanaID / 2) * 4; // this is the one
+
+							if (kanaID < 12) sdata->font_icon.texLayout.u0 = whateverThisIs_small + 176;
+							else             sdata->font_icon.texLayout.u0 = whateverThisIs_small + 104;
+
+							sdata->font_icon.texLayout.u1 = sdata->font_icon.texLayout.u0 + 11;
+
+							if (kanaID < 12) sdata->font_icon.texLayout.v0 = 24;
+							else             sdata->font_icon.texLayout.v0 = 32;
+
+							sdata->font_icon.texLayout.v2 = sdata->font_icon.texLayout.v0 + 7;
+
+							sdata->font_icon.texLayout.v1 = sdata->font_icon.texLayout.v0;
+							sdata->font_icon.texLayout.u2 = sdata->font_icon.texLayout.u0;
+							sdata->font_icon.texLayout.u3 = sdata->font_icon.texLayout.u1;
+							sdata->font_icon.texLayout.v3 = sdata->font_icon.texLayout.v2;
+						}
+						else
+						{
+							kanaID = (u_char)iconID - 0x98; // if you remove the u_char cast the dakuten and handakuten diacritics break. why??? --Super
+							sdata->font_icon.texLayout.clut = sdata->font_jfontSmall0x18IconData.clut;
+
+							if (kanaID & 1) sdata->font_icon.texLayout.clut += 0x40;
+
+							sdata->font_icon.texLayout.tpage = sdata->font_jfontSmall0x18IconData.tpage;
+
+							sdata->font_icon.texLayout.u0 = data.font_X1Y1data[kanaID * 2 + 1] / 2 * 12;
+							sdata->font_icon.texLayout.u1 = sdata->font_icon.texLayout.u0 + 11;
+
+							sdata->font_icon.texLayout.v0 = data.font_X1Y1data[kanaID * 2] * 8 + 8;
+							sdata->font_icon.texLayout.v2 = data.font_X1Y1data[kanaID * 2] * 8 + 15;
+
+							sdata->font_icon.texLayout.v1 = sdata->font_icon.texLayout.v0;
+							sdata->font_icon.texLayout.u2 = sdata->font_icon.texLayout.u0;
+							sdata->font_icon.texLayout.u3 = sdata->font_icon.texLayout.u1;
+							sdata->font_icon.texLayout.v3 = sdata->font_icon.texLayout.v2;
+						}
+					}
+				}
+
 			#endif
 
-				if ((*character == ':') || (*character == '.')) 
+			#if BUILD <= UsaRetail
+
+				if (iconID < gGT->iconGroup[iconGroupID]->numIcons)
 				{
-					charLength = data.font_puncPixWidth[fontType];
+					struct Icon** iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[iconGroupID]);
+
+					DECOMP_DecalHUD_DrawPolyGT4
+					(						
+						iconPtrArray[iconID],
+
+						posX + pixWidthExtra,
+						posY + pixHeightExtra,
+
+						&gGT->backBuffer->primMem,
+						gGT->tileView_UI.ptrOT,
+
+						ptrColor[0],
+						ptrColor[1],
+						ptrColor[2],
+						ptrColor[3],
+
+						0, iconScale
+					);
 				}
 
-				else
+			#elif BUILD == JpnTrial || BUILD == JpnRetail
+
+				if (iconStruct == 0)
 				{
-					if ((((*character == '@') || (*character == '[')) || (*character == '^')) || (*character == '*')) 
-					{
-						#if BUILD == JpnRetail
-
-						// japan retail adds support for the Mad Catz MC2 Racing Wheel (probably the best thing Naughty Dog added to this version to be honest)
-						// this replaces the regular face button characters with ones that match the buttons on the steering wheel and recolors them accordingly
-
-						isRacingWheel = DecalFont_boolRacingWheel();
-						
-						if ((isRacingWheel & 0xffff) == 0)
-						{
-							iconScale = data.font_buttonScale[fontType];
-							pixHeightExtra = data.font_buttonPixHeight[fontType];
-							charLength = data.font_charPixWidth[fontType] + data.font_buttonPixWidth[fontType];
-
-							// use neutral vertex color for button characters
-							ptrColor = data.ptrColor[GRAY];
-						}
-						else
-						{
-							iVar9 = PERIWINKLE;
-							if (*character == '@')
-							{
-								*character = 'A';
-								UnknownJapaneseGoto1:
-								japanPtrColor = iVar9 << 2;
-							}
-							else
-							{
-								if (*character < 0x41)
-								{
-									japanPtrColor = WHITE;
-
-									if(*character == '*')
-									{
-										*character = '1';
-										UnknownJapaneseGoto2:
-										iVar9 = RED;
-										goto UnknownJapaneseGoto1;
-									}
-								}
-								else
-								{
-									if (*character == '[')
-									{
-										*character = '2';
-										goto UnknownJapaneseGoto2;
-									}
-									japanPtrColor = WHITE;
-									if (*character == '^')
-									{
-										*character = 0x42;
-										goto UnknownJapaneseGoto1;
-									}
-								}
-							}
-							ptrColor = data.ptrColor[japanPtrColor];
-						}
-						#else
-
-						iconScale = data.font_buttonScale[fontType];
-						pixHeightExtra = data.font_buttonPixHeight[fontType];
-						charLength = data.font_charPixWidth[fontType] + data.font_buttonPixWidth[fontType];
-
-						// use neutral vertex color for button characters
-						ptrColor = data.ptrColor[GRAY];
-						#endif
-					}
+					struct Icon** iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[iconGroupID]);
+					if (kanaID < gGT->iconGroup[iconGroupID]->numIcons) iconStruct = iconPtrArray[kanaID];
 				}
-			
-				// used for Europe-only characters
-				if (*character < 3) 
+				if (iconStruct != 0)
 				{
-					charLength = 0;
-					iconID = data.unk_dataHere[fontType * 2 + *character - 1];
-					
-					#if BUILD == EurRetail
-					fontDataPointer = &data.font_unkWidthHeightOffsets[0];
+					DECOMP_DecalHUD_DrawPolyGT4
+					(						
+						iconStruct,
 
-					LoadExtraCharacterOffsets:
-					pixWidthExtra = fontDataPointer[fontType * 2];
-					pixHeightExtra = fontDataPointer[(fontType * 2) + 1];
+						posX + pixWidthExtra,
+						posY + pixHeightExtra,
 
-					#else
-					pixWidthExtra = data.font_unkWidthHeightOffsets[fontType * 2];
-					pixHeightExtra = data.font_unkWidthHeightOffsets[(fontType * 2) + 1];
-					#endif
+						&gGT->backBuffer->primMem,
+						gGT->tileView_UI.ptrOT,
+
+						ptrColor[0],
+						ptrColor[1],
+						ptrColor[2],
+						ptrColor[3],
+
+						0, iconScale
+					);
 				}
-				else
+
+			#else // i.e. european build
+
+				struct Icon** iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[iconGroupID]);
+
+				for(; numCharacters > 0; numCharacters--, pixWidthExtra += data.font_EurPixWidthExtra[fontType])
 				{
-					#if BUILD != EurRetail
-
-					// normal ascii characters, 
-					// 0xE0 characters from 0x20 to 0x100
-					if (((u_int)*character - 0x21) < 0xdf)
+					if (upsideDownCharacter)
 					{
-						// get iconID based on ascii character
-						iconID = data.font_characterIconID[*character - 0x21];
-					}
-
-					#else
-
-					if (*character == '')
-					{
-						// The tilde as a diacritical mark
-						// It's implemented in CTR using the underscore character, shrunk down and placed above the character that follows
-						// Seen in the Spanish language for the Ñ, although because of the above mentioned you can use it on anything
-
-						iconID = 0x2f;
-						pixWidthExtra = data.font_EurDiacriticalTilde[fontType * 3];
-						pixHeightExtra = data.font_EurDiacriticalTilde[(fontType * 3) + 1];
-						iconScale = data.font_EurDiacriticalTilde[(fontType * 3) + 2];
-						charLength = 0;
-					}
-					else
-					{
-						if (*character != '"')
-						{
-							if (*character == '#')
-							{
-								// Inverted exclamation mark, used in the Spanish language
-								rotateCharacter = true;
-								iconID = 0x25;
-								fontDataPointer = &data.font_EurInvertedExclamationMarkData[0];
-							}
-							else
-							{
-								// Inverted question mark, used in the Spanish language
-								if (*character == '$')
-								{
-									rotateCharacter = true;
-									iconID = 0x2e;
-									fontDataPointer = &data.font_EurInvertedQuestionMarkData[0];
-								}
-								else
-								{
-									if (*character != '&')
-									{
-										// europe only has 0x60 characters
-										if (((u_int)*character - 0x21) < 0x5f)
-										{
-											iconID = data.font_characterIconID[*character - 0x21];
-										}
-										goto DrawIcon;
-									}
-									// Upwards period
-									// Supposed to be the ordinal indicator character in Spanish and French
-									iconID = 0x2c;
-									fontDataPointer = &data.font_EurOrdinalIndicatorData[0];
-								}
-							}
-							goto LoadExtraCharacterOffsets;
-						}
-						// the current character must be a quotation mark at this point
-						// unlike the other characters it is actually used for a quotation mark
-						// quotation marks in the european version are two apostrophes joined together
-						iVar13 = 2;
-						pixWidthExtra = data.font_EurQuotationMarkWidth[fontType];
-						// set icon ID to apostrophe
-						iconID = 0x24;
-					}
-
-					#endif
-				}
-			
-				// if iconID is valid
-				if (iconID != 0xff)
-				{
-					iconGroupID = data.font_IconGroupID[fontType];
-
-					#if BUILD <= UsaRetail
-
-					// used for japanese font characters, appears unused in us retail
-					// see below
-					if (iconID > 0x7f)
-					{
-						iconID -= 0x80;
-						japaneseIconGroupID = 0xf;
-						if (iconGroupID == 4)
-						{
-							japaneseIconGroupID = 0xe;
-						}
-						iconGroupID = japaneseIconGroupID;
-					}
-
-					// if icon index is less than
-					if ((iconID & 0xffff) < sdata->gGT->iconGroup[iconGroupID]->numIcons)
-					{
-						DecalHUD_DrawPolyGT4
+						DECOMP_DecalHUD_Arrow2D
 						(
-							sdata->gGT->iconGroup[iconGroupID]->icons[iconID & 0xffff],
-
-							posX + pixWidthExtra,
-							posY + pixHeightExtra,
-
-							&sdata->gGT->backBuffer->primMem,
-							sdata->gGT->tileView_UI.ptrOT,
-
-							ptrColor[0],
-							ptrColor[1],
-							ptrColor[2],
-							ptrColor[3],
-
-							0, iconScale
-						);
-					}
-
-					#endif
-
-					#if BUILD == JpnTrial || BUILD == JpnRetail
-
-					iconIDBackup = iconID;
-
-					// if icon ID goes over 0x7f, then this is a japanese font character
-					if (iconID > 0x7f)
-					{
-						// japanese character icons start at 0
-						iconIDBackup = iconID - 0x80;
-
-						// the "big" and "small" font icon groups for the japanese characters are 0xE and 0xF respectively
-						japaneseIconGroupID = 0xf;
-						// if icon group is non-japanese big font, set to japanese
-						if (iconGroupID == 4)
-						{
-							japaneseIconGroupID = 0xe;
-						}
-						iconGroupID = japaneseIconGroupID;
-						
-						// icon struct, see common.h
-						iconStruct = &sdata->font_icon;
-						finalIconID = iconIDBackup & 0xffff;
-
-						if (japaneseIconGroupID == 0xe)
-						{
-							// yeah this is pretty scuffed
-							// naughty dog gets the paletteXY from an array of ints containing 4 bytes of the icon struct data of the first icons in the japanese font icon groups, and the 0x18th in the small group as well, starting at the X data of the first three vertices in the icon
-							// which is why I need to do pointer arithmetic here because they didn't just copy the paletteXY instead
-							sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontBigIconData[0] + 2);
-
-							if (iconIDBackup & 1)
-							{
-								sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontBigIconData[0] + 2) + 0x40;
-							}
-
-							sdata->font_icon.X1 = (u_char)iconIDBackup * '\b' & 0xf0;
-							sdata->font_icon.X2 = sdata->font_icon.X1 + 0xf;
-
-							unknownY = (u_char)(iconIDBackup >> 1) & 0x10;
-
-							sdata->font_icon.Y1 = unknownY + 8;
-							sdata->font_icon.Y3 = unknownY + 0x17;
-
-							sdata->font_icon.pageXY = *(short*)((int)&sdata->font_jfontBigIconData[1] + 2) + ((u_short)((iconIDBackup & 0xffff) < 0x40) ^ 1);
-
-							sdata->font_icon.Y2 = sdata->font_icon.Y1;
-							sdata->font_icon.X3 = sdata->font_icon.X1;
-							sdata->font_icon.X4 = sdata->font_icon.X2;
-							sdata->font_icon.Y4 = sdata->font_icon.Y3;
-						}
-						else
-						{
-							if (finalIconID < 0x18)
-							{
-								sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontSmallIconData[0] + 2);
-
-								if (iconIDBackup & 1)
-								{
-									sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontSmallIconData[0] + 2) + 0x40;
-								}
-
-								sdata->font_icon.pageXY = *(short*)((int)&sdata->font_jfontSmallIconData[1] + 2);
-
-								cVar5 = (((u_char)iconIDBackup & 0xfe) + (char)(finalIconID >> 1)) * '\x04';
-
-								if (finalIconID < 0xc)
-								{
-									sdata->font_icon.X1 = cVar5 + 0xb0;
-								}
-								else
-								{
-									sdata->font_icon.X1 = cVar5 + 0x68;
-								}
-
-								sdata->font_icon.X2 = sdata->font_icon.X1 + 0xb;
-
-								if ((iconIDBackup & 0xffff) < 0xc)
-								{
-									sdata->font_icon.Y1 = '\x18';
-								}
-								else
-								{
-									sdata->font_icon.Y1 = ' ';
-								}
-
-								sdata->font_icon.Y3 = sdata->font_icon.Y1 + '\a';
-								sdata->font_icon.Y2 = sdata->font_icon.Y1;
-								sdata->font_icon.X3 = sdata->font_icon.X1;
-								sdata->font_icon.X4 = sdata->font_icon.X2;
-								sdata->font_icon.Y4 = sdata->font_icon.Y3;
-							}
-							else
-							{
-								iconIDBackup = iconID - 0x98;
-								sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontSmall0x18IconData[0] + 2);
-
-								if ((iconIDBackup & 1) != 0)
-								{
-									sdata->font_icon.paletteXY = *(short*)((int)&sdata->font_jfontSmall0x18IconData[0] + 2) + 0x40;
-								}
-
-								sdata->font_icon.pageXY = *(short*)((int)&sdata->font_jfontSmall0x18IconData[1] + 2);
-
-								sdata->font_icon.X1 = ((u_char)data.font_X1Y1data[((iconIDBackup & 0xffff) * 2) + 1] >> 1) * '\f';
-								sdata->font_icon.X2 = sdata->font_icon.X1 + 0xb;
-
-								sdata->font_icon.Y1 = data.font_X1Y1data[(iconIDBackup & 0xffff) * 2] * '\b' + '\b';
-								sdata->font_icon.Y3 = data.font_X1Y1data[(iconIDBackup & 0xffff) * 2] * '\b' + '\x0f';
-
-								sdata->font_icon.Y2 = sdata->font_icon.Y1;
-								sdata->font_icon.X3 = sdata->font_icon.X1;
-								sdata->font_icon.X4 = sdata->font_icon.X2;
-								sdata->font_icon.Y4 = sdata->font_icon.Y3;
-							}
-						}
-					}
-
-					#endif
-
-					#if BUILD == EurRetail
-					DrawIcon:
-					iconGroupID = data.font_IconGroupID[fontType];
-					#endif
-
-					#if BUILD > UsaRetail
-					
-					// if icon struct somehow doesn't exist then use fallback
-					if (!iconStruct)
-					{
-						#if BUILD != EurRetail
-						if ((iconIDBackup & 0xffff) < sdata->gGT->iconGroup[iconGroupID]->numIcons)
-						{
-							iconStruct = sdata->gGT->iconGroup[iconGroupID]->icons[iconIDBackup];
-						}
-						#else
-						if (iconID < sdata->gGT->iconGroup[iconGroupID]->numIcons)
-						{
-							iconStruct = sdata->gGT->iconGroup[iconGroupID]->icons[iconID];
-						}
-						#endif
-					}
-					if (iconStruct)
-					{
-						#if BUILD != EurRetail
-
-						DecalHUD_DrawPolyGT4
-						(
-							iconStruct,
+							iconPtrArray[iconID],
 							
 							posX + pixWidthExtra,
 							posY + pixHeightExtra,
 
-							&sdata->gGT->backBuffer->primMem,
-							sdata->gGT->tileView_UI.ptrOT,
+							&gGT->backBuffer->primMem,
+							gGT->tileView_UI.ptrOT,
+
+							ptrColor[2],
+							ptrColor[3],
+							ptrColor[0],
+							ptrColor[1],
+
+							0, iconScale, 0x800
+						);
+					}
+					else
+					{
+						DECOMP_DecalHUD_DrawPolyGT4
+						(
+							iconPtrArray[iconID],
+							
+							posX + pixWidthExtra,
+							posY + pixHeightExtra,
+
+							&gGT->backBuffer->primMem,
+							gGT->tileView_UI.ptrOT,
 
 							ptrColor[0],
 							ptrColor[1],
@@ -513,68 +425,11 @@ LAB_80022598:
 
 							0, iconScale
 						);
-
-						#else
-
-						do
-						{
-							if (rotateCharacter)
-							{
-								DecalHUD_Arrow2D
-								(
-									iconStruct,
-									
-									posX + pixWidthExtra,
-									posY + pixHeightExtra,
-
-									&sdata->gGT->backBuffer->primMem,
-									sdata->gGT->tileView_UI.ptrOT,
-
-									ptrColor[2],
-									ptrColor[3],
-									ptrColor[0],
-									ptrColor[1],
-
-									0, iconScale, 0x800
-								);
-							}
-							else
-							{
-								DecalHUD_DrawPolyGT4
-								(
-									iconStruct,
-									
-									posX + pixWidthExtra,
-									posY + pixHeightExtra,
-
-									&sdata->gGT->backBuffer->primMem,
-									sdata->gGT->tileView_UI.ptrOT,
-
-									ptrColor[0],
-									ptrColor[1],
-									ptrColor[2],
-									ptrColor[3],
-
-									0, iconScale
-								);
-							}
-							iVar13--;
-							pixWidthExtra += data.font_EurPixWidthExtra[fontType];
-						} while (0 < iVar13 * 0x10000);
-
-						#endif
 					}
-					#endif
 				}
-				posX += charLength;
 
-			#if BUILD > UsaRetail
-			}
 			#endif
-
-			str++;
-			len--;
-		} while (*str != 0);
+		}
+		posX += charWidth;
 	}
-	return;
 }

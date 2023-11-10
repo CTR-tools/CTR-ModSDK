@@ -1,0 +1,4 @@
+common, exe, start, 0x0, ../decompile/General/psyq_start.c
+
+// start at TEXT, so RDATA is preserved
+common, exe, 0x800123e0, 0x0, main.c

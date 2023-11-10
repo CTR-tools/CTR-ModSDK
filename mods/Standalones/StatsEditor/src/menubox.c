@@ -44,39 +44,48 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* dri
 	if (buttonsTapped & BTN_LEFT) digitSelected = (digitSelected + 1) % 5;
 	if (buttonsTapped & BTN_RIGHT) digitSelected = (digitSelected + 4) % 5;
 
-	// Up & Down: increment/decrement stat value
-	switch(digitSelected)
+	int increase = 1;
+
+	if (buttonsTapped & (BTN_UP | BTN_DOWN))
 	{
-		case 0:
-			if (buttonsTapped & BTN_UP)
-				metaPhys[*driverClass] += 1;
-			if (buttonsTapped & BTN_DOWN)
-				metaPhys[*driverClass] -= 1;
-			break;
-		case 1:
-			if (buttonsTapped & BTN_UP)
-				metaPhys[*driverClass] += 10;
-			if (buttonsTapped & BTN_DOWN)
-				metaPhys[*driverClass] -= 10;
-			break;
-		case 2:
-			if (buttonsTapped & BTN_UP)
-				metaPhys[*driverClass] += 100;
-			if (buttonsTapped & BTN_DOWN)
-				metaPhys[*driverClass] -= 100;
-			break;
-		case 3:
-			if (buttonsTapped & BTN_UP)
-				metaPhys[*driverClass] += 1000;
-			if (buttonsTapped & BTN_DOWN)
-				metaPhys[*driverClass] -= 1000;
-			break;
-		case 4:
-			if (buttonsTapped & BTN_UP)
-				metaPhys[*driverClass] += 10000;
-			if (buttonsTapped & BTN_DOWN)
-				metaPhys[*driverClass] -= 10000;
-			break;
+		for(u_int i = 0; i < digitSelected; i++)
+		{
+			increase *= 10;
+		}
+
+		if (buttonsTapped & BTN_UP)
+		{
+			metaPhys[*driverClass] += increase;
+
+			#if BUILD == UsaRetail
+				if ((data.metaPhys[metaPhysID].DriverOffset == 1) && metaPhys[*driverClass] > 256)
+					metaPhys[*driverClass] = 255;
+				if ((data.metaPhys[metaPhysID].DriverOffset == 2) && metaPhys[*driverClass] > 65536)
+					metaPhys[*driverClass] = 65535;
+			#else
+				if ((data.metaPhys[metaPhysID].size == 1) && metaPhys[*driverClass] > 256)
+					metaPhys[*driverClass] = 255;
+				if ((data.metaPhys[metaPhysID].size == 2) && metaPhys[*driverClass] > 65536)
+					metaPhys[*driverClass] = 65535;
+			#endif
+		}
+
+		if (buttonsTapped & BTN_DOWN)
+		{
+			metaPhys[*driverClass] -= increase;
+			
+			#if BUILD == UsaRetail
+				if ((data.metaPhys[metaPhysID].DriverOffset == 1) && metaPhys[*driverClass] < -129)
+					metaPhys[*driverClass] = -128;
+				if ((data.metaPhys[metaPhysID].DriverOffset == 2) && metaPhys[*driverClass] > 65536)
+					metaPhys[*driverClass] = 65535;
+			#else
+				if ((data.metaPhys[metaPhysID].size == 1) && metaPhys[*driverClass] < -129)
+					metaPhys[*driverClass] = -128;
+				if ((data.metaPhys[metaPhysID].size == 2) && metaPhys[*driverClass] < -32769)
+					metaPhys[*driverClass] = -32768;
+			#endif
+		}
 	}
 
 	// Select: open and close menu (can also be closed with Start)
@@ -161,8 +170,8 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT, int* metaPhys, int* dr
 	)
 		metaPhysColor = BLUE;
 
-	DecalFont_DrawLine(sdata->lngStrings[588 + *driverClass], SCREEN_WIDTH/2, SCREEN_HEIGHT/4, FONT_SMALL, (CENTER_TEXT | ORANGE)); // display current driver class
-	DecalFont_DrawLine(sdata->lngStrings[593 + metaPhysID], SCREEN_WIDTH/2, SCREEN_HEIGHT/3, FONT_SMALL, (CENTER_TEXT | metaPhysColor)); // display current metaPhys ID
+	DecalFont_DrawLine(sdata->lngStrings[588 + *driverClass], SCREEN_WIDTH/2, SCREEN_HEIGHT/4, FONT_SMALL, (JUSTIFY_CENTER | ORANGE)); // display current driver class
+	DecalFont_DrawLine(sdata->lngStrings[593 + metaPhysID], SCREEN_WIDTH/2, SCREEN_HEIGHT/3, FONT_SMALL, (JUSTIFY_CENTER | metaPhysColor)); // display current metaPhys ID
 
 	DrawNumbers(gGT, metaPhys, driverClass, metaPhysColor);
 

@@ -27,5 +27,6 @@ void start()
 	// initialize $sp
 	sp = 0x807ffff8;
 	
-	main();
+	u_int DECOMP_main();
+	DECOMP_main();
 }

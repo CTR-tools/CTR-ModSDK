@@ -3,7 +3,6 @@
 void MM_Battle_CloseSubMenu(struct MenuBox *mb)
 {
     mb->state |= 4;
-    return;
 }
 
 void MM_Battle_DrawIcon_Weapon(struct Icon *icon, u_int posX, int posY, struct PrimMem *primMem, u_int *ot,
@@ -72,5 +71,4 @@ void MM_Battle_Init(void)
 {
     OVR_230.battle_transitionState = 0;
     OVR_230.battle_transitionFrames = 0xc;
-    return;
 }

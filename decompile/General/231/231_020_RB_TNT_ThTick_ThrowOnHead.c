@@ -23,8 +23,9 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
   // object
   mw = inst->thread->object;
   
-  // alter height of TNT as it flies onto a driver's head
-  mw->deltaPos[1] += mw->velocity[1] * (gGT->elapsedTimeMS >> 5);
+  // alter height of TNT as it flies onto a driver's head,
+  // do NOT use parenthesis
+  mw->deltaPos[1] += mw->velocity[1] * gGT->elapsedTimeMS >> 5;
   
   // if TNT is moving downward
   if (mw->velocity[1] < 0) 

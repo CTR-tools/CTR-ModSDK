@@ -12,7 +12,7 @@ undefined4 FUN_80034960(undefined4 param_1,int param_2)
 
     // if 3 or 4 players
     if (2 < param_2) {
-      return 0x9c4;
+      return 2500;
     }
     break;
 
@@ -22,7 +22,7 @@ undefined4 FUN_80034960(undefined4 param_1,int param_2)
 
   // if mystery caves
   case 9:
-    return 0x9c4;
+    return 2500;
 
   // main menu
   case 0x27:
@@ -1898,7 +1898,7 @@ void FUN_80035e70(uint *param_1)
   // if LEV exists
   if (piVar21 != (int *)0x0)
   {
-	// get pointer to LEV info
+	// get pointer to LEV mesh_info
     iVar22 = *piVar21;
   }
 
@@ -2846,7 +2846,7 @@ code_r0x800369d8:
 		// gGT->256c & drawLev
 		((param_1[0x95b] & 1) != 0) &&
 
-		// if LEV info is valid
+		// if LEV mesh_info is valid
 		(iVar22 != 0)
 	 )
   {
@@ -6095,6 +6095,7 @@ void FUN_80039fa8(int param_1)
 		// set lap ID (0,1,2) to flash, because it is new best lap
 		*(int *)(puVar3 + 0x1d40) = iVar7 >> 0x10;
 
+		// start drawing OSK, and... ?
         *(uint *)(puVar3 + 0x1d44) = *(uint *)(puVar3 + 0x1d44) | 0x8c000000;
       }
 
@@ -6925,7 +6926,7 @@ LAB_8003a71c:
 			)
 		   )
 		{
-          // GhostBuffer_EndRecording
+          // GhostTape_End
 		  FUN_80027e90();
 
           *(uint *)(PTR_DAT_8008d2ac + 0x1d44) = *(uint *)(PTR_DAT_8008d2ac + 0x1d44) | 1;
@@ -7084,33 +7085,29 @@ void FUN_8003b008(int param_1)
         puVar4 = puVar4 + 4;
       } while (puVar3 != (undefined4 *)(iVar2 + 0x134));
 
-	  // if there are zero screens, crash the game
+	  // numPlyrCurrGame
       bVar1 = *(byte *)(param_1 + 0x1ca8);
-      if (bVar1 == 0) {
-        trap(0x1c00);
-      }
+	  
+	  #if 0 // do not rewrite
+      if (bVar1 == 0) trap(0x1c00);
+	  if (((uint)bVar1 == 0xffffffff) && (*(int *)(iVar5 + 0x1a40) == -0x80000000)) trap(0x1800);
+	  #endif
 
-	  // if there are -1 screens, crash the game
-      if (((uint)bVar1 == 0xffffffff) && (*(int *)(iVar5 + 0x1a40) == -0x80000000)) {
-        trap(0x1800);
-      }
-
+	  // gGT->rainBuffer[i].numParticles_curr
       *(int *)(iVar5 + 0x1a40) = *(int *)(iVar5 + 0x1a40) / (int)(uint)bVar1;
 
-	  // if there are zero screens, crash the game
+	  // numPlyrCurrGame
 	  bVar1 = *(byte *)(param_1 + 0x1ca8);
-      if (bVar1 == 0) {
-        trap(0x1c00);
-      }
-
-	  // if there are -1 screens, crash the game
-      if (((uint)bVar1 == 0xffffffff) && ((uint)*(ushort *)(iVar5 + 0x1a44) == 0x80000000)) {
-        trap(0x1800);
-      }
+      
+	  #if 0 // do not rewrite
+	  if (bVar1 == 0) trap(0x1c00);
+	  if (((uint)bVar1 == 0xffffffff) && ((uint)*(ushort *)(iVar5 + 0x1a44) == 0x80000000)) trap(0x1800);
+      #endif
 
 	  // next screen
 	  iVar6 = iVar6 + 1;
 
+	  // gGT->rainBuffer[i].numParticles_max
       *(undefined2 *)(iVar5 + 0x1a44) =
            (short)((int)(uint)*(ushort *)(iVar5 + 0x1a44) / (int)(uint)bVar1);
 
@@ -7570,7 +7567,7 @@ void FUN_8003b6d0(uint *param_1)
     FUN_80012598();
   }
 
-  // GhostBuffer_InitMemory
+  // GhostReplay_Init1
   FUN_80027838();
 
   // Check if 231 dll is loaded
@@ -7763,11 +7760,10 @@ void FUN_8003b6d0(uint *param_1)
   // basically, if you're in time trial gameplay
   if ((*(uint *)PTR_DAT_8008d2ac & 0x20022000) == 0x20000)
   {
-	// initialize all ghost instances,
-	// assuming threads are already born
+	// GhostReplay_Init2
     FUN_80027b88();
 
-	// initialize ghost recording system
+	// GhostTape_Start
     FUN_80027df4();
   }
   return;
@@ -8465,7 +8461,7 @@ void FUN_8003c248(void)
 }
 
 
-// refresh screen during Intro
+// MainInit_VRAMDisplay
 void FUN_8003c310(void)
 
 {
@@ -8881,7 +8877,7 @@ undefined4 main(void)
 	  // CseqMusic_StopAll
       FUN_80029258();
 
-	  // CseqMusic_Start
+	  // CseqMusic_Start (no loop at end)
 	  FUN_80028c78(0,0,0,0,0);
 
 	  // Music_Start

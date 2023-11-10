@@ -82,20 +82,22 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 	// hide MenuBox
 	MENUBOX_Hide(mb);
 
+	// get rid of pause flag
+	gGT->gameMode1 &= ~PAUSE_1;
+
 	MainFreeze_SafeAdvDestroy();
 
 	// careful, it's stringID MINUS one
-	switch (stringID - 1)
+	switch (stringID)
 	{
-
 		// stringID 1: "RESTART"
-		case 0:
+		case 1:
 
 		// stringID 4: "RETRY"
-		case 3:
+		case 4:
 
-			// get rid of pause flag
-			gGT->gameMode1 &= ~PAUSE_1;
+			// restart race
+			sdata->Loading.stage = -5;
 
 			if (TitleFlag_IsFullyOffScreen() == 1)
 			{
@@ -104,36 +106,21 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			}
 
 			// if you are not showing a ghost during a race
-			if (sdata->boolPlayGhost == 0)
-			{
-				// restart race
-				sdata->Loading.stage = -5;
-				return;
-			}
+			if (sdata->boolReplayHumanGhost == 0) return;
 
 			// If the ghost playing buffer is nullptr
-			if (sdata->ptrGhostTapePlaying == 0)
-			{
-				// restart race
-				sdata->Loading.stage = -5;
-				return;
-			}
+			if (sdata->ptrGhostTapePlaying == 0) return;
 
-			// At this point, we are certain there is a ghost buffer so you must be in time trial mode
-
-			// Make P2 the character that is saved in the header of the ghost that you will see in the race
-			data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
-
-			// restart race
-			sdata->Loading.stage = -5;
+			// Make P2 the character that is saved in the header of the 
+			// ghost that you will see in the race
+			data.characterIDs[1] = sdata->ptrGhostTapePlaying->characterID;
 			return;
 
 		// stringID 2: "RESUME"
-		case 1:
+		case 2:
 
 			// unpause game
 			ElimBG_Deactivate(gGT);
-			gGT->gameMode1 &= ~PAUSE_1;
 
 			// unpause audio
 			MainFrame_TogglePauseAudio(0);
@@ -143,10 +130,10 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			return;
 
 		// stringID 5: "CHANGE CHARACTER"
-		case 4:
+		case 5:
 
 			// erase ghost of previous race from RAM
-			GhostBuffer_Destroy();
+			GhostTape_Destroy();
 
 			// set level ID to main menu
 			levID = MAIN_MENU_LEVEL;
@@ -156,16 +143,13 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 
 			// when loading is done, add bit for "in mb"
 			sdata->Loading.OnBegin.AddBitsConfig0 |= 0x2000;
-
-			// get rid of pause flag
-			gGT->gameMode1 &= ~PAUSE_1;
 			break;
 
 		// stringID 6: "CHANGE LEVEL"
-		case 5:
+		case 6:
 
 			// erase ghost of previous race from RAM
-			GhostBuffer_Destroy();
+			GhostTape_Destroy();
 
 			// level ID of main mb
 			levID = MAIN_MENU_LEVEL;
@@ -176,13 +160,10 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			// when loading is done
 			// add bit for "in mb"
 			sdata->Loading.OnBegin.AddBitsConfig0 |= 0x2000;
-
-			// get rid of pause flag
-			gGT->gameMode1 &= ~PAUSE_1;
 			break;
 
 		// stringID 10: "CHANGE SETUP"
-		case 9:
+		case 10:
 
 			// set level ID to main menu
 			levID = MAIN_MENU_LEVEL;
@@ -193,13 +174,10 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			// when loading is done
 			// add bit for "in mb"
 			sdata->Loading.OnBegin.AddBitsConfig0 |= 0x2000;
-
-			// get rid of pause flag
-			gGT->gameMode1 &= ~PAUSE_1;
 			break;
 
 		// stringID 13: "EXIT TO MAP"
-		case 12:
+		case 13:
 
 			// when loading is done
 			// add this bit for In Adventure Arena
@@ -212,9 +190,6 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			// when loading is done
 			// remove bit for CTR Token Challenge
 			sdata->Loading.OnBegin.RemBitsConfig8 |= 8;
-
-			// get rid of pause flag
-			gGT->gameMode1 &= ~PAUSE_1;
 
 			// If you are not in Adventure cup
 			if ((gameMode & ADVENTURE_CUP) == 0)
@@ -248,6 +223,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 		default:
 			break;
 	}
+	
 	// load level ID
 	MainRaceTrack_RequestLoad(levID);
 	return;

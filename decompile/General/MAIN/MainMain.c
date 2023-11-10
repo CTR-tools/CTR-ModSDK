@@ -5,7 +5,7 @@ void StateZero();
 //#define FastBoot
 
 u_int DECOMP_main()
-{
+{	
 	struct GameTracker* gGT;
 	
 	u_int AddBitsConfig0;
@@ -19,7 +19,9 @@ u_int DECOMP_main()
 	
 	gGT = sdata->gGT;
 	
+#ifndef REBUILD_PS1	
 	__main();
+#endif
 
 	do
 	{
@@ -32,8 +34,8 @@ u_int DECOMP_main()
 		}
 		#endif
 
-		LOAD_NextQueuedFile();
-		CDSYS_XAPauseAtEnd();
+		DECOMP_LOAD_NextQueuedFile();
+		DECOMP_CDSYS_XAPauseAtEnd();
 
 		switch(sdata->mainGameState)
 		{
@@ -45,45 +47,40 @@ u_int DECOMP_main()
 			// Happens on first frame that loading ends
 			case 1:
 			
+#ifndef REBUILD_PS1
 				// deactivate pause
 				ElimBG_Deactivate(gGT);
 				MainStats_RestartRaceCountLoss();
 				Voiceline_ClearTimeStamp();
+#endif
 				
 				// Disable End-Of-Race menu
 				gGT->gameMode1 &= ~END_OF_RACE;
 
-				// Main Menu Level ID
 				if (gGT->levelID == MAIN_MENU_LEVEL)
 				{
-					LAB_8003ca68:
-					iVar8 = TitleFlag_IsFullyOffScreen();
-					if (iVar8 != 0)
-					{
-						TitleFlag_SetFullyOnScreen();
-					}
+					if (DECOMP_TitleFlag_IsFullyOffScreen() != 0)
+						DECOMP_TitleFlag_SetFullyOnScreen();
 				}
 				
-				// if not main menu
 				else
 				{
-					iVar8 = TitleFlag_IsFullyOnScreen();
-					if (iVar8 == 0)
-					{
-						// If you are drawing main menu, set fully on screen
-						if (gGT->levelID == MAIN_MENU_LEVEL) goto LAB_8003ca68;
-					}
-					else
-					{
-						TitleFlag_BeginTransition(2);
-					}
+					if (DECOMP_TitleFlag_IsFullyOnScreen() != 0)
+						DECOMP_TitleFlag_BeginTransition(2);
 				}
+				
+#ifndef REBUILD_PS1
 				EffectSfxRain_Reset(gGT);
 				GAMEPROG_GetPtrHighScoreTrack();
-				MainInit_FinalizeInit(gGT);
+#endif
+				
+				DECOMP_MainInit_FinalizeInit(gGT);
+				
+#ifndef REBUILD_PS1				
 				GAMEPAD_GetNumConnected(sdata->gGamepads);
 				sdata->boolSoundPaused = 0;
 				VehInit_EngineAudio_AllPlayers();
+#endif
 				
 				// 9 = intro cutscene
 				// 10 = traffic lights
@@ -105,7 +102,9 @@ u_int DECOMP_main()
 					)
 				)
 				{
+#ifndef REBUILD_PS1
 					Audio_SetState_Safe(uVar12);
+#endif
 				}
 				sdata->mainGameState = 3;
 				gGT->clockEffectEnabled &= 0xfffe;
@@ -113,109 +112,82 @@ u_int DECOMP_main()
 
 			// Reset stage, reset music
 			case 2:
+#ifndef REBUILD_PS1
 				Audio_SetState_Safe(1);
 				MEMPACK_PopState();
 				
 				// ignore threads, because we PopState, 
 				// so the threadpool will reset anyway
 				LevInstDef_RePack(gGT->level1->ptr_mesh_info, 0);
+#endif
+				
 				sdata->mainGameState = 1;
 				break;
 
 			// Main Gameplay Update
 			// Makes up all normal interaction with the game
 			case 3:
-				// if loading is not finished
+				// if loading, or gameplay interrupted
 				if (sdata->Loading.stage != -1)
 				{
-					iVar8 = TitleFlag_IsFullyOnScreen();
 					if
 					(
-						// wait for flag to be fully on-screen before starting to load the game
-						((iVar8 == 1) ||
-						// If Level ID is Naughty Dog Box
-						(gGT->levelID == NAUGHTY_DOG_CRATE)) || (sdata->pause_state != 0)
+						(DECOMP_TitleFlag_IsFullyOnScreen() == 1) ||
+						(gGT->levelID == NAUGHTY_DOG_CRATE) || 
+						(sdata->pause_state != 0)
 					)
 					{
 						gGT->gameMode1 |= LOADING;
 					}
+					
 					iVar8 = sdata->Loading.stage;
 
 					// elapsed milliseconds per frame, locked 32 here
 					// impacts speed of flag wave during "loading...", but does not impact speed of flying text
 					gGT->elapsedTimeMS = 32;
 					
-					// if loading is finished, but still in "loading mode", and if pools dont need to be reset (maybe for credits?)
+					// if loading VLC
+					if (iVar8 == -6)
+					{
+						// if VLC is not loaded, quit
+						// we know when it's done from a load callback
+						if (sdata->bool_IsLoaded_VlcTable != 1) break;
+						
+						// if == 1, finish the loading
+						goto FinishLoading;
+					}
+					
+					// if restarting race
 					if (iVar8 == -5)
 					{
-						iVar8 = TitleFlag_IsFullyOnScreen();
-						if (iVar8 == 1)
+						if (DECOMP_TitleFlag_IsFullyOnScreen() == 1)
 						{
-							// set game state to 2 to initialize the world
-							// does not initialize pools
+							// reinitialize world,
+							// does not reinitialize pools
 							sdata->mainGameState = 2;
 
-							// nothing is being loaded anymore
+							// no loading, and no interruption
 							sdata->Loading.stage = -1;
 							
 							// Turn off the "Loading..." flag
 							gGT->gameMode1 &= ~LOADING;
 							break;
 						}
+						
+						// if not fully on-screen, do not BREAK,
+						// keep rendering the scene
 					}
 					
-					// if something is being loaded
-					else
+					// if waiting for checkered flag to cover screen,
+					// right before loading the next requested level
+					else if (iVar8 == -4)
 					{
-						// if not waiting for checkered flag to cover screen
-						if (iVar8 != -4)
-						{
-							// if loading VLC
-							if (iVar8 == -6)
-							{
-								// if VLC is not loaded, quit
-								// we know when it's done from a load callback
-								if (sdata->bool_IsLoaded_VlcTable != 1) break;
-							}
-							else
-							{
-								sdata->Loading.stage = LOAD_TenStages(gGT, iVar8, sdata->ptrBigfile1);
-								
-								// if did not just complete loading stage 9, skip logic to load VLC, skip logic to end loading, skip logic if "if == -4", goto rendering.
-								// We can skip rendering by changing BNE on 0x8003cca0 to "bne v0, v1, 8003cf3c"
-								if (sdata->Loading.stage != -2) goto LAB_8003ccf8;
-								
-								// if stage 9 of loading was just finished
-								if
-								(
-									// If you're in main menu
-									(gGT->levelID == MAIN_MENU_LEVEL) ||
-									// If you're in scrapbook
-									(gGT->levelID == SCRAPBOOK)
-								)
-								{
-									MainLoadVLC();
-									// start loading VLC (scroll up to iVar8 == -6)
-									sdata->Loading.stage = -6;
-									break;
-								}
-							}
-							// loading is finished
-							sdata->Loading.stage = -1;
-							// set game state to 1, to initialize world, as well as initialize all pools
-							sdata->mainGameState = 1;
-							// remove "Loading..." flag from gGT
-							gGT->gameMode1 &= ~LOADING;
-							break;
-						}
-						iVar8 = TitleFlag_IsFullyOnScreen();
 						RemBitsConfig8 = sdata->Loading.OnBegin.RemBitsConfig8;
 						AddBitsConfig8 = sdata->Loading.OnBegin.AddBitsConfig8;
 						RemBitsConfig0 = sdata->Loading.OnBegin.RemBitsConfig0;
 						AddBitsConfig0 = sdata->Loading.OnBegin.AddBitsConfig0;
 						
-						// wait for flag to be fully on-screen
-						if (iVar8 == 1)
+						if (DECOMP_TitleFlag_IsFullyOnScreen() == 1)
 						{
 							sdata->Loading.OnBegin.AddBitsConfig0 = 0;
 							sdata->Loading.OnBegin.RemBitsConfig0 = 0;
@@ -226,26 +198,65 @@ u_int DECOMP_main()
 
 							gGT->hudFlags &= 0xf7;
 
-							iVar8 = sdata->Loading.Lev_ID_To_Load;
-
 							gameMode1 = gGT->gameMode1;
 							gGT->gameMode2 = gameMode2 | AddBitsConfig8;
 							gGT->gameMode1 = gameMode1 | AddBitsConfig0;
 							gGT->gameMode1 = (gameMode1 | AddBitsConfig0) & ~RemBitsConfig0;
 							gGT->gameMode2 = (gameMode2 | AddBitsConfig8) & ~RemBitsConfig8;
-							MainRaceTrack_StartLoad(iVar8);
+							
+							#ifndef REBUILD_PS1
+							MainRaceTrack_StartLoad(sdata->Loading.Lev_ID_To_Load);
+							#endif
 						}
-						else
+						
+						else if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)
+							DECOMP_TitleFlag_BeginTransition(1);
+						
+						// do not BREAK, 
+						// keep rendering the scene
+					}
+					
+					// if something is being loaded
+					else
+					{
+						sdata->Loading.stage = DECOMP_LOAD_TenStages(gGT, iVar8, sdata->ptrBigfile1);
+							
+						// If just finished loading stage 9
+						if (sdata->Loading.stage == -2)
 						{
-							iVar8 = TitleFlag_IsFullyOffScreen();
-							if (iVar8 == 1)
+							#ifndef REBUILD_PS1
+							if
+							(
+								(gGT->levelID == MAIN_MENU_LEVEL) ||
+								(gGT->levelID == SCRAPBOOK)
+							)
 							{
-								TitleFlag_BeginTransition(1);
+								MainLoadVLC();
+								
+								// start loading VLC (scroll up to iVar8 == -6)
+								sdata->Loading.stage = -6;
+								break;
 							}
+							#endif
+							
+FinishLoading:
+							// loading is finished,
+							// initialize world and pools,
+							// remove LOADING... flag from gGT
+							sdata->Loading.stage = -1;
+							sdata->mainGameState = 1;
+							gGT->gameMode1 &= ~LOADING;							
+							break;
 						}
+						
+						// else, do not BREAK,
+						// keep rendering the scene
+						// which is the checkered flag
 					}
 				}
-				LAB_8003ccf8:
+
+// =========== Main Game Loop ======================
+
 				if
 				(
 					(
@@ -271,8 +282,10 @@ u_int DECOMP_main()
 				// frame counter, not represented in common.h currently
 				sdata->frameCounter++;
 
+#ifndef REBUILD_PS1
 				// Process all gamepad input
 				GAMEPAD_ProcessAnyoneVars(sdata->gGamepads);
+#endif
 
 				#ifdef FastBoot
 				// disable spawn
@@ -298,7 +311,7 @@ u_int DECOMP_main()
 				#endif
 
 				// Start new frame (ClearOTagR)
-				MainFrame_ResetDB(gGT, sdata->gGamepads);
+				DECOMP_MainFrame_ResetDB(gGT);
 
 				if
 				(
@@ -315,31 +328,22 @@ u_int DECOMP_main()
 				{
 					// All this code is for the 30-second timer within Demo Mode
 					// To see 30-second timer in Main Menu, go to FUN_00001604 in 230.c
-
-					// 0x1edc is a countdown the timer
 					// pressing (or holding) any button sets it to zero
 
-					// Get the current value of the countdown timer
-					iVar8 = gGT->demoCountdownTimer;
-
-					// subtract one frame
-					gGT->demoCountdownTimer = iVar8 - 1;
+					gGT->demoCountdownTimer--;
 
 					// check to see if time ran out
-					if (iVar8 - 1 < 1)
+					if (gGT->demoCountdownTimer < 1)
 					{
-						// leave demo mode
+						// leave demo mode, go to main menu
 						gGT->boolDemoMode = 0;
-
-						// set number of players to 1
 						gGT->numPlyrNextGame = 1;
-
-						// go to main menu
 						sdata->mainMenuState = 0;
 
-						// load LEV of main menu
-						LAB_8003ce08:
-						MainRaceTrack_RequestLoad(39);
+						LAB_8003ce08: ;
+#ifndef REBUILD_PS1
+						MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+#endif
 					}
 					
 					// if time remains on the timer
@@ -369,14 +373,15 @@ u_int DECOMP_main()
 					}
 
 					// "DEMO MODE\rPRESS ANY BUTTON TO EXIT"
-					DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
+					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
 				}
 				
+#ifndef REBUILD_PS1
 				if ((gGT->gameMode1 & LOADING) == 0)
 				{
 					MainFrame_GameLogic(gGT, sdata->gGamepads);
 				}
-				
+#endif
 				// If you are in demo mode
 				if (gGT->boolDemoMode != '\0')
 				{
@@ -387,13 +392,35 @@ u_int DECOMP_main()
 				// reset vsync calls between drawsync
 				gGT->vSync_between_drawSync = 0;
 
-				MainFrame_RenderFrame(gGT, sdata->gGamepads);
+#ifdef REBUILD_PS1
+				
+				if(sdata->Loading.stage == -1)
+				{
+					gGT->level1->clearColor[0].enable = 1;
+					gGT->level1->clearColor[1].enable = 1;
+					
+					DECOMP_DecalFont_DrawLine(__DATE__, 0x100, 0xA0, 2, 0xffff8000);
+					DECOMP_DecalFont_DrawLine(__TIME__, 0x100, 0xA8, 2, 0xffff8000);
+				}
+#endif
 
+#ifdef REBUILD_PC
+				char PsyX_BeginScene();
+				PsyX_BeginScene();
+#endif
+				DECOMP_MainFrame_RenderFrame(gGT, sdata->gGamepads);
+#ifdef REBUILD_PC
+				void PsyX_EndScene();
+				PsyX_EndScene();
+#endif
+
+#ifndef REBUILD_PS1
 				// if mask is talking in Adventure Hub
 				if (sdata->boolDraw3D_AdvMask != 0)
 				{
 					AH_MaskHint_Update();
 				}
+#endif
 				break;
 
 			#if 0
@@ -445,26 +472,24 @@ void StateZero()
 	ResetCallback();
 	
 	// We have 2mb RAM total
-	MEMPACK_Init(0x800000);
+	DECOMP_MEMPACK_Init(0x800000);
 	
 	// also sets debug variables to "off"
-	LOAD_InitCD();
+	DECOMP_LOAD_InitCD();
 	
-	// Without this, checkered flag will draw one frame after the copyright page draws, then go away once Naughty Dog Box scene is ready
-	TitleFlag_SetFullyOffScreen();
+	// Without this, checkered flag will draw one frame after 
+	// the copyright page draws, then go off-screen at ND Box
+	DECOMP_TitleFlag_SetFullyOffScreen();
 	
 	ResetGraph(0);
 	SetGraphDebug(0);
-	
-	MainInit_VRAMClear();
-	
+	DECOMP_MainInit_VRAMClear();
+
 	SetDispMask(1);
 	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
 	SetDefDrawEnv(&gGT->db[1].drawEnv, 0, 0x128, 0x200, 0xd8);
 	SetDefDispEnv(&gGT->db[0].dispEnv, 0, 0x128, 0x200, 0xd8);
 	SetDefDispEnv(&gGT->db[1].dispEnv, 0, 0, 0x200, 0xd8);
-	
-	gGT->db[0].drawEnv.isbg = 1;
 	
 	gGT->db[0].dispEnv.screen.x = 0;
 	gGT->db[0].dispEnv.screen.y = 0xc;
@@ -476,6 +501,7 @@ void StateZero()
 	gGT->db[1].dispEnv.screen.w = 0x100;
 	gGT->db[1].dispEnv.screen.h = 0xd8;
 	
+	gGT->db[0].drawEnv.isbg = 1;
 	gGT->db[0].drawEnv.r0 = 0;
 	gGT->db[0].drawEnv.g0 = 0;
 	gGT->db[0].drawEnv.b0 = 0;
@@ -503,39 +529,42 @@ void StateZero()
 	// traffic light countdown timer, set to negative one second
 	gGT->trafficLightsTimer = 0xfffffc40;
 	
-	RCNT_Init();
-	
+	DECOMP_RCNT_Init();
+
 	// set callback and save callback
 	EnterCriticalSection();
-	sdata->MainDrawCb_DrawSyncPtr = DrawSyncCallback(&MainDrawCb_DrawSync);
+	sdata->MainDrawCb_DrawSyncPtr = DrawSyncCallback(&DECOMP_MainDrawCb_DrawSync);
 	ExitCriticalSection();
 	
-	MEMCARD_InitCard();
-	
+	DECOMP_MEMCARD_InitCard();
 	VSync(0);
-	
-	GAMEPAD_Init(sdata->gGamepads);
-	
+	DECOMP_GAMEPAD_Init(sdata->gGamepads);
 	VSync(0);
-	
-	GAMEPAD_GetNumConnected(sdata->gGamepads);
-	
+	DECOMP_GAMEPAD_GetNumConnected(sdata->gGamepads);
+
+#ifndef REBUILD_PC
+#define BIGPATH rdata.s_PathTo_Bigfile
+#else
+#define BIGPATH "\\BIGFILE.BIG;1"
+#endif
+
 	// Get CD Position fo BIGFILE
-	sdata->ptrBigfile1 = LOAD_ReadDirectory(rdata.s_PathTo_Bigfile);
+	sdata->ptrBigfile1 = DECOMP_LOAD_ReadDirectory(BIGPATH);
 	
 	#ifndef FastBoot
-	// Load Language
-	// takes 1 as hard-coded parameter for English
-	// PAL SCES02105 has this same function (different name), and calls it multiple times
-	LOAD_LangFile(sdata->ptrBigfile1, 1);
-	
-	GAMEPROG_NewGame_OnBoot();
-	
+	// English=1
+	// PAL SCES02105 calls it multiple times
+	DECOMP_LOAD_LangFile(sdata->ptrBigfile1, 1);
+	DECOMP_GAMEPROG_NewGame_OnBoot();
 	gGT->overlayIndex_null_notUsed = 0;
 	#endif
 	
+#ifdef REBUILD_PS1
+	gGT->levelID = MAIN_MENU_LEVEL;
+#else
 	// set level ID to naughty dog box
 	gGT->levelID = NAUGHTY_DOG_CRATE;
+#endif
 	
 	#ifdef FastBoot
 	gGT->levelID = N_GIN_LABS;
@@ -544,55 +573,58 @@ void StateZero()
 	#endif
 	
 	InitGeom();
+	SetGeomOffset(0x100, 0x78);	// width/2, height/2
+	SetGeomScreen(0x140);		// "distance" to screen, alters FOV
 	
-	// width / 2, and height / 2
-	SetGeomOffset(0x100, 0x78);
-	
-	// "distance" to screen, alters FOV
-	SetGeomScreen(0x140);
-	
+#ifndef REBUILD_PS1
 	RenderBucket_InitDepthGTE();
 	Vector_BakeMatrixTable();
+#endif
 	
-	gGT->overlayIndex_EndOfRace = 0xff;
 	gGT->swapchainIndex = 0;
 	gGT->backBuffer = &gGT->db[0];
+	
+	gGT->overlayIndex_EndOfRace = 0xff;
 	gGT->overlayIndex_LOD = 0xff;
 	gGT->overlayIndex_Threads = 0xff;
+	
 	PutDispEnv(&gGT->db[1].dispEnv);
 	PutDrawEnv(&gGT->db[1].drawEnv);
 	DrawSync(0);
 	
 	#ifndef FastBoot
 	// Load Intro TIM for "SCEA Presents" from VRAM file
-	LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
-	MainInit_VRAMDisplay();
+	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
+	DECOMP_MainInit_VRAMDisplay();
 	#endif
 	
 	// \SOUNDS\KART.HWL;1
-	// enable audio if not already enabled
-	howl_InitGlobals(data.kartHwlPath);
+	DECOMP_howl_InitGlobals(data.kartHwlPath);
 	
-	VSyncCallback(MainDrawCb_Vsync);
+	VSyncCallback(DECOMP_MainDrawCb_Vsync);
 	
 	#ifndef FastBoot
+#ifndef REBUILD_PS1
 	Music_SetIntro();
 	CseqMusic_StopAll();
 	CseqMusic_Start(0, 0, 0, 0, 0);
 	Music_Start(0);
+#endif
 	
-	// CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
 	// "Start your engines, for Sony Computer..."
-	CDSYS_XAPlay(1, 0x50);
+	DECOMP_CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);
+
+#ifndef REBUILD_PC
 	while (sdata->XA_State != 0)
 	{
 		// WARNING: Read-only address (ram, 0x8008d888) is written
-		CDSYS_XAPauseAtEnd();
+		DECOMP_CDSYS_XAPauseAtEnd();
 	}
+#endif
+
 	#endif
 	
-	// WARNING: Read-only address (ram, 0x8008d888) is written
-	DecalGlobal_Clear(gGT);
+	DECOMP_DecalGlobal_Clear(gGT);
 	
 	// This loads UI textures (shared.vrm)
 	// This includes traffic lights, font, and more
@@ -600,7 +632,7 @@ void StateZero()
 	// 	the area between 2 screen buffers and top right corner in vram
 	// sdata->ptrBigfile1 is the Pointer to "cd position of bigfile"
 	// Add a bookmark before loading (param_3 is 0 in the call)
-	LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, &vramSize, 0xffffffff);
+	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x102, 0, &vramSize, 0xffffffff);
 	
 	sdata->mainGameState = 3;
 	

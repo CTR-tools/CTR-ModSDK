@@ -1,7 +1,6 @@
 #include <common.h>
 
-// budget 0x6E8 (1768)
-// curr (1708)
+// budget 1572 / 1768
 
 void DECOMP_VehPtr_Drifting_PhysAngular(struct Thread* th, struct Driver* driver)
 {
@@ -204,21 +203,21 @@ LAB_80063244:
 	// if holding a drift
 	else 
 	{
-		iVar13 = driver->KartStates.Drifting.numFramesDrifting;
-		
-		// if opposite signs,
-		// switchWay with positive count,
-		// standard with negative count
-		if((iVar15 ^ iVar13) < 0) iVar13 = 0;
-		
-		// share signs
-		else
+		// if drifting right
+		if(iVar15 < 1)
 		{
-			if(iVar15 < 0) iVar13--;
-			else iVar13++;
+			driver->KartStates.Drifting.numFramesDrifting--;
+			if(driver->KartStates.Drifting.numFramesDrifting > 0)
+				driver->KartStates.Drifting.numFramesDrifting = 0;
 		}
 		
-		driver->KartStates.Drifting.numFramesDrifting = iVar13;
+		// if drifting left
+		else
+		{
+			driver->KartStates.Drifting.numFramesDrifting++;
+			if(driver->KartStates.Drifting.numFramesDrifting < 0)
+				driver->KartStates.Drifting.numFramesDrifting = 0;
+		}
 	}
 	if (bVar3)
 	{
@@ -321,17 +320,20 @@ LAB_800632cc:
 	}
 	else
 	{
-		*(u_short*)&driver->unk3D4[2] = 0;
+		driver->unk3D4[2] = 0;
 	}
+	
 	iVar12_E = driver->unk3D4[0];
 	if (iVar12_E < 0)
 	{
 		iVar12_E = -iVar12_E;
 	}
+	
 	if (0x32 < iVar12_E)
 	{
-		*(u_short*)&driver->unk3D4[2] = 0;
+		driver->unk3D4[2] = 0;
 	}
+	
 	if (driver->unk3D4[2] == 0)
 	{
 		driver->unk3D4[1] = 10;

@@ -8,8 +8,7 @@ void FUN_80022b94(void)
 
 
 // DecalGlobal_Clear
-void FUN_80022b9c(void)
-
+void FUN_80022b9c(int param_1)
 {
   // Clear all icon pointers
   memset(param_1 + 0x1eec,0,0x220);
@@ -20,7 +19,7 @@ void FUN_80022b9c(void)
 
 // DecalGlobal_Store
 // param_1 is gGT,
-// pram_2 is decal info
+// pram_2 is LevTexLookup
 void FUN_80022bdc(int param_1,int *param_2)
 
 {
@@ -30,7 +29,10 @@ void FUN_80022bdc(int param_1,int *param_2)
   uint uVar4;
   int *piVar5;
 
-  if (param_2 != (int *)0x0) {
+  // lev->0x3C
+  if (param_2 != (int *)0x0) 
+  {
+	// loop through all icons
     uVar3 = param_2[1];
     uVar4 = uVar3 + *param_2 * 0x20;
     while (uVar3 < uVar4)
@@ -43,9 +45,10 @@ void FUN_80022bdc(int param_1,int *param_2)
       }
       uVar3 = uVar3 + 0x20;
     }
+	
+	// loop through all iconGroups
     piVar2 = (int *)param_2[3];
     piVar5 = piVar2 + param_2[2];
-
     while (piVar2 < piVar5)
 	{
 	  // IconGroupID
@@ -73,7 +76,7 @@ int * FUN_80022c88(int param_1,int *param_2)
   int **ppiVar3;
   int **ppiVar4;
 
-  // lev -> ptr_named_tex
+  // lev -> levTexLookup
   iVar1 = *(int *)(param_1 + 0x3c);
 
   // if pointer is valid

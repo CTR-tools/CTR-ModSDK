@@ -1724,14 +1724,14 @@ void FUN_800ad310(int param_1)
   // instance -> thread -> object (tnt)
   piVar2 = *(int **)(*(int *)(iVar1 + 0x6c) + 0x30);
   
+  // inst->matrix.t[1]
   *(int *)(iVar1 + 0x48) =
        *(int *)(iVar1 + 0x48) +
        ((int)*(short *)((int)piVar2 + 0xe) * *(int *)(PTR_DAT_8008d2ac + 0x1d04) >> 5);
-	   
+  
+  // stopFallAtY
   if (*(short *)((int)piVar2 + 0x12) == 0x3fff) 
-  {
     *(undefined2 *)((int)piVar2 + 0x12) = *(undefined2 *)(*(int *)(*piVar2 + 0x1c) + 0x48);
-  }
   
   if (*(int *)(iVar1 + 0x48) <= (int)*(short *)((int)piVar2 + 0x12)) 
   {
@@ -1755,6 +1755,8 @@ void FUN_800ad310(int param_1)
 	// tntObject -> driver -> tntRecv = 0
     *(undefined4 *)(*piVar2 + 0x18) = 0;
   }
+  
+  // decrease velocity (artificial gravity)
   iVar1 = (uint)*(ushort *)((int)piVar2 + 0xe) - ((*(int *)(PTR_DAT_8008d2ac + 0x1d04) << 2) >> 5);
   *(undefined2 *)((int)piVar2 + 0xe) = (short)iVar1;
   if (iVar1 * 0x10000 >> 0x10 < -0x60) {
@@ -2098,10 +2100,10 @@ undefined4 FUN_800ad9ac(int param_1,undefined4 param_2)
 	// ThreadMeta
     iVar1 = FUN_8001d094(iVar3);
 	
-	// if funcLevThreadsBirth is not nullptr
+	// if LThC is not nullptr
     if ((iVar1 != 0) && (*(code **)(iVar1 + 8) != (code *)0x0)) 
 	{		
-	  // execute funcLevThreadsBirth, make thread for this instance
+	  // execute LThC, make thread for this instance
 	  // upon collision with the instance, let it run thread->funcThCollide
       uVar2 = (**(code **)(iVar1 + 8))(iVar4,param_2,param_1);
 	  
@@ -5023,7 +5025,7 @@ void FUN_800b1220(int param_1)
     *(undefined2 *)(*(int *)(*(int *)(param_1 + 0x4a0) + 0x30) + 4) = 0x1e00;
     
 	// random number
-	iVar1 = FUN_8003ea28(0x42);
+	iVar1 = FUN_8003ea28();
 	
 	// random (related to driver offset 0x50a)
     *(undefined2 *)(*(int *)(*(int *)(param_1 + 0x4a0) + 0x30) + 6) = (short)((iVar1 % 400) / 100);
@@ -13074,8 +13076,7 @@ undefined4 FUN_800ba0c8(int param_1,int param_2,short *param_3)
   
   // This is the door you can shoot in tiger temple
   
-  // If not in relic race, ignore the function,
-  // there are no weapons to activate door anyways
+  // Only continue if not in relic race
   if ((*(uint *)PTR_DAT_8008d2ac & 0x4000000) == 0) 
   {
 	 // get thread for this instance

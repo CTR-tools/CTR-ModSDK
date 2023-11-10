@@ -9,7 +9,7 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, stru
 	#endif
 
 	// setInt32RGB4 needs to go before addPolyGT4
-	// for more information check "temporaryrevampedgpuheader.h"
+	// for more information check "include/gpu.h"
 	POLY_GT4* p = (POLY_GT4*)primMem->curr;
 	setInt32RGB4(p, color0, color1, color2, color3);
 	addPolyGT4(ot, p);

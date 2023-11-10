@@ -40,7 +40,7 @@ struct x y[] =
 	TEST16(&data.advCupStringIndex),
 	TEST16(&data.characterIDs),
 	TEST16(&data.metaPhys),
-	TEST16(&data.placeholder_lastByte),
+	//TEST16(&data.placeholder_lastByte),
 
 	TEST16(&sdata_static),
 	TEST16(&sdata_static.s_camera),
@@ -52,7 +52,7 @@ struct x y[] =
 	TEST16(&sdata_static.s_token),
 	TEST16(&sdata_static.numIconsEOR),
 	TEST16(&sdata_static.s_NOSCRUB),
-	TEST16(&sdata_static.useDisc),
+	TEST16(&sdata_static.boolUseDisc),
 	TEST16(&sdata_static.ReadFileAsyncCallbackFuncPtr),
 	TEST16(&sdata_static.lngStrings),
 	TEST16(&sdata_static.ptrLoadSaveObj),
@@ -80,6 +80,8 @@ struct x y[] =
 	TEST16(&sdata_static.mempack),
 	TEST16(&sdata_static.numGhostProfilesSaved),
 
+	TEST16(&sdata_static.GhostRecording.boostCooldown1E),
+
 	// 926 - 0x2584
 	// 1006 - 0x258C
 	// 1020 - 0x2594
@@ -89,5 +91,6 @@ struct x y[] =
 	TEST16(OFFSETOF(struct Driver, BattleHUD.teamID)),
 	TEST16(OFFSETOF(struct Driver, reserves)),
 	TEST16(OFFSETOF(struct Driver, numTimesMaskGrab)),
-	TEST16(OFFSETOF(struct Turbo, fireVisibilityCooldown))
+	TEST16(OFFSETOF(struct Turbo, fireVisibilityCooldown)),
+	TEST16(OFFSETOF(struct Instance, idpp[0].mh))
 };

@@ -7,9 +7,9 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
   struct GameTracker *gGT;
   u_int uVar3;
   int iVar4;
-  struct GhostRecording *GhostBufferEnd;
-  struct GhostRecording *ghostRec;
-  struct GhostRecording *ghostReplay;
+  void *GhostBufferEnd;
+  struct GhostHeader *ghRecording;
+  struct GhostHeader *ghPlaying;
   u_short style;
   void *startOffs;
   void *endOffs;
@@ -19,7 +19,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
   if (menu->unk1e == 0)
   {
 
-    if (-1 < menu->unk1a)
+    if (-1 < menu->rowSelected)
     {
       if (menu->unk1a * 6 + menu->rows != 9)
       {
@@ -37,7 +37,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
       if (option == 6)
       {
         // Erase ghost of previous race from RAM
-        GhostBuffer_Destroy();
+        GhostTape_Destroy();
 
         // go back to track selection
         sdata->mainMenuState = 2;
@@ -52,7 +52,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
           if (option == 4)
           {
             // Turn off HUD
-            sdata->gGT->hudFlags &= 0xfe;
+            gGT->hudFlags &= 0xfe;
 
             iVar4 = TitleFlag_IsFullyOffScreen();
 
@@ -70,23 +70,26 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
             // destroy "most" fx, let menu fx play to end
             howl_StopAudio(1, 0, 0);
 
-            if ((sdata->gGT->unknownFlags_1d44 & 1) == 0)
+            if ((gGT->unknownFlags_1d44 & 1) == 0)
             {
               return;
             }
 
-            sdata->boolPlayGhost = 1;
+            sdata->boolReplayHumanGhost = 1;
 
             GhostBufferEnd = (int)sdata->GhostRecording.ptrGhost + 0xf80;
 
             // Ghost recording buffer
-            ghostRec = sdata->GhostRecording.ptrGhost;
+            ghRecording = sdata->GhostRecording.ptrGhost;
 
             // Ghost replay buffer (to watch while you drive)
-            ghostReplay = sdata->ptrGhostTapePlaying;
+            ghPlaying = sdata->ptrGhostTapePlaying;
 
-            if ((((u_int)*ghostRec | (u_int)*ghostReplay) & 3) == 0)
+            if (((ghRecording->magic | ghPlaying->magic) & 3) == 0)
             {
+			  int* ghostRec = (int*)ghRecording;
+			  int* ghostReplay = (int*)ghPlaying;
+				
               // Copy ghost recording buffer
               do
               {
@@ -124,7 +127,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
 
             // Make P2 the character that is saved in the
             // header of the ghost that you will see in the race
-            data.characterIDs[1] = (sdata->ptrGhostTapePlaying + 6);
+            data.characterIDs[1] = sdata->ptrGhostTapePlaying->characterID;
 
             // no ghosts are drawing
             sdata->boolGhostsDrawing = 0;
@@ -145,7 +148,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
             // If "Quit"...
 
             // Erase ghost of previous race from RAM
-            GhostBuffer_Destroy();
+            GhostTape_Destroy();
 
             // go back to main menu
             sdata->mainMenuState = 0;
@@ -156,7 +159,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
           }
 
           // Erase ghost of previous race from RAM
-          GhostBuffer_Destroy();
+          GhostTape_Destroy();
 
           // go to character selection
           sdata->mainMenuState = 1;
@@ -198,7 +201,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
               sdata->Loading.OnBegin.RemBitsConfig8 |= 8;
 
               // If you are in Adventure cup
-              if ((sdata->gGT->gameMode1 & ADVENTURE_CUP) != 0)
+              if ((gGT->gameMode1 & ADVENTURE_CUP) != 0)
               {
                 // when loading is done, remove flags for
                 // adventure cup, relic race, and crystal challenge
@@ -215,7 +218,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
 
               // If you're in a Boss Race
               // 0x80000000
-              if (sdata->gGT->gameMode1 < 0)
+              if (gGT->gameMode1 < 0)
               {
                 // when loading is done,
                 // add flag to spawn near boss door
@@ -231,7 +234,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
               sdata->Loading.OnBegin.RemBitsConfig0 = uVar3;
 
               // Load LEV in Track Selection
-              MainRaceTrack_RequestLoad((sdata->gGT + 0x1eb4));
+              MainRaceTrack_RequestLoad((gGT->prevLEV));
               return;
             }
 

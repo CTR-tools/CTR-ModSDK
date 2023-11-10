@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_VehInit_SetConsts(struct Driver * driver)
+void DECOMP_VehInit_SetConsts(struct Driver* driver)
 {
 	u_int metaPhysSize;
 	u_int i;
@@ -13,38 +13,24 @@ void DECOMP_VehInit_SetConsts(struct Driver * driver)
 	{
 		metaPhys = &data.metaPhys[i];
 
-		// Get the size of the variable
 		metaPhysSize = metaPhys->size;
+		
+		void* src = &metaPhys->value[data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID];
+		void* dst = &d[metaPhys->DriverOffset];
 
-		// If variable size == 2 bytes
+		if (metaPhysSize == 1)
+		{
+			*(char*)dst = *(char*)src;
+			continue;
+		}
+		
 		if (metaPhysSize == 2)
 		{
-			*(u_short *)&d[metaPhys->DriverOffset] = metaPhys->value[data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID];
+			*(short*)dst = *(short*)src;
+			continue;
 		}
-
-		// if variable size != 2 bytes
-		else
-		{
-
-			// if variable size < 3 bytes
-			if (metaPhysSize < 3)
-			{
-				// If variable size == 1 byte
-				if (metaPhysSize == 1)
-				{
-					*(u_char *)&d[metaPhys->DriverOffset] = metaPhys->value[data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID];
-				}
-			}
-
-			// if variable size >= 3 bytes
-			else
-			{
-				if (metaPhysSize == 4)
-				{
-					*(u_int *)&d[metaPhys->DriverOffset] = metaPhys->value[data.MetaDataCharacters[data.characterIDs[driver->driverID]].engineID];
-				}
-			}
-		}
+		
+		*(int*)dst = *(int*)src;
 	}
 
 	return;

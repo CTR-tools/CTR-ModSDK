@@ -589,7 +589,7 @@ LAB_8001ab04:
                 // if fly-in data exists in LEV
                 else
                 {
-                    local_2c = gGT->level1->ptrSpawnType1->pointers[4];
+                    local_2c = gGT->level1->ptrSpawnType1->pointers[ST1_NTROPY];
                     local_26 = 0x8e;
                     local_28 = 0x96;
                     local_30 = local_2c + 0x354;

@@ -139,7 +139,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 					warppadLNG,
 					gGT->tileView[0].rect.x + gGT->tileView[0].rect.w/2,
 					gGT->tileView[0].rect.x + gGT->tileView[0].rect.h - 30,
-					FONT_BIG, (CENTER_TEXT | ORANGE)
+					FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 				);
 			}
 			
@@ -492,6 +492,10 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			// if never opened
 			if(sdata->boolOpenTokenRelicMenu == 0)
 			{
+				// menubox->0x1a (row)
+				*(short*)0x800b4e6a =
+					(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) != 0);
+				
 				// now opened
 				sdata->boolOpenTokenRelicMenu = 1;
 				

@@ -269,7 +269,7 @@ undefined4 FUN_800284d0(uint param_1,byte param_2,uint param_3)
 				// get pointer to cseq audio, given soundID from param1
 				pbVar5 = (byte *)(DAT_8008d7d8 + uVar4 * 8),
 
-				// spu addresses
+				// howl_spuAddrs[otherFX->spuIndex] != 0
 				*(short *)((uint)*(ushort *)(pbVar5 + 4) * 4 + DAT_8008d7dc) != 0
 			)
 		)
@@ -283,7 +283,7 @@ undefined4 FUN_800284d0(uint param_1,byte param_2,uint param_3)
 	  // howl_InitChannelAttr_OtherFX
       FUN_8002c424(
 
-	    // ???
+	    // metaOtherFX
 		pbVar5,
 
 		// &ChannelAttr
@@ -414,11 +414,15 @@ undefined4 FUN_80028690(uint param_1,uint param_2)
 	  // volume of Voice
       bVar1 = DAT_8008d7bc;
     }
+	
+	// no distortion
     if (uVar5 == 0x80)
 	{
 	  // channelAttr offset 0x8
       channelAttr.pitch = *(undefined2 *)(pbVar4 + 2);
     }
+	
+	// distortion
     else
 	{
 	  // channelAttr offset 0x8
@@ -504,7 +508,7 @@ void FUN_80028844(uint param_1)
 }
 
 
-// Initialize car engine audio system for one driver
+// EngineAudio_InitOnce
 uint FUN_80028880(uint param_1,uint param_2)
 
 {
@@ -525,7 +529,7 @@ uint FUN_80028880(uint param_1,uint param_2)
 	  // metaEngineFX
       iVar1 = DAT_8008d7d0 + param_1 * 8;
 
-	  // spu addresses
+	  // ChannelAttr->spuStartAddr = howl_spuAddrs[engineFX->spuIndex] << 3
       if (*(short *)((uint)*(ushort *)(iVar1 + 6) * 4 + DAT_8008d7dc) != 0)
 	  {
 		// distort
@@ -760,6 +764,11 @@ void FUN_80028bbc(ushort param_1)
 
 
 // CseqMusic_Start
+// param_1 - SongID (playing)
+// param_2 - deltaBPM
+// param_3 - 8008d068 for AdvHub
+// param_4 - songSetActiveBits
+// param_5 - boolLoopAtEnd
 undefined4 FUN_80028c78(ushort param_1,undefined4 param_2,
 			undefined4 param_3,undefined4 param_4,
             undefined4 param_5)
@@ -1024,6 +1033,7 @@ void FUN_80028f34(ushort param_1,uint param_2)
 
 // CseqMusic_ChangeTempo
 // param_1 song index to change
+// param_2 tempo
 void FUN_80029008(ushort param_1,undefined4 param_2)
 
 {
@@ -1080,6 +1090,9 @@ void FUN_80029008(ushort param_1,undefined4 param_2)
 
 
 // CseqMusic_AdvHubSwap
+// param1 - songID
+// param2 - songSet
+// param3 - songSetActiveBits
 void FUN_800290cc(ushort param_1,undefined4 param_2,undefined4 param_3)
 
 {
@@ -1243,13 +1256,15 @@ void FUN_800292e0(void)
   // set address
   DAT_8008d770 = 0x202;
 
-  // set bank loading stage
+  // Stage 4: Finished,
+  // resets to stage 0 when Bank_Alloc is called
   DAT_8008d774 = 4;
   return;
 }
 
 
 // Bank_Alloc
+// param1 - bankID
 undefined4 FUN_800292fc(uint param_1,int param_2)
 
 {
@@ -1312,17 +1327,27 @@ uint FUN_800293b8(void)
   short *psVar5;
   ulong addr;
 
+  // Stage 0: Load To RAM (first half)
+  // Stage 1: Load To RAM (second half), and assign SpuEntry
+  // Stage 2: Spu Transfer Start
+  // Stage 3: Spu Transfer Complete
+  // Stage 4: Finish
+
+
+  // Stage 4: Finish
   if (DAT_8008d774 == 4) {
     uVar1 = 1;
   }
-  else {
+  else 
+  {
+	// bankLoadStage 1: load to RAM, and assign SpuEntry
     if (DAT_8008d774 == 1)
 	{
-	  // howl_loadDataFromCd_RetryOnError
+	  // LOAD_HowlSectorChainEnd
       iVar2 = FUN_8003266c();
       if (iVar2 != 0)
 	  {
-		// audioAllocSize
+		// reset audioAllocSize
         DAT_8008d764 = 0;
 
         iVar2 = 0;
@@ -1332,7 +1357,8 @@ uint FUN_800293b8(void)
 		{
           iVar3 = 0;
 
-		  // loop through all samples
+		  // loop through all samples,
+		  // recalculate audioAllocSize for all "loaded" samples
           do
 		  {
 			// index
@@ -1343,12 +1369,12 @@ uint FUN_800293b8(void)
 
                            (uint)*(ushort *)
 
-
+							  // howl_spuAddrs[sampleBlockHeader->spuIndexArr[iVar3]].size
 							  (
 								// sampleBlock->???->size?
 								(uint)*(ushort *)((int)DAT_8008d784 + iVar3 + 2) * 4 +
 
-								// spu addresses
+								// howl_spuAddrs[ ^^^ ].size
 								DAT_8008d7dc + 2
 							  )
 
@@ -1360,21 +1386,33 @@ uint FUN_800293b8(void)
 
           } while (iVar2 < (int)(uint)*DAT_8008d784);
         }
-        if (DAT_8008d77c == 0) {
+        
+		if (DAT_8008d77c == 0) 
+		{
+		  // ptrLastBank.max
           *(undefined2 *)(DAT_8008d780 + 6) = (short)(DAT_8008d764 >> 3);
         }
-        else {
+        else 
+		{
+		  // ptrLastBank.max
           if (*(ushort *)(DAT_8008d780 + 6) < DAT_8008d764) {
             DAT_8008d774 = 4;
             return 1;
           }
         }
+		
+		// align up allocation
         DAT_8008d768 = DAT_8008d764 + 0x7ff >> 0xb;
 
 		// MEMPACK_ReallocMem
         FUN_8003e94c((DAT_8008d764 + 0x7ff & 0xfffff800) + 0x800);
 
-		// DAT_80095e7c is CdlFile for Kart.HWL
+		// LOAD_HowlSectorChainStart
+		// read new SampleBlock #2 to RAM
+		// DAT_80095e7c is CdlFile for Kart.HWL,
+		// DAT_8008d788+0x800 is the destination to load to
+		// DAT_8008d778 is offset of HWL where bank is
+		// DAT_8008d768 is numSectors to load
         iVar2 = FUN_80032594(&DAT_80095e7c,DAT_8008d788 + 0x800,DAT_8008d778 + 1,DAT_8008d768);
 
 		if (iVar2 == 0) {
@@ -1387,10 +1425,12 @@ uint FUN_800293b8(void)
           DAT_8008d770._0_2_ = *(short *)(DAT_8008d780 + 4);
         }
 
-		// spu addresses
+		// howl_spuAddrs
         iVar2 = DAT_8008d7dc;
 
         iVar3 = 0;
+
+		// === Assign SpuEntry for all "new" samples ===
 
 		// if there are samples in the block
         if (*DAT_8008d784 != 0)
@@ -1398,20 +1438,20 @@ uint FUN_800293b8(void)
 		  // loop through all samples in the block
           do
 		  {
-			// intended destination of sample in SPU
+			// howl_spuAddrs[sampleBlock->spuIndexArr[iVar3]]
             psVar5 = (short *)((uint)DAT_8008d784[iVar3 + 1] * 4 + iVar2);
 
 			// if not specified
             if (*psVar5 == 0)
 			{
-			  // set to spu allocator
+			  // spuAddrs->spuAddr = alloc
               *psVar5 = (short)DAT_8008d770;
             }
 
 			// index
 			iVar3 = iVar3 + 1;
 
-			// increment allocator by size
+			// increment allocator by spuAddrs->size
             DAT_8008d770._0_2_ = (short)DAT_8008d770 + psVar5[1];
 
           } while (iVar3 < (int)(uint)*DAT_8008d784);
@@ -1419,40 +1459,55 @@ uint FUN_800293b8(void)
         DAT_8008d774 = 2;
       }
     }
-    else {
+    else 
+	{
       if (DAT_8008d774 < 2) {
         if (
+				// Stage 0: Load to RAM
 				(DAT_8008d774 == 0) &&
 				(
+					// LOAD_HowlSectorChainStart
+					// read new SampleBlock #1 to RAM
 					// DAT_80095e7c is CdlFile for Kart.HWL
+					// DAT_8008d788 is the destination to load to
+					// DAT_8008d778 is offset of HWL where bank is
+					// load just 1 sector
 					iVar2 = FUN_80032594(&DAT_80095e7c,DAT_8008d788,DAT_8008d778,1),
 
 					iVar2 != 0
 				)
 			)
 		{
+		  // go to Stage 1
           DAT_8008d774 = 1;
         }
       }
-      else {
+      else 
+	  {
+		// Stage 2: Spu Transfer Start
         if (DAT_8008d774 == 2)
 		{
-		  // howl_loadDataFromCd_RetryOnError
+		  // LOAD_HowlSectorChainEnd
           iVar2 = FUN_8003266c();
-          if (iVar2 != 0) {
+          if (iVar2 != 0) 
+		  {
+			// ptrLastBank->min
             addr = (uint)*(ushort *)(DAT_8008d780 + 4) * 8;
 
-			// if less than 516,096
-			// (spu has 512kb memory)
-            if (addr + DAT_8008d764 < 0x7e000) {
+			// addr+audioAllocSize (start + size) < spu 512kb memory
+            if (addr + DAT_8008d764 < 0x7e000) 
+			{
+			  // send RAM to SPU
               SpuSetTransferStartAddr(addr);
               SpuRead((uchar *)(DAT_8008d788 + 0x800),DAT_8008d764);
             }
             DAT_8008d774 = 3;
           }
         }
-        else {
+        else 
+		{
           if (
+				// Stage 3: Spu Transfer Complete
 				(DAT_8008d774 == 3) &&
 
 				// (0) = SPU_TRANSFER_PEEK
@@ -1500,7 +1555,8 @@ void FUN_800296c4(int param_1)
 
     if ((uVar1 & 1) == 0)
 	{
-	  // move SPU allocator back to bank->min
+	  // move SPU allocator back to bank->min,
+	  // this works cause Bank_Destroy is always used on "last" bank
       DAT_8008d770 = (uint)*(ushort *)(param_1 + 4);
     }
 
@@ -1525,7 +1581,7 @@ void FUN_80029730(ushort param_1,short param_2)
 
   uVar3 = 0;
 
-  // spu addresses
+  // howl_spuAddrs
   puVar2 = DAT_8008d7dc;
 
   // howlHeader->numSpuAddrs
@@ -1542,7 +1598,7 @@ void FUN_80029730(ushort param_1,short param_2)
 			(*puVar2 < (ushort)(param_1 + param_2))
 		 )
 	  {
-		// erase address
+		// SpuAddrEntry->spuAddr
         *puVar2 = 0;
       }
 
@@ -1574,13 +1630,17 @@ undefined4 FUN_800297a0(ushort param_1,byte *param_2)
                     // numAudioBanks
                     uVar2 = (uint)DAT_8008d76c,
 
-                    // bank[numBanks].bankID == param_1
+                    // bank[numBanks].bankID = param_1
                     *(ushort *)(&DAT_8008fc2c + uVar2 * 8) = param_1,
 
 					// flags
                     (*(ushort *)(&DAT_8008fc2e + uVar2 * 8) & 3) == 0
                 )
         ) &&
+
+		// === Ghidra Fail ===
+		// dont pass param_2, pass this: (&DAT_8008fc2c + uVar2 * 8),
+		// ghidra misses it cause $a1 is set too early from the function call
 
 		// Bank_Alloc
         (iVar3 = FUN_800292fc((uint)param_1, param_2), iVar3 != 0)
@@ -1665,15 +1725,17 @@ void FUN_800298e4(void)
   return;
 }
 
-
-// howl_InstrumentPitch
-// param_1 longSamplePitch
-// param_2 shortSampleIndex (drums)
+// howl_InstrumentPitch(longSample->basePitch, note->pitchIndex, SongSeq->distort)
 uint FUN_8002991c(int param_1,int param_2,uint param_3)
 
 {
   uint uVar1;
 
+  // param_3
+  // (>> 0) & 0x40 - distortion
+  // (>> 6) & 0xXX - pitch/octave?
+
+  // noteFrequency
   uVar1 = (uint)*(ushort *)
 			(&DAT_80082eac + (param_2 + ((int)param_3 >> 6) + -2) * 2) 
 			* param_1 >> 0xc;
@@ -1687,7 +1749,7 @@ uint FUN_8002991c(int param_1,int param_2,uint param_3)
 }
 
 
-// param_1 is \SOUNDS\KART.HWL;1
+// howl_InitGlobals("\SOUNDS\KART.HWL;1")
 uint FUN_80029988(undefined4 param_1)
 
 {
@@ -1706,8 +1768,13 @@ uint FUN_80029988(undefined4 param_1)
 	// Set default volume for Voice
     DAT_8008d7bc = 0xff;
 
+	// OptionSlider_BoolPlay
     DAT_8008d794 = 0;
+	
+	// OptionSlider_Index
     DAT_8008d798 = 0;
+	
+	// OptionSlider_soundID
     DAT_8008d7a0 = 0;
 
 	// Set Audio Mode to "Stereo" by default
@@ -1719,6 +1786,7 @@ uint FUN_80029988(undefined4 param_1)
 	// volume copy does not exist
     DAT_8008d79f = 0;
 
+	// songLoadStage
     DAT_8008d7a4 = 3;
 
 	// initialize Sound Processor,
@@ -1741,9 +1809,10 @@ uint FUN_80029988(undefined4 param_1)
 	// Voiceline_PoolInit
     FUN_8002c918();
 
+	// Voiceline_SetDefaults
     FUN_8002d2b0();
 
-	// param_1 is \SOUNDS\KART.HWL;1
+	// howl_LoadHeader("\SOUNDS\KART.HWL;1")
     iVar1 = FUN_80029b2c(param_1);
 
     uVar2 = (uint)(iVar1 != 0);
@@ -1757,7 +1826,7 @@ uint FUN_80029988(undefined4 param_1)
 }
 
 
-// loads howl header values (calculates pointers to all arrays)
+// howl_ParseHeader
 void FUN_80029a50(int param_1)
 {
     // metaOtherFX = ptrSpuAddrs + howlHeader->numSpuAddrs
@@ -1766,19 +1835,19 @@ void FUN_80029a50(int param_1)
     // metaEngineFX = metaOtherFX + ...
     DAT_8008d7d0 = DAT_8008d7d8 + *(int *)(param_1 + 0x14) * 8;
 
-    // howl_banks = metaEngineFX + ...
+    // howl_bankOffsets = metaEngineFX + ...
     DAT_8008d7e4 = DAT_8008d7d0 + *(int *)(param_1 + 0x18) * 8;
 
-    // howl_cseqs = howl_banks + howlHeader->cnt_banks * 2
+    // howl_songOffsets = howl_bankOffsets + howlHeader->cnt_banks * 2
     DAT_8008d7e0 = DAT_8008d7e4 + *(int *)(param_1 + 0x1c) * 2;
 
 	// howl_header
     DAT_8008d7c0 = param_1;
 
-    // howl_endOfHeader = howl_cseqs + howlHeader->cnt_seqs * 2
+    // howl_endOfHeader = howl_songOffsets + howlHeader->cnt_songs * 2
     DAT_8008d7d4 = DAT_8008d7e0 + *(int *)(param_1 + 0x20) * 2;
 
-	// array of SPU addresses
+	// howl_spuAddrs = array of SPU addresses
     DAT_8008d7dc = param_1 + 0x28;
 
 	return;
@@ -1797,41 +1866,29 @@ void FUN_80029ab4(int param_1)
   /*
   //makes more sense to be moved here from the end:
 
-  //pointer to cseq start
+  // ptrCseqHeader
   DAT_8008d7b0 = param_1;
 
-  //pointer to long samples array (instruments)
-  //previous + sizeof(header)
+  // ptrCseqLongSamples (instruments)
+  // previous + sizeof(header)
   DAT_8008d7e8 = param_1 + 8;
   */
 
-  //pointer to short samples array (drums)
-  //previous + numLongSamples * sizeof(longSample)
+  // ptrCseqShortSamples (drums)
+  // previous + numLongSamples * sizeof(longSample)
   DAT_8008d7c4 = param_1 + 8 + (uint)*(byte *)(param_1 + 4) * 0xc;
 
-  //pointer to sequences (table of offsets to actual cseq data)
+  // ptrCseqSongStartOffset
   //previous + numShortSamples * sizeof(shortSample)
   DAT_8008d7b4 = DAT_8008d7c4 + (uint)*(byte *)(param_1 + 5) * 8;
 
-  //pointer (footer, bottom of howl)???
-  //previous + numSequences * 2
+  // ptrCseqSongData
+  //previous + numSongs * 2
   DAT_8008d7c8 = DAT_8008d7b4 + (uint)*(ushort *)(param_1 + 6) * 2;
 
-  //here goes some pro alignment
-
-  //if bit0 is set, skip byte
-  if ((DAT_8008d7c8 & 1) != 0)
-  {
-	// ptrCseqData
-    DAT_8008d7c8 = DAT_8008d7c8 + 1;
-  }
-
-  //if bit1 is set, skip 2 more bytes
-  if ((DAT_8008d7c8 & 2) != 0)
-  {
-	// ptrCseqData
-    DAT_8008d7c8 = DAT_8008d7c8 + 2;
-  }
+  // align data up by 4
+  if ((DAT_8008d7c8 & 1) != 0) DAT_8008d7c8 = DAT_8008d7c8 + 1;
+  if ((DAT_8008d7c8 & 2) != 0) DAT_8008d7c8 = DAT_8008d7c8 + 2;
 
   //pointer to cseq start
   DAT_8008d7b0 = param_1;
@@ -1876,7 +1933,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 						// Give CdlFile of Kart.HWL,
 						// Give pointer of 0x800 allocation
 
-						// howl_readSectorSync
+						// LOAD_HowlHeaderSectors
 						iVar1 = FUN_80032498(&DAT_80095e7c,piVar2,0,1),
 						iVar1 != 0
 					)
@@ -1890,6 +1947,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 	{
       //get size of howl header data
       iVar1 = piVar2[9];
+	  
       // calculate number of sectors occupied by header
       iVar3 = iVar1 + 0x827 >> 0xb;
 
@@ -1905,17 +1963,16 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 				// so it loads after the last byte of sector
 				// asm - addiu      a1,s1,0x800
 
-				// howl_readSectorSync
+				// LOAD_HowlHeaderSectors
 				iVar3 = FUN_80032498(&DAT_80095e7c,piVar2 + 0x200,1,iVar3 + -1),
 				iVar3 != 0
 			)
 		  )
 	  {
-        // parse howl header
+        // howl_ParseHeader
         FUN_80029a50(piVar2);
 
-        // reallocate for full howl header size
-		    // MEMPACK_ReallocMem
+        // MEMPACK_ReallocMem for full howl header size
         FUN_8003e94c(iVar1 + 0x28);
         return 1;
       }
@@ -1929,7 +1986,7 @@ undefined4 FUN_80029b2c(undefined4 param_1)
 }
 
 
-// Set the Song ID
+// howl_SetSong
 undefined4 FUN_80029c40(uint param_1)
 
 {
@@ -1940,23 +1997,22 @@ undefined4 FUN_80029c40(uint param_1)
   }
 
   // If audio is enabled
-  else {
-    //wipe pointer to howl_ParseCseqHeader
+  else 
+  {  
+	// howl_ErasePtrCseqHeader,
+	// song can not play anymore, loading next song
     FUN_80029dc0();
+	
     //set loading state = 0 (start loading cseq)
     DAT_8008d7a4 = 0;
 
-	// Get pointer to song, given song ID
+	// howl_songOffsets[songID]
     DAT_8008d7a8 = (uint)*(ushort *)((param_1 & 0xffff) * 2 + DAT_8008d7e0);
   }
   return 1;
 }
 
 
-
-//loads song in multiple steps based on global state variable
-//returns true if song is fully loaded, false if loading is in process
-//should be called in a do { howl_loadSong() } while (result != false) loop
 //howl_loadSong
 uint FUN_80029ca4(void)
 
@@ -1985,13 +2041,14 @@ uint FUN_80029ca4(void)
     //case state 1 - load cseq data (loads filesize / 0x800 - 1 sector)
     if (DAT_8008d7a4 == 1)
 	{
-	  // howl_loadDataFromCd_RetryOnError
+	  // LOAD_HowlSectorChainEnd
       iVar2 = FUN_8003266c();
       if (
 			(iVar2 != 0) &&
 			(
+				// LOAD_HowlSectorChainStart
 				// DAT_80095e7c is CdlFile for Kart.HWL
-				// DAT_8008d7a8 is pointer to song
+				// DAT_8008d7a8 is sectorOffset
 				iVar2 = FUN_80032594(&DAT_80095e7c,&DAT_80090d84,DAT_8008d7a8 + 1,
                                (DAT_80090584 + 0x7ffU >> 0xb) - 1),
 
@@ -2010,7 +2067,7 @@ uint FUN_80029ca4(void)
 				(
 					// DAT_80095e7c is CdlFile for Kart.HWL
 					// DAT_80090584 cseq data
-					// DAT_8008d7a8 is pointer to song
+					// DAT_8008d7a8 sectorOffset
 					iVar2 = FUN_80032594(&DAT_80095e7c,&DAT_80090584,DAT_8008d7a8,1),
 
 					iVar2 != 0
@@ -2023,7 +2080,7 @@ uint FUN_80029ca4(void)
 
 	    //case state = 2 - parse header
 		//(or anything greater than 3, basically case default)
-		// howl_loadDataFromCd_RetryOnError
+		// LOAD_HowlSectorChainEnd
         if ((DAT_8008d7a4 == 2) && (iVar2 = FUN_8003266c(), iVar2 != 0))
 		{
 		  // parse cseq header
@@ -2042,21 +2099,18 @@ uint FUN_80029ca4(void)
 
 
 
-// wipe ptrCseqHeader
+// howl_ErasePtrCseqHeader
 void FUN_80029dc0(void)
 
 {
-  // ptrCseqHeader
+  // sdata->ptrCseqHeader,
+  // now song can't play anymore
   DAT_8008d7b0 = 0;
   return;
 }
 
-//this looks like reading variable length time delta, as found in midi format
-//refer to: http://www.ccarh.org/courses/253/handout/vlv/
-//param_1 - pointer to read from
-//returns pointer after parsing (like is we parsed 3 bytes it will be param_1 + 3)
-//param_2 - place to save parsed result
-//howl_ReadTimeDelta
+// howl_GetNextNote
+// currNote, note->elapsedNoteLength
 byte * FUN_80029dcc(byte *param_1,uint *param_2)
 
 {
@@ -2064,7 +2118,10 @@ byte * FUN_80029dcc(byte *param_1,uint *param_2)
   uint uVar2;
   byte *pbVar3;
 
+  // SongNote offset 0x0
   uVar2 = (uint)*param_1;
+  
+  // loop until... what?
   pbVar3 = param_1 + 1;
   if ((*param_1 & 0x80) != 0)
   {
@@ -2075,10 +2132,18 @@ byte * FUN_80029dcc(byte *param_1,uint *param_2)
       uVar2 = uVar2 * 0x80 + ((uint)bVar1 & 0x7f);
     } while ((bVar1 & 0x80) != 0);
   }
+  
+  // update elapsedNoteLength
   *param_2 = uVar2;
+  
   return pbVar3;
 }
 
+// exists, but empty, see array at 80083004
+void cseq_opcode00()
+{
+	return;
+}
 
 // cseq_opcode01_noteoff
 void FUN_80029e18(int param_1)
@@ -2088,6 +2153,7 @@ void FUN_80029e18(int param_1)
   int *piVar2;
   int iVar3;
 
+  // sequence->currNote
   iVar3 = *(int *)(param_1 + 0x18);
 
   // channel taken
@@ -2108,9 +2174,12 @@ void FUN_80029e18(int param_1)
 				// channelStats->type == music
 				(*(char *)((int)piVar1 + 0xb) == '\x02') &&
 
+				// channelStats->soundID == sequence->soundID
 				(piVar1[6] == (uint)*(byte *)(param_1 + 1))
 			)
 			&&
+			
+			// sequence->index == note->index
 			(*(char *)((int)piVar1 + 0xd) == *(char *)(iVar3 + 1))
 		  )
 	 {
@@ -2138,6 +2207,11 @@ void FUN_80029e18(int param_1)
   return;
 }
 
+// exists, but empty, see array at 80083004
+void cseq_opcode02()
+{
+	return;
+}
 
 // cseq_opcode03
 void FUN_80029f24(byte *param_1)
@@ -2159,11 +2233,16 @@ void FUN_80029f24(byte *param_1)
   return;
 }
 
+// exists, but empty, see array at 80083004
+void cseq_opcode04()
+{
+	return;
+}
 
 // howl_InitChannelAttr_Music
 // param1 - SongSeq
 // param2 - ChannelAttr
-// param3 - drumsID
+// param3 - note->pitchIndex, or note->drumsIndex
 // param4 - channel volume
 void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 
@@ -2177,19 +2256,19 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
   // songPoolIndex
   bVar1 = param_1[0xb];
 
+  // instrument
   if ((*param_1 & 4) == 0)
   {
-	// instruments sequence (0xc bytes each)
+	// ptrCseqLongSamples[SongSeq->instrumentID]
     iVar4 = DAT_8008d7e8 + (uint)param_1[3] * 0xc;
 
-	// howl_InstrumentPitch
+	// howl_InstrumentPitch(longSample->basePitch, note->pitchIndex, SongSeq->distort)
 	uVar3 = FUN_8002991c((uint)*(ushort *)(iVar4 + 4),param_3,(uint)param_1[8]);
 
 	// volume of Music
     uVar5 = (uint)DAT_8008d7b8;
 
-	// ptr -> instrumentSeq -> sampleID,
-	// spu addresses, multiply by 8
+	// ChannelAttr->spuStartAddr = howl_spuAddrs[longSample->spuIndex] << 3
     *param_2 = (uint)*(ushort *)((uint)*(ushort *)(iVar4 + 6) * 4 + DAT_8008d7dc) << 3;
 
 	// channelAttr->ADSR = sample->ADSR
@@ -2215,16 +2294,21 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
 			// instrument volume
 			 * (uint)*(byte *)(iVar4 + 1);
   }
+  
+  // drums
   else
   {
 	// drums sequence (0x8 each)
     iVar4 = DAT_8008d7c4 + param_3 * 8;
 
+	// no distortion
     if (param_1[8] == 0x80)
 	{
 	  // drums -> pitch
       uVar3 = *(undefined2 *)(iVar4 + 2);
     }
+	
+	// distortion
     else
 	{
 	  // drums -> pitch ...
@@ -2234,8 +2318,7 @@ void FUN_80029f80(byte *param_1,int *param_2,int param_3,int param_4)
               );
     }
 
-	// ptr -> drums -> sampleID
-	// spu addresses
+	// ChannelAttr->spuStartAddr = howl_spuAddrs[shortSample->spuIndex] << 3
     uVar2 = *(ushort *)((uint)*(ushort *)(iVar4 + 4) * 4 + DAT_8008d7dc);
 
 	// ADSR
@@ -2354,6 +2437,7 @@ void FUN_8002a28c(int param_1)
 		((&DAT_80095d9c)[(uint)*(byte *)(param_1 + 0xb) * 0x7c] != '\0')
 	 )
   {
+	// sequence->currNote
     iVar3 = *(int *)(param_1 + 0x18);
 
 	// howl_InitChannelAttr_Music
@@ -2365,10 +2449,10 @@ void FUN_8002a28c(int param_1)
 			// ChannelAttr
 			auStack32,
 
-			// drums
+			// note->pitchIndex
 			*(undefined *)(iVar3 + 1),
 
-			// volume
+			// note->volume
 			*(undefined *)(iVar3 + 2)
 		);
 
@@ -2386,7 +2470,7 @@ void FUN_8002a28c(int param_1)
       *(undefined *)(iVar2 + 0xb) = 2;
 
       *(undefined *)(iVar2 + 0xc) = 0;		// ???
-      *(undefined *)(iVar2 + 10) = uVar1;	// ??? iVar3 + 2
+      *(undefined *)(iVar2 + 10) = uVar1;	// ???
 
 	  // echo
       *(undefined *)(iVar2 + 0xe) = *(undefined *)(param_1 + 4);
@@ -2422,18 +2506,19 @@ void FUN_8002a28c(int param_1)
 void FUN_8002a3a8(int param_1)
 
 {
+  // sequence->volume = note->volume
   *(undefined *)(param_1 + 5) = *(undefined *)(*(int *)(param_1 + 0x18) + 1);
-  FUN_8002a170();
+  FUN_8002a170(param_1);
   return;
 }
-
 
 // cseq_opcode07
 void FUN_8002a3d4(int param_1)
 
 {
+  // sequence->distort = note->distort
   *(undefined *)(param_1 + 9) = *(undefined *)(*(int *)(param_1 + 0x18) + 1);
-  FUN_8002a170();
+  FUN_8002a170(param_1);
   return;
 }
 
@@ -2444,6 +2529,7 @@ void FUN_8002a400(int param_1)
   int *piVar1;
   int iVar2;
 
+  // sequence->currNote
   iVar2 = *(int *)(param_1 + 0x18);
 
   // channel taken
@@ -2463,7 +2549,7 @@ void FUN_8002a400(int param_1)
 			(piVar1[6] == (uint)*(byte *)(param_1 + 1))
 		 )
 	 {
-
+		// set reverb
 		(&DAT_8008fcd6)[(uint)*(byte *)((int)piVar1 + 9) * 8] =
 			(ushort)*(byte *)(iVar2 + 1);
 
@@ -2484,6 +2570,7 @@ void FUN_8002a400(int param_1)
 void FUN_8002a494(int param_1)
 
 {
+  // SongSeq->instrumentID = SongSeq->currNote->instrumentID
   *(undefined *)(param_1 + 3) = *(undefined *)(*(int *)(param_1 + 0x18) + 1);
   return;
 }
@@ -2497,6 +2584,7 @@ void FUN_8002a4a8(byte *param_1)
   int iVar2;
   int *piVar3;
 
+  // distortion
   param_1[8] = *(byte *)(*(int *)(param_1 + 0x18) + 1);
 
   // channel taken
@@ -2514,12 +2602,13 @@ void FUN_8002a4a8(byte *param_1)
 		// howl_InstrumentPitch
         uVar1 = FUN_8002991c(
 
-			// instrument sequence (0xc bytes each), offset 4 (pitch)
+			// SampleInstrument[seq->instrumentID].basePitch
 			(uint)*(ushort *)(DAT_8008d7e8 + (uint)param_1[3] * 0xc + 4),
 
-			// shortSampleIndex
+			// stats->pitchIndex
 			(uint)*(byte *)((int)piVar3 + 0xd),
 
+			// distortion
 			(uint)param_1[8]
 		);
 
@@ -2534,10 +2623,17 @@ void FUN_8002a4a8(byte *param_1)
 		// drum samples (0x8 bytes each)
         iVar2 = DAT_8008d7c4 + (uint)*(byte *)((int)piVar3 + 0xd) * 8;
 
-		if (param_1[8] == 0x80) {
+		// no distortion
+		if (param_1[8] == 0x80) 
+		{
+		  // ChannelAttr[channel->ID].pitch
           (&DAT_8008fcd4)[(uint)*(byte *)((int)piVar3 + 9) * 8] = *(undefined2 *)(iVar2 + 2);
         }
-        else {
+		
+		// distortion
+        else 
+		{
+		  // ChannelAttr[channel->ID].pitch
           (&DAT_8008fcd4)[(uint)*(byte *)((int)piVar3 + 9) * 8] =
                (short)((uint)*(ushort *)(iVar2 + 2) * *(int *)(&DAT_800829ac + (uint)param_1[8] * 4)
                       >> 0x10);
@@ -2566,7 +2662,7 @@ byte * FUN_8002a63c(void)
   // loop counter is zero
   iVar2 = 0;
 
-  // channel pool
+  // song seqs
   pbVar1 = &DAT_800902cc;
 
   // for iVar2 = 0; iVar2 < 0x18 (24); iVar2++
@@ -2591,13 +2687,9 @@ byte * FUN_8002a63c(void)
 
 
 // SongPool_CalculateTempo
+// const (dec)60, tpqn, bpm
 uint FUN_8002a678(short param_1,short param_2,short param_3)
 {
-  // param1:
-  // 0x3c (60) = normal
-  // 120 = half speed
-  // 30 = double speed
-
   if ((int)param_1 == 0) {
     trap(0x1c00);
   }
@@ -2607,27 +2699,37 @@ uint FUN_8002a678(short param_1,short param_2,short param_3)
 
 
 // SongPool_ChangeTempo
+// song, and tempo
 void FUN_8002a6cc(int param_1,short param_2)
 
 {
   undefined4 uVar1;
 
-  // ptrCseqData
-  // ptrCseqSequence
+  // ptrCseqSongData[ptrCseqSongStartOffset[song->id]]
   param_2 = *(short *)(DAT_8008d7c8 +
                        (uint)*(ushort *)((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4) + 2) +
             param_2;
 
+  // beats per minute (bpm)
   *(short *)(param_1 + 10) = param_2;
 
   // SongPool_CalculateTempo
   uVar1 = FUN_8002a678(0x3c,(int)*(short *)(param_1 + 8),(int)param_2);
+  
+  // new tempo
   *(undefined4 *)(param_1 + 0xc) = uVar1;
+  
   return;
 }
 
 
 // SongPool_Start
+// param_1 - songPool pointer
+// param_2 - SongID (playing)
+// param_3 - deltaBPM
+// param_4 - boolLoopAtEnd
+// param_5 - 8008D068 for AdvHub
+// param_6 - songSetActiveBits
 void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,uint *param_5,
                  undefined4 param_6)
 
@@ -2642,23 +2744,37 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
   ushort *puVar8;
   int iVar9;
 
+  // song->flags, now playing
   *param_1 = 1;
 
-  // ptrCseqSequence
+  // ptrCseqSongStartOffset
   iVar9 = DAT_8008d7b4;
 
+  // song->id
   *(ushort *)(param_1 + 2) = param_2;
 
-  // ptrCseqData
+  // ptrCseqSongData[ptrCseqSongStartOffset[song->id]]
   iVar9 = DAT_8008d7c8 + (uint)*(ushort *)((uint)param_2 * 2 + iVar9);
 
+  // if AdvHub
   if (param_5 != (uint *)0x0) {
-    if (*param_5 != (uint)*(byte *)(iVar9 + 1)) {
+    
+	// CseqSongHeader->numSeqs
+	if (*param_5 != (uint)*(byte *)(iVar9 + 1)) 
+	{
       return;
     }
+	
+	// songSetActiveBits
     *(undefined4 *)(param_1 + 4) = param_6;
   }
+  
+  // iVar9 = CseqSongHeader
+  
+  // song->0x8 = iVar9->4 (tpqn)
   *(undefined2 *)(param_1 + 8) = *(undefined2 *)(iVar9 + 4);
+  
+  // song->0xA = iVar9->2 (bpm) + deltaBPM
   param_3 = *(short *)(iVar9 + 2) + param_3;
   *(short *)(param_1 + 10) = param_3;
 
@@ -2666,6 +2782,7 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
   uVar3 = FUN_8002a678(0x3c,(int)*(short *)(param_1 + 8),(int)param_3);
   *(undefined4 *)(param_1 + 0xc) = uVar3;
 
+  // song->0x10, song->timeSpentPlaying
   *(undefined4 *)(param_1 + 0x10) = 0;
   *(undefined4 *)(param_1 + 0x14) = 0;
 
@@ -2692,62 +2809,119 @@ void FUN_8002a730(undefined *param_1,ushort param_2,short param_3,int param_4,ui
     param_1[0x19] = 0xbe;
   }
 
+  // vol_StepRate
   param_1[0x1a] = 1;
+  
+  // numSequences
   param_1[0x1b] = 0;
+  
+  // &CseqSongHeader->seqOffsetArr[0]
   puVar8 = (ushort *)(iVar9 + 6);
+  
+  // &CseqSongHeader->seqOffsetArr[CseqSongHeader->numSeqs]
   puVar7 = puVar8 + *(byte *)(iVar9 + 1);
+  
+  // align up by 2
   if (((uint)puVar7 & 1) != 0) {
     puVar7 = (ushort *)((int)puVar7 + 1);
   }
+  
+  // align up by 4
   if (((uint)puVar7 & 2) != 0) {
     puVar7 = puVar7 + 1;
   }
+  
+  
+  // puVar7 is now the first byte after
+  // the seqOffsetArr, so all offsets are
+  // relative to this address
+  
+  
   iVar6 = 0;
+  
+  // add new SongSeqs to song playing
   if (*(byte *)(iVar9 + 1) != 0) {
-    do {
+    do 
+	{
+	  // songNoteHeader = puVar7[CseqSongHeader->seqOffsetArr[iVar6]]
       pbVar5 = (byte *)((int)puVar7 + (uint)*puVar8);
 
-	  // SongPool_FindFreeChannel
+	  // SongSeq* pbVar4 = SongPool_FindFreeChannel
       pbVar4 = (byte *)FUN_8002a63c();
 
 	  // if a free channel was found
       if (pbVar4 != (byte *)0x0)
 	  {
+		// seq is now playing
         *pbVar4 = 1;
-        if ((*pbVar5 & 1) != 0) {
+		
+		// songNoteHeader->0x0
+        if ((*pbVar5 & 1) != 0) 
+		{
+		  // seq now playing, and (instrument/drums)
           *pbVar4 = 5;
         }
-        if (param_4 != 0) {
+        
+		if (param_4 != 0) 
+		{
+		  // song loops at the end
           *pbVar4 = *pbVar4 | 2;
         }
-        bVar1 = pbVar5[1];
-        pbVar4[3] = 0;
+        
+		// songNoteHeader->0x1
+		bVar1 = pbVar5[1];
+        
+		// instrumentID and reverb
+		pbVar4[3] = 0;
         pbVar4[4] = 0;
+		
         pbVar4[2] = bVar1;
+		
+		// volume
         if ((param_5 == (uint *)0x0) ||
            (((uint)*(byte *)(param_5[1] + iVar6) & *(uint *)(param_1 + 4)) != 0)) {
           pbVar4[5] = 0xff;
           pbVar4[6] = 0xff;
         }
+		
+		// volume
         else {
           pbVar4[5] = 0;
           pbVar4[6] = 0;
         }
+		
         pbVar4[7] = 1;
+		
+		// distortion and LR
         pbVar4[8] = 0x80;
         pbVar4[9] = 0x80;
+		
         pbVar4[10] = 0;
-        bVar1 = param_1[1];
+        
+		// song->songPoolIndex
+		bVar1 = param_1[1];
+		
+		// noteLength and elapsedNoteTime
         *(undefined4 *)(pbVar4 + 0xc) = 0;
         *(undefined4 *)(pbVar4 + 0x10) = 0;
+		
+		// void* firstNote = &SongNoteHeader->notes[0]
         *(byte **)(pbVar4 + 0x14) = pbVar5 + 2;
-        pbVar4[0xb] = bVar1;
+        
+		// note->songPoolIndex
+		pbVar4[0xb] = bVar1;
 
-		// howl_ReadTimeDelta
+		// howl_GetNextNote
+		// firstNote, note->elapsedNoteLength
         uVar3 = FUN_80029dcc(pbVar5 + 2,pbVar4 + 0xc);
 
+		// void* currNote
 		*(undefined4 *)(pbVar4 + 0x18) = uVar3;
+		
+		// save pointer to songSeq in songPool->CseqSequences
         *(byte **)(param_1 + (uint)(byte)param_1[0x1b] * 4 + 0x1c) = pbVar4;
+		
+		// increment number of sequences playing
         param_1[0x1b] = param_1[0x1b] + '\x01';
       }
       iVar6 = iVar6 + 1;
@@ -2763,27 +2937,33 @@ void FUN_8002a9d8(int param_1,undefined param_2,undefined param_3,int param_4)
 
 {
   // never?
-  if (param_4 != 0) {
+  if (param_4 != 0) 
+  {
+	// change curr volume "immediately" without fade
     *(undefined *)(param_1 + 0x18) = param_2;
   }
 
+  // desired volume
   *(undefined *)(param_1 + 0x19) = param_2;
+  
+  // stepRate
   *(undefined *)(param_1 + 0x1a) = param_3;
+  
   return;
 }
 
 
 // SongPool_AdvHub1
 // param1 - song pool member
-// param2 - cseq index
+// param2 - cseqID
 // param3 - volume of cseq
+// param4 - boolImm
 void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 
 {
   int iVar1;
 
-  // ptrCseqData
-  // ptrCseqSequence
+  // ptrCseqSongData[ptrCseqSongStartOffset[song->id]] -> numSeqs
   if (param_2 < (int)(uint)*(byte *)(DAT_8008d7c8 +
                                      (uint)*(ushort *)
                                             ((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4) + 1)
@@ -2795,10 +2975,11 @@ void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 	// never?
 	if (param_4 != 0)
 	{
+	  // vol_Curr
       *(undefined *)(iVar1 + 5) = param_3;
     }
 
-	// volume of cseq samples
+	// vol_New
     *(undefined *)(iVar1 + 6) = param_3;
   }
   return;
@@ -2806,7 +2987,9 @@ void FUN_8002a9f0(int param_1,int param_2,undefined param_3,int param_4)
 
 
 // SongPool_AdvHub2
-// param1 - song pool member
+// param1 - Song* member
+// param2 - songSet
+// param3 - songSetActiveBits
 void FUN_8002aa44(int param_1,uint *param_2,undefined4 param_3)
 
 {
@@ -2814,19 +2997,22 @@ void FUN_8002aa44(int param_1,uint *param_2,undefined4 param_3)
   int iVar2;
   int iVar3;
 
-  // ptrCseqData
-  // ptrCseqSequence
+  // ptrCseqSongData[ptrCseqSongStartOffset[song->id]]
   iVar3 = DAT_8008d7c8 + (uint)*(ushort *)((uint)*(ushort *)(param_1 + 2) * 2 + DAT_8008d7b4);
 
-  if (param_2 != (uint *)0x0) {
+  if (param_2 != (uint *)0x0) 
+  {
+	// if(songSet->numSeqs != csh->numSeqs)
     if (*param_2 != (uint)*(byte *)(iVar3 + 1)) {
       return;
     }
+	
+	// song->songSetActiveBits = songSetActiveBits;
     *(undefined4 *)(param_1 + 4) = param_3;
   }
   iVar2 = 0;
 
-  // if cseq -> numLongSamples != 0
+  // if csh->numSeqs != 0
   if (*(char *)(iVar3 + 1) != '\0')
   {
 	// loop through all Cseq music on all adv hub tracks
@@ -2936,7 +3122,7 @@ void FUN_8002ac0c(byte *param_1)
 }
 
 
-// Disable Audio
+// howl_Disable
 undefined4 FUN_8002ac94(void)
 
 {
@@ -2952,24 +3138,37 @@ undefined4 FUN_8002ac94(void)
 
 
 // UpdateChannelVol_EngineFX
+// EngineFX*, ChannelAttr*, vol, LR
 void FUN_8002acb8(int param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 {
   // Channel_SetVolume
   FUN_8002b540(
+	
+	// channelAttr
 	param_2,
 
 	// volume of FX
 	(uint)DAT_8008d7ac *
+	
+		// engineFX->vol
 		(uint)*(byte *)(param_1 + 1) *
+		
+		// vol
 		param_3 >> 10,
 
-	param_4);
+		// LR
+		param_4);
+		
   return;
 }
 
 
 // UpdateChannelVol_OtherFX
+// param_1 - OtherFX*
+// param_2 - ChannelAttr*
+// param_3 - volume
+// param_4 - LR
 void FUN_8002ad04(byte *param_1,undefined4 param_2,int param_3,undefined4 param_4)
 
 {
@@ -2991,6 +3190,7 @@ void FUN_8002ad04(byte *param_1,undefined4 param_2,int param_3,undefined4 param_
 
 
 // UpdateChannelVol_Music
+// SongSeq* ChanneAttr* vol LR
 void FUN_8002ad70(byte *param_1,undefined4 param_2,int param_3,int param_4)
 
 {
@@ -3053,9 +3253,19 @@ void FUN_8002ae64(void)
         (&DAT_8008fc6c)[*(byte *)((int)piVar1 + 9)] | 0x40;
 
 		// UpdateChannelVol_EngineFX
-        FUN_8002acb8(DAT_8008d7d0 + (uint)*(ushort *)(piVar1 + 6) * 8,
-                     &DAT_8008fccc + (uint)*(byte *)((int)piVar1 + 9) * 4,
-                     (uint)*(byte *)((int)piVar1 + 0xf),(uint)*(byte *)((int)piVar1 + 0x11));
+        FUN_8002acb8(
+		
+			// howl_metaEngineFX[channelStats->soundID]
+			DAT_8008d7d0 + (uint)*(ushort *)(piVar1 + 6) * 8,
+            
+			// channelAttrNew[channelStats->channelID]
+			&DAT_8008fccc + (uint)*(byte *)((int)piVar1 + 9) * 4,
+			
+			// channelStats->vol
+			(uint)*(byte *)((int)piVar1 + 0xf),
+			
+			// channelStats->LR
+			(uint)*(byte *)((int)piVar1 + 0x11));
       }
       else
 	  {
@@ -3272,10 +3482,10 @@ void FUN_8002b208(int param_1,int param_2)
   uint uVar4;
 
   if (
-
+		// OptionSlider_BoolPlay
 		(DAT_8008d794 != 0) &&
 
-		// if new row != old row
+		// if new row != old OptionSlider_Index
 		(param_1 != DAT_8008d798)
 	  )
   {
@@ -3302,7 +3512,9 @@ void FUN_8002b208(int param_1,int param_2)
         FUN_800291a0(1);
       }
     }
-    else {
+    else 
+	{
+	  // row index
       if (DAT_8008d798 < 2) {
         if (DAT_8008d798 == 0)
 		{
@@ -3314,18 +3526,21 @@ void FUN_8002b208(int param_1,int param_2)
         if ((DAT_8008d798 == 2) && (DAT_8008d7a0 != 0))
 		{
 		  // OtherFX_Stop1 (specific instance of soundID)
-          FUN_80028808();
+          FUN_80028808(DAT_8008d7a0);
           DAT_8008d7a0 = 0;
         }
       }
     }
   }
+  
+  // change in OptionSlider_BoolPlay
   if ((param_2 != DAT_8008d794) ||
      (iVar2 = DAT_8008d794, iVar1 = DAT_8008d798, param_1 != DAT_8008d798)) {
 
 	// if sound is stopping
 	if (param_2 == 0)
 	{
+	  // music row
       if (DAT_8008d798 == 1)
 	  {
 		// Music_GetHighestSongPlayIndex
@@ -3352,6 +3567,8 @@ void FUN_8002b208(int param_1,int param_2)
         if (DAT_8008d798 < 2) {
           iVar2 = param_2;
           iVar1 = param_1;
+		  
+		  // FX row
           if (DAT_8008d798 == 0)
 		  {
 			// OtherFX_Stop2
@@ -3363,12 +3580,16 @@ void FUN_8002b208(int param_1,int param_2)
         else {
           iVar2 = param_2;
           iVar1 = param_1;
+		  
+		  // voice row
           if ((DAT_8008d798 == 2) && (iVar2 = param_2, iVar1 = param_1, DAT_8008d7a0 != 0))
 		  {
 			// OtherFX_Stop2
             FUN_80028808();
 
+			// OptionSlider_soundID
             DAT_8008d7a0 = 0;
+			
             iVar2 = param_2;
             iVar1 = param_1;
           }
@@ -3404,7 +3625,7 @@ void FUN_8002b208(int param_1,int param_2)
             uVar3 = 2;
           }
 
-		  // CseqMusic_Start
+		  // CseqMusic_Start (loopAtEnd)
           FUN_80028c78(uVar3,0,0,0,1);
 
           iVar2 = param_2;
@@ -3413,7 +3634,11 @@ void FUN_8002b208(int param_1,int param_2)
       }
     }
   }
+  
+  // OptionSlider_Index
   DAT_8008d798 = iVar1;
+  
+  // OptionSlider_BoolPlay
   DAT_8008d794 = iVar2;
 
   // If you are hovering over the "Voice" slider
@@ -3445,7 +3670,7 @@ void FUN_8002b208(int param_1,int param_2)
                 + 0x2c;
       }
 
-	  // OtherFX_Play
+	  // OtherFX_Play, save OptionSlider_soundID
       DAT_8008d7a0 = FUN_80028468(uVar4 & 0xffff,0);
     }
   }
@@ -3985,13 +4210,17 @@ void FUN_8002bbac(void)
 			((*pbVar9 & 2) == 0)
 		  )
 	  {
+		// vol_Curr
         uVar5 = (uint)(byte)(&DAT_80095d9c)[iVar12];
 
-		// [something] + tempo
+		// songPool->0x10 + songPool->tempo
         uVar4 = *(int *)((int)&DAT_80095d94 + iVar12) + *(int *)((int)&DAT_80095d90 + iVar12);
         uVar11 = uVar4 >> 0x10;
 
+		// songPool->0x10
 		*(uint *)((int)&DAT_80095d94 + iVar12) = uVar4;
+		
+		// vol_New
         bVar8 = (&DAT_80095d9d)[iVar12];
         uVar4 = (uint)bVar8;
 
@@ -3999,16 +4228,29 @@ void FUN_8002bbac(void)
         *(int *)((int)&DAT_80095d98 + iVar12) =
 		*(int *)((int)&DAT_80095d98 + iVar12) + uVar11;
 
+		// self = (unsigned short)self
         *(uint *)((int)&DAT_80095d94 + iVar12) = (uint)*(ushort *)((int)&DAT_80095d94 + iVar12);
-        if (uVar5 != uVar4) {
-          if (uVar5 < uVar4) {
+        
+		// vol_Curr != vol_New
+		if (uVar5 != uVar4) 
+		{
+		  // vol_Curr < vol_New
+          if (uVar5 < uVar4) 
+		  {
+			// increase
             bVar7 = (byte)(uVar5 + (byte)(&DAT_80095d9e)[iVar12]);
             bVar1 = uVar4 < uVar5 + (byte)(&DAT_80095d9e)[iVar12];
           }
-          else {
+		  
+		  // vol_Curr > vol_New
+          else 
+		  {
+			// decrease
             bVar7 = (byte)(uVar5 - (byte)(&DAT_80095d9e)[iVar12]);
             bVar1 = (int)(uVar5 - (byte)(&DAT_80095d9e)[iVar12]) < (int)uVar4;
           }
+		  
+		  // reached desired volume, and if song over
           if ((bVar1) && (bVar7 = bVar8, (*pbVar9 & 4) != 0))
 		  {
 			// SongPool_StopAllCseq
@@ -4019,9 +4261,14 @@ void FUN_8002bbac(void)
 
             *pbVar9 = *pbVar9 & 0xfb;
           }
+		  
+		  // new vol_Curr
           (&DAT_80095d9c)[iVar12] = bVar7;
+		  
+		  // volumeChanged
           bVar1 = true;
         }
+		
         iVar10 = 0;
 
 		// song numSequences
@@ -4035,6 +4282,8 @@ void FUN_8002bbac(void)
 
             uVar5 = (uint)pbVar6[5];
             uVar4 = (uint)pbVar6[6];
+			
+			// if current != desired, lerp by stepRate
             if (uVar5 != uVar4) {
               if (uVar5 < uVar4) {
                 bVar8 = (byte)(uVar5 + pbVar6[7]);
@@ -4054,20 +4303,25 @@ void FUN_8002bbac(void)
 			// if sequence is playing
 			if ((*pbVar6 & 1) != 0)
 			{
+			  // sequence->noteLength
               uVar5 = *(uint *)(pbVar6 + 0xc);
 
-			  // increment ??? by tempo
+			  // sequence->noteTimeElapsed
               uVar4 = *(int *)(pbVar6 + 0x10) + uVar11;
               *(uint *)(pbVar6 + 0x10) = uVar4;
 
+			  // while noteLength < noteTimeElapsed
               if (uVar5 <= uVar4) {
-                do {
+                do 
+				{
                   if ((*pbVar6 & 1) == 0) break;
+				  
+				  // sequence->noteTimeElapsed
                   *(uint *)(pbVar6 + 0x10) = *(int *)(pbVar6 + 0x10) - uVar5;
 
 				  // pbVar6 is the cseq struct
 
-				  // bVar8 is cseq opcode index
+				  // sequence->currNote->opcode
                   bVar8 = **(byte **)(pbVar6 + 0x18);
 
 				  // if opcode is valid
@@ -4077,26 +4331,42 @@ void FUN_8002bbac(void)
 					// pass cseq structure as parameter
                     (*(code *)(&PTR_LAB_80083004)[(uint)bVar8])(pbVar6);
 
+					// seq->flags
                     bVar7 = *pbVar6;
-                    if ((bVar7 & 1) != 0) {
+					
+                    if ((bVar7 & 1) != 0) 
+					{
+					  // if song not restarting (opcode03)
                       if ((bVar7 & 8) == 0)
 					  {
-						// increment opcode by pointer?
+						// sequence->currNote += noteSize[noteType]
                         iVar2 = *(int *)(pbVar6 + 0x18) + *(int *)(&DAT_80083030 + (uint)bVar8 * 4);
                         *(int *)(pbVar6 + 0x18) = iVar2;
                       }
-                      else {
+                      
+					  // if song restarting (opcode03)
+					  else 
+					  {
+						// sequence->firstNote
                         iVar2 = *(int *)(pbVar6 + 0x14);
+						
+						// remove flag
                         *pbVar6 = bVar7 & 0xf7;
                       }
 
-					  // howl_ReadTimeDelta
+					  // howl_GetNextNote
+					  // currNote, sequence->NoteLength
                       uVar3 = FUN_80029dcc(iVar2,pbVar6 + 0xc);
 
+					  // update currNote
 					  *(undefined4 *)(pbVar6 + 0x18) = uVar3;
                     }
                   }
+				  
+				  // sequence->NoteLength
                   uVar5 = *(uint *)(pbVar6 + 0xc);
+				
+				// while noteLength < noteTimeElapsed
                 } while (uVar5 <= *(uint *)(pbVar6 + 0x10));
               }
             }
@@ -4230,13 +4500,16 @@ void FUN_8002be9c(void)
 			// ADSR needs to change
 			((uVar4 & 8) != 0) &&
 
+			// change in adsr
 			(*(int *)(&DAT_8008fe50 + vNum * 8) != (&DAT_8008fcd0)[vNum * 4])
 		  )
 	  {
+		// set new adsr
         pitch = *(ushort *)(&DAT_8008fcd0 + vNum * 4);
         (&DAT_8008fe50)[vNum * 8] = pitch;
         uVar1 = *(ushort *)((int)&DAT_8008fcd0 + vNum * 0x10 + 2);
         (&DAT_8008fe52)[vNum * 8] = uVar1;
+		
         if ((short)pitch < 0) {
           local_38 = 5;
         }
@@ -4415,8 +4688,7 @@ void FUN_8002c208(void)
       ppiVar3 = (int **)*ppiVar1;
 
       if (
-			// if sound is not ???,
-			// basically, if sound is on a timer
+			// if sound is on a timer (not stacatto)
 			((*(byte *)(ppiVar1 + 2) & 4) == 0) &&
 
 			(
@@ -4459,6 +4731,7 @@ void FUN_8002c208(void)
 
 
 // howl_InitChannelAttr_EngineFX
+// param_1 EngineFX*
 // param_2 ChannelAttr
 // param_3 volume
 // param_4 LR
@@ -4497,7 +4770,7 @@ void FUN_8002c34c(int param_1,int *param_2,int param_3,undefined4 param_4,int pa
   // channelAttr 0x8, pitch
   *(undefined2 *)(param_2 + 2) = uVar2;
 
-  // spu addresses
+  // ChannelAttr->spuStartAddr = howl_spuAddrs[engineFX->spuIndex] << 3
   uVar1 = *(ushort *)((uint)*(ushort *)(param_1 + 6) * 4 + DAT_8008d7dc);
 
   // ADSR
@@ -4511,7 +4784,9 @@ void FUN_8002c34c(int param_1,int *param_2,int param_3,undefined4 param_4,int pa
 }
 
 // howl_InitChannelAttr_OtherFX
+// param_1 OtherFX*
 // param_2 ChannelAttr
+// param_5 distortion
 void FUN_8002c424(byte *param_1,int *param_2,int param_3,undefined4 param_4,int param_5)
 
 {
@@ -4526,11 +4801,15 @@ void FUN_8002c424(byte *param_1,int *param_2,int param_3,undefined4 param_4,int 
 	  // volume of Voice
     bVar1 = DAT_8008d7bc;
   }
+  
+  // no distortion
   if (param_5 == 0x80)
   {
 	// pitch
     uVar3 = *(undefined2 *)(param_1 + 2);
   }
+  
+  // distortion
   else
   {
 	// pitch
@@ -4544,7 +4823,7 @@ void FUN_8002c424(byte *param_1,int *param_2,int param_3,undefined4 param_4,int 
   // pitch
   *(undefined2 *)(param_2 + 2) = uVar3;
 
-  // spu addresses
+  // ChannelAttr->spuStartAddr = howl_spuAddrs[otherFX->spuIndex] << 3
   uVar2 = *(ushort *)((uint)*(ushort *)(param_1 + 4) * 4 + DAT_8008d7dc);
 
   // ADSR
@@ -4934,10 +5213,12 @@ void FUN_8002c918(void)
     *(undefined2 *)(puVar2 + 1) = 0x80ff;
     *(undefined2 *)((int)puVar2 + 6) = 0x1fc2;
 
+	// clear rest of channelAttr to 0xFFFF
 	*(undefined2 *)(puVar2 + 2) = 0xffff;
     *(undefined2 *)((int)puVar2 + 10) = 0xffff;
     *(undefined2 *)(puVar2 + 3) = 0xffff;
     *(undefined2 *)((int)puVar2 + 0xe) = 0xffff;
+	
     puVar2 = puVar2 + 4;
     puVar3 = puVar3 + 1;
 
@@ -4973,7 +5254,7 @@ void FUN_8002c918(void)
   // loop counter
   vNum = 0;
 
-  // channel pool
+  // song seqs
   puVar1 = &DAT_800902cc;
 
   // for vNum = 0; vNum < 0x18 (24); vNum++
@@ -5838,7 +6119,7 @@ void FUN_8002d67c(void)
     }
     break;
   case 7:
-	// Garage_Idle2
+	// Garage_LerpFX
     FUN_800304b8();
     break;
   case 8:
@@ -5959,7 +6240,7 @@ void FUN_8002d67c(void)
 	  // high distToFinish
       if (2000 < *(int *)(iVar3 + 0x488))
 	  {
-		// CDSYS_XASeek
+		// CDSYS_XASeek (FINAL LAP! music)
         FUN_8001cc18(1,0,6);
       }
       DAT_8008d7fc = '\0';
@@ -6085,7 +6366,7 @@ void FUN_8002d67c(void)
 	  // high distToFinish
       if (2000 < *(int *)(iVar3 + 0x488))
 	  {
-		// CDSYS_XASeek
+		// CDSYS_XASeek (Victory Fanfare music)
         FUN_8001cc18(1,0,4);
       }
       DAT_8008d7fc = '\0';
@@ -6301,17 +6582,19 @@ void FUN_8002dd24(void)
 
   } while (iVar1 == 0);
 
-  // Set Song ID to intro
+  // howl_SetSong
   FUN_80029c40(0x1c);
 
-  do {
+  do 
+  {
+	// howl_LoadSong
     iVar1 = FUN_80029ca4();
   } while (iVar1 == 0);
   return;
 }
 
 
-
+// Music_LoadBanks
 void FUN_8002dd74(void)
 
 {
@@ -6724,13 +7007,19 @@ LAB_8002e2f4:
     }
     cVar2 = '\x04';
     break;
+	
   case '\x04':
-    iVar3 = FUN_80029ca4();
+    
+	// howl_LoadSong
+	iVar3 = FUN_80029ca4();
+	
     cVar2 = '\x05';
     if (iVar3 == 0) goto switchD_8002de8c_caseD_5;
     break;
+  
   default:
     return 1;
+  
   case -0xbad1ab1f:
     goto switchD_8002de8c_caseD_5;
   }
@@ -6759,6 +7048,10 @@ void FUN_8002e338(void)
 
 
 // Music_Adjust
+// param_1 - SongID (playing)
+// param_2 - deltaBPM
+// param_3 - 8008d068 for AdvHub
+// param_4 - songSetActiveBits
 void FUN_8002e350(uint param_1,int param_2,undefined4 param_3,undefined4 param_4)
 {
   // if cseq music can play
@@ -6788,7 +7081,7 @@ void FUN_8002e350(uint param_1,int param_2,undefined4 param_3,undefined4 param_4
   // if new SongID
   if (DAT_8008d810 != param_1)
   {
-	// CseqMusic_Start
+	// CseqMusic_Start (loopAtEnd)
     FUN_80028c78(param_1,param_2,param_3,param_4,1);
 
 	// boolPlayCseqMusic = true
@@ -6864,7 +7157,7 @@ void FUN_8002e4c0(void)
 }
 
 
-// part of game boot, loading, and Spyro 2 launch
+// Music_Stop
 void FUN_8002e4ec(void)
 {
   // if music is playing
@@ -6996,32 +7289,41 @@ int FUN_8002e658(undefined4 *param_1)
 }
 
 
-
+// OtherFX_RecycleNew
+// param1 - soundID_countCount
+// param2 - newSoundID
+// param3 - modify
 void FUN_8002e690(uint *param_1,uint param_2,undefined4 param_3)
 
 {
   uint uVar1;
 
   if (
-		// if audioPtr is valid
+		// if soundID_soundCount is playing
 		(*param_1 != 0) &&
 
+		// if soundID doesn't match new ID
 		((*param_1 & 0xffff) != param_2)
 	  )
   {
 	// OtherFX_Stop1
-    FUN_80028808();
+    FUN_80028808(*param_1);
     *param_1 = 0;
   }
 
+  // if newSound != -1
   if (param_2 != 0xffffffff)
   {
+	// if this is a new sound
     if (*param_1 == 0)
 	{
 	  // OtherFX_Play_LowLevel
       uVar1 = FUN_800284d0(param_2 & 0xffff,0,param_3);
       *param_1 = uVar1;
     }
+	
+	// if not a new sound,
+	// modification of old sound
     else
 	{
 	  // OtherFX_Modify
@@ -7032,14 +7334,14 @@ void FUN_8002e690(uint *param_1,uint param_2,undefined4 param_3)
 }
 
 
-// OtherFX_Stop_Safe
+// OtherFX_RecycleMute
 void FUN_8002e724(int *param_1)
 
 {
   if (*param_1 != 0)
   {
 	// OtherFX_Stop1
-    FUN_80028808();
+    FUN_80028808(*param_1);
     *param_1 = 0;
   }
   return;
@@ -7149,7 +7451,7 @@ void FUN_8002e84c(uint *param_1,uint param_2,int param_3)
     if ((*param_1 != 0) && ((*param_1 & 0xffff) != param_2))
 	{
 	  // OtherFX_Stop1
-      FUN_80028808();
+      FUN_80028808(*param_1);
       *param_1 = 0;
     }
 
@@ -7224,7 +7526,7 @@ void FUN_8002e84c(uint *param_1,uint param_2,int param_3)
     if (*param_1 != 0)
 	{
 	  // OtherFX_Stop1
-      FUN_80028808();
+      FUN_80028808(*param_1);
       *param_1 = 0;
     }
   }
@@ -7918,7 +8220,7 @@ void FUN_8002f31c(uint *param_1,uint param_2,int param_3)
   if ((*param_1 != 0) && ((*param_1 & 0xffff) != param_2))
   {
 	// OtherFX_Stop1
-    FUN_80028808();
+    FUN_80028808(*param_1);
 
     *param_1 = 0;
   }
@@ -8895,17 +9197,22 @@ LAB_800303c4:
 }
 
 
-// Garage_Idle1
+// Garage_PlayFX
 void FUN_80030404(uint param_1,int param_2)
 
 {
-  if (param_2 < 8) {
+  if (param_2 < 8) 
+  {
+	// if sound == BIRD_RANDOM
     if (param_1 == 0xf6)
 	{
+	  // pick a new sound, 0xF3, 0xF4, or 0xF5,
+	  // one of three different bird noises near Pura
+		
       DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
 
+	  // soundId = (random%3) + 0xf3;
 	  param_1 =
-				// optimized way to get 1% of something?
 				(
 					// 100%
 					DAT_8008d058 -
@@ -8937,7 +9244,7 @@ void FUN_80030404(uint param_1,int param_2)
 }
 
 
-// Garage_Idle2
+// Garage_LerpFX
 void FUN_800304b8(void)
 
 {
@@ -8959,27 +9266,40 @@ void FUN_800304b8(void)
   // for iVar8 = 0; iVar8 < 8; iVar8++
   do {
     cVar1 = *pcVar4;
+	
+	// center
     if (cVar1 == '\0') {
       sVar6 = 0xff;
       sVar5 = 0x80;
     }
-    else {
+    else 
+	{
+	  // left
       if (cVar1 == '\x01') {
         sVar6 = 100;
         sVar5 = 0x3c;
       }
-      else {
+      else 
+	  {
         sVar6 = 0;
-        if (cVar1 == '\x02') {
+        
+		// right
+		if (cVar1 == '\x02') {
           sVar6 = 100;
           sVar5 = 0xc3;
         }
-        else {
+
+		// too far
+        else 
+		{
           sVar5 = *(short *)(pcVar4 + 4);
         }
       }
     }
-    if ((sVar5 != *(short *)(pcVar4 + 4)) || (sVar6 != *(short *)(pcVar4 + 2))) {
+	
+	// desired change
+    if ((sVar5 != *(short *)(pcVar4 + 4)) || (sVar6 != *(short *)(pcVar4 + 2))) 
+	{
       if (sVar6 != *(short *)(pcVar4 + 2)) {
         sVar3 = *(short *)(pcVar4 + 2) + 8;
         if (*(short *)(pcVar4 + 2) < sVar6) {
@@ -9014,10 +9334,12 @@ void FUN_800304b8(void)
         FUN_8002e690(puVar7,(uint)(byte)(&DAT_8008d080)[iVar8],
                      (int)*(short *)(pcVar4 + 2) << 0x10 | (int)*(short *)(pcVar4 + 4) | 0x8000U);
       }
+	  
+	  // change is finished
       if (((sVar5 == *(short *)(pcVar4 + 4)) && (sVar6 == *(short *)(pcVar4 + 2))) &&
          (pcVar4[1] = *pcVar4, *pcVar4 == '\x03'))
 	  {
-		// OtherFX_Stop_Safe
+		// OtherFX_RecycleMute
         FUN_8002e724(puVar7);
       }
     }

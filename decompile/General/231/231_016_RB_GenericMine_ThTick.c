@@ -79,13 +79,11 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   }
   
   // increment posY by velY * time
-  inst->matrix.t[1] += mw->velocity[1] * (gGT->elapsedTimeMS >> 5);
+  // do NOT use parenthesis
+  inst->matrix.t[1] += mw->velocity[1] * gGT->elapsedTimeMS >> 5;
   
-  // === This is not "maxHeight" ===
-  // what is it?
-  
-  if (inst->matrix.t[1] < mw->maxHeight) {
-    inst->matrix.t[1] = mw->maxHeight;
+  if (inst->matrix.t[1] < mw->stopFallAtY) {
+    inst->matrix.t[1] = mw->stopFallAtY;
   }
   
   // decrease velocity by time, this is artificial gravity (negative acceleration)
@@ -269,7 +267,7 @@ LAB_800ad174:
         mw->deltaPos[0] = 0;
         mw->deltaPos[1] = 0;
         mw->deltaPos[2] = 0;
-        mw->maxHeight = 0x3fff;
+        mw->stopFallAtY = 0x3fff;
 		
         ThTick_SetAndExec(t,RB_TNT_ThTick_ThrowOnHead);
       }
@@ -316,9 +314,9 @@ LAB_800ad174:
         
 		// give driver to tnt object
 		tnt->driverTarget = d;
-		
-		// set tnt posY
-        tnt->maxHeight = inst->matrix.t[1];
+
+		// stopFallAtY (where it explodes)
+        tnt->stopFallAtY = inst->matrix.t[1];
 		
 		// driver -> instTntRecv
         d->instTntRecv = instCrate;

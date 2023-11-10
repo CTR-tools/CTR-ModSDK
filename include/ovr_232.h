@@ -12,8 +12,18 @@ struct BossGarageDoor
 	// 0x14 bytes large
 };
 
+#if 0
 struct AdvPause {
 
+};
+#endif
+
+enum WoodDoorCamFlags
+{
+	WdCam_FlyingOut = 1,
+	WdCam_FullyOut = 2, // unused
+	WdCam_FlyingIn = 4, // unused
+	WdCam_CutscenePlaying = 0x10
 };
 
 struct WoodDoor
@@ -21,19 +31,26 @@ struct WoodDoor
 	struct Instance* otherDoor;
 	struct Instance* keyInst[4];
 	
-	// 0x14
-	// short vec4[4]
+	// 0x14 (5)
+	short doorRot[4];
 	
-	// 0x1C
-	// 0x1E
-	// specLightDir[4] ??
+	// 0x1c (7)
+	short camFlags;
+	short camTimer_unused;
 	
-	// 0x24
+	// 0x20 (8)
+	int hudFlags;
 	
+	// 0x24 (9)
+	short frameCount_unused;
+	short frameCount_doorOpenAnim;
 	
-	// 0x30
-	// increments by 16 per frame
-	// makes keys move in circular motion
+	// 0x28 (10)
+	short keyRot[4];
+	
+	// 0x30 (12)
+	short keyOrbit;
+	short keyShrinkFrame;
 	
 	// 0x34
 	int doorID;

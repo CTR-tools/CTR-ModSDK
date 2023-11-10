@@ -41,8 +41,16 @@ void MainCharacterSelect(int player)
 			if(!hasSelectedClass[player])
 			{
 				OtherFX_Play(1, 1);
+				#if BUILD == UsaRetail
 				OVR_230.movingToTrackMenu = 1;
 				OVR_230.isMenuTransitioning = 2;
+				#elif BUILD == EurRetail
+				*(int*)0x800b6288 = 1;
+				*(int*)0x800b62c4 = 2;
+				#elif BUILD == JpnRetail
+				*(int*)0x800b9a90 = 1;
+				*(int*)0x800b9acc = 2;
+				#endif
 				hasSelectedClass[player] = true;
 			}
 			hasSelectedClass[player] = false;

@@ -29,7 +29,7 @@ void DECOMP_RB_MovingExplosive_Explode(struct Thread* t,struct Instance* inst,st
   PlaySound3D(soundId,inst);
   
   // stop audio of rolling
-  OtherFX_Stop_Safe(tw->audioPtr);
+  OtherFX_RecycleMute(tw->audioPtr);
   
   RB_Burst_Init(inst);
   

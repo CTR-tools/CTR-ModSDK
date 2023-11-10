@@ -1031,7 +1031,7 @@ undefined4 FUN_80018ba0(int param_1,ushort *param_2,ushort *param_3,ushort *para
 
     if (sVar4 < sVar1)
 	{
-	  // LEV -> ptrSpawnType1 -> pointers[3]
+	  // LEV -> ptrSpawnType1 -> pointers[3] -- ST1_CAMERA_PATH
       puVar5 = *(ushort **)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) + 0x10);
 
 	  uVar3 = (uint)*puVar5;
@@ -2698,10 +2698,9 @@ void FUN_8001b334(int param_1)
   // tileView from cameraDC, offset 0x48
   psVar19 = (short *)piVar18[0x12];
 
-  // if camera is frozen, quit (character select)
-  if ((piVar18[0x1c] & 0x8000U) != 0) {
+  // if cameraDC->0x70 & 0x8000 (freecam)
+  if ((piVar18[0x1c] & 0x8000U) != 0) 
     return;
-  }
 
   if (
 		(
@@ -2792,7 +2791,7 @@ void FUN_8001b334(int param_1)
   // LEV -> ptrSpawnType1 -> numPointers
   if (**(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) < 3) goto switchD_8001b678_caseD_1;
 
-  // LEV -> ptrSpawnType1 -> pointers[2]
+  // LEV -> ptrSpawnType1 -> pointers[2] -- ST1_CAMERA_EOR
   psVar12 = (short *)(*(int **)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134))[3];
 
   // number of nodes for end-of-race camera,

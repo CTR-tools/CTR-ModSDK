@@ -60,7 +60,7 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 	// frame 0-16
 	if(baronObj->pointIndex < 0x11)
 	{
-		OtherFX_Stop_Safe(&baronObj->soundID_flags);
+		OtherFX_RecycleMute(&baronObj->soundID_flags);
 	}
 	
 	// frame 17+

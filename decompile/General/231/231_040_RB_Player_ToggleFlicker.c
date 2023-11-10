@@ -20,11 +20,14 @@ void DECOMP_RB_Player_ToggleFlicker(void)
             ((gGT->timer & 1) != 0)
 		)
     {
+	  struct InstDrawPerPlayer* idpp =
+		INST_GETIDPP(d->instSelf);
+		
       // on all screens
       for (i = 0; i < gGT->numPlyrCurrGame; i++)
       {
         // make driver invisible
-        d->instSelf->idpp[i].unkb8[0] &= 0xffffffbf;
+        idpp[i].unkb8[0] &= 0xffffffbf;
       }
     }
   }

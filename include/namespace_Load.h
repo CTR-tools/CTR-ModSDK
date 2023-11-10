@@ -10,12 +10,56 @@ struct BigHeader
 	int numEntry;
 
 	// "numEntry" number of entries
-	struct BigEntry entry[1];
+	//struct BigEntry entry[0];
+};
+#define BIG_GETENTRY(x) \
+	((unsigned int)x + sizeof(struct BigHeader))
+
+struct DramPointerMap
+{
+	int numBytes;
+	
+	//int offsets[0];
+};
+
+#define DRAM_GETOFFSETS(x) \
+	((unsigned int)x + sizeof(struct DramPointerMap))
+
+struct VramHeader
+{
+	char data[0xC];
+	
+	// 0xC
+	RECT rect;
+	
+	// 0x14
+	//u_char pixels[0];
+};
+
+#define VRAMHEADER_GETPIXLES(x) \
+	((unsigned int)x + sizeof(struct VramHeader))
+
+enum LevVramIndex
+{
+	LVI_VRAM = 0,
+	LVI_LEV = 1,
+	LVI_PTR = 2,
+};
+
+enum LoadType
+{
+	// ordinary read to ram
+	LT_RAW = 1,
+	
+	// read with pointer map at the end
+	LT_DRAM = 2,
+	
+	// read with vram transfer
+	LT_VRAM = 3
 };
 
 struct LoadQueueSlot
 {
-
 	// 0x0
 	struct BigHeader* ptrBigfileCdPos;
 

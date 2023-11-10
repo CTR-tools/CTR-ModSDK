@@ -1,5 +1,4 @@
-#ifndef CTR_GPU_H
-#define CTR_GPU_H
+#pragma once
 
 force_inline void addPolyF3(u_long* ot, POLY_F3* p)
 {
@@ -154,12 +153,14 @@ force_inline void addLineG4(u_long* ot, LINE_G4* p)
 	p->p1, p->p2 = 0;
 }
 
+#ifndef REBUILD_PC
 force_inline void addFill(u_long* ot, FILL* p)
 {
 	p->tag = 0x3000000 | *ot;
 	*ot = ((u_int) p) ^ 0x80000000;
 	p->code = 2;
 }
+#endif
 
 // version of psn00bsdk's setXY4 macro that compiles to a smaller bytesize
 // based on original compiled code for the game's primitive functions
@@ -196,5 +197,3 @@ force_inline void addFill(u_long* ot, FILL* p)
 	(((P_COLOR *) &((p)->r1))->color = (rgb1)), \
 	(((P_COLOR *) &((p)->r2))->color = (rgb2)), \
 	(((P_COLOR *) &((p)->r3))->color = (rgb3))
-
-#endif

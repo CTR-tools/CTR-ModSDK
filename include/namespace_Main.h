@@ -64,7 +64,7 @@ enum GameMode2
 	
 	CHEAT_INVISIBLE	= 0x8000,
 	CHEAT_ENGINE	= 0x10000,
-	// & 0x20000 - GARAGE_OSK
+	GARAGE_OSK		= 0x20000,
 	CHEAT_ADV		= 0x40000,
 	CHEAT_ICY		= 0x80000,
 	CHEAT_TURBOPAD	= 0x100000,
@@ -77,6 +77,7 @@ enum GameMode2
 	// & 0x4000000 - INC_TROPHY
 	
 	CHEAT_TURBOCOUNT = 0x8000000
+	// & 0x10000000 - LNG_CHANGE (EurRetail Only)
 };
 
 // real ND name
@@ -136,10 +137,14 @@ struct GameTracker
 		struct Instance* inst;
 
 		// 0xC
-		char data2[0x11C];
+		char data2[0x100];
 
-		// 0x10C + 0x110
-		// both related to OT
+		// 0x10C and 0x110
+		int ptrOT1;
+		int ptrOT2;
+
+		// 0x114
+		char data3[0x14];
 
 		// 0x120
 		// InstDrawPerPlayer ID
@@ -303,7 +308,7 @@ struct GameTracker
 	// 1c40 -- SepReview
 	// 1ca8 -- UsaRetail, JpnTrial
 	// 1cb0 -- EurRetail, JpnRetail
-	
+
 	// 1ca8, 1ca9
 	char numPlyrCurrGame;
 	char numPlyrNextGame;
@@ -529,7 +534,7 @@ struct GameTracker
 	int numTeams;
 
 	// 1de0
-	char unk_afterTeams[0x10];
+	int unk_afterTeams[4];
 
 	// 1df0
 	int numWeapons;

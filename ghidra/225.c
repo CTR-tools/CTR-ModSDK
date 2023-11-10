@@ -176,7 +176,7 @@ void FUN_8009f718(void)
 					1,0x1000);
       }
 	  
-	  // if VERSUS mode
+	  // if battle mode
       else 
 	  {
         iVar10 = (int)sVar1 * 0x1b0000;

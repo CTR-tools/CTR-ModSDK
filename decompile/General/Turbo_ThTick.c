@@ -1,6 +1,6 @@
 #include <common.h>
 
-void OtherFX_DriverTurbo(void*, int, int);
+void OtherFX_RecycleNew(void*, int, int);
 void ThTick_FastRET(struct Thread*);
 
 // Turbo_ThTick
@@ -155,7 +155,7 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 		turbo->inst->flags = turbo->inst->flags & 0xffffff7f;
 	}
 	
-	if (instance->alphaScale < 0x9c4)
+	if (instance->alphaScale < 2500)
 	{
 		// gamepad vibration
 		GAMEPAD_Vib_3(driver, 4, 4);
@@ -225,7 +225,7 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 		}
 	
 		// driver audio
-		OtherFX_DriverTurbo(&driver->driverAudioPtrs[3], 0xe, (iVar7 << 0x10 | fireAudioDistort | 0x80));
+		OtherFX_RecycleNew(&driver->driverAudioPtrs[3], 0xe, (iVar7 << 0x10 | fireAudioDistort | 0x80));
 	
 		// manipulate turbo audio distort to change sound each frame
 		if (turbo->fireAudioDistort < 0xc0)
@@ -299,7 +299,7 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 			}
 	
 			// driver audio
-			OtherFX_DriverTurbo(&driver->driverAudioPtrs[3], 0xffffffff, uVar8);
+			OtherFX_RecycleNew(&driver->driverAudioPtrs[3], 0xffffffff, uVar8);
 		}
 	
 		// 0x800 = this thread needs to be deleted

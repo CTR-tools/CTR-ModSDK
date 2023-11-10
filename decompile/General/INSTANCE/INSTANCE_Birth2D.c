@@ -13,11 +13,14 @@ struct Instance* DECOMP_INSTANCE_Birth2D(
 		
 	inst->flags |= 0x400;
 	
-	inst->idpp[0].tileView = &gGT->tileView_UI;
+	struct InstDrawPerPlayer* idpp =
+		INST_GETIDPP(inst);
+	
+	idpp[0].tileView = &gGT->tileView_UI;
 	
 	for(i = 1; i < gGT->numPlyrCurrGame; i++)
 	{
-		inst->idpp[i].tileView = 0;
+		idpp[i].tileView = 0;
 	}
 	
 	return inst;

@@ -29,7 +29,8 @@ struct GameProgress
 	// 8008e6e8
 	unsigned int unknown;
 
-	// 8008e6ec
+	// 8008e6ec - UsaRetail
+	// 8008eaa0 - EurRetail
 	// characters, tracks, cups, scrapbook
 	unsigned int unlocks[2];
 
@@ -155,8 +156,8 @@ struct AdvProgress
  	// 0x0C:
  		0x1: Glacier Park Key
  		0x2: Citadel Key
- 		0x4: Beat Oxide
- 		0x8: ???
+ 		0x4: BeatOxide1
+ 		0x8: BeatOxide2
  		0x10: Beach to Gemstone Valley door
  		0x20: Gemstone Valley to cups
  		0x40: Beach to Glacier Park
@@ -172,8 +173,8 @@ struct AdvProgress
  		0x10000: Lost Ruins Purple CTR Token
  		0x20000: Glacier Park Purple CTR Token
  		0x40000: Citadel City Purple CTR Token
- 		0x80000: ???
- 		0x100000: ???
+ 		0x80000: BeatOxide1 (again?)
+ 		0x100000: BeatOxide2 (again?)
  		0x200000: ???
  		0x400000: Hint - Map Information
  		0x800000: Hint - Using a Warp Pad

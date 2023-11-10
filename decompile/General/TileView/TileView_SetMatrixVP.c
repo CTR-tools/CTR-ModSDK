@@ -3,8 +3,6 @@
 // TileView_SetMatrixVP -- CameraMatrix, and ViewProj
 void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
 {
-  // ViewProj used for tracks
-
   #define uint unsigned int
 
   // CameraMatrix
@@ -34,6 +32,14 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   tx = tileView->pos[0];
   ty = tileView->pos[1];
   tz = tileView->pos[2];
+  
+  tileView->matrix_Camera.t[0] = tx;
+  tileView->matrix_Camera.t[1] = ty;
+  tileView->matrix_Camera.t[2] = tz;
+  
+  tileView->matrix_CameraTranspose.t[0] = tx;
+  tileView->matrix_CameraTranspose.t[1] = ty;
+  tileView->matrix_CameraTranspose.t[2] = tz;
 
 // gte_SetLightMatrix
 #define gte_r8(r0) __asm__ volatile("ctc2   %0, $8" : : "r"(r0))
@@ -55,15 +61,19 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   *(int*)((int)&tileView->matrix_Camera + 0x8) = uVar5;
   *(int*)((int)&tileView->matrix_Camera + 0xC) = uVar6;
   *(short*)((int)&tileView->matrix_Camera + 0x10) = sVar7;
-  tileView->matrix_Camera.t[0] = tx;
-  tileView->matrix_Camera.t[1] = ty;
-  tileView->matrix_Camera.t[2] = tz;
 
   // transpose the camera matrix
   view0 = uVar3 & 0xffff | uVar4 & 0xffff0000;
   view4 = uVar6 & 0xffff | uVar3 & 0xffff0000;
   view8 = uVar5 & 0xffff | uVar6 & 0xffff0000;
   viewC = uVar4 & 0xffff | uVar5 & 0xffff0000;
+  
+  // CameraTranspose, for lightning during Driver Warping effect
+  *(int*)((int)&tileView->matrix_CameraTranspose + 0x0) = view0;
+  *(int*)((int)&tileView->matrix_CameraTranspose + 0x4) = view4;
+  *(int*)((int)&tileView->matrix_CameraTranspose + 0x8) = view8;
+  *(int*)((int)&tileView->matrix_CameraTranspose + 0xC) = viewC;
+  *(short*)((int)&tileView->matrix_CameraTranspose + 0x10) = sVar7;
 
   // load transpose camera matrix
   // similar to gte_SetLightMatrix

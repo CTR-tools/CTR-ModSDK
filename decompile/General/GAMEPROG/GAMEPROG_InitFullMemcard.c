@@ -12,7 +12,7 @@ void DECOMP_GAMEPROG_InitFullMemcard(struct MemcardProfile* mcp)
 	mcp->header[1] = sizeof(struct MemcardProfile);
 	
 	// GameProgress and GameOptions
-	GAMEPROG_NewProfile_OutsideAdv(&mcp->gameProgress);
+	DECOMP_GAMEPROG_NewProfile_OutsideAdv(&mcp->gameProgress);
 	
 	// 4 profiles
 	for(i = 0; i < 4; i++)

@@ -8,5 +8,5 @@ int DECOMP_MEMPACK_GetFreeBytes()
 	ptrMempack = sdata->PtrMempack;
 
 	// subtract last byte from first byte, to return size
-	return ptrMempack->lastFreeByte - ptrMempack->firstFreeByte;
+	return (u_int)ptrMempack->lastFreeByte - (u_int)ptrMempack->firstFreeByte;
 }

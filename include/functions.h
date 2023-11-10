@@ -52,13 +52,13 @@ u_int CDSYS_GetFilePosInt(char* fileString, int* filePos);
 void CDSYS_SetMode_StreamData();
 void CDSYS_SetMode_StreamAudio();
 u_int CDSYS_SetXAToLang(int lngIndex);
-void CDSYS_CdSyncCallback(char result);
-void CDSYS_CdReadyCallback(char result);
-void CDSYS_IRQ_Callback();
-void CDSYS_Transfer_Callback();
-void CDSYS_IRQ_Enable();
-void CDSYS_IRQ_Disable();
-void CDSYS_ParseSpuData();
+void CDSYS_XaCallbackCdSync(char result);
+void CDSYS_XaCallbackCdReady(char result);
+void CDSYS_SpuCallbackIRQ();
+void CDSYS_SpuCallbackTransfer();
+void CDSYS_SpuEnableIRQ();
+void CDSYS_SpuDisableIRQ();
+void CDSYS_SpuGetMaxSample();
 u_int CDSYS_XAGetNumTracks(int categoryID);
 u_int CDSYS_XASeek(int isCdControl, int categoryID, int audioTrackID);
 u_int CDSYS_XAGetTrackLength(int categoryID, int audioTrackID);
@@ -100,8 +100,8 @@ void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem)
 void CTR_Box_DrawClearBox(RECT* r, u_int* rgb, int param_3, u_long* otMem, struct PrimMem* primMem);
 void CTR_Box_DrawSolidBox(RECT* r, u_int* rgb, u_long* otMem, struct PrimMem* primMem);
 void CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
-//void CTR_CycleTex_Model(void* animtex, int timer);
-void CTR_CycleTex_AllModels(int param_1, struct Model* model, u_int param_3);
+void CTR_CycleTex_Model(struct AnimTex* pAnimTexArray, int timer);
+void CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer);
 //CTR_CycleTex_2p3p4pWumpaHUD();
 void CTR_ClearRenderLists_1P2P(struct GameTracker* gGT, int numPlyrCurrGame);
 void CTR_ClearRenderLists_3P4P(struct GameTracker* gGT, int numPlyrCurrGame);
@@ -117,6 +117,9 @@ void DebugFont_DrawNumbers(int param_1, u_int param_2, int param_3);
 
 // DecalFont
 
+#if BUILD == JpnRetail
+	u_int DecalFont_boolRacingWheel();
+#endif
 int DecalFont_GetLineWidthStrlen(char* str, short len, short fontType);
 int DecalFont_GetLineWidth(char* str, short fontType);
 void DecalFont_DrawLineStrlen(char* str, short len, int posX, int posY, short fontType, int flags);
@@ -168,7 +171,7 @@ void ElimBG_SaveScreenshot_Chunk(void *img1,void *img2,int param_3);
 void ElimBG_SaveScreenshot_Full(struct GameTracker* gGT);
 void ElimBG_Activate(struct GameTracker* gGT);
 void ElimBG_ToggleInstance(struct Instance* inst, int boolGameIsPaused);
-void ElimBG_ToggleAllInstances(struct Instance* inst, int boolGameIsPaused);
+void ElimBG_ToggleAllInstances(struct GameTracker* gGT, int boolGameIsPaused);
 void ElimBG_HandleState(struct GameTracker* gGT);
 void ElimBG_Deactivate(struct GameTracker* gGT);
 
@@ -209,20 +212,20 @@ void GAMEPROG_GetPtrHighScoreTrack();
 
 // GhostBuffer
 
-//void GhostBuffer_ThTick();
-//GhostBuffer_InitMemory()
-//GhostBuffer_InitRecording()
-//GhostBuffer_EndRecording()
-void GhostBuffer_RecordStats(short param_1);
-void GhostBuffer_RecordBoosts(int reserves, u_char type, int fireLevel);
-void GhostBuffer_Destroy();
+//void GhostReplay_ThTick();
+//GhostReplay_Init1()
+//GhostTape_Start()
+//GhostTape_End()
+void GhostTape_WriteMoves(short param_1);
+void GhostTape_WriteBoosts(int reserves, u_char type, int fireLevel);
+void GhostTape_Destroy();
 
 // OtherFX
 
 short CountSounds();
-void OtherFX_Play(unsigned int soundID, int flags);
+int OtherFX_Play(unsigned int soundID, int flags);
 void OtherFX_Play_Echo(unsigned int soundID, int flags, int echoFlag);
-void OtherFX_Play_LowLevel(u_int soundID, u_char flags1, u_int flags2);
+int OtherFX_Play_LowLevel(u_int soundID, u_char flags1, u_int flags2);
 //OtherFX_Modify()
 void OtherFX_Stop1(int soundID_count);
 void OtherFX_Stop2(int soundID_count);
@@ -268,12 +271,12 @@ void CseqMusic_StopAll();
 	//howl_InstrumentPitch()
 	void howl_InitGlobals(char* howlFilepath);
 	//howl_ParseHeader()
-	//howl_ParseCesqHeader()
+	//howl_ParseCseqHeader()
 	//howl_LoadHeader()
 	//howl_SetSong()
 	//howl_LoadSong()
-	//howl_ErasePtrCesqHeader()
-	//howl_ReadTimeDelta()
+	//howl_ErasePtrCseqHeader()
+	//howl_GetNextNote()
 
 	// cseq opcode
 
@@ -299,7 +302,12 @@ void CseqMusic_StopAll();
 	//SongPool_FindFreeChannel()
 	//SongPool_CalculateTempo()
 	void SongPool_ChangeTempo(struct Song* song, short p2);
-	void SongPool_Start(struct Song* song, u_short songID, short param_3, int param_4, u_int* param_5, int param_6);
+	
+	void SongPool_Start(
+		struct Song* song, int songID, int deltaBPM,
+		int boolLoopAtEnd, struct SongSet* songSet, int songSetActiveBits);
+
+	
 	void SongPool_Volume(struct Song* song, char param_2, char param_3, int param_4);
 	//SongPool_AdvHub1()
 	//SongPool_AdvHub2()
@@ -322,7 +330,7 @@ void CseqMusic_StopAll();
 	// not even the last of howl
 
 	short howl_VolumeGet(int volumeType);
-	void howl_VolumeSet(int volumeType, char volume);
+	void howl_VolumeSet(int volumeType, unsigned char volume);
 	char howl_ModeGet();
 	void howl_ModeSet(char volumeMode);
 
@@ -355,7 +363,7 @@ void CseqMusic_StopAll();
 	// this is the last of ho- got em
 
 	void howl_PlayAudio_Update();
-	void howl_InitChannelAttr_EngineFX(struct ChannelStats* channel, struct ChannelAttr* attr, int volume, int leftRight, int distortion);
+	void howl_InitChannelAttr_EngineFX(struct ChannelStats* channel, struct ChannelAttr* attr, int volume, int LR, int distortion);
 	void howl_InitChannelAttr_OtherFX(char* ptrCseq, struct ChannelAttr* attr, int volume, int param_4, int distortion);
 	void howl_PauseAudio();
 	//howl_UnPauseChannel()
@@ -408,8 +416,8 @@ void CseqMusic_StopAll();
 
 	// Even more OtherFX...
 
-	//void OtherFX_DriverTurbo(u_int* param_1, u_int param_2, u_int param_3);
-	void OtherFX_Stop_Safe(int* param_1);
+	//void OtherFX_RecycleNew(u_int* param_1, u_int param_2, u_int param_3);
+	void OtherFX_RecycleMute(int* param_1);
 	//OtherFX_DriverCrashing()
 
 	// uh...
@@ -441,8 +449,8 @@ void CseqMusic_StopAll();
 
 	void Garage_Init();
 	void Garage_Enter(char characterID);
-	void Garage_Idle1(u_int soundID, char characterID);
-	void Garage_Idle2();
+	void Garage_PlayFX(u_int soundID, char characterID);
+	void Garage_LerpFX();
 	void Garage_MoveLR(int desiredID);
 	void Garage_Leave();
 
@@ -458,7 +466,7 @@ struct Instance* INSTANCE_BirthWithThread_Stack(int* spArr);
 void INSTANCE_Death(struct Instance* inst);
 void INSTANCE_LevInitAll(struct InstDef* instDef, int num);
 void INSTANCE_LevDelayedLInBs(void* instDefs, u_int numInstances);
-u_short INSTANCE_GetNumAnimFrames(struct Instance*, int param_2);
+u_short INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex);
 
 // JitPool
 
@@ -523,15 +531,15 @@ void LOAD_VramFileCallback(struct LoadQueueSlot* lqs);
 u_int LOAD_VramFile(struct BigHeader* bigfile, u_int fileIndex, u_int* destination, u_int* sizePtr, int callback);
 void LOAD_ReadFileASyncCallback();
 u_long* LOAD_ReadFile(struct BigHeader* bigfile, u_int loadType, u_int fileIndex, u_int* destination, u_int* sizePtr, int callback);
-void* LOAD_ReadFile_NoCallback(char* file, void* addr, int unk);
+void* LOAD_ReadFile_NoCallback(char* file, void* addr, int* size);
 //LOAD_FindFile()
 
 // these are the last howl functions ever
 
-//howl_readSectorSync()
-//howl_cdReadCallback()
-//howl_loadDataFromCd()
-//howl_loadDataFromCd_RetryOnError()
+//LOAD_HowlHeaderSectors()
+//LOAD_HowlCallback()
+//LOAD_HowlSectorChainStart()
+//LOAD_HowlSectorChainEnd()
 
 // more LOAD
 
@@ -643,8 +651,8 @@ void MainStats_RestartRaceCountLoss();
 
 // MATH
 
-int MATH_Sin(int angle);
-int MATH_Cos(int angle);
+int MATH_Sin(u_int angle);
+int MATH_Cos(u_int angle);
 int MATH_FastSqrt(int dist, int unk);
 MATRIX* MATH_HitboxMatrix(MATRIX* output, MATRIX* input);
 void MATH_VectorLength(VECTOR* input);
@@ -686,7 +694,7 @@ void MEMPACK_SwapPacks(int index);
 void MEMPACK_NewPack_StartEnd(void* start, int size);
 u_int MEMPACK_GetFreeBytes();
 void* MEMPACK_AllocMem(int allocSize); // also has a second parameter? --Super
-void* MEMPACK_AllocHighMem(int allocSize);
+//void* MEMPACK_AllocHighMem(int allocSize, char*);
 void MEMPACK_ClearHighMem();
 void* MEMPACK_ReallocMem(int allocSize);
 int MEMPACK_PushState();
@@ -775,9 +783,9 @@ void TitleFlag_SetFullyOnScreen();
 void TitleFlag_SetFullyOffScreen();
 void TitleFlag_SetCanDraw(int enable);
 int TitleFlag_GetCanDraw();
-//TitleFlag_GetOT()
+u_long* TitleFlag_GetOT();
 void TitleFlag_ResetTextAnim();
-//TitleFlag_DrawLoadingString()
+void TitleFlag_DrawLoadingString();
 void TitleFlag_DrawSelf();
 
 // MENUBOX
@@ -798,7 +806,7 @@ void MENUBOX_GetWidth(struct MenuBox* m, RECT* r, int);
 void MENUBOX_DrawSelf(struct MenuBox* m, int, int, int);
 void MENUBOX_ClearInput();
 void MENUBOX_CollectInput();
-void MENUBOX_ProcessInput(struct MenuBox* m);
+//void MENUBOX_ProcessInput(struct MenuBox* m);
 void MENUBOX_ProcessState();
 void MENUBOX_Show(struct MenuBox* m);
 void MENUBOX_Hide(struct MenuBox* m);

@@ -15,28 +15,50 @@ enum BitsPerPixel
 	BPP_16 = 2
 };
 
+enum Split
+{
+	SPLIT_X,
+	SPLIT_Y,
+	SPLIT_Z
+};
+
+#define BSP_BRANCH(ID, AXIS, CHILD1, CHILD2) \
+[ID] = \
+{ \
+	.flag = 0, \
+	.id = ID, \
+	.data = \
+	{ \
+		.branch = \
+		{ \
+			.axis = { \
+				AXIS == SPLIT_X ? 0x1000 : 0, \
+				AXIS == SPLIT_Y ? 0x1000 : 0, \
+				AXIS == SPLIT_Z ? 0x1000 : 0, 0xFF40 \
+			}, \
+			.childID = {CHILD1, CHILD2}, \
+		} \
+	} \
+}
+
+#define BSP_LEAF(ID, FIRST, COUNT) \
+[ID] = \
+{ \
+	.flag = 1, \
+	.id = ID, \
+	.data = \
+	{ \
+		.leaf = \
+		{ \
+			.numQuads = COUNT, \
+			.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[FIRST]) \
+		} \
+	} \
+}
+
 // can't change these, or else triNormalVec has to change
 #define sizeX 0x300
 #define sizeZ 0x300
-
-/*
-	NEW_BLOCK
-	(
-		// index, texture
-		0, texgroup_ground,
-
-		// posX, posZ
-		// +z is forward, +x is left, not right
-		// size of a quadblock is always 0x300 x 0x300, as per the above macros
-		0x0, 0x0,
-
-		// vertex flags, quadblock flags
-		NULL, 0x1800,
-
-		// RGB color
-		RGBtoBGR(0xFF0000),
-	),
-*/
 
 #define NEW_BLOCK(qIndex, texgroup, posX, posZ, flagV, flagQ, color) \
 	.levVertex[9*qIndex+0] = NEW_VERTEX(posX-sizeX/2, 0, posZ-sizeZ/2, flagV, GetRed(color), GetGreen(color), GetBlue(color)),\
@@ -60,13 +82,7 @@ enum BitsPerPixel
 			LEV_OFFSETOF(texgroup), \
 			LEV_OFFSETOF(texgroup), \
 			LEV_OFFSETOF(texgroup) \
-		}, \
-		\
-		.bbox = \
-		{ \
-			.min = {posX-sizeX/2, 0, posZ-sizeZ/2}, \
-			.max = {posX+sizeX/2, 0, posZ+sizeZ/2} \
-		}, \
+		},\
 		.terrain_type = 0, \
 		.weather_intensity = 0, \
 		.weather_vanishRate = 0, \
@@ -77,24 +93,7 @@ enum BitsPerPixel
 		.triNormalVecBitShift = 0x12, \
 		\
 		.ptr_texture_low = LEV_OFFSETOF(texgroup), \
-		.pvs = LEV_OFFSETOF(pvs), \
-		\
-		.triNormalVecDividend = \
-		{ \
-			/* hi 2 */ \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			0x1C71, \
-			\
-			/* lo 2 */ \
-			0x1C71, \
-			0x1C71, \
-		} \
+		.pvs = LEV_OFFSETOF(pvs) \
 	}
 	
 // get vertex numbers from here:
@@ -110,24 +109,7 @@ enum BitsPerPixel
 	.levVertex[9*qIndex+hi1].pos[1] = height, \
 	.levVertex[9*qIndex+hi2].pos[1] = height, \
 	.levVertex[9*qIndex+hi3].pos[1] = height, \
-	.quadBlock[qIndex].checkpointIndex = -1, \
-	.quadBlock[qIndex].bbox.max[1] = height, \
-	.quadBlock[qIndex].triNormalVecDividend = \
-	{ \
-		/* hi 2 */ \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		0x1971, \
-		\
-		/* lo 2 */ \
-		0x1971,  \
-		0x1971,  \
-	}
+	.quadBlock[qIndex].checkpointIndex = -1
 	
 #define SET_POSY_FLAT(qIndex, posY) \
 	.levVertex[9*qIndex+0].pos[1] = posY, \
@@ -138,9 +120,7 @@ enum BitsPerPixel
 	.levVertex[9*qIndex+5].pos[1] = posY, \
 	.levVertex[9*qIndex+6].pos[1] = posY, \
 	.levVertex[9*qIndex+7].pos[1] = posY, \
-	.levVertex[9*qIndex+8].pos[1] = posY, \
-	.quadBlock[qIndex].bbox.min[1] = posY, \
-	.quadBlock[qIndex].bbox.max[1] = posY
+	.levVertex[9*qIndex+8].pos[1] = posY
 	
 #define SET_POSY_RAMP(qIndex, posY, height, low1, low2, low3, mid1, mid2, mid3, hi1, hi2, hi3) \
 	.levVertex[9*qIndex+low1].pos[1] = posY, \
@@ -151,9 +131,7 @@ enum BitsPerPixel
 	.levVertex[9*qIndex+mid3].pos[1] = posY+(height/2), \
 	.levVertex[9*qIndex+hi1].pos[1] = posY+height, \
 	.levVertex[9*qIndex+hi2].pos[1] = posY+height, \
-	.levVertex[9*qIndex+hi3].pos[1] = posY+height, \
-	.quadBlock[qIndex].bbox.min[1] = posY, \
-	.quadBlock[qIndex].bbox.max[1] = posY+height
+	.levVertex[9*qIndex+hi3].pos[1] = posY+height
 
 // if clutX is 512 in VRAM, the clutX parameter is 32 (512>>4),
 // bitshifting must be done for that variable, consistent to PNG names
@@ -165,6 +143,15 @@ enum BitsPerPixel
 	.u2 = ((imgX&0x3f)<<(2-bpp))+0, .v2 = (imgY&0xff)+sizeY-1, \
 	.u3 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v3 = (imgY&0xff)+sizeY-1} \
 	
+#define ImageName_Scroll(imgX, imgY, clutX, clutY, sizeX, sizeY, bpp, blend, scale) \
+	{.clut =  ((clutX >> 0) << 0) | (clutY << 6), \
+	.tpage = ((imgX >> 6) << 0) | ((imgY >> 8) << 4) | (blend<<5) | (bpp<<7), \
+	.u0 = ((imgX&0x3f)<<(2-bpp))+0, .v0 = ((imgY&0xff)+0)-scale, \
+	.u1 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v1 = ((imgY&0xff)+0)-scale, \
+	.u2 = ((imgX&0x3f)<<(2-bpp))+0, .v2 = ((imgY&0xff)+sizeY-1)-scale, \
+	.u3 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v3 = ((imgY&0xff)+sizeY-1)-scale} \
+
+	
 // top/bottom left/right assuming you're rotation is 0,0,0
 #define TEX_2X2(qIndex, BottomRight, BottomLeft, TopRight, TopLeft) \
 	.quadBlock[qIndex].ptr_texture_mid = \
@@ -174,30 +161,6 @@ enum BitsPerPixel
 		LEV_OFFSETOF(TopRight), \
 		LEV_OFFSETOF(TopLeft) \
 	}
-
-#define PTR_MAP_QUADBLOCK(x) \
-	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[0]),\
-	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[1]),\
-	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[2]),\
-	LEV_OFFSETOF(quadBlock[x].ptr_texture_mid[3]),\
-	LEV_OFFSETOF(quadBlock[x].ptr_texture_low),\
-	LEV_OFFSETOF(quadBlock[x].pvs)
-
-#define TurboPadImage(imgX, imgY, clutX, clutY, sizeX, sizeY, bpp, blend, scale) \
-	{.clut =  ((clutX >> 0) << 0) | (clutY << 6), \
-	.tpage = ((imgX >> 6) << 0) | ((imgY >> 8) << 4) | (blend<<5) | (bpp<<7), \
-	.u0 = ((imgX&0x3f)<<(2-bpp))+0, .v0 = ((imgY&0xff)+0)-scale, \
-	.u1 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v1 = ((imgY&0xff)+0)-scale, \
-	.u2 = ((imgX&0x3f)<<(2-bpp))+0, .v2 = ((imgY&0xff)+sizeY-1)-scale, \
-	.u3 = ((imgX&0x3f)<<(2-bpp))+sizeX-1, .v3 = ((imgY&0xff)+sizeY-1)-scale} \
-
-#define TurboPadScroll(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale) \
-	{ \
-		.far    = TurboPadImage(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale), \
-		.middle = TurboPadImage(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale), \
-		.near   = TurboPadImage(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale), \
-		.mosaic = TurboPadImage(tp_imgX, tp_imgY, tp_clutX, tp_clutY, tp_sizeX, tp_sizeY, tp_bpp, tp_blend, scale), \
-	},
 
 #define SetQuadBlockAnimTex(qIndex, animtex) \
 	.quadBlock[qIndex].ptr_texture_mid[0] = LEV_OFFSETOF(animtex)|1, \

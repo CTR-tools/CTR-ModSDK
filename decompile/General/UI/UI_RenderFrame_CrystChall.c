@@ -89,7 +89,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
       //turn on 26th bit of Actions Flag set (means racer finished the race)
       player->actionsFlagSet |= 0x2000000;
 
-      MainGameEnd_Initialize(0x42);
+      MainGameEnd_Initialize();
     }
 
     OtherFX_Play(0x42,1);

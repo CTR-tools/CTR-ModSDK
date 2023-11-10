@@ -19,7 +19,7 @@ void DECOMP_MENUBOX_GetWidth(struct MenuBox* m, short* width, int boolCheckSubme
 	{
 		// width of string in each row
 		lineWidth = DecalFont_GetLineWidth(
-			sdata->lngStrings[row->stringIndex], 
+			sdata->lngStrings[row->stringIndex & 0x7fff], 
 			fontType);
 		
 		// set new width if new max is found
@@ -41,7 +41,7 @@ void DECOMP_MENUBOX_GetWidth(struct MenuBox* m, short* width, int boolCheckSubme
 		
 		// width of string in each row
 		lineWidth = DecalFont_GetLineWidth(
-			sdata->lngStrings[m->stringIndexTitle], 
+			sdata->lngStrings[m->stringIndexTitle & 0x7fff], 
 			fontType);
 
 		// set new width if new max is found

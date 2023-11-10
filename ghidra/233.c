@@ -1318,7 +1318,7 @@ LAB_800ad8ec:
     if (*(int *)(PTR_DAT_8008d2ac + 0x1a10) == 0x28) {
       if (param_1 != 0) 
 	  {
-		// Garage_Idle1
+		// Garage_PlayFX
         FUN_80030404(*(undefined4 *)(psVar14 + 6),
                      (int)*(short *)(*(int *)(param_1 + 0x18) + 0x10) + -0xce);
       }
@@ -5712,6 +5712,7 @@ void FUN_800b8f8c(void)
     iVar12 = iVar12 + 1;
   } while (iVar12 * 0x10000 >> 0x10 < 5);
   
+  // ST1_CREDITS
   // LEV -> ptrSpawnType1 -> pointers[6], not [7] cause array starts at offset 0x4
   puVar9 = *(undefined4 **)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x134) + 0x1c);
   

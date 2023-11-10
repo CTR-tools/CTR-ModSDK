@@ -16,7 +16,7 @@ common, exe, CTR_CycleTex_LEV, 0x0, src/return2.c
 common, exe, UI_Map_DrawRawIcon, 0x0, src/return3.c
 
 // disable ghost memory
-common, exe, GhostBuffer_InitMemory, 0x0, src/return4.c
+common, exe, GhostReplay_Init1, 0x0, src/return4.c
 
 // disable LevInstQueue
 // required? or just needed cause I messed up? crashes in relocate attempts

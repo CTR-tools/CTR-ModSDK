@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GAMEPROG_GetPtrHighScoreTrack()
+void DECOMP_GAMEPROG_GetPtrHighScoreTrack()
 {
 	int gameMode1;
 	struct GameTracker* gGT;

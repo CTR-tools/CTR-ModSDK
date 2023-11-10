@@ -1,0 +1,9 @@
+Shaders/D3D9/*.h
+Shaders/D3D11/*.h
+Shaders/D3D12/*.h
+Shaders/Vulkan/*.h
+Shaders/GXM/*.gxp
+Shaders/GXM/*.gxp.obj
+Shaders/GXM/*.sdb
+Shaders/NVN/*.bnsh
+Shaders/XED3D/*.h

@@ -8,7 +8,7 @@ void DECOMP_MM_MENUBOX_Difficulty(struct MenuBox* mb)
   
   // if uninitialized
   if (row == -1) {
-    mb->ptrPrevBox_InHierarchy->state &= 0xffffffeb;
+    mb->ptrPrevBox_InHierarchy->state &= ~(ONLY_DRAW_TITLE | DRAW_NEXT_MENU_IN_HIERARCHY);
   }
   
   else 

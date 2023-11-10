@@ -12,7 +12,7 @@ void CAM_EndOfRace_hook(struct CameraDC* camDC, struct Driver* d)
 
 	// enable CDSYS_XAPlay so this
 	// play can run successfully
-	sdata->useDisc = 1;
+	sdata->boolUseDisc = 1;
 
 	// get rank
 	r = (int)d->driverRank;
@@ -29,7 +29,7 @@ void CAM_EndOfRace_hook(struct CameraDC* camDC, struct Driver* d)
 
 	// disable all other CDSYS_XAPlay
 	// so this play is not overwritten
-	sdata->useDisc = 0;
+	sdata->boolUseDisc = 0;
 
 	// call original
 	CAM_EndOfRace(camDC, d);
@@ -40,5 +40,5 @@ void CAM_EndOfRace_hook(struct CameraDC* camDC, struct Driver* d)
 void CdReadyCallbackHook()
 {
 	// enable again
-	sdata->useDisc = 1;
+	sdata->boolUseDisc = 1;
 }

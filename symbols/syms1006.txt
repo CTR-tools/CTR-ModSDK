@@ -61,13 +61,13 @@
 8001d8c0 CDSYS_SetMode_StreamData
 8001d944 CDSYS_SetMode_StreamAudio
 8001d9bc CDSYS_SetXAToLang			// real ND name
-8001dbf4 CDSYS_CdSyncCallback
-8001dc4c CDSYS_CdReadyCallback
-8001dd34 CDSYS_IRQ_Callback
-8001ddd4 CDSYS_Transfer_Callback
-8001de34 CDSYS_IRQ_Enable
-8001deb4 CDSYS_IRQ_Disable
-8001dee8 CDSYS_ParseSpuData
+8001dbf4 CDSYS_XaCallbackCdSync
+8001dc4c CDSYS_XaCallbackCdReady
+8001dd34 CDSYS_SpuCallbackIRQ
+8001ddd4 CDSYS_SpuCallbackTransfer
+8001de34 CDSYS_SpuEnableIRQ
+8001deb4 CDSYS_SpuDisableIRQ
+8001dee8 CDSYS_SpuGetMaxSample
 8001e030 CDSYS_XAGetNumTracks
 8001e068 CDSYS_XASeek				// real ND name
 8001e170 CDSYS_XAGetTrackLength
@@ -215,14 +215,14 @@
 80028360 GAMEPROG_NewGame_OnBoot
 80028398 GAMEPROG_GetPtrHighScoreTrack
 
-800283f0 GhostBuffer_ThTick
-80028d50 GhostBuffer_InitMemory
-800290a0 GhostBuffer_InitDriver
-8002930c GhostBuffer_InitRecording
-80027e90 GhostBuffer_EndRecording
-800293a8 GhostBuffer_RecordStats
-800298a4 GhostBuffer_RecordBoosts
-80029928 GhostBuffer_Destroy
+800283f0 GhostReplay_ThTick
+80028d50 GhostReplay_Init1
+800290a0 GhostReplay_Init2
+8002930c GhostTape_Start
+80027e90 GhostTape_End
+800293a8 GhostTape_WriteMoves
+800298a4 GhostTape_WriteBoosts
+80029928 GhostTape_Destroy
 
 // === Everything below "Ghost" is "Howl"
 
@@ -266,12 +266,12 @@
 8002ae34 howl_InstrumentPitch
 8002aea0 howl_InitGlobals
 8002af68 howl_ParseHeader
-8002afcc howl_ParseCesqHeader
+8002afcc howl_ParseCseqHeader
 8002b044 howl_LoadHeader
 8002b158 howl_SetSong
 8002b1bc howl_LoadSong
-8002b2d8 howl_ErasePtrCesqHeader
-8002b2e4 howl_ReadTimeDelta
+8002b2d8 howl_ErasePtrCseqHeader
+8002b2e4 howl_GetNextNote
 8002b330 cseq_opcode01_noteoff
 8002b43c cseq_opcode03
 8002b498 howl_InitChannelAttr_Music
@@ -373,8 +373,8 @@
 8002fb98 GTE_AudioLR_Driver
 8002fc24 GTE_GetSquaredLength
 
-8002fc5c OtherFX_DriverTurbo
-8002fcf0 OtherFX_Stop_Safe
+8002fc5c OtherFX_RecycleNew
+8002fcf0 OtherFX_RecycleMute
 8002fd2c OtherFX_DriverCrashing
 8002fd88 GTE_GetSquaredDistance
 
@@ -396,8 +396,8 @@
 // Garage is not in Sep3
 800317d4 Garage_Init
 80031830 Garage_Enter
-800319d0 Garage_Idle1
-80031a84 Garage_Idle2
+800319d0 Garage_PlayFX
+80031a84 Garage_LerpFX
 // Garage_MoveLR
 80031d18 Garage_Leave
 
@@ -469,10 +469,10 @@
 
 80033a04 LOAD_FindFile
 
-80033a64 howl_readSectorSync
-80033b18 howl_cdReadCallback
-80033b60 howl_loadDataFromCd
-80033c38 howl_loadDataFromCd_RetryOnError
+80033a64 LOAD_HowlHeaderSectors
+80033b18 LOAD_HowlCallback
+80033b60 LOAD_HowlSectorChainStart
+80033c38 LOAD_HowlSectorChainEnd
 80033c80 LOAD_RunPtrMap
 
 80033ccc LOAD_Robots2P
@@ -1180,7 +1180,7 @@
 
 800764EC CdRead
 80076688 CdReadSync
-8007678C CheckCallback // <-- this is probably CdReadCallback. checkCallback doesn't have any args.
+8007678C CdReadCallback
 
 800767A0 SetGeomScreen
 800767B0 SetGeomOffset

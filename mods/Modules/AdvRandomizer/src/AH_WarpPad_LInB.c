@@ -83,27 +83,24 @@ void AH_WarpPad_LInB(struct Instance *inst)
 	{
 		levelID = levelID * 10 + inst->name[i] - '0';
 	}
+
 	swap = (levelID > 22) ? newPads[levelID - 79] : newPads[levelID];
+
+	warppadObj->levelID = levelID;
 
 	if (RANDOM_MODE)
 		warppadObj->levelID = swap;
-	
-	warppadObj->levelID = levelID;
 
 	unlockItem_numNeeded = -1;
 
 	// Trophy Track
 	if (levelID < 0x10)
 	{
-		// optimization idea:
-		// instead of data.metaDataLEV[levelID].hubID
-		// can we just do gGT->levelID-0x19?
-
 		// if trophy owned
-		if (CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) != 0)
+		if (CHECK_ADV_BIT(sdata->advProgress.rewards, (swap + 6)) != 0)
 		{
 		GetKeysRequirement:
-			arrKeysNeeded = 0x800b4e7c;
+			arrKeysNeeded = (short*)0x800b4e7c;
 
 			// keys needed to unlock track again
 			unlockItem_modelID = 99;
@@ -121,8 +118,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		}
 	}
 
-	// Slide Col
-	else if (levelID == 0x10)
+	else if (levelID == SLIDE_COLISEUM)
 	{
 		// number relics needed to open
 		unlockItem_modelID = 0x61;
@@ -130,8 +126,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		unlockItem_numNeeded = 10;
 	}
 
-	// Turbo Track
-	else if (levelID == 0x11)
+	else if (levelID == TURBO_TRACK)
 	{
 		// number gems needed to open
 		unlockItem_modelID = 0x5f;
@@ -145,7 +140,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 	}
 
 	// battle maps
-	else if (levelID < 0x19)
+	else if (levelID < GEM_STONE_VALLEY)
 	{
 		goto GetKeysRequirement;
 	}
@@ -233,7 +228,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 			t->modelIndex = 2;
 
 			// if trophy not owned
-			if (CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) == 0)
+			if (CHECK_ADV_BIT(sdata->advProgress.rewards, (swap + 6)) == 0)
 			{
 				// open for trophy
 				t->modelIndex = 1;
@@ -248,7 +243,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 			}
 
 			// if token not owned
-			if (CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) == 0)
+			if (CHECK_ADV_BIT(sdata->advProgress.rewards, (swap + 0x4c)) == 0)
 			{
 				// open for relic/token
 				if (t->modelIndex != 1)
@@ -263,7 +258,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 				newInst->scale[1] = 0x2000;
 				newInst->scale[2] = 0x2000;
 
-				i = data.metaDataLEV[levelID].ctrTokenGroupID;
+				i = data.metaDataLEV[swap].ctrTokenGroupID;
 
 				// token color
 				newInst->colorRGBA =
@@ -287,7 +282,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 
 			// if relic not owned
 			if (levelID < 0x12) // check this cause of "goto BattleTrack"
-				if (CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x16)) == 0)
+				if (CHECK_ADV_BIT(sdata->advProgress.rewards, (swap + 0x16)) == 0)
 				{
 					// SlideCol/TurboTrack
 					if (levelID >= 0x10)
@@ -344,7 +339,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		else if (levelID < 0x19)
 		{
 			battleTrackArr = 0x800aba3c;
-			i = battleTrackArr[levelID - 0x12] + 0x6f;
+			i = battleTrackArr[swap - 0x12] + 0x6f;
 
 			// already unlocked
 			t->modelIndex = 2;
@@ -362,7 +357,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 		else
 		{
 			// bit index of gem
-			i = (levelID - 100) + 0x6a;
+			i = (swap - 100) + 0x6a;
 
 			// if gem is already unlocked, quit
 			if (CHECK_ADV_BIT(sdata->advProgress.rewards, i) != 0)
@@ -381,7 +376,7 @@ void AH_WarpPad_LInB(struct Instance *inst)
 			// specular lighting
 			newInst->flags |= 0x20000;
 
-			i = levelID - 100;
+			i = swap - 100;
 
 			// token color
 			newInst->colorRGBA =

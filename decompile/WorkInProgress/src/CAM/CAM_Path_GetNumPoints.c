@@ -19,7 +19,7 @@ int DECOMP_CAM_Path_GetNumPoints(void)
         (ptrSpawnType1->count < 3) ||
         (
             // get ptr_intro_cam
-            introCam = ptrSpawnType1->pointers[4],
+            introCam = ptrSpawnType1->pointers[ST1_CAMERA_PATH],
 
             // ptr_intro_cam is nullptr
             introCam == NULL))

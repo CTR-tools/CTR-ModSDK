@@ -9,20 +9,20 @@ void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 	u_int flags;
 	int i;
 	int timeRemaining;
+	gGT = sdata->gGT;
 
 	// amount of time event should last, minus, time elapsed in the event.
 	// basically, time remaining in the event
-	timeRemaining = sdata->gGT->originalEventTime - sdata->gGT->elapsedEventTime;
+	timeRemaining = gGT->originalEventTime - gGT->elapsedEventTime;
 
 	// if you run out of time
 	if (timeRemaining < 0)
 	{
 		// Make a time string with zero milliseconds on the clock
 		str = MENUBOX_DrawTime(0);
-		gGT = sdata->gGT;
 
 		// If you're not in End-Of-Race menu
-		if ((sdata->gGT->gameMode1 & END_OF_RACE) == 0)
+		if ((gGT->gameMode1 & END_OF_RACE) == 0)
 		{
 			// dont check if numPlyrCurrGame != 0,
 			// when would that ever be false
@@ -57,7 +57,7 @@ void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 		(timeRemaining < 0x3840) &&
 
 		// if number of frames is an even number
-		((sdata->gGT->timer & 1) == 0)
+		((gGT->timer & 1) == 0)
 	)
 	{
 		// set color to white

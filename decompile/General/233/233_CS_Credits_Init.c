@@ -25,7 +25,9 @@ void CS_Credits_Init()
 	gGT = sdata->gGT;
 	advProg = &sdata->advProgress;
 	creditsObj = &creditsBSS->creditsObj;
-	CLH = gGT->level1->ptrSpawnType1->pointers[6];
+	
+	void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+	CLH = pointers[ST1_CREDITS];
 	
 	creditsBSS->DancerThread = 0;
 	
@@ -90,7 +92,8 @@ void CS_Credits_Init()
 		
 		inst->flags |= 0x400;
 		
-		inst->idpp[0].tileView = &gGT->tileView_UI;
+		struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
+		idpp[0].tileView = &gGT->tileView_UI;
 		
 		#if 0
 		// OG game erases other idpp's, but just ignore it
@@ -102,16 +105,17 @@ void CS_Credits_Init()
 	memcpy(creditsDst, CLH, CLH->size);
 	
 	creditsBSS->numStrings = creditsDst->numStrings;
-	creditsBSS->ptrStrings = creditsDst->ptrStrings;
+	
+	char** ptrStrings = CREDITSHEADER_GETSTRINGS(creditsDst);
 	
 	for(i = 0; i < creditsBSS->numStrings; i++)
 	{
-		creditsDst->ptrStrings[i] =
-		((unsigned int)creditsDst->ptrStrings[i] + (unsigned int)creditsDst);
+		ptrStrings[i] =
+		((unsigned int)ptrStrings[i] + (unsigned int)creditsDst);
 	}
 	
 	creditsObj->credits_posY = 340;
-	creditsObj->credits_topString = creditsDst->ptrStrings[0x14];
+	creditsObj->credits_topString = ptrStrings[0x14];
 }
 
 // temporary workaround

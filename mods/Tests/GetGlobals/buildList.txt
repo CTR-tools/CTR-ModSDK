@@ -1,0 +1,4 @@
+// Compile main code to empty spaces in RDATA
+common, exe, rdata_free, 0x0, src/entry.c
+
+common, exe, MEMPACK_SwapPacks, -0x8, src/hookEntry.s

@@ -1,114 +1,96 @@
 #include <common.h>
 
-int MM_Title_ThTick(struct Thread*);
+int MM_Title_ThTick(struct Thread *);
 
-void DECOMP_MM_Title_Init(void) 
+void DECOMP_MM_Title_Init(void)
 {
-  struct GameTracker* gGT = sdata->gGT;
-  struct Thread* threadTitle;
-  struct Instance* titleInst;
-  struct Title* titleObj = OVR_230.titleObj;
-  int i;
-  int *piVar8;
-  int *piVar9;
-  
-  if (
-		(
-			(
-				// if "title" object is nullptr
-				(titleObj == NULL) && 
-				
-				// if you are in main menu
-				((gGT->gameMode1 & MAIN_MENU) != 0)
-			) &&
-			(*(unsigned char*)0x800b5a1c != 2)
-		) &&
-		(
-			(
-				// model ptr (Title blue Ring)
-				gGT->modelPtr[0x68] != 0 &&
-				
-				(2 < gGT->level1->ptrSpawnType1->count)
-			)
-		)
-	 ) 
+  struct GameTracker *gGT = sdata->gGT;
+  struct Thread *t;
+  struct Instance *inst;
+  struct Title *title;
+  char m, n;
+
+  if ((( // if "title" object is nullptr
+           (title == NULL) &&
+
+           // if you are in main menu
+           ((gGT->gameMode1 & MAIN_MENU) != 0)) &&
+       // You're not in transition between menus
+       (OVR_230.MM_State != 2)) &&
+      (( // model ptr (Title blue Ring)
+          gGT->modelPtr[0x68] != 0 &&
+
+          (2 < gGT->level1->ptrSpawnType1->count))))
   {
-	
-	// CameraDC, freecam mode
+
+    // freecam mode
     gGT->cameraDC->cameraMode = 3;
-	
-    gGT->tileView[0].distanceToScreen_CURR = 0x1c2;
-	
-	// pointer to Intro Cam, to view Crash holding Trophy in main menu
+
+    gGT->tileView[0].distanceToScreen_CURR = 450;
+
+    // pointer to Intro Cam, to view Crash holding Trophy in main menu
     OVR_230.ptrIntroCam = gGT->level1->ptrSpawnType1->pointers;
-    
-	// 0x24 = size
-	// 0 = no relation to param4	
-	// 0x200 = MediumStackPool
-	// 0xd = "other" thread bucket
-	threadTitle = THREAD_BirthWithObject(0x24020d,MM_Title_ThTick,OVR_230.s_title,0);
-	
-	// Get object of title screen that was just built
-    piVar9 = threadTitle->object;
-	
-	// store object globally
-    titleObj = piVar9;
-	
-	// Memset, 0x24 bytes large
-    memset(piVar9,0,0x24);
-	
-	// store pointer to thread inside object
-    *piVar9 = threadTitle;
-	
-    piVar8 = piVar9;
-    
-	// create 6 instances
-	for (i = 0; i < 6; i++) 
-	{
-	  // increment to next pointer in object,
-	  // which is where instance pointers start
-      piVar8 += 1;
-	  
-      titleInst = INSTANCE_Birth3D(
-              (gGT->modelPtr[OVR_230.titleInstances[i].modelID]),OVR_230.s_title,threadTitle);
-      
-	  // store instance
-	  *piVar8 = titleInst;
-      
-	  if (OVR_230.titleInstances[i].boolApplyFlag != 0) 
-	  { 
-        // visible during gameplay
-        titleInst->flags |= 0x2000000;
+
+    t = THREAD_BirthWithObject(
+        SIZE_RELATIVE_POOL_BUCKET(
+            sizeof(struct Title), // 0x24
+            NONE,
+            MEDIUM,
+            OTHER),
+        MM_Title_ThTick,
+        OVR_230.s_title, // debug name
+        0);
+
+    // Get object of title screen that was just built
+    title = t->object;
+
+    // store object globally
+    OVR_230.titleObj = title;
+
+    // Memset, 0x24 bytes large
+    memset(title, 0, 0x24);
+
+    // store pointer to thread inside object
+    title->t = t;
+
+    // create 6 instances
+    for (n = 0; n < 6; n++)
+    {
+      inst = INSTANCE_Birth3D(gGT->modelPtr[OVR_230.titleInstances[n].modelID], OVR_230.s_title, t);
+
+      // store instance
+      title->i[n] = inst;
+
+      if (OVR_230.titleInstances[n].boolVisible)
+      {
+        inst->flags |= VISIBLE_DURING_GAMEPLAY;
       }
-	  
-	  // naughty dog typo?
-      titleInst->matrix.m[0][0] = 0x1000;
-      titleInst->matrix.m[1][0] = 0x1000;
-      titleInst->matrix.m[1][1] = 0x5000;
-      titleInst->matrix.m[1][0] = 0x5000;
-      titleInst->matrix.m[0][0] = 0x5000;
-      titleInst->matrix.m[0][2] = 0;
-      titleInst->matrix.m[1][2] = 0;
-	  
-	  // Position
-      titleInst->matrix.t[0] = 0;
-      titleInst->matrix.t[1] = 0;
-      titleInst->matrix.t[2] = 0;
-	  
-	  // make invisible
-      titleInst->flags |=  0x80;
-	  
-	  // if multiplayer
-      if (1 < gGT->numPlyrCurrGame) {
-        for (i = 1; i < gGT->numPlyrCurrGame; i++)
+
+      // naughty dog typo?
+      inst->matrix.m[0][0] = 0x1000;
+      inst->matrix.m[1][0] = 0x1000;
+      inst->matrix.m[1][1] = 0x5000;
+      inst->matrix.m[1][0] = 0x5000;
+      inst->matrix.m[0][0] = 0x5000;
+      inst->matrix.m[0][2] = 0;
+      inst->matrix.m[1][2] = 0;
+
+      // Position
+      inst->matrix.t[0] = 0;
+      inst->matrix.t[1] = 0;
+      inst->matrix.t[2] = 0;
+
+      inst->flags |= HIDE_MODEL;
+
+      // if multiplayer
+      if (1 < gGT->numPlyrCurrGame)
+      {
+        for (m = 1; m < gGT->numPlyrCurrGame; m++)
         {
-          titleInst->idpp[i].tileView->pos[0] = 0;
-        } 
+          inst->idpp[m].tileView->pos[0] = 0;
+        }
       }
     }
-	
-    MM_Title_CameraMove(piVar9,0);
+    MM_Title_CameraMove(title, 0);
   }
-  return;
-} 
- 
+}

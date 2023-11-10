@@ -5,14 +5,14 @@ enum Buttons
 	BTN_LEFT = 0x4,
 	BTN_RIGHT = 0x8,
 	BTN_CROSS_one = 0x10,
-	BTN_CROSS_two = 0x4000,
+	BTN_CROSS_two = 0x4000, // same as RAW_BTN
 	BTN_CROSS = BTN_CROSS_one | BTN_CROSS_two,
 	BTN_SQUARE_one = 0x20,
-	BTN_SQUARE_two = 0x8000,
+	BTN_SQUARE_two = 0x8000, // same as RAW_BTN
 	BTN_SQUARE = BTN_SQUARE_one | BTN_SQUARE_two,
 	BTN_CIRCLE = 0x40,
 	BTN_L2_one = 0x80,
-	BTN_L2_two = 0x100,
+	BTN_L2_two = 0x100, // same as RAW_BTN
 	BTN_L2 = BTN_L2_one | BTN_L2_two,
 	BTN_R2 = 0x200,
 	BTN_R1 = 0x400,
@@ -27,6 +27,8 @@ enum Buttons
 enum RawInput
 {
 	RAW_BTN_SELECT = 0x1,
+	RAW_BTN_L3 = 0x2,
+	RAW_BTN_R3 = 0x4,
 	RAW_BTN_START = 0x8,
 	RAW_BTN_UP = 0x10,
 	RAW_BTN_RIGHT = 0x20,
@@ -103,20 +105,18 @@ struct GamepadBuffer
 	short framesSinceLastInput;
 
 	// 0x2A
-	short unk_0x2A;
-
-	// 0x2A
-	// char motor[2] -- again?
+	char motorCurr[2];
+	
+	// 0x2C
+	char motorStepRate[2];
 
 	// 0x2E
-	// [0] for left,
-	// [1] for right
-	// char motor[2];
+	char motorPrev[2];
 
-	// 0x2C
+	// 0x30
 	// probably all these are in
 	// FUN_80025e18, and FUN_800252a0
-	char data18[0x18];
+	char data14[0x14];
 
 	// 0x44
 	char unk_44_countdown;
@@ -208,7 +208,7 @@ struct GamepadSystem
 struct RacingWheelData
 {
 	// 0x0
-	short gamepadCenter;
+	unsigned short gamepadCenter;
 
 	// 0x2
 	short deadZone;

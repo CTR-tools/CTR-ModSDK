@@ -8,5 +8,5 @@ void DECOMP_GAMEPROG_NewProfile_OutsideAdv(struct GameProgress* gameProg)
 	// GameProgress and GameOptions
 	memset(gameProg, 0, sizeof(struct GameProgress) + sizeof(struct GameOptions));
 	
-	GAMEPROG_ResetHighScores(gameProg);
+	DECOMP_GAMEPROG_ResetHighScores(gameProg);
 }

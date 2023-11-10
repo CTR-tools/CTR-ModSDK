@@ -153,7 +153,7 @@ struct MineWeapon
 
 	// 0x12
 	// used by tnt, and potion_inAir
-	short maxHeight;
+	short stopFallAtY;
 
 	// 0x14
 	// causes explosion if != 0,
@@ -239,13 +239,23 @@ struct CtrLetter
 	short rot[3];
 	short padding;
 
+	// 0x8
+	char unk[0x28];
+	
+	// 0x30
+	// where, on earth, are these initialized?
+	short velX;
+	short velY;
+
 	// 0x8 bytes large
 };
 
+#if 0
 struct StartBanner
 {
 	// 0x4 bytes large
 };
+#endif
 
 struct Armadillo
 {
@@ -341,10 +351,12 @@ struct FlameJet
 	// 0x14 bytes large
 };
 
+#if 0
 struct Fruit
 {
 	// 0x4 bytes large
 };
+#endif
 
 struct Minecart
 {

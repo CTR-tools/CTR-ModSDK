@@ -261,6 +261,7 @@ void FUN_80021984(undefined4 *param_1,int param_2)
 
 // CTR_CycleTex_Model
 // animates non-lev textures on a single model
+// param_1 = animtex, param_2 = timer
 void FUN_80021a20(undefined4 *param_1,int param_2)
 
 {
@@ -270,28 +271,49 @@ void FUN_80021a20(undefined4 *param_1,int param_2)
   undefined4 *puVar4;
   int iVar5;
 
+  //active frame texture ptr - first field of the struct
   puVar1 = (undefined4 *)*param_1;
+
+  //store animtex ptr
   puVar4 = param_1;
+
+  //the list ends with the pointer to the first animtex struct, so we loop until its euqal to the passed ptr 
   while (puVar1 != param_1) {
+    //num frames
     iVar2 = (int)*(short *)(puVar4 + 1);
+
+    //timer math
     iVar3 = param_2 + *(short *)((int)puVar4 + 6) >> ((int)*(short *)(puVar4 + 2) & 0x1fU);
+
+    //current frame
     iVar5 = iVar3 % iVar2;
+
+    //exceptions
     if (iVar2 == 0) {
       trap(0x1c00);
     }
     if ((iVar2 == -1) && (iVar3 == -0x80000000)) {
       trap(0x1800);
     }
+
+    //store current frame to the animtex
     *(undefined2 *)((int)puVar4 + 10) = (short)iVar5;
+
+    //copy framearray[curFrame] ptr to active frame texture
     *(undefined4 *)*puVar4 = *(undefined4 *)((int)puVar4 + ((iVar5 << 0x10) >> 0xe) + 0xc);
+
+    //skip to the next struct (12 + 4 * numFrames) 
     puVar4 = puVar4 + (int)*(short *)(puVar4 + 1) + 3;
+    
+    //get next struct first field value
     puVar1 = (undefined4 *)*puVar4;
   }
   return;
 }
 
 
-// CTR_CycleTex_AllModels
+
+// CTR_CycleTex_AllModels (num models, ptr models, timer)
 void FUN_80021ac0(int param_1,int *param_2,undefined4 param_3)
 
 {
@@ -300,32 +322,70 @@ void FUN_80021ac0(int param_1,int *param_2,undefined4 param_3)
   ushort *puVar3;
   uint uVar4;
 
+    //proceed if model ptr is not null and num models is not 0
+    //check against 0 is important here (and in the end of the loop)
+    //if -1 if passed as num models, it will keep looping until the NULL ptr
   if ((param_2 != (int *)0x0) && (param_1 != 0)) {
+      
     do {
+
+        //NULL check for model
       iVar1 = *param_2;
+
       if (iVar1 == 0) {
         return;
       }
+
+        //current pModel -> headers
       uVar2 = *(uint *)(iVar1 + 0x14);
+      
+        //current pModel->headers + current pModel->numHeaders * sizeof (header)
+        //end of headers
       uVar4 = uVar2 + (int)*(short *)(iVar1 + 0x12) * 0x40;
+
+        //if have any headers
       if (uVar2 < uVar4) {
+          
+          //pHeader->flags
         puVar3 = (ushort *)(uVar2 + 0x16);
+        
+        //loop though all headers
         do {
-          if ((*(int *)(puVar3 + 0x13) != 0) && ((*puVar3 & 2) == 0))
+          if (
+            //animtex is not null (0x16+0x26 = 0x3C)
+            (*(int *)(puVar3 + 0x13) != 0) && 
+            
+            //and anim flag is not set?
+            ((*puVar3 & 2) == 0)
+          )
 		  {
 			// CTR_CycleTex_Model
             FUN_80021a20(*(int *)(puVar3 + 0x13),param_3);
           }
+          
+          //next header ptr
           uVar2 = uVar2 + 0x40;
+          
+          //next header flags
           puVar3 = puVar3 + 0x20;
+          
+          //if have any headers
         } while (uVar2 < uVar4);
       }
+
+    //decrement num models
       param_1 = param_1 + -1;
+      
+      //increment ptr model
       param_2 = param_2 + 1;
+      
+      //loop until loop models is not 0
     } while (param_1 != 0);
+    
   }
   return;
 }
+
 
 
 // CTR_CycleTex_2p3p4pWumpaHUD

@@ -1,21 +1,31 @@
-// 312+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1 = 381 rewritten so far
+// 486+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 564 rewritten so far
 
-// 312 for every 'common' and ','
+// 486 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
 // 10 for the eleven UI functions
 // +1 for DebugFont
+// +1 for 222
+// +2 for 223
+// +2 for 224
 
 // functions bigger than their originals
 common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
 common, exe, MATH_Sin, 0x0, General/MATH/MATH_Sin_hook.s
 common, exe, LibraryOfModels_Store, 0x0, General/LibraryOfModels/LibraryOfModels_Store_hook.s
 
-// 221
-common, 221, CC_EndEvent_DrawMenu, 0x0, General/221/221_Full.c
+// OVR1
+common, 221, OVR_Region1, 0x0, General/221/221_Full.c
+common, 222, OVR_Region1, 0x0, General/222/222_Full.c
+common, 223, OVR_Region1, 0x0, General/223/223_Full.c
+common, 224, OVR_Region1, 0x0, General/224/224_Full.c
+common, 225, OVR_Region1, 0x0, General/225/225_Full.c
 
 // 230 (incomplete)
+common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/230_00_MM_Battle_DrawIcon_Character.c
+common, 230, MM_TransitionInOut, 0x0, General/230/230_01_MM_TransitionInOut.c
+
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
 common, 230, MM_MENUBOX_Main, 0x0, General/230/230_31_MM_MENUBOX_Main.c
 common, 230, MM_ToggleRows_PlayerCount, 0x0, General/230/230_32_MM_ToggleRows_PlayerCount.c
@@ -37,6 +47,12 @@ common, 230, MM_Characters_PreventOverlap, 0x0, General/230/230_47_MM_Characters
 common, 230, MM_Characters_RestoreIDs, 0x0, General/230/230_48_MM_Characters_RestoreIDs.c
 common, 230, MM_Characters_HideDrivers, 0x0, General/230/230_49_MM_Characters_HideDrivers.c
 common, 230, MM_Characters_MenuBox, 0x0, General/230/230_50_MM_Characters_MenuBox.c
+common, 230, MM_TrackSelect_Video_SetDefaults, 0x0, General/230/230_51_MM_TrackSelect_Video_SetDefaults.c
+common, 230, MM_TrackSelect_Video_State, 0x0, General/230/230_52_MM_TrackSelect_Video_State.c
+common, 230, MM_TrackSelect_Video_Draw, 0x0, General/230/230_53_MM_TrackSelect_Video_Draw.c
+common, 230, MM_TrackSelect_boolTrackOpen, 0x0, General/230/230_54_MM_TrackSelect_boolTrackOpen.c
+common, 230, MM_TrackSelect_Init, 0x0, General/230/230_55_MM_TrackSelect_Init.c
+//ommon, 230, MM_TrackSelect_MenuBox, 0x0, General/230/230_56_MM_TrackSelect_MenuBox.c
 
 // 231 (incomplete)
 // skip first two
@@ -63,6 +79,8 @@ common, 231, RB_TNT_ThTick_ThrowOnHead, 0x0, General/231/231_020_RB_TNT_ThTick_T
 common, 231, RB_Player_ToggleInvisible, 0x0, General/231/231_039_RB_Player_ToggleInvisible.c
 common, 231, RB_Player_ToggleFlicker, 0x0, General/231/231_040_RB_Player_ToggleFlicker.c
 
+common, 231, RB_Burst_CollLevInst, 0x0, General/231/231_050_RB_Burst_CollLevInst.c
+
 common, 231, RB_Baron_ThTick, 0x0, General/231/231_054_055_RB_Baron.c
 common, 231, RB_Blade_ThTick, 0x0, General/231/231_056_057_RB_Blade.c
 common, 231, RB_Bubbles_RoosTubes, 0x0, General/231/231_058_RB_Bubbles_RoosTubes.c
@@ -83,7 +101,7 @@ common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_108_111_RB_Seal.c
 common, 231, RB_Snowball_ThTick, 0x0, General/231/231_112_113_RB_Snowball.c
 // skip Spider, 
 // skip StartText (unused) 
-// skip Teeth
+common, 231, RB_Teeth_LInB, 0x0, General/231/231_120_124_RB_Teeth.c
 common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
 
 // 232 (incomplete)
@@ -96,7 +114,14 @@ common, 232, AH_WarpPad_ThDestroy, 0x0, General/232/232_05_AH_WarpPad_ThDestroy.
 common, 232, AH_WarpPad_LInB, 0x0, General/232/232_06_AH_WarpPad_LInB.c
 common, 232, AH_Garage_ThDestroy, 0x0, General/232/232_07_AH_Garage_ThDestroy.c
 common, 232, AH_Garage_Open, 0x0, General/232/232_08_AH_Garage_Open.c
+common, 232, AH_Garage_ThTick, 0x0, General/232/232_09_AH_Garage_ThTick.c
+common, 232, AH_Garage_LInB, 0x0, General/232/232_10_AH_Garage_LInB.c
+common, 232, AH_SaveObj_ThDestroy, 0x0, General/232/232_11_AH_SaveObj_ThDestroy.c
+common, 232, AH_SaveObj_ThTick, 0x0, General/232/232_12_AH_SaveObj_ThTick.c
+common, 232, AH_SaveObj_LInB, 0x0, General/232/232_13_AH_SaveObj_LInB.c
 common, 232, AH_Door_ThDestroy, 0x0, General/232/232_14_AH_Door_ThDestroy.c
+common, 232, AH_Door_ThTick, 0x0, General/232/232_15_AH_Door_ThTick.c
+common, 232, AH_Door_LInB, 0x0, General/232/232_16_AH_Door_LInB.c
 common, 232, AH_Map_Main, 0x0, General/232/232_24_AH_Map_Main.c
 
 // 233
@@ -125,12 +150,31 @@ common, exe, CAM_SetDesiredPosRot, 0x0, General/CAMERA/CAM_SetDesiredPosRot.c
 common, exe, CAM_StartOfRace, 0x0, General/CAMERA/CAM_StartOfRace.c
 
 // CDSYS
-common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_XAGetNumTracks.c
-// started XAGetTrackLength, not done
+common, exe, CDSYS_Init, 0x0, General/CDSYS/CDSYS_c01_Init.c
+common, exe, CDSYS_GetFilePosInt, 0x0, General/CDSYS/CDSYS_c02_GetFilePosInt.c
+common, exe, CDSYS_SetMode_StreamData, 0x0, General/CDSYS/CDSYS_c03_SetMode_StreamData.c
+common, exe, CDSYS_SetMode_StreamAudio, 0x0, General/CDSYS/CDSYS_c04_SetMode_StreamAudio.c
+common, exe, CDSYS_SetXAToLang, 0x0, General/CDSYS/CDSYS_c05_SetXAToLang.c
+common, exe, CDSYS_XaCallbackCdSync, 0x0, General/CDSYS/CDSYS_c06_XaCallbackCdSync.c
+common, exe, CDSYS_XaCallbackCdReady, 0x0, General/CDSYS/CDSYS_c07_XaCallbackCdReady.c
+common, exe, CDSYS_SpuCallbackIRQ, 0x0, General/CDSYS/CDSYS_c08_SpuCallbackIRQ.c
+common, exe, CDSYS_SpuCallbackTransfer, 0x0, General/CDSYS/CDSYS_c09_SpuCallbackTransfer.c
+common, exe, CDSYS_SpuEnableIRQ, 0x0, General/CDSYS/CDSYS_c10_SpuEnableIRQ.c
+common, exe, CDSYS_SpuDisableIRQ, 0x0, General/CDSYS/CDSYS_c11_SpuDisableIRQ.c
+// skip CDSYS_SpuGetMaxSample
+common, exe, CDSYS_XAGetNumTracks, 0x0, General/CDSYS/CDSYS_c13_XAGetNumTracks.c
+common, exe, CDSYS_XASeek, 0x0, General/CDSYS/CDSYS_c14_XASeek.c
+common, exe, CDSYS_XAGetTrackLength, 0x0, General/CDSYS/CDSYS_c15_XAGetTrackLength.c
+common, exe, CDSYS_XAPlay, 0x0, General/CDSYS/CDSYS_c16_XAPlay.c
+common, exe, CDSYS_XAPauseRequest, 0x0, General/CDSYS/CDSYS_c17_XAPauseRequest.c
+common, exe, CDSYS_XAPauseForce, 0x0, General/CDSYS/CDSYS_c18_XAPauseForce.c
+common, exe, CDSYS_XAPauseAtEnd, 0x0, General/CDSYS/CDSYS_c19_XAPauseAtEnd.c
 
 // CTR
 common, exe, CTR_CycleTex_LEV, 0x0, General/CTR_CycleTex_LEV.c
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
+common, exe, CTR_CycleTex_AllModels, 0x0, General/CTR_CycleTex_AllModels.c
+common, exe, CTR_CycleTex_Model, 0x0, General/CTR_CycleTex_Model.c
 
 // DebugFont
 common, exe, DebugFont_Init, 0x0, General/DebugFont/DebugFont_Init.c General/DebugFont/DebugFont_DrawNumbers, DebugFont.bin
@@ -143,6 +187,10 @@ common, exe, DecalFont_DrawLineOT, 0x0, General/DecalFont/DecalFont_DrawLineOT.c
 common, exe, DecalFont_DrawMultiLineStrlen, 0x0, General/DecalFont/DecalFont_DrawMultiLineStrlen.c
 common, exe, DecalFont_DrawMultiLine, 0x0, General/DecalFont/DecalFont_DrawMultiLine.c
 common, exe, DecalFont_GetLineWidthStrlen, 0x0, General/DecalFont/DecalFont_GetLineWidthStrlen.c
+
+// DecalGlobal
+common, exe, DecalGlobal_Clear, 0x0, General/DecalGlobal/DecalGlobal_Clear.c
+common, exe, DecalGlobal_Store, 0x0, General/DecalGlobal/DecalGlobal_Store.c
 
 // DecalHUD
 common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyFT4.c
@@ -158,6 +206,7 @@ common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c
 
 // GAMEPAD
 common, exe, GAMEPAD_Init, 0x0, General/GAMEPAD/GAMEPAD_Init.c
+common, exe, GAMEPAD_GetNumConnected, 0x0, General/GAMEPAD/GAMEPAD_GetNumConnected.c
 common, exe, GAMEPAD_ProcessAnyoneVars, 0x0, General/GAMEPAD/GAMEPAD_ProcessAnyoneVars.c
 
 // GAMEPROG (done)
@@ -172,30 +221,114 @@ common, exe, GAMEPROG_SyncGameAndCard, 0x0, General/GAMEPROG/GAMEPROG_SyncGameAn
 common, exe, GAMEPROG_NewGame_OnBoot, 0x0, General/GAMEPROG/GAMEPROG_NewGame_OnBoot.c
 common, exe, GAMEPROG_GetPtrHighScoreTrack, 0x0, General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c
 
+// GHOST
+//ommon, exe, GhostReplay_ThTick, 0x0, General/GHOST/GhostReplay_ThTick.c
+common, exe, GhostReplay_Init1, 0x0, General/GHOST/GhostReplay_Init1.c
+common, exe, GhostReplay_Init2, 0x0, General/GHOST/GhostReplay_Init2.c
+common, exe, GhostTape_Start, 0x0, General/GHOST/GhostTape_Start.c
+common, exe, GhostTape_End, 0x0, General/GHOST/GhostTape_End.c
+common, exe, GhostTape_WriteMoves, 0x0, General/GHOST/GhostTape_WriteMoves.c
+common, exe, GhostTape_WriteBoosts, 0x0, General/GHOST/GhostTape_WriteBoosts.c
+common, exe, GhostTape_Destroy, 0x0, General/GHOST/GhostTape_Destroy.c
+
 // HOWL
-common, exe, OtherFX_Play, 0x0, General/HOWL/OtherFX_Play.c
-common, exe, OtherFX_Play_Echo, 0x0, General/HOWL/OtherFX_Play_Echo.c
-common, exe, OtherFX_Stop1, 0x0, General/HOWL/OtherFX_Stop1.c
-common, exe, OtherFX_Stop2, 0x0, General/HOWL/OtherFX_Stop2.c
+common, exe, CountSounds, 0x0, General/HOWL/h01_CountSounds.c
+common, exe, OtherFX_Play, 0x0, General/HOWL/h02_OtherFX_Play.c
+common, exe, OtherFX_Play_Echo, 0x0, General/HOWL/h03_OtherFX_Play_Echo.c
+common, exe, OtherFX_Play_LowLevel, 0x0, General/HOWL/h04_OtherFX_Play_LowLevel.c
+common, exe, OtherFX_Modify, 0x0, General/HOWL/h05_OtherFX_Modify.c
+common, exe, OtherFX_Stop1, 0x0, General/HOWL/h06_OtherFX_Stop1.c
+common, exe, OtherFX_Stop2, 0x0, General/HOWL/h07_OtherFX_Stop2.c
+common, exe, EngineAudio_InitOnce, 0x0, General/HOWL/h08_EngineAudio_InitOnce.c
+common, exe, EngineAudio_Recalculate, 0x0, General/HOWL/h09_EngineAudio_Recalculate.c
+common, exe, EngineAudio_Stop, 0x0, General/HOWL/h10_EngineAudio_Stop.c
+common, exe, SetReverbMode, 0x0, General/HOWL/h11_SetReverbMode.c
+common, exe, CseqMusic_Start, 0x0, General/HOWL/h12_CseqMusic_Start.c
+common, exe, CseqMusic_Pause, 0x0, General/HOWL/h13_CseqMusic_Pause.c
+common, exe, CseqMusic_Resume, 0x0, General/HOWL/h14_CseqMusic_Resume.c
+common, exe, CseqMusic_ChangeVolume, 0x0, General/HOWL/h15_CseqMusic_ChangeVolume.c
+common, exe, CseqMusic_Restart, 0x0, General/HOWL/h16_CseqMusic_Restart.c
+common, exe, CseqMusic_ChangeTempo, 0x0, General/HOWL/h17_CseqMusic_ChangeTempo.c
+common, exe, CseqMusic_AdvHubSwap, 0x0, General/HOWL/h18_CseqMusic_AdvHubSwap.c
+common, exe, CseqMusic_Stop, 0x0, General/HOWL/h19_CseqMusic_Stop.c
+common, exe, CseqMusic_StopAll, 0x0, General/HOWL/h20_CseqMusic_StopAll.c
+common, exe, Bank_ResetAllocator, 0x0, General/HOWL/h21_Bank_ResetAllocator.c
+common, exe, Bank_Alloc, 0x0, General/HOWL/h22_Bank_Alloc.c
+common, exe, Bank_AssignSpuAddrs, 0x0, General/HOWL/h23_Bank_AssignSpuAddrs.c
+common, exe, Bank_Destroy, 0x0, General/HOWL/h24_Bank_Destroy.c
+common, exe, Bank_ClearInRange, 0x0, General/HOWL/h25_Bank_ClearInRange.c
+common, exe, Bank_Load, 0x0, General/HOWL/h26_Bank_Load.c
+common, exe, Bank_DestroyLast, 0x0, General/HOWL/h27_Bank_DestroyLast.c
+common, exe, Bank_DestroyUntilIndex, 0x0, General/HOWL/h28_Bank_DestroyUntilIndex.c
+common, exe, Bank_DestroyAll, 0x0, General/HOWL/h29_Bank_DestroyAll.c
+common, exe, howl_InstrumentPitch, 0x0, General/HOWL/h30_howl_InstrumentPitch.c
+common, exe, howl_InitGlobals, 0x0, General/HOWL/h31_howl_InitGlobals.c
+common, exe, howl_ParseHeader, 0x0, General/HOWL/h32_howl_ParseHeader.c
+common, exe, howl_ParseCseqHeader, 0x0, General/HOWL/h33_howl_ParseCseqHeader.c
+common, exe, howl_LoadHeader, 0x0, General/HOWL/h34_howl_LoadHeader.c
+common, exe, howl_SetSong, 0x0, General/HOWL/h35_howl_SetSong.c
+common, exe, howl_LoadSong, 0x0, General/HOWL/h36_howl_LoadSong.c
+common, exe, howl_ErasePtrCseqHeader, 0x0, General/HOWL/h37_howl_ErasePtrCseqHeader.c
+common, exe, howl_GetNextNote, 0x0, General/HOWL/h38_howl_GetNextNote.c
+common, exe, cseq_opcode01_noteoff, 0x0, General/HOWL/h39_cseq_opcode01_noteoff.c
+common, exe, cseq_opcode03, 0x0, General/HOWL/h40_cseq_opcode03.c
+common, exe, howl_InitChannelAttr_Music, 0x0, General/HOWL/h41_howl_InitChannelAttr_Music.c
+common, exe, cseq_opcode_from06and07, 0x0, General/HOWL/h42_cseq_opcode_from06and07.c
+common, exe, cseq_opcode05_noteon, 0x0, General/HOWL/h43_cseq_opcode05_noteon.c
+common, exe, cseq_opcode06, 0x0, General/HOWL/h44_cseq_opcode06.c
+common, exe, cseq_opcode07, 0x0, General/HOWL/h45_cseq_opcode07.c
+common, exe, cseq_opcode08, 0x0, General/HOWL/h46_cseq_opcode08.c
+common, exe, cseq_opcode09, 0x0, General/HOWL/h47_cseq_opcode09.c
+common, exe, cseq_opcode0a, 0x0, General/HOWL/h48_cseq_opcode0a.c
+common, exe, SongPool_FindFreeChannel, 0x0, General/HOWL/h49_SongPool_FindFreeChannel.c
+common, exe, SongPool_CalculateTempo, 0x0, General/HOWL/h50_SongPool_CalculateTempo.c
+common, exe, SongPool_ChangeTempo, 0x0, General/HOWL/h51_SongPool_ChangeTempo.c
+common, exe, SongPool_Start, 0x0, General/HOWL/h52_SongPool_Start.c
+common, exe, SongPool_Volume, 0x0, General/HOWL/h53_SongPool_Volume.c
+common, exe, SongPool_AdvHub1, 0x0, General/HOWL/h54_SongPool_AdvHub1.c
+common, exe, SongPool_AdvHub2, 0x0, General/HOWL/h55_SongPool_AdvHub2.c
+common, exe, SongPool_StopCseq, 0x0, General/HOWL/h56_SongPool_StopCseq.c
+common, exe, SongPool_StopAllCseq, 0x0, General/HOWL/h57_SongPool_StopAllCseq.c
+common, exe, howl_Disable, 0x0, General/HOWL/h58_howl_Disable.c
+common, exe, UpdateChannelVol_EngineFX, 0x0, General/HOWL/h59_UpdateChannelVol_EngineFX.c
+common, exe, UpdateChannelVol_OtherFX, 0x0, General/HOWL/h60_UpdateChannelVol_OtherFX.c
+common, exe, UpdateChannelVol_Music, 0x0, General/HOWL/h61_UpdateChannelVol_Music.c
+common, exe, UpdateChannelVol_EngineFX_All, 0x0, General/HOWL/h62_UpdateChannelVol_EngineFX_All.c
+common, exe, UpdateChannelVol_Music_All, 0x0, General/HOWL/h63_UpdateChannelVol_Music_All.c
+common, exe, UpdateChannelVol_OtherFX_All, 0x0, General/HOWL/h64_UpdateChannelVol_OtherFX_All.c
+common, exe, howl_VolumeGet, 0x0, General/HOWL/h65_howl_VolumeGet.c
+common, exe, howl_VolumeSet, 0x0, General/HOWL/h66_howl_VolumeSet.c
+common, exe, howl_ModeGet, 0x0, General/HOWL/h67_howl_ModeGet.c
+common, exe, howl_ModeSet, 0x0, General/HOWL/h68_howl_ModeSet.c
+common, exe, OptionsMenu_TestSound, 0x0, General/HOWL/h69_OptionsMenu_TestSound.c
+common, exe, Smart_EnterCriticalSection, 0x0, General/HOWL/h70_Smart_EnterCriticalSection.c
+common, exe, Smart_ExitCriticalSection, 0x0, General/HOWL/h71_Smart_ExitCriticalSection.c
+common, exe, Channel_SetVolume, 0x0, General/HOWL/h72_Channel_SetVolume.c
+common, exe, Channel_FindSound, 0x0, General/HOWL/h73_Channel_FindSound.c
+common, exe, Channel_AllocSlot_AntiSpam, 0x0, General/HOWL/h74_Channel_AllocSlot_AntiSpam.c
+common, exe, Channel_AllocSlot, 0x0, General/HOWL/h75_Channel_AllocSlot.c
+common, exe, Channel_SearchFX_EditAttr, 0x0, General/HOWL/h76_Channel_SearchFX_EditAttr.c
+common, exe, Channel_SearchFX_Destroy, 0x0, General/HOWL/h77_Channel_SearchFX_Destroy.c
+common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/h78_Channel_DestroyAll_LowLevel.c
+common, exe, Channel_ParseSongToChannels, 0x0, General/HOWL/h79_Channel_ParseSongToChannels.c
+common, exe, Channel_UpdateChannels, 0x0, General/HOWL/h80_Channel_UpdateChannels.c
+common, exe, Cutscene_VolumeBackup, 0x0, General/HOWL/h81_Cutscene_VolumeBackup.c
+common, exe, Cutscene_VolumeRestore, 0x0, General/HOWL/h82_Cutscene_VolumeRestore.c
+common, exe, howl_PlayAudio_Update, 0x0, General/HOWL/h83_howl_PlayAudio_Update.c
+common, exe, howl_InitChannelAttr_EngineFX, 0x0, General/HOWL/h84_howl_InitChannelAttr_EngineFX.c
+common, exe, howl_InitChannelAttr_OtherFX, 0x0, General/HOWL/h85_howl_InitChannelAttr_OtherFX.c
+common, exe, howl_PauseAudio, 0x0, General/HOWL/h86_howl_PauseAudio.c
+common, exe, howl_UnPauseChannel, 0x0, General/HOWL/h87_howl_UnPauseChannel.c
+common, exe, howl_UnPauseAudio, 0x0, General/HOWL/h88_howl_UnPauseAudio.c
+common, exe, howl_StopAudio, 0x0, General/HOWL/h89_howl_StopAudio.c
 
-common, exe, CseqMusic_Start, 0x0, General/HOWL/CseqMusic_Start.c
-common, exe, CseqMusic_Pause, 0x0, General/HOWL/CseqMusic_Pause.c
-common, exe, CseqMusic_Resume, 0x0, General/HOWL/CseqMusic_Resume.c
-common, exe, CseqMusic_ChangeVolume, 0x0, General/HOWL/CseqMusic_ChangeVolume.c
-common, exe, CseqMusic_Restart, 0x0, General/HOWL/CseqMusic_Restart.c
-common, exe, CseqMusic_ChangeTempo, 0x0, General/HOWL/CseqMusic_ChangeTempo.c
-// skip AdvHub cseqMusic temporarily, tired
-common, exe, CseqMusic_Stop, 0x0, General/HOWL/CseqMusic_Stop.c
-common, exe, CseqMusic_StopAll, 0x0, General/HOWL/CseqMusic_StopAll.c
-
-common, exe, Channel_SetVolume, 0x0, General/HOWL/Channel_SetVolume.c
-common, exe, Channel_FindSound, 0x0, General/HOWL/Channel_FindSound.c
-common, exe, Channel_AllocSlot_AntiSpam, 0x0, General/HOWL/Channel_AllocSlot_AntiSpam.c
-common, exe, Channel_AllocSlot, 0x0, General/HOWL/Channel_AllocSlot.c
-common, exe, Channel_SearchFX_EditAttr, 0x0, General/HOWL/Channel_SearchFX_EditAttr.c
-common, exe, Channel_SearchFX_Destroy, 0x0, General/HOWL/Channel_SearchFX_Destroy.c
-common, exe, Channel_DestroyAll_LowLevel, 0x0, General/HOWL/Channel_DestroyAll_LowLevel.c
-// skip last two "channel" functions
+// HOWL_Garage
+common, exe, Garage_Init, 0x0, General/HOWL/Garage_Init.c
+common, exe, Garage_Enter, 0x0, General/HOWL/Garage_Enter.c
+common, exe, Garage_PlayFX, 0x0, General/HOWL/Garage_PlayFX.c
+common, exe, Garage_LerpFX, 0x0, General/HOWL/Garage_LerpFX.c
+common, exe, Garage_MoveLR, 0x0, General/HOWL/Garage_MoveLR.c
+common, exe, Garage_Leave, 0x0, General/HOWL/Garage_Leave.c
 
 // INSTANCE
 common, exe, INSTANCE_Birth, 0x0, General/INSTANCE/INSTANCE_Birth.c
@@ -204,6 +337,7 @@ common, exe, INSTANCE_Birth2D, 0x0, General/INSTANCE/INSTANCE_Birth2D.c
 common, exe, INSTANCE_BirthWithThread, 0x0, General/INSTANCE/INSTANCE_BirthWithThread.c
 common, exe, INSTANCE_BirthWithThread_Stack, 0x0, General/INSTANCE/INSTANCE_BirthWithThread_Stack.c
 common, exe, INSTANCE_Death, 0x0, General/INSTANCE/INSTANCE_Death.c
+common, exe, INSTANCE_GetNumAnimFrames, 0x0, General/INSTANCE/INSTANCE_GetNumAnimFrames.c
 
 // JitPool
 common, exe, JitPool_Clear, 0x0, General/JitPool/JitPool_Clear.c
@@ -236,34 +370,57 @@ common, exe, LinkedCollide_Hitbox_Desc, 0x0, General/LinkedCollide_Hitbox_Desc.c
 
 
 // LOAD
-common, exe, LOAD_AppendQueue, 0x0, General/LOAD/LOAD_AppendQueue.c
-common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_Callback_Overlay_Generic.c
-common, exe, LOAD_Callback_Overlay_230, 0x0, General/LOAD/LOAD_Callback_Overlay_230.c
-common, exe, LOAD_Callback_Overlay_231, 0x0, General/LOAD/LOAD_Callback_Overlay_231.c
-common, exe, LOAD_Callback_Overlay_232, 0x0, General/LOAD/LOAD_Callback_Overlay_232.c
-common, exe, LOAD_Callback_Overlay_233, 0x0, General/LOAD/LOAD_Callback_Overlay_233.c
-common, exe, LOAD_Callback_MaskHints3D, 0x0, General/LOAD/LOAD_Callback_MaskHints3D.c
-common, exe, LOAD_Callback_Podiums, 0x0, General/LOAD/LOAD_Callback_Podiums.c
-common, exe, LOAD_Callback_LEV, 0x0, General/LOAD/LOAD_Callback_LEV.c
-common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD/LOAD_Callback_LEV_Adv.c
-common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD/LOAD_Callback_DriverModels.c
-common, exe, LOAD_CDRequestCallback, 0x0, General/LOAD/LOAD_CDRequestCallback.c
-common, exe, LOAD_DriverMPK, 0x0, General/LOAD/LOAD_DriverMPK.c
-common, exe, LOAD_GetAdvPackIndex, 0x0, General/LOAD/LOAD_GetAdvPackIndex.c
-common, exe, LOAD_GetBigfileIndex, 0x0, General/LOAD/LOAD_GetBigfileIndex.c
-common, exe, LOAD_HubSwapPtrs, 0x0, General/LOAD/LOAD_HubSwapPtrs.c
-common, exe, LOAD_Hub_SwapNow, 0x0, General/LOAD/LOAD_Hub_SwapNow.c
-common, exe, LOAD_IsOpen_AdvHub, 0x0, General/LOAD/LOAD_IsOpen_AdvHub.c
-common, exe, LOAD_IsOpen_MainMenu, 0x0, General/LOAD/LOAD_IsOpen_MainMenu.c
-common, exe, LOAD_IsOpen_Podiums, 0x0, General/LOAD/LOAD_IsOpen_Podiums.c
-common, exe, LOAD_IsOpen_RacingOrBattle, 0x0, General/LOAD/LOAD_IsOpen_RacingOrBattle.c
-common, exe, LOAD_LangFile, 0x0, General/LOAD/LOAD_LangFile.c
-common, exe, LOAD_LevelFile, 0x0, General/LOAD/LOAD_LevelFile.c
-common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_ReadFile.c
-common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_OvrLOD.c
-common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_OvrEndRace.c
-common, exe, LOAD_OvrThreads, 0x0, General/LOAD/LOAD_OvrThreads.c
-common, exe, LOAD_TenStages, 0x0, General/LOAD/LOAD_TenStages.c
+common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_A01_Callback_Overlay_Generic.c
+common, exe, LOAD_Callback_Overlay_230, 0x0, General/LOAD/LOAD_A02_Callback_Overlay_230.c
+common, exe, LOAD_Callback_Overlay_231, 0x0, General/LOAD/LOAD_A03_Callback_Overlay_231.c
+common, exe, LOAD_Callback_Overlay_232, 0x0, General/LOAD/LOAD_A04_Callback_Overlay_232.c
+common, exe, LOAD_Callback_Overlay_233, 0x0, General/LOAD/LOAD_A05_Callback_Overlay_233.c
+common, exe, LOAD_Callback_MaskHints3D, 0x0, General/LOAD/LOAD_A06_Callback_MaskHints3D.c
+common, exe, LOAD_Callback_Podiums, 0x0, General/LOAD/LOAD_A07_Callback_Podiums.c
+common, exe, LOAD_Callback_LEV, 0x0, General/LOAD/LOAD_A08_Callback_LEV.c
+common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD/LOAD_A09_Callback_LEV_Adv.c
+common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD/LOAD_A10_Callback_DriverModels.c
+common, exe, LOAD_HubCallback, 0x0, General/LOAD/LOAD_A11_HubCallback.c
+common, exe, LOAD_GlobalModelPtrs_MPK, 0x0, General/LOAD/LOAD_A12_GlobalModelPtrs_MPK.c
+common, exe, LOAD_HubSwapPtrs, 0x0, General/LOAD/LOAD_A13_HubSwapPtrs.c
+common, exe, LOAD_StringToUpper, 0x0, General/LOAD/LOAD_A14_StringToUpper.c
+common, exe, LOAD_InitCD, 0x0, General/LOAD/LOAD_A15_InitCD.c
+common, exe, LOAD_ReadDirectory, 0x0, General/LOAD/LOAD_A16_ReadDirectory.c
+common, exe, LOAD_DramFileCallback, 0x0, General/LOAD/LOAD_A17_DramFileCallback.c
+common, exe, LOAD_DramFile, 0x0, General/LOAD/LOAD_A18_DramFile.c
+common, exe, LOAD_VramFileCallback, 0x0, General/LOAD/LOAD_A19_VramFileCallback.c
+common, exe, LOAD_VramFile, 0x0, General/LOAD/LOAD_A20_VramFile.c
+common, exe, LOAD_ReadFileASyncCallback, 0x0, General/LOAD/LOAD_A21_ReadFileASyncCallback.c
+common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_A22_ReadFile.c
+common, exe, LOAD_ReadFile_NoCallback, 0x0, General/LOAD/LOAD_A23_ReadFile_NoCallback.c
+common, exe, LOAD_FindFile, 0x0, General/LOAD/LOAD_A24_FindFile.c
+common, exe, LOAD_HowlHeaderSectors, 0x0, General/LOAD/LOAD_A25_HowlHeaderSectors.c
+common, exe, LOAD_HowlCallback, 0x0, General/LOAD/LOAD_A26_HowlCallback.c
+common, exe, LOAD_HowlSectorChainStart, 0x0, General/LOAD/LOAD_A27_HowlSectorChainStart.c
+common, exe, LOAD_HowlSectorChainEnd, 0x0, General/LOAD/LOAD_A28_HowlSectorChainEnd.c
+common, exe, LOAD_RunPtrMap, 0x0, General/LOAD/LOAD_A29_RunPtrMap.c
+common, exe, LOAD_Robots2P, 0x0, General/LOAD/LOAD_A30_Robots2P.c
+common, exe, LOAD_Robots1P, 0x0, General/LOAD/LOAD_A31_Robots1P.c
+common, exe, LOAD_DriverMPK, 0x0, General/LOAD/LOAD_A32_DriverMPK.c
+common, exe, LOAD_LangFile, 0x0, General/LOAD/LOAD_A33_LangFile.c
+common, exe, LOAD_GetBigfileIndex, 0x0, General/LOAD/LOAD_A34_GetBigfileIndex.c
+common, exe, LOAD_AppendQueue, 0x0, General/LOAD/LOAD_A35_AppendQueue.c
+common, exe, LOAD_CDRequestCallback, 0x0, General/LOAD/LOAD_A36_CDRequestCallback.c
+common, exe, LOAD_NextQueuedFile, 0x0, General/LOAD/LOAD_A37_NextQueuedFile.c
+common, exe, LOAD_Hub_ReadFile, 0x0, General/LOAD/LOAD_A38_Hub_ReadFile.c
+common, exe, LOAD_Hub_SwapNow, 0x0, General/LOAD/LOAD_A39_Hub_SwapNow.c
+common, exe, LOAD_Hub_Main, 0x0, General/LOAD/LOAD_A40_Hub_Main.c
+common, exe, LOAD_OvrLOD, 0x0, General/LOAD/LOAD_A41_OvrLOD.c
+common, exe, LOAD_OvrEndRace, 0x0, General/LOAD/LOAD_A42_OvrEndRace.c
+common, exe, LOAD_OvrThreads, 0x0, General/LOAD/LOAD_A43_OvrThreads.c
+common, exe, LOAD_GetAdvPackIndex, 0x0, General/LOAD/LOAD_A44_GetAdvPackIndex.c
+common, exe, LOAD_TenStages, 0x0, General/LOAD/LOAD_A45_TenStages.c
+common, exe, LOAD_TalkingMask, 0x0, General/LOAD/LOAD_A46_TalkingMask.c
+common, exe, LOAD_LevelFile, 0x0, General/LOAD/LOAD_A47_LevelFile.c
+common, exe, LOAD_IsOpen_RacingOrBattle, 0x0, General/LOAD/LOAD_A48_IsOpen_RacingOrBattle.c
+common, exe, LOAD_IsOpen_MainMenu, 0x0, General/LOAD/LOAD_A49_IsOpen_MainMenu.c
+common, exe, LOAD_IsOpen_AdvHub, 0x0, General/LOAD/LOAD_A50_IsOpen_AdvHub.c
+common, exe, LOAD_IsOpen_Podiums, 0x0, General/LOAD/LOAD_A51_IsOpen_Podiums.c
 
 // MAIN
 common, exe, MainDB_GetClipSize, 0x0, General/MAIN/MainDB_GetClipSize.c
@@ -276,9 +433,17 @@ common, exe, MainFrame_RenderFrame, 0x0, General/MAIN/MainFrame_RenderFrame.c
 common, exe, MainFrame_RequestMaskHint, 0x0, General/MAIN/MainFrame_RequestMaskHint.c
 common, exe, MainFrame_ResetDB, 0x0, General/MAIN/MainFrame_ResetDB.c
 common, exe, MainFrame_TogglePauseAudio, 0x0, General/MAIN/MainFrame_TogglePauseAudio.c
+common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefault.c
 common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
+common, exe, MainGameStart_Initialize, 0x0, General/MAIN/MainGameStart_Initialize.c
+common, exe, MainInit_VisMem, 0x0, General/MAIN/MainInit_VisMem.c
 common, exe, MainInit_PrimMem, 0x0, General/MAIN/MainInit_PrimMem.c
+common, exe, MainInit_JitPoolsReset, 0x0, General/MAIN/MainInit_JitPoolsReset.c
 common, exe, MainInit_OTMem, 0x0, General/MAIN/MainInit_OTMem.c
+common, exe, MainInit_Drivers, 0x0, General/MAIN/MainInit_Drivers.c
+common, exe, MainInit_FinalizeInit, 0x0, General/MAIN/MainInit_FinalizeInit.c
+common, exe, MainInit_VRAMClear, 0x0, General/MAIN/MainInit_VRAMClear.c
+common, exe, MainInit_VRAMDisplay, 0x0, General/MAIN/MainInit_VRAMDisplay.c
 common, exe, main, 0x0, General/MAIN/MainMain.c
 common, exe, MainRaceTrack_RequestLoad, 0x0, General/MAIN/MainRaceTrack_RequestLoad.c
 common, exe, MainRaceTrack_StartLoad, 0x0, General/MAIN/MainRaceTrack_StartLoad.c
@@ -307,7 +472,6 @@ common, exe, MEMCARD_GetNextHwEvent, 0x0, General/MEMCARD/MEMCARD_GetNextHwEvent
 common, exe, MEMCARD_Format, 0x0, General/MEMCARD/MEMCARD_Format.c
 common, exe, MEMCARD_EraseFile, 0x0, General/MEMCARD/MEMCARD_EraseFile.c
 common, exe, MEMCARD_SkipEvents, 0x0, General/MEMCARD/MEMCARD_SkipEvents.c
-common, exe, MEMCARD_FindNextGhost, 0x0, General/MEMCARD/MEMCARD_FindNextGhost.c
 common, exe, MEMCARD_IsFile, 0x0, General/MEMCARD/MEMCARD_IsFile.c
 common, exe, MEMCARD_WaitForHwEvent, 0x0, General/MEMCARD/MEMCARD_WaitForHwEvent.c
 common, exe, MEMCARD_WriteFile, 0x0, General/MEMCARD/MEMCARD_WriteFile.c
@@ -368,6 +532,27 @@ common, exe, TileView_SetMatrixVP, 0x0, General/TileView/TileView_SetMatrixVP.c
 common, exe, TileView_SetPsyqGeom, 0x0, General/TileView/TileView_SetPsyqGeom.c
 common, exe, TileView_UpdateFrustum, 0x0, General/TileView/TileView_UpdateFrustum.c
 common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
+common, exe, TileView_SetDrawEnv_Normal, 0x0, General/TileView/TileView_SetDrawEnv_Normal.c
+
+// TitleFlag
+common, exe, TitleFlag_MoveModels, 0x0, General/TitleFlag/TitleFlag_t01_MoveModels.c
+common, exe, TitleFlag_IsFullyOnScreen, 0x0, General/TitleFlag/TitleFlag_t02_IsFullyOnScreen.c
+common, exe, TitleFlag_IsFullyOffScreen, 0x0, General/TitleFlag/TitleFlag_t03_IsFullyOffScreen.c
+common, exe, TitleFlag_IsTransitioning, 0x0, General/TitleFlag/TitleFlag_t04_IsTransitioning.c
+common, exe, TitleFlag_SetDrawOrder, 0x0, General/TitleFlag/TitleFlag_t05_SetDrawOrder.c
+common, exe, TitleFlag_BeginTransition, 0x0, General/TitleFlag/TitleFlag_t06_BeginTransition.c
+common, exe, TitleFlag_SetFullyOnScreen, 0x0, General/TitleFlag/TitleFlag_t07_SetFullyOnScreen.c
+common, exe, TitleFlag_SetFullyOffScreen, 0x0, General/TitleFlag/TitleFlag_t08_SetFullyOffScreen.c
+common, exe, TitleFlag_SetCanDraw, 0x0, General/TitleFlag/TitleFlag_t09_SetCanDraw.c
+common, exe, TitleFlag_GetCanDraw, 0x0, General/TitleFlag/TitleFlag_t10_GetCanDraw.c
+common, exe, TitleFlag_GetOT, 0x0, General/TitleFlag/TitleFlag_t11_GetOT.c
+common, exe, TitleFlag_ResetTextAnim, 0x0, General/TitleFlag/TitleFlag_t12_ResetTextAnim.c
+common, exe, TitleFlag_DrawLoadingString, 0x0, General/TitleFlag/TitleFlag_t13_DrawLoadingString.c
+common, exe, TitleFlag_DrawSelf, 0x0, General/TitleFlag/TitleFlag_t14_DrawSelf.c
+
+// RCNT (watch out for namespace name, not alphabetical)
+common, exe, RCNT_Init, 0x0, General/RCNT/RCNT_Init.c
+common, exe, RCNT_Destroy, 0x0, General/RCNT/RCNT_Destroy.c
 
 // UI
 common, exe, UI_ConvertX_2, 0x0, General/UI/UI_ConvertX_2.c
@@ -377,7 +562,6 @@ common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
 // note to self, still need UI_DrawRankedDrivers,
 // squish 11 functions
 common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_DrawNumWumpa.c General/UI/UI_DrawNumKey.c General/UI/UI_DrawNumRelic.c General/UI/UI_DrawNumTrophy.c General/UI/UI_DrawNumCrystal.c General/UI/UI_DrawNumTimebox.c General/UI/UI_DrawSpeedBG.c General/UI/UI_DrawSpeedNeedle.c General/UI/UI_JumpMeter_Draw.c General/UI/UI_JumpMeter_Update.c General/UI/UI_DrawSlideMeter.c, UI_ElevenFuncs.bin
-
 
 common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_DrawPosSuffix.c
 common, exe, UI_Map_GetIconPos, 0x0, General/UI/UI_Map_GetIconPos.c
@@ -402,6 +586,9 @@ common, exe, UI_RenderFrame_CrystChall, 0x0, General/UI/UI_RenderFrame_CrystChal
 common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
 
+// VEH Init
+common, exe, VehInit_SetConsts, 0x0, General/Vehicle/VehInit_SetConsts.c
+common, exe, VehInit_TeleportAll, 0x0, General/Vehicle/VehInit_TeleportAll.c
 
 // VEH PTR
 common, exe, VehPtr_Crashing_PhysAngular, 0x0, General/Vehicle/VehPtr_Crashing_FuncPtrs.c

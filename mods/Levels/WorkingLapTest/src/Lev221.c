@@ -1,3 +1,8 @@
+// Only for generating LEV files
+#pragma GCC diagnostic ignored "-Wint-conversion"
+#pragma GCC diagnostic ignored "-Woverride-init"
+#pragma GCC diagnostic ignored "-Woverflow"
+
 #include <common.h>
 #include "../../levelBuilder.h"
 
@@ -18,25 +23,25 @@ struct LevelFile
 	int visBitIndex[4];
 	struct VisMem visMem;
 	
-	int VisMem_bitIndex_DstMemcpyP1[8]; // leave empty
+	// leave empty
+	// DstMemcpy must be big for PVS to copy into,
+	// RenderList must be big enough for 2 pointers to all BSP nodes
+	int VisMem_bitIndex_DstMemcpyP1[8];
 	int VisMem_bspList_RenderListP1[3*2];
-	int VisMem_bitIndex_DstMemcpyP2[8]; // leave empty
+	int VisMem_bitIndex_DstMemcpyP2[8];
 	int VisMem_bspList_RenderListP2[3*2];
-	int VisMem_bitIndex_DstMemcpyP3[8]; // leave empty
+	int VisMem_bitIndex_DstMemcpyP3[8];
 	int VisMem_bspList_RenderListP3[3*2];
-	int VisMem_bitIndex_DstMemcpyP4[8]; // leave empty
+	int VisMem_bitIndex_DstMemcpyP4[8];
 	int VisMem_bspList_RenderListP4[3*2];
 	
-	int map[(31+NUM_BLOCKS*6)+1];
+	int map[(3)+1];
 };
 
-// for whatever reason it's necessary to offset every pointer by -4
 struct LevelFile file =
 {
-	// i don't know what the map section is, other than holding pointers for most level variables
 	.ptrMap = LEV_OFFSETOF(map[0]),
 	
-	// i don't know what the relation between all of these variables is, specifically
 	.level =
 	{
 		.ptr_mesh_info = LEV_OFFSETOF(mInfo),
@@ -84,17 +89,17 @@ struct LevelFile file =
 		.ptrVertexArray = LEV_OFFSETOF(levVertex[0]),
 		.unk2 = 0, // idk, fine to leave null
 		.bspRoot = LEV_OFFSETOF(bsp[0]),
-		.numBspNodes = 3, // can be anything non-zero
+		.numBspNodes = 3,
 	},
 	
 	// quadblock texture type
 	// see IconGroup4 in namespace_Decal.h
 	.test_texture =
 	{
-		.far =    ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // very far
-		.middle = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // far
-		.near =   ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
-		.mosaic = ImageName_Blend(904, 480, 60, 460, 32, 32, BPP_4, ADD), // close
+		.far =    ImageName_Blend(512, 0, 32, 128, 32, 32, BPP_4, ADD), // very far
+		.middle = ImageName_Blend(512, 0, 32, 128, 32, 32, BPP_4, ADD), // far
+		.near =   ImageName_Blend(512, 0, 32, 128, 32, 32, BPP_4, ADD), // close
+		.mosaic = ImageName_Blend(512, 0, 32, 128, 32, 32, BPP_4, ADD), // close
 	},
 	
 	// this must exist, or else camera fly-in checks for "count" without nullptr check, and crashes dereferencing nullptr on real PSX
@@ -296,102 +301,18 @@ struct LevelFile file =
 		},
 	},
 
-	.quadBlock[0].blockID =  20-0-1,
-	.quadBlock[1].blockID =  20-1-1,
-	.quadBlock[2].blockID =  20-2-1,
-	.quadBlock[3].blockID =  20-3-1,
-	.quadBlock[4].blockID =  20-4-1,
-	.quadBlock[5].blockID =  20-5-1,
-	.quadBlock[6].blockID =  20-6-1,
-	.quadBlock[7].blockID =  20-7-1,
-	.quadBlock[8].blockID =  20-8-1,
-	.quadBlock[9].blockID =  20-9-1,
-	.quadBlock[10].blockID = 20-10-1,
-	.quadBlock[11].blockID = 20-11-1,
-	.quadBlock[12].blockID = 20-12-1,
-	.quadBlock[13].blockID = 20-13-1,
-	.quadBlock[14].blockID = 20-14-1,
-	.quadBlock[15].blockID = 20-15-1,
-	.quadBlock[16].blockID = 20-16-1,
-	.quadBlock[17].blockID = 20-17-1,
-	.quadBlock[18].blockID = 20-18-1,
-	.quadBlock[19].blockID = 20-19-1,
-
 	// ========== bsp ======================
 	
 	.bsp =
 	{
 		// root node
-		[0] =
-		{
-			.flag = 0,
-			.id = 0,
-			.box =
-			{
-				.min = {-0x3000, 0xFFE4, -0x3000},
-				.max = {0x3000, 0x066E, 0x3000}
-			},
-			
-			.data =
-			{
-				.branch =
-				{
-					// need more info on this
-					.axis = {0x1000, 0x0, 0x0, 0xFF40},
-					
-					// 0x4000 signifies leaf node
-					.childID = {0x4002, 0x4001},
-				}
-			}
-		},
+		BSP_BRANCH(0, SPLIT_Z, 0x1, 0x2),
 		
-		// leaf with nothing in it
-		[1] =
-		{
-			.flag = 0,
-			.id = 1,
-			.box =
-			{
-				// random box that exists nowhere
-				.min = {0x2800, 0xFFE4, 0x2800},
-				.max = {0x2800, 0x400, 0x2F00}
-			},
-			
-			.data =
-			{
-				.leaf =
-				{
-					.unk1 = 0,
-					.bspHitboxArray = 0,
-					.numQuads = 0,
-					.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[0])
-				}
-			}
-		},
+		// bsp[1], start with quadblock[0], 2 quadblocks
+		BSP_LEAF(1, 0, 2),
 		
-		// leaf with all of our quadblocks
-		[2] =
-		{
-			.flag = (1<<2)|1,
-			.id = 2,
-			.box =
-			{
-				// random box that exists nowhere
-				.min = {-0x1100, 0xFFE4, -0x1100},
-				.max = {0x2800, 0x400, 0x2800}
-			},
-			
-			.data =
-			{
-				.leaf =
-				{
-					.unk1 = 0,
-					.bspHitboxArray = 0,
-					.numQuads = 20,
-					.ptrQuadBlockArray = LEV_OFFSETOF(quadBlock[0])
-				}
-			}
-		},
+		// bsp[2], start with quadblock[2], 18 quadblocks
+		BSP_LEAF(2, 2, 18),
 	},
 	
 	.pvs =
@@ -430,74 +351,12 @@ struct LevelFile file =
 		.visFaceList[3] = LEV_OFFSETOF(VisMem_bitIndex_DstMemcpyP4[4]),
 		.bspList[3] = LEV_OFFSETOF(VisMem_bspList_RenderListP4[0]),
 	},
-	
-	// initialize for leaf nodes only
-	.VisMem_bspList_RenderListP1[2*1+1] = LEV_OFFSETOF(bsp[1]),
-	.VisMem_bspList_RenderListP2[2*1+1] = LEV_OFFSETOF(bsp[1]),
-	.VisMem_bspList_RenderListP3[2*1+1] = LEV_OFFSETOF(bsp[1]),
-	.VisMem_bspList_RenderListP4[2*1+1] = LEV_OFFSETOF(bsp[1]),
-	.VisMem_bspList_RenderListP1[2*2+1] = LEV_OFFSETOF(bsp[2]),
-	.VisMem_bspList_RenderListP2[2*2+1] = LEV_OFFSETOF(bsp[2]),
-	.VisMem_bspList_RenderListP3[2*2+1] = LEV_OFFSETOF(bsp[2]),
-	.VisMem_bspList_RenderListP4[2*2+1] = LEV_OFFSETOF(bsp[2]),
-	
+		
 	.map =
 	{
-		(31+NUM_BLOCKS*6)<<2,
+		(2)<<2,
 		
-		// 31
-		LEV_OFFSETOF(level.ptr_mesh_info),
-		LEV_OFFSETOF(level.visMem),
-		LEV_OFFSETOF(level.ptrSpawnType1),
-		LEV_OFFSETOF(level.ptr_restart_points),
-		LEV_OFFSETOF(mInfo.ptrQuadBlockArray),
-		LEV_OFFSETOF(mInfo.ptrVertexArray),
-		LEV_OFFSETOF(mInfo.bspRoot),
-		LEV_OFFSETOF(bsp[1].data.leaf.ptrQuadBlockArray),
-		LEV_OFFSETOF(bsp[2].data.leaf.ptrQuadBlockArray),
 		LEV_OFFSETOF(pvs.visLeafSrc),
 		LEV_OFFSETOF(pvs.visFaceSrc),
-		LEV_OFFSETOF(visMem.visLeafList[0]),
-		LEV_OFFSETOF(visMem.visLeafList[1]),
-		LEV_OFFSETOF(visMem.visLeafList[2]),
-		LEV_OFFSETOF(visMem.visLeafList[3]),
-		LEV_OFFSETOF(visMem.visFaceList[0]),
-		LEV_OFFSETOF(visMem.visFaceList[1]),
-		LEV_OFFSETOF(visMem.visFaceList[2]),
-		LEV_OFFSETOF(visMem.visFaceList[3]),
-		LEV_OFFSETOF(visMem.bspList[0]),
-		LEV_OFFSETOF(visMem.bspList[1]),
-		LEV_OFFSETOF(visMem.bspList[2]),
-		LEV_OFFSETOF(visMem.bspList[3]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*1+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*1+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*1+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*1+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP1[2*2+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP2[2*2+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP3[2*2+1]),
-		LEV_OFFSETOF(VisMem_bspList_RenderListP4[2*2+1]),
-
-		// (NUM_BLOCKS*6)
-		PTR_MAP_QUADBLOCK(0),
-		PTR_MAP_QUADBLOCK(1),
-		PTR_MAP_QUADBLOCK(2),
-		PTR_MAP_QUADBLOCK(3),
-		PTR_MAP_QUADBLOCK(4),
-		PTR_MAP_QUADBLOCK(5),
-		PTR_MAP_QUADBLOCK(6),
-		PTR_MAP_QUADBLOCK(7),
-		PTR_MAP_QUADBLOCK(8),
-		PTR_MAP_QUADBLOCK(9),
-		PTR_MAP_QUADBLOCK(10),
-		PTR_MAP_QUADBLOCK(11),
-		PTR_MAP_QUADBLOCK(12),
-		PTR_MAP_QUADBLOCK(13),
-		PTR_MAP_QUADBLOCK(14),
-		PTR_MAP_QUADBLOCK(15),
-		PTR_MAP_QUADBLOCK(16),
-		PTR_MAP_QUADBLOCK(17),
-		PTR_MAP_QUADBLOCK(18),
-		PTR_MAP_QUADBLOCK(19)
 	},
 };

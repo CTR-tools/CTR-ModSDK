@@ -39,9 +39,10 @@ int CheckString(int* m, int* str)
 {
 	return
 		(
-			// check 8 bytes, not 16,
-			// 8 is good enough
+			// need 12 bytes, so "pinstripe"
+			// and "pinstripedance" both work
 			m[0] == str[0] &&
-			m[1] == str[1]
+			m[1] == str[1] &&
+			m[2] == str[2]
 		);
 }

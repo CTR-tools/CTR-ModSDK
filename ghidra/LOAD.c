@@ -165,7 +165,7 @@ void FUN_80031b00(int param_1)
 
 // Sep review copy calls this
 // LOAD_HubCallback
-void FUN_80031b14(void)
+void FUN_80031b14(int param_1)
 
 {
   short *psVar1;
@@ -173,7 +173,8 @@ void FUN_80031b14(void)
   // game is done loading
   DAT_8008d0a4 = 0;
 
-  FUN_80031aa4();
+  // LOAD_Callback_LEV_Adv
+  FUN_80031aa4(param_1);
 
   // swap 1 and 2 during adventure mode
   psVar1 = (short *)(PTR_DAT_8008d2ac + 0x254a);
@@ -278,7 +279,7 @@ void FUN_80031bdc(int param_1)
 }
 
 
-// capitalize string
+// LOAD_StringToUpper
 void FUN_80031c1c(byte *param_1)
 
 {
@@ -308,6 +309,7 @@ void FUN_80031c1c(byte *param_1)
 
 // Aug 5 says
 // "CD Init Error!"
+// LOAD_InitCD
 void FUN_80031c58(void)
 
 {
@@ -406,7 +408,7 @@ void FUN_80031d30(int param_1)
 	  // LOAD_RunPtrMap
       FUN_800326b4(piVar1 + 1,piVar2 + 1,*piVar2 >> 2);
 
-	  // if this needs to be erased
+	  // if overly allocated
       if ((*(ushort *)(param_1 + 4) & 1) != 0)
 	  {
 		// MEMPACK_ReallocMem
@@ -483,7 +485,7 @@ FUN_80031e00(undefined4 param_1,undefined4 param_2,undefined4 *param_3,undefined
   else {
     if (param_5 == -2)
 	{
-		// This function is called LOAD_ReadFile
+		// LOAD_ReadFile
 		local_1c = FUN_800321b4(param_1,2,param_2,0,param_4,FUN_80031d30);
 
 		DAT_80083a48 = local_1c;
@@ -491,7 +493,7 @@ FUN_80031e00(undefined4 param_1,undefined4 param_2,undefined4 *param_3,undefined
     }
     else
 	{
-		// This function is called LOAD_ReadFile
+		// LOAD_ReadFile
 		local_1c = FUN_800321b4(param_1,2,param_2,param_3,param_4,FUN_80031d30);
     }
   }
@@ -499,10 +501,10 @@ FUN_80031e00(undefined4 param_1,undefined4 param_2,undefined4 *param_3,undefined
 }
 
 
-//loads TIMs from ctr texture file to vram
-//ctr texture file is either a single TIM, or multiple TIMS with a header
-//https://github.com/CTR-tools/CTR-tools/blob/master/formats/txt_vram.txt
-//param_1 = pointer to file queue slot
+// LOAD_VramFileCallback
+// ctr texture file is either a single TIM, or multiple TIMS with a header
+// https://github.com/CTR-tools/CTR-tools/blob/master/formats/txt_vram.txt
+// param_1 = pointer to file queue slot
 void FUN_80031ee4(int param_1)
 
 {
@@ -533,11 +535,11 @@ void FUN_80031ee4(int param_1)
       while (iVar3 != 0) {
 
         //read rect and load to vram (psy-q func)
-        local_18 = *(undefined2 *)(piVar2 + 3);
+        local_18 = *(undefined2 *)((int)piVar2 + 0xc);
         local_16 = *(undefined2 *)((int)piVar2 + 0xe);
-        local_14 = *(undefined2 *)(piVar2 + 4);
+        local_14 = *(undefined2 *)((int)piVar2 + 0x10);
         local_12 = *(undefined2 *)((int)piVar2 + 0x12);
-        LoadImage(&local_18,piVar2 + 5);
+        LoadImage(&local_18,(int)piVar2 + 0x14);
 
         //calulate pointers for next iteration
         iVar1 = iVar3 >> 2;
@@ -550,11 +552,11 @@ void FUN_80031ee4(int param_1)
       //only 1 TIM in this file
 
       //read rect and load to vram (psy-q func)
-      local_18 = *(undefined2 *)(piVar2 + 3);
+      local_18 = *(undefined2 *)((int)piVar2 + 0xc);
       local_16 = *(undefined2 *)((int)piVar2 + 0xe);
-      local_14 = *(undefined2 *)(piVar2 + 4);
+      local_14 = *(undefined2 *)((int)piVar2 + 0x10);
       local_12 = *(undefined2 *)((int)piVar2 + 0x12);
-      LoadImage(&local_18,piVar2 + 5);
+      LoadImage(&local_18,(int)piVar2 + 0x14);
     }
   }
 
@@ -590,7 +592,7 @@ FUN_80031fdc(undefined4 param_1,undefined4 param_2,undefined4 *param_3,undefined
   //if we're not given the address to use, create new temporary place to load
   if (param_3 == (undefined4 *)0x0) {
 
-	// add a bookmark
+	// MEMPACK_PushState
     FUN_8003e978();
   }
 
@@ -653,7 +655,9 @@ void FUN_80032110(char param_1)
   // function, because we will execute now
   CdReadCallback(0);
 
-  if (param_1 == '\x02') {
+  // result == CdlComplete
+  if (param_1 == '\x02') 
+  {
     if ((DAT_80083a40 & 1) != 0)
 	{
 	  // MEMPACK_ReallocMem
@@ -796,7 +800,7 @@ u_long * FUN_80032344(char *param_1,u_long *param_2,u_long *param_3)
   CdlFILE CStack56;
   u_char auStack32 [8];
 
-  // capitalize string
+  // LOAD_StringToUpper
   FUN_80031c1c(param_1);
 
   // CDSYS_SetMode_StreamData
@@ -871,7 +875,7 @@ uint FUN_80032438(char *param_1,CdlFILE *param_2)
 	// CDSYS_SetMode_StreamData
     FUN_8001c470();
 
-	// capitalize the string
+	// LOAD_StringToUpper
     FUN_80031c1c(param_1);
 
 	// cpVar2 and param_2 are the same
@@ -888,9 +892,11 @@ uint FUN_80032438(char *param_1,CdlFILE *param_2)
 // same as 80032594, but doesn't store params and calls CdReadSync
 // only called from howl_LoadHeader
 // param_1 is the address to CdlFile of Kart.HWL
-// param_2 is allocation of 0x800 bytes
+// param_2 is ptrDestination
+// param_3 is firstSector
+// param_4 is numSector
 
-// howl_readSectorSync
+// LOAD_HowlHeaderSectors
 undefined4 FUN_80032498(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
 
 {
@@ -901,6 +907,7 @@ undefined4 FUN_80032498(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
   // CDSYS_SetMode_StreamData
   FUN_8001c470();
 
+  // (numSectors * 0x800 - cdlFile.size) < 0x800
   if ((param_3 + param_4) * 0x800 - (int)param_1[1] < 0x800) {
 
 	// Get CD Position of Kart.HWL
@@ -936,14 +943,14 @@ undefined4 FUN_80032498(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
 }
 
 
-// howl cd reading callback
+// LOAD_HowlCallback
 void FUN_8003254c(char param_1)
 
 {
   // disable callback
   CdReadCallback(0);
 
-  //if psyq cdread status 2 (success?), set howl loading status to 0
+  // result == CdlComplete
   if (param_1 == '\x02') {
     DAT_8008d840 = 0;
   }
@@ -962,7 +969,7 @@ void FUN_8003254c(char param_1)
 // param_2 - pointer to load data to
 // param_3 - offset from the beginning of file in sectors
 // param_4 - number of sectors to load
-// howl_loadDataFromCd
+// LOAD_HowlSectorChainStart
 uint FUN_80032594(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
 
 {
@@ -979,7 +986,7 @@ uint FUN_80032594(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
   }
   else
   {
-	// save parameters for howl_loadDataFromCd_RetryOnError
+	// save parameters for LOAD_HowlSectorChainEnd
 
     // this seems to be some 5 int howl struct at DAT_8008d840, 1st int being current loading status
     DAT_8008d844 = param_1;
@@ -1034,7 +1041,7 @@ uint FUN_80032594(CdlLOC *param_1,u_long *param_2,int param_3,int param_4)
 //loads pending data from cd
 //basically wrapper for FUN_80032594
 
-// howl_loadDataFromCd_RetryOnError
+// LOAD_HowlSectorChainEnd
 uint FUN_8003266c(void)
 
 {
@@ -1084,7 +1091,7 @@ void FUN_800326b4(int param_1,int *param_2,int param_3)
 }
 
 
-// Set AIs for 2P Arcade,
+// LOAD_Robots2P
 // and load MPK for AI models
 // param_1 bigfile
 // param_2 = P1 Character ID
@@ -1191,13 +1198,12 @@ void FUN_80032700(undefined4 param_1,uint param_2,uint param_3,undefined4 param_
   DAT_80086e8e = (ushort)pbVar6[3];
 
   //add to load queue from range 324=packs\2P_arcade\*.mpk
-  // '1' for dram
   FUN_80032d30(param_1,2,iVar4 + 0x144,0,param_4);
   return;
 }
 
 
-// Set Character IDs of AIs
+// LOAD_Robots1P
 // param_1 will always be P1 Character ID
 void FUN_800327dc(int param_1)
 {
@@ -1750,11 +1756,12 @@ void FUN_80032ffc(undefined4 param_1,int param_2,int param_3)
   // If this sub-mempack does not already have this LEV loaded, then load it
   if ((int)*(short *)(PTR_DAT_8008d2ac + param_3 * 2 + 0x254c) != param_2)
   {
-	// erase mask hint model pointer (why?)
+	// erase mask hint model pointer,
+	// different hubs need different mask
     DAT_8008d0f0 = 0;
 
-	// change active allocation system to ???
-    FUN_8003e80c();
+	// change active allocation
+    FUN_8003e80c(param_3);
 
 	// MEMPACK_ClearLowMem
     FUN_8003e9b8();
@@ -3344,25 +3351,22 @@ void FUN_800347d0(int param_1,int param_2)
 {
   int iVar1;
 
-  // erase mask hint model pointer (why?)
+  // erase mask hint model pointer
   DAT_8008d0f0 = 0;
 
   *(undefined2 *)(PTR_DAT_8008d2ac + param_1 * 2 + 0x254c) = 0xffff;
 
   // change active allocation system to ???
-  FUN_8003e80c();
+  FUN_8003e80c(param_1);
 
   // MEMPACK_ClearLowMem
   FUN_8003e9b8();
 
-  // aku or uka file index
+  // different variation of aku/uka
   iVar1 = (param_1 + -1) * 2;
 
   // Game is now loading
   DAT_8008d0a4 = 1;
-
-  // iVar1 alters LOD
-  // param2*4 alters aku vs uka
 
   // load the vram for 3D mask hints
   // DAT_8008d09c is the Pointer to "cd position of bigfile"
@@ -3388,7 +3392,7 @@ void FUN_80034874(undefined4 param_1)
 
   puVar1 = PTR_DAT_8008d2ac;
 
-  // erase mask hint model pointer (why?)
+  // erase mask hint model pointer
   DAT_8008d0f0 = 0;
 
   // Turn off HUD

@@ -2,12 +2,9 @@
 
 void DECOMP_MM_Title_CameraReset(void)
 {
-  struct Title* title = OVR_230.titleObj;
+  struct Title *title = OVR_230.titleObj;
 
-  if (title!= NULL) 
-  {
-	// CameraPosOffset X
-    title->cameraPosOffset[0] = 0x7D0;
-  }
-  return;
+  if (title == NULL) return;
+  
+  title->cameraPosOffset[0] = 2000;
 }

@@ -50,13 +50,13 @@
 8001ca28 CDSYS_SetMode_StreamData
 8001caac CDSYS_SetMode_StreamAudio
 8001cb24 CDSYS_SetXAToLang			// real ND name
-8001cdd8 CDSYS_CdSyncCallback
-8001ce30 CDSYS_CdReadyCallback
-8001cf18 CDSYS_IRQ_Callback
-8001cfb8 CDSYS_Transfer_Callback
-8001d018 CDSYS_IRQ_Enable
-8001d098 CDSYS_IRQ_Disable
-8001d0cc CDSYS_ParseSpuData
+8001cdd8 CDSYS_XaCallbackCdSync
+8001ce30 CDSYS_XaCallbackCdReady
+8001cf18 CDSYS_SpuCallbackIRQ
+8001cfb8 CDSYS_SpuCallbackTransfer
+8001d018 CDSYS_SpuEnableIRQ
+8001d098 CDSYS_SpuDisableIRQ
+8001d0cc CDSYS_SpuGetMaxSample
 8001d214 CDSYS_XAGetNumTracks
 8001d24c CDSYS_XASeek				// real ND name
 8001d354 CDSYS_XAGetTrackLength
@@ -204,14 +204,14 @@
 80026a60 GAMEPROG_NewGame_OnBoot
 80026a98 GAMEPROG_GetPtrHighScoreTrack
 
-80026af0 GhostBuffer_ThTick
-80027450 GhostBuffer_InitMemory
-800277a0 GhostBuffer_InitDriver
-80027a0c GhostBuffer_InitRecording
-80027aa8 GhostBuffer_EndRecording
-80027b38 GhostBuffer_RecordStats
-80027fa4 GhostBuffer_RecordBoosts
-80028028 GhostBuffer_Destroy
+80026af0 GhostReplay_ThTick
+80027450 GhostReplay_Init1
+800277a0 GhostReplay_Init2
+80027a0c GhostTape_Start
+80027aa8 GhostTape_End
+80027b38 GhostTape_WriteMoves
+80027fa4 GhostTape_WriteBoosts
+80028028 GhostTape_Destroy
 
 // === Everything below "Ghost" is "Howl"
 
@@ -255,12 +255,12 @@
 800294d0 howl_InstrumentPitch
 8002952c howl_InitGlobals
 800295f0 howl_ParseHeader
-80029654 howl_ParseCesqHeader
+80029654 howl_ParseCseqHeader
 800296cc howl_LoadHeader
 800297e0 howl_SetSong
 80029844 howl_LoadSong
-80029960 howl_ErasePtrCesqHeader
-8002996c howl_ReadTimeDelta
+80029960 howl_ErasePtrCseqHeader
+8002996c howl_GetNextNote
 800299b8 cseq_opcode01_noteoff
 80029ac4 cseq_opcode03
 80029b20 howl_InitChannelAttr_Music
@@ -361,8 +361,8 @@
 8002dd98 GTE_AudioLR_Driver
 8002de24 GTE_GetSquaredLength
 
-8002de5c OtherFX_DriverTurbo
-8002def0 OtherFX_Stop_Safe
+8002de5c OtherFX_RecycleNew
+8002def0 OtherFX_RecycleMute
 8002df2c OtherFX_DriverCrashing
 8002df88 GTE_GetSquaredDistance
 
@@ -451,10 +451,10 @@
 
 8003177c LOAD_FindFile
 
-800317dc howl_readSectorSync
-80031890 howl_cdReadCallback
-800318d8 howl_loadDataFromCd
-800319a4 howl_loadDataFromCd_RetryOnError
+800317dc LOAD_HowlHeaderSectors
+80031890 LOAD_HowlCallback
+800318d8 LOAD_HowlSectorChainStart
+800319a4 LOAD_HowlSectorChainEnd
 800319ec LOAD_RunPtrMap
 
 80031a38 LOAD_Robots2P
@@ -1168,7 +1168,7 @@
 
 800753AC CdRead
 80075548 CdReadSync
-8007564C CheckCallback
+8007564C CdReadCallback
 // unknown 80075660 ??
 80075870 ResetCallback
 

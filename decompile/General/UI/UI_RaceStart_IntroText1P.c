@@ -154,7 +154,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 			#endif
 			
 			((gGT->tileView[0].rect.y - (transition + -7)) + -6),
-            FONT_BIG, (CENTER_TEXT | ORANGE)
+            FONT_BIG, (JUSTIFY_CENTER | ORANGE)
          );
 
          // Track 1/4, 2/4, 3/4, 4/4 in cup
@@ -180,7 +180,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
       }
 
       // Print top title text "Arcade, Time Trial, etc"
-      DecalFont_DrawLine(pcVar6, posX, sVar7, font, (CENTER_TEXT | ORANGE));
+      DecalFont_DrawLine(pcVar6, posX, sVar7, font, (JUSTIFY_CENTER | ORANGE));
 
       // Print the name of the level
       // Crash Cove, Roos Tubes, etc
@@ -199,7 +199,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 		 #endif
 		 
          (gGT->tileView[0].rect.y + gGT->tileView[0].rect.h + transition + -0x17),
-         FONT_BIG, (CENTER_TEXT | ORANGE));
+         FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 	  // same for all
 	  rect.x = gGT->tileView[0].rect.x;

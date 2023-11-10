@@ -145,9 +145,9 @@ LAB_80022598:
 				if (*character < 3) 
 				{
 					charLength = 0;
-					iconID = data.unk_dataHere[fontType * 2 + *character - 1];
+					iconID = data.font_indentIconID[fontType * 2 + *character - 1];
 					
-					fontDataPointer = &data.font_unkWidthHeightOffsets[0];
+					fontDataPointer = &data.font_indentPixDimensions[0];
 
 					LoadExtraCharacterOffsets:
 					pixWidthExtra = fontDataPointer[fontType * 2];
@@ -290,8 +290,11 @@ LAB_80022598:
 					if (!iconStruct)
 					{
 						if (iconID < sdata->gGT->iconGroup[iconGroupID]->numIcons)
-						{
-							iconStruct = sdata->gGT->iconGroup[iconGroupID]->icons[iconID];
+						{							
+							struct Icon** iconPtrArray =
+								ICONGROUP_GETICONS(sdata->gGT->iconGroup[iconGroupID]);
+							
+							iconStruct = iconPtrArray[iconID];
 						}
 					}
 					if (iconStruct)
@@ -338,7 +341,11 @@ LAB_80022598:
 								if (*character == ')') scaleOffsetY = 2;
 								if (*character == '')
 								{
-									iconStruct = sdata->gGT->iconGroup[5]->icons[0x1f];
+							
+									struct Icon** iconPtrArray =
+										ICONGROUP_GETICONS(sdata->gGT->iconGroup[5]);
+							
+									iconStruct = iconPtrArray[0x1f];
 									scaleOffsetY = 2;
 								}
 							}

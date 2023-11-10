@@ -34,6 +34,7 @@ enum InstanceFlags
 	REVERSE_CULL_DIRECTION = 0x8000,
 	DRAW_TRANSPARENT = 0x10000,
 	DISABLE_VCOLOR_USE_INSTCOLOR = 0x20000,
+	GHOST_DRAW_TRANSPARENT= 0x60000,
 	//
 	//
 	//
@@ -42,7 +43,7 @@ enum InstanceFlags
 	//
 	//
 	//
-	//
+	VISIBLE_DURING_GAMEPLAY = 0x2000000,
 	DRAW_HUGE = 0x8000000,
 	INVISIBLE_BEFORE_PAUSE = 0x10000000,
 	INVISIBLE_DURING_PAUSE = 0x20000000
@@ -366,7 +367,7 @@ struct ModelHeader
 	struct ModelAnim** ptrAnimations;
 
 	// 0x3C
-	unsigned int unk4;
+	struct AnimTex* animtex;
 };
 
 // https://github.com/DCxDemo/CTR-tools/blob/master/formats/txt_ctr.txt
@@ -437,7 +438,7 @@ struct InstDrawPerPlayer
 
 	// all get set in FUN_80070950
 	// 0xb8 - copy of 0x28 (prev frame?) (flags per player?)
-	u_int unkb8[2];
+	int unkb8[2];
 
 	// 0xc0 - origin of cur frame
 	// 0xc4 - origin of next frame
@@ -458,6 +459,9 @@ struct InstDrawPerPlayer
 	// 0xd8 - LOD index (0,1,2,3)
 	int lodIndex;
 
+    // 0xdc
+    short unkDC[2];
+
 	// 0xe0 - pointer to LOD ModelHeader
 	struct ModelHeader* mh;
 
@@ -470,8 +474,7 @@ struct InstDrawPerPlayer
 	// 0xf4
 	short specLight[4];
 
-	// 0xfc
-	struct Instance* birth2D;
+	// 0xfc = end of struct
 
 	// 0x74 + 0x88 = 0xFC
 	// 0x88 = size of struct
@@ -564,10 +567,10 @@ struct Instance
 	// see set in FUN_800abab0 (231)
 	int bitCompressed_NormalVector_AndDriverIndex;
 
-	// end of "main" Instance
-
 	// 0x74
-	struct InstDrawPerPlayer idpp[0];
-
-	// struct is 0xFC bytes large (in 1P mode)
+	//struct InstDrawPerPlayer idpp[0];
 };
+
+#define INST_GETIDPP(x) \
+	((unsigned int)x + sizeof(struct Instance))
+	

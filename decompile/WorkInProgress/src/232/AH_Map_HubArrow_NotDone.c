@@ -64,13 +64,11 @@ LAB_800b0fc0:
       iVar2 = (iVar1 << 0x10) >> 0xe;
 	  
 	  // posX outer = posX inner + [scale]
-      (int)local_20[iVar2] =
-           (int)local_30[iVar2] + ((int*)0x800b4ec0)[iVar4];
+      (int)local_20[iVar2] = (int)local_30[iVar2] + ((int*)0x800b4ec0)[iVar4];
       
       
 	  // posY outer = posY inner + [scale]
-	  (int)local_20[iVar2 + 2] =
-           (int)local_30[iVar2 + 2] + ((int*)0x800b4ec2)[iVar4];
+	  (int)local_20[iVar2 + 2] = (int)local_30[iVar2 + 2] + ((int*)0x800b4ec2)[iVar4];
     
 	}
 	MENUBOX_DrawRwdTriangle(local_20,color,

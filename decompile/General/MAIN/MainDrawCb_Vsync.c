@@ -14,10 +14,12 @@ void DECOMP_MainDrawCb_Vsync()
 	// 1 unit = 1/16th millisecond
 	// 1 second = ~16,000 units
 	// increment timer, and reset system clock
-	sdata->rcnt_elapsedUnits_betweenVsyncs += GetRCnt(0xf2000001);
+	sdata->rcnt_elapsedUnits_total += GetRCnt(0xf2000001);
 	ResetRCnt(0xf2000001);
 
+#ifndef REBUILD_PS1
 	howl_PlayAudio_Update();
-	GAMEPAD_CheckUnplugged(sdata->gGamepads);
+	GAMEPAD_CheckUnplugged(sdata->gGamepads);	
+#endif
 	return;
 }

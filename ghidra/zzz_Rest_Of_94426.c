@@ -672,7 +672,7 @@ void FUN_80042a8c(void *param_1,int param_2,undefined4 *param_3,short *param_4,u
     sStack102 = param_4[1];
   }
 
-  // drawEnv.dtd (always zero)
+  // drawEnv.isbg (always zero)
   local_58 = param_5;
 
   // gGT->backBuffer->primMem.curr
@@ -797,6 +797,7 @@ void FUN_80042c04(short *param_1)
 
   // param1 is short* so double offsets,
   // offsets 0x28 - 0x48 is for ViewProj matrix
+  // offsets 0x48 - 0x68 is for Transpose matrix
   *(uint *)(param_1 + 0x2e) = uVar1;
   *(uint *)(param_1 + 0x1e) = uVar1;
   *(int *)(param_1 + 0x30) = -iVar13;
@@ -2822,7 +2823,7 @@ void FUN_80045254(undefined2 *param_1,int param_2,undefined4 param_3,undefined4 
   local_38 = *param_1;
   local_34 = param_1[2];
   iVar3 = 0;
-  if (*(char *)(param_2 + 3) != 'd') {
+  if (*(char *)(param_2 + 3) != 0x64) {
     iVar1 = 0;
     do {
       puVar2 = (undefined4 *)((iVar1 >> 0xe) + param_2);
@@ -2841,7 +2842,7 @@ void FUN_80045254(undefined2 *param_1,int param_2,undefined4 param_3,undefined4 
 
       iVar3 = iVar3 + 1;
       iVar1 = iVar3 * 0x10000;
-    } while (*(char *)((iVar3 * 0x10000 >> 0xe) + param_2 + 3) != 'd');
+    } while (*(char *)((iVar3 * 0x10000 >> 0xe) + param_2 + 3) != 0x64);
   }
   return;
 }
@@ -6091,7 +6092,7 @@ void FUN_80048a30(int param_1,short param_2,short param_3,short param_4,undefine
 void FUN_80048da0(void)
 
 {
-  // offset 8 of MENUBOX_DrawSelfFourAdvProfiles
+  // offset 8 of menuBox_FourAdvProfiles
   DAT_80085b90 = DAT_80085b90 | 0x800000;
 
   // offset 8 of menuBox_GhostSelection
@@ -6107,7 +6108,7 @@ void FUN_80048da0(void)
 void FUN_80048de4(void)
 
 {
-  // offset 8 of MENUBOX_DrawSelfFourAdvProfiles
+  // offset 8 of menuBox_FourAdvProfiles
   DAT_80085b90 = DAT_80085b90 & 0xff7fffff;
 
   // offset 8 of menuBox_GhostSelection
@@ -8213,7 +8214,13 @@ int FUN_8004b3a4(void)
   // which is less than 0.006 seconds
   if (lVar1 < 100)
   {
-	// do nothing?
+	// update, cause vsyncCallback
+	// already changed it since setting
+	// iVar2 the first time
+	
+	// Check assembly, make sure
+	// this actually updates, try 
+	// Redhotbr's "volatile" idea
     iVar2 = DAT_8008d988;
   }
 
@@ -10459,8 +10466,10 @@ void FUN_8004dee8(undefined4 param_1,int param_2)
   {
 	// loop through all ghosts
     do {
-      //if you have beaten Nefarious Tropy
-      if (*(short *)(*(int *)(param_2 + 0x30) + 0x632) != 0) {
+      
+	  // if ghost is initialized
+      if (*(short *)(*(int *)(param_2 + 0x30) + 0x632) != 0) 
+	  {
         if (*(short *)(*(int *)(param_2 + 0x30) + 0x630) == 0) {
           uVar1 = 6;
           //if the number of elapsed frames since boot is odd
@@ -15612,7 +15621,7 @@ void FUN_8005435c(void)
       *(uint *)(iVar3 + 0x2c8) = *(uint *)(iVar3 + 0x2c8) | 0x2000000;
 
 	  // MainGameEnd_Initialize
-      FUN_8003a3fc(0x42);
+      FUN_8003a3fc();
     }
 
 	// OtherFX_Play
@@ -17128,7 +17137,7 @@ void FUN_80055c90(int param_1)
               return;
             }
 
-			// bool playGhostDuringRace
+			// boolReplayHumanGhost
             DAT_8008d958 = 1;
 
             puVar5 = DAT_8008fbf4 + 0xf80;
@@ -20069,7 +20078,7 @@ void FUN_80058d2c(int param_1,int param_2)
     sVar1 = (&DAT_80086e84)[param_2];
   }
 
-  // Driver_SearchModelByString
+  // VehInit_GetModelByName
   uVar3 = FUN_80058948((&PTR_s_crash_80086d84)[(int)sVar1 * 4]);
 
   // INSTANCE_Birth3D -- ptrModel, name, thread
@@ -25214,10 +25223,21 @@ LAB_8005ef64:
         }
         *(short *)(param_2 + 0x410) = sVar5;
       }
-      if ((*(int *)(param_2 + 0x18) != 0) &&
-         (iVar9 = (int)*(short *)(*(int *)(param_2 + 0x18) + 0x1e), iVar9 < 0x9c4)) {
+	  
+      if (
+		  // driver->instTntRecv
+		  (*(int *)(param_2 + 0x18) != 0) &&
+		
+		   // driver->instTntRecv->scale[1] < 2500
+           (
+			iVar9 = (int)*(short *)(*(int *)(param_2 + 0x18) + 0x1e), 
+			iVar9 < 2500
+		   )
+		 ) 
+	  {
         iVar6 = iVar6 + (iVar9 + -0x800) * 2;
       }
+	  
       iVar11 = (int)*(short *)(param_2 + 0x40c);
       iVar9 = iVar6;
       if (iVar6 < 0) {
@@ -29703,6 +29723,8 @@ LAB_800632cc:
     }
     *(short *)(param_2 + 0x3c6) = *(short *)(param_2 + 0x3c6) + sVar5;
   }
+  
+  // numFramesDrifting (negative if switchway)
   iVar12 = (int)*(short *)(param_2 + 0x580);
   if (iVar12 < 0) {
     iVar12 = -iVar12;
@@ -29730,13 +29752,16 @@ LAB_800632cc:
   else {
     *(undefined2 *)(param_2 + 0x3d8) = 0;
   }
+  
   iVar12 = (int)*(short *)(param_2 + 0x3d4);
   if (iVar12 < 0) {
     iVar12 = -iVar12;
   }
+  
   if (0x32 < iVar12) {
     *(undefined2 *)(param_2 + 0x3d8) = 0;
   }
+  
   if (*(short *)(param_2 + 0x3d8) == 0) {
     *(undefined2 *)(param_2 + 0x3d6) = 10;
     if (0 < *(short *)(param_2 + 0x3d4)) {
@@ -29972,7 +29997,7 @@ void FUN_8006364c(undefined4 param_1,int param_2)
   else {
 
     if (
-			// If your drift counter is less than the constant that makes you "spin out" from too much drift
+			// drift counter counts backwards during switchway drift: did switchway too long?
 			((int)*(short *)(param_2 + 0x580) < (int)-(uint)*(byte *)(param_2 + 0x463)) ||
 
 			((
@@ -35907,7 +35932,7 @@ void FUN_800693c8(int param_1)
       *(uint *)(*piVar9 + 0x28) = *(uint *)(*piVar9 + 0x28) & 0xffffff7f;
     }
 
-	if (*(ushort *)(iVar11 + 0x22) < 0x9c4)
+	if (*(ushort *)(iVar11 + 0x22) < 2500)
 	{
 	  // gamepad vibration
       FUN_80026440(iVar12,4,4);
@@ -43634,12 +43659,13 @@ void FUN_800716ec(int param_1,code *UNRECOVERED_JUMPTABLE)
   // Set per-frame funcPtr
   *(code **)(param_1 + 0x2c) = UNRECOVERED_JUMPTABLE;
 
-  // Execute the weapon's function pointer
-  // with JR $a1
-  (*UNRECOVERED_JUMPTABLE)();
-  
+  // lw $sp 1F8000D4
+
   // $ra is set to 80071678 and executes
   // when the thread is finished
+
+  // Execute the weapon's function pointer
+  // with JR $a1
 }
 
 

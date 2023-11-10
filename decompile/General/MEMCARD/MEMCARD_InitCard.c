@@ -3,7 +3,6 @@
 //- creates 8 events (4 per card?)
 //- calls InitCARD and StartCARD
 void DECOMP_MEMCARD_InitCard(void)
-
 {
     // This section was copy/pasted by Naughty Dog,
     // psx\sample\memcard\CARD\CARD.C lines 84 to 101
@@ -32,7 +31,7 @@ void DECOMP_MEMCARD_InitCard(void)
     InitCARD(0);
     StartCARD();
     _bu_init();
-
+	
     // This tells us a memory card exists,
     // If it is set to 0 with Cheat Engine,
     // the game will think the card is unformatted

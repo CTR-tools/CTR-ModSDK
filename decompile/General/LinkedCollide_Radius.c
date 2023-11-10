@@ -16,14 +16,19 @@ struct Instance* DECOMP_LinkedCollide_Radius(struct Instance* objInst,struct Thr
     diff_y = thInst->matrix.t[1] - objInst->matrix.t[1]; 
     diff_z = thInst->matrix.t[2] - objInst->matrix.t[2]; 
 
-    diff_dist = diff_x * diff_x + diff_z*diff_z;
-    if ((objInst->model->id == 0x21) && ((diff_dist < hitRadius) && (-0x20 < diff_y))) {
-      // Minecart has cylindrical collision
+    diff_dist = diff_x*diff_x + diff_z*diff_z;
+	
+	// Minecart
+    if (objInst->model->id == 0x21)
+	{		
+	  // Cylinder collision
+	  if((diff_dist < hitRadius) && (-0x20 < diff_y))
         return thInst;
-    } else if (diff_dist + diff_y * diff_y < hitRadius) {
-        // Spherical collision for everything else
+    } 
+	
+	// Spherical collision for everything else
+	else if (diff_dist + diff_y*diff_y < hitRadius) 
         return thInst; 
-    }
 
     // next thread in the list (thread bucket)
     thBucket = thBucket->siblingThread;

@@ -50,13 +50,13 @@
 8001c470 CDSYS_SetMode_StreamData
 8001c4f4 CDSYS_SetMode_StreamAudio
 8001c56c CDSYS_SetXAToLang			// real ND name
-8001c7a4 CDSYS_CdSyncCallback
-8001c7fc CDSYS_CdReadyCallback
-8001c8e4 CDSYS_IRQ_Callback
-8001c984 CDSYS_Transfer_Callback
-8001c9e4 CDSYS_IRQ_Enable
-8001ca64 CDSYS_IRQ_Disable
-8001ca98 CDSYS_ParseSpuData
+8001c7a4 CDSYS_XaCallbackCdSync
+8001c7fc CDSYS_XaCallbackCdReady
+8001c8e4 CDSYS_SpuCallbackIRQ
+8001c984 CDSYS_SpuCallbackTransfer
+8001c9e4 CDSYS_SpuEnableIRQ
+8001ca64 CDSYS_SpuDisableIRQ
+8001ca98 CDSYS_SpuGetMaxSample
 8001cbe0 CDSYS_XAGetNumTracks
 8001cc18 CDSYS_XASeek				// real ND name
 8001cd20 CDSYS_XAGetTrackLength
@@ -189,14 +189,15 @@
 80026e48 GAMEPROG_NewGame_OnBoot
 80026e80 GAMEPROG_GetPtrHighScoreTrack
 
-80026ed8 GhostBuffer_ThTick
-80027838 GhostBuffer_InitMemory
-80027b88 GhostBuffer_InitDriver
-80027df4 GhostBuffer_InitRecording
-80027e90 GhostBuffer_EndRecording
-80027f20 GhostBuffer_RecordStats
-8002838c GhostBuffer_RecordBoosts
-80028410 GhostBuffer_Destroy
+80026ed8 GhostReplay_ThTick
+80027838 GhostReplay_Init1
+80027b88 GhostReplay_Init2
+
+80027df4 GhostTape_Start
+80027e90 GhostTape_End
+80027f20 GhostTape_WriteMoves
+8002838c GhostTape_WriteBoosts
+80028410 GhostTape_Destroy
 
 // === Everything below "Ghost" is "Howl"
 
@@ -240,12 +241,12 @@
 8002991c howl_InstrumentPitch
 80029988 howl_InitGlobals
 80029a50 howl_ParseHeader
-80029ab4 howl_ParseCesqHeader
+80029ab4 howl_ParseCseqHeader
 80029b2c howl_LoadHeader
 80029c40 howl_SetSong
 80029ca4 howl_LoadSong
-80029dc0 howl_ErasePtrCesqHeader
-80029dcc howl_ReadTimeDelta
+80029dc0 howl_ErasePtrCseqHeader
+80029dcc howl_GetNextNote
 80029e18 cseq_opcode01_noteoff
 80029f24 cseq_opcode03
 80029f80 howl_InitChannelAttr_Music
@@ -347,8 +348,8 @@
 8002e5cc GTE_AudioLR_Driver 
 8002e658 GTE_GetSquaredLength
 
-8002e690 OtherFX_DriverTurbo
-8002e724 OtherFX_Stop_Safe
+8002e690 OtherFX_RecycleNew
+8002e724 OtherFX_RecycleMute
 8002e760 OtherFX_DriverCrashing
 8002e7bc GTE_GetSquaredDistance
 
@@ -370,8 +371,8 @@
 // Garage is not in Sep3
 80030208 Garage_Init
 80030264 Garage_Enter
-80030404 Garage_Idle1
-800304b8 Garage_Idle2
+80030404 Garage_PlayFX
+800304b8 Garage_LerpFX
 80030694 Garage_MoveLR
 8003074c Garage_Leave
 
@@ -425,9 +426,7 @@
 80031a78 LOAD_Callback_LEV
 80031aa4 LOAD_Callback_LEV_Adv		// from TenStage
 80031b00 LOAD_Callback_DriverModels
-
 80031b14 LOAD_HubCallback			// real ND name (for async hubs)
-
 80031b50 LOAD_GlobalModelPtrs_MPK
 80031bdc LOAD_HubSwapPtrs
 80031c1c LOAD_StringToUpper
@@ -441,12 +440,10 @@
 800321b4 LOAD_ReadFile				// real ND name
 80032344 LOAD_ReadFile_NoCallback
 80032438 LOAD_FindFile
-
-80032498 howl_readSectorSync
-8003254c howl_cdReadCallback
-80032594 howl_loadDataFromCd
-8003266c howl_loadDataFromCd_RetryOnError
-
+80032498 LOAD_HowlHeaderSectors
+8003254c LOAD_HowlCallback
+80032594 LOAD_HowlSectorChainStart
+8003266c LOAD_HowlSectorChainEnd
 800326b4 LOAD_RunPtrMap
 80032700 LOAD_Robots2P
 800327dc LOAD_Robots1P
@@ -1238,7 +1235,7 @@
 // unknown 80076d28 ------ called by lib funcs
 80076f10 CdRead
 800770ac CdReadSync
-800771b0 CheckCallback // <-- this is probably CdReadCallback. checkCallback doesn't have any args.
+800771b0 CdReadCallback
 800771c4 ResetCallback
 800771f4 InterruptCallback
 80077224 DMACallback

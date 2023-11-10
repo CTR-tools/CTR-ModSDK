@@ -56,7 +56,7 @@ void DECOMP_RB_GenericMine_LInB(struct Instance *inst)
 	mw->boolDestroyed = 0;
 	mw->frameCount_DontHurtParent = 0;
 	mw->extraFlags = 0;
-	mw->maxHeight = inst->matrix.t[1];
+	mw->stopFallAtY = inst->matrix.t[1];
 	
 	RB_MinePool_Add(mw);
 		

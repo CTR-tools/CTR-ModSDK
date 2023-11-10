@@ -169,8 +169,9 @@ void DECOMP_RB_Fireball_LInB(struct Instance* inst)
 	// similar to turtles, dont need to subtract '0'
 	if((inst->name[9] & 1) == 1)
 	{
-		// 1.44s, which is 45 frames
-		t->cooldownFrameCount = 1440 >> 5;
+		// 1.44s, this is a ms-based timer, not a frame-based 
+		// counter, so t->cooldownFrameCount is not allowed
+		fireObj->cycleTimer = 1440;
 	}
 }
 

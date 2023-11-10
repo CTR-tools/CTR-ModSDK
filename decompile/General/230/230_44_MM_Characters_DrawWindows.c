@@ -100,15 +100,18 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
   
 	iVar6 = iVar14;
   
+	struct InstDrawPerPlayer* idpp =
+		INST_GETIDPP(iVar10);
+  
     // clear tileView in every InstDrawPerPlayer
-    iVar10->idpp[0].tileView = 0;
-    iVar10->idpp[1].tileView = 0;
-    iVar10->idpp[2].tileView = 0;
-    iVar10->idpp[3].tileView = 0;
+    idpp[0].tileView = 0;
+    idpp[1].tileView = 0;
+    idpp[2].tileView = 0;
+    idpp[3].tileView = 0;
   
     // set tileView in InstDrawPerPlayer,
     // so that each camera can only see one driver
-    iVar10->idpp[iVar6].tileView = tileview;
+    idpp[iVar6].tileView = tileview;
   
     ptrCurr = &OVR_230.characterSelect_charIDs_curr[iVar6];
     iVar10->animFrame = 0;

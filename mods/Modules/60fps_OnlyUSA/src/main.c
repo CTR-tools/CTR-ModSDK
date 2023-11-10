@@ -715,6 +715,8 @@ void PatchParticles()
 	
 	*(unsigned int*)0x80040348 = JAL(NewParticleCreateInstance);
 	
+	// ====== Deprecated =========
+	// This was at 0x80088004, but it's been renamed and divided
 	for(pe = &data.emSet_Terrain[0]; pe < &data.emSet_Terrain[0x21]; pe++)
 	{
 		PatchPE(pe);

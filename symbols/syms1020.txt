@@ -50,13 +50,13 @@
 8001c484 CDSYS_SetMode_StreamData
 8001c508 CDSYS_SetMode_StreamAudio
 8001c580 CDSYS_SetXAToLang			// real ND name
-8001c7c4 CDSYS_CdSyncCallback
-8001c81c CDSYS_CdReadyCallback
-8001c904 CDSYS_IRQ_Callback
-8001c9a4 CDSYS_Transfer_Callback
-8001ca04 CDSYS_IRQ_Enable
-8001ca84 CDSYS_IRQ_Disable
-8001cab8 CDSYS_ParseSpuData
+8001c7c4 CDSYS_XaCallbackCdSync
+8001c81c CDSYS_XaCallbackCdReady
+8001c904 CDSYS_SpuCallbackIRQ
+8001c9a4 CDSYS_SpuCallbackTransfer
+8001ca04 CDSYS_SpuEnableIRQ
+8001ca84 CDSYS_SpuDisableIRQ
+8001cab8 CDSYS_SpuGetMaxSample
 8001cc00 CDSYS_XAGetNumTracks
 8001cc38 CDSYS_XASeek				// real ND name
 8001cd40 CDSYS_XAGetTrackLength
@@ -203,14 +203,14 @@
 80026ee4 GAMEPROG_NewGame_OnBoot
 80026f1c GAMEPROG_GetPtrHighScoreTrack
 
-80026f74 GhostBuffer_ThTick
-800278d4 GhostBuffer_InitMemory
-80027c24 GhostBuffer_InitDriver
-80027e90 GhostBuffer_InitRecording
-80027f2c GhostBuffer_EndRecording
-80027fbc GhostBuffer_RecordStats
-80028428 GhostBuffer_RecordBoosts
-800284ac GhostBuffer_Destroy
+80026f74 GhostReplay_ThTick
+800278d4 GhostReplay_Init1
+80027c24 GhostReplay_Init2
+80027e90 GhostTape_Start
+80027f2c GhostTape_End
+80027fbc GhostTape_WriteMoves
+80028428 GhostTape_WriteBoosts
+800284ac GhostTape_Destroy
 
 // === Everything below "Ghost" is "Howl"
 
@@ -254,12 +254,12 @@
 80029a10 howl_InstrumentPitch
 80029a7c howl_InitGlobals
 80029b44 howl_ParseHeader
-80029ba8 howl_ParseCesqHeader
+80029ba8 howl_ParseCseqHeader
 80029c20 howl_LoadHeader
 80029d34 howl_SetSong
 80029d98 howl_LoadSong
-80029eb4 howl_ErasePtrCesqHeader
-80029ec0 howl_ReadTimeDelta
+80029eb4 howl_ErasePtrCseqHeader
+80029ec0 howl_GetNextNote
 80029f0c cseq_opcode01_noteoff
 8002a018 cseq_opcode03
 8002a074 howl_InitChannelAttr_Music
@@ -361,8 +361,8 @@
 8002e854 GTE_AudioLR_Driver
 8002e8e0 GTE_GetSquaredLength
 
-8002e918 OtherFX_DriverTurbo
-8002e9ac OtherFX_Stop_Safe
+8002e918 OtherFX_RecycleNew
+8002e9ac OtherFX_RecycleMute
 8002e9e8 OtherFX_DriverCrashing
 8002ea44 GTE_GetSquaredDistance
 
@@ -384,8 +384,8 @@
 // Garage is not in Sep3
 800304ac Garage_Init
 80030508 Garage_Enter
-800306a8 Garage_Idle1
-8003075c Garage_Idle2
+800306a8 Garage_PlayFX
+8003075c Garage_LerpFX
 // Garage_MoveLR
 800309f0 Garage_Leave
 
@@ -457,10 +457,10 @@
 
 80032728 LOAD_FindFile
 
-80032788 howl_readSectorSync
-8003283c howl_cdReadCallback
-80032884 howl_loadDataFromCd
-8003295c howl_loadDataFromCd_RetryOnError
+80032788 LOAD_HowlHeaderSectors
+8003283c LOAD_HowlCallback
+80032884 LOAD_HowlSectorChainStart
+8003295c LOAD_HowlSectorChainEnd
 800329a4 LOAD_RunPtrMap
 
 800329f0 LOAD_Robots2P
@@ -558,7 +558,7 @@
 8003cd40 MainRaceTrack_StartLoad
 8003cd84 MainRaceTrack_RequestLoad
 
-// MainStats_ClearBattleVS
+8003cde8 MainStats_ClearBattleVS
 8003ce2c MainStats_RestartRaceCountLoss
 
 // End of MAIN ^^^
@@ -1063,6 +1063,7 @@
 // == 40 more functions, only stubbed in 926 ==
 
 8006c730 SquareRoot0_stub
+8006c79c RngDeadCoed
 8006c808 ApplyMatrixLV_stub
 8006ff88 RenderLists_Init1P2P
 800717ac ThTick_FastRET
@@ -1170,7 +1171,7 @@
 
 80077028 CdRead
 800771c4 CdReadSync
-800772c8 CheckCallback // <-- this is probably CdReadCallback. checkCallback doesn't have any args.
+800772c8 CdReadCallback
 800772dc ResetCallback
 8007730c InterruptCallback
 8007733c DMACallback
@@ -1326,7 +1327,7 @@
 800affd0 MM_TrackSelect_Video_Draw
 800b0450 MM_TrackSelect_boolTrackOpen
 800b04c8 MM_TrackSelect_Init
-800b05cc MM_TrackSelect_MenuBox
+800b05d4 MM_TrackSelect_MenuBox
 800b1438 MM_TrackSelect_GetMenuBox
 800b1444 MM_CupSelect_Init
 800b1478 MM_CupSelect_MenuBox
@@ -1340,7 +1341,8 @@
 800b3f00 MM_HighScore_MenuBox
 800b45cc MM_Scrapbook_Init
 800b45fc MM_Scrapbook_PlayMovie
-800b4898 MM_ResetAllMenus
+800b4898 MM_MENUBOX_LanguageBoot
+800b49b4 MM_ResetAllMenus
 800b4a38 MM_JumpTo_Title_Returning
 800b4a68 MM_JumpTo_Title_FirstTime
 800b4b2c MM_JumpTo_BattleSetup

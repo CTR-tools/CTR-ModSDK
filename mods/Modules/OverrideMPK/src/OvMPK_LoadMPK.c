@@ -118,7 +118,7 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 	{	
 		// load High LOD for one driver each
 		// add to load queue from range 242=models\racers\*_hi.ctr
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[i] + bigfileIndex_modelHigh,
 			&data.driverModel_lowLOD[i],0xfffffffe);
 	}
@@ -129,7 +129,7 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 	if(boolNeedWeapons == 0)
 	{
 		// load MPK of P1 on adventure,
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[i] + bigfileIndex_mpkAdv,
 			0,param_3);
 	}
@@ -142,13 +142,13 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 
 		// load High LOD for one driver each
 		// add to load queue from range 242=models\racers\*_hi.ctr
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[i] + bigfileIndex_modelHigh,
 			&data.driverModel_lowLOD[i],0xfffffffe);
 
 		// load 4P MPK of Penta,
 		// required to get all the weapon models
-		LOAD_AppendQueue(param_1,2,
+		LOAD_AppendQueue(param_1,LT_DRAM,
 			0xD + bigfileIndex_mpk4pVS,
 			0,param_3);
 	}

@@ -48,12 +48,13 @@ void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 void AH_WarpPad_AllWarppadNum();
 void MM_Title_SetTrophyDPP();
-void BreakDraw();
 u_int MM_Video_CheckIfFinished(int param_1);
 
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	struct Level* lev = gGT->level1;
+	
+#ifndef REBUILD_PS1
 	
 	DrawControllerError(gGT, gGamepads);
 	DrawFinalLap(gGT);
@@ -114,53 +115,58 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderAllHeatParticles(gGT);
 	
 	TileView_FadeAllWindows();
-	RenderAllLevelGeometry(gGT);
-	RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
-	MultiplayerWumpaHUD(gGT);
 	
-	#if 0
-	// Multiplayer Pixel LOD Part 3
-	#endif
-	
-	if(
-		// if not cutscene
-		// if not in adventure arena
-		// if not in main menu
-		((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA | MAIN_MENU)) == 0) &&
-		
-		// if loading is 100% finished
-		(sdata->Loading.stage != -4)
-	)
+	if((gGT->renderFlags & 1) != 0)
 	{
-		// in DotLights.c
-		void DotLights(struct GameTracker* gGT);
-		DotLights(gGT);
-	
-		if((gGT->renderFlags & 0x8000) != 0)
+		RenderAllLevelGeometry(gGT);
+		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
+		MultiplayerWumpaHUD(gGT);
+		
+		#if 0
+		// Multiplayer Pixel LOD Part 3
+		#endif
+		
+		if(
+			// if not cutscene
+			// if not in adventure arena
+			// if not in main menu
+			((gGT->gameMode1 & (GAME_CUTSCENE | ADVENTURE_ARENA | MAIN_MENU)) == 0) &&
+			
+			// if loading is 100% finished
+			(sdata->Loading.stage != -4)
+		)
 		{
-			WindowBoxLines(gGT);
-			WindowDivsionLines(gGT);
+			// in DotLights.c
+			void DotLights(struct GameTracker* gGT);
+			DotLights(gGT);
+		
+			if((gGT->renderFlags & 0x8000) != 0)
+			{
+				WindowBoxLines(gGT);
+				WindowDivsionLines(gGT);
+			}
+		
 		}
+		
+		// if game is not loading
+		if (sdata->Loading.stage == -1) 
+		{
+			// If game is not paused
+			if ((gGT->gameMode1 & PAUSE_ALL) == 0)
+			{
+				RobotcarWeapons_Update();
+			}
 	
+			StartLine_Update();
+		}
 	}
-	
-	// if game is not loading
-    if (sdata->Loading.stage == -1) {
-
-	  // If game is not paused
-      if ((gGT->gameMode1 & PAUSE_ALL) == 0)
-	  {
-		RobotcarWeapons_Update();
-      }
-
-	  StartLine_Update();
-    }
 
 	// If in main menu, or in adventure arena,
 	// or in End-Of-Race menu
 	if ((gGT->gameMode1 & (ADVENTURE_ARENA | END_OF_RACE | MAIN_MENU)) != 0) {
 		unk80047d64();
 	}
+#endif
 	
 	// clear swapchain
 	if (
@@ -171,28 +177,34 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 			)
 		)
 	{
-		CAM_ClearScreen(gGT);
+		DECOMP_CAM_ClearScreen(gGT);
 	}
 	
 	if ((gGT->renderFlags & 0x1000) != 0)
 	{
-		TitleFlag_DrawSelf();
+		DECOMP_TitleFlag_DrawSelf();
 	}
 
 	RenderDispEnv_UI(gGT);
 	
+#ifndef REBUILD_PS1
 	gGT->countTotalTime = 
 		RCNT_GetTime_Total();
+#endif
 	
 	RenderVSYNC(gGT);
+	
+#ifndef REBUILD_PS1
 	RenderFMV();
 	
 	gGT->countTotalTime =
 		RCNT_GetTime_Elapsed(gGT->countTotalTime,0);
+#endif
 	
 	RenderSubmit(gGT);
 }
 
+#ifndef REBUILD_PS1
 void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	int posY;
@@ -247,7 +259,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 			[
 				data.lngIndex_gamepadUnplugged[lngArrStart + i]
 			],
-			0x100, posY + window.h, FONT_SMALL, (CENTER_TEXT | ORANGE));
+			0x100, posY + window.h, FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 
 		// add for each line
 		window.h += 8;
@@ -256,7 +268,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// PLEASE CONNECT A CONTROLLER
 	DecalFont_DrawLine(
 		sdata->lngStrings[0xac/4],
-		0x100, posY + window.h, FONT_SMALL, (CENTER_TEXT | ORANGE));
+		0x100, posY + window.h, FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 		
 	// add for each line
 	window.h += 8;
@@ -334,7 +346,7 @@ DrawFinalLapString:
 		DecalFont_DrawLineOT(
 			sdata->lngStrings[0x8cc/4],
 			resultPos[0], resultPos[1],
-			FONT_BIG, (CENTER_TEXT | ORANGE),
+			FONT_BIG, (JUSTIFY_CENTER | ORANGE),
 			tileView->ptrOT);
 			
 		sdata->finalLapTextTimer[i]--;
@@ -496,7 +508,11 @@ void RenderAllHUD(struct GameTracker* gGT)
 				// drawing end of race
 				else
 				{
-					if((gGT->gameMode2 & CUP_ANY_KIND) != 0)
+					if(
+						// VS mode, and Cup
+						((gGT->gameMode1 & ARCADE_MODE) == 0) && 
+						((gGT->gameMode2 & CUP_ANY_KIND) != 0)
+					  )
 					{
 						// disable drawing hud,
 						// enable drawing "standings"
@@ -504,32 +520,22 @@ void RenderAllHUD(struct GameTracker* gGT)
 						return;
 					}
 					
-					if((gameMode1 & RELIC_RACE) != 0)
+					// temporary, until we rewrite MainGameEnd_Initialize
+					if((gGT->gameMode1 & RELIC_RACE) == 0)
 					{
-						RR_EndEvent_DrawMenu();
-						return;
+						// all 221-225 overlays share the same
+						// function address, so call as one func
+						void OVR_Region1();
+						OVR_Region1();
 					}
 					
-					if((gameMode1 & TIME_TRIAL) != 0)
+					// except relic, until we rewrite MainGameEnd_Initialize
+					else
 					{
-						TT_EndEvent_DrawMenu();
-						return;
+						void DECOMP_RR_EndEvent_DrawMenu();
+						DECOMP_RR_EndEvent_DrawMenu();
 					}
 					
-					if((gameMode1 & CRYSTAL_CHALLENGE) != 0)
-					{
-						CC_EndEvent_DrawMenu();
-						return;
-					}
-					
-					if((gameMode1 & (ADVENTURE_MODE | ARCADE_MODE)) != 0)
-					{
-						AA_EndEvent_DrawMenu();
-						return;
-					}
-					
-					// only remaining option
-					VB_EndEvent_DrawMenu();
 					return;
 				}
 			}
@@ -692,6 +698,7 @@ void RenderAllNormalParticles(struct GameTracker* gGT)
 			gGT->particleList_ordinary);
 	}
 }
+#endif
 
 void RenderDispEnv_World(struct GameTracker* gGT)
 {
@@ -700,12 +707,13 @@ void RenderDispEnv_World(struct GameTracker* gGT)
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		tileView = &gGT->tileView[i];
-		TileView_SetDrawEnv_Normal(
+		DECOMP_TileView_SetDrawEnv_Normal(
 			&tileView->ptrOT[0x3ff],
 			tileView, gGT->backBuffer, 0, 0);
 	}
 }
 
+#ifndef REBUILD_PS1
 // I need a better name
 void RenderAllFlag0x40(struct GameTracker* gGT)
 {
@@ -812,8 +820,6 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	struct Level* level1;
 	struct TileView* tileView;
 	struct mesh_info* ptr_mesh_info;
-	
-	if((gGT->renderFlags & 1) == 0) return;
 	
 	level1 = gGT->level1;
 	if(level1 == 0) return;
@@ -1193,16 +1199,23 @@ void WindowDivsionLines(struct GameTracker* gGT)
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
 }
+#endif
 
 void RenderDispEnv_UI(struct GameTracker* gGT)
 {
 	struct TileView* tileView = &gGT->tileView_UI;
 	
-	TileView_SetDrawEnv_Normal(
+	DECOMP_TileView_SetDrawEnv_Normal(
 		&tileView->ptrOT[4],
 		tileView, gGT->backBuffer, 0, 0);
 }
 
+// force code to re-check RAM during the loop, cause the compiler 
+// doesn't know what IRQs are, and wont re-check RAM by default,
+// causing a 10fps bug where the game could normally go 60+, such 
+// as the blizzard bluff tunnel. Bug replicates in DuckStation,
+// but not no$psx and not redux.
+__attribute__((optimize("O0")))
 void RenderVSYNC(struct GameTracker* gGT)
 {	
 	// render checkered flag
@@ -1213,6 +1226,13 @@ void RenderVSYNC(struct GameTracker* gGT)
 
 	while(1)
 	{
+
+#ifdef REBUILD_PC
+		// must be called in the loop,
+		// or else it wont properly sync
+		DrawSync(0);
+#endif
+		
 		if(
 			// if DrawOTag finished
 			(gGT->bool_DrawOTag_InProgress == 0) &&
@@ -1225,6 +1245,7 @@ void RenderVSYNC(struct GameTracker* gGT)
 			return;
 		}
 		
+#ifndef REBUILD_PC
 		// if more than 6 VSYNCs passed since
 		// the last successful draw, FPS < 10fps
 		if(gGT->vSync_between_drawSync > 6)
@@ -1233,9 +1254,11 @@ void RenderVSYNC(struct GameTracker* gGT)
 			BreakDraw();
 			return;
 		}
+#endif
 	}
 }
 
+#ifndef REBUILD_PS1
 void RenderFMV()
 {
 	if(sdata->boolPlayVideoSTR == 1)
@@ -1250,6 +1273,7 @@ void RenderFMV()
 		DrawSync(0);
 	}
 }
+#endif
 
 void RenderSubmit(struct GameTracker* gGT)
 {		

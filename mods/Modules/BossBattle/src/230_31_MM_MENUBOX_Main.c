@@ -17,7 +17,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   struct GameTracker *gGT = sdata->gGT;
 
   // if scrapbook is unlocked
-  if ((sdata->gameProgress.unlocks[0] & 0x10) != 0)
+  if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
   {
     // change OVR_230.rows_mainMenu_Basic
     // to OVR_230.rows_mainMenu_WithScrapbook

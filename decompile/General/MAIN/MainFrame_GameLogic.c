@@ -203,7 +203,7 @@ LAB_80035098:
 			}
 		}
 		BOTS_UpdateGlobals();
-		GhostBuffer_RecordStats(0);
+		GhostTape_WriteMoves(0);
 		gGT->unk1cc4[4] = (u_int)(gGT->unk1cc4[4] * 10000) / 0x147e;
 		Particle_UpdateAllParticles();
 	}

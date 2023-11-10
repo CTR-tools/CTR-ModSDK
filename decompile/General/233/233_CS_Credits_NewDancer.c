@@ -18,12 +18,15 @@ void CS_Credits_NewDancer(struct Thread* dancerTh, int dancerModelID)
 	
 	creditsObj->countdown = 360;
 	
+	char* ptrStrings =
+		CREDITSHEADER_GETSTRINGS(creditsBSS);
+	
 	// less than TAWNA1
 	if(dancerModelID < 0x8f)
 	{
 		// subtract CRASHDANCE
 		creditsObj->epilogue_topString = 
-			creditsBSS->ptrStrings[dancerModelID - 0x7e];
+			ptrStrings[dancerModelID - 0x7e];
 	}
 	
 	// TAWNA
@@ -31,7 +34,7 @@ void CS_Credits_NewDancer(struct Thread* dancerTh, int dancerModelID)
 	{
 		// subtract an extra cause of GARAGE_TOP
 		creditsObj->epilogue_topString = 
-			creditsBSS->ptrStrings[(dancerModelID - 0x7e) - 1];
+			ptrStrings[(dancerModelID - 0x7e) - 1];
 	}
 	
 	creditsObj->epilogueCount200 = 200;

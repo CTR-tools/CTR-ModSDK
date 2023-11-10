@@ -83,8 +83,11 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	for(i = 0; i < 14; i++)
 	{
 		short* val = (short*)((int)driver + (int)PhysLinear_DriverOffsets[i]);
-		*val -= msPerFrame;
-		if(*val < 0) *val = 0;
+		if(*val > 0)
+		{
+			*val -= msPerFrame;
+			if(*val < 0) *val = 0;
+		}
 	}
 	
 	if(driver->reserves > 0) driver->timeSpentUsingReserves += msPerFrame;
@@ -293,7 +296,7 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 				timerHazard = driver->clockReceive << 4;
 
 				// approximate trigonometry
-				approxTrig = data.trigApprox[(timerHazard & 0x3ff)];
+				approxTrig = *(int*)&data.trigApprox[(timerHazard & 0x3ff)];
 
 				if ((timerHazard & 0x400) == 0) approxTrig = approxTrig << 0x10;
 				approxTrig = approxTrig >> 0x10;

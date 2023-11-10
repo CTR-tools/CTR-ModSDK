@@ -43,9 +43,11 @@ void DECOMP_AH_WarpPad_AllWarppadNum()
 
 void AH_WarpPad_SetNumModelData(struct Instance* inst, struct ModelHeader* mh)
 {
-	// it's 4am, I dont care, I'm going to bed - Niko
-	inst->idpp[0].ptrCommandList = 	mh->ptrCommandList;
-	inst->idpp[0].ptrColorLayout = 	mh->ptrColors;
-	inst->idpp[0].ptrTexLayout = 	mh->ptrTexLayout;
-	inst->idpp[0].unkc0[0] = 		mh->ptrVertexData;
+	struct InstDrawPerPlayer* idpp =
+		INST_GETIDPP(inst);
+		
+	idpp[0].ptrCommandList = 	mh->ptrCommandList;
+	idpp[0].ptrColorLayout = 	mh->ptrColors;
+	idpp[0].ptrTexLayout = 	mh->ptrTexLayout;
+	idpp[0].unkc0[0] = 		mh->ptrVertexData;
 }

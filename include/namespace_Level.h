@@ -98,28 +98,28 @@ struct AnimTex
 	// 0x0
 	// pointer to IconGroup4 struct to be animated
 	// cycles through the entirety of ptrarray
-	struct IconGroup4* ptrNext;
+	int* ptrActiveTex;
 
 	// 0x4
 	short numFrames;
 
 	// 0x6
-	// related to timer
-	short shrug;
+	short frameDuration;
 
 	// 0x8
-	// related to timer
-	short lottashortshuh;
+	short shiftFactor;
 
 	// 0xA
-	// current frame
 	u_short frameIndex;
 
 	// 0xC
-	// amount of elements in array is same as numFrames
-	// ptrarray[numFrames] leads to the next AnimTex struct in the ptr_anim_tex array
-	struct IconGroup4* ptrarray[0];
+	// size = numFrames
+	// After this array is the next AnimTex
+	//struct IconGroup4* ptrarray[0];
 };
+
+#define ANIMTEX_GETARRAY(x) \
+	((unsigned int)x + sizeof(struct AnimTex))
 
 struct PVS
 {
@@ -288,6 +288,7 @@ struct OVert
 
 	// 2 bytes large,
 	// always in pairs of two
+	short data[2];
 };
 
 struct WaterVert
@@ -409,13 +410,25 @@ struct mesh_info
 	// 0x20 bytes large
 };
 
+enum ST1
+{
+	ST1_MAP=0,
+	ST1_SPAWN=1,
+	ST1_CAMERA_EOR,
+	ST1_CAMERA_PATH,
+	ST1_NTROPY,
+	ST1_NOXIDE,
+	ST1_CREDITS
+};
+
 struct SpawnType1
 {
 	int count;
 	
-	// more than 1, determined by "count"
-	void* pointers[0];
+	//void* pointers[0];
 };
+#define ST1_GETPOINTERS(x) \
+	((unsigned int)x + sizeof(struct SpawnType1))
 
 struct SpawnType2
 {
@@ -459,6 +472,14 @@ struct Skybox
 	// each Face is vec4s(v1Off,v2Off,v3Off,renderMode),
 	// offsets of ptrVertex, divide offset by 0xC to get index,
 	// renderMode can be just 0000 and it'll work fine
+};
+
+struct LevTexLookup
+{
+	int numIcon;
+	struct Icon* firstIcon;
+	int numIconGroup;
+	struct IconGroup** firstIconGroupPtr;
 };
 
 struct Level
@@ -529,7 +550,7 @@ struct Level
 
 	// 0x3c
 	// leads to the icon pack header
-	void* ptr_named_tex;
+	struct LevTexLookup* levTexLookup;
 
 	// 0x40
 	// leads to the icon pack data
@@ -570,7 +591,7 @@ struct Level
 	void* ptrLowTexArray;
 
 	// 0xD8
-	// base background color, used to clear the screen
+	// Used in Coco Park, encoded as Blue
 	u_int clearColorRGBA;
 
 	// 0xDC
@@ -659,7 +680,7 @@ struct Level
 	void* ptrSCVert;
 
 	// 0x17c - 0x182
-	char unkStarData[0x8];
+	short unkStarData[4];
 
 	// split-lines
 	// for ice, mud, water
@@ -668,7 +689,7 @@ struct Level
 	char splitLines[4];
 
 	// 0x188
-	struct NavHeader** LevNavHeader;
+	struct NavHeader** LevNavTable;
 
 	// 0x18C
 	// used in FUN_80060630

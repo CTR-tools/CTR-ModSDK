@@ -36,10 +36,10 @@ enum Font
 enum FontFlags
 {
 	// end text at X position
-	END_AT_X=0x4000,
+	JUSTIFY_RIGHT=0x4000,
 
 	// center text
-	CENTER_TEXT=0x8000
+	JUSTIFY_CENTER=0x8000
 };
 
 // text color gradients corresponding to ptrColors
@@ -66,7 +66,7 @@ enum Colors
 	DINGODILE_OLIVE,
 	POLAR_CYAN,
 	PURA_VIOLET,
-	PINSTRIPE_PALE_DARK_BLUE,
+	PINSTRIPE_PALE_DARK_BLUE, // different in sep3
 	PAPU_YELLOW,
 	ROO_ORANGE,
 	JOE_COLOR,
@@ -84,7 +84,7 @@ enum Colors
 
 	// gray #808080, identical to fake crash's
 	// the neutral vertex color for the PSX
-	// used for sprites that don't need coloring as a result
+	// used for sprites that don't need coloring, as a result
 	GRAY,
 
 	// colors assigned to each player in multiplayer modes
@@ -98,9 +98,13 @@ enum Colors
 	LIGHT_GREEN,
 	FOREST_GREEN,
 	CREDITS_FADE, // written dynamically while credits are running, makes text fade to black bg
+	
+	// Only in USA, EUR, JPN, not Sep3
+	#if BUILD >= UsaRetail
 	BLUE,
 	LIME_GREEN,
 	ORANGE_RED,
+	#endif
 
 	// total amount of enum entries
 	NUM_COLORS
@@ -161,14 +165,11 @@ struct IconGroup
 	// 0x12
 	short numIcons;
 
-	// This is an array, not a pointer,
-	// see below...
 	// 0x14
-	struct Icon* icons[1];
-
-	// So it really looks like this
-	// struct Icon icons[numIcons];
+	//struct Icon* icons[0];
 };
+#define ICONGROUP_GETICONS(x) \
+	((unsigned int)x + sizeof(struct IconGroup))
 
 _Static_assert(sizeof(struct TextureLayout) == 0xC);
 _Static_assert(sizeof(struct Icon) == 0x20);

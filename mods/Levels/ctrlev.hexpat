@@ -154,7 +154,7 @@ struct TextureLayout
 	// 0x14
 	// top left corner
 	u8 u0;
-    u8 v0 [[format("format_texturelayout_v")]];
+    u8 v0;
 
 	// 0x16
 	// holds X and Y with bit shifting
@@ -279,7 +279,7 @@ struct Model
 	short numHeaders;
 
 	// 0x14
-	CTRLEVPtr<ModelHeader, u32> headers[this.numHeaders];
+	CTRLEVPtr<u32, u32> headers[this.numHeaders];
 };
 
 struct Thread

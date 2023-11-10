@@ -2,16 +2,20 @@
 
 void DECOMP_DecalFont_DrawLineOT(char* str, int posX, int posY, short fontType, int flags, u_long* ot)
 {
-	// backup original
+	struct GameTracker* gGT;
 	u_long * backupOT;
-	backupOT = sdata->gGT->tileView_UI.ptrOT;
+	
+	gGT = sdata->gGT;
+	
+	// backup
+	backupOT = gGT->tileView_UI.ptrOT;
 
-	// set new
-	sdata->gGT->tileView_UI.ptrOT = ot;
+	// alter
+	gGT->tileView_UI.ptrOT = ot;
 
 	// draw
-	DecalFont_DrawLine(str, posX, posY, fontType, flags);
+	DECOMP_DecalFont_DrawLine(str, posX, posY, fontType, flags);
 
-	// restore
-	sdata->gGT->tileView_UI.ptrOT = backupOT;
+	// reset
+	gGT->tileView_UI.ptrOT = backupOT;
 }

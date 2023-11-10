@@ -5,6 +5,84 @@ struct unknown233
 	int unknown3;
 };
 
+struct CutsceneObj
+{
+	// 0x0
+	struct IconGroup* ptrIcons;
+	// 0x4
+	short unk4;
+	// 0x6
+	short unk6;
+
+	/* 0x8
+	jittery number? color?
+	usually has value of 0x2e808080 */
+	int unk8;
+
+	// 0xC
+	short unk_C;
+	// 0xE
+	short unk_E;
+
+	// 0x10
+	int* metadata;
+
+	// 0x14
+	short unk14;	
+
+	// 0x16
+	// determines time or frame animation
+	unsigned short flags;
+
+	int unk18;
+
+	short unk1c;
+	short unk1e;
+	short unk20;
+	short unk22;
+	short unk24;
+	short unk26;
+	short unk28;
+
+	// 0x2a
+	short scaleSpeed;
+	// 0x2c 
+	short desiredScale;
+
+	struct
+	{
+		// 0x2e
+		short textPos[2];
+
+		// 0x32
+		// index to subtitle text in LNG
+		// -1 to disable
+		short lngIndex;
+
+		// 0x34
+		short font;
+
+		// 0x36
+		short colors;
+
+	} Subtitles;
+
+
+	#if 0
+	// 0x38
+	char* currOpcode[2];
+	// 0x40
+	char* prevOpcode;
+
+	// 0x44
+	u_char unk44[4];
+	// 0x48
+	int unk48;
+	#endif
+
+	// size is supposedly 0x60, some things are still missing
+};
+
 extern struct
 {
 	char fill_beginning[4];
@@ -125,9 +203,13 @@ struct CreditsLevHeader
 {
 	int size;
 	int numStrings;
-	char* ptrStrings[1];
+	
+	//char* ptrStrings[0];
 };
 
+#define CREDITSHEADER_GETSTRINGS(x) \
+	((unsigned int)x + sizeof(struct CreditsLevHeader))
+	
 struct CreditsObj
 {
 	// 800b94bc (000) 

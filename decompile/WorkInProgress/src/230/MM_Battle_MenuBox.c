@@ -19,7 +19,7 @@ void MM_Battle_MenuBox(void)
     short *puVar18;
     short sVar20;
     ushort local_60[4];
-    short local_58[4];
+    RECT local_58;
     short local_50;
     short local_4e;
     short local_4c;
@@ -552,7 +552,7 @@ void MM_Battle_MenuBox(void)
                 MenuBox_ProcessInput(box, sdata->buttonTapPerPlayer[0], 1, 1);
                 if ((box->state & 4) != 0)
                 {
-                    box->state &= 0xfffffffb;
+                    box->state &= ~(ONLY_DRAW_TITLE);
 
                     // Leave the submenu that is within the Setup Battle menu
 
@@ -576,7 +576,7 @@ void MM_Battle_MenuBox(void)
                        (int)(((u_int)OVR_230.transitionMeta_battle[1].distX + 0x8c) * 0x10000) >> 0x10,
                        (int)(((u_int)OVR_230.transitionMeta_battle[1].distY + 0x24) * 0x10000) >> 0x10, 1, 0x4000);
 
-    OVR_230.battleType_box.state = OVR_230.battleType_box.state & 0xfffffebf;
+    OVR_230.battleType_box.state = OVR_230.battleType_box.state & ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
 
     // if you are not choosing type of battle
     if (sdata->battleSetupExpandMenu != 0)
@@ -611,7 +611,7 @@ void MM_Battle_MenuBox(void)
         {
             if (OVR_230.battleType_box.rowSelected == 2)
             {
-                OVR_230.battleLengthLifeTime_box.state &= 0xfffffebf;
+                OVR_230.battleLengthLifeTime_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
                 if (sdata->battleSetupExpandMenu != 1)
                 {
                     OVR_230.battleLengthLifeTime_box.state |= 0x40;
@@ -623,7 +623,7 @@ void MM_Battle_MenuBox(void)
                 MenuBox_DrawSelf(&OVR_230.battleLengthLifeTime_box,
                                  (int)(((u_int)OVR_230.transitionMeta_battle[2].currX + 0x9c) * 0x10000) >> 0x10,
                                  (int)(short)(OVR_230.transitionMeta_battle[2].currY + sVar6 + 4), 0x8e);
-                OVR_230.battleLengthLifeLife_box.state &= 0xfffffebf;
+                OVR_230.battleLengthLifeLife_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
                 if (sdata->battleSetupExpandMenu != 10)
                 {
                     OVR_230.battleLengthLifeLife_box.state |= 0x40;
@@ -652,10 +652,10 @@ void MM_Battle_MenuBox(void)
         box = &OVR_230.battleLengthPoints_box;
     }
     uVar12 = box->state;
-    box->state = uVar12 & 0xfffffebf;
+    box->state = uVar12 & ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
     if (sdata->battleSetupExpandMenu != 1)
     {
-        box->state = uVar12 & 0xfffffebf | 0x40;
+        box->state = uVar12 & ~(0x100 | SHOW_ONLY_HIGHLIT_ROW) | 0x40;
     }
     if (sdata->battleSetupRowHighlighted != 1)
     {
@@ -772,7 +772,7 @@ LAB_800b25f0:
         local_50 = OVR_230.transitionMeta_battle[4].currX + 0x9c;
         local_4e = OVR_230.transitionMeta_battle[4].currY + sVar20 + 3;
 
-        CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, 1,
+        CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
 
                              gGT->backBuffer->otMem.startPlusFour,
 
@@ -840,10 +840,10 @@ LAB_800b25f0:
     // the player from starting the Battle
     if (j == 0)
     {
-        OVR_230.battleStartGame_box.state &= 0xfffffebf;
+        OVR_230.battleStartGame_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
         if (sdata->battleSetupExpandMenu != 5)
         {
-            OVR_230.battleStartGame_box.state |= 0x40;
+            OVR_230.battleStartGame_box.state |= SHOW_ONLY_HIGHLIT_ROW;
         }
         if (sdata->battleSetupRowHighlighted != 5)
         {
@@ -929,19 +929,19 @@ LAB_800b25f0:
         local_60[3] = 0x20;
         local_60[1] = local_3e + (sdata->battleSetupRowHighlighted - 3) * 0x20 + 2;
 
-        CTR_Box_DrawClearBox(local_60, &sdata->menuRowHighlight_Normal, 1,
+        CTR_Box_DrawClearBox(local_60, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
                              gGT->backBuffer->otMem.startPlusFour,
 
                              // pointer to PrimMem struct
                              gGT->backBuffer->primMem);
     }
 
-    local_58[0] = local_40 + 3;
-    local_58[1] = local_3e + 2;
-    local_58[2] = local_3c + -6;
-    local_58[3] = local_3a + -4;
+    local_58.x = local_40 + 3;
+    local_58.y = local_3e + 2;
+    local_58.w = local_3c - 6;
+    local_58.h = local_3a - 4;
 
-    CTR_Box_DrawClearBox(local_58, &OVR_230.color3[0], 1,
+    CTR_Box_DrawClearBox(local_58, &OVR_230.color3[0], TRANS_50_DECAL,
                          gGT->backBuffer->otMem.startPlusFour,
 
                          // pointer to PrimMem struct

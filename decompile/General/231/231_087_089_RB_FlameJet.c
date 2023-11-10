@@ -152,7 +152,7 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 	else if(fjObj->cycleTimer == 0x2d)
 	{
 		if(fjObj->audioPtr != 0)
-			OtherFX_Stop_Safe(&fjObj->audioPtr);
+			OtherFX_RecycleMute(&fjObj->audioPtr);
 	}
 	
 	// repeat cycle every 105 (3.5s)
@@ -205,6 +205,7 @@ void DECOMP_RB_FlameJet_LInB(struct Instance* inst)
 	fjObj->audioPtr = 0;
 	
 	// put on separate cycles
-	metaArray = (short*)sdata->gGT->level1->ptrSpawnType1->pointers[1];
+	void** pointers = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
+	metaArray = (short*)pointers[ST1_SPAWN];
 	t->cooldownFrameCount = metaArray[inst->name[9] - '0'];
 }

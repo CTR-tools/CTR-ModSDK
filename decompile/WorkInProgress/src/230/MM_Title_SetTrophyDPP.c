@@ -5,16 +5,16 @@ void DECOMP_MM_Title_SetTrophyDPP(void)
 {
   struct Instance* iVar1;
   struct Instance* iVar2;
-  struct Title* titleObj = OVR_230.titleObj;
+  struct Title* title = OVR_230.titleObj;
   
   // if title object exists
-  if (titleObj != NULL) 
+  if (title != NULL) 
   {
 	// instance named "title"
-    iVar2 = titleObj->i[3];
+    iVar2 = title->i[3];
 	
 	// another instance named "title"
-    iVar1 = titleObj->i[2];
+    iVar1 = title->i[2];
 	
     if ((iVar2->idpp->unkb8[0] & 0x100) == 0) 
 	{
@@ -27,5 +27,4 @@ void DECOMP_MM_Title_SetTrophyDPP(void)
       *(short*)(iVar1->idpp + 0xde) = *(short*)(iVar2->idpp + 0xde);
     }
   }
-  return;
 }

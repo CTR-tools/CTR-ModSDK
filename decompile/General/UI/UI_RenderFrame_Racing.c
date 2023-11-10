@@ -139,7 +139,8 @@ void DECOMP_UI_RenderFrame_Racing()
 
 	if (gGT->level1->ptrSpawnType1 != 0)
 	{
-		levPtrMap = gGT->level1->ptrSpawnType1->pointers[0];
+		void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+		levPtrMap = pointers[ST1_MAP];
 	}
 
 	// If you are not in Relic Race, and not in battle mode,
@@ -206,7 +207,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						 	// Midpoint between Start Y and Size Y, except 0x1e higher
 						 	(int)(((u_int)tileView->rect.y + ((int)((u_int)tileView->rect.h << 0x10) >> 0x11) + -0x1e) * 0x10000) >> 0x10,
 
-							FONT_BIG, (CENTER_TEXT | ORANGE)
+							FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 						);
 					}
 
@@ -322,11 +323,14 @@ void DECOMP_UI_RenderFrame_Racing()
 						// set timer value
 						playerStruct->PickupWumpaHUD.cooldown = partTimeVariable1;
 					}
-
+					
+					struct Icon** iconPtrArray =
+						ICONGROUP_GETICONS(gGT->iconGroup[0xB]);
+			
 					// "wumpaposter" icon group
 					DecalHUD_DrawPolyFT4
 					(
-						gGT->iconGroup[0xB]->icons[0],
+						iconPtrArray[0],
 						(int)wumpaModel_Pos[0],
 						(int)wumpaModel_Pos[1],
 
@@ -897,11 +901,11 @@ void DECOMP_UI_RenderFrame_Racing()
 				i = DecalFont_GetLineWidth(sdata->lngStrings[0x24B], 1);
 
 				// Draw the string
-				DecalFont_DrawLine((char *)&string[0], (int)(((u_int)turboCount_Pos[0] - i) * 0x10000) >> 0x10, (int)turboCount_Pos[1], FONT_BIG, (END_AT_X | ORANGE_RED));
+				DecalFont_DrawLine((char *)&string[0], (int)(((u_int)turboCount_Pos[0] - i) * 0x10000) >> 0x10, (int)turboCount_Pos[1], FONT_BIG, (JUSTIFY_RIGHT | ORANGE_RED));
 
 
 				// Draw the string
-				DecalFont_DrawLine(sdata->lngStrings[0x24B], (int)(short)turboCount_Pos[0], (int)turboCount_Pos[1], FONT_BIG, (END_AT_X | ORANGE));
+				DecalFont_DrawLine(sdata->lngStrings[0x24B], (int)(short)turboCount_Pos[0], (int)turboCount_Pos[1], FONT_BIG, (JUSTIFY_RIGHT | ORANGE));
 
 				backBuffer = gGT->backBuffer;
 				primMemCurr = backBuffer->primMem.curr;
@@ -1137,7 +1141,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				// In some cases, this cuts off bits, but sometimes
 				// [number] * 0x10000 >> 0x10 = [number]
 
-				DecalFont_DrawLine(pbVar6, partTimeVariable3 * 0x10000 >> 0x10, (partTimeVariable5 - 0x1e) * 0x10000 >> 0x10, FONT_BIG, (CENTER_TEXT | ORANGE));
+				DecalFont_DrawLine(pbVar6, partTimeVariable3 * 0x10000 >> 0x10, (partTimeVariable5 - 0x1e) * 0x10000 >> 0x10, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 				if
 				(

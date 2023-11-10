@@ -100,7 +100,7 @@ struct Thread
 	void (*funcThCollide)(struct Thread* self);
 
 	// 0x2c
-	void* funcThTick;
+	void (*funcThTick)(struct Thread* self);
 
 	// This would be 9900C for players, or a pointer
 	// to a camera, etc
@@ -155,7 +155,7 @@ struct ThreadBucket
 	int boolCantPause;
 
 	// 0x10
-	int unk2;
+	char unk2[4];
 
 	// size is 0x14
 };

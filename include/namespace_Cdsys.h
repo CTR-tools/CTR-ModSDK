@@ -11,6 +11,12 @@ enum XA_TYPE
 	CDSYS_XA_NUM_TYPES
 };
 
+enum DiscMode
+{
+	DM_DATA,
+	DM_AUDIO
+};
+
 struct XNF
 {
 	// 0x0
@@ -22,13 +28,11 @@ struct XNF
 	// 0x8
 	int numTypes;
 
-
 	// 0xC
 	int numXAs_total;
 
 	// 0x10
 	int numAudioTracks_total;
-
 
 	// 0x14
 	int numXA[CDSYS_XA_NUM_TYPES];
@@ -42,11 +46,18 @@ struct XNF
 	// 0x44
 	int firstSongIndex[CDSYS_XA_NUM_TYPES];
 
-	// The number '1' is the
-	// total number of XA files
-	// all entries are 0002xxxx
 	// 0x54
-	int XaCdPos[1];
+	// size = numXAs_total
+	//int XaCdPos[0];
+};
+#define XNF_GETXACDPOS(x) \
+	((unsigned int)x + sizeof(struct XNF))
+
+struct XaSize
+{
+	char XaIndex;
+	char XaPrefix;
+	short XaBytes;
 };
 
 struct AudioMeta

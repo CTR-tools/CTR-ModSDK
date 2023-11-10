@@ -89,7 +89,7 @@ struct MenuBox
 	// & 2, centers posX
 	// & 4, draw only title bar
 	// & 0x10, draw ptrNextBox_InHierarchy
-	// & 0x20, disable menubox input, allow menubox funcptrz
+	// & 0x20, disable menubox input, allow menubox funcptr
 	// & 0x40, show only highlighted row
 	// & 0x28, main menu character select (better meaning)?
 	// & 0x80, tiny text in rows
@@ -124,7 +124,7 @@ struct MenuBox
 	short rowSelected;
 
 	// 0x1c
-	short unk1a;
+	short unk1c;
 
 	// 0x1e
 	// no idea, used in save/load

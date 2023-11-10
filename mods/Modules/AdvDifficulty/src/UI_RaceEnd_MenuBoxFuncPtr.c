@@ -19,7 +19,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
   gGT = sdata->gGT;
   if (menu->unk1e == 0)
   {
-    if (-1 < menu->unk1a)
+    if (-1 < menu->rowSelected)
     {
       option = menu->rows[menu->rowSelected].stringIndex;
       // if not "save ghost"
@@ -34,7 +34,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
       {
       case 7:
         // Change Difficulty
-        if (gGT->gameMode1 & TIME_TRIAL)
+        if (gGT->gameMode1 & (TIME_TRIAL|RELIC_RACE))
           return;
         nextMenu = (gGT->gameMode1 & ARCADE_MODE) ? &End_arcadeDifficulty : &End_AdvRaceDifficulty;
         nextMenu->posY_curr = (gGT->numPlyrCurrGame == 1)? 170 : 108;
@@ -43,7 +43,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
       case 6:
         // Change level
         // Erase ghost of previous race from RAM
-        GhostBuffer_Destroy();
+        GhostTape_Destroy();
         // go back to track selection
         sdata->mainMenuState = 2;
         break;
@@ -69,7 +69,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
         if ((gGT->unknownFlags_1d44 & 1) == 0)
           return;
 
-        sdata->boolPlayGhost = 1;
+        sdata->boolReplayHumanGhost = 1;
 
         GhostBufferEnd = (int)sdata->GhostRecording.ptrGhost + 0x3e00;
         ghostTape = sdata->GhostRecording.ptrGhost;
@@ -91,7 +91,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
 
         // Make P2 the character that is saved in the
         // header of the ghost that you will see in the race
-        data.characterIDs[1] = *(short *)((int)sdata->ptrGhostTapePlaying + 6);
+        data.characterIDs[1] = sdata->ptrGhostTapePlaying->characterID;
 
         // no ghosts are drawing
         sdata->boolGhostsDrawing = 0;
@@ -101,7 +101,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
       case 3:
         // Quit
         // Erase ghost of previous race from RAM
-        GhostBuffer_Destroy();
+        GhostTape_Destroy();
         // go back to main menu
         sdata->mainMenuState = 0;
         // load LEV of main menu
@@ -117,7 +117,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
         sdata->ptrActiveMenuBox = &data.menuBox_GhostSelection;
         return;
 
-      case 0xd:
+      case 13:
         // Exit To Map
         // when loading is done, add flag for "In Adventure Arena"
         sdata->Loading.OnBegin.AddBitsConfig0 |= ADVENTURE_ARENA;
@@ -132,7 +132,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
           sdata->Loading.OnBegin.RemBitsConfig0 |= (ADVENTURE_CUP | RELIC_RACE | CRYSTAL_CHALLENGE);
 
           // load Gemstone valley LEV
-          MainRaceTrack_RequestLoad(0x19);
+          MainRaceTrack_RequestLoad(GEM_STONE_VALLEY);
           return;
         }
 
@@ -154,7 +154,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
         MainRaceTrack_RequestLoad(gGT->prevLEV);
         return;
 
-      case 0xc9:
+      case 201:
         // Press X to continue
         sdata->menuReadyToPass |= 1;
         return;

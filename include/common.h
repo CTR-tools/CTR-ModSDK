@@ -1,4 +1,10 @@
+#ifndef COMMON_H
+#define COMMON_H
+
+#ifndef REBUILD_PC
 #include <gccHeaders.h>
+#endif
+
 #include <macros.h>
 #include <stdbool.h>
 
@@ -18,6 +24,7 @@
 #include <namespace_Decal.h>
 #include <namespace_Display.h>
 #include <namespace_Gamepad.h>
+#include <namespace_Ghost.h>
 #include <namespace_Howl.h>
 #include <namespace_Instance.h>
 
@@ -53,7 +60,14 @@
 #include <ovr_231.h>
 #include <ovr_232.h>
 #include <ovr_233.h>
-#include <regionsEXE.h>
-#include <functions.h>
-#include <gpu.h>
 #include <math.h>
+#include <regionsEXE.h>
+
+#ifndef REBUILD_PC
+#include <functions.h>
+#endif
+
+#include <decomp_functions.h>
+#include <gpu.h>
+
+#endif

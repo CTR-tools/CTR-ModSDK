@@ -546,12 +546,12 @@ struct Driver
 	// 0x350
 	// continues updating while driver is airborne,
 	// used for VisMem (sometimes?)
-	struct Quadblock* underDriver;
+	struct QuadBlock* underDriver;
 
 	// 0x354
 	// last "valid" quadblock the driver touched
 	// used for mask grab if next block is invalid
-	struct Quadblock* lastValid;
+	struct QuadBlock* lastValid;
 
 	// 0x358
 	// is it ice, gravel, or what?
@@ -720,7 +720,6 @@ struct Driver
 	short turbo_audioCooldown;
 
 	// 0x3E2
-	// needs to be signed to preserve saffi-fire bug
 	short reserves;
 
 	// 0x3E4
@@ -890,6 +889,8 @@ struct Driver
 	
 	// 0x448 - 0x1B
 	char const_SteerAccel_Stage2_FrameLength;
+
+	// not part of metaPhys
 	char boolFirstFrameSinceEngineRevving;
 	
 	// 0x44a - 0x1C
@@ -919,7 +920,9 @@ struct Driver
 	char unk457; // 0x22
 	char unk458; // 0x23
 	char unk459; // 0x24
-	short unk45a; // 0x25
+	char unk45a; // 0x25
+
+	char unk45b; // unused? skips straight to 0x45c
 
 	// 0x45c, 0x45d - 0x26, 0x27
 	// resist turning at low speed
@@ -934,41 +937,39 @@ struct Driver
 	
 	// all VehPtr_Drifting_PhysAngular
 	// or VehPtr_Drifting_Finalize
-	char unk460; // 0x2A
-	char unk461; // 0x2B
-	char unk462; // 0x2C
+	char unk460; // 0x460 - 0x2A
+	char unk461; // 0x461 - 0x2B
+	char unk462; // 0x462 - 0x2C
 	
 	// 0x463 - 0x2D
 	char const_Drifting_FramesTillSpinout;
 	
-	// impact turning?
-	short unk464;
-	short unk466;
-	
-	// 0x468
+	// 0x464, 0x466, 0x468 - 0x2E, 0x2F, 0x30
+	short unk464; // impact turning?
+	short unk466; // impact turning?
 	short const_Drifting_CameraSpinRate;
+
+	// 0x46A, 0x46B - 0x31, 0x32
 	char unk46a;
 	char unk46b;
-	int unk46c;
+
+	// 0x46C, 0x46E, 0x470, 0x472, 0x474 - 0x33, 0x34, 0x35, 0x36, 0x37
+	short unk46c;
+	short unk46e;
 	short unk470;
 	short unk472;
 	short unk474;
 
-	// 0x476
-	// point where turbo meter is empty
-	char const_turboMaxRoom;
-
-	// 0x477
-	// point where turbo turns red
-	char const_turboLowRoomWarning;
-
-	// 0x478
+	// 0x476, 0x477, 0x478, 0x479, 0x47A - 0x38, 0x39, 0x3A, 0x3B, 0x3C
+	char const_turboMaxRoom;        // point where turbo meter is empty
+	char const_turboLowRoomWarning; // point where turbo turns red
 	char const_turboFullBarReserveGain;
-	
-	// 0x479
 	char unk479; // 582 related
 	char unk47A; // 582 related
-	char unk47B;
+
+	char unk47B; // unused? metaphys skips straight to 0x47C
+
+	// 0x47C, 0x47E, 0x480 - 0x3D, 0x3E, 0x3F
 	short unk47C;
 	short unk47E;
 	short unk480;
@@ -980,7 +981,7 @@ struct Driver
 	// 1st, 2nd, 3rd, etc
 	short driverRank;
 
-	// 0x484
+	// 0x484 - MetaPhys stat no. 0x40
 	// Used in Aug4 and Aug14
 	int const_prototypeKey;
 
@@ -1372,60 +1373,84 @@ struct Driver
 	// === Robotcar and Ghost ===
 
 	// 0x598
-	// unknown
+	int unk598;
+	int unk59c;
+	int unk5a0;
 
 	// 0x5a4
-	// pointer to NavFrame
-
+	struct NavFrame* botNavFrame;
+	
+	int unk5a8;
+	int unk5ac;
+	
 	// 0x5b0
 	// unsigned int flags
 	// & 0x010 - is blasted? Something to do with damage
 	// & 0x100 - camera spectates this AI
 	// & 0x200 - race started for AI
+	int botFlags;
 
 	// 0x5b4
 	// acceleration from start-line
+	int botAccel;
 
 	// 0x5b8
 	// short path index
-
-	// 0x5ba
-	// short ???
+	short botPath;
+	short unk5ba;
 
 	// 0x5bc
 	// incline rotXZ
 	// probably only for AIs
+	char unk5bc[0x34];
 	
 	// 0x5d4
 	// AI speed
 	
+	// 0x5f0
+	int ai_posBackup[3];
+	
+	// 0x5fc
+	short ai_rot4[4];
+	
 	// 0x604
-	// AI progress // max recorded value = 60
+	int ai_progress_cooldown;
+
+	// 0x608
+	short ai_rotY_608;
+	
+	// 0x60a
+	short ai_quadblock_checkpointIndex;
 
 	// 0x60c
-	// short estimatePos[3]
+	short estimatePos[3];
 	
 	// 0x612
-	// char estimateRotNav[3]
-	// char estimateRotCurrY;
+	char estimateRotNav[3];
+	char estimateRotCurrY;
 
 	// 0x616
-	// short distToNextNavXYZ
+	short distToNextNavXYZ;
 	
 	// 0x618
-	// short distToNextNavXZ
+	short distToNextNavXZ;
 	
 	// 0x61A
-	// ???
+	short unk61a;
+	int unk61c;
 	
 	// 0x620
-	// MaskHeadWeapon* maskObj;
+	struct MaskHeadWeapon* maskObj;
 	
 	// 0x624
-	// short weaponCooldown
+	short weaponCooldown;
 
 	// 0x626
 	// short ??? // Something set when blasted ?
+	short unk626;
+	
+	// 0x628
+	int unk628;
 
 	// ===========================================
 
@@ -1437,16 +1462,17 @@ struct Driver
 	// 0x62C - 0x670 reserved for ghost
 
 	// 0x62C
-	// ptrGhostTape
+	struct GhostTape* ghostTape;
 
 	// 0x630
-	// ghostID
+	short ghostID;
 
 	// 0x632
-	// ??
+	short ghostBoolInit;
 
 	// 0x634
-	// short boolStartedGhost
+	short ghostBoolStarted;
+	short unk636;
 
 	// 0x638
 	// end of ghost struct (as determined by memset)
@@ -1459,8 +1485,12 @@ struct Driver
 	// 0x670 - size of pool object
 };
 
-#if BUILD < EurRetail
-_Static_assert(sizeof(struct MetaPhys) == 0x1C);
-#else
+#if BUILD >= JpnTrial
 _Static_assert(sizeof(struct MetaPhys) == 0x20);
+#else
+_Static_assert(sizeof(struct MetaPhys) == 0x1C);
+#endif
+
+#if BUILD == UsaRetail
+_Static_assert(sizeof(struct Driver) == 0x638);
 #endif

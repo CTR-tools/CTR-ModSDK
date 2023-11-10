@@ -2,12 +2,11 @@
 #include "macro.h"
 
 extern struct MenuRow rows_advDifficulty[];
-
 extern struct MenuRow rows_extraDifficulty[];
 
 void MM_AdvDifficulty(struct MenuBox *mb)
 {
-	short row = mb->rowSelected;
+	char row = mb->rowSelected;
 	struct MenuBox *prevBox = mb->ptrPrevBox_InHierarchy;
 
 	// if uninitialized
@@ -17,9 +16,8 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 		return;
 	}
 
-	int arcadeDifficulty = 0;
+	short arcadeDifficulty = 0;
 
-	// if you are in Adventure menu
 	if (prevBox == &OVR_230.menubox_adventure && row < 6)
 	{
 		switch (row)
@@ -34,7 +32,7 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 			arcadeDifficulty = 0x280;
 			break;
 		default:
-			arcadeDifficulty = OVR_230.cupDifficultySpeed[row + 1];
+			arcadeDifficulty = OVR_230.cupDifficultySpeed[row-1];
 			break;
 		}
 		OVR_230.desiredMenu = 0;
@@ -63,7 +61,11 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 
 struct MenuBox extra_difficulty =
     {
-        .stringIndexTitle = 345,
+        #if BUILD == JpnRetail
+        .stringIndexTitle = 354,
+		#else
+		.stringIndexTitle = 345,
+		#endif
         .posX_curr = 0,
         .posY_curr = 0,
         .unk1 = 0,
@@ -71,11 +73,16 @@ struct MenuBox extra_difficulty =
         .rows = rows_extraDifficulty,
         .funcPtr = MM_AdvDifficulty,
         .width = 171,
-        .height = 86};
+        .height = 86
+		};
 
 struct MenuBox adv_difficulty =
     {
-        .stringIndexTitle = 345,
+		#if BUILD == JpnRetail
+        .stringIndexTitle = 354,
+		#else
+		.stringIndexTitle = 345,
+		#endif
         .posX_curr = 0,
         .posY_curr = 0,
         .unk1 = 0,
@@ -83,4 +90,5 @@ struct MenuBox adv_difficulty =
         .rows = rows_advDifficulty,
         .funcPtr = MM_AdvDifficulty,
         .width = 171,
-        .height = 86};
+        .height = 86
+		};

@@ -38,7 +38,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // if you are transitioning in
 
     // if not done watching C-T-R letters
-    if (OVR_230.unkTimerMM < 0xe6)
+    if (OVR_230.unkTimerMM < 230)
     {
       OVR_230.countMeta0xD = OVR_230.title_OtherStuff[0];
 
@@ -46,7 +46,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
       goto END_FUNCTION;
     }
 
-    OVR_230.menubox_mainMenu.state &= 0xffffffdf | BIG_TEXT_IN_TITLE;
+    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS) | BIG_TEXT_IN_TITLE;
 
     MM_TransitionInOut((u_short *)0x800b4864, OVR_230.countMeta0xD, *(int *)0x800b4844);
 
@@ -118,14 +118,14 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // and if the "fade-out" animation is done,
   // time to figure out where you're going next
 
-  switch (*(short *)0x800b59e0)
+  switch (OVR_230.desiredMenu)
   {
 
   // advanture character selection
   case 0:
 
     GAMEPROG_NewProfile_InsideAdv(&sdata->advProgress.rewards);
-    *(short *)0x8008d96c = 0xffff;
+    sdata->advProfileIndex = 0xffff;
 
     // go to adventure character select screen
     sdata->mainMenuState = 4;
@@ -133,15 +133,14 @@ void DECOMP_MM_Title_MenuUpdate(void)
     MM_Title_CameraReset();
     MM_Title_KillThread();
 
-    // Load lev 40, adventure character selection screen
-    MainRaceTrack_RequestLoad(0x28);
+    MainRaceTrack_RequestLoad(ADVENTURE_CHARACTER_SELECT);
     break;
 
   // adventure save/load
   case 1:
 
     // Go to save/load
-    sdata->ptrDesiredMenuBox = &data.MENUBOX_DrawSelfFourAdvProfiles;
+    sdata->ptrDesiredMenuBox = &data.menuBox_FourAdvProfiles;
 
     MM_Title_CameraReset();
 
@@ -200,7 +199,8 @@ void DECOMP_MM_Title_MenuUpdate(void)
       // number of times you've seen Demo Mode,
       seenDemo = sdata->demoModeIndex;
 
-      gGT->demoCountdownTimer = 0x708;
+	  // 60 seconds
+      gGT->demoCountdownTimer = 1800;
 
       // use the number of time's you've seen
       // Demo Mode, to decide the order of characters
@@ -208,7 +208,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
       for (iVar4 = 0; iVar4 < 8; iVar4++)
       {
         // set character ID
-        data.characterIDs[iVar4] = seenDemo;
+        data.characterIDs[iVar4] = seenDemo & 7;
 
         // iterate character ID
         seenDemo++;
@@ -236,8 +236,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // go to scrapbook
     sdata->mainMenuState = 5;
 
-    // Lev 64, Scrapbook
-    iVar4 = 0x40;
+    iVar4 = SCRAPBOOK;
   LAB_800abfc0:
 
     // Load level
@@ -264,20 +263,19 @@ END_FUNCTION:
   {
     OVR_230.titleCameraPosRot[0] = OVR_230.title_OtherStuff[0x1C] + OVR_230.title_OtherStuff[0x5C];
     OVR_230.titleCameraPosRot[2] = OVR_230.title_OtherStuff[0x1E] + OVR_230.title_OtherStuff[0x5E];
-    OVR_230.titleCameraPosRot[4] = OVR_230.title_OtherStuff[0x20] + OVR_230.title_OtherStuff[0xA6];
+    OVR_230.titleCameraPosRot[4] = OVR_230.title_OtherStuff[0x20] + OVR_230.title_OtherStuff[0x66];
   }
 
-  OVR_230.menubox_mainMenu.posX_curr = OVR_230.title_OtherStuff[0x08] + OVR_230.title_OtherStuff[0x6A];
-  OVR_230.menubox_mainMenu.posY_curr = OVR_230.title_OtherStuff[0x0A] + OVR_230.title_OtherStuff[0x6C];
-  OVR_230.menubox_players1P2P.posX_curr = OVR_230.title_OtherStuff[0x34] + OVR_230.title_OtherStuff[0x88];
-  OVR_230.menubox_players1P2P.posY_curr = OVR_230.title_OtherStuff[0x36] + OVR_230.title_OtherStuff[0x8A];
-  OVR_230.menubox_players2P3P4P.posX_curr = OVR_230.title_OtherStuff[0x34] + OVR_230.title_OtherStuff[0x88];
-  OVR_230.menubox_players2P3P4P.posY_curr = OVR_230.title_OtherStuff[0x36] + OVR_230.title_OtherStuff[0x8A];
-  OVR_230.menubox_difficulty.posX_curr = OVR_230.title_OtherStuff[0x38] + OVR_230.title_OtherStuff[0x92];
-  OVR_230.menubox_difficulty.posY_curr = OVR_230.title_OtherStuff[0x3A] + OVR_230.title_OtherStuff[0x94];
-  OVR_230.menubox_raceType.posX_curr = OVR_230.title_OtherStuff[0x30] + OVR_230.title_OtherStuff[0x7E];
-  OVR_230.menubox_raceType.posY_curr = OVR_230.title_OtherStuff[0x32] + OVR_230.title_OtherStuff[0x80];
-  OVR_230.menubox_adventure.posX_curr = OVR_230.title_OtherStuff[0x2C] + OVR_230.title_OtherStuff[0x74];
-  OVR_230.menubox_adventure.posY_curr = OVR_230.title_OtherStuff[0x2E] + OVR_230.title_OtherStuff[0x76];
-  return;
+  OVR_230.menubox_mainMenu.posX_curr = OVR_230.title_OtherStuff[0x08] + OVR_230.title_OtherStuff[0x2A];
+  OVR_230.menubox_mainMenu.posY_curr = OVR_230.title_OtherStuff[0x0A] + OVR_230.title_OtherStuff[0x2C];
+  OVR_230.menubox_players1P2P.posX_curr = OVR_230.title_OtherStuff[0x34] + OVR_230.title_OtherStuff[0x48];
+  OVR_230.menubox_players1P2P.posY_curr = OVR_230.title_OtherStuff[0x36] + OVR_230.title_OtherStuff[0x4A];
+  OVR_230.menubox_players2P3P4P.posX_curr = OVR_230.title_OtherStuff[0x34] + OVR_230.title_OtherStuff[0x48];
+  OVR_230.menubox_players2P3P4P.posY_curr = OVR_230.title_OtherStuff[0x36] + OVR_230.title_OtherStuff[0x4A];
+  OVR_230.menubox_difficulty.posX_curr = OVR_230.title_OtherStuff[0x38] + OVR_230.title_OtherStuff[0x52];
+  OVR_230.menubox_difficulty.posY_curr = OVR_230.title_OtherStuff[0x3A] + OVR_230.title_OtherStuff[0x54];
+  OVR_230.menubox_raceType.posX_curr = OVR_230.title_OtherStuff[0x30] + OVR_230.title_OtherStuff[0x3E];
+  OVR_230.menubox_raceType.posY_curr = OVR_230.title_OtherStuff[0x32] + OVR_230.title_OtherStuff[0x40];
+  OVR_230.menubox_adventure.posX_curr = OVR_230.title_OtherStuff[0x2C] + OVR_230.title_OtherStuff[0x34];
+  OVR_230.menubox_adventure.posY_curr = OVR_230.title_OtherStuff[0x2E] + OVR_230.title_OtherStuff[0x36];
 }

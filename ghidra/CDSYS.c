@@ -12,7 +12,7 @@ undefined4 FUN_8001c360(int param_1)
   // boolDebugMachine = false?
   DAT_8008e528 = 0;
 
-  // bool useDisc
+  // bool boolUseDisc
   DAT_8008d6b0 = param_1;
 
   // If you are using disc
@@ -34,33 +34,64 @@ undefined4 FUN_8001c360(int param_1)
   // stream mode is null
   DAT_8008d6ac = 0xffffffff;
 
-  // bool_XAs_Loaded
+  // bool_XnfLoaded
   DAT_8008d6b4 = 0;
 
+  // XA_State
   DAT_8008d708 = 0;
 
   // XA is not finished (nor started)
   DAT_8008d6b8 = 0;
 
+  // countFail_CdSyncCallback
   DAT_8008d720 = 0;
+  
+  // countPass_CdReadyCallback
   DAT_8008d704 = 0;
+  
+  // countFail_CdReadyCallback
   DAT_8008d724 = 0;
+  
+  // XA_CurrOffset
   DAT_8008d6f8 = 0;
 
   // countPass_CdTransferCallback
   DAT_8008d6d8 = 0;
 
+  // XA_Playing_Category
   DAT_8008d6e4 = 0;
+  
+  // XA_Playing_Index
   DAT_8008d6e0 = 0;
+  
+  // XA_StartPos
   DAT_8008d6f0 = 0;
+  
+  // XA_EndPos
   DAT_8008d710 = 0;
+  
+  // XA_VolumeBitshift
   DAT_8008d70c = 0;
+  
+  // XA_VolumeDeduct
   DAT_8008d6c8 = 0;
+  
+  // XA_MaxSampleVal
   DAT_8008d714 = 0;
+  
+  // XA_MaxSampleValInArr
   DAT_8008d6f4 = 0;
+  
+  // irqAddr
   DAT_8008d6c4 = 0;
+  
+  // unused
   DAT_8008d700 = 0;
+  
+  // XA_CurrPos
   DAT_8008d6d4 = 0;
+  
+  // XA_PausePos
   DAT_8008d6ec = 0;
 
   // CDSYS_SetMode_StreamData
@@ -114,7 +145,7 @@ void FUN_8001c470(void)
   u_char local_10 [8];
 
   if (
-		// bool useDisc
+		// boolUseDisc
 		// if you are using CD instead of parallel port
 		(DAT_8008d6b0 != 0) &&
 
@@ -122,10 +153,10 @@ void FUN_8001c470(void)
 		(DAT_8008d6ac != 0)
 	 )
   {
-	// bool_XAs_Loaded
+	// bool_XnfLoaded
     if (DAT_8008d6b4 != 0)
 	{
-	  // CDSYS_PauseForce
+	  // CDSYS_XAPauseForce
       FUN_8001cfec();
     }
 
@@ -139,13 +170,13 @@ void FUN_8001c470(void)
 	local_10[0] = CdlModeSpeed;
 	CdControl(CdlSetmode, local_10, 0);
 
-
+	// XA_State
 	DAT_8008d708 = 0;
 
 	// stream mode is now data
     DAT_8008d6ac = 0;
 
-	// bool_XAs_Loaded
+	// bool_XnfLoaded
     if (DAT_8008d6b4 != 0)
 	{
 	  // called when CdControl is complete
@@ -170,7 +201,7 @@ void FUN_8001c4f4(void)
 			// If you are using CD instead of parallel port
 			(DAT_8008d6b0 != 0) &&
 
-			// bool_XAs_Loaded
+			// bool_XnfLoaded
 			(DAT_8008d6b4 != 0)
 		) &&
 
@@ -190,6 +221,7 @@ void FUN_8001c4f4(void)
 	// set stream mode to audio
 	DAT_8008d6ac = 1;
 
+	// XA_State
     DAT_8008d708 = 0;
 
 	// called when CdControl is complete
@@ -231,7 +263,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
     //check lang id overflow. what's interesting is that the id is not checked during lang file loading
     if (param_1 < 8)
 	{
-	  // bool_XAs_Loaded
+	  // bool_XnfLoaded
       DAT_8008d6b4 = 0;
 
 	  // CDSYS_SetMode_StreamData
@@ -240,7 +272,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
       //get current lang string (ENG, JPN, etc)
       ppcVar5 = &PTR_DAT_80081050 + param_1;
 
-    //update xa file paths
+	  //update xa file paths
       strncpy(s_ENG_XNF_1_80081000,*ppcVar5,3);
       strncpy(s_ENG_EXTRA_S00_XA_1_80081024,*ppcVar5,3);
       strncpy(s_ENG_GAME_S00_XA_1_8008103c,*ppcVar5,3);
@@ -284,7 +316,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
 
 		  // not an array of 3 ints,
 		  // array of a huge ton of data
-		  // ptrXA_data
+		  // ptrArray_XaCdPos
           DAT_8008d718 = piVar3 + 0x11;
 
           iVar9 = 0;
@@ -295,7 +327,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
 		  // byte - digit char indices to swap (00)
 		  // short - null
 
-		  // &sdata->audioData[0]
+		  // &sdata->audioMeta[0]
           pbVar7 = &DAT_80081070;
 
 		  // pointer to actual XA entries (big array of uint (byte[4])),
@@ -346,7 +378,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
 			// if all "types" are loaded
             if (DAT_8008d6dc <= iVar9)
 			{
-			  // bool_XAs_Loaded
+			  // bool_XnfLoaded
               DAT_8008d6b4 = 1;
               return 1;
             }
@@ -360,7 +392,7 @@ LAB_8001c654:
   return uVar2;
 }
 
-// CDSYS_CdSyncCallback
+// CDSYS_XaCallbackCdSync
 void FUN_8001c7a4(char param_1)
 
 {
@@ -386,14 +418,14 @@ void FUN_8001c7a4(char param_1)
   return;
 }
 
-// CDSYS_CdReadyCallback
+// CDSYS_XaCallbackCdReady
 void FUN_8001c7fc(char param_1)
 
 {
   // if result == CdlDataReady
   if (param_1 == '\x01')
   {
-	// current position of CD
+	// cdlFile_CdReady (half of a CdlFILE struct)
     CdGetSector(&DAT_8008e6b8,3);
     DAT_8008d6d4 = CdPosToInt((CdlLOC *)&DAT_8008e6b8);
 
@@ -401,7 +433,7 @@ void FUN_8001c7fc(char param_1)
 			// if XA is queued to start (CD seeking?)
 			(DAT_8008d708 == 2) &&
 
-			// if CD_CurrPos is more than XA_StartPos
+			// if XA_CurrPos is more than XA_StartPos
 			(DAT_8008d6f0 <= DAT_8008d6d4)
 		)
 	{
@@ -416,7 +448,7 @@ void FUN_8001c7fc(char param_1)
 			// if XA is playing
 			(DAT_8008d708 == 3) &&
 
-			// if CD_CurrPos is more than XA_EndPos
+			// if XA_CurrPos is more than XA_EndPos
 			(DAT_8008d710 < DAT_8008d6d4)
 		)
 	{
@@ -442,7 +474,7 @@ void FUN_8001c7fc(char param_1)
 }
 
 
-// CDSYS_IRQ_Callback
+// CDSYS_SpuCallbackIRQ
 void FUN_8001c8e4(void)
 
 {
@@ -458,6 +490,7 @@ code specifying which half of the buffer is currently being written to, so you c
 half.
   */
 
+  // 5 = SPU_CDONLY
   SpuReadDecodedData((SpuDecodedData *)&DAT_8008dd28,5);
 
   if (
@@ -497,14 +530,19 @@ half.
 }
 
 
-// CDSYS_Transfer_Callback
+// CDSYS_SpuCallbackTransfer
 void FUN_8001c984(void)
 
 {
-  if (DAT_8008d6c4 == 0) {
-    DAT_8008d6c4 = 0x200;
+  // irqAddr
+  if (DAT_8008d6c4 == 0) 
+  {
+    // irqAddr
+	DAT_8008d6c4 = 0x200;
   }
-  else {
+  else 
+  {
+	// irqAddr
     DAT_8008d6c4 = 0;
   }
 
@@ -518,14 +556,14 @@ void FUN_8001c984(void)
   // countPass_CdTransferCallback
   DAT_8008d6d8 = DAT_8008d6d8 + 1;
 
-  // CDSYS_ParseSpuData
+  // CDSYS_SpuGetMaxSample
   FUN_8001ca98();
 
   return;
 }
 
 
-// CDSYS_IRQ_Enable
+// CDSYS_SpuEnableIRQ
 void FUN_8001c9e4(void)
 
 {
@@ -550,7 +588,10 @@ void FUN_8001c9e4(void)
   SpuSetTransferCallback(FUN_8001c984);
   SpuSetIRQCallback(FUN_8001c8e4);
 
+  // irqAddr
   DAT_8008d6c4 = 0x200;
+  
+  // unused
   DAT_8008d700 = 0;
 
   // interrupt SPU when this address
@@ -564,7 +605,7 @@ void FUN_8001c9e4(void)
 }
 
 
-// CDSYS_IRQ_Disable
+// CDSYS_SpuDisableIRQ
 void FUN_8001ca64(void)
 
 {
@@ -579,7 +620,7 @@ void FUN_8001ca64(void)
 }
 
 
-// CDSYS_ParseSpuData
+// CDSYS_SpuGetMaxSample
 void FUN_8001ca98(void)
 
 {
@@ -598,14 +639,20 @@ void FUN_8001ca98(void)
   // if you are using CD instead of parallel port
   if (DAT_8008d6b0 != 0) {
     uVar2 = 0x100;
+	
+	// if irqAddr == 0x0, range {0x0 - 0x100}
     if (DAT_8008d6c4 == 0) {
       uVar2 = 0;
       uVar7 = 0x100;
     }
-    else {
+    
+	// otherwise, range {0x100 - 0x200}
+	else 
+	{
       uVar7 = 0x200;
     }
 
+	// curr < end
 	if (uVar2 < uVar7)
 	{
 	  // decoded SPU data
@@ -639,11 +686,15 @@ void FUN_8001ca98(void)
 	// save max
 	DAT_8008d714 = (int)sVar8;
 
+	// XA_MaxSampleValArr
     piVar5 = &DAT_8008e6c8 + DAT_8008d6bc;
+	
     DAT_8008d6bc = DAT_8008d6bc + 1;
     bVar1 = 2 < DAT_8008d6bc;
-    *piVar5 = DAT_8008d714;
-    if (bVar1) {
+    
+	*piVar5 = DAT_8008d714;
+    
+	if (bVar1) {
       DAT_8008d6bc = 0;
     }
     if (DAT_8008d6c0 < 3) {
@@ -664,7 +715,7 @@ void FUN_8001ca98(void)
           iVar4 = 8;
         }
 
-		// find another max
+		// XA_MaxSampleValInArr
         if (DAT_8008d6f4 < *(int *)((int)&DAT_8008e6c8 + iVar4)) {
           DAT_8008d6f4 = *(int *)((int)&DAT_8008e6c8 + iVar4);
         }
@@ -715,7 +766,7 @@ LAB_8001cd00:
   // if you are using CD instead of parallel
   else
   {
-	// bool_XAs_Loaded
+	// bool_XnfLoaded
     if (DAT_8008d6b4 != 0)
 	{
 	  // three XA categories, 0,1,2
@@ -779,6 +830,7 @@ LAB_8001cd00:
   return uVar1;
 }
 
+// CDSYS_XAGetTrackLength
 // assumed to return sample length from XINF XA entry
 // param1 - xa type (game, music, extra)
 // param2 - xa audioTrackID
@@ -791,7 +843,7 @@ int FUN_8001cd20(int param_1,int param_2)
 		// if you are using CD instead of parallel port
 		(DAT_8008d6b0 != 0) &&
 
-		// bool_XAs_Loaded
+		// bool_XnfLoaded
 		(DAT_8008d6b4 != 0)
 	 )
   {
@@ -805,7 +857,14 @@ int FUN_8001cd20(int param_1,int param_2)
     iVar1 = FUN_8001cbe0(param_1);
 
 	// if audioTrackID is within bounds
-    if (param_2 < iVar1) {
+    if (param_2 < iVar1) 
+	{
+	/*
+		sdata->ptrArray_XaSize[
+				sdata->ptrArray_firstSongIndex[categoryID] +
+				audioTrackID
+			].XaBytes;
+	*/
       return (int)*(short *)(DAT_8008d6e8 + *(int *)(param_1 * 4 + DAT_8008d6d0) * 4 + param_2 * 4 +
                             2);
     }
@@ -920,7 +979,7 @@ undefined4 FUN_8001cdb4(int param_1,int param_2)
 
   // Only continue if you are on CD
 
-  // bool_XAs_Loaded
+  // bool_XnfLoaded
   if (DAT_8008d6b4 != 0)
   {
 	// if category is invalid
@@ -954,7 +1013,7 @@ undefined4 FUN_8001cdb4(int param_1,int param_2)
     if (DAT_8008d6ac != 1)
 	{
 	  // CDSYS_SetMode_StreamAudio
-      FUN_8001c4f4(5);
+      FUN_8001c4f4();
     }
 
 	// XA_State
@@ -998,10 +1057,16 @@ undefined4 FUN_8001cdb4(int param_1,int param_2)
 	// convert StartPosInt, to a real position
     CdIntToPos(DAT_8008d6f0,aCStack24);
 
+	// XA_MaxSampleVal
 	DAT_8008d714 = 0;
+	
+	// XA_MaxSampleValInArr
     DAT_8008d6f4 = 0;
+	
+	// unused
     DAT_8008d700 = 0;
-    DAT_8008d704 = 0;
+    
+	DAT_8008d704 = 0;
     DAT_8008d724 = 0;
     DAT_8008d6f8 = 0;
 
@@ -1015,14 +1080,14 @@ undefined4 FUN_8001cdb4(int param_1,int param_2)
 	// As of now, XA plays indefinitely, until CdReadyCallback
 	// determines the current CD position is past the end position,
 	// and then when IRQ determines the SPU is done playing the last
-	// of the XA, CDSYS_PauseForce is called to stop playing XA.
+	// of the XA, CDSYS_XAPauseForce is called to stop playing XA.
 
 	// Emulators with no IRQ support will keep playing random
 	// XA audio on the disc infinitely, and never reach ND Box
 
     if (iVar2 == 1)
 	{
-	  // CDSYS_IRQ_Enable
+	  // CDSYS_SpuEnableIRQ
       FUN_8001c9e4();
 
       return 1;
@@ -1044,7 +1109,7 @@ void FUN_8001cf98(void)
 			// If you are using CD and not parallel port
 			(DAT_8008d6b0 != 0) &&
 
-			// bool_XAs_Loaded
+			// bool_XnfLoaded
 			(DAT_8008d6b4 != 0)
 		) &&
 
@@ -1067,7 +1132,7 @@ void FUN_8001cf98(void)
 }
 
 
-// CDSYS_PauseForce
+// CDSYS_XAPauseForce
 void FUN_8001cfec(void)
 
 {
@@ -1076,7 +1141,7 @@ void FUN_8001cfec(void)
 			// If you are using CD and not parallel port
 			(DAT_8008d6b0 != 0) &&
 
-			// bool_XAs_Loaded
+			// bool_XnfLoaded
 			(DAT_8008d6b4 != 0)
 		) &&
 
@@ -1092,10 +1157,10 @@ void FUN_8001cfec(void)
     DAT_8008d708 = 0;
 
 	// cancel interrupt request
-	// (useless, cause it is called in CDSYS_IRQ_Disable anyway)
+	// (useless, cause it is called in CDSYS_SpuDisableIRQ anyway)
     SpuSetIRQ(0);
 
-	// CDSYS_IRQ_Disable
+	// CDSYS_SpuDisableIRQ
 	FUN_8001ca64();
 
 	// '\t' = 9 = CdlPause
@@ -1115,7 +1180,7 @@ void FUN_8001d06c(void)
   // if XA is finished (according to IRQ)
   if (DAT_8008d6b8 != 0)
   {
-	// CDSYS_PauseForce
+	// CDSYS_XAPauseForce
     FUN_8001cfec();
   }
   return;

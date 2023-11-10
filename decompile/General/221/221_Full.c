@@ -34,10 +34,29 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	struct Instance* tokenInst;
 	int growVal;
 	int bitIndex;
+	int levelID;
 	
 	gGT = sdata->gGT;
+	levelID = gGT->levelID;
 	driver = gGT->drivers[0];
-	bitIndex = hub[gGT->levelID-0x12]+0x6f;
+	
+	// if someone is doing "Dingo Bingo"
+	if(levelID == 0)
+	{
+		// emulate an $sp exploit that jumped
+		// out of bounds, into the $sp of another function,
+		// which forced the OG game to read camera position
+		bitIndex = gGT->tileView[0].pos[2];
+	}
+	
+	// if you're not screwing around
+	else
+	{
+		bitIndex = hub[gGT->levelID-0x12];
+	}
+	
+	// first purple token at 0x6f
+	bitIndex += 0x6f;
 	
 	adv = &sdata->advProgress;
 	boolLose = driver->numCrystals < gGT->numCrystalsInLEV;
@@ -73,7 +92,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		DecalFont_DrawLine(
 			sdata->lngStrings[lngIndex],
 			posXY[0] + 0x33, posXY[1] + 8,
-			FONT_BIG, (CENTER_TEXT | ORANGE));
+			FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 	}
 	
 	// Fly from Left,
@@ -92,7 +111,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		DecalFont_DrawLine(
 			sdata->lngStrings[0x16D], 
 			posXY[0], posXY[1],
-			FONT_BIG, (CENTER_TEXT | ORANGE));
+			FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 			
 		UI_DrawLimitClock(posXY[0]-0x33, posXY[1]+0x11, FONT_BIG);
 	}
@@ -113,7 +132,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 		DecalFont_DrawLine(
 			sdata->lngStrings[0xC9],
 			0x100, 0xbe,
-			FONT_BIG, (CENTER_TEXT | ORANGE));
+			FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 		
 		// if still waiting to press X/O, quit function
 		if((sdata->AnyPlayerTap & (BTN_CROSS|BTN_CIRCLE)) == 0)
@@ -144,10 +163,10 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	DecalFont_DrawLine(
 		sdata->lngStrings[0x16F],
 		posXY[0], 0xA2,
-		FONT_BIG, (CENTER_TEXT | ORANGE));
+		FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 	// make token visible
-	tokenInst->flags &= ~(0x80);
+	tokenInst->flags &= ~(HIDE_MODEL);
 
 	tokenInst->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
 	tokenInst->matrix.t[1] = UI_ConvertY_2(0xA2-0x18, 0x200);
@@ -174,7 +193,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	DecalFont_DrawLine(
 		sdata->lngStrings[0xC9],
 		0x100, 0xbe,
-		FONT_BIG, (CENTER_TEXT | ORANGE));
+		FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 		
 	// if still waiting to press X/O, quit function
 	if((sdata->AnyPlayerTap & (BTN_CROSS|BTN_CIRCLE)) == 0)
@@ -192,10 +211,12 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	sdata->Loading.OnBegin.RemBitsConfig0 |= CRYSTAL_CHALLENGE;
 	
 	// unlock token
-	adv->rewards[bitIndex>>5] |= (1<<(bitIndex&0x1f));
+	UNLOCK_ADV_BIT(adv->rewards,bitIndex);
 	
 	// go back to adv hub
 	MainRaceTrack_RequestLoad(gGT->prevLEV);
+	
+	return;
 }
 
 void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox*);

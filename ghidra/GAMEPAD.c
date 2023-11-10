@@ -230,6 +230,8 @@ void FUN_80025410(int param_1)
 			// 1 - PadStateFindPad
 			// and many more...
             uVar2 = PadGetState(uVar4);
+			
+			// GAMEPAD_ProcessState
             FUN_800252a0(iVar6,uVar2,uVar4);
           }
 
@@ -529,6 +531,9 @@ uint FUN_80025718(int param_1)
           }
         }
 		
+		// gamepadMapBtn to map RawInput enum
+		// to Buttons enum, to support different
+		// types of controllers
         puVar2 = &DAT_800824a8;
         uVar1 = DAT_800824a8;
         while (uVar1 != 0) {

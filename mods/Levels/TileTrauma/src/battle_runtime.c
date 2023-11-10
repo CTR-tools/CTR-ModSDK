@@ -76,7 +76,7 @@ void RunInitHook()
 	if(sdata->ptrGhostTapePlaying == 0)
 	{
 		LoadSave_ToggleMode(0x30);
-		sdata->boolPlayGhost = 0;
+		sdata->boolReplayHumanGhost = 0;
 		sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00);
 	}
 	
