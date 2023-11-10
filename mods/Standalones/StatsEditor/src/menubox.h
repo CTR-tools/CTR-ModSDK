@@ -78,7 +78,7 @@ struct MenuBox MyMenuBox =
 
 	.rowSelected = 0,
 
-	.unk1a = 0,
+	.unk1c = 0,
 	.unk1e = 1,
 
 	.width = 448,

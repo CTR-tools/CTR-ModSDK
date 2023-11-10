@@ -48,7 +48,7 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* dri
 
 	if (buttonsTapped & (BTN_UP | BTN_DOWN))
 	{
-		for(int i = 0; i < digitSelected; i++)
+		for(u_int i = 0; i < digitSelected; i++)
 		{
 			increase *= 10;
 		}
