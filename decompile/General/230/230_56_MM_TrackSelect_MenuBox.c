@@ -124,7 +124,6 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		}
 	}
 	OVR_230.trackSel_transitionFrames = elapsedFrames;
-	sVar7 = OVR_230.trackSel_transitionState;
 
 	// default arcade tracks
 	selectMenu = &OVR_230.arcadeTracks[0];
@@ -199,12 +198,12 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				if ((gGT->gameMode1 & (BATTLE_MODE | TIME_TRIAL)) == 0)
 				{
 					// open lap select menu
-					OVR_230.trackSel_boolOpenLapBox = sVar7;
+					OVR_230.trackSel_boolOpenLapBox = OVR_230.trackSel_transitionState;
 					break;
 				}
 				
 				// if Battle or Time Trial, skip straight to level
-				OVR_230.trackSel_postTransition_boolStart = sVar7;
+				OVR_230.trackSel_postTransition_boolStart = OVR_230.trackSel_transitionState;
 				OVR_230.trackSel_transitionState = EXITING_MENU;
 				break;
 				
@@ -229,7 +228,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	// if lap selection menu is open
 	else
 	{
-		sVar7 = 0;
+		short lapSelTransitionState = 0;
 	
 		// copy LapRow from 8d920 to temp variable b55ae
 		OVR_230.menubox_LapSel.rowSelected = sdata->uselessLapRowCopy;
@@ -237,7 +236,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		// If you're in track selection menu
 		if (OVR_230.trackSel_transitionState == IN_MENU)
 		{
-			sVar7 = MENUBOX_ProcessInput(&OVR_230.menubox_LapSel);
+			lapSelTransitionState = MENUBOX_ProcessInput(&OVR_230.menubox_LapSel);
 		}
 	
 		MENUBOX_DrawSelf
@@ -254,20 +253,20 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		gGT->numLaps = OVR_230.lapRowVal[OVR_230.menubox_LapSel.rowSelected];
 		
 		// if it is time to start the race
-		if (sVar7 == 1)
+		if (lapSelTransitionState == 1)
 		{
 			// try to start the race
 			OVR_230.trackSel_transitionState = EXITING_MENU;
 	
 			// if this is 1 (which it is), the race starts,
 			// otherwise, you go back to character selection
-			OVR_230.trackSel_postTransition_boolStart = sVar7;
+			OVR_230.trackSel_postTransition_boolStart = lapSelTransitionState;
 		}
 	
 		// If it is not time to start the race
 		else
 		{
-			if (sVar7 == -1)
+			if (lapSelTransitionState == -1)
 			{
 				// close lap selection menu
 				OVR_230.trackSel_boolOpenLapBox = 0;
@@ -308,9 +307,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	MM_TrackSelect_Video_State(uVar14);
 
 	uVar15 = (u_int)numTracks;
-	sVar7 = mb->rowSelected;
-	gGT->currLEV = selectMenu[sVar7].levID;
-	iVar9 = (int)sVar7 + -1;
+	gGT->currLEV = selectMenu[mb->rowSelected].levID;
+	iVar9 = (int)mb->rowSelected + -1;
 
 	for (iVar18 = 0; iVar18 < 4; iVar18++)
 	{
