@@ -244,28 +244,23 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	sVar7 = 0;
 
 	// copy LapRow from 8d920 to temp variable b55ae
-	*(char *)0x800b55ae = sdata->uselessLapRowCopy;
+	OVR_230.menubox_LapSel.rowSelected = sdata->uselessLapRowCopy;
 
 	// If you're in track selection menu
 	if (OVR_230.trackSel_transitionState == 1)
 	{
-		sVar7 = MENUBOX_ProcessInput((struct MenuBox *)0x800b5594);
+		sVar7 = MENUBOX_ProcessInput(&OVR_230.menubox_LapSel);
 	}
 
-	// This function might alter b55ae to make sure it doesn't go out of bounds
-	MENUBOX_DrawSelf((struct MenuBox *)0x800b5594,
-									 OVR_230.transitionMeta_trackSel[2].currX,
-									 OVR_230.transitionMeta_trackSel[2].currY, 0xa4);
+	MENUBOX_DrawSelf(&OVR_230.menubox_LapSel,
+			OVR_230.transitionMeta_trackSel[2].currX,
+			OVR_230.transitionMeta_trackSel[2].currY, 0xa4);
 
 	// put LapRow back into 8d920
-	sdata->uselessLapRowCopy = *(char *)0x800b55ae;
+	sdata->uselessLapRowCopy = OVR_230.menubox_LapSel.rowSelected;
 
-	// get number of laps from a short array based on lap row number
-	// Lap Row = 0 -> 3
-	// Lap Row = 1 -> 5
-	// Lap Row = 2 -> 7
-
-	gGT->numLaps = ((short *)0x800b5574)[*(char *)0x800b55ae];
+	// get lap count
+	gGT->numLaps = OVR_230.lapRowVal[OVR_230.menubox_LapSel.rowSelected];
 	
 	// if it is time to start the race
 	if (sVar7 == 1)
@@ -421,13 +416,13 @@ LAB_800b05b8:
 				int timeTrialFlags = sdata->gameProgress.highScoreTracks[gGT->levelID].timeTrialFlags;
 
 				// if star is earned
-				if (((timeTrialFlags >> ((u_short *)0x800b55c8)[iVar17]) & 1) != 0)
+				if (((timeTrialFlags >> OVR_230.timeTrialFlagGet[iVar17]) & 1) != 0)
 				{
 					// 0x0E: driver_9 (papu) (yellow)
 					// 0x16: silver
 
 					// pointer to color data of star
-					piVar12 = data.ptrColor[((u_short *)0x800b55c4)[iVar17]];
+					piVar12 = data.ptrColor[OVR_230.timeTrialStarCol[iVar17]];
 
 					struct Icon** iconPtrArray =
 						ICONGROUP_GETICONS(gGT->iconGroup[5]);
@@ -606,14 +601,14 @@ LAB_800b05b8:
 							iconMap1,
 
 							// X
-							(int)((short *)0x800b55cc)[iVar18 * 3] + 
+							OVR_230.drawMapOffset[iVar18].offsetX + 
 									p.x +
 									(OVR_230.transitionMeta_trackSel[2].currX - OVR_230.transitionMeta_trackSel[1].currX) +
 									(0xb0 >> 1) +
 									(iVar9 >> 1),
 
 							// Y
-							(int)((short *)0x800b55ce)[iVar18 * 3] + 
+							OVR_230.drawMapOffset[iVar18].offsetY + 
 									p.y +
 									(OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[1].currY) +
 									0x49+0x22+
@@ -629,7 +624,7 @@ LAB_800b05b8:
 							// 1 = draw map with regular color (white) - used for the main layer of the minimap in the track select screen
 							// 2 = draw map blue - used for the outline of the minimap in the track select screen
 							// 3 = draw map black - used for the shadow of the minimap in the track select screen
-							(u_int)((char *)0x800b55d0)[iVar18 * 6]);
+							OVR_230.drawMapOffset[iVar18].type);
 				}
 			}
 			MM_TrackSelect_Video_Draw(

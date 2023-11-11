@@ -556,13 +556,35 @@ struct Overlay_230
 	// 800b5d80 - EurRetail
 	// 800b95e0 - JpnRetail
 	// Not all of this is actually transitionmeta, needs proper look
-	struct TransitionMeta transitionMeta_trackSel[0x11];
-
+	struct TransitionMeta transitionMeta_trackSel[5];
+	short padding_800B5572;
+	
+	// 800b5574
+	short lapRowVal[4];
+	
+	// 800b557c
+	struct MenuRow menurow_LapSel[4];
+	
+	// 800B5594
+	struct MenuBox menubox_LapSel;
+	
+	// 800B55C0
+	int videoCol;
+	
+	// 800B55C4
+	short timeTrialStarCol[2];
+	short timeTrialFlagGet[2];
+	
+	// 800b55cc
+	struct
+	{
+		short offsetX;
+		short offsetY;
+		short type;
+	} drawMapOffset[6];
+	
 #if BUILD == JpnRetail
-	char unk800b968a[0xA];
-#else	
-	short padding800b55EA;
-	int unk800b55EC;
+	char unk800b968a[4];
 #endif
 
 	// ============== Cup Select ==================
@@ -879,7 +901,7 @@ struct Overlay_230
 	// 800b5a08 - UsaRetail
 	// 800b62ac - EurRetail
 	// 800b9ab4 - JpnRetail
-	int transitionState;
+	int characterSelect_transitionState;
 
 	// 800b5a0c - UsaRetail
 	// 800b62b0 - EurRetail

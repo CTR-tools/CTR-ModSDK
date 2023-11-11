@@ -17,7 +17,7 @@ void DECOMP_MM_MENUBOX_1p2p(struct MenuBox* mb)
     
 	gGT->numPlyrNextGame = 1;
     
-	OVR_230.transitionState = 0;
+	OVR_230.characterSelect_transitionState = 0;
   }
   
   else 
