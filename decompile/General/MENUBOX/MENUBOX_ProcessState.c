@@ -26,36 +26,36 @@ void DECOMP_MENUBOX_ProcessState()
 		
 		// show menubox
 		sdata->ptrActiveMenuBox = currMenuBox;
-		currMenuBox->state &= ~(0x1000);
+		currMenuBox->state &= ~NEEDS_TO_CLOSE;
 		
 		// get menubox at end of hierarchy, if there is hierarchy
-		while((currMenuBox->state & 0x10) != 0)
+		while((currMenuBox->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)
 		{
 			currMenuBox = (struct MenuBox*)currMenuBox->ptrNextBox_InHierarchy;
 		}
 		
 		// remove "draw only title bar" from lowest hierarchy,
 		// so that rows in this menu draw properly
-		currMenuBox->state &= ~(0x4);
+		currMenuBox->state &= ~ONLY_DRAW_TITLE;
 	}
 	
 	currMenuBox = sdata->ptrActiveMenuBox;
 	
 	// run funcPtr if it exists
-	if((currMenuBox->state & 0x420) != 0)
+	if((currMenuBox->state & (EXECUTE_FUNCPTR | DISABLE_INPUT_ALLOW_FUNCPTRS)) != 0)
 	{
 		currMenuBox->unk1e = 1;
 		currMenuBox->funcPtr(currMenuBox);
 	}
 	
 	// if not character selection
-	if((currMenuBox->state & 0x20) == 0)
+	if((currMenuBox->state & DISABLE_INPUT_ALLOW_FUNCPTRS) == 0)
 	{
 		// process button input for menu
 		MENUBOX_ProcessInput(currMenuBox);
 		
 		// if MenuBox border is not invisible
-		if((currMenuBox->state & 0x2000) == 0)
+		if((currMenuBox->state & INVISIBLE) == 0)
 		{
 			// clear width, then get width
 			width = 0;
@@ -78,7 +78,7 @@ void DECOMP_MENUBOX_ProcessState()
 	}
 	
 	// if menubox needs to close
-	if((currMenuBox->state & 0x1000) != 0)
+	if((currMenuBox->state & NEEDS_TO_CLOSE) != 0)
 	{
 		// deactivate
 		sdata->ptrActiveMenuBox = 0;
