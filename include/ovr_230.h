@@ -575,17 +575,19 @@ struct Overlay_230
 	short timeTrialStarCol[2];
 	short timeTrialFlagGet[2];
 	
-	// 800b55cc
+#if BUILD == JpnRetail
+	// 800b966c
+	char wumpaShadowRGBA[4];
+#endif
+	
+	// 800b55cc -- UsaRetail
+	// 800b9670 -- JpnRetail
 	struct
 	{
 		short offsetX;
 		short offsetY;
 		short type;
 	} drawMapOffset[6];
-	
-#if BUILD == JpnRetail
-	char unk800b968a[4];
-#endif
 
 	// ============== Cup Select ==================
 
