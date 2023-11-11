@@ -192,17 +192,20 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			case BTN_CIRCLE:
 				// "enter/confirm" sound
 				OtherFX_Play(1, 1);
+				
+				// if not Battle or Time Trial, open LapSelectMenu
 				if ((gGT->gameMode1 & (BATTLE_MODE | TIME_TRIAL)) == 0)
 				{
 					// open lap select menu
 					OVR_230.trackSel_boolOpenLapBox = sVar7;
 					goto ClearInput;
 				}
-				// ready to race
+				
+				// if Battle or Time Trial, skip straight to level
 				OVR_230.trackSel_postTransition_boolStart = sVar7;
-				// transition out (but go into race)
 				OVR_230.trackSel_transitionState = EXITING_MENU;
 				goto ClearInput;
+				
 				break;
 				
 			case BTN_TRIANGLE:
