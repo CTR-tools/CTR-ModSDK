@@ -1,5 +1,7 @@
 #include <common.h>
 
+#define ushort u_short
+
 void MM_Battle_MenuBox(void)
 {
     char numPlyr;
@@ -20,14 +22,12 @@ void MM_Battle_MenuBox(void)
     short sVar20;
     ushort local_60[4];
     RECT local_58;
+    short local_58b[4];
     short local_50;
     short local_4e;
     short local_4c;
     short local_4a;
-    short local_48;
-    short local_46;
-    ushort local_44;
-    short local_42;
+    RECT local_48;
     ushort local_40;
     ushort local_3e;
     short local_3c;
@@ -58,7 +58,7 @@ void MM_Battle_MenuBox(void)
                 MM_TransitionInOut(&OVR_230.transitionMeta_battle[0], (int)OVR_230.battle_transitionFrames, 8);
 
                 // reduce frames
-                sVar6 = OVR_230.battle_transitionFrames--;
+                sVar6 = OVR_230.battle_transitionFrames - 1;
 
                 // if finished
                 if (OVR_230.battle_transitionFrames == 0)
@@ -116,14 +116,11 @@ void MM_Battle_MenuBox(void)
 
     numPlyr = gGT->numPlyrNextGame;
 
-    // if you dont have zero players
-    if (numPlyr)
-    {
         // loop through all players
         for (i = 0; i < numPlyr; i++)
         {
             // get the team of each player
-            uVar12 = SEXT24((short)(1 << gGT->battleSetup.teamOfEachPlayer[i]));
+            uVar12 = (short)(1 << gGT->battleSetup.teamOfEachPlayer[i]);
 
             // If we have not accounted for this team existing
             if ((gGT->battleSetup.teamFlags & uVar12) == 0)
@@ -135,7 +132,7 @@ void MM_Battle_MenuBox(void)
                 gGT->battleSetup.numTeams++;
             }
         }
-    }
+
     for (i = 0; i < 4; i++)
     {
         if ((gGT->battleSetup.teamFlags & 1 << i) == 0)
@@ -165,9 +162,7 @@ void MM_Battle_MenuBox(void)
         sdata->battleSetupRowHighlighted = 4;
     }
 
-    // if number of players is not zero
-    if (numPlyr)
-    {
+
 
         for (i = 0; i < numPlyr; i++)
         {
@@ -179,7 +174,7 @@ void MM_Battle_MenuBox(void)
                 {
                     // If you have room to move left
                     // if your team number is more than 0
-                    if (0 < gGT->batteSetup.teamOfEachPlayer[i])
+                    if (0 < gGT->battleSetup.teamOfEachPlayer[i])
                     {
                         // play sound
                         OtherFX_Play(0, 1);
@@ -213,7 +208,6 @@ void MM_Battle_MenuBox(void)
                 }
             }
         }
-    }
 
     // make a copy of the row you have highlighted
     uVar4 = sdata->battleSetupRowHighlighted;
@@ -300,7 +294,7 @@ void MM_Battle_MenuBox(void)
                                     uVar12 = OVR_230.FlagesGameMode1_BattleType[OVR_230.battleType_box.rowSelected];
                                     uVar10 = uVar10 & 0xfffe3fff | uVar12;
 
-                                    puVar19 = uVar10;
+                                    //puVar19 = uVar10;
                                     if ((uVar12 & 0x10000) != 0)
                                     {
                                         // point limit
@@ -325,7 +319,7 @@ void MM_Battle_MenuBox(void)
 
                                     else
                                     {
-                                        uVar12 = SEXT14(OVR_230.time_3_6_INF[OVR_230.battleLengthLifeTime_box.rowSelected]);
+                                        uVar12 = OVR_230.time_3_6_INF[OVR_230.battleLengthLifeTime_box.rowSelected];
                                     }
 
                                     // set time limit based on number of minutes
@@ -365,8 +359,7 @@ void MM_Battle_MenuBox(void)
 
                                     // check if player changed team,
                                     // then clear stats if a change happened
-                                    if (numPlyr)
-                                    {
+
                                         for (i = 0; i < numPlyr; i++)
                                         {
                                             if (gGT->battleSetup.teamOfEachPlayer[i] != gGT->battleSetup.teamOfEachPlayer[j])
@@ -375,7 +368,6 @@ void MM_Battle_MenuBox(void)
                                             }
                                             gGT->battleSetup.teamOfEachPlayer[i] = gGT->battleSetup.teamOfEachPlayer[j];
                                         }
-                                    }
 
                                     sdata->buttonTapPerPlayer[1] = 0;
                                     sdata->buttonTapPerPlayer[2] = 0;
@@ -549,7 +541,7 @@ void MM_Battle_MenuBox(void)
             }
             if (box != NULL)
             {
-                MenuBox_ProcessInput(box, sdata->buttonTapPerPlayer[0], 1, 1);
+                MENUBOX_ProcessInput(box, sdata->buttonTapPerPlayer[0], 1, 1);
                 if ((box->state & 4) != 0)
                 {
                     box->state &= ~(ONLY_DRAW_TITLE);
@@ -563,42 +555,45 @@ void MM_Battle_MenuBox(void)
         }
 
         // clear gamepad input (for menus)
-        MenuBox_ClearInput();
+        MENUBOX_ClearInput();
     }
 
     // "SETUP BATTLE"
     DecalFont_DrawLine(sdata->lngStrings[0x90],
-                       (int)(((u_int)OVR_230.transitionMeta_battle[6].distX + 0x100) * 0x10000) >> 0x10,
-                       (int)(((u_int)OVR_230.transitionMeta_battle[6].distY + 10) * 0x10000) >> 0x10, 1, 0xffff8000);
+		OVR_230.transitionMeta_battle[9].currX + 0x100,
+		OVR_230.transitionMeta_battle[9].currY + 10, 1, 0xffff8000);
 
     // "TYPE:"
     DecalFont_DrawLine(sdata->lngStrings[0x91],
-                       (int)(((u_int)OVR_230.transitionMeta_battle[1].distX + 0x8c) * 0x10000) >> 0x10,
-                       (int)(((u_int)OVR_230.transitionMeta_battle[1].distY + 0x24) * 0x10000) >> 0x10, 1, 0x4000);
+		OVR_230.transitionMeta_battle[1].currX + 0x8c,
+		OVR_230.transitionMeta_battle[1].currY + 0x24, 1, 0x4000);
 
-    OVR_230.battleType_box.state = OVR_230.battleType_box.state & ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
+    OVR_230.battleType_box.state &= ~(0x100); 
+	OVR_230.battleType_box.state |= SHOW_ONLY_HIGHLIT_ROW;
 
     // if you are not choosing type of battle
     if (sdata->battleSetupExpandMenu != 0)
     {
-        OVR_230.battleType_box.state = OVR_230.battleType_box.state | 0x40;
+        OVR_230.battleType_box.state |= 0x40;
     }
 
     if (sdata->battleSetupRowHighlighted != 0)
     {
-        OVR_230.battleType_box.state = OVR_230.battleType_box.state | 0x100;
+        OVR_230.battleType_box.state |= 0x100;
     }
 
-    MenuBox_DrawSelf(&OVR_230.battleType_box, (int)(((u_int)OVR_230.transitionMeta_battle[0].currX + 0x9c) * 0x10000) >> 0x10,
-                     (int)(((u_int)OVR_230.transitionMeta_battle[0].currY + 0x24) * 0x10000) >> 0x10, 0x134);
+    MENUBOX_DrawSelf(&OVR_230.battleType_box, 
+		OVR_230.transitionMeta_battle[0].currX + 0x9c,
+		OVR_230.transitionMeta_battle[0].currY + 0x24, 0x134);
+		
     local_38 = 0xd;
-    MenuBox_GetHeight(&OVR_230.battleType_box, &local_38, 0);
+    MENUBOX_GetHeight(&OVR_230.battleType_box, &local_38, 0);
     sVar6 = local_38 + 0x20;
 
     // "LENGTH:"
     DecalFont_DrawLine(sdata->lngStrings[0x95],
-                       (int)(((u_int)OVR_230.transitionMeta_battle[3].currX + 0x8c) * 0x10000) >> 0x10,
-                       (int)(short)(OVR_230.transitionMeta_battle[3].currY + sVar6 + 4), 1, 0x4000);
+		OVR_230.transitionMeta_battle[3].currX + 0x8c,
+		OVR_230.transitionMeta_battle[3].currY + sVar6 + 4, 1, 0x4000);
 
     if (OVR_230.battleType_box.rowSelected == 1)
     {
@@ -611,7 +606,9 @@ void MM_Battle_MenuBox(void)
         {
             if (OVR_230.battleType_box.rowSelected == 2)
             {
-                OVR_230.battleLengthLifeTime_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
+                OVR_230.battleLengthLifeTime_box.state &= ~(0x100);
+				OVR_230.battleLengthLifeTime_box.state |= SHOW_ONLY_HIGHLIT_ROW;
+				
                 if (sdata->battleSetupExpandMenu != 1)
                 {
                     OVR_230.battleLengthLifeTime_box.state |= 0x40;
@@ -620,11 +617,15 @@ void MM_Battle_MenuBox(void)
                 {
                     OVR_230.battleLengthLifeTime_box.state |= 0x100;
                 }
-                MenuBox_DrawSelf(&OVR_230.battleLengthLifeTime_box,
-                                 (int)(((u_int)OVR_230.transitionMeta_battle[2].currX + 0x9c) * 0x10000) >> 0x10,
-                                 (int)(short)(OVR_230.transitionMeta_battle[2].currY + sVar6 + 4), 0x8e);
-                OVR_230.battleLengthLifeLife_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
-                if (sdata->battleSetupExpandMenu != 10)
+				
+                MENUBOX_DrawSelf(&OVR_230.battleLengthLifeTime_box,
+					OVR_230.transitionMeta_battle[2].currX + 0x9c,
+					OVR_230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
+								 
+                OVR_230.battleLengthLifeLife_box.state &= ~(0x100); 
+				OVR_230.battleLengthLifeLife_box.state |= SHOW_ONLY_HIGHLIT_ROW;
+                
+				if (sdata->battleSetupExpandMenu != 10)
                 {
                     OVR_230.battleLengthLifeLife_box.state |= 0x40;
                 }
@@ -632,13 +633,15 @@ void MM_Battle_MenuBox(void)
                 {
                     OVR_230.battleLengthLifeLife_box.state |= 0x100;
                 }
-                MenuBox_DrawSelf(&OVR_230.battleLengthLifeLife_box,
-                                 (int)(((u_int)OVR_230.transitionMeta_battle[2].currX + 0x142) * 0x10000) >> 0x10,
-                                 (int)(short)(OVR_230.transitionMeta_battle[2].currY + sVar6 + 4), 0x8e);
+				
+                MENUBOX_DrawSelf(&OVR_230.battleLengthLifeLife_box,
+					OVR_230.transitionMeta_battle[2].currX + 0x142,
+					OVR_230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
+								 
                 local_38 = 0xd;
-                MenuBox_GetHeight(&OVR_230.battleLengthLifeTime_box, &local_38, 0);
+                MENUBOX_GetHeight(&OVR_230.battleLengthLifeTime_box, &local_38, 0);
                 local_36[0] = 0xd;
-                MenuBox_GetHeight(&OVR_230.battleLengthLifeLife_box, &local_36, 0);
+                MENUBOX_GetHeight(&OVR_230.battleLengthLifeLife_box, &local_36, 0);
                 sVar20 = local_36[0] + sVar6;
                 if (local_36[0] < local_38)
                 {
@@ -651,28 +654,35 @@ void MM_Battle_MenuBox(void)
             goto LAB_800b25f0;
         box = &OVR_230.battleLengthPoints_box;
     }
-    uVar12 = box->state;
-    box->state = uVar12 & ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
+    
+	box->state &= ~(0x100);
+	box->state |= SHOW_ONLY_HIGHLIT_ROW;
+	
     if (sdata->battleSetupExpandMenu != 1)
     {
-        box->state = uVar12 & ~(0x100 | SHOW_ONLY_HIGHLIT_ROW) | 0x40;
+        box->state |= 0x40;
     }
     if (sdata->battleSetupRowHighlighted != 1)
     {
-        box->state = box->state | 0x100;
+        box->state |= 0x100;
     }
-    MenuBox_DrawSelf(box, (int)(((u_int)OVR_230.transitionMeta_battle[2].currX + 0x9c) * 0x10000) >> 0x10,
-                     (int)(short)(OVR_230.transitionMeta_battle[2].currY + sVar6 + 4), 0x134);
-    local_38 = 0xd;
-    MenuBox_GetHeight(box, &local_38, 0);
+    
+	MENUBOX_DrawSelf(box, 
+		OVR_230.transitionMeta_battle[2].currX + 0x9c,
+		OVR_230.transitionMeta_battle[2].currY + sVar6 + 4, 0x134);
+    
+	local_38 = 0xd;
+    MENUBOX_GetHeight(box, &local_38, 0);
     sVar20 = local_38 + sVar6;
+	
 LAB_800b25f0:
-    iVar8 = 0x9f;
+    
+	iVar8 = 0x9f;
 
     // "TEAMS:"
     DecalFont_DrawLine(sdata->lngStrings[0x98],
-                       (int)(((u_int)OVR_230.transitionMeta_battle[5].currX + 0x8c) * 0x10000) >> 0x10,
-                       (int)(short)(OVR_230.transitionMeta_battle[5].currY + sVar20 + 10), 1, 0x4000);
+		OVR_230.transitionMeta_battle[5].currX + 0x8c,
+		OVR_230.transitionMeta_battle[5].currY + sVar20 + 10, 1, 0x4000);
 
     i = 4;
 
@@ -680,25 +690,22 @@ LAB_800b25f0:
     {
         iVar16 = i;
         iVar13 = (int)(short)j;
-        local_58[iVar13] = 0;
+        local_58b[iVar13] = 0;
         local_60[iVar13] = 4;
 
-        // if number of players is not zero
-        if (numPlyr)
+        for (i = 0; i < numPlyr; i++)
         {
-            for (i = 0; i < numPlyr; i++)
+            iVar9 = (int)gGT->battleSetup.teamOfEachPlayer[i];
+            if (iVar9 == iVar13)
             {
-                iVar9 = (int)gGT->battleSetup.teamOfEachPlayer[i];
-                if (iVar9 == iVar13)
-                {
-                    psVar11 = local_58 + iVar9;
-                    puVar14 = local_60 + iVar9;
-                    *psVar11 = *psVar11 + 1;
-                    iVar16 = iVar16 + 0x2a;
-                    *puVar14 = *puVar14 + 0x2a;
-                }
+                psVar11 = &local_58b[iVar9];
+                puVar14 = &local_60[iVar9];
+                *psVar11 = *psVar11 + 1;
+                iVar16 = iVar16 + 0x2a;
+                *puVar14 = *puVar14 + 0x2a;
             }
         }
+			
         i = iVar16 + 4;
     }
 
@@ -724,15 +731,10 @@ LAB_800b25f0:
 
     for (i = 0; i < 4; i++)
     {
-        i = i >> 0x10;
-
         uVar4 = local_60[i];
         iVar13 = (u_int)uVar4 << 0x10;
-        iVar13 = iVar8 + ((iVar13 >> 0x10) - (iVar13 >> 0x1f) >> 1) + (int)local_58[i] * -0x15;
+        iVar13 = iVar8 + (uVar4>>0x1) + (int)local_58b[i] * -0x15;
 
-        // if number of players is not zero
-        if (numPlyr)
-        {
             for (iVar16 = 0; iVar16 < numPlyr; iVar16++)
             {
                 if (gGT->battleSetup.teamOfEachPlayer[iVar16] == i)
@@ -751,14 +753,15 @@ LAB_800b25f0:
                                                  1, 0x1000);
                 }
             }
-        }
-        local_42 = 0x1a;
-        local_48 = OVR_230.transitionMeta_battle[4].currX + (short)iVar8;
-        iVar8 = iVar8 + (u_int)uVar4;
-        local_46 = OVR_230.transitionMeta_battle[4].currY + sVar20 + 5;
-        local_44 = uVar4;
 
-        CTR_Box_DrawSolidBox(&local_48, (u_int)((int)data.ptrColor[24][j]),
+        local_48.h = 0x1a;
+        local_48.x = OVR_230.transitionMeta_battle[4].currX + (short)iVar8;
+        iVar8 = iVar8 + (u_int)uVar4;
+        local_48.y = OVR_230.transitionMeta_battle[4].currY + sVar20 + 5;
+        
+		local_48.w = uVar4;
+
+        CTR_Box_DrawSolidBox(&local_48, data.ptrColor[PLAYER_BLUE+i],
                              gGT->backBuffer->otMem.startPlusFour,
 
                              // pointer to PrimMem struct
@@ -786,11 +789,10 @@ LAB_800b25f0:
     local_3e = OVR_230.transitionMeta_battle[4].currY + sVar20;
 
     // Draw 2D Menu rectangle background
-    MenuBox_DrawFullRect(&local_40, 0, gGT->backBuffer->);
+    MENUBOX_DrawFullRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
-    // _sdata->lngStrings + 0x264
     // "WEAPONS:"
-    DecalFont_DrawLine(*(u_int *)(sdata->lngStrings + 0x264),
+    DecalFont_DrawLine(sdata->lngStrings[0x99],
                        (int)(((u_int)OVR_230.transitionMeta_battle[7].currX + 0x8c) * 0x10000) >> 0x10,
                        (int)(short)(OVR_230.transitionMeta_battle[7].currY + sVar20 + 0x44), 1, 0x4000);
 
@@ -826,7 +828,7 @@ LAB_800b25f0:
         j = 0;
 
         // If number of teams is less than 2
-        if (*gGT->battleSetup.numTeams < 2)
+        if (gGT->battleSetup.numTeams < 2)
         {
             // THERE MUST BE
             j = 0xaa;
@@ -840,7 +842,9 @@ LAB_800b25f0:
     // the player from starting the Battle
     if (j == 0)
     {
-        OVR_230.battleStartGame_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
+        OVR_230.battleStartGame_box.state &= ~(0x100); 
+		OVR_230.battleStartGame_box.state |= SHOW_ONLY_HIGHLIT_ROW;
+		
         if (sdata->battleSetupExpandMenu != 5)
         {
             OVR_230.battleStartGame_box.state |= SHOW_ONLY_HIGHLIT_ROW;
@@ -849,10 +853,10 @@ LAB_800b25f0:
         {
             OVR_230.battleStartGame_box.state |= 0x100;
         }
-        MenuBox_DrawSelf(&OVR_230.battleStartGame_box, (int)(((u_int)OVR_230.transitionMeta_battle[8].currX + 0x9c) * 0x10000) >> 0x10,
+        MENUBOX_DrawSelf(&OVR_230.battleStartGame_box, (int)(((u_int)OVR_230.transitionMeta_battle[8].currX + 0x9c) * 0x10000) >> 0x10,
                          (int)(short)(OVR_230.transitionMeta_battle[8].currY + sVar20 + 0x78), 0x134);
         local_38 = 0xd;
-        MenuBox_GetHeight(&OVR_230.battleStartGame_box, &local_38, 0);
+        MENUBOX_GetHeight(&OVR_230.battleStartGame_box, &local_38, 0);
     }
 
     // If you have no errors that prevent
@@ -905,7 +909,7 @@ LAB_800b25f0:
             DecalFont_DrawLine(&OVR_230.s_3[0], iVar13, j, 2, uVar17);
         }
 
-        MM_Battle_DrawIcon_Weapon(gGT->ptrIcons[&OVR_230.battleWeaponsEnabled[iVar8 + 1]],
+        MM_Battle_DrawIcon_Weapon(gGT->ptrIcons[OVR_230.battleWeaponsEnabled[iVar8 + 1]],
                                   iVar13, j,
 
                                   // pointer to PrimMem struct
@@ -929,11 +933,11 @@ LAB_800b25f0:
         local_60[3] = 0x20;
         local_60[1] = local_3e + (sdata->battleSetupRowHighlighted - 3) * 0x20 + 2;
 
-        CTR_Box_DrawClearBox(local_60, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
+        CTR_Box_DrawClearBox(&local_60[0], &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
                              gGT->backBuffer->otMem.startPlusFour,
 
                              // pointer to PrimMem struct
-                             gGT->backBuffer->primMem);
+                             &gGT->backBuffer->primMem);
     }
 
     local_58.x = local_40 + 3;
@@ -941,13 +945,13 @@ LAB_800b25f0:
     local_58.w = local_3c - 6;
     local_58.h = local_3a - 4;
 
-    CTR_Box_DrawClearBox(local_58, &OVR_230.color3[0], TRANS_50_DECAL,
+    CTR_Box_DrawClearBox(&local_58, &OVR_230.color3[0], TRANS_50_DECAL,
                          gGT->backBuffer->otMem.startPlusFour,
 
                          // pointer to PrimMem struct
-                         gGT->backBuffer->primMem);
+                         &gGT->backBuffer->primMem);
 
-    MenuBox_DrawFullRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
+    MENUBOX_DrawFullRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
     // save all five battle settings
     // these are selected rows from all battle options

@@ -97,10 +97,10 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
                         // pointer to OT mem
                         gGT->tileView_UI.ptrOT,
 
-                        *(int*)0x800b55c0,
-						*(int*)0x800b55c0,
-						*(int*)0x800b55c0,
-						*(int*)0x800b55c0,
+                        OVR_230.videoCol,
+						OVR_230.videoCol,
+						OVR_230.videoCol,
+						OVR_230.videoCol,
 						0, FP(1.0));
   }
 

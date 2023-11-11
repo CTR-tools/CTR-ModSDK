@@ -1,3 +1,10 @@
+enum TransitionState
+{
+	ENTERING_MENU,
+	IN_MENU,
+	EXITING_MENU,
+};
+
 // MainMenu
 struct Title
 {
@@ -193,7 +200,8 @@ struct Overlay_230
 	// 800b7ff0 - JpnRetail
 	struct MenuRow rows_players1P2P[3];
 
-#if BUILD == EurRetail
+// ????
+#if BUILD == EurRetail || BUILD == UsaRetail
 	char padding800b4cf2[2];
 #endif
 
@@ -227,7 +235,7 @@ struct Overlay_230
 	// 800b80b8 - JpnRetail
 	struct MenuRow rows_raceType[3];
 
-#if BUILD == EurRetail
+#if BUILD == EurRetail || BUILD == UsaRetail
 	char padding800b4dba[2];
 #endif
 
@@ -236,12 +244,13 @@ struct Overlay_230
 	// 800b80cc - JpnRetail
 	struct MenuBox menubox_raceType;
 
-	// 800b4670 - UsaRetail
+	// 800b4674 - UsaRetail
 	// 800b4de8 - EurRetail
 	// 800b80f8 - JpnRetail
 	struct MenuRow rows_adventure[3];
 
-#if BUILD == EurRetail
+// ???
+#if BUILD == EurRetail || BUILD == UsaRetail
 	char padding800b4dfa[2];
 #endif
 
@@ -278,7 +287,8 @@ struct Overlay_230
 	// 800b8190 - JpnRetail
 	struct MenuRow rows_cupSelect[5];
 
-#if BUILD == EurRetail
+// ????
+#if BUILD == EurRetail || BUILD == UsaRetail
 	char padding800b4f02[2];
 #endif
 
@@ -519,15 +529,16 @@ struct Overlay_230
 
 	// 800b5390 - UsaRetail
 	// 800b5b6c - EurRetail
-	int characterSelect_NeutralColor;
+	u_int characterSelect_NeutralColor;
 
 	// 800b5394 - UsaRetail
 	// 800b5b70 - EurRetail
-	int characterSelect_ChosenColor;
+	u_int characterSelect_ChosenColor;
 
 	// 800b5398 - UsaRetail
 	// 800b5b74 - EurRetail
 	char characterSelect_BlueRectColors[0x18];
+	// u_int characterSelect_BlueRectColors[6];
 
 	// =========== Track Select CONST ============
 
@@ -545,14 +556,38 @@ struct Overlay_230
 	// 800b5d80 - EurRetail
 	// 800b95e0 - JpnRetail
 	// Not all of this is actually transitionmeta, needs proper look
-	struct TransitionMeta transitionMeta_trackSel[0x11];
-
+	struct TransitionMeta transitionMeta_trackSel[5];
+	short padding_800B5572;
+	
+	// 800b5574
+	short lapRowVal[4];
+	
+	// 800b557c
+	struct MenuRow menurow_LapSel[4];
+	
+	// 800B5594
+	struct MenuBox menubox_LapSel;
+	
+	// 800B55C0
+	int videoCol;
+	
+	// 800B55C4
+	short timeTrialStarCol[2];
+	short timeTrialFlagGet[2];
+	
 #if BUILD == JpnRetail
-	char unk800b968a[0xA];
-#else	
-	short padding800b55EA;
-	int unk800b55EC;
+	// 800b966c
+	char wumpaShadowRGBA[4];
 #endif
+	
+	// 800b55cc -- UsaRetail
+	// 800b9670 -- JpnRetail
+	struct
+	{
+		short offsetX;
+		short offsetY;
+		short type;
+	} drawMapOffset[6];
 
 	// ============== Cup Select ==================
 
@@ -574,7 +609,7 @@ struct Overlay_230
 	// 800b563c - UsaRetail
 	// 800b5e7c - EurRetail
 	// 800b96e0 - JpnRetail
-	int cupSel_Color; // of what?
+	u_int cupSel_Color; // of what?
 
 	// ============= Battle CONST ================
 
@@ -596,7 +631,7 @@ struct Overlay_230
 	// 800b976c - JpnRetail
 	struct MenuBox battleType_box;
 
-	// 800b56f0 - UsaRetail
+	// 800b56f4 - UsaRetail
 	// 800b5f34 - EurRetail
 	// 800b9798 - JpnRetail
 	struct MenuRow battleLengthLifeTime_rows[4];
@@ -834,17 +869,20 @@ struct Overlay_230
 
 	// 800b59dc - UsaRetail
 	// 800b6280 - EurRetail
-	int characterSelect_sizeY;
+	short characterSelect_sizeY;
+	short unk_aftercharacterselect_sizey;
 
 	// 800b59e0 - UsaRetail
 	// 800b6284 - EurRetail
 	// 800b9a8c - JpnRetail
-	int desiredMenu;
+	short desiredMenu;
+	short unk_afterdesiredmenu;
 
 	// 800b59e4 -- UsaRetail
 	// 800b6288 -- EurRetail
 	// 800b9a90 -- JpnRetail
-	int movingToTrackMenu;
+	short movingToTrackMenu;
+	short unk_aftermovingtotrackmenu;
 
 	// 800b59e8 -- UsaRetail
 	// 800b628c -- EurRetail
@@ -865,7 +903,7 @@ struct Overlay_230
 	// 800b5a08 - UsaRetail
 	// 800b62ac - EurRetail
 	// 800b9ab4 - JpnRetail
-	int transitionState;
+	int characterSelect_transitionState;
 
 	// 800b5a0c - UsaRetail
 	// 800b62b0 - EurRetail

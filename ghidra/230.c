@@ -5057,15 +5057,27 @@ void FUN_800b1660
   int iVar8;
   int iVar9;
   
-  if (param_1 != 0) {
+  if (param_1 != 0) 
+  {
+	// UV
     uVar5 = *(uint *)(param_1 + 0x18);
     uVar6 = *(uint *)(param_1 + 0x14);
+	
+	// posY << 16
     uVar3 = param_3 * 0x10000;
+	
+	// UV
     uVar7 = *(undefined4 *)(param_1 + 0x1c);
+	
+	// posY_upper
     iVar8 = (int)(((uint)*(byte *)(param_1 + 0x1d) - ((int)uVar6 >> 8 & 0xffU)) * (int)param_7) >>
             0xc;
+			
     puVar4 = *(uint **)(param_4 + 0xc);
+	
+	// posX_farRight
     iVar9 = (int)(((uVar5 & 0xff) - (uVar6 & 0xff)) * (int)param_7) >> 0xc;
+	
     if (param_6 == 0) {
       uVar2 = *param_9;
       puVar4[5] = uVar5;
@@ -5080,10 +5092,17 @@ void FUN_800b1660
     puVar4[3] = uVar6;
     *(short *)(puVar4 + 7) = (short)uVar7;
     *(undefined2 *)(puVar4 + 9) = *(undefined2 *)(param_1 + 0x1e);
-    uVar5 = param_2 + iVar8;
-    if ((param_8 & 1) == 0) {
+    
+	// posX
+	uVar5 = param_2 + iVar8;
+    
+	if ((param_8 & 1) == 0) 
+	{
       uVar6 = param_2 + iVar9;
+	  
+	  // posY
       uVar5 = uVar3 + iVar8 * 0x10000;
+	  
       uVar1 = param_2 | uVar5;
       uVar5 = uVar6 | uVar5;
       uVar6 = uVar6 | uVar3;
@@ -5100,15 +5119,25 @@ void FUN_800b1660
         puVar4[2] = uVar5;
       }
     }
-    else {
+    else 
+	{
       uVar6 = uVar3 + iVar9 * 0x10000;
       uVar2 = uVar5 | uVar3;
       uVar1 = param_2 | uVar6;
       uVar5 = uVar5 | uVar6;
-      if (param_8 == 1) {
+      
+	  if (param_8 == 1) 
+	  {
+		// x | y
         puVar4[4] = param_2 | uVar3;
-        puVar4[8] = uVar2;
+        
+		// bigX | y
+		puVar4[8] = uVar2;
+		
+		// x | bigY
         puVar4[2] = uVar1;
+		
+		// bigX | bigY
         puVar4[6] = uVar5;
       }
       else {

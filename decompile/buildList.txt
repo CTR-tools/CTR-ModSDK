@@ -1,6 +1,6 @@
-// 486+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 564 rewritten so far
+// 494+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 572 rewritten so far
 
-// 486 for every 'common' and ','
+// 494 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -52,7 +52,14 @@ common, 230, MM_TrackSelect_Video_State, 0x0, General/230/230_52_MM_TrackSelect_
 common, 230, MM_TrackSelect_Video_Draw, 0x0, General/230/230_53_MM_TrackSelect_Video_Draw.c
 common, 230, MM_TrackSelect_boolTrackOpen, 0x0, General/230/230_54_MM_TrackSelect_boolTrackOpen.c
 common, 230, MM_TrackSelect_Init, 0x0, General/230/230_55_MM_TrackSelect_Init.c
-//ommon, 230, MM_TrackSelect_MenuBox, 0x0, General/230/230_56_MM_TrackSelect_MenuBox.c
+common, 230, MM_TrackSelect_MenuBox, 0x0, General/230/230_56_MM_TrackSelect_MenuBox.c
+common, 230, MM_TrackSelect_GetMenuBox, 0x0, General/230/230_57_MM_TrackSelect_GetMenuBox.c
+common, 230, MM_CupSelect_Init, 0x0, General/230/230_58_MM_CupSelect_Init.c
+common, 230, MM_CupSelect_MenuBox, 0x0, General/230/230_59_MM_CupSelect_MenuBox.c
+common, 230, MM_Battle_CloseSubMenu, 0x0, General/230/230_60_MM_Battle_CloseSubMenu.c
+common, 230, MM_Battle_DrawIcon_Weapon, 0x0, General/230/230_61_MM_Battle_DrawIcon_Weapon.c
+common, 230, MM_Battle_Init, 0x0, General/230/230_62_MM_Battle_Init.c
+//ommon, 230, MM_Battle_MenuBox, 0x0, General/230/230_63_MM_Battle_MenuBox.c
 
 // 231 (incomplete)
 // skip first two

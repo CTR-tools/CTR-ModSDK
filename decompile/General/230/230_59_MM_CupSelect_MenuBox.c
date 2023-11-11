@@ -18,7 +18,8 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
     {
         OVR_230.cupSel_postTransition_boolStart = (mb->rowSelected != -1);
         OVR_230.cupSel_transitionState = 2;
-        OVR_230.menubox_cupSelect.state &= ~(EXECUTE_FUNCPTR) | DISABLE_INPUT_ALLOW_FUNCPTRS;
+        OVR_230.menubox_cupSelect.state &= ~(EXECUTE_FUNCPTR);
+		OVR_230.menubox_cupSelect.state |= DISABLE_INPUT_ALLOW_FUNCPTRS;
         return;
     }
 
@@ -41,7 +42,8 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
             {
                 // menu is now in focus
                 OVR_230.cupSel_transitionState = 1;
-                OVR_230.menubox_cupSelect.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS) | BIG_TEXT_IN_TITLE;
+				OVR_230.menubox_cupSelect.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
+				OVR_230.menubox_cupSelect.state |= EXECUTE_FUNCPTR;
             }
         }
         // if transitioning out
@@ -91,7 +93,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
     OVR_230.cupSel_transitionFrames = elapsedFrames;
 
     // "SELECT CUP RACE"
-    DecalFont_DrawLine(sdata->lngStrings[0x2fc],
+    DecalFont_DrawLine(sdata->lngStrings[0xBF],
                        (OVR_230.transitionMeta_cupSel[4].currX + 0x100),
                        (OVR_230.transitionMeta_cupSel[4].currY + 0x10), 1, 0xffff8000);
     // Loop through all four cups
@@ -127,22 +129,24 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         // loop through 3 stars to draw
         for (starIndex = 0; starIndex < 3; starIndex++)
         {
+			// assuming starUnlock is never more than 32,
+			// otherwise you'd do [flag>>5] >> flag&0x1f
             int starUnlock = OVR_230.cupSel_StarUnlockFlag[starIndex] + cupIndex;
-            if ((sdata->gameProgress.unlocks[starUnlock >> 5] >> starUnlock & 1) != 0)
+            if (((sdata->gameProgress.unlocks[0] >> starUnlock) & 1) != 0)
             {
                 // array of colorIDs
                 // 0x11: driver_C (tropy) (blue)
                 // 0x0E: driver_9 (papu) (yellow)
                 // 0x16: silver
 
-                starColor = data.ptrColor[((OVR_230.cupSel_StarColorIndex[starIndex]) >> 2)];
+                starColor = data.ptrColor[OVR_230.cupSel_StarColorIndex[starIndex]];
 
 				struct Icon** iconPtrArray =
 					ICONGROUP_GETICONS(gGT->iconGroup[5]);
 
-                DecalHUD_DrawPolyGT4(iconPtrArray[7],
+                DecalHUD_DrawPolyGT4(iconPtrArray[0x37],
                                      (startX + (cupIndex & 1) * 0xCA - 0x16),
-                                     (startY + ((starIndex >> 4) + 0x10)),
+                                     (startY + ((starIndex * 0x10) + 0x10)),
 
                                      // pointer to PrimMem struct
                                      &gGT->backBuffer->primMem,
@@ -162,9 +166,9 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         for (trackIndex = 0; trackIndex < 4; trackIndex++)
         {
             // Draw Icon of each track
-            MENUBOX_DrawPolyGT4(gGT->ptrIcons[data.ArcadeCups[cupIndex].CupTrack[trackIndex].trackID],
+            MENUBOX_DrawPolyGT4(gGT->ptrIcons[data.ArcadeCups[cupIndex].CupTrack[trackIndex].iconID],
                                 (startX + (trackIndex & 1) * 0x54),
-                                (startY + (trackIndex - ((trackIndex >> 0xf) >> 1) * 0x23)),
+                                (startY + (trackIndex >> 1) * 0x23),
 
                                 // pointer to PrimMem struct
                                 &gGT->backBuffer->primMem,
@@ -178,23 +182,26 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
                                 OVR_230.cupSel_Color,
                                 0, FP(0.5));
         }
+		
         if (cupIndex == mb->rowSelected)
         {
-            cupBox.h = startX - 3;
-            cupBox.w = startY - 2;
-            cupBox.y = 174;
-            cupBox.x = 74;
+			// highlight box
+            cupBox.x = startX - 3;
+            cupBox.y = startY - 2;
+            cupBox.w = 174;
+            cupBox.h = 74;
 
             CTR_Box_DrawClearBox(&cupBox, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
                                  gGT->backBuffer->otMem.startPlusFour,
                                  &gGT->backBuffer->primMem);
         }
-        cupBox.h = startX - 6;
-        cupBox.w = startY - 4;
-        cupBox.y = 180;
-        cupBox.x = 78;
-
-        // Draw 2D Menu rectangle background
-        MENUBOX_DrawInnerRect(&cupBox, 0, gGT->backBuffer->otMem.startPlusFour);
+		
+		// background box
+        cupBox.x = startX - 6;
+        cupBox.y = startY - 4;
+        cupBox.w = 180;
+        cupBox.h = 78;
+        
+		MENUBOX_DrawInnerRect(&cupBox, 0, gGT->backBuffer->otMem.startPlusFour);
     }
 }

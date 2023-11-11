@@ -1815,12 +1815,20 @@ struct Data
 	struct MenuRow menuRow_advHub[5];
 
 	// +2 padding
+	#if BUILD == UsaRetail
+	char padding_advhub[2];
+	#endif
 
 	// 0x80084388 -- 2C
 	struct MenuBox menuBox_advHub;
 
 	// 0x800843B4
 	struct MenuRow menuRow_advRace[5];
+
+	// +2 padding
+	#if BUILD == UsaRetail
+	char padding_advrace[2];
+	#endif
 
 	// 0x800843D4 -- 2C
 	struct MenuBox menuBox_advRace;
@@ -1847,6 +1855,9 @@ struct Data
 	struct MenuRow menuRow_arcadeRace[7];
 
 	// +2 padding
+	#if BUILD == UsaRetail
+	char padding_arcaderace[2];
+	#endif
 
 	// 0x80082778 -- SepReview -- MenuBox struct was 8 bytes larger
 	// 0x80084510 -- UsaRetail
@@ -1961,6 +1972,9 @@ struct Data
 	struct MenuRow menuRow_saveGame[3];
 
 	// +2 padding (0x14 total) 0x14 = 20, 3*6 +2
+	#if BUILD == UsaRetail
+	char padding_savegame[2];
+	#endif
 
 	// 0x80085A68 -- 2C (+8 for SepReview)
 	struct MenuBox menuBox_saveGame;
@@ -2017,6 +2031,11 @@ struct Data
 
 	// 80085B3C
 	struct MenuRow menuRow_greenLoadSave[5];
+
+	// +2 padding (0x14 total) 0x14 = 20, 3*6 +2
+	#if BUILD == UsaRetail
+	char padding_greenloadsave[2];
+	#endif
 
 	// 80083dcc -- SepReview	0x58 (from messageScreens)
 	// 80085b5c -- UsaRetail	0x58 (from messageScreens)
@@ -3913,7 +3932,8 @@ struct sData
 	// 8008dc40 -- EurRetail
 	// 80090cb0 -- JpnRetail
 	// error message posY choice (0,1,2) (high, mid, low)
-	int errorMessagePosIndex;
+	short errorMessagePosIndex;
+	short unk_aftererrormessageposindex;
 	#endif
 
 	// 8008d890
@@ -4072,7 +4092,8 @@ struct sData
 	// 8008c888 -- JpnTrial
 	// 8008dce4 -- EurRetail
 	// 80090d5C -- JpnRetail
-	int trackSelIndex;
+	u_short trackSelIndex;
+	short unk_aftertrackselindex;
 
 	// 8008d934
 	// one bit for each player that has
