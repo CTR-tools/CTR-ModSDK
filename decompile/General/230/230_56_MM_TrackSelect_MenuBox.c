@@ -12,7 +12,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	char bVar3;
 	char bVar4;
 	short sVar5;
-	u_short currTrack;
+	short currTrack;
 	short sVar7;
 	short elapsedFrames;
 	u_int uVar8;
@@ -128,17 +128,16 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	OVR_230.trackSel_transitionFrames = elapsedFrames;
 	sVar7 = OVR_230.trackSel_transitionState;
 
+	// default arcade tracks
+	selectMenu = &OVR_230.arcadeTracks[0];
+	numTracks = 18;
+
 	// if you are in battle mode
 	if ((gGT->gameMode1 & BATTLE_MODE) != 0)
 	{
 		selectMenu = &OVR_230.battleTracks[0];
-
 		numTracks = 7;
 	}
-
-	selectMenu = &OVR_230.arcadeTracks[0];
-
-	numTracks = 18;
 
 	currTrack = mb->rowSelected;
 
@@ -205,6 +204,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				OVR_230.trackSel_postTransition_boolStart = sVar7;
 				// transition out (but go into race)
 				OVR_230.trackSel_transitionState = 2;
+				goto LAB_800b04b8;
 				break;
 				
 			case BTN_TRIANGLE:
@@ -215,6 +215,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				OVR_230.trackSel_postTransition_boolStart = 0;
 				// transition out
 				OVR_230.trackSel_transitionState = 2;
+				goto LAB_800b04b8;
 				break;
 			default:
 				goto LAB_800b04b8;
@@ -329,7 +330,7 @@ LAB_800b05b8:
 		do
 		{
 			iVar10 = iVar9;
-			if (iVar9 << 0x10 < 0)
+			if (iVar9 < 0)
 			{
 				iVar10 = uVar15 - 1;
 			}
@@ -420,7 +421,7 @@ LAB_800b05b8:
 				int timeTrialFlags = sdata->gameProgress.highScoreTracks[gGT->levelID].timeTrialFlags;
 
 				// if star is earned
-				if ((timeTrialFlags & ((u_short *)0x800b55c8)[iVar17]) != 0)
+				if (((timeTrialFlags >> ((u_short *)0x800b55c8)[iVar17]) & 1) != 0)
 				{
 					// 0x0E: driver_9 (papu) (yellow)
 					// 0x16: silver
@@ -473,7 +474,7 @@ LAB_800b05b8:
 		if ((OVR_230.trackSel_changeTrack_frameCount == 0) && ((short)iVar18 == 4))
 		{
 			// if you are in time trial mode
-			if ((gGT->gameMode1 & MAIN_MENU) != 0)
+			if ((gGT->gameMode1 & TIME_TRIAL) != 0)
 			{
 				// Check if this track has Ghost Data
 				uVar15 = GhostData_NumGhostsForLEV(selectMenu[iVar10].levID);
@@ -492,7 +493,7 @@ LAB_800b05b8:
 					}
 
 					// "GHOST DATA EXISTS"
-					DecalFont_DrawLine(sdata->lngStrings[0x1ac], 
+					DecalFont_DrawLine(sdata->lngStrings[0x6B], 
 						(iVar11 + 0x80),
 						(iVar9 + 0x76),
 						2, uVar14);
@@ -516,12 +517,14 @@ LAB_800b05b8:
 
 		do
 		{
+			iVar10++;
+			
 			if (uVar15 <= iVar10)
 			{
 				iVar10 = 0;
 			}
 			uVar8 = MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
-			iVar10++;
+			
 		} while ((uVar8 & 0xffff) == 0);
 
 		iVar18 = iVar18 + 1;
@@ -602,8 +605,6 @@ LAB_800b05b8:
 							// bottom half
 							iconMap1,
 
-							// 100, 0x4b, 0xb0
-
 							// X
 							(int)((short *)0x800b55cc)[iVar18 * 3] + 
 									p.x +
@@ -615,8 +616,8 @@ LAB_800b05b8:
 							(int)((short *)0x800b55ce)[iVar18 * 3] + 
 									p.y +
 									(OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[1].currY) +
-									//0x49+0x22+
-									(100 >> 1) +
+									0x49+0x22+
+									0x10 + // idk how bitshifting pulls 0x10 in ghidra, but that's it
 									(iVar10 >> 1),
 
 							// pointer to PrimMem struct
