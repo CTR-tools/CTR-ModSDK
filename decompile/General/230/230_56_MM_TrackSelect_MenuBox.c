@@ -19,7 +19,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	int iVar9;
 	int iVar10;
 	int iVar11;
-	int *piVar12;
+	int *starColor;
 	u_int uVar14;
 	u_int uVar15;
 	int iVar17;
@@ -36,10 +36,10 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	elapsedFrames = OVR_230.trackSel_transitionFrames;
 
 	// if you are not in track selection menu
-	if (OVR_230.trackSel_transitionState != 1)
+	if (OVR_230.trackSel_transitionState != IN_MENU)
 	{
 		// if transitioning in
-		if (OVR_230.trackSel_transitionState == 0)
+		if (OVR_230.trackSel_transitionState == ENTERING_MENU)
 		{
 			// make error message posY appear
 			// near bottom of screen
@@ -54,21 +54,19 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			}
 
 			MM_TransitionInOut(&OVR_230.transitionMeta_trackSel[0], elapsedFrames, 8);
-
 			elapsedFrames--;
 
 			// ran out of frames
 			if (elapsedFrames == 0)
 			{
 				// menu is now in focus
-				OVR_230.trackSel_transitionState = 1;
+				OVR_230.trackSel_transitionState = IN_MENU;
 			}
 		}
 		// transitioning out
-		else if (OVR_230.trackSel_transitionState == 2)
+		else if (OVR_230.trackSel_transitionState == EXITING_MENU)
 		{
 			MM_TransitionInOut(&OVR_230.transitionMeta_trackSel[0], elapsedFrames, 8);
-
 			elapsedFrames++;
 
 			if (elapsedFrames > 12)
@@ -252,9 +250,12 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		sVar7 = MENUBOX_ProcessInput(&OVR_230.menubox_LapSel);
 	}
 
-	MENUBOX_DrawSelf(&OVR_230.menubox_LapSel,
-			OVR_230.transitionMeta_trackSel[2].currX,
-			OVR_230.transitionMeta_trackSel[2].currY, 0xa4);
+	MENUBOX_DrawSelf
+	(
+		&OVR_230.menubox_LapSel,
+		OVR_230.transitionMeta_trackSel[2].currX,
+		OVR_230.transitionMeta_trackSel[2].currY, 0xa4
+	);
 
 	// put LapRow back into 8d920
 	sdata->uselessLapRowCopy = OVR_230.menubox_LapSel.rowSelected;
@@ -303,9 +304,11 @@ LAB_800b05b8:
 	uVar14 = 0;
 
 	// if you are transitioning out of level selection
-	if (
-			(OVR_230.trackSel_changeTrack_frameCount != 0) ||
-			(OVR_230.trackSel_transitionState == 2))
+	if
+	(
+		(OVR_230.trackSel_changeTrack_frameCount != 0) ||
+		(OVR_230.trackSel_transitionState == 2)
+	)
 	{
 		// transitioning,
 		// which means stop drawing track video,
@@ -418,16 +421,14 @@ LAB_800b05b8:
 				// if star is earned
 				if (((timeTrialFlags >> OVR_230.timeTrialFlagGet[iVar17]) & 1) != 0)
 				{
-					// 0x0E: driver_9 (papu) (yellow)
-					// 0x16: silver
-
 					// pointer to color data of star
-					piVar12 = data.ptrColor[OVR_230.timeTrialStarCol[iVar17]];
+					starColor = data.ptrColor[OVR_230.timeTrialStarCol[iVar17]];
 
-					struct Icon** iconPtrArray =
-						ICONGROUP_GETICONS(gGT->iconGroup[5]);
+					struct Icon** iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[5]);
 
-					DecalHUD_DrawPolyGT4(iconPtrArray[0x37],
+					DecalHUD_DrawPolyGT4
+					(
+						iconPtrArray[0x37],
 						iVar11 + 0x104, (int)sVar7 + iVar17 * 8 + 4,
 
 						// pointer to PrimMem struct
@@ -437,12 +438,13 @@ LAB_800b05b8:
 						gGT->tileView_UI.ptrOT,
 
 						// color data
-						piVar12[0],
-						piVar12[1],
-						piVar12[2],
-						piVar12[3],
+						starColor[0],
+						starColor[1],
+						starColor[2],
+						starColor[3],
 
-						0, FP(1.0));
+						0, FP(1.0)
+					);
 				}
 			}
 			// restore levelID
@@ -460,11 +462,13 @@ LAB_800b05b8:
 		// and so on
 		
 		// Draw string
-		DecalFont_DrawLine(
-				sdata->lngStrings[data.metaDataLEV[selectMenu[iVar10].levID].name_LNG],
-				(iVar11 + 8),
-				(iVar9 + 0x65),
-				1, 0);
+		DecalFont_DrawLine
+		(
+			sdata->lngStrings[data.metaDataLEV[selectMenu[iVar10].levID].name_LNG],
+			(iVar11 + 8),
+			(iVar9 + 0x65),
+			FONT_BIG, ORANGE
+		);
 
 		if ((OVR_230.trackSel_changeTrack_frameCount == 0) && ((short)iVar18 == 4))
 		{
@@ -480,18 +484,21 @@ LAB_800b05b8:
 					// Flash Colors
 					if ((sdata->frameCounter & 4) == 0)
 					{
-						uVar14 = 0xffff8004;
+						uVar14 = (JUSTIFY_CENTER | WHITE);
 					}
 					else
 					{
-						uVar14 = 0xffff8001;
+						uVar14 = (JUSTIFY_CENTER | PERIWINKLE);
 					}
 
 					// "GHOST DATA EXISTS"
-					DecalFont_DrawLine(sdata->lngStrings[0x6B], 
+					DecalFont_DrawLine
+					(
+						sdata->lngStrings[0x6B], 
 						(iVar11 + 0x80),
 						(iVar9 + 0x76),
-						2, uVar14);
+						FONT_SMALL, uVar14
+					);
 				}
 			}
 			q.x = r.x + 6;
@@ -499,11 +506,15 @@ LAB_800b05b8:
 			q.w = r.w - 12;
 			q.h = r.h - 8;
 
-			CTR_Box_DrawClearBox(&q, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
-													 gGT->backBuffer->otMem.startPlusFour,
+			CTR_Box_DrawClearBox
+			(
+				&q, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
 
-													 // pointer to PrimMem struct
-													 &gGT->backBuffer->primMem);
+				gGT->backBuffer->otMem.startPlusFour,
+
+				// pointer to PrimMem struct
+				&gGT->backBuffer->primMem
+			);
 		}
 		uVar15 = (u_int)numTracks;
 
@@ -535,8 +546,9 @@ LAB_800b05b8:
 			// posY of "SELECT LEVEL"
 			// near-top if map exists, near-mid if no map
 			p.y = OVR_230.transitionMeta_trackSel[1].currY + 0x3a;
-				if (-1 < selectMenu[mb->rowSelected].mapTextureID)
-					p.y = OVR_230.transitionMeta_trackSel[1].currY + 5;
+			
+			if (-1 < selectMenu[mb->rowSelected].mapTextureID)
+				p.y = OVR_230.transitionMeta_trackSel[1].currY + 5;
 
 			// _OVR_230.trackSel_boolOpenLapBox is the boolean to show
 			// the selection menu for number of laps:
@@ -546,28 +558,35 @@ LAB_800b05b8:
 			if (OVR_230.trackSel_boolOpenLapBox == 0)
 			{
 				// "SELECT"
-				DecalFont_DrawLine(sdata->lngStrings[0x69],
+				DecalFont_DrawLine
+				(
+					sdata->lngStrings[0x69],
 					(OVR_230.transitionMeta_trackSel[3].currX + 0x18c),
 					(OVR_230.transitionMeta_trackSel[3].currY + (u_int)p.y),
-					1, 0xffff8000);
+					FONT_BIG, (JUSTIFY_CENTER | ORANGE)
+				);
 
 				// "LEVEL"
-				DecalFont_DrawLine(sdata->lngStrings[0x6a],
+				DecalFont_DrawLine
+				(
+					sdata->lngStrings[0x6a],
 					(OVR_230.transitionMeta_trackSel[3].currX + 0x18c),
 					(OVR_230.transitionMeta_trackSel[3].currY + (u_int)p.y + 0x10),
-					1, 0xffff8000);
+					FONT_BIG, (JUSTIFY_CENTER | ORANGE)
+				);
 			}
 		
 			// next, draw the map icon, below "SELECT LEVEL",
 			// exactly 0x22 (34) pixels below the text
 			p.y += 0x22;
 		
-			if (
-					(-1 < selectMenu[mb->rowSelected].mapTextureID) &&
+			if
+			(
+				(-1 < selectMenu[mb->rowSelected].mapTextureID) &&
 
-					// If lap selection menu is closed
-					(OVR_230.trackSel_boolOpenLapBox == 0)
-				)
+				// If lap selection menu is closed
+				(OVR_230.trackSel_boolOpenLapBox == 0)
+			)
 			{
 				int mapID = selectMenu[mb->rowSelected].mapTextureID;
 				struct Icon* iconMap0 = gGT->ptrIcons[mapID+0];
@@ -592,44 +611,47 @@ LAB_800b05b8:
 				{
 					iVar10 = ((((u_int)bVar1 - (u_int)bVar2) + (u_int)bVar3) - (u_int)bVar4);
 
-					UI_Map_DrawMap(
+					UI_Map_DrawMap
+					(
+						// top half
+						iconMap0,
 
-							// top half
-							iconMap0,
+						// bottom half
+						iconMap1,
 
-							// bottom half
-							iconMap1,
-
-							// X
-							OVR_230.drawMapOffset[iVar18].offsetX + 
+						// X
+						OVR_230.drawMapOffset[iVar18].offsetX + 
 									p.x +
 									(OVR_230.transitionMeta_trackSel[2].currX - OVR_230.transitionMeta_trackSel[1].currX) +
 									(0xb0 >> 1) +
 									(iVar9 >> 1),
 
-							// Y
-							OVR_230.drawMapOffset[iVar18].offsetY + 
+						// Y
+						OVR_230.drawMapOffset[iVar18].offsetY + 
 									p.y +
 									(OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[1].currY) +
 									0x49+0x22+
 									0x10 + // idk how bitshifting pulls 0x10 in ghidra, but that's it
 									(iVar10 >> 1),
 
-							// pointer to PrimMem struct
-							&gGT->backBuffer->primMem,
+						// pointer to PrimMem struct
+						&gGT->backBuffer->primMem,
 
-							// pointer to OT mem
-							gGT->tileView_UI.ptrOT,
+						// pointer to OT mem
+						gGT->tileView_UI.ptrOT,
 
-							// 1 = draw map with regular color (white) - used for the main layer of the minimap in the track select screen
-							// 2 = draw map blue - used for the outline of the minimap in the track select screen
-							// 3 = draw map black - used for the shadow of the minimap in the track select screen
-							OVR_230.drawMapOffset[iVar18].type);
+						// 1 = draw map with regular color (white) - used for the main layer of the minimap in the track select screen
+						// 2 = draw map blue - used for the outline of the minimap in the track select screen
+						// 3 = draw map black - used for the shadow of the minimap in the track select screen
+						OVR_230.drawMapOffset[iVar18].type
+					);
 				}
 			}
-			MM_TrackSelect_Video_Draw(
-					&p, selectMenu, (int)(short)OVR_230.trackSel_currTrack,
-					(u_int)(OVR_230.trackSel_transitionState == 2), 0);
+			MM_TrackSelect_Video_Draw
+			(
+				&p, selectMenu, (int)(short)OVR_230.trackSel_currTrack,
+				(u_int)(OVR_230.trackSel_transitionState == 2), 0
+			);
 			return;
 		}
 	} while (true);
