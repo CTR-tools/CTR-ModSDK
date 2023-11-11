@@ -36,8 +36,9 @@ enum MenuBoxFlags
 	// title will use big text
 	// to be used in conjunction with "USE_SMALL_FONT_IN_ROWS"
 	BIG_TEXT_IN_TITLE = 0x4000,
+
 	ALL_PLAYERS_USE_MENU = 0x8000,
-	// 0x10000
+	CLEAR_INPUTS_UPON_OPENING = 0x10000,
 	// 0x20000
 	// 0x40000
 	// 0x80000

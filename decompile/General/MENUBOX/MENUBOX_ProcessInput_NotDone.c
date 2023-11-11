@@ -15,13 +15,15 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 	RngDeadCoed();
 #endif
 
-	if (
+	if
+	(
 		// if not drawing only title bar,
 		// therefore this is the bottom of hierarchy
-		((m->state & 4) == 0) &&
+		((m->state & ONLY_DRAW_TITLE) == 0) &&
 
 		// must be both 0x20000 and 0x40000
-		((m->state & 0x60000) != 0x60000))
+		((m->state & 0x60000) != 0x60000)
+	)
 	{
 		oldRow = m->rowSelected;
 
@@ -32,7 +34,7 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 			sdata->activeSubMenu = m;
 
 			// if input should clear upon opening
-			if (m->state & 0x10000)
+			if (m->state & CLEAR_INPUTS_UPON_OPENING)
 			{
 				MENUBOX_ClearInput();
 			}
@@ -79,12 +81,14 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 
 		if ((button & (BTN_CROSS | BTN_CIRCLE)) == 0)
 		{
-			if (
+			if
+			(
 				// if Triangle or Square
 				((button & (BTN_TRIANGLE | BTN_SQUARE)) != 0) &&
 
 				// if this is not the top of the menu
-				((m->state & MENU_IS_TOP_OF_HIERARCHY) == 0))
+				((m->state & MENU_IS_TOP_OF_HIERARCHY) == 0)
+			)
 			{
 				// process GO BACK
 
