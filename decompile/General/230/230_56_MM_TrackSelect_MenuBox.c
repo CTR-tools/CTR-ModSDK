@@ -96,7 +96,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// if you are not in battle mode
 
 				// if you are in time trial mode
-				if ((gGT->gameMode1 & MAIN_MENU) != 0)
+				if ((gGT->gameMode1 & TIME_TRIAL) != 0)
 				{
 					// allocate room at the end of RAM for ghosts
 					sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00, OVR_230.s_loaded_ghost_data);
