@@ -166,7 +166,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				} while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
 				
 				OVR_230.trackSel_direction = 1;
-				goto LAB_800b0424;
+				goto ChangeTrackRow;
 			
 			case BTN_DOWN:
 				
@@ -186,7 +186,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				} while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
 				
 				OVR_230.trackSel_direction = -1;
-				goto LAB_800b0424;
+				goto ChangeTrackRow;
 			
 			case BTN_CROSS_one:
 			case BTN_CIRCLE:
@@ -196,13 +196,13 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				{
 					// open lap select menu
 					OVR_230.trackSel_boolOpenLapBox = sVar7;
-					goto LAB_800b04b8;
+					goto ClearInput;
 				}
 				// ready to race
 				OVR_230.trackSel_postTransition_boolStart = sVar7;
 				// transition out (but go into race)
 				OVR_230.trackSel_transitionState = 2;
-				goto LAB_800b04b8;
+				goto ClearInput;
 				break;
 				
 			case BTN_TRIANGLE:
@@ -213,21 +213,21 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				OVR_230.trackSel_postTransition_boolStart = 0;
 				// transition out
 				OVR_230.trackSel_transitionState = 2;
-				goto LAB_800b04b8;
+				goto ClearInput;
 				break;
 			default:
-				goto LAB_800b04b8;
+				goto ClearInput;
 			}
 
-		LAB_800b0424:
+		ChangeTrackRow:
 			// 3 frames of moving track list
 			OVR_230.trackSel_changeTrack_frameCount = 3;
 			OVR_230.trackSel_currTrack = currTrack;
 
-		LAB_800b04b8:
+		ClearInput:
 			// clear gamepad input (for menus)
 			MENUBOX_ClearInput();
-			goto LAB_800b05b8;
+			goto TrackSelected;
 		}
 	}
 
@@ -236,7 +236,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	{
 		// if lap selection menu is closed
 		if (OVR_230.trackSel_boolOpenLapBox == 0)
-			goto LAB_800b05b8;
+			goto TrackSelected;
 	}
 
 	sVar7 = 0;
@@ -291,7 +291,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		gGT->numLaps = 1;
 	}
 
-LAB_800b05b8:
+TrackSelected:
 
 	// decrease frame from track list motion
 	iVar9 = OVR_230.trackSel_changeTrack_frameCount + -1;
