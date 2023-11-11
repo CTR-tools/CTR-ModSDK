@@ -139,19 +139,16 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 	currTrack = mb->rowSelected;
 
-	// if you're not loading a LEV
-	if (OVR_230.trackSel_changeTrack_frameCount == 0)
+	// if lap selection menu is closed
+	if (OVR_230.trackSel_boolOpenLapBox == 0)
 	{
-		// if lap selection menu is closed
-		if (OVR_230.trackSel_boolOpenLapBox == 0)
+		// if not changing levels
+		if (OVR_230.trackSel_changeTrack_frameCount == 0)
 		{
 			switch (sdata->buttonTapPerPlayer[0] & (BTN_UP | BTN_DOWN | BTN_TRIANGLE | BTN_SQUARE_one | BTN_CROSS_one | BTN_CIRCLE))
 			{
 				
 			case BTN_UP:
-				
-				// change track sound
-				OtherFX_Play(0, 1);
 				
 				// look for unlocked track
 				do
@@ -165,13 +162,14 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 					
 				} while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
 				
+				OVR_230.trackSel_currTrack = currTrack;
+				OVR_230.trackSel_changeTrack_frameCount = 3;
 				OVR_230.trackSel_direction = 1;
-				goto ChangeTrackRow;
+				
+				OtherFX_Play(0, 1);
+				break;
 			
 			case BTN_DOWN:
-				
-				// change track sound
-				OtherFX_Play(0, 1);
 				
 				// look for unlocked track
 				do
@@ -185,8 +183,12 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 				} while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
 				
+				OVR_230.trackSel_currTrack = currTrack;
+				OVR_230.trackSel_changeTrack_frameCount = 3;
 				OVR_230.trackSel_direction = -1;
-				goto ChangeTrackRow;
+				
+				OtherFX_Play(0, 1);
+				break;
 			
 			case BTN_CROSS_one:
 			case BTN_CIRCLE:
@@ -198,14 +200,12 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				{
 					// open lap select menu
 					OVR_230.trackSel_boolOpenLapBox = sVar7;
-					goto ClearInput;
+					break;
 				}
 				
 				// if Battle or Time Trial, skip straight to level
 				OVR_230.trackSel_postTransition_boolStart = sVar7;
 				OVR_230.trackSel_transitionState = EXITING_MENU;
-				goto ClearInput;
-				
 				break;
 				
 			case BTN_TRIANGLE:
@@ -216,85 +216,71 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				OVR_230.trackSel_postTransition_boolStart = 0;
 				// transition out
 				OVR_230.trackSel_transitionState = EXITING_MENU;
-				goto ClearInput;
 				break;
 			default:
-				goto ClearInput;
+				break;
 			}
 
-		ChangeTrackRow:
-			// 3 frames of moving track list
-			OVR_230.trackSel_changeTrack_frameCount = 3;
-			OVR_230.trackSel_currTrack = currTrack;
-
-		ClearInput:
 			// clear gamepad input (for menus)
 			MENUBOX_ClearInput();
-			goto TrackSelected;
 		}
 	}
 
-	// if you are loading a LEV
+	// if lap selection menu is open
 	else
 	{
-		// if lap selection menu is closed
-		if (OVR_230.trackSel_boolOpenLapBox == 0)
-			goto TrackSelected;
-	}
-
-	sVar7 = 0;
-
-	// copy LapRow from 8d920 to temp variable b55ae
-	OVR_230.menubox_LapSel.rowSelected = sdata->uselessLapRowCopy;
-
-	// If you're in track selection menu
-	if (OVR_230.trackSel_transitionState == IN_MENU)
-	{
-		sVar7 = MENUBOX_ProcessInput(&OVR_230.menubox_LapSel);
-	}
-
-	MENUBOX_DrawSelf
-	(
-		&OVR_230.menubox_LapSel,
-		OVR_230.transitionMeta_trackSel[2].currX,
-		OVR_230.transitionMeta_trackSel[2].currY, 0xa4
-	);
-
-	// put LapRow back into 8d920
-	sdata->uselessLapRowCopy = OVR_230.menubox_LapSel.rowSelected;
-
-	// get lap count
-	gGT->numLaps = OVR_230.lapRowVal[OVR_230.menubox_LapSel.rowSelected];
+		sVar7 = 0;
 	
-	// if it is time to start the race
-	if (sVar7 == 1)
-	{
-		// try to start the race
-		OVR_230.trackSel_transitionState = EXITING_MENU;
-
-		// if this is 1 (which it is), the race starts,
-		// otherwise, you go back to character selection
-		OVR_230.trackSel_postTransition_boolStart = sVar7;
-	}
-
-	// If it is not time to start the race
-	else
-	{
-		if (sVar7 == -1)
+		// copy LapRow from 8d920 to temp variable b55ae
+		OVR_230.menubox_LapSel.rowSelected = sdata->uselessLapRowCopy;
+	
+		// If you're in track selection menu
+		if (OVR_230.trackSel_transitionState == IN_MENU)
 		{
-			// close lap selection menu
-			OVR_230.trackSel_boolOpenLapBox = 0;
+			sVar7 = MENUBOX_ProcessInput(&OVR_230.menubox_LapSel);
+		}
+	
+		MENUBOX_DrawSelf
+		(
+			&OVR_230.menubox_LapSel,
+			OVR_230.transitionMeta_trackSel[2].currX,
+			OVR_230.transitionMeta_trackSel[2].currY, 0xa4
+		);
+	
+		// put LapRow back into 8d920
+		sdata->uselessLapRowCopy = OVR_230.menubox_LapSel.rowSelected;
+	
+		// get lap count
+		gGT->numLaps = OVR_230.lapRowVal[OVR_230.menubox_LapSel.rowSelected];
+		
+		// if it is time to start the race
+		if (sVar7 == 1)
+		{
+			// try to start the race
+			OVR_230.trackSel_transitionState = EXITING_MENU;
+	
+			// if this is 1 (which it is), the race starts,
+			// otherwise, you go back to character selection
+			OVR_230.trackSel_postTransition_boolStart = sVar7;
+		}
+	
+		// If it is not time to start the race
+		else
+		{
+			if (sVar7 == -1)
+			{
+				// close lap selection menu
+				OVR_230.trackSel_boolOpenLapBox = 0;
+			}
+		}
+	
+		// If "One Lap Race" Cheat is enabled
+		if ((gGT->gameMode2 & CHEAT_ONELAP) != 0)
+		{
+			// Set number of Laps to 1
+			gGT->numLaps = 1;
 		}
 	}
-
-	// If "One Lap Race" Cheat is enabled
-	if ((gGT->gameMode2 & CHEAT_ONELAP) != 0)
-	{
-		// Set number of Laps to 1
-		gGT->numLaps = 1;
-	}
-
-TrackSelected:
 
 	// decrease frame from track list motion
 	iVar9 = OVR_230.trackSel_changeTrack_frameCount + -1;
