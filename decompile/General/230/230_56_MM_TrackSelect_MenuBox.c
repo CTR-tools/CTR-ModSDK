@@ -201,7 +201,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// ready to race
 				OVR_230.trackSel_postTransition_boolStart = sVar7;
 				// transition out (but go into race)
-				OVR_230.trackSel_transitionState = 2;
+				OVR_230.trackSel_transitionState = EXITING_MENU;
 				goto ClearInput;
 				break;
 				
@@ -212,7 +212,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// not ready to race
 				OVR_230.trackSel_postTransition_boolStart = 0;
 				// transition out
-				OVR_230.trackSel_transitionState = 2;
+				OVR_230.trackSel_transitionState = EXITING_MENU;
 				goto ClearInput;
 				break;
 			default:
@@ -245,7 +245,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	OVR_230.menubox_LapSel.rowSelected = sdata->uselessLapRowCopy;
 
 	// If you're in track selection menu
-	if (OVR_230.trackSel_transitionState == 1)
+	if (OVR_230.trackSel_transitionState == IN_MENU)
 	{
 		sVar7 = MENUBOX_ProcessInput(&OVR_230.menubox_LapSel);
 	}
@@ -267,7 +267,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	if (sVar7 == 1)
 	{
 		// try to start the race
-		OVR_230.trackSel_transitionState = 2;
+		OVR_230.trackSel_transitionState = EXITING_MENU;
 
 		// if this is 1 (which it is), the race starts,
 		// otherwise, you go back to character selection
@@ -307,7 +307,7 @@ TrackSelected:
 	if
 	(
 		(OVR_230.trackSel_changeTrack_frameCount != 0) ||
-		(OVR_230.trackSel_transitionState == 2)
+		(OVR_230.trackSel_transitionState == EXITING_MENU)
 	)
 	{
 		// transitioning,
@@ -650,7 +650,7 @@ TrackSelected:
 			MM_TrackSelect_Video_Draw
 			(
 				&p, selectMenu, (int)(short)OVR_230.trackSel_currTrack,
-				(u_int)(OVR_230.trackSel_transitionState == 2), 0
+				(u_int)(OVR_230.trackSel_transitionState == EXITING_MENU), 0
 			);
 			return;
 		}
