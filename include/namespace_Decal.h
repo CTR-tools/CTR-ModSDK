@@ -93,7 +93,6 @@ enum Colors
 	PLAYER_GREEN,
 	PLAYER_YELLOW,
 
-	// colors only available in versions from UsaRetail onwards
 	DARK_RED,
 	LIGHT_GREEN,
 	FOREST_GREEN,

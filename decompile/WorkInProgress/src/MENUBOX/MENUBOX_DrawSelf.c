@@ -10,7 +10,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
     short posY_prev = mb->posY_curr;
 
     if ((mb[10] & 0x10U) != 0)
-        textColor = 0x1d;
+        textColor = LIGHT_GREEN;
 
     if ((mb->state & 0x60000) == 0x60000)
     {
@@ -29,7 +29,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
 
     mb->width = width;
     mb->height = menuBoxHeight;
-    mb->state &= 0xfffffff7;
+    mb->state &= ~8;
 
     if ((mb->state & CENTER_ON_Y) != 0)
     {
@@ -43,7 +43,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
     short sVar12 = 0;
     short titleIndex = mb->stringIndexTitle;
 
-    if (titleIndex >= 0 && (mb->state & 4) == 0)
+    if (titleIndex >= 0 && (mb->state & ONLY_DRAW_TITLE) == 0)
     {
         short titleHeight = (mb->state & BIG_TEXT_IN_TITLE) ? titleRowHeight : rowHeight;
         int titleX = param_2 + posX_prev;
@@ -51,7 +51,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
         if (mb->state & 0x200)
         {
             titleX += (width - (width >> 0xf) >> 1);
-            textColor |= 0xffff8000;
+            textColor |= JUSTIFY_CENTER;
         }
 
         DecalFont_DrawLine(sdata->lngStrings[titleIndex], titleX, yOffset, titleHeight, textColor);
@@ -68,11 +68,11 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
             if ((mb->state & (SHOW_ONLY_HIGHLIT_ROW | ONLY_DRAW_TITLE)) == 0 || sVar12 == mb->rowSelected)
             {
                 u_short stringIndex = row->stringIndex;
-                u_short textColor = (stringIndex & 0x8000) ? 0x17 : 0;
+                u_short textColor = (stringIndex & 0x8000) ? GRAY : ORANGE;
                 if (stringIndex & 0x7fff)
                 {
                     if (mb->state & CENTER_ON_X)
-                        textColor |= 0x8000;
+                        textColor |= JUSTIFY_CENTER;
 
                     DecalFont_DrawLine(sdata->lngStrings[stringIndex], param_2 + posX_prev + 1, yOffset, rowHeight, textColor);
                 }
