@@ -125,7 +125,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // advanture character selection
   case 0:
   
-    MM_Title_KillThread();
+    DECOMP_MM_Title_KillThread();
 
     GAMEPROG_NewProfile_InsideAdv(&sdata->advProgress.rewards);
     sdata->advProfileIndex = 0xffff;
@@ -148,7 +148,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // regular character selection screen
   case 2:
 
-    MM_Title_KillThread();
+    DECOMP_MM_Title_KillThread();
 
     // return to character selection
     sdata->ptrDesiredMenuBox = &OVR_230.menubox_characterSelect;
@@ -168,7 +168,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // demo mode
   case 4:
 
-    MM_Title_KillThread();
+    DECOMP_MM_Title_KillThread();
 
     gGT->gameMode1 &= ~(BATTLE_MODE | ADVENTURE_MODE | TIME_TRIAL | ADVENTURE_ARENA | ARCADE_MODE | ADVENTURE_CUP);
     gGT->gameMode2 &= ~(CUP_ANY_KIND);
@@ -222,7 +222,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // scrapbook
   case 5:
 
-    MM_Title_KillThread();
+    DECOMP_MM_Title_KillThread();
 
     // go to scrapbook
     sdata->mainMenuState = 5;
@@ -269,4 +269,32 @@ END_FUNCTION:
   OVR_230.menubox_players2P3P4P.posY_curr = OVR_230.title_plyrPosY + OVR_230.transitionMeta_Menu[3].currY;
   OVR_230.menubox_difficulty.posX_curr = OVR_230.title_diffPosX + OVR_230.transitionMeta_Menu[4].currX;
   OVR_230.menubox_difficulty.posY_curr = OVR_230.title_diffPosY + OVR_230.transitionMeta_Menu[4].currY;
+}
+
+void DECOMP_MM_Title_KillThread(void)
+{
+  char n;
+  struct GameTracker *gGT = sdata->gGT;
+  struct Title *title = OVR_230.titleObj;
+
+  if (// if "title" object exists
+      (title != NULL) &&
+      (// if you are in main menu
+      (gGT->gameMode1 & MAIN_MENU) != 0))
+  {
+    // destroy six instances
+    for (n = 0; n < 6; n++)
+    {
+      INSTANCE_Death(title->i[n]);
+      title->i[n] = NULL;
+    }
+	
+	// kill thread
+    title->t->flags |= 0x800;
+    OVR_230.titleObj = NULL;
+
+    // CameraDC, it must be zero to follow you
+    gGT->cameraDC[0].transitionTo.rot[0] = 0;
+    gGT->tileView[0].distanceToScreen_CURR = 256;
+  }
 }

@@ -29,7 +29,9 @@ common, 230, MM_Title_MenuUpdate, 0x0, General/230/230_02_MM_Title_MenuUpdate.c
 common, 230, MM_Title_SetTrophyDPP, 0x0, General/230/230_03_MM_Title_SetTrophyDPP.c
 common, 230, MM_Title_CameraMove, 0x0, General/230/230_04_MM_Title_CameraMove.c
 common, 230, MM_Title_ThTick, 0x0, General/230/230_05_MM_Title_ThTick.c
-
+common, 230, MM_Title_Init, 0x0, General/230/230_06_MM_Title_Init.c
+common, 230, MM_Title_CameraReset, 0x0, General/230/230_07_MM_Title_CameraReset.c
+common, 230, MM_Title_KillThread, 0x0, General/230/230_08_MM_Title_KillThread.c
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
 common, 230, MM_MENUBOX_Main, 0x0, General/230/230_31_MM_MENUBOX_Main.c
 common, 230, MM_ToggleRows_PlayerCount, 0x0, General/230/230_32_MM_ToggleRows_PlayerCount.c
