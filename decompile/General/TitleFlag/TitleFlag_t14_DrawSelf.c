@@ -160,7 +160,7 @@ SKIP_LOADING_TEXT:
 	darkness = data.checkerFlagVariables[4];
 
 	// vertical strips
-	for (rows = 1; rows < 34; rows++)
+	for (rows = 1; rows < 35; rows++)
 	{
 #ifdef REBUILD_PC
 		top = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
