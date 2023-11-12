@@ -1,8 +1,6 @@
 #include <common.h>
 
-#define TITLE_FRAME *(int *)0x800b5a14
-
-int DECOMP_MM_Title_ThTick(struct Thread *title)
+void DECOMP_MM_Title_ThTick(struct Thread *title)
 {
   short animFram;
   struct GameTracker *gGT;
@@ -18,9 +16,10 @@ int DECOMP_MM_Title_ThTick(struct Thread *title)
   int cops[8];
   short direction[3];
   short rot[3];
+  struct InstDrawPerPlayer* idpp;
 
   // frame counters
-  timer = TITLE_FRAME;
+  timer = OVR_230.unkTimerMM;
 
   // object from thread
   obj = title->object;
@@ -32,7 +31,7 @@ int DECOMP_MM_Title_ThTick(struct Thread *title)
     MENUBOX_ClearInput();
 
     // set frame to 1000, skip the animation
-    TITLE_FRAME = 1000;
+    OVR_230.unkTimerMM = 1000;
   }
 
   // if frame is more than 230
@@ -93,7 +92,7 @@ int DECOMP_MM_Title_ThTick(struct Thread *title)
     {
       // if frame is anywhere in the two seconds
       // that the trophy is in the air
-      if (timer - 138 < 62)
+      if ((unsigned int)(timer - 138) < 62)
       {
         // make invisible
         titleInst->flags |= 0x80;
@@ -119,6 +118,7 @@ int DECOMP_MM_Title_ThTick(struct Thread *title)
       // something for specular light
       ConvertRotToMatrix_Transpose(&auStack120, &rot);
 
+#if 0
 #define gte_ldVXY0(r0) __asm__ volatile("mtc2   %0, $0" \
                                         :               \
                                         : "r"(r0))
@@ -158,32 +158,29 @@ int DECOMP_MM_Title_ThTick(struct Thread *title)
       direction[2] = cops[2] + cops[5];
 
       // specular light
-      titleInst->idpp->specLight[0] = cops[5] + cops[2];
-      titleInst->idpp->specLight[1] = cops[4] + cops[1];
-      titleInst->idpp->specLight[2] = cops[3] + cops[0];
+	  idpp = INST_GETIDPP(titleInst);
+      idpp->specLight[0] = cops[5] + cops[2];
+      idpp->specLight[1] = cops[4] + cops[1];
+      idpp->specLight[2] = cops[3] + cops[0];
+#endif
     }
   }
 
-  //
   MM_Title_CameraMove(obj, timer);
 
   // increment frame counter
-  timer = TITLE_FRAME + 1;
+  timer = OVR_230.unkTimerMM + 1;
 
-  if (245 < TITLE_FRAME)
+  if (245 < OVR_230.unkTimerMM)
   {
     // animation is over
-    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS) | BIG_TEXT_IN_TITLE;
+    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
+	OVR_230.menubox_mainMenu.state |= EXECUTE_FUNCPTR;
 
     // dont increment index
-    timer = TITLE_FRAME;
+    timer = OVR_230.unkTimerMM;
   }
 
   // write to index
-  TITLE_FRAME = timer;
-
-  // it is stored at $v0 (r2)
-  // but doesn't really "return",
-  // cause the thread executer wont use it
-  return TITLE_FRAME;
+  OVR_230.unkTimerMM = timer;
 }

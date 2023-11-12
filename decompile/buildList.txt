@@ -28,6 +28,7 @@ common, 230, MM_TransitionInOut, 0x0, General/230/230_01_MM_TransitionInOut.c
 common, 230, MM_Title_MenuUpdate, 0x0, General/230/230_02_MM_Title_MenuUpdate.c
 common, 230, MM_Title_SetTrophyDPP, 0x0, General/230/230_03_MM_Title_SetTrophyDPP.c
 common, 230, MM_Title_CameraMove, 0x0, General/230/230_04_MM_Title_CameraMove.c
+common, 230, MM_Title_ThTick, 0x0, General/230/230_05_MM_Title_ThTick.c
 
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
 common, 230, MM_MENUBOX_Main, 0x0, General/230/230_31_MM_MENUBOX_Main.c

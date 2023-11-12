@@ -46,7 +46,8 @@ void DECOMP_MM_Title_MenuUpdate(void)
       goto END_FUNCTION;
     }
 
-    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS) | BIG_TEXT_IN_TITLE;
+    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS); 
+	OVR_230.menubox_mainMenu.state |= EXECUTE_FUNCPTR;
 
 	MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numTransition);
 
