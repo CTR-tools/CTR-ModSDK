@@ -39,8 +39,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	short currFrame;
 	u_int scaleDown;
 	u_int txtColor;
-	u_int bitIndex;
+	int bitIndex;
 
+	bitIndex = -1;
 	gGT = sdata->gGT;
 	driver = gGT->drivers[0];
 	numPlyr = gGT->numPlyrCurrGame;
@@ -460,9 +461,13 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		}
 	}
 
-	// Unlock reward
-	UNLOCK_ADV_BIT(adv->rewards, bitIndex);
-
+	// if something needs unlocking
+	if(bitIndex > 0)
+	{
+		// Unlock reward
+		UNLOCK_ADV_BIT(adv->rewards, bitIndex);
+	}
+	
 	// if trophy is not won,
 	// Dingo Bingo needs to win trophy and token in the same race
 	bitIndex = gGT->levelID + 6;
