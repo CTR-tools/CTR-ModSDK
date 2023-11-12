@@ -25,7 +25,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
     if (OVR_230.highScore_transitionState < 2)
     {
       // if transitioning in
-      if (OVR_230.highScore_transitionState == 0)
+      if (OVR_230.highScore_transitionState == ENTERING_MENU)
       {
         DECOMP_MM_TransitionInOut(&OVR_230.transitionMeta_HighScores[0], frames, 8);
 
@@ -36,7 +36,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
         if (frames == 0)
         {
           // transition is done
-          OVR_230.highScore_transitionState = 1;
+          OVR_230.highScore_transitionState = IN_MENU;
 
           OVR_230.highScore_transitionFrames[0] = frames;
         }
@@ -45,7 +45,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
     else
     {
       if (( // if transitioning out
-              (OVR_230.highScore_transitionState == 2) &&
+              (OVR_230.highScore_transitionState == EXITING_MENU) &&
               (frames == 0)) &&
           (OVR_230.highScore_transitionFrames[2] == 0))
       {
@@ -101,7 +101,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
         // pressed ^ or []
         if (input == -1)
         {
-          OVR_230.highScore_transitionState = 2;
+          OVR_230.highScore_transitionState = EXITING_MENU;
         }
         else
         {
@@ -167,15 +167,19 @@ void DECOMP_MM_HighScore_MenuBox(void)
     OtherFX_Play(2, 1);
 
     // transitioning out
-    OVR_230.highScore_transitionState = 2;
+    OVR_230.highScore_transitionState = EXITING_MENU;
   }
 
 DRAW_MENU:
 
   videoState = 0;
 
-  if ((((isMenuMoving) || (OVR_230.highScore_transitionFrames[1] != 0)) || (OVR_230.highScore_transitionFrames[2] != 0)) ||
-      (OVR_230.highScore_transitionState == 2))
+  if (
+		(isMenuMoving) || 
+		(OVR_230.highScore_transitionFrames[1] != 0) || 
+		(OVR_230.highScore_transitionFrames[2] != 0) ||
+		(OVR_230.highScore_transitionState == EXITING_MENU)
+	)
   {
     // new track viewed this frame
     videoState = 1;
