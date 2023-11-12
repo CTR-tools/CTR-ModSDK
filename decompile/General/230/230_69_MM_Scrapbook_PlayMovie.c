@@ -8,6 +8,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 	DRAWENV* ptrDrawEnv;
     const CdlLOC *cdLoc;
     struct GameTracker *gGT = gGT;
+	int isOn = TitleFlag_IsFullyOnScreen();
 
     // book state (0,1,2,3,4)
     switch (OVR_230.scrapbookState)
@@ -16,7 +17,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     // Init State,
     // alter checkered flag
     case 0:
-        if (TitleFlag_IsFullyOnScreen() == 1)
+        if (isOn == 1)
         {
             // checkered flag, begin transition off-screen
             TitleFlag_BeginTransition(2);
@@ -75,14 +76,19 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
     // Actually play the movie
     case 2:
-
-		// gGT->DB[nextFrame]
-		ptrDrawEnv = &gGT->db[1 - gGT->swapchainIndex].drawEnv;
-
+	
         // infinite loop (cause this is scrapbook),
         // keep doing DecodeFrame and VSync until done
         while (
-            MM_Video_DecodeFrame(
+			
+			// This bugs for the same reason as RenderFrame_Vsync,
+			// register wont update caues modern GCC doesn't know
+			// swapchainIndex changes in VsyncCallback
+			
+			// gGT->DB[nextFrame] (swapchain flips in VsyncCallback)
+			ptrDrawEnv = &gGT->db[1 - gGT->swapchainIndex].drawEnv,
+            
+			MM_Video_DecodeFrame(
 				ptrDrawEnv->ofs[0],
 				ptrDrawEnv->ofs[1] + 4) == 0)
         {
@@ -134,33 +140,26 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     // send player back to adv hub,
     // or back to main menu
     case 4:
-
-        if (TitleFlag_IsFullyOnScreen() == 1)
+        if (isOn == 1)
         {
             // change checkered flag back
             TitleFlag_SetDrawOrder(0);
 
+			// if adventure mode
+			lev = GEM_STONE_VALLEY;
+
             // If you're not in Adventure Mode
             if ((gGT->gameMode1 & ADVENTURE_MODE) == 0)
             {
-                // TransitionTo_MainMenu_Returning
+                lev = MAIN_MENU_LEVEL;
+				
                 MM_JumpTo_Title_Returning();
 
                 // return to main menu (adv, tt, arcade, vs, battle)
                 sdata->mainMenuState = 0;
-
-                // main menu
-                lev = MAIN_MENU_LEVEL;
-            }
-            else
-            {
-                lev = GEM_STONE_VALLEY;
             }
 
-            // load level ID
             MainRaceTrack_RequestLoad(lev);
-
-            // make menu disappear
             MENUBOX_Hide(mb);
         }
         break;
