@@ -58,7 +58,7 @@ void DECOMP_MM_Title_Init(void)
       // store instance
       title->i[n] = inst;
 
-      if (OVR_230.titleInstances[n].boolVisible)
+      if (OVR_230.titleInstances[n].boolTrophy)
       {
         inst->flags |= VISIBLE_DURING_GAMEPLAY;
       }

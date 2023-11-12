@@ -338,7 +338,7 @@ struct Overlay_230
 		short frameIndex_startMoving;
 		short unk2;
 
-		u_short boolVisible;
+		u_short boolTrophy;
 #if BUILD == JpnRetail
 	} titleInstances[7];
 #else

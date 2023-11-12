@@ -12,8 +12,8 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   int timer;
   struct Title *ptrTitle;
   int *obj;
-  MATRIX auStack120[32];
-  int cops[8];
+  MATRIX matrix;
+  int cops[6];
   short direction[3];
   short rot[3];
   struct InstDrawPerPlayer* idpp;
@@ -88,7 +88,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
       titleInst->animFrame = 0;
     }
 
-    if ((OVR_230.titleInstances[i].boolVisible) != 0)
+    if ((OVR_230.titleInstances[i].boolTrophy) != 0)
     {
       // if frame is anywhere in the two seconds
       // that the trophy is in the air
@@ -108,60 +108,9 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
         titleInst->animIndex = 1;
       }
 
-      gGT = sdata->gGT;
-
-      // reverse direction of camera
-      rot[0] = -(gGT->tileView->rot[0]);
-      rot[1] = -(gGT->tileView->rot[1]);
-      rot[2] = -(gGT->tileView->rot[2]);
-
-      // something for specular light
-      ConvertRotToMatrix_Transpose(&auStack120, &rot);
-
 #if 0
-#define gte_ldVXY0(r0) __asm__ volatile("mtc2   %0, $0" \
-                                        :               \
-                                        : "r"(r0))
-#define gte_ldVZ0(r0) __asm__ volatile("mtc2   %0, $1" \
-                                       :               \
-                                       : "r"(r0))
-
-      // 0, 0x1000, 0
-      gte_ldVXY0(0x10000000);
-      gte_ldVZ0(0);
-      gte_rtv0();
-
-      cops[0] = gte_stMAC1();
-      cops[1] = gte_stMAC2();
-      cops[2] = gte_stMAC3();
-
-      titleInst->unk53 = cops[0];
-      titleInst->reflectionRGBA = cops[2];
-
-      MATH_VectorNormalize(&direction);
-
-      direction[0] = titleInst->matrix.t[0] - gGT->tileView->rot[0];
-      direction[1] = titleInst->matrix.t[1] - gGT->tileView->rot[1];
-      direction[2] = titleInst->matrix.t[2] - gGT->tileView->rot[2];
-
-      MATH_VectorNormalize(&direction);
-
-      gte_ldv0(&direction);
-      gte_rtv0();
-
-      cops[3] = gte_stMAC1();
-      cops[4] = gte_stMAC2();
-      cops[5] = gte_stMAC3();
-
-      direction[0] = cops[0] + cops[3];
-      direction[1] = cops[1] + cops[4];
-      direction[2] = cops[2] + cops[5];
-
-      // specular light
-	  idpp = INST_GETIDPP(titleInst);
-      idpp->specLight[0] = cops[5] + cops[2];
-      idpp->specLight[1] = cops[4] + cops[1];
-      idpp->specLight[2] = cops[3] + cops[0];
+	// remove dead code,
+	// specular light is not used on Trophy
 #endif
     }
   }
