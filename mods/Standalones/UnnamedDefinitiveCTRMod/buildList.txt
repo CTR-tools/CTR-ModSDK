@@ -32,4 +32,4 @@ common, exe, Turbo_Increment, 0x0, src/AllowUSFStacking.c
 common, exe, OnCollide_Drivers, 0x0, src/OopsAllSuperTurboPads.c
 
 // Compile code to empty spaces in RDATA //
-common, exe, rdata_free, 0x0, src/KeepU-TurnReserves.c src/BlueFireModeInt.c ../../Modules/BlueFire/src/main.c
+common, exe, rdata_free, 0x0, src/KeepU-TurnReserves.c src/BlueFireModeInt.c src/BlueFire.c

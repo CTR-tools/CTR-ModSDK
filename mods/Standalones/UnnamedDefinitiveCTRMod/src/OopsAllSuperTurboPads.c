@@ -7,7 +7,6 @@ extern u_int RF_blueFireMode;
 void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)
 {
 	struct Instance* breadInstance;
-	u_int reservesIncrement;
 	int iVar3;
 	u_int fireLevel;
 	u_int stepFlagSet;
@@ -28,25 +27,29 @@ void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)
 		*(u_short*)&driver->fill18_postQuadBlock[6] |= 1;
 	}
 
-	// If this is not an ordinary turbo pad
-	if ((stepFlagSet & 1) == 0) goto LAB_8005ec70;
-
-	// add one second reserves
-	reservesIncrement = 960;
-
-	// set speed of turbo to normal speed
-	fireLevel = 0x100;
-
-	// If Super Turbo Pads is enabled
-	if (RF_blueFireMode == 2)
+	// If this is not a super turbo pad
+	if ((stepFlagSet & 2) == 0)
 	{
+		// If this is not an ordinary turbo pad
+		if ((stepFlagSet & 1) == 0) goto LAB_8005ec70;
+
+		if (RF_blueFireMode == 2) goto MyGoto;
+
+		// set speed of turbo to normal speed
+		fireLevel = 0x100;
+	}
+
+	// If this is a super turbo pad (only on some tracks)
+	else
+	{
+MyGoto:
 		// Set speed of turbo to big speed
 		fireLevel = 0x800;
 	}
 
 	// Turbo_Increment
 	// add reserves and speed of turbo pad
-	Turbo_Increment(driver, reservesIncrement, (TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD), fireLevel);
+	Turbo_Increment(driver, 960, (TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD), fireLevel);
 
 LAB_8005ec70:
 	if ((stepFlagSet & 0x8000) == 0)
