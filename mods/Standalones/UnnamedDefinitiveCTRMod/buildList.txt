@@ -1,0 +1,31 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+// Modify menu //
+
+// Modify track list menu
+common, 230, MM_TrackSelect_MenuBox, 0x0, src/MM_TrackSelect_MenuBox_Hook.s
+
+// Blue Fire //
+
+// Blue Fire Hook
+common, exe, BOTS_SetRotation, -0x8, ../../Modules/BlueFire/src/hookUpdate.s
+
+// Keep U-Turn reserves stuff
+// Erasing the original reserve cancelation if, so that we can run our own code
+926, exe, VehPtr_Driving_PhysLinear, 0xA30, src/hookReserveCancelation.s
+926, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
+1020, exe, VehPtr_Driving_PhysLinear, 0xA30, src/hookReserveCancelation.s
+1020, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
+1111, exe, VehPtr_Driving_PhysLinear, 0xA4C, src/hookReserveCancelation.s
+1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
+
+// Modify Turbo_Increment function to allow for USF stacking
+common, exe, Turbo_Increment, 0x0, src/AllowUSFStacking.c
+
+// Modify OnCollide_Drivers function for enabling or disabling the STP cheat
+common, exe, OnCollide_Drivers, 0x0, src/OopsAllSuperTurboPads.c
+
+// Compile code to empty spaces in RDATA //
+common, exe, rdata_free, 0x0, src/RaceOptions.c src/230_56_MM_TrackSelect_MenuBox.c src/KeepU-TurnReserves.c src/BlueFireModeInt.c ../../Modules/BlueFire/src/main.c
