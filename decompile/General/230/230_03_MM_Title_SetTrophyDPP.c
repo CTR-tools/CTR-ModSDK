@@ -13,8 +13,8 @@ void DECOMP_MM_Title_SetTrophyDPP(void)
   
   if (title == NULL) return;
 	
-  idpp1 = INST_GETIDPP(title->i[2]); // "title"
-  idpp2 = INST_GETIDPP(title->i[3]); // another "title"
+  idpp1 = INST_GETIDPP(title->i[1]); // "title"
+  idpp2 = INST_GETIDPP(title->i[2]); // another "title"
   
   idpp2_b8 = idpp2->unkb8[0];
   if ((idpp2_b8 & 0x100) != 0) return; 
