@@ -8,22 +8,22 @@ RECT menuBoxBG =
 	.x = MenuBoxBG_x,
 	.y = MenuBoxBG_y,
 	.w = MenuBoxBG_w,
-	.h = 130,
+	.h = 70 + 4, 
 };
 
 RECT titleSeparatorLine =
 {
-	.x = MenuBoxBG_x + 10,
+	.x = MenuBoxBG_x,
 	.y = MenuBoxBG_y + 23,
-	.w = MenuBoxBG_w - 20,
+	.w = MenuBoxBG_w,
 	.h = 2,
 };
 
 RECT glowingcursor =
 {
-	.x = MenuBoxBG_x + 18,
+	.x = MenuBoxBG_x + 3,
 	.y = 0,
-	.w = MenuBoxBG_w - 46,
+	.w = MenuBoxBG_w - 6,
 	.h = 9,
 };
 

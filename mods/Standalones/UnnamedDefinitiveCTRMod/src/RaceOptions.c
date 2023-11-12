@@ -21,10 +21,20 @@ force_inline void ProcessInputs(struct GameTracker* gGT, struct MenuBox* mb, u_i
 
 force_inline void DisplayMenuBox(struct GameTracker* gGT, struct MenuBox* mb)
 {
-	glowingcursor.y = (MenuBoxBG_y + 48) + (10 * mb->rowSelected);
+	u_int firstRowY = ((MenuBoxBG_y + 4) + 26);
+
+	glowingcursor.y = firstRowY + (10 * mb->rowSelected);
 
 	// "OPTIONS"
 	DecalFont_DrawLine(sdata->lngStrings[324], SCREEN_WIDTH/2, MenuBoxBG_y + 4, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
+
+	// "FALL GUY"
+	DecalFont_DrawLine(sdata->lngStrings[451], glowingcursor.x + 2, firstRowY + (10 * 0) + 1, FONT_SMALL, ORANGE);
+	// idk
+	DecalFont_DrawLine(sdata->lngStrings[452], glowingcursor.x + 2, firstRowY + (10 * 1) + 1, FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(sdata->lngStrings[452], glowingcursor.x + 2, firstRowY + (10 * 2) + 1, FONT_SMALL, ORANGE);
+	// "EXIT"
+	DecalFont_DrawLine(sdata->lngStrings[331], glowingcursor.x + 2, firstRowY + (10 * 3) + 1, FONT_SMALL, ORANGE);
 
 	MENUBOX_DrawInnerRect(&titleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
 	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
