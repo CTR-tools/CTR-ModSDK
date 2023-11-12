@@ -348,7 +348,8 @@ struct Overlay_230
 	// 800B4830 - UsaRetail
 	// 800b500c - EurRetail
 	// 800b882c - JpnRetail
-	char titleCameraPosRot[0x10];
+	short titleCameraPos[4];
+	short titleCameraRot[4];
 
 	// 800B4840 - UsaRetail
 	// 800b501c - EurRetail
@@ -358,7 +359,44 @@ struct Overlay_230
 #if BUILD == JpnRetail
 	char title_OtherStuff[0x8C];
 #else
-	char title_OtherStuff[0x84];
+
+	// Full block is 0x84 bytes
+
+	// 800B4840
+	int title_numFrameTotal;
+	
+	// 800B4844
+	int title_numFrameTransition;
+
+	// 800B4848
+	short title_mainPosX;
+	short title_mainPosY;
+
+	// 800B484c
+	short title_advPosX;
+	short title_advPosY;
+	
+	// 800B4850
+	short title_racePosX;
+	short title_racePosY;
+	
+	// 800B4854
+	short title_plyrPosX;
+	short title_plyrPosY;
+	
+	// 800B4858
+	short title_diffPosX;
+	short title_diffPosY;
+	
+	// 800B485c
+	short title_camPos[4];
+	
+	// 800B4864
+	struct TransitionMeta transitionMeta_Menu[8];
+	
+	// 800B48B4
+	char title_unkEmpty[0x10];
+
 #endif
 
 	// 800b48c4 - UsaRetail
