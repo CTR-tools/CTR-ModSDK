@@ -20,9 +20,9 @@ void DECOMP_CTR_Box_DrawWireBox(RECT *r, u_char *rgb, void *ot, struct PrimMem *
     setRGB0(p, rgb[0], rgb[1], rgb[2]);
 
     setXY3(p,
-           r.x, r->x,                    // XY0
-           (r.x + r->x), r->x,           // XY1
-           (r.x + r->w), (r->x + r->h)); // XY2
+           r->x, r->x,                    // XY0
+           (r->x + r->x), r->x,           // XY1
+           (r->x + r->w), (r->x + r->h)); // XY2
 
     AddPrim(ot, p);
   }
@@ -35,7 +35,7 @@ void DECOMP_CTR_Box_DrawWireBox(RECT *r, u_char *rgb, void *ot, struct PrimMem *
     primMem->curr = p + 1;
   }
 
-  if (p == null)
+  if (p == NULL)
     return;
 
   // set Poly_LineF3 len, code, and padding
@@ -45,9 +45,9 @@ void DECOMP_CTR_Box_DrawWireBox(RECT *r, u_char *rgb, void *ot, struct PrimMem *
   setRGB0(p, rgb[0], rgb[1], rgb[2]);
 
   setXY3(p,
-         r.x, r->x,                    // XY0
-         r.x, (r->x + r->h),           // XY1
-         (r.x + r->w), (r->x + r->h)); // XY2
+         r->x, r->x,                    // XY0
+         r->x, (r->x + r->h),           // XY1
+         (r->x + r->w), (r->x + r->h)); // XY2
 
   AddPrim(ot, p);
 }

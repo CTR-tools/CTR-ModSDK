@@ -1,6 +1,6 @@
-// 494+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 572 rewritten so far
+// 497+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 575 rewritten so far
 
-// 494 for every 'common' and ','
+// 497 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -178,6 +178,10 @@ common, exe, CDSYS_XAPauseForce, 0x0, General/CDSYS/CDSYS_c18_XAPauseForce.c
 common, exe, CDSYS_XAPauseAtEnd, 0x0, General/CDSYS/CDSYS_c19_XAPauseAtEnd.c
 
 // CTR
+//ommon, exe, CTR_Box_DrawClearBox, 0x0, General/CTR_Box_DrawClearBox.c
+common, exe, CTR_Box_DrawSolidBox, 0x0, General/CTR_Box_DrawSolidBox.c
+common, exe, CTR_Box_DrawWireBox, 0x0, General/CTR_Box_DrawWireBox.c
+common, exe, CTR_Box_DrawWirePrims, 0x0, General/CTR_Box_DrawWirePrims.c
 common, exe, CTR_CycleTex_LEV, 0x0, General/CTR_CycleTex_LEV.c
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
 common, exe, CTR_CycleTex_AllModels, 0x0, General/CTR_CycleTex_AllModels.c
