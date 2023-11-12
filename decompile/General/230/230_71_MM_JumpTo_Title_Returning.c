@@ -8,5 +8,5 @@ void MM_JumpTo_Title_Returning(void)
   // return to main menu from another menu
   OVR_230.MM_State = 3;
 
-  OVR_230.countMeta0xD = OVR_230.title_OtherStuff[0];
+  OVR_230.countMeta0xD = OVR_230.title_numFrameTotal;
 }
