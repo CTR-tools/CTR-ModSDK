@@ -4,6 +4,8 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 {
     short lev;
     int cdPos;
+	int getButtonPress;
+	DRAWENV* ptrDrawEnv;
     const CdlLOC *cdLoc;
     struct GameTracker *gGT = gGT;
 
@@ -71,33 +73,33 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         goto GO_BACK;
 
-        // Actually play the movie
+    // Actually play the movie
     case 2:
+
+		// gGT->DB[nextFrame]
+		ptrDrawEnv = &gGT->db[1 - gGT->swapchainIndex].drawEnv;
 
         // infinite loop (cause this is scrapbook),
         // keep doing DecodeFrame and VSync until done
         while (
             MM_Video_DecodeFrame(
-
-                // gGT->DB[nextFrame].ofs[X]
-                gGT->db[1 - gGT->swapchainIndex].drawEnv.ofs[0],
-
-                // gGT->DB[nextFrame].ofs[Y]
-                gGT->db[1 - gGT->swapchainIndex].drawEnv.ofs[1] + 4) == 0)
+				ptrDrawEnv->ofs[0],
+				ptrDrawEnv->ofs[1] + 4) == 0)
         {
             VSync(0);
         }
+		
+		// If you press Start, Cross, Circle, Triangle, or Square
+		getButtonPress = (sdata->buttonTapPerPlayer[0] & 0x41070);
 
         if (
-            // if movie is finished,
-            // means scrapbook ended, no looping
-            (MM_Video_CheckIfFinished(0) == 1) ||
-
-            // If you press Start, Cross, Circle, Triangle, or Square
-            ((sdata->buttonTapPerPlayer[0] & 0x41070) != 0))
+				// if movie is finished,
+				// means scrapbook ended, no looping
+				(MM_Video_CheckIfFinished(0) == 1) ||
+				(getButtonPress != 0)
+			)
         {
-            // If you press Start, Cross, Circle, Triangle, or Square
-            if ((sdata->buttonTapPerPlayer[0] & 0x41070) != 0)
+            if (getButtonPress != 0)
             {
                 TitleFlag_SetFullyOnScreen();
             }
@@ -109,8 +111,8 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         VSync(4);
         break;
 
-        // return disc to normal,
-        // return checkered flag to normal
+    // return disc to normal,
+    // return checkered flag to normal
     case 3:
         SpuSetCommonCDVolume(0, 0);
 
@@ -129,8 +131,8 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         OVR_230.scrapbookState = 4;
         break;
 
-        // send player back to adv hub,
-        // or back to main menu
+    // send player back to adv hub,
+    // or back to main menu
     case 4:
 
         if (TitleFlag_IsFullyOnScreen() == 1)

@@ -71,7 +71,7 @@ common, 230, MM_HighScore_Draw, 0x0, General/230/230_65_MM_HighScore_Draw.c
 common, 230, MM_HighScore_Init, 0x0, General/230/230_66_MM_HighScore_Init.c
 // 67_HighScore_MenuBox
 common, 230, MM_Scrapbook_Init, 0x0, General/230/230_68_MM_Scrapbook_Init.c
-// 69_Scrapbook_PlayMovie
+common, 230, MM_Scrapbook_PlayMovie, 0x0, General/230/230_69_MM_Scrapbook_PlayMovie
 common, 230, MM_ResetAllMenus, 0x0, General/230/230_70_MM_ResetAllMenus.c
 common, 230, MM_JumpTo_Title_Returning, 0x0, General/230/230_71_MM_JumpTo_Title_Returning.c
 common, 230, MM_JumpTo_Title_FirstTime, 0x0, General/230/230_72_MM_JumpTo_Title_FirstTime.c
