@@ -1,16 +1,5 @@
 #include <common.h>
 
-void MM_Scrapbook_Init(void)
-{
-    OVR_230.scrapbookState = 0;
-
-    // change checkered flag
-    TitleFlag_SetDrawOrder(1);
-
-    // clear gamepad input (for menus)
-    MENUBOX_ClearInput();
-}
-
 void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 {
     short lev;
@@ -55,7 +44,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         // \TEST.STR;1
         // if file was found
-        if (CdSearchFile(cdLoc, s__TEST_STR_1_800aba88) != 0)
+        if (CdSearchFile(cdLoc, OVR_230.s_teststr1) != 0)
         {
             SpuSetCommonCDVolume(sdata->vol_Music << 7, sdata->vol_Music << 7);
 

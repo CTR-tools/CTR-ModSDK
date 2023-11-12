@@ -891,11 +891,13 @@ struct Overlay_230
 	// 2) Vertical (in-menu)
 	short highScore_transitionFrames[3];
 
-	// 800b59ca - UsaRetail
+	// 800b59d0 - UsaRetail
 	// 800b6274 - EurRetail
-	// Horizontal (X axis) and Vertical (Y Axis)
-	// -1 (negative dir), 0x00010001 (positive dir)
-	int highScore_direction[2];
+	// X (horizontal) and Y (vertical) Axes
+	// -1 for negative direction and 1 for positive direction
+	// not sure why each need two buffers, perhaps to prevent mid-transition error
+	short highScore_horizontalMove[2];
+	short highScore_verticalMove[2];
 
 	// =============== Scrapbook ===================
 
