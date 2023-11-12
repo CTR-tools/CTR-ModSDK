@@ -119,6 +119,10 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// near middle of screen
 				sdata->errorMessagePosIndex = 0;
 
+				// fix for new lap selection menu
+				gGT->numLaps = 3;
+				RO_numLapsIndex = 1;
+
 				return;
 			}
 		}

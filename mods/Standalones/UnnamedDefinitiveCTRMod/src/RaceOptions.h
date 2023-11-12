@@ -1,7 +1,7 @@
 #define NUM_ROWS 4
-#define MenuBoxBG_w 448
-#define MenuBoxBG_x 32
-#define MenuBoxBG_y 39
+#define MenuBoxBG_w 350
+#define MenuBoxBG_x SCREEN_WIDTH/2 - 350/2
+#define MenuBoxBG_y SCREEN_HEIGHT/2 - 74/2
 
 RECT menuBoxBG =
 {

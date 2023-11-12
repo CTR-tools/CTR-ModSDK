@@ -490,9 +490,17 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			if (-1 < selectMenu[mb->rowSelected].mapTextureID)
 				p.y = OVR_230.transitionMeta_trackSel[1].currY + 5;
 		
-			// next, draw the map icon, below "SELECT LEVEL",
-			// exactly 0x22 (34) pixels below the text
-			p.y += 0x22;
+			// edited for this mod
+			p.y += 8;
+
+			// "OPTIONS"
+			DecalFont_DrawLine
+			(
+				sdata->lngStrings[324],
+				(OVR_230.transitionMeta_trackSel[3].currX + 0x18c),
+				(OVR_230.transitionMeta_trackSel[3].currY + (u_int)p.y + 180),
+				FONT_BIG, (JUSTIFY_CENTER | ORANGE)
+			);
 		
 			if (-1 < selectMenu[mb->rowSelected].mapTextureID)
 			{
