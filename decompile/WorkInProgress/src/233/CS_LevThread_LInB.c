@@ -26,7 +26,7 @@ void CS_LevThread_LInB(struct Instance* inst)
         ), 
         
         CS_Thread_ThTick(),	  // behavior
-        s_introguy_800abd18,  // debug name
+        OVR_233.s_introguy,  // debug name
         0						          // thread relative
       );
 
@@ -46,7 +46,7 @@ void CS_LevThread_LInB(struct Instance* inst)
     cs.prevOpCode = -1; // 0xFFFFFFFF
 
     // disable subtitles
-    cs->Subtitles.lngIndex = 0xffff;
+    cs->Subtitles.lngIndex = -1;
 
     modelID = inst->model->id;
 
