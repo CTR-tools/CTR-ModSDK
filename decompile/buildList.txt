@@ -67,7 +67,7 @@ common, 230, MM_Battle_DrawIcon_Weapon, 0x0, General/230/230_61_MM_Battle_DrawIc
 common, 230, MM_Battle_Init, 0x0, General/230/230_62_MM_Battle_Init.c
 //ommon, 230, MM_Battle_MenuBox, 0x0, General/230/230_63_MM_Battle_MenuBox.c
 common, 230, MM_HighScore_Text3D, 0x0, General/230/230_64_MM_HighScore_Text3D.c
-// 65_HighScore_Draw
+common, 230, MM_HighScore_Draw, 0x0, General/230/230_65_MM_HighScore_Draw.c
 // 66_HighScore_Init
 // 67_HighScore_MenuBox
 common, 230, MM_Scrapbook_Init, 0x0, General/230/230_68_MM_Scrapbook_Init.c
