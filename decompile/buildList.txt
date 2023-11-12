@@ -1,6 +1,6 @@
-// 494+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 572 rewritten so far
+// 504+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 582 rewritten so far
 
-// 494 for every 'common' and ','
+// 504 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -25,7 +25,13 @@ common, 225, OVR_Region1, 0x0, General/225/225_Full.c
 // 230 (incomplete)
 common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/230_00_MM_Battle_DrawIcon_Character.c
 common, 230, MM_TransitionInOut, 0x0, General/230/230_01_MM_TransitionInOut.c
-
+common, 230, MM_Title_MenuUpdate, 0x0, General/230/230_02_MM_Title_MenuUpdate.c
+common, 230, MM_Title_SetTrophyDPP, 0x0, General/230/230_03_MM_Title_SetTrophyDPP.c
+common, 230, MM_Title_CameraMove, 0x0, General/230/230_04_MM_Title_CameraMove.c
+common, 230, MM_Title_ThTick, 0x0, General/230/230_05_MM_Title_ThTick.c
+common, 230, MM_Title_Init, 0x0, General/230/230_06_MM_Title_Init.c
+common, 230, MM_Title_CameraReset, 0x0, General/230/230_07_MM_Title_CameraReset.c
+common, 230, MM_Title_KillThread, 0x0, General/230/230_08_MM_Title_KillThread.c
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
 common, 230, MM_MENUBOX_Main, 0x0, General/230/230_31_MM_MENUBOX_Main.c
 common, 230, MM_ToggleRows_PlayerCount, 0x0, General/230/230_32_MM_ToggleRows_PlayerCount.c
@@ -178,6 +184,10 @@ common, exe, CDSYS_XAPauseForce, 0x0, General/CDSYS/CDSYS_c18_XAPauseForce.c
 common, exe, CDSYS_XAPauseAtEnd, 0x0, General/CDSYS/CDSYS_c19_XAPauseAtEnd.c
 
 // CTR
+//ommon, exe, CTR_Box_DrawClearBox, 0x0, General/CTR_Box_DrawClearBox.c
+common, exe, CTR_Box_DrawSolidBox, 0x0, General/CTR_Box_DrawSolidBox.c
+common, exe, CTR_Box_DrawWireBox, 0x0, General/CTR_Box_DrawWireBox.c
+common, exe, CTR_Box_DrawWirePrims, 0x0, General/CTR_Box_DrawWirePrims.c
 common, exe, CTR_CycleTex_LEV, 0x0, General/CTR_CycleTex_LEV.c
 common, exe, CTR_ErrorScreen, 0x0, General/CTR_ErrorScreen.c
 common, exe, CTR_CycleTex_AllModels, 0x0, General/CTR_CycleTex_AllModels.c

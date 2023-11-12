@@ -40,15 +40,16 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // if not done watching C-T-R letters
     if (OVR_230.unkTimerMM < 230)
     {
-      OVR_230.countMeta0xD = OVR_230.title_OtherStuff[0];
+      OVR_230.countMeta0xD = OVR_230.title_numFrameTotal;
 
       // end function
       goto END_FUNCTION;
     }
 
-    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS) | BIG_TEXT_IN_TITLE;
+    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS); 
+	OVR_230.menubox_mainMenu.state |= EXECUTE_FUNCPTR;
 
-    MM_TransitionInOut((u_short *)0x800b4864, OVR_230.countMeta0xD, *(int *)0x800b4844);
+	MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numTransition);
 
     // If the animation ends
     if (OVR_230.countMeta0xD == 0)
@@ -81,8 +82,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 
     // assume OVR_230.MM_State = 3
     // if you are returning from another menu
-
-    MM_TransitionInOut((u_short *)0x800b4864, OVR_230.countMeta0xD, *(int *)0x800b4844);
+	MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numTransition);
 
     // If "fade-in" animation from other menu is done
     if (OVR_230.countMeta0xD == 0)
@@ -104,34 +104,34 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // If you are transitioning out
 
   // MM_TransitionInOut
-  MM_TransitionInOut((u_short *)0x800b4864, OVR_230.countMeta0xD, *(int *)0x800b4844);
+  MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numTransition);
 
   // Increment frame timer, increase time left in "fade-in"
   // animation, which plays it in reverse, as "fade-out"
   OVR_230.countMeta0xD += 1;
 
   // If the "fade-out" animation is not over, skip "switch" statemenet
-  if (OVR_230.countMeta0xD <= OVR_230.title_OtherStuff[0])
+  if (OVR_230.countMeta0xD <= OVR_230.title_numFrameTotal)
     goto END_FUNCTION;
 
   // If you are transitioning out of the menu,
   // and if the "fade-out" animation is done,
   // time to figure out where you're going next
+  MM_Title_CameraReset();
 
   switch (OVR_230.desiredMenu)
   {
 
   // advanture character selection
   case 0:
+  
+    DECOMP_MM_Title_KillThread();
 
     GAMEPROG_NewProfile_InsideAdv(&sdata->advProgress.rewards);
     sdata->advProfileIndex = 0xffff;
 
     // go to adventure character select screen
     sdata->mainMenuState = 4;
-
-    MM_Title_CameraReset();
-    MM_Title_KillThread();
 
     MainRaceTrack_RequestLoad(ADVENTURE_CHARACTER_SELECT);
     break;
@@ -142,17 +142,13 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // Go to save/load
     sdata->ptrDesiredMenuBox = &data.menuBox_FourAdvProfiles;
 
-    MM_Title_CameraReset();
-
     LoadSave_ToggleMode(0x10);
     break;
 
   // regular character selection screen
   case 2:
 
-    MM_Title_CameraReset();
-
-    MM_Title_KillThread();
+    DECOMP_MM_Title_KillThread();
 
     // return to character selection
     sdata->ptrDesiredMenuBox = &OVR_230.menubox_characterSelect;
@@ -163,19 +159,16 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // high score menu
   case 3:
 
-    MM_Title_CameraReset();
-
     MM_HighScore_Init();
 
     // Go to high score menu
     sdata->ptrDesiredMenuBox = &OVR_230.menubox_highScores;
     break;
 
+  // demo mode
   case 4:
 
-    MM_Title_CameraReset();
-
-    MM_Title_KillThread();
+    DECOMP_MM_Title_KillThread();
 
     gGT->gameMode1 &= ~(BATTLE_MODE | ADVENTURE_MODE | TIME_TRIAL | ADVENTURE_ARENA | ARCADE_MODE | ADVENTURE_CUP);
     gGT->gameMode2 &= ~(CUP_ANY_KIND);
@@ -229,9 +222,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // scrapbook
   case 5:
 
-    MM_Title_CameraReset();
-
-    MM_Title_KillThread();
+    DECOMP_MM_Title_KillThread();
 
     // go to scrapbook
     sdata->mainMenuState = 5;
@@ -243,7 +234,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     MainRaceTrack_RequestLoad(iVar4);
 
     // make main menu disappear
-    MENUBOX_Hide((struct MenuBox *)0x800b4540);
+    MENUBOX_Hide(&OVR_230.menubox_mainMenu);
   }
 
 END_FUNCTION:
@@ -255,27 +246,55 @@ END_FUNCTION:
   // Crash + C-T-R animation cutscene
   if (OVR_230.MM_State == 0)
   {
-    OVR_230.titleCameraPosRot[0] = OVR_230.title_OtherStuff[0x1C];
-    OVR_230.titleCameraPosRot[2] = OVR_230.title_OtherStuff[0x1E];
-    OVR_230.titleCameraPosRot[4] = OVR_230.title_OtherStuff[0x20];
+    OVR_230.titleCameraPos[0] = OVR_230.title_camPos[0];
+    OVR_230.titleCameraPos[1] = OVR_230.title_camPos[1];
+    OVR_230.titleCameraPos[2] = OVR_230.title_camPos[2];
   }
   else
   {
-    OVR_230.titleCameraPosRot[0] = OVR_230.title_OtherStuff[0x1C] + OVR_230.title_OtherStuff[0x5C];
-    OVR_230.titleCameraPosRot[2] = OVR_230.title_OtherStuff[0x1E] + OVR_230.title_OtherStuff[0x5E];
-    OVR_230.titleCameraPosRot[4] = OVR_230.title_OtherStuff[0x20] + OVR_230.title_OtherStuff[0x66];
+    OVR_230.titleCameraPos[0] = OVR_230.title_camPos[0] + OVR_230.transitionMeta_Menu[5].currX;
+    OVR_230.titleCameraPos[1] = OVR_230.title_camPos[1] + OVR_230.transitionMeta_Menu[5].currY;
+    OVR_230.titleCameraPos[2] = OVR_230.title_camPos[2] + OVR_230.transitionMeta_Menu[6].currX;
   }
 
-  OVR_230.menubox_mainMenu.posX_curr = OVR_230.title_OtherStuff[0x08] + OVR_230.title_OtherStuff[0x2A];
-  OVR_230.menubox_mainMenu.posY_curr = OVR_230.title_OtherStuff[0x0A] + OVR_230.title_OtherStuff[0x2C];
-  OVR_230.menubox_players1P2P.posX_curr = OVR_230.title_OtherStuff[0x34] + OVR_230.title_OtherStuff[0x48];
-  OVR_230.menubox_players1P2P.posY_curr = OVR_230.title_OtherStuff[0x36] + OVR_230.title_OtherStuff[0x4A];
-  OVR_230.menubox_players2P3P4P.posX_curr = OVR_230.title_OtherStuff[0x34] + OVR_230.title_OtherStuff[0x48];
-  OVR_230.menubox_players2P3P4P.posY_curr = OVR_230.title_OtherStuff[0x36] + OVR_230.title_OtherStuff[0x4A];
-  OVR_230.menubox_difficulty.posX_curr = OVR_230.title_OtherStuff[0x38] + OVR_230.title_OtherStuff[0x52];
-  OVR_230.menubox_difficulty.posY_curr = OVR_230.title_OtherStuff[0x3A] + OVR_230.title_OtherStuff[0x54];
-  OVR_230.menubox_raceType.posX_curr = OVR_230.title_OtherStuff[0x30] + OVR_230.title_OtherStuff[0x3E];
-  OVR_230.menubox_raceType.posY_curr = OVR_230.title_OtherStuff[0x32] + OVR_230.title_OtherStuff[0x40];
-  OVR_230.menubox_adventure.posX_curr = OVR_230.title_OtherStuff[0x2C] + OVR_230.title_OtherStuff[0x34];
-  OVR_230.menubox_adventure.posY_curr = OVR_230.title_OtherStuff[0x2E] + OVR_230.title_OtherStuff[0x36];
+  OVR_230.menubox_mainMenu.posX_curr = OVR_230.title_mainPosX + OVR_230.transitionMeta_Menu[0].currX;
+  OVR_230.menubox_mainMenu.posY_curr = OVR_230.title_mainPosY + OVR_230.transitionMeta_Menu[0].currY;
+  OVR_230.menubox_adventure.posX_curr = OVR_230.title_advPosX + OVR_230.transitionMeta_Menu[1].currX;
+  OVR_230.menubox_adventure.posY_curr = OVR_230.title_advPosY + OVR_230.transitionMeta_Menu[1].currY;
+  OVR_230.menubox_raceType.posX_curr = OVR_230.title_racePosX + OVR_230.transitionMeta_Menu[2].currX;
+  OVR_230.menubox_raceType.posY_curr = OVR_230.title_racePosY + OVR_230.transitionMeta_Menu[2].currY;
+  OVR_230.menubox_players1P2P.posX_curr = OVR_230.title_plyrPosX + OVR_230.transitionMeta_Menu[3].currX;
+  OVR_230.menubox_players1P2P.posY_curr = OVR_230.title_plyrPosY + OVR_230.transitionMeta_Menu[3].currY;
+  OVR_230.menubox_players2P3P4P.posX_curr = OVR_230.title_plyrPosX + OVR_230.transitionMeta_Menu[3].currX;
+  OVR_230.menubox_players2P3P4P.posY_curr = OVR_230.title_plyrPosY + OVR_230.transitionMeta_Menu[3].currY;
+  OVR_230.menubox_difficulty.posX_curr = OVR_230.title_diffPosX + OVR_230.transitionMeta_Menu[4].currX;
+  OVR_230.menubox_difficulty.posY_curr = OVR_230.title_diffPosY + OVR_230.transitionMeta_Menu[4].currY;
+}
+
+void DECOMP_MM_Title_KillThread(void)
+{
+  char n;
+  struct GameTracker *gGT = sdata->gGT;
+  struct Title *title = OVR_230.titleObj;
+
+  if (// if "title" object exists
+      (title != NULL) &&
+      (// if you are in main menu
+      (gGT->gameMode1 & MAIN_MENU) != 0))
+  {
+    // destroy six instances
+    for (n = 0; n < 6; n++)
+    {
+      INSTANCE_Death(title->i[n]);
+      title->i[n] = NULL;
+    }
+	
+	// kill thread
+    title->t->flags |= 0x800;
+    OVR_230.titleObj = NULL;
+
+    // CameraDC, it must be zero to follow you
+    gGT->cameraDC[0].transitionTo.rot[0] = 0;
+    gGT->tileView[0].distanceToScreen_CURR = 256;
+  }
 }
