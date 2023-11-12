@@ -366,7 +366,7 @@ struct Overlay_230
 	int title_numFrameTotal;
 	
 	// 800B4844
-	int title_numFrameTransition;
+	int title_numTransition;
 
 	// 800B4848
 	short title_mainPosX;

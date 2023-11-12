@@ -25,6 +25,8 @@ common, 225, OVR_Region1, 0x0, General/225/225_Full.c
 // 230 (incomplete)
 common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/230_00_MM_Battle_DrawIcon_Character.c
 common, 230, MM_TransitionInOut, 0x0, General/230/230_01_MM_TransitionInOut.c
+common, 230, MM_Title_MenuUpdate, 0x0, General/230/230_02_MM_Title_MenuUpdate.c
+//ommon, 230, MM_Title_SetTrophyDPP, 0x0, General/230/230_03_MM_Title_SetTrophyDPP.c
 
 common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
 common, 230, MM_MENUBOX_Main, 0x0, General/230/230_31_MM_MENUBOX_Main.c

@@ -40,7 +40,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // if not done watching C-T-R letters
     if (OVR_230.unkTimerMM < 230)
     {
-      OVR_230.countMeta0xD = OVR_230.title_OtherStuff[0];
+      OVR_230.countMeta0xD = OVR_230.title_numFrameTotal;
 
       // end function
       goto END_FUNCTION;
@@ -48,7 +48,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 
     OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS) | BIG_TEXT_IN_TITLE;
 
-	MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numFrameTransition);
+	MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numTransition);
 
     // If the animation ends
     if (OVR_230.countMeta0xD == 0)
@@ -81,7 +81,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 
     // assume OVR_230.MM_State = 3
     // if you are returning from another menu
-	MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numFrameTransition);
+	MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numTransition);
 
     // If "fade-in" animation from other menu is done
     if (OVR_230.countMeta0xD == 0)
@@ -103,14 +103,14 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // If you are transitioning out
 
   // MM_TransitionInOut
-  MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numFrameTransition);
+  MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numTransition);
 
   // Increment frame timer, increase time left in "fade-in"
   // animation, which plays it in reverse, as "fade-out"
   OVR_230.countMeta0xD += 1;
 
   // If the "fade-out" animation is not over, skip "switch" statemenet
-  if (OVR_230.countMeta0xD <= OVR_230.title_OtherStuff[0])
+  if (OVR_230.countMeta0xD <= OVR_230.title_numFrameTotal)
     goto END_FUNCTION;
 
   // If you are transitioning out of the menu,
