@@ -184,7 +184,7 @@ void MM_Battle_MenuBox(void)
                 }
 
                 // If you press Right on D-Pad or move stick to the Right
-                if ((sdata->buttonTapPerPlayer[j] & 8) != 0)
+                if ((sdata->buttonTapPerPlayer[i] & 8) != 0)
                 {
                     // If there is room to move right,
                     // If your team number is less than 3
@@ -361,7 +361,7 @@ void MM_Battle_MenuBox(void)
                                             {
                                                 MainStats_ClearBattleVS();
                                             }
-                                            gGT->battleSetup.teamOfEachPlayer[i] = gGT->battleSetup.teamOfEachPlayer[j];
+                                            gGT->battleSetup.teamOfEachPlayer[i] = gGT->battleSetup.teamOfEachPlayer[i];
                                         }
 
                                     sdata->buttonTapPerPlayer[1] = 0;
@@ -838,8 +838,7 @@ LAB_800b25f0:
     // the player from starting the Battle
     if (j == 0)
     {
-        OVR_230.battleStartGame_box.state &= ~(0x100); 
-		OVR_230.battleStartGame_box.state |= SHOW_ONLY_HIGHLIT_ROW;
+        OVR_230.battleStartGame_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW); 
 		
         if (sdata->battleSetupExpandMenu != 5)
         {
@@ -849,8 +848,10 @@ LAB_800b25f0:
         {
             OVR_230.battleStartGame_box.state |= 0x100;
         }
-        MENUBOX_DrawSelf(&OVR_230.battleStartGame_box, (int)(((u_int)OVR_230.transitionMeta_battle[8].currX + 0x9c) * 0x10000) >> 0x10,
-                         (int)(short)(OVR_230.transitionMeta_battle[8].currY + sVar20 + 0x78), 0x134);
+        MENUBOX_DrawSelf(&OVR_230.battleStartGame_box, 
+				OVR_230.transitionMeta_battle[8].currX + 0x9c,
+				OVR_230.transitionMeta_battle[8].currY + sVar20 + 0x78, 0x134);
+				
         local_38 = 0xd;
         MENUBOX_GetHeight(&OVR_230.battleStartGame_box, &local_38, 0);
     }
@@ -884,7 +885,7 @@ LAB_800b25f0:
         j = (iVar8 / 6);
 
         // Check if this weapon is not enabled
-        if ((gGT->battleSetup.enabledWeapons & OVR_230.battleWeaponsEnabled[iVar8 * 2]) == 0)
+        if ((gGT->battleSetup.enabledWeapons & OVR_230.battleWeaponsEnabled[iVar8*2]) == 0)
         {
             color = (u_int)OVR_230.color2;
             uVar17 = 0x15;
@@ -905,7 +906,7 @@ LAB_800b25f0:
             DecalFont_DrawLine(&OVR_230.s_3[0], iVar13, j, 2, uVar17);
         }
 
-        MM_Battle_DrawIcon_Weapon(gGT->ptrIcons[OVR_230.battleWeaponsEnabled[iVar8 + 1]],
+        MM_Battle_DrawIcon_Weapon(gGT->ptrIcons[OVR_230.battleWeaponsEnabled[iVar8*2+1]],
                                   iVar13, j,
 
                                   // pointer to PrimMem struct
