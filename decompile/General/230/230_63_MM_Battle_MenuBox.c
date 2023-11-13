@@ -30,7 +30,7 @@ void MM_Battle_MenuBox(void)
     short local_38;
     short local_36[3];
 
-    struct MenuBox *box = 0;
+    struct MenuBox *box;
     struct GameTracker *gGT = sdata->gGT;
 
     local_38 = 0;
@@ -591,7 +591,7 @@ void MM_Battle_MenuBox(void)
 
     if (OVR_230.battleType_box.rowSelected == 1)
     {
-        gGT = &OVR_230.battleLengthTimeTime_box;
+        box = &OVR_230.battleLengthTimeTime_box;
     }
     else
     {
@@ -733,15 +733,14 @@ LAB_800b25f0:
                     sVar6 = (short)iVar13;
                     iVar13 = iVar13 + 0x2a;
 
-                    MM_Battle_DrawIcon_Character(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar16]].iconID],
-                                                 (int)OVR_230.transitionMeta_battle[4].currX + (int)sVar6,
-                                                 (int)OVR_230.transitionMeta_battle[4].currY + (int)sVar20 + 6,
-
-                                                 // pointer to PrimMem struct
-                                                 &gGT->backBuffer->primMem,
-                                                 // pointer to OT mem
-                                                 gGT->tileView_UI.ptrOT,
-                                                 1, 0x1000);
+                    MM_Battle_DrawIcon_Character(
+						gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar16]].iconID],
+						(int)OVR_230.transitionMeta_battle[4].currX + (int)sVar6,
+						(int)OVR_230.transitionMeta_battle[4].currY + (int)sVar20 + 6,
+	
+						&gGT->backBuffer->primMem,
+						gGT->tileView_UI.ptrOT,
+						1, 0x1000);
                 }
             }
 
