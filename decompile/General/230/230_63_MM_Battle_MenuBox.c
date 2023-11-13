@@ -143,15 +143,17 @@ void MM_Battle_MenuBox(void)
 
     // Related to Battle mode
     if (
-        (
+          (
             // If number of teams is less than 2
-            (gGT->battleSetup.numTeams) < 2) ||
+            ((gGT->battleSetup.numTeams) < 2) ||
 
-        // If no weapons are slected
-        ((gGT->battleSetup.enabledWeapons & 0xcde) == 0)
+			// If no weapons are slected
+			((gGT->battleSetup.enabledWeapons & 0xcde) == 0)
+		  ) &&
 
             // If you are hovering over row 5 (Start Battle)
-            && (sdata->battleSetupRowHighlighted == 5))
+			(sdata->battleSetupRowHighlighted == 5)
+		)
     {
         // Move cursor back to row 4 (in weapons selection)
         sdata->battleSetupRowHighlighted = 4;
@@ -701,7 +703,7 @@ LAB_800b25f0:
     }
 
     uVar10 = 0x12e - iVar16;
-    i = (int)(uVar10 * 0x10000) >> 0x10;
+    i = (int)(uVar10);
     uVar12 = i + 3;
     if ((int)uVar12 < 0)
     {
@@ -711,10 +713,10 @@ LAB_800b25f0:
 
     for (i = 0; i < 4; i++)
     {
-        psVar11 = (short *)((int)local_60b + (i >> 0xf));
+        psVar11 = &local_60b[i];
         uVar10 = uVar10 - uVar12;
         *psVar11 = *psVar11 + (short)uVar12;
-        if ((int)(uVar10 * 0x10000) < (int)(uVar12 << 0x10))
+        if ((int)(uVar10) < (int)(uVar12))
         {
             uVar12 = uVar10;
         }
@@ -723,7 +725,6 @@ LAB_800b25f0:
     for (i = 0; i < 4; i++)
     {
         uVar4 = local_60b[i];
-        iVar13 = (u_int)uVar4 << 0x10;
         iVar13 = iVar8 + (uVar4>>0x1) + (int)local_58b[i] * -0x15;
 
             for (iVar16 = 0; iVar16 < numPlyr; iVar16++)
