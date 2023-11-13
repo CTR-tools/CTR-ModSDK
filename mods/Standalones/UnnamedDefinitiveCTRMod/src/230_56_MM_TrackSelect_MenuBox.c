@@ -496,7 +496,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			// "OPTIONS"
 			DecalFont_DrawLine
 			(
-				sdata->lngStrings[324],
+				sdata->lngStrings[604],
 				(OVR_230.transitionMeta_trackSel[3].currX + 0x18c),
 				(OVR_230.transitionMeta_trackSel[3].currY + (u_int)p.y + 180),
 				FONT_BIG, (JUSTIFY_CENTER | ORANGE)

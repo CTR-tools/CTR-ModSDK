@@ -52,6 +52,14 @@ force_inline void ProcessInputs(struct GameTracker* gGT, struct MenuBox* mb, u_i
 				break;
 		}
 	}
+
+	if (buttonsTapped & (BTN_SQUARE | BTN_TRIANGLE | BTN_START))
+	{
+		if (buttonsTapped & (BTN_SQUARE | BTN_TRIANGLE)) OtherFX_Play(2, 1);
+		else                                             OtherFX_Play(1, 1);
+		
+		RaceOptionsIsOpen = false;
+	}
 }
 
 force_inline void DisplayMenuBox(struct GameTracker* gGT, struct MenuBox* mb)
@@ -78,7 +86,7 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT, struct MenuBox* mb)
 	// Blue Fire:
 	DecalFont_DrawLine(sdata->lngStrings[597 + RF_blueFireMode], optionTextPosX, firstRowY + (10 * 1) + 1, FONT_SMALL, WHITE | JUSTIFY_RIGHT);
 	// Mirror Mode: "OFF"
-	DecalFont_DrawLine(sdata->lngStrings[598], optionTextPosX, firstRowY + (10 * 2) + 1, FONT_SMALL, WHITE | JUSTIFY_RIGHT);
+	DecalFont_DrawLine(sdata->lngStrings[597], optionTextPosX, firstRowY + (10 * 2) + 1, FONT_SMALL, WHITE | JUSTIFY_RIGHT);
 
 	MENUBOX_DrawInnerRect(&titleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
 	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
