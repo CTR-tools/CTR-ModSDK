@@ -20,18 +20,13 @@ void MM_Battle_MenuBox(void)
     u_int uVar17;
     short *puVar18;
     short sVar20;
-    ushort local_60[4];
+    RECT local_60;
+    ushort local_60b[4];
     RECT local_58;
     short local_58b[4];
-    short local_50;
-    short local_4e;
-    short local_4c;
-    short local_4a;
+    RECT local_50;
     RECT local_48;
-    ushort local_40;
-    ushort local_3e;
-    short local_3c;
-    short local_3a;
+    RECT local_40;
     short local_38;
     short local_36[3];
 
@@ -362,7 +357,7 @@ void MM_Battle_MenuBox(void)
 
                                         for (i = 0; i < numPlyr; i++)
                                         {
-                                            if (gGT->battleSetup.teamOfEachPlayer[i] != gGT->battleSetup.teamOfEachPlayer[j])
+                                            if (sdata->teamOfEachPlayer[i] != gGT->battleSetup.teamOfEachPlayer[i])
                                             {
                                                 MainStats_ClearBattleVS();
                                             }
@@ -691,7 +686,7 @@ LAB_800b25f0:
         iVar16 = i;
         iVar13 = (int)(short)j;
         local_58b[iVar13] = 0;
-        local_60[iVar13] = 4;
+        local_60b[iVar13] = 4;
 
         for (i = 0; i < numPlyr; i++)
         {
@@ -699,7 +694,7 @@ LAB_800b25f0:
             if (iVar9 == iVar13)
             {
                 psVar11 = &local_58b[iVar9];
-                puVar14 = &local_60[iVar9];
+                puVar14 = &local_60b[iVar9];
                 *psVar11 = *psVar11 + 1;
                 iVar16 = iVar16 + 0x2a;
                 *puVar14 = *puVar14 + 0x2a;
@@ -720,7 +715,7 @@ LAB_800b25f0:
 
     for (i = 0; i < 4; i++)
     {
-        psVar11 = (short *)((int)local_60 + (i >> 0xf));
+        psVar11 = (short *)((int)local_60b + (i >> 0xf));
         uVar10 = uVar10 - uVar12;
         *psVar11 = *psVar11 + (short)uVar12;
         if ((int)(uVar10 * 0x10000) < (int)(uVar12 << 0x10))
@@ -731,7 +726,7 @@ LAB_800b25f0:
 
     for (i = 0; i < 4; i++)
     {
-        uVar4 = local_60[i];
+        uVar4 = local_60b[i];
         iVar13 = (u_int)uVar4 << 0x10;
         iVar13 = iVar8 + (uVar4>>0x1) + (int)local_58b[i] * -0x15;
 
@@ -770,10 +765,10 @@ LAB_800b25f0:
 
     if (sdata->battleSetupRowHighlighted == 2)
     {
-        local_4c = 0x134;
-        local_4a = 0x1e;
-        local_50 = OVR_230.transitionMeta_battle[4].currX + 0x9c;
-        local_4e = OVR_230.transitionMeta_battle[4].currY + sVar20 + 3;
+        local_50.w = 0x134;
+        local_50.h = 0x1e;
+        local_50.x = OVR_230.transitionMeta_battle[4].currX + 0x9c;
+        local_50.y = OVR_230.transitionMeta_battle[4].currY + sVar20 + 3;
 
         CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
 
@@ -783,13 +778,14 @@ LAB_800b25f0:
 
                              &gGT->backBuffer->primMem);
     }
-    local_3c = 0x140;
-    local_3a = 0x24;
-    local_40 = OVR_230.transitionMeta_battle[4].currX + 0x96;
-    local_3e = OVR_230.transitionMeta_battle[4].currY + sVar20;
+	
+    local_40.w = 0x140;
+    local_40.h = 0x24;
+    local_40.x = OVR_230.transitionMeta_battle[4].currX + 0x96;
+    local_40.y = OVR_230.transitionMeta_battle[4].currY + sVar20;
 
     // Draw 2D Menu rectangle background
-    MENUBOX_DrawFullRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
+    MENUBOX_DrawInnerRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
     // "WEAPONS:"
     DecalFont_DrawLine(sdata->lngStrings[0x99],
@@ -874,10 +870,10 @@ LAB_800b25f0:
                            (int)sVar6);
     }
     i = 0;
-    local_3c = 0x140;
-    local_3a = 0x44;
-    local_40 = OVR_230.transitionMeta_battle[6].currX + 0x96;
-    local_3e = OVR_230.transitionMeta_battle[6].currY + sVar20 + 0x2a;
+    local_40.w = 0x140;
+    local_40.h = 0x44;
+    local_40.x = OVR_230.transitionMeta_battle[6].currX + 0x96;
+    local_40.y = OVR_230.transitionMeta_battle[6].currY + sVar20 + 0x2a;
 
     // Loop through all 11 weapon icons
     for (i = 0; i < 11; i++)
@@ -896,8 +892,8 @@ LAB_800b25f0:
 
         // iVar4 % 6
         // Go to 2nd row after 6th icon
-        iVar13 = (u_int)local_40 + (iVar8 % 6) * 0x34 + j * 0x1a + 6;
-        j = (u_int)local_3e + j * 0x20 + 2;
+        iVar13 = (u_int)local_40.x + (iVar8 % 6) * 0x34 + j * 0x1a + 6;
+        j = (u_int)local_40.y + j * 0x20 + 2;
 
         // If the icon is bowling bomb or missile on the 2nd row
         if ((i - 7U & 0xffff) < 2)
@@ -923,27 +919,27 @@ LAB_800b25f0:
 
     if ((u_int)sdata->battleSetupRowHighlighted - 3 < 2)
     {
-        sVar6 = local_40 + sdata->battleSetupWeaponHighlighted * 0x34;
-        local_60[0] = sVar6 + 4;
+        sVar6 = local_40.x + sdata->battleSetupWeaponHighlighted * 0x34;
+        local_60.x = sVar6 + 4;
         if (sdata->battleSetupRowHighlighted == 4)
         {
-            local_60[0] = sVar6 + 0x1e;
+            local_60.x = sVar6 + 0x1e;
         }
-        local_60[2] = 0x34;
-        local_60[3] = 0x20;
-        local_60[1] = local_3e + (sdata->battleSetupRowHighlighted - 3) * 0x20 + 2;
+        local_60.w = 0x34;
+        local_60.h = 0x20;
+        local_60.y = local_40.y + (sdata->battleSetupRowHighlighted - 3) * 0x20 + 2;
 
-        CTR_Box_DrawClearBox(&local_60[0], &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
+        CTR_Box_DrawClearBox(&local_60, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
                              gGT->backBuffer->otMem.startPlusFour,
 
                              // pointer to PrimMem struct
                              &gGT->backBuffer->primMem);
     }
 
-    local_58.x = local_40 + 3;
-    local_58.y = local_3e + 2;
-    local_58.w = local_3c - 6;
-    local_58.h = local_3a - 4;
+    local_58.x = local_40.x + 3;
+    local_58.y = local_40.y + 2;
+    local_58.w = local_40.w - 6;
+    local_58.h = local_40.h - 4;
 
     CTR_Box_DrawClearBox(&local_58, &OVR_230.color3[0], TRANS_50_DECAL,
                          gGT->backBuffer->otMem.startPlusFour,
@@ -951,7 +947,7 @@ LAB_800b25f0:
                          // pointer to PrimMem struct
                          &gGT->backBuffer->primMem);
 
-    MENUBOX_DrawFullRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
+    MENUBOX_DrawInnerRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
     // save all five battle settings
     // these are selected rows from all battle options

@@ -4147,15 +4147,16 @@ struct sData
 	int boolReplayHumanGhost;
 
 	// 8008d95c
-	char data18_aaa[0x10];
+	int unk8008d95c;
 
 	// 8008d960
-	// char teamOfEachPlayer[4];
+	char teamOfEachPlayer[4];
 	
 	// 8008d964
-	// unknown
+	int unk8008d964;
 
 	// 8008d968 boolWipeMemcard (why?)
+	int unk8008d968;
 	
 	// 8008d96c
 	int advProfileIndex;

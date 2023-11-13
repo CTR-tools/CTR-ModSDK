@@ -6,7 +6,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     int cdPos;
 	int getButtonPress;
 	DRAWENV* ptrDrawEnv;
-    const CdlLOC *cdLoc;
+    const CdlLOC cdLoc;
     struct GameTracker *gGT = gGT;
 	int isOn = TitleFlag_IsFullyOnScreen();
 
@@ -47,14 +47,14 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         // \TEST.STR;1
         // if file was found
-        if (CdSearchFile(cdLoc, OVR_230.s_teststr1) != 0)
+        if (CdSearchFile(&cdLoc, OVR_230.s_teststr1) != 0)
         {
             SpuSetCommonCDVolume(sdata->vol_Music << 7, sdata->vol_Music << 7);
 
             // Alloc memory to store Scrapbook
             MM_Video_AllocMem(0x200, 0xd0, 10, 0x40, 1);
 
-            cdPos = CdPosToInt(cdLoc);
+            cdPos = CdPosToInt(&cdLoc);
 
             // scrapbook runs 15fps,
             // see bottom of Duckstation screen while running

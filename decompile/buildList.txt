@@ -65,7 +65,7 @@ common, 230, MM_CupSelect_MenuBox, 0x0, General/230/230_59_MM_CupSelect_MenuBox.
 common, 230, MM_Battle_CloseSubMenu, 0x0, General/230/230_60_MM_Battle_CloseSubMenu.c
 common, 230, MM_Battle_DrawIcon_Weapon, 0x0, General/230/230_61_MM_Battle_DrawIcon_Weapon.c
 common, 230, MM_Battle_Init, 0x0, General/230/230_62_MM_Battle_Init.c
-//ommon, 230, MM_Battle_MenuBox, 0x0, General/230/230_63_MM_Battle_MenuBox.c
+common, 230, MM_Battle_MenuBox, 0x0, General/230/230_63_MM_Battle_MenuBox.c
 common, 230, MM_HighScore_Text3D, 0x0, General/230/230_64_MM_HighScore_Text3D.c
 common, 230, MM_HighScore_Draw, 0x0, General/230/230_65_MM_HighScore_Draw.c
 common, 230, MM_HighScore_Init, 0x0, General/230/230_66_MM_HighScore_Init.c

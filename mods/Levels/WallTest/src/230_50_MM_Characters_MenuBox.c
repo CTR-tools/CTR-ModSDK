@@ -292,7 +292,7 @@ void MM_Characters_MenuBox()
 								local_50 = 1;
 								nextDriver = MM_Characters_GetNextDriver(direction, (int)(short)*globalIconPerPlayerPtr2);
 								nextDriverCopy = (int)nextDriver;
-								globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[direction], nextDriverCopy);
+								globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.getNextDriver1[direction], nextDriverCopy);
 								globalIconPerPlayerCopy5 = (int)(short)globalIconPerPlayerCopy2;
 
 								if
@@ -301,7 +301,7 @@ void MM_Characters_MenuBox()
 									(button = MM_Characters_boolIsInvalid(globalIconPerPlayerPtr, globalIconPerPlayerCopy5, j), (button & 0xffff) != 0)
 								)
 								{
-									nextDriver = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[direction], (int)(short)*globalIconPerPlayerPtr2);
+									nextDriver = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.getNextDriver1[direction], (int)(short)*globalIconPerPlayerPtr2);
 									globalIconPerPlayerCopy5 = (int)nextDriver;
 									globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy5);
 									globalIconPerPlayerCopy4 = (int)(short)globalIconPerPlayerCopy2;
@@ -317,7 +317,7 @@ void MM_Characters_MenuBox()
 									{
 										nextDriver = MM_Characters_GetNextDriver(direction, (int)(short)*globalIconPerPlayerPtr2);
 										globalIconPerPlayerCopy5 = (int)nextDriver;
-										globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[3 + direction], globalIconPerPlayerCopy5);
+										globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.getNextDriver2[direction], globalIconPerPlayerCopy5);
 										globalIconPerPlayerCopy4 = (int)(short)globalIconPerPlayerCopy2;
 
 										if
@@ -331,7 +331,7 @@ void MM_Characters_MenuBox()
 											)
 										) 
 										{
-											nextDriver = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.dataUnk[3 + direction], (int)(short)*globalIconPerPlayerPtr2);
+											nextDriver = MM_Characters_GetNextDriver((u_int)(u_char)OVR_230.getNextDriver2[direction], (int)(short)*globalIconPerPlayerPtr2);
 											globalIconPerPlayerCopy5 = (int)nextDriver;
 											globalIconPerPlayerCopy2 = MM_Characters_GetNextDriver(direction, globalIconPerPlayerCopy5);
 											globalIconPerPlayerCopy4 = (int)(short)globalIconPerPlayerCopy2;
@@ -469,7 +469,7 @@ void MM_Characters_MenuBox()
 			}
 			else
 			{
-				puVar12 = &OVR_230.dataUnk[8];
+				puVar12 = &OVR_230.characterSelect_Outline;
 			}
 		
 			MENUBOX_DrawOuterRect_HighLevel(&r80, puVar12, 0, gGT->backBuffer->otMem.startPlusFour);
