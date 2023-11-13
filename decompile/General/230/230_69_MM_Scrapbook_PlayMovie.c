@@ -1,22 +1,14 @@
 #include <common.h>
 
-void MM_Scrapbook_Init(void)
-{
-    OVR_230.scrapbookState = 0;
-
-    // change checkered flag
-    TitleFlag_SetDrawOrder(1);
-
-    // clear gamepad input (for menus)
-    MENUBOX_ClearInput();
-}
-
 void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 {
     short lev;
     int cdPos;
+	int getButtonPress;
+	DRAWENV* ptrDrawEnv;
     const CdlLOC *cdLoc;
     struct GameTracker *gGT = gGT;
+	int isOn = TitleFlag_IsFullyOnScreen();
 
     // book state (0,1,2,3,4)
     switch (OVR_230.scrapbookState)
@@ -25,7 +17,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     // Init State,
     // alter checkered flag
     case 0:
-        if (TitleFlag_IsFullyOnScreen() == 1)
+        if (isOn == 1)
         {
             // checkered flag, begin transition off-screen
             TitleFlag_BeginTransition(2);
@@ -55,7 +47,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         // \TEST.STR;1
         // if file was found
-        if (CdSearchFile(cdLoc, s__TEST_STR_1_800aba88) != 0)
+        if (CdSearchFile(cdLoc, OVR_230.s_teststr1) != 0)
         {
             SpuSetCommonCDVolume(sdata->vol_Music << 7, sdata->vol_Music << 7);
 
@@ -82,33 +74,38 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         goto GO_BACK;
 
-        // Actually play the movie
+    // Actually play the movie
     case 2:
-
+	
         // infinite loop (cause this is scrapbook),
         // keep doing DecodeFrame and VSync until done
         while (
-            MM_Video_DecodeFrame(
-
-                // gGT->DB[nextFrame].ofs[X]
-                gGT->db[1 - gGT->swapchainIndex].drawEnv.ofs[0],
-
-                // gGT->DB[nextFrame].ofs[Y]
-                gGT->db[1 - gGT->swapchainIndex].drawEnv.ofs[1] + 4) == 0)
+			
+			// This bugs for the same reason as RenderFrame_Vsync,
+			// register wont update caues modern GCC doesn't know
+			// swapchainIndex changes in VsyncCallback
+			
+			// gGT->DB[nextFrame] (swapchain flips in VsyncCallback)
+			ptrDrawEnv = &gGT->db[1 - gGT->swapchainIndex].drawEnv,
+            
+			MM_Video_DecodeFrame(
+				ptrDrawEnv->ofs[0],
+				ptrDrawEnv->ofs[1] + 4) == 0)
         {
             VSync(0);
         }
+		
+		// If you press Start, Cross, Circle, Triangle, or Square
+		getButtonPress = (sdata->buttonTapPerPlayer[0] & 0x41070);
 
         if (
-            // if movie is finished,
-            // means scrapbook ended, no looping
-            (MM_Video_CheckIfFinished(0) == 1) ||
-
-            // If you press Start, Cross, Circle, Triangle, or Square
-            ((sdata->buttonTapPerPlayer[0] & 0x41070) != 0))
+				// if movie is finished,
+				// means scrapbook ended, no looping
+				(MM_Video_CheckIfFinished(0) == 1) ||
+				(getButtonPress != 0)
+			)
         {
-            // If you press Start, Cross, Circle, Triangle, or Square
-            if ((sdata->buttonTapPerPlayer[0] & 0x41070) != 0)
+            if (getButtonPress != 0)
             {
                 TitleFlag_SetFullyOnScreen();
             }
@@ -120,8 +117,8 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         VSync(4);
         break;
 
-        // return disc to normal,
-        // return checkered flag to normal
+    // return disc to normal,
+    // return checkered flag to normal
     case 3:
         SpuSetCommonCDVolume(0, 0);
 
@@ -140,36 +137,29 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         OVR_230.scrapbookState = 4;
         break;
 
-        // send player back to adv hub,
-        // or back to main menu
+    // send player back to adv hub,
+    // or back to main menu
     case 4:
-
-        if (TitleFlag_IsFullyOnScreen() == 1)
+        if (isOn == 1)
         {
             // change checkered flag back
             TitleFlag_SetDrawOrder(0);
 
+			// if adventure mode
+			lev = GEM_STONE_VALLEY;
+
             // If you're not in Adventure Mode
             if ((gGT->gameMode1 & ADVENTURE_MODE) == 0)
             {
-                // TransitionTo_MainMenu_Returning
+                lev = MAIN_MENU_LEVEL;
+				
                 MM_JumpTo_Title_Returning();
 
                 // return to main menu (adv, tt, arcade, vs, battle)
                 sdata->mainMenuState = 0;
-
-                // main menu
-                lev = MAIN_MENU_LEVEL;
-            }
-            else
-            {
-                lev = GEM_STONE_VALLEY;
             }
 
-            // load level ID
             MainRaceTrack_RequestLoad(lev);
-
-            // make menu disappear
             MENUBOX_Hide(mb);
         }
         break;

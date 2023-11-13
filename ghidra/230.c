@@ -6913,7 +6913,7 @@ void FUN_800b4014(int param_1)
 	
     goto LAB_800b4224;
 	
-	// Actually play the movie
+  // Actually play the movie
   case 2:
   
 	// infinite loop (cause this is scrapbook),
@@ -6964,8 +6964,8 @@ void FUN_800b4014(int param_1)
     VSync(4);
     break;
 	
-	// return disc to normal,
-	// return checkered flag to normal
+  // return disc to normal,
+  // return checkered flag to normal
   case 3:
     SpuSetCommonCDVolume(0,0);
 	

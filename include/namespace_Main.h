@@ -454,7 +454,7 @@ struct GameTracker
 	short notFoundInCode2;
 
 	// 0x1d50
-	short notFoundInCode3;
+	short langIndex;
 #endif
 
 	// sep 1ce4 -- found

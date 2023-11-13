@@ -1,6 +1,6 @@
-// 504+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 582 rewritten so far
+// 515+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 593 rewritten so far
 
-// 504 for every 'common' and ','
+// 515 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 21 for cheats
 // most other additions for 231
@@ -66,6 +66,19 @@ common, 230, MM_Battle_CloseSubMenu, 0x0, General/230/230_60_MM_Battle_CloseSubM
 common, 230, MM_Battle_DrawIcon_Weapon, 0x0, General/230/230_61_MM_Battle_DrawIcon_Weapon.c
 common, 230, MM_Battle_Init, 0x0, General/230/230_62_MM_Battle_Init.c
 //ommon, 230, MM_Battle_MenuBox, 0x0, General/230/230_63_MM_Battle_MenuBox.c
+common, 230, MM_HighScore_Text3D, 0x0, General/230/230_64_MM_HighScore_Text3D.c
+common, 230, MM_HighScore_Draw, 0x0, General/230/230_65_MM_HighScore_Draw.c
+common, 230, MM_HighScore_Init, 0x0, General/230/230_66_MM_HighScore_Init.c
+// 67_HighScore_MenuBox
+common, 230, MM_Scrapbook_Init, 0x0, General/230/230_68_MM_Scrapbook_Init.c
+common, 230, MM_Scrapbook_PlayMovie, 0x0, General/230/230_69_MM_Scrapbook_PlayMovie
+common, 230, MM_ResetAllMenus, 0x0, General/230/230_70_MM_ResetAllMenus.c
+common, 230, MM_JumpTo_Title_Returning, 0x0, General/230/230_71_MM_JumpTo_Title_Returning.c
+common, 230, MM_JumpTo_Title_FirstTime, 0x0, General/230/230_72_MM_JumpTo_Title_FirstTime.c
+common, 230, MM_JumpTo_BattleSetup, 0x0, General/230/230_73_MM_JumpTo_BattleSetup.c
+common, 230, MM_JumpTo_TrackSelect, 0x0, General/230/230_74_MM_JumpTo_TrackSelect.c
+common, 230, MM_JumpTo_Characters, 0x0, General/230/230_75_MM_JumpTo_Characters.c
+common, 230, MM_JumpTo_Scrapbook, 0x0, General/230/230_76_MM_JumpTo_Scrapbook.c
 
 // 231 (incomplete)
 // skip first two

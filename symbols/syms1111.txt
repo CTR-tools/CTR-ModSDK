@@ -572,7 +572,7 @@
 8003e714 MainRaceTrack_StartLoad
 8003e758 MainRaceTrack_RequestLoad
 
-// MainStats_ClearBattleVS
+8003e7bc MainStats_ClearBattleVS
 8003e800 MainStats_RestartRaceCountLoss
 
 // End of MAIN ^^^
@@ -1083,6 +1083,7 @@
 8007466c ThTick_FastRET
 800746c4 ThTick_SetAndExec
 800746dc ThTick_Set
+800746e4 VSync
 
 // libs in the exe
 // ==============================
@@ -1284,7 +1285,7 @@
 800b0b74 MM_ToggleRows_PlayerCount
 800b0c8c MM_MENUBOX_1p2p
 800b0d14 MM_MENUBOX_2p3p4p
-800b0d6c MM_ToggleRows_Difficulty
+800b0da4 MM_ToggleRows_Difficulty
 800b0ed0 MM_MENUBOX_Difficulty
 800b0f54 MM_MENUBOX_SingleCup
 // MM_MENUBOX_Language only in europe

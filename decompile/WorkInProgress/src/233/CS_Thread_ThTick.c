@@ -34,7 +34,6 @@ void CS_Thread_ThTick(struct Thread *t)
     // if this is a time animation, not a frame animation
     if ((cs->flags & 0x40) != 0)
     {
-        //
         CS_Thread_InterpolateFramesMS(t);
     }
 
@@ -76,11 +75,12 @@ void CS_Thread_ThTick(struct Thread *t)
         {
             CS_Instance_GetFrameData(inst, inst->animIndex, inst->animFrame, &box, 0, 0);
 
-            *(short *)0x800b0b7c = box.y;
+            OVR_233.VertSplitLine = box.y;
             
             if (inst == NULL)
-                goto LAB_800ae744;
+                goto DRAW_SUBTITLES;
         }
+
         // flag
         if (((cs->flags & 2) != 0) &&
             (inst->alphaScale = 0, (gGT->timer & 1) != 0))
@@ -89,17 +89,17 @@ void CS_Thread_ThTick(struct Thread *t)
         }
     }
 
-LAB_800ae744:
+DRAW_SUBTITLES:
     // if pointer to subtitles exists
-    if (0 < cs->Subtitles.index)
+    if (0 < cs->Subtitles.lngIndex)
     {
         // Ripper Roo's cutscene subtitles
 
         box.h = DecalFont_DrawMultiLine(sdata->lngStrings[cs->Subtitles.lngIndex],
                                         cs->Subtitles.textPos[0], cs->Subtitles.textPos[1],
-                                        0x1cc,
+                                        460,
                                         cs->Subtitles.font, cs->Subtitles.colors);
-        box.w = 0x1d8;
+        box.w = 472;
         box.x = cs->Subtitles.textPos[0] - 236;
         box.h =+ 8;
         box.y = cs->Subtitles.textPos[1] - 4;
@@ -114,5 +114,4 @@ LAB_800ae744:
         // This thread is now dead
         t->flags |= 0x800;
     }
-    return;
 }
