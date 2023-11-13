@@ -558,12 +558,14 @@ struct Overlay_230
 	// points to s_1, s_2, s_3, s_4
 	int *PlayerNumberStrings[4];
 
-#if 0
 	// 800b5384
+	char getNextDriver1[4];
+	
 	// 800b5388
-	// 800b538c
-#endif
-	char dataUnk[0xC];
+	char getNextDriver2[4];
+
+	// 800b538c -- UsaRetail
+	u_int characterSelect_Outline;
 
 	// 800b5390 - UsaRetail
 	// 800b5b6c - EurRetail
