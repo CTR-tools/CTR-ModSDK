@@ -30,7 +30,7 @@ void MM_Battle_MenuBox(void)
     short local_38;
     short local_36[3];
 
-    struct MenuBox *box;
+    struct MenuBox *box = 0;
     struct GameTracker *gGT = sdata->gGT;
 
     local_38 = 0;
@@ -563,8 +563,7 @@ void MM_Battle_MenuBox(void)
 		OVR_230.transitionMeta_battle[1].currX + 0x8c,
 		OVR_230.transitionMeta_battle[1].currY + 0x24, 1, 0x4000);
 
-    OVR_230.battleType_box.state &= ~(0x100); 
-	OVR_230.battleType_box.state |= SHOW_ONLY_HIGHLIT_ROW;
+    OVR_230.battleType_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
 
     // if you are not choosing type of battle
     if (sdata->battleSetupExpandMenu != 0)
@@ -601,8 +600,7 @@ void MM_Battle_MenuBox(void)
         {
             if (OVR_230.battleType_box.rowSelected == 2)
             {
-                OVR_230.battleLengthLifeTime_box.state &= ~(0x100);
-				OVR_230.battleLengthLifeTime_box.state |= SHOW_ONLY_HIGHLIT_ROW;
+                OVR_230.battleLengthLifeTime_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
 				
                 if (sdata->battleSetupExpandMenu != 1)
                 {
@@ -617,8 +615,7 @@ void MM_Battle_MenuBox(void)
 					OVR_230.transitionMeta_battle[2].currX + 0x9c,
 					OVR_230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
 								 
-                OVR_230.battleLengthLifeLife_box.state &= ~(0x100); 
-				OVR_230.battleLengthLifeLife_box.state |= SHOW_ONLY_HIGHLIT_ROW;
+                OVR_230.battleLengthLifeLife_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
                 
 				if (sdata->battleSetupExpandMenu != 10)
                 {
@@ -650,8 +647,7 @@ void MM_Battle_MenuBox(void)
         box = &OVR_230.battleLengthPoints_box;
     }
     
-	box->state &= ~(0x100);
-	box->state |= SHOW_ONLY_HIGHLIT_ROW;
+	box->state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
 	
     if (sdata->battleSetupExpandMenu != 1)
     {
