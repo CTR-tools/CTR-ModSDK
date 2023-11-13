@@ -69,7 +69,7 @@ common, 230, MM_Battle_Init, 0x0, General/230/230_62_MM_Battle_Init.c
 common, 230, MM_HighScore_Text3D, 0x0, General/230/230_64_MM_HighScore_Text3D.c
 common, 230, MM_HighScore_Draw, 0x0, General/230/230_65_MM_HighScore_Draw.c
 common, 230, MM_HighScore_Init, 0x0, General/230/230_66_MM_HighScore_Init.c
-// 67_HighScore_MenuBox
+common, 230, MM_HighScore_MenuBox, 0x0, General/230/230_67_MM_HighScore_MenuBox.c
 common, 230, MM_Scrapbook_Init, 0x0, General/230/230_68_MM_Scrapbook_Init.c
 common, 230, MM_Scrapbook_PlayMovie, 0x0, General/230/230_69_MM_Scrapbook_PlayMovie
 common, 230, MM_ResetAllMenus, 0x0, General/230/230_70_MM_ResetAllMenus.c
