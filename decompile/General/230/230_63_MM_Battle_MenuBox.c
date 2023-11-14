@@ -111,22 +111,22 @@ void MM_Battle_MenuBox(void)
 
     numPlyr = gGT->numPlyrNextGame;
 
-        // loop through all players
-        for (i = 0; i < numPlyr; i++)
+    // loop through all players
+    for (i = 0; i < numPlyr; i++)
+    {
+        // get the team of each player
+        uVar12 = (short)(1 << gGT->battleSetup.teamOfEachPlayer[i]);
+
+        // If we have not accounted for this team existing
+        if ((gGT->battleSetup.teamFlags & uVar12) == 0)
         {
-            // get the team of each player
-            uVar12 = (short)(1 << gGT->battleSetup.teamOfEachPlayer[i]);
+            // This team now exists
+            gGT->battleSetup.teamFlags |= uVar12;
 
-            // If we have not accounted for this team existing
-            if ((gGT->battleSetup.teamFlags & uVar12) == 0)
-            {
-                // This team now exists
-                gGT->battleSetup.teamFlags |= uVar12;
-
-                // increase number of teams
-                gGT->battleSetup.numTeams++;
-            }
+            // increase number of teams
+            gGT->battleSetup.numTeams++;
         }
+    }
 
     for (i = 0; i < 4; i++)
     {
@@ -159,52 +159,50 @@ void MM_Battle_MenuBox(void)
         sdata->battleSetupRowHighlighted = 4;
     }
 
-
-
-        for (i = 0; i < numPlyr; i++)
-        {
-            // If you are selecting "Teams" row
-            if (sdata->battleSetupRowHighlighted == 2)
-            {
-                // If you press Left on D-Pad or move stick to the Left
-                if ((sdata->buttonTapPerPlayer[i] & 4) != 0)
-                {
-                    // If you have room to move left
-                    // if your team number is more than 0
-                    if (0 < gGT->battleSetup.teamOfEachPlayer[i])
-                    {
-                        // play sound
-                        OtherFX_Play(0, 1);
-
-                        // Move your icon to the left
-                        gGT->battleSetup.teamOfEachPlayer[i]--;
-                    }
-
-                    // clear the gamepad input so that it
-                    // does not use this frame's input on the next frame
-                    sdata->buttonTapPerPlayer[i] = 0;
-                }
-
-                // If you press Right on D-Pad or move stick to the Right
-                if ((sdata->buttonTapPerPlayer[i] & 8) != 0)
-                {
-                    // If there is room to move right,
-                    // If your team number is less than 3
-                    if (gGT->battleSetup.teamOfEachPlayer[i] < 3)
-                    {
-                        // play sound
-                        OtherFX_Play(0, 1);
-
-                        // Move your icon to the right
-                        gGT->battleSetup.teamOfEachPlayer[i]++;
-                    }
-
-                    // clear the gamepad input so that it
-                    // does not use this frame's input on the next frame
-                    sdata->buttonTapPerPlayer[i] = 0;
-                }
-            }
-        }
+	for (i = 0; i < numPlyr; i++)
+	{
+		// If you are selecting "Teams" row
+		if (sdata->battleSetupRowHighlighted == 2)
+		{
+			// If you press Left on D-Pad or move stick to the Left
+			if ((sdata->buttonTapPerPlayer[i] & 4) != 0)
+			{
+				// If you have room to move left
+				// if your team number is more than 0
+				if (0 < gGT->battleSetup.teamOfEachPlayer[i])
+				{
+					// play sound
+					OtherFX_Play(0, 1);
+	
+					// Move your icon to the left
+					gGT->battleSetup.teamOfEachPlayer[i]--;
+				}
+	
+				// clear the gamepad input so that it
+				// does not use this frame's input on the next frame
+				sdata->buttonTapPerPlayer[i] = 0;
+			}
+	
+			// If you press Right on D-Pad or move stick to the Right
+			if ((sdata->buttonTapPerPlayer[i] & 8) != 0)
+			{
+				// If there is room to move right,
+				// If your team number is less than 3
+				if (gGT->battleSetup.teamOfEachPlayer[i] < 3)
+				{
+					// play sound
+					OtherFX_Play(0, 1);
+	
+					// Move your icon to the right
+					gGT->battleSetup.teamOfEachPlayer[i]++;
+				}
+	
+				// clear the gamepad input so that it
+				// does not use this frame's input on the next frame
+				sdata->buttonTapPerPlayer[i] = 0;
+			}
+		}
+	}
 
     // make a copy of the row you have highlighted
     uVar4 = sdata->battleSetupRowHighlighted;
@@ -377,7 +375,7 @@ void MM_Battle_MenuBox(void)
                         else
                         {
                             // if row 3 or 4 (weapons)
-                            if (sdata->battleSetupRowHighlighted - 3 < 2)
+                            if ((unsigned short)(sdata->battleSetupRowHighlighted - 3) < 2)
                             {
                                 // change which weapon is highlighted
                                 sdata->battleSetupWeaponHighlighted++;
@@ -397,7 +395,7 @@ void MM_Battle_MenuBox(void)
                     else
                     {
                         // if row 3 or 4 (weapons)
-                        if (sdata->battleSetupRowHighlighted - 3 < 2)
+                        if ((unsigned short)(sdata->battleSetupRowHighlighted - 3) < 2)
                         {
                             // change which weapon is highlighted
                             sdata->battleSetupWeaponHighlighted--;
