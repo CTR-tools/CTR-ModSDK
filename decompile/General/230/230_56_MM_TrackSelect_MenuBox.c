@@ -97,7 +97,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				if ((gGT->gameMode1 & TIME_TRIAL) != 0)
 				{
 					// allocate room at the end of RAM for ghosts
-					sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00, OVR_230.s_loaded_ghost_data);
+					sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00/*, OVR_230.s_loaded_ghost_data*/);
 
 					memset(sdata->ptrGhostTapePlaying, 0, 0x28);
 
