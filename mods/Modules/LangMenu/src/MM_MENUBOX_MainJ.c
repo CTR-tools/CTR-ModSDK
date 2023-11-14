@@ -21,7 +21,7 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
   {
     MM_Title_MenuUpdate();
 
-    if (((OVR_230.MM_State == 1) && (OVR_230.titleObj != 0)) && (190 < OVR_230.unkTimerMM))
+    if (((OVR_230.MM_State == 1) && (OVR_230.titleObj != 0)) && (190 < OVR_230.timerInTitle))
     {
       DecalFont_DrawLineOT(sdata->lngStrings[0x250], 0x11d, 0xb8, 2, 0,
                            gGT->backBuffer->otMem.startPlusFour[3]);
@@ -53,7 +53,7 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
   MM_Title_Init();
   if ((mb->state & 0x10) != 0)
   {
-    OVR_230.unkTimerMM = 1000;
+    OVR_230.timerInTitle = 1000;
   }
 
   if ((mb->state & 0x400) == 0)

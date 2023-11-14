@@ -38,7 +38,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // if you are transitioning in
 
     // if not done watching C-T-R letters
-    if (OVR_230.unkTimerMM < 230)
+    if (OVR_230.timerInTitle < 230)
     {
       OVR_230.countMeta0xD = OVR_230.title_numFrameTotal;
 

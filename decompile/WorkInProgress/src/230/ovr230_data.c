@@ -1026,7 +1026,7 @@ struct Overlay_230 o230 =
 	.characterSelect_ptrWindowXY = 0,
 	.characterSelectIconLayout = 0,
 
-	.unkTimerMM = 0,
+	.timerInTitle = 0,
 	.csm_Active = 0,
 	.MM_State = 0,
 	.isMenuTransitioning = 0,

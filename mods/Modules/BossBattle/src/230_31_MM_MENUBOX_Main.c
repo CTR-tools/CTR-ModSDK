@@ -42,7 +42,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
             // if "title" object exists
             (OVR_230.titleObj != NULL)) &&
-        (0xe5 < OVR_230.unkTimerMM))
+        (0xe5 < OVR_230.timerInTitle))
     {
       // "TM" trademark string
       DecalFont_DrawLineOT(
@@ -85,7 +85,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   // if drawing ptrNextBox_InHierarchy
   if ((mainMenu->state & 0x10) != 0)
   {
-    OVR_230.unkTimerMM = 1000;
+    OVR_230.timerInTitle = 1000;
   }
 
   if ((mainMenu->state & 0x400) == 0)

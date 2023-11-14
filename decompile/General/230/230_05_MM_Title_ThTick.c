@@ -19,7 +19,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   struct InstDrawPerPlayer* idpp;
 
   // frame counters
-  timer = OVR_230.unkTimerMM;
+  timer = OVR_230.timerInTitle;
 
   // object from thread
   obj = title->object;
@@ -31,7 +31,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
     MENUBOX_ClearInput();
 
     // set frame to 1000, skip the animation
-    OVR_230.unkTimerMM = 1000;
+    OVR_230.timerInTitle = 1000;
   }
 
   // if frame is more than 230
@@ -118,18 +118,18 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   MM_Title_CameraMove(obj, timer);
 
   // increment frame counter
-  timer = OVR_230.unkTimerMM + 1;
+  timer = OVR_230.timerInTitle + 1;
 
-  if (245 < OVR_230.unkTimerMM)
+  if (245 < OVR_230.timerInTitle)
   {
     // animation is over
     OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
 	OVR_230.menubox_mainMenu.state |= EXECUTE_FUNCPTR;
 
     // dont increment index
-    timer = OVR_230.unkTimerMM;
+    timer = OVR_230.timerInTitle;
   }
 
   // write to index
-  OVR_230.unkTimerMM = timer;
+  OVR_230.timerInTitle = timer;
 }
