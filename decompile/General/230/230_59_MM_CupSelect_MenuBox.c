@@ -31,8 +31,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         // if transitioning in
         if (D230.cupSel_transitionState == 0)
         {
-            // Ghidra said it has another param of "1", when it only accepts 3 params.
-            MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, 8);
+            DECOMP_MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, 8);
 
             // reduce frame count
             elapsedFrames--;
@@ -49,7 +48,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         // if transitioning out
         else if (D230.cupSel_transitionState == 2)
         {
-            MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, 8);
+            DECOMP_MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, 8);
 
             // increase frame count
             elapsedFrames++;
@@ -84,7 +83,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
                 // return to character selection
                 sdata->ptrDesiredMenuBox = &D230.menubox_characterSelect;
 
-                MM_Characters_RestoreIDs();
+                DECOMP_MM_Characters_RestoreIDs();
                 return;
             }
         }

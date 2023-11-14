@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
+void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 {
     short lev;
     int cdPos;
@@ -153,7 +153,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             {
                 lev = MAIN_MENU_LEVEL;
 				
-                MM_JumpTo_Title_Returning();
+                DECOMP_MM_JumpTo_Title_Returning();
 
                 // return to main menu (adv, tt, arcade, vs, battle)
                 sdata->mainMenuState = 0;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MM_HighScore_MenuBox(void)
+void DECOMP_MM_HighScore_MenuBox(struct MenuBox* unused)
 {
   u_char videoState;
   bool isMenuMoving;
@@ -49,7 +49,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
               (frames == 0)) &&
           (D230.highScore_transitionFrames[2] == 0))
       {
-        MM_TransitionInOut(&D230.transitionMeta_HighScores[0], frames, 8);
+        DECOMP_MM_TransitionInOut(&D230.transitionMeta_HighScores[0], frames, 8);
 
         frames++;
 		D230.highScore_transitionFrames[0]++;
@@ -57,7 +57,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
         // if 12 frames past
         if (12 < frames)
         {
-          MM_JumpTo_Title_Returning();
+          DECOMP_MM_JumpTo_Title_Returning();
           return;
         }
       }
@@ -134,7 +134,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
           if (D230.highScore_trackDesired > 0x11)
             D230.highScore_trackDesired = 0;
 			
-        } while ((MM_TrackSelect_boolTrackOpen(&D230.arcadeTracks[D230.highScore_trackDesired]) & 0xFFFF) == 0);
+        } while ((DECOMP_MM_TrackSelect_boolTrackOpen(&D230.arcadeTracks[D230.highScore_trackDesired]) & 0xFFFF) == 0);
       }
     }
     // If you press Left
@@ -151,7 +151,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
         if (D230.highScore_trackDesired < 0)
           D230.highScore_trackDesired = 0x11;
         
-      } while ((MM_TrackSelect_boolTrackOpen(&D230.arcadeTracks[D230.highScore_trackDesired]) & 0xFFFF) == 0);
+      } while ((DECOMP_MM_TrackSelect_boolTrackOpen(&D230.arcadeTracks[D230.highScore_trackDesired]) & 0xFFFF) == 0);
     }
   }
 
@@ -182,7 +182,7 @@ DRAW_MENU:
     videoState = 1;
   }
 
-  MM_TrackSelect_Video_State(videoState);
+  DECOMP_MM_TrackSelect_Video_State(videoState);
 
   frames = D230.highScore_transitionFrames[1] - 1;
   if (D230.highScore_transitionFrames[1] == 0)
@@ -241,7 +241,7 @@ DRAW_MENU:
 
   if (((iVar8 != -0x200) && (iVar8 != 0x200)) && ((iVar7 != -0xd8 && (iVar7 != 0xd8))))
   {
-    MM_HighScore_Draw(D230.highScore_trackCurr, D230.highScore_rowCurr, iVar8, iVar7);
+    DECOMP_MM_HighScore_Draw(D230.highScore_trackCurr, D230.highScore_rowCurr, iVar8, iVar7);
     if (D230.highScore_transitionFrames[2] != 0)
     {
       
@@ -270,7 +270,7 @@ DRAW_MENU:
   if (((iVar8 != iVar5) || (iVar7 != iVar6)) &&
       ((iVar5 != -0x200 && (((iVar5 != 0x200 && (iVar6 != -0xd8)) && (iVar6 != 0xd8))))))
   {
-    MM_HighScore_Draw(D230.highScore_trackDesired, D230.highScore_rowDesired, iVar5, iVar6);
+    DECOMP_MM_HighScore_Draw(D230.highScore_trackDesired, D230.highScore_rowDesired, iVar5, iVar6);
   }
   
   box.x = D230.transitionMeta_HighScores[0].currX - 0x14;

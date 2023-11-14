@@ -1,10 +1,10 @@
 #include <common.h>
 
-void MM_JumpTo_Title_FirstTime(void)
+void DECOMP_MM_JumpTo_Title_FirstTime(void)
 {
   struct GameTracker *gGT = sdata->gGT;
 
-  MM_ResetAllMenus();
+  DECOMP_MM_ResetAllMenus();
 
   MainStats_ClearBattleVS();
 

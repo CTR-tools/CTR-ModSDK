@@ -34,7 +34,7 @@ void DECOMP_MM_TrackSelect_Init()
 	}
 
 	// Loop through all tracks until an unlocked track is found
-	while (!MM_TrackSelect_boolTrackOpen(&selectMenu[D230.menubox_trackSelect.rowSelected]))
+	while (!DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[D230.menubox_trackSelect.rowSelected]))
 	{
 		D230.menubox_trackSelect.rowSelected++;
 
@@ -47,5 +47,5 @@ void DECOMP_MM_TrackSelect_Init()
 
 	D230.trackSel_currTrack = D230.menubox_trackSelect.rowSelected;
 
-	MM_TrackSelect_Video_SetDefaults();
+	DECOMP_MM_TrackSelect_Video_SetDefaults();
 }

@@ -2,7 +2,7 @@
 
 #define ushort u_short
 
-void MM_Battle_MenuBox(void)
+void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 {
     char numPlyr;
     ushort uVar4;
@@ -50,7 +50,7 @@ void MM_Battle_MenuBox(void)
             // if transitioning in
             if (D230.battle_transitionState == 0)
             {
-                MM_TransitionInOut(&D230.transitionMeta_battle[0], (int)D230.battle_transitionFrames, 8);
+                DECOMP_MM_TransitionInOut(&D230.transitionMeta_battle[0], (int)D230.battle_transitionFrames, 8);
 
                 // reduce frames
                 sVar6 = D230.battle_transitionFrames - 1;
@@ -69,8 +69,7 @@ void MM_Battle_MenuBox(void)
             // if transitioning out
             if (D230.battle_transitionState == 2)
             {
-                // MM_TransitionInOut
-                MM_TransitionInOut(&D230.transitionMeta_battle[0], (int)D230.battle_transitionFrames, 8);
+                DECOMP_MM_TransitionInOut(&D230.transitionMeta_battle[0], (int)D230.battle_transitionFrames, 8);
 
                 // count frames
                 D230.battle_transitionFrames++;
@@ -91,7 +90,7 @@ void MM_Battle_MenuBox(void)
 
                     // == else goBack ==
 
-                    MM_TrackSelect_Init();
+                    DECOMP_MM_TrackSelect_Init();
 
                     // change desiredMenuBox to Track Selection
                     sdata->ptrDesiredMenuBox = &D230.menubox_trackSelect;
@@ -732,7 +731,7 @@ LAB_800b25f0:
                     sVar6 = (short)iVar13;
                     iVar13 = iVar13 + 0x2a;
 
-                    MM_Battle_DrawIcon_Character(
+                    DECOMP_MM_Battle_DrawIcon_Character(
 						gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar16]].iconID],
 						(int)D230.transitionMeta_battle[4].currX + (int)sVar6,
 						(int)D230.transitionMeta_battle[4].currY + (int)sVar20 + 6,
@@ -765,11 +764,7 @@ LAB_800b25f0:
         local_50.y = D230.transitionMeta_battle[4].currY + sVar20 + 3;
 
         CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
-
                              gGT->backBuffer->otMem.startPlusFour,
-
-                             // pointer to PrimMem struct
-
                              &gGT->backBuffer->primMem);
     }
 	
@@ -782,9 +777,11 @@ LAB_800b25f0:
     MENUBOX_DrawInnerRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
     // "WEAPONS:"
-    DecalFont_DrawLine(sdata->lngStrings[0x99],
-                       (int)(((u_int)D230.transitionMeta_battle[7].currX + 0x8c) * 0x10000) >> 0x10,
-                       (int)(short)(D230.transitionMeta_battle[7].currY + sVar20 + 0x44), 1, 0x4000);
+    DecalFont_DrawLine(
+		sdata->lngStrings[0x99],
+		D230.transitionMeta_battle[7].currX + 0x8c,
+		D230.transitionMeta_battle[7].currY + sVar20 + 0x44,
+		1, 0x4000);
 
     // make flashing color for error message
 
@@ -859,10 +856,8 @@ LAB_800b25f0:
         // 0x100 for halfway on the X-axis,
         // flashing sVar6 color
 
-        DecalFont_DrawLine(sdata->lngStrings[j], 0x100, (int)(short)(sVar20 + 0x6a), 1,
-                           (int)sVar6);
-        DecalFont_DrawLine(sdata->lngStrings[i], 0x100, (int)(short)(sVar20 + 0x7a), 1,
-                           (int)sVar6);
+        DecalFont_DrawLine(sdata->lngStrings[j], 0x100, sVar20 + 0x6a, 1, (int)sVar6);
+        DecalFont_DrawLine(sdata->lngStrings[i], 0x100, sVar20 + 0x7a, 1, (int)sVar6);
     }
     i = 0;
     local_40.w = 0x140;
@@ -900,16 +895,17 @@ LAB_800b25f0:
             DecalFont_DrawLine(&R230.s_3[0], iVar13, j, 2, uVar17);
         }
 
-        MM_Battle_DrawIcon_Weapon(gGT->ptrIcons[D230.battleWeaponsEnabled[iVar8*2+1]],
-                                  iVar13, j,
+        DECOMP_MM_Battle_DrawIcon_Weapon(
+			gGT->ptrIcons[D230.battleWeaponsEnabled[iVar8*2+1]],
+            iVar13, j,
 
-                                  // pointer to PrimMem struct
-                                  &gGT->backBuffer->primMem,
+            // pointer to PrimMem struct
+            &gGT->backBuffer->primMem,
 
-                                  // pointer to OT mem
-                                  gGT->tileView_UI.ptrOT,
+            // pointer to OT mem
+            gGT->tileView_UI.ptrOT,
 
-                                  1, 0x1000, 1, color);
+            1, 0x1000, 1, color);
     }
 
     if ((u_int)sdata->battleSetupRowHighlighted - 3 < 2)
@@ -936,10 +932,8 @@ LAB_800b25f0:
     local_58.w = local_40.w - 6;
     local_58.h = local_40.h - 4;
 
-    CTR_Box_DrawClearBox(&local_58, &D230.color3[0], TRANS_50_DECAL,
+    CTR_Box_DrawClearBox(&local_58, &D230.color3, TRANS_50_DECAL,
                          gGT->backBuffer->otMem.startPlusFour,
-
-                         // pointer to PrimMem struct
                          &gGT->backBuffer->primMem);
 
     MENUBOX_DrawInnerRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);

@@ -115,7 +115,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
     }
   }
 
-  MM_Title_CameraMove(obj, timer);
+  DECOMP_MM_Title_CameraMove(obj, timer);
 
   // increment frame counter
   timer = D230.timerInTitle + 1;

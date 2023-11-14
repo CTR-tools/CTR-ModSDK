@@ -1,6 +1,7 @@
 #include <common.h>
 
-void DECOMP_MM_Characters_HideDrivers(void) {
+void DECOMP_MM_Characters_HideDrivers(void) 
+{
   char i;
   struct GameTracker *gGT = sdata->gGT;
 

@@ -1,6 +1,7 @@
 #include <common.h>
 
-void DECOMP_MM_Characters_RestoreIDs(void) {
+void DECOMP_MM_Characters_RestoreIDs(void) 
+{
   struct GameTracker *gGT = sdata->gGT;
   short *currID;
   int iVar3;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MM_HighScore_Init(void)
+void DECOMP_MM_HighScore_Init(void)
 {
   D230.highScore_transitionState = ENTERING_MENU;
   D230.highScore_transitionFrames[0] = 0xc;
@@ -8,5 +8,5 @@ void MM_HighScore_Init(void)
   D230.highScore_rowCurr = 0;
 
   // reset all video variables
-  MM_TrackSelect_Video_SetDefaults();
+  DECOMP_MM_TrackSelect_Video_SetDefaults();
 }

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MM_Scrapbook_Init(void)
+void DECOMP_MM_Scrapbook_Init(void)
 {
     D230.scrapbookState = 0;
 

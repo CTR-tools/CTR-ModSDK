@@ -742,9 +742,9 @@ struct OverlayDATA_230
 	// 800b58c4 - UsaRetail
 	// 800b6104 - EurRetail
 	// 800b9968 - JpnRetail
-	char color1[4];
-	char color2[4];
-	char color3[4];
+	int color1;
+	int color2;
+	int color3;
 
 	// ================ High Score CONST ==================
 

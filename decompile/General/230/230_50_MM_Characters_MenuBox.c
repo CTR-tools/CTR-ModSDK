@@ -3,7 +3,7 @@
 // character selection menu, 
 // MENUBOX_FuncPtr for menuBox: 0x800b46b4;
 
-void MM_Characters_MenuBox()
+void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 {
 	u_char numPlyrNextGame;
 	int bVar2;
@@ -63,7 +63,7 @@ void MM_Characters_MenuBox()
 	// if menu is not in focus
 	if (D230.isMenuTransitioning != 1) 
 	{
-		MM_TransitionInOut(D230.ptrTransitionMeta, (int)D230.transitionFrames, 8);
+		DECOMP_MM_TransitionInOut(D230.ptrTransitionMeta, (int)D230.transitionFrames, 8);
 	}
 
 	DECOMP_MM_Characters_SetMenuLayout();
@@ -103,7 +103,7 @@ void MM_Characters_MenuBox()
 			// if returning to main menu
 			if (D230.movingToTrackMenu == 0) 
 			{
-				MM_JumpTo_Title_Returning();
+				DECOMP_MM_JumpTo_Title_Returning();
 				return;
 			}
 		
@@ -111,13 +111,13 @@ void MM_Characters_MenuBox()
 			if ((gGT->gameMode2 & CUP_ANY_KIND) != 0) 
 			{
 				sdata->ptrDesiredMenuBox = &D230.menubox_cupSelect;
-				MM_CupSelect_Init();
+				DECOMP_MM_CupSelect_Init();
 				return;
 			}
 		
 			// if going to track selection
 			sdata->ptrDesiredMenuBox = &D230.menubox_trackSelect;
-			MM_TrackSelect_Init();
+			DECOMP_MM_TrackSelect_Init();
 			return;
 		}
 	}

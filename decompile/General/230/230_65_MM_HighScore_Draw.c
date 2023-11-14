@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int posY)
+void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int posY)
 {
     char i;
     short numColor;
@@ -70,7 +70,8 @@ void MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int pos
     u_int iconColor = D230.highscore_iconColor;
 
 	// "BEST TRACK TIMES"
-    MM_HighScore_Text3D(sdata->lngStrings[0xb3], 
+    DECOMP_MM_HighScore_Text3D(
+		sdata->lngStrings[0xb3], 
 		D230.transitionMeta_HighScores[1].currX + (uVar10 + 0x20), 
 		D230.transitionMeta_HighScores[1].currY + (uVar9 + 0x2b), 
 		FONT_SMALL, 0);
@@ -113,14 +114,14 @@ void MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int pos
         }
 		
         // "BEST LAP TIME:"
-        MM_HighScore_Text3D(
+        DECOMP_MM_HighScore_Text3D(
 			sdata->lngStrings[0xb4], 
 			D230.transitionMeta_HighScores[7].currX + (uVar10 + 0x124), 
 			D230.transitionMeta_HighScores[7].currY + (uVar9 + 0x2b), 
 			FONT_SMALL, 0);
 
         // Character Name
-        MM_HighScore_Text3D(
+        DECOMP_MM_HighScore_Text3D(
 			entry[0].name,
 			D230.transitionMeta_HighScores[7].currX + (uVar10 + 0x160),
 			D230.transitionMeta_HighScores[7].currY + (uVar9 + 0x39),
@@ -128,7 +129,7 @@ void MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int pos
 			entry[0].characterID + 5);
 
         // Draw time string
-        MM_HighScore_Text3D(
+        DECOMP_MM_HighScore_Text3D(
 			MENUBOX_DrawTime(entry[0].time),
 			D230.transitionMeta_HighScores[7].currX + (uVar10 + 0x160),
 			D230.transitionMeta_HighScores[7].currY + (uVar9 + 0x4a),
@@ -161,7 +162,7 @@ void MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int pos
 			1, 0x1000);
 
         // draw the name string
-        MM_HighScore_Text3D(
+        DECOMP_MM_HighScore_Text3D(
 			entry[i+1].name,
 			D230.transitionMeta_HighScores[j].currX + uVar10 + 0x5c,
 			D230.transitionMeta_HighScores[j].currY + uVar9 + (i * 0x1f) + 0x39,
@@ -169,7 +170,7 @@ void MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int pos
 			entry[i+1].characterID + 5);
 
         // draw the Time string
-        MM_HighScore_Text3D(
+        DECOMP_MM_HighScore_Text3D(
 			MENUBOX_DrawTime(entry[i+1].time),
 			D230.transitionMeta_HighScores[j].currX + uVar10 + 0x5c,
 			D230.transitionMeta_HighScores[j].currY + uVar9 + (i * 0x1f) + 0x4a,
@@ -181,7 +182,7 @@ void MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int pos
     videoBox.x = D230.transitionMeta_HighScores[9].currX + offsetX + 0x124;
     videoBox.y = D230.transitionMeta_HighScores[9].currY + offsetY + 0x5a;
 
-    MM_TrackSelect_Video_Draw(
+    DECOMP_MM_TrackSelect_Video_Draw(
 		&videoBox, &D230.arcadeTracks, trackIndex, 
 		(D230.highScore_transitionState == EXITING_MENU), 0);
 }

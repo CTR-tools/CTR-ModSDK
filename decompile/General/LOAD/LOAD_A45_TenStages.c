@@ -1,11 +1,6 @@
 #include <common.h>
 
-void MM_JumpTo_Title_FirstTime();
-void MM_JumpTo_Characters();
-void MM_JumpTo_TrackSelect();
-void MM_JumpTo_BattleSetup();
 void CS_Garage_Init();
-void MM_JumpTo_Scrapbook();
 
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
 {
@@ -319,12 +314,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// all these are 230, except for adv garage in 233
 				switch(sdata->mainMenuState)
 				{
-					case 0:	MM_JumpTo_Title_FirstTime();	break;
-					case 1:	MM_JumpTo_Characters();			break;
-					case 2:	MM_JumpTo_TrackSelect();		break;
-					case 3:	MM_JumpTo_BattleSetup();		break; 
-					case 4:	CS_Garage_Init();				break;
-					case 5:	MM_JumpTo_Scrapbook();			break;
+					case 0:	DECOMP_MM_JumpTo_Title_FirstTime();	break;
+					case 1:	DECOMP_MM_JumpTo_Characters();		break;
+					case 2:	DECOMP_MM_JumpTo_TrackSelect();		break;
+					case 3:	DECOMP_MM_JumpTo_BattleSetup();		break; 
+					case 4:	CS_Garage_Init();					break;
+					case 5:	DECOMP_MM_JumpTo_Scrapbook();		break;
 				}
 			}
 			#endif

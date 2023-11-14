@@ -1,10 +1,5 @@
 #include <common.h>
 
-void MM_TransitionInOut(struct TransitionMeta*, int, int);
-void MM_Characters_RestoreIDs();
-void MM_Battle_Init();
-char MM_TrackSelect_boolTrackOpen(void*);
-
 void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 {
 	char bVar1;
@@ -53,7 +48,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				sdata->errorMessagePosIndex = 2;
 			}
 
-			MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, 8);
+			DECOMP_MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, 8);
 			elapsedFrames--;
 
 			// ran out of frames
@@ -66,7 +61,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		// transitioning out
 		else if (D230.trackSel_transitionState == EXITING_MENU)
 		{
-			MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, 8);
+			DECOMP_MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, 8);
 			elapsedFrames++;
 
 			if (elapsedFrames > 12)
@@ -76,7 +71,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				{
 					// return to character selection
 					sdata->ptrDesiredMenuBox = &D230.menubox_characterSelect;
-					MM_Characters_RestoreIDs();
+					DECOMP_MM_Characters_RestoreIDs();
 					return;
 				}
 
@@ -87,7 +82,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				{
 					// open weapon selection menu
 					sdata->ptrDesiredMenuBox = &D230.menubox_battleWeapons;
-					MM_Battle_Init();
+					DECOMP_MM_Battle_Init();
 					return;
 				}
 
@@ -159,7 +154,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 						// set to the last track
 						currTrack = numTracks - 1;
 					
-				} while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
+				} while (!DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
 				
 				D230.trackSel_currTrack = currTrack;
 				D230.trackSel_changeTrack_frameCount = 3;
@@ -180,7 +175,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 						// set to the first trrack
 						currTrack = 0;
 
-				} while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
+				} while (!DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
 				
 				D230.trackSel_currTrack = currTrack;
 				D230.trackSel_changeTrack_frameCount = 3;
@@ -304,7 +299,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		uVar14 = 1;
 	}
 
-	MM_TrackSelect_Video_State(uVar14);
+	DECOMP_MM_TrackSelect_Video_State(uVar14);
 
 	uVar15 = (u_int)numTracks;
 	gGT->currLEV = selectMenu[mb->rowSelected].levID;
@@ -320,7 +315,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				iVar10 = uVar15 - 1;
 			}
 
-			uVar8 = MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
+			uVar8 = DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
 
 			iVar9 = iVar10 - 1;
 		} while ((uVar8 & 0xffff) == 0);
@@ -516,7 +511,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			{
 				iVar10 = 0;
 			}
-			uVar8 = MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
+			uVar8 = DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
 			
 		} while ((uVar8 & 0xffff) == 0);
 
@@ -634,11 +629,13 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 					);
 				}
 			}
-			MM_TrackSelect_Video_Draw
+			
+			DECOMP_MM_TrackSelect_Video_Draw
 			(
 				&p, selectMenu, (int)(short)D230.trackSel_currTrack,
 				(u_int)(D230.trackSel_transitionState == EXITING_MENU), 0
 			);
+			
 			return;
 		}
 	} while (true);

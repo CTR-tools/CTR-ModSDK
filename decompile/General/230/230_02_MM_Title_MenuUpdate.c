@@ -49,7 +49,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     D230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS); 
 	D230.menubox_mainMenu.state |= EXECUTE_FUNCPTR;
 
-	MM_TransitionInOut(&D230.transitionMeta_Menu[0], D230.countMeta0xD, D230.title_numTransition);
+	DECOMP_MM_TransitionInOut(&D230.transitionMeta_Menu[0], D230.countMeta0xD, D230.title_numTransition);
 
     // If the animation ends
     if (D230.countMeta0xD == 0)
@@ -82,7 +82,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 
     // assume D230.MM_State = 3
     // if you are returning from another menu
-	MM_TransitionInOut(&D230.transitionMeta_Menu[0], D230.countMeta0xD, D230.title_numTransition);
+	DECOMP_MM_TransitionInOut(&D230.transitionMeta_Menu[0], D230.countMeta0xD, D230.title_numTransition);
 
     // If "fade-in" animation from other menu is done
     if (D230.countMeta0xD == 0)
@@ -103,8 +103,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // assume D230.MM_State = 2
   // If you are transitioning out
 
-  // MM_TransitionInOut
-  MM_TransitionInOut(&D230.transitionMeta_Menu[0], D230.countMeta0xD, D230.title_numTransition);
+  DECOMP_MM_TransitionInOut(&D230.transitionMeta_Menu[0], D230.countMeta0xD, D230.title_numTransition);
 
   // Increment frame timer, increase time left in "fade-in"
   // animation, which plays it in reverse, as "fade-out"
@@ -117,7 +116,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // If you are transitioning out of the menu,
   // and if the "fade-out" animation is done,
   // time to figure out where you're going next
-  MM_Title_CameraReset();
+  DECOMP_MM_Title_CameraReset();
 
   switch (D230.desiredMenu)
   {
@@ -159,7 +158,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // high score menu
   case 3:
 
-    MM_HighScore_Init();
+    DECOMP_MM_HighScore_Init();
 
     // Go to high score menu
     sdata->ptrDesiredMenuBox = &D230.menubox_highScores;

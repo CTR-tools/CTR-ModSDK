@@ -13,10 +13,8 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     mainMenu->rows = &D230.rows_mainMenu_WithScrapbook[0];
 
   DECOMP_MM_ParseCheatCodes();
-
-  MM_ToggleRows_Difficulty();
-
-  MM_ToggleRows_PlayerCount();
+  DECOMP_MM_ToggleRows_Difficulty();
+  DECOMP_MM_ToggleRows_PlayerCount();
 
   // If you are at the highest hierarchy level of main menu
   if (mainMenu->unk1e == 1)
@@ -66,7 +64,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     }
   }
 
-  MM_Title_Init();
+  DECOMP_MM_Title_Init();
 
   // if drawing ptrNextBox_InHierarchy
   if ((mainMenu->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)

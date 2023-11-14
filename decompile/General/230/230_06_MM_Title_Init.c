@@ -1,7 +1,5 @@
 #include <common.h>
 
-int MM_Title_ThTick(struct Thread *);
-
 void DECOMP_MM_Title_Init(void)
 {
   struct GameTracker *gGT = sdata->gGT;
@@ -38,7 +36,7 @@ void DECOMP_MM_Title_Init(void)
             NONE,
             MEDIUM,
             OTHER),
-        MM_Title_ThTick, 0, 0);
+        DECOMP_MM_Title_ThTick, 0, 0);
 
     title = t->object;
 
@@ -80,6 +78,6 @@ void DECOMP_MM_Title_Init(void)
         idpp[m].tileView = 0;
       }
     }
-    MM_Title_CameraMove(title, 0);
+    DECOMP_MM_Title_CameraMove(title, 0);
   }
 }

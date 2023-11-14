@@ -2,8 +2,6 @@
 
 void DECOMP_MM_HighScore_Text3D(char *string, int posX, int posY, short font, u_int flags)
 {
-    // Used in High Score Menu
-
     // draw a string
     DecalFont_DrawLine(string, posX, posY, font, flags);
 
