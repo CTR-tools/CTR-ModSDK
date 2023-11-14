@@ -2,7 +2,7 @@
 #include "RaceOptions.h"
 
 u_int UDCTRM_RO_rowSelected = 0; // race options menu row, should start at 0
-u_char UDCTRM_RO_numLaps[4] = {1, 3, 5, 7}; // accepted values for lap option, just the lap numbers from the og game
+u_char UDCTRM_RO_numLaps[4] = {1, 3, 5, 7}; // accepted values for laps option, just the lap amounts from the og game
 u_int UDCTRM_RO_numLapsIndex = 1; // number of laps should be 3 by default
 extern u_int UDCTRM_RF_blueFireMode; // found in BlueFireInt.c
 extern u_int UDCTRM_RO_isOpen; // found in trackselect menubox... for now?
