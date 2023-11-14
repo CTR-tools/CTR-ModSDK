@@ -10,7 +10,7 @@ void MM_JumpTo_Title_FirstTime(void)
 
     sdata->ptrActiveMenuBox = MM_Menubox_LanguageBoot(gGT);
 
-    OVR_230.unkTimerMM = 0;
+    OVR_230.timerInTitle = 0;
 
     // first time in main menu
     // (play crash trophy anim)

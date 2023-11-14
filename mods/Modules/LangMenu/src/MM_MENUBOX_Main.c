@@ -23,7 +23,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
         // main menu, "title" exists, and timer >= 230
         (OVR_230.MM_State == 1) &&
         (OVR_230.titleObj != NULL) &&
-        (229 < OVR_230.unkTimerMM))
+        (229 < OVR_230.timerInTitle))
     {
 
       // "TM" trademark string
@@ -77,7 +77,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   MM_Title_Init();
 
   if ((mainMenu->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)
-    OVR_230.unkTimerMM = 1000;
+    OVR_230.timerInTitle = 1000;
 
   // if funcPtr is null
   if ((mainMenu->state & EXECUTE_FUNCPTR) == 0)

@@ -958,7 +958,7 @@ struct Overlay_230
 	// 800b5a14 - UsaRetail
 	// 800b62b8 - EurRetail
 	// 800b9ac0 - JpnRetail
-	int unkTimerMM;
+	int timerInTitle;
 
 	// 800b5a18 - UsaRetail
 	// 800b62bc - EurRetail
