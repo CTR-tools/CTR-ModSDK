@@ -14,7 +14,7 @@ void DECOMP_THREAD_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thr
 			
 			// recursively find all children
 			if(th->childThread != 0)
-				THREAD_CheckBloodlineForDead(&th->childThread, th->childThread);
+				DECOMP_THREAD_CheckBloodlineForDead(&th->childThread, th->childThread);
 			
 			// current thread is alive, doesn't need to be overwritten,
 			// next check sibling, so sibling will be replaced by the
@@ -29,7 +29,7 @@ void DECOMP_THREAD_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thr
 			if(th->childThread != 0)
 				DECOMP_THREAD_DestroyBloodline(th->childThread);
 			
-			THREAD_DestroySelf(th);
+			DECOMP_THREAD_DestroySelf(th);
 		
 			// replace thread with pointer to it's own sibling
 			*replaceSelf = th->siblingThread;

@@ -135,6 +135,25 @@ struct Thread
 	// this struct is 0x48 bytes large
 };
 
+// used for THREAD_CollidePointWithSelf
+struct Need_New_Name
+{
+	// 0x0
+	short pos[4];
+	
+	// 0x8
+	struct Thread* th;
+	
+	// 0xC
+	int radius;
+	
+	// 0x10
+	short distX;
+	short distY;
+	short distZ;
+	short padding;
+};
+
 // These are used to recursively
 // search threads with unidirectional
 // links (next = curr + 0x10)

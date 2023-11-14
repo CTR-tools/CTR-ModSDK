@@ -1,23 +1,5 @@
 #include <common.h>
 
-struct Need_New_Name
-{
-	// 0x0
-	short pos[4];
-	
-	// 0x8
-	struct Thread* th;
-	
-	// 0xC
-	int radius;
-	
-	// 0x10
-	short distX;
-	short distY;
-	short distZ;
-	short padding;
-};
-
 void DECOMP_THREAD_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf)
 {
 	struct Instance* inst;

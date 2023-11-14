@@ -37,6 +37,39 @@ void DECOMP_cseq_opcode0a();
 void DECOMP_howl_InitGlobals(char* filename);
 void DECOMP_howl_LoadHeader(char* filename);
 
+// INSTANCE
+void DECOMP_INSTANCE_Birth(
+	struct Instance* inst, struct Model* model, char* name,
+	struct Thread* th, int flags);
+struct Instance* DECOMP_INSTANCE_Birth2D(
+	struct Model* model, char* name, struct Thread* th);
+struct Instance* DECOMP_INSTANCE_Birth3D(
+	struct Model* model, char* name, struct Thread* th);
+struct Instance* DECOMP_INSTANCE_BirthWithThread(
+	int modelID, char* name, int poolType, int bucket,
+	void* funcThTick, int objSize, struct Thread* parent);
+struct Instance* DECOMP_INSTANCE_BirthWithThread_Stack(int* spArr);
+void DECOMP_INSTANCE_Death(struct Instance* inst);
+u_short DECOMP_INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex);
+
+// JitPool
+int DECOMP_JitPool_Add(struct JitPool* AP);
+void DECOMP_JitPool_Clear(struct JitPool* AP);
+void DECOMP_JitPool_Init(struct JitPool* AP, 
+	int maxItems, int itemSize, char* name);
+void DECOMP_JitPool_Remove(struct JitPool* AP, struct Item* item);
+
+// LIST
+void DECOMP_LIST_AddBack(struct LinkedList* L, struct Item* I);
+void DECOMP_LIST_AddFront(struct LinkedList* L, struct Item* I);
+void DECOMP_LIST_Clear(struct LinkedList* L);
+void* DECOMP_LIST_GetFirstItem(struct LinkedList* L);
+void* DECOMP_LIST_GetNextItem(struct Item* I);
+void DECOMP_LIST_Init(struct LinkedList* L, struct Item* item, int itemSize, int numItems);
+struct Item* DECOMP_LIST_RemoveBack(struct LinkedList* L);
+struct Item* DECOMP_LIST_RemoveFront(struct LinkedList* L);
+struct Item* DECOMP_LIST_RemoveMember(struct LinkedList* L, struct Item* I);
+
 void DECOMP_LOAD_Callback_Overlay_Generic();
 void DECOMP_LOAD_Callback_Overlay_230();
 void DECOMP_LOAD_Callback_Overlay_231();
@@ -88,6 +121,19 @@ void* DECOMP_MEMPACK_AllocHighMem(int allocSize);
 int DECOMP_MEMPACK_GetFreeBytes();
 void DECOMP_MEMPACK_PopState();
 int DECOMP_MEMPACK_PushState();
+
+struct Thread* DECOMP_THREAD_BirthWithObject(
+	int flags, void* funcThTick, 
+	char* name, struct Thread* relativeTh);
+void DECOMP_THREAD_CheckAllForDead();
+void DECOMP_THREAD_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
+void DECOMP_THREAD_CollidePointWithBucket(struct Thread* th, short* vec3_pos);
+void DECOMP_THREAD_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf);
+void DECOMP_THREAD_DestroyInstance(struct Thread* t);
+void DECOMP_THREAD_DestroyObject(void* object, int threadFlags);
+void DECOMP_THREAD_DestroySelf(struct Thread* t);
+void DECOMP_THREAD_DestroyTracker(struct Thread* t);
+struct Thread* DECOMP_THREAD_SearchForModel(struct Thread* th, int modelID);
 
 void DECOMP_TileView_Init(struct TileView* tileView, int id, int total);
 void DECOMP_TileView_SetPsyqGeom(struct TileView* tileView);

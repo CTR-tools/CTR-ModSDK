@@ -3,7 +3,7 @@
 /// @brief Obtain number of actual animation data frames in the first lod entry of the passed model.  
 /// @param pInstance - pointer to Instance
 /// @param animIndex - animation index to check
-u_short INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex)
+u_short DECOMP_INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex)
 {
     struct Model* pModel;
     struct ModelHeader* pHeader;

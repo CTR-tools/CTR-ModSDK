@@ -2,7 +2,7 @@
 
 void DECOMP_INSTANCE_Death(struct Instance* inst)
 {
-	JitPool_Remove(
+	DECOMP_JitPool_Remove(
 		&sdata->gGT->JitPools.instance,
 		inst);
 }
