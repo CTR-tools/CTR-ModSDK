@@ -23,6 +23,8 @@ common, 224, OVR_Region1, 0x0, General/224/224_Full.c
 common, 225, OVR_Region1, 0x0, General/225/225_Full.c
 
 // 230 (incomplete)
+common, 230, R230, 0x0, General/230/R230.c
+common, 230, D230, 0x0, General/230/D230.c
 common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/230_00_MM_Battle_DrawIcon_Character.c
 common, 230, MM_TransitionInOut, 0x0, General/230/230_01_MM_TransitionInOut.c
 common, 230, MM_Title_MenuUpdate, 0x0, General/230/230_02_MM_Title_MenuUpdate.c

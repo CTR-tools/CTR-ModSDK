@@ -1,20 +1,21 @@
-struct Overlay_230 o230 =
+#include <common.h>
+
+void MM_MENUBOX_Main();
+void MM_MENUBOX_1p2p();
+void MM_MENUBOX_2p3p4p();
+void MM_MENUBOX_Difficulty();
+void MM_MENUBOX_SingleCup();
+void MM_MENUBOX_NewLoad();
+void MM_Characters_MenuBox();
+void MM_TrackSelect_MenuBox();
+void MM_CupSelect_MenuBox();
+void MM_Battle_MenuBox();
+void MM_HighScore_MenuBox();
+void MM_Scrapbook_PlayMovie();
+void MM_Battle_CloseSubMenu();
+
+struct OverlayDATA_230 D230 =
 {
-#if 0
-	.s_title = "title",
-
-	.characterID_default = 
-	{
-		0, 1, 2, 3,
-		4, 5, 6, 7
-	},
-
-	.s_4 = "4",
-	.s_3 = "3",
-	.s_2 = "2",
-	.s_1 = "1",
-#endif
-
 	// MAIN MENU CONSTS
 	
 	.rows_mainMenu_Basic =
@@ -48,7 +49,7 @@ struct Overlay_230 o230 =
 		.posY_curr = 0x6c,
 		
 		.state = 0x2b,
-		.rows = rows_mainMenu_Basic,
+		.rows = &D230.rows_mainMenu_Basic,
 		.funcPtr = MM_MENUBOX_Main,
 		
 		.unk1e = 1,
@@ -66,7 +67,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = 0x53,
 		
 		.state = 8,
-		.rows = rows_players1P2P,
+		.rows = &D230.rows_players1P2P,
 		.funcPtr = MM_MENUBOX_1p2p,	
 	},
 	
@@ -83,7 +84,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = 0x53,
 		
 		.state = 8,
-		.rows = rows_players2P3P4P,
+		.rows = &D230.rows_players2P3P4P,
 		.funcPtr = MM_MENUBOX_2p3p4p,	
 	},
 	
@@ -100,7 +101,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = 0x159,
 		
 		.state = 1,
-		.rows = rows_difficulty,
+		.rows = &D230.rows_difficulty,
 		.funcPtr = MM_MENUBOX_Difficulty,	
 	},
 	
@@ -116,7 +117,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = 0x15D,
 		
 		.state = 1,
-		.rows = rows_raceType,
+		.rows = &D230.rows_raceType,
 		.funcPtr = MM_MENUBOX_SingleCup,	
 	},
 	
@@ -132,7 +133,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = -1,
 		
 		.state = 9,
-		.rows = rows_adventure,
+		.rows = &D230.rows_adventure,
 		.funcPtr = MM_MENUBOX_NewLoad,	
 	},
 
@@ -155,7 +156,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = -1,
 		
 		.state = 0x400001,
-		.rows = rows_lngBoot,
+		.rows = &D230.rows_lngBoot,
 		.funcPtr = MM_MENUBOX_Language
 	},
 
@@ -191,7 +192,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = -1,
 		
 		.state = 0x2408,
-		.rows = rows_cupSelect,
+		.rows = &D230.rows_cupSelect,
 		.funcPtr = MM_CupSelect_MenuBox,	
 	},
 	
@@ -221,15 +222,15 @@ struct Overlay_230 o230 =
 	
 	.ptrMenuBoxes =
 	{
-		&menubox_mainMenu,
-		&menubox_players1P2P,
-		&menubox_players2P3P4P,
-		&menubox_adventure,
-		&menubox_characterSelect,
-		&menubox_trackSelect,
-		&menubox_cupSelect,
-		&menubox_battleWeapons,
-		&menubox_highScores
+		&D230.menubox_mainMenu,
+		&D230.menubox_players1P2P,
+		&D230.menubox_players2P3P4P,
+		&D230.menubox_adventure,
+		&D230.menubox_characterSelect,
+		&D230.menubox_trackSelect,
+		&D230.menubox_cupSelect,
+		&D230.menubox_battleWeapons,
+		&D230.menubox_highScores
 	},
 	
 	.titleInstances =
@@ -326,14 +327,14 @@ struct Overlay_230 o230 =
 	.ptrSelectWindowPos =
 	{
 		// full menus, 1p2p3p4p
-		&characterSelectWindowPos[0],
-		&characterSelectWindowPos[2],
-		&characterSelectWindowPos[6],
-		&characterSelectWindowPos[9],
+		&D230.characterSelectWindowPos[0],
+		&D230.characterSelectWindowPos[2],
+		&D230.characterSelectWindowPos[6],
+		&D230.characterSelectWindowPos[9],
 		
 		// small menus, 1p2p
-		&characterSelectWindowPos[1],
-		&characterSelectWindowPos[4],
+		&D230.characterSelectWindowPos[1],
+		&D230.characterSelectWindowPos[4],
 	},
 	
 	.windowW =
@@ -499,12 +500,12 @@ struct Overlay_230 o230 =
 	
 	.ptrCsmArr = 
 	{
-		&csm_1P2P,
-		&csm_1P2P,
-		&csm_3P,
-		&csm_4P,
-		&csm_1P2P_limited,
-		&csm_1P2P_limited
+		&D230.csm_1P2P,
+		&D230.csm_1P2P,
+		&D230.csm_3P,
+		&D230.csm_4P,
+		&D230.csm_1P2P_limited,
+		&D230.csm_1P2P_limited
 	},
 
 	.characterIcon = 
@@ -592,10 +593,10 @@ struct Overlay_230 o230 =
 
 	.ptr_transitionMeta_csm = 
 	{
-		&transitionMeta_csm_1P2P,
-		&transitionMeta_csm_1P2P,
-		&transitionMeta_csm_3P,
-		&transitionMeta_csm_4P
+		&D230.transitionMeta_csm_1P2P,
+		&D230.transitionMeta_csm_1P2P,
+		&D230.transitionMeta_csm_3P,
+		&D230.transitionMeta_csm_4P
 	},
 
 	.csm_instPos = {0, 0x28, 0xFA, 0},
@@ -608,10 +609,10 @@ struct Overlay_230 o230 =
 
 	.PlayerNumberStrings = 
 	{
-		&s_1,
-		&s_2,
-		&s_3,
-		&s_4
+		&R230.s_1,
+		&R230.s_2,
+		&R230.s_3,
+		&R230.s_4
 	},
 
 	.getNextDriver1 = {2, 2, 1, 1},
@@ -721,8 +722,8 @@ struct Overlay_230 o230 =
 		.posY_curr = 0x7c,
 
 		.state = 0x81,
-		.rows = menurow_LapSel,
-	}
+		.rows = &D230.menurow_LapSel,
+	},
 
 	.videoCol = 0x808080,
 
@@ -753,7 +754,7 @@ struct Overlay_230 o230 =
 
 	.cupSel_StarColorIndex = {0x11, 0xE, 0x16, 0},
 
-	.cupSel_StarUnlockFlag = (0xC, 0x10, 0x14, 0),
+	.cupSel_StarUnlockFlag = {0xC, 0x10, 0x14, 0},
 
 	.cupSel_Color = 0xC0C0C0,
 
@@ -787,7 +788,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = battleType_rows,
+		.rows = &D230.battleType_rows,
 		.funcPtr = MM_Battle_CloseSubMenu
 	},
 
@@ -804,7 +805,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = battleLengthLifeTime_rows,
+		.rows = &D230.battleLengthLifeTime_rows,
 		.funcPtr = MM_Battle_CloseSubMenu
 	},
 
@@ -821,7 +822,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = battleLengthTimeTime_rows,
+		.rows = &D230.battleLengthTimeTime_rows,
 		.funcPtr = MM_Battle_CloseSubMenu
 	},
 
@@ -838,7 +839,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = battleLengthPoints_rows,
+		.rows = &D230.battleLengthPoints_rows,
 		.funcPtr = MM_Battle_CloseSubMenu
 	},
 
@@ -855,7 +856,7 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = battleLengthLifeLife_rows,
+		.rows = &D230.battleLengthLifeLife_rows,
 		.funcPtr = MM_Battle_CloseSubMenu
 	},
 
@@ -870,18 +871,18 @@ struct Overlay_230 o230 =
 		.stringIndexTitle = -1,
 
 		.state = 0x10280,
-		.rows = battleStartGame_rows,
+		.rows = &D230.battleStartGame_rows,
 		.funcPtr = MM_Battle_CloseSubMenu
 	},
 
 	.battleMenuBoxArray =
 	{
-		&battleType_box,
-		&battleLengthTimeTime_Box,
-		&battleLengthPoints_box,
-		&battleLengthLifeLife_box,
-		&battleLengthLifeTime_box
-	}
+		&D230.battleType_box,
+		&D230.battleLengthTimeTime_box,
+		&D230.battleLengthPoints_box,
+		&D230.battleLengthLifeLife_box,
+		&D230.battleLengthLifeTime_box
+	},
 
 	.battleWeaponsEnabled =
 	{
@@ -893,7 +894,7 @@ struct Overlay_230 o230 =
 		0x2000, 0x12
 	},
 
-	.FlagesGameMode1_BattleType = {0x4000,0x10000,0x8000}.
+	.FlagesGameMode1_BattleType = {0x4000,0x10000,0x8000},
 
 	.time_3_6_9 = {3,6,9},
 	.time_3_6_INF = {3,6,0xFF},
@@ -920,7 +921,7 @@ struct Overlay_230 o230 =
 		{256, 0, 1, 0, 0},
 		{256, 0, 0, 0, 0},
 		{0, 0, -1, 0, 0}
-	}
+	},
 
 	.colorIndexArray = {0xE, 0x16},
 
@@ -934,7 +935,7 @@ struct Overlay_230 o230 =
 		{0xB1, 0,2,0,0},
 		{0xB2, 1,2,0,0},
 		{-1}
-	}
+	},
 
 	.highScoreBox =
 	{
@@ -943,8 +944,8 @@ struct Overlay_230 o230 =
 		.posY_curr = 0xAF,
 
 		.state = 0x81,
-		.rows = highScoreRows
-	}
+		.rows = &D230.highScoreRows
+	},
 
 	.highScore_trackDesired = 0,
 	.highScore_rowDesired = 0,
@@ -974,7 +975,7 @@ struct Overlay_230 o230 =
 		.posY_curr = 118,
 		
 		.state = 0xC03,
-		.rows = rows_lngBoot,
+		.rows = &D230.rows_lngBoot,
 		.funcPtr = MM_MENUBOX_LanguageBoot
 	}
 
