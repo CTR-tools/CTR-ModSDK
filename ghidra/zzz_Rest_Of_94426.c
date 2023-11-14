@@ -7519,7 +7519,7 @@ LAB_800499e4:
 			// TransitionTo_MainMenu_Returning
             FUN_800b4334();
 
-			// GetMENUBOX_AdvNewLoad
+			// MM_AdvNewLoad_GetMenuBox
 			iVar10 = FUN_800ad980();
 
             *(uint *)(iVar10 + 8) = *(uint *)(iVar10 + 8) & 0xfffffffb;

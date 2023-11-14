@@ -867,16 +867,17 @@ LAB_800b25f0:
 
     // Loop through all 11 weapon icons
     for (i = 0; i < 11; i++)
-    {
+    {		
         iVar8 = (int)(short)i;
-        color = (u_int)D230.color1;
-        uVar17 = 4;
         j = (iVar8 / 6);
+
+        color = &D230.color1;
+        uVar17 = 4;
 
         // Check if this weapon is not enabled
         if ((gGT->battleSetup.enabledWeapons & D230.battleWeaponsEnabled[iVar8*2]) == 0)
         {
-            color = (u_int)D230.color2;
+            color = &D230.color2;
             uVar17 = 0x15;
         }
 

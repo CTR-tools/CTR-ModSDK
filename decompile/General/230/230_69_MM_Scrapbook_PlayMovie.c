@@ -1,12 +1,21 @@
 #include <common.h>
 
+// prevent compiler optimization from screwing us over,
+// it does not know VsyncCallback will change swapchainIndex,
+// never update the register, and crash the game
+DRAWENV* ScrapbookGetDrawEnv()
+{
+	struct GameTracker* gGT = sdata->gGT;
+	return &gGT->db[1 - gGT->swapchainIndex].drawEnv;
+}
+
 void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 {
     short lev;
     int cdPos;
 	int getButtonPress;
 	DRAWENV* ptrDrawEnv;
-    const CdlLOC cdLoc;
+    const CdlFILE cdlFile;
     struct GameTracker *gGT = gGT;
 	int isOn = TitleFlag_IsFullyOnScreen();
 
@@ -47,14 +56,14 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         // \TEST.STR;1
         // if file was found
-        if (CdSearchFile(&cdLoc, R230.s_teststr1) != 0)
+        if (CdSearchFile(&cdlFile, R230.s_teststr1) != 0)
         {
             SpuSetCommonCDVolume(sdata->vol_Music << 7, sdata->vol_Music << 7);
 
             // Alloc memory to store Scrapbook
             MM_Video_AllocMem(0x200, 0xd0, 10, 0x40, 1);
 
-            cdPos = CdPosToInt(&cdLoc);
+            cdPos = CdPosToInt(&cdlFile.pos);
 
             // scrapbook runs 15fps,
             // see bottom of Duckstation screen while running
@@ -81,12 +90,8 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         // keep doing DecodeFrame and VSync until done
         while (
 			
-			// This bugs for the same reason as RenderFrame_Vsync,
-			// register wont update caues modern GCC doesn't know
-			// swapchainIndex changes in VsyncCallback
-			
 			// gGT->DB[nextFrame] (swapchain flips in VsyncCallback)
-			ptrDrawEnv = &gGT->db[1 - gGT->swapchainIndex].drawEnv,
+			ptrDrawEnv = ScrapbookGetDrawEnv(),
             
 			MM_Video_DecodeFrame(
 				ptrDrawEnv->ofs[0],

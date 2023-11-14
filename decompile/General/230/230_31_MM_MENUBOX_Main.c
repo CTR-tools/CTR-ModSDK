@@ -19,7 +19,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   // If you are at the highest hierarchy level of main menu
   if (mainMenu->unk1e == 1)
   {
-    MM_Title_MenuUpdate();
+    DECOMP_MM_Title_MenuUpdate();
 
     if (
 		// main menu, "title" exists, and timer >= 230
