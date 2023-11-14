@@ -1,18 +1,20 @@
 #include <common.h>
 #include "RaceOptions.h"
 
-u_int UDCTRM_RO_rowSelected = 0;
-u_char UDCTRM_RO_numLaps[4] = {1, 3, 5, 7};
-u_int UDCTRM_RO_numLapsIndex = 1;
-extern u_int UDCTRM_RF_blueFireMode;
-extern u_int UDCTRM_RO_isOpen;
+u_int UDCTRM_RO_rowSelected = 0; // race options menu row, should start at 0
+u_char UDCTRM_RO_numLaps[4] = {1, 3, 5, 7}; // accepted values for lap option, just the lap numbers from the og game
+u_int UDCTRM_RO_numLapsIndex = 1; // number of laps should be 3 by default
+extern u_int UDCTRM_RF_blueFireMode; // found in BlueFireInt.c
+extern u_int UDCTRM_RO_isOpen; // found in trackselect menubox... for now?
 
 force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
 {
-	if (buttonsTapped & (BTN_L1 | BTN_R1 | BTN_L2 | BTN_R2 | BTN_UP | BTN_DOWN)) OtherFX_Play(0, 1);
-
+	// change row
 	if (buttonsTapped & (BTN_UP | BTN_DOWN))
 	{
+		// play sound for when you're moving around in the menu
+		OtherFX_Play(0, 1);
+
 		if (buttonsTapped & BTN_UP)
 		{
 			UDCTRM_RO_rowSelected = (UDCTRM_RO_rowSelected + (NUM_ROWS - 1)) % NUM_ROWS;
@@ -29,6 +31,8 @@ force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
 		switch (UDCTRM_RO_rowSelected)
 		{
 			case 0:
+				// number of laps
+				// we don't want players to change laps in time trial...
 				if (!(gGT->gameMode1 & TIME_TRIAL))
 				{
 					OtherFX_Play(1, 1);
@@ -37,17 +41,21 @@ force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
 				}
 				else
 				{
+					// denied!
 					OtherFX_Play(5, 1);
 				}
 				break;
 			case 1:
+				// toggle blue fire mode
 				UDCTRM_RF_blueFireMode = (UDCTRM_RF_blueFireMode + 1) % 3;
 				OtherFX_Play(1, 1);
 				break;
 			case 2:
+				// mirror mode -- not yet implemented
 				OtherFX_Play(5, 1);
 				break;
 			case 3:
+				// exit
 				OtherFX_Play(1, 1);
 				UDCTRM_RO_isOpen = false;
 				break;
@@ -56,13 +64,15 @@ force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
 
 	if (buttonsTapped & (BTN_SQUARE | BTN_TRIANGLE | BTN_START))
 	{
-		if (buttonsTapped & (BTN_SQUARE | BTN_TRIANGLE)) OtherFX_Play(2, 1);
-		else                                             OtherFX_Play(1, 1);
+		if (buttonsTapped & (BTN_SQUARE | BTN_TRIANGLE)) OtherFX_Play(2, 1); // back sound
+		else                                             OtherFX_Play(1, 1); // accept sound
 		
+		// this variable controls when the track select menubox function will draw the race options menu
 		UDCTRM_RO_isOpen = false;
 	}
 }
 
+// draw menu
 force_inline void DisplayMenuBox(struct GameTracker* gGT)
 {
 	u_int firstRowY = ((UDCTRM_RO_MenuBoxBG_y + 4) + 26);
@@ -89,12 +99,13 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT)
 	// Mirror Mode: "OFF"
 	DecalFont_DrawLine(sdata->lngStrings[597], optionTextPosX, firstRowY + (10 * 2) + 1, FONT_SMALL, WHITE | JUSTIFY_RIGHT);
 
-	MENUBOX_DrawInnerRect(&UDCTRM_RO_titleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour);
+	MENUBOX_DrawInnerRect(&UDCTRM_RO_titleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the line that's below the title
 	CTR_Box_DrawClearBox(&UDCTRM_RO_glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
 	MENUBOX_DrawInnerRect(&UDCTRM_RO_menuBoxBG, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the actual menubox background
 }
 
 // the MenuBox function
+// remember: this is a fake menubox. this doesn't make use of a menubox struct at all
 void UDCTRM_RaceOptions()
 {
 	ProcessInputs(sdata->gGT, sdata->gGamepads->gamepad[0].buttonsTapped);
