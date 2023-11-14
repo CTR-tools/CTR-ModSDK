@@ -1,6 +1,6 @@
 #include <common.h>
 
-extern u_int RF_blueFireMode;
+extern u_int UDCTRM_RF_blueFireMode;
 
 // OnCollide_Drivers
 // handle collision with turbo pads and robotcars
@@ -33,7 +33,7 @@ void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)
 		// If this is not an ordinary turbo pad
 		if ((stepFlagSet & 1) == 0) goto LAB_8005ec70;
 
-		if (RF_blueFireMode == 2) goto MyGoto;
+		if (UDCTRM_RF_blueFireMode == 2) goto MyGoto;
 
 		// set speed of turbo to normal speed
 		fireLevel = 0x100;

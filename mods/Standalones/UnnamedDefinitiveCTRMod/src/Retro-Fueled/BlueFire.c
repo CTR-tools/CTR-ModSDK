@@ -1,6 +1,6 @@
 #include <common.h>
 
-extern u_int RF_blueFireMode;
+extern u_int UDCTRM_RF_blueFireMode;
 
 u_long redFlames_clut[8] __attribute__ ((section (".data"))) = {0x80DA809A, 0x805A80BA, 0x811A803A, 0x819A81DA, 0x813A817A, 0x829A821A, 0x835A839A, 0x82DA831A};
 u_long blueFlames_clut[8] __attribute__ ((section (".data"))) = {0xFF25FF65, 0xFFA5FF45, 0xFEE5FFC5, 0xFE65FE25, 0xFEC5FE85, 0xFD65FDE5, 0xFCA5FC65, 0xFD25FCE5};
@@ -46,7 +46,7 @@ char blueFire = 0;
 
 void InjectBlueFire()
 {
-	if (!blueFire && RF_blueFireMode != 0)
+	if (!blueFire && UDCTRM_RF_blueFireMode != 0)
 	{
 		LoadImage(&flames_pos, blueFlames_clut);
 		LoadImage(&plumes_pos, bluePlumes_clut);

@@ -1,6 +1,6 @@
 #include <common.h>
 
-extern u_int RF_blueFireMode;
+extern u_int UDCTRM_RF_blueFireMode;
 
 // param1 - driver
 // param2 - reserves to add
@@ -262,7 +262,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// speed cap has been raised
 			(driver->reserves == 0) ||
 			(driver->fireSpeedCap < (short)newFireSpeedCap)
-		) || RF_blueFireMode < 1 &&
+		) || UDCTRM_RF_blueFireMode < 1 &&
 
 		// OR
 

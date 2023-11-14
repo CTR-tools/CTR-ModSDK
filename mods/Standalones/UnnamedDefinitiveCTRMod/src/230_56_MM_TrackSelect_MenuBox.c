@@ -5,11 +5,9 @@ void MM_Characters_RestoreIDs();
 void MM_Battle_Init();
 char MM_TrackSelect_boolTrackOpen(void*);
 
-void RaceOptions_FuncPtr(struct MenuBox* mb);
+void UDCTRM_RaceOptions();
 
-extern struct MenuBox RaceOptions;
-
-u_int RaceOptionsIsOpen = false;
+u_int UDCTRM_RO_isOpen = false;
 
 void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 {
@@ -144,7 +142,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 	currTrack = mb->rowSelected;
 
-	if (!(RaceOptionsIsOpen))
+	if (!(UDCTRM_RO_isOpen))
 	{
 		// if not changing levels
 		if (OVR_230.trackSel_changeTrack_frameCount == 0)
@@ -217,7 +215,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				if (!(gGT->gameMode1 & BATTLE_MODE))
 				{
 					OtherFX_Play(1, 1);
-					RaceOptionsIsOpen = true;
+					UDCTRM_RO_isOpen = true;
 				}
 				break;
 			default:
@@ -230,7 +228,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	}
 	else
 	{
-		RaceOptions_FuncPtr(&RaceOptions);
+		UDCTRM_RaceOptions();
 	}
 
 	// decrease frame from track list motion
@@ -248,7 +246,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	(
 		(OVR_230.trackSel_changeTrack_frameCount != 0) ||
 		(OVR_230.trackSel_transitionState == EXITING_MENU) ||
-		(RaceOptionsIsOpen != 0)
+		(UDCTRM_RO_isOpen != 0)
 	)
 	{
 		// transitioning,
