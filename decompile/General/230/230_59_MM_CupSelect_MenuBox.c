@@ -92,9 +92,12 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
     D230.cupSel_transitionFrames = elapsedFrames;
 
     // "SELECT CUP RACE"
-    DecalFont_DrawLine(sdata->lngStrings[0xBF],
-                       (D230.transitionMeta_cupSel[4].currX + 0x100),
-                       (D230.transitionMeta_cupSel[4].currY + 0x10), 1, 0xffff8000);
+    DECOMP_DecalFont_DrawLine(
+		sdata->lngStrings[0xBF],
+		(D230.transitionMeta_cupSel[4].currX + 0x100),
+		(D230.transitionMeta_cupSel[4].currY + 0x10), 
+		1, 0xffff8000);
+		
     // Loop through all four cups
     for (cupIndex = 0; cupIndex < 4; cupIndex++)
     {
@@ -112,18 +115,18 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         }
 
         // draw the name of the cup
-        DecalFont_DrawLine(sdata->lngStrings[data.ArcadeCups[cupIndex].lngIndex_CupName],
-                            
-                           (D230.transitionMeta_cupSel[cupIndex].currX + (cupIndex & 1) * 200 + 0xa2),
-                           (D230.transitionMeta_cupSel[cupIndex].currY + (cupIndex - (cupIndex >> 0xf) >> 1) * 0x54 + 0x44),
-                           3, txtColor);
+        DECOMP_DecalFont_DrawLine(
+			sdata->lngStrings[data.ArcadeCups[cupIndex].lngIndex_CupName],                  
+			(D230.transitionMeta_cupSel[cupIndex].currX + (cupIndex &1) * 200 + 0xa2),
+			(D230.transitionMeta_cupSel[cupIndex].currY + (cupIndex>>1) * 0x54 + 0x44),
+			3, txtColor);
     }
 
     // Loop through all four cups
     for (cupIndex = 0; cupIndex < 4; cupIndex++)
     {
-        startX = (short) D230.transitionMeta_cupSel[cupIndex].currX + (cupIndex & 1) * 200 + 0x4e;
-        startY = (short) D230.transitionMeta_cupSel[cupIndex].currY + (cupIndex - (cupIndex >> 0xf) >> 1) * 0x54 + 0x29;
+        startX = (short) D230.transitionMeta_cupSel[cupIndex].currX + (cupIndex &1) * 200 + 0x4e;
+        startY = (short) D230.transitionMeta_cupSel[cupIndex].currY + (cupIndex>>1) * 0x54 + 0x29;
 
         // loop through 3 stars to draw
         for (starIndex = 0; starIndex < 3; starIndex++)
@@ -143,21 +146,15 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
 				struct Icon** iconPtrArray =
 					ICONGROUP_GETICONS(gGT->iconGroup[5]);
 
-                DecalHUD_DrawPolyGT4(iconPtrArray[0x37],
-                                     (startX + (cupIndex & 1) * 0xCA - 0x16),
-                                     (startY + ((starIndex * 0x10) + 0x10)),
-
-                                     // pointer to PrimMem struct
-                                     &gGT->backBuffer->primMem,
-
-                                     // pointer to OT mem
-                                     gGT->tileView_UI.ptrOT,
-
-                                     // color data
-                                     starColor[0], starColor[1],
-                                     starColor[2], starColor[3],
-
-                                     0, FP(1.0));
+                DecalHUD_DrawPolyGT4(
+					iconPtrArray[0x37],
+					(startX + (cupIndex & 1) * 0xCA - 0x16),
+					(startY + ((starIndex * 0x10) + 0x10)),
+					&gGT->backBuffer->primMem,
+					gGT->tileView_UI.ptrOT,
+					starColor[0], starColor[1],
+					starColor[2], starColor[3],
+					0, FP(1.0));
             }
         }
 
@@ -165,21 +162,17 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         for (trackIndex = 0; trackIndex < 4; trackIndex++)
         {
             // Draw Icon of each track
-            MENUBOX_DrawPolyGT4(gGT->ptrIcons[data.ArcadeCups[cupIndex].CupTrack[trackIndex].iconID],
-                                (startX + (trackIndex & 1) * 0x54),
-                                (startY + (trackIndex >> 1) * 0x23),
-
-                                // pointer to PrimMem struct
-                                &gGT->backBuffer->primMem,
-
-                                // pointer to OT mem
-                                gGT->tileView_UI.ptrOT,
-
-                                D230.cupSel_Color,
-                                D230.cupSel_Color,
-                                D230.cupSel_Color,
-                                D230.cupSel_Color,
-                                0, FP(0.5));
+            MENUBOX_DrawPolyGT4(
+				gGT->ptrIcons[data.ArcadeCups[cupIndex].CupTrack[trackIndex].iconID],
+				(startX + (trackIndex &1) * 0x54),
+				(startY + (trackIndex>>1) * 0x23),
+				&gGT->backBuffer->primMem,
+				gGT->tileView_UI.ptrOT,
+				D230.cupSel_Color,
+				D230.cupSel_Color,
+				D230.cupSel_Color,
+				D230.cupSel_Color,
+				0, FP(0.5));
         }
 		
         if (cupIndex == mb->rowSelected)

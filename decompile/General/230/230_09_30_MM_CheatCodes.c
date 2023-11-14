@@ -466,10 +466,10 @@ void DECOMP_MM_ParseCheatCodes()
 	// so store this code here
 	#if 1
 	char* info = "Date/Time in CheatCodes.c";
-	DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, ORANGE);
-	DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, ORANGE);
-	DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, ORANGE);
-	DecalFont_DrawLine("50%", 		285, 206, FONT_SMALL, ORANGE);
+	DECOMP_DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, ORANGE);
+	DECOMP_DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, ORANGE);
+	DECOMP_DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, ORANGE);
+	DECOMP_DecalFont_DrawLine("50%", 		285, 206, FONT_SMALL, ORANGE);
 	#endif
 	
 	gpad = &sdata->gGamepads->gamepad[0];
@@ -534,7 +534,7 @@ void DECOMP_MM_ParseCheatCodes()
 		// if not spyro 2 cheat...
 		
 		// play cheat sound
-		OtherFX_Play(0x67, 1);
+		DECOMP_OtherFX_Play(0x67, 1);
 		
 		// apply cheat
 		*cheat->writeAddr |= cheat->addBits;

@@ -8,20 +8,26 @@ void DECOMP_MM_Title_Init(void)
   struct Title *title;
   char m, n;
 
-  if ((( // if "title" object is nullptr
-           (D230.titleObj == NULL) &&
-          // if you are in main menu
-          ((gGT->gameMode1 & MAIN_MENU) != 0)) &&
-          // You're not in transition between menus
-          (D230.MM_State != 2)) &&
-          (( // model ptr (Title blue Ring)
-          gGT->modelPtr[STATIC_RINGTOP] != 0 &&
-          // IntroCam ptr exists
-          (2 < gGT->level1->ptrSpawnType1->count))))
+  if 	( 
+			// if "title" object is nullptr
+			(D230.titleObj == NULL) &&
+          
+			// if you are in main menu
+			((gGT->gameMode1 & MAIN_MENU) != 0) &&
+          
+			// You're not in transition between menus
+			(D230.MM_State != 2) &&
+          
+			// model ptr (Title blue Ring)
+			(gGT->modelPtr[STATIC_RINGTOP] != 0) &&
+          
+			// IntroCam ptr exists
+			(gGT->level1->ptrSpawnType1->count > 2)
+		)
   {
 
     // freecam mode
-    gGT->cameraDC->cameraMode = 3;
+    gGT->cameraDC[0].cameraMode = 3;
 
     gGT->tileView[0].distanceToScreen_CURR = 450;
 

@@ -13,7 +13,7 @@ unsigned char DECOMP_MM_TransitionInOut(struct TransitionMeta* meta, int framesP
     if (framesLeft == 4)
     {
         // Play "swoosh" sound for menu transition
-        OtherFX_Play(0x65, 0);
+        DECOMP_OtherFX_Play(0x65, 0);
     }
 
 	// last member of array is null-terminated with 0xFFFF

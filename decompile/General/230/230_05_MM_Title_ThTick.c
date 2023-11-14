@@ -28,28 +28,21 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   if ((sdata->buttonTapPerPlayer[0] & 0x40070) != 0)
   {
     // clear gamepad input (for menus)
-    MENUBOX_ClearInput();
+    DECOMP_MENUBOX_ClearInput();
 
     // set frame to 1000, skip the animation
     D230.timerInTitle = 1000;
   }
 
-  // if frame is more than 230
-  if (230 < timer)
-  {
-    // cap to 230
-    timer = 230;
-  }
+  // cap at 230
+  if (timer > 230) timer = 230;
 
   // play 8 sounds, one on each frame
   for (i = 0; i < 8; i++)
-
   {
-    // if frame index, is one of eight on the array
     if (D230.titleSounds[i].frameToPlay == timer)
     {
-      // Play sound on this specific frame
-      OtherFX_Play(D230.titleSounds[i].soundID, 1);
+      DECOMP_OtherFX_Play(D230.titleSounds[i].soundID, 1);
     }
   }
 

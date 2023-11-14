@@ -161,7 +161,7 @@ void DECOMP_MM_HighScore_MenuBox(struct MenuBox* unused)
     isMenuMoving = true;
 
     // Play sound
-    OtherFX_Play(2, 1);
+    DECOMP_OtherFX_Play(2, 1);
 
     // transitioning out
     D230.highScore_transitionState = EXITING_MENU;

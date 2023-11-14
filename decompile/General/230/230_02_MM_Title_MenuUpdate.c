@@ -125,14 +125,16 @@ void DECOMP_MM_Title_MenuUpdate(void)
   case 0:
   
     DECOMP_MM_Title_KillThread();
-
-    GAMEPROG_NewProfile_InsideAdv(&sdata->advProgress.rewards);
+    DECOMP_GAMEPROG_NewProfile_InsideAdv(&sdata->advProgress.rewards);
+	
     sdata->advProfileIndex = 0xffff;
 
     // go to adventure character select screen
     sdata->mainMenuState = 4;
 
+#ifndef REBUILD_PS1
     MainRaceTrack_RequestLoad(ADVENTURE_CHARACTER_SELECT);
+#endif
     break;
 
   // adventure save/load
@@ -141,7 +143,9 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // Go to save/load
     sdata->ptrDesiredMenuBox = &data.menuBox_FourAdvProfiles;
 
+#ifndef REBUILD_PS1
     LoadSave_ToggleMode(0x10);
+#endif
     break;
 
   // regular character selection screen
@@ -229,11 +233,13 @@ void DECOMP_MM_Title_MenuUpdate(void)
     iVar4 = SCRAPBOOK;
   LAB_800abfc0:
 
+#ifndef REBUILD_PS1
     // Load level
     MainRaceTrack_RequestLoad(iVar4);
+#endif
 
     // make main menu disappear
-    MENUBOX_Hide(&D230.menubox_mainMenu);
+    DECOMP_MENUBOX_Hide(&D230.menubox_mainMenu);
   }
 
 END_FUNCTION:
@@ -284,7 +290,7 @@ void DECOMP_MM_Title_KillThread(void)
     // destroy six instances
     for (n = 0; n < 6; n++)
     {
-      INSTANCE_Death(title->i[n]);
+      DECOMP_INSTANCE_Death(title->i[n]);
       title->i[n] = NULL;
     }
 	

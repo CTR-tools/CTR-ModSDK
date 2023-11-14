@@ -8,7 +8,7 @@ void DECOMP_MM_Title_CameraMove(struct Title* title, int frameIndex)
 
   // after frame 0xe6, make the intro models transition from the center
   // of the screen, to the left of the screen, over the course of 15 frames
-  result = TitleFlag_MoveModels(D230.timerInTitle-0xe6, 0xF);
+  result = DECOMP_TitleFlag_MoveModels(D230.timerInTitle-0xe6, 0xF);
 
   gGT = sdata->gGT;
 

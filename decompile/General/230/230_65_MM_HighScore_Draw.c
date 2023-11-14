@@ -24,7 +24,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
 
     levelID = D230.arcadeTracks[trackIndex].levID;
 
-    lineWidth = DecalFont_GetLineWidth(sdata->lngStrings[data.metaDataLEV[levelID].name_LNG], 1);
+    lineWidth = DECOMP_DecalFont_GetLineWidth(sdata->lngStrings[data.metaDataLEV[levelID].name_LNG], 1);
     lineWidth = lineWidth >> 1;
 
     // get color data
@@ -35,7 +35,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
         ICONGROUP_GETICONS(gGT->iconGroup[4]);
 
     // Draw arrow pointing Left
-    DecalHUD_Arrow2D(
+    DECOMP_DecalHUD_Arrow2D(
         iconPtrArray[0x38],
         D230.transitionMeta_HighScores[0].currX + (offsetX - lineWidth) + 0xec,
         D230.transitionMeta_HighScores[0].currY + offsetY + 0x15,
@@ -48,7 +48,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
         0, 0x1000, 0x800);
 
 	// Draw arrow pointing Right
-    DecalHUD_Arrow2D(
+    DECOMP_DecalHUD_Arrow2D(
         iconPtrArray[0x38],
         D230.transitionMeta_HighScores[0].currX + (lineWidth + offsetX) + 0x112,
         D230.transitionMeta_HighScores[0].currY + offsetY + 0x15,
@@ -61,7 +61,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
         0, 0x1000, 0);
 
     // draw track name
-    DecalFont_DrawLine(
+    DECOMP_DecalFont_DrawLine(
 		sdata->lngStrings[data.metaDataLEV[levelID].name_LNG],
 		D230.transitionMeta_HighScores[0].currX + (short)(posX + 0x100),
 		D230.transitionMeta_HighScores[0].currY + (short)(posY + 0xe),
@@ -98,7 +98,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
 					struct Icon** ptrIconArray;
 					ptrIconArray = ICONGROUP_GETICONS(gGT->iconGroup[5]);
 
-                    DecalHUD_DrawPolyGT4(
+                    DECOMP_DecalHUD_DrawPolyGT4(
 						ptrIconArray[0x37],
 						D230.transitionMeta_HighScores[0].currX + offsetX + (i * 0x10) + 0xf0,
 						D230.transitionMeta_HighScores[0].currY + offsetY + 4,
@@ -134,6 +134,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
 			D230.transitionMeta_HighScores[7].currX + (uVar10 + 0x160),
 			D230.transitionMeta_HighScores[7].currY + (uVar9 + 0x4a),
 			FONT_SMALL, 0);
+			
         // Character Icon
         MENUBOX_DrawPolyGT4(
 			gGT->ptrIcons[data.MetaDataCharacters[entry[0].characterID].iconID],

@@ -82,8 +82,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                     // if starting race
                     if (D230.battle_postTransition_boolStart != 0)
                     {
-                        // passthrough MenuBox for the function
-                        // TitleBeginTrack
+                        // passthrough MenuBox for funcPtr "TitleBeginTrack"
                         sdata->ptrDesiredMenuBox = &data.menuBox_TitleBeginTrack;
                         return;
                     }
@@ -91,8 +90,6 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                     // == else goBack ==
 
                     DECOMP_MM_TrackSelect_Init();
-
-                    // change desiredMenuBox to Track Selection
                     sdata->ptrDesiredMenuBox = &D230.menubox_trackSelect;
 
                     return;
@@ -240,7 +237,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                                 if ((sdata->buttonTapPerPlayer[0] & 0x40020) != 0)
                                 {
                                     // Play "Go Back" sound
-                                    OtherFX_Play(2, 1);
+                                    DECOMP_OtherFX_Play(2, 1);
 
                                     // go back when transition is done, dont start race
                                     D230.battle_postTransition_boolStart = 0;
@@ -254,7 +251,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                             else
                             {
                                 // Play sound
-                                OtherFX_Play(1, 1);
+                                DECOMP_OtherFX_Play(1, 1);
 
                                 switch (sdata->battleSetupRowHighlighted)
                                 {
@@ -549,16 +546,16 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
         }
 
         // clear gamepad input (for menus)
-        MENUBOX_ClearInput();
+        DECOMP_MENUBOX_ClearInput();
     }
 
     // "SETUP BATTLE"
-    DecalFont_DrawLine(sdata->lngStrings[0x90],
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x90],
 		D230.transitionMeta_battle[9].currX + 0x100,
 		D230.transitionMeta_battle[9].currY + 10, 1, 0xffff8000);
 
     // "TYPE:"
-    DecalFont_DrawLine(sdata->lngStrings[0x91],
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x91],
 		D230.transitionMeta_battle[1].currX + 0x8c,
 		D230.transitionMeta_battle[1].currY + 0x24, 1, 0x4000);
 
@@ -580,11 +577,11 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 		D230.transitionMeta_battle[0].currY + 0x24, 0x134);
 		
     local_38 = 0xd;
-    MENUBOX_GetHeight(&D230.battleType_box, &local_38, 0);
+    DECOMP_MENUBOX_GetHeight(&D230.battleType_box, &local_38, 0);
     sVar6 = local_38 + 0x20;
 
     // "LENGTH:"
-    DecalFont_DrawLine(sdata->lngStrings[0x95],
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x95],
 		D230.transitionMeta_battle[3].currX + 0x8c,
 		D230.transitionMeta_battle[3].currY + sVar6 + 4, 1, 0x4000);
 
@@ -630,9 +627,9 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 					D230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
 								 
                 local_38 = 0xd;
-                MENUBOX_GetHeight(&D230.battleLengthLifeTime_box, &local_38, 0);
+                DECOMP_MENUBOX_GetHeight(&D230.battleLengthLifeTime_box, &local_38, 0);
                 local_36[0] = 0xd;
-                MENUBOX_GetHeight(&D230.battleLengthLifeLife_box, &local_36, 0);
+                DECOMP_MENUBOX_GetHeight(&D230.battleLengthLifeLife_box, &local_36, 0);
                 sVar20 = local_36[0] + sVar6;
                 if (local_36[0] < local_38)
                 {
@@ -670,7 +667,7 @@ LAB_800b25f0:
 	iVar8 = 0x9f;
 
     // "TEAMS:"
-    DecalFont_DrawLine(sdata->lngStrings[0x98],
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x98],
 		D230.transitionMeta_battle[5].currX + 0x8c,
 		D230.transitionMeta_battle[5].currY + sVar20 + 10, 1, 0x4000);
 
@@ -777,7 +774,7 @@ LAB_800b25f0:
     MENUBOX_DrawInnerRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
     // "WEAPONS:"
-    DecalFont_DrawLine(
+    DECOMP_DecalFont_DrawLine(
 		sdata->lngStrings[0x99],
 		D230.transitionMeta_battle[7].currX + 0x8c,
 		D230.transitionMeta_battle[7].currY + sVar20 + 0x44,
@@ -844,7 +841,7 @@ LAB_800b25f0:
 				D230.transitionMeta_battle[8].currY + sVar20 + 0x78, 0x134);
 				
         local_38 = 0xd;
-        MENUBOX_GetHeight(&D230.battleStartGame_box, &local_38, 0);
+        DECOMP_MENUBOX_GetHeight(&D230.battleStartGame_box, &local_38, 0);
     }
 
     // If you have no errors that prevent
@@ -856,8 +853,8 @@ LAB_800b25f0:
         // 0x100 for halfway on the X-axis,
         // flashing sVar6 color
 
-        DecalFont_DrawLine(sdata->lngStrings[j], 0x100, sVar20 + 0x6a, 1, (int)sVar6);
-        DecalFont_DrawLine(sdata->lngStrings[i], 0x100, sVar20 + 0x7a, 1, (int)sVar6);
+        DECOMP_DecalFont_DrawLine(sdata->lngStrings[j], 0x100, sVar20 + 0x6a, 1, (int)sVar6);
+        DECOMP_DecalFont_DrawLine(sdata->lngStrings[i], 0x100, sVar20 + 0x7a, 1, (int)sVar6);
     }
     i = 0;
     local_40.w = 0x140;
@@ -889,23 +886,15 @@ LAB_800b25f0:
         // If the icon is bowling bomb or missile on the 2nd row
         if ((i - 7U & 0xffff) < 2)
         {
-            // 0x800aba20
-            // "3"
-
             // draw the "3" over the icons
-            DecalFont_DrawLine(&R230.s_3[0], iVar13, j, 2, uVar17);
+            DECOMP_DecalFont_DrawLine(&R230.s_3[0], iVar13, j, 2, uVar17);
         }
 
         DECOMP_MM_Battle_DrawIcon_Weapon(
 			gGT->ptrIcons[D230.battleWeaponsEnabled[iVar8*2+1]],
             iVar13, j,
-
-            // pointer to PrimMem struct
             &gGT->backBuffer->primMem,
-
-            // pointer to OT mem
             gGT->tileView_UI.ptrOT,
-
             1, 0x1000, 1, color);
     }
 

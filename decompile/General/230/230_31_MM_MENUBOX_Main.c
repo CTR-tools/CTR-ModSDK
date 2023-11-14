@@ -29,7 +29,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 	   )
     {
       // "TM" trademark string
-      DecalFont_DrawLineOT(
+      DECOMP_DecalFont_DrawLineOT(
           sdata->lngStrings[0x244], 0x10e, 0x9c, FONT_SMALL, ORANGE,
           &gGT->backBuffer->otMem.startPlusFour[3]);
     }

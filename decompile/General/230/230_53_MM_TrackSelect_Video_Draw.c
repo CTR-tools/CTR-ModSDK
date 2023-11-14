@@ -27,6 +27,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
     D230.trackSel_video_state = 1;
   }
 
+#ifndef REBUILD_PS1
   else
   {
     // Lock D230.trackSel_video_state to zero to prevent allocation,
@@ -81,27 +82,22 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
       }
     }
   }
+#endif
 
   // if not playing video, draw icon
   if (D230.trackSel_video_state != 3)
   {
-    // This is the same function that draws Character icons
-
     // Draw Video icon
-    MENUBOX_DrawPolyGT4(gGT->ptrIcons[selectMenu->videoThumbnail],
-                        (r->x + 3), (r->y + 2),
-
-                        // pointer to PrimMem struct
-                        &gGT->backBuffer->primMem,
-
-                        // pointer to OT mem
-                        gGT->tileView_UI.ptrOT,
-
-                        D230.videoCol,
-						D230.videoCol,
-						D230.videoCol,
-						D230.videoCol,
-						0, FP(1.0));
+    MENUBOX_DrawPolyGT4(
+		gGT->ptrIcons[selectMenu->videoThumbnail],
+        (r->x + 3), (r->y + 2),
+        &gGT->backBuffer->primMem,
+        gGT->tileView_UI.ptrOT,
+        D230.videoCol,
+		D230.videoCol,
+		D230.videoCol,
+		D230.videoCol,
+		0, FP(1.0));
   }
 
   if (D230.trackSel_unk == 1)

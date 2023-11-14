@@ -17,7 +17,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 	DRAWENV* ptrDrawEnv;
     const CdlFILE cdlFile;
     struct GameTracker *gGT = gGT;
-	int isOn = TitleFlag_IsFullyOnScreen();
+	int isOn = DECOMP_TitleFlag_IsFullyOnScreen();
 
     // book state (0,1,2,3,4)
     switch (D230.scrapbookState)
@@ -29,7 +29,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         if (isOn == 1)
         {
             // checkered flag, begin transition off-screen
-            TitleFlag_BeginTransition(2);
+            DECOMP_TitleFlag_BeginTransition(2);
         }
 
         // go to Load State
@@ -46,13 +46,13 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     case 1:
 
         // if not fully off screen
-        if (TitleFlag_IsFullyOffScreen() != 1)
+        if (DECOMP_TitleFlag_IsFullyOffScreen() != 1)
         {
             // quit, dont start video yet
             return;
         }
 
-        CDSYS_SetMode_StreamData();
+        DECOMP_CDSYS_SetMode_StreamData();
 
         // \TEST.STR;1
         // if file was found
@@ -131,10 +131,10 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         MM_Video_ClearMem();
 
-        if (TitleFlag_IsFullyOffScreen() == 1)
+        if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)
         {
             // checkered flag, begin transition on-screen
-            TitleFlag_BeginTransition(1);
+            DECOMP_TitleFlag_BeginTransition(1);
         }
     GO_BACK:
 
@@ -148,7 +148,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         if (isOn == 1)
         {
             // change checkered flag back
-            TitleFlag_SetDrawOrder(0);
+            DECOMP_TitleFlag_SetDrawOrder(0);
 
 			// if adventure mode
 			lev = GEM_STONE_VALLEY;
@@ -164,8 +164,11 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
                 sdata->mainMenuState = 0;
             }
 
+			#ifndef REBUILD_PS1
             MainRaceTrack_RequestLoad(lev);
-            MENUBOX_Hide(mb);
+			#endif
+			
+            DECOMP_MENUBOX_Hide(mb);
         }
         break;
     default:
