@@ -17,7 +17,7 @@ void DECOMP_MM_MENUBOX_1p2p(struct MenuBox* mb)
     
 	gGT->numPlyrNextGame = 1;
     
-	OVR_230.characterSelect_transitionState = 0;
+	D230.characterSelect_transitionState = 0;
   }
   
   else 
@@ -29,7 +29,7 @@ void DECOMP_MM_MENUBOX_1p2p(struct MenuBox* mb)
 	  gGT->numPlyrNextGame = mb->rowSelected + 1;
 	  
 	  // go to difficulty box
-	  mb->ptrNextBox_InHierarchy = &OVR_230.menubox_difficulty;
+	  mb->ptrNextBox_InHierarchy = &D230.menubox_difficulty;
       
 	  mb->state|= 0x14;
 	  return;

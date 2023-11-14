@@ -16,7 +16,7 @@ void DECOMP_MM_MENUBOX_2p3p4p(struct MenuBox * mb)
 
     gGT->numPlyrNextGame = 1;
 
-    OVR_230.characterSelect_transitionState = 0;
+    D230.characterSelect_transitionState = 0;
   } 
   else 
   {
@@ -26,8 +26,8 @@ void DECOMP_MM_MENUBOX_2p3p4p(struct MenuBox * mb)
       // row 0 is 2P, row 1 is 3P, row 2 is 4P
       gGT->numPlyrNextGame = mb->rowSelected + 2;
 
-      OVR_230.MM_State = 2;
-      OVR_230.desiredMenu = 2;
+      D230.MM_State = 2;
+      D230.desiredMenu = 2;
 
       mb->state |= 4;
       return;

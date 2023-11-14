@@ -6,7 +6,7 @@ void DECOMP_MM_Title_SetTrophyDPP(void)
   struct InstDrawPerPlayer* idpp1;
   struct InstDrawPerPlayer* idpp2;
   struct Instance** instArr;
-  struct Title* title = OVR_230.titleObj;
+  struct Title* title = D230.titleObj;
   int e4;
   int e8;
   int dc;

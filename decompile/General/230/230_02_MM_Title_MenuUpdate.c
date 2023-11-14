@@ -12,7 +12,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // 3 - coming back to main menu after exiting another menu
 
   // If main menu is in focus
-  if (OVR_230.MM_State == 1)
+  if (D230.MM_State == 1)
   {
     // no transitioning action is needed,
     // skip to end of function
@@ -22,14 +22,14 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // If you aren't in main menu
 
   // if not transitioning out
-  if (OVR_230.MM_State < 2)
+  if (D230.MM_State < 2)
   {
 
     // If your state is less than 2, and
     // not 1, then it must be 0 by default
 
     // If not transitioning in
-    if (OVR_230.MM_State != 0)
+    if (D230.MM_State != 0)
 
       // error, just skip everything
       goto END_FUNCTION;
@@ -38,24 +38,24 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // if you are transitioning in
 
     // if not done watching C-T-R letters
-    if (OVR_230.timerInTitle < 230)
+    if (D230.timerInTitle < 230)
     {
-      OVR_230.countMeta0xD = OVR_230.title_numFrameTotal;
+      D230.countMeta0xD = D230.title_numFrameTotal;
 
       // end function
       goto END_FUNCTION;
     }
 
-    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS); 
-	OVR_230.menubox_mainMenu.state |= EXECUTE_FUNCPTR;
+    D230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS); 
+	D230.menubox_mainMenu.state |= EXECUTE_FUNCPTR;
 
-	MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numTransition);
+	MM_TransitionInOut(&D230.transitionMeta_Menu[0], D230.countMeta0xD, D230.title_numTransition);
 
     // If the animation ends
-    if (OVR_230.countMeta0xD == 0)
+    if (D230.countMeta0xD == 0)
     {
       // you are now in main menu
-      OVR_230.MM_State = 1;
+      D230.MM_State = 1;
 
       // no further transitioning is needed,
       // skip to end of function
@@ -65,30 +65,30 @@ void DECOMP_MM_Title_MenuUpdate(void)
   LAB_800ac004:
 
     // decrease amount of time remaining in animation
-    OVR_230.countMeta0xD -= 1;
+    D230.countMeta0xD -= 1;
     goto END_FUNCTION;
   }
 
   // If not transitioning out
-  if (OVR_230.MM_State != 2)
+  if (D230.MM_State != 2)
   {
     // if you are not returning from another menu,
     // so either in main menu or watching C-T-R trophy animation
-    if (OVR_230.MM_State != 3)
+    if (D230.MM_State != 3)
     {
       // no further action is needed
       goto END_FUNCTION;
     }
 
-    // assume OVR_230.MM_State = 3
+    // assume D230.MM_State = 3
     // if you are returning from another menu
-	MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numTransition);
+	MM_TransitionInOut(&D230.transitionMeta_Menu[0], D230.countMeta0xD, D230.title_numTransition);
 
     // If "fade-in" animation from other menu is done
-    if (OVR_230.countMeta0xD == 0)
+    if (D230.countMeta0xD == 0)
     {
       // you are now in main menu
-      OVR_230.MM_State = 1;
+      D230.MM_State = 1;
 
       // end the function
       goto END_FUNCTION;
@@ -100,18 +100,18 @@ void DECOMP_MM_Title_MenuUpdate(void)
     goto LAB_800ac004;
   }
 
-  // assume OVR_230.MM_State = 2
+  // assume D230.MM_State = 2
   // If you are transitioning out
 
   // MM_TransitionInOut
-  MM_TransitionInOut(&OVR_230.transitionMeta_Menu[0], OVR_230.countMeta0xD, OVR_230.title_numTransition);
+  MM_TransitionInOut(&D230.transitionMeta_Menu[0], D230.countMeta0xD, D230.title_numTransition);
 
   // Increment frame timer, increase time left in "fade-in"
   // animation, which plays it in reverse, as "fade-out"
-  OVR_230.countMeta0xD += 1;
+  D230.countMeta0xD += 1;
 
   // If the "fade-out" animation is not over, skip "switch" statemenet
-  if (OVR_230.countMeta0xD <= OVR_230.title_numFrameTotal)
+  if (D230.countMeta0xD <= D230.title_numFrameTotal)
     goto END_FUNCTION;
 
   // If you are transitioning out of the menu,
@@ -119,7 +119,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   // time to figure out where you're going next
   MM_Title_CameraReset();
 
-  switch (OVR_230.desiredMenu)
+  switch (D230.desiredMenu)
   {
 
   // advanture character selection
@@ -151,7 +151,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     DECOMP_MM_Title_KillThread();
 
     // return to character selection
-    sdata->ptrDesiredMenuBox = &OVR_230.menubox_characterSelect;
+    sdata->ptrDesiredMenuBox = &D230.menubox_characterSelect;
 
     DECOMP_MM_Characters_RestoreIDs();
     break;
@@ -162,7 +162,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     MM_HighScore_Init();
 
     // Go to high score menu
-    sdata->ptrDesiredMenuBox = &OVR_230.menubox_highScores;
+    sdata->ptrDesiredMenuBox = &D230.menubox_highScores;
     break;
 
   // demo mode
@@ -212,7 +212,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 
       // get trackID from demo mode index,
       // in order of Single Race track selection
-      iVar4 = OVR_230.arcadeTracks[sdata->demoModeIndex].levID;
+      iVar4 = D230.arcadeTracks[sdata->demoModeIndex].levID;
 
       // increment number of times you've been in demo mode
       sdata->demoModeIndex += 1;
@@ -234,7 +234,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     MainRaceTrack_RequestLoad(iVar4);
 
     // make main menu disappear
-    MENUBOX_Hide(&OVR_230.menubox_mainMenu);
+    MENUBOX_Hide(&D230.menubox_mainMenu);
   }
 
 END_FUNCTION:
@@ -244,38 +244,38 @@ END_FUNCTION:
 
   // if you're entering menu for first time in
   // Crash + C-T-R animation cutscene
-  if (OVR_230.MM_State == 0)
+  if (D230.MM_State == 0)
   {
-    OVR_230.titleCameraPos[0] = OVR_230.title_camPos[0];
-    OVR_230.titleCameraPos[1] = OVR_230.title_camPos[1];
-    OVR_230.titleCameraPos[2] = OVR_230.title_camPos[2];
+    D230.titleCameraPos[0] = D230.title_camPos[0];
+    D230.titleCameraPos[1] = D230.title_camPos[1];
+    D230.titleCameraPos[2] = D230.title_camPos[2];
   }
   else
   {
-    OVR_230.titleCameraPos[0] = OVR_230.title_camPos[0] + OVR_230.transitionMeta_Menu[5].currX;
-    OVR_230.titleCameraPos[1] = OVR_230.title_camPos[1] + OVR_230.transitionMeta_Menu[5].currY;
-    OVR_230.titleCameraPos[2] = OVR_230.title_camPos[2] + OVR_230.transitionMeta_Menu[6].currX;
+    D230.titleCameraPos[0] = D230.title_camPos[0] + D230.transitionMeta_Menu[5].currX;
+    D230.titleCameraPos[1] = D230.title_camPos[1] + D230.transitionMeta_Menu[5].currY;
+    D230.titleCameraPos[2] = D230.title_camPos[2] + D230.transitionMeta_Menu[6].currX;
   }
 
-  OVR_230.menubox_mainMenu.posX_curr = OVR_230.title_mainPosX + OVR_230.transitionMeta_Menu[0].currX;
-  OVR_230.menubox_mainMenu.posY_curr = OVR_230.title_mainPosY + OVR_230.transitionMeta_Menu[0].currY;
-  OVR_230.menubox_adventure.posX_curr = OVR_230.title_advPosX + OVR_230.transitionMeta_Menu[1].currX;
-  OVR_230.menubox_adventure.posY_curr = OVR_230.title_advPosY + OVR_230.transitionMeta_Menu[1].currY;
-  OVR_230.menubox_raceType.posX_curr = OVR_230.title_racePosX + OVR_230.transitionMeta_Menu[2].currX;
-  OVR_230.menubox_raceType.posY_curr = OVR_230.title_racePosY + OVR_230.transitionMeta_Menu[2].currY;
-  OVR_230.menubox_players1P2P.posX_curr = OVR_230.title_plyrPosX + OVR_230.transitionMeta_Menu[3].currX;
-  OVR_230.menubox_players1P2P.posY_curr = OVR_230.title_plyrPosY + OVR_230.transitionMeta_Menu[3].currY;
-  OVR_230.menubox_players2P3P4P.posX_curr = OVR_230.title_plyrPosX + OVR_230.transitionMeta_Menu[3].currX;
-  OVR_230.menubox_players2P3P4P.posY_curr = OVR_230.title_plyrPosY + OVR_230.transitionMeta_Menu[3].currY;
-  OVR_230.menubox_difficulty.posX_curr = OVR_230.title_diffPosX + OVR_230.transitionMeta_Menu[4].currX;
-  OVR_230.menubox_difficulty.posY_curr = OVR_230.title_diffPosY + OVR_230.transitionMeta_Menu[4].currY;
+  D230.menubox_mainMenu.posX_curr = D230.title_mainPosX + D230.transitionMeta_Menu[0].currX;
+  D230.menubox_mainMenu.posY_curr = D230.title_mainPosY + D230.transitionMeta_Menu[0].currY;
+  D230.menubox_adventure.posX_curr = D230.title_advPosX + D230.transitionMeta_Menu[1].currX;
+  D230.menubox_adventure.posY_curr = D230.title_advPosY + D230.transitionMeta_Menu[1].currY;
+  D230.menubox_raceType.posX_curr = D230.title_racePosX + D230.transitionMeta_Menu[2].currX;
+  D230.menubox_raceType.posY_curr = D230.title_racePosY + D230.transitionMeta_Menu[2].currY;
+  D230.menubox_players1P2P.posX_curr = D230.title_plyrPosX + D230.transitionMeta_Menu[3].currX;
+  D230.menubox_players1P2P.posY_curr = D230.title_plyrPosY + D230.transitionMeta_Menu[3].currY;
+  D230.menubox_players2P3P4P.posX_curr = D230.title_plyrPosX + D230.transitionMeta_Menu[3].currX;
+  D230.menubox_players2P3P4P.posY_curr = D230.title_plyrPosY + D230.transitionMeta_Menu[3].currY;
+  D230.menubox_difficulty.posX_curr = D230.title_diffPosX + D230.transitionMeta_Menu[4].currX;
+  D230.menubox_difficulty.posY_curr = D230.title_diffPosY + D230.transitionMeta_Menu[4].currY;
 }
 
 void DECOMP_MM_Title_KillThread(void)
 {
   char n;
   struct GameTracker *gGT = sdata->gGT;
-  struct Title *title = OVR_230.titleObj;
+  struct Title *title = D230.titleObj;
 
   if (// if "title" object exists
       (title != NULL) &&
@@ -291,7 +291,7 @@ void DECOMP_MM_Title_KillThread(void)
 	
 	// kill thread
     title->t->flags |= 0x800;
-    OVR_230.titleObj = NULL;
+    D230.titleObj = NULL;
 
     // CameraDC, it must be zero to follow you
     gGT->cameraDC[0].transitionTo.rot[0] = 0;

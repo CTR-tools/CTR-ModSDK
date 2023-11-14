@@ -99,14 +99,11 @@ struct TransitionMeta
 	// 0xA -- size
 };
 
-// starts at the start of overlay region 3
-struct Overlay_230
+// 800ab9f0 - UsaRetail
+// 800abe04 - EurRetail
+// 800aef2c - JpnRetail
+struct OverlayRDATA_230
 {
-	// =========== 230 RDATA ============
-
-	// 800ab9f0 - UsaRetail
-	// 800abe04 - EurRetail
-	// 800aef2c - JpnRetail
 	// (tag given by compiler, meaningless to game)
 	// do not compile this "tag" in the struct when we're actually building the overlay
 	int overlayTag;
@@ -155,19 +152,13 @@ struct Overlay_230
 	// 800aefc4 - JpnRetail
 	// " test.str 1"
 	char s_teststr1[12];
+};
 
-// ========== Functions ==============
-
-// 800aba94 - UsaRetail
-// 800abea8 - EurRetail
-#if BUILD == UsaRetail
-	char fillafterteststr[0x8A50];
-#elif BUILD == EurRetail
-	char fillafterteststr[0x8DA4];
-#elif BUILD == JpnRetail
-	char fillafterteststr[0x8F98];
-#endif
-
+// 800b44e4 - UsaRetail
+// 800b4c4c - EurRetail
+// 800b7f68 - JpnRetail
+struct OverlayDATA_230
+{
 	// =========== Main Menu CONST =============
 
 	// 800b44e4 - UsaRetail
@@ -201,7 +192,7 @@ struct Overlay_230
 	struct MenuRow rows_players1P2P[3];
 
 // ????
-#if BUILD == EurRetail || BUILD == UsaRetail
+#if (BUILD == EurRetail) || (BUILD == UsaRetail)
 	char padding800b4cf2[2];
 #endif
 
@@ -235,7 +226,7 @@ struct Overlay_230
 	// 800b80b8 - JpnRetail
 	struct MenuRow rows_raceType[3];
 
-#if BUILD == EurRetail || BUILD == UsaRetail
+#if (BUILD == EurRetail) || (BUILD == UsaRetail)
 	char padding800b4dba[2];
 #endif
 
@@ -250,7 +241,7 @@ struct Overlay_230
 	struct MenuRow rows_adventure[3];
 
 // ???
-#if BUILD == EurRetail || BUILD == UsaRetail
+#if (BUILD == EurRetail) || (BUILD == UsaRetail)
 	char padding800b4dfa[2];
 #endif
 
@@ -288,7 +279,7 @@ struct Overlay_230
 	struct MenuRow rows_cupSelect[5];
 
 // ????
-#if BUILD == EurRetail || BUILD == UsaRetail
+#if (BUILD == EurRetail) || (BUILD == UsaRetail)
 	char padding800b4f02[2];
 #endif
 
@@ -339,10 +330,11 @@ struct Overlay_230
 		short unk2;
 
 		u_short boolTrophy;
+	}
 #if BUILD == JpnRetail
-	} titleInstances[7];
+	 titleInstances[7];
 #else
-	} titleInstances[6];
+	 titleInstances[6];
 #endif
 
 	// 800B4830 - UsaRetail
@@ -406,10 +398,11 @@ struct Overlay_230
 	{
 		short frameToPlay;
 		short soundID;
+	}
 #if BUILD != JpnRetail
-	} titleSounds[8];
+	titleSounds[8];
 #else
-	} titleSounds[7];
+	titleSounds[7];
 
 	char unkTitleData[0x18];
 #endif
@@ -425,10 +418,11 @@ struct Overlay_230
 		int numButtons;
 		int buttons[10];
 		void *funcPtr;
+	}
 #if BUILD == JpnRetail
-	} cheats[0x15];
+	cheats[0x15];
 #else
-	} cheats[0x16];
+	cheats[0x16];
 #endif
 
 	// 800B4D04 - UsaRetail
@@ -1034,7 +1028,8 @@ struct Overlay_230
 	// 800b5a64 MM_Video_DecDCToutCallbackFunc
 };
 
-extern struct Overlay_230 OVR_230;
+extern struct OverlayRDATA_230 R230;
+extern struct OverlayDATA_230 D230;
 
 // starts at 800b67ac
 extern struct

@@ -11,11 +11,11 @@ void DECOMP_MM_Title_Init(void)
   char m, n;
 
   if ((( // if "title" object is nullptr
-           (OVR_230.titleObj == NULL) &&
+           (D230.titleObj == NULL) &&
           // if you are in main menu
           ((gGT->gameMode1 & MAIN_MENU) != 0)) &&
           // You're not in transition between menus
-          (OVR_230.MM_State != 2)) &&
+          (D230.MM_State != 2)) &&
           (( // model ptr (Title blue Ring)
           gGT->modelPtr[STATIC_RINGTOP] != 0 &&
           // IntroCam ptr exists
@@ -30,7 +30,7 @@ void DECOMP_MM_Title_Init(void)
     void **pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 
     // pointer to Intro Cam, to view Crash holding Trophy in main menu
-    OVR_230.ptrIntroCam = pointers[ST1_CAMERA_PATH];
+    D230.ptrIntroCam = pointers[ST1_CAMERA_PATH];
 
     t = THREAD_BirthWithObject(
         SIZE_RELATIVE_POOL_BUCKET(
@@ -42,7 +42,7 @@ void DECOMP_MM_Title_Init(void)
 
     title = t->object;
 
-    OVR_230.titleObj = title;
+    D230.titleObj = title;
 
     memset(title, 0, 0x24);
 
@@ -51,12 +51,12 @@ void DECOMP_MM_Title_Init(void)
     // create 6 instances
     for (n = 0; n < 6; n++)
     {
-      inst = INSTANCE_Birth3D(gGT->modelPtr[OVR_230.titleInstances[n].modelID], 0, t);
+      inst = INSTANCE_Birth3D(gGT->modelPtr[D230.titleInstances[n].modelID], 0, t);
 
       // store instance
       title->i[n] = inst;
 
-      if (OVR_230.titleInstances[n].boolTrophy)
+      if (D230.titleInstances[n].boolTrophy)
       {
         inst->flags |= VISIBLE_DURING_GAMEPLAY;
       }

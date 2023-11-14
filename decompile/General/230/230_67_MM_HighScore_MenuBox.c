@@ -19,24 +19,24 @@ void DECOMP_MM_HighScore_MenuBox(void)
   isMenuMoving = false;
 
   // if menu is not fully on-screen
-  if (OVR_230.highScore_transitionState != 1)
+  if (D230.highScore_transitionState != 1)
   {
-    frames = OVR_230.highScore_transitionFrames[0];
-    if (OVR_230.highScore_transitionState < 2)
+    frames = D230.highScore_transitionFrames[0];
+    if (D230.highScore_transitionState < 2)
     {
       // if transitioning in
-      if (OVR_230.highScore_transitionState == ENTERING_MENU)
+      if (D230.highScore_transitionState == ENTERING_MENU)
       {
-        DECOMP_MM_TransitionInOut(&OVR_230.transitionMeta_HighScores[0], frames, 8);
+        DECOMP_MM_TransitionInOut(&D230.transitionMeta_HighScores[0], frames, 8);
 
         // count frames
         frames--;
 
         // if run out of frames
-        if (OVR_230.highScore_transitionFrames[0] == 0)
+        if (D230.highScore_transitionFrames[0] == 0)
         {
           // transition is done
-          OVR_230.highScore_transitionState = IN_MENU;
+          D230.highScore_transitionState = IN_MENU;
 
           frames = 0;
         }
@@ -45,14 +45,14 @@ void DECOMP_MM_HighScore_MenuBox(void)
     else
     {
       if (( // if transitioning out
-              (OVR_230.highScore_transitionState == EXITING_MENU) &&
+              (D230.highScore_transitionState == EXITING_MENU) &&
               (frames == 0)) &&
-          (OVR_230.highScore_transitionFrames[2] == 0))
+          (D230.highScore_transitionFrames[2] == 0))
       {
-        MM_TransitionInOut(&OVR_230.transitionMeta_HighScores[0], frames, 8);
+        MM_TransitionInOut(&D230.transitionMeta_HighScores[0], frames, 8);
 
         frames++;
-		OVR_230.highScore_transitionFrames[0]++;
+		D230.highScore_transitionFrames[0]++;
 
         // if 12 frames past
         if (12 < frames)
@@ -62,8 +62,8 @@ void DECOMP_MM_HighScore_MenuBox(void)
         }
       }
     }
-    OVR_230.highScore_transitionFrames[0] = frames;
-    if (OVR_230.highScore_transitionState != 1)
+    D230.highScore_transitionFrames[0] = frames;
+    if (D230.highScore_transitionState != 1)
       goto DRAW_MENU;
   }
 
@@ -73,7 +73,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
   if ((buttonTap & 1) == 0)
   {
     // If you press Down
-    if (((buttonTap & 2) != 0) && (OVR_230.highScoreBox.rowSelected < 1))
+    if (((buttonTap & 2) != 0) && (D230.highScoreBox.rowSelected < 1))
     {
       isMenuMoving = true;
     }
@@ -82,7 +82,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
   // If you press Up
   else
   {
-    if (OVR_230.highScoreBox.rowSelected == 1)
+    if (D230.highScoreBox.rowSelected == 1)
     {
       isMenuMoving = true;
     }
@@ -97,61 +97,61 @@ void DECOMP_MM_HighScore_MenuBox(void)
       // If you dont press Right
       if ((buttonTap & 8) == 0)
       {
-        input = MENUBOX_ProcessInput(&OVR_230.highScoreBox);
+        input = MENUBOX_ProcessInput(&D230.highScoreBox);
         // pressed ^ or []
         if (input == -1)
         {
-          OVR_230.highScore_transitionState = EXITING_MENU;
+          D230.highScore_transitionState = EXITING_MENU;
         }
         else
         {
-          if ((input == 1) && (OVR_230.highScoreBox.rowSelected == 2))
+          if ((input == 1) && (D230.highScoreBox.rowSelected == 2))
           {
-            OVR_230.highScore_transitionState = OVR_230.highScoreBox.rowSelected;
+            D230.highScore_transitionState = D230.highScoreBox.rowSelected;
           }
         }
-        if ((OVR_230.highScoreBox.rowSelected < 2) && (OVR_230.highScore_rowDesired != OVR_230.highScoreBox.rowSelected))
+        if ((D230.highScoreBox.rowSelected < 2) && (D230.highScore_rowDesired != D230.highScoreBox.rowSelected))
         {
-          OVR_230.highScore_verticalMove[1] = -1;
-          if (OVR_230.highScoreBox.rowSelected != 0)
+          D230.highScore_verticalMove[1] = -1;
+          if (D230.highScoreBox.rowSelected != 0)
           {
-            OVR_230.highScore_verticalMove[1] = 1;
+            D230.highScore_verticalMove[1] = 1;
           }
-          OVR_230.highScore_rowDesired = OVR_230.highScoreBox.rowSelected;
+          D230.highScore_rowDesired = D230.highScoreBox.rowSelected;
         }
       }
       // If you press Right
       else
       {
         isMenuMoving = true;
-        OVR_230.highScore_horizontalMove[1] = 1;
+        D230.highScore_horizontalMove[1] = 1;
         do
         {
           // increment track counter
-          OVR_230.highScore_trackDesired++;
+          D230.highScore_trackDesired++;
 
           // Turbo Track -> Crash Cove
-          if (OVR_230.highScore_trackDesired > 0x11)
-            OVR_230.highScore_trackDesired = 0;
+          if (D230.highScore_trackDesired > 0x11)
+            D230.highScore_trackDesired = 0;
 			
-        } while ((MM_TrackSelect_boolTrackOpen(&OVR_230.arcadeTracks[OVR_230.highScore_trackDesired]) & 0xFFFF) == 0);
+        } while ((MM_TrackSelect_boolTrackOpen(&D230.arcadeTracks[D230.highScore_trackDesired]) & 0xFFFF) == 0);
       }
     }
     // If you press Left
     else
     {
       isMenuMoving = true;
-      OVR_230.highScore_horizontalMove[1] = -1;
+      D230.highScore_horizontalMove[1] = -1;
       do
       {
         // decrement track counter
-        OVR_230.highScore_trackDesired--;
+        D230.highScore_trackDesired--;
 
         // Crash Cove -> Turbo Track
-        if (OVR_230.highScore_trackDesired < 0)
-          OVR_230.highScore_trackDesired = 0x11;
+        if (D230.highScore_trackDesired < 0)
+          D230.highScore_trackDesired = 0x11;
         
-      } while ((MM_TrackSelect_boolTrackOpen(&OVR_230.arcadeTracks[OVR_230.highScore_trackDesired]) & 0xFFFF) == 0);
+      } while ((MM_TrackSelect_boolTrackOpen(&D230.arcadeTracks[D230.highScore_trackDesired]) & 0xFFFF) == 0);
     }
   }
 
@@ -164,7 +164,7 @@ void DECOMP_MM_HighScore_MenuBox(void)
     OtherFX_Play(2, 1);
 
     // transitioning out
-    OVR_230.highScore_transitionState = EXITING_MENU;
+    D230.highScore_transitionState = EXITING_MENU;
   }
 
 DRAW_MENU:
@@ -173,9 +173,9 @@ DRAW_MENU:
 
   if (
 		(isMenuMoving) || 
-		(OVR_230.highScore_transitionFrames[1] != 0) || 
-		(OVR_230.highScore_transitionFrames[2] != 0) ||
-		(OVR_230.highScore_transitionState == EXITING_MENU)
+		(D230.highScore_transitionFrames[1] != 0) || 
+		(D230.highScore_transitionFrames[2] != 0) ||
+		(D230.highScore_transitionState == EXITING_MENU)
 	)
   {
     // new track viewed this frame
@@ -184,69 +184,69 @@ DRAW_MENU:
 
   MM_TrackSelect_Video_State(videoState);
 
-  frames = OVR_230.highScore_transitionFrames[1] - 1;
-  if (OVR_230.highScore_transitionFrames[1] == 0)
+  frames = D230.highScore_transitionFrames[1] - 1;
+  if (D230.highScore_transitionFrames[1] == 0)
   {
-    frames = OVR_230.highScore_transitionFrames[2] - 1;
-    if (OVR_230.highScore_transitionFrames[2] == 0)
+    frames = D230.highScore_transitionFrames[2] - 1;
+    if (D230.highScore_transitionFrames[2] == 0)
     {
-      if (OVR_230.highScore_trackCurr == OVR_230.highScore_trackDesired)
+      if (D230.highScore_trackCurr == D230.highScore_trackDesired)
       {
-        if (OVR_230.highScore_rowCurr != OVR_230.highScore_rowDesired)
+        if (D230.highScore_rowCurr != D230.highScore_rowDesired)
         {
-          OVR_230.highScore_transitionFrames[2] = 8;
-          OVR_230.highScore_verticalMove[0] = OVR_230.highScore_verticalMove[1];
+          D230.highScore_transitionFrames[2] = 8;
+          D230.highScore_verticalMove[0] = D230.highScore_verticalMove[1];
         }
       }
       else
       {
-        OVR_230.highScore_transitionFrames[1] = 8;
-        OVR_230.highScore_horizontalMove[0] = OVR_230.highScore_horizontalMove[1];
+        D230.highScore_transitionFrames[1] = 8;
+        D230.highScore_horizontalMove[0] = D230.highScore_horizontalMove[1];
       }
     }
     else
     {
       isMenuMoving = (frames > 1);
-      OVR_230.highScore_transitionFrames[2] = frames;
+      D230.highScore_transitionFrames[2] = frames;
       if (!isMenuMoving)
       {
-        OVR_230.highScore_rowCurr = OVR_230.highScore_rowDesired;
+        D230.highScore_rowCurr = D230.highScore_rowDesired;
       }
     }
   }
   else
   {
     isMenuMoving = (frames > 1);
-    OVR_230.highScore_transitionFrames[1] = frames;
+    D230.highScore_transitionFrames[1] = frames;
     if (!isMenuMoving)
     {
-      OVR_230.highScore_trackCurr = OVR_230.highScore_trackDesired;
+      D230.highScore_trackCurr = D230.highScore_trackDesired;
     }
   }
   
-  MENUBOX_DrawSelf(&OVR_230.highScoreBox, OVR_230.transitionMeta_HighScores[0xA].currX, OVR_230.transitionMeta_HighScores[0xA].currY, 0xa4);
+  MENUBOX_DrawSelf(&D230.highScoreBox, D230.transitionMeta_HighScores[0xA].currX, D230.transitionMeta_HighScores[0xA].currY, 0xa4);
 
   iVar8 = 0;
   iVar7 = 0;
 
    // if menu is not currently moving horizontally
-  if (OVR_230.highScore_transitionFrames[1] == 0)
+  if (D230.highScore_transitionFrames[1] == 0)
   {
-    iVar7 = (8 - OVR_230.highScore_transitionFrames[2]) * OVR_230.highScore_verticalMove[0] * 0x1b;
+    iVar7 = (8 - D230.highScore_transitionFrames[2]) * D230.highScore_verticalMove[0] * 0x1b;
   }
   else
   {
-    iVar8 = (8 - OVR_230.highScore_transitionFrames[1]) * OVR_230.highScore_horizontalMove[0] * 0x40;
+    iVar8 = (8 - D230.highScore_transitionFrames[1]) * D230.highScore_horizontalMove[0] * 0x40;
   }
 
   if (((iVar8 != -0x200) && (iVar8 != 0x200)) && ((iVar7 != -0xd8 && (iVar7 != 0xd8))))
   {
-    MM_HighScore_Draw(OVR_230.highScore_trackCurr, OVR_230.highScore_rowCurr, iVar8, iVar7);
-    if (OVR_230.highScore_transitionFrames[2] != 0)
+    MM_HighScore_Draw(D230.highScore_trackCurr, D230.highScore_rowCurr, iVar8, iVar7);
+    if (D230.highScore_transitionFrames[2] != 0)
     {
       
-      box.x = OVR_230.transitionMeta_HighScores[0].currX - 0x14;
-      box.y = OVR_230.transitionMeta_HighScores[0].currY + (short)iVar7 + 9;
+      box.x = D230.transitionMeta_HighScores[0].currX - 0x14;
+      box.y = D230.transitionMeta_HighScores[0].currY + (short)iVar7 + 9;
       box.w = 0x228;
       box.h = 0x19;
 
@@ -259,22 +259,22 @@ DRAW_MENU:
   iVar6 = 0;
 
   // if menu is not currently moving horizontally
-  if (OVR_230.highScore_transitionFrames[1] == 0)
+  if (D230.highScore_transitionFrames[1] == 0)
   {
-    iVar6 = OVR_230.highScore_transitionFrames[2] * -0x1b * OVR_230.highScore_verticalMove[0];
+    iVar6 = D230.highScore_transitionFrames[2] * -0x1b * D230.highScore_verticalMove[0];
   }
   else
   {
-    iVar5 = OVR_230.highScore_transitionFrames[1] * -0x40 * OVR_230.highScore_horizontalMove[0];
+    iVar5 = D230.highScore_transitionFrames[1] * -0x40 * D230.highScore_horizontalMove[0];
   }
   if (((iVar8 != iVar5) || (iVar7 != iVar6)) &&
       ((iVar5 != -0x200 && (((iVar5 != 0x200 && (iVar6 != -0xd8)) && (iVar6 != 0xd8))))))
   {
-    MM_HighScore_Draw(OVR_230.highScore_trackDesired, OVR_230.highScore_rowDesired, iVar5, iVar6);
+    MM_HighScore_Draw(D230.highScore_trackDesired, D230.highScore_rowDesired, iVar5, iVar6);
   }
   
-  box.x = OVR_230.transitionMeta_HighScores[0].currX - 0x14;
-  box.y = OVR_230.transitionMeta_HighScores[0].currY + (short)iVar6 + 9;
+  box.x = D230.transitionMeta_HighScores[0].currX - 0x14;
+  box.y = D230.transitionMeta_HighScores[0].currY + (short)iVar6 + 9;
   box.w = 0x228;
   box.h = 0x19;
 

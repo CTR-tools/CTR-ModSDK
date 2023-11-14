@@ -2,7 +2,7 @@
 
 void MM_Scrapbook_Init(void)
 {
-    OVR_230.scrapbookState = 0;
+    D230.scrapbookState = 0;
 
     // change checkered flag
     TitleFlag_SetDrawOrder(1);

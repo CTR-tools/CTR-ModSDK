@@ -19,9 +19,9 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   // if scrapbook is unlocked
   if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
   {
-    // change OVR_230.rows_mainMenu_Basic
-    // to OVR_230.rows_mainMenu_WithScrapbook
-    mainMenu->rows = &OVR_230.rows_mainMenu_WithScrapbook[0];
+    // change D230.rows_mainMenu_Basic
+    // to D230.rows_mainMenu_WithScrapbook
+    mainMenu->rows = &D230.rows_mainMenu_WithScrapbook[0];
   }
 
   MM_ParseCheatCodes();
@@ -38,11 +38,11 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     if (
         (
             // If you are in main menu
-            (OVR_230.MM_State == 1) &&
+            (D230.MM_State == 1) &&
 
             // if "title" object exists
-            (OVR_230.titleObj != NULL)) &&
-        (0xe5 < OVR_230.timerInTitle))
+            (D230.titleObj != NULL)) &&
+        (0xe5 < D230.timerInTitle))
     {
       // "TM" trademark string
       DecalFont_DrawLineOT(
@@ -50,7 +50,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
           &gGT->backBuffer->otMem.startPlusFour[3]);
     }
 
-    if ((OVR_230.menubox_mainMenu.state & 0x10) == 0)
+    if ((D230.menubox_mainMenu.state & 0x10) == 0)
     {
       gGT->numPlyrNextGame = 1;
 
@@ -63,11 +63,11 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
         if (gGT->demoCountdownTimer < 1)
         {
           // Transition out of main menu
-          OVR_230.MM_State = 2;
+          D230.MM_State = 2;
 
           // Go to a cutscene of some kind
           // (either oxide intro or demo mode)
-          OVR_230.desiredMenu = 4;
+          D230.desiredMenu = 4;
         }
       }
 
@@ -85,7 +85,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   // if drawing ptrNextBox_InHierarchy
   if ((mainMenu->state & 0x10) != 0)
   {
-    OVR_230.timerInTitle = 1000;
+    D230.timerInTitle = 1000;
   }
 
   if ((mainMenu->state & 0x400) == 0)
@@ -93,7 +93,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     return;
   }
 
-  struct Title *titleObj = OVR_230.titleObj;
+  struct Title *titleObj = D230.titleObj;
 
   // if "title" object exists
   if (titleObj != NULL)
@@ -141,7 +141,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
 
     // menubox for new/load
-    mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_adventure;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_adventure;
     mainMenu->state |= 0x10;
     return;
   }
@@ -150,10 +150,10 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x4d)
   {
     // Leave main menu hierarchy
-    OVR_230.MM_State = 2;
+    D230.MM_State = 2;
 
     // Set next stage to 2 for Time Trial
-    OVR_230.desiredMenu = 2;
+    D230.desiredMenu = 2;
 
     // set number of players to 1
     gGT->numPlyrNextGame = 1;
@@ -186,7 +186,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x4f)
   {
     // next menuBox is choosing single+cup
-    mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_raceType;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_raceType;
     mainMenu->state |= 0x10;
     return;
   }
@@ -194,13 +194,13 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   // if you chose Battle
   if (choose == 0x50)
   {
-    OVR_230.characterSelect_transitionState = 2;
+    D230.characterSelect_transitionState = 2;
 
     // set game mode to Battle Mode
     gGT->gameMode1 |= BATTLE_MODE;
 
     // set next menuBox to 2P,3P,4P
-    mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_players2P3P4P;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_players2P3P4P;
     mainMenu->state |= 0x10;
     return;
   }
@@ -209,10 +209,10 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x51)
   {
     // Set next stage to high score menu
-    OVR_230.desiredMenu = 3;
+    D230.desiredMenu = 3;
 
     // Leave main menu hierarchy
-    OVR_230.MM_State = 2;
+    D230.MM_State = 2;
 
     return;
   }
@@ -221,10 +221,10 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x234)
   {
     // Set next stage to Scrapbook
-    OVR_230.desiredMenu = 5;
+    D230.desiredMenu = 5;
 
     // Leave main menu hierarchy
-    OVR_230.MM_State = 2;
+    D230.MM_State = 2;
 
     return;
   }

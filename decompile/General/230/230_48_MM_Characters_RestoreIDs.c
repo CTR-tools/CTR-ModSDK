@@ -10,8 +10,8 @@ void DECOMP_MM_Characters_RestoreIDs(void) {
 
   // erase select bits
   sdata->characterSelectFlags = 0;
-  OVR_230.transitionFrames = 0xc;
-  OVR_230.isMenuTransitioning = 0;
+  D230.transitionFrames = 0xc;
+  D230.isMenuTransitioning = 0;
 
   // This uses 80086e84, which controls character IDs
   // loop 8 times
@@ -32,7 +32,7 @@ void DECOMP_MM_Characters_RestoreIDs(void) {
     // Basically sets them to 0, 1, 2, 3, 4... up to 0xE,
     // setting Oxide's manually to 0xF is needed to make his icon appear
 
-    OVR_230.characterIcon[OVR_230.csm_Active[i].characterID] = i;
+    D230.characterIcon[D230.csm_Active[i].characterID] = i;
   }
 
   // if number of players is not zero
@@ -46,7 +46,7 @@ void DECOMP_MM_Characters_RestoreIDs(void) {
       currID = &data.characterIDs[i];
 
       // get unlock requirement for this character
-      uVar1 = OVR_230.csm_Active[*currID].unlockFlags;
+      uVar1 = D230.csm_Active[*currID].unlockFlags;
 
       if (
 			// If Icon has an unlock requirement
@@ -68,14 +68,14 @@ void DECOMP_MM_Characters_RestoreIDs(void) {
   {
 	// set name string ID to the character ID of each player.
 	// The string will only draw if both these variables match
-	OVR_230.characterSelect_charIDs_curr[i] = data.characterIDs[i];
-	OVR_230.characterSelect_charIDs_desired[i] = data.characterIDs[i];
+	D230.characterSelect_charIDs_curr[i] = data.characterIDs[i];
+	D230.characterSelect_charIDs_desired[i] = data.characterIDs[i];
 	
 	// something to do with transitioning between icons
-	OVR_230.timerPerPlayer[i] = 0;
+	D230.timerPerPlayer[i] = 0;
 	
 	// rotation of each driver, 90 degrees difference
-	OVR_230.characterSelect_angle[i] = (i * 0x400) + 400;
+	D230.characterSelect_angle[i] = (i * 0x400) + 400;
   }
 
   DECOMP_MM_Characters_DrawWindows(0);

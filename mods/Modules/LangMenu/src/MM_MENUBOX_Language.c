@@ -40,7 +40,7 @@ void MM_MENUBOX_Language(struct MenuBox *mb)
         return;
       }
     }
-    struct MenuBox *mainMenu = &OVR_230.menubox_mainMenu;
+    struct MenuBox *mainMenu = &D230.menubox_mainMenu;
     gGT->notFoundInCode2 = 1; // boolLangChosen
     mainMenu->state |= DISABLE_INPUT_ALLOW_FUNCPTRS;
     sdata->ptrDesiredMenuBox = mainMenu;
@@ -88,6 +88,6 @@ struct MenuBox* MM_Menubox_LanguageBoot(struct GameTracker* gGT)
     timer = 900;
     return &menubox_language;
   } else {
-    return &OVR_230.menubox_mainMenu;
+    return &D230.menubox_mainMenu;
   }
 };

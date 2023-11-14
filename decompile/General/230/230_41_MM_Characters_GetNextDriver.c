@@ -6,8 +6,8 @@ int DECOMP_MM_Characters_GetNextDriver(short dpad, char characterID)
   short unlocked;
   char newDriver;
 
-  nextDriver = OVR_230.csm_Active[characterID].indexNext[dpad];
-  unlocked = OVR_230.csm_Active[nextDriver].unlockFlags;
+  nextDriver = D230.csm_Active[characterID].indexNext[dpad];
+  unlocked = D230.csm_Active[nextDriver].unlockFlags;
 
   // set new driver to the driver
   // you'd get when pressing Up button

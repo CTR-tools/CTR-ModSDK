@@ -28,16 +28,16 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
 
   for (iVar14 = 0; iVar14 < gGT->numPlyrNextGame; iVar14++)
   {
-    psVar11 = &OVR_230.characterSelect_ptrWindowXY[iVar14*2];
-    tMeta = &OVR_230.ptrTransitionMeta[iVar14];
+    psVar11 = &D230.characterSelect_ptrWindowXY[iVar14*2];
+    tMeta = &D230.ptrTransitionMeta[iVar14];
   
     // tileView
     tileview = &gGT->tileView[iVar14];
   
     tileview->rect.x = psVar11[0] + tMeta[0x10].currX;
     tileview->rect.y = psVar11[1] + tMeta[0x10].currY;
-    tileview->rect.w = OVR_230.characterSelect_sizeX;
-    tileview->rect.h = OVR_230.characterSelect_sizeY;
+    tileview->rect.w = D230.characterSelect_sizeX;
+    tileview->rect.h = D230.characterSelect_sizeY;
   
     // negative StartX
     if ((short)tileview->rect.x < 0) {
@@ -113,7 +113,7 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     // so that each camera can only see one driver
     idpp[iVar6].tileView = tileview;
   
-    ptrCurr = &OVR_230.characterSelect_charIDs_curr[iVar6];
+    ptrCurr = &D230.characterSelect_charIDs_curr[iVar6];
     iVar10->animFrame = 0;
     iVar10->vertSplit = 0;
   
@@ -126,19 +126,19 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     gGT->cameraDC[iVar6].cameraMode = 3;
 	
     // Set position of player
-    iVar10->matrix.t[0] = OVR_230.csm_instPos[0];
-    iVar10->matrix.t[1] = OVR_230.csm_instPos[1];
-    iVar10->matrix.t[2] = OVR_230.csm_instPos[2];
+    iVar10->matrix.t[0] = D230.csm_instPos[0];
+    iVar10->matrix.t[1] = D230.csm_instPos[1];
+    iVar10->matrix.t[2] = D230.csm_instPos[2];
   
-    psVar11 = &OVR_230.timerPerPlayer[iVar6];
+    psVar11 = &D230.timerPerPlayer[iVar6];
     sVar9 = *psVar11 + -1;
   
     // If no transition between players
     if (*psVar11 == 0) {
       // compare to character ID
       if (*ptrCurr != data.characterIDs[iVar6]) {
-        *psVar11 = OVR_230.moveModels << 1;
-        OVR_230.characterSelect_charIDs_desired[iVar6] = data.characterIDs[iVar6];
+        *psVar11 = D230.moveModels << 1;
+        D230.characterSelect_charIDs_desired[iVar6] = data.characterIDs[iVar6];
       }
     }
   
@@ -148,34 +148,34 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
       *psVar11 = sVar9;
   
       // if timer is before midpoint
-      if ((int)sVar9 < (int)OVR_230.moveModels) 
+      if ((int)sVar9 < (int)D230.moveModels) 
 	  {
         // make driver fly off screen
-        *ptrCurr = OVR_230.characterSelect_charIDs_desired[iVar6];
-        iVar5 = TitleFlag_MoveModels((int)sVar9, (int)OVR_230.moveModels);
+        *ptrCurr = D230.characterSelect_charIDs_desired[iVar6];
+        iVar5 = TitleFlag_MoveModels((int)sVar9, (int)D230.moveModels);
   
         // direction moving
-        iVar6 = -OVR_230.characterSelect_MoveDir[iVar6];
-        iVar8 = iVar5 * OVR_230.unkCharacterWindows >> 0xc;
+        iVar6 = -D230.characterSelect_MoveDir[iVar6];
+        iVar8 = iVar5 * D230.unkCharacterWindows >> 0xc;
       }
   
       // if timer is after midpoint
       else {
         // make new driver fly on screen
-        iVar5 = TitleFlag_MoveModels((int)sVar9 - (int)OVR_230.moveModels, (int)OVR_230.moveModels);
+        iVar5 = TitleFlag_MoveModels((int)sVar9 - (int)D230.moveModels, (int)D230.moveModels);
   
         // direction moving
-        iVar8 = OVR_230.characterSelect_MoveDir[iVar6];
-        iVar6 = (0x1000 - iVar5) * (int)OVR_230.unkCharacterWindows >> 0xc;
+        iVar8 = D230.characterSelect_MoveDir[iVar6];
+        iVar6 = (0x1000 - iVar5) * (int)D230.unkCharacterWindows >> 0xc;
       }
   
       iVar10->matrix.t[0] += iVar6 * iVar8;
     }
   
     // driver rotation
-    rot[0] = OVR_230.csm_instRot[0];
-    rot[1] = OVR_230.csm_instRot[1] + OVR_230.characterSelect_angle[iVar14];
-    rot[2] = OVR_230.csm_instRot[2];
+    rot[0] = D230.csm_instRot[0];
+    rot[1] = D230.csm_instRot[1] + D230.characterSelect_angle[iVar14];
+    rot[2] = D230.csm_instRot[2];
   
     // convert 3 rotation shorts into rotation matrix
     ConvertRotToMatrix(&iVar10->matrix.m[0][0], &rot[0]);

@@ -4,7 +4,7 @@ void DECOMP_MM_ResetAllMenus(void)
 {
     for (int i = 0; i < 9; i++)
     {
-        struct MenuBox* mb = OVR_230.ptrMenuBoxes[i];
+        struct MenuBox* mb = D230.ptrMenuBoxes[i];
 
         // Close menubox
         mb->state |= 8;

@@ -19,7 +19,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   struct InstDrawPerPlayer* idpp;
 
   // frame counters
-  timer = OVR_230.timerInTitle;
+  timer = D230.timerInTitle;
 
   // object from thread
   obj = title->object;
@@ -31,7 +31,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
     MENUBOX_ClearInput();
 
     // set frame to 1000, skip the animation
-    OVR_230.timerInTitle = 1000;
+    D230.timerInTitle = 1000;
   }
 
   // if frame is more than 230
@@ -46,10 +46,10 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
 
   {
     // if frame index, is one of eight on the array
-    if (OVR_230.titleSounds[i].frameToPlay == timer)
+    if (D230.titleSounds[i].frameToPlay == timer)
     {
       // Play sound on this specific frame
-      OtherFX_Play(OVR_230.titleSounds[i].soundID, 1);
+      OtherFX_Play(D230.titleSounds[i].soundID, 1);
     }
   }
 
@@ -66,7 +66,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
     titleInst->flags &= 0xffffff7f;
 
     // the frame of title screen that each instance should start animation
-    animFram = OVR_230.titleInstances[i].frameIndex_startMoving;
+    animFram = D230.titleInstances[i].frameIndex_startMoving;
 
     // set all instances to first animation
     titleInst->animIndex = 0;
@@ -88,7 +88,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
       titleInst->animFrame = 0;
     }
 
-    if ((OVR_230.titleInstances[i].boolTrophy) != 0)
+    if ((D230.titleInstances[i].boolTrophy) != 0)
     {
       // if frame is anywhere in the two seconds
       // that the trophy is in the air
@@ -118,18 +118,18 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   MM_Title_CameraMove(obj, timer);
 
   // increment frame counter
-  timer = OVR_230.timerInTitle + 1;
+  timer = D230.timerInTitle + 1;
 
-  if (245 < OVR_230.timerInTitle)
+  if (245 < D230.timerInTitle)
   {
     // animation is over
-    OVR_230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
-	OVR_230.menubox_mainMenu.state |= EXECUTE_FUNCPTR;
+    D230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
+	D230.menubox_mainMenu.state |= EXECUTE_FUNCPTR;
 
     // dont increment index
-    timer = OVR_230.timerInTitle;
+    timer = D230.timerInTitle;
   }
 
   // write to index
-  OVR_230.timerInTitle = timer;
+  D230.timerInTitle = timer;
 }

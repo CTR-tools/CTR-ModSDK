@@ -17,8 +17,8 @@ void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox *mb)
     return;
   case 1:
     #if BUILD == UsaRetail
-        OVR_230.desiredMenu = 1;
-        OVR_230.MM_State = 2; // transitioning out
+        D230.desiredMenu = 1;
+        D230.MM_State = 2; // transitioning out
     #endif
     #if BUILD == EurRetail
         *(int *)0x800b6284 = 1;

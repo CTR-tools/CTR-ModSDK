@@ -11,7 +11,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 	int isOn = TitleFlag_IsFullyOnScreen();
 
     // book state (0,1,2,3,4)
-    switch (OVR_230.scrapbookState)
+    switch (D230.scrapbookState)
     {
 
     // Init State,
@@ -24,7 +24,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         }
 
         // go to Load State
-        OVR_230.scrapbookState = 1;
+        D230.scrapbookState = 1;
 
         mb->state &= ~NEEDS_TO_CLOSE;
 
@@ -47,7 +47,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         // \TEST.STR;1
         // if file was found
-        if (CdSearchFile(&cdLoc, OVR_230.s_teststr1) != 0)
+        if (CdSearchFile(&cdLoc, R230.s_teststr1) != 0)
         {
             SpuSetCommonCDVolume(sdata->vol_Music << 7, sdata->vol_Music << 7);
 
@@ -67,7 +67,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             MM_Video_StartStream(cdPos, 0x1148);
 
             // start playing movie
-            OVR_230.scrapbookState = 2;
+            D230.scrapbookState = 2;
 
             return;
         }
@@ -111,7 +111,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             }
 
             // stop video
-            OVR_230.scrapbookState = 3;
+            D230.scrapbookState = 3;
         }
 
         VSync(4);
@@ -134,7 +134,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     GO_BACK:
 
         // return to gameplay
-        OVR_230.scrapbookState = 4;
+        D230.scrapbookState = 4;
         break;
 
     // send player back to adv hub,

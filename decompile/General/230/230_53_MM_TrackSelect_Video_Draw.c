@@ -24,32 +24,32 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
     )
   {
     // draw icon
-    OVR_230.trackSel_video_state = 1;
+    D230.trackSel_video_state = 1;
   }
 
   else
   {
-    // Lock OVR_230.trackSel_video_state to zero to prevent allocation,
+    // Lock D230.trackSel_video_state to zero to prevent allocation,
     // which helps the Oxide efforts
 
-    if ((OVR_230.trackSel_video_state == 2) && (OVR_230.trackSel_unk == 1))
+    if ((D230.trackSel_video_state == 2) && (D230.trackSel_unk == 1))
     {
 
       // If you have not allocated memory for video yet
-      if (OVR_230.trackSel_video_boolAllocated == 0)
+      if (D230.trackSel_video_boolAllocated == 0)
       {
         // Allocate memory for video in Track Selection
         MM_Video_AllocMem(0xb0, 0x4b, 4, 0, 0);
 
         // You have now allocated the memory
-        OVR_230.trackSel_video_boolAllocated = OVR_230.trackSel_unk;
+        D230.trackSel_video_boolAllocated = D230.trackSel_unk;
       }
 
       // CD position of video, and numFrames
       MM_Video_StartStream(bh->cdpos + entry[videoID].offset, selectMenu->videoLength);
     }
 	
-    if (((OVR_230.trackSel_unk == 3) || (OVR_230.trackSel_video_state == 3)) || (OVR_230.trackSel_video_state == 2))
+    if (((D230.trackSel_unk == 3) || (D230.trackSel_video_state == 3)) || (D230.trackSel_video_state == 2))
     {
       tpage = gGT->ptrIcons[0x3f]->texLayout.tpage;
       u0 = gGT->ptrIcons[0x3f]->texLayout.u0;
@@ -58,11 +58,11 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
 	  // Decode off-screen
 	  int ret = MM_Video_DecodeFrame(512, 0);
 
-      if ((ret == 1) && (OVR_230.trackSel_video_state == 2))
+      if ((ret == 1) && (D230.trackSel_video_state == 2))
       {
-        OVR_230.trackSel_video_state = 3;
+        D230.trackSel_video_state = 3;
       }
-      if (OVR_230.trackSel_unk == 3)
+      if (D230.trackSel_unk == 3)
       {
         // RECT position (x,y)
         sdata->videoSTR_src_vramRect.x = (u_short)u0 + (tpage & 0xf) * 0x40 + 3;
@@ -83,7 +83,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
   }
 
   // if not playing video, draw icon
-  if (OVR_230.trackSel_video_state != 3)
+  if (D230.trackSel_video_state != 3)
   {
     // This is the same function that draws Character icons
 
@@ -97,33 +97,33 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
                         // pointer to OT mem
                         gGT->tileView_UI.ptrOT,
 
-                        OVR_230.videoCol,
-						OVR_230.videoCol,
-						OVR_230.videoCol,
-						OVR_230.videoCol,
+                        D230.videoCol,
+						D230.videoCol,
+						D230.videoCol,
+						D230.videoCol,
 						0, FP(1.0));
   }
 
-  if (OVR_230.trackSel_unk == 1)
+  if (D230.trackSel_unk == 1)
   {
     // disable video copy
     MainFrame_InitVideoSTR(0, 0, 0, 0);
   }
-  if ((param_4 == 1) && (OVR_230.trackSel_video_boolAllocated == 1))
+  if ((param_4 == 1) && (D230.trackSel_video_boolAllocated == 1))
   {
-    OVR_230.trackSel_video_state = 1;
+    D230.trackSel_video_state = 1;
   }
-  if ((OVR_230.trackSel_video_state == 1) && (OVR_230.trackSel_unk != 1))
+  if ((D230.trackSel_video_state == 1) && (D230.trackSel_unk != 1))
   {
     MM_Video_StopStream();
   }
-  if ((param_4 == 1) && (OVR_230.trackSel_video_boolAllocated == 1))
+  if ((param_4 == 1) && (D230.trackSel_video_boolAllocated == 1))
   {
     MM_Video_ClearMem(r, (u_int)param_5 | 1);
 
-    OVR_230.trackSel_video_boolAllocated = 0;
+    D230.trackSel_video_boolAllocated = 0;
   }
-  OVR_230.trackSel_unk = OVR_230.trackSel_video_state;
+  D230.trackSel_unk = D230.trackSel_video_state;
 
   // Draw 2D Menu rectangle background
   MENUBOX_DrawInnerRect(r, (short)(param_5 | 1), gGT->backBuffer->otMem.startPlusFour);

@@ -1,6 +1,6 @@
 struct Overlay_230 o230 =
 {
-
+#if 0
 	.s_title = "title",
 
 	.characterID_default = 
@@ -13,6 +13,7 @@ struct Overlay_230 o230 =
 	.s_3 = "3",
 	.s_2 = "2",
 	.s_1 = "1",
+#endif
 
 	// MAIN MENU CONSTS
 	

@@ -39,49 +39,49 @@ void MM_Battle_MenuBox(void)
     // these are selected rows from all battle options
     for (i = 0; i < 5; i++)
     {
-        OVR_230.battleMenuBoxArray[i]->rowSelected = sdata->battleSettings[i];
+        D230.battleMenuBoxArray[i]->rowSelected = sdata->battleSettings[i];
     }
 
-    sVar6 = OVR_230.battle_transitionFrames;
-    if (OVR_230.battle_transitionState != 1)
+    sVar6 = D230.battle_transitionFrames;
+    if (D230.battle_transitionState != 1)
     {
-        if ((short)OVR_230.battle_transitionState < 2)
+        if ((short)D230.battle_transitionState < 2)
         {
             // if transitioning in
-            if (OVR_230.battle_transitionState == 0)
+            if (D230.battle_transitionState == 0)
             {
-                MM_TransitionInOut(&OVR_230.transitionMeta_battle[0], (int)OVR_230.battle_transitionFrames, 8);
+                MM_TransitionInOut(&D230.transitionMeta_battle[0], (int)D230.battle_transitionFrames, 8);
 
                 // reduce frames
-                sVar6 = OVR_230.battle_transitionFrames - 1;
+                sVar6 = D230.battle_transitionFrames - 1;
 
                 // if finished
-                if (OVR_230.battle_transitionFrames == 0)
+                if (D230.battle_transitionFrames == 0)
                 {
                     // menu is now in focus
-                    OVR_230.battle_transitionState = 1;
-                    sVar6 = OVR_230.battle_transitionFrames;
+                    D230.battle_transitionState = 1;
+                    sVar6 = D230.battle_transitionFrames;
                 }
             }
         }
         else
         {
             // if transitioning out
-            if (OVR_230.battle_transitionState == 2)
+            if (D230.battle_transitionState == 2)
             {
                 // MM_TransitionInOut
-                MM_TransitionInOut(&OVR_230.transitionMeta_battle[0], (int)OVR_230.battle_transitionFrames, 8);
+                MM_TransitionInOut(&D230.transitionMeta_battle[0], (int)D230.battle_transitionFrames, 8);
 
                 // count frames
-                OVR_230.battle_transitionFrames++;
+                D230.battle_transitionFrames++;
 
-                sVar6 = OVR_230.battle_transitionFrames;
+                sVar6 = D230.battle_transitionFrames;
 
                 // if 12 frames past
-                if (0xc < OVR_230.battle_transitionFrames)
+                if (0xc < D230.battle_transitionFrames)
                 {
                     // if starting race
-                    if (OVR_230.battle_postTransition_boolStart != 0)
+                    if (D230.battle_postTransition_boolStart != 0)
                     {
                         // passthrough MenuBox for the function
                         // TitleBeginTrack
@@ -94,14 +94,14 @@ void MM_Battle_MenuBox(void)
                     MM_TrackSelect_Init();
 
                     // change desiredMenuBox to Track Selection
-                    sdata->ptrDesiredMenuBox = &OVR_230.menubox_trackSelect;
+                    sdata->ptrDesiredMenuBox = &D230.menubox_trackSelect;
 
                     return;
                 }
             }
         }
     }
-    OVR_230.battle_transitionFrames = sVar6;
+    D230.battle_transitionFrames = sVar6;
 
     // There are no battle teams (clear flags)
     gGT->battleSetup.teamFlags = 0;
@@ -208,7 +208,7 @@ void MM_Battle_MenuBox(void)
     uVar4 = sdata->battleSetupRowHighlighted;
 
     if (
-        (OVR_230.battle_transitionState == 1) &&
+        (D230.battle_transitionState == 1) &&
 
         // If you press D-pad or Cross, Square, Triangle, Circle
         ((sdata->buttonTapPerPlayer[0] & 0x4007f) != 0))
@@ -244,10 +244,10 @@ void MM_Battle_MenuBox(void)
                                     OtherFX_Play(2, 1);
 
                                     // go back when transition is done, dont start race
-                                    OVR_230.battle_postTransition_boolStart = 0;
+                                    D230.battle_postTransition_boolStart = 0;
 
                                     // start transition out
-                                    OVR_230.battle_transitionState = 2;
+                                    D230.battle_transitionState = 2;
                                 }
                             }
 
@@ -274,7 +274,7 @@ void MM_Battle_MenuBox(void)
 
                                     // Enable or disable a weapon when you click it
                                     gGT->battleSetup.enabledWeapons ^=
-                                        OVR_230.battleWeaponsEnabled
+                                        D230.battleWeaponsEnabled
                                             [((int)sdata->battleSetupWeaponHighlighted + ((int)(((u_int)sdata->battleSetupRowHighlighted - 3) * 0x10000) >> 0x10) * 6) * 2];
                                     break;
 
@@ -286,7 +286,7 @@ void MM_Battle_MenuBox(void)
                                     uVar10 = gGT->gameMode1;
                                     gGT->gameMode1 = uVar10 & 0xfffe3fff;
 
-                                    uVar12 = OVR_230.FlagesGameMode1_BattleType[OVR_230.battleType_box.rowSelected];
+                                    uVar12 = D230.FlagesGameMode1_BattleType[D230.battleType_box.rowSelected];
                                     uVar10 = uVar10 & 0xfffe3fff | uVar12;
 
                                     //puVar19 = uVar10;
@@ -297,24 +297,24 @@ void MM_Battle_MenuBox(void)
                                     }
 
                                     if (((gGT->gameMode1 & 0x8000) != 0) &&
-                                        (0 < OVR_230.time_3_6_INF[OVR_230.battleLengthLifeTime_box.rowSelected]))
+                                        (0 < D230.time_3_6_INF[D230.battleLengthLifeTime_box.rowSelected]))
                                     {
                                         // time limit
                                         gGT->gameMode1 |= 0x10000;
                                     }
 
                                     // set kill limit
-                                    gGT->battleSetup.killLimit = OVR_230.points_5_10_15[OVR_230.battleLengthPoints_box.rowSelected];
+                                    gGT->battleSetup.killLimit = D230.points_5_10_15[D230.battleLengthPoints_box.rowSelected];
 
                                     // if time limit
-                                    if (OVR_230.battleType_box.rowSelected == 1)
+                                    if (D230.battleType_box.rowSelected == 1)
                                     {
-                                        uVar12 = OVR_230.time_3_6_9[OVR_230.battleLengthTimeTime_box.rowSelected];
+                                        uVar12 = D230.time_3_6_9[D230.battleLengthTimeTime_box.rowSelected];
                                     }
 
                                     else
                                     {
-                                        uVar12 = OVR_230.time_3_6_INF[OVR_230.battleLengthLifeTime_box.rowSelected];
+                                        uVar12 = D230.time_3_6_INF[D230.battleLengthLifeTime_box.rowSelected];
                                     }
 
                                     // set time limit based on number of minutes
@@ -328,7 +328,7 @@ void MM_Battle_MenuBox(void)
                                     gGT->battleSetup.numWeapons = 0;
 
                                     // life limit
-                                    gGT->battleSetup.lifeLimit = OVR_230.lives_3_6_9[OVR_230.battleLengthLifeLife_box.rowSelected];
+                                    gGT->battleSetup.lifeLimit = D230.lives_3_6_9[D230.battleLengthLifeLife_box.rowSelected];
 
                                     // write RNG array of weaponIDs, based on weapon flags,
                                     // loop through 14 "possible" weapons
@@ -347,10 +347,10 @@ void MM_Battle_MenuBox(void)
                                     }
 
                                     // start battle when transition is done
-                                    OVR_230.battle_postTransition_boolStart = 1;
+                                    D230.battle_postTransition_boolStart = 1;
 
                                     // start transition out
-                                    OVR_230.battle_transitionState = 2;
+                                    D230.battle_transitionState = 2;
 
                                     // check if player changed team,
                                     // then clear stats if a change happened
@@ -383,7 +383,7 @@ void MM_Battle_MenuBox(void)
 
                             else
                             {
-                                if ((OVR_230.battleType_box.rowSelected == 2) && (sdata->battleSetupRowHighlighted == 1))
+                                if ((D230.battleType_box.rowSelected == 2) && (sdata->battleSetupRowHighlighted == 1))
                                 {
                                     sdata->battleSetupRowHighlighted = 10;
                                 }
@@ -403,7 +403,7 @@ void MM_Battle_MenuBox(void)
 
                         else
                         {
-                            if ((OVR_230.battleType_box.rowSelected == 2) && (sdata->battleSetupRowHighlighted == 10))
+                            if ((D230.battleType_box.rowSelected == 2) && (sdata->battleSetupRowHighlighted == 10))
                                 goto LAB_800b1d7c;
                         }
                     }
@@ -412,9 +412,9 @@ void MM_Battle_MenuBox(void)
                 // If you press Down
                 else
                 {
-                    if ((OVR_230.battleType_box.rowSelected == 2) && (sdata->battleSetupRowHighlighted == 10))
+                    if ((D230.battleType_box.rowSelected == 2) && (sdata->battleSetupRowHighlighted == 10))
                     {
-                        sdata->battleSetupRowHighlighted = OVR_230.battleType_box.rowSelected;
+                        sdata->battleSetupRowHighlighted = D230.battleType_box.rowSelected;
                     }
                     else
                     {
@@ -434,10 +434,10 @@ void MM_Battle_MenuBox(void)
             // If you press Up
             else
             {
-                if ((OVR_230.battleType_box.rowSelected == 2) && (sdata->battleSetupRowHighlighted == 10))
+                if ((D230.battleType_box.rowSelected == 2) && (sdata->battleSetupRowHighlighted == 10))
                 {
                 LAB_800b1d7c:
-                    sdata->battleSetupRowHighlighted = OVR_230.battle_transitionState;
+                    sdata->battleSetupRowHighlighted = D230.battle_transitionState;
                 }
                 else
                 {
@@ -485,24 +485,24 @@ void MM_Battle_MenuBox(void)
             // Dropdown menu for Time (3 minutes, 6 minutes, etc)
             if (sdata->battleSetupExpandMenu == 1)
             {
-                if (OVR_230.battleType_box.rowSelected == 1)
+                if (D230.battleType_box.rowSelected == 1)
                 {
-                    box = &OVR_230.battleLengthTimeTime_box;
+                    box = &D230.battleLengthTimeTime_box;
                 }
                 else
                 {
-                    if ((short)OVR_230.battleType_box.rowSelected < 2)
+                    if ((short)D230.battleType_box.rowSelected < 2)
                     {
-                        if (OVR_230.battleType_box.rowSelected == 0)
+                        if (D230.battleType_box.rowSelected == 0)
                         {
-                            box = &OVR_230.battleLengthPoints_box;
+                            box = &D230.battleLengthPoints_box;
                         }
                     }
                     else
                     {
-                        if (OVR_230.battleType_box.rowSelected == 2)
+                        if (D230.battleType_box.rowSelected == 2)
                         {
-                            box = &OVR_230.battleLengthLifeTime_box;
+                            box = &D230.battleLengthLifeTime_box;
                         }
                     }
                 }
@@ -519,7 +519,7 @@ void MM_Battle_MenuBox(void)
                     // Dropdown menu for (Point Limit, Life Limit, TIme Limit)
                     if (sdata->battleSetupExpandMenu == 0)
                     {
-                        box = &OVR_230.battleType_box;
+                        box = &D230.battleType_box;
                     }
                 }
 
@@ -530,7 +530,7 @@ void MM_Battle_MenuBox(void)
                     // Dropdown for 3 lives, 6 lives, 9 lives
                     if (sdata->battleSetupExpandMenu == 10)
                     {
-                        box = &OVR_230.battleLengthLifeLife_box;
+                        box = &D230.battleLengthLifeLife_box;
                     }
                 }
             }
@@ -555,85 +555,85 @@ void MM_Battle_MenuBox(void)
 
     // "SETUP BATTLE"
     DecalFont_DrawLine(sdata->lngStrings[0x90],
-		OVR_230.transitionMeta_battle[9].currX + 0x100,
-		OVR_230.transitionMeta_battle[9].currY + 10, 1, 0xffff8000);
+		D230.transitionMeta_battle[9].currX + 0x100,
+		D230.transitionMeta_battle[9].currY + 10, 1, 0xffff8000);
 
     // "TYPE:"
     DecalFont_DrawLine(sdata->lngStrings[0x91],
-		OVR_230.transitionMeta_battle[1].currX + 0x8c,
-		OVR_230.transitionMeta_battle[1].currY + 0x24, 1, 0x4000);
+		D230.transitionMeta_battle[1].currX + 0x8c,
+		D230.transitionMeta_battle[1].currY + 0x24, 1, 0x4000);
 
-    OVR_230.battleType_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
+    D230.battleType_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
 
     // if you are not choosing type of battle
     if (sdata->battleSetupExpandMenu != 0)
     {
-        OVR_230.battleType_box.state |= 0x40;
+        D230.battleType_box.state |= 0x40;
     }
 
     if (sdata->battleSetupRowHighlighted != 0)
     {
-        OVR_230.battleType_box.state |= 0x100;
+        D230.battleType_box.state |= 0x100;
     }
 
-    MENUBOX_DrawSelf(&OVR_230.battleType_box, 
-		OVR_230.transitionMeta_battle[0].currX + 0x9c,
-		OVR_230.transitionMeta_battle[0].currY + 0x24, 0x134);
+    MENUBOX_DrawSelf(&D230.battleType_box, 
+		D230.transitionMeta_battle[0].currX + 0x9c,
+		D230.transitionMeta_battle[0].currY + 0x24, 0x134);
 		
     local_38 = 0xd;
-    MENUBOX_GetHeight(&OVR_230.battleType_box, &local_38, 0);
+    MENUBOX_GetHeight(&D230.battleType_box, &local_38, 0);
     sVar6 = local_38 + 0x20;
 
     // "LENGTH:"
     DecalFont_DrawLine(sdata->lngStrings[0x95],
-		OVR_230.transitionMeta_battle[3].currX + 0x8c,
-		OVR_230.transitionMeta_battle[3].currY + sVar6 + 4, 1, 0x4000);
+		D230.transitionMeta_battle[3].currX + 0x8c,
+		D230.transitionMeta_battle[3].currY + sVar6 + 4, 1, 0x4000);
 
-    if (OVR_230.battleType_box.rowSelected == 1)
+    if (D230.battleType_box.rowSelected == 1)
     {
-        box = &OVR_230.battleLengthTimeTime_box;
+        box = &D230.battleLengthTimeTime_box;
     }
     else
     {
         sVar20 = sVar6;
-        if (1 < OVR_230.battleType_box.rowSelected)
+        if (1 < D230.battleType_box.rowSelected)
         {
-            if (OVR_230.battleType_box.rowSelected == 2)
+            if (D230.battleType_box.rowSelected == 2)
             {
-                OVR_230.battleLengthLifeTime_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
+                D230.battleLengthLifeTime_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
 				
                 if (sdata->battleSetupExpandMenu != 1)
                 {
-                    OVR_230.battleLengthLifeTime_box.state |= 0x40;
+                    D230.battleLengthLifeTime_box.state |= 0x40;
                 }
                 if (sdata->battleSetupRowHighlighted != 1)
                 {
-                    OVR_230.battleLengthLifeTime_box.state |= 0x100;
+                    D230.battleLengthLifeTime_box.state |= 0x100;
                 }
 				
-                MENUBOX_DrawSelf(&OVR_230.battleLengthLifeTime_box,
-					OVR_230.transitionMeta_battle[2].currX + 0x9c,
-					OVR_230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
+                MENUBOX_DrawSelf(&D230.battleLengthLifeTime_box,
+					D230.transitionMeta_battle[2].currX + 0x9c,
+					D230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
 								 
-                OVR_230.battleLengthLifeLife_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
+                D230.battleLengthLifeLife_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
                 
 				if (sdata->battleSetupExpandMenu != 10)
                 {
-                    OVR_230.battleLengthLifeLife_box.state |= 0x40;
+                    D230.battleLengthLifeLife_box.state |= 0x40;
                 }
                 if (sdata->battleSetupRowHighlighted != 10)
                 {
-                    OVR_230.battleLengthLifeLife_box.state |= 0x100;
+                    D230.battleLengthLifeLife_box.state |= 0x100;
                 }
 				
-                MENUBOX_DrawSelf(&OVR_230.battleLengthLifeLife_box,
-					OVR_230.transitionMeta_battle[2].currX + 0x142,
-					OVR_230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
+                MENUBOX_DrawSelf(&D230.battleLengthLifeLife_box,
+					D230.transitionMeta_battle[2].currX + 0x142,
+					D230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
 								 
                 local_38 = 0xd;
-                MENUBOX_GetHeight(&OVR_230.battleLengthLifeTime_box, &local_38, 0);
+                MENUBOX_GetHeight(&D230.battleLengthLifeTime_box, &local_38, 0);
                 local_36[0] = 0xd;
-                MENUBOX_GetHeight(&OVR_230.battleLengthLifeLife_box, &local_36, 0);
+                MENUBOX_GetHeight(&D230.battleLengthLifeLife_box, &local_36, 0);
                 sVar20 = local_36[0] + sVar6;
                 if (local_36[0] < local_38)
                 {
@@ -642,9 +642,9 @@ void MM_Battle_MenuBox(void)
             }
             goto LAB_800b25f0;
         }
-        if (OVR_230.battleType_box.rowSelected != 0)
+        if (D230.battleType_box.rowSelected != 0)
             goto LAB_800b25f0;
-        box = &OVR_230.battleLengthPoints_box;
+        box = &D230.battleLengthPoints_box;
     }
     
 	box->state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW);
@@ -659,8 +659,8 @@ void MM_Battle_MenuBox(void)
     }
     
 	MENUBOX_DrawSelf(box, 
-		OVR_230.transitionMeta_battle[2].currX + 0x9c,
-		OVR_230.transitionMeta_battle[2].currY + sVar6 + 4, 0x134);
+		D230.transitionMeta_battle[2].currX + 0x9c,
+		D230.transitionMeta_battle[2].currY + sVar6 + 4, 0x134);
     
 	local_38 = 0xd;
     MENUBOX_GetHeight(box, &local_38, 0);
@@ -672,8 +672,8 @@ LAB_800b25f0:
 
     // "TEAMS:"
     DecalFont_DrawLine(sdata->lngStrings[0x98],
-		OVR_230.transitionMeta_battle[5].currX + 0x8c,
-		OVR_230.transitionMeta_battle[5].currY + sVar20 + 10, 1, 0x4000);
+		D230.transitionMeta_battle[5].currX + 0x8c,
+		D230.transitionMeta_battle[5].currY + sVar20 + 10, 1, 0x4000);
 
     i = 4;
 
@@ -734,8 +734,8 @@ LAB_800b25f0:
 
                     MM_Battle_DrawIcon_Character(
 						gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar16]].iconID],
-						(int)OVR_230.transitionMeta_battle[4].currX + (int)sVar6,
-						(int)OVR_230.transitionMeta_battle[4].currY + (int)sVar20 + 6,
+						(int)D230.transitionMeta_battle[4].currX + (int)sVar6,
+						(int)D230.transitionMeta_battle[4].currY + (int)sVar20 + 6,
 	
 						&gGT->backBuffer->primMem,
 						gGT->tileView_UI.ptrOT,
@@ -744,9 +744,9 @@ LAB_800b25f0:
             }
 
         local_48.h = 0x1a;
-        local_48.x = OVR_230.transitionMeta_battle[4].currX + (short)iVar8;
+        local_48.x = D230.transitionMeta_battle[4].currX + (short)iVar8;
         iVar8 = iVar8 + (u_int)uVar4;
-        local_48.y = OVR_230.transitionMeta_battle[4].currY + sVar20 + 5;
+        local_48.y = D230.transitionMeta_battle[4].currY + sVar20 + 5;
         
 		local_48.w = uVar4;
 
@@ -761,8 +761,8 @@ LAB_800b25f0:
     {
         local_50.w = 0x134;
         local_50.h = 0x1e;
-        local_50.x = OVR_230.transitionMeta_battle[4].currX + 0x9c;
-        local_50.y = OVR_230.transitionMeta_battle[4].currY + sVar20 + 3;
+        local_50.x = D230.transitionMeta_battle[4].currX + 0x9c;
+        local_50.y = D230.transitionMeta_battle[4].currY + sVar20 + 3;
 
         CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
 
@@ -775,16 +775,16 @@ LAB_800b25f0:
 	
     local_40.w = 0x140;
     local_40.h = 0x24;
-    local_40.x = OVR_230.transitionMeta_battle[4].currX + 0x96;
-    local_40.y = OVR_230.transitionMeta_battle[4].currY + sVar20;
+    local_40.x = D230.transitionMeta_battle[4].currX + 0x96;
+    local_40.y = D230.transitionMeta_battle[4].currY + sVar20;
 
     // Draw 2D Menu rectangle background
     MENUBOX_DrawInnerRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
     // "WEAPONS:"
     DecalFont_DrawLine(sdata->lngStrings[0x99],
-                       (int)(((u_int)OVR_230.transitionMeta_battle[7].currX + 0x8c) * 0x10000) >> 0x10,
-                       (int)(short)(OVR_230.transitionMeta_battle[7].currY + sVar20 + 0x44), 1, 0x4000);
+                       (int)(((u_int)D230.transitionMeta_battle[7].currX + 0x8c) * 0x10000) >> 0x10,
+                       (int)(short)(D230.transitionMeta_battle[7].currY + sVar20 + 0x44), 1, 0x4000);
 
     // make flashing color for error message
 
@@ -832,22 +832,22 @@ LAB_800b25f0:
     // the player from starting the Battle
     if (j == 0)
     {
-        OVR_230.battleStartGame_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW); 
+        D230.battleStartGame_box.state &= ~(0x100 | SHOW_ONLY_HIGHLIT_ROW); 
 		
         if (sdata->battleSetupExpandMenu != 5)
         {
-            OVR_230.battleStartGame_box.state |= SHOW_ONLY_HIGHLIT_ROW;
+            D230.battleStartGame_box.state |= SHOW_ONLY_HIGHLIT_ROW;
         }
         if (sdata->battleSetupRowHighlighted != 5)
         {
-            OVR_230.battleStartGame_box.state |= 0x100;
+            D230.battleStartGame_box.state |= 0x100;
         }
-        MENUBOX_DrawSelf(&OVR_230.battleStartGame_box, 
-				OVR_230.transitionMeta_battle[8].currX + 0x9c,
-				OVR_230.transitionMeta_battle[8].currY + sVar20 + 0x78, 0x134);
+        MENUBOX_DrawSelf(&D230.battleStartGame_box, 
+				D230.transitionMeta_battle[8].currX + 0x9c,
+				D230.transitionMeta_battle[8].currY + sVar20 + 0x78, 0x134);
 				
         local_38 = 0xd;
-        MENUBOX_GetHeight(&OVR_230.battleStartGame_box, &local_38, 0);
+        MENUBOX_GetHeight(&D230.battleStartGame_box, &local_38, 0);
     }
 
     // If you have no errors that prevent
@@ -867,21 +867,21 @@ LAB_800b25f0:
     i = 0;
     local_40.w = 0x140;
     local_40.h = 0x44;
-    local_40.x = OVR_230.transitionMeta_battle[6].currX + 0x96;
-    local_40.y = OVR_230.transitionMeta_battle[6].currY + sVar20 + 0x2a;
+    local_40.x = D230.transitionMeta_battle[6].currX + 0x96;
+    local_40.y = D230.transitionMeta_battle[6].currY + sVar20 + 0x2a;
 
     // Loop through all 11 weapon icons
     for (i = 0; i < 11; i++)
     {
         iVar8 = (int)(short)i;
-        color = (u_int)OVR_230.color1;
+        color = (u_int)D230.color1;
         uVar17 = 4;
         j = (iVar8 / 6);
 
         // Check if this weapon is not enabled
-        if ((gGT->battleSetup.enabledWeapons & OVR_230.battleWeaponsEnabled[iVar8*2]) == 0)
+        if ((gGT->battleSetup.enabledWeapons & D230.battleWeaponsEnabled[iVar8*2]) == 0)
         {
-            color = (u_int)OVR_230.color2;
+            color = (u_int)D230.color2;
             uVar17 = 0x15;
         }
 
@@ -897,10 +897,10 @@ LAB_800b25f0:
             // "3"
 
             // draw the "3" over the icons
-            DecalFont_DrawLine(&OVR_230.s_3[0], iVar13, j, 2, uVar17);
+            DecalFont_DrawLine(&R230.s_3[0], iVar13, j, 2, uVar17);
         }
 
-        MM_Battle_DrawIcon_Weapon(gGT->ptrIcons[OVR_230.battleWeaponsEnabled[iVar8*2+1]],
+        MM_Battle_DrawIcon_Weapon(gGT->ptrIcons[D230.battleWeaponsEnabled[iVar8*2+1]],
                                   iVar13, j,
 
                                   // pointer to PrimMem struct
@@ -936,7 +936,7 @@ LAB_800b25f0:
     local_58.w = local_40.w - 6;
     local_58.h = local_40.h - 4;
 
-    CTR_Box_DrawClearBox(&local_58, &OVR_230.color3[0], TRANS_50_DECAL,
+    CTR_Box_DrawClearBox(&local_58, &D230.color3[0], TRANS_50_DECAL,
                          gGT->backBuffer->otMem.startPlusFour,
 
                          // pointer to PrimMem struct
@@ -948,7 +948,7 @@ LAB_800b25f0:
     // these are selected rows from all battle options
     for (i = 0; i < 5; i++)
     {
-        sdata->battleSettings[i] = OVR_230.battleMenuBoxArray[i]->rowSelected;
+        sdata->battleSettings[i] = D230.battleMenuBoxArray[i]->rowSelected;
     }
     return;
 }

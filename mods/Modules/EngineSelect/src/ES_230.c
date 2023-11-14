@@ -42,8 +42,8 @@ void MainCharacterSelect(int player)
 			{
 				OtherFX_Play(1, 1);
 				#if BUILD == UsaRetail
-				OVR_230.movingToTrackMenu = 1;
-				OVR_230.isMenuTransitioning = 2;
+				D230.movingToTrackMenu = 1;
+				D230.isMenuTransitioning = 2;
 				#elif BUILD == EurRetail
 				*(int*)0x800b6288 = 1;
 				*(int*)0x800b62c4 = 2;

@@ -14,7 +14,7 @@ void MM_MENUBOX_Language(struct MenuBox *mb)
     *(char *)(sdata->gGT + 0x1d58) =
         
 		// EurRetail OVR_230 global array of language ID
-        OVR_230.langIndex[row];
+        D230.langIndex[row];
 
     sdata->gGT->gameMode2 |= 0x10000000; // Flag only foound in EurRetail related to lang change
 

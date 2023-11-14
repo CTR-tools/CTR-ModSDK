@@ -16,7 +16,7 @@ void DECOMP_MM_ToggleRows_Difficulty(void)
   // check 3 mods (easy, medium, hard)
   for (iVar7 = 0; iVar7 < 3; iVar7++) 
   {
-    bitIndex = OVR_230.cupDifficultyUnlockFlags[iVar7];
+    bitIndex = D230.cupDifficultyUnlockFlags[iVar7];
     
 	// if -1 (for EASY row), skip
 	if (-1 == bitIndex) continue; 
@@ -43,7 +43,7 @@ void DECOMP_MM_ToggleRows_Difficulty(void)
 	
 	// get current value of lng index,
 	// for easy, medium, hard
-    uVar5 = OVR_230.cupDifficultyLngIndex[iVar7];
+    uVar5 = D230.cupDifficultyLngIndex[iVar7];
 	  
     if (
 		// if locked
@@ -65,7 +65,7 @@ void DECOMP_MM_ToggleRows_Difficulty(void)
     }
 	
 	// save new value
-    OVR_230.rows_difficulty[iVar7].stringIndex = uVar5;
+    D230.rows_difficulty[iVar7].stringIndex = uVar5;
   }
 }
  

@@ -10,7 +10,7 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
 
   if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
   {
-    OVR_230.menubox_mainMenu.rows = OVR_230.rows_mainMenu_WithScrapbook;
+    D230.menubox_mainMenu.rows = D230.rows_mainMenu_WithScrapbook;
   }
 
   MM_ParseCheatCodes();
@@ -21,15 +21,15 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
   {
     MM_Title_MenuUpdate();
 
-    if (((OVR_230.MM_State == 1) && (OVR_230.titleObj != 0)) && (190 < OVR_230.timerInTitle))
+    if (((D230.MM_State == 1) && (D230.titleObj != 0)) && (190 < D230.timerInTitle))
     {
       DecalFont_DrawLineOT(sdata->lngStrings[0x250], 0x11d, 0xb8, 2, 0,
                            gGT->backBuffer->otMem.startPlusFour[3]);
     }
 
-    if ((OVR_230.menubox_mainMenu.state & 0x10) == 0)
+    if ((D230.menubox_mainMenu.state & 0x10) == 0)
     {
-      if (OVR_230.MM_State != 2)
+      if (D230.MM_State != 2)
       {
         gGT->numPlyrNextGame = 1;
       }
@@ -39,8 +39,8 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
         gGT->demoCountdownTimer = timer;
         if (timer < 1)
         {
-          OVR_230.MM_State = 2;
-          OVR_230.desiredMenu = 4;
+          D230.MM_State = 2;
+          D230.desiredMenu = 4;
         }
       }
       else
@@ -53,7 +53,7 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
   MM_Title_Init();
   if ((mb->state & 0x10) != 0)
   {
-    OVR_230.timerInTitle = 1000;
+    D230.timerInTitle = 1000;
   }
 
   if ((mb->state & 0x400) == 0)
@@ -61,9 +61,9 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
     return;
   }
 
-  if (OVR_230.titleObj != 0)
+  if (D230.titleObj != 0)
   {
-    OVR_230.titleObj->cameraPosOffset[2] = 0;
+    D230.titleObj->cameraPosOffset[2] = 0;
   }
 
   if (mb->unk1e != 0)
@@ -91,7 +91,7 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
       gGT->numLaps = 1;
     }
     state = mb->state;
-    nextBox = &OVR_230.menubox_raceType;
+    nextBox = &D230.menubox_raceType;
   }
   else
   {
@@ -99,31 +99,31 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
     {
       if (choose == 0x51)
       {
-        OVR_230.desiredMenu = 3;
+        D230.desiredMenu = 3;
       }
       else
       {
         if (choose < 0x51)
         {
-          OVR_230.characterSelect_transitionState = 2;
+          D230.characterSelect_transitionState = 2;
           gGT->gameMode1 |= 0x20;
           state = mb->state;
-          nextBox = &OVR_230.menubox_players2P3P4P;
+          nextBox = &D230.menubox_players2P3P4P;
           goto LAB_OVR_230__800b0b24;
         }
         if (choose != 0x240)
         {
           return;
         }
-        OVR_230.desiredMenu = 5;
+        D230.desiredMenu = 5;
       }
-      OVR_230.MM_State = 2;
+      D230.MM_State = 2;
       return;
     }
     if (choose == 0x4d)
     {
-      OVR_230.MM_State = 2;
-      OVR_230.desiredMenu = 2;
+      D230.MM_State = 2;
+      D230.desiredMenu = 2;
       gGT->numPlyrNextGame = 1;
       gGT->gameMode1 |= 0x20000;
       gGT->gameMode2 &= 0xffaef1ff;
@@ -138,7 +138,7 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
       gGT->gameMode1 |= 0x80000;
       gGT->gameMode2 &= 0xffaef1ff;
       state = mb->state;
-      nextBox = &OVR_230.menubox_adventure;
+      nextBox = &D230.menubox_adventure;
     }
     else
     {
@@ -148,7 +148,7 @@ void MM_MENUBOX_Main(struct MenuBox *mb)
       }
       gGT->gameMode1 |= 0x400000;
       state = mb->state;
-      nextBox = &OVR_230.menubox_raceType;
+      nextBox = &D230.menubox_raceType;
     }
   }
 LAB_OVR_230__800b0b24:
