@@ -38,9 +38,7 @@ void DECOMP_MM_Title_Init(void)
             NONE,
             MEDIUM,
             OTHER),
-        MM_Title_ThTick,
-        OVR_230.s_title, // debug name
-        0);
+        MM_Title_ThTick, 0, 0);
 
     title = t->object;
 
@@ -53,7 +51,7 @@ void DECOMP_MM_Title_Init(void)
     // create 6 instances
     for (n = 0; n < 6; n++)
     {
-      inst = INSTANCE_Birth3D(gGT->modelPtr[OVR_230.titleInstances[n].modelID], OVR_230.s_title, t);
+      inst = INSTANCE_Birth3D(gGT->modelPtr[OVR_230.titleInstances[n].modelID], 0, t);
 
       // store instance
       title->i[n] = inst;
