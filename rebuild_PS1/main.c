@@ -222,6 +222,9 @@
 // RCNT (watch namespace, not alphabetical)
 #include "../decompile/General/RCNT/RCNT_Init.c"
 
+// UI
+#include "../decompile/General/UI/UI_Map_DrawMap.c"
+
 // 230
 //#include "../decompile/General/230/R230.c"
 //#include "../decompile/General/230/D230.c"

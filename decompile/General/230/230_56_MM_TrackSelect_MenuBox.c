@@ -595,7 +595,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				{
 					iVar10 = ((((u_int)bVar1 - (u_int)bVar2) + (u_int)bVar3) - (u_int)bVar4);
 
-					UI_Map_DrawMap
+					DECOMP_UI_Map_DrawMap
 					(
 						// top half
 						iconMap0,
