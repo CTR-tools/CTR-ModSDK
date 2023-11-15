@@ -41,6 +41,7 @@
 #include "../decompile/General/DecalGlobal/DecalGlobal_Clear.c"
 #include "../decompile/General/DecalGlobal/DecalGlobal_Store.c"
 
+#include "../decompile/General/DecalHUD/DecalHUD_DrawPolyFT4.c"
 #include "../decompile/General/DecalHUD/DecalHUD_DrawPolyGT4.c"
 #include "../decompile/General/DecalHUD/DecalHUD_Arrow2D.c"
 
@@ -167,6 +168,26 @@
 #include "../decompile/General/MEMPACK/MEMPACK_ClearLowMem.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_PopState.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_PopToState.c"
+
+// skip MENUBOX_DrawPolyGT4
+#include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_Edge.c"
+#include "../decompile/General/MenuBox/MENUBOX_DrawTime.c"
+// skip MENUBOX_RWD
+#include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_LowLevel.c"
+#include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_HighLevel.c"
+// MENUBOX_DrawQuip.c (wip)
+// MENUBOX_DrawInnerRect
+// MENUBOX_DrawFullRect
+#include "../decompile/General/MenuBox/MENUBOX_GetHeight.c"
+#include "../decompile/General/MenuBox/MENUBOX_GetWidth.c"
+// MENUBOX_DrawSelf.c (wip)
+#include "../decompile/General/MenuBox/MENUBOX_ClearInput.c"
+#include "../decompile/General/MenuBox/MENUBOX_CollectInput.c"
+// MENUBOX_ProcessInput.c (wip)
+// MENUBOX_ProcessState.c (wip)
+#include "../decompile/General/MenuBox/MENUBOX_Show.c"
+#include "../decompile/General/MenuBox/MENUBOX_Hide.c"
+#include "../decompile/General/MenuBox/MENUBOX_BoolHidden.c"
 
 #include "../decompile/General/TileView/TileView_Init.c"
 #include "../decompile/General/TileView/TileView_SetPsyqGeom.c"

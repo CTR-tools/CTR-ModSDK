@@ -18,9 +18,13 @@ u_char* DECOMP_MENUBOX_DrawTime(int milliseconds)
 		// where string will be stored
 		&sdata->fillerAfterMempack[0x60],
 
+#ifndef REBUILD_PS1
 		// Format
 		// Minute:Seconds:Milliseconds
 		&rdata.s_timeString[0],
+#else
+		"%ld:%ld%ld:%ld%ld",
+#endif
 
 		// minutes
 		milliseconds / 0xe100,

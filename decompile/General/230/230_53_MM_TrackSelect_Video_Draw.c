@@ -126,5 +126,6 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
   D230.trackSel_unk = D230.trackSel_video_state;
 
   // Draw 2D Menu rectangle background
-  MENUBOX_DrawInnerRect(r, (short)(param_5 | 1), gGT->backBuffer->otMem.startPlusFour);
+  MENUBOX_DrawInnerRect(
+	r, (short)(param_5 | 1), gGT->backBuffer->otMem.startPlusFour);
 }

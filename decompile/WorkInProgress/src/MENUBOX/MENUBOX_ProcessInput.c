@@ -111,7 +111,7 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 				}
 
 				// useless? cause set later?
-				m->selectedRow = newRow;
+				m->rowSelected = newRow;
 			}
 		}
 
@@ -143,7 +143,7 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 				m->unk6 = 0;
 
 				// useless? cause set later?
-				m->selectedRow = newRow;
+				m->rowSelected = newRow;
 
 				returnVal = 1;
 
@@ -160,7 +160,7 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 		// this is why you can bug character select
 		// by pressing Down and X at the same time,
 		// cause the row isn't set until after X is processed
-		m->selectedRow = newRow;
+		m->rowSelected = newRow;
 	}
 
 	// if "next" hierarchy level exists

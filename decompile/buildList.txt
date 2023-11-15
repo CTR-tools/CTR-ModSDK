@@ -352,7 +352,6 @@ common, exe, LIST_Init, 0x0, General/LIST/LIST_Init.c
 common, exe, LinkedCollide_Radius, 0x0, General/LinkedCollide_Radius.c
 common, exe, LinkedCollide_Hitbox_Desc, 0x0, General/LinkedCollide_Hitbox_Desc.c
 
-
 // LOAD
 common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_A01_Callback_Overlay_Generic.c
 common, exe, LOAD_Callback_Overlay_230, 0x0, General/LOAD/LOAD_A02_Callback_Overlay_230.c
@@ -479,19 +478,22 @@ common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK/MEMPACK_PopToState.c
 common, exe, MixRNG_Scramble, 0x0, General/MixRNG/MixRNG_Scramble.c
 
 // MenuBox
-// skip several
+// skip MENUBOX_DrawPolyGT4
 common, exe, MENUBOX_DrawOuterRect_Edge, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_Edge.c
-common, exe, MENUBOX_DrawOuterRect_LowLevel, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_LowLevel.c
 common, exe, MENUBOX_DrawTime, 0x0, General/MenuBox/MENUBOX_DrawTime.c
-// skip several
-// skip DrawBG
+// skip MENUBOX_RWD
+common, exe, MENUBOX_DrawOuterRect_LowLevel, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_LowLevel.c
+common, exe, MENUBOX_DrawOuterRect_HighLevel, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_HighLevel.c
+// MENUBOX_DrawQuip.c (wip)
+// MENUBOX_DrawInnerRect
+// MENUBOX_DrawFullRect
 common, exe, MENUBOX_GetHeight, 0x0, General/MenuBox/MENUBOX_GetHeight.c
 common, exe, MENUBOX_GetWidth, 0x0, General/MenuBox/MENUBOX_GetWidth.c
-// skip DrawSelf
+// MENUBOX_DrawSelf.c (wip)
 common, exe, MENUBOX_ClearInput, 0x0, General/MenuBox/MENUBOX_ClearInput.c
 common, exe, MENUBOX_CollectInput, 0x0, General/MenuBox/MENUBOX_CollectInput.c
-// skip ProcessInput (wip)
-common, exe, MENUBOX_ProcessState, 0x0, General/MenuBox/MENUBOX_ProcessState.c
+// MENUBOX_ProcessInput.c (wip)
+// MENUBOX_ProcessState.c (wip)
 common, exe, MENUBOX_Show, 0x0, General/MenuBox/MENUBOX_Show.c
 common, exe, MENUBOX_Hide, 0x0, General/MenuBox/MENUBOX_Hide.c
 common, exe, MENUBOX_BoolHidden, 0x0, General/MenuBox/MENUBOX_BoolHidden.c

@@ -251,7 +251,8 @@ DRAW_MENU:
       box.h = 0x19;
 
       // Draw 2D Menu rectangle background
-      MENUBOX_DrawInnerRect(&box, 0, gGT->backBuffer->otMem.startPlusFour);
+      MENUBOX_DrawInnerRect(
+		&box, 0, gGT->backBuffer->otMem.startPlusFour);
     }
   }
 
@@ -279,5 +280,6 @@ DRAW_MENU:
   box.h = 0x19;
 
   // Draw 2D Menu rectangle background
-  MENUBOX_DrawInnerRect(&box, 0, gGT->backBuffer->otMem.startPlusFour);
+  MENUBOX_DrawInnerRect(
+	&box, 0, gGT->backBuffer->otMem.startPlusFour);
 }

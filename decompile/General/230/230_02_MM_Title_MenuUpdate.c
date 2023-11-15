@@ -239,7 +239,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 #endif
 
     // make main menu disappear
-    MENUBOX_Hide(&D230.menubox_mainMenu);
+    DECOMP_MENUBOX_Hide(&D230.menubox_mainMenu);
   }
 
 END_FUNCTION:

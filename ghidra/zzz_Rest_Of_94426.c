@@ -3584,7 +3584,6 @@ LAB_80045e94:
 		// if string is valid
 		if ((uVar8 & 0x7fff) != 0)
 		{
-
 		  if ((local_78 & 0x200) == 0)
 		  {
             iVar3 = param_2 + (uint)(ushort)param_1[0xb] + 1;

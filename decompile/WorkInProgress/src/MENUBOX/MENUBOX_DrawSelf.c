@@ -2,19 +2,19 @@
 
 void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_short width)
 {
-    struct GameTracker* gGT = sdata->gGT;
     u_short textColor = 0;
+    struct GameTracker* gGT = sdata->gGT;
     short rowHeight = data.font_charPixHeight[FONT_SMALL];
     short titleRowHeight = data.font_charPixHeight[FONT_BIG] + 3;
     short posX_prev = mb->posX_curr;
     short posY_prev = mb->posY_curr;
 
-    if ((mb[10] & 0x10U) != 0)
+    if ((mb->drawStyle & 0x10U) != 0)
         textColor = LIGHT_GREEN;
 
-    if ((mb->state & 0x60000) == 0x60000)
+    if ((mb->state & 0x60000) != 0)
     {
-        mb[0xf] = 2;
+        mb->unk1e = 2;
         if (mb->funcPtr != NULL)
             mb->funcPtr(mb);
     }
@@ -25,7 +25,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
     }
 
     int menuBoxHeight = 0;
-    MENUBOX_GetHeight(mb, &menuBoxHeight, 0);
+    DECOMP_MENUBOX_GetHeight(mb, &menuBoxHeight, 0);
 
     mb->width = width;
     mb->height = menuBoxHeight;
@@ -34,7 +34,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
     if ((mb->state & CENTER_ON_Y) != 0)
     {
         short tmpHeight = 0;
-        MENUBOX_GetHeight(mb, &tmpHeight, 1);
+        DECOMP_MENUBOX_GetHeight(mb, &tmpHeight, 1);
         short centerOffset = -(tmpHeight >> 1);
         rowHeight += centerOffset;
     }
@@ -43,14 +43,14 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
     short sVar12 = 0;
     short titleIndex = mb->stringIndexTitle;
 
-    if (titleIndex >= 0 && (mb->state & ONLY_DRAW_TITLE) == 0)
+    if ((titleIndex >= 0) && ((mb->state & ONLY_DRAW_TITLE) == 0))
     {
-        short titleHeight = (mb->state & BIG_TEXT_IN_TITLE) ? titleRowHeight : rowHeight;
+        short titleHeight = ((mb->state & BIG_TEXT_IN_TITLE)!=0) ? titleRowHeight : rowHeight;
         int titleX = param_2 + posX_prev;
 
-        if (mb->state & 0x200)
+        if ((mb->state & 0x200) != 0)
         {
-            titleX += (width - (width >> 0xf) >> 1);
+            titleX += width>>1;
             textColor |= JUSTIFY_CENTER;
         }
 
@@ -65,13 +65,16 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
 
         do
         {
-            if ((mb->state & (SHOW_ONLY_HIGHLIT_ROW | ONLY_DRAW_TITLE)) == 0 || sVar12 == mb->rowSelected)
+            if (
+				(((mb->state & (SHOW_ONLY_HIGHLIT_ROW | ONLY_DRAW_TITLE))) == 0) || 
+				(sVar12 == mb->rowSelected)
+				)
             {
                 u_short stringIndex = row->stringIndex;
                 u_short textColor = (stringIndex & 0x8000) ? GRAY : ORANGE;
                 if (stringIndex & 0x7fff)
                 {
-                    if (mb->state & CENTER_ON_X)
+                    if ((mb->state & CENTER_ON_X) != 0)
                         textColor |= JUSTIFY_CENTER;
 
                     DecalFont_DrawLine(sdata->lngStrings[stringIndex], param_2 + posX_prev + 1, yOffset, rowHeight, textColor);
@@ -86,13 +89,13 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
     if ((mb->state & 0x104) == 0)
     {
         short rectX = param_2 + posX_prev + local_40;
-        short rectY = param_3 + posY_prev + local_38 + local_58 + rowHeight - 1;
+        short rectY = param_3 + posY_prev + rowHeight - 1;
 
         if ((mb->state & SHOW_ONLY_HIGHLIT_ROW) == 0)
             rectY += mb->rowSelected * rowHeight + local_50;
 
         u_short* highlightColor = &sdata->menuRowHighlight_Normal;
-        if (mb[10] & 0x10U)
+        if ((mb->drawStyle & 0x10) != 0)
             highlightColor = &sdata->menuRowHighlight_Green;
 
         CTR_Box_DrawClearBox(&rectX, highlightColor, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour, &gGT->backBuffer->primMem);
@@ -100,14 +103,14 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
 
     if (mb->state & DRAW_NEXT_MENU_IN_HIERARCHY)
     {
-        MENUBOX_DrawSelf(mb->ptrNextBox_InHierarchy, param_2 + posX_prev, param_3 + local_38 + local_58 + rowHeight + 0xc, width);
+        MENUBOX_DrawSelf(mb->ptrNextBox_InHierarchy, param_2 + posX_prev, param_3 + rowHeight + 0xc, width);
     }
 
     if ((mb->state & ONLY_DRAW_TITLE) == 0)
     {
         posX_prev = mb->posX_prev;
         posY_prev = mb->posY_prev;
-        rowHeight = (menuBoxHeight + 8) - (u_short)(*(byte*)(mb + 4) >> 7);
+        rowHeight = (menuBoxHeight + 8) - (u_short)(*(unsigned char*)(mb->state >> 7));
     }
     else
     {
@@ -117,7 +120,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
     }
 
     short rectWidth = width + 0xc;
-    short rectHeight = local_38 + local_58 + posY_prev - 4;
+    short rectHeight = posY_prev - 4;
     short rectX = param_2 + posX_prev - 6;
-    MENUBOX_DrawFullRect(mb, &rectX);
+    MENUBOX_DrawFullRect(mb, &rectX, gGT->backBuffer->otMem.startPlusFour);
 }

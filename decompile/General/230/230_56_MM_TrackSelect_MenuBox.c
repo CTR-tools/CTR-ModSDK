@@ -217,7 +217,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			}
 
 			// clear gamepad input (for menus)
-			MENUBOX_ClearInput();
+			DECOMP_MENUBOX_ClearInput();
 		}
 	}
 
@@ -502,7 +502,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		uVar15 = (u_int)numTracks;
 
 		// Draw 2D Menu rectangle background
-		MENUBOX_DrawInnerRect(&r, 0, gGT->backBuffer->otMem.startPlusFour);
+		MENUBOX_DrawInnerRect(
+			&r, 0, gGT->backBuffer->otMem.startPlusFour);
 
 		do
 		{

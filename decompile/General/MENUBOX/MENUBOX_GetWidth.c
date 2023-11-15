@@ -18,7 +18,7 @@ void DECOMP_MENUBOX_GetWidth(struct MenuBox* m, short* width, int boolCheckSubme
 	for(row = m->rows; row->stringIndex != -1; row++)
 	{
 		// width of string in each row
-		lineWidth = DecalFont_GetLineWidth(
+		lineWidth = DECOMP_DecalFont_GetLineWidth(
 			sdata->lngStrings[row->stringIndex & 0x7fff], 
 			fontType);
 		
@@ -40,7 +40,7 @@ void DECOMP_MENUBOX_GetWidth(struct MenuBox* m, short* width, int boolCheckSubme
 		}
 		
 		// width of string in each row
-		lineWidth = DecalFont_GetLineWidth(
+		lineWidth = DECOMP_DecalFont_GetLineWidth(
 			sdata->lngStrings[m->stringIndexTitle & 0x7fff], 
 			fontType);
 

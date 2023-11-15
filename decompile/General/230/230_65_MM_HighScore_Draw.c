@@ -130,7 +130,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
 
         // Draw time string
         DECOMP_MM_HighScore_Text3D(
-			MENUBOX_DrawTime(entry[0].time),
+			DECOMP_MENUBOX_DrawTime(entry[0].time),
 			D230.transitionMeta_HighScores[7].currX + (uVar10 + 0x160),
 			D230.transitionMeta_HighScores[7].currY + (uVar9 + 0x4a),
 			FONT_SMALL, 0);
@@ -172,7 +172,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
 
         // draw the Time string
         DECOMP_MM_HighScore_Text3D(
-			MENUBOX_DrawTime(entry[i+1].time),
+			DECOMP_MENUBOX_DrawTime(entry[i+1].time),
 			D230.transitionMeta_HighScores[j].currX + uVar10 + 0x5c,
 			D230.transitionMeta_HighScores[j].currY + uVar9 + (i * 0x1f) + 0x4a,
 			FONT_SMALL, 0);

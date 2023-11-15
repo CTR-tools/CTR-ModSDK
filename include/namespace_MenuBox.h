@@ -94,6 +94,7 @@ struct MenuBox
 	// & 0x40, show only highlighted row
 	// & 0x28, main menu character select (better meaning)?
 	// & 0x80, tiny text in rows
+	// & 0xFF, row height (state>>7)
 	// & 0x400, execute menubox funcptr
 	// & 0x800, ??? used in 221 menu
 	// & 0x1000, needs to close

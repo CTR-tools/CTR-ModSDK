@@ -16,6 +16,7 @@ void DECOMP_CTR_CycleTex_Model(struct AnimTex* animtex, int timer);
 void DECOMP_DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
 int DECOMP_DecalFont_DrawMultiLine(char* str, int posX, int posY, int maxPixLen, short fontType, int flags);
 void DECOMP_DecalGlobal_Clear(struct GameTracker* gGT);
+void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);
 void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
 
 void DECOMP_DISPLAY_Swap(void);
@@ -131,6 +132,18 @@ int DECOMP_MEMPACK_GetFreeBytes();
 void DECOMP_MEMPACK_PopState();
 int DECOMP_MEMPACK_PushState();
 
+int DECOMP_MENUBOX_BoolHidden(struct MenuBox* m);
+void DECOMP_MENUBOX_ClearInput();
+void DECOMP_MENUBOX_CollectInput();
+void DECOMP_MENUBOX_DrawOuterRect_Edge(RECT* r, u_int* rgb, u_int param_3, u_long* otMem);
+void DECOMP_MENUBOX_DrawOuterRect_HighLevel(RECT* r, u_int* rgb, short param_3, u_long* otMem);
+void DECOMP_MENUBOX_DrawOuterRect_LowLevel(RECT* p, short xOffset, u_short yOffset, u_int* rgb, short param_5, u_long* otMem);
+u_char* DECOMP_MENUBOX_DrawTime(int milliseconds);
+void DECOMP_MENUBOX_GetHeight(struct MenuBox* m, short* height, int boolCheckSubmenu);
+void DECOMP_MENUBOX_GetWidth(struct MenuBox* m, short* width, int boolCheckSubmenu);
+void DECOMP_MENUBOX_Hide(struct MenuBox* m);
+void DECOMP_MENUBOX_Show(struct MenuBox* m);
+
 struct Thread* DECOMP_THREAD_BirthWithObject(
 	int flags, void* funcThTick, 
 	char* name, struct Thread* relativeTh);
@@ -150,7 +163,8 @@ void DECOMP_TileView_SetPsyqGeom(struct TileView* tileView);
 void DECOMP_TileView_SetDrawEnv_Normal(
 		void* ot, struct TileView* tileView, struct DB* backBuffer,
 		DRAWENV* copyDrawEnvNULL, int isbg);
-		
+
+void DECOMP_TitleFlag_SetCanDraw(short param_1);
 void DECOMP_TitleFlag_BeginTransition(int direction);
 void DECOMP_TitleFlag_SetFullyOnScreen();
 void DECOMP_TitleFlag_SetFullyOffScreen();

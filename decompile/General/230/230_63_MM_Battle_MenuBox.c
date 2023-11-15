@@ -546,7 +546,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
         }
 
         // clear gamepad input (for menus)
-        MENUBOX_ClearInput();
+        DECOMP_MENUBOX_ClearInput();
     }
 
     // "SETUP BATTLE"
@@ -577,7 +577,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 		D230.transitionMeta_battle[0].currY + 0x24, 0x134);
 		
     local_38 = 0xd;
-    MENUBOX_GetHeight(&D230.battleType_box, &local_38, 0);
+    DECOMP_MENUBOX_GetHeight(&D230.battleType_box, &local_38, 0);
     sVar6 = local_38 + 0x20;
 
     // "LENGTH:"
@@ -627,9 +627,9 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 					D230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
 								 
                 local_38 = 0xd;
-                MENUBOX_GetHeight(&D230.battleLengthLifeTime_box, &local_38, 0);
+                DECOMP_MENUBOX_GetHeight(&D230.battleLengthLifeTime_box, &local_38, 0);
                 local_36[0] = 0xd;
-                MENUBOX_GetHeight(&D230.battleLengthLifeLife_box, &local_36, 0);
+                DECOMP_MENUBOX_GetHeight(&D230.battleLengthLifeLife_box, &local_36, 0);
                 sVar20 = local_36[0] + sVar6;
                 if (local_36[0] < local_38)
                 {
@@ -659,7 +659,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 		D230.transitionMeta_battle[2].currY + sVar6 + 4, 0x134);
     
 	local_38 = 0xd;
-    MENUBOX_GetHeight(box, &local_38, 0);
+    DECOMP_MENUBOX_GetHeight(box, &local_38, 0);
     sVar20 = local_38 + sVar6;
 	
 LAB_800b25f0:
@@ -771,7 +771,8 @@ LAB_800b25f0:
     local_40.y = D230.transitionMeta_battle[4].currY + sVar20;
 
     // Draw 2D Menu rectangle background
-    MENUBOX_DrawInnerRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
+    MENUBOX_DrawInnerRect(
+		&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
     // "WEAPONS:"
     DECOMP_DecalFont_DrawLine(
@@ -841,7 +842,7 @@ LAB_800b25f0:
 				D230.transitionMeta_battle[8].currY + sVar20 + 0x78, 0x134);
 				
         local_38 = 0xd;
-        MENUBOX_GetHeight(&D230.battleStartGame_box, &local_38, 0);
+        DECOMP_MENUBOX_GetHeight(&D230.battleStartGame_box, &local_38, 0);
     }
 
     // If you have no errors that prevent
@@ -926,7 +927,8 @@ LAB_800b25f0:
                          gGT->backBuffer->otMem.startPlusFour,
                          &gGT->backBuffer->primMem);
 
-    MENUBOX_DrawInnerRect(&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
+    MENUBOX_DrawInnerRect(
+		&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
     // save all five battle settings
     // these are selected rows from all battle options

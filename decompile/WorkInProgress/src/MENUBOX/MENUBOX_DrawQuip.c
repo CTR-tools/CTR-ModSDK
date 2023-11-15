@@ -21,7 +21,7 @@ void DECOMP_MENUBOX_DrawQuip(char* comment,short posX,int posY,u_int sizeX,short
   if ((flags & 0x8000U) != 0)
   {
 	// posX with text un-centered
-    posX = posX - (short)(((int)(sizeX << 0x10) >> 0x10) - ((int)(sizeX << 0x10) >> 0x1f) >> 1);
+    posX = posX - sizeX>>1;
   }
 
   sizeY = (u_int)data.PlayerCommentBoxParams[0][fontType];

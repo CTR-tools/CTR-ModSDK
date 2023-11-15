@@ -295,7 +295,7 @@ void DrawMenu()
 	}
 	#endif
 
-    if (igt->selectedRow)
+    if (igt->rowSelected)
     {
         if (igt->framesHoldingUp < 10)
         {
@@ -349,7 +349,7 @@ void DrawMenu()
     }
 
     if (sdata->gGamepads->gamepad[0].buttonsTapped & BTN_CROSS)
-        igt->selectedRow ^= 1;
+        igt->rowSelected ^= 1;
 
 
 	// no save/load support in japan kiosk trial
@@ -380,7 +380,7 @@ void DrawMenu()
 			rowColor = PERIWINKLE;
 
 			// if !selectedRow
-            if (!igt->selectedRow)
+            if (!igt->rowSelected)
             {
                 if (sdata->gGT->timer & 1)
                     rowColor = ORANGE;
@@ -449,7 +449,7 @@ void RunUpdateHook()
         {
             igt->onMenu ^= 1;
             igt->menuRow = 0;
-            igt->selectedRow = 0;
+            igt->rowSelected = 0;
             igt->framesHoldingDown = 0;
             igt->framesHoldingUp = 0;
 

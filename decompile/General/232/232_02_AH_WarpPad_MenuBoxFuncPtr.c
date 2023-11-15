@@ -15,6 +15,6 @@ void DECOMP_AH_WarpPad_MenuBoxFuncPtr(struct MenuBox* mb)
 	}
 	
 	// optimizes to JMP
-	MENUBOX_Hide(mb);
+	DECOMP_MENUBOX_Hide(mb);
 	return;
 }

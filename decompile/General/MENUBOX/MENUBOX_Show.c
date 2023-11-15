@@ -6,5 +6,5 @@ void DECOMP_MENUBOX_Show(struct MenuBox* m)
 	
 	m->state &= ~NEEDS_TO_CLOSE;
 	
-	MENUBOX_ClearInput();
+	DECOMP_MENUBOX_ClearInput();
 }

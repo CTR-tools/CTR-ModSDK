@@ -174,7 +174,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             MainRaceTrack_RequestLoad(lev);
 			#endif
 			
-            MENUBOX_Hide(mb);
+            DECOMP_MENUBOX_Hide(mb);
         }
         break;
     default:

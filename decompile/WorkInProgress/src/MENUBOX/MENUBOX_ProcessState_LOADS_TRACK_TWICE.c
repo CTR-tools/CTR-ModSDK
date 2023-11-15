@@ -11,6 +11,7 @@ void DECOMP_MENUBOX_ProcessState()
 	struct MenuBox* currMenuBox;
 	int currState;
 	short width;
+	int state;
 	
 	// check for curr box
 	currMenuBox = sdata->ptrDesiredMenuBox;
@@ -40,45 +41,46 @@ void DECOMP_MENUBOX_ProcessState()
 	}
 	
 	currMenuBox = sdata->ptrActiveMenuBox;
+	state = currMenuBox->state;
 	
 	// run funcPtr if it exists
-	if((currMenuBox->state & (EXECUTE_FUNCPTR | DISABLE_INPUT_ALLOW_FUNCPTRS)) != 0)
+	if((state & (EXECUTE_FUNCPTR | DISABLE_INPUT_ALLOW_FUNCPTRS)) != 0)
 	{
 		currMenuBox->unk1e = 1;
 		currMenuBox->funcPtr(currMenuBox);
 	}
 	
 	// if not character selection
-	if((currMenuBox->state & DISABLE_INPUT_ALLOW_FUNCPTRS) == 0)
+	if((state & DISABLE_INPUT_ALLOW_FUNCPTRS) == 0)
 	{
 		// process button input for menu
 		MENUBOX_ProcessInput(currMenuBox);
 		
 		// if MenuBox border is not invisible
-		if((currMenuBox->state & INVISIBLE) == 0)
+		if((state & INVISIBLE) == 0)
 		{
 			// clear width, then get width
 			width = 0;
-			MENUBOX_GetWidth(currMenuBox, &width, 1);
+			DECOMP_MENUBOX_GetWidth(currMenuBox, &width, 1);
 			
 			// draw
-			MENUBOX_DrawSelf(currMenuBox, 0, 0, (int)width);
+			DECOMP_MENUBOX_DrawSelf(currMenuBox, 0, 0, (int)width);
 		}
 	}
 	
 	// not sure what this is
-	if((currMenuBox->state & 0x800) == 0)
+	if((state & 0x800) == 0)
 	{
-		if(TitleFlag_GetCanDraw() == 0)
+		if(DECOMP_TitleFlag_GetCanDraw() == 0)
 		{
-			TitleFlag_SetCanDraw(1);
+			DECOMP_TitleFlag_SetCanDraw(1);
 		}
 		
 		sdata->gGT->renderFlags |= 0x20;
 	}
 	
 	// if menubox needs to close
-	if((currMenuBox->state & NEEDS_TO_CLOSE) != 0)
+	if((state & NEEDS_TO_CLOSE) != 0)
 	{
 		// deactivate
 		sdata->ptrActiveMenuBox = 0;
