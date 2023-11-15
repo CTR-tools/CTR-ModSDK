@@ -12,6 +12,7 @@ void DECOMP_CTR_ErrorScreen(char r, char g, char b);
 void CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer);
 void DECOMP_CTR_CycleTex_Model(struct AnimTex* animtex, int timer);
 
+void DECOMP_CTR_Box_DrawClearBox(RECT* r, u_int* colorPtr, int transparency, u_long* ot, struct PrimMem* primMem);
 void DECOMP_CTR_Box_DrawSolidBox(RECT* r, u_int* colorPtr, u_long* otMem, struct PrimMem* primMem);
 
 // decal

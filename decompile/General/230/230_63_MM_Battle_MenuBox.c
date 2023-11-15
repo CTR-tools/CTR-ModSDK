@@ -771,9 +771,10 @@ LAB_800b25f0:
         local_50.x = D230.transitionMeta_battle[4].currX + 0x9c;
         local_50.y = D230.transitionMeta_battle[4].currY + sVar20 + 3;
 
-        CTR_Box_DrawClearBox(&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
-                             gGT->backBuffer->otMem.startPlusFour,
-                             &gGT->backBuffer->primMem);
+        DECOMP_CTR_Box_DrawClearBox(
+			&local_50, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
+			gGT->backBuffer->otMem.startPlusFour,
+			&gGT->backBuffer->primMem);
     }
 	
     local_40.w = 0x140;
@@ -922,11 +923,10 @@ LAB_800b25f0:
         local_60.h = 0x20;
         local_60.y = local_40.y + (sdata->battleSetupRowHighlighted - 3) * 0x20 + 2;
 
-        CTR_Box_DrawClearBox(&local_60, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
-                             gGT->backBuffer->otMem.startPlusFour,
-
-                             // pointer to PrimMem struct
-                             &gGT->backBuffer->primMem);
+        DECOMP_CTR_Box_DrawClearBox(
+			&local_60, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
+            gGT->backBuffer->otMem.startPlusFour,
+            &gGT->backBuffer->primMem);
     }
 
     local_58.x = local_40.x + 3;
@@ -934,9 +934,10 @@ LAB_800b25f0:
     local_58.w = local_40.w - 6;
     local_58.h = local_40.h - 4;
 
-    CTR_Box_DrawClearBox(&local_58, &D230.color3, TRANS_50_DECAL,
-                         gGT->backBuffer->otMem.startPlusFour,
-                         &gGT->backBuffer->primMem);
+    DECOMP_CTR_Box_DrawClearBox(
+		&local_58, &D230.color3, TRANS_50_DECAL,
+		gGT->backBuffer->otMem.startPlusFour,
+		&gGT->backBuffer->primMem);
 
     MENUBOX_DrawInnerRect(
 		&local_40, 0, gGT->backBuffer->otMem.startPlusFour);

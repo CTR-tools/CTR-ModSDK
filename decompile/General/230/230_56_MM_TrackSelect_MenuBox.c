@@ -501,13 +501,9 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			q.w = r.w - 12;
 			q.h = r.h - 8;
 
-			CTR_Box_DrawClearBox
-			(
+			DECOMP_CTR_Box_DrawClearBox(
 				&q, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL,
-
 				gGT->backBuffer->otMem.startPlusFour,
-
-				// pointer to PrimMem struct
 				&gGT->backBuffer->primMem
 			);
 		}

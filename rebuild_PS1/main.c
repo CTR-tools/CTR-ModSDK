@@ -30,6 +30,7 @@
 #include "../decompile/General/CTR_CycleTex_AllModels.c"
 #include "../decompile/General/CTR_CycleTex_Model.c"
 
+#include "../decompile/General/CTR_Box_DrawClearBox.c"
 #include "../decompile/General/CTR_Box_DrawSolidBox.c"
 
 #include "../decompile/General/DecalFont/DecalFont_GetLineWidth.c"
