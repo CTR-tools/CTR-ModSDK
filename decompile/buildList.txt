@@ -151,7 +151,7 @@ common, exe, CDSYS_XAPauseForce, 0x0, General/CDSYS/CDSYS_c18_XAPauseForce.c
 common, exe, CDSYS_XAPauseAtEnd, 0x0, General/CDSYS/CDSYS_c19_XAPauseAtEnd.c
 
 // CTR
-//ommon, exe, CTR_Box_DrawClearBox, 0x0, General/CTR_Box_DrawClearBox.c
+common, exe, CTR_Box_DrawClearBox, 0x0, General/CTR_Box_DrawClearBox.c
 common, exe, CTR_Box_DrawSolidBox, 0x0, General/CTR_Box_DrawSolidBox.c
 common, exe, CTR_Box_DrawWireBox, 0x0, General/CTR_Box_DrawWireBox.c
 common, exe, CTR_Box_DrawWirePrims, 0x0, General/CTR_Box_DrawWirePrims.c
