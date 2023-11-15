@@ -564,7 +564,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 			r80.h = 0x1d;
 
 			// this draws the flashing blue square that appears when you highlight a character in the character select screen
-			CTR_Box_DrawSolidBox
+			DECOMP_CTR_Box_DrawSolidBox
 			(
 				&r80, &colorRGBA,
 				gGT->backBuffer->otMem.startPlusFour,

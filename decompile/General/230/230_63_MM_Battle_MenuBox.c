@@ -758,11 +758,10 @@ LAB_800b25f0:
         
 		local_48.w = uVar4;
 
-        CTR_Box_DrawSolidBox(&local_48, data.ptrColor[PLAYER_BLUE+i],
-                             gGT->backBuffer->otMem.startPlusFour,
-
-                             // pointer to PrimMem struct
-                             &gGT->backBuffer->primMem);
+        DECOMP_CTR_Box_DrawSolidBox(
+			&local_48, data.ptrColor[PLAYER_BLUE+i],
+			gGT->backBuffer->otMem.startPlusFour,
+            &gGT->backBuffer->primMem);
     }
 
     if (sdata->battleSetupRowHighlighted == 2)
