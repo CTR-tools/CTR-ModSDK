@@ -98,17 +98,17 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		if (driver->japanTurboUnknown == 0)
 		{
 			driver->numTurbos = 1;
-			if ((driver->numTurbosBackup < 1) && ((sdata->gGT->gameMode1 & END_OF_RACE) == 0))
+			if ((driver->numTurbosHighScore < 1) && ((sdata->gGT->gameMode1 & END_OF_RACE) == 0))
 			{
-				driver->numTurbosBackup = 1;
+				driver->numTurbosHighScore = 1;
 			}
 		}
 		else
 		{
 			driver->numTurbos++;
-			if ((driver->numTurbosBackup < driver->numTurbos) && ((sdata->gGT->gameMode1 & END_OF_RACE) == 0))
+			if ((driver->numTurbosHighScore < driver->numTurbos) && ((sdata->gGT->gameMode1 & END_OF_RACE) == 0))
 			{
-				driver->numTurbosBackup = driver->numTurbos;
+				driver->numTurbosHighScore = driver->numTurbos;
 			}
 		}
 
@@ -206,7 +206,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 				
 				#if BUILD == JpnRetail
 				// probably some sort of overflow safety check
-				if (driver->numTurbosBackup < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosBackup = driver->numTurbos;
+				if (driver->numTurbosHighScore < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosHighScore = driver->numTurbos;
 				#endif
 			}
 		}
@@ -222,7 +222,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			driver->numTurbos++;
 			#if BUILD == JpnRetail
 			// probably some sort of overflow safety check
-			if (driver->numTurbosBackup < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosBackup = driver->numTurbos;
+			if (driver->numTurbosHighScore < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosHighScore = driver->numTurbos;
 			#endif
 		}
 	

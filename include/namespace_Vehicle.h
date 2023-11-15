@@ -389,7 +389,7 @@ struct Driver
 	
 	// 0x50
 	// see Turbo_Increment in 1111
-	int numTurbosBackup;
+	int numTurbosHighScore;
 	#endif
 
 	#if BUILD >= SepReview
