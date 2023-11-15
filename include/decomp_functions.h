@@ -59,6 +59,10 @@ void DECOMP_JitPool_Init(struct JitPool* AP,
 	int maxItems, int itemSize, char* name);
 void DECOMP_JitPool_Remove(struct JitPool* AP, struct Item* item);
 
+// LevInstDef
+void DECOMP_LevInstDef_UnPack(struct mesh_info* ptr_mesh_info);
+void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub);
+
 // LIST
 void DECOMP_LIST_AddBack(struct LinkedList* L, struct Item* I);
 void DECOMP_LIST_AddFront(struct LinkedList* L, struct Item* I);

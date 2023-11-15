@@ -1209,27 +1209,12 @@ void RenderDispEnv_UI(struct GameTracker* gGT)
 		tileView, gGT->backBuffer, 0, 0);
 }
 
-// Use separate functions so it always reads RAM,
-// otherwise GCC optimization wont update registers,
-// GCC doesn't know callbacks are editing these variables
-int boolStallDone(struct GameTracker* gGT)
-{
-	return
-		
-		// if DrawOTag finished
-		(gGT->bool_DrawOTag_InProgress == 0) &&
-			
-		// two VSYNCs passed, 30fps lock
-		(sdata->vsyncTillFlip < 1);
-}
-
-int boolMissionAbort(struct GameTracker* gGT)
-{
-	// if more than 6 VSYNCs passed since
-	// the last successful draw, FPS < 10fps
-	return gGT->vSync_between_drawSync > 6;
-}
-
+// force code to re-check RAM during the loop, cause the compiler 
+// doesn't know what IRQs are, and wont re-check RAM by default,
+// causing a 10fps bug where the game could normally go 60+, such 
+// as the blizzard bluff tunnel. Bug replicates in DuckStation,
+// but not no$psx and not redux.
+__attribute__((optimize("O0")))
 void RenderVSYNC(struct GameTracker* gGT)
 {	
 	// render checkered flag
@@ -1247,14 +1232,22 @@ void RenderVSYNC(struct GameTracker* gGT)
 		DrawSync(0);
 #endif
 		
-		if(boolStallDone(gGT))
+		if(
+			// if DrawOTag finished
+			(gGT->bool_DrawOTag_InProgress == 0) &&
+			
+			// two VSYNCs passed, 30fps lock
+			(sdata->vsyncTillFlip < 1)
+		  )
 		{
 			// quit, end of stall
 			return;
 		}
 		
 #ifndef REBUILD_PC
-		if(boolMissionAbort(gGT))
+		// if more than 6 VSYNCs passed since
+		// the last successful draw, FPS < 10fps
+		if(gGT->vSync_between_drawSync > 6)
 		{
 			// just quit and try the next frame
 			BreakDraw();
