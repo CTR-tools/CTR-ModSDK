@@ -88,7 +88,7 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
   if (D230.trackSel_video_state != 3)
   {
     // Draw Video icon
-    MENUBOX_DrawPolyGT4(
+    DECOMP_MENUBOX_DrawPolyGT4(
 		gGT->ptrIcons[selectMenu->videoThumbnail],
         (r->x + 3), (r->y + 2),
         &gGT->backBuffer->primMem,

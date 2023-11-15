@@ -478,7 +478,7 @@ common, exe, MEMPACK_PopToState, 0x0, General/MEMPACK/MEMPACK_PopToState.c
 common, exe, MixRNG_Scramble, 0x0, General/MixRNG/MixRNG_Scramble.c
 
 // MenuBox
-// skip MENUBOX_DrawPolyGT4
+common, exe, MENUBOX_DrawPolyGT4, 0x0, General/MenuBox/MENUBOX_DrawPolyGT4.c
 common, exe, MENUBOX_DrawOuterRect_Edge, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_Edge.c
 common, exe, MENUBOX_DrawTime, 0x0, General/MenuBox/MENUBOX_DrawTime.c
 common, exe, MENUBOX_DrawRwdBlueRect_Subset, 0x0, General/MenuBox/MENUBOX_DrawRwdBlueRect_Subset.c

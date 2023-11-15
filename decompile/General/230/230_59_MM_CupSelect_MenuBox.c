@@ -162,7 +162,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         for (trackIndex = 0; trackIndex < 4; trackIndex++)
         {
             // Draw Icon of each track
-            MENUBOX_DrawPolyGT4(
+            DECOMP_MENUBOX_DrawPolyGT4(
 				gGT->ptrIcons[data.ArcadeCups[cupIndex].CupTrack[trackIndex].iconID],
 				(startX + (trackIndex &1) * 0x54),
 				(startY + (trackIndex>>1) * 0x23),

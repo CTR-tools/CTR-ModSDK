@@ -511,7 +511,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 			iVar8 = &D230.ptrTransitionMeta[i];
 			
 			// Draw Character Icon
-			MENUBOX_DrawPolyGT4
+			DECOMP_MENUBOX_DrawPolyGT4
 			(
 				gGT->ptrIcons[data.MetaDataCharacters[csm_Active->characterID].iconID],
 				((struct TransitionMeta*)iVar8)->currX + csm_Active->posX + 6,

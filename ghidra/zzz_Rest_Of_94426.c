@@ -2675,14 +2675,14 @@ LAB_80044568:
 
 
 // MENUBOX_DrawPolyGT4
-void FUN_80044ef8(int param_1)
+void FUN_80044ef8(param1, param2, ... param10, param11)
 
 {
   // safety check for nullptr
   if (param_1 != 0)
   {
 	// DecalHUD_DrawPolyGT4
-    FUN_80023054();
+    FUN_80023054(param1, param2, ... param10, param11);
   }
 
   return;

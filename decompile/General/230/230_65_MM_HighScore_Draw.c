@@ -136,7 +136,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
 			FONT_SMALL, 0);
 			
         // Character Icon
-        MENUBOX_DrawPolyGT4(
+        DECOMP_MENUBOX_DrawPolyGT4(
 			gGT->ptrIcons[data.MetaDataCharacters[entry[0].characterID].iconID],
 			D230.transitionMeta_HighScores[7].currX + (offsetX + 0x124), 
 			D230.transitionMeta_HighScores[7].currY + (offsetY + 0x38),
@@ -153,7 +153,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
         char j = i + 2;
 
         // Character Icon
-        MENUBOX_DrawPolyGT4(
+        DECOMP_MENUBOX_DrawPolyGT4(
 			gGT->ptrIcons[data.MetaDataCharacters[entry[i+1].characterID].iconID],
 			D230.transitionMeta_HighScores[j].currX + offsetX + 0x20,
 			D230.transitionMeta_HighScores[j].currY + offsetY + (i * 0x1f) + 0x39,

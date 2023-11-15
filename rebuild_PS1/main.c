@@ -171,7 +171,7 @@
 #include "../decompile/General/MEMPACK/MEMPACK_PopState.c" 
 #include "../decompile/General/MEMPACK/MEMPACK_PopToState.c"
 
-// skip MENUBOX_DrawPolyGT4
+#include "../decompile/General/MenuBox/MENUBOX_DrawPolyGT4.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_Edge.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawTime.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawRwdBlueRect_Subset.c"
