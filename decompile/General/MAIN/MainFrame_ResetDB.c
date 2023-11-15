@@ -9,6 +9,7 @@ void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT)
 	struct DB* db;
 	int ot_tileView_UI;
 	
+// Dont use this in DECOMP until drivers->stepFlagSet is written
 #ifndef REBUILD_PS1
 	// check if new adv hub should be loaded,
 	// this was a random place for ND to put it

@@ -424,6 +424,7 @@ common, exe, MainInit_VisMem, 0x0, General/MAIN/MainInit_VisMem.c
 common, exe, MainInit_PrimMem, 0x0, General/MAIN/MainInit_PrimMem.c
 common, exe, MainInit_JitPoolsReset, 0x0, General/MAIN/MainInit_JitPoolsReset.c
 common, exe, MainInit_OTMem, 0x0, General/MAIN/MainInit_OTMem.c
+common, exe, MainInit_JitPoolsNew, 0x0, General/MAIN/MainInit_JitPoolsNew.c
 common, exe, MainInit_Drivers, 0x0, General/MAIN/MainInit_Drivers.c
 common, exe, MainInit_FinalizeInit, 0x0, General/MAIN/MainInit_FinalizeInit.c
 common, exe, MainInit_VRAMClear, 0x0, General/MAIN/MainInit_VRAMClear.c

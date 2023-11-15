@@ -99,6 +99,8 @@ void DECOMP_MainDrawCb_DrawSync();
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT);
 
+void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT);
+void DECOMP_MainInit_JitPoolsReset(struct GameTracker* gGT);
 void DECOMP_MainInit_PrimMem(struct GameTracker* gGT);
 void DECOMP_MainInit_OTMem(struct GameTracker* gGT);
 void DECOMP_MainInit_FinalizeInit(struct GameTracker* gGT);

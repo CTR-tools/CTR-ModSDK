@@ -172,9 +172,9 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 		gGT->DecalMP[i].ptrOT2 = 0;
     }
 
-#ifndef REBUILD_PS1
-    MainInit_JitPoolsReset(gGT);
+    DECOMP_MainInit_JitPoolsReset(gGT);
 
+#ifndef REBUILD_PS1
     // 0x1d7c
     gGT->trackLength_x_numLaps_x_8 =
         lev1->ptr_restart_points[0].distToFinish *

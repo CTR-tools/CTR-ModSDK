@@ -215,10 +215,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				((gGT->gameMode2 & CREDITS) != 0)
 			)
 			{
-#ifndef REBUILD_PS1
 				// (now, at beginning of mempack)
-				MainInit_JitPoolsNew(gGT);
-#endif
+				DECOMP_MainInit_JitPoolsNew(gGT);
 			}
 			break;
 		}
@@ -557,6 +555,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				uVar16 = DecalGlobal_Find2(piVar15, rdata.s_lightgreenon);
 				gGT->trafficLightIcon[3] = uVar16;
 			}
+#endif
 			
 			gGT->gameMode1_prevFrame = 1;
 
@@ -571,11 +570,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			)
 			{
 				// (now, at end of mempack)
-				MainInit_JitPoolsNew(gGT);
+				DECOMP_MainInit_JitPoolsNew(gGT);
 
 				return loadingStage + 1;
 			}
-#endif
 			
 			// podium reward
 			if (gGT->podiumRewardID != 0)
