@@ -67,7 +67,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			if (elapsedFrames > 12)
 			{
 				// if track has not been chosen
-				if (D230.trackSel_postTransition_boolStart == 0)
+				if (D230.trackSel_StartRaceAfterFadeOut == 0)
 				{
 					// return to character selection
 					sdata->ptrDesiredMenuBox = &D230.menubox_characterSelect;
@@ -100,7 +100,9 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 					// by default, dont show ghost in race
 					sdata->boolReplayHumanGhost = 0;
 
+#ifndef REBUILD_PS1
 					LoadSave_ToggleMode(0x30);
+#endif
 
 					// open the ghost selection menu
 					sdata->ptrDesiredMenuBox = &data.menuBox_GhostSelection;
@@ -161,7 +163,9 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				D230.trackSel_changeTrack_frameCount = 3;
 				D230.trackSel_direction = 1;
 				
+#ifndef REBUILD_PS1
 				OtherFX_Play(0, 1);
+#endif
 				break;
 			
 			case BTN_DOWN:
@@ -182,13 +186,17 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				D230.trackSel_changeTrack_frameCount = 3;
 				D230.trackSel_direction = -1;
 				
+#ifndef REBUILD_PS1
 				OtherFX_Play(0, 1);
+#endif
 				break;
 			
 			case BTN_CROSS_one:
 			case BTN_CIRCLE:
+#ifndef REBUILD_PS1
 				// "enter/confirm" sound
 				OtherFX_Play(1, 1);
+#endif
 				
 				// if not Battle or Time Trial, open LapSelectMenu
 				if ((gGT->gameMode1 & (BATTLE_MODE | TIME_TRIAL)) == 0)
@@ -199,17 +207,17 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				}
 				
 				// if Battle or Time Trial, skip straight to level
-				D230.trackSel_postTransition_boolStart = D230.trackSel_transitionState;
+				D230.trackSel_StartRaceAfterFadeOut = D230.trackSel_transitionState;
 				D230.trackSel_transitionState = EXITING_MENU;
 				break;
 				
 			case BTN_TRIANGLE:
 			case BTN_SQUARE_one:
+#ifndef REBUILD_PS1
 				// "go back" sound
 				OtherFX_Play(2, 1);
-				// not ready to race
-				D230.trackSel_postTransition_boolStart = 0;
-				// transition out
+#endif
+				D230.trackSel_StartRaceAfterFadeOut = 0;
 				D230.trackSel_transitionState = EXITING_MENU;
 				break;
 			default:
@@ -256,7 +264,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	
 			// if this is 1 (which it is), the race starts,
 			// otherwise, you go back to character selection
-			D230.trackSel_postTransition_boolStart = lapSelTransitionState;
+			D230.trackSel_StartRaceAfterFadeOut = lapSelTransitionState;
 		}
 	
 		// If it is not time to start the race
@@ -397,7 +405,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				gGT->levelID = selectMenu[iVar10].levID;
 
 				// (useless?)
-				GAMEPROG_GetPtrHighScoreTrack();
+				DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 
 				int timeTrialFlags = sdata->gameProgress.highScoreTracks[gGT->levelID].timeTrialFlags;
 
@@ -434,7 +442,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			gGT->levelID = sVar5;
 
 			// (useless?)
-			GAMEPROG_GetPtrHighScoreTrack();
+			DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 		}
 
 		// alphabet
@@ -458,8 +466,12 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			// if you are in time trial mode
 			if ((gGT->gameMode1 & TIME_TRIAL) != 0)
 			{
+				#ifndef REBUILD_PS1
 				// Check if this track has Ghost Data
 				uVar15 = GhostData_NumGhostsForLEV(selectMenu[iVar10].levID);
+				#else
+				uVar15 = 0;
+				#endif
 
 				// If this track has Ghost Data
 				if ((uVar15 & 0xffff) != 0)

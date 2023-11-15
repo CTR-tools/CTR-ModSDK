@@ -37,7 +37,9 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         mb->state &= ~NEEDS_TO_CLOSE;
 
+		#ifndef REBUILD_PS1
         Audio_SetState_Safe(1);
+		#endif
 
         break;
 

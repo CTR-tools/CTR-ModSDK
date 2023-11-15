@@ -76,7 +76,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			if (elapsedFrames > 12)
 			{
 				// if track has not been chosen
-				if (OVR_230.trackSel_postTransition_boolStart == 0)
+				if (OVR_230.trackSel_StartRaceAfterFadeOut == 0)
 				{
 					// return to character selection
 					sdata->ptrDesiredMenuBox = &OVR_230.menubox_characterSelect;
@@ -199,7 +199,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				OtherFX_Play(1, 1);
 				
 				// if Battle or Time Trial, skip straight to level
-				OVR_230.trackSel_postTransition_boolStart = OVR_230.trackSel_transitionState;
+				OVR_230.trackSel_StartRaceAfterFadeOut = OVR_230.trackSel_transitionState;
 				OVR_230.trackSel_transitionState = EXITING_MENU;
 				break;
 				
@@ -208,7 +208,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// "go back" sound
 				OtherFX_Play(2, 1);
 				// not ready to race
-				OVR_230.trackSel_postTransition_boolStart = 0;
+				OVR_230.trackSel_StartRaceAfterFadeOut = 0;
 				// transition out
 				OVR_230.trackSel_transitionState = EXITING_MENU;
 				break;

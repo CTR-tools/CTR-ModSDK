@@ -226,10 +226,10 @@
 #include "../decompile/General/UI/UI_Map_DrawMap.c"
 
 // 230
-//#include "../decompile/General/230/R230.c"
-//#include "../decompile/General/230/D230.c"
-//#include "../decompile/General/230/1_Block1.c"
-//#include "../decompile/General/230/230_39_MM_AdvNewLoad_GetMenuBox.c"
-//#include "../decompile/General/230/1_Block2.c"
-//#include "../decompile/General/230/230_57_MM_TrackSelect_GetMenuBox.c"
-//#include "../decompile/General/230/1_Block3.c"
+#include "../decompile/General/230/R230.c"
+#include "../decompile/General/230/D230.c"
+#include "../decompile/General/230/1_Block1.c"
+#include "../decompile/General/230/230_39_MM_AdvNewLoad_GetMenuBox.c"
+#include "../decompile/General/230/1_Block2.c"
+#include "../decompile/General/230/230_57_MM_TrackSelect_GetMenuBox.c"
+#include "../decompile/General/230/1_Block3.c"

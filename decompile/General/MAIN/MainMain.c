@@ -71,9 +71,9 @@ u_int DECOMP_main()
 				
 #ifndef REBUILD_PS1
 				EffectSfxRain_Reset(gGT);
-				GAMEPROG_GetPtrHighScoreTrack();
 #endif
-				
+
+				DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 				DECOMP_MainInit_FinalizeInit(gGT);
 				
 #ifndef REBUILD_PS1				

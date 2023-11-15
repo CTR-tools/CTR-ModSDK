@@ -12,8 +12,10 @@ unsigned char DECOMP_MM_TransitionInOut(struct TransitionMeta* meta, int framesP
 
     if (framesLeft == 4)
     {
+#ifndef REBUILD_PS1
         // Play "swoosh" sound for menu transition
         OtherFX_Play(0x65, 0);
+#endif
     }
 
 	// last member of array is null-terminated with 0xFFFF

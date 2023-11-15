@@ -167,8 +167,10 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 				// if your team number is more than 0
 				if (0 < gGT->battleSetup.teamOfEachPlayer[i])
 				{
+#ifndef REBUILD_PS1
 					// play sound
 					OtherFX_Play(0, 1);
+#endif
 	
 					// Move your icon to the left
 					gGT->battleSetup.teamOfEachPlayer[i]--;
@@ -186,8 +188,10 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 				// If your team number is less than 3
 				if (gGT->battleSetup.teamOfEachPlayer[i] < 3)
 				{
+#ifndef REBUILD_PS1
 					// play sound
 					OtherFX_Play(0, 1);
+#endif
 	
 					// Move your icon to the right
 					gGT->battleSetup.teamOfEachPlayer[i]++;
@@ -236,8 +240,10 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                                 // If you press Square or Trianlge
                                 if ((sdata->buttonTapPerPlayer[0] & 0x40020) != 0)
                                 {
+									#ifndef REBUILD_PS1
                                     // Play "Go Back" sound
                                     OtherFX_Play(2, 1);
+									#endif
 
                                     // go back when transition is done, dont start race
                                     D230.battle_postTransition_boolStart = 0;
@@ -250,8 +256,10 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                             // If you press Cross or Circle
                             else
                             {
+								#ifndef REBUILD_PS1
                                 // Play sound
                                 OtherFX_Play(1, 1);
+								#endif
 
                                 switch (sdata->battleSetupRowHighlighted)
                                 {
@@ -355,8 +363,10 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                                         {
                                             if (sdata->teamOfEachPlayer[i] != gGT->battleSetup.teamOfEachPlayer[i])
                                             {
+												#ifndef REBUILD_PS1
                                                 MainStats_ClearBattleVS();
-                                            }
+												#endif
+											}
                                             gGT->battleSetup.teamOfEachPlayer[i] = gGT->battleSetup.teamOfEachPlayer[i];
                                         }
 
@@ -466,8 +476,10 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 
             if (sdata->battleSetupRowHighlighted != uVar4)
             {
+				#ifndef REBUILD_PS1
                 // Play sound
                 OtherFX_Play(0, 1);
+				#endif
             }
         }
 

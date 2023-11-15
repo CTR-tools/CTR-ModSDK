@@ -832,7 +832,7 @@ struct OverlayDATA_230
 	short trackSel_transitionState;
 	// 800b59b0 - UsaRetail
 	// 800b6254 - EurRetail
-	short trackSel_postTransition_boolStart;
+	short trackSel_StartRaceAfterFadeOut;
 	// 800b59b2 - UsaRetail
 	// 800b6256 - EurRetail
 	short trackSel_transitionFrames;

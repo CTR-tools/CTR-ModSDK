@@ -12,11 +12,13 @@ void DECOMP_MM_ToggleRows_PlayerCount()
 		// unlock row
 		row->stringIndex &= 0x7fff;
 		
+#ifndef REBUILD_PS1
 		if((MainFrame_HaveAllPads(i+1) & 0xffff) == 0)
 		{
 			// lock row
 			row->stringIndex |= 0x8000;
 		}
+#endif
 	}
 	
 	for(i = 0; i < 3; i++)
@@ -26,10 +28,12 @@ void DECOMP_MM_ToggleRows_PlayerCount()
 		// unlock row
 		row->stringIndex &= 0x7fff;
 		
+#ifndef REBUILD_PS1
 		if((MainFrame_HaveAllPads(i+2) & 0xffff) == 0)
 		{
 			// lock row
 			row->stringIndex |= 0x8000;
 		}
+#endif
 	}
 }

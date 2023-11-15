@@ -42,7 +42,9 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   {
     if (D230.titleSounds[i].frameToPlay == timer)
     {
+#ifndef REBUILD_PS1
       OtherFX_Play(D230.titleSounds[i].soundID, 1);
+#endif
     }
   }
 

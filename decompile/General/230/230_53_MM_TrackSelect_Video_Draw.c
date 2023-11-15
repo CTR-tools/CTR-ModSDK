@@ -100,13 +100,13 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
 		0, FP(1.0));
   }
 
+#ifndef REBUILD_PS1
   if (D230.trackSel_unk == 1)
   {
     // disable video copy
     MainFrame_InitVideoSTR(0, 0, 0, 0);
   }
   
-#ifndef REBUILD_PS1
   if ((param_4 == 1) && (D230.trackSel_video_boolAllocated == 1))
   {
     D230.trackSel_video_state = 1;

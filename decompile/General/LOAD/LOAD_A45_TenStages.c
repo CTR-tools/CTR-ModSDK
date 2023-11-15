@@ -305,6 +305,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				Music_Restart();
 			}
+			#endif
 
 			// If in main menu (character selection, track selection, any part of it)
 			if ((gGT->gameMode1 & MAIN_MENU) != 0)
@@ -322,7 +323,6 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					case 5:	DECOMP_MM_JumpTo_Scrapbook();		break;
 				}
 			}
-			#endif
 			
 			sdata->ptrMPK = 0;
 			sdata->load_inProgress = 1;

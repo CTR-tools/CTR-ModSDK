@@ -6,7 +6,9 @@ void DECOMP_MM_JumpTo_Title_FirstTime(void)
 
   DECOMP_MM_ResetAllMenus();
 
+  #ifndef REBUILD_PS1
   MainStats_ClearBattleVS();
+  #endif
 
 #if BUILD == EurRetail
   // if you have not chose a language or skipped the language menu

@@ -160,8 +160,10 @@ void DECOMP_MM_HighScore_MenuBox(struct MenuBox* unused)
   {
     isMenuMoving = true;
 
+	#ifndef REBUILD_PS1
     // Play sound
     OtherFX_Play(2, 1);
+	#endif
 
     // transitioning out
     D230.highScore_transitionState = EXITING_MENU;
