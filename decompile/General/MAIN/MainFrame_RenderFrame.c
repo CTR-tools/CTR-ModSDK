@@ -68,7 +68,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 				DECOMP_CTR_CycleTex_LEV(
 					lev->ptr_anim_tex,
 					gGT->timer);
-#ifndef REBUILD_PS1					
+				
 	if(
 		(sdata->ptrActiveMenuBox != 0) ||
 		((gGT->gameMode1 & END_OF_RACE) != 0)
@@ -81,7 +81,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		if(sdata->Loading.stage == -1)
 			MENUBOX_ProcessState();
 
-//#ifndef REBUILD_PS1	
+#ifndef REBUILD_PS1	
 	RainLogic(gGT);
 	EffectSfxRain_MakeSound(gGT);
 	MenuHighlight();
