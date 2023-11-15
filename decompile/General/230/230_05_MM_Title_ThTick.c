@@ -28,7 +28,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   if ((sdata->buttonTapPerPlayer[0] & 0x40070) != 0)
   {
     // clear gamepad input (for menus)
-    DECOMP_MENUBOX_ClearInput();
+    MENUBOX_ClearInput();
 
     // set frame to 1000, skip the animation
     D230.timerInTitle = 1000;
@@ -42,7 +42,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   {
     if (D230.titleSounds[i].frameToPlay == timer)
     {
-      DECOMP_OtherFX_Play(D230.titleSounds[i].soundID, 1);
+      OtherFX_Play(D230.titleSounds[i].soundID, 1);
     }
   }
 

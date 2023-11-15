@@ -33,7 +33,6 @@ void DECOMP_TitleFlag_DrawLoadingString(void)
     // loop counter
     iVar6 = 0;
 
-#ifndef REBUILD_PS1
     // if game is not loading
     if (sdata->Loading.stage == -1)
     {
@@ -46,10 +45,6 @@ void DECOMP_TitleFlag_DrawLoadingString(void)
     {
         sdata->TitleFlag_Transition = 0;
     }
-#else
-    // temporary test for PC port "LOADING..."
-    sdata->TitleFlag_Transition = 0;
-#endif
 
     iVar10 = 
 		(sdata->TitleFlag_Transition & 0xffff) - 
@@ -151,7 +146,7 @@ void DECOMP_TitleFlag_DrawLoadingString(void)
     {
 
         sdata->TitleFlag_LoadingTextAnimFrame = -1;
-        if (sdata->Loading.stage - 6U < 2)
+        if ((u_int)(sdata->Loading.stage - 6U) < 2)
         {
             sdata->TitleFlag_LoadingTextAnimFrame = 0;
         }

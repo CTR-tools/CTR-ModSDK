@@ -105,6 +105,8 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
     // disable video copy
     MainFrame_InitVideoSTR(0, 0, 0, 0);
   }
+  
+#ifndef REBUILD_PS1
   if ((param_4 == 1) && (D230.trackSel_video_boolAllocated == 1))
   {
     D230.trackSel_video_state = 1;
@@ -119,6 +121,8 @@ void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectM
 
     D230.trackSel_video_boolAllocated = 0;
   }
+#endif
+  
   D230.trackSel_unk = D230.trackSel_video_state;
 
   // Draw 2D Menu rectangle background

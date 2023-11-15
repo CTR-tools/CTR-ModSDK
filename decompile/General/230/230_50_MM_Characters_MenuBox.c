@@ -355,7 +355,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 						if (globalIconPerPlayerCopy3 << 0x10 != globalIconPerPlayerCopy2 << 0x10) 
 						{
 							// Play sound
-							DECOMP_OtherFX_Play(0, 1);
+							OtherFX_Play(0, 1);
 						}
 						if (local_50 != 0)
 						{
@@ -387,7 +387,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 					numPlyrNextGame = gGT->numPlyrNextGame;
 		
 					// Play sound
-					DECOMP_OtherFX_Play(1,1);
+					OtherFX_Play(1,1);
 		
 					// if all players have selected their characters
 					if ((int)(short)sdata->characterSelectFlags == (1 << numPlyrNextGame)-1) 
@@ -412,7 +412,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 					D230.isMenuTransitioning = 2;
 		
 					// Play sound
-					DECOMP_OtherFX_Play(2, 1);
+					OtherFX_Play(2, 1);
 				}
 			}
 			else 
@@ -421,7 +421,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 				if ((button & 0x40020) != 0) 
 				{
 					// Play sound
-					DECOMP_OtherFX_Play(2, 1);
+					OtherFX_Play(2, 1);
 		
 					// this player has de-selected their character
 					sdata->characterSelectFlags = sdata->characterSelectFlags & ~characterSelectFlags5bit;

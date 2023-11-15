@@ -25,7 +25,10 @@
 #include "../decompile/General/CDSYS/CDSYS_c18_XAPauseForce.c" 
 #include "../decompile/General/CDSYS/CDSYS_c19_XAPauseAtEnd.c" 
 
+#include "../decompile/General/CTR_CycleTex_LEV.c"
 #include "../decompile/General/CTR_ErrorScreen.c"
+#include "../decompile/General/CTR_CycleTex_AllModels.c"
+#include "../decompile/General/CTR_CycleTex_Model.c"
 
 #include "../decompile/General/DecalFont/DecalFont_GetLineWidth.c"
 #include "../decompile/General/DecalFont/DecalFont_DrawLineStrlen.c"
@@ -197,3 +200,12 @@
 
 // RCNT (watch namespace, not alphabetical)
 #include "../decompile/General/RCNT/RCNT_Init.c"
+
+// 230
+//#include "../decompile/General/230/R230.c"
+//#include "../decompile/General/230/D230.c"
+//#include "../decompile/General/230/1_Block1.c"
+//#include "../decompile/General/230/230_39_MM_AdvNewLoad_GetMenuBox.c"
+//#include "../decompile/General/230/1_Block2.c"
+//#include "../decompile/General/230/230_57_MM_TrackSelect_GetMenuBox.c"
+//#include "../decompile/General/230/1_Block3.c"

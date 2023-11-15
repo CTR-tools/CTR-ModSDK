@@ -7,7 +7,10 @@ void DECOMP_CDSYS_XaCallbackCdSync(char result);
 void DECOMP_CDSYS_XaCallbackCdReady(char result);
 void DECOMP_CDSYS_SetMode_StreamData();
 
+void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
 void DECOMP_CTR_ErrorScreen(char r, char g, char b);
+void CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer);
+void DECOMP_CTR_CycleTex_Model(struct AnimTex* animtex, int timer);
 
 // decal
 void DECOMP_DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);

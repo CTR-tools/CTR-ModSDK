@@ -8,5 +8,5 @@ void DECOMP_MM_Scrapbook_Init(void)
     DECOMP_TitleFlag_SetDrawOrder(1);
 
     // clear gamepad input (for menus)
-    DECOMP_MENUBOX_ClearInput();
+    MENUBOX_ClearInput();
 }

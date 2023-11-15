@@ -146,7 +146,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
 				struct Icon** iconPtrArray =
 					ICONGROUP_GETICONS(gGT->iconGroup[5]);
 
-                DecalHUD_DrawPolyGT4(
+                DECOMP_DecalHUD_DrawPolyGT4(
 					iconPtrArray[0x37],
 					(startX + (cupIndex & 1) * 0xCA - 0x16),
 					(startY + ((starIndex * 0x10) + 0x10)),

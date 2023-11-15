@@ -237,7 +237,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                                 if ((sdata->buttonTapPerPlayer[0] & 0x40020) != 0)
                                 {
                                     // Play "Go Back" sound
-                                    DECOMP_OtherFX_Play(2, 1);
+                                    OtherFX_Play(2, 1);
 
                                     // go back when transition is done, dont start race
                                     D230.battle_postTransition_boolStart = 0;
@@ -251,7 +251,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                             else
                             {
                                 // Play sound
-                                DECOMP_OtherFX_Play(1, 1);
+                                OtherFX_Play(1, 1);
 
                                 switch (sdata->battleSetupRowHighlighted)
                                 {
@@ -546,7 +546,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
         }
 
         // clear gamepad input (for menus)
-        DECOMP_MENUBOX_ClearInput();
+        MENUBOX_ClearInput();
     }
 
     // "SETUP BATTLE"
@@ -577,7 +577,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 		D230.transitionMeta_battle[0].currY + 0x24, 0x134);
 		
     local_38 = 0xd;
-    DECOMP_MENUBOX_GetHeight(&D230.battleType_box, &local_38, 0);
+    MENUBOX_GetHeight(&D230.battleType_box, &local_38, 0);
     sVar6 = local_38 + 0x20;
 
     // "LENGTH:"
@@ -627,9 +627,9 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 					D230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
 								 
                 local_38 = 0xd;
-                DECOMP_MENUBOX_GetHeight(&D230.battleLengthLifeTime_box, &local_38, 0);
+                MENUBOX_GetHeight(&D230.battleLengthLifeTime_box, &local_38, 0);
                 local_36[0] = 0xd;
-                DECOMP_MENUBOX_GetHeight(&D230.battleLengthLifeLife_box, &local_36, 0);
+                MENUBOX_GetHeight(&D230.battleLengthLifeLife_box, &local_36, 0);
                 sVar20 = local_36[0] + sVar6;
                 if (local_36[0] < local_38)
                 {
@@ -841,7 +841,7 @@ LAB_800b25f0:
 				D230.transitionMeta_battle[8].currY + sVar20 + 0x78, 0x134);
 				
         local_38 = 0xd;
-        DECOMP_MENUBOX_GetHeight(&D230.battleStartGame_box, &local_38, 0);
+        MENUBOX_GetHeight(&D230.battleStartGame_box, &local_38, 0);
     }
 
     // If you have no errors that prevent

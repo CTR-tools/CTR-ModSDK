@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CTR_CycleTex_Model(struct AnimTex* animtex, int timer)
+void DECOMP_CTR_CycleTex_Model(struct AnimTex* animtex, int timer)
 {
 	int frameIndex;
 	struct AnimTex* curAnimTex = animtex;

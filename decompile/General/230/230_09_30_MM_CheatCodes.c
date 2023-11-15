@@ -525,8 +525,10 @@ void DECOMP_MM_ParseCheatCodes()
 		
 		// if spyro 2 cheat
 		if(cheat == &cheats[0])
-		{
+		{	
+			#ifndef REBUILD_PS1
 			MainKillGame_LaunchSpyro2();
+			#endif
 			
 			return;
 		}
@@ -534,7 +536,7 @@ void DECOMP_MM_ParseCheatCodes()
 		// if not spyro 2 cheat...
 		
 		// play cheat sound
-		DECOMP_OtherFX_Play(0x67, 1);
+		OtherFX_Play(0x67, 1);
 		
 		// apply cheat
 		*cheat->writeAddr |= cheat->addBits;

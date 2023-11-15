@@ -21,7 +21,7 @@ void CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, 
 			
             if ((pHeader->animtex != NULL) && ((pHeader->flags & 2) == 0) )
             {
-                CTR_CycleTex_Model(pHeader->animtex, timer);
+                DECOMP_CTR_CycleTex_Model(pHeader->animtex, timer);
             }
         }
     }

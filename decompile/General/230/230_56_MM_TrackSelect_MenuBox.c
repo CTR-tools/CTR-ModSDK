@@ -92,7 +92,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				if ((gGT->gameMode1 & TIME_TRIAL) != 0)
 				{
 					// allocate room at the end of RAM for ghosts
-					sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00/*, R230.s_loaded_ghost_data*/);
+					sdata->ptrGhostTapePlaying = 
+						DECOMP_MEMPACK_AllocHighMem(0x3e00/*, R230.s_loaded_ghost_data*/);
 
 					memset(sdata->ptrGhostTapePlaying, 0, 0x28);
 
@@ -371,12 +372,12 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		r.h = 0x19;
 
 		// posX of track list
-		// 800b5546 is for transition in and out
-		iVar11 = (u_int)D230.transitionMeta_trackSel[0].currX + (MATH_Cos(uVar15) * 0x19 >> 9) + -0xb4;
+		iVar11 = (u_int)D230.transitionMeta_trackSel[0].currX + 
+					(DECOMP_MATH_Cos(uVar15) * 0x19 >> 9) + -0xb4;
 
 		// posY of track list
-		// 800b5548 is for transition in and out
-		iVar9 = (u_int)D230.transitionMeta_trackSel[0].currY + (MATH_Sin(uVar15) * 200 >> 0xc);
+		iVar9 = (u_int)D230.transitionMeta_trackSel[0].currY + 
+					(DECOMP_MATH_Sin(uVar15) * 200 >> 0xc);
 
 		sVar7 = (short)iVar9 + 0x60;
 		r.x = (short)iVar11;
@@ -408,7 +409,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 					struct Icon** iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[5]);
 
-					DecalHUD_DrawPolyGT4
+					DECOMP_DecalHUD_DrawPolyGT4
 					(
 						iconPtrArray[0x37],
 						iVar11 + 0x104, (int)sVar7 + iVar17 * 8 + 4,
@@ -444,7 +445,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		// and so on
 		
 		// Draw string
-		DecalFont_DrawLine
+		DECOMP_DecalFont_DrawLine
 		(
 			sdata->lngStrings[data.metaDataLEV[selectMenu[iVar10].levID].name_LNG],
 			(iVar11 + 8),
@@ -474,7 +475,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 					}
 
 					// "GHOST DATA EXISTS"
-					DecalFont_DrawLine
+					DECOMP_DecalFont_DrawLine
 					(
 						sdata->lngStrings[0x6B], 
 						(iVar11 + 0x80),
@@ -540,7 +541,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			if (D230.trackSel_boolOpenLapBox == 0)
 			{
 				// "SELECT"
-				DecalFont_DrawLine
+				DECOMP_DecalFont_DrawLine
 				(
 					sdata->lngStrings[0x69],
 					(D230.transitionMeta_trackSel[3].currX + 0x18c),
@@ -549,7 +550,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				);
 
 				// "LEVEL"
-				DecalFont_DrawLine
+				DECOMP_DecalFont_DrawLine
 				(
 					sdata->lngStrings[0x6a],
 					(D230.transitionMeta_trackSel[3].currX + 0x18c),

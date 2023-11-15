@@ -58,6 +58,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         // if file was found
         if (CdSearchFile(&cdlFile, R230.s_teststr1) != 0)
         {
+#ifndef REBUILD_PS1
             SpuSetCommonCDVolume(sdata->vol_Music << 7, sdata->vol_Music << 7);
 
             // Alloc memory to store Scrapbook
@@ -74,6 +75,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
             // CD position of video, and numFrames
             MM_Video_StartStream(cdPos, 0x1148);
+#endif
 
             // start playing movie
             D230.scrapbookState = 2;
@@ -86,6 +88,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     // Actually play the movie
     case 2:
 	
+#ifndef REBUILD_PS1
         // infinite loop (cause this is scrapbook),
         // keep doing DecodeFrame and VSync until done
         while (
@@ -109,10 +112,11 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 				(MM_Video_CheckIfFinished(0) == 1) ||
 				(getButtonPress != 0)
 			)
+#endif
         {
             if (getButtonPress != 0)
             {
-                TitleFlag_SetFullyOnScreen();
+                DECOMP_TitleFlag_SetFullyOnScreen();
             }
 
             // stop video
@@ -125,11 +129,13 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     // return disc to normal,
     // return checkered flag to normal
     case 3:
+#ifndef REBUILD_PS1
         SpuSetCommonCDVolume(0, 0);
 
         MM_Video_StopStream();
 
         MM_Video_ClearMem();
+#endif
 
         if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)
         {
@@ -168,7 +174,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             MainRaceTrack_RequestLoad(lev);
 			#endif
 			
-            DECOMP_MENUBOX_Hide(mb);
+            MENUBOX_Hide(mb);
         }
         break;
     default:
