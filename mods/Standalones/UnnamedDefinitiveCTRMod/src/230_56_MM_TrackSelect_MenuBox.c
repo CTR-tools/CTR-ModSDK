@@ -1,5 +1,14 @@
 #include <common.h>
 
+void MM_TransitionInOut(struct TransitionMeta*, int, int);
+void MM_Characters_RestoreIDs();
+void MM_Battle_Init();
+char MM_TrackSelect_boolTrackOpen(void*);
+
+void UDCTRM_RaceOptions();
+
+u_int UDCTRM_RO_isOpen = false;
+
 void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 {
 	char bVar1;
@@ -28,13 +37,13 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	struct MainMenu_LevelRow *selectMenu;
 	struct GameTracker *gGT = sdata->gGT;
 
-	elapsedFrames = D230.trackSel_transitionFrames;
+	elapsedFrames = OVR_230.trackSel_transitionFrames;
 
 	// if you are not in track selection menu
-	if (D230.trackSel_transitionState != IN_MENU)
+	if (OVR_230.trackSel_transitionState != IN_MENU)
 	{
 		// if transitioning in
-		if (D230.trackSel_transitionState == ENTERING_MENU)
+		if (OVR_230.trackSel_transitionState == ENTERING_MENU)
 		{
 			// make error message posY appear
 			// near bottom of screen
@@ -48,30 +57,30 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				sdata->errorMessagePosIndex = 2;
 			}
 
-			DECOMP_MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, 8);
+			MM_TransitionInOut(&OVR_230.transitionMeta_trackSel[0], elapsedFrames, 8);
 			elapsedFrames--;
 
 			// ran out of frames
 			if (elapsedFrames == 0)
 			{
 				// menu is now in focus
-				D230.trackSel_transitionState = IN_MENU;
+				OVR_230.trackSel_transitionState = IN_MENU;
 			}
 		}
 		// transitioning out
-		else if (D230.trackSel_transitionState == EXITING_MENU)
+		else if (OVR_230.trackSel_transitionState == EXITING_MENU)
 		{
-			DECOMP_MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, 8);
+			MM_TransitionInOut(&OVR_230.transitionMeta_trackSel[0], elapsedFrames, 8);
 			elapsedFrames++;
 
 			if (elapsedFrames > 12)
 			{
 				// if track has not been chosen
-				if (D230.trackSel_postTransition_boolStart == 0)
+				if (OVR_230.trackSel_postTransition_boolStart == 0)
 				{
 					// return to character selection
-					sdata->ptrDesiredMenuBox = &D230.menubox_characterSelect;
-					DECOMP_MM_Characters_RestoreIDs();
+					sdata->ptrDesiredMenuBox = &OVR_230.menubox_characterSelect;
+					MM_Characters_RestoreIDs();
 					return;
 				}
 
@@ -81,8 +90,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				if ((gGT->gameMode1 & BATTLE_MODE) != 0)
 				{
 					// open weapon selection menu
-					sdata->ptrDesiredMenuBox = &D230.menubox_battleWeapons;
-					DECOMP_MM_Battle_Init();
+					sdata->ptrDesiredMenuBox = &OVR_230.menubox_battleWeapons;
+					MM_Battle_Init();
 					return;
 				}
 
@@ -92,7 +101,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				if ((gGT->gameMode1 & TIME_TRIAL) != 0)
 				{
 					// allocate room at the end of RAM for ghosts
-					sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00/*, R230.s_loaded_ghost_data*/);
+					sdata->ptrGhostTapePlaying = MEMPACK_AllocHighMem(0x3e00, OVR_230.s_loaded_ghost_data);
 
 					memset(sdata->ptrGhostTapePlaying, 0, 0x28);
 
@@ -114,36 +123,32 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// near middle of screen
 				sdata->errorMessagePosIndex = 0;
 
-				// fix for new lap selection menu
-				gGT->numLaps = 3;
-				RO_numLapsIndex = 1;
-
 				return;
 			}
 		}
 	}
-	D230.trackSel_transitionFrames = elapsedFrames;
+	OVR_230.trackSel_transitionFrames = elapsedFrames;
 
 	// default arcade tracks
-	selectMenu = &D230.arcadeTracks[0];
+	selectMenu = &OVR_230.arcadeTracks[0];
 	numTracks = 18;
 
 	// if you are in battle mode
 	if ((gGT->gameMode1 & BATTLE_MODE) != 0)
 	{
-		selectMenu = &D230.battleTracks[0];
+		selectMenu = &OVR_230.battleTracks[0];
 		numTracks = 7;
 	}
 
 	currTrack = mb->rowSelected;
 
-	// if lap selection menu is closed
-	if (D230.trackSel_boolOpenLapBox == 0)
+	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
+	if (!(UDCTRM_RO_isOpen))
 	{
 		// if not changing levels
-		if (D230.trackSel_changeTrack_frameCount == 0)
+		if (OVR_230.trackSel_changeTrack_frameCount == 0)
 		{
-			switch (sdata->buttonTapPerPlayer[0] & (BTN_UP | BTN_DOWN | BTN_TRIANGLE | BTN_SQUARE_one | BTN_CROSS_one | BTN_CIRCLE))
+			switch (sdata->buttonTapPerPlayer[0] & (BTN_UP | BTN_DOWN | BTN_TRIANGLE | BTN_SQUARE_one | BTN_CROSS_one | BTN_CIRCLE | BTN_START))
 			{
 				
 			case BTN_UP:
@@ -158,11 +163,11 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 						// set to the last track
 						currTrack = numTracks - 1;
 					
-				} while (!DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
+				} while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
 				
-				D230.trackSel_currTrack = currTrack;
-				D230.trackSel_changeTrack_frameCount = 3;
-				D230.trackSel_direction = 1;
+				OVR_230.trackSel_currTrack = currTrack;
+				OVR_230.trackSel_changeTrack_frameCount = 3;
+				OVR_230.trackSel_direction = 1;
 				
 				OtherFX_Play(0, 1);
 				break;
@@ -179,11 +184,11 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 						// set to the first trrack
 						currTrack = 0;
 
-				} while (!DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
+				} while (!MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
 				
-				D230.trackSel_currTrack = currTrack;
-				D230.trackSel_changeTrack_frameCount = 3;
-				D230.trackSel_direction = -1;
+				OVR_230.trackSel_currTrack = currTrack;
+				OVR_230.trackSel_changeTrack_frameCount = 3;
+				OVR_230.trackSel_direction = -1;
 				
 				OtherFX_Play(0, 1);
 				break;
@@ -193,17 +198,9 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// "enter/confirm" sound
 				OtherFX_Play(1, 1);
 				
-				// if not Battle or Time Trial, open LapSelectMenu
-				if ((gGT->gameMode1 & (BATTLE_MODE | TIME_TRIAL)) == 0)
-				{
-					// open lap select menu
-					D230.trackSel_boolOpenLapBox = D230.trackSel_transitionState;
-					break;
-				}
-				
 				// if Battle or Time Trial, skip straight to level
-				D230.trackSel_postTransition_boolStart = D230.trackSel_transitionState;
-				D230.trackSel_transitionState = EXITING_MENU;
+				OVR_230.trackSel_postTransition_boolStart = OVR_230.trackSel_transitionState;
+				OVR_230.trackSel_transitionState = EXITING_MENU;
 				break;
 				
 			case BTN_TRIANGLE:
@@ -211,9 +208,16 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// "go back" sound
 				OtherFX_Play(2, 1);
 				// not ready to race
-				D230.trackSel_postTransition_boolStart = 0;
+				OVR_230.trackSel_postTransition_boolStart = 0;
 				// transition out
-				D230.trackSel_transitionState = EXITING_MENU;
+				OVR_230.trackSel_transitionState = EXITING_MENU;
+				break;
+			case BTN_START:
+				if (!(gGT->gameMode1 & BATTLE_MODE))
+				{
+					OtherFX_Play(1, 1);
+					UDCTRM_RO_isOpen = true;
+				}
 				break;
 			default:
 				break;
@@ -223,68 +227,17 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			MENUBOX_ClearInput();
 		}
 	}
-
-	// if lap selection menu is open
 	else
 	{
-		short lapSelTransitionState = 0;
-	
-		// copy LapRow from 8d920 to temp variable b55ae
-		D230.menubox_LapSel.rowSelected = sdata->uselessLapRowCopy;
-	
-		// If you're in track selection menu
-		if (D230.trackSel_transitionState == IN_MENU)
-		{
-			lapSelTransitionState = MENUBOX_ProcessInput(&D230.menubox_LapSel);
-		}
-	
-		MENUBOX_DrawSelf
-		(
-			&D230.menubox_LapSel,
-			D230.transitionMeta_trackSel[2].currX,
-			D230.transitionMeta_trackSel[2].currY, 0xa4
-		);
-	
-		// put LapRow back into 8d920
-		sdata->uselessLapRowCopy = D230.menubox_LapSel.rowSelected;
-	
-		// get lap count
-		gGT->numLaps = D230.lapRowVal[D230.menubox_LapSel.rowSelected];
-		
-		// if it is time to start the race
-		if (lapSelTransitionState == 1)
-		{
-			// try to start the race
-			D230.trackSel_transitionState = EXITING_MENU;
-	
-			// if this is 1 (which it is), the race starts,
-			// otherwise, you go back to character selection
-			D230.trackSel_postTransition_boolStart = lapSelTransitionState;
-		}
-	
-		// If it is not time to start the race
-		else
-		{
-			if (lapSelTransitionState == -1)
-			{
-				// close lap selection menu
-				D230.trackSel_boolOpenLapBox = 0;
-			}
-		}
-	
-		// If "One Lap Race" Cheat is enabled
-		if ((gGT->gameMode2 & CHEAT_ONELAP) != 0)
-		{
-			// Set number of Laps to 1
-			gGT->numLaps = 1;
-		}
+		UDCTRM_RaceOptions();
 	}
+	/////////////////////////// SECTION 1          ///////////////////////////
 
 	// decrease frame from track list motion
-	iVar9 = D230.trackSel_changeTrack_frameCount + -1;
-	if ((0 < D230.trackSel_changeTrack_frameCount) && (D230.trackSel_changeTrack_frameCount = iVar9, iVar9 == 0))
+	iVar9 = OVR_230.trackSel_changeTrack_frameCount + -1;
+	if ((0 < OVR_230.trackSel_changeTrack_frameCount) && (OVR_230.trackSel_changeTrack_frameCount = iVar9, iVar9 == 0))
 	{
-		mb->rowSelected = D230.trackSel_currTrack;
+		mb->rowSelected = OVR_230.trackSel_currTrack;
 	}
 
 	// not transitioning
@@ -293,8 +246,9 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	// if you are transitioning out of level selection
 	if
 	(
-		(D230.trackSel_changeTrack_frameCount != 0) ||
-		(D230.trackSel_transitionState == EXITING_MENU)
+		(OVR_230.trackSel_changeTrack_frameCount != 0) ||
+		(OVR_230.trackSel_transitionState == EXITING_MENU) ||
+		(UDCTRM_RO_isOpen != 0)
 	)
 	{
 		// transitioning,
@@ -303,7 +257,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		uVar14 = 1;
 	}
 
-	DECOMP_MM_TrackSelect_Video_State(uVar14);
+	MM_TrackSelect_Video_State(uVar14);
 
 	uVar15 = (u_int)numTracks;
 	gGT->currLEV = selectMenu[mb->rowSelected].levID;
@@ -319,7 +273,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				iVar10 = uVar15 - 1;
 			}
 
-			uVar8 = DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
+			uVar8 = MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
 
 			iVar9 = iVar10 - 1;
 		} while ((uVar8 & 0xffff) == 0);
@@ -335,9 +289,9 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		// This part actually "moves" the rows,
 		// when pressing the Up and Down buttons on D-Pad
 		uVar15 = ((iVar9 >> 0x10) + -4) * 0x73;
-		if (0 < D230.trackSel_changeTrack_frameCount)
+		if (0 < OVR_230.trackSel_changeTrack_frameCount)
 		{
-			uVar15 = uVar15 + (((3 - D230.trackSel_changeTrack_frameCount) * 0x73) / 3) * (int)D230.trackSel_direction;
+			uVar15 = uVar15 + (((3 - OVR_230.trackSel_changeTrack_frameCount) * 0x73) / 3) * (int)OVR_230.trackSel_direction;
 		}
 
 		// This is just MATH_Cos and Math_Sin 
@@ -376,11 +330,11 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 		// posX of track list
 		// 800b5546 is for transition in and out
-		iVar11 = (u_int)D230.transitionMeta_trackSel[0].currX + (MATH_Cos(uVar15) * 0x19 >> 9) + -0xb4;
+		iVar11 = (u_int)OVR_230.transitionMeta_trackSel[0].currX + (MATH_Cos(uVar15) * 0x19 >> 9) + -0xb4;
 
 		// posY of track list
 		// 800b5548 is for transition in and out
-		iVar9 = (u_int)D230.transitionMeta_trackSel[0].currY + (MATH_Sin(uVar15) * 200 >> 0xc);
+		iVar9 = (u_int)OVR_230.transitionMeta_trackSel[0].currY + (MATH_Sin(uVar15) * 200 >> 0xc);
 
 		sVar7 = (short)iVar9 + 0x60;
 		r.x = (short)iVar11;
@@ -405,10 +359,10 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				int timeTrialFlags = sdata->gameProgress.highScoreTracks[gGT->levelID].timeTrialFlags;
 
 				// if star is earned
-				if (((timeTrialFlags >> D230.timeTrialFlagGet[iVar17]) & 1) != 0)
+				if (((timeTrialFlags >> OVR_230.timeTrialFlagGet[iVar17]) & 1) != 0)
 				{
 					// pointer to color data of star
-					starColor = data.ptrColor[D230.timeTrialStarCol[iVar17]];
+					starColor = data.ptrColor[OVR_230.timeTrialStarCol[iVar17]];
 
 					struct Icon** iconPtrArray = ICONGROUP_GETICONS(gGT->iconGroup[5]);
 
@@ -456,7 +410,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			FONT_BIG, ORANGE
 		);
 
-		if ((D230.trackSel_changeTrack_frameCount == 0) && ((short)iVar18 == 4))
+		if ((OVR_230.trackSel_changeTrack_frameCount == 0) && ((short)iVar18 == 4))
 		{
 			// if you are in time trial mode
 			if ((gGT->gameMode1 & TIME_TRIAL) != 0)
@@ -515,7 +469,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			{
 				iVar10 = 0;
 			}
-			uVar8 = DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
+			uVar8 = MM_TrackSelect_boolTrackOpen(&selectMenu[iVar10]);
 			
 		} while ((uVar8 & 0xffff) == 0);
 
@@ -527,52 +481,29 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			p.h = 0x4b;
 		
 			// posX of "SELECT LEVEL"
-			p.x = D230.transitionMeta_trackSel[1].currX + 0x134;
+			p.x = OVR_230.transitionMeta_trackSel[1].currX + 0x134;
 			
 			// posY of "SELECT LEVEL"
 			// near-top if map exists, near-mid if no map
-			p.y = D230.transitionMeta_trackSel[1].currY + 0x3a;
+			p.y = OVR_230.transitionMeta_trackSel[1].currY + 0x3a;
 			
 			if (-1 < selectMenu[mb->rowSelected].mapTextureID)
-				p.y = D230.transitionMeta_trackSel[1].currY + 5;
-
-			// _D230.trackSel_boolOpenLapBox is the boolean to show
-			// the selection menu for number of laps:
-			// 3, 5, 7
-
-			// If the lap selection menu is closed
-			if (D230.trackSel_boolOpenLapBox == 0)
-			{
-				// "SELECT"
-				DecalFont_DrawLine
-				(
-					sdata->lngStrings[0x69],
-					(D230.transitionMeta_trackSel[3].currX + 0x18c),
-					(D230.transitionMeta_trackSel[3].currY + (u_int)p.y),
-					FONT_BIG, (JUSTIFY_CENTER | ORANGE)
-				);
-
-				// "LEVEL"
-				DecalFont_DrawLine
-				(
-					sdata->lngStrings[0x6a],
-					(D230.transitionMeta_trackSel[3].currX + 0x18c),
-					(D230.transitionMeta_trackSel[3].currY + (u_int)p.y + 0x10),
-					FONT_BIG, (JUSTIFY_CENTER | ORANGE)
-				);
-			}
+				p.y = OVR_230.transitionMeta_trackSel[1].currY + 5;
 		
-			// next, draw the map icon, below "SELECT LEVEL",
-			// exactly 0x22 (34) pixels below the text
-			p.y += 0x22;
-		
-			if
+			/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
+			p.y += 8;
+
+			// "OPTIONS"
+			DecalFont_DrawLine
 			(
-				(-1 < selectMenu[mb->rowSelected].mapTextureID) &&
-
-				// If lap selection menu is closed
-				(D230.trackSel_boolOpenLapBox == 0)
-			)
+				sdata->lngStrings[604],
+				(OVR_230.transitionMeta_trackSel[3].currX + 0x18c),
+				(OVR_230.transitionMeta_trackSel[3].currY + (u_int)p.y + 180),
+				FONT_BIG, (JUSTIFY_CENTER | ORANGE)
+			);
+			/////////////////////////// SECTION 2         ///////////////////////////
+		
+			if (-1 < selectMenu[mb->rowSelected].mapTextureID)
 			{
 				int mapID = selectMenu[mb->rowSelected].mapTextureID;
 				struct Icon* iconMap0 = gGT->ptrIcons[mapID+0];
@@ -606,16 +537,16 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 						iconMap1,
 
 						// X
-						D230.drawMapOffset[iVar18].offsetX + 
+						OVR_230.drawMapOffset[iVar18].offsetX + 
 									p.x +
-									(D230.transitionMeta_trackSel[2].currX - D230.transitionMeta_trackSel[1].currX) +
+									(OVR_230.transitionMeta_trackSel[2].currX - OVR_230.transitionMeta_trackSel[1].currX) +
 									(0xb0 >> 1) +
 									(iVar9 >> 1),
 
 						// Y
-						D230.drawMapOffset[iVar18].offsetY + 
+						OVR_230.drawMapOffset[iVar18].offsetY + 
 									p.y +
-									(D230.transitionMeta_trackSel[2].currY - D230.transitionMeta_trackSel[1].currY) +
+									(OVR_230.transitionMeta_trackSel[2].currY - OVR_230.transitionMeta_trackSel[1].currY) +
 									0x49+0x22+
 									0x10 + // idk how bitshifting pulls 0x10 in ghidra, but that's it
 									(iVar10 >> 1),
@@ -629,17 +560,15 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 						// 1 = draw map with regular color (white) - used for the main layer of the minimap in the track select screen
 						// 2 = draw map blue - used for the outline of the minimap in the track select screen
 						// 3 = draw map black - used for the shadow of the minimap in the track select screen
-						D230.drawMapOffset[iVar18].type
+						OVR_230.drawMapOffset[iVar18].type
 					);
 				}
 			}
-			
-			DECOMP_MM_TrackSelect_Video_Draw
+			MM_TrackSelect_Video_Draw
 			(
-				&p, selectMenu, (int)(short)D230.trackSel_currTrack,
-				(u_int)(D230.trackSel_transitionState == EXITING_MENU), 0
+				&p, selectMenu, (int)(short)OVR_230.trackSel_currTrack,
+				(u_int)(OVR_230.trackSel_transitionState == EXITING_MENU), 0
 			);
-			
 			return;
 		}
 	} while (true);

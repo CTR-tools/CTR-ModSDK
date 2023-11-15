@@ -1,10 +1,6 @@
 #include <common.h>
 
-// Type 0 - startline boost
-// Type 2 - hang time or powerslide
-// Type 4 (AND = 1) - turbo pad
-// Type 8 (AND = 1) - boost powerup
-// Type 0x10 (AND = 4) - super engine
+extern u_int UDCTRM_RF_blueFireMode;
 
 // param1 - driver
 // param2 - reserves to add
@@ -28,7 +24,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	if
 	(
 		// if this is a turbo pad
-		((type & 4) != 0) &&
+		(type & 4) &&
 		
 		// racer is in accel prevention (holding square)
 		((driver->actionsFlagSet & 8) != 0)
@@ -94,17 +90,17 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		if (driver->japanTurboUnknown == 0)
 		{
 			driver->numTurbos = 1;
-			if ((driver->numTurbosBackup < 1) && ((sdata->gGT->gameMode1 & END_OF_RACE) == 0))
+			if ((driver->numTurbosHighScore < 1) && ((sdata->gGT->gameMode1 & END_OF_RACE) == 0))
 			{
-				driver->numTurbosBackup = 1;
+				driver->numTurbosHighScore = 1;
 			}
 		}
 		else
 		{
 			driver->numTurbos++;
-			if ((driver->numTurbosBackup < driver->numTurbos) && ((sdata->gGT->gameMode1 & END_OF_RACE) == 0))
+			if ((driver->numTurbosHighScore < driver->numTurbos) && ((sdata->gGT->gameMode1 & END_OF_RACE) == 0))
 			{
-				driver->numTurbosBackup = driver->numTurbos;
+				driver->numTurbosHighScore = driver->numTurbos;
 			}
 		}
 
@@ -146,8 +142,8 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// make flame disappear after
 			// 	- powerslide: two frames (quick death)
 			//	- all others: 255 frames (slowly die out)
-			if ((type & 2) != 0)	count = 2;
-			else					count = 0xff;
+			if (type & 2) count = 2;
+			else          count = 0xff;
 			turboObj->fireDisappearCountdown = count;
 	
 			// if modelIndex == "player" of any kind
@@ -192,7 +188,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		turboThread->flags &= 0xfffff7ff;
 	
 		// turbo pad
-		if ((type & 4) != 0)
+		if (type & 4)
 		{
 			// only increase counter on the first frame of turbo pad
 			
@@ -202,7 +198,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 				
 				#if BUILD == JpnRetail
 				// probably some sort of overflow safety check
-				if (driver->numTurbosBackup < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosBackup = driver->numTurbos;
+				if (driver->numTurbosHighScore < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosHighScore = driver->numTurbos;
 				#endif
 			}
 		}
@@ -218,7 +214,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			driver->numTurbos++;
 			#if BUILD == JpnRetail
 			// probably some sort of overflow safety check
-			if (driver->numTurbosBackup < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosBackup = driver->numTurbos;
+			if (driver->numTurbosHighScore < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosHighScore = driver->numTurbos;
 			#endif
 		}
 	
@@ -256,6 +252,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			((int)driver->const_SacredFireSpeed - (int)driver->const_SingleTurboSpeed) >> 8
 		);
 
+	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 	if
 	(
 		// any gain in boost,
@@ -266,6 +263,19 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// speed cap has been raised
 			(driver->reserves == 0) ||
 			(driver->fireSpeedCap < (short)newFireSpeedCap)
+		) || UDCTRM_RF_blueFireMode < 1 &&
+	/////////////////////////// END CHANGES       ///////////////////////////
+
+		// OR
+
+		// you have USF, and boosted on a non-STP,
+		// resize fire to lose size
+		(
+			// Current speed cap is greater than 0x1000
+			// AND
+			// You are not on a super turbo pad
+			(int)driver->const_SacredFireSpeed < (int)driver->fireSpeedCap &&
+			((driver->stepFlagSet & 2) == 0)
 		)
 	)
 	
