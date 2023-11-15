@@ -36,7 +36,7 @@ void DECOMP_MM_Title_Init(void)
     // pointer to Intro Cam, to view Crash holding Trophy in main menu
     D230.ptrIntroCam = pointers[ST1_CAMERA_PATH];
 
-    t = THREAD_BirthWithObject(
+    t = DECOMP_THREAD_BirthWithObject(
         SIZE_RELATIVE_POOL_BUCKET(
             sizeof(struct Title), // 0x24
             NONE,
@@ -55,7 +55,7 @@ void DECOMP_MM_Title_Init(void)
     // create 6 instances
     for (n = 0; n < 6; n++)
     {
-      inst = INSTANCE_Birth3D(gGT->modelPtr[D230.titleInstances[n].modelID], 0, t);
+      inst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[D230.titleInstances[n].modelID], 0, t);
 
       // store instance
       title->i[n] = inst;
