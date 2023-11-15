@@ -28,5 +28,5 @@ void DECOMP_THREAD_DestroyObject(void* object, int threadFlags)
 	object = (void*)((unsigned int)object - 8);
 	
 	// add object back to free list
-	LIST_AddFront(&myPool->free, object);
+	DECOMP_LIST_AddFront(&myPool->free, object);
 }

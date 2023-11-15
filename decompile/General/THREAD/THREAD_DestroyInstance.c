@@ -2,5 +2,5 @@
 
 void DECOMP_THREAD_DestroyInstance(struct Thread* t)
 {
-	INSTANCE_Death(t->inst);
+	DECOMP_INSTANCE_Death(t->inst);
 }

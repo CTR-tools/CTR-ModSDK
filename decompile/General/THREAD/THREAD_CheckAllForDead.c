@@ -8,6 +8,6 @@ void DECOMP_THREAD_CheckAllForDead()
 	
 	for(i = 0; i < NUM_BUCKETS; i++)
 	{
-		THREAD_CheckBloodlineForDead(&tb[i].thread, tb[i].thread);
+		DECOMP_THREAD_CheckBloodlineForDead(&tb[i].thread, tb[i].thread);
 	}
 }

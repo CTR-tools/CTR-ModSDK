@@ -22,7 +22,7 @@ void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox *mb)
   // if Load was chosen
   else
   {
-    OVR_230.desiredMenu = row;
-    OVR_230.MM_State = 2; // transitioning out
+    D230.desiredMenu = row;
+    D230.MM_State = 2; // transitioning out
   }
 }

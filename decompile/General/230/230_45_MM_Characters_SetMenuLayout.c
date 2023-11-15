@@ -11,7 +11,7 @@ void DECOMP_MM_Characters_SetMenuLayout(void)
   expand = 0;
 
   // By default, draw "Select character" in 3P menu
-  OVR_230.isRosterExpanded = 0;
+  D230.isRosterExpanded = 0;
 
   numPlyrNextGame = sdata->gGT->numPlyrNextGame;
   
@@ -21,7 +21,7 @@ void DECOMP_MM_Characters_SetMenuLayout(void)
   // if any are unlocked, use expanded
   for (i = 0xc; i < 0xf; i++) 
   {
-    unlocked = OVR_230.csm_1P2P[i].unlockFlags;
+    unlocked = D230.csm_1P2P[i].unlockFlags;
     
 	if ((sdata->gameProgress.unlocks[unlocked >> 5] >> unlocked & 1) != 0) 
 	{
@@ -43,23 +43,23 @@ void DECOMP_MM_Characters_SetMenuLayout(void)
   }
 
 
-  OVR_230.isRosterExpanded = expand;
+  D230.isRosterExpanded = expand;
 
-  OVR_230.characterSelectIconLayout = iVar3;
+  D230.characterSelectIconLayout = iVar3;
 
-  OVR_230.csm_instPos[1] = OVR_230.driverPosY[iVar3];
-  OVR_230.csm_instPos[2] = OVR_230.driverPosZ[iVar3];
+  D230.csm_instPos[1] = D230.driverPosY[iVar3];
+  D230.csm_instPos[2] = D230.driverPosZ[iVar3];
 
-  OVR_230.characterSelect_sizeX = OVR_230.windowW[iVar3];
-  OVR_230.characterSelect_sizeY = OVR_230.windowH[iVar3];
+  D230.characterSelect_sizeX = D230.windowW[iVar3];
+  D230.characterSelect_sizeY = D230.windowH[iVar3];
 
-  OVR_230.characterSelect_ptrWindowXY = OVR_230.ptrSelectWindowPos[iVar3];
+  D230.characterSelect_ptrWindowXY = D230.ptrSelectWindowPos[iVar3];
 
-  OVR_230.csm_Active = OVR_230.ptrCsmArr[iVar3];
+  D230.csm_Active = D230.ptrCsmArr[iVar3];
 
-  OVR_230.textPos = OVR_230.textPosArr[iVar3];
+  D230.textPos = D230.textPosArr[iVar3];
 
-  OVR_230.ptrTransitionMeta = OVR_230.ptr_transitionMeta_csm[numPlyrNextGame - 1];
+  D230.ptrTransitionMeta = D230.ptr_transitionMeta_csm[numPlyrNextGame - 1];
 
   return;
 }

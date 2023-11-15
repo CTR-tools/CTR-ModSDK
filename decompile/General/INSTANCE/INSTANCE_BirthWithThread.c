@@ -29,7 +29,7 @@ struct Instance* DECOMP_INSTANCE_BirthWithThread(
 		objSize = (objSize & 0xffc) + 4;
 	}
 	
-	t = THREAD_BirthWithObject
+	t = DECOMP_THREAD_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
@@ -62,7 +62,7 @@ struct Instance* DECOMP_INSTANCE_BirthWithThread(
 	*/
 	
 	t->modelIndex = modelID;
-	inst = INSTANCE_Birth3D(m, name, t);
+	inst = DECOMP_INSTANCE_Birth3D(m, name, t);
 	
 	/*
 

@@ -96,7 +96,7 @@ void RunUpdateHook()
 	}
 
 	// main menu
-	if(sdata->ptrActiveMenuBox == &OVR_230.menubox_mainMenu)
+	if(sdata->ptrActiveMenuBox == &D230.menubox_mainMenu)
 	{
 		sdata->ptrActiveMenuBox->rows = &NewRowsMM[0];
 	}
@@ -109,11 +109,11 @@ void RunUpdateHook()
 	
 	// dont allow pressing Triangle from Battle Setup
 	if(
-		(sdata->ptrActiveMenuBox == &OVR_230.menubox_battleWeapons) &&
-		(sdata->ptrDesiredMenuBox == &OVR_230.menubox_trackSelect)
+		(sdata->ptrActiveMenuBox == &D230.menubox_battleWeapons) &&
+		(sdata->ptrDesiredMenuBox == &D230.menubox_trackSelect)
 	  )
 	{
-		sdata->ptrDesiredMenuBox = &OVR_230.menubox_characterSelect;
+		sdata->ptrDesiredMenuBox = &D230.menubox_characterSelect;
 	}
 }
 

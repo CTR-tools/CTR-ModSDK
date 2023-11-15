@@ -20,10 +20,10 @@ void MM_ExtraDifficulty(struct MenuBox* mb)
 		else if (row == ROW_ULTRA_HARD)
 			sdata->gGT->arcadeDifficulty = 0x280; // popular ultra hard gameshark code
 		else
-			sdata->gGT->arcadeDifficulty = OVR_230.cupDifficultySpeed[row];
+			sdata->gGT->arcadeDifficulty = D230.cupDifficultySpeed[row];
 
-		OVR_230.desiredMenu = 2;
-		OVR_230.MM_State = 2;
+		D230.desiredMenu = 2;
+		D230.MM_State = 2;
 		mb->state |= ONLY_DRAW_TITLE;
 	}
 }

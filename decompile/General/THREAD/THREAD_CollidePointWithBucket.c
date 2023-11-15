@@ -6,7 +6,7 @@ void DECOMP_THREAD_CollidePointWithBucket(struct Thread* th, short* vec3_pos)
 	
 	while(th != 0)
 	{
-		THREAD_CollidePointWithSelf(th, vec3_pos);
+		DECOMP_THREAD_CollidePointWithSelf(th, vec3_pos);
 		
 		// next
 		th = th->siblingThread;

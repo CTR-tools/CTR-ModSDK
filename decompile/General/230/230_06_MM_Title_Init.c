@@ -1,7 +1,5 @@
 #include <common.h>
 
-int MM_Title_ThTick(struct Thread *);
-
 void DECOMP_MM_Title_Init(void)
 {
   struct GameTracker *gGT = sdata->gGT;
@@ -10,27 +8,33 @@ void DECOMP_MM_Title_Init(void)
   struct Title *title;
   char m, n;
 
-  if ((( // if "title" object is nullptr
-           (OVR_230.titleObj == NULL) &&
-          // if you are in main menu
-          ((gGT->gameMode1 & MAIN_MENU) != 0)) &&
-          // You're not in transition between menus
-          (OVR_230.MM_State != 2)) &&
-          (( // model ptr (Title blue Ring)
-          gGT->modelPtr[STATIC_RINGTOP] != 0 &&
-          // IntroCam ptr exists
-          (2 < gGT->level1->ptrSpawnType1->count))))
+  if 	( 
+			// if "title" object is nullptr
+			(D230.titleObj == NULL) &&
+          
+			// if you are in main menu
+			((gGT->gameMode1 & MAIN_MENU) != 0) &&
+          
+			// You're not in transition between menus
+			(D230.MM_State != 2) &&
+          
+			// model ptr (Title blue Ring)
+			(gGT->modelPtr[STATIC_RINGTOP] != 0) &&
+          
+			// IntroCam ptr exists
+			(gGT->level1->ptrSpawnType1->count > 2)
+		)
   {
 
     // freecam mode
-    gGT->cameraDC->cameraMode = 3;
+    gGT->cameraDC[0].cameraMode = 3;
 
     gGT->tileView[0].distanceToScreen_CURR = 450;
 
     void **pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
 
     // pointer to Intro Cam, to view Crash holding Trophy in main menu
-    OVR_230.ptrIntroCam = pointers[ST1_CAMERA_PATH];
+    D230.ptrIntroCam = pointers[ST1_CAMERA_PATH];
 
     t = THREAD_BirthWithObject(
         SIZE_RELATIVE_POOL_BUCKET(
@@ -38,13 +42,11 @@ void DECOMP_MM_Title_Init(void)
             NONE,
             MEDIUM,
             OTHER),
-        MM_Title_ThTick,
-        OVR_230.s_title, // debug name
-        0);
+        DECOMP_MM_Title_ThTick, 0, 0);
 
     title = t->object;
 
-    OVR_230.titleObj = title;
+    D230.titleObj = title;
 
     memset(title, 0, 0x24);
 
@@ -53,12 +55,12 @@ void DECOMP_MM_Title_Init(void)
     // create 6 instances
     for (n = 0; n < 6; n++)
     {
-      inst = INSTANCE_Birth3D(gGT->modelPtr[OVR_230.titleInstances[n].modelID], OVR_230.s_title, t);
+      inst = INSTANCE_Birth3D(gGT->modelPtr[D230.titleInstances[n].modelID], 0, t);
 
       // store instance
       title->i[n] = inst;
 
-      if (OVR_230.titleInstances[n].boolTrophy)
+      if (D230.titleInstances[n].boolTrophy)
       {
         inst->flags |= VISIBLE_DURING_GAMEPLAY;
       }
@@ -82,6 +84,6 @@ void DECOMP_MM_Title_Init(void)
         idpp[m].tileView = 0;
       }
     }
-    MM_Title_CameraMove(title, 0);
+    DECOMP_MM_Title_CameraMove(title, 0);
   }
 }

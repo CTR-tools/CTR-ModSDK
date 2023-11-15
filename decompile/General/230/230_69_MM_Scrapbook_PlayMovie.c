@@ -1,17 +1,26 @@
 #include <common.h>
 
-void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
+// prevent compiler optimization from screwing us over,
+// it does not know VsyncCallback will change swapchainIndex,
+// never update the register, and crash the game
+DRAWENV* ScrapbookGetDrawEnv()
+{
+	struct GameTracker* gGT = sdata->gGT;
+	return &gGT->db[1 - gGT->swapchainIndex].drawEnv;
+}
+
+void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 {
     short lev;
     int cdPos;
 	int getButtonPress;
 	DRAWENV* ptrDrawEnv;
-    const CdlLOC *cdLoc;
+    const CdlFILE cdlFile;
     struct GameTracker *gGT = gGT;
-	int isOn = TitleFlag_IsFullyOnScreen();
+	int isOn = DECOMP_TitleFlag_IsFullyOnScreen();
 
     // book state (0,1,2,3,4)
-    switch (OVR_230.scrapbookState)
+    switch (D230.scrapbookState)
     {
 
     // Init State,
@@ -20,11 +29,11 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         if (isOn == 1)
         {
             // checkered flag, begin transition off-screen
-            TitleFlag_BeginTransition(2);
+            DECOMP_TitleFlag_BeginTransition(2);
         }
 
         // go to Load State
-        OVR_230.scrapbookState = 1;
+        D230.scrapbookState = 1;
 
         mb->state &= ~NEEDS_TO_CLOSE;
 
@@ -37,24 +46,24 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
     case 1:
 
         // if not fully off screen
-        if (TitleFlag_IsFullyOffScreen() != 1)
+        if (DECOMP_TitleFlag_IsFullyOffScreen() != 1)
         {
             // quit, dont start video yet
             return;
         }
 
-        CDSYS_SetMode_StreamData();
+        DECOMP_CDSYS_SetMode_StreamData();
 
         // \TEST.STR;1
         // if file was found
-        if (CdSearchFile(cdLoc, OVR_230.s_teststr1) != 0)
+        if (CdSearchFile(&cdlFile, R230.s_teststr1) != 0)
         {
             SpuSetCommonCDVolume(sdata->vol_Music << 7, sdata->vol_Music << 7);
 
             // Alloc memory to store Scrapbook
             MM_Video_AllocMem(0x200, 0xd0, 10, 0x40, 1);
 
-            cdPos = CdPosToInt(cdLoc);
+            cdPos = CdPosToInt(&cdlFile.pos);
 
             // scrapbook runs 15fps,
             // see bottom of Duckstation screen while running
@@ -67,7 +76,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             MM_Video_StartStream(cdPos, 0x1148);
 
             // start playing movie
-            OVR_230.scrapbookState = 2;
+            D230.scrapbookState = 2;
 
             return;
         }
@@ -81,12 +90,8 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         // keep doing DecodeFrame and VSync until done
         while (
 			
-			// This bugs for the same reason as RenderFrame_Vsync,
-			// register wont update caues modern GCC doesn't know
-			// swapchainIndex changes in VsyncCallback
-			
 			// gGT->DB[nextFrame] (swapchain flips in VsyncCallback)
-			ptrDrawEnv = &gGT->db[1 - gGT->swapchainIndex].drawEnv,
+			ptrDrawEnv = ScrapbookGetDrawEnv(),
             
 			MM_Video_DecodeFrame(
 				ptrDrawEnv->ofs[0],
@@ -111,7 +116,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             }
 
             // stop video
-            OVR_230.scrapbookState = 3;
+            D230.scrapbookState = 3;
         }
 
         VSync(4);
@@ -126,15 +131,15 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         MM_Video_ClearMem();
 
-        if (TitleFlag_IsFullyOffScreen() == 1)
+        if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)
         {
             // checkered flag, begin transition on-screen
-            TitleFlag_BeginTransition(1);
+            DECOMP_TitleFlag_BeginTransition(1);
         }
     GO_BACK:
 
         // return to gameplay
-        OVR_230.scrapbookState = 4;
+        D230.scrapbookState = 4;
         break;
 
     // send player back to adv hub,
@@ -143,7 +148,7 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
         if (isOn == 1)
         {
             // change checkered flag back
-            TitleFlag_SetDrawOrder(0);
+            DECOMP_TitleFlag_SetDrawOrder(0);
 
 			// if adventure mode
 			lev = GEM_STONE_VALLEY;
@@ -153,14 +158,17 @@ void MM_Scrapbook_PlayMovie(struct MenuBox *mb)
             {
                 lev = MAIN_MENU_LEVEL;
 				
-                MM_JumpTo_Title_Returning();
+                DECOMP_MM_JumpTo_Title_Returning();
 
                 // return to main menu (adv, tt, arcade, vs, battle)
                 sdata->mainMenuState = 0;
             }
 
+			#ifndef REBUILD_PS1
             MainRaceTrack_RequestLoad(lev);
-            MENUBOX_Hide(mb);
+			#endif
+			
+            DECOMP_MENUBOX_Hide(mb);
         }
         break;
     default:

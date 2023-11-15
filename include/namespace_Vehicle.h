@@ -388,7 +388,8 @@ struct Driver
 	short compilerPadding_0x4E;
 	
 	// 0x50
-	// see Turbo_Increment in 1111
+	// highest amount of consecutive turbos in a race
+	// exclusive to Japan Retail
 	int numTurbosHighScore;
 	#endif
 

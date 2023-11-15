@@ -16,23 +16,22 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
 
     if (mb->unk1e == 0)
     {
-        OVR_230.cupSel_postTransition_boolStart = (mb->rowSelected != -1);
-        OVR_230.cupSel_transitionState = 2;
-        OVR_230.menubox_cupSelect.state &= ~(EXECUTE_FUNCPTR);
-		OVR_230.menubox_cupSelect.state |= DISABLE_INPUT_ALLOW_FUNCPTRS;
+        D230.cupSel_postTransition_boolStart = (mb->rowSelected != -1);
+        D230.cupSel_transitionState = 2;
+        D230.menubox_cupSelect.state &= ~(EXECUTE_FUNCPTR);
+		D230.menubox_cupSelect.state |= DISABLE_INPUT_ALLOW_FUNCPTRS;
         return;
     }
 
-    elapsedFrames = OVR_230.cupSel_transitionFrames;
+    elapsedFrames = D230.cupSel_transitionFrames;
 
     // if not stationary
-    if (OVR_230.cupSel_transitionState != 1)
+    if (D230.cupSel_transitionState != 1)
     {
         // if transitioning in
-        if (OVR_230.cupSel_transitionState == 0)
+        if (D230.cupSel_transitionState == 0)
         {
-            // Ghidra said it has another param of "1", when it only accepts 3 params.
-            MM_TransitionInOut(&OVR_230.transitionMeta_cupSel[0], elapsedFrames, 8);
+            DECOMP_MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, 8);
 
             // reduce frame count
             elapsedFrames--;
@@ -41,15 +40,15 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
             if (elapsedFrames == 0)
             {
                 // menu is now in focus
-                OVR_230.cupSel_transitionState = 1;
-				OVR_230.menubox_cupSelect.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
-				OVR_230.menubox_cupSelect.state |= EXECUTE_FUNCPTR;
+                D230.cupSel_transitionState = 1;
+				D230.menubox_cupSelect.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
+				D230.menubox_cupSelect.state |= EXECUTE_FUNCPTR;
             }
         }
         // if transitioning out
-        else if (OVR_230.cupSel_transitionState == 2)
+        else if (D230.cupSel_transitionState == 2)
         {
-            MM_TransitionInOut(&OVR_230.transitionMeta_cupSel[0], elapsedFrames, 8);
+            DECOMP_MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, 8);
 
             // increase frame count
             elapsedFrames++;
@@ -58,7 +57,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
             if (12 < elapsedFrames)
             {
                 // if cup selected
-                if (OVR_230.cupSel_postTransition_boolStart != 0)
+                if (D230.cupSel_postTransition_boolStart != 0)
                 {
                     // set cupID to the cup selected
                     gGT->cup.cupID = mb->rowSelected;
@@ -82,20 +81,23 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
                 }
 
                 // return to character selection
-                sdata->ptrDesiredMenuBox = &OVR_230.menubox_characterSelect;
+                sdata->ptrDesiredMenuBox = &D230.menubox_characterSelect;
 
-                MM_Characters_RestoreIDs();
+                DECOMP_MM_Characters_RestoreIDs();
                 return;
             }
         }
     }
 
-    OVR_230.cupSel_transitionFrames = elapsedFrames;
+    D230.cupSel_transitionFrames = elapsedFrames;
 
     // "SELECT CUP RACE"
-    DecalFont_DrawLine(sdata->lngStrings[0xBF],
-                       (OVR_230.transitionMeta_cupSel[4].currX + 0x100),
-                       (OVR_230.transitionMeta_cupSel[4].currY + 0x10), 1, 0xffff8000);
+    DECOMP_DecalFont_DrawLine(
+		sdata->lngStrings[0xBF],
+		(D230.transitionMeta_cupSel[4].currX + 0x100),
+		(D230.transitionMeta_cupSel[4].currY + 0x10), 
+		1, 0xffff8000);
+		
     // Loop through all four cups
     for (cupIndex = 0; cupIndex < 4; cupIndex++)
     {
@@ -113,25 +115,25 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         }
 
         // draw the name of the cup
-        DecalFont_DrawLine(sdata->lngStrings[data.ArcadeCups[cupIndex].lngIndex_CupName],
-                            
-                           (OVR_230.transitionMeta_cupSel[cupIndex].currX + (cupIndex & 1) * 200 + 0xa2),
-                           (OVR_230.transitionMeta_cupSel[cupIndex].currY + (cupIndex - (cupIndex >> 0xf) >> 1) * 0x54 + 0x44),
-                           3, txtColor);
+        DECOMP_DecalFont_DrawLine(
+			sdata->lngStrings[data.ArcadeCups[cupIndex].lngIndex_CupName],                  
+			(D230.transitionMeta_cupSel[cupIndex].currX + (cupIndex &1) * 200 + 0xa2),
+			(D230.transitionMeta_cupSel[cupIndex].currY + (cupIndex>>1) * 0x54 + 0x44),
+			3, txtColor);
     }
 
     // Loop through all four cups
     for (cupIndex = 0; cupIndex < 4; cupIndex++)
     {
-        startX = (short) OVR_230.transitionMeta_cupSel[cupIndex].currX + (cupIndex & 1) * 200 + 0x4e;
-        startY = (short) OVR_230.transitionMeta_cupSel[cupIndex].currY + (cupIndex - (cupIndex >> 0xf) >> 1) * 0x54 + 0x29;
+        startX = (short) D230.transitionMeta_cupSel[cupIndex].currX + (cupIndex &1) * 200 + 0x4e;
+        startY = (short) D230.transitionMeta_cupSel[cupIndex].currY + (cupIndex>>1) * 0x54 + 0x29;
 
         // loop through 3 stars to draw
         for (starIndex = 0; starIndex < 3; starIndex++)
         {
 			// assuming starUnlock is never more than 32,
 			// otherwise you'd do [flag>>5] >> flag&0x1f
-            int starUnlock = OVR_230.cupSel_StarUnlockFlag[starIndex] + cupIndex;
+            int starUnlock = D230.cupSel_StarUnlockFlag[starIndex] + cupIndex;
             if (((sdata->gameProgress.unlocks[0] >> starUnlock) & 1) != 0)
             {
                 // array of colorIDs
@@ -139,26 +141,20 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
                 // 0x0E: driver_9 (papu) (yellow)
                 // 0x16: silver
 
-                starColor = data.ptrColor[OVR_230.cupSel_StarColorIndex[starIndex]];
+                starColor = data.ptrColor[D230.cupSel_StarColorIndex[starIndex]];
 
 				struct Icon** iconPtrArray =
 					ICONGROUP_GETICONS(gGT->iconGroup[5]);
 
-                DecalHUD_DrawPolyGT4(iconPtrArray[0x37],
-                                     (startX + (cupIndex & 1) * 0xCA - 0x16),
-                                     (startY + ((starIndex * 0x10) + 0x10)),
-
-                                     // pointer to PrimMem struct
-                                     &gGT->backBuffer->primMem,
-
-                                     // pointer to OT mem
-                                     gGT->tileView_UI.ptrOT,
-
-                                     // color data
-                                     starColor[0], starColor[1],
-                                     starColor[2], starColor[3],
-
-                                     0, FP(1.0));
+                DecalHUD_DrawPolyGT4(
+					iconPtrArray[0x37],
+					(startX + (cupIndex & 1) * 0xCA - 0x16),
+					(startY + ((starIndex * 0x10) + 0x10)),
+					&gGT->backBuffer->primMem,
+					gGT->tileView_UI.ptrOT,
+					starColor[0], starColor[1],
+					starColor[2], starColor[3],
+					0, FP(1.0));
             }
         }
 
@@ -166,21 +162,17 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         for (trackIndex = 0; trackIndex < 4; trackIndex++)
         {
             // Draw Icon of each track
-            MENUBOX_DrawPolyGT4(gGT->ptrIcons[data.ArcadeCups[cupIndex].CupTrack[trackIndex].iconID],
-                                (startX + (trackIndex & 1) * 0x54),
-                                (startY + (trackIndex >> 1) * 0x23),
-
-                                // pointer to PrimMem struct
-                                &gGT->backBuffer->primMem,
-
-                                // pointer to OT mem
-                                gGT->tileView_UI.ptrOT,
-
-                                OVR_230.cupSel_Color,
-                                OVR_230.cupSel_Color,
-                                OVR_230.cupSel_Color,
-                                OVR_230.cupSel_Color,
-                                0, FP(0.5));
+            MENUBOX_DrawPolyGT4(
+				gGT->ptrIcons[data.ArcadeCups[cupIndex].CupTrack[trackIndex].iconID],
+				(startX + (trackIndex &1) * 0x54),
+				(startY + (trackIndex>>1) * 0x23),
+				&gGT->backBuffer->primMem,
+				gGT->tileView_UI.ptrOT,
+				D230.cupSel_Color,
+				D230.cupSel_Color,
+				D230.cupSel_Color,
+				D230.cupSel_Color,
+				0, FP(0.5));
         }
 		
         if (cupIndex == mb->rowSelected)

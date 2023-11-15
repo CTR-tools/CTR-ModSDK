@@ -144,7 +144,7 @@ void RunUpdateHook()
 	firstQuad = gGT->level1->ptr_mesh_info->ptrQuadBlockArray;
 
 	// main menu
-	if(sdata->ptrActiveMenuBox == &OVR_230.menubox_mainMenu)
+	if(sdata->ptrActiveMenuBox == &D230.menubox_mainMenu)
 	{
 		sdata->ptrActiveMenuBox->rows = &NewRowsMM[0];
 	}

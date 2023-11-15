@@ -7,7 +7,7 @@ struct Instance* DECOMP_INSTANCE_Birth2D(
 	struct GameTracker* gGT;
 	
 	struct Instance* inst = 
-		INSTANCE_Birth3D(model, name, th);
+		DECOMP_INSTANCE_Birth3D(model, name, th);
 		
 	gGT = sdata->gGT;
 		

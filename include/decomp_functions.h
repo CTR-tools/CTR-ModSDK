@@ -37,6 +37,39 @@ void DECOMP_cseq_opcode0a();
 void DECOMP_howl_InitGlobals(char* filename);
 void DECOMP_howl_LoadHeader(char* filename);
 
+// INSTANCE
+void DECOMP_INSTANCE_Birth(
+	struct Instance* inst, struct Model* model, char* name,
+	struct Thread* th, int flags);
+struct Instance* DECOMP_INSTANCE_Birth2D(
+	struct Model* model, char* name, struct Thread* th);
+struct Instance* DECOMP_INSTANCE_Birth3D(
+	struct Model* model, char* name, struct Thread* th);
+struct Instance* DECOMP_INSTANCE_BirthWithThread(
+	int modelID, char* name, int poolType, int bucket,
+	void* funcThTick, int objSize, struct Thread* parent);
+struct Instance* DECOMP_INSTANCE_BirthWithThread_Stack(int* spArr);
+void DECOMP_INSTANCE_Death(struct Instance* inst);
+u_short DECOMP_INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex);
+
+// JitPool
+int DECOMP_JitPool_Add(struct JitPool* AP);
+void DECOMP_JitPool_Clear(struct JitPool* AP);
+void DECOMP_JitPool_Init(struct JitPool* AP, 
+	int maxItems, int itemSize, char* name);
+void DECOMP_JitPool_Remove(struct JitPool* AP, struct Item* item);
+
+// LIST
+void DECOMP_LIST_AddBack(struct LinkedList* L, struct Item* I);
+void DECOMP_LIST_AddFront(struct LinkedList* L, struct Item* I);
+void DECOMP_LIST_Clear(struct LinkedList* L);
+void* DECOMP_LIST_GetFirstItem(struct LinkedList* L);
+void* DECOMP_LIST_GetNextItem(struct Item* I);
+void DECOMP_LIST_Init(struct LinkedList* L, struct Item* item, int itemSize, int numItems);
+struct Item* DECOMP_LIST_RemoveBack(struct LinkedList* L);
+struct Item* DECOMP_LIST_RemoveFront(struct LinkedList* L);
+struct Item* DECOMP_LIST_RemoveMember(struct LinkedList* L, struct Item* I);
+
 void DECOMP_LOAD_Callback_Overlay_Generic();
 void DECOMP_LOAD_Callback_Overlay_230();
 void DECOMP_LOAD_Callback_Overlay_231();
@@ -89,6 +122,19 @@ int DECOMP_MEMPACK_GetFreeBytes();
 void DECOMP_MEMPACK_PopState();
 int DECOMP_MEMPACK_PushState();
 
+struct Thread* DECOMP_THREAD_BirthWithObject(
+	int flags, void* funcThTick, 
+	char* name, struct Thread* relativeTh);
+void DECOMP_THREAD_CheckAllForDead();
+void DECOMP_THREAD_CheckBloodlineForDead(struct Thread** replaceSelf, struct Thread* th);
+void DECOMP_THREAD_CollidePointWithBucket(struct Thread* th, short* vec3_pos);
+void DECOMP_THREAD_CollidePointWithSelf(struct Thread* th, struct Need_New_Name* buf);
+void DECOMP_THREAD_DestroyInstance(struct Thread* t);
+void DECOMP_THREAD_DestroyObject(void* object, int threadFlags);
+void DECOMP_THREAD_DestroySelf(struct Thread* t);
+void DECOMP_THREAD_DestroyTracker(struct Thread* t);
+struct Thread* DECOMP_THREAD_SearchForModel(struct Thread* th, int modelID);
+
 void DECOMP_TileView_Init(struct TileView* tileView, int id, int total);
 void DECOMP_TileView_SetPsyqGeom(struct TileView* tileView);
 
@@ -103,3 +149,63 @@ void DECOMP_RCNT_Init();
 void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short posY, short fontType, int flags);
 
 void DECOMP_TitleFlag_DrawSelf();
+
+// 230
+void DECOMP_MM_Battle_DrawIcon_Character(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);
+unsigned char DECOMP_MM_TransitionInOut(struct TransitionMeta* meta, int framesPassed, int numFrames);
+void DECOMP_MM_Title_MenuUpdate(void);
+void DECOMP_MM_Title_SetTrophyDPP(void);
+void DECOMP_MM_Title_CameraMove(struct Title* title, int frameIndex);
+void DECOMP_MM_Title_ThTick(struct Thread *title);
+void DECOMP_MM_Title_Init(void);
+void DECOMP_MM_Title_CameraReset(void);
+void DECOMP_MM_Title_KillThread(void);
+void DECOMP_MM_ParseCheatCodes();
+void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu);
+void DECOMP_MM_ToggleRows_PlayerCount();
+void DECOMP_MM_MENUBOX_1p2p(struct MenuBox* mb);
+void DECOMP_MM_MENUBOX_2p3p4p(struct MenuBox * mb);
+void DECOMP_MM_ToggleRows_Difficulty(void);
+void DECOMP_MM_MENUBOX_Difficulty(struct MenuBox* mb);
+void DECOMP_MM_MENUBOX_SingleCup(struct MenuBox* mb);
+void DECOMP_MM_MENUBOX_NewLoad(struct MenuBox* mb);
+struct MenuBox* DECOMP_MM_AdvNewLoad_GetMenuBox(void);
+void DECOMP_MM_Characters_AnimateColors(unsigned char *colorData, short playerID, short flag);
+int DECOMP_MM_Characters_GetNextDriver(short dpad, char characterID);
+u_int DECOMP_MM_Characters_boolIsInvalid(short* globalIconPerPlayer, short characterID, short player);
+struct Model* DECOMP_MM_Characters_GetModelByName(int *name);
+void DECOMP_MM_Characters_DrawWindows(char wheelFlag);
+void DECOMP_MM_Characters_SetMenuLayout(void);
+void DECOMP_MM_Characters_BackupIDs(void);
+void DECOMP_MM_Characters_PreventOverlap(void);
+void DECOMP_MM_Characters_RestoreIDs(void);
+void DECOMP_MM_Characters_HideDrivers(void);
+void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused);
+void DECOMP_MM_TrackSelect_Video_SetDefaults(void);
+void DECOMP_MM_TrackSelect_Video_State(int state);
+void DECOMP_MM_TrackSelect_Video_Draw(RECT *r, struct MainMenu_LevelRow *selectMenu, int trackIndex, int param_4, u_short param_5);
+char DECOMP_MM_TrackSelect_boolTrackOpen(struct MainMenu_LevelRow* menuSelect);
+void DECOMP_MM_TrackSelect_Init();
+void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb);
+void* DECOMP_MM_TrackSelect_GetMenuBox();
+void DECOMP_MM_CupSelect_Init(void);
+void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb);
+void DECOMP_MM_Battle_CloseSubMenu(struct MenuBox *mb);
+void DECOMP_MM_Battle_DrawIcon_Weapon(struct Icon *icon, 
+		u_int posX, int posY, struct PrimMem *primMem, u_int *ot,
+        char transparency, short param_7, u_short param_8, u_int *color);
+void DECOMP_MM_Battle_Init(void);
+void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused);
+void DECOMP_MM_HighScore_Text3D(char *string, int posX, int posY, short font, u_int flags);
+void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_int posY);
+void DECOMP_MM_HighScore_Init(void);
+void DECOMP_MM_HighScore_MenuBox(struct MenuBox* unused);
+void DECOMP_MM_Scrapbook_Init(void);
+void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb);
+void DECOMP_MM_ResetAllMenus(void);
+void DECOMP_MM_JumpTo_Title_Returning(void);
+void DECOMP_MM_JumpTo_Title_FirstTime(void);
+void DECOMP_MM_JumpTo_BattleSetup(void);
+void DECOMP_MM_JumpTo_TrackSelect(void);
+void DECOMP_MM_JumpTo_Characters(void);
+void DECOMP_MM_JumpTo_Scrapbook(void);

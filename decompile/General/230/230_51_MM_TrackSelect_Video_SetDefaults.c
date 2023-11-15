@@ -13,11 +13,11 @@ void DECOMP_MM_TrackSelect_Video_SetDefaults(void)
   sdata->videoSTR_dst_vramY = 0;
   
   // track icon has been viewed for zero frames
-  OVR_230.trackSel_video_frameCount = 0;
+  D230.trackSel_video_frameCount = 0;
   
   // Data is not allocated for TrackSel videos
-  OVR_230.trackSel_video_boolAllocated = 0;
+  D230.trackSel_video_boolAllocated = 0;
   
-  OVR_230.trackSel_video_state = 1;
-  OVR_230.trackSel_unk = 1;
+  D230.trackSel_video_state = 1;
+  D230.trackSel_unk = 1;
 }

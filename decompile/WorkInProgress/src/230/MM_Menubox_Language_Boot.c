@@ -11,14 +11,14 @@ void MM_MENUBOX_LanguageBoot(struct MenuBox *mb)
         if (sdata->gGamepads->anyoneHeldCurr != 0)
         {
             // reset menu timer
-            OVR_230.langMenuTimer = 900;
+            D230.langMenuTimer = 900;
         }
 
-        OVR_230.langMenuTimer--;
+        D230.langMenuTimer--;
 
         // if the timer ran out, 
         // automatically choose current selection (do the rest of the func)
-        if (-1 < OVR_230.langMenuTimer)
+        if (-1 < D230.langMenuTimer)
         {
             return;
         }
@@ -28,10 +28,10 @@ void MM_MENUBOX_LanguageBoot(struct MenuBox *mb)
     gGT->gameMode2 |= 0x10000000;  
 
     //langIndex on PAL gGT
-    gGT[0x1D58] = OVR_230.langIndex_Boot[mb->rowSelected]; // why need a separate index array???
+    gGT[0x1D58] = D230.langIndex_Boot[mb->rowSelected]; // why need a separate index array???
 
     // always goes to main menu after lang chosen
-    sdata->ptrDesiredMenuBox = &OVR_230.menubox_mainMenu; 
+    sdata->ptrDesiredMenuBox = &D230.menubox_mainMenu; 
 
     // tell game not to call this menu again
     sdata->boolLangChosen = 1; 

@@ -61,8 +61,31 @@
 #include "../decompile/General/HOWL/h33_howl_ParseCseqHeader.c"
 #include "../decompile/General/HOWL/h34_howl_LoadHeader.c"
 
+#include "../decompile/General/INSTANCE/INSTANCE_Birth.c"
+#include "../decompile/General/INSTANCE/INSTANCE_Birth3D.c"
+#include "../decompile/General/INSTANCE/INSTANCE_Birth2D.c"
+#include "../decompile/General/INSTANCE/INSTANCE_BirthWithThread.c"
+#include "../decompile/General/INSTANCE/INSTANCE_BirthWithThread_Stack.c"
+#include "../decompile/General/INSTANCE/INSTANCE_Death.c"
+#include "../decompile/General/INSTANCE/INSTANCE_GetNumAnimFrames.c"
+
+#include "../decompile/General/JitPool/JitPool_Clear.c"
+#include "../decompile/General/JitPool/JitPool_Init.c"
+#include "../decompile/General/JitPool/JitPool_Add.c"
+#include "../decompile/General/JitPool/JitPool_Remove.c"
+
 #include "../decompile/General/LibraryOfModels/LibraryOfModels_Clear.c"
 #include "../decompile/General/LibraryOfModels/LibraryOfModels_Store.c"
+
+#include "../decompile/General/LIST/LIST_Clear.c"
+#include "../decompile/General/LIST/LIST_AddFront.c"
+#include "../decompile/General/LIST/LIST_AddBack.c"
+#include "../decompile/General/LIST/LIST_GetNextItem.c"
+#include "../decompile/General/LIST/LIST_GetFirstItem.c"
+#include "../decompile/General/LIST/LIST_RemoveMember.c"
+#include "../decompile/General/LIST/LIST_RemoveFront.c"
+#include "../decompile/General/LIST/LIST_RemoveBack.c"
+#include "../decompile/General/LIST/LIST_Init.c"
 
 #include "../decompile/General/LOAD/LOAD_A01_Callback_Overlay_Generic.c"
 #include "../decompile/General/LOAD/LOAD_A02_Callback_Overlay_230.c"
@@ -139,6 +162,17 @@
 #include "../decompile/General/TileView/TileView_Init.c"
 #include "../decompile/General/TileView/TileView_SetPsyqGeom.c"
 #include "../decompile/General/TileView/TileView_SetDrawEnv_Normal.c"
+
+#include "../decompile/General/THREAD/THREAD_DestroyTracker.c"
+#include "../decompile/General/THREAD/THREAD_DestroyInstance.c"
+#include "../decompile/General/THREAD/THREAD_DestroyObject.c"
+#include "../decompile/General/THREAD/THREAD_DestroySelf_AndBloodline.c"
+#include "../decompile/General/THREAD/THREAD_CheckBloodlineForDead.c"
+#include "../decompile/General/THREAD/THREAD_CheckAllForDead.c"
+#include "../decompile/General/THREAD/THREAD_BirthWithObject.c"
+#include "../decompile/General/THREAD/THREAD_CollidePointWithSelf.c"
+#include "../decompile/General/THREAD/THREAD_CollidePointWithBucket.c"
+#include "../decompile/General/THREAD/THREAD_SearchForModel.c"
 
 // skip TitleFlag_t01
 #include "../decompile/General/TitleFlag/TitleFlag_t02_IsFullyOnScreen.c"

@@ -10,33 +10,31 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
   // if scrapbook is unlocked, change "rows" to extended array
   if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
-    mainMenu->rows = &OVR_230.rows_mainMenu_WithScrapbook[0];
+    mainMenu->rows = &D230.rows_mainMenu_WithScrapbook[0];
 
   DECOMP_MM_ParseCheatCodes();
-
-  MM_ToggleRows_Difficulty();
-
-  MM_ToggleRows_PlayerCount();
+  DECOMP_MM_ToggleRows_Difficulty();
+  DECOMP_MM_ToggleRows_PlayerCount();
 
   // If you are at the highest hierarchy level of main menu
   if (mainMenu->unk1e == 1)
   {
-    MM_Title_MenuUpdate();
+    DECOMP_MM_Title_MenuUpdate();
 
     if (
 		// main menu, "title" exists, and timer >= 230
-		(OVR_230.MM_State == 1) &&
-		(OVR_230.titleObj != NULL) &&
-		(229 < OVR_230.unkTimerMM)
+		(D230.MM_State == 1) &&
+		(D230.titleObj != NULL) &&
+		(229 < D230.timerInTitle)
 	   )
     {
       // "TM" trademark string
-      DecalFont_DrawLineOT(
+      DECOMP_DecalFont_DrawLineOT(
           sdata->lngStrings[0x244], 0x10e, 0x9c, FONT_SMALL, ORANGE,
           &gGT->backBuffer->otMem.startPlusFour[3]);
     }
 
-    if ((OVR_230.menubox_mainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0)
+    if ((D230.menubox_mainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0)
     {
       gGT->numPlyrNextGame = 1;
 
@@ -49,11 +47,11 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
         if (gGT->demoCountdownTimer < 1)
         {
           // Transition out of main menu
-          OVR_230.MM_State = 2;
+          D230.MM_State = 2;
 
           // Go to a cutscene of some kind
           // (either oxide intro or demo mode)
-          OVR_230.desiredMenu = 4;
+          D230.desiredMenu = 4;
         }
       }
 
@@ -66,12 +64,12 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     }
   }
 
-  MM_Title_Init();
+  DECOMP_MM_Title_Init();
 
   // if drawing ptrNextBox_InHierarchy
   if ((mainMenu->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)
   {
-    OVR_230.unkTimerMM = 1000;
+    D230.timerInTitle = 1000;
   }
   
   // if funcPtr is null
@@ -80,7 +78,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     return;
   }
 
-  struct Title *titleObj = OVR_230.titleObj;
+  struct Title *titleObj = D230.titleObj;
 
   // if "title" object exists
   if (titleObj != NULL)
@@ -129,7 +127,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
 
     // menubox for new/load
-    mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_adventure;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_adventure;
     mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
     return;
   }
@@ -138,10 +136,10 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x4d)
   {
     // Leave main menu hierarchy
-    OVR_230.MM_State = 2;
+    D230.MM_State = 2;
 
     // Set next stage to 2 for Time Trial
-    OVR_230.desiredMenu = 2;
+    D230.desiredMenu = 2;
 
     // set number of players to 1
     gGT->numPlyrNextGame = 1;
@@ -165,7 +163,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     gGT->gameMode1 |= ARCADE_MODE;
 
     // set next menuBox
-    mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_raceType;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_raceType;
     mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
     return;
   }
@@ -174,7 +172,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x4f)
   {
     // next menuBox is choosing single+cup
-    mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_raceType;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_raceType;
     mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
     return;
   }
@@ -182,13 +180,13 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   // Battle
   if (choose == 0x50)
   {
-    OVR_230.characterSelect_transitionState = 2;
+    D230.characterSelect_transitionState = 2;
 
     // set game mode to Battle Mode
     gGT->gameMode1 |= BATTLE_MODE;
 
     // set next menuBox to 2P,3P,4P
-    mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_players2P3P4P;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_players2P3P4P;
     mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
     return;
   }
@@ -197,10 +195,10 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x51)
   {
     // Set next stage to high score menu
-    OVR_230.desiredMenu = 3;
+    D230.desiredMenu = 3;
 
     // Leave main menu hierarchy
-    OVR_230.MM_State = 2;
+    D230.MM_State = 2;
 
     return;
   }
@@ -209,10 +207,10 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if (choose == 0x234) 
   {
 	// Set next stage to Scrapbook
-    OVR_230.desiredMenu = 5;
+    D230.desiredMenu = 5;
 
     // Leave main menu hierarchy
-    OVR_230.MM_State = 2;
+    D230.MM_State = 2;
 
     return;
   }

@@ -10,7 +10,7 @@ void DECOMP_MainFreeze_ConfigDrawArrows(short offsetX, short offsetY, char* str)
 	// orange color
 	color = 0;
 
-	if ((sdata->data18_aaa[0x14] & 4) == 0)
+	if ((sdata->frameCounter & 4) == 0)
 	{
 		// red color
 		color = 3;

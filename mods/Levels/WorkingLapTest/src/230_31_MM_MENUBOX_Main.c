@@ -10,9 +10,9 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
   //// if scrapbook is unlocked
   //if ((sdata->gameProgress.unlocks[1] & 0x10) != 0) 
   //{  
-  //// change OVR_230.rows_mainMenu_Basic
-  //// to OVR_230.rows_mainMenu_WithScrapbook
-  //mainMenu->rows = &OVR_230.rows_mainMenu_WithScrapbook[0];
+  //// change D230.rows_mainMenu_Basic
+  //// to D230.rows_mainMenu_WithScrapbook
+  //mainMenu->rows = &D230.rows_mainMenu_WithScrapbook[0];
   //}
 
   #if 1
@@ -39,7 +39,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
       (*(int*)0x800b5a1c == 1) && 
       
       // if "title" object exists
-      (OVR_230.titleObj != NULL)
+      (D230.titleObj != NULL)
     ) &&
         (0xe5 < *(int*)0x800b5a14)
      ) 
@@ -69,7 +69,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
     return;
   }
   
-  struct Title* titleObj = OVR_230.titleObj;
+  struct Title* titleObj = D230.titleObj;
 
   // if "title" object exists
   if (titleObj != NULL) 
@@ -116,7 +116,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
     
     // menubox for new/load
-    mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_adventure;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_adventure;
     mainMenu->state |= 0x10;
     return;
   }
@@ -152,7 +152,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
     gGT->gameMode1 |= ARCADE_MODE;
 
   // set next menuBox
-  mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_raceType;
+  mainMenu->ptrNextBox_InHierarchy = &D230.menubox_raceType;
   mainMenu->state |= 0x10;
   return;
   }
@@ -161,7 +161,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
   if (choose == 0x4f) 
   {
   // next menuBox is choosing single+cup
-    mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_raceType;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_raceType;
   mainMenu->state |= 0x10;
   return;
   }
@@ -175,7 +175,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
     gGT->gameMode1 |= BATTLE_MODE;
   
     // set next menuBox to 2P,3P,4P
-    mainMenu->ptrNextBox_InHierarchy = &OVR_230.menubox_players2P3P4P;
+    mainMenu->ptrNextBox_InHierarchy = &D230.menubox_players2P3P4P;
     mainMenu->state |= 0x10;
     return;
   }

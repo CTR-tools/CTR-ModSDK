@@ -18,7 +18,7 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 
 	short arcadeDifficulty = 0;
 
-	if (prevBox == &OVR_230.menubox_adventure && row < 6)
+	if (prevBox == &D230.menubox_adventure && row < 6)
 	{
 		switch (row)
 		{
@@ -32,10 +32,10 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 			arcadeDifficulty = 0x280;
 			break;
 		default:
-			arcadeDifficulty = OVR_230.cupDifficultySpeed[row-1];
+			arcadeDifficulty = D230.cupDifficultySpeed[row-1];
 			break;
 		}
-		OVR_230.desiredMenu = 0;
+		D230.desiredMenu = 0;
 	}
 	// if you are in Arcade menu
 	else if (row < 5)
@@ -49,13 +49,13 @@ void MM_AdvDifficulty(struct MenuBox *mb)
 			arcadeDifficulty = 0x280;
 			break;
 		default:
-			arcadeDifficulty = OVR_230.cupDifficultySpeed[row];
+			arcadeDifficulty = D230.cupDifficultySpeed[row];
 			break;
 		}
-		OVR_230.desiredMenu = 2;
+		D230.desiredMenu = 2;
 	}
 	sdata->gGT->arcadeDifficulty = arcadeDifficulty;
-	OVR_230.MM_State = 2;
+	D230.MM_State = 2;
 	mb->state |= ONLY_DRAW_TITLE;
 }
 

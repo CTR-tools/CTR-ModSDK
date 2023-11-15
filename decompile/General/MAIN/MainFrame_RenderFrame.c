@@ -47,7 +47,6 @@ void RB_Spider_DrawWebs(struct Thread* thread, struct TileView* tileView);
 void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 void AH_WarpPad_AllWarppadNum();
-void MM_Title_SetTrophyDPP();
 u_int MM_Video_CheckIfFinished(int param_1);
 
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -756,7 +755,7 @@ void RenderAllTitleDPP(struct GameTracker* gGT)
 {
 	if((gGT->gameMode1 & MAIN_MENU) == 0) return;
 	if(LOAD_IsOpen_MainMenu() == 0) return;
-	MM_Title_SetTrophyDPP();
+	DECOMP_MM_Title_SetTrophyDPP();
 }
 
 void RenderBucket_ExecuteAllInstances(struct GameTracker* gGT)

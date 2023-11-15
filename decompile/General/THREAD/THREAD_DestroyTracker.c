@@ -6,5 +6,5 @@ void DECOMP_THREAD_DestroyTracker(struct Thread* t)
 	
 	if(gGT->numMissiles > 0) gGT->numMissiles--;
 	
-	THREAD_DestroyInstance(t);
+	DECOMP_THREAD_DestroyInstance(t);
 }

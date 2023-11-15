@@ -1,14 +1,16 @@
-// 515+21+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 593 rewritten so far
-
-// 515 for every 'common' and ','
+// 469+38+16+18+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 598 rewritten so far
+// 469 for every 'common' and ','
 // additions for every file that has multiple functions,
-// 21 for cheats
+// 38 for 230_Block1
+// 16 for 230_Block2
+// 18 for 230_Block3
 // most other additions for 231
 // 10 for the eleven UI functions
 // +1 for DebugFont
 // +1 for 222
 // +2 for 223
 // +2 for 224
+// Divide it all by 1190 (1181 functions + 9 DATA regions)
 
 // functions bigger than their originals
 common, exe, rdata_free, 0x0, General/MATH/MATH_Sin.c General/LibraryOfModels/LibraryOfModels_Store.c, rdata.bin
@@ -23,62 +25,14 @@ common, 224, OVR_Region1, 0x0, General/224/224_Full.c
 common, 225, OVR_Region1, 0x0, General/225/225_Full.c
 
 // 230 (incomplete)
-common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/230_00_MM_Battle_DrawIcon_Character.c
-common, 230, MM_TransitionInOut, 0x0, General/230/230_01_MM_TransitionInOut.c
-common, 230, MM_Title_MenuUpdate, 0x0, General/230/230_02_MM_Title_MenuUpdate.c
-common, 230, MM_Title_SetTrophyDPP, 0x0, General/230/230_03_MM_Title_SetTrophyDPP.c
-common, 230, MM_Title_CameraMove, 0x0, General/230/230_04_MM_Title_CameraMove.c
-common, 230, MM_Title_ThTick, 0x0, General/230/230_05_MM_Title_ThTick.c
-common, 230, MM_Title_Init, 0x0, General/230/230_06_MM_Title_Init.c
-common, 230, MM_Title_CameraReset, 0x0, General/230/230_07_MM_Title_CameraReset.c
-common, 230, MM_Title_KillThread, 0x0, General/230/230_08_MM_Title_KillThread.c
-common, 230, MM_Cheat_MaxWumpa, 0x0, General/230/230_09_30_MM_CheatCodes.c // contains 22 functions
-common, 230, MM_MENUBOX_Main, 0x0, General/230/230_31_MM_MENUBOX_Main.c
-common, 230, MM_ToggleRows_PlayerCount, 0x0, General/230/230_32_MM_ToggleRows_PlayerCount.c
-common, 230, MM_MENUBOX_1p2p, 0x0, General/230/230_33_MM_MENUBOX_1p2p.c
-common, 230, MM_MENUBOX_2p3p4p, 0x0, General/230/230_34_MM_MENUBOX_2p3p4p.c
-common, 230, MM_ToggleRows_Difficulty, 0x0, General/230/230_35_MM_ToggleRows_Difficulty.c
-common, 230, MM_MENUBOX_Difficulty, 0x0, General/230/230_36_MM_MENUBOX_Difficulty.c
-common, 230, MM_MENUBOX_SingleCup, 0x0, General/230/230_37_MM_MENUBOX_SingleCup.c
-common, 230, MM_MENUBOX_NewLoad, 0x0, General/230/230_38_MM_MENUBOX_NewLoad.c
+common, 230, R230, 0x0, General/230/R230.c
+common, 230, D230, 0x0, General/230/D230.c
+common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/1_Block1.c
 common, 230, MM_AdvNewLoad_GetMenuBox, 0x0, General/230/230_39_MM_AdvNewLoad_GetMenuBox.c
-common, 230, MM_Characters_AnimateColors, 0x0, General/230/230_40_MM_Characters_AnimateColors.c
-common, 230, MM_Characters_GetNextDriver, 0x0, General/230/230_41_MM_Characters_GetNextDriver.c
-common, 230, MM_Characters_boolIsInvalid, 0x0, General/230/230_42_MM_Characters_boolIsInvalid.c
-common, 230, MM_Characters_GetModelByName, 0x0, General/230/230_43_MM_Characters_GetModelByName.c
-common, 230, MM_Characters_DrawWindows, 0x0, General/230/230_44_MM_Characters_DrawWindows.c
-common, 230, MM_Characters_SetMenuLayout, 0x0, General/230/230_45_MM_Characters_SetMenuLayout.c
-common, 230, MM_Characters_BackupIDs, 0x0, General/230/230_46_MM_Characters_BackupIDs.c
-common, 230, MM_Characters_PreventOverlap, 0x0, General/230/230_47_MM_Characters_PreventOverlap.c
-common, 230, MM_Characters_RestoreIDs, 0x0, General/230/230_48_MM_Characters_RestoreIDs.c
-common, 230, MM_Characters_HideDrivers, 0x0, General/230/230_49_MM_Characters_HideDrivers.c
-common, 230, MM_Characters_MenuBox, 0x0, General/230/230_50_MM_Characters_MenuBox.c
-common, 230, MM_TrackSelect_Video_SetDefaults, 0x0, General/230/230_51_MM_TrackSelect_Video_SetDefaults.c
-common, 230, MM_TrackSelect_Video_State, 0x0, General/230/230_52_MM_TrackSelect_Video_State.c
-common, 230, MM_TrackSelect_Video_Draw, 0x0, General/230/230_53_MM_TrackSelect_Video_Draw.c
-common, 230, MM_TrackSelect_boolTrackOpen, 0x0, General/230/230_54_MM_TrackSelect_boolTrackOpen.c
-common, 230, MM_TrackSelect_Init, 0x0, General/230/230_55_MM_TrackSelect_Init.c
-common, 230, MM_TrackSelect_MenuBox, 0x0, General/230/230_56_MM_TrackSelect_MenuBox.c
+common, 230, MM_Characters_AnimateColors, 0x0, General/230/1_Block2.c
 common, 230, MM_TrackSelect_GetMenuBox, 0x0, General/230/230_57_MM_TrackSelect_GetMenuBox.c
-common, 230, MM_CupSelect_Init, 0x0, General/230/230_58_MM_CupSelect_Init.c
-common, 230, MM_CupSelect_MenuBox, 0x0, General/230/230_59_MM_CupSelect_MenuBox.c
-common, 230, MM_Battle_CloseSubMenu, 0x0, General/230/230_60_MM_Battle_CloseSubMenu.c
-common, 230, MM_Battle_DrawIcon_Weapon, 0x0, General/230/230_61_MM_Battle_DrawIcon_Weapon.c
-common, 230, MM_Battle_Init, 0x0, General/230/230_62_MM_Battle_Init.c
-//ommon, 230, MM_Battle_MenuBox, 0x0, General/230/230_63_MM_Battle_MenuBox.c
-common, 230, MM_HighScore_Text3D, 0x0, General/230/230_64_MM_HighScore_Text3D.c
-common, 230, MM_HighScore_Draw, 0x0, General/230/230_65_MM_HighScore_Draw.c
-common, 230, MM_HighScore_Init, 0x0, General/230/230_66_MM_HighScore_Init.c
-// 67_HighScore_MenuBox
-common, 230, MM_Scrapbook_Init, 0x0, General/230/230_68_MM_Scrapbook_Init.c
-common, 230, MM_Scrapbook_PlayMovie, 0x0, General/230/230_69_MM_Scrapbook_PlayMovie
-common, 230, MM_ResetAllMenus, 0x0, General/230/230_70_MM_ResetAllMenus.c
-common, 230, MM_JumpTo_Title_Returning, 0x0, General/230/230_71_MM_JumpTo_Title_Returning.c
-common, 230, MM_JumpTo_Title_FirstTime, 0x0, General/230/230_72_MM_JumpTo_Title_FirstTime.c
-common, 230, MM_JumpTo_BattleSetup, 0x0, General/230/230_73_MM_JumpTo_BattleSetup.c
-common, 230, MM_JumpTo_TrackSelect, 0x0, General/230/230_74_MM_JumpTo_TrackSelect.c
-common, 230, MM_JumpTo_Characters, 0x0, General/230/230_75_MM_JumpTo_Characters.c
-common, 230, MM_JumpTo_Scrapbook, 0x0, General/230/230_76_MM_JumpTo_Scrapbook.c
+common, 230, MM_CupSelect_Init, 0x0, General/230/1_Block3.c
+// next comes MM_Video
 
 // 231 (incomplete)
 // skip first two

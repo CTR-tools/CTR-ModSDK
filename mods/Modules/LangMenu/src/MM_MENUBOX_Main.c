@@ -21,9 +21,9 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
     if (
         // main menu, "title" exists, and timer >= 230
-        (OVR_230.MM_State == 1) &&
-        (OVR_230.titleObj != NULL) &&
-        (229 < OVR_230.unkTimerMM))
+        (D230.MM_State == 1) &&
+        (D230.titleObj != NULL) &&
+        (229 < D230.timerInTitle))
     {
 
       // "TM" trademark string
@@ -39,10 +39,10 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
           &gGT->backBuffer->otMem.startPlusFour[3]);
     }
 
-    if ((OVR_230.menubox_mainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0)
+    if ((D230.menubox_mainMenu.state & DRAW_NEXT_MENU_IN_HIERARCHY) == 0)
     {
 #if BUILD == JpnRetail
-      if (OVR_230.MM_State != 2)
+      if (D230.MM_State != 2)
 #endif
       {
         gGT->numPlyrNextGame = 1;
@@ -57,11 +57,11 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
         if (gGT->demoCountdownTimer < 1)
         {
           // Transition out of main menu
-          OVR_230.MM_State = 2;
+          D230.MM_State = 2;
 
           // Go to a cutscene of some kind
           // (either oxide intro or demo mode)
-          OVR_230.desiredMenu = 4;
+          D230.desiredMenu = 4;
         }
       }
 
@@ -77,13 +77,13 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   MM_Title_Init();
 
   if ((mainMenu->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)
-    OVR_230.unkTimerMM = 1000;
+    D230.timerInTitle = 1000;
 
   // if funcPtr is null
   if ((mainMenu->state & EXECUTE_FUNCPTR) == 0)
     return;
 
-  struct Title *titleObj = OVR_230.titleObj;
+  struct Title *titleObj = D230.titleObj;
 
   // if "title" object exists
   if (titleObj != NULL)
@@ -123,12 +123,12 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   case 0x4c: // Adventure Mode
     gGT->gameMode1 |= ADVENTURE_MODE;
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
-    nextBox = &OVR_230.menubox_adventure;
+    nextBox = &D230.menubox_adventure;
     break;
 
   case 0x4d: // Time Trial
-    OVR_230.MM_State = 2;
-    OVR_230.desiredMenu = 2;
+    D230.MM_State = 2;
+    D230.desiredMenu = 2;
     gGT->numPlyrNextGame = 1;
     gGT->gameMode1 |= TIME_TRIAL;
     gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
@@ -136,22 +136,22 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 
   case 0x4e: // Arcade Mode
     gGT->gameMode1 |= ARCADE_MODE;
-    nextBox = &OVR_230.menubox_raceType;
+    nextBox = &D230.menubox_raceType;
     break;
 
   case 0x4f: // Versus
-    nextBox = &OVR_230.menubox_raceType;
+    nextBox = &D230.menubox_raceType;
     break;
 
   case 0x50: // Battle
-    OVR_230.characterSelect_transitionState = 2;
+    D230.characterSelect_transitionState = 2;
     gGT->gameMode1 |= BATTLE_MODE;
-    nextBox = &OVR_230.menubox_players2P3P4P;
+    nextBox = &D230.menubox_players2P3P4P;
     break;
 
   case 0x51: // High Score
-    OVR_230.desiredMenu = 3;
-    OVR_230.MM_State = 2;
+    D230.desiredMenu = 3;
+    D230.MM_State = 2;
     break;
 
   case 82: // Language

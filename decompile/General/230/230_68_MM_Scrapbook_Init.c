@@ -1,12 +1,12 @@
 #include <common.h>
 
-void MM_Scrapbook_Init(void)
+void DECOMP_MM_Scrapbook_Init(void)
 {
-    OVR_230.scrapbookState = 0;
+    D230.scrapbookState = 0;
 
     // change checkered flag
-    TitleFlag_SetDrawOrder(1);
+    DECOMP_TitleFlag_SetDrawOrder(1);
 
     // clear gamepad input (for menus)
-    MENUBOX_ClearInput();
+    DECOMP_MENUBOX_ClearInput();
 }

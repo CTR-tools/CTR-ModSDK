@@ -11,6 +11,9 @@ struct Thread* DECOMP_THREAD_BirthWithObject(
 	void* object;
 	struct Thread* th;
 	struct ThreadBucket* tb;
+	struct GameTracker* gGT;
+
+	gGT = sdata->gGT;
 	
 	// get from self
 	bucketID = flags & 0xff;
@@ -30,7 +33,7 @@ struct Thread* DECOMP_THREAD_BirthWithObject(
 	}
 	
 	// TODO: need an array and enum for this
-	allPools = &sdata->gGT->JitPools.thread;
+	allPools = &gGT->JitPools.thread;
 	
 	// 0x100 - largeStackPool	(0x1970) [4]
 	// 0x200 - medStackPool		(0x1948) [3]
@@ -74,8 +77,8 @@ struct Thread* DECOMP_THREAD_BirthWithObject(
 	// === initialize thread ===
 
 	// thread and object
-	th = LIST_RemoveFront(&allPools[0].free);
-	object = LIST_RemoveFront(&myPool->free);
+	th = DECOMP_LIST_RemoveFront(&allPools[0].free);
+	object = DECOMP_LIST_RemoveFront(&myPool->free);
 
 	th->inst = 0;
 	th->funcThDestroy = 0;
