@@ -52,7 +52,7 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 			}
 			
 			// erase instance in pool
-			LIST_AddFront(
+			DECOMP_LIST_AddFront(
 				&sdata->gGT->JitPools.instance.free, 
 				visInstSrc[0]);
 			
@@ -61,5 +61,5 @@ void DECOMP_LevInstDef_RePack(struct mesh_info* ptr_mesh_info, int boolAdvHub)
 		}
 	}
 	
-	THREAD_CheckAllForDead();
+	DECOMP_THREAD_CheckAllForDead();
 }

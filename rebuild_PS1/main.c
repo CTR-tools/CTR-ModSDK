@@ -74,6 +74,9 @@
 #include "../decompile/General/JitPool/JitPool_Add.c"
 #include "../decompile/General/JitPool/JitPool_Remove.c"
 
+#include "../decompile/General/LevInstDef/LevInstDef_UnPack.c"
+#include "../decompile/General/LevInstDef/LevInstDef_RePack.c"
+
 #include "../decompile/General/LibraryOfModels/LibraryOfModels_Clear.c"
 #include "../decompile/General/LibraryOfModels/LibraryOfModels_Store.c"
 

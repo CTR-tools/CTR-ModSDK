@@ -314,11 +314,11 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
         gGT->db[1].drawEnv.isbg = 1;
     }
 
-#ifndef REBUILD_PS1
     if (lev1 != NULL)
 		if (lev1->ptr_mesh_info != NULL)
-			LevInstDef_UnPack(lev1->ptr_mesh_info);
+			DECOMP_LevInstDef_UnPack(lev1->ptr_mesh_info);
 
+#ifndef REBUILD_PS1
     MainInit_VisMem(gGT);
     MainInit_RainBuffer(gGT);
 

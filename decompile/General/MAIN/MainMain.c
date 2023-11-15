@@ -114,12 +114,13 @@ u_int DECOMP_main()
 			case 2:
 #ifndef REBUILD_PS1
 				Audio_SetState_Safe(1);
-				MEMPACK_PopState();
+#endif
+
+				DECOMP_MEMPACK_PopState();
 				
 				// ignore threads, because we PopState, 
 				// so the threadpool will reset anyway
-				LevInstDef_RePack(gGT->level1->ptr_mesh_info, 0);
-#endif
+				DECOMP_LevInstDef_RePack(gGT->level1->ptr_mesh_info, 0);
 				
 				sdata->mainGameState = 1;
 				break;
