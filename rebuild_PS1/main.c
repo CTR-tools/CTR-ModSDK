@@ -180,7 +180,7 @@
 #include "../decompile/General/THREAD/THREAD_CollidePointWithBucket.c"
 #include "../decompile/General/THREAD/THREAD_SearchForModel.c"
 
-// skip TitleFlag_t01
+#include "../decompile/General/TitleFlag/TitleFlag_t01_MoveModels.c"
 #include "../decompile/General/TitleFlag/TitleFlag_t02_IsFullyOnScreen.c"
 #include "../decompile/General/TitleFlag/TitleFlag_t03_IsFullyOffScreen.c"
 #include "../decompile/General/TitleFlag/TitleFlag_t04_IsTransitioning.c"
