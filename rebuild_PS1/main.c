@@ -172,7 +172,9 @@
 // skip MENUBOX_DrawPolyGT4
 #include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_Edge.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawTime.c"
-// skip MENUBOX_RWD
+#include "../decompile/General/MenuBox/MENUBOX_DrawRwdBlueRect_Subset.c"
+#include "../decompile/General/MenuBox/MENUBOX_DrawRwdBlueRect.c"
+#include "../decompile/General/MenuBox/MENUBOX_DrawRwdTriangle.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_LowLevel.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_HighLevel.c"
 // MENUBOX_DrawQuip.c (wip)
