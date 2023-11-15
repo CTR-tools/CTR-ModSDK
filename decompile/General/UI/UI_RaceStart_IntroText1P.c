@@ -207,7 +207,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
 	  
 	  // 2-pixel height
 	  // random generic color
-      colors[0] = sdata -> battleSetup_Color_UI_1;
+      colors[0] = sdata->battleSetup_Color_UI_1;
 	  rect.h = 2;
 
       // Draw tiny rectangle near big black title bar (first)
