@@ -2974,7 +2974,7 @@ void FUN_80045650(undefined4 param_1,undefined4 param_2,short param_3,undefined4
 }
 
 
-// Only used for drawing player comments
+// MENUBOX_DrawQuip
 void FUN_8004568c(undefined4 param_1,short param_2,int param_3,uint param_4,short param_5,
                  short param_6,short param_7)
 
@@ -3028,7 +3028,7 @@ void FUN_8004568c(undefined4 param_1,short param_2,int param_3,uint param_4,shor
 
 // WARNING: Could not reconcile some variable overlaps
 
-// Draw 2D Menu rectangle background
+// MENUBOX_DrawInnerRect
 // param1 is a pointer to RECT (x,y,w,h)
 // param2 is type of tileView
 	// 0: transparent, like main menu
@@ -3139,7 +3139,7 @@ void FUN_800457b0(undefined4 *param_1,ushort param_2,undefined4 param_3)
 }
 
 
-// Draw MenuBox background
+// MENUBOX_DrawFullRect
 void FUN_800459ec(short *param_1,short *param_2)
 
 {
@@ -3185,7 +3185,7 @@ void FUN_800459ec(short *param_1,short *param_2)
                  *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
   }
 
-  // Draw 2D Menu rectangle background
+  // MENUBOX_DrawInnerRect
   FUN_800457b0(param_2,(int)param_1[10],*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
   return;
 }
