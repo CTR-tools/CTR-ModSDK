@@ -698,7 +698,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 			r60.x = 0;
 			r60.y = 0;
 		
-			MENUBOX_DrawRwdBlueRect
+			DECOMP_MENUBOX_DrawRwdBlueRect
 			(
 				&r60.x, &D230.characterSelect_BlueRectColors[0],
 				&gGT->tileView[i].ptrOT[0x3ff], &gGT->backBuffer->primMem

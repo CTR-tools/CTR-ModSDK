@@ -21,6 +21,6 @@ void DECOMP_MENUBOX_DrawRwdBlueRect(RECT *rect, char* metas, u_long *ot, struct 
         pos[1] = rect->y + (short)(meta[3] * rect->h / 100);
         pos[3] = rect->y + (short)(meta[7] * rect->h / 100) - pos[1] + 1;
 
-        MENUBOX_DrawRwdBlueRect_Subset(pos, colors, ot, primMem);
+        DECOMP_MENUBOX_DrawRwdBlueRect_Subset(pos, colors, ot, primMem);
     }
 }
