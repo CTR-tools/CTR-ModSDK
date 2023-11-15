@@ -142,6 +142,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 	currTrack = mb->rowSelected;
 
+	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 	if (!(UDCTRM_RO_isOpen))
 	{
 		// if not changing levels
@@ -230,6 +231,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	{
 		UDCTRM_RaceOptions();
 	}
+	/////////////////////////// SECTION 1          ///////////////////////////
 
 	// decrease frame from track list motion
 	iVar9 = OVR_230.trackSel_changeTrack_frameCount + -1;
@@ -488,7 +490,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			if (-1 < selectMenu[mb->rowSelected].mapTextureID)
 				p.y = OVR_230.transitionMeta_trackSel[1].currY + 5;
 		
-			// edited for this mod
+			/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 			p.y += 8;
 
 			// "OPTIONS"
@@ -499,6 +501,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				(OVR_230.transitionMeta_trackSel[3].currY + (u_int)p.y + 180),
 				FONT_BIG, (JUSTIFY_CENTER | ORANGE)
 			);
+			/////////////////////////// SECTION 2         ///////////////////////////
 		
 			if (-1 < selectMenu[mb->rowSelected].mapTextureID)
 			{

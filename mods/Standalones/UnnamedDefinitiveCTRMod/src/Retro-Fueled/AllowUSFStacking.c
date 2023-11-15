@@ -252,6 +252,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			((int)driver->const_SacredFireSpeed - (int)driver->const_SingleTurboSpeed) >> 8
 		);
 
+	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 	if
 	(
 		// any gain in boost,
@@ -263,6 +264,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			(driver->reserves == 0) ||
 			(driver->fireSpeedCap < (short)newFireSpeedCap)
 		) || UDCTRM_RF_blueFireMode < 1 &&
+	/////////////////////////// END CHANGES       ///////////////////////////
 
 		// OR
 

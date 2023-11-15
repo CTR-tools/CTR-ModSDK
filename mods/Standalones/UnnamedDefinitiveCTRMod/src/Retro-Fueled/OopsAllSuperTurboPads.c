@@ -27,6 +27,7 @@ void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)
 		*(u_short*)&driver->fill18_postQuadBlock[6] |= 1;
 	}
 
+	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 	// If this is not a super turbo pad
 	if ((stepFlagSet & 2) == 0)
 	{
@@ -50,6 +51,7 @@ MyGoto:
 	// Turbo_Increment
 	// add reserves and speed of turbo pad
 	Turbo_Increment(driver, 960, (TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD), fireLevel);
+	/////////////////////////// END OF CHANGES     ///////////////////////////
 
 LAB_8005ec70:
 	if ((stepFlagSet & 0x8000) == 0)
