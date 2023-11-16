@@ -495,7 +495,7 @@ common, exe, MENUBOX_GetWidth, 0x0, General/MenuBox/MENUBOX_GetWidth.c
 common, exe, MENUBOX_ClearInput, 0x0, General/MenuBox/MENUBOX_ClearInput.c
 common, exe, MENUBOX_CollectInput, 0x0, General/MenuBox/MENUBOX_CollectInput.c
 common, exe, MENUBOX_ProcessInput, 0x0, General/MenuBox/MENUBOX_ProcessInput.c
-// MENUBOX_ProcessState.c (wip)
+common, exe, MENUBOX_ProcessState, 0x0, General/MenuBox/MENUBOX_ProcessState.c
 common, exe, MENUBOX_Show, 0x0, General/MenuBox/MENUBOX_Show.c
 common, exe, MENUBOX_Hide, 0x0, General/MenuBox/MENUBOX_Hide.c
 common, exe, MENUBOX_BoolHidden, 0x0, General/MenuBox/MENUBOX_BoolHidden.c

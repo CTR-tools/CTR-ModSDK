@@ -50,6 +50,9 @@ void DECOMP_MENUBOX_ProcessState()
 		currMenuBox->funcPtr(currMenuBox);
 	}
 	
+	// check if funcPtr changed "state"
+	state = currMenuBox->state;
+	
 	// if not character selection
 	if((state & DISABLE_INPUT_ALLOW_FUNCPTRS) == 0)
 	{
@@ -64,7 +67,7 @@ void DECOMP_MENUBOX_ProcessState()
 			DECOMP_MENUBOX_GetWidth(currMenuBox, &width, 1);
 			
 			// draw
-			DECOMP_MENUBOX_DrawSelf(currMenuBox, 0, 0, (int)width);
+			MENUBOX_DrawSelf(currMenuBox, 0, 0, (int)width);
 		}
 	}
 	
