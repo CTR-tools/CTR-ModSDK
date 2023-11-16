@@ -18,5 +18,8 @@
     <ClCompile Include="CrashTeamRacingPC.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WindowsInputTEMPORARY.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -392,15 +392,6 @@ FinishLoading:
 				// reset vsync calls between drawsync
 				gGT->vSync_between_drawSync = 0;
 
-#ifdef REBUILD_PS1
-				
-				if(sdata->Loading.stage == -1)
-				{	
-					DECOMP_DecalFont_DrawLine(__DATE__, 0x100, 0xA0, 2, 0xffff8000);
-					DECOMP_DecalFont_DrawLine(__TIME__, 0x100, 0xA8, 2, 0xffff8000);
-				}
-#endif
-
 #ifdef REBUILD_PC
 				char PsyX_BeginScene();
 				PsyX_BeginScene();

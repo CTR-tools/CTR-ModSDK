@@ -4404,14 +4404,15 @@ struct Data data =
 		9,6,3,1,0,0,0,0
 	},
 	
-#ifndef REBUILD_PC
 	// By default, can NOT remove rdata name_Debug,
 	// the strings are needed for model lookup
 	.MetaDataCharacters =
 	{
 		[0] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_crash[0],
+#endif
 			.name_LNG_long = 44,
 			.name_LNG_short = 60,
 			.iconID = 32,
@@ -4419,7 +4420,9 @@ struct Data data =
 		},
 		[1] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_cortex[0],
+#endif
 			.name_LNG_long = 45,
 			.name_LNG_short = 61,
 			.iconID = 33,
@@ -4427,7 +4430,9 @@ struct Data data =
 		},
 		[2] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_tiny[0],
+#endif
 			.name_LNG_long = 46,
 			.name_LNG_short = 62,
 			.iconID = 34,
@@ -4435,7 +4440,9 @@ struct Data data =
 		},
 		[3] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_coco[0],
+#endif
 			.name_LNG_long = 47,
 			.name_LNG_short = 63,
 			.iconID = 35,
@@ -4443,7 +4450,9 @@ struct Data data =
 		},
 		[4] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_ngin[0],
+#endif
 			.name_LNG_long = 48,
 			.name_LNG_short = 64,
 			.iconID = 36,
@@ -4451,7 +4460,9 @@ struct Data data =
 		},
 		[5] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_dingo[0],
+#endif
 			.name_LNG_long = 49,
 			.name_LNG_short = 65,
 			.iconID = 37,
@@ -4459,7 +4470,9 @@ struct Data data =
 		},
 		[6] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_polar[0],
+#endif
 			.name_LNG_long = 50,
 			.name_LNG_short = 66,
 			.iconID = 38,
@@ -4467,7 +4480,9 @@ struct Data data =
 		},
 		[7] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_pura[0],
+#endif
 			.name_LNG_long = 51,
 			.name_LNG_short = 67,
 			.iconID = 39,
@@ -4475,7 +4490,9 @@ struct Data data =
 		},
 		[8] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_pinstripe[0],
+#endif
 			.name_LNG_long = 52,
 			.name_LNG_short = 68,
 			.iconID = 43,
@@ -4483,7 +4500,9 @@ struct Data data =
 		},
 		[9] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_papu[0],
+#endif
 			.name_LNG_long = 53,
 			.name_LNG_short = 69,
 			.iconID = 41,
@@ -4491,7 +4510,9 @@ struct Data data =
 		},
 		[10] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_roo[0],
+#endif
 			.name_LNG_long = 54,
 			.name_LNG_short = 70,
 			.iconID = 40,
@@ -4499,7 +4520,9 @@ struct Data data =
 		},
 		[11] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_joe[0],
+#endif
 			.name_LNG_long = 55,
 			.name_LNG_short = 71,
 			.iconID = 42,
@@ -4507,7 +4530,9 @@ struct Data data =
 		},
 		[12] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_ntropy[0],
+#endif
 			.name_LNG_long = 56,
 			.name_LNG_short = 72,
 			.iconID = 44,
@@ -4515,7 +4540,9 @@ struct Data data =
 		},
 		[13] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_pen[0],
+#endif
 			.name_LNG_long = 58,
 			.name_LNG_short = 74,
 			.iconID = 53,
@@ -4523,7 +4550,9 @@ struct Data data =
 		},
 		[14] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_fake[0],
+#endif
 			.name_LNG_long = 59,
 			.name_LNG_short = 75,
 			.iconID = 54,
@@ -4531,14 +4560,15 @@ struct Data data =
 		},
 		[15] =
 		{
+#ifndef REBUILD_PC
 			.name_Debug = &rdata.s_oxide[0],
+#endif
 			.name_LNG_long = 57,
 			.name_LNG_short = 73,
 			.iconID = 55,
 			.engineID = 0,
 		}
 	},
-#endif
 
 	.characterIDs =
 	{

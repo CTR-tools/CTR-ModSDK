@@ -115,9 +115,11 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     // set tileView in InstDrawPerPlayer,
     // so that each camera can only see one driver
     idpp[iVar6].tileView = tileview;
+#endif
 
     ptrCurr = &D230.characterSelect_charIDs_curr[iVar6];
 
+#ifndef REBUILD_PS1
     iVar10->animFrame = 0;
     iVar10->vertSplit = 0;
   
@@ -133,6 +135,7 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     iVar10->matrix.t[0] = D230.csm_instPos[0];
     iVar10->matrix.t[1] = D230.csm_instPos[1];
     iVar10->matrix.t[2] = D230.csm_instPos[2];
+#endif
   
     psVar11 = &D230.timerPerPlayer[iVar6];
     sVar9 = *psVar11 + -1;
@@ -183,6 +186,7 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     rot[1] = D230.csm_instRot[1] + D230.characterSelect_angle[iVar14];
     rot[2] = D230.csm_instRot[2];
   
+#ifndef REBUILD_PS1
     // convert 3 rotation shorts into rotation matrix
     ConvertRotToMatrix(&iVar10->matrix.m[0][0], &rot[0]);
 #endif

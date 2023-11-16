@@ -36,9 +36,6 @@ void DECOMP_MM_Characters_RestoreIDs(void)
     D230.characterIcon[D230.csm_Active[i].characterID] = i;
   }
 
-  // if number of players is not zero
-  if (gGT->numPlyrNextGame) {
-
     for (i = 0; i < gGT->numPlyrNextGame; i++) 
 	{
       // Determine if this icon is unlocked (and drawing)
@@ -61,7 +58,6 @@ void DECOMP_MM_Characters_RestoreIDs(void)
         *currID = 0;
       }
     }
-  }
 
   DECOMP_MM_Characters_PreventOverlap();
 
