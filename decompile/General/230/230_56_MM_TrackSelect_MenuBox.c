@@ -240,7 +240,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		// If you're in track selection menu
 		if (D230.trackSel_transitionState == IN_MENU)
 		{
-			lapSelTransitionState = MENUBOX_ProcessInput(&D230.menubox_LapSel);
+			lapSelTransitionState = DECOMP_MENUBOX_ProcessInput(&D230.menubox_LapSel);
 		}
 	
 		MENUBOX_DrawSelf

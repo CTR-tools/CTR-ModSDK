@@ -544,7 +544,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
             }
             if (box != NULL)
             {
-                MENUBOX_ProcessInput(box, sdata->buttonTapPerPlayer[0], 1, 1);
+                DECOMP_MENUBOX_ProcessInput(box, sdata->buttonTapPerPlayer[0], 1, 1);
                 if ((box->state & 4) != 0)
                 {
                     box->state &= ~(ONLY_DRAW_TITLE);

@@ -74,7 +74,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		((gGT->gameMode1 & END_OF_RACE) != 0)
 	)
 	{
-		MENUBOX_CollectInput();
+		DECOMP_MENUBOX_CollectInput();
 	}
 	
 	if(sdata->ptrActiveMenuBox != 0)

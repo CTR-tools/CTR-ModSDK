@@ -188,7 +188,7 @@
 // MENUBOX_DrawSelf.c (wip)
 #include "../decompile/General/MenuBox/MENUBOX_ClearInput.c"
 #include "../decompile/General/MenuBox/MENUBOX_CollectInput.c"
-// MENUBOX_ProcessInput.c (wip)
+#include "../decompile/General/MenuBox/MENUBOX_ProcessInput.c"
 // MENUBOX_ProcessState.c (wip)
 #include "../decompile/General/MenuBox/MENUBOX_Show.c"
 #include "../decompile/General/MenuBox/MENUBOX_Hide.c"

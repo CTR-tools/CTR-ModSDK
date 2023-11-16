@@ -97,7 +97,7 @@ void DECOMP_MM_HighScore_MenuBox(struct MenuBox* unused)
       // If you dont press Right
       if ((buttonTap & 8) == 0)
       {
-        input = MENUBOX_ProcessInput(&D230.highScoreBox);
+        input = DECOMP_MENUBOX_ProcessInput(&D230.highScoreBox);
         // pressed ^ or []
         if (input == -1)
         {
