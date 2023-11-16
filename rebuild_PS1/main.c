@@ -181,11 +181,11 @@
 #include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_LowLevel.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_HighLevel.c"
 // MENUBOX_DrawQuip.c (wip)
-// MENUBOX_DrawInnerRect
+#include "../decompile/General/MenuBox/MENUBOX_DrawInnerRect.c"
 // MENUBOX_DrawFullRect
 #include "../decompile/General/MenuBox/MENUBOX_GetHeight.c"
 #include "../decompile/General/MenuBox/MENUBOX_GetWidth.c"
-// MENUBOX_DrawSelf.c (wip)
+#include "../decompile/General/MenuBox/MENUBOX_DrawSelf.c"
 #include "../decompile/General/MenuBox/MENUBOX_ClearInput.c"
 #include "../decompile/General/MenuBox/MENUBOX_CollectInput.c"
 #include "../decompile/General/MenuBox/MENUBOX_ProcessInput.c"

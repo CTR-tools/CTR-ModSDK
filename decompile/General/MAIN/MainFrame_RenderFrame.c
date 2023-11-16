@@ -276,7 +276,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// add 3 pixels above, 3 pixels bellow
 	window.h += 6;
 		
-	MENUBOX_DrawInnerRect(&window, 1, gGT->backBuffer->otMem.startPlusFour);
+	DECOMP_MENUBOX_DrawInnerRect(&window, 1, gGT->backBuffer->otMem.startPlusFour);
 }
 
 void DrawFinalLap(struct GameTracker* gGT)

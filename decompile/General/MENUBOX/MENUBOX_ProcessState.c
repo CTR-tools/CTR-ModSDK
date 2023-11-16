@@ -67,7 +67,7 @@ void DECOMP_MENUBOX_ProcessState()
 			DECOMP_MENUBOX_GetWidth(currMenuBox, &width, 1);
 			
 			// draw
-			MENUBOX_DrawSelf(currMenuBox, 0, 0, (int)width);
+			DECOMP_MENUBOX_DrawSelf(currMenuBox, 0, 0, (int)width);
 		}
 	}
 	

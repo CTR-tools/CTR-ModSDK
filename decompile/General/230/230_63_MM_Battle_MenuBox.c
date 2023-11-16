@@ -584,7 +584,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
         D230.battleType_box.state |= 0x100;
     }
 
-    MENUBOX_DrawSelf(&D230.battleType_box, 
+    DECOMP_MENUBOX_DrawSelf(&D230.battleType_box, 
 		D230.transitionMeta_battle[0].currX + 0x9c,
 		D230.transitionMeta_battle[0].currY + 0x24, 0x134);
 		
@@ -619,7 +619,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                     D230.battleLengthLifeTime_box.state |= 0x100;
                 }
 				
-                MENUBOX_DrawSelf(&D230.battleLengthLifeTime_box,
+                DECOMP_MENUBOX_DrawSelf(&D230.battleLengthLifeTime_box,
 					D230.transitionMeta_battle[2].currX + 0x9c,
 					D230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
 								 
@@ -634,7 +634,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                     D230.battleLengthLifeLife_box.state |= 0x100;
                 }
 				
-                MENUBOX_DrawSelf(&D230.battleLengthLifeLife_box,
+                DECOMP_MENUBOX_DrawSelf(&D230.battleLengthLifeLife_box,
 					D230.transitionMeta_battle[2].currX + 0x142,
 					D230.transitionMeta_battle[2].currY + sVar6 + 4, 0x8e);
 								 
@@ -666,7 +666,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
         box->state |= 0x100;
     }
     
-	MENUBOX_DrawSelf(box, 
+	DECOMP_MENUBOX_DrawSelf(box, 
 		D230.transitionMeta_battle[2].currX + 0x9c,
 		D230.transitionMeta_battle[2].currY + sVar6 + 4, 0x134);
     
@@ -783,7 +783,7 @@ LAB_800b25f0:
     local_40.y = D230.transitionMeta_battle[4].currY + sVar20;
 
     // Draw 2D Menu rectangle background
-    MENUBOX_DrawInnerRect(
+    DECOMP_MENUBOX_DrawInnerRect(
 		&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
     // "WEAPONS:"
@@ -849,7 +849,7 @@ LAB_800b25f0:
         {
             D230.battleStartGame_box.state |= 0x100;
         }
-        MENUBOX_DrawSelf(&D230.battleStartGame_box, 
+        DECOMP_MENUBOX_DrawSelf(&D230.battleStartGame_box, 
 				D230.transitionMeta_battle[8].currX + 0x9c,
 				D230.transitionMeta_battle[8].currY + sVar20 + 0x78, 0x134);
 				
@@ -939,7 +939,7 @@ LAB_800b25f0:
 		gGT->backBuffer->otMem.startPlusFour,
 		&gGT->backBuffer->primMem);
 
-    MENUBOX_DrawInnerRect(
+    DECOMP_MENUBOX_DrawInnerRect(
 		&local_40, 0, gGT->backBuffer->otMem.startPlusFour);
 
     // save all five battle settings

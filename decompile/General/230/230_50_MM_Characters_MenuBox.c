@@ -632,7 +632,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 			r68.h = 0x21;
 		
 			// Draw 2D Menu rectangle background
-			MENUBOX_DrawInnerRect(
+			DECOMP_MENUBOX_DrawInnerRect(
 				&r68, 0, gGT->backBuffer->otMem.startPlusFour);
 		}
 	}
@@ -692,7 +692,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 			psVar22 = psVar22 + 2;
 		
 			// Draw 2D Menu rectangle background
-			MENUBOX_DrawInnerRect(
+			DECOMP_MENUBOX_DrawInnerRect(
 				&r60, 9, &gGT->backBuffer->otMem.startPlusFour[3]);
 			
 			r60.x = 0;

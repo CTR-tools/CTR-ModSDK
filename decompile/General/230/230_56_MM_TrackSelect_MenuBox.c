@@ -243,7 +243,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			lapSelTransitionState = DECOMP_MENUBOX_ProcessInput(&D230.menubox_LapSel);
 		}
 	
-		MENUBOX_DrawSelf
+		DECOMP_MENUBOX_DrawSelf
 		(
 			&D230.menubox_LapSel,
 			D230.transitionMeta_trackSel[2].currX,
@@ -510,7 +510,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		uVar15 = (u_int)numTracks;
 
 		// Draw 2D Menu rectangle background
-		MENUBOX_DrawInnerRect(
+		DECOMP_MENUBOX_DrawInnerRect(
 			&r, 0, gGT->backBuffer->otMem.startPlusFour);
 
 		do

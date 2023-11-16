@@ -13,10 +13,10 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 {
     short lev;
     int cdPos;
-	int getButtonPress;
+	int getButtonPress=0;
 	DRAWENV* ptrDrawEnv;
     const CdlFILE cdlFile;
-    struct GameTracker *gGT = gGT;
+    struct GameTracker *gGT = sdata->gGT;
 	int isOn = DECOMP_TitleFlag_IsFullyOnScreen();
 
     // book state (0,1,2,3,4)

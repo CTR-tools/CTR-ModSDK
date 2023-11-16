@@ -226,7 +226,7 @@ DRAW_MENU:
     }
   }
   
-  MENUBOX_DrawSelf(&D230.highScoreBox, D230.transitionMeta_HighScores[0xA].currX, D230.transitionMeta_HighScores[0xA].currY, 0xa4);
+  DECOMP_MENUBOX_DrawSelf(&D230.highScoreBox, D230.transitionMeta_HighScores[0xA].currX, D230.transitionMeta_HighScores[0xA].currY, 0xa4);
 
   iVar8 = 0;
   iVar7 = 0;
@@ -253,7 +253,7 @@ DRAW_MENU:
       box.h = 0x19;
 
       // Draw 2D Menu rectangle background
-      MENUBOX_DrawInnerRect(
+      DECOMP_MENUBOX_DrawInnerRect(
 		&box, 0, gGT->backBuffer->otMem.startPlusFour);
     }
   }
@@ -282,6 +282,6 @@ DRAW_MENU:
   box.h = 0x19;
 
   // Draw 2D Menu rectangle background
-  MENUBOX_DrawInnerRect(
+  DECOMP_MENUBOX_DrawInnerRect(
 	&box, 0, gGT->backBuffer->otMem.startPlusFour);
 }

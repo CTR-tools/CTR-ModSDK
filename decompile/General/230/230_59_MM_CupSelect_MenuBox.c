@@ -195,7 +195,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         cupBox.w = 180;
         cupBox.h = 78;
         
-		MENUBOX_DrawInnerRect(
+		DECOMP_MENUBOX_DrawInnerRect(
 			&cupBox, 0, gGT->backBuffer->otMem.startPlusFour);
     }
 }

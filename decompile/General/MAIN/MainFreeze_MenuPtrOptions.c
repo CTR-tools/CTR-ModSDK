@@ -415,7 +415,7 @@ switchD_80038f90_caseD_9:
 	menuBoxBG.w = 400;
 	menuBoxBG.h = 0x87 - local_68;
 	menuBoxBG.y = sVar4 + 0x14;
-	MENUBOX_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
+	DECOMP_MENUBOX_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
 	if ((local_70 != 0) || ((sdata->AnyPlayerTap & (BTN_TRIANGLE | BTN_START | BTN_SQUARE_one)) != 0))
 	{

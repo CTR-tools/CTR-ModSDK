@@ -85,6 +85,7 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     tileview->rot[1] = 0;
     tileview->rot[2] = 0;
   
+#ifndef REBUILD_PS1
     // player -> instance
     iVar10 = gGT->drivers[iVar14]->instSelf;
   
@@ -97,9 +98,11 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
       // You are an AI (I think)
       iVar10->flags |= 0x80;
     }
+#endif
   
 	iVar6 = iVar14;
-  
+
+#ifndef REBUILD_PS1
 	struct InstDrawPerPlayer* idpp =
 		INST_GETIDPP(iVar10);
   
@@ -112,8 +115,9 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     // set tileView in InstDrawPerPlayer,
     // so that each camera can only see one driver
     idpp[iVar6].tileView = tileview;
-  
+
     ptrCurr = &D230.characterSelect_charIDs_curr[iVar6];
+
     iVar10->animFrame = 0;
     iVar10->vertSplit = 0;
   
@@ -168,8 +172,10 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
         iVar8 = D230.characterSelect_MoveDir[iVar6];
         iVar6 = (0x1000 - iVar5) * (int)D230.unkCharacterWindows >> 0xc;
       }
-  
+
+#ifndef REBUILD_PS1
       iVar10->matrix.t[0] += iVar6 * iVar8;
+#endif
     }
   
     // driver rotation
@@ -177,7 +183,6 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     rot[1] = D230.csm_instRot[1] + D230.characterSelect_angle[iVar14];
     rot[2] = D230.csm_instRot[2];
   
-#ifndef REBUILD_PS1
     // convert 3 rotation shorts into rotation matrix
     ConvertRotToMatrix(&iVar10->matrix.m[0][0], &rot[0]);
 #endif
