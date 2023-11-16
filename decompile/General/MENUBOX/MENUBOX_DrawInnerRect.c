@@ -72,20 +72,20 @@ void DECOMP_MENUBOX_DrawInnerRect(RECT *r, int tileViewType, void *ot) {
     short horizontalOffset = ((tileViewType & 0x80) != 0) ? 4 : 0xc;
     short verticalOffset = ((tileViewType & 0x40) != 0) ? 2 : 6;
 
-    // Adjusting RECT for the additional drawing
-    adjustedRect.x += horizontalOffset;
-    adjustedRect.y += verticalOffset;
+    adjustedRect.x = r->x + r->w;
+    adjustedRect.y = r->y + verticalOffset;	
+	adjustedRect.w = horizontalOffset;
+	adjustedRect.h = r->h;
 
     // Adjust and draw the box
     DECOMP_CTR_Box_DrawClearBox(
 		&adjustedRect, &sdata->DrawSolidBoxData[0], 0, ot,
         &sdata->gGT->backBuffer->primMem);
 
-    // Adjust for the second drawing
-    adjustedRect.x -= horizontalOffset;     // Re-adjusting x
-    adjustedRect.y -= verticalOffset;       // Re-adjusting y
-    adjustedRect.w += horizontalOffset * 2; // Adjusting width
-    adjustedRect.h += verticalOffset * 2;   // Adjusting height
+    adjustedRect.x = r->x + horizontalOffset;
+    adjustedRect.y = r->y + r->h;	
+	adjustedRect.w = r->w - horizontalOffset;
+	adjustedRect.h = verticalOffset;
 
     // Draw the box again
     DECOMP_CTR_Box_DrawClearBox(
