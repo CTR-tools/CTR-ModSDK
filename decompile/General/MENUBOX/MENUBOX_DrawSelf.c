@@ -91,13 +91,13 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
 			row++;
         } while (row->stringIndex != -1);
     }
-#if 0
 
     if ((mb->state & 0x104) == 0)
     {
         r.x = param_2 + posX_prev;// + local_40;
         r.y = param_3 + posY_prev + rowHeight - 1;
 		r.w = width;
+		r.h = 0;
 
         if ((mb->state & SHOW_ONLY_HIGHLIT_ROW) == 0)
             r.h += mb->rowSelected * rowHeight;// + local_50;
@@ -106,7 +106,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
         if ((mb->drawStyle & 0x10) != 0)
             highlightColor = &sdata->menuRowHighlight_Green;
 
-        CTR_Box_DrawClearBox(&r, highlightColor, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour, &gGT->backBuffer->primMem);
+        DECOMP_CTR_Box_DrawClearBox(&r, highlightColor, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour, &gGT->backBuffer->primMem);
     }
 
     if ((mb->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)
@@ -126,11 +126,10 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
         posY_prev = mb->posY_prev;
         rowHeight += 8;
     }
-
+	
 	r.h = rowHeight;
     r.w = width + 0xc;
     r.y = posY_prev - 4;
     r.x = param_2 + posX_prev - 6;
-    MENUBOX_DrawFullRect(mb, &r);
-#endif
+    DECOMP_MENUBOX_DrawFullRect(mb, &r);
 }

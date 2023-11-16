@@ -182,7 +182,7 @@
 #include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_HighLevel.c"
 // MENUBOX_DrawQuip.c (wip)
 #include "../decompile/General/MenuBox/MENUBOX_DrawInnerRect.c"
-// MENUBOX_DrawFullRect
+#include "../decompile/General/MenuBox/MENUBOX_DrawFullRect.c"
 #include "../decompile/General/MenuBox/MENUBOX_GetHeight.c"
 #include "../decompile/General/MenuBox/MENUBOX_GetWidth.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawSelf.c"
