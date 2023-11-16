@@ -3370,7 +3370,7 @@ void FUN_80045c50(short *param_1,short *param_2,short param_3)
 }
 
 
-// draw entire menubox
+// MENUBOX_DrawSelf
 // param_1 - ptrMenuBox
 // param_4 - menuBox width
 void FUN_80045db0(short *param_1,int param_2,short param_3,ushort param_4)
@@ -3699,7 +3699,7 @@ LAB_80045e94:
   local_66 = local_38 + local_58 + sVar9 + -4;
   local_68 = local_40 + (short)param_2 + sVar11 + -6;
 
-  // draw background of menubox
+  // MENUBOX_DrawFullRect
   FUN_800459ec(param_1,&local_68);
   return;
 }

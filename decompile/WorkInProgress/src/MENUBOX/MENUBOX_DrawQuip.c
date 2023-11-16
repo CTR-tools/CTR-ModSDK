@@ -31,7 +31,11 @@ void DECOMP_MENUBOX_DrawQuip(char* comment,short posX,int posY,u_int sizeX,short
                 posX,(data.PlayerCommentBoxParams[1][lineWidth] + posY),
                 fontType, flags);
 
-  // Draw 2D Menu rectangle background
-  MENUBOX_DrawFullRect(&posX,(int)param_7, sdata->gGT->backBuffer->otMem.startPlusFour);
+  RECT r;
+  r.x = posX;
+  r.y = posY;
+  r.w = sizeX;
+  r.h = sizeY;
+  MENUBOX_DrawInnerRect(&r,(int)param_7, sdata->gGT->backBuffer->otMem.startPlusFour);
   return;
 }

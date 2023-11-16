@@ -491,7 +491,7 @@ common, exe, MENUBOX_DrawOuterRect_HighLevel, 0x0, General/MenuBox/MENUBOX_DrawO
 // MENUBOX_DrawFullRect
 common, exe, MENUBOX_GetHeight, 0x0, General/MenuBox/MENUBOX_GetHeight.c
 common, exe, MENUBOX_GetWidth, 0x0, General/MenuBox/MENUBOX_GetWidth.c
-// MENUBOX_DrawSelf.c (wip)
+common, exe, MENUBOX_DrawSelf, 0x0, General/MenuBox/MENUBOX_DrawSelf.c
 common, exe, MENUBOX_ClearInput, 0x0, General/MenuBox/MENUBOX_ClearInput.c
 common, exe, MENUBOX_CollectInput, 0x0, General/MenuBox/MENUBOX_CollectInput.c
 common, exe, MENUBOX_ProcessInput, 0x0, General/MenuBox/MENUBOX_ProcessInput.c

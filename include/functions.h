@@ -800,7 +800,7 @@ void MENUBOX_DrawOuterRect_LowLevel(RECT* r, short x, u_short y, u_int* rgb, sho
 void MENUBOX_DrawOuterRect_HighLevel(RECT* r, u_int* rgb, u_int param_3, u_long* otMem);
 void MENUBOX_DrawQuip(char*, short, short, short, short, int, short);
 void MENUBOX_DrawInnerRect(RECT* r, int flag, u_long* ot);
-void MENUBOX_DrawFullRect(RECT* r, short param_2, u_long* otMem);
+void MENUBOX_DrawFullRect(struct MenuBox* mb, RECT* r);
 //MENUBOX_GetHeight()
 void MENUBOX_GetWidth(struct MenuBox* m, RECT* r, int);
 void MENUBOX_DrawSelf(struct MenuBox* m, int, int, int);
