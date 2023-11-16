@@ -57,7 +57,7 @@ void DECOMP_MENUBOX_ProcessState()
 	if((state & DISABLE_INPUT_ALLOW_FUNCPTRS) == 0)
 	{
 		// process button input for menu
-		MENUBOX_ProcessInput(currMenuBox);
+		DECOMP_MENUBOX_ProcessInput(currMenuBox);
 		
 		// if MenuBox border is not invisible
 		if((state & INVISIBLE) == 0)

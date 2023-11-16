@@ -79,7 +79,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	
 	if(sdata->ptrActiveMenuBox != 0)
 		if(sdata->Loading.stage == -1)
-			MENUBOX_ProcessState();
+			DECOMP_MENUBOX_ProcessState();
 
 #ifndef REBUILD_PS1	
 	RainLogic(gGT);

@@ -189,7 +189,7 @@
 #include "../decompile/General/MenuBox/MENUBOX_ClearInput.c"
 #include "../decompile/General/MenuBox/MENUBOX_CollectInput.c"
 #include "../decompile/General/MenuBox/MENUBOX_ProcessInput.c"
-// MENUBOX_ProcessState.c (wip)
+#include "../decompile/General/MenuBox/MENUBOX_ProcessState.c"
 #include "../decompile/General/MenuBox/MENUBOX_Show.c"
 #include "../decompile/General/MenuBox/MENUBOX_Hide.c"
 #include "../decompile/General/MenuBox/MENUBOX_BoolHidden.c"

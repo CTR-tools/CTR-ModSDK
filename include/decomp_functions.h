@@ -139,6 +139,7 @@ void DECOMP_MENUBOX_DrawPolyGT4(struct Icon* icon, short posX, short posY, struc
 int DECOMP_MENUBOX_BoolHidden(struct MenuBox* m);
 void DECOMP_MENUBOX_ClearInput();
 void DECOMP_MENUBOX_CollectInput();
+void DECOMP_MENUBOX_ProcessState();
 int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m);
 void DECOMP_MENUBOX_DrawOuterRect_Edge(RECT* r, u_int* rgb, u_int param_3, u_long* otMem);
 void DECOMP_MENUBOX_DrawOuterRect_HighLevel(RECT* r, u_int* rgb, short param_3, u_long* otMem);
