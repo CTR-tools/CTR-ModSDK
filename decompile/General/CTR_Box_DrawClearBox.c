@@ -29,10 +29,10 @@ void DECOMP_CTR_Box_DrawClearBox(RECT* r, u_int* colorPtr, int transparency, u_l
 		short rightX = r->x + r->w;
 		short bottomY = r->y + r->h;
 
-		*(int*)&p->f4.x0 = r->x | (r->y<<16);
-		*(int*)&p->f4.x1 = rightX | (r->y<<16);
-		*(int*)&p->f4.x2 = r->x | (bottomY<<16);
-		*(int*)&p->f4.x3 = rightX | (bottomY<<16);
+		p->f4.x0 = r->x, 	p->f4.y0 = r->y;
+		p->f4.x1 = rightX,	p->f4.y1 = r->y;
+		p->f4.x2 = r->x, 	p->f4.y2 = bottomY;
+		p->f4.x3 = rightX,	p->f4.y3 = bottomY;
 
 		AddPrim(ot, p);
 	}
