@@ -1,141 +1,217 @@
 #include <common.h>
 
-void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_short width)
+void DECOMP_MENUBOX_DrawSelf(struct MenuBox *mb, int posX, short posY, short menuboxWidth)
 {
-    u_short textColor = 0;
-	int font = FONT_SMALL;
-    struct GameTracker* gGT = sdata->gGT;
-    short rowHeight = data.font_charPixHeight[FONT_SMALL];
-    short titleRowHeight = data.font_charPixHeight[FONT_BIG] + 3;
-    short posX_prev = mb->posX_curr;
-    short posY_prev = mb->posY_curr;
-	RECT r;
+    u_short textFlags;
+    u_int state;
+    int index;
+    char *titleString;
+    short offsetX;
+    short sVar4;
+    u_int *rgb;
+    u_short uVar5;
+    struct MenuRow *row;
+    short sVar6;
+    short sVar7;
+    u_short uVar8;
+    RECT background;
+    RECT borders;
+    short local_60;
+    short menuboxHeight;
+    short offsetY;
+    short local_50;
+    short local_48;
+    short local_40;
+    short local_38;
+    int local_30;
+    int local_2c;
+    short posX_prev;
+    short posY_prev;
+    struct GameTracker *gGT = sdata->gGT;
 
+    uVar8 = 0;
+    local_40 = 0;
+    local_38 = 0;
     if ((mb->drawStyle & 0x10U) != 0)
-        textColor = LIGHT_GREEN;
-
+    {
+        uVar8 = 0x1d;
+    }
+    offsetY = posY;
     if ((mb->state & 0x60000) == 0x60000)
     {
         mb->unk1e = 2;
         if (mb->funcPtr != NULL)
+        {
             mb->funcPtr(mb);
-    }
-
-    if ((mb->state & USE_SMALL_FONT) == 0)
-    {
-		font = FONT_BIG;
-        rowHeight = data.font_charPixHeight[FONT_BIG] + 3;
-    }
-	
-    int menuBoxHeight = 0;
-    DECOMP_MENUBOX_GetHeight(mb, &menuBoxHeight, 0);
-
-    mb->width = width;
-    mb->height = menuBoxHeight;
-    mb->state &= ~8;
-
-	short centerOffset=0;
-    if ((mb->state & CENTER_ON_Y) != 0)
-    {
-        short tmpHeight = 0;
-        DECOMP_MENUBOX_GetHeight(mb, &tmpHeight, 1);
-        centerOffset = -(tmpHeight >> 1);
-    }
-
-    short yOffset = param_3 + rowHeight + posY_prev + centerOffset;
-    short sVar12 = 0;
-    short titleIndex = mb->stringIndexTitle;
-
-    if ((titleIndex >= 0) && ((mb->state & ONLY_DRAW_TITLE) == 0))
-    {
-        short fontTitle = ((mb->state & BIG_TEXT_IN_TITLE)!=0) ? FONT_BIG : font;
-        int titleX = param_2 + posX_prev;
-
-        if ((mb->state & 0x200) != 0)
-        {
-            titleX += width>>1;
-            textColor |= JUSTIFY_CENTER;
         }
-
-        DECOMP_DecalFont_DrawLine(
-			sdata->lngStrings[titleIndex], titleX, yOffset, fontTitle, textColor);
-		
-        yOffset += titleRowHeight + 6;
     }
-
-    struct MenuRow* row = &mb->rows[0];
-    if (row->stringIndex != -1)
+    posX_prev = 2;
+    if ((mb->state & 0x80) == 0)
     {
-        int rowX = (width >> 1) + 1;
-
-        do
-        {
-            if (
-				(((mb->state & (SHOW_ONLY_HIGHLIT_ROW | ONLY_DRAW_TITLE))) == 0) || 
-				(sVar12 == mb->rowSelected)
-				)
-            {
-                u_short stringIndex = row->stringIndex;
-                u_short textColor = ((stringIndex & 0x8000) != 0) ? GRAY : ORANGE;
-
-                if ((mb->state & CENTER_ON_X) != 0)
-                    textColor |= JUSTIFY_CENTER;
-
-                DECOMP_DecalFont_DrawLine(
-					sdata->lngStrings[stringIndex & 0x7fff], 
-					param_2 + posX_prev + 1, yOffset, font, textColor);
-					
-
-                yOffset += rowHeight;
-            }
-			
-            sVar12++;
-			row++;
-        } while (row->stringIndex != -1);
-    }
-
-    if ((mb->state & 0x104) == 0)
-    {
-        r.x = param_2 + posX_prev;// + local_40;
-        r.y = param_3 + rowHeight + posY_prev + centerOffset - 1;
-		r.w = width;
-		r.h = rowHeight;
-
-        if ((mb->state & SHOW_ONLY_HIGHLIT_ROW) == 0)
-            r.y += mb->rowSelected * rowHeight;// + local_50;
-
-        u_short* highlightColor = &sdata->menuRowHighlight_Normal;
-        if ((mb->drawStyle & 0x10) != 0)
-            highlightColor = &sdata->menuRowHighlight_Green;
-
-#ifndef REBUILD_PC
-        DECOMP_CTR_Box_DrawClearBox(&r, highlightColor, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour, &gGT->backBuffer->primMem);
-#else
-        DECOMP_CTR_Box_DrawSolidBox(&r, highlightColor, gGT->backBuffer->otMem.startPlusFour, &gGT->backBuffer->primMem);
-#endif		
-	}
-
-    if ((mb->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)
-    {
-        DECOMP_MENUBOX_DrawSelf(mb->ptrNextBox_InHierarchy, param_2 + posX_prev, param_3 + rowHeight + 0xc, width);
-    }
-
-    if ((mb->state & ONLY_DRAW_TITLE) == 0)
-    {
-        posX_prev = mb->posX_prev;
-        posY_prev = mb->posY_prev;
-        rowHeight = (menuBoxHeight + 8) - (u_short)((unsigned char)(mb->state >> 7));
+        posX_prev = 1;
+        local_50 = 2;
+        sVar7 = data.font_charPixHeight[1] + 3;
     }
     else
     {
-        posX_prev = mb->posX_prev;
-        posY_prev = mb->posY_prev;
-        rowHeight += 8;
+        local_50 = 0;
+        sVar7 = data.font_charPixHeight[2];
+        if ((mb->state & 0x4000) == 0)
+        {
+            local_48 = data.font_charPixHeight[2];
+            goto LAB_80045e94;
+        }
     }
-	
-	r.h = rowHeight;
-    r.w = width + 0xc;
-    r.y = param_3 + rowHeight + posY_prev + centerOffset - 4;
-    r.x = param_2 + posX_prev - 6;
-    DECOMP_MENUBOX_DrawFullRect(mb, &r);
+    local_48 = data.font_charPixHeight[1] + 3;
+LAB_80045e94:
+
+    local_60 = 0;
+    mb->posX_prev = mb->posX_curr;
+    mb->posY_prev = mb->posY_curr;
+    DECOMP_MENUBOX_GetHeight(mb, &local_60, 0);
+
+    state = mb->state;
+
+    mb->width = menuboxWidth;
+    mb->state &= 0xfffffff7;
+    mb->height = local_60;
+
+    if ((state & 2) != 0)
+    {
+        menuboxHeight = 0;
+        DECOMP_MENUBOX_GetHeight(mb, &menuboxHeight, 1);
+        local_38 = (short)(-menuboxHeight/2);
+    }
+    if ((state & 1) != 0)
+    {
+        local_40 = (short)(-menuboxWidth/2);
+    }
+    sVar6 = 0;
+    row = &mb->rows[0];
+    index = mb->stringIndexTitle;
+    posY_prev = local_50 + local_38 + offsetY + mb->posY_prev;
+    if ((-1 < index) && ((state & 4) == 0))
+    {
+        sVar4 = 1;
+        if ((state & 0x4000) == 0)
+        {
+            sVar4 = posX_prev;
+        }
+        if ((state & 0x200) == 0)
+        {
+            offsetX = (short)(posX + mb->posX_prev);
+            uVar5 = uVar8;
+            if ((state & 1) != 0)
+            {
+                uVar5 = uVar8 | 0x8000;
+            }
+            titleString = sdata->lngStrings[index];
+        }
+        else
+        {
+            uVar5 = uVar8 | 0x8000;
+            titleString = sdata->lngStrings[index];
+            offsetX = (short)(posX + mb->posX_prev + (menuboxWidth/2));
+        }
+        DECOMP_DecalFont_DrawLine(titleString, offsetX, posY_prev, sVar4, uVar5);
+        posY_prev = local_48 + posY_prev + 6;
+    }
+
+    if (row->stringIndex != -1)
+    {
+        local_30 = (menuboxWidth/2) + 1;
+        local_2c = posX_prev;
+        do
+        {
+            state = mb->state;
+            if (((state & 0x44) == 0) || (sVar6 == mb->rowSelected))
+            {
+                uVar5 = row->stringIndex;
+                textFlags = 0x17;
+                if ((uVar5 & 0x8000) == 0)
+                {
+                    textFlags = uVar8;
+                }
+                if ((uVar5 & 0x7fff) != 0)
+                {
+                    if ((state & 0x200) == 0)
+                    {
+                        sVar4 = (short)(posX + mb->posX_prev + 1);
+                        if ((state & 1) != 0)
+                        {
+                            textFlags |= 0x8000;
+                        }
+                        titleString = sdata->lngStrings[uVar5 & 0x7fff];
+                        index = local_2c;
+                    }
+                    else
+                    {
+                        textFlags |= 0x8000;
+                        titleString = sdata->lngStrings[uVar5 & 0x7fff];
+                        sVar4 = (short)(posX + mb->posX_prev + local_30);
+                        index = posX_prev;
+                    }
+                    DECOMP_DecalFont_DrawLine(titleString, sVar4, posY_prev, index, textFlags);
+                }
+                posY_prev += sVar7;
+            }
+            row++;
+            sVar6++;
+        } while (row->stringIndex != -1);
+    }
+    if ((mb->state & 0x104) == 0)
+    {
+        background.x = local_40 + posX + mb->posX_prev;
+        background.y = offsetY + mb->posY_prev + local_38;
+        if ((mb->state & 0x40) == 0)
+        {
+            background.y += mb->rowSelected * sVar7 + local_50 + -1;
+        }
+        else
+        {
+            background.y += local_50 + -1;
+        }
+        if ((mb->state & 0x80) == 0)
+        {
+            background.h = -3;
+        }
+        else
+        {
+            background.h = 1;
+        }
+        background.h = sVar7 + background.h;
+        if (-1 < mb->stringIndexTitle)
+        {
+            background.y += local_48 + 6;
+        }
+        rgb = &sdata->menuRowHighlight_Normal;
+        if ((mb->drawStyle & 0x10U) != 0)
+        {
+            rgb = &sdata->menuRowHighlight_Green;
+        }
+        background.w = menuboxWidth;
+        DECOMP_CTR_Box_DrawClearBox(&background, rgb, 1, gGT->backBuffer->otMem.startPlusFour,
+                             &gGT->backBuffer->primMem);
+    }
+    if ((mb->state & 0x10) != 0)
+    {
+        DECOMP_MENUBOX_DrawSelf(mb->ptrNextBox_InHierarchy,
+                         posX + mb->posX_prev,
+                         local_38 + offsetY + mb->posY_prev + sVar7 + 0xc, menuboxWidth);
+    }
+    posX_prev = mb->posX_prev;
+    posY_prev = mb->posY_prev;
+    if ((mb->state & 4) == 0)
+    {
+
+        borders.h = (local_60 + 8) - (*(char *)&mb->state >> 7);
+    }
+    else
+    {
+        borders.h = sVar7 + 8;
+    }
+    borders.w = menuboxWidth + 0xc;
+    borders.y = local_38 + offsetY + posY_prev - 4;
+    borders.x = local_40 + posX + posX_prev - 6;
+    DECOMP_MENUBOX_DrawFullRect(mb, &borders);
 }
