@@ -487,7 +487,7 @@ common, exe, MENUBOX_DrawRwdTriangle, 0x0, General/MenuBox/MENUBOX_DrawRwdTriang
 common, exe, MENUBOX_DrawOuterRect_LowLevel, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_LowLevel.c
 common, exe, MENUBOX_DrawOuterRect_HighLevel, 0x0, General/MenuBox/MENUBOX_DrawOuterRect_HighLevel.c
 // MENUBOX_DrawQuip.c (wip)
-common, exe, MENUBOX_DrawOuterRect_HighLevel, 0x0, General/MenuBox/MENUBOX_DrawInnerRect.c
+common, exe, MENUBOX_DrawInnerRect, 0x0, General/MenuBox/MENUBOX_DrawInnerRect.c
 // MENUBOX_DrawFullRect
 common, exe, MENUBOX_GetHeight, 0x0, General/MenuBox/MENUBOX_GetHeight.c
 common, exe, MENUBOX_GetWidth, 0x0, General/MenuBox/MENUBOX_GetWidth.c
