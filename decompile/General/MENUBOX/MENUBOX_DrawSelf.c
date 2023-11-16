@@ -34,21 +34,21 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
     mb->height = menuBoxHeight;
     mb->state &= ~8;
 
+	short centerOffset=0;
     if ((mb->state & CENTER_ON_Y) != 0)
     {
         short tmpHeight = 0;
         DECOMP_MENUBOX_GetHeight(mb, &tmpHeight, 1);
-        short centerOffset = -(tmpHeight >> 1);
-        rowHeight += centerOffset;
+        centerOffset = -(tmpHeight >> 1);
     }
 
-    short yOffset = param_3 + rowHeight + posY_prev;
+    short yOffset = param_3 + rowHeight + posY_prev + centerOffset;
     short sVar12 = 0;
     short titleIndex = mb->stringIndexTitle;
 
     if ((titleIndex >= 0) && ((mb->state & ONLY_DRAW_TITLE) == 0))
     {
-        short titleHeight = ((mb->state & BIG_TEXT_IN_TITLE)!=0) ? 1 : 2;
+        short fontTitle = ((mb->state & BIG_TEXT_IN_TITLE)!=0) ? FONT_BIG : font;
         int titleX = param_2 + posX_prev;
 
         if ((mb->state & 0x200) != 0)
@@ -57,7 +57,9 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
             textColor |= JUSTIFY_CENTER;
         }
 
-        DECOMP_DecalFont_DrawLine(sdata->lngStrings[titleIndex], titleX, yOffset, titleHeight, textColor);
+        DECOMP_DecalFont_DrawLine(
+			sdata->lngStrings[titleIndex], titleX, yOffset, fontTitle, textColor);
+		
         yOffset += titleRowHeight + 6;
     }
 
@@ -95,19 +97,23 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
     if ((mb->state & 0x104) == 0)
     {
         r.x = param_2 + posX_prev;// + local_40;
-        r.y = param_3 + posY_prev + rowHeight - 1;
+        r.y = param_3 + rowHeight + posY_prev + centerOffset - 1;
 		r.w = width;
-		r.h = 0;
+		r.h = rowHeight;
 
         if ((mb->state & SHOW_ONLY_HIGHLIT_ROW) == 0)
-            r.h += mb->rowSelected * rowHeight;// + local_50;
+            r.y += mb->rowSelected * rowHeight;// + local_50;
 
         u_short* highlightColor = &sdata->menuRowHighlight_Normal;
         if ((mb->drawStyle & 0x10) != 0)
             highlightColor = &sdata->menuRowHighlight_Green;
 
+#ifndef REBUILD_PC
         DECOMP_CTR_Box_DrawClearBox(&r, highlightColor, TRANS_50_DECAL, gGT->backBuffer->otMem.startPlusFour, &gGT->backBuffer->primMem);
-    }
+#else
+        DECOMP_CTR_Box_DrawSolidBox(&r, highlightColor, gGT->backBuffer->otMem.startPlusFour, &gGT->backBuffer->primMem);
+#endif		
+	}
 
     if ((mb->state & DRAW_NEXT_MENU_IN_HIERARCHY) != 0)
     {
@@ -129,7 +135,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
 	
 	r.h = rowHeight;
     r.w = width + 0xc;
-    r.y = posY_prev - 4;
+    r.y = param_3 + rowHeight + posY_prev + centerOffset - 4;
     r.x = param_2 + posX_prev - 6;
     DECOMP_MENUBOX_DrawFullRect(mb, &r);
 }
