@@ -45,6 +45,14 @@ void DECOMP_MENUBOX_CollectInput()
 
 	sdata->buttonTapPerPlayer[0] = tap;
 	sdata->buttonHeldPerPlayer[0] = holdCurr;
+	
+	if ((tap & BTN_CROSS) != 0)
+	{
+		sdata->buttonTapPerPlayer[1] = BTN_CROSS;
+		sdata->buttonTapPerPlayer[2] = BTN_CROSS;
+		sdata->buttonTapPerPlayer[3] = BTN_CROSS;
+	}
+	
 	holdCurr = 0;
 
 	sdata->gameProgress.unlocks[0] = -1;
