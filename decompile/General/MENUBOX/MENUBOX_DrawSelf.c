@@ -190,8 +190,18 @@ LAB_80045e94:
             rgb = &sdata->menuRowHighlight_Green;
         }
         background.w = menuboxWidth;
-        DECOMP_CTR_Box_DrawClearBox(&background, rgb, 1, gGT->backBuffer->otMem.startPlusFour,
-                             &gGT->backBuffer->primMem);
+
+#ifndef REBUILD_PC
+        DECOMP_CTR_Box_DrawClearBox(
+            &background, rgb, 1, 
+            gGT->backBuffer->otMem.startPlusFour,
+            &gGT->backBuffer->primMem);
+#else
+        DECOMP_CTR_Box_DrawSolidBox(
+            &background, rgb,
+            gGT->backBuffer->otMem.startPlusFour,
+            &gGT->backBuffer->primMem);
+#endif
     }
     if ((mb->state & 0x10) != 0)
     {
