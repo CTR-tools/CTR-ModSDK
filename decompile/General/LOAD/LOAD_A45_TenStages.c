@@ -306,7 +306,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				Music_Restart();
 			}
 			#else
-			sdata->mainMenuState = 1;
+			sdata->mainMenuState = 0;
 			#endif
 
 			// If in main menu (character selection, track selection, any part of it)

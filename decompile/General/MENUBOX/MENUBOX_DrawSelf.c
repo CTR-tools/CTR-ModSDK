@@ -21,7 +21,6 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
             mb->funcPtr(mb);
     }
 
-#if 0
     if ((mb->state & USE_SMALL_FONT) == 0)
     {
 		font = FONT_BIG;
@@ -58,7 +57,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
             textColor |= JUSTIFY_CENTER;
         }
 
-        DecalFont_DrawLine(sdata->lngStrings[titleIndex], titleX, yOffset, titleHeight, textColor);
+        DECOMP_DecalFont_DrawLine(sdata->lngStrings[titleIndex], titleX, yOffset, titleHeight, textColor);
         yOffset += titleRowHeight + 6;
     }
 
@@ -80,7 +79,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
                 if ((mb->state & CENTER_ON_X) != 0)
                     textColor |= JUSTIFY_CENTER;
 
-                DecalFont_DrawLine(
+                DECOMP_DecalFont_DrawLine(
 					sdata->lngStrings[stringIndex & 0x7fff], 
 					param_2 + posX_prev + 1, yOffset, font, textColor);
 					
@@ -92,6 +91,7 @@ void DECOMP_MENUBOX_DrawSelf(struct MenuBox* mb, int param_2, short param_3, u_s
 			row++;
         } while (row->stringIndex != -1);
     }
+#if 0
 
     if ((mb->state & 0x104) == 0)
     {
