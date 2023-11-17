@@ -84,7 +84,11 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 #ifndef REBUILD_PS1	
 	RainLogic(gGT);
 	EffectSfxRain_MakeSound(gGT);
+#endif
+
 	MenuHighlight();
+
+#ifndef REBUILD_PS1	
 	RenderAllWeather(gGT);
 	RenderAllConfetti(gGT);
 	RenderAllStars(gGT);
@@ -380,6 +384,7 @@ void RainLogic(struct GameTracker* gGT)
 			(camQB->weather_vanishRate << 2) / numPlyrCurrGame;
 	}
 }
+#endif
 
 void MenuHighlight()
 {
@@ -387,7 +392,7 @@ void MenuHighlight()
 	int trig;
 	
 	fc = sdata->frameCounter << 7;
-	trig = MATH_Sin(fc);
+	trig = DECOMP_MATH_Sin(fc);
 	
 	trig = (trig << 6) >> 0xc;
 	
@@ -396,6 +401,7 @@ void MenuHighlight()
 	sdata->menuRowHighlight_Green = ((trig + 0xA0) * 0x100) | 0x400040;
 }
 
+#ifndef REBUILD_PS1
 void RenderAllWeather(struct GameTracker* gGT)
 {
 	int numPlyrCurrGame = gGT->numPlyrCurrGame;
