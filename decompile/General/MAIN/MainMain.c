@@ -405,12 +405,10 @@ FinishLoading:
 #endif
 
 #ifdef REBUILD_PC
-				char PsyX_BeginScene();
 				PsyX_BeginScene();
 #endif
 				DECOMP_MainFrame_RenderFrame(gGT, sdata->gGamepads);
 #ifdef REBUILD_PC
-				void PsyX_EndScene();
 				PsyX_EndScene();
 #endif
 
