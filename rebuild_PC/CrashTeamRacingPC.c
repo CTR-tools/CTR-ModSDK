@@ -11,6 +11,7 @@
 #include "psx/inline_c.h"
 #include "PsyX/PsyX_public.h"
 #include "PsyX/PsyX_globals.h"
+#include "PsyX/PsyX_render.h"
 #define u_char unsigned char
 #define u_short unsigned short
 #define u_int unsigned int
@@ -26,14 +27,8 @@
 
 int main()
 {
-	void PsyX_Initialise(char* appName, int width, int height, int fullscreen);
 	PsyX_Initialise("CTRPC", 800, 600, 0);
-
-	void PsyX_CDFS_Init(const char* imageFileName, int track /*= 0*/, int sectorSize /*= 0*/);
 	PsyX_CDFS_Init("ctr-u.bin", 0, 0);
-
-	void PsyX_SetSwapInterval(int);
-	void PsyX_EnableSwapInterval(int);
 
 	// set to 30 FPS VSync
 	PsyX_SetSwapInterval(2);
