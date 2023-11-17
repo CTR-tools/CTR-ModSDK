@@ -9,7 +9,7 @@ void DECOMP_MENUBOX_DrawQuip(char *comment, short startX, int startY, u_int size
 
   if ((sizeX & 0xffff) == 0)
   {
-    width = DecalFont_GetLineWidth(comment, fontType);
+    width = DECOMP_DecalFont_GetLineWidth(comment, fontType);
     sizeX = width + 0xc;
   }
 
@@ -23,7 +23,7 @@ void DECOMP_MENUBOX_DrawQuip(char *comment, short startX, int startY, u_int size
   sizeY = (u_int)data.PlayerCommentBoxParams[fontType];
 
   // Draw string
-  DecalFont_DrawLine(comment,
+  DECOMP_DecalFont_DrawLine(comment,
                      startX, (data.PlayerCommentBoxParams[4 + fontType] + startY),
                      fontType, textFlag);
 
@@ -32,5 +32,5 @@ void DECOMP_MENUBOX_DrawQuip(char *comment, short startX, int startY, u_int size
   r.y = startY;
   r.w = sizeX;
   r.h = sizeY;
-  MENUBOX_DrawInnerRect(&r, boxFlag, sdata->gGT->backBuffer->otMem.startPlusFour);
+  DECOMP_MENUBOX_DrawInnerRect(&r, boxFlag, sdata->gGT->backBuffer->otMem.startPlusFour);
 }

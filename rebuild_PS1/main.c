@@ -180,7 +180,7 @@
 #include "../decompile/General/MenuBox/MENUBOX_DrawRwdTriangle.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_LowLevel.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawOuterRect_HighLevel.c"
-// MENUBOX_DrawQuip.c (wip)
+#include "../decompile/General/MenuBox/MENUBOX_DrawQuip.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawInnerRect.c"
 #include "../decompile/General/MenuBox/MENUBOX_DrawFullRect.c"
 #include "../decompile/General/MenuBox/MENUBOX_GetHeight.c"
