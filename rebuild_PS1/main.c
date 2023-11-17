@@ -231,8 +231,11 @@
 #include "../decompile/General/UI/UI_Map_DrawMap.c"
 
 // 230
+#ifdef REBUILD_PC
 #include "../decompile/General/230/R230.c"
 #include "../decompile/General/230/D230.c"
+#endif
+
 #include "../decompile/General/230/1_Block1.c"
 #include "../decompile/General/230/230_39_MM_AdvNewLoad_GetMenuBox.c"
 #include "../decompile/General/230/1_Block2.c"

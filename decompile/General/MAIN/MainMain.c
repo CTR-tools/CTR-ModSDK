@@ -393,7 +393,7 @@ FinishLoading:
 				gGT->vSync_between_drawSync = 0;
 
 // TEMPORARY until PC port has ThreadBucket execution
-#ifdef REBUILD_PC
+#ifdef REBUILD_PS1
 				// temporary test without thread execution
 				if(D230.titleObj != 0)
 				{

@@ -52,7 +52,7 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   ptrTitle = (struct Title *)obj;
 
   // no instances yet
-#ifndef REBUILD_PC
+#ifndef REBUILD_PS1
   // loop 6 times
   for (i = 0; i < 6; i++)
   {

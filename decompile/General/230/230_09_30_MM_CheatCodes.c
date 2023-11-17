@@ -466,7 +466,7 @@ void DECOMP_MM_ParseCheatCodes()
 	// so store this code here
 	#if 1
 	char* info = "Date/Time in CheatCodes.c";
-	#ifdef REBUILD_PC
+	#ifdef REBUILD_PS1
 	DECOMP_DecalFont_DrawLine("NO SOUND YET", 	50, 179, FONT_BIG, RED);
 	#endif
 	DECOMP_DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, ORANGE);
