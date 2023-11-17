@@ -51,7 +51,7 @@ void DECOMP_CTR_Box_DrawClearBox(RECT* r, u_int* colorPtr, int transparency, u_l
 
 	if (primMem_curr <= primMem->endMin100)
 	{
-		primMem->curr = (void*)((int)primMem_curr + 0x20);
+		primMem->curr = (void*)((int)primMem_curr + 0x18);
 		p = (multiCmdPacket*)primMem_curr;
 	}
 	if (p != 0)
