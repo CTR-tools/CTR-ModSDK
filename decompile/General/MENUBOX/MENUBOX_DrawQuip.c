@@ -1,0 +1,36 @@
+#include <common.h>
+
+void DECOMP_MENUBOX_DrawQuip(char *comment, short startX, int startY, u_int sizeX, short fontType,
+                             int textFlag, short boxFlag)
+{
+  int posX = startX;
+  int width;
+  u_int sizeY;
+
+  if ((sizeX & 0xffff) == 0)
+  {
+    width = DecalFont_GetLineWidth(comment, fontType);
+    sizeX = width + 0xc;
+  }
+
+  // if text is not centered
+  if ((textFlag & 0x8000) != 0)
+  {
+    // posX with text un-centered
+    posX = startX - (sizeX>>1);
+  }
+
+  sizeY = (u_int)data.PlayerCommentBoxParams[fontType];
+
+  // Draw string
+  DecalFont_DrawLine(comment,
+                     startX, (data.PlayerCommentBoxParams[4 + fontType] + startY),
+                     fontType, textFlag);
+
+  RECT r;
+  r.x = posX;
+  r.y = startY;
+  r.w = sizeX;
+  r.h = sizeY;
+  MENUBOX_DrawInnerRect(&r, boxFlag, sdata->gGT->backBuffer->otMem.startPlusFour);
+}
