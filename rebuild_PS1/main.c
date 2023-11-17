@@ -231,11 +231,16 @@
 #include "../decompile/General/UI/UI_Map_DrawMap.c"
 
 // 230
+// only put these in the EXE for REBUILD_PC,
+// REBUILD_PS1 puts them on BuildList.txt,
+// cause R230 and D230 in the symbol table
+// go to the overlay
 #ifdef REBUILD_PC
 #include "../decompile/General/230/R230.c"
 #include "../decompile/General/230/D230.c"
 #endif
 
+// 230
 #include "../decompile/General/230/1_Block1.c"
 #include "../decompile/General/230/230_39_MM_AdvNewLoad_GetMenuBox.c"
 #include "../decompile/General/230/1_Block2.c"
