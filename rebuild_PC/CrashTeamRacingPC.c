@@ -1,10 +1,16 @@
-#define _CRT_SECURE_NO_WARNINSG
+#define _CRT_SECURE_NO_WARNINGS
 #define REBUILD_PC
-#include "Library/LIBCD.H"
-#include "Library/LIBGPU.H"
-#include "Library/LIBSPU.H"
-#include "Library/KERNEL.H"
+#include "psx/types.h"
+#include "psx/libetc.h"
+#include "psx/libgte.h"
+#include "psx/libgpu.h"
+#include "psx/libspu.h"
+#include "psx/libcd.h"
+#include "psx/libapi.h"
+#include "psx/strings.h"
 #include "psx/inline_c.h"
+#include "PsyX/PsyX_public.h"
+#include "PsyX/PsyX_globals.h"
 #define u_char unsigned char
 #define u_short unsigned short
 #define u_int unsigned int
@@ -12,7 +18,7 @@
 #define _Static_assert(x) ;
 #define __attribute__(x) ;
 #define BUILD 926
-#define RECT PSX_RECT
+#define RECT RECT16
 
 #include "../rebuild_PS1/main.c"
 #include "../decompile/General/zGlobal_DATA.c"
