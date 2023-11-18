@@ -122,8 +122,13 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
 #ifndef REBUILD_PS1
     iVar10->animFrame = 0;
     iVar10->vertSplit = 0;
-  
+
+#if 0
     uVar4 = DECOMP_MM_Characters_GetModelByName(data.MetaDataCharacters[(int)*ptrCurr].name_Debug);
+#else
+	struct Model* MM_Characters_GetModelByID(int id);
+	uVar4 = MM_Characters_GetModelByID(*ptrCurr);
+#endif
   
     // set modelPtr in Instance
     iVar10->model = uVar4;
