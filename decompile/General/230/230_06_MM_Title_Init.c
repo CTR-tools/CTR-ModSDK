@@ -17,10 +17,9 @@ void DECOMP_MM_Title_Init(void)
           
 			// You're not in transition between menus
 			(D230.MM_State != 2) &&
-#ifndef REBUILD_PS1
+
 			// model ptr (Title blue Ring)
 			(gGT->modelPtr[STATIC_RINGTOP] != 0) &&
-#endif
           
 			// IntroCam ptr exists
 			(gGT->level1->ptrSpawnType1->count > 2)

@@ -133,8 +133,8 @@ int DecalFont_DrawMultiLine(char* str, int posX, int posY, int maxPixLen, short 
 void DecalGlobal_EmptyFunc_MainFrame_ResetDB();
 void DecalGlobal_Clear(struct GameTracker* gGT);
 void DecalGlobal_Store(struct GameTracker* gGT, struct Icon* icon); // second parameter might be wrong --Super
-int* DecalGlobal_Find1(struct Level* level, char* str);
-int* DecalGlobal_Find2(u_int* param_1, char* str);
+int* DecalGlobal_FindInLEV(struct Level* level, char* str);
+int* DecalGlobal_FindInMPK(u_int* param_1, char* str);
 
 // DecalHUD
 

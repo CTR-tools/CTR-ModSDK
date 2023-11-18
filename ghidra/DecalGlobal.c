@@ -67,7 +67,7 @@ void FUN_80022bdc(int param_1,int *param_2)
 }
 
 
-// DecalGlobal_Find1
+// DecalGlobal_FindInLEV
 int * FUN_80022c88(int param_1,int *param_2)
 
 {
@@ -119,7 +119,7 @@ int * FUN_80022c88(int param_1,int *param_2)
 }
 
 
-// DecalGlobal_Find2
+// DecalGlobal_FindInMPK
 int * FUN_80022d2c(int *param_1,int *param_2)
 
 {

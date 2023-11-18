@@ -555,23 +555,23 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				// search algorithm depends on
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(lev, rdata.s_circle);
+				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_circle);
 				gGT->stars.unk[2] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(lev, rdata.s_clod);
+				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_clod);
 				gGT->ptrClod = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(lev, rdata.s_dustpuff);
+				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_dustpuff);
 				gGT->ptrDustpuff = uVar16;
 
 				// search for icon by string "Smoke Ring"
-				uVar16 = DecalGlobal_Find1(lev, rdata.s_smokering);
+				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_smokering);
 				gGT->ptrSmoking = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find1(lev, rdata.s_sparkle);
+				uVar16 = DecalGlobal_FindInLEV(lev, rdata.s_sparkle);
 				gGT->ptrSparkle = uVar16;
 			}
 
@@ -582,19 +582,19 @@ int LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* 
 				
 				// search for icon by string
 				//what even are these first arguments? --Super
-				uVar16 = DecalGlobal_Find2(piVar15, rdata.s_lightredoff);
+				uVar16 = DecalGlobal_FindInMPK(piVar15, rdata.s_lightredoff);
 				gGT->trafficLightIcon[0] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find2(piVar15, rdata.s_lightredon);
+				uVar16 = DecalGlobal_FindInMPK(piVar15, rdata.s_lightredon);
 				gGT->trafficLightIcon[1] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find2(piVar15, rdata.s_lightgreenoff);
+				uVar16 = DecalGlobal_FindInMPK(piVar15, rdata.s_lightgreenoff);
 				gGT->trafficLightIcon[2] = uVar16;
 
 				// search for icon by string
-				uVar16 = DecalGlobal_Find2(piVar15, rdata.s_lightgreenon);
+				uVar16 = DecalGlobal_FindInMPK(piVar15, rdata.s_lightgreenon);
 				gGT->trafficLightIcon[3] = uVar16;
 			}
 			gGT->gameMode1_prevFrame = 1;

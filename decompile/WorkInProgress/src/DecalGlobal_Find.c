@@ -1,6 +1,6 @@
 #include <common.h>
 
-struct IconGroup * DECOMP_DecalGlobal_Find1(struct Level *lev, int *checkBytes)
+struct IconGroup * DECOMP_DecalGlobal_FindInLEV(struct Level *lev, int *checkBytes)
 {
   struct LevTexLookup *lookup;
   struct IconGroup *curr;
@@ -39,7 +39,7 @@ struct IconGroup * DECOMP_DecalGlobal_Find1(struct Level *lev, int *checkBytes)
   return NULL;
 }
 
-int * DECOMP_DecalGlobal_Find2(int* curr, int* check)
+int * DECOMP_DecalGlobal_FindInMPK(int* curr, int* check)
 {
   while (*(char *)curr != 0)
   {

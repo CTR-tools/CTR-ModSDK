@@ -147,8 +147,8 @@
 8002451c DecalGlobal_EmptyFunc_MainFrame_ResetDB
 80024524 DecalGlobal_Clear
 80024564 DecalGlobal_Store
-80024610 DecalGlobal_Find1
-800246b4 DecalGlobal_Find2
+80024610 DecalGlobal_FindInLEV
+800246b4 DecalGlobal_FindInMPK
 
 80024738 DecalHUD_DrawPolyFT4
 8002484c DecalHUD_DrawWeapon
