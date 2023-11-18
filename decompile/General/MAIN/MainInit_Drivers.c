@@ -14,6 +14,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 
     gGT->numBotsNextGame = 0;
 
+#ifndef REBUILD_PS1
     if ((gameMode & (GAME_CUTSCENE | ADVENTURE_ARENA | MAIN_MENU)) == 0)
     {
         BOTS_Adv_AdjustDifficulty();
@@ -25,6 +26,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
     {
         RB_MinePool_Init();
     }
+#endif
 
     // Spawn all players,
 	// This MUST be in reverse order,
@@ -34,6 +36,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 		gGT->drivers[i] = VehInit_Player(i);
     }
 	
+#ifndef REBUILD_PS1
 	// spawn all AIs
     if (
         (
@@ -87,6 +90,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
         EngineAudio_InitOnce(0x10, 0x8080);
         EngineAudio_InitOnce(0x11, 0x8080);
     }
+#endif
 
     // if this is main menu
     if ((gameMode & MAIN_MENU) != 0)
@@ -98,6 +102,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
         }
     }
 
+#ifndef REBUILD_PS1
     // if you're in time trial, not main menu, not loading.
     // basically, if you're in time trial gameplay
     if ((gameMode & 0x20022000) == TIME_TRIAL)
@@ -106,4 +111,5 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 
         GhostTape_Start();
     }
+#endif
 }

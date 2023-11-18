@@ -4084,7 +4084,7 @@ LAB_80017218:
 	// robot Driver is 0x62c bytes large
     memset(iVar7,0,0x62c);
 
-	// Init NonGhost Driver
+	// VehInit_NonGhost
     FUN_80058d2c(iVar3,param_1);
 
 	// pointer to structure of each player, given param1 car ID

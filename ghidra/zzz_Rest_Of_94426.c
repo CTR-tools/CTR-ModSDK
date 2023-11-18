@@ -20179,7 +20179,7 @@ struct Driver* FUN_80058ec0(int param_1)
   // player Driver is 0x62C bytes large
   memset(iVar3,0,0x62c);
 
-  // Init NonGhost Driver
+  // VehInit_NonGhost
   FUN_80058d2c(iVar2,param_1);
 
   // Get Team that player chose from Battle Setup menu

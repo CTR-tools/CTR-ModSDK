@@ -146,6 +146,7 @@
 #include "../decompile/General/MAIN/MainDrawCb_Vsync.c"
 #include "../decompile/General/MAIN/MainFrame_RenderFrame.c"
 #include "../decompile/General/MAIN/MainFrame_ResetDB.c"
+#include "../decompile/General/MAIN/MainInit_Drivers.c
 #include "../decompile/General/MAIN/MainInit_JitPoolsNew.c"
 #include "../decompile/General/MAIN/MainInit_JitPoolsReset.c"
 #include "../decompile/General/MAIN/MainInit_OTMem.c"
@@ -229,6 +230,9 @@
 
 // UI
 #include "../decompile/General/UI/UI_Map_DrawMap.c"
+
+// VEH
+#include "../decompile/General/Vehicle/VehInit_Player.c"
 
 // 230
 // only put these in the EXE for REBUILD_PC,

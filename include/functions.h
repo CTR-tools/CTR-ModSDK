@@ -619,7 +619,7 @@ void MainInit_PrimMem(u_int* param_1);
 //MainInit_JitPoolsReset()
 void MainInit_OTMem(u_int* param_1);
 void MainInit_JitPoolsNew(u_int* param_1);
-//MainInit_Drivers()
+void MainInit_Drivers(struct GameTracker *gGT);
 void MainInit_FinalizeInit();
 int MainInit_StringToLevID(char* str);
 void MainInit_VRAMClear();

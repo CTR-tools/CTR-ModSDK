@@ -110,6 +110,7 @@ void DECOMP_MainDrawCb_DrawSync();
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT);
 
+void DECOMP_MainInit_Drivers(struct GameTracker *gGT);
 void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT);
 void DECOMP_MainInit_JitPoolsReset(struct GameTracker* gGT);
 void DECOMP_MainInit_PrimMem(struct GameTracker* gGT);
@@ -187,6 +188,8 @@ void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short pos
 void DECOMP_TitleFlag_DrawSelf();
 
 void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);
+
+struct Driver* DECOMP_VehInit_Player(int index);
 
 // 230
 void DECOMP_MM_Battle_DrawIcon_Character(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);

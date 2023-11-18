@@ -174,14 +174,12 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 
     DECOMP_MainInit_JitPoolsReset(gGT);
 
-#ifndef REBUILD_PS1
     // 0x1d7c
     gGT->trackLength_x_numLaps_x_8 =
         lev1->ptr_restart_points[0].distToFinish *
         gGT->numLaps * 8;
 
-    MainInit_Drivers(gGT);
-#endif
+    DECOMP_MainInit_Drivers(gGT);
 
     // assume 1P fov
     numPlyr = 1;
