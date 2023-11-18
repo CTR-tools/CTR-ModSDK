@@ -26,7 +26,7 @@ void DECOMP_CTR_Box_DrawClearBox(RECT* r, u_int* colorPtr, int transparency, u_l
 #endif
 
 		*(int*)&p->f4.tag = 0;
-		*(int*)&p->f4.r0 = *colorPtr;
+		setInt32RGB0(p->f4)
 		p->f4.code = 0x2A;
 
 		short rightX = r->x + r->w;
