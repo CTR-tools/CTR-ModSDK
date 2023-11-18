@@ -10,7 +10,7 @@ struct Driver* DECOMP_VehInit_Player(int index)
 	struct Driver* d = t->object;
 	memset(d, 0, 0x62c);
 	
-	VehInit_NonGhost(d, index);
+	VehInit_NonGhost(t, index);
 	
 	d->funcPtrs[0] = VehPtr_Driving_Init;
 	

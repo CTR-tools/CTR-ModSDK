@@ -20136,7 +20136,7 @@ void FUN_80058d2c(int param_1,int param_2)
   // give instance to driver
   *(int *)(iVar5 + 0x1c) = iVar4;
 
-  // initialize tire data
+  // VehInit_TireSprites
   FUN_80058c4c(param_1);
 
   // VehInit_SetConsts(driver*), based on driver class

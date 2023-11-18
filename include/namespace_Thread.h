@@ -118,7 +118,8 @@ struct Thread
 	int driver_unk1;
 
 	// 0x3c
-	int driver_unk2;
+	short driver_unk2;
+	short driver_unk3E;
 
 	// 0x40
 	short driver_unk3;

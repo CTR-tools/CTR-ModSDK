@@ -232,7 +232,7 @@
 #include "../decompile/General/UI/UI_Map_DrawMap.c"
 
 // VEH
-#include "../decompile/General/Vehicle/VehInit_Player.c"
+//#include "../decompile/General/Vehicle/VehInit_Player.c"
 
 // 230
 // only put these in the EXE for REBUILD_PC,

@@ -780,7 +780,7 @@ void FUN_80027838(void)
 	  // driver -> instSelf
       piVar7[7] = iVar6;
 
-	  // initialize tire data
+	  // VehInit_TireSprites
       FUN_80058c4c();
 
 	  // VehInit_SetConsts(driver*), based on driver class
