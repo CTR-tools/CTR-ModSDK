@@ -9,11 +9,13 @@ void DECOMP_INSTANCE_Birth(
 	
 	gGT = sdata->gGT;
 	
+#ifndef REBUILD_PS1
 	// copy name
 	for(i = 0; i < 16; i++)
 	{
 		inst->name[i] = name[i];
 	}
+#endif
 	
 	inst->unk50 = 0xfe;
 	inst->unk51 = 0xc;

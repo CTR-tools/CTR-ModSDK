@@ -52,7 +52,6 @@ void DECOMP_MM_Title_Init(void)
 
     title->t = t;
 
-#ifndef REBUILD_PS1
     // create 6 instances
     for (n = 0; n < 6; n++)
     {
@@ -85,7 +84,6 @@ void DECOMP_MM_Title_Init(void)
         idpp[m].tileView = 0;
       }
     }
-#endif
 
     DECOMP_MM_Title_CameraMove(title, 0);
   }
