@@ -5,7 +5,7 @@ void VehPtr_Driving_Init();
 struct Driver* DECOMP_VehInit_Player(int index)
 {
 	struct Thread* t =
-		THREAD_BirthWithObject(0x62c0100, 0, 0, 0);
+		DECOMP_THREAD_BirthWithObject(0x62c0100, 0, 0, 0);
 		
 	struct Driver* d = t->object;
 	memset(d, 0, 0x62c);

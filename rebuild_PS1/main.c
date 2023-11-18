@@ -146,7 +146,7 @@
 #include "../decompile/General/MAIN/MainDrawCb_Vsync.c"
 #include "../decompile/General/MAIN/MainFrame_RenderFrame.c"
 #include "../decompile/General/MAIN/MainFrame_ResetDB.c"
-#include "../decompile/General/MAIN/MainInit_Drivers.c
+#include "../decompile/General/MAIN/MainInit_Drivers.c"
 #include "../decompile/General/MAIN/MainInit_JitPoolsNew.c"
 #include "../decompile/General/MAIN/MainInit_JitPoolsReset.c"
 #include "../decompile/General/MAIN/MainInit_OTMem.c"
