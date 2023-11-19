@@ -33,9 +33,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 	// because of threadBucket linked list order
     for (i = numPlyrCurrGame-1; i >= 0; i--)
     {
-		#ifndef REBUILD_PS1
 		gGT->drivers[i] = DECOMP_VehInit_Player(i);
-		#endif
     }
 	
 #ifndef REBUILD_PS1
@@ -100,9 +98,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 		// fill up 4 players
         for (i = numPlyrCurrGame; i < 4; i++)
         {
-			#ifndef REBUILD_PS1
             gGT->drivers[i] = DECOMP_VehInit_Player(i);
-			#endif
         }
     }
 
