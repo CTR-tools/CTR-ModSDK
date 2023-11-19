@@ -15,31 +15,41 @@ struct Model* VehInit_GetModelByName(char *searchName)
         m = models[i];
 
         // 12/16 bytes is enough
-        if (m != NULL &&
-            (*(u_int *)&m->name[0] == *(u_int *)&searchName[0]) &&
-            (*(u_int *)&m->name[4] == *(u_int *)&searchName[4]) &&
-            (*(u_int *)&m->name[8] == *(u_int *)&searchName[8]))
+        if (
+				(m != NULL) &&
+				(*(u_int *)&m->name[0] == *(u_int *)&searchName[0]) &&
+				(*(u_int *)&m->name[4] == *(u_int *)&searchName[4]) &&
+				(*(u_int *)&m->name[8] == *(u_int *)&searchName[8]) &&
+				(*(u_int *)&m->name[12] == *(u_int *)&searchName[12])
+			)
         {
             // character found, return pointer
             return m;
         }
     }
 
-    // if PLYROBJECTLIST is not nullptr
-    if ((sdata->PLYROBJECTLIST != NULL) &&
-        // make sure elements of PLYROBJECTLIST are valid
-        (sdata->PLYROBJECTLIST[0] != NULL))
-    {
-        // PLYROBJECTLIST, used for arcade (6-8 players)
-        models = sdata->PLYROBJECTLIST;
+	models = sdata->PLYROBJECTLIST;
 
+    if (
+			// list is valid, and first element is valid
+			(models != NULL) &&
+			(models[0] != NULL)
+		)
+    {
         // loop until all strings are checked (until current is not nullptr)
-        for (i = 0; m = models[i], m != NULL; i++)
+        for (
+				i = 0,	m = models[i]; 
+				m != NULL; 
+				i++,	m = models[i]
+			)
         {
 			// 12/16 bytes is enough
-            if ((*(u_int *)&m->name[0] == *(u_int *)&searchName[0]) &&
-                (*(u_int *)&m->name[4] == *(u_int *)&searchName[4]) &&
-                (*(u_int *)&m->name[8] == *(u_int *)&searchName[8]))
+            if (
+					(*(u_int *)&m->name[0] == *(u_int *)&searchName[0]) &&
+					(*(u_int *)&m->name[4] == *(u_int *)&searchName[4]) &&
+					(*(u_int *)&m->name[8] == *(u_int *)&searchName[8]) &&
+					(*(u_int *)&m->name[12] == *(u_int *)&searchName[12])
+				)
             {
                 // character found, return pointer
                 return m;
