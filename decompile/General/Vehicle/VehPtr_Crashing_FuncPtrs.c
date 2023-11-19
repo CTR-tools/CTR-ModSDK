@@ -45,7 +45,7 @@ void DECOMP_VehPtr_Crashing_Animate(struct Thread* t, struct Driver* d)
 	// If crashing animation is not finished, quit function
 	if(
 		(inst->animFrame+1) <
-		Instance_GetNumAnimFrames(inst, inst->animIndex)
+		VehAnim_Instance_GetNumAnimFrames(inst, inst->animIndex)
 	  )
 	{
 		return;
@@ -60,11 +60,11 @@ void DECOMP_VehPtr_Crashing_Animate(struct Thread* t, struct Driver* d)
 	// start halfway into steer animation
 	inst->animFrame = 
 		
-		Instance_GetStartFrame(
+		VehAnim_Instance_GetStartFrame(
 			
 			0, // midpoint
 			
-			Instance_GetNumAnimFrames(
+			VehAnim_Instance_GetNumAnimFrames(
 				inst, // driver instance
 				0	  // anim #0, steer
 			)

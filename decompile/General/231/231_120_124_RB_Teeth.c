@@ -140,7 +140,7 @@ void DECOMP_RB_Teeth_ThTick(struct Thread* t)
 	// modify animation index by direction
     inst->animFrame = inst->animFrame + teeth->direction;
 	
-    iVar1 = Instance_GetNumAnimFrames(inst,0);
+    iVar1 = VehAnim_Instance_GetNumAnimFrames(inst,0);
 	
 	// if animation is not on last frame
     if ((int)inst->animFrame < iVar1) 

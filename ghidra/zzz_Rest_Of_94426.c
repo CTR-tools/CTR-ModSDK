@@ -20126,7 +20126,7 @@ void FUN_80058d2c(int param_1,int param_2)
   // "If driver belongs to human player"
   if (param_2 < (int)(uint)(byte)PTR_DAT_8008d2ac[0x1ca8])
   {
-	// thread flag
+	// instance flag
     *(uint *)(iVar4 + 0x28) = *(uint *)(iVar4 + 0x28) | 0x4000000;
   }
 

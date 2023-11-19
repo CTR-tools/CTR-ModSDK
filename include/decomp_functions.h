@@ -190,6 +190,7 @@ void DECOMP_TitleFlag_DrawSelf();
 void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);
 
 struct Driver* DECOMP_VehInit_Player(int index);
+void DECOMP_VehInit_NonGhost(struct Thread* t, int index);
 
 // 230
 void DECOMP_MM_Battle_DrawIcon_Character(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);

@@ -8,7 +8,7 @@ void DECOMP_VehPtr_StopSpin_Animate(struct Thread* t, struct Driver* d)
 	struct Instance* inst;
 	inst = t->inst;
 	
-	numFrames = Instance_GetNumAnimFrames(inst, inst->animIndex);
+	numFrames = VehAnim_Instance_GetNumAnimFrames(inst, inst->animIndex);
 	
 	// if you are spinning right
 	if(d->KartStates.Spinning.spinDir == -1)
@@ -53,11 +53,11 @@ void DECOMP_VehPtr_StopSpin_Animate(struct Thread* t, struct Driver* d)
 	// desired halfway into steer animation
 	numFrames = 
 		
-		Instance_GetStartFrame(
+		VehAnim_Instance_GetStartFrame(
 			
 			0, // midpoint
 			
-			Instance_GetNumAnimFrames(
+			VehAnim_Instance_GetNumAnimFrames(
 				inst, // driver instance
 				0	  // anim #0, steer
 			)

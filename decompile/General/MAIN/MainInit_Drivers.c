@@ -34,7 +34,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
     for (i = numPlyrCurrGame-1; i >= 0; i--)
     {
 		#ifndef REBUILD_PS1
-		gGT->drivers[i] = VehInit_Player(i);
+		gGT->drivers[i] = DECOMP_VehInit_Player(i);
 		#endif
     }
 	
@@ -101,7 +101,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
         for (i = numPlyrCurrGame; i < 4; i++)
         {
 			#ifndef REBUILD_PS1
-            gGT->drivers[i] = VehInit_Player(i);
+            gGT->drivers[i] = DECOMP_VehInit_Player(i);
 			#endif
         }
     }

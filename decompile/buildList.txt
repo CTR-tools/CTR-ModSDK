@@ -577,7 +577,8 @@ common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
 
 // VEH Init
-//ommon, exe, VehInit_Player, 0x0, General/Vehicle/VehInit_Player.c
+common, exe, VehInit_Player, 0x0, General/Vehicle/VehInit_Player.c
+common, exe, VehInit_NonGhost, 0x0, General/Vehicle/VehInit_NonGhost.c
 common, exe, VehInit_SetConsts, 0x0, General/Vehicle/VehInit_SetConsts.c
 common, exe, VehInit_TeleportAll, 0x0, General/Vehicle/VehInit_TeleportAll.c
 
