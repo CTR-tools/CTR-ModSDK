@@ -862,8 +862,8 @@
 8005abfc Turbo_Increment
 
 // VehAnim
-8005b0c4 Instance_GetStartFrame
-8005b0f4 Instance_GetNumAnimFrames
+8005b0c4 VehAnim_Instance_GetStartFrame
+8005b0f4 VehAnim_Instance_GetNumAnimFrames
 8005b178 OnAnimate_Driving
 8005b510 OnAnimate_Spinning
 8005b5fc OnAnimate_LastSpin
