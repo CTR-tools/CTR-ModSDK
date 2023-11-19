@@ -581,6 +581,7 @@ common, exe, VehInit_Player, 0x0, General/Vehicle/VehInit_Player.c
 common, exe, VehInit_NonGhost, 0x0, General/Vehicle/VehInit_NonGhost.c
 common, exe, VehInit_SetConsts, 0x0, General/Vehicle/VehInit_SetConsts.c
 common, exe, VehInit_TeleportAll, 0x0, General/Vehicle/VehInit_TeleportAll.c
+common, exe, VehInit_GetModelByName, 0x0, General/Vehicle/VehInit_GetModelByName.c
 
 // VEH PTR
 common, exe, VehPtr_Crashing_PhysAngular, 0x0, General/Vehicle/VehPtr_Crashing_FuncPtrs.c
