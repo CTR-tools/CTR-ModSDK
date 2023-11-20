@@ -1,4 +1,4 @@
-#define NUM_ROWS 4
+#define UDCTRM_RO_NUM_ROWS 4
 #define UDCTRM_RO_MenuBoxBG_w 350
 #define UDCTRM_RO_MenuBoxBG_x SCREEN_WIDTH/2 - 350/2
 #define UDCTRM_RO_MenuBoxBG_y SCREEN_HEIGHT/2 - 74/2
