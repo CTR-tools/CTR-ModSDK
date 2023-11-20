@@ -13,11 +13,18 @@
 //////////////////////////////////////////
 //////////////////////////////////////////
 
+//////// Title screen options menu ////////
+
+common, 230, MM_MENUBOX_Main, 0x0, src/Options_Menu/230_31_MM_MENUBOX_Main.c
+common, 230, MM_Title_MenuUpdate, 0x0, src/Options_Menu/230_02_MM_Title_MenuUpdate.c
+
+// Replace MenuRows of main menu
+common, 230, 0x800b454c, 0x0, src/Options_Menu/OptionsMenu_MenuRowInsert.c
+
 ////////////// Race options //////////////
 
 // Modify track list menu
 common, 230, MM_TrackSelect_MenuBox, 0x0, src/Race_Options/MM_TrackSelect_MenuBox_Hook.s
-common, 230, MM_EndOfFile, 0x0, src/Race_Options/RaceOptions.c src/Race_Options/230_56_MM_TrackSelect_MenuBox.c
 
 ///////////////////////////////////////////
 ///////////////////////////////////////////
@@ -46,6 +53,9 @@ common, exe, Turbo_Increment, 0x0, src/Packaged_Mods/Retro-Fueled/AllowUSFStacki
 common, exe, OnCollide_Drivers, 0x0, src/Packaged_Mods/Retro-Fueled/OopsAllSuperTurboPads.c
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Compile at the end of 230 overlay binary //
+common, 230, MM_EndOfFile, 0x0, src/Race_Options/RaceOptions.c src/Race_Options/230_56_MM_TrackSelect_MenuBox.c src/Options_Menu/OptionsMenu_Insert.c src/Options_Menu/OptionsMenu.c
 
 // Compile code to empty spaces in RDATA //
 common, exe, rdata_free, 0x0, src/Packaged_Mods/Retro-Fueled/KeepU-TurnReserves.c src/Packaged_Mods/Retro-Fueled/BlueFireModeInt.c src/Packaged_Mods/Retro-Fueled/BlueFire.c
