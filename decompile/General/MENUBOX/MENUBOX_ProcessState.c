@@ -48,16 +48,19 @@ void DECOMP_MENUBOX_ProcessState()
 	{
 		currMenuBox->unk1e = 1;
 		currMenuBox->funcPtr(currMenuBox);
+		
+		// check if funcPtr changed "state"
+		state = currMenuBox->state;
 	}
-	
-	// check if funcPtr changed "state"
-	state = currMenuBox->state;
 	
 	// if not character selection
 	if((state & DISABLE_INPUT_ALLOW_FUNCPTRS) == 0)
 	{
 		// process button input for menu
 		DECOMP_MENUBOX_ProcessInput(currMenuBox);
+		
+		// check if ProcessInput changed "state"
+		state = currMenuBox->state;
 		
 		// if MenuBox border is not invisible
 		if((state & INVISIBLE) == 0)

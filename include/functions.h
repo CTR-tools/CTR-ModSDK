@@ -186,7 +186,7 @@ void GAMEPAD_Init(struct GamepadSystem* gGamepads);
 //GAMEPAD_SetMainMode()
 //GAMEPAD_ProcessState()
 void GAMEPAD_PollVsync(struct GamepadSystem* gGamepads);
-void GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads);
+int GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessHold(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessSticks(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessTapRelease(struct GamepadSystem* gGamepads);
