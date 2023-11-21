@@ -19,7 +19,7 @@ void DECOMP_MainDrawCb_Vsync()
 
 #ifndef REBUILD_PS1
 	howl_PlayAudio_Update();
-	GAMEPAD_CheckUnplugged(sdata->gGamepads);	
+	GAMEPAD_PollVsync(sdata->gGamepads);	
 #endif
 	return;
 }

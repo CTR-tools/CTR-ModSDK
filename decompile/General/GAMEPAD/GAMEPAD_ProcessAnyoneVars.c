@@ -9,7 +9,7 @@ void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads)
 
   // determine which buttons are held this frame,
   // store a backup of "currFrame" into "lastFrame"
-  uVar1 = GAMEPAD_ProcessHold(gGamepads);
+  GAMEPAD_ProcessHold(gGamepads);
 
   // handle mapping of D-Pad and
   // analog stick values onto each other
@@ -17,7 +17,7 @@ void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads)
 
   // Writes all gamepad variables
   // for Tap and Release, based on Hold
-  uVar2 = GAMEPAD_ProcessTapRelease(gGamepads);
+  GAMEPAD_ProcessTapRelease(gGamepads);
 
   GAMEPAD_ProcessForceFeedback(gGamepads);
 

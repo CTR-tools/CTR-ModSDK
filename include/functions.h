@@ -185,7 +185,7 @@ void ElimBG_Deactivate(struct GameTracker* gGT);
 void GAMEPAD_Init(struct GamepadSystem* gGamepads);
 //GAMEPAD_SetMainMode()
 //GAMEPAD_ProcessState()
-void GAMEPAD_CheckUnplugged(struct GamepadSystem* gGamepads);
+void GAMEPAD_PollVsync(struct GamepadSystem* gGamepads);
 u_int GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads);
 u_int GAMEPAD_ProcessHold(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessSticks(struct GamepadSystem* gGamepads);

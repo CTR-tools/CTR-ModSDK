@@ -174,7 +174,7 @@
 8002537c GAMEPAD_Init
 800253e0 GAMEPAD_SetMainMode
 80025478 GAMEPAD_ProcessState
-800255e8 GAMEPAD_CheckUnplugged
+800255e8 GAMEPAD_PollVsync
 800257c0 GAMEPAD_GetNumConnected
 // extra appears here in Sep3
 8002592c GAMEPAD_ProcessHold

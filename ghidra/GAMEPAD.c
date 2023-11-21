@@ -125,7 +125,7 @@ void FUN_800252a0(int param_1,int param_2,undefined4 param_3)
 
 // check for unplugged gamepads in VsyncCallback
 
-// GAMEPAD_CheckUnplugged
+// GAMEPAD_PollVsync
 void FUN_80025410(int param_1)
 
 {
@@ -467,7 +467,7 @@ uint FUN_800255b4(int param_1)
 // param1 is pointer to gamepadSystem
 
 // GAMEPAD_ProcessHold
-uint FUN_80025718(int param_1)
+void FUN_80025718(int param_1)
 
 {
   uint uVar1;
@@ -576,7 +576,6 @@ uint FUN_80025718(int param_1)
     param_1 = param_1 + 0x50;
 
   } while (iVar6 < 8);
-  return uVar7;
 }
 
 
@@ -897,7 +896,7 @@ LAB_80025be4:
 // also maps joysticks onto buttons
 
 // GAMEPAD_ProcessTapRelease
-uint FUN_80025d10(int param_1)
+void FUN_80025d10(int param_1)
 
 {
   char cVar1;
@@ -974,7 +973,6 @@ LAB_80025dbc:
       iVar3 = iVar3 + 0x50;
     } while (iVar5 < *(int *)(param_1 + 0x314));
   }
-  return uVar4;
 }
 
 // noping this disables force feedback completely
