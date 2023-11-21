@@ -51,7 +51,10 @@
 #include "../decompile/General/DISPLAY/DISPLAY_Swap.c"
 
 #include "../decompile/General/GAMEPAD/GAMEPAD_Init.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_PollVsync.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_GetNumConnected.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_ProcessAnyoneVars.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_ProcessTapRelease.c"
 
 #include "../decompile/General/GAMEPROG/GAMEPROG_ResetHighScores.c"
 // skip

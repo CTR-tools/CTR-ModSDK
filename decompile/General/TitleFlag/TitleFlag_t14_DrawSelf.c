@@ -4,17 +4,10 @@
 int scratchpadBuf[0x1000];
 #endif
 
-typedef struct Color
-{
-	u_char R;
-	u_char G;
-	u_char B;
-} Color;
-
 void DECOMP_TitleFlag_DrawSelf()
 {
 	char i, j;
-	char column, row;
+	char rows, columns;
 	u_char toggle;
 	short flagPos;
 	u_long *ot;
@@ -22,11 +15,7 @@ void DECOMP_TitleFlag_DrawSelf()
 	u_int screenlimit;
 	u_int dimensions;
 	int approx[2];
-	int colorSine[2];
-	u_char brightnessRight;
-	u_char brightnessLeft;
-	u_char rightRGB[3];
-	u_char leftRGB[3];
+	int setColor[2];
 	u_int angle[2];
 	u_int *top;
 	u_int *bottom;
@@ -43,8 +32,8 @@ void DECOMP_TitleFlag_DrawSelf()
 	int unk1;
 	int unk2;
 	int waveAngle;
-	int unk3;
-	int unk4;
+	int brightness;
+	int darkness;
 	int time;
 
 	if (sdata->TitleFlag_CanDraw == 0)
@@ -61,12 +50,12 @@ void DECOMP_TitleFlag_DrawSelf()
 			goto SKIP_LOADING_TEXT;
 	}
 
-	TitleFlag_DrawLoadingString();
+	DECOMP_TitleFlag_DrawLoadingString();
 
 SKIP_LOADING_TEXT:
 
 	sdata->TitleFlag_CopyLoadStage = sdata->Loading.stage;
-	ot = (u_long *)TitleFlag_GetOT();
+	ot = (u_long *)DECOMP_TitleFlag_GetOT();
 
 	gte_SetRotMatrix(&data.matrixTitleFlag);
 	gte_SetTransMatrix(&data.matrixTitleFlag);
@@ -94,7 +83,7 @@ SKIP_LOADING_TEXT:
 		data.checkerFlagVariables[0] += 0x200;
 
 		// Range: [1.0, 2.0]
-		approx[0] = MATH_Sin(data.checkerFlagVariables[0]) + 0xfff;
+		approx[0] = DECOMP_MATH_Sin(data.checkerFlagVariables[0]) + 0xfff;
 
 		// Range: [16, 32] + 0x96
 		data.checkerFlagVariables[1] = (approx[0] * 0x20 >> 0xd) + 0x96;
@@ -103,14 +92,14 @@ SKIP_LOADING_TEXT:
 		data.checkerFlagVariables[2] = data.checkerFlagVariables[2] + 200;
 
 		// Range: [1.0, 2.0]
-		approx[0] = MATH_Sin(data.checkerFlagVariables[2]) + 0xfff;
+		approx[0] = DECOMP_MATH_Sin(data.checkerFlagVariables[2]) + 0xfff;
 
 		// Range: [32, 64] + 0xb4
 		data.checkerFlagVariables[3] = (approx[0] * 0x40 >> 0xd) + 0xb4;
 	}
 
 	// Range: [1.0, 2.0]
-	approx[0] = MATH_Sin(angle[0]) + 0xfff;
+	approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
 	approx[0] = approx[0] * data.checkerFlagVariables[1];
 	approx[0] = (approx[0] >> 0xd) + 0x280;
 
@@ -118,8 +107,7 @@ SKIP_LOADING_TEXT:
 	angle[0] += 0xc80;
 
 	// Range: [1.0, 2.0]
-	colorSine[0] = MATH_Sin(angle[0]) + 0xfff;
-	FP(1.0);
+	setColor[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
 
 	time = sdata->TitleFlag_ElapsedTime >> 5;
 	angle[0] = time;
@@ -142,7 +130,7 @@ SKIP_LOADING_TEXT:
 			j++, vect++)
 		{
 			// Range: [1.0, 2.0]
-			approx[1] = MATH_Sin(angle[0]) + 0xfff;
+			approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
 			angle[0] += 300;
 
 			vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
@@ -165,11 +153,11 @@ SKIP_LOADING_TEXT:
 	unk1 = data.checkerFlagVariables[0];
 	unk2 = data.checkerFlagVariables[1];
 	waveAngle = data.checkerFlagVariables[2];
-	unk3 = data.checkerFlagVariables[3];
-	unk4 = data.checkerFlagVariables[4];
+	brightness = data.checkerFlagVariables[3];
+	darkness = data.checkerFlagVariables[4];
 
 	// vertical strips
-	for (column = 0; column < 35; column++)
+	for (rows = 1; rows < 35; rows++)
 	{
 #ifdef REBUILD_PC
 		top = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
@@ -182,21 +170,21 @@ SKIP_LOADING_TEXT:
 #endif
 
 		// increment
-		unk4 += unk3 * 0x40;
-		angle[0] = unk4;
+		darkness += brightness * 0x40;
+		angle[0] = darkness;
 		angle[1] = (int)angle[0] >> 5;
 
 		if (0xfff < angle[1])
 		{
 			angle[1] = (int)(angle[0] & 0x1ffff) >> 5;
-			unk4 = angle[0] & 0x1ffff;
+			darkness = angle[0] & 0x1ffff;
 
 			// increment
 			unk1 += 0x200;
 			angle[0] = unk1;
 
 			// Range: [1.0, 2.0]
-			approx[0] = MATH_Sin(angle[0]) + 0xfff;
+			approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
 
 			// Range: [16, 32] + 0x96
 			unk2 = (approx[0] * 0x20 >> 0xd) + 0x96;
@@ -206,21 +194,21 @@ SKIP_LOADING_TEXT:
 			angle[0] = waveAngle;
 
 			// Range: [1.0, 2.0]
-			approx[0] = MATH_Sin(angle[0]) + 0xfff;
+			approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
 
 			// Range: [32, 64] + 0xb4
-			unk3 = (approx[0] * 0x40 >> 0xd) + 0xb4;
+			brightness = (approx[0] * 0x40 >> 0xd) + 0xb4;
 		}
 
 		// Range: [1.0, 2.0]
-		approx[0] = MATH_Sin(angle[1]) + 0xfff;
+		approx[0] = DECOMP_MATH_Sin(angle[1]) + 0xfff;
 		approx[0] = (approx[0] * unk2 >> 0xd) + 0x280;
 
 		// 280 degrees
 		angle[1] += 0xc80;
 
 		// range: [1.0, 2.0]
-		colorSine[1] = MATH_Sin(angle[1]) + 0xfff;
+		setColor[1] = DECOMP_MATH_Sin(angle[1]) + 0xfff;
 
 		pos[0].vy = 0xfc72;
 		pos[1].vy = 0xfcd0;
@@ -239,7 +227,7 @@ SKIP_LOADING_TEXT:
 			i++, vect++)
 		{
 			// Range: [1.0, 2.0]
-			approx[1] = MATH_Sin(angle[0]) + 0xfff;
+			approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
 			angle[0] += 300;
 
 			// change all vector posZ
@@ -252,32 +240,34 @@ SKIP_LOADING_TEXT:
 		i = 0;
 
 		// horizontal strips
-		for (row = 0; row < 10; row++)
+		for (columns = 1; columns < 10; columns++)
 		{
-			gte_stsxy3((long *)(top + 1), (long *)(top + 2), (long *)(top + 3));
-
-			if (row < 9)
+			if (columns < 11)
 			{
-				for (
-					j = 0, vect = &pos[0];
-					j < 3;
-					j++, vect++)
+				gte_stsxy3((long *)(top + 1), (long *)(top + 2), (long *)(top + 3));
+
+				if (columns < 10)
 				{
-					// Range: [1.0, 2.0]
-					approx[1] = MATH_Sin(angle[0]) + 0xfff;
-					angle[0] += 300;
+					for (
+						j = 0, vect = &pos[0];
+						j < 3;
+						j++, vect++)
+					{
+						// Range: [1.0, 2.0]
+						approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+						angle[0] += 300;
 
-					// change all vector posZ
-					vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
+						// change all vector posZ
+						vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
+					}
+
+					pos[0].vy += 0x11a;
+					pos[1].vy += 0x11a;
+					pos[2].vy += 0x11a;
+					gte_ldv3(&pos[0], &pos[1], &pos[2]);
+					gte_rtpt();
 				}
-
-				pos[0].vy += 0x11a;
-				pos[1].vy += 0x11a;
-				pos[2].vy += 0x11a;
-				gte_ldv3(&pos[0], &pos[1], &pos[2]);
-				gte_rtpt();
 			}
-
 			if (i == 0)
 			{
 				top++;
@@ -300,38 +290,22 @@ SKIP_LOADING_TEXT:
 					if (p == 0)
 						return;
 
-					// Change this for custom tilecolors;
-					Color lightTile = {255, 255, 255}; // default: white
-					Color darkTile = {160, 160, 160};  // default: grey
+					char colorRight;
+					char colorLeft;
 
-					// dark tile
-					Color CurrTile = darkTile;
-					int positiveConstant = 0x69;
-					int negativeConstant = -0x37;
-					int something = 0xA0;
-
-					// light tile
-					if (((column >> 2) + (i >> 2) & 1U) == 0)
+					// white tile
+					if (((rows >> 2) + (i >> 2) & 1U) == 0)
 					{
-						CurrTile = lightTile;
-						positiveConstant = 0x82;
-						negativeConstant = -0x7d;
-						something = 0xFF;
+						colorRight = (setColor[0] * 0x82 + (0x2000 - setColor[0]) * 0xff >> 0xd);
+						colorLeft = (setColor[1] * -0x7d + 0x1fe000 >> 0xd);
 					}
 
-					// Calculate color brightness
-					// You don't have to do use either dark/light tile calculations,
-					// you can use the same calculation constants for both left and right
-					brightnessRight = (u_char)((colorSine[0] * positiveConstant + (0x2000 - colorSine[0]) * something) >> 0xD);
-					brightnessLeft = (u_char)((colorSine[1] * negativeConstant + (something << 0xD)) >> 0xD);
-
-					rightRGB[0] = (CurrTile.R * brightnessRight) >> 8;
-					rightRGB[1] = (CurrTile.G * brightnessRight) >> 8;
-					rightRGB[2] = (CurrTile.B * brightnessRight) >> 8;
-
-					leftRGB[0] = (CurrTile.R * brightnessLeft) >> 8;
-					leftRGB[1] = (CurrTile.G * brightnessLeft) >> 8;
-					leftRGB[2] = (CurrTile.B * brightnessLeft) >> 8;
+					// black tile
+					else
+					{
+						colorRight = (setColor[0] * 0x69 + (0x2000 - setColor[0]) * 0xa0 >> 0xd);
+						colorLeft = (setColor[1] * -0x37 + 0x140000 >> 0xd);
+					}
 
 					// positions
 					*(int *)&p->x0 = bottom[0];
@@ -339,16 +313,16 @@ SKIP_LOADING_TEXT:
 					*(int *)&p->x1 = top[0];
 					*(int *)&p->x3 = top[1];
 
-					// right corner
-					setRGB0(p, rightRGB[0], rightRGB[1], rightRGB[2]);
-					setRGB2(p, rightRGB[0], rightRGB[1], rightRGB[2]);
-
-					// left corner
-					setRGB1(p, leftRGB[0], leftRGB[1], leftRGB[2]);
-					setRGB3(p, leftRGB[0], leftRGB[1], leftRGB[2]);
+					// color
+					setRGB0(p, colorRight, colorRight, colorRight);
+					setRGB2(p, colorRight, colorRight, colorRight);
 
 					// prim/code
 					setPolyG4(p);
+
+					// color
+					setRGB1(p, colorLeft, colorLeft, colorLeft);
+					setRGB3(p, colorLeft, colorLeft, colorLeft);
 
 					// Prim/OT
 					// addPrim(ot, p); works but uses more instructions.
@@ -357,7 +331,8 @@ SKIP_LOADING_TEXT:
 				}
 			}
 		}
-		colorSine[0] = colorSine[1];
+		// Alternate starting color on each new row
+		setColor[0] = setColor[1];
 	}
 	sdata->TitleFlag_ElapsedTime += gGT->elapsedTimeMS * 100;
 }
