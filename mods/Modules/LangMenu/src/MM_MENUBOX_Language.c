@@ -47,10 +47,21 @@ void MM_MENUBOX_Language(struct MenuBox *mb)
     goto LOAD_LNG;
   }
 
-  if ((row > -1) && (row < 6))
+  if (
+      (row > -1) &&
+#if BUILD == JpnRetail
+      (row < 7)
+#else
+      (row < 6)
+#endif
+  )
   {
   LOAD_LNG:
-    gGT->langIndex = langIndex[row + 1];
+    gGT->langIndex = langIndex[row
+#if BUILD != JpnRetail
+                               + 1
+#endif
+    ];
     gGT->gameMode2 |= 0x10000000; // LANG_CHANGE
   }
 
@@ -58,6 +69,18 @@ void MM_MENUBOX_Language(struct MenuBox *mb)
   mb->ptrPrevBox_InHierarchy->state &= ~(DRAW_NEXT_MENU_IN_HIERARCHY | ONLY_DRAW_TITLE);
 };
 
+#if BUILD == JpnRetail
+struct MenuRow rows_language[] =
+    {
+        [0] = MENU_ROW(642, 0, 1, 0, 0),
+        [1] = MENU_ROW(133, 0, 2, 1, 1),
+        [2] = MENU_ROW(134, 1, 3, 2, 2),
+        [3] = MENU_ROW(135, 2, 4, 3, 3),
+        [4] = MENU_ROW(136, 3, 5, 4, 4),
+        [5] = MENU_ROW(137, 4, 6, 5, 5),
+        [6] = MENU_ROW(138, 5, 6, 6, 6),
+        [7] = FINALIZER_ROW};
+#else
 struct MenuRow rows_language[] =
     {
         [0] = MENU_ROW(133, ROW_ENGLISH, ROW_FRENCH, ROW_ENGLISH, ROW_FRENCH),
@@ -66,8 +89,8 @@ struct MenuRow rows_language[] =
         [3] = MENU_ROW(136, ROW_GERMAN, ROW_SPANISH, ROW_GERMAN, ROW_SPANISH),
         [4] = MENU_ROW(137, ROW_ITALIAN, ROW_DUTCH, ROW_ITALIAN, ROW_DUTCH),
         [5] = MENU_ROW(138, ROW_SPANISH, ROW_DUTCH, ROW_SPANISH, ROW_DUTCH),
-        [6] = FINALIZER_ROW
-        };
+        [6] = FINALIZER_ROW};
+#endif
 
 struct MenuBox menubox_language =
     {
@@ -79,15 +102,17 @@ struct MenuBox menubox_language =
         .rows = rows_language,
         .funcPtr = MM_MENUBOX_Language,
         .width = 171,
-        .height = 120
-};
+        .height = 120};
 
-struct MenuBox* MM_Menubox_LanguageBoot(struct GameTracker* gGT) 
+struct MenuBox *MM_Menubox_LanguageBoot(struct GameTracker *gGT)
 {
-  if (!gGT->notFoundInCode2) {
+  if (!gGT->notFoundInCode2)
+  {
     timer = 900;
     return &menubox_language;
-  } else {
+  }
+  else
+  {
     return &D230.menubox_mainMenu;
   }
 };

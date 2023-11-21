@@ -16,9 +16,6 @@ void LOAD_LangFile(int bigfilePtr, int lang)
 	int numStrings;
 	char **strArray;
 
-	CTR_ErrorScreen(0, 0, 0);
-	VSync(0);
-
 #if BUILD != JpnRetail
 	if (sdata->lngFile == 0)
 	{
@@ -43,4 +40,7 @@ void LOAD_LangFile(int bigfilePtr, int lang)
 			(unsigned int)strArray[i] +
 			(unsigned int)lngFile;
 	}
+
+	CTR_ErrorScreen(0, 0, 0);
+	VSync(0);
 }

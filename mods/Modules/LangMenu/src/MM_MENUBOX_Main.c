@@ -8,6 +8,21 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   struct GameTracker *gGT = sdata->gGT;
   struct MenuBox *nextBox;
 
+  // if scrapbook is unlocked, change "rows" to extended array
+  if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
+  {
+    // so it doesn't do this again once rewritten
+    if (mainMenu->rows[7].stringIndex < 0)
+    {
+      mainMenu->rows[6].rowOnPressDown = 7;
+      #if BUILD == JpnRetail
+      mainMenu->rows[7].stringIndex = 0x240;
+      #else
+      mainMenu->rows[7].stringIndex = 0x234;
+      #endif
+    }
+  }
+
   MM_ParseCheatCodes();
 
   MM_ToggleRows_Difficulty();
@@ -161,6 +176,15 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     menubox_language.state = (CENTER_ON_X | 0x400000);
     menubox_language.width = 141;
     nextBox = &menubox_language;
+    break;
+    // Scrapbook
+#if BUILD == JpnRetail
+  case 0x240:
+#else
+  case 0x234: 
+#endif
+    D230.desiredMenu = 5;
+    D230.MM_State = 2;
     break;
   }
   if (nextBox)
