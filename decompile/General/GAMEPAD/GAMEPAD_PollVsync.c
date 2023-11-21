@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
+void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
 {
     u_int uVar2;
     u_int uVar4;
@@ -51,7 +51,8 @@ void GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
                 // to this gamepad port. 1 for no mtap, 4 for mtap
                 for (char i = 0; i < maxPadsPerPort; i++)
                 {
-                    pad = gGamepads->gamepad[i];
+                    pad = &gGamepads->gamepad[i];
+					
                     // if this is not a multitap,
                     // skip next block, and just start
                     // if-body with ptrPadBuff
@@ -69,6 +70,7 @@ void GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
                     {
                         uVar4 = (port << 4) | i;
 
+						#ifndef REBUILD_PS1
                         // according to libref
                         // 0 - PadStateDisCon
                         // 1 - PadStateFindPad
@@ -76,7 +78,8 @@ void GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
                         uVar2 = PadGetState(uVar4);
 
                         GAMEPAD_ProcessState(pad, uVar2, uVar4);
-                    }
+						#endif
+					}
                     // increment gamepad counter
                     numConnected++;
                 }
@@ -90,9 +93,9 @@ void GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
     {
         for (;
              numConnected < 8;
-             numConnected++;)
+             numConnected++)
         {
-            pad = gGamepads->gamepad[numConnected];
+            pad = &gGamepads->gamepad[numConnected];
             // no analog sticks found
             pad->gamepadType = 0;
         }

@@ -282,10 +282,8 @@ FinishLoading:
 				// frame counter, not represented in common.h currently
 				sdata->frameCounter++;
 
-#ifndef REBUILD_PS1
 				// Process all gamepad input
-				GAMEPAD_ProcessAnyoneVars(sdata->gGamepads);
-#endif
+				DECOMP_GAMEPAD_ProcessAnyoneVars(sdata->gGamepads);
 
 				#ifdef FastBoot
 				// disable spawn

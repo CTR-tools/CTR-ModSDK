@@ -11,7 +11,7 @@ typedef struct Color
 	u_char B;
 } Color;
 
-void TitleFlag_DrawSelf()
+void DECOMP_TitleFlag_DrawSelf()
 {
 	char i, j;
 	char column, row;

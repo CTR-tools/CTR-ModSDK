@@ -26,6 +26,14 @@ void DECOMP_DISPLAY_Swap(void);
 
 // gamepad
 void DECOMP_GAMEPAD_Init(struct GamepadSystem* gGamepads);
+void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem* gGamepads);
+void DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads);
+void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem* gGamepads);
+void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem* gGamepads);
+void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem* gGamepads);
+void DECOMP_GAMEPAD_ProcessForceFeedback(struct GamepadSystem* gGamepads);
+void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads);
+
 void DECOMP_GAMEPROG_NewGame_OnBoot();
 void DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 
