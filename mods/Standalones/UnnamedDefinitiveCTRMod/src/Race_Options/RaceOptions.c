@@ -17,12 +17,12 @@ force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
 
 		if (buttonsTapped & BTN_UP)
 		{
-			UDCTRM_RO_rowSelected = (UDCTRM_RO_rowSelected + (NUM_ROWS - 1)) % NUM_ROWS;
+			UDCTRM_RO_rowSelected = (UDCTRM_RO_rowSelected + (UDCTRM_RO_NUM_ROWS - 1)) % UDCTRM_RO_NUM_ROWS;
 		}
 
 		if (buttonsTapped & BTN_DOWN)
 		{
-			UDCTRM_RO_rowSelected = (UDCTRM_RO_rowSelected + 1) % NUM_ROWS;
+			UDCTRM_RO_rowSelected = (UDCTRM_RO_rowSelected + 1) % UDCTRM_RO_NUM_ROWS;
 		}
 	}
 

@@ -121,7 +121,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
   switch (D230.desiredMenu)
   {
 
-  // advanture character selection
+  // adventure character selection
   case 0:
   
     DECOMP_MM_Title_KillThread();
