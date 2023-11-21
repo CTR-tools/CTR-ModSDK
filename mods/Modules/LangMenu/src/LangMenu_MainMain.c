@@ -131,10 +131,10 @@ u_int main()
 			InitGeom();
 
 			// width / 2, and height / 2
-			SetGeomOffset(0x100, 0x78);
+			gte_SetGeomOffset(0x100, 0x78);
 
 			// "distance" to screen, alters FOV
-			SetGeomScreen(0x140);
+			gte_SetGeomScreen(0x140);
 
 			RenderBucket_InitDepthGTE();
 			Vector_BakeMatrixTable();
