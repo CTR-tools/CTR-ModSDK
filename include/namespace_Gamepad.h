@@ -102,7 +102,7 @@ struct GamepadBuffer
 	short gamepadType;
 
 	// 0x28
-	short framesSinceLastInput;
+	unsigned short framesSinceLastInput;
 
 	// 0x2A
 	char motorCurr[2];

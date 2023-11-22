@@ -7,11 +7,11 @@ void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads)
   unsigned int uVar2;
   struct GamepadBuffer* pad;
 
-#ifndef REBUILD_PS1
   // determine which buttons are held this frame,
   // store a backup of "currFrame" into "lastFrame"
-  GAMEPAD_ProcessHold(gGamepads);
+  DECOMP_GAMEPAD_ProcessHold(gGamepads);
 
+#ifndef REBUILD_PS1
   // handle mapping of D-Pad and
   // analog stick values onto each other
   GAMEPAD_ProcessSticks(gGamepads);
