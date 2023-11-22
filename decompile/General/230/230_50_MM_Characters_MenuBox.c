@@ -695,8 +695,10 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 			DECOMP_MENUBOX_DrawInnerRect(
 				&r60, 9, &gGT->backBuffer->otMem.startPlusFour[3]);
 			
+			#ifndef REBUILD_PS1
 			r60.x = 0;
 			r60.y = 0;
+			#endif
 		
 			DECOMP_MENUBOX_DrawRwdBlueRect
 			(
