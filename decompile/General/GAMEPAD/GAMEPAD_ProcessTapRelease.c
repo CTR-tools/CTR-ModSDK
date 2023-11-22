@@ -29,6 +29,12 @@ void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
         }
         else
         {
+			// temporary, until GAMEPAD_ProcessSticks
+			// is finished and ready to go
+			#ifdef REBUILD_PS1
+			cVar1 = 0;
+			#endif
+			
             if (cVar1 != 0)
             {
                 if (pad->stickLX < 0x20)
