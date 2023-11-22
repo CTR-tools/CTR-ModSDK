@@ -27,6 +27,11 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 		numPortsPerSlot = 4;
 	}
 	
+#ifdef REBUILD_PC
+	numSlots = 1;
+	numPortsPerSlot = 4;
+#endif
+	
 	padIndex = 0;
 	numConnected = 0;
 	bitwiseConnected = 0;

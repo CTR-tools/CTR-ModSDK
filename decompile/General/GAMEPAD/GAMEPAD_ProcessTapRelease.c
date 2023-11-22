@@ -7,13 +7,11 @@
 void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
 {
     char cVar1;
-    u_int heldPrev;
     struct GamepadBuffer *pad;
 
     char numConnected = gGamepads->numGamepadsConnected;
 
     cVar1 = sdata->unk_padSetActAlign[6];
-    heldPrev = 0;
 
     if (!numConnected)
         return;
@@ -63,9 +61,6 @@ void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
                     }
                 }
             }
-
-            // get buttons held this frame
-            heldPrev |= pad->buttonsHeldCurrFrame;
 
             // tapped
             pad->buttonsTapped = ~pad->buttonsHeldPrevFrame & pad->buttonsHeldCurrFrame;
