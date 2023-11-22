@@ -75,9 +75,9 @@ u_int DECOMP_main()
 
 				DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 				DECOMP_MainInit_FinalizeInit(gGT);
+				DECOMP_GAMEPAD_GetNumConnected(sdata->gGamepads);
 				
 #ifndef REBUILD_PS1				
-				GAMEPAD_GetNumConnected(sdata->gGamepads);
 				sdata->boolSoundPaused = 0;
 				VehInit_EngineAudio_AllPlayers();
 #endif
