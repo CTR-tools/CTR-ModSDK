@@ -19,7 +19,7 @@ common, 230, MM_MENUBOX_Main, 0x0, src/Options_Menu/230_31_MM_MENUBOX_Main.c
 common, 230, MM_Title_MenuUpdate, 0x0, src/Options_Menu/230_02_MM_Title_MenuUpdate.c
 
 // Replace MenuRows of main menu
-common, 230, 0x800b454c, 0x0, src/Options_Menu/OptionsMenu_MenuRowInsert.c
+common, 230, 0x800b454c, 0x0, src/Options_Menu/OptionsMenu_MenuRowPointer.c
 
 ////////////// Race options //////////////
 
