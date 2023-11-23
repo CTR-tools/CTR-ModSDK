@@ -1300,7 +1300,11 @@ void RenderSubmit(struct GameTracker* gGT)
 	// swap=1, get db[0]
 	gGT->frontBuffer = &gGT->db
 		[
+			#ifdef REBUILD_PC
+			0
+			#else
 			1 - gGT->swapchainIndex
+			#endif
 		];
 		
 	gGT->bool_DrawOTag_InProgress = 1;

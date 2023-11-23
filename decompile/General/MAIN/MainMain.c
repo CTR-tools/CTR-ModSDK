@@ -482,6 +482,7 @@ void StateZero()
 	DECOMP_MainInit_VRAMClear();
 
 	SetDispMask(1);
+	
 	SetDefDrawEnv(&gGT->db[0].drawEnv, 0, 0, 0x200, 0xd8);
 	SetDefDrawEnv(&gGT->db[1].drawEnv, 0, 0x128, 0x200, 0xd8);
 	SetDefDispEnv(&gGT->db[0].dispEnv, 0, 0x128, 0x200, 0xd8);
@@ -589,9 +590,11 @@ void StateZero()
 	DrawSync(0);
 	
 	#ifndef FastBoot
+	#ifndef REBUILD_PC
 	// Load Intro TIM for "SCEA Presents" from VRAM file
 	DECOMP_LOAD_VramFile(sdata->ptrBigfile1, 0x1fd, 0, &vramSize, 0xffffffff);
 	DECOMP_MainInit_VRAMDisplay();
+	#endif
 	#endif
 	
 	// \SOUNDS\KART.HWL;1

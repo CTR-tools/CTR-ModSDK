@@ -700,21 +700,11 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 			r60.y = 0;
 			#endif
 		
-			#if 0//#ifdef REBUILD_PC
-			int* otDrawLast_ClosestDepth;
-			otDrawLast_ClosestDepth = gGT->ot_tileView_UI[gGT->swapchainIndex];
-			DECOMP_MENUBOX_DrawRwdBlueRect
-			(
-				&r60.x, &D230.characterSelect_BlueRectColors[0],
-				&otDrawLast_ClosestDepth[5], &gGT->backBuffer->primMem
-			);
-			#else
 			DECOMP_MENUBOX_DrawRwdBlueRect
 			(
 				&r60.x, &D230.characterSelect_BlueRectColors[0],
 				&gGT->tileView[i].ptrOT[0x3ff], &gGT->backBuffer->primMem
-			);	
-			#endif
+			);
 		}
 	}
 	return;
