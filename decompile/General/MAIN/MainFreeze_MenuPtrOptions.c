@@ -101,14 +101,14 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 		local_60 = (numRacingWheels + 1) * 10;
 	}
 	iVar7 = (int)((u_int)areThereRacingWheels << 0x10) >> 0x11;
-	data.Options_HighlightBar_PosY[8][0] = sVar8 * -10 + 0x77;
+	data.Options_HighlightBar[8].posY = sVar8 * -10 + 0x77;
 	i = 0;
 	if (0 < (short)numRacingWheels)
 	{
 		iVar10 = 0;
 		do
 		{
-			data.Options_HighlightBar_PosY[(iVar10 >> 0x10) + 4][0] = (short)((u_int)iVar10 >> 0x10) * 10 + 0x4f;
+			data.Options_HighlightBar[(iVar10 >> 0x10) + 4].posY = (short)((u_int)iVar10 >> 0x10) * 10 + 0x4f;
 			i = i + 1;
 			iVar10 = i * 0x10000;
 		} while (i * 0x10000 >> 0x10 < (int)(short)numRacingWheels);
@@ -126,13 +126,13 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 				uVar6 = (u_short)(iVar10 != 0);
 			}
 			i = i + 1;
-			data.Options_HighlightBar_PosY[(int)(short)numRacingWheels + sVar8 + 4][0] = (sVar8 + numRacingWheels + uVar6) * 10 + 0x4f;
+			data.Options_HighlightBar[(int)(short)numRacingWheels + sVar8 + 4].posY = (sVar8 + numRacingWheels + uVar6) * 10 + 0x4f;
 			iVar10 = (u_int)numAnalogGamepads << 0x10;
 		} while (i * 0x10000 < iVar10);
 	}
 	uVar6 = mb->drawStyle & 0xfeff;
 	mb->drawStyle = uVar6;
-	if (2 < gGT->numPlyrCurrGame)
+	if (2 < sdata->gGT->numPlyrCurrGame)
 	{
 		mb->drawStyle = uVar6 | 0x100;
 	}
@@ -360,7 +360,13 @@ switchD_80038f90_caseD_9:
 					uVar15 = ORANGE;
 				}
 				// "CONTROLLER 1", "CONTROLLER 2", "CONTROLLER 1A", "CONTROLLER 1B", "CONTROLLER 1C", "CONTROLLER 1D"
-				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)((uVar13 + gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], (short)((u_int)(iVar12 * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), FONT_SMALL, uVar15);
+				DecalFont_DrawLine
+				(
+					sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)((uVar13 + gamepadSlotBufferMeta1) * 0x10000) >> 0xf))],
+					(short)((u_int)(iVar12 * 0x10000) >> 0x10),
+					(short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10),
+					FONT_SMALL, uVar15
+				);
 				if ((sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_Vibration_PerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0)
 				{
 					// "VIBRATE ON"
@@ -376,7 +382,13 @@ switchD_80038f90_caseD_9:
 				{
 					uVar15 = WHITE;
 				}
-				DecalFont_DrawLine(*dualshockVibrateString, (short)((u_int)((iVar12 + i + 10) * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), FONT_SMALL, uVar15);
+				DecalFont_DrawLine
+				(
+					*dualshockVibrateString,
+					(short)((u_int)((iVar12 + i + 10) * 0x10000) >> 0x10),
+					(short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10),
+					FONT_SMALL, uVar15
+				);
 				iVar14 = iVar14 + 1;
 				iVar10 = iVar14 * 0x10000;
 			} while (iVar14 * 0x10000 < (int)((u_int)numRacingWheels << 0x10));
@@ -391,7 +403,13 @@ switchD_80038f90_caseD_9:
 		{
 			do
 			{
-				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)(((u_int)local_b0[(short)i] + (u_int)gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], 0x100, (short)((iVar7 + (u_int)local_60 + (short)i * 10 + 100) * 0x10000 >> 0x10), FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
+				DecalFont_DrawLine
+				(
+					sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)(((u_int)local_b0[(short)i] + (u_int)gamepadSlotBufferMeta1) * 0x10000) >> 0xf))],
+					0x100,
+					(short)((iVar7 + (u_int)local_60 + (short)i * 10 + 100) * 0x10000 >> 0x10),
+					FONT_SMALL, (JUSTIFY_CENTER | ORANGE)
+				);
 				i = i + 1;
 			} while (i * 0x10000 >> 0x10 < iVar12);
 		}
@@ -401,8 +419,8 @@ switchD_80038f90_caseD_9:
 
 	glowingcursor.x = 0x4a;
 	glowingcursor.w = 0x16c;
-	glowingcursor.y = data.Options_HighlightBar_PosY[mb->rowSelected][0] + sVar4 + 0x14;
-	glowingcursor.h = data.Options_HighlightBar_PosY[mb->rowSelected][1];
+	glowingcursor.y = data.Options_HighlightBar[mb->rowSelected].posY + sVar4 + 0x14;
+	glowingcursor.h = data.Options_HighlightBar[mb->rowSelected].sizeY;
 	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 
 	titleSeparatorLine.x = 66;
