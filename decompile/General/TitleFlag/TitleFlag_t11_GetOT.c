@@ -14,7 +14,7 @@ int DECOMP_TitleFlag_GetOT(void)
 	
 	// on PC, the gGT->tileView[X].ptrOT
 	// is not connected to the main swapchain OT
-	#ifdef REBUILD_PC
+	#if 0//#ifdef REBUILD_PC
 	otDrawFirst_FarthestDepth = &otDrawLast_ClosestDepth[5];
 	#endif
 

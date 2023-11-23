@@ -85,7 +85,7 @@ void PsyXKeyboardHandler(int key, char down)
 
 int main()
 {
-	PsyX_Initialise("CTRPC", 800, 600, 0);
+	PsyX_Initialise("CTRPC", 640*3, 480*3, 0);
 	PsyX_CDFS_Init("ctr-u.bin", 0, 0);
 
 	// set to 30 FPS VSync
