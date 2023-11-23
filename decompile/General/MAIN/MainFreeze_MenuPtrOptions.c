@@ -360,7 +360,13 @@ switchD_80038f90_caseD_9:
 					uVar15 = ORANGE;
 				}
 				// "CONTROLLER 1", "CONTROLLER 2", "CONTROLLER 1A", "CONTROLLER 1B", "CONTROLLER 1C", "CONTROLLER 1D"
-				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)((uVar13 + gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], (short)((u_int)(iVar12 * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), FONT_SMALL, uVar15);
+				DecalFont_DrawLine
+				(
+					sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)((uVar13 + gamepadSlotBufferMeta1) * 0x10000) >> 0xf))],
+					(short)((u_int)(iVar12 * 0x10000) >> 0x10),
+					(short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10),
+					FONT_SMALL, uVar15
+				);
 				if ((sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_Vibration_PerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0)
 				{
 					// "VIBRATE ON"
@@ -376,7 +382,13 @@ switchD_80038f90_caseD_9:
 				{
 					uVar15 = WHITE;
 				}
-				DecalFont_DrawLine(*dualshockVibrateString, (short)((u_int)((iVar12 + i + 10) * 0x10000) >> 0x10), (short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10), FONT_SMALL, uVar15);
+				DecalFont_DrawLine
+				(
+					*dualshockVibrateString,
+					(short)((u_int)((iVar12 + i + 10) * 0x10000) >> 0x10),
+					(short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10),
+					FONT_SMALL, uVar15
+				);
 				iVar14 = iVar14 + 1;
 				iVar10 = iVar14 * 0x10000;
 			} while (iVar14 * 0x10000 < (int)((u_int)numRacingWheels << 0x10));
@@ -391,7 +403,13 @@ switchD_80038f90_caseD_9:
 		{
 			do
 			{
-				DecalFont_DrawLine(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)(((u_int)local_b0[(short)i] + (u_int)gamepadSlotBufferMeta1) * 0x10000) >> 0xf))], 0x100, (short)((iVar7 + (u_int)local_60 + (short)i * 10 + 100) * 0x10000 >> 0x10), FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
+				DecalFont_DrawLine
+				(
+					sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)(((u_int)local_b0[(short)i] + (u_int)gamepadSlotBufferMeta1) * 0x10000) >> 0xf))],
+					0x100,
+					(short)((iVar7 + (u_int)local_60 + (short)i * 10 + 100) * 0x10000 >> 0x10),
+					FONT_SMALL, (JUSTIFY_CENTER | ORANGE)
+				);
 				i = i + 1;
 			} while (i * 0x10000 >> 0x10 < iVar12);
 		}
