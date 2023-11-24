@@ -471,11 +471,11 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 					*/
 
-					LINE_F3* p = primMem->curr;
+					POLY_F3* p = primMem->curr;
 					primMem->curr = p + 1;
 
 					// set Poly_LineF3 len, code, and padding
-					setLineF3(p);
+					setPolyF3(p);
 
 					// RGB
 					setRGB0(p,
