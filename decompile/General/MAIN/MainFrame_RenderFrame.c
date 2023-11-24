@@ -87,6 +87,13 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 #endif
 
 	MenuHighlight();
+	
+#ifdef REBUILD_PS1
+	void TEST_DrawInstances(struct GameTracker* gGT);
+	//RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
+	TEST_DrawInstances(gGT);
+	//RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
+#endif
 
 #ifndef REBUILD_PS1	
 	RenderAllWeather(gGT);

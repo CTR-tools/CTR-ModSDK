@@ -2,6 +2,9 @@
 
 #include <common.h>
 
+// not in OG game, just a test
+#include "TEST_DrawInstances.c"
+
 #include "../decompile/General/MAIN/MainMain.c"
 
 #include "../decompile/General/CAMERA/CAM_ClearScreen.c"
