@@ -5,8 +5,6 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 	struct OTMem* otMem = &gGT->backBuffer->otMem;
 	struct PrimMem* primMem = &gGT->backBuffer->primMem;
 
-	return;
-
 	for (
 			struct Instance* curr = gGT->JitPools.instance.taken.first;
 			curr != 0;
@@ -34,7 +32,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				setLineF3(p);
 
 				// RGB
-				setRGB0(p, i*0x20, 0, 0);
+				setRGB0(p, i*0x3F, 0, 0);
 
 				setXY3(p,
 					10, 10,		// XY0
