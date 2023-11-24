@@ -285,8 +285,19 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			MATRIX* mat2 = &curr->matrix;
 
 			// how do I multiply mat1 and mat2 together?
-			gte_SetRotMatrix(mat1);
-			gte_SetTransMatrix(mat1);
+			gte_SetRotMatrix(mat2);
+			gte_SetTransMatrix(mat2);
+
+#if 0
+			// test
+			posWorld1[0] = 0x100;
+			posWorld1[1] = 0x100;
+			posWorld1[2] = 0x500;
+			posWorld1[3] = 0;
+			gte_ldv0(&posWorld1[0]);
+			gte_rtps();
+			gte_stsxy(&posScreen1[0]);
+#endif
 
 			struct Model* m = curr->model;
 			struct ModelHeader* mh = &m->headers[0];
