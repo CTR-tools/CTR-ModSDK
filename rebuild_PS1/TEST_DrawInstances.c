@@ -58,7 +58,11 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				setLineF3(p);
 
 				// RGB
-				setRGB0(p, i*0x3F, 0, 0);
+				setRGB0(p, 
+							data.ptrColor[PLAYER_BLUE + i][0], 
+							data.ptrColor[PLAYER_BLUE + i][0]>>8, 
+							data.ptrColor[PLAYER_BLUE + i][0]>>16
+				);
 
 				posWorld1[0] = vertData[j * 9 + 0];
 				posWorld1[1] = vertData[j * 9 + 1];
