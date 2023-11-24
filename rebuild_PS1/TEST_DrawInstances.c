@@ -262,7 +262,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 		)
 	{
 		// temporary test
-		curr->model = &mCheese.mgti[0];
+		//curr->model = &mCheese.mgti[0];
 
 		for (int i = 0; i < gGT->numPlyrCurrGame; i++)
 		{
@@ -277,27 +277,28 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// when leaving character selection back to main menu
 			idpp[i].tileView = 0;
 
-			MATRIX* mat1 = &sdata->gGT->tileView[0].matrix_ViewProj;
+			// not this, this is identity matrix
+#if 0
+			MATRIX* mat1 = &view->matrix_ViewProj;
 			*(int*)&mat1->m[0][0] = 0x1000;
 			*(int*)&mat1->m[1][1] = 0x900; // -- temporary --
 			*(int*)&mat1->m[2][2] = 0x1000;
+#endif
 
+			// copy from running CTR instance in no$psx
 			MATRIX* mat2 = &curr->matrix;
+			*(int*)&mat2->m[0][0] = 0xEED;
+			*(int*)&mat2->m[0][2] = 0x5C2;
+			*(int*)&mat2->m[1][1] = 0xF000;
+			*(int*)&mat2->m[2][0] = 0x5C2;
+			*(int*)&mat2->m[2][2] = 0xFFFFF113;
+			mat2->t[0] = 0;
+			mat2->t[1] = 0x28;
+			mat2->t[2] = 0xC8;
 
 			// how do I multiply mat1 and mat2 together?
 			gte_SetRotMatrix(mat2);
 			gte_SetTransMatrix(mat2);
-
-#if 0
-			// test
-			posWorld1[0] = 0x100;
-			posWorld1[1] = 0x100;
-			posWorld1[2] = 0x500;
-			posWorld1[3] = 0;
-			gte_ldv0(&posWorld1[0]);
-			gte_rtps();
-			gte_stsxy(&posScreen1[0]);
-#endif
 
 			struct Model* m = curr->model;
 			struct ModelHeader* mh = &m->headers[0];
@@ -305,6 +306,65 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 			// 3FF is background, 3FE is next depth slot
 			void* ot = &view->ptrOT[0x3FE];
+
+#if 1
+			POLY_F3* p = primMem->curr;
+			primMem->curr = p + 1;
+
+			// set Poly_LineF3 len, code, and padding
+			setPolyF3(p);
+
+			// RGB
+			setRGB0(p,
+				data.ptrColor[PLAYER_BLUE + i][0],
+				data.ptrColor[PLAYER_BLUE + i][0] >> 8,
+				data.ptrColor[PLAYER_BLUE + i][0] >> 16
+			);
+
+			posWorld1[0] = ((mh->ptrFrameData->pos[0] + 0) * mh->scale[0]) >> 8;
+			posWorld1[1] = ((mh->ptrFrameData->pos[1] + 0) * mh->scale[1]) >> 8;
+			posWorld1[2] = ((mh->ptrFrameData->pos[2] - 0x200) * mh->scale[2]) >> 8;
+			posWorld1[3] = 0;
+			gte_ldv0(&posWorld1[0]);
+			gte_rtps();
+			gte_stsxy(&posScreen1[0]);
+
+			posWorld2[0] = ((mh->ptrFrameData->pos[0] + 0x80) * mh->scale[0]) >> 8;
+			posWorld2[1] = ((mh->ptrFrameData->pos[1] + 0xFF) * mh->scale[1]) >> 8;
+			posWorld2[2] = ((mh->ptrFrameData->pos[2] - 0x200) * mh->scale[2]) >> 8;
+			posWorld2[3] = 0;
+			gte_ldv0(&posWorld2[0]);
+			gte_rtps();
+			gte_stsxy(&posScreen2[0]);
+
+			posWorld3[0] = ((mh->ptrFrameData->pos[0] + 0xFF) * mh->scale[0]) >> 8;
+			posWorld3[1] = ((mh->ptrFrameData->pos[1] +    0) * mh->scale[1]) >> 8;
+			posWorld3[2] = ((mh->ptrFrameData->pos[2] - 0x200) * mh->scale[2]) >> 8;
+			posWorld3[3] = 0;
+			gte_ldv0(&posWorld3[0]);
+			gte_rtps();
+			gte_stsxy(&posScreen3[0]);
+
+			// to be in viewport, coordinates must be
+			// X: [0, 0x40]
+			// Y: [0, 0xA0]
+			setXY3(p,
+				posScreen1[0], posScreen1[1],	// XY0
+				posScreen2[0], posScreen2[1],	// XY1
+				posScreen3[0], posScreen3[1]);	// XY2
+
+			AddPrim(ot, p);
+
+
+
+			// ============================
+
+			continue;
+
+			// ============================
+#endif
+
+
 
 			//helper type, kinda same as RGB
 			//a 255 grid "compressed vertex" 0 = 0.0 and 255 = 1.0. 256 steps only.
@@ -448,6 +508,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 					gte_rtps();
 					gte_stsxy(&posScreen3[0]);
 
+					// to be in viewport, coordinates must be
+					// X: [0, 0x40]
+					// Y: [0, 0xA0]
 					setXY3(p,
 						posScreen1[0], posScreen1[1],	// XY0
 						posScreen2[0], posScreen2[1],	// XY1
