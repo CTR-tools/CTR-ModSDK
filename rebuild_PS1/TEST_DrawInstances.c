@@ -414,24 +414,24 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 					);
 
 					posWorld1[0] = ((mh->ptrFrameData->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
-					posWorld1[1] = ((mh->ptrFrameData->pos[1] + tempCoords[1].Y) * mh->scale[0]) >> 8;
-					posWorld1[2] = ((mh->ptrFrameData->pos[2] + tempCoords[1].Z) * mh->scale[0]) >> 8;
+					posWorld1[1] = ((mh->ptrFrameData->pos[1] + tempCoords[1].Y) * mh->scale[1]) >> 8;
+					posWorld1[2] = ((mh->ptrFrameData->pos[2] + tempCoords[1].Z) * mh->scale[2]) >> 8;
 					posWorld1[3] = 0;
 					gte_ldv0(&posWorld1[0]);
 					gte_rtps();
 					gte_stsxy(&posScreen1[0]);
 
 					posWorld2[0] = ((mh->ptrFrameData->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8;
-					posWorld2[1] = ((mh->ptrFrameData->pos[1] + tempCoords[2].Y) * mh->scale[0]) >> 8;
-					posWorld2[2] = ((mh->ptrFrameData->pos[2] + tempCoords[2].Z) * mh->scale[0]) >> 8;
+					posWorld2[1] = ((mh->ptrFrameData->pos[1] + tempCoords[2].Y) * mh->scale[1]) >> 8;
+					posWorld2[2] = ((mh->ptrFrameData->pos[2] + tempCoords[2].Z) * mh->scale[2]) >> 8;
 					posWorld2[3] = 0;
 					gte_ldv0(&posWorld2[0]);
 					gte_rtps();
 					gte_stsxy(&posScreen2[0]);
 
 					posWorld3[0] = ((mh->ptrFrameData->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8;
-					posWorld3[1] = ((mh->ptrFrameData->pos[1] + tempCoords[3].Y) * mh->scale[0]) >> 8;
-					posWorld3[2] = ((mh->ptrFrameData->pos[2] + tempCoords[3].Z) * mh->scale[0]) >> 8;
+					posWorld3[1] = ((mh->ptrFrameData->pos[1] + tempCoords[3].Y) * mh->scale[1]) >> 8;
+					posWorld3[2] = ((mh->ptrFrameData->pos[2] + tempCoords[3].Z) * mh->scale[2]) >> 8;
 					posWorld3[3] = 0;
 					gte_ldv0(&posWorld3[0]);
 					gte_rtps();
