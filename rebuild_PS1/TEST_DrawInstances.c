@@ -400,6 +400,50 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 					*/
 
+					LINE_F3* p = primMem->curr;
+					primMem->curr = p + 1;
+
+					// set Poly_LineF3 len, code, and padding
+					setLineF3(p);
+
+					// RGB
+					setRGB0(p,
+						data.ptrColor[PLAYER_BLUE + i][0],
+						data.ptrColor[PLAYER_BLUE + i][0] >> 8,
+						data.ptrColor[PLAYER_BLUE + i][0] >> 16
+					);
+
+					posWorld1[0] = ((mh->ptrFrameData->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
+					posWorld1[1] = ((mh->ptrFrameData->pos[1] + tempCoords[1].Y) * mh->scale[0]) >> 8;
+					posWorld1[2] = ((mh->ptrFrameData->pos[2] + tempCoords[1].Z) * mh->scale[0]) >> 8;
+					posWorld1[3] = 0;
+					gte_ldv0(&posWorld1[0]);
+					gte_rtps();
+					gte_stsxy(&posScreen1[0]);
+
+					posWorld2[0] = ((mh->ptrFrameData->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8;
+					posWorld2[1] = ((mh->ptrFrameData->pos[1] + tempCoords[2].Y) * mh->scale[0]) >> 8;
+					posWorld2[2] = ((mh->ptrFrameData->pos[2] + tempCoords[2].Z) * mh->scale[0]) >> 8;
+					posWorld2[3] = 0;
+					gte_ldv0(&posWorld2[0]);
+					gte_rtps();
+					gte_stsxy(&posScreen2[0]);
+
+					posWorld3[0] = ((mh->ptrFrameData->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8;
+					posWorld3[1] = ((mh->ptrFrameData->pos[1] + tempCoords[3].Y) * mh->scale[0]) >> 8;
+					posWorld3[2] = ((mh->ptrFrameData->pos[2] + tempCoords[3].Z) * mh->scale[0]) >> 8;
+					posWorld3[3] = 0;
+					gte_ldv0(&posWorld3[0]);
+					gte_rtps();
+					gte_stsxy(&posScreen3[0]);
+
+					setXY3(p,
+						posScreen1[0], posScreen1[1],	// XY0
+						posScreen2[0], posScreen2[1],	// XY1
+						posScreen3[0], posScreen3[1]);	// XY2
+
+					AddPrim(ot, p);
+
 					int x = *(int*)&tempCoords[0];
 
 					if ((flags & DRAW_CMD_FLAG_FLIP_NORMAL) != 0)
@@ -413,55 +457,6 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 				//proceed to the next command
 				pCmd++;
-			}
-
-			for (int j = 0; j < 6; j++)
-			{
-#if 0
-				LINE_F3* p = primMem->curr;
-				primMem->curr = p + 1;
-
-				// set Poly_LineF3 len, code, and padding
-				setLineF3(p);
-
-				// RGB
-				setRGB0(p, 
-							data.ptrColor[PLAYER_BLUE + i][0], 
-							data.ptrColor[PLAYER_BLUE + i][0]>>8, 
-							data.ptrColor[PLAYER_BLUE + i][0]>>16
-				);
-
-				posWorld1[0] = vertData[j * 9 + 0 + 14];
-				posWorld1[1] = vertData[j * 9 + 1 + 14];
-				posWorld1[2] = vertData[j * 9 + 2 + 14];
-				posWorld1[3] = 0;
-				gte_ldv0(&posWorld1[0]);
-				gte_rtps();
-				gte_stsxy(&posScreen1[0]);
-
-				posWorld2[0] = vertData[j * 9 + 3 + 14];
-				posWorld2[1] = vertData[j * 9 + 4 + 14];
-				posWorld2[2] = vertData[j * 9 + 5 + 14];
-				posWorld2[3] = 0;
-				gte_ldv0(&posWorld2[0]);
-				gte_rtps();
-				gte_stsxy(&posScreen2[0]);
-
-				posWorld3[0] = vertData[j * 9 + 6 + 14];
-				posWorld3[1] = vertData[j * 9 + 7 + 14];
-				posWorld3[2] = vertData[j * 9 + 8 + 14];
-				posWorld3[3] = 0;
-				gte_ldv0(&posWorld3[0]);
-				gte_rtps();
-				gte_stsxy(&posScreen3[0]);
-
-				setXY3(p,
-					posScreen1[0], posScreen1[1],	// XY0
-					posScreen2[0], posScreen2[1],	// XY1
-					posScreen3[0], posScreen3[1]);	// XY2
-
-				AddPrim(ot, p);
-#endif
 			}
 		}
 	}
