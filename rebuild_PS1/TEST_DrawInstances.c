@@ -11,12 +11,18 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			curr = curr->next
 		)
 	{
-		for (int i = 0; i < gGT->numPlyrNextGame; i++)
+		for (int i = 0; i < gGT->numPlyrCurrGame; i++)
 		{
+			if ((curr->flags & 0x80) != 0) continue;
+
 			struct InstDrawPerPlayer* idpp = INST_GETIDPP(curr);
 
 			struct TileView* view = idpp[i].tileView;
 			if (view == 0) continue;
+
+			// reset, might be off by one frame and glitch in the top-left corner,
+			// when leaving character selection back to main menu
+			idpp[i].tileView = 0;
 
 			struct Model* m = curr->model;
 

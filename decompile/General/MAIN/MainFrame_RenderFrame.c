@@ -1289,7 +1289,10 @@ void RenderFMV()
 #endif
 
 void RenderSubmit(struct GameTracker* gGT)
-{		
+{
+#ifdef REBUILD_PC
+	sdata->vsyncTillFlip = 2;
+#else
 	// do I need the "if"? will it ever be nullptr?
 	if(gGT->frontBuffer != 0)
 	{
@@ -1305,14 +1308,8 @@ void RenderSubmit(struct GameTracker* gGT)
 	
 	// swap=0, get db[1]
 	// swap=1, get db[0]
-	gGT->frontBuffer = &gGT->db
-		[
-			#ifdef REBUILD_PC
-			0
-			#else
-			1 - gGT->swapchainIndex
-			#endif
-		];
+	gGT->frontBuffer = &gGT->db[1 - gGT->swapchainIndex];
+#endif
 		
 	gGT->bool_DrawOTag_InProgress = 1;
 	
