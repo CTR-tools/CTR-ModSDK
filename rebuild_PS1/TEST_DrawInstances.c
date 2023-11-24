@@ -292,9 +292,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			*(int*)&mat2->m[1][1] = 0xF000;
 			*(int*)&mat2->m[2][0] = 0x5C2;
 			*(int*)&mat2->m[2][2] = 0xFFFFF113;
-			mat2->t[0] = 0;
-			mat2->t[1] = 0x28;
-			mat2->t[2] = 0xC8;
+			mat2->t[0] = -0x800;
+			mat2->t[1] = -0x328;
+			mat2->t[2] = 0x10C8;
 
 			// how do I multiply mat1 and mat2 together?
 			gte_SetRotMatrix(mat2);
@@ -307,7 +307,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// 3FF is background, 3FE is next depth slot
 			void* ot = &view->ptrOT[0x3FE];
 
-#if 1
+#if 0
 			POLY_F3* p = primMem->curr;
 			primMem->curr = p + 1;
 
@@ -413,7 +413,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				u_short texIndex = *pCmd & 0x1FF; //9 bits
 
 				// if got a new vertex, load it
-				if ((flags & DRAW_CMD_FLAG_NEW_VERTEX) != 0)
+				if ((flags & DRAW_CMD_FLAG_NEW_VERTEX) == 0)
 				{
 					//copy from vertex buffer to stack index
 					stack[stackIndex] = ptrVerts[vertexIndex];
