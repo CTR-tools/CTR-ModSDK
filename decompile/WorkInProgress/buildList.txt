@@ -1,3 +1,7 @@
+common, exe, CAM_ThTick, 0x0, src/CAM_ThTick_Hook.s
+common, exe, rdata_free, 0x0, src/CAM_ThTick_ghidra.c
+
+//common, exe, MainFreeze_MenuPtrOptions, 0x0, ../General/MAIN/MainFreeze_MenuPtrOptions.c
 
 // common, 230, MM_TrackSelect_MenuBox, 0x0, src/MM_TrackSelect_MenuBox_Hook.s
 // common, exe, rdata_free, 0x0, src/230/MM_TrackSelect_MenuBox.c

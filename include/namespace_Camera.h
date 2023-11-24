@@ -51,7 +51,7 @@ struct CameraDC
 	// 0x1c - ptrQuadBlock
 	// similar to driver +a0,
 	// quadblock camera is currently above
-	struct Quadblock* ptrQuadBlock;
+	struct QuadBlock* ptrQuadBlock;
 	
 	// 0x20
 	// VisMem->0x40[player], quadblock->0x44->0x0
