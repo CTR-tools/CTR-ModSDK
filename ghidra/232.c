@@ -102,7 +102,7 @@ void FUN_800abbdc(void)
             (*(short *)(iVar2 + 0x6a) * 0x40 + *(int *)(*(int *)(*(int *)(iVar2 + 8) + 0x18) + 0x14)
             + -0x18);
       
-	  // xxx = ptrVertexData
+	  // xxx = ptrFrameData
 	  *(undefined4 *)(*(int *)(iVar2 + 8) + 0xc0) =
            *(undefined4 *)
             (*(short *)(iVar2 + 0x6a) * 0x40 + *(int *)(*(int *)(*(int *)(iVar2 + 8) + 0x18) + 0x14)

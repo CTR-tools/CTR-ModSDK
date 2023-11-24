@@ -36913,10 +36913,10 @@ code_r0x8006a52c:
           *(undefined4 *)(in_at + 0xf8) = 0;
         }
 
-		// next origin
+		// ptrNextFrame
 		psVar20 = *(short **)(iVar12 + 0xc4);
 
-		// current origin
+		// ptrCurrFrame
 		puVar19 = *(ushort **)(iVar12 + 0xc0);
 
 		// if there is no pointer to next origin,
@@ -37364,16 +37364,25 @@ void FUN_8006aaa8(int *param_1,int param_2)
         *(undefined4 *)(iVar7 + 0xe0) = 0;
         *(undefined4 *)(iVar7 + 0xf8) = 0;
       }
+	  
+	  // idpp ptrNextFrame
       psVar17 = *(short **)(iVar12 + 0xc4);
-      puVar16 = *(ushort **)(iVar12 + 0xc0);
-      if (psVar17 == (short *)0x0) {
+      
+	  // idpp ptrCurrFrame
+	  puVar16 = *(ushort **)(iVar12 + 0xc0);
+      
+	  if (psVar17 == (short *)0x0) 
+	  {
+		// origin
         uVar5 = puVar16[1];
         uVar6 = puVar16[2];
         *(ushort *)(iVar7 + 0x30) = *puVar16 & 0x7fff;
         *(ushort *)(iVar7 + 0x32) = uVar5;
         *(int *)(iVar7 + 0x34) = (int)(short)uVar6;
       }
-      else {
+      else 
+	  {
+		// origin
         *(short *)(iVar7 + 0x30) = *puVar16 + *psVar17;
         *(short *)(iVar7 + 0x32) = puVar16[1] + psVar17[1];
         *(int *)(iVar7 + 0x34) = ((int)(short)puVar16[2] + (int)psVar17[2]) * 2;
@@ -37767,10 +37776,10 @@ code_r0x8006b030:
           *(undefined4 *)(in_at + 0xf8) = 0;
         }
 
-		// origin next frame
+		// ptrNextFrame
         psVar20 = *(short **)(iVar14 + 0xc4);
 
-		// origin this frame
+		// ptrCurrFrame
         puVar19 = *(ushort **)(iVar14 + 0xc0);
 
 		// no next frame,
@@ -37855,7 +37864,6 @@ code_r0x8006b030:
   gte_ldVZ2(uVar17);
   in_t3 = *(uint *)(in_at + 0x10c);
   gte_rtpt_b();
-  
   *(int *)(in_at + 0xc0) = iVar14;
   *(undefined4 *)(in_at + 0xc4) = uVar17;
   *(short *)(in_at + 0xce) = *(short *)(in_at + 0x44) - (short)((uint)iVar14 >> 0x10);
@@ -39160,20 +39168,31 @@ void FUN_8006c984(void)
              *(undefined4 *)(in_at + 0xe0) = 0;
              *(undefined4 *)(in_at + 0xf8) = 0;
            }
+		   
+		   // idpp ptrNextFrame
            psVar17 = *(short **)(iVar10 + 0xc4);
+		   
+		   // idpp ptrCurrFrame
            puVar16 = *(ushort **)(iVar10 + 0xc0);
-           if (psVar17 == (short *)0x0) {
+		   
+           if (psVar17 == (short *)0x0) 
+		   {
+			 // origin
              uVar3 = puVar16[1];
              uVar4 = puVar16[2];
              *(ushort *)(in_at + 0x30) = *puVar16 & 0x7fff;
              *(ushort *)(in_at + 0x32) = uVar3;
              *(int *)(in_at + 0x34) = (int)(short)uVar4;
            }
-           else {
+           
+		   else 
+		   {
+			 // origin
              *(ushort *)(in_at + 0x30) = *puVar16 + *psVar17;
              *(ushort *)(in_at + 0x32) = puVar16[1] + psVar17[1];
              *(int *)(in_at + 0x34) = ((int)(short)puVar16[2] + (int)psVar17[2]) * 2;
            }
+		   
            *(undefined4 *)(in_at + 0x58) = 0;
            puVar18 = *(undefined4 **)(iVar10 + 0xd0);
            iVar6 = **(int **)(iVar10 + 200);

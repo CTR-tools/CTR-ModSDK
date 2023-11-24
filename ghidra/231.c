@@ -8538,7 +8538,7 @@ int FUN_800b53e0(int param_1)
   // modelHeader->ptrCommands, skip 2 bytes (skip numColors)
   puVar4 = (uint *)(*(short **)(param_1 + 0x20) + 2);
   
-  // modelHeader->ptrVertexData
+  // modelHeader->ptrFrameData[modelHeader->ptrFrameData->vertexOffset]
   pbVar5 = (byte *)(*(int *)(param_1 + 0x24) + *(int *)(*(int *)(param_1 + 0x24) + 0x18));
   
   // if less than 64 colors found, quit
@@ -8613,7 +8613,7 @@ LAB_800b563c:
   // do not wave the banner, leave it flat
   if (3 < (byte)PTR_DAT_8008d2ac[0x1ca8]) 
   {
-	// modelHeader->ptrVertexData
+	// modelHeader->ptrFrameData[modelHeader->ptrFrameData->vertexOffset]
     uVar2 = *(int *)(param_1 + 0x24) + *(int *)(*(int *)(param_1 + 0x24) + 0x18);
     
 	uVar3 = uVar2 + (int)sVar8 * 3;
@@ -8655,7 +8655,7 @@ void FUN_800b56c4(int param_1,short param_2)
   // modelHeader -> ptrColors
   iVar7 = *(int *)(param_1 + 0x2c);
   
-  // modelHeader->ptrVertexData
+  // modelHeader->ptrFrameData[modelHeader->ptrFrameData->vertexOffset]
   pbVar6 = (byte *)(*(int *)(param_1 + 0x24) + *(int *)(*(int *)(param_1 + 0x24) + 0x18));
   
   pbVar8 = pbVar6 + (int)param_2 * 3;

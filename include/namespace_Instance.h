@@ -282,12 +282,15 @@ enum MODEL_ID
 
 };
 
+// see 231: // modelHeader->ptrFrameData[modelHeader->ptrFrameData->vertexOffset]
 struct ModelFrame
 {
 	// origin
-	short pos[3];
+	short pos[4];
+	char unk16[16];
+	int vertexOffset; // always 0x1C
 
-	// size of frame depends on model
+	//char verts[0];
 };
 
 // used for compressed animations
@@ -312,15 +315,9 @@ struct ModelAnim
 	struct ModelDelta* modelDeltaArray;
 
 	// 0x18
-	// this is where the first frame starts
-	// Array of ModelFrame
+	// struct ModelFrame firstFrame;
+	// then verts, then next ModelFrame, then verts, etc...
 };
-
-// Note to self,
-// rename Model to ModelHeaderGroup
-// then make a ModelHeader
-// then make Model for what is actually drawn
-//		(pointers to colors, polygons, etc)
 
 struct ModelHeader
 {
@@ -348,7 +345,8 @@ struct ModelHeader
 	unsigned int ptrCommandList;
 
 	// 0x24
-	unsigned int ptrVertexData;
+	// null if there are animations
+	struct ModelFrame* ptrFrameData;
 
 	// 0x28
 	unsigned int ptrTexLayout; // same as LEV
@@ -442,7 +440,8 @@ struct InstDrawPerPlayer
 
 	// 0xc0 - origin of cur frame
 	// 0xc4 - origin of next frame
-	int unkc0[2];
+	struct ModelFrame* ptrCurrFrame;
+	struct ModelFrame* ptrNextFrame;
 	
 	// 0xc8
 	unsigned int ptrCommandList;

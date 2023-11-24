@@ -48,6 +48,6 @@ void AH_WarpPad_SetNumModelData(struct Instance* inst, struct ModelHeader* mh)
 		
 	idpp[0].ptrCommandList = 	mh->ptrCommandList;
 	idpp[0].ptrColorLayout = 	mh->ptrColors;
-	idpp[0].ptrTexLayout = 	mh->ptrTexLayout;
-	idpp[0].unkc0[0] = 		mh->ptrVertexData;
+	idpp[0].ptrTexLayout = 		mh->ptrTexLayout;
+	idpp[0].ptrCurrFrame = 		mh->ptrFrameData;
 }
