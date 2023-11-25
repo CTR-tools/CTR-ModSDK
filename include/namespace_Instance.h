@@ -349,7 +349,7 @@ struct ModelHeader
 	struct ModelFrame* ptrFrameData;
 
 	// 0x28
-	struct TextureLayout* ptrTexLayout; // same as LEV
+	struct TextureLayout** ptrTexLayout; // same as LEV
 
 	// 0x2C
 	unsigned int* ptrColors; // CLUT = color lookup table
@@ -447,7 +447,7 @@ struct InstDrawPerPlayer
 	unsigned int ptrCommandList;
 	
 	// 0xcc
-	struct TextureLayout* ptrTexLayout;
+	struct TextureLayout** ptrTexLayout;
 	
 	// 0xd0
 	unsigned int ptrColorLayout;

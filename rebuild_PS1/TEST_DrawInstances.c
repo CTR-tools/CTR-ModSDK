@@ -142,7 +142,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				tempTex[0] = tempTex[1];
 				tempTex[1] = tempTex[2];
 				tempTex[2] = tempTex[3];
-				tempTex[3] = (texIndex == 0 ? 0 : &mh->ptrTexLayout[texIndex-1]);
+				tempTex[3] = (texIndex == 0 ? 0 : mh->ptrTexLayout[texIndex-1]);
 
 				//this is probably some tristrip optimization, so we can reuse vertex from the last triangle
 				//and only spend 1 command
@@ -232,16 +232,13 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 						primMem->curr = p + 1;
 
 						*(int*)&p->r0 = tempColor[1];
-						*(short*)&p->u0 = *(short*)&tempTex[3]->u0;
+						*(int*)&p->u0 = *(int*)&tempTex[3]->u0;
 
 						*(int*)&p->r1 = tempColor[2];
-						*(short*)&p->u1 = *(short*)&tempTex[3]->u1;
+						*(int*)&p->u1 = *(int*)&tempTex[3]->u1;
 
 						*(int*)&p->r2 = tempColor[3];
 						*(short*)&p->u2 = *(short*)&tempTex[3]->u2;
-
-						p->clut = tempTex[3]->clut;
-						p->tpage = tempTex[3]->tpage;
 
 						setPolyGT3(p);
 
