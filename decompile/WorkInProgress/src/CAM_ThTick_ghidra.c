@@ -350,21 +350,21 @@ LAB_8001c128:
 					}
 					else if ((u_short)(sVar5 - 0xfU) < 2)
 					{
-						tv->pos[0] = DAT_8009cf94 + (short)((u_int)d->posCurr[0] >> 8);
-						tv->pos[1] = DAT_8009cf96 + (short)((u_int)d->posCurr[1] >> 8);
-						tv->pos[2] = DAT_8009cf98 + (short)((u_int)d->posCurr[2] >> 8);
+						tv->pos[0] = sdata->FirstPersonCamera.posOffset[0] + (short)((u_int)d->posCurr[0] >> 8);
+						tv->pos[1] = sdata->FirstPersonCamera.posOffset[1] + (short)((u_int)d->posCurr[1] >> 8);
+						tv->pos[2] = sdata->FirstPersonCamera.posOffset[2] + (short)((u_int)d->posCurr[2] >> 8);
 						if (cDC->cameraMode == 0x10)
 						{
-							tv->rot[0] = DAT_8009cf9c + (d->rotCurr).x;
-							sVar6 = DAT_8009cf9e + d->angle;
+							tv->rot[0] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
+							sVar6 = sdata->FirstPersonCamera.rotOffset[1] + d->angle;
 						}
 						else
 						{
-							tv->rot[0] = DAT_8009cf9c + (d->rotCurr).x;
-							sVar6 = DAT_8009cf9e + (d->rotCurr).y;
+							tv->rot[0] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
+							sVar6 = sdata->FirstPersonCamera.rotOffset[1] + (d->rotCurr).y;
 						}
 						tv->rot[1] = sVar6;
-						tv->rot[2] = DAT_8009cfa0 + (d->rotCurr).z;
+						tv->rot[2] = sdata->FirstPersonCamera.rotOffset[2] + (d->rotCurr).z;
 					}
 					else
 					{
@@ -412,7 +412,16 @@ LAB_8001c128:
 								gte_SetRotMatrix((MATRIX *)0x1f800328);
 								gte_ldv0((SVECTOR *)&cDC->transitionTo);
 								gte_rtv0();
+
+								// get the result
+								#define read_mt(r0, r1, r2) 	__asm__ volatile( \
+									"mfc2   %0, $25;"  \
+									"mfc2   %1, $26;"  \
+									"mfc2   %2, $27;"  \
+									: : "r"(r0), "r"(r1), "r"(r2))
+
 								read_mt(uVar9, iVar7, iVar8);
+
 								tv->pos[0] = scratchpad[0x144] + (short)uVar9;
 								tv->pos[1] = scratchpad[0x145] + (short)iVar7;
 								tv->pos[2] = scratchpad[0x146] + (short)iVar8;
