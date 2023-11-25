@@ -15,7 +15,7 @@ void DECOMP_MainInit_VRAMDisplay()
 	x[0] = 0;
 	x[1] = 0x100;
 	
-	y[0] = 0x128;
+	y[0] = 0;
 	y[1] = 0x128;
 
 	for(int i = 0; i < 2; i++)
