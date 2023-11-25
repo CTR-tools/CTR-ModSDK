@@ -100,6 +100,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			//then once you don't need vertex data, you can overwrite same indices with new data
 			CompVertex stack[256];
 
+			// pCmd[0] is number of commands
+			pCmd++;
+
 			//loop commands until we hit the end marker 
 			while (*pCmd != END_OF_LIST)
 			{
