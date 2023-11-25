@@ -2,8 +2,10 @@
 
 #include <common.h>
 
-// not in OG game, just a test
+// not in OG game, does not fit byte budget,
+// random testing to learn more about the game 
 #include "TEST_DrawInstances.c"
+#include "TEST_ConvertRotToMatrix.c"
 
 #include "../decompile/General/MAIN/MainMain.c"
 
@@ -204,6 +206,7 @@
 
 #include "../decompile/General/TileView/TileView_Init.c"
 #include "../decompile/General/TileView/TileView_SetPsyqGeom.c"
+#include "../decompile/General/TileView/TileView_SetMatrixVP.c"
 #include "../decompile/General/TileView/TileView_SetDrawEnv_Normal.c"
 
 #include "../decompile/General/THREAD/THREAD_DestroyTracker.c"

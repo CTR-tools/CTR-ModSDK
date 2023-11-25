@@ -89,6 +89,15 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	MenuHighlight();
 	
 #ifdef REBUILD_PS1
+
+	// This is temporary until RainLogic is done
+	void DECOMP_TileView_SetMatrixVP(struct TileView* v);
+	DECOMP_TileView_SetMatrixVP(&gGT->tileView[0]);
+	DECOMP_TileView_SetMatrixVP(&gGT->tileView[1]);
+	DECOMP_TileView_SetMatrixVP(&gGT->tileView[2]);
+	DECOMP_TileView_SetMatrixVP(&gGT->tileView[3]);
+
+	// This is temporary until RenderBucket is done
 	void TEST_DrawInstances(struct GameTracker* gGT);
 	RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 	TEST_DrawInstances(gGT);

@@ -203,11 +203,9 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     DECOMP_TileView_Init(view, 0, 1);
     view->rot[0] = 0x800;
     DECOMP_TileView_SetPsyqGeom(view);
-    
-// ConvertRotToMatrix not done
-#ifndef REBUILD_PS1
-	TileView_SetMatrixVP(view);
+	DECOMP_TileView_SetMatrixVP(view);
 
+#ifndef REBUILD_PS1
     if ((gGT->hudFlags & 2) != 0)
     {
         UI_INSTANCE_InitAll();

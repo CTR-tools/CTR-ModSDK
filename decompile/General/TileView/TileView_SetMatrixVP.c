@@ -1,5 +1,7 @@
 #include <common.h>
 
+static char buf[0x400];
+
 // TileView_SetMatrixVP -- CameraMatrix, and ViewProj
 void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
 {
@@ -21,13 +23,26 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   int ty;
   int tz;
 
-  // tileView rotation
-  *(short*)0x1f8003f4 = tileView->rot[0];
-  *(short*)0x1f8003f6 = tileView->rot[1];
-  *(short*)0x1f8003f8 = tileView->rot[2];
+  char* scratchpad;
+  
+  #ifndef REBUILD_PS1
+  scratchpad = 0x1f800000;
+  #else
+  scratchpad = &buf[0];
+  #endif
 
-  // make rotation matrix for camera's view matrix
-  ConvertRotToMatrix((MATRIX *)0x1f8003d4, (short *)0x1f8003f4);
+  // tileView rotation
+  *(short*)&scratchpad[0x3f4] = tileView->rot[0];
+  *(short*)&scratchpad[0x3f6] = tileView->rot[1];
+  *(short*)&scratchpad[0x3f8] = tileView->rot[2];
+
+  #ifndef REBUILD_PS1
+  ConvertRotToMatrix((MATRIX *)&scratchpad[0x3d4], (short *)&scratchpad[0x3f4]);
+  #else
+  // only a TEST function for REBUILD_PS1 and REBUILD_PC,
+  // can not be used stable, with regular PS1 modding
+  DECOMP_ConvertRotToMatrix((MATRIX *)&scratchpad[0x3d4], (short *)&scratchpad[0x3f4]);
+  #endif
 
   tx = tileView->pos[0];
   ty = tileView->pos[1];
@@ -41,19 +56,21 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   tileView->matrix_CameraTranspose.t[1] = ty;
   tileView->matrix_CameraTranspose.t[2] = tz;
 
+#ifndef REBUILD_PS1
 // gte_SetLightMatrix
 #define gte_r8(r0) __asm__ volatile("ctc2   %0, $8" : : "r"(r0))
 #define gte_r9(r0) __asm__ volatile("ctc2   %0, $9" : : "r"(r0))
 #define gte_r10(r0) __asm__ volatile("ctc2   %0, $10" : : "r"(r0))
 #define gte_r11(r0) __asm__ volatile("ctc2   %0, $11" : : "r"(r0))
 #define gte_r12(r0) __asm__ volatile("ctc2   %0, $12" : : "r"(r0))
+#endif
 
   // CameraMatrix
-  uVar3 = *(int*)0x1f8003d4;
-  uVar4 = *(int*)0x1f8003d8;
-  uVar5 = *(int*)0x1f8003dc;
-  uVar6 = *(int*)0x1f8003e0;
-  sVar7 = *(short*)0x1f8003e4;
+  uVar3 = *(int*)&scratchpad[0x3d4];
+  uVar4 = *(int*)&scratchpad[0x3d8];
+  uVar5 = *(int*)&scratchpad[0x3dc];
+  uVar6 = *(int*)&scratchpad[0x3e0];
+  sVar7 = *(short*)&scratchpad[0x3e4];
 
   // CameraMatrix, for shadows, particles, and audio
   *(int*)((int)&tileView->matrix_Camera + 0x0) = uVar3;
@@ -77,29 +94,48 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
 
   // load transpose camera matrix
   // similar to gte_SetLightMatrix
+#ifndef REBUILD_PS1
   gte_r8(view0);
   gte_r9(view4);
   gte_r10(view8);
   gte_r11(viewC);
   gte_r12(sVar7);
+#else
+  gte_SetLightMatrix(&tileView->matrix_CameraTranspose);
+#endif
 
   // load inverted camera position
+#ifndef REBUILD_PS1
 #define gte_ldVXY0(r0) 	__asm__ volatile("mtc2   %0, $0" : : "r"(r0))
 #define gte_ldVZ0(r0) 	__asm__ volatile("mtc2   %0, $1" : : "r"(r0))
   gte_ldVXY0(-tx & 0xffff | -ty * 0x10000);
   gte_ldVZ0(-tz);
+#else
+  int negPos[4];
+  negPos[0] = -tx;
+  negPos[1] = -ty;
+  negPos[2] = -tz;
+  gte_ldv0(&negPos[0]);
+#endif
 
   // multiply inverted camera position, 
   // by transpose camera matrix
   gte_llv0();
 
   // get the result
+#ifndef REBUILD_PS1
 #define read_mt(r0, r1, r2) 	__asm__ volatile( \
 	"mfc2   %0, $25;"  \
 	"mfc2   %1, $26;"  \
 	"mfc2   %2, $27;"  \
 	: : "r"(r0), "r"(r1), "r"(r2))
   read_mt(tx,ty,tz);
+#else
+  gte_stlvnl(&negPos[0]);
+  tx = negPos[0];
+  ty = negPos[1];
+  tz = negPos[2];
+#endif
 
   // start with transpose camera matrix
   *(int*)((int)&tileView->matrix_ViewProj + 0x0) = view0;
@@ -149,10 +185,15 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   // store camera matrix,
   // otherwise oxide intro cutscene bugs out,
   // when crash is sleeping on the grassy hill
+
+#ifndef REBUILD_PS1
   gte_r8 (uVar3);
   gte_r9 (uVar4);
   gte_r10(uVar5);
   gte_r11(uVar6);
+#else
+  gte_SetLightMatrix(&scratchpad[0x3d4]);
+#endif
 
   return;
 }

@@ -40,6 +40,8 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			*(int*)&mat1->m[2][2] = 0x1000;
 #endif
 
+// HARD-CODE MATRIX
+#if 0
 			// copy from running CTR instance in no$psx,
 			// INSTANCE IDPP offset 0x78 is a 4x4 MVP
 			// INSTANCE IDPP offset 0x98 is a 3x3, idk
@@ -52,10 +54,25 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			mat2->t[0] = 0;
 			mat2->t[1] = 0x58;
 			mat2->t[2] = 0x320;
+#endif
+
+#if 1
+			// shouldn't need this, matrix is invalid
+			curr->scale[0] = 0xCCC/4;
+			curr->scale[1] = 0xCCC/4;
+			curr->scale[2] = 0xCCC/4;
+
+			MATRIX* mat2 = MulMatrix(&view->matrix_ViewProj, &curr->matrix);
+			//MATRIX* mat2 = &curr->matrix;
+
+			// where does this come from?
+			mat2->t[0] = 0;
+			mat2->t[1] = 0x58;
+			mat2->t[2] = 0x320;
+#endif
 
 			if (gGT->numPlyrNextGame > 2)
 				mat2->t[2] = 0x3E8;
-
 
 			// how do I multiply mat1 and mat2 together?
 			gte_SetRotMatrix(mat2);
