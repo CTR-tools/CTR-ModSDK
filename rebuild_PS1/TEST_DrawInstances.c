@@ -30,7 +30,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 			// reset, might be off by one frame and glitch in the top-left corner,
 			// when leaving character selection back to main menu
-			//idpp[i].tileView = 0;
+			idpp[i].tileView = 0;
 
 			// not this, this is identity matrix
 #if 0
