@@ -352,7 +352,7 @@ struct ModelHeader
 	unsigned int ptrTexLayout; // same as LEV
 
 	// 0x2C
-	unsigned int ptrColors; // CLUT = color lookup table
+	unsigned int* ptrColors; // CLUT = color lookup table
 
 	// 0x30
 	// same as anim->0x14

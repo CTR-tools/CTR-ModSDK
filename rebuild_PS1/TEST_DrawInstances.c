@@ -98,6 +98,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			//you can draw may trigles of the list with minimum additional loads
 			//then once you don't need vertex data, you can overwrite same indices with new data
 			CompVertex stack[256];
+			int tempColor[128];
 
 			//loop commands until we hit the end marker 
 			while (*pCmd != END_OF_LIST)
@@ -126,11 +127,18 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				tempCoords[2] = tempCoords[3];
 				tempCoords[3] = stack[stackIndex];
 
+				//push new color
+				tempColor[0] = tempColor[1];
+				tempColor[1] = tempColor[2];
+				tempColor[2] = tempColor[3];
+				tempColor[3] = mh->ptrColors[colorIndex];
+
 				//this is probably some tristrip optimization, so we can reuse vertex from the last triangle
 				//and only spend 1 command
 				if ((flags & DRAW_CMD_FLAG_SWAP_VERTEX) != 0)
 				{
 					tempCoords[1] = tempCoords[0];
+					tempColor[1] = tempColor[0];
 				}
 
 				//if got reset flag, reset tristrip vertex counter
@@ -142,44 +150,17 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				//enough data to add prim
 				if (stripLength >= 2)
 				{
-					//submit triangle vertices here
 
-					/*
-					here's the scaling formula
-					but i had to flip Y first
-					then scale XYZ by XZY, important
-					then flip Z to -Y and Y to Z
-
-					guess it's simpler in the actual game and i just do the negation twice
-					(but could be mirrored otherwise, gotta test it again)
-
-					//same as (pos * scale) >> 8 ?
-
-					v.X = (short)((((float)(v.X + frame.posOffset.X) / 255.0f) * scale.X));
-					v.Y = (short)(-(((float)(v.Y + frame.posOffset.Z) / 255.0f) * scale.Z));
-					v.Z = (short)((((float)(v.Z + frame.posOffset.Y) / 255.0f) * scale.Y));
-
-					//flip axis
-					short zz = v.Z;
-					v.Z = (short)-v.Y;
-					v.Y = zz;
-
-					then i sumbit vertices 1 2 3 from tempCoords (0 is unused)
-
-					*/
-
-					POLY_F3* p = primMem->curr;
+					POLY_G3* p = primMem->curr;
 					primMem->curr = p + 1;
 
-					// set Poly_LineF3 len, code, and padding
-					setPolyF3(p);
-
 					// RGB
-					setRGB0(p,
-						data.ptrColor[PLAYER_BLUE + i][0],
-						data.ptrColor[PLAYER_BLUE + i][0] >> 8,
-						data.ptrColor[PLAYER_BLUE + i][0] >> 16
-					);
+					*(int*)&p->r0 = tempColor[1];
+					*(int*)&p->r1 = tempColor[2];
+					*(int*)&p->r2 = tempColor[3];
+
+					// set Poly_LineF3 len, code, and padding
+					setPolyG3(p);
 
 					short zz;
 					posWorld1[0] = ((mh->ptrFrameData->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
