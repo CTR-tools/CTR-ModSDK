@@ -40,7 +40,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			*(int*)&mat1->m[2][2] = 0x1000;
 #endif
 
-			// copy from running CTR instance in no$psx
+			// copy from running CTR instance in no$psx,
+			// INSTANCE IDPP offset 0x78 is a 4x4 MVP
+			// INSTANCE IDPP offset 0x98 is a 3x3, idk
 			MATRIX* mat2 = &curr->matrix;
 			*(int*)&mat2->m[0][0] = 0x332;
 			*(int*)&mat2->m[0][2] = 0x205;
