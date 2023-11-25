@@ -75,12 +75,12 @@ void CAM_ThTick(struct Thread *t)
 
     // If you are in process of changing 0 to 1
     else {
-      dc->desiredRot[0] = dc->unk92;
+      *(short *)((int)&cDC->mode + 2) = dc->unk92;
       dc->cameraMode = 0;
     }
   }
   
-  iVar9 = dc->desiredRot[0] * 0x24;
+  iVar9 = *(short *)((int)&cDC->mode + 2) * 0x24;
 
   // 8:3 (80080F7A) aspect ratio if 2 screens else 4:3 (80080F68)
   iVar20 = iVar9 - 
