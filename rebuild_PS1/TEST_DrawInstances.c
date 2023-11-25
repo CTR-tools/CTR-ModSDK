@@ -92,13 +92,13 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			//a "shifting window", here we update the vertices and read triangle once it's ready
 			//you need same cache for both colors and texture layouts
 			CompVertex tempCoords[4];
+			int tempColor[4];
 
 			//i believe this must be scratchpad, but it uses 4 bytes, this array is only 3 bytes (like array buffer for simplicity).
 			//the idea is that it loads vertices to scratchpad and with proper sorting,
 			//you can draw may trigles of the list with minimum additional loads
 			//then once you don't need vertex data, you can overwrite same indices with new data
 			CompVertex stack[256];
-			int tempColor[128];
 
 			//loop commands until we hit the end marker 
 			while (*pCmd != END_OF_LIST)
