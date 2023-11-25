@@ -1,6 +1,8 @@
 #include <common.h>
 
+#ifdef REBUILD_PS1
 static char buf[0x400];
+#endif
 
 // TileView_SetMatrixVP -- CameraMatrix, and ViewProj
 void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
@@ -23,24 +25,22 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   int ty;
   int tz;
 
+  #ifdef REBUILD_PS1
   char* scratchpad;
-  
-  #ifndef REBUILD_PS1
-  scratchpad = 0x1f800000;
-  #else
   scratchpad = &buf[0];
   #endif
 
-  // tileView rotation
-  *(short*)&scratchpad[0x3f4] = tileView->rot[0];
-  *(short*)&scratchpad[0x3f6] = tileView->rot[1];
-  *(short*)&scratchpad[0x3f8] = tileView->rot[2];
-
   #ifndef REBUILD_PS1
-  ConvertRotToMatrix((MATRIX *)&scratchpad[0x3d4], (short *)&scratchpad[0x3f4]);
+  *(short*)0x1f8003f4 = tileView->rot[0];
+  *(short*)0x1f8003f6 = tileView->rot[1];
+  *(short*)0x1f8003f8 = tileView->rot[2];
+  ConvertRotToMatrix((MATRIX *)0x1f8003d4, (short *)0x1f8003f4);
   #else
   // only a TEST function for REBUILD_PS1 and REBUILD_PC,
   // can not be used stable, with regular PS1 modding
+  *(short*)&scratchpad[0x3f4] = tileView->rot[0];
+  *(short*)&scratchpad[0x3f6] = tileView->rot[1];
+  *(short*)&scratchpad[0x3f8] = tileView->rot[2];
   DECOMP_ConvertRotToMatrix((MATRIX *)&scratchpad[0x3d4], (short *)&scratchpad[0x3f4]);
   #endif
 
@@ -57,13 +57,22 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   tileView->matrix_CameraTranspose.t[2] = tz;
 
 #ifndef REBUILD_PS1
+
 // gte_SetLightMatrix
 #define gte_r8(r0) __asm__ volatile("ctc2   %0, $8" : : "r"(r0))
 #define gte_r9(r0) __asm__ volatile("ctc2   %0, $9" : : "r"(r0))
 #define gte_r10(r0) __asm__ volatile("ctc2   %0, $10" : : "r"(r0))
 #define gte_r11(r0) __asm__ volatile("ctc2   %0, $11" : : "r"(r0))
 #define gte_r12(r0) __asm__ volatile("ctc2   %0, $12" : : "r"(r0))
-#endif
+
+  // CameraMatrix
+  uVar3 = *(int*)0x1f8003d4;
+  uVar4 = *(int*)0x1f8003d8;
+  uVar5 = *(int*)0x1f8003dc;
+  uVar6 = *(int*)0x1f8003e0;
+  sVar7 = *(short*)0x1f8003e4;
+
+#else
 
   // CameraMatrix
   uVar3 = *(int*)&scratchpad[0x3d4];
@@ -71,6 +80,7 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   uVar5 = *(int*)&scratchpad[0x3dc];
   uVar6 = *(int*)&scratchpad[0x3e0];
   sVar7 = *(short*)&scratchpad[0x3e4];
+#endif
 
   // CameraMatrix, for shadows, particles, and audio
   *(int*)((int)&tileView->matrix_Camera + 0x0) = uVar3;
