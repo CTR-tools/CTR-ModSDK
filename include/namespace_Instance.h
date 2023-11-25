@@ -428,11 +428,11 @@ struct InstDrawPerPlayer
 	// used for flag & 0x2 to face camera
 	struct TileView* tileView;
 
-	// 0x78 - another matrix? in DrawFunc_Split and DrawFunc_Normal
-	MATRIX m1;
+	// 0x78 - in DrawFunc_Split and DrawFunc_Normal
+	MATRIX mvp;
 	
-	// 0x98 - another matrix? in normal wheel rendering (FUN_8006e588) (and drawFuncs, like 0x78)
-	MATRIX m2;
+	// 0x98 - in normal wheel rendering (FUN_8006e588) (and drawFuncs, like 0x78)
+	MATRIX m3x3;
 
 	// all get set in FUN_80070950
 	// 0xb8 - copy of 0x28 (prev frame?) (flags per player?)
