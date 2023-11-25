@@ -30,7 +30,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 			// reset, might be off by one frame and glitch in the top-left corner,
 			// when leaving character selection back to main menu
-			idpp[i].tileView = 0;
+			//idpp[i].tileView = 0;
 
 			// not this, this is identity matrix
 #if 0
@@ -42,14 +42,14 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 			// copy from running CTR instance in no$psx
 			MATRIX* mat2 = &curr->matrix;
-			*(int*)&mat2->m[0][0] = 0xEED;
-			*(int*)&mat2->m[0][2] = 0x5C2;
-			*(int*)&mat2->m[1][1] = 0xF000;
-			*(int*)&mat2->m[2][0] = 0x5C2;
-			*(int*)&mat2->m[2][2] = 0xFFFFF113;
-			mat2->t[0] = -0x800;
-			mat2->t[1] = -0x328;
-			mat2->t[2] = 0x10C8;
+			*(int*)&mat2->m[0][0] = 0x332;
+			*(int*)&mat2->m[0][2] = 0x205;
+			*(int*)&mat2->m[1][1] = 0xFDAC;
+			*(int*)&mat2->m[2][0] = 0x13B;
+			*(int*)&mat2->m[2][2] = 0xFFFFFAC2;
+			mat2->t[0] = 0;
+			mat2->t[1] = 0x58;
+			mat2->t[2] = 0x320;
 
 			// how do I multiply mat1 and mat2 together?
 			gte_SetRotMatrix(mat2);
@@ -62,6 +62,27 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// 3FF is background, 3FE is next depth slot
 			void* ot = &view->ptrOT[0x3FE];
 
+			// test
+#if 0
+			POLY_F3* p1 = primMem->curr;
+			primMem->curr = p1 + 1;
+
+			// RGB
+			*(int*)&p1->r0 = 0xFFFFFF;
+
+			setPolyF3(p1);
+
+			// to be in viewport, coordinates must be
+			// X: [0, 0x40]
+			// Y: [0, 0xA0]
+			setXY3(p1,
+				0x10, 0x10,	// XY0
+				0x10, 0x38,	// XY1
+				0x98, 0x38);	// XY2
+
+			AddPrim(ot, p1);
+			continue;
+#endif
 
 			//helper type, kinda same as RGB
 			//a 255 grid "compressed vertex" 0 = 0.0 and 255 = 1.0. 256 steps only.
