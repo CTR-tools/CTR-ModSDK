@@ -226,9 +226,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 					// X: [0, 0x40]
 					// Y: [0, 0xA0]
 					setXY3(p,
-						posScreen1[0], posScreen1[1],	// XY0
-						posScreen2[0], posScreen2[1],	// XY1
-						posScreen3[0], posScreen3[1]);	// XY2
+						(posScreen1[0] / 2), (posScreen1[1] / 2),	// XY0
+						(posScreen2[0] / 2), (posScreen2[1] / 2),	// XY1
+						(posScreen3[0] / 2), (posScreen3[1] / 2));	// XY2
 
 					AddPrim(ot, p);
 
