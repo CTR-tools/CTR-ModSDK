@@ -183,8 +183,13 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     rot[1] = D230.csm_instRot[1] + D230.characterSelect_angle[iVar14];
     rot[2] = D230.csm_instRot[2];
   
-    // convert 3 rotation shorts into rotation matrix
+#ifndef REBUILD_PS1
+    ConvertRotToMatrix(&iVar10->matrix.m[0][0], &rot[0]);
+#else
+    // only a TEST function for REBUILD_PS1 and REBUILD_PC,
+    // can not be used stable, with regular PS1 modding
     DECOMP_ConvertRotToMatrix(&iVar10->matrix.m[0][0], &rot[0]);
+#endif
   }
   return;
 }
