@@ -53,6 +53,10 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			mat2->t[1] = 0x58;
 			mat2->t[2] = 0x320;
 
+			if (gGT->numPlyrNextGame > 2)
+				mat2->t[2] = 0x3E8;
+
+
 			// how do I multiply mat1 and mat2 together?
 			gte_SetRotMatrix(mat2);
 			gte_SetTransMatrix(mat2);
