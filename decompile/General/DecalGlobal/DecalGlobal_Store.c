@@ -14,7 +14,8 @@ void DECOMP_DecalGlobal_Store(struct GameTracker* gGT, struct LevTexLookup* LTL)
 			currIcon++
 		)
 	{
-		if(currIcon->global_IconArray_Index < 0x88)
+		// uint, in case of negatives
+		if((uint)currIcon->global_IconArray_Index < 0x88)
 			gGT->ptrIcons[currIcon->global_IconArray_Index] = currIcon;
 	}
 	
@@ -26,7 +27,7 @@ void DECOMP_DecalGlobal_Store(struct GameTracker* gGT, struct LevTexLookup* LTL)
 		)
 	{	
 		// use '[0]' to dereference pointer
-		if(currGroup[0]->groupID < 0x11)
+		if((uint)currGroup[0]->groupID < 0x11)
 			gGT->iconGroup[currGroup[0]->groupID] = currGroup[0];
 	}
 }
