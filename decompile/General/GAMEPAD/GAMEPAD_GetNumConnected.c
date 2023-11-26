@@ -67,10 +67,29 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 		}
 	}
 	
-	if(padIndex < 8)
+	while(padCurr < &gGamepads->gamepad[8])
 	{
 		// pad is now unplugged
 		padCurr->ptrRawInput = 0;
 		padCurr++;
 	}
+	
+	// this name is way too long
+	int* ptrToSet = &gGamepads->gamepadsConnectedByFlag;
+	
+	if(*ptrToSet == -1)
+		*ptrToSet = bitwiseConnected;
+	
+	else if(*ptrToSet != bitwiseConnected)
+	{
+		int oldVal = *ptrToSet;
+		
+		*ptrToSet = bitwiseConnected;
+		
+		// return change
+		return (u_int)((bitwiseConnected ^ oldVal) & oldVal) != 0;
+	}
+	
+	// no change
+	return 0;
 }
