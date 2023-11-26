@@ -56,10 +56,14 @@ int DECOMP_TitleFlag_GetOT(void)
 		// transition is finished
         else
         {
-			if (sdata->TitleFlag_DrawOrder != -1)
-				return otDrawFirst_FarthestDepth;
+			if (sdata->TitleFlag_DrawOrder != 1)
+			{
+			
+				if (sdata->TitleFlag_DrawOrder != -1)
+					return otDrawFirst_FarthestDepth;
 				
-			sdata->TitleFlag_DrawOrder = 0;
+				sdata->TitleFlag_DrawOrder = 0;
+			}
         }
 
     }
