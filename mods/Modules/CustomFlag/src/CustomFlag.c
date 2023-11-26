@@ -4,13 +4,46 @@
 int scratchpadBuf[0x1000];
 #endif
 
-force_inline char TitleFlag_CalculateBrightness(u_int sine, u_char darkTile)
+// Change this for custom tilecolors;
+
+// Three values for R-G-B channels.
+// Set these to the brightest of the color you want for each tile
+// Decimal or Hex numbers is accepted, with maximum value of 255, no negative
+u_char lightTile[3] = {0x42, 0xAA, 0xD7};
+u_char darkTile[3] = {0x3F, 0x96, 0xCD};
+// These specific colors are similar to Nitro-Fueled theme colors
+
+force_inline unsigned char TitleFlag_CalculateBrightness(u_int sine, u_char darker)
 {
-	if (darkTile)
+	// This is the shader effect for wave shadow
+	// Smaller (more negative) number will result in harsher shadows
+	// But Don't change the other constants.
+
+	if (darker)
+		// extra shader for dark tiles (if needed, mostly not).
+		return (u_char)(((sine * -75) + 0x1fe000) >> 0xD);
+	
+	// default lighter shader, minimum is -255
+	return (u_char)(((sine * -50) + 0x1fe000) >> 0xD);
+}
+
+force_inline void TitleFlag_SetRGB(POLY_G4 *p, u_char* tile, u_char pixBrightness, u_char left)
+{
+	u_int rgb[3];
+
+	for (char t = 0; t < 3; t++)
+		rgb[t] = (tile[t] * pixBrightness) >> 8;
+
+	if (left)
 	{
-		return sine * -55 + 0x140000 >> 0xD;
+		setRGB1(p, rgb[0], rgb[1], rgb[2]);
+		setRGB3(p, rgb[0], rgb[1], rgb[2]);
 	}
-	return sine * -125 + 0x1fe000 >> 0xD;
+	else
+	{
+		setRGB0(p, rgb[0], rgb[1], rgb[2]);
+		setRGB2(p, rgb[0], rgb[1], rgb[2]);
+	}
 }
 
 void DECOMP_TitleFlag_DrawSelf()
@@ -25,6 +58,10 @@ void DECOMP_TitleFlag_DrawSelf()
 	u_int dimensions;
 	int approx[2];
 	int colorSine[2];
+	u_char colorRight;
+	u_char colorLeft;
+	u_char rightRGB[3];
+	u_char leftRGB[3];
 	u_int angle[2];
 	u_int *top;
 	u_int *bottom;
@@ -41,8 +78,8 @@ void DECOMP_TitleFlag_DrawSelf()
 	int unk1;
 	int unk2;
 	int waveAngle;
-	int brightness;
-	int darkness;
+	int unk3;
+	int unk4;
 	int time;
 
 	if (sdata->TitleFlag_CanDraw == 0)
@@ -59,12 +96,12 @@ void DECOMP_TitleFlag_DrawSelf()
 			goto SKIP_LOADING_TEXT;
 	}
 
-	DECOMP_TitleFlag_DrawLoadingString();
+	TitleFlag_DrawLoadingString();
 
 SKIP_LOADING_TEXT:
 
 	sdata->TitleFlag_CopyLoadStage = sdata->Loading.stage;
-	ot = (u_long *)DECOMP_TitleFlag_GetOT();
+	ot = (u_long *)TitleFlag_GetOT();
 
 	gte_SetRotMatrix(&data.matrixTitleFlag);
 	gte_SetTransMatrix(&data.matrixTitleFlag);
@@ -92,7 +129,7 @@ SKIP_LOADING_TEXT:
 		data.checkerFlagVariables[0] += 0x200;
 
 		// Range: [1.0, 2.0]
-		approx[0] = DECOMP_MATH_Sin(data.checkerFlagVariables[0]) + 0xfff;
+		approx[0] = MATH_Sin(data.checkerFlagVariables[0]) + 0xfff;
 
 		// Range: [16, 32] + 0x96
 		data.checkerFlagVariables[1] = (approx[0] * 0x20 >> 0xd) + 0x96;
@@ -101,14 +138,14 @@ SKIP_LOADING_TEXT:
 		data.checkerFlagVariables[2] = data.checkerFlagVariables[2] + 200;
 
 		// Range: [1.0, 2.0]
-		approx[0] = DECOMP_MATH_Sin(data.checkerFlagVariables[2]) + 0xfff;
+		approx[0] = MATH_Sin(data.checkerFlagVariables[2]) + 0xfff;
 
 		// Range: [32, 64] + 0xb4
 		data.checkerFlagVariables[3] = (approx[0] * 0x40 >> 0xd) + 0xb4;
 	}
 
 	// Range: [1.0, 2.0]
-	approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+	approx[0] = MATH_Sin(angle[0]) + 0xfff;
 	approx[0] = approx[0] * data.checkerFlagVariables[1];
 	approx[0] = (approx[0] >> 0xd) + 0x280;
 
@@ -116,7 +153,8 @@ SKIP_LOADING_TEXT:
 	angle[0] += 0xc80;
 
 	// Range: [1.0, 2.0]
-	colorSine[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+	colorSine[0] = MATH_Sin(angle[0]) + 0xfff;
+	FP(1.0);
 
 	time = sdata->TitleFlag_ElapsedTime >> 5;
 	angle[0] = time;
@@ -139,7 +177,7 @@ SKIP_LOADING_TEXT:
 			j++, vect++)
 		{
 			// Range: [1.0, 2.0]
-			approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+			approx[1] = MATH_Sin(angle[0]) + 0xfff;
 			angle[0] += 300;
 
 			vect->vz = (short)approx[0] + (short)(approx[1] * 0x20 >> 0xd);
@@ -162,11 +200,11 @@ SKIP_LOADING_TEXT:
 	unk1 = data.checkerFlagVariables[0];
 	unk2 = data.checkerFlagVariables[1];
 	waveAngle = data.checkerFlagVariables[2];
-	brightness = data.checkerFlagVariables[3];
-	darkness = data.checkerFlagVariables[4];
+	unk3 = data.checkerFlagVariables[3];
+	unk4 = data.checkerFlagVariables[4];
 
 	// vertical strips
-	for (column = 1; column < 35; column++)
+	for (column = 0; column < 35; column++)
 	{
 #ifdef REBUILD_PC
 		top = &scratchpadBuf[(toggle * 0x78 / 4) - 1];
@@ -179,21 +217,21 @@ SKIP_LOADING_TEXT:
 #endif
 
 		// increment
-		darkness += brightness * 0x40;
-		angle[0] = darkness;
+		unk4 += unk3 * 0x40;
+		angle[0] = unk4;
 		angle[1] = (int)angle[0] >> 5;
 
 		if (0xfff < angle[1])
 		{
 			angle[1] = (int)(angle[0] & 0x1ffff) >> 5;
-			darkness = angle[0] & 0x1ffff;
+			unk4 = angle[0] & 0x1ffff;
 
 			// increment
 			unk1 += 0x200;
 			angle[0] = unk1;
 
 			// Range: [1.0, 2.0]
-			approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+			approx[0] = MATH_Sin(angle[0]) + 0xfff;
 
 			// Range: [16, 32] + 0x96
 			unk2 = (approx[0] * 0x20 >> 0xd) + 0x96;
@@ -203,21 +241,21 @@ SKIP_LOADING_TEXT:
 			angle[0] = waveAngle;
 
 			// Range: [1.0, 2.0]
-			approx[0] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+			approx[0] = MATH_Sin(angle[0]) + 0xfff;
 
 			// Range: [32, 64] + 0xb4
-			brightness = (approx[0] * 0x40 >> 0xd) + 0xb4;
+			unk3 = (approx[0] * 0x40 >> 0xd) + 0xb4;
 		}
 
 		// Range: [1.0, 2.0]
-		approx[0] = DECOMP_MATH_Sin(angle[1]) + 0xfff;
+		approx[0] = MATH_Sin(angle[1]) + 0xfff;
 		approx[0] = (approx[0] * unk2 >> 0xd) + 0x280;
 
 		// 280 degrees
 		angle[1] += 0xc80;
 
 		// range: [1.0, 2.0]
-		colorSine[1] = DECOMP_MATH_Sin(angle[1]) + 0xfff;
+		colorSine[1] = MATH_Sin(angle[1]) + 0xfff;
 
 		pos[0].vy = 0xfc72;
 		pos[1].vy = 0xfcd0;
@@ -236,7 +274,7 @@ SKIP_LOADING_TEXT:
 			i++, vect++)
 		{
 			// Range: [1.0, 2.0]
-			approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+			approx[1] = MATH_Sin(angle[0]) + 0xfff;
 			angle[0] += 300;
 
 			// change all vector posZ
@@ -249,7 +287,6 @@ SKIP_LOADING_TEXT:
 		i = 0;
 
 		// horizontal strips
-		// draws bottoms-up
 		for (row = 0; row < 10; row++)
 		{
 			gte_stsxy3((long *)(top + 1), (long *)(top + 2), (long *)(top + 3));
@@ -262,7 +299,7 @@ SKIP_LOADING_TEXT:
 					j++, vect++)
 				{
 					// Range: [1.0, 2.0]
-					approx[1] = DECOMP_MATH_Sin(angle[0]) + 0xfff;
+					approx[1] = MATH_Sin(angle[0]) + 0xfff;
 					angle[0] += 300;
 
 					// change all vector posZ
@@ -295,28 +332,29 @@ SKIP_LOADING_TEXT:
 						backDB->primMem.curr = p + 1;
 					}
 
-					if (p == NULL)
+					if (p == 0)
 						return;
 
-					// white tile
-					u_char boolDark = false;
+					// dark tile
+					u_char* CurrTile = &darkTile[0];
+					u_char boolDarker = true;
 
-					// grey tile
-					if (((column >> 2) + (i >> 2) & 1U) != 0)
+					// light tile
+					if (((column >> 2) + (i >> 2) & 1U) == 0)
 					{
-						boolDark = true;
+						boolDarker = false;
+						CurrTile = &lightTile[0];
 					}
 
-					char colorRight = TitleFlag_CalculateBrightness(colorSine[0], boolDark);
-					char colorLeft = TitleFlag_CalculateBrightness(colorSine[1], boolDark);
+					// Calculate color brightness
+					// You don't have to do use either dark/light tile calculations,
+					// you can use the same calculation constants for both left and right
+					colorRight = TitleFlag_CalculateBrightness(colorSine[0], boolDarker);
+					colorLeft = TitleFlag_CalculateBrightness(colorSine[1], boolDarker);
 
-					// right corner
-					setRGB0(p, colorRight, colorRight, colorRight);
-					setRGB2(p, colorRight, colorRight, colorRight);
-
-					// left corner
-					setRGB1(p, colorLeft, colorLeft, colorLeft);
-					setRGB3(p, colorLeft, colorLeft, colorLeft);
+					// set colors
+					TitleFlag_SetRGB(p, CurrTile, colorRight, false);
+					TitleFlag_SetRGB(p, CurrTile, colorLeft, true);
 
 					// positions
 					*(int *)&p->x0 = bottom[0];
