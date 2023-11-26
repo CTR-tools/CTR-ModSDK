@@ -1,55 +1,56 @@
 #include <common.h>
 
-void CalculateVolumeFromDistance(uint *soundCount, uint soundID, int distance)
+void CalculateVolumeFromDistance(u_int *soundCount_ID, u_int soundID, int distance)
 {
-    uint vol;
+    u_int volume;
+    u_int soundFlag;
     int distort;
 
     if (distance < 6000)
     {
-        if ((*soundCount != 0) && ((*soundCount & 0xffff) != soundID))
+        if ((*soundCount_ID != 0) && ((*soundCount_ID & 0xffff) != soundID))
         {
-            OtherFX_Stop1(*soundCount);
-            *soundCount = 0;
+            OtherFX_Stop1(*soundCount_ID);
+            *soundCount_ID = 0;
         }
         
         if (distance < 301)
         {
             // full volume
-            vol = 0xff;
+            volume = 255;
         }
 
         else
         {
             // Map distance from [close, far] to [loud, quiet]
-            vol = MapToRange(distance, 300, 6000, 0xff, 0);
+            volume = MapToRange(distance, 300, 6000, 0xff, 0);
         }
 
-        if (soundID != 0xffffffff)
+        if (soundID != -1)
         {
-            if (*soundCount == 0)
+            if (*soundCount_ID == 0)
             {
-                vol = OtherFX_Play_LowLevel(
+                soundID = OtherFX_Play_LowLevel(
                     soundID & 0xffff, 0,
-                    (vol & 0xff) << 0x10 |
+                    (volume & 0xff) << 0x10 |
                     // no distortion, balance L/R
                     0x8080);
 
-                *soundCount = vol;
+                *soundCount_ID = soundID;
             }
             else
             {
-                if (soundID == 0x89)
+                if (soundID == 137)
                 {
-                    distort = (sdata->gGT.frameTimer_VsyncCallback >> 2 & 0x7f) - 0x40;
+                    distort = (sdata->gGT->frameTimer_VsyncCallback >> 2 & 0x7f) - 0x40;
                     if (distort < 0)
                     {
                         distort = -distort;
                     }
-                    vol =
+                    soundFlag =
 
                         // volume
-                        (vol & 0xff) << 0x10 |
+                        (volume & 0xff) << 0x10 |
 
                         // distortion
                         (distort + 100U & 0xff) << 8 |
@@ -59,31 +60,26 @@ void CalculateVolumeFromDistance(uint *soundCount, uint soundID, int distance)
                 }
                 else
                 {
-                    vol =
+                    soundFlag =
 
                         // volume
-                        (vol & 0xff) << 0x10 |
+                        (volume & 0xff) << 0x10 |
 
                         // no distortion, balance L/R
                         0x8080;
                 }
 
-                OtherFX_Modify(*soundCount, vol);
+                OtherFX_Modify(*soundCount_ID, soundFlag);
             }
         }
     }
     // if distance is farther than 6000
     else
     {
-        if (*soundCount != 0)
+        if (*soundCount_ID != 0)
         {
-            OtherFX_Stop1(*soundCount);
-            *soundCount = 0;
+            OtherFX_Stop1(*soundCount_ID);
+            *soundCount_ID = 0;
         }
     }
-}
-
-void PlayWarppadSound(u_int distance)
-{
-    CalculateVolumeFromDistance(&sdata->soundFadeInput[0].soundID_soundCount, 0x98, distance);
 }
