@@ -12,7 +12,6 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 	u_int uVar5;
 	u_int uVar6;
 	int* piVar7;
-	struct Driver* pvVar9;
 	struct Driver* psVar8;
 	struct Driver* psVar9;
 	struct Driver* psVar10;
@@ -28,17 +27,17 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 		tileView = gGT->tileView;
 		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 		{
-			pvVar9 = (struct Driver*)psVar12->object;
-			if (pvVar9->clockSend)
+			psVar9 = (struct Driver*)psVar12->object;
+			if (psVar9->clockSend)
 			{
-				pvVar9->clockSend--;
+				psVar9->clockSend--;
 			}
-			uVar3 = pvVar9->unk367;
+			uVar3 = psVar9->unk367;
 			if (uVar3 == 0)
 			{
-				if (pvVar9->clockReceive == 0)
+				if (psVar9->clockReceive == 0)
 				{
-					uVar3 = (u_int)pvVar9->clockSend;
+					uVar3 = (u_int)psVar9->clockSend;
 					if (uVar3 == 0)
 					{
 						if ((gGT->clockEffectEnabled & 1) == 0) goto LAB_80034e74;
@@ -47,18 +46,18 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 				}
 				else
 				{
-					if ((pvVar9->actionsFlagSet & 0x2000000) != 0)
+					if ((psVar9->actionsFlagSet & 0x2000000) != 0)
 					{
-						pvVar9->clockReceive = 0;
+						psVar9->clockReceive = 0;
 					}
-					uVar3 = (u_int)pvVar9->clockReceive;
+					uVar3 = (u_int)psVar9->clockReceive;
 				}
 				DISPLAY_Blur_Main(tileView, uVar3);
 			}
 			else
 			{
 				DISPLAY_Blur_Main(tileView, -uVar3);
-				pvVar9->unk367--;
+				psVar9->unk367--;
 			}
 LAB_80034e74:
 			tileView = tileView + 1;
@@ -123,28 +122,28 @@ LAB_80034e74:
 		{
 			gGT->elapsedEventTime = 0;
 		}
-		CTR_CycleTex_AllModels(-1, (struct Model*)sdata->PLYROBJECTLIST, gGT->timer);
-		CTR_CycleTex_AllModels(gGT->level1->numModels, (struct Model*)gGT->level1->ptrModelsPtrArray, gGT->timer);
+		CTR_CycleTex_AllModels(-1, (struct Model**)sdata->PLYROBJECTLIST, gGT->timer);
+		CTR_CycleTex_AllModels(gGT->level1->numModels, gGT->level1->ptrModelsPtrArray, gGT->timer);
 		psVar8 = 0;
 		psVar9 = 0;
 		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 		{
-			pvVar9 = (struct Driver*)psVar12->object;
+			psVar9 = (struct Driver*)psVar12->object;
 			psVar10 = psVar9;
-			if (pvVar9->driverID == 0)
+			if (psVar9->driverID == 0)
 			{
 LAB_80035098:
-				psVar8 = pvVar9;
+				psVar8 = psVar9;
 				psVar9 = psVar10;
 			}
 			else
 			{
-				if (pvVar9->driverID == 1)
+				if (psVar9->driverID == 1)
 				{
-					psVar9 = pvVar9;
+					psVar9 = psVar9;
 				}
 				psVar10 = psVar8;
-				if ((u_char)pvVar9->numTimesAttacking < (u_char)psVar8->numTimesAttacking) goto LAB_80035098;
+				if ((u_char)psVar9->numTimesAttacking < (u_char)psVar8->numTimesAttacking) goto LAB_80035098;
 			}
 		}
 		if
@@ -187,15 +186,15 @@ LAB_80035098:
 						// dont run funcPtrs from inside driver struct
 						if (psVar12->funcThTick != 0) continue;
 						
-						pvVar9 = (struct Driver*)psVar12->object;
+						psVar9 = (struct Driver*)psVar12->object;
 						
 						for(iVar11 = 0; iVar11 < 13; iVar11++)
 						{
-							pcVar5 = pvVar9->funcPtrs[iVar11];
+							pcVar5 = psVar9->funcPtrs[iVar11];
 							
 							if (pcVar5 != 0)
 							{
-								pcVar5(psVar12, pvVar9);
+								pcVar5(psVar12, psVar9);
 							}
 						}
 					}
