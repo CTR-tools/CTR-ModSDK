@@ -28,17 +28,17 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 		tileView = gGT->tileView;
 		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 		{
-			pvVar12 = (struct Driver*)psVar12->object;
-			if (pvVar12->clockSend)
+			pvVar9 = (struct Driver*)psVar12->object;
+			if (pvVar9->clockSend)
 			{
-				pvVar12->clockSend += 0xff;
+				pvVar9->clockSend--;
 			}
-			uVar3 = (u_int)*(u_char*)((u_int)&pvVar12->forcedJump_trampoline + 1);
+			uVar3 = pvVar9->unk367;
 			if (uVar3 == 0)
 			{
-				if (pvVar12->clockReceive == 0)
+				if (pvVar9->clockReceive == 0)
 				{
-					uVar3 = (u_int)pvVar12->clockSend;
+					uVar3 = (u_int)pvVar9->clockSend;
 					if (uVar3 == 0)
 					{
 						if ((gGT->clockEffectEnabled & 1) == 0) goto LAB_80034e74;
@@ -47,18 +47,18 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 				}
 				else
 				{
-					if ((pvVar12->actionsFlagSet & 0x2000000) != 0)
+					if ((pvVar9->actionsFlagSet & 0x2000000) != 0)
 					{
-						pvVar12->clockReceive = 0;
+						pvVar9->clockReceive = 0;
 					}
-					uVar3 = (u_int)pvVar12->clockReceive;
+					uVar3 = (u_int)pvVar9->clockReceive;
 				}
 				DISPLAY_Blur_Main(tileView, uVar3);
 			}
 			else
 			{
 				DISPLAY_Blur_Main(tileView, -uVar3);
-				*(char*)((u_int)&pvVar12->forcedJump_trampoline + 1) = *(char*)((u_int)&pvVar12->forcedJump_trampoline + 1) - 1;
+				pvVar9->unk367--;
 			}
 LAB_80034e74:
 			tileView = tileView + 1;
@@ -152,11 +152,11 @@ LAB_80035098:
 			((psVar8 != 0) && (psVar9 != 0)) &&
 			(
 				iVar4 = (u_int)(u_char)psVar9->numTimesAttacking - (u_int)(u_char)psVar8->numTimesAttacking, 
-				*(short*)(psVar8->unk_4F0_4F8 + 2) < iVar4
+				*(short*)(&psVar8->unk_4F0_4F8[2]) < iVar4
 			)
 		)
 		{
-			*(short*)(psVar8->unk_4F0_4F8 + 2) = (short)iVar4;
+			*(short*)(&psVar8->unk_4F0_4F8[2]) = (short)iVar4;
 		}
 		for (iVar4 = 0; iVar4 < NUM_BUCKETS; iVar4++)
 		{
@@ -187,13 +187,15 @@ LAB_80035098:
 						// dont run funcPtrs from inside driver struct
 						if (psVar12->funcThTick != 0) continue;
 						
+						pvVar9 = (struct Driver*)psVar12->object;
+						
 						for(iVar11 = 0; iVar11 < 13; iVar11++)
 						{
-							pcVar5 = ((struct Driver*)psVar12->object)->funcPtrs[iVar11];
+							pcVar5 = pvVar9->funcPtrs[iVar11];
 							
 							if (pcVar5 != 0)
 							{
-								pcVar5(psVar12, (struct Driver*)psVar12->object);
+								pcVar5(psVar12, pvVar9);
 							}
 						}
 					}
@@ -238,7 +240,7 @@ LAB_80035098:
 	uVar3 = gGT->gameMode1;
 	if ((uVar3 & END_OF_RACE) == 0)
 	{
-		if ((bVar1) || ((gGT->gameMode1 & PAUSE_ALL) != 0))
+		if ((bVar1) || ((uVar3 & PAUSE_ALL) != 0))
 		{
 			if (gGT->cooldownfromPauseUntilUnpause == 0)
 			{

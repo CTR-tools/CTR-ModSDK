@@ -573,7 +573,8 @@ struct Driver
 	// 0x366
 	// forced to jump while on turtles,
 	// should we say "forcedJump_turtles"?
-	short forcedJump_trampoline;
+	char forcedJump_trampoline;
+	char unk367;
 
 	// 0x368
 	short AxisAngle2_normalVec[3];
