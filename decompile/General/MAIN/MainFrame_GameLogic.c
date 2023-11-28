@@ -270,8 +270,8 @@ LAB_80035098:
 		}
 		else if (gGT->cooldownFromUnpauseUntilPause == 0)
 		{
-			if ((uVar3 & (GAME_CUTSCENE | END_OF_RACE | MAIN_MENU)) == 0) 
-				if (sdata->ptrActiveMenuBox == 0) &&
+			if ((uVar3 & (GAME_CUTSCENE | END_OF_RACE | MAIN_MENU)) == 0)
+				if (sdata->ptrActiveMenuBox == 0)
 					if (sdata->AkuAkuHintState == 0)
 						if (TitleFlag_IsFullyOnScreen() == 0)
 			{
