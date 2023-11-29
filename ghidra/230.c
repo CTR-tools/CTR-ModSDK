@@ -4158,13 +4158,18 @@ void FUN_800b00d4(int param_1)
     if (DAT_800b59ac == 0) 
 	{
       if (
+			// trackSel_transitionState != IN_MENU
 			(DAT_800b59ae != 1) || 
 			
-			// If you press D-pad or Cross, Square, Triangle, Circle
+			// If NOT press D-pad or Cross, Square, Triangle, Circle
 			((DAT_8009a990 & 0x4007f) == 0)
 			
-		  ) goto LAB_800b05b8;
-		  
+		  ) 
+	  {
+		// skip button input
+		goto LAB_800b05b8;
+	  }
+	  
 	  // If you do not press Down
       if ((DAT_8009a990 & 2) == 0) 
 	  {  

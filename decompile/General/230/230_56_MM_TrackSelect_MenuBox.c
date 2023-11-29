@@ -145,10 +145,22 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	// if lap selection menu is closed
 	if (D230.trackSel_boolOpenLapBox == 0)
 	{
-		// if not changing levels
-		if (D230.trackSel_changeTrack_frameCount == 0)
+		int importantButton = 
+			sdata->buttonTapPerPlayer[0] & 
+			(BTN_UP | BTN_DOWN | BTN_TRIANGLE | BTN_SQUARE_one | BTN_CROSS_one | BTN_CIRCLE);
+		
+		if (
+				// if not changing levels
+				(D230.trackSel_changeTrack_frameCount == 0) &&
+				
+				// only check buttons if IN_MENU
+				(D230.trackSel_transitionState == IN_MENU) &&
+				
+				// desired button pressed
+				(importantButton != 0)
+			)	
 		{
-			switch (sdata->buttonTapPerPlayer[0] & (BTN_UP | BTN_DOWN | BTN_TRIANGLE | BTN_SQUARE_one | BTN_CROSS_one | BTN_CIRCLE))
+			switch (importantButton)
 			{
 				
 			case BTN_UP:
