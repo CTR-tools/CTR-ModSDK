@@ -259,5 +259,7 @@
 #include "../decompile/General/230/1_Block1.c"
 #include "../decompile/General/230/230_39_MM_AdvNewLoad_GetMenuBox.c"
 #include "../decompile/General/230/1_Block2.c"
+#include "../decompile/General/230/230_55_MM_TrackSelect_Init.c"
+#include "../decompile/General/230/230_56_MM_TrackSelect_MenuBox.c"
 #include "../decompile/General/230/230_57_MM_TrackSelect_GetMenuBox.c"
 #include "../decompile/General/230/1_Block3.c"
