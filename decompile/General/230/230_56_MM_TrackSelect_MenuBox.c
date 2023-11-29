@@ -49,13 +49,16 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			}
 
 			DECOMP_MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, 8);
-			elapsedFrames--;
-
+			
 			// ran out of frames
 			if (elapsedFrames == 0)
 			{
 				// menu is now in focus
 				D230.trackSel_transitionState = IN_MENU;
+			}
+			else
+			{
+				elapsedFrames--;
 			}
 		}
 		// transitioning out
@@ -66,6 +69,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 			if (elapsedFrames > 12)
 			{
+				sdata->errorMessagePosIndex = 0;
+				
 				// if track has not been chosen
 				if (D230.trackSel_StartRaceAfterFadeOut == 0)
 				{
@@ -151,8 +156,6 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// look for unlocked track
 				do
 				{
-					printf("loop1\n");
-					
 					currTrack--;
 					
 					// if index is negative
@@ -176,8 +179,6 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// look for unlocked track
 				do
 				{
-					printf("loop2\n");
-					
 					currTrack++;
 					
 					// if you go beyond max number of tracks
@@ -323,8 +324,6 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	{
 		do
 		{
-			printf("loop3\n");
-					
 			iVar10 = iVar9;
 			if (iVar9 < 0)
 			{
@@ -522,8 +521,6 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 		do
 		{
-			printf("loop4\n");
-			
 			iVar10++;
 			
 			if (uVar15 <= iVar10)
