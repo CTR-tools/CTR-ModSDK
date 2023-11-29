@@ -894,7 +894,8 @@ struct OverlayDATA_230 D230 =
 		0x2000, 0x12
 	},
 
-	.FlagesGameMode1_BattleType = {0x4000,0x10000,0x8000},
+	.FlagesGameMode1_BattleType = 
+		{POINT_LIMIT,TIME_LIMIT,LIFE_LIMIT},
 
 	.time_3_6_9 = {3,6,9},
 	.time_3_6_INF = {3,6,0xFF},

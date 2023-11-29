@@ -287,24 +287,22 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                                 case 5:
 
                                     // get game mode, minus some flags
-                                    uVar10 = gGT->gameMode1;
-                                    gGT->gameMode1 = uVar10 & 0xfffe3fff;
+                                    gGT->gameMode1 &= ~(POINT_LIMIT|LIFE_LIMIT|TIME_LIMIT);
 
                                     uVar12 = D230.FlagesGameMode1_BattleType[D230.battleType_box.rowSelected];
-                                    uVar10 = uVar10 & 0xfffe3fff | uVar12;
+                                    gGT->gameMode1 |= uVar12;
 
-                                    //puVar19 = uVar10;
-                                    if ((uVar12 & 0x10000) != 0)
+                                    if ((uVar12 & TIME_LIMIT) != 0)
                                     {
                                         // point limit
-                                        gGT->gameMode1 = uVar10 | 0x4000;
+                                        gGT->gameMode1 |= POINT_LIMIT;
                                     }
 
-                                    if (((gGT->gameMode1 & 0x8000) != 0) &&
+                                    if (((gGT->gameMode1 & LIFE_LIMIT) != 0) &&
                                         (0 < D230.time_3_6_INF[D230.battleLengthLifeTime_box.rowSelected]))
                                     {
                                         // time limit
-                                        gGT->gameMode1 |= 0x10000;
+                                        gGT->gameMode1 |= TIME_LIMIT;
                                     }
 
                                     // set kill limit
