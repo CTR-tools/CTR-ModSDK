@@ -379,7 +379,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                         else
                         {
                             // if row 3 or 4 (weapons)
-                            if ((unsigned short)(sdata->battleSetupRowHighlighted - 3) < 2)
+                            if ((unsigned int)sdata->battleSetupRowHighlighted - 3 < 2)
                             {
                                 // change which weapon is highlighted
                                 sdata->battleSetupWeaponHighlighted++;
@@ -399,7 +399,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                     else
                     {
                         // if row 3 or 4 (weapons)
-                        if ((unsigned short)(sdata->battleSetupRowHighlighted - 3) < 2)
+                        if ((unsigned int)sdata->battleSetupRowHighlighted - 3 < 2)
                         {
                             // change which weapon is highlighted
                             sdata->battleSetupWeaponHighlighted--;
@@ -449,7 +449,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                     sdata->battleSetupRowHighlighted--;
 
                     // If you go above the top row (0)
-                    if (sdata->battleSetupRowHighlighted << 0x10 < 0)
+                    if (sdata->battleSetupRowHighlighted < 0)
                     {
                         // Go back to the top row
                         sdata->battleSetupRowHighlighted = 0;
