@@ -48,7 +48,7 @@ struct OverlayDATA_230 D230 =
 		.posX_curr = 0x180,
 		.posY_curr = 0x6c,
 		
-		.state = 0x2b,
+		.state = 0x403,
 		.rows = &D230.rows_mainMenu_Basic,
 		.funcPtr = DECOMP_MM_MENUBOX_Main,
 		
