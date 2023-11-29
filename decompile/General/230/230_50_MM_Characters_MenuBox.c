@@ -72,16 +72,15 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 	// if transitioning in
 	if (D230.isMenuTransitioning == 0) 
 	{
-		// subtract frame
-		D230.transitionFrames--;
-	
 		// if no more frames
-		if (D230.transitionFrames == -1) 
+		if (D230.transitionFrames == 0) 
 		{
 			// menu is now in focus
 			D230.isMenuTransitioning = 1;
-			
-			D230.transitionFrames = 0;
+		}
+		else
+		{
+			D230.transitionFrames--;
 		}
 	}
 
