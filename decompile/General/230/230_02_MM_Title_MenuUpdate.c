@@ -191,34 +191,25 @@ void DECOMP_MM_Title_MenuUpdate(void)
     {
       // enable Demo Mode
       gGT->boolDemoMode = 1;
+	  
+      // set number of players to 1
+      gGT->numPlyrCurrGame = 1;
+	  
+	  // 60 seconds
+      gGT->demoCountdownTimer = 1800;
 
       // number of times you've seen Demo Mode,
       seenDemo = sdata->demoModeIndex;
 
-	  // 60 seconds
-      gGT->demoCountdownTimer = 1800;
-
-      // use the number of time's you've seen
-      // Demo Mode, to decide the order of characters
-
-      for (iVar4 = 0; iVar4 < 8; iVar4++)
-      {
-        // set character ID
-        data.characterIDs[iVar4] = seenDemo & 7;
-
-        // iterate character ID
-        seenDemo++;
-      }
-
-      // set number of players to 1
-      gGT->numPlyrCurrGame = 1;
+      // set character ID
+      data.characterIDs[0] = seenDemo;
 
       // get trackID from demo mode index,
       // in order of Single Race track selection
-      iVar4 = D230.arcadeTracks[sdata->demoModeIndex].levID;
+      iVar4 = D230.arcadeTracks[seenDemo].levID;
 
-      // increment number of times you've been in demo mode
-      sdata->demoModeIndex += 1;
+      // increment counter
+      sdata->demoModeIndex = (seenDemo + 1) & 7;
     }
     goto LAB_800abfc0;
 
