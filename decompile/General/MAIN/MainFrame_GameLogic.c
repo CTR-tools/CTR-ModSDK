@@ -180,23 +180,26 @@ LAB_80035098:
 						Weapon_Shoot_OnCirclePress((struct Driver*)psVar12->object);
 					}
 					
-					for(psVar12 = gGT->threadBuckets[iVar4].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
+					// run all driver funcPtrs,
+					// all drivers must run the same stage (1-13)
+					// at the same time, that's why the stages exist
+					for(iVar11 = 0; iVar11 < 13; iVar11++)
 					{
-						// if PLYR converted to robotcar at end of race,
-						// dont run funcPtrs from inside driver struct
-						if (psVar12->funcThTick != 0) continue;
-						
-						psVar9 = (struct Driver*)psVar12->object;
-						
-						for(iVar11 = 0; iVar11 < 13; iVar11++)
+						for(psVar12 = gGT->threadBuckets[iVar4].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 						{
+							// if PLYR converted to robotcar at end of race,
+							// dont run funcPtrs from inside driver struct
+							if (psVar12->funcThTick != 0) continue;
+						
+							psVar9 = (struct Driver*)psVar12->object;
+							
 							pcVar5 = psVar9->funcPtrs[iVar11];
 							
 							if (pcVar5 != 0)
 							{
 								pcVar5(psVar12, psVar9);
 							}
-						}
+						}	
 					}
 				}
 				
