@@ -459,7 +459,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 
             // If you are a row less than 5,
             // any row except the bottom
-            if ((uint)sdata->battleSetupRowHighlighted - 3 < 2)
+            if ((unsigned short)sdata->battleSetupRowHighlighted - 3 < 2)
             {
                 i = (u_int)sdata->battleSetupRowHighlighted - 2;
                 if (sdata->battleSetupWeaponHighlighted < 0)
