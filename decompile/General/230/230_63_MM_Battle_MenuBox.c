@@ -126,7 +126,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 
     for (i = 0; i < 4; i++)
     {
-        if ((gGT->battleSetup.teamFlags & 1 << i) == 0)
+        if ((gGT->battleSetup.teamFlags & (1 << i)) == 0)
         {
             // -500
             gGT->battleSetup.pointsPerTeam[i] = 0xfffffe0c;
@@ -459,7 +459,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 
             // If you are a row less than 5,
             // any row except the bottom
-            if (sdata->battleSetupRowHighlighted - 3 < 2)
+            if ((uint)sdata->battleSetupRowHighlighted - 3 < 2)
             {
                 i = (u_int)sdata->battleSetupRowHighlighted - 2;
                 if (sdata->battleSetupWeaponHighlighted < 0)
@@ -909,7 +909,7 @@ LAB_800b25f0:
             1, 0x1000, 1, color);
     }
 
-    if ((u_int)sdata->battleSetupRowHighlighted - 3 < 2)
+    if ((unsigned short)sdata->battleSetupRowHighlighted - 3 < 2)
     {
         sVar6 = local_40.x + sdata->battleSetupWeaponHighlighted * 0x34;
         local_60.x = sVar6 + 4;
