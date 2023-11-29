@@ -7613,7 +7613,7 @@ LAB_800499e4:
 		  // MM_TrackSelect_GetMenuBox
           DAT_8008d924 = (undefined *)FUN_800b0eac();
 
-		  // set default track selection values
+		  // MM_TrackSelect_Init
 		  FUN_800affd0();
           return;
         }

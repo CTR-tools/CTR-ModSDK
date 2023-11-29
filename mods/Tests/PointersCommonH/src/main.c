@@ -58,7 +58,7 @@ struct x y[] =
 	TEST16(&sdata_static.ptrLoadSaveObj),
 	TEST16(&sdata_static.ptrActiveMenuBox),
 	TEST16(&sdata_static.unk_saveGame_related),
-	TEST16(&sdata_static.trackSelIndex),
+	TEST16(&sdata_static.trackSelBackup),
 	TEST16(&sdata_static.AnyPlayerTap),
 	TEST16(&sdata_static.AnyPlayerHold),
 	TEST16(&sdata_static.ptrRelic),

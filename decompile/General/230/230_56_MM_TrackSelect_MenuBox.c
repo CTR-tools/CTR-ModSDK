@@ -135,6 +135,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	}
 
 	currTrack = mb->rowSelected;
+	sdata->trackSelBackup = currTrack;
 
 	// if lap selection menu is closed
 	if (D230.trackSel_boolOpenLapBox == 0)
@@ -150,6 +151,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// look for unlocked track
 				do
 				{
+					printf("loop1\n");
+					
 					currTrack--;
 					
 					// if index is negative
@@ -173,6 +176,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				// look for unlocked track
 				do
 				{
+					printf("loop2\n");
+					
 					currTrack++;
 					
 					// if you go beyond max number of tracks
@@ -318,6 +323,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	{
 		do
 		{
+			printf("loop3\n");
+					
 			iVar10 = iVar9;
 			if (iVar9 < 0)
 			{
@@ -515,6 +522,8 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 		do
 		{
+			printf("loop4\n");
+			
 			iVar10++;
 			
 			if (uVar15 <= iVar10)

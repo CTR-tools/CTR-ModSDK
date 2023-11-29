@@ -4092,8 +4092,8 @@ struct sData
 	// 8008c888 -- JpnTrial
 	// 8008dce4 -- EurRetail
 	// 80090d5C -- JpnRetail
-	u_short trackSelIndex;
-	short unk_aftertrackselindex;
+	u_short trackSelBackup;
+	short padding_8008d932;
 
 	// 8008d934
 	// one bit for each player that has
