@@ -33,9 +33,6 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         {
             DECOMP_MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, 8);
 
-            // reduce frame count
-            elapsedFrames--;
-
             // if no more frames
             if (elapsedFrames == 0)
             {
@@ -44,6 +41,11 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
 				D230.menubox_cupSelect.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);
 				D230.menubox_cupSelect.state |= EXECUTE_FUNCPTR;
             }
+			
+			else
+			{
+				elapsedFrames--;
+			}
         }
         // if transitioning out
         else if (D230.cupSel_transitionState == 2)

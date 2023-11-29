@@ -58,13 +58,17 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			}
 
 			MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, 8);
-			elapsedFrames--;
-
+			
 			// ran out of frames
 			if (elapsedFrames == 0)
 			{
 				// menu is now in focus
 				D230.trackSel_transitionState = IN_MENU;
+			}
+			
+			else
+			{
+				elapsedFrames--;
 			}
 		}
 		// transitioning out
