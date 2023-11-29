@@ -28,7 +28,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
     RECT local_48;
     RECT local_40;
     short local_38;
-    short local_36[3];
+    short local_36;
 
     struct MenuBox *box;
     struct GameTracker *gGT = sdata->gGT;
@@ -459,7 +459,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 
             // If you are a row less than 5,
             // any row except the bottom
-            if ((unsigned short)sdata->battleSetupRowHighlighted - 3 < 2)
+            if ((unsigned int)sdata->battleSetupRowHighlighted - 3 < 2)
             {
                 i = (u_int)sdata->battleSetupRowHighlighted - 2;
                 if (sdata->battleSetupWeaponHighlighted < 0)
@@ -547,10 +547,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                 {
                     box->state &= ~(ONLY_DRAW_TITLE);
 
-                    // Leave the submenu that is within the Setup Battle menu
-
-                    // Set to 0xFFFF
-                    sdata->battleSetupExpandMenu = 0xffff;
+                    sdata->battleSetupExpandMenu = -1;
                 }
             }
         }
@@ -638,10 +635,10 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
 								 
                 local_38 = 0xd;
                 DECOMP_MENUBOX_GetHeight(&D230.battleLengthLifeTime_box, &local_38, 0);
-                local_36[0] = 0xd;
+                local_36 = 0xd;
                 DECOMP_MENUBOX_GetHeight(&D230.battleLengthLifeLife_box, &local_36, 0);
-                sVar20 = local_36[0] + sVar6;
-                if (local_36[0] < local_38)
+                sVar20 = local_36 + sVar6;
+                if (local_36 < local_38)
                 {
                     sVar20 = local_38 + sVar6;
                 }
@@ -909,7 +906,7 @@ LAB_800b25f0:
             1, 0x1000, 1, color);
     }
 
-    if ((unsigned short)sdata->battleSetupRowHighlighted - 3 < 2)
+    if ((unsigned int)sdata->battleSetupRowHighlighted - 3 < 2)
     {
         sVar6 = local_40.x + sdata->battleSetupWeaponHighlighted * 0x34;
         local_60.x = sVar6 + 4;
