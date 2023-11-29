@@ -398,7 +398,7 @@ FinishLoading:
 					// skip trophy animation
 					D230.timerInTitle = 1000;
 
-					DECOMP_MM_Title_ThTick(D230.titleObj);
+					DECOMP_MM_Title_ThTick(D230.titleObj->t);
 				}
 #endif
 

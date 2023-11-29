@@ -19,6 +19,10 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			curr = curr->next
 		)
 	{
+		// only draw unanimated models, 
+		// which have one static frame at ptrFrameData
+		if (curr->model->headers[0].ptrFrameData == 0) continue;
+
 		for (int i = 0; i < gGT->numPlyrCurrGame; i++)
 		{
 			if ((curr->flags & 0x80) != 0) continue;
@@ -81,6 +85,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 			struct Model* m = curr->model;
 			struct ModelHeader* mh = &m->headers[0];
+
 			char* vertData = (char*)&mh->ptrFrameData[0] + mh->ptrFrameData->vertexOffset;
 
 			// 3FF is background, 0x0 is minimum depth

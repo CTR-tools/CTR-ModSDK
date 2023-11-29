@@ -51,8 +51,6 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   // copy pointer to title object
   ptrTitle = (struct Title *)obj;
 
-  // no instances yet
-#ifndef REBUILD_PS1
   // loop 6 times
   for (i = 0; i < 6; i++)
   {
@@ -113,7 +111,6 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   }
 
   DECOMP_MM_Title_CameraMove(obj, timer);
-#endif
 
   // increment frame counter
   timer = D230.timerInTitle + 1;
