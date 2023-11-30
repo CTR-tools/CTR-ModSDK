@@ -1,5 +1,6 @@
 #include <common.h>
 
+#ifndef REBUILD_PS1
 __attribute__((optimize("O0")))
 int ScrapBookPlayMovie_DecodeFrame()
 {
@@ -10,6 +11,7 @@ int ScrapBookPlayMovie_DecodeFrame()
 		ptrDrawEnv->ofs[0],
 		ptrDrawEnv->ofs[1] + 4) == 0;
 }
+#endif
 
 void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 {
