@@ -1,12 +1,14 @@
 #include <common.h>
 
-// prevent compiler optimization from screwing us over,
-// it does not know VsyncCallback will change swapchainIndex,
-// never update the register, and crash the game
-DRAWENV* ScrapbookGetDrawEnv()
+__attribute__((optimize("O0")))
+int ScrapBookPlayMovie_DecodeFrame()
 {
 	struct GameTracker* gGT = sdata->gGT;
-	return &gGT->db[1 - gGT->swapchainIndex].drawEnv;
+	DRAWENV* ptrDrawEnv = &gGT->db[1 - gGT->swapchainIndex].drawEnv;
+            
+	return MM_Video_DecodeFrame(
+		ptrDrawEnv->ofs[0],
+		ptrDrawEnv->ofs[1] + 4) == 0;
 }
 
 void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
@@ -93,14 +95,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 #ifndef REBUILD_PS1
         // infinite loop (cause this is scrapbook),
         // keep doing DecodeFrame and VSync until done
-        while (
-			
-			// gGT->DB[nextFrame] (swapchain flips in VsyncCallback)
-			ptrDrawEnv = ScrapbookGetDrawEnv(),
-            
-			MM_Video_DecodeFrame(
-				ptrDrawEnv->ofs[0],
-				ptrDrawEnv->ofs[1] + 4) == 0)
+        while (ScrapBookPlayMovie_DecodeFrame())
         {
             VSync(0);
         }
