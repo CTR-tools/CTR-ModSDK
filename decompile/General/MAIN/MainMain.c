@@ -254,7 +254,22 @@ FinishLoading:
 						// which is the checkered flag
 					}
 				}
-
+				
+				// sync music, in case loading is too fast,
+				// https://www.youtube.com/watch?v=rzJcVdm4ny4
+				#ifndef REBUILD_PS1
+				else
+				{
+					if(gGT->levelID == NAUGHTY_DOG_CRATE)
+					{
+						// wait around
+						int GetSongTime();
+						while(GetSongTime() < 0x11c0)
+						{}
+					}
+				}
+				#endif
+				
 // =========== Main Game Loop ======================
 
 				if
@@ -450,6 +465,14 @@ FinishLoading:
 		}
 	} while( true );
 }
+
+#ifndef REBUILD_PS1
+__attribute__((optimize("O0")))
+int GetSongTime()
+{
+	return sdata->songPool[0].timeSpentPlaying;
+}
+#endif
 
 // by separating this, it can be 
 // overwritten dynamically (oxide fix)
