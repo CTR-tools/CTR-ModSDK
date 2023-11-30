@@ -258,6 +258,7 @@ FinishLoading:
 				// sync music, in case loading is too fast,
 				// https://www.youtube.com/watch?v=rzJcVdm4ny4
 				#ifndef REBUILD_PS1
+				#if 1 // not part of the OG game
 				else
 				{
 					if(gGT->levelID == NAUGHTY_DOG_CRATE)
@@ -268,6 +269,7 @@ FinishLoading:
 						{}
 					}
 				}
+				#endif
 				#endif
 				
 // =========== Main Game Loop ======================
