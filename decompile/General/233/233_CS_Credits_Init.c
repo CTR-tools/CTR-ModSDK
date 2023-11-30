@@ -107,6 +107,7 @@ void CS_Credits_Init()
 	creditsBSS->numStrings = creditsDst->numStrings;
 	
 	char** ptrStrings = CREDITSHEADER_GETSTRINGS(creditsDst);
+	creditsBSS->ptrStrings = ptrStrings;
 	
 	for(i = 0; i < creditsBSS->numStrings; i++)
 	{

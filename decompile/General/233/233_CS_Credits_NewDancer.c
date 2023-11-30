@@ -18,8 +18,7 @@ void CS_Credits_NewDancer(struct Thread* dancerTh, int dancerModelID)
 	
 	creditsObj->countdown = 360;
 	
-	char* ptrStrings =
-		CREDITSHEADER_GETSTRINGS(creditsBSS);
+	char** ptrStrings = creditsBSS->ptrStrings;
 	
 	// less than TAWNA1
 	if(dancerModelID < 0x8f)
