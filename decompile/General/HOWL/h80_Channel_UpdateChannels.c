@@ -33,7 +33,7 @@ void DECOMP_Channel_UpdateChannels()
 			
 			if((updateFlags & 2) != 0)
 			{
-				*ptrFlag &= ~(2);
+				*ptrFlag &= ~(1);
 			}
 			
 			else
