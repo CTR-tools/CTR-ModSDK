@@ -441,7 +441,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			adv->rewards[3] |= 0x80004;
 
 			// if beaten oxide 2nd time
-			if(gGT->bossID == 6)
+			if(gGT->bossID == 5)
 			{
 				// beat 2nd time
 				adv->rewards[3] |= 0x100008;
