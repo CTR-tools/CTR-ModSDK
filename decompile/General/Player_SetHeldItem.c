@@ -26,7 +26,6 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 	int itemSet;
 	char item;
 	char bossFails;
-	int bruh;
 
 	// 6th Itemset (Battle Mode Custom Itemset)
 	itemSet = ITEMSET_BattleCustom;
@@ -111,25 +110,17 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 				// 1P Arcade
 				case 8:
 
-					// careful, dont let names confuse you
-					bruh = (u_int)driver->driverRank << 0x10;
-					itemSet = bruh >> 0x10;
+					// 0,1 = 0 (itemset1)
+					// 2,3 = 1 (itemset2)
+					// 4,5 = 2 (itemset3)
+					// 6,7 = 3 (itemset4)
+					itemSet = driver->driverRank >> 1;
 
 					// if in 2nd place, get itemSet2
 					if (itemSet == 1)
 					{
 						Itemset2:
-						// 2nd Itemset
 						itemSet = ITEMSET_Race2;
-					}
-
-					else
-					{
-						// 1st place, 		gets 1st Itemset
-						// 3rd, 4th place, 	gets 2nd Itemset
-						// 5th, 6th place, 	gets 3rd Itemset
-						// 7th, 8th place,	gets 4th Itemset
-						itemSet = itemSet - (bruh >> 0x1f) >> 1;
 					}
 			}
 		}
