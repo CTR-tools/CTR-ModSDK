@@ -323,19 +323,18 @@ void EngineSound_Player(struct Driver *driver)
             distort = (distort & 0xff) << 8;
 
             // L/R
-            LR = LR & 0xff;
+            LR &= 0xff;
 
-            // if echo effect is requierd
+            // if echo effect is required
             if ((driver->actionsFlagSet & 0x10000) != 0)
             {
                 // add echo
-                vol = vol | distort | 0x1000000;
+                vol |= (distort | 0x1000000);
                 goto RECALCULATE;
             }
         }
     }
-    vol = vol | distort;
+    vol |= distort;
 RECALCULATE:
-    EngineAudio_Recalculate(engine * 4 + id & 0xffff, uVar6 | uVar10);
-    return;
+    EngineAudio_Recalculate((engine * 4 + id & 0xffff), uVar6 | uVar10);
 }
