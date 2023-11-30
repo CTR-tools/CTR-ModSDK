@@ -35,7 +35,7 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 			sdata->activeSubMenu = m;
 
 			// if input should clear upon opening
-			if ((m->state & CLEAR_INPUTS_UPON_OPENING) != 0)
+			if ((m->state & KEEP_INPUTS_IN_SUBMENU) == 0)
 			{
 				DECOMP_MENUBOX_ClearInput();
 			}
