@@ -30,7 +30,7 @@ void DECOMP_TileView_Init(struct TileView* tileView, int id, int total)
 		tileView->rect.h = SIZEY_TOP;
 
 		tileView->rect.x = (id&1) * 0x103;
-		tileView->rect.y = (id>>1) * SIZEY_TOP+4;
+		tileView->rect.y = (id>>1) * (SIZEY_TOP+4);
 
 		return;
 	}
