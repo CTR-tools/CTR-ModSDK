@@ -1,0 +1,9 @@
+// Include anti-anti-piracy patches for PAL and NTSC-J
+1006, exe, 0x80012534, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
+1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
+
+common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
+common, exe, MixRNG_Scramble, 0x0, src/hookRNG.s
+
+common, exe, rdata_free, 0x0, src/main.c
