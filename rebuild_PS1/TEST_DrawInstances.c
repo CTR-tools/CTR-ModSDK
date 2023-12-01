@@ -84,7 +84,29 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			SetGeomOffset(view->rect.w>>1, view->rect.h>>1);
 
 			struct Model* m = curr->model;
+
+#if 0 // ANIM_TEST
+			m = gGT->modelPtr[0x3e];
+#endif
+
 			struct ModelHeader* mh = &m->headers[0];
+
+#if 0 // ANIM_TEST
+
+			// animation
+			struct ModelAnim* ma = m->headers[0].ptrAnimations[0];
+
+			int frameIndex = gGT->timer % ma->numFrames;
+			gGT->timer++;
+
+			// cast
+			char* maByte = (char*)ma;
+			maByte = MODELANIM_GETFRAME(maByte);
+			maByte = &maByte[ma->frameSize * frameIndex];
+			
+			// frame data
+			m->headers[0].ptrFrameData = maByte;
+#endif
 
 			char* vertData = (char*)&mh->ptrFrameData[0] + mh->ptrFrameData->vertexOffset;
 

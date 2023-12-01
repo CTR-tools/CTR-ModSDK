@@ -319,6 +319,9 @@ struct ModelAnim
 	// then verts, then next ModelFrame, then verts, etc...
 };
 
+#define MODELANIM_GETFRAME(x) \
+	((unsigned int)x + sizeof(struct ModelAnim))
+
 struct ModelHeader
 {
 	// name of individual model LOD,
