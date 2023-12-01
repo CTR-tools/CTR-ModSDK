@@ -2242,7 +2242,7 @@ void FUN_800adc0c(int param_1)
 							// player -> instance
       iVar10 = *(int *)(*(int *)(puVar1 + (int)sVar9 * 4 + 0x24ec) + 0x1c);
       
-	  // Disable "AI flag"
+	  // Not invisible
 	  uVar7 = *(uint *)(iVar10 + 0x28) & 0xffffff7f;
       
 	  // Set instance flags
@@ -2251,7 +2251,7 @@ void FUN_800adc0c(int param_1)
 	  // if driver loaded is not human
       if (((int)(uint)(byte)puVar1[0x1ca9] <= (int)sVar9) || (param_1 == 0)) 
 	  {
-		// You are an AI (I think)
+		// invisible
         *(uint *)(iVar10 + 0x28) = uVar7 | 0x80;
       }
 	  
