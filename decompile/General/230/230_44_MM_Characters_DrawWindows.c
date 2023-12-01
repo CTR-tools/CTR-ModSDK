@@ -183,10 +183,6 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     rot[1] = D230.csm_instRot[1] + D230.characterSelect_angle[iVar14];
     rot[2] = D230.csm_instRot[2];
 
-#if 0 // ANIM_TEST
-	rot[1] = D230.csm_instRot[1];
-#endif
-
 #ifndef REBUILD_PS1
     ConvertRotToMatrix(&iVar10->matrix.m[0][0], &rot[0]);
 #else

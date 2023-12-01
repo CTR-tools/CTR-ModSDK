@@ -19,10 +19,6 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			curr = curr->next
 		)
 	{
-		// only draw unanimated models, 
-		// which have one static frame at ptrFrameData
-		if (curr->model->headers[0].ptrFrameData == 0) continue;
-
 		for (int i = 0; i < gGT->numPlyrCurrGame; i++)
 		{
 			if ((curr->flags & 0x80) != 0) continue;
@@ -91,24 +87,28 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 			struct ModelHeader* mh = &m->headers[0];
 
-#if 0 // ANIM_TEST
+			// assume unanimated
+			struct ModelFrame* mf = mh->ptrFrameData;
 
-			// animation
-			struct ModelAnim* ma = m->headers[0].ptrAnimations[0];
+			// animated
+			if (mf == 0)
+			{
+				// animation
+				struct ModelAnim* ma = m->headers[0].ptrAnimations[0];
 
-			int frameIndex = gGT->timer % ma->numFrames;
-			gGT->timer++;
+				int frameIndex = gGT->timer % ma->numFrames;
+				gGT->timer++;
 
-			// cast
-			char* maByte = (char*)ma;
-			maByte = MODELANIM_GETFRAME(maByte);
-			maByte = &maByte[ma->frameSize * frameIndex];
-			
-			// frame data
-			m->headers[0].ptrFrameData = maByte;
-#endif
+				// cast
+				char* maByte = (char*)ma;
+				maByte = MODELANIM_GETFRAME(maByte);
+				maByte = &maByte[ma->frameSize * frameIndex];
 
-			char* vertData = (char*)&mh->ptrFrameData[0] + mh->ptrFrameData->vertexOffset;
+				// frame data
+				mf = maByte;
+			}
+
+			char* vertData = (char*)&mf[0] + mf->vertexOffset;
 
 			// 3FF is background, 0x0 is minimum depth
 			void* ot = &view->ptrOT[0];
@@ -224,9 +224,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 						// === Copy/Paste in both prims
 						short zz;
-						posWorld1[0] = ((mh->ptrFrameData->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
-						posWorld1[1] = ((mh->ptrFrameData->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8;
-						posWorld1[2] = ((mh->ptrFrameData->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8;
+						posWorld1[0] = ((mf->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
+						posWorld1[1] = ((mf->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8;
+						posWorld1[2] = ((mf->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8;
 						posWorld1[3] = 0;
 						zz = posWorld1[2];
 						posWorld1[2] = posWorld1[1];
@@ -238,9 +238,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 						gte_rtps();
 						gte_stsxy(&posScreen1[0]);
 
-						posWorld2[0] = ((mh->ptrFrameData->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8;
-						posWorld2[1] = ((mh->ptrFrameData->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8;
-						posWorld2[2] = ((mh->ptrFrameData->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8;
+						posWorld2[0] = ((mf->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8;
+						posWorld2[1] = ((mf->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8;
+						posWorld2[2] = ((mf->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8;
 						posWorld2[3] = 0;
 						zz = posWorld2[2];
 						posWorld2[2] = posWorld2[1];
@@ -252,9 +252,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 						gte_rtps();
 						gte_stsxy(&posScreen2[0]);
 
-						posWorld3[0] = ((mh->ptrFrameData->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8;
-						posWorld3[1] = ((mh->ptrFrameData->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8;
-						posWorld3[2] = ((mh->ptrFrameData->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8;
+						posWorld3[0] = ((mf->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8;
+						posWorld3[1] = ((mf->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8;
+						posWorld3[2] = ((mf->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8;
 						posWorld3[3] = 0;
 						zz = posWorld3[2];
 						posWorld3[2] = posWorld3[1];
@@ -294,9 +294,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 						// === Copy/Paste in both prims
 						short zz;
-						posWorld1[0] = ((mh->ptrFrameData->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
-						posWorld1[1] = ((mh->ptrFrameData->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8;
-						posWorld1[2] = ((mh->ptrFrameData->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8;
+						posWorld1[0] = ((mf->pos[0] + tempCoords[1].X) * mh->scale[0]) >> 8;
+						posWorld1[1] = ((mf->pos[2] + tempCoords[1].Y) * mh->scale[2]) >> 8;
+						posWorld1[2] = ((mf->pos[1] + tempCoords[1].Z) * mh->scale[1]) >> 8;
 						posWorld1[3] = 0;
 						zz = posWorld1[2];
 						posWorld1[2] = posWorld1[1];
@@ -308,9 +308,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 						gte_rtps();
 						gte_stsxy(&posScreen1[0]);
 
-						posWorld2[0] = ((mh->ptrFrameData->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8;
-						posWorld2[1] = ((mh->ptrFrameData->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8;
-						posWorld2[2] = ((mh->ptrFrameData->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8;
+						posWorld2[0] = ((mf->pos[0] + tempCoords[2].X) * mh->scale[0]) >> 8;
+						posWorld2[1] = ((mf->pos[2] + tempCoords[2].Y) * mh->scale[2]) >> 8;
+						posWorld2[2] = ((mf->pos[1] + tempCoords[2].Z) * mh->scale[1]) >> 8;
 						posWorld2[3] = 0;
 						zz = posWorld2[2];
 						posWorld2[2] = posWorld2[1];
@@ -322,9 +322,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 						gte_rtps();
 						gte_stsxy(&posScreen2[0]);
 
-						posWorld3[0] = ((mh->ptrFrameData->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8;
-						posWorld3[1] = ((mh->ptrFrameData->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8;
-						posWorld3[2] = ((mh->ptrFrameData->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8;
+						posWorld3[0] = ((mf->pos[0] + tempCoords[3].X) * mh->scale[0]) >> 8;
+						posWorld3[1] = ((mf->pos[2] + tempCoords[3].Y) * mh->scale[2]) >> 8;
+						posWorld3[2] = ((mf->pos[1] + tempCoords[3].Z) * mh->scale[1]) >> 8;
 						posWorld3[3] = 0;
 						zz = posWorld3[2];
 						posWorld3[2] = posWorld3[1];
