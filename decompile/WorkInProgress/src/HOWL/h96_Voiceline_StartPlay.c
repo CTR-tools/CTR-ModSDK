@@ -27,8 +27,10 @@ void Voiceline_StartPlay(struct Item *voiceLine)
             // if character is 15 - Oxide
             (*(char *)((int)voiceLine + 10) == 0xf))))
     {
+		// inline audioRNG scramble
         sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
-        uVar3 = (sdata->audioRNG & 3) + 4;
+        
+		uVar3 = (sdata->audioRNG & 3) + 4;
     }
 
     else
@@ -46,6 +48,7 @@ void Voiceline_StartPlay(struct Item *voiceLine)
     }
     else
     {
+		// inline audioRNG scramble
         sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
 
         // if (uVar1 == 0)

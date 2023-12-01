@@ -17,7 +17,7 @@ void Level_RandomFX(int *param_1, u_int soundID, int param_3, uint param_4, int 
     // if no cooldown
     if (cooldown == 0)
     {
-        // scamble RNG
+        // inline audioRNG scramble
         sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
 
         //
@@ -33,7 +33,7 @@ void Level_RandomFX(int *param_1, u_int soundID, int param_3, uint param_4, int 
             // echo, no distort, balance LR
             0x1008080);
 
-        // scramble RNG
+        // inline audioRNG scramble
         sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
 
         // if (param_4 == 0)

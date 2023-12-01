@@ -5427,13 +5427,19 @@ void FUN_8002cbe8(uint param_1,uint param_2,uint param_3)
 
   bVar1 = (&DAT_800838dc)[param_1];
   if (7 < (int)param_1) {
-    if (((&DAT_80096244)[param_2] & 1 << (param_1 & 0x1f)) == 0) {
+    if (((&DAT_80096244)[param_2] & 1 << (param_1 & 0x1f)) == 0) 
+	{
+	  // inline audioRNG scramble
       DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
+	  
       uVar8 = DAT_8008d058 & 3;
     }
-    else {
+    else 
+	{
+	  // inline audioRNG scramble
       DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
-      uVar8 = DAT_8008d058 & 7;
+      
+	  uVar8 = DAT_8008d058 & 7;
     }
     if (uVar8 != 0) {
       return;
@@ -5472,8 +5478,11 @@ void FUN_8002cbe8(uint param_1,uint param_2,uint param_3)
   }
   if (bVar3) {
     if (!bVar2 || !bVar5) goto LAB_8002ce20;
+	
+	// inline audioRNG scramble
     DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
-    bVar4 = false;
+    
+	bVar4 = false;
     if ((DAT_8008d058 & 1) == 0) goto LAB_8002cdcc;
   }
   else {
@@ -5604,8 +5613,10 @@ void FUN_8002cf28(undefined4 *param_1)
 		)
 	)
   {
+	// inline audioRNG scramble
     DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
-    uVar3 = (DAT_8008d058 & 3) + 4;
+    
+	uVar3 = (DAT_8008d058 & 3) + 4;
   }
 
   else
@@ -5621,9 +5632,12 @@ void FUN_8002cf28(undefined4 *param_1)
 	// Voiceline_StopAll
     FUN_8002cb44();
   }
-  else {
+  else 
+  {
+	// inline audioRNG scramble
     DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
-    if (uVar1 == 0) {
+    
+	if (uVar1 == 0) {
       trap(0x1c00);
     }
     iVar5 = (DAT_8008d058 % (uint)uVar1) * 2;
@@ -7686,7 +7700,7 @@ void FUN_8002eab8(int *param_1,uint param_2,int param_3,uint param_4,int param_5
   // if no cooldown
   if (iVar1 == 0)
   {
-	// scamble RNG
+	// inline audioRNG scramble
     DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
 
 	// OtherFX_Play_LowLevel
@@ -7703,7 +7717,7 @@ void FUN_8002eab8(int *param_1,uint param_2,int param_3,uint param_4,int param_5
 	   0x1008080
 	);
 
-	// scramble RNG
+	// inline audioRNG scramble
 	DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
 
     if (param_4 == 0) {
@@ -9209,6 +9223,7 @@ void FUN_80030404(uint param_1,int param_2)
 	  // pick a new sound, 0xF3, 0xF4, or 0xF5,
 	  // one of three different bird noises near Pura
 		
+	  // inline audioRNG scramble
       DAT_8008d058 = ((DAT_8008d058 >> 3) + DAT_8008d058 * 0x20000000) * 5 + 1;
 
 	  // soundId = (random%3) + 0xf3;

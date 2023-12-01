@@ -38,11 +38,13 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
     {
         if ((sdata->timeSet1[param_2] & (1 << voiceID)) == 0)
         {
+			// inline audioRNG scramble
             sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
             uVar8 = sdata->audioRNG & 3;
         }
         else
         {
+			// inline audioRNG scramble
             sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
             uVar8 = sdata->audioRNG & 7;
         }
@@ -78,8 +80,11 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
     {
         if (!bVar2 || !bVar5)
             goto LAB_8002ce20;
+		
+		// inline audioRNG scramble
         sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
-        bVar4 = false;
+        
+		bVar4 = false;
         if ((sdata->audioRNG & 1) == 0)
             goto LAB_8002cdcc;
     }
