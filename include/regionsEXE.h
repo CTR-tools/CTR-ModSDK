@@ -4558,8 +4558,6 @@ struct sData
 	// 80095E80
 	int KartHWL_fileSize;
 
-	// ==========================
-
 	// 80095E84
 	char KartHWL_filename[0x10];
 
@@ -4569,11 +4567,6 @@ struct sData
 
 	// ==================================
 
-	// 80096194
-	// part of voices, see FUN_8002cf28, FUN_8002dc4c
-	char data_80096194[0x150];
-
-	#if 0
 	// 80096194 -- next variable
 	int backupParams_FUN_8002cf28[4];
 
@@ -4609,11 +4602,11 @@ struct sData
 
 	} voicelinePool[8];
 
-	// 80096244 -- next
-
-	// Audio Timestamps
 	// 80096244
+	int timeSet1[0x10];
+	
 	// 80096284
+	int timeSet2[0x10];
 
 	// 800962c4 and 800962d4
 	struct
@@ -4624,18 +4617,11 @@ struct sData
 		int soundID_soundCount;
 	} SoundFadeInput[2];
 
-	#endif
-
-	// garage pool added after sep3
-
-
 	#if BUILD >= UsaRetail
 	// 800962E4
 	// eight members, each 0xc
 	struct GarageFX garageSoundPool[8];
 	#endif
-
-	// 800962E4 to 80096338 ^^ from FUN_8003074c
 
 	// 80094f94 -- SepReview
 	// 80096344 -- UsaRetail

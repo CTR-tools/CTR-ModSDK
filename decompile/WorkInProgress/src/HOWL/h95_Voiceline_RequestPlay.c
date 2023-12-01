@@ -36,7 +36,7 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
 
     if (7 < voiceID)
     {
-        if (((*(u_int *)0x80096244)[param_2] & (1 << voiceID)) == 0)
+        if ((sdata->timeSet1[param_2] & (1 << voiceID)) == 0)
         {
             sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
             uVar8 = sdata->audioRNG & 3;
@@ -54,7 +54,7 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
     }
 
     // If player spoke more than two seconds ago
-    bVar2 = 60 < gGT->frameTimer_MainFrame_ResetDB - (*(u_int *)0x80096284)[param_2];
+    bVar2 = 60 < gGT->frameTimer_MainFrame_ResetDB - sdata->timeSet2[param_2];
 
     bVar5 = bVar1 < 2;
 
@@ -70,7 +70,7 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
           (bVar3 = true,
 
            // If player spoke less than two seconds ago
-           gGT->frameTimer_MainFrame_ResetDB - (*(u_int *)0x80096284)[param_2]) < 60)))
+           gGT->frameTimer_MainFrame_ResetDB - sdata->timeSet2[param_2]) < 60)))
     {
         bVar3 = false;
     }
@@ -97,7 +97,8 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
             {
                 return;
             }
-            ((u_int *)0x80096244)[param_2] |= (1 << (voiceID));
+			
+            sdata->timeSet1[param_2] |= (1 << (voiceID));
 
             iVar10 = sdata->VoiceLine2.last;
 
@@ -167,5 +168,5 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
 LAB_8002ce00:
 
     // store time stamp
-    ((u_int *)0x80096284)[param_2] = sdata->gGT->frameTimer_MainFrame_ResetDB;
+    sdata->timeSet2[param_2] = sdata->gGT->frameTimer_MainFrame_ResetDB;
 }
