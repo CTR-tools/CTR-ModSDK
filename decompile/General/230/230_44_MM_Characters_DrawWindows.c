@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
+void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
 {
   struct GameTracker* gGT;
   short uVar2;
@@ -21,7 +21,7 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
   
   gGT = sdata->gGT;
 
-  if (wheelFlag != 0) {
+  if (boolShowDrivers != 0) {
     // enable drawing wheels
 	gGT->renderFlags |= 0x80;
   }
@@ -88,13 +88,20 @@ void DECOMP_MM_Characters_DrawWindows(char wheelFlag)
     // player -> instance
     iVar10 = gGT->drivers[iVar14]->instSelf;
   
-    // Disable "AI flag"
+    // Make Visible
     iVar10->flags &= 0xffffff7f;
   
-    // if driver loaded is not human
-    if ((gGT->numPlyrNextGame <= iVar14) || (wheelFlag == 0)) 
+    // if driver is off-screen
+    if (
+			// ND bug, this can't happen
+			#if 0
+			(gGT->numPlyrNextGame <= iVar14) || 
+			#endif
+			
+			(boolShowDrivers == 0)
+		) 
     {
-      // You are an AI (I think)
+      // invisible
       iVar10->flags |= 0x80;
     }
   

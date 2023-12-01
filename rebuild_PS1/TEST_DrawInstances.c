@@ -14,9 +14,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 	struct PrimMem* primMem = &gGT->backBuffer->primMem;
 
 	for (
-			struct Instance* curr = gGT->JitPools.instance.taken.first;
-			curr != 0;
-			curr = curr->next
+		struct Instance* curr = gGT->JitPools.instance.taken.first;
+		curr != 0;
+		curr = curr->next
 		)
 	{
 		for (int i = 0; i < gGT->numPlyrCurrGame; i++)
@@ -28,10 +28,6 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			struct TileView* view = idpp[i].tileView;
 			if (view == 0) continue;
 
-			// reset, might be off by one frame and glitch in the top-left corner,
-			// when leaving character selection back to main menu
-			idpp[i].tileView = 0;
-
 			// not this, this is identity matrix
 #if 0
 			MATRIX* mat1 = &view->matrix_ViewProj;
@@ -40,7 +36,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			*(int*)&mat1->m[2][2] = 0x1000;
 #endif
 
-// HARD-CODE MATRIX
+			// HARD-CODE MATRIX
 #if 0
 			// copy from running CTR instance in no$psx,
 			// INSTANCE IDPP offset 0x78 is a 4x4 MVP
@@ -58,9 +54,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 #if 1
 			// shouldn't need this, matrix is invalid
-			curr->scale[0] = 0xCCC/4;
-			curr->scale[1] = 0xCCC/4;
-			curr->scale[2] = 0xCCC/4;
+			curr->scale[0] = 0xCCC / 4;
+			curr->scale[1] = 0xCCC / 4;
+			curr->scale[2] = 0xCCC / 4;
 
 			MATRIX* mat2 = MulMatrix(&view->matrix_ViewProj, &curr->matrix);
 			//MATRIX* mat2 = &curr->matrix;
@@ -77,7 +73,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// how do I multiply mat1 and mat2 together?
 			gte_SetRotMatrix(mat2);
 			gte_SetTransMatrix(mat2);
-			SetGeomOffset(view->rect.w>>1, view->rect.h>>1);
+			SetGeomOffset(view->rect.w >> 1, view->rect.h >> 1);
 
 			struct Model* m = curr->model;
 
@@ -214,7 +210,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				tempTex[0] = tempTex[1];
 				tempTex[1] = tempTex[2];
 				tempTex[2] = tempTex[3];
-				tempTex[3] = (texIndex == 0 ? 0 : mh->ptrTexLayout[texIndex-1]);
+				tempTex[3] = (texIndex == 0 ? 0 : mh->ptrTexLayout[texIndex - 1]);
 
 				//this is probably some tristrip optimization, so we can reuse vertex from the last triangle
 				//and only spend 1 command
@@ -367,7 +363,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 							(posScreen1[0]), (posScreen1[1]),	// XY0
 							(posScreen2[0]), (posScreen2[1]),	// XY1
 							(posScreen3[0]), (posScreen3[1]));	// XY2
-					
+
 						pFinal = p;
 					}
 
