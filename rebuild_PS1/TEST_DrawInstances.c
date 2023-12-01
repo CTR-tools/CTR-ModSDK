@@ -93,11 +93,35 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// animated
 			if (mf == 0)
 			{
+				// HARD-CODE MATRIX
+#if 1
+				// copy from running CTR instance in no$psx,
+				// INSTANCE IDPP offset 0x78 is a 4x4 MVP
+				// INSTANCE IDPP offset 0x98 is a 3x3, idk
+				MATRIX* mat2 = &curr->matrix;
+				*(int*)&mat2->m[0][0] = 0x3db1;
+				*(int*)&mat2->m[0][2] = 0xf90204;
+				*(int*)&mat2->m[1][1] = 0xfea8f8ab;
+				*(int*)&mat2->m[2][0] = 0x262095c;
+				*(int*)&mat2->m[2][2] = 0xfffff328;
+				mat2->t[0] = 0xfffffcb0;
+				mat2->t[1] = 0x284;
+				mat2->t[2] = 0xfb0;
+				gte_SetRotMatrix(mat2);
+				gte_SetTransMatrix(mat2);
+#endif
 				// animation
 				struct ModelAnim* ma = m->headers[0].ptrAnimations[0];
 
 				int frameIndex = gGT->timer % ma->numFrames;
 				gGT->timer++;
+
+				// if animation is compressed
+				if (ma->modelDeltaArray != 0)
+				{
+					// reset to first frame
+					frameIndex = 0;
+				}
 
 				// cast
 				char* maByte = (char*)ma;
