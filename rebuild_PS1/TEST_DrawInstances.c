@@ -85,6 +85,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 			// assume unanimated
 			struct ModelFrame* mf = mh->ptrFrameData;
+			struct ModelAnim* ma = 0;
 
 			// animated
 			if (mf == 0)
@@ -107,7 +108,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				gte_SetTransMatrix(mat2);
 #endif
 				// animation
-				struct ModelAnim* ma = m->headers[0].ptrAnimations[0];
+				ma = m->headers[0].ptrAnimations[0];
 
 				int frameIndex = gGT->timer % ma->numFrames;
 				gGT->timer++;
@@ -200,6 +201,30 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				tempCoords[1] = tempCoords[2];
 				tempCoords[2] = tempCoords[3];
 				tempCoords[3] = stack[stackIndex];
+
+				if (ma != 0)
+				{
+					// deltaArray bits: 0bXXXXXXXZZZZZZZZYYYYYYYYAAABBBCCC
+
+					// temporal_x: >> 0x19
+					// temporal_z: << 7 >> 0x18
+					// temporal_y: << 0xF >> 0x18
+
+					if (ma->modelDeltaArray != 0)
+					{
+						// == Does not work yet ==
+
+						int temporal = ma->modelDeltaArray->arr[stackIndex];
+
+						int AA = (temporal) & 7;
+						int BB = (temporal>>3) & 7;
+						int CC = (temporal>>6) & 7;
+
+						tempCoords[3].X += temporal >> 0x19;
+						tempCoords[3].Z += (temporal << 7) >> 0x18;
+						tempCoords[3].Y += (temporal << 0xf) >> 0x18;
+					}
+				}
 
 				//push new color
 				tempColor[0] = tempColor[1];
