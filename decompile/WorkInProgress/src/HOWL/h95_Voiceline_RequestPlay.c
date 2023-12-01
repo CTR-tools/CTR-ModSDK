@@ -1,4 +1,5 @@
 #include <common.h>
+
 // param1 - voiceID
 // param2 - characterID
 // param3 - characterID
@@ -36,19 +37,21 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
 
     if (7 < voiceID)
     {
+		// inline audioRNG scramble
+        sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
+		
         if ((sdata->timeSet1[param_2] & (1 << voiceID)) == 0)
         {
-			// inline audioRNG scramble
-            sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
+			// 1/4 chance
             uVar8 = sdata->audioRNG & 3;
         }
         else
         {
-			// inline audioRNG scramble
-            sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
+			// 1/8 chance
             uVar8 = sdata->audioRNG & 7;
         }
 
+		// quit if 3/4 or 7/8
         if (uVar8 != 0)
         {
             return;
