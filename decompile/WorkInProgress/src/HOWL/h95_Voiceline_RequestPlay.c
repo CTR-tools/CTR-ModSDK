@@ -79,8 +79,11 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
     {
         bVar3 = false;
     }
+	
+	// if intended to play as OtherFX
     if (bVar3)
     {
+		// override to CDSYS_XaPlay
         if (!bVar2 || !bVar5)
             goto LAB_8002ce20;
 		
@@ -88,9 +91,13 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
         sdata->audioRNG = ((sdata->audioRNG >> 3) + sdata->audioRNG * 0x20000000) * 5 + 1;
         
 		bVar4 = false;
+		
+		// coin flip to override to CDSYS_XaPlay
         if ((sdata->audioRNG & 1) == 0)
             goto LAB_8002cdcc;
     }
+	
+	// if play voice as CDSYS_XaPlay
     else
     {
         if (!bVar2 || !bVar5)
@@ -159,6 +166,8 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
             return;
         }
     }
+	
+	// == Play voice as OtherFX sampled audio ==
 
     if (bVar1 == 0)
     {
