@@ -24,7 +24,7 @@ void DECOMP_RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta)
 			(wumpaDelta > 0) &&
 			
 			// driver is not an AI
-			((driver->actionsFlagSet & 0x100000) != 0)
+			((driver->actionsFlagSet & 0x100000) == 0)
 		)
 	{
 		// for end-of-race comments

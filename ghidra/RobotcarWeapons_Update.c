@@ -82,7 +82,9 @@ void DECOMP_RobotcarWeapons_Update(void)
 							nextDriver->weaponCooldown == 0 &&
 
 							// If you dont have a tnt on your head
-							(nextDriver->instTntRecv == 0)) &&
+							(nextDriver->instTntRecv == 0)
+						) &&
+						
 						((
 							// if there is no clock weapon in effect
 							nextDriver->clockReceive == 0 &&
@@ -96,9 +98,11 @@ void DECOMP_RobotcarWeapons_Update(void)
 										*(int *)(nextDriver->instSelf->matrix.t[2]),
 
 								// check if distance between drivers is small
-								(iVar6 * iVar6 + iVar7 * iVar7) - 0x90001U < 0x13affff))
-
-							 ))))
+								(iVar6 * iVar6 + iVar7 * iVar7) - 0x90001U < 0x13affff
+							)
+						))
+					 ))
+					)
 				{
 					// Get random number
 					iVar6 = MixRNG_Scramble();

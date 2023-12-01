@@ -11,6 +11,12 @@ enum XA_TYPE
 	CDSYS_XA_NUM_TYPES
 };
 
+enum XA_GAME
+{
+	//XAG_
+	// 0 - wahoo
+};
+
 enum DiscMode
 {
 	DM_DATA,

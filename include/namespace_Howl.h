@@ -460,6 +460,45 @@ struct Bank
 	// 8 elements of 8-byte struct
 };
 
+#if 0
+enum VoiceType_SFX
+{
+	VT_Blasted = 1,
+	VT_Spinout = 3,
+	VT_Jump = 7,
+	// 0xa,
+	// 0xb,
+	// 0xf,
+	VT_Turbo = 0x10,
+	VT_Crate = 0x13,
+}
+
+// This is XA_Game, move to CDSYS, and the WRONG ORDER
+enum VoiceType_XAGAME2
+{
+	VT_ActiveTaunt1=0,
+	VT_ActiveTaunt2=1,
+	VT_BigAir1,
+	VT_BigAir2,
+	VT_Finish1,
+	VT_Finish2,
+	VT_Finish3,
+	VT_LaughTaunt1,
+	VT_LaughTaunt2,
+	VT_Ouch1,
+	VT_Ouch2,
+	VT_PassiveTaunt1,
+	VT_PassiveTaunt2,
+	VT_SneakyTaunt1,
+	VT_SneakyTaunt2,
+	VT_Spinout1,
+	VT_Spinout2,
+	VT_Yay1,
+	VT_Yay2,
+	VT_NUM // 0x13
+}
+#endif
+
 _Static_assert(sizeof(SpuReverbAttr) == 0x14);
 _Static_assert(sizeof(struct ChannelAttr) == 0x10);
 _Static_assert(sizeof(struct ChannelStats) == 0x20);
