@@ -214,15 +214,109 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 					{
 						// == Does not work yet ==
 
-						int temporal = ma->modelDeltaArray->arr[stackIndex];
+						unsigned int delta = ma->modelDeltaArray->arr[stackIndex];
+						unsigned int vertex = *(int*)&tempCoords[3];
 
-						int AA = (temporal) & 7;
-						int BB = (temporal>>3) & 7;
-						int CC = (temporal>>6) & 7;
+						unsigned int r3, r8, r9, r10, r17=0, r19, r20, s58=0, s59=0, s5a=0;
+						
+						s58 = 0; // dont reset each vertex
+						r19 = 0; // comes from what?
+						r20 = delta;
 
-						tempCoords[3].X += temporal >> 0x19;
-						tempCoords[3].Z += (temporal << 7) >> 0x18;
-						tempCoords[3].Y += (temporal << 0xf) >> 0x18;
+						r3 = r20 >> 6;
+						r3 = r3 & 7;
+						r8 = r3 ^ 0x1f;
+						r3++;
+						r10 = r3 - 8;
+						r19 += 3;
+
+						// identical to below
+						r9 = r17 >> r8;
+						if (r19 >= 0)
+						{
+							r17 = vertex;
+							r3 -= r19;
+							r3 = r17 << r3;
+							r9 |= r3;
+							r9 = r9 >> r8;
+							r3 = r19;
+							r19 -= 0x20;
+						}
+
+						if (r10 != 0)
+						{
+							r17 = r17 << 3;
+							r8 = r20 >> 0x19;
+							r8 = r8 << 1;
+							r3 = s58;
+							r9 += r8 + r3;
+						}
+
+						s58 = r9;
+						r3 = r20 >> 3;
+						r3 = r3 & 7;
+						r8 = r3 ^ 0x1f;
+						r3++;
+						r10 = r3 - 8;
+						r19 += 3;
+
+						// identical to above
+						r9 = r17 >> r8;
+						if (r19 >= 0)
+						{
+							r17 = vertex;
+							r3 -= r19;
+							r3 = r17 << r3;
+							r9 |= r3;
+							r9 = r9 >> r8;
+							r3 = r19;
+							r19 -= 0x20;
+						}
+
+						if (r10 != 0)
+						{
+							r8 = r20 << 7;
+							r8 = r8 >> 0x18;
+							r8 = r8 << 1;
+							r3 = s5a;
+							r9 += r8 + r3;
+						}
+
+						s5a = r9;
+						r3 = r20;
+						r3 = r3 & 7;
+						r8 = r3 ^ 0x1f;
+						r3++;
+						r10 = r3 - 8;
+						r19 += 3;
+
+						// identical to above
+						r9 = r17 >> r8;
+						if (r19 >= 0)
+						{
+							r17 = vertex;
+							r3 -= r19;
+							r3 = r17 << r3;
+							r9 |= r3;
+							r9 = r9 >> r8;
+							r3 = r19;
+							r19 -= 0x20;
+						}
+
+						if (r10 != 0)
+						{
+							r8 = r20 << 0xf;
+							r8 = r8 >> 0x18;
+							r8 = r8 << 1;
+							r3 = s59;
+							r9 += r8 + r3;
+						}
+
+						s59 = r9;
+
+						tempCoords[3].X = s58;
+						tempCoords[3].Z = s59;
+						tempCoords[3].Y = s5a;
 					}
 				}
 

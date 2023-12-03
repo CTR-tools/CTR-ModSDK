@@ -82,7 +82,10 @@ addu       $9,$9,$8
 addu       $9,$9,$3
 
 LAB_8006a984:
+
+# 0x58 = X
 sb         $9,0x58($1)
+
 srl        $3,$20,0x3
 andi       $3,$3,0x7
 xori       $8,$3,0x1f
@@ -120,7 +123,11 @@ addu       $9,$9,$8
 addu       $9,$9,$3
 
 LAB_8006a9e8:
+
+# 0x5A = Z
 sb         $9,0x5a($1)
+
+# (delta & 0b111) ^ 0x1f
 andi       $3,$20,0x7
 xori       $8,$3,0x1f
 addiu      $3,$3,0x1
@@ -157,7 +164,11 @@ addu       $9,$9,$8
 addu       $9,$9,$3
 
 LAB_8006aa48:
+
+# 0x59 = Y
 sb         $9,0x59($1)
+
+# X, Y, and Z in one 4-byte
 lw         $3,0x58($1)
 
 LAB_8006aa50:
@@ -173,6 +184,8 @@ addu       $3,$3,$10
 sll        $3,$3,0x2
 sw         $8,0x140($5)
 sw         $3,0x144($5)
+
+# from here to bottom: all color data
 
 LAB_8006aa80:
 srl        $9,$11,0x7
@@ -191,5 +204,7 @@ addu       $9,$9,$1
 
 jr         $31
 lw        $9,0x140($9)
+
+#$9, return color
 
 # end 8006aaa8
