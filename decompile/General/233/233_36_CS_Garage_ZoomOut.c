@@ -1,9 +1,9 @@
 #include <common.h>
 
-void DECOMP_CS_Garage_ZoomOut(char param_1)
+void DECOMP_CS_Garage_ZoomOut(char zoomState)
 {
     // if just entered garage
-    if (param_1 == 0)
+    if (zoomState == 0)
     {
         // use no frames,
         // just use default zoomed out position
@@ -28,5 +28,5 @@ void DECOMP_CS_Garage_ZoomOut(char param_1)
 
     *(short *)0x800b863a = *(short *)0x800b863c;
 
-    sdata->gGT->gameMode2 &= 0xfffdffff;
+    sdata->gGT->gameMode2 &= ~(GARAGE_OSK);
 }

@@ -2,19 +2,15 @@
 
 void CS_Thread_ThTick(struct Thread *t)
 {
-    struct GameTracker *gGT;
-    struct Instance *parentInst;
-    struct Instance *inst;
+    struct Instance* parentInst;
+    struct Instance* inst;
     RECT box;
 
-    struct CutsceneObj * cs; // Cutscene obj
-
-    cs = t->object;
-    gGT = sdata->gGT;
-
-    if (
-        // if cutscene thread needs to die
-        (CS_Thread_UseOpcode(t->inst, cs) != NULL) &&
+    struct CutsceneObj* cs = t->object; // Cutscene obj
+    struct GameTracker* gGT = sdata->gGT;
+    
+    // if cutscene thread needs to die
+    if ((CS_Thread_UseOpcode(t->inst, cs) != NULL) &&
 
         // thread is now dead
         (t->flags |= 0x800,

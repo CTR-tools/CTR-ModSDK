@@ -44,5 +44,4 @@ void Level_RandomFX(int *param_1, u_int soundID, int param_3, uint param_4, int 
         // set random cooldown to next sfx
         *param_1 = sdata->audioRNG % param_4 + param_3;
     }
-    return;
 }

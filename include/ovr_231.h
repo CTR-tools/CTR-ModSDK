@@ -250,12 +250,12 @@ struct CtrLetter
 	// 0x8 bytes large
 };
 
-#if 0
 struct StartBanner
 {
+	short unk0;
+	short unk1;
 	// 0x4 bytes large
 };
-#endif
 
 struct Armadillo
 {

@@ -1,3 +1,5 @@
+#include <common.h>
+
 // param_1 either cutscene obj or ModelHeader
 char DECOMP_CS_Instance_BoolPlaySound(struct CutsceneObj *cs, struct Instance *desiredInst)
 {
