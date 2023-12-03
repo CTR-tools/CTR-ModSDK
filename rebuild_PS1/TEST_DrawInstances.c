@@ -252,7 +252,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 							r9 += r8 + r3;
 						}
 
+						// X output
 						s58 = r9;
+
 						r3 = r20 >> 3;
 						r3 = r3 & 7;
 						r8 = r3 ^ 0x1f;
@@ -282,7 +284,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 							r9 += r8 + r3;
 						}
 
+						// Z output
 						s5a = r9;
+
 						r3 = r20;
 						r3 = r3 & 7;
 						r8 = r3 ^ 0x1f;
@@ -312,6 +316,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 							r9 += r8 + r3;
 						}
 
+						// Y output
 						s59 = r9;
 
 						tempCoords[3].X = s58;
