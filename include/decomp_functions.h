@@ -224,7 +224,7 @@ void DECOMP_MM_Characters_AnimateColors(unsigned char *colorData, short playerID
 int DECOMP_MM_Characters_GetNextDriver(short dpad, char characterID);
 u_int DECOMP_MM_Characters_boolIsInvalid(short* globalIconPerPlayer, short characterID, short player);
 struct Model* DECOMP_MM_Characters_GetModelByName(int *name);
-void DECOMP_MM_Characters_DrawWindows(char wheelFlag);
+void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers);
 void DECOMP_MM_Characters_SetMenuLayout(void);
 void DECOMP_MM_Characters_BackupIDs(void);
 void DECOMP_MM_Characters_PreventOverlap(void);

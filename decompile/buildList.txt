@@ -109,8 +109,8 @@ common, 232, AH_Map_Main, 0x0, General/232/232_24_AH_Map_Main.c
 // 233
 common, 233, CS_Credits_Init, 0x0, General/233/233_CS_Credits_Init.c
 common, 233, CS_Credits_NewDancer, 0x0, General/233/233_CS_Credits_NewDancer.c
-common, 233, CS_Credits_End, 0x0, General/233/233_CS_Credits_End.c
-common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_CS_Podium_FullScene_Init.c
+common, 233, CS_Credits_End, 0x0, General/233/233_50_CS_Credits_End.c
+common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_32_CS_Podium_FullScene_Init.c
 
 // exe globals
 common, exe, data, 0x0, General/zGlobal_DATA.c
