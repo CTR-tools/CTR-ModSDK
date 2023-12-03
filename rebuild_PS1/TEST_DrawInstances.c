@@ -320,8 +320,8 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 						s59 = r9;
 
 						tempCoords[3].X = s58;
-						tempCoords[3].Z = s59;
-						tempCoords[3].Y = s5a;
+						tempCoords[3].Y = s59;
+						tempCoords[3].Z = s5a;
 					}
 				}
 

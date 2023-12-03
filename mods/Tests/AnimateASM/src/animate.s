@@ -168,7 +168,7 @@ LAB_8006aa48:
 # 0x59 = Y
 sb         $9,0x59($1)
 
-# X, Y, and Z in one 4-byte
+# XZY in one 4-byte register
 lw         $3,0x58($1)
 
 LAB_8006aa50:
