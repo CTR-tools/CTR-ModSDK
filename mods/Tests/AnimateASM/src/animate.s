@@ -44,6 +44,7 @@ LAB_8006a91c:
 lw         $20,0x0($30)
 addiu      $30,$30,0x4
 
+# ((delta >> 6) & 7) ^ 0x1f
 srl        $3,$20,0x6
 andi       $3,$3,0x7
 xori       $8,$3,0x1f
@@ -73,6 +74,7 @@ LAB_8006a968:
 beq        $10,$0,LAB_8006a984
 sllv      $17,$17,$3
 
+# ((delta >> 0x19) & 7) ^ 0x1f
 sra        $8,$20,0x19
 sll        $8,$8,0x1
 lb         $3,0x58($1)
@@ -92,8 +94,12 @@ blez       $19,LAB_8006a9cc
 srav      $9,$17,$8
 
 move       $9,$17
+
+#$17 = model->verts[x]
+#model->verts++
 lw         $17,0x0($23)
 addiu      $23,$23,0x4
+
 subu       $3,$3,$19
 srlv       $3,$17,$3
 or         $9,$9,$3
@@ -106,6 +112,7 @@ LAB_8006a9cc:
 beq        $10,$0,LAB_8006a9e8
 sllv      $17,$17,$3
 
+# ((delta << 7) >> 0x18)
 sll        $8,$20,0x7
 sra        $8,$8,0x18
 lb         $3,0x5a($1)
@@ -124,8 +131,12 @@ blez       $19,LAB_8006aa2c
 srav      $9,$17,$8
 
 move       $9,$17
+
+#$17 = model->verts[x]
+#model->verts++
 lw         $17,0x0($23)
 addiu      $23,$23,0x4
+
 subu       $3,$3,$19
 srlv       $3,$17,$3
 or         $9,$9,$3
@@ -138,6 +149,7 @@ LAB_8006aa2c:
 beq        $10,$0,LAB_8006aa48
 sllv      $17,$17,$3
 
+# ((delta << 0xf) >> 0x18)
 sll        $8,$20,0xf
 sra        $8,$8,0x18
 lb         $3,0x59($1)
