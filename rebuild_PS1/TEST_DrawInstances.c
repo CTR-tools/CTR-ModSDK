@@ -175,6 +175,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// pCmd[0] is number of commands
 			pCmd++;
 
+
+			unsigned int r3, r8, r9, r10, r17 = 0, r19 = 0, r20, s58 = 0, s59 = 0, s5a = 0;
+
 			//loop commands until we hit the end marker 
 			while (*pCmd != END_OF_LIST)
 			{
@@ -216,11 +219,8 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 						unsigned int delta = ma->modelDeltaArray->arr[stackIndex];
 						unsigned int vertex = *(int*)&tempCoords[3];
-
-						unsigned int r3, r8, r9, r10, r17=0, r19, r20, s58=0, s59=0, s5a=0;
 						
-						s58 = 0; // dont reset each vertex
-						r19 = 0; // comes from what?
+						r17 = vertex;
 						r20 = delta;
 
 						r3 = r20 >> 6;
