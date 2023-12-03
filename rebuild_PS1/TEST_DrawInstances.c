@@ -175,8 +175,11 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// pCmd[0] is number of commands
 			pCmd++;
 
-
-			unsigned int r3, r8, r9, r10, r17 = 0, r19 = 0, r20, s58 = 0, s59 = 0, s5a = 0;
+			// compression
+			int x_alu = 0;
+			int y_alu = 0;
+			int z_alu = 0;
+			int bi = 0;
 
 			//loop commands until we hit the end marker 
 			while (*pCmd != END_OF_LIST)
@@ -207,121 +210,53 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 				if (ma != 0)
 				{
-					// deltaArray bits: 0bXXXXXXXZZZZZZZZYYYYYYYYAAABBBCCC
-
-					// temporal_x: >> 0x19
-					// temporal_z: << 7 >> 0x18
-					// temporal_y: << 0xF >> 0x18
+					// Similar to Crash 2
+					// https://github.com/cbhacks/CrashEdit/blob/647a97b004e7324ac4f648dcfcecc7d3f8412da3/CrashEdit/Controls/AnimationEntryViewer.cs#L451
 
 					if (ma->modelDeltaArray != 0)
 					{
 						// == Does not work yet ==
 
-						unsigned int delta = ma->modelDeltaArray->arr[stackIndex];
-						unsigned int vertex = *(int*)&tempCoords[3];
-						
-						r17 = vertex;
-						r20 = delta;
+						int temporal = ma->modelDeltaArray->arr[stackIndex];
 
-						r3 = r20 >> 6;
-						r3 = r3 & 7;
-						r8 = r3 ^ 0x1f;
-						r3++;
-						r10 = r3 - 8;
-						r19 += 3;
+						int XBits = (temporal) & 7;
+						int YBits = (temporal >> 3) & 7;
+						int ZBits = (temporal >> 6) & 7;
 
-						// identical to below
-						r9 = r17 >> r8;
-						if (r19 >= 0)
+						int bx = (temporal >> 0x19) << 1;
+						int by = (temporal << 7) >> 0x18;
+						int bz = (temporal << 0xf) >> 0x18;
+
+						int vx = tempCoords[3].X;
+						int vy = tempCoords[3].Y;
+						int vz = tempCoords[3].Z;
+
+						if (XBits == 7) x_alu = 0;
+						if (YBits == 7) y_alu = 0;
+						if (ZBits == 7) z_alu = 0;
+
+						// XZY frame data
+						int newX = (vx!=0) ? XBits : 0;
+						for (int j = 0; j < XBits; ++j)
 						{
-							r17 = vertex;
-							r3 -= r19;
-							r3 = r17 << r3;
-							r9 |= r3;
-							r9 = r9 >> r8;
-							r3 = r19;
-							r19 -= 0x20;
+							newX |= vx << (XBits - 1 - j);
 						}
 
-						if (r10 != 0)
+						int newY = (vy!=0) ? YBits : 0;
+						for (int j = 0; j < YBits; ++j)
 						{
-							r17 = r17 << 3;
-							r8 = r20 >> 0x19;
-							r8 = r8 << 1;
-							r3 = s58;
-							r9 += r8 + r3;
+							newY |= vy << (YBits - 1 - j);
 						}
 
-						// X output
-						s58 = r9;
-
-						r3 = r20 >> 3;
-						r3 = r3 & 7;
-						r8 = r3 ^ 0x1f;
-						r3++;
-						r10 = r3 - 8;
-						r19 += 3;
-
-						// identical to above
-						r9 = r17 >> r8;
-						if (r19 >= 0)
+						int newZ = (vz!=0) ? ZBits : 0;
+						for (int j = 0; j < ZBits; ++j)
 						{
-							r17 = vertex;
-							r3 -= r19;
-							r3 = r17 << r3;
-							r9 |= r3;
-							r9 = r9 >> r8;
-							r3 = r19;
-							r19 -= 0x20;
+							newZ |= vz << (ZBits - 1 - j);
 						}
 
-						if (r10 != 0)
-						{
-							r8 = r20 << 7;
-							r8 = r8 >> 0x18;
-							r8 = r8 << 1;
-							r3 = s5a;
-							r9 += r8 + r3;
-						}
-
-						// Z output
-						s5a = r9;
-
-						r3 = r20;
-						r3 = r3 & 7;
-						r8 = r3 ^ 0x1f;
-						r3++;
-						r10 = r3 - 8;
-						r19 += 3;
-
-						// identical to above
-						r9 = r17 >> r8;
-						if (r19 >= 0)
-						{
-							r17 = vertex;
-							r3 -= r19;
-							r3 = r17 << r3;
-							r9 |= r3;
-							r9 = r9 >> r8;
-							r3 = r19;
-							r19 -= 0x20;
-						}
-
-						if (r10 != 0)
-						{
-							r8 = r20 << 0xf;
-							r8 = r8 >> 0x18;
-							r8 = r8 << 1;
-							r3 = s59;
-							r9 += r8 + r3;
-						}
-
-						// Y output
-						s59 = r9;
-
-						tempCoords[3].X = s58;
-						tempCoords[3].Y = s59;
-						tempCoords[3].Z = s5a;
+						x_alu = (x_alu + newX + bx) % 256;
+						y_alu = (y_alu + newY + by) % 256;
+						z_alu = (z_alu + newZ + bz) % 256;
 					}
 				}
 
