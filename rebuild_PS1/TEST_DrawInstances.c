@@ -1,5 +1,12 @@
 #include <common.h>
 
+int bi = 0;
+int GetBit(unsigned char* vertData)
+{
+	int ret = (vertData[bi >> 3] & (1 << (bi & 7))) != 0;
+	bi++;
+	return ret;
+}
 
 void TEST_DrawInstances(struct GameTracker* gGT)
 {
@@ -179,7 +186,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			int x_alu = 0;
 			int y_alu = 0;
 			int z_alu = 0;
-			int bi = 0;
+			bi = 0;
 
 			//loop commands until we hit the end marker 
 			while (*pCmd != END_OF_LIST)
@@ -227,36 +234,36 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 						int by = (temporal << 7) >> 0x18;
 						int bz = (temporal << 0xf) >> 0x18;
 
-						int vx = tempCoords[3].X;
-						int vy = tempCoords[3].Y;
-						int vz = tempCoords[3].Z;
-
 						if (XBits == 7) x_alu = 0;
 						if (YBits == 7) y_alu = 0;
 						if (ZBits == 7) z_alu = 0;
 
 						// XZY frame data
-						int newX = (vx!=0) ? XBits : 0;
+						int newX = GetBit(vertData) ? -(1 << XBits) : 0;
 						for (int j = 0; j < XBits; ++j)
 						{
-							newX |= vx << (XBits - 1 - j);
+							newX |= GetBit(vertData) << (XBits - 1 - j);
 						}
 
-						int newY = (vy!=0) ? YBits : 0;
+						int newY = GetBit(vertData) ? -(1 << YBits) : 0;
 						for (int j = 0; j < YBits; ++j)
 						{
-							newY |= vy << (YBits - 1 - j);
+							newY |= GetBit(vertData) << (YBits - 1 - j);
 						}
 
-						int newZ = (vz!=0) ? ZBits : 0;
+						int newZ = GetBit(vertData) ? -(1 << ZBits) : 0;
 						for (int j = 0; j < ZBits; ++j)
 						{
-							newZ |= vz << (ZBits - 1 - j);
+							newZ |= GetBit(vertData) << (ZBits - 1 - j);
 						}
 
 						x_alu = (x_alu + newX + bx) % 256;
 						y_alu = (y_alu + newY + by) % 256;
 						z_alu = (z_alu + newZ + bz) % 256;
+
+						tempCoords[3].X = x_alu;
+						tempCoords[3].Y = y_alu;
+						tempCoords[3].Z = z_alu;
 					}
 				}
 
