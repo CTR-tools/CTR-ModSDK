@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainFreeze_ConfigSetupEntry(void)
+void DECOMP_MainFreeze_ConfigSetupEntry(void)
 {
 	short sVar1;
 	short sVar2;
@@ -54,7 +54,7 @@ void MainFreeze_ConfigSetupEntry(void)
 				if ((uVar5 & 0x50) != 0)
 				{
 					sdata->raceWheelConfigPageIndex = 2;
-					sdata->rwd[iVar9].deadZone = *(short *)(&data.raceConfig_unknown_deadzone_array + (short)sdata->WheelConfigOption * 6);
+					data.rwd[iVar9].deadZone = *(short *)(&data.raceConfig_unknown_deadzone_array + (short)sdata->WheelConfigOption * 6);
 				}
 			}
 			else
@@ -90,12 +90,12 @@ void MainFreeze_ConfigSetupEntry(void)
 				sdata->raceWheelConfigPageIndex = sdata->raceWheelConfigPageIndex + 1;
 				if (uVar7 == 0)
 				{
-					sdata->rwd[iVar9].gamepadCenter = (u_short)*(byte *)(sdata->gGamepads->gamepad[iVar9].ptrRawInput + 2);
+					data.rwd[iVar9].gamepadCenter = (u_short)*(byte *)(sdata->gGamepads->gamepad[iVar9].ptrRawInput + 2);
 				}
 				else
 				{
 					sdata->gGamepads->gamepad[iVar9].unk_44_countdown = '\x04';
-					sdata->rwd[sdata->gamepad_ID_ThatOpenedRaceWheelConfig].gamepadCenter = 0x80;
+					data.rwd[sdata->gamepad_ID_ThatOpenedRaceWheelConfig].gamepadCenter = 0x80;
 				}
 				MenuBox_ClearInput();
 			}
@@ -112,7 +112,7 @@ void MainFreeze_ConfigSetupEntry(void)
 				if ((uVar5 & 0x50) != 0)
 				{
 					sdata->boolOpenWheelConfig = 0;
-					sdata->rwd[iVar9].range = data.raceConfig_unknown_rwd_range[(short)sdata->raceWheelConfigOptionIndex * 3];
+					data.rwd[iVar9].range = data.raceConfig_unknown_rwd_range[(short)sdata->raceWheelConfigOptionIndex * 3];
 					MenuBox_ClearInput();
 				}
 			}
@@ -204,11 +204,11 @@ void MainFreeze_ConfigSetupEntry(void)
 				{
 					sVar1 = 0xec;
 				}
-				*(short *)((int)local_48 + iVar3) = *(short *)((int)sdata->raceConfig_unk80084294 + iVar3 + iVar10) + sVar1;
+				*(short *)((int)local_48 + iVar3) = *(short *)((int)data.raceConfig_unk80084294 + iVar3 + iVar10) + sVar1;
 				iVar3 = iVar8 << 0x10;
 				iVar8 = iVar8 + 1;
 				iVar3 = iVar3 >> 0xe;
-				*(short *)((int)local_48 + iVar3 + 2) = (short)sdata->unk_drawingRaceWheelRects[0] + (short)((iVar12 << 5) >> 0xc) + 0x20 + *(short *)((int)sdata->raceConfig_unk80084294 + iVar3 + iVar10 + 2);
+				*(short *)((int)local_48 + iVar3 + 2) = (short)sdata->unk_drawingRaceWheelRects[0] + (short)((iVar12 << 5) >> 0xc) + 0x20 + *(short *)((int)data.raceConfig_unk80084294 + iVar3 + iVar10 + 2);
 			} while (iVar8 * 0x10000 >> 0x10 < 3);
 			MENUBOX_DrawRwdTriangle(local_48, (char *)data.raceConfig_colors_arrows, (u_long *)(sdata->gGT->tileView_UI).ptrOT, &sdata->gGT->backBuffer->primMem);
 			iVar6 = iVar6 + 1;
