@@ -1763,7 +1763,22 @@ struct Data
 	// number of options on each page of race wheel config
 	
 	// 80084258
-	unsigned char raceConfig_unk80084258[0x54];
+	unsigned short raceConfig_unk80084258[2];
+
+	// 8008425c
+	unsigned short raceConfig_unknown_deadzone_array[16];
+
+	// 80084270
+	unsigned short raceConfig_unk80084270[2];
+
+	// 80084274
+	unsigned short raceConfig_unknown_rwd_range[14];
+
+	// 80084290
+	unsigned short raceConfig_unk80084290[2];
+
+	// 80084294
+	unsigned short raceConfig_unk80084294[6];
 
 	// 800842ac
 	unsigned char raceConfig_colors_arrows[0xc];
@@ -1776,7 +1791,10 @@ struct Data
 	// 80082510 - Sep3
 	// 800842D0 - UsaRetail
 	// 800831d0 - JpnTrial
-	unsigned char unkNamcoGamepad[0x3c];
+	unsigned char unkNamcoGamepadRwdTriangleColors[0xc];
+
+	// 800842DC - UsaRetail
+	unsigned short unkNamcoGamepad_800842DC[0x30/2];
 	#endif
 
 	// 8008254c -- sep3
@@ -2996,11 +3014,11 @@ struct sData
 
 	// 8008d2e0
 	// one for RaceWheel, one for Namco
-	int posY_MultiLine[2];
+	short posY_MultiLine[4];
 
 	// 8008d2e8
 	// one for RaceWheel, one for Namco
-	int posY_Arrows[2];
+	short posY_Arrows[4];
 
 	// 8008d2f0
 	int unk_RaceWheelConfig[3];
