@@ -90,14 +90,14 @@ void DECOMP_MainFreeze_ConfigSetupEntry(void)
 				sdata->raceWheelConfigPageIndex = sdata->raceWheelConfigPageIndex + 1;
 				if (uVar7 == 0)
 				{
-					data.rwd[iVar9].gamepadCenter = (u_short)*(byte *)(sdata->gGamepads->gamepad[iVar9].ptrRawInput + 2);
+					data.rwd[iVar9].gamepadCenter = (u_short)*(u_char *)(sdata->gGamepads->gamepad[iVar9].ptrRawInput + 2);
 				}
 				else
 				{
 					sdata->gGamepads->gamepad[iVar9].unk_44_countdown = '\x04';
 					data.rwd[sdata->gamepad_ID_ThatOpenedRaceWheelConfig].gamepadCenter = 0x80;
 				}
-				MenuBox_ClearInput();
+				MENUBOX_ClearInput();
 			}
 			sdata->unk_RaceWheelConfig[0] = 0;
 		}
@@ -113,7 +113,7 @@ void DECOMP_MainFreeze_ConfigSetupEntry(void)
 				{
 					sdata->boolOpenWheelConfig = 0;
 					data.rwd[iVar9].range = data.raceConfig_unknown_rwd_range[(short)sdata->raceWheelConfigOptionIndex * 3];
-					MenuBox_ClearInput();
+					MENUBOX_ClearInput();
 				}
 			}
 			else
@@ -146,7 +146,7 @@ void DECOMP_MainFreeze_ConfigSetupEntry(void)
 		uVar7 = sdata->unk_RaceWheelConfig[0] & 0x3ff;
 		do
 		{
-			uVar5 = data.trigApprox[uVar7];
+			uVar5 = *(u_int*)&data.trigApprox[uVar7].sin;
 			if ((iVar9 & 0x400U) == 0)
 			{
 				uVar5 = uVar5 << 0x10;
@@ -170,7 +170,7 @@ void DECOMP_MainFreeze_ConfigSetupEntry(void)
 		do
 		{
 			uVar7 = sdata->frameCounter * 0x40 + (iVar12 >> 5);
-			uVar5 = data.trigApprox[uVar7 & 0x3c0];
+			uVar5 = *(u_int*)&data.trigApprox[uVar7 & 0x3c0].sin;
 			if ((uVar7 & 0x400) == 0)
 			{
 				uVar5 = uVar5 << 0x10;
@@ -181,7 +181,7 @@ void DECOMP_MainFreeze_ConfigSetupEntry(void)
 				iVar12 = -iVar12;
 			}
 			uVar7 = iVar9 * iVar12 >> 0xc;
-			uVar5 = data.trigApprox[uVar7 & 0x3ff];
+			uVar5 = *(u_int*)&data.trigApprox[uVar7 & 0x3ff].sin;
 			if ((uVar7 & 0x400) == 0)
 			{
 				uVar5 = uVar5 << 0x10;
@@ -236,8 +236,8 @@ void DECOMP_MainFreeze_ConfigSetupEntry(void)
 			iVar10 = iVar6;
 		}
 		uVar7 = iVar10 - 0x400;
-		sVar1 = (short)data.trigApprox[uVar7 & 0x3ff];
-		iVar8 = (int)data.trigApprox[uVar7 & 0x3ff] >> 0x10;
+		sVar1 = (short)(*(u_int*)&data.trigApprox[uVar7 & 0x3ff].sin);
+		iVar8 = (int)(*(u_int*)&data.trigApprox[uVar7 & 0x3ff].sin) >> 0x10;
 		if ((uVar7 & 0x400) == 0)
 		{
 			iVar10 = (int)sVar1;
@@ -267,7 +267,7 @@ LAB_80038620:
 		iVar8 = iVar12 * 0x10000;
 	} while (iVar12 * 0x10000 >> 0x10 < 2);
 	uVar7 = (int)sdata->frameCounter << 6;
-	uVar5 = data.trigApprox[uVar7 & 0x3c0];
+	uVar5 = *(u_int*)&data.trigApprox[uVar7 & 0x3c0].sin;
 	if ((uVar7 & 0x400) == 0)
 	{
 		uVar5 = uVar5 << 0x10;
@@ -278,8 +278,8 @@ LAB_80038620:
 		iVar12 = -iVar12;
 	}
 	uVar7 = (iVar12 * iVar9 >> 0xc) - 0x400;
-	iVar9 = (int)data.trigApprox[uVar7 & 0x3ff] >> 0x10;
-	sVar1 = (short)data.trigApprox[uVar7 & 0x3ff];
+	iVar9 = (int)(*(u_int*)&data.trigApprox[uVar7 & 0x3ff].sin) >> 0x10;
+	sVar1 = (short)(*(u_int*)&data.trigApprox[uVar7 & 0x3ff].sin);
 	if ((uVar7 & 0x400) == 0)
 	{
 		iVar6 = (int)sVar1;
@@ -328,8 +328,8 @@ LAB_800387c4:
 				red = 'P';
 			}
 			uVar5 = (uVar7 & 0xfff) + iVar12 + iVar9;
-			sVar2 = (short)data.trigApprox[uVar5 & 0x3ff];
-			iVar6 = (int)data.trigApprox[uVar5 & 0x3ff] >> 0x10;
+			sVar2 = (short)(*(u_int*)&data.trigApprox[uVar5 & 0x3ff].sin);
+			iVar6 = (int)(*(u_int*)&data.trigApprox[uVar5 & 0x3ff].sin) >> 0x10;
 			if ((uVar5 & 0x400) == 0)
 			{
 				iVar8 = (int)sVar2;
