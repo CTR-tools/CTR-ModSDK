@@ -42,15 +42,15 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 		for(int Port = 0; Port < numPortsPerSlot; Port++)
 		{
 			ptrControllerPacket = &gGamepads->slotBuffer[Slot];
-			if(ptrControllerPacket->controllerMeta.isControllerConnected == 0)
+			if(ptrControllerPacket->isControllerConnected == 0)
 			{
 				// if multitap plugged in
-				if(ptrControllerPacket->controllerMeta.controllerData == (PAD_ID_MULTITAP << 4))
+				if(ptrControllerPacket->controllerData == (PAD_ID_MULTITAP << 4))
 				{
-					ptrControllerPacket = &gGamepads->slotBuffer[Slot].controllers[Port].controllerPacket;
+					ptrControllerPacket = &gGamepads->slotBuffer[Slot].controllers[Port];
 				}
 				
-				if(ptrControllerPacket->controllerMeta.isControllerConnected == 0)
+				if(ptrControllerPacket->isControllerConnected == 0)
 				{
 					bitwiseConnected |= (Slot*4 + Port);
 					

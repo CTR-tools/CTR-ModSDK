@@ -17,18 +17,18 @@ u_int DECOMP_DecalFont_boolRacingWheel()
 				// if P1 controller exists, is a MadCatz Racing Wheel (neGcon with payload length 3), and is "not connected", then return true
 				// this check will then be used to replace all instances of PS1 button icons with appropriate racing wheel ones
 
-				// controllerPacketP1->controllerMeta.payLoadLength == 3
-				// controllerPacketP1->controllerMeta.controllerType == PAD_ID_NEGCON
+				// controllerPacketP1->payLoadLength == 3
+				// controllerPacketP1->controllerType == PAD_ID_NEGCON
 				(controllerPacketP1->controllerData == ((PAD_ID_NEGCON << 4) | 3)) &&
 				(
 					(
-						sdata->gGamepads->gamepad[1].ptrControllerPacket == 0 || sdata->gGamepads->gamepad[1].ptrControllerPacket->controllerMeta.isControllerConnected != 0
+						sdata->gGamepads->gamepad[1].ptrControllerPacket == 0 || sdata->gGamepads->gamepad[1].ptrControllerPacket->isControllerConnected != 0
 					)
 				)
 			) &&
 			(
 				(
-					sdata->gGamepads->gamepad[2].ptrControllerPacket == 0 || sdata->gGamepads->gamepad[2].ptrControllerPacket->controllerMeta.isControllerConnected != 0
+					sdata->gGamepads->gamepad[2].ptrControllerPacket == 0 || sdata->gGamepads->gamepad[2].ptrControllerPacket->isControllerConnected != 0
 				)
 			)
 		) &&
@@ -36,9 +36,9 @@ u_int DECOMP_DecalFont_boolRacingWheel()
 			(
 				(
 					(
-						sdata->gGamepads->gamepad[3].ptrControllerPacket == 0 || sdata->gGamepads->gamepad[3].ptrControllerPacket->controllerMeta.isControllerConnected != 0
+						sdata->gGamepads->gamepad[3].ptrControllerPacket == 0 || sdata->gGamepads->gamepad[3].ptrControllerPacket->isControllerConnected != 0
 					) && (controllerPacketP1 != 0)
-				) && (controllerPacketP1->controllerMeta.isControllerConnected == 0)
+				) && (controllerPacketP1->isControllerConnected == 0)
 			)
 		)
 	)

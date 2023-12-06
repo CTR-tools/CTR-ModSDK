@@ -49,61 +49,56 @@ enum Buttons
 	BTN_TRIANGLE = 0x40000
 };
 
-struct __attribute__((packed)) ControllerMeta
+struct __attribute__((packed)) ControllerPacket
 {
-	uint8_t	isControllerConnected; // A.K.A. controller status -- name might be wrong...
+	// 0x0
+	uint8_t	isControllerConnected;    // A.K.A. controller status -- name might be wrong...
 
+	// 0x1
 	// single byte that you can access as either a pair of nibbles or a whole integer
 	union
 	{
 		struct
 		{
-			uint8_t	payloadLength:4;       // Payload length / 2, 0 for multitap
-			uint8_t	controllerType:4;      // Device type (PadTypeID)
+			uint8_t	payloadLength:4;  // Payload length / 2, 0 for multitap
+			uint8_t	controllerType:4; // Device type (PadTypeID)
 		};
 		uint8_t controllerData;
 	}
-
-	// 2 bytes
-};
-
-struct __attribute__((packed)) ControllerPacket
-{
-	// 0x0
-	struct ControllerMeta controllerMeta;
 	
 	// 0x2
-	uint16_t controllerInput;              // Button states, see RawInput enum
+	uint16_t controllerInput;         // Button states, see RawInput enum
 
 	// 0x4
+	// union size: 4 bytes
 	union
 	{
 		struct
 		{
-			uint8_t rightX, rightY; // Right stick coordinates
-			uint8_t leftX, leftY;   // Left stick coordinates
+			uint8_t rightX, rightY;   // Right stick coordinates
+			uint8_t leftX, leftY;     // Left stick coordinates
 		} analog;
 		struct
 		{
-			int8_t x_mov, y_mov;    // X, Y movement of mouse
+			int8_t x_mov, y_mov;      // X, Y movement of mouse
 		} mouse;
 		struct
 		{
-			uint8_t	twist;          // Controller twist
-			uint8_t	btn_1;          // 1 button value
-			uint8_t	btn_2;          // 2 button value
-			uint8_t	trg_l;          // L trigger value
+			uint8_t	twist;            // Controller twist
+			uint8_t	btn_1;            // 1 button value
+			uint8_t	btn_2;            // 2 button value
+			uint8_t	trg_l;            // L trigger value
 		} neGcon;
 		struct
 		{
-			uint16_t jog_rot;       // Jog rotation
+			uint16_t jog_rot;         // Jog rotation
 		} jogcon;
 		struct
 		{
-			uint16_t gun_x;         // Gun X position in dotclocks
-			uint16_t gun_y;         // Gun Y position in scanlines
+			uint16_t gun_x;           // Gun X position in dotclocks
+			uint16_t gun_y;           // Gun Y position in scanlines
 		} guncon;
-	}; // union size: 4 bytes
+	};
 
 	// 8 bytes
 };

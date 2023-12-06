@@ -63,7 +63,7 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
                         // assuming this is a multitap
                         (gGamepads->slotBuffer[port].multitapMeta.isControllerConnected != 0) ||
 
-                        (gGamepads->slotBuffer[port].controllers[0].controllerMeta.isControllerConnected != 0)
+                        (gGamepads->slotBuffer[port].controllers[0].isControllerConnected != 0)
                     )
                     {
                         // no analog sticks found

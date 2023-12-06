@@ -30,14 +30,14 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
         }
 
         // must be zero to confirm connection
-        else if (ptrControllerPacket->controllerMeta.isControllerConnected == 0)
+        else if (ptrControllerPacket->isControllerConnected == 0)
 		{
 			uVar4 = ptrControllerPacket->controllerInput;
 			uVar4 = uVar4 ^ 0xffff;
 			uVar5 = 0;
 			
 			// If this is madcatz racing wheel
-			if (ptrControllerPacket->controllerMeta.controllerData == ((PAD_ID_NEGCON << 4) | 3))
+			if (ptrControllerPacket->controllerData == ((PAD_ID_NEGCON << 4) | 3))
 			{
 				if (0x40 < ptrControllerPacket->neGcon.btn_1)
 				{
@@ -58,7 +58,7 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
 			{
 				// If this is ANAJ
 				// could be different from NPC-105
-				if (ptrControllerPacket->controllerMeta.controllerData == ((PAD_ID_ANALOG_STICK << 4) | 3))
+				if (ptrControllerPacket->controllerData == ((PAD_ID_ANALOG_STICK << 4) | 3))
 				{
 					uVar4 = uVar4 << 0x10;
 				}
