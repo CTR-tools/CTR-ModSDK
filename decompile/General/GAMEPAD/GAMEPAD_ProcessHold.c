@@ -32,7 +32,7 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
         // must be zero to confirm connection
         else if (ptrControllerPacket->isControllerConnected == 0)
 		{
-			uVar4 = ptrControllerPacket->controllerInput;
+			uVar4 = (ptrControllerPacket->controllerInput1 << 8) | ptrControllerPacket->controllerInput2;
 			uVar4 = uVar4 ^ 0xffff;
 			uVar5 = 0;
 			

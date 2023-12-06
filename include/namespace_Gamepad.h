@@ -67,7 +67,17 @@ struct __attribute__((packed)) ControllerPacket
 	};
 	
 	// 0x2
-	uint16_t controllerInput;         // Button states, see RawInput enum
+	// Button states, see RawInput enum
+	// set up us a union because like 1 function needs the short to be accessed as two separate bytes
+	union
+	{
+		struct
+		{
+			uint8_t controllerInput1;
+			uint8_t controllerInput2;
+		};
+		uint16_t controllerInput;
+	};
 
 	// 0x4
 	// union size: 4 bytes
