@@ -85,7 +85,7 @@ void inputDisplay_Main()
 		DecalFont_DrawLine(".", 23,178, FONT_SMALL, ORANGE);
 
 		struct GamepadBuffer * controller = &sdata->gGamepads->gamepad[0];
-		DrawButtons((unsigned short *)((unsigned int)&controller->ptrControllerMeta + 2));
+		DrawButtons(&controller->ptrControllerPacket->controllerInput);
 		DrawAnalog(&controller->stickLX, &controller->stickLY);
 	}
 }

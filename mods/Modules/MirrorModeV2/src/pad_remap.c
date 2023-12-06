@@ -58,7 +58,7 @@ void Remap_Main()
 	
 		if(sdata->gGT->levelID != MAIN_MENU_LEVEL)
 		{
-			RemapButtons((unsigned short *)((unsigned int)&gamepad->ptrControllerMeta + 2));
+			RemapButtons(&gamepad->ptrControllerPacket->controllerInput);
 		}
 	}
 }

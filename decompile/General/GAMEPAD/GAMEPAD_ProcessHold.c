@@ -8,7 +8,7 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
     char j;
     char* btnMapPtr;
     u_int *puVar2;
-    struct ControllerMeta *ptrControllerMeta;
+    struct ControllerPacket *ptrControllerPacket;
     unsigned short uVar4;
     u_int uVar5;
 
@@ -17,12 +17,12 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
     // loop through all 8 gamepadBuffers
     for(pad = &gGamepads->gamepad[0]; pad < &gGamepads->gamepad[8]; pad++)
     {
-        ptrControllerMeta = pad->ptrControllerMeta;
+        ptrControllerPacket = pad->ptrControllerPacket;
 
         pad->buttonsHeldPrevFrame = pad->buttonsHeldCurrFrame;
 
         // if pointer is invalid
-        if (ptrControllerMeta == NULL)
+        if (ptrControllerPacket == NULL)
         {
             // erase buttons held this frame and prev
             pad->buttonsHeldPrevFrame = 0;
@@ -30,26 +30,24 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
         }
 
         // must be zero to confirm connection
-        else if (ptrControllerMeta->isControllerConnected == 0)
+        else if (ptrControllerPacket->controllerMeta.isControllerConnected == 0)
 		{
-			struct ControllerInput *input = (struct ControllerInput *)((u_int)ptrControllerMeta + 2);
-
-			uVar4 = input->rawInput;
+			uVar4 = ptrControllerPacket->controllerInput;
 			uVar4 = uVar4 ^ 0xffff;
 			uVar5 = 0;
 			
 			// If this is madcatz racing wheel
-			if (ptrControllerMeta->controllerData == ((PAD_ID_NEGCON << 4) | 3))
+			if (ptrControllerPacket->controllerMeta.controllerData == ((PAD_ID_NEGCON << 4) | 3))
 			{
-				if (0x40 < input->neGcon.btn_1)
+				if (0x40 < ptrControllerPacket->neGcon.btn_1)
 				{
 					uVar4 |= 0x40;
 				}
-				if (0x40 < input->neGcon.btn_2)
+				if (0x40 < ptrControllerPacket->neGcon.btn_2)
 				{
 					uVar4 |= 0x80;
 				}
-				if (0x40 < input->neGcon.trg_l)
+				if (0x40 < ptrControllerPacket->neGcon.trg_l)
 				{
 					uVar4 |= 4;
 				}
@@ -60,7 +58,7 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
 			{
 				// If this is ANAJ
 				// could be different from NPC-105
-				if (ptrControllerMeta->controllerData == ((PAD_ID_ANALOG_STICK << 4) | 3))
+				if (ptrControllerPacket->controllerMeta.controllerData == ((PAD_ID_ANALOG_STICK << 4) | 3))
 				{
 					uVar4 = uVar4 << 0x10;
 				}

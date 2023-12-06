@@ -266,10 +266,10 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	
 	for(i = 0; i < gGT->numPlyrNextGame; i++)
 	{
-		struct ControllerMeta* ptrControllerMeta = gGamepads->gamepad[i].ptrControllerMeta;
+		struct ControllerPacket* ptrControllerPacket = gGamepads->gamepad[i].ptrControllerPacket;
 		
-		if(ptrControllerMeta != 0)
-			if(ptrControllerMeta->isControllerConnected == 0) continue;
+		if(ptrControllerPacket != 0)
+			if(ptrControllerPacket->controllerMeta.isControllerConnected == 0) continue;
 		
 		// if controller is unplugged
 		

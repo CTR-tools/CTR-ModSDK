@@ -19,7 +19,7 @@ void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
     for (char i = 0; i < numConnected; i++)
     {
         pad = &gGamepads->gamepad[i];
-        if (pad->ptrControllerMeta == NULL)
+        if (pad->ptrControllerPacket == NULL)
         {
             // erase tap and release
             pad->buttonsTapped = 0;

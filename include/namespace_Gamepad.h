@@ -67,10 +67,15 @@ struct __attribute__((packed)) ControllerMeta
 	// 2 bytes
 };
 
-struct __attribute__((packed)) ControllerInput
+struct __attribute__((packed)) ControllerPacket
 {
-	uint16_t rawInput;              // Button states, see RawInput enum
+	// 0x0
+	struct ControllerMeta controllerMeta;
+	
+	// 0x2
+	uint16_t controllerInput;              // Button states, see RawInput enum
 
+	// 0x4
 	union
 	{
 		struct
@@ -98,15 +103,7 @@ struct __attribute__((packed)) ControllerInput
 			uint16_t gun_x;         // Gun X position in dotclocks
 			uint16_t gun_y;         // Gun Y position in scanlines
 		} guncon;
-	};
-
-	// 6 bytes
-};
-
-struct __attribute__((packed)) ControllerPacket
-{
-	struct ControllerMeta controllerMeta;
-	struct ControllerInput controllerInput;
+	}; // union size: 4 bytes
 
 	// 8 bytes
 };
@@ -117,9 +114,6 @@ struct __attribute__((packed)) MultitapPacket
 	struct ControllerMeta multitapMeta;
 
 	// 0x2
-	// some functions point to this offset for referencing input data...
-	// yet struct size remains the same in single player and 2-player multiplayer...
-	// could this be a union of ControllerPacket[4] and ControllerInput depending on controllers connected?
 	struct ControllerPacket controllers[4];
 
 	// 34 bytes
@@ -171,7 +165,7 @@ struct GamepadBuffer
 	// 0x20
 	// For details,
 	// see GamepadSystem->slotBuffer
-	struct ControllerMeta* ptrControllerMeta;
+	struct ControllerPacket* ptrControllerPacket;
 
 	// 0x24
 	short gamepadID; // 0 - 7
