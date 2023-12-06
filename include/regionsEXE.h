@@ -1752,33 +1752,29 @@ struct Data
 	#else
 
 	// block should be 0x78 bytes
-
+	
 	// 80084258
-	// racing wheel config option strings
-	// 0,3,5,7,9,30,45,90,135, approx 0x38 bytes large
+	struct
+	{
+		short lngIndex;
+		short lo16;
+		short hi1;
+	} raceConfig_DeadZone[4];
 
-	// 80084272
+	// 80084270
+	struct
+	{
+		short lngIndex;
+		short lo16;
+		short hi1;
+	} raceConfig_Range[5];
+	short padding8008428e;
 
 	// 80084290
 	// number of options on each page of race wheel config
-	
-	// 80084258
-	unsigned short raceConfig_unk80084258[2];
-
-	// 8008425c
-	unsigned short raceConfig_unknown_deadzone_array[16];
-
-	// 80084270
-	unsigned short raceConfig_unk80084270[2];
-
-	// 80084274
-	unsigned short raceConfig_unknown_rwd_range[14];
 
 	// 80084290
-	unsigned short raceConfig_unk80084290[2];
-
-	// 80084294
-	unsigned short raceConfig_unk80084294[6];
+	unsigned short raceConfig_unk80084290[14];
 
 	// 800842ac
 	unsigned char raceConfig_colors_arrows[0xc];
@@ -1794,7 +1790,7 @@ struct Data
 	unsigned char unkNamcoGamepadRwdTriangleColors[0xc];
 
 	// 800842DC - UsaRetail
-	unsigned short unkNamcoGamepad_800842DC[0x30/2];
+	short unkNamcoGamepad_800842DC[0x30/2];
 	#endif
 
 	// 8008254c -- sep3
