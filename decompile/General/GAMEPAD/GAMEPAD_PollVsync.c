@@ -21,7 +21,7 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
     maxPadsPerPort = 1;
 
     // If there is a multitap present
-    if ((gGamepads->slotBuffer->meta[0] == 0) && gGamepads->slotBuffer->meta[1] == -0x80)
+    if ((gGamepads->slotBuffer[0].isControllerConnected == 0) && gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4))
     {
         // Gameplay now only cares about one gamepad port,
         // Port 1, which has the multitap. However, the gamepad
