@@ -64,7 +64,7 @@ struct __attribute__((packed)) ControllerPacket
 			uint8_t	controllerType:4; // Device type (PadTypeID)
 		};
 		uint8_t controllerData;
-	}
+	};
 	
 	// 0x2
 	uint16_t controllerInput;         // Button states, see RawInput enum
@@ -119,7 +119,7 @@ struct __attribute__((packed)) MultitapPacket
 			uint8_t	controllerType:4;
 		};
 		uint8_t controllerData;
-	}
+	};
 
 	// 0x2
 	struct ControllerPacket controllers[4];
