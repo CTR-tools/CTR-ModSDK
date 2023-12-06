@@ -47,7 +47,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 	
 	local_70 = 0;
 	numRacingWheels = 0;
-	gamepadSlotBufferMeta1 = (u_short)(sdata->gGamepads->slotBuffer[0].multitapMeta.controllerData == (PAD_ID_MULTITAP << 4)) << 1;
+	gamepadSlotBufferMeta1 = (u_short)(sdata->gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4)) << 1;
 	MainFreeze_SafeAdvDestroy();
 	iVar12 = 0;
 	numAnalogGamepads = 0;
@@ -64,7 +64,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 		iVar7 = 0;
 		do
 		{
-			psVar9 = sdata->gGamepads->gamepad[iVar7 >> 0x10].ptrRawInput;
+			psVar9 = sdata->gGamepads->gamepad[iVar7 >> 0x10].ptrControllerPacket;
 			if (((psVar9 == (short *)0x0) || (*(char *)psVar9 != 0)) || ((*(char *)((int)psVar9 + 1) != -0x1d && (*(char *)((int)psVar9 + 1) != '#'))))
 			{
 				uVar13 = (u_int)numRacingWheels;
@@ -346,7 +346,7 @@ switchD_80038f90_caseD_9:
 				bVar2 = false;
 				areThereRacingWheels = *(u_short *)((int)local_a8 + (iVar10 >> 0xf));
 				uVar13 = (u_int)areThereRacingWheels;
-				psVar9 = sdata->gGamepads->gamepad[(short)areThereRacingWheels].ptrRawInput;
+				psVar9 = sdata->gGamepads->gamepad[(short)areThereRacingWheels].ptrControllerPacket;
 				if ((psVar9 == (short *)0x0) || (*(char *)psVar9 != '\0'))
 				{
 					bVar2 = true;

@@ -58,10 +58,10 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
                     // if-body with ptrPadBuff
                     if
                     (
-                        (gGamepads->slotBuffer[port].multitapMeta.controllerData == (PAD_ID_MULTITAP << 4)) &&
+                        (gGamepads->slotBuffer[port].controllerData == (PAD_ID_MULTITAP << 4)) &&
 
                         // assuming this is a multitap
-                        (gGamepads->slotBuffer[port].multitapMeta.isControllerConnected != 0) ||
+                        (gGamepads->slotBuffer[port].isControllerConnected != 0) ||
 
                         (gGamepads->slotBuffer[port].controllers[0].isControllerConnected != 0)
                     )

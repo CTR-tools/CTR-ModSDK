@@ -106,7 +106,20 @@ struct __attribute__((packed)) ControllerPacket
 struct __attribute__((packed)) MultitapPacket
 {
 	// 0x0
-	struct ControllerMeta multitapMeta;
+	// see ControllerPacket
+	uint8_t	isControllerConnected;
+
+	// 0x1
+	// ditto
+	union
+	{
+		struct
+		{
+			uint8_t	payloadLength:4;
+			uint8_t	controllerType:4;
+		};
+		uint8_t controllerData;
+	}
 
 	// 0x2
 	struct ControllerPacket controllers[4];

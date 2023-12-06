@@ -18,8 +18,8 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 	
 	if(
 		// multitap detected
-		(gGamepads->slotBuffer[0].multitapMeta.isControllerConnected == 0) &&
-		(gGamepads->slotBuffer[0].multitapMeta.controllerData == (PAD_ID_MULTITAP << 4))
+		(gGamepads->slotBuffer[0].isControllerConnected == 0) &&
+		(gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4))
 	)
 	{
 		// 4 players, with multitap

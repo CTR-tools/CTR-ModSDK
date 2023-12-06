@@ -206,7 +206,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// if more than 2 players, or if multitap used
 	if(
 		(gGT->numPlyrNextGame > 2) || 
-		(gGamepads->slotBuffer[0].multitapMeta.controllerData == (PAD_ID_MULTITAP << 4))
+		(gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4))
 	)
 	{
 		// change to "1A", "1B", "1C", "1D",
