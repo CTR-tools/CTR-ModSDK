@@ -53,5 +53,5 @@ void RemapButtons(unsigned short * buttons)
 void Remap_Main()
 {
 	struct GamepadBuffer * gamepad = &sdata->gGamepads->gamepad[0];
-	RemapButtons(&gamepad->ptrRawInput[1]);
+	RemapButtons((unsigned short *)((unsigned int)&gamepad->ptrControllerMeta + 2));
 }

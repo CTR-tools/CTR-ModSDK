@@ -8,25 +8,21 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
     char j;
     char* btnMapPtr;
     u_int *puVar2;
-    unsigned char *rawInputBytes;
+    struct ControllerMeta *ptrControllerMeta;
     unsigned short uVar4;
     u_int uVar5;
 
     struct GamepadBuffer *pad;
 
     // loop through all 8 gamepadBuffers
-    for (
-			pad = &gGamepads->gamepad[0];
-			pad < &gGamepads->gamepad[8];
-			pad++
-		)
+    for(pad = &gGamepads->gamepad[0]; pad < &gGamepads->gamepad[8]; pad++)
     {
-        rawInputBytes = pad->ptrRawInput;
+        ptrControllerMeta = pad->ptrControllerMeta;
 
         pad->buttonsHeldPrevFrame = pad->buttonsHeldCurrFrame;
 
         // if pointer is invalid
-        if (rawInputBytes == NULL)
+        if (ptrControllerMeta == NULL)
         {
             // erase buttons held this frame and prev
             pad->buttonsHeldPrevFrame = 0;
@@ -34,24 +30,26 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
         }
 
         // must be zero to confirm connection
-        else if (rawInputBytes[0] == NULL)
+        else if (ptrControllerMeta->isControllerConnected == 0)
 		{
-			uVar4 = (rawInputBytes[2] << 8) | rawInputBytes[3];
+			struct ControllerInput *input = (struct ControllerInput *)((u_int)ptrControllerMeta + 2);
+
+			uVar4 = input->rawInput;
 			uVar4 = uVar4 ^ 0xffff;
 			uVar5 = 0;
 			
 			// If this is madcatz racing wheel
-			if (rawInputBytes[1] == 35)
+			if (ptrControllerMeta->controllerData == ((PAD_ID_NEGCON << 4) | 3))
 			{
-				if (0x40 < rawInputBytes[5])
+				if (0x40 < input->neGcon.btn_1)
 				{
 					uVar4 |= 0x40;
 				}
-				if (0x40 < rawInputBytes[6])
+				if (0x40 < input->neGcon.btn_2)
 				{
 					uVar4 |= 0x80;
 				}
-				if (0x40 < rawInputBytes[7])
+				if (0x40 < input->neGcon.trg_l)
 				{
 					uVar4 |= 4;
 				}
@@ -62,7 +60,7 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
 			{
 				// If this is ANAJ
 				// could be different from NPC-105
-				if (rawInputBytes[1] == 83)
+				if (ptrControllerMeta->controllerData == ((PAD_ID_ANALOG_STICK << 4) | 3))
 				{
 					uVar4 = uVar4 << 0x10;
 				}

@@ -9,7 +9,7 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 	int numPortsPerSlot;
 	
 	int padIndex;
-	char* ptrRawInput;
+	struct ControllerMeta* ptrControllerMeta;
 	struct GamepadBuffer* padCurr;
 	
 	// 2 players, no multitap
@@ -18,8 +18,8 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 	
 	if(
 		// multitap detected
-		(gGamepads->slotBuffer[0].meta[0] == 0) &&
-		(gGamepads->slotBuffer[0].meta[1] == -0x80)
+		(gGamepads->slotBuffer[0].multitapMeta.isControllerConnected == 0) &&
+		(gGamepads->slotBuffer[0].multitapMeta.controllerData == (PAD_ID_MULTITAP << 4))
 	)
 	{
 		// 4 players, with multitap
@@ -41,22 +41,22 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 	{
 		for(int Port = 0; Port < numPortsPerSlot; Port++)
 		{
-			ptrRawInput = &gGamepads->slotBuffer[Slot].meta[0];
-			if(ptrRawInput[0] == 0)
+			ptrControllerMeta = &gGamepads->slotBuffer[Slot].multitapMeta;
+			if(ptrControllerMeta->isControllerConnected == 0)
 			{
 				// if multitap plugged in
-				if(ptrRawInput[1] == -0x80)
+				if(ptrControllerMeta->controllerData == (PAD_ID_MULTITAP << 4))
 				{
-					ptrRawInput = &gGamepads->slotBuffer[Slot].padBuffer[Port];
+					ptrControllerMeta = &gGamepads->slotBuffer[Slot].controllers[Port].controllerMeta;
 				}
 				
-				if(ptrRawInput[0] == 0)
+				if(ptrControllerMeta->isControllerConnected == 0)
 				{
 					bitwiseConnected |= (Slot*4 + Port);
 					
 					gGamepads->numGamepadsConnected = numConnected + 1;
 					
-					padCurr->ptrRawInput = ptrRawInput;
+					padCurr->ptrControllerMeta = ptrControllerMeta;
 					padCurr->gamepadID = Port + Slot*0x10;
 				}
 			}
@@ -70,7 +70,7 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads)
 	while(padCurr < &gGamepads->gamepad[8])
 	{
 		// pad is now unplugged
-		padCurr->ptrRawInput = 0;
+		padCurr->ptrControllerMeta = 0;
 		padCurr++;
 	}
 	

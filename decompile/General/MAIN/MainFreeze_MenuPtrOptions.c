@@ -47,7 +47,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 	
 	local_70 = 0;
 	numRacingWheels = 0;
-	gamepadSlotBufferMeta1 = (u_short)(sdata->gGamepads->slotBuffer[0].meta[1] == -0x80) << 1;
+	gamepadSlotBufferMeta1 = (u_short)(sdata->gGamepads->slotBuffer[0].multitapMeta.controllerData == (PAD_ID_MULTITAP << 4)) << 1;
 	MainFreeze_SafeAdvDestroy();
 	iVar12 = 0;
 	numAnalogGamepads = 0;

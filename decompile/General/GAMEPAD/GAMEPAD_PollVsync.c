@@ -56,12 +56,15 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
                     // if this is not a multitap,
                     // skip next block, and just start
                     // if-body with ptrPadBuff
-                    if ((gGamepads->slotBuffer[port].meta[1] == -0x80) &&
+                    if
+                    (
+                        (gGamepads->slotBuffer[port].multitapMeta.controllerData == (PAD_ID_MULTITAP << 4)) &&
 
                         // assuming this is a multitap
-                        (gGamepads->slotBuffer[port].meta[0] != 0) ||
+                        (gGamepads->slotBuffer[port].multitapMeta.isControllerConnected != 0) ||
 
-                        (gGamepads->slotBuffer[port].padBuffer[0].data[0] != 0))
+                        (gGamepads->slotBuffer[port].controllers[0].controllerMeta.isControllerConnected != 0)
+                    )
                     {
                         // no analog sticks found
                         pad->gamepadType = 0;
