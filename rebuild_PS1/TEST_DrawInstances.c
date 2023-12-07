@@ -1,9 +1,18 @@
 #include <common.h>
 
 int bi = 0;
-int GetBit(unsigned char* vertData)
+int GetBit(unsigned int* vertData)
 {
-	int ret = (vertData[bi >> 3] & (1 << (bi & 7))) != 0;
+	int intIndex = (bi >> 5);
+	unsigned int vertInt = &vertData[intIndex];
+
+	unsigned int readReverse = 0;
+	for (int i = 0; i < 32; i++)
+	{
+		readReverse |= (vertInt << i & 1) << (31 - i);
+	}
+
+	int ret = (readReverse & (1 << (bi & 31))) != 0;
 	bi++;
 	return ret;
 }
