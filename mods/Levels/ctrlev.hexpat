@@ -199,12 +199,10 @@ struct AnimTex
 	short numFrames;
 
 	// 0x6
-	// related to timer
-	short shrug;
+	short frameDuration;
 
 	// 0x8
-	// related to timer
-	short lottashortshuh;
+	short shiftFactor;
 
 	// 0xA
 	// current frame
