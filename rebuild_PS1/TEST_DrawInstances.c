@@ -4,7 +4,7 @@ int bi = 0;
 int GetBit(unsigned int* vertData)
 {
 	int intIndex = (bi >> 5);
-	unsigned int vertInt = &vertData[intIndex];
+	unsigned int vertInt = vertData[intIndex];
 
 	unsigned int readReverse = 0;
 	for (int i = 0; i < 32; i++)
