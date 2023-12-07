@@ -9,7 +9,8 @@ int GetBit(unsigned int* vertData)
 	unsigned int readReverse = 0;
 	for (int i = 0; i < 32; i++)
 	{
-		readReverse |= (vertInt << i & 1) << (31 - i);
+		readReverse |= (vertInt & 1) << (31 - i);
+		vertInt = vertInt >> 1;
 	}
 
 	int ret = (readReverse & (1 << (bi & 31))) != 0;
@@ -240,19 +241,19 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 						//is it X bits + 1 for sign or X bits including sign? cause code implies the latter, but still reads 1 extra bit for sign
 
 						// convert XZY frame data
-						char newX = GetBit(vertData) ? -(1 << XBits) : 0;
+						int newX = GetBit(vertData) ? -(1 << XBits) : 0;
 						for (int j = 0; j < XBits; ++j)
 						{
 							newX |= GetBit(vertData) << (XBits - 1 - j);
 						}
 
-						char newY = GetBit(vertData) ? -(1 << YBits) : 0;
+						int newY = GetBit(vertData) ? -(1 << YBits) : 0;
 						for (int j = 0; j < YBits; ++j)
 						{
 							newY |= GetBit(vertData) << (YBits - 1 - j);
 						}
 
-						char newZ = GetBit(vertData) ? -(1 << ZBits) : 0;
+						int newZ = GetBit(vertData) ? -(1 << ZBits) : 0;
 						for (int j = 0; j < ZBits; ++j)
 						{
 							newZ |= GetBit(vertData) << (ZBits - 1 - j);
