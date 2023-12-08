@@ -12,7 +12,6 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   int timer;
   struct Title *ptrTitle;
   int *obj;
-  MATRIX matrix;
   int cops[6];
   short direction[3];
   short rot[3];
