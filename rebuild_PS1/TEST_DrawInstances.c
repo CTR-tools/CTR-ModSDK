@@ -10,21 +10,24 @@ unsigned int Flip(unsigned int num)
 		((num >> 8) & 0xff00) | // move byte 2 to byte 1
 		((num << 24) & 0xff000000); // byte 0 to byte 3}
 }
+
 int bi = 0;
+
 int GetBit(unsigned int* vertData)
 {
-	int intIndex = (bi >> 5);
-	unsigned int vertInt = Flip(vertData[intIndex]);
-
+	unsigned int vertInt = vertData[bi >> 5];
 	unsigned int readReverse = 0;
+
 	for (int i = 0; i < 32; i++)
 	{
 		readReverse |= (vertInt & 1) << (31 - i);
 		vertInt = vertInt >> 1;
 	}
 
-	int ret = (readReverse & (1 << (bi & 31))) != 0;
+	int ret = (readReverse >> (bi & 31)) & 1;
+
 	bi++;
+
 	return ret;
 }
 
@@ -208,6 +211,8 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			int z_alu = 0;
 			bi = 0;
 
+			printf("%s\n", m->name);
+
 			//loop commands until we hit the end marker 
 			while (*pCmd != END_OF_LIST)
 			{
@@ -221,34 +226,38 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				// if got a new vertex, load it
 				if ((flags & DRAW_CMD_FLAG_NEW_VERTEX) == 0)
 				{
-					// Similar to Crash 2
+					// exactly Crash 2 delta compression algorithm
 					// https://github.com/cbhacks/CrashEdit/blob/647a97b004e7324ac4f648dcfcecc7d3f8412da3/CrashEdit/Controls/AnimationEntryViewer.cs#L451
 
 					// here should also check for current anim etc,
 					// for now just check if anim exists and take 1st frame
 					if (ma != NULL && ma->modelDeltaArray != NULL)
 					{
-						// == Does not work yet ==
-						
 						//store temporal vertex packed uint
-						u_int temporal = ma->modelDeltaArray->arr[vertexIndex];
+						u_int temporal = ((u_int*)ma->modelDeltaArray)[vertexIndex];
+
+						//printf("temporal: %08x\n", temporal);
 
 						//extract data from packed uint
-						u_char XBits = (temporal) & 7;
+						//deltaArray bits: 0bXXXXXXXZZZZZZZZYYYYYYYYAAABBBCCC
+
+						u_char XBits = (temporal >> 6) & 7;
 						u_char YBits = (temporal >> 3) & 7;
-						u_char ZBits = (temporal >> 6) & 7;
+						u_char ZBits = (temporal) & 7;
 
 						u_char bx = (temporal >> 0x19) << 1;
 						u_char by = (temporal << 7) >> 0x18;
 						u_char bz = (temporal << 0xf) >> 0x18;
+
+						//printf("pos: %i %i %i bits: %i %i %i\n", bx, by, bz, XBits, YBits, ZBits);
 
 						//maybe reset the coord value, each axis separately
 						if (XBits == 7) x_alu = 0;
 						if (YBits == 7) y_alu = 0;
 						if (ZBits == 7) z_alu = 0;
 
-						//i find it weird that it still reads 1 bit here if we got 0 bits in temporal
-						//is it X bits + 1 for sign or X bits including sign? cause code implies the latter, but still reads 1 extra bit for sign
+						//we first read sign bit, then we read required number of bits of the coord shift.
+						//so it's Xbits + 1, YBits + 1, ZBits + 1
 
 						// convert XZY frame data
 						int newX = GetBit(vertData) ? -(1 << XBits) : 0;
@@ -274,10 +283,14 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 						y_alu = (y_alu + newY + by) % 256;
 						z_alu = (z_alu + newZ + bz) % 256;
 
-						//store values to stack index
+						//store values to stack index, axis swap is important
 						stack[stackIndex].X = x_alu;
-						stack[stackIndex].Y = y_alu;
-						stack[stackIndex].Z = z_alu;
+						stack[stackIndex].Y = z_alu;
+						stack[stackIndex].Z = y_alu;
+
+						//printf("result: %i %i %i\n\n", x_alu, y_alu, z_alu);
+
+						//_sleep(1000);
 					}
 					else
 					{
