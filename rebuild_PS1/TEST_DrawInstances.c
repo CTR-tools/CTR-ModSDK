@@ -88,16 +88,22 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 #if 1
 			MATRIX* mat2 = MulMatrix(&view->matrix_ViewProj, &curr->matrix);
 			
-			// where does this come from?
+			// === Driver Instances ===
+
+			// copy from running CTR instance in no$psx,
+			// INSTANCE IDPP offset 0x78 is a 4x4 MVP
+			// INSTANCE IDPP offset 0x98 is a 3x3, idk
+
+			// how is the game supposed to set this without hard-code?
 			// also, for some reason I need to multiply
 			// the original game's value by 4?
 			mat2->t[0] = 0;
 			mat2->t[1] = 0x58*4;
 			mat2->t[2] = 0x320*4;
-#endif
 
 			if (gGT->numPlyrNextGame > 2)
-				mat2->t[2] = 0x3E8*4;
+				mat2->t[2] = 0x3E8 * 4;
+#endif
 
 			// how do I multiply mat1 and mat2 together?
 			gte_SetRotMatrix(mat2);
@@ -114,12 +120,16 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// animated
 			if (mf == 0)
 			{
-				// HARD-CODE MATRIX
+				// === Crash + Trophy Anim ===
+
+				// breakpoint this,
+				// when does game change this matrix?
+				int x = &curr->matrix;
+
 #if 1
 				// copy from running CTR instance in no$psx,
 				// INSTANCE IDPP offset 0x78 is a 4x4 MVP
 				// INSTANCE IDPP offset 0x98 is a 3x3, idk
-				int x = &curr->matrix;
 				*(int*)&mat2->m[0][0] = 0x3db1;
 				*(int*)&mat2->m[0][2] = 0xf90204;
 				*(int*)&mat2->m[1][1] = 0xfea8f8ab;
