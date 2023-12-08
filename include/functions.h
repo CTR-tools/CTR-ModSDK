@@ -41,7 +41,7 @@ u_int CAM_FollowDriver_TrackPath(struct CameraDC* cDC, short* param_2, int cDCsp
 void CAM_LookAtPosition(int param_1, int* driverPos, short* camTransitionToPos, short* camTransitionToRot);
 void CAM_FollowDriver_Spin360(struct CameraDC* cDC, u_int param_2, struct Driver* d, short* camTransitionToPos, u_int param_5);
 void CAM_SetDesiredPosRot(int param_1, u_short* param_2, u_short* param_3);
-void CAM_FollowDriver_Normal(struct CameraDC* cDC, struct Driver* d, short* tileView, short scratchpad, short* param_5);
+void CAM_FollowDriver_Normal(struct CameraDC* cDC, struct Driver* d, short* tileView, int scratchpad, short* param_5);
 int CAM_MapRange_PosPoints(short* vec3sPos1, short* vec3sPos2, short* vec3iPos);
 void CAM_ThTick(struct Thread* t);
 

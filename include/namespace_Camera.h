@@ -34,7 +34,10 @@ struct CameraDC
 
 	// 0x08
 	// camera mode, zoom out and such
-	unsigned int mode;
+	unsigned short mode;
+	
+	// 0x0A
+	unsigned short nearOrFar;
 	
 	// 0xC
 	unsigned int unk0xC;

@@ -130,7 +130,7 @@ common, exe, CAM_EndOfRace_Battle, 0x0, General/CAMERA/CAM_EndOfRace_Battle.c
 common, exe, CAM_Init, 0x0, General/CAMERA/CAM_Init.c
 common, exe, CAM_SetDesiredPosRot, 0x0, General/CAMERA/CAM_SetDesiredPosRot.c
 common, exe, CAM_StartOfRace, 0x0, General/CAMERA/CAM_StartOfRace.c
-//ommon, exe, CAM_ThTick, 0x0, General/CAMERA/CAM_ThTick.c
+common, exe, CAM_ThTick, 0x0, General/CAMERA/CAM_ThTick.c
 
 // CDSYS
 common, exe, CDSYS_Init, 0x0, General/CDSYS/CDSYS_c01_Init.c

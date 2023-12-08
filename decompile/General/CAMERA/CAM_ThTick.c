@@ -73,17 +73,23 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 		}
 		else
 		{
-			*(short *)((int)&cDC->mode + 2) = cDC->unk92;
+			cDC->nearOrFar = cDC->unk92;
 			cDC->cameraMode = 0;
 		}
 	}
 
-	iVar7 = (int)*(short *)((int)&cDC->mode + 2);
-	psVar23 = &data.NearCam4x3 + iVar7 * 2;
+	iVar7 = cDC->nearOrFar;
+	
+	struct ZoomData* zm;
+	
+	zm = &data.NearCam4x3;
 	if (sdata->gGT->numPlyrCurrGame == 2)
 	{
-		psVar23 = &data.NearCam8x3 + iVar7 * 2;
+		zm = &data.NearCam8x3;
 	}
+	
+	psVar23 = &zm[iVar7];
+
 
 	if ((cDC->flags & 0x20) == 0) goto switchD_8001b678_caseD_1;
 	psVar14 = sdata->gGT->level1->ptrSpawnType1;
@@ -235,6 +241,7 @@ LAB_8001b928:
 	}
 
 switchD_8001b678_caseD_1:
+
 	tv->distanceToScreen_PREV = tv->distanceToScreen_CURR;
 	sVar6 = cDC->cameraMode;
 
@@ -384,7 +391,7 @@ LAB_8001c128:
 								{
 									cDC->flags = cDC->flags | 9;
 								}
-								CAM_FollowDriver_Normal(cDC, d, tv->pos, 0x108, &psVar23->distMin);
+								CAM_FollowDriver_Normal(cDC, d, tv->pos, 0x1f800108, &psVar23->distMin);
 							}
 							cDC->driver5B0_prevFrame = d->botFlags;
 							goto LAB_8001c150;
@@ -472,7 +479,8 @@ LAB_8001c128:
 		}
 	}
 
-	CAM_FollowDriver_Normal(cDC, d, tv->pos, 0x108, &psVar23->distMin);
+	CAM_FollowDriver_Normal(cDC, d, &tv->pos[0], 0x1f800108, &psVar23->distMin);
+	
 LAB_8001c150:
 	cDC->cameraModePrev = cDC->cameraMode;
 	psVar3 = sdata->gGT;
@@ -530,5 +538,6 @@ LAB_8001c150:
 		cDC->flags &= ~1;
 	}
 	cDC->flags &= ~0x88;
+	
 	return;
 }
