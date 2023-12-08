@@ -136,7 +136,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				gte_SetTransMatrix(mat2);
 #endif
 				// animation
-				ma = m->headers[0].ptrAnimations[0];
+				ma = m->headers[0].ptrAnimations[curr->animIndex];
 
 				int frameIndex = curr->animFrame;
 
