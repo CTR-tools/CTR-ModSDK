@@ -40,6 +40,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 	short posScreen3[4];
 	short posWorld3[4];
 
+	// temporary
+	gGT->timer++;
+
 	struct OTMem* otMem = &gGT->backBuffer->otMem;
 	struct PrimMem* primMem = &gGT->backBuffer->primMem;
 
@@ -106,11 +109,6 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			SetGeomOffset(view->rect.w >> 1, view->rect.h >> 1);
 
 			struct Model* m = curr->model;
-
-#if 0 // ANIM_TEST
-			m = gGT->modelPtr[0x3e];
-#endif
-
 			struct ModelHeader* mh = &m->headers[0];
 
 			// assume unanimated
@@ -131,24 +129,16 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				*(int*)&mat2->m[1][1] = 0xfea8f8ab;
 				*(int*)&mat2->m[2][0] = 0x262095c;
 				*(int*)&mat2->m[2][2] = 0xfffff328;
-				mat2->t[0] = 0xfffffcb0;
-				mat2->t[1] = 0x284;
-				mat2->t[2] = 0xfb0;
+				mat2->t[0] = -0x100;
+				mat2->t[1] = 0x84;
+				mat2->t[2] = 0x4b0;
 				gte_SetRotMatrix(mat2);
 				gte_SetTransMatrix(mat2);
 #endif
 				// animation
 				ma = m->headers[0].ptrAnimations[0];
 
-				int frameIndex = gGT->timer % ma->numFrames;
-				gGT->timer++;
-
-				// if animation is compressed
-				if (ma->modelDeltaArray != 0)
-				{
-					// reset to first frame
-					frameIndex = 0;
-				}
+				int frameIndex = curr->animFrame;
 
 				// cast
 				char* maByte = (char*)ma;
@@ -211,8 +201,6 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			int z_alu = 0;
 			bi = 0;
 
-			printf("%s\n", m->name);
-
 			//loop commands until we hit the end marker 
 			while (*pCmd != END_OF_LIST)
 			{
@@ -234,7 +222,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 					if (ma != NULL && ma->modelDeltaArray != NULL)
 					{
 						//store temporal vertex packed uint
-						u_int temporal = ((u_int*)ma->modelDeltaArray)[vertexIndex];
+						u_int temporal = ma->modelDeltaArray[vertexIndex];
 
 						//printf("temporal: %08x\n", temporal);
 
@@ -279,9 +267,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 						}
 
 						//calculate decompressed coord value
-						x_alu = (x_alu + newX + bx) % 256;
-						y_alu = (y_alu + newY + by) % 256;
-						z_alu = (z_alu + newZ + bz) % 256;
+						x_alu = (x_alu + newX + bx);
+						y_alu = (y_alu + newY + by);
+						z_alu = (z_alu + newZ + bz);
 
 						//store values to stack index, axis swap is important
 						stack[stackIndex].X = x_alu;

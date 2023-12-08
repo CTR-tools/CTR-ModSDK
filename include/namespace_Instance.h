@@ -293,13 +293,6 @@ struct ModelFrame
 	//char verts[0];
 };
 
-// used for compressed animations
-struct ModelDelta
-{
-	int size; // number of INTs
-	int arr[1];
-};
-
 struct ModelAnim
 {
 	char name[0x10];
@@ -312,7 +305,7 @@ struct ModelAnim
 	// copied to instance -> 0xd4
 	// used for compressed animations,
 	// or nullptr if animation is uncompressed
-	struct ModelDelta* modelDeltaArray;
+	u_int* modelDeltaArray;
 
 	// 0x18
 	// struct ModelFrame firstFrame;

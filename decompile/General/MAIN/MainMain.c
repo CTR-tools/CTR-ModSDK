@@ -412,9 +412,6 @@ FinishLoading:
 				// temporary test without thread execution
 				if(D230.titleObj != 0)
 				{
-					// skip trophy animation
-					D230.timerInTitle = 1000;
-
 					DECOMP_MM_Title_ThTick(D230.titleObj->t);
 				}
 #endif
