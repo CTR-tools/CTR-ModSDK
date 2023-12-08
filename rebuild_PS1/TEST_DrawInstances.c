@@ -86,22 +86,18 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 #endif
 
 #if 1
-			// shouldn't need this, matrix is invalid
-			curr->scale[0] = 0xCCC / 4;
-			curr->scale[1] = 0xCCC / 4;
-			curr->scale[2] = 0xCCC / 4;
-
 			MATRIX* mat2 = MulMatrix(&view->matrix_ViewProj, &curr->matrix);
-			//MATRIX* mat2 = &curr->matrix;
-
+			
 			// where does this come from?
+			// also, for some reason I need to multiply
+			// the original game's value by 4?
 			mat2->t[0] = 0;
-			mat2->t[1] = 0x58;
-			mat2->t[2] = 0x320;
+			mat2->t[1] = 0x58*4;
+			mat2->t[2] = 0x320*4;
 #endif
 
 			if (gGT->numPlyrNextGame > 2)
-				mat2->t[2] = 0x3E8;
+				mat2->t[2] = 0x3E8*4;
 
 			// how do I multiply mat1 and mat2 together?
 			gte_SetRotMatrix(mat2);
@@ -123,15 +119,14 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				// copy from running CTR instance in no$psx,
 				// INSTANCE IDPP offset 0x78 is a 4x4 MVP
 				// INSTANCE IDPP offset 0x98 is a 3x3, idk
-				MATRIX* mat2 = &curr->matrix;
 				*(int*)&mat2->m[0][0] = 0x3db1;
 				*(int*)&mat2->m[0][2] = 0xf90204;
 				*(int*)&mat2->m[1][1] = 0xfea8f8ab;
 				*(int*)&mat2->m[2][0] = 0x262095c;
 				*(int*)&mat2->m[2][2] = 0xfffff328;
-				mat2->t[0] = -0x100;
-				mat2->t[1] = 0x84;
-				mat2->t[2] = 0x4b0;
+				mat2->t[0] = -0x350;
+				mat2->t[1] = 0x284;
+				mat2->t[2] = 0xfb0;
 				gte_SetRotMatrix(mat2);
 				gte_SetTransMatrix(mat2);
 #endif
