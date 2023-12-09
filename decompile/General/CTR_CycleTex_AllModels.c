@@ -4,7 +4,7 @@
 /// @param numModels - number of models to process. negative value means loops until NULL is met
 /// @param pModels - pointer to array of model pointers
 /// @param timer
-void CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer)
+void DECOMP_CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer)
 {
     struct Model * pModel;
     struct ModelHeader * pHeader;

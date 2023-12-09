@@ -391,12 +391,11 @@ FinishLoading:
 					DECOMP_DecalFont_DrawMultiLine(sdata->lngStrings[0x8c0 / 4], 0x100, uVar12, 0x200, 2, 0xffff8000);
 				}
 				
-#ifndef REBUILD_PS1
 				if ((gGT->gameMode1 & LOADING) == 0)
 				{
-					MainFrame_GameLogic(gGT, sdata->gGamepads);
+					DECOMP_MainFrame_GameLogic(gGT, sdata->gGamepads);
 				}
-#endif
+				
 				// If you are in demo mode
 				if (gGT->boolDemoMode != '\0')
 				{
@@ -406,15 +405,6 @@ FinishLoading:
 
 				// reset vsync calls between drawsync
 				gGT->vSync_between_drawSync = 0;
-
-// TEMPORARY until PC port has ThreadBucket execution
-#ifdef REBUILD_PS1
-				// temporary test without thread execution
-				if(D230.titleObj != 0)
-				{
-					DECOMP_MM_Title_ThTick(D230.titleObj->t);
-				}
-#endif
 
 #ifdef REBUILD_PC
 				PsyX_BeginScene();

@@ -91,7 +91,6 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 #ifdef REBUILD_PS1
 
 	// This is temporary until RainLogic is done
-	void DECOMP_TileView_SetMatrixVP(struct TileView* v);
 	DECOMP_TileView_SetMatrixVP(&gGT->tileView[0]);
 	DECOMP_TileView_SetMatrixVP(&gGT->tileView[1]);
 	DECOMP_TileView_SetMatrixVP(&gGT->tileView[2]);

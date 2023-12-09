@@ -52,11 +52,16 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 					}
 					uVar3 = (u_int)psVar9->clockReceive;
 				}
+
+#ifndef REBUILD_PS1
 				DISPLAY_Blur_Main(tileView, uVar3);
+#endif
 			}
 			else
 			{
+#ifndef REBUILD_PS1
 				DISPLAY_Blur_Main(tileView, -uVar3);
+#endif
 				psVar9->unk367--;
 			}
 LAB_80034e74:
@@ -65,8 +70,14 @@ LAB_80034e74:
 		gGT->timer = gGT->timer + 1;
 		gGT->framesInThisLEV = gGT->framesInThisLEV + 1;
 		gGT->unk1cc4[4] = 0;
+
+#ifndef REBUILD_PS1
 		iVar4 = RCNT_GetTime_Elapsed(gGT->anotherTimer, &gGT->anotherTimer);
 		iVar4 = (iVar4 << 5) / 100;
+#else
+		iVar4 = 0x20;
+#endif
+
 		gGT->elapsedTimeMS = iVar4;
 		if (iVar4 < 0)
 		{
@@ -105,6 +116,7 @@ LAB_80034e74:
 						uVar3 = gGT->timer;
 						if (uVar3 == (uVar3 / 6) * 6)
 						{
+#ifndef REBUILD_PS1
 							if (uVar3 == (uVar3 / 0xc) * 0xc)
 							{
 								OtherFX_Play_LowLevel(0x40, '\0', 0x8c9080);
@@ -113,6 +125,7 @@ LAB_80034e74:
 							{
 								OtherFX_Play_LowLevel(0x40, '\0', 0x8c8880);
 							}
+#endif
 						}
 					}
 				}
@@ -122,8 +135,10 @@ LAB_80034e74:
 		{
 			gGT->elapsedEventTime = 0;
 		}
-		CTR_CycleTex_AllModels(-1, (struct Model**)sdata->PLYROBJECTLIST, gGT->timer);
-		CTR_CycleTex_AllModels(gGT->level1->numModels, gGT->level1->ptrModelsPtrArray, gGT->timer);
+		
+		DECOMP_CTR_CycleTex_AllModels(-1, (struct Model**)sdata->PLYROBJECTLIST, gGT->timer);
+		DECOMP_CTR_CycleTex_AllModels(gGT->level1->numModels, gGT->level1->ptrModelsPtrArray, gGT->timer);
+		
 		psVar8 = 0;
 		psVar9 = 0;
 		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
@@ -175,10 +190,12 @@ LAB_80035098:
 			{
 				if (iVar4 == 0)
 				{
+#ifndef REBUILD_PS1
 					for(psVar12 = gGT->threadBuckets[iVar4].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 					{
 						Weapon_Shoot_OnCirclePress((struct Driver*)psVar12->object);
 					}
+#endif
 					
 					// run all driver funcPtrs,
 					// all drivers must run the same stage (1-13)
@@ -202,23 +219,35 @@ LAB_80035098:
 						}	
 					}
 				}
-				
+#ifndef REBUILD_PS1
 				ThTick_RunBucket(gGT->threadBuckets[iVar4].thread);
+#else
+				TEST_ThTickRunBucket(gGT->threadBuckets[iVar4].thread);
+#endif
 			}
 		}
+
+#ifndef REBUILD_PS1
 		BOTS_UpdateGlobals();
 		GhostTape_WriteMoves(0);
 		gGT->unk1cc4[4] = (u_int)(gGT->unk1cc4[4] * 10000) / 0x147e;
 		Particle_UpdateAllParticles();
+#endif
 	}
 	else
 	{
 		psVar12 = gGT->threadBuckets[AKUAKU].thread;
 		if (psVar12 != 0)
 		{
+#ifndef REBUILD_PS1
 			ThTick_RunBucket(psVar12);
+#else
+			TEST_ThTickRunBucket(psVar12);
+#endif
 		}
 	}
+	
+#ifndef REBUILD_PS1
 	uVar5 = LOAD_IsOpen_RacingOrBattle();
 	if (uVar5 != 0)
 	{
@@ -231,15 +260,21 @@ LAB_80035098:
 			RB_Burst_DrawAll(gGT);
 		}
 	}
-	THREAD_CheckAllForDead();
+#endif
+
+	DECOMP_THREAD_CheckAllForDead();
+
+#ifndef REBUILD_PS1
 	if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	{
 		Audio_Update1();
 	}
+#endif
 	
 	gGT->gameMode1_prevFrame = gGT->gameMode1;
-	uVar5 = GAMEPAD_GetNumConnected(gGamepads);
+	uVar5 = DECOMP_GAMEPAD_GetNumConnected(gGamepads);
 	uVar3 = gGT->gameMode1;
+
 	if ((uVar3 & END_OF_RACE) == 0)
 	{
 		if ((bVar1) || ((uVar3 & PAUSE_ALL) != 0))
@@ -255,13 +290,17 @@ LAB_80035098:
 					((sdata->AnyPlayerTap & BTN_START) != 0)
 				)
 				{
-					MENUBOX_ClearInput();
+					DECOMP_MENUBOX_ClearInput();
 					gGT->gameMode1 &= ~PAUSE_1;
+					
+#ifndef REBUILD_PS1
 					MainFrame_TogglePauseAudio(0);
 					OtherFX_Play(1, 1);
 					MainFreeze_SafeAdvDestroy();
 					ElimBG_Deactivate(gGT);
-					MENUBOX_Hide(sdata->ptrActiveMenuBox);
+#endif
+
+					DECOMP_MENUBOX_Hide(sdata->ptrActiveMenuBox);
 					gGT->cooldownFromUnpauseUntilPause = 5;
 				}
 			}
@@ -275,7 +314,7 @@ LAB_80035098:
 			if ((uVar3 & (GAME_CUTSCENE | END_OF_RACE | MAIN_MENU)) == 0)
 				if (sdata->ptrActiveMenuBox == 0)
 					if (sdata->AkuAkuHintState == 0)
-						if (TitleFlag_IsFullyOnScreen() == 0)
+						if (DECOMP_TitleFlag_IsFullyOnScreen() == 0)
 			{
 				for(iVar4 = 0; iVar4 < gGT->numPlyrCurrGame; iVar4++)
 				{
@@ -286,8 +325,11 @@ LAB_80035098:
 								(uVar5 != 0) &&
 								(
 									(
+#ifndef REBUILD_PS1
 										uVar3 = MainFrame_HaveAllPads((u_short)(u_char)gGT->numPlyrNextGame),
-										(uVar3 & 0xffff) == 0 && ((gGT->gameMode1 & PAUSE_ALL) == 0)
+										(uVar3 & 0xffff) == 0 && 
+#endif
+										((gGT->gameMode1 & PAUSE_ALL) == 0)
 									)
 								)
 							) ||
@@ -297,7 +339,11 @@ LAB_80035098:
 					)
 					{
 						gGT->unknownFlags_1d44 = (gGT->gameMode1 & 0x3e0020) | PAUSE_1;
+						
+#ifndef REBUILD_PS1
 						MainFreeze_IfPressStart();
+#endif
+
 						gGT->cooldownfromPauseUntilUnpause = 5;
 					}
 				}
@@ -326,6 +372,8 @@ LAB_80035098:
 				{
 					return;
 				}
+
+#ifndef REBUILD_PS1
 				sVar2 = TitleOSK_DrawMenu(0x140);
 				if (sVar2 == 0)
 				{
@@ -334,11 +382,16 @@ LAB_80035098:
 				if (sVar2 == 1)
 				{
 					*(u_short*)&sdata->unk_saveGame_related = 0;
+					
 					LoadSave_ToggleMode(0x41);
-					MENUBOX_Show(&data.menuBox_warning2);
+
+					DECOMP_MENUBOX_Show(&data.menuBox_warning2);
 					gGT->unknownFlags_1d44 |= AKU_SONG;
+
 					return;
 				}
+#endif
+
 				gGT->newHighScoreIndex = -1;
 				gGT->unknownFlags_1d44 &= ~(RELIC_RACE | CRYSTAL_CHALLENGE);
 				return;
@@ -350,8 +403,10 @@ LAB_80035098:
 	{
 		if (gGT->timerEndOfRaceVS < 0x96)
 		{
+#ifndef REBUILD_PS1
 			UI_VsQuipDrawAll();
 			UI_VsWaitForPressX();
+#endif
 		}
 		if (0x1e < gGT->timerEndOfRaceVS)
 		{

@@ -86,7 +86,13 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 #endif
 
 #if 1
+			// no MulMatrix in PS1?
+
+			#ifdef REBUILD_PC
 			MATRIX* mat2 = MulMatrix(&view->matrix_ViewProj, &curr->matrix);
+			#else
+			MATRIX* mat2 = &curr->matrix;
+			#endif
 			
 			// === Driver Instances ===
 

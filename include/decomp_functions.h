@@ -7,6 +7,7 @@ void DECOMP_CDSYS_XaCallbackCdSync(char result);
 void DECOMP_CDSYS_XaCallbackCdReady(char result);
 void DECOMP_CDSYS_SetMode_StreamData();
 
+void DECOMP_CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer);
 void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
 void DECOMP_CTR_ErrorScreen(char r, char g, char b);
 void CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer);
@@ -115,6 +116,7 @@ void DECOMP_LOAD_NextQueuedFile();
 void DECOMP_MainDrawCb_Vsync();
 void DECOMP_MainDrawCb_DrawSync();
 
+void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT);
 
@@ -181,6 +183,7 @@ struct Thread* DECOMP_THREAD_SearchForModel(struct Thread* th, int modelID);
 
 void DECOMP_TileView_Init(struct TileView* tileView, int id, int total);
 void DECOMP_TileView_SetPsyqGeom(struct TileView* tileView);
+void DECOMP_TileView_SetMatrixVP(struct TileView* tileView);
 
 void DECOMP_TileView_SetDrawEnv_Normal(
 		void* ot, struct TileView* tileView, struct DB* backBuffer,

@@ -6,10 +6,11 @@
 // random testing to learn more about the game 
 #include "TEST_DrawInstances.c"
 #include "TEST_ConvertRotToMatrix.c"
+#include "TEST_ThTickRunBucket.c"
 
 #include "../decompile/General/MAIN/MainMain.c"
 
-#include "../decompile/General/CAMERA/CAM_ClearScreen.c"
+#include "../decompile/General/CAMERA/CAM_01_ClearScreen.c"
 
 #include "../decompile/General/CDSYS/CDSYS_c01_Init.c" 
 #include "../decompile/General/CDSYS/CDSYS_c02_GetFilePosInt.c" 
@@ -153,6 +154,7 @@
 #include "../decompile/General/MAIN/MainDB_PrimMem.c"
 #include "../decompile/General/MAIN/MainDrawCb_DrawSync.c"
 #include "../decompile/General/MAIN/MainDrawCb_Vsync.c"
+#include "../decompile/General/MAIN/MainFrame_GameLogic.c"
 #include "../decompile/General/MAIN/MainFrame_RenderFrame.c"
 #include "../decompile/General/MAIN/MainFrame_ResetDB.c"
 #include "../decompile/General/MAIN/MainInit_Drivers.c"

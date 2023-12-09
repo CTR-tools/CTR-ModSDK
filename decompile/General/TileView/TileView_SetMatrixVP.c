@@ -56,7 +56,7 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   tileView->matrix_CameraTranspose.t[1] = ty;
   tileView->matrix_CameraTranspose.t[2] = tz;
 
-#ifndef REBUILD_PS1
+#ifndef REBUILD_PC
 
 // gte_SetLightMatrix
 #define gte_r8(r0) __asm__ volatile("ctc2   %0, $8" : : "r"(r0))
@@ -104,7 +104,7 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
 
   // load transpose camera matrix
   // similar to gte_SetLightMatrix
-#ifndef REBUILD_PS1
+#ifndef REBUILD_PC
   gte_r8(view0);
   gte_r9(view4);
   gte_r10(view8);
@@ -196,7 +196,7 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   // otherwise oxide intro cutscene bugs out,
   // when crash is sleeping on the grassy hill
 
-#ifndef REBUILD_PS1
+#ifndef REBUILD_PC
   gte_r8 (uVar3);
   gte_r9 (uVar4);
   gte_r10(uVar5);
