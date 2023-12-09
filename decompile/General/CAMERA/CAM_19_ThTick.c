@@ -86,14 +86,23 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	psVar23 = &psVar23[cDC->nearOrFar];
 
 	if ((cDC->flags & 0x20) == 0) goto switchD_8001b678_caseD_1;
+	
 	psVar14 = gGT->level1->ptrSpawnType1;
+	
 	psVar21 = 0;
 	if (psVar14->count < 3) goto switchD_8001b678_caseD_1;
-	psVar19 = (short *)psVar14[3].count;
+	
+	void** ptrs = ST1_GETPOINTERS(psVar14);
+	psVar19 = ptrs[ST1_CAMERA_EOR];
+	
+	// number of EOR cameras
 	sVar6 = *psVar19;
+	
 	local_28 = (short)((u_int)d->posCurr[0] >> 8);
 	local_26 = (short)((u_int)d->posCurr[1] >> 8);
 	local_24 = (short)((u_int)d->posCurr[2] >> 8);
+	
+	// advance to first EOR
 	psVar20 = psVar19 + 1;
 
 	if (sVar6 != 0)
@@ -108,8 +117,17 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 				iVar7 = -iVar7;
 			}
 			uVar16 = (u_int)*psVar20;
-			psVar20 = (short *)((int)psVar19 + *(short *)((int)data.EndOfRace_Camera_Size + ((iVar7 << 0x10) >> 0xf)) + 2);
-			if (((uVar22 == uVar16) || (psVar15 = gGT->level1->ptr_restart_points, uVar22 == (u_char)psVar15[uVar16].nextIndex_forward)) || ((uVar22 == (u_char)psVar15[uVar16].nextIndex_left || ((uVar22 == (u_char)psVar15[uVar16].nextIndex_backward || (uVar22 == (u_char)psVar15[uVar16].nextIndex_right))))))
+			
+			psVar20 = (short *)((int)psVar19 + data.EndOfRace_Camera_Size[iVar7] + 2);
+			
+			psVar15 = gGT->level1->ptr_restart_points;
+			if (
+					(uVar22 == uVar16) || 
+					(uVar22 == (u_char)psVar15[uVar16].nextIndex_forward) || 
+					(uVar22 == (u_char)psVar15[uVar16].nextIndex_left) || 
+					(uVar22 == (u_char)psVar15[uVar16].nextIndex_backward) || 
+					(uVar22 == (u_char)psVar15[uVar16].nextIndex_right)
+				)
 			{
 				psVar21 = psVar19;
 			}
