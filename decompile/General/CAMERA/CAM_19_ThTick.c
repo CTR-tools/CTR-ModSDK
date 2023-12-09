@@ -85,12 +85,12 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	
 	psVar23 = &psVar23[cDC->nearOrFar];
 
-	if ((cDC->flags & 0x20) == 0) goto switchD_8001b678_caseD_1;
+	if ((cDC->flags & 0x20) == 0) goto SkipNewCameraEOR;
 	
 	psVar14 = gGT->level1->ptrSpawnType1;
 	
 	psVar21 = 0;
-	if (psVar14->count < 3) goto switchD_8001b678_caseD_1;
+	if (psVar14->count < 3) goto SkipNewCameraEOR;
 	
 	void** ptrs = ST1_GETPOINTERS(psVar14);
 	psVar19 = ptrs[ST1_CAMERA_EOR];
@@ -108,16 +108,23 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	if (sVar6 != 0)
 	{
 		uVar22 = (u_int)d->unknown_in_FUN_8005ca24[1];
+		
+		// pointer to modeID in EOR camera
 		psVar19 += 2;
+		
 		for(; sVar6 != 0; sVar6--)
 		{
+			// camera mode
 			iVar7 = (int)*psVar19;
 			if (iVar7 < 0)
 			{
 				iVar7 = -iVar7;
 			}
+			
+			// respawnPoint
 			uVar16 = (u_int)*psVar20;
 			
+			// +2 to include respawnPoint and modeID
 			psVar20 = (short *)((int)psVar19 + data.EndOfRace_Camera_Size[iVar7] + 2);
 			
 			psVar15 = gGT->level1->ptr_restart_points;
@@ -135,9 +142,11 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 		}
 	}
 
-	if ((psVar21 == 0) || (psVar21 == (short *)cDC->unk_DC2)) goto switchD_8001b678_caseD_1;
+	// if no EOR found, or EOR is already in-use
+	if ((psVar21 == 0) || (psVar21 == cDC->currEOR)) goto SkipNewCameraEOR;
 
-	cDC->unk_DC2 = (int)psVar21;
+	cDC->currEOR = (int)psVar21;
+	
 	sVar6 = *psVar21;
 	psVar19 = psVar21 + 1;
 	sVar5 = sVar6;
@@ -252,7 +261,7 @@ LAB_8001b928:
 			*(short *)(cDC->unk_b0 + 6) = psVar21[10];
 	}
 
-switchD_8001b678_caseD_1:
+SkipNewCameraEOR:
 
 	tv->distanceToScreen_PREV = tv->distanceToScreen_CURR;
 	sVar6 = cDC->cameraMode;

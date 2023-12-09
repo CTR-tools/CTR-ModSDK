@@ -161,7 +161,8 @@ struct CameraDC
 	short frameCounterTransition;
 
 	// 0xa0
-	int unk_DC2;
+	void* currEOR;
+	
 	// difference between 8e and 9e?
 
 	// 0xa4
