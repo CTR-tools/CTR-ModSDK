@@ -657,7 +657,7 @@ LAB_8001ab04:
         // if end-of-race battle
         else
         {
-            CAM_FollowDriver_Spin360(cDC, scratchpad, d, &local_40, &local_38);
+            DECOMP_CAM_FollowDriver_Spin360(cDC, scratchpad, d, &local_40, &local_38);
 
             // reverse interpolation of fly-in [0x1000 to 0]
             x = 0x1000 - (int)*(short *)(cDC + 0x8c);

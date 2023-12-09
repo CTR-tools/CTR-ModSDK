@@ -275,7 +275,7 @@ SkipNewCameraEOR:
 			if (sVar6 == 4)
 			{
 LAB_8001c11c:
-				CAM_LookAtPosition((int)scratchpad, d->posCurr, tv->pos, tv->rot);
+				DECOMP_CAM_LookAtPosition((int)scratchpad, d->posCurr, tv->pos, tv->rot);
 				psVar21 = scratchpad;
 LAB_8001c128:
 				*(int *)(psVar21 + 0x120) = (int)tv->pos[0];
@@ -288,7 +288,7 @@ LAB_8001c128:
 				psVar21 = scratchpad;
 				if (sVar6 == 10)
 				{
-					CAM_FollowDriver_Spin360(cDC, (u_int)0x1f800108, d, tv->pos, (u_int)tv->rot);
+					DECOMP_CAM_FollowDriver_Spin360(cDC, (u_int)0x1f800108, d, tv->pos, (u_int)tv->rot);
 					goto LAB_8001c128;
 				}
 				if (sVar6 != 0xb)
@@ -463,7 +463,9 @@ LAB_8001c128:
 					}
 					goto LAB_8001c128;
 				}
-				CAM_LookAtPosition((int)0x1f800108, d->posCurr, tv->pos, tv->rot);
+				
+				DECOMP_CAM_LookAtPosition((int)0x1f800108, d->posCurr, tv->pos, tv->rot);
+				
 				iVar7 = SquareRoot0_stub((*(short *)0x1f800354) * (*(short *)0x1f800354) + (*(short *)0x1f80035c) * (*(short *)0x1f80035c));
 				iVar17 = (int)(cDC->transitionTo).pos[0];
 				iVar24 = (iVar7 - (cDC->transitionTo).pos[1]) * iVar17;
