@@ -89,7 +89,8 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// no MulMatrix in PS1?
 
 			#ifdef REBUILD_PC
-			MATRIX* mat2 = MulMatrix(&view->matrix_ViewProj, &curr->matrix);
+			MATRIX copy = view->matrix_ViewProj; // required
+			MATRIX* mat2 = MulMatrix(&copy, &curr->matrix);
 			#else
 			MATRIX* mat2 = &curr->matrix;
 			#endif
