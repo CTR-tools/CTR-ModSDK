@@ -63,7 +63,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 	if (stringID == 11 || stringID == 12)
 	{
 		// Set MenuBox to Hints
-		sdata->ptrDesiredMenuBox = (struct MenuBox *)0x800b518c;
+		sdata->ptrDesiredMenuBox = (struct MenuBox *)0x800b518c; // in 232
 		return;
 	}
 

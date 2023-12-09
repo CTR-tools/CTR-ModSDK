@@ -250,7 +250,7 @@ LAB_80035098:
 				(
 					(
 						(sdata->ptrActiveMenuBox != &data.menuBox_optionsMenu_racingWheel) &&
-						(sdata->ptrActiveMenuBox != (struct MenuBox*)0x800b518c)
+						(sdata->ptrActiveMenuBox != (struct MenuBox*)0x800b518c) // in 232
 					) &&
 					((sdata->AnyPlayerTap & BTN_START) != 0)
 				)

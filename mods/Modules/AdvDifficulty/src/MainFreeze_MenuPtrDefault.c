@@ -4,7 +4,7 @@ extern struct MenuBox AdvMainFreeze_Difficulty;
 extern struct MenuBox arcadeMainFreeze_Difficulty;
 
 #if BUILD == UsaRetail
-struct MenuBox * menuBox_hints = 0x800b518c;
+struct MenuBox * menuBox_hints = 0x800b518c; // in 232
 #endif
 #if BUILD == EurRetail
 struct MenuBox * menuBox_hints = 0x800b5638;
