@@ -472,7 +472,7 @@ void DECOMP_MM_ParseCheatCodes()
 	DECOMP_DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, ORANGE);
 	DECOMP_DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, ORANGE);
 	DECOMP_DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, ORANGE);
-	DECOMP_DecalFont_DrawLine("51%", 		285, 206, FONT_SMALL, ORANGE);
+	DECOMP_DecalFont_DrawLine("52%", 		285, 206, FONT_SMALL, ORANGE);
 	#endif
 	
 	gpad = &sdata->gGamepads->gamepad[0];
