@@ -1772,8 +1772,6 @@ struct Data
 
 	// 80084290
 	// number of options on each page of race wheel config
-
-	// 80084290
 	unsigned short raceConfig_unk80084290[14];
 
 	// 800842ac
