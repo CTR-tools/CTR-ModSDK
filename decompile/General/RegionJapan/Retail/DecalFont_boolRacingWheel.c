@@ -4,27 +4,31 @@
 
 u_int DECOMP_DecalFont_boolRacingWheel()
 {
-	char* ptrRawInput;
-	u_int result;
-	
-	ptrRawInput = sdata->gGamepads->gamepad[0]->ptrRawInput;
-	result = 0;
-	// check if raw input pointers for other gamepads don't exist
+	struct ControllerPacket* controllerPacketP1 = sdata->gGamepads->gamepad[0].ptrControllerPacket;
+	u_int isRacingWheel = false;
+
 	if
 	(
 		(
 			(
-				// # is the id for the madcatz mc2 racing wheel
-				(ptrRawInput[1] == '#') &&
+				// check if ptrControllerPacket in non-P1 controllers is null
+				// or check if non-P1 controller types aren't multitaps (?)
+
+				// if P1 controller exists, is a MadCatz Racing Wheel (neGcon with payload length 3), and is "not connected", then return true
+				// this check will then be used to replace all instances of PS1 button icons with appropriate racing wheel ones
+
+				// controllerPacketP1->payLoadLength == 3
+				// controllerPacketP1->controllerType == PAD_ID_NEGCON
+				(controllerPacketP1->controllerData == ((PAD_ID_NEGCON << 4) | 3)) &&
 				(
 					(
-						sdata->gGamepads->gamepad[1]->ptrRawInput == 0 || sdata->gGamepads->gamepad[1]->ptrRawInput[0] != '\0'
+						sdata->gGamepads->gamepad[1].ptrControllerPacket == 0 || sdata->gGamepads->gamepad[1].ptrControllerPacket->isControllerConnected != 0
 					)
 				)
 			) &&
 			(
 				(
-					sdata->gGamepads->gamepad[2]->ptrRawInput == 0 || sdata->gGamepads->gamepad[2]->ptrRawInput[0] != '\0'
+					sdata->gGamepads->gamepad[2].ptrControllerPacket == 0 || sdata->gGamepads->gamepad[2].ptrControllerPacket->isControllerConnected != 0
 				)
 			)
 		) &&
@@ -32,14 +36,14 @@ u_int DECOMP_DecalFont_boolRacingWheel()
 			(
 				(
 					(
-						sdata->gGamepads->gamepad[3]->ptrRawInput == 0 || sdata->gGamepads->gamepad[3]->ptrRawInput[0] != '\0'
-					) && (ptrRawInput != 0)
-				) && (ptrRawInput[0] == '\0')
+						sdata->gGamepads->gamepad[3].ptrControllerPacket == 0 || sdata->gGamepads->gamepad[3].ptrControllerPacket->isControllerConnected != 0
+					) && (controllerPacketP1 != 0)
+				) && (controllerPacketP1->isControllerConnected == 0)
 			)
 		)
 	)
 	{
-		result = 1;
+		isRacingWheel = true;
 	}
-	return result;
+	return isRacingWheel;
 }
