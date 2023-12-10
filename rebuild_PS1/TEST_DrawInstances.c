@@ -125,7 +125,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				// === Crash + Trophy Anim ===
 
 #if 1
-				// hard-coded MVP
+				// hard-coded MVP (idpp->0x78)
 				*(int*)&mat2->m[0][0] = 0x7032;
 				*(int*)&mat2->m[0][2] = 0x1c60a51;
 				*(int*)&mat2->m[1][1] = 0xf921b940;
