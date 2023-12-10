@@ -104,12 +104,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// how is the game supposed to set this without hard-code?
 			// also, for some reason I need to multiply
 			// the original game's value by 4?
-			mat2->t[0] = 0;
-			mat2->t[1] = 0x58*4;
-			mat2->t[2] = 0x320*4;
 
-			if (gGT->numPlyrNextGame > 2)
-				mat2->t[2] = 0x3E8 * 4;
 #endif
 
 			// how do I multiply mat1 and mat2 together?
@@ -130,14 +125,12 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				// === Crash + Trophy Anim ===
 
 #if 1
-				// TO DO: Need camera animation,
-				// then ViewProj * curr->matrix will work
-
-				*(int*)&mat2->m[0][0] = 0x3db1;
-				*(int*)&mat2->m[0][2] = 0xf90204;
-				*(int*)&mat2->m[1][1] = 0xfea8f8ab;
-				*(int*)&mat2->m[2][0] = 0x262095c;
-				*(int*)&mat2->m[2][2] = 0xfffff328;
+				// hard-coded MVP
+				*(int*)&mat2->m[0][0] = 0x7032;
+				*(int*)&mat2->m[0][2] = 0x1c60a51;
+				*(int*)&mat2->m[1][1] = 0xf921b940;
+				*(int*)&mat2->m[2][0] = 0x17671105;
+				*(int*)&mat2->m[2][2] = 0xffffbe54;
 				mat2->t[0] = -0x350;
 				mat2->t[1] = 0x284;
 				mat2->t[2] = 0xfb0;
