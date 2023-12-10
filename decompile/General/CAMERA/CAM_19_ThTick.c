@@ -83,7 +83,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	if (gGT->numPlyrCurrGame == 2)
 		psVar23 = &data.NearCam8x3;
 	
-	psVar23 = &psVar23[cDC->nearOrFar];
+	psVar23 = &psVar23[cDC->nearOrFar*2];
 
 	if ((cDC->flags & 0x20) == 0) goto SkipNewCameraEOR;
 	
