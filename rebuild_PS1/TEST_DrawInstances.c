@@ -70,15 +70,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			MATRIX* mat2 = &curr->matrix;
 			#endif
 
-			mat2->m[0][0] /=4;
-			mat2->m[0][1] /=4;
-			mat2->m[0][2] /=4;
-			mat2->m[1][0] /=4;
-			mat2->m[1][1] /=4;
-			mat2->m[1][2] /=4;
-			mat2->m[2][0] /=4;
-			mat2->m[2][1] /=4;
-			mat2->m[2][2] /=4;
+			mat2->m[0][0] /=4; mat2->m[0][1] /=4; mat2->m[0][2] /=4;
+			mat2->m[1][0] /=4; mat2->m[1][1] /=4; mat2->m[1][2] /=4;
+			mat2->m[2][0] /=4; mat2->m[2][1] /=4; mat2->m[2][2] /=4;
 			
 #if 1
 			// 0x900 and 0x1000 come from matrix->ViewProj
