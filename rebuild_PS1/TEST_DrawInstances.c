@@ -81,14 +81,13 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			mat2->m[2][2] /=4;
 			
 #if 1
-			// === Driver Instances ===
-			// Taken from gGT->drivers[0]->instSelf->idpp[0].mvp.t
+			// 0x900 and 0x1000 come from matrix->ViewProj
+			// while in character selection. NOT finished
+			// translation generation, see Crash + Trophy
+			// is hard-coded, and still need camera pos
 			mat2->t[0] = 0;
-			mat2->t[1] = 0x58;
-			mat2->t[2] = 0x320;
-
-			if (gGT->numPlyrNextGame > 2)
-				mat2->t[2] = 0x3E8;
+			mat2->t[1] = (curr->matrix.t[1] * 0x900) >> 0xA;	// 0x5A instead of 0x58 (wrong, but close)
+			mat2->t[2] = (curr->matrix.t[2] * 0x1000) >> 0xA;	// 0x320 (1p2p) or 0x3E8 (3p4p), GOOD!
 #endif
 
 			// how do I multiply mat1 and mat2 together?
