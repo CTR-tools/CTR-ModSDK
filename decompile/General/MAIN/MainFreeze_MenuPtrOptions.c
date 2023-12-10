@@ -10,7 +10,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 	u_short uVar6;
 	int iVar7;
 	short sVar8;
-	short *psVar9;
+	struct ControllerPacket *psVar9;
 	int iVar10;
 	char **volumeModeString;
 	char **dualshockVibrateString;
@@ -64,7 +64,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 		iVar7 = 0;
 		do
 		{
-			psVar9 = sdata_gGamepads->gamepad[iVar7 >> 0x10].ptrControllerPacket;
+			psVar9 = sdata->gGamepads->gamepad[iVar7 >> 0x10].ptrControllerPacket;
 			if (((psVar9 == (struct ControllerPacket *)0x0) || (psVar9->isControllerConnected != 0)) || ((psVar9->controllerData != ((PAD_ID_JOGCON << 4) | 3) && (psVar9->controllerData != ((PAD_ID_NEGCON << 4) | 3)))))
 			{
 				uVar13 = (u_int)numRacingWheels;
