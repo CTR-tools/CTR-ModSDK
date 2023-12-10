@@ -76,12 +76,20 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			
 #if 1
 			// 0x900 and 0x1000 come from matrix->ViewProj
-			// while in character selection. NOT finished
-			// translation generation, see Crash + Trophy
-			// is hard-coded, and still need camera pos
+			// while in character selection. Due to hard-code,
+			// position is not correct in main menu yet
 			mat2->t[0] = 0;
-			mat2->t[1] = (curr->matrix.t[1] * 0x900) >> 0xA;	// 0x5A instead of 0x58 (wrong, but close)
-			mat2->t[2] = (curr->matrix.t[2] * 0x1000) >> 0xA;	// 0x320 (1p2p) or 0x3E8 (3p4p), GOOD!
+			mat2->t[1] = (curr->matrix.t[1] * 0x900) >> 0xC;	// 0x5A instead of 0x58 (wrong, but close)
+			mat2->t[2] = (curr->matrix.t[2] * 0x1000) >> 0xC;	// 0x320 (1p2p) or 0x3E8 (3p4p), GOOD!
+
+			// adjust for Crash+Trophy animation
+			mat2->t[0] += view->matrix_ViewProj.t[0]; // -0x350 (GOOD)
+			mat2->t[1] += view->matrix_ViewProj.t[1]; // 0x280 instead of 0x284 (wrong, but close)
+			mat2->t[2] += view->matrix_ViewProj.t[2]; // 0xfB0 (GOOD)
+
+			mat2->t[0] *= 4;
+			mat2->t[1] *= 4;
+			mat2->t[2] *= 4;
 #endif
 
 			// how do I multiply mat1 and mat2 together?
@@ -96,18 +104,12 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			struct ModelFrame* mf = mh->ptrFrameData;
 			struct ModelAnim* ma = 0;
 
+			// 0xD4 -> 0x350
+			// 0xA0 -> 0x284
+
 			// animated
 			if (mf == 0)
 			{
-#if 1
-				// === Crash + Trophy Anim ===
-				// Taken from threadObj->i[0]->idpp[0].mvp.t
-				mat2->t[0] = -0x350;
-				mat2->t[1] = 0x284;
-				mat2->t[2] = 0xfb0;
-				gte_SetRotMatrix(mat2);
-				gte_SetTransMatrix(mat2);
-#endif
 				// animation
 				ma = m->headers[0].ptrAnimations[curr->animIndex];
 
