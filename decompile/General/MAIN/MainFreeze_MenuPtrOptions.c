@@ -65,7 +65,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 		do
 		{
 			psVar9 = sdata_gGamepads->gamepad[iVar7 >> 0x10].ptrControllerPacket;
-			if (((psVar9 == (struct ControllerPacket *)0x0) || (psVar9->isControllerConnected != 0)) || ((psVar9->controllerData != 0xe3 && (psVar9->controllerData != 0x23))))
+			if (((psVar9 == (struct ControllerPacket *)0x0) || (psVar9->isControllerConnected != 0)) || ((psVar9->controllerData != ((PAD_ID_JOGCON << 4) | 3) && (psVar9->controllerData != ((PAD_ID_NEGCON << 4) | 3)))))
 			{
 				uVar13 = (u_int)numRacingWheels;
 				numRacingWheels = numRacingWheels + 1;
