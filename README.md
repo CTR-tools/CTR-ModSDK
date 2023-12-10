@@ -34,6 +34,8 @@ $ git clone https://github.com/CTR-Tools/CTR-ModSDK.git
 
 As mentioned earlier, this repository is also used for an attempt at decompiling the original CTR assembly into human-readable C code. Our decompilation targets **non-matching** code that still functions identically compared to the original code.
 
+![decompile progress](decomp_progress.png)
+
 [![Decompile Overview](https://img.youtube.com/vi/V9QlFzSVDAU/hqdefault.jpg)](https://www.youtube.com/watch?v=V9QlFzSVDAU)
 
 ## 🤝 Contributing
