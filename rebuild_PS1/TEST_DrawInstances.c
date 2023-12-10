@@ -61,31 +61,6 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			struct TileView* view = idpp[i].tileView;
 			if (view == 0) continue;
 
-			// not this, this is identity matrix
-#if 0
-			MATRIX* mat1 = &view->matrix_ViewProj;
-			*(int*)&mat1->m[0][0] = 0x1000;
-			*(int*)&mat1->m[1][1] = 0x900; // -- temporary --
-			*(int*)&mat1->m[2][2] = 0x1000;
-#endif
-
-			// HARD-CODE MATRIX
-#if 0
-			// copy from running CTR instance in no$psx,
-			// INSTANCE IDPP offset 0x78 is a 4x4 MVP
-			// INSTANCE IDPP offset 0x98 is a 3x3, idk
-			MATRIX* mat2 = &curr->matrix;
-			*(int*)&mat2->m[0][0] = 0x332;
-			*(int*)&mat2->m[0][2] = 0x205;
-			*(int*)&mat2->m[1][1] = 0xFDAC;
-			*(int*)&mat2->m[2][0] = 0x13B;
-			*(int*)&mat2->m[2][2] = 0xFFFFFAC2;
-			mat2->t[0] = 0;
-			mat2->t[1] = 0x58;
-			mat2->t[2] = 0x320;
-#endif
-
-#if 1
 			// no MulMatrix in PS1?
 
 			#ifdef REBUILD_PC
@@ -94,17 +69,26 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			#else
 			MATRIX* mat2 = &curr->matrix;
 			#endif
+
+			mat2->m[0][0] /=4;
+			mat2->m[0][1] /=4;
+			mat2->m[0][2] /=4;
+			mat2->m[1][0] /=4;
+			mat2->m[1][1] /=4;
+			mat2->m[1][2] /=4;
+			mat2->m[2][0] /=4;
+			mat2->m[2][1] /=4;
+			mat2->m[2][2] /=4;
 			
+#if 1
 			// === Driver Instances ===
+			// Taken from gGT->drivers[0]->instSelf->idpp[0].mvp.t
+			mat2->t[0] = 0;
+			mat2->t[1] = 0x58;
+			mat2->t[2] = 0x320;
 
-			// copy from running CTR instance in no$psx,
-			// INSTANCE IDPP offset 0x78 is a 4x4 MVP
-			// INSTANCE IDPP offset 0x98 is a 3x3, idk
-
-			// how is the game supposed to set this without hard-code?
-			// also, for some reason I need to multiply
-			// the original game's value by 4?
-
+			if (gGT->numPlyrNextGame > 2)
+				mat2->t[2] = 0x3E8;
 #endif
 
 			// how do I multiply mat1 and mat2 together?
@@ -122,15 +106,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			// animated
 			if (mf == 0)
 			{
-				// === Crash + Trophy Anim ===
-
 #if 1
-				// hard-coded MVP (idpp->0x78)
-				*(int*)&mat2->m[0][0] = 0x7032;
-				*(int*)&mat2->m[0][2] = 0x1c60a51;
-				*(int*)&mat2->m[1][1] = 0xf921b940;
-				*(int*)&mat2->m[2][0] = 0x17671105;
-				*(int*)&mat2->m[2][2] = 0xffffbe54;
+				// === Crash + Trophy Anim ===
+				// Taken from threadObj->i[0]->idpp[0].mvp.t
 				mat2->t[0] = -0x350;
 				mat2->t[1] = 0x284;
 				mat2->t[2] = 0xfb0;
