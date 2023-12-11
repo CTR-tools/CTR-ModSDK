@@ -75,12 +75,32 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 			mat2->m[2][0] /=4; mat2->m[2][1] /=4; mat2->m[2][2] /=4;
 			
 #if 1
+			int lenX = SquareRoot0(
+				view->matrix_ViewProj.m[0][0] * view->matrix_ViewProj.m[0][0] +
+				view->matrix_ViewProj.m[1][0] * view->matrix_ViewProj.m[1][0] +
+				view->matrix_ViewProj.m[2][0] * view->matrix_ViewProj.m[2][0]
+			);
+
+			int lenY = SquareRoot0(
+				view->matrix_ViewProj.m[0][1] * view->matrix_ViewProj.m[0][1] +
+				view->matrix_ViewProj.m[1][1] * view->matrix_ViewProj.m[1][1] +
+				view->matrix_ViewProj.m[2][1] * view->matrix_ViewProj.m[2][1]
+			);
+
+			int lenZ = SquareRoot0(
+				view->matrix_ViewProj.m[0][2] * view->matrix_ViewProj.m[0][2] +
+				view->matrix_ViewProj.m[1][2] * view->matrix_ViewProj.m[1][2] +
+				view->matrix_ViewProj.m[2][2] * view->matrix_ViewProj.m[2][2]
+			);
+
+			printf("%04x, %04x, %04x\n", lenX, lenY, lenZ);
+
 			// 0x900 and 0x1000 come from matrix->ViewProj
 			// while in character selection. Due to hard-code,
 			// position is not correct in main menu yet
-			mat2->t[0] = 0;
-			mat2->t[1] = (curr->matrix.t[1] * 0x900) >> 0xC;	// 0x5A instead of 0x58 (wrong, but close)
-			mat2->t[2] = (curr->matrix.t[2] * 0x1000) >> 0xC;	// 0x320 (1p2p) or 0x3E8 (3p4p), GOOD!
+			mat2->t[0] = (curr->matrix.t[0] * lenX) >> 0xC;
+			mat2->t[1] = (curr->matrix.t[1] * lenY) >> 0xC;	// 0x5A instead of 0x58 (wrong, but close)
+			mat2->t[2] = (curr->matrix.t[2] * lenZ) >> 0xC;	// 0x320 (1p2p) or 0x3E8 (3p4p), GOOD!
 
 			// adjust for Crash+Trophy animation
 			mat2->t[0] += view->matrix_ViewProj.t[0]; // -0x350 (GOOD)
