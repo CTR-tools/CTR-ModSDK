@@ -58,19 +58,39 @@ void DECOMP_MM_Characters_DrawWindows(int boolShowDrivers)
     }
   
     // startX + sizeX out of bounds
-    if ((0x200 < (int)(short)tileview->rect.x + (int)(short)tileview->rect.w) &&
-        (tileview->rect.w = (short)(0x200 - (u_int)(u_short)tileview->rect.x),
-         (int)((0x200 - (u_int)(u_short)tileview->rect.x) * 0x10000) < 0)) {
+    if (
+            (0x200 < tileview->rect.x + tileview->rect.w) &&
+            (
+                tileview->rect.w = 0x200 - tileview->rect.x,
+                tileview->rect.w < 0
+            )
+        )
+    {
       tileview->rect.x = 0x200;
       tileview->rect.w = 0;
+
+#ifdef REBUILD_PC
+      // PsyCross can't handle w==0
+      tileview->rect.w = 1;
+#endif
     }
   
     // startY + sizeY out of bounds
-    if ((0xd8 < (int)(short)tileview->rect.y + (int)(short)tileview->rect.h) &&
-        (tileview->rect.h = (short)(0xd8 - (u_int)(u_short)tileview->rect.y),
-         (int)((0xd8 - (u_int)(u_short)tileview->rect.y) * 0x10000) < 0)) {
+    if (
+            (0xd8 < tileview->rect.y + tileview->rect.h) &&
+            (
+                tileview->rect.h = 0xd8 - tileview->rect.y,
+                tileview->rect.h < 0
+            )
+        ) 
+    {
       tileview->rect.y = 0xd8;
       tileview->rect.h = 0;
+
+#ifdef REBUILD_PC
+      // PsyCross can't handle h==0
+      tileview->rect.h = 1;
+#endif
     }
   
     // distanceToScreen
