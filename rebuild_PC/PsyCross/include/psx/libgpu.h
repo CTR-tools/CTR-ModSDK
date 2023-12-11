@@ -649,6 +649,12 @@ typedef struct {
 	u_long  code[2];
 } DR_PSYX_TEX;
 
+typedef struct {
+	DECLARE_P_ADDR
+	u_long  code;
+	const char* text;
+} DR_PSYX_DBGMARKER;
+
 /*
  * Environment
  */
@@ -857,7 +863,22 @@ extern void GetDrawEnv2(DR_ENV *p);
 */
 
 extern void SetPsyXTexture(DR_PSYX_TEX *p, uint grTextureId, int width, int height);
+extern void SetPsyXDebugMarker(DR_PSYX_DBGMARKER* p, const char* str);
 
+#ifdef _DEBUG
+#define PSYX_DBG_MARKER_TEXT(primptr, ot, text) \
+	{ \
+		DR_PSYX_DBGMARKER* marker; \
+		marker = (DR_PSYX_DBGMARKER*)(primptr); \
+		SetPsyXDebugMarker(marker, text); \
+		(primptr) += sizeof(DR_PSYX_DBGMARKER); \
+		addPrim((ot), marker); \
+	}
+#else
+#define PSYX_DBG_MARKER_TEXT(primptr, ot, text)
+#endif
+
+#define PSYX_DBG_MARKER_RESET(primptr, ot) PSYX_DBG_MARKER_TEXT(primptr, ot, nullptr)
 
 #if defined(_LANGUAGE_C_PLUS_PLUS)||defined(__cplusplus)||defined(c_plusplus)
 }

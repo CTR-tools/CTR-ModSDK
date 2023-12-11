@@ -202,6 +202,9 @@ extern void			GR_ClearVRAM(int x, int y, int w, int h, unsigned char r, unsigned
 extern void			GR_UpdateVertexBuffer(const GrVertex* vertices, int count);
 extern void			GR_DrawTriangles(int start_vertex, int triangles);
 
+extern void			GR_PushDebugLabel(const char* label);
+extern void			GR_PopDebugLabel();
+
 #if defined(_LANGUAGE_C_PLUS_PLUS)||defined(__cplusplus)||defined(c_plusplus)
 }
 #endif
