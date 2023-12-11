@@ -1,16 +1,5 @@
 #include <common.h>
 
-unsigned int Flip(unsigned int num)
-{
-	// who cares
-	// https://stackoverflow.com/questions/2182002/how-to-convert-big-endian-to-little-endian-in-c-without-using-library-functions
-
-	return ((num >> 24) & 0xff) | // move byte 3 to byte 0
-		((num << 8) & 0xff0000) | // move byte 1 to byte 2
-		((num >> 8) & 0xff00) | // move byte 2 to byte 1
-		((num << 24) & 0xff000000); // byte 0 to byte 3}
-}
-
 int bi = 0;
 
 int GetBit(unsigned int* vertData)
@@ -39,6 +28,14 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 	short posWorld2[4];
 	short posScreen3[4];
 	short posWorld3[4];
+
+// If PS1, but not PC, dont draw,
+// our function is too slow for PS1
+#ifndef REBUILD_PC
+#ifdef REBUILD_PS1
+	return;
+#endif
+#endif
 
 	// temporary
 	gGT->timer++;
