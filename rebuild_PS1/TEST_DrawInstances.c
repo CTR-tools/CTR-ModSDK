@@ -95,21 +95,31 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 			printf("%04x, %04x, %04x\n", lenX, lenY, lenZ);
 
-			// 0x900 and 0x1000 come from matrix->ViewProj
-			// while in character selection. Due to hard-code,
-			// position is not correct in main menu yet
+			// Is this how you use ViewProj to warp translation?
+			// Works for Character Select, breaks for Crash+Trophy
 			mat2->t[0] = (curr->matrix.t[0] * lenX) >> 0xC;
-			mat2->t[1] = (curr->matrix.t[1] * lenY) >> 0xC;	// 0x5A instead of 0x58 (wrong, but close)
-			mat2->t[2] = (curr->matrix.t[2] * lenZ) >> 0xC;	// 0x320 (1p2p) or 0x3E8 (3p4p), GOOD!
+			mat2->t[1] = (curr->matrix.t[1] * lenY) >> 0xC;	
+			mat2->t[2] = (curr->matrix.t[2] * lenZ) >> 0xC;	
 
-			// adjust for Crash+Trophy animation
-			mat2->t[0] += view->matrix_ViewProj.t[0]; // -0x350 (GOOD)
-			mat2->t[1] += view->matrix_ViewProj.t[1]; // 0x280 instead of 0x284 (wrong, but close)
-			mat2->t[2] += view->matrix_ViewProj.t[2]; // 0xfB0 (GOOD)
+			// adjust for Crash+Trophy animation,
+			// this is (0,0,0) when in character select
+			mat2->t[0] += view->matrix_ViewProj.t[0];
+			mat2->t[1] += view->matrix_ViewProj.t[1];
+			mat2->t[2] += view->matrix_ViewProj.t[2];
 
 			mat2->t[0] *= 4;
 			mat2->t[1] *= 4;
 			mat2->t[2] *= 4;
+
+			// In Character Select:
+			// X: 0 (GOOD)
+			// Y: 0x5A instead of 0x58 (wrong, but close)
+			// Z: 0x320 (1p2p) or 0x3E8 (3p4p), GOOD!
+
+			// In Crash+Trophy:
+			// X: -0x350 (GOOD)
+			// Y: 0x280 instead of 0x284 (wrong, but close)
+			// Z: 0xfB0 (GOOD)
 #endif
 
 			// how do I multiply mat1 and mat2 together?
