@@ -63,6 +63,10 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 			// no MulMatrix in PS1?
 
+			// If translation data is correct, but on-screen 
+			// graphics are wrong, maybe the 3x3 matrix is wrong?
+			// Try removing MulMatrix
+
 			#ifdef REBUILD_PC
 			MATRIX copy = view->matrix_ViewProj; // required
 			MATRIX* mat2 = MulMatrix(&copy, &curr->matrix);
@@ -93,7 +97,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				view->matrix_ViewProj.m[2][2] * view->matrix_ViewProj.m[2][2]
 			);
 
-			printf("%04x, %04x, %04x\n", lenX, lenY, lenZ);
+			//printf("%04x, %04x, %04x\n", lenX, lenY, lenZ);
 
 			// Is this how you use ViewProj to warp translation?
 			// Works for Character Select, breaks for Crash+Trophy
