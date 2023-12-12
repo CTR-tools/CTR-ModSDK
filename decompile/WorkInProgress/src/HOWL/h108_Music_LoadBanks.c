@@ -28,13 +28,13 @@ void Music_LoadBanks(void)
         // if not Naughty Dog Box
         if (level != NAUGHTY_DOG_CRATE)
         {
-            if (DAT_8008d834 == 0)
+            if (sdata->audioDefaults[7] == 0)
             {
                 Bank_DestroyAll();
 
                 Bank_Load(0, thisBank);
 
-                DAT_8008d834 = 1;
+                sdata->audioDefaults[7] = 1;
             }
 
             else
@@ -54,7 +54,7 @@ void Music_LoadBanks(void)
         bankID = 33;
     }
 
-    DAT_8008d834 = 0;
+    sdata->audioDefaults[7] = 0;
 
     Bank_Load(bankID, thisBank);
 

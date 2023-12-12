@@ -37,7 +37,7 @@ void Audio_SetReverbMode(int levelID, u_int isBossRace, int bossID)
             }
 
             // get reverb based on boss
-            reverb = data.reverbModeBossID[bossID];
+            reverb = sdata->reverbModeBossID[bossID];
         }
 
         SetReverbMode(reverb);

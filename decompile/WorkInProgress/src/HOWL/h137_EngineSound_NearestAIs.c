@@ -124,14 +124,15 @@ void DECOMP_EngineSound_NearestAIs(void)
           iVar10 = distX - iVar10;
         }
 
-        volume = EngineSound_VolumeAdjust(iVar10 + 0x80, ((int*)0x8008d828)[sVar1], 10);
-        ((int*)0x8008d828)[sVar1] = volume;
+		char* arr3 = &sdata->audioDefaults[4];
+        volume = EngineSound_VolumeAdjust(iVar10 + 0x80, arr3[sVar1], 10);
+        arr3[sVar1] = volume;
 
         piVar9 = params[sVar1] + 2;
 
-        EngineSound_AI(robot, player, sVar1, *piVar9, *piVar9 - ((int*)0x8008d820)[sVar1], volume);
-
-        ((int*)0x8008d820)[sVar1] = *piVar9;
+		char* arr2 = &sdata->audioDefaults[2];
+        EngineSound_AI(robot, player, sVar1, *piVar9, *piVar9 - arr2[sVar1], volume);
+        arr2[sVar1] = *piVar9;
       }
     }
   }

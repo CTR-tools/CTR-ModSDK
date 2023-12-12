@@ -2,17 +2,16 @@
 
 void Audio_SetDefaults(void)
 {
-    // AI Engine Sounds?
-    DAT_8008d818 = 0;
-    DAT_8008d81c = 0;
-    DAT_8008d820 = 0;
-    DAT_8008d824 = 0;
+	sdata->audioDefaults[0] = 0;
+	sdata->audioDefaults[1] = 0;
+	sdata->audioDefaults[2] = 0;
+	sdata->audioDefaults[3] = 0;
 
-    DAT_8008d828 = 0x80;
-    DAT_8008d82c = 0x80;
-    DAT_8008d830 = 0;
-    DAT_8008d834 = 0;
-    DAT_8008d838 = 0;
+    sdata->audioDefaults[4] = 0x80;
+    sdata->audioDefaults[5] = 0x80;
+    sdata->audioDefaults[6] = 0;
+    sdata->audioDefaults[7] = 0;
+    sdata->audioDefaults[8] = 0;
 
     // erase both SoundFadeInput
     sdata->SoundFadeInput[0].unk = 0;

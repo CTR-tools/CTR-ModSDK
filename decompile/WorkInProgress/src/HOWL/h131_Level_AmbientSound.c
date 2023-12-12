@@ -214,9 +214,9 @@ void Level_AmbientSound(void)
                     else
                     {
                     LAB_8002f074:
-                        if (DAT_8008d830 == 0)
+                        if (sdata->audioDefaults[6] == 0)
                         {
-                            DAT_8008d830 = 1;
+                            sdata->audioDefaults[6] = 1;
                         }
                     }
                 LAB_8002f088:

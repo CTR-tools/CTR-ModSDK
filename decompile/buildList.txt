@@ -1,5 +1,5 @@
-// 505+38+14+18+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 632 rewritten so far
-// 505 for every 'common' and ','
+// 508+38+14+18+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 635 rewritten so far
+// 508 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
 // 14 for 230_Block2
@@ -327,7 +327,9 @@ common, exe, Audio_SetState_Safe, 0x0, General/HOWL/h101_Audio_SetState_Safe.c
 common, exe, Audio_AdvHub_SwapSong, 0x0, General/HOWL/h102_Audio_AdvHub_SwapSong.c
 common, exe, Audio_SetMaskSong, 0x0, General/HOWL/h103_Audio_SetMaskSong.c
 common, exe, Audio_Update1, 0x0, General/HOWL/h104_Audio_Update1.c
-
+common, exe, Audio_SetDefaults, 0x0, General/HOWL/h105_Audio_SetDefaults.c
+common, exe, Audio_SetReverbMode, 0x0, General/HOWL/h106_Audio_SetReverbMode.c
+common, exe, Music_SetIntro, 0x0, General/HOWL/h107_Music_SetIntro.c
 
 // HOWL_Garage
 common, exe, Garage_Init, 0x0, General/HOWL/h138_Garage_Init.c

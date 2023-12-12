@@ -3873,13 +3873,16 @@ struct sData
 	int audioDefaults[9];
 	
 	// 8008d818
-	// engine audio for AIs
+	// array of 8 (ai engine?)
 	
 	// 8008d820
 	// array of 8
 	
 	// 8008d828
 	// array of 8
+	
+	// 8008d830
+	// 8008d835 audio state
 
 	// 8008bc78 sep3
 	// 8008d83c usaRetil

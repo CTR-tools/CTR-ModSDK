@@ -81,8 +81,9 @@ void DECOMP_EngineSound_AI(struct Driver *param_1, struct Driver *param_2, int p
     desiredVolume = 0;
   }
 
-  volume = EngineSound_VolumeAdjust(desiredVolume, ((int *)0x8008d818)[param_3], 10);
-  ((int *)0x8008d818)[param_3] = volume;
+  char* arr1 = &sdata->audioDefaults[0];
+  volume = EngineSound_VolumeAdjust(desiredVolume, arr1[param_3], 10);
+  arr1[param_3] = volume;
 
   // Map value from [oldMin, oldMax] to [newMin, newMax]
   // inverting newMin and newMax will give an inverse range mapping
