@@ -320,7 +320,13 @@ common, exe, Voiceline_ClearTimeStamp, 0x0, General/HOWL/h91_Voiceline_ClearTime
 common, exe, Voiceline_PoolClear, 0x0, General/HOWL/h92_Voiceline_PoolClear.c
 common, exe, Voiceline_StopAll, 0x0, General/HOWL/h93_Voiceline_StopAll.c
 common, exe, Voiceline_ToggleEnable, 0x0, General/HOWL/h94_Voiceline_ToggleEnable.c
-// skip h95
+// skip h95, h96, h97 (requires CDSYS fix from void to int), h98 (empty)
+common, exe, Voiceline_SetDefaults, 0x0, General/HOWL/h99_Voiceline_SetDefaults.c
+common, exe, Audio_SetState, 0x0, General/HOWL/h100_Audio_SetState.c
+common, exe, Audio_SetState_Safe, 0x0, General/HOWL/h101_Audio_SetState_Safe.c
+common, exe, Audio_AdvHub_SwapSong, 0x0, General/HOWL/h102_Audio_AdvHub_SwapSong.c
+common, exe, Audio_SetMaskSong, 0x0, General/HOWL/h103_Audio_SetMaskSong.c
+common, exe, Audio_Update1, 0x0, General/HOWL/h104_Audio_Update1.c
 
 
 // HOWL_Garage

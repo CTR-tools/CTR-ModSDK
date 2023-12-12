@@ -97,7 +97,7 @@ void Audio_Update1(void)
         }
 
 		// if need to XASeek
-        if (((DAT_8008d7fc != 0) && (sdata->XA_State == 0)) &&
+        if (((sdata->boolNeedXASeek != 0) && (sdata->XA_State == 0)) &&
             (9 < gGT->frameTimer_MainFrame_ResetDB - sdata->XA_PausePos))
         {
             // far from finish line
@@ -108,7 +108,7 @@ void Audio_Update1(void)
             }
 			
 			// dont need to XASeek
-            DAT_8008d7fc = 0;
+            sdata->boolNeedXASeek = 0;
         }
 
         Level_AmbientSound();
@@ -162,12 +162,13 @@ void Audio_Update1(void)
 
         Level_AmbientSound();
 
-        // if driver's lap is the last lap
-        if (d->lapIndex == gGT->numLaps - 1U)
-            &&
+        if (
+				// if driver's lap is the last lap
+				(d->lapIndex == gGT->numLaps - 1U) &&
 
                 // if finish line is close
                 (d->distanceToFinish_curr < 9000)
+			)
             {
                 Audio_SetState_Safe(15);
             }
@@ -194,7 +195,7 @@ void Audio_Update1(void)
         }
 
 		// if need to XASeek
-        if (((DAT_8008d7fc != 0) && (sdata->XA_State == 0)) &&
+        if (((sdata->boolNeedXASeek != 0) && (sdata->XA_State == 0)) &&
             (9 < gGT->frameTimer_MainFrame_ResetDB - sdata->XA_PausePos))
         {
             // far from finish line
@@ -204,7 +205,7 @@ void Audio_Update1(void)
             }
 			
 			// dont need to XASeek
-            DAT_8008d7fc = 0;
+            sdata->boolNeedXASeek = 0;
         }
 
         Level_AmbientSound();
@@ -248,17 +249,17 @@ void Audio_Update1(void)
 
                         // count how many times N Tropy has been beaten
                         // during this playthrough
-                        iVar7 = DAT_8008d7fa;
-                        DAT_8008d7fa = DAT_8008d7fa + 1;
+                        iVar7 = sdata->nTropyVoiceCount;
+                        sdata->nTropyVoiceCount = iVar7 + 1;
 
                         // pick an N Tropy XA voiceline
-                        uVar1 = *(undefined2 *)(&DAT_80083908 + iVar7 * 2);
+                        uVar1 = data.nTropyXA[iVar7];
 
                         // if beaten more than 5 times
-                        if (5 < DAT_8008d7fa)
+                        if (5 < sdata->nTropyVoiceCount)
                         {
                             // go back to 0
-                            DAT_8008d7fa = 0;
+                            sdata->nTropyVoiceCount = 0;
                         }
                     }
 
@@ -286,7 +287,7 @@ void Audio_Update1(void)
             }
 
             // desired XA
-            DAT_8008d7f8 = uVar1;
+            sdata->desiredXA_3 = uVar1;
 
             Audio_SetState_Safe(0x10);
         }

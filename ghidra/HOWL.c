@@ -5816,7 +5816,7 @@ void FUN_8002d2b0(void)
 {
   DAT_8008d7f0 = 0;
   DAT_8008d7f4 = 0;
-  DAT_8008d7f2 = 0;
+  sdata->desiredXA_1 = 0;
 
   // WrongWay_bool = False
   DAT_8008d9dc = 0;
@@ -5824,7 +5824,7 @@ void FUN_8002d2b0(void)
   // framesDrivingSameDirection = 0
   DAT_8008d9e4 = 0;
   DAT_8008d7fa = 0;
-  DAT_8008d7fc = 0;
+  sdata->boolNeedXASeek = 0;
 
   // Music_SetDefaults
   FUN_8002e338();
@@ -5844,7 +5844,7 @@ void FUN_8002d2f4(undefined4 param_1)
   {
 	// stop/pause cseq music (main: case 2)
   case 1:
-    DAT_8008d7fc = 0;
+    sdata->boolNeedXASeek = 0;
 
 	// CDSYS_XAPauseRequest
     FUN_8001cf98();
@@ -5882,14 +5882,14 @@ void FUN_8002d2f4(undefined4 param_1)
   case 9:
 
 	// CDSYS_XAPlay(CDSYS_XA_TYPE_MUSIC, x)
-    FUN_8001cdb4(0,(int)DAT_8008d7f2);
+    FUN_8001cdb4(0,(int)sdata->desiredXA_1);
 
-    iVar1 = (int)DAT_8008d7f2 + 1;
+    iVar1 = (int)sdata->desiredXA_1 + 1;
     iVar3 = iVar1;
     if (iVar1 < 0) {
-      iVar3 = (int)DAT_8008d7f2 + 4;
+      iVar3 = (int)sdata->desiredXA_1 + 4;
     }
-    DAT_8008d7f2 = (short)iVar1 + (short)(iVar3 >> 2) * -4;
+    sdata->desiredXA_1 = (short)iVar1 + (short)(iVar3 >> 2) * -4;
     break;
   case 10:
 
@@ -5919,12 +5919,12 @@ void FUN_8002d2f4(undefined4 param_1)
     // Voiceline_ToggleEnable
 	FUN_8002cbb4(0);
 
-    DAT_8008d7fc = 1;
+    sdata->boolNeedXASeek = 1;
     break;
 
   // if you are on last lap
   case 0xd:
-    DAT_8008d7fc = 0;
+    sdata->boolNeedXASeek = 0;
 
 	// Music_LowerVolume
     FUN_8002e418();
@@ -5952,13 +5952,13 @@ void FUN_8002d2f4(undefined4 param_1)
 
     break;
   case 0x10:
-    DAT_8008d7fc = 0;
+    sdata->boolNeedXASeek = 0;
 
 	// Music_Restart
     FUN_8002e4c0();
 
 	// set XA
-    iVar3 = (int)DAT_8008d7f8;
+    iVar3 = (int)sdata->desiredXA_3;
 
 	// CDSYS_XA_TYPE_MUSIC
     uVar2 = 0;
@@ -6248,7 +6248,7 @@ void FUN_8002d67c(void)
       iVar3 = iVar7;
     } while (iVar5 < 8);
 
-    if (((DAT_8008d7fc != '\0') && (DAT_8008d708 == 0)) &&
+    if (((sdata->boolNeedXASeek != '\0') && (DAT_8008d708 == 0)) &&
        (9 < (uint)(*(int *)(PTR_DAT_8008d2ac + 0x1cf8) - DAT_8008d6ec)))
 	{
 	  // high distToFinish
@@ -6257,7 +6257,7 @@ void FUN_8002d67c(void)
 		// CDSYS_XASeek (FINAL LAP! music)
         FUN_8001cc18(1,0,6);
       }
-      DAT_8008d7fc = '\0';
+      sdata->boolNeedXASeek = '\0';
     }
 
 	// Level_AmbientSound
@@ -6374,7 +6374,7 @@ void FUN_8002d67c(void)
       iVar8 = -1;
     } while (iVar5 < 8);
 
-    if (((DAT_8008d7fc != '\0') && (DAT_8008d708 == 0)) &&
+    if (((sdata->boolNeedXASeek != '\0') && (DAT_8008d708 == 0)) &&
        (9 < (uint)(*(int *)(PTR_DAT_8008d2ac + 0x1cf8) - DAT_8008d6ec)))
 	{
 	  // high distToFinish
@@ -6383,7 +6383,7 @@ void FUN_8002d67c(void)
 		// CDSYS_XASeek (Victory Fanfare music)
         FUN_8001cc18(1,0,4);
       }
-      DAT_8008d7fc = '\0';
+      sdata->boolNeedXASeek = '\0';
     }
 
 	// Level_AmbientSound
@@ -6474,7 +6474,7 @@ void FUN_8002d67c(void)
       }
 
 	  // desired XA
-      DAT_8008d7f8 = uVar1;
+      sdata->desiredXA_3 = uVar1;
 
 	  // Audio_SetState_Safe
       FUN_8002d4cc(0x10);

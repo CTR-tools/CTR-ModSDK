@@ -14,7 +14,7 @@ void Audio_SetState(u_int state)
     {
     // stop/pause cseq music (main: case 2)
     case 1:
-        DAT_8008d7fc = 0;
+        sdata->boolNeedXASeek = 0;
 
         CDSYS_XAPauseRequest();
 
@@ -43,15 +43,15 @@ void Audio_SetState(u_int state)
         }
         break;
     case 9:
-        CDSYS_XAPlay(CDSYS_XA_TYPE_MUSIC, (int)DAT_8008d7f2);
+        CDSYS_XAPlay(CDSYS_XA_TYPE_MUSIC, (int)sdata->desiredXA_1);
 
-        iVar1 = (int)DAT_8008d7f2 + 1;
+        iVar1 = (int)sdata->desiredXA_1 + 1;
         XA_index = iVar1;
         if (iVar1 < 0)
         {
-            XA_index = (int)DAT_8008d7f2 + 4;
+            XA_index = (int)sdata->desiredXA_1 + 4;
         }
-        DAT_8008d7f2 = iVar1 + (XA_index >> 2) * -4;
+        sdata->desiredXA_1 = iVar1 + (XA_index >> 2) * -4;
         break;
     case 10:
 
@@ -75,15 +75,13 @@ void Audio_SetState(u_int state)
 
         Voiceline_ToggleEnable(0);
 
-		// need to XASeek
-        DAT_8008d7fc = 1;
+        sdata->boolNeedXASeek = 1;
         break;
 
     // if you are on last lap
     case 13:
-        DAT_8008d7fc = 0;
+        sdata->boolNeedXASeek = 0;
 
-        //
         Music_LowerVolume();
 
         XA_type = CDSYS_XA_TYPE_MUSIC;
@@ -104,12 +102,12 @@ void Audio_SetState(u_int state)
 
         break;
     case 16:
-        DAT_8008d7fc = 0;
+        sdata->boolNeedXASeek = 0;
 
         Music_Restart();
 
         // set XA
-        XA_index = DAT_8008d7f8;
+        XA_index = sdata->desiredXA_3;
 
         XA_type = CDSYS_XA_TYPE_MUSIC;
 

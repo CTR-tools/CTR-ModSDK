@@ -47,13 +47,9 @@ void Audio_SetMaskSong(u_int tempo)
     {
         Music_Adjust(0, tempo, 0, 0);
 
-        if ((gameMode & UKA_SONG) != 0)
+        if ((gameMode & (UKA_SONG|AKU_SONG)) != 0)
         {
-            gGT->gameMode1 &= ~(UKA_SONG);
-        }
-        if ((gameMode & AKU_SONG) != 0)
-        {
-            gGT->gameMode1 &= ~(AKU_SONG);
+            gGT->gameMode1 &= ~(UKA_SONG|AKU_SONG);
         }
     }
 }
