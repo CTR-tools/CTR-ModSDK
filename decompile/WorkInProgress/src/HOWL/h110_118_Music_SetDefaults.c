@@ -2,8 +2,8 @@
 
 void Music_SetDefaults(void)
 {
-    sdata->boolPlayCseqMusic = false;
     // no music playing
+    sdata->boolPlayCseqMusic = false;
     sdata->CseqSongID = -1;
     sdata->CseqSongTempo = 0;
 }
