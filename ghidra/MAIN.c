@@ -148,7 +148,7 @@ void FUN_80034aa4(void)
   // howl_PlayAudio_Update
   FUN_8002c208();
 
-  // check for unplugged gamepads
+  // GAMEPAD_PollVsync
   FUN_80025410(PTR_DAT_8008d2b0);
 
   return;

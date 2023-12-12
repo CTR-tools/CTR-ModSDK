@@ -93,7 +93,8 @@ struct ChannelStats
 	unsigned char LR;
 
 	// 0x12
-	char unk6[0x4];
+	short ad;
+	short sr;
 
 	// 0x16
 	short timeLeft;

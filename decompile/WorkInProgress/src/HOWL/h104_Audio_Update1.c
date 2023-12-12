@@ -96,6 +96,7 @@ void Audio_Update1(void)
             d = iVar7;
         }
 
+		// if need to XASeek
         if (((DAT_8008d7fc != 0) && (sdata->XA_State == 0)) &&
             (9 < gGT->frameTimer_MainFrame_ResetDB - sdata->XA_PausePos))
         {
@@ -105,6 +106,8 @@ void Audio_Update1(void)
                 // (FINAL LAP! music)
                 CDSYS_XASeek(1, 0, 6);
             }
+			
+			// dont need to XASeek
             DAT_8008d7fc = 0;
         }
 
@@ -190,6 +193,7 @@ void Audio_Update1(void)
             iVar8 = -1;
         }
 
+		// if need to XASeek
         if (((DAT_8008d7fc != 0) && (sdata->XA_State == 0)) &&
             (9 < gGT->frameTimer_MainFrame_ResetDB - sdata->XA_PausePos))
         {
@@ -198,6 +202,8 @@ void Audio_Update1(void)
             {
                 CDSYS_XASeek(1, 0, 4);
             }
+			
+			// dont need to XASeek
             DAT_8008d7fc = 0;
         }
 

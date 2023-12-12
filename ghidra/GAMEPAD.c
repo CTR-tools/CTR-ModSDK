@@ -122,9 +122,6 @@ void FUN_800252a0(int param_1,int param_2,undefined4 param_3)
   return;
 }
 
-
-// check for unplugged gamepads in VsyncCallback
-
 // GAMEPAD_PollVsync
 void FUN_80025410(int param_1)
 

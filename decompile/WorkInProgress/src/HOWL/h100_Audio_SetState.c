@@ -75,6 +75,7 @@ void Audio_SetState(u_int state)
 
         Voiceline_ToggleEnable(0);
 
+		// need to XASeek
         DAT_8008d7fc = 1;
         break;
 

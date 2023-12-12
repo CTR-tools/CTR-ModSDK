@@ -315,14 +315,21 @@ common, exe, howl_PauseAudio, 0x0, General/HOWL/h86_howl_PauseAudio.c
 common, exe, howl_UnPauseChannel, 0x0, General/HOWL/h87_howl_UnPauseChannel.c
 common, exe, howl_UnPauseAudio, 0x0, General/HOWL/h88_howl_UnPauseAudio.c
 common, exe, howl_StopAudio, 0x0, General/HOWL/h89_howl_StopAudio.c
+common, exe, Voiceline_PoolInit, 0x0, General/HOWL/h90_Voiceline_PoolInit.c
+common, exe, Voiceline_ClearTimeStamp, 0x0, General/HOWL/h91_Voiceline_ClearTimeStamp.c
+common, exe, Voiceline_PoolClear, 0x0, General/HOWL/h92_Voiceline_PoolClear.c
+common, exe, Voiceline_StopAll, 0x0, General/HOWL/h93_Voiceline_StopAll.c
+common, exe, Voiceline_ToggleEnable, 0x0, General/HOWL/h94_Voiceline_ToggleEnable.c
+// skip h95
+
 
 // HOWL_Garage
-common, exe, Garage_Init, 0x0, General/HOWL/Garage_Init.c
-common, exe, Garage_Enter, 0x0, General/HOWL/Garage_Enter.c
-common, exe, Garage_PlayFX, 0x0, General/HOWL/Garage_PlayFX.c
-common, exe, Garage_LerpFX, 0x0, General/HOWL/Garage_LerpFX.c
-common, exe, Garage_MoveLR, 0x0, General/HOWL/Garage_MoveLR.c
-common, exe, Garage_Leave, 0x0, General/HOWL/Garage_Leave.c
+common, exe, Garage_Init, 0x0, General/HOWL/h138_Garage_Init.c
+common, exe, Garage_Enter, 0x0, General/HOWL/h139_Garage_Enter.c
+common, exe, Garage_PlayFX, 0x0, General/HOWL/h140_Garage_PlayFX.c
+common, exe, Garage_LerpFX, 0x0, General/HOWL/h141_Garage_LerpFX.c
+common, exe, Garage_MoveLR, 0x0, General/HOWL/h142_Garage_MoveLR.c
+common, exe, Garage_Leave, 0x0, General/HOWL/h143_Garage_Leave.c
 
 // INSTANCE
 common, exe, INSTANCE_Birth, 0x0, General/INSTANCE/INSTANCE_Birth.c

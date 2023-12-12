@@ -3816,10 +3816,32 @@ struct sData
 
 	// 8008bc30 sep3
 	// 8008d7f0 usaRetail
-	// int unkAudioState;
+	// short unkAudioState;
+	
+	// 8008d7f2
+	// short desiredXA_1;
+	
+	// 8008d7f4
+	// int desiredXA_1;
+	
+	// 8008d7f8
+	// short desiredXA_3;
+	
+	// 8008d7fa
+	// short nTropyVoiceCount;
+	
+	// 8008d7fc
+	// int boolNeedXASeek;
 
-	// 8008d800
 	// end of sData (due to alignment)
+	// 8008d800 (1)
+	// int bankCount;
+	
+	// 8008d804
+	// int bankPodiumStage;
+	
+	// 8008d808 (1)
+	// int bankLoad54;
 
 	// 8008d80c
 	// boolPlayCseqAudio

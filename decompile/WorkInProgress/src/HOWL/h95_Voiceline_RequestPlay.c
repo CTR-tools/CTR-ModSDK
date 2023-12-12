@@ -115,7 +115,7 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
 			
             sdata->timeSet1[param_2] |= (1 << (voiceID));
 
-            iVar10 = sdata->VoiceLine2.last;
+            iVar10 = sdata->Voiceline2.last;
 
             iVar7 = sdata->Voiceline1.first;
 
@@ -138,10 +138,10 @@ void Voiceline_RequestPlay(u_int voiceID, u_int param_2, u_int param_3)
             if (sdata->Voiceline1.first == NULL)
             {
                 // if voiceline taken->back is null
-                if (sdata->VoiceLine2.last == 0)
+                if (sdata->Voiceline2.last == 0)
                     goto LAB_8002cee4;
 
-                LIST_RemoveMember(&sdata->Voiceline2.first, sdata->VoiceLine2.last);
+                LIST_RemoveMember(&sdata->Voiceline2.first, sdata->Voiceline2.last);
             }
 
             // if free voicelines are available

@@ -25,18 +25,17 @@ void Voiceline_PoolInit(void)
   // initialize all members in sound list
   for (index = 0; index < 24; index++)
   {
-    struct ChannelStats stats = sdata->channelStatsPrev[i];
-    sdata->ChannelUpdateFlags[i] = 0;
+    struct ChannelStats* stats = &sdata->channelStatsPrev[index];
+    sdata->ChannelUpdateFlags[index] = 0;
 
     SpuSetVoiceADSRAttr(index, 0, 0xf, 0x7f, 2, 0xf, 5, 1, 3);
-    stats.flags = 0;
-    stats.channelID = index;
+    stats->flags = 0;
+    stats->channelID = index;
 
-    // ADSR
-    *(short *)&stats.unk6[0] = 0x80ff;
-    *(short *)&stats.unk6[2] = 0x1fc2;
+	stats->ad = 0x80ff;
+	stats->sr = 0x1fc2;
 
-    struct ChannelAttr *curr = sdata->channelAttrCur[i];
+    struct ChannelAttr *curr = &sdata->channelAttrCur[index];
 
     curr->spuStartAddr = -1;
 
@@ -51,14 +50,14 @@ void Voiceline_PoolInit(void)
 
   for (index = 0; index < 2; index++)
   {
-    struct Song *pool = sdata->songPool[index];
+    struct Song *pool = &sdata->songPool[index];
 
     pool->id = index;
   }
 
   for (index = 0; index < 24; index++)
   {
-    struct SongSeq *seq = sdata->songSeq[index];
+    struct SongSeq *seq = &sdata->songSeq[index];
 
     // not playing
     seq->flags = 0;
