@@ -3842,16 +3842,33 @@ struct sData
 	
 	// 8008d808 (1)
 	// int bankLoad54;
+	
+	#if BUILD == SepReview
+	char unk_beforeVoicelineBool[0x14];
+	#elif BUILD >= UsaRetail
+	char unk_beforeVoicelineBool[0x1c];
+	#endif
 
-	// 8008d80c
-	// boolPlayCseqAudio
+	// 8008bc44 sep3
+	// 8008d80c usaRetail
+	int cseqBoolPlay;
 
-	// 8008d810
-	// highest cseq song index
+	// 8008bc48 sep3
+	// 8008d810 usaRetail
+	int cseqHighestIndex;
 
-	// 8008d814
-	// cseq song tempo
+	// 8008bc4c sep3
+	// 8008d814 usaRetail
+	int cseqTempo;
+	
+	#if BUILD == SepReview
+	int unk8008bc50;
+	#endif
 
+	// 8008bc54 sep3 -- FUN_8002d6c0
+	// 8008d818 usaRetail -- FUN_8002dc4c
+	int audioDefaults[9];
+	
 	// 8008d818
 	// engine audio for AIs
 	
@@ -3860,16 +3877,6 @@ struct sData
 	
 	// 8008d828
 	// array of 8
-
-	#if BUILD == SepReview
-	char unk_beforeVoicelineBool[0x44];
-	#elif BUILD >= UsaRetail
-	char unk_beforeVoicelineBool[0x48];
-	#endif
-
-	// 8008bc74 sep3
-	// 8008d838 usaRetail
-	int unkTimer_8008d838;
 
 	// 8008bc78 sep3
 	// 8008d83c usaRetil
