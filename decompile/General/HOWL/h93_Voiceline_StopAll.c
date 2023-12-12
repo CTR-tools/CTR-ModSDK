@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Voiceline_StopAll(void)
+void DECOMP_Voiceline_StopAll(void)
 {
 	while(sdata->Voiceline2.last != 0)
 	{

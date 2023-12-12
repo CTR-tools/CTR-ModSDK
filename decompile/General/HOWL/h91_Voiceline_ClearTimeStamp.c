@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Voiceline_ClearTimeStamp(void)
+void DECOMP_Voiceline_ClearTimeStamp(void)
 {
     for (char i = 0; i < 16; i++)
     {

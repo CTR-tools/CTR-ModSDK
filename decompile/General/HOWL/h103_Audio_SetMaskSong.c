@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Audio_SetMaskSong(u_int tempo)
+void DECOMP_Audio_SetMaskSong(u_int tempo)
 {
     char i;
     u_char isMaskUsed;

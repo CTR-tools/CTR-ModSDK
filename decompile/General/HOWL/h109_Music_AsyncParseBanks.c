@@ -1,4 +1,6 @@
-u_int Music_AsyncParseBanks(void)
+#include <common.h>
+
+u_int DECOMP_Music_AsyncParseBanks(void)
 {
     char bVar1;
     char newState;
@@ -6,11 +8,11 @@ u_int Music_AsyncParseBanks(void)
     u_int uVar4;
     struct GameTracker *gGT = sdata->gGT;
     struct Bank thisBank;
-
     int level = gGT->levelID;
+	char* arr = &sdata->audioDefaults[7];
 
     // loading state of song (one byte)
-    switch (DAT_8008d835)
+    switch (arr[1])
     {
 
     case 0:
@@ -86,9 +88,9 @@ u_int Music_AsyncParseBanks(void)
         if (Bank_AssignSpuAddrs() == 0)
             goto PARSE_FINISH;
 
-        DAT_8008d800 = 0;
-        DAT_8008d804 = 0;
-        DAT_8008d808 = 0;
+        sdata->bankCount = 0;
+        sdata->bankPodiumStage = 0;
+        sdata->bankLoad54 = 0;
 
         // If you're drawing any Arcade or Battle maps
         if ((level < GEM_STONE_VALLEY) &&
@@ -120,7 +122,7 @@ u_int Music_AsyncParseBanks(void)
         {
             Bank_Load(54, thisBank);
 
-            DAT_8008d808 = 1;
+            sdata->bankLoad54 = 1;
         }
 
         newState = 2;
@@ -145,15 +147,15 @@ u_int Music_AsyncParseBanks(void)
                 newState = 3;
 
                 // numPlyrCurrGame
-                if (DAT_8008d800 < gGT->numPlyrCurrGame)
+                if (sdata->bankCount < gGT->numPlyrCurrGame)
                 {
-                    if ((DAT_8008d808 == 0) ||
+                    if ((sdata->bankLoad54 == 0) ||
 
                         // if characterID is secret character
-                        (7 < data.characterIDs[DAT_8008d800]))
+                        (7 < data.characterIDs[sdata->bankCount]))
                     {
                         // bank = characterID + 0x37
-                        index = data.characterIDs[DAT_8008d800] + 0x37;
+                        index = data.characterIDs[sdata->bankCount] + 0x37;
 
                         // load bank
                         goto LOAD_BANK;
@@ -168,16 +170,16 @@ u_int Music_AsyncParseBanks(void)
             else
             {
                 // load 5 banks, one for each driver
-                if (DAT_8008d800 < 5)
+                if (sdata->bankCount < 5)
                 {
-                    index = data.characterIDs[DAT_8008d800] + 0x37;
+                    index = data.characterIDs[sdata->bankCount] + 0x37;
 
                 LOAD_BANK:
 
                     Bank_Load(index, thisBank);
 
                 LAB_8002e178:
-                    DAT_8008d800 = DAT_8008d800 + 1;
+                    sdata->bankCount = sdata->bankCount + 1;
                     goto PARSE_FINISH;
                 }
                 newState = 3;
@@ -190,9 +192,9 @@ u_int Music_AsyncParseBanks(void)
             // Level ID in the Adventure Arena
             if (level - 25 < 5)
             {
-                if (DAT_8008d800 == 0)
+                if (sdata->bankCount == 0)
                 {
-                    if ((DAT_8008d808 != 0) ||
+                    if ((sdata->bankLoad54 != 0) ||
 
                         // characterID is special character
                         (7 < data.characterIDs[0]))
@@ -211,7 +213,7 @@ u_int Music_AsyncParseBanks(void)
                 // podium reward
                 if (gGT->podiumRewardID != 0)
                 {
-                    if (DAT_8008d804 == 0)
+                    if (sdata->bankPodiumStage == 0)
                     {
                         bVar1 = gGT->podium_modelIndex_First;
 
@@ -221,7 +223,7 @@ u_int Music_AsyncParseBanks(void)
                     }
                     else
                     {
-                        if (DAT_8008d804 == 1)
+                        if (sdata->bankPodiumStage == 1)
                         {
                             if (gGT->podium_modelIndex_Second != 0)
                             {
@@ -232,7 +234,7 @@ u_int Music_AsyncParseBanks(void)
                         else
                         {
                             newState = 3;
-                            if (DAT_8008d804 != 2)
+                            if (sdata->bankPodiumStage != 2)
                                 break;
 
                             if (gGT->podium_modelIndex_Third != 0)
@@ -242,7 +244,7 @@ u_int Music_AsyncParseBanks(void)
                             }
                         }
                     }
-                    DAT_8008d804 = DAT_8008d804 + 1;
+                    sdata->bankPodiumStage = sdata->bankPodiumStage + 1;
                     goto PARSE_FINISH;
                 }
             }
@@ -332,19 +334,20 @@ u_int Music_AsyncParseBanks(void)
 
         break;
 
-    // ?
+    #if 0
     case -0xbad1ab1f:
         goto PARSE_FINISH;
+	#endif
 
     default:
         return 1;
     }
 
     // loading state of song (one byte)
-    DAT_8008d835 = newState;
+    arr[1] = newState;
 PARSE_FINISH:
     // state == 5 is finished. 
     // if false, function failed.
-    return (DAT_8008d835 == 5);
+    return (arr[1] == 5);
 }
  

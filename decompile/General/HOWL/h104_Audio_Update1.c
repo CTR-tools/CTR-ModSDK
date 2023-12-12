@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Audio_Update1(void)
+void DECOMP_Audio_Update1(void)
 {
     char i;
     short uVar1;

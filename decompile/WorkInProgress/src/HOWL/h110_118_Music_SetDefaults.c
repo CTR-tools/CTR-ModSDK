@@ -90,7 +90,7 @@ void Music_RaiseVolume(void)
 void Music_Restart(void)
 {
     // if cseq music is playing
-    if (sdata->boolPlayCseqMusic)
+    if (sdata->boolPlayCseqMusic != 0)
     {
         CseqMusic_Restart(sdata->CseqSongID, 8);
     }
@@ -99,7 +99,7 @@ void Music_Restart(void)
 void Music_Stop(void)
 {
     // if music is playing
-    if (sdata->boolPlayCseqMusic)
+    if (sdata->boolPlayCseqMusic != 0)
     {
         CseqMusic_Stop(sdata->CseqSongID & 0xffff);
 

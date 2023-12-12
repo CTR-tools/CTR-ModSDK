@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Voiceline_SetDefaults(void)
+void DECOMP_Voiceline_SetDefaults(void)
 {
     sdata->unkAudioState = 0;
     sdata->desiredXA_1 = 0;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Audio_SetState(u_int state)
+void DECOMP_Audio_SetState(u_int state)
 {
     u_char XA_type;
     u_char XA_index;

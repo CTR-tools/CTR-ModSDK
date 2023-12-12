@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Audio_SetReverbMode(int levelID, u_int isBossRace, int bossID)
+void DECOMP_Audio_SetReverbMode(int levelID, u_int isBossRace, int bossID)
 {
     u_int reverb;
     // if audio is enabled

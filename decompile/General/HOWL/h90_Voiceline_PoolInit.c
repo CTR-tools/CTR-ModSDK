@@ -1,7 +1,7 @@
 #include <common.h>
 
 // does not really touch voiceline
-void Voiceline_PoolInit(void)
+void DECOMP_Voiceline_PoolInit(void)
 {
   char index;
 

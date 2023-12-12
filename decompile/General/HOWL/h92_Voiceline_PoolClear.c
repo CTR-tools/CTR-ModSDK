@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Voiceline_PoolClear(void)
+void DECOMP_Voiceline_PoolClear(void)
 {
     sdata->boolCanPlayWrongWaySFX = false;
 

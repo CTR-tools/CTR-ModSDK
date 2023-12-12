@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Audio_AdvHub_SwapSong(int levelID)
+void DECOMP_Audio_AdvHub_SwapSong(int levelID)
 {
     if ((sdata->unkAudioState == 5) &&
         // If you're on a map in the Adventure Arena

@@ -1,11 +1,12 @@
 #include <common.h>
 
-void Music_LoadBanks(void)
+void DECOMP_Music_LoadBanks(void)
 {
     u_int bankID;
     struct Bank thisBank;
     struct GameTracker *gGT = sdata->gGT;
     int level = gGT->levelID;
+	char* arr = &sdata->audioDefaults[7];
 
     Audio_SetReverbMode(
         // Level ID
@@ -43,7 +44,7 @@ void Music_LoadBanks(void)
             }
 
             // loading state of song (one byte)
-            DAT_8008d835 = 0;
+            arr[1] = 0;
             return;
         }
 
@@ -59,5 +60,5 @@ void Music_LoadBanks(void)
     Bank_Load(bankID, thisBank);
 
     // loading state of song (one byte)
-    DAT_8008d835 = 3;
+    arr[1] = 3;
 }

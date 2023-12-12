@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Music_SetIntro(void)
+void DECOMP_Music_SetIntro(void)
 {
     u_int boolSuccess;
     struct Bank thisBank;

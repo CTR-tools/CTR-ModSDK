@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Audio_SetDefaults(void)
+void DECOMP_Audio_SetDefaults(void)
 {
 	sdata->audioDefaults[0] = 0;
 	sdata->audioDefaults[1] = 0;

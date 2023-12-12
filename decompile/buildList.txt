@@ -330,6 +330,8 @@ common, exe, Audio_Update1, 0x0, General/HOWL/h104_Audio_Update1.c
 common, exe, Audio_SetDefaults, 0x0, General/HOWL/h105_Audio_SetDefaults.c
 common, exe, Audio_SetReverbMode, 0x0, General/HOWL/h106_Audio_SetReverbMode.c
 common, exe, Music_SetIntro, 0x0, General/HOWL/h107_Music_SetIntro.c
+common, exe, Music_LoadBanks, 0x0, General/HOWL/h108_Music_LoadBanks.c
+common, exe, Music_AsyncParseBanks, 0x0, General/HOWL/h109_Music_AsyncParseBanks.c
 
 // HOWL_Garage
 common, exe, Garage_Init, 0x0, General/HOWL/h138_Garage_Init.c
