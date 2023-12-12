@@ -7098,7 +7098,7 @@ void FUN_8002e350(uint param_1,int param_2,undefined4 param_3,undefined4 param_4
 	// CseqMusic_Start (loopAtEnd)
     FUN_80028c78(param_1,param_2,param_3,param_4,1);
 
-	// boolPlayCseqMusic = true
+	// cseqBoolPlay = true
     DAT_8008d80c = 1;
 
 	// set active SongID and tempo
@@ -7190,7 +7190,7 @@ void FUN_8002e4ec(void)
 // Music_Start
 void FUN_8002e524(uint param_1)
 {
-  // boolPlayCseqMusic = true
+  // cseqBoolPlay = true
   DAT_8008d80c = 1;
 
   // set highest song index
@@ -7204,7 +7204,7 @@ void FUN_8002e524(uint param_1)
 void FUN_8002e53c(void)
 
 {
-  // boolPlayCseqMusic = false
+  // cseqBoolPlay = false
   DAT_8008d80c = 0;
 
   // no songs are playing
