@@ -3816,37 +3816,40 @@ struct sData
 
 	// 8008bc30 sep3
 	// 8008d7f0 usaRetail
-	// short unkAudioState;
+	short unkAudioState;
 	
 	// 8008d7f2
-	// short desiredXA_1;
+	short desiredXA_1;
 	
 	// 8008d7f4
-	// int desiredXA_1;
+	int desiredXA_2;
 	
 	// 8008d7f8
-	// short desiredXA_3;
+	short desiredXA_3;
 	
 	// 8008d7fa
-	// short nTropyVoiceCount;
+	short nTropyVoiceCount;
 	
 	// 8008d7fc
-	// int boolNeedXASeek;
+	#if BUILD >= UsaRetail
+	int boolNeedXASeek;
+	#endif
 
-	// end of sData (due to alignment)
-	// 8008d800 (1)
-	// int bankCount;
+	// 8008bc3c sep3
+	// 8008d800 UsaRetail -- end of sData (due to alignment)
+	int bankCount;
 	
-	// 8008d804
-	// int bankPodiumStage;
+	// 8008bc40 sep3
+	// 8008d804 UsaRetail
+	int bankPodiumStage;
+	
+	#if BUILD >= UsaRetail
+	// Sep3 loads bank 51 (0x33)
+	// UsaRetail loads bank 54 (0x36)
+	// but sep3 doesn't save bool
 	
 	// 8008d808 (1)
-	// int bankLoad54;
-	
-	#if BUILD == SepReview
-	char unk_beforeVoicelineBool[0x14];
-	#elif BUILD >= UsaRetail
-	char unk_beforeVoicelineBool[0x1c];
+	int bankLoad54;
 	#endif
 
 	// 8008bc44 sep3
