@@ -52,7 +52,10 @@ void DECOMP_Voiceline_PoolInit(void)
   {
     struct Song *pool = &sdata->songPool[index];
 
-    pool->id = index;
+	// not playing
+	pool->flags = 0;
+
+    pool->songPoolIndex = index;
   }
 
   for (index = 0; index < 24; index++)
