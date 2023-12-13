@@ -6,8 +6,10 @@ int DECOMP_LOAD_HowlHeaderSectors(CdlFILE* cdlFileHWL, void* ptrDestination, int
 	
 	DECOMP_CDSYS_SetMode_StreamData();
 	
+	int sizeLastSector = ((firstSector + numSector) * 0x800 - cdlFileHWL->size);
+
 	// If reading out of file bounds, quit
-	if ( ((firstSector+numSector)*0x800 - cdlFileHWL->size) >= 0x800 )
+	if (sizeLastSector >= 0x800 )
 		return 0;
 	
 	CdIntToPos(CdPosToInt(&cdlFileHWL->pos) + firstSector, &loc);
