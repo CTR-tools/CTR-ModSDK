@@ -105,7 +105,7 @@ int frameCount = 0;
 int oldTicks = 0;
 
 // printf once every X frames
-int frameGap = 200;
+int frameGap = 2000;
 
 int NikoCalcFPS()
 {

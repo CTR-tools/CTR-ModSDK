@@ -248,21 +248,21 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 						// convert XZY frame data
 						int newX = GetBit(vertData) ? -(1 << XBits) : 0;
-						for (int j = 0; j < XBits; ++j)
+						for (int j = XBits-1; j >= 0; j--)
 						{
-							newX |= GetBit(vertData) << (XBits - 1 - j);
+							newX |= GetBit(vertData) << j;
 						}
 
 						int newY = GetBit(vertData) ? -(1 << YBits) : 0;
-						for (int j = 0; j < YBits; ++j)
+						for (int j = YBits - 1; j >= 0; j--)
 						{
-							newY |= GetBit(vertData) << (YBits - 1 - j);
+							newY |= GetBit(vertData) << j;
 						}
 
 						int newZ = GetBit(vertData) ? -(1 << ZBits) : 0;
-						for (int j = 0; j < ZBits; ++j)
+						for (int j = ZBits - 1; j >= 0; j--)
 						{
-							newZ |= GetBit(vertData) << (ZBits - 1 - j);
+							newZ |= GetBit(vertData) << j;
 						}
 
 						//calculate decompressed coord value
