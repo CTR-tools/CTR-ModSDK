@@ -335,7 +335,12 @@ common, exe, Music_AsyncParseBanks, 0x0, General/HOWL/h109_Music_AsyncParseBanks
 common, exe, Music_SetDefaults, 0x0, General/HOWL/h110_Music_SetDefaults.c
 common, exe, Music_Adjust, 0x0, General/HOWL/h111_Music_Adjust.c
 common, exe, Music_LowerVolume, 0x0, General/HOWL/h112_Music_LowerVolume.c
-common, exe, Music_RaiseVolume , 0x0, General/HOWL/h113_Music_RaiseVolume.c
+common, exe, Music_RaiseVolume, 0x0, General/HOWL/h113_Music_RaiseVolume.c
+common, exe, Music_Restart, 0x0, General/HOWL/h114_Music_Restart.c
+common, exe, Music_Stop, 0x0, General/HOWL/h115_Music_Stop.c
+common, exe, Music_Start, 0x0, General/HOWL/h116_Music_Start.c
+common, exe, Music_End, 0x0, General/HOWL/h117_Music_End.c
+common, exe, Music_GetHighestSongPlayIndex, 0x0, General/HOWL/h118_Music_GetHighestSongPlayIndex.c
 
 // HOWL_Garage
 common, exe, Garage_Init, 0x0, General/HOWL/h138_Garage_Init.c

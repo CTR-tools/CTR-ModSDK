@@ -20,40 +20,37 @@ void DECOMP_Music_LoadBanks(void)
 
     if (level == INTRO_RACE_TODAY)
     {
-        Bank_DestroyAll();
-
         bankID = 0x22;
     }
+	
+	else if(level == NAUGHTY_DOG_CRATE)
+	{
+        bankID = 0x21;
+	}
+	
     else
     {
-        // if not Naughty Dog Box
-        if (level != NAUGHTY_DOG_CRATE)
+
+        if (sdata->audioDefaults[7] == 0)
         {
-            if (sdata->audioDefaults[7] == 0)
-            {
-                Bank_DestroyAll();
+            Bank_DestroyAll();
 
-                Bank_Load(0, thisBank);
+            Bank_Load(0, thisBank);
 
-                sdata->audioDefaults[7] = 1;
-            }
-
-            else
-            {
-                Bank_DestroyUntilIndex(0);
-            }
-
-            // loading state of song (one byte)
-            arr[1] = 0;
-            return;
+            sdata->audioDefaults[7] = 1;
         }
 
-        // if it is naughty dog box scene
+        else
+        {
+            Bank_DestroyUntilIndex(0);
+        }
 
-        Bank_DestroyAll();
-
-        bankID = 33;
+        // loading state of song (one byte)
+        arr[1] = 0;
+        return;
     }
+
+	Bank_DestroyAll();
 
     sdata->audioDefaults[7] = 0;
 

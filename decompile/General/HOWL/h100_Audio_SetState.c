@@ -8,7 +8,9 @@ void DECOMP_Audio_SetState(u_int state)
     int iVar1;
 
     struct GameTracker *gGT = sdata->gGT;
-    u_short level = gGT->levelID;
+    u_short level;
+	
+	XA_type = CDSYS_XA_TYPE_MUSIC;
 
     switch (state)
     {
@@ -35,15 +37,19 @@ void DECOMP_Audio_SetState(u_int state)
 
         CseqMusic_StopAll();
 
+		level = gGT->levelID;
+
         // Level ID on Adventure Arena
         if (level - 0x19U < 5)
         {
             // convert levelID to a bitshifted flag
-            Music_Adjust(0, 0, &sdata->advHubSongSet, 1 << (level - 0x19U & 0x1f));
+            Music_Adjust(0, 0, &sdata->advHubSongSet, 1 << (level - 0x19U));
         }
         break;
     case 9:
-        CDSYS_XAPlay(CDSYS_XA_TYPE_MUSIC, (int)sdata->desiredXA_1);
+        
+		// hack to save byte budget
+		//CDSYS_XAPlay(XA_type, (int)sdata->desiredXA_1);
 
         iVar1 = (int)sdata->desiredXA_1 + 1;
         XA_index = iVar1;
@@ -52,8 +58,14 @@ void DECOMP_Audio_SetState(u_int state)
             XA_index = (int)sdata->desiredXA_1 + 4;
         }
         sdata->desiredXA_1 = iVar1 + (XA_index >> 2) * -4;
-        break;
-    case 10:
+		
+		// hack to save byte budget,
+		// jmp to XAPlay call instead of "break"
+		XA_index = iVar1 - 1;
+		goto PLAY_XA;
+		//break;
+    
+	case 10:
 
         Music_Stop();
 
@@ -84,8 +96,6 @@ void DECOMP_Audio_SetState(u_int state)
 
         Music_LowerVolume();
 
-        XA_type = CDSYS_XA_TYPE_MUSIC;
-
         // MUSIC_LAST_LAP
         XA_index = 6;
 
@@ -108,8 +118,6 @@ void DECOMP_Audio_SetState(u_int state)
 
         // set XA
         XA_index = sdata->desiredXA_3;
-
-        XA_type = CDSYS_XA_TYPE_MUSIC;
 
         if (61 < XA_index)
         {
