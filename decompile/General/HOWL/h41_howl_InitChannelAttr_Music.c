@@ -19,7 +19,7 @@ void DECOMP_howl_InitChannelAttr_Music(
 		struct SampleInstrument* longSample = 
 			&sdata->ptrCseqLongSamples[seq->instrumentID];
 	
-		pitch = howl_InstrumentPitch(longSample->basePitch, index, seq->distort);
+		pitch = DECOMP_howl_InstrumentPitch(longSample->basePitch, index, seq->distort);
 		
 		attr->spuStartAddr = sdata->howl_spuAddrs[longSample->spuIndex].spuAddr << 3;
 		
@@ -55,7 +55,7 @@ void DECOMP_howl_InitChannelAttr_Music(
 		sampleVol *= (u_int)shortSample->volume;
 	}
 	
-	Channel_SetVolume(attr, (u_int)(sampleVol*channelVol) >> 0xf, seq->LR);
+	DECOMP_Channel_SetVolume(attr, (u_int)(sampleVol*channelVol) >> 0xf, seq->LR);
 	
 	attr->pitch = pitch;
 	attr->reverb = seq->reverb;

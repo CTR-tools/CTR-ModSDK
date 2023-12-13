@@ -49,14 +49,14 @@ short DECOMP_EngineAudio_Recalculate(u_int soundID,u_int sfx)
     channelAttr.pitch = ptrEngineFX->pitch * data.distortConst_Engine[distortion] >> 0x10;
   }
   
-  Channel_SetVolume(&channelAttr, sdata->vol_FX * ptrEngineFX->volume * volume >> 10, LR);
+  DECOMP_Channel_SetVolume(&channelAttr, sdata->vol_FX * ptrEngineFX->volume * volume >> 10, LR);
   channelAttr.reverb = echo;
 
-  Smart_EnterCriticalSection();
+  DECOMP_Smart_EnterCriticalSection();
 
   // 0 - engineFX
   // soundID & 0xffff, dont search for specific instance
-  channel = Channel_SearchFX_EditAttr(0,soundID,0x70,&channelAttr);
+  channel = DECOMP_Channel_SearchFX_EditAttr(0,soundID,0x70,&channelAttr);
 
   if (channel != 0)
   {
@@ -66,7 +66,7 @@ short DECOMP_EngineAudio_Recalculate(u_int soundID,u_int sfx)
     channel->LR = LR;
   }
 
-  Smart_ExitCriticalSection();
+  DECOMP_Smart_ExitCriticalSection();
 
   return 1;
 }

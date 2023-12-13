@@ -10,6 +10,6 @@ void DECOMP_Bank_DestroyUntilIndex(int index)
 		
 		if(ptrLastBank->bankID == index) return;
 		
-		Bank_DestroyLast();
+		DECOMP_Bank_DestroyLast();
 	}
 }

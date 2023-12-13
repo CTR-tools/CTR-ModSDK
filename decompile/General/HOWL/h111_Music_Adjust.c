@@ -16,13 +16,13 @@ void DECOMP_Music_Adjust(u_int songID, int newTempo, struct SongSet *set, u_int 
             // if tempo has changed
             if (sdata->cseqTempo != newTempo)
             {
-                CseqMusic_ChangeTempo(sdata->cseqHighestIndex, newTempo);
+                DECOMP_CseqMusic_ChangeTempo(sdata->cseqHighestIndex, newTempo);
                 sdata->cseqTempo = newTempo;
             }
         }
         else
         {
-            CseqMusic_Stop(sdata->cseqHighestIndex);
+            DECOMP_CseqMusic_Stop(sdata->cseqHighestIndex);
         }
     }
 
@@ -30,7 +30,7 @@ void DECOMP_Music_Adjust(u_int songID, int newTempo, struct SongSet *set, u_int 
     if (sdata->cseqHighestIndex != songID)
     {
         //  (loopAtEnd)
-        CseqMusic_Start(songID, newTempo, set, songSetActiveBits, 1);
+        DECOMP_CseqMusic_Start(songID, newTempo, set, songSetActiveBits, 1);
 
         sdata->cseqBoolPlay = true;
 

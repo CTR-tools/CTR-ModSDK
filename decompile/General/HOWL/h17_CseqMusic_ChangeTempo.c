@@ -1,6 +1,6 @@
 #include <common.h>
 
-void CseqMusic_ChangeTempo(int songID, int p2)
+void DECOMP_CseqMusic_ChangeTempo(int songID, int p2)
 {
 	int i;
 	struct Song* song;
@@ -14,7 +14,7 @@ void CseqMusic_ChangeTempo(int songID, int p2)
 	if(sdata->ptrCseqHeader->numSongs <= songID) return;
 	#endif
 	
-	Smart_EnterCriticalSection();
+	DECOMP_Smart_EnterCriticalSection();
 	
 	for(i = 0; i < 2; i++)
 	{
@@ -26,9 +26,9 @@ void CseqMusic_ChangeTempo(int songID, int p2)
 				(song->id == songID)
 			)
 		{
-			SongPool_ChangeTempo(song, p2);
+			DECOMP_SongPool_ChangeTempo(song, p2);
 		}
 	}
 	
-	Smart_ExitCriticalSection();
+	DECOMP_Smart_ExitCriticalSection();
 }

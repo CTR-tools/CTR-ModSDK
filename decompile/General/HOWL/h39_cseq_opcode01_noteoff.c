@@ -31,8 +31,8 @@ void DECOMP_cseq_opcode01_noteoff(struct SongSeq* seq)
 		*flagPtr &= ~(2);
 		
 		// recycle: remove from taken, put on free
-		LIST_RemoveMember(&sdata->channelTaken, curr);
-		LIST_AddBack(&sdata->channelFree, curr);
+		DECOMP_LIST_RemoveMember(&sdata->channelTaken, curr);
+		DECOMP_LIST_AddBack(&sdata->channelFree, curr);
 	}
 }
 

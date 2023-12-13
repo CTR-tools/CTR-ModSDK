@@ -16,7 +16,7 @@ void DECOMP_OptionsMenu_TestSound(int newRow, int newBoolPlay)
 		// FX row
 		if(oldRow == 0)
 		{
-			OtherFX_Stop2(0x48);
+			DECOMP_OtherFX_Stop2(0x48);
 		}
 		
 		// Music row
@@ -25,14 +25,14 @@ void DECOMP_OptionsMenu_TestSound(int newRow, int newBoolPlay)
 			// end Aku or Uka song
 			// 0=level, 1=aku, 2=uka
 			
-			if(Music_GetHighestSongPlayIndex() == 1)
+			if(DECOMP_Music_GetHighestSongPlayIndex() == 1)
 			{
-				CseqMusic_Stop(2);
+				DECOMP_CseqMusic_Stop(2);
 			}
 			
 			else
 			{
-				CseqMusic_Stop(1);
+				DECOMP_CseqMusic_Stop(1);
 			}
 		}
 	
@@ -41,7 +41,7 @@ void DECOMP_OptionsMenu_TestSound(int newRow, int newBoolPlay)
 		{
 			if(sdata->OptionSlider_soundID != 0)
 			{
-				OtherFX_Stop1(sdata->OptionSlider_soundID);
+				DECOMP_OtherFX_Stop1(sdata->OptionSlider_soundID);
 				sdata->OptionSlider_soundID = 0;
 			}
 		}
@@ -55,7 +55,7 @@ void DECOMP_OptionsMenu_TestSound(int newRow, int newBoolPlay)
 		// FX row
 		if(newRow == 0)
 		{
-			OtherFX_Play(0x48, 0);
+			DECOMP_OtherFX_Play(0x48, 0);
 		}
 		
 		// Music row
@@ -65,10 +65,10 @@ void DECOMP_OptionsMenu_TestSound(int newRow, int newBoolPlay)
 			// 0=level, 1=aku, 2=uka
 			
 			int val = 1;
-			if(Music_GetHighestSongPlayIndex() == 1)
+			if(DECOMP_Music_GetHighestSongPlayIndex() == 1)
 				val = 2;
 			
-			CseqMusic_Start(val,0,0,0,1);
+			DECOMP_CseqMusic_Start(val,0,0,0,1);
 		}
 	}
 	
@@ -101,7 +101,7 @@ void DECOMP_OptionsMenu_TestSound(int newRow, int newBoolPlay)
 			}
 		
 			sdata->OptionSlider_soundID = 
-				OtherFX_Play(sampleVoiceID, 0);
+				DECOMP_OtherFX_Play(sampleVoiceID, 0);
 		}
 	}
 }

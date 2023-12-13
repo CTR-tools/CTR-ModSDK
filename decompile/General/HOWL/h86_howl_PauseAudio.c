@@ -7,7 +7,7 @@ void DECOMP_howl_PauseAudio()
 	struct ChannelStats* curr;
 	struct ChannelStats* pausedStats;
 	
-	CDSYS_XAPauseRequest();
+	DECOMP_CDSYS_XAPauseRequest();
 	
 	// if already paused, quit
 	if(sdata->numBackup_ChannelStats != 0)
@@ -15,9 +15,9 @@ void DECOMP_howl_PauseAudio()
 	
 	pausedStats = &sdata->channelStatsCurr[0];
 	
-	CseqMusic_Pause();
+	DECOMP_CseqMusic_Pause();
 	
-	Smart_EnterCriticalSection();
+	DECOMP_Smart_EnterCriticalSection();
 	for(
 			curr = sdata->channelTaken.first;
 			curr != 0;
@@ -42,10 +42,10 @@ void DECOMP_howl_PauseAudio()
 		dest[6] = src[6];
 		dest[7] = src[7];
 		
-		LIST_RemoveMember(&sdata->channelTaken, curr);
-		LIST_AddBack(&sdata->channelFree, curr);
+		DECOMP_LIST_RemoveMember(&sdata->channelTaken, curr);
+		DECOMP_LIST_AddBack(&sdata->channelFree, curr);
 	
 		sdata->numBackup_ChannelStats++;
 	}
-	Smart_ExitCriticalSection();
+	DECOMP_Smart_ExitCriticalSection();
 }

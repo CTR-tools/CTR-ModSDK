@@ -9,5 +9,5 @@ void DECOMP_Music_Stop(void)
     sdata->cseqHighestIndex = -1;
     
 	// function call comes last, so it compiles to jmp
-    CseqMusic_Stop(sdata->cseqHighestIndex & 0xffff);
+    DECOMP_CseqMusic_Stop(sdata->cseqHighestIndex & 0xffff);
 }

@@ -6,6 +6,6 @@ void DECOMP_Bank_DestroyAll()
 	
 	while(sdata->numAudioBanks != 0)
 	{		
-		Bank_DestroyLast();
+		DECOMP_Bank_DestroyLast();
 	}
 }

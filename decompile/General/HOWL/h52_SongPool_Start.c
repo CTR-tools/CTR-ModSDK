@@ -32,7 +32,7 @@ void DECOMP_SongPool_Start(
 	song->bpm = csh->bpm + deltaBPM;
 	
 	song->tempo = 
-		SongPool_CalculateTempo(60, song->tpqn, song->bpm);
+		DECOMP_SongPool_CalculateTempo(60, song->tpqn, song->bpm);
 		
 	song->unk10 = 0;
 	song->timeSpentPlaying = 0;
@@ -76,7 +76,7 @@ void DECOMP_SongPool_Start(
 	{
 		cnhCurr = &cnhFirst[seqOffsetArr[i]];
 		
-		seqCurr = SongPool_FindFreeChannel();
+		seqCurr = DECOMP_SongPool_FindFreeChannel();
 		if(seqCurr == NULL) continue;
 		
 		// now playing
@@ -128,7 +128,7 @@ void DECOMP_SongPool_Start(
 		seqCurr->firstNote = NOTEHEADER_GETNOTES(cnhCurr);
 		
 		seqCurr->currNote = 
-			howl_GetNextNote(seqCurr->firstNote, &seqCurr->NoteLength);
+			DECOMP_howl_GetNextNote(seqCurr->firstNote, &seqCurr->NoteLength);
 			
 		song->CseqSequences[song->numSequences++] = seqCurr;
 	}

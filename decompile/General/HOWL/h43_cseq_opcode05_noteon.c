@@ -13,9 +13,9 @@ void DECOMP_cseq_opcode05_noteon(struct SongSeq* seq)
 
 	currNote = seq->currNote;
 	
-	howl_InitChannelAttr_Music(seq, &attr, currNote[1], currNote[2]);
+	DECOMP_howl_InitChannelAttr_Music(seq, &attr, currNote[1], currNote[2]);
 	
-	stats = Channel_AllocSlot(0x7c, &attr);
+	stats = DECOMP_Channel_AllocSlot(0x7c, &attr);
 	
 	if(stats == 0) return;
 	

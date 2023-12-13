@@ -12,8 +12,8 @@ void DECOMP_Smart_ExitCriticalSection(void)
 		// if you have no more active needs to be in a critical section
 		sdata->criticalSectionCount == 0))
   {
-	// You are no longer in a critical section
-    Smart_ExitCriticalSection();
+	// Use the real PsyQ version
+    ExitCriticalSection();
   }
   return;
 }

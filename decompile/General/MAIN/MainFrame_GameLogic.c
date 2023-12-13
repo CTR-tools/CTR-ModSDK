@@ -116,16 +116,14 @@ LAB_80034e74:
 						uVar3 = gGT->timer;
 						if (uVar3 == (uVar3 / 6) * 6)
 						{
-#ifndef REBUILD_PS1
 							if (uVar3 == (uVar3 / 0xc) * 0xc)
 							{
-								OtherFX_Play_LowLevel(0x40, '\0', 0x8c9080);
+								DECOMP_OtherFX_Play_LowLevel(0x40, '\0', 0x8c9080);
 							}
 							else
 							{
-								OtherFX_Play_LowLevel(0x40, '\0', 0x8c8880);
+								DECOMP_OtherFX_Play_LowLevel(0x40, '\0', 0x8c8880);
 							}
-#endif
 						}
 					}
 				}
@@ -295,7 +293,7 @@ LAB_80035098:
 					
 #ifndef REBUILD_PS1
 					MainFrame_TogglePauseAudio(0);
-					OtherFX_Play(1, 1);
+					DECOMP_OtherFX_Play(1, 1);
 					MainFreeze_SafeAdvDestroy();
 					ElimBG_Deactivate(gGT);
 #endif

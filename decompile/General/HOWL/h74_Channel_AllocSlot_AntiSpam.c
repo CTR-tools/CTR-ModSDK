@@ -50,7 +50,7 @@ struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
 		}
 	}
 	
-	return Channel_AllocSlot(flags, attr);
+	return DECOMP_Channel_AllocSlot(flags, attr);
 }
 
 void Channel_DestroySelf(struct ChannelStats* stats)
@@ -63,6 +63,6 @@ void Channel_DestroySelf(struct ChannelStats* stats)
 	stats->flags &= ~(1);
 	
 	// recycle
-	LIST_RemoveMember(&sdata->channelTaken, stats);
-	LIST_AddBack(&sdata->channelFree, stats);
+	DECOMP_LIST_RemoveMember(&sdata->channelTaken, stats);
+	DECOMP_LIST_AddBack(&sdata->channelFree, stats);
 }	

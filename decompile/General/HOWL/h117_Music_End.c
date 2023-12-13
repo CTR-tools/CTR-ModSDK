@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Music_End(void)
+void DECOMP_Music_End(void)
 {
     sdata->cseqBoolPlay = false;
 

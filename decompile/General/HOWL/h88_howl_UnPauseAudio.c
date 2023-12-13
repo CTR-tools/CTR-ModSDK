@@ -14,7 +14,7 @@ void DECOMP_howl_UnPauseAudio()
 
 	pausedStats = &sdata->channelStatsCurr[0];
 
-	Smart_EnterCriticalSection();
+	DECOMP_Smart_EnterCriticalSection();
 	for(
 			i = 0, curr = sdata->channelFree.first;
 			i < sdata->numBackup_ChannelStats;
@@ -36,15 +36,15 @@ void DECOMP_howl_UnPauseAudio()
 		dest[6] = src[6];
 		dest[7] = src[7];
 		
-		LIST_RemoveMember(&sdata->channelFree, curr);
-		LIST_AddBack(&sdata->channelTaken, curr);
+		DECOMP_LIST_RemoveMember(&sdata->channelFree, curr);
+		DECOMP_LIST_AddBack(&sdata->channelTaken, curr);
 	
 		curr->channelID = backupID;
-		howl_UnPauseChannel(curr);
+		DECOMP_howl_UnPauseChannel(curr);
 	}
-	Smart_ExitCriticalSection();
+	DECOMP_Smart_ExitCriticalSection();
 	
-	CseqMusic_Resume();
+	DECOMP_CseqMusic_Resume();
 	
 	sdata->numBackup_ChannelStats = 0;
 }

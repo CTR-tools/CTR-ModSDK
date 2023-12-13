@@ -3,10 +3,10 @@
 // specific instance of soundID
 void DECOMP_OtherFX_Stop1(int soundID_count)
 {
-	Smart_EnterCriticalSection();
+	DECOMP_Smart_EnterCriticalSection();
 	
 	// specific instance of soundID
-	Channel_SearchFX_Destroy(1, soundID_count, 0xffffffff);
+	DECOMP_Channel_SearchFX_Destroy(1, soundID_count, 0xffffffff);
 	
-	Smart_ExitCriticalSection();
+	DECOMP_Smart_ExitCriticalSection();
 }

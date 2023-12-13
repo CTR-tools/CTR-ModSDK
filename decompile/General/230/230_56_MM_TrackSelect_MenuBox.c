@@ -181,9 +181,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				D230.trackSel_changeTrack_frameCount = 3;
 				D230.trackSel_direction = 1;
 				
-#ifndef REBUILD_PS1
-				OtherFX_Play(0, 1);
-#endif
+				DECOMP_OtherFX_Play(0, 1);
 				break;
 			
 			case BTN_DOWN:
@@ -204,17 +202,14 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				D230.trackSel_changeTrack_frameCount = 3;
 				D230.trackSel_direction = -1;
 				
-#ifndef REBUILD_PS1
-				OtherFX_Play(0, 1);
-#endif
+				DECOMP_OtherFX_Play(0, 1);
 				break;
 			
 			case BTN_CROSS_one:
 			case BTN_CIRCLE:
-#ifndef REBUILD_PS1
+			
 				// "enter/confirm" sound
-				OtherFX_Play(1, 1);
-#endif
+				DECOMP_OtherFX_Play(1, 1);
 				
 				// if not Battle or Time Trial, open LapSelectMenu
 				if ((gGT->gameMode1 & (BATTLE_MODE | TIME_TRIAL)) == 0)
@@ -231,10 +226,10 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				
 			case BTN_TRIANGLE:
 			case BTN_SQUARE_one:
-#ifndef REBUILD_PS1
+			
 				// "go back" sound
-				OtherFX_Play(2, 1);
-#endif
+				DECOMP_OtherFX_Play(2, 1);
+				
 				D230.trackSel_StartRaceAfterFadeOut = 0;
 				D230.trackSel_transitionState = EXITING_MENU;
 				break;

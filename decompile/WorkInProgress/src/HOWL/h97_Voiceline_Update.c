@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Voiceline_Update(void)
+void DECOMP_Voiceline_Update(void)
 {
     int length;
     struct Item *first;

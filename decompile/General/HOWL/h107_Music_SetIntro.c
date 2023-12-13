@@ -7,11 +7,11 @@ void DECOMP_Music_SetIntro(void)
 
     sdata->audioDefaults[7] = 0;
 
-    Bank_Load(33, &thisBank);
+    DECOMP_Bank_Load(33, &thisBank);
 
-    while(Bank_AssignSpuAddrs() == 0) {}
+    while(DECOMP_Bank_AssignSpuAddrs() == 0) {}
 	
-    howl_SetSong(28);
+    DECOMP_howl_SetSong(28);
     
-	while(howl_LoadSong() == 0) {}
+	while(DECOMP_howl_loadSong() == 0) {}
 }

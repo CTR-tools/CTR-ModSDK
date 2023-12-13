@@ -1,6 +1,7 @@
 #include <common.h>
 
-u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags) {
+u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags)
+{
     struct ChannelStats* channel;
     struct ChannelAttr channelAttr;
     int modify;
@@ -42,14 +43,14 @@ u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags) {
         channelAttr.pitch = ptrOtherFX->pitch * data.distortConst_OtherFX[distort] >> 0x10;
     }
 
-    Channel_SetVolume(&channelAttr, modify * ptrOtherFX->volume * volume >> 10, LR);
+    DECOMP_Channel_SetVolume(&channelAttr, modify * ptrOtherFX->volume * volume >> 10, LR);
     channelAttr.reverb = echo;
 
-    Smart_EnterCriticalSection();
+    DECOMP_Smart_EnterCriticalSection();
 
     // 1 - otherFX
 	// soundID & 0xffffffff, search for specific instance
-    channel = Channel_SearchFX_EditAttr(1, soundId, 0x70, &channelAttr);
+    channel = DECOMP_Channel_SearchFX_EditAttr(1, soundId, 0x70, &channelAttr);
 
     if (channel != 0) 
 	{
@@ -59,7 +60,7 @@ u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags) {
         channel->LR = LR;
     }
 
-    Smart_ExitCriticalSection();
+    DECOMP_Smart_ExitCriticalSection();
 	
     return 1;
 }

@@ -23,12 +23,11 @@ char DECOMP_EngineAudio_InitOnce(u_int soundID,u_int flags)
   if (sdata->howl_spuAddrs[ptrEngineFX->spuIndex].spuAddr == 0) return 0;
   
   // make ChannelAttr from howl pointer somehow
-  howl_InitChannelAttr_EngineFX(ptrEngineFX,&channelAttr,volume,LR,distortion);
+  DECOMP_howl_InitChannelAttr_EngineFX(ptrEngineFX,&channelAttr,volume,LR,distortion);
   
-  Smart_EnterCriticalSection();
+  DECOMP_Smart_EnterCriticalSection();
   
-  // Channel_AllocSlot
-  channel = Channel_AllocSlot(0x7c,&channelAttr);
+  channel = DECOMP_Channel_AllocSlot(0x7c,&channelAttr);
   
   // if channel was found
   if (channel != 0)
@@ -45,7 +44,7 @@ char DECOMP_EngineAudio_InitOnce(u_int soundID,u_int flags)
     channel->flags |= 4;
   }
   
-  Smart_ExitCriticalSection();
+  DECOMP_Smart_ExitCriticalSection();
   
   return (channel != 0);
 }

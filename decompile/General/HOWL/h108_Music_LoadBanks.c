@@ -8,7 +8,7 @@ void DECOMP_Music_LoadBanks(void)
     int level = gGT->levelID;
 	char* arr = &sdata->audioDefaults[7];
 
-    Audio_SetReverbMode(
+    DECOMP_Audio_SetReverbMode(
         // Level ID
         level,
 
@@ -33,16 +33,16 @@ void DECOMP_Music_LoadBanks(void)
 
         if (sdata->audioDefaults[7] == 0)
         {
-            Bank_DestroyAll();
+            DECOMP_Bank_DestroyAll();
 
-            Bank_Load(0, thisBank);
+            DECOMP_Bank_Load(0, &thisBank);
 
             sdata->audioDefaults[7] = 1;
         }
 
         else
         {
-            Bank_DestroyUntilIndex(0);
+            DECOMP_Bank_DestroyUntilIndex(0);
         }
 
         // loading state of song (one byte)
@@ -50,11 +50,11 @@ void DECOMP_Music_LoadBanks(void)
         return;
     }
 
-	Bank_DestroyAll();
+	DECOMP_Bank_DestroyAll();
 
     sdata->audioDefaults[7] = 0;
 
-    Bank_Load(bankID, thisBank);
+    DECOMP_Bank_Load(bankID, &thisBank);
 
     // loading state of song (one byte)
     arr[1] = 3;

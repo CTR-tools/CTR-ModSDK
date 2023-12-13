@@ -61,8 +61,8 @@ void DECOMP_Channel_ParseSongToChannels()
 				{
 					song->flags &= ~(4);
 					
-					SongPool_StopAllCseq(song);
-					Music_End();
+					DECOMP_SongPool_StopAllCseq(song);
+					DECOMP_Music_End();
 				}
 			}
 			
@@ -149,7 +149,7 @@ void DECOMP_Channel_ParseSongToChannels()
 					}
 					
 					seq->currNote = 
-						howl_GetNextNote(seq->currNote, &seq->NoteLength);
+						DECOMP_howl_GetNextNote(seq->currNote, &seq->NoteLength);
 				}
 			}
 		}
@@ -157,6 +157,6 @@ void DECOMP_Channel_ParseSongToChannels()
 	
 	if(boolVolumeChange)
 	{
-		UpdateChannelVol_Music_All();
+		DECOMP_UpdateChannelVol_Music_All();
 	}
 }

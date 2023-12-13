@@ -35,23 +35,152 @@ void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_ProcessForceFeedback(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads);
 
+int DECOMP_GAMEPROG_CheckGhostsBeaten(int ghostID);
 void DECOMP_GAMEPROG_NewGame_OnBoot();
 void DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 
 // howl
-void DECOMP_cseq_opcode00_empty(); // should remove
-void DECOMP_cseq_opcode01_noteoff();
-void DECOMP_cseq_opcode02_empty(); // should remove
-void DECOMP_cseq_opcode03();
-void DECOMP_cseq_opcode04_empty(); // should remove
-void DECOMP_cseq_opcode05_noteon();
-void DECOMP_cseq_opcode06();
-void DECOMP_cseq_opcode07();
-void DECOMP_cseq_opcode08();
-void DECOMP_cseq_opcode09();
-void DECOMP_cseq_opcode0a();
+int DECOMP_CountSounds();
+int DECOMP_OtherFX_Play(unsigned int soundID, int flags);
+void DECOMP_OtherFX_Play_Echo(unsigned int soundID, int flags, int echoFlag);
+int DECOMP_OtherFX_Play_LowLevel(u_int soundID, char boolAntiSpam, u_int flags);
+u_int DECOMP_OtherFX_Modify(u_int soundId, u_int flags);
+void DECOMP_OtherFX_Stop1(int soundID_count);
+void DECOMP_OtherFX_Stop2(int soundID_count);
+char DECOMP_EngineAudio_InitOnce(u_int soundID,u_int flags);
+short DECOMP_EngineAudio_Recalculate(u_int soundID,u_int sfx);
+void DECOMP_EngineAudio_Stop(u_int soundID);
+void DECOMP_SetReverbMode(u_short newReverbMode);
+int DECOMP_CseqMusic_Start(int songID, int p2, int p3, int p4, int p5);
+void DECOMP_CseqMusic_Pause();
+void DECOMP_CseqMusic_Resume();
+void DECOMP_CseqMusic_ChangeVolume(int songID, int p2, int p3);
+void DECOMP_CseqMusic_Restart(int songID, int p2);
+void DECOMP_CseqMusic_ChangeTempo(int songID, int p2);
+void DECOMP_CseqMusic_AdvHubSwap(
+	u_short songId, struct SongSet* songSet, int songSetActiveBits);
+void DECOMP_CseqMusic_Stop(int songID);
+void DECOMP_CseqMusic_StopAll();
+void DECOMP_Bank_ResetAllocator();
+int DECOMP_Bank_Alloc(int bankID, struct Bank* ptrBank);
+int DECOMP_Bank_AssignSpuAddrs();
+void DECOMP_Bank_Destroy(struct Bank* ptrLastBank);
+void DECOMP_Bank_ClearInRange(unsigned short min, unsigned short max);
+int DECOMP_Bank_Load(int bankID, struct Bank* ptrBank);
+int DECOMP_Bank_DestroyLast();
+void DECOMP_Bank_DestroyUntilIndex(int index);
+void DECOMP_Bank_DestroyAll();
+unsigned int DECOMP_howl_InstrumentPitch(
+	int basePitch, int pitchIndex, unsigned int distort);
 void DECOMP_howl_InitGlobals(char* filename);
+void DECOMP_howl_ParseHeader(struct HowlHeader* hh);
+void DECOMP_howl_ParseCseqHeader(struct CseqHeader* ch);
 void DECOMP_howl_LoadHeader(char* filename);
+void DECOMP_howl_SetSong(int songID);
+int DECOMP_howl_loadSong();
+void DECOMP_howl_ErasePtrCseqHeader();
+char* DECOMP_howl_GetNextNote(char* currNote, int* noteLen);
+void DECOMP_cseq_opcode00_empty();
+void DECOMP_cseq_opcode01_noteoff(struct SongSeq* seq);
+void DECOMP_cseq_opcode02_empty();
+void DECOMP_cseq_opcode03(struct SongSeq* seq);
+void DECOMP_cseq_opcode04_empty();
+void DECOMP_howl_InitChannelAttr_Music(
+	struct SongSeq* seq, struct ChannelAttr* attr, int index, int channelVol);
+void DECOMP_cseq_opcode_from06and07(struct SongSeq* seq);
+void DECOMP_cseq_opcode05_noteon(struct SongSeq* seq);
+void DECOMP_cseq_opcode06(struct SongSeq* seq);
+void DECOMP_cseq_opcode07(struct SongSeq* seq);
+void DECOMP_cseq_opcode08(struct SongSeq* seq);
+void DECOMP_cseq_opcode09(struct SongSeq* seq);
+void DECOMP_cseq_opcode0a(struct SongSeq* seq);
+struct SongSeq* DECOMP_SongPool_FindFreeChannel();
+int DECOMP_SongPool_CalculateTempo(int const60, int tpqn, int bpm);
+void DECOMP_SongPool_ChangeTempo(struct Song* song, short deltaBPM);
+void DECOMP_SongPool_Start(
+	struct Song* song, int songID, int deltaBPM,
+	int boolLoopAtEnd, struct SongSet* songSet, int songSetActiveBits);
+void DECOMP_SongPool_Volume(struct Song* song, int newVol, int newStep, int boolImm);
+void DECOMP_SongPool_AdvHub1(struct Song* song, int seqID, int vol, int boolImm);
+void DECOMP_SongPool_AdvHub2(struct Song* song, struct SongSet* songSet, int songSetActiveBits);
+void DECOMP_SongPool_StopCseq(struct SongSeq* seq);
+void DECOMP_SongPool_StopAllCseq(struct Song* song);
+void DECOMP_howl_Disable();
+void DECOMP_UpdateChannelVol_EngineFX(
+	struct EngineFX* engineFX, struct ChannelAttr* attr, int vol, int LR);
+void DECOMP_UpdateChannelVol_OtherFX(
+	struct OtherFX* otherFX, struct ChannelAttr* attr, int vol, int LR);
+void DECOMP_UpdateChannelVol_Music(
+	struct SongSeq* songSeq, struct ChannelAttr* attr, int index, int vol);
+void DECOMP_UpdateChannelVol_EngineFX_All();
+void DECOMP_UpdateChannelVol_Music_All();
+void DECOMP_UpdateChannelVol_OtherFX_All();
+int DECOMP_howl_VolumeGet(int type);
+void DECOMP_howl_VolumeSet(int type, unsigned char vol);
+int DECOMP_howl_ModeGet();
+void DECOMP_howl_ModeSet(int newMode);
+void DECOMP_OptionsMenu_TestSound(int newRow, int newBoolPlay);
+void DECOMP_Smart_EnterCriticalSection(void);
+void DECOMP_Smart_ExitCriticalSection(void);
+void DECOMP_Channel_SetVolume(
+	struct ChannelAttr* attr,
+	int volume, int LR);
+struct ChannelStats* DECOMP_Channel_FindSound(int soundID);
+struct ChannelStats* DECOMP_Channel_AllocSlot_AntiSpam(
+	short soundID,
+	char boolUseAntiSpam,
+	int flags,
+	struct ChannelAttr* attr);
+struct ChannelStats* DECOMP_Channel_AllocSlot(
+	int flags,
+	struct ChannelAttr* attr);
+struct ChannelStats* DECOMP_Channel_SearchFX_EditAttr(
+	int type, int soundID, int updateFlags, 
+	struct ChannelAttr* attr);
+struct ChannelStats* DECOMP_Channel_SearchFX_Destroy(
+	int type, int soundID, int flags);
+void DECOMP_Channel_DestroyAll_LowLevel(int opt1, int boolKeepMusic, char type);
+void DECOMP_Channel_ParseSongToChannels();
+void DECOMP_Channel_UpdateChannels();
+void DECOMP_Cutscene_VolumeBackup(void);
+void DECOMP_Cutscene_VolumeRestore(void);
+void DECOMP_howl_PlayAudio_Update();
+void DECOMP_howl_InitChannelAttr_EngineFX(
+		struct EngineFX* engineFX, struct ChannelAttr* attr,
+		int vol, int LR, int distort);
+void DECOMP_howl_InitChannelAttr_OtherFX(
+		struct OtherFX* otherFX, struct ChannelAttr* attr,
+		int vol, int LR, int distort);
+void DECOMP_howl_PauseAudio();
+void DECOMP_howl_UnPauseChannel(struct ChannelStats* stats);
+void DECOMP_howl_UnPauseAudio();
+void DECOMP_howl_StopAudio(int boolErasePauseBackup, int boolEraseMusic, int boolDestroyAllFX);
+void DECOMP_Voiceline_PoolInit(void);
+void DECOMP_Voiceline_ClearTimeStamp(void);
+void DECOMP_Voiceline_PoolClear(void);
+void DECOMP_Voiceline_StopAll(void);
+void DECOMP_Voiceline_ToggleEnable(int toggle);
+// skip 95, 96, 97, 98
+void DECOMP_Voiceline_SetDefaults(void);
+void DECOMP_Audio_SetState(u_int state);
+void DECOMP_Audio_SetState_Safe(int state);
+void DECOMP_Audio_AdvHub_SwapSong(int levelID);
+void DECOMP_Audio_SetMaskSong(u_int tempo);
+void DECOMP_Audio_Update1(void);
+void DECOMP_Audio_SetDefaults(void);
+void DECOMP_Audio_SetReverbMode(int levelID, u_int isBossRace, int bossID);
+void DECOMP_Music_SetIntro(void);
+void DECOMP_Music_LoadBanks(void);
+u_int DECOMP_Music_AsyncParseBanks(void);
+void DECOMP_Music_SetDefaults(void);
+void DECOMP_Music_Adjust(u_int songID, int newTempo, struct SongSet *set, u_int songSetActiveBits);
+void DECOMP_Music_LowerVolume(void);
+void DECOMP_Music_RaiseVolume(void);
+void DECOMP_Music_Restart(void);
+void DECOMP_Music_Stop(void);
+void DECOMP_Music_Start(u_int songID);
+void DECOMP_Music_End(void);
+u_int DECOMP_Music_GetHighestSongPlayIndex(void);
 
 // INSTANCE
 void DECOMP_INSTANCE_Birth(
@@ -106,6 +235,10 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 void* DECOMP_LOAD_ReadDirectory(char* filename);
 void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int* size);
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile);
+
+void DECOMP_LOAD_HowlCallback(char result);
+int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector);
+int DECOMP_LOAD_HowlSectorChainEnd();
 
 void DECOMP_LOAD_InitCD();
 void DECOMP_LOAD_RunPtrMap(int origin, int* patchArr, int numPtrs);

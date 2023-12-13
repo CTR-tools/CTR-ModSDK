@@ -29,7 +29,7 @@ void DECOMP_cseq_opcode_from06and07(struct SongSeq* seq)
 		// not the sound needed to turn off
 		if(curr->soundID != soundID) continue;
 		
-		Channel_SetVolume(
+		DECOMP_Channel_SetVolume(
 				&sdata->channelAttrNew[curr->channelID],
 				(sampleVol * curr->vol) >> 0x12,
 				seq->LR

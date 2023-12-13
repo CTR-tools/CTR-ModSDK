@@ -14,7 +14,7 @@ void DECOMP_CseqMusic_Stop(int songID)
 	if(sdata->ptrCseqHeader->numSongs <= songID) return;
 	#endif
 	
-	Smart_EnterCriticalSection();
+	DECOMP_Smart_EnterCriticalSection();
 	
 	for(i = 0; i < 2; i++)
 	{
@@ -26,9 +26,9 @@ void DECOMP_CseqMusic_Stop(int songID)
 				(song->id == songID)
 			)
 		{
-			SongPool_StopAllCseq(song);
+			DECOMP_SongPool_StopAllCseq(song);
 		}
 	}
 	
-	Smart_ExitCriticalSection();
+	DECOMP_Smart_ExitCriticalSection();
 }

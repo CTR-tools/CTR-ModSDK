@@ -13,7 +13,7 @@ void DECOMP_CS_Garage_ZoomOut(char zoomState)
 
         Garage_Enter(sdata->advCharSelectIndex_curr);
 
-        Audio_SetState_Safe(8);
+        DECOMP_Audio_SetState_Safe(8);
     }
     else
     {

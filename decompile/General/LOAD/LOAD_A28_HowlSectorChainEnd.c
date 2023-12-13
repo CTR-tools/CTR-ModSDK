@@ -8,7 +8,7 @@ int DECOMP_LOAD_HowlSectorChainEnd()
 	
 	if(howlChainState == -1)
 	{
-		LOAD_HowlSectorChainStart(
+		DECOMP_LOAD_HowlSectorChainStart(
 			howlChainParams[0], howlChainParams[1],
 			howlChainParams[2], howlChainParams[3]
 		);

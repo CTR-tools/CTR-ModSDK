@@ -12,6 +12,6 @@ void DECOMP_SongPool_StopAllCseq(struct Song* song)
 	
 	for(i = 0; i < song->numSequences; i++)
 	{
-		SongPool_StopCseq(song->CseqSequences[i]);
+		DECOMP_SongPool_StopCseq(song->CseqSequences[i]);
 	}
 }

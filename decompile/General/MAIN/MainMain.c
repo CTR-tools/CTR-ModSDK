@@ -102,9 +102,7 @@ u_int DECOMP_main()
 					)
 				)
 				{
-#ifndef REBUILD_PS1
-					Audio_SetState_Safe(uVar12);
-#endif
+					DECOMP_Audio_SetState_Safe(uVar12);
 				}
 				sdata->mainGameState = 3;
 				gGT->clockEffectEnabled &= 0xfffe;
@@ -112,9 +110,7 @@ u_int DECOMP_main()
 
 			// Reset stage, reset music
 			case 2:
-#ifndef REBUILD_PS1
-				Audio_SetState_Safe(1);
-#endif
+				DECOMP_Audio_SetState_Safe(1);
 				DECOMP_MEMPACK_PopState();
 				
 				// ignore threads, because we PopState,

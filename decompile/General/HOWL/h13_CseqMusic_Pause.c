@@ -14,7 +14,7 @@ void DECOMP_CseqMusic_Pause()
 	if(sdata->ptrCseqHeader == 0) return;
 	#endif
 	
-	Smart_EnterCriticalSection();
+	DECOMP_Smart_EnterCriticalSection();
 	
 	for(i = 0; i < 2; i++)
 	{
@@ -28,5 +28,5 @@ void DECOMP_CseqMusic_Pause()
 		}
 	}
 	
-	Smart_ExitCriticalSection();
+	DECOMP_Smart_ExitCriticalSection();
 }

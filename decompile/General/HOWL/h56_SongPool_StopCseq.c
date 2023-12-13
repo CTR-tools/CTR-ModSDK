@@ -18,7 +18,7 @@ void DECOMP_SongPool_StopCseq(struct SongSeq* seq)
 		if(curr->type != 2) continue;
 		
 		// This line doesn't work, ND Box -> Loading screen
-		// does not stpo "all" sounds, unless commented out.
+		// does not stop "all" sounds, unless commented out.
 		// Without this line, the game can't stop "individual"
 		// music sequences, but the game never does that anyway
 		#if 0
@@ -33,8 +33,8 @@ void DECOMP_SongPool_StopCseq(struct SongSeq* seq)
 		*(u_char*)&curr->flags &= ~(1);
 		
 		// recycle: remove from taken, put on free
-		LIST_RemoveMember(&sdata->channelTaken, curr);
-		LIST_AddBack(&sdata->channelFree, curr);
+		DECOMP_LIST_RemoveMember(&sdata->channelTaken, curr);
+		DECOMP_LIST_AddBack(&sdata->channelFree, curr);
 	}
 	
 	// not playing

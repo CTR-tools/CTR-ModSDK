@@ -112,9 +112,7 @@ void DECOMP_MM_HighScore_MenuBox(struct MenuBox *mb_unused)
   else
   {
     bVar1 = true;
-#ifndef REBUILD_PS1
-    OtherFX_Play(2,1);
-#endif
+    DECOMP_OtherFX_Play(2,1);
     D230.highScore_transitionState = EXITING_MENU;
   }
 

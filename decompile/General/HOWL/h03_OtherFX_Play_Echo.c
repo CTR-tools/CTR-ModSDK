@@ -14,5 +14,5 @@ void DECOMP_OtherFX_Play_Echo(unsigned int soundID, int flags, int echoFlag)
 	
 	if(echoFlag != 0) otherFlags |= 0x1000000;
 	
-	OtherFX_Play_LowLevel(soundID & 0xfff, flags & 0xff, otherFlags);
+	DECOMP_OtherFX_Play_LowLevel(soundID & 0xfff, flags & 0xff, otherFlags);
 }

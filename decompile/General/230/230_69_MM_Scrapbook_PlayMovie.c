@@ -38,13 +38,8 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
 
         // go to Load State
         D230.scrapbookState = 1;
-
         mb->state &= ~NEEDS_TO_CLOSE;
-
-		#ifndef REBUILD_PS1
-        Audio_SetState_Safe(1);
-		#endif
-
+        DECOMP_Audio_SetState_Safe(1);
         break;
 
     // Load State,

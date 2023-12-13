@@ -8,7 +8,7 @@ void DECOMP_Bank_Destroy(struct Bank* ptrLastBank)
 
 	flags = ptrLastBank->flags;
 	
-	Bank_ClearInRange(ptrLastBank->min, ptrLastBank->max);
+	DECOMP_Bank_ClearInRange(ptrLastBank->min, ptrLastBank->max);
 	
 	if((flags & 1) == 0)
 	{

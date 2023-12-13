@@ -3,16 +3,16 @@
 void DECOMP_Cutscene_VolumeRestore(void)
 {
   // enter critical section
-  Smart_EnterCriticalSection();
+  DECOMP_Smart_EnterCriticalSection();
 
-    // copy does not exist
-    sdata->boolStoringVolume = 0;
-
-    // Set volume of FX
-    howl_VolumeSet(0,sdata->storedVolume);
+  // copy does not exist
+  sdata->boolStoringVolume = 0;
+  
+  // Set volume of FX
+  DECOMP_howl_VolumeSet(0,sdata->storedVolume);
 
   // exit critical section
-  Smart_ExitCriticalSection();
+  DECOMP_Smart_ExitCriticalSection();
 
   return;
 }

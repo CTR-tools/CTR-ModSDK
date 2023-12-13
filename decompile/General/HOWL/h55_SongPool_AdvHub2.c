@@ -24,6 +24,6 @@ void DECOMP_SongPool_AdvHub2(struct Song* song, struct SongSet* songSet, int son
 		if((songSet->ptrSongSetBits[i] & song->songSetActiveBits) == 0)
 			vol = 0;
 		
-		SongPool_AdvHub1(song, i, vol, 0);
+		DECOMP_SongPool_AdvHub1(song, i, vol, 0);
 	}
 }

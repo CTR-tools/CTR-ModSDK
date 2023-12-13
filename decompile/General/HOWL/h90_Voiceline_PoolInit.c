@@ -11,14 +11,14 @@ void DECOMP_Voiceline_PoolInit(void)
 
   sdata->ptrCseqHeader = 0;
 
-  Bank_ResetAllocator();
+  DECOMP_Bank_ResetAllocator();
 
-  Audio_SetDefaults();
+  DECOMP_Audio_SetDefaults();
 
-  LIST_Clear(&sdata->channelFree);
-  LIST_Clear(&sdata->channelTaken);
+  DECOMP_LIST_Clear(&sdata->channelFree);
+  DECOMP_LIST_Clear(&sdata->channelTaken);
 
-  LIST_Init(&sdata->channelFree, &sdata->channelStatsPrev[0], 0x20, 0x18);
+  DECOMP_LIST_Init(&sdata->channelFree, &sdata->channelStatsPrev[0], 0x20, 0x18);
 
   SpuSetReverbVoice(0, 0xffffff);
 
@@ -28,7 +28,10 @@ void DECOMP_Voiceline_PoolInit(void)
     struct ChannelStats* stats = &sdata->channelStatsPrev[index];
     sdata->ChannelUpdateFlags[index] = 0;
 
+	#ifndef REBUILD_PC
     SpuSetVoiceADSRAttr(index, 0, 0xf, 0x7f, 2, 0xf, 5, 1, 3);
+	#endif
+	
     stats->flags = 0;
     stats->channelID = index;
 

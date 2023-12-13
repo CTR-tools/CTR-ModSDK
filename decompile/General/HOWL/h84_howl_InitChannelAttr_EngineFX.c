@@ -4,7 +4,7 @@ void DECOMP_howl_InitChannelAttr_EngineFX(
 		struct EngineFX* engineFX, struct ChannelAttr* attr,
 		int vol, int LR, int distort)
 {
-	Channel_SetVolume(
+	DECOMP_Channel_SetVolume(
 		attr,
 		(sdata->vol_FX * engineFX->volume * vol) >> 10,
 		LR

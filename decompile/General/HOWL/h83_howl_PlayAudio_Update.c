@@ -17,7 +17,7 @@ void DECOMP_howl_PlayAudio_Update()
 				sdata->currentVolume = 0;
 			
 			sdata->criticalSectionCount = 1;
-			howl_VolumeSet(0, sdata->currentVolume);
+			DECOMP_howl_VolumeSet(0, sdata->currentVolume);
 			sdata->criticalSectionCount = 0;
 		}
 		
@@ -42,12 +42,12 @@ void DECOMP_howl_PlayAudio_Update()
 					
 			curr->flags = statFlags & ~(1);
 					
-			LIST_RemoveMember(&sdata->channelTaken, curr);
-			LIST_AddBack(&sdata->channelFree, curr);
+			DECOMP_LIST_RemoveMember(&sdata->channelTaken, curr);
+			DECOMP_LIST_AddBack(&sdata->channelFree, curr);
 		}
 		
-		Channel_ParseSongToChannels();
+		DECOMP_Channel_ParseSongToChannels();
 	}
 	
-	Channel_UpdateChannels();
+	DECOMP_Channel_UpdateChannels();
 }

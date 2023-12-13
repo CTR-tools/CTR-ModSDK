@@ -5,6 +5,6 @@ void DECOMP_Music_Restart(void)
     // if cseq music is playing
     if (sdata->cseqBoolPlay != 0)
     {
-        CseqMusic_Restart(sdata->cseqHighestIndex, 8);
+        DECOMP_CseqMusic_Restart(sdata->cseqHighestIndex, 8);
     }
 }

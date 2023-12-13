@@ -14,7 +14,7 @@ void DECOMP_CseqMusic_ChangeVolume(int songID, int p2, int p3)
 	if(sdata->ptrCseqHeader->numSongs <= songID) return;
 	#endif
 	
-	Smart_EnterCriticalSection();
+	DECOMP_Smart_EnterCriticalSection();
 	
 	for(i = 0; i < 2; i++)
 	{
@@ -26,9 +26,9 @@ void DECOMP_CseqMusic_ChangeVolume(int songID, int p2, int p3)
 				(song->id == songID)
 			)
 		{
-			SongPool_Volume(song, p2&0xff, p3&0xff, 0);
+			DECOMP_SongPool_Volume(song, p2&0xff, p3&0xff, 0);
 		}
 	}
 	
-	Smart_ExitCriticalSection();
+	DECOMP_Smart_ExitCriticalSection();
 }

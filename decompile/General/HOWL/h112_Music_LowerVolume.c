@@ -16,6 +16,6 @@ void DECOMP_Music_LowerVolume(void)
             setVolume = 90;
         }
 
-        CseqMusic_ChangeVolume(sdata->cseqHighestIndex & 0xffff, setVolume, 8);
+        DECOMP_CseqMusic_ChangeVolume(sdata->cseqHighestIndex & 0xffff, setVolume, 8);
     }
 }

@@ -8,9 +8,9 @@ void DECOMP_EngineAudio_Stop(u_int soundID)
   if (sdata->ptrHowlHeader->numEngineFX <= soundID) return;
   
   // 0 - engineFX
-  Smart_EnterCriticalSection();
-  Channel_SearchFX_Destroy(0,soundID,0xffffffff);
-  Smart_ExitCriticalSection();
+  DECOMP_Smart_EnterCriticalSection();
+  DECOMP_Channel_SearchFX_Destroy(0,soundID,0xffffffff);
+  DECOMP_Smart_ExitCriticalSection();
   
   return;
 }

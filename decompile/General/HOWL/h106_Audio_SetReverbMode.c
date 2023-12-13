@@ -40,6 +40,6 @@ void DECOMP_Audio_SetReverbMode(int levelID, u_int isBossRace, int bossID)
             reverb = sdata->reverbModeBossID[bossID];
         }
 
-        SetReverbMode(reverb);
+        DECOMP_SetReverbMode(reverb);
     }
 }

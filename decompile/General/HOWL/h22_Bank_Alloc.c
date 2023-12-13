@@ -20,14 +20,14 @@ int DECOMP_Bank_Alloc(int bankID, struct Bank* ptrBank)
 	
 	// temporary for loading banks to RAM,
 	// sending data to SPU, then erasing RAM
-	MEMPACK_PushState();
+	DECOMP_MEMPACK_PushState();
 	
-	sdata->ptrSampleBlock2 = MEMPACK_AllocMem(0x800 /*, "SampleBlock"*/);
+	sdata->ptrSampleBlock2 = DECOMP_MEMPACK_AllocMem(0x800 /*, "SampleBlock"*/);
 	
 	if(sdata->ptrSampleBlock2 == 0)
 	{
 		// no data loaded, PopState
-		MEMPACK_PopState();
+		DECOMP_MEMPACK_PopState();
 		return 0;
 	}
 	

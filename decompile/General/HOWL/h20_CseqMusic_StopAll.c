@@ -13,7 +13,7 @@ void DECOMP_CseqMusic_StopAll()
 	if(sdata->ptrCseqHeader == 0) return;
 	#endif
 	
-	Smart_EnterCriticalSection();
+	DECOMP_Smart_EnterCriticalSection();
 	
 	for(i = 0; i < 2; i++)
 	{
@@ -22,9 +22,9 @@ void DECOMP_CseqMusic_StopAll()
 		// if pool is taken
 		if ((song->flags & 1) != 0)
 		{
-			SongPool_StopAllCseq(song);
+			DECOMP_SongPool_StopAllCseq(song);
 		}
 	}
 	
-	Smart_ExitCriticalSection();
+	DECOMP_Smart_ExitCriticalSection();
 }

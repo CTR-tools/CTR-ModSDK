@@ -17,7 +17,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 
     case 0:
         // unsuccessful
-        if (Bank_AssignSpuAddrs() == 0)
+        if (DECOMP_Bank_AssignSpuAddrs() == 0)
             goto PARSE_FINISH;
 
         // If you're in a Boss Race
@@ -78,14 +78,14 @@ u_int DECOMP_Music_AsyncParseBanks(void)
             }
         }
 
-        Bank_Load(index, thisBank);
+        DECOMP_Bank_Load(index, &thisBank);
 
         newState = 1;
         break;
 
     case 1:
         // unsuccessful
-        if (Bank_AssignSpuAddrs() == 0)
+        if (DECOMP_Bank_AssignSpuAddrs() == 0)
             goto PARSE_FINISH;
 
         sdata->bankCount = 0;
@@ -120,7 +120,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 
               ((gGT->gameMode1 & ARCADE_MODE) != 0))))
         {
-            Bank_Load(54, thisBank);
+            DECOMP_Bank_Load(54, &thisBank);
 
             sdata->bankLoad54 = 1;
         }
@@ -130,7 +130,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
         break;
     case 2:
 
-        if (Bank_AssignSpuAddrs() == 0)
+        if (DECOMP_Bank_AssignSpuAddrs() == 0)
             goto PARSE_FINISH;
 
         // If you're on any Arcade or Battle map
@@ -176,7 +176,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 
                 LOAD_BANK:
 
-                    Bank_Load(index, thisBank);
+                    DECOMP_Bank_Load(index, &thisBank);
 
                 LAB_8002e178:
                     sdata->bankCount = sdata->bankCount + 1;
@@ -219,7 +219,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 
                     LOAD_BANK_PODIUM:
 
-                        Bank_Load((bVar1 - 88), thisBank);
+                        DECOMP_Bank_Load((bVar1 - 88), &thisBank);
                     }
                     else
                     {
@@ -252,7 +252,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
         break;
     case 3:
 
-        if (Bank_AssignSpuAddrs() == 0)
+        if (DECOMP_Bank_AssignSpuAddrs() == 0)
             goto PARSE_FINISH;
 
         // If you're in a Boss Race
@@ -321,7 +321,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
                 }
             }
         SET_SONG:
-            howl_SetSong(index);
+            DECOMP_howl_SetSong(index);
         }
         newState = 4;
         break;
@@ -329,7 +329,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
     case 4:
         newState = 5;
 
-        if (howl_LoadSong() == 0)
+        if (DECOMP_howl_loadSong() == 0)
             goto PARSE_FINISH;
 
         break;

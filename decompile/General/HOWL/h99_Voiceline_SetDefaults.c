@@ -12,5 +12,5 @@ void DECOMP_Voiceline_SetDefaults(void)
     sdata->nTropyVoiceCount = 0;
     sdata->boolNeedXASeek = 0;
 
-    Music_SetDefaults();
+    DECOMP_Music_SetDefaults();
 }

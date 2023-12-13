@@ -7,7 +7,7 @@ void DECOMP_Voiceline_ToggleEnable(int toggle)
     {
         sdata->voicelineCooldown = 0;
 
-        Voiceline_StopAll();
+        DECOMP_Voiceline_StopAll();
     }
     sdata->boolCanPlayVoicelines = toggle;
 }

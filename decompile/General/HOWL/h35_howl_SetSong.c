@@ -12,7 +12,7 @@ void DECOMP_howl_SetSong(int songID)
 	
 	// === Reset Song ===
 	
-	howl_ErasePtrCseqHeader();
+	DECOMP_howl_ErasePtrCseqHeader();
 	
 	// Stage 0: Start Loading
 	sdata->songLoadStage = 0;

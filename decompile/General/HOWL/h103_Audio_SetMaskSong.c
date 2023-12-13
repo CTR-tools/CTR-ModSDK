@@ -38,14 +38,14 @@ void DECOMP_Audio_SetMaskSong(u_int tempo)
                 // If Aku song is playing
                 (gameMode & AKU_SONG) != 0))
         {
-            Music_Adjust(songID, tempo, 0, 0);
+            DECOMP_Music_Adjust(songID, tempo, 0, 0);
         }
     }
 
     // If no players are using mask
     else
     {
-        Music_Adjust(0, tempo, 0, 0);
+        DECOMP_Music_Adjust(0, tempo, 0, 0);
 
         if ((gameMode & (UKA_SONG|AKU_SONG)) != 0)
         {

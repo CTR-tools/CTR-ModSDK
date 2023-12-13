@@ -713,9 +713,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			{
 				uVar16 = 7;
 LAB_800346b0:
-#ifndef REBUILD_PS1
-				Audio_SetState_Safe(uVar16);
-#endif
+				DECOMP_Audio_SetState_Safe(uVar16);
 				return loadingStage + 1;
 			}
 

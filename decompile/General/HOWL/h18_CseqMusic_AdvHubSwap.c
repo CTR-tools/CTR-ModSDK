@@ -6,12 +6,13 @@ void DECOMP_CseqMusic_AdvHubSwap(u_short songId, struct SongSet* songSet, int so
   int i;
 
   // Temporarily commented out, while trying to fit byte budget
+  #if 0
+  if (sdata->boolAudioEnabled == 0) return;
+  if (sdata->ptrCseqHeader == 0) return;
+  if (songId >= sdata->ptrCseqHeader->numSongs) return;
+  #endif
   
-  //if (sdata->boolAudioEnabled == 0) return;
-  //if (sdata->ptrCseqHeader == 0) return;
-  //if (songId >= sdata->ptrCseqHeader->numSongs) return;
-  
-  Smart_EnterCriticalSection();
+  DECOMP_Smart_EnterCriticalSection();
         
   for (i = 0; i < 2; i++) 
   {
@@ -22,11 +23,11 @@ void DECOMP_CseqMusic_AdvHubSwap(u_short songId, struct SongSet* songSet, int so
 	{
 		if (song->id == songId)
 		{
-			SongPool_AdvHub2(song, songSet, songSetActiveBits);
+			DECOMP_SongPool_AdvHub2(song, songSet, songSetActiveBits);
 		}
     }
   }
   
-  Smart_ExitCriticalSection();
+  DECOMP_Smart_ExitCriticalSection();
   return;
 }

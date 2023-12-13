@@ -23,7 +23,7 @@ void DECOMP_UpdateChannelVol_EngineFX_All()
 		// type == EngineFX
 		if(curr->type == 0)
 		{
-			UpdateChannelVol_EngineFX(
+			DECOMP_UpdateChannelVol_EngineFX(
 				&sdata->howl_metaEngineFX[soundID],
 				&sdata->channelAttrNew[curr->channelID],
 				curr->vol, curr->LR);
@@ -32,7 +32,7 @@ void DECOMP_UpdateChannelVol_EngineFX_All()
 		// type == OtherFX
 		else
 		{
-			UpdateChannelVol_OtherFX(
+			DECOMP_UpdateChannelVol_OtherFX(
 				&sdata->howl_metaOtherFX[soundID],
 				&sdata->channelAttrNew[curr->channelID],
 				curr->vol, curr->LR);
