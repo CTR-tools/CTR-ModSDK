@@ -30,14 +30,13 @@ void DECOMP_Music_LoadBanks(void)
 	
     else
     {
-
-        if (sdata->audioDefaults[7] == 0)
+        if (*(char*)&sdata->audioDefaults[7] == 0)
         {
             DECOMP_Bank_DestroyAll();
 
             DECOMP_Bank_Load(0, &thisBank);
 
-            sdata->audioDefaults[7] = 1;
+            *(char*)&sdata->audioDefaults[7] = 1;
         }
 
         else
@@ -52,7 +51,7 @@ void DECOMP_Music_LoadBanks(void)
 
 	DECOMP_Bank_DestroyAll();
 
-    sdata->audioDefaults[7] = 0;
+    *(char*)&sdata->audioDefaults[7] = 0;
 
     DECOMP_Bank_Load(bankID, &thisBank);
 
