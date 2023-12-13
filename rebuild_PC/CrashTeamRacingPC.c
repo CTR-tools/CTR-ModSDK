@@ -101,6 +101,24 @@ void PsyXKeyboardHandler(int key, char down)
 		btnFlags = down ? (btnFlags | 0x20) : (btnFlags & ~0x20);
 }
 
+int frameCount = 0;
+int oldTicks = 0;
+
+// printf once every X frames
+int frameGap = 200;
+
+int NikoCalcFPS()
+{
+	if (frameCount++ != frameGap) return;
+	
+	frameCount = 0;
+	int newTicks = SDL_GetTicks();
+	int delta = newTicks - oldTicks;
+	oldTicks = newTicks;
+
+	printf("NikoCalcFPS: %d fps\n", (1000 * frameGap) / delta);
+}
+
 int main()
 {
 	PsyX_Initialise("CTRPC", 800, 600, 0);

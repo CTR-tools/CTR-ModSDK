@@ -408,6 +408,8 @@ FinishLoading:
 				DECOMP_MainFrame_RenderFrame(gGT, sdata->gGamepads);
 #ifdef REBUILD_PC
 				PsyX_EndScene();
+				int NikoCalcFPS();
+				NikoCalcFPS();
 #endif
 
 #ifndef REBUILD_PS1
