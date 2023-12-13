@@ -5,15 +5,8 @@ int bi = 0;
 int GetBit(unsigned int* vertData)
 {
 	unsigned int vertInt = vertData[bi >> 5];
-	unsigned int readReverse = 0;
 
-	for (int i = 0; i < 32; i++)
-	{
-		readReverse |= (vertInt & 1) << (31 - i);
-		vertInt = vertInt >> 1;
-	}
-
-	int ret = (readReverse >> (bi & 31)) & 1;
+	int ret = (vertInt >> (31-(bi & 31))) & 1;
 
 	bi++;
 
