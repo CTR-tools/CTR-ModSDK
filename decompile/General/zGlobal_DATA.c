@@ -1834,7 +1834,6 @@ struct Data data =
 	},
 	#endif
 	
-#ifndef REBUILD_PC
 	.opcodeFunc =
 	{
 		DECOMP_cseq_opcode00_empty, // should remove
@@ -1849,7 +1848,6 @@ struct Data data =
 		DECOMP_cseq_opcode09,
 		DECOMP_cseq_opcode0a
 	},
-#endif
 	
 	.opcodeOffset = 
 	{

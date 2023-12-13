@@ -301,15 +301,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		}
 		case 4:
 		{
-			#ifndef REBUILD_PS1
 			// if level is not AdvGarage or Naughty Dog Box Scene
 			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
-				Music_Restart();
+				DECOMP_Music_Restart();
 			}
-			#else
-			sdata->mainMenuState = 0;
-			#endif
 
 			// If in main menu (character selection, track selection, any part of it)
 			if ((gGT->gameMode1 & MAIN_MENU) != 0)
@@ -358,25 +354,22 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					DECOMP_DecalGlobal_Store(gGT, gGT->mpkIcons);
 			}
 			
-			#ifndef REBUILD_PS1
 			// if level is not AdvGarage or Naughty Dog Box Scene
 			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
-				Music_Stop();
-				CseqMusic_StopAll();
-				Music_LoadBanks();
+				DECOMP_Music_Stop();
+				DECOMP_CseqMusic_StopAll();
+				DECOMP_Music_LoadBanks();
 			}
-			#endif
 			
 			break;
 		}
 		case 6:
-		{			
-#ifndef REBUILD_PS1
+		{
 			// if level is not AdvGarage or Naughty Dog Box Scene
 			if ((levelID != ADVENTURE_CHARACTER_SELECT) && (levelID != NAUGHTY_DOG_CRATE))
 			{
-				iVar9 = Music_AsyncParseBanks();
+				iVar9 = DECOMP_Music_AsyncParseBanks();
 
 				if (iVar9 == 0)
 				{
@@ -384,9 +377,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					return loadingStage;
 				}
 
+#ifndef REBUILD_PS1
 				Cutscene_VolumeRestore();
-			}
 #endif
+			}
 			// == banks are done parsing ===
 			
 			// loop through models

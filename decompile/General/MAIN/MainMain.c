@@ -614,12 +614,10 @@ void StateZero()
 	VSyncCallback(DECOMP_MainDrawCb_Vsync);
 	
 	#ifndef FastBoot
-#ifndef REBUILD_PS1
-	Music_SetIntro();
-	CseqMusic_StopAll();
-	CseqMusic_Start(0, 0, 0, 0, 0);
-	Music_Start(0);
-#endif
+	DECOMP_Music_SetIntro();
+	DECOMP_CseqMusic_StopAll();
+	DECOMP_CseqMusic_Start(0, 0, 0, 0, 0);
+	DECOMP_Music_Start(0);
 	
 	// "Start your engines, for Sony Computer..."
 	DECOMP_CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, 0x50);

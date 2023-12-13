@@ -15,8 +15,10 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 	
 	DECOMP_CDSYS_SetMode_StreamData();
 	
+	int sizeOver = ((firstSector + numSector) * 0x800 - cdlFileHWL->size);
+
 	// If reading out of file bounds, quit
-	if ( ((firstSector+numSector)*0x800 - cdlFileHWL->size) >= 0x800 )
+	if (sizeOver >= 0x800 )
 		return 0;
 	
 	CdIntToPos(CdPosToInt(&cdlFileHWL->pos) + firstSector, &loc);
@@ -26,7 +28,16 @@ int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, 
 	
 	sdata->howlChainState = 1;
 	
+	#ifndef REBUILD_PC
+
 	CdReadCallback(DECOMP_LOAD_HowlCallback);
-		
 	return (CdRead(numSector, ptrDestination, 0x80) != 0);
+	
+	#else
+	
+	CdRead(numSector, ptrDestination, 0x80);
+	CdReadSync(0, 0);
+	DECOMP_LOAD_HowlCallback(CdlComplete);
+	
+	#endif
 }

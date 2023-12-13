@@ -76,9 +76,7 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 			// if cursor moving sound is not muted
 			if ((m->state & MUTE_SOUND_OF_MOVING_CURSOR) == 0)
 			{
-#ifndef REBUILD_PS1
-				OtherFX_Play(0, 1);
-#endif
+				DECOMP_OtherFX_Play(0, 1);
 			}
 		}
 
@@ -98,9 +96,7 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 				// if menu is not muted
 				if ((m->state & MUTE_SOUND_OF_MOVING_CURSOR) == 0)
 				{
-#ifndef REBUILD_PS1
-					OtherFX_Play(2, 1);
-#endif
+					DECOMP_OtherFX_Play(2, 1);
 				}
 
 				returnVal = -1;
@@ -129,10 +125,8 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 				// if menu is not muted
 				if ((m->state & MUTE_SOUND_OF_MOVING_CURSOR) == 0)
 				{
-#ifndef REBUILD_PS1
 					// "womp" sound
-					OtherFX_Play(5, 1);
-#endif
+					DECOMP_OtherFX_Play(5, 1);
 				}
 			}
 
@@ -142,10 +136,8 @@ int DECOMP_MENUBOX_ProcessInput(struct MenuBox *m)
 				// if menu is not muted
 				if ((m->state & MUTE_SOUND_OF_MOVING_CURSOR) == 0)
 				{
-#ifndef REBUILD_PS1
 					// enter sound
-					OtherFX_Play(1, 1);
-#endif
+					DECOMP_OtherFX_Play(1, 1);
 				}
 
 				m->unk1e = 0;
