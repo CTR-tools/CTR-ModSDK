@@ -42,84 +42,57 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 		curr = curr->next
 		)
 	{
-		for (int i = 0; i < gGT->numPlyrCurrGame; i++)
-		{
-			if ((curr->flags & 0x80) != 0) continue;
+		if ((curr->flags & 0x80) != 0) continue;
 
+		for (int i = 0; i < gGT->numPlyrCurrGame; i++)
+		{			
 			struct InstDrawPerPlayer* idpp = INST_GETIDPP(curr);
 
 			struct TileView* view = idpp[i].tileView;
 			if (view == 0) continue;
 
-			// no MulMatrix in PS1?
-
-			// If translation data is correct, but on-screen 
-			// graphics are wrong, maybe the 3x3 matrix is wrong?
-			// Try removing MulMatrix
-
-			#ifdef REBUILD_PC
-			MATRIX copy = view->matrix_ViewProj; // required
-			MATRIX* mat2 = MulMatrix(&copy, &curr->matrix);
-			#else
-			MATRIX* mat2 = &curr->matrix;
+			#if 1
+			// temporary, until CAMERA_ThTick is done
+			view->distanceToScreen_PREV = view->distanceToScreen_CURR;
+			
+			// temporary, until TileView_UpdateFrustum is done
+			gte_SetGeomScreen(view->distanceToScreen_PREV);
 			#endif
 
-			mat2->m[0][0] /=4; mat2->m[0][1] /=4; mat2->m[0][2] /=4;
-			mat2->m[1][0] /=4; mat2->m[1][1] /=4; mat2->m[1][2] /=4;
-			mat2->m[2][0] /=4; mat2->m[2][1] /=4; mat2->m[2][2] /=4;
+			// ============ Get ModelViewProj Matrix ==============
+
+			MATRIX copy = view->matrix_ViewProj; // required
+			MATRIX* mat2 = MulMatrix(&copy, &curr->matrix);
+
+			mat2->m[0][0] /= 4; mat2->m[0][1] /= 4; mat2->m[0][2] /= 4;
+			mat2->m[1][0] /= 4; mat2->m[1][1] /= 4; mat2->m[1][2] /= 4;
+			mat2->m[2][0] /= 4; mat2->m[2][1] /= 4; mat2->m[2][2] /= 4;
+
+			// ============ Get Perspective Translation ==============
+
+			VECTOR pos;
+			pos.vx = curr->matrix.t[0] - view->matrix_Camera.t[0];
+			pos.vy = curr->matrix.t[1] - view->matrix_Camera.t[1];
+			pos.vz = curr->matrix.t[2] - view->matrix_Camera.t[2];
 			
-#if 1
-			int lenX = SquareRoot0(
-				view->matrix_ViewProj.m[0][0] * view->matrix_ViewProj.m[0][0] +
-				view->matrix_ViewProj.m[1][0] * view->matrix_ViewProj.m[1][0] +
-				view->matrix_ViewProj.m[2][0] * view->matrix_ViewProj.m[2][0]
-			);
-
-			int lenY = SquareRoot0(
-				view->matrix_ViewProj.m[0][1] * view->matrix_ViewProj.m[0][1] +
-				view->matrix_ViewProj.m[1][1] * view->matrix_ViewProj.m[1][1] +
-				view->matrix_ViewProj.m[2][1] * view->matrix_ViewProj.m[2][1]
-			);
-
-			int lenZ = SquareRoot0(
-				view->matrix_ViewProj.m[0][2] * view->matrix_ViewProj.m[0][2] +
-				view->matrix_ViewProj.m[1][2] * view->matrix_ViewProj.m[1][2] +
-				view->matrix_ViewProj.m[2][2] * view->matrix_ViewProj.m[2][2]
-			);
-
-			//printf("%04x, %04x, %04x\n", lenX, lenY, lenZ);
-
-			// Is this how you use ViewProj to warp translation?
-			// Works for Character Select, breaks for Crash+Trophy
-			mat2->t[0] = (curr->matrix.t[0] * lenX) >> 0xC;
-			mat2->t[1] = (curr->matrix.t[1] * lenY) >> 0xC;	
-			mat2->t[2] = (curr->matrix.t[2] * lenZ) >> 0xC;	
-
-			// adjust for Crash+Trophy animation,
-			// this is (0,0,0) when in character select
-			mat2->t[0] += view->matrix_ViewProj.t[0];
-			mat2->t[1] += view->matrix_ViewProj.t[1];
-			mat2->t[2] += view->matrix_ViewProj.t[2];
+#ifdef REBUILD_PC
+			ApplyMatrixLV(&view->matrix_ViewProj, &pos, &mat2->t[0]);
+#else
+			// Not rewritten yet,
+			#if 0
+			ApplyMatrixLV_stub(&view->matrix_ViewProj, &pos, &mat2->t[0]);
+			#endif
+#endif
 
 			mat2->t[0] *= 4;
 			mat2->t[1] *= 4;
 			mat2->t[2] *= 4;
-
-			// In Character Select:
-			// X: 0 (GOOD)
-			// Y: 0x5A instead of 0x58 (wrong, but close)
-			// Z: 0x320 (1p2p) or 0x3E8 (3p4p), GOOD!
-
-			// In Crash+Trophy:
-			// X: -0x350 (GOOD)
-			// Y: 0x280 instead of 0x284 (wrong, but close)
-			// Z: 0xfB0 (GOOD)
-#endif
-
-			// how do I multiply mat1 and mat2 together?
+			
 			gte_SetRotMatrix(mat2);
 			gte_SetTransMatrix(mat2);
-			SetGeomOffset(view->rect.w >> 1, view->rect.h >> 1);
+			gte_SetGeomOffset(view->rect.w >> 1, view->rect.h >> 1);
+			
+			// ============ Draw Instance ==============
 
 			struct Model* m = curr->model;
 			struct ModelHeader* mh = &m->headers[0];

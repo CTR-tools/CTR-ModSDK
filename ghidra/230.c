@@ -734,7 +734,7 @@ void FUN_800ac6dc(void)
 	// CameraDC, freecam mode
     *(undefined2 *)(PTR_DAT_8008d2ac + 0x1532) = 3;
 	
-	// gGT->tileView[0].distToScreen
+	// gGT->tileView[0].distToScreen_CURR
     *(undefined4 *)(puVar1 + 0x274) = 0x1c2;
 	
 	// pointer to Intro Cam, to view Crash holding Trophy in main menu

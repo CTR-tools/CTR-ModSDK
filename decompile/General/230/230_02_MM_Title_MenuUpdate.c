@@ -291,6 +291,6 @@ void DECOMP_MM_Title_KillThread(void)
 
     // CameraDC, it must be zero to follow you
     gGT->cameraDC[0].transitionTo.rot[0] = 0;
-    gGT->tileView[0].distanceToScreen_CURR = 256;
+    gGT->tileView[0].distanceToScreen_CURR = 0x100;
   }
 }
