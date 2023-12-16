@@ -32,7 +32,41 @@ void DrawLevel(
 	int* visMem10,
 	int unk)
 {
+	short posScreen1[4];
+	short posWorld1[4];
+	short posScreen2[4];
+	short posWorld2[4];
+	short posScreen3[4];
+	short posWorld3[4];
+	
+	struct LevVertex* pVA = &mi->ptrVertexArray[0];
+	
+	#if 1
+	// temporary, until CAMERA_ThTick is done
+	view->distanceToScreen_PREV = view->distanceToScreen_CURR;
+	
+	// temporary, until TileView_UpdateFrustum is done
+	gte_SetGeomScreen(view->distanceToScreen_PREV);
+	#endif
+	
+	MATRIX* mat2 = &view->matrix_ViewProj;
+	
+			//mat2->m[0][0] /= 4; mat2->m[0][1] /= 4; mat2->m[0][2] /= 4;
+			//mat2->m[1][0] /= 4; mat2->m[1][1] /= 4; mat2->m[1][2] /= 4;
+			//mat2->m[2][0] /= 4; mat2->m[2][1] /= 4; mat2->m[2][2] /= 4;
+			
+	gte_SetRotMatrix(mat2);
+	gte_SetTransMatrix(mat2);
+	gte_SetGeomOffset(view->rect.w >> 1, view->rect.h >> 1);
+	
+	void* ot = &view->ptrOT[0];
+	
+	#if 0
 	printf("\nDump Level:\n");
+	#endif
+	
+	int numBlock = 0;
+	
 	for(int i = 0; i < 5; i++)
 	{
 		if(RL->list[i].bspListStart == 0) continue;
@@ -50,11 +84,108 @@ void DrawLevel(
 		{
 			bsp = slot[1];
 			
+			#if 0
 			// number of quads, per bsp block, per list
 			printf("List %d, bsp %d, numBlock %d\n",
 						i, count, bsp->data.leaf.numQuads);
+			#endif
+			
+			POLY_G3* p;
+			void* pNext;
+			void* pCurr;
+			int otZ;
+			
+			for(int j = 0; j < bsp->data.leaf.numQuads; j++)
+			{	
+				struct QuadBlock* block;
+				block = &bsp->data.leaf.ptrQuadBlockArray[j];
+		
+				p = primMem->curr;
+				pNext = p + 1;
+				pCurr = p;
+				if(pNext > ((unsigned int)primMem->end - 0x200)) return;
+	
+				*(int*)&p->r0 = *(int*)&pVA[block->index[0]].color_lo[0];
+				*(int*)&p->r1 = *(int*)&pVA[block->index[1]].color_lo[0];
+				*(int*)&p->r2 = *(int*)&pVA[block->index[2]].color_lo[0];
+	
+				setPolyG3(p);
+	
+				gte_ldv0(&pVA[block->index[0]].pos[0]);
+				gte_rtps();
+				gte_stsxy(&posScreen1[0]);
+	
+				gte_ldv0(&pVA[block->index[1]].pos[0]);
+				gte_rtps();
+				gte_stsxy(&posScreen2[0]);
+	
+				gte_ldv0(&pVA[block->index[2]].pos[0]);
+				gte_rtps();
+				gte_stsxy(&posScreen3[0]);
+	
+				// to be in viewport, coordinates must be
+				// X: [0, 0x40]
+				// Y: [0, 0xA0]
+				setXY3(p,
+					(posScreen1[0]), (posScreen1[1]),	// XY0
+					(posScreen2[0]), (posScreen2[1]),	// XY1
+					(posScreen3[0]), (posScreen3[1]));	// XY2
+					
+				gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
+				gte_avsz3();
+				gte_stotz(&otZ);
+	
+				if (otZ > 0)
+				{
+					AddPrim((u_long*)ot + (otZ >> 1), pCurr);
+					primMem->curr = pNext;
+				}
+				
+				p = primMem->curr;
+				pNext = p + 1;
+				pCurr = p;
+				if(pNext > ((unsigned int)primMem->end - 0x200)) return;
+	
+				*(int*)&p->r0 = *(int*)&pVA[block->index[1]].color_lo[0];
+				*(int*)&p->r1 = *(int*)&pVA[block->index[3]].color_lo[0];
+				*(int*)&p->r2 = *(int*)&pVA[block->index[2]].color_lo[0];
+	
+				setPolyG3(p);
+	
+				gte_ldv0(&pVA[block->index[1]].pos[0]);
+				gte_rtps();
+				gte_stsxy(&posScreen1[0]);
+	
+				gte_ldv0(&pVA[block->index[3]].pos[0]);
+				gte_rtps();
+				gte_stsxy(&posScreen2[0]);
+	
+				gte_ldv0(&pVA[block->index[2]].pos[0]);
+				gte_rtps();
+				gte_stsxy(&posScreen3[0]);
+	
+				// to be in viewport, coordinates must be
+				// X: [0, 0x40]
+				// Y: [0, 0xA0]
+				setXY3(p,
+					(posScreen1[0]), (posScreen1[1]),	// XY0
+					(posScreen2[0]), (posScreen2[1]),	// XY1
+					(posScreen3[0]), (posScreen3[1]));	// XY2
+					
+				gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
+				gte_avsz3();
+				gte_stotz(&otZ);
+	
+				if (otZ > 0)
+				{
+					AddPrim((u_long*)ot + (otZ >> 1), pCurr);
+					primMem->curr = pNext;
+				}
+			}
 		}
 		
+		#if 0
 		printf("List %d, bsp %d\n\n", i, count);
+		#endif
 	}
 }
