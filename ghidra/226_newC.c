@@ -7,7 +7,7 @@
 // param2 - tileView
 // param3 - LEV->ptr_mesh_info, pointer is stored at first four bytes of LEV
 // param4 - primMem
-// param5 - gGT->[0x1a10+0x10] 
+// param5 - gGT->[0x1a38+0x10] 
 // param6 - points somewhere in LEV
 void UndefinedFunction_800a0cbc
                (int param_1,int param_2,int param_3,int param_4,int param_5,undefined4 param_6)
