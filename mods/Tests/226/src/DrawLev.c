@@ -65,6 +65,14 @@ void DrawLevel(
 	
 	int numBlock = 0;
 	
+	POLY_G4* p;
+	void* pNext;
+	void* pCurr;
+	int otZ;
+	
+	#define USE_BSP 0
+	
+	#if USE_BSP
 	for(int i = 0; i < 5; i++)
 	{
 		if(RL->list[i].bspListStart == 0) continue;
@@ -88,15 +96,16 @@ void DrawLevel(
 						i, count, bsp->data.leaf.numQuads);
 			#endif
 			
-			POLY_G4* p;
-			void* pNext;
-			void* pCurr;
-			int otZ;
-			
 			for(int j = 0; j < bsp->data.leaf.numQuads; j++)
-			{	
+			{
 				struct QuadBlock* block;
 				block = &bsp->data.leaf.ptrQuadBlockArray[j];
+	#else
+			for(int j = 0; j < mi->numQuadBlock; j++)
+			{	
+				struct QuadBlock* block;
+				block = &mi->ptrQuadBlockArray[j];
+	#endif
 		
 				p = primMem->curr;
 				pNext = p + 1;
@@ -151,10 +160,13 @@ void DrawLevel(
 					}
 				}
 			}
+			
+	#if USE_BSP
 		}
 		
 		#if 0
 		printf("List %d, bsp %d\n\n", i, count);
 		#endif
 	}
+	#endif
 }
