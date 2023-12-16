@@ -137,8 +137,14 @@ void DrawLevel(
 	
 				if (otZ > 0)
 				{
-					AddPrim((u_long*)ot + (otZ >> 1), pCurr);
-					primMem->curr = pNext;
+					otZ = otZ / 4;
+					
+					// matrices not divided by 4
+					if(otZ < 1024)
+					{
+						AddPrim((u_long*)ot + (otZ >> 1), pCurr);
+						primMem->curr = pNext;
+					}
 				}
 				
 				p = primMem->curr;
@@ -178,8 +184,14 @@ void DrawLevel(
 	
 				if (otZ > 0)
 				{
-					AddPrim((u_long*)ot + (otZ >> 1), pCurr);
-					primMem->curr = pNext;
+					// matrices not divided by 4
+					otZ = otZ / 4;
+					
+					if(otZ < 1024)
+					{
+						AddPrim((u_long*)ot + (otZ >> 1), pCurr);
+						primMem->curr = pNext;
+					}
 				}
 			}
 		}
