@@ -298,12 +298,14 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				//enough data to add prim
 				if (stripLength >= 2)
 				{
-					void* pFinal;
+					void* pCurr;
+					void* pNext;
 
 					if (tempTex[3] == 0)
 					{
 						POLY_G3* p = primMem->curr;
-						primMem->curr = p + 1;
+						pNext = p + 1;
+						pCurr = p;
 
 						*(int*)&p->r0 = tempColor[1];
 						*(int*)&p->r1 = tempColor[2];
@@ -362,13 +364,12 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 							(posScreen1[0]), (posScreen1[1]),	// XY0
 							(posScreen2[0]), (posScreen2[1]),	// XY1
 							(posScreen3[0]), (posScreen3[1]));	// XY2
-
-						pFinal = p;
 					}
 					else
 					{
 						POLY_GT3* p = primMem->curr;
-						primMem->curr = p + 1;
+						pNext = p + 1;
+						pCurr = p;
 
 						*(int*)&p->r0 = tempColor[1];
 						*(int*)&p->u0 = *(int*)&tempTex[3]->u0;
@@ -432,15 +433,18 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 							(posScreen1[0]), (posScreen1[1]),	// XY0
 							(posScreen2[0]), (posScreen2[1]),	// XY1
 							(posScreen3[0]), (posScreen3[1]));	// XY2
-
-						pFinal = p;
 					}
 
 					int otZ;
 					gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
 					gte_avsz3();
 					gte_stotz(&otZ);
-					AddPrim((u_long*)ot + (otZ >> 1), pFinal);
+
+					if (otZ > 0)
+					{
+						AddPrim((u_long*)ot + (otZ >> 1), pCurr);
+						primMem->curr = pNext;
+					}
 
 					if ((flags & DRAW_CMD_FLAG_FLIP_NORMAL) != 0)
 					{
