@@ -1520,7 +1520,7 @@ void FUN_80043b30(undefined4 param_1)
     *(uint *)puVar1 = uVar2 & 0xfffe3fff;
   }
 
-  // Load LEV in Track Selection
+  // MainRaceTrack_RequestLoad(track in trackSelection)
   FUN_8003cfc0((int)*(short *)(PTR_DAT_8008d2ac + 0x1eb0));
 
   // make MenuBox invisible
