@@ -405,6 +405,9 @@ FinishLoading:
 // temporary, no camera thread yet
 #ifdef REBUILD_PC
 
+				// disable demo mode from happening
+				gGT->demoCountdownTimer = 1800;
+
 				if (gGT->levelID < GEM_STONE_VALLEY)
 				{
 					if (gGT->trafficLightsTimer > 0)
