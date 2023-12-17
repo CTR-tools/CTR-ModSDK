@@ -133,9 +133,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 			// go to adventure character select screen
 			sdata->mainMenuState = 4;
 
-			#ifndef REBUILD_PS1
-			MainRaceTrack_RequestLoad(ADVENTURE_CHARACTER_SELECT);
-			#endif
+			DECOMP_MainRaceTrack_RequestLoad(ADVENTURE_CHARACTER_SELECT);
 			break;
 
 		// adventure save/load
@@ -234,10 +232,8 @@ void DECOMP_MM_Title_MenuUpdate(void)
 			iVar4 = SCRAPBOOK;
 			LAB_800abfc0:
 
-			#ifndef REBUILD_PS1
 			// Load level
-			MainRaceTrack_RequestLoad(iVar4);
-			#endif
+			DECOMP_MainRaceTrack_RequestLoad(iVar4);
 
 			// make main menu disappear
 			MENUBOX_Hide(&D230.menubox_mainMenu);

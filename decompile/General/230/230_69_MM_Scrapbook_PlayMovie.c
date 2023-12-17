@@ -164,9 +164,7 @@ void DECOMP_MM_Scrapbook_PlayMovie(struct MenuBox *mb)
                 sdata->mainMenuState = 0;
             }
 
-			#ifndef REBUILD_PS1
-            MainRaceTrack_RequestLoad(lev);
-			#endif
+            DECOMP_MainRaceTrack_RequestLoad(lev);
 			
             DECOMP_MENUBOX_Hide(mb);
         }

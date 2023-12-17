@@ -262,12 +262,10 @@ LAB_80035098:
 
 	DECOMP_THREAD_CheckAllForDead();
 
-#ifndef REBUILD_PS1
 	if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 	{
-		Audio_Update1();
+		DECOMP_Audio_Update1();
 	}
-#endif
 	
 	gGT->gameMode1_prevFrame = gGT->gameMode1;
 	uVar5 = DECOMP_GAMEPAD_GetNumConnected(gGamepads);

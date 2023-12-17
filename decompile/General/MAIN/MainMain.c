@@ -351,10 +351,8 @@ FinishLoading:
 						gGT->numPlyrNextGame = 1;
 						sdata->mainMenuState = 0;
 
-						LAB_8003ce08: ;
-#ifndef REBUILD_PS1
-						MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
-#endif
+						LAB_8003ce08:
+						DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 					}
 					
 					// if time remains on the timer

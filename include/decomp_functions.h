@@ -18,6 +18,7 @@ void DECOMP_CTR_Box_DrawSolidBox(RECT* r, u_int* colorPtr, u_long* otMem, struct
 
 // decal
 void DECOMP_DecalFont_DrawLine(char* str, int posX, int posY, short fontType, int flags);
+void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short posY, short fontType, int flags);
 int DECOMP_DecalFont_DrawMultiLine(char* str, int posX, int posY, int maxPixLen, short fontType, int flags);
 void DECOMP_DecalGlobal_Clear(struct GameTracker* gGT);
 void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);
@@ -262,6 +263,8 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker* gGT);
 void DECOMP_MainInit_VRAMClear();
 void DECOMP_MainInit_VRAMDisplay();
 
+void DECOMP_MainRaceTrack_RequestLoad(short levelID);
+
 int DECOMP_MATH_Sin(u_int angle);
 int DECOMP_MATH_Cos(u_int angle);
 
@@ -326,9 +329,8 @@ void DECOMP_TitleFlag_SetCanDraw(short param_1);
 void DECOMP_TitleFlag_BeginTransition(int direction);
 void DECOMP_TitleFlag_SetFullyOnScreen();
 void DECOMP_TitleFlag_SetFullyOffScreen();
+void DECOMP_TitleFlag_ResetTextAnim();
 void DECOMP_RCNT_Init();
-void DECOMP_DecalFont_DrawLineStrlen(u_char* str, short len, int posX, short posY, short fontType, int flags);
-
 void DECOMP_TitleFlag_DrawSelf();
 
 void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);

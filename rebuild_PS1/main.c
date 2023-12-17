@@ -277,6 +277,7 @@
 #include "../decompile/General/MAIN/MainInit_FinalizeInit.c"
 #include "../decompile/General/MAIN/MainInit_VRAMClear.c" 
 #include "../decompile/General/MAIN/MainInit_VRAMDisplay.c" 
+#include "../decompile/General/MAIN/MainRaceTrack_RequestLoad.c"
 
 #include "../decompile/General/MATH/MATH_Sin.c"
 #include "../decompile/General/MATH/MATH_Cos.c"
