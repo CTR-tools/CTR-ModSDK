@@ -24,13 +24,12 @@ void DECOMP_VehInit_NonGhost(struct Thread* t, int index)
 		id = data.characterIDs[index];
 	}
 	
-	struct Model* m = 
-#ifdef REBUILD_PS1
-		sdata->PLYROBJECTLIST[0];
+#ifndef REBUILD_PS1
+	struct Model* m = VehInit_GetModelByName(data.MetaDataCharacters[id].name_Debug);
 #else
-		VehInit_GetModelByName(data.MetaDataCharacters[id].name_Debug);
+	struct Model* m = 0;
 #endif
-	
+
 	struct Instance* inst =
 		DECOMP_INSTANCE_Birth3D(m, 0, t);
 		

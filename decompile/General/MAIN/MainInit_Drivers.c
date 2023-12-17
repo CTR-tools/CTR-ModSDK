@@ -101,6 +101,66 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
             gGT->drivers[i] = DECOMP_VehInit_Player(i);
         }
     }
+	
+#ifdef REBUILD_PS1
+	i = 0;
+	int driverID = 0;
+	struct Model* m;
+	while (1)
+	{
+		m = sdata->PLYROBJECTLIST[i++];
+
+		// "token"
+		if(*(int*)&m->name[0] == 0x656b6f74)
+		{
+			// Player 1 always comes after Token
+			break;
+		}
+
+		if (m == 0)
+		{
+			i = 0;
+			break;
+		}
+	}
+	
+	if(gGT->numPlyrCurrGame == 1)
+	{
+		driverID = 0;
+	}
+	
+	else if(gGT->numPlyrCurrGame == 2)
+	{
+		gGT->drivers[0]->instSelf->model = data.driverModel_lowLOD[0];
+		gGT->drivers[1]->instSelf->model = data.driverModel_lowLOD[1];
+		driverID = 2;
+	}
+	
+	else
+	{
+		gGT->drivers[0]->instSelf->model = data.driverModel_lowLOD[0];
+		gGT->drivers[1]->instSelf->model = data.driverModel_lowLOD[1];
+		gGT->drivers[2]->instSelf->model = data.driverModel_lowLOD[2];
+		
+		if(gGT->numPlyrCurrGame == 4)
+			gGT->drivers[3]->instSelf->model = sdata->PLYROBJECTLIST[i++];	
+		
+		driverID = 8;
+	}
+	
+	for(driverID; driverID < 7; driverID++)
+	{
+		if(gGT->drivers[driverID] == 0) break;
+		gGT->drivers[driverID]->instSelf->model = sdata->PLYROBJECTLIST[i++];
+	}
+	
+	for(driverID = 0; driverID < 7; driverID++)
+	{
+		if(gGT->drivers[driverID] == 0) break;
+		printf("%s\n", gGT->drivers[driverID]->instSelf->model->name);
+	}
+	
+#endif
 
 #ifndef REBUILD_PS1
     // if you're in time trial, not main menu, not loading.
@@ -110,6 +170,10 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
         GhostReplay_Init2();
 
         GhostTape_Start();
+		
+		#ifdef REBUILD_PS1
+		#error Do Something For instSelf->model
+		#endif
     }
 #endif
 }
