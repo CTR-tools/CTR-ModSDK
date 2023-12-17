@@ -471,6 +471,7 @@ FinishLoading:
 					)
 					{
 						DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+						sdata->mainMenuState = 2;
 					}
 				}
 #endif
