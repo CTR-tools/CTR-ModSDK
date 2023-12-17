@@ -1,7 +1,8 @@
 #include <common.h>
 
 #ifdef REBUILD_PC
-char memory[2*1024*1024];
+// with 8mb expansion, we have bonus PrimMem
+char memory[8*1024*1024];
 #endif
 
 void DECOMP_MEMPACK_Init(int ramSize)
@@ -17,10 +18,10 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	// Visual Studio -> Properties -> Linker -> Advanced -> 
 	// Base Address, Randomized Base Address, Fixed Base Address
 	ptrMempack->start = &memory[0];
-	memset(memory, 0, 2*1024*1024);
+	memset(memory, 0, 8*1024*1024);
 	
-	ptrMempack->endOfAllocator = &memory[2*1024*1024 - 4];
-	ptrMempack->lastFreeByte = &memory[2*1024*1024 - 4];
+	ptrMempack->endOfAllocator = &memory[8*1024*1024 - 4];
+	ptrMempack->lastFreeByte = &memory[8*1024*1024 - 4];
 
 #else
 	

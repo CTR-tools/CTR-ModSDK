@@ -109,57 +109,106 @@ void TEST_226(
 				// dont invisible walls
 				if ((block->quadFlags & (1<<15)) != 0) continue;
 	#endif
-		
-				p = primMem->curr;
-				pNext = p + 1;
-				pCurr = p;
-				if(pNext > ((unsigned int)primMem->end - 0x200)) return;
-	
-				*(int*)&p->r0 = *(int*)&pVA[block->index[0]].color_lo[0];
-				*(int*)&p->r1 = *(int*)&pVA[block->index[1]].color_lo[0];
-				*(int*)&p->r2 = *(int*)&pVA[block->index[2]].color_lo[0];
-				*(int*)&p->r3 = *(int*)&pVA[block->index[3]].color_lo[0];
-	
-				setPolyG4(p);
-	
-				gte_ldv0(&pVA[block->index[0]].pos[0]);
+
+				int idHigh[16] =
+				{
+					0,4,5,6,
+					4,1,6,7,
+					5,6,2,8,
+					6,7,8,3
+				};
+
+				int idLow[4] =
+				{
+					0,1,2,3
+				};
+
+				int num = 1;
+				int* id = idLow;
+				int k = 0;
+
+				gte_ldv0(&pVA[block->index[id[4 * k + 0]]].pos[0]);
 				gte_rtps();
 				gte_stsxy(&posScreen1[0]);
-	
-				gte_ldv0(&pVA[block->index[1]].pos[0]);
+
+				gte_ldv0(&pVA[block->index[id[4 * k + 1]]].pos[0]);
 				gte_rtps();
 				gte_stsxy(&posScreen2[0]);
-	
-				gte_ldv0(&pVA[block->index[2]].pos[0]);
+
+				gte_ldv0(&pVA[block->index[id[4 * k + 2]]].pos[0]);
 				gte_rtps();
 				gte_stsxy(&posScreen3[0]);
-				
-				gte_ldv0(&pVA[block->index[3]].pos[0]);
+
+				gte_ldv0(&pVA[block->index[id[4 * k + 3]]].pos[0]);
 				gte_rtps();
 				gte_stsxy(&posScreen4[0]);
-	
-				// to be in viewport, coordinates must be
-				// X: [0, 0x40]
-				// Y: [0, 0xA0]
-				setXY4(p,
-					(posScreen1[0]), (posScreen1[1]),	// XY0
-					(posScreen2[0]), (posScreen2[1]),	// XY1
-					(posScreen3[0]), (posScreen3[1]),	// XY2
-					(posScreen4[0]), (posScreen4[1]));
-					
+
 				gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
 				gte_avsz3();
 				gte_stotz(&otZ);
-	
-				if (otZ > 0)
+
+				if (otZ > 8)
 				{
-					otZ = otZ / 4;
-					
-					// matrices not divided by 4
-					if(otZ < 1024)
+					if (otZ < 1024)
 					{
-						AddPrim((u_long*)ot + (otZ >> 1), pCurr);
-						primMem->curr = pNext;
+						num = 4;
+						id = idHigh;
+					}
+				}
+		
+				for (k = 0; k < num; k++)
+				{
+					p = primMem->curr;
+					pNext = p + 1;
+					pCurr = p;
+					if (pNext > ((unsigned int)primMem->end - 0x200)) return;
+
+					*(int*)&p->r0 = *(int*)&pVA[block->index[id[4*k+0]]].color_hi[0];
+					*(int*)&p->r1 = *(int*)&pVA[block->index[id[4*k+1]]].color_hi[0];
+					*(int*)&p->r2 = *(int*)&pVA[block->index[id[4*k+2]]].color_hi[0];
+					*(int*)&p->r3 = *(int*)&pVA[block->index[id[4*k+3]]].color_hi[0];
+
+					setPolyG4(p);
+
+					gte_ldv0(&pVA[block->index[id[4 * k + 0]]].pos[0]);
+					gte_rtps();
+					gte_stsxy(&posScreen1[0]);
+
+					gte_ldv0(&pVA[block->index[id[4 * k + 1]]].pos[0]);
+					gte_rtps();
+					gte_stsxy(&posScreen2[0]);
+
+					gte_ldv0(&pVA[block->index[id[4 * k + 2]]].pos[0]);
+					gte_rtps();
+					gte_stsxy(&posScreen3[0]);
+
+					gte_ldv0(&pVA[block->index[id[4 * k + 3]]].pos[0]);
+					gte_rtps();
+					gte_stsxy(&posScreen4[0]);
+
+					// to be in viewport, coordinates must be
+					// X: [0, 0x40]
+					// Y: [0, 0xA0]
+					setXY4(p,
+						(posScreen1[0]), (posScreen1[1]),	// XY0
+						(posScreen2[0]), (posScreen2[1]),	// XY1
+						(posScreen3[0]), (posScreen3[1]),	// XY2
+						(posScreen4[0]), (posScreen4[1]));
+
+					gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
+					gte_avsz3();
+					gte_stotz(&otZ);
+
+					if (otZ > 8)
+					{
+						otZ = otZ / 4;
+
+						// matrices not divided by 4
+						if (otZ < 1000)
+						{
+							AddPrim((u_long*)ot + (otZ >> 1), pCurr);
+							primMem->curr = pNext;
+						}
 					}
 				}
 			}

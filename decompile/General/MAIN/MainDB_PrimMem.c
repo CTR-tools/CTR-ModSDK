@@ -4,6 +4,10 @@ void DECOMP_MainDB_PrimMem(struct PrimMem* primMem, u_int size)
 {
 	void* pvVar1;
 	
+	#ifdef REBUILD_PC
+	size = size*8;
+	#endif
+	
 	pvVar1 = DECOMP_MEMPACK_AllocMem(size);
 	primMem->size = size;
 	primMem->unk2 = (int)pvVar1;
