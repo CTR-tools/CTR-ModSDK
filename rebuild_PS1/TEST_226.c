@@ -105,6 +105,9 @@ void TEST_226(
 			{	
 				struct QuadBlock* block;
 				block = &mi->ptrQuadBlockArray[j];
+
+				// dont invisible walls
+				if ((block->quadFlags & (1<<15)) != 0) continue;
 	#endif
 		
 				p = primMem->curr;
