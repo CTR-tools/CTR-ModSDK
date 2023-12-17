@@ -559,6 +559,10 @@ common, exe, TileView_UpdateFrustum, 0x0, General/TileView/TileView_UpdateFrustu
 common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
 common, exe, TileView_SetDrawEnv_Normal, 0x0, General/TileView/TileView_SetDrawEnv_Normal.c
 
+// TitleBeginTrack
+common, exe, TitleBeginTrack_MenuBoxFuncPtr, 0x0, General/TitleBeginTrack_MenuBoxFuncPtr.c
+common, exe, TitleBeginTrack_Get_MenuBox, 0x0, General/TitleBeginTrack_Get_MenuBox.c
+
 // TitleFlag
 common, exe, TitleFlag_MoveModels, 0x0, General/TitleFlag/TitleFlag_t01_MoveModels.c
 common, exe, TitleFlag_IsFullyOnScreen, 0x0, General/TitleFlag/TitleFlag_t02_IsFullyOnScreen.c

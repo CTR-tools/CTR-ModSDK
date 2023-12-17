@@ -1482,7 +1482,7 @@ void FUN_80043ab8(void)
 }
 
 
-// TitleBeginTrack_MenuFuncPtr
+// TitleBeginTrack_MenuBoxFuncPtr
 void FUN_80043b30(undefined4 param_1)
 
 {

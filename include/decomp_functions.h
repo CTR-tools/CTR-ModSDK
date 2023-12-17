@@ -236,6 +236,7 @@ void* DECOMP_LOAD_VramFile(void* bigfilePtr, int subfileIndex, int* ptrDestinati
 void* DECOMP_LOAD_ReadDirectory(char* filename);
 void* DECOMP_LOAD_ReadFile_NoCallback(char* filename, void* ptrDestination, int* size);
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile);
+void DECOMP_LOAD_LevelFile(int levelID);
 
 void DECOMP_LOAD_HowlCallback(char result);
 int DECOMP_LOAD_HowlSectorChainStart(CdlFILE* cdlFileHWL, void* ptrDestination, int firstSector, int numSector);
@@ -263,6 +264,7 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker* gGT);
 void DECOMP_MainInit_VRAMClear();
 void DECOMP_MainInit_VRAMDisplay();
 
+void DECOMP_MainRaceTrack_StartLoad(short levelID);
 void DECOMP_MainRaceTrack_RequestLoad(short levelID);
 
 int DECOMP_MATH_Sin(u_int angle);
@@ -324,6 +326,9 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView);
 void DECOMP_TileView_SetDrawEnv_Normal(
 		void* ot, struct TileView* tileView, struct DB* backBuffer,
 		DRAWENV* copyDrawEnvNULL, int isbg);
+
+void DECOMP_TitleBeginTrack_MenuBoxFuncPtr(struct MenuBox* mb);
+struct MenuBox* DECOMP_TitleBeginTrack_Get_MenuBox();
 
 void DECOMP_TitleFlag_SetCanDraw(short param_1);
 void DECOMP_TitleFlag_BeginTransition(int direction);

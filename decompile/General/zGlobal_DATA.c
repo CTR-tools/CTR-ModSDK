@@ -3893,7 +3893,7 @@ struct Data data =
 	{
 		.stringIndexTitle = 0xFFFF,
 		.state = 0x20, // no input, just funcPtr
-		.funcPtr = 0x80043B30
+		.funcPtr = DECOMP_TitleBeginTrack_MenuBoxFuncPtr
 	},
 	
 	.matrixTitleFlag =

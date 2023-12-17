@@ -200,9 +200,7 @@ u_int DECOMP_main()
 							gGT->gameMode1 = (gameMode1 | AddBitsConfig0) & ~RemBitsConfig0;
 							gGT->gameMode2 = (gameMode2 | AddBitsConfig8) & ~RemBitsConfig8;
 							
-							#ifndef REBUILD_PS1
-							MainRaceTrack_StartLoad(sdata->Loading.Lev_ID_To_Load);
-							#endif
+							DECOMP_MainRaceTrack_StartLoad(sdata->Loading.Lev_ID_To_Load);
 						}
 						
 						else if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)

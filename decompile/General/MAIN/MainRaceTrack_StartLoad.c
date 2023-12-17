@@ -6,11 +6,13 @@ void DECOMP_MainRaceTrack_StartLoad(short levelID)
   // clear backup,
   // keep music,
   // destroy "most" fx, let menu fx play to end
-  howl_StopAudio(1,0,0);
+  DECOMP_howl_StopAudio(1,0,0);
 
+#ifndef REBUILD_PS1
   // deactivate pause
   ElimBG_Deactivate(sdata->gGT);
+#endif
 
-  LOAD_LevelFile(levelID);
+  DECOMP_LOAD_LevelFile(levelID);
   return;
 }

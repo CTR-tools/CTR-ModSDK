@@ -261,6 +261,8 @@
 #include "../decompile/General/LOAD/LOAD_A44_GetAdvPackIndex.c"
 #include "../decompile/General/LOAD/LOAD_A45_TenStages.c"
 
+#include "../decompile/General/LOAD/LOAD_A47_LevelFile.c"
+
 #include "../decompile/General/MAIN/MainDB_GetClipSize.c"
 #include "../decompile/General/MAIN/MainDB_OTMem.c"
 #include "../decompile/General/MAIN/MainDB_PrimMem.c"
@@ -277,6 +279,7 @@
 #include "../decompile/General/MAIN/MainInit_FinalizeInit.c"
 #include "../decompile/General/MAIN/MainInit_VRAMClear.c" 
 #include "../decompile/General/MAIN/MainInit_VRAMDisplay.c" 
+#include "../decompile/General/MAIN/MainRaceTrack_StartLoad.c"
 #include "../decompile/General/MAIN/MainRaceTrack_RequestLoad.c"
 
 #include "../decompile/General/MATH/MATH_Sin.c"
@@ -334,6 +337,9 @@
 #include "../decompile/General/THREAD/THREAD_CollidePointWithSelf.c"
 #include "../decompile/General/THREAD/THREAD_CollidePointWithBucket.c"
 #include "../decompile/General/THREAD/THREAD_SearchForModel.c"
+
+#include "../decompile/General/TitleBeginTrack_MenuBoxFuncPtr.c"
+#include "../decompile/General/TitleBeginTrack_Get_MenuBox.c"
 
 #include "../decompile/General/TitleFlag/TitleFlag_t01_MoveModels.c"
 #include "../decompile/General/TitleFlag/TitleFlag_t02_IsFullyOnScreen.c"
