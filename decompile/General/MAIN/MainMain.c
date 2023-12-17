@@ -457,6 +457,18 @@ FinishLoading:
 					{
 						gGT->tileView[0].pos[1] -= 0x20;
 					}
+					
+					if (
+						((held & BTN_UP) != 0) &&
+						((held & BTN_DOWN) != 0) &&
+						((held & BTN_LEFT) != 0) &&
+						((held & BTN_RIGHT) != 0) &&
+						((held & BTN_CROSS) != 0) &&
+						((held & BTN_TRIANGLE) != 0)
+					)
+					{
+						DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+					}
 				}
 #endif
 

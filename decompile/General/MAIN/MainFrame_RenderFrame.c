@@ -97,10 +97,13 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	DECOMP_TileView_SetMatrixVP(&gGT->tileView[3]);
 
 	// This is temporary until RenderBucket is done
-	void TEST_DrawInstances(struct GameTracker* gGT);
-	RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
-	TEST_DrawInstances(gGT);
-	RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
+	if ((gGT->renderFlags & 0x20) != 0)
+	{
+		void TEST_DrawInstances(struct GameTracker* gGT);
+		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
+		TEST_DrawInstances(gGT);
+		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
+	}
 #endif
 
 #ifndef REBUILD_PS1	
