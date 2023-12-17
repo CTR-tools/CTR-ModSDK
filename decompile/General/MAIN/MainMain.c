@@ -422,14 +422,14 @@ FinishLoading:
 
 					if ((held & BTN_UP) != 0)
 					{
-						gGT->tileView[0].pos[2] += (0x20 * DECOMP_MATH_Cos(-gGT->tileView[0].rot[1])) >> 0xC;
-						gGT->tileView[0].pos[0] += (0x20 * DECOMP_MATH_Sin(-gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[2] += (0x40 * DECOMP_MATH_Cos(-gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[0] += (0x40 * DECOMP_MATH_Sin(-gGT->tileView[0].rot[1])) >> 0xC;
 					}
 
 					if ((held & BTN_DOWN) != 0)
 					{
-						gGT->tileView[0].pos[2] -= (0x20 * DECOMP_MATH_Cos(-gGT->tileView[0].rot[1])) >> 0xC;
-						gGT->tileView[0].pos[0] -= (0x20 * DECOMP_MATH_Sin(-gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[2] -= (0x40 * DECOMP_MATH_Cos(-gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[0] -= (0x40 * DECOMP_MATH_Sin(-gGT->tileView[0].rot[1])) >> 0xC;
 					}
 
 					if ((held & BTN_LEFT) != 0)
