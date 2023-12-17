@@ -1523,7 +1523,7 @@ void FUN_80043b30(undefined4 param_1)
   // MainRaceTrack_RequestLoad(track in trackSelection)
   FUN_8003cfc0((int)*(short *)(PTR_DAT_8008d2ac + 0x1eb0));
 
-  // make MenuBox invisible
+  // MENUBOX_Hide
   FUN_800469c8(param_1);
   return;
 }
