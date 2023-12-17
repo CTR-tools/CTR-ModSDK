@@ -16,8 +16,11 @@ void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio
 	// traffic light countdown
     gGT->trafficLightsTimer = 0xf00;
 
+// Temporary until camera thread is done
+#ifndef REBUILD_PS1
 	// fly-in camera animation
     gameModeFlag |= START_OF_RACE;
+#endif
   }
   // if you are:
   else

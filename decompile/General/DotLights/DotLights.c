@@ -81,7 +81,6 @@ DrawLights:
   
   for(playerIndex = 0; playerIndex < gGT->numPlyrCurrGame; playerIndex++)
   {
-
       tileView = &gGT->tileView[playerIndex];
 
 	  scale = FP(0.5);

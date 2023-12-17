@@ -539,9 +539,9 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// if linked list of icons exists
 			if (gGT->mpkIcons != 0)
 			{
-#ifndef REBUILD_PS1
 				piVar15 = *(u_int *)((u_int)gGT->mpkIcons + 4);
 				
+#ifndef REBUILD_PS1
 				// search for icon by string
 				//what even are these first arguments? --Super
 				uVar16 = DecalGlobal_FindInMPK(piVar15, rdata.s_lightredoff);
@@ -558,6 +558,27 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// search for icon by string
 				uVar16 = DecalGlobal_FindInMPK(piVar15, rdata.s_lightgreenon);
 				gGT->trafficLightIcon[3] = uVar16;
+#else
+				for(
+						struct Icon* firstIcon = piVar15; 
+						*(int*)&firstIcon->name[0];
+						firstIcon++
+					)
+				{
+					if(
+						// "lightred"
+						(*(int*)&firstIcon->name[0] == 0x6867696c) &&
+						(*(int*)&firstIcon->name[4] == 0x64657274)
+					)
+					{
+						// lets hope the order is the same in every MPK
+						gGT->trafficLightIcon[0] = &firstIcon[1];
+						gGT->trafficLightIcon[1] = &firstIcon[0];
+						gGT->trafficLightIcon[2] = &firstIcon[3];
+						gGT->trafficLightIcon[3] = &firstIcon[2];
+						break;
+					}
+				}
 #endif
 			}
 			

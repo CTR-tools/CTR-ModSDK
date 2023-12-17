@@ -158,9 +158,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 			(sdata->Loading.stage != -4)
 		)
 		{
-#ifndef REBUILD_PS1
 			DECOMP_DotLights(gGT);
-#endif
 		
 			if((gGT->renderFlags & 0x8000) != 0)
 			{
