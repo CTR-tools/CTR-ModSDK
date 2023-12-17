@@ -24,7 +24,7 @@ struct RenderList
 	// one for each player
 };
 
-void DrawLevel(
+void TEST_226(
 	struct RenderList* RL,
 	struct TileView* view,
 	struct mesh_info* mi,

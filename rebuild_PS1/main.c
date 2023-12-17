@@ -7,6 +7,7 @@
 #include "TEST_DrawInstances.c"
 #include "TEST_ConvertRotToMatrix.c"
 #include "TEST_ThTickRunBucket.c"
+#include "TEST_226.c"
 
 #include "../decompile/General/MAIN/MainMain.c"
 

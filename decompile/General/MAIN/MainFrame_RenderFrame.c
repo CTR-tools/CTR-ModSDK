@@ -140,9 +140,20 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	{
 #ifndef REBUILD_PS1
 		RenderAllLevelGeometry(gGT);
+#else
+		// 226-229
+		TEST_226(
+			0,
+			&gGT->tileView[0],
+			gGT->level1->ptr_mesh_info,
+			&gGT->backBuffer->primMem,
+			0,
+			0); // waterEnvMap?
+#endif
+		
+		
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 		MultiplayerWumpaHUD(gGT);
-#endif
 		
 		#if 0
 		// Multiplayer Pixel LOD Part 3
@@ -1088,14 +1099,17 @@ SkyboxGlow:
 	
 	return;
 }
+#endif
 
 void MultiplayerWumpaHUD(struct GameTracker* gGT)
 {
 	if((gGT->hudFlags & 1) == 0) return;
 	if(gGT->numPlyrCurrGame < 2) return;
+	
+#ifndef REBUILD_PS1
 	UI_RenderFrame_Wumpa3D_2P3P4P(gGT);
-}
 #endif
+}
 
 void WindowBoxLines(struct GameTracker* gGT)
 {
