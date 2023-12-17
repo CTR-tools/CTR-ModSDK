@@ -2491,65 +2491,88 @@ void FUN_8001f6f0(int param_1,int param_2)
 void FUN_8001f7f0(int param_1)
 
 {
-  undefined4 uVar1;
-  undefined4 *in_t8;
-
-  // t8 is address of first LevVertex in level
-
+  ushort uVar1;
+  undefined4 *puVar2;
+  uint uVar3;
+  uint uVar4;
+  undefined4 uVar5;
+  int in_t8;
+  uint *in_t9;
+  
+  // t9 - pointer to quadblock
+  
+  uVar3 = *in_t9;
+  uVar4 = in_t9[1];
+  
   // [0]
-  uVar1 = in_t8[1];
-  *(undefined4 *)(param_1 + 0xf0) = *in_t8;
-  *(undefined4 *)(param_1 + 0xf4) = uVar1;
-  *(undefined4 **)(param_1 + 0xf8) = in_t8;
+  puVar2 = (undefined4 *)((uVar3 & 0xffff) * 0x10 + in_t8);
+  uVar5 = puVar2[1];
+  *(undefined4 *)(param_1 + 0xf0) = *puVar2;
+  *(undefined4 *)(param_1 + 0xf4) = uVar5;
+  *(undefined4 **)(param_1 + 0xf8) = puVar2;
   
   // [1]
-  uVar1 = in_t8[0x23ca1];
-  *(undefined4 *)(param_1 + 0x104) = in_t8[0x23ca0];
-  *(undefined4 *)(param_1 + 0x108) = uVar1;
-  *(undefined4 **)(param_1 + 0x10c) = in_t8 + 0x23ca0;
-  *(undefined4 *)(param_1 + 0xec) = 0x8f290004;
+  puVar2 = (undefined4 *)((uVar3 >> 0x10) * 0x10 + in_t8);
+  uVar5 = puVar2[1];
+  *(undefined4 *)(param_1 + 0x104) = *puVar2;
+  *(undefined4 *)(param_1 + 0x108) = uVar5;
+  *(undefined4 **)(param_1 + 0x10c) = puVar2;
+  
+  *(uint *)(param_1 + 0xec) = uVar4;
+  uVar3 = in_t9[2];
   
   // [2]
-  uVar1 = in_t8[0x11];
-  *(undefined4 *)(param_1 + 0x118) = in_t8[0x10];
-  *(undefined4 *)(param_1 + 0x11c) = uVar1;
-  *(undefined4 **)(param_1 + 0x120) = in_t8 + 0x10;
+  puVar2 = (undefined4 *)((uVar4 & 0xffff) * 0x10 + in_t8);
+  uVar5 = puVar2[1];
+  *(undefined4 *)(param_1 + 0x118) = *puVar2;
+  *(undefined4 *)(param_1 + 0x11c) = uVar5;
+  *(undefined4 **)(param_1 + 0x120) = puVar2;
   
   // [3]
-  uVar1 = in_t8[0x23ca5];
-  *(undefined4 *)(param_1 + 300) = in_t8[0x23ca4];
-  *(undefined4 *)(param_1 + 0x130) = uVar1;
-  *(undefined4 **)(param_1 + 0x134) = in_t8 + 0x23ca4;
+  puVar2 = (undefined4 *)((uVar4 >> 0x10) * 0x10 + in_t8);
+  uVar5 = puVar2[1];
+  *(undefined4 *)(param_1 + 300) = *puVar2;
+  *(undefined4 *)(param_1 + 0x130) = uVar5;
+  *(undefined4 **)(param_1 + 0x134) = puVar2;
+  
+  uVar4 = in_t9[3];
   
   // [4]
-  uVar1 = in_t8[0x3fffd];
-  *(undefined4 *)(param_1 + 0x140) = in_t8[0x3fffc];
-  *(undefined4 *)(param_1 + 0x144) = uVar1;
-  *(undefined4 **)(param_1 + 0x148) = in_t8 + 0x3fffc;
+  puVar2 = (undefined4 *)((uVar3 & 0xffff) * 0x10 + in_t8);
+  uVar5 = puVar2[1];
+  *(undefined4 *)(param_1 + 0x140) = *puVar2;
+  *(undefined4 *)(param_1 + 0x144) = uVar5;
+  *(undefined4 **)(param_1 + 0x148) = puVar2;
   
   // [5]
-  uVar1 = in_t8[0xc40d];
-  *(undefined4 *)(param_1 + 0x154) = in_t8[0xc40c];
-  *(undefined4 *)(param_1 + 0x158) = uVar1;
-  *(undefined4 **)(param_1 + 0x15c) = in_t8 + 0xc40c;
+  puVar2 = (undefined4 *)((uVar3 >> 0x10) * 0x10 + in_t8);
+  uVar5 = puVar2[1];
+  *(undefined4 *)(param_1 + 0x154) = *puVar2;
+  *(undefined4 *)(param_1 + 0x158) = uVar5;
+  *(undefined4 **)(param_1 + 0x15c) = puVar2;
+  
+  uVar1 = *(ushort *)(in_t9 + 4);
   
   // [6]
-  uVar1 = in_t8[0x6401];
-  *(undefined4 *)(param_1 + 0x168) = in_t8[0x6400];
-  *(undefined4 *)(param_1 + 0x16c) = uVar1;
-  *(undefined4 **)(param_1 + 0x170) = in_t8 + 0x6400;
+  puVar2 = (undefined4 *)((uVar4 & 0xffff) * 0x10 + in_t8);
+  uVar5 = puVar2[1];
+  *(undefined4 *)(param_1 + 0x168) = *puVar2;
+  *(undefined4 *)(param_1 + 0x16c) = uVar5;
+  *(undefined4 **)(param_1 + 0x170) = puVar2;
   
   // [7]
-  uVar1 = in_t8[0xd];
-  *(undefined4 *)(param_1 + 0x17c) = in_t8[0xc];
-  *(undefined4 *)(param_1 + 0x180) = uVar1;
-  *(undefined4 **)(param_1 + 0x184) = in_t8 + 0xc;
+  puVar2 = (undefined4 *)((uVar4 >> 0x10) * 0x10 + in_t8);
+  uVar5 = puVar2[1];
+  *(undefined4 *)(param_1 + 0x17c) = *puVar2;
+  *(undefined4 *)(param_1 + 0x180) = uVar5;
+  *(undefined4 **)(param_1 + 0x184) = puVar2;
   
   // [8]
-  uVar1 = in_t8[0x6085];
-  *(undefined4 *)(param_1 + 400) = in_t8[0x6084];
-  *(undefined4 *)(param_1 + 0x194) = uVar1;
-  *(undefined4 **)(param_1 + 0x198) = in_t8 + 0x6084;
+  puVar2 = (undefined4 *)((uint)uVar1 * 0x10 + in_t8);
+  uVar5 = puVar2[1];
+  *(undefined4 *)(param_1 + 400) = *puVar2;
+  *(undefined4 *)(param_1 + 0x194) = uVar5;
+  *(undefined4 **)(param_1 + 0x198) = puVar2;
   return;
 }
 
