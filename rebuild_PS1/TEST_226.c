@@ -65,7 +65,7 @@ void TEST_226(
 	
 	int numBlock = 0;
 	
-	POLY_G4* p;
+	POLY_GT4* p;
 	void* pNext;
 	void* pCurr;
 	int otZ;
@@ -172,7 +172,7 @@ void TEST_226(
 					*(int*)&p->r2 = *(int*)&pVA[block->index[id[4*k+2]]].color_hi[0];
 					*(int*)&p->r3 = *(int*)&pVA[block->index[id[4*k+3]]].color_hi[0];
 
-					setPolyG4(p);
+					setPolyGT4(p);
 
 					gte_ldv0(&pVA[block->index[id[4 * k + 0]]].pos[0]);
 					gte_rtps();
@@ -198,6 +198,38 @@ void TEST_226(
 						(posScreen2[0]), (posScreen2[1]),	// XY1
 						(posScreen3[0]), (posScreen3[1]),	// XY2
 						(posScreen4[0]), (posScreen4[1]));
+
+					if (num == 4)
+					{
+						struct TextureLayout* tl = block->ptr_texture_mid[3];
+						if (tl != 0)
+						{
+							setUV4(p,
+								tl->u0, tl->v0,
+								tl->u1, tl->v1,
+								tl->u2, tl->v2,
+								tl->u3, tl->v3);
+
+							p->clut = tl->clut;
+							p->tpage = tl->tpage;
+						}
+					}
+
+					else
+					{
+						struct TextureLayout* tl = block->ptr_texture_low;
+						if (tl != 0)
+						{
+							setUV4(p,
+								tl->u0, tl->v0,
+								tl->u1, tl->v1,
+								tl->u2, tl->v2,
+								tl->u3, tl->v3);
+
+							p->clut = tl->clut;
+							p->tpage = tl->tpage;
+						}
+					}
 
 					gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
 					gte_avsz3();
