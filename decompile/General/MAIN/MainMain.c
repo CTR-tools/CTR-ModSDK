@@ -412,13 +412,16 @@ FinishLoading:
 				{
 					if (gGT->trafficLightsTimer > 0)
 					{
-						gGT->tileView[0].pos[0] = gGT->level1->DriverSpawn[0].pos[0];
-						gGT->tileView[0].pos[1] = gGT->level1->DriverSpawn[0].pos[1] + 0x100;
-						gGT->tileView[0].pos[2] = gGT->level1->DriverSpawn[0].pos[2];
-
-						gGT->tileView[0].rot[0] = gGT->level1->DriverSpawn[0].rot[0];
-						gGT->tileView[0].rot[1] = 0xc00-gGT->level1->DriverSpawn[0].rot[1];
-						gGT->tileView[0].rot[2] = 0x800; // required
+						for(int k = 0; k < gGT->numPlyrCurrGame; k++)
+						{
+							gGT->tileView[k].pos[0] = gGT->level1->DriverSpawn[k].pos[0];
+							gGT->tileView[k].pos[1] = gGT->level1->DriverSpawn[k].pos[1] + 0x100;
+							gGT->tileView[k].pos[2] = gGT->level1->DriverSpawn[k].pos[2];
+										  
+							gGT->tileView[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0];
+							gGT->tileView[k].rot[1] = 0xc00-gGT->level1->DriverSpawn[k].rot[1];
+							gGT->tileView[k].rot[2] = 0x800; // required
+						}
 					}
 					else
 					{

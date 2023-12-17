@@ -147,12 +147,16 @@ void TEST_226(
 				gte_avsz3();
 				gte_stotz(&otZ);
 
-				if (otZ > 8)
+				// boost LOD for 1P mode only
+				if (sdata->gGT->numPlyrCurrGame == 1)
 				{
-					if (otZ < 1024)
+					if (otZ > 8)
 					{
-						num = 4;
-						id = idHigh;
+						if (otZ < 1024)
+						{
+							num = 4;
+							id = idHigh;
+						}
 					}
 				}
 		

@@ -144,14 +144,17 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 #ifndef REBUILD_PS1
 		RenderAllLevelGeometry(gGT);
 #else
-		// 226-229
-		TEST_226(
-			0,
-			&gGT->tileView[0],
-			gGT->level1->ptr_mesh_info,
-			&gGT->backBuffer->primMem,
-			0,
-			0); // waterEnvMap?
+		for (int i = 0; i < gGT->numPlyrCurrGame; i++)
+		{
+			// 226-229
+			TEST_226(
+				0,
+				&gGT->tileView[i],
+				gGT->level1->ptr_mesh_info,
+				&gGT->backBuffer->primMem,
+				0,
+				0); // waterEnvMap?
+		}
 #endif
 		
 		
