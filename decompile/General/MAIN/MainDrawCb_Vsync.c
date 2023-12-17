@@ -17,9 +17,7 @@ void DECOMP_MainDrawCb_Vsync()
 	sdata->rcnt_elapsedUnits_total += GetRCnt(0xf2000001);
 	ResetRCnt(0xf2000001);
 
-	#ifndef REBUILD_PC
 	DECOMP_howl_PlayAudio_Update();
-	#endif
 
 	DECOMP_GAMEPAD_PollVsync(sdata->gGamepads);	
 	return;

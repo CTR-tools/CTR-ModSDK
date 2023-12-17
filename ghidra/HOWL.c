@@ -4492,10 +4492,8 @@ void FUN_8002be9c(void)
 		// set new previous
         (&DAT_8008fe4c)[vNum * 4] = startAddr;
 
-		#ifndef REBUILD_PC
 		// start address is an address in spu ram, not cpu ram
 		SpuSetVoiceStartAddr(vNum,startAddr);
-		#endif
 	  }
 
       if (
@@ -4540,11 +4538,8 @@ void FUN_8002be9c(void)
         }
 
 		// these are SPU Channels, not a voiceline
-
-		#ifndef REBUILD_PC
         SpuSetVoiceADSRAttr(vNum,pitch >> 8 & 0x7f,pitch >> 4 & 0xf,uVar1 >> 6 & 0x7f,uVar1 & 0x1f,
                             pitch & 0xf,local_38,local_34,RRmode);
-		#endif
 	  }
 
       if (
@@ -5202,9 +5197,7 @@ void FUN_8002c918(void)
   // for vNum = 0; vNum < 0x18 (24); vNum++
   do
   {
-	#ifndef REBUILD_PC
     SpuSetVoiceADSRAttr(vNum,0,0xf,0x7f,2,0xf,5,1,3);
-	#endif
 	
     puVar1[8] = 0;
     puVar1[9] = (char)vNum;
