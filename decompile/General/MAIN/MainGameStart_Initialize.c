@@ -1,6 +1,6 @@
 #include <common.h>
 
-void MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio)
+void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio)
 {
   u_int gameModeFlag = gGT->gameMode1 & ~(END_OF_RACE);  // Remove end-of-race flag
 
@@ -35,14 +35,16 @@ void MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio)
   // this never happens in normal gameplay
   if (boolStopAudio == 0) {
 
-    Music_Stop();
+    DECOMP_Music_Stop();
 
     // stops menu sounds
     // keep backup,
     // keep music (no music to stop),
     // stop all fx
-    howl_StopAudio(0,0,1);
+    DECOMP_howl_StopAudio(0,0,1);
   }
 
+#ifndef REBUILD_PS1
   VehInit_TeleportAll(gGT,2);
+#endif
 }

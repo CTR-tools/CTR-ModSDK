@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DotLights(struct GameTracker* gGT)
+void DECOMP_DotLights(struct GameTracker* gGT)
 {
   int iVar1;
   int d1;
@@ -34,7 +34,7 @@ void DotLights(struct GameTracker* gGT)
     if (0 < sdata->trafficLightsTimer_prevFrame)
 	{
 	  // Play "green light" Sound
-      OtherFX_Play(0x46,0);
+      DECOMP_OtherFX_Play(0x46,0);
     }
 
 	// (1,1,1,1)
@@ -57,7 +57,7 @@ void DotLights(struct GameTracker* gGT)
 		  if(sdata->trafficLightsTimer_prevFrame > (0x3c0*lightIndex))
 		  {
 			// Play "red light" Sound
-			OtherFX_Play(0x45,0);
+			DECOMP_OtherFX_Play(0x45,0);
 		  }
 		  
 		  d1 |= (1<<lightIndex);
@@ -113,7 +113,7 @@ DrawLights:
 	  for(lightIndex = 0; lightIndex < 4; lightIndex ++)
 	  {
 
-		DecalHUD_DrawPolyFT4(
+		DECOMP_DecalHUD_DrawPolyFT4(
 		
 			// icon pointer
 			gGT->trafficLightIcon

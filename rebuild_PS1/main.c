@@ -56,6 +56,8 @@
 
 #include "../decompile/General/DISPLAY/DISPLAY_Swap.c"
 
+#include "../decompile/General/DotLights/DotLights.c"
+
 #include "../decompile/General/GAMEPAD/GAMEPAD_Init.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_PollVsync.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_GetNumConnected.c"
@@ -271,6 +273,9 @@
 #include "../decompile/General/MAIN/MainFrame_GameLogic.c"
 #include "../decompile/General/MAIN/MainFrame_RenderFrame.c"
 #include "../decompile/General/MAIN/MainFrame_ResetDB.c"
+
+#include "../decompile/General/MAIN/MainGameStart_Initialize.c"
+
 #include "../decompile/General/MAIN/MainInit_Drivers.c"
 #include "../decompile/General/MAIN/MainInit_JitPoolsNew.c"
 #include "../decompile/General/MAIN/MainInit_JitPoolsReset.c"

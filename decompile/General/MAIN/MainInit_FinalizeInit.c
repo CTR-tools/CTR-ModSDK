@@ -263,21 +263,25 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
 #ifndef REBUILD_PS1
     // copy InstDef to InstancePool
     INSTANCE_LevInitAll(lev1->ptrInstDefs, lev1->numInstances);
+#endif
 
     // Debug_ToggleNormalSpawn == normal spawn
     if (gGT->Debug_ToggleNormalSpawn != 0)
     {
-        MainGameStart_Initialize(gGT, 1);
+        DECOMP_MainGameStart_Initialize(gGT, 1);
 
         if (gGT->boolDemoMode != 0)
         {
             for (i = 0; i < gGT->numPlyrCurrGame; i++)
             {
+#ifndef REBUILD_PS1
                 BOTS_Driver_Convert(gGT->drivers[i]);
+#endif
             }
         }
     }
 
+#ifndef REBUILD_PS1
     // execute all camera thread update functions
     ThTick_RunBucket(gGT->threadBuckets[CAMERA].thread);
 #endif

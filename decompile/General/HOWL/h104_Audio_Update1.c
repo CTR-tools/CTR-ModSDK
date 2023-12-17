@@ -72,6 +72,11 @@ void DECOMP_Audio_Update1(void)
         Level_AmbientSound();
 		#endif
 
+        // Temporary, no Drivers yet
+        #ifdef REBUILD_PC
+        break;
+        #endif
+
         // if race has more than 2 laps
         if ((2 < sdata->gGT->numLaps) &&
             // if you are on 2nd to last lap

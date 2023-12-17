@@ -26,6 +26,8 @@ void DECOMP_DecalHUD_DrawPolyGT4(struct Icon* icon, short posX, short posY, stru
 
 void DECOMP_DISPLAY_Swap(void);
 
+void DECOMP_DotLights(struct GameTracker* gGT);
+
 // gamepad
 void DECOMP_GAMEPAD_Init(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem* gGamepads);
@@ -254,6 +256,8 @@ void DECOMP_MainDrawCb_DrawSync();
 void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT);
+
+void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio);
 
 void DECOMP_MainInit_Drivers(struct GameTracker *gGT);
 void DECOMP_MainInit_JitPoolsNew(struct GameTracker *gGT);

@@ -134,12 +134,15 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderAllHeatParticles(gGT);
 	
 	TileView_FadeAllWindows();
+#endif
 	
 	if((gGT->renderFlags & 1) != 0)
 	{
+#ifndef REBUILD_PS1
 		RenderAllLevelGeometry(gGT);
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 		MultiplayerWumpaHUD(gGT);
+#endif
 		
 		#if 0
 		// Multiplayer Pixel LOD Part 3
@@ -155,9 +158,9 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 			(sdata->Loading.stage != -4)
 		)
 		{
-			// in DotLights.c
-			void DotLights(struct GameTracker* gGT);
-			DotLights(gGT);
+#ifndef REBUILD_PS1
+			DECOMP_DotLights(gGT);
+#endif
 		
 			if((gGT->renderFlags & 0x8000) != 0)
 			{
@@ -167,6 +170,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		
 		}
 		
+#ifndef REBUILD_PS1
 		// if game is not loading
 		if (sdata->Loading.stage == -1) 
 		{
@@ -178,8 +182,10 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	
 			StartLine_Update();
 		}
+#endif
 	}
 
+#ifndef REBUILD_PS1
 	// If in main menu, or in adventure arena,
 	// or in End-Of-Race menu
 	if ((gGT->gameMode1 & (ADVENTURE_ARENA | END_OF_RACE | MAIN_MENU)) != 0) {
@@ -1091,6 +1097,7 @@ void MultiplayerWumpaHUD(struct GameTracker* gGT)
 	if(gGT->numPlyrCurrGame < 2) return;
 	UI_RenderFrame_Wumpa3D_2P3P4P(gGT);
 }
+#endif
 
 void WindowBoxLines(struct GameTracker* gGT)
 {
@@ -1102,7 +1109,7 @@ void WindowBoxLines(struct GameTracker* gGT)
 	
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
-		MENUBOX_DrawOuterRect_LowLevel(
+		DECOMP_MENUBOX_DrawOuterRect_LowLevel(
 
 			// dimensions, thickness
 			&gGT->tileView[i].rect,4,2,
@@ -1219,7 +1226,6 @@ void WindowDivsionLines(struct GameTracker* gGT)
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
 }
-#endif
 
 void RenderDispEnv_UI(struct GameTracker* gGT)
 {

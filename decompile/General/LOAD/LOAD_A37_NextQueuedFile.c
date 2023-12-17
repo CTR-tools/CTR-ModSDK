@@ -86,6 +86,11 @@ void DECOMP_LOAD_NextQueuedFile()
 		// Use callback if present
 		if(curr->callback.funcPtr != 0)
 		{
+#ifdef REBUILD_PC
+			if(*curr->callback.funcPtr != -1)
+				if (*curr->callback.funcPtr != -2)
+#endif
+
 			(*curr->callback.funcPtr)(curr);
 		}
 		
