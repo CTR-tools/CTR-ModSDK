@@ -417,6 +417,12 @@ FinishLoading:
 						gGT->tileView[0].rot[1] = 0xc00-gGT->level1->DriverSpawn[0].rot[1];
 						gGT->tileView[0].rot[2] = 0x800; // required
 					}
+					else
+					{
+						// temporary workaround, cause XA IRQ doesn't happen,
+						// must be zero for level music to work
+						sdata->XA_State = 0;
+					}
 
 					int held = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
 
