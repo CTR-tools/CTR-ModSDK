@@ -76,9 +76,7 @@ void DECOMP_Channel_UpdateChannels()
 			{
 				cur->spuStartAddr = startAddr;
 				
-				#ifndef REBUILD_PC
 				SpuSetVoiceStartAddr(vNum, startAddr);
-				#endif
 			}
 		}
 		
@@ -116,12 +114,10 @@ void DECOMP_Channel_UpdateChannels()
 				if((sr >> 5 & 1) == 0)	RRmode = 3;
 				else					RRmode = 7;
 				
-				#ifndef REBUILD_PC
 				SpuSetVoiceADSRAttr(vNum, 
 					(ad>>8)&0x7f, (ad>>4)&0xf,
 					(sr>>6)&0x7f, sr&0x1f, ad&0xf,
 					local_38, local_34, RRmode);
-				#endif
 			}
 		}
 		

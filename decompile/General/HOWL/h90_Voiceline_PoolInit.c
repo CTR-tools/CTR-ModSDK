@@ -28,9 +28,7 @@ void DECOMP_Voiceline_PoolInit(void)
     struct ChannelStats* stats = &sdata->channelStatsPrev[index];
     sdata->ChannelUpdateFlags[index] = 0;
 
-	#ifndef REBUILD_PC
     SpuSetVoiceADSRAttr(index, 0, 0xf, 0x7f, 2, 0xf, 5, 1, 3);
-	#endif
 	
     stats->flags = 0;
     stats->channelID = index;
