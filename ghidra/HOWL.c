@@ -1499,7 +1499,7 @@ uint FUN_800293b8(void)
 			{
 			  // send RAM to SPU
               SpuSetTransferStartAddr(addr);
-              SpuRead((uchar *)(DAT_8008d788 + 0x800),DAT_8008d764);
+              SpuWrite((uchar *)(DAT_8008d788 + 0x800),DAT_8008d764);
             }
             DAT_8008d774 = 3;
           }

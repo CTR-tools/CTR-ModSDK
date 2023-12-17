@@ -1215,7 +1215,7 @@
 800761b0 SpuSetReverbModeDepth
 800761e0 SpuSetReverb
 800762b0 SpuSetTransferStartAddr
-80076310 SpuRead
+80076310 SpuWrite
 80076370 SpuIsTransferCompleted
 80076420 SpuSetVoiceADSRAttr
 80076560 SpuSetVoicePitch

@@ -136,9 +136,7 @@ int DECOMP_Bank_AssignSpuAddrs()
 			// start transfer
 			SpuSetTransferStartAddr(spuAddrStart);
 			
-			#ifndef REBUILD_PC
-			SpuRead((int)sdata->ptrSampleBlock2 + 0x800, sdata->audioAllocSize);
-			#endif
+			SpuWrite((int)sdata->ptrSampleBlock2 + 0x800, sdata->audioAllocSize);
 		}
 		
 		sdata->bankLoadStage++;
