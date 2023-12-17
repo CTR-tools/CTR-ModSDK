@@ -398,6 +398,66 @@ FinishLoading:
 				// reset vsync calls between drawsync
 				gGT->vSync_between_drawSync = 0;
 
+
+
+
+
+// temporary, no camera thread yet
+#ifdef REBUILD_PC
+
+				if (gGT->levelID < GEM_STONE_VALLEY)
+				{
+					if (gGT->trafficLightsTimer > 0)
+					{
+						gGT->tileView[0].pos[0] = gGT->level1->DriverSpawn[0].pos[0];
+						gGT->tileView[0].pos[1] = gGT->level1->DriverSpawn[0].pos[1] + 0x100;
+						gGT->tileView[0].pos[2] = gGT->level1->DriverSpawn[0].pos[2];
+
+						gGT->tileView[0].rot[0] = gGT->level1->DriverSpawn[0].rot[0];
+						gGT->tileView[0].rot[1] = 0xc00-gGT->level1->DriverSpawn[0].rot[1];
+						gGT->tileView[0].rot[2] = 0x800; // required
+					}
+
+					int held = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
+
+					if ((held & BTN_UP) != 0)
+					{
+						gGT->tileView[0].pos[2] += (0x20 * DECOMP_MATH_Cos(-gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[0] += (0x20 * DECOMP_MATH_Sin(-gGT->tileView[0].rot[1])) >> 0xC;
+					}
+
+					if ((held & BTN_DOWN) != 0)
+					{
+						gGT->tileView[0].pos[2] -= (0x20 * DECOMP_MATH_Cos(-gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[0] -= (0x20 * DECOMP_MATH_Sin(-gGT->tileView[0].rot[1])) >> 0xC;
+					}
+
+					if ((held & BTN_LEFT) != 0)
+					{
+						gGT->tileView[0].rot[1] -= 0x20;
+					}
+
+					if ((held & BTN_RIGHT) != 0)
+					{
+						gGT->tileView[0].rot[1] += 0x20;
+					}
+
+					if ((held & BTN_CROSS) != 0)
+					{
+						gGT->tileView[0].pos[1] += 0x20;
+					}
+
+					if ((held & BTN_TRIANGLE) != 0)
+					{
+						gGT->tileView[0].pos[1] -= 0x20;
+					}
+				}
+#endif
+
+
+
+
+
 #ifdef REBUILD_PC
 				PsyX_BeginScene();
 #endif
