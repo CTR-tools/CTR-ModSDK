@@ -31,13 +31,16 @@ void DECOMP_RB_Crystal_LInC();
 void DECOMP_RB_Teeth_LInB();
 void DECOMP_RB_Teeth_LInC();
 
-void AH_Door_LInB();
 void AH_Sign_LInB();
-void AH_Garage_LInB();
-void AH_SaveObj_LInB();
-void AH_WarpPad_LInB();
+void DECOMP_AH_Door_LInB();
+void DECOMP_AH_Garage_LInB();
+void DECOMP_AH_SaveObj_LInB();
+void DECOMP_AH_WarpPad_LInB();
 
 void CS_LevThread_LInB();
+
+// Missing:
+// GenericMine, Orca, Spider, Banner, Sign, CS
 
 // This inserts debug names if needed
 #if 1
@@ -596,7 +599,7 @@ struct Data data =
 		SET_MDM(0,0,0),
 		
 		// 0x6C - STATIC_WARPPAD
-		SET_MDM(0,AH_WarpPad_LInB,0),
+		SET_MDM(0,DECOMP_AH_WarpPad_LInB,0),
 		
 		// 0x6D - STATIC_BIG0
 		SET_MDM(0,0,0),
@@ -614,22 +617,22 @@ struct Data data =
 		SET_MDM(0,0/*RB_StartText_LInB*/,0),
 		
 		// 0x72 - STATIC_SAVEOBJ
-		SET_MDM(0,AH_SaveObj_LInB,0),
+		SET_MDM(0,DECOMP_AH_SaveObj_LInB,0),
 		
 		// 0x73 - STATIC_PINGARAGE
-		SET_MDM(0,AH_Garage_LInB,0),
+		SET_MDM(0,DECOMP_AH_Garage_LInB,0),
 		
 		// 0x74 - STATIC_PAPUGARAGE
-		SET_MDM(0,AH_Garage_LInB,0),
+		SET_MDM(0,DECOMP_AH_Garage_LInB,0),
 		
 		// 0x75 - STATIC_ROOGARAGE
-		SET_MDM(0,AH_Garage_LInB,0),
+		SET_MDM(0,DECOMP_AH_Garage_LInB,0),
 		
 		// 0x76 - STATIC_JOEGARAGE
-		SET_MDM(0,AH_Garage_LInB,0),
+		SET_MDM(0,DECOMP_AH_Garage_LInB,0),
 		
 		// 0x77 - STATIC_OXIDEGARAGE
-		SET_MDM(0,AH_Garage_LInB,0),
+		SET_MDM(0,DECOMP_AH_Garage_LInB,0),
 		
 		// 0x78 - STATIC_SCAN (load/save screen)
 		SET_MDM(0,0,0),
@@ -638,7 +641,7 @@ struct Data data =
 		SET_MDM(0,0,0),
 		
 		// 0x7a - STATIC_DOOR
-		SET_MDM(0,AH_Door_LInB,0),
+		SET_MDM(0,DECOMP_AH_Door_LInB,0),
 		
 		// 0x7b - STATIC_BEAM (warppad vortex)
 		SET_MDM(0,0,0),
