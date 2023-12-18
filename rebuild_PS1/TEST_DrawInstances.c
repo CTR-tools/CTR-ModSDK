@@ -477,6 +477,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 				if (curr != 0)
 				{
 					if ((curr->flags & 0x80) != 0) continue;
+					if ((curr->flags & 1) == 0) continue;
 
 					DrawOneInst(curr);
 				}
@@ -491,6 +492,7 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 		)
 	{
 		if ((curr->flags & 0x80) != 0) continue;
+		if ((curr->flags & 1) == 0) continue;
 
 		DrawOneInst(curr);
 	}
