@@ -140,9 +140,27 @@ struct QuadBlock
 	u_short quadFlags;
 
 	// 0x14
-	unsigned int draw_order_low; // actually for "med"
+	// todo: this is a packed bit value
+	// refactor to a usable struct somehow
+	/*
+		drawOrderLow |
+		faceFlags[0].packedValue << (8 + 0 * 5) |
+		faceFlags[1].packedValue << (8 + 1 * 5) |
+		faceFlags[2].packedValue << (8 + 2 * 5) |
+		faceFlags[3].packedValue << (8 + 3 * 5) |
+		(doubleSided ? 1 : 0) << 31)
+	*/
+	/*
+		//where 5 bits of faceFlags are 
+		3 bits Rotation = x & 7;
+		2 bits faceMode = (x >> 3) & 3;
+	*/
+	unsigned int draw_order_low;
+
+
 
 	// 0x18
+	// 4 bytes, byte per mid quad
 	unsigned int draw_order_high;
 
 	// 0x1c
