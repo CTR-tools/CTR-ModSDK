@@ -48,10 +48,6 @@ void TEST_226(
 	#endif
 	
 	MATRIX* mat2 = &view->matrix_ViewProj;
-	
-			//mat2->m[0][0] /= 4; mat2->m[0][1] /= 4; mat2->m[0][2] /= 4;
-			//mat2->m[1][0] /= 4; mat2->m[1][1] /= 4; mat2->m[1][2] /= 4;
-			//mat2->m[2][0] /= 4; mat2->m[2][1] /= 4; mat2->m[2][2] /= 4;
 			
 	gte_SetRotMatrix(mat2);
 	gte_SetTransMatrix(mat2);
@@ -219,9 +215,9 @@ void TEST_226(
 					{
 						// needed for some unkown reason?
 						// otherwise level can't draw past a few feet
-						otZ = (otZ >> 3) << 1;
+						otZ = (otZ >> 2) << 1;
 
-						if (otZ < 1023)
+						if (otZ < 2040)
 						{
 							AddPrim((u_long*)ot + (otZ >> 1), pCurr);
 							primMem->curr = pNext;

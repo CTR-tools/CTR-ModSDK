@@ -47,9 +47,9 @@ void DrawOneInst(struct Instance* curr)
 		MATRIX copy = view->matrix_ViewProj; // required
 		MATRIX* mat2 = MulMatrix(&copy, &curr->matrix);
 
-		mat2->m[0][0] /= 4; mat2->m[0][1] /= 4; mat2->m[0][2] /= 4;
-		mat2->m[1][0] /= 4; mat2->m[1][1] /= 4; mat2->m[1][2] /= 4;
-		mat2->m[2][0] /= 4; mat2->m[2][1] /= 4; mat2->m[2][2] /= 4;
+		mat2->m[0][0] /= 16; mat2->m[0][1] /= 16; mat2->m[0][2] /= 16;
+		mat2->m[1][0] /= 16; mat2->m[1][1] /= 16; mat2->m[1][2] /= 16;
+		mat2->m[2][0] /= 16; mat2->m[2][1] /= 16; mat2->m[2][2] /= 16;
 
 		// ============ Get Perspective Translation ==============
 
@@ -66,10 +66,6 @@ void DrawOneInst(struct Instance* curr)
 		ApplyMatrixLV_stub(&view->matrix_ViewProj, &pos, &mat2->t[0]);
 #endif
 #endif
-
-		mat2->t[0] *= 4;
-		mat2->t[1] *= 4;
-		mat2->t[2] *= 4;
 
 		gte_SetRotMatrix(mat2);
 		gte_SetTransMatrix(mat2);
@@ -424,10 +420,10 @@ void DrawOneInst(struct Instance* curr)
 				gte_stotz(&otZ);
 
 				if (otZ > 0)
-				{
+				{	
 					// needed for some unkown reason?
 					// otherwise level can't draw past a few feet
-					otZ = (otZ >> 3) << 1;
+					otZ = (otZ >> 2) << 1;
 
 					AddPrim((u_long*)ot + (otZ >> 1), pCurr);
 					primMem->curr = pNext;
