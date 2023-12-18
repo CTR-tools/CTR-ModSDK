@@ -260,10 +260,8 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
         gGT->demoCountdownTimer = 900;
     }
 
-#ifndef REBUILD_PS1
     // copy InstDef to InstancePool
-    INSTANCE_LevInitAll(lev1->ptrInstDefs, lev1->numInstances);
-#endif
+    DECOMP_INSTANCE_LevInitAll(lev1->ptrInstDefs, lev1->numInstances);
 
     // Debug_ToggleNormalSpawn == normal spawn
     if (gGT->Debug_ToggleNormalSpawn != 0)

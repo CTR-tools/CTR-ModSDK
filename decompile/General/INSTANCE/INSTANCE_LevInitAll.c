@@ -15,7 +15,7 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 	for (int i = 0; i < numInst; i++)
 	{
 		// get first free item in Instance Pool
-		inst = (struct Instance *)LIST_RemoveFront(&gGT->JitPools.instance.free);
+		inst = (struct Instance *)DECOMP_LIST_RemoveFront(&gGT->JitPools.instance.free);
 	
 		// NOT writing to model
 		// InstDef + 0x10 + 0x1c
@@ -30,8 +30,6 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 			// quit
 			return;
 		}
-	
-		printf("new inst\n");
 	
 		// pointer to InstDef in LEV
 		src = (int*)levInstDef;
@@ -49,14 +47,11 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 			dst[3] = src[3];
 			src += 4;
 			dst += 4;
-			printf("copy x\n");
 		}
 	
 		dst[0] = src[0];
 		dst[1] = src[1];
 		dst[2] = src[2];
-	
-		printf("copy done\n");
 	
 		// 0x10 + (5 * 4) = 0x24
 		inst->unk50 = levInstDef->unk24 - 2;  
@@ -75,8 +70,16 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 		inst->vertSplit = 0;
 		inst->unk53 = 1;
 		inst->bitCompressed_NormalVector_AndDriverIndex = 0;
-	
+
+#ifndef REBUILD_PS1
 		ConvertRotToMatrix(&inst->matrix.m, &levInstDef->rot[0]);
+#else
+		*(int*)&inst->matrix.m[0][0] = 0x1000;
+		*(int*)&inst->matrix.m[0][2] = 0;
+		*(int*)&inst->matrix.m[1][1] = 0x1000;
+		*(int*)&inst->matrix.m[2][0] = 0;
+		*(short*)&inst->matrix.m[2][2] = 0x1000;
+#endif
 	
 		// instance posX and posY
 		inst->matrix.t[0] = levInstDef->pos[0];
@@ -94,9 +97,8 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 		}
 	
 		modelID = levInstDef->model->id;
-	
-		printf("check thread: %d\n", modelID);
 		
+#ifndef REBUILD_PS1
 		if (( // Only continue if LEV instances are enabled,
 			// they may be disabled due to podium scene on adv hub
 				((gGT->gameMode2 & DISABLE_LEV_INSTANCE) == 0) &&
@@ -112,6 +114,7 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 			// call funcLevInstDefBirth, make thread for this instance
 			meta->LInB(inst);
 		}
+#endif
 	
 		int boolArcadeOnly =
 		(

@@ -198,6 +198,7 @@
 #include "../decompile/General/INSTANCE/INSTANCE_BirthWithThread_Stack.c"
 #include "../decompile/General/INSTANCE/INSTANCE_Death.c"
 #include "../decompile/General/INSTANCE/INSTANCE_GetNumAnimFrames.c"
+#include "../decompile/General/INSTANCE/INSTANCE_LevInitAll.c"
 
 #include "../decompile/General/JitPool/JitPool_Clear.c"
 #include "../decompile/General/JitPool/JitPool_Init.c"

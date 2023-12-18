@@ -198,6 +198,7 @@ struct Instance* DECOMP_INSTANCE_BirthWithThread(
 struct Instance* DECOMP_INSTANCE_BirthWithThread_Stack(int* spArr);
 void DECOMP_INSTANCE_Death(struct Instance* inst);
 u_short DECOMP_INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex);
+void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst);
 
 // JitPool
 int DECOMP_JitPool_Add(struct JitPool* AP);

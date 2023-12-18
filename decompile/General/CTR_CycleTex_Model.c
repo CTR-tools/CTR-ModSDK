@@ -5,6 +5,10 @@ void DECOMP_CTR_CycleTex_Model(struct AnimTex* animtex, int timer)
 	int frameIndex;
 	struct AnimTex* curAnimTex = animtex;
 	
+#ifdef REBUILD_PC
+	return;
+#endif
+
 	// iterate over All AnimTex's in a row,
 	// last one loops back to the beginning, could've also just been a null terminator
 	while (*(int*)curAnimTex != animtex)
