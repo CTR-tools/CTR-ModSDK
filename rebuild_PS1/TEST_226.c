@@ -217,9 +217,10 @@ void TEST_226(
 
 					if (otZ > 8)
 					{
-						otZ = otZ / 4;
+						// because matrices not divided by 4,
+						// see issue in TEST_DrawInstances
+						otZ = (otZ >> 3) << 1;
 
-						// matrices not divided by 4
 						if (otZ < 1023)
 						{
 							AddPrim((u_long*)ot + (otZ >> 1), pCurr);
