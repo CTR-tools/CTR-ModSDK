@@ -1,9 +1,9 @@
 #include <common.h>
 
-void DECOMP_AH_Door_ThDestroy(struct Thread* doorThread)
+void DECOMP_AH_Door_ThDestroy(struct Thread* t)
 {
   int i;
-  struct WoodDoor* woodDoor = doorThread->object;
+  struct WoodDoor* woodDoor = t->object;
   struct Instance** instPtrArr = &woodDoor->otherDoor;
   
   // otherDoor, and 4 keys, all next to each other
@@ -11,7 +11,7 @@ void DECOMP_AH_Door_ThDestroy(struct Thread* doorThread)
   {
     if (instPtrArr[i] != NULL)
     {
-      INSTANCE_Death(instPtrArr[i]);
+      DECOMP_INSTANCE_Death(instPtrArr[i]);
       instPtrArr[i] = NULL;
     }
   } 

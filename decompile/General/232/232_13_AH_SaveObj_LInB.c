@@ -1,38 +1,41 @@
 #include <common.h>
 
-void AH_SaveObj_ThTick(struct Thread*);
-void AH_SaveObj_ThDestroy(struct Thread*);
-
 void DECOMP_AH_SaveObj_LInB(struct Instance* savInst)
 {
     short rot[3];
 
     struct GameTracker* gGT = sdata->gGT;
-    struct Thread* saveTh;
+    struct Thread* t;
     struct Instance* inst;
     struct SaveObj* save;
 
     // if this Instance's thread is not valid
     if (savInst->thread == NULL)
     {
-        saveTh = THREAD_BirthWithObject(
-			SIZE_RELATIVE_POOL_BUCKET(
-				sizeof(struct SaveObj),
-				NONE,
-				SMALL,
-				STATIC),
-			AH_SaveObj_ThTick, 0, 0);
+        t = 
+			DECOMP_THREAD_BirthWithObject
+			(
+				SIZE_RELATIVE_POOL_BUCKET
+				(
+					sizeof(struct SaveObj),
+					NONE,
+					SMALL,
+					STATIC
+				),
+				
+				DECOMP_AH_SaveObj_ThTick, 0, 0
+			);
 
-        savInst->thread = saveTh;
+        savInst->thread = t;
 
         // if the thread was built properly
-        if (saveTh != NULL)
+        if (t != NULL)
         {
-            save = saveTh->object;
+            save = t->object;
 
-            saveTh->inst = savInst;
+            t->inst = savInst;
 
-            saveTh->funcThDestroy = AH_SaveObj_ThDestroy;
+            t->funcThDestroy = DECOMP_AH_SaveObj_ThDestroy;
 
             // initialize object
             save->flags = 0;

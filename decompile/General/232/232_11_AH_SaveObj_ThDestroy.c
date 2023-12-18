@@ -1,14 +1,13 @@
 #include <common.h>
 
-void DECOMP_AH_SaveObj_ThDestroy(struct Thread *saveTh)
+void DECOMP_AH_SaveObj_ThDestroy(struct Thread* t)
 {
-    struct SaveObj *save;
-
-    save = saveTh->object;
+    struct SaveObj* save;
+    save = t->object;
 
     if (save->inst != NULL)
     {
-        INSTANCE_Death(save->inst);
+        DECOMP_INSTANCE_Death(save->inst);
         save->inst = NULL;
     }
     return;

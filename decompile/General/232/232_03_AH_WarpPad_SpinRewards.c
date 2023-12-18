@@ -11,7 +11,11 @@ void DECOMP_AH_WarpPad_SpinRewards(
 	unsigned int trig;
 	unsigned int thirds;
 	
+#ifndef REBUILD_PS1
 	ConvertRotToMatrix(
+#else
+	TEST_ConvertRotToMatrix(
+#endif
 		&prizeInst->matrix, 
 		&warppadObj->spinRot_Prize[0]);
 		
@@ -33,10 +37,12 @@ void DECOMP_AH_WarpPad_SpinRewards(
 	else if(modelID == 0x7d) 
 		specLight = &warppadObj->specLightToken[0];
 	
+#ifndef REBUILD_PS1
 	Vector_SpecLightSpin3D(
 		prizeInst, 
 		&warppadObj->spinRot_Prize[0], 
 		specLight);
+#endif
 	
 SpinReward:
 
@@ -55,5 +61,4 @@ SpinReward:
 	
 	trig = MATH_Cos(thirds);
 	prizeInst->matrix.t[2] = z + (trig * 0xA0 >> 0xc);
-
 }

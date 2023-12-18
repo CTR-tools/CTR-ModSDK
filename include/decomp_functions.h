@@ -405,3 +405,30 @@ void DECOMP_MM_JumpTo_BattleSetup(void);
 void DECOMP_MM_JumpTo_TrackSelect(void);
 void DECOMP_MM_JumpTo_Characters(void);
 void DECOMP_MM_JumpTo_Scrapbook(void);
+
+// 231 (undone)
+
+// 232
+short* DECOMP_AH_WarpPad_GetSpawnPosRot(short* posData);
+void DECOMP_AH_WarpPad_AllWarppadNum();
+void DECOMP_AH_WarpPad_MenuBoxFuncPtr(struct MenuBox* mb);
+
+void DECOMP_AH_WarpPad_SpinRewards(
+	struct Instance* prizeInst,
+	struct WarpPad* warppadObj,
+	int index,
+	int x, int y, int z);
+	
+void DECOMP_AH_WarpPad_ThTick(struct Thread* t);
+void DECOMP_AH_WarpPad_ThDestroy(struct Thread* t);
+void DECOMP_AH_WarpPad_LInB(struct Instance* inst);
+void DECOMP_AH_Garage_ThDestroy(struct Thread* t);
+void DECOMP_AH_Garage_Open(struct ScratchpadStruct* sps,struct Thread* otherTh);
+void DECOMP_AH_Garage_ThTick(struct Thread *t);
+void DECOMP_AH_Garage_LInB(struct Instance *inst);
+void DECOMP_AH_SaveObj_ThDestroy(struct Thread* t);
+void DECOMP_AH_SaveObj_ThTick(struct Thread* t);
+void DECOMP_AH_SaveObj_LInB(struct Instance* savInst);
+void DECOMP_AH_Door_ThDestroy(struct Thread* t);
+void DECOMP_AH_Door_ThTick(struct Thread* t);
+void DECOMP_AH_Door_LInB(struct Instance *inst);

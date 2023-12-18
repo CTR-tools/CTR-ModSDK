@@ -1,8 +1,5 @@
 #include <common.h>
 
-void AH_Garage_ThTick(struct Thread *);
-void AH_Garage_ThDestroy(struct Thread *);
-
 void DECOMP_AH_Garage_LInB(struct Instance *inst)
 {
     char bossIsOpen, i;
@@ -24,23 +21,28 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     if (inst->thread != NULL)
         return;
 
-    t = THREAD_BirthWithObject(
-        SIZE_RELATIVE_POOL_BUCKET(
-            sizeof(struct BossGarageDoor),
-            NONE,
-            SMALL,
-            STATIC),
-        AH_Garage_ThTick, // behavior
-        0, 				  // debug name
-        0                 // thread relative
-    );
+    t = 
+		DECOMP_THREAD_BirthWithObject
+		(
+			SIZE_RELATIVE_POOL_BUCKET
+			(
+				sizeof(struct BossGarageDoor),
+				NONE,
+				SMALL,
+				STATIC
+			),
+        
+			DECOMP_AH_Garage_ThTick, // behavior
+			0, 				  // debug name
+			0                 // thread relative
+		);
 
     if (t == NULL)
         return;
 
     inst->thread = t;
     t->inst = inst;
-    t->funcThDestroy = AH_Garage_ThDestroy;
+    t->funcThDestroy = DECOMP_AH_Garage_ThDestroy;
     
     garage = t->object;
     garage->direction = 0;
@@ -57,7 +59,7 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
     {
         // make a "garagetop" to make door appear to roll up
 
-        garageTop = INSTANCE_Birth3D(gGT->modelPtr[0x8e],0, t);
+        garageTop = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x8e],0, t);
 
         // copy matrix from one instance to the other
         *(int*)&garageTop->matrix.m[0][0] = *(int*)&inst->matrix.m[0][0];
@@ -69,13 +71,13 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
 		garageTop->matrix.t[1] = inst->matrix.t[1];
 		garageTop->matrix.t[2] = inst->matrix.t[2];
 
-        ratio = MATH_Sin((int)inst->instDef->rot[1]);
+        ratio = DECOMP_MATH_Sin((int)inst->instDef->rot[1]);
 
         // continue setting GarageTop position
         garageTop->matrix.t[0] = inst->matrix.t[0] + (ratio * 0x4c >> 0xc);
         garageTop->matrix.t[1] = inst->matrix.t[1] + 0x300;
 
-        ratio = MATH_Cos((int)inst->instDef->rot[1]);
+        ratio = DECOMP_MATH_Cos((int)inst->instDef->rot[1]);
 
         // continue setting GarageTop position
         garageTop->matrix.t[2] = inst->matrix.t[2] + (ratio * 0x4c >> 0xc);
@@ -129,7 +131,9 @@ void DECOMP_AH_Garage_LInB(struct Instance *inst)
         t->modelIndex = 0;
     }
 
-    memcpy(garage->rot, inst->instDef->rot, sizeof(short)*3);
+    garage->rot[0] = inst->instDef->rot[0];
+    garage->rot[1] = inst->instDef->rot[1];
+    garage->rot[2] = inst->instDef->rot[2];
 
     inst->unk50 = 1;
     inst->unk51 = inst->unk50;

@@ -1,8 +1,5 @@
 #include <common.h>
 
-void DECOMP_AH_WarpPad_ThTick(struct Thread* t);
-void DECOMP_AH_WarpPad_ThDestroy(struct Thread* t);
-
 void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 {
 	int i;
@@ -25,9 +22,8 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 	gGT = sdata->gGT;
 	
     t =	
-		THREAD_BirthWithObject
+		DECOMP_THREAD_BirthWithObject
 		(
-			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
 			(
 				sizeof(struct WarpPad), 
@@ -163,7 +159,7 @@ GetKeysRequirement:
 		// if beam model exists
 		if(gGT->modelPtr[0x7B] != 0)
 		{
-			newInst = INSTANCE_Birth3D(gGT->modelPtr[0x7B], 0, t);
+			newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x7B], 0, t);
 				
 			// copy matrix
 			*(int*)((int)&newInst->matrix + 0x0) = *(int*)((int)&inst->matrix + 0x0);
@@ -185,7 +181,7 @@ GetKeysRequirement:
 		{
 			for(i = 0; i < 2; i++)
 			{
-				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x7C], 0, t);
+				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x7C], 0, t);
 					
 				// copy matrix
 				*(int*)((int)&newInst->matrix + 0x0) = *(int*)((int)&inst->matrix + 0x0);
@@ -369,7 +365,7 @@ SlideColTurboTrack:
 			// rainbow color
 			t->modelIndex = 4;
 			
-			newInst = INSTANCE_Birth3D(gGT->modelPtr[0x5f], 0, t);
+			newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x5f], 0, t);
 				
 			// specular lighting
 			newInst->flags |= 0x20000;
@@ -413,7 +409,7 @@ SlideColTurboTrack:
 	// ====== Item ========
 	
 	// WPIS_CLOSED_ITEM
-	newInst = INSTANCE_Birth3D(gGT->modelPtr[unlockItem_modelID], 0, t);
+	newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[unlockItem_modelID], 0, t);
 		
 	// copy matrix
 	*(int*)((int)&newInst->matrix + 0x0) = *(int*)((int)&inst->matrix + 0x0);
@@ -496,7 +492,7 @@ SlideColTurboTrack:
 	// ====== "X" ========
 	
 	// WPIS_CLOSED_X
-	newInst = INSTANCE_Birth3D(gGT->modelPtr[0x6F], 0, t);
+	newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x6F], 0, t);
 	
 	// copy matrix
 	*(int*)((int)&newInst->matrix + 0x0) = 0x1000;
@@ -522,7 +518,7 @@ SlideColTurboTrack:
 	if(warppadObj->digit10s != 0)
 	{
 		// WPIS_CLOSED_10S
-		newInst = INSTANCE_Birth3D(gGT->modelPtr[0x38], 0, t);
+		newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x38], 0, t);
 		
 		// copy matrix
 		*(int*)((int)&newInst->matrix + 0x0) = 0x1000;
@@ -553,7 +549,7 @@ SlideColTurboTrack:
 	if(warppadObj->digit1s == 9) i = 0x6e; // '9'
 	
 	// WPIS_CLOSED_1S
-	newInst = INSTANCE_Birth3D(gGT->modelPtr[i], 0, t);
+	newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[i], 0, t);
 	
 	// copy matrix
 	*(int*)((int)&newInst->matrix + 0x0) = 0x1000;

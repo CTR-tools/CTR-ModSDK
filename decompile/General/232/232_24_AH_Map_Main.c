@@ -34,7 +34,7 @@ void DECOMP_AH_Map_Main(void)
   {
 	// Trigger Aku Hint:
 	// Welcome to Adventure Arena
-    MainFrame_RequestMaskHint(0,0);
+    DECOMP_MainFrame_RequestMaskHint(0,0);
   }
   
   // in the OG code, is this even possible?

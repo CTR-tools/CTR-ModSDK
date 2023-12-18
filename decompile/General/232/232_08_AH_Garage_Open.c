@@ -41,7 +41,7 @@ void DECOMP_AH_Garage_Open(struct ScratchpadStruct* sps,struct Thread* otherTh)
     }
     
     // Play sound
-    OtherFX_Play(sound,1);
+    DECOMP_OtherFX_Play(sound,1);
   }
   
   // door is now opening

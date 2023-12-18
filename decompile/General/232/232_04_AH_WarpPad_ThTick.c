@@ -2,6 +2,45 @@
 
 // budget: 4992
 
+// This goes into 232 BSS later on
+#if 0
+// 800b4e86
+short num800b4e86 = -1;
+
+// 800b4e88
+int time800b4e88[7] =
+{
+	0x1c200,	// NITRO_COURT
+	0x13ec0,	// RAMPAGE_RUINS
+	0xe100,		// PARKING_LOT (null)
+	0x13740,	// SKULL_ROCK
+	0xe100,		// THE_NORTH_BOWL (null)
+	0x1c200,	// ROCKY_ROAD
+	0xe100,		// LAB_BASEMENT (null)
+}
+
+// 800b4e3c
+struct MenuRow r800b4e3c =
+{
+	{0x176, 0, 1, 0, 0}, // CTR CHALLENGE
+	{0xb8,  0, 1, 1, 1}, // RELIC RACE
+	{-1,  0, 0, 0, 0}  // NULL
+};
+
+// 800b4e50
+struct MenuBox mb800b4e50 =
+{
+	.stringIndexTitle = 0xb6,
+	.posX_curr = 0x100,
+	.posY_curr = 0x6c,
+	.unk1 = 0,
+	.state = 0x100803,
+	.rows = &r800b4e3c[0],
+	.funcPtr = DECOMP_AH_WarpPad_MenuBoxFuncPtr,
+	.drawStyle = 4,
+};
+#endif
+
 void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 {
 	int i;

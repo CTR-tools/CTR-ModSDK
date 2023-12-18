@@ -1,8 +1,5 @@
 #include <common.h>
 
-void AH_Door_ThTick(struct Thread *);
-void AH_Door_ThDestroy(struct Thread *);
-
 void DECOMP_AH_Door_LInB(struct Instance *inst)
 {
   char i;
@@ -28,16 +25,20 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   if (inst->thread != NULL)
     return;
 
-  t = THREAD_BirthWithObject(
-      SIZE_RELATIVE_POOL_BUCKET(
+  t = 
+	DECOMP_THREAD_BirthWithObject
+	(
+      SIZE_RELATIVE_POOL_BUCKET
+	  (
           0x38,
           NONE,
           SMALL,
-          STATIC),
-      AH_Door_ThTick,   // behavior
+          STATIC
+	  ),
+      DECOMP_AH_Door_ThTick,   // behavior
       0, 				// debug name
       0                	// thread relative
-  );
+	);
 
   inst->thread = t;
 
@@ -49,7 +50,7 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
 
   t->inst = inst;
 
-  t->funcThDestroy = AH_Door_ThDestroy;
+  t->funcThDestroy = DECOMP_AH_Door_ThDestroy;
 
   // this instance is always the left-hand door,
   // and every left-hand door has one key hole
@@ -103,7 +104,7 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   // "door"
 
   // INSTANCE_Birth3D -- ptrModel, name, thread
-  otherDoorInst = INSTANCE_Birth3D(m, 0, 0);
+  otherDoorInst = DECOMP_INSTANCE_Birth3D(m, 0, 0);
 
   // spawn instance of right-hand door,
   // which is not in LEV file, only built in thread
@@ -126,13 +127,13 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
   // set scaleX to -0x1000
   otherDoorInst->scale[0] = 0xf000;
 
-  ratio = MATH_Cos((int)inst->instDef->rot[1]);
+  ratio = DECOMP_MATH_Cos((int)inst->instDef->rot[1]);
 
   otherDoorInst->matrix.t[0] += (ratio * 0x600 >> 0xc);
 
   otherDoorInst->matrix.t[1] = inst->matrix.t[1];
 
-  ratio = MATH_Sin((int)(int)inst->instDef->rot[1]);
+  ratio = DECOMP_MATH_Sin((int)(int)inst->instDef->rot[1]);
 
   otherDoorInst->matrix.t[2] += (ratio * 0x600 >> 0xc);
 

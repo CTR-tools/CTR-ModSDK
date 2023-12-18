@@ -8,7 +8,7 @@ void DECOMP_AH_Garage_ThDestroy(struct Thread* garageThread)
   
   if (garage->garageTopInst != NULL) 
   {
-    INSTANCE_Death(garage->garageTopInst);
+    DECOMP_INSTANCE_Death(garage->garageTopInst);
 	garage->garageTopInst = NULL;
   }
   

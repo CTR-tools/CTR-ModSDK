@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_AH_SaveObj_ThTick(struct Thread *saveTh)
+void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
 {
     short sVar1;
     unsigned short uVar2;
@@ -23,7 +23,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread *saveTh)
 
     driver = gGT->drivers[0];
 
-    saveInst = saveTh->inst;
+    saveInst = t->inst;
 
     driverInst = driver->instSelf;
 
@@ -32,7 +32,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread *saveTh)
     distY = saveInst->matrix.t[1] - driverInst->matrix.t[1];
     distZ = saveInst->matrix.t[2] - driverInst->matrix.t[2];
 
-    save = saveTh->object;
+    save = t->object;
 
     // get distance from player instance and thread object instance
     dist = distX * distX + distY * distY + distZ * distZ;
@@ -54,7 +54,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread *saveTh)
         if ((sdata->advProgress.rewards[3] & 0x10000000) == 0)
         {
             // Aku Hint "This is the load/save screen..."
-            MainFrame_RequestMaskHint(6, 0);
+            DECOMP_MainFrame_RequestMaskHint(6, 0);
         }
 
         if (
@@ -136,10 +136,12 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread *saveTh)
                     {
                         save->flags |= 2;
 
+#ifndef REBUILD_PS1
                         LoadSave_GetTrackID();
+#endif
 
                         // enable menubox for green load/save screen
-                        MENUBOX_Show(&data.menuBox_greenLoadSave);
+                        DECOMP_MENUBOX_Show(&data.menuBox_greenLoadSave);
                     }
 
                     // if it is time to return to player
@@ -175,7 +177,7 @@ LAB_800af72c:
     {
         sVar1 = saveInst->animFrame;
 
-        iVar7 = INSTANCE_GetNumAnimFrames(saveInst, 0);
+        iVar7 = DECOMP_INSTANCE_GetNumAnimFrames(saveInst, 0);
 
         // if animation is not finished
         if ((int)sVar1 < iVar7 - 1)
@@ -190,7 +192,6 @@ LAB_800af72c:
         {
             // get square root to have "true" distance
             iVar7 = SquareRoot0_stub(dist);
-
 
             // multiply by 1.5f
             // mul 3, divide 2
@@ -209,7 +210,7 @@ LAB_800af72c:
             }
 
             // Play save/load screen sound
-            OtherFX_Play_LowLevel(0x99, 1, (uVar6 & 0xff) << 0x10 | 0x8080);
+            DECOMP_OtherFX_Play_LowLevel(0x99, 1, (uVar6 & 0xff) << 0x10 | 0x8080);
 
             // reset animation
             saveInst->animFrame = 0;

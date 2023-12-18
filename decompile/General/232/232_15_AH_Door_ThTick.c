@@ -6,7 +6,7 @@
 void VehPtr_Freeze_Init(struct Thread *, struct Driver *);
 void VehPtr_Driving_Init(struct Thread *, struct Driver *);
 
-void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
+void DECOMP_AH_Door_ThTick(struct Thread* t)
 {
   char doorIsOpen;
   short doorID;
@@ -27,8 +27,8 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
   short* scaler;
 
   struct GameTracker* gGT = sdata->gGT;
-  struct WoodDoor* door = doorTh->object;
-  struct Instance* doorInst = doorTh->inst;
+  struct WoodDoor* door = t->object;
+  struct Instance* doorInst = t->inst;
   struct Instance* keyInst;
   struct Driver* driver = gGT->drivers[0];
   struct Instance* driverInst;
@@ -50,7 +50,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
   }
 
   // Cosine(angle)
-  ratio = MATH_Cos((int)doorInst->instDef->rot[1]);
+  ratio = DECOMP_MATH_Cos((int)doorInst->instDef->rot[1]);
 
   // X distance of player and door
   distX = doorInst->matrix.t[0] + (ratio * 0x300 >> 0xc) - driver->instSelf->matrix.t[0];
@@ -59,7 +59,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
   distY = doorInst->matrix.t[1] - driver->instSelf->matrix.t[1];
 
   // Sine(angle)
-  ratio = MATH_Sin((int)doorInst->instDef->rot[1]);
+  ratio = DECOMP_MATH_Sin((int)doorInst->instDef->rot[1]);
 
   // Z distance of player and door
   distZ = doorInst->matrix.t[2] + (ratio * 0x300 >> 0xc) - driver->instSelf->matrix.t[2];
@@ -133,7 +133,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
     // if hint is not unlocked
     if (chkRewards == 0)
     {
-      MainFrame_RequestMaskHint(hintId, 0);
+      DECOMP_MainFrame_RequestMaskHint(hintId, 0);
     }
     return;
   }
@@ -225,7 +225,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
             for (i = 0; i < numKeys; i++)
             {
 			  // name = "key"
-              keyInst = INSTANCE_Birth3D(gGT->modelPtr[0x63], 0, doorTh);
+              keyInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x63], 0, t);
 
               // Set Key Color
               keyInst->colorRGBA = 0xdca6000;
@@ -311,11 +311,13 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
 
 			  piVar16 = &door->keyRot[0];
 
+#ifndef REBUILD_PS1
 			  // desiredPos is actually specLightDir in this case, variable re-use
               Vector_SpecLightSpin3D(keyInst, piVar16, &desiredPos[0]);
 
               // convert 3 rotation shorts into rotation matrix
               ConvertRotToMatrix(&keyInst->matrix, piVar16);
+#endif
             }
             door->keyInst[i] = keyInst;
           }
@@ -334,24 +336,24 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
         switch (door->frameCount_doorOpenAnim)
         {
         case 0x0A:
-          OtherFX_Play_LowLevel(0x67, 1, 0xff7680);
+          DECOMP_OtherFX_Play_LowLevel(0x67, 1, 0xff7680);
           break;
         case 0x0F:
-          OtherFX_Play_LowLevel(0x67, 1, 0xeb8080);
+          DECOMP_OtherFX_Play_LowLevel(0x67, 1, 0xeb8080);
           break;
         case 0x14:
-          OtherFX_Play_LowLevel(0x67, 1, 0xd78a80);
+          DECOMP_OtherFX_Play_LowLevel(0x67, 1, 0xd78a80);
           break;
         case 0x19:
-          OtherFX_Play_LowLevel(0x67, 1, 0xc39480);
+          DECOMP_OtherFX_Play_LowLevel(0x67, 1, 0xc39480);
           break;
         case 0x50:
           // unlock door sound
-          OtherFX_Play(0x93, 1);
+          DECOMP_OtherFX_Play(0x93, 1);
           break;
 		case 0x78:
           // on last frame, doors "creek" open
-          OtherFX_Play(0x94, 1);
+          DECOMP_OtherFX_Play(0x94, 1);
           break;
 		
 		default:
@@ -363,9 +365,9 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
 
     // == After 4 seconds ==
 
-    ratio = MATH_Cos((int)doorInst->instDef->rot[1]);
+    ratio = DECOMP_MATH_Cos((int)doorInst->instDef->rot[1]);
 
-    i = MATH_Cos((int)doorInst->instDef->rot[1] + 0x400);
+    i = DECOMP_MATH_Cos((int)doorInst->instDef->rot[1] + 0x400);
 
     // desired posX for transition
     desiredPos[0] = doorInst->matrix.t[0] + (short)(ratio * 0x312 >> 0xc) +
@@ -373,9 +375,9 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
     // desired posY for transition
     desiredPos[1] = doorInst->matrix.t[1] + 0x17a;
 
-	ratio = MATH_Sin((int)doorInst->instDef->rot[1]);
+	ratio = DECOMP_MATH_Sin((int)doorInst->instDef->rot[1]);
 
-	i = MATH_Sin((int)doorInst->instDef->rot[1] + 0x400);
+	i = DECOMP_MATH_Sin((int)doorInst->instDef->rot[1] + 0x400);
 
     // desired posZ for transition
     desiredPos[2] = doorInst->matrix.t[2] + (short)(ratio * 0x312 >> 0xc) +
@@ -441,7 +443,7 @@ void DECOMP_AH_Door_ThTick(struct Thread *doorTh)
   {
   	if(door->keyInst[i] != NULL)
   	{
-  		INSTANCE_Death(door->keyInst[i]);
+  		DECOMP_INSTANCE_Death(door->keyInst[i]);
   		door->keyInst[i] = NULL;
   	}
   }

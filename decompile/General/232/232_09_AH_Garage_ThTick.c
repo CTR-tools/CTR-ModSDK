@@ -1,7 +1,5 @@
 #include <common.h>
 
-void AH_Garage_Open(struct ScratchpadStruct *, struct Thread *);
-
 void DECOMP_AH_Garage_ThTick(struct Thread *t)
 {
     char bossIsOpen, i;
@@ -68,7 +66,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
             uVar8 = (levelID == GEM_STONE_VALLEY) ? 0x96 : 0x95;
 
             // Play sound
-            OtherFX_Play(uVar8, 1);
+            DECOMP_OtherFX_Play(uVar8, 1);
 
             // erase cooldown
             garage->cooldown = 0;
@@ -182,7 +180,7 @@ LAB_800aec34:
     if (sdata->AkuAkuHintState == 0)
     {
         // draw string, lng_challenge
-        DecalFont_DrawLine(
+        DECOMP_DecalFont_DrawLine(
 
             sdata->lngStrings[data.lng_challenge[bossLNG[hubID]]],
 
@@ -214,7 +212,7 @@ LAB_800aec34:
     }
 	
 	if(uVar8 != 0)
-		MainFrame_RequestMaskHint(uVar8, 0);
+		DECOMP_MainFrame_RequestMaskHint(uVar8, 0);
 
 LAB_800aede0:
 
@@ -234,17 +232,17 @@ LAB_800aede8:
     SPS->Input1.modelID = 0x73;
 
     SPS->Union.ThBuckColl.thread = t;
-    SPS->Union.ThBuckColl.funcCallback = AH_Garage_Open;
+    SPS->Union.ThBuckColl.funcCallback = DECOMP_AH_Garage_Open;
 
     // Open garage door when player gets within radius of door
     THREAD_CollideHitboxWithBucket(gGT->threadBuckets[PLAYER].thread, SPS, 0);
 
-    ratio = MATH_Sin((int)inst->instDef->rot[1]);
+    ratio = DECOMP_MATH_Sin((int)inst->instDef->rot[1]);
 
     pos[0] = (int)inst->instDef->pos[0] + (ratio * -0x280 >> 0xc);
     pos[1] = (int)inst->instDef->pos[1];
 
-    ratio = MATH_Cos((int)inst->instDef->rot[1]);
+    ratio = DECOMP_MATH_Cos((int)inst->instDef->rot[1]);
 
     pos[2] = (int)inst->instDef->pos[2] + (ratio * -0x280 >> 0xc);
 
@@ -286,8 +284,8 @@ LAB_800aede8:
         // Set the boss character (P2)
         data.characterIDs[1] = data.metaDataLEV[levelID].characterID_Boss;
 
-        TitleFlag_SetDrawOrder(1);
-        MainRaceTrack_RequestLoad(levelID);
+        DECOMP_TitleFlag_SetDrawOrder(1);
+        DECOMP_MainRaceTrack_RequestLoad(levelID);
     }
     return;
 }

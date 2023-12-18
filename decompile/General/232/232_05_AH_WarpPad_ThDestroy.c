@@ -15,7 +15,7 @@ void DECOMP_AH_WarpPad_ThDestroy(struct Thread* t)
 	{
 		if(instArr[i] != 0)
 		{
-			INSTANCE_Death(instArr[i]);
+			DECOMP_INSTANCE_Death(instArr[i]);
 			instArr[i] = 0;
 		}
 	}	

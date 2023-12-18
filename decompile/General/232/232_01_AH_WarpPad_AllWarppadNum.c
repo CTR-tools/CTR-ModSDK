@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DECOMP_AH_WarpPad_SetNumModelData(struct Instance* inst, struct ModelHeader* mh);
-
 void DECOMP_AH_WarpPad_AllWarppadNum()
 {
 	struct WarpPad* wp;
