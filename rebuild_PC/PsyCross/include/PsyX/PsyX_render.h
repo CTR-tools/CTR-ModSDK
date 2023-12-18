@@ -99,11 +99,13 @@
 #	define VRAM_INTERNAL_FORMAT   GL_LUMINANCE_ALPHA
 #endif
 
-#define VRAM_WIDTH (1024)
-#define VRAM_HEIGHT (512)
+#define VRAM_WIDTH		(1024)
+#define VRAM_HEIGHT		(512)
 
-#define TPAGE_WIDTH (256)
-#define TPAGE_HEIGHT (256)
+#define TPAGE_WIDTH		(256)
+#define TPAGE_HEIGHT	(256)
+
+#define MAX_VERTEX_BUFFER_SIZE	(1 << (sizeof(ushort) * 8))
 
 #pragma pack(push,1)
 typedef struct
@@ -149,8 +151,6 @@ typedef enum
 	TF_32_BIT_RGBA		// custom texture
 } TexFormat;
 
-#define MAX_NUM_POLY_BUFFER_VERTICES (32768)
-#define MAX_NUM_INDEX_BUFFERS        (4096)
 
 #if defined(RENDERER_OGLES) || defined(RENDERER_OGL)
 typedef uint TextureID;

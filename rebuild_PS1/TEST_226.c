@@ -123,44 +123,15 @@ void TEST_226(
 					0,1,2,3
 				};
 
+				// low LOD
 				int num = 1;
 				int* id = idLow;
-				int k = 0;
 
-				gte_ldv0(&pVA[block->index[id[4 * k + 0]]].pos[0]);
-				gte_rtps();
-				gte_stsxy(&posScreen1[0]);
-
-				gte_ldv0(&pVA[block->index[id[4 * k + 1]]].pos[0]);
-				gte_rtps();
-				gte_stsxy(&posScreen2[0]);
-
-				gte_ldv0(&pVA[block->index[id[4 * k + 2]]].pos[0]);
-				gte_rtps();
-				gte_stsxy(&posScreen3[0]);
-
-				gte_ldv0(&pVA[block->index[id[4 * k + 3]]].pos[0]);
-				gte_rtps();
-				gte_stsxy(&posScreen4[0]);
-
-				gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
-				gte_avsz3();
-				gte_stotz(&otZ);
-
-				// boost LOD for 1P mode only
-				if (sdata->gGT->numPlyrCurrGame == 1)
-				{
-					if (otZ > 8)
-					{
-						if (otZ < 1024)
-						{
-							num = 4;
-							id = idHigh;
-						}
-					}
-				}
+				// high LOD
+				num = 4;
+				id = idHigh;
 		
-				for (k = 0; k < num; k++)
+				for (int k = 0; k < num; k++)
 				{
 					p = primMem->curr;
 					pNext = p + 1;
@@ -201,7 +172,16 @@ void TEST_226(
 
 					if (num == 4)
 					{
-						struct TextureLayout* tl = block->ptr_texture_mid[3];
+						// must remove flags that are stored in pointer
+						unsigned int ptr = block->ptr_texture_mid[3];
+						struct TextureLayout* tl = ptr;
+						
+						if (ptr & 1)
+						{
+							ptr = ptr & ~(3);
+							tl = *(int*)ptr;
+						}
+						
 						if (tl != 0)
 						{
 							setUV4(p,
@@ -240,7 +220,7 @@ void TEST_226(
 						otZ = otZ / 4;
 
 						// matrices not divided by 4
-						if (otZ < 1000)
+						if (otZ < 1023)
 						{
 							AddPrim((u_long*)ot + (otZ >> 1), pCurr);
 							primMem->curr = pNext;
