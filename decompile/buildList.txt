@@ -343,6 +343,7 @@ common, exe, INSTANCE_BirthWithThread, 0x0, General/INSTANCE/INSTANCE_BirthWithT
 common, exe, INSTANCE_BirthWithThread_Stack, 0x0, General/INSTANCE/INSTANCE_BirthWithThread_Stack.c
 common, exe, INSTANCE_Death, 0x0, General/INSTANCE/INSTANCE_Death.c
 common, exe, INSTANCE_GetNumAnimFrames, 0x0, General/INSTANCE/INSTANCE_GetNumAnimFrames.c
+common, exe, INSTANCE_LevInitAll, 0x0, General/INSTANCE/INSTANCE_LevInitAll.c
 
 // JitPool
 common, exe, JitPool_Clear, 0x0, General/JitPool/JitPool_Clear.c

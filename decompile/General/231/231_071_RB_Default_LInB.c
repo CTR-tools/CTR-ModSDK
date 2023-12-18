@@ -2,8 +2,10 @@
 
 void DECOMP_RB_Default_LInB(struct Instance* inst)
 {
-	// low ram budget
+	// low ram budget, can't use a regular pointer
 	register char* scratch asm("$at");
+	scratch = 0x1f800000;
+	
 	int var;
 	
 	// high-LOD coll (8 triangles)
