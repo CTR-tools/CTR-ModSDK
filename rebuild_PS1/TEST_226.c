@@ -217,8 +217,8 @@ void TEST_226(
 
 					if (otZ > 8)
 					{
-						// because matrices not divided by 4,
-						// see issue in TEST_DrawInstances
+						// needed for some unkown reason?
+						// otherwise level can't draw past a few feet
 						otZ = (otZ >> 3) << 1;
 
 						if (otZ < 1023)

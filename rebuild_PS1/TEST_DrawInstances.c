@@ -425,6 +425,10 @@ void DrawOneInst(struct Instance* curr)
 
 				if (otZ > 0)
 				{
+					// needed for some unkown reason?
+					// otherwise level can't draw past a few feet
+					otZ = (otZ >> 3) << 1;
+
 					AddPrim((u_long*)ot + (otZ >> 1), pCurr);
 					primMem->curr = pNext;
 				}
