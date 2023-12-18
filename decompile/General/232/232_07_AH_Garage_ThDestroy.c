@@ -1,10 +1,9 @@
 #include <common.h>
 
-void DECOMP_AH_Garage_ThDestroy(struct Thread* garageThread)
+void DECOMP_AH_Garage_ThDestroy(struct Thread* t)
 {
   struct BossGarageDoor* garage;
-  
-  garage = garageThread->object;
+  garage = t->object;
   
   if (garage->garageTopInst != NULL) 
   {
