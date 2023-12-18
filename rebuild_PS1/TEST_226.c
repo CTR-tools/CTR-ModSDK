@@ -211,17 +211,10 @@ void TEST_226(
 					gte_avsz3();
 					gte_stotz(&otZ);
 
-					if (otZ > 8)
+					if (otZ > 0)
 					{
-						// needed for some unkown reason?
-						// otherwise level can't draw past a few feet
-						otZ = (otZ >> 2) << 1;
-
-						if (otZ < 2040)
-						{
-							AddPrim((u_long*)ot + (otZ >> 1), pCurr);
-							primMem->curr = pNext;
-						}
+						AddPrim((u_long*)ot + (otZ >> 2), pCurr);
+						primMem->curr = pNext;
 					}
 				}
 			}
