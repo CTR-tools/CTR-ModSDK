@@ -9,6 +9,7 @@ void DECOMP_CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModel
     struct Model * pModel;
     struct ModelHeader * pHeader;
 
+    // temporary until level/model matrix math is fixed
 #ifdef REBUILD_PC
     return;
 #endif

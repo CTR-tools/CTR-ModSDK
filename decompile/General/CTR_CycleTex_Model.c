@@ -4,7 +4,8 @@ void DECOMP_CTR_CycleTex_Model(struct AnimTex* animtex, int timer)
 {
 	int frameIndex;
 	struct AnimTex* curAnimTex = animtex;
-	
+
+	// temporary until level/model matrix math is fixed
 #ifdef REBUILD_PC
 	return;
 #endif
