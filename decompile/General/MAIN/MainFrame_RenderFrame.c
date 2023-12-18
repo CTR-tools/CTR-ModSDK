@@ -46,7 +46,7 @@ void RB_Blowup_ProcessBucket(struct Thread* thread);
 void RB_Spider_DrawWebs(struct Thread* thread, struct TileView* tileView);
 void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
-void AH_WarpPad_AllWarppadNum();
+void DECOMP_AH_WarpPad_AllWarppadNum();
 u_int MM_Video_CheckIfFinished(int param_1);
 
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
@@ -779,7 +779,7 @@ void RenderAllFlag0x40(struct GameTracker* gGT)
 	{
 		if((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
 		{
-			AH_WarpPad_AllWarppadNum();
+			DECOMP_AH_WarpPad_AllWarppadNum();
 		}
 	}
 	

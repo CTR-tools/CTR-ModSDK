@@ -1,9 +1,9 @@
 #include <common.h>
 
-void AH_WarpPad_ThTick(struct Thread* t);
-void AH_WarpPad_ThDestroy(struct Thread* t);
+void DECOMP_AH_WarpPad_ThTick(struct Thread* t);
+void DECOMP_AH_WarpPad_ThDestroy(struct Thread* t);
 
-void AH_WarpPad_LInB(struct Instance* inst)
+void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 {
 	int i;
 	int levelID;
@@ -36,7 +36,7 @@ void AH_WarpPad_LInB(struct Instance* inst)
 				WARPPAD
 			), 
 			
-			AH_WarpPad_ThTick,	// behavior
+			DECOMP_AH_WarpPad_ThTick,	// behavior
 			0,					// debug name
 			0					// thread relative
 		);
@@ -45,7 +45,7 @@ void AH_WarpPad_LInB(struct Instance* inst)
 	inst->thread = t;
 	t->inst = inst;
 	
-	t->funcThDestroy = AH_WarpPad_ThDestroy;
+	t->funcThDestroy = DECOMP_AH_WarpPad_ThDestroy;
 	
 	// 0 - locked
 	// 1 - open for trophy

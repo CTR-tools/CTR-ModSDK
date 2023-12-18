@@ -1,6 +1,6 @@
 #include <common.h>
 
-void AH_WarpPad_SpinRewards(
+void DECOMP_AH_WarpPad_SpinRewards(
 	struct Instance* prizeInst,
 	struct WarpPad* warppadObj,
 	int index,

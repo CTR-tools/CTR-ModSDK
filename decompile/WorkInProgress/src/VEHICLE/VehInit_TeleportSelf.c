@@ -218,7 +218,7 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
                         // get position where driver should spawn on map,
                         // outside warppad they previously entered
 
-                        warppadRot = AH_WarpPad_GetSpawnPosRot(&warppadPos);
+                        warppadRot = DECOMP_AH_WarpPad_GetSpawnPosRot(&warppadPos);
                         posBottom = warppadPos[0];
                         posBottom = warppadPos[1] + 0x80;
                         posBottom = warppadPos[2];

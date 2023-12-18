@@ -2,7 +2,7 @@
 
 // budget: 4992
 
-void AH_WarpPad_ThTick(struct Thread* t)
+void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 {
 	int i;
 	int j;
@@ -402,7 +402,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 		
 		if(instArr[WPIS_OPEN_PRIZE1+i] != 0)
 		{
-			AH_WarpPad_SpinRewards(
+			DECOMP_AH_WarpPad_SpinRewards(
 				instArr[WPIS_OPEN_PRIZE1+i],
 				warppadObj, i,
 				warppadInst->matrix.t[0],
