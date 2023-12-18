@@ -420,9 +420,12 @@ void DrawOneInst(struct Instance* curr)
 				gte_stotz(&otZ);
 
 				if (otZ > 0)
-				{	
-					AddPrim((u_long*)ot + (otZ >> 2), pCurr);
-					primMem->curr = pNext;
+				{
+					if (otZ < 4080)
+					{
+						AddPrim((u_long*)ot + (otZ >> 2), pCurr);
+						primMem->curr = pNext;
+					}
 				}
 
 				if ((flags & DRAW_CMD_FLAG_FLIP_NORMAL) != 0)

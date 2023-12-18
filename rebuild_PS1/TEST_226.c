@@ -213,8 +213,11 @@ void TEST_226(
 
 					if (otZ > 0)
 					{
-						AddPrim((u_long*)ot + (otZ >> 2), pCurr);
-						primMem->curr = pNext;
+						if (otZ < 4080)
+						{
+							AddPrim((u_long*)ot + (otZ >> 2), pCurr);
+							primMem->curr = pNext;
+						}
 					}
 				}
 			}
