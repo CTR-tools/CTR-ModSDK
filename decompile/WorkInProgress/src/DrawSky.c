@@ -81,17 +81,17 @@ void DrawSky_Full(Skybox* pSkybox, void* pTileView, void* primMem)
 
 	// These get modified in between skybox segments,
 	// the C output is wrong
-	DAT_1f800010 = *(int *)(pTileView + 8) + 0x500U >> 7 & 0x1c;
+	DAT_1f800010 = pTileView->rot[1] + 0x500U >> 7 & 0x1c;
 	DAT_1f800014 = DAT_1f800010 >> 1;
 
 	//it probably modifies segment index on the register in between, then uses it in the segment function?
 	//does it like uses horizontal angle, something like 4096 / 512 then draw segments around it?
 
 	// draw four skybox segments
-	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, (pTileView->0xF4) + 0xFFC);
-	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, (pTileView->0xF4) + 0xFFC);
-	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, (pTileView->0xF4) + 0xFFC);
-	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, (pTileView->0xF4) + 0xFFC);
+	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, &pTileView->ptrOT[0x3ff]);
+	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, &pTileView->ptrOT[0x3ff]);
+	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, &pTileView->ptrOT[0x3ff]);
+	uVar1 = DrawSky_Piece(pSkybox, pTileView, primMem, &pTileView->ptrOT[0x3ff]);
 
 	// restore
 	unaff_ra = DAT_1f800000;
