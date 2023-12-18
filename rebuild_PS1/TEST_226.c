@@ -169,17 +169,20 @@ void TEST_226(
 					if (num == 4)
 					{
 						// must remove flags that are stored in pointer
-						unsigned int ptr = block->ptr_texture_mid[3];
+						unsigned int ptr = block->ptr_texture_mid[k];
 						struct TextureLayout* tl = ptr;
-						
+
 						if (ptr & 1)
 						{
 							ptr = ptr & ~(3);
 							tl = *(int*)ptr;
 						}
-						
+
 						if (tl != 0)
 						{
+							//move ptr to highest mid lod
+							tl += 2;
+
 							setUV4(p,
 								tl->u0, tl->v0,
 								tl->u1, tl->v1,

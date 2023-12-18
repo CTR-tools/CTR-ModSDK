@@ -2,7 +2,7 @@
 
 int bi = 0;
 
-int GetBit(unsigned int* vertData)
+inline int GetBit(unsigned int* vertData)
 {
 	unsigned int vertInt = vertData[bi >> 5];
 
