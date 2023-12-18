@@ -1,9 +1,10 @@
-// 519+38+14+18+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 646 rewritten so far
-// 519 for every 'common' and ','
+// 505+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 648 rewritten so far
+// 505 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
 // 14 for 230_Block2
 // 18 for 230_Block3
+// 16 for 232 adv hub
 // most other additions for 231
 // 10 for the eleven UI functions
 // +1 for DebugFont
@@ -87,23 +88,7 @@ common, 231, RB_Teeth_LInB, 0x0, General/231/231_120_124_RB_Teeth.c
 common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
 
 // 232 (incomplete)
-common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_00_AH_WarpPad_GetSpawnPosRot.c
-common, 232, AH_WarpPad_AllWarppadNum, 0x0, General/232/232_01_AH_WarpPad_AllWarppadNum.c
-common, 232, AH_WarpPad_MenuBoxFuncPtr, 0x0, General/232/232_02_AH_WarpPad_MenuBoxFuncPtr.c
-common, 232, AH_WarpPad_SpinRewards, 0x0, General/232/232_03_AH_WarpPad_SpinRewards.c
-common, 232, AH_WarpPad_ThTick, 0x0, General/232/232_04_AH_WarpPad_ThTick.c
-common, 232, AH_WarpPad_ThDestroy, 0x0, General/232/232_05_AH_WarpPad_ThDestroy.c
-common, 232, AH_WarpPad_LInB, 0x0, General/232/232_06_AH_WarpPad_LInB.c
-common, 232, AH_Garage_ThDestroy, 0x0, General/232/232_07_AH_Garage_ThDestroy.c
-common, 232, AH_Garage_Open, 0x0, General/232/232_08_AH_Garage_Open.c
-common, 232, AH_Garage_ThTick, 0x0, General/232/232_09_AH_Garage_ThTick.c
-common, 232, AH_Garage_LInB, 0x0, General/232/232_10_AH_Garage_LInB.c
-common, 232, AH_SaveObj_ThDestroy, 0x0, General/232/232_11_AH_SaveObj_ThDestroy.c
-common, 232, AH_SaveObj_ThTick, 0x0, General/232/232_12_AH_SaveObj_ThTick.c
-common, 232, AH_SaveObj_LInB, 0x0, General/232/232_13_AH_SaveObj_LInB.c
-common, 232, AH_Door_ThDestroy, 0x0, General/232/232_14_AH_Door_ThDestroy.c
-common, 232, AH_Door_ThTick, 0x0, General/232/232_15_AH_Door_ThTick.c
-common, 232, AH_Door_LInB, 0x0, General/232/232_16_AH_Door_LInB.c
+common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_00_16.c
 common, 232, AH_Map_Main, 0x0, General/232/232_24_AH_Map_Main.c
 
 // 233

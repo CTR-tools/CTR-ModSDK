@@ -540,6 +540,12 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 				
 				MENUBOX_Show(0x800b4e50);
 				
+				// temporary, until 232 BSS is rewritten
+				// with proper structs, and DECOMP function symbol
+				#if 1
+				*(int*)0x800b4e60 = DECOMP_AH_WarpPad_MenuBoxFuncPtr;
+				#endif
+				
 				// dont load level
 				return;
 			}
