@@ -139,6 +139,8 @@ LAB_80034e74:
 		
 		psVar8 = 0;
 		psVar9 = 0;
+
+#ifndef REBUILD_PC
 		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 		{
 			psVar9 = (struct Driver*)psVar12->object;
@@ -159,6 +161,8 @@ LAB_80035098:
 				if ((u_char)psVar9->numTimesAttacking < (u_char)psVar8->numTimesAttacking) goto LAB_80035098;
 			}
 		}
+#endif
+
 		if
 		(
 			((psVar8 != 0) && (psVar9 != 0)) &&

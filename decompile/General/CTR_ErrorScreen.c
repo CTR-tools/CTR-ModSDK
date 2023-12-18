@@ -5,6 +5,10 @@ void DECOMP_CTR_ErrorScreen(char r, char g, char b)
 	TILE p;
 	int i;
 
+#ifdef REBUILD_PC
+	while (1) {}
+#endif
+
 	for(i = 0; i < 3; i++)
 	{
 		DrawSync(0);

@@ -408,9 +408,15 @@ FinishLoading:
 				// disable demo mode from happening
 				gGT->demoCountdownTimer = 1800;
 
-				if (gGT->levelID < GEM_STONE_VALLEY)
+				if (gGT->levelID != MAIN_MENU_LEVEL)
 				{
-					if (gGT->trafficLightsTimer > 0)
+					if (
+							(gGT->trafficLightsTimer > 0) ||
+							(
+								(gGT->levelID == ADVENTURE_CHARACTER_SELECT) &&
+								(gGT->tileView[0].rot[2] == 0)
+							)
+						)
 					{
 						for(int k = 0; k < gGT->numPlyrCurrGame; k++)
 						{
@@ -473,8 +479,18 @@ FinishLoading:
 						((held & BTN_TRIANGLE) != 0)
 					)
 					{
-						DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
-						sdata->mainMenuState = 2;
+						if(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
+						{
+							// N_SANITY_BEACH
+							// NAUGHTY_DOG_CRATE
+							DECOMP_MainRaceTrack_RequestLoad(N_SANITY_BEACH);
+						}
+						
+						else
+						{
+							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+							sdata->mainMenuState = 2;
+						}
 					}
 				}
 #endif

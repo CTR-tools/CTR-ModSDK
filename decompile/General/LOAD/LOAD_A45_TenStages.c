@@ -319,6 +319,8 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					case 3:	DECOMP_MM_JumpTo_BattleSetup();		break;
 					#ifndef REBUILD_PS1
 					case 4:	CS_Garage_Init();					break;
+					#else
+					case 4:	sdata->ptrActiveMenuBox = 0;		break;
 					#endif
 					case 5:	DECOMP_MM_JumpTo_Scrapbook();		break;
 				}
@@ -407,6 +409,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					iVar9 = 0x68800;
 					iVar12 = 0x68800;
 				}
+
+#ifdef REBUILD_PC
+				iVar9 = 0x68800<<1;
+				iVar12 = 0x68800<<1;
+#endif
 
 				// Allocate room for LEV swapping
 				iVar5 = DECOMP_MEMPACK_AllocMem(iVar9 + iVar12); // "HUB ALLOC"

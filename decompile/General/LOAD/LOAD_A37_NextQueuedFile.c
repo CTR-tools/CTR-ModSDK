@@ -81,18 +81,13 @@ void DECOMP_LOAD_NextQueuedFile()
 
 #ifdef REBUILD_PC
 		DECOMP_LOAD_ReadFileASyncCallback(CdlComplete);
-#endif
-		
+#else
 		// Use callback if present
 		if(curr->callback.funcPtr != 0)
 		{
-#ifdef REBUILD_PC
-			if(*curr->callback.funcPtr != -1)
-				if (*curr->callback.funcPtr != -2)
-#endif
-
 			(*curr->callback.funcPtr)(curr);
 		}
+#endif
 		
 		// reset timer
 		sdata->frameWhenLoadingFinished = 0;

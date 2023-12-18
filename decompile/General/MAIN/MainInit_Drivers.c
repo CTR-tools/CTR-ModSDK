@@ -153,12 +153,16 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 		if(gGT->drivers[driverID] == 0) break;
 		gGT->drivers[driverID]->instSelf->model = sdata->PLYROBJECTLIST[i++];
 	}
-	
+
+
+	// leave commented, or it crashes Adventure->New
+	#if 0
 	for(driverID = 0; driverID < 7; driverID++)
 	{
 		if(gGT->drivers[driverID] == 0) break;
 		printf("%s\n", gGT->drivers[driverID]->instSelf->model->name);
 	}
+	#endif
 	
 #endif
 
