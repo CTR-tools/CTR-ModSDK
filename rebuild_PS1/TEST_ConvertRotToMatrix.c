@@ -5,7 +5,7 @@ https://en.wikipedia.org/wiki/Rotation_matrix
 CTRL + F and look for "Other 3D rotation matrices can be obtained from these three using"
 */
 
-void DECOMP_ConvertRotToMatrix(MATRIX* m, short* rot)
+void TEST_ConvertRotToMatrix(MATRIX* m, short* rot)
 {
 	#define mSIN DECOMP_MATH_Sin
 	#define mCOS DECOMP_MATH_Cos

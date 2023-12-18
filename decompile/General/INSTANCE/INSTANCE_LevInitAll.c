@@ -74,11 +74,9 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 #ifndef REBUILD_PS1
 		ConvertRotToMatrix(&inst->matrix.m, &levInstDef->rot[0]);
 #else
-		*(int*)&inst->matrix.m[0][0] = 0x1000;
-		*(int*)&inst->matrix.m[0][2] = 0;
-		*(int*)&inst->matrix.m[1][1] = 0x1000;
-		*(int*)&inst->matrix.m[2][0] = 0;
-		*(short*)&inst->matrix.m[2][2] = 0x1000;
+		// only a TEST function for REBUILD_PS1 and REBUILD_PC,
+		// can not be used stable, with regular PS1 modding
+		TEST_ConvertRotToMatrix(&inst->matrix.m, &levInstDef->rot[0]);
 #endif
 	
 		// instance posX and posY

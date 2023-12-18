@@ -41,7 +41,7 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   *(short*)&scratchpad[0x3f4] = tileView->rot[0];
   *(short*)&scratchpad[0x3f6] = tileView->rot[1];
   *(short*)&scratchpad[0x3f8] = tileView->rot[2];
-  DECOMP_ConvertRotToMatrix((MATRIX *)&scratchpad[0x3d4], (short *)&scratchpad[0x3f4]);
+  TEST_ConvertRotToMatrix((MATRIX *)&scratchpad[0x3d4], (short *)&scratchpad[0x3f4]);
   #endif
 
   tx = tileView->pos[0];
