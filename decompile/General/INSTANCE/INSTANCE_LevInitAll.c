@@ -139,8 +139,13 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 			if(boolArcadeOnly)
 				inst->flags &= ~(0xf);
 	
-			if(boolRelicOnly)
+			if (boolRelicOnly)
+			{
 				gGT->timeCratesInLEV++;
+
+				// temporary, until timebox thread is ready
+				inst->flags |= 1;
+			}
 		}
 	
 		else if ((gGT->gameMode1 & CRYSTAL_CHALLENGE) != 0)
