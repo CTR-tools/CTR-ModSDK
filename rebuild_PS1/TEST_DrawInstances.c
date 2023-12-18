@@ -419,7 +419,7 @@ void DrawOneInst(struct Instance* curr)
 				gte_avsz3();
 				gte_stotz(&otZ);
 
-				if (otZ > 0)
+				if (otZ > 8)
 				{
 					if (otZ < 4080)
 					{
