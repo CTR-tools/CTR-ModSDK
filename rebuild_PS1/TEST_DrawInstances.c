@@ -472,8 +472,14 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 
 			for (int i = 0; i < gGT->level1->numInstances; i++)
 			{
-				if (instDef[i].ptrInstance != 0)
-					DrawOneInst(instDef[i].ptrInstance);
+				struct Instance* curr = instDef[i].ptrInstance;
+
+				if (curr != 0)
+				{
+					if ((curr->flags & 0x80) != 0) continue;
+
+					DrawOneInst(curr);
+				}
 			}
 		}
 	}
