@@ -2,7 +2,10 @@
 
 int bi = 0;
 
-inline int GetBit(unsigned int* vertData)
+#ifdef REBUILD_PC
+inline 
+#endif
+int GetBit(unsigned int* vertData)
 {
 	unsigned int vertInt = vertData[bi >> 5];
 
@@ -44,12 +47,25 @@ void DrawOneInst(struct Instance* curr)
 
 		// ============ Get ModelViewProj Matrix ==============
 
-		MATRIX copy = view->matrix_ViewProj; // required
-		MATRIX* mat2 = MulMatrix(&copy, &curr->matrix);
+		MATRIX mvp;
+		MATRIX* mat2 = &mvp;
+		
+		// why is this shifting by 0x10 instead of 0xC?
+		
+#define RCC(row, col, index) \
+	((int)((int)view->matrix_ViewProj.m[row][index] * (int)curr->matrix.m[index][col]) >> 0x10)
 
-		mat2->m[0][0] /= 16; mat2->m[0][1] /= 16; mat2->m[0][2] /= 16;
-		mat2->m[1][0] /= 16; mat2->m[1][1] /= 16; mat2->m[1][2] /= 16;
-		mat2->m[2][0] /= 16; mat2->m[2][1] /= 16; mat2->m[2][2] /= 16;
+		mvp.m[0][0] = RCC(0, 0, 0) + RCC(0, 0, 1) + RCC(0, 0, 2);
+		mvp.m[0][1] = RCC(0, 1, 0) + RCC(0, 1, 1) + RCC(0, 1, 2);
+		mvp.m[0][2] = RCC(0, 2, 0) + RCC(0, 2, 1) + RCC(0, 2, 2);
+
+		mvp.m[1][0] = RCC(1, 0, 0) + RCC(1, 0, 1) + RCC(1, 0, 2);
+		mvp.m[1][1] = RCC(1, 1, 0) + RCC(1, 1, 1) + RCC(1, 1, 2);
+		mvp.m[1][2] = RCC(1, 2, 0) + RCC(1, 2, 1) + RCC(1, 2, 2);
+
+		mvp.m[2][0] = RCC(2, 0, 0) + RCC(2, 0, 1) + RCC(2, 0, 2);
+		mvp.m[2][1] = RCC(2, 1, 0) + RCC(2, 1, 1) + RCC(2, 1, 2);
+		mvp.m[2][2] = RCC(2, 2, 0) + RCC(2, 2, 1) + RCC(2, 2, 2);
 
 		// ============ Get Perspective Translation ==============
 
