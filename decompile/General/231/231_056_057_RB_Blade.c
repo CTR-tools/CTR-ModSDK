@@ -15,7 +15,11 @@ void DECOMP_RB_Blade_ThTick(struct Thread* t)
 	
 	bladeObj->angle += 0x100;
 	
+#ifndef REBUILD_PC
 	ConvertRotToMatrix(&bladeInst->matrix, &rot[0]);
+#else
+	TEST_ConvertRotToMatrix(&bladeInst->matrix, &rot[0]);
+#endif
 	
 	bladeInst->scale[0] = 0x1000;
 	bladeInst->scale[1] = 0x1000;
@@ -34,7 +38,7 @@ void DECOMP_RB_Blade_LInB(struct Instance* inst)
 	struct Blade* bladeObj;
 	
 	struct Thread* t = 
-		THREAD_BirthWithObject
+		DECOMP_THREAD_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
