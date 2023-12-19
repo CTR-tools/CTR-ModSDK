@@ -5,26 +5,26 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 	short sVar1;
 	char bVar2;
 	short sVar3;
-	short sVar4;
+	short menuRowsNegativePadding_halved_again;
 	char cVar5;
 	u_short uVar6;
 	int iVar7;
-	short sVar8;
+	short menuRowsToRemove;
 	struct ControllerPacket *psVar9;
 	int iVar10;
 	char **volumeModeString;
 	char **dualshockVibrateString;
-	u_short areThereRacingWheels;
+	u_short areBothControllerLabelsNecessary;
 	int selectedRow;
-	int iVar12;
+	int somethingToDoWithVolumeLineWidth;
 	int i;
 	u_int uVar13;
 	int iVar14;
 
 	u_short uVar15;
-	u_short local_b0 [4];
-	u_short local_a8 [4];
-	u_short local_a0 [4];
+	u_short analogId [4];
+	u_short gamepadId [4];
+	u_short isGamepadAnalog [4];
 
 	// used for the volume sliders
 	RECT volumeSliderBar;
@@ -37,27 +37,27 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 	RECT menuBoxBG;
 	
 	short local_70;
-	u_short local_68;
-	u_short local_60;
-	u_short numRacingWheels;
-	u_short numAnalogGamepads;
-	u_short gamepadSlotBufferMeta1;
-	short local_38;
-	int local_30;
+	u_short menuRowsNegativePaddingCopy;
+	u_short dualShockListVerticalPadding;
+	u_short numGamepads;
+	u_short numAnalogs;
+	u_short isMultitap;
+	short whateverThisIsNow;
+	int thisOtherThing;
 	
 	local_70 = 0;
-	numRacingWheels = 0;
-	gamepadSlotBufferMeta1 = (u_short)(sdata->gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4)) << 1;
+	numGamepads = 0;
+	isMultitap = (u_short)(sdata->gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4)) << 1;
 	MainFreeze_SafeAdvDestroy();
-	iVar12 = 0;
-	numAnalogGamepads = 0;
+	somethingToDoWithVolumeLineWidth = 0;
+	numAnalogs = 0;
 	if (sdata->boolOpenWheelConfig != 0)
 	{
 		MainFreeze_ConfigSetupEntry();
 		return;
 	}
-	// For if you are not in racing wheel configuration
-	// Since you did not hit "return", you will continue with the rest of the Options menu
+	
+	// get number of ordinary gamepads and/or "analog controllers" connected, and which players are using which
 	i = 0;
 	if (sdata->gGT->numPlyrCurrGame != 0)
 	{
@@ -67,76 +67,98 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 			psVar9 = sdata->gGamepads->gamepad[iVar7 >> 0x10].ptrControllerPacket;
 			if (((psVar9 == (struct ControllerPacket *)0x0) || (psVar9->isControllerConnected != 0)) || ((psVar9->controllerData != ((PAD_ID_JOGCON << 4) | 3) && (psVar9->controllerData != ((PAD_ID_NEGCON << 4) | 3)))))
 			{
-				uVar13 = (u_int)numRacingWheels;
-				numRacingWheels = numRacingWheels + 1;
-				*(short *)((int)local_a8 + ((int)(uVar13 << 0x10) >> 0xf)) = (short)i;
-				*(u_short *)((int)local_a0 + ((i << 0x10) >> 0xf)) = 0;
+				uVar13 = (u_int)numGamepads;
+				numGamepads = numGamepads + 1;
+				gamepadId[uVar13] = (short)i;
+				isGamepadAnalog[i] = false;
 			}
 			else
 			{
-				uVar13 = (u_int)numAnalogGamepads;
-				numAnalogGamepads = numAnalogGamepads + 1;
-				*(short *)((int)local_b0 + ((int)(uVar13 << 0x10) >> 0xf)) = (short)i;
-				local_a0[iVar7 >> 0x10] = 1;
+				uVar13 = (u_int)numAnalogs;
+				numAnalogs = numAnalogs + 1;
+				analogId[uVar13] = (short)i;
+				isGamepadAnalog[iVar7 >> 0x10] = true;
 			}
 			i = i + 1;
 			iVar7 = i * 0x10000;
 		} while (i * 0x10000 >> 0x10 < (int)(u_int)sdata->gGT->numPlyrCurrGame);
 	}
-	// 0 for no racing wheels
-	// 1 for racing wheels
-	areThereRacingWheels = 0;
-	if (numRacingWheels != 0)
+
+	// bool
+	// 0 for no "analog controllers"
+	// 1 for yes "analog controllers"
+	areBothControllerLabelsNecessary = 0;
+	if (numGamepads != 0)
 	{
-		areThereRacingWheels = (u_short)(numAnalogGamepads != 0);
+		areBothControllerLabelsNecessary = (u_short)(numAnalogs != 0);
 	}
-	sVar8 = (4 - areThereRacingWheels) - (u_short)sdata->gGT->numPlyrCurrGame;
-	areThereRacingWheels = sVar8 * 10;
-	if (numRacingWheels == 0)
+
+	// amount of menu rows to hide
+	// used for the dualshock and/or "analog" rows which are variable
+
+	// in singleplayer, regardless of gamepad, 2 of these rows are always visible
+	// with 4 regular gamepads connected, in multiplayer, there's 5 rows visible
+	// maximum amount of rows is 6, which happens if there's 4 controllers and one of them is "analog"
+	// in the last scenario, menuRowsToRemove will equal -1
+	menuRowsToRemove = (4 - areBothControllerLabelsNecessary) - (u_short)sdata->gGT->numPlyrCurrGame;
+
+	u_short menuRowsNegativePadding = menuRowsToRemove * 10;
+
+	if (numGamepads == 0)
 	{
-		local_60 = 0;
+		dualShockListVerticalPadding = 0;
 	}
 	else
 	{
-		local_60 = (numRacingWheels + 1) * 10;
+		dualShockListVerticalPadding = (numGamepads + 1) * 10;
 	}
-	iVar7 = (int)((u_int)areThereRacingWheels << 0x10) >> 0x11;
-	data.Options_HighlightBar[8].posY = sVar8 * -10 + 0x77;
+
+	int menuRowsNegativePadding_halved = (int)((u_int)menuRowsNegativePadding << 0x10) >> 0x11;
+
+	// cursor location for exit button, which will change depending on how many dualshock rows there need to be
+	data.Options_HighlightBar[8].posY = menuRowsToRemove * -10 + 119;
+
+	// cursor location for dualshock rows
 	i = 0;
-	if (0 < (short)numRacingWheels)
+	if (0 < (short)numGamepads)
 	{
 		iVar10 = 0;
 		do
 		{
-			data.Options_HighlightBar[(iVar10 >> 0x10) + 4].posY = (short)((u_int)iVar10 >> 0x10) * 10 + 0x4f;
+			data.Options_HighlightBar[(iVar10 >> 0x10) + 4].posY = (short)((u_int)iVar10 >> 0x10) * 10 + 79;
 			i = i + 1;
 			iVar10 = i * 0x10000;
-		} while (i * 0x10000 >> 0x10 < (int)(short)numRacingWheels);
+		} while (i * 0x10000 >> 0x10 < (int)(short)numGamepads);
 	}
-	iVar10 = (u_int)numAnalogGamepads << 0x10;
+
+	// cursor location for "analog" rows...?
+	iVar10 = (u_int)numAnalogs << 0x10;
 	i = 0;
 	if (0 < iVar10)
 	{
 		do
 		{
 			uVar6 = 0;
-			sVar8 = (short)i;
-			if ((short)numRacingWheels != 0)
+			short analogIdx = (short)i;
+			if ((short)numGamepads != 0)
 			{
-				uVar6 = (u_short)(iVar10 != 0);
+				uVar6 = (u_short)(iVar10 != 0); // bool
 			}
 			i = i + 1;
-			data.Options_HighlightBar[(int)(short)numRacingWheels + sVar8 + 4].posY = (sVar8 + numRacingWheels + uVar6) * 10 + 0x4f;
-			iVar10 = (u_int)numAnalogGamepads << 0x10;
+			data.Options_HighlightBar[(int)(short)numGamepads + analogIdx + 4].posY = (analogIdx + numGamepads + uVar6) * 10 + 79;
+			iVar10 = (u_int)numAnalogs << 0x10;
 		} while (i * 0x10000 < iVar10);
 	}
+
 	uVar6 = mb->drawStyle & 0xfeff;
 	mb->drawStyle = uVar6;
 	if (2 < sdata->gGT->numPlyrCurrGame)
 	{
 		mb->drawStyle = uVar6 | 0x100;
 	}
-	local_68 = areThereRacingWheels;
+
+	menuRowsNegativePaddingCopy = menuRowsNegativePadding;
+
 	if ((sdata->AnyPlayerTap & BTN_UP) == 0)
 	{
 		if ((sdata->AnyPlayerTap & BTN_DOWN) == 0)
@@ -152,9 +174,9 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 			case 2:
 				selectedRow = (int)mb->rowSelected;
 				OptionsMenu_TestSound(selectedRow, 1);
-				if ((sdata->AnyPlayerHold & 4) == 0)
+				if ((sdata->AnyPlayerHold & BTN_LEFT) == 0)
 				{
-					if ((sdata->AnyPlayerHold & 8) != 0)
+					if ((sdata->AnyPlayerHold & BTN_RIGHT) != 0)
 					{
 						// get value of volume slider
 						uVar6 = howl_VolumeGet(selectedRow);
@@ -199,13 +221,13 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 					OtherFX_Play(1, 1);
 					i = (int)((uVar6 - 4) * 0x10000) >> 0x10;
 					// if the row you selected is for configuring a racing wheel gamepad
-					if (i < (short)numRacingWheels)
+					if (i < (short)numGamepads)
 					{
-						sdata->gGT->gameMode1 = sdata->gGT->gameMode1 ^ data.gGT_gameMode1_Vibration_PerPlayer[(short)local_a8[i]];
+						sdata->gGT->gameMode1 = sdata->gGT->gameMode1 ^ data.gGT_gameMode1_Vibration_PerPlayer[(short)gamepadId[i]];
 					}
 					else
 					{
-						sdata->gamepad_ID_ThatOpenedRaceWheelConfig = local_b0[i - (short)numRacingWheels];
+						sdata->gamepad_ID_ThatOpenedRaceWheelConfig = analogId[i - (short)numGamepads];
 						sdata->boolOpenWheelConfig = 1;
 						sdata->raceWheelConfigPageIndex = 0;
 					}
@@ -222,23 +244,23 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 			goto switchD_80038f90_caseD_9;
 		}
 		OtherFX_Play(0, 1);
-		sVar8 = mb->rowSelected + 1;
-		mb->rowSelected = sVar8;
-		if (8 < sVar8)
+		short rowSelectedCopy = mb->rowSelected + 1;
+		mb->rowSelected = rowSelectedCopy;
+		if (8 < rowSelectedCopy)
 		{
 			mb->rowSelected = 0;
 			goto switchD_80038f90_caseD_9;
 		}
-		if ((int)sVar8 < (int)(sdata->gGT->numPlyrCurrGame + 4)) goto switchD_80038f90_caseD_9;
+		if ((int)rowSelectedCopy < (int)(sdata->gGT->numPlyrCurrGame + 4)) goto switchD_80038f90_caseD_9;
 	}
 	else
 	{
 		OtherFX_Play(0, 1);
-		sVar8 = mb->rowSelected + -1;
-		mb->rowSelected = sVar8;
-		if (-1 < sVar8)
+		short rowSelectedCopy = mb->rowSelected + -1;
+		mb->rowSelected = rowSelectedCopy;
+		if (-1 < rowSelectedCopy)
 		{
-			if (sVar8 == 7)
+			if (rowSelectedCopy == 7)
 			{
 				mb->rowSelected = sdata->gGT->numPlyrCurrGame + 3;
 			}
@@ -252,9 +274,9 @@ switchD_80038f90_caseD_9:
 	do
 	{
 		i = DecalFont_GetLineWidth(sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Audio + (i >> 0xf))], 2);
-		if (iVar12 << 0x10 < i << 0x10)
+		if (somethingToDoWithVolumeLineWidth << 0x10 < i << 0x10)
 		{
-			iVar12 = i;
+			somethingToDoWithVolumeLineWidth = i;
 		}
 		uVar13 = uVar13 + 1;
 		i = uVar13 * 0x10000;
@@ -262,52 +284,52 @@ switchD_80038f90_caseD_9:
 	iVar10 = 0;
 	
 	// "OPTIONS"
-	DecalFont_DrawLine(sdata->lngStrings[324], 0x100, (short)((u_int)((iVar7 + 0x1a) * 0x10000) >> 0x10), FONT_BIG, (JUSTIFY_CENTER | ORANGE));
+	DecalFont_DrawLine(sdata->lngStrings[324], 0x100, (short)((u_int)((menuRowsNegativePadding_halved + 0x1a) * 0x10000) >> 0x10), FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
-	i = 0x17c - (iVar12 + 0x1e);
-	local_38 = (short)i;
-	local_30 = (i * 0x10000 >> 0x10) + -5;
+	i = 0x17c - (somethingToDoWithVolumeLineWidth + 0x1e);
+	whateverThisIsNow = (short)i;
+	thisOtherThing = (i * 0x10000 >> 0x10) + -5;
 	i = 0;
 	do
 	{
 		i = i >> 0x10;
 		uVar6 = howl_VolumeGet(i);
-		iVar14 = (uVar6 & 0xff) * local_30;
-		sVar4 = (short)areThereRacingWheels >> 1;
-		sVar8 = sVar4 + (short)(i * 10);
+		iVar14 = (uVar6 & 0xff) * thisOtherThing;
+		menuRowsNegativePadding_halved_again = (short)menuRowsNegativePadding >> 1;
+		short volumeHeightSomething = menuRowsNegativePadding_halved_again + (short)(i * 10);
 		if (iVar14 < 0)
 		{
 			iVar14 = iVar14 + 0xff;
 		}
-		sVar3 = (short)(iVar12 + 0x1e);
+		sVar3 = (short)(somethingToDoWithVolumeLineWidth + 0x1e);
 		sVar1 = sVar3 + (short)((u_int)iVar14 >> 8) + 0x38;
 		volumeSliderBar.x = sVar1 + 1;
-		volumeSliderBar.y = sVar8 + 0x30;
+		volumeSliderBar.y = volumeHeightSomething + 0x30;
 		volumeSliderBar.w = 3;
 		volumeSliderBar.h = 10;
 		CTR_Box_DrawSolidBox(&volumeSliderBar, (u_int *)(data.Options_VolumeSlider_Colors + 0xc), (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
-		volumeSliderBarOutline.y = sVar8 + 0x2f;
+		volumeSliderBarOutline.y = volumeHeightSomething + 0x2f;
 		volumeSliderBarOutline.w = 5;
 		volumeSliderBarOutline.h = 0xc;
 		volumeSliderBarOutline.x = sVar1;
 		CTR_Box_DrawSolidBox(&volumeSliderBarOutline, (u_int *)(data.Options_VolumeSlider_Colors + 0x10), (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 		volumeSliderTriangle[0] = sVar3 + 0x38;
-		volumeSliderTriangle[1] = sVar8 + 0x3a;
-		volumeSliderTriangle[2] = sVar3 + local_38 + 0x38;
-		volumeSliderTriangle[3] = sVar8 + 0x30;
+		volumeSliderTriangle[1] = volumeHeightSomething + 0x3a;
+		volumeSliderTriangle[2] = sVar3 + whateverThisIsNow + 0x38;
+		volumeSliderTriangle[3] = volumeHeightSomething + 0x30;
 		volumeSliderTriangle[4] = volumeSliderTriangle[2];
 		volumeSliderTriangle[5] = volumeSliderTriangle[1];
 		MENUBOX_DrawRwdTriangle(volumeSliderTriangle, data.Options_VolumeSlider_Colors, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 		
 		// "FX:" "MUSIC:" "VOICE:"
-		DecalFont_DrawLine(sdata->lngStrings[data.Options_StringIDs_Audio[i]], 0x4c, (short)((u_int)((i * 10 + iVar7 + 0x32) * 0x10000) >> 0x10), 2, ORANGE);
+		DecalFont_DrawLine(sdata->lngStrings[data.Options_StringIDs_Audio[i]], 0x4c, (short)((u_int)((i * 10 + menuRowsNegativePadding_halved + 0x32) * 0x10000) >> 0x10), 2, ORANGE);
 
 		iVar10 = iVar10 + 1;
 		i = iVar10 * 0x10000;
 	} while (iVar10 * 0x10000 >> 0x10 < 3);
 
 	// "MODE:"
-	DecalFont_DrawLine(sdata->lngStrings[332], 0x4c, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(sdata->lngStrings[332], 0x4c, (short)((u_int)((menuRowsNegativePadding_halved + 0x50) * 0x10000) >> 0x10), FONT_SMALL, ORANGE);
 
 	cVar5 = howl_ModeGet();
 	if (cVar5 == '\0')
@@ -320,33 +342,33 @@ switchD_80038f90_caseD_9:
 		// "STEREO"
 		volumeModeString = &sdata->lngStrings[334];
 	}
-	DecalFont_DrawLine(*volumeModeString, 0x1b4, (short)((u_int)((iVar7 + 0x50) * 0x10000) >> 0x10), FONT_SMALL, (JUSTIFY_RIGHT | WHITE));
+	DecalFont_DrawLine(*volumeModeString, 0x1b4, (short)((u_int)((menuRowsNegativePadding_halved + 0x50) * 0x10000) >> 0x10), FONT_SMALL, (JUSTIFY_RIGHT | WHITE));
 
-	areThereRacingWheels = numRacingWheels;
-	if (numRacingWheels != 0)
+	u_short numGamepadsCopy = numGamepads;
+	if (numGamepads != 0)
 	{
 		// "DUAL SHOCK:"
-		DecalFont_DrawLine(sdata->lngStrings[330], 0x4c, (short)((u_int)((iVar7 + 0x5a) * 0x10000) >> 0x10), FONT_SMALL, ORANGE);
+		DecalFont_DrawLine(sdata->lngStrings[330], 0x4c, (short)((u_int)((menuRowsNegativePadding_halved + 0x5a) * 0x10000) >> 0x10), FONT_SMALL, ORANGE);
 
 		i = DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Gamepads[2]], 2);
 		iVar10 = DecalFont_GetLineWidth(sdata->lngStrings[326], 2);
-		iVar12 = DecalFont_GetLineWidth(sdata->lngStrings[325], 2);
+		somethingToDoWithVolumeLineWidth = DecalFont_GetLineWidth(sdata->lngStrings[325], 2);
 		iVar14 = 0;
-		if (iVar12 << 0x10 < iVar10 << 0x10)
+		if (somethingToDoWithVolumeLineWidth << 0x10 < iVar10 << 0x10)
 		{
-			iVar12 = iVar10;
+			somethingToDoWithVolumeLineWidth = iVar10;
 		}
-		iVar12 = (i + iVar12 + 10) * 0x10000;
-		iVar12 = 0x100 - ((iVar12 >> 0x10) - (iVar12 >> 0x1f) >> 1);
-		if (0 < (short)areThereRacingWheels)
+		somethingToDoWithVolumeLineWidth = (i + somethingToDoWithVolumeLineWidth + 10) * 0x10000;
+		somethingToDoWithVolumeLineWidth = 0x100 - ((somethingToDoWithVolumeLineWidth >> 0x10) - (somethingToDoWithVolumeLineWidth >> 0x1f) >> 1);
+		if (0 < (short)numGamepadsCopy)
 		{
 			iVar10 = 0;
 			do
 			{
 				bVar2 = false;
-				areThereRacingWheels = *(u_short *)((int)local_a8 + (iVar10 >> 0xf));
-				uVar13 = (u_int)areThereRacingWheels;
-				psVar9 = sdata->gGamepads->gamepad[(short)areThereRacingWheels].ptrControllerPacket;
+				areBothControllerLabelsNecessary = *(u_short *)((int)gamepadId + (iVar10 >> 0xf));
+				uVar13 = (u_int)areBothControllerLabelsNecessary;
+				psVar9 = sdata->gGamepads->gamepad[(short)areBothControllerLabelsNecessary].ptrControllerPacket;
 				if ((psVar9 == (struct ControllerPacket *)0x0) || (psVar9->isControllerConnected != 0))
 				{
 					bVar2 = true;
@@ -362,9 +384,9 @@ switchD_80038f90_caseD_9:
 				// "CONTROLLER 1", "CONTROLLER 2", "CONTROLLER 1A", "CONTROLLER 1B", "CONTROLLER 1C", "CONTROLLER 1D"
 				DecalFont_DrawLine
 				(
-					sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)((uVar13 + gamepadSlotBufferMeta1) * 0x10000) >> 0xf))],
-					(short)((u_int)(iVar12 * 0x10000) >> 0x10),
-					(short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10),
+					sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)((uVar13 + isMultitap) * 0x10000) >> 0xf))],
+					(short)((u_int)(somethingToDoWithVolumeLineWidth * 0x10000) >> 0x10),
+					(short)((u_int)(((short)iVar14 * 10 + menuRowsNegativePadding_halved + 100) * 0x10000) >> 0x10),
 					FONT_SMALL, uVar15
 				);
 				if ((sdata->gGT->gameMode1 & *(u_int *)((int)data.gGT_gameMode1_Vibration_PerPlayer + ((int)(uVar13 << 0x10) >> 0xe))) == 0)
@@ -385,54 +407,54 @@ switchD_80038f90_caseD_9:
 				DecalFont_DrawLine
 				(
 					*dualshockVibrateString,
-					(short)((u_int)((iVar12 + i + 10) * 0x10000) >> 0x10),
-					(short)((u_int)(((short)iVar14 * 10 + iVar7 + 100) * 0x10000) >> 0x10),
+					(short)((u_int)((somethingToDoWithVolumeLineWidth + i + 10) * 0x10000) >> 0x10),
+					(short)((u_int)(((short)iVar14 * 10 + menuRowsNegativePadding_halved + 100) * 0x10000) >> 0x10),
 					FONT_SMALL, uVar15
 				);
 				iVar14 = iVar14 + 1;
 				iVar10 = iVar14 * 0x10000;
-			} while (iVar14 * 0x10000 < (int)((u_int)numRacingWheels << 0x10));
+			} while (iVar14 * 0x10000 < (int)((u_int)numGamepads << 0x10));
 		}
 	}
-	iVar12 = (int)(short)numAnalogGamepads;
-	if (iVar12 != 0)
+	somethingToDoWithVolumeLineWidth = (int)(short)numAnalogs;
+	if (somethingToDoWithVolumeLineWidth != 0)
 	{
 		i = 0;
-		DecalFont_DrawLine(sdata->lngStrings[336], 0x4c, (short)(((u_int)local_60 + iVar7 + 0x5a) * 0x10000 >> 0x10), FONT_SMALL, ORANGE);
-		if (0 < iVar12)
+		DecalFont_DrawLine(sdata->lngStrings[336], 0x4c, (short)(((u_int)dualShockListVerticalPadding + menuRowsNegativePadding_halved + 0x5a) * 0x10000 >> 0x10), FONT_SMALL, ORANGE);
+		if (0 < somethingToDoWithVolumeLineWidth)
 		{
 			do
 			{
 				DecalFont_DrawLine
 				(
-					sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)(((u_int)local_b0[(short)i] + (u_int)gamepadSlotBufferMeta1) * 0x10000) >> 0xf))],
+					sdata->lngStrings[*(short *)((int)data.Options_StringIDs_Gamepads + ((int)(((u_int)analogId[(short)i] + (u_int)isMultitap) * 0x10000) >> 0xf))],
 					0x100,
-					(short)((iVar7 + (u_int)local_60 + (short)i * 10 + 100) * 0x10000 >> 0x10),
+					(short)((menuRowsNegativePadding_halved + (u_int)dualShockListVerticalPadding + (short)i * 10 + 100) * 0x10000 >> 0x10),
 					FONT_SMALL, (JUSTIFY_CENTER | ORANGE)
 				);
 				i = i + 1;
-			} while (i * 0x10000 >> 0x10 < iVar12);
+			} while (i * 0x10000 >> 0x10 < somethingToDoWithVolumeLineWidth);
 		}
 	}
 	// "EXIT"
-	DecalFont_DrawLine(sdata->lngStrings[331], 0x4c, (short)(((iVar7 + 0x8c) - (u_int)local_68) * 0x10000 >> 0x10), FONT_SMALL, ORANGE);
+	DecalFont_DrawLine(sdata->lngStrings[331], 0x4c, (short)(((menuRowsNegativePadding_halved + 0x8c) - (u_int)menuRowsNegativePaddingCopy) * 0x10000 >> 0x10), FONT_SMALL, ORANGE);
 
 	glowingcursor.x = 0x4a;
 	glowingcursor.w = 0x16c;
-	glowingcursor.y = data.Options_HighlightBar[mb->rowSelected].posY + sVar4 + 0x14;
+	glowingcursor.y = data.Options_HighlightBar[mb->rowSelected].posY + menuRowsNegativePadding_halved_again + 0x14;
 	glowingcursor.h = data.Options_HighlightBar[mb->rowSelected].sizeY;
 	CTR_Box_DrawClearBox(&glowingcursor, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 
 	titleSeparatorLine.x = 66;
-	titleSeparatorLine.y = sVar4 + 43;
+	titleSeparatorLine.y = menuRowsNegativePadding_halved_again + 43;
 	titleSeparatorLine.w = 380;
 	titleSeparatorLine.h = 2;
 	MENUBOX_DrawOuterRect_Edge(&titleSeparatorLine, (u_int)&sdata->battleSetup_Color_UI_1, 0x20, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
 	menuBoxBG.x = 0x38;
 	menuBoxBG.w = 400;
-	menuBoxBG.h = 0x87 - local_68;
-	menuBoxBG.y = sVar4 + 0x14;
+	menuBoxBG.h = 0x87 - menuRowsNegativePaddingCopy;
+	menuBoxBG.y = menuRowsNegativePadding_halved_again + 0x14;
 	MENUBOX_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 
 	if ((local_70 != 0) || ((sdata->AnyPlayerTap & (BTN_TRIANGLE | BTN_START | BTN_SQUARE_one)) != 0))
