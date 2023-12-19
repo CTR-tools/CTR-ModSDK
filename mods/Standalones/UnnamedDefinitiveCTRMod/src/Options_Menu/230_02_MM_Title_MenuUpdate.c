@@ -246,6 +246,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 
 			// return to character selection
 			sdata->ptrDesiredMenuBox = &UDCTRM_OM_MenuBox;
+			MainFrame_TogglePauseAudio(1);
 			break;
 		/////////////////////////// END OF CHANGES     ///////////////////////////
 	}

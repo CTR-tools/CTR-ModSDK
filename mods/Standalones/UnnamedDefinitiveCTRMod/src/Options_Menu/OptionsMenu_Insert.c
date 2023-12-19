@@ -4,7 +4,7 @@
 
 ////////////////// Options MenuBox //////////////////
 
-void UDCTRM_OM_FuncPtr(struct MenuBox* mb);
+void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb);
 
 struct MenuBox UDCTRM_OM_MenuBox =
 {
@@ -19,7 +19,7 @@ struct MenuBox UDCTRM_OM_MenuBox =
 
     .rows = 0,
 
-    .funcPtr = UDCTRM_OM_FuncPtr,
+    .funcPtr = DECOMP_MainFreeze_MenuPtrOptions,
 
     .drawStyle = 0,
 
