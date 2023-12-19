@@ -2,14 +2,18 @@
 
 void TEST_ThTickRunBucket(struct Thread* t)
 {
-	while(t != 0)
+	for(/**/; t != 0; t = t->siblingThread)
 	{
-		// if thread wasn't killed in a menu -- this is required cause dead threads
-		// aren't cleaned until after bucket execution, and menu is before bucket execution
-		if((t->flags & 0x800) == 0)
-			if(t->funcThTick != 0)
-				t->funcThTick(t);
+		if((t->flags & 0x800) != 0) continue;
 		
-		t = t->siblingThread;
+		if(t->funcThTick == 0) continue;
+		
+		if(t->cooldownFrameCount != 0)
+		{
+			t->cooldownFrameCount--;
+			continue;
+		}
+		
+		t->funcThTick(t);
 	}
 }
