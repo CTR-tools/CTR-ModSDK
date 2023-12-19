@@ -14,7 +14,7 @@ void DECOMP_RB_FlameJet_LInB();
 void DECOMP_RB_Plant_LInB();
 void DECOMP_RB_Minecart_LInB();
 void DECOMP_RB_Snowball_LInB();
-void DECOMP_RB_Armadillo_LInB();
+//void DECOMP_RB_Armadillo_LInB();	-- DONE
 //void DECOMP_RB_Blade_LInB();		-- DONE
 //void DECOMP_RB_Seal_LInB();		-- DONE
 void RB_Orca_LInB();
@@ -52,7 +52,7 @@ void DECOMP_RB_FlameJet_LInB() {}
 void DECOMP_RB_Plant_LInB() {}
 void DECOMP_RB_Minecart_LInB() {}
 void DECOMP_RB_Snowball_LInB() {}
-void DECOMP_RB_Armadillo_LInB() {}
+//void DECOMP_RB_Armadillo_LInB() {}-- DONE
 //void DECOMP_RB_Blade_LInB() {}	-- DONE
 //void DECOMP_RB_Seal_LInB() {}		-- DONE
 void RB_Orca_LInB() {}

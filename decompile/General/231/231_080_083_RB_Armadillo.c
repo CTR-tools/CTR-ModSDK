@@ -16,7 +16,7 @@ void RB_Armadillo_ThTick_Flip(struct Thread* t)
 	// if animation is not over
 	if(
 		(armInst->animFrame+1) < 
-		INSTANCE_GetNumAnimFrames(armInst, 0)
+		DECOMP_INSTANCE_GetNumAnimFrames(armInst, 0)
 	)
 	{
 		// increment frame
@@ -31,14 +31,20 @@ void RB_Armadillo_ThTick_Flip(struct Thread* t)
 	armObj->velX = -armObj->velX;
 	armObj->velZ = -armObj->velZ;
 	
+#ifndef REBUILD_PS1
 	// play roll sound
 	PlaySound3D(0x70, armInst);
+#endif
 
 	// rolling animation
 	armInst->animFrame = 0;
 	armInst->animIndex = 1;
 
+#ifndef REBUILD_PS1
 	ThTick_SetAndExec(t, DECOMP_RB_Armadillo_ThTick_Rolling);
+#else
+	TEST_ThTickSetAndExec(t, DECOMP_RB_Armadillo_ThTick_Rolling);
+#endif
 }
 
 void DECOMP_RB_Armadillo_ThTick_TurnAround(struct Thread* t)
@@ -52,14 +58,18 @@ void DECOMP_RB_Armadillo_ThTick_TurnAround(struct Thread* t)
 	
 	// spin rotCurrY 180 degrees (turn around)
 	armObj->rotCurr[1] = 
-		RB_Hazard_InterpolateValue(
+		DECOMP_RB_Hazard_InterpolateValue(
 			armObj->rotCurr[1], armObj->rotDesired[1], 0x100
 		);
 		
 	// increment frame
 	armInst->animFrame = armInst->animFrame+1;
-		
+	
+#ifndef REBUILD_PS1
 	ConvertRotToMatrix(&armInst->matrix, &armObj->rotCurr[0]);
+#else
+	TEST_ConvertRotToMatrix(&armInst->matrix, &armObj->rotCurr[0]);
+#endif
 	
 	if(armObj->rotCurr[1] != armObj->rotDesired[1])
 	{
@@ -68,8 +78,12 @@ void DECOMP_RB_Armadillo_ThTick_TurnAround(struct Thread* t)
 	}
 	
 	// === End of TurnAround ===
-	
+
+#ifndef REBUILD_PS1
 	ThTick_SetAndExec(t, RB_Armadillo_ThTick_Flip);
+#else
+	TEST_ThTickSetAndExec(t, RB_Armadillo_ThTick_Flip);
+#endif
 }
 
 void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t)
@@ -84,7 +98,7 @@ void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t)
 	// if animation is not over
 	if(
 		(armInst->animFrame+1) < 
-		INSTANCE_GetNumAnimFrames(armInst, 1)
+		DECOMP_INSTANCE_GetNumAnimFrames(armInst, 1)
 	)
 	{
 		// increment frame
@@ -124,7 +138,11 @@ void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t)
 	armInst->animFrame = 0;
 	armInst->animIndex = 0;
 	
+#ifndef REBUILD_PS1
 	ThTick_SetAndExec(t, DECOMP_RB_Armadillo_ThTick_TurnAround);
+#else
+	TEST_ThTickSetAndExec(t, DECOMP_RB_Armadillo_ThTick_TurnAround);
+#endif
 }
 
 void DECOMP_RB_Armadillo_LInB(struct Instance* inst)
@@ -134,7 +152,7 @@ void DECOMP_RB_Armadillo_LInB(struct Instance* inst)
 	short* metaArray;
 	
 	struct Thread* t = 
-		THREAD_BirthWithObject
+		DECOMP_THREAD_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
