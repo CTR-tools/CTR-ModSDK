@@ -406,16 +406,13 @@ FinishLoading:
 #ifdef REBUILD_PC
 
 				// disable demo mode from happening
-				gGT->demoCountdownTimer = 1800;
+				//gGT->demoCountdownTimer = 1800;
 
 				if (gGT->levelID != MAIN_MENU_LEVEL)
 				{
 					if (
 							(gGT->trafficLightsTimer > 0) ||
-							(
-								(gGT->levelID == ADVENTURE_CHARACTER_SELECT) &&
-								(gGT->tileView[0].rot[2] == 0)
-							)
+							(gGT->tileView[0].rot[2] != 0x800)
 						)
 					{
 						for(int k = 0; k < gGT->numPlyrCurrGame; k++)
