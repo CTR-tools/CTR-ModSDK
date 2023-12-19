@@ -425,7 +425,7 @@ FinishLoading:
 							gGT->tileView[k].pos[2] = gGT->level1->DriverSpawn[k].pos[2];
 										  
 							gGT->tileView[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0];
-							gGT->tileView[k].rot[1] = 0xc00-gGT->level1->DriverSpawn[k].rot[1];
+							gGT->tileView[k].rot[1] = gGT->level1->DriverSpawn[k].rot[1] + 0x400;
 							gGT->tileView[k].rot[2] = 0x800; // required
 						}
 					}
@@ -440,24 +440,24 @@ FinishLoading:
 
 					if ((held & BTN_UP) != 0)
 					{
-						gGT->tileView[0].pos[2] += (0x40 * DECOMP_MATH_Cos(-gGT->tileView[0].rot[1])) >> 0xC;
-						gGT->tileView[0].pos[0] += (0x40 * DECOMP_MATH_Sin(-gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[2] += (0x40 * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[0] += (0x40 * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
 					}
 
 					if ((held & BTN_DOWN) != 0)
 					{
-						gGT->tileView[0].pos[2] -= (0x40 * DECOMP_MATH_Cos(-gGT->tileView[0].rot[1])) >> 0xC;
-						gGT->tileView[0].pos[0] -= (0x40 * DECOMP_MATH_Sin(-gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[2] -= (0x40 * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[0] -= (0x40 * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
 					}
 
 					if ((held & BTN_LEFT) != 0)
 					{
-						gGT->tileView[0].rot[1] -= 0x20;
+						gGT->tileView[0].rot[1] += 0x20;
 					}
 
 					if ((held & BTN_RIGHT) != 0)
 					{
-						gGT->tileView[0].rot[1] += 0x20;
+						gGT->tileView[0].rot[1] -= 0x20;
 					}
 
 					if ((held & BTN_CROSS) != 0)
