@@ -10,8 +10,9 @@ void TEST_ConvertRotToMatrix(MATRIX* m, short* rot)
 	#define mSIN DECOMP_MATH_Sin
 	#define mCOS DECOMP_MATH_Cos
 	
-// RotZ * RotY * RotX,
-// gimbal lock on Z axis, no good
+// This is a ZYX
+// gimbal lock on Z axis, bugs Hot Air Skyway's "blade" no good,
+// I need to make an optimal version of YXZ (confirmed to match the game)
 #if 0
 	m->m[0][0] = (mCOS(rot[2]) * mCOS(rot[1])) >> 0xC;
 	m->m[0][1] = ((((mCOS(rot[2]) * mSIN(rot[1])) >> 0xC) * mSIN(rot[0])) >> 0xC) - ((mSIN(rot[2]) * mCOS(rot[0])) >> 0xC);
@@ -65,12 +66,11 @@ void TEST_ConvertRotToMatrix(MATRIX* m, short* rot)
 	rotX.m[2][1] = mSIN(rot[0]);
 	rotX.m[2][2] = mCOS(rot[0]);
 
-// Either YXZ or YZX,
-// because ZYX gimbal locks on Hot Air Skyway blades
-
+// YXZ is definitely correct,
+// tested with camera gimbal lock
 #define m1 rotY
-#define m2 rotZ
-#define m3 rotX
+#define m2 rotX
+#define m3 rotZ
 
 	MATRIX mix;
 
