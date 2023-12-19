@@ -39,9 +39,24 @@ force_inline void IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(struct MenuBox* mb,
 		}
 	}
 
+	// the menu buttons for configuring dualshocks and analog controllers are accompanied by labels each
+	// these labels can appear at once
 	int areBothControllerLabelsNecessary = false;
 	if (gamepad->numGamepads != 0) areBothControllerLabelsNecessary = (gamepad->numAnalogs != 0);
 
+	// set amount of menu rows to hide/remove
+	// used for the dualshock and/or "analog" rows which are variable
+
+	// in singleplayer, regardless of gamepad, 2 of these rows are always visible
+	// (dualshock label + 1 gamepad)
+
+	// with 4 regular gamepads connected, in multiplayer, there's 5 rows visible
+	// (dualshock label + 4 gamepads)
+
+	// maximum amount of rows is 6, which happens if there's 4 controllers and one of them is analog
+	// (dualshock label + analog label + 4 gamepads)
+
+	// in the last scenario, menuRowsToRemove will equal -1
 	gamepad->menuRowsToRemove = (4 - areBothControllerLabelsNecessary) - sdata->gGT->numPlyrCurrGame;
 }
 
@@ -81,7 +96,7 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GA
 				int volume = howl_VolumeGet(mb->rowSelected) & 0xff;
 
 				if (sdata->AnyPlayerHold & BTN_LEFT)  volume = (volume + (0xff - 4)) % 0xff;
-				if (sdata->AnyPlayerHold & BTN_RIGHT) volume = (volume + 4) % 0xff;
+				if (sdata->AnyPlayerHold & BTN_RIGHT) volume = (volume + 4)          % 0xff;
 
 				howl_VolumeSet(mb->rowSelected, volume);
 			}
@@ -159,8 +174,6 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 	// note: multitap only works if it's connected to the P1 slot
 	int isMultitap = (sdata->gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4));
 
-	int somethingToDoWithVolumeLineWidth = 0;
-
 	// a menubox row is 10 pixels
 	int menuRowsNegativePadding = gamepad->menuRowsToRemove * 10;
 
@@ -195,53 +208,55 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 	mb->drawStyle &= 0xfeff;
 	if (sdata->gGT->numPlyrCurrGame > 2) mb->drawStyle |= 0x100;
 
+	int volumeSliderTriangleLeftMargin = 0;
+
 	for(int i = 0; i < 3; i++)
 	{
+		//"FX:", "MUSIC:", "VOICE:"
 		int lineWidth = DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Audio[i]], FONT_SMALL);
-		if (somethingToDoWithVolumeLineWidth < lineWidth) somethingToDoWithVolumeLineWidth = lineWidth;
+		if (volumeSliderTriangleLeftMargin < lineWidth) volumeSliderTriangleLeftMargin = lineWidth;
 	}
 
 	// "OPTIONS"
 	DecalFont_DrawLine(sdata->lngStrings[324], 256, (menuRowsNegativePadding / 2) + 26, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
-	int whateverThisIsNow = 380 - (somethingToDoWithVolumeLineWidth + 30);
-	int thisOtherThing = whateverThisIsNow - 5;
+	int volumeSliderWidth = 380 - (volumeSliderTriangleLeftMargin + 30);
 
 	// draw volume sliders
 	for(int i = 0; i <3; i++)
 	{
 		int volume = howl_VolumeGet(i) & 0xff;
-		int iDontKnow = volume * thisOtherThing;
+		int volumeSliderValue = volume * (volumeSliderWidth - 5);
 
-		short volumeHeightSomething = (menuRowsNegativePadding / 2) + (i * 10);
+		short volumeSliderPosY = (menuRowsNegativePadding / 2) + (i * 10);
 
-		if (iDontKnow < 0) iDontKnow += 0xff;
+		if (volumeSliderValue < 0) volumeSliderValue += 0xff;
 
-		int beatsMe = somethingToDoWithVolumeLineWidth + 30;
-		int knowAsMuchAsIDo = beatsMe + (short)((u_int)iDontKnow >> 8) + 0x38; // yeah, I really don't know
+		int volumeSliderTriangleLeftPosX = volumeSliderTriangleLeftMargin + 30;
+		int volumeSliderBarPosX = volumeSliderTriangleLeftPosX + (short)((u_int)volumeSliderValue >> 8) + 0x38; // yeah, I really don't know
 
 		RECT volumeSliderBar =
 		{
-			.x = knowAsMuchAsIDo + 1,
-			.y = volumeHeightSomething + 48,
+			.x = volumeSliderBarPosX + 1,
+			.y = volumeSliderPosY + 48,
 			.w = 3,
 			.h = 10
 		};
 		CTR_Box_DrawSolidBox(&volumeSliderBar, (u_int *)(data.Options_VolumeSlider_Colors + 0xc), (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 		RECT volumeSliderBarOutline =
 		{
-			.x = knowAsMuchAsIDo,
-			.y = volumeHeightSomething + 47,
+			.x = volumeSliderBarPosX,
+			.y = volumeSliderPosY + 47,
 			.w = 5,
 			.h = 12
 		};
 		CTR_Box_DrawSolidBox(&volumeSliderBarOutline, (u_int *)(data.Options_VolumeSlider_Colors + 0x10), (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 		short volumeSliderTriangle[8] =
 		{
-			beatsMe + 56,
-			volumeHeightSomething + 58,
-			beatsMe + whateverThisIsNow + 56,
-			volumeHeightSomething + 48,
+			volumeSliderTriangleLeftPosX + 56,
+			volumeSliderPosY + 58,
+			volumeSliderTriangleLeftPosX + volumeSliderWidth + 56,
+			volumeSliderPosY + 48,
 			volumeSliderTriangle[2],
 			volumeSliderTriangle[1]
 		};
@@ -264,13 +279,13 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 		// "DUAL SHOCK:"
 		DecalFont_DrawLine(sdata->lngStrings[330], 76, (menuRowsNegativePadding / 2) + 90, FONT_SMALL, ORANGE);
 
-		int lineWidth_idk = DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Gamepads[2]], FONT_SMALL);
+		int lineWidth_controller1A = DecalFont_GetLineWidth(sdata->lngStrings[data.Options_StringIDs_Gamepads[2]], FONT_SMALL);
 		int lineWidth_vibrateOff = DecalFont_GetLineWidth(sdata->lngStrings[326], FONT_SMALL);
 		int lineWidth_vibrateOn = DecalFont_GetLineWidth(sdata->lngStrings[325], FONT_SMALL);
 
 		if (lineWidth_vibrateOn < lineWidth_vibrateOff) lineWidth_vibrateOn = lineWidth_vibrateOff;
 
-		lineWidth_vibrateOn = (lineWidth_idk + lineWidth_vibrateOn + 10);
+		lineWidth_vibrateOn = (lineWidth_controller1A + lineWidth_vibrateOn + 10);
 		lineWidth_vibrateOn = 256 - (lineWidth_vibrateOn - (lineWidth_vibrateOn >> 0xf) >> 1);
 
 		if (gamepad->numGamepads > 0)
@@ -291,7 +306,7 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 				// "CONTROLLER 1", "CONTROLLER 2", "CONTROLLER 1A", "CONTROLLER 1B", "CONTROLLER 1C", "CONTROLLER 1D"
 				DecalFont_DrawLine
 				(
-					sdata->lngStrings[data.Options_StringIDs_Gamepads[currPad + isMultitap]], //perhaps isMultitap * 2?
+					sdata->lngStrings[data.Options_StringIDs_Gamepads[currPad + isMultitap]],
 					lineWidth_vibrateOn,
 					(i * 10) + (menuRowsNegativePadding / 2) + 100,
 					FONT_SMALL, dualShockRowColor
@@ -316,13 +331,7 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 					dualShockRowColor = WHITE;
 				}
 
-				DecalFont_DrawLine
-				(
-					dualshockVibrateString,
-					lineWidth_vibrateOn + lineWidth_idk + 10,
-					(i * 10) + (menuRowsNegativePadding / 2) + 100,
-					FONT_SMALL, dualShockRowColor
-				);
+				DecalFont_DrawLine(dualshockVibrateString, lineWidth_vibrateOn + lineWidth_controller1A + 10, (i * 10) + (menuRowsNegativePadding / 2) + 100, FONT_SMALL, dualShockRowColor);
 			}
 		}
 	}
@@ -389,6 +398,10 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 		return;
 	}
 
+	// the options menu has gamepad-related settings
+	// specificially for DualShock controllers
+	// as well as what CTR refers to as "analog controllers", which are jogcons and negcons
+	// this struct will be filled out in IDENTIFYGAMEPADS
 	GAMEPAD_MainFreeze_MenuPtrOptions gamepad =
 	{
 		.numGamepads = 0,
