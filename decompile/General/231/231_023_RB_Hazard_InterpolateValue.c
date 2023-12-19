@@ -9,12 +9,12 @@ int DECOMP_RB_Hazard_InterpolateValue(short currRot, short desiredRot, short rot
 	// adjust for range of "short" [0-0xffff]
 	// compared to range of degrees [0-0xfff]
 	int diff = ((desiredRot - currRot) & 0xfff);
-	if (diff == 0) return currRot & 0xfff;
 	if (diff > 0x7ff) diff -= 0x1000;
-	if (diff < 0) diff = -diff;
 
-	// skip to end, if close enough
-	if (diff < rotSpeed) return desiredRot & 0xfff;
+	// skip to end if close enough
+	int diffAbs = diff;
+	if (diffAbs < 0) diffAbs = -diffAbs;
+	if (diffAbs < rotSpeed) return desiredRot & 0xfff;
 
 	// interpolate
 	if (diff < 0) currRot -= delta;
