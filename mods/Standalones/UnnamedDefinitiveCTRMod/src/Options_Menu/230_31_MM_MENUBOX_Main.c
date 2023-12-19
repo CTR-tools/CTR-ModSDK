@@ -3,7 +3,7 @@
 // byte budget
 // 840/1108
 
-extern struct MenuRow UDCTRM_OM_MenuRows_ScrapbookUnlocked[9];
+extern struct MenuRow UDCTRM_MM_MenuRows_ScrapbookUnlocked[9];
 
 void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 {
@@ -12,7 +12,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 
 	// if scrapbook is unlocked, change "rows" to extended array
 	if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
-		mainMenu->rows = UDCTRM_OM_MenuRows_ScrapbookUnlocked;
+		mainMenu->rows = UDCTRM_MM_MenuRows_ScrapbookUnlocked;
 
 	MM_ParseCheatCodes();
 	MM_ToggleRows_Difficulty();
