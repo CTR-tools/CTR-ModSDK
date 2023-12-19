@@ -133,7 +133,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 			// go to adventure character select screen
 			sdata->mainMenuState = 4;
 
-			DECOMP_MainRaceTrack_RequestLoad(ADVENTURE_CHARACTER_SELECT);
+			MainRaceTrack_RequestLoad(ADVENTURE_CHARACTER_SELECT);
 			break;
 
 		// adventure save/load
@@ -233,7 +233,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 			LAB_800abfc0:
 
 			// Load level
-			DECOMP_MainRaceTrack_RequestLoad(iVar4);
+			MainRaceTrack_RequestLoad(iVar4);
 
 			// make main menu disappear
 			MENUBOX_Hide(&D230.menubox_mainMenu);
