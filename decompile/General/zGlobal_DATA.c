@@ -39,6 +39,45 @@ void DECOMP_AH_WarpPad_LInB();
 
 void CS_LevThread_LInB();
 
+// temporary, until 231 compiles into PC port
+#ifdef REBUILD_PC
+void DECOMP_RB_Default_LInB() {}
+void DECOMP_RB_Fruit_LInB() {}
+void DECOMP_RB_Fruit_LInC() {}
+void RB_GenericMine_LInB() {}
+void DECOMP_RB_CrateFruit_LInC() {}
+void DECOMP_RB_CrateWeapon_LInC() {}
+void DECOMP_RB_CrateTime_LInC() {}
+void DECOMP_RB_FlameJet_LInB() {}
+void DECOMP_RB_Plant_LInB() {}
+void DECOMP_RB_Minecart_LInB() {}
+void DECOMP_RB_Snowball_LInB() {}
+void DECOMP_RB_Armadillo_LInB() {}
+void DECOMP_RB_Blade_LInB() {}
+void DECOMP_RB_Seal_LInB() {}
+void RB_Orca_LInB() {}
+void DECOMP_RB_Baron_LInB() {}
+void DECOMP_RB_Turtle_LInB() {}
+void DECOMP_RB_Turtle_LInC() {}
+void RB_Spider_LInB() {}
+void DECOMP_RB_Fireball_LInB() {}
+void RB_Banner_LInB() {}
+void DECOMP_RB_CtrLetter_LInB() {}
+void DECOMP_RB_CtrLetter_LInC() {}
+void DECOMP_RB_Crystal_LInB() {}
+void DECOMP_RB_Crystal_LInC() {}
+void DECOMP_RB_Teeth_LInB() {}
+void DECOMP_RB_Teeth_LInC() {}
+
+void AH_Sign_LInB() {}
+void DECOMP_AH_Door_LInB() {}
+void DECOMP_AH_Garage_LInB() {}
+void DECOMP_AH_SaveObj_LInB() {}
+void DECOMP_AH_WarpPad_LInB() {}
+
+void CS_LevThread_LInB() {}
+#endif
+
 // Missing:
 // GenericMine, Orca, Spider, Banner, Sign, CS
 
@@ -259,7 +298,6 @@ struct Data data =
 		.name = data.s_XA_ENG_GAME
 	},
 	
-#ifndef REBUILD_PC
 	.MetaDataModels =
 	{
 		// 0x00 - NO_FUNC
@@ -958,7 +996,6 @@ struct Data data =
 		// 0xe1 - STATIC_GNORMALZ
 		SET_MDM(0,AH_Sign_LInB,0),
 	},
-#endif
 
 	.ptrRenderedQuadblockDestination_forEachPlayer =
 	{
