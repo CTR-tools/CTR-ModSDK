@@ -419,8 +419,14 @@ void DrawOneInst(struct Instance* curr)
 				gte_avsz3();
 				gte_stotz(&otZ);
 
-				if (otZ > 8)
+				// near-range for instances should be higher
+				// for instances than level (not exact number)
+				if (otZ > 32)
 				{
+					// make sure instances draw on top of the road,
+					// reduce depth in the sorting table (not exact number)
+					otZ -= 32;
+
 					if (otZ < 4080)
 					{
 						AddPrim((u_long*)ot + (otZ >> 2), pCurr);
