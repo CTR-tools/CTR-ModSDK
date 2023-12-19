@@ -47,7 +47,7 @@ common, exe, BOTS_SetRotation, -0x8, ../../Modules/BlueFire/src/hookUpdate.s
 1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
 
 // Modify Turbo_Increment function to allow for USF stacking
-common, exe, Turbo_Increment, 0x0, src/Packaged_Mods/Retro-Fueled/AllowUSFStacking.c
+common, exe, Turbo_Increment, 0x0, Turbo_Increment_Hook.s
 
 // Modify OnCollide_Drivers function for enabling or disabling the STP cheat
 common, exe, OnCollide_Drivers, 0x0, src/Packaged_Mods/Retro-Fueled/OopsAllSuperTurboPads.c
@@ -62,4 +62,4 @@ common, 230, MM_MENUBOX_1p2p, 0x0, src/Packaged_Mods/ExtraDifficulty/MM_MENUBOX_
 common, 230, MM_EndOfFile, 0x0, src/Race_Options/RaceOptions.c src/Race_Options/230_56_MM_TrackSelect_MenuBox.c src/Options_Menu/OptionsMenu_Insert.c src/Options_Menu/MainFreeze_MenuPtrOptions.c src/Packaged_Mods/ExtraDifficulty/MM_ExtraDifficulty.c
 
 // Compile code to empty spaces in RDATA //
-common, exe, rdata_free, 0x0, src/Packaged_Mods/Retro-Fueled/KeepU-TurnReserves.c src/Packaged_Mods/Retro-Fueled/BlueFireModeInt.c src/Packaged_Mods/Retro-Fueled/BlueFire.c
+common, exe, rdata_free, 0x0, src/Packaged_Mods/Retro-Fueled/KeepU-TurnReserves.c src/Packaged_Mods/Retro-Fueled/BlueFireModeInt.c src/Packaged_Mods/Retro-Fueled/BlueFire.c src/Turbo_Increment.c

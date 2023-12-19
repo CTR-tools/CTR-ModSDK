@@ -140,9 +140,9 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			turboObj->fireVisibilityCooldown = 0x60;
 			
 			// make flame disappear after
-			// 	- powerslide: two frames (quick death)
+			// 	- powerslide: two frames (quick death) // Edited so it only happens when reserves are gone
 			//	- all others: 255 frames (slowly die out)
-			if (type & 2) count = 2;
+			if ((type & 2) && !driver->reserves)	count = 2;
 			else          count = 0xff;
 			turboObj->fireDisappearCountdown = count;
 	
@@ -206,11 +206,15 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		// all other boosts
 		else
 		{
-			// make fire invisible for the sake of the visibility cooldown as explained in common.h
-			turboInst1->flags |= 0x1000080;
-			turboInst2->flags |= 0x1000080;
-	
-			turboObj->fireVisibilityCooldown = 0x60;
+			// disable fire visibility cooldown when you actually have reserves
+			if (!driver->reserves)
+			{
+				// make fire invisible for the sake of the visibility cooldown as explained in common.h
+				turboInst1->flags |= 0x1000080;
+				turboInst2->flags |= 0x1000080;
+		
+				turboObj->fireVisibilityCooldown = 0x60;
+			}
 			driver->numTurbos++;
 			#if BUILD == JpnRetail
 			// the japanese version of the game keeps track of your highest turbo chain in a race
