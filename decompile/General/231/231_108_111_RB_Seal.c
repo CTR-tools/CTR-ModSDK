@@ -118,22 +118,21 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 #endif
 	}
 	
-#if 0
 	// spin rotCurrY 180 degrees (turn around)
 	sealObj->rotCurr[1] = 
-		RB_Hazard_InterpolateValue(
+		DECOMP_RB_Hazard_InterpolateValue(
 			sealObj->rotCurr[1], sealObj->rotDesired[1], 0x80
 		);
 		
 	// negate rotCurrX (slant)
 	sealObj->rotCurr[0] = 
-		RB_Hazard_InterpolateValue(
+		DECOMP_RB_Hazard_InterpolateValue(
 			sealObj->rotCurr[0], sealObj->rotDesired[0], 0x14
 		);
 	
 	// negate rotCurrZ (slant)
 	sealObj->rotCurr[2] = 
-		RB_Hazard_InterpolateValue(
+		DECOMP_RB_Hazard_InterpolateValue(
 			sealObj->rotCurr[2], sealObj->rotDesired[2], 0x14
 		);
 
@@ -141,7 +140,6 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 	ConvertRotToMatrix(&sealInst->matrix, &sealObj->rotCurr[0]);
 #else
 	TEST_ConvertRotToMatrix(&sealInst->matrix, &sealObj->rotCurr[0]);
-#endif
 #endif
 
 	// if rotation is finished

@@ -394,5 +394,6 @@
 #include "../decompile/General/230/1_Block3.c"
 
 // 231
+#include "../decompile/General/231/231_023_RB_Hazard_InterpolateValue.c"
 #include "../decompile/General/231/231_056_057_RB_Blade.c"
 #include "../decompile/General/231/231_108_111_RB_Seal.c"
