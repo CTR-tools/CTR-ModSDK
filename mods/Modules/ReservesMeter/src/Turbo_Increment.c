@@ -1,11 +1,5 @@
 #include <common.h>
 
-// Type 0 - startline boost
-// Type 2 - hang time or powerslide
-// Type 4 (AND = 1) - turbo pad
-// Type 8 (AND = 1) - boost powerup
-// Type 0x10 (AND = 4) - super engine
-
 // param1 - driver
 // param2 - reserves to add
 // param3 - add type
@@ -24,6 +18,8 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	struct Thread* turboThread;
 	struct Instance* turboInst1;
 	struct Instance* turboInst2;
+	
+	struct GameTracker* gGT = sdata->gGT;
 
 	if
 	(
@@ -65,7 +61,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	driver->actionsFlagSet = driver->actionsFlagSet & 0xffffff7f | 0x200000;
 
 	// turbo thread bucket
-	turboThread = sdata->gGT->threadBuckets[TURBO].thread;
+	turboThread = gGT->threadBuckets[TURBO].thread;
 
 	// check all turbo threads
 	while(turboThread != 0)
@@ -94,7 +90,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		if (driver->japanTurboUnknown == 0)
 		{
 			driver->numTurbos = 1;
-			if ((driver->numTurbosHighScore < 1) && ((sdata->gGT->gameMode1 & END_OF_RACE) == 0))
+			if ((driver->numTurbosHighScore < 1) && ((gGT->gameMode1 & END_OF_RACE) == 0))
 			{
 				driver->numTurbosHighScore = 1;
 			}
@@ -102,7 +98,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		else
 		{
 			driver->numTurbos++;
-			if ((driver->numTurbosHighScore < driver->numTurbos) && ((sdata->gGT->gameMode1 & END_OF_RACE) == 0))
+			if ((driver->numTurbosHighScore < driver->numTurbos) && ((gGT->gameMode1 & END_OF_RACE) == 0))
 			{
 				driver->numTurbosHighScore = driver->numTurbos;
 			}
@@ -131,7 +127,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			
 			// turbo #2
 			turboInst2 = INSTANCE_Birth3D(
-				sdata->gGT->modelPtr[0x2C], 	// model
+				gGT->modelPtr[0x2C], 	// model
 				&sdata->s_turbo2[0], 		// name
 				turboThread					// parent thread
 			);
@@ -166,7 +162,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			addFlags = 0;
 	
 			// 1P flags
-			if (sdata->gGT->numPlyrCurrGame == 1)
+			if (gGT->numPlyrCurrGame == 1)
 			{
 				addFlags = 0x2000000;
 			}
@@ -201,8 +197,8 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 				driver->numTurbos++;
 				
 				#if BUILD == JpnRetail
-				// probably some sort of overflow safety check
-				if (driver->numTurbosHighScore < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosHighScore = driver->numTurbos;
+				// the japanese version of the game keeps track of your highest turbo chain in a race
+				if (driver->numTurbosHighScore < driver->numTurbos && (gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosHighScore = driver->numTurbos;
 				#endif
 			}
 		}
@@ -222,7 +218,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			driver->numTurbos++;
 			#if BUILD == JpnRetail
 			// the japanese version of the game keeps track of your highest turbo chain in a race
-			if (driver->numTurbosHighScore < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosHighScore = driver->numTurbos;
+			if (driver->numTurbosHighScore < driver->numTurbos && (gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosHighScore = driver->numTurbos;
 			#endif
 		}
 	
@@ -341,7 +337,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	if (*(short *)&driver->instSelf->thread->modelIndex == 0x18)
 	{
 		// CameraDC flag
-		sdata->gGT->cameraDC[driver->driverID].flags |= 0x80;
+		gGT->cameraDC[driver->driverID].flags |= 0x80;
 
 		// gamepad vibration
 		GAMEPAD_Vib_4(driver, 8, 0x7f);

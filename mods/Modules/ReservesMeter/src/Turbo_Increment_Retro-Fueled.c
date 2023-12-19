@@ -201,7 +201,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 				driver->numTurbos++;
 				
 				#if BUILD == JpnRetail
-				// probably some sort of overflow safety check
+				// the japanese version of the game keeps track of your highest turbo chain in a race
 				if (driver->numTurbosHighScore < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosHighScore = driver->numTurbos;
 				#endif
 			}
@@ -221,7 +221,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			}
 			driver->numTurbos++;
 			#if BUILD == JpnRetail
-			// probably some sort of overflow safety check
+			// the japanese version of the game keeps track of your highest turbo chain in a race
 			if (driver->numTurbosHighScore < driver->numTurbos && (sdata->gGT->gameMode1 & END_OF_RACE) == 0) driver->numTurbosHighScore = driver->numTurbos;
 			#endif
 		}
