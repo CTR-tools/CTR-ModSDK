@@ -468,7 +468,7 @@ void FUN_80030ad4(undefined4 *param_1,int param_2)
 			((*(uint *)(PTR_DAT_8008d2ac + 8) & 0x100) == 0) &&
 
 			(
-				// ThreadMeta
+				// COLL_LevModelMeta
 				iVar13 = FUN_8001d094((int)*(short *)(*piVar18 + 0x10)),
 
 				// if pointer is not nulllptr

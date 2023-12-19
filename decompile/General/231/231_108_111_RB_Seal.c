@@ -1,5 +1,6 @@
 #include <common.h>
 
+#ifndef REBUILD_PS1
 // one seal can not collide with more than one other thread,
 // then quits, it was like that in the original game too,
 // but one seal likely-wont collide with two threads at the same time
@@ -85,8 +86,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 		return;
 	}
 }
-
-void DECOMP_RB_Seal_ThTick_Move(struct Thread* t);	
+#endif
 
 void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 {
@@ -99,7 +99,7 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 	// if animation is not over
 	if(
 		(sealInst->animFrame+2) < 
-		INSTANCE_GetNumAnimFrames(sealInst, 0)
+		DECOMP_INSTANCE_GetNumAnimFrames(sealInst, 0)
 	)
 	{
 		// increment frame
@@ -112,10 +112,13 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 		// reset animation
 		sealInst->animFrame = 0;
 		
+#ifndef REBUILD_PS1
 		// only play sound in TurnAround
 		PlaySound3D(0x77, sealInst);
+#endif
 	}
 	
+#ifndef REBUILD_PS1
 	// spin rotCurrY 180 degrees (turn around)
 	sealObj->rotCurr[1] = 
 		RB_Hazard_InterpolateValue(
@@ -150,6 +153,7 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 	
 	// move
 	ThTick_SetAndExec(t, DECOMP_RB_Seal_ThTick_Move);
+#endif
 }
 
 void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
@@ -164,7 +168,7 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	// if animation is not over
 	if(
 		(sealInst->animFrame+2) < 
-		INSTANCE_GetNumAnimFrames(sealInst, 0)
+		DECOMP_INSTANCE_GetNumAnimFrames(sealInst, 0)
 	)
 	{
 		// increment frame
@@ -180,6 +184,7 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 		// no sound here
 	}
 	
+#ifndef REBUILD_PS1
 	// move seal
 	for(i = 0; i < 3; i++)
 	{
@@ -219,6 +224,7 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	
 	// turn around
 	ThTick_SetAndExec(t, DECOMP_RB_Seal_ThTick_TurnAround);
+#endif
 }
 
 void DECOMP_RB_Seal_LInB(struct Instance* inst)
@@ -228,7 +234,7 @@ void DECOMP_RB_Seal_LInB(struct Instance* inst)
 	struct InstDef* instDef;
 	
 	struct Thread* t = 
-		THREAD_BirthWithObject
+		DECOMP_THREAD_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
@@ -274,8 +280,12 @@ void DECOMP_RB_Seal_LInB(struct Instance* inst)
 	sealObj->rotCurr[1] = instDef->rot[1];
 	sealObj->rotCurr[2] = instDef->rot[2];
 	
+#ifndef REBUILD_PS1
 	ConvertRotToMatrix(&inst->matrix, &sealObj->rotCurr[0]);
-	
+#else
+	TEST_ConvertRotToMatrix(&inst->matrix, &sealObj->rotCurr[0]);
+#endif
+
 	// dont call RB_Default_LInB(inst),
 	// we know seal is never over ice
 }

@@ -408,6 +408,9 @@ void DECOMP_MM_JumpTo_Characters(void);
 void DECOMP_MM_JumpTo_Scrapbook(void);
 
 // 231 (undone)
+void DECOMP_RB_Seal_ThTick_Move(struct Thread* t);
+void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t);
+void DECOMP_RB_Seal_LInB(struct Instance* inst);
 
 // 232
 short* DECOMP_AH_WarpPad_GetSpawnPosRot(short* posData);

@@ -37,12 +37,12 @@ int DECOMP_RB_Hazard_InterpolateValue(unsigned short currRot,unsigned short desi
         if (-1 < diff) goto LAB_800adb44;
 		
 		// new rotation is old rotation - speed
-        desiredRot = currRot - (rotSpeed * sdata->gGT->elapsedTimeMS >> 5);
+        desiredRot = currRot - (rotSpeed * sdata->gGT->elapsedTimeMS) >> 5;
       }
       else 
 	  {
 		// new rotation is old rotation + speed
-        desiredRot = currRot + (rotSpeed * sdata->gGT->elapsedTimeMS >> 5);
+        desiredRot = currRot + (rotSpeed * sdata->gGT->elapsedTimeMS) >> 5;
       }
     }
 	

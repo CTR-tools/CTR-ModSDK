@@ -1,7 +1,7 @@
 
 // called "COLL" for "Collisions"
 
-// COLL_GetThreadMeta
+// COLL_LevModelMeta
 undefined ** FUN_8001d094(uint param_1)
 
 {

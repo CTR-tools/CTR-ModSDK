@@ -16,7 +16,7 @@ void DECOMP_RB_Minecart_LInB();
 void DECOMP_RB_Snowball_LInB();
 void DECOMP_RB_Armadillo_LInB();
 void DECOMP_RB_Blade_LInB();
-void DECOMP_RB_Seal_LInB();
+//void DECOMP_RB_Seal_LInB();		-- DONE
 void RB_Orca_LInB();
 void DECOMP_RB_Baron_LInB();
 void DECOMP_RB_Turtle_LInB();
@@ -54,7 +54,7 @@ void DECOMP_RB_Minecart_LInB() {}
 void DECOMP_RB_Snowball_LInB() {}
 void DECOMP_RB_Armadillo_LInB() {}
 void DECOMP_RB_Blade_LInB() {}
-void DECOMP_RB_Seal_LInB() {}
+//void DECOMP_RB_Seal_LInB() {}		-- DONE
 void RB_Orca_LInB() {}
 void DECOMP_RB_Baron_LInB() {}
 void DECOMP_RB_Turtle_LInB() {}
@@ -78,7 +78,7 @@ void DECOMP_AH_WarpPad_LInB() {}
 void CS_LevThread_LInB() {}
 #endif
 
-// Missing:
+// Missing from Decomp/General:
 // GenericMine, Orca, Spider, Banner, Sign, CS
 
 // This inserts debug names if needed
