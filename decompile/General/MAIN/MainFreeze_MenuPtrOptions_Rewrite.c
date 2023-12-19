@@ -402,6 +402,4 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct MenuBox* mb)
 	IDENTIFYGAMEPADS_MainFreeze_MenuPtrOptions(mb, &gamepad);
 	PROCESSINPUTS_MainFreeze_MenuPtrOptions(mb, &gamepad);
 	DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(mb, &gamepad);
-
-	printf("%d\n", mb->rowSelected);
 }
