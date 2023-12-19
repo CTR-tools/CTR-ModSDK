@@ -1,11 +1,11 @@
 #include <common.h>
 
-#ifndef REBUILD_PS1
 // one seal can not collide with more than one other thread,
 // then quits, it was like that in the original game too,
 // but one seal likely-wont collide with two threads at the same time
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound)
 {
+#ifndef REBUILD_PS1
 	struct GameTracker* gGT;
 	struct Instance* hitInst;
 	struct Driver* hitDriver;
@@ -85,8 +85,8 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 		// dont check other bucket
 		return;
 	}
-}
 #endif
+}
 
 void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 {
@@ -118,7 +118,7 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 #endif
 	}
 	
-#ifndef REBUILD_PS1
+#if 0
 	// spin rotCurrY 180 degrees (turn around)
 	sealObj->rotCurr[1] = 
 		RB_Hazard_InterpolateValue(
@@ -136,8 +136,13 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 		RB_Hazard_InterpolateValue(
 			sealObj->rotCurr[2], sealObj->rotDesired[2], 0x14
 		);
-	
+
+#ifndef REBUILD_PS1
 	ConvertRotToMatrix(&sealInst->matrix, &sealObj->rotCurr[0]);
+#else
+	TEST_ConvertRotToMatrix(&sealInst->matrix, &sealObj->rotCurr[0]);
+#endif
+#endif
 
 	// if rotation is finished
 	if(sealObj->rotCurr[1] != sealObj->rotDesired[1])
@@ -151,8 +156,11 @@ void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t)
 	// negate
 	sealObj->direction = !sealObj->direction;
 	
-	// move
+#ifndef REBUILD_PS1
+	// turn move
 	ThTick_SetAndExec(t, DECOMP_RB_Seal_ThTick_Move);
+#else
+	TEST_ThTickSetAndExec(t, DECOMP_RB_Seal_ThTick_Move);
 #endif
 }
 
@@ -184,7 +192,6 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 		// no sound here
 	}
 	
-#ifndef REBUILD_PS1
 	// move seal
 	for(i = 0; i < 3; i++)
 	{
@@ -222,8 +229,11 @@ void DECOMP_RB_Seal_ThTick_Move(struct Thread* t)
 	sealObj->rotDesired[0] = -sealObj->rotCurr[0];
 	sealObj->rotDesired[2] = -sealObj->rotCurr[2];
 	
+#ifndef REBUILD_PS1
 	// turn around
 	ThTick_SetAndExec(t, DECOMP_RB_Seal_ThTick_TurnAround);
+#else
+	TEST_ThTickSetAndExec(t, DECOMP_RB_Seal_ThTick_TurnAround);
 #endif
 }
 

@@ -4,10 +4,11 @@
 
 // not in OG game, does not fit byte budget,
 // random testing to learn more about the game 
+#include "TEST_226.c"
 #include "TEST_DrawInstances.c"
 #include "TEST_ConvertRotToMatrix.c"
 #include "TEST_ThTickRunBucket.c"
-#include "TEST_226.c"
+#include "TEST_ThTickSetAndExec.c"
 
 #include "../decompile/General/MAIN/MainMain.c"
 
