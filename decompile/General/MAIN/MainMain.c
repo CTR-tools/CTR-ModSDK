@@ -405,11 +405,21 @@ FinishLoading:
 // temporary, no camera thread yet
 #ifdef REBUILD_PC
 
-				// disable demo mode from happening
-				//gGT->demoCountdownTimer = 1800;
-
-				if (gGT->levelID != MAIN_MENU_LEVEL)
+				if (
+						(gGT->level1 != 0) && // for ND Box
+						(gGT->levelID != MAIN_MENU_LEVEL)
+					)
 				{
+					if (gGT->levelID == NAUGHTY_DOG_CRATE)
+					{
+						gGT->tileView[0].pos[0] = 0xff00;
+						gGT->tileView[0].pos[1] = 0x100;
+
+						// wait 5 seconds
+						if(gGT->timer > 30*5)
+							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+					}
+
 					if (
 							(gGT->trafficLightsTimer > 0) ||
 							(gGT->tileView[0].rot[2] != 0x800)
@@ -663,12 +673,7 @@ void StateZero()
 	gGT->overlayIndex_null_notUsed = 0;
 	#endif
 	
-#ifdef REBUILD_PS1
-	gGT->levelID = MAIN_MENU_LEVEL;
-#else
-	// set level ID to naughty dog box
 	gGT->levelID = NAUGHTY_DOG_CRATE;
-#endif
 	
 	#ifdef FastBoot
 	gGT->levelID = N_GIN_LABS;
