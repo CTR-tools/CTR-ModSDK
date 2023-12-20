@@ -1,6 +1,7 @@
 #include <common.h>
 
-extern struct MenuBox UDCTRM_OM_MenuBox;
+extern struct MenuBox UDCTRM_OM_GameplayMenuBox;
+extern struct MenuBox UDCTRM_OM_ControllerSFXMenuBox;
 
 void DECOMP_MM_Title_MenuUpdate(void)
 {
@@ -240,12 +241,18 @@ void DECOMP_MM_Title_MenuUpdate(void)
 		/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 			break;
 
+		case 0x2a:
+
+			MM_Title_KillThread();
+
+			sdata->ptrDesiredMenuBox = &UDCTRM_OM_GameplayMenuBox;
+			break;
+
 		case 0x45:
 
 			MM_Title_KillThread();
 
-			// return to character selection
-			sdata->ptrDesiredMenuBox = &UDCTRM_OM_MenuBox;
+			sdata->ptrDesiredMenuBox = &UDCTRM_OM_ControllerSFXMenuBox;
 			MainFrame_TogglePauseAudio(1);
 			break;
 		/////////////////////////// END OF CHANGES     ///////////////////////////
