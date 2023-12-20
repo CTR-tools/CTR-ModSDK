@@ -1,5 +1,7 @@
 #include <common.h>
 
+#define UDCTRM_OM_NUM_ROWS 11
+
 typedef struct
 {
 	int numGamepads;
@@ -69,17 +71,19 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GA
 		// play sound for when you're moving around in the menu
 		OtherFX_Play(0, 1);
 
-		// there are only 9 rows total
+		/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
+		// there are only UDCTRM_OM_NUM_ROWS rows total
 		if (sdata->AnyPlayerTap & BTN_UP)
 		{
-			mb->rowSelected = (mb->rowSelected + (9 - 1)) % 9;
+			mb->rowSelected = (mb->rowSelected + (UDCTRM_OM_NUM_ROWS - 1)) % UDCTRM_OM_NUM_ROWS;
 			if (mb->rowSelected == 7) mb->rowSelected = sdata->gGT->numPlyrCurrGame + 3;
 		}
 		if (sdata->AnyPlayerTap & BTN_DOWN)
 		{
-			mb->rowSelected = (mb->rowSelected + 1) % 9;
-			if (mb->rowSelected > (sdata->gGT->numPlyrCurrGame + 3)) mb->rowSelected = 8;
+			mb->rowSelected = (mb->rowSelected + 1) % UDCTRM_OM_NUM_ROWS;
+			if (mb->rowSelected > (sdata->gGT->numPlyrCurrGame + 3) && mb->rowSelected < 8) mb->rowSelected = 8;
 		}
+		/////////////////////////// SECTION 1          ///////////////////////////
 	}
 
 	switch (mb->rowSelected)
@@ -146,19 +150,30 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GA
 			}
 			break;
 
-		// Exit
+		/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 		case 8:
+		case 9:
 			// clear test sound
 			OptionsMenu_TestSound(0, 0);
 
 			if (sdata->AnyPlayerTap & (BTN_CIRCLE | BTN_CROSS_one))
 			{
-				/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
+				// denied!
+				OtherFX_Play(5, 1);
+			}
+			break;
+		// Exit
+		case 10:
+			// clear test sound
+			OptionsMenu_TestSound(0, 0);
+
+			if (sdata->AnyPlayerTap & (BTN_CIRCLE | BTN_CROSS_one))
+			{
 				OtherFX_Play(2, 1);
-				/////////////////////////// END OF CHANGES     ///////////////////////////
 				exitMenu = true;
 			}
 			break;
+		/////////////////////////// SECTION 2          ///////////////////////////
 	}
 
 	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
@@ -169,12 +184,26 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GA
 		OtherFX_Play(2, 1);
 		MM_JumpTo_Title_Returning();
 	}
-	/////////////////////////// END OF CHANGES     ///////////////////////////
+	/////////////////////////// SECTION 3          ///////////////////////////
 }
 
 // stuff is drawn last to first
 force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GAMEPAD_MainFreeze_MenuPtrOptions* gamepad)
 {
+	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
+	short UDCTRM_OM_CursorPosY[UDCTRM_OM_NUM_ROWS] =
+	{
+		data.Options_HighlightBar[0].posY, data.Options_HighlightBar[1].posY, data.Options_HighlightBar[2].posY, data.Options_HighlightBar[3].posY,
+		-1, -1, -1, -1, -1, -1, -1
+	};
+	short UDCTRM_OM_CursorHeight[UDCTRM_OM_NUM_ROWS] =
+	{
+		data.Options_HighlightBar[0].sizeY, data.Options_HighlightBar[1].sizeY, data.Options_HighlightBar[2].sizeY, data.Options_HighlightBar[3].sizeY,
+		data.Options_HighlightBar[4].sizeY, data.Options_HighlightBar[5].sizeY, data.Options_HighlightBar[6].sizeY, data.Options_HighlightBar[7].sizeY,
+		data.Options_HighlightBar[8].sizeY, data.Options_HighlightBar[8].sizeY, data.Options_HighlightBar[8].sizeY
+	};
+	/////////////////////////// SECTION 4          ///////////////////////////
+
 	// note: multitap only works if it's connected to the P1 slot
 	int isMultitap = (sdata->gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4));
 
@@ -184,15 +213,18 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 	int analogRowPosY = 0;
 	if (gamepad->numGamepads != 0) analogRowPosY = (gamepad->numGamepads + 1) * 10;
 
+	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 	// cursor location for exit button, which will change depending on how many dualshock rows there need to be
-	data.Options_HighlightBar[8].posY = gamepad->menuRowsToRemove * -10 + 119;
+	UDCTRM_OM_CursorPosY[8] = gamepad->menuRowsToRemove * -10 + 119;
+	UDCTRM_OM_CursorPosY[9] = UDCTRM_OM_CursorPosY[8] + 10;
+	UDCTRM_OM_CursorPosY[10] = UDCTRM_OM_CursorPosY[9] + 10;
 
 	// cursor location for dualshock rows
 	if (gamepad->numGamepads > 0)
 	{
 		for(int i = 0; i < gamepad->numGamepads; i++)
 		{
-			data.Options_HighlightBar[i + 4].posY = (i * 10) + 79;
+			UDCTRM_OM_CursorPosY[i + 4] = (i * 10) + 79;
 		}
 	}
 
@@ -204,9 +236,10 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 			int areBothControllerLabelsNecessary = false;
 			if (gamepad->numGamepads != 0) areBothControllerLabelsNecessary = (gamepad->numAnalogs != 0);
 
-			data.Options_HighlightBar[gamepad->numGamepads + i + 4].posY = ((gamepad->numGamepads + i + areBothControllerLabelsNecessary) * 10) + 79;
+			UDCTRM_OM_CursorPosY[gamepad->numGamepads + i + 4] = ((gamepad->numGamepads + i + areBothControllerLabelsNecessary) * 10) + 79;
 		}
 	}
+	/////////////////////////// SECTION 5          ///////////////////////////
 
 	// drawStyle needs research...
 	mb->drawStyle &= 0xfeff;
@@ -221,10 +254,8 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 		if (volumeSliderTriangleLeftMargin < lineWidth) volumeSliderTriangleLeftMargin = lineWidth;
 	}
 
-	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 	// "OPTIONS"
-	DecalFont_DrawLine(sdata->lngStrings[605], 256, (menuRowsNegativePadding / 2) + 26, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
-	/////////////////////////// END OF CHANGES     ///////////////////////////
+	DecalFont_DrawLine(sdata->lngStrings[324], 256, (menuRowsNegativePadding / 2) + 26, FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
 	int volumeSliderWidth = 380 - (volumeSliderTriangleLeftMargin + 30);
 
@@ -278,6 +309,7 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 	int mode = howl_ModeGet();
 	char* volumeModeString = (mode == 0 ? sdata->lngStrings[333] : sdata->lngStrings[334]);
 
+	// "MONO", "STEREO"
 	DecalFont_DrawLine(volumeModeString, 436, (menuRowsNegativePadding / 2) + 80, FONT_SMALL, (JUSTIFY_RIGHT | WHITE));
 
 	if (gamepad->numGamepads != 0)
@@ -332,10 +364,12 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 				}
 
 				dualShockRowColor = GRAY;
-				if ((!gamepadConnected) && (dualShockRowColor = RED, (sdata->gGT->gameMode1 & data.gGT_gameMode1_Vibration_PerPlayer[currPad]) == 0))
+				/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
+				if ((!gamepadConnected) && (dualShockRowColor = CORTEX_RED, (sdata->gGT->gameMode1 & data.gGT_gameMode1_Vibration_PerPlayer[currPad]) == 0))
 				{
-					dualShockRowColor = WHITE;
+					dualShockRowColor = TINY_GREEN;
 				}
+				/////////////////////////// SECTION 6          ///////////////////////////
 
 				DecalFont_DrawLine(dualshockVibrateString, lineWidth_vibrateOn + lineWidth_controller1A + 10, (i * 10) + (menuRowsNegativePadding / 2) + 100, FONT_SMALL, dualShockRowColor);
 			}
@@ -362,16 +396,33 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 		}
 	}
 
-	// "EXIT"
-	DecalFont_DrawLine(sdata->lngStrings[331], 76, (menuRowsNegativePadding / 2) + 140 - menuRowsNegativePadding, FONT_SMALL, ORANGE);
+	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
+	// "RESERVES METER:"
+	DecalFont_DrawLine(sdata->lngStrings[611], 76, (menuRowsNegativePadding / 2) + ((9 * 10) + 50) - menuRowsNegativePadding, FONT_SMALL, ORANGE);
 
+	// "OFF"
+	DecalFont_DrawLine(sdata->lngStrings[597], 436, (menuRowsNegativePadding / 2) + ((9 * 10) + 50) - menuRowsNegativePadding, FONT_SMALL, (JUSTIFY_RIGHT | GRAY));
+
+	// "TURBO COUNTER:"
+	DecalFont_DrawLine(sdata->lngStrings[612], 76, (menuRowsNegativePadding / 2) + ((10 * 10) + 50) - menuRowsNegativePadding, FONT_SMALL, ORANGE);
+
+	// "OFF"
+	DecalFont_DrawLine(sdata->lngStrings[597], 436, (menuRowsNegativePadding / 2) + ((10 * 10) + 50) - menuRowsNegativePadding, FONT_SMALL, (JUSTIFY_RIGHT | GRAY));
+
+	// "EXIT"
+	DecalFont_DrawLine(sdata->lngStrings[331], 76, (menuRowsNegativePadding / 2) + ((11 * 10) + 50) - menuRowsNegativePadding, FONT_SMALL, ORANGE);
+	/////////////////////////// SECTION 7          ///////////////////////////
+
+	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 	RECT cursor =
 	{
 		.x = 74,
-		.y = data.Options_HighlightBar[mb->rowSelected].posY + (menuRowsNegativePadding / 2) + 20,
+		.y = UDCTRM_OM_CursorPosY[mb->rowSelected] + (menuRowsNegativePadding / 2) + 20,
 		.w = 364,
-		.h = data.Options_HighlightBar[mb->rowSelected].sizeY
+		.h = UDCTRM_OM_CursorHeight[mb->rowSelected]
 	};
+	/////////////////////////// SECTION 8          ///////////////////////////
+
 	CTR_Box_DrawClearBox(&cursor, &sdata->menuRowHighlight_Normal, TRANS_50_DECAL, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour, &sdata->gGT->backBuffer->primMem);
 
 	RECT titleSeparatorLine =
@@ -388,7 +439,9 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 		.x = 56,
 		.y = (menuRowsNegativePadding / 2) + 20,
 		.w = 400,
-		.h = 135 - menuRowsNegativePadding
+		/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
+		.h = (45 + (UDCTRM_OM_NUM_ROWS * 10)) - menuRowsNegativePadding
+		/////////////////////////// END OF CHANGES     ///////////////////////////
 	};
 	MENUBOX_DrawInnerRect(&menuBoxBG, 4, (u_long *)(sdata->gGT->backBuffer->otMem).startPlusFour);
 }

@@ -92,12 +92,20 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT)
 	// "EXIT"
 	DecalFont_DrawLine(sdata->lngStrings[331], UDCTRM_RO_glowingcursor.x + 2, firstRowY + (10 * 3) + 1, FONT_SMALL, ORANGE);
 
+	int lapsSettingColor = WHITE;
+	if (gGT->gameMode1 & TIME_TRIAL) lapsSettingColor = GRAY;
+
 	// Laps:
-	DecalFont_DrawLine(sdata->lngStrings[600 + UDCTRM_RO_numLapsIndex], optionTextPosX, firstRowY + (10 * 0) + 1, FONT_SMALL, WHITE | JUSTIFY_RIGHT);
+	DecalFont_DrawLine(sdata->lngStrings[600 + UDCTRM_RO_numLapsIndex], optionTextPosX, firstRowY + (10 * 0) + 1, FONT_SMALL, lapsSettingColor | JUSTIFY_RIGHT);
+
+	int blueFireSettingColor = CORTEX_RED;
+	if (UDCTRM_RF_blueFireMode == 1) blueFireSettingColor = TINY_GREEN;
+	if (UDCTRM_RF_blueFireMode == 2) blueFireSettingColor = CRASH_BLUE;
+
 	// Blue Fire:
-	DecalFont_DrawLine(sdata->lngStrings[597 + UDCTRM_RF_blueFireMode], optionTextPosX, firstRowY + (10 * 1) + 1, FONT_SMALL, WHITE | JUSTIFY_RIGHT);
+	DecalFont_DrawLine(sdata->lngStrings[597 + UDCTRM_RF_blueFireMode], optionTextPosX, firstRowY + (10 * 1) + 1, FONT_SMALL, blueFireSettingColor | JUSTIFY_RIGHT);
 	// Mirror Mode: "OFF"
-	DecalFont_DrawLine(sdata->lngStrings[597], optionTextPosX, firstRowY + (10 * 2) + 1, FONT_SMALL, WHITE | JUSTIFY_RIGHT);
+	DecalFont_DrawLine(sdata->lngStrings[597], optionTextPosX, firstRowY + (10 * 2) + 1, FONT_SMALL, GRAY | JUSTIFY_RIGHT);
 
 	MENUBOX_DrawInnerRect(&UDCTRM_RO_titleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the line that's below the title
 	CTR_Box_DrawClearBox(&UDCTRM_RO_glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
