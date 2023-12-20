@@ -272,6 +272,7 @@ force_inline void DISPLAYMENUBOX_MainFreeze_MenuPtrOptions(struct MenuBox* mb, G
 	int mode = howl_ModeGet();
 	char* volumeModeString = (mode == 0 ? sdata->lngStrings[333] : sdata->lngStrings[334]);
 
+	// "MONO", "STEREO"
 	DecalFont_DrawLine(volumeModeString, 436, (menuRowsNegativePadding / 2) + 80, FONT_SMALL, (JUSTIFY_RIGHT | WHITE));
 
 	if (gamepad->numGamepads != 0)
