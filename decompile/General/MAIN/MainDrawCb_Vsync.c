@@ -19,6 +19,10 @@ void DECOMP_MainDrawCb_Vsync()
 
 	DECOMP_howl_PlayAudio_Update();
 
+	#ifdef REBUILD_PC
+	PsyX_UpdateInput();
+	#endif
+	
 	DECOMP_GAMEPAD_PollVsync(sdata->gGamepads);	
 	return;
 }
