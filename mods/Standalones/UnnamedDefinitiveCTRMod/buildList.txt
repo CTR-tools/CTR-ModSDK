@@ -56,10 +56,19 @@ common, exe, OnCollide_Drivers, 0x0, src/Packaged_Mods/Retro-Fueled/OopsAllSuper
 
 common, 230, MM_MENUBOX_1p2p, 0x0, src/Packaged_Mods/ExtraDifficulty/MM_MENUBOX_1p2p.c
 
+////////////// ReservesMeter //////////////
+
+// Reserves Meter Hook
+903, exe, UI_RenderFrame_CrystChall, -0x8, src/Packaged_Mods/ReservesMeter/reserveshook.s
+926, exe, UI_RenderFrame_AdvHub, -0x8, src/Packaged_Mods/ReservesMeter/reserveshook.s
+1006, exe, UI_RenderFrame_AdvHub, -0x8, src/Packaged_Mods/ReservesMeter/reserveshook.s
+1020, exe, UI_RenderFrame_AdvHub, -0x8, src/Packaged_Mods/ReservesMeter/reserveshook.s
+1111, exe, UI_RenderFrame_AdvHub, -0x8, src/Packaged_Mods/ReservesMeter/reserveshook.s
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Compile at the end of 230 overlay binary //
 common, 230, MM_EndOfFile, 0x0, src/Race_Options/RaceOptions.c src/Race_Options/230_56_MM_TrackSelect_MenuBox.c src/Options_Menu/OptionsMenu_Insert.c src/Options_Menu/OptionsMenu.c src/Options_Menu/ControllerSFXOptions_TitleScreen.c src/Options_Menu/GameplayOptions.c src/Packaged_Mods/ExtraDifficulty/MM_ExtraDifficulty.c
 
 // Compile code to empty spaces in RDATA //
-common, exe, rdata_free, 0x0, src/Packaged_Mods/Retro-Fueled/KeepU-TurnReserves.c src/Packaged_Mods/Retro-Fueled/BlueFireModeInt.c src/Packaged_Mods/Retro-Fueled/BlueFire.c src/Turbo_Increment.c
+common, exe, rdata_free, 0x0, src/Globals.c src/Packaged_Mods/Retro-Fueled/KeepU-TurnReserves.c src/Packaged_Mods/Retro-Fueled/BlueFire.c src/Turbo_Increment.c src/Packaged_Mods/ReservesMeter/main.c
