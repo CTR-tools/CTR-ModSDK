@@ -417,9 +417,15 @@ void DECOMP_RB_Armadillo_ThTick_TurnAround(struct Thread* t);
 void DECOMP_RB_Armadillo_ThTick_Rolling(struct Thread* t);
 void DECOMP_RB_Armadillo_LInB(struct Instance* inst);
 
+void DECOMP_RB_Minecart_ThTick(struct Thread* t);
+void DECOMP_RB_Minecart_LInB(struct Instance* inst);
+
 void DECOMP_RB_Seal_ThTick_Move(struct Thread* t);
 void DECOMP_RB_Seal_ThTick_TurnAround(struct Thread* t);
 void DECOMP_RB_Seal_LInB(struct Instance* inst);
+
+void DECOMP_RB_Snowball_ThTick(struct Thread* t);
+void DECOMP_RB_Snowball_LInB(struct Instance* inst);
 
 // 232
 short* DECOMP_AH_WarpPad_GetSpawnPosRot(short* posData);

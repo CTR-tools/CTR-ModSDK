@@ -43,9 +43,11 @@ RollSound:
 	// sewer speedway barrel
 	if(modelID == 0x4e)
 	{
+		#ifndef REBUILD_PS1
 		// barrel roll
 		soundID = 0x74;
 		PlaySound3D_Flags(&snowObj->audioPtr, soundID, snowInst);
+		#endif
 	}
 	
 	baseShort = snowObj->pointIndex;
@@ -54,9 +56,15 @@ RollSound:
 	
 	baseShort *= 6;
 	
+	#ifndef REBUILD_PS1
 	ConvertRotToMatrix(
 		&snowInst->matrix,
 		&ptrSpawnType2->posCoords[baseShort+3]);
+	#else
+	TEST_ConvertRotToMatrix(
+		&snowInst->matrix,
+		&ptrSpawnType2->posCoords[baseShort+3]);
+	#endif
 		
 	snowInst->matrix.t[0] = ptrSpawnType2->posCoords[baseShort+0];
 	snowInst->matrix.t[1] = ptrSpawnType2->posCoords[baseShort+1];
@@ -73,7 +81,7 @@ void DECOMP_RB_Snowball_LInB(struct Instance* inst)
 	struct Snowball* snowObj;
 	
 	struct Thread* t = 
-		THREAD_BirthWithObject
+		DECOMP_THREAD_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET

@@ -6,6 +6,10 @@ extern short minecartArr[50];
 
 void RB_Minecart_CheckColl(struct Instance* minecartInst, struct Thread* minecartTh)
 {
+
+// PC port has no  player movement yet
+#ifndef REBUILD_PS1
+
 	struct Driver* hitDriver;
 	struct Instance* hitInst;
 	struct GameTracker* gGT = sdata->gGT;
@@ -39,6 +43,7 @@ void RB_Minecart_CheckColl(struct Instance* minecartInst, struct Thread* minecar
 		// attempt to harm driver (squish)
 		RB_Hazard_HurtDriver(hitDriver,3,0,0);
 	}
+#endif
 }
 
 void RB_Minecart_NewPoint(
@@ -58,7 +63,11 @@ void RB_Minecart_NewPoint(
 	minecartObj->rotDesired[0] =
 		ratan2(
 			minecartObj->dir[1],
+			#ifndef REBUILD_PC
 			SquareRoot0_stub(
+			#else
+			SquareRoot0(
+			#endif
 				minecartObj->dir[0]*minecartObj->dir[0] +
 				minecartObj->dir[2]*minecartObj->dir[2]
 			)
@@ -89,7 +98,7 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 	// if animation is not over
 	if(
 		(minecartInst->animFrame+1) < 
-		INSTANCE_GetNumAnimFrames(minecartInst, 0)
+		DECOMP_INSTANCE_GetNumAnimFrames(minecartInst, 0)
 	)
 	{
 		// increment frame
@@ -180,23 +189,29 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 	}
 		
 	minecartObj->rotCurr[0] =
-		RB_Hazard_InterpolateValue(
+		DECOMP_RB_Hazard_InterpolateValue(
 			minecartObj->rotCurr[0], 
 			minecartObj->rotDesired[0], 
 			minecartObj->rotSpeed);
 	
 	minecartObj->rotCurr[1] =
-		RB_Hazard_InterpolateValue(
+		DECOMP_RB_Hazard_InterpolateValue(
 			minecartObj->rotCurr[1], 
 			minecartObj->rotDesired[1], 
 			minecartObj->rotSpeed);
-			
-	ConvertRotToMatrix(&minecartInst->matrix, &minecartObj->rotCurr[0]);
 	
+	#ifndef REBUILD_PS1
+	ConvertRotToMatrix(&minecartInst->matrix, &minecartObj->rotCurr[0]);
+	#else
+	TEST_ConvertRotToMatrix(&minecartInst->matrix, &minecartObj->rotCurr[0]);
+	#endif
+	
+	#ifndef REBUILD_PS1
 	PlaySound3D_Flags(
 		&minecartObj->audioPtr,
 		0x72, // minecart sound
 		minecartInst);
+	#endif
 		
 	RB_Minecart_CheckColl(minecartInst, t);
 }
@@ -209,7 +224,7 @@ void DECOMP_RB_Minecart_LInB(struct Instance* inst)
 	int startIndex;
 	
 	struct Thread* t = 
-		THREAD_BirthWithObject
+		DECOMP_THREAD_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
