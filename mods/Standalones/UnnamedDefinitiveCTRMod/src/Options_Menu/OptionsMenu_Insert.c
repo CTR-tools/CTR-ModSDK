@@ -11,7 +11,7 @@ void UDCTRM_OM_ControllerSFXFuncPtr(struct MenuBox* mb);
 struct MenuRow UDCTRM_OM_MenuRows[] =
 {
     MENU_ROW(0, 610, 0, 1, 0, 0),
-    MENU_ROW(1, 606, 0, 1, 1, 1),
+    MENU_ROW(1, 609, 0, 1, 1, 1),
     FINALIZER_ROW
 };
 

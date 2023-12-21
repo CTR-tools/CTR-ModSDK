@@ -47,7 +47,7 @@ common, exe, BOTS_SetRotation, -0x8, ../../Modules/BlueFire/src/hookUpdate.s
 1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
 
 // Modify Turbo_Increment function to allow for USF stacking
-common, exe, Turbo_Increment, 0x0, Turbo_Increment_Hook.s
+common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_Hook.s
 
 // Modify OnCollide_Drivers function for enabling or disabling the STP cheat
 common, exe, OnCollide_Drivers, 0x0, src/Packaged_Mods/Retro-Fueled/OopsAllSuperTurboPads.c
