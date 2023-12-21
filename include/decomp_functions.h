@@ -428,6 +428,10 @@ void DECOMP_RB_Seal_LInB(struct Instance* inst);
 void DECOMP_RB_Snowball_ThTick(struct Thread* t);
 void DECOMP_RB_Snowball_LInB(struct Instance* inst);
 
+void DECOMP_RB_Turtle_ThTick(struct Thread* t);
+int DECOMP_RB_Turtle_LInC(struct Instance* inst, struct Thread* driverTh);
+void DECOMP_RB_Turtle_LInB(struct Instance* inst);
+
 // 232
 short* DECOMP_AH_WarpPad_GetSpawnPosRot(short* posData);
 void DECOMP_AH_WarpPad_AllWarppadNum();

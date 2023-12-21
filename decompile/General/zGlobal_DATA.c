@@ -19,8 +19,8 @@ void DECOMP_RB_Plant_LInB();
 //void DECOMP_RB_Seal_LInB();		-- DONE
 void RB_Orca_LInB();
 void DECOMP_RB_Baron_LInB();
-void DECOMP_RB_Turtle_LInB();
-void DECOMP_RB_Turtle_LInC();
+//void DECOMP_RB_Turtle_LInB();		-- DONE
+//void DECOMP_RB_Turtle_LInC();		-- DONE
 void RB_Spider_LInB();
 void DECOMP_RB_Fireball_LInB();
 void RB_Banner_LInB();
@@ -57,8 +57,8 @@ void DECOMP_RB_Plant_LInB() {}
 //void DECOMP_RB_Seal_LInB() {}		-- DONE
 void RB_Orca_LInB() {}
 void DECOMP_RB_Baron_LInB() {}
-void DECOMP_RB_Turtle_LInB() {}
-void DECOMP_RB_Turtle_LInC() {}
+//void DECOMP_RB_Turtle_LInB() {}	-- DONE
+//void DECOMP_RB_Turtle_LInC() {}	-- DONE
 void RB_Spider_LInB() {}
 void DECOMP_RB_Fireball_LInB() {}
 void RB_Banner_LInB() {}
