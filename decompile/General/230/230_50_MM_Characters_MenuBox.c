@@ -211,7 +211,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 				button = sdata->buttonTapPerPlayer[i], 
 			
 				// If you press the D-Pad, or Cross, Square, Triangle, Circle
-				button & 0x4007f
+				button & (BTN_TRIANGLE | BTN_CIRCLE | BTN_SQUARE_one | BTN_CROSS_one | BTN_RIGHT | BTN_LEFT | BTN_DOWN | BTN_UP)
 			)
 		)
 		{
@@ -219,15 +219,15 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 			if (((int)(short)sdata->characterSelectFlags >> i & 1U) == 0)
 			{
 				// If you pressed any of the D-pad buttons
-				if ((button & 0xf) != 0) 
+				if ((button & (BTN_RIGHT | BTN_LEFT | BTN_DOWN | BTN_UP)) != 0) 
 				{
 					local_50 = 0;
 			
 					// If you do not press Up
-					if ((button & 1) == 0) 
+					if ((button & BTN_UP) == 0) 
 					{	
 						// If you do not press Down
-						if ((button & 2) == 0) 
+						if ((button & BTN_DOWN) == 0) 
 						{
 							// This must be if you press Left,
 							// because the variable will change
@@ -237,7 +237,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 							direction = 2;
 				
 							// If you press Left
-							if ((button & 4) != 0) goto LAB_800aec08;
+							if ((button & BTN_LEFT) != 0) goto LAB_800aec08;
 				
 							// At this point, you must have pressed Right
 				
@@ -378,7 +378,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 				}
 		
 				// If this player pressed Cross or Circle
-				if (((sdata->buttonTapPerPlayer)[i] & 0x50) != 0) 
+				if (((sdata->buttonTapPerPlayer)[i] & (BTN_CIRCLE | BTN_CROSS_one)) != 0) 
 				{
 					// this player has now selected a character
 					sdata->characterSelectFlags = sdata->characterSelectFlags | (u_short)(1 << i);
@@ -403,7 +403,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 					((i & 0xffff) == 0) && 
 			
 					// if you press Square or Triangle
-					((sdata->buttonTapPerPlayer[0] & 0x40020) != 0)
+					((sdata->buttonTapPerPlayer[0] & (BTN_TRIANGLE | BTN_SQUARE_one)) != 0)
 				) 
 				{
 					// return to main menu
@@ -417,7 +417,7 @@ void DECOMP_MM_Characters_MenuBox(struct MenuBox* unused)
 			else 
 			{
 				// if you press Square or Triangle
-				if ((button & 0x40020) != 0) 
+				if ((button & (BTN_TRIANGLE | BTN_SQUARE_one)) != 0) 
 				{
 					// Play sound
 					DECOMP_OtherFX_Play(2, 1);

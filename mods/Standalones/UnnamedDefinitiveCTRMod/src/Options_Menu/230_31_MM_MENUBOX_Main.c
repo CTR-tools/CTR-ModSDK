@@ -3,7 +3,8 @@
 // byte budget
 // 840/1108
 
-extern struct MenuRow UDCTRM_OM_MenuRows_ScrapbookUnlocked[9];
+extern struct MenuRow UDCTRM_MM_MenuRows_ScrapbookUnlocked[9];
+extern struct MenuBox UDCTRM_OM_MenuBox;
 
 void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 {
@@ -12,7 +13,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 
 	// if scrapbook is unlocked, change "rows" to extended array
 	if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
-		mainMenu->rows = UDCTRM_OM_MenuRows_ScrapbookUnlocked;
+		mainMenu->rows = UDCTRM_MM_MenuRows_ScrapbookUnlocked;
 
 	MM_ParseCheatCodes();
 	MM_ToggleRows_Difficulty();
@@ -225,9 +226,8 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 	// Options (new for this mod!)
 	if (rowLngID == 14)
 	{
-		D230.desiredMenu = 0x45;
-
-		D230.MM_State = EXITING_MENU;
+		mainMenu->ptrNextBox_InHierarchy = &UDCTRM_OM_MenuBox;
+		mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
 		return;
 	}
 	/////////////////////////// END OF CHANGES     ///////////////////////////
