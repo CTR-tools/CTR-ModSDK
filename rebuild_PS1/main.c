@@ -396,6 +396,7 @@
 
 // 231
 #include "../decompile/General/231/231_023_RB_Hazard_InterpolateValue.c"
+#include "../decompile/General/231/231_054_055_RB_Baron.c"
 #include "../decompile/General/231/231_056_057_RB_Blade.c"
 #include "../decompile/General/231/231_080_083_RB_Armadillo.c"
 #include "../decompile/General/231/231_097_098_RB_Minecart.c"

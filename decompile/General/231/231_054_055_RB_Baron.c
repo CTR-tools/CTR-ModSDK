@@ -49,7 +49,9 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 	#if 0
 	// dont check modelID, it's always barrel
 	#endif
-	
+
+// 3D audio not in PC port yet
+#ifndef REBUILD_PS1
 	// 16th frame
 	if(baronObj->pointIndex == 0x10)
 	{
@@ -69,12 +71,17 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 		// sound of barrel moving
 		PlaySound3D_Flags(&baronObj->soundID_flags, 0x74, baronInst);
 	}
+#endif
 	
 	baseShort = baronObj->pointIndex;
 	
 	baseShort *= 6;
 	
+#ifndef REBUILD_PS1
 	ConvertRotToMatrix(
+#else
+	TEST_ConvertRotToMatrix(
+#endif
 		&baronInst->matrix,
 		&ptrSpawnType2->posCoords[baseShort+3]);
 		
@@ -89,6 +96,8 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 	// skip check for modelID, that would happen before collision 
 	#endif
 	
+// not needed in PC port yet
+#ifndef REBUILD_PS1
 	hitInst = RB_Hazard_CollideWithDrivers(baronInst, 0, 0x19000, 0);
 	if(hitInst != 0)
 	{
@@ -98,6 +107,7 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 		// attempt to harm driver (squish)
 		RB_Hazard_HurtDriver(hitDriver,3,0,0);
 	}
+#endif
 }
 
 void DECOMP_RB_Baron_LInB(struct Instance* inst)
@@ -105,7 +115,7 @@ void DECOMP_RB_Baron_LInB(struct Instance* inst)
 	struct Baron* baronObj;
 	
 	struct Thread* t = 
-		THREAD_BirthWithObject
+		DECOMP_THREAD_BirthWithObject
 		(
 			// creation flags
 			SIZE_RELATIVE_POOL_BUCKET
