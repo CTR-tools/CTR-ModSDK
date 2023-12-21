@@ -73,16 +73,15 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
                     {
                         uVar4 = (port << 4) | i;
 
-						#ifndef REBUILD_PS1
                         // according to libref
                         // 0 - PadStateDisCon
                         // 1 - PadStateFindPad
                         // and many more...
                         uVar2 = PadGetState(uVar4);
 
-                        GAMEPAD_ProcessState(pad, uVar2, uVar4);
-						#endif
+                        DECOMP_GAMEPAD_ProcessState(pad, uVar2, uVar4);
 					}
+
                     // increment gamepad counter
                     numConnected++;
                 }

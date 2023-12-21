@@ -45,14 +45,14 @@ void FUN_800251ac(int param_1)
 void FUN_80025208(void)
 
 {
-  _padSetMainMode(0,0,0);
-  _padSetMainMode(1,0,0);
-  _padSetMainMode(2,0,0);
-  _padSetMainMode(3,0,0);
-  _padSetMainMode(0x10,0,0);
-  _padSetMainMode(0x11,0,0);
-  _padSetMainMode(0x12,0,0);
-  _padSetMainMode(0x13,0,0);
+  PadSetMainMode(0,0,0);
+  PadSetMainMode(1,0,0);
+  PadSetMainMode(2,0,0);
+  PadSetMainMode(3,0,0);
+  PadSetMainMode(0x10,0,0);
+  PadSetMainMode(0x11,0,0);
+  PadSetMainMode(0x12,0,0);
+  PadSetMainMode(0x13,0,0);
   return;
 }
 
@@ -82,7 +82,7 @@ void FUN_800252a0(int param_1,int param_2,undefined4 param_3)
     else {
       if (param_2 == 6) {
         if (*(short *)(param_1 + 0x26) == 0) {
-          iVar2 = _padSetMainMode(param_3,1,0);
+          iVar2 = PadSetMainMode(param_3,1,0);
           if (iVar2 != 0) {
             *(undefined2 *)(param_1 + 0x26) = 1;
           }
@@ -107,9 +107,9 @@ void FUN_800252a0(int param_1,int param_2,undefined4 param_3)
             }
 
 			// gamepad rumble
-            _padSetAct(param_3,param_1 + 0x2e,2);
+            PadSetAct(param_3,param_1 + 0x2e,2);
 
-			iVar2 = _padSetActAlign(param_3,&DAT_8008d038);
+			iVar2 = PadSetActAlign(param_3,&DAT_8008d038);
 
 			if (iVar2 != 0) {
               *(undefined2 *)(param_1 + 0x26) = 2;

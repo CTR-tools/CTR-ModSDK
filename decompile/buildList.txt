@@ -189,6 +189,7 @@ common, exe, GAMEPAD_GetNumConnected, 0x0, General/GAMEPAD/GAMEPAD_GetNumConnect
 common, exe, GAMEPAD_ProcessAnyoneVars, 0x0, General/GAMEPAD/GAMEPAD_ProcessAnyoneVars.c
 common, exe, GAMEPAD_ProcessTapRelease, 0x0, General/GAMEPAD/GAMEPAD_ProcessTapRelease.c
 common, exe, GAMEPAD_ProcessHold, 0x0, General/GAMEPAD/GAMEPAD_ProcessHold.c
+common, exe, GAMEPAD_ProcessState, 0x0, General/GAMEPAD/GAMEPAD_ProcessState.c
 
 // GAMEPROG (done)
 common, exe, GAMEPROG_AdvPercent, 0x0, General/GAMEPROG/GAMEPROG_AdvPercent.c

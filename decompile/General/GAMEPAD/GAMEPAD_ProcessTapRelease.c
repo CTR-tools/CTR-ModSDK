@@ -11,7 +11,7 @@ void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
 
     char numConnected = gGamepads->numGamepadsConnected;
 
-    cVar1 = sdata->unk_padSetActAlign[6];
+    cVar1 = sdata->unkPadSetActAlign[6];
 
     if (!numConnected)
         return;

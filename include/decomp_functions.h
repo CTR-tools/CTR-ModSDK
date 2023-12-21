@@ -36,6 +36,7 @@ void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_ProcessForceFeedback(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads);
+void DECOMP_GAMEPAD_ProcessState(struct GamepadBuffer* pad, int padState, short id);
 
 int DECOMP_GAMEPROG_CheckGhostsBeaten(int ghostID);
 void DECOMP_GAMEPROG_NewGame_OnBoot();
@@ -408,7 +409,7 @@ void DECOMP_MM_JumpTo_Characters(void);
 void DECOMP_MM_JumpTo_Scrapbook(void);
 
 // 231 (undone)
-int DECOMP_RB_Hazard_InterpolateValue(unsigned short currRot,unsigned short desiredRot,short rotSpeed);
+int DECOMP_RB_Hazard_InterpolateValue(short currRot, short desiredRot, short rotSpeed);
 
 void DECOMP_RB_Blade_ThTick(struct Thread* t);
 void DECOMP_RB_Blade_LInB(struct Instance* inst);

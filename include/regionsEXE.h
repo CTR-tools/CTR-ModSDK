@@ -2701,7 +2701,7 @@ struct sData
 
 	// 8008d038 -- UsaRetail
 	// 8008d3c0 -- EurRetail
-	char unk_padSetActAlign[8];
+	char unkPadSetActAlign[8];
 
 	// ==========================================================
 
@@ -2709,7 +2709,7 @@ struct sData
 	#if BUILD >= EurRetail
 	// 8008d3c8 -- EurRetail
 	// calls padSetAct on slot 2, after realizing a multitap is in slot 1
-	char unk_padSetAct[0x4];
+	char unkPadSetAct[0x4];
 	#endif
 
 	// 8008b4a8 -- SepReview

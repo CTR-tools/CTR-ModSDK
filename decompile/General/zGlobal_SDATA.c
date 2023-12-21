@@ -72,7 +72,7 @@ struct sData sdata_static =
 	.pause_backup_renderFlags = 0,
 	.pause_state = 0,
 	
-	.unk_padSetActAlign = 
+	.unkPadSetActAlign = 
 	{
 		0,1,-1,-1,
 		-1,-1,1,0

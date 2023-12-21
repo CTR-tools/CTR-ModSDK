@@ -63,8 +63,6 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
 					uVar4 = uVar4 << 0x10;
 				}
 			}
-			
-#ifndef REBUILD_PC
 
 			// gamepadMapBtn to map RawInput enum
 			// to Buttons enum, to support different
@@ -80,32 +78,7 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
 					uVar5 |= *(int*)&btnMapPtr[4];
 				}
 			}
-			
-#else
 
-			// apply to all
-			if (WIN_GetPressCross())
-				uVar5 |= BTN_CROSS;
-
-			if(pad == &gGamepads->gamepad[0])
-			{
-				if (WIN_GetPressUp())
-					uVar5 |= BTN_UP;
-			
-				if (WIN_GetPressDown())
-					uVar5 |= BTN_DOWN;
-			
-				if (WIN_GetPressLeft())
-					uVar5 |= BTN_LEFT;
-			
-				if (WIN_GetPressRight())
-					uVar5 |= BTN_RIGHT;
-			
-				if (WIN_GetPressTriangle())
-					uVar5 |= BTN_TRIANGLE;
-			}
-#endif
-	
 			// record buttons held this frame
 			pad->buttonsHeldCurrFrame = uVar5;
 	

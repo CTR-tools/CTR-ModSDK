@@ -66,6 +66,7 @@
 #include "../decompile/General/GAMEPAD/GAMEPAD_ProcessAnyoneVars.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_ProcessTapRelease.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_ProcessHold.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_ProcessState.c"
 
 #include "../decompile/General/GAMEPROG/GAMEPROG_ResetHighScores.c"
 #include "../decompile/General/GAMEPROG/GAMEPROG_CheckGhostsBeaten.c"

@@ -1150,11 +1150,11 @@
 80074c3c PadInitMtap
 80074d9c PadStartCom
 80074E68 PadStopCom
-80074EAC _padSetActAlign
+80074EAC PadSetActAlign
 // unknown function
-8007501C _padSetMainMode
+8007501C PadSetMainMode
 // unknown functions
-8007517C _padSetAct
+8007517C PadSetAct
 800751BC PadInfoAct
 8007529C strcpy
 800752AC SpuSetReverbModeParam

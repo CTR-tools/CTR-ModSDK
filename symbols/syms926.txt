@@ -1203,12 +1203,12 @@
 80075660 PadInitMtap
 800757c0 PadStartCom
 8007588c PadStopCom
-800758d0 _padSetActAlign
+800758d0 PadSetActAlign
 // unknown 8007594c ------ called by lib funcs
-80075a40 _padSetMainMode
+80075a40 PadSetMainMode
 // unknown 80075adc ------ called by lib funcs
 // unknown 80075b34 ------ called by lib funcs
-80075ba0 _padSetAct
+80075ba0 PadSetAct
 80075be0 PadInfoAct
 80075cc0 strcpy
 80075cd0 SpuSetReverbModeParam
@@ -1353,7 +1353,7 @@
 8007c870 GPU_cw
 8007c9c0 ChangeClearPAD
 8007c9d0 ChangeClearRCnt
-8007d554 _padSetCmd
+8007d554 PadSetCmd
 8007d564 _padSendAtLoadInfo
 8007d5e8 _padRecvAtLoadInfo
 8007d858 _padGetActSize
