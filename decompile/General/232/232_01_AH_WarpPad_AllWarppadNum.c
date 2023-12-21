@@ -1,5 +1,7 @@
 #include <common.h>
 
+void AH_WarpPad_SetNumModelData(struct Instance* inst, struct ModelHeader* mh);
+
 void DECOMP_AH_WarpPad_AllWarppadNum()
 {
 	struct WarpPad* wp;
@@ -24,7 +26,7 @@ void DECOMP_AH_WarpPad_AllWarppadNum()
 		{
 			inst = wp->inst[2];
 			mh = &inst->model->headers[0];
-			DECOMP_AH_WarpPad_SetNumModelData(inst, &mh[wp->digit1s-1]);
+			AH_WarpPad_SetNumModelData(inst, &mh[wp->digit1s-1]);
 		}
 		
 		if (
@@ -34,12 +36,12 @@ void DECOMP_AH_WarpPad_AllWarppadNum()
 		{
 			inst = wp->inst[3];
 			mh = &inst->model->headers[0];
-			DECOMP_AH_WarpPad_SetNumModelData(inst, mh);
+			AH_WarpPad_SetNumModelData(inst, mh);
 		}
 	}
 }
 
-void DECOMP_AH_WarpPad_SetNumModelData(struct Instance* inst, struct ModelHeader* mh)
+void AH_WarpPad_SetNumModelData(struct Instance* inst, struct ModelHeader* mh)
 {
 	struct InstDrawPerPlayer* idpp =
 		INST_GETIDPP(inst);

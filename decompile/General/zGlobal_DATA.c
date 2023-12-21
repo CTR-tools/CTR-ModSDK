@@ -32,7 +32,7 @@ void DECOMP_RB_Teeth_LInB();
 void DECOMP_RB_Teeth_LInC();
 
 void AH_Sign_LInB();
-void DECOMP_AH_Door_LInB();
+void DECOMP_AH_Door_LInB();	
 void DECOMP_AH_Garage_LInB();
 void DECOMP_AH_SaveObj_LInB();
 void DECOMP_AH_WarpPad_LInB();

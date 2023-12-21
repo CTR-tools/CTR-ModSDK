@@ -55,7 +55,7 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst)
             // DAT_800aba80
             // "scan"
 
-            inst = INSTANCE_Birth3D(gGT->modelPtr[0x78], 0, 0);
+            inst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x78], 0, 0);
 
             inst->matrix.m[0][0] = savInst->matrix.m[0][0];
             inst->matrix.m[0][2] = savInst->matrix.m[0][2];

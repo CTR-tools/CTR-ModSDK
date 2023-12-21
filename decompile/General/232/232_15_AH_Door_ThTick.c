@@ -300,11 +300,11 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
                   iVar17 += 0x1f;
                 }
 
-                ratio = MATH_Sin(door->keyOrbit + iVar18);
+                ratio = DECOMP_MATH_Sin(door->keyOrbit + iVar18);
 
                 keyInst->matrix.t[0] = driver->instSelf->matrix.t[0] + ((iVar17 >> 5) * ratio >> 0xc);
 
-                ratio = MATH_Cos(door->keyOrbit + iVar18);
+                ratio = DECOMP_MATH_Cos(door->keyOrbit + iVar18);
 
                 keyInst->matrix.t[2] = driver->instSelf->matrix.t[2] + ((iVar17 >> 5) * ratio >> 0xc);
               }

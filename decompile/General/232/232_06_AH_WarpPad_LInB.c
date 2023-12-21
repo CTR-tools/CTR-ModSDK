@@ -228,7 +228,7 @@ GetKeysRequirement:
 				// open for trophy
 				t->modelIndex = 1;
 				
-				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x62], 0, t);
+				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x62], 0, t);
 				
 				newInst->scale[0] = 0x2800;
 				newInst->scale[1] = 0x2800;
@@ -244,7 +244,7 @@ GetKeysRequirement:
 				if(t->modelIndex != 1)
 					t->modelIndex = 3;
 BattleTrack:
-				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x7D], 0, t);
+				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x7D], 0, t);
 				
 				// specular lighting
 				newInst->flags |= 0x30000;
@@ -287,7 +287,7 @@ SlideColTurboTrack:
 				else if(t->modelIndex != 1)
 					t->modelIndex = 3;
 				
-				newInst = INSTANCE_Birth3D(gGT->modelPtr[0x61], 0, t);
+				newInst = DECOMP_INSTANCE_Birth3D(gGT->modelPtr[0x61], 0, t);
 				
 				// relic blue
 				newInst->colorRGBA = 0x20a5ff0;

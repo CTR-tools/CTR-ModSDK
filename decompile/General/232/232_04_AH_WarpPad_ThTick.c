@@ -173,7 +173,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 				
 				// midpoing X,
 				// 30 pixels above botttom Y
-				DecalFont_DrawLine
+				DECOMP_DecalFont_DrawLine
 				(
 					warppadLNG,
 					gGT->tileView[0].rect.x + gGT->tileView[0].rect.w/2,
@@ -197,7 +197,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			   )
 			{
 				// give hint "you must have 4 tokens for a gem"
-				MainFrame_RequestMaskHint(0x1b, 0);
+				DECOMP_MainFrame_RequestMaskHint(0x1b, 0);
 			}
 			
 			else if
@@ -214,7 +214,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			   )
 			{
 				// give hint for "need more trophies"
-				MainFrame_RequestMaskHint(2, 0);
+				DECOMP_MainFrame_RequestMaskHint(2, 0);
 			}
 			
 			else if
@@ -228,7 +228,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			   )
 			{
 				// give hint for "need more trophies"
-				MainFrame_RequestMaskHint(0x1C, 0);
+				DECOMP_MainFrame_RequestMaskHint(0x1C, 0);
 			}
 		}
 	}
@@ -250,8 +250,8 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			
 		angleCamToWarppad = -angleCamToWarppad;
 		
-		angleSin = MATH_Sin(angleCamToWarppad);
-		angleCos = MATH_Cos(angleCamToWarppad);
+		angleSin = DECOMP_MATH_Sin(angleCamToWarppad);
+		angleCos = DECOMP_MATH_Cos(angleCamToWarppad);
 		
 		// no 10s digit
 		if(instArr[WPIS_CLOSED_10S] == 0)
@@ -490,7 +490,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	}
 		
 	// if flag is on-screen, loading has already been finalized
-	if(TitleFlag_IsTransitioning() != 0) return;
+	if(DECOMP_TitleFlag_IsTransitioning() != 0) return;
 		
 	// if driver has not entered this warppad
 	if(warppadObj->boolEnteredWarppad == 0)
@@ -538,7 +538,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 				// now opened
 				sdata->boolOpenTokenRelicMenu = 1;
 				
-				MENUBOX_Show(0x800b4e50);
+				DECOMP_MENUBOX_Show(0x800b4e50);
 				
 				// temporary, until 232 BSS is rewritten
 				// with proper structs, and DECOMP function symbol
@@ -551,7 +551,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			}
 			
 			// if opened, but not closed yet
-			if((MENUBOX_BoolHidden(0x800b4e50) & 0xffff) == 0)
+			if((DECOMP_MENUBOX_BoolHidden(0x800b4e50) & 0xffff) == 0)
 			{
 				// dont load level
 				return;
@@ -569,7 +569,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 				
 				// if hint is locked
 				if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i+0x76)) == 0)
-					MainFrame_RequestMaskHint(i, 1);
+					DECOMP_MainFrame_RequestMaskHint(i, 1);
 				
 				// if can't spawn aku cause he's already here,
 				// quit function, wait till he's done to start race
@@ -597,7 +597,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		
 		// Dont have hint "collect every crystal"
 		if ((sdata->advProgress.rewards[4] & 0x8000) == 0)
-			MainFrame_RequestMaskHint(0x19, 1);
+			DECOMP_MainFrame_RequestMaskHint(0x19, 1);
 		
 		// if can't spawn aku cause he's already here,
 		// quit function, wait till he's done to start race
@@ -627,7 +627,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	// this without an IF check at all
 	if( (levelID < 0x10) || (levelID >= 100) )
 	{
-		LOAD_Robots1P(data.characterIDs[0]);
+		DECOMP_LOAD_Robots1P(data.characterIDs[0]);
 		
 		// spawn P1 in the back
 		sdata->kartSpawnOrderArray[0] = 7;
@@ -668,7 +668,12 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			
 			for(i = 0; i < 7; i++)
 			{
+				#ifndef REBUILD_PS1
 				rng1 = RngDeadCoed(&sdata->const_0x30215400);
+				#else
+				rng1 = 0;
+				#endif
+				
 				rng2 = 7 - i;
 				
 				rng2 = (rng1 & 0xfff) % rng2 + 1;
@@ -688,5 +693,5 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	// Rem Adventure Arena
 	sdata->Loading.OnBegin.RemBitsConfig0 |= 0x100000;
 	
-	MainRaceTrack_RequestLoad(levelID);
+	DECOMP_MainRaceTrack_RequestLoad(levelID);
 }
