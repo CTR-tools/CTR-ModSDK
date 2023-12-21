@@ -49,56 +49,31 @@ enum SdlKeys
 	SDL_SCANCODE_LEFT = 80,
 	SDL_SCANCODE_DOWN = 81,
 	SDL_SCANCODE_UP = 82,
+	SDL_SCANCODE_B = 5,
 	SDL_SCANCODE_C = 6,
 	SDL_SCANCODE_X = 27,
 };
 static int btnFlags = 0;
 
-int WIN_GetPressUp()
+int WIN_GetKeys()
 {
-	return btnFlags & 0x1;
-}
-
-int WIN_GetPressDown()
-{
-	return btnFlags & 0x2;
-}
-
-int WIN_GetPressLeft()
-{
-	return btnFlags & 0x4;
-}
-
-int WIN_GetPressRight()
-{
-	return btnFlags & 0x8;
-}
-
-int WIN_GetPressCross()
-{
-	return btnFlags & 0x10;
-}
-
-int WIN_GetPressTriangle()
-{
-	return btnFlags & 0x20;
+	return btnFlags;
 }
 
 void PsyXKeyboardHandler(int key, char down)
 {
-	// here goes your SDL_SCANCODE_* debug keys
-	if (key == SDL_SCANCODE_UP)
-		btnFlags = down ? (btnFlags | 0x1) : (btnFlags & ~0x1);
-	if (key == SDL_SCANCODE_DOWN)
-		btnFlags = down ? (btnFlags | 0x2) : (btnFlags & ~0x2);
-	if (key == SDL_SCANCODE_LEFT)
-		btnFlags = down ? (btnFlags | 0x4) : (btnFlags & ~0x4);
-	if (key == SDL_SCANCODE_RIGHT)
-		btnFlags = down ? (btnFlags | 0x8) : (btnFlags & ~0x8);
-	if (key == SDL_SCANCODE_X)
-		btnFlags = down ? (btnFlags | 0x10) : (btnFlags & ~0x10);
-	if (key == SDL_SCANCODE_C)
-		btnFlags = down ? (btnFlags | 0x20) : (btnFlags & ~0x20);
+#define SDL_TO_KEY(x, y) \
+	if (key == x) \
+	btnFlags = down ? (btnFlags | y) : (btnFlags & ~y)
+
+	SDL_TO_KEY(SDL_SCANCODE_UP, BTN_UP);
+	SDL_TO_KEY(SDL_SCANCODE_DOWN, BTN_DOWN);
+	SDL_TO_KEY(SDL_SCANCODE_LEFT, BTN_LEFT);
+	SDL_TO_KEY(SDL_SCANCODE_RIGHT, BTN_RIGHT);
+
+	SDL_TO_KEY(SDL_SCANCODE_X, BTN_CROSS);
+	SDL_TO_KEY(SDL_SCANCODE_C, BTN_TRIANGLE);
+	SDL_TO_KEY(SDL_SCANCODE_B, BTN_START);
 }
 
 int frameCount = 0;
