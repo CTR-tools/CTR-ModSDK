@@ -430,29 +430,55 @@ void DrawOneInst(struct Instance* curr)
 						(posScreen3[0]), (posScreen3[1]));	// XY2
 				}
 
-				int otZ;
 				gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
-				gte_avsz3();
-				gte_stotz(&otZ);
 
-				// near-range for instances should be higher
-				// for instances than level (not exact number)
-				if (otZ > 32)
+				// === Error, Crash's hair doesn't draw ===
+				// Need to find a 
+
+				// backface culling
+				int opZ;
+				gte_nclip();
+				gte_stopz(&opZ);
+
+				// automatic pass, if no frontface or backface culling
+				int boolPassCull = ((flags & DRAW_CMD_FLAG_CULLING) == 0);
+
+				// if culling is required
+				if (!boolPassCull)
 				{
-					// make sure instances draw on top of the road,
-					// reduce depth in the sorting table (not exact number)
-					otZ -= 32;
+					// assume backface culling
+					boolPassCull = (opZ >= 0);
 
-					if (otZ < 4080)
-					{
-						AddPrim((u_long*)ot + (otZ >> 2), pCurr);
-						primMem->curr = pNext;
-					}
+					// if polygon is flipped
+					if ((flags & DRAW_CMD_FLAG_FLIP_NORMAL) != 0)
+						boolPassCull = !boolPassCull;
+
+					// if instance is flipped
+					if ((curr->flags & REVERSE_CULL_DIRECTION) != 0)
+						boolPassCull = !boolPassCull;
 				}
-
-				if ((flags & DRAW_CMD_FLAG_FLIP_NORMAL) != 0)
+					
+				if (boolPassCull)
 				{
-					//swap 2 coords to flip the normal here or can have 2 separate sumbission branches
+					// sorting
+					int otZ;
+					gte_avsz3();
+					gte_stotz(&otZ);
+
+					// near-range for instances should be higher
+					// for instances than level (not exact number)
+					if (otZ > 32)
+					{
+						// make sure instances draw on top of the road,
+						// reduce depth in the sorting table (not exact number)
+						otZ -= 32;
+
+						if (otZ < 4080)
+						{
+							AddPrim((u_long*)ot + (otZ >> 2), pCurr);
+							primMem->curr = pNext;
+						}
+					}
 				}
 			}
 
