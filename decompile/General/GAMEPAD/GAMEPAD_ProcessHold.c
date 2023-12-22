@@ -79,12 +79,6 @@ void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem *gGamepads)
 				}
 			}
 			
-			#ifdef REBUILD_PC
-			// if no controller, or if broken PsyX (until InitMTap is supported)
-			if ( (uVar5 == 0) || (uVar5 == 0x00073eff) )
-				uVar5 = WIN_GetKeys();
-			#endif
-
 			// record buttons held this frame
 			pad->buttonsHeldCurrFrame = uVar5;
 	

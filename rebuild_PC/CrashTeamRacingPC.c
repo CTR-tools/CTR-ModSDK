@@ -43,39 +43,6 @@ typedef enum {
 #include "../decompile/General/zGlobal_DATA.c"
 #include "../decompile/General/zGlobal_SDATA.c"
 
-enum SdlKeys
-{
-	SDL_SCANCODE_RIGHT = 79,
-	SDL_SCANCODE_LEFT = 80,
-	SDL_SCANCODE_DOWN = 81,
-	SDL_SCANCODE_UP = 82,
-	SDL_SCANCODE_B = 5,
-	SDL_SCANCODE_C = 6,
-	SDL_SCANCODE_X = 27,
-};
-static int btnFlags = 0;
-
-int WIN_GetKeys()
-{
-	return btnFlags;
-}
-
-void PsyXKeyboardHandler(int key, char down)
-{
-#define SDL_TO_KEY(x, y) \
-	if (key == x) \
-	btnFlags = down ? (btnFlags | y) : (btnFlags & ~y)
-
-	SDL_TO_KEY(SDL_SCANCODE_UP, BTN_UP);
-	SDL_TO_KEY(SDL_SCANCODE_DOWN, BTN_DOWN);
-	SDL_TO_KEY(SDL_SCANCODE_LEFT, BTN_LEFT);
-	SDL_TO_KEY(SDL_SCANCODE_RIGHT, BTN_RIGHT);
-
-	SDL_TO_KEY(SDL_SCANCODE_X, BTN_CROSS);
-	SDL_TO_KEY(SDL_SCANCODE_C, BTN_TRIANGLE);
-	SDL_TO_KEY(SDL_SCANCODE_B, BTN_START);
-}
-
 int frameCount = 0;
 int oldTicks = 0;
 
@@ -102,7 +69,6 @@ int main()
 	// set to 30 FPS VSync
 	PsyX_SetSwapInterval(2);
 	PsyX_EnableSwapInterval(1);
-	g_dbg_gameDebugKeys = PsyXKeyboardHandler;
 
 	return DECOMP_main();
 }
