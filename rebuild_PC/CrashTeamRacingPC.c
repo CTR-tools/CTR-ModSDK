@@ -70,5 +70,8 @@ int main()
 	PsyX_SetSwapInterval(2);
 	PsyX_EnableSwapInterval(1);
 
+	// P1 = Controller 1
+	g_cfg_controllerToSlotMapping[0] = 0;
+
 	return DECOMP_main();
 }
