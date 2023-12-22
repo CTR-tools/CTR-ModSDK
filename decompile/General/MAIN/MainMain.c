@@ -469,12 +469,12 @@ FinishLoading:
 
 					if ((held & BTN_CROSS) != 0)
 					{
-						gGT->tileView[0].pos[1] += 0x20;
+						gGT->tileView[0].pos[1] -= 0x20;
 					}
 
 					if ((held & BTN_TRIANGLE) != 0)
 					{
-						gGT->tileView[0].pos[1] -= 0x20;
+						gGT->tileView[0].pos[1] += 0x20;
 					}
 					
 					if ((held & BTN_START) != 0)
