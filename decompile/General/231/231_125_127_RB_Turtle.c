@@ -185,6 +185,12 @@ void DECOMP_RB_Turtle_LInB(struct Instance* inst)
 	struct Turtle* turtleObj;
 	
 	inst->flags |= 0x2000;
+
+	// works in Debug, breaks in Release,
+	// so just make turtles invisible
+#ifdef REBUILD_PC
+	inst->flags |= 0x80;
+#endif
 	
 	t = 
 		DECOMP_THREAD_BirthWithObject

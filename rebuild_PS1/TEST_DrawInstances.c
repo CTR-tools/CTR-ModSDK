@@ -157,7 +157,7 @@ void DrawOneInst(struct Instance* curr)
 		//the idea is that it loads vertices to scratchpad and with proper sorting,
 		//you can draw may trigles of the list with minimum additional loads
 		//then once you don't need vertex data, you can overwrite same indices with new data
-		CompVertex stack[256];
+		CompVertex stack[256] = { 0 };
 
 		// pCmd[0] is number of commands
 		pCmd++;
