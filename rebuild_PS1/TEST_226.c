@@ -237,15 +237,19 @@ void TEST_226(
 
 					gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
 
-					// === NOT DONE ===
-					// Need draw_order flags from quadblock
-					// to determine front, back, or no culling
+					int draw_order_low = block->draw_order_low;
+					
+					// automatic pass, if no frontface or backface culling
+					int boolPassCull = (draw_order_low & 0x80000000) != 0;
 
-					// check CW/CCW culling
-					int opZ;
-					gte_nclip();
-					gte_stopz(&opZ);
-					int boolPassCull = (opZ < 0);
+					if (!boolPassCull)
+					{
+						// check CW/CCW culling
+						int opZ;
+						gte_nclip();
+						gte_stopz(&opZ);
+						boolPassCull = (opZ < 0);
+					}
 
 					if (boolPassCull)
 					{
