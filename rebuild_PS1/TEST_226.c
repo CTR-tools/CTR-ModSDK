@@ -191,11 +191,14 @@ void TEST_226(
 						(posScreen3[0]), (posScreen3[1]),	// XY2
 						(posScreen4[0]), (posScreen4[1]));
 
+					// if num == 1
+					struct TextureLayout* tl = block->ptr_texture_low;
+
 					if (num == 4)
 					{
 						// must remove flags that are stored in pointer
 						unsigned int ptr = block->ptr_texture_mid[k];
-						struct TextureLayout* tl = ptr;
+						tl = ptr;
 
 						if (ptr & 1)
 						{
@@ -219,20 +222,16 @@ void TEST_226(
 						}
 					}
 
-					else
+					if (tl != 0)
 					{
-						struct TextureLayout* tl = block->ptr_texture_low;
-						if (tl != 0)
-						{
-							setUV4(p,
-								tl->u0, tl->v0,
-								tl->u1, tl->v1,
-								tl->u2, tl->v2,
-								tl->u3, tl->v3);
+						setUV4(p,
+							tl->u0, tl->v0,
+							tl->u1, tl->v1,
+							tl->u2, tl->v2,
+							tl->u3, tl->v3);
 
-							p->clut = tl->clut;
-							p->tpage = tl->tpage;
-						}
+						p->clut = tl->clut;
+						p->tpage = tl->tpage;
 					}
 
 					gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
