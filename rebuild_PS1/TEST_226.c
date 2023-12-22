@@ -210,15 +210,6 @@ void TEST_226(
 						{
 							//move ptr to highest mid lod
 							tl += 2;
-
-							setUV4(p,
-								tl->u0, tl->v0,
-								tl->u1, tl->v1,
-								tl->u2, tl->v2,
-								tl->u3, tl->v3);
-
-							p->clut = tl->clut;
-							p->tpage = tl->tpage;
 						}
 					}
 
