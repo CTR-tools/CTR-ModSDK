@@ -65,9 +65,9 @@ void TEST_226(
 	void* pNext;
 	void* pCurr;
 	
-	#define USE_BSP 0
-	
-	#if USE_BSP
+#define USE_RL 0
+
+#if USE_RL
 	for(int i = 0; i < 5; i++)
 	{
 		if(RL->list[i].bspListStart == 0) continue;
@@ -84,26 +84,52 @@ void TEST_226(
 		)
 		{
 			bsp = slot[1];
-			
-			#if 0
-			// number of quads, per bsp block, per list
-			printf("List %d, bsp %d, numBlock %d\n",
-						i, count, bsp->data.leaf.numQuads);
-			#endif
-			
+#else
+		for(int i = 0; i < mi->numBspNodes; i++)
+		{
+			struct BSP* bsp = &mi->bspRoot[i];
+
+			// draw leaf nodes only
+			if ((bsp->flag & 1 == 0))
+				continue;
+
+			if (bsp->data.leaf.ptrQuadBlockArray == 0)
+				continue;
+
+// This gives no improvement
+#if 0
+			// === Test every BSP block against Frustum ===
+
+			short posBSP[3];
+			int otZ_block;
+
+			// minX, minY, minZ
+			posBSP[0] = bsp->box.min[0];
+			posBSP[1] = bsp->box.min[1];
+			posBSP[2] = bsp->box.min[2];
+			gte_ldv0(&posBSP[0]);
+			gte_rtps();
+			gte_stotz(&otZ_block);
+			gte_stsxy(&posScreen1[0]);
+			if (posScreen1[0] > 0) goto PassFrustumBSP;
+			if (posScreen1[0] < view->rect.w) goto PassFrustumBSP;
+			if (otZ_block >= 0) continue;
+
+			// fail Frustum BSP
+			continue;
+
+			PassFrustumBSP:
+#endif
+
+
+#endif
 			for(int j = 0; j < bsp->data.leaf.numQuads; j++)
 			{
 				struct QuadBlock* block;
 				block = &bsp->data.leaf.ptrQuadBlockArray[j];
-	#else
-			for(int j = 0; j < mi->numQuadBlock; j++)
-			{	
-				struct QuadBlock* block;
-				block = &mi->ptrQuadBlockArray[j];
 
 				// dont invisible walls
-				if ((block->quadFlags & (1<<15)) != 0) continue;
-	#endif
+				if ((block->quadFlags & (1 << 15)) != 0) continue;
 
 				int idHigh[16] =
 				{
@@ -238,13 +264,9 @@ void TEST_226(
 					}
 				}
 			}
-			
-	#if USE_BSP
 		}
-		
-		#if 0
-		printf("List %d, bsp %d\n\n", i, count);
-		#endif
+	
+#if USE_RL
 	}
-	#endif
+#endif
 }
