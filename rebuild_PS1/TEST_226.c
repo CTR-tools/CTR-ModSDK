@@ -64,7 +64,6 @@ void TEST_226(
 	POLY_GT4* p;
 	void* pNext;
 	void* pCurr;
-	int otZ;
 	
 	#define USE_BSP 0
 	
@@ -211,15 +210,30 @@ void TEST_226(
 					}
 
 					gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
-					gte_avsz3();
-					gte_stotz(&otZ);
 
-					if (otZ > 8)
+					// === NOT DONE ===
+					// Need draw_order flags from quadblock
+					// to determine front, back, or no culling
+
+					// check CW/CCW culling
+					int opZ;
+					gte_nclip();
+					gte_stopz(&opZ);
+					int boolPassCull = (opZ < 0);
+
+					if (boolPassCull)
 					{
-						if (otZ < 4080)
+						int otZ;
+						gte_avsz3();
+						gte_stotz(&otZ);
+
+						if (otZ > 8)
 						{
-							AddPrim((u_long*)ot + (otZ >> 2), pCurr);
-							primMem->curr = pNext;
+							if (otZ < 4080)
+							{
+								AddPrim((u_long*)ot + (otZ >> 2), pCurr);
+								primMem->curr = pNext;
+							}
 						}
 					}
 				}
