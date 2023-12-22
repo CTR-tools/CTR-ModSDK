@@ -237,6 +237,7 @@ void TEST_226(
 
 					gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
 
+					int draw_order_high = block->draw_order_high;
 					int draw_order_low = block->draw_order_low;
 					
 					// automatic pass, if no frontface or backface culling
