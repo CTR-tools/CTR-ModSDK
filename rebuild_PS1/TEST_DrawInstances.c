@@ -432,14 +432,6 @@ void DrawOneInst(struct Instance* curr)
 
 				gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
 
-				// === Error, Crash's hair doesn't draw ===
-				// Need to find a 
-
-				// backface culling
-				int opZ;
-				gte_nclip();
-				gte_stopz(&opZ);
-
 				// automatic pass, if no frontface or backface culling
 				int boolPassCull = ((flags & DRAW_CMD_FLAG_CULLING) == 0);
 
@@ -447,6 +439,9 @@ void DrawOneInst(struct Instance* curr)
 				if (!boolPassCull)
 				{
 					// assume backface culling
+					int opZ;
+					gte_nclip();
+					gte_stopz(&opZ);
 					boolPassCull = (opZ >= 0);
 
 					// if polygon is flipped

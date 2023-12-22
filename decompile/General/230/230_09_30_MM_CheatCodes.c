@@ -433,25 +433,21 @@ struct Cheat cheats[22] =
 		.addBits = 0x800000,
 	},
 	
-	// Better Penta Icon - "wonderswan"
+	// TurboCounter - "addon"
 	{
-		.length = 10,
+		.length = 5,
 		.buttons =
 		{
-			LETTER_W,
+			LETTER_A,
+			LETTER_D,
+			LETTER_D,
 			LETTER_O,
 			LETTER_N,
-			LETTER_D,
-			LETTER_E,
-			LETTER_R,
-			LETTER_S,
-			LETTER_W,
-			LETTER_A,
-			LETTER_N
+			0,0,0,0,0
 		},
 		
 		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 1,
+		.addBits = 0x8000000,
 	}
 };
 
@@ -465,6 +461,16 @@ void DECOMP_MM_ParseCheatCodes()
 	int boolPass;
 	struct Cheat* cheat;
 	struct GamepadBuffer* gpad;
+	
+	// there's extra room in here, 
+	// so store this code here
+	#if 1
+	char* info = "Date/Time in CheatCodes.c";
+	DECOMP_DecalFont_DrawLine(info, 		5, 197, FONT_SMALL, ORANGE);
+	DECOMP_DecalFont_DrawLine(__DATE__, 	5, 206, FONT_SMALL, ORANGE);
+	DECOMP_DecalFont_DrawLine(__TIME__, 	170, 206, FONT_SMALL, ORANGE);
+	DECOMP_DecalFont_DrawLine("54%", 		285, 206, FONT_SMALL, ORANGE);
+	#endif
 	
 	gpad = &sdata->gGamepads->gamepad[0];
 	
@@ -526,15 +532,11 @@ void DECOMP_MM_ParseCheatCodes()
 			
 			return;
 		}
-		if(cheat == &cheats[21])
-		{
-			LoadBetterPentaIcon();
-		}
 		
 		// if not spyro 2 cheat...
 		
 		// play cheat sound
-		OtherFX_Play(0x67, 1);
+		DECOMP_OtherFX_Play(0x67, 1);
 		
 		// apply cheat
 		*cheat->writeAddr |= cheat->addBits;
