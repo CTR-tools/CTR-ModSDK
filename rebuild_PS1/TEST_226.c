@@ -24,6 +24,19 @@ struct RenderList
 	// one for each player
 };
 
+enum RotateFlipType
+{
+	RFT_None = 0,
+	RFT_Rotate90 = 1,
+	RFT_Rotate180 = 2,
+	RFT_Rotate270 = 3,
+	RFT_FlipRotate270 = 4,
+	RFT_FlipRotate180 = 5,
+	RFT_FlipRotate90 = 6,
+	RFT_Flip = 7,
+	RFT_NoMatch = -1
+};
+
 void TEST_226(
 	struct RenderList* RL,
 	struct TileView* view,
@@ -213,22 +226,103 @@ void TEST_226(
 						}
 					}
 
+
+					unsigned int draw_order_high = block->draw_order_high;
+					unsigned int draw_order_low = block->draw_order_low;
+
 					if (tl != 0)
 					{
-						setUV4(p,
-							tl->u0, tl->v0,
-							tl->u1, tl->v1,
-							tl->u2, tl->v2,
-							tl->u3, tl->v3);
+						unsigned int rotAndOrder = (draw_order_low >> (8 + k * 5)) & 0x1F;
+						unsigned int justRot = rotAndOrder & 7;
+
+						// 0,1,2,3
+						if (justRot == RFT_None)
+						{
+							setUV4(p,
+								tl->u0, tl->v0,
+								tl->u1, tl->v1,
+								tl->u2, tl->v2,
+								tl->u3, tl->v3);
+						}
+
+						// 2,0,3,1
+						else if (justRot == RFT_Rotate90)
+						{
+							setUV4(p,
+								tl->u2, tl->v2,
+								tl->u0, tl->v0,
+								tl->u3, tl->v3,
+								tl->u1, tl->v1);
+						}
+
+						// 3,2,1,0
+						else if (justRot == RFT_Rotate180)
+						{
+							setUV4(p,
+								tl->u3, tl->v3,
+								tl->u2, tl->v2,
+								tl->u1, tl->v1,
+								tl->u0, tl->v0);
+						}
+
+						// 1,3,0,2
+						else if (justRot == RFT_Rotate270)
+						{
+							setUV4(p,
+								tl->u1, tl->v1,
+								tl->u3, tl->v3,
+								tl->u0, tl->v0,
+								tl->u2, tl->v2);
+						}
+
+						// 0,2,1,3
+						else if (justRot == RFT_FlipRotate270)
+						{
+							setUV4(p,
+								tl->u0, tl->v0,
+								tl->u2, tl->v2,
+								tl->u1, tl->v1,
+								tl->u3, tl->v3);
+						}
+
+						// 2,3,1,0
+						else if (justRot == RFT_FlipRotate180)
+						{
+							setUV4(p,
+								tl->u2, tl->v2,
+								tl->u3, tl->v3,
+								tl->u0, tl->v1,
+								tl->u1, tl->v0);
+						}
+
+						// 3,1,2,0
+						else if (justRot == RFT_FlipRotate90)
+						{
+							setUV4(p,
+								tl->u3, tl->v3,
+								tl->u1, tl->v1,
+								tl->u2, tl->v2,
+								tl->u0, tl->v0);
+						}
+
+						// 1,0,3,2
+						else if (justRot == RFT_Flip)
+						{
+							setUV4(p,
+								tl->u1, tl->v1,
+								tl->u0, tl->v0,
+								tl->u3, tl->v3,
+								tl->u2, tl->v2);
+						}
+
+						else
+							continue;
 
 						p->clut = tl->clut;
 						p->tpage = tl->tpage;
 					}
 
 					gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
-
-					int draw_order_high = block->draw_order_high;
-					int draw_order_low = block->draw_order_low;
 					
 					// automatic pass, if no frontface or backface culling
 					int boolPassCull = (draw_order_low & 0x80000000) != 0;
