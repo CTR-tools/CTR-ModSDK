@@ -15,7 +15,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 	if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
 		mainMenu->rows = UDCTRM_MM_MenuRows_ScrapbookUnlocked;
 
-	MM_ParseCheatCodes();
+	DECOMP_MM_ParseCheatCodes();
 	MM_ToggleRows_Difficulty();
 	MM_ToggleRows_PlayerCount();
 

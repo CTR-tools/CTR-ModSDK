@@ -1,4 +1,5 @@
 #include <common.h>
+extern u_int UDCTRM_mystery1;
 
 // all buttons fit in one byte
 // except triangle, which overrides
@@ -450,12 +451,14 @@ struct Cheat cheats[22] =
 			LETTER_N
 		},
 		
-		.writeAddr = &sdata_static.gameTracker.gameMode2,
-		.addBits = 1,
+		.writeAddr = 0,
+		.addBits = 0,
 	}
 };
 
 char inputButtons[12] = {0,0,0,0,0,0,0,0,0,0};
+
+void LoadBetterPentaIcon();
 
 void DECOMP_MM_ParseCheatCodes()
 {
@@ -528,6 +531,7 @@ void DECOMP_MM_ParseCheatCodes()
 		}
 		if(cheat == &cheats[21])
 		{
+			UDCTRM_mystery1 = true;
 			LoadBetterPentaIcon();
 		}
 		
