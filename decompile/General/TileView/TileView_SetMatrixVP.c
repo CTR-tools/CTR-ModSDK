@@ -1,6 +1,6 @@
 #include <common.h>
 
-#ifdef REBUILD_PS1
+#ifdef REBUILD_PC
 static char buf[0x400];
 #endif
 
@@ -25,12 +25,12 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   int ty;
   int tz;
 
-  #ifdef REBUILD_PS1
+  #ifdef REBUILD_PC
   char* scratchpad;
   scratchpad = &buf[0];
   #endif
 
-  #ifndef REBUILD_PS1
+  #ifndef REBUILD_PC
   *(short*)0x1f8003f4 = tileView->rot[0];
   *(short*)0x1f8003f6 = tileView->rot[1];
   *(short*)0x1f8003f8 = tileView->rot[2];
@@ -111,7 +111,7 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
 #endif
 
   // load inverted camera position
-#ifndef REBUILD_PS1
+#ifndef REBUILD_PC
 #define gte_ldVXY0(r0) 	__asm__ volatile("mtc2   %0, $0" : : "r"(r0))
 #define gte_ldVZ0(r0) 	__asm__ volatile("mtc2   %0, $1" : : "r"(r0))
   gte_ldVXY0(-tx & 0xffff | -ty * 0x10000);
@@ -130,7 +130,7 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   gte_llv0();
 
   // get the result
-#ifndef REBUILD_PS1
+#ifndef REBUILD_PC
 #define read_mt(r0, r1, r2) 	__asm__ volatile( \
 	"mfc2   %0, $25;"  \
 	"mfc2   %1, $26;"  \
