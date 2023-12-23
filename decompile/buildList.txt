@@ -617,6 +617,7 @@ common, exe, VehInit_GetModelByName, 0x0, General/Vehicle/VehInit_GetModelByName
 common, exe, VehPtr_Crashing_PhysAngular, 0x0, General/Vehicle/VehPtr_Crashing_FuncPtrs.c
 common, exe, VehPtr_Crashing_Init, 0x0, General/Vehicle/VehPtr_Crashing_Init.c
 common, exe, VehPtr_Drifting_PhysAngular, 0x0, General/Vehicle/VehPtr_Drifting_PhysAngular.c
+common, exe, VehPtr_Drifting_Update, 0x0, General/Vehicle/VehPtr_Drifting_Update.c
 common, exe, VehPtr_Driving_PhysAngular, 0x0, General/Vehicle/VehPtr_Driving_PhysAngular.c
 common, exe, VehPtr_Driving_PhysLinear, 0x0, General/Vehicle/VehPtr_Driving_PhysLinear.c
 common, exe, VehPtr_Spinning_Update, 0x0, General/Vehicle/VehPtr_Spinning_FuncPtrs.c

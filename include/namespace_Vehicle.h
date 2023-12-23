@@ -598,7 +598,8 @@ struct Driver
 	short unk37e;
 
 	// 0x380
-	short normalVecID;
+	char normalVecID;
+	char unk381;
 
 	// 0x382
 	short buttonUsedToStartDrift;
@@ -1276,7 +1277,8 @@ struct Driver
 			short driftTotalTimeMS;
 			
 			// 0x586
-			short numBoostsAttempted;
+			char numBoostsAttempted;
+			char numBoostsSuccess;
 			
 			// == end ==
 			

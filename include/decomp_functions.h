@@ -411,6 +411,8 @@ void DECOMP_MM_JumpTo_Scrapbook(void);
 // 231 (undone)
 int DECOMP_RB_Hazard_InterpolateValue(short currRot, short desiredRot, short rotSpeed);
 
+void DECOMP_RB_Baron_LInB(struct Instance* inst);
+
 void DECOMP_RB_Blade_ThTick(struct Thread* t);
 void DECOMP_RB_Blade_LInB(struct Instance* inst);
 
