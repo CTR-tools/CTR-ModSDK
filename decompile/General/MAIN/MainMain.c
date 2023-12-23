@@ -403,7 +403,7 @@ FinishLoading:
 
 
 // temporary, no camera thread yet
-#ifdef REBUILD_PC
+#ifdef REBUILD_PS1
 
 				if (
 						(gGT->level1 != 0) && // for ND Box

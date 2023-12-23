@@ -300,6 +300,8 @@ struct Data data =
 	
 	.MetaDataModels =
 	{
+		#if 0
+		
 		// 0x00 - NO_FUNC
 		SET_MDM(0,0,0),
 		
@@ -995,6 +997,8 @@ struct Data data =
 		
 		// 0xe1 - STATIC_GNORMALZ
 		SET_MDM(0,AH_Sign_LInB,0),
+		
+		#endif
 	},
 
 	.ptrRenderedQuadblockDestination_forEachPlayer =

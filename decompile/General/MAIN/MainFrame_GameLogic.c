@@ -140,7 +140,7 @@ LAB_80034e74:
 		psVar8 = 0;
 		psVar9 = 0;
 
-#ifndef REBUILD_PC
+#ifndef REBUILD_PS1
 		for(psVar12 = gGT->threadBuckets[0].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 		{
 			psVar9 = (struct Driver*)psVar12->object;

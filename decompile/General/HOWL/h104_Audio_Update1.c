@@ -73,7 +73,7 @@ void DECOMP_Audio_Update1(void)
 		#endif
 
         // Temporary, no Drivers yet
-        #ifdef REBUILD_PC
+        #ifdef REBUILD_PS1
         break;
         #endif
 
