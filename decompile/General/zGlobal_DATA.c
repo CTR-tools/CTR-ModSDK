@@ -300,7 +300,8 @@ struct Data data =
 	
 	.MetaDataModels =
 	{
-		#if 0
+		// turn off for rebuild_ps1
+		#if 1
 		
 		// 0x00 - NO_FUNC
 		SET_MDM(0,0,0),
