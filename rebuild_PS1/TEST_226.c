@@ -346,6 +346,9 @@ void TEST_226(
 						{
 							if (otZ < 4080)
 							{
+								if ((p->tpage & 0x40) == 0)
+									setSemiTrans(p, true);
+
 								AddPrim((u_long*)ot + (otZ >> 2), pCurr);
 								primMem->curr = pNext;
 							}
