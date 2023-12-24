@@ -14,6 +14,8 @@
 #include "../decompile/General/MAIN/MainMain.c"
 
 #include "../decompile/General/CAMERA/CAM_01_ClearScreen.c"
+#include "../decompile/General/CAMERA/CAM_04_Path_GetNumPoints.c"
+#include "../decompile/General/CAMERA/CAM_05_Path_Move.c"
 
 #include "../decompile/General/CDSYS/CDSYS_c01_Init.c" 
 #include "../decompile/General/CDSYS/CDSYS_c02_GetFilePosInt.c" 

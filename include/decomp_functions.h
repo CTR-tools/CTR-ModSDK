@@ -1,5 +1,9 @@
 #include <common.h>
 
+void DECOMP_CAM_ClearScreen(struct GameTracker* gGT);
+int DECOMP_CAM_Path_GetNumPoints(void);
+u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, short *param_4);
+
 void DECOMP_CDSYS_SetXAToLang(int lang);
 void DECOMP_CDSYS_XAPlay(int categoryID, int xaID);
 void DECOMP_CDSYS_XAPauseAtEnd();

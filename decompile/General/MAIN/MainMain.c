@@ -409,7 +409,31 @@ FinishLoading:
 						(gGT->level1 != 0) && // for ND Box
 						(gGT->levelID != MAIN_MENU_LEVEL)
 					)
-				{
+				{	
+					// placeholder until 233 CS_Garage_MenuBox is done,
+					// remember to correct the LOAD_TenStages "case 4"
+					if (gGT->levelID == ADVENTURE_CHARACTER_SELECT)
+					{
+						if(gGT->tileView[0].pos[0] != 0x24c)
+						{
+							if(gGT->level2 == 0)
+							{
+								// no relevence, just boolean for camera
+								gGT->level2 = 1;
+								
+								int x = 0;
+								int y = 0;
+								DECOMP_CAM_Path_Move(x, &gGT->tileView[0].pos, &gGT->tileView[0].rot, &y);
+							}
+						}
+					}
+					else
+					{
+						// no relevence, just boolean for camera
+						gGT->level2 = 0;
+					}
+					
+					// placeholder until 233 is done
 					if (gGT->levelID == NAUGHTY_DOG_CRATE)
 					{
 						gGT->tileView[0].pos[0] = 0;

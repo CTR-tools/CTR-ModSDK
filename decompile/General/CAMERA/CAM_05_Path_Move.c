@@ -9,7 +9,7 @@ u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, sh
   short *move;
 
   // get number of position on track
-  numPos = CAM_Path_GetNumPoints();
+  numPos = DECOMP_CAM_Path_GetNumPoints();
 
   if (frameIndex < 0) return 0;
   if (frameIndex >= numPos) return 0;

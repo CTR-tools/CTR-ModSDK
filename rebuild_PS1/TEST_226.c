@@ -344,14 +344,15 @@ void TEST_226(
 
 						if (otZ > 8)
 						{
-							if (otZ < 4080)
-							{
-								if ((p->tpage & 0x40) == 0)
-									setSemiTrans(p, true);
+							if (otZ > 4080)
+								otZ = 4080;
+							
+							if ((p->tpage & 0x40) == 0)
+								setSemiTrans(p, true);
 
-								AddPrim((u_long*)ot + (otZ >> 2), pCurr);
-								primMem->curr = pNext;
-							}
+							AddPrim((u_long*)ot + (otZ >> 2), pCurr);
+							primMem->curr = pNext;
+							
 						}
 					}
 				}
