@@ -147,6 +147,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		for (int i = 0; i < gGT->numPlyrCurrGame; i++)
 		{
 			// 226-229
+			// placeholder for DrawLevelOvr1P
 			TEST_226(
 				0,
 				&gGT->tileView[i],
@@ -154,6 +155,12 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 				&gGT->backBuffer->primMem,
 				0,
 				0); // waterEnvMap?
+				
+			// placeholder for DrawSky_Full
+			TEST_DrawSkybox(
+				gGT->level1->ptr_skybox,
+				&gGT->tileView[i],
+				&gGT->backBuffer->primMem);
 		}
 #endif
 		

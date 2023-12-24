@@ -1,45 +1,5 @@
 #include "common.h"
 
-typedef struct SkyboxFace {
-	u_short A; //ABC stores offsets to add to ptrVerts. divide by 12 if you need an index
-	u_short B;
-	u_short C;
-	u_short D; //this is uh, ot ptr increment? always 0 in the files
-} SkyboxFace;
-
-typedef struct ShortVertex {
-	SVECTOR Position; //this is padded 2*4
-	CVECTOR Color;
-} ShortVertex;
-
-#define NUM_SKYBOX_SEGMENTS 8
-
-typedef struct Skybox {
-
-	//0x00
-	//number of vertices, shouldnt be negative, so uint
-	u_int numVertices; 
-
-	//0x04
-	//pointer to the skybox vertex array
-	ShortVertex* pVerts;
-	
-	//skybox is split in 8 segments, but the vertex array is shared
-	//there is a larger copy of scaled vertices in the array, it is unknown whether they are used or not
-
-	//0x08
-	//number of faces in a segment
-	short sizes[NUM_SKYBOX_SEGMENTS];
-
-	//0x18 = 8 + 2 * 8
-	//pointer to the first face of the segment
-	SkyboxFace* pFaces[NUM_SKYBOX_SEGMENTS];
-
-	//followed by the array of ShortVertex
-	//then followed by the array of SkyboxFace
-
-} Skybox;
-
 
 // draws level skybox
 // param_1 - lev ptr_skybox

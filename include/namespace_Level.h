@@ -475,22 +475,31 @@ struct CheckpointNode
 	// 0xC -- size
 };
 
+struct SkyboxFace {
+	u_short A; //ABC stores offsets to add to ptrVerts. divide by 12 if you need an index
+	u_short B;
+	u_short C;
+	u_short D; //this is uh, ot ptr increment? always 0 in the files
+};
+
+struct ShortVertex {
+	SVECTOR Position; //this is padded 2*4
+	CVECTOR Color;
+};
+
+#define NUM_SKYBOX_SEGMENTS 8
 struct Skybox
 {
 	int numVertex;
-	void* ptrVertex;
-	int numFaces[8];
-	short* ptrFaces[8];
-
-	// each Vertex is 
-	//{
-	//  pos[4], col[4]	
-	//}
-
-	// each Face is vec4s(v1Off,v2Off,v3Off,renderMode),
-	// offsets of ptrVertex, divide offset by 0xC to get index,
-	// renderMode can be just 0000 and it'll work fine
+	struct ShortVertex* ptrVertex;
+	
+	short numFaces[NUM_SKYBOX_SEGMENTS];
+	struct SkyboxFace* ptrFaces[NUM_SKYBOX_SEGMENTS];
+	
+	// struct SkyboxFace allFaces[0];
 };
+#define SKY_GETFACES(x) \
+	((unsigned int)x + sizeof(struct Skybox))
 
 struct LevTexLookup
 {
