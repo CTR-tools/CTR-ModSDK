@@ -18,11 +18,13 @@ void TEST_DrawSkybox(
 	// 3x3 viewProj was set in previosu call to TEST_226
 	gte_ldtr(0, 0, 0);
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		struct SkyboxFace* ptrFace = ptrSkybox->ptrFaces[i];
+		int index = ((((tileView->rot[1] + 0x500) >> 9) + i - 2) & 0x7);
+		
+		struct SkyboxFace* ptrFace = ptrSkybox->ptrFaces[index];
 
-		for (int j = 0; j < ptrSkybox->numFaces[i]; j++)
+		for (int j = 0; j < ptrSkybox->numFaces[index]; j++)
 		{
 			p = primMem->curr;
 			void* pNext = p + 1;
