@@ -16,9 +16,6 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
   int loop;
   struct Level* level1;
   u_long* endOT;
-  
-  unsigned int shiftUp;
-  unsigned int shiftDown;
 
   backDB = gGT->backBuffer;
   tile = backDB->primMem.curr;
@@ -37,13 +34,10 @@ void DECOMP_CAM_ClearScreen(struct GameTracker* gGT)
     w = view->rect.w;
     h = view->rect.h;
 	
-	shiftUp = (unsigned int)(((unsigned short)h) << 0x10);
-	shiftDown = shiftUp >> 0x10;
-
     // tileView rotation
 	// view up/down will change where the line splits.
 	// At 0x800, camera looks straight, and line is perfectly midpoint
-    iVar5 = ((int)view->rot[0]-0x800 >> 3) + (shiftDown - (shiftUp >> 0x1f) >> 1);
+    iVar5 = ((int)view->rot[0]-0x800 >> 3) + (h>>1);
 
 	// if splitline is above top of screen,
 	// camera looks far down and only sees bottom half

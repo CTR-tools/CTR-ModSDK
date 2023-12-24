@@ -412,18 +412,19 @@ FinishLoading:
 				{
 					if (gGT->levelID == NAUGHTY_DOG_CRATE)
 					{
-						gGT->tileView[0].pos[0] = 0xff00;
-						gGT->tileView[0].pos[1] = 0x100;
+						gGT->tileView[0].pos[0] = 0;
+						gGT->tileView[0].pos[1] = 0x1c2;
+						gGT->tileView[0].pos[2] = 0x1dd;
+						gGT->tileView[0].rot[0] = 0x7dd;
+						gGT->tileView[0].rot[1] = 0;
+						gGT->tileView[0].rot[2] = 0;
 
 						// wait 5 seconds
 						if(gGT->timer > 30*5)
 							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 					}
 
-					if (
-							(gGT->trafficLightsTimer > 0) ||
-							(gGT->tileView[0].rot[2] != 0x800)
-						)
+					if (gGT->trafficLightsTimer > 0)
 					{
 						for(int k = 0; k < gGT->numPlyrCurrGame; k++)
 						{
@@ -431,9 +432,9 @@ FinishLoading:
 							gGT->tileView[k].pos[1] = gGT->level1->DriverSpawn[k].pos[1] + 0x100;
 							gGT->tileView[k].pos[2] = gGT->level1->DriverSpawn[k].pos[2];
 										  
-							gGT->tileView[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0];
-							gGT->tileView[k].rot[1] = gGT->level1->DriverSpawn[k].rot[1] + 0x400;
-							gGT->tileView[k].rot[2] = 0x800; // required
+							gGT->tileView[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0] + 0x800;
+							gGT->tileView[k].rot[1] = gGT->level1->DriverSpawn[k].rot[1] - 0x400;
+							gGT->tileView[k].rot[2] = 0; // required
 						}
 					}
 					else
@@ -447,14 +448,14 @@ FinishLoading:
 
 					if ((held & BTN_UP) != 0)
 					{
-						gGT->tileView[0].pos[2] += (0x40 * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
-						gGT->tileView[0].pos[0] += (0x40 * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[2] -= (0x40 * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[0] -= (0x40 * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
 					}
 
 					if ((held & BTN_DOWN) != 0)
 					{
-						gGT->tileView[0].pos[2] -= (0x40 * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
-						gGT->tileView[0].pos[0] -= (0x40 * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[2] += (0x40 * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[0] += (0x40 * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
 					}
 
 					if ((held & BTN_LEFT) != 0)

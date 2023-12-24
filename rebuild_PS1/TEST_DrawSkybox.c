@@ -5,6 +5,9 @@ void TEST_DrawSkybox(
 	struct TileView* tileView,
 	struct PrimMem* primMem)
 {
+	if (ptrSkybox == 0)
+		return;
+
 	POLY_G3* p;
 	short posScreen1[4];
 	short posScreen2[4];
