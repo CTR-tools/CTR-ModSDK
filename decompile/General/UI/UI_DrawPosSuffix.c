@@ -14,7 +14,7 @@ void DECOMP_UI_DrawPosSuffix(short posX, short posY, struct Driver *d, short fla
     currRank = gGT->battleSetup.finishedRankOfEachTeam[d->BattleHUD.teamID];
 
   // Draw the suffix of your current position
-  DecalFont_DrawLine(sdata->lngStrings[data.stringIndexSuffix[currRank]], posX, posY, FONT_BIG, flags);
+  DECOMP_DecalFont_DrawLine(sdata->lngStrings[data.stringIndexSuffix[currRank]], posX, posY, FONT_BIG, flags);
 
   // If pointer to instance of "Big Number" is valid
   if (d->BigNumber[0] != 0)

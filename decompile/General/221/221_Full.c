@@ -18,7 +18,7 @@ extern struct MenuBox menuBox221;
 	
 int UI_ConvertX_2(int x, int const_0x200);
 int UI_ConvertY_2(int y, int const_0x200);
-void DECOMP_UI_DrawNumCrystal(int x, int y, struct Driver* d);
+void DECOMP_UI_DrawNumCrystal(short x, short y, struct Driver* d);
 void UI_DrawLimitClock(short x, short y, short fontSize);
 void MENUBOX_ClearInput();
 void MENUBOX_Show(struct MenuBox*);

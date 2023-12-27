@@ -104,6 +104,32 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		TEST_DrawInstances(gGT);
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 	}
+	
+	// This is temporary, until RenderAllHUD is done
+	if(
+		(gGT->numPlyrCurrGame != 1) ||
+		((gGT->hudFlags & 8) == 0) ||
+		((gGT->gameMode1 & START_OF_RACE) == 0)
+	)
+	{
+		// why is this needed? adv hub crashes otherwise
+		if((gGT->gameMode1 & 0x40000000) == 0)
+		if(gGT->level1 != 0)
+		
+		if((gGT->hudFlags & 1) != 0)
+		{
+			if((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
+			{
+				DECOMP_UI_RenderFrame_AdvHub();
+			}
+			
+			else
+			{
+				DECOMP_UI_RenderFrame_Racing();
+			}
+		}
+	}
+	
 #endif
 
 #ifndef REBUILD_PS1	

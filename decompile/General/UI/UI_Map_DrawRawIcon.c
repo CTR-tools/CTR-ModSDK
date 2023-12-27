@@ -14,14 +14,14 @@ void DECOMP_UI_Map_DrawRawIcon(
   posX = param_2[0];
   posY = param_2[2];
 
-  UI_Map_GetIconPos(ptrMap,&posX,&posY);
+  DECOMP_UI_Map_GetIconPos(ptrMap,&posX,&posY);
 
   ptrColor = data.ptrColor[colorID];
 
   struct Icon** iconPtrArray =
   	ICONGROUP_GETICONS(sdata->gGT->iconGroup[5]);
 
-  DecalHUD_DrawPolyGT4(
+  DECOMP_DecalHUD_DrawPolyGT4(
 	iconPtrArray[iconID],
 	posX, posY,
 	&gGT->backBuffer->primMem,

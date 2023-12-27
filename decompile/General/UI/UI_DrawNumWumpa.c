@@ -1,11 +1,9 @@
 #include <common.h>
 
-void DECOMP_UI_DrawNumWumpa(int param_1,int param_2,struct Driver* d)
+void DECOMP_UI_DrawNumWumpa(short posX, short posY, struct Driver* d)
 {
   char currWumpa;
   int currWumpa10s;
-  short posX;
-  short posY;
   int i;
   int iconID;
   struct GameTracker* gGT;
@@ -13,18 +11,16 @@ void DECOMP_UI_DrawNumWumpa(int param_1,int param_2,struct Driver* d)
   char message[16];
 
   gGT = sdata->gGT;
-  posX = (short)param_1;
-  posY = (short)param_2;
-
+  
   // if numPlyrCurrGame is less than 3
   if (gGT->numPlyrCurrGame < 3)
   {
 	// Draw 'x' before drawing number of wumpa
-    DecalFont_DrawLine(&sdata->s_x[0],(int)posX,posY+4,FONT_SMALL,ORANGE);
+    DECOMP_DecalFont_DrawLine(&sdata->s_x[0],(int)posX,posY+4,FONT_SMALL,ORANGE);
 
 	// Draw number after the 'x'
     sprintf(message,&sdata->s_int[0],d->numWumpas);
-	DecalFont_DrawLine(message,posX+0xd,(int)posY,FONT_BIG,ORANGE);
+	DECOMP_DecalFont_DrawLine(message,posX+0xd,(int)posY,FONT_BIG,ORANGE);
 
   }
 
@@ -46,7 +42,7 @@ void DECOMP_UI_DrawNumWumpa(int param_1,int param_2,struct Driver* d)
 		struct Icon** iconPtrArray =
 			ICONGROUP_GETICONS(gGT->iconGroup[5]);
 		
-		DecalHUD_DrawPolyGT4(
+		DECOMP_DecalHUD_DrawPolyGT4(
 	
 			iconPtrArray[iconID],
 	

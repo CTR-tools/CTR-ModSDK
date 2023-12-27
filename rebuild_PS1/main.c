@@ -36,13 +36,14 @@
 #include "../decompile/General/CDSYS/CDSYS_c18_XAPauseForce.c" 
 #include "../decompile/General/CDSYS/CDSYS_c19_XAPauseAtEnd.c" 
 
+#include "../decompile/General/CTR_Box_DrawClearBox.c"
+#include "../decompile/General/CTR_Box_DrawSolidBox.c"
+#include "../decompile/General/CTR_Box_DrawWireBox.c"
+#include "../decompile/General/CTR_Box_DrawWirePrims.c"
 #include "../decompile/General/CTR_CycleTex_LEV.c"
 #include "../decompile/General/CTR_ErrorScreen.c"
 #include "../decompile/General/CTR_CycleTex_AllModels.c"
 #include "../decompile/General/CTR_CycleTex_Model.c"
-
-#include "../decompile/General/CTR_Box_DrawClearBox.c"
-#include "../decompile/General/CTR_Box_DrawSolidBox.c"
 
 #include "../decompile/General/DecalFont/DecalFont_GetLineWidth.c"
 #include "../decompile/General/DecalFont/DecalFont_DrawLineStrlen.c"
@@ -372,7 +373,42 @@
 #include "../decompile/General/RCNT/RCNT_Init.c"
 
 // UI
+#include "../decompile/General/UI/UI_ConvertX_2.c"
+#include "../decompile/General/UI/UI_ConvertY_2.c"
+#include "../decompile/General/UI/UI_DrawLapCount.c"
+
+// note to self, still need UI_DrawRankedDrivers,
+#include "../decompile/General/UI/UI_DrawNumWumpa.c"
+#include "../decompile/General/UI/UI_DrawNumKey.c"
+#include "../decompile/General/UI/UI_DrawNumRelic.c"
+#include "../decompile/General/UI/UI_DrawNumTrophy.c"
+#include "../decompile/General/UI/UI_DrawNumCrystal.c"
+#include "../decompile/General/UI/UI_DrawNumTimebox.c"
+#include "../decompile/General/UI/UI_DrawSpeedBG.c"
+#include "../decompile/General/UI/UI_DrawSpeedNeedle.c"
+#include "../decompile/General/UI/UI_JumpMeter_Draw.c"
+#include "../decompile/General/UI/UI_JumpMeter_Update.c"
+#include "../decompile/General/UI/UI_DrawSlideMeter.c"
+
+#include "../decompile/General/UI/UI_DrawPosSuffix.c"
+#include "../decompile/General/UI/UI_Map_GetIconPos.c"
+#include "../decompile/General/UI/UI_Map_DrawAdvPlayer.c"
 #include "../decompile/General/UI/UI_Map_DrawMap.c"
+#include "../decompile/General/UI/UI_Map_DrawRawIcon.c"
+#include "../decompile/General/UI/UI_Map_DrawDrivers.c"
+#include "../decompile/General/UI/UI_Map_DrawGhosts.c"
+#include "../decompile/General/UI/UI_Map_DrawTracking.c"
+#include "../decompile/General/UI/UI_DrawDriverIcon.c"
+#include "../decompile/General/UI/UI_DrawLimitClock.c"
+#include "../decompile/General/UI/UI_SaveLapTime.c"
+#include "../decompile/General/UI/UI_DrawRaceClock.c"
+#include "../decompile/General/UI/UI_Lerp2D_Angular.c"
+#include "../decompile/General/UI/UI_Lerp2D_HUD.c"
+#include "../decompile/General/UI/UI_Lerp2D_Linear.c"
+
+#include "../decompile/General/UI/UI_Weapon_DrawBG.c"
+#include "../decompile/General/UI/UI_RenderFrame_Racing.c"
+#include "../decompile/General/UI/UI_RenderFrame_AdvHub.c"
 
 // VEH
 #include "../decompile/General/Vehicle/VehInit_Player.c"

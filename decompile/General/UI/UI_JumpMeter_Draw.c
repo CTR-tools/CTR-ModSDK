@@ -1,7 +1,5 @@
 #include <common.h>
 
-void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem);
-
 void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 {
 	struct GameTracker *gGT;
@@ -30,9 +28,11 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	iVar11 = (int)posX;
 	iVar8 = (int)posY + -0x2b;
 
+#ifndef REBUILD_PS1
 	DECOMP_DebugFont_DrawNumbers(iVar5, iVar11 - 0x10, iVar8);
 	DECOMP_DebugFont_DrawNumbers(iVar10, iVar11 + -4, iVar8);
 	DECOMP_DebugFont_DrawNumbers((((whateverThisIs + iVar10 * -0x60) * 100) / 0x3c0) * 0x10000 >> 0x10, iVar11 + 4, iVar8);
+#endif
 
 	sVar9 = posX + -0x14;
 	jumpMeter = posY + -0x2d;
@@ -42,7 +42,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	box.y = jumpMeter;
 	memset(auStack64, 0, 4);
 
-	CTR_Box_DrawWireBox(&box, auStack64, gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
+	DECOMP_CTR_Box_DrawWireBox(&box, auStack64, gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
 
 	backDB = gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
@@ -80,7 +80,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 		box2.x = posX;
 		memset(auStack48, 0, 4);
 
-		CTR_Box_DrawWireBox(&box2, auStack48, gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
+		DECOMP_CTR_Box_DrawWireBox(&box2, auStack48, gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
 
 		backDB = gGT->backBuffer;
 		primmemCurr = backDB->primMem.curr;

@@ -21,7 +21,13 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct 
 	setUV4(p, icon->texLayout.u0, icon->texLayout.v0, icon->texLayout.u1, icon->texLayout.v1, icon->texLayout.u2, bottomV, icon->texLayout.u3, bottomV);
 	p->clut = icon->texLayout.clut;
 	p->tpage = icon->texLayout.tpage;
+	
+	#ifdef REBUILD_PC
+	*(int*)p->r0 = color;
+	setPolyFT4(p);
+	#else
 	setColor0(p, color);
+	#endif
 
 	if (transparency)
 	{

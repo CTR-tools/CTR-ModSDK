@@ -55,13 +55,13 @@ void DECOMP_AH_Map_Warppads(short* ptrMap, struct Thread* warppadThread, short *
         *(char*)0x800b5670 = 1;
         
 		// Get Icon Dimensions
-		UI_Map_GetIconPos(ptrMap,&posX,&posY);
+		DECOMP_UI_Map_GetIconPos(ptrMap,&posX,&posY);
         
 		AH_Map_HubArrowOutter(ptrMap,(int)*param_3,posX,posY,0,0);
         
 		*param_3 = *param_3 + 1;
       }
-      UI_Map_DrawRawIcon(ptrMap,warppadInst->matrix.t[0],0x31,color,0,0x1000);
+      DECOMP_UI_Map_DrawRawIcon(ptrMap,warppadInst->matrix.t[0],0x31,color,0,0x1000);
       if (
 			(!bVar2) &&
 			(

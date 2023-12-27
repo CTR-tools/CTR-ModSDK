@@ -26,7 +26,7 @@ void DECOMP_UI_Lerp2D_Angular(short* ptrPos, short drawnPosition, short absolute
 	if (absolutePositionInt < drawnPositionInt)
 	{
 		// Sine(angle)
-		angle = MATH_Sin(((int)frameCounter << 0xb) / 5);
+		angle = DECOMP_MATH_Sin(((int)frameCounter << 0xb) / 5);
 		ptrPos[0] = (short)(angle * 0x14 >> 0xc) + 0x14;
 	}
 
@@ -34,7 +34,7 @@ void DECOMP_UI_Lerp2D_Angular(short* ptrPos, short drawnPosition, short absolute
 	else
 	{
 		// Sine(angle)
-		angle = MATH_Sin(((int)frameCounter << 0xb) / 5);
+		angle = DECOMP_MATH_Sin(((int)frameCounter << 0xb) / 5);
 		ptrPos[0] = 0x14 - (short)(angle * 0x14 >> 0xc);
 	}
 	

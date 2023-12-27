@@ -1,7 +1,5 @@
 #include <common.h>
 
-void CTR_Box_DrawWireBox(RECT* r, int* unk, u_long* ot, struct PrimMem* primMem);
-
 void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 {
 	struct GameTracker *gGT;
@@ -58,7 +56,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	box.h = meterHeight;
 	memset(auStack40, 0, 4);
 
-	CTR_Box_DrawWireBox(&box, auStack40, sdata->gGT->tileView_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
+	DECOMP_CTR_Box_DrawWireBox(&box, auStack40, sdata->gGT->tileView_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
 
 	backDB = sdata->gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;

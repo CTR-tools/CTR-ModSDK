@@ -19,6 +19,7 @@ void DECOMP_UI_Weapon_DrawBG(short param_1,short param_2,short param_3,struct Dr
 
   iVar1 = iVar2 * 0xd000 >> 0x10;
 
+#ifndef REBUILD_PS1
   for(i = 0; i < 2; i++)
   {
 
@@ -36,6 +37,7 @@ void DECOMP_UI_Weapon_DrawBG(short param_1,short param_2,short param_3,struct Dr
 	
 				2+i,iVar2,iVar1,0xff0000);
   }
+#endif
 
   return;
 }

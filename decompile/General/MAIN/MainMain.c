@@ -405,6 +405,10 @@ FinishLoading:
 // temporary, no camera thread yet
 #ifdef REBUILD_PS1
 
+				gGT->hudFlags &= 0xfe;
+				if(gGT->levelID < 0x1C)
+					gGT->hudFlags |= 1;
+
 				if (
 						(gGT->level1 != 0) && // for ND Box
 						(gGT->levelID != MAIN_MENU_LEVEL)

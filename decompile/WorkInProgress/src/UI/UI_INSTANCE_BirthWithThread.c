@@ -173,11 +173,11 @@ LAB_8004ccc8:
         psVar11 = hudStruct[param_3].x;
 
 		// Convert X
-        color = UI_ConvertX_2(*psVar11,psVar11[2]);
+        color = DECOMP_UI_ConvertX_2(*psVar11,psVar11[2]);
         bigNum->matrix.t[0] = color;
 
 		// Convert Y
-		color = UI_ConvertY_2(psVar11[1],psVar11[2]);
+		color = DECOMP_UI_ConvertY_2(psVar11[1],psVar11[2]);
         bigNum->matrix.t[1] = color;
 
 		bigNum->matrix.t[2] = psVar11[2];

@@ -38,44 +38,44 @@ void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
             d->highestJump = d->jumpMeter;
          }
 
-         //if Jump meter < 0x5A0
-         if (d->jumpMeter < 0x5a0) {
-            //if Jump meter < 960
-            if (d->jumpMeter < 960) {
-               //if Jump meter > 0x27F
-               if (0x27f < d->jumpMeter) {
-                  // Turbo_Increment
+		#ifndef REBUILD_PS1
+         if (d->jumpMeter < 0x5a0) 
+		 {
+            if (d->jumpMeter < 960) 
+			{
+               if (0x27f < d->jumpMeter) 
+			   {
                   // add one second reserves
                   Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, 0);
                }
             }
 
-            //if Jump meter >= 960
-            else {
-               // Turbo_Increment
+            else 
+			{
                // add one second reserves, plus speed
                Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, 0x80);
             }
          }
 
-         //if Jump meter >= 0x5A0
-         else {
-            // Turbo_Increment
+         else 
+		 {
             // add one second reserves, plus speed
             Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, 0x100);
          }
+		#endif
       }
    }
 
    //if player is in the air
-   else {
-      //if (0x3FC of player struct > 0x480) and Jump meter < 0x481
-      if ((0x480 < d->jump_LandingBoost) && (d->jumpMeter < 0x481)) {
-         //Jump meter related operation
-
+   else 
+   {
+	  #ifndef REBUILD_PS1
+      if ((0x480 < d->jump_LandingBoost) && (d->jumpMeter < 0x481)) 
+	  {
          // Make driver talk
          Voiceline_RequestPlay(7, data.characterIDs[d->driverID], 0x10);
       }
+	  #endif
 
       //Jump meter = 0x3FC
       d->jumpMeter = d->jump_LandingBoost;

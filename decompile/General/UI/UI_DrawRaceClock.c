@@ -1,5 +1,12 @@
 #include <common.h>
 
+#ifdef REBUILD_PC
+struct
+{
+	char s_timeString_empty[12];
+} rdata = { 0 };
+#endif
+
 // used for both finished lap time and current race time
 void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct Driver* driver)
 {
@@ -148,7 +155,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	// str = 0x4d: TIME TRIAL
 	// str = 0xc4: TOTAL
 	// str = 0xc5: YOUR TIME
-	DecalFont_DrawLine(sdata->lngStrings[str], (int)(short)paramX, (int)(short)paramY, fontType, (int)strFlags_but_its_also_posY);
+	DECOMP_DecalFont_DrawLine(sdata->lngStrings[str], (int)(short)paramX, (int)(short)paramY, fontType, (int)strFlags_but_its_also_posY);
 
 	// set string to use data.ptrColor[1], which is the periwinkle gradient seen in the LAP text on the HUD
 	// particularly used for relic race when the time is frozen
@@ -216,7 +223,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	}
 
 	// Draw String
-	DecalFont_DrawLine(totalTimeString, posX, numParamY >> 0x10, FONT_BIG, (int)strFlags_but_its_also_posY);
+	DECOMP_DecalFont_DrawLine(totalTimeString, posX, numParamY >> 0x10, FONT_BIG, (int)strFlags_but_its_also_posY);
 
 	if
 	(
@@ -248,7 +255,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 		{
 			if ((numLaps <= (int)lapIndex) && (numLaps < (char)gGT->numLaps))
 			{
-				UI_SaveLapTime(lapIndex, gGT->elapsedEventTime - driver->lapTime, (u_int)driver->driverID);
+				DECOMP_UI_SaveLapTime(lapIndex, gGT->elapsedEventTime - driver->lapTime, (u_int)driver->driverID);
 
 				// custom code for optimization using this unrelated variable
 				iVar5 = (u_int)driver->driverID * 7 + numLaps;
@@ -297,7 +304,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 					iVar7 = (int)(((u_int)textPosY + numParamY * 8 + 0x10) * 0x10000) >> 0x10;
 
 					// draw "Ln" string
-					DecalFont_DrawLine(&sdata->s_Ln[0], bitshiftTextPosX >> 0x10, iVar7, FONT_SMALL, RED);
+					DECOMP_DecalFont_DrawLine(&sdata->s_Ln[0], bitshiftTextPosX >> 0x10, iVar7, FONT_SMALL, RED);
 
 					lapFontType = FONT_SMALL;
 					stringColor = PERIWINKLE;
@@ -322,10 +329,10 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 					lapTextHeight = (short *)(&data.font_charPixHeight[lapFontType]);
 
 					// draw string
-					DecalFont_DrawLine(local_38, unbitshiftTextPosX, (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
+					DECOMP_DecalFont_DrawLine(local_38, unbitshiftTextPosX, (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
 
 					// LAP
-					DecalFont_DrawLine(sdata->lngStrings[0x18], (int)(((u_int)textPosX - (u_int)data.font_charPixWidth[lapFontType])), (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
+					DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x18], (int)(((u_int)textPosX - (u_int)data.font_charPixWidth[lapFontType])), (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10, lapFontType, (JUSTIFY_RIGHT | RED));
 
 					stringColor = (int)(short)stringColor_but_its_also_relicColor;
 					iVar7 = (int)(((u_int)textPosY - ((char)gGT->numLaps - numLaps) * (int)*lapTextHeight) * 0x10000) >> 0x10;
@@ -333,7 +340,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 				}
 
 				// draw string for total amount of time in race
-				DecalFont_DrawLine(&rdata.s_timeString_empty[0], iVar5, iVar7, lapFontType, stringColor);
+				DECOMP_DecalFont_DrawLine(&rdata.s_timeString_empty[0], iVar5, iVar7, lapFontType, stringColor);
 			}
 LAB_8004f84c:
 			// lap counter
@@ -424,7 +431,7 @@ LAB_8004f378:
 	// str 0xc6: SAPPHIRE
 	// str 199 (c7): GOLD
 	// str 0xc8: PLATINUM
-	DecalFont_DrawLine(sdata->lngStrings[str], (int)(short)textPosX, (int)sVar1, fontType, (int)(short)stringColor_but_its_also_relicColor);
+	DECOMP_DecalFont_DrawLine(sdata->lngStrings[str], (int)(short)textPosX, (int)sVar1, fontType, (int)(short)stringColor_but_its_also_relicColor);
 
 	// Convert each number from the binary
 	// version of Relic Time to the ascii version
@@ -434,6 +441,6 @@ LAB_8004f378:
 	sdata->raceClockStr[3] = sdata->relicTime_1sec + '0';
 	sdata->raceClockStr[5] = sdata->relicTime_10ms + '0';
 	sdata->raceClockStr[6] = sdata->relicTime_1ms + '0';
-	DecalFont_DrawLine(sdata->raceClockStr, (int)(short)uVar11, (int)strFlags_but_its_also_posY, FONT_BIG, (int)(short)(stringColor_but_its_also_relicColor & (0xffff ^ JUSTIFY_RIGHT)));
+	DECOMP_DecalFont_DrawLine(sdata->raceClockStr, (int)(short)uVar11, (int)strFlags_but_its_also_posY, FONT_BIG, (int)(short)(stringColor_but_its_also_relicColor & (0xffff ^ JUSTIFY_RIGHT)));
 	return;
 }

@@ -19,7 +19,7 @@ void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 	if (timeRemaining < 0)
 	{
 		// Make a time string with zero milliseconds on the clock
-		str = MENUBOX_DrawTime(0);
+		str = DECOMP_MENUBOX_DrawTime(0);
 
 		// If you're not in End-Of-Race menu
 		if ((gGT->gameMode1 & END_OF_RACE) == 0)
@@ -37,7 +37,10 @@ void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 				d->actionsFlagSet |= 0x2000000;
 			};
 
+#ifndef REBUILD_PC
 			MainGameEnd_Initialize();
+#endif
+			
 		}
 	}
 
@@ -45,7 +48,7 @@ void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 	else
 	{
 		// make a string with the remaining time
-		str = MENUBOX_DrawTime(timeRemaining);
+		str = DECOMP_MENUBOX_DrawTime(timeRemaining);
 	}
 
 	// default color is dark red
@@ -65,6 +68,6 @@ void DECOMP_UI_DrawLimitClock(short posX, short posY, short fontType)
 	}
 
 	// put the time string on the screen
-	DecalFont_DrawLine(str, (int)posX, (int)posY, (int)fontType, flags);
+	DECOMP_DecalFont_DrawLine(str, (int)posX, (int)posY, (int)fontType, flags);
 	return;
 }

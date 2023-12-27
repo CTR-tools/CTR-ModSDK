@@ -21,7 +21,7 @@ void DECOMP_UI_Map_DrawTracking(int ptrMap,struct Thread* bucket)
 	// == only draw warpball ==
 	
 	// draw warpball
-	UI_Map_DrawRawIcon(
+	DECOMP_UI_Map_DrawRawIcon(
 		ptrMap,&inst->matrix.t[0],
 		0x20,0,0,0x1000);
 	
@@ -38,7 +38,7 @@ void DECOMP_UI_Map_DrawTracking(int ptrMap,struct Thread* bucket)
     if ((sdata->gGT->timer & 1) != 0)
       uVar1 = 3;
       
-    UI_Map_DrawRawIcon(
+    DECOMP_UI_Map_DrawRawIcon(
 	  ptrMap,&d->instSelf->matrix.t[0],
 	  0x21,uVar1,0,0x1000);
   }

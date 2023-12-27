@@ -27,7 +27,7 @@ void DECOMP_UI_DrawLapCount(short posX,int posY,int param_3,struct Driver* d)
   if (numPlyrCurrGame < 3)
   {
     // LAP
-    DecalFont_DrawLine(sdata->lngStrings[0x60/4],posX,posY,FONT_SMALL,(JUSTIFY_RIGHT | PERIWINKLE));
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x60/4],posX,posY,FONT_SMALL,(JUSTIFY_RIGHT | PERIWINKLE));
 
     type = FONT_BIG;
     flags = (JUSTIFY_RIGHT | PERIWINKLE);
@@ -43,6 +43,6 @@ void DECOMP_UI_DrawLapCount(short posX,int posY,int param_3,struct Driver* d)
   sdata->s_printDividing[2] = numLaps + '0';
 
   // draw string
-  DecalFont_DrawLine(&sdata->s_printDividing[0],posX,(posY + 8),type,flags);
+  DECOMP_DecalFont_DrawLine(&sdata->s_printDividing[0],posX,(posY + 8),type,flags);
   return;
 }

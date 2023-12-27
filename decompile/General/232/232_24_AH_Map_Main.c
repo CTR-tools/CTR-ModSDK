@@ -1,9 +1,5 @@
 #include <common.h>
 
-void DECOMP_UI_DrawNumRelic(short, short);
-void DECOMP_UI_DrawNumKey(short, short);
-void DECOMP_UI_DrawNumTrophy(short, short);
-
 void DECOMP_AH_Map_Main(void)
 {
   struct GameTracker* gGT = sdata->gGT;
@@ -68,13 +64,15 @@ void DECOMP_AH_Map_Main(void)
     local_1e[0] = 0;
     *(int*)0x800b5670 = 0;
 	
-    UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread,&local_20);
-	
+    DECOMP_UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread,&local_20);
+
+#ifndef REBUILD_PC	
     AH_Map_Warppads(hubPtrs,gGT->threadBuckets[5],&local_1e[0]);
 	
     AH_Map_HubItems(hubPtrs,&local_1e[0]);
+#endif
 	
-    UI_Map_DrawMap(
+    DECOMP_UI_Map_DrawMap(
                 gGT->ptrIcons[3],
 
                 gGT->ptrIcons[4],

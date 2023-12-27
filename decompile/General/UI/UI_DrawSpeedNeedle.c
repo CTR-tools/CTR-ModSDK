@@ -39,9 +39,14 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
     maxScale = iVar9;
   }
 
+#ifndef REBUILD_PC
   // Map value from [oldMin, oldMax] to [newMin, newMax]
   // inverting newMin and newMax will give an inverse range mapping
   needle = MapToRange(((speed >> 0x18) * 0x1a5e0) / 64000, minScale, (maxScale * 0x1a5e0) / 64000, minRange, maxRange);
+#else
+  needle = 0;
+#endif
+
   angle1 = needle;
   angle2 = angle1 + 0x400;
 
@@ -50,8 +55,8 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   p = 0;
 
   // trigonometry lookup table
-  int cos[2] = {MATH_Cos(angle1), MATH_Cos(angle2)};
-  int sin[2] = {MATH_Sin(angle1), MATH_Sin(angle2)};
+  int cos[2] = {DECOMP_MATH_Cos(angle1), DECOMP_MATH_Cos(angle2)};
+  int sin[2] = {DECOMP_MATH_Sin(angle1), DECOMP_MATH_Sin(angle2)};
 
   // if there is room for more
   if (primmemCurr <= (u_long*) backDB->primMem.endMin100) {

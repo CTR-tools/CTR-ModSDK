@@ -1,15 +1,5 @@
 #include <common.h>
 
-void DECOMP_UI_DrawNumRelic(short, short);
-void DECOMP_UI_DrawNumKey(short, short);
-void DECOMP_UI_DrawNumTrophy(short, short);
-void DECOMP_UI_DrawNumCrystal(short, short, struct Driver*);
-void DECOMP_UI_DrawSpeedNeedle(short, short, struct Driver*);
-void DECOMP_UI_DrawSpeedBG(short, short, struct Driver*);
-void DECOMP_UI_JumpMeter_Update(struct Driver*);
-void DECOMP_UI_JumpMeter_Draw(short, short, struct Driver*);
-void DECOMP_UI_DrawSlideMeter(short, short, struct Driver*);
-
 // 692 by default, budget 768
 
 void DECOMP_UI_RenderFrame_CrystChall(void)
@@ -35,7 +25,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 
   DECOMP_UI_DrawSlideMeter(hudStructPtr[0x10].x,hudStructPtr[0x10].y,player);
 
-  DECOMP_UI_DrawSpeedBG(hudStructPtr[0x12].x,hudStructPtr[0x12].y,player);
+  DECOMP_UI_DrawSpeedBG();
 
   DECOMP_UI_DrawNumCrystal(hudStructPtr[0x22].x + 0x10, hudStructPtr[0x22].y - 0x10,player);
 
@@ -43,7 +33,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   UI_Weapon_DrawSelf(hudStructPtr[0].x,hudStructPtr[0].y,hudStructPtr[1].y,player);
 
   // TIME
-  DecalFont_DrawLine(sdata->lngStrings[0x12],0x14,8,FONT_SMALL,ORANGE);
+  DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x12],0x14,8,FONT_SMALL,ORANGE);
 
   // "TIME" and the actual time are printed at the same
   // X-coordinate, so we know 0x14 is the X, which only
@@ -51,7 +41,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   // the Y-coordinate.
 
   // draw countdown clock
-  UI_DrawLimitClock(0x14,0x10,1);
+  DECOMP_UI_DrawLimitClock(0x14,0x10,1);
 
 
   // If game is paused
@@ -92,7 +82,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
       MainGameEnd_Initialize();
     }
 
-    OtherFX_Play(0x42,1);
+    DECOMP_OtherFX_Play(0x42,1);
 
     if (player->PickupWumpaHUD.numCollected != 0)
 		player->PickupWumpaHUD.cooldown = 5;
@@ -102,7 +92,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   else
   {
 	// interpolate position over course of 5 frames
-    UI_Lerp2D_HUD(
+    DECOMP_UI_Lerp2D_HUD(
 		&local_18[0],
 		(int)player->PickupWumpaHUD.startX,
 		(int)player->PickupWumpaHUD.startY,

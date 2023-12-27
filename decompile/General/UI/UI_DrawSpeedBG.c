@@ -23,8 +23,8 @@ void DECOMP_UI_DrawSpeedBG(void)
   
   for (i = 0; i < 7; i++) 
   {
-	  // white
-    CTR_Box_DrawWirePrims(
+	// white
+    DECOMP_CTR_Box_DrawWirePrims(
 		upperHalf[0] + 0x1e0, upperHalf[1] + 0xbe,
 		upperHalf[2] + 0x1e0, upperHalf[3] + 0xbe,
 		0xff, 0xff, 0xff,
@@ -32,7 +32,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 		&backDB->primMem);
     
 	// black
-    CTR_Box_DrawWirePrims(
+    DECOMP_CTR_Box_DrawWirePrims(
 		upperHalf[0] + 0x1e1, upperHalf[1] + 0xbf,
 		upperHalf[2] + 0x1e1, upperHalf[3] + 0xbf,
 		0, 0, 0,
@@ -45,7 +45,7 @@ void DECOMP_UI_DrawSpeedBG(void)
   for (i = 0; i < 6; i++) 
   {
 	// white
-    CTR_Box_DrawWirePrims(
+    DECOMP_CTR_Box_DrawWirePrims(
 		vertData[0] + 0x1e0, vertData[1] + 0xbe,
 		vertData[4] + 0x1e0, vertData[5] + 0xbe,
 		0xff, 0xff, 0xff,
@@ -53,7 +53,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 		&backDB->primMem);
 
 	// white
-    CTR_Box_DrawWirePrims(
+    DECOMP_CTR_Box_DrawWirePrims(
 		vertData[2] + 0x1e0, vertData[3] + 0xbe,
 		vertData[6] + 0x1e0, vertData[7] + 0xbe,
 		0xff, 0xff, 0xff,
@@ -61,7 +61,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 		&backDB->primMem);
 
 	// black
-    CTR_Box_DrawWirePrims(
+    DECOMP_CTR_Box_DrawWirePrims(
 		vertData[0] + 0x1e1, vertData[1] + 0xbf,
 		vertData[4] + 0x1e1, vertData[5] + 0xbf,
 		0, 0, 0,
@@ -69,7 +69,7 @@ void DECOMP_UI_DrawSpeedBG(void)
 		&backDB->primMem);
 
 	// black
-    CTR_Box_DrawWirePrims(
+    DECOMP_CTR_Box_DrawWirePrims(
 		vertData[2] + 0x1e1, vertData[3] + 0xbf,
 		vertData[6] + 0x1e1, vertData[7] + 0xbf,
 		0, 0, 0,
@@ -120,7 +120,11 @@ void DECOMP_UI_DrawSpeedBG(void)
     setRGB1(p, 0, 0, 0);
     setRGB2(p, 0, 0, 0);
     setRGB3(p, 0, 0, 0);
+#ifndef REBUILD_PC
     p->pad0 = 0x32;
+#else
+	p->pad1 = 0x32; // PsyCross numbers 1,2,3 instead of 0,1,2
+#endif
     setXY4(p, 0, 0, 
     vertData[2] + 0x1e0, vertData[3] + 0xbe,
     vertData[6] + 0x1e0, vertData[7] + 0xbe,

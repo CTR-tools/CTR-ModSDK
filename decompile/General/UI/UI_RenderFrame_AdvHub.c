@@ -1,9 +1,5 @@
 #include <common.h>
 
-void DECOMP_UI_DrawNumRelic(short, short);
-void DECOMP_UI_DrawNumKey(short, short);
-void DECOMP_UI_DrawNumTrophy(short, short);
-
 void DECOMP_UI_RenderFrame_AdvHub(void)
 {
     struct UiElement2D* hudStructPtr;

@@ -144,7 +144,7 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
          // Name of Cup
 
          // uVar9 * 4
-         DecalFont_DrawLine(
+         DECOMP_DecalFont_DrawLine(
             sdata -> lngStrings[textID],
 			
 			#if 0
@@ -180,11 +180,11 @@ void DECOMP_UI_RaceStart_IntroText1P(void) {
       }
 
       // Print top title text "Arcade, Time Trial, etc"
-      DecalFont_DrawLine(pcVar6, posX, sVar7, font, (JUSTIFY_CENTER | ORANGE));
+      DECOMP_DecalFont_DrawLine(pcVar6, posX, sVar7, font, (JUSTIFY_CENTER | ORANGE));
 
       // Print the name of the level
       // Crash Cove, Roos Tubes, etc
-      DecalFont_DrawLine(
+      DECOMP_DecalFont_DrawLine(
 
          // 83a88 = 110
          // 8d878 + 110*4 -> Dingo Canyon

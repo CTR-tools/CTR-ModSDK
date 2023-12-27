@@ -347,6 +347,21 @@ void DECOMP_TitleFlag_ResetTextAnim();
 void DECOMP_RCNT_Init();
 void DECOMP_TitleFlag_DrawSelf();
 
+// UI
+void DECOMP_UI_DrawNumWumpa(short param_1, short param_2, struct Driver* d);
+void DECOMP_UI_DrawNumKey(short posX, short posY);
+void DECOMP_UI_DrawNumRelic(short posX, short posY);
+void DECOMP_UI_DrawNumTrophy(short posX, short posY);
+void DECOMP_UI_DrawNumCrystal(short posX, short posY, struct Driver* d);
+void DECOMP_UI_DrawNumTimebox(short posX, short posY, struct Driver* d);
+void DECOMP_UI_DrawSpeedBG(void);
+void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver);
+void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver);
+void DECOMP_UI_JumpMeter_Update(struct Driver * d);
+
+void DECOMP_UI_RenderFrame_AdvHub(void);
+void DECOMP_UI_RenderFrame_Racing();
+
 void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);
 
 struct Driver* DECOMP_VehInit_Player(int index);
