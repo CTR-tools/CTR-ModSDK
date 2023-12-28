@@ -146,15 +146,15 @@ void TEST_226(
 
 				int idHigh[16] =
 				{
-					0,4,5,6,
-					4,1,6,7,
-					5,6,2,8,
-					6,7,8,3
+					5,0,6,4,
+					6,4,7,1,
+					2,5,8,6,
+					8,6,3,7
 				};
 
 				int idLow[4] =
 				{
-					0,1,2,3
+					2,0,3,1
 				};
 
 				// low LOD
@@ -230,23 +230,13 @@ void TEST_226(
 					unsigned int draw_order_high = block->draw_order_high;
 					unsigned int draw_order_low = block->draw_order_low;
 
+					unsigned int rotAndOrder = (draw_order_low >> (8 + k * 5)) & 0x1F;
+					unsigned int justRot = rotAndOrder & 7;
+
 					if (tl != 0)
 					{
-						unsigned int rotAndOrder = (draw_order_low >> (8 + k * 5)) & 0x1F;
-						unsigned int justRot = rotAndOrder & 7;
-
-						// 0,1,2,3
+						// 2031
 						if (justRot == RFT_None)
-						{
-							setUV4(p,
-								tl->u0, tl->v0,
-								tl->u1, tl->v1,
-								tl->u2, tl->v2,
-								tl->u3, tl->v3);
-						}
-
-						// 2,0,3,1
-						else if (justRot == RFT_Rotate90)
 						{
 							setUV4(p,
 								tl->u2, tl->v2,
@@ -255,8 +245,8 @@ void TEST_226(
 								tl->u1, tl->v1);
 						}
 
-						// 3,2,1,0
-						else if (justRot == RFT_Rotate180)
+						// 3210
+						else if (justRot == RFT_Rotate90)
 						{
 							setUV4(p,
 								tl->u3, tl->v3,
@@ -265,8 +255,8 @@ void TEST_226(
 								tl->u0, tl->v0);
 						}
 
-						// 1,3,0,2
-						else if (justRot == RFT_Rotate270)
+						// 1302
+						else if (justRot == RFT_Rotate180)
 						{
 							setUV4(p,
 								tl->u1, tl->v1,
@@ -275,8 +265,28 @@ void TEST_226(
 								tl->u2, tl->v2);
 						}
 
-						// 0,2,1,3
+						// 0123
+						else if (justRot == RFT_Rotate270)
+						{
+							setUV4(p,
+								tl->u0, tl->v0,
+								tl->u1, tl->v1,
+								tl->u2, tl->v2,
+								tl->u3, tl->v3);
+						}
+
+						// 1032
 						else if (justRot == RFT_FlipRotate270)
+						{
+							setUV4(p,
+								tl->u1, tl->v1,
+								tl->u0, tl->v0,
+								tl->u3, tl->v3,
+								tl->u2, tl->v2);
+						}
+
+						// 3102
+						else if (justRot == RFT_FlipRotate180)
 						{
 							setUV4(p,
 								tl->u0, tl->v0,
@@ -285,34 +295,24 @@ void TEST_226(
 								tl->u3, tl->v3);
 						}
 
-						// 2,3,1,0
-						else if (justRot == RFT_FlipRotate180)
+						// 2301
+						else if (justRot == RFT_FlipRotate90)
 						{
 							setUV4(p,
 								tl->u2, tl->v2,
 								tl->u3, tl->v3,
-								tl->u0, tl->v1,
-								tl->u1, tl->v0);
+								tl->u0, tl->v0,
+								tl->u1, tl->v1);
 						}
 
-						// 3,1,2,0
-						else if (justRot == RFT_FlipRotate90)
+						// 3120
+						else if (justRot == RFT_Flip)
 						{
 							setUV4(p,
 								tl->u3, tl->v3,
 								tl->u1, tl->v1,
 								tl->u2, tl->v2,
 								tl->u0, tl->v0);
-						}
-
-						// 1,0,3,2
-						else if (justRot == RFT_Flip)
-						{
-							setUV4(p,
-								tl->u1, tl->v1,
-								tl->u0, tl->v0,
-								tl->u3, tl->v3,
-								tl->u2, tl->v2);
 						}
 
 						else
