@@ -232,6 +232,7 @@ void TEST_226(
 
 					unsigned int rotAndOrder = (draw_order_low >> (8 + k * 5)) & 0x1F;
 					unsigned int justRot = rotAndOrder & 7;
+					unsigned int justOrder = (rotAndOrder >> 3) & 3;
 
 					if (tl != 0)
 					{
@@ -320,6 +321,35 @@ void TEST_226(
 
 						p->clut = tl->clut;
 						p->tpage = tl->tpage;
+					}
+
+					if (justOrder == 1)
+					{
+						int u0 = p->u0;
+						int v0 = p->v0;
+
+						int u1 = p->u1;
+						int v1 = p->v1;
+
+						int u2 = p->u2;
+						int v2 = p->v2;
+
+						int u3 = p->u3;
+						int v3 = p->v3;
+						
+						// 2031
+						p->u0 = u2, p->v0 = v2;
+						p->u1 = u0, p->v1 = v0;
+						p->u2 = u3, p->v2 = v3;
+						p->u3 = u1, p->v3 = v1;
+					}
+
+					else if (justOrder == 2)
+					{
+						// try using "continue" to show these,
+						// tbh it looks fine just by doing nothing
+
+						// continue;
 					}
 
 					gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
