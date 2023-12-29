@@ -323,34 +323,39 @@ void TEST_226(
 						p->tpage = tl->tpage;
 					}
 
+					int u[4];
+					int v[4];
+
+					u[0] = p->u0;
+					v[0] = p->v0;
+
+					u[1] = p->u1;
+					v[1] = p->v1;
+
+					u[2] = p->u2;
+					v[2] = p->v2;
+
+					u[3] = p->u3;
+					v[3] = p->v3;
+
+					#define SETME(x0, x1, x2, x3) p->u0 = u[x0-1], p->v0 = v[x0-1]; p->u1 = u[x1-1], p->v1 = v[x1-1]; p->u2 = u[x2-1], p->v2 = v[x2-1]; p->u3 = u[x3-1], p->v3 = v[x3-1];
+
+
 					if (justOrder == 1)
 					{
-						int u0 = p->u0;
-						int v0 = p->v0;
+						// for a good example, see AdvHub Warppads
 
-						int u1 = p->u1;
-						int v1 = p->v1;
-
-						int u2 = p->u2;
-						int v2 = p->v2;
-
-						int u3 = p->u3;
-						int v3 = p->v3;
-						
-						// 2031
-						p->u0 = u2, p->v0 = v2;
-						p->u1 = u0, p->v1 = v0;
-						p->u2 = u3, p->v2 = v3;
-						p->u3 = u1, p->v3 = v1;
+						/*SETME(1, 3, 2, 4);*/
+						SETME(3, 1, 4, 2);
 					}
 
 					else if (justOrder == 2)
 					{
-						// try using "continue" to show these,
-						// tbh it looks fine just by doing nothing
+						// for a good example, see N Gin Labs
 
-						// continue;
-					}
+						/*SETME(3, 4, 2, 1);*/
+						SETME(4, 3, 1, 2);
+					}		   
 
 					gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
 					
