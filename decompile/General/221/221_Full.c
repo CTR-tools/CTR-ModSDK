@@ -39,21 +39,17 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	gGT = sdata->gGT;
 	levelID = gGT->levelID;
 	driver = gGT->drivers[0];
+		
+	// "Dingo Bingo" $sp exploit, for 101% speedruns.
+	// Dingo Canyon gives different item depending on 
+	// camera, Blizz Bluff gives Skull Rock token, and
+	// Dragon Mines gives purple gem
+	if(levelID == 0) bitIndex = gGT->tileView[0].pos[2];
+	else if(levelID == 1) bitIndex = 0;
+	else if(levelID == 2) bitIndex = -1;
 	
-	// if someone is doing "Dingo Bingo"
-	if(levelID == 0)
-	{
-		// emulate an $sp exploit that jumped
-		// out of bounds, into the $sp of another function,
-		// which forced the OG game to read camera position
-		bitIndex = gGT->tileView[0].pos[2];
-	}
-	
-	// if you're not screwing around
-	else
-	{
-		bitIndex = hub[gGT->levelID-0x12];
-	}
+	// default logic
+	else bitIndex = hub[gGT->levelID-0x12];
 	
 	// first purple token at 0x6f
 	bitIndex += 0x6f;
