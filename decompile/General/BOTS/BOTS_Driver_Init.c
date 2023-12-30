@@ -1,5 +1,7 @@
 #include <common.h>
 
+// Budget: 336/436 bytes
+
 struct Driver* DECOMP_BOTS_Driver_Init(int driverID)
 {
 	int pathIndex;
@@ -7,6 +9,7 @@ struct Driver* DECOMP_BOTS_Driver_Init(int driverID)
 	int i;
 	struct Thread* t;
 	struct Driver* d;
+	struct GameTracker *gGT = sdata->gGT;
 	
 	// take default
 	pathIndex = sdata->driver_pathIndexIDs[driverID];
@@ -53,16 +56,15 @@ struct Driver* DECOMP_BOTS_Driver_Init(int driverID)
 	d = t->object;
 	memset(d, 0x0, 0x62C);
 	VehInit_NonGhost(t, driverID);
-	sdata->gGT->drivers[driverID] = d;
-	t->modelIndex = 0x3f;
+	gGT->drivers[driverID] = d;
+	t->modelIndex = DYNAMIC_ROBOT_CAR;
 	
-	// === Need to Finish ===
-	
-	// [0x5a4, 0x5b8 not in common.h]
+	d->botPath = i;
+	d->botNavFrame = sdata->NavPath_ptrNavFrameArray[i];
 	d->actionsFlagSet |= 0x100000;
-	// [&DAT_8008daf8] unknown use
+	LIST_AddFront(&sdata->unk_NavRelated[i], (struct Item*)(&d->unk598));
 	
-	sdata->gGT->numBotsCurrGame += 1;
+	gGT->numBotsNextGame++;
 	BOTS_GotoStartingLine(d);
 	return d;
 }

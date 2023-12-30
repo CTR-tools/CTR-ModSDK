@@ -983,7 +983,7 @@ void Turbo_Audio(struct Driver* driver, int speed_cap);
 void Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
 //Instance_GetStartFrame()
 //Instance_GetNumAnimFrames()
-//OnAnimate_Driving()
+void OnAnimate_Driving(struct Thread* t, struct Driver* d);
 void OnAnimate_Spinning();
 void OnAnimate_LastSpin();
 //DrawShadows_Subset1()
@@ -999,7 +999,7 @@ void Driver_ConvertVectorsToSpeed(struct Driver* d, int* v);
 void DriverCrash_AnyTwoCars(struct Thread* thread, u_short* param_2, int* param_3);
 //Driver_ConvertSpeedToVectors()
 //OnGravity()
-//OnApplyForces()
+void OnApplyForces(struct Thread* t, struct Driver* d);
 void OnCollide_Drivers(struct Thread* t, struct Driver* d);
 void OnRender();
 void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
@@ -1017,8 +1017,8 @@ int Player_GetBaseSpeed(struct Driver* driver);
 int Player_StickReturnToRest(int param_1, u_int param_2, struct RacingWheelData* param_3);
 //void Player_StickGetStrength()
 int Player_StickGetStrengthAbsolute(int param_1, u_int param_2, struct RacingWheelData* param_3);
-void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver);
-void VehPtr_Driving_Audio();
+void VehPtr_Driving_PhysLinear(struct Thread* t, struct Driver* d);
+void VehPtr_Driving_Audio(struct Thread* t, struct Driver* d);
 void VehPtr_Driving_Update(struct Thread* t, struct Driver* d);
 void VehPtr_Driving_Init(struct Thread* t, struct Driver* d);
 void VehPtr_Freeze_PhysLinear(struct Thread* t, struct Driver* d);
@@ -1027,7 +1027,7 @@ void VehPtr_AntiVShift_Update(struct Thread* t, struct Driver* d);
 void VehPtr_AntiVShift_ReverseOneFrame(struct Thread* t, struct Driver* d);
 void VehPtr_AntiVShift_Init(struct Thread* t, struct Driver* d);
 void VehPtr_Drifting_PhysAngular(struct Thread* th, struct Driver* driver);
-void VehPtr_Drifting_Finalize(struct Thread* t, struct Driver* d);
+void VehPtr_Drifting_Finalize(struct Driver* d);
 void VehPtr_Drifting_Update(struct Thread* t, struct Driver* d);
 void VehPtr_Drifting_PhysLinear(struct Thread *thread, struct Driver *driver);
 void VehPtr_Drifting_InitSetUpdate(struct Thread* t, struct Driver* d);

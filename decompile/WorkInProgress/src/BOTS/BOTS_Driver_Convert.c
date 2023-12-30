@@ -1,27 +1,28 @@
 #include <common.h>
 
+// Budget: 584/692 bytes
+
 void DECOMP_BOTS_Driver_Convert(struct Driver *d)
 {
-  struct GameTracker *gGT = sdata->gGT;
-  char validPath;
+  u_char validPath;
   short numPoints;
-  int i, pathIndex;
-  unsigned int navFrame;
+  int i, damageType;
+  struct NavFrame *frame;
   unsigned int actionFlag;
+  struct GameTracker *gGT = sdata->gGT;
 
   // if this racer is not an AI (player)
-  if ((d->actionFlagsSet & 0x100000) == 0)
+  if ((d->actionsFlagSet & 0x100000) == 0)
   {
-
     UI_RaceEnd_GetDriverClock(d);
-    
-    validPath = 0;
+
+    validPath = false;
 
     // nav path index of this driver
-    pathIndex = sdata->driver_pathIndexIDs[d->driverID];
+    i = sdata->driver_pathIndexIDs[d->driverID];
 
     // number of nav points on this path
-    numPoints = sdata->NavPath_ptrHeader[pathIndex]->numPoints;
+    numPoints = sdata->NavPath_ptrHeader[i]->numPoints;
 
     // ============
 
@@ -40,90 +41,80 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d)
         if (sdata->NavPath_ptrHeader[i]->numPoints != 0)
         {
           // valid path data was found
-          validPath = 1;
+          validPath = true;
           break;
         }
       }
     }
 
-  END_SECTION:
-
     // if valid path data was found
-    if (validPath)
+    if (!validPath) return;
+
+    // 0x94 chunk in driver struct?
+    memset(&d->unk598, 0, 0x94);
+
+    *(int*)((int)d + 0x540) = d->ySpeed;
+
+    // nav path index
+    d->botPath = i;
+
+    // AI speed
+    *(int *)((int)d  + 0x5d4) = d->speedApprox;
+
+    // pointer to first navFrame on path
+    d->botNavFrame = sdata->NavPath_ptrNavFrameArray[i];
+
+    d->unk5a8 = 0;
+    d->unknownDimension2Curr = 0;
+    d->multDrift = 0;
+    d->ampTurnState = 0;
+    d->set_0xF0_OnWallRub = 0;
+
+    d->instSelf->thread->funcThTick = BOTS_ThTick_Drive;
+
+    // if you are in battle mode
+    if ((gGT->gameMode1 & BATTLE_MODE))
     {
-      // 0x94 chunk in driver struct?
-      memset(*(int *)(d + 0x598), 0, 0x94);
+      // pointer to each AI Path Header
+      frame = NAVHEADER_GETFRAME(sdata->NavPath_ptrHeader[i]);
 
-      // path index
-      pathIndex = i;
-
-      *(int *)(d + 0x5d0) = d->ySpeed;
-
-      // nav path index
-      d->botPath = pathIndex;
-
-      // AI speed
-      *(int *)(d + 0x5d4) = d->speedApprox;
-
-      // pointer to first navFrame on path
-      navFrame = sdata->NavPath_ptrNavFrameArray[pathIndex];
-
-      d->unk5a8 = 0;
-      d->unknownDimension2Curr = 0;
-      d->multiDrift = 0;
-      d->ampTurnState = 0;
-      d->set_0xF0_OnWallRub = 0;
-
-      // current navFrame
-      d->botNavFrame = navFrame;
-
-      d->instSelf->thread->funcThTick = BOTS_ThTick_Drive;
-
-      // if you are in battle mode
-      if ((gGT->gameMode1 & BATTLE_MODE) != 0)
-      {
-        // pointer to each AI Path Header
-        struct NavHeader* ptrNav = sdata->NavPath_ptrHeader[pathIndex];
-
-        // set the X, Y, and Z positions
-        d->posCurr[0] = (int)ptrNav->frame->pos[0] << 8;
-        d->posCurr[1] = (int)ptrNav->frame->pos[1] << 8;
-        d->posCurr[2] = (int)ptrNav->frame->pos[2] << 8;
-      }
-
-      // (free or taken?)
-      LIST_AddFront(sdata->unk_NavRelated[pathIndex], d->unk598);
-
-      BOTS_SetRotation(d, 0);
-
-      GAMEPAD_Vib_2(d, 0, 0);
-
-      actionFlag = d->actionFlagsSet;
-
-      // player becomes AI, drop bits for button holding
-      d->actionFlagsSet &= 0xfffffff3 | 0x100000;
-
-      // if previous value of actions flag set had 26th flag on (means racer
-      // finished the race)
-      if ((actionFlag & 0x2000000) != 0)
-      {
-        CAM_EndOfRace(gGT->cameraDC[d->driverID], d);
-      }
-
-      // Kart state:
-      switch (d->kartState)
-      {
-        // if racer is spinning
-      case 3:
-        navFrame = 1;
-        // if racer is blasted
-      case 6:
-        navFrame = 2;
-        break;
-      default:
-        return;
-      }
-      BOTS_ChangeState(d, navFrame, 0, 0);
+      // set the X, Y, and Z positions
+      d->posCurr[0] = (int)frame[i].pos[0] << 8;
+      d->posCurr[1] = (int)frame[i].pos[1] << 8;
+      d->posCurr[2] = (int)frame[i].pos[2] << 8;
     }
+
+    // (free or taken?)
+    LIST_AddFront(&sdata->unk_NavRelated[i], (struct Item *)d->unk598);
+
+    BOTS_SetRotation(d, 0);
+
+    GAMEPAD_Vib_2(d, 0, 0);
+
+    actionFlag = d->actionsFlagSet;
+
+    // remove flags for pressing L1|R1|Square and becomes AI
+    d->actionsFlagSet = ((actionFlag & ~(0x4 | 0x8)) | 0x100000);
+
+    // if previous value of actions flag set had 26th flag on
+    // (racer finished the race)
+    if ((actionFlag & 0x2000000) != 0)
+    {
+      CAM_EndOfRace(&gGT->cameraDC[d->driverID], d);
+    }
+
+    // Kart state:
+    switch (d->kartState)
+    {
+    case SPINNING:
+      damageType = 1;
+      break;
+    case BLASTED:
+      damageType = 2;
+      break;
+    default:
+      return;
+    }
+    BOTS_ChangeState(d, damageType, 0, 0);
   }
 }

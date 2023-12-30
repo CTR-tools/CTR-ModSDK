@@ -3,6 +3,7 @@ enum KartState
 	NORMAL=0,
 	CRASHING=1,
 	DRIFTING=2,
+	SPINNING=3,
 	ENGINE_REVVING=4,
 	MASK_GRABBED=5,
 	BLASTED=6,
@@ -1278,6 +1279,8 @@ struct Driver
 			
 			// 0x586
 			char numBoostsAttempted;
+
+			// 0x587
 			char numBoostsSuccess;
 			
 			// == end ==
