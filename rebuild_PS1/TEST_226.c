@@ -371,6 +371,12 @@ void TEST_226(
 
 				if (boolPassCull)
 				{
+					short midX = (p->x0 + p->x1 + p->x2 + p->x3) / 4;
+					short midY = (p->y0 + p->y1 + p->y2 + p->y3) / 4;
+
+					short midArr[4] = { midX, midY, 0, 0 };
+					gte_ldv0(midArr);
+
 					int otZ;
 					gte_avsz3();
 					gte_stotz(&otZ);
