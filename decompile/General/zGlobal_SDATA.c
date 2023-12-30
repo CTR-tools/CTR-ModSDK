@@ -366,7 +366,7 @@ struct sData sdata_static =
 	.stringFormat2 = "%ld",
 	.greyColor = 0x808080,
 	.greenColor = 0x20c020,
-	.darkColor = 0x25,
+	.s_percent_sign = 0x25,
 	.redColor = 0xA0A000,
 	.ghostIconColor = 0x808080,
 	

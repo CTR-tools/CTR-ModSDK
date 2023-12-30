@@ -3240,10 +3240,9 @@ struct sData
 	int greenColor;
 
 	// 8008d498
-	// black color (25 00 00)
-	// used as inverse "filter out 'nothing' "
-	// to draw clear profile
-	int darkColor;
+	// percent sign in ASCII hex code (0x25)
+	// for drawing adv profile
+	int s_percent_sign;
 
 	// 8008d49c
 	// red color drawn on ghost profile, (a0 a0 00)
@@ -4764,7 +4763,9 @@ struct sData
 	{
 		struct Instance* inst;
 
-		char data[8];
+		short rot[3];
+
+		short padding;
 
 	// 4 profiles, 3 instances per profile
 	} LoadSaveData[12];
