@@ -343,9 +343,9 @@ void DF_ParseOT(u_long* startOT)
 
 void DF_DrawOTag(u_long* ot)
 {
-	// ignore DF naming,
-	// copied from DebugFrustum
+	// only mirror track levels
+	if (sdata->gGT->levelID < INTRO_RACE_TODAY)
+		DF_ParseOT(ot);
 	
-	DF_ParseOT(ot);
 	DrawOTag(ot);
 }
