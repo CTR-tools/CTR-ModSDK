@@ -430,8 +430,6 @@ void DrawOneInst(struct Instance* curr)
 						(posScreen3[0]), (posScreen3[1]));	// XY2
 				}
 
-				gte_stsxy3(&posScreen1[0], &posScreen2[0], &posScreen3[0]);
-
 				// automatic pass, if no frontface or backface culling
 				int boolPassCull = ((flags & DRAW_CMD_FLAG_CULLING) == 0);
 
