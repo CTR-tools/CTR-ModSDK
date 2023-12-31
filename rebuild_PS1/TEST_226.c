@@ -144,6 +144,95 @@ void TEST_226(
 			// dont invisible walls
 			if ((block->quadFlags & (1 << 15)) != 0) continue;
 
+			int boolWater = 0;
+
+			// check for water
+			for (int L = 0; L < 4; L++)
+			{
+				struct LevVertex* v = &pVA[block->index[L]];
+				for (int k = 0; k < sdata->gGT->level1->numWaterVertices; k++)
+				{
+					struct LevVertex* v2 = sdata->gGT->level1->ptr_water[k].v;
+
+					// if quadblock is water
+					if (v == v2)
+					{
+						POLY_F4* p = primMem->curr;
+						void* pNext = p + 1;
+
+						p->r0 = 0x7F;
+						p->g0 = 0x7F;
+						p->b0 = 0xFF;
+						setPolyF4(p);
+
+						gte_ldv0(&pVA[block->index[0]].pos[0]);
+						gte_rtps();
+						gte_stsxy(&posScreen1[0]);
+
+						gte_ldv0(&pVA[block->index[1]].pos[0]);
+						gte_rtps();
+						gte_stsxy(&posScreen2[0]);
+
+						gte_ldv0(&pVA[block->index[2]].pos[0]);
+						gte_rtps();
+						gte_stsxy(&posScreen3[0]);
+
+						gte_ldv0(&pVA[block->index[3]].pos[0]);
+						gte_rtps();
+						gte_stsxy(&posScreen4[0]);
+
+						setXY4(p,
+							(posScreen1[0]), (posScreen1[1]),	// XY0
+							(posScreen2[0]), (posScreen2[1]),	// XY1
+							(posScreen3[0]), (posScreen3[1]),	// XY2
+							(posScreen4[0]), (posScreen4[1]));
+
+						// automatic pass, if no frontface or backface culling
+						int boolPassCull = (block->draw_order_low & 0x80000000) != 0;
+
+						if (!boolPassCull)
+						{
+							// check CW/CCW culling
+							int opZ;
+							gte_nclip();
+							gte_stopz(&opZ);
+							boolPassCull = (opZ < 0);
+						}
+
+						if (boolPassCull)
+						{
+							short midX = (p->x0 + p->x1 + p->x2 + p->x3) / 4;
+							short midY = (p->y0 + p->y1 + p->y2 + p->y3) / 4;
+
+							short midArr[4] = { midX, midY, 0, 0 };
+							gte_ldv0(midArr);
+
+							int otZ;
+							gte_avsz3();
+							gte_stotz(&otZ);
+
+							if (otZ > 0)
+							{
+								if (otZ > 4080)
+									otZ = 4080;
+
+								AddPrim((u_long*)ot + (otZ >> 2), p);
+								primMem->curr = pNext;
+							}
+						}
+
+						boolWater = 1;
+					}
+				
+					if (boolWater) break;
+				}
+
+				if (boolWater) break;
+			}
+
+			// done with quadblock
+			if (boolWater) continue;
+
 			int idHigh[16] =
 			{
 				5,0,6,4,
