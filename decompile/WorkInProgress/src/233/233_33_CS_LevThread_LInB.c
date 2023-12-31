@@ -76,7 +76,7 @@ void CS_LevThread_LInB(struct Instance* inst)
     meta = cs->metadata;
 
     cs->unk18 = (int)meta[4];
-    cs->unk14 = meta[2] + (short)(((MixRNG_Scramble() >> 2 & 0xfffU) * ((meta[3] - meta[2]) + 1)) >> 0xc);
+    cs->unk14 = meta[2] + (short)(((DECOMP_MixRNG_Scramble() >> 2 & 0xfffU) * ((meta[3] - meta[2]) + 1)) >> 0xc);
 
     cs->unk1c = 0;
     cs->unk20 = 0;

@@ -16,6 +16,7 @@
 #include "../decompile/General/CAMERA/CAM_01_ClearScreen.c"
 #include "../decompile/General/CAMERA/CAM_04_Path_GetNumPoints.c"
 #include "../decompile/General/CAMERA/CAM_05_Path_Move.c"
+#include "../decompile/General/CAMERA/CAM_16_SetDesiredPosRot.c"
 
 #include "../decompile/General/CDSYS/CDSYS_c01_Init.c" 
 #include "../decompile/General/CDSYS/CDSYS_c02_GetFilePosInt.c" 
@@ -281,6 +282,7 @@
 #include "../decompile/General/MAIN/MainFrame_GameLogic.c"
 #include "../decompile/General/MAIN/MainFrame_RenderFrame.c"
 #include "../decompile/General/MAIN/MainFrame_ResetDB.c"
+#include "../decompile/General/MAIN/MainFrame_RequestMaskHint.c"
 
 #include "../decompile/General/MAIN/MainGameStart_Initialize.c"
 
@@ -334,6 +336,8 @@
 #include "../decompile/General/MenuBox/MENUBOX_Show.c"
 #include "../decompile/General/MenuBox/MENUBOX_Hide.c"
 #include "../decompile/General/MenuBox/MENUBOX_BoolHidden.c"
+
+#include "../decompile/General/MixRNG/MixRNG_Scramble.c"
 
 #include "../decompile/General/TileView/TileView_Init.c"
 #include "../decompile/General/TileView/TileView_SetPsyqGeom.c"
@@ -444,6 +448,11 @@
 #include "../decompile/General/231/231_125_127_RB_Turtle.c"
 
 // 232
-#if 0 // not done
-#include "../decompile/General/232/232_Block1.c"
+#ifdef REBUILD_PC
+// see notes from 230
+#include "../decompile/General/232/R232.c"
+#include "../decompile/General/232/D232.c"
 #endif
+
+#include "../decompile/General/232/232_Block1.c"
+#include "../decompile/General/232/232_99_AH_MaskHint_boolCanSpawn.c"

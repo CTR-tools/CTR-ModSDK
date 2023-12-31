@@ -96,28 +96,32 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 	
 		modelID = levInstDef->model->id;
 		
-		if (( // Only continue if LEV instances are enabled,
+		// can be -1
+		if ((short)modelID > 0)
+		{
+			// Only continue if LEV instances are enabled,
 			// they may be disabled due to podium scene on adv hub
-				((gGT->gameMode2 & DISABLE_LEV_INSTANCE) == 0) &&
-	
-				(
+			if ((gGT->gameMode2 & DISABLE_LEV_INSTANCE) == 0)
+			{
+				if (
 					// temporary
 					#ifndef REBUILD_PS1
 					meta = COLL_LevModelMeta(modelID),
 					#else
 					meta = &data.MetaDataModels[modelID],
 					#endif
-	
+
 					// if pointer is not nulllptr
 					meta != NULL
-				)
-			) &&
-	
-			// If funcLevInstDefBirth
-			(meta->LInB != NULL))
-		{
-			// call funcLevInstDefBirth, make thread for this instance
-			meta->LInB(inst);
+					)
+				{
+					if (meta->LInB != NULL)
+					{
+						// call funcLevInstDefBirth, make thread for this instance
+						meta->LInB(inst);
+					}
+				}
+			}
 		}
 	
 		int boolArcadeOnly =

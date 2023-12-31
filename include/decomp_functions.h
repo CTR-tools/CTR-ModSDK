@@ -3,6 +3,7 @@
 void DECOMP_CAM_ClearScreen(struct GameTracker* gGT);
 int DECOMP_CAM_Path_GetNumPoints(void);
 u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, short *param_4);
+void DECOMP_CAM_SetDesiredPosRot(struct CameraDC* cDC, short* pos, short* rot);
 
 void DECOMP_CDSYS_SetXAToLang(int lang);
 void DECOMP_CDSYS_XAPlay(int categoryID, int xaID);
@@ -261,6 +262,7 @@ void DECOMP_MainDrawCb_DrawSync();
 void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT);
+void DECOMP_MainFrame_RequestMaskHint(short hintId, char interruptWarpPad);
 
 void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio);
 
@@ -314,6 +316,8 @@ void DECOMP_MENUBOX_GetHeight(struct MenuBox* m, short* height, int boolCheckSub
 void DECOMP_MENUBOX_GetWidth(struct MenuBox* m, short* width, int boolCheckSubmenu);
 void DECOMP_MENUBOX_Hide(struct MenuBox* m);
 void DECOMP_MENUBOX_Show(struct MenuBox* m);
+
+int DECOMP_MixRNG_Scramble();
 
 struct Thread* DECOMP_THREAD_BirthWithObject(
 	int flags, void* funcThTick, 
@@ -477,3 +481,5 @@ void DECOMP_AH_SaveObj_LInB(struct Instance* savInst);
 void DECOMP_AH_Door_ThDestroy(struct Thread* t);
 void DECOMP_AH_Door_ThTick(struct Thread* t);
 void DECOMP_AH_Door_LInB(struct Instance *inst);
+
+int DECOMP_AH_MaskHint_boolCanSpawn();

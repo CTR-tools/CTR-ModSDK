@@ -15,22 +15,11 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
     u_int uVar8;
     int dist[3];
     int pos[3];
-    short *bossTracks;
-    short *bossIDs;
-    short *bossLNG;
     struct BossGarageDoor *garage;
     struct Instance *inst;
     struct Instance *drv_inst;
     struct GameTracker *gGT;
     struct AdvProgress *adv;
-
-    // == OVR_232.h globals ==
-    // array track to load boss
-    bossTracks = (short *)0x800aba4c;
-    // bossID
-    bossIDs = (short *)0x800aba58;
-    // string for LNG
-    bossLNG = bossIDs;
 
     bossIsOpen = true;
 
@@ -120,7 +109,14 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
         {
             // Update rotation of garagetop
             garage->rot[0] += (short)garage->direction * 0x40;
-            ConvertRotToMatrix(&garage->garageTopInst->matrix, &garage->rot[0]);
+            
+#ifndef REBUILD_PS1
+			ConvertRotToMatrix(
+#else
+			TEST_ConvertRotToMatrix(
+#endif
+				&garage->garageTopInst->matrix, 
+				&garage->rot[0]);
         }
 
         inst->flags &= 0xffffefff | 0x302000;
@@ -182,7 +178,7 @@ LAB_800aec34:
         // draw string, lng_challenge
         DECOMP_DecalFont_DrawLine(
 
-            sdata->lngStrings[data.lng_challenge[bossLNG[hubID]]],
+            sdata->lngStrings[data.lng_challenge[R232.bossIDs[hubID]]],
 
             (view.x + view.w >> 1),
             ((view.y + view.h) - 0x1e),
@@ -234,8 +230,10 @@ LAB_800aede8:
     SPS->Union.ThBuckColl.thread = t;
     SPS->Union.ThBuckColl.funcCallback = DECOMP_AH_Garage_Open;
 
+#ifndef REBUILD_PS1
     // Open garage door when player gets within radius of door
     THREAD_CollideHitboxWithBucket(gGT->threadBuckets[PLAYER].thread, SPS, 0);
+#endif
 
     ratio = DECOMP_MATH_Sin((int)inst->instDef->rot[1]);
 
@@ -275,11 +273,11 @@ LAB_800aede8:
 
         else
         {
-            gGT->bossID = bossIDs[hubID];
+            gGT->bossID = R232.bossIDs[hubID];
         }
 
 		// new levelID
-		levelID = bossTracks[hubID];
+		levelID = R232.bossTracks[hubID];
 
         // Set the boss character (P2)
         data.characterIDs[1] = data.metaDataLEV[levelID].characterID_Boss;

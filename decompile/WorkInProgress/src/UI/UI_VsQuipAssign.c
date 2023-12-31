@@ -26,7 +26,7 @@ void DECOMP_UI_VsQuipAssign(struct Driver* d,u_int *param_2,int param_3,int para
 						(uVar4 + 4) == (uVar5 + 4) &&
 						(
 							// random number
-							currIndex = MixRNG_Scramble(),
+							currIndex = DECOMP_MixRNG_Scramble(),
 							(currIndex >> 3 & 0xffU) < 0x40
 						)
 					)
@@ -46,7 +46,7 @@ void DECOMP_UI_VsQuipAssign(struct Driver* d,u_int *param_2,int param_3,int para
         }
 
 		// Get random number
-        currIndex = MixRNG_Scramble();
+        currIndex = DECOMP_MixRNG_Scramble();
 
         if (0x3f < (currIndex >> 3 & 0xffU)) {
           return;

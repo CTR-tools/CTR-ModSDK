@@ -488,7 +488,7 @@ LAB_80058568:
 
         CAM_StartOfRace(gGT->cameraDC[d->driverID].cameraID);
 
-        d->instSelf->thread->funcThTick = ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) ? NULL : 0x80058c44;
+        d->instSelf->thread->funcThTick = ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) ? NULL : Veh_NullThread;
 
         // set OnInit function
         d->funcPtrs[0] = ((gGT->gameMode1 & ADVENTURE_ARENA) == 0) ? VehPtr_EngineRevving_Init : VehPtr_Driving_Init;

@@ -47,7 +47,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
 	  // Set TNT timer to 0, it blows up at 0x5a
       mw->numFramesOnHead = 0;
 	  
-      rng = (short)MixRNG_Scramble();
+      rng = (short)DECOMP_MixRNG_Scramble();
       
 	  // Set number of required jumps to 8, with some RNG to mix it up
 	  mw->jumpsRemaining = 8 - (rng + (rng / 2) * -2);

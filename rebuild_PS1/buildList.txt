@@ -8,3 +8,6 @@ common, exe, sdata_static, 0x0, ../decompile/General/zGlobal_SDATA.c
 
 common, 230, R230, 0x0, ../decompile/General/230/R230.c
 common, 230, D230, 0x0, ../decompile/General/230/D230.c
+
+common, 232, R232, 0x0, ../decompile/General/232/R232.c
+common, 232, D232, 0x0, ../decompile/General/232/D232.c

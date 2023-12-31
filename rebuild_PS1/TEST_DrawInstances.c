@@ -531,6 +531,9 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 	{
 		if ((curr->flags & 0x80) != 0) continue;
 		if ((curr->flags & 1) == 0) continue;
+		
+		// skip "scan" in 232
+		if (curr->model->id == 0x78) continue;
 
 		DrawOneInst(curr);
 	}

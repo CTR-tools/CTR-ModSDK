@@ -14,10 +14,7 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 	int unlockItem_modelID;
 	
 	int* arrTokenCount;
-	short* arrKeysNeeded;
 	struct Instance* newInst;
-	
-	short* battleTrackArr;
 	
 	gGT = sdata->gGT;
 	
@@ -93,12 +90,11 @@ void DECOMP_AH_WarpPad_LInB(struct Instance* inst)
 		if(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 6)) != 0)
 		{
 GetKeysRequirement:
-			arrKeysNeeded = 0x800b4e7c;
 			
 			// keys needed to unlock track again
 			unlockItem_modelID = 99;
 			unlockItem_numOwned = gGT->currAdvProfile.numKeys;
-			unlockItem_numNeeded = arrKeysNeeded[data.metaDataLEV[levelID].hubID];
+			unlockItem_numNeeded = D232.arrKeysNeeded[data.metaDataLEV[levelID].hubID];
 		}
 		
 		// if trophy not owned
@@ -266,9 +262,9 @@ BattleTrack:
 				// could have it's own specular light, but they're
 				// all the same specLight, so just use the first one
 				
-				warppadObj->specLightToken[0] = *(short*)0x800b4e1c;
-				warppadObj->specLightToken[1] = *(short*)0x800b4e1e;
-				warppadObj->specLightToken[2] = *(short*)0x800b4e20;
+				warppadObj->specLightToken[0] = D232.specLightToken[0];
+				warppadObj->specLightToken[1] = D232.specLightToken[1];
+				warppadObj->specLightToken[2] = D232.specLightToken[2];
 				
 				warppadObj->inst[WPIS_OPEN_PRIZE2] = newInst;
 			}
@@ -331,9 +327,8 @@ SlideColTurboTrack:
 		
 		// battle tracks
 		else if(levelID < 0x19)
-		{			
-			battleTrackArr = 0x800aba3c;
-			i = battleTrackArr[levelID - 0x12] + 0x6f;
+		{
+			i = R232.battleTrackArr[levelID - 0x12] + 0x6f;
 			
 			// already unlocked
 			t->modelIndex = 2;
@@ -381,9 +376,9 @@ SlideColTurboTrack:
 			warppadObj->inst[WPIS_OPEN_PRIZE1] = newInst;
 			
 			// store in Gem array
-			warppadObj->specLightGem[0] = *(short*)0x800b4ddc;
-			warppadObj->specLightGem[1] = *(short*)0x800b4dde;
-			warppadObj->specLightGem[2] = *(short*)0x800b4de0;
+			warppadObj->specLightGem[0] = D232.specLightGem[0];
+			warppadObj->specLightGem[1] = D232.specLightGem[1];
+			warppadObj->specLightGem[2] = D232.specLightGem[2];
 			
 			// for matrix copy
 			goto SlideColTurboTrack;
@@ -437,9 +432,9 @@ SlideColTurboTrack:
 			// Relic blue color
 			newInst->colorRGBA = 0x20a5ff0;
 			
-			warppadObj->specLightRelic[0] = *(short*)0x800b4dfc;
-			warppadObj->specLightRelic[1] = *(short*)0x800b4dfe;
-			warppadObj->specLightRelic[2] = *(short*)0x800b4e00;
+			warppadObj->specLightRelic[0] = D232.specLightRelic[0];
+			warppadObj->specLightRelic[1] = D232.specLightRelic[1];
+			warppadObj->specLightRelic[2] = D232.specLightRelic[2];
 		}
 		
 		// Key
@@ -449,9 +444,9 @@ SlideColTurboTrack:
 			newInst->colorRGBA = 0xdca6000;
 			
 			// store in Gem array (intended by ND, not a bug)
-			warppadObj->specLightGem[0] = *(short*)0x800b4ddc;
-			warppadObj->specLightGem[1] = *(short*)0x800b4dde;
-			warppadObj->specLightGem[2] = *(short*)0x800b4de0;
+			warppadObj->specLightGem[0] = D232.specLightGem[0];
+			warppadObj->specLightGem[1] = D232.specLightGem[1];
+			warppadObj->specLightGem[2] = D232.specLightGem[2];
 		}
 		
 		// Gem
@@ -460,9 +455,9 @@ SlideColTurboTrack:
 			// dont set color, that gets set in ThTick
 			
 			// store in Gem array
-			warppadObj->specLightGem[0] = *(short*)0x800b4ddc;
-			warppadObj->specLightGem[1] = *(short*)0x800b4dde;
-			warppadObj->specLightGem[2] = *(short*)0x800b4de0;
+			warppadObj->specLightGem[0] = D232.specLightGem[0];
+			warppadObj->specLightGem[1] = D232.specLightGem[1];
+			warppadObj->specLightGem[2] = D232.specLightGem[2];
 		}
 		
 		// assume token
@@ -481,9 +476,9 @@ SlideColTurboTrack:
 			// could have it's own specular light, but they're
 			// all the same specLight, so just use the first one
 			
-			warppadObj->specLightToken[0] = *(short*)0x800b4e1c;
-			warppadObj->specLightToken[1] = *(short*)0x800b4e1e;
-			warppadObj->specLightToken[2] = *(short*)0x800b4e20;
+			warppadObj->specLightToken[0] = D232.specLightToken[0];
+			warppadObj->specLightToken[1] = D232.specLightToken[1];
+			warppadObj->specLightToken[2] = D232.specLightToken[2];
 		}
 	}
 	

@@ -1,50 +1,5 @@
 #include <common.h>
 
-// budget: 4992
-
-// This goes into 232 BSS later on
-#if 0
-// 800b4e3c
-struct MenuRow r800b4e3c =
-{
-	{0x176, 0, 1, 0, 0}, // CTR CHALLENGE
-	{0xb8,  0, 1, 1, 1}, // RELIC RACE
-	{-1,  0, 0, 0, 0}  // NULL
-};
-
-// 800b4e50
-struct MenuBox mb800b4e50 =
-{
-	.stringIndexTitle = 0xb6,
-	.posX_curr = 0x100,
-	.posY_curr = 0x6c,
-	.unk1 = 0,
-	.state = 0x100803,
-	.rows = &r800b4e3c[0],
-	.funcPtr = DECOMP_AH_WarpPad_MenuBoxFuncPtr,
-	.drawStyle = 4,
-};
-
-// 800b4e7c
-// arrKeysNeeded
-
-// 800b4e86
-short num800b4e86 = -1;
-
-// 800b4e88
-int time800b4e88[7] =
-{
-	0x1c200,	// NITRO_COURT
-	0x13ec0,	// RAMPAGE_RUINS
-	0xe100,		// PARKING_LOT (null)
-	0x13740,	// SKULL_ROCK
-	0xe100,		// THE_NORTH_BOWL (null)
-	0x1c200,	// ROCKY_ROAD
-	0xe100,		// LAB_BASEMENT (null)
-}
-
-#endif
-
 void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 {
 	int i;
@@ -87,6 +42,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	warppadInst = t->inst;
 	visInstSrc = gGT->cameraDC[0].visInstSrc;
 	
+#ifndef REBUILD_PS1
 	while(visInstSrc[0] != 0)
 	{
 		if(visInstSrc[0] == warppadInst)
@@ -97,6 +53,9 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		
 		visInstSrc++;
 	}
+#else
+	boolOpen = 1;
+#endif
 	
 	// array of instances in warppad object
 	instArr = &warppadObj->inst[0];
@@ -153,12 +112,12 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		// then use this warppad as the "closest". Otherwise the
 		// game could run this for two warppads right next to each other
 		if(
-				(*(short*)0x800b4e86 == -1) ||
-				(*(short*)0x800b4e86 == levelID)
+				(D232.levelID == -1) ||
+				(D232.levelID == levelID)
 		  )
 		{
 			// saved as nearest warppad
-			*(short*)0x800b4e86 = levelID;
+			D232.levelID = levelID;
 			
 			// if not giving Aku Hint
 			if(sdata->AkuAkuHintState == 0)
@@ -240,7 +199,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	// not near portal
 	else
 	{
-		*(short*)0x800b4e86 = -1;
+		D232.levelID = -1;
 	}
 	
 	// if warppad is locked
@@ -293,12 +252,17 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		warppadInst = instArr[WPIS_CLOSED_ITEM];
 		#define InstArr0 warppadInst
 		
+#ifndef REBUILD_PS1
 		ConvertRotToMatrix(
+#else
+		TEST_ConvertRotToMatrix(
+#endif
 			&InstArr0->matrix,
 			&warppadObj->spinRot_Prize[0]);
 		
 		modelID = InstArr0->model->id;
-				
+
+#ifndef REBUILD_PS1
 		// Trophy has no specular light
 		if(modelID == 0x62) return;
 				
@@ -330,7 +294,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		
 		// for Key or Gem
 		Vector_SpecLightSpin3D(InstArr0, &warppadObj->spinRot_Prize[0], &warppadObj->specLightGem[0]);
-		
+#endif
 		return;
 	}
 	
@@ -346,10 +310,14 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		
 		// what on earth was this RNG?
 		// how'd they come up with something so random, that looks so good?
-		i = MixRNG_Scramble();
+		i = DECOMP_MixRNG_Scramble();
 		warppadObj->spinRot_Beam[1] += ((short)(i >> 3) + (short)((i >> 3) / 6) * -6 + 1) * 0x200;
 	
+#ifndef REBUILD_PS1
 		ConvertRotToMatrix(
+#else
+		TEST_ConvertRotToMatrix(
+#endif
 			&instArr[WPIS_OPEN_BEAM]->matrix, 
 			&warppadObj->spinRot_Beam[0]);
 	}
@@ -359,7 +327,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	wispMaxHeight = 0x600;
 	
 	// if close to this warppad
-	if(*(short*)0x800b4e86 != -1)
+	if(D232.levelID != -1)
 		wispMaxHeight = 0x400;
 	
 	for(i = 0; i < 2; i++)
@@ -371,7 +339,11 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			
 			warppadObj->spinRot_Wisp[i][1] += 0x100;
 			
+#ifndef REBUILD_PS1
 			ConvertRotToMatrix(
+#else
+			TEST_ConvertRotToMatrix(
+#endif
 				&instArr[WPIS_OPEN_RING1+i]->matrix, 
 				&warppadObj->spinRot_Wisp[i][0]);
 			
@@ -411,7 +383,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 				// full transparency
 				instArr[WPIS_OPEN_RING1+i]->alphaScale = 0x1000;
 				
-				rng1 = MixRNG_Scramble() >> 3;
+				rng1 = DECOMP_MixRNG_Scramble() >> 3;
 				
 				rng2 = rng1;
 				if(rng1 < 0)
@@ -517,8 +489,10 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	// warp back. Without this, Freeze causes mask-grab, which makes you drive.
 	// However, with this, state goes 0xA, then 0xB, then 0xA, and warp SFX
 	// plays a second time. Animation also plays twice but is invisible second time
+#ifndef REBUILD_PS1
 	void VehPtr_Warp_Init();
 	gGT->drivers[0]->funcPtrs[0] = VehPtr_Warp_Init;
+#endif
 	
 	if (warppadObj->framesWarping < 0x400)
 		warppadObj->framesWarping++;
@@ -535,27 +509,20 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 			// if never opened
 			if(sdata->boolOpenTokenRelicMenu == 0)
 			{
-				// menubox->0x1a (row)
-				*(short*)0x800b4e6a =
+				D232.menuBox_TokenRelic.rowSelected =
 					(CHECK_ADV_BIT(sdata->advProgress.rewards, (levelID + 0x4c)) != 0);
 				
 				// now opened
 				sdata->boolOpenTokenRelicMenu = 1;
 				
-				DECOMP_MENUBOX_Show(0x800b4e50);
-				
-				// temporary, until 232 BSS is rewritten
-				// with proper structs, and DECOMP function symbol
-				#if 1
-				*(int*)0x800b4e60 = DECOMP_AH_WarpPad_MenuBoxFuncPtr;
-				#endif
+				DECOMP_MENUBOX_Show(&D232.menuBox_TokenRelic);
 				
 				// dont load level
 				return;
 			}
 			
 			// if opened, but not closed yet
-			if((DECOMP_MENUBOX_BoolHidden(0x800b4e50) & 0xffff) == 0)
+			if((DECOMP_MENUBOX_BoolHidden(&D232.menuBox_TokenRelic) & 0xffff) == 0)
 			{
 				// dont load level
 				return;
@@ -577,7 +544,7 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 				
 				// if can't spawn aku cause he's already here,
 				// quit function, wait till he's done to start race
-				i = AH_MaskHint_boolCanSpawn();
+				i = DECOMP_AH_MaskHint_boolCanSpawn();
 				if((i & 0xffff) == 0) return;
 				
 				// reset for future gameplay
@@ -605,10 +572,10 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 		
 		// if can't spawn aku cause he's already here,
 		// quit function, wait till he's done to start race
-		i = AH_MaskHint_boolCanSpawn();
+		i = DECOMP_AH_MaskHint_boolCanSpawn();
 		if((i & 0xffff) == 0) return;
 		
-		gGT->originalEventTime = *(int*)(0x800b4e88 + 4 * (levelID-0x12));
+		gGT->originalEventTime = D232.timeCrystalChallenge[levelID-0x12];
 	}
 	
 	// gem cups

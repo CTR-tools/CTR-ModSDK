@@ -142,6 +142,28 @@ struct SaveObj
 	// total size unk
 };
 
+struct OverlayRDATA_232
+{
+	// 0x800aba3c
+	short battleTrackArr[8];
+	
+	// 0x800aba4c
+	short bossTracks[6];
+	
+	// 0x800aba58
+	short bossIDs[6];
+	
+	// 0x800aba64
+	char s_garage[8];
+	char s_garagetop[0xc];
+	char s_saveobj[8];
+	char s_scan[8];
+	char s_key[4];
+	
+	// 0x800aba8c
+	short keyFrame[0xc];
+};
+
 struct OverlayDATA_232
 {
 	// 800b4ddc (3*5 plus padding)
@@ -172,5 +194,5 @@ struct OverlayDATA_232
 	short saveObjCameraOffset[4];
 };
 
-// 800b4ddc - UsaRetail
-extern struct OverlayDATA_230 D230;
+extern struct OverlayRDATA_232 R232;
+extern struct OverlayDATA_232 D232;

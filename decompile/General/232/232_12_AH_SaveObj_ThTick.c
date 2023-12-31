@@ -65,7 +65,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
                 // 0 - speaking,
                 // 1 - gone
 
-                uVar6 = AH_MaskHint_boolCanSpawn(),
+                uVar6 = DECOMP_AH_MaskHint_boolCanSpawn(),
 
                 // if aku is gone
                 (uVar6 & 0xffff) != 0)
@@ -83,18 +83,20 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
                 desiredPos[2] = gGT->level1->ptrSpawnType2_PosRot->posCoords[2] + (short)((int)saveInst->matrix.m[2][0] * 0x19 >> 7);
 
                 // desired transition rotation (x,y,z)
-                desiredRot[0] = gGT->level1->ptrSpawnType2_PosRot->posCoords[3] + *(short*)0x800b4ea4;
-                desiredRot[1] = gGT->level1->ptrSpawnType2_PosRot->posCoords[4] + *(short*)0x800b4ea6;
-                desiredRot[2] = gGT->level1->ptrSpawnType2_PosRot->posCoords[5] + *(short*)0x800b4ea8;
+                desiredRot[0] = gGT->level1->ptrSpawnType2_PosRot->posCoords[3] + D232.saveObjCameraOffset[0];
+                desiredRot[1] = gGT->level1->ptrSpawnType2_PosRot->posCoords[4] + D232.saveObjCameraOffset[1];
+                desiredRot[2] = gGT->level1->ptrSpawnType2_PosRot->posCoords[5] + D232.saveObjCameraOffset[2];
 
-                // 0x80058c44 is an empty function that does nothing
-                driver->instSelf->thread->funcThTick = 0x80058c44;
+                // Veh_NullThread is an empty function that does nothing
+                driver->instSelf->thread->funcThTick = Veh_NullThread;
 
                 // Set CameraDC's desired position and rotation,
                 // then begin the transition by setting flag
-                CAM_SetDesiredPosRot(gGT->cameraDC, &desiredPos, &desiredRot);
+                DECOMP_CAM_SetDesiredPosRot(gGT->cameraDC, &desiredPos, &desiredRot);
 
+#ifndef REBUILD_PS1
                 GAMEPAD_Vib_2(driver, 0, 0);
+#endif
 
                 save->flags |= 1;
 
@@ -186,6 +188,7 @@ LAB_800af72c:
             saveInst->animFrame += 1;
         }
 
+#ifndef REBUILD_PS1
         // if animation is finished,
         // reset animation, and play sound
         else
@@ -206,7 +209,7 @@ LAB_800af72c:
                 // calculate volume based on distance,
                 // mapping perentage between min-max distance,
                 // to a volume 0 - 0xff
-                uVar6 = MapToRange(iVar7, 300, 6000, 0xff, 0);
+                uVar6 = MapToRange(iVar7, 300, 6000, 0xff, 0);	
             }
 
             // Play save/load screen sound
@@ -215,6 +218,7 @@ LAB_800af72c:
             // reset animation
             saveInst->animFrame = 0;
         }
+#endif
     }
     return;
 }

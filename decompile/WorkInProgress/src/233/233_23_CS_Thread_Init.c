@@ -229,7 +229,7 @@ LAB_800af5ec:
 
     cs->unk18 = (int)meta[4];
 
-    cs->unk14 = meta[2] + (short)(((MixRNG_Scramble() >> 2 & 0xfffU) * ((meta[3] - meta[2]) + 1)) >> 0xc);
+    cs->unk14 = meta[2] + (short)(((DECOMP_MixRNG_Scramble() >> 2 & 0xfffU) * ((meta[3] - meta[2]) + 1)) >> 0xc);
 
     if (inst != 0)
     {

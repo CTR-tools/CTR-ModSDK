@@ -104,7 +104,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   else
   {
     // get number of keys for whichever door is on the hub
-    numKeys = ((short *)0x800b4e7c)[(lev + -0x19)];
+    numKeys = D232.arrKeysNeeded[(lev + -0x19)];
   }
 
   // if in a state where you're seeing the boss key open an adv door,
@@ -199,7 +199,9 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
 
     // If you are here, game must not be paused
 
+#ifndef REBUILD_PS1
     driver->funcPtrs[0] = VehPtr_Freeze_Init;
+#endif
 
     door->camFlags |= WdCam_CutscenePlaying;
 
@@ -389,9 +391,11 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
     desiredRot[2] = doorInst->instDef->rot[2];
 
     // set desired position and rotation for CamerDC transition
-    CAM_SetDesiredPosRot(&gGT->cameraDC[0], &desiredPos[0], &desiredRot[0]);
+    DECOMP_CAM_SetDesiredPosRot(&gGT->cameraDC[0], &desiredPos[0], &desiredRot[0]);
 
+#ifndef REBUILD_PS1
     GAMEPAD_Vib_2(driver, 0, 0);
+#endif
 
     // start camera out transition (in "else" below)
     door->camFlags |= WdCam_FlyingOut;
@@ -407,17 +411,29 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   desiredRot[0] = door->doorRot[0];
   desiredRot[1] = doorInst->instDef->rot[1] - door->doorRot[1];
   desiredRot[2] = door->doorRot[2];
-  ConvertRotToMatrix(&door->otherDoor->matrix, &desiredRot[0]);
+  
+#ifndef REBUILD_PS1
+	ConvertRotToMatrix(
+#else
+	TEST_ConvertRotToMatrix(
+#endif
+	&door->otherDoor->matrix, &desiredRot[0]);
   
   // left-hand door rot[x,y,z]
   desiredRot[1] = doorInst->instDef->rot[1] + door->doorRot[1];
-  ConvertRotToMatrix(&doorInst->matrix, &desiredRot[0]);
+
+#ifndef REBUILD_PS1
+	ConvertRotToMatrix(
+#else
+	TEST_ConvertRotToMatrix(
+#endif
+	&doorInst->matrix, &desiredRot[0]);
   
   // if less than 11 frames have passed,
   // decrease key scale, then quit function
   if (door->keyShrinkFrame < 0xb)
   {
-  	scaler = (short*)0x800aba8c;
+  	scaler = (short*)R232.keyFrame;
   	
   	// loop through 4 keys
   	for (i = 0; i < 4; i++)
@@ -495,7 +511,9 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   	
   cDC->flags |= 0x400;
   
+#ifndef REBUILD_PS1
   driver->funcPtrs[0] = VehPtr_Driving_Init;
+#endif
   
   // cutscene over
   door->camFlags &= ~(0x10);

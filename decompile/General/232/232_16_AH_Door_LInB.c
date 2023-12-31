@@ -176,10 +176,20 @@ void DECOMP_AH_Door_LInB(struct Instance *inst)
     // make matrices for both doors rotated open
 
     // convert 3 rotation shorts into rotation matrix
-    ConvertRotToMatrix(&inst->matrix, &leftRot);
+#ifndef REBUILD_PS1
+	ConvertRotToMatrix(
+#else
+	TEST_ConvertRotToMatrix(
+#endif
+		&inst->matrix, &leftRot);
 
     // convert 3 rotation shorts into rotation matrix
-    ConvertRotToMatrix(&otherDoorInst->matrix, &rightRot);
+#ifndef REBUILD_PS1
+	ConvertRotToMatrix(
+#else
+	TEST_ConvertRotToMatrix(
+#endif
+		&otherDoorInst->matrix, &rightRot);
   }
   return;
 }

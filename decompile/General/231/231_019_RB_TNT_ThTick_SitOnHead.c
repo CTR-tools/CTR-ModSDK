@@ -77,7 +77,7 @@ LAB_800ad4ec:
     mw->jumpsRemaining = 0;
   }
   else {
-    rng = MixRNG_Scramble();
+    rng = DECOMP_MixRNG_Scramble();
     if (rng != (rng / 0x10e) * 0x10e) goto LAB_800ad5f8;
   }
   

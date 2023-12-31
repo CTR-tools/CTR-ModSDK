@@ -81,7 +81,7 @@ void CS_Thread_ThTick(struct Thread *t)
         if (((cs->flags & 2) != 0) &&
             (inst->alphaScale = 0, (gGT->timer & 1) != 0))
         {
-            inst->alphaScale = (MixRNG_Scramble() & 0x7ff) + 0x400;
+            inst->alphaScale = (DECOMP_MixRNG_Scramble() & 0x7ff) + 0x400;
         }
     }
 

@@ -384,7 +384,7 @@ int DECOMP_RB_CrateFruit_LInC(
 		driver = RB_CrateAny_GetDriver(collidingTh, sps);
 		if(driver == 1) return 1;
 		
-		random = MixRNG_Scramble();
+		random = DECOMP_MixRNG_Scramble();
 		newWumpa = random;
 		if (random < 0) {
 		newWumpa = random + 3;

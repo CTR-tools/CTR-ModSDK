@@ -3,8 +3,6 @@
 
 // budget: 4992
 
-char AH_MaskHint_boolCanSpawn(void);
-
 void AH_WarpPad_ThTick(struct Thread* t)
 {
 	int i;
@@ -163,7 +161,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			   )
 			{
 				// give hint "you must have 4 tokens for a gem"
-				MainFrame_RequestMaskHint(0x1b, 0);
+				DECOMP_MainFrame_RequestMaskHint(0x1b, 0);
 			}
 			
 			else if
@@ -180,7 +178,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			   )
 			{
 				// give hint for "need more trophies"
-				MainFrame_RequestMaskHint(2, 0);
+				DECOMP_MainFrame_RequestMaskHint(2, 0);
 			}
 			
 			else if
@@ -194,7 +192,7 @@ void AH_WarpPad_ThTick(struct Thread* t)
 			   )
 			{
 				// give hint for "need more trophies"
-				MainFrame_RequestMaskHint(0x1C, 0);
+				DECOMP_MainFrame_RequestMaskHint(0x1C, 0);
 			}
 		}
 	}
@@ -525,11 +523,11 @@ void AH_WarpPad_ThTick(struct Thread* t)
 				
 				// if hint is locked
 				if(CHECK_ADV_BIT(sdata->advProgress.rewards, (i+0x76)) == 0)
-					MainFrame_RequestMaskHint(i, 1);
+					DECOMP_MainFrame_RequestMaskHint(i, 1);
 				
 				// if can't spawn aku cause he's already here,
 				// quit function, wait till he's done to start race
-				i = AH_MaskHint_boolCanSpawn();
+				i = DECOMP_AH_MaskHint_boolCanSpawn();
 				if((i & 0xffff) == 0) return;
 				
 				// reset for future gameplay
@@ -553,11 +551,11 @@ void AH_WarpPad_ThTick(struct Thread* t)
 		
 		// Dont have hint "collect every crystal"
 		if ((sdata->advProgress.rewards[4] & 0x8000) == 0)
-			MainFrame_RequestMaskHint(0x19, 1);
+			DECOMP_MainFrame_RequestMaskHint(0x19, 1);
 		
 		// if can't spawn aku cause he's already here,
 		// quit function, wait till he's done to start race
-		i = AH_MaskHint_boolCanSpawn();
+		i = DECOMP_AH_MaskHint_boolCanSpawn();
 		if((i & 0xffff) == 0) return;
 		
 		gGT->originalEventTime = *(int*)(0x800b4e88 + 4 * (levelID-0x12));

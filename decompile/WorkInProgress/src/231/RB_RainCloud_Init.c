@@ -88,7 +88,7 @@ void DECOMP_RB_RainCloud_Init(struct Driver* d)
     *(int*)(d->thCloud->object + 4) = 0x1e00;
     
 	// random number
-	rng = MixRNG_Scramble();
+	rng = DECOMP_MixRNG_Scramble();
 	
 	// random (related to driver offset 0x50a)
     *(short *)(d->thCloud->object + 6) = (short)((rng % 400) / 100);

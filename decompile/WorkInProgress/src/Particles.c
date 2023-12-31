@@ -11,17 +11,17 @@ void Particle_FuncPtr_PotionShatter(struct Particle *p)
       goto LAB_8003ebc8;
 
     // Get random number
-    rng = MixRNG_Scramble();
+    rng = DECOMP_MixRNG_Scramble();
 
     p->axis[0].velocity = rng + (rng / 800) * -800 - 400;
 
     // Get random number
-    rng = MixRNG_Scramble();
+    rng = DECOMP_MixRNG_Scramble();
 
     p->axis[2].velocity = rng + (rng / 800) * -800 - 400;
 
     // Get random number
-    rng = MixRNG_Scramble();
+    rng = DECOMP_MixRNG_Scramble();
 
     sVar2 = (rng >> 8);
     if (rng < 0)
@@ -58,12 +58,12 @@ void Particle_FuncPtr_SpitTire(struct Particle *p)
   if (p->axis[1].startVal >> 8 < *(int *)(p->driverInst->matrix.t[1]) + 0x10)
   {
     // Get random number
-    rng = MixRNG_Scramble();
+    rng = DECOMP_MixRNG_Scramble();
 
     p->axis[0].velocity = rng + (rng / 0x1640) * -0x1640 - 0xb20;
 
     // Get random number
-    rng = MixRNG_Scramble();
+    rng = DECOMP_MixRNG_Scramble();
 
     iVar2 = p->axis[5].startVal;
 
@@ -71,7 +71,7 @@ void Particle_FuncPtr_SpitTire(struct Particle *p)
     if (iVar2 == 0x1000)
     {
       // Get random number
-      rng = MixRNG_Scramble();
+      rng = DECOMP_MixRNG_Scramble();
 
       p->axis[1].velocity = rng + (rng / 0x12c0) * -0x12c0 + 0x1900;
       iVar2 = p->driverInst->matrix.t[1];
@@ -81,7 +81,7 @@ void Particle_FuncPtr_SpitTire(struct Particle *p)
     {
       if (iVar2 == 0xfff)
       {
-        rng = MixRNG_Scramble();
+        rng = DECOMP_MixRNG_Scramble();
         p->axis[1].velocity = rng + (rng / 800) * -800 + 8000;
         iVar2 = p->driverInst->matrix.t[1];
         p->axis[5].startVal = 0xffe;
@@ -94,7 +94,7 @@ void Particle_FuncPtr_SpitTire(struct Particle *p)
         }
 
         // Get random number
-        rng = MixRNG_Scramble();
+        rng = DECOMP_MixRNG_Scramble();
 
         p->axis[1].velocity = rng + (rng / 800) * -800 + 6000;
         rng = p->driverInst->matrix.t[1];
@@ -122,7 +122,7 @@ void Particle_FuncPtr_ExhaustUnderwater(struct Particle *p)
       p->ptrIconArray = icon->icons;
     }
 
-    p->axis[4].startVal = MixRNG_Scramble() & 0xfff;
+    p->axis[4].startVal = DECOMP_MixRNG_Scramble() & 0xfff;
     p->framesLeftInLife = 0;
   }
 }

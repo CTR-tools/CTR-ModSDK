@@ -1006,7 +1006,7 @@ void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
 void CameraSlack_PhysAngular(struct Driver* d);
 
 // "VehPtr"
-
+void Veh_NullThread();
 void VehPtr_Driving_PhysAngular(struct Thread* thread, struct Driver* driver);
 //Player_Driving_LerpQuarterStrength()
 int Player_Driving_LerpToForwards(struct Driver* driver, int param_2, int param_3, int param_4);
