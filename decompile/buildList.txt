@@ -176,6 +176,9 @@ common, exe, DecalHUD_DrawWeapon, 0x0, General/DecalHUD/DecalHUD_DrawWeapon.c
 common, exe, DecalHUD_DrawPolyGT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyGT4.c
 common, exe, DecalHUD_Arrow2D, 0x0, General/DecalHUD/DecalHUD_Arrow2D.c
 
+// skidmarks
+common, exe, DrawSkidMarks_Subset2, 0x0, General/DrawSkidMarks_Subset2.c
+
 // Display
 common, exe, DISPLAY_Swap, 0x0, General/Display/DISPLAY_Swap.c
 
