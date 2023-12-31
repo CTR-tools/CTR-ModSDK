@@ -28,13 +28,13 @@ common, 225, OVR_Region1, 0x0, General/225/225_Full.c
 // 230 (incomplete)
 common, 230, R230, 0x0, General/230/R230.c
 common, 230, D230, 0x0, General/230/D230.c
-common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/1_Block1.c
+common, 230, MM_Battle_DrawIcon_Character, 0x0, General/230/230_Block1.c
 common, 230, MM_AdvNewLoad_GetMenuBox, 0x0, General/230/230_39_MM_AdvNewLoad_GetMenuBox.c
-common, 230, MM_Characters_AnimateColors, 0x0, General/230/1_Block2.c
+common, 230, MM_Characters_AnimateColors, 0x0, General/230/230_Block2.c
 common, 230, MM_TrackSelect_Init, 0x0, General/230/230_55_MM_TrackSelect_Init.c
 common, 230, MM_TrackSelect_MenuBox, 0x0, General/230/230_56_MM_TrackSelect_MenuBox.c
 common, 230, MM_TrackSelect_GetMenuBox, 0x0, General/230/230_57_MM_TrackSelect_GetMenuBox.c
-common, 230, MM_CupSelect_Init, 0x0, General/230/1_Block3.c
+common, 230, MM_CupSelect_Init, 0x0, General/230/230_Block3.c
 // next comes MM_Video
 
 // 231 (incomplete)
@@ -90,7 +90,7 @@ common, 231, RB_Teeth_LInB, 0x0, General/231/231_120_124_RB_Teeth.c
 common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
 
 // 232 (incomplete)
-common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_00_16.c
+common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
 common, 232, AH_Map_Main, 0x0, General/232/232_24_AH_Map_Main.c
 
 // 233

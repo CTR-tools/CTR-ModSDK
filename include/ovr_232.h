@@ -141,3 +141,36 @@ struct SaveObj
 	
 	// total size unk
 };
+
+struct OverlayDATA_232
+{
+	// 800b4ddc (3*5 plus padding)
+	short specLightGem[16];
+	
+	// 800b4dfc (3*5 plus padding)
+	short specLightRelic[16];
+	
+	// 800b4e1c (3*5 plus padding)
+	short specLightToken[16];
+	
+	// 800b4e3c
+	struct MenuBox menuRow_TokenRelic[3];
+	
+	// 800b4e50
+	struct MenuBox menuBox_TokenRelic;
+	
+	// 800b4e7c
+	short arrKeysNeeded[5];
+	
+	// 800b4e86
+	short levelID;
+	
+	// 800b4e88
+	int timeCrystalChallenge[7];
+
+	// 800b4ea4
+	short saveObjCameraOffset[4];
+};
+
+// 800b4ddc - UsaRetail
+extern struct OverlayDATA_230 D230;
