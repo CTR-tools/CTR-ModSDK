@@ -173,7 +173,8 @@ LAB_8004ccc8:
 	  // if no tileView is supplied
 	  if (param_5 == 0)
 	  {
-        psVar11 = hudStruct[param_3].x;
+		// TODO: fix struct size
+        psVar11 = &hudStruct[2*param_3].x;
 
 		// Convert X
         color = DECOMP_UI_ConvertX_2(*psVar11,psVar11[2]);
@@ -186,11 +187,12 @@ LAB_8004ccc8:
 		bigNum->matrix.t[2] = psVar11[2];
       }
 
-	  // if tileView is supplied
+	  // if tileView is supplied,
+	  // for decalMP and fruitDisp
       else
 	  {
-		// instance->tileView
-        bigNum->idpp[0].tileView = param_5;
+		struct InstDrawPerPlayer* idpp = INST_GETIDPP(bigNum);
+        idpp[0].tileView = param_5;
 
 		// record that tileView is present
 		bigNum->flags = bigNum->flags | 0x100;
@@ -200,13 +202,16 @@ LAB_8004ccc8:
         bigNum->matrix.t[2] = 0x200;
       }
 
-	  puVar10 = &hudStruct[param_3];
-      bigNum->scale[0] = puVar10->x + 6;
-      bigNum->scale[1] = puVar10->x + 6;
-      uVar5 = puVar10->x + 6;
+	  // TODO: There's 0x14 elements, 8 bytes large,
+	  // There are NOT 0x28 elements, 4 bytes large
+	  puVar10 = &hudStruct[2*param_3];
+      uVar5 = puVar10[1].y;
+      bigNum->scale[0] = uVar5;
+      bigNum->scale[1] = uVar5;
+      bigNum->scale[2] = uVar5;
+	  
       bigNum->unk50 = 0x80;
       bigNum->unk51 = 0x80;
-      bigNum->scale[2] = uVar5;
       if (param_4 == 0) {
         local_30 = 0;
       }
@@ -228,7 +233,8 @@ LAB_8004ccc8:
 	  // thread = thread -> next
       driverThread = driverThread->next;
 
-	  hudStruct += 0xa0;
+	  // TODO: fix struct size
+	  hudStruct += 0x28;
     }
   }
   return bigNum;

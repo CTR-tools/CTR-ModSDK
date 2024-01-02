@@ -588,7 +588,7 @@ common, exe, UI_ThTick_CtrLetters, 0x0, General/UI/UI_ThTick_CtrLetters.c
 common, exe, UI_ThTick_big1, 0x0, General/UI/UI_ThTick_big1.c
 common, exe, UI_ConvertX_2, 0x0, General/UI/UI_ConvertX_2.c
 common, exe, UI_ConvertY_2, 0x0, General/UI/UI_ConvertY_2.c
-//ommon, exe, UI_INSTANCE_BirthWithThread, 0x0, General/UI/UI_INSTANCE_BirthWithThread.c
+common, exe, UI_INSTANCE_BirthWithThread, 0x0, General/UI/UI_INSTANCE_BirthWithThread.c
 common, exe, UI_INSTANCE_InitAll, 0x0, General/UI/UI_INSTANCE_InitAll.c
 common, exe, UI_Map_GetIconPos, 0x0, General/UI/UI_Map_GetIconPos.c
 common, exe, UI_Map_DrawAdvPlayer, 0x0, General/UI/UI_Map_DrawAdvPlayer.c
