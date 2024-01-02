@@ -49,14 +49,14 @@ void RemapButtons(unsigned short * buttons)
 
 void Remap_Main()
 {
-	int i;
 	struct GamepadBuffer* gamepad;
+	struct GameTracker * gGT = sdata->gGT;
 	
-	for(i = 0; i < sdata->gGT->numPlyrCurrGame; i++)
+	for(int i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		gamepad = &sdata->gGamepads->gamepad[i];
-	
-		if(sdata->gGT->levelID != MAIN_MENU_LEVEL)
+
+		if ((gGT->gameMode1 & (PAUSE_1 | END_OF_RACE | MAIN_MENU)) == 0)
 		{
 			RemapButtons(&gamepad->ptrControllerPacket->controllerInput);
 		}

@@ -10,8 +10,8 @@ struct sData sdata_static =
 	.langBufferSize = 0x3F04,
 	
 #if NO_BSS
-	.unkPtr_8008da48 = 0x8008da48,
-	.unkPtr_8008da64 = 0x8008da64,
+	.arcade_difficultyParams = 0x8008da48,
+	.cup_difficultyParams = 0x8008da64,
 #else
 	.unkPtr_8008da48 = &sdata_static.unk_data1c_1[0],
 	.unkPtr_8008da64 = &sdata_static.unk_data1c_2[0],
@@ -366,7 +366,7 @@ struct sData sdata_static =
 	.stringFormat2 = "%ld",
 	.greyColor = 0x808080,
 	.greenColor = 0x20c020,
-	.darkColor = 0x25,
+	.s_percent_sign = 0x25,
 	.redColor = 0xA0A000,
 	.ghostIconColor = 0x808080,
 	

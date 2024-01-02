@@ -1,40 +1,27 @@
 #include <common.h>
 
-void LoadSave_ThTick(struct Thread* th)
+void LoadSave_ThTick(struct Thread *t)
 {
-  char i;
-  int iVar1;
-  int iVar2;
-  int *piVar3;
-  int *piVar4;
-  short local_28;
-  short local_26;
-  short local_24;
-
-  piVar4 = *(int **)((struct LoadSaveData *)th->object)->data[0];
-  piVar3 = piVar4 + 1;
-
   // loop through 12 instances,
-  // 3 per profile, 4 profiles
-  for (i = 0; i < 12; i++) 
+  // 3 instances per profile, 4 profile slots
+  for (int i = 0; i < 12; i++)
   {
-    iVar1 = (i % 3);
-    *(short *)((int)piVar3 + 2) += ((short*)0x8008d47c)[iVar1];
+    // determine if it's Relic, Key or Trophy
+    int objIndex = (i % 3);
 
-	 // convert 3 rotation shorts into rotation matrix
-    ConvertRotToMatrix(*piVar4 + 0x30,piVar3);
+    // and add its corresponding rate
+    sdata->LoadSaveData[i].rot[1] += sdata->LoadSave_SpinRateY[objIndex];
 
-    if (iVar1 != 1)
-	{
-	  // from MetaDataSaveLoad
-      local_28 = data.MetaDataLoadSave[i]->vec3_specular_inverted[0];
-      local_26 = data.MetaDataLoadSave[i]->vec3_specular_inverted[1];
-      local_24 = data.MetaDataLoadSave[i]->vec3_specular_inverted[2];
-	  // 
-      Vector_SpecLightSpin3D(*piVar4,piVar3,&local_28);
+    struct Instance * inst = sdata->LoadSaveData[i].inst;
+
+    // convert 3 rotation shorts into rotation matrix
+    ConvertRotToMatrix(inst->matrix, sdata->LoadSaveData[i].rot);
+
+    if (objIndex != 1)
+    {
+      // from MetaDataSaveLoad
+      short *rot = data.MetaDataLoadSave[i]->vec3_specular_inverted;
+      Vector_SpecLightSpin3D(inst->matrix, sdata->LoadSaveData[i].rot, rot);
     }
-    piVar3 = piVar3 + 3;
-    piVar4 = piVar4 + 3;
   }
-  return;
 }

@@ -1,7 +1,7 @@
 #include <common.h>
 
 // param4 - reason
-int DECOMP_BOTS_ChangeState(
+u_char DECOMP_BOTS_ChangeState(
 	struct Driver *victim, int damageType, 
 	struct Driver *attacker, int damageReason)
 {
@@ -118,7 +118,7 @@ int DECOMP_BOTS_ChangeState(
     }
 
     // AI is not in progress cooldown
-	victim->ai_progress_cooldown = 0;
+	  victim->ai_progress_cooldown = 0;
 
     // Kart Emote ID = 0
     victim->matrixArray = 0;
@@ -163,7 +163,7 @@ int DECOMP_BOTS_ChangeState(
     *(int *)(victim + 0x5d0) = 0;
 
     // AI is not in progress cooldown
-    *(int *)(victim + 0x604) = 0;
+    victim->ai_progress_cooldown = 0;
 
     *(int *)(victim + 0x5d4) = *(int *)(victim + 0x5d4) >> 1;
     victim->botFlags |= 6;
@@ -182,10 +182,8 @@ int DECOMP_BOTS_ChangeState(
     victim->unk5bc[0] = 0xd20;
     victim->unk5ba = 5;
 
-    // racer is being mask grabbed
     victim->kartState = MASK_GRABBED;
-
-    victim->botFlags = victim->botFlags | 6;
+    victim->botFlags |= 6;
 
     // TODO: Inline this below
     struct Thread *thread_1 = victim->instSelf->thread;
@@ -197,31 +195,23 @@ int DECOMP_BOTS_ChangeState(
     break;
 
   default:
-    // set AI progress cooldown to 0x3C
-    *(int *)(victim + 0x604) = 0x3c;
+    victim->ai_progress_cooldown = 60;
   }
 
   // === Count Statistics ===
   // Exactly the same as Player_ChangeState
 
-  if ((attacker != 0) && (damageType != 0))
+  if (damageType)
   {
-    attacker->numTimesAttacking++;
-    
-	if (damageReason == 3)
-    {
-      attacker->numTimesMissileHitSomeone++;
+    attacker->numTimesAttacked++;
+    switch (damageType){
+      case 1:
+        attacker->numTimesBombsHitSomeone++;
+      case 3:
+        attacker->numTimesMissileHitSomeone++;
+      case 4:
+        attacker->numTimesMovingPotionHitSomeone++;
     }
-	
-    else if (damageReason == 1)
-	{
-		attacker->numTimesBombsHitSomeone++;
-	}
-	
-    else if (damageReason == 4)
-	{
-		attacker->numTimesMovingPotionHitSomeone++;
-	}
   }
   return 1;
 }

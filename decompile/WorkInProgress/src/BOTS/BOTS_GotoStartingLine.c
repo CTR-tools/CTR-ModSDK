@@ -44,10 +44,10 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver *d)
 
   d->rotCurr.w = 0;
   d->rotPrev.y = 0;
-  *(short *)(d + 0x600) = 0;
+  d->ai_rot4[0] = 0;
+  d->ai_rot4[2] = 0;
   d->rotCurr.x = 0;
   d->rotPrev.x = 0;
-  *(short *)(d + 0x5fc) = 0;
   
   d->unknownDimension2Curr = 0;
 
@@ -70,6 +70,4 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver *d)
   // cooldown before next weapon
   RngDeadCoed(&sdata->const_0x30215400);
   d->weaponCooldown = (extraout_var & 0xff) + 300;
-
-  return;
 }
