@@ -382,7 +382,7 @@ struct sData sdata_static =
 	
 	.boolOpenTokenRelicMenu = 0,
 	.ptrTileViewUI = 0,
-	.ptrThreadFruitDisp = 0,
+	.ptrFruitDisp = 0,
 	.menuReadyToPass = 0,
 	
 	.s_token = "token",

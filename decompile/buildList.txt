@@ -1,5 +1,5 @@
-// 513+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 656 rewritten so far
-// 513 for every 'common' and ','
+// 519+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 662 rewritten so far
+// 519 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
 // 14 for 230_Block2
@@ -588,7 +588,8 @@ common, exe, UI_ThTick_CtrLetters, 0x0, General/UI/UI_ThTick_CtrLetters.c
 common, exe, UI_ThTick_big1, 0x0, General/UI/UI_ThTick_big1.c
 common, exe, UI_ConvertX_2, 0x0, General/UI/UI_ConvertX_2.c
 common, exe, UI_ConvertY_2, 0x0, General/UI/UI_ConvertY_2.c
-// UI_InitAll comes next
+//ommon, exe, UI_INSTANCE_BirthWithThread, 0x0, General/UI/UI_INSTANCE_BirthWithThread.c
+common, exe, UI_INSTANCE_InitAll, 0x0, General/UI/UI_INSTANCE_InitAll.c
 common, exe, UI_Map_GetIconPos, 0x0, General/UI/UI_Map_GetIconPos.c
 common, exe, UI_Map_DrawAdvPlayer, 0x0, General/UI/UI_Map_DrawAdvPlayer.c
 common, exe, UI_Map_DrawMap, 0x0, General/UI/UI_Map_DrawMap.c

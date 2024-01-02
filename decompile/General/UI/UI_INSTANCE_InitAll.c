@@ -5,40 +5,48 @@ void DECOMP_UI_INSTANCE_InitAll(void)
   struct GameTracker *gGT;
   struct Instance* crystal;
   struct Instance* token;
+  u_int gameMode1;
   u_int relicType;
   int iVar5;
+  
+  #if 0
   undefined2 *puVar6;
   undefined2 *puVar7;
+  #endif
+  
   int i;
 
   gGT = sdata->gGT;
   sdata->menuReadyToPass &= 0xfffffffe;
   gGT->renderFlags |= 0x8000;
   
-  relicType = gGT->gameMode1;
+  gameMode1 = gGT->gameMode1;
 
   // For most of the function
 
   // If you're not in Crystal Challenge (in adventure mode)
-  if ((relicType & CRYSTAL_CHALLENGE) == 0)
+  if ((gameMode1 & CRYSTAL_CHALLENGE) == 0)
   {
 	// If you're in Adventure Arena
-    if ((relicType & ADVENTURE_ARENA) != 0)
+    if ((gameMode1 & ADVENTURE_ARENA) != 0)
 	{
-      UI_INSTANCE_BirthWithThread(0x61,UI_ThTick_Reward,0xe,1,0,sdata->s_relic1);
-      UI_INSTANCE_BirthWithThread(99,UI_ThTick_Reward,0xf,1,0,sdata->s_key1);
-      UI_INSTANCE_BirthWithThread(0x62,UI_ThTick_Reward,0x10,0,0,sdata->s_trophy1);
+      UI_INSTANCE_BirthWithThread(0x61,UI_ThTick_Reward,0xe,1,0,/*sdata->s_relic1*/0);
+      UI_INSTANCE_BirthWithThread(99,UI_ThTick_Reward,0xf,1,0,/*sdata->s_key1*/0);
+      UI_INSTANCE_BirthWithThread(0x62,UI_ThTick_Reward,0x10,0,0,/*sdata->s_trophy1*/0);
 
       GAMEPROG_AdvPercent(&sdata->advProgress);
       return;
     }
 
-	// ???
-    if ((relicType & (LOADING | ADVENTURE_ARENA | MAIN_MENU)) != 0) {
+    if ((gameMode1 & (RELIC_RACE | ADVENTURE_ARENA | TIME_TRIAL)) != 0) 
+	{
+		
+// We dont know what this is yet
+#if 0
       puVar7 = &DAT_800862d8;
       puVar6 = &DAT_800862c8;
 
-    for (i = 0; i < 8; i++)
+	  for (i = 0; i < 8; i++)
 	  {
 		// loop through all player structures
 
@@ -51,20 +59,19 @@ void DECOMP_UI_INSTANCE_InitAll(void)
           *puVar7 = 5;
         }
 
-		    puVar7 = puVar7 + 1;
+		puVar7 = puVar7 + 1;
         puVar6 = puVar6 + 1;
-      } 
+      }
+#endif
 
 	  // If you're not in a Relic Race
-      if ((relicType & RELIC_RACE) == 0) {
+      if ((gameMode1 & RELIC_RACE) == 0) {
         return;
       }
 
-    int relicType;
 	  // The rest of this block only happens in Relic Mode
-
-      sdata->ptrRelic = UI_INSTANCE_BirthWithThread(0x61,UI_ThTick_Reward,0xe,1,0,sdata->s_relic1);
-      sdata->ptrTimebox1 = UI_INSTANCE_BirthWithThread(0x5c,UI_ThTick_CountPickup,0x13,1,0,sdata->s_timebox1);
+      sdata->ptrRelic = UI_INSTANCE_BirthWithThread(0x61,UI_ThTick_Reward,0xe,1,0,/*sdata->s_relic1*/0);
+      sdata->ptrTimebox1 = UI_INSTANCE_BirthWithThread(0x5c,UI_ThTick_CountPickup,0x13,1,0,/*sdata->s_timebox1*/0);
 
 	  // if instance
       if (sdata->ptrRelic != 0)
@@ -94,17 +101,9 @@ void DECOMP_UI_INSTANCE_InitAll(void)
         relicType = 2;
       }
 
-	  // Level ID
-    int levID = (gGT->levelID);
-      
-	  // int offset in table
-	  int relicOffs = relicType * 4;
-
-	  // [change for easy reading]
 	  // get relic time on this track, for this relic type (sapphire, gold, platinum)
-	  int relicTime = (data.RelicTime[levID+relicOffs]);
+	  unsigned int relicTime = data.RelicTime[gGT->levelID + relicType];
 
-	  // [change for easy reading]
 	  // store globally for HUD to access later
       i = relicTime >> 0x1f;
       sdata->relicTime_1ms= relicTime / 0xe100;
@@ -114,14 +113,16 @@ void DECOMP_UI_INSTANCE_InitAll(void)
       sdata->relicTime_1min = (relicTime / 0x3c0) % 10;
       return;
     }
-    *(struct TileView*)0x8008d4b4 = NULL;
-
-	// if more than 1 screen
+	
+	// used for multiplayer wumpa
+    sdata->ptrTileViewUI = NULL;
 	if (1 < gGT->numPlyrCurrGame)
 	{
-      *(struct TileView*)0x8008d4b4 = sdata->tileView_DecalMP;
+      sdata->ptrTileViewUI = &sdata->tileView_DecalMP;
     }
 	
+// skipping pixelLOD
+#if 0
 	// second half of pixel-LOD tileView, copy from TileView_UI
     sdata->dataLibFiller[40] = gGT->tileView_UI.matrix_ViewProj.m[0][0];
     sdata->dataLibFiller[44] = gGT->tileView_UI.matrix_ViewProj.m[0][2];
@@ -140,36 +141,34 @@ void DECOMP_UI_INSTANCE_InitAll(void)
     sdata->dataLibFiller[30] = gGT->tileView_UI.rect.y;
     sdata->dataLibFiller[32] = gGT->tileView_UI.rect.w;
     sdata->dataLibFiller[34] = gGT->tileView_UI.rect.h;
+#endif
 
-	// pointer to OT mem
-    sdata->tileView_DecalMP->ptrOT = &gGT->backBuffer->primMem;
-
-    (u_long*)(((int)sdata->tileView_DecalMP) + 0xf8)= gGT->tileView->ptrOT;
+    sdata->tileView_DecalMP.ptrOT = gGT->tileView->ptrOT;
+    sdata->tileView_DecalMP.distanceToScreen_PREV = gGT->tileView->distanceToScreen_PREV;
 
 	// create thread and Instance for "fruitdisp"
 	// the function returns an enttity
-    *(void*)0x8008d4b8 = UI_INSTANCE_BirthWithThread(0x37,UI_ThTick_CountPickup,3,1,*(struct TileView*)0x8008d4b4,sdata->s_fruitdisp);
+    sdata->ptrFruitDisp = 
+		UI_INSTANCE_BirthWithThread(0x37,UI_ThTick_CountPickup,3,1,sdata->ptrTileViewUI,/*sdata->s_fruitdisp*/0);
 
     if (
-			// If numPlyrCurrGame is less than 3
 			(gGT->numPlyrCurrGame < 3) &&
 
 			// If you're not in Battle Mode
-			((relicType & BATTLE_MODE) == 0)
+			((gameMode1 & BATTLE_MODE) == 0)
 		)
 	{
-	  // UI_INSTANCE_BirthWithThread
-      UI_INSTANCE_BirthWithThread(0x38,UI_ThTick_big1,2,0,0,sdata->s_big1);
+      UI_INSTANCE_BirthWithThread(0x38,UI_ThTick_big1,2,0,0,/*sdata->s_big1*/0);
     }
 
 	// If you're not in Adventure Mode
-    if ((relicType & ADVENTURE_MODE) == 0) {
+    if ((gameMode1 & ADVENTURE_MODE) == 0) {
       return;
     }
-    sdata->ptrHudC = UI_INSTANCE_BirthWithThread(0x93,UI_ThTick_CtrLetters,0x12,0,0,sdata->s_hudc);
-    sdata->ptrHudT = UI_INSTANCE_BirthWithThread(0x94,UI_ThTick_CtrLetters,0x12,0,0,sdata->s_hudt);
-    sdata->ptrHudR = UI_INSTANCE_BirthWithThread(0x95,UI_ThTick_CtrLetters,0x12,0,0,sdata->s_hudr);
-    sdata->ptrToken = UI_INSTANCE_BirthWithThread(0x7d,UI_ThTick_Reward,0x12,0,0,sdata->s_token);
+	
+    sdata->ptrHudC = UI_INSTANCE_BirthWithThread(0x93,UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudc*/0);
+    sdata->ptrHudT = UI_INSTANCE_BirthWithThread(0x94,UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudt*/0);
+    sdata->ptrHudR = UI_INSTANCE_BirthWithThread(0x95,UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudr*/0);
 
     sdata->ptrHudC->flags |= 0x80;
     sdata->ptrHudT->flags |= 0x80;
@@ -179,23 +178,16 @@ void DECOMP_UI_INSTANCE_InitAll(void)
   // If you're in Crystal Challenge
   else
   {
-	//Make a separate crystal for End of Race menu
-    sdata->ptrMenuCrystal = UI_INSTANCE_BirthWithThread(0x60,UI_ThTick_Reward,0x11,0,0,sdata->s_crystal1);
-
-	// Make a crystal for HUD
-    sdata->ptrHudCrystal = UI_INSTANCE_BirthWithThread(0x60,UI_ThTick_Reward,0x11,0,0,sdata->s_crystal1);
-
-	// Make a token
-    sdata->ptrToken = UI_INSTANCE_BirthWithThread(0x7d,UI_ThTick_Reward,0x12,0,0,sdata->s_token);
-
-	// make copy of hudCrystal pointer
-  crystal = sdata->ptrHudCrystal;
-  // make copy of Token pointer
-  token = sdata->ptrToken;
+    sdata->ptrMenuCrystal = UI_INSTANCE_BirthWithThread(0x60,UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
+	sdata->ptrHudCrystal = UI_INSTANCE_BirthWithThread(0x60,UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
+	sdata->ptrHudCrystal->flags |= 0x80;
   }
 
-  // make invisible, either crystal in HUD, or letter R in HUD
-  crystal->flags = crystal->flags | 0x80;
+  // Make a token
+  sdata->ptrToken = UI_INSTANCE_BirthWithThread(0x7d,UI_ThTick_Reward,0x12,0,0,/*sdata->s_token*/0);
+	
+  // make copy of Token pointer
+  token = sdata->ptrToken;
 
   // set Token scale (x, y, z) to zero
   token->scale[0] = 0;

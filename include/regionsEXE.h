@@ -3299,8 +3299,7 @@ struct sData
 	int ptrTileViewUI;
 
 	// 8008d4b8
-	// ptr to fruitdisp thread
-	int ptrThreadFruitDisp;
+	int ptrFruitDisp;
 
 	// 8008d4bc
 	int menuReadyToPass;
@@ -4827,11 +4826,10 @@ struct sData
 	// 8009b0e0 - EurRetail	-- 1c34 from mempack
 	// 8009e208 - JpnRetail	-- 1c54 from mempack
 
-	#if 0
 	// 8009AD18 - tileView_DecalMP
-	// 8009ae0c - ptrOT, tileView ^^ + 0xf4
 	struct TileView tileView_DecalMP;
 
+	#if 0
 	// 8009AE28
 	// first byte after TileView,
 	// used by FUN_8005d0d0 for collision?

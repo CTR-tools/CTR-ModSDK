@@ -9804,8 +9804,7 @@ void FUN_8004cec4(void)
 	// loop iteration counter
     iVar8 = 0;
 
-	// ???
-	// If you're loading, or on adventure map, or in main menu ???
+	// If (RELIC_RACE | ADVENTURE_ARENA | TIME_TRIAL) != 0
     if ((uVar3 & 0x4120000) != 0) {
       puVar7 = &DAT_800862d8;
       puVar6 = &DAT_800862c8;
@@ -9926,9 +9925,12 @@ void FUN_8004cec4(void)
     DAT_8009ad38 = *(undefined2 *)(PTR_DAT_8008d2ac + 0x13a8);
     DAT_8009ad3a = *(undefined2 *)(PTR_DAT_8008d2ac + 0x13aa);
 
-	// pointer to OT mem
+	// 8009ad18 is tileView_DecalMP
+
+	// tileView_DecalMP offset 0xF4
     DAT_8009ae0c = *(undefined4 *)(PTR_DAT_8008d2ac + 0x147c);
 
+	// tileView_DecalMP offset 0x18
     DAT_8009ad30 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x13a0);
 
 	// create thread and Instance for "fruitdisp"
