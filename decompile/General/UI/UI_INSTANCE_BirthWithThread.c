@@ -107,7 +107,7 @@ LAB_8004cc58:
         }
 
 		// if C-T-R letters
-        if ((short)(model->id - 0x93U) < 3) {
+        if ((unsigned int)(model->id - 0x93U) < 3) {
           puVar12[0x14] = 0xf368;
           puVar12[0x15] = 0x99f;
           puVar12[0x16] = 0x232;
