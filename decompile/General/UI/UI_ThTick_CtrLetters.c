@@ -7,9 +7,7 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
   int endOfRaceTransition;
   struct Instance* inst;
   struct UiElement3D* obj;
-  short rotY;
-  short rotX;
-  short rotZ;
+  short rot[3];
 
   // thread->instance
   inst = bucket->inst;
@@ -32,11 +30,7 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
 		// If you're in End-Of-Race menu
 		((sdata->gGT->gameMode1 & END_OF_RACE) != 0) &&
 
-		(
-			// TitleFlag_IsTransitioning
-			endOfRaceTransition = TitleFlag_IsTransitioning,
-			endOfRaceTransition != 0
-		)
+		(DECOMP_TitleFlag_IsTransitioning() != 0)
 	)
   {
 	// Set Scale to zero, basically stop
@@ -47,24 +41,24 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
   }
 
   if (inst->scale[0] == 0x800) {
-    rotX = 0;
+    rot[1] = 0;
   }
   else {
     endOfRaceTransition = (int)inst->scale[0] + -0x800;
     if (endOfRaceTransition < 0) {
       endOfRaceTransition = (int)inst->scale[0] + -0x401;
     }
-    rotX = ((short)(endOfRaceTransition >> 10) + 1) * 0x200;
+    rot[1] = ((short)(endOfRaceTransition >> 10) + 1) * 0x200;
   }
-  rotY = 0;
-  rotZ = 0;
-  inst = inst->matrix;
+  rot[0] = 0;
+  rot[2] = 0;
+  inst = &inst->matrix;
 
    // convert 3 rotation shorts into rotation matrix
-  CovertRotToMatrix(inst,&rotY);
+  ConvertRotToMatrix(inst,&rot[0]);
 
   // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
-  MatrixRotate(inst,obj->m.m[0][0],inst);
+  MatrixRotate(inst,&obj->m.m[0][0],inst);
   
   return;
 }

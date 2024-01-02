@@ -176,7 +176,7 @@ struct OverlayDATA_232
 	short specLightToken[16];
 	
 	// 800b4e3c
-	struct MenuBox menuRow_TokenRelic[3];
+	struct MenuRow menuRow_TokenRelic[3];
 	
 	// 800b4e50
 	struct MenuBox menuBox_TokenRelic;

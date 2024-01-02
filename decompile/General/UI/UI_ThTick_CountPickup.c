@@ -5,7 +5,7 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket) {
   struct GameTracker * gGT;
   short rotSpd;
   u_int flags;
-  int mat;
+  MATRIX* mat;
 
   gGT = sdata->gGT;
 
@@ -53,15 +53,15 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket) {
   LAB_8004c7d4:
 
   obj->rot[1] = rotSpd;
-  mat = inst->matrix.m[0][0];
+  mat = &inst->matrix.m[0][0];
 
   // convert 3 rotation shorts into rotation matrix
-  CovertRotToMatrix(mat, obj);
+  ConvertRotToMatrix(mat, obj);
   // then rotate
-  MatrixRotate(mat, obj->m.m[0][0], mat);
+  MatrixRotate(mat, &obj->m.m[0][0], mat);
 
   // if hud is enabled, and this is not demo mode
-  if ((gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) {
+  if ((*(int*)&gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) {
     // make visible
     flags = inst->flags & 0xffffff7f;
   } else {

@@ -581,15 +581,14 @@ common, exe, RCNT_Init, 0x0, General/RCNT/RCNT_Init.c
 common, exe, RCNT_Destroy, 0x0, General/RCNT/RCNT_Destroy.c
 
 // UI
+common, exe, UI_SaveLapTime, 0x0, General/UI/UI_SaveLapTime.c
+common, exe, UI_ThTick_CountPickup, 0x0, General/UI/UI_ThTick_CountPickup.c
+common, exe, UI_ThTick_Reward, 0x0, General/UI/UI_ThTick_Reward.c
+common, exe, UI_ThTick_CtrLetters, 0x0, General/UI/UI_ThTick_CtrLetters.c
+common, exe, UI_ThTick_big1, 0x0, General/UI/UI_ThTick_big1.c
 common, exe, UI_ConvertX_2, 0x0, General/UI/UI_ConvertX_2.c
 common, exe, UI_ConvertY_2, 0x0, General/UI/UI_ConvertY_2.c
-common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
-
-// note to self, still need UI_DrawRankedDrivers,
-// squish 11 functions
-common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_DrawNumWumpa.c General/UI/UI_DrawNumKey.c General/UI/UI_DrawNumRelic.c General/UI/UI_DrawNumTrophy.c General/UI/UI_DrawNumCrystal.c General/UI/UI_DrawNumTimebox.c General/UI/UI_DrawSpeedBG.c General/UI/UI_DrawSpeedNeedle.c General/UI/UI_JumpMeter_Draw.c General/UI/UI_JumpMeter_Update.c General/UI/UI_DrawSlideMeter.c, UI_ElevenFuncs.bin
-
-common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_DrawPosSuffix.c
+// UI_InitAll comes next
 common, exe, UI_Map_GetIconPos, 0x0, General/UI/UI_Map_GetIconPos.c
 common, exe, UI_Map_DrawAdvPlayer, 0x0, General/UI/UI_Map_DrawAdvPlayer.c
 common, exe, UI_Map_DrawMap, 0x0, General/UI/UI_Map_DrawMap.c
@@ -598,14 +597,23 @@ common, exe, UI_Map_DrawDrivers, 0x0, General/UI/UI_Map_DrawDrivers.c
 common, exe, UI_Map_DrawGhosts, 0x0, General/UI/UI_Map_DrawGhosts.c
 common, exe, UI_Map_DrawTracking, 0x0, General/UI/UI_Map_DrawTracking.c
 common, exe, UI_DrawDriverIcon, 0x0, General/UI/UI_DrawDriverIcon.c
-common, exe, UI_DrawLimitClock, 0x0, General/UI/UI_DrawLimitClock.c
-common, exe, UI_SaveLapTime, 0x0, General/UI/UI_SaveLapTime.c
-common, exe, UI_DrawRaceClock, 0x0, General/UI/UI_DrawRaceClock.c
 common, exe, UI_Lerp2D_Angular, 0x0, General/UI/UI_Lerp2D_Angular.c
 common, exe, UI_Lerp2D_HUD, 0x0, General/UI/UI_Lerp2D_HUD.c
 common, exe, UI_Lerp2D_Linear, 0x0, General/UI/UI_Lerp2D_Linear.c
-
+common, exe, UI_DrawRaceClock, 0x0, General/UI/UI_DrawRaceClock.c
+common, exe, UI_DrawLimitClock, 0x0, General/UI/UI_DrawLimitClock.c
+// UI_BattleDrawHeadArrows
+// UI_TrackerSelf
+common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_DrawPosSuffix.c
+common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
+// UI_DrawBattleScores
+// UI_Weapon_DrawSelf
 common, exe, UI_Weapon_DrawBG, 0x0, General/UI/UI_Weapon_DrawBG.c
+
+// note to self, still need UI_DrawRankedDrivers,
+// squish 11 functions
+common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_DrawNumWumpa.c General/UI/UI_DrawNumKey.c General/UI/UI_DrawNumRelic.c General/UI/UI_DrawNumTrophy.c General/UI/UI_DrawNumCrystal.c General/UI/UI_DrawNumTimebox.c General/UI/UI_DrawSpeedBG.c General/UI/UI_DrawSpeedNeedle.c General/UI/UI_JumpMeter_Draw.c General/UI/UI_JumpMeter_Update.c General/UI/UI_DrawSlideMeter.c, UI_ElevenFuncs.bin
+
 common, exe, UI_RenderFrame_Racing, 0x0, General/UI/UI_RenderFrame_Racing.c
 common, exe, UI_RenderFrame_AdvHub, 0x0, General/UI/UI_RenderFrame_AdvHub.c
 common, exe, UI_RenderFrame_CrystChall, 0x0, General/UI/UI_RenderFrame_CrystChall.c
