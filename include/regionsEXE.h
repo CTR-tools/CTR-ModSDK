@@ -4376,11 +4376,11 @@ struct sData
 
 	// 8008da48
 	// pointer at 8008cf70
-	char unk_data1c_1[0x1c];
+	short arcadeDiff[0xE];
 
 	// 8008da64
 	// pointer at 8008cf74
-	char unk_data1c_2[0x1c];
+	short cupDiff[0xE];
 
 	// 8008beb4 -- SepReview
 	// 8008da80 -- UsaRetail

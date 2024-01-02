@@ -13,8 +13,8 @@ struct sData sdata_static =
 	.arcade_difficultyParams = 0x8008da48,
 	.cup_difficultyParams = 0x8008da64,
 #else
-	.unkPtr_8008da48 = &sdata_static.unk_data1c_1[0],
-	.unkPtr_8008da64 = &sdata_static.unk_data1c_2[0],
+	.arcade_difficultyParams = &sdata_static.arcadeDiff[0],
+	.cup_difficultyParams = &sdata_static.cupDiff[0],
 #endif
 	
 	.driver_pathIndexIDs =

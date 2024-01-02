@@ -102,15 +102,15 @@ void DECOMP_UI_INSTANCE_InitAll(void)
       }
 
 	  // get relic time on this track, for this relic type (sapphire, gold, platinum)
-	  unsigned int relicTime = data.RelicTime[gGT->levelID + relicType];
+	  unsigned int relicTime = data.RelicTime[gGT->levelID*3 + relicType];
 
 	  // store globally for HUD to access later
-      i = relicTime >> 0x1f;
-      sdata->relicTime_1ms= relicTime / 0xe100;
-      sdata->relicTime_10ms = ((relicTime * 100) / 0x3c0) % 10;
-      sdata->relicTime_1sec = ((relicTime / 6 + i >> 4) - i) % 10;
+      sdata->relicTime_1min = relicTime / 0xe100;
       sdata->relicTime_10sec = (relicTime / 0x2580) % 6;
-      sdata->relicTime_1min = (relicTime / 0x3c0) % 10;
+      sdata->relicTime_1sec = (relicTime / 0x3c0) % 10;
+      sdata->relicTime_10ms = ((relicTime * 100) / 0x3c0) % 10;
+      sdata->relicTime_1ms = ((relicTime * 1000) / 0x3c0) % 10;
+	  
       return;
     }
 	
