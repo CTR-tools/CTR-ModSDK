@@ -352,6 +352,17 @@ void DECOMP_RCNT_Init();
 void DECOMP_TitleFlag_DrawSelf();
 
 // UI
+void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket);
+void DECOMP_UI_ThTick_Reward(struct Thread * bucket);
+void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket);
+void DECOMP_UI_ThTick_big1(struct Thread * bucket);
+
+int DECOMP_UI_ConvertX_2(int oldPosX,int newPosX);
+int DECOMP_UI_ConvertY_2(int oldPosY,int newPosY);
+
+void DECOMP_UI_INSTANCE_InitAll(void);
+int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6);
+
 void DECOMP_UI_DrawNumWumpa(short param_1, short param_2, struct Driver* d);
 void DECOMP_UI_DrawNumKey(short posX, short posY);
 void DECOMP_UI_DrawNumRelic(short posX, short posY);
@@ -368,6 +379,7 @@ void DECOMP_UI_RenderFrame_Racing();
 
 void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);
 
+// VEH
 struct Driver* DECOMP_VehInit_Player(int index);
 void DECOMP_VehInit_NonGhost(struct Thread* t, int index);
 

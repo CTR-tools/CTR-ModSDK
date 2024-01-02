@@ -22,9 +22,9 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
   // Rotate on the Y axis
   obj->rot[1] += 0x40;
 
-  // Vector_SpecLightSpin2D
-  // instance, ptr rot[6], cop registers
+#ifndef REBUILD_PS1
   Vector_SpecLightSpin2D(inst,obj,obj->lightDir);
+#endif
 
   if (
 		// If you're in End-Of-Race menu
@@ -54,11 +54,15 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
   rot[2] = 0;
   inst = &inst->matrix;
 
-   // convert 3 rotation shorts into rotation matrix
+#ifndef REBUILD_PS1
   ConvertRotToMatrix(inst,&rot[0]);
+#else
+  TEST_ConvertRotToMatrix(inst,&rot[0]);
+#endif
 
-  // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
+#ifndef REBUILD_PS1
   MatrixRotate(inst,&obj->m.m[0][0],inst);
+#endif
   
   return;
 }

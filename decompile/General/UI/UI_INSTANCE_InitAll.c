@@ -30,12 +30,15 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	// If you're in Adventure Arena
     if ((gameMode1 & ADVENTURE_ARENA) != 0)
 	{
-      UI_INSTANCE_BirthWithThread(0x61,UI_ThTick_Reward,0xe,1,0,/*sdata->s_relic1*/0);
-      UI_INSTANCE_BirthWithThread(99,UI_ThTick_Reward,0xf,1,0,/*sdata->s_key1*/0);
-      UI_INSTANCE_BirthWithThread(0x62,UI_ThTick_Reward,0x10,0,0,/*sdata->s_trophy1*/0);
+      DECOMP_UI_INSTANCE_BirthWithThread(0x61,	DECOMP_UI_ThTick_Reward,0xe,1,0,/*sdata->s_relic1*/0);
+      DECOMP_UI_INSTANCE_BirthWithThread(99,	DECOMP_UI_ThTick_Reward,0xf,1,0,/*sdata->s_key1*/0);
+      DECOMP_UI_INSTANCE_BirthWithThread(0x62,	DECOMP_UI_ThTick_Reward,0x10,0,0,/*sdata->s_trophy1*/0);
 
+	  #ifndef REBUILD_PS1
       GAMEPROG_AdvPercent(&sdata->advProgress);
-      return;
+      #endif
+	  
+	  return;
     }
 
     if ((gameMode1 & (RELIC_RACE | ADVENTURE_ARENA | TIME_TRIAL)) != 0) 
@@ -70,8 +73,8 @@ void DECOMP_UI_INSTANCE_InitAll(void)
       }
 
 	  // The rest of this block only happens in Relic Mode
-      sdata->ptrRelic = UI_INSTANCE_BirthWithThread(0x61,UI_ThTick_Reward,0xe,1,0,/*sdata->s_relic1*/0);
-      sdata->ptrTimebox1 = UI_INSTANCE_BirthWithThread(0x5c,UI_ThTick_CountPickup,0x13,1,0,/*sdata->s_timebox1*/0);
+      sdata->ptrRelic = 	DECOMP_UI_INSTANCE_BirthWithThread(0x61,DECOMP_UI_ThTick_Reward, 0xe,1,0,/*sdata->s_relic1*/0);
+      sdata->ptrTimebox1 = 	DECOMP_UI_INSTANCE_BirthWithThread(0x5c,DECOMP_UI_ThTick_CountPickup, 0x13,1,0,/*sdata->s_timebox1*/0);
 
 	  // if instance
       if (sdata->ptrRelic != 0)
@@ -149,7 +152,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	// create thread and Instance for "fruitdisp"
 	// the function returns an enttity
     sdata->ptrFruitDisp = 
-		UI_INSTANCE_BirthWithThread(0x37,UI_ThTick_CountPickup,3,1,sdata->ptrTileViewUI,/*sdata->s_fruitdisp*/0);
+		DECOMP_UI_INSTANCE_BirthWithThread(0x37,DECOMP_UI_ThTick_CountPickup,3,1,sdata->ptrTileViewUI,/*sdata->s_fruitdisp*/0);
 
     if (
 			(gGT->numPlyrCurrGame < 3) &&
@@ -158,7 +161,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 			((gameMode1 & BATTLE_MODE) == 0)
 		)
 	{
-      UI_INSTANCE_BirthWithThread(0x38,UI_ThTick_big1,2,0,0,/*sdata->s_big1*/0);
+      DECOMP_UI_INSTANCE_BirthWithThread(0x38,DECOMP_UI_ThTick_big1,2,0,0,/*sdata->s_big1*/0);
     }
 
 	// If you're not in Adventure Mode
@@ -166,9 +169,14 @@ void DECOMP_UI_INSTANCE_InitAll(void)
       return;
     }
 	
-    sdata->ptrHudC = UI_INSTANCE_BirthWithThread(0x93,UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudc*/0);
-    sdata->ptrHudT = UI_INSTANCE_BirthWithThread(0x94,UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudt*/0);
-    sdata->ptrHudR = UI_INSTANCE_BirthWithThread(0x95,UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudr*/0);
+    sdata->ptrHudC = DECOMP_UI_INSTANCE_BirthWithThread(0x93,DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudc*/0);
+    sdata->ptrHudT = DECOMP_UI_INSTANCE_BirthWithThread(0x94,DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudt*/0);
+    sdata->ptrHudR = DECOMP_UI_INSTANCE_BirthWithThread(0x95,DECOMP_UI_ThTick_CtrLetters,0x12,0,0,/*sdata->s_hudr*/0);
+
+#ifdef REBUILD_PC
+    if (sdata->ptrHudC == 0)
+        return;
+#endif
 
     sdata->ptrHudC->flags |= 0x80;
     sdata->ptrHudT->flags |= 0x80;
@@ -178,13 +186,13 @@ void DECOMP_UI_INSTANCE_InitAll(void)
   // If you're in Crystal Challenge
   else
   {
-    sdata->ptrMenuCrystal = UI_INSTANCE_BirthWithThread(0x60,UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
-	sdata->ptrHudCrystal = UI_INSTANCE_BirthWithThread(0x60,UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
+    sdata->ptrMenuCrystal = DECOMP_UI_INSTANCE_BirthWithThread(0x60,DECOMP_UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
+	sdata->ptrHudCrystal = DECOMP_UI_INSTANCE_BirthWithThread(0x60,DECOMP_UI_ThTick_Reward,0x11,0,0,/*sdata->s_crystal1*/0);
 	sdata->ptrHudCrystal->flags |= 0x80;
   }
 
   // Make a token
-  sdata->ptrToken = UI_INSTANCE_BirthWithThread(0x7d,UI_ThTick_Reward,0x12,0,0,/*sdata->s_token*/0);
+  sdata->ptrToken = DECOMP_UI_INSTANCE_BirthWithThread(0x7d,DECOMP_UI_ThTick_Reward,0x12,0,0,/*sdata->s_token*/0);
 	
   // make copy of Token pointer
   token = sdata->ptrToken;

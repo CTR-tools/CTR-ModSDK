@@ -43,13 +43,13 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
 	  // 0 = no relation to param4
 	  // 0x300 = SmallStackPool
 	  // 0x10 = hud thread bucket
-      hudThread = THREAD_BirthWithObject(0x380310,param_2,param_6,0);
+      hudThread = DECOMP_THREAD_BirthWithObject(0x380310,param_2,param_6,0);
 
 	  // Get the object attached to the thread
       puVar12 = hudThread->object;
 
 	  // Big Number HUD element
-      bigNum = INSTANCE_Birth2D(model,0,hudThread);
+      bigNum = DECOMP_INSTANCE_Birth2D(model,0,hudThread);
 
 	  // give the Instance to the thread
       hudThread->inst = bigNum;
@@ -193,7 +193,7 @@ LAB_8004ccc8:
         idpp[0].tileView = param_5;
 
 		// record that tileView is present
-		bigNum->flags = bigNum->flags | 0x100;
+		bigNum->flags |= 0x100;
 
         bigNum->matrix.t[0] = 0;
         bigNum->matrix.t[1] = 0;
@@ -220,8 +220,11 @@ LAB_8004ccc8:
       rot[1] = 0;
       rot[2] = 0;
 
-	   // convert 3 rotation shorts into rotation matrix
+#ifndef REBUILD_PS1
       ConvertRotToMatrix(puVar12 + 4,&rot[0]);
+#else
+	  TEST_ConvertRotToMatrix(puVar12 + 4,&rot[0]);
+#endif
 
       *puVar12 = 0;
       puVar12[1] = 0;

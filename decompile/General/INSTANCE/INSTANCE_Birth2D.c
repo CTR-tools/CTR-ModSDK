@@ -16,7 +16,11 @@ struct Instance* DECOMP_INSTANCE_Birth2D(
 	struct InstDrawPerPlayer* idpp =
 		INST_GETIDPP(inst);
 	
+#ifndef REBUILD_PS1
 	idpp[0].tileView = &gGT->tileView_UI;
+#else
+	idpp[0].tileView = &gGT->tileView[0];
+#endif
 	
 	for(i = 1; i < gGT->numPlyrCurrGame; i++)
 	{

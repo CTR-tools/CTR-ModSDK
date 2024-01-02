@@ -1,6 +1,7 @@
 #include <common.h>
 
-void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket) {
+void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket)
+{
 
   struct GameTracker * gGT;
   short rotSpd;
@@ -55,19 +56,29 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket) {
   obj->rot[1] = rotSpd;
   mat = &inst->matrix.m[0][0];
 
-  // convert 3 rotation shorts into rotation matrix
-  ConvertRotToMatrix(mat, obj);
-  // then rotate
+#ifndef REBUILD_PS1
+  ConvertRotToMatrix(mat,obj);
+#else
+  TEST_ConvertRotToMatrix(mat,obj);
+#endif
+
+#ifndef REBUILD_PS1  
   MatrixRotate(mat, &obj->m.m[0][0], mat);
+#endif
 
   // if hud is enabled, and this is not demo mode
-  if ((*(int*)&gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) {
+  if ((*(int*)&gGT->bool_DrawOTag_InProgress & 0xff0100) == 0x100) 
+  {
     // make visible
     flags = inst->flags & 0xffffff7f;
-  } else {
+  } 
+  
+  else 
+  {
     // make invisible
     flags = inst->flags | 0x80;
   }
+  
   inst->flags = flags;
   return;
 }

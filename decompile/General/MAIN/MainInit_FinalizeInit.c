@@ -205,12 +205,10 @@ void DECOMP_MainInit_FinalizeInit(struct GameTracker *gGT)
     DECOMP_TileView_SetPsyqGeom(view);
 	DECOMP_TileView_SetMatrixVP(view);
 
-#ifndef REBUILD_PS1
     if ((gGT->hudFlags & 2) != 0)
     {
-        UI_INSTANCE_InitAll();
+        DECOMP_UI_INSTANCE_InitAll();
     }
-#endif
 
     gGT->unk1cac[4] = 2;
 

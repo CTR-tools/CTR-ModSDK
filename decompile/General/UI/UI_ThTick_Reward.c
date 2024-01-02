@@ -22,17 +22,22 @@ void DECOMP_UI_ThTick_Reward(struct Thread * bucket)
   // Spin on the Y axis
   obj->rot[1] += 0x40;
 
-  // instance, ptr rot[6], cop registers
+#ifndef REBUILD_PS1
   Vector_SpecLightSpin2D(inst,obj,obj->lightDir);
+#endif
 
   // pointer to matrix
   mat = &inst->matrix;
 
-   // convert 3 rotation shorts into rotation matrix
+#ifndef REBUILD_PS1
   ConvertRotToMatrix(mat,obj);
+#else
+  TEST_ConvertRotToMatrix(mat,obj);
+#endif
 
-  // MatrixRotate (param_1 = param_2 matrix rotated by param_3 matrix)
+#ifndef REBUILD_PS1
   MatrixRotate(mat,&obj->m.m[0][0],mat);
+#endif
   
   if (
 		// if hud is enabled, and this is not demo mode
