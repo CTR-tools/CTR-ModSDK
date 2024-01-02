@@ -1027,7 +1027,7 @@ void VehPtr_AntiVShift_Update(struct Thread* t, struct Driver* d);
 void VehPtr_AntiVShift_ReverseOneFrame(struct Thread* t, struct Driver* d);
 void VehPtr_AntiVShift_Init(struct Thread* t, struct Driver* d);
 void VehPtr_Drifting_PhysAngular(struct Thread* th, struct Driver* driver);
-void VehPtr_Drifting_Finalize(struct Driver* d);
+void VehPtr_Drifting_Finalize(struct Thread* t, struct Driver* d);
 void VehPtr_Drifting_Update(struct Thread* t, struct Driver* d);
 void VehPtr_Drifting_PhysLinear(struct Thread *thread, struct Driver *driver);
 void VehPtr_Drifting_InitSetUpdate(struct Thread* t, struct Driver* d);
