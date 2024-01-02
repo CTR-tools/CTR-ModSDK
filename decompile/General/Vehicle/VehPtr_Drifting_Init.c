@@ -2,22 +2,7 @@
 
 // Budget 200 / 272 bytes
 
-void *PlayerDriftingFuncTable[13] =
-    {
-        VehPtr_Drifting_InitSetUpdate,
-        NULL,
-        VehPtr_Drifting_PhysLinear,
-        VehPtr_Driving_Audio,
-        VehPtr_Drifting_PhysAngular,
-        OnApplyForces,
-        COLL_StartSearch_NearPlayer,
-        OnCollide_Drivers,
-        COLL_StartSearch_Player,
-        Player_JumpAndFriction,
-        OnRender,
-        OnAnimate_Driving,
-        VehParticle_DriverMain
-    };
+extern void *PlayerDriftingFuncTable[13];
 
 // seems to handle start of drifts
 void DECOMP_VehPtr_Drifting_Init(struct Thread *t, struct Driver *d)
@@ -57,12 +42,23 @@ void DECOMP_VehPtr_Drifting_Init(struct Thread *t, struct Driver *d)
     }
 }
 
-void DECOMP_VehPtr_Drifting_InitSetUpdate(struct Thread* t,struct Driver* d)
-{
-  // This is so the update function
-  // is not called on the first frame,
-  // just like spinning
+void DECOMP_VehPtr_Drifting_InitSetUpdate();
+void DECOMP_VehPtr_Drifting_PhysLinear();
+void DECOMP_VehPtr_Drifting_PhysAngular();
 
-    d->funcPtrs[0] = NULL;
-    d->funcPtrs[1] = VehPtr_Drifting_Update;
+void *PlayerDriftingFuncTable[13] =
+{
+    DECOMP_VehPtr_Drifting_InitSetUpdate,
+    NULL,
+    DECOMP_VehPtr_Drifting_PhysLinear,
+    VehPtr_Driving_Audio,
+    DECOMP_VehPtr_Drifting_PhysAngular,
+    OnApplyForces,
+    COLL_StartSearch_NearPlayer,
+    OnCollide_Drivers,
+    COLL_StartSearch_Player,
+    Player_JumpAndFriction,
+    OnRender,
+    OnAnimate_Driving,
+    VehParticle_DriverMain
 };

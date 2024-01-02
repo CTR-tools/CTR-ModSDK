@@ -1,4 +1,4 @@
-// 519+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2 = 662 rewritten so far
+// 519+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2+4 = 666 rewritten so far
 // 519 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
@@ -631,8 +631,8 @@ common, exe, VehInit_GetModelByName, 0x0, General/Vehicle/VehInit_GetModelByName
 // VEH PTR
 common, exe, VehPtr_Crashing_PhysAngular, 0x0, General/Vehicle/VehPtr_Crashing_FuncPtrs.c
 common, exe, VehPtr_Crashing_Init, 0x0, General/Vehicle/VehPtr_Crashing_Init.c
-common, exe, VehPtr_Drifting_PhysAngular, 0x0, General/Vehicle/VehPtr_Drifting_PhysAngular.c
-common, exe, VehPtr_Drifting_Update, 0x0, General/Vehicle/VehPtr_Drifting_Update.c
+common, exe, VehPtr_Drifting_PhysAngular, 0x0, General/Vehicle/VehPtr_Drifting_FuncPtrs.c
+common, exe, VehPtr_Drifting_Init, 0x0, General/Vehicle/VehPtr_Drifting_Init.c
 common, exe, VehPtr_Driving_PhysAngular, 0x0, General/Vehicle/VehPtr_Driving_PhysAngular.c
 common, exe, VehPtr_Driving_PhysLinear, 0x0, General/Vehicle/VehPtr_Driving_PhysLinear.c
 common, exe, VehPtr_Spinning_Update, 0x0, General/Vehicle/VehPtr_Spinning_FuncPtrs.c
