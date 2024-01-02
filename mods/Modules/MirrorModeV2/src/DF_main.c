@@ -343,8 +343,23 @@ void DF_ParseOT(u_long* startOT)
 
 void DF_DrawOTag(u_long* ot)
 {
+	// store in kernel cause whatever
+	#define toggle *(int*)0x8000FFF0
+
+	#define R1_SELECT (BTN_R1 | BTN_SELECT)
+
+	struct GamepadBuffer * pad = &sdata->gGamepads->gamepad[0];
+
+	// if held this frame, and not previous
+	if(((pad->buttonsHeldCurrFrame & R1_SELECT) == R1_SELECT) &&
+		((pad->buttonsHeldPrevFrame & R1_SELECT) != R1_SELECT)
+	  )
+	{
+		toggle = !toggle;
+	}
+
 	// only mirror track levels
-	if (sdata->gGT->levelID < INTRO_RACE_TODAY)
+	if (toggle && (sdata->gGT->levelID < INTRO_RACE_TODAY))
 		DF_ParseOT(ot);
 	
 	DrawOTag(ot);

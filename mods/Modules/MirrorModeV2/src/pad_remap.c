@@ -15,7 +15,7 @@ unsigned int original_map[] = {
 	RAW_BTN_L2,
 	RAW_BTN_SELECT,
 	RAW_BTN_START
-};
+	};
 
 // Swap directions
 unsigned int new_map[] = {
@@ -33,9 +33,9 @@ unsigned int new_map[] = {
 	RAW_BTN_L2,
 	RAW_BTN_SELECT,
 	RAW_BTN_START
-};
+	};
 
-void RemapButtons(unsigned short * buttons)
+void RemapButtons(unsigned short *buttons)
 {
 	unsigned short curr_buttons = *buttons;
 	unsigned short new_buttons = 0xFFFF;
@@ -49,16 +49,17 @@ void RemapButtons(unsigned short * buttons)
 
 void Remap_Main()
 {
-	struct GamepadBuffer* gamepad;
-	struct GameTracker * gGT = sdata->gGT;
-	
-	for(int i = 0; i < gGT->numPlyrCurrGame; i++)
+#define toggle *(int *)0x8000FFF0
+
+	struct GamepadBuffer *gamepad;
+	struct GameTracker *gGT = sdata->gGT;
+
+	if (!toggle || ((gGT->gameMode1 & (PAUSE_1 | END_OF_RACE | MAIN_MENU)) != 0))
+		return;
+
+	for (int i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		gamepad = &sdata->gGamepads->gamepad[i];
-
-		if ((gGT->gameMode1 & (PAUSE_1 | END_OF_RACE | MAIN_MENU)) == 0)
-		{
-			RemapButtons(&gamepad->ptrControllerPacket->controllerInput);
-		}
+		RemapButtons(&gamepad->ptrControllerPacket->controllerInput);
 	}
 }
