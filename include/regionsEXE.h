@@ -1171,6 +1171,10 @@ struct rData
 	// first func at FUN_800123e0
 };
 
+struct Difficulty {
+	short params1 [14];
+	short params2 [14];
+};
 // Last PsyQ function?
 // 80080990 FlushCache
 
@@ -1181,15 +1185,20 @@ struct rData
 // Need to fix header of struct
 // to use proper "Data" starting addr
 
-// 8007f0d0 -- SepReview
-// 80080ee0 -- UsaRetail
-// 8007ff44 -- JpnTrial
-// 80081414 -- EurRetail
-// 80084254 -- JpnRetail
+//  -- SepReview
+// 800809a0 -- UsaRetail
+//  -- JpnTrial
+//  -- EurRetail
+//  -- JpnRetail
 struct Data
 {
-	// this actually starts at 800809a0,
-	// more arrays for AdvDifficulty
+	// 800809a0
+    // 18 tracks
+    struct Difficulty ArcadeDifficulty[18];
+    
+    // 80080d90
+    // 6 boss races
+    struct Difficulty BossDifficulty[6];
 	
 	// 8007f0d0 -- SepReview
 	// 80080ee0 -- UsaRetail
@@ -2602,9 +2611,10 @@ struct sData
 	#endif
 
 	// 0x8008CF70
-	// do they always point to the same place?
-	void* unkPtr_8008da48;
-	void* unkPtr_8008da64;
+	short* arcade_difficultyParams;
+
+	// 0x8008CF74
+	short* cup_difficultyParams;
 
 	// 0x8008CF78
 	// path index for each AI
@@ -3478,7 +3488,7 @@ struct sData
 	struct Driver* bestHumanRank;
 
 	// 8008d678
-	char unk_afterHumanRank[8];
+	short* difficultyParams[2];
 
 	// 8008d680
 	// if these are all zero, all AIs
@@ -4921,7 +4931,7 @@ _Static_assert(sizeof(struct MetaDataMODEL) == 0xC);
 
 #if BUILD == UsaRetail
 #define OFFSETOF_SDATA(ELEMENT) ((unsigned int)&(((struct sData *)0x8008cf6c)->ELEMENT))
-#define OFFSETOF_DATA(ELEMENT) ((unsigned int)&(((struct Data *)0x80080ee0)->ELEMENT))
+#define OFFSETOF_DATA(ELEMENT) ((unsigned int)&(((struct Data *)0x800809a0)->ELEMENT))
 
 _Static_assert(OFFSETOF_DATA(menuRow_quit[0]) == 0x800841BC);
 _Static_assert(OFFSETOF_DATA(menuBox_quit) == 0x800841D0);

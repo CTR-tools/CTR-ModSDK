@@ -10,8 +10,8 @@ struct sData sdata_static =
 	.langBufferSize = 0x3F04,
 	
 #if NO_BSS
-	.unkPtr_8008da48 = 0x8008da48,
-	.unkPtr_8008da64 = 0x8008da64,
+	.arcade_difficultyParams = 0x8008da48,
+	.cup_difficultyParams = 0x8008da64,
 #else
 	.unkPtr_8008da48 = &sdata_static.unk_data1c_1[0],
 	.unkPtr_8008da64 = &sdata_static.unk_data1c_2[0],
