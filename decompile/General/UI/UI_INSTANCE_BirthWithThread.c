@@ -18,9 +18,7 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
   struct Driver* driver;
   struct Thread* driverThread;
   struct Model* model;
-  short local_30;
-  short local_2e;
-  short local_2c;
+  short rot[3];
   
   struct GameTracker* gGT;
   gGT = sdata->gGT;
@@ -213,17 +211,17 @@ LAB_8004ccc8:
       bigNum->unk50 = 0x80;
       bigNum->unk51 = 0x80;
       if (param_4 == 0) {
-        local_30 = 0;
+        rot[0] = 0;
       }
       else {
-        lVar7 = ratan2(*(long *)bigNum->matrix.t[1],*(long *)bigNum->matrix.t[2]);
-        local_30 = -(short)lVar7;
+        lVar7 = ratan2(bigNum->matrix.t[1],bigNum->matrix.t[2]);
+        rot[0] = -(short)lVar7;
       }
-      local_2e = 0;
-      local_2c = 0;
+      rot[1] = 0;
+      rot[2] = 0;
 
 	   // convert 3 rotation shorts into rotation matrix
-      ConvertRotToMatrix(puVar12 + 4,&local_30);
+      ConvertRotToMatrix(puVar12 + 4,&rot[0]);
 
       *puVar12 = 0;
       puVar12[1] = 0;
