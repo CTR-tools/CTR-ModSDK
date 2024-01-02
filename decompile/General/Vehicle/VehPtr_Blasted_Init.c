@@ -2,8 +2,6 @@
 
 int LOAD_IsOpen_RacingOrBattle();
 void RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
-int Instance_GetNumAnimFrames(struct Driver* driver, int param_2);
-int Instance_GetStartFrame(int midpoint, int numFrames);
 void DECOMP_VehPtr_Blasted_Update(struct Thread* thread, struct Driver* driver);
 void DECOMP_VehPtr_Blasted_PhysLinear(struct Thread* thread, struct Driver* driver);
 void VehPtr_Driving_Audio(struct Thread* thread, struct Driver* driver);

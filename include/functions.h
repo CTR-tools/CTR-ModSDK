@@ -466,7 +466,10 @@ struct Instance* INSTANCE_BirthWithThread_Stack(int* spArr);
 void INSTANCE_Death(struct Instance* inst);
 void INSTANCE_LevInitAll(struct InstDef* instDef, int num);
 void INSTANCE_LevDelayedLInBs(void* instDefs, u_int numInstances);
-u_short INSTANCE_GetNumAnimFrames(struct Instance* pInstance, int animIndex);
+
+// not really part of "INSTANCE" namespace
+int VehAnim_Instance_GetNumAnimFrames(struct Driver* driver, int param_2);
+int VehAnim_Instance_GetStartFrame(int midpoint, int numFrames);
 
 // JitPool
 

@@ -47,7 +47,5 @@ void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio
     DECOMP_howl_StopAudio(0,0,1);
   }
 
-#ifndef REBUILD_PS1
-  VehInit_TeleportAll(gGT,2);
-#endif
+  DECOMP_VehInit_TeleportAll(gGT,2);
 }

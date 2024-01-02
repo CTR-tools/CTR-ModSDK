@@ -11,7 +11,7 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
     short prevLev;
     short rotY;
     short rotZ;
-    short *warppadRot;
+    short *warppadRot=0;
     short *check;
     short posTop[3];
     short posBottom[3];
@@ -26,11 +26,17 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
     };
 
     struct InstDef *levInstDef;
-    struct PosRot *posRot;
+    struct PosRot *posRot=0;
     struct GameTracker *gGT = sdata->gGT;
     struct Level* level1 = gGT->level1;
+
+#ifndef REBUILD_PS1
     struct ScratchpadStruct* sps = 0x1f800108;
-    
+#else
+    char scratchpad[0x1000];
+    struct ScratchpadStruct* sps = &scratchpad[0];
+#endif
+
     // cheat flags
     gameMode2 = gGT->gameMode2;
 
@@ -65,9 +71,9 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
     if ((spawnFlag & 1) == 0)
     {
         // Ordinary player position
-        posBottom = (short)(d->posCurr[0] >> 8);
-        posBottom = (short)(d->posCurr[1] >> 8) + 0x80;
-        posBottom = (short)(d->posCurr[2] >> 8);
+        posBottom[0] = (short)(d->posCurr[0] >> 8);
+        posBottom[1] = (short)(d->posCurr[1] >> 8) + 0x80;
+        posBottom[2] = (short)(d->posCurr[2] >> 8);
     }
 
     // if you are spawning into the world for the first time,
@@ -100,7 +106,7 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
                         ((int*)&levInstDef->name[0] == 0x726f6f64)) &&
 
                         //  name == "#5"
-                        ((short*)&levInstDef->name[0] == 0x3523)) &&
+                        ((short*)&levInstDef->name[4] == 0x3523)) &&
 
                         // last 8 bytes of 16-byte name, all zeros
                         (((int*)&levInstDef->name[8] == 0 && ((int*)&levInstDef[12] == 0)))
@@ -169,9 +175,9 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
             {
                 // position outside boss door
                 posRot = level1->ptrSpawnType2_PosRot[3].posCoords;
-                posBottom = posRot->pos[0];
-                posBottom = posRot->pos[1];
-                posBottom = posRot->pos[2];
+                posBottom[0] = posRot->pos[0];
+                posBottom[1] = posRot->pos[1];
+                posBottom[2] = posRot->pos[2];
             }
             // If spawning anywhere else
             else
@@ -187,15 +193,17 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
                     // so lap doesn't count when race starts
                     d->actionsFlagSet |= 0x1000000;
 
+#ifndef REBUILD_PS1
                     d->distanceToFinish_checkpoint = level1->ptr_restart_points[0].distToFinish << 3;
+#endif
 
                     // get coords where driver based on driver order (0-7)
-                    posRot = &level1.DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
+                    posRot = &level1->DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
 
                     // get position where each of the 8 drivers should spawn, from LEV
-                    posBottom = posRot->pos[0];
-                    posBottom = posRot->pos[1] + 0x80;
-                    posBottom = posRot->pos[2];
+                    posBottom[0] = posRot->pos[0];
+                    posBottom[1] = posRot->pos[1] + 0x80;
+                    posBottom[2] = posRot->pos[2];
                 }
 
                 // if you are in adventure arena
@@ -207,30 +215,30 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
 
                         // if you just came from any of these...
                         if (
-
-                            // main menu, or adv character garage
-                            ((prevLev == MAIN_MENU_LEVEL) || (prevLev == ADVENTURE_CHARACTER_SELECT)) ||
-
-                            // nowhere?, or cutscene?
-                            ((prevLev == -1 || ((i == SCRAPBOOK || (prevLev - 0x2cU < 0x14))))))
+							(prevLev == MAIN_MENU_LEVEL) || 
+							(prevLev == ADVENTURE_CHARACTER_SELECT) ||
+                            (prevLev == -1) || 
+							(prevLev == SCRAPBOOK) || 
+							((unsigned int)(prevLev - 0x2c) < 0x14)
+							)
                             goto LAB_80058158;
 
                         // get position where driver should spawn on map,
                         // outside warppad they previously entered
 
                         warppadRot = DECOMP_AH_WarpPad_GetSpawnPosRot(&warppadPos);
-                        posBottom = warppadPos[0];
-                        posBottom = warppadPos[1] + 0x80;
-                        posBottom = warppadPos[2];
+                        posBottom[0] = warppadPos[0];
+                        posBottom[1] = warppadPos[1] + 0x80;
+                        posBottom[2] = warppadPos[2];
                     }
 
                     // if you have a podium reward
                     else
                     {
                         // spawn on the podium in the adv hub
-                        posBottom = posRot->pos[0];
-                        posBottom = posRot->pos[1] + 0x80;
-                        posBottom = posRot->pos[2];
+                        posBottom[0] = posRot->pos[0];
+                        posBottom[1] = posRot->pos[1] + 0x80;
+                        posBottom[2] = posRot->pos[2];
                     }
                 }
             }
@@ -239,6 +247,7 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
         // if spawning at hub door
         else
         {
+#ifndef REBUILD_PS1
             // Do not move
             gameMode2 |= 0x4000;
             
@@ -259,14 +268,23 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
             // doorLengthZ + (to get to midpoint between two doors)
             // perpendicularZ (to spawn away from door)
             posBottom[2] = levInstDef->pos[2] + (short)(MATH_Sin(angle) >> 1) + (short)(MATH_Sin(angle + 0x400) >> 3);
-        }
+#endif
+		}
     }
 
     posTop[0] = posBottom[0];
     posTop[1] = posBottom[1] - 0x100;
     posTop[2] = posBottom[2];
 
-    COLL_SearchTree_FindQuadblock_Touching(&posTop, &posBottom, &sps, 0);
+#if 1
+
+    d->posCurr[0] = posTop[0] << 8;
+    d->posCurr[1] = (posTop[1] + spawnPosY) * 0x100;
+    d->posCurr[2] = posTop[2] << 8;
+	
+#else
+	
+    COLL_SearchTree_FindQuadblock_Touching(&posTop[0], &posBottom[0], sps, 0);
 
     // if collision was not found
     if (sps->boolDidTouchQuadblock == 0)
@@ -313,6 +331,8 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
 
     // save quadblock height
     d->quadBlockHeight = (int) sps->Union.QuadBlockColl.hitPos[1] << 8;
+	
+#endif
 
     // if you are spawning into the world for the first time,
     // could be startline, or adv hub spawn in several places
@@ -320,9 +340,14 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
     {
         if (levInstDef == NULL)
         {
+#ifndef REBUILD_PS1
             // get desired rotation of driver when leaving portal, or spawning at startline
-                angle = level1->ptrSpawnType2_PosRot[3].posCoords[7] & 0xfff;
-            // if spawning outside boss door
+			angle = level1->ptrSpawnType2_PosRot[3].posCoords[7] & 0xfff;
+#else
+            angle = 0;
+#endif
+
+			// if spawning outside boss door
             if (boolSpawnAtBossDoor)
             {
                 angle += 0x400U;
@@ -372,7 +397,7 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
                 STARTLINE_ROT:
 
                     // position index on starting line
-                    posRot = &level1.DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
+                    posRot = &level1->DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
 
                     // rotation data of all 8 drivers on starting line
                     d->rotCurr.x = posRot->rot[0];
@@ -391,14 +416,14 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
                     }
 
                     if (
-                        (   // If you just came from the main menu
-                            (gGT->prevLEV == MAIN_MENU_LEVEL) ||
-
-                            // If you just came from "nothing"
-                            (gGT->prevLEV == -1) ) ||
-
-                            // if WarpPad_ReturnToMap failed to find a matching portal
-                            (warppadRot == NULL)
+							// If you just came from the main menu
+							(gGT->prevLEV == MAIN_MENU_LEVEL) ||
+							
+							// If you just came from "nothing"
+							(gGT->prevLEV == -1) ||
+							
+							// if WarpPad_ReturnToMap failed to find a matching portal
+							(warppadRot == NULL)
                         )
 
                         // skip
@@ -445,9 +470,14 @@ LAB_80058568:
     // set animation to zero
     d->instSelf->animIndex = 0;
 
+#ifndef REBUILD_PS1
     // get number of frames in animation and set it to driver instance
-    d->instSelf->animFrame = Instance_GetStartFrame(
-        0, Instance_GetNumAnimFrames(d->instSelf, 0));
+    d->instSelf->animFrame = 
+		VehAnim_Instance_GetStartFrame(
+        0, VehAnim_Instance_GetNumAnimFrames(d->instSelf, 0));
+#else
+	d->instSelf->animFrame = 0;
+#endif
 
     // Set Scale (x, y, z)
     d->instSelf->scale[0] = 3276;
@@ -486,13 +516,15 @@ LAB_80058568:
             d->funcPtrs[i] = NULL;
         }
 
-        CAM_StartOfRace(gGT->cameraDC[d->driverID].cameraID);
+#ifndef REBUILD_PS1
+        CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
 
         d->instSelf->thread->funcThTick = ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) ? NULL : Veh_NullThread;
 
         // set OnInit function
         d->funcPtrs[0] = ((gGT->gameMode1 & ADVENTURE_ARENA) == 0) ? VehPtr_EngineRevving_Init : VehPtr_Driving_Init;
-    }
+#endif
+	}
 
     d->lapIndex = 0;
 
@@ -563,7 +595,7 @@ SKIP_WEAPON:
         d->invisibleTimer = 0x2d00;
     }
 
-    // If Super Engine Cheat is enabled
+    // If Super Engine Cheat
     if ((gameMode2 & CHEAT_ENGINE) != 0)
     {
         d->superEngineTimer = 0x2d00;

@@ -12,12 +12,16 @@ void DECOMP_VehInit_TeleportAll(struct GameTracker *gGT, u_int spawnFlags)
     
     if (d->instSelf->thread->modelIndex == DYNAMIC_ROBOT_CAR)
     {
+		#ifndef REBUILD_PS1
         BOTS_GotoStartingLine(d);
+		#endif
     }
 	
     else
     {
+		#ifndef REBUILD_PS1
         VehInit_TeleportSelf(d, spawnFlags | 1, 0);
+		#endif
     }
   }
 }
