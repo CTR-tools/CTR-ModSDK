@@ -6,7 +6,7 @@ void DECOMP_BOTS_Adv_AdjustDifficulty(void)
   short *difficultyParams;
   short *params1;
   short *params2;
-  short numLost;
+  short baseModifier;
   int currDifficulty;
   int maxDifficulty;
   int modifier;
@@ -44,27 +44,24 @@ void DECOMP_BOTS_Adv_AdjustDifficulty(void)
       // 0x80000000
       if ((int)gameMode1 < 0)
       {
-        //  times you've lost this boss race
-        numLost = BOTS_Adv_NumTimesLostEvent(sdata->advProgress.timesLostBossRace[gGT->bossID]);
-
+        // base difficulty modifier based on number of times lost
+        baseModifier = BOTS_Adv_NumTimesLostEvent(sdata->advProgress.timesLostBossRace[gGT->bossID]);
         maxDifficulty = gGT->bossID * 5;
-
-        modifier = numLost - 225; // always negative?
+        modifier = baseModifier - 225; 
 
         // if Adv Difficulty cheat is activated
         if (advCheat != 0)
         {
           maxDifficulty = gGT->bossID * 7;
-
-          modifier = numLost - 321;
+          modifier = baseModifier - 321;
         }
       }
       // If you're not in a Boss Race
       else
       {
         short trophyIndex = gGT->currAdvProfile.numTrophies + 1;
-        numLost = BOTS_Adv_NumTimesLostEvent(sdata->advProgress.timesLostRacePerLev[gGT->levelID]);
-        modifier = numLost - 60;
+        baseModifier = BOTS_Adv_NumTimesLostEvent(sdata->advProgress.timesLostRacePerLev[gGT->levelID]);
+        modifier = baseModifier - 60;
         maxDifficulty = (trophyIndex * 35) >> 2;
 
         // if negative (never happens to my knowledge)
@@ -76,7 +73,7 @@ void DECOMP_BOTS_Adv_AdjustDifficulty(void)
         // if Adv Difficulty cheat is activated
         if (advCheat != 0)
         {
-          modifier = numLost - 100;
+          modifier = baseModifier - 100;
           maxDifficulty = trophyIndex * 12;
         }
       }
@@ -86,31 +83,30 @@ void DECOMP_BOTS_Adv_AdjustDifficulty(void)
     else
     {
       short track = gGT->cup.trackIndex;
-      numLost = BOTS_Adv_NumTimesLostEvent(sdata->advProgress.timesLostCupRace[track]);
+      baseModifier = BOTS_Adv_NumTimesLostEvent(sdata->advProgress.timesLostCupRace[track]);
       maxDifficulty = track * 5;
       // If you're in Purple Gem Cup
       if (gGT->cup.cupID == 4)
       {
-        modifier = numLost - 225;
+        modifier = baseModifier - 225;
 
         // if Adv Difficulty cheat is activated
         if (advCheat != 0)
         {
           maxDifficulty = track * 7;
-          modifier = numLost - 321;
+          modifier = baseModifier - 321;
         }
       }
       // If you're in Adventure Cup (Red, Green, Blue, Yellow)
       else
       {
-        modifier = numLost - 205;
+        modifier = baseModifier - 205;
 
         // if Adventure Difficulty cheat is activated
         if (advCheat != 0)
         {
-          // track index 0,1,2,3
           maxDifficulty = track * 7;
-          modifier = numLost - 300;
+          modifier = baseModifier - 300;
         }
       }
       currDifficulty = maxDifficulty - modifier;
