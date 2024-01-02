@@ -21,17 +21,20 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
   short local_30;
   short local_2e;
   short local_2c;
+  
+  struct GameTracker* gGT;
+  gGT = sdata->gGT;
 
   // get model pointer
-  model = sdata->gGT->modelPtr[param_1];
+  model = gGT->modelPtr[param_1];
 
-  hudStruct = data.hudStructPtr[sdata->gGT->numPlyrCurrGame - 1];
+  hudStruct = data.hudStructPtr[gGT->numPlyrCurrGame - 1];
 
   bigNum = 0;
   // if model exist
   if (model != 0)
   {
-    driverThread = sdata->gGT->threadBuckets[0].thread;
+    driverThread = gGT->threadBuckets[0].thread;
 
     while (driverThread != 0)
 	{
@@ -149,7 +152,7 @@ LAB_8004ccc8:
           if (modelID == 0x7d)
 		  {
 			// get AdvCup ID from level metadata
-            int advCupID = data.metaDataLEV[sdata->gGT->levelID].ctrTokenGroupID;
+            int advCupID = data.metaDataLEV[gGT->levelID].ctrTokenGroupID;
 
 			puVar12[0x14] = 0xf368;
             puVar12[0x15] = 0x99f;
