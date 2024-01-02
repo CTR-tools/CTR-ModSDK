@@ -87,6 +87,16 @@ void DrawOneInst(struct Instance* curr)
 		gte_SetTransMatrix(mat2);
 		gte_SetGeomOffset(view->rect.w >> 1, view->rect.h >> 1);
 
+		// temporary, for tileView_UI
+		if ((curr->flags & 0x400) != 0)
+		{
+			gte_SetRotMatrix(&curr->matrix);
+			gte_SetTransMatrix(&curr->matrix);
+
+			// disable 3D HUD, come back later
+			return;
+		}
+
 		// ============ Draw Instance ==============
 
 		struct Model* m = curr->model;
