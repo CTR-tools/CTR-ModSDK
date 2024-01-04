@@ -13,10 +13,12 @@ void VehInit_TireSprites(struct Thread *t)
 
     d->wheelSprites = tire;
     
-    // if character ID is oxide
-    if (data.characterIDs[d->driverID] == 15)
-        // Not in Main Menu
-        // (gGT->levelID != MAIN_MENU_LEVEL))
+    
+    if (
+			// if character ID is oxide
+			(data.characterIDs[d->driverID] == 15) &&
+			(gGT->levelID != MAIN_MENU_LEVEL)
+		)
     {
         d->wheelSize = 0;
     }

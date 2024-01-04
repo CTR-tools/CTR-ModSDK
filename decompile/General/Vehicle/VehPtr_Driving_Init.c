@@ -1,23 +1,6 @@
 #include <common.h>
 
-// Budget: 192 / 308 bytes
-
-void *PlayerDrivingFuncTable[13] =
-    {
-        NULL,
-        VehPtr_Driving_Update,
-        VehPtr_Driving_PhysLinear,
-        VehPtr_Driving_Audio,
-        VehPtr_Driving_PhysAngular,
-        OnApplyForces,
-        COLL_StartSearch_NearPlayer,
-        OnCollide_Drivers,
-        COLL_StartSearch_Player,
-        Player_JumpAndFriction,
-        OnRender,
-        OnAnimate_Driving,
-        VehParticle_DriverMain
-    };
+extern void *PlayerDrivingFuncTable[13];
 
 void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d)
 {
@@ -54,3 +37,20 @@ void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d)
         }
     }
 }
+
+void *PlayerDrivingFuncTable[13] =
+{
+    NULL,
+    VehPtr_Driving_Update,
+    VehPtr_Driving_PhysLinear,
+    VehPtr_Driving_Audio,
+    VehPtr_Driving_PhysAngular,
+    OnApplyForces,
+    COLL_StartSearch_NearPlayer,
+    OnCollide_Drivers,
+    COLL_StartSearch_Player,
+    Player_JumpAndFriction,
+    OnRender,
+    OnAnimate_Driving,
+    VehParticle_DriverMain
+};

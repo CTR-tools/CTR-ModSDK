@@ -1,11 +1,11 @@
-// 519+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2+4 = 666 rewritten so far
+// 519+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2+4+1 = 666 rewritten so far
 // 519 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
 // 14 for 230_Block2
 // 18 for 230_Block3
 // 16 for 232 adv hub
-// most other additions for 231
+// most others for 231 or VehPtr
 // 10 for the eleven UI functions
 // +1 for DebugFont
 // +1 for 222
@@ -630,18 +630,36 @@ common, exe, VehInit_TeleportAll, 0x0, General/Vehicle/VehInit_TeleportAll.c
 common, exe, VehInit_GetModelByName, 0x0, General/Vehicle/VehInit_GetModelByName.c
 
 // VEH PTR
-common, exe, VehPtr_Crashing_PhysAngular, 0x0, General/Vehicle/VehPtr_Crashing_FuncPtrs.c
-common, exe, VehPtr_Crashing_Init, 0x0, General/Vehicle/VehPtr_Crashing_Init.c
+
+
+common, exe, VehPtr_Driving_PhysAngular, 0x0, General/Vehicle/VehPtr_Driving_PhysAngular.c
+// more
+common, exe, VehPtr_Driving_PhysLinear, 0x0, General/Vehicle/VehPtr_Driving_PhysLinear.c
+// Driving_Audio
+// Driving_Update
+common, exe, VehPtr_Driving_Init, 0x0, General/Vehicle/VehPtr_Driving_Init.c
+common, exe, VehPtr_Freeze_PhysLinear, 0x0, General/Vehicle/VehPtr_Freeze_PhysLinear.c
+common, exe, VehPtr_Freeze_Init, 0x0, General/Vehicle/VehPtr_Freeze_Init.c
+common, exe, VehPtr_AntiVShift_Update, 0x0, General/Vehicle/VehPtr_AntiVShift_FuncPtrs.c
+common, exe, VehPtr_AntiVShift_Init, 0x0, General/Vehicle/VehPtr_AntiVShift_Init.c
 common, exe, VehPtr_Drifting_PhysAngular, 0x0, General/Vehicle/VehPtr_Drifting_FuncPtrs.c
 common, exe, VehPtr_Drifting_Init, 0x0, General/Vehicle/VehPtr_Drifting_Init.c
-common, exe, VehPtr_Driving_PhysAngular, 0x0, General/Vehicle/VehPtr_Driving_PhysAngular.c
-common, exe, VehPtr_Driving_PhysLinear, 0x0, General/Vehicle/VehPtr_Driving_PhysLinear.c
+common, exe, VehPtr_Crashing_PhysAngular, 0x0, General/Vehicle/VehPtr_Crashing_FuncPtrs.c
+common, exe, VehPtr_Crashing_Init, 0x0, General/Vehicle/VehPtr_Crashing_Init.c
 common, exe, VehPtr_Spinning_Update, 0x0, General/Vehicle/VehPtr_Spinning_FuncPtrs.c
 common, exe, VehPtr_Spinning_Init, 0x0, General/Vehicle/VehPtr_Spinning_Init.c
 common, exe, VehPtr_LastSpin_Update, 0x0, General/Vehicle/VehPtr_LastSpin_FuncPtrs.c
 common, exe, VehPtr_LastSpin_Init, 0x0, General/Vehicle/VehPtr_LastSpin_Init.c
 common, exe, VehPtr_StopSpin_Update, 0x0, General/Vehicle/VehPtr_StopSpin_FuncPtrs.c
 common, exe, VehPtr_StopSpin_Init, 0x0, General/Vehicle/VehPtr_StopSpin_Init.c
+
+// ChangeState
+// Weapon
+// VehPtr_MaskGrab
+// VehPtr_EatenByPlant
+// VehPtr_Dead
+// VehPtr_EngineRevving
+
 common, exe, VehPtr_Blasted_Update, 0x0, General/Vehicle/VehPtr_Blasted_FuncPtrs.c
 common, exe, VehPtr_Blasted_Init, 0x0, General/Vehicle/VehPtr_Blasted_Init.c
 
