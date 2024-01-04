@@ -900,7 +900,7 @@ struct OverlayDATA_230 D230 =
 	.time_3_6_9 = {3,6,9},
 	.time_3_6_INF = {3,6,0xFF},
 	.lives_3_6_9 = {3,6,9},
-	.points_5_10_15 = {3,10,15},
+	.points_5_10_15 = {5,10,15},
 
 	.color1 = 0x808080,
 	.color2 = 0x101010,
