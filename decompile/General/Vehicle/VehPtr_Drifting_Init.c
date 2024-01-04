@@ -7,8 +7,7 @@ extern void *PlayerDriftingFuncTable[13];
 // seems to handle start of drifts
 void DECOMP_VehPtr_Drifting_Init(struct Thread *t, struct Driver *d)
 {
-    // kart is drifting
-    d->kartState = DRIFTING;
+    d->kartState = KS_DRIFTING;
 
     // Character's Drift stat + ((Turning multiplier? << 2) / 5) * 100
     short drift = (d->unk460 + ((d->turnConst << 2) / 5)) * 0x100;

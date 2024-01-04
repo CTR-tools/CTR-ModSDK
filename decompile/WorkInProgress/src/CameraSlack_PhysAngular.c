@@ -22,19 +22,16 @@ void CameraSlack_PhysAngular(struct Driver *driver)
 	// high speed
 	if (speedApprox >= 0x301)
 	{
-		// check if driver is not on warppad
-		if (((driver->actionsFlagSet & 0x4000) == 0) &&
-
-			// if not crashing
-			(driver->kartState != 1) &&
-
-			((driver->set_0xF0_OnWallRub == 0)) &&
-
-			// if driver is on quadblock
-			((driver->actionsFlagSet & 1 != 0)) &&
-
-			// not on ice or flying
-			(terrain_meta = driver->terrainMeta1->const_0x100, terrain_meta != 0))
+		terrain_meta = driver->terrainMeta1->const_0x100;
+		
+		if (
+			// not on warppad, not crashing, not wall rubbing,
+			// must be on quadblock, but not on ice or flying
+			((driver->actionsFlagSet & 0x4000) == 0) &&
+			(driver->kartState != KS_CRASHING) &&
+			(driver->set_0xF0_OnWallRub == 0) &&
+			((driver->actionsFlagSet & 1) != 0) &&
+			(terrain_meta != 0))
 		{
 
 			// kart angle cap from 'straight to camera'

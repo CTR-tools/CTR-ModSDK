@@ -121,7 +121,7 @@ void EngineSound_Player(struct Driver *driver)
         }
         else
         {
-            if (driver->kartState == 4)
+            if (driver->kartState == KS_ENGINE_REVVING)
             {
                 iVar12 = 0;
                 if (0 < driver->fireSpeed)
@@ -141,7 +141,10 @@ void EngineSound_Player(struct Driver *driver)
                 {
                     iVar12 = -iVar12;
                 }
-                if (((driver->actionsFlagSetPrevFrame & 1) == 0) || (driver->kartState == 2))
+                if (
+						((driver->actionsFlagSetPrevFrame & 1) == 0) || 
+						(driver->kartState == KS_DRIFTING)
+					)
                 {
                     iVar12 = iVar12 + 0xf00;
                 }
@@ -164,7 +167,8 @@ void EngineSound_Player(struct Driver *driver)
             {
                 uVar11 = driver->fill_3B6[0] - 500;
                 driver->fill_3B6[0] = uVar11;
-                if (driver->kartState == 2)
+				
+                if (driver->kartState == KS_DRIFTING)
                 {
                     if (uVar11 < 2000)
                     {
@@ -216,7 +220,7 @@ void EngineSound_Player(struct Driver *driver)
             vol = MapToRange(sVar4, 0, sVar2, 0x82, uVar9);
 
             // if racer is not drifting and not in accel prevention
-            if ((driver->kartState != 2) && ((driver->actionsFlagSet & 8) == 0))
+            if ((driver->kartState != KS_DRIFTING) && ((driver->actionsFlagSet & 8) == 0))
             {
                 vol += (iVar8 >> 3);
             }
@@ -246,8 +250,7 @@ void EngineSound_Player(struct Driver *driver)
             // If this is human and not AI
             if ((driver->actionsFlagSet & 0x100000) == 0)
             {
-                // if kart state == drifting
-                if (driver->kartState == 2)
+                if (driver->kartState == KS_DRIFTING)
                 {
                     // if turbo meter has no room left
                     if (driver->turbo_MeterRoomLeft == 0)

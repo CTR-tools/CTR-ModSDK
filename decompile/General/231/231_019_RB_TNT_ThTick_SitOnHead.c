@@ -25,8 +25,12 @@ void DECOMP_RB_TNT_ThTick_SitOnHead(struct Thread* t)
   // Get Kart State
   state = mw->driverTarget->kartState;
   
-  // If crashing, spinning out, or being mask-grabbed
-  if (((state == 1) || (state == 5)) || (state == 3)) {
+  if (
+		(state == KS_CRASHING) || 
+		(state == KS_MASK_GRABBED) || 
+		(state == KS_SPINNING)
+	) 
+  {
     
 	// Play explosion sound
 	PlaySound3D(0x3d,inst);

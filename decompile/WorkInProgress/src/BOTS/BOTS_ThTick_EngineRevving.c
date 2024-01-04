@@ -45,13 +45,8 @@ void DECOMP_BOTS_ThTick_EngineRevving(struct Thread* botThread)
     // erase pointer to object
     bot->maskObj = NULL;
 
-    // kart state engineRevving
-    bot->kartState = ENGINE_REVVING;
-
-    // clock weapon recv
+    bot->kartState = KS_ENGINE_REVVING;
     bot->clockReceive = 0;
-
-    // squish timer
     bot->squishTimer = 0;
 
     // execute, then assign BOTS_ThTick_Drive

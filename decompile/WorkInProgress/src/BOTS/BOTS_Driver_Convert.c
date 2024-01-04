@@ -106,10 +106,10 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d)
     // Kart state:
     switch (d->kartState)
     {
-    case SPINNING:
+    case KS_SPINNING:
       damageType = 1;
       break;
-    case BLASTED:
+    case KS_BLASTED:
       damageType = 2;
       break;
     default:

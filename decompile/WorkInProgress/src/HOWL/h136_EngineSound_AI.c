@@ -15,7 +15,10 @@ void DECOMP_EngineSound_AI(struct Driver *param_1, struct Driver *param_2, int p
     speedoScale = -speedoScale;
   
 
-  if (((param_1->actionsFlagSetPrevFrame & 1) == 0) || (param_1->kartState == 2))
+  if (
+		((param_1->actionsFlagSetPrevFrame & 1) == 0) || 
+		(param_1->kartState == KS_DRIFTING)
+	 )
   {
     speedoScale += 0xf00;
   }
@@ -39,7 +42,7 @@ void DECOMP_EngineSound_AI(struct Driver *param_1, struct Driver *param_2, int p
     fill = param_1->fill_3B6[0] - 500;
     param_1->fill_3B6[0] = fill;
 
-    if (param_1->kartState == 2)
+    if (param_1->kartState == KS_DRIFTING)
     {
       if (fill < 2000)
       {

@@ -40,7 +40,7 @@ void VehPtr_Blasted_Init(struct Thread *thread, struct Driver *driver)
 	char bVar3;
 	char simpTurnState;
 	
-	driver->kartState = '\x06';
+	driver->kartState = KS_BLASTED;
 	driver->turbo_MeterRoomLeft = 0;
 	
 	if (

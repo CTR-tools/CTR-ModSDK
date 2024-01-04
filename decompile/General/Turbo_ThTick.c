@@ -234,21 +234,22 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 		}
 	}
 	
+	kartState = driver->kartState;
+	
 	if
 	(
 		// if this is a ghost
 		(instanceDriver->thread->modelIndex == 0x4b) ||
 	
-		// kart state
-		(((kartState = driver->kartState,
-	
-		// if not being mask grabbed, not crashing, not being warped
-		kartState != '\x05' && (kartState != '\x01'))
-	
-		// lol they found a glitch with this
-		#if BUILD > SepReview
-		&& (kartState != '\n')))
-		#endif
+		(
+			(kartState != KS_MASK_GRABBED)
+			&& (kartState != KS_CRASHING)
+			
+			// lol they found a glitch with this
+			#if BUILD > SepReview
+			&& (kartState != KS_WARP_PAD)
+			#endif
+		)
 	)
 	{
 		// if reserves are nearing zero

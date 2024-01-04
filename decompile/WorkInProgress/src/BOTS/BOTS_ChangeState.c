@@ -9,13 +9,14 @@ u_char DECOMP_BOTS_ChangeState(
 
   victim->ChangeState_param2 = 0;
 
-  if (victim->kartState == MASK_GRABBED)
+  if (victim->kartState == KS_MASK_GRABBED)
   {
     return 0;
   }
+  
   // if racer is not being mask grabbed
   // set kart state to normal
-  victim->kartState = NORMAL;
+  victim->kartState = KS_NORMAL;
 
   switch (damageType)
   {
@@ -182,7 +183,7 @@ u_char DECOMP_BOTS_ChangeState(
     victim->unk5bc[0] = 0xd20;
     victim->unk5ba = 5;
 
-    victim->kartState = MASK_GRABBED;
+    victim->kartState = KS_MASK_GRABBED;
     victim->botFlags |= 6;
 
     // TODO: Inline this below

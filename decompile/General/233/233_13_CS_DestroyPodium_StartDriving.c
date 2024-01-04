@@ -35,7 +35,7 @@ void DECOMP_CS_DestroyPodium_StartDriving(void)
   // driver Flags  make visible
   inst->flags &= ~(HIDE_MODEL);
 
-  d->kartState = ENGINE_REVVING;
+  d->kartState = KS_ENGINE_REVVING;
 
   d->funcPtrs[0] = DECOMP_VehPtr_Driving_Init;
 

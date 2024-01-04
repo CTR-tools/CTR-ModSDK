@@ -293,8 +293,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
 
     state = d->kartState;
 
-    // if kart is being mask grabbed
-    if (state == 5)
+    if (state == KS_MASK_GRABBED)
     {
         // tileView position
         *(int *)(scratchpad + 0x240) = (int)view->pos[0];
@@ -307,16 +306,15 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
         cDC->framesZoomingOut = 0;
     }
 
-    // if kart is in forced stillness
-    if (state == 4)
+    if (state == KS_ENGINE_REVVING)
     {
         // reset camera interpolation
         *(short *)(cDC + 0xc0) = 0;
         *(short *)(cDC + 0xc2) = 0;
         cDC->framesZoomingOut = 0;
     }
-    // if kart is not being blasted, racer is on the ground and (?)
-    if (((d->kartState != 6) && ((d->actionsFlagSet & 1) != 0)) &&
+	
+    if (((d->kartState != KS_BLASTED) && ((d->actionsFlagSet & 1) != 0)) &&
         (cDC->unk_c6 != 0))
     {
         // camera distance = camera speed, minus camera position
@@ -337,7 +335,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     if (((cDC->flags & 0x20) == 0) && (cDC->cameraMode == 0))
     {
 
-        if ((d->kartState != 6) && (cDC->unk_c6 == 0))
+        if ((d->kartState != KS_BLASTED) && (cDC->unk_c6 == 0))
             goto LAB_8001a8c0;
 
         if (cDC->unk_c6 == 0)
@@ -465,10 +463,8 @@ LAB_8001ab04:
         *(int *)(scratchpad + 0x25c) = *(int *)(scratchpad + 0x244) + (int)*(short *)(cDC + 0xc8);
     }
 
-    // if mask grab
-    if (d->kartState == 5)
+    if (d->kartState == KS_MASK_GRABBED)
     {
-
         view->rot[2] -= (view->rot[2] >> 3);
 
         // camera dirX, cameraPosX minus driverPosX
@@ -542,8 +538,7 @@ LAB_8001ab04:
         cDC->unkTriplet1[2] = 0xfffffffe;
     }
 
-    // If not mask grabbed
-    if (d->kartState != 5)
+    if (d->kartState != KS_MASK_GRABBED)
     {
         // tileView position
         view->pos[0] += *(short *)(scratchpad + 0x214) + cDC->unkTriplet1[0];

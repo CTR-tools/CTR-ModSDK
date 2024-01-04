@@ -14,7 +14,10 @@ void OnAnimate_Driving(struct Thread *t, struct Driver *d)
     struct GameTracker *gGT = sdata->gGT;
     struct Instance *inst = t->inst;
 
-    if (d->instTntRecv == 0 && d->kartState != 10)
+    if (
+			(d->instTntRecv == 0) && 
+			(d->kartState != KS_WARP_PAD)
+		)
     {
         if (d->fireSpeed < 0)
         {
@@ -153,8 +156,7 @@ void OnAnimate_Driving(struct Thread *t, struct Driver *d)
                 interp = InterpBySpeed(inst->animFrame, 1, numFrames - 1);
                 inst->animFrame = interp;
 
-                // if you're getting mask grabbed
-                if (d->kartState == 5) return;                
+                if (d->kartState == KS_MASK_GRABBED) return;                
 
                 char charID = data.characterIDs[d->driverID];
 

@@ -29,8 +29,7 @@ void DECOMP_VehPtr_Spinning_Init(struct Thread* t, struct Driver* d)
 {
 	int i;
 	
-	// spinning
-	d->kartState = 3;
+	d->kartState = KS_SPINNING;
 	
 	d->unk_LerpToForwards = 0;
 	d->turbo_MeterRoomLeft = 0;

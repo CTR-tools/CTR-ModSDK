@@ -483,14 +483,9 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 			((buttonsTapped & 0x40) != 0) &&
 
 			(
-				// if neutral driving
-				((kartState == 0 ||
-
-				// or sliding
-				(kartState == 2)) ||
-
-				// or AntiVShift
-				(kartState == 9))
+				(kartState == KS_NORMAL) ||
+				(kartState == KS_DRIFTING) ||
+				(kartState == KS_ANTIVSHIFT)
 			)
 		) &&
 
@@ -933,8 +928,10 @@ CheckJumpButtons:
 	(
 		(driver->mashingXMakesItBig == 0) ||
 
-		// kart state not 0, and kart state not 9
-		((driver->kartState != 0 && (driver->kartState != 9)))
+		(
+			(driver->kartState != KS_NORMAL) && 
+			(driver->kartState != KS_ANTIVSHIFT)
+		)
 	)
 	{
 		driver->mashXUnknown = 0;
@@ -1091,7 +1088,7 @@ SkipSetSteer:
 	driverSpeedOrSmth = (int)driver->fireSpeed;
 	if (driverSpeedOrSmth < 0) driverSpeedOrSmth = -driverSpeedOrSmth;
 
-	if (((driver->actionsFlagSetPrevFrame & 1) == 0) || (kartState == 2))
+	if (((driver->actionsFlagSetPrevFrame & 1) == 0) || (kartState == KS_DRIFTING))
 	{
 		driverSpeedOrSmth = driverSpeedOrSmth + 0xf00;
 	}
@@ -1122,7 +1119,7 @@ SkipSetSteer:
 	(
 		(driver->unkSpeedValue1 < 1) && 
 		((driver->tireColor & 1) == 0) &&
-		(kartState != 4)
+		(kartState != KS_ENGINE_REVVING)
 	)
 	{
 		//reset 0x3BC

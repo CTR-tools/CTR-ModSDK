@@ -24,7 +24,7 @@ void DECOMP_BOTS_MaskGrab(struct Thread *botThread)
         nextframe = sdata->NavPath_ptrNavFrameArray[bot->botPath];
     }
 
-    bot->kartState = MASK_GRABBED;
+    bot->kartState = KS_MASK_GRABBED;
 
     bot->unk5a8 = (frame->rot[3] - (frame->rot[3]  >> 0x1f) >> 1) << 8;
 

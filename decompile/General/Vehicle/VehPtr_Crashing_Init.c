@@ -9,7 +9,7 @@ void DECOMP_VehPtr_Crashing_Animate();
 
 // budget, 0x120 bytes, 288 bytes
 
-void* PlayerCrashingFuncTable[0xD] =
+void* PlayerCrashingFuncTable[13] =
 {
 	0,
 	0,
@@ -36,19 +36,11 @@ void DECOMP_VehPtr_Crashing_Init(struct Thread* t, struct Driver* d)
 	inst->scale[0] = 0xccc;
 	inst->scale[1] = 0xccc;
 	
-	// crashing
-	d->kartState = 1;
+	d->kartState = KS_CRASHING;
 	
 	d->numFramesSpentSteering = 1000;
 	
-	// all chars set to zero
 	d->Screen_OffsetY = 0;
-	
-	// Dont use Offset Array (Loop) optimization
-	// each line of this 'C' code, is one ASM instruction,
-	// it can not be more RAM-optimal or CPU-optimal
-	
-	// all shorts set to zero
 	d->ampTurnState = 0;
 	d->unk36E = 0;
 	d->speed = 0;
@@ -77,7 +69,7 @@ void DECOMP_VehPtr_Crashing_Init(struct Thread* t, struct Driver* d)
 	d->velocityXYZ[1] = 0;
 	d->velocityXYZ[2] = 0;
 	
-	for(i = 0; i < 0xD; i++)
+	for(i = 0; i < 13; i++)
 	{
 		d->funcPtrs[i] = PlayerCrashingFuncTable[i];
 	}

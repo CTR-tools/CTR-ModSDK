@@ -208,7 +208,7 @@ LAB_800b9aa8:
     // spin out
     spiderInst = RB_Hazard_HurtDriver(victim, 1, 0, 0);
 
-    if ((spiderInst != 0) && (victim->kartState != 3))
+    if ((spiderInst != 0) && (victim->kartState != KS_SPINNING))
     {
       // Play sound
       OtherFX_Play(0x7b, 1);

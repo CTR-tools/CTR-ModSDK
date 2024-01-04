@@ -37,7 +37,7 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 		if (boolHurt == 0) return;
 		
 		// if driver was already spinning out
-		if (kartStatePrev == 3) return;
+		if (kartStatePrev == KS_SPINNING) return;
 		
 		if (sound == 0) return;
 		

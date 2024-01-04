@@ -19,12 +19,8 @@ struct Instance* RB_Hazard_CollideWithDrivers(
 	{
 		driver = sdata->gGT->drivers[i];
 		
-		// skip invalid drivers
 		if(driver == 0) continue;
-		
-		// skip invincible drivers
-		if(driver->kartState == 5) continue;
-		
+		if(driver->kartState == KS_MASK_GRABBED) continue;
 		driverInst = driver->instSelf;
 		
 		if (

@@ -21,20 +21,16 @@ void *PlayerDrivingFuncTable[13] =
 
 void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d)
 {
-    // spawn function that gives you immediate control,
-    // used for adventure spawn, and dropping a mask-grab
-
     struct GameTracker *gGT = sdata->gGT;
 
-    // This if-statement prevents driving in Main Menu,
-    // Cutscenes, Naughty Dog Box Scene, etc
-
-    // if Level ID is not an adv hub
-    if ((4 < (gGT->levelID - GEM_STONE_VALLEY)) ||
-        // or, this is an adv hub, and 232 is loaded
-        (LOAD_IsOpen_AdvHub()))
+    if (
+			(gGT->levelID < GEM_STONE_VALLEY) ||
+			
+			// AdvHub + 232, so 233 podium wont work
+			LOAD_IsOpen_AdvHub()
+		)
     {
-        d->kartState = NORMAL;
+        d->kartState = KS_NORMAL;
 
         // Turbo meter = full
         d->turbo_MeterRoomLeft = 0;
@@ -49,11 +45,10 @@ void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d)
             d->funcPtrs[i] = PlayerDrivingFuncTable[i];
         }
 
-        // If you're in Battle Mode and
-        if (((gGT->gameMode1 & BATTLE_MODE) != 0) &&
-
-            // player is blasted
-            (d->kartState == 6))
+        if (
+				((gGT->gameMode1 & BATTLE_MODE) != 0) &&
+				(d->kartState == KS_BLASTED)
+			)
         {
             d->invincibleTimer = 0xb40;
         }

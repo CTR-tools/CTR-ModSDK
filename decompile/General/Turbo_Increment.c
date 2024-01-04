@@ -51,10 +51,9 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 
 	kartState = driver->kartState;
 
-	//if player is spinning, blasted, or mask grabbed, quit the function
-	if (kartState == 3) return;
-	if (kartState == 6) return;
-	if (kartState == 5) return;
+	if (kartState == KS_SPINNING) return;
+	if (kartState == KS_MASK_GRABBED) return;
+	if (kartState == KS_BLASTED) return;
 
 	//turn off 8th flag, turn on 22nd flag of actions flag set
 	//means ? (!(8)) and racer just got an outside turbo (22)
@@ -151,8 +150,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			{
 				turboObj->fireAudioDistort = 0;
 				
-				//racer is not crashing
-				if(driver->kartState != '\x01')
+				if(driver->kartState != KS_CRASHING)
 				{
 					Turbo_Audio(driver, fireLevel);
 				}
