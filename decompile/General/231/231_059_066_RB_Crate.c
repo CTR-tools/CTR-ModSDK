@@ -461,6 +461,10 @@ int DECOMP_RB_CrateTime_LInC(
 	driver = driverTh->object;
 	modelID = crateInst->model->id;
 	
+	// if driver turned into AI during end-of-race menu
+	if ((driver->actionsFlagSet & 0x100000) != 0)
+		return;
+	
 	driver->numTimeCrates++;
 	
 	if(modelID == STATIC_TIME_CRATE_01)
