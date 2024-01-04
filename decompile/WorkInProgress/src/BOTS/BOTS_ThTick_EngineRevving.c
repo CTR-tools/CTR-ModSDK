@@ -42,9 +42,7 @@ void DECOMP_BOTS_ThTick_EngineRevving(struct Thread* botThread)
       maskObj->rot[2] &= 0xfffe;
     }
 
-    // erase pointer to object
     bot->maskObj = NULL;
-
     bot->kartState = KS_ENGINE_REVVING;
     bot->clockReceive = 0;
     bot->squishTimer = 0;
