@@ -6807,7 +6807,9 @@ uint FUN_8002de48(void)
 		) ||
 
 		// If you're in Arcade Mode
-        ((*(uint *)PTR_DAT_8008d2ac & 0x400000) != 0))))
+        ((*(uint *)PTR_DAT_8008d2ac & 0x400000) != 0)
+		))
+	  )
 	{
 	  // Bank_Load
       FUN_800297a0(0x36,auStack16);
