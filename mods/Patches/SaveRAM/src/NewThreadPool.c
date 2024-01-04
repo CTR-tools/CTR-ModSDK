@@ -3,7 +3,6 @@
 // To do: add header
 
 void PadInitMtap(); // 80029988
-void MainInit_StringToLevID();
 void MEMPACK_Init();
 
 // room for 3 threads
