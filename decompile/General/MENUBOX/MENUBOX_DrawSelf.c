@@ -206,8 +206,7 @@ LAB_80045e94:
     posY_prev = mb->posY_prev;
     if ((mb->state & 4) == 0)
     {
-
-        borders.h = (local_60 + 8) - (*(char *)&mb->state >> 7);
+        borders.h = (local_60 + 8) - (*(unsigned char *)&mb->state >> 7);
     }
     else
     {

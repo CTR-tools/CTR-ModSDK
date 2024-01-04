@@ -3191,7 +3191,7 @@ void FUN_800459ec(short *param_1,short *param_2)
 }
 
 
-// Get MenuBox Height
+// MENUBOX_GetHeight
 // param_1 MenuBox
 // param_2 return value
 // param_3 bool check submenus
