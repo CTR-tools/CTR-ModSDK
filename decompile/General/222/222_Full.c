@@ -540,6 +540,10 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		sVar2 = 0x3e;
 	}
 
+	// stop after 12 seconds
+	if(driver->framesSinceRaceEnded_forThisDriver > 360)
+		return;
+
 	// increment counter for number of frames since the player ended the race
 	driver->framesSinceRaceEnded_forThisDriver++;
 	framesElapsed = driver->framesSinceRaceEnded_forThisDriver;
@@ -577,9 +581,6 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpStartX = -0xae;
 		lerpEndX = lerpStartY;
 		lerpStartY = lerpEndY;
-		
-		// optimization
-		if(currFrame > endFrame) return;
 	}
 	
 	// If not
