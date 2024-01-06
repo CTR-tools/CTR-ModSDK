@@ -391,13 +391,13 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
   iVar2 = (int)param_3[3] * (int)param_3[3];
   *(int *)(param_3 + 4) = iVar2;
   
-  // posCurr
+  // input1.pos = posCurr
   *param_3 = *param_1;
   param_3[1] = param_1[1];
   sVar1 = param_1[2];
   param_3[2] = sVar1;
   
-  // posCurr (again)
+  // QuadBlockColl.hitPos = posCurr (again)
   param_3[0xf] = param_3[1];
   param_3[0xe] = *param_3;
   *(int *)(param_3 + 0xc) = iVar2;
@@ -405,7 +405,7 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
   
   param_3[0xb] = param_3[3];
   
-  // posPrev
+  // QuadBlockColl.pos = posPrev
   param_3[8] = *param_2;
   param_3[9] = param_2[1];
   param_3[10] = param_2[2];
@@ -460,18 +460,32 @@ void FUN_8001d77c(short *param_1,short *param_2,short *param_3)
   if ((int)param_3[10] + (int)param_3[0xb] < (int)param_3[2] + (int)param_3[3]) {
     sVar1 = (short)((int)param_3[2] + (int)param_3[3]);
   }
+  
+  // sps->unk4C[0x38]
   *(undefined4 *)(param_3 + 0x42) = 0x1000;
+  
   param_3[0x1d] = sVar1;
   
+  // boolDidTouchHitbox
   param_3[0x21] = 0;
+  
+  // unk3C
   param_3[0x1e] = 0;
+  
+  // sps->dataOutput[0]
   *(undefined4 *)(param_3 + 0xd2) = 0;
+  
+  // sps->unk4C[0x78]
   *(undefined4 *)(param_3 + 0x62) = 0;
 
   // COLL_SearchTree_FindX, callback
   // PerBspLeaf_CheckInstances
-  FUN_8001ebec(*(undefined4 *)(*(int *)(param_3 + 0x16) + 0x18),param_3 + 0x18,FUN_8001d610,param_3)
-  ;
+  FUN_8001ebec(
+	*(undefined4 *)(*(int *)(param_3 + 0x16) + 0x18),
+	param_3 + 0x18,
+	FUN_8001d610,
+	param_3);
+	
   return;
 }
 
