@@ -1,21 +1,22 @@
 #include <common.h>
 
 void DECOMP_COLL_TestQuadblock_TwoTris(struct ScratchpadStruct* sps,struct QuadBlock* quad)
-{
-  COLL_ResetScratchpadCache(0x1f800108);
-  
+{	
+  COLL_ResetScratchpadCache(sps);
+
   // always 2 for low poly (big block)
   sps->dataOutput[7] = 2;
   
-  sps->dataOutput[6] = quad->triNormalVecBitShift;;
+  sps->dataOutput[6] = quad->triNormalVecBitShift;
   
   // calculate normal vectors for two triangles,
   // no collision detection here
+  struct BspSearchVertex* bsv = &sps->bspSearchVert[0];
   
   if (sps->unk4C[0xA0] != sps->unk4C[0xA2]) {
     sps->dataOutput[4] = quad->triNormalVecDividend[9];
-    COLL_TestTriangle_GetNormalVector(0x1f800108, 0x1f80020c, 0x1f800234, 0x1f800220); // 1, 3, 2
+    COLL_TestTriangle_GetNormalVector(sps, &bsv[1], &bsv[3], &bsv[2]); // 1, 3, 2
   }
   sps->dataOutput[4] = quad->triNormalVecDividend[8];
-  COLL_TestTriangle_GetNormalVector(0x1f800108, 0x1f8001f8, 0x1f80020c, 0x1f800220); // 0, 1, 2
+  COLL_TestTriangle_GetNormalVector(sps, &bsv[0], &bsv[1], &bsv[2]); // 0, 1, 2
 }

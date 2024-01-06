@@ -2190,7 +2190,7 @@ void FUN_8001ef50(int param_1,short *param_2,short *param_3,short *param_4)
 }
 
 
-// TestTriangle_GetNormalVector
+// COLL_TestTriangle_GetNormalVector
 void FUN_8001f2dc(int param_1,undefined4 *param_2,short *param_3,short *param_4)
 
 {
