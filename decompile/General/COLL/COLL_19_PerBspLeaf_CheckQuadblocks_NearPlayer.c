@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_COLL_PerBspLeaf_CheckQuadblocks_Touching(struct BSP *node, struct ScratchpadStruct *sps)
+void DECOMP_COLL_PerBspLeaf_CheckQuadblocks_NearPlayer(struct BSP *node, struct ScratchpadStruct *sps)
 {
     u_int numQuads;
     struct QuadBlock* ptrQuad;
@@ -8,19 +8,17 @@ void DECOMP_COLL_PerBspLeaf_CheckQuadblocks_Touching(struct BSP *node, struct Sc
     // if bsp flag is water
     if ((node->flag & 2) != 0)
     {
-        sps->dataOutput[0] |= 0x8000;
+        *(int*)&sps->dataOutput[0] |= 0x8000;
     }
 
     numQuads = node->data.leaf.numQuads;
-
     ptrQuad = node->data.leaf.ptrQuadBlockArray;
 
     // loop through all quadblocks
-    while (numQuads--)
+    while (numQuads-- != 0)
     {
-        COLL_PerQuadblock_CheckTriangles_Touching(ptrQuad, sps);
-        ptrQuad++ // next quadblock
-    };
+        COLL_PerQuadblock_CheckTriangles_NearPlayer(ptrQuad++, sps);
+    }
 
     if ((sps->Union.QuadBlockColl.unk22 & 1) != 0)
     {

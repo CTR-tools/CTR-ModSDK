@@ -152,6 +152,10 @@ common, exe, COLL_PerBspLeaf_CheckInstances, 0x0, General/COLL/COLL_02_PerBspLea
 common, exe, COLL_StartSearch_AI, 0x0, General/COLL/COLL_03_StartSearch_AI.c
 
 // over budget
+//common, exe, COLL_PerBspLeaf_CheckQuadblocks_Touching, 0x0, General/COLL/COLL_12_PerBspLeaf_CheckQuadblocks_Touching.c
+//common, exe, COLL_PerBspLeaf_CheckQuadblocks_NearPlayer, 0x0, General/COLL/COLL_19_PerBspLeaf_CheckQuadblocks_NearPlayer.c
+
+// over budget
 //common, exe, COLL_TestQuadblock_TwoTris, 0x0, General/COLL/COLL_13_TestQuadblock_TwoTris.c
 //common, exe, COLL_TestQuadblock_EightTris, 0x0, General/COLL/COLL_14_TestQuadblock_EightTris.c
 

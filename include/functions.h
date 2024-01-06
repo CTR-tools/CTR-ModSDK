@@ -71,7 +71,7 @@ void CDSYS_XAPauseAtEnd();
 
 u_char* COLL_LevModelMeta(u_int index);
 u_int COLL_Instance(short* param_1, struct BSP* node);
-void COLL_PerBspLeaf_CheckInstances(struct BSP* node, int param_2);
+void COLL_PerBspLeaf_CheckInstances(struct BSP* node, struct ScratchpadStruct *sps);
 void COLL_StartSearch_AI(short* posCurr, short* posPrev, short* param_3);
 void COLL_StartSearch_Player(struct Thread* t, struct Driver* d);
 void COLL_SearchTree_FindQuadblock_Touching(u_int* posTop, u_int* posBottom, u_int* param_3, int param_4);
@@ -80,15 +80,15 @@ u_int FUN_8001ede4(u_short* param_1, short* param_2, short* param_3, short* para
 void FUN_8001ef1c();
 void FUN_8001ef50(int param_1, short* param_2, short* param_3, short* param_4);
 void FUN_8001f2dc(int param_1, short* param_2, short* param_3, short* param_4);
-void COLL_PerQuadblock_CheckTriangles_Touching(struct QuadBlock* qb, int param_2);
-void COLL_PerBspLeaf_CheckQuadblocks_Touching(struct BSP* node, int param_2);
+void COLL_PerQuadblock_CheckTriangles_Touching(struct QuadBlock* qb, struct ScratchpadStruct *sps);
+void COLL_PerBspLeaf_CheckQuadblocks_Touching(struct BSP* node, struct ScratchpadStruct *sps);
 void FUN_8001f67c(int param_1, int param_2);
 void FUN_8001f6f0(int param_1, int param_2);
 void FUN_8001f7f0(int param_1);
 u_int FUN_8001f928(u_int* param_1, u_int* param_2, u_int* param_3, u_int* param_4);
 void FUN_8001fc40(u_int* param_1, int param_2, u_int param_3, u_int param_4);
-void COLL_PerQuadblock_CheckTriangles_NearPlayer(struct QuadBlock* qb, int param_2);
-void COLL_PerBspLeaf_CheckQuadblocks_NearPlayer(struct BSP* node, int param_2);
+void COLL_PerQuadblock_CheckTriangles_NearPlayer(struct QuadBlock* qb, struct ScratchpadStruct *sps);
+void COLL_PerBspLeaf_CheckQuadblocks_NearPlayer(struct BSP* node, struct ScratchpadStruct *sps);
 void FUN_80020334(struct QuadBlock* qb, int triangleID, int param_3);
 void COLL_StartSearch_NearPlayer(struct Thread* t, struct Driver* d);
 u_int COLL_Scrub(struct Driver* d, struct Thread* t, int param_3, int param_4, int* param_5);
