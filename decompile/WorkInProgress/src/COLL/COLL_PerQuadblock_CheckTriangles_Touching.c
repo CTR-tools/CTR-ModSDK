@@ -1,40 +1,40 @@
 #include <common.h>
 
-void COLL_PerQuadblock_CheckTriangles_Touching(struct QuadBlock *ptrQuad, struct ScratchpadStruct *searchResult)
+void COLL_PerQuadblock_CheckTriangles_Touching(struct QuadBlock *ptrQuad, struct ScratchpadStruct *sps)
 {
     // ??? used to write to quadBlocksRendered ???
     // "at + 100 = 80096404" from 226 ? which is quadblocksrendered
-    (struct QuadBlock *)(searchResult->unk4C[0x18]) = ptrQuad;
+    (struct QuadBlock *)(sps->unk4C[0x18]) = ptrQuad;
 
     if (
         (
             (
                 // quadblock flags
-                ((searchResult->Union.QuadBlockColl.searchFlags & ptrQuad->quadFlags) != 0) &&
+                ((sps->Union.QuadBlockColl.searchFlags & ptrQuad->quadFlags) != 0) &&
 
                 // quadblock flags
-                ((searchResult->Union.QuadBlockColl.unk28 & ptrQuad->quadFlags) == 0)) &&
+                ((sps->Union.QuadBlockColl.unk28 & ptrQuad->quadFlags) == 0)) &&
 
-            ((ptrQuad->bbox.min[0] >> 0x10) - searchResult->bbox.max[1] < 1)) &&
+            ((ptrQuad->bbox.min[0] >> 0x10) - sps->bbox.max[1] < 1)) &&
 
         ((
             (
-                ptrQuad->bbox.min[0] - searchResult->bbox.max[0] < 1 &&
+                ptrQuad->bbox.min[0] - sps->bbox.max[0] < 1 &&
 
-                (searchResult->bbox.min[0] - (ptrQuad->bbox.min[2] >> 0x10) < 1)) &&
+                (sps->bbox.min[0] - (ptrQuad->bbox.min[2] >> 0x10) < 1)) &&
 
             ((
-                ptrQuad->bbox.min[2] - searchResult->bbox.max[2] < 1 &&
+                ptrQuad->bbox.min[2] - sps->bbox.max[2] < 1 &&
 
-                (searchResult->bbox.min[2] - (ptrQuad->bbox.max[1] >> 0x10) < 1))))))
+                (sps->bbox.min[2] - (ptrQuad->bbox.max[1] >> 0x10) < 1))))))
     {
-        if (searchResult->bbox.min[1] - ptrQuad->bbox.max[1] < 1)
+        if (sps->bbox.min[1] - ptrQuad->bbox.max[1] < 1)
         {
             // if 3P or 4P mode,
             // then use low-LOD quadblock collision (two triangles)
-            if ((searchResult->Union.QuadBlockColl.unk22 & 2) == 0)
+            if ((sps->Union.QuadBlockColl.unk22 & 2) == 0)
             {
-                COLL_TestQuadblock_TwoTris(searchResult, ptrQuad);
+                COLL_TestQuadblock_TwoTris(sps, ptrQuad);
 
                 // call COLL_TestTriangle_FindAny two times, one per triangle
 
@@ -46,9 +46,9 @@ void COLL_PerQuadblock_CheckTriangles_Touching(struct QuadBlock *ptrQuad, struct
             }
             else
             {
-                if ((searchResult->Union.QuadBlockColl.unk22 & 8) == 0)
+                if ((sps->Union.QuadBlockColl.unk22 & 8) == 0)
                 {
-                    COLL_TestQuadblock_EightTris(searchResult, ptrQuad);
+                    COLL_TestQuadblock_EightTris(sps, ptrQuad);
                 }
 
                 // call COLL_TestTriangle_FindAny eight times, one per triangle
