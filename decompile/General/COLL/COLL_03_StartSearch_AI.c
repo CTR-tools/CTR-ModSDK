@@ -30,9 +30,9 @@ void DECOMP_COLL_StartSearch_AI(short *posCurr, short *posPrev, struct Scratchpa
     sps->unk3C = 0;
     sps->boolDidTouchHitbox = 0;
 
-    *(u_int *)(sps->unk4C[0x38]) = 0x1000;
-    *(u_int *)(sps->unk4C[0x78]) = 0; // 0xC4 arraySize
-    *(u_int *)(sps->dataOutput[0]) = 0;
+    *(u_int *)&sps->unk4C[0x38] = 0x1000;
+    *(u_int *)&sps->unk4C[0x78] = 0; // 0xC4 arraySize
+    *(u_int *)&sps->dataOutput[0] = 0;
 
     COLL_SearchTree_FindX(sps->ptr_mesh_info->bspRoot, &sps->bbox, COLL_PerBspLeaf_CheckInstances, sps);
 }
