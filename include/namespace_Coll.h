@@ -14,10 +14,10 @@ struct BspSearchVertex
 	u_short flags;
 	
 	// 0x8
-	short normalVec[3];
+	struct LevVertex* pLevelVertex;
 	
-	// 0xE
-	short normalVec_scaled[3];
+	// 0xC
+	short normalVec[4];
 	
 	// 0x14 large
 };
