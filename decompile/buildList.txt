@@ -147,6 +147,9 @@ common, exe, CDSYS_XAPauseRequest, 0x0, General/CDSYS/CDSYS_c17_XAPauseRequest.c
 common, exe, CDSYS_XAPauseForce, 0x0, General/CDSYS/CDSYS_c18_XAPauseForce.c
 common, exe, CDSYS_XAPauseAtEnd, 0x0, General/CDSYS/CDSYS_c19_XAPauseAtEnd.c
 
+// COLL
+common, exe, COLL_PerBspLeaf_CheckInstances, 0x0, General/COLL/COLL_02_PerBspLeaf_CheckInstances.c
+
 // CTR
 common, exe, CTR_Box_DrawClearBox, 0x0, General/CTR_Box_DrawClearBox.c
 common, exe, CTR_Box_DrawSolidBox, 0x0, General/CTR_Box_DrawSolidBox.c

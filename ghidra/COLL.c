@@ -336,7 +336,7 @@ void FUN_8001d610(int param_1,int param_2)
 			(
 				(
 					(
-						// if data is invalid
+						// if data is invalid (what?)
 						(
 							// if collision for instance is disabled
 							((*(byte *)piVar3 & 0x80) == 0) || 
