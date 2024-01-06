@@ -150,10 +150,8 @@ common, exe, CDSYS_XAPauseAtEnd, 0x0, General/CDSYS/CDSYS_c19_XAPauseAtEnd.c
 // COLL
 common, exe, COLL_PerBspLeaf_CheckInstances, 0x0, General/COLL/COLL_02_PerBspLeaf_CheckInstances.c
 common, exe, COLL_StartSearch_AI, 0x0, General/COLL/COLL_03_StartSearch_AI.c
-
-// over budget
-//common, exe, COLL_TestQuadblock_TwoTris, 0x0, General/COLL/COLL_13_TestQuadblock_TwoTris.c
-//common, exe, COLL_TestQuadblock_EightTris, 0x0, General/COLL/COLL_14_TestQuadblock_EightTris.c
+common, exe, COLL_TestQuadblock_TwoTris, 0x0, General/COLL/COLL_13_TestQuadblock_TwoTris.c
+common, exe, COLL_TestQuadblock_EightTris, 0x0, General/COLL/COLL_14_TestQuadblock_EightTris.c
 
 // CTR
 common, exe, CTR_Box_DrawClearBox, 0x0, General/CTR_Box_DrawClearBox.c
