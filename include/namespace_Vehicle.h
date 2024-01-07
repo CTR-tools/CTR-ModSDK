@@ -1316,10 +1316,16 @@ struct Driver
 			int engineRevFire;
 			
 			// 0x58c
-			int engineRevMS;
+			short engineRevMS;
+
+			// 0x58e
+			short unk58e;
 			
 			// 0x590
-			char unk[4];
+			short unk590;
+
+			// 0x592
+			char unk[2];
 			
 			// 0x594
 			int boolEngineRevMaskGrab;
