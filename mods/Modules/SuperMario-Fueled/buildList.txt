@@ -1,0 +1,13 @@
+common, exe, VehPtr_Drifting_Update, 0x0, src/VehPtr_Drifting_Update.c
+common, exe, UI_DrawSlideMeter, 0x0, src/UI_DrawSlideMeter.c
+
+// ReservesMeter //
+
+// Compile the ASM injection that will load our code
+903, exe, UI_RenderFrame_CrystChall, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+926, exe, UI_RenderFrame_AdvHub, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+1006, exe, UI_RenderFrame_AdvHub, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+1020, exe, UI_RenderFrame_AdvHub, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+1111, exe, UI_RenderFrame_AdvHub, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
+
+common, exe, rdata_free, 0x0, ../../Modules/ReservesMeter/src/main.c

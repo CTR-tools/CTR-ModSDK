@@ -1,0 +1,2 @@
+common, exe, rdata_free, 0x0, src/main.c
+common, exe, BOTS_SetRotation, -0x8, src/hook.s
