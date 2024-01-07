@@ -1,19 +1,24 @@
 #include <common.h>
 
 // byte budget
-// 840/1108
+// 920 / 1108
 
-extern struct MenuRow UDCTRM_MM_MenuRows_ScrapbookUnlocked[9];
+#define UDCTRM_MM_ROW_OPTIONS 6
+#define UDCTRM_MM_ROW_SCRAPBOOK 7
+
 extern struct MenuBox UDCTRM_OM_MenuBox;
 
-void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
+void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 {
 	short rowLngID;
 	struct GameTracker *gGT = sdata->gGT;
 
 	// if scrapbook is unlocked, change "rows" to extended array
 	if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
-		mainMenu->rows = UDCTRM_MM_MenuRows_ScrapbookUnlocked;
+	{
+		mainMenu->rows[UDCTRM_MM_ROW_OPTIONS].rowOnPressDown = UDCTRM_MM_ROW_SCRAPBOOK;
+		mainMenu->rows[UDCTRM_MM_ROW_SCRAPBOOK].stringIndex = 564;
+	}
 
 	DECOMP_MM_ParseCheatCodes();
 	MM_ToggleRows_Difficulty();
@@ -24,7 +29,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 	{
 		MM_Title_MenuUpdate();
 
-		if
+		if 
 		(
 			// main menu, "title" exists, and timer >= 230
 			(D230.MM_State == 1) &&
@@ -78,7 +83,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 	{
 		D230.timerInTitle = 1000;
 	}
-	
+
 	// if funcPtr is null
 	if ((mainMenu->state & EXECUTE_FUNCPTR) == 0)
 	{
@@ -95,18 +100,9 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 	}
 
 	// if you are at highest level of menu hierarchy
-	if (mainMenu->unk1e != 0)
+	if ((mainMenu->unk1e != 0) || (mainMenu->rowSelected < 0))
 	{
 		// leave the function
-		return;
-	}
-
-	// If you are here, then you must not be
-	// at the highest level of menu hierarchy
-
-	// if row is negative, do nothing
-	if ((mainMenu->rowSelected) < 0)
-	{
 		return;
 	}
 
@@ -116,119 +112,71 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox* mainMenu)
 	// clear more game mode flags
 	gGT->gameMode2 &= ~(CUP_ANY_KIND);
 
-	mainMenu->state |= ONLY_DRAW_TITLE;
+	mainMenu->state |= ONLY_DRAW_TITLE;	
 
-	// Default to 3,
-	// this intentionally disables the 1-lap cheat
-	// in Time Trial and Adventure, DONT change it
-	gGT->numLaps = 3;
-
-	// get LNG index of row selected
-	rowLngID = mainMenu->rows[mainMenu->rowSelected].stringIndex;
-
-	// Adventure Mode
-	if (rowLngID == 76)
-	{
-		// Turn on Adventure Mode, turn off item cheats
-		gGT->gameMode1 |= ADVENTURE_MODE;
-		gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
-
-		// menubox for new/load
-		mainMenu->ptrNextBox_InHierarchy = &D230.menubox_adventure;
-		mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
-		return;
-	}
-	
-	// Time Trial
-	if (rowLngID == 77)
-	{
-		// Leave main menu hierarchy
-		D230.MM_State = 2;
-
-		// Set next stage to 2 for Time Trial
-		D230.desiredMenu = 2;
-
-		// set number of players to 1
-		gGT->numPlyrNextGame = 1;
-
-		// set game mode to Time Trial Mode
-		gGT->gameMode1 |= TIME_TRIAL;
-		gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
-		return;
-	}
-	
-	// DONT change, should only work in Arcade, and VS
+	// should only work in Arcade, and VS
 	if ((gGT->gameMode2 & CHEAT_ONELAP) != 0) 
 	{
 		gGT->numLaps = 1;
 	}
 	
-	// Arcade Mode
-	if (rowLngID == 78)
+	// get LNG index of row selected
+	rowLngID = mainMenu->rows[mainMenu->rowSelected].stringIndex;
+
+	struct MenuBox *nextBox;
+
+	switch (rowLngID)
 	{
-		// set game mode to Arcade Mode
-		gGT->gameMode1 |= ARCADE_MODE;
+	case 76: // Adventure Mode
+		gGT->numLaps = 3;
+		gGT->gameMode1 |= ADVENTURE_MODE;
+		gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
+		nextBox = &D230.menubox_adventure;
+		break;
 
-		// set next menuBox
-		mainMenu->ptrNextBox_InHierarchy = &D230.menubox_raceType;
-		mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
-		return;
-	}
-	
-	// Versus
-	if (rowLngID == 79)
-	{
-		// next menuBox is choosing single+cup
-		mainMenu->ptrNextBox_InHierarchy = &D230.menubox_raceType;
-		mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
-		return;
-	}
-	
-	// Battle
-	if (rowLngID == 80)
-	{
-		D230.characterSelect_transitionState = 2;
-
-		// set game mode to Battle Mode
-		gGT->gameMode1 |= BATTLE_MODE;
-
-		// set next menuBox to 2P,3P,4P
-		mainMenu->ptrNextBox_InHierarchy = &D230.menubox_players2P3P4P;
-		mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
-		return;
-	}
-	
-	// High Score
-	if (rowLngID == 81)
-	{
-		// Set next stage to high score menu
-		D230.desiredMenu = 3;
-
-		// Leave main menu hierarchy
-		D230.MM_State = 2;
-
-		return;
-	}
-	
-	// Scrapbook
-	if (rowLngID == 564) 
-	{
-	// Set next stage to Scrapbook
-		D230.desiredMenu = 5;
-
-		// Leave main menu hierarchy
+	case 77: // Time Trial
 		D230.MM_State = EXITING_MENU;
+		D230.desiredMenu = 2;
+		gGT->numPlyrNextGame = 1;
+		gGT->numLaps = 3;
+		gGT->gameMode1 |= TIME_TRIAL;
+		gGT->gameMode2 &= ~(CHEAT_WUMPA | CHEAT_MASK | CHEAT_TURBO | CHEAT_ENGINE | CHEAT_BOMBS);
+		break;
 
-		return;
-	}
+	case 78: // Arcade Mode
+		gGT->gameMode1 |= ARCADE_MODE;
+		nextBox = &D230.menubox_raceType;
+		break;
+
+	case 79: // Versus
+		nextBox = &D230.menubox_raceType;
+		break;
+
+	case 80: // Battle
+		D230.characterSelect_transitionState = 2;
+		gGT->gameMode1 |= BATTLE_MODE;
+		nextBox = &D230.menubox_players2P3P4P;
+		break;
+
+	case 81: // High Score
+		D230.desiredMenu = 3;
+		D230.MM_State = EXITING_MENU;
+		break;
+
+	case 564: // Scrapbook
+		D230.desiredMenu = 5;
+		D230.MM_State = EXITING_MENU;
+		break;
 
 	/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
 	// Options (new for this mod!)
-	if (rowLngID == 14)
-	{
-		mainMenu->ptrNextBox_InHierarchy = &UDCTRM_OM_MenuBox;
-		mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
-		return;
-	}
+	case 14: // Options
+		nextBox = &UDCTRM_OM_MenuBox;
 	/////////////////////////// END OF CHANGES     ///////////////////////////
+	}
+	if (nextBox)
+	{
+		mainMenu->ptrNextBox_InHierarchy = nextBox;
+		mainMenu->state |= DRAW_NEXT_MENU_IN_HIERARCHY;
+	}
 }

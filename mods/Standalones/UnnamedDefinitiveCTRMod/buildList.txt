@@ -21,7 +21,7 @@ common, 230, MM_MENUBOX_Main, 0x0, src/Options_Menu/230_31_MM_MENUBOX_Main.c
 common, 230, MM_Title_MenuUpdate, 0x0, src/Options_Menu/230_02_MM_Title_MenuUpdate.c
 
 // Replace MenuRows of main menu
-common, 230, 0x800b454c, 0x0, src/Options_Menu/TitleScreenMenuRowsInsert.c
+926, 230, 0x800b44e4, 0x0, src/Options_Menu/TitleScreenMenuRowsInsert.c
 
 ////////////// Race options //////////////
 
@@ -67,6 +67,17 @@ common, 230, MM_MENUBOX_1p2p, 0x0, src/Packaged_Mods/ExtraDifficulty/MM_MENUBOX_
 1020, exe, UI_RenderFrame_AdvHub, -0x8, src/Packaged_Mods/ReservesMeter/reserveshook.s
 1111, exe, UI_RenderFrame_AdvHub, -0x8, src/Packaged_Mods/ReservesMeter/reserveshook.s
 
+////////////// MirrorMode //////////////
+
+903, exe, 0x80036acc, 0x0,  src/Packaged_Mods/MirrorMode/MI_JalDrawOTag.s
+926, exe, 0x800379b0, 0x0,  src/Packaged_Mods/MirrorMode/MI_JalDrawOTag.s
+1006, exe, 0x80038fe8, 0x0,  src/Packaged_Mods/MirrorMode/MI_JalDrawOTag.s
+1020, exe, 0x80037e00, 0x0,  src/Packaged_Mods/MirrorMode/MI_JalDrawOTag.s
+1111, exe, 0x80039674, 0x0,  src/Packaged_Mods/MirrorMode/MI_JalDrawOTag.s
+
+common, exe, MEMPACK_SwapPacks, -0x8, src/Packaged_Mods/MirrorMode/hookEntry.s
+common, exe, LOAD_Hub_ReadFile, -0x8, src/Packaged_Mods/MirrorMode/hookRemap.s
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Compile at the end of 230 overlay binary //
@@ -74,3 +85,4 @@ common, 230, MM_EndOfFile, 0x0, src/Race_Options/RaceOptions.c src/Race_Options/
 
 // Compile code to empty spaces in RDATA //
 common, exe, rdata_free, 0x0, src/Globals.c src/Packaged_Mods/Retro-Fueled/KeepU-TurnReserves.c src/Packaged_Mods/Retro-Fueled/BlueFire.c src/Turbo_Increment.c src/Packaged_Mods/ReservesMeter/main.c src/BetterPentaIcon.c
+common, exe, Torch_Main, 0x0, src/Packaged_Mods/MirrorMode/MI_main.c src/Packaged_Mods/MirrorMode/pad_remap.c src/Packaged_Mods/MirrorMode/entry.c
