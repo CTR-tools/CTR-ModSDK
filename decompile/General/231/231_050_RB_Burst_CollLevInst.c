@@ -22,7 +22,7 @@ void DECOMP_RB_Burst_CollLevInst(struct ScratchpadStruct* sps,struct BSP* bspHit
   if (model < 9) 
   {
 	// skip nullptr checks, nullptr is not possible
-    meta = COLL_LevModelMeta(model);
+    meta = DECOMP_COLL_LevModelMeta(model);
     meta->LInC(inst,sps->Union.ThBuckColl.thread,sps);
 	return;
   }

@@ -12,6 +12,8 @@ void DECOMP_CDSYS_XaCallbackCdSync(char result);
 void DECOMP_CDSYS_XaCallbackCdReady(char result);
 void DECOMP_CDSYS_SetMode_StreamData();
 
+void* DECOMP_COLL_LevModelMeta(int id);
+
 void DECOMP_CTR_CycleTex_AllModels(unsigned int numModels, struct Model** pModelArray, int timer);
 void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer);
 void DECOMP_CTR_ErrorScreen(char r, char g, char b);

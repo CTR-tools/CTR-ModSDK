@@ -18,7 +18,7 @@ unsigned short DECOMP_RB_Hazard_CollLevInst(struct ScratchpadStruct *sps, struct
     model = inst->model->id;
 
     // Get the metadata for the model
-    meta = COLL_LevModelMeta(model);
+    meta = DECOMP_COLL_LevModelMeta(model);
 
     // Check if LInC is not nullptr
     if (meta->LInC != NULL)

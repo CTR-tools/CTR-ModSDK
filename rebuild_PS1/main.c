@@ -18,6 +18,8 @@
 #include "../decompile/General/CAMERA/CAM_05_Path_Move.c"
 #include "../decompile/General/CAMERA/CAM_16_SetDesiredPosRot.c"
 
+#include "../decompile/General/COLL/COLL_00_LevModelMeta.c"
+
 #include "../decompile/General/CDSYS/CDSYS_c01_Init.c" 
 #include "../decompile/General/CDSYS/CDSYS_c02_GetFilePosInt.c" 
 #include "../decompile/General/CDSYS/CDSYS_c03_SetMode_StreamData.c" 

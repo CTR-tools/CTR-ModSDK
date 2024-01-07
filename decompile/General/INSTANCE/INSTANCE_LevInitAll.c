@@ -103,23 +103,12 @@ void DECOMP_INSTANCE_LevInitAll(struct InstDef *levInstDef, int numInst)
 			// they may be disabled due to podium scene on adv hub
 			if ((gGT->gameMode2 & DISABLE_LEV_INSTANCE) == 0)
 			{
-				if (
-					// temporary
-					#ifndef REBUILD_PS1
-					meta = COLL_LevModelMeta(modelID),
-					#else
-					meta = &data.MetaDataModels[modelID],
-					#endif
-
-					// if pointer is not nulllptr
-					meta != NULL
-					)
+				meta = DECOMP_COLL_LevModelMeta(modelID);
+				
+				if (meta->LInB != NULL)
 				{
-					if (meta->LInB != NULL)
-					{
-						// call funcLevInstDefBirth, make thread for this instance
-						meta->LInB(inst);
-					}
+					// call funcLevInstDefBirth, make thread for this instance
+					meta->LInB(inst);
 				}
 			}
 		}
