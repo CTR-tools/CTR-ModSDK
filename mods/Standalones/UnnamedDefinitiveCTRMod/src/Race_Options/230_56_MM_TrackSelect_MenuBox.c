@@ -495,16 +495,20 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				p.y = D230.transitionMeta_trackSel[1].currY + 5;
 		
 			/////////////////////////// CHANGED FOR UDCTRM ///////////////////////////
-			p.y += 8;
+			if ((gGT->gameMode1 & BATTLE_MODE) == 0)
+			{
+				p.y += 8;
 
-			// "OPTIONS"
-			DecalFont_DrawLine
-			(
-				sdata->lngStrings[604],
-				(D230.transitionMeta_trackSel[3].currX + 0x18c),
-				(D230.transitionMeta_trackSel[3].currY + (u_int)p.y + 180),
-				FONT_BIG, (JUSTIFY_CENTER | ORANGE)
-			);
+				// "OPTIONS"
+				DecalFont_DrawMultiLine
+				(
+					sdata->lngStrings[604],
+					(D230.transitionMeta_trackSel[3].currX + 0x18c),
+					(D230.transitionMeta_trackSel[3].currY + (u_int)p.y + 180),
+					250,
+					FONT_SMALL, (JUSTIFY_CENTER | ORANGE)
+				);
+			}
 			/////////////////////////// SECTION 2         ///////////////////////////
 		
 			if (-1 < selectMenu[mb->rowSelected].mapTextureID)

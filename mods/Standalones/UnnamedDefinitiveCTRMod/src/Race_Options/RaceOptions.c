@@ -5,6 +5,8 @@ u_int UDCTRM_RO_rowSelected = 0; // race options menu row, should start at 0
 u_char UDCTRM_RO_numLaps[4] = {1, 3, 5, 7}; // accepted values for laps option, just the lap amounts from the og game
 u_int UDCTRM_RO_numLapsIndex = 1; // number of laps should be 3 by default
 extern u_int UDCTRM_RF_blueFireMode; // found in BlueFireInt.c
+extern u_int UDCTRM_MI_mirrorMode; // found in MI_main.C
+// extern u_int UDCTRM_IL_itemless;
 extern u_int UDCTRM_RO_isOpen; // found in trackselect menubox... for now?
 
 force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
@@ -52,13 +54,13 @@ force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
 				break;
 			case 2:
 				// mirror mode -- not yet implemented
-				OtherFX_Play(5, 1);
+				UDCTRM_MI_mirrorMode = (UDCTRM_MI_mirrorMode + 1) % 2;
+				OtherFX_Play(1, 1);
 				break;
 			case 3:
 				// exit
 				OtherFX_Play(1, 1);
-				UDCTRM_RO_isOpen = false;
-				break;
+				goto CLOSE_RO_MENU;
 		}
 	}
 
@@ -66,7 +68,7 @@ force_inline void ProcessInputs(struct GameTracker* gGT, u_int buttonsTapped)
 	{
 		if (buttonsTapped & (BTN_SQUARE | BTN_TRIANGLE)) OtherFX_Play(2, 1); // back sound
 		else                                             OtherFX_Play(1, 1); // accept sound
-		
+		CLOSE_RO_MENU:
 		// this variable controls when the track select menubox function will draw the race options menu
 		UDCTRM_RO_isOpen = false;
 	}
@@ -104,8 +106,11 @@ force_inline void DisplayMenuBox(struct GameTracker* gGT)
 
 	// Blue Fire:
 	DecalFont_DrawLine(sdata->lngStrings[597 + UDCTRM_RF_blueFireMode], optionTextPosX, firstRowY + (10 * 1) + 1, FONT_SMALL, blueFireSettingColor | JUSTIFY_RIGHT);
-	// Mirror Mode: "OFF"
-	DecalFont_DrawLine(sdata->lngStrings[597], optionTextPosX, firstRowY + (10 * 2) + 1, FONT_SMALL, GRAY | JUSTIFY_RIGHT);
+	
+	// Mirror Mode:
+	int mirrorModeSettingColor = GRAY;
+	if (UDCTRM_MI_mirrorMode == 1) mirrorModeSettingColor = TINY_GREEN;
+	DecalFont_DrawLine(sdata->lngStrings[597 + UDCTRM_MI_mirrorMode], optionTextPosX, firstRowY + (10 * 2) + 1, FONT_SMALL, mirrorModeSettingColor | JUSTIFY_RIGHT);
 
 	MENUBOX_DrawInnerRect(&UDCTRM_RO_titleSeparatorLine, 4, (u_long *)(gGT->backBuffer->otMem).startPlusFour); // draw the line that's below the title
 	CTR_Box_DrawClearBox(&UDCTRM_RO_glowingcursor, &sdata->menuRowHighlight_Normal, 1, (u_long *)(gGT->backBuffer->otMem).startPlusFour, &gGT->backBuffer->primMem); // draw glowing cursor
