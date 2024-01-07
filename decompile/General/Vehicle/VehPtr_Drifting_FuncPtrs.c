@@ -399,26 +399,25 @@ void DECOMP_VehPtr_Drifting_Finalize(struct Thread* t, struct Driver* d)
 
 void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
 {
-    char cVar1;
     short noInputTime;
     int incrementReserves;
-    int meter;
+    int meterLeft;
     int highMeter;
     struct GamepadBuffer* pad = &sdata->gGamepads->gamepad[d->driverID];
 
     // This is the distance remaining that can be filled
-    meter = d->turbo_MeterRoomLeft;
+    meterLeft = d->turbo_MeterRoomLeft;
 
     if ((pad->buttonsTapped & (BTN_R1 | BTN_L1)) == 0)
     {
         // If there is no room in the turbo meter left to fill
-        if (meter == 0)
+        if (meterLeft == 0)
         {
             // If you have not attempted to boost 3 times in a row
             if (d->KartStates.Drifting.numBoostsAttempted < 3)
             {
                 // set turbo meter to empty
-                meter = d->const_turboMaxRoom << 5;
+                meterLeft = d->const_turboMaxRoom << 5;
             }
         }
 
@@ -426,17 +425,17 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
         else
         {
             // decreaes the amoutn of room remaining, by elapsed milliseconds per frame, ~32
-            meter -= sdata->gGT->elapsedTimeMS;
+            meterLeft -= sdata->gGT->elapsedTimeMS;
 
             // if the bar goes beyond full
-            if (meter < 0)
+            if (meterLeft < 0)
             {
                 // set bar to full
-                meter = 0;
+                meterLeft = 0;
             }
 
             // If bar is full
-            if (meter == 0)
+            if (meterLeft == 0)
             {
                 // Make a sound
                 OtherFX_Play_Echo(0xf, 1, ((d->actionsFlagSet & 0x10000) != 0));
@@ -455,7 +454,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
         d->KartStates.Drifting.numFramesDrifting = 0;
 
         // If turbo meter is not empty
-        if (meter != 0)
+        if (meterLeft != 0)
         {
             // const_turboLowRoomWarning
             // get length where turbo turns from green to red
@@ -465,13 +464,13 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
             // the distance remaining from the red/green "turning point" to the end,
 
             // If meter is in the red
-            if (meter < highMeter)
+            if (meterLeft < highMeter)
             {
                 // reserves_gain = map from old range to new range,
                 // the more room remaining to fill, the less boost you get
                 // old minMax: [zero -> const_turboLowRoomWarning]
                 // new minMax: [const_turboFullBarReserveGain, -> zero]
-                incrementReserves = MapToRange(meter, 0, highMeter, d->const_turboFullBarReserveGain << 5, 0);
+                incrementReserves = MapToRange(meterLeft, 0, highMeter, d->const_turboFullBarReserveGain << 5, 0);
 
                 Turbo_Increment(
 
@@ -507,14 +506,14 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
                 d->unk381 = 8;
             }
 
-            meter = 0;
+            meterLeft = 0;
 
             // increase number of boost attempts (both success and failure)
             d->KartStates.Drifting.numBoostsAttempted++;
         }
     }
 
-    d->turbo_MeterRoomLeft = meter;
+    d->turbo_MeterRoomLeft = meterLeft;
 
     // 1.0 seconds
     noInputTime = 0x3c0;
@@ -564,13 +563,9 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
 
 void DECOMP_VehPtr_Drifting_PhysLinear(struct Thread *thread, struct Driver *driver)
 {
-	struct GameTracker* gGT;
-	
 	VehPtr_Driving_PhysLinear(thread, driver);
-	gGT = sdata->gGT;
 	driver->actionsFlagSet |= 0x1800;
-	driver->timeSpentDrifting += gGT->elapsedTimeMS;
-	return;
+	driver->timeSpentDrifting += sdata->gGT->elapsedTimeMS;
 }
 
 void DECOMP_VehPtr_Drifting_InitSetUpdate(struct Thread* t, struct Driver* d)
@@ -581,6 +576,5 @@ void DECOMP_VehPtr_Drifting_InitSetUpdate(struct Thread* t, struct Driver* d)
 
   d->funcPtrs[0] = 0;
   d->funcPtrs[1] = DECOMP_VehPtr_Drifting_Update;
-  return;
 }
 
