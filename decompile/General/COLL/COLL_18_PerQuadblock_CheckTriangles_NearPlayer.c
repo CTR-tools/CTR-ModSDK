@@ -24,13 +24,13 @@ void DECOMP_COLL_PerQuadblock_CheckTriangles_NearPlayer(struct QuadBlock *quad, 
 			COLL_TestQuadblock_TwoTris(sps, quad);
 	
 			sps->unk4C[0x17] = 0;
-			COLL_TestTriangle_FindClosest(sps, 0x1f8001f8, 0x1f80020c, 0x1f800220); // 0, 1, 2
+			COLL_TestTriangle_FindClosest(sps, &bsv[0], &bsv[1], &bsv[2]); // 0, 1, 2
 
 			// If this is a quad instead of a triangle
 			if (quad->index[2] != quad->index[3])
 			{
 				sps->unk4C[0x17] = 1;
-				COLL_TestTriangle_FindClosest(sps, 0x1f80020c, 0x1f800234, 0x1f800220); // 1, 3, 2
+				COLL_TestTriangle_FindClosest(sps, &bsv[1], &bsv[3], &bsv[2]); // 1, 3, 2
 			}
 		}
 		else
@@ -41,25 +41,25 @@ void DECOMP_COLL_PerQuadblock_CheckTriangles_NearPlayer(struct QuadBlock *quad, 
 			}
 	
 			sps->unk4C[0x17] = 2;
-			COLL_TestTriangle_FindClosest(sps, 0x1f8001f8, 0x1f800248, 0x1f80025c); // 0, 4, 5
+			COLL_TestTriangle_FindClosest(sps, &bsv[0], &bsv[4], &bsv[5]); // 0, 4, 5
 			sps->unk4C[0x17] = 3;
-			COLL_TestTriangle_FindClosest(sps, 0x1f800248, 0x1f800270, 0x1f80025c); // 4, 6, 5
+			COLL_TestTriangle_FindClosest(sps, &bsv[4], &bsv[6], &bsv[5]); // 4, 6, 5
 			sps->unk4C[0x17] = 4;
-			COLL_TestTriangle_FindClosest(sps, 0x1f800270, 0x1f800248, 0x1f80020c); // 6, 4, 1
+			COLL_TestTriangle_FindClosest(sps, &bsv[6], &bsv[4], &bsv[1]); // 6, 4, 1
 			sps->unk4C[0x17] = 5;
-			COLL_TestTriangle_FindClosest(sps, 0x1f80025c, 0x1f800270, 0x1f800220); // 5, 6, 2
+			COLL_TestTriangle_FindClosest(sps, &bsv[5], &bsv[6], &bsv[2]); // 5, 6, 2
 
 			// If this is a quad instead of a triangle
 			if (quad->index[2] != quad->index[3])
 			{
 				sps->unk4C[0x17] = 6;
-				COLL_TestTriangle_FindClosest(sps, 0x1f800298, 0x1f800270, 0x1f800284); // 8, 6, 7
+				COLL_TestTriangle_FindClosest(sps, &bsv[8], &bsv[6], &bsv[7]); // 8, 6, 7
 				sps->unk4C[0x17] = 7;
-				COLL_TestTriangle_FindClosest(sps, 0x1f800284, 0x1f800234, 0x1f800298); // 7, 3, 8
+				COLL_TestTriangle_FindClosest(sps, &bsv[7], &bsv[3], &bsv[8]); // 7, 3, 8
 				sps->unk4C[0x17] = 8;
-				COLL_TestTriangle_FindClosest(sps, 0x1f80020c, 0x1f800284, 0x1f800270); // 1, 7, 6
+				COLL_TestTriangle_FindClosest(sps, &bsv[1], &bsv[7], &bsv[6]); // 1, 7, 6
 				sps->unk4C[0x17] = 9;
-				COLL_TestTriangle_FindClosest(sps, 0x1f800220, 0x1f800270, 0x1f800298); // 2, 6, 8
+				COLL_TestTriangle_FindClosest(sps, &bsv[2], &bsv[6], &bsv[8]); // 2, 6, 8
 			}
 		}
     }
