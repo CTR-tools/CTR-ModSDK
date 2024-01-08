@@ -12,10 +12,8 @@ void SwapDirection(u_int toggle)
 
 void Remap_Main()
 {
-#define toggle *(int *)0x8000FFF0
-
 	if ((sdata->gGT->gameMode1 & (PAUSE_1 | END_OF_RACE | MAIN_MENU)) == 0)
-		SwapDirection(toggle);
+		SwapDirection(UDCTRM_MI_mirrorMode);
 	else
 		SwapDirection(0);
 }
