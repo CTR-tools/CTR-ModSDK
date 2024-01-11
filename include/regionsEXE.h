@@ -4080,7 +4080,11 @@ struct sData
 	// 8008d8e4
 	// UsaRetail JpnTrial EurRetail
 	#if BUILD >= SepReview && BUILD <= EurRetail
-	char data10_aaaaa[0xE];
+	char data10_aaaaa[0xC];
+	
+	// 8008d8f0 - Usa
+	u_short boolHasLoadedOptions;
+
 	u_short titleoskunknown;
 	#elif BUILD == JpnRetail
 	char data14_aaaaa[0x14];
