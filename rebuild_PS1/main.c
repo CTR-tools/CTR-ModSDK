@@ -341,11 +341,6 @@
 
 #include "../decompile/General/MixRNG/MixRNG_Scramble.c"
 
-#include "../decompile/General/TileView/TileView_Init.c"
-#include "../decompile/General/TileView/TileView_SetPsyqGeom.c"
-#include "../decompile/General/TileView/TileView_SetMatrixVP.c"
-#include "../decompile/General/TileView/TileView_SetDrawEnv_Normal.c"
-
 #include "../decompile/General/THREAD/THREAD_DestroyTracker.c"
 #include "../decompile/General/THREAD/THREAD_DestroyInstance.c"
 #include "../decompile/General/THREAD/THREAD_DestroyObject.c"
@@ -356,6 +351,13 @@
 #include "../decompile/General/THREAD/THREAD_CollidePointWithSelf.c"
 #include "../decompile/General/THREAD/THREAD_CollidePointWithBucket.c"
 #include "../decompile/General/THREAD/THREAD_SearchForModel.c"
+
+#include "../decompile/General/TileView/TileView_Init.c"
+#include "../decompile/General/TileView/TileView_SetPsyqGeom.c"
+#include "../decompile/General/TileView/TileView_SetDrawEnv_Normal.c"
+#include "../decompile/General/TileView/TileView_SetMatrixVP.c"
+#include "../decompile/General/TileView/TileView_FadeOneWindow.c"
+#include "../decompile/General/TileView/TileView_FadeAllWindows.c"
 
 #include "../decompile/General/TitleBeginTrack_MenuBoxFuncPtr.c"
 #include "../decompile/General/TitleBeginTrack_Get_MenuBox.c"

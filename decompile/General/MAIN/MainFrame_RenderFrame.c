@@ -161,9 +161,9 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderAllTires(gGT);
 	RenderAllShadows(gGT);
 	RenderAllHeatParticles(gGT);
-	
-	TileView_FadeAllWindows();
 #endif
+	
+	DECOMP_TileView_FadeAllWindows();
 	
 	if((gGT->renderFlags & 1) != 0)
 	{

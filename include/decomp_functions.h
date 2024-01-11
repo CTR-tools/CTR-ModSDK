@@ -342,6 +342,9 @@ void DECOMP_TileView_SetDrawEnv_Normal(
 		void* ot, struct TileView* tileView, struct DB* backBuffer,
 		DRAWENV* copyDrawEnvNULL, int isbg);
 
+void DECOMP_TileView_FadeOneWindow(struct TileView *view);
+void DECOMP_TileView_FadeAllWindows();
+
 void DECOMP_TitleBeginTrack_MenuBoxFuncPtr(struct MenuBox* mb);
 struct MenuBox* DECOMP_TitleBeginTrack_Get_MenuBox();
 

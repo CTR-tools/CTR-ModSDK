@@ -6,8 +6,8 @@ void DECOMP_TileView_FadeAllWindows()
 
 	for(int i=0; i < gGT->numPlyrCurrGame; i++)
 	{
-		TileView_FadeOneWindow(&gGT->tileView[i]);
+		DECOMP_TileView_FadeOneWindow(&gGT->tileView[i]);
 	}
 
-	TileView_FadeOneWindow(&gGT->tileView_UI);
+	DECOMP_TileView_FadeOneWindow(&gGT->tileView_UI);
 }
