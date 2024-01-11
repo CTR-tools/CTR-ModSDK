@@ -4,7 +4,7 @@ void DECOMP_TileView_FadeAllWindows()
 {
 	struct GameTracker* gGT = sdata->gGT;
 
-	for(char i=0; i < gGT->numPlyrCurrGame; i++)
+	for(int i=0; i < gGT->numPlyrCurrGame; i++)
 	{
 		TileView_FadeOneWindow(&gGT->tileView[i]);
 	}

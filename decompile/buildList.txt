@@ -1,5 +1,5 @@
-// 524+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2+4+1 = 672 rewritten so far
-// 524 for every 'common' and ','
+// 533+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2+4+1 = 681 rewritten so far
+// 533 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
 // 14 for 230_Block2
@@ -152,7 +152,7 @@ common, exe, COLL_LevModelMeta, 0x0, General/COLL/COLL_00_LevModelMeta.c
 common, exe, COLL_PerBspLeaf_CheckInstances, 0x0, General/COLL/COLL_02_PerBspLeaf_CheckInstances.c
 common, exe, COLL_StartSearch_AI, 0x0, General/COLL/COLL_03_StartSearch_AI.c
 
-// over budget
+// over budget, but assumed working
 //common, exe, COLL_PerQuadblock_CheckTriangles_Touching, 0x0, General/COLL/COLL_11_PerQuadblock_CheckTriangles_Touching.c
 //common, exe, COLL_PerBspLeaf_CheckQuadblocks_Touching, 0x0, General/COLL/COLL_12_PerBspLeaf_CheckQuadblocks_Touching.c
 //common, exe, COLL_TestQuadblock_TwoTris, 0x0, General/COLL/COLL_13_TestQuadblock_TwoTris.c
@@ -567,6 +567,7 @@ common, exe, TileView_Init, 0x0, General/TileView/TileView_Init.c
 common, exe, TileView_SetMatrixVP, 0x0, General/TileView/TileView_SetMatrixVP.c
 common, exe, TileView_SetPsyqGeom, 0x0, General/TileView/TileView_SetPsyqGeom.c
 common, exe, TileView_UpdateFrustum, 0x0, General/TileView/TileView_UpdateFrustum.c
+common, exe, TileView_FadeOneWindow, 0x0, General/TileView/TileView_FadeOneWindow.c
 common, exe, TileView_FadeAllWindows, 0x0, General/TileView/TileView_FadeAllWindows.c
 common, exe, TileView_SetDrawEnv_Normal, 0x0, General/TileView/TileView_SetDrawEnv_Normal.c
 

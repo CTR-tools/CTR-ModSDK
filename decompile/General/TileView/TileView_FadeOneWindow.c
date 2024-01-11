@@ -9,16 +9,16 @@ void DECOMP_TileView_FadeOneWindow(struct TileView *view)
     POLY_F4 f4;
   } multiCmdPacket;
 
-  short newFade;
   int fadeStrength;
   multiCmdPacket *p = NULL;
 
   struct DB *backBuffer = sdata->gGT->backBuffer;
+  
+  short currValue = view->fadeFromBlack_currentValue;
 
-  // if tileView->fadeFromBlack_currentValue
-  // is not 0x1000, which means there must be
+  // if not 0x1000, which means there must be
   // some amount of fading
-  if (view->fadeFromBlack_currentValue != 0x1000)
+  if (currValue != 0x1000)
   {
     p = (POLY_F4 *)backBuffer->primMem.curr;
 
@@ -29,12 +29,12 @@ void DECOMP_TileView_FadeOneWindow(struct TileView *view)
     p->f4.y0 = 0;
 
     // if we are fading to black
-    if (view->fadeFromBlack_currentValue < 0x1001)
+    if (currValue < 0x1001)
     {
       p->tpage = 0xe1000a40;
 
       // get strength of fade (0 to 0x1000)
-      fadeStrength = 0xfff - newFade;
+      fadeStrength = 0xfff - currValue;
     }
     else
     {
@@ -42,7 +42,7 @@ void DECOMP_TileView_FadeOneWindow(struct TileView *view)
       p->tpage = 0xe1000a20;
 
       // get strength of fade (0 to 0x1000)
-      fadeStrength = view->fadeFromBlack_currentValue - 0x1000;
+      fadeStrength = currValue - 0x1000;
     }
 
     // strength of fade
@@ -60,23 +60,20 @@ void DECOMP_TileView_FadeOneWindow(struct TileView *view)
     AddPrim(view->ptrOT, p);
 
     // move pointer after writing polygons
-    backBuffer->primMem.curr = (int)p + sizeof(multiCmdPacket);
+    backBuffer->primMem.curr = p + 1;
   }
 
   // alter the fade value by the fade velocity
-  newFade = view->fadeFromBlack_currentValue + view->fade_step;
-
-  // set new fade value (temporarily)
-  view->fadeFromBlack_currentValue = newFade;
+  currValue += view->fade_step;
 
   // if fade velocity is negative
   if (view->fade_step < 1)
   {
     // if we go lower than the desired fade
-    if (newFade < view->fadeFromBlack_desiredResult)
+    if (currValue < view->fadeFromBlack_desiredResult)
     {
       // set to desired fade
-      view->fadeFromBlack_currentValue = view->fadeFromBlack_desiredResult;
+      currValue = view->fadeFromBlack_desiredResult;
     }
   }
 
@@ -84,10 +81,13 @@ void DECOMP_TileView_FadeOneWindow(struct TileView *view)
   else
   {
     // if we go higher than the desired fade value
-    if (view->fadeFromBlack_desiredResult < newFade)
+    if (view->fadeFromBlack_desiredResult < currValue)
     {
       // set to desired fade value
-      view->fadeFromBlack_currentValue = view->fadeFromBlack_desiredResult;
+      currValue = view->fadeFromBlack_desiredResult;
     }
   }
+  
+  // set new fade value
+  view->fadeFromBlack_currentValue = currValue;
 }
