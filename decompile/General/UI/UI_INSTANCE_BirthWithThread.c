@@ -13,7 +13,7 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
   int color;
   struct UiElement2D *puVar10;
   short *psVar11;
-  short *puVar12;
+  struct UiElement3D* ui3D;
   struct Instance* bigNum;
   struct Driver* driver;
   struct Thread* driverThread;
@@ -46,7 +46,7 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
       hudThread = DECOMP_THREAD_BirthWithObject(0x380310,param_2,param_6,0);
 
 	  // Get the object attached to the thread
-      puVar12 = hudThread->object;
+      ui3D = hudThread->object;
 
 	  // Big Number HUD element
       bigNum = DECOMP_INSTANCE_Birth2D(model,0,hudThread);
@@ -54,119 +54,92 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
 	  // give the Instance to the thread
       hudThread->inst = bigNum;
 
-      if (model->id == 0x38)
-	  {
-		// set pointer to instance of Big Number in HUD
-        driver->BigNumber[0] = bigNum;
-      }
-      else {
-        if (model->id == 0x37) {
-          driver->BigNumber[1] = bigNum;
-        }
-      }
-
-	  // model -> id
 	  modelID = model->id;
 
+      if (modelID == 0x38)
+	  {
+		driver->BigNumber[0] = bigNum;
+      }
+	  
+      else if (modelID == 0x37) 
+	  {
+        driver->BigNumber[1] = bigNum;
+      }
+
 	  // if this is a gem
-	  if (modelID == 0x5f) {
+	  else if (modelID == 0x5f) {
         color = 0x6c08080;
 LAB_8004cc4c:
-        puVar12[0x14] = 0xf368;
-        puVar12[0x15] = 0x99f;
-        puVar12[0x16] = 0x232;
+        ui3D->lightDir[0] = 0xf368;
+        ui3D->lightDir[1] = 0x99f;
+        ui3D->lightDir[2] = 0x232;
 LAB_8004cc58:
         bigNum->colorRGBA = color;
 
 		// specular lighting
         bigNum->flags |= 0x20000;
       }
-      else
+      
+	  // crystal
+      else if (modelID == 0x60) 
 	  {
-		// relic
-        if (modelID == 0x61) {
-          color = 0x60a5ff0;
-          goto LAB_8004cc4c;
-        }
-
-		// crystal
-        if (modelID == 0x60) {
-          puVar12[0x14] = 0xf4a0;
-          puVar12[0x15] = 0xb60;
-          color = 0xd22fff0;
-          puVar12[0x16] = 0xfd28;
-          goto LAB_8004cc58;
-        }
-
-		// key
-        if (modelID == 99) {
-          color = 0xdca6000;
-          goto LAB_8004cc4c;
-        }
-
-		// if C-T-R letters
-        if ((unsigned int)(model->id - 0x93U) < 3) {
-          puVar12[0x14] = 0xf368;
-          puVar12[0x15] = 0x99f;
-          puVar12[0x16] = 0x232;
-          puVar12[0x19] = 0xc;
-
-		  // modelID
-          modelID = model->id;
-
-		  // letter C
-          if (modelID == 0x93) {
-            uVar5 = 0xfffc;
-LAB_8004ccc8:
-            puVar12[0x18] = uVar5;
-          }
-          else
-		  {
-			// letter T
-            if (modelID == 0x94)
-			{
-              puVar12[0x18] = 0;
-            }
-
-			else
-			{
-			  // letter R
-              if (modelID == 0x95) {
-                uVar5 = 4;
-                goto LAB_8004ccc8;
-              }
-            }
-          }
-
-		  // Set color
-          bigNum->colorRGBA = 0xffc8000;
-
-		  // specular lighting
-          bigNum->flags |= 0x30000;
-        }
-        else
-		{
-		  // token model
-          if (modelID == 0x7d)
-		  {
-			// get AdvCup ID from level metadata
-            int advCupID = data.metaDataLEV[gGT->levelID].ctrTokenGroupID;
-
-			puVar12[0x14] = 0xf368;
-            puVar12[0x15] = 0x99f;
-            puVar12[0x16] = 0x232;
-
-			// get color from Adv Cup ID
-			advCupID = advCupID << 3;
-            modelID = data.AdvCups[advCupID].color[0];
-            sVar2 = data.AdvCups[advCupID].color[1];
-            sVar3 = data.AdvCups[advCupID].color[2];
-
-			bigNum->flags |= 0x30000;
-            bigNum->colorRGBA = modelID << 0x14 | sVar2 << 0xc | sVar3 << 4;
-          }
-        }
+        ui3D->lightDir[0] = 0xf4a0;
+        ui3D->lightDir[1] = 0xb60;
+        ui3D->lightDir[2] = 0xfd28;
+        color = 0xd22fff0;
+        goto LAB_8004cc58;
       }
+	  
+	  // relic
+	  else if (modelID == 0x61) 
+	  {
+        color = 0x60a5ff0;
+        goto LAB_8004cc4c;
+	  }
+
+	  // key
+      else if (modelID == 99) 
+	  {
+        color = 0xdca6000;
+        goto LAB_8004cc4c;
+      }
+
+	  // if C-T-R letters
+      if ((unsigned int)(modelID - 0x93U) < 3) 
+	  {	    
+	    // -4 for C
+	    // +0 for T
+	    // +4 for R
+        ui3D->rot[0] = (modelID-0x94) * 4;
+        ui3D->rot[1] = 0xc;
+	  
+	    // Set color
+        bigNum->colorRGBA = 0xffc8000;
+	  
+		goto lightDir_spec0x30000;
+      }
+        
+	  // token
+	  else if (modelID == 0x7d)
+	  {
+		// get AdvCup ID from level metadata
+        int advCupID = data.metaDataLEV[gGT->levelID].ctrTokenGroupID;
+	  	  	
+	  	short* cupColor = &data.AdvCups[advCupID].color[0];
+	  	
+        bigNum->colorRGBA = 
+			(cupColor[0] << 0x14) | 
+			(cupColor[1] << 0xc) | 
+			(cupColor[2] << 4);
+        
+lightDir_spec0x30000:
+		
+	  	ui3D->lightDir[0] = 0xf368;
+        ui3D->lightDir[1] = 0x99f;
+        ui3D->lightDir[2] = 0x232;
+	  
+	  	bigNum->flags |= 0x30000;
+	  }
 
 	  // if no tileView is supplied
 	  if (param_5 == 0)
@@ -221,15 +194,15 @@ LAB_8004ccc8:
       rot[2] = 0;
 
 #ifndef REBUILD_PS1
-      ConvertRotToMatrix(puVar12 + 4,&rot[0]);
+      ConvertRotToMatrix(&ui3D->m,&rot[0]);
 #else
-	  TEST_ConvertRotToMatrix(puVar12 + 4,&rot[0]);
+	  TEST_ConvertRotToMatrix(&ui3D->m,&rot[0]);
 #endif
 
-      *puVar12 = 0;
-      puVar12[1] = 0;
-      puVar12[2] = 0;
-      puVar12[3] = 0x1000;
+      ui3D->rot[0] = 0;
+      ui3D->rot[1] = 0;
+      ui3D->rot[2] = 0;
+      ui3D->rot[3] = 0x1000;
 
 	  // thread = thread -> next
       driverThread = driverThread->next;
