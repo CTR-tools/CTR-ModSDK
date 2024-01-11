@@ -2,27 +2,43 @@
 
 void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
 {
-    short reserves[3] = {1100, 2250, 3300};
-    short fireLevel[3] = {384, 509, 634};
     char turbo_level;
-    int incrementReserves;
     int meterLeft;
-    int highMeter;
     struct GamepadBuffer *pad = &sdata->gGamepads->gamepad[d->driverID];
 
     // This is the distance remaining that can be filled
     meterLeft = d->turbo_MeterRoomLeft;
-#define EMPTY_METER (d->const_turboMaxRoom << 5)
+    u_short empty = (d->const_turboMaxRoom << 5);
 
     if ((pad->buttonsTapped & (BTN_R1 | BTN_L1)) == 0)
     {
         turbo_level = d->KartStates.Drifting.numBoostsSuccess;
+
         // if still drifting
-        if ((pad->buttonsReleased & (BTN_R1 | BTN_L1)) == 0)
+        if ((pad->buttonsReleased & d->buttonUsedToStartDrift) == 0)
         {
+            // if (turbo_level)
+            // {
+            //     MATRIX *currMatrix = &d->instSelf->matrix;
+            //     gte_SetRotMatrix(currMatrix);
+            //     gte_SetTransMatrix(currMatrix);
+
+            //     struct ParticleEmitter *emset = (sdata->gGT->timer & 1) ? SparksR[turbo_level - 1] : SparksL[turbo_level - 1];
+
+            //     // Tire Sparks
+            //     VehParticle_Terrain_Ground(d, emset);
+            // }
+
             if (turbo_level < 3)
             {
-                meterLeft -= sdata->gGT->elapsedTimeMS;
+                short turn = d->unknownDimension2Curr;
+                turn = (turn < 0) ? -turn : turn;
+                meterLeft -= MapToRange(turn, 0, 0x400, 0, 32);
+
+                // slower fill if neutral or wide drift
+                // normal fill if you do a tight turn
+                // meterLeft -= (turn = (turn < 0) ? -turn : turn) > 800 ?
+                //             sdata->gGT->elapsedTimeMS : (sdata->gGT->elapsedTimeMS >> 1);
 
                 // if the bar is full or beyond
                 if (meterLeft <= 0)
@@ -32,7 +48,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
                     // mini-turbo level up
                     turbo_level++;
                     // reset bar to beginning
-                    meterLeft = EMPTY_METER;
+                    meterLeft = empty;
                 }
             }
             else
@@ -57,14 +73,14 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
                     // driver
                     d,
                     // amount of reserves
-                    reserves[turbo_level - 1],
+                    1920 * turbo_level,
                     // turbo type
-                    POWER_SLIDE_HANG_TIME,
+                    TURBO_PAD,
                     // fire level
-                    fireLevel[turbo_level - 1]);
+                    0x100 * turbo_level);
                 // reset turbo_level
                 turbo_level = 0;
-                meterLeft = EMPTY_METER;
+                meterLeft = empty;
             }
         }
         d->KartStates.Drifting.numBoostsSuccess = turbo_level;
