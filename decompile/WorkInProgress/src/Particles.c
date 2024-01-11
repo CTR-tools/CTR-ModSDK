@@ -177,16 +177,16 @@ int Particle_BitwiseClampByte(int *param_1)
 }
 
 // called from RenderList and CreateInstance
-u_int Particle_SetColors(u_int param_1, u_int param_2, int param_3)
+u_int Particle_SetColors(u_int flagColors, u_int flagAlpha, struct Particle* p)
 {
   u_int rgba;
 
-  if ((param_1 & 0x80) == 0)
+  if ((flagColors & 0x80) == 0)
   {
     // draw white
     rgba = 0x1000000;
 
-    if ((param_2 & 0x80) != 0)
+    if ((flagAlpha & 0x80) != 0)
     {
         // draw white, with alpha clipping
         rgba = 0x3000000;
@@ -195,21 +195,21 @@ u_int Particle_SetColors(u_int param_1, u_int param_2, int param_3)
   else
   {
     // red
-    rgba = Particle_BitwiseClampByte(param_3 + 0x5c);
+    rgba = Particle_BitwiseClampByte(p->axis[7].startVal);
 
-    if ((param_1 & 0x100) != 0)
+    if ((flagColors & 0x100) != 0)
     {
       // green
-      rgba |= Particle_BitwiseClampByte(param_3 + 0x64) << 8;
+      rgba |= Particle_BitwiseClampByte(p->axis[8].startVal) << 8;
     }
 
-    if ((param_1 & 0x200) != 0)
+    if ((flagColors & 0x200) != 0)
     {
       // blue
-      rgba |= Particle_BitwiseClampByte(param_3 + 0x6c) << 16;
+      rgba |= Particle_BitwiseClampByte(p->axis[9].startVal) << 16;
     }
 
-    if ((param_2 & 0x80) != 0)
+    if ((flagAlpha & 0x80) != 0)
     {
         // enable alpha clipping
         rgba |= 0x2000000;
