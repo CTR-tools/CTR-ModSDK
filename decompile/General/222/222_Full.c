@@ -249,7 +249,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 		if (
 			// Every 0.5 seconds or so
-			((t % 10 & 0xffff) == 0) &&
+			((t % FPS_DOUBLE(10) & 0xffff) == 0) &&
 
 			// sdata->numIconsEOR is the number of icons being
 			// drawn on the end-of-race menu in 1P mode
