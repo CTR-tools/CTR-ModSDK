@@ -273,14 +273,6 @@ void RunEntryHook()
 	// Mask Grab
 	*(unsigned int*)0x80067B58 = 0x2442FF00;
 
-	// Emulate 30fps on 60fps
-	// (temporary)
-	{	
-		// bitshift frame parameter for texture scrolling
-		// (turbo pads, water, lava, etc)
-		*(unsigned int*)0x8002198c = 0x52843;
-	}
-
 	// Driver physics
 	{
 		// MetaPhys
@@ -436,10 +428,6 @@ void RunEntryHook()
 
 	}
 
-	// wumpa and crystal (more fixes in 231)
-	{
-		*(unsigned char*)0x80054568 = 5*2;
-	}
 
 	#if 0
 	// does not work yet
