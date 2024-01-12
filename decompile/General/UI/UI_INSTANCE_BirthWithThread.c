@@ -54,11 +54,13 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
 
 	  modelID = model->id;
 
+	  // bigNumber
       if (modelID == 0x38)
 	  {
 		driver->BigNumber[0] = bigNum;
       }
 	  
+	  // fruitDisp
       else if (modelID == 0x37) 
 	  {
         driver->BigNumber[1] = bigNum;
@@ -194,8 +196,8 @@ lightDir_spec0x30000:
       ui3D->rot[2] = 0;
       ui3D->rot[3] = 0x1000;
 
-	  // thread = thread -> next
-      driverThread = driverThread->next;
+	  // next thread
+      driverThread = driverThread->siblingThread;
 
 	  // TODO: use enum for hud elements
 	  hudStruct += 0x14;
