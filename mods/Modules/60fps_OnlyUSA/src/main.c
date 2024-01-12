@@ -367,9 +367,9 @@ void RunEntryHook()
 		}
 
 
-		// Angular velocity spinout
-		*(unsigned int*)0x80063F48 = 0x24020096;
-		*(unsigned int*)0x80063F54 = 0x2402FF6A;
+		// Angular velocity spinout (done, vehptr_spinning_init)
+		//*(unsigned int*)0x80063F48 = 0x24020096;
+		//*(unsigned int*)0x80063F54 = 0x2402FF6A;
 
 		// Reserves, double parameter of function
 		*(unsigned int*)0x8005ac44 = 0x52840;

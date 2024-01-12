@@ -43,13 +43,13 @@ void DECOMP_VehPtr_Spinning_Init(struct Thread* t, struct Driver* d)
 	
 	// if spinning left
 	d->KartStates.Spinning.spinDir = 1;
-	d->KartStates.Spinning.driftSpinRate = 300;
+	d->KartStates.Spinning.driftSpinRate = FPS_DOUBLE(300);
 	
 	if(d->ampTurnState < 0)
 	{
 		// if spinning right
 		d->KartStates.Spinning.spinDir = -1;
-		d->KartStates.Spinning.driftSpinRate = -300;
+		d->KartStates.Spinning.driftSpinRate = FPS_DOUBLE(-300);
 	}
 	
 	if(d->simpTurnState < 1)
