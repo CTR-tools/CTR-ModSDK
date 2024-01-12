@@ -13,8 +13,6 @@ void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d)
 			LOAD_IsOpen_AdvHub()
 		)
     {
-        d->kartState = KS_NORMAL;
-
         // Turbo meter = full
         d->turbo_MeterRoomLeft = 0;
 
@@ -35,6 +33,10 @@ void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d)
         {
             d->invincibleTimer = 0xb40;
         }
+		
+		// must put this HERE, so that 
+		// the above IF-statement works
+        d->kartState = KS_NORMAL;
     }
 }
 
