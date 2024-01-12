@@ -11,8 +11,6 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
   long lVar7;
   struct UiElement2D *hudStruct;
   int color;
-  struct UiElement2D *puVar10;
-  short *psVar11;
   struct UiElement3D* ui3D;
   struct Instance* bigNum;
   struct Driver* driver;
@@ -141,21 +139,16 @@ lightDir_spec0x30000:
 	  	bigNum->flags |= 0x30000;
 	  }
 
-	  // if no tileView is supplied
+	  // if tileView is not supplied,
+	  // which means this draws in Player tileView
 	  if (param_5 == 0)
 	  {
-		// TODO: fix struct size
-        psVar11 = &hudStruct[2*param_3].x;
+		struct UiElement2D* currUI2D;
+        currUI2D = &hudStruct[param_3];
 
-		// Convert X
-        color = DECOMP_UI_ConvertX_2(*psVar11,psVar11[2]);
-        bigNum->matrix.t[0] = color;
-
-		// Convert Y
-		color = DECOMP_UI_ConvertY_2(psVar11[1],psVar11[2]);
-        bigNum->matrix.t[1] = color;
-
-		bigNum->matrix.t[2] = psVar11[2];
+        bigNum->matrix.t[0] = DECOMP_UI_ConvertX_2(currUI2D->x,currUI2D->z);
+        bigNum->matrix.t[1] = DECOMP_UI_ConvertY_2(currUI2D->y,currUI2D->z);
+		bigNum->matrix.t[2] = currUI2D->z;
       }
 
 	  // if tileView is supplied,
@@ -173,10 +166,7 @@ lightDir_spec0x30000:
         bigNum->matrix.t[2] = 0x200;
       }
 
-	  // TODO: There's 0x14 elements, 8 bytes large,
-	  // There are NOT 0x28 elements, 4 bytes large
-	  puVar10 = &hudStruct[2*param_3];
-      uVar5 = puVar10[1].y;
+	  uVar5 = hudStruct[param_3].scale;
       bigNum->scale[0] = uVar5;
       bigNum->scale[1] = uVar5;
       bigNum->scale[2] = uVar5;
@@ -207,8 +197,8 @@ lightDir_spec0x30000:
 	  // thread = thread -> next
       driverThread = driverThread->next;
 
-	  // TODO: fix struct size
-	  hudStruct += 0x28;
+	  // TODO: use enum for hud elements
+	  hudStruct += 0x14;
     }
   }
   return bigNum;

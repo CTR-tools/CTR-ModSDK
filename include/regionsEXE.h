@@ -2180,57 +2180,37 @@ struct Data
 	// 80086098 -- EurRetail
 	// 8008911C -- JpnRetail
 
-	// 00 - weaponIcon_Pos
-	// 01 - weaponIcon_Scale
-	// 02 - lapCount_Pos
-	// 03 - lapCount_Scale
-	// 04 - bigNumber_Pos
-	// 05 - bigNumber_unk
-	// 06 - wumpaModel_Pos
+	// 00 - weaponIcon
+	// 01 - lapCount
+	// 02 - bigNumber
+	// 03 - wumpaModel
+	// 04 - wumpaNum
+	// 05 - bigNumberSuffix
+	// 06 - jumpMeter
 	// 07 - ???
-	// 08 - wumpaNum_Pos
-	// 09 - ???
-	// 0A - bigNumber_PosSuffix
-	// 0B - ???
-	// 0C - jumpMeter_Pos
-	// 0D - ???
-	// 0E - ???
-	// 0F - ???
-	// 10 - driftMeter_Pos
-	// 11 - ???
-	// 12 - speedometer_Pos
-	// 13 - ???
-	// 14 - ???
-	// 15 - ???
-	// 16 - juicedUp_behindWeapon_Pos
-	// 17 - juicedUp_behindWeapon_Scale
-	// 18 - juicedUp_behindWumpa_Pos
-	// 19 - juicedUp_behindWumpa_Scale
-	// 1A - numLives_Pos
-	// 1B - ???
-	// 1C - advhub_numRelic_Pos
-	// 1D - ???
-	// 1E - advhub_numKey_Pos
-	// 1F - ???
-	// 20 - advhub_numTrophy_Pos
-	// 21 - ???
-	// 22 - crystalNum_Pos
-	// 23 - crystalModel_Pos
-	// 24 - LetterCTR_Pos
-	// 25 - ???
-	// 26 - timeCrateNum_Pos
-	// 27 - ???
-	// 28 - num elements
+	// 08 - driftMeter
+	// 09 - speedometer
+	// 0A - ???
+	// 0B - juicedUp_behindWeapon
+	// 0C - juicedUp_behindWumpa
+	// 0D - numLives
+	// 0E - advhub_numRelic
+	// 0F - advhub_numKey
+	// 10 - advhub_numTrophy
+	// 11 - numCrystal
+	// 12 - LetterCTR
+	// 13 - timeCrateNum
+	// 14 - num elements
 	
-	struct UiElement2D hud_1P_P1[0x28];
+	struct UiElement2D hud_1P_P1[0x14];
 
-	struct UiElement2D hud_2P_P1[0x28];
-	struct UiElement2D hud_2P_P2[0x28];
+	struct UiElement2D hud_2P_P1[0x14];
+	struct UiElement2D hud_2P_P2[0x14];
 
-	struct UiElement2D hud_4P_P1[0x28];
-	struct UiElement2D hud_4P_P2[0x28];
-	struct UiElement2D hud_4P_P3[0x28];
-	struct UiElement2D hud_4P_P4[0x28];
+	struct UiElement2D hud_4P_P1[0x14];
+	struct UiElement2D hud_4P_P2[0x14];
+	struct UiElement2D hud_4P_P3[0x14];
+	struct UiElement2D hud_4P_P4[0x14];
 
 	// 8008625c, array of four pointers,
 	// [0] = 1P P1

@@ -46,8 +46,6 @@ void DECOMP_UI_RenderFrame_Racing()
 	struct DB *backBuffer;
 	struct Thread* turboThread;
 	struct Turbo* turboThreadObject;
-	struct Icon* icon1;
-	struct Icon* icon2;
 	
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
@@ -60,8 +58,6 @@ void DECOMP_UI_RenderFrame_Racing()
 	// adding this here so the compiler doesn't complain
 	wumpaModel_Pos[0] = 0;
 	wumpaModel_Pos[1] = 0;
-	icon1 = 0;
-	icon2 = 0;
 	turboCount_Pos[0] = 0;
 	turboCount_Pos[1] = 0;
 
@@ -226,13 +222,13 @@ void DECOMP_UI_RenderFrame_Racing()
 			)
 			{
 				// draw spedometer needle
-				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[0x12].x, hudStructPtr[0x12].y, playerStruct);
+				DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x, hudStructPtr[9].y, playerStruct);
 
 				// draw jump meter
-				DECOMP_UI_JumpMeter_Draw(hudStructPtr[0xC].x, hudStructPtr[0xC].y, playerStruct);
+				DECOMP_UI_JumpMeter_Draw(hudStructPtr[6].x, hudStructPtr[6].y, playerStruct);
 
 				// Draw Powerslide Meter
-				DECOMP_UI_DrawSlideMeter(hudStructPtr[0x10].x, hudStructPtr[0x10].y, playerStruct);
+				DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x, hudStructPtr[8].y, playerStruct);
 
 				// draw background of spedometer
 				DECOMP_UI_DrawSpeedBG();
@@ -241,25 +237,24 @@ void DECOMP_UI_RenderFrame_Racing()
 			//if racer hasn't finished the race
 			if ((playerStruct->actionsFlagSet & 0x2000000) == 0)
 			{
-
 				// If you're not in Battle Mode
 				if ((gGT->gameMode1 & BATTLE_MODE) == 0)
 				{
 					// Draw powerslide meter
-					DECOMP_UI_DrawSlideMeter(hudStructPtr[0x10].x, hudStructPtr[0x10].y, playerStruct);
+					DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x, hudStructPtr[8].y, playerStruct);
 				}
 
 				// If you are not in Time Trial or Relic Race
 				if ((gGT->gameMode1 & (TIME_TRIAL | RELIC_RACE)) == 0)
 				{
-					DECOMP_UI_DrawNumWumpa(hudStructPtr[8].x, hudStructPtr[8].y, playerStruct);
+					DECOMP_UI_DrawNumWumpa(hudStructPtr[4].x, hudStructPtr[4].y, playerStruct);
 				}
 			}
 
 			// If you're in a Relic Race
 			if ((gGT->gameMode1 & RELIC_RACE) != 0)
 			{
-				DECOMP_UI_DrawNumTimebox(hudStructPtr[0x26].x, hudStructPtr[0x26].y, playerStruct);
+				DECOMP_UI_DrawNumTimebox(hudStructPtr[0x13].x, hudStructPtr[0x13].y, playerStruct);
 			}
 
 			// If game is not paused
@@ -267,8 +262,8 @@ void DECOMP_UI_RenderFrame_Racing()
 			{
 				if (playerStruct->PickupWumpaHUD.numCollected != 0)
 				{
-					wumpaModel_Pos[0] = hudStructPtr[6].x;
-					wumpaModel_Pos[1] = hudStructPtr[6].y;
+					wumpaModel_Pos[0] = hudStructPtr[3].x;
+					wumpaModel_Pos[1] = hudStructPtr[3].y;
 
 					// if cooldown between items is over
 					if (playerStruct->PickupWumpaHUD.cooldown == 0)
@@ -309,7 +304,7 @@ void DECOMP_UI_RenderFrame_Racing()
 							&wumpaModel_Pos[0],
 							(int)playerStruct->PickupWumpaHUD.startX,
 							(int)playerStruct->PickupWumpaHUD.startY,
-							hudStructPtr[6].x, hudStructPtr[6].y,
+							hudStructPtr[3].x, hudStructPtr[3].y,
 							playerStruct->PickupWumpaHUD.cooldown,
 							5
 						);
@@ -339,7 +334,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						// pointer to OT memory
 						gGT->tileView_UI.ptrOT,
 
-						0, hudStructPtr[1].y
+						0, hudStructPtr[0].scale
 					);
 				}
 				ptrHudC = sdata->ptrHudC;
@@ -347,42 +342,33 @@ void DECOMP_UI_RenderFrame_Racing()
 				ptrHudT = sdata->ptrHudT;
 				if (playerStruct->PickupLetterHUD.cooldown != 0)
 				{
+					struct Instance* curr;
+					LetterCTR_Pos[0] = hudStructPtr[0x12].x;
+					LetterCTR_Pos[1] = hudStructPtr[0x12].y;
+					
 					// C-Letter
 					if (playerStruct->PickupLetterHUD.modelID == 0x93)
-					{
-						// make visible
-						*(u_int *)&ptrHudC->flags &= 0xffffff7f;
-
-						LetterCTR_Pos[0] = hudStructPtr[0x24].x;
-						ptrHudR = ptrHudC;
-						LAB_80053584:
-						LetterCTR_Pos[1] = hudStructPtr[0x24].y;
-						ptrHudT = ptrHudR;
+					{	
+						curr = ptrHudC;
 					}
 
-					// not C-Letter
+					// T-letter
+					else if (playerStruct->PickupLetterHUD.modelID == 0x94)
+					{
+						LetterCTR_Pos[0] += 0x1d;
+						LetterCTR_Pos[1] -= 1;	
+						curr = ptrHudT;
+					}
+
+					// R-Letter
 					else
 					{
-						// not T-Letter
-						if (playerStruct->PickupLetterHUD.modelID != 0x94)
-						{
-							// R-Letter
-
-							// make visible
-							*(u_int *)&ptrHudR->flags &= 0xffffff7f;
-
-							LetterCTR_Pos[0] = hudStructPtr[0x24].x + 0x3a;
-							goto LAB_80053584;
-						}
-
-						// T-Letter
-
-						// make visible
-						*(u_int *)&ptrHudT->flags &= 0xffffff7f;
-
-						LetterCTR_Pos[0] = hudStructPtr[0x24].x + 0x1d;
-						LetterCTR_Pos[1] = hudStructPtr[0x24].y - 1;
+						LetterCTR_Pos[0] += 0x3a;
+						curr = ptrHudR;
 					}
+					
+					// make visible
+					*(u_int *)&curr->flags &= 0xffffff7f;
 
 					// reduce frame counter
 					playerStruct->PickupLetterHUD.cooldown--;
@@ -419,7 +405,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				if ((playerStruct->actionsFlagSet & 0x2000000) == 0)
 				{
 					// Draw weapon and number of wumpa fruit in HUD
-					UI_Weapon_DrawSelf(hudStructPtr[0].x, hudStructPtr[0].y, hudStructPtr[1].y, playerStruct);
+					UI_Weapon_DrawSelf(hudStructPtr[0].x, hudStructPtr[0].y, hudStructPtr[0].scale, playerStruct);
 				}
 				#endif
 			}
@@ -469,8 +455,8 @@ void DECOMP_UI_RenderFrame_Racing()
 				// if the animation is not done
 				else
 				{
-					wumpaModel_Pos[0] = hudStructPtr[0x1A].x + 0x20;
-					wumpaModel_Pos[1] = hudStructPtr[0x1A].y;
+					wumpaModel_Pos[0] = hudStructPtr[0xD].x + 0x20;
+					wumpaModel_Pos[1] = hudStructPtr[0xD].y;
 
 					// if you do not have life limit (battle)
 					if ((gGT->gameMode1 & LIFE_LIMIT) == 0)
@@ -529,8 +515,8 @@ void DECOMP_UI_RenderFrame_Racing()
 					(
 						&wumpaModel_Pos[0], (int)playerStruct->BattleHUD.startX,
 						(int)playerStruct->BattleHUD.startY,
-						(int)(((u_int)hudStructPtr[0x1A].x + 0x20) * 0x10000) >> 0x10,
-						(int)(((u_int)hudStructPtr[0x1A].y + 8) * 0x10000) >> 0x10,
+						(int)(((u_int)hudStructPtr[0xD].x + 0x20) * 0x10000) >> 0x10,
+						(int)(((u_int)hudStructPtr[0xD].y + 8) * 0x10000) >> 0x10,
 						playerStruct->BattleHUD.cooldown,
 						5
 					);
@@ -549,8 +535,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				//if racer hasn't finished the race
 				if ((playerStruct->actionsFlagSet & 0x2000000) == 0)
 				{
-					// Draw which lap they are on (1/3, 2/3, 3/3, etc)
-					DECOMP_UI_DrawLapCount(hudStructPtr[2].x, hudStructPtr[2].y, (u_int)hudStructPtr[3].y, playerStruct);
+					DECOMP_UI_DrawLapCount(hudStructPtr[1].x, hudStructPtr[1].y, (u_int)hudStructPtr[1].scale, playerStruct);
 				}
 			}
 
@@ -560,7 +545,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			else
 			{
 				// Draw how many points or lifes the player has
-				UI_DrawBattleScores((int)hudStructPtr[0x1A].x, (int)hudStructPtr[0x1A].y, playerStruct);
+				UI_DrawBattleScores((int)hudStructPtr[0xD].x, (int)hudStructPtr[0xD].y, playerStruct);
 			}
 
 			if
@@ -604,8 +589,6 @@ void DECOMP_UI_RenderFrame_Racing()
 				)
 				{
 					sVar17 = 0;
-					sVar1 = hudStructPtr[0xA].x;
-					sVar2 = hudStructPtr[0xA].y;
 					partTimeVariable5 = 0;
 				}
 				else
@@ -613,41 +596,25 @@ void DECOMP_UI_RenderFrame_Racing()
 
 					// if numPlyrCurrGame is less than 3
 					if (gGT->numPlyrCurrGame < 3) goto LAB_80053af4;
-					sVar1 = hudStructPtr[0xA].x;
-					sVar2 = hudStructPtr[0xA].y;
+
 					bVar3 = (gGT->timer & 1) == 0;
 					sVar17 = (u_short)bVar3 << 2;
 					partTimeVariable5 = ((u_int)bVar3 << 0x12) >> 0x10;
 				}
 
-				// Draw the "st", "nd", "rd" suffix after "1st, 2nd, 3rd, etc"
-				// "Placment" TYPO IN THE CHAT --Super
+				sVar1 = hudStructPtr[5].x;
+				sVar2 = hudStructPtr[5].y;
 				DECOMP_UI_DrawPosSuffix(sVar1, sVar2, playerStruct, (short)partTimeVariable5);
 
 				// if more than 2 players
 				if (2 < gGT->numPlyrCurrGame)
 				{
-					// pointer to OT memory
-					ptrOT = gGT->tileView_UI.ptrOT;
-
-					// position, from hud struct
-					sVar1 = hudStructPtr[4].x;
-					sVar2 = hudStructPtr[4].y;
-
-					// gGT->backBuffer
-					backBuffer = gGT->backBuffer;
-
 					// Get Color Data
 					ptrColor = data.ptrColor[sVar17];
 
-					// Four colors, one for each corner
-					local_7c = ptrColor[0];
-					local_78 = ptrColor[1];
-					local_74 = ptrColor[2];
-					local_70 = ptrColor[3];
-
 					// icon pointer, specifically for the big rank icons that start at 0x19
 					iconPtr = gGT->ptrIcons[(int)playerStruct->driverRank + 0x19];
+					
 					LAB_80053aec:
 
 					DECOMP_DecalHUD_DrawPolyGT4
@@ -656,60 +623,40 @@ void DECOMP_UI_RenderFrame_Racing()
 						iconPtr,
 
 						// position
-						(int)sVar1,
-						(int)sVar2,
+						(int)hudStructPtr[2].x,
+						(int)hudStructPtr[2].y,
 
-						&backBuffer->primMem,
-
-						ptrOT,
+						&gGT->backBuffer->primMem,
+						gGT->tileView_UI.ptrOT,
 
 						// color data
-						local_7c,
-						local_78,
-						local_74,
-						local_70,
+						ptrColor[0],
+						ptrColor[1],
+						ptrColor[2],
+						ptrColor[3],
 
 						0, FP(1.0)
 					);
 				}
 			}
 
-			// if you are in Relic Race, or Battle, or Time Trial
-			else
+			// If you're in end-of-race and Battle
+			else if ((partTimeVariable5 & 0x200020) == 0x200020)
 			{
-				// If you're in end-of-race and Battle
-				if ((partTimeVariable5 & 0x200020) == 0x200020)
-				{
-					partTimeVariable5 = (u_int)((gGT->timer & 1) == 0);
-
-					// Draw the "st", "nd", "rd" suffix after "1st, 2nd, 3rd, etc"
-					DECOMP_UI_DrawPosSuffix(hudStructPtr[0xA].x, hudStructPtr[0xA].y, playerStruct, (short)(partTimeVariable5 << 2));
-
-					sVar1 = hudStructPtr[4].x;
-					sVar2 = hudStructPtr[4].y;
-
-					// pointer to OT memory
-					ptrOT = gGT->tileView_UI.ptrOT;
-
-					// gGT->backBuffer
-					backBuffer = gGT->backBuffer;
-
-					// Get Color Data
-					ptrColor = data.ptrColor[partTimeVariable5];
-
-					// Four colors, one for each corner
-					local_7c = ptrColor[0];
-					local_78 = ptrColor[1];
-					local_74 = ptrColor[2];
-					local_70 = ptrColor[3];
-
-					// pointer to icon
-					// get rank icon of each battle team after battle is over
-					// OH GOD THIS IS CONVOLUTED and probably wrong --Super
-					iconPtr = gGT->ptrIcons[gGT->battleSetup.finishedRankOfEachTeam[playerStruct->BattleHUD.teamID] + 0x19];
-
-					goto LAB_80053aec;
-				}
+				partTimeVariable5 = (u_int)((gGT->timer & 1) == 0);
+		
+				// Draw the "st", "nd", "rd" suffix after "1st, 2nd, 3rd, etc"
+				DECOMP_UI_DrawPosSuffix(hudStructPtr[5].x, hudStructPtr[5].y, playerStruct, (short)(partTimeVariable5 << 2));
+		
+				// Get Color Data
+				ptrColor = data.ptrColor[partTimeVariable5];
+		
+				// pointer to icon
+				// get rank icon of each battle team after battle is over
+				// OH GOD THIS IS CONVOLUTED and probably wrong --Super
+				iconPtr = gGT->ptrIcons[gGT->battleSetup.finishedRankOfEachTeam[playerStruct->BattleHUD.teamID] + 0x19];
+		
+				goto LAB_80053aec;
 			}
 			LAB_80053af4:
 
@@ -740,7 +687,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				) &&
 				(
 					// draw shining background behind wumpa fruit
-					DECOMP_UI_Weapon_DrawBG(hudStructPtr[0x18].x, hudStructPtr[0x18].y, hudStructPtr[0x19].y, playerStruct),
+					DECOMP_UI_Weapon_DrawBG(hudStructPtr[0xC].x, hudStructPtr[0xC].y, hudStructPtr[0xC].scale, playerStruct),
 
 					// If your weapon is not "no weapon"
 					playerStruct->heldItemID != '\x0f'
@@ -748,15 +695,15 @@ void DECOMP_UI_RenderFrame_Racing()
 			)
 			{
 				// draw shining background behind weapon
-				DECOMP_UI_Weapon_DrawBG(hudStructPtr[0x16].x, hudStructPtr[0x16].y, hudStructPtr[0x17].y, playerStruct);
+				DECOMP_UI_Weapon_DrawBG(hudStructPtr[0xB].x, hudStructPtr[0xB].y, hudStructPtr[0xB].scale, playerStruct);
 			}
 
 			// go to next player
 			// thread = thread->sibling
 			playerThread = playerThread->siblingThread;
 
-			// next HUD structure
-			hudStructPtr += 0x28;
+			// TODO: use num where 0x14 = NUM_HUD
+			hudStructPtr += 0x14;
 
 		} while (playerThread != 0);
 	}
@@ -1001,22 +948,11 @@ void DECOMP_UI_RenderFrame_Racing()
 		// if ptr_map is valid
 		if (levPtrMap != 0)
 		{
-
 			// If numPlyrCurrGame is 1
 			if (gGT->numPlyrCurrGame == '\x01')
 			{
-				// pointer to backBuffer
-				backBuffer = gGT->backBuffer;
-
-				// pointer to OT memory
-				ptrOT = gGT->tileView_UI.ptrOT;
-
 				// posX
 				partTimeVariable4 = 500;
-
-				// two halves of the map textures
-				icon1 = gGT->ptrIcons[3];
-				icon2 = gGT->ptrIcons[4];
 
 				// posY
 				local_74 = 0xc3;
@@ -1025,22 +961,11 @@ void DECOMP_UI_RenderFrame_Racing()
 			// if numPlyrCurrGame is not 1
 			else
 			{
-				// posX
-				partTimeVariable4 = 0x1b8;
-
 				// if numPlyrCurrGame is not 3
 				if (gGT->numPlyrCurrGame != '\x03') goto LAB_80054040;
-
-				// This happens only if numPlyrCurrGame is 3
-				// pointer to backBuffer
-				backBuffer = gGT->backBuffer;
-
-				// pointer to OT memory
-				ptrOT = gGT->tileView_UI.ptrOT;
-
-				// two halves of the map textures
-				icon1 = gGT->ptrIcons[3];
-				icon2 = gGT->ptrIcons[4];
+				
+				// posX
+				partTimeVariable4 = 440;
 
 				// posY
 				local_74 = 0xcd;
@@ -1050,16 +975,17 @@ void DECOMP_UI_RenderFrame_Racing()
 			DECOMP_UI_Map_DrawMap
 			(
 				// top half and bottom half
-				icon1, icon2,
-
+				gGT->ptrIcons[3],
+				gGT->ptrIcons[4],
+				
 				// X and Y
 				partTimeVariable4, local_74,
 
 				// Pointer to primary memory
-				&backBuffer->primMem,
+				&gGT->backBuffer->primMem,
 
 				// pointer to OT memory
-				ptrOT,
+				gGT->tileView_UI.ptrOT,
 
 				// color, in this case white
 				1

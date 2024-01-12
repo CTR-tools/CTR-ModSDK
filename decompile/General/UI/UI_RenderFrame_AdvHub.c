@@ -6,7 +6,7 @@ void DECOMP_UI_RenderFrame_AdvHub(void)
 	
 	hudStructPtr = data.hudStructPtr[0];
 
-	DECOMP_UI_DrawNumRelic	(hudStructPtr[0x1C].x + 0x10, hudStructPtr[0x1C].y - 10);
-	DECOMP_UI_DrawNumKey	(hudStructPtr[0x1E].x + 0x10, hudStructPtr[0x1E].y - 10);
-	DECOMP_UI_DrawNumTrophy	(hudStructPtr[0x20].x + 0x10, hudStructPtr[0x20].y - 10);
+	DECOMP_UI_DrawNumRelic	(hudStructPtr[0xE].x + 0x10,  hudStructPtr[0xE].y - 10);
+	DECOMP_UI_DrawNumKey	(hudStructPtr[0xF].x + 0x10,  hudStructPtr[0xF].y - 10);
+	DECOMP_UI_DrawNumTrophy	(hudStructPtr[0x10].x + 0x10, hudStructPtr[0x10].y - 10);
 }

@@ -19,18 +19,18 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
     DECOMP_UI_JumpMeter_Update(player);
   }
 
-  DECOMP_UI_DrawSpeedNeedle(hudStructPtr[0x12].x,hudStructPtr[0x12].y,player);
+  DECOMP_UI_DrawSpeedNeedle(hudStructPtr[9].x,hudStructPtr[9].y,player);
 
-  DECOMP_UI_JumpMeter_Draw(hudStructPtr[0xc].x,hudStructPtr[0xc].y,player);
+  DECOMP_UI_JumpMeter_Draw(hudStructPtr[6].x,hudStructPtr[6].y,player);
 
-  DECOMP_UI_DrawSlideMeter(hudStructPtr[0x10].x,hudStructPtr[0x10].y,player);
+  DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x,hudStructPtr[8].y,player);
 
   DECOMP_UI_DrawSpeedBG();
 
-  DECOMP_UI_DrawNumCrystal(hudStructPtr[0x22].x + 0x10, hudStructPtr[0x22].y - 0x10,player);
+  DECOMP_UI_DrawNumCrystal(hudStructPtr[0x11].x + 0x10, hudStructPtr[0x11].y - 0x10, player);
 
   // Draw weapon and number of wumpa fruit in HUD
-  UI_Weapon_DrawSelf(hudStructPtr[0].x,hudStructPtr[0].y,hudStructPtr[1].y,player);
+  UI_Weapon_DrawSelf(hudStructPtr[0].x, hudStructPtr[0].y, hudStructPtr[0].scale, player);
 
   // TIME
   DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x12],0x14,8,FONT_SMALL,ORANGE);
@@ -55,8 +55,8 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
     sdata->ptrHudCrystal->flags |= 0x80;
     goto LAB_800545e8;
   }
-  local_18[0] = hudStructPtr[0x22].x;
-  local_18[1] = hudStructPtr[0x22].y;
+  local_18[0] = hudStructPtr[0x11].x;
+  local_18[1] = hudStructPtr[0x11].y;
 
   // make visible
   sdata->ptrHudCrystal->flags &= 0xffffff7f;
@@ -96,8 +96,8 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 		&local_18[0],
 		(int)player->PickupWumpaHUD.startX,
 		(int)player->PickupWumpaHUD.startY,
-		(int)hudStructPtr[0x22].x,
-		(int)hudStructPtr[0x22].y,
+		(int)hudStructPtr[0x11].x,
+		(int)hudStructPtr[0x11].y,
 
 		// cooldown (0-5)
 		player->PickupWumpaHUD.cooldown,
@@ -111,22 +111,24 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   
   struct Instance* hudCrystal = sdata->ptrHudCrystal;
   
+  // ======= This is DECOMP_UI_ConvertX_2 and Y_2, but inlined =======
+  
   // posX
-  iVar5 = (local_18[0] + -0x100) * hudStructPtr[0x23].x;
+  iVar5 = (local_18[0] + -0x100) * hudStructPtr[0x11].z;
   if (iVar5 < 0) {
     iVar5 = iVar5 + 0xff;
   }
   hudCrystal->matrix.t[0] = iVar5 >> 8;
   
   // posY
-  iVar5 = (local_18[1] + -0x6c) * hudStructPtr[0x23].x;
+  iVar5 = (local_18[1] + -0x6c) * hudStructPtr[0x11].z;
   if (iVar5 < 0) {
     iVar5 = iVar5 + 0xff;
   }
   hudCrystal->matrix.t[1] = iVar5 >> 8;
   
   // posZ
-  hudCrystal->matrix.t[2] = hudStructPtr[0x23].x;
+  hudCrystal->matrix.t[2] = hudStructPtr[0x11].z;
 
 LAB_800545e8:
 

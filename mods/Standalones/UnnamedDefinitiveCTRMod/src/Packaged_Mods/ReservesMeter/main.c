@@ -115,7 +115,7 @@ void ICantBelieveItTookNearly23YearsToMakeThis()
 {
 	if(sdata->gGT->numPlyrCurrGame == 1 && UDCTRM_OM_GameplayReservesMeter)
 	{
-		DrawReservesMeter(data.hud_1P_P1[0x10].x, data.hud_1P_P1[0x10].y + 5, (struct Driver*)sdata->gGT->threadBuckets[0].thread->object);
+		DrawReservesMeter(data.hud_1P_P1[0x8].x, data.hud_1P_P1[0x8].y + 5, (struct Driver*)sdata->gGT->threadBuckets[0].thread->object);
 	}
 }
 

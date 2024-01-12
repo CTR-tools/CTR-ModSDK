@@ -52,7 +52,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	hudR = sdata->ptrHudR;
 	struct Instance *hudLetters[3] = {hudC, hudT, hudR};
 	hudToken = sdata->ptrToken;
-	hudCTR = &data.hud_1P_P1[0x24];
+	hudCTR = &data.hud_1P_P1[0x12];
 
 	elapsedFrames = sdata->framesSinceRaceEnded;
 
@@ -292,17 +292,24 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			DecalFont_DrawLine(&str_number, letterPos[0] + 0x20, 0x5f, 2, 4);
 
 			// Draw the driver's character icon
-			UI_DrawDriverIcon(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->driversInRaceOrder[i]->driverID]].iconID],
+			UI_DrawDriverIcon(
+			
+				gGT->ptrIcons[
+					data.MetaDataCharacters[
+						data.characterIDs[
+							gGT->driversInRaceOrder[i]->driverID
+						]
+					].iconID],
 
-							  letterPos[0], 0x60,
+				letterPos[0], 0x60,
 
-							  // pointer to PrimMem struct
-							  &gGT->backBuffer->primMem,
+				// pointer to PrimMem struct
+				&gGT->backBuffer->primMem,
 
-							  // pointer to OT mem
-							  gGT->tileView_UI.ptrOT,
+				// pointer to OT mem
+				gGT->tileView_UI.ptrOT,
 
-							  1, 0x1000, 0x808080);
+				1, 0x1000, 0x808080);
 		}
 	}
 
@@ -505,10 +512,15 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	RECT r;
 
 	gGT = sdata->gGT;
-	numPlyr = gGT->numPlyrCurrGame;
 	driver = gGT->drivers[driverId];
+	
+	// stop after 12 seconds
+	if(driver->framesSinceRaceEnded_forThisDriver > 360)
+		return;
+	
+	numPlyr = gGT->numPlyrCurrGame;
 	hudArray = data.hudStructPtr[numPlyr - 1];
-	hud = &hudArray[driverId * 0x28];
+	hud = &hudArray[driverId * 0x14]; // to-do, use enum where 0x14 is number of hud
 	bigNum = driver->BigNumber[0];
 
 	// Lap time box height
@@ -539,10 +551,6 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		sVar1 = 9;
 		sVar2 = 0x3e;
 	}
-
-	// stop after 12 seconds
-	if(driver->framesSinceRaceEnded_forThisDriver > 360)
-		return;
 
 	// increment counter for number of frames since the player ended the race
 	driver->framesSinceRaceEnded_forThisDriver++;
@@ -577,7 +585,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		currFrame = framesElapsed + param_2 - 300;
 		endFrame = 0xf;
 		
-		lerpStartY = UI_ConvertX_2(-100, hud[5].x);
+		lerpStartY = UI_ConvertX_2(-100, hud[2].z);
 		lerpStartX = -0xae;
 		lerpEndX = lerpStartY;
 		lerpStartY = lerpEndY;
@@ -589,22 +597,18 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		currFrame = framesElapsed;
 		endFrame = 0x1e;
 		
-		lerpStartX = UI_ConvertX_2(hud[4].x, hud[5].x);
-		lerpStartY = UI_ConvertY_2(hud[4].y, hud[5].x);
+		lerpStartX = UI_ConvertX_2(hud[2].x, hud[2].z);
+		lerpStartY = UI_ConvertY_2(hud[2].y, hud[2].z);
 		lerpEndX = -0xae;
 	}
 
-	// interpolate fly-in
+	// interpolate fly-in positionXY
 	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, endFrame);
-
-	// Set X and Y position of Big Number
 	bigNum->matrix.t[0] = posXY[0];
 	bigNum->matrix.t[1] = posXY[1];
 
-	// interpolate fly-in
-	UI_Lerp2D_Linear(&posXY[0], hud[5].y, 0, 0x1e00, 0, framesElapsed, 30);
-
-	// Set scale of Big Number in HUD
+	// interpolate scale to 0x1e00
+	UI_Lerp2D_Linear(&posXY[0], hud[2].scale, 0, 0x1e00, 0, framesElapsed, 30);
 	bigNum->scale[0] = posXY[0];
 	bigNum->scale[1] = posXY[0];
 	bigNum->scale[2] = posXY[0];
@@ -617,8 +621,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	}
 	else
 	{
-		lerpStartX = hud[10].x;
-		lerpStartY = hud[10].y;
+		lerpStartX = hud[5].x;
+		lerpStartY = hud[5].y;
 		lerpEndX = 0x78;
 	}
 

@@ -85,7 +85,7 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
 		{
           sVar7 = (
 						// wumpaHudPosX
-						hudStructPtr[0xc].x +
+						hudStructPtr[3].x +
 
 						// TileView rect.x
 						decalMP->rect.x
@@ -93,7 +93,7 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
 
           sVar8 = (
 						// wumpaHudPosY
-						hudStructPtr[0xd].x +
+						hudStructPtr[3].y +
 
 						// TileView rect.y
 						decalMP->rect.y
@@ -153,7 +153,7 @@ void DECOMP_UI_RenderFrame_Wumpa3D_2P3P4P(struct GameTracker* gGT)
 		  // pointer to OT memory, and pointer to primitive
 		  AddPrim(gGT->tileView_UI.ptrOT,p);
         }
-        hudStructPtr += 0xa0;
+        hudStructPtr += 0x14; // TO-DO, add enum so 0x14 is NUM_HUD
       }
     }
   }

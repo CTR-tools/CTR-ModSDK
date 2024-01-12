@@ -2,6 +2,8 @@ struct UiElement2D
 {
 	short x;
 	short y;
+	short z;
+	short scale;
 };
 
 struct UiElement3D
@@ -22,4 +24,5 @@ struct UiElement3D
 	// 0x38 bytes
 };
 
-_Static_assert(sizeof(struct UiElement2D) == 4);
+_Static_assert(sizeof(struct UiElement2D) == 0x8);
+_Static_assert(sizeof(struct UiElement3D) == 0x38);

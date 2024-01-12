@@ -257,9 +257,9 @@ void CameraPerFrameHook(struct Thread* t)
 
 	// get pointer to hud positions for each driver
 	hud = data.hudStructPtr[(sdata->gGT->numPlyrCurrGame-1)];
-	hud = &hud[driver->driverID * 0x28];
+	hud = &hud[driver->driverID * 0x14]; // TO-DO use enum where 0x14 is NUM_HUD
 
-	UI_DrawSlideMeter(hud[0x10].x, hud[0x10].y, driver);
+	UI_DrawSlideMeter(hud[8].x, hud[8].y, driver);
 
 	// call original function
 	CAM_ThTick(t);

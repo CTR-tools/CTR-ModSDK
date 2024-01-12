@@ -89,12 +89,12 @@ void DECOMP_AH_Map_Main(void)
                  
 				1);
 	
-    DECOMP_UI_DrawSlideMeter(ptrHudData[0x10].x,ptrHudData[0x10].y,advDriver);
+    DECOMP_UI_DrawSlideMeter(ptrHudData[8].x, ptrHudData[8].y, advDriver);
   }
   
-  DECOMP_UI_DrawNumRelic	(ptrHudData[0x1C].x + 0x10, ptrHudData[0x1C].y - 10);
-  DECOMP_UI_DrawNumKey		(ptrHudData[0x1E].x + 0x10, ptrHudData[0x1E].y - 10);
-  DECOMP_UI_DrawNumTrophy	(ptrHudData[0x20].x + 0x10, ptrHudData[0x20].y - 10);
+  DECOMP_UI_DrawNumRelic	(ptrHudData[0xE].x + 0x10,  ptrHudData[0xE].y - 10);
+  DECOMP_UI_DrawNumKey		(ptrHudData[0xF].x + 0x10,  ptrHudData[0xF].y - 10);
+  DECOMP_UI_DrawNumTrophy	(ptrHudData[0x10].x + 0x10, ptrHudData[0x10].y - 10);
   
   return;
 }
