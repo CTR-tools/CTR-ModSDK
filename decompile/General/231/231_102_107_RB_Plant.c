@@ -76,7 +76,7 @@ PlayChewSound:
 			plantInst->animFrame = plantInst->animFrame+1;
 			
 			// last frame
-			if(plantInst->animFrame == 0xf)
+			if(plantInst->animFrame == FPS_DOUBLE(0xf))
 			{
 				goto PlayChewSound;
 			}
@@ -112,7 +112,7 @@ PlayChewSound:
 			plantInst->animFrame = plantInst->animFrame+1;
 			
 			// last frame
-			if(plantInst->animFrame == 0x19)
+			if(plantInst->animFrame == FPS_DOUBLE(0x19))
 			{
 				if(plantObj->boolEatingPlayer != 0)
 				{
@@ -134,38 +134,38 @@ PlayChewSound:
 						particle->driverInst = plantInst;
 						
 						particle->axis[0].startVal +=
-							(
-								plantInst->matrix.t[0] +
-								(plantInst->matrix.m[0][2] * 9 >> 7) 
-							) * 0x100;
+						(
+							plantInst->matrix.t[0] +
+							(plantInst->matrix.m[0][2] * 9 >> 7) 
+						) * 0x100;
 							
 						particle->axis[1].startVal +=
-							(
-								plantInst->matrix.t[1] 
-								+ 0x20
-							) * 0x100;
+						(
+							plantInst->matrix.t[1] 
+							+ 0x20
+						) * 0x100;
 							
 						particle->axis[2].startVal +=
-							(
-								plantInst->matrix.t[2] +
-								(plantInst->matrix.m[2][2] * 9 >> 7) 
-							) * 0x100;
+						(
+							plantInst->matrix.t[2] +
+							(plantInst->matrix.m[2][2] * 9 >> 7) 
+						) * 0x100;
 							
 						particle->axis[0].velocity +=
-							(
-								// 6 - 26
-								(DECOMP_MixRNG_Scramble() & 10 + 0x10) *
-								(plantInst->matrix.m[0][2] >> 0xC)
-							) * 0x100;
+						(
+							// 6 - 26
+							(DECOMP_MixRNG_Scramble() & 10 + 0x10) *
+							(plantInst->matrix.m[0][2] >> 0xC)
+						) * 0x100;
 							
 						// axis[1].velocity is untouched
 							
 						particle->axis[2].velocity +=
-							(
-								// 6 - 26
-								(DECOMP_MixRNG_Scramble() & 10 + 0x10) *
-								(plantInst->matrix.m[2][2] >> 0xC)
-							) * 0x100;
+						(
+							// 6 - 26
+							(DECOMP_MixRNG_Scramble() & 10 + 0x10) *
+							(plantInst->matrix.m[2][2] >> 0xC)
+						) * 0x100;
 					}
 				}
 			}

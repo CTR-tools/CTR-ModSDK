@@ -29,63 +29,6 @@ void NewCallback231()
 		*(unsigned short*)0x800b68d8 = 0xD3; // 105*2 + 1
 	}
 
-	// "Snowball" Blizzard Bluff + Sewer Speedway
-	{
-		// Emulate 30fps on 60fps
-
-		// SIGH, here we go...
-		// only store incremented frame counter value
-		// every 2 frames with gGT->1cec timer
-		*(unsigned int*)0x800b94d0 = 0x8e86d2ac; // r20 -> gGT
-		*(unsigned int*)0x800b94d4 = 0;
-		*(unsigned int*)0x800b94d8 = 0x8cc31cec; // gGT -> timer
-		*(unsigned int*)0x800b94dc = 0;
-		*(unsigned int*)0x800b94e0 = 0x30660001; // timer & 1
-		*(unsigned int*)0x800b94e4 = 0x14c00003; // jump 3 instructions if true
-		*(unsigned int*)0x800b94e8 = 0;
-		*(unsigned int*)0x800b94ec = 0x1010;	 // $r2 = $hi
-		*(unsigned int*)0x800b94f0 = 0xA6220006; // $r17->0x6 = $r2
-		*(unsigned int*)0x800b94f4 = 0;
-
-		// dont touch 0x800b94f8, mov r4, r19 for the JAL
-		// dont touch 0x800b94fc, it's a JAL we need
-
-		// remove the original $r17->0x6 = $r2,
-		// so it only happens inside the "if"
-		*(unsigned int*)0x800b9500 = 0; // erase original write
-	}
-
-	// N Gin Labs Drum
-	{
-		// 800b31f4 (overwrite if-drum-else-baron)
-		// jump to 800b337c (baron code)
-		*(unsigned int*)0x800b31f4 = 0x802CCDF;
-
-		// 800b337c (overwrite baron code)
-		// if odd frame, jump 800b31fc (drum code)
-		// else, jump 800b3490 (collision code)
-
-		// r2, r3, r5, r6, safe to edit
-		*(unsigned int*)0x800b337c = 0; // DONT get gGT from r20, it's in r21
-		*(unsigned int*)0x800b3380 = 0;
-		*(unsigned int*)0x800b3384 = 0x8ea31cec; // gGT -> timer
-		*(unsigned int*)0x800b3388 = 0;
-		*(unsigned int*)0x800b338c = 0x30660001; // timer & 1
-		*(unsigned int*)0x800b3390 = 0x14C0FF99; // if true, jump 800b31f8 (drum)
-		*(unsigned int*)0x800b3394 = 0;
-		// else... keep going
-
-		// must subtract one from iVar5+2c (frame index)
-		// r18 has the drum instance
-		*(unsigned int*)0x800b3398 = 0x8E26002C; // r6 = drumObj->frameIndex
-		*(unsigned int*)0x800b339C = 0;
-		*(unsigned int*)0x800b33A0 = 0x24C6FFFF; // r6--;
-		*(unsigned int*)0x800B33A4 = 0xAE26002c; // drumObj->frameIndex = r6;
-		*(unsigned int*)0x800b33A8 = 0;
-		*(unsigned int*)0x800b33ac = 0x802CD24; // jump 800b3490 (collision)
-		*(unsigned int*)0x800b33b0 = 0;
-	}
-
 	// weapon roulette
 	{
 		// timer after red potion expires
@@ -135,15 +78,6 @@ void NewCallback231()
 
 		// sub 16ms instead of 32
 		*(unsigned short*)0x800b0a3c = -0x10;
-	}
-
-	// plant
-	{
-		// tire spitting
-		*(unsigned short*)0x800b8334 = 0x19*2;
-
-		// chew sound
-		*(unsigned short*)0x800b8298 = 0xf*2;
 	}
 
 	#if 0 // does not work yet

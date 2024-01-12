@@ -40,16 +40,8 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 #endif
 
 	if(level->numSpawnType2_PosRot == 0) return;
-	
 	ptrSpawnType2 = &level->ptrSpawnType2_PosRot[0];
 	
-	// [skip safety checks]
-	baronObj->pointIndex = (baronObj->pointIndex + 1) % (ptrSpawnType2->numCoords);
-	
-	#if 0
-	// dont check modelID, it's always barrel
-	#endif
-
 // 3D audio not in PC port yet
 #ifndef REBUILD_PS1
 	// 16th frame
@@ -74,20 +66,69 @@ void DECOMP_RB_Baron_ThTick(struct Thread* t)
 #endif
 	
 	baseShort = baronObj->pointIndex;
-	
 	baseShort *= 6;
-	
-#ifndef REBUILD_PS1
-	ConvertRotToMatrix(
-#else
-	TEST_ConvertRotToMatrix(
-#endif
-		&baronInst->matrix,
-		&ptrSpawnType2->posCoords[baseShort+3]);
 		
-	baronInst->matrix.t[0] = ptrSpawnType2->posCoords[baseShort+0] + 0x111;
-	baronInst->matrix.t[1] = ptrSpawnType2->posCoords[baseShort+1];
-	baronInst->matrix.t[2] = ptrSpawnType2->posCoords[baseShort+2] - 0x110;
+	#ifdef USE_60FPS
+		
+		short pos[3];
+		pos[0] = ptrSpawnType2->posCoords[baseShort+0];
+		pos[1] = ptrSpawnType2->posCoords[baseShort+1];
+		pos[2] = ptrSpawnType2->posCoords[baseShort+2];
+		
+		short rot[3];
+		rot[0] = ptrSpawnType2->posCoords[baseShort+3];
+		rot[1] = ptrSpawnType2->posCoords[baseShort+4];
+		rot[2] = ptrSpawnType2->posCoords[baseShort+5];
+				
+		if(sdata->gGT->timer & 1)
+		{
+			baronObj->pointIndex = (baronObj->pointIndex + 1) % (ptrSpawnType2->numCoords);
+			
+			baseShort = baronObj->pointIndex;
+			baseShort *= 6;
+			
+			//printf("\n");
+			for(int j = 0; j < 3; j++)
+			{
+				pos[j] = (pos[j] + ptrSpawnType2->posCoords[baseShort+j]) / 2;
+				
+				//printf("%d\n", rot[j]);
+				// Skip lerp for one frame, otherwise 60fps breaks a seemless
+				// 360-degree flip with an eye-sore 180-degree flip
+				if(rot[2] == ptrSpawnType2->posCoords[baseShort+3+2])
+				rot[j] = (rot[j] + ptrSpawnType2->posCoords[baseShort+3+j]) / 2;
+			}
+		}
+		
+		#ifndef REBUILD_PS1
+		ConvertRotToMatrix(
+		#else
+		TEST_ConvertRotToMatrix(
+		#endif
+			&baronInst->matrix, &rot[0]);
+			
+		baronInst->matrix.t[0] = pos[0] + 0x111;
+		baronInst->matrix.t[1] = pos[1];
+		baronInst->matrix.t[2] = pos[2] - 0x110;
+	
+	// 30FPS
+	#else
+		
+		#ifndef REBUILD_PS1
+		ConvertRotToMatrix(
+		#else
+		TEST_ConvertRotToMatrix(
+		#endif
+			&baronInst->matrix,
+			&ptrSpawnType2->posCoords[baseShort+3]);
+			
+		baronInst->matrix.t[0] = ptrSpawnType2->posCoords[baseShort+0] + 0x111;
+		baronInst->matrix.t[1] = ptrSpawnType2->posCoords[baseShort+1];
+		baronInst->matrix.t[2] = ptrSpawnType2->posCoords[baseShort+2] - 0x110;
+		
+		baronObj->pointIndex = (baronObj->pointIndex + 1) % (ptrSpawnType2->numCoords);
+	
+	#endif
 	
 	#if 0
 	// skip code for Baron plane

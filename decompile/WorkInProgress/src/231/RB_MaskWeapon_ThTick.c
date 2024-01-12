@@ -30,35 +30,22 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
 
     if (d->invisibleTimer == 0)
     {
-        // If driver is visible
-
-        // numPlyrCurrGame is not zero
-        if (numPlyr)
+        for (i = 0; i < numPlyr; i++)
         {
-
-            for (i = 0; i < numPlyr; i++)
-            {
-                view = &gGT->tileView[i];
-                maskInst->idpp[i].tileView = view;
-                mask->maskBeamInst->idpp[i].tileView = view;
-            }
+            view = &gGT->tileView[i];
+            maskInst->idpp[i].tileView = view;
+            mask->maskBeamInst->idpp[i].tileView = view;
         }
     }
     // if driver is invisible
     else
     {
-
-        // if numPlyrCurrGame is not zero
-        if (numPlyr)
+        for (i = 0; i < numPlyr; i++)
         {
-
-            for (i = 0; i < numPlyr; i++)
+            if (i != d->driverID)
             {
-                if (i != d->driverID)
-                {
-                    maskInst->idpp[i].tileView = NULL;
-                    mask->maskBeamInst->idpp[i].tileView = NULL;
-                }
+                maskInst->idpp[i].tileView = NULL;
+                mask->maskBeamInst->idpp[i].tileView = NULL;
             }
         }
     }

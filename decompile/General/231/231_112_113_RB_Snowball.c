@@ -56,24 +56,73 @@ RollSound:
 	
 	baseShort *= 6;
 	
-	#ifndef REBUILD_PS1
-	ConvertRotToMatrix(
-		&snowInst->matrix,
-		&ptrSpawnType2->posCoords[baseShort+3]);
-	#else
-	TEST_ConvertRotToMatrix(
-		&snowInst->matrix,
-		&ptrSpawnType2->posCoords[baseShort+3]);
-	#endif
+	#ifdef USE_60FPS
+			
+		short pos[3];
+		pos[0] = ptrSpawnType2->posCoords[baseShort+0];
+		pos[1] = ptrSpawnType2->posCoords[baseShort+1];
+		pos[2] = ptrSpawnType2->posCoords[baseShort+2];
 		
-	snowInst->matrix.t[0] = ptrSpawnType2->posCoords[baseShort+0];
-	snowInst->matrix.t[1] = ptrSpawnType2->posCoords[baseShort+1];
-	snowInst->matrix.t[2] = ptrSpawnType2->posCoords[baseShort+2];
+		short rot[3];
+		rot[0] = ptrSpawnType2->posCoords[baseShort+3];
+		rot[1] = ptrSpawnType2->posCoords[baseShort+4];
+		rot[2] = ptrSpawnType2->posCoords[baseShort+5];
+				
+		if(sdata->gGT->timer & 1)
+		{
+			snowObj->pointIndex = (snowObj->pointIndex + 1) % (snowObj->numPoints*2);
+			
+			baseShort = snowObj->pointIndex;
+			if(baseShort > snowObj->numPoints)
+				baseShort = (snowObj->numPoints*2) - baseShort;
+			
+			baseShort *= 6;
+			
+			for(int j = 0; j < 3; j++)
+			{
+				pos[j] = (pos[j] + ptrSpawnType2->posCoords[baseShort+j]) / 2;
+								
+				//printf("%d\n", rot[j]);
+				// Skip lerp for one frame, otherwise 60fps breaks a seemless
+				// 360-degree flip with an eye-sore 180-degree flip
+				if(rot[2] == ptrSpawnType2->posCoords[baseShort+3+2])
+				rot[j] = (rot[j] + ptrSpawnType2->posCoords[baseShort+3+j]) / 2;
+			}
+		}
+		
+		#ifndef REBUILD_PS1
+		ConvertRotToMatrix(&snowInst->matrix, &rot[0]);
+		#else
+		TEST_ConvertRotToMatrix(&snowInst->matrix, &rot[0]);
+		#endif
+			
+		snowInst->matrix.t[0] = pos[0];
+		snowInst->matrix.t[1] = pos[1];
+		snowInst->matrix.t[2] = pos[2];
+	
+	// original 30fps
+	#else
+		
+		#ifndef REBUILD_PS1
+		ConvertRotToMatrix(
+			&snowInst->matrix,
+			&ptrSpawnType2->posCoords[baseShort+3]);
+		#else
+		TEST_ConvertRotToMatrix(
+			&snowInst->matrix,
+			&ptrSpawnType2->posCoords[baseShort+3]);
+		#endif
+			
+		snowInst->matrix.t[0] = ptrSpawnType2->posCoords[baseShort+0];
+		snowInst->matrix.t[1] = ptrSpawnType2->posCoords[baseShort+1];
+		snowInst->matrix.t[2] = ptrSpawnType2->posCoords[baseShort+2];
+		
+		// [skip safety checks]
+		snowObj->pointIndex = (snowObj->pointIndex + 1) % (snowObj->numPoints*2);
+	
+	#endif
 	
 	RB_Minecart_CheckColl(snowInst, t);
-	
-	// [skip safety checks]
-	snowObj->pointIndex = (snowObj->pointIndex + 1) % (snowObj->numPoints*2);
 }
 
 void DECOMP_RB_Snowball_LInB(struct Instance* inst)
