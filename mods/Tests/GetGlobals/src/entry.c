@@ -6,12 +6,56 @@ void RunEntryHook()
 	printf("\n");
 	printf("\n");
 	
-	// temporary
-	
+
+	// PUT YOUR TEST HERE
+
+
 	printf("\n");
 	printf("\n");
 	printf("\n");
 }
+
+// BACKKUP: Difficulty
+#if 0
+void RunEntryHook()
+{
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	
+	for(int i = 0; i < 6; i++)
+	{
+	printf("[%d] =\n", i);
+	printf("{\n");
+	printf("	.params1 =\n");
+	printf("	{\n");
+	
+	printf("		"); // no \n
+	for(int j = 0; j < 14; j++)
+	{
+		if(data.BossDifficulty[i].params1[j] != data.BossDifficulty[0].params1[j])
+			printf("0x%04x,",  data.BossDifficulty[i].params1[j]);
+	}
+	
+	printf("\n	},\n");
+	printf("	.params2 =\n");
+	printf("	{\n");
+	
+	printf("		"); // no \n
+	for(int j = 0; j < 14; j++)
+	{
+		if(data.BossDifficulty[i].params2[j] != data.BossDifficulty[0].params2[j])
+			printf("0x%04x,", data.BossDifficulty[i].params2[j]);
+	}
+	
+	printf("\n	},\n");
+	printf("},\n");
+	}
+	printf("\n");
+	printf("\n");
+	printf("\n");
+}
+#endif
 
 // BACKUP: Terrain Dump
 #if 0
