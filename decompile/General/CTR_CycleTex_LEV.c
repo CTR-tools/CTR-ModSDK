@@ -9,7 +9,7 @@ void DECOMP_CTR_CycleTex_LEV(struct AnimTex* animtex, int timer)
 	// last one loops back to the beginning, could've also just been a null terminator
 	while (*(int*)curAnimTex != animtex)
 	{
-		frameIndex = timer + curAnimTex->frameDuration >> 
+		frameIndex = FPS_HALF(timer) + curAnimTex->frameDuration >> 
 						((int)curAnimTex->shiftFactor & 0x1fU);
 						
 		frameIndex = frameIndex % curAnimTex->numFrames;
