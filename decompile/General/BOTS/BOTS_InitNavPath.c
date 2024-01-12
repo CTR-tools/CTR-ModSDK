@@ -2,24 +2,20 @@
 
 void DECOMP_BOTS_InitNavPath(struct GameTracker* gGT, short index)
 {
-	// if level has no data
-	if(gGT->level1->LevNavTable == 0)
+	struct NavHeader* nh = 0;
+	struct NavHeader** LevNavTable = gGT->level1->LevNavTable;
+	
+	if(LevNavTable != 0)
 	{
-		// use a template, which cancels AIs
-		sdata->NavPath_ptrHeader[index] = &sdata->blank_NavHeader;
-		
-		sdata->NavPath_ptrNavFrameArray[index] = 
-			NAVHEADER_GETFRAME(&sdata->blank_NavHeader);
-
-		// dont bother setting numNavPoints in header to zero,
-		// it's already zero
+		// nullptr on Nitro Court
+		nh = LevNavTable[index];
 	}
-
-	// if data exists
-	else
+	
+	// if path exists
+	if(nh != 0)
 	{
 		// grab the data
-		sdata->NavPath_ptrHeader[index] = gGT->level1->LevNavTable[index];
+		sdata->NavPath_ptrHeader[index] = nh;
 		
 		sdata->NavPath_ptrNavFrameArray[index] = 
 			NAVHEADER_GETFRAME(sdata->NavPath_ptrHeader[index]);
@@ -30,6 +26,19 @@ void DECOMP_BOTS_InitNavPath(struct GameTracker* gGT, short index)
 			// never mind then
 			sdata->NavPath_ptrHeader[index]->numPoints = 0;
 		}
+	}
+	
+	// if no path data is found
+	else
+	{
+		// use a template, which cancels AIs
+		sdata->NavPath_ptrHeader[index] = &sdata->blank_NavHeader;
+		
+		sdata->NavPath_ptrNavFrameArray[index] = 
+			NAVHEADER_GETFRAME(&sdata->blank_NavHeader);
+
+		// dont bother setting numNavPoints in header to zero,
+		// it's already zero
 	}
 
 	// save number of points

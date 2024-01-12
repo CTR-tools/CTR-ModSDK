@@ -43,17 +43,17 @@ void FUN_80012440(undefined4 param_1,int param_2)
 {
   short *psVar1;
 
-  // If pointer to AI Nav points, within LEV, is nullptr
+  // If there is no nav data
   if (*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x188) == 0)
   {
 	// if this happens, no AIs spawn on track
     psVar1 = (short *)0x0;
   }
 
-  // If you have AI Nav points, within LEV
+  // If pointer to 3 paths exists
   else
   {
-	// get pointer to each path
+	// get pointer to each path (nullptr on Nitro Court)
     psVar1 = *(short **)(*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x160) + 0x188) + param_2 * 4);
   }
 
