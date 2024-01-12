@@ -23,7 +23,6 @@ void DECOMP_UI_RenderFrame_Racing()
 	int partTimeVariable3;
 	u_short *driverRankIndexAbsolute;
 	POLY_G4 * TurboCounterBar;
-	struct Instance* ptrHudC;
 	short sVar17;
 	u_short *driverRankIndexLeft;
 	u_int local_7c;
@@ -40,8 +39,6 @@ void DECOMP_UI_RenderFrame_Racing()
 	short turboCount_Pos[2];
 	u_short local_30 [2];
 	struct Thread* playerThread;
-	struct Instance* ptrHudR;
-	struct Instance* ptrHudT;
 	u_long *ptrOT;
 	struct DB *backBuffer;
 	struct Thread* turboThread;
@@ -337,9 +334,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						0, hudStructPtr[0].scale
 					);
 				}
-				ptrHudC = sdata->ptrHudC;
-				ptrHudR = sdata->ptrHudR;
-				ptrHudT = sdata->ptrHudT;
+
 				if (playerStruct->PickupLetterHUD.cooldown != 0)
 				{
 					struct Instance* curr;
@@ -349,7 +344,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					// C-Letter
 					if (playerStruct->PickupLetterHUD.modelID == 0x93)
 					{	
-						curr = ptrHudC;
+						curr = sdata->ptrHudC;
 					}
 
 					// T-letter
@@ -357,14 +352,14 @@ void DECOMP_UI_RenderFrame_Racing()
 					{
 						LetterCTR_Pos[0] += 0x1d;
 						LetterCTR_Pos[1] -= 1;	
-						curr = ptrHudT;
+						curr = sdata->ptrHudT;
 					}
 
 					// R-Letter
 					else
 					{
 						LetterCTR_Pos[0] += 0x3a;
-						curr = ptrHudR;
+						curr = sdata->ptrHudR;
 					}
 					
 					// make visible
@@ -387,13 +382,13 @@ void DECOMP_UI_RenderFrame_Racing()
 
 					// Convert X
 					partTimeVariable4 = DECOMP_UI_ConvertX_2((int)LetterCTR_Pos[0], 0x200);
-					ptrHudT->matrix.t[0] = partTimeVariable4;
+					curr->matrix.t[0] = partTimeVariable4;
 
 					// Convert Y
 					partTimeVariable4 = DECOMP_UI_ConvertY_2((int)LetterCTR_Pos[1],0x200);
-					ptrHudT->matrix.t[1] = partTimeVariable4;
+					curr->matrix.t[1] = partTimeVariable4;
 
-					ptrHudT->matrix.t[2] = 0x200;
+					curr->matrix.t[2] = 0x200;
 				}
 			}
 
