@@ -88,14 +88,8 @@ void NewCallback231()
 
 	// weapon roulette
 	{
-		// timer after hitting weapon box
-		*(unsigned char*)0x800b40bc = 0x5a*2;
-
 		// timer after red potion expires
 		*(unsigned char*)0x800b11a4 = 5*2;
-
-		// mash circle to get item faster
-		*(unsigned short*)0x800620f4 = 0x46*2;
 	}
 
 	// spinning bomb
@@ -592,7 +586,6 @@ void RunEntryHook()
 	#endif
 
 	// Inject new hooks
-	data.overlayCallbackFuncs[0] = NewCallback230;
 	data.overlayCallbackFuncs[1] = NewCallback231;
 	data.overlayCallbackFuncs[2] = NewCallback232;
 	data.overlayCallbackFuncs[3] = NewCallback233;

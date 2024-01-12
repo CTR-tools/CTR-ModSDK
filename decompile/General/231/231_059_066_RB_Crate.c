@@ -166,9 +166,9 @@ void DECOMP_RB_CrateAny_ThTick_Grow(struct Thread* t)
 	
 	// == ready to regrow ==
 	
-	crateInst->scale[0] += 0x100;
-	crateInst->scale[1] += 0x100;
-	crateInst->scale[2] += 0x100;
+	crateInst->scale[0] += FPS_HALF(0x100);
+	crateInst->scale[1] += FPS_HALF(0x100);
+	crateInst->scale[2] += FPS_HALF(0x100);
 	
 	if (crateInst->scale[0] >= 0x1000)
 	{
@@ -293,7 +293,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 		driver->numTimesHitWeaponBox++;
 		
 		// timer for weapon roulette
-		driver->itemRollTimer = 90;
+		driver->itemRollTimer = FPS_DOUBLE(90);
 		
 		// if no roulette
 		if((sdata->gGT->gameMode1 & ROLLING_ITEM) == 0)

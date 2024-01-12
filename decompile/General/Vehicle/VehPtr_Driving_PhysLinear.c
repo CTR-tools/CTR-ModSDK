@@ -518,7 +518,7 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		{
 			// circle button ends timer, if 
 			// less than 70 frames (2.3s) remain
-			if (driver->itemRollTimer < 0x46)
+			if (driver->itemRollTimer < FPS_DOUBLE(70))
 				driver->itemRollTimer = 0;
 			
 			// skip weapon firing check
