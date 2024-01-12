@@ -527,8 +527,8 @@ DrawFinalLapString:
 			tileView->ptrOT);
 			
 		#if 0
-		// we need to patch this in StartLine:
-		(&DAT_8008d2a0)[iVar10] = 0x5a;
+		// we need to patch this in StartLine.c:
+		// (&DAT_8008d2a0)[iVar10] = 0x5a;
 		#endif
 			
 		// but because StartLine is not rewritten,
