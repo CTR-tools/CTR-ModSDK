@@ -207,5 +207,5 @@ void DECOMP_RB_FlameJet_LInB(struct Instance* inst)
 	// put on separate cycles
 	void** pointers = ST1_GETPOINTERS(sdata->gGT->level1->ptrSpawnType1);
 	metaArray = (short*)pointers[ST1_SPAWN];
-	t->cooldownFrameCount = metaArray[inst->name[9] - '0'];
+	t->cooldownFrameCount = FPS_DOUBLE(metaArray[inst->name[9] - '0']);
 }
