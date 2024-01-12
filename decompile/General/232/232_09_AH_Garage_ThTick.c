@@ -65,7 +65,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
             inst->flags &= 0xffffff7f;
         }
 		
-		inst->flags &= 0xffcfdfff
+		inst->flags &= 0xffcfdfff;
     }
     // if door is opening or closing
     else
@@ -120,7 +120,8 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
 				&garage->rot[0]);
         }
 
-        inst->flags &= 0xffffefff | 0x302000;
+        inst->flags &= 0xffffefff;
+		inst->flags |= 0x302000;
     }
 
 LAB_800aeb6c:
