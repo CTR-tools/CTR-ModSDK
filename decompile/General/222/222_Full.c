@@ -281,7 +281,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				currFrame = t;
 			}
 
-			t -= 10;
+			t -= FPS_DOUBLE(10);
 
 			// interpolate fly-in
 			UI_Lerp2D_Linear(&letterPos[0], lerpStartX, 0x60, lerpEndX, 0x60, currFrame, FPS_DOUBLE(10));
