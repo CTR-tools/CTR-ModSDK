@@ -470,7 +470,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 	
 	// number of players
 	for(i = 0; i < 4; i++)
-	{
+	{		
 		// time remaining in animation
 		textTimer = sdata->finalLapTextTimer[i];
 		
@@ -525,6 +525,18 @@ DrawFinalLapString:
 			resultPos[0], resultPos[1],
 			FONT_BIG, (JUSTIFY_CENTER | ORANGE),
 			tileView->ptrOT);
+			
+		#if 0
+		// we need to patch this in StartLine:
+		(&DAT_8008d2a0)[iVar10] = 0x5a;
+		#endif
+			
+		// but because StartLine is not rewritten,
+		// then we settle for this (30fps on 60fps)
+			
+		#ifdef USE_60FPS
+		if(gGT->timer & 1)
+		#endif
 			
 		sdata->finalLapTextTimer[i]--;
 	}
