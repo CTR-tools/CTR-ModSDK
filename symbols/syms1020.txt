@@ -1,5 +1,5 @@
 80010000 rdata
-80081414 data
+80080ED4 data
 8008d2ec sdata_static
 8008da1c bss
 

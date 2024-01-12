@@ -90,6 +90,16 @@ void CS_LevThread_LInB() {}
 
 struct Data data =
 {
+	.ArcadeDifficulty =
+	{
+		
+	},
+	
+	.BossDifficulty =
+	{
+		
+	},
+	
 	.advDifficulty =
 	{
 		0x0, 0x3, 0x6, 0xB, 0x13, 0x1D, 

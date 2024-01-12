@@ -1178,18 +1178,11 @@ struct Difficulty {
 // Last PsyQ function?
 // 80080990 FlushCache
 
-// Ghidra 94426 says...
-// .data
-// ram:800809a0-ram:8008cf6b
-
-// Need to fix header of struct
-// to use proper "Data" starting addr
-
-//  -- SepReview
+// 8007EB90 -- SepReview
 // 800809a0 -- UsaRetail
-//  -- JpnTrial
-//  -- EurRetail
-//  -- JpnRetail
+// 8007FA04 -- JpnTrial
+// 80080ED4 -- EurRetail
+// 80083D14 -- JpnRetail
 struct Data
 {
 	// 800809a0
