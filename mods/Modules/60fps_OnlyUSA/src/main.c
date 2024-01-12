@@ -352,8 +352,8 @@ void RunEntryHook()
 		// MetaPhys
 		for(i = 0; i < NUM_CLASSES; i++)
 		{
-			// frames until spinout
-			data.metaPhys[0x2D].value[i] = data.metaPhys[0x2D].value[i] << 1;
+			// frames until spinout (done, patched in metaPhys)
+			//data.metaPhys[0x2D].value[i] = data.metaPhys[0x2D].value[i] << 1;
 			
 			// doesn't work for some reason?
 			#if 0
