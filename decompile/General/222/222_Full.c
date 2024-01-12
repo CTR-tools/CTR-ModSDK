@@ -161,8 +161,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				hudToken->matrix.t[1] = UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
 				
 				// variable reuse, frame timers
-				lerpStartY = FPS_DOUBLE(120);
-				lerpEndY = FPS_DOUBLE(160);
+				lerpStartY = 120;
+				lerpEndY = 160;
 			}
 			
 			// If you already have this CTR Token unlocked
