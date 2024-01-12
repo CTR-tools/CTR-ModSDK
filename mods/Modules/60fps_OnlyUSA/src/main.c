@@ -699,21 +699,7 @@ void RunEntryHook()
 		// nop hole of a JAL, but multiplayer wont
 		// work in 60fps right now anyway
 	}
-	
-	// loading screen
-	{
-		// waving flag
-		*(unsigned char*)0x8003cb78 = 0x10;
 		
-		// make v1's value alternate each frame: 0,1,0,1...
-		// better solution would be to change  "iVar9 = DAT_8008d450 * -0x3c + 0x23c;"
-		// to only multiply by 0x3C/2 instead of 0x3C
-		*(unsigned int*)0x8004446c = 0x8C621ce8; // v0 = gGT->1ce8 (not 1cec)
-		*(unsigned int*)0x80044474 = 0x30430001; // v1 = v0 & 1
-		*(unsigned int*)0x80044478 = 0;
-		*(unsigned int*)0x80044480 = 0;
-	}
-	
 	#if 1
 	// still a little off, dont know why
 	PatchParticles();
