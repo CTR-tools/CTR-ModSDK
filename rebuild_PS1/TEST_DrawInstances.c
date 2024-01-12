@@ -500,7 +500,6 @@ void DrawOneInst(struct Instance* curr)
 void TEST_DrawInstances(struct GameTracker* gGT)
 {
 
-
 // If PS1, but not PC, dont draw,
 // our function is too slow for PS1
 #ifndef REBUILD_PC
@@ -508,9 +507,6 @@ void TEST_DrawInstances(struct GameTracker* gGT)
 	return;
 #endif
 #endif
-
-	// temporary
-	gGT->timer++;
 
 	if (gGT->level1 != 0)
 	{

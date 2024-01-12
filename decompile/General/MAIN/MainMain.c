@@ -476,34 +476,34 @@ FinishLoading:
 
 					if ((held & BTN_UP) != 0)
 					{
-						gGT->tileView[0].pos[2] -= (0x40 * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
-						gGT->tileView[0].pos[0] -= (0x40 * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[2] -= (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[0] -= (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
 					}
 
 					if ((held & BTN_DOWN) != 0)
 					{
-						gGT->tileView[0].pos[2] += (0x40 * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
-						gGT->tileView[0].pos[0] += (0x40 * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[2] += (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
+						gGT->tileView[0].pos[0] += (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
 					}
 
 					if ((held & BTN_LEFT) != 0)
 					{
-						gGT->tileView[0].rot[1] += 0x20;
+						gGT->tileView[0].rot[1] += FPS_HALF(0x20);
 					}
 
 					if ((held & BTN_RIGHT) != 0)
 					{
-						gGT->tileView[0].rot[1] -= 0x20;
+						gGT->tileView[0].rot[1] -= FPS_HALF(0x20);
 					}
 
 					if ((held & BTN_CROSS) != 0)
 					{
-						gGT->tileView[0].pos[1] -= 0x20;
+						gGT->tileView[0].pos[1] -= FPS_HALF(0x20);
 					}
 
 					if ((held & BTN_TRIANGLE) != 0)
 					{
-						gGT->tileView[0].pos[1] += 0x20;
+						gGT->tileView[0].pos[1] += FPS_HALF(0x20);
 					}
 					
 					if ((held & BTN_START) != 0)
