@@ -623,7 +623,7 @@ common, exe, UI_DrawLimitClock, 0x0, General/UI/UI_DrawLimitClock.c
 common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_DrawPosSuffix.c
 common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
 // UI_DrawBattleScores
-// UI_Weapon_DrawSelf
+common, exe, UI_Weapon_DrawSelf, 0x0, General/UI/UI_Weapon_DrawSelf.c
 common, exe, UI_Weapon_DrawBG, 0x0, General/UI/UI_Weapon_DrawBG.c
 
 // note to self, still need UI_DrawRankedDrivers,

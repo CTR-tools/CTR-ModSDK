@@ -5,8 +5,6 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 
 {
   u_int currChar;
-  struct DB* backBuff;
-  u_long otMem;
   int iconID;
   struct GameTracker* gGT;
   short posXY[0];
@@ -82,14 +80,6 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 	  // Draw the number near the weapon icon to show how many
       DecalFont_DrawLine(sdata->s_spacebar,(int)posX,(int)posY,2,4);
     }
-
-	// pointer to back buffer
-    backBuff = gGT->backBuffer;
-
-	// pointer to OT memory
-    otMem = &gGT->tileView_UI.ptrOT;
-
-    iconID = iconID << 2;
   }
   
   // if roulette shuffle
@@ -136,25 +126,34 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 				iconID = 3;
 			}
 		}
+		
+		// only change icon once per 2 frames,
+		// take advantage of unused padding
+		#ifdef USE_60FPS
+		if(gGT->timer & 1)
+		{
+			// backup
+			d->funcPtrs_compilerpadding = iconID;
+		}
+		else
+		{
+			// restore
+			iconID = d->funcPtrs_compilerpadding;
+		}
+		#endif
 	}
 	
 	// if timer is not finished
 	if (d->PickupTimeboxHUD.cooldown != 0)
 	{
-		UI_Lerp2d_HUD(&posXY[0],d->PickupTimeboxHUD.startX,d->PickupTimeboxHUD.startY,
-				(int)posX,(int)posY,d->PickupTimeboxHUD.cooldown,5);
+		DECOMP_UI_Lerp2D_HUD(&posXY[0],d->PickupTimeboxHUD.startX,d->PickupTimeboxHUD.startY,
+				(int)posX,(int)posY,d->PickupTimeboxHUD.cooldown,FPS_DOUBLE(5));
 	
 		// subtract one from timer
 		d->PickupTimeboxHUD.cooldown--;
 	}
 	
-	// pointer to back buffer
-	backBuff = gGT->backBuffer;
-	
-	// pointer to OT memory
-	otMem = gGT->tileView_UI.ptrOT;
-	
-	iconID = (iconID + 5) * 4;
+	iconID = (iconID + 5);
 	posX = posXY[0];
 	posY = posXY[1];
   }
@@ -166,10 +165,10 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 				(int)posX,(int)posY,
 
 				// PrimMem
-				&backBuff->primMem,
+				&gGT->backBuffer->primMem,
 
 				// OTMem
-				otMem,
+				gGT->tileView_UI.ptrOT,
 
 				TRANS_50_DECAL,(int)scale,1);
   return;
