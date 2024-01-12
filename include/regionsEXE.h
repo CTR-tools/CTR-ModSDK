@@ -1483,7 +1483,7 @@ struct Data
 	// 80081674 -- JpnTrial		814
 	// 80082A60 -- EurRetail	730
 	// 80085990 -- JpnRetail	820
-	#if BUILD < JpnRetail
+	#if BUILD <= EurRetail
 	SpuReverbAttr reverbParams[5]; // 5*0x14 = 0x64
 	#else
 	SpuReverbAttr reverbParams[6]; // 6*0x14 = 0x78
@@ -1728,7 +1728,7 @@ struct Data
 	// not in Sep3, after PtrClipBuffer is 0,3,6,9
 	#if BUILD >= UsaRetail
 	
-		#if BUILD <= JpnRetail
+		#if BUILD <= EurRetail
 		// 80084238
 		short lngIndex_unused_multiplayerDirections[6];
 		#endif

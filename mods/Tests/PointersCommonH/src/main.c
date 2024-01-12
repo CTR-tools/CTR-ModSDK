@@ -91,6 +91,5 @@ struct x y[] =
 	TEST16(OFFSETOF(struct Driver, BattleHUD.teamID)),
 	TEST16(OFFSETOF(struct Driver, reserves)),
 	TEST16(OFFSETOF(struct Driver, numTimesMaskGrab)),
-	TEST16(OFFSETOF(struct Turbo, fireVisibilityCooldown)),
-	TEST16(OFFSETOF(struct Instance, idpp[0].mh))
+	TEST16(OFFSETOF(struct Turbo, fireVisibilityCooldown))
 };
