@@ -50,7 +50,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
             // if transitioning in
             if (D230.battle_transitionState == 0)
             {
-                DECOMP_MM_TransitionInOut(&D230.transitionMeta_battle[0], (int)D230.battle_transitionFrames, 8);
+                DECOMP_MM_TransitionInOut(&D230.transitionMeta_battle[0], (int)D230.battle_transitionFrames, FPS_DOUBLE(8));
 
                 // reduce frames
                 sVar6 = D230.battle_transitionFrames - 1;
@@ -69,7 +69,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
             // if transitioning out
             if (D230.battle_transitionState == 2)
             {
-                DECOMP_MM_TransitionInOut(&D230.transitionMeta_battle[0], (int)D230.battle_transitionFrames, 8);
+                DECOMP_MM_TransitionInOut(&D230.transitionMeta_battle[0], (int)D230.battle_transitionFrames, FPS_DOUBLE(8));
 
                 // count frames
                 D230.battle_transitionFrames++;
@@ -77,7 +77,7 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
                 sVar6 = D230.battle_transitionFrames;
 
                 // if 12 frames past
-                if (0xc < D230.battle_transitionFrames)
+                if (FPS_DOUBLE(0xc) < D230.battle_transitionFrames)
                 {
                     // if starting race
                     if (D230.battle_postTransition_boolStart != 0)
@@ -784,7 +784,7 @@ LAB_800b25f0:
     sVar6 = -0x7fff;
 
     // if time on timer is odd
-    if ((sdata->frameCounter & 1) != 0)
+    if ((FPS_HALF(sdata->frameCounter) & 1) != 0)
     {
         // change color
         sVar6 = -0x7ffd;

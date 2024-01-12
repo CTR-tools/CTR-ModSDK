@@ -15,7 +15,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	struct Instance *hudT;
 	struct Instance *hudR;
 	struct Instance *hudToken;
-	struct CtrLetter *letter;
+	struct UiElement3D *letter;
 	
 	char i;
 	char tokenUnlock;
@@ -57,7 +57,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	elapsedFrames = sdata->framesSinceRaceEnded;
 
 	// count frames if hasn't been 30 seconds
-	if (elapsedFrames < 900)
+	if (elapsedFrames < FPS_DOUBLE(900))
 		elapsedFrames++;
 
 	sdata->framesSinceRaceEnded = elapsedFrames;
@@ -88,7 +88,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			lerpEndX = lerpStartX + 0x10;
 			lerpEndY = lerpStartY + 0x10;
 			currFrame = elapsedFrames;
-			lerpFrames = 8;
+			lerpFrames = FPS_DOUBLE(8);
 			
 			// If you have not unlocked this CTR Token
 			bitIndex = gGT->levelID + 0x4C;
@@ -100,9 +100,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				scaleDown = scaleDown >> 10;
 
 				// lerp letters off-screen
-				if (elapsedFrames > 230)
+				if (elapsedFrames > FPS_DOUBLE(230))
 				{
-					currFrame = elapsedFrames - 230;
+					currFrame = elapsedFrames - FPS_DOUBLE(230);
 					
 					lerpStartX += 0x10;
 					lerpStartY += 0x50;
@@ -111,9 +111,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 				}
 
 				// lerp letters to center
-				else if (elapsedFrames > 140)
+				else if (elapsedFrames > FPS_DOUBLE(140))
 				{
-					currFrame = elapsedFrames - 140;
+					currFrame = elapsedFrames - FPS_DOUBLE(140);
 					
 					lerpStartX += 0x10;
 					lerpStartY += 0x10;
@@ -122,9 +122,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					
 					if (hudToken->scale[0] < 0x2001)
 					{
-						hudToken->scale[0] += 0x200;
-						hudToken->scale[1] += 0x200;
-						hudToken->scale[2] += 0x200;
+						hudToken->scale[0] += FPS_HALF(0x200);
+						hudToken->scale[1] += FPS_HALF(0x200);
+						hudToken->scale[2] += FPS_HALF(0x200);
 					}
 	
 					if (hudC->scale[0] == 0x800)
@@ -134,9 +134,9 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					{
 						for (i = 0; i < 3; i++)
 						{
-							hudLetters[i]->scale[0] += 0x400;
-							hudLetters[i]->scale[1] += 0x400;
-							hudLetters[i]->scale[2] += 0x400;
+							hudLetters[i]->scale[0] += FPS_HALF(0x400);
+							hudLetters[i]->scale[1] += FPS_HALF(0x400);
+							hudLetters[i]->scale[2] += FPS_HALF(0x400);
 						}
 					}
 					
@@ -149,12 +149,12 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					// lerp on-screen: CTR TOKEN AWARDED
 					txtStartX = 0x264;
 					txtEndX = 0x100;
-					UI_Lerp2D_Linear(&txtPos[0], txtStartX, 0xA6, txtEndX, 0xA6, currFrame, 8);
-					txtColor = (gGT->timer & 1) ? 0xFFFF8003 : 0xFFFF8004;
+					UI_Lerp2D_Linear(&txtPos[0], txtStartX, 0xA6, txtEndX, 0xA6, currFrame, FPS_DOUBLE(8));
+					txtColor = (gGT->timer & FPS_DOUBLE(1)) ? 0xFFFF8003 : 0xFFFF8004;
 					DecalFont_DrawLine(sdata->lngStrings[0x16F], txtPos[0], txtPos[1], 1, txtColor);
 				}
 
-				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, 8);
+				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, FPS_DOUBLE(8));
 
 				hudToken->flags &= ~HIDE_MODEL;
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
@@ -169,15 +169,15 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			else
 			{
 				// or <= ?
-				if (elapsedFrames > 300)
+				if (elapsedFrames > FPS_DOUBLE(300))
 				{
-					currFrame = elapsedFrames - 300;
+					currFrame = elapsedFrames - FPS_DOUBLE(300);
 					
 					lerpStartX = hudCTR->x + 0x10;
 					lerpStartY = hudCTR->y + 0x10;
 					lerpEndX = -400;
 					lerpEndY = lerpStartY;
-					lerpFrames = 10;
+					lerpFrames = FPS_DOUBLE(10);
 				}
 				UI_Lerp2D_Linear(&letterPos[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, lerpFrames);
 				
@@ -197,7 +197,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		
 		// If you did not collect all 3 letters (C, T, and R), or you lost the race,
 		// do this for the first 30 seconds (900 frames)
-		else if (elapsedFrames < 900)
+		else if (elapsedFrames < FPS_DOUBLE(900))
 		{
 			driver->PickupLetterHUD.numCollected = 0;
 			
@@ -208,7 +208,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 						((hudLetters[i]->flags & HIDE_MODEL) == 0) &&
 					
 						// delay letter (6 frames apart)
-						(elapsedFrames > (6*i)) &&
+						(elapsedFrames > FPS_DOUBLE(6*i)) &&
 					
 						// letter not fully off-screen
 						(-300 < hudLetters[i]->matrix.t[1])
@@ -217,14 +217,14 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 					letter = hudLetters[i]->thread->object;
 					
 					// move X position (yes, C-Letter only, Naughty Dog bug?)
-					hudLetters[0]->matrix.t[0] += letter->velX;
+					hudLetters[0]->matrix.t[0] += letter->vel[0];
 					
 					// make the letter fall off the screen
-					hudLetters[i]->matrix.t[1] -= letter->velY;
+					hudLetters[i]->matrix.t[1] -= letter->vel[1];
 
-					if (-0x14 < letter->velY)
+					if (FPS_HALF(-0x14) < letter->vel[1])
 					{
-						letter->velY -= 2;
+						letter->vel[1] -= FPS_HALF(2);
 					}
 				}
 			}
@@ -238,14 +238,14 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	}
 
 	// If it hasn't been 1 second from race ended
-	if (elapsedFrames < 29)
+	if (elapsedFrames < FPS_DOUBLE(29))
 		return;
 
 	// If there is one player
 	if (numPlyr == 1)
 	{
 		// start counting time 1 second after race ends
-		t = (elapsedFrames & 0xffff) - 30;
+		t = (elapsedFrames & 0xffff) - FPS_DOUBLE(30);
 
 		if (
 			// Every 0.5 seconds or so
@@ -268,11 +268,11 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			int iVar11 = gGT->tileView[0].rect.x +
 						 (gGT->tileView[0].rect.w - totalPlyr * 56 + 12) / 2 + (i * 56);
 
-			if (elapsedFrames + lerpEndY > 300)
+			if (elapsedFrames + lerpEndY > FPS_DOUBLE(300))
 			{
 				lerpStartX = iVar11;
 				lerpEndX = -100;
-				currFrame = elapsedFrames + lerpEndY - 300;
+				currFrame = elapsedFrames + lerpEndY - FPS_DOUBLE(300);
 			}
 			else
 			{
@@ -314,7 +314,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	}
 
 	// 0x78 + 0x6e = 0xe6 (230) frames waited for Token Race
-	if (elapsedFrames < lerpStartY + 110)
+	if ((elapsedFrames-lerpStartY) < FPS_DOUBLE(110))
 		return;
 	if (
 		// If you are in Adventure cup
@@ -515,7 +515,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	driver = gGT->drivers[driverId];
 	
 	// stop after 12 seconds
-	if(driver->framesSinceRaceEnded_forThisDriver > 360)
+	if(driver->framesSinceRaceEnded_forThisDriver > FPS_DOUBLE(360))
 		return;
 	
 	numPlyr = gGT->numPlyrCurrGame;
@@ -558,7 +558,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 
 	if (
 		// if player ended race less than 110 frames ago
-		(framesElapsed < 110) &&
+		(framesElapsed < FPS_DOUBLE(110)) &&
 
 		// If you press Cross or Circle
 		((sdata->AnyPlayerTap & 0x50) != 0) &&
@@ -567,7 +567,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		(numPlyr == 1))
 	{
 		// Assume race ended 110 frames ago
-		framesElapsed = 110;
+		framesElapsed = FPS_DOUBLE(110);
 		sdata->framesSinceRaceEnded = framesElapsed;
 		driver->framesSinceRaceEnded_forThisDriver = framesElapsed;
 
@@ -577,13 +577,13 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		MENUBOX_ClearInput();
 	}
 
-	tenseconds = (framesElapsed + param_2 > 300);
+	tenseconds = (framesElapsed + param_2 > FPS_DOUBLE(300));
 
 	// If race ended more than 10 seconds ago.
 	if (tenseconds)
 	{
-		currFrame = framesElapsed + param_2 - 300;
-		endFrame = 0xf;
+		currFrame = framesElapsed + param_2 - FPS_DOUBLE(300);
+		endFrame = FPS_DOUBLE(0xf);
 		
 		lerpStartY = UI_ConvertX_2(-100, hud[2].z);
 		lerpStartX = -0xae;
@@ -595,7 +595,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	else
 	{
 		currFrame = framesElapsed;
-		endFrame = 0x1e;
+		endFrame = FPS_DOUBLE(0x1e);
 		
 		lerpStartX = UI_ConvertX_2(hud[2].x, hud[2].z);
 		lerpStartY = UI_ConvertY_2(hud[2].y, hud[2].z);
@@ -608,7 +608,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	bigNum->matrix.t[1] = posXY[1];
 
 	// interpolate scale to 0x1e00
-	UI_Lerp2D_Linear(&posXY[0], hud[2].scale, 0, 0x1e00, 0, framesElapsed, 30);
+	UI_Lerp2D_Linear(&posXY[0], hud[2].scale, 0, 0x1e00, 0, framesElapsed, FPS_DOUBLE(30));
 	bigNum->scale[0] = posXY[0];
 	bigNum->scale[1] = posXY[0];
 	bigNum->scale[2] = posXY[0];

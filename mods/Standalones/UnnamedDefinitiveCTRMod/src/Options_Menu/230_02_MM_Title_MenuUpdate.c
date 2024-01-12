@@ -260,9 +260,6 @@ void DECOMP_MM_Title_MenuUpdate(void)
 
 END_FUNCTION:
 
-	// All these might be various timers for audio,
-	// flashing highlight menu bars, waving flag, etc
-
 	// if you're entering menu for first time in
 	// Crash + C-T-R animation cutscene
 	if (D230.MM_State == 0)

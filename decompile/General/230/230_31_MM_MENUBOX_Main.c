@@ -59,7 +59,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
       else
       {
         // 900 = 30 seconds at 30fps
-        gGT->demoCountdownTimer = 900;
+        gGT->demoCountdownTimer = FPS_DOUBLE(900);
       }
     }
   }

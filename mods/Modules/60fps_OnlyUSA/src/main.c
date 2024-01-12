@@ -7,115 +7,6 @@ void MM_Title_CameraMove(int a, int b);
 u_int MM_Video_DecodeFrame();
 int PatchPE(struct ParticleEmitter* pe);
 
-// jal hook, call og function if needed
-int NewDecode()
-{
-	if(sdata->gGT->timer & 1)
-	{
-		return MM_Video_DecodeFrame();
-	}
-	
-	return 0;
-}
-
-// jmp hook
-void SaveObj_ThTick_Hook()
-{
-	register int animFrame asm("v0");
-	register struct Instance* inst asm("v1");
-	
-	// on only one frame of the 16-frame cycle,
-	// v0 is not animFrame, and v1 is not instance,
-	// skip this frame
-	if((animFrame & 0xfffffff0) != 0) return;
-	
-	// make 60fps animation run at 30fps
-	
-	if(inst->animFrame != 0)
-	{
-		if(sdata->gGT->timer & 1)
-		{
-			inst->animFrame--;
-		}
-	}
-}
-
-void NewCallback230()
-{
-	// Title (Crash holding trophy) animation
-	{
-		// prevent main menu to spawn until 2x title is over
-		*(unsigned short*)0x800abd10 = 2*0xe6;
-
-		// double the transition frames to spawn menu
-		*(unsigned char*)0x800ac20c = 2* 0xf;
-
-		// reposition frame index for intro camera
-		*(short*)0x800ac214 = 2 * -0xe6;
-
-		// make camera use the same position for every pair of frames
-		*(unsigned char*)0x800ac23c = 0x43;
-
-		// double the duration cap, so it won't immediately skip to menu
-		*(unsigned short*)0x800ac3bc = 2*0xe6;
-		*(unsigned short*)0x800ac3c8 = 0x1cb;
-
-		// reposition the time window for trophy in the air
-		*(short*)0x800ac4a8 = 2 * -0x8a;
-		*(unsigned short*)0x800ac4ac= 2*0x3e;
-		*(unsigned short*)0x800ac4d0 = 2*0xc8;
-
-		// double the total animation frames per model?
-		*(short*)0x800ac4dc = 2 * -0xc8;
-
-		// double the frame/time limit for the whole animation seq
-		*(unsigned short*)0x800ac674 = 2*0xf6;
-	}
-
-	// patch video
-	*(unsigned int*)0x800afc8c = JAL(NewDecode);
-	
-	// frame countdown to play video
-	*(unsigned char*)0x800afacc = 0x15*2;
-
-	// Double all Menu transition duration.
-	*(unsigned char*)0x800b4840 = 0xc*2;
-
-	// Double the frames for MM transition
-	*(unsigned char*)0x800b4844 = 2*8;
-
-	// Fix spinning driver
-	*(unsigned char*)0x800af6d0 = 0x20;
-
-	// Transition between drivers
-	*(unsigned short*)0x800b536e = 4*2;
-
-	// Demo Mode Timer 2
-	*(unsigned short*)0x800ad10c = 900*2;
-
-	// character select flashing colors, half speed
-	// change multiplier to 128, sll 0x7
-	*(unsigned short*)0x800ad9d0 = 0x11c0;
-
-	// high score flashing arrows
-	*(unsigned char*)0x800b1218 = 2*2;
-	
-	// ghost data exists flashing text
-	*(unsigned char*)0x800b0a40 = 4*2;
-
-	// battle menu team flashing text
-	*(unsigned char*)0x800b2a54 = 2;
-
-	// high score flashing arrows
-	*(unsigned char*)0x800b3010 = 4*2;
-
-	// MM high score transition
-	*(unsigned char*)0x800b3924 = 0x18;
-	*(unsigned char*)0x800b3a3c = 0x19;
-
-	LOAD_Callback_Overlay_230();
-}
-
 void NewCallback231()
 {
 	// roo's tubes bubbles, only one of many 231 PEs that need patching,
@@ -423,35 +314,9 @@ void NewCallback231()
 
 void NewCallback232()
 {
-	// open hub door
+	// UI
 	{
-		// sound effects
-		*(unsigned short*)0x800b01fc = 0xa*2;
-		*(unsigned short*)0x800b0204 = 0xf*2;
-		*(unsigned short*)0x800b0228 = 0x14*2;
-		*(unsigned short*)0x800b024c = 0x19*2;
-		*(unsigned short*)0x800b0270 = 0x50*2;
-		*(unsigned short*)0x800b0294 = 0x78*2;
-
-		// four second timer
-		*(unsigned short*)0x800afe74 = 0x78*2;
-
-		// key scale rate
-		*(unsigned short*)0x800b0050 = 0x40*2;
-		*(unsigned short*)0x800b0068 = 0x40*2;
-		*(unsigned short*)0x800b0080 = 0x40*2;
-
-		// look for more instances of + 0x2a
-
-		// reduce key spin rate
-		*(unsigned short*)0x800b01d8 = 0x20;
-
-		// reduce key posY rise rate
-		*(unsigned short*)0x800b00b4 = 2;
-
-		// camera transition out
-		// (not fixed)
-
+	
 		// blinking adv map UI
 		*(unsigned char*)0x800b18a0 = 2*2; // door arrows
 		*(unsigned char*)0x800b1934 = 2*2; // boss stars
@@ -460,33 +325,6 @@ void NewCallback232()
 		// map items "outer" anims
 
 		// transition in, is in EXE, already patched
-	}
-
-	// warppads
-	{
-		// reduce spin rate of items
-		// required to unlock warppad
-		*(unsigned short*)0x800ac740 = 0x20;
-
-		// reduce spin rate of items
-		// inside unlocked warppad
-		*(unsigned short*)0x800ad108 = 0x40;
-
-		// ======== Electric spin NOT FIXED =============
-
-		// electric spin (not fixed)
-		// Electric Spin alternates by frame
-		//		Frame 0: rot = (0,0,0)
-		//		Frame 1: rot += (rand) << 9
-
-		// Changed << 9 to << 8 here, not enough to fix
-		*(unsigned int*)0x800ACF70 = 0x63200;
-
-		// particle spin
-		*(unsigned short*)0x800acfc8 = 0x80;
-
-		// particle rise rate
-		*(unsigned int*)0x800acffc = 0x152C43;
 	}
 
 	// Boss Garage
@@ -534,11 +372,6 @@ void NewCallback232()
 		*(unsigned char*)0x800b2048 = 4*2;
 	}
 	
-	// saveload
-	{
-		// fix scanline
-		*(unsigned int*)0x800af7e8 = JMP(SaveObj_ThTick_Hook);
-	}
 
 	LOAD_Callback_Overlay_232();
 }
@@ -556,125 +389,6 @@ void NewCallback233()
 	*(unsigned char*)0x800b7e0c = 8;
 
 	LOAD_Callback_Overlay_233();
-}
-
-void PatchModel(struct Model* m, struct Thread* t)
-{
-	struct ModelHeader* h;
-	struct ModelAnim** a;
-	int i;
-	int j;
-	int loopNum;
-	struct Thread* search;
-
-	// error check (yes, needed)
-	if(m == 0) return;
-
-	// ignore ND box, intro models, oxide intro, podiums, etc
-	if(LOAD_IsOpen_Podiums()) return;
-	
-	// if this is a driver model
-	if(m->id == -1)
-	{
-		// only patch if this is not a human,
-		// otherwise steering breaks on starting line
-
-		// bool found = false
-		i = 0;
-
-		// first player thread
-		search = sdata->gGT->threadBuckets[PLAYER].thread;
-
-		// check all players
-		do
-		{
-			// if this thread is a player, patch model
-			if(search == t) i = 1;
-
-			// next thread
-			search = search->siblingThread;
-
-		} while(search != 0);
-
-		// if this model is not attached
-		// to a player thread, dont patch it
-		if(i == 0)
-			return;
-	}
-
-	// model header
-	h = m->headers;
-
-	// skip if the model is patched
-	if(h[0].name[0xf] == 1) return;
-
-	// record the model is patched
-	h[0].name[0xf] = 1;
-
-	#if 0
-	// max graphics
-	h[0].maxDistanceLOD = 0x7fff;
-	#endif
-
-	#if 0
-	// min graphics
-	for(i = 0; i < m->numHeaders-1; i++)
-	{
-		h[i].maxDistanceLOD = 0;
-	}
-	#endif
-
-	// loop through headers
-	for(i = 0; i < m->numHeaders; i++)
-	{		
-		// pointer to array of pointers
-		a = h[i].ptrAnimations;
-
-		// number of animations
-		loopNum = h[i].numAnimations;
-
-		// loop through all animations
-		for(j = 0; j < loopNum; j++)
-		{
-			// skip doubling, if interpolation already happens,
-			// known to happen in spiders, and drivers for
-			// low LOD anims, and high LOD crashing + reversing
-			if(a[j]->numFrames & 0x8000) continue;
-			
-			// multiply by 2
-			a[j]->numFrames =
-			a[j]->numFrames << 1;
-
-			// should only need to subtract one,
-			// but then many animations break on last frame,
-			// need to patch code that manipulates last frame
-			a[j]->numFrames--;
-
-			// negative, or flag?
-			a[j]->numFrames =
-			a[j]->numFrames | 0x8000;
-		}
-	}
-}
-
-void INSTANCE_Birth_Hook(struct Instance* i, struct Model* m, char* name, struct Thread* t, int flags)
-{
-	INSTANCE_Birth(i,m,name,t,flags);
-
-	PatchModel(m, t);
-	return;
-}
-
-void INSTANCE_LevInitAll_Hook(struct InstDef* instDef, int num)
-{
-	int i;
-
-	INSTANCE_LevInitAll(instDef, num);
-
-	for(i = 0; i < num; i++)
-	{
-		PatchModel(instDef[i].ptrInstance->model, 0);
-	}
 }
 
 int PatchPE(struct ParticleEmitter* pe)
@@ -739,14 +453,8 @@ void RunEntryHook()
 {
 	u_int i;
 
-	// Enable 60fps
-	*(unsigned char*)0x80037930 = 1;
-
-	// Demo Mode Timer 1
-	*(unsigned short*)0x8003be38 = 900*2;
-
-	// Main Menu Row Highlight
-	*(unsigned char*)0x800363bc = 0x80;
+	// Enable 60fps (done)
+	// *(unsigned char*)0x80037930 = 1;
 
 	// Mask Grab
 	*(unsigned int*)0x80067B58 = 0x2442FF00;
@@ -757,22 +465,6 @@ void RunEntryHook()
 		// bitshift frame parameter for texture scrolling
 		// (turbo pads, water, lava, etc)
 		*(unsigned int*)0x8002198c = 0x52843;
-	}
-
-	// HUD objects
-	{
-		// spinning 3D objects (Key, Trophy, Relic, adv hud etc)
-		// reduce speed
-		*(unsigned char*)0x8004c87c = 0x20;
-
-		// spinning wumpa and crystal
-		*(unsigned char*)0x8004c7c4 = 0x20;
-
-		// C-T-R letters
-		*(unsigned char*)0x8004c93c = 0x20;
-
-		// spinning timebox
-		*(unsigned char*)0x8004c7d0 = 0x40;
 	}
 
 	// Driver physics
@@ -852,15 +544,6 @@ void RunEntryHook()
 		*(unsigned short*)0x80068c84 = 0x258>>1;
 		*(unsigned short*)0x80068ca4 = 0xc80>>1;
 		*(unsigned short*)0x80068cb8 = 0x258>>1;
-	}
-
-	// Relic race
-	{
-		// fix ticking sound
-		*(unsigned int*)0x80034F98 = 0x518C2;
-		*(unsigned int*)0x80034FA4 = 0x21080;
-		*(unsigned int*)0x80034FAC = 0x51902;
-		*(unsigned int*)0x80034FB8 = 0x210C0;
 	}
 
 	// Blinking  UI
@@ -980,18 +663,6 @@ void RunEntryHook()
 		// jump buffer (froggy)
 		*(unsigned char*)0x80062200 = 10*2;
 		*(unsigned char*)0x80062224 = 10*2;
-	}
-
-	// animation speeds
-	{
-		// patch every INSTANCE_Birth for 3D instances,
-		// do not patch the 2D instances, that's just BigNum
-		*(unsigned int*)0x80027d70 = JAL(INSTANCE_Birth_Hook);
-		*(unsigned int*)0x800308bc = JAL(INSTANCE_Birth_Hook);
-
-		// patch every time LEV instances are made
-		*(unsigned int*)0x80033234 = JAL(INSTANCE_LevInitAll_Hook);
-		*(unsigned int*)0x8003be50 = JAL(INSTANCE_LevInitAll_Hook);
 	}
 	
 	// turbo fire

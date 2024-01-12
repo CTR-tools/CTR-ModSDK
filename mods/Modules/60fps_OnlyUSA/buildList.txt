@@ -6,9 +6,6 @@
 // Compile main code to empty spaces in RDATA
 common, exe, rdata_free, 0x0, src/main.c
 
-// Inject patched binaries for title animation
-926, 230, 0x800b4800, 0x0, src/trophyAnims.bin
-926, 230, 0x800b48c4, 0x0, src/trophySounds.bin
 
 // hooks
 common, exe, __main, 0x68, src/hookEntry.s

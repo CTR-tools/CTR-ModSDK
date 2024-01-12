@@ -11,7 +11,6 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   int i;
   int timer;
   struct Title *ptrTitle;
-  int *obj;
   int cops[6];
   short direction[3];
   short rot[3];
@@ -20,9 +19,6 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   // frame counters
   timer = D230.timerInTitle;
 
-  // object from thread
-  obj = title->object;
-
   // If you press Cross, Circle, Triangle, or Square
   if ((sdata->buttonTapPerPlayer[0] & 0x40070) != 0)
   {
@@ -30,23 +26,23 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
     DECOMP_MENUBOX_ClearInput();
 
     // set frame to 1000, skip the animation
-    D230.timerInTitle = 1000;
+    D230.timerInTitle = FPS_DOUBLE(1000);
   }
 
   // cap at 230
-  if (timer > 230) timer = 230;
+  if (timer > FPS_DOUBLE(230)) timer = FPS_DOUBLE(230);
 
   // play 8 sounds, one on each frame
   for (i = 0; i < 8; i++)
   {
-    if (D230.titleSounds[i].frameToPlay == timer)
+    if (FPS_DOUBLE(D230.titleSounds[i].frameToPlay) == timer)
     {
       DECOMP_OtherFX_Play(D230.titleSounds[i].soundID, 1);
     }
   }
 
   // copy pointer to title object
-  ptrTitle = (struct Title *)obj;
+  ptrTitle = (struct Title *)title->object;
 
   // loop 6 times
   for (i = 0; i < 6; i++)
@@ -84,17 +80,17 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
     {
       // if frame is anywhere in the two seconds
       // that the trophy is in the air
-      if ((unsigned int)(timer - 138) < 62)
+      if ((unsigned int)(timer - FPS_DOUBLE(138)) < FPS_DOUBLE(62))
       {
         // make invisible
         titleInst->flags |= 0x80;
       }
 
       // otherwise
-      else if (199 < timer)
+      else if (FPS_DOUBLE(200) <= timer)
       {
         // play frame index, based on total animation frame
-        titleInst->animFrame = timer - 200;
+        titleInst->animFrame = timer - FPS_DOUBLE(200);
 
         // set animation to 1
         titleInst->animIndex = 1;
@@ -107,12 +103,12 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
     }
   }
 
-  DECOMP_MM_Title_CameraMove(obj, timer);
+  DECOMP_MM_Title_CameraMove(ptrTitle, timer);
 
   // increment frame counter
   timer = D230.timerInTitle + 1;
 
-  if (245 < D230.timerInTitle)
+  if (FPS_DOUBLE(245) < D230.timerInTitle)
   {
     // animation is over
     D230.menubox_mainMenu.state &= ~(DISABLE_INPUT_ALLOW_FUNCPTRS);

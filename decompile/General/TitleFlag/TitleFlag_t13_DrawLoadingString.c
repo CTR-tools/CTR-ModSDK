@@ -38,7 +38,7 @@ void DECOMP_TitleFlag_DrawLoadingString(void)
     {
         if (-1000 < (int)sdata->TitleFlag_Transition)
         {
-            sdata->TitleFlag_Transition -= 0x28;
+            sdata->TitleFlag_Transition -= FPS_HALF(0x28);
         }
     }
     else
@@ -53,12 +53,12 @@ void DECOMP_TitleFlag_DrawLoadingString(void)
 			((iVar3 << 0x10) >> 0x1f) >> 1
 		);
 
-    iVar3 = sdata->TitleFlag_LoadingTextAnimFrame;
+    iVar3 = FPS_HALF(sdata->TitleFlag_LoadingTextAnimFrame);
 
     if (0 < iVar2)
     {
 
-        iVar9 = sdata->TitleFlag_LoadingTextAnimFrame * -0x3c + 0x23c;
+        iVar9 = iVar3 * -0x3c + 0x23c;
 
         // for iVar6 = 0; iVar6 < strlen("LOADING..."); iVar6++)
         do

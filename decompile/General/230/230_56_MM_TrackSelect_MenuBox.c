@@ -48,7 +48,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				sdata->errorMessagePosIndex = 2;
 			}
 
-			DECOMP_MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, 8);
+			DECOMP_MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, FPS_DOUBLE(8));
 			
 			// ran out of frames
 			if (elapsedFrames == 0)
@@ -64,10 +64,10 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		// transitioning out
 		else if (D230.trackSel_transitionState == EXITING_MENU)
 		{
-			DECOMP_MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, 8);
+			DECOMP_MM_TransitionInOut(&D230.transitionMeta_trackSel[0], elapsedFrames, FPS_DOUBLE(8));
 			elapsedFrames++;
 
-			if (elapsedFrames > 12)
+			if (elapsedFrames > FPS_DOUBLE(12))
 			{
 				sdata->errorMessagePosIndex = 0;
 				
@@ -178,7 +178,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				} while (!DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
 				
 				D230.trackSel_currTrack = currTrack;
-				D230.trackSel_changeTrack_frameCount = 3;
+				D230.trackSel_changeTrack_frameCount = FPS_DOUBLE(3);
 				D230.trackSel_direction = 1;
 				
 				DECOMP_OtherFX_Play(0, 1);
@@ -199,7 +199,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				} while (!DECOMP_MM_TrackSelect_boolTrackOpen(&selectMenu[currTrack]));
 				
 				D230.trackSel_currTrack = currTrack;
-				D230.trackSel_changeTrack_frameCount = 3;
+				D230.trackSel_changeTrack_frameCount = FPS_DOUBLE(3);
 				D230.trackSel_direction = -1;
 				
 				DECOMP_OtherFX_Play(0, 1);
@@ -355,7 +355,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 		uVar15 = ((iVar9 >> 0x10) + -4) * 0x73;
 		if (0 < D230.trackSel_changeTrack_frameCount)
 		{
-			uVar15 = uVar15 + (((3 - D230.trackSel_changeTrack_frameCount) * 0x73) / 3) * (int)D230.trackSel_direction;
+			uVar15 = uVar15 + (((FPS_DOUBLE(3) - D230.trackSel_changeTrack_frameCount) * 0x73) / FPS_DOUBLE(3)) * (int)D230.trackSel_direction;
 		}
 
 		// This is just MATH_Cos and Math_Sin 
@@ -490,7 +490,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 				if ((uVar15 & 0xffff) != 0)
 				{
 					// Flash Colors
-					if ((sdata->frameCounter & 4) == 0)
+					if ((FPS_HALF(sdata->frameCounter) & 4) == 0)
 					{
 						uVar14 = (JUSTIFY_CENTER | WHITE);
 					}

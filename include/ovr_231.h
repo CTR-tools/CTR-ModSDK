@@ -238,15 +238,6 @@ struct CtrLetter
 {
 	short rot[3];
 	short padding;
-
-	// 0x8
-	char unk[0x28];
-	
-	// 0x30
-	// where, on earth, are these initialized?
-	short velX;
-	short velY;
-
 	// 0x8 bytes large
 };
 

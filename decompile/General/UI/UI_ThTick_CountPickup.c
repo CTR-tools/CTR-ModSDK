@@ -42,14 +42,14 @@ void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket)
       // if HUD item is not timecrate
       if (inst->model->id != STATIC_TIME_CRATE_01) {
         // rotation speed 0x80
-        rotSpd = obj->rot[1] + 0x80;
+        rotSpd = obj->rot[1] + FPS_HALF(0x80);
         goto LAB_8004c7d4;
       }
   }
 
   // if wumpa or crystal,
   // rotation speed 0x40
-  rotSpd = obj->rot[1] + 0x40;
+  rotSpd = obj->rot[1] + FPS_HALF(0x40);
 
   LAB_8004c7d4:
 

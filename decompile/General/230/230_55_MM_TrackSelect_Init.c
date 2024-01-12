@@ -13,7 +13,7 @@ void DECOMP_MM_TrackSelect_Init()
 	D230.menubox_trackSelect.rowSelected = sdata->trackSelBackup;
 	
 	// 12 frames when moving between selection
-	D230.trackSel_transitionFrames = 12;
+	D230.trackSel_transitionFrames = FPS_DOUBLE(12);
 	
 	// Set menu and num of tracks based on game mode
 	if ((sdata->gGT->gameMode1 & BATTLE_MODE) != 0)

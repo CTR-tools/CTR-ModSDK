@@ -19,7 +19,7 @@ void DECOMP_MM_TrackSelect_Video_State(int state)
 	{
 		// wait 20 frames
 	    D230.trackSel_video_frameCount++;
-		if(D230.trackSel_video_frameCount > 20)
+		if(D230.trackSel_video_frameCount > FPS_DOUBLE(20))
 		{
 			// allocate video memory, prepare to play video
 			D230.trackSel_video_state = 2;

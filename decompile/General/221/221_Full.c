@@ -58,7 +58,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	boolLose = driver->numCrystals < gGT->numCrystalsInLEV;
 	
 	// count frames
-	if(sdata->framesSinceRaceEnded < 900)
+	if(sdata->framesSinceRaceEnded < FPS_DOUBLE(900))
 		sdata->framesSinceRaceEnded++;
 	
 	// hide hud crystal
@@ -73,7 +73,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 			0x264, 0x56, // startX, startY,
 			0xcd, 0x56, // endX, endY
 			sdata->framesSinceRaceEnded,
-			0x14);
+			FPS_DOUBLE(0x14));
 	
 		sdata->ptrMenuCrystal->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
 		sdata->ptrMenuCrystal->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
@@ -101,7 +101,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 			-0x63, 0x18, // startX, startY,
 			0x100, 0x18, // endX, endY
 			sdata->framesSinceRaceEnded,
-			0x14);
+			FPS_DOUBLE(0x14));
 			
 		// TIME REMAINING
 		DecalFont_DrawLine(
@@ -149,8 +149,8 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// Naughty Dog bug,
 	// should be ((& 1) == 0) to enable flicker
 	#if 0
-	color = 0xffff8000;
-	if(gGT->timer == 0) color = 0xffff8004;
+	color = (JUSTIFY_CENTER | ORANGE);
+	if(gGT->timer == 0) color = (JUSTIFY_CENTER | WHITE);
 	#endif
 	
 	// variable re-use posXY[0]
@@ -168,17 +168,17 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	tokenInst->matrix.t[1] = UI_ConvertY_2(0xA2-0x18, 0x200);
 
 	// play unlock sound after exactly 1 second
-	if(sdata->framesSinceRaceEnded == 30)
+	if(sdata->framesSinceRaceEnded == FPS_DOUBLE(30))
 	{
 		OtherFX_Play(0x67, 1);
 	}
 	
 	// grow token after first second
-	if(sdata->framesSinceRaceEnded > 30)
+	if(sdata->framesSinceRaceEnded > FPS_DOUBLE(30))
 	{
 		if(tokenInst->scale[0] < 0x2001)
 		{
-			growVal = tokenInst->scale[0] + 0x200;
+			growVal = tokenInst->scale[0] + FPS_HALF(0x200);
 			tokenInst->scale[0] = growVal;
 			tokenInst->scale[1] = growVal;
 			tokenInst->scale[2] = growVal;

@@ -20,7 +20,7 @@ void DECOMP_UI_ThTick_CtrLetters(struct Thread * bucket)
   // that's why the lighting changes in the HUD
 
   // Rotate on the Y axis
-  obj->rot[1] += 0x40;
+  obj->rot[1] += FPS_HALF(0x40);
 
 #ifndef REBUILD_PS1
   Vector_SpecLightSpin2D(inst,obj,obj->lightDir);

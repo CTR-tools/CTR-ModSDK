@@ -115,7 +115,9 @@ void DrawOneInst(struct Instance* curr)
 			// animation
 			ma = m->headers[0].ptrAnimations[curr->animIndex];
 
-			int frameIndex = curr->animFrame;
+			// temporary solution, plays animations
+			// at 30fps while rest of the game is 60fps
+			int frameIndex = FPS_HALF(curr->animFrame);
 
 			// cast
 			char* maByte = (char*)ma;

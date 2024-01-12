@@ -75,7 +75,7 @@ LAB_80034e74:
 		iVar4 = RCNT_GetTime_Elapsed(gGT->anotherTimer, &gGT->anotherTimer);
 		iVar4 = (iVar4 << 5) / 100;
 #else
-		iVar4 = 0x20;
+		iVar4 = FPS_HALF(0x20);
 #endif
 
 		gGT->elapsedTimeMS = iVar4;
@@ -114,9 +114,9 @@ LAB_80034e74:
 					else
 					{
 						uVar3 = gGT->timer;
-						if (uVar3 == (uVar3 / 6) * 6)
+						if (uVar3 == (uVar3 / FPS_DOUBLE(6)) * FPS_DOUBLE(6))
 						{
-							if (uVar3 == (uVar3 / 0xc) * 0xc)
+							if (uVar3 == (uVar3 / FPS_DOUBLE(0xc)) * FPS_DOUBLE(0xc))
 							{
 								DECOMP_OtherFX_Play_LowLevel(0x40, '\0', 0x8c9080);
 							}

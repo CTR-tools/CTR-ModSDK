@@ -140,7 +140,7 @@ u_int DECOMP_main()
 
 					// elapsed milliseconds per frame, locked 32 here
 					// impacts speed of flag wave during "loading...", but does not impact speed of flying text
-					gGT->elapsedTimeMS = 32;
+					gGT->elapsedTimeMS = FPS_HALF(32);
 					
 					// if loading VLC
 					if (iVar8 == -6)

@@ -206,7 +206,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
     door->camFlags |= WdCam_CutscenePlaying;
 
     // if timer is less than four full seconds
-    if (door->frameCount_doorOpenAnim < 0x78)
+    if (door->frameCount_doorOpenAnim < FPS_DOUBLE(0x78))
     {
       if (driver->speedApprox < 0x80)
       {
@@ -279,16 +279,16 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
               if (keyInst->scale[0] < 0xa00)
               {
                 // increase scale on X, Y, Z
-                keyInst->scale[0] += 0x40;
-                keyInst->scale[1] += 0x40;
-                keyInst->scale[2] += 0x40;
+                keyInst->scale[0] += FPS_HALF(0x40);
+                keyInst->scale[1] += FPS_HALF(0x40);
+                keyInst->scale[2] += FPS_HALF(0x40);
               }
 
               // if key posY is less than (player posY + 0xa0)
               if (keyInst->matrix.t[1] < (driver->instSelf->matrix.t[1] + 0xa0))
               {
                 // increase key posY
-                keyInst->matrix.t[1] += 4;
+                keyInst->matrix.t[1] += FPS_HALF(4);
               }
 
               if (1 < numKeys)
@@ -326,7 +326,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
         }
 		
         door->keyRot[0] = 0;
-        door->keyRot[1] += 0x40;
+        door->keyRot[1] += FPS_HALF(0x40);
         door->keyRot[2] = 0;
 
         door->keyOrbit += 0x10;
@@ -337,23 +337,23 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
 
         switch (door->frameCount_doorOpenAnim)
         {
-        case 0x0A:
+        case FPS_DOUBLE(0x0A):
           DECOMP_OtherFX_Play_LowLevel(0x67, 1, 0xff7680);
           break;
-        case 0x0F:
+        case FPS_DOUBLE(0x0F):
           DECOMP_OtherFX_Play_LowLevel(0x67, 1, 0xeb8080);
           break;
-        case 0x14:
+        case FPS_DOUBLE(0x14):
           DECOMP_OtherFX_Play_LowLevel(0x67, 1, 0xd78a80);
           break;
-        case 0x19:
+        case FPS_DOUBLE(0x19):
           DECOMP_OtherFX_Play_LowLevel(0x67, 1, 0xc39480);
           break;
-        case 0x50:
+        case FPS_DOUBLE(0x50):
           // unlock door sound
           DECOMP_OtherFX_Play(0x93, 1);
           break;
-		case 0x78:
+		case FPS_DOUBLE(0x78):
           // on last frame, doors "creek" open
           DECOMP_OtherFX_Play(0x94, 1);
           break;
@@ -405,7 +405,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
 
   // == door is opening ==
 
-  door->doorRot[1] += 0x10;
+  door->doorRot[1] += FPS_HALF(0x10);
   
   // right-hand door rot[x,y,z]
   desiredRot[0] = door->doorRot[0];

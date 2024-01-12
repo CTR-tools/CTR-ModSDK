@@ -10,7 +10,9 @@ void DECOMP_VehInit_TeleportAll(struct GameTracker *gGT, u_int spawnFlags)
 
     if (d == NULL) continue;
     
-    if (d->instSelf->thread->modelIndex == DYNAMIC_ROBOT_CAR)
+	// desperate for byte budget here
+    //if (d->instSelf->thread->modelIndex == DYNAMIC_ROBOT_CAR)
+	if((d->actionsFlagSet & 0x00100000) != 0)
     {
 		#ifndef REBUILD_PS1
         BOTS_GotoStartingLine(d);
@@ -23,5 +25,9 @@ void DECOMP_VehInit_TeleportAll(struct GameTracker *gGT, u_int spawnFlags)
         VehInit_TeleportSelf(d, spawnFlags | 1, 0);
 		#endif
     }
+	
+	#ifdef USE_60FPS
+	d->instSelf->animFrame *= 2;
+	#endif
   }
 }

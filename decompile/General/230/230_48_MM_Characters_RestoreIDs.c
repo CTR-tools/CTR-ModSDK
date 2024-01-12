@@ -11,7 +11,7 @@ void DECOMP_MM_Characters_RestoreIDs(void)
 
   // erase select bits
   sdata->characterSelectFlags = 0;
-  D230.transitionFrames = 0xc;
+  D230.transitionFrames = FPS_DOUBLE(0xc);
   D230.isMenuTransitioning = 0;
 
   // This uses 80086e84, which controls character IDs

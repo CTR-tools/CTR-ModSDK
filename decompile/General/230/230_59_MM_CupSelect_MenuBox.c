@@ -31,7 +31,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         // if transitioning in
         if (D230.cupSel_transitionState == 0)
         {
-            DECOMP_MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, 8);
+            DECOMP_MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, FPS_DOUBLE(8));
 
             // if no more frames
             if (elapsedFrames == 0)
@@ -50,13 +50,13 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         // if transitioning out
         else if (D230.cupSel_transitionState == 2)
         {
-            DECOMP_MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, 8);
+            DECOMP_MM_TransitionInOut(&D230.transitionMeta_cupSel[0], elapsedFrames, FPS_DOUBLE(8));
 
             // increase frame count
             elapsedFrames++;
 
             // if more than 12 frames pass
-            if (12 < elapsedFrames)
+            if (FPS_DOUBLE(12) < elapsedFrames)
             {
                 // if cup selected
                 if (D230.cupSel_postTransition_boolStart != 0)
@@ -107,7 +107,7 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         if (cupIndex == mb->rowSelected)
         {
             // Make text flash
-            txtColor = (sdata->frameCounter & 2) ? 0xffff8000 : 0xffff8004;
+            txtColor = (FPS_HALF(sdata->frameCounter) & 2) ? 0xffff8000 : 0xffff8004;
         }
         // If this is not the cup you're highlighting
         else

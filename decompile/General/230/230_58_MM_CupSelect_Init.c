@@ -9,5 +9,5 @@ void DECOMP_MM_CupSelect_Init(void)
   
   // reset transition data
   D230.cupSel_transitionState = 0;
-  D230.cupSel_transitionFrames = 0xc;
+  D230.cupSel_transitionFrames = FPS_DOUBLE(0xc);
 }

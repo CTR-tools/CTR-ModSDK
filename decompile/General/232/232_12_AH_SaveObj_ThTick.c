@@ -168,7 +168,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
        save->flags = 0;
     }
 
-    save->scanlineFrame = 0xf;
+    save->scanlineFrame = FPS_DOUBLE(0xf);
 
 LAB_800af72c:
 
@@ -184,6 +184,10 @@ LAB_800af72c:
         // if animation is not finished
         if ((int)sVar1 < iVar7 - 1)
         {
+			#ifdef USE_60FPS
+			if(gGT->timer & 1)
+			#endif
+			
             // increment animation frame
             saveInst->animFrame += 1;
         }

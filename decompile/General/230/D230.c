@@ -235,19 +235,19 @@ struct OverlayDATA_230 D230 =
 	
 	.titleInstances =
 	{
-		{0x68, 0x4e, 0xe6, 0},
-		{0x66, 0, 0xe6, 1},
-		{0x67, 0x14, 0xe6, 0},
-		{0x69, 0x4e, 0xe6, 0},
-		{0x6a, 0x8c, 0xe6, 0},
-		{0x6b, 0xd7, 0xe6, 0}
+		{0x68, FPS_DOUBLE(0x4e), 0xe6, 0},
+		{0x66, FPS_DOUBLE(0x0), 0xe6, 1},
+		{0x67, FPS_DOUBLE(0x14), 0xe6, 0},
+		{0x69, FPS_DOUBLE(0x4e), 0xe6, 0},
+		{0x6a, FPS_DOUBLE(0x8c), 0xe6, 0},
+		{0x6b, FPS_DOUBLE(0xd7), 0xe6, 0}
 	},
 	
 	.titleCameraPos = {0x32, 0xFFE2, 0x64, 0},
 	.titleCameraRot = {0, 0xFF9C, 0, 0},
 	
-	.title_numFrameTotal = 0xC,
-	.title_numTransition = 8,
+	.title_numFrameTotal = FPS_DOUBLE(0xC),
+	.title_numTransition = FPS_DOUBLE(8),
 	
 	.title_mainPosX = 0x180,
 	.title_mainPosY = 0x6c,
@@ -603,7 +603,7 @@ struct OverlayDATA_230 D230 =
 
 	.csm_instRot = {0x800, 0, 0},
 	
-	.moveModels = 4,
+	.moveModels = FPS_DOUBLE(4),
 
 	.unkCharacterWindows = 0x8C,
 

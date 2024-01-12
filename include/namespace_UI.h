@@ -18,8 +18,7 @@ struct UiElement3D
 	short lightDir[4];
 	
 	// 0x30
-	// used in 8004c914
-	short rot2[4];
+	short vel[4];
 	
 	// 0x38 bytes
 };

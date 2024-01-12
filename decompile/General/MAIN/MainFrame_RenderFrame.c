@@ -49,9 +49,114 @@ void RB_StartText_ProcessBucket(struct Thread* thread);
 void DECOMP_AH_WarpPad_AllWarppadNum();
 u_int MM_Video_CheckIfFinished(int param_1);
 
+#ifdef USE_60FPS
+void PatchModel_60fps(struct Model* m)
+{
+	struct ModelHeader* h;
+	struct ModelAnim** a;
+	int i;
+	int j;
+	int loopNum;
+	struct Thread* search;
+
+	// error check (yes, needed)
+	if(m == 0) return;
+
+#ifndef REBUILD_PC
+	// ignore ND box, intro models, oxide intro, podiums, etc
+	if(LOAD_IsOpen_Podiums()) return;
+#endif
+
+	// model header
+	h = m->headers;
+
+	// skip if the model is patched
+	if(h[0].name[0xf] == 1) return;
+
+	// record the model is patched
+	h[0].name[0xf] = 1;
+
+	#if 0
+	// max graphics
+	h[0].maxDistanceLOD = 0x7fff;
+	#endif
+
+	#if 0
+	// min graphics
+	for(i = 0; i < m->numHeaders-1; i++)
+	{
+		h[i].maxDistanceLOD = 0;
+	}
+	#endif
+
+	// loop through headers
+	for(i = 0; i < m->numHeaders; i++)
+	{		
+		// pointer to array of pointers
+		a = h[i].ptrAnimations;
+
+		// number of animations
+		loopNum = h[i].numAnimations;
+
+		// loop through all animations
+		for(j = 0; j < loopNum; j++)
+		{
+			// skip doubling, if interpolation already happens,
+			// known to happen in spiders, and drivers for
+			// low LOD anims, and high LOD crashing + reversing
+			if(a[j]->numFrames & 0x8000) continue;
+			
+			// multiply by 2
+			a[j]->numFrames =
+			a[j]->numFrames << 1;
+
+			// should only need to subtract one,
+			// but then many animations break on last frame,
+			// need to patch code that manipulates last frame
+			a[j]->numFrames--;
+
+			// negative, or flag?
+			a[j]->numFrames =
+			a[j]->numFrames | 0x8000;
+		}
+	}
+}
+void ScanInstances_60FPS(struct GameTracker* gGT)
+{
+	struct JitPool* instPool = &sdata->gGT->JitPools.instance;
+	
+	// check if pool is empty
+	if(instPool->free.count == 0) return;
+	if(instPool->taken.first == 0) return;
+
+	for(
+			struct Instance* inst = instPool->taken.first; 
+			inst != 0; 
+			inst = inst->next
+		)
+	{
+		PatchModel_60fps(inst->model);
+	}
+	
+	if(gGT->level1 != 0)
+	for(int i = 0; i < gGT->level1->numInstances; i++)
+	{
+		struct Instance* inst = gGT->level1->ptrInstDefs[i].ptrInstance;
+		
+		if(inst != 0)
+			PatchModel_60fps(inst->model);
+	}
+}
+#endif
+
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	struct Level* lev = gGT->level1;
+	
+	#ifdef USE_60FPS
+	if ((gGT->renderFlags & 0x20) != 0)
+		ScanInstances_60FPS(gGT);
+	#endif
 	
 #ifndef REBUILD_PS1
 	DrawControllerError(gGT, gGamepads);
@@ -459,7 +564,7 @@ void MenuHighlight()
 	int fc;
 	int trig;
 	
-	fc = sdata->frameCounter << 7;
+	fc = FPS_HALF(sdata->frameCounter) << 7;
 	trig = DECOMP_MATH_Sin(fc);
 	
 	trig = (trig << 6) >> 0xc;
@@ -1362,15 +1467,18 @@ void RenderFMV()
 
 void RenderSubmit(struct GameTracker* gGT)
 {
+	// 1 VSYNC = 60fps
+	// 2 VSYNCs = 30fps
+	
 #ifdef REBUILD_PC
-	sdata->vsyncTillFlip = 2;
+	
+	sdata->vsyncTillFlip = FPS_HALF(2);
 #else
+	
 	// do I need the "if"? will it ever be nullptr?
 	if(gGT->frontBuffer != 0)
 	{
-		// wait two VSYNCs per frame,
-		// this is the 30fps lock
-		sdata->vsyncTillFlip = 2;
+		sdata->vsyncTillFlip = FPS_HALF(2);
 		
 		// skip debug stuff
 		

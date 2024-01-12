@@ -28,7 +28,7 @@ void DECOMP_MM_HighScore_Draw(u_short trackIndex, u_int rowIndex, u_int posX, u_
     lineWidth = lineWidth >> 1;
 
     // get color data
-    numColor = ((sdata->frameCounter & 4) == 0) ? RED : ORANGE;
+    numColor = ((FPS_HALF(sdata->frameCounter) & 4) == 0) ? RED : ORANGE;
     colorPtr = data.ptrColor[numColor];
 
     struct Icon **iconPtrArray =

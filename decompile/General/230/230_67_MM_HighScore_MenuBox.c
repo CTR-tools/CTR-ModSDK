@@ -19,7 +19,7 @@ void DECOMP_MM_HighScore_MenuBox(struct MenuBox *mb_unused)
     {
       if (D230.highScore_transitionState == ENTERING_MENU)
       {
-        DECOMP_MM_TransitionInOut(D230.transitionMeta_HighScores,(int)D230.highScore_transitionFrames[0],8);
+        DECOMP_MM_TransitionInOut(D230.transitionMeta_HighScores,(int)D230.highScore_transitionFrames[0],FPS_DOUBLE(8));
         sVar2 = D230.highScore_transitionFrames[0] + -1;
         if (D230.highScore_transitionFrames[0] == 0)
         {
@@ -30,10 +30,10 @@ void DECOMP_MM_HighScore_MenuBox(struct MenuBox *mb_unused)
     }
     else if (((D230.highScore_transitionState == EXITING_MENU) && (D230.highScore_transitionFrames[1] == 0)) && (D230.highScore_transitionFrames[2] == 0))
     {
-      DECOMP_MM_TransitionInOut(D230.transitionMeta_HighScores,(int)D230.highScore_transitionFrames[0],8);
+      DECOMP_MM_TransitionInOut(D230.transitionMeta_HighScores,(int)D230.highScore_transitionFrames[0],FPS_DOUBLE(8));
       D230.highScore_transitionFrames[0] = D230.highScore_transitionFrames[0] + 1;
       sVar2 = D230.highScore_transitionFrames[0];
-      if (0xc < D230.highScore_transitionFrames[0])
+      if (FPS_DOUBLE(0xc) < D230.highScore_transitionFrames[0])
       {
         DECOMP_MM_JumpTo_Title_Returning();
         return;
@@ -135,13 +135,13 @@ LAB_OVR_230__800b3c78:
       {
         if (D230.highScore_rowCurr != D230.highScore_rowDesired)
         {
-          D230.highScore_transitionFrames[2] = 8;
+          D230.highScore_transitionFrames[2] = FPS_DOUBLE(8);
           D230.highScore_verticalMove[0] = D230.highScore_verticalMove[1];
         }
       }
       else
       {
-        D230.highScore_transitionFrames[1] = 8;
+        D230.highScore_transitionFrames[1] = FPS_DOUBLE(8);
         D230.highScore_horizontalMove[0] = D230.highScore_horizontalMove[1];
       }
     }
@@ -172,12 +172,12 @@ LAB_OVR_230__800b3c78:
   
   if (D230.highScore_transitionFrames[1] == 0)
   {
-    iVar4 = (8 - D230.highScore_transitionFrames[2]) * D230.highScore_verticalMove[0] * 0x1b;
+    iVar4 = (FPS_DOUBLE(8) - D230.highScore_transitionFrames[2]) * D230.highScore_verticalMove[0] * 0x1b;
   }
   
   else
   {
-    iVar7 = (8 - D230.highScore_transitionFrames[1]) * D230.highScore_horizontalMove[0] * 0x40;
+    iVar7 = (FPS_DOUBLE(8) - D230.highScore_transitionFrames[1]) * D230.highScore_horizontalMove[0] * 0x40;
   }
   
   if (((iVar7 != -0x200) && (iVar7 != 0x200)) && ((iVar4 != -0xd8 && (iVar4 != 0xd8))))

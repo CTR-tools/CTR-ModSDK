@@ -110,8 +110,8 @@ LAB_8004cc58:
 	    // -4 for C
 	    // +0 for T
 	    // +4 for R
-        ui3D->rot[0] = (modelID-0x94) * 4;
-        ui3D->rot[1] = 0xc;
+        ui3D->vel[0] = FPS_HALF((modelID-0x94) * 4);
+        ui3D->vel[1] = FPS_HALF(0xc);
 	  
 	    // Set color
         bigNum->colorRGBA = 0xffc8000;

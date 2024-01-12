@@ -12,7 +12,7 @@ void DECOMP_CAM_SetDesiredPosRot(struct CameraDC* cDC, short* pos, short* rot)
 	}
 
 	// 1 second, 30 frames
-	cDC->frameCounterTransition = 0x1e;
+	cDC->frameCounterTransition = FPS_DOUBLE(0x1e);
 
 	cDC->unk8E = 0;
 	cDC->unk8C = 0x1000;
