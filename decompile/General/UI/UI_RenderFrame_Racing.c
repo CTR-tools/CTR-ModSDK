@@ -303,7 +303,7 @@ void DECOMP_UI_RenderFrame_Racing()
 							(int)playerStruct->PickupWumpaHUD.startY,
 							hudStructPtr[3].x, hudStructPtr[3].y,
 							playerStruct->PickupWumpaHUD.cooldown,
-							5
+							FPS_DOUBLE(5)
 						);
 
 						// subtract one from timer
@@ -377,7 +377,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						playerStruct->PickupLetterHUD.startY,
 						(int)LetterCTR_Pos[0], (int)LetterCTR_Pos[1],
 						(int)playerStruct->PickupLetterHUD.cooldown,
-						10
+						FPS_DOUBLE(10)
 					);
 
 					// Convert X
@@ -424,7 +424,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						&wumpaModel_Pos[0], playerStruct->PickupTimeboxHUD.startX,
 						playerStruct->PickupTimeboxHUD.startY,
 						0x14, 8, playerStruct->PickupTimeboxHUD.cooldown,
-						10
+						FPS_DOUBLE(10)
 					);
 
 					// Decrease remaining number of frames for this to be on screen
@@ -513,7 +513,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						(int)(((u_int)hudStructPtr[0xD].x + 0x20) * 0x10000) >> 0x10,
 						(int)(((u_int)hudStructPtr[0xD].y + 8) * 0x10000) >> 0x10,
 						playerStruct->BattleHUD.cooldown,
-						5
+						FPS_DOUBLE(5)
 					);
 
 					// subtract one from the number of frames that the animation lasts

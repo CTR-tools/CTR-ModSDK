@@ -20,78 +20,6 @@ void NewCallback231()
 		// next PE
 		pe++;
 	}
-	
-	// Armadillo
-	{
-		// VelX and VelZ, adjust bitshift for
-		// direction from instance->forwardDir
-		*(unsigned int*)0x800b5ebc = 0x00021203;
-		*(unsigned int*)0x800b5ecc = 0x00021203;
-
-		// ms timer, change 32ms to 16ms,
-		// to fix travel disatnce
-		*(unsigned char*)0x800b5bd4 = 0x10;
-		
-		// fix cooldown timer, overwrite "fireball"
-		// string to append armadillo function
-		
-		*(unsigned int*)0x800b5f38 = 0x21040; // sll v0, 1
-		*(unsigned int*)0x800b5f3c = 0xA602001C; // sh v0, 0x1c(s0)
-		*(unsigned int*)0x800b5f40 = 0;
-		*(unsigned int*)0x800b5f44 = 0x8FB00018; // LW s0, 0x18(sp)
-		*(unsigned int*)0x800b5f48 = 0x3E00008; // JR RA
-		*(unsigned int*)0x800b5f4c = 0x27bd0028; // sp += 0x28
-	}
-
-	// Seal
-	{
-		// VelX, VelY, VelZ, adjust bitshift for
-		// direction from instance->forwardDir
-		*(unsigned int*)0x800b8ea4 = 0x00042183;
-		*(unsigned int*)0x800b8ee0 = 0x00042183;
-		*(unsigned int*)0x800b8f20 = 0x00042183;
-
-		// Fix travel distance
-		*(unsigned char*)0x800b8f50 = 45*2;
-		*(unsigned char*)0x800b8f64 = 45*2;
-	}
-
-	// Minecart
-	{
-		// Fix speed
-		*(unsigned char*)0x800b7924 = 8*2;
-		*(unsigned char*)0x800b796c = 4*2;
-	}
-
-	// TNT Weapon
-	{
-		// Detonation time
-		*(unsigned char*)0x800ad600 = 0x5a*2;
-
-		// Honk 1 is zero, leave it alone
-
-		// Honk 2,3,4,5,6
-		*(unsigned char*)0x800ad610 = 0x14*2;
-		*(unsigned char*)0x800ad618 = 0x28*2;
-		*(unsigned char*)0x800ad620 = 0x3c*2;
-		*(unsigned char*)0x800ad628 = 0x46*2;
-		*(unsigned char*)0x800ad630 = 0x50*2;
-
-		// Scaling with bit shift
-		*(unsigned int*)0x800ad6c4 = 0x21040;
-		*(unsigned int*)0x800ad6e4 = 0x21040;
-
-		// grow after spawn (tnt, nitro, potion, shared)
-		*(unsigned short*)0x800acce8 = 0x100;
-		*(unsigned short*)0x800accf8 = 0x100;
-		*(unsigned short*)0x800accfc = 0x100;
-	}
-
-	// Hot Air Skyway "blade" on blimps
-	{
-		// rotation speed
-		*(unsigned short*)0x800B3950 = 0x80;
-	}
 
 	// Tiger Temple "Flamejet"
 	{
@@ -205,15 +133,6 @@ void NewCallback231()
 	}
 	#endif
 
-	// tnt in air
-	{
-		// spinning and scaling after initial hit
-		*(unsigned short*)0x800AD8c8 = 0x80;
-		*(unsigned short*)0x800AD8e4 = -0x80;
-		*(unsigned short*)0x800AD8f4 = -0x80;
-		*(unsigned short*)0x800AD8f8 = -0x80;
-	}
-
 	// shield
 	{
 		// ShieldDark_Pop and ShieldDark_PerFrame
@@ -222,30 +141,6 @@ void NewCallback231()
 
 		// sub 16ms instead of 32
 		*(unsigned short*)0x800b0a3c = -0x10;
-	}
-
-	// Wumpa pickup (and crystal)
-	{
-		// duration
-		*(unsigned char*)0x800B4468 = 5*2;
-		*(unsigned char*)0x800b4598 = 5*2;
-		*(unsigned char*)0x800B4D80 = 5*2;
-		*(unsigned char*)0x80053494 = 5*2;
-	}
-
-	// CTR 3D Letter
-	{
-		// edit 4C4 (duration)
-		*(unsigned char*)0x800b5194 = 10*2;
-
-		// edit spin, half speed
-		*(unsigned char*)0x800b5300 = 0x20;
-	}
-
-	// spinning crystal track objects
-	{
-		*(unsigned short*)0x800b4e04 = 0x20;
-		*(unsigned short*)0x800b4e1c = 0x20;
 	}
 
 	// plant
@@ -325,15 +220,6 @@ void NewCallback232()
 		// map items "outer" anims
 
 		// transition in, is in EXE, already patched
-	}
-
-	// Boss Garage
-	{
-		// open/close door
-		*(unsigned int*)0x800aea34 = 0x31900;
-
-		// rotate garagetop
-		*(unsigned int*)0x800aeacc = 0x21140;
 	}
 
 	// Mask Hints

@@ -250,7 +250,7 @@ void DECOMP_RB_Minecart_LInB(struct Instance* inst)
 	
 	minecartObj = ((struct Minecart*)t->object);
 	memset(minecartObj, 0, sizeof(struct Minecart));
-	minecartObj->betweenPoints_numFrames = 8;
+	minecartObj->betweenPoints_numFrames = FPS_DOUBLE(8);
 	minecartObj->rotSpeed = 0x20;
 
 	// unused code

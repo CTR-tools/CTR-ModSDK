@@ -80,7 +80,7 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   
   // increment posY by velY * time
   // do NOT use parenthesis
-  inst->matrix.t[1] += mw->velocity[1] * gGT->elapsedTimeMS >> 5;
+  inst->matrix.t[1] += (mw->velocity[1] * gGT->elapsedTimeMS) >> 5;
   
   if (inst->matrix.t[1] < mw->stopFallAtY) {
     inst->matrix.t[1] = mw->stopFallAtY;
@@ -96,9 +96,9 @@ void DECOMP_RB_GenericMine_ThTick(struct Thread* t)
   if (inst->scale[0] < 0x1000) 
   {
 	// make scale larger each frame
-    inst->scale[0] += 0x200;
-    inst->scale[1] += 0x200;
-    inst->scale[2] += 0x200;
+    inst->scale[0] += FPS_HALF(0x200);
+    inst->scale[1] += FPS_HALF(0x200);
+    inst->scale[2] += FPS_HALF(0x200);
   }
  
   param = 0x3840;

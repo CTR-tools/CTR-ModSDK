@@ -25,7 +25,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
   
   // alter height of TNT as it flies onto a driver's head,
   // do NOT use parenthesis
-  mw->deltaPos[1] += mw->velocity[1] * gGT->elapsedTimeMS >> 5;
+  mw->deltaPos[1] += (mw->velocity[1] * gGT->elapsedTimeMS) >> 5;
   
   // if TNT is moving downward
   if (mw->velocity[1] < 0) 
@@ -83,7 +83,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
 	if(mw->velocity[1] < -0x60) mw->velocity[1] = -0x60;
   
   // rotation
-  *(short *)((unsigned int)mw + 0x26) += 0x100;
+  *(short *)((unsigned int)mw + 0x26) += FPS_HALF(0x100);
   
   // if scale is small
   if (inst->scale[0] < 0x801) 
@@ -98,9 +98,9 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
   else 
   {
 	// reduce scale
-    inst->scale [0] += -0x100;
-    inst->scale [1] += -0x100;
-    inst->scale [2] += -0x100;
+    inst->scale [0] -= FPS_HALF(0x100);
+    inst->scale [1] -= FPS_HALF(0x100);
+    inst->scale [2] -= FPS_HALF(0x100);
   }
   return;
 }

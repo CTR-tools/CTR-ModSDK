@@ -64,7 +64,7 @@ void DECOMP_TileView_FadeOneWindow(struct TileView *view)
   }
 
   // alter the fade value by the fade velocity
-  currValue += view->fade_step;
+  currValue += FPS_HALF(view->fade_step);
 
   // if fade velocity is negative
   if (view->fade_step < 1)

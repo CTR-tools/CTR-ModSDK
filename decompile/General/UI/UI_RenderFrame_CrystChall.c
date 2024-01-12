@@ -85,7 +85,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
     DECOMP_OtherFX_Play(0x42,1);
 
     if (player->PickupWumpaHUD.numCollected != 0)
-		player->PickupWumpaHUD.cooldown = 5;
+		player->PickupWumpaHUD.cooldown = FPS_DOUBLE(5);
   }
 
   // if cooldown is not done
@@ -103,7 +103,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 		player->PickupWumpaHUD.cooldown,
 
 		// 5 frames total
-		5);
+		FPS_DOUBLE(5));
 
 	// reduce cooldown between getting each wumpa (or crystal)
 	player->PickupWumpaHUD.cooldown--;

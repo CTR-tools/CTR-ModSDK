@@ -304,7 +304,7 @@ int DECOMP_RB_CrateWeapon_LInC(
 			sdata->gGT->gameMode1 |= ROLLING_ITEM;
 		}
 		
-		driver->PickupTimeboxHUD.cooldown = 5;
+		driver->PickupTimeboxHUD.cooldown = FPS_DOUBLE(5);
 		driver->noItemTimer = 0;
 		
 		if(driver->numWumpas == 10)
@@ -391,7 +391,7 @@ int DECOMP_RB_CrateFruit_LInC(
 		}
 		newWumpa = random + (newWumpa >> 2) * -4 + 5;
 		
-		driver->PickupWumpaHUD.cooldown = 5;
+		driver->PickupWumpaHUD.cooldown = FPS_DOUBLE(5);
 		driver->PickupWumpaHUD.numCollected = newWumpa;
 		
 		tileView = &sdata->gGT->tileView[driver->driverID];
@@ -487,7 +487,7 @@ int DECOMP_RB_CrateTime_LInC(
 		Voiceline_RequestPlay(0x13, data.characterIDs[driver->driverID], 0x10);
 	}
 	
-	driver->PickupTimeboxHUD.cooldown = 10;
+	driver->PickupTimeboxHUD.cooldown = FPS_DOUBLE(10);
 	
 	tileView = &gGT->tileView[driver->driverID];
 	RB_Fruit_GetScreenCoords(tileView, crateInst, &posScreen[0]);
