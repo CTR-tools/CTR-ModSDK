@@ -316,7 +316,8 @@ void RunEntryHook()
 	{
 		// Intro Camera Fly-in
 		// Need to fix camera zoom to player
-		*(unsigned short*)0x80018D78 = 0x14A;
+		
+		// these are in FollowDriver_Normal
 		*(unsigned short*)0x8001AF6C = 0x14A;
 		*(unsigned short*)0x8001AF80 = 0x12D;
 		*(unsigned short*)0x8001AF8C = 0x12C;
@@ -335,13 +336,6 @@ void RunEntryHook()
 		*(unsigned short*)0x80067d60 = 500;
 		*(unsigned short*)0x80067d64 = 0x80;
 		*(unsigned short*)0x80067d70 = 0x80;
-	}
-
-	// camera transitions
-	{
-		// fix one-second transitions
-		*(unsigned short*)0x80018d44 = 0x1e*2;
-		*(unsigned short*)0x8001a094 = 0x1e*2;
 	}
 
 	// enter warppad
