@@ -237,7 +237,7 @@ void PatchParticles()
 	
 	// ====== Deprecated =========
 	// This was at 0x80088004, but it's been renamed and divided
-	for(pe = &data.emSet_Terrain[0]; pe < &data.emSet_Terrain[0x21]; pe++)
+	for(pe = &data.emSet_DirtLR[0]; pe < &data.emSet_SnowLR[6]; pe++)
 		PatchPE(pe);
 	
 	for(pe = &data.emSet_Exhaust_Water[0]; pe < &data.emSet_Falling[5]; pe++)
@@ -249,7 +249,7 @@ void PatchParticles()
 
 // This executes one time, before the
 // Crash Team Racing exe boots
-void RunEntryHook()
+void RunEntryHook_60fps()
 {
 	u_int i;
 

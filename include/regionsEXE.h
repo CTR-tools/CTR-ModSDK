@@ -30,8 +30,6 @@ struct Terrain
 	int unk14;
 	
 	// 0x18
-	// both pointers in 80088004 area,
-	// spawns particles driving over grass
 	struct ParticleEmitter* em_OddFrame;
 
 	// 0x1C
