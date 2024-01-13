@@ -27,7 +27,7 @@ void VehPtr_MaskGrab_Update(struct Thread *t, struct Driver *d)
     int noInput = d->NoInputTimer - gGT->elapsedTimeMS;
 
     // if negative
-    if (noInput << 10 < 0)
+    if (noInput < 0)
     {
         // set to zero
         noInput = 0;
@@ -41,7 +41,7 @@ void VehPtr_MaskGrab_Update(struct Thread *t, struct Driver *d)
     // when input is allowed,
     // which is when driver is spawned back over track
 
-    struct MaskHeadWeapon *mask = d->maskObj;
+    struct MaskHeadWeapon *mask = d->KartStates.MaskGrab.maskObj;
 
     if (mask != NULL)
     {
@@ -210,7 +210,7 @@ void VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
         }
     }
 
-    struct MaskHeadWeapon *mask = d->maskObj;
+    struct MaskHeadWeapon *mask = d->KartStates.MaskGrab.maskObj;
 
     // if maskObj
     if (mask != 0)
@@ -322,7 +322,7 @@ void VehPtr_MaskGrab_Init(struct Thread* t, struct Driver *d)
     d->KartStates.MaskGrab.boolStillFalling = false;
 
     // Mask Object
-    d->maskObj = Weapon_Mask_UseWeapon(d, 1);
+    d->KartStates.MaskGrab.maskObj = Weapon_Mask_UseWeapon(d, 1);
     
     d->matrixArray = 0;
     d->matrixIndex = 0;
@@ -416,7 +416,7 @@ void VehPtr_MaskGrab_Init(struct Thread* t, struct Driver *d)
     for (i = 0; i < 13; i++)
         d->funcPtrs[i] = PlayerMaskGrabFuncTable[i];
 
-    struct MaskHeadWeapon *mask = d->maskObj;
+    struct MaskHeadWeapon *mask = d->KartStates.MaskGrab.maskObj;
 
     // if maskObj
     if (mask == NULL)
