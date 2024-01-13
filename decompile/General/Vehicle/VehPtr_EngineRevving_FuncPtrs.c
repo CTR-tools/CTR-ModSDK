@@ -133,8 +133,6 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
             iVar4 = -iVar4;
         }
 
-        // NOPing will fill meter in
-        // slow motion, showing how it works
         iVar4 = iVar4 >> 1;
 
         iVar7 = iVar4;
@@ -155,7 +153,7 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
 
         iVar4 = InterpBySpeed(
 				d->KartStates.EngineRevving.engineRevFire, 
-				iVar7, 
+				FPS_HALF(iVar7), 
 				d->KartStates.EngineRevving.engineRevBoostMeter);
 
         // Set new curr rev
@@ -206,7 +204,7 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
 
         uVar6 = InterpBySpeed(
 				d->KartStates.EngineRevving.engineRevBoostMeter, 
-				d->const_SacredFireSpeed / 3 + 3,
+				FPS_HALF(d->const_SacredFireSpeed / 3 + 3),
 				d->const_SacredFireSpeed + d->const_SpeedometerScale_ClassStat);
 				
         d->KartStates.EngineRevving.engineRevBoostMeter = uVar6;
@@ -265,7 +263,7 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
         }
 
         // new rev = curr rev - rev deacceleration rate
-        iVar4 = d->KartStates.EngineRevving.engineRevFire - uVar8;
+        iVar4 = d->KartStates.EngineRevving.engineRevFire - FPS_HALF(uVar8);
 
         // curr rev = new rev
         d->KartStates.EngineRevving.engineRevFire = iVar4;
