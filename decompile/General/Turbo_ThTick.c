@@ -7,7 +7,6 @@ void ThTick_FastRET(struct Thread*);
 void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 {
 	char kartState;
-	short frameIndex;
 	u_int fireAudioDistort;
 	int iVar7;
 	u_int uVar8;
@@ -17,6 +16,7 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 	struct Driver* driver;
 	int fireSize;
 	short elapsedTime;
+	struct GameTracker* gGT = sdata->gGT;
 
 	// get object attached to thread
 	turbo = (struct Turbo*)turboThread->object;
@@ -139,7 +139,7 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 	gte_stlvl((VECTOR *)&turbo->inst->matrix.t[0]);
 	
 	// decrease turbo visibility cooldown by elapsed milliseconds per frame, ~32
-	elapsedTime = turbo->fireVisibilityCooldown - sdata->gGT->elapsedTimeMS;
+	elapsedTime = turbo->fireVisibilityCooldown - gGT->elapsedTimeMS;
 	turbo->fireVisibilityCooldown = elapsedTime;
 	
 	// don't allow negatives
@@ -162,21 +162,18 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 	}
 	
 	// set new model pointer, one of seven
-	instance->model = sdata->gGT->modelPtr[(int)turbo->fireAnimIndex + 0x2c];
+	instance->model = gGT->modelPtr[(int)turbo->fireAnimIndex + 0x2c];
 	
 	// set new model pointer, one of seven
-	turbo->inst->model = sdata->gGT->modelPtr[((int)turbo->fireAnimIndex + 3U & 7) + 0x2c];
+	turbo->inst->model = gGT->modelPtr[((int)turbo->fireAnimIndex + 3U & 7) + 0x2c];
 	
-	// increment frame index
-	frameIndex = turbo->fireAnimIndex;
-	turbo->fireAnimIndex = frameIndex + 1;
+	#ifdef USE_60FPS
+	if(gGT->timer & 1)
+	#endif
+		turbo->fireAnimIndex++;
 	
-	// if gone past seven frames of fire
-	if (7 < frameIndex + 1)
-	{
-		// back to first frame of fire
-		turbo->fireAnimIndex = 0;
-	}
+	// if higher than 7, back to zero
+	turbo->fireAnimIndex &= 7;
 	
 	if ('\0' < turbo->fireDisappearCountdown)
 	{

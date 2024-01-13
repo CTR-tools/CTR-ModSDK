@@ -314,20 +314,6 @@ void RunEntryHook()
 		*(unsigned short*)0x8001AF80 = 0x12D;
 		*(unsigned short*)0x8001AF8C = 0x12C;
 		*(unsigned short*)0x8001AF90 = 0x12C;
-
-		// Engine Revving (filling bar)
-		*(unsigned int*)0x80067be0 = 0x22883;
-
-		// Engine Revving (draining bar)
-		*(unsigned int*)0x80067d3c = 0x52883;
-		*(unsigned short*)0x80067d40 = 1501;
-		*(unsigned short*)0x80067d48 = 0x80;
-		*(unsigned short*)0x80067d50 = 1500;
-		*(unsigned short*)0x80067d54 = 501;
-		*(unsigned short*)0x80067d5c = 0x80;
-		*(unsigned short*)0x80067d60 = 500;
-		*(unsigned short*)0x80067d64 = 0x80;
-		*(unsigned short*)0x80067d70 = 0x80;
 	}
 
 	// enter warppad
@@ -460,27 +446,7 @@ void RunEntryHook()
 		*(unsigned char*)0x80062200 = 10*2;
 		*(unsigned char*)0x80062224 = 10*2;
 	}
-	
-	// turbo fire
-	{
-		// only increment on odd frames
 		
-		// skip on bad frames
-		*(unsigned int*)0x80069974 = 0x279c7000;	// gp += 0x7000
-		*(unsigned int*)0x80069978 = 0x8F8348A0; 	// lw v1, 0x48A0(gp) -- same as gGT->1cec
-		*(unsigned int*)0x8006997C = 0;				// nop
-		*(unsigned int*)0x80069980 = 0x30630001;	// andi v1, v1, 0x1
-		*(unsigned int*)0x80069984 = 0x10600003;	// beq v1, zero, 0x80069994 (restore gp)
-		
-		// dont worry about nop hole, v0 and v1 are both overwritten anyway
-		
-		// write on good frames
-		*(unsigned int*)0x80069988 = 0x24420001;	// addiu v0, v0, 0x1
-		*(unsigned int*)0x8006998C = 0x30420007;	// andi v0, v0, 0x7
-		*(unsigned int*)0x80069990 = 0xA6020008;	// sh v0, 0x8(s0)
-		*(unsigned int*)0x80069994 = 0x279c9000;	// gp -= 0x7000
-	}
-	
 	// roo's tubes SCVert
 	{
 		*(unsigned int*)0x80036E04 = 0x42180;
