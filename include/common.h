@@ -2,7 +2,7 @@
 #define COMMON_H
 
 // toggle these in decompile
-#define USE_60FPS
+//#define USE_60FPS
 //#define USE_16BY9
 
 #ifdef USE_60FPS

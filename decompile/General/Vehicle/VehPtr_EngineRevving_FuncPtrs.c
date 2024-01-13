@@ -5,7 +5,7 @@ void DECOMP_VehPtr_EngineRevving_Update(struct Thread *t, struct Driver *d)
     int revFireLevel;
 
     // If race has not started
-    if (d->KartStates.boolEngineRevMaskGrab == false)
+    if (d->KartStates.EngineRevving.boolEngineRevMaskGrab == false)
     {
         // If Traffic Lights are not done counting down
         if (0 < sdata->gGT->trafficLightsTimer)
@@ -34,16 +34,10 @@ void DECOMP_VehPtr_EngineRevving_Update(struct Thread *t, struct Driver *d)
     // frozen, and into driving, last iteration of
     // this function
 
-    // if reason for revving is mask grab
-    if ((d->KartStates.boolEngineRevMaskGrab == true) &&
-
-        // if maskObj exists
-        (d->maskObj != NULL))
-    {
-        // end duration
-        (struct MaskHeadWeapon *)(d->maskObj)->duration = 0;
-    }
-
+    if ((d->KartStates.EngineRevving.boolEngineRevMaskGrab == true) &&
+		(d->KartStates.EngineRevving.maskObj != NULL))
+		 d->KartStates.EngineRevving.maskObj->duration = 0;
+    
     if ((d->const_SpeedometerScale_ClassStat < d->KartStates.EngineRevving.engineRevFire) &&
         (d->KartStates.EngineRevving.unk[1] & 3) == 0)
     {
@@ -74,32 +68,26 @@ void DECOMP_VehPtr_EngineRevving_Update(struct Thread *t, struct Driver *d)
 
 void DECOMP_VehPtr_EngineRevving_PhysLinear(struct Thread *t, struct Driver *d)
 {
+	int unkTimer;
+	
     struct GameTracker *gGT = sdata->gGT;
-    int unkTimer = d->KartStates.EngineRevving.unk58e;
-    // elapsed milliseconds per frame, ~32
+    
+	unkTimer = d->KartStates.EngineRevving.unk58e;
     unkTimer -= gGT->elapsedTimeMS;
-    if (unkTimer * 0x10000 < 0)
-    {
-        unkTimer = 0;
-    }
+    if (unkTimer * 0x10000 < 0) unkTimer = 0;
     d->KartStates.EngineRevving.unk58e = unkTimer;
 
     unkTimer = d->KartStates.EngineRevving.unk590;
-
-    // elapsed milliseconds per frame, ~32
     unkTimer -= gGT->elapsedTimeMS;
-    if (unkTimer * 0x10000 < 0)
-    {
-        unkTimer = 0;
-    }
+    if (unkTimer * 0x10000 < 0) unkTimer = 0;
     d->KartStates.EngineRevving.unk590 = unkTimer;
 
     VehPtr_Driving_PhysLinear(t, d);
 
     // if race already started
-    if (d->KartStates.boolEngineRevMaskGrab != 0)
+    if (d->KartStates.EngineRevving.boolEngineRevMaskGrab != 0)
     {
-        struct CameraDC *cDC = &gGT.cameraDC[d->driverID];
+        struct CameraDC *cDC = &gGT->cameraDC[d->driverID];
 
         cDC->flags |= 0x10;
         cDC->unk98 = 0x40;
@@ -108,11 +96,8 @@ void DECOMP_VehPtr_EngineRevving_PhysLinear(struct Thread *t, struct Driver *d)
         d->posCurr[1] -= 0x200;
 
         // if maskObj exists
-        if (d->maskObj != 0)
-        {
-            // set mask duration to 8 secs
-            (struct MaskHeadWeapon *)(d->maskObj)->duration = 7680;
-        }
+        if (d->KartStates.EngineRevving.maskObj != 0)
+            d->KartStates.EngineRevving.maskObj->duration = 7680;
     }
 }
 
@@ -126,16 +111,21 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
     short sVar5;
     int uVar6;
     int iVar7;
-    uint uVar8;
+    u_int uVar8;
     int iVar9;
     
     struct Instance *inst = t->inst;
 
-    if (((0 < d->fireSpeed) && (d->KartStates.EngineRevving.unk58e == 0)) &&
-        (d->KartStates.EngineRevving.unk[1] & 3) == 0)
+    if (
+			(d->fireSpeed > 0) && 
+			(d->KartStates.EngineRevving.unk58e == 0) &&
+			((d->KartStates.EngineRevving.unk[1] & 3) == 0)
+		)
     {
-        // Curr revving meter   -   Max revving meter
-        iVar4 = d->KartStates.EngineRevving.engineRevFire - d->KartStates.EngineRevving.engineRevBoostMeter;
+        // Curr revving meter - Max revving meter
+        iVar4 = 
+			d->KartStates.EngineRevving.engineRevFire - 
+			d->KartStates.EngineRevving.engineRevBoostMeter;
 
         // absolute value
         if (iVar4 < 0)
@@ -163,9 +153,10 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
             iVar7 = 0x100;
         }
 
-        // Interpolate turboMeter by speed
-        // parameters: curr revving meter and meter filling speed
-        iVar4 = InterpBySpeed(d->KartStates.EngineRevving.engineRevFire, iVar7);
+        iVar4 = InterpBySpeed(
+				d->KartStates.EngineRevving.engineRevFire, 
+				iVar7, 
+				d->KartStates.EngineRevving.engineRevBoostMeter);
 
         // Set new curr rev
         d->KartStates.EngineRevving.engineRevFire = iVar4;
@@ -213,11 +204,11 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
     {
         d->KartStates.EngineRevving.unk[0] = 0;
 
-        // Interpolate rotation by speed
-        // params: max revv, ???
-        uVar6 = InterpBySpeed(d->KartStates.EngineRevving.engineRevBoostMeter, d->const_SacredFireSpeed / 3 + 3);
-
-        // max rev = ???
+        uVar6 = InterpBySpeed(
+				d->KartStates.EngineRevving.engineRevBoostMeter, 
+				d->const_SacredFireSpeed / 3 + 3,
+				d->const_SacredFireSpeed + d->const_SpeedometerScale_ClassStat);
+				
         d->KartStates.EngineRevving.engineRevBoostMeter = uVar6;
     }
 
@@ -355,7 +346,7 @@ LAB_80067dec:
     // then return that same percentage between bVar1<<5 and local18
     // Map value from [oldMin, oldMax] to [newMin, newMax]
     // inverting newMin and newMax will give an inverse range mapping
-    uVar3 = MapToRange(uVar6, iVar7, iVar9, (uint)bVar1 << 5, local_18);
+    uVar3 = MapToRange(uVar6, iVar7, iVar9, (u_int)bVar1 << 5, local_18);
 
     d->turbo_MeterRoomLeft = uVar3;
     d->distanceDrivenBackwards = 0;
@@ -382,68 +373,4 @@ LAB_80067dec:
     inst->scale[2] = (short)((iVar4 * 6) / 10) + 3276;
 
     d->jumpSquishStretch = iVar4;
-}
-
-void *PlayerEngineRevFuncTable[13] =
-    {
-        NULL,
-        DECOMP_VehPtr_EngineRevving_Update,
-        DECOMP_VehPtr_EngineRevving_PhysLinear,
-        VehPtr_Driving_Audio,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        OnRender,
-        DECOMP_VehPtr_EngineRevving_Animate,
-        VehParticle_DriverMain,
-};
-
-void DECOMP_VehPtr_EngineRevving_Init(struct Thread *t, struct Driver *d)
-{
-    // spawn function that waits for traffic lights
-
-    // kart state to rev
-    d->kartState = KS_ENGINE_REVVING;
-    d->engineRevState = 0; // no rev
-    d->KartStates.EngineRevving.engineRevFire = 0;
-
-    // assume reason for revving is: start of race
-    d->KartStates.EngineRevving.boolEngineRevMaskGrab = false;
-
-    // clear maskObj
-    d->maskObj = NULL;
-
-    // if this is a mask grab
-    if (d->quadBlockHeight + 0x1000 < d->posCurr[1])
-    {
-        // assume reason for revving is: mask grab
-        d->KartStates.EngineRevving.boolEngineRevMaskGrab = true;
-
-        // Mask Object
-        d->maskObj = Weapon_Mask_UseWeapon(d, 0);
-
-        // Driver flag
-        d->actionsFlagSet &= ~(1);
-
-        // CameraDC flag
-        sdata->gGT->cameraDC[d->driverID].flags |= 8;
-    }
-
-    for (char i = 0; i < 13; i++)
-    {
-        d->funcPtrs[i] = PlayerEngineRevFuncTable[i];
-    }
-
-    d->boolFirstFrameSinceEngineRevving = true;
-
-    d->KartStates.EngineRevving.engineRevMS = 0;
-    d->KartStates.EngineRevving.unk58e = 0;
-    d->KartStates.EngineRevving.unk590 = 0;
-    d->KartStates.EngineRevving.unk[0] = 0;
-    d->KartStates.EngineRevving.unk[1] = 0;
-
-    d->KartStates.EngineRevving.engineRevBoostMeter = d->const_SpeedometerScale_ClassStat + d->const_SpeedometerScale_ClassStat / 3;
 }

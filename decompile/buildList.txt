@@ -1,4 +1,4 @@
-// 534+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2+4+1 = 682 rewritten so far
+// 534+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2+4+1+2 = 682 rewritten so far
 // 534 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
@@ -673,8 +673,9 @@ common, exe, VehPtr_StopSpin_Init, 0x0, General/Vehicle/VehPtr_StopSpin_Init.c
 // VehPtr_MaskGrab
 // VehPtr_EatenByPlant
 // VehPtr_Dead
-// VehPtr_EngineRevving
 
+common, exe, VehPtr_EngineRevving_Update, 0x0, General/Vehicle/VehPtr_EngineRevving_FuncPtrs.c
+common, exe, VehPtr_EngineRevving_Init, 0x0, General/Vehicle/VehPtr_EngineRevving_Init.c
 common, exe, VehPtr_Blasted_Update, 0x0, General/Vehicle/VehPtr_Blasted_FuncPtrs.c
 common, exe, VehPtr_Blasted_Init, 0x0, General/Vehicle/VehPtr_Blasted_Init.c
 

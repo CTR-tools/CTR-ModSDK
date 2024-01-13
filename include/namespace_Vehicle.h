@@ -1325,7 +1325,7 @@ struct Driver
 			short unk590;
 
 			// 0x592
-			char unk[2];
+			unsigned char unk[2];
 			
 			// 0x594
 			int boolEngineRevMaskGrab;
