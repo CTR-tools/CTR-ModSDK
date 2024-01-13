@@ -224,7 +224,9 @@ int PatchPE(struct ParticleEmitter* pe)
 
 struct Particle* NewParticleCreateInstance(struct LinkedList* param_1)
 {
-	if(sdata->gGT->timer & 1) return 0;
+	// do 2 instead of 1,
+	// that way timer & 1 works with SetLeft and SetRight
+	if(sdata->gGT->timer & 2) return 0;
 	
 	return (struct Particle*)LIST_RemoveFront(param_1);
 }
@@ -324,7 +326,6 @@ void RunEntryHook()
 		*(unsigned int*)0x8004ec4c = 0;
 	}
 
-
 	#if 0
 	// does not work yet
 	// damage timers
@@ -348,21 +349,6 @@ void RunEntryHook()
 		// changes rng [0 - 16] to [0 - 64]
 		*(unsigned char*)0x80040c24 = 0x40;
 		*(unsigned char*)0x80040f4c = 0x40;
-	}
-		
-	// roo's tubes SCVert
-	{
-		*(unsigned int*)0x80036E04 = 0x42180;
-	}
-	
-	// crash cove OVert
-	{
-		*(unsigned int*)0x80036DE0 = 0x42043; // 1P
-		
-		// to do: 2P, 3P, 4P,
-		// they'll be the same "SRA a0, 1" in the 
-		// nop hole of a JAL, but multiplayer wont
-		// work in 60fps right now anyway
 	}
 		
 	#if 1

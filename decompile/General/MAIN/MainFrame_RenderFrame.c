@@ -1027,11 +1027,14 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	{	
 		CTR_ClearRenderLists_1P2P(gGT, 1);
 		
+		// === Temporary 60FPS macros ===
+		// Emulate 30fps on 60fps for SCVert and OVert
+		
 		// if no SCVert
 		if((level1->configFlags & 4) == 0)
 		{
 			// assume OVert (no primitives generated here)
-			AnimateWater1P(gGT->timer, level1->numWaterVertices,
+			AnimateWater1P(FPS_HALF(gGT->timer), level1->numWaterVertices,
 				level1->ptr_water, level1->ptr_tex_waterEnvMap,
 				gGT->visMem1->visOVertList[0]);
 		}
@@ -1040,7 +1043,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		else
 		{
 			// draw SCVert (no primitives generated here
-			AnimateQuad(gGT->timer << 7, 
+			AnimateQuad(gGT->timer << FPS_LEFTSHIFT(7), 
 				level1->numSCVert, level1->ptrSCVert,
 				gGT->visMem1->visSCVertList[0]);
 		}
