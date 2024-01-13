@@ -258,15 +258,6 @@ void RunEntryHook()
 	// Mask Grab
 	*(unsigned int*)0x80067B58 = 0x2442FF00;
 
-	// Driver physics
-	{
-		// Reserves, double parameter of function
-		*(unsigned int*)0x8005ac44 = 0x52840;
-
-		// Audio "screeetch" sound (no fix)
-		// time spent spnning (might be fine?)
-	}
-
 	// Starting line
 	{
 		// Intro Camera Fly-in
