@@ -628,7 +628,7 @@ common, exe, UI_Weapon_DrawBG, 0x0, General/UI/UI_Weapon_DrawBG.c
 
 // note to self, still need UI_DrawRankedDrivers,
 // squish 11 functions
-common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_DrawNumWumpa.c General/UI/UI_DrawNumKey.c General/UI/UI_DrawNumRelic.c General/UI/UI_DrawNumTrophy.c General/UI/UI_DrawNumCrystal.c General/UI/UI_DrawNumTimebox.c General/UI/UI_DrawSpeedBG.c General/UI/UI_DrawSpeedNeedle.c General/UI/UI_JumpMeter_Draw.c General/UI/UI_JumpMeter_Update.c General/UI/UI_DrawSlideMeter.c, UI_ElevenFuncs.bin
+common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_AAA_BigBlock1.c
 
 common, exe, UI_RenderFrame_Racing, 0x0, General/UI/UI_RenderFrame_Racing.c
 common, exe, UI_RenderFrame_AdvHub, 0x0, General/UI/UI_RenderFrame_AdvHub.c
