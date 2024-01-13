@@ -21,14 +21,6 @@ void NewCallback231()
 		pe++;
 	}
 
-	// Tiger Temple "Flamejet"
-	{
-		// duration timers
-		*(unsigned short*)0x800b67f0 = 0x2d*2;
-		*(unsigned short*)0x800b68d0 = 0x2d*2;
-		*(unsigned short*)0x800b68d8 = 0xD3; // 105*2 + 1
-	}
-
 	// weapon roulette
 	{
 		// timer after red potion expires
