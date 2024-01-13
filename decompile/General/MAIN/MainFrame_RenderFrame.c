@@ -1305,9 +1305,13 @@ void WindowDivsionLines(struct GameTracker* gGT)
 
 	numPlyrCurrGame = gGT->numPlyrCurrGame;
 
-	// if numPlyrCurrGame is more than 1
-    if (1 < numPlyrCurrGame)
-	{
+	// horizontal bar
+#ifdef USE_NEW2P
+	if (numPlyrCurrGame > 2)
+#else
+    if (numPlyrCurrGame > 1)
+#endif
+	{		
 		p = gGT->backBuffer->primMem.curr;
 
 		// set R, G, B, CODE, all to zero,
@@ -1335,9 +1339,21 @@ void WindowDivsionLines(struct GameTracker* gGT)
 		gGT->backBuffer->primMem.curr = (void*)(p + 1);
     }
 
-	// if numPlyrCurrGame is more than 2
-    if (2 < numPlyrCurrGame)
+	// vertical bar
+#ifdef USE_NEW2P
+	if (numPlyrCurrGame > 1)
+#else
+    if (numPlyrCurrGame > 2)
+#endif
 	{
+		// test for USE_NEW2P
+		#if 0
+		gGT->drivers[0]->numWumpas = 10;
+		gGT->drivers[0]->heldItemID = 3;
+		gGT->drivers[1]->numWumpas = 10;
+		gGT->drivers[1]->heldItemID = 3;
+		#endif
+		
 		p = gGT->backBuffer->primMem.curr;
 
 		// set R, G, B, CODE, all to zero,

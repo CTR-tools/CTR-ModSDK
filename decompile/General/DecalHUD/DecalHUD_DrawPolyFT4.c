@@ -4,6 +4,12 @@
 
 void DECOMP_DecalHUD_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale)
 {
+	#ifdef USE_16BY9
+	void ui16BY9_DrawPolyFT4(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);
+	ui16BY9_DrawPolyFT4(icon, posX, posY, primMem, ot, transparency, scale);
+	return;
+	#endif
+	
 	if (!icon) return;
 
 	POLY_FT4* p = (POLY_FT4*)primMem->curr;

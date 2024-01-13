@@ -163,11 +163,12 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   // PAL:
   // 0x3B0/0x600 = 59/96 aspect,
   // 59/96 * 512/236 = 4/3
-
-  // NTSC widescreen:
-  // 0x360 for 4:3, 0x480 for 16:9
   
-  // dynamic numerator
+  // Do NOT set to 0x480 
+  // to change 4/3 to 16/9,
+  // it will zoom "in" instead of "out"
+  // because of stretching Y instead of X
+  
   #if BUILD == EurRetail
   #define r360 0x3B0
   #else
@@ -181,6 +182,11 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   tileView->matrix_ViewProj.t[0] = tx;
   tileView->matrix_ViewProj.t[1] = (ty * r360) / r600;
   tileView->matrix_ViewProj.t[2] = tz;
+  
+#ifdef USE_16BY9
+  void ui16by9_ViewProj(struct TileView* view);
+  ui16by9_ViewProj(tileView);
+#endif
 
   // scale Y axis (1)
   tileView->matrix_ViewProj.m[1][0] =

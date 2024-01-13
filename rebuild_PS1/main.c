@@ -417,17 +417,7 @@
 #include "../decompile/General/UI/UI_Weapon_DrawBG.c"
 
 // note to self, still need UI_DrawRankedDrivers,
-#include "../decompile/General/UI/UI_DrawNumWumpa.c"
-#include "../decompile/General/UI/UI_DrawNumKey.c"
-#include "../decompile/General/UI/UI_DrawNumRelic.c"
-#include "../decompile/General/UI/UI_DrawNumTrophy.c"
-#include "../decompile/General/UI/UI_DrawNumCrystal.c"
-#include "../decompile/General/UI/UI_DrawNumTimebox.c"
-#include "../decompile/General/UI/UI_DrawSpeedBG.c"
-#include "../decompile/General/UI/UI_DrawSpeedNeedle.c"
-#include "../decompile/General/UI/UI_JumpMeter_Draw.c"
-#include "../decompile/General/UI/UI_JumpMeter_Update.c"
-#include "../decompile/General/UI/UI_DrawSlideMeter.c"
+#include "../decompile/General/UI/UI_AAA_BigBlock1.c"
 
 #include "../decompile/General/UI/UI_RenderFrame_Racing.c"
 #include "../decompile/General/UI/UI_RenderFrame_AdvHub.c"

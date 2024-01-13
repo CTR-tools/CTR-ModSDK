@@ -13,6 +13,11 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 
 	gGT = sdata->gGT;
 
+	#ifdef USE_16BY9
+	if((gGT->gameMode1 & MAIN_MENU) == 0)
+		posX += 4;
+	#endif
+
 	iVar9 = 0;
 
 	// draw minimap with neutral/none vertex color, minimap's regular color is white
@@ -93,6 +98,15 @@ void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short 
 	// width of the primitive
 	// leftX is the left margin of the primitive, posX is the right
 	leftX = posX - (short)(icon->texLayout.u1 - icon->texLayout.u0);
+	
+	#ifdef USE_16BY9
+	// widescreen, need to scale X by 75%,
+	// so subtract 12% from left and 12% from right
+	short len = ((posX - leftX) * 125) / 1000;
+	leftX += len;
+	posX -= len;
+	#endif
+	
 	p->x0 = leftX;
 	p->x1 = posX;
 	p->x2 = leftX;

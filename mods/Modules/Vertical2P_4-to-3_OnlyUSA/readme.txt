@@ -1,1 +1,0 @@
-Adds vertical split screen in two player mode, for 4:3 display mode. Made by Niko.

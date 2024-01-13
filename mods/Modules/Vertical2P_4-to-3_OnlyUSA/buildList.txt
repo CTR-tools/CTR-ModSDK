@@ -1,6 +1,0 @@
-926, exe, rdata_free, 0x0, src/2P_CustomSplit.c src/2P_FixIconAxis.c, v2P_main
-
-926, exe, 0x800374c0, 0x0, src/2P_hook_LeaveRender.s
-926, exe, 0x80052c70, 0x0, src/2P_hook_IconAxis.s
-
-common, exe, TileView_Init,0x0, src/2P_TileView_Init.c

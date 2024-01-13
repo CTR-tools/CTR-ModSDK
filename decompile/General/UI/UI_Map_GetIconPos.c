@@ -20,25 +20,25 @@ void DECOMP_UI_Map_GetIconPos(short* ptrMap,int* posX,int* posY)
   
   if (sVar1 == 0) 
   {
-    iVar2 = ptrMap6 + (*posX * ptrMap[4]    ) / (ptrMap[0] - ptrMap[2]);
+    iVar2 = ptrMap6 + WIDE_34(*posX * ptrMap[4]    ) / (ptrMap[0] - ptrMap[2]);
     iVar4 = ptrMap7 + (*posY * ptrMap[5] * 2) / (ptrMap[1] - ptrMap[3]);
   }
   
   else if (sVar1 == 1) 
   {
-	iVar4 = ptrMap7 + (*posX * ptrMap[5] * 2) / (ptrMap[0] - ptrMap[2]);
+	iVar4 = ptrMap7 + WIDE_34(*posX * ptrMap[5] * 2) / (ptrMap[0] - ptrMap[2]);
 	iVar2 = ptrMap6 - (*posY * ptrMap[4]    ) / (ptrMap[1] - ptrMap[3]);
   }
   
   else if (sVar1 == 2) 
   {
-    iVar2 = ptrMap6 - (*posX * ptrMap[4]    ) / (ptrMap[0] - ptrMap[2]);
+    iVar2 = ptrMap6 - WIDE_34(*posX * ptrMap[4]    ) / (ptrMap[0] - ptrMap[2]);
     iVar4 = ptrMap7 - (*posY * ptrMap[5] * 2) / (ptrMap[1] - ptrMap[3]);
   }
   
   else 
   {
-    iVar4 = ptrMap7 - (*posX * ptrMap[5] * 2) / (ptrMap[0] - ptrMap[2]);
+    iVar4 = ptrMap7 - WIDE_34(*posX * ptrMap[5] * 2) / (ptrMap[0] - ptrMap[2]);
     iVar2 = ptrMap6 + (*posY * ptrMap[4]    ) / (ptrMap[1] - ptrMap[3]);
   }
 
@@ -47,6 +47,11 @@ void DECOMP_UI_Map_GetIconPos(short* ptrMap,int* posX,int* posY)
     iVar2 -= 0x3c;
     iVar4 += 10;
   }
+  
+  #ifdef USE_16BY9
+  if((sdata->gGT->gameMode1 & MAIN_MENU) == 0)
+  	iVar2 += 4;
+  #endif
   
   *posX = iVar2;
   *posY = iVar4;

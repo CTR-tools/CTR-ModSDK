@@ -13,6 +13,8 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	RECT box;
 	u_int auStack40 [2];
 	int currentRoomRemaining;
+	
+	gGT = sdata->gGT;
 
 	meterLength = 0;
 
@@ -20,7 +22,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	meterHeight = 7;
 
 	// if numPlyrCurrGame is more than 2 (3P or 4P)
-	if (2 < sdata->gGT->numPlyrCurrGame)
+	if (2 < gGT->numPlyrCurrGame)
 	{
 		// Make the bar shorter
 		meterHeight = 3;
@@ -30,7 +32,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	if ((int)driver->turbo_MeterRoomLeft != 0)
 	{
 		// current room remaining
-		currentRoomRemaining = driver->turbo_MeterRoomLeft * 0x31;
+		currentRoomRemaining = driver->turbo_MeterRoomLeft * WIDE_PICK(0x31, 0x25);
 
 		// max amount of room in turbo
 		maxRoom = (u_int)driver->const_turboMaxRoom << 5;
@@ -48,17 +50,17 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		*/
 
 		// length of rectangle is currentRoom / maxRoom
-		meterLength = 0x31 - (short)(currentRoomRemaining / maxRoom);
+		meterLength = WIDE_PICK(0x31, 0x25) - (short)(currentRoomRemaining / maxRoom);
 	}
-	box.x = posX - 0x31;
+	box.x = posX - WIDE_PICK(0x31, 0x25);
 	box.y = posY - meterHeight;
-	box.w = 0x31;
+	box.w = WIDE_PICK(0x31, 0x25);
 	box.h = meterHeight;
 	memset(auStack40, 0, 4);
 
-	DECOMP_CTR_Box_DrawWireBox(&box, auStack40, sdata->gGT->tileView_UI.ptrOT, &sdata->gGT->backBuffer->primMem);
+	DECOMP_CTR_Box_DrawWireBox(&box, auStack40, gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
 
-	backDB = sdata->gGT->backBuffer;
+	backDB = gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
 	p = 0;
 
@@ -90,7 +92,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		}
 
 		*(u_int *)&p->r0 = colorAndCode;
-		gGT = sdata->gGT;
+		gGT = gGT;
 		meterHeight = posY - meterHeight;
 		p->x0 = posX - meterLength;
 		p->y0 = meterHeight;
@@ -107,7 +109,7 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		*(int*)p = *primmemCurr | 0x5000000;
 		*primmemCurr = (u_int)p & 0xffffff;
 
-		backDB = sdata->gGT->backBuffer;
+		backDB = gGT->backBuffer;
 		primmemCurr = backDB->primMem.curr;
 		p = 0;
 		if (primmemCurr <= (u_long *)backDB->primMem.endMin100)
@@ -118,15 +120,15 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 		if (p != 0)
 		{
 			*(u_int *)&p->r0 = 0x28808080;
-			gGT = sdata->gGT;
-			p->x0 = posX - 0x31;
+			gGT = gGT;
+			p->x0 = posX - WIDE_PICK(0x31, 0x25);
 			p->y0 = meterHeight;
 			p->x1 = posX;
 			p->y1 = meterHeight;
 			p->y2 = posY;
 			p->x3 = posX;
 			p->y3 = posY;
-			p->x2 = posX - 0x31;
+			p->x2 = posX - WIDE_PICK(0x31, 0x25);
 
 			// pointer to OT memory
 			primmemCurr = gGT->tileView_UI.ptrOT;

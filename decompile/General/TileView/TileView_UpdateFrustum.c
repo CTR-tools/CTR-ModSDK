@@ -65,7 +65,12 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   cameraPosY = tileView->pos[1];
   cameraPosZ = tileView->pos[2];
 
+  #ifdef USE_16BY9
+  min_Y = (tileView->rect.w * 1000) / 750;
+  #else
   min_Y = tileView->rect.w;
+  #endif
+  
   val_X = min_Y / 2;
 
   iVar4 = ((tileView->rect.h * 0x600) / 0x360) << 0x10;
@@ -139,11 +144,21 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
 	// from end of TileView_SetMatrixVP (called earlier)
 	read_mt(tx,ty,tz);
     
+#ifdef USE_16BY9
+	// === Widescreen extends far-clip ====
+	// wider frustum means direction goes less "far"
+	// I tried 0x200 for 16x9, it's close enough
+	// but 20x9 is broken no matter what
+	posX = (short)tx * 0x200 + cameraPosX;
+    posY = (short)ty * 0x200 + cameraPosY;
+    posZ = (short)tz * 0x200 + cameraPosZ;
+#else
 	// far clip: pos + dir*100
 	posX = (short)tx * 0x100 + cameraPosX;
     posY = (short)ty * 0x100 + cameraPosY;
     posZ = (short)tz * 0x100 + cameraPosZ;
-    
+#endif
+	
 	iVar19 = 0x1000;
     
 	// near clip: pos + dir*1
@@ -275,10 +290,6 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
   *(short*)0x1f800024 = cameraPosX;
   *(short*)0x1f800026 = cameraPosY;
   *(short*)0x1f800028 = cameraPosZ;
-
-  // Changing stuff here is what caused EuroAli's
-  // discovery for widescreen, so that polygons aren't
-  // clipped outside of original 4:3 viewport
 
   // TileView_SetFrustumPlane (x4)
   

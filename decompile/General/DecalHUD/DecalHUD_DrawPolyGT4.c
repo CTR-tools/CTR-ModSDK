@@ -6,6 +6,14 @@ void DECOMP_DecalHUD_DrawPolyGT4(
 	struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, 
 	u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale)
 {
+	#ifdef USE_16BY9
+	void ui16BY9_DrawPolyGT4(
+	struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, 
+	u_int color0, u_int color1, u_int color2, u_int color3, char transparency, short scale);
+	ui16BY9_DrawPolyGT4(icon, posX, posY, primMem, ot, color0, color1, color2, color3, transparency, scale);
+	return;
+	#endif
+	
 	#if BUILD > SepReview
 		if (!icon) return;
 	#endif

@@ -30,13 +30,13 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 
 #ifndef REBUILD_PS1
 	DECOMP_DebugFont_DrawNumbers(iVar5, iVar11 - 0x10, iVar8);
-	DECOMP_DebugFont_DrawNumbers(iVar10, iVar11 + -4, iVar8);
-	DECOMP_DebugFont_DrawNumbers((((whateverThisIs + iVar10 * -0x60) * 100) / 0x3c0) * 0x10000 >> 0x10, iVar11 + 4, iVar8);
+	DECOMP_DebugFont_DrawNumbers(iVar10, iVar11 + WIDE_PICK(-4, -6), iVar8);
+	DECOMP_DebugFont_DrawNumbers((((whateverThisIs + iVar10 * -0x60) * 100) / 0x3c0) * 0x10000 >> 0x10, iVar11 + WIDE_PICK(4, 0), iVar8);
 #endif
 
 	sVar9 = posX + -0x14;
 	jumpMeter = posY + -0x2d;
-	box.w = 0x22;
+	box.w = WIDE_PICK(0x22, 0x1D); // dont use 3/4 ratio
 	box.h = 10;
 	box.x = sVar9;
 	box.y = jumpMeter;
@@ -59,8 +59,8 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	if (p != 0)
 	{
 		*(u_int *)&p->r0 = 0x28ffffff;
-		p->x1 = posX + 0xe;
-		p->x3 = posX + 0xe;
+		p->x1 = posX + WIDE_34(0xe);
+		p->x3 = posX + WIDE_34(0xe);
 		p->x0 = sVar9;
 		p->y0 = jumpMeter;
 		p->y1 = jumpMeter;
@@ -75,7 +75,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 		*primmemCurr = (u_int)p & 0xffffff;
 
 		box2.y = posY - 0x26;
-		box2.w = 0xc;
+		box2.w = WIDE_34(0xc);
 		box2.h = 0x26;
 		box2.x = posX;
 		memset(auStack48, 0, 4);
@@ -117,7 +117,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 			}
 			*(u_int *)&p->r0 = colorAndCode;
 			jumpMeterHeight = (int)sVar9 * 0x26;
-			sVar9 = posX + 0xc;
+			sVar9 = posX + WIDE_34(0xc);
 			p->x0 = posX;
 			p->x1 = sVar9;
 			p->x2 = posX;

@@ -39,11 +39,24 @@ void DECOMP_TileView_Init(struct TileView* tileView, int id, int total)
 	tileView->distanceToScreen_PREV = 0x100;
 	tileView->distanceToScreen_CURR = 0x100;
 
+#ifdef USE_NEW2P
+
+	tileView->rect.w = (total == 1) ? 0x200 : 0xfd;
+	tileView->rect.h = SIZEY_1P;
+
+	tileView->rect.x = (id&1) * 0x103;
+	tileView->rect.y = 0;
+
+// default 4:3
+#else
+
 	tileView->rect.w = 0x200;
 	tileView->rect.h = (total == 1) ? SIZEY_1P : SIZEY_TOP;
 
 	tileView->rect.x = 0;
 	tileView->rect.y = (id == 0) ? 0 : SIZEY_TOP+4;
+	
+#endif
 	
 	return;
 }

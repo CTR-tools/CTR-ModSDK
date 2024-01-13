@@ -10,7 +10,7 @@ void DECOMP_DebugFont_DrawNumbers(int index, int screenPosX, int screenPosY)
   unsigned int uVar6;
   struct GameTracker* gGT = sdata->gGT;
 
-  uVar6 = screenPosX + 7;
+  uVar6 = screenPosX + WIDE_PICK(7, 5);
   uVar5 = (screenPosY + 0) << 0x10;
   uVar4 = (screenPosY + 7) << 0x10;
 

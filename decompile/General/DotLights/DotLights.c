@@ -95,9 +95,18 @@ DrawLights:
 	  // (icon endX - icon startX) * scale / 0x1000
       sizeX = (int)FP_Mult((icon->texLayout.u1 - icon->texLayout.u0), scale);
 
+	  #ifdef USE_16BY9
+	  sizeX = WIDE_34(sizeX);
+	  #endif
+
 	  // posX of first light
 	  // (window sizeX/2) - (light sizeX*2)
 	  newPosX = (tileView->rect.w + sizeX * -4) / 2;
+	  
+	  #ifdef USE_16BY9
+	  // counter the DrawPolyFT4 midpoint shifting
+	  newPosX -= (sizeX * 125) / 1000;
+	  #endif
 
 	  // posY
 	  newPosY =

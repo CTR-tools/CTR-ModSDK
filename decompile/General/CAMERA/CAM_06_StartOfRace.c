@@ -9,7 +9,7 @@ void DECOMP_CAM_StartOfRace(struct CameraDC* cDC)
     cDC->unk8C = 0;
 
     // make transition to driver last one second
-    cDC->frameCounterTransition = 0x1E;
+    cDC->frameCounterTransition = FPS_DOUBLE(0x1E);
     cDC->desiredRot[6] = 0;
 
     // when camera reaches player, be zoomed in
@@ -17,8 +17,11 @@ void DECOMP_CAM_StartOfRace(struct CameraDC* cDC)
     cDC->unk88 = (void*)(flyInData + 0x18);
 
     // if 1 or less screens
-	  // set fly-in to last 165 frames, (5.25 seconds)
-    cDC->unk8E = 0xA5;
+	// set fly-in to last 165 frames, (5.25 seconds)
+    
+	// ONLY patch this if used with PS1 asm patches,
+	// until the camera functions are really rewritten
+	cDC->unk8E = FPS_DOUBLE(0xA5); 
   }
   else {
     // set animation to last one frame

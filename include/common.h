@@ -3,7 +3,8 @@
 
 // toggle these in decompile
 #define USE_60FPS
-//#define USE_16BY9
+#define USE_16BY9
+#define USE_NEW2P
 
 #ifdef USE_60FPS
 #define FPS_DOUBLE(x) ((x)*2)
@@ -15,6 +16,17 @@
 #define FPS_HALF(x) (x)
 #define FPS_LEFTSHIFT(x) (x)
 #define FPS_RIGHTSHIFT(x) (x)
+#endif
+
+// WIDE_PICK:
+// param1 - normal
+// param2 - widescreen
+#ifdef USE_16BY9
+#define WIDE_34(x) (((x)*750)/1000)
+#define WIDE_PICK(x,y) (y)
+#else
+#define WIDE_34(x) (x)	
+#define WIDE_PICK(x,y) (x)
 #endif
 
 #ifndef REBUILD_PC
