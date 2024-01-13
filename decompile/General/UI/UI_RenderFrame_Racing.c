@@ -289,7 +289,7 @@ void DECOMP_UI_RenderFrame_Racing()
 						DECOMP_OtherFX_Play(0x42, 1);
 
 						// initial timer value
-						partTimeVariable1 = 5;
+						partTimeVariable1 = FPS_DOUBLE(5);
 
 						// if timer is already running, set new timer value
 						if (playerStruct->PickupWumpaHUD.numCollected != 0) goto LAB_80053498;

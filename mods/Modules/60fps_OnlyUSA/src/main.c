@@ -317,15 +317,6 @@ void RunEntryHook()
 		*(unsigned char*)0x8004FFC8 = 10*2;
 	}
 
-	// Non-text HUD linear interpolation
-	{
-		// double number of frames in interps
-		*(unsigned int*)0x8004ec40 = 0x31840;
-		*(unsigned int*)0x8004ec44 = 0x43001A;
-		*(unsigned int*)0x8004ec48 = 0;
-		*(unsigned int*)0x8004ec4c = 0;
-	}
-
 	#if 0
 	// does not work yet
 	// damage timers
