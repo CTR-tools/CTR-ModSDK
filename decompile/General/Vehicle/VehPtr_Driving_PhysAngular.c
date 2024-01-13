@@ -44,7 +44,7 @@ void DECOMP_VehPtr_Driving_PhysAngular(struct Thread* thread, struct Driver* dri
 	{
 		destinedRot = (u_int)(u_char)driver->unk46a;
 	}
-	rotCurrW_interp = InterpBySpeed((int)(driver->rotPrev).w, 8, destinedRot);
+	rotCurrW_interp = InterpBySpeed((int)(driver->rotPrev).w, FPS_HALF(8), destinedRot);
 	(driver->rotPrev).w = (short)rotCurrW_interp;
 	rotCurrW_interp = InterpBySpeed(rotCurrW_original, rotCurrW_interp * elapsedTimeMS >> 5, 0);
 	actionsFlagSet = driver->actionsFlagSet;
@@ -88,7 +88,10 @@ LAB_8005fd74:
 	rotCurrW_original = (int)driver->rotationSpinRate;
 	if (rotCurrW_interp == 0)
 	{
-		rotCurrW_interp = InterpBySpeed(rotCurrW_original, ((int)driver->const_TurnInputDelay + driver->turnConst * 0x32) * terrain->friction >> 8, 0);
+		int rate = ((int)driver->const_TurnInputDelay + driver->turnConst * 0x32) * terrain->friction >> 8;
+		
+		rotCurrW_interp = InterpBySpeed(rotCurrW_original, FPS_HALF(rate), 0);
+			
 		forwardDir = (short)rotCurrW_interp;
 	}
 	else
@@ -336,7 +339,7 @@ LAB_80060284:
 		{
 			rotCurrW_interp = -rotCurrW_original;
 		}
-		rotCurrW_interp = InterpBySpeed(turnResistMax, rotCurrW_interp, 0);
+		rotCurrW_interp = InterpBySpeed(turnResistMax, FPS_HALF(rotCurrW_interp), 0);
 		forwardDir = (short)rotCurrW_interp;
 	}
 	else

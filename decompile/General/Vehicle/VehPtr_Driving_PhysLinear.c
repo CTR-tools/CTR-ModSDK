@@ -1082,7 +1082,7 @@ SkipSetSteer:
 
 	// Change wheel rotation based on StickLX
 	driverSpeedOrSmth = Player_StickGetStrengthAbsolute(driverSpeedOrSmth, 0x40, ptrgamepad->rwd);
-	driverBaseSpeedUshort = InterpBySpeed((int)driver->wheelRotation, 0x18, -driverSpeedOrSmth);
+	driverBaseSpeedUshort = InterpBySpeed((int)driver->wheelRotation, FPS_HALF(0x18), -driverSpeedOrSmth);
 	*(u_short*)&driver->wheelRotation = driverBaseSpeedUshort;
 
 	driverSpeedOrSmth = (int)driver->fireSpeed;

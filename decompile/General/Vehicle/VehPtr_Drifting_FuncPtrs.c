@@ -82,7 +82,7 @@ void DECOMP_VehPtr_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 	driver->rotPrev.w =
 		InterpBySpeed(
 			(int)driver->rotPrev.w, 
-			8, 
+			FPS_HALF(8), 
 			uVar10);
 
 	// Interpolate rotation by speed
@@ -193,6 +193,10 @@ void DECOMP_VehPtr_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 	{
 LAB_80063244:
 
+		#ifdef USE_60FPS
+		if(gGT->timer & 1)
+		#endif
+
 		// Interpolate by 1 unit, until zero
 		driver->KartStates.Drifting.numFramesDrifting =
 			InterpBySpeed((int)driver->KartStates.Drifting.numFramesDrifting, 1, 0);
@@ -204,7 +208,12 @@ LAB_80063244:
 		// if drifting right
 		if(iVar15 < 1)
 		{
+			#ifdef USE_60FPS
+			if(gGT->timer & 1)
+			#endif
+			
 			driver->KartStates.Drifting.numFramesDrifting--;
+			
 			if(driver->KartStates.Drifting.numFramesDrifting > 0)
 				driver->KartStates.Drifting.numFramesDrifting = 0;
 		}
@@ -212,7 +221,12 @@ LAB_80063244:
 		// if drifting left
 		else
 		{
+			#ifdef USE_60FPS
+			if(gGT->timer & 1)
+			#endif
+			
 			driver->KartStates.Drifting.numFramesDrifting++;
+			
 			if(driver->KartStates.Drifting.numFramesDrifting < 0)
 				driver->KartStates.Drifting.numFramesDrifting = 0;
 		}

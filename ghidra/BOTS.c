@@ -2074,7 +2074,7 @@ LAB_80014b48:
           //if driver has Reserves
           else
 		  {
-			// const_accel_withReserves
+			// const_Accel_Reserves
             sVar7 = *(short *)(iVar17 + 0x42a);
           }
 

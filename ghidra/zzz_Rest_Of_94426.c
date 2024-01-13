@@ -26847,7 +26847,7 @@ LAB_80060ab0:
 				(0 < *(short *)(param_2 + 0x39c))
 			  )
 		  {
-			// const_accel_withReserves
+			// const_Accel_Reserves
             iVar7 = (int)*(short *)(param_2 + 0x42a);
           }
 
