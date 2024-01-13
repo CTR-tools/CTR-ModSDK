@@ -275,28 +275,6 @@ void RunEntryHook()
 
 	// Driver physics
 	{
-		// MetaPhys
-		for(i = 0; i < NUM_CLASSES; i++)
-		{
-			// frames until spinout (done, patched in metaPhys)
-			//data.metaPhys[0x2D].value[i] = data.metaPhys[0x2D].value[i] << 1;
-			
-			// doesn't work for some reason?
-			#if 0
-			// steer stages
-			data.metaPhys[0x19].value[i] = data.metaPhys[0x19].value[i] << 1;
-			data.metaPhys[0x1A].value[i] = data.metaPhys[0x1A].value[i] << 1;
-			data.metaPhys[0x1B].value[i] = data.metaPhys[0x1B].value[i] << 1;
-			data.metaPhys[0x1C].value[i] = data.metaPhys[0x1C].value[i] << 1;
-			data.metaPhys[0x1D].value[i] = data.metaPhys[0x1D].value[i] << 1;
-			#endif
-		}
-
-
-		// Angular velocity spinout (done, vehptr_spinning_init)
-		//*(unsigned int*)0x80063F48 = 0x24020096;
-		//*(unsigned int*)0x80063F54 = 0x2402FF6A;
-
 		// Reserves, double parameter of function
 		*(unsigned int*)0x8005ac44 = 0x52840;
 
@@ -438,13 +416,6 @@ void RunEntryHook()
 		// changes rng [0 - 16] to [0 - 64]
 		*(unsigned char*)0x80040c24 = 0x40;
 		*(unsigned char*)0x80040f4c = 0x40;
-	}
-
-	// jumps
-	{
-		// jump buffer (froggy)
-		*(unsigned char*)0x80062200 = 10*2;
-		*(unsigned char*)0x80062224 = 10*2;
 	}
 		
 	// roo's tubes SCVert

@@ -609,7 +609,7 @@ CheckJumpButtons:
 			if ((actionsFlagSetCopy & 4) == 0)
 			{
 				// 10 frame jump buffer
-				driver->jump_TenBuffer = 10;
+				driver->jump_TenBuffer = FPS_DOUBLE(10);
 			}
 			goto LAB_8006222c;
 		}
@@ -636,7 +636,7 @@ CheckJumpButtons:
 
 		if (driverRankItemValue != 3)
 		{
-			driver->jump_TenBuffer = 10;
+			driver->jump_TenBuffer = FPS_DOUBLE(10);
 			LAB_8006222c:
 			actionsFlagSetCopy |= 4;
 		}

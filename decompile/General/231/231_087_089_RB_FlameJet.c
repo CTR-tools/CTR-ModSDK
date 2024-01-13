@@ -98,7 +98,7 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 	fjObj = (struct FlameJet*)t->object;
 	
 	// in first 45 frames (1.5s)
-	if(fjObj->cycleTimer < 0x2d)
+	if(fjObj->cycleTimer < FPS_DOUBLE(0x2d))
 	{
 		PlaySound3D_Flags(&fjObj->audioPtr, 0x68, fjInst);
 		
@@ -149,14 +149,14 @@ void DECOMP_RB_FlameJet_ThTick(struct Thread* t)
 	}
 	
 	// on 45th frame (1.5s)
-	else if(fjObj->cycleTimer == 0x2d)
+	else if(fjObj->cycleTimer == FPS_DOUBLE(0x2d))
 	{
 		if(fjObj->audioPtr != 0)
 			OtherFX_RecycleMute(&fjObj->audioPtr);
 	}
 	
 	// repeat cycle every 105 (3.5s)
-	else if(fjObj->cycleTimer > 0x69)
+	else if(fjObj->cycleTimer > FPS_DOUBLE(0x69))
 		fjObj->cycleTimer = 0;
 	
 EndFjThTick:
