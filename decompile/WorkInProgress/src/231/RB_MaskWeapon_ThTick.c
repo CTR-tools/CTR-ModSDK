@@ -13,20 +13,19 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
     int iVar6;
     struct MaskHeadWeapon* mask;
     struct Instance* maskInst;
+	struct Instance* maskBeamInst;
     struct Instance* driverInst;
     struct Driver* d;
 
     gGT = sdata->gGT;
-
     numPlyr = gGT->numPlyrCurrGame;
 
+    mask = maskTh->object;
     maskInst = maskTh->inst;
-
-    mask = maskInst->thread->object;
-
-    driverInst = maskTh->parentThread->inst;
+	maskBeamInst = mask->maskBeamInst;
 
     d = maskTh->parentThread->object;
+    driverInst = maskTh->parentThread->inst;
 
     if (d->invisibleTimer == 0)
     {
@@ -34,10 +33,10 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
         {
             view = &gGT->tileView[i];
             maskInst->idpp[i].tileView = view;
-            mask->maskBeamInst->idpp[i].tileView = view;
+            maskBeamInst->idpp[i].tileView = view;
         }
     }
-    // if driver is invisible
+	
     else
     {
         for (i = 0; i < numPlyr; i++)
@@ -45,7 +44,7 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
             if (i != d->driverID)
             {
                 maskInst->idpp[i].tileView = NULL;
-                mask->maskBeamInst->idpp[i].tileView = NULL;
+                maskBeamInst->idpp[i].tileView = NULL;
             }
         }
     }
@@ -66,89 +65,91 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
         maskInst->vertSplit = driverInst->vertSplit;
 
         // mask beam is reflective
-        mask->maskBeamInst->flags |= 0x4000;
+        maskBeamInst->flags |= 0x4000;
 
         // copy split line
-        mask->maskBeamInst->vertSplit = driverInst->vertSplit;
+        maskBeamInst->vertSplit = driverInst->vertSplit;
     }
     maskInst->unk50 = driverInst->unk50;
     maskInst->unk51 = driverInst->unk51;
 
     // Sine(angle)
     ratio = MATH_Sin((int)mask->rot[1]);
-
-    DAT_1f800130._0_2_ = (short)(((ratio << 6) >> 0xc) * (int)mask->scale >> 0xc);
-    DAT_1f800130._2_2_ = ((short *)0x800b2cc4)[(int)mask->maskBeamInst->animFrame] + 0x40;
+    *(short*)0x1f800130 = (short)(((ratio << 6) >> 0xc) * (int)mask->scale >> 0xc);
 
     // Cosine(angle)
     ratio = MATH_Cos((int)mask->rot[1]);
-
-    DAT_1f800128 = 0;
-    DAT_1f800134._0_2_ = (short)(((ratio << 6) >> 0xc) * (int)mask->scale >> 0xc);
-    DAT_1f80012a = mask->rot[1];
-    DAT_1f80012c._0_2_ = 0;
+    *(short*)0x1f800134 = (short)(((ratio << 6) >> 0xc) * (int)mask->scale >> 0xc);
+	
+    *(short*)0x1f800132 = ((short *)0x800b2cc4)[(int)maskBeamInst->animFrame] + 0x40;
+	
+    *(short*)0x1f800128 = 0;
+    *(short*)0x1f80012a = mask->rot[1];
+    *(short*)0x1f80012c = 0;
 
     if ((mask->rot[2] & 1) == 0)
     {
         // Copy Matrix:
         // To: Mask
         // From: Player
-        LHMatrix_Parent(maskInst, driverInst, &DAT_1f800130);
+        LHMatrix_Parent(maskInst, driverInst, 0x1f800130);
 
         // convert 3 rotation shorts into rotation matrix
-        ConvertRotToMatrix(&DAT_1f800108, &DAT_1f800128);
+        ConvertRotToMatrix(0x1f800108, 0x1f800128);
 
-        MatrixRotate(&maskInst->matrix, &maskInst->matrix, &DAT_1f800108);
+        MatrixRotate(&maskInst->matrix, &maskInst->matrix, 0x1f800108);
     }
     else
     {
-        maskInst->matrix.t[0] = (int)mask->pos[0] + (int)(short)DAT_1f800130;
-        maskInst->matrix.t[1] = (int)mask->pos[1] + (int)DAT_1f800130._2_2_;
-        maskInst->matrix.t[2] = (int)mask->pos[2] + (int)(short)DAT_1f800134;
+        maskInst->matrix.t[0] = (int)mask->pos[0] + *(short*)0x1f800130;
+        maskInst->matrix.t[1] = (int)mask->pos[1] + *(short*)0x1f800132;
+        maskInst->matrix.t[2] = (int)mask->pos[2] + *(short*)0x1f800134;
 
         // convert 3 rotation shorts into rotation matrix
-        ConvertRotToMatrix(&maskInst->matrix, &DAT_1f800128);
+        ConvertRotToMatrix(&maskInst->matrix, 0x1f800128);
     }
-    DAT_1f800130._0_2_ = 0;
-    DAT_1f800130._2_2_ = 0x40;
-    DAT_1f800134._0_2_ = 0;
-    DAT_1f800128 = 0;
-    DAT_1f80012a = mask->rot[1];
-    DAT_1f80012c._0_2_ = 0;
+    
+	*(short*)0x1f800130 = 0;
+    *(short*)0x1f800132 = 0x40;
+    *(short*)0x1f800134 = 0;
+	
+    *(short*)0x1f800128 = 0;
+    *(short*)0x1f80012a = mask->rot[1];
+    *(short*)0x1f80012c = 0;
 
     if ((mask->rot[2] & 1) == 0)
     {
-        LHMatrix_Parent(mask->maskBeamInst, driverInst, &DAT_1f800130);
+        LHMatrix_Parent(maskBeamInst, driverInst, 0x1f800130);
 
-        ConvertRotToMatrix(&DAT_1f800108, &DAT_1f800128);
+        ConvertRotToMatrix(0x1f800108, 0x1f800128);
 
-        driverInst = mask->maskBeamInst->matrix;
-        MatrixRotate(driverInst, driverInst, &DAT_1f800108);
+        driverInst = maskBeamInst->matrix;
+        MatrixRotate(driverInst, driverInst, 0x1f800108);
     }
     else
     {
-        mask->maskBeamInst->matrix.t[0] = (int)mask->pos[0];
-        mask->maskBeamInst->matrix.t[1] = (int)mask->pos[1] + (int)DAT_1f800130._2_2_;
-        mask->maskBeamInst->matrix.t[2] = (int)mask->pos[2] + (int)(short)DAT_1f800134;
+        maskBeamInst->matrix.t[0] = (int)mask->pos[0];
+        maskBeamInst->matrix.t[1] = (int)mask->pos[1] + *(short*)0x1f800132;
+        maskBeamInst->matrix.t[2] = (int)mask->pos[2];
 
         // convert 3 rotation shorts into rotation matrix
-        ConvertRotToMatrix(&mask->maskBeamInst->matrix, &DAT_1f800128);
+        ConvertRotToMatrix(&maskBeamInst->matrix, 0x1f800128);
     }
 
     // get animFrame
-    sVar1 = INSTANCE_GetNumAnimFrames(mask->maskBeamInst, 0);
+    sVar1 = INSTANCE_GetNumAnimFrames(maskBeamInst, 0);
 
     // if animation is not finished
-    if ((int)mask->maskBeamInst->animFrame < sVar1 - 1)
+    if ((int)maskBeamInst->animFrame < sVar1 - 1)
     {
         // increment animation frame
-        mask->maskBeamInst->animFrame += 1;
+        maskBeamInst->animFrame += 1;
     }
     // if animation is finished
     else
     {
         // restart animation
-        mask->maskBeamInst->animFrame = 0;
+        maskBeamInst->animFrame = 0;
     }
 
     // adjust rotation
@@ -161,33 +162,32 @@ void DECOMP_RB_MaskWeapon_ThTick(struct Thread* maskTh)
         mask->duration = 0;
 
         ThTick_SetAndExec(maskTh, RB_MaskWeapon_FadeAway);
+		return;
     }
 
     // if duration is not over
-    else
+
+    // reduce duration time by milliseconds
+    iVar6 = (u_int)mask->duration - gGT->elapsedTimeMS;
+
+    // set new duration
+    mask->duration = (short)iVar6;
+
+    // check for negatives
+    if (iVar6 * 0x10000 < 0)
     {
-        // reduce duration time by milliseconds
-        iVar6 = (u_int)mask->duration - gGT->elapsedTimeMS;
-
-        // set new duration
-        mask->duration = (short)iVar6;
-
-        // check for negatives
-        if (iVar6 * 0x10000 < 0)
-        {
-            mask->duration = 0;
-        }
+        mask->duration = 0;
     }
 
     // make Beam visible
-    mask->maskBeamInst->flags &= 0xffffff7f;
+    maskBeamInst->flags &= 0xffffff7f;
 
     // Set Beam Scale (x, y, z)
-    mask->maskBeamInst->scale[0] = mask->scale;
-    mask->maskBeamInst->scale[1] = mask->scale;
-    mask->maskBeamInst->scale[2] = mask->scale;
+    maskBeamInst->scale[0] = mask->scale;
+    maskBeamInst->scale[1] = mask->scale;
+    maskBeamInst->scale[2] = mask->scale;
 
-    mask->maskBeamInst->alphaScale = 0;
+    maskBeamInst->alphaScale = 0;
 
     // make Head visible
     maskInst->flags &= 0xffffff7f;
