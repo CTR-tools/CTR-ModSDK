@@ -37,8 +37,18 @@ void DECOMP_VehPtr_LastSpin_PhysAngular(struct Thread* t, struct Driver* d)
 	
 	d->numFramesSpentSteering = 10000;
 	
-	d->rotationSpinRate -= d->rotationSpinRate >> 3;
-	d->unk3D4[0] -= d->unk3D4[0] >> 3;
+	#ifdef USE_60FPS
+	if(sdata->gGT->timer & 1)
+	{
+	#endif
+
+		d->rotationSpinRate -= d->rotationSpinRate >> 3;
+		d->unk3D4[0] -= d->unk3D4[0] >> 3;
+
+	#ifdef USE_60FPS
+	}
+	#endif
+	
 	d->ampTurnState = d->rotationSpinRate;
 	
 	if(unknownDimension2Curr < 0)
@@ -46,13 +56,16 @@ void DECOMP_VehPtr_LastSpin_PhysAngular(struct Thread* t, struct Driver* d)
 		if(
 			(d->KartStates.Spinning.driftSpinRate > 0) &&
 			(unknownDimension2Curr > -400)
+			#ifdef USE_60FPS
+			&& (sdata->gGT->timer & 1)
+			#endif
 		  )
 		{
 			d->KartStates.Spinning.driftSpinRate = 
 				(unknownDimension2Curr * -4) >> 3;
 			
-			if(d->KartStates.Spinning.driftSpinRate < 0x20)
-				d->KartStates.Spinning.driftSpinRate = 0x20;
+			if(d->KartStates.Spinning.driftSpinRate < FPS_HALF(0x20))
+				d->KartStates.Spinning.driftSpinRate = FPS_HALF(0x20);
 		}
 	
 		d->unknownDimension2Curr += d->KartStates.Spinning.driftSpinRate;
@@ -74,13 +87,16 @@ void DECOMP_VehPtr_LastSpin_PhysAngular(struct Thread* t, struct Driver* d)
 		if(
 			(d->KartStates.Spinning.driftSpinRate < 0) &&
 			(unknownDimension2Curr < 400)
+			#ifdef USE_60FPS
+			&& (sdata->gGT->timer & 1)
+			#endif
 		  )
 		{
 			d->KartStates.Spinning.driftSpinRate = 
 				(unknownDimension2Curr * -4) >> 3;
 			
-			if(d->KartStates.Spinning.driftSpinRate > -0x20)
-				d->KartStates.Spinning.driftSpinRate = -0x20;
+			if(d->KartStates.Spinning.driftSpinRate > FPS_HALF(-0x20))
+				d->KartStates.Spinning.driftSpinRate = FPS_HALF(-0x20);
 		}
 	
 		d->unknownDimension2Curr += d->KartStates.Spinning.driftSpinRate;

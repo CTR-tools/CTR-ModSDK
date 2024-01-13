@@ -37,9 +37,20 @@ void DECOMP_VehPtr_Blasted_PhysAngular(struct Thread *thread, struct Driver *dri
 	int elapsedTimeMS = sdata->gGT->elapsedTimeMS;
 	
 	driver->numFramesSpentSteering = 10000;
-	driver->unk3D4[0] -= (driver->unk3D4[0] >> 3);
-	driver->rotationSpinRate -= (driver->rotationSpinRate >> 3);
-	driver->unk_LerpToForwards -= (driver->unk_LerpToForwards >> 3);
+	
+	#ifdef USE_60FPS
+	if(sdata->gGT->timer & 1)
+	{
+	#endif
+	
+		driver->unk3D4[0] -= (driver->unk3D4[0] >> 3);
+		driver->rotationSpinRate -= (driver->rotationSpinRate >> 3);
+		driver->unk_LerpToForwards -= (driver->unk_LerpToForwards >> 3);
+	
+	#ifdef USE_60FPS
+	}
+	#endif
+	
 	driver->ampTurnState = driver->rotationSpinRate;
 	
 	driver->unknownDimension2Curr += driver->unk_LerpToForwards;

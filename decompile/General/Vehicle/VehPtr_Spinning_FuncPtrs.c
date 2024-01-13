@@ -46,8 +46,17 @@ void DECOMP_VehPtr_Spinning_PhysAngular(struct Thread* t, struct Driver* d)
 	
 	d->numFramesSpentSteering = 10000;
 	
-	// subtract itself by 1/8
-	d->rotationSpinRate -= d->rotationSpinRate >> 3;
+	#ifdef USE_60FPS
+	if(sdata->gGT->timer & 1)
+	{
+	#endif
+	
+		d->rotationSpinRate -= d->rotationSpinRate >> 3;
+		d->unk3D4[0] -= d->unk3D4[0] >> 3;
+	
+	#ifdef USE_60FPS
+	}
+	#endif
 	
 	d->unknownDimension2Curr += d->KartStates.Spinning.driftSpinRate;
 	d->unknownDimension2Curr += 0x800U;
@@ -55,9 +64,6 @@ void DECOMP_VehPtr_Spinning_PhysAngular(struct Thread* t, struct Driver* d)
 	d->unknownDimension2Curr -= 0x800;
 		
 	d->ampTurnState = d->rotationSpinRate;
-	
-	// subtract itself by 1/8
-	d->unk3D4[0] -= d->unk3D4[0] >> 3;
 	
 	d->angle = 
 	(
