@@ -40,6 +40,10 @@ void DECOMP_VehPtr_Crashing_Animate(struct Thread* t, struct Driver* d)
 	inst = t->inst;
 	
 	inst->animFrame++;
+	
+	#ifdef USE_60FPS
+	if(sdata->gGT->timer & 1)
+	#endif
 	d->matrixIndex++;
 	
 	// If crashing animation is not finished, quit function
