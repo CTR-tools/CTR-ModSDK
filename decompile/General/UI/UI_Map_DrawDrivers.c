@@ -36,7 +36,7 @@ void DECOMP_UI_Map_DrawDrivers(int ptrMap,struct Thread* bucket,short *param_3)
 	{
 		// If this is an even numbered frame
 		// ptrColors white value
-		if ((gGT->timer & 2) == 0) {
+		if ((gGT->timer & FPS_DOUBLE(2)) == 0) {
 			kartColor = WHITE;
 		}
 		

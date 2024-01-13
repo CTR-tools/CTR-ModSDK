@@ -288,14 +288,6 @@ void RunEntryHook()
 
 	// Blinking  UI
 	{	
-		// racing map UI
-		// just getting started...
-		*(unsigned short*)0x8004dc04 = 2*2;
-		*(unsigned short*)0x8004de1c = 2*2;
-		*(unsigned short*)0x8004de74 = 2*2; // player dot
-		*(unsigned short*)0x8004f094 = 2*2;
-		*(unsigned short*)0x8004f148 = 2*2;
-
 		// on-screen keyboard
 		*(unsigned char*)0x8004ad00 = 2*2; // underscore
 

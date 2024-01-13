@@ -142,7 +142,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 
 		// this particular snippet is for drawing the TOTAL text in the time trial lap results screen before it flashes, at which point it moves from the left to the center of the screen
 		// if global game timer is on an odd number (in which case this condition doesn't execute) then set string to end at posX of next DrawLine and use data.ptrColor[WHITE]
-		if (((flags & 4) == 0) || (strFlags_but_its_also_posY = (JUSTIFY_RIGHT | WHITE), (gGT->timer & 2) != 0))
+		if (((flags & 4) == 0) || (strFlags_but_its_also_posY = (JUSTIFY_RIGHT | WHITE), (gGT->timer & FPS_DOUBLE(2)) != 0))
 		{
 			strFlags_but_its_also_posY = (JUSTIFY_RIGHT | ORANGE);
 		}
@@ -176,7 +176,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 	{
 		// use timer to change color on even and odd frames
 		// strFlags_but_its_also_posY equals either 4 (white) or 0 (orange)
-		strFlags_but_its_also_posY = (u_short)((gGT->timer & 2) == 0) << 2;
+		strFlags_but_its_also_posY = (u_short)((gGT->timer & FPS_DOUBLE(2)) == 0) << 2;
 	}
 
 	// if number of laps is 7
@@ -288,7 +288,7 @@ void DECOMP_UI_DrawRaceClock(u_short paramX, u_short paramY, u_int flags, struct
 				)
 				{
 					// Change color based on frame counter
-					stringColor_but_its_also_relicColor = ((u_short)(gGT->timer >> 1) ^ 1) & 1;
+					stringColor_but_its_also_relicColor = ((u_short)(gGT->timer >> FPS_DOUBLE(1)) ^ 1) & 1;
 				}
 
 				// Otherwise, color is white by default, you can see that in "stringColor_but_its_also_relicColor = 1" near lap 3 check
