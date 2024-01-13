@@ -478,9 +478,24 @@ void DrawFinalLap(struct GameTracker* gGT)
 		if(textTimer == 0)
 			continue;
 		
+		#ifdef USE_60FPS
+		// if crossed finish line less than 1 second ago
+		if((gGT->elapsedEventTime - gGT->drivers[i]->lapTime) < 960)
+			
+			// if StartLine.c initialized this to 90 (which we can't change yet),
+			// for more info, CTRL + F and search: (&DAT_8008d2a0)[iVar10] = 0x5a;
+			if(sdata->finalLapTextTimer[i] == 90)
+				
+				// change to 180, for 3 seconds at 60fps
+				sdata->finalLapTextTimer[i] = 180;
+				
+		// update register with changed value
+		textTimer = sdata->finalLapTextTimer[i];
+		#endif
+		
 		// turn "time remaining" into "time elapsed",
 		// 90 frames total in animation, 1.5 seconds
-		textTimer = 90 - textTimer;
+		textTimer = FPS_DOUBLE(90) - textTimer;
 		
 		// camera
 		tileView = &gGT->tileView[i];
@@ -489,7 +504,7 @@ void DrawFinalLap(struct GameTracker* gGT)
 		posY = tileView->rect.h / 4;
 		
 		// fly from right to center
-		if(textTimer < 11)
+		if(textTimer <= FPS_DOUBLE(10))
 		{
 			startX = tileView->rect.w + 100;
 			endX = tileView->rect.w / 2;
@@ -498,13 +513,13 @@ void DrawFinalLap(struct GameTracker* gGT)
 		}
 		
 		// sit in center
-		if(textTimer < 0x51)
+		if(textTimer <= FPS_DOUBLE(0x50))
 		{
 			startX = tileView->rect.w / 2;
 			endX = startX;
 			
 			// for duration
-			textTimer -= 10;
+			textTimer -= FPS_DOUBLE(10);
 
 			goto DrawFinalLapString;
 		}
@@ -512,11 +527,11 @@ void DrawFinalLap(struct GameTracker* gGT)
 		// fly from center to left
 		startX = tileView->rect.w / 2;
 		endX = -100;
-		textTimer -= 0x50;
+		textTimer -= FPS_DOUBLE(0x50);
 		
 DrawFinalLapString:
 
-		UI_Lerp2D_Linear(&resultPos, startX, posY, endX, posY, textTimer, 10);
+		UI_Lerp2D_Linear(&resultPos, startX, posY, endX, posY, textTimer, FPS_DOUBLE(10));
 
 		// need to specify OT, or else "FINAL LAP" will draw on top of character icons,
 		// and by doing this, "FINAL LAP" draws under the character icons instead
@@ -525,18 +540,6 @@ DrawFinalLapString:
 			resultPos[0], resultPos[1],
 			FONT_BIG, (JUSTIFY_CENTER | ORANGE),
 			tileView->ptrOT);
-			
-		#if 0
-		// we need to patch this in StartLine.c:
-		// (&DAT_8008d2a0)[iVar10] = 0x5a;
-		#endif
-			
-		// but because StartLine is not rewritten,
-		// then we settle for this (30fps on 60fps)
-			
-		#ifdef USE_60FPS
-		if(gGT->timer & 1)
-		#endif
 			
 		sdata->finalLapTextTimer[i]--;
 	}

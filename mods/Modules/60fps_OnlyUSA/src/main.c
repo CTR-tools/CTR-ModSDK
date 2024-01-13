@@ -238,19 +238,13 @@ void PatchParticles()
 	// ====== Deprecated =========
 	// This was at 0x80088004, but it's been renamed and divided
 	for(pe = &data.emSet_Terrain[0]; pe < &data.emSet_Terrain[0x21]; pe++)
-	{
 		PatchPE(pe);
-	}
 	
 	for(pe = &data.emSet_Exhaust_Water[0]; pe < &data.emSet_Falling[5]; pe++)
-	{
 		PatchPE(pe);
-	}
 	
 	for(pe = &data.emSet_Warpball[0]; pe < &data.emSet_Warppad[7]; pe++)
-	{
 		PatchPE(pe);
-	}
 }
 
 // This executes one time, before the
@@ -258,9 +252,6 @@ void PatchParticles()
 void RunEntryHook()
 {
 	u_int i;
-
-	// Enable 60fps (done)
-	// *(unsigned char*)0x80037930 = 1;
 
 	// Mask Grab
 	*(unsigned int*)0x80067B58 = 0x2442FF00;
@@ -331,57 +322,6 @@ void RunEntryHook()
 		*(unsigned int*)0x8004ec44 = 0x43001A;
 		*(unsigned int*)0x8004ec48 = 0;
 		*(unsigned int*)0x8004ec4c = 0;
-	}
-
-	// Text linear interplation,
-	// for ALL fly-in text like "FINAL LAP!"
-	{
-		// SIGH, here we go...
-
-		// Migrate assembly from
-		// top of function to middle,
-		// replacing error checks that
-		// never find anything anyway
-
-		for(i = 0x8004ed10; i >=0x8004ece0; i -= 4)
-		{
-			// move down 9 instructions
-			*(unsigned int*)(i + (9<<2)) = *(unsigned int*)i;
-
-		}
-
-		// fix jnz after relocating, to correct jump offset
-		*(unsigned char*)0x8004ed08 =
-		*(unsigned char*)0x8004ed08 - 9;
-
-		// inject new assembly to double endFrame
-		*(unsigned int*)0x8004ece0 = 0x84040;
-
-		// jump the empty instructions so we dont
-		// waste cycles doing NOPs. 9-cycle-migration
-		// is a bit overkill, but now we have room if
-		// needed for anything else
-		*(unsigned int*)0x8004ece4 = 0x8013b41;
-
-		// set next to nop
-		*(unsigned int*)0x8004ece8 = 0;
-	}
-
-	// specific changes for FINAL LAP!
-	{
-		// Do not change the 10-frame parameter,
-		// that gets corrected above ^^
-
-		// frame duration
-		*(unsigned char*)0x80041718 = 0x5a*2;
-
-		// frames when text changes behavior
-		*(unsigned char*)0x800360D4 = 0x5a*2;
-		*(unsigned char*)0x800360E4 = (0x50*2)+1;
-		*(unsigned char*)0x800360EC = (0xa*2)+1;
-		*(unsigned short*)0x80036100 = -(0x50*2);
-		*(unsigned short*)0x80036130 = -(0xa*2);
-
 	}
 
 
