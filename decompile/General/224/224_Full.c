@@ -401,7 +401,7 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 		
 		// If you got a new best lap
 		if (((gGT->unknownFlags_1d44 & 0x4000000) != 0) &&
-			((gGT->timer & 2) != 0))
+			((gGT->timer & FPS_DOUBLE(2)) != 0))
 		{
 			timeColor = 0xffff8004;
 		}
