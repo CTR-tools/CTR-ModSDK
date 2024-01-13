@@ -324,8 +324,7 @@ LAB_80067dec:
         // 477 changes when meter turns red
         local_18 = d->const_turboLowRoomWarning * 0x20 + 1;
 
-        // curr rev
-        uVar6 = d->KartStates.EngineRevving.engineRevFire;
+        // min, max
         iVar7 = 0;
         iVar9 = iVar4;
     }
@@ -336,20 +335,20 @@ LAB_80067dec:
 
         local_18 = 1;
 
-        // curr rev
-        uVar6 = d->KartStates.EngineRevving.engineRevFire;
-        iVar9 = iVar4 + d->const_SacredFireSpeed;
+        // min, max
         iVar7 = iVar4;
+        iVar9 = iVar4 + d->const_SacredFireSpeed;
     }
 
-    // Get percentage of uVar6 between iVar7 and iVar9,
-    // then return that same percentage between bVar1<<5 and local18
-    // Map value from [oldMin, oldMax] to [newMin, newMax]
-    // inverting newMin and newMax will give an inverse range mapping
-    uVar3 = MapToRange(uVar6, iVar7, iVar9, (u_int)bVar1 << 5, local_18);
+    uVar3 = MapToRange(
+				d->KartStates.EngineRevving.engineRevFire, 
+				iVar7, iVar9, 
+				(u_int)bVar1 << 5, local_18
+			);
 
     d->turbo_MeterRoomLeft = uVar3;
-    d->distanceDrivenBackwards = 0;
+    
+	d->distanceDrivenBackwards = 0;
     iVar4 = d->unk36E >> 6;
 
     if (iVar4 < 0x401)
