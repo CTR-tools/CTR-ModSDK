@@ -306,7 +306,7 @@ LAB_800ad174:
 		
         tnt->instParent= d->instSelf;
 		
-        tnt->frameCount_DontHurtParent = 10;
+        tnt->frameCount_DontHurtParent = FPS_DOUBLE(10);
         tnt->boolDestroyed = 0;
         *(short *)((unsigned int)tnt + 0x26) = 0;
         tnt->crateInst= 0;
