@@ -216,65 +216,27 @@ void NewCallback233()
 	LOAD_Callback_Overlay_233();
 }
 
-#if PATCH_PARTICLE
-int PatchPE(struct ParticleEmitter* pe)
-{
-	// skip null PE
-	if(pe->flags == 0) return 0;
-	
-	// skip unknown "special" PEs
-	if((pe->flags & 0xC0) != 0) return 1;
-	
-	if(pe->initOffset == 0xC)
-	{
-		pe->InitTypes.FuncInit.particle_lifespan *= 2;
-		return 1;
-	}
-	
-	// any other type,
-	// assuming they're all AxisInit (I hope),
-	// unless there's more that we haven't researched yet
-	pe->InitTypes.AxisInit.baseValue.velocity /= 2;
-	pe->InitTypes.AxisInit.baseValue.accel /= 2;
-	pe->InitTypes.AxisInit.rngSeed.velocity /= 2;
-	pe->InitTypes.AxisInit.rngSeed.accel /= 2;
-	
-	return 1;
-}
-
 struct Particle* NewParticleCreateInstance(struct LinkedList* param_1)
 {
 	// do 2 instead of 1,
-	// that way timer & 1 works with SetLeft and SetRight
+	// that way timer & 1 works with SetLeft and SetRight,
+	// see VehParticle_DriverMain and call to VehParticle_Terrain_Ground
+	
+	// This will break group of 10 particles that spawn
+	// during mask-grab, cause they all spawn on the same frame
 	if(sdata->gGT->timer & 2) return 0;
 	
 	return (struct Particle*)LIST_RemoveFront(param_1);
 }
-
-void PatchParticles()
-{
-	struct ParticleEmitter* pe;
-	
-	*(unsigned int*)0x80040348 = JAL(NewParticleCreateInstance);
-	
-	// ====== Deprecated =========
-	// This was at 0x80088004, but it's been renamed and divided
-	for(pe = &data.emSet_DirtLR[0]; pe < &data.emSet_SnowLR[6]; pe++)
-		PatchPE(pe);
-	
-	for(pe = &data.emSet_Exhaust_Water[0]; pe < &data.emSet_Falling[5]; pe++)
-		PatchPE(pe);
-	
-	for(pe = &data.emSet_Warpball[0]; pe < &data.emSet_Warppad[7]; pe++)
-		PatchPE(pe);
-}
-#endif
 
 // This executes one time, before the
 // Crash Team Racing exe boots
 void ui60_entryHook()
 {
 	u_int i;
+
+	// replace call to LIST_RemoveFront inside Particle_CreateInstance
+	*(unsigned int*)0x80040348 = JAL(NewParticleCreateInstance);
 
 	// Mask Grab
 	*(unsigned int*)0x80067B58 = 0x2442FF00;
