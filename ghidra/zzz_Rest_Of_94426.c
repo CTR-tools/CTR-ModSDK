@@ -22330,7 +22330,7 @@ void FUN_8005b178(int param_1,int param_2)
 		  {
             uVar8 = 1;
             
-			//kart emote frame = *(uchar *)(iVar10 + 0x54)
+			// matrixIndex = animFrame
             *(undefined *)(param_2 + 0x4d) = *(undefined *)(iVar10 + 0x54);
           }
         }
@@ -33523,10 +33523,8 @@ void FUN_80066e8c(int param_1,int param_2)
   // if driver touched ground before mask grab
   if (*(char *)(param_2 + 0x58d) == '\0') {
 
-	//reset Kart emote
+	// MatrixArr and MatrixIndex
     *(undefined *)(param_2 + 0x4c) = 0;
-
-	//reset Kart emote Frame
     *(undefined *)(param_2 + 0x4d) = 0;
 
 	// set animation
@@ -33561,7 +33559,7 @@ void FUN_80066e8c(int param_1,int param_2)
       *(undefined *)(param_2 + 0x58f) = 1;
     }
 
-    //Kart emote = Crashing
+    // MatrixArr = Crashing
     *(undefined *)(param_2 + 0x4c) = 4;
 
 	if (*(short *)(param_2 + 0x58a) < 3)
@@ -33588,10 +33586,12 @@ void FUN_80066e8c(int param_1,int param_2)
     if (7 < sVar2) {
       *(undefined2 *)(param_2 + 0x58a) = 7;
     }
-    if (*(short *)(param_2 + 0x400) < 0x510) {
-    	//Kart emote = Crashing
+    if (*(short *)(param_2 + 0x400) < 0x510) 
+	{
+      // MatrixArr Crashing
       *(undefined *)(param_2 + 0x4c) = 4;
-      //Kart emote Frame = 12
+      
+	  // MatrixIndex = 12
       *(undefined *)(param_2 + 0x4d) = 0xc;
 
 	  // set animation

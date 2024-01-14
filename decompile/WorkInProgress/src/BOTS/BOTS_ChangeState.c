@@ -119,9 +119,8 @@ u_char DECOMP_BOTS_ChangeState(
     }
 
     // AI is not in progress cooldown
-	  victim->ai_progress_cooldown = 0;
+	victim->ai_progress_cooldown = 0;
 
-    // Kart Emote ID = 0
     victim->matrixArray = 0;
 
     // driver is now blasted

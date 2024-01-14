@@ -90,14 +90,8 @@ void VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
     // if driver touched ground before mask grab
     if (d->KartStates.MaskGrab.boolStillFalling == false)
     {
-
-        // reset Kart emote
         d->matrixArray = 0;
-
-        // reset Kart emote Frame
         d->matrixIndex = 0;
-
-        // set animation
         inst->animIndex = 0;
 
         // (instance, anim#0)
@@ -130,7 +124,7 @@ void VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
             d->KartStates.MaskGrab.boolWhistle = true;
         }
 
-        // Kart emote = Crashing
+        // Crashing
         d->matrixArray = 4;
 
         d->matrixIndex = (d->KartStates.MaskGrab.unk58a < 3) ? 7 : d->KartStates.MaskGrab.unk58a + 5;;
@@ -159,9 +153,9 @@ void VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
         // no input is less than 1.35 s
         if (d->NoInputTimer < 1296)
         {
-            // Kart emote = Crashing
+            // Crashing
             d->matrixArray = 4;
-            // Kart emote Frame = 12
+			
             d->matrixIndex = 12;
 
             // set animation

@@ -68,7 +68,7 @@ void OnAnimate_Driving(struct Thread *t, struct Driver *d)
             else if (currAnimIndex == 2)
             {
                 animSpeed = 1;
-                // kart emote frame
+				
                 d->matrixIndex = *(char *)&inst->animFrame;
             }
 

@@ -3710,7 +3710,7 @@ undefined4 FUN_80016b00(int param_1,int param_2,int param_3,int param_4)
 	//AI is not in progress cooldown
     *(undefined4 *)(param_1 + 0x604) = 0;
 
-	//Kart Emote ID = 0
+	// matrixArr
     *(undefined *)(param_1 + 0x4c) = 0;
 
 	// driver is now blasted
