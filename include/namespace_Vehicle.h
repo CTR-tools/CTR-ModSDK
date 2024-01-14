@@ -472,8 +472,8 @@ struct Driver
 	// 0x00000100 - driving wrong way
 	// 0x00000200 - using turbo weapon
 	// 0x00000400 - started jump this frame
-	// 0x00000800 - front wheel skid
-	// 0x00001000 - back wheel skid
+	// 0x00000800 - back wheel skid
+	// 0x00001000 - front wheel skid
 	// 0x00002000 - driving against wall
 	// 0x00004000 - warping (or blasted, or LastSpin)
 	// 0x00008000 - want to fire weapon

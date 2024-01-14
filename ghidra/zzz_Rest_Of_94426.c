@@ -21229,22 +21229,25 @@ void FUN_80059a18(int param_1,int param_2,undefined *param_3,uint param_4)
   
   if ((local_30 & 8) != 0) 
   {
-	// back wheel skid (0x1000)
-	// front wheel skid (0x800)
+	// skid with front wheels, and back wheels
     *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x1800;
   }
   
+  // matrixArr
   bVar26 = *(byte *)(param_2 + 0x4c);
+  
+  // matArr02 (wheelie)
   if (bVar26 == 1) 
   {
-	// front wheel skid
+	// back wheel skid
     *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x800;
 LAB_8005a094:
 
-	// no back wheel skid
+	// no front wheel skid
     *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) & 0xffffefff;
   }
   
+  // if wheelie of any kind
   else if ((bVar26 != 0) && (bVar26 < 4)) goto LAB_8005a094;
   
   //if racer is not on the ground, not leaving skid marks on front or back tires
@@ -21401,7 +21404,7 @@ LAB_8005a73c:
     sVar3 = (short)iVar16;
     sVar4 = (short)(iVar16 >> 1);
 	
-    // front wheel skids
+    // back wheel skids
     if ((*(uint *)(param_2 + 0x2c8) & 0x800) != 0) 
 	{
 	  // enable skidmarks for first tire
@@ -21512,7 +21515,7 @@ LAB_8005a73c:
       }
     }
 	
-    // back wheel skids
+    // front wheel skids
     if ((*(uint *)(param_2 + 0x2c8) & 0x1000) != 0) 
 	{
 	  // enable skidmarks for third tire
@@ -22463,34 +22466,33 @@ void FUN_8005b178(int param_1,int param_2)
           return;
         }
 
-    //player / AI structure + 0x4a shows driver index (0-7)
+		//player / AI structure + 0x4a shows driver index (0-7)
 
-		    //get character ID
+		//get character ID
         sVar6 = (&DAT_80086e84)[*(byte *)(param_2 + 0x4a)];
 
-		    //if this is penta
+		//if this is penta
         if (sVar6 == 0xd) {
           sVar6 = 3;
         }
 
-		    //if this is fake crash
+		//if this is fake crash
         if (sVar6 == 0xe) {
           sVar6 = 0;
         }
 
-		//cVar3 = (char)sVar6 + 0x7
-        cVar3 = (char)sVar6 + '\a';
+        cVar3 = (char)sVar6 + 7;
 
-		    //if this is oxide
-        if (sVar6 == 0xf) {
-          //cVar3 = 0x7 (hex equivalent of ascii \a)
-          cVar3 = '\a';
+		//if this is oxide
+        if (sVar6 == 0xf) 
+		{
+          cVar3 = 7;
         }
 
-		// set animation
+		// set matrixArr for jump
         *(char *)(param_2 + 0x4c) = cVar3;
 
-        // set animation frame
+        // set matrixIndex to animation frame
         *(undefined *)(param_2 + 0x4d) = *(undefined *)(iVar10 + 0x54);
         return;
       }
@@ -25268,8 +25270,11 @@ LAB_8005ef64:
 			// 0x5b?
             FUN_80028494(0x5b,1,*(ushort *)(param_2 + 0x2ca) & 1);
           }
+		  
           *(short *)(iVar14 + 0x1e) = *(short *)(param_2 + 0x40c) + 0xccc;
-          *(undefined *)(param_2 + 0x4c) = 5;
+          
+		  // matrixArr for blasted
+		  *(undefined *)(param_2 + 0x4c) = 5;
           *(undefined *)(param_2 + 0x4d) = 0;
         }
 		
@@ -25315,9 +25320,12 @@ LAB_8005ef64:
 		((*(uint *)(param_2 + 0x2c8) & 0x80) != 0)
 	 ) 
   {
+	// matrixArr
     bVar3 = *(byte *)(param_2 + 0x4c);
     if (bVar3 != 0) {
-      if (bVar3 == 2) {
+      if (bVar3 == 2) 
+	  {
+		// matrixArr
         *(undefined *)(param_2 + 0x4c) = 3;
 LAB_8005f398:
         *(undefined *)(param_2 + 0x4d) = 0;
@@ -25340,7 +25348,10 @@ LAB_8005f398:
             iVar6 = 0x100;
           }
           uVar15 = (undefined)((uint)(iVar6 * (DAT_80087f10 + -1)) >> 8);
+		  
+		  // matrixArr
           *(undefined *)(param_2 + 0x4c) = 3;
+		  
           goto LAB_8005f354;
         }
       }
@@ -25359,7 +25370,9 @@ LAB_8005f39c:
     if (bVar3 == 1) {
       bVar3 = *(char *)(param_2 + 0x4d) + 1;
       *(byte *)(param_2 + 0x4d) = bVar3;
-      if (DAT_80087f00 <= (int)(uint)bVar3) {
+      if (DAT_80087f00 <= (int)(uint)bVar3) 
+	  {
+		// matrixArr
         *(undefined *)(param_2 + 0x4c) = 2;
         goto LAB_8005f398;
       }
@@ -25383,13 +25396,17 @@ LAB_8005f39c:
           iVar6 = 0x100;
         }
         uVar15 = (undefined)((uint)(iVar6 * (DAT_80087f00 + -1)) >> 8);
+		
+		// matrixArr
         *(undefined *)(param_2 + 0x4c) = 1;
 LAB_8005f354:
         *(undefined *)(param_2 + 0x4d) = uVar15;
       }
       goto LAB_8005f39c;
     }
-    if (bVar3 == 0) {
+    if (bVar3 == 0) 
+	{
+	  // matrixArr
       *(undefined *)(param_2 + 0x4c) = 1;
       goto LAB_8005f398;
     }
