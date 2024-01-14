@@ -63,7 +63,12 @@ int NikoCalcFPS()
 
 int main()
 {
+#ifdef USE_16BY9
+	PsyX_Initialise("CTRPC", 1280, 720, 0);
+#else
 	PsyX_Initialise("CTRPC", 800, 600, 0);
+#endif
+
 	PsyX_CDFS_Init("ctr-u.bin", 0, 0);
 
 	// set to 30 FPS VSync
