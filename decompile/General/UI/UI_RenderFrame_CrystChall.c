@@ -30,7 +30,7 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
   DECOMP_UI_DrawNumCrystal(hudStructPtr[0x11].x + 0x10, hudStructPtr[0x11].y - 0x10, player);
 
   // Draw weapon and number of wumpa fruit in HUD
-  UI_Weapon_DrawSelf(hudStructPtr[0].x, hudStructPtr[0].y, hudStructPtr[0].scale, player);
+  DECOMP_UI_Weapon_DrawSelf(hudStructPtr[0].x, hudStructPtr[0].y, hudStructPtr[0].scale, player);
 
   // TIME
   DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x12],0x14,8,FONT_SMALL,ORANGE);

@@ -395,14 +395,12 @@ void DECOMP_UI_RenderFrame_Racing()
 			// If you're not in a Relic Race
 			if ((gGT->gameMode1 & RELIC_RACE) == 0)
 			{
-				#ifndef REBUILD_PS1
 				//if racer hasn't finished the race
 				if ((playerStruct->actionsFlagSet & 0x2000000) == 0)
 				{
 					// Draw weapon and number of wumpa fruit in HUD
-					UI_Weapon_DrawSelf(hudStructPtr[0].x, hudStructPtr[0].y, hudStructPtr[0].scale, playerStruct);
+					DECOMP_UI_Weapon_DrawSelf(hudStructPtr[0].x, hudStructPtr[0].y, hudStructPtr[0].scale, playerStruct);
 				}
-				#endif
 			}
 
 			// if you are in relic mode

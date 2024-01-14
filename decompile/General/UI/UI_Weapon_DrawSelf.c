@@ -7,7 +7,7 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
   u_int currChar;
   int iconID;
   struct GameTracker* gGT;
-  short posXY[0];
+  short posXY[2];
   
   gGT = sdata->gGT;
 
@@ -78,7 +78,7 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
     if (d->numHeldItems != 0)
 	{
 	  // Draw the number near the weapon icon to show how many
-      DecalFont_DrawLine(sdata->s_spacebar,(int)posX,(int)posY,2,4);
+      DECOMP_DecalFont_DrawLine(sdata->s_spacebar,(int)posX,(int)posY,2,4);
     }
   }
   
@@ -158,18 +158,21 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 	posY = posXY[1];
   }
 
+#ifndef REBUILD_PS1
   DecalHUD_DrawWeapon(
-				// pointer to icon, from array of icon pointers
-				gGT->ptrIcons[iconID],
-
-				(int)posX,(int)posY,
-
-				// PrimMem
-				&gGT->backBuffer->primMem,
-
-				// OTMem
-				gGT->tileView_UI.ptrOT,
-
-				TRANS_50_DECAL,(int)scale,1);
+		// pointer to icon, from array of icon pointers
+		gGT->ptrIcons[iconID],
+	
+		(int)posX,(int)posY,
+	
+		// PrimMem
+		&gGT->backBuffer->primMem,
+	
+		// OTMem
+		gGT->tileView_UI.ptrOT,
+	
+		TRANS_50_DECAL,(int)scale,1);
+#endif
+		
   return;
 }

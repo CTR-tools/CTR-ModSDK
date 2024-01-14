@@ -414,8 +414,6 @@
 #include "../decompile/General/UI/UI_DrawPosSuffix.c"
 #include "../decompile/General/UI/UI_DrawLapCount.c"
 
-#include "../decompile/General/UI/UI_Weapon_DrawBG.c"
-
 // note to self, still need UI_DrawRankedDrivers,
 #include "../decompile/General/UI/UI_AAA_BigBlock1.c"
 

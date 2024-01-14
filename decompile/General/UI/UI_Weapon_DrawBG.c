@@ -24,18 +24,18 @@ void DECOMP_UI_Weapon_DrawBG(short param_1,short param_2,short param_3,struct Dr
   {
 
 	UI_WeaponBG_DrawShine(
-				// Weapon Roulette background (shine)
-				gGT->ptrIcons[0xc4/4],
-	
-				(int)param_1,(int)param_2,
-	
-				// pointer to PrimMem struct
-				&gGT->backBuffer->primMem,
-	
-				// pointer to OTMem 
-				gGT->tileView[d->driverID].ptrOT,
-	
-				2+i,iVar2,iVar1,0xff0000);
+			// Weapon Roulette background (shine)
+			gGT->ptrIcons[0xc4/4],
+		
+			(int)param_1,(int)param_2,
+		
+			// pointer to PrimMem struct
+			&gGT->backBuffer->primMem,
+		
+			// pointer to OTMem 
+			gGT->tileView[d->driverID].ptrOT,
+		
+			2+i,iVar2,iVar1,0xff0000);
   }
 #endif
 

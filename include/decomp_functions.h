@@ -368,6 +368,8 @@ int DECOMP_UI_ConvertY_2(int oldPosY,int newPosY);
 void DECOMP_UI_INSTANCE_InitAll(void);
 int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int param_4,int param_5,int param_6);
 
+void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* d);
+void DECOMP_UI_Weapon_DrawBG(short param_1,short param_2,short param_3,struct Driver* d);
 void DECOMP_UI_DrawNumWumpa(short param_1, short param_2, struct Driver* d);
 void DECOMP_UI_DrawNumKey(short posX, short posY);
 void DECOMP_UI_DrawNumRelic(short posX, short posY);

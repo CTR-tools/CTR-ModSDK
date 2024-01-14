@@ -1,6 +1,8 @@
 #include <common.h>
 
-#include "UI_DrawNumWumpa.c" 
+#include "UI_Weapon_DrawSelf.c"
+#include "UI_Weapon_DrawBG.c"
+#include "UI_DrawNumWumpa.c"
 #include "UI_DrawNumKey.c"
 #include "UI_DrawNumRelic.c"
 #include "UI_DrawNumTrophy.c"

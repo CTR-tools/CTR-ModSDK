@@ -1,4 +1,4 @@
-// 537+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+10+1+1+2+4+2+4+1+2 = 687 rewritten so far
+// 537+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+12+1+1+2+4+2+4+1+2 = 687 rewritten so far
 // 537 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
@@ -6,7 +6,7 @@
 // 18 for 230_Block3
 // 16 for 232 adv hub
 // most others for 231 or VehPtr
-// 10 for the eleven UI functions
+// 12 for the 13 UI functions
 // +1 for DebugFont
 // +1 for 222
 // +2 for 223
@@ -623,12 +623,12 @@ common, exe, UI_DrawLimitClock, 0x0, General/UI/UI_DrawLimitClock.c
 common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_DrawPosSuffix.c
 common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
 // UI_DrawBattleScores
-common, exe, UI_Weapon_DrawSelf, 0x0, General/UI/UI_Weapon_DrawSelf.c
-common, exe, UI_Weapon_DrawBG, 0x0, General/UI/UI_Weapon_DrawBG.c
+
+// squish 13 functions
+common, exe, UI_Weapon_DrawSelf, 0x0, General/UI/UI_AAA_BigBlock1.c
 
 // note to self, still need UI_DrawRankedDrivers,
-// squish 11 functions
-common, exe, UI_DrawNumWumpa, 0x0, General/UI/UI_AAA_BigBlock1.c
+// then all these next functions can join the block
 
 common, exe, UI_RenderFrame_Racing, 0x0, General/UI/UI_RenderFrame_Racing.c
 common, exe, UI_RenderFrame_AdvHub, 0x0, General/UI/UI_RenderFrame_AdvHub.c
