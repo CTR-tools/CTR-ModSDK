@@ -222,8 +222,7 @@ struct Particle* NewParticleCreateInstance(struct LinkedList* param_1)
 	// that way timer & 1 works with SetLeft and SetRight,
 	// see VehParticle_DriverMain and call to VehParticle_Terrain_Ground
 	
-	// This will break group of 10 particles that spawn
-	// during mask-grab, cause they all spawn on the same frame
+	// This will break MaskGrab, and TireSpit effects
 	if(sdata->gGT->timer & 2) return 0;
 	
 	return (struct Particle*)LIST_RemoveFront(param_1);

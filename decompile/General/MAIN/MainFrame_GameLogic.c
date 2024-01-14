@@ -235,8 +235,43 @@ LAB_80035098:
 		gGT->unk1cc4[4] = (u_int)(gGT->unk1cc4[4] * 10000) / 0x147e;
 		
 		#ifdef USE_60FPS
-		if(gGT->timer & 1)
+		
+		// This does not fix Underwater, or particles with function pointers
+		for(struct Particle* p = gGT->particleList_ordinary; p != 0; p = p->next)
+		{
+			// good thing PSX supports address mirroring,
+			// use the top bit to determine if particle is patched
+			unsigned int pointer = p->ptrIconGroup;
+			unsigned int topBit = pointer & 0xC0000000;
+			
+			// topBit will be 00000000 (if null) or 80000000 (not null),
+			// set the bit 40000000 to prove it was patched, and the 
+			// pointer will behave as if it was never edited (thanks psx mirroring)
+			if(topBit == 0x40000000) continue;
+			
+			pointer = pointer & 0xfffffff;
+			pointer |= 0x40000000;
+			p->ptrIconGroup = pointer;
+			
+			p->framesLeftInLife *= 2;
+			
+			for(int axis = 0; axis < 0xb; axis++)
+			{
+				p->axis[axis].velocity /= 2;
+				p->axis[axis].accel /= 2;
+			}
+		}
+		
+		// For byte budget, forget heat warp,
+		// it only draws in Tiger Temple anyway
+		
+		//for(struct Particle* p = gGT->particleList_heatWarp; p != 0; p = p->next)
+		//{
+		//	p->axis[7].velocity = 0x30;
+		//}
+		
 		#endif
+
 		Particle_UpdateAllParticles();
 #endif
 	}
