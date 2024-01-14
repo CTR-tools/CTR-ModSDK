@@ -233,6 +233,10 @@ LAB_80035098:
 		BOTS_UpdateGlobals();
 		GhostTape_WriteMoves(0);
 		gGT->unk1cc4[4] = (u_int)(gGT->unk1cc4[4] * 10000) / 0x147e;
+		
+		#ifdef USE_60FPS
+		if(gGT->timer & 1)
+		#endif
 		Particle_UpdateAllParticles();
 #endif
 	}

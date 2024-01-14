@@ -24,7 +24,8 @@ void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
          }
       }
       //if, in previous frame? player was in the air
-      else {
+      else 
+	  {
 
          // if jump is high enough to be significant
          if (0x150 < d->jumpMeter) {
@@ -38,31 +39,18 @@ void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
             d->highestJump = d->jumpMeter;
          }
 
-		#ifndef REBUILD_PS1
-         if (d->jumpMeter < 0x5a0) 
+		 #ifndef REBUILD_PS1
+         if (d->jumpMeter >= 640) 
 		 {
-            if (d->jumpMeter < 960) 
-			{
-               if (0x27f < d->jumpMeter) 
-			   {
-                  // add one second reserves
-                  Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, 0);
-               }
-            }
+            int param = 0;
+			if (d->jumpMeter >= 960) param = 0x80;
+			if (d->jumpMeter >= 1440) param = 0x100;
 
-            else 
-			{
-               // add one second reserves, plus speed
-               Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, 0x80);
-            }
+			// add one second reserves
+			Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, param);
          }
 
-         else 
-		 {
-            // add one second reserves, plus speed
-            Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, 0x100);
-         }
-		#endif
+		 #endif
       }
    }
 
