@@ -127,28 +127,28 @@ void VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
         // Crashing
         d->matrixArray = 4;
 
-        d->matrixIndex = (d->KartStates.MaskGrab.unk58a < 3) ? 7 : d->KartStates.MaskGrab.unk58a + 5;;
+        d->matrixIndex = (d->KartStates.MaskGrab.animFrame < 3) ? 7 : d->KartStates.MaskGrab.animFrame + 5;
 
         // change animation
         inst->animIndex = 2;
 
         frame = 7;
 
-        if (2 < d->KartStates.MaskGrab.unk58a)
+        if (2 < d->KartStates.MaskGrab.animFrame)
         {
-            frame = d->KartStates.MaskGrab.unk58a + 5;
+            frame = d->KartStates.MaskGrab.animFrame + 5;
         }
 
         inst->animFrame = frame;
 
-        frame = d->KartStates.MaskGrab.unk58a + 1;
+        frame = d->KartStates.MaskGrab.animFrame + 1;
         
         if (7 < frame)
         {
             frame = 7;
         }
 
-        d->KartStates.MaskGrab.unk58a = frame;
+        d->KartStates.MaskGrab.animFrame = frame;
 
         // no input is less than 1.35 s
         if (d->NoInputTimer < 1296)

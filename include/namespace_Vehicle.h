@@ -1345,7 +1345,7 @@ struct Driver
 			short AngleAxis_NormalVec[3];
 	
 			// 0x58a
-			short unk58a;
+			short animFrame;
 	
 			// 0x58c
 			char boolParticlesSpawned;
