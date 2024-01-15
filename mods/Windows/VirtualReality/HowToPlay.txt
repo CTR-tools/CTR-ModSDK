@@ -1,9 +1,10 @@
 [standalone directions, without geo-11 or VrScreenCap]
 
-Recommended to play with 60fps patches,
-after patching your rom, must make a hex change:
-search 80 1f 11 3c d4 03 31 36
-replace 00 80 11 3c 00 c0 31 36
+Compile the decompile for PS1 with the following defines:
+#define USE_60FPS
+#define USE_16BY9
+#define USE_NEW2P
+#define USE_VR
 
 Must have DuckStation open with the game running,
 and Quest 2 running in "Quest Link" mode, before
@@ -25,6 +26,8 @@ Press the Oculus Home button on your right hand, then
 with your Quest Link taskbar, select view desktop monitor.
 Press L2 to make the monitor centered to your view in Quest Link
 Press Select to center the headset view in CTR itself
+
+Why we use geo-11 and VrScreenCap:
 
 You can not "lock" the quest link monitor to your head,
 so turning around 180 degrees will make you not see anything.

@@ -30,19 +30,38 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   scratchpad = &buf[0];
   #endif
 
+  // originally used 556 bytes
+
+  #ifdef REBUILD_PC
+  // Windows x86_64, use global scratchpad
+  MATRIX* matrixDST = &scratchpad[0x3d4];
+  #else
+	#ifdef USE_VR
+	// in DuckStation, use address usable by injection
+	MATRIX* matrixDST = 0x8000C000;
+	#else
+	// ordinary PlayStation 1, use scratchpad
+	MATRIX* matrixDST = 0x1f8003d4;
+	#endif
+  #endif
+
+// Dont write matrix for VR,
+// OculusTest.exe will inject the matrix manually
+#ifndef USE_VR
   #ifndef REBUILD_PC
   *(short*)0x1f8003f4 = tileView->rot[0];
   *(short*)0x1f8003f6 = tileView->rot[1];
   *(short*)0x1f8003f8 = tileView->rot[2];
-  ConvertRotToMatrix((MATRIX *)0x1f8003d4, (short *)0x1f8003f4);
+  ConvertRotToMatrix(matrixDST, (short *)0x1f8003f4);
   #else
   // only a TEST function for REBUILD_PS1 and REBUILD_PC,
   // can not be used stable, with regular PS1 modding
   *(short*)&scratchpad[0x3f4] = tileView->rot[0];
   *(short*)&scratchpad[0x3f6] = tileView->rot[1];
   *(short*)&scratchpad[0x3f8] = tileView->rot[2];
-  TEST_ConvertRotToMatrix((MATRIX *)&scratchpad[0x3d4], (short *)&scratchpad[0x3f4]);
+  TEST_ConvertRotToMatrix(matrixDST, (short *)&scratchpad[0x3f4]);
   #endif
+#endif
 
   tx = tileView->pos[0];
   ty = tileView->pos[1];
@@ -61,22 +80,14 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
 #define gte_r11(r0) __asm__ volatile("ctc2   %0, $11" : : "r"(r0))
 #define gte_r12(r0) __asm__ volatile("ctc2   %0, $12" : : "r"(r0))
 
-  // CameraMatrix
-  uVar3 = *(int*)0x1f8003d4;
-  uVar4 = *(int*)0x1f8003d8;
-  uVar5 = *(int*)0x1f8003dc;
-  uVar6 = *(int*)0x1f8003e0;
-  sVar7 = *(short*)0x1f8003e4;
-
-#else
-
-  // CameraMatrix
-  uVar3 = *(int*)&scratchpad[0x3d4];
-  uVar4 = *(int*)&scratchpad[0x3d8];
-  uVar5 = *(int*)&scratchpad[0x3dc];
-  uVar6 = *(int*)&scratchpad[0x3e0];
-  sVar7 = *(short*)&scratchpad[0x3e4];
 #endif
+
+  // CameraMatrix
+  uVar3 = *(int*)&matrixDST->m[0][0];
+  uVar4 = *(int*)&matrixDST->m[0][2];
+  uVar5 = *(int*)&matrixDST->m[1][1];
+  uVar6 = *(int*)&matrixDST->m[2][0];
+  sVar7 = *(short*)&matrixDST->m[2][2];
 
   // CameraMatrix, for shadows, particles, and audio
   *(int*)((int)&tileView->matrix_Camera + 0x0) = uVar3;

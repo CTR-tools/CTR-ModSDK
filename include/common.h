@@ -5,6 +5,7 @@
 #define USE_60FPS
 #define USE_16BY9
 #define USE_NEW2P
+#define USE_VR
 
 #ifdef USE_60FPS
 #define FPS_DOUBLE(x) ((x)*2)
