@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <windows.h>
 #include <glm/glm.hpp>
@@ -6,50 +7,78 @@
 #include <glm/common.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-char* pBuf;
-int mode = 0;
-
-void initializeEmu()
-{
-	HWND console = GetConsoleWindow();
-	RECT r;
-	GetWindowRect(console, &r); //stores the console's current dimensions
-	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
-
-	printf("1: 3rd-person (normal)\n");
-	printf("2: 1st-person (kart head)\n");
-	printf("3: 1st-person (velocity)\n");
-	printf("Enter Mode: ");
-	scanf_s("%d", &mode, 4);
-	system("cls");
-
-
-	char pid[16];
-	printf("Enter DuckStation PID: ");
-	scanf_s("%s", pid, sizeof(pid));
-
-	char duckName[100];
-	sprintf_s(duckName, 100, "duckstation_%s", pid);
-
-	TCHAR duckNameT[100];
-	swprintf(duckNameT, 100, L"%hs", duckName);
-
-	// 8mb RAM
-	const unsigned int size = 0x800000;
-	HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
-	pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
-}
-
-#define _CRT_SECURE_NO_WARNINGS 1
 #include <stdio.h>
 #include <math.h>
 #include <OVR_CAPI.h>
 
 int main()
 {
-	initializeEmu();
+	char* pBuf = 0;
+	int mode = 0;
 
-	if (pBuf == 0)
+	HWND console = GetConsoleWindow();
+	RECT r;
+	GetWindowRect(console, &r); //stores the console's current dimensions
+	MoveWindow(console, r.left, r.top, 480, 240 + 35, TRUE);
+
+	printf("Type a number (1-3),\n");
+	printf("then press Enter to continue.\n\n");
+
+	printf("1: 3rd-person (normal)\n");
+	printf("2: 1st-person (kart head)\n");
+	printf("3: 1st-person (velocity)\n\n");
+
+	printf("Enter Mode: ");
+	scanf_s("%d", &mode, 4);
+	system("cls");
+
+
+
+
+	printf("Note: Use a brand new installation of DuckStation,\n");
+	printf("to prevent corruption of an existing installation.\n\n");
+
+	char duckPath[1024];
+	printf("Drag DuckStation exe file into this window,\n");
+	printf("then press Enter to launch in VR mode.\n\n");
+
+	printf("DuckStation exe: ");
+	scanf_s("%s", &duckPath[0], 1024);
+	system("cls");
+
+
+
+
+	wchar_t wName[1024];
+	mbstowcs(wName, duckPath, strlen(duckPath) + 1);//Plus null
+	LPWSTR ptrName = wName;
+
+	// additional information
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+
+	// set the size of the structures
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+
+	// start the program up
+	CreateProcess(
+		ptrName,		// the path
+		NULL,			// Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		0,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory 
+		&si,            // Pointer to STARTUPINFO structure
+		&pi             // Pointer to PROCESS_INFORMATION structure (removed extra parentheses)
+	);
+
+	int pid = pi.dwProcessId;
+
+	if (pid == 0)
 	{
 		printf("Error: Failed to open DuckStation\nTry again\n");
 		system("pause");
@@ -57,8 +86,37 @@ int main()
 		main();
 	}
 
-	ovrResult result;
+	char duckName[100];
+	sprintf_s(duckName, 100, "duckstation_%d", pid);
 
+	TCHAR duckNameT[100];
+	swprintf(duckNameT, 100, L"%hs", duckName);
+
+	while (pBuf == 0)
+	{
+		// 8mb RAM
+		const unsigned int size = 0x800000;
+		HANDLE hFile = OpenFileMapping(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, duckNameT);
+		pBuf = (char*)MapViewOfFile(hFile, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, size);
+
+		Sleep(100);
+	}
+
+	printf("Do this yourself:\n\n");
+	printf("- Patch the Crash Team Racing rom with the XDELTA,\n");
+	printf("- Launch the modified rom in the THIS DuckStation window,\n");
+	printf("- Wait for the game to boot into the Naughty Dog Box Scene,\n");
+	printf("- Check this window again for next steps, they'll appear automatically\n");
+
+	// wait for game to launch MEMPACK_Init
+	while (*(unsigned int*)&pBuf[0x990e8] != 0x800ba9f0)
+		Sleep(100);
+
+	system("cls");
+
+
+
+	ovrResult result;
 	ovrInitParams initParams = { ovrInit_RequestVersion, OVR_MINOR_VERSION, NULL, 0, 0 };
 	result = ovr_Initialize(&initParams);
 
@@ -68,21 +126,65 @@ int main()
 		ovr_GetLastErrorInfo(&errorInfo);
 		printf("ovr_Initialize failed: %s\n", errorInfo.ErrorString);
 		system("pause");
+		exit(0);
 	}
 
 	ovrSession session;
 	ovrGraphicsLuid luid;
 	result = ovr_Create(&session, &luid);
 
-	if (OVR_FAILURE(result))
+	while (OVR_FAILURE(result))
 	{
 		ovrErrorInfo errorInfo;
 		ovr_GetLastErrorInfo(&errorInfo);
-		printf("ovr_Create failed: %s\n", errorInfo.ErrorString);
-		system("pause");
+		printf("Ovr_Create failed: %s\n", errorInfo.ErrorString);
+		printf("Please plug in your headset and enter Quest Link mode\n");
+		
+		Sleep(100);
+		result = ovr_Create(&session, &luid);
+		system("cls");
 	}
 
+
+
+
+	printf("Drag vr-screen-cap-CTR exe file into this window,\n");
+	printf("this exe should be in the same folder as OculusTest,\n");
+	printf("then press Enter to play the game.\n\n");
+
+	printf("vr-screen-cap-CTR exe: ");
+	scanf_s("%s", &duckPath[0], 1024);
 	system("cls");
+
+
+
+
+	mbstowcs(wName, duckPath, strlen(duckPath) + 1);//Plus null
+	ptrName = wName;
+
+	// set the size of the structures
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+
+	// start the program up
+	CreateProcess(
+		wName,
+		NULL,			// Command line
+		NULL,           // Process handle not inheritable
+		NULL,           // Thread handle not inheritable
+		FALSE,          // Set handle inheritance to FALSE
+		0,              // No creation flags
+		NULL,           // Use parent's environment block
+		NULL,           // Use parent's starting directory 
+		&si,            // Pointer to STARTUPINFO structure
+		&pi             // Pointer to PROCESS_INFORMATION structure (removed extra parentheses)
+	);
+
+	if (pi.dwProcessId == 0)
+	{
+		while (1) printf("Error\n");
+	}
 
 	float time = 0.0f;
 
