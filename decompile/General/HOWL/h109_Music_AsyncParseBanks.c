@@ -23,13 +23,12 @@ u_int DECOMP_Music_AsyncParseBanks(void)
         // If you're in a Boss Race
         if (gGT->gameMode1 < 0)
         {
-            uVar4 = sdata->songBankBossID[gGT->bossID];
+            index = sdata->songBankBossID[gGT->bossID];
         }
 		
 		// any driving track
         else if (level < INTRO_RACE_TODAY)
         {
-            // Get index from array
             index = data.levBank_FX[level];
         }
 			

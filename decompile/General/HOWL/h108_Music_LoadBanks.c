@@ -20,23 +20,25 @@ void DECOMP_Music_LoadBanks(void)
 
     if (level == INTRO_RACE_TODAY)
     {
+		DECOMP_Bank_DestroyAll();
         bankID = 0x22;
     }
 	
 	else if(level == NAUGHTY_DOG_CRATE)
 	{
+		DECOMP_Bank_DestroyAll();
         bankID = 0x21;
 	}
 	
     else
     {
-        if (*(char*)&sdata->audioDefaults[7] == 0)
+        if (arr[0] == 0)
         {
             DECOMP_Bank_DestroyAll();
 
             DECOMP_Bank_Load(0, &thisBank);
 
-            *(char*)&sdata->audioDefaults[7] = 1;
+            arr[0] = 1;
         }
 
         else
@@ -49,9 +51,7 @@ void DECOMP_Music_LoadBanks(void)
         return;
     }
 
-	DECOMP_Bank_DestroyAll();
-
-    *(char*)&sdata->audioDefaults[7] = 0;
+    arr[0] = 0;
 
     DECOMP_Bank_Load(bankID, &thisBank);
 
