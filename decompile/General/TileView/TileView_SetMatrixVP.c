@@ -48,6 +48,7 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
 // Dont write matrix for VR,
 // OculusTest.exe will inject the matrix manually
 #ifndef USE_VR
+  
   #ifndef REBUILD_PC
   *(short*)0x1f8003f4 = tileView->rot[0];
   *(short*)0x1f8003f6 = tileView->rot[1];
@@ -61,6 +62,18 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   *(short*)&scratchpad[0x3f8] = tileView->rot[2];
   TEST_ConvertRotToMatrix(matrixDST, (short *)&scratchpad[0x3f4]);
   #endif
+
+// ifdef USE_VR
+#else
+
+  // if inside VR, increment each frame,
+  // assuming tileView->pos resets next frame,
+  // do not use this with freecam mods cause
+  // it will increment infinitely into the skybox
+  tileView->pos[0] += matrixDST->t[0];
+  tileView->pos[1] += matrixDST->t[1];
+  tileView->pos[2] += matrixDST->t[2];
+  
 #endif
 
   tx = tileView->pos[0];

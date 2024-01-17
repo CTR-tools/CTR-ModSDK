@@ -1,0 +1,69 @@
+Step 1: 
+Download DuckStation, this needs to be a fresh copy of DuckStation
+so that Virtual Reality does not corrupt an existing installation
+
+Step 2:
+Apply ctr-u-VirtualReality.xdelta to CTR USA rom (in .bin format)
+Recommended to use the following patcher:
+https://hack64.net/tools/patcher.php
+
+Step 3: 
+Drag all files from geo-11 folder into DuckStation directory,
+so the files are next to the DuckStation exe file
+
+Step 4:
+Open OculusTest.exe
+
+Step 5:
+As instructed by OculusTest, pick a number 1-3,
+we recommend 1, but 2 and 3 are available as extras
+
+Step 6:
+Drag the DuckStation exe into OculusTest window,
+then press Enter on the keyboard. Yes this is 
+required, you can't just "open" DuckStation without this
+
+Step 7:
+In DuckStation, go to Settings -> Console Settings:
+	check "Enable Clock Speed Control" box, 
+	slide bar to 400%
+	
+Step 8:
+In DuckStation, go to Settings -> Display Settings, 
+	choose Renderer: Hardware (D3D11),
+	check VSync box,
+	choose Aspect Ratio: 16x9
+	
+Step 9:
+In DuckStation, go to Settings -> Enhancement Settings, 
+	choose Resolution Scale: 5x or higher, (or lower if you get lag)
+	
+Step 10:
+Close settings window
+
+Step 11:
+Start the modified Crash Team Racing ROM,
+that was built from the XDELTA
+
+Step 12:
+Wait until Naughty Dog Box Scene, then OculusTest
+window will have new instructions
+
+Step 13:
+Put on your Meta headset, and enter Quest Link mode,
+this can be wired link, or air link, either works.
+OculusTest window will update when it detects a headset
+
+Step 14:
+If you see "Oculus Test" window in your headset,
+take the headset off of your head
+
+Step 15:
+Drag vr-screen-cap-CTR.exe into OculusTest window,
+then press Enter. This exe is in the same folder as OculusTest
+
+Step 16: Put on the headset, press "Select"
+on your game controller at any time to reset your view.
+
+No audio in the headset, so put on some headphones 
+that plug into your PC. Enjoy the game!

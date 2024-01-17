@@ -187,7 +187,6 @@ int main()
 	}
 
 	float time = 0.0f;
-
 	short backupRot[9];
 
 	// Main loop...
@@ -232,7 +231,7 @@ int main()
 		glm::mat4 rotMatrix = glm::rotate(glm::mat4_cast(q), 3.14159f, glm::vec3(1, 0, 0));
 		rotMatrix = glm::rotate(rotMatrix, rotY, glm::vec3(0, 1, 0));
 
-		short rot[9];
+		short rot[16];
 		rot[0] = 4096.0f * rotMatrix[0][0];
 		rot[1] = 4096.0f * rotMatrix[0][1];
 		rot[2] = 4096.0f * rotMatrix[0][2];
@@ -242,15 +241,23 @@ int main()
 		rot[6] = 4096.0f * rotMatrix[2][0];
 		rot[7] = 4096.0f * rotMatrix[2][1];
 		rot[8] = 4096.0f * rotMatrix[2][2];
+		rot[9] = 0;
 
-		// to make this work
-		// patch 80042c14 = li s1, 8000c000
-		// dont waste time with build list,
-		// just open your game (modded or OG) with hex editors,
-		// search 80 1f 11 3c d4 03 31 36
-		// replace 00 80 11 3c 00 c0 31 36
+		float addX =
+			cos(rotY) * ts.HeadPose.ThePose.Position.x +
+			sin(-rotY) * ts.HeadPose.ThePose.Position.z;
 
-		memcpy(&pBuf[(0x8000c000 & 0xfffffff)], &rot[0], sizeof(short) * 9);
+		float addY = ts.HeadPose.ThePose.Position.y;
+
+		float addZ =
+			sin(rotY) * ts.HeadPose.ThePose.Position.x +
+			cos(-rotY) * ts.HeadPose.ThePose.Position.z;
+
+		*(int*)&rot[10] = (int)(addX * 512.0f);
+		*(int*)&rot[12] = (int)(addY * 512.0f);
+		*(int*)&rot[14] = (int)(addZ * 512.0f);
+
+		memcpy(&pBuf[(0x8000c000 & 0xfffffff)], &rot[0], sizeof(short) * 16);
 
 		// 8ms = 240 updates per second
 		Sleep(4);

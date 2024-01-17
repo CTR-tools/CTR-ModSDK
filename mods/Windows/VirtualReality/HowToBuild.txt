@@ -6,11 +6,28 @@ Compile the decompile for PS1 with the following defines:
 #define USE_NEW2P
 #define USE_VR
 
-Must have DuckStation open with the game running,
-and Quest 2 running in "Quest Link" mode, before
-startin this windows program
+Geo-11
+Only modified config files
+https://helixmod.blogspot.com/2022/06/announcing-new-geo-11-3d-driver.html
 
-Start OculusTest, pick a number (1, 2, or 3).
+VrScreenCap
+Modified "update_matrices" to remove "self.rotation"
+https://github.com/artumino/VRScreenCap
+inside of src/engine/entity.rs: pub fn update_matrices(...)
+You must install "cargo" to build a rust demo
+Do NOT compile with --release, that breaks in my experience
+
+CTR 60fps XDELTA
+Part of CTR-Tools\CTR-ModSDK github repository
+This gets applied to the CTR rom
+
+OculusTest.exe
+Part of CTR-Tools\CTR-ModSDK github repository
+This injects Oculus Quest data into the emulator
+
+Runtime:
+
+-Start OculusTest, pick a number (1, 2, or 3).
 3rd-person is the least motion-sickening of all options.
 1st-person (kart head) will rotate the camera based on
 the head rotation of the kart character, hitting a potion
@@ -20,12 +37,10 @@ the direction the kart is moving in, not sickening.
 Both first-person modes have been hidden in CTR since 
 the game shipped, they were both designed by Naughty Dog.
 
-After picking a mode, then enter the DuckStation PID,
-then put on the headset, you should see "Oculus Test" appear.
-Press the Oculus Home button on your right hand, then 
-with your Quest Link taskbar, select view desktop monitor.
-Press L2 to make the monitor centered to your view in Quest Link
-Press Select to center the headset view in CTR itself
+-Drag in DuckStation (this gets PID)
+-Set options (so 16x9 and 60fps work)
+-Launch the game
+-Drag in vr-screen-cap-CTR
 
 Why we use geo-11 and VrScreenCap:
 

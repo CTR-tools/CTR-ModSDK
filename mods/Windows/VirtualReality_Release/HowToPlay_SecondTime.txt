@@ -1,0 +1,38 @@
+Step 1:
+Open OculusTest.exe
+
+Step 2:
+As instructed by OculusTest, pick a number 1-3,
+we recommend 1, but 2 and 3 are available as extras
+
+Step 3:
+Drag the DuckStation exe into OculusTest window,
+then press Enter on the keyboard. Yes this is 
+required, you can't just "open" DuckStation without this
+
+Step 4:
+Start the modified Crash Team Racing ROM,
+that was built from the XDELTA
+
+Step 5:
+Wait until Naughty Dog Box Scene, then OculusTest
+window will have new instructions
+
+Step 6:
+Put on your Meta headset, and enter Quest Link mode,
+this can be wired link, or air link, either works.
+OculusTest window will update when it detects a headset
+
+Step 7:
+If you see "Oculus Test" window in your headset,
+take the headset off of your head
+
+Step 8:
+Drag vr-screen-cap-CTR.exe into OculusTest window,
+then press Enter. This exe is in the same folder as OculusTest
+
+Step 9: Put on the headset, press "Select"
+on your game controller at any time to reset your view.
+
+No audio in the headset, so put on some headphones 
+that plug into your PC. Enjoy the game!
