@@ -2210,37 +2210,32 @@ struct Data
 	// [3] = 4P P1
 	struct UiElement2D* hudStructPtr[4];
 
-
-	// ============================================================================
-
-	// consistent hole on all versions
 	// 8008626c
-	unsigned char unk_between_hudStructPtr_menuRow_arcadeEndRace[0x94];
+	// 8 XY values
+	short trackerAnim1[8*2];
 
-	// 8008626c - related to missile or warpball chasing player
-
-	// 8008628c - else ^^
-
+	// 8008628c
+	// 11 XY values, but ND code
+	// sets variable to 12 instead of 11,
+	// Naughty Dog bug?
+	short trackerAnim2[0xb*2];
 
 	// 800862b8
-	// rank of driver index (absolute)
+	short rankIconsDesired[8];
 
 	// 800862c8
-	// rank of driver index (drawn on left)
+	short rankIconsCurr[8];
 
 	// 800862d8
-	// something for each driver?
+	short rankIconsTransitionTimer[8];
 
 	// 800862e8
-	// something for missiles?
+	// used to make the tracker squish and bounce 
+	// for the first few frames of tracking
+	short trackerTimer[8];
 
 	// 800862f8
-	// short[4] for missiles
-	// 0 for missile, 1 for warpball, for every "player" being tracked
-
-	// 0x80086300 -- end
-
-	// ============================================================================
+	short trackerType[4];
 
 	// 0x800845D0 -- SepReview
 	// 0x80086300 -- UsaRetail

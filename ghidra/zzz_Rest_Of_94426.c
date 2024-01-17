@@ -14052,10 +14052,16 @@ void FUN_800524c4(void)
 
 					 1,0x1000,local_30);
 
+		// increment timer
         sVar10 = *psVar13;
         *psVar13 = sVar10 + 1;
-        if (4 < (short)(sVar10 + 1)) {
+		
+		// 5-frame counter
+        if (4 < (short)(sVar10 + 1)) 
+		{
           *psVar13 = 0;
+		  
+		  // current = desired, transition is finished
           *(short *)((int)&DAT_800862c8 + iVar15) = *(short *)((int)&DAT_800862b8 + iVar15);
         }
       }
