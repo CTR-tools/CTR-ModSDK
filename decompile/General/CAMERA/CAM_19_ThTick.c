@@ -428,14 +428,17 @@ LAB_8001c128:
 									iVar7 = 0xc0;
 								}
 								uVar10 = CAM_FollowDriver_TrackPath(cDC, (short *)0x1f800398, iVar7, 0);
+								
+								// interpolate two rotations
 								iVar8 = ((uVar10 - uVar9) + 0x800 & 0xfff) - 0x800;
 								*(short *)0x1f800314 = 0x800;
 								*(short *)0x1f800316 = (short)uVar9 + (short)(iVar8 >> 1);
 								*(short *)0x1f800318 = 0;
+								
+								// interpolate two positions
 								*(short *)0x1f800390 = (short)((int)(*(short *)0x1f800390) + (int)(*(short *)0x1f800398) >> 1);
 								*(short *)0x1f800392 = (short)((int)(*(short *)0x1f800392) + (int)(*(short *)0x1f80039a) >> 1);
-								iVar7 = (int)(*(short *)0x1f80039c);
-								*(short *)0x1f800394 = (short)((*(short *)0x1f800394) + iVar7 >> 1);
+								*(short *)0x1f800394 = (short)((int)(*(short *)0x1f800394) + (int)(*(short *)0x1f80039c) >> 1);
 								ConvertRotToMatrix((MATRIX *)0x1f800328, (short *)0x1f800314);
 								gte_SetRotMatrix((MATRIX *)0x1f800328);
 								gte_ldv0((SVECTOR *)&cDC->transitionTo);

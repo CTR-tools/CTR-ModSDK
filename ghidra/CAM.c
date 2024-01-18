@@ -3269,10 +3269,13 @@ LAB_8001c128:
 				  // Get another point on path, then interpolate
                   iVar20 = FUN_800198f8(piVar18,&DAT_1f800398,uVar14,0);
 
+				  // interpolate two rotations
 				  DAT_1f800314 = 0x800;
                   DAT_1f800316 = (short)iVar9 +
                                  (short)((int)(((iVar20 - iVar9) + 0x800U & 0xfff) - 0x800) >> 1);
                   DAT_1f800318 = 0;
+				  
+				  // interpolate two positions
                   DAT_1f800390 = (short)((int)DAT_1f800390 + (int)DAT_1f800398 >> 1);
                   DAT_1f800392 = (short)((int)DAT_1f800392 + (int)DAT_1f80039a >> 1);
                   DAT_1f800394 = (short)((int)DAT_1f800394 + (int)DAT_1f80039c >> 1);
