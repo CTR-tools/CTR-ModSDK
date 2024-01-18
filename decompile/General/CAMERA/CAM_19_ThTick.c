@@ -127,13 +127,26 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 			// +2 to include respawnPoint and modeID
 			psVar20 = (short *)((int)psVar19 + data.EndOfRace_Camera_Size[iVar7] + 2);
 			
-			psVar15 = gGT->level1->ptr_restart_points;
+			psVar15 = &gGT->level1->ptr_restart_points[uVar16];
+			
+			// If this printf happens, the code works,
+			// but without printf, it ignores the nextIndex IFs
+			#if 0
+			printf("%d %d %d %d %d %d\n",
+			uVar22,
+			uVar16,
+			psVar15->nextIndex_forward,
+			psVar15->nextIndex_left, 
+			psVar15->nextIndex_backward,
+			psVar15->nextIndex_right);
+			#endif
+			
 			if (
 					(uVar22 == uVar16) || 
-					(uVar22 == (u_char)psVar15[uVar16].nextIndex_forward) || 
-					(uVar22 == (u_char)psVar15[uVar16].nextIndex_left) || 
-					(uVar22 == (u_char)psVar15[uVar16].nextIndex_backward) || 
-					(uVar22 == (u_char)psVar15[uVar16].nextIndex_right)
+					(uVar22 == psVar15->nextIndex_forward) || 
+					(uVar22 == psVar15->nextIndex_left) || 
+					(uVar22 == psVar15->nextIndex_backward) || 
+					(uVar22 == psVar15->nextIndex_right)
 				)
 			{
 				psVar21 = psVar19;
