@@ -18,13 +18,10 @@ void DECOMP_UI_RenderFrame_Racing()
 	u_int partTimeVariable5;
 	struct Icon* iconPtr;
 	u_long *primMemCurr;
-	u_short *puVar12;
 	char *fmt;
 	int partTimeVariable3;
-	u_short *driverRankIndexAbsolute;
 	POLY_G4 * TurboCounterBar;
 	short sVar17;
-	u_short *driverRankIndexLeft;
 	u_int local_7c;
 	u_int local_78;
 	u_int local_74;
@@ -65,30 +62,15 @@ void DECOMP_UI_RenderFrame_Racing()
 	// if time on clock is zero
 	if (gGT->elapsedEventTime == 0)
 	{
-
-		// loop counter
-		i = 0;
-
-		driverRankIndexLeft = (u_short*)&data.unk_between_hudStructPtr_menuRow_arcadeEndRace[0x5C];
-		driverRankIndexAbsolute = (u_short*)&data.unk_between_hudStructPtr_menuRow_arcadeEndRace[0x4C];
-		// something for each driver?
-		puVar12 = (u_short*)&data.unk_between_hudStructPtr_menuRow_arcadeEndRace[0x6C];
-
-		// for i = 0; i < 8; i++
-		do
+		for(i = 0; i < 8; i++)
 		{
-			*puVar12 = 0;
-			puVar12 = puVar12 + 1;
+			data.rankIconsTransitionTimer[i] = 0;
+			
 			pbVar6 = &sdata->kartSpawnOrderArray[i];
 
-			// increment loop counter
-			i = i + 1;
-
-			*driverRankIndexAbsolute = (u_short)*pbVar6;
-			driverRankIndexAbsolute++;
-			*driverRankIndexLeft = (u_short)*pbVar6;
-			driverRankIndexLeft++;
-		} while (i < 8);
+			data.rankIconsCurr[i] = (u_short)*pbVar6;
+			data.rankIconsDesired[i] = (u_short)*pbVar6;
+		}
 	}
 
 	// If not drawing intro-race cutscene
