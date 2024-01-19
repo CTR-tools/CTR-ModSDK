@@ -243,7 +243,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 			(cDC->transitionTo).rot[0] = psVar21[5];
 			(cDC->transitionTo).rot[1] = psVar21[6];
 			(cDC->transitionTo).rot[2] = psVar21[7];
-			*(short *)cDC->unk_b0 = psVar21[8];
+			*(short *)&cDC->unk_b0[0] = psVar21[8];
 			break;
 		case 10:
 			sVar6 = *psVar19;
@@ -268,10 +268,10 @@ LAB_8001b928:
 			(cDC->transitionTo).rot[0] = psVar21[4];
 			(cDC->transitionTo).rot[1] = psVar21[5];
 			(cDC->transitionTo).rot[2] = psVar21[6];
-			*(short *)cDC->unk_b0 = psVar21[7];
-			*(short *)(cDC->unk_b0 + 2) = psVar21[8];
-			*(short *)(cDC->unk_b0 + 4) = psVar21[9];
-			*(short *)(cDC->unk_b0 + 6) = psVar21[10];
+			*(short *)&cDC->unk_b0[0] = psVar21[7];
+			*(short *)&cDC->unk_b0[2] = psVar21[8];
+			*(short *)&cDC->unk_b0[4] = psVar21[9];
+			*(short *)&cDC->unk_b0[6] = psVar21[10];
 	}
 
 SkipNewCameraEOR:
@@ -316,15 +316,15 @@ LAB_8001c128:
 						local_26 = (short)((u_int)d->posCurr[1] >> 8);
 						local_24 = (short)((u_int)d->posCurr[2] >> 8);
 						iVar8 = CAM_MapRange_PosPoints((cDC->transitionTo).pos, (cDC->transitionTo).rot, &local_28);
-						iVar17 = (int)*(short *)(cDC->unk_b0 + 6);
-						local_28 = *(short *)cDC->unk_b0 - (cDC->transitionTo).rot[0];
-						local_26 = *(short *)(cDC->unk_b0 + 2) - (cDC->transitionTo).rot[1];
+						iVar17 = (int)*(short *)(&cDC->unk_b0[6]);
+						local_28 = *(short *)&cDC->unk_b0[0] - (cDC->transitionTo).rot[0];
+						local_26 = *(short *)&cDC->unk_b0[2] - (cDC->transitionTo).rot[1];
+						local_24 = *(short *)&cDC->unk_b0[4] - (cDC->transitionTo).rot[2];
 						iVar7 = iVar17;
 						if (iVar17 < 0)
 						{
 							iVar7 = -iVar17;
 						}
-						local_24 = *(short *)(cDC->unk_b0 + 4) - (cDC->transitionTo).rot[2];
 						if (iVar17 < 0)
 						{
 							local_28 = -local_28;
@@ -367,7 +367,7 @@ LAB_8001c128:
 						psVar21 = (cDC->transitionTo).rot;
 						if (iVar17 < 0)
 						{
-							psVar21 = (short *)cDC->unk_b0;
+							psVar21 = (short *)&cDC->unk_b0[0];
 						}
 						tv->pos[0] = *psVar21 + (short)(local_28 * iVar25 >> 0xc);
 						tv->pos[1] = psVar21[1] + (short)(local_26 * iVar25 >> 0xc);
@@ -434,9 +434,9 @@ LAB_8001c128:
 						{
 							if ((gGT->level1->cnt_restart_points != 0) && ((gGT->gameMode1 & 0xf) == 0))
 							{
-								uVar9 = CAM_FollowDriver_TrackPath(cDC, (short *)0x1f800390, (int)*(short *)cDC->unk_b0, 1);
+								uVar9 = CAM_FollowDriver_TrackPath(cDC, (short *)0x1f800390, (int)*(short *)&cDC->unk_b0[0], 1);
 								iVar7 = -0xc0;
-								if (-1 < *(short *)cDC->unk_b0)
+								if (-1 < *(short *)&cDC->unk_b0[0])
 								{
 									iVar7 = 0xc0;
 								}
