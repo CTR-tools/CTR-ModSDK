@@ -282,7 +282,8 @@ SkipNewCameraEOR:
 	if (sVar6 != 0)
 	{
 		sVar5 = cDC->cameraMode;
-		*(u_short *)(cDC->data14 + 0x12) = 0;
+		*(short*)&cDC->data14[0x12] = 0;
+		
 		if (sVar6 != 0)
 		{
 			if (sVar6 == 4)
