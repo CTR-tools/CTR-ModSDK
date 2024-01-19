@@ -458,9 +458,9 @@ LAB_8001c128:
 								tv->pos[0] = scratchpad[0x144] + (short)uVar9;
 								tv->pos[1] = scratchpad[0x145] + (short)iVar7;
 								tv->pos[2] = scratchpad[0x146] + (short)iVar8;
-								tv->rot[0] = scratchpad[0x106] + (cDC->transitionTo).rot[0];
-								tv->rot[1] = scratchpad[0x107] + (cDC->transitionTo).rot[1];
-								tv->rot[2] = scratchpad[0x108] + (cDC->transitionTo).rot[2];
+								tv->rot[0] = scratchpad[0x106] + cDC->transitionTo.rot[0];
+								tv->rot[1] = scratchpad[0x107] + cDC->transitionTo.rot[1];
+								tv->rot[2] = scratchpad[0x108] + cDC->transitionTo.rot[2];
 							}
 							psVar21 = scratchpad;
 							if (cDC->cameraMode == 0xd) goto LAB_8001c11c;
