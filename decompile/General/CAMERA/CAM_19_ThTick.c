@@ -394,17 +394,9 @@ LAB_8001c128:
 						tv->pos[0] = sdata->FirstPersonCamera.posOffset[0] + (short)((u_int)d->posCurr[0] >> 8);
 						tv->pos[1] = sdata->FirstPersonCamera.posOffset[1] + (short)((u_int)d->posCurr[1] >> 8);
 						tv->pos[2] = sdata->FirstPersonCamera.posOffset[2] + (short)((u_int)d->posCurr[2] >> 8);
-						if (cDC->cameraMode == 0x10)
-						{
-							tv->rot[0] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
-							sVar6 = sdata->FirstPersonCamera.rotOffset[1] + d->angle;
-						}
-						else
-						{
-							tv->rot[0] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
-							sVar6 = sdata->FirstPersonCamera.rotOffset[1] + (d->rotCurr).y;
-						}
-						tv->rot[1] = sVar6;
+						
+						tv->rot[0] = sdata->FirstPersonCamera.rotOffset[0] + (d->rotCurr).x;
+						tv->rot[1] = sdata->FirstPersonCamera.rotOffset[1] + (d->rotCurr).y;
 						tv->rot[2] = sdata->FirstPersonCamera.rotOffset[2] + (d->rotCurr).z;
 					}
 					else
