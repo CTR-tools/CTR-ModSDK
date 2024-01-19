@@ -56,7 +56,7 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
     // bigNumber
     if (modelID == 0x38)
     {
-  	driver->BigNumber[0] = bigNum;
+  	  driver->BigNumber[0] = bigNum;
     }
     
     // fruitDisp
