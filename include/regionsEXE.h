@@ -3832,7 +3832,9 @@ struct sData
 
 	// 8008bc48 sep3
 	// 8008d810 usaRetail
-	int cseqHighestIndex;
+	// definitely unsigned, we can tell from assembly
+	// in Music_LowerVolume and Music_RaiseVolume
+	unsigned int cseqHighestIndex;
 
 	// 8008bc4c sep3
 	// 8008d814 usaRetail
