@@ -4,7 +4,6 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 {
 	short sVar1;
 	int bVar2;
-	struct GameTracker *psVar3;
 	u_short uVar4;
 	short sVar5;
 	short sVar6;
@@ -513,7 +512,6 @@ LAB_8001c128:
 	
 LAB_8001c150:
 	cDC->cameraModePrev = cDC->cameraMode;
-	psVar3 = gGT;
 
 	if (cDC->ptrQuadBlock != 0)
 	{
@@ -521,7 +519,7 @@ LAB_8001c150:
 		if ((psVar11 != 0) && (piVar12 = psVar11->visLeafSrc, piVar12 != 0))
 		{
 			cDC->visLeafSrc = piVar12;
-			psVar3->unk1cac[1] = ((int)cDC->ptrQuadBlock - (int)psVar3->level1->ptr_mesh_info->ptrQuadBlockArray) * -0x1642c859 >> 2;
+			gGT->unk1cac[1] = ((int)cDC->ptrQuadBlock - (int)gGT->level1->ptr_mesh_info->ptrQuadBlockArray) * -0x1642c859 >> 2;
 		}
 		if (cDC->ptrQuadBlock != 0)
 		{
@@ -552,19 +550,17 @@ LAB_8001c150:
 		}
 	}
 
-	if (*(int *)(cDC->unk30fill + 8) == 0)
+	if (*(int *)&cDC->unk30fill[8] == 0)
 	{
 		cDC->visLeafSrc = 0;
 		cDC->visFaceSrc = 0;
 	}
 
-	psVar3 = gGT;
-
 	if ((cDC->flags & 1) != 0)
 	{
 		gGT->rainBuffer[cDC->cameraID].cameraPos[0] = tv->pos[0];
-		psVar3->rainBuffer[cDC->cameraID].cameraPos[1] = tv->pos[1];
-		psVar3->rainBuffer[cDC->cameraID].cameraPos[2] = tv->pos[2];
+		gGT->rainBuffer[cDC->cameraID].cameraPos[1] = tv->pos[1];
+		gGT->rainBuffer[cDC->cameraID].cameraPos[2] = tv->pos[2];
 		cDC->flags &= ~1;
 	}
 	cDC->flags &= ~0x88;
