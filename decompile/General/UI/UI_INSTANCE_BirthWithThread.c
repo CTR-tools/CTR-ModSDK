@@ -177,9 +177,16 @@ lightDir_spec0x30000:
     if (param_4 == 0) {
       rot[0] = 0;
     }
-    else {
-      lVar7 = ratan2(bigNum->matrix.t[1],bigNum->matrix.t[2]);
-      rot[0] = -(short)lVar7;
+    else 
+	{
+	  #ifdef USE_NEW2P
+	  if(gGT->numPlyrCurrGame == 2)
+		lVar7 = ratan2((bigNum->matrix.t[1]*4)/3,bigNum->matrix.t[2]);
+	  else
+	  #endif
+  
+	  lVar7 = ratan2(bigNum->matrix.t[1],bigNum->matrix.t[2]);  
+	  rot[0] = -(short)lVar7;
     }
     rot[1] = 0;
     rot[2] = 0;
