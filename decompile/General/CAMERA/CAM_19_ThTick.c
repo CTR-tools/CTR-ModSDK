@@ -26,7 +26,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 	u_int uVar22;
 	struct CameraDC *cDC;
 	struct TileView *tv;
-	struct ZoomData *psVar23;
+	struct ZoomData *ptrZoomData;
 	struct Driver *d;
 	short *scratchpad;
 	int iVar24;
@@ -79,11 +79,11 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 		}
 	}
 	
-	psVar23 = &data.NearCam4x3;
+	ptrZoomData = &data.NearCam4x3;
 	if (gGT->numPlyrCurrGame == 2)
-		psVar23 = &data.NearCam8x3;
+		ptrZoomData = &data.NearCam8x3;
 	
-	psVar23 = &psVar23[cDC->nearOrFar*2];
+	ptrZoomData = &ptrZoomData[cDC->nearOrFar*2];
 
 	if ((cDC->flags & 0x20) == 0) goto SkipNewCameraEOR;
 	
@@ -417,7 +417,7 @@ LAB_8001c128:
 								{
 									cDC->flags = cDC->flags | 9;
 								}
-								CAM_FollowDriver_Normal(cDC, d, tv->pos, 0x1f800108, &psVar23->distMin);
+								CAM_FollowDriver_Normal(cDC, d, tv->pos, 0x1f800108, ptrZoomData);
 							}
 							cDC->driver5B0_prevFrame = d->botFlags;
 							goto LAB_8001c150;
@@ -510,7 +510,7 @@ LAB_8001c128:
 		}
 	}
 
-	CAM_FollowDriver_Normal(cDC, d, &tv->pos[0], 0x1f800108, &psVar23->distMin);
+	CAM_FollowDriver_Normal(cDC, d, &tv->pos[0], 0x1f800108, ptrZoomData);
 	
 LAB_8001c150:
 	cDC->cameraModePrev = cDC->cameraMode;
