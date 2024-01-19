@@ -291,9 +291,6 @@ LAB_8001c11c:
 				DECOMP_CAM_LookAtPosition((int)scratchpad, d->posCurr, tv->pos, tv->rot);
 				psVar21 = scratchpad;
 LAB_8001c128:
-				*(int *)(psVar21 + 0x120) = (int)tv->pos[0];
-				*(int *)(psVar21 + 0x122) = (int)tv->pos[1];
-				sVar6 = tv->pos[2];
 				scratchpad = psVar21;
 			}
 			else
@@ -499,12 +496,13 @@ LAB_8001c128:
 				{
 					iVar7 = iVar17;
 				}
-				*(short *)0x1f800348 = (int)tv->pos[0];
 				tv->distanceToScreen_PREV = tv->distanceToScreen_CURR + iVar7;
-				*(short *)0x1f80034c = (int)tv->pos[1];
-				sVar6 = tv->pos[2];
 			}
-			*(int *)(scratchpad + 0x124) = (int)sVar6;
+			
+			*(int *)0x1f800348 = (int)tv->pos[0];
+			*(int *)0x1f80034c = (int)tv->pos[1];
+			*(int *)0x1f800350 = (int)tv->pos[2];
+			
 			CAM_FindClosestQuadblock(scratchpad, cDC, d, (short *)((u_int)scratchpad | 0x240));
 			goto LAB_8001c150;
 		}
