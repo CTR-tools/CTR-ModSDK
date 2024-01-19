@@ -149,10 +149,10 @@ void DECOMP_UI_INSTANCE_InitAll(void)
     sdata->tileView_DecalMP.ptrOT = gGT->tileView->ptrOT;
     sdata->tileView_DecalMP.distanceToScreen_PREV = gGT->tileView->distanceToScreen_PREV;
 
-	// create thread and Instance for "fruitdisp"
-	// the function returns an enttity
+	// Replace TileViewUI with regular TileView,
+	// workaround for decompile, and it just looks better
     sdata->ptrFruitDisp = 
-		DECOMP_UI_INSTANCE_BirthWithThread(0x37,DECOMP_UI_ThTick_CountPickup,3,1,sdata->ptrTileViewUI,/*sdata->s_fruitdisp*/0);
+		DECOMP_UI_INSTANCE_BirthWithThread(0x37,DECOMP_UI_ThTick_CountPickup,3,1,/*sdata->ptrTileViewUI*/0,/*sdata->s_fruitdisp*/0);
 
     if (
 			(gGT->numPlyrCurrGame < 3) &&
