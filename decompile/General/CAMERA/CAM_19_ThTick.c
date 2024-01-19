@@ -432,9 +432,12 @@ LAB_8001c128:
 								uVar10 = CAM_FollowDriver_TrackPath(cDC, (short *)0x1f800398, iVar7, 0);
 								
 								// interpolate two rotations
+								// ERROR: 0x1f800316 is bugged, we set to zero
+								// to prevent the camera from flying away, but it should not be zero,
+								// see Demo Mode on Crash Cove and Roo's Tubes
 								iVar8 = ((uVar10 - uVar9) + 0x800 & 0xfff) - 0x800;
 								*(short *)0x1f800314 = 0x800;
-								*(short *)0x1f800316 = (short)uVar9 + (short)(iVar8 >> 1);
+								*(short *)0x1f800316 = 0;//(short)uVar9 + (short)(iVar8 >> 1);
 								*(short *)0x1f800318 = 0;
 								
 								// interpolate two positions
