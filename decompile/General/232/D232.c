@@ -72,7 +72,7 @@ struct OverlayDATA_232 D232 =
 		0xe100,		// PARKING_LOT (null)
 		0x13740,	// SKULL_ROCK
 		0xe100,		// THE_NORTH_BOWL (null)
-		0x1c200,	// ROCKY_ROAD
+		0x12c00,	// ROCKY_ROAD
 		0xe100,		// LAB_BASEMENT (null)
 	},
 	
