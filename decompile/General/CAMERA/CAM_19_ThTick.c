@@ -471,7 +471,7 @@ LAB_8001c128:
 				
 				DECOMP_CAM_LookAtPosition((int)0x1f800108, d->posCurr, tv->pos, tv->rot);
 				
-				iVar7 = SquareRoot0_stub((*(short *)0x1f800354) * (*(short *)0x1f800354) + (*(short *)0x1f80035c) * (*(short *)0x1f80035c));
+				iVar7 = SquareRoot0_stub((*(int *)0x1f800354) * (*(int *)0x1f800354) + (*(int *)0x1f80035c) * (*(int *)0x1f80035c));
 				iVar17 = (int)(cDC->transitionTo).pos[0];
 				iVar24 = (iVar7 - (cDC->transitionTo).pos[1]) * iVar17;
 				iVar8 = (int)(cDC->transitionTo).pos[2];
