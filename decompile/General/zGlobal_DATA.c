@@ -4497,7 +4497,7 @@ struct Data data =
 
 		// bignum
 		#ifdef USE_NEW2P
-		{40,194+0x103,257,4112},
+		{40+0x103,194,257,4112},
 		#else
 		{40,194,257,4112},
 		#endif
