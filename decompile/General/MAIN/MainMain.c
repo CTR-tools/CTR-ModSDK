@@ -603,9 +603,6 @@ void StateZero()
 	#ifdef USE_60FPS
 	void ui60_entryHook(); ui60_entryHook();
 	#endif
-	#ifdef USE_NEW2P
-	void new2p_entryHook(); new2p_entryHook();
-	#endif
 	#endif
 	
 	// Set Video Mode to NTSC
