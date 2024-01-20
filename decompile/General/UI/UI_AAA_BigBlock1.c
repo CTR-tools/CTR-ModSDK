@@ -415,7 +415,6 @@ void ui16BY9_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMe
 	// widescreen, need to scale X by 75%,
 	// so subtract 12% from left and 12% from right
 	int len = ((p->x2 - p->x0) * 125) / 1000;
-	printf("%d %d %d %d\n", p->x0, p->x1, p->x2, p->x3);
 	p->x0 += len;
 	p->x1 += len;
 	p->x2 -= len;
