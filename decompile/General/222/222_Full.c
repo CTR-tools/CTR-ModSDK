@@ -653,7 +653,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	r.y = (posXY[1] - r.h) + 0xd;
 
 	// calculate size of box
-	r.w = width + 0x94;
+	r.w = width + WIDE_34(0x94);
 	r.h += 6;
 
 	// Draw 2D Menu rectangle background
