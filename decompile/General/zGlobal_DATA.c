@@ -4457,7 +4457,7 @@ struct Data data =
 
 		// drift meter
 		#ifdef USE_NEW2P
-		{498-0x103,212,0,0},
+		{498-0x103+3,212,0,0},
 		#else
 		{498,102,0,0},
 		#endif
@@ -4522,7 +4522,11 @@ struct Data data =
 		{461,182,0,0}, 
 		
 		// drift meter
+		#ifdef USE_NEW2P
+		{498+3,212,0,0},
+		#else
 		{498,212,0,0},
+		#endif
 		
 		{414,132,0,2730}, 
 		{461,182,0,0},
