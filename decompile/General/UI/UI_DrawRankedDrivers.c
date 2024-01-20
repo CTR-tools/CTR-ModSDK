@@ -397,93 +397,95 @@ void DECOMP_UI_DrawRankedDrivers(void) {
         puVar16 = puVar16 + 1;
       }
 
-
-	#if 0
-      // pointer to first Tracking thread
-      warpballThread = &gGT->threadBuckets[6];
-
-      // loop through all "Tracking" objects, AKA WarpBalls
-      while (warpballThread != 0) {
-
+      for (
+			warpballThread = gGT->threadBuckets[TRACKING].thread;
+			warpballThread != 0;
+			warpballThread = warpballThread->siblingThread
+		  ) 
+	  {
         // Get Instance from Thread
         warpballInst = warpballThread->inst;
 
-        // Instance->Model->ModelID == warpball
-        if (warpballInst->model->id == 0x36) {
-          // pointer to path data
-          iVar3 = gGT->level1->ptr_restart_points;
+        // if not warpball, skip
+        if (warpballInst->model->id != 0x36) 
+			continue;
+		
+        // pointer to path data
+        iVar3 = gGT->level1->ptr_restart_points;
 
-          iVar12 = 0;
+        iVar12 = 0;
 
-          if ((gGT->level1->cnt_restart_points - 1 U < 0xff) &&
+#if 0
+        if ((gGT->level1->cnt_restart_points - 1 U < 0xff) &&
 
-            // path index = warpballInst->thread->object->pathNode - lev->startNode
-            iVar4 = ((((((struct TrackerWeapon *) warpballInst->thread->object)->pathNode - iVar3) * -0x55555555 >> 2),
+          // path index = warpballInst->thread->object->pathNode - lev->startNode
+          iVar4 = ((((((struct TrackerWeapon *) warpballInst->thread->object)->pathNode - iVar3) * -0x55555555 >> 2),
 
-              // if path index is valid
-              -1 < iVar4))) {
-            psVar17 = (iVar3 + (iVar3 + iVar4 * 0xc + 8) *0xc);
-            local_40 = warpballInst->matrix.t[0];
-            local_3e = warpballInst->matrix.t[1];
-            local_3c = warpballInst->matrix.t[2];
-            iVar8 = (iVar3 + (psVar17 + 4) * 0xc);
-            local_38 = CONCAT22(psVar17[1] - iVar8[1], *psVar17 - iVar8);
-            local_34 = psVar17[2] - iVar8[2];
+            // if path index is valid
+            -1 < iVar4))) 
+		{
+          psVar17 = (iVar3 + (iVar3 + iVar4 * 0xc + 8) *0xc);
+          local_40 = warpballInst->matrix.t[0];
+          local_3e = warpballInst->matrix.t[1];
+          local_3c = warpballInst->matrix.t[2];
+          iVar8 = (iVar3 + (psVar17 + 4) * 0xc);
+          local_38 = CONCAT22(psVar17[1] - iVar8[1], *psVar17 - iVar8);
+          local_34 = psVar17[2] - iVar8[2];
 
-            MATH_VectorNormalize(&local_38);
+          MATH_VectorNormalize(&local_38);
 
-            local_48 = CONCAT22(local_3e - psVar17[1], local_40 - *psVar17);
-            local_44 = local_3c - psVar17[2];
-            gte_ldR11R12(local_38);
-            gte_ldR13R21((int)local_34);
-            gte_ldVXY0(local_48);
-            gte_ldVZ0((int)local_44);
-            gte_mvmva(0,0,0,3,0);
+          local_48 = CONCAT22(local_3e - psVar17[1], local_40 - *psVar17);
+          local_44 = local_3c - psVar17[2];
+          gte_ldR11R12(local_38);
+          gte_ldR13R21((int)local_34);
+          gte_ldVXY0(local_48);
+          gte_ldVZ0((int)local_44);
+          gte_mvmva(0,0,0,3,0);
 
-            iVar15 = gte_stMAC1();
-            uVar1 = ((gGT->level1->ptr_restart_points) + 6);
-            iVar3 = (u_int)(u_short) psVar17[3] * 8 + (iVar15 >> 0xc);
-            iVar15 = (u_int) uVar1 << 3;
-            iVar12 = iVar3 % iVar15;
-            if (uVar1 == 0) {
-              trap(0x1c00);
-            }
-            if ((iVar15 == -1) && (iVar3 == -0x80000000)) {
-              trap(0x1800);
-            }
+          iVar15 = gte_stMAC1();
+          uVar1 = ((gGT->level1->ptr_restart_points) + 6);
+          iVar3 = (u_int)(u_short) psVar17[3] * 8 + (iVar15 >> 0xc);
+          iVar15 = (u_int) uVar1 << 3;
+          iVar12 = iVar3 % iVar15;
+          if (uVar1 == 0) {
+            trap(0x1c00);
           }
-          if (iVar12 != 0) {
-            iVar15 = ((gGT->level1->ptr_restart_points) + 6) * 8;
-            iVar12 = iVar15 - iVar12;
-            iVar15 = iVar15 / 0x1d1;
-            if (iVar15 == 0) {
-              trap(0x1c00);
-            }
-            if ((iVar15 == -1) && (iVar12 == -0x80000000)) {
-              trap(0x1800);
-            }
-
-            DecalHUD_DrawWeapon(
-              // warpball icon
-              gGT->ptrIcons[0xe],
-
-              (iVar12 / iVar15) + 5,
-              0x66,
-
-              // pointer to PrimMem struct
-              &gGT->backBuffer->primMem,
-
-              // pointer to OT memory
-              gGT->tileView_UI.ptrOT,
-
-              TRANS_50_DECAL, FP(2/3) - FP(1/8), 1);
+          if ((iVar15 == -1) && (iVar3 == -0x80000000)) {
+            trap(0x1800);
           }
         }
-        // go to next warp ball
-        warpballThread = warpballThread->siblingThread;
+#endif
+		
+		if (iVar12 != 0) 
+		{
+          iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
+          iVar12 = iVar15 - iVar12;
+          iVar15 = iVar15 / 0x1d1;
+		  
+		  #if 0
+          if (iVar15 == 0) {
+            trap(0x1c00);
+          }
+          if ((iVar15 == -1) && (iVar12 == -0x80000000)) {
+            trap(0x1800);
+          }
+		  #endif
+
+          DecalHUD_DrawWeapon(
+            // warpball icon
+            gGT->ptrIcons[0xe],
+
+            (iVar12 / iVar15) + 5,
+            0x66,
+
+            // pointer to PrimMem struct
+            &gGT->backBuffer->primMem,
+
+            // pointer to OT memory
+            gGT->tileView_UI.ptrOT,
+
+            TRANS_50_DECAL, FP(2/3) - FP(1/8), 1);
+        }
       }
-    
-	#endif
-	
 	}
 }
