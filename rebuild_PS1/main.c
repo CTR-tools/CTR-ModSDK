@@ -414,11 +414,7 @@
 #include "../decompile/General/UI/UI_DrawPosSuffix.c"
 #include "../decompile/General/UI/UI_DrawLapCount.c"
 
-// note to self, still need UI_DrawRankedDrivers,
 #include "../decompile/General/UI/UI_AAA_BigBlock1.c"
-
-#include "../decompile/General/UI/UI_RenderFrame_Racing.c"
-#include "../decompile/General/UI/UI_RenderFrame_AdvHub.c"
 
 // VEH
 #include "../decompile/General/Vehicle/VehInit_Player.c"

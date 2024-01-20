@@ -13,6 +13,10 @@
 #include "UI_JumpMeter_Draw.c"
 #include "UI_JumpMeter_Update.c" 
 #include "UI_DrawSlideMeter.c"
+#include "UI_DrawRankedDrivers.c"
+#include "UI_RenderFrame_Racing.c"
+#include "UI_RenderFrame_AdvHub.c"
+#include "UI_RenderFrame_CrystChall.c"
 
 #define JMP(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0x8000000)
 #define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)

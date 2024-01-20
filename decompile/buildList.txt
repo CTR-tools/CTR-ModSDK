@@ -1,12 +1,12 @@
-// 535+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+12+1+1+2+4+2+4+1+2 = 687 rewritten so far
-// 535 for every 'common' and ','
+// 533+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+16+1+1+2+4+2+4+1+2 = 689 rewritten so far
+// 533 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
 // 14 for 230_Block2
 // 18 for 230_Block3
 // 16 for 232 adv hub
 // most others for 231 or VehPtr
-// 12 for the 13 UI functions
+// 16 for the 13 UI functions
 // +1 for DebugFont
 // +1 for 222
 // +2 for 223
@@ -624,14 +624,9 @@ common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_DrawPosSuffix.c
 common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
 // UI_DrawBattleScores
 
-// squish 13 functions
+// squish 17 functions
 common, exe, UI_Weapon_DrawSelf, 0x0, General/UI/UI_AAA_BigBlock1.c
 
-common, exe, UI_DrawRankedDrivers, 0x0, General/UI/UI_DrawRankedDrivers.c
-
-common, exe, UI_RenderFrame_Racing, 0x0, General/UI/UI_RenderFrame_Racing.c
-common, exe, UI_RenderFrame_AdvHub, 0x0, General/UI/UI_RenderFrame_AdvHub.c
-common, exe, UI_RenderFrame_CrystChall, 0x0, General/UI/UI_RenderFrame_CrystChall.c
 common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
 

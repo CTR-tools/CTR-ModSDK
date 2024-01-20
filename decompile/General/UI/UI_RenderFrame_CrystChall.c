@@ -74,13 +74,15 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 	// if you have enough crystals to win the race
     if (gGT->numCrystalsInLEV <= player->numCrystals)
 	{
+#ifndef REBUILD_PS1
       player->funcPtrs[0] = VehPtr_Freeze_Init;
 
       //turn on 26th bit of Actions Flag set (means racer finished the race)
       player->actionsFlagSet |= 0x2000000;
 
       MainGameEnd_Initialize();
-    }
+#endif
+	}
 
     DECOMP_OtherFX_Play(0x42,1);
 
@@ -141,7 +143,7 @@ LAB_800545e8:
   // if not paused, item stopped rolling, and 
   // weapon roulette sound is playing, then
   // stop the sound and remove flag
-  OtherFX_Stop2(0x5d);
+  DECOMP_OtherFX_Stop2(0x5d);
   gGT->gameMode1 &= ~(ROLLING_ITEM);
   
   return;

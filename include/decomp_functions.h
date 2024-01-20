@@ -380,6 +380,8 @@ void DECOMP_UI_DrawSpeedBG(void);
 void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver);
 void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver);
 void DECOMP_UI_JumpMeter_Update(struct Driver * d);
+void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver);
+void DECOMP_UI_DrawRankedDrivers(void);
 
 void DECOMP_UI_RenderFrame_AdvHub(void);
 void DECOMP_UI_RenderFrame_Racing();

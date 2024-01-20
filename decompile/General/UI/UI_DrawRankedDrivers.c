@@ -99,7 +99,7 @@ void DECOMP_UI_DrawRankedDrivers(void) {
 		
 		// draw rank number: '1', '2', '3', '4'
 		sdata->s_spacebar[0] = (char) iVar15 + '1';
-		DecalFont_DrawLine(&sdata->s_spacebar, 0x34, iVar12 >> 0x10, 2, txtColor);
+		DECOMP_DecalFont_DrawLine(&sdata->s_spacebar, 0x34, iVar12 >> 0x10, 2, txtColor);
 		
 		// add to Y, which mekes it lower on screen
 		iVar12 = iVar12 + 0x1b0000;
@@ -190,12 +190,14 @@ void DECOMP_UI_DrawRankedDrivers(void) {
 		  // === Icon Transitioning ===
 		  if(posXY[0] == -100)
 		  {
+			#ifndef REBUILD_PS1
 			UI_Lerp2D_Angular(
 				&posXY[0],
 				*curr,
 				*des,
 				*psVar13
 			);
+			#endif
 			
             psVar13[0]++;
             
@@ -206,7 +208,7 @@ void DECOMP_UI_DrawRankedDrivers(void) {
             }
 		  }
 
-          UI_DrawDriverIcon(
+          DECOMP_UI_DrawDriverIcon(
 
             gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar14]].iconID],
 

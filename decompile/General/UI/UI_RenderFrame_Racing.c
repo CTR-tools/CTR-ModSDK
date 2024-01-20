@@ -113,14 +113,15 @@ void DECOMP_UI_RenderFrame_Racing()
 		levPtrMap = pointers[ST1_MAP];
 	}
 
-#ifndef REBUILD_PS1
 	// If you are not in Relic Race, and not in battle mode,
 	// and not in time trial
 	if ((gGT->gameMode1 & (RELIC_RACE | TIME_TRIAL | BATTLE_MODE)) == 0)
 	{
+// cant run on PC yet, drivers dont initialize
+#ifndef REBUILD_PC
 		DECOMP_UI_DrawRankedDrivers();
-	}
 #endif
+	}
 
 	// pointer to first Player thread
 	playerThread = gGT->threadBuckets[0].thread;

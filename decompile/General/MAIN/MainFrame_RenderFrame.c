@@ -689,13 +689,13 @@ void RenderAllHUD(struct GameTracker* gGT)
 					// not crystal challenge
 					if((gameMode1 & CRYSTAL_CHALLENGE) == 0)
 					{
-						UI_RenderFrame_Racing();
+						DECOMP_UI_RenderFrame_Racing();
 					}
 					
 					// if crystal challenge
 					else
 					{
-						UI_RenderFrame_CrystChall();
+						DECOMP_UI_RenderFrame_CrystChall();
 					}
 				}
 				
@@ -753,7 +753,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 					// if any transition is over
 					if(gGT->tileView_UI.fadeFromBlack_currentValue > 0xfff)
 					{
-						UI_RenderFrame_AdvHub();
+						DECOMP_UI_RenderFrame_AdvHub();
 					}
 				}
 				
