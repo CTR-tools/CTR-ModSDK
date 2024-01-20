@@ -58,6 +58,11 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
   int cos[2] = {DECOMP_MATH_Cos(angle1), DECOMP_MATH_Cos(angle2)};
   int sin[2] = {DECOMP_MATH_Sin(angle1), DECOMP_MATH_Sin(angle2)};
 
+#ifdef USE_16BY9
+  sin[0] = WIDE_34(sin[0]);
+  sin[1] = WIDE_34(sin[1]);
+#endif
+
   // if there is room for more
   if (primmemCurr <= (u_long*) backDB->primMem.endMin100) {
     // increment prim pointer

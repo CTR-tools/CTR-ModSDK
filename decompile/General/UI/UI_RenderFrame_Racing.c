@@ -660,7 +660,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			)
 			{
 				// draw shining background behind wumpa fruit
-				DECOMP_UI_Weapon_DrawBG(hudStructPtr[0xC].x, hudStructPtr[0xC].y, hudStructPtr[0xC].scale, playerStruct),
+				DECOMP_UI_Weapon_DrawBG(hudStructPtr[0xC].x, hudStructPtr[0xC].y, hudStructPtr[0xC].scale, playerStruct);
 
 				// If your weapon is not "no weapon"
 				if(playerStruct->heldItemID != 0xF)
