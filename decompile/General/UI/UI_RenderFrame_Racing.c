@@ -653,25 +653,21 @@ void DECOMP_UI_RenderFrame_Racing()
 
 			if
 			(
-				(
-					// if 9 < number of wumpa fruit
-					// if you have 10 wumpa fruit
-					('\t' < playerStruct->numWumpas) &&
+				(playerStruct->numWumpas >= 10) &&
 
-					//if racer hasn't finished the race
-					((playerStruct->actionsFlagSet & 0x2000000) == 0)
-				) &&
-				(
-					// draw shining background behind wumpa fruit
-					DECOMP_UI_Weapon_DrawBG(hudStructPtr[0xC].x, hudStructPtr[0xC].y, hudStructPtr[0xC].scale, playerStruct),
-
-					// If your weapon is not "no weapon"
-					playerStruct->heldItemID != '\x0f'
-				)
+				//if racer hasn't finished the race
+				((playerStruct->actionsFlagSet & 0x2000000) == 0)
 			)
 			{
-				// draw shining background behind weapon
-				DECOMP_UI_Weapon_DrawBG(hudStructPtr[0xB].x, hudStructPtr[0xB].y, hudStructPtr[0xB].scale, playerStruct);
+				// draw shining background behind wumpa fruit
+				DECOMP_UI_Weapon_DrawBG(hudStructPtr[0xC].x, hudStructPtr[0xC].y, hudStructPtr[0xC].scale, playerStruct),
+
+				// If your weapon is not "no weapon"
+				if(playerStruct->heldItemID != 0xF)
+				{
+					// draw shining background behind weapon
+					DECOMP_UI_Weapon_DrawBG(hudStructPtr[0xB].x, hudStructPtr[0xB].y, hudStructPtr[0xB].scale, playerStruct);
+				}
 			}
 
 			// go to next player
