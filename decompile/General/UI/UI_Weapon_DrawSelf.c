@@ -152,7 +152,7 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
   }
 
 #ifndef REBUILD_PS1
-  DecalHUD_DrawWeapon(
+  DECOMP_DecalHUD_DrawWeapon(
 		// pointer to icon, from array of icon pointers
 		gGT->ptrIcons[iconID],
 	

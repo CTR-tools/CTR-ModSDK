@@ -4,26 +4,52 @@
 // in Arcade mode and Boss mode, and draws
 // icons in multiplayer on the midY axis (and warpball)
 
-#ifdef USE_NEW2P
-void new2p_FixIconAxis(int param_1,u_int param_2,int param_3,int param_4,u_int *param_5,u_int param_6,
-                 u_int param_7,u_int param_8,u_int param_9,u_char param_10,short param_11)
+int DriverIndex_GetDamageColor(int iVar14)
 {
-	if(sdata->gGT->numPlyrCurrGame == 2)
-	{
-		// swap X to Y
-		param_3 = (param_2 * 0xd8) / 0x200;
-
-		// set X to midpoint,
-		// minus 8 pixels for centering
-		param_2 = 0xF4;
-	}
+	struct GameTracker* gGT = sdata->gGT;
+	struct Driver* d = gGT->drivers[iVar14];
 	
-	DECOMP_DecalHUD_DrawPolyGT4(
-			param_1, param_2, param_3, param_4,
-			param_5, param_6, param_7, param_8,
-			param_9, param_10, param_11);
+    int iVar12 = d->damageColorTimer;
+	
+	// make icon white
+	int local_30 = 0x808080;
+
+	// -30 to -1
+    if (iVar12 < 0) 
+	{
+		local_30 = 0;
+		int strength = (iVar12 + 30) * 4;
+		local_30 += strength;
+		local_30 += (0xFF-strength) * 0x100;
+		local_30 += strength * 0x10000;
+	
+		#ifdef USE_60FPS
+		if(gGT->timer & 1)
+		#endif
+	
+		// one frame closer to zero
+		d->damageColorTimer += 1;
+    }
+
+    // 30 to 1
+    if (iVar12 > 0)
+	{
+		local_30 = 0;
+		int strength = (30 - iVar12) * 4;
+		local_30 += (0xFF-strength);
+		local_30 += strength * 0x100;
+		local_30 += strength * 0x10000;
+	
+		#ifdef USE_60FPS
+		if(gGT->timer & 1)
+		#endif
+	
+		// one frame closer to zero
+		d->damageColorTimer -= 1;
+    }
+
+	return local_30;
 }
-#endif
 
 void DECOMP_UI_DrawRankedDrivers(void) {
     u_short uVar1;
@@ -144,45 +170,7 @@ void DECOMP_UI_DrawRankedDrivers(void) {
           ((*des + 1) < 9)
         ) 
 		{
-          // player structure + [some offset]
-          iVar12 = gGT->drivers[iVar14]->damageColorTimer;
-		  
-		  // make icon white
-		  local_30 = 0x808080;
-
-		  // -30 to -1
-          if (iVar12 < 0) 
-		  {
-			local_30 = 0;
-			int strength = (iVar12 + 30) * 4;
-			local_30 += strength;
-			local_30 += (0xFF-strength) * 0x100;
-			local_30 += strength * 0x10000;
-
-			#ifdef USE_60FPS
-			if(gGT->timer & 1)
-			#endif
-
-			// one frame closer to zero
-			gGT->drivers[iVar14]->damageColorTimer += 1;
-          }
-
-          // 30 to 1
-          if (iVar12 > 0)
-		  {
-			local_30 = 0;
-			int strength = (30 - iVar12) * 4;
-			local_30 += (0xFF-strength);
-			local_30 += strength * 0x100;
-			local_30 += strength * 0x10000;
-
-			#ifdef USE_60FPS
-			if(gGT->timer & 1)
-			#endif
-
-			// one frame closer to zero
-			gGT->drivers[iVar14]->damageColorTimer -= 1;
-          }
+		  local_30 = DriverIndex_GetDamageColor(iVar14);
 
           psVar13 = &data.rankIconsTransitionTimer[iVar14];
 
@@ -251,53 +239,14 @@ void DECOMP_UI_DrawRankedDrivers(void) {
 
       totalNumPlyrs = gGT->numPlyrCurrGame + gGT->numBotsCurrGame;
 
-      puVar16 = 0x800862d8;
-      iVar12 = 0;
+      puVar16 = &data.rankIconsTransitionTimer[0];
       iVar15 = 0;
 
       for (iVar14 = 0; iVar14 < totalNumPlyrs; iVar14++) 
 	  {
         // puVar5 increases by 4 for each iteration
 
-        // player structure + [some offset]
-        iVar12 = gGT->drivers[iVar14]->damageColorTimer;
-		  
-		// make icon white
-		local_30 = 0x808080;
-
-		// -30 to -1
-        if (iVar12 < 0) 
-		{
-			local_30 = 0;
-			int strength = (iVar12 + 30) * 4;
-			local_30 += strength;
-			local_30 += (0xFF-strength) * 0x100;
-			local_30 += strength * 0x10000;
-
-			#ifdef USE_60FPS
-			if(gGT->timer & 1)
-			#endif
-
-			// one frame closer to zero
-			gGT->drivers[iVar14]->damageColorTimer += 1;
-        }
-
-        // 30 to 1
-        if (iVar12 > 0)
-		{
-			local_30 = 0;
-			int strength = (30 - iVar12) * 4;
-			local_30 += (0xFF-strength);
-			local_30 += strength * 0x100;
-			local_30 += strength * 0x10000;
-
-			#ifdef USE_60FPS
-			if(gGT->timer & 1)
-			#endif
-
-			// one frame closer to zero
-			gGT->drivers[iVar14]->damageColorTimer -= 1;
-        }
+        local_30 = DriverIndex_GetDamageColor(iVar14);
 
         uVar1 = *puVar16;
 
@@ -318,11 +267,7 @@ void DECOMP_UI_DrawRankedDrivers(void) {
         else {
           // length of track
           iVar3 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
-
-          // icon posX = track length - driver->distanceToFinish
           iVar4 = iVar3 - gGT->drivers[iVar14]->distanceToFinish_curr;
-
-          // divide track length by 0x1d1 (approx screen width)
           iVar3 = iVar3 / 0x1d1;
 
           // divide distanceToFinish by screen width
@@ -369,18 +314,20 @@ void DECOMP_UI_DrawRankedDrivers(void) {
           uVar11 = uVar18;
         }
 
-		#ifdef USE_NEW2P
-        new2p_FixIconAxis(
-		#else
         DECOMP_DecalHUD_DrawPolyGT4(
-		#endif
           gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar14]].iconID],
 
-          // positionX
-          uVar11 + 5,
-
-          // midpointY
-          0x66,
+		  #ifdef USE_NEW2P
+		  
+		  // midpointX, swap X to Y
+		  0xF4, ((uVar11 + 5) * 0xd8) / 0x200,
+		  
+		  #else
+			  
+          // positionX, midpointY
+          uVar11 + 5, 0x66,
+		  
+		  #endif
 
           // pointer to PrimMem struct
           &gGT->backBuffer->primMem,
@@ -396,13 +343,14 @@ void DECOMP_UI_DrawRankedDrivers(void) {
         *puVar16 = uVar11;
         puVar16 = puVar16 + 1;
       }
+	}
 
-      for (
-			warpballThread = gGT->threadBuckets[TRACKING].thread;
-			warpballThread != 0;
-			warpballThread = warpballThread->siblingThread
-		  ) 
-	  {
+    for (
+		warpballThread = gGT->threadBuckets[TRACKING].thread;
+		warpballThread != 0;
+		warpballThread = warpballThread->siblingThread
+	  ) 
+	{
         // Get Instance from Thread
         warpballInst = warpballThread->inst;
 
@@ -414,83 +362,83 @@ void DECOMP_UI_DrawRankedDrivers(void) {
         struct CheckpointNode* cn = gGT->level1->ptr_restart_points;
 		
 		struct TrackerWeapon* tw = warpballInst->thread->object;
+		
 		iVar4 = tw->nodeCurrIndex;
-
         iVar12 = 0;
 
-        if (
-				(gGT->level1->cnt_restart_points > 0) &&
+		if (gGT->level1->cnt_restart_points < 1) continue;
+		if (iVar4 < 0) continue;
 
-				// if path index is valid
-				(-1 < iVar4)
-			) 
-		{
-		  int pos[4];
-          pos[0] = warpballInst->matrix.t[0];
-          pos[1] = warpballInst->matrix.t[1];
-          pos[2] = warpballInst->matrix.t[2];
-		  
-          struct CheckpointNode* cn1 = &cn[tw->ptrNodeCurr->nextIndex_forward];
-          struct CheckpointNode* cn2 = &cn[cn1->nextIndex_forward];
-		  
-		  short vec1[4];
-		  vec1[0] = cn1->pos[0] - cn2->pos[0];
-		  vec1[1] = cn1->pos[1] - cn2->pos[1];
-		  vec1[2] = cn1->pos[2] - cn2->pos[2];
-          MATH_VectorNormalize(&vec1[0]);
-
-		  short vec2[4];
-		  vec2[0] = pos[0] - cn1->pos[0];
-		  vec2[1] = pos[1] - cn1->pos[1];
-		  vec2[2] = pos[2] - cn1->pos[2];
-		  
-		  // replace R11R12 and R13R21
-          gte_ldsvrtrow0(&vec1[0]);
-		  
-		  // required short
-          gte_ldv0(&vec2[0]);
-		  
-          gte_mvmva(0,0,0,3,0);
-
-		  // replace stMAC1
-          gte_stlvnl0(&iVar15);
-
-		  iVar3 = cn1->distToFinish * 8 + (iVar15 >> 0xc);
-          iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
-          iVar12 = iVar3 % iVar15;
-		  
-		  #if 0
-          if (uVar1 == 0) trap(0x1c00);
-          if ((iVar15 == -1) && (iVar3 == -0x80000000)) trap(0x1800);
-		  #endif
-        }
+		int pos[4];
+        pos[0] = warpballInst->matrix.t[0];
+        pos[1] = warpballInst->matrix.t[1];
+        pos[2] = warpballInst->matrix.t[2];
 		
-		if (iVar12 != 0) 
-		{
-          iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
-          iVar12 = iVar15 - iVar12;
-          iVar15 = iVar15 / 0x1d1;
+        struct CheckpointNode* cn1 = &cn[tw->ptrNodeCurr->nextIndex_forward];
+        struct CheckpointNode* cn2 = &cn[cn1->nextIndex_forward];
+		
+		short vec1[4];
+		vec1[0] = cn1->pos[0] - cn2->pos[0];
+		vec1[1] = cn1->pos[1] - cn2->pos[1];
+		vec1[2] = cn1->pos[2] - cn2->pos[2];
+        MATH_VectorNormalize(&vec1[0]);
+
+		short vec2[4];
+		vec2[0] = pos[0] - cn1->pos[0];
+		vec2[1] = pos[1] - cn1->pos[1];
+		vec2[2] = pos[2] - cn1->pos[2];
+		
+		// replace R11R12 and R13R21
+        gte_ldsvrtrow0(&vec1[0]);
+		
+		// required short
+        gte_ldv0(&vec2[0]);
+		
+        gte_mvmva(0,0,0,3,0);
+
+		// replace stMAC1
+        gte_stlvnl0(&iVar15);
+
+		iVar3 = cn1->distToFinish * 8 + (iVar15 >> 0xc);
+        iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
+        iVar12 = iVar3 % iVar15;
+		
+		#if 0
+        if (uVar1 == 0) trap(0x1c00);
+        if ((iVar15 == -1) && (iVar3 == -0x80000000)) trap(0x1800);
+		#endif
+
+        iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
+        iVar12 = iVar15 - iVar12;
+        iVar15 = iVar15 / 0x1d1;
+		
+		#if 0
+        if (iVar15 == 0) trap(0x1c00);
+        if ((iVar15 == -1) && (iVar12 == -0x80000000)) trap(0x1800);
+		#endif
+
+        DECOMP_DecalHUD_DrawWeapon(
+          // warpball icon
+          gGT->ptrIcons[0xe],
 		  
-		  #if 0
-          if (iVar15 == 0) trap(0x1c00);
-          if ((iVar15 == -1) && (iVar12 == -0x80000000)) trap(0x1800);
+		  #ifdef USE_NEW2P
+		  
+		  // midpointX, swap X to Y
+		  0xF4, (((iVar12 / iVar15) + 5) * 0xd8) / 0x200,
+		  
+		  #else
+			  
+          // positionX, midpointY
+          (iVar12 / iVar15) + 5, 0x66,
+		  
 		  #endif
 
-          DecalHUD_DrawWeapon(
-            // warpball icon
-            gGT->ptrIcons[0xe],
+          // pointer to PrimMem struct
+          &gGT->backBuffer->primMem,
 
-            (iVar12 / iVar15) + 5,
-            0x66,
+          // pointer to OT memory
+          gGT->tileView_UI.ptrOT,
 
-            // pointer to PrimMem struct
-            &gGT->backBuffer->primMem,
-
-            // pointer to OT memory
-            gGT->tileView_UI.ptrOT,
-
-            TRANS_50_DECAL, FP(2/3) - FP(1/8), 1);
-        }
-      }
+          TRANS_50_DECAL, FP(2/3) - FP(1/8), 1);
 	}
 }

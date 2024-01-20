@@ -34,6 +34,16 @@ void DECOMP_UI_DrawDriverIcon(struct Icon* icon, short posX, short posY, struct 
 		setTransparency(p, transparency);
 	}
 	
+	#ifdef USE_16BY9
+	// widescreen, need to scale X by 75%,
+	// so subtract 12% from left and 12% from right
+	int len = ((p->x1 - p->x0) * 125) / 1000;
+	p->x0 += len;
+	p->x2 += len;
+	p->x1 -= len;
+	p->x3 -= len;
+	#endif
+	
 	primMem->curr = p + 1;
 
 	return;

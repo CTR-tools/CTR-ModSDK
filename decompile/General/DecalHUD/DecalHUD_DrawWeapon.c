@@ -4,6 +4,12 @@
 
 void DECOMP_DecalHUD_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, char rot)
 {
+	#ifdef USE_16BY9
+	void ui16BY9_DrawWeapon(struct Icon* icon, short posX, short posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale, char rot);
+	ui16BY9_DrawWeapon(icon,posX,posY,primMem,ot,transparency,scale,rot);
+	return;
+	#endif
+	
 	#if BUILD > SepReview
 		if (!icon) return;
 	#endif
