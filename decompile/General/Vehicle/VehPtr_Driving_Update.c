@@ -14,17 +14,21 @@ void DECOMP_VehPtr_Driving_Update(struct Thread *t, struct Driver *d)
         }
 
         // if steering hard enough to start a drift
-        if ((((d->const_TurnRate + ((d->turnConst << 1) / 5) >> 1) < simpTurnState) &&
-             (
-                 // player has jump buttons held
-                 (sdata->gGamepads->gamepad[d->driverID].buttonsHeldCurrFrame) &
-                 d->buttonUsedToStartDrift) != 0) &&
+        if (
+			(
+				((d->const_TurnRate + ((d->turnConst << 1) / 5) >> 1) < simpTurnState) &&
+				
+				// player has jump buttons held
+				((sdata->gGamepads->gamepad[d->driverID].buttonsHeldCurrFrame) &
+				d->buttonUsedToStartDrift) != 0
+			) &&
 
             // player is not in accel prevention or braking and
             ((d->actionsFlagSet & 8) == 0) &&
-            (d->const_Speed_ClassStat >> 1 <= d->speedApprox))
+            (d->const_Speed_ClassStat >> 1 <= d->speedApprox)
+		  )
         {
-            VehPtr_Drifting_Init(t,d);
+            DECOMP_VehPtr_Drifting_Init(t,d);
 
             // exit the function
             return;
@@ -42,7 +46,7 @@ void DECOMP_VehPtr_Driving_Update(struct Thread *t, struct Driver *d)
     {
 
         // Stop driving, until you press X, prevents jitters
-        VehPtr_AntiVShift_Init(t,d);
+        DECOMP_VehPtr_AntiVShift_Init(t,d);
     }
 
     else

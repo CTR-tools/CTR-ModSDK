@@ -1035,9 +1035,9 @@ CheckJumpButtons:
 	iVar14 =
 	MapToRange
 	(
-		driverSpeedCopy, 0x300,
-		driver->const_Speed_ClassStat / 2, 0x40,
-		iVar14
+		driverSpeedCopy, 
+		0x300,	driver->const_Speed_ClassStat / 2, 
+		0x40,	iVar14
 	);
 	
 UseTurnRate:

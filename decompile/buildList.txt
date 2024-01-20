@@ -651,7 +651,7 @@ common, exe, VehPtr_Driving_PhysAngular, 0x0, General/Vehicle/VehPtr_Driving_Phy
 // more
 common, exe, VehPtr_Driving_PhysLinear, 0x0, General/Vehicle/VehPtr_Driving_PhysLinear.c
 // Driving_Audio
-// Driving_Update
+common, exe, VehPtr_Driving_Update, 0x0, General/Vehicle/VehPtr_Driving_Update.c
 common, exe, VehPtr_Driving_Init, 0x0, General/Vehicle/VehPtr_Driving_Init.c
 common, exe, VehPtr_Freeze_PhysLinear, 0x0, General/Vehicle/VehPtr_Freeze_PhysLinear.c
 common, exe, VehPtr_Freeze_Init, 0x0, General/Vehicle/VehPtr_Freeze_Init.c
