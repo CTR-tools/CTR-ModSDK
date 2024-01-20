@@ -58,7 +58,7 @@ void DECOMP_UI_Lerp2D_Angular(short* ptrPos, short drawnPosition, short absolute
 			)
 			
 			// divide distance down
-			/ FPS_DOUBLE(5)
+			/ (FPS_DOUBLE(5)*4)
 		);
 	
 	return;

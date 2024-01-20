@@ -43,29 +43,15 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 
     if ((gameMode1 & (RELIC_RACE | ADVENTURE_ARENA | TIME_TRIAL)) != 0) 
 	{
-		
-// We dont know what this is yet
-#if 0
-      puVar7 = &DAT_800862d8;
-      puVar6 = &DAT_800862c8;
-
 	  for (i = 0; i < 8; i++)
 	  {
-		// loop through all player structures
-
-		// player structure + 0x482 is your rank in the race
-		// 0 = 1st place, 1 = 2nd place, 2 = 3rd place, etc
-        *puVar6 = gGT->drivers[i]->driverRank;
+        data.rankIconsCurr[i] = gGT->drivers[i]->driverRank;
 
 		// if more than 1 screen
         if (1 < gGT->numPlyrCurrGame) {
-          *puVar7 = 5;
+          data.rankIconsTransitionTimer[i] = 5;
         }
-
-		puVar7 = puVar7 + 1;
-        puVar6 = puVar6 + 1;
-      }
-#endif
+	  }
 
 	  // If you're not in a Relic Race
       if ((gameMode1 & RELIC_RACE) == 0) {

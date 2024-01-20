@@ -109,20 +109,18 @@ void DECOMP_UI_DrawRankedDrivers(void) {
 	  
 	  }
 
-
-      psVar17 = &data.rankIconsCurr[0];
-	  
-	  short* psVar8;
-	  psVar8 = &data.rankIconsDesired[0];
-
       for (iVar14 = 0; iVar14 < 8; iVar14++) 
 	  {
+        short* curr = &data.rankIconsCurr[iVar14];
+	  
+	    short* des = &data.rankIconsDesired[iVar14];
+		  
         if (
           // if player structure pointer is not nullptr
           (gGT->drivers[iVar14] != 0) &&
 
           // if you haven't gotten to the last driver
-          ((*psVar8 + 1) < 9)
+          ((*des + 1) < 9)
         ) 
 		{
           // player structure + [some offset]
@@ -174,19 +172,18 @@ void DECOMP_UI_DrawRankedDrivers(void) {
           if (*psVar13 == 0) 
 		  {
             // get absolute pos-rank of driver
-            iVar12 = *psVar8;
+            iVar12 = *des;
 
             // if current == desired
-            if (iVar12 == (int)*psVar17) 
+            if (iVar12 == *curr) 
 			{
               // if top positions
-              if ((iVar12 + 1) < 5) 
+              if (iVar12 < 4) 
 			  {
 				posXY[0] = 0x14;
 				posXY[1] = iVar12 * 0x1b + 0x39;
-
-                *psVar17 = *psVar8;
               }
+			  else continue;
             }
           }
 
@@ -195,10 +192,18 @@ void DECOMP_UI_DrawRankedDrivers(void) {
 		  {
 			UI_Lerp2D_Angular(
 				&posXY[0],
-				data.rankIconsCurr[iVar14],
-				data.rankIconsDesired[iVar14],
+				*curr,
+				*des,
 				*psVar13
 			);
+			
+            psVar13[0]++;
+            
+		    if (*psVar13 >= FPS_DOUBLE(5)) 
+		    {
+              *psVar13 = 0;
+              *curr = *des;
+            }
 		  }
 
           UI_DrawDriverIcon(
@@ -214,19 +219,7 @@ void DECOMP_UI_DrawRankedDrivers(void) {
             gGT->tileView_UI.ptrOT,
 
             1, 0x1000, local_30);
-
-          *psVar13++;
-          
-		  if (*psVar13 >= FPS_DOUBLE(5)) 
-		  {
-            *psVar13 = 0;
-            data.rankIconsCurr[iVar14] = data.rankIconsDesired[iVar14];
-          }
         }
-          
-		LAB_800528cc:
-          psVar17 += 1;
-          psVar8 += 1;
       }
     }
       
