@@ -22,19 +22,17 @@ void DECOMP_UI_Lerp2D_Angular(short* ptrPos, short drawnPosition, short absolute
 	// absolute position
 	absolutePositionInt = (int)absolutePosition;
 
+	angle = DECOMP_MATH_Sin(((int)frameCounter << 0xb) / FPS_DOUBLE(5));
+		
 	// if driver "just" passed another driver
 	if (absolutePositionInt < drawnPositionInt)
 	{
-		// Sine(angle)
-		angle = DECOMP_MATH_Sin(((int)frameCounter << 0xb) / 5);
 		ptrPos[0] = (short)(angle * 0x14 >> 0xc) + 0x14;
 	}
 
 	// if driver "was" passed by another driver
 	else
 	{
-		// Sine(angle)
-		angle = DECOMP_MATH_Sin(((int)frameCounter << 0xb) / 5);
 		ptrPos[0] = 0x14 - (short)(angle * 0x14 >> 0xc);
 	}
 	
@@ -52,13 +50,15 @@ void DECOMP_UI_Lerp2D_Angular(short* ptrPos, short drawnPosition, short absolute
 		// transition per frame
 		(
 			// distance to travel
-			((((absolutePositionInt - drawnPositionInt) * 0x1b)
+			(
+				(((absolutePositionInt - drawnPositionInt) * 0x1b)
 			
-			// move more each frame
-			* (int)frameCounter) * 4)
+				// move more each frame
+				* (int)frameCounter) * 4
+			)
 			
 			// divide distance down
-			/ 20
+			/ FPS_DOUBLE(5)
 		);
 	
 	return;

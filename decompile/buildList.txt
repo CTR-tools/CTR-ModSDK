@@ -627,8 +627,7 @@ common, exe, UI_DrawLapCount, 0x0, General/UI/UI_DrawLapCount.c
 // squish 13 functions
 common, exe, UI_Weapon_DrawSelf, 0x0, General/UI/UI_AAA_BigBlock1.c
 
-// note to self, still need UI_DrawRankedDrivers,
-// then all these next functions can join the block
+common, exe, UI_DrawRankedDrivers, 0x0, General/UI/UI_DrawRankedDrivers.c
 
 common, exe, UI_RenderFrame_Racing, 0x0, General/UI/UI_RenderFrame_Racing.c
 common, exe, UI_RenderFrame_AdvHub, 0x0, General/UI/UI_RenderFrame_AdvHub.c

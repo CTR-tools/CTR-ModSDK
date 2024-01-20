@@ -5,78 +5,71 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 
 {
   u_int currChar;
+  int itemID;
   int iconID;
   struct GameTracker* gGT;
   short posXY[2];
   
+  // beat 7360
+  
   gGT = sdata->gGT;
+  itemID = d->heldItemID;
+
+  // If you do have "no weapon icon"
+  if (itemID == 0xf) return;
 
   // If you are not shuffling through weapon roulette
-  if (d->heldItemID != 0x10)
+  if (itemID != 0x10)
   {
-	// If you do have "no weapon icon"
-    if (d->heldItemID == 0xf) {
-      return;
-    }
+    iconID = itemID + 5;
 
-	// If you have a weapon that is ready to use
-
-    iconID = d->heldItemID + 5;
-
-	// Get the ascii character to represent the quantity
-	// of weapon that you have (3 missiles)
-    sdata->s_spacebar[0] = d->numHeldItems + '0';
+	// character ID
+	currChar = data.characterIDs[d->driverID];
 
 	if (
-			(
-				(
-					// If your weapon is a mask
-					(d->heldItemID == 7) &&
-					(
-						// character ID
-						currChar = data.characterIDs[d->driverID],
-
-						// if not Crash
-						currChar != 0
-					)
-				) &&
-
-				// if not Coco
-				(currChar != 3)
-			) &&
-
-			(
-				(
-					// if not Polar
-					currChar != 6 &&
-
-					// If not Pura (7, same as mask weaponID)
-					// This is some insane compiler optimization
-					(currChar != d->heldItemID)
-				)
-			)
+			// If your weapon is a mask
+			(itemID == 7) &&
+			
+			// Not Crash, Coco, Polar, Pura
+			(currChar != 0) &&
+			(currChar != 3) &&
+			(currChar != 6) &&
+			(currChar != 7)
 		)
 	{
 	  // This is a bad guy, change icon to Uka
       iconID = 0x32;
     }
 
-	// if 9 < amount of wumpa fruit
-	// if you have 10 wumpa fruit
-    if ((9 < d->numWumpas) &&
+    if (
+		(d->numWumpas >= 10) &&
 
-		// If your weapon is less than, or equal to, 6
-       ((d->heldItemID - 3 < 2 || (d->heldItemID == 6))))
+		// TNT, Potion, Shield
+		(
+			((unsigned int)(itemID - 3) < 2) || 
+			(itemID == 6)
+		)
+	   )
 	{
-      iconID = d->heldItemID + 0x11;
+      iconID = itemID + 0x11;
     }
-    if (((d->noItemTimer) != 0) && (((gGT->timer) & 1) == 0)) {
+	
+	// make weapon flicker
+    if (
+			((d->noItemTimer) != 0) && 
+			((gGT->timer & FPS_DOUBLE(1)) == 0)
+		) 
+	{
       return;
     }
 
 	// If this weapon has a quantity (3 missiles)
     if (d->numHeldItems != 0)
 	{
+	  // Get the ascii character to represent the quantity
+	  // of weapon that you have (3 missiles)
+	  sdata->s_spacebar[0] = d->numHeldItems + '0';
+		
 	  // Draw the number near the weapon icon to show how many
       DECOMP_DecalFont_DrawLine(sdata->s_spacebar,(int)posX,(int)posY,2,4);
     }
@@ -85,45 +78,44 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
   // if roulette shuffle
   else
   {
-	iconID = 0;
+	itemID = 0;
 	posXY[0] = posX;
 	posXY[1] = posY;
 	
 	// If game is not paused
-	if ((gGT->gameMode1 & PAUSE_ALL) == 0) {
+	if ((gGT->gameMode1 & PAUSE_ALL) == 0) 
+	{
+		// random item
+		itemID = rand();
 	
 		// If you're not in Battle Mode
 		if ((gGT->gameMode1 & BATTLE_MODE) == 0) 
 		{
-			// random item
-			iconID = rand();
-			iconID = iconID + ((iconID / 6 + (iconID >> 0x1f) >> 1) - (iconID >> 0x1f)) * -0xc;
+			itemID = itemID % 0xc;
 			
 			// replace spring with turbo
-			if (iconID == 5) goto LAB_800508ec;
+			if (itemID == 5) goto LAB_800508ec;
 		}
 		
 		// if Battle Mode
 		else 
 		{
-			// random item
-			iconID = rand();
-			iconID = iconID % 0xe;
+			itemID = itemID % 0xe;
 			
 			// replace spring
-			if (iconID == 5) {
+			if (itemID == 5) {
 		LAB_800508ec:
-				iconID = 0;
+				itemID = 0;
 			}
 			
 			// replace clock
-			else if (iconID == 8) {
-				iconID = 1;
+			else if (itemID == 8) {
+				itemID = 1;
 			}
 			
 			// replace warpball
-			else if (iconID == 9) {
-				iconID = 3;
+			else if (itemID == 9) {
+				itemID = 3;
 			}
 		}
 		
@@ -133,12 +125,12 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 		if(gGT->timer & 1)
 		{
 			// backup
-			d->funcPtrs_compilerpadding = iconID;
+			d->funcPtrs_compilerpadding = itemID;
 		}
 		else
 		{
 			// restore
-			iconID = d->funcPtrs_compilerpadding;
+			itemID = d->funcPtrs_compilerpadding;
 		}
 		#endif
 	}
@@ -153,7 +145,8 @@ void DECOMP_UI_Weapon_DrawSelf(short posX,short posY,short scale,struct Driver* 
 		d->PickupTimeboxHUD.cooldown--;
 	}
 	
-	iconID = (iconID + 5);
+	iconID = itemID + 5;
+	
 	posX = posXY[0];
 	posY = posXY[1];
   }

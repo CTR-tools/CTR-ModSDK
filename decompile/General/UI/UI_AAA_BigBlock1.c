@@ -439,7 +439,7 @@ void new2p_FixIconAxis(int param_1,u_int param_2,int param_3,int param_4,u_int *
 
 void new2p_entryHook()
 {
-	// part of UI_DrawRankedDrivers
+	// part of DECOMP_UI_DrawRankedDrivers
 	*(int*)0x80052c70 = JAL(new2p_FixIconAxis);
 }
 #endif

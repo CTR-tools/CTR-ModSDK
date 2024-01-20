@@ -118,7 +118,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	// and not in time trial
 	if ((gGT->gameMode1 & (RELIC_RACE | TIME_TRIAL | BATTLE_MODE)) == 0)
 	{
-		UI_DrawRankedDrivers();
+		DECOMP_UI_DrawRankedDrivers();
 	}
 #endif
 
