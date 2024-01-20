@@ -389,7 +389,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 			}
 		}
 		#endif
-		r.w = 0x100;
+		r.w = WIDE_PICK(256, 200);
 		r.h = 0x19;
 
 		// posX of track list
@@ -433,7 +433,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 					DECOMP_DecalHUD_DrawPolyGT4
 					(
 						iconPtrArray[0x37],
-						iVar11 + 0x104, (int)sVar7 + iVar17 * 8 + 4,
+						iVar11 + WIDE_PICK(256+4, 200+4), (int)sVar7 + iVar17 * 8 + 4,
 
 						// pointer to PrimMem struct
 						&gGT->backBuffer->primMem,
