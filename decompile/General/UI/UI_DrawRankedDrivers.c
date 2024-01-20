@@ -411,50 +411,59 @@ void DECOMP_UI_DrawRankedDrivers(void) {
 			continue;
 		
         // pointer to path data
-        iVar3 = gGT->level1->ptr_restart_points;
+        struct CheckpointNode* cn = gGT->level1->ptr_restart_points;
+		
+		struct TrackerWeapon* tw = warpballInst->thread->object;
+		iVar4 = tw->nodeCurrIndex;
 
         iVar12 = 0;
 
-#if 0
-        if ((gGT->level1->cnt_restart_points - 1 U < 0xff) &&
+        if (
+				(gGT->level1->cnt_restart_points > 0) &&
 
-          // path index = warpballInst->thread->object->pathNode - lev->startNode
-          iVar4 = ((((((struct TrackerWeapon *) warpballInst->thread->object)->pathNode - iVar3) * -0x55555555 >> 2),
-
-            // if path index is valid
-            -1 < iVar4))) 
+				// if path index is valid
+				(-1 < iVar4)
+			) 
 		{
-          psVar17 = (iVar3 + (iVar3 + iVar4 * 0xc + 8) *0xc);
-          local_40 = warpballInst->matrix.t[0];
-          local_3e = warpballInst->matrix.t[1];
-          local_3c = warpballInst->matrix.t[2];
-          iVar8 = (iVar3 + (psVar17 + 4) * 0xc);
-          local_38 = CONCAT22(psVar17[1] - iVar8[1], *psVar17 - iVar8);
-          local_34 = psVar17[2] - iVar8[2];
+		  int pos[4];
+          pos[0] = warpballInst->matrix.t[0];
+          pos[1] = warpballInst->matrix.t[1];
+          pos[2] = warpballInst->matrix.t[2];
+		  
+          struct CheckpointNode* cn1 = &cn[tw->ptrNodeCurr->nextIndex_forward];
+          struct CheckpointNode* cn2 = &cn[cn1->nextIndex_forward];
+		  
+		  short vec1[4];
+		  vec1[0] = cn1->pos[0] - cn2->pos[0];
+		  vec1[1] = cn1->pos[1] - cn2->pos[1];
+		  vec1[2] = cn1->pos[2] - cn2->pos[2];
+          MATH_VectorNormalize(&vec1[0]);
 
-          MATH_VectorNormalize(&local_38);
-
-          local_48 = CONCAT22(local_3e - psVar17[1], local_40 - *psVar17);
-          local_44 = local_3c - psVar17[2];
-          gte_ldR11R12(local_38);
-          gte_ldR13R21((int)local_34);
-          gte_ldVXY0(local_48);
-          gte_ldVZ0((int)local_44);
+		  short vec2[4];
+		  vec2[0] = pos[0] - cn1->pos[0];
+		  vec2[1] = pos[1] - cn1->pos[1];
+		  vec2[2] = pos[2] - cn1->pos[2];
+		  
+		  // replace R11R12 and R13R21
+          gte_ldsvrtrow0(&vec1[0]);
+		  
+		  // required short
+          gte_ldv0(&vec2[0]);
+		  
           gte_mvmva(0,0,0,3,0);
 
-          iVar15 = gte_stMAC1();
-          uVar1 = ((gGT->level1->ptr_restart_points) + 6);
-          iVar3 = (u_int)(u_short) psVar17[3] * 8 + (iVar15 >> 0xc);
-          iVar15 = (u_int) uVar1 << 3;
+		  // replace stMAC1
+          gte_stlvnl0(&iVar15);
+
+		  iVar3 = cn1->distToFinish * 8 + (iVar15 >> 0xc);
+          iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
           iVar12 = iVar3 % iVar15;
-          if (uVar1 == 0) {
-            trap(0x1c00);
-          }
-          if ((iVar15 == -1) && (iVar3 == -0x80000000)) {
-            trap(0x1800);
-          }
+		  
+		  #if 0
+          if (uVar1 == 0) trap(0x1c00);
+          if ((iVar15 == -1) && (iVar3 == -0x80000000)) trap(0x1800);
+		  #endif
         }
-#endif
 		
 		if (iVar12 != 0) 
 		{
@@ -463,12 +472,8 @@ void DECOMP_UI_DrawRankedDrivers(void) {
           iVar15 = iVar15 / 0x1d1;
 		  
 		  #if 0
-          if (iVar15 == 0) {
-            trap(0x1c00);
-          }
-          if ((iVar15 == -1) && (iVar12 == -0x80000000)) {
-            trap(0x1800);
-          }
+          if (iVar15 == 0) trap(0x1c00);
+          if ((iVar15 == -1) && (iVar12 == -0x80000000)) trap(0x1800);
 		  #endif
 
           DecalHUD_DrawWeapon(

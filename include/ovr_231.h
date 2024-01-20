@@ -86,20 +86,29 @@ struct TrackerWeapon
 	// 0x34
 	// bitshift with driver->driverID
 	// one bit for every driver hit
+	u_int driversHit;
 	
 	// 0x38
 	// distY from track floor
+	int distFromGround;
 
-	// 0x3C - pointer to vec3i
-	// pathNodeStart on path
+	// 0x3C
+	struct CheckpointNode* ptrNodeCurr;
 
-	// 0x40 - pointer to vec3i
-	// pathNodeEnd on path
+	// 0x40
+	struct CheckpointNode* ptrNodeNext;
 
-	// 0x44 - path index Start
-	// 0x45 - path index End
+	// 0x44
+	u_char nodeCurrIndex;
 	
-	// 0x48 - time spent alive?
+	// 0x45
+	u_char nodeNextIndex;
+	
+	// 0x46
+	short padding;
+	
+	// 0x48
+	int timeAlive;
 
 	// 0x52 - turnAround count
 
