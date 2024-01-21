@@ -23,27 +23,9 @@
 
 #ifndef REBUILD_PC
 #ifdef USE_60FPS
-int PatchPE(struct ParticleEmitter* pe);
-
-// byte budgget
-#define PATCH_PARTICLE 0
 
 void NewCallback231()
 {
-	#if PATCH_PARTICLE
-	// roo's tubes bubbles, only one of many 231 PEs that need patching,
-	// could also just patch Particle_UpdateList
-	struct ParticleEmitter* pe = (struct ParticleEmitter*)0x800b3bc0;
-	
-	// loop through all PEs until 
-	// null PE is found at end of array
-	while(PatchPE(pe) != 0)
-	{
-		// next PE
-		pe++;
-	}
-	#endif
-
 	// weapon roulette
 	{
 		// timer after red potion expires
@@ -94,25 +76,6 @@ void NewCallback231()
 		// sub 16ms instead of 32
 		*(unsigned short*)0x800b0a3c = -0x10;
 	}
-
-	#if 0 // does not work yet
-	// damage timers
-	{
-		// search every "+ 0x4ac) = " in 231.c
-
-		#define DAMAGE_GREEN -(0x1e*2)
-		#define DAMAGE_RED (0x1e*2)
-		*(unsigned short*)0x800ACE80 = DAMAGE_RED;
-		*(unsigned short*)0x800ACE84 = DAMAGE_GREEN;
-		*(unsigned short*)0x800ACF28 = DAMAGE_RED;
-		*(unsigned short*)0x800ACF68 = DAMAGE_GREEN;
-		*(unsigned short*)0x800ACFB4 = DAMAGE_RED;
-		*(unsigned short*)0x800AD684 = DAMAGE_RED;
-		*(unsigned short*)0x800AE308 = DAMAGE_RED;
-		*(unsigned short*)0x800AF92C = DAMAGE_RED;
-		*(unsigned short*)0x800B201C = DAMAGE_RED;
-	}
-	#endif
 
 	// start banner
 	{
@@ -287,20 +250,6 @@ void ui60_entryHook()
 	}
 
 	#if 0
-	// DOES NOT WORK
-	
-	// damage timers
-	{
-		*(unsigned char*)0x800526f4 = 0x1e*2;
-		*(unsigned char*)0x80052714 = 0x1e*2;
-		*(unsigned char*)0x80052614 = 0x1e*2;
-		*(unsigned char*)0x800526d8 = 0x1e*2;
-		*(unsigned char*)0x800529c8 = 0x1e*2;
-		*(unsigned char*)0x800529ac = 0x1e*2;
-		*(unsigned char*)0x800529e8 = 0x1e*2;
-		*(unsigned char*)0x80052904 = 0x1e*2;
-	}
-
 	// Boss cooldown
 	{
 		// 8008d8e4 needs to be doubled, after being set
@@ -310,11 +259,6 @@ void ui60_entryHook()
 		*(unsigned char*)0x80040c24 = 0x40;
 		*(unsigned char*)0x80040f4c = 0x40;
 	}
-	#endif
-		
-	#if PATCH_PARTICLE
-	// still a little off, dont know why
-	PatchParticles();
 	#endif
 
 	// Inject new hooks

@@ -109,8 +109,11 @@ void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short 
 	
 	else
 	{
+		// Must scale around 3D->2D origin,
+		// which is at gGT->level1->ptrs[ST1_MAP]
+		
 		// 25% from left
-		leftX += len*2;
+		//leftX += len*2;
 	}
 	
 	#endif
