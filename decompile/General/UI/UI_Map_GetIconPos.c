@@ -1,14 +1,32 @@
 #include <common.h>
 
-void DECOMP_UI_Map_GetIconPos(short* ptrMap,int* posX,int* posY)
+// 488 / 760
+
+struct Map
+{
+	short worldEndX;
+	short worldEndY;
+	short worldStartX;
+	short worldStartY;
+	
+	short iconSizeX;
+	short iconSizeY;
+	short iconStartX;
+	short iconStartY;
+	
+	short mode;
+};
+
+void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY)
 
 {
-  short sVar1;
-  int iVar2;
-  int iVar4;
+  short mode;
+  int addX;
+  int addY;
+  int worldRangeX;
+  int worldRangeY;
 
-  int ptrMap6 = ptrMap[6];
-  int ptrMap7 = ptrMap[7] - 0x10;
+  struct Map* map = &m[0];
 
   #if 0
   // trap() functions were removed from original,
@@ -16,46 +34,51 @@ void DECOMP_UI_Map_GetIconPos(short* ptrMap,int* posX,int* posY)
   #endif
   
   // rendering mode (forward, sideways, etc)
-  sVar1 = ptrMap[8];
+  mode = map->mode;
   
-  if (sVar1 == 0) 
+  worldRangeX = map->worldEndX - map->worldStartX;
+  worldRangeY = map->worldEndY - map->worldStartY;
+  
+  if (mode == 0) 
   {
-    iVar2 = ptrMap6 + WIDE_34(*posX * ptrMap[4]    ) / (ptrMap[0] - ptrMap[2]);
-    iVar4 = ptrMap7 + (*posY * ptrMap[5] * 2) / (ptrMap[1] - ptrMap[3]);
+	// 0 degrees
+    addX =  (*posX * map->iconSizeX    ) / worldRangeX;
+    addY =  (*posY * map->iconSizeY * 2) / worldRangeY;
   }
   
-  else if (sVar1 == 1) 
+  else if (mode == 1) 
   {
-	iVar4 = ptrMap7 + (*posX * ptrMap[5] * 2) / (ptrMap[0] - ptrMap[2]);
-	iVar2 = ptrMap6 - WIDE_34(*posY * ptrMap[4]    ) / (ptrMap[1] - ptrMap[3]);
+	// 90 degrees
+	addX = -(*posY * map->iconSizeX    ) / worldRangeY;
+	addY =  (*posX * map->iconSizeY * 2) / worldRangeX;
   }
   
-  else if (sVar1 == 2) 
+  else if (mode == 2) 
   {
-    iVar2 = ptrMap6 - WIDE_34(*posX * ptrMap[4]    ) / (ptrMap[0] - ptrMap[2]);
-    iVar4 = ptrMap7 - (*posY * ptrMap[5] * 2) / (ptrMap[1] - ptrMap[3]);
+	// 180 degrees
+    addX = -(*posX * map->iconSizeX    ) / worldRangeX;
+    addY = -(*posY * map->iconSizeY * 2) / worldRangeY;
   }
   
   else 
   {
-    iVar4 = ptrMap7 - (*posX * ptrMap[5] * 2) / (ptrMap[0] - ptrMap[2]);
-    iVar2 = ptrMap6 + WIDE_34(*posY * ptrMap[4]    ) / (ptrMap[1] - ptrMap[3]);
+	// 270 degrees
+    addX =  (*posY * map->iconSizeX    ) / worldRangeY;
+    addY = -(*posX * map->iconSizeY * 2) / worldRangeX;
   }
 
   if (sdata->gGT->numPlyrCurrGame == 3) 
   {
-    iVar2 -= 0x3c;
-    iVar4 += 10;
+    addX -= 0x3c;
+    addY += 10;
   }
   
   #ifdef USE_16BY9
-  if((sdata->gGT->gameMode1 & MAIN_MENU) == 0)
-  	iVar2 += 4;
+  //int distToRight = map->iconSizeX - addX;
+  //addX = map->iconSizeX - WIDE_34(distToRight);
   #endif
   
-  *posX = iVar2;
-  *posY = iVar4;
+  *posX = map->iconStartX + addX;
+  *posY = map->iconStartY + addY - 0x10;
   return;
 }
-
-// 436
