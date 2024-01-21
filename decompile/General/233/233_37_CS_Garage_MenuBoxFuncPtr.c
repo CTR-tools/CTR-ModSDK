@@ -8,7 +8,6 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     int iVar5;
     short *puVar6;
     int iVar7;
-    u_int *puVar8;
     u_int uVar9;
     u_int *puVar11;
     int iVar12;
@@ -34,6 +33,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     int local_2c;
 
     struct GameTracker *gGT = sdata->gGT;
+	struct PrimMem* primMem = &gGT->backBuffer->primMem;
 	struct MetaDataCHAR* MDC = &data.MetaDataCharacters[sdata->advCharSelectIndex_curr];
 	int nameIndex = MDC->name_LNG_long;
 	RECT r;
@@ -189,46 +189,35 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
                 iVar12 = gGT->backBuffer;
 
                 // primMem curr
-                puVar8 = *(u_int **)(iVar12 + 0x80);
-
-                puVar11 = (u_int *)0x0;
-
-                // near end of Prim mem
-                if (puVar8 <= *(u_int **)(iVar12 + 0x84))
-                {
-                    *(u_int **)(iVar12 + 0x80) = puVar8 + 9;
-                    puVar11 = puVar8;
-                }
+                POLY_G4* p = primMem->curr;
 
                 // quit if prim mem runs out
-                if (puVar11 == (u_int *)0x0)
-                {
-                    return;
-                }
+                if (p+2 >= primMem->end)
+					return;
+				
+				primMem->curr = p + 1;
 
                 // color data
-                puVar11[1] = puVar13[0] | 0x38000000;
-                puVar11[3] = puVar13[1] | 0x38000000;
-                puVar11[5] = puVar13[0] | 0x38000000;
-				puVar11[7] = puVar13[1] | 0x38000000;
+                *(int*)&p->r0 = puVar13[0] | 0x38000000;
+                *(int*)&p->r1 = puVar13[1] | 0x38000000;
+                *(int*)&p->r2 = puVar13[0] | 0x38000000;
+				*(int*)&p->r3 = puVar13[1] | 0x38000000;
 
                 sVar3 = (short)uVar22 + (short)iVar7;
-                *(short *)(puVar11 + 2) = sVar3;
-                *(short *)(puVar11 + 6) = sVar3;
-                *(short *)(puVar11 + 4) = sVar3 + sVar4;
-                *(u_short *)((int)puVar11 + 10) = uVar21;
-                *(u_short *)((int)puVar11 + 0x12) = uVar21;
-                *(short *)((int)puVar11 + 0x1a) = (short)local_2c;
-                *(short *)((int)puVar11 + 0x22) = (short)local_2c;
-
-
-                *(short *)(puVar11 + 8) = *(short *)(puVar11 + 6) + sVar4;
+                p->x0 = sVar3;
+                p->y0 = uVar21;
+                p->x1 = sVar3 + sVar4;
+                p->y1 = uVar21;
+                p->x2 = sVar3;
+                p->y2 = (short)local_2c;
+                p->x3 = sVar3 + sVar4;
+                p->y3 = (short)local_2c;
 
                 // pointer to OT memory
-                puVar8 = *(u_int **)(gGT + 0x147c);
+                void* ot = gGT->tileView_UI.ptrOT;
 
-                *puVar11 = *puVar8 | 0x8000000;
-                *puVar8 = (u_int)puVar11 & 0xffffff;
+				*(int*)p = (*(int*)ot & 0xffffff) | 0x8000000;
+				*(int*)ot = (int)p & 0xffffff;
             }
             puVar13 = puVar13 + 1;
             iVar15 = iVar15 + 4;
@@ -288,10 +277,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
         0xec - iVar17,
         0xbb,
 
-        // pointer to PrimMem struct
-        &gGT->backBuffer->primMem,
-
-        // pointer to OT memory
+        primMem,
         gGT->tileView_UI.ptrOT,
 
         ptrColor[0], ptrColor[1], 
@@ -305,11 +291,8 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
         iVar17 + 0x112,
         0xbb,
 
-        // pointer to PrimMem struct
-        &gGT->backBuffer->primMem,
-
-        // pointer to OT mem
-        gGT->tileView_UI.ptrOT,
+        primMem,
+		gGT->tileView_UI.ptrOT,
 
         ptrColor[0], ptrColor[1], 
 		ptrColor[2], ptrColor[3],
