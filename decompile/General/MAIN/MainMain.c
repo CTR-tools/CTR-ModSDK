@@ -426,8 +426,8 @@ FinishLoading:
 								gGT->level2 = 1;
 								
 								int x = 0;
-								int y = 0;
-								DECOMP_CAM_Path_Move(x, &gGT->tileView[0].pos, &gGT->tileView[0].rot, &y);
+								int getPath = 0;
+								DECOMP_CAM_Path_Move(x, &gGT->tileView[0].pos, &gGT->tileView[0].rot, &getPath);
 							}
 						}
 					}

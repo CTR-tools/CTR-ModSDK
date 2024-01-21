@@ -1,6 +1,6 @@
 #include <common.h>
 
-u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, short *param_4)
+u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, short *getPath)
 {
   short numPos;
   u_int pathNumNode;
@@ -41,7 +41,7 @@ u_char DECOMP_CAM_Path_Move(int frameIndex, short *position, short *rotation, sh
   // advance pointer to pos+rot
   move += (int)frameIndex * 6;
   
-  param_4[0] = pathID;
+  *getPath = pathID;
   
   // position of frame
   position[0] = move[0];

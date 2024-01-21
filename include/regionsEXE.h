@@ -149,6 +149,34 @@ struct MetaDataBOSS
 	unsigned short juiceFlag;
 };
 
+// starts at 0x80086d84
+struct MetaDataCHAR
+{
+	// 0
+	// "crash", "pen"
+	// never seen in-game
+	char* name_Debug;
+
+	// 4
+	// "Crash Bandicoot", "Penta Penguin"
+	// for character selection
+	short name_LNG_long;
+
+	// 6
+	// "Crash", "Penguin"
+	// for default high scores
+	short name_LNG_short;
+
+	// 8
+	// index in ptrIcons
+	int iconID;
+
+	// 0xC
+	// Can be 0,1,2,3,(4 for max, in pal)
+	// changes engine sound
+	int engineID;
+};
+
 // always starts at address 0x80010000,
 // which is 0x800 bytes into the EXE file
 struct rData
@@ -2359,33 +2387,7 @@ struct Data
 	// Copy one row into another
 	// to make duplicates of icons
 	// in character selection screen
-	struct
-	{
-		// 0
-		// "crash", "pen"
-		// never seen in-game
-		char* name_Debug;
-
-		// 4
-		// "Crash Bandicoot", "Penta Penguin"
-		// for character selection
-		short name_LNG_long;
-
-		// 6
-		// "Crash", "Penguin"
-		// for default high scores
-		short name_LNG_short;
-
-		// 8
-		// index in ptrIcons
-		int iconID;
-
-		// 0xC
-		// Can be 0,1,2,3,(4 for max, in pal)
-		// changes engine sound
-		int engineID;
-
-	} MetaDataCharacters[0x10];
+	struct MetaDataCHAR MetaDataCharacters[0x10];
 
 	// 0x80086E38 -- Aug14
 	// 0x80085390 -- SepReview

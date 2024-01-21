@@ -1,8 +1,6 @@
 #include <common.h>
 
-#if 0
-
-void CS_Garage_MenuBoxFuncPtr(void)
+void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 {
     char bVar1;
     short sVar3;
@@ -12,7 +10,6 @@ void CS_Garage_MenuBoxFuncPtr(void)
     int iVar7;
     u_int *puVar8;
     u_int uVar9;
-    short *psVar10;
     u_int *puVar11;
     int iVar12;
     u_int *puVar13;
@@ -20,9 +17,8 @@ void CS_Garage_MenuBoxFuncPtr(void)
     int iVar15;
     int iVar16;
     int iVar17;
-    undefined **ppuVar18;
+    int* ptrColor;
     int uVar19;
-    u_short *puVar20;
     u_short uVar21;
     u_int uVar22;
     short local_70;
@@ -39,19 +35,20 @@ void CS_Garage_MenuBoxFuncPtr(void)
     short local_50;
     short local_4e;
     short local_4c;
-    undefined auStack72[8];
     u_short local_40;
-    u_int *local_38;
     int local_30;
     int local_2c;
 
     struct GameTracker *gGT = sdata->gGT;
+	struct MetaDataCHAR* MDC = &data.MetaDataCharacters[sdata->advCharSelectIndex_curr];
+	int nameIndex = MDC->name_LNG_long;
+	RECT r;
 
     // CameraDC, freecam mode
     gGT->cameraDC[0].cameraMode = 3;
 
     // subtract transition timer by one frame
-    sVar4 = *(short*)0x800b8638--;
+    sVar4 = *(short*)0x800b8638 - 1;
 
     // if mid-transition, skip some code
     if (*(short*)0x800b8638 != 0)
@@ -60,64 +57,34 @@ void CS_Garage_MenuBoxFuncPtr(void)
     // At this point, there must not be a transition
     // between drivers, so start drawing the UI
 
-    // bar length (animated) in adv character selection
-    psVar10 = &DAT_800b85e8;
-
     iVar7 = (int)(short)sdata->advCharSelectIndex_curr;
+	
+	#if 0
+	// count frames in garage?
     *(short*)0x800b85ee = *(short*)0x800b85ee + 1;
+	#endif
 
     // animate growth of all three stat bars
     for (iVar7 = 0; iVar7 < 3; iVar7++)
     {
-
-        // if bar length is less than character stat
-        if (*psVar10 <
-
-            // array of engine-specific stats
-            *(short *)(&DAT_800b85f8 +
-                       iVar17 * 2 +
-
-                       // engineID from MetaDataCharacters
-                       *(int *)(&DAT_80086d90 + (int)*(short *)(&DAT_800b85d8 + iVar7 * 2) * 0x10) * 6))
-        {
-            // make bar grow
-            *psVar10 = *psVar10 + 3;
-        }
-
-        // if bar length is more than character stat
-        if (
-
-            // array of engine-specific stats
-            *(short *)(&DAT_800b85f8 +
-                       iVar17 * 2 +
-
-                       // engineID from MetaDataCharacters
-                       *(int *)(&DAT_80086d90 + (int)*(short *)(&DAT_800b85d8 + iVar7 * 2) * 0x10) * 6) < *psVar10)
-        {
-            // set bar length to character stat
-            *psVar10 =
-
-                // array of engine-specific stats
-                *(short *)(&DAT_800b85f8 +
-                           iVar17 * 2 +
-
-                           // engineID from MetaDataCharacters
-                           *(int *)(&DAT_80086d90 +
-                                    (int)*(short *)(&DAT_800b85d8 + iVar7 * 2) * 0x10) *
-                               6);
-        }
-
-        // loop to next bar
-
-        psVar10 = psVar10 + 1;
+		short* bar = (unsigned int)0x800b85e8 + 2 * iVar7;
+		short stat = *(short *)((unsigned int)0x800b85f8 + MDC->engineID*6 + iVar7*2);
+		
+        if (*bar < stat)	*bar = *bar + 3;
+        if (stat < *bar)	*bar = stat;
     }
 
-    if ((*(short *)(&DAT_80086d88 +
-                    (int)*(short *)(&DAT_800b85d8 + (int)(short)sdata->advCharSelectIndex_curr * 2) * 0x10) ==
-         0x2e) ||
-        (uVar19 = 0x17f,
-         *(short *)(&DAT_80086d88 +
-                    (int)*(short *)(&DAT_800b85d8 + (int)(short)sdata->advCharSelectIndex_curr * 2) * 0x10) == 0x33))
+    if (
+			// Tiny Tiger
+			(nameIndex == 0x2e) ||
+        
+			(
+				uVar19 = 0x17f,
+				
+				// Pura
+				nameIndex == 0x33
+			)
+		)
     {
         uVar19 = 0x81;
         local_40 = 0x80;
@@ -138,35 +105,46 @@ void CS_Garage_MenuBoxFuncPtr(void)
     // "Turn"
     DecalFont_DrawLine(sdata->lngStrings[0x247], uVar19, 0x3c, 1, 0x4020);
 
-    iVar7 = 0;
-    if ((*(u_int *)(&DAT_80086d90 + (int)*(short *)(&DAT_800b85d8 + (int)(short)sdata->advCharSelectIndex_curr * 2) * 0x10) != 3) &&
-        (iVar7 = 2,
-         *(u_int *)(&DAT_80086d90 +
-                   (int)*(short *)(&DAT_800b85d8 + (int)(short)sdata->advCharSelectIndex_curr * 2) * 0x10) < 2))
-    {
-        iVar7 = 1;
-    }
+	int engineID = MDC->engineID;
+
+    // 0x248 - Beginner
+	// EngineID == 3
+	iVar7 = 0;
+	
+	// 0x24A - Advanced
+	if (engineID == 2) iVar7 = 2;
+	
+	// 0x249 - Intermediate
+    if (engineID < 2) iVar7 = 1;
+
     iVar17 = 0;
-    local_38 = &local_68;
     uVar21 = 0x21;
     local_2c = 0x28;
     local_30 = 0x22;
 
+	#if 0
+	// remove array at 800b85f0,
+	// it's 0x248, 0x249, 0x24A,
+	// instead just do 0x248 + iVar1
+	#endif
+
     // Draw a string
-    DecalFont_DrawLine(*(int *)((int)(short)(&DAT_800b85f0)[iVar7] * 4 + sdata->lngStrings), (u_int)local_40, 0xf, 1, 0xffff8000);
+    DecalFont_DrawLine(sdata->lngStrings[0x248+iVar7], (u_int)local_40, 0xf, 1, 0xffff8000);
 
     // bar length (animated)
-    puVar20 = &DAT_800b85e8;
+    short* puVar20 = 0x800b85e8;
 
     do
-    {
-        local_60 = uVar22 | (u_int)uVar21 << 0x10;
-        local_5c = CONCAT22(7, *puVar20);
-        local_68 = local_60;
-        local_64 = local_5c;
+    {		
+		r.x = uVar22;
+		r.y = uVar21;
+		r.w = *puVar20;
+		r.h = 7;
+		
+		// outline color white
         local_60 = *(int*)0x800b7780;
 
-        CTR_Box_DrawWireBox(local_38, &local_60,
+        CTR_Box_DrawWireBox(&r, &local_60,
 
                             // pointer to OT memory
                             gGT->tileView_UI.ptrOT,
@@ -174,12 +152,15 @@ void CS_Garage_MenuBoxFuncPtr(void)
                             // pointer to PrimMem struct
                             &gGT->backBuffer->primMem);
 
-        local_68 = CONCAT22((short)local_30, (short)uVar22 + 1);
-        local_60 = local_60 & 0xff000000;
-        local_64 = CONCAT22(5, *puVar20 - 2);
+		r.x = uVar22 + 1;
+		r.y = local_30;
+        r.w = *puVar20 - 2;
+		r.h = 5;
 
-        //
-        CTR_Box_DrawWireBox(local_38, &local_60,
+		// outline color black
+		local_60 = local_60 & 0xff000000;
+
+        CTR_Box_DrawWireBox(&r, &local_60,
 
                             // pointer to OT memory
                             gGT->tileView_UI.ptrOT,
@@ -232,10 +213,10 @@ void CS_Garage_MenuBoxFuncPtr(void)
                 }
 
                 // color data
-                puVar11[1] = *puVar13 | 0x38000000;
-                puVar11[3] = *(u_int *)((int)&DAT_800b861c + iVar15) | 0x38000000;
-                puVar11[5] = *puVar13 | 0x38000000;
-                uVar9 = *(u_int *)((int)&DAT_800b861c + iVar15);
+                puVar11[1] = puVar13[0] | 0x38000000;
+                puVar11[3] = puVar13[1] | 0x38000000;
+                puVar11[5] = puVar13[0] | 0x38000000;
+				puVar11[7] = puVar13[1] | 0x38000000;
 
                 sVar3 = (short)uVar22 + (short)iVar7;
                 *(short *)(puVar11 + 2) = sVar3;
@@ -245,7 +226,6 @@ void CS_Garage_MenuBoxFuncPtr(void)
                 *(u_short *)((int)puVar11 + 0x12) = uVar21;
                 *(short *)((int)puVar11 + 0x1a) = (short)local_2c;
                 *(short *)((int)puVar11 + 0x22) = (short)local_2c;
-                puVar11[7] = uVar9 | 0x38000000;
 
 
                 *(short *)(puVar11 + 8) = *(short *)(puVar11 + 6) + sVar4;
@@ -286,29 +266,30 @@ void CS_Garage_MenuBoxFuncPtr(void)
     // Draw 2D Menu rectangle background
     MENUBOX_DrawInnerRect(&local_70, 4, gGT->backBuffer->otMem.startPlusFour);
 
-    // Draw a string
-    DecalFont_DrawLine(*(int *)((int)*(short *)(&DAT_80086d88 +
-                                                       (int)*(short *)(&DAT_800b85d8 + (int)(short)sdata->advCharSelectIndex_curr * 2) * 0x10) *
-                                           4 +
-                                       sdata->lngStrings),
-                       0x100, 0xb4, 1, 0xffff8000);
-    iVar7 = 0;
+	#if 0
+	// Original game uses array at 800b85d8,
+	// we remove the usage cause it's just 0,1,2,3,4,5,6,7,
+	// this array is used in Oxide Fix (Garage_Init+0x80),
+	// so we can adjust the mod to fit the new code
+	
+	// otherwise would be
+	// lngStrings[metadata[800b85d8[charSelectIndex]].nameLNG]
+	#endif
+
+	char* name = sdata->lngStrings[nameIndex];
+
+    DecalFont_DrawLine(name, 0x100, 0xb4, 1, 0xffff8000);
+    
+	iVar7 = 0;
     if ((sdata->frameCounter & 4) == 0)
     {
         iVar7 = 3;
     }
-    iVar17 = DecalFont_GetLineWidth(*(int *)((int)*(short *)(&DAT_80086d88 +
-                                                                    (int)*(short *)(&DAT_800b85d8 +
-                                                                                    (int)(short)sdata->advCharSelectIndex_curr * 2) *
-                                                                        0x10) *
-                                                        4 +
-                                                    sdata->lngStrings),
-                                    1);
-
-    iVar17 = ((iVar17 << 0x10) >> 0x10) - ((iVar17 << 0x10) >> 0x1f) >> 1;
+	
+    iVar17 = DecalFont_GetLineWidth(name, 1) >> 1;
 
     // Color data
-    ppuVar18 = &data.ptrColor[iVar7];
+    ptrColor = &data.ptrColor[iVar7];
 
 	struct Icon** iconPtrArray =
 		ICONGROUP_GETICONS(gGT->iconGroup[4]);
@@ -320,13 +301,15 @@ void CS_Garage_MenuBoxFuncPtr(void)
         0xbb,
 
         // pointer to PrimMem struct
-        gGT->backBuffer->primMem,
+        &gGT->backBuffer->primMem,
 
         // pointer to OT memory
         gGT->tileView_UI.ptrOT,
 
-        *(int *)*ppuVar18, *(int *)(*ppuVar18 + 4),
-        *(int *)(*ppuVar18 + 8), *(int *)(*ppuVar18 + 0xc), 0, 0x1000, 0x800);
+        ptrColor[0], ptrColor[1], 
+		ptrColor[2], ptrColor[3],
+		
+		0, 0x1000, 0x800);
 
     // Draw arrow pointing Right
     DecalHUD_Arrow2D(
@@ -335,13 +318,15 @@ void CS_Garage_MenuBoxFuncPtr(void)
         0xbb,
 
         // pointer to PrimMem struct
-        gGT->backBuffer->primMem,
+        &gGT->backBuffer->primMem,
 
         // pointer to OT mem
         gGT->tileView_UI.ptrOT,
 
-        *(int *)*ppuVar18, *(int *)(*ppuVar18 + 4),
-        *(int *)(*ppuVar18 + 8), *(int *)(*ppuVar18 + 0xc), 0, 0x1000, 0);
+        ptrColor[0], ptrColor[1], 
+		ptrColor[2], ptrColor[3],
+		
+		0, 0x1000, 0);
 
     sVar4 = *(short*)0x800b8638;
 
@@ -471,12 +456,14 @@ void CS_Garage_MenuBoxFuncPtr(void)
             // previous equals current
             sdata->advCharSelectIndex_prev = sdata->advCharSelectIndex_curr;
 
-            // add one, then chop of all "bits" that come after 7,
-            // that way, the number 8 turns into 0, so you stay in bounds
-            sdata->advCharSelectIndex_curr = uVar21 & 7;
+			// clamp 0-7
+			uVar21 = uVar21 & 7;
 
-            Garage_MoveLR();
+            sdata->advCharSelectIndex_curr = uVar21;
+
+            Garage_MoveLR(uVar21);
         }
+		
         *(short*)0x800b8638 =  *(short*)0x800b85c4;
         if (*(short*)0x800b863a < *(short*)0x800b85cc)
         {
@@ -497,7 +484,7 @@ LAB_800b821c:
     if (0 < *(short*)0x800b863a)
     {
         // decrease zoom frame timer
-        *(short*)0x800b863a --;
+        *(short*)0x800b863a = *(short*)0x800b863a - 1;
     }
 
     sVar4 = *(int*)0x800b863e;
@@ -537,14 +524,13 @@ LAB_800b821c:
 
     if (*(int*)0x800b8640 == 0)
     {
-        *(short*)0x800b863a = (short)DAT_800b85cc;
+        *(short*)0x800b863a = *(short*)0x800b85cc;
     }
-    if (DAT_800b863c != 0)
+    if (*(int*)0x800b863c != 0)
     {
-        DAT_800b863c --;
+        *(int*)0x800b863c = *(int*)0x800b863c - 1;
     }
-    puVar6 = gGT->tileView[0];
-
+    
     // if current is zero, and previous is 7
     if ((sdata->advCharSelectIndex_curr == 0) && (sdata->advCharSelectIndex_prev == 7))
     {
@@ -581,45 +567,41 @@ LAB_800b821c:
     // pointer to position,
     // pointer to rotation
 
-    CAM_Path_Move((int)sVar4, &local_58, &local_50, auStack72);
+    int getPath;
+    CAM_Path_Move((int)sVar4, &local_58, &local_50, &getPath);
 
     // set position and rotation to tileView
-    *puVar6 = local_58;
+    gGT->tileView[0].pos[0] = local_58;
     gGT->tileView[0].pos[1] = local_56;
     gGT->tileView[0].pos[2] = local_54;
+	
     gGT->tileView[0].rot[0] = local_50;
     gGT->tileView[0].rot[1] = local_4e;
-    iVar7 = DAT_800b863c;
     gGT->tileView[0].rot[2] = local_4c;
 
+	iVar7 = *(int*)0x800b863c;
     if (iVar7 == 0)
     {
-        iVar7 = (DAT_800b85cc - *(short*)0x800b863a) *
-                (DAT_800b85d4 - DAT_800b85d0);
-        if (DAT_800b85cc == 0)
-        {
-            trap(0x1c00);
-        }
-        if ((DAT_800b85cc == -1) && (iVar7 == -0x80000000))
-        {
-            trap(0x1800);
-        }
-    }
+        iVar7 = (*(int*)0x800b85cc - *(short*)0x800b863a) *
+                (*(int*)0x800b85d4 - *(int*)0x800b85d0);
+		
+		#if 0
+        if (DAT_800b85cc == 0) trap(0x1c00);
+        if ((DAT_800b85cc == -1) && (iVar7 == -0x80000000)) trap(0x1800);
+		#endif
+	}
     else
     {
-        iVar7 = iVar7 * (DAT_800b85d4 - DAT_800b85d0);
-        if (DAT_800b85cc == 0)
-        {
-            trap(0x1c00);
-        }
-        if ((DAT_800b85cc == -1) && (iVar7 == -0x80000000))
-        {
-            trap(0x1800);
-        }
+        iVar7 = iVar7 * (*(int*)0x800b85d4 - *(int*)0x800b85d0);
+		
+		#if 0
+        if (DAT_800b85cc == 0) trap(0x1c00);
+        if ((DAT_800b85cc == -1) && (iVar7 == -0x80000000)) trap(0x1800);
+		#endif
     }
-    iVar7 = DAT_800b85d0 + iVar7 / DAT_800b85cc;
-    gGT->tileView[1].distanceToScreen_CURR = iVar7;
+	
+    iVar7 = *(int*)0x800b85d0 + iVar7 / *(int*)0x800b85cc;
+    
+	gGT->tileView[1].distanceToScreen_CURR = iVar7;
     gGT->tileView[0].distanceToScreen_PREV = iVar7;
 }
-
-#endif
