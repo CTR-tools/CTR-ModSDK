@@ -5209,6 +5209,8 @@ LAB_800b17e4:
           
 		  *param_2 = *param_2 + 1;
         }
+		
+		// UI_Map_DrawRawIcon
         FUN_8004dc44(param_1,&local_50,0x37,uVar6,0,0x1000);
       }
       psVar10 = psVar10 + 4;
@@ -5304,8 +5306,11 @@ void FUN_800b1a18(undefined4 param_1,int param_2,short *param_3)
         
 		*param_3 = *param_3 + 1;
       }
+	  
+	  // UI_Map_DrawRawIcon
       FUN_8004dc44(param_1,iVar6 + 0x44,0x31,iVar5,0,0x1000);
-      if (
+      
+	  if (
 			(!bVar2) &&
 			(
 				iVar5 = *(int *)(iVar6 + 0x44) -

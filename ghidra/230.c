@@ -4668,7 +4668,7 @@ LAB_800b0774:
           uVar6 = uVar6 + 1;
           iVar10 = ((((uint)bVar1 - (uint)bVar2) + (uint)bVar3) - (uint)bVar4) * 0x10000;
 		  
-		  // Draw Map
+		  // UI_Map_DrawMap
           FUN_8004d614(
 		  
 						// top half

@@ -10008,7 +10008,7 @@ void FUN_8004cec4(void)
 }
 
 
-// Draw map
+// UI_Map_DrawMap
 void FUN_8004d614(int param_1,int param_2,short param_3,short param_4,int param_5,void *param_6,
                  byte param_7)
 
@@ -15343,7 +15343,7 @@ LAB_80053c98:
         local_74 = 0xcd;
       }
 
-	  // Draw the map
+	  // UI_Map_DrawMap
       FUN_8004d614(
 					// top half and bottom half
 					local_7c,local_78,
