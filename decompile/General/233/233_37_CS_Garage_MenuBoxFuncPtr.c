@@ -29,12 +29,6 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     int local_64;
     u_int local_60;
     int local_5c;
-    short local_58;
-    short local_56;
-    short local_54;
-    short local_50;
-    short local_4e;
-    short local_4c;
     u_short local_40;
     int local_30;
     int local_2c;
@@ -250,21 +244,15 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     } while (iVar17 < 3);
 
     // "Intermediate"
-
     sVar4 = DecalFont_GetLineWidth(sdata->lngStrings[0x249], 1);
 
-    local_70 = (local_40 - (sVar4 >> 1)) + -6;
-    local_6e = 0xb;
-
-    // "Intermediate"
-
-    local_6c = DecalFont_GetLineWidth(sdata->lngStrings[0x249], 1);
-
-    local_6c = local_6c + 0xc;
-    local_6a = 0x44;
+    r.x = (local_40 - (sVar4 >> 1)) + -6;
+    r.y = 0xb;
+    r.w = sVar4 + 0xc;
+    r.h = 0x44;
 
     // Draw 2D Menu rectangle background
-    MENUBOX_DrawInnerRect(&local_70, 4, gGT->backBuffer->otMem.startPlusFour);
+    MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
 
 	#if 0
 	// Original game uses array at 800b85d8,
@@ -289,7 +277,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     iVar17 = DecalFont_GetLineWidth(name, 1) >> 1;
 
     // Color data
-    ptrColor = &data.ptrColor[iVar7];
+    ptrColor = data.ptrColor[iVar7];
 
 	struct Icon** iconPtrArray =
 		ICONGROUP_GETICONS(gGT->iconGroup[4]);
@@ -568,16 +556,18 @@ LAB_800b821c:
     // pointer to rotation
 
     int getPath;
-    CAM_Path_Move((int)sVar4, &local_58, &local_50, &getPath);
+	short pos[3];
+	short rot[3];
+    CAM_Path_Move((int)sVar4, &pos[0], &rot[0], &getPath);
 
     // set position and rotation to tileView
-    gGT->tileView[0].pos[0] = local_58;
-    gGT->tileView[0].pos[1] = local_56;
-    gGT->tileView[0].pos[2] = local_54;
+    gGT->tileView[0].pos[0] = pos[0];
+    gGT->tileView[0].pos[1] = pos[1];
+    gGT->tileView[0].pos[2] = pos[2];
 	
-    gGT->tileView[0].rot[0] = local_50;
-    gGT->tileView[0].rot[1] = local_4e;
-    gGT->tileView[0].rot[2] = local_4c;
+    gGT->tileView[0].rot[0] = rot[0];
+    gGT->tileView[0].rot[1] = rot[1];
+    gGT->tileView[0].rot[2] = rot[2];
 
 	iVar7 = *(int*)0x800b863c;
     if (iVar7 == 0)
