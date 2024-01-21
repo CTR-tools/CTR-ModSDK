@@ -26,8 +26,8 @@ void DECOMP_UI_Map_GetIconPos(short* ptrMap,int* posX,int* posY)
   
   else if (sVar1 == 1) 
   {
-	iVar4 = ptrMap7 + WIDE_34(*posX * ptrMap[5] * 2) / (ptrMap[0] - ptrMap[2]);
-	iVar2 = ptrMap6 - (*posY * ptrMap[4]    ) / (ptrMap[1] - ptrMap[3]);
+	iVar4 = ptrMap7 + (*posX * ptrMap[5] * 2) / (ptrMap[0] - ptrMap[2]);
+	iVar2 = ptrMap6 - WIDE_34(*posY * ptrMap[4]    ) / (ptrMap[1] - ptrMap[3]);
   }
   
   else if (sVar1 == 2) 
@@ -38,8 +38,8 @@ void DECOMP_UI_Map_GetIconPos(short* ptrMap,int* posX,int* posY)
   
   else 
   {
-    iVar4 = ptrMap7 - WIDE_34(*posX * ptrMap[5] * 2) / (ptrMap[0] - ptrMap[2]);
-    iVar2 = ptrMap6 + (*posY * ptrMap[4]    ) / (ptrMap[1] - ptrMap[3]);
+    iVar4 = ptrMap7 - (*posX * ptrMap[5] * 2) / (ptrMap[0] - ptrMap[2]);
+    iVar2 = ptrMap6 + WIDE_34(*posY * ptrMap[4]    ) / (ptrMap[1] - ptrMap[3]);
   }
 
   if (sdata->gGT->numPlyrCurrGame == 3) 
