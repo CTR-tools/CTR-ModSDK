@@ -10,7 +10,6 @@ void DECOMP_UI_RenderFrame_Racing()
 	short sVar2;
 	u_char bVar3;
 	int partTimeVariable1;
-	u_int partTimeVariable4;
 	int* ptrColor;
 	u_char *pbVar6;
 	int i;
@@ -24,7 +23,6 @@ void DECOMP_UI_RenderFrame_Racing()
 	short sVar17;
 	u_int local_7c;
 	u_int local_78;
-	u_int local_74;
 	u_int local_70;
 	struct Driver* playerStruct;
 	struct UiElement2D *hudStructPtr;
@@ -40,6 +38,9 @@ void DECOMP_UI_RenderFrame_Racing()
 	struct DB *backBuffer;
 	struct Thread* turboThread;
 	struct Turbo* turboThreadObject;
+	
+	u_int mapPosX;
+	u_int mapPosY;
 	
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
@@ -363,14 +364,8 @@ void DECOMP_UI_RenderFrame_Racing()
 						FPS_DOUBLE(10)
 					);
 
-					// Convert X
-					partTimeVariable4 = DECOMP_UI_ConvertX_2((int)LetterCTR_Pos[0], 0x200);
-					curr->matrix.t[0] = partTimeVariable4;
-
-					// Convert Y
-					partTimeVariable4 = DECOMP_UI_ConvertY_2((int)LetterCTR_Pos[1],0x200);
-					curr->matrix.t[1] = partTimeVariable4;
-
+					curr->matrix.t[0] = DECOMP_UI_ConvertX_2((int)LetterCTR_Pos[0],0x200);
+					curr->matrix.t[1] = DECOMP_UI_ConvertY_2((int)LetterCTR_Pos[1],0x200);
 					curr->matrix.t[2] = 0x200;
 				}
 			}
@@ -917,54 +912,36 @@ void DECOMP_UI_RenderFrame_Racing()
 		DECOMP_UI_Map_DrawGhosts	(levPtrMap, gGT->threadBuckets[GHOST].thread);
 		DECOMP_UI_Map_DrawTracking	(levPtrMap, gGT->threadBuckets[TRACKING].thread);
 
-		// if ptr_map is valid
-		if (levPtrMap != 0)
+		mapPosX = 500;
+		mapPosY = 195;
+
+		if (gGT->numPlyrCurrGame == 3)
 		{
-			// If numPlyrCurrGame is 1
-			if (gGT->numPlyrCurrGame == '\x01')
-			{
-				// posX
-				partTimeVariable4 = 500;
-
-				// posY
-				local_74 = 0xc3;
-			}
-
-			// if numPlyrCurrGame is not 1
-			else
-			{
-				// if numPlyrCurrGame is not 3
-				if (gGT->numPlyrCurrGame != '\x03') goto LAB_80054040;
-				
-				// posX
-				partTimeVariable4 = 440;
-
-				// posY
-				local_74 = 0xcd;
-			}
-
-			// Draw the map
-			DECOMP_UI_Map_DrawMap
-			(
-				// top half and bottom half
-				gGT->ptrIcons[3],
-				gGT->ptrIcons[4],
-				
-				// X and Y
-				partTimeVariable4, local_74,
-
-				// Pointer to primary memory
-				&gGT->backBuffer->primMem,
-
-				// pointer to OT memory
-				gGT->tileView_UI.ptrOT,
-
-				// color, in this case white
-				1
-			);
+			mapPosX -= 60;
+			mapPosY += 10;
 		}
+
+		// Draw the map
+		DECOMP_UI_Map_DrawMap
+		(
+			// top half and bottom half
+			gGT->ptrIcons[3],
+			gGT->ptrIcons[4],
+			
+			// X and Y
+			mapPosX, mapPosY,
+
+			// Pointer to primary memory
+			&gGT->backBuffer->primMem,
+
+			// pointer to OT memory
+			gGT->tileView_UI.ptrOT,
+
+			// color, in this case white
+			1
+		);
 	}
-	LAB_80054040:
+	
 	bVar3 = false;
 
 	// loop counter

@@ -70,12 +70,16 @@ void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY)
 
   #ifdef USE_16BY9
   addX = WIDE_34(addX);
-  addX += ((462 - map->iconStartX) / 4) + 5;
+  
+  if (sdata->gGT->numPlyrCurrGame == 1)
+  {
+	addX += ((462 - map->iconStartX) / 4) + 5;
+  }
   #endif
 
   if (sdata->gGT->numPlyrCurrGame == 3) 
   {
-    addX -= 0x3c;
+    addX -= 60;
     addY += 10;
   }
   

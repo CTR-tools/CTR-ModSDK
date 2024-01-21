@@ -60,9 +60,12 @@ void UI_Map_DrawMap_ExtraFunc(struct Icon* icon, POLY_FT4* p, short posX, short 
 		leftX += ((midX-leftX) * 250) / 1000;
 		posX -= ((posX-midX) * 250) / 1000;
 		
-		// 462 is midX of Crash Cove
-		leftX += ((462 - midX) / 4) + 5;
-		posX += ((462 - midX) / 4) + 5;
+		if (sdata->gGT->numPlyrCurrGame == 1)
+		{
+			// 462 is midX of Crash Cove
+			leftX += ((462 - midX) / 4) + 5;
+			posX += ((462 - midX) / 4) + 5;
+		}
 	}
 	
 	#endif
