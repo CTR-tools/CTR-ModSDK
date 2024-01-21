@@ -97,10 +97,11 @@ common, 232, AH_Map_Main, 0x0, General/232/232_24_AH_Map_Main.c
 common, 232, AH_MaskHint_boolCanSpawn, 0x0, General/232/232_99_AH_MaskHint_boolCanSpawn.c
 
 // 233
-common, 233, CS_Credits_Init, 0x0, General/233/233_CS_Credits_Init.c
-common, 233, CS_Credits_NewDancer, 0x0, General/233/233_CS_Credits_NewDancer.c
-common, 233, CS_Credits_End, 0x0, General/233/233_50_CS_Credits_End.c
 common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_32_CS_Podium_FullScene_Init.c
+common, 233, CS_Garage_MenuBoxFuncPtr, 0x0, General/233/233_37_CS_Garage_MenuBoxFuncPtr.c
+common, 233, CS_Credits_Init, 0x0, General/233/233_46_CS_Credits_Init.c
+common, 233, CS_Credits_NewDancer, 0x0, General/233/233_48_CS_Credits_NewDancer.c
+common, 233, CS_Credits_End, 0x0, General/233/233_50_CS_Credits_End.c
 
 // exe globals
 common, exe, data, 0x0, General/zGlobal_DATA.c

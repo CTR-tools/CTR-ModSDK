@@ -1,5 +1,7 @@
 #include <common.h>
 
+#if 0
+
 void CS_Garage_MenuBoxFuncPtr(void)
 {
     char bVar1;
@@ -620,9 +622,4 @@ LAB_800b821c:
     gGT->tileView[0].distanceToScreen_PREV = iVar7;
 }
 
-struct MenuBox *CS_Garage_GetMenuBox(void)
-{
-    // this "MenuBox" is what displays the driver stats,
-    // driver name, and arrows, before selecting the driver
-    return 0x800b8598;
-}
+#endif
