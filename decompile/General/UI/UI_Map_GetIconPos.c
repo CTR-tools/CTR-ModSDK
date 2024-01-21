@@ -77,6 +77,25 @@ void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY)
   //int distToRight = map->iconSizeX - addX;
   //addX = map->iconSizeX - WIDE_34(distToRight);
   #endif
+
+// See how the origin of the map changes constantly?
+// The map icon has to somehow scale with respect to this
+// origin, otherwise the 3D->2D IconPos will never work
+#if 0
+  if(*(int*)0x8000c000 == 0)
+  {
+	addX = 0;
+	addY = 0;
+  }
+  
+  else if(*(int*)0x8000c000 == 1)
+  {
+	addX = map->iconSizeX;
+	addY = map->iconSizeY;
+  }
+
+  *(int*)0x8000c000 = (*(int*)0x8000c000 + 1) % 2;
+#endif
   
   *posX = map->iconStartX + addX;
   *posY = map->iconStartY + addY - 0x10;

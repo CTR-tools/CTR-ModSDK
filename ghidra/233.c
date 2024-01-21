@@ -4590,6 +4590,7 @@ void FUN_800b7834(void)
   // bar length (animated)		
   puVar20 = &DAT_800b85e8;
   
+  // 3 bars (speed, accel, turn)
   do {
     local_60 = uVar22 | (uint)uVar21 << 0x10;
     local_5c = CONCAT22(7,*puVar20);
@@ -4626,6 +4627,8 @@ void FUN_800b7834(void)
     iVar15 = 4;
     iVar7 = 0;
     iVar14 = 0xd;
+	
+	// 6 bars (color variation)
     do {
       iVar12 = 0xd;
       if ((short)*puVar20 <= iVar14) {
@@ -4692,6 +4695,7 @@ void FUN_800b7834(void)
       iVar16 = iVar16 + 1;
       iVar14 = iVar14 + 0xd;
     } while (iVar16 < 6);
+	
     uVar21 = uVar21 + 0xf;
     puVar20 = puVar20 + 1;
     iVar17 = iVar17 + 1;
