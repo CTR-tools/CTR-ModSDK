@@ -154,13 +154,9 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 		// outline color white
         local_60 = *(int*)0x800b7780;
 
-        CTR_Box_DrawWireBox(&r, &local_60,
-
-                            // pointer to OT memory
-                            gGT->tileView_UI.ptrOT,
-
-                            // pointer to PrimMem struct
-                            &gGT->backBuffer->primMem);
+        CTR_Box_DrawWireBox(
+			&r, &local_60,
+			gGT->tileView_UI.ptrOT, primMem);
 
 		r.x = uVar22 + 1;
 		r.y = local_30;
@@ -170,13 +166,10 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 		// outline color black
 		local_60 = local_60 & 0xff000000;
 
-        CTR_Box_DrawWireBox(&r, &local_60,
-
-                            // pointer to OT memory
-                            gGT->tileView_UI.ptrOT,
-
-                            // pointer to PrimMem struct
-                            &gGT->backBuffer->primMem);
+        CTR_Box_DrawWireBox(
+			&r, &local_60,
+            gGT->tileView_UI.ptrOT, primMem);
+			
         iVar16 = 0;
 
         // color data of bars (blue green yellow red)
@@ -202,9 +195,6 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
             }
             if (iVar7 + iVar5 <= (int)(short)*puVar20)
             {
-                // backbuffer
-                iVar12 = gGT->backBuffer;
-
                 // primMem curr
                 POLY_G4* p = primMem->curr;
 
