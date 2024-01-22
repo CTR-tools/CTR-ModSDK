@@ -55,7 +55,7 @@ void RunUpdateHook()
 	gGT->cameraDC[0].tileView = 0;
 
 	// amount of milliseconds per frame, 32 in 30fps, 16 in 60fps
-	speed = gGT->variousTimers[5];
+	speed = gGT->elapsedTimeMS;
 
 	// adjust to my liking
 	speed = 3 * (speed / 2);
