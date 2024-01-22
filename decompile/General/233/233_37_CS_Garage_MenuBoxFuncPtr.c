@@ -489,6 +489,7 @@ LAB_800b821c:
     {
         *(short*)0x800b863a = *(int*)0x800b85cc;
     }
+	
     if (*(short*)0x800b863c != 0)
     {
         *(short*)0x800b863c = *(short*)0x800b863c - 1;
