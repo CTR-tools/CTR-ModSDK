@@ -331,7 +331,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
                 {
                     *(int*)0x800b8640 = 0;
                     bVar1 = *(short*)0x800b863a < *(int*)0x800b85cc;
-                    gGT->gameMode2 &= 0xfffdffff;
+                    gGT->gameMode2 &= ~GARAGE_OSK;
                     if (bVar1)
                     {
                         *(short*)0x800b863c = *(int*)0x800b85cc - sVar4;
@@ -464,7 +464,7 @@ LAB_800b821c:
             (
 				sVar4 = *(short*)0x800b863e + 1,
 
-				(gGT->gameMode2 & 0x20000) != 0
+				(gGT->gameMode2 & GARAGE_OSK) != 0
 			)
 		))
 	   )
