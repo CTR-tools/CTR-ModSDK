@@ -4910,8 +4910,11 @@ LAB_800b8084:
 	  // Garage_MoveLR
       FUN_80030694();
     }
+	
+	// reset frame counter to max number of frames
     DAT_800b8638 = DAT_800b85c4;
-    if (DAT_800b863a < DAT_800b85cc) {
+    
+	if (DAT_800b863a < DAT_800b85cc) {
       DAT_800b863c = (short)DAT_800b85cc - DAT_800b863a;
     }
     DAT_800b8640 = 0;

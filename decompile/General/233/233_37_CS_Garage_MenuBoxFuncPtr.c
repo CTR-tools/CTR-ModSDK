@@ -446,7 +446,9 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
             Garage_MoveLR(uVar21);
         }
 		
+		// reset frame counter to max number of frames
         *(short*)0x800b8638 =  *(short*)0x800b85c4;
+		
         if (*(short*)0x800b863a < *(int*)0x800b85cc)
         {
             *(short*)0x800b863c = *(int*)0x800b85cc - *(short*)0x800b863a;
