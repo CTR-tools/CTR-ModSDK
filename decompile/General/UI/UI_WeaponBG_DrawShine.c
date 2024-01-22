@@ -21,7 +21,7 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
         wumpaShine = &sdata->wumpaShineColor2[0];
     }
 
-    sVar3 = (short)((icon->texLayout.u1 - icon->texLayout.u0) * (int)param_7) >> 0xc;
+    sVar3 = (short)(((icon->texLayout.u1 - icon->texLayout.u0) * (int)param_7) >> 0xc);
     sVar1 = posX + sVar3;
     param_7 = param_7 >> 0xc;
     sVar12 = sVar1 - param_7;
