@@ -329,7 +329,6 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
                 sVar4 = *(short*)0x800b863a;
                 if (*(int*)0x800b8640 == 1)
                 {
-					printf("fail2\n");
                     *(int*)0x800b8640 = 0;
                     bVar1 = *(short*)0x800b863a < *(int*)0x800b85cc;
                     gGT->gameMode2 &= 0xfffdffff;
@@ -361,9 +360,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 
             // if false
             if (*(int*)0x800b8640 == 0)
-            {
-				printf("pressX\n");
-				
+            {	
                 // make it true
                 *(int*)0x800b8640 = 1;
             }
@@ -439,7 +436,6 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
             *(short*)0x800b863c = *(int*)0x800b85cc - *(short*)0x800b863a;
         }
 		
-		printf("fail1\n");
         *(int*)0x800b8640 = 0;
         gGT->gameMode2 &= ~GARAGE_OSK;
     }
