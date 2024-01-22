@@ -5044,6 +5044,8 @@ LAB_800b821c:
     }
   }
   iVar7 = DAT_800b85d0 + iVar7 / DAT_800b85cc;
+  
+  // what? Why is this tileView[1]
   *(int *)(puVar2 + 0x274) = iVar7;
   *(int *)(puVar2 + 0x180) = iVar7;
   return;

@@ -568,6 +568,6 @@ LAB_800b821c:
 	
     iVar7 = *(int*)0x800b85d0 + iVar7 / *(int*)0x800b85cc;
     
-	gGT->tileView[1].distanceToScreen_CURR = iVar7;
+	gGT->tileView[0].distanceToScreen_CURR = iVar7;
     gGT->tileView[0].distanceToScreen_PREV = iVar7;
 }
