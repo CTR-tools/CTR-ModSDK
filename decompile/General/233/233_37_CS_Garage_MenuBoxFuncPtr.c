@@ -13,7 +13,6 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     int iVar12;
     u_int *puVar13;
     int iVar14;
-    int iVar15;
     int iVar16;
     int iVar17;
     int* ptrColor;
@@ -41,8 +40,14 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     // CameraDC, freecam mode
     gGT->cameraDC[0].cameraMode = 3;
 
-    // subtract transition timer by one frame
-    sVar4 = *(short*)0x800b8638 - 1;
+	#ifdef USE_60FPS
+	if( (gGT->timer & 1) == 0)
+		sVar4 = *(short*)0x800b8638;
+	else
+	#endif
+
+		// subtract transition timer by one frame
+		sVar4 = *(short*)0x800b8638 - 1;
 
     // if mid-transition, skip some code
     if (*(short*)0x800b8638 != 0)
@@ -64,7 +69,18 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 		short* bar = (unsigned int)0x800b85e8 + 2 * iVar7;
 		short stat = *(short *)((unsigned int)0x800b85f8 + MDC->engineID*6 + iVar7*2);
 		
-        if (*bar < stat)	*bar = *bar + 3;
+		#ifdef USE_16BY9
+		stat = WIDE_34(stat);
+		#endif
+		
+		// half bar length, half speed per frame, just add 1
+		#if (defined(USE_60FPS) && defined(USE_16BY9))
+			#define BAR_RATE 1
+		#else
+			#define BAR_RATE 3
+		#endif
+		
+        if (*bar < stat)	*bar = *bar + BAR_RATE;
         if (stat < *bar)	*bar = stat;
     }
 
@@ -166,12 +182,13 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
         // color data of bars (blue green yellow red)
         puVar13 = (int*)0x800b861c;
 
-        iVar15 = 4;
+		int segmentLength = WIDE_PICK(13, 10);
+
         iVar7 = 0;
-        iVar14 = 0xd;
+        iVar14 = segmentLength;
         do
         {
-            iVar12 = 0xd;
+            iVar12 = segmentLength;
             if ((short)*puVar20 <= iVar14)
             {
                 iVar12 = (u_int)*puVar20 - iVar7;
@@ -219,17 +236,26 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 				*(int*)p = (*(int*)ot & 0xffffff) | 0x8000000;
 				*(int*)ot = (int)p & 0xffffff;
             }
+			
+			// color index
             puVar13 = puVar13 + 1;
-            iVar15 = iVar15 + 4;
-            iVar7 = iVar7 + 0xd;
+			
+			// segment index
             iVar16 = iVar16 + 1;
-            iVar14 = iVar14 + 0xd;
-        } while (iVar16 < 6);
+			
+            iVar7 = iVar7 + segmentLength;
+            iVar14 = iVar14 + segmentLength;
+        
+		} while (iVar16 < 6);
+		
+		// 15 pixels lower Y axis
         uVar21 = uVar21 + 0xf;
-        puVar20 = puVar20 + 1;
-        iVar17 = iVar17 + 1;
         local_2c = local_2c + 0xf;
         local_30 = local_30 + 0xf;
+		
+        puVar20 = puVar20 + 1;
+        iVar17 = iVar17 + 1;
+		
     } while (iVar17 < 3);
 
     // "Intermediate"
@@ -258,7 +284,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     DecalFont_DrawLine(name, 0x100, 0xb4, 1, 0xffff8000);
     
 	iVar7 = 0;
-    if ((sdata->frameCounter & 4) == 0)
+    if ((sdata->frameCounter & FPS_DOUBLE(4)) == 0)
     {
         iVar7 = 3;
     }
@@ -447,43 +473,46 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 LAB_800b821c:
     *(short*)0x800b8638 = sVar4;
 
-    // if frames remain
+    // if frames remaing for zoom camera
     if (0 < *(short*)0x800b863a)
     {
-        // decrease zoom frame timer
-        *(short*)0x800b863a = *(short*)0x800b863a - 1;
+		#ifdef USE_60FPS
+		if(gGT->timer & 1)
+		#endif
+		
+			// decrease zoom frame timer
+			*(short*)0x800b863a = *(short*)0x800b863a - 1;
     }
 
 	// if pressed X once, and waited for countdown clock
-    sVar4 = *(short*)0x800b863e;
-    if (
-        ((*(int*)0x800b8640 == 1) && (*(short*)0x800b863a == 0)) &&
-
-        ((
-            (0x3b < *(short*)0x800b863e) ||
-            (
-				sVar4 = *(short*)0x800b863e + 1,
-
-				(gGT->gameMode2 & GARAGE_OSK) != 0
-			)
-		))
-	   )
-    {
-        // set desiredMenuBox to OSK (on-screen keyboard)
-        sdata->ptrDesiredMenuBox = &data.menuBox_OSK;
-
-        data.characterIDs[0] = sdata->advCharSelectIndex_curr;
-        sdata->advProgress.characterID = data.characterIDs[0];
-
-        TitleOSK_RestoreName(0);
-
-        // Play Sound
-        OtherFX_Play(1, 1);
-
-        sVar4 = *(short*)0x800b863e;
-    }
+    if ((*(int*)0x800b8640 == 1) && (*(short*)0x800b863a == 0))
+	{
+		if(
+				// frames remaining for animation
+				(0x3b < *(short*)0x800b863e) ||
+				((gGT->gameMode2 & GARAGE_OSK) != 0)
+		  )
+		{
+			// set desiredMenuBox to OSK (on-screen keyboard)
+			sdata->ptrDesiredMenuBox = &data.menuBox_OSK;
 	
-    *(short*)0x800b863e = sVar4;
+			data.characterIDs[0] = sdata->advCharSelectIndex_curr;
+			sdata->advProgress.characterID = data.characterIDs[0];
+	
+			TitleOSK_RestoreName(0);
+	
+			// Play Sound
+			OtherFX_Play(1, 1);
+		}
+		
+		else
+		{
+			#ifdef USE_60FPS
+			if(gGT->timer & 1)
+			#endif
+				*(short*)0x800b863e = *(short*)0x800b863e + 1;
+		}
+	}
 
     if (*(int*)0x800b8640 == 0)
     {
@@ -492,7 +521,10 @@ LAB_800b821c:
 	
     if (*(short*)0x800b863c != 0)
     {
-        *(short*)0x800b863c = *(short*)0x800b863c - 1;
+		#ifdef USE_60FPS
+		if(gGT->timer & 1)
+		#endif
+			*(short*)0x800b863c = *(short*)0x800b863c - 1;
     }
     
     // if current is zero, and previous is 7
