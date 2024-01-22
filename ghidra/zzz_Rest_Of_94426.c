@@ -10623,12 +10623,14 @@ void FUN_8004e37c(int param_1,short param_2,short param_3,int param_4,void *para
   }
   
   iVar10 = 0;
+  
   iVar8 = (int)(((uint)*(byte *)(param_1 + 0x18) - (uint)*(byte *)(param_1 + 0x14)) * (int)param_7)
           >> 0xc;
   sVar3 = (short)iVar8;
   sVar1 = param_2 + sVar3;
   param_7 = param_7 >> 0xc;
   sVar12 = sVar1 - param_7;
+  
   sVar4 = (short)((int)(((uint)*(byte *)(param_1 + 0x1d) - (uint)*(byte *)(param_1 + 0x15)) *
                        (int)param_8) >> 0xc);
   sVar2 = param_3 + sVar4;
