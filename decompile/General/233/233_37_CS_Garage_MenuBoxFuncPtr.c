@@ -519,37 +519,21 @@ LAB_800b821c:
 			*(short*)0x800b863c = *(short*)0x800b863c - 1;
     }
     
-    // if current is zero, and previous is 7
+    // Pura->Crash
     if ((sdata->advCharSelectIndex_curr == 0) && (sdata->advCharSelectIndex_prev == 7))
-    {
         sVar4 = 0xf0 - *(short*)0x800b8638;
-    }
 
-    // if current is not zero, or if previous is not 7
+    // Crash->Pura
+    else if ((sdata->advCharSelectIndex_curr == 7) && (sdata->advCharSelectIndex_prev == 0))
+		sVar4 = *(short*)0x800b8638 + 0xd2;
+
+    // Move Right
+    else if (sdata->advCharSelectIndex_prev < sdata->advCharSelectIndex_curr)
+        sVar4 = sdata->advCharSelectIndex_curr * 0x1e - *(short*)0x800b8638;
+
+    // Move Left
     else
-    {
-        // if current is 7, and previous is 0
-        if ((sdata->advCharSelectIndex_curr == 7) && (sdata->advCharSelectIndex_prev == 0))
-        {
-            sVar4 = *(short*)0x800b8638 + 0xd2;
-        }
-
-        // if current is not 7, or if previous is not zero
-        else
-        {
-            // if current is less more previous (you move right)
-            if (sdata->advCharSelectIndex_prev < sdata->advCharSelectIndex_curr)
-            {
-                sVar4 = sdata->advCharSelectIndex_curr * 0x1e - *(short*)0x800b8638;
-            }
-
-            // if current is less than previous (you move left)
-            else
-            {
-                sVar4 = sdata->advCharSelectIndex_curr * 0x1e + *(short*)0x800b8638;
-            }
-        }
-    }
+        sVar4 = sdata->advCharSelectIndex_curr * 0x1e + *(short*)0x800b8638;
 
     // animation frame index,
     // pointer to position,
@@ -559,6 +543,57 @@ LAB_800b821c:
 	short pos[3];
 	short rot[3];
     CAM_Path_Move((int)sVar4, &pos[0], &rot[0], &getPath);
+	
+	#ifdef USE_60FPS
+	
+	// if transitioning
+	if(*(short*)0x800b8638 != 0)
+	{
+		// if counter wasn't moved this frame
+		if((gGT->timer & 1) == 0)
+		{
+			// Pura->Crash
+			if ((sdata->advCharSelectIndex_curr == 0) && (sdata->advCharSelectIndex_prev == 7))
+				sVar4 = 0xf0 - (*(short*)0x800b8638-1);
+		
+			// Crash->Pura
+			else if ((sdata->advCharSelectIndex_curr == 7) && (sdata->advCharSelectIndex_prev == 0))
+				sVar4 = (*(short*)0x800b8638-1) + 0xd2;
+		
+			// Move Right
+			else if (sdata->advCharSelectIndex_prev < sdata->advCharSelectIndex_curr)
+				sVar4 = sdata->advCharSelectIndex_curr * 0x1e - (*(short*)0x800b8638-1);
+		
+			// Move Left
+			else
+				sVar4 = sdata->advCharSelectIndex_curr * 0x1e + (*(short*)0x800b8638-1);
+			
+			short pos2[3];
+			short rot2[3];
+			CAM_Path_Move((int)sVar4, &pos2[0], &rot2[0], &getPath);
+		
+			pos[0] = (pos[0] + pos2[0]) / 2;
+			pos[1] = (pos[1] + pos2[1]) / 2;
+			pos[2] = (pos[2] + pos2[2]) / 2;
+			
+			int diff = rot[1] - rot2[1];
+			if(diff < 0) diff = -diff;
+			
+			// on the one frame that jumps from
+			// 359 degrees -> 1 degree, just ignore
+			// interpolation. Nobody will notice a one-frame
+			// gap between Polar and Pura where it reuses the
+			// old frame's rotation, with lerp'd position
+			if(diff < 0x800)
+			{
+				rot[0] = (rot[0] + rot2[0]) / 2;
+				rot[1] = (rot[1] + rot2[1]) / 2;
+				rot[2] = (rot[2] + rot2[2]) / 2;
+			}
+		}
+	}
+	
+	#endif
 
     // set position and rotation to tileView
     gGT->tileView[0].pos[0] = pos[0];
