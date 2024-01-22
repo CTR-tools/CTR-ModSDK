@@ -1,6 +1,9 @@
 #include <common.h>
 
-void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, struct PrimMem *primMem, u_long *ot, char param_6, short param_7, short param_8, int param9)
+void DECOMP_UI_WeaponBG_DrawShine(
+	struct Icon *icon, short posX, short posY, 
+	struct PrimMem *primMem, u_long *ot, 
+	char param_6, short param_7, short param_8, int param9)
 {
     
     short sVar1;
@@ -30,6 +33,10 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
     sVar2 = posY + sVar4;
     param_8 = param_8 >> 0xc;
     sVar11 = sVar2 - param_8;
+	
+	#ifdef USE_16BY9
+	int len = (sVar3 * 250) / 1000;
+	#endif
 
     // loop 4 times
     for (i = 0; i < 4; i++)
@@ -42,6 +49,7 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
 
         switch (i)
         {
+		// top left
         case 0:
             // xy0
             p->x0 = posX;
@@ -52,9 +60,10 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
             p->x2 = posX;
             p->y2 = sVar2;
             p->x3 = sVar1;
-            p->y3 = sVar2;
+            p->y3 = sVar2;			
             break;
 
+		// top right
         case 1:
             // xy0
             sVar5 = (posX + sVar3 * 2) - param_7;
@@ -67,6 +76,7 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
             p->y2 = sVar2;
             p->x3 = sVar12;
             p->y3 = sVar2;
+			
             break;
 
         case 2:
@@ -81,6 +91,7 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
             p->y2 = sVar11;
             p->x3 = sVar1;
             p->y3 = sVar11;
+			
             break;
 
         case 3:
@@ -96,8 +107,25 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
             p->y2 = sVar11;
             p->x3 = sVar12;
             p->y3 = sVar11;
+			
             break;
         }
+		
+		#ifdef USE_16BY9
+		if(i & 1)
+		{
+			// x0 and x2 is the right side
+			p->x0 -= len;
+			p->x2 -= len;
+		}
+		
+		else
+		{
+			// x0 and x2 is the left side
+			p->x0 += len;
+			p->x2 += len;
+		}
+		#endif
 
         // color RGB
         *(u_int *)&p->r0 = wumpaShine[2];
@@ -107,7 +135,10 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
 
         setPolyGT4(p);
 
+		// always true
+		#if 0
         if (param_6 != 0)
+		#endif
         {
             p->tpage = (p->tpage & ~(0x60)) | (((u_short)param_6 - 1) * 0x20);
             p->code |= 2;

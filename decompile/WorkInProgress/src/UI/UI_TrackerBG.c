@@ -19,7 +19,7 @@ void DECOMP_UI_TrackerBG(struct Icon* targetIcon,short posX,short posY,struct Pr
   sVar10 = sVar1 - param_7;
 
   // wumpaShineTheta (given to sine)
-  sdata->wumpaShineTheta += 0x100;
+  sdata->wumpaShineTheta += FPS_HALF(0x100);
 
   offsY = ((targetIcon->texLayout.v2 - targetIcon->texLayout.v0) * param_8) >> 0xc;
   sVar2 = posY + offsY;

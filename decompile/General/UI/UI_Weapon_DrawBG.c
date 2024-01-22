@@ -15,29 +15,27 @@ void DECOMP_UI_Weapon_DrawBG(short param_1,short param_2,short param_3,struct Dr
   iVar2 = (int)param_3;
 
   // wumpaShineTheta (given to sine)
-  sdata->wumpaShineTheta += 0x100;
+  sdata->wumpaShineTheta += FPS_HALF(0x100);
 
   iVar1 = iVar2 * 0xd000 >> 0x10;
 
-#ifndef REBUILD_PS1
   for(i = 0; i < 2; i++)
   {
-
-	UI_WeaponBG_DrawShine(
-			// Weapon Roulette background (shine)
-			gGT->ptrIcons[0xc4/4],
+	DECOMP_UI_WeaponBG_DrawShine(
+			
+		// Weapon Roulette background (shine)
+		gGT->ptrIcons[0xc4/4],
 		
-			(int)param_1,(int)param_2,
+		(int)param_1,(int)param_2,
 		
-			// pointer to PrimMem struct
-			&gGT->backBuffer->primMem,
+		// pointer to PrimMem struct
+		&gGT->backBuffer->primMem,
 		
-			// pointer to OTMem 
-			gGT->tileView[d->driverID].ptrOT,
+		// pointer to OTMem 
+		gGT->tileView[d->driverID].ptrOT,
 		
-			2+i,iVar2,iVar1,0xff0000);
+		2+i,iVar2,iVar1,0xff0000);
   }
-#endif
 
   return;
 }
