@@ -312,13 +312,6 @@ void ui60_entryHook()
 		*(unsigned short*)0x80068cb8 = 0x258>>1;
 	}
 
-	// Blinking  UI
-	{	
-		// on-screen keyboard
-		*(unsigned char*)0x8004ad00 = 2*2; // underscore
-
-	}
-
 	// Missile
 	{
 		// beeping sound
