@@ -371,22 +371,13 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
             // if true
             else
             {
+				// if pressed X twice quickly
                 if (*(int*)0x800b8640 == 1)
                 {
                     // set desiredMenuBox to OSK (on-screen keyboard)
                     sdata->ptrDesiredMenuBox = &data.menuBox_OSK;
 
-                    // set Character ID of P1 to the
-                    // character you see in the
-                    // 3D Character Selection screen
-
-                    // Naughty Dog mistake:
-                    // This line still works, but it is redundant,
-                    // shouldn't need to pull characterID from array,
-                    // should just be 80086e84 = sdata->advCharSelectIndex_curr
                     data.characterIDs[0] = sdata->advCharSelectIndex_curr;
-
-                    // set icon ID to match Character ID
                     sdata->advProgress.characterID = data.characterIDs[0];
 
                     TitleOSK_RestoreName(0);
@@ -467,6 +458,7 @@ LAB_800b821c:
         *(short*)0x800b863a = *(short*)0x800b863a - 1;
     }
 
+	// if pressed X once, and waited for countdown clock
     sVar4 = *(short*)0x800b863e;
     if (
         ((*(int*)0x800b8640 == 1) && (*(short*)0x800b863a == 0)) &&
@@ -484,17 +476,7 @@ LAB_800b821c:
         // set desiredMenuBox to OSK (on-screen keyboard)
         sdata->ptrDesiredMenuBox = &data.menuBox_OSK;
 
-        // set Character ID of P1 to the
-        // character you see in the
-        // 3D Character Selection screen
-
-        // Naughty Dog mistake:
-        // This line still works, but it is redundant,
-        // shouldn't need to pull characterID from array,
-        // should just be 80086e84 = sdata->advCharSelectIndex_curr
         data.characterIDs[0] = sdata->advCharSelectIndex_curr;
-
-        // set Icon ID to match Character ID
         sdata->advProgress.characterID = data.characterIDs[0];
 
         TitleOSK_RestoreName(0);
