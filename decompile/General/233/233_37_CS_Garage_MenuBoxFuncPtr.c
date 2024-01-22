@@ -306,13 +306,13 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 
         (
             // If you dont press Triangle, Cross, Circle, or Square
-            ((sdata->AnyPlayerTap & 0x40070) == 0 &&
+            ((sdata->AnyPlayerTap & 0x40070) == 0) &&
 
              // If you dont press D-pad
-             ((sdata->AnyPlayerHold & 0xc) == 0))))
+             ((sdata->AnyPlayerHold & 0xc) == 0)
+		)
+	   )
         goto LAB_800b821c;
-
-    iVar7 = 2;
 
     // If you dont press D-pad
     if ((sdata->AnyPlayerHold & 0xc) == 0)
@@ -329,12 +329,13 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
                 sVar4 = *(short*)0x800b863a;
                 if (*(int*)0x800b8640 == 1)
                 {
+					printf("fail2\n");
                     *(int*)0x800b8640 = 0;
-                    bVar1 = *(short*)0x800b863a < *(short*)0x800b85cc;
+                    bVar1 = *(short*)0x800b863a < *(int*)0x800b85cc;
                     gGT->gameMode2 &= 0xfffdffff;
                     if (bVar1)
                     {
-                        *(short*)0x800b863c = *(short*)0x800b85cc - sVar4;
+                        *(short*)0x800b863c = *(int*)0x800b85cc - sVar4;
                     }
                 }
                 else
@@ -361,6 +362,8 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
             // if false
             if (*(int*)0x800b8640 == 0)
             {
+				printf("pressX\n");
+				
                 // make it true
                 *(int*)0x800b8640 = 1;
             }
@@ -394,8 +397,12 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
             }
         }
     }
+	
+	// if using D-pad
     else
     {
+		// erase animated bars
+		iVar7 = 2;
         puVar6 = (short*)0x800b85ec;
         do
         {
@@ -436,10 +443,12 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
         }
 		
         *(short*)0x800b8638 =  *(short*)0x800b85c4;
-        if (*(short*)0x800b863a < *(short*)0x800b85cc)
+        if (*(short*)0x800b863a < *(int*)0x800b85cc)
         {
-            *(short*)0x800b863c = *(short*)0x800b85cc - *(short*)0x800b863a;
+            *(short*)0x800b863c = *(int*)0x800b85cc - *(short*)0x800b863a;
         }
+		
+		printf("fail1\n");
         *(int*)0x800b8640 = 0;
         gGT->gameMode2 &= ~GARAGE_OSK;
     }
@@ -458,15 +467,19 @@ LAB_800b821c:
         *(short*)0x800b863a = *(short*)0x800b863a - 1;
     }
 
-    sVar4 = *(int*)0x800b863e;
+    sVar4 = *(short*)0x800b863e;
     if (
         ((*(int*)0x800b8640 == 1) && (*(short*)0x800b863a == 0)) &&
 
         ((
-            0x3b < *(int*)0x800b863e ||
-            (sVar4 = *(int*)0x800b863e + 1,
+            (0x3b < *(short*)0x800b863e) ||
+            (
+				sVar4 = *(short*)0x800b863e + 1,
 
-             (gGT->gameMode2 & 0x20000) != 0))))
+				(gGT->gameMode2 & 0x20000) != 0
+			)
+		))
+	   )
     {
         // set desiredMenuBox to OSK (on-screen keyboard)
         sdata->ptrDesiredMenuBox = &data.menuBox_OSK;
@@ -489,17 +502,18 @@ LAB_800b821c:
         // Play Sound
         OtherFX_Play(1, 1);
 
-        sVar4 = *(int*)0x800b863e;
+        sVar4 = *(short*)0x800b863e;
     }
-    *(int*)0x800b863e = sVar4;
+	
+    *(short*)0x800b863e = sVar4;
 
     if (*(int*)0x800b8640 == 0)
     {
-        *(short*)0x800b863a = *(short*)0x800b85cc;
+        *(short*)0x800b863a = *(int*)0x800b85cc;
     }
-    if (*(int*)0x800b863c != 0)
+    if (*(short*)0x800b863c != 0)
     {
-        *(int*)0x800b863c = *(int*)0x800b863c - 1;
+        *(short*)0x800b863c = *(short*)0x800b863c - 1;
     }
     
     // if current is zero, and previous is 7
@@ -552,7 +566,7 @@ LAB_800b821c:
     gGT->tileView[0].rot[1] = rot[1];
     gGT->tileView[0].rot[2] = rot[2];
 
-	iVar7 = *(int*)0x800b863c;
+	iVar7 = *(short*)0x800b863c;
     if (iVar7 == 0)
     {
         iVar7 = (*(int*)0x800b85cc - *(short*)0x800b863a) *
