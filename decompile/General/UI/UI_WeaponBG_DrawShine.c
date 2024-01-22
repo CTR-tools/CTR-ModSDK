@@ -57,7 +57,7 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
 
         case 1:
             // xy0
-            sVar5 = (posX + sVar3 << 1) - param_7;
+            sVar5 = (posX + sVar3 * 2) - param_7;
             p->x0 = sVar5;
             p->y0 = posY;
 
@@ -71,7 +71,7 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
 
         case 2:
             // xy0
-            sVar5 = (posY + sVar4 << 1) - param_8;
+            sVar5 = (posY + sVar4 * 2) - param_8;
             p->x0 = posX;
             p->y0 = sVar5;
 
@@ -85,8 +85,8 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
 
         case 3:
             // xy0
-            sVar5 = (posX + sVar3 << 1) - param_7;
-            sVar6 = (posY + sVar4 << 1) - param_8;
+            sVar5 = (posX + sVar3 * 2) - param_7;
+            sVar6 = (posY + sVar4 * 2) - param_8;
             p->x0 = sVar5;
             p->y0 = sVar6;
 
