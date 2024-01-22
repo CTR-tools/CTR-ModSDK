@@ -21,7 +21,7 @@ void DECOMP_VehPtr_Crashing_PhysAngular(struct Thread* t, struct Driver* d)
 		(d->ampTurnState * elapsedTimeMS >> 0xd)
 	) & 0xfff;
 	
-	d->rotCurr.y = d->unk3D4[0] + d->angle + d->unknownDimension2Curr;
+	d->rotCurr.y = d->unk3D4[0] + d->angle + d->turnAngleCurr;
 	
 	d->rotCurr.w = 
 		InterpBySpeed

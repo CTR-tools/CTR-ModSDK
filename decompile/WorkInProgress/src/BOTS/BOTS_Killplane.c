@@ -20,7 +20,7 @@ void DECOMP_BOTS_Killplane(struct Thread *botThread)
   if (strcmp(gGT->levelName, 0x80010000) == 0)
   {
     // edge-case override?
-    switch (bot->unknown_in_FUN_8005ca24[1])
+    switch (bot->unknown_lap_related[1])
     {
     case -0x6c:
       override = 0x84;
@@ -71,7 +71,7 @@ void DECOMP_BOTS_Killplane(struct Thread *botThread)
     frame = bot->botNavFrame;
 
     // current nav point (player turned AI)
-    currNav = bot->unknown_in_FUN_8005ca24[1];
+    currNav = bot->unknown_lap_related[1];
 
     // goBackCount
     backCount = frame->goBackCount;
@@ -91,7 +91,7 @@ void DECOMP_BOTS_Killplane(struct Thread *botThread)
         frame = sdata->NavPath_ptrHeader[i]->last - 0x14;
       }
       backCount = frame->goBackCount;
-      currNav = bot->unknown_in_FUN_8005ca24[1];
+      currNav = bot->unknown_lap_related[1];
     }
     // save ptr to nav frame
     bot->botNavFrame = frame;

@@ -65,7 +65,7 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d)
     d->botNavFrame = sdata->NavPath_ptrNavFrameArray[i];
 
     d->unk5a8 = 0;
-    d->unknownDimension2Curr = 0;
+    d->turnAngleCurr = 0;
     d->multDrift = 0;
     d->ampTurnState = 0;
     d->set_0xF0_OnWallRub = 0;

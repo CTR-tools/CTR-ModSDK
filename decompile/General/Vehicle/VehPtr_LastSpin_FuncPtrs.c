@@ -6,12 +6,12 @@ void DECOMP_VehPtr_Crashing_PhysAngular(struct Thread* t, struct Driver* d);
 
 void DECOMP_VehPtr_LastSpin_Update(struct Thread* t, struct Driver* d)
 {
-	int driftAngle = d->unknownDimension2Curr;
+	int driftAngle = d->turnAngleCurr;
 	
 	// if almost facing forward
 	if(
-		(driftAngle < 0x10) &&
-		(driftAngle > -0x10)
+		(driftAngle < 16) &&
+		(driftAngle > -16)
 		)
 	{
 		// stop spin
@@ -32,8 +32,8 @@ void DECOMP_VehPtr_LastSpin_PhysLinear(struct Thread* t, struct Driver* d)
 
 void DECOMP_VehPtr_LastSpin_PhysAngular(struct Thread* t, struct Driver* d)
 {
-	int unknownDimension2Curr;
-	unknownDimension2Curr = d->unknownDimension2Curr;
+	int driftAngleCurr;
+	driftAngleCurr = d->turnAngleCurr;
 	
 	d->numFramesSpentSteering = 10000;
 	
@@ -51,65 +51,65 @@ void DECOMP_VehPtr_LastSpin_PhysAngular(struct Thread* t, struct Driver* d)
 	
 	d->ampTurnState = d->rotationSpinRate;
 	
-	if(unknownDimension2Curr < 0)
+	if(driftAngleCurr < 0)
 	{
 		if(
 			(d->KartStates.Spinning.driftSpinRate > 0) &&
-			(unknownDimension2Curr > -400)
+			(driftAngleCurr > -400)
 			#ifdef USE_60FPS
 			&& (sdata->gGT->timer & 1)
 			#endif
 		  )
 		{
 			d->KartStates.Spinning.driftSpinRate = 
-				(unknownDimension2Curr * -4) >> 3;
+				(driftAngleCurr * -4) >> 3;
 			
 			if(d->KartStates.Spinning.driftSpinRate < FPS_HALF(0x20))
 				d->KartStates.Spinning.driftSpinRate = FPS_HALF(0x20);
 		}
 	
-		d->unknownDimension2Curr += d->KartStates.Spinning.driftSpinRate;
-		d->unknownDimension2Curr += 0x800U;
-		d->unknownDimension2Curr &= 0xfff;
-		d->unknownDimension2Curr -= 0x800;
+		d->turnAngleCurr += d->KartStates.Spinning.driftSpinRate;
+		d->turnAngleCurr += 0x800U;
+		d->turnAngleCurr &= 0xfff;
+		d->turnAngleCurr -= 0x800;
 	
 		if(
 			(d->KartStates.Spinning.driftSpinRate > 0) &&
-			(d->unknownDimension2Curr > 0)
+			(d->turnAngleCurr > 0)
 		)
 		{
-			d->unknownDimension2Curr = 0;
+			d->turnAngleCurr = 0;
 		}
 	}
 	
-	if(unknownDimension2Curr > 0)
+	if(driftAngleCurr > 0)
 	{
 		if(
 			(d->KartStates.Spinning.driftSpinRate < 0) &&
-			(unknownDimension2Curr < 400)
+			(driftAngleCurr < 400)
 			#ifdef USE_60FPS
 			&& (sdata->gGT->timer & 1)
 			#endif
 		  )
 		{
 			d->KartStates.Spinning.driftSpinRate = 
-				(unknownDimension2Curr * -4) >> 3;
+				(driftAngleCurr * -4) >> 3;
 			
 			if(d->KartStates.Spinning.driftSpinRate > FPS_HALF(-0x20))
 				d->KartStates.Spinning.driftSpinRate = FPS_HALF(-0x20);
 		}
 	
-		d->unknownDimension2Curr += d->KartStates.Spinning.driftSpinRate;
-		d->unknownDimension2Curr += 0x800U;
-		d->unknownDimension2Curr &= 0xfff;
-		d->unknownDimension2Curr -= 0x800;
+		d->turnAngleCurr += d->KartStates.Spinning.driftSpinRate;
+		d->turnAngleCurr += 0x800U;
+		d->turnAngleCurr &= 0xfff;
+		d->turnAngleCurr -= 0x800;
 		
 		if(
 			(d->KartStates.Spinning.driftSpinRate < 0) &&
-			(d->unknownDimension2Curr < 0)
+			(d->turnAngleCurr < 0)
 		)
 		{
-			d->unknownDimension2Curr = 0;
+			d->turnAngleCurr = 0;
 		}
 	}
 	

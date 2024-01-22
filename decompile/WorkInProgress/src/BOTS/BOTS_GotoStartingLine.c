@@ -49,7 +49,7 @@ void DECOMP_BOTS_GotoStartingLine(struct Driver *d)
   d->rotCurr.x = 0;
   d->rotPrev.x = 0;
   
-  d->unknownDimension2Curr = 0;
+  d->turnAngleCurr = 0;
 
   // turn on 21st flag of actions flag set, means driver is AI
   d->actionsFlagSet |= 0x100000;

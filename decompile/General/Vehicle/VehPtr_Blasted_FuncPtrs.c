@@ -53,16 +53,16 @@ void DECOMP_VehPtr_Blasted_PhysAngular(struct Thread *thread, struct Driver *dri
 	
 	driver->ampTurnState = driver->rotationSpinRate;
 	
-	driver->unknownDimension2Curr += driver->unk_LerpToForwards;
-	driver->unknownDimension2Curr += 0x800;
-	driver->unknownDimension2Curr &= 0xfff;
-	driver->unknownDimension2Curr -= 0x800;
+	driver->turnAngleCurr += driver->unk_LerpToForwards;
+	driver->turnAngleCurr += 0x800;
+	driver->turnAngleCurr &= 0xfff;
+	driver->turnAngleCurr -= 0x800;
 	
 	driver->angle += (short)((int)driver->rotationSpinRate * elapsedTimeMS >> 0xd);
 	driver->angle &= 0xfff;
 	
 	(driver->rotCurr).y = 
-		driver->unk3D4[0] + driver->angle + driver->unknownDimension2Curr;
+		driver->unk3D4[0] + driver->angle + driver->turnAngleCurr;
 	
 	(driver->rotCurr).w = 
 		InterpBySpeed((int)(driver->rotCurr).w, (elapsedTimeMS << 5) >> 5, 0);

@@ -20,7 +20,7 @@ void OnAnimate_LastSpin(struct Thread *t, struct Driver* d)
         // if numFrames not zero
         if (numFrames)
         {
-            sVar1 = d->unknownDimension2Curr;
+            sVar1 = d->turnAngleCurr;
 
             // get animation frame
             startFrame = inst->animFrame;

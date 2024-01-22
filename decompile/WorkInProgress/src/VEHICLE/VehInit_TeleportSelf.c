@@ -449,8 +449,8 @@ LAB_80058568:
 
     d->speed = 0;
     d->speedApprox = 0;
-    d->unknownDimensionCurr = 0;
-    d->unknownDimensionPrev = 0;
+    d->jumpHeightCurr = 0;
+    d->jumpHeightPrev = 0;
     d->unk_offset3B2 = 0;
     d->angle = d->rotCurr.y;
     d->rotPrev.x = d->rotCurr.x;
@@ -489,9 +489,9 @@ LAB_80058568:
     d->jump_LandingBoost = 0;
     d->jumpMeter = 0;
     d->jumpMeterTimer = 0;
-    d->unknownDimension2Curr = 0;
+    d->turnAngleCurr = 0;
     d->unk_LerpToForwards = 0;
-    d->unknownDimension2Prev = 0;
+    d->turnAnglePrev = 0;
     d->rotCurr.w = 0;
     d->rotPrev.w = 0;
     d->ChangeState_param2 = 0;

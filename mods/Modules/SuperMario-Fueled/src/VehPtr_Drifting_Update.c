@@ -31,9 +31,9 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
 
             if (turbo_level < 3)
             {
-                short turn = d->unknownDimension2Curr;
+                short turn = d->turnAngleCurr;
                 turn = (turn < 0) ? -turn : turn;
-                meterLeft -= MapToRange(turn, 0, 0x400, 0, 32);
+                meterLeft -= MapToRange(turn, 0, 1080, 0, 48);
 
                 // slower fill if neutral or wide drift
                 // normal fill if you do a tight turn
@@ -73,11 +73,11 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
                     // driver
                     d,
                     // amount of reserves
-                    1920 * turbo_level,
+                    1440 * turbo_level,
                     // turbo type
                     TURBO_PAD,
                     // fire level
-                    0x100 * turbo_level);
+                    199 * turbo_level);
                 // reset turbo_level
                 turbo_level = 0;
                 meterLeft = empty;

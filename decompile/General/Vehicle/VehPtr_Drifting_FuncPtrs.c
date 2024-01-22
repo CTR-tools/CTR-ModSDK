@@ -293,7 +293,7 @@ LAB_800632cc:
 	// Map value from [oldMin, oldMax] to [newMin, newMax]
 	// inverting newMin and newMax will give an inverse range mapping
 	iVar15 = MapToRange(iVar15, 0, iVar11 << 8, 0, iVar8);
-	iVar12_D = (iVar12_D + iVar15) - driver->unknownDimension2Curr;
+	iVar12_D = (iVar12_D + iVar15) - driver->turnAngleCurr;
 	iVar15 = iVar12_D >> 3;
 	sVar5 = (short)iVar15;
 	if (iVar12_D != 0)
@@ -302,7 +302,7 @@ LAB_800632cc:
 		{
 			sVar5 = 1;
 		}
-		driver->unknownDimension2Curr += sVar5;
+		driver->turnAngleCurr += sVar5;
 	}
 	iVar12_E = driver->KartStates.Drifting.numFramesDrifting;
 	if (iVar12_E < 0)
@@ -383,7 +383,7 @@ LAB_800632cc:
 															
 		sVar5 = (short)((int)((u_int)driver->unk47A * gGT->elapsedTimeMS) >> 5);
 				
-		if (driver->unknownDimension2Curr < 0)
+		if (driver->turnAngleCurr < 0)
 		{
 			sVar5 = -sVar5;
 		}
@@ -392,7 +392,7 @@ LAB_800632cc:
 		driver->axisRotationX &= 0xfff;
 	}
 	
-	driver->rotCurr.y = driver->unk3D4[0] + driver->angle + driver->unknownDimension2Curr;
+	driver->rotCurr.y = driver->unk3D4[0] + driver->angle + driver->turnAngleCurr;
 
 	// increment this by milliseconds
 	driver->KartStates.Drifting.driftTotalTimeMS += gGT->elapsedTimeMS;
