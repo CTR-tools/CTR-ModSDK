@@ -503,7 +503,7 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 					DECOMP_DecalFont_DrawLine
 					(
 						sdata->lngStrings[0x6B], 
-						(iVar11 + 0x80),
+						(iVar11 + 8 + WIDE_34(0x78)),
 						(iVar9 + 0x76),
 						FONT_SMALL, uVar14
 					);
