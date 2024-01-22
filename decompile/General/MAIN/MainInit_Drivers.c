@@ -87,6 +87,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
     // If number of AIs is not zero
     if (gGT->numBotsNextGame != 0)
     {
+		// Init AI engine sounds
         EngineAudio_InitOnce(0x10, 0x8080);
         EngineAudio_InitOnce(0x11, 0x8080);
     }

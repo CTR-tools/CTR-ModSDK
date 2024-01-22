@@ -4,7 +4,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 {
   struct GameTracker *gGT = sdata->gGT;
   u_short seenDemo;
-  int iVar4;
+  short cutsceneLev;
 
   // 0 - watching Crash + C-T-R letters animation
   // 1 - in the main menu
@@ -181,7 +181,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
     if (gGT->boolSeenOxideIntro == 0)
     {
       gGT->boolSeenOxideIntro = 1;
-      iVar4 = 0x1e;
+      cutsceneLev = INTRO_RACE_TODAY;
     }
 
     // If you've already seen Oxide Cutscene
@@ -194,7 +194,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
       gGT->numPlyrCurrGame = 1;
 	  
 	  // 60 seconds
-      gGT->demoCountdownTimer = 1800;
+      gGT->demoCountdownTimer = FPS_DOUBLE(1800);
 
       // number of times you've seen Demo Mode,
       seenDemo = sdata->demoModeIndex;
@@ -204,7 +204,7 @@ void DECOMP_MM_Title_MenuUpdate(void)
 
       // get trackID from demo mode index,
       // in order of Single Race track selection
-      iVar4 = D230.arcadeTracks[seenDemo].levID;
+      cutsceneLev = D230.arcadeTracks[seenDemo].levID;
 
       // increment counter
       sdata->demoModeIndex = (seenDemo + 1) & 7;
@@ -219,11 +219,11 @@ void DECOMP_MM_Title_MenuUpdate(void)
     // go to scrapbook
     sdata->mainMenuState = 5;
 
-    iVar4 = SCRAPBOOK;
+    cutsceneLev = SCRAPBOOK;
   LAB_800abfc0:
 
     // Load level
-    DECOMP_MainRaceTrack_RequestLoad(iVar4);
+    DECOMP_MainRaceTrack_RequestLoad(cutsceneLev);
 
     // make main menu disappear
     DECOMP_MENUBOX_Hide(&D230.menubox_mainMenu);
