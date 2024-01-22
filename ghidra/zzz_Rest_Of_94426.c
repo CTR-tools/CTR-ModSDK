@@ -12342,7 +12342,7 @@ void FUN_80050528(short param_1,int param_2,undefined4 param_3,int param_4)
 }
 
 
-// Draw how many points or lifes the player has in battle
+// UI_DrawBattleScores
 void FUN_80050654(int param_1,int param_2,int param_3)
 
 {
@@ -14833,7 +14833,7 @@ LAB_80053584:
 	  // if you're in battle mode
       else
 	  {
-		// Draw how many points or lifes the player has
+		// UI_DrawBattleScores
         FUN_80050654((int)psVar20[0x34],(int)psVar20[0x35],iVar19);
       }
 

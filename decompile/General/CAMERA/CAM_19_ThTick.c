@@ -106,7 +106,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 
 	if (sVar6 != 0)
 	{
-		uVar22 = (u_int)d->unknown_in_FUN_8005ca24[1];
+		uVar22 = (u_int)d->unknown_lap_related[1];
 		
 		// pointer to modeID in EOR camera
 		psVar19 += 2;

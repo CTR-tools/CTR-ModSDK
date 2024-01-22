@@ -510,15 +510,15 @@ void DECOMP_UI_RenderFrame_Racing()
 				}
 			}
 
-// not rewritten yet
-#ifndef REBUILD_PS1
 			// if you're in battle mode
 			else
 			{
 				// Draw how many points or lifes the player has
-				UI_DrawBattleScores((int)hudStructPtr[0xD].x, (int)hudStructPtr[0xD].y, playerStruct);
+				DECOMP_UI_DrawBattleScores((int)hudStructPtr[0xD].x, (int)hudStructPtr[0xD].y, playerStruct);
 			}
 
+// not rewritten yet
+#ifndef REBUILD_PS1
 			if
 			(
 				// if you're in adventure mode or Arcade mode and
