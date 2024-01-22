@@ -12604,7 +12604,7 @@ LAB_80050abc:
 }
 
 
-// Draw_JuicedUp_Shine
+// UI_Weapon_DrawBG (renamed to DrawJuicedUpShine?)
 void FUN_80050af8(short param_1,short param_2,short param_3,int param_4)
 
 {
@@ -15024,14 +15024,14 @@ LAB_80053af4:
 				((*(uint *)(iVar19 + 0x2c8) & 0x2000000) == 0)
 			) &&
 			(
-				// draw shining background behind wumpa fruit
+				// UI_Weapon_DrawBG
 				FUN_80050af8((int)psVar20[0x30],(int)psVar20[0x31],(int)psVar20[0x33],iVar19),
 
 				// If your weapon is not "no weapon"
 				*(char *)(iVar19 + 0x36) != '\x0f')
 			)
 	  {
-		// draw shining background behind weapon
+		// UI_Weapon_DrawBG
         FUN_80050af8((int)psVar20[0x2c],(int)psVar20[0x2d],(int)psVar20[0x2f],iVar19);
       }
 

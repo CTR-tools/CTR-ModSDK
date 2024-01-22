@@ -1,6 +1,6 @@
 #include <common.h>
 
-void UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, struct PrimMem *primMem, u_long *ot, char param_6, short param_7, short param_8)
+void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, struct PrimMem *primMem, u_long *ot, char param_6, short param_7, short param_8, int param9)
 {
     
     short sVar1;
@@ -14,8 +14,6 @@ void UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, struct Pri
     short sVar11;
     short sVar12;
     u_int colors[3];
-    u_int colors;
-    u_int colors;
 
     // color1[3]
     u_int *wumpaShine = &sdata->wumpaShineColor1[0];
@@ -41,10 +39,10 @@ void UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, struct Pri
     for (i = 0; i < 4; i++)
     {
         p = primMem->curr;
-        p->u0 = icon->texLayout.u0;
-        p->u1 = icon->texLayout.u1;
-        p->u2 = icon->texLayout.u2;
-        p->u3 = icon->texLayout.u3;
+        *(int*)&p->u0 = *(int*)&icon->texLayout.u0;
+        *(int*)&p->u1 = *(int*)&icon->texLayout.u1;
+        *(int*)&p->u2 = *(int*)&icon->texLayout.u2;
+        *(short*)&p->u3 = *(short*)&icon->texLayout.u3;
 
         switch (i)
         {
@@ -115,13 +113,13 @@ void UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, struct Pri
 
         if (param_6 != 0)
         {
-            p->tpage = p->tpage & ~(0x60) | ((u_short)param_6 - 1) * 0x20;
+            p->tpage = (p->tpage & ~(0x60)) | (((u_short)param_6 - 1) * 0x20);
             p->code |= 2;
         }
 
         AddPrim(ot, p);
 
         // increment primMem
-        primMem->curr = (int)p + 0x34;
+        primMem->curr = p + 1;
     }
 }

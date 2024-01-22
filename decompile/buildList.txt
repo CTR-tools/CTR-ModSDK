@@ -614,7 +614,7 @@ common, exe, UI_Map_DrawDrivers, 0x0, General/UI/UI_Map_DrawDrivers.c
 common, exe, UI_Map_DrawGhosts, 0x0, General/UI/UI_Map_DrawGhosts.c
 common, exe, UI_Map_DrawTracking, 0x0, General/UI/UI_Map_DrawTracking.c
 //UI_WeaponBG_AnimateShine
-//UI_WeaponBG_DrawShine
+common, exe, UI_WeaponBG_DrawShine, 0x0, General/UI/UI_WeaponBG_DrawShine.c
 //UI_TrackerBG
 common, exe, UI_DrawDriverIcon, 0x0, General/UI/UI_DrawDriverIcon.c
 common, exe, UI_Lerp2D_Angular, 0x0, General/UI/UI_Lerp2D_Angular.c
