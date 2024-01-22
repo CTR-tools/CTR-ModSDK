@@ -4537,7 +4537,7 @@ void FUN_800b0454(int param_1)
 	// RB_ShieldDark_Pop is from being mask-grabbed,
 	// or from colliding with another player
 	
-	// execute, then assign per-frame funcPtr to thread
+	// ThTick_SetAndExec, RB_ShieldDark_Pop
     FUN_800716ec(param_1,FUN_800b0278);
 	
     return;
