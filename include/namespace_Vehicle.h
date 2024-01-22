@@ -616,10 +616,10 @@ struct Driver
 	short speedApprox;
 
 	// 0x390
-	short unknownDimensionCurr;
+	short jumpHeightCurr;
 
 	// 0x392
-	short unknownDimensionPrev;
+	short jumpHeightPrev;
 
 	// 0x394
 	short axisRotationY;
@@ -690,10 +690,10 @@ struct Driver
 
 	// 0x3C6 0x3C8
 	// in VehPtr_Driving_PhysLinear, 
-	// and FUN_8005fb4c, 
+	// and CameraSlack_PhysAngular, 
 	// and VehPtr_LastSpin_Update
-	short unknownDimension2Curr;
-	short unknownDimension2Prev;
+	short turnAngleCurr;
+	short turnAnglePrev;
 	
 	// 0x3CA
 	short unk3CA;
@@ -1001,8 +1001,11 @@ struct Driver
 	unsigned int distanceDrivenBackwards;
 
 	// 0x494
-	// 494=char, 495=char, 496=short
-	unsigned char unknown_in_FUN_8005ca24[4];
+	// 494=char, 495=char
+	unsigned char unknown_lap_related[2];
+
+	// 0x496
+	unsigned short engineVol;
 
 	// Used to draw "1st, 2nd, 3rd..." in corner of screen
 	// 0x498 and 0x49C, both hold it, at different times
@@ -1377,7 +1380,16 @@ struct Driver
 		// state 10
 		struct
 		{
+			// 0x580
 			int timer;
+			// 0x584
+			int unk4;
+			// 0x588
+			int quadHeight;
+			// 0x58c
+			int numParticle;
+			// 0x590
+			int beamHeight;
 		} Warp;
 		
 	} KartStates;

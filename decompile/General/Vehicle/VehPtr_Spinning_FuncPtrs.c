@@ -58,10 +58,10 @@ void DECOMP_VehPtr_Spinning_PhysAngular(struct Thread* t, struct Driver* d)
 	}
 	#endif
 	
-	d->unknownDimension2Curr += d->KartStates.Spinning.driftSpinRate;
-	d->unknownDimension2Curr += 0x800U;
-	d->unknownDimension2Curr &= 0xfff;
-	d->unknownDimension2Curr -= 0x800;
+	d->turnAngleCurr += d->KartStates.Spinning.driftSpinRate;
+	d->turnAngleCurr += 0x800U;
+	d->turnAngleCurr &= 0xfff;
+	d->turnAngleCurr -= 0x800;
 		
 	d->ampTurnState = d->rotationSpinRate;
 	
@@ -71,7 +71,7 @@ void DECOMP_VehPtr_Spinning_PhysAngular(struct Thread* t, struct Driver* d)
 		(d->rotationSpinRate * elapsedTimeMS >> 0xd)
 	) & 0xfff;
 	
-	d->rotCurr.y = d->unk3D4[0] + d->angle + d->unknownDimension2Curr;
+	d->rotCurr.y = d->unk3D4[0] + d->angle + d->turnAngleCurr;
 	
 	d->rotCurr.w = 
 		InterpBySpeed

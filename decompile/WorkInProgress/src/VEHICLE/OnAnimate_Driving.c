@@ -27,7 +27,7 @@ void OnAnimate_Driving(struct Thread *t, struct Driver *d)
             animType = (d->baseSpeed < 1);
         }
         // if player height is far from quadblock height
-        if ((0x600 < d->unknownDimensionCurr || inst->animIndex == 3) && (0x8000 < d->posCurr[1] - d->quadBlockHeight))
+        if ((0x600 < d->jumpHeightCurr || inst->animIndex == 3) && (0x8000 < d->posCurr[1] - d->quadBlockHeight))
         {
             // jumping animation
             animType = 3;

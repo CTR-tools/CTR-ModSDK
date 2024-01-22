@@ -267,7 +267,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// Current speed cap is at USF
 			// AND
 			// You are not on a super turbo pad
-			0x6400 < driver->fireSpeedCap &&
+			(0x6400 <= driver->fireSpeedCap) &&
 			((driver->stepFlagSet & 2) == 0)
 		)
 	)

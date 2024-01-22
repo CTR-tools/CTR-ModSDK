@@ -397,8 +397,8 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	driver->posPrev[2] = driver->posCurr[2];
 	
 	// unknown
-	driver->unknownDimensionPrev = driver->unknownDimensionCurr;
-	driver->unknownDimension2Prev = driver->unknownDimension2Curr;
+	driver->jumpHeightPrev = driver->jumpHeightCurr;
+	driver->turnAnglePrev = driver->turnAngleCurr;
 
 	// ??? --Super
 	uVar20 = actionsFlagSetCopy & 0x7f1f83d5;

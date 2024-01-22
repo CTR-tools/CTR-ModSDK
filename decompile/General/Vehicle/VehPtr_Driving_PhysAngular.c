@@ -17,7 +17,7 @@ void DECOMP_VehPtr_Driving_PhysAngular(struct Thread* thread, struct Driver* dri
 	u_short angle;
 	int turnResistMinBitshift;
 	int turnResistMaxBitshift;
-	int unknownDimension2Curr_final;
+	int driftAngleCurr_Final;
 	int turnResistMax;
 	int turnResistMin;
 	u_int actionsFlagSet;
@@ -26,7 +26,7 @@ void DECOMP_VehPtr_Driving_PhysAngular(struct Thread* thread, struct Driver* dri
 	short forwardDir;
 	int rotCurrW_interp;
 	char simpTurnState;
-	short unknownDimension2Curr_og;
+	short driftAngleCurr_og;
 	
 	rotCurrW_original = (int)(driver->rotCurr).w;
 	rotCurrW_interp = rotCurrW_original;
@@ -207,16 +207,16 @@ LAB_8005fee4:
 			}
 		}
 	}
-	unknownDimension2Curr_og = driver->unknownDimension2Curr;
-	classSpeed_halved = Player_Driving_LerpToForwards(driver, (int)unknownDimension2Curr_og, (int)forwardDir, classSpeed_halved);
+	driftAngleCurr_og = driver->turnAngleCurr;
+	classSpeed_halved = Player_Driving_LerpToForwards(driver, (int)driftAngleCurr_og, (int)forwardDir, classSpeed_halved);
 	driver->unk_LerpToForwards = (short)classSpeed_halved;
 	classSpeed_halved = (int)(short)classSpeed_halved;
 	if (terrain->unk_0x20[1] != 0x100)
 	{
 		classSpeed_halved = terrain->unk_0x20[1] * classSpeed_halved >> 8;
 	}
-	unknownDimension2Curr_final = (int)unknownDimension2Curr_og + (classSpeed_halved * elapsedTimeMS >> 5);
-	driver->unknownDimension2Curr = (short)unknownDimension2Curr_final;
+	driftAngleCurr_Final = (int)driftAngleCurr_og + (classSpeed_halved * elapsedTimeMS >> 5);
+	driver->turnAngleCurr = (short)driftAngleCurr_Final;
 	turnResistMinBitshift = rotCurrW_original;
 	if ((0x2ff < speedApprox) && ((actionsFlagSet & 1) != 0))
 	{
@@ -284,10 +284,10 @@ LAB_8005fee4:
 	rotCurrW_original = (int)driver->unk3D4[1];
 	if (((terrain->flags & 0x10U) == 0) && ((actionsFlagSet & 1) != 0))
 	{
-		turnResistMin = unknownDimension2Curr_final;
-		if (unknownDimension2Curr_final < 0)
+		turnResistMin = driftAngleCurr_Final;
+		if (driftAngleCurr_Final < 0)
 		{
-			turnResistMin = -unknownDimension2Curr_final;
+			turnResistMin = -driftAngleCurr_Final;
 		}
 		if (rotCurrW_interp * 3 >> 2 < turnResistMin)
 		{
@@ -307,7 +307,7 @@ LAB_8005fee4:
 				{
 					turnResistMaxBitshift = 8;
 					rotCurrW_original = 0x14;
-					if (unknownDimension2Curr_final < 0)
+					if (driftAngleCurr_Final < 0)
 					{
 						rotCurrW_original = -0x14;
 					}
@@ -365,7 +365,7 @@ LAB_80060284:
 	driver->ampTurnState = (short)turnResistMinBitshift;
 	angle = angle + (short)(turnResistMinBitshift * elapsedTimeMS >> 0xd) & 0xfff;
 	driver->angle = angle;
-	(driver->rotCurr).y = angle + (short)unknownDimension2Curr_final + forwardDir;
+	(driver->rotCurr).y = angle + (short)driftAngleCurr_Final + forwardDir;
 
 	if (((actionsFlagSet & 8) == 0) && (driver->mashXUnknown < 7))
 	{

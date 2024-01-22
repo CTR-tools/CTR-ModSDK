@@ -235,7 +235,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     // player rotation
     sVar3 = d->angle;
 
-    sVar4 = d->unknownDimension2Curr;
+    sVar4 = d->turnAngleCurr;
 
     // rotZ
     *(short *)(scratchpad + 0x210) = 0;
