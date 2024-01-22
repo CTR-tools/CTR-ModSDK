@@ -13,23 +13,19 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
     int i;
     short sVar11;
     short sVar12;
-    u_int colors[3];
-
-    // color1[3]
-    u_int *wumpaShine = &sdata->wumpaShineColor1[0];
+    
+	u_int *wumpaShine = &sdata->wumpaShineColor1[0];
 
     if (param_6 == 3)
     {
         wumpaShine = &sdata->wumpaShineColor2[0];
     }
 
-    for (i = 0; i < 3; i++)
-        colors[i] = wumpaShine[i];
-
     sVar3 = (short)((icon->texLayout.u1 - icon->texLayout.u0) * (int)param_7) >> 0xc;
     sVar1 = posX + sVar3;
     param_7 = param_7 >> 0xc;
     sVar12 = sVar1 - param_7;
+	
     sVar4 = (short)(((icon->texLayout.v2 - icon->texLayout.v0) * (int)param_8) >> 0xc);
     sVar2 = posY + sVar4;
     param_8 = param_8 >> 0xc;
@@ -104,10 +100,10 @@ void DECOMP_UI_WeaponBG_DrawShine(struct Icon *icon, short posX, short posY, str
         }
 
         // color RGB
-        *(u_int *)&p->r0 = colors[2];
-        *(u_int *)&p->r1 = colors[1];
-        *(u_int *)&p->r2 = colors[1];
-        *(u_int *)&p->r3 = colors[0];
+        *(u_int *)&p->r0 = wumpaShine[2];
+        *(u_int *)&p->r1 = wumpaShine[1];
+        *(u_int *)&p->r2 = wumpaShine[1];
+        *(u_int *)&p->r3 = wumpaShine[0];
 
         setPolyGT4(p);
 
