@@ -518,8 +518,6 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	short lerpEndX;
 	short currFrame;
 	short width;
-	short sVar1;
-	short sVar2;
 	short endFrame;
 	short posXY[2];
 	RECT r;
@@ -577,22 +575,14 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		MENUBOX_ClearInput();
 	}
 	
-	// If this is player 2
-	lerpEndY = 0x41;
-	sVar1 = 0x89;
-	sVar2 = 0xc3;
-
-	// If this is player 1
-	if (driverId == 0)
-	{
-		lerpEndY = -0x3d;
-		sVar1 = 9;
-		sVar2 = 0x3e;
-	}
-
 	tenseconds = (framesElapsed + param_2 > FPS_DOUBLE(300));
 
 	// === Draw BigNum ===
+
+	// Player 2, or Player 1
+	lerpEndY = 0x41;
+	if (driverId == 0)
+		lerpEndY = -0x3d;
 
 	// If race ended more than 10 seconds ago.
 	if (tenseconds)
@@ -628,11 +618,16 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	bigNum->scale[2] = posXY[0];
 
 	// === Draw Suffix ===
+	
+	// Player 2, or Player 1
+	lerpEndY = 0x89;
+	if (driverId == 0)
+		lerpEndY = 9;
 
 	if (tenseconds)
 	{
 		lerpStartX = 0x78;
-		lerpStartY = sVar1;
+		lerpStartY = lerpEndY;
 		lerpEndX = -0x3c;
 	}
 	else
@@ -642,11 +637,15 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpEndX = 0x78;
 	}
 
-	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, sVar1, currFrame, endFrame);
+	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, endFrame);
 	UI_DrawPosSuffix(posXY[0], posXY[1], driver, 0);
 
 	// === DrawRaceClock ===
-
+	
+	lerpEndY = 0xc3;
+	if (driverId == 0)
+		lerpEndY = 0x3e;
+	
 	if (tenseconds)
 	{
 		lerpStartX = 0x150;
@@ -659,7 +658,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpEndX = 0x150;
 	}
 
-	UI_Lerp2D_Linear(&posXY[0], lerpStartX, sVar2, lerpEndX, sVar2, currFrame, endFrame);
+	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpEndY, lerpEndX, lerpEndY, currFrame, endFrame);
 	UI_DrawRaceClock(posXY[0], posXY[1], 1, driver);
 
 	// "TOTAL"
