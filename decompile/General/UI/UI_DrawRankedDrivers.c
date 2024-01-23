@@ -51,7 +51,8 @@ int DriverIndex_GetDamageColor(int iVar14)
 	return local_30;
 }
 
-void DECOMP_UI_DrawRankedDrivers(void) {
+void DECOMP_UI_DrawRankedDrivers(void) 
+{
     u_short uVar1;
     char bVar2;
     int iVar3;
@@ -235,8 +236,8 @@ void DECOMP_UI_DrawRankedDrivers(void) {
     }
       
 	// if this is multiplayer
-    else {
-
+    else 
+	{
       totalNumPlyrs = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
 
       puVar16 = &data.rankIconsTransitionTimer[0];
@@ -343,102 +344,102 @@ void DECOMP_UI_DrawRankedDrivers(void) {
         *puVar16 = uVar11;
         puVar16 = puVar16 + 1;
       }
-	}
 
-    for (
-		warpballThread = gGT->threadBuckets[TRACKING].thread;
-		warpballThread != 0;
-		warpballThread = warpballThread->siblingThread
+	  for (
+	  	warpballThread = gGT->threadBuckets[TRACKING].thread;
+	  	warpballThread != 0;
+	  	warpballThread = warpballThread->siblingThread
 	  ) 
-	{
-        // Get Instance from Thread
-        warpballInst = warpballThread->inst;
-
-        // if not warpball, skip
-        if (warpballInst->model->id != 0x36) 
-			continue;
-		
-        // pointer to path data
-        struct CheckpointNode* cn = gGT->level1->ptr_restart_points;
-		
-		struct TrackerWeapon* tw = warpballInst->thread->object;
-		
-		iVar4 = tw->nodeCurrIndex;
-        iVar12 = 0;
-
-		if (gGT->level1->cnt_restart_points < 1) continue;
-		if (iVar4 < 0) continue;
-
-		int pos[4];
-        pos[0] = warpballInst->matrix.t[0];
-        pos[1] = warpballInst->matrix.t[1];
-        pos[2] = warpballInst->matrix.t[2];
-		
-        struct CheckpointNode* cn1 = &cn[tw->ptrNodeCurr->nextIndex_forward];
-        struct CheckpointNode* cn2 = &cn[cn1->nextIndex_forward];
-		
-		short vec1[4];
-		vec1[0] = cn1->pos[0] - cn2->pos[0];
-		vec1[1] = cn1->pos[1] - cn2->pos[1];
-		vec1[2] = cn1->pos[2] - cn2->pos[2];
-        MATH_VectorNormalize(&vec1[0]);
-
-		short vec2[4];
-		vec2[0] = pos[0] - cn1->pos[0];
-		vec2[1] = pos[1] - cn1->pos[1];
-		vec2[2] = pos[2] - cn1->pos[2];
-		
-		// replace R11R12 and R13R21
-        gte_ldsvrtrow0(&vec1[0]);
-		
-		// required short
-        gte_ldv0(&vec2[0]);
-		
-        gte_mvmva(0,0,0,3,0);
-
-		// replace stMAC1
-        gte_stlvnl0(&iVar15);
-
-		iVar3 = cn1->distToFinish * 8 + (iVar15 >> 0xc);
-        iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
-        iVar12 = iVar3 % iVar15;
-		
-		#if 0
-        if (uVar1 == 0) trap(0x1c00);
-        if ((iVar15 == -1) && (iVar3 == -0x80000000)) trap(0x1800);
-		#endif
-
-        iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
-        iVar12 = iVar15 - iVar12;
-        iVar15 = iVar15 / 0x1d1;
-		
-		#if 0
-        if (iVar15 == 0) trap(0x1c00);
-        if ((iVar15 == -1) && (iVar12 == -0x80000000)) trap(0x1800);
-		#endif
-
-        DECOMP_DecalHUD_DrawWeapon(
-          // warpball icon
-          gGT->ptrIcons[0xe],
-		  
-		  #ifdef USE_NEW2P
-		  
-		  // midpointX, swap X to Y
-		  0xF4, (((iVar12 / iVar15) + 5) * 0xd8) / 0x200,
-		  
-		  #else
-			  
-          // positionX, midpointY
-          (iVar12 / iVar15) + 5, 0x66,
-		  
-		  #endif
-
-          // pointer to PrimMem struct
-          &gGT->backBuffer->primMem,
-
-          // pointer to OT memory
-          gGT->tileView_UI.ptrOT,
-
-          TRANS_50_DECAL, FP(2/3) - FP(1/8), 1);
+	  {
+	  	// Get Instance from Thread
+	  	warpballInst = warpballThread->inst;
+	  
+	  	// if not warpball, skip
+	  	if (warpballInst->model->id != 0x36) 
+	  		continue;
+	  	
+	  	// pointer to path data
+	  	struct CheckpointNode* cn = gGT->level1->ptr_restart_points;
+	  	
+	  	struct TrackerWeapon* tw = warpballInst->thread->object;
+	  	
+	  	iVar4 = tw->nodeCurrIndex;
+	  	iVar12 = 0;
+	  
+	  	if (gGT->level1->cnt_restart_points < 1) continue;
+	  	if (iVar4 < 0) continue;
+	  
+	  	int pos[4];
+	  	pos[0] = warpballInst->matrix.t[0];
+	  	pos[1] = warpballInst->matrix.t[1];
+	  	pos[2] = warpballInst->matrix.t[2];
+	  	
+	  	struct CheckpointNode* cn1 = &cn[tw->ptrNodeCurr->nextIndex_forward];
+	  	struct CheckpointNode* cn2 = &cn[cn1->nextIndex_forward];
+	  	
+	  	short vec1[4];
+	  	vec1[0] = cn1->pos[0] - cn2->pos[0];
+	  	vec1[1] = cn1->pos[1] - cn2->pos[1];
+	  	vec1[2] = cn1->pos[2] - cn2->pos[2];
+	  	MATH_VectorNormalize(&vec1[0]);
+	  
+	  	short vec2[4];
+	  	vec2[0] = pos[0] - cn1->pos[0];
+	  	vec2[1] = pos[1] - cn1->pos[1];
+	  	vec2[2] = pos[2] - cn1->pos[2];
+	  	
+	  	// replace R11R12 and R13R21
+	  	gte_ldsvrtrow0(&vec1[0]);
+	  	
+	  	// required short
+	  	gte_ldv0(&vec2[0]);
+	  	
+	  	gte_mvmva(0,0,0,3,0);
+	  
+	  	// replace stMAC1
+	  	gte_stlvnl0(&iVar15);
+	  
+	  	iVar3 = cn1->distToFinish * 8 + (iVar15 >> 0xc);
+	  	iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
+	  	iVar12 = iVar3 % iVar15;
+	  	
+	  	#if 0
+	  	if (uVar1 == 0) trap(0x1c00);
+	  	if ((iVar15 == -1) && (iVar3 == -0x80000000)) trap(0x1800);
+	  	#endif
+	  
+	  	iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;
+	  	iVar12 = iVar15 - iVar12;
+	  	iVar15 = iVar15 / 0x1d1;
+	  	
+	  	#if 0
+	  	if (iVar15 == 0) trap(0x1c00);
+	  	if ((iVar15 == -1) && (iVar12 == -0x80000000)) trap(0x1800);
+	  	#endif
+	  
+	  	DECOMP_DecalHUD_DrawWeapon(
+	  	// warpball icon
+	  	gGT->ptrIcons[0xe],
+	  	
+	  	#ifdef USE_NEW2P
+	  	
+	  	// midpointX, swap X to Y
+	  	0xF4, (((iVar12 / iVar15) + 5) * 0xd8) / 0x200,
+	  	
+	  	#else
+	  		
+	  	// positionX, midpointY
+	  	(iVar12 / iVar15) + 5, 0x66,
+	  	
+	  	#endif
+	  
+	  	// pointer to PrimMem struct
+	  	&gGT->backBuffer->primMem,
+	  
+	  	// pointer to OT memory
+	  	gGT->tileView_UI.ptrOT,
+	  
+	  	TRANS_50_DECAL, FP(2/3) - FP(1/8), 1);
+	  }
 	}
 }
