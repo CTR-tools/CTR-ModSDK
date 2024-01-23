@@ -552,19 +552,6 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		break;
 	}
 
-	// If this is player 2
-	lerpEndY = 0x41;
-	sVar1 = 0x89;
-	sVar2 = 0xc3;
-
-	// If this is player 1
-	if (driverId == 0)
-	{
-		lerpEndY = -0x3d;
-		sVar1 = 9;
-		sVar2 = 0x3e;
-	}
-
 	// increment counter for number of frames since the player ended the race
 	driver->framesSinceRaceEnded_forThisDriver++;
 	framesElapsed = driver->framesSinceRaceEnded_forThisDriver;
@@ -589,8 +576,23 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		// clear gamepad input (for menus)
 		MENUBOX_ClearInput();
 	}
+	
+	// If this is player 2
+	lerpEndY = 0x41;
+	sVar1 = 0x89;
+	sVar2 = 0xc3;
+
+	// If this is player 1
+	if (driverId == 0)
+	{
+		lerpEndY = -0x3d;
+		sVar1 = 9;
+		sVar2 = 0x3e;
+	}
 
 	tenseconds = (framesElapsed + param_2 > FPS_DOUBLE(300));
+
+	// === Draw BigNum ===
 
 	// If race ended more than 10 seconds ago.
 	if (tenseconds)
@@ -598,9 +600,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		currFrame = framesElapsed + param_2 - FPS_DOUBLE(300);
 		endFrame = FPS_DOUBLE(0xf);
 		
-		lerpStartY = UI_ConvertX_2(-100, hud[2].z);
 		lerpStartX = -0xae;
-		lerpEndX = lerpStartY;
+		lerpEndX = UI_ConvertX_2(-100, hud[2].z);
 		lerpStartY = lerpEndY;
 	}
 	
@@ -626,6 +627,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	bigNum->scale[1] = posXY[0];
 	bigNum->scale[2] = posXY[0];
 
+	// === Draw Suffix ===
+
 	if (tenseconds)
 	{
 		lerpStartX = 0x78;
@@ -640,8 +643,9 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	}
 
 	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, sVar1, currFrame, endFrame);
-
 	UI_DrawPosSuffix(posXY[0], posXY[1], driver, 0);
+
+	// === DrawRaceClock ===
 
 	if (tenseconds)
 	{
@@ -661,11 +665,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	// "TOTAL"
 	width = DecalFont_GetLineWidth(sdata->lngStrings[0xc4], 1);
 
-	// calculate top left corner position
 	r.x = (posXY[0] - width) + -6;
 	r.y = (posXY[1] - r.h) + 0xd;
-
-	// calculate size of box
 	r.w = width + WIDE_34(0x94);
 	r.h += 6;
 
