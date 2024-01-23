@@ -507,7 +507,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 {
 	struct GameTracker *gGT;
 	struct Driver *driver;
-	struct UiElement2D **hudArray;
+	struct UiElement2D *hudArray;
 	struct UiElement2D *hud;
 	struct Instance *bigNum;
 	char numPlyr, tenseconds;
