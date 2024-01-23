@@ -508,7 +508,7 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 		{
 			// Shoot the bubble
 			shield = (struct Shield*)driver->instBubbleHold->thread->object;
-			shield->shieldshot |= 2;
+			shield->flags |= 2;
 			driver->instBubbleHold = 0;
 			goto CheckJumpButtons;
 		}

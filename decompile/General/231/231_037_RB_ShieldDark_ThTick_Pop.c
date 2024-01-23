@@ -16,8 +16,8 @@ void DECOMP_RB_ShieldDark_ThTick_Pop(struct Thread* t)
   rot[0] = 0;
   rot[1] = 0;
   rot[2] = 0;
-  LHMatrix_Parent(instDark, driverOwner->instSelf,&local_18);
-  LHMatrix_Parent(instColor,driverOwner->instSelf,&local_18);
+  LHMatrix_Parent(instDark, driverOwner->instSelf,&rot[0]);
+  LHMatrix_Parent(instColor,driverOwner->instSelf,&rot[0]);
   
   // set rotation
   *(int*)&instDark->matrix.m[0][0] = 0x1000;
@@ -37,18 +37,23 @@ void DECOMP_RB_ShieldDark_ThTick_Pop(struct Thread* t)
   
   if (animFrame < 0xb) 
   {
+	short* animSeq = 0x800b2d14;
+	  
 	// set scale
-    instDark->scale[0] = *(short *)0x800b2d14[animFrame*2+0];
-    instDark->scale[1] = *(short *)0x800b2d14[animFrame*2+1];
-    instDark->scale[2] = *(short *)0x800b2d14[animFrame*2+0];
+    instDark->scale[0] = animSeq[animFrame*2+0];
+    instDark->scale[1] = animSeq[animFrame*2+1];
+    instDark->scale[2] = animSeq[animFrame*2+0];
 	
 	// set scale
-    instColor->scale[0] = *(short *)0x800b2d14[animFrame*2+0];
-    instColor->scale[1] = *(short *)0x800b2d14[animFrame*2+1];
-    instColor->scale[2] = *(short *)0x800b2d14[animFrame*2+0];
+    instColor->scale[0] = animSeq[animFrame*2+0];
+    instColor->scale[1] = animSeq[animFrame*2+1];
+    instColor->scale[2] = animSeq[animFrame*2+0];
 	
-    // next frame
-    sh->animFrame += 1;
+	#ifdef USE_60FPS
+	if(sdata->gGT->timer & 1)
+	#endif
+		// next frame
+		sh->animFrame += 1;
 	
 	return;
   }
