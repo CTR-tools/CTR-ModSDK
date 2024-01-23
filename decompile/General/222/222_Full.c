@@ -61,14 +61,26 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 		elapsedFrames++;
 
 	sdata->framesSinceRaceEnded = elapsedFrames;
-
-	if (driver->BigNumber[0]->scale[0] != 0x1e00)
+	
+	#ifdef USE_NEW2P
+	if(numPlyr > 1)
+	for(iVar10 = 0; iVar10 < numPlyr; iVar10++)
 	{
-		struct Instance* bigNum1 = driver->BigNumber[1];
+		struct Instance* instFruitDisp = 
+			gGT->drivers[iVar10]->instFruitDisp;
 		
-		bigNum1->scale[0] = 0;
-		bigNum1->scale[1] = 0;
-		bigNum1->scale[2] = 0;
+		instFruitDisp->scale[0] = 0;
+		instFruitDisp->scale[1] = 0;
+		instFruitDisp->scale[2] = 0;
+	}
+	#endif
+
+	if (driver->instBigNum->scale[0] != 0x1e00)
+	{
+		struct Instance* instFruitDisp = driver->instFruitDisp;
+		instFruitDisp->scale[0] = 0;
+		instFruitDisp->scale[1] = 0;
+		instFruitDisp->scale[2] = 0;
 	}
 
 	// if not in Token mode, these won't be used until later;
@@ -521,7 +533,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	numPlyr = gGT->numPlyrCurrGame;
 	hudArray = data.hudStructPtr[numPlyr - 1];
 	hud = &hudArray[driverId * 0x14]; // to-do, use enum where 0x14 is number of hud
-	bigNum = driver->BigNumber[0];
+	bigNum = driver->instBigNum;
 
 	// Lap time box height
 	switch (gGT->numLaps)

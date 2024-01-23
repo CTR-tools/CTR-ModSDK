@@ -41,7 +41,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   short sVar9;
   int iVar10;
   int iVar11;
-  int iVar12;
   u_int uVar13;
   int iVar14;
   char acStack160[24];
@@ -68,6 +67,18 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   gGT = sdata->gGT;
   numPlyr = gGT->numPlyrCurrGame;
   VsConfigIndex = numPlyr-2;
+  
+  #ifdef USE_NEW2P
+  for(iVar10 = 0; iVar10 < numPlyr; iVar10++)
+  {
+	struct Instance* instFruitDisp = 
+		gGT->drivers[iVar10]->instFruitDisp;
+	
+	instFruitDisp->scale[0] = 0;
+	instFruitDisp->scale[1] = 0;
+	instFruitDisp->scale[2] = 0;
+  }
+  #endif
 
   if (sdata->framesSinceRaceEnded < FPS_DOUBLE(0xf0))
   {
@@ -137,14 +148,13 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   
   {
     iStack60 = iVar10;
-    iVar12 = 0;
     uStack52 = (u_int)(iVar10 < 3);
     iStack48 = FPS_DOUBLE(0x1e);
     iStack44 = FPS_DOUBLE(5);
 	
     for (iVar11 = 0; iVar11 < iStack60; iVar11++)
     {	
-      sVar1 = asStack128[gGT->battleSetup.unk1dc8[iVar12]];
+      sVar1 = asStack128[gGT->battleSetup.unk1dc8[iVar11]];
       sVar5 = (short)iVar14;
       if (iStack48 < sdata->framesSinceRaceEnded)
       {
@@ -168,18 +178,19 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
         uStack112 = VsPosY_Config[VsPosY_NUM*VsConfigIndex + uStack88];
 		
         // Draw character icon
-        DecalHUD_DrawPolyFT4(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[gGT->battleSetup.unk1dc8[iVar12]]->driverID]].iconID],
+        DecalHUD_DrawPolyFT4(
+			gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[gGT->battleSetup.unk1dc8[iVar11]]->driverID]].iconID],
 
-                             // Position X and Position Y
-                             pos[0], uStack112,
+            // Position X and Position Y
+            pos[0], uStack112,
 
-                             // pointer to PrimMem struct
-                             &gGT->backBuffer->primMem,
+            // pointer to PrimMem struct
+            &gGT->backBuffer->primMem,
 
-                             // pointer to OT mem
-                             gGT->tileView_UI.ptrOT,
+            // pointer to OT mem
+            gGT->tileView_UI.ptrOT,
 
-                             1, 0x1000);
+            1, 0x1000);
       }
       
 	  // if battle mode
@@ -193,21 +204,22 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           for (iVar10 = 0; iVar10 < numPlyr; iVar10++)
           {
             // player -> battleTeam == (teamID)
-            if (gGT->drivers[iVar10]->BattleHUD.teamID == gGT->battleSetup.unk1dc8[iVar12])
+            if (gGT->drivers[iVar10]->BattleHUD.teamID == gGT->battleSetup.unk1dc8[iVar11])
             {
               iVar6 = sVar9;
               sVar9 = sVar9 + 1;
 
-              DecalHUD_DrawPolyFT4(gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[iVar10]->driverID]].iconID],
-                                   pos[0], sVar5 + iVar6 * 0x1b,
+              DecalHUD_DrawPolyFT4(
+				gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[iVar10]->driverID]].iconID],
+                pos[0], sVar5 + iVar6 * 0x1b,
 
-                                   // pointer to PrimMem struct
-                                   &gGT->backBuffer->primMem,
+                // pointer to PrimMem struct
+                &gGT->backBuffer->primMem,
 
-                                   // pointer to OT mem
-                                   gGT->tileView_UI.ptrOT,
+                // pointer to OT mem
+                gGT->tileView_UI.ptrOT,
 
-                                   1, 0x1000);
+                1, 0x1000);
             }
           }
         }
@@ -229,13 +241,13 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           if ((gGT->gameMode1 & 0x20) == 0)
           {
             // get position player finished in race
-            iVar2 = gGT->drivers[gGT->battleSetup.unk1dc8[iVar12]]->driverRank;
+            iVar2 = gGT->drivers[gGT->battleSetup.unk1dc8[iVar11]]->driverRank;
           }
           // If you are in Battle Mode
           else
           {
             // get position of the team in battle
-            iVar2 = gGT->battleSetup.finishedRankOfEachTeam[gGT->battleSetup.unk1dc8[iVar12]];
+            iVar2 = gGT->battleSetup.finishedRankOfEachTeam[gGT->battleSetup.unk1dc8[iVar11]];
           }
 
           uVar7 = 0x4003;
@@ -252,14 +264,14 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           // string for each player rank and count from standings (0x1e80)
           sprintf(acStack160, "%d%s-%2.02ld", iVar2,
                   sdata->lngStrings[((short *)0x800a0200)[iVar10]],
-                  (gGT->standingsPoints[gGT->battleSetup.unk1dc8[iVar12] * 3 + iVar10]));
+                  (gGT->standingsPoints[gGT->battleSetup.unk1dc8[iVar11] * 3 + iVar10]));
 
           // Draw string
           DecalFont_DrawLine(acStack160, (pos[0] + 0x79), ((uStack112 - (iVar6 * 4 + -0xd)) + iVar10 * 8), 2, uVar7);
         }
       }
 
-      if (gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar12]] == sStack80)
+      if (gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar11]] == sStack80)
       {
         sStack72 = sStack72 + 1;
       }
@@ -277,20 +289,18 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       iStack48 = iStack48 + FPS_DOUBLE(5);
       iStack44 = iStack44 + FPS_DOUBLE(5);
 	  
-	  sStack80 = gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar12]];
+	  sStack80 = gGT->battleSetup.unk_afterTeams[gGT->battleSetup.unk1dc8[iVar11]];
       sprintf(acStack160, "%d%s", sVar1 + 1, sdata->lngStrings[((short *)0x800a0200)[sVar1]]);
 
       // Draw String
       DecalFont_DrawLine(acStack160, (pos[0] - 0x24), (uStack112 + 5), 1, 0xffff8000);
-
-      iVar12 = iVar12 + 1;
     }
   }
 
   for (uVar13 = 0; uVar13 < numPlyr; uVar13++)
   {
     // get pointer to instance of Big Number in HUD
-    bigNum = gGT->drivers[uVar13]->BigNumber[0];
+    bigNum = gGT->drivers[uVar13]->instBigNum;
     view = &gGT->tileView[uVar13];
 
     // if the pointer is valid
@@ -315,6 +325,8 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 	
       sStack104 = 1;
 
+	  // default
+	  #ifndef USE_NEW2P
       if (
           // If there are two players
           (numPlyr == 2) &&
@@ -325,7 +337,21 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
         view->rect.w -= FPS_HALF(0xc);
         view->distanceToScreen_CURR = 0x80;
       }
+	  
+	  // vertical 2P split
+	  #else
+      if (
+          // If there are two players
+          (numPlyr == 2) &&
 
+          // something in camera buffer
+          (0x6c < view->rect.h))
+      {
+        view->rect.h -= FPS_HALF(0x6);
+        view->distanceToScreen_CURR = 0x80;
+      }
+	  #endif
+	  
       // first tileView buffer is at 0x168,
       // so this is ~0x20 bytes into tileViews
 

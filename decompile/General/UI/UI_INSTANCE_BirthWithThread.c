@@ -12,7 +12,7 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
   struct UiElement2D *hudStruct;
   int color;
   struct UiElement3D* ui3D;
-  struct Instance* bigNum;
+  struct Instance* inst;
   struct Driver* driver;
   struct Thread* driverThread;
   struct Model* model;
@@ -27,7 +27,7 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
 
   hudStruct = data.hudStructPtr[gGT->numPlyrCurrGame - 1];
 
-  bigNum = 0;
+  inst = 0;
 
   driverThread = gGT->threadBuckets[0].thread;
   
@@ -46,23 +46,23 @@ int DECOMP_UI_INSTANCE_BirthWithThread(int param_1,int param_2,int param_3,int p
     ui3D = hudThread->object;
   
     // Big Number HUD element
-    bigNum = DECOMP_INSTANCE_Birth2D(model,0,hudThread);
+    inst = DECOMP_INSTANCE_Birth2D(model,0,hudThread);
   
     // give the Instance to the thread
-    hudThread->inst = bigNum;
+    hudThread->inst = inst;
   
     modelID = model->id;
   
-    // bigNumber
+    // bigNum
     if (modelID == 0x38)
     {
-  	  driver->BigNumber[0] = bigNum;
+  	  driver->instBigNum = inst;
     }
     
     // fruitDisp
     else if (modelID == 0x37) 
     {
-      driver->BigNumber[1] = bigNum;
+      driver->instFruitDisp = inst;
     }
   
     // if this is a gem
@@ -73,10 +73,10 @@ LAB_8004cc4c:
       ui3D->lightDir[1] = 0x99f;
       ui3D->lightDir[2] = 0x232;
 LAB_8004cc58:
-      bigNum->colorRGBA = color;
+      inst->colorRGBA = color;
 
 	  // specular lighting
-      bigNum->flags |= 0x20000;
+      inst->flags |= 0x20000;
     }
       
 	// crystal
@@ -113,7 +113,7 @@ LAB_8004cc58:
       ui3D->vel[1] = FPS_HALF(0xc);
 	
 	  // Set color
-      bigNum->colorRGBA = 0xffc8000;
+      inst->colorRGBA = 0xffc8000;
 	
 	  goto lightDir_spec0x30000;
     }
@@ -126,7 +126,7 @@ LAB_8004cc58:
 		  	
 	  short* cupColor = &data.AdvCups[advCupID].color[0];
 		
-      bigNum->colorRGBA = 
+      inst->colorRGBA = 
 		(cupColor[0] << 0x14) | 
 		(cupColor[1] << 0xc) | 
 		(cupColor[2] << 4);
@@ -137,7 +137,7 @@ lightDir_spec0x30000:
       ui3D->lightDir[1] = 0x99f;
       ui3D->lightDir[2] = 0x232;
 	  
-	  bigNum->flags |= 0x30000;
+	  inst->flags |= 0x30000;
 	}
 
 	// if tileView is not supplied,
@@ -147,33 +147,33 @@ lightDir_spec0x30000:
 	  struct UiElement2D* currUI2D;
       currUI2D = &hudStruct[param_3];
 
-      bigNum->matrix.t[0] = DECOMP_UI_ConvertX_2(currUI2D->x,currUI2D->z);
-      bigNum->matrix.t[1] = DECOMP_UI_ConvertY_2(currUI2D->y,currUI2D->z);
-	  bigNum->matrix.t[2] = currUI2D->z;
+      inst->matrix.t[0] = DECOMP_UI_ConvertX_2(currUI2D->x,currUI2D->z);
+      inst->matrix.t[1] = DECOMP_UI_ConvertY_2(currUI2D->y,currUI2D->z);
+	  inst->matrix.t[2] = currUI2D->z;
     }
 
 	// if tileView is supplied,
 	// for decalMP and fruitDisp
     else
 	{
-	  struct InstDrawPerPlayer* idpp = INST_GETIDPP(bigNum);
+	  struct InstDrawPerPlayer* idpp = INST_GETIDPP(inst);
       idpp[0].tileView = param_5;
 
 	  // record that tileView is present
-	  bigNum->flags |= 0x100;
+	  inst->flags |= 0x100;
 
-      bigNum->matrix.t[0] = 0;
-      bigNum->matrix.t[1] = 0;
-      bigNum->matrix.t[2] = 0x200;
+      inst->matrix.t[0] = 0;
+      inst->matrix.t[1] = 0;
+      inst->matrix.t[2] = 0x200;
     }
 
 	uVar5 = hudStruct[param_3].scale;
-    bigNum->scale[0] = uVar5;
-    bigNum->scale[1] = uVar5;
-    bigNum->scale[2] = uVar5;
+    inst->scale[0] = uVar5;
+    inst->scale[1] = uVar5;
+    inst->scale[2] = uVar5;
 	
-    bigNum->unk50 = 0x80;
-    bigNum->unk51 = 0x80;
+    inst->unk50 = 0x80;
+    inst->unk51 = 0x80;
     if (param_4 == 0) {
       rot[0] = 0;
     }
@@ -181,11 +181,11 @@ lightDir_spec0x30000:
 	{
 	  #ifdef USE_NEW2P
 	  if(gGT->numPlyrCurrGame == 2)
-		lVar7 = ratan2((bigNum->matrix.t[1]*4)/3,bigNum->matrix.t[2]);
+		lVar7 = ratan2((inst->matrix.t[1]*4)/3,inst->matrix.t[2]);
 	  else
 	  #endif
   
-	  lVar7 = ratan2(bigNum->matrix.t[1],bigNum->matrix.t[2]);  
+	  lVar7 = ratan2(inst->matrix.t[1],inst->matrix.t[2]);  
 	  rot[0] = -(short)lVar7;
     }
     rot[1] = 0;
@@ -209,5 +209,5 @@ lightDir_spec0x30000:
 	hudStruct += 0x14;
   }
 
-  return bigNum;
+  return inst;
 }

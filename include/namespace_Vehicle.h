@@ -1007,9 +1007,11 @@ struct Driver
 	// 0x496
 	unsigned short engineVol;
 
-	// Used to draw "1st, 2nd, 3rd..." in corner of screen
-	// 0x498 and 0x49C, both hold it, at different times
-	struct Instance* BigNumber[2];
+	// 0x498
+	struct Instance* instBigNum;
+	
+	// 0x49c
+	struct Instance* instFruitDisp;
 
 	// 0x4a0
 	// raincloud when you hit red potion
