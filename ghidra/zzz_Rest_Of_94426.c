@@ -32701,9 +32701,11 @@ LAB_800659ec:
   // if weapon ID is Shield Bubble
   case 6:
 
-	// make thread and instance, function returns instance
 	// 0x200 flag = MediumStackPool
 	// 0xd = "other" thread bucket
+	// 0x5a = shieldDark (darkens edges of 2nd shield instance)
+	// 0x18 = sizeof(struct Shield)
+	// 800b0454 - RB_ShieldDark_ThTick_Grow
     iVar5 = FUN_800309a4(0x5a,"shielddark",0x200,0xd,&DAT_800b0454,0x18,
 
 										// driver -> instance -> thread
@@ -32726,14 +32728,14 @@ LAB_800659ec:
 	// if number of wumpa is less than 10
     if (*(char *)(param_1 + 0x30) < '\n')
 	{
-	  // Green shield model pointer (in instance)
+	  // Green (0x5e) shield model pointer (in instance)
       uVar7 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x22d8);
     }
 
 	// if number of wumpa is 10
 	else
 	{
-	  // Blue shield model pointer (in instance)
+	  // Blue (0x56) shield model pointer (in instance)
       uVar7 = *(undefined4 *)(PTR_DAT_8008d2ac + 0x22b8);
     }
 

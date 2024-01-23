@@ -4178,7 +4178,7 @@ void FUN_800afdbc(int param_1)
   return;
 }
 
-// RB_ShieldDark_Pop
+// RB_ShieldDark_ThTick_Pop
 void FUN_800b0278(int param_1)
 
 {
@@ -4255,7 +4255,7 @@ void FUN_800b0278(int param_1)
   return;
 }
 
-// RB_ShieldDark_ThTick
+// RB_ShieldDark_ThTick_Grow
 void FUN_800b0454(int param_1)
 
 {
@@ -4297,8 +4297,10 @@ void FUN_800b0454(int param_1)
 	// highlight is now visible
     *(uint *)(piVar15[3] + 0x28) = *(uint *)(piVar15[3] + 0x28) & 0xffffff7f;
     
+	// highlightRot[1]
 	iVar10 = (int)*(short *)((int)piVar15 + 0x12);
-    iVar8 = iVar10;
+    
+	iVar8 = iVar10;
     if (iVar10 < 0) {
       iVar8 = iVar10 + 0xfff;
     }
@@ -4306,9 +4308,10 @@ void FUN_800b0454(int param_1)
 	// if highlight is finished
     if ((iVar10 + (iVar8 >> 0xc) * -0x1000) * 0x10000 >> 0x10 == 0x400) 
 	{
-	  // cooldown is 30 frames (one second)
+	  // highlightTimer (30 frames)
       *(undefined2 *)((int)piVar15 + 0x16) = 0x1e;
 	  
+	  // highlightRot[1]
       *(undefined2 *)((int)piVar15 + 0x12) = 0xc00;
 	  
 	  // make highlight invisible
@@ -4463,9 +4466,10 @@ void FUN_800b0454(int param_1)
   }
   
   // if this is not a blue shield,
-  // meaning it must fade eventually
   if ((*(ushort *)((int)piVar15 + 6) & 4) == 0) 
   {
+	// === Green Shield ===
+	  
 	// duration
     sVar4 = *(short *)(piVar15 + 1);
 	
@@ -4534,10 +4538,10 @@ void FUN_800b0454(int param_1)
     *piVar15 = 0;
     *(undefined4 *)(iVar16 + 0x14) = 0;
 	
-	// RB_ShieldDark_Pop is from being mask-grabbed,
+	// RB_ShieldDark_ThTick_Pop is from being mask-grabbed,
 	// or from colliding with another player
 	
-	// ThTick_SetAndExec, RB_ShieldDark_Pop
+	// ThTick_SetAndExec, RB_ShieldDark_ThTick_Pop
     FUN_800716ec(param_1,FUN_800b0278);
 	
     return;

@@ -34,7 +34,6 @@ struct MaskHeadWeapon
 	// 0x14 bytes large
 };
 
-
 // bomb, missile, warpball
 // yes, the bomb chases you and steers towards targets
 struct TrackerWeapon
@@ -124,13 +123,38 @@ struct RainCloud
 	short itemScrollRandom;
 };
 
-// same
+// when the shield is worn
 struct Shield
 {
-	char unknown[6];
+	// 0x0
+	int animFrame;
+	
+	// 0x4
+	short duration;
+	
 	// 0x6
-	// something to do with shooting the shield i guess
-	u_short shieldshot;
+	// & 2 - shooting
+	// & 4 - blue shield
+	// & ??? - shooting
+	short flags;
+	
+	// 0x8
+	struct Instance* instColor;
+	
+	// 0xC
+	struct Instance* instHighlight;
+
+	// 0x10
+	short highlightRot[3];
+	short highlightTimer;
+	
+	// 0x18
+};
+
+// when the shield is thrown
+struct ShieldBomb
+{
+	// 0x58 bytes
 };
 
 struct MineWeapon;

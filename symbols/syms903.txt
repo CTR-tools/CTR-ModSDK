@@ -1371,8 +1371,8 @@
 800ad9b0 RB_Warpball_ThTick
 800ae4d8 RB_MaskWeapon_FadeAway
 800ae724 RB_MaskWeapon_ThTick
-800aeae4 RB_ShieldDark_Pop
-800aecc0 RB_ShieldDark_ThTick
+800aeae4 RB_ShieldDark_ThTick_Pop
+800aecc0 RB_ShieldDark_ThTick_Grow
 800af528 RB_Player_ToggleInvisible
 800af5d4 RB_Player_ToggleFlicker
 800af688 RB_RainCloud_FadeAway
