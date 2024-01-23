@@ -642,6 +642,9 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 
 	// === DrawRaceClock ===
 	
+	// default
+	#ifndef USE_NEW2P
+	
 	lerpEndY = 0xc3;
 	if (driverId == 0)
 		lerpEndY = 0x3e;
@@ -657,7 +660,42 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpStartX = 0x218;
 		lerpEndX = 0x150;
 	}
+	
+	// new
+	#else
+		
+	lerpEndY = 0x3e;
+	
+	if (tenseconds)
+	{
+		currFrame = framesElapsed + param_2 - FPS_DOUBLE(300);
+		endFrame = FPS_DOUBLE(0xf);
+		
+		lerpStartX =
+			gGT->tileView[driverId].rect.x +
+			gGT->tileView[driverId].rect.w >> 1;
+		
+		lerpEndX = 0x218;
+		if (driverId == 0)
+			lerpEndX = -0x40;
+	}
+	
+	else
+	{
+		currFrame = framesElapsed;
+		endFrame = FPS_DOUBLE(0x1e);
+		
+		lerpStartX = 0x218;
+		if (driverId == 0)
+			lerpStartX = -0x40;
 
+		lerpEndX = 
+			gGT->tileView[driverId].rect.x +
+			gGT->tileView[driverId].rect.w >> 1;
+	}
+	
+	#endif
+	
 	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpEndY, lerpEndX, lerpEndY, currFrame, endFrame);
 	UI_DrawRaceClock(posXY[0], posXY[1], 1, driver);
 

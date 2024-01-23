@@ -36,7 +36,8 @@ void FUN_8009f704(int param_1,short param_2,undefined4 param_3)
   // "YOUR TIME"
   FUN_80022878(*(undefined4 *)(DAT_8008d878 + 0x314),(int)(short)param_1,
                (int)(((uint)local_36 - 0x4c) * 0x10000) >> 0x10,1,0xffff8000);
-			   
+  
+  // UI_DrawRaceClock   
   FUN_8004edac((int)local_38,(int)(short)local_36,param_3,uVar3);
   
   // DAT_8008d878 + 0x310
@@ -411,6 +412,7 @@ LAB_8009fe84:
 	// Fly-in Interpolation
     FUN_8004ecd4(&local_10,0x14,8,local_20,8,local_1c,0x14);
 	
+	// UI_DrawRaceClock
     FUN_8004edac((int)local_10,(int)local_e,0,*(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec));
     goto LAB_800a03c0;
   }

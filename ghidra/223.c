@@ -518,7 +518,9 @@ LAB_800a0290:
   // interpolate fly-in
   FUN_8004ecd4(&local_50,uVar7,0x32,0x100,local_68,local_64,0x14);
   
+  // UI_DrawRaceClock
   FUN_8004edac((int)(short)local_50,(int)(((uint)local_4e - 8) * 0x10000) >> 0x10,1,iVar10);
+  
   if ((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x2000000) != 0) 
   {
 	// if race ended less than 491 frames ago

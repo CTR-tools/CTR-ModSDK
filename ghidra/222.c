@@ -951,6 +951,7 @@ void FUN_800a06f8(ushort param_1,short param_2)
   // interpolate fly-in or fly-out
   FUN_8004ecd4(&local_30,local_40,uVar9,uVar10,uVar9,iVar8,uVar11);
   
+  // UI_DrawRaceClock
   FUN_8004edac((int)local_30,(int)local_2e,1,iVar6);
   
   // DAT_8008d878 + 0x310
