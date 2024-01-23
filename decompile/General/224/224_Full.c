@@ -180,7 +180,7 @@ AddStuff:
 			// ====== Draw High Score ===========
 			
 			// 900-1002
-			if (framesSinceRaceEnded < 1002)
+			if (framesSinceRaceEnded < FPS_DOUBLE(1002))
 			{
 				framesSinceRaceEnded -= FPS_DOUBLE(901);
 				
@@ -336,7 +336,7 @@ void DECOMP_TT_EndEvent_DrawHighScore(short startX, int startY)
 			nameColor = (gGT->timer & FPS_DOUBLE(2)) ? 4 : nameColor;
 			
 			// flash color of time
-			timeColor = ((gGT->timer & FPS_DOUBLE(2)) << 1);
+			timeColor = ((gGT->timer & FPS_DOUBLE(2)) << FPS_LEFTSHIFT(1));
 		}
 
 		timebox_Y = startY + 0x11 + currRowY;

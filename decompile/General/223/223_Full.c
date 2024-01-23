@@ -540,7 +540,7 @@ void DECOMP_RR_EndEvent_DrawHighScore(short startX, int startY)
 			nameColor = (gGT->timer & FPS_DOUBLE(2)) ? 4 : nameColor;
 			
 			// flash color of time
-			timeColor = ((gGT->timer & FPS_DOUBLE(2)) << 1);
+			timeColor = ((gGT->timer & FPS_DOUBLE(2)) << FPS_LEFTSHIFT(1));
 		}
 
 		timebox_Y = startY + 0x11 + currRowY;
