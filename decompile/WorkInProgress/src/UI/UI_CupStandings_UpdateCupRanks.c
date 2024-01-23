@@ -10,7 +10,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
   short highestPts;
 
   gGT = sdata->gGT;
-  totalNumCharacters = gGT->numBotsCurrGame + gGT->numPlyrCurrGame;
+  totalNumCharacters = gGT->numBotsNextGame + gGT->numPlyrCurrGame;
   checked = 0;
 
   // set highest numPoints value to zero

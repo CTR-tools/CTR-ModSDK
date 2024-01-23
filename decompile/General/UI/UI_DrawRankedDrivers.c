@@ -237,7 +237,7 @@ void DECOMP_UI_DrawRankedDrivers(void) {
 	// if this is multiplayer
     else {
 
-      totalNumPlyrs = gGT->numPlyrCurrGame + gGT->numBotsCurrGame;
+      totalNumPlyrs = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
 
       puVar16 = &data.rankIconsTransitionTimer[0];
       iVar15 = 0;

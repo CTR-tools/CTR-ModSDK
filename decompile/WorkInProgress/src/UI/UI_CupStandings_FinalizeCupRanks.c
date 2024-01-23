@@ -12,7 +12,7 @@ void DECOMP_UI_CupStandings_FinalizeCupRanks(void)
   gGT = sdata->gGT;
 
   // numPlyrCurrGame + number of AIs
-  totalNumCharacters = gGT->numPlyrCurrGame + gGT->numBotsCurrGame;
+  totalNumCharacters = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
 
   // if there are more than four drivers, keep it at 4
   if (4 < totalNumCharacters) {

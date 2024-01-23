@@ -27,7 +27,7 @@ void DECOMP_EngineSound_NearestAIs(void)
   // is mildly redundant
 
   // If number of AIs is not zero
-  if (gGT->numBotsCurrGame)
+  if (gGT->numBotsNextGame)
   {
 
     params[0] = 0;

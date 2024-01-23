@@ -54,7 +54,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
 
   gGT = sdata->gGT;
 
-  numDrivers = gGT->numPlyrCurrGame + gGT->numBotsCurrGame;
+  numDrivers = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
   
   titleFlag = TitleFlag_IsFullyOffScreen();
 
@@ -103,7 +103,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
     sdata->framesSinceRaceEnded = 0x3c;
 
     // Save the number of drivers
-    sdata->numIconsEOR = gGT->numPlyrCurrGame + gGT->numBotsCurrGame;
+    sdata->numIconsEOR = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
 
     // clear gamepad input (for menus)
     MENUBOX_ClearInput();
@@ -236,7 +236,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
         else {
 
           // If number of AIs is zero
-          if (gGT->numBotsCurrGame == 0) {
+          if (gGT->numBotsNextGame == 0) {
             uVar9 = 0x6c;
             sVar7 = gGT->tileView->rect.x + (short)(((int) gGT->tileView->rect.w + var1 * -0x5a + 0xc) / 2) + sVar18;
             goto LAB_800568d8;
@@ -312,7 +312,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
       // where you see just amount of points added
       if ((sdata->menuReadyToPass & 4) == 0) {
         // If number of AIs is zero
-        if (gGT->numBotsCurrGame == 0) {
+        if (gGT->numBotsNextGame == 0) {
 
           // amount of points to add is based on how
           // many players are in the race, and race position
@@ -418,7 +418,7 @@ void DECOMP_UI_CupStandings_UpdateCupRanks(void)
       // Add points awarded from Track Standings to Cup Standings
 
       // If number of AIs is zero (VS cup)
-      if (gGT->numBotsCurrGame == 0) {
+      if (gGT->numBotsNextGame == 0) {
 
         // if numPlyrCurrGame != 0
         if (gGT->numPlyrCurrGame != 0) {
