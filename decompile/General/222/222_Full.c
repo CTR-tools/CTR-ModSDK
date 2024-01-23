@@ -62,12 +62,13 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 	sdata->framesSinceRaceEnded = elapsedFrames;
 	
+	// move to UI_VsWaitForX when that's done
 	#ifdef USE_NEW2P
 	if(numPlyr > 1)
-	for(iVar10 = 0; iVar10 < numPlyr; iVar10++)
+	for(i = 0; i < numPlyr; i++)
 	{
 		struct Instance* instFruitDisp = 
-			gGT->drivers[iVar10]->instFruitDisp;
+			gGT->drivers[i]->instFruitDisp;
 		
 		instFruitDisp->scale[0] = 0;
 		instFruitDisp->scale[1] = 0;

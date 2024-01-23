@@ -68,6 +68,7 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   numPlyr = gGT->numPlyrCurrGame;
   VsConfigIndex = numPlyr-2;
   
+  // move to UI_VsWaitForX when that's done
   #ifdef USE_NEW2P
   for(iVar10 = 0; iVar10 < numPlyr; iVar10++)
   {
