@@ -14,7 +14,7 @@ void DECOMP_MM_Battle_DrawIcon_Weapon(struct Icon *icon,
     u_int u1 = *(int*)&icon->texLayout.u1;
     u_int u2 = *(int*)&icon->texLayout.u2;
 	
-    int iVar1 = 0x2f;
+    int iVar1 = WIDE_34(0x2f);
     int iVar2 = 0x1f;
 	
 	posY *= 0x10000;

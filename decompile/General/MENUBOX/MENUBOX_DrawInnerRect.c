@@ -75,9 +75,10 @@ void DECOMP_MENUBOX_DrawInnerRect(RECT *r, int tileViewType, void *ot)
 		}
 	}
 
+	// Draw shadow under the menu
 	if ((tileViewType & 4) == 0) 
 	{
-		short horizontalOffset = ((tileViewType & 0x80) != 0) ? 4 : 0xc;
+		short horizontalOffset = ((tileViewType & 0x80) != 0) ? WIDE_34(4) : WIDE_34(0xc);
 		short verticalOffset = ((tileViewType & 0x40) != 0) ? 2 : 6;
 
 		adjustedRect.x = r->x + r->w;
