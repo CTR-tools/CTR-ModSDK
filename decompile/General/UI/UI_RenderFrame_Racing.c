@@ -2,7 +2,7 @@
 
 // To do: add a header
 void RB_Player_ModifyWumpa(struct Driver*, int);
-void AA_EndEvent_DisplayTime(u_short, short);
+void DECOMP_AA_EndEvent_DisplayTimeAA_EndEvent_DisplayTime(u_short, short);
 
 void DECOMP_UI_RenderFrame_Racing()
 {
@@ -528,11 +528,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				((playerStruct->actionsFlagSet & 0x2000000) != 0)
 			)
 			{
-				// Player / AI structure + 0x4a shows driver index (0-7)
-
-				// DLL 222
-				// Display total time it took to finish race
-				AA_EndEvent_DisplayTime((u_int)playerStruct->driverID, 0);
+				DECOMP_AA_EndEvent_DisplayTime((u_int)playerStruct->driverID, 0);
 			}	
 #endif
 			

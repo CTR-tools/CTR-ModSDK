@@ -581,8 +581,10 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 
 	// Player 2, or Player 1
 	lerpEndY = 0x41;
+	#ifndef USE_NEW2P
 	if (driverId == 0)
 		lerpEndY = -0x3d;
+	#endif
 
 	// If race ended more than 10 seconds ago.
 	if (tenseconds)
@@ -593,6 +595,14 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpStartX = -0xae;
 		lerpEndX = UI_ConvertX_2(-100, hud[2].z);
 		lerpStartY = lerpEndY;
+		
+		#ifdef USE_NEW2P
+		if(driverId == 1)
+		{
+			lerpStartX = 0xae;
+			lerpEndX = 0x200 - lerpEndX;
+		}
+		#endif
 	}
 	
 	// If not
@@ -604,6 +614,13 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		lerpStartX = UI_ConvertX_2(hud[2].x, hud[2].z);
 		lerpStartY = UI_ConvertY_2(hud[2].y, hud[2].z);
 		lerpEndX = -0xae;
+		
+		#ifdef USE_NEW2P
+		if(driverId == 1)
+		{
+			lerpEndX = 0xae;
+		}
+		#endif
 	}
 
 	// interpolate fly-in positionXY
@@ -621,20 +638,35 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	
 	// Player 2, or Player 1
 	lerpEndY = 0x89;
+	#ifndef USE_NEW2P
 	if (driverId == 0)
 		lerpEndY = 9;
+	#endif
 
 	if (tenseconds)
 	{
 		lerpStartX = 0x78;
 		lerpStartY = lerpEndY;
 		lerpEndX = -0x3c;
+		
+		#ifdef USE_NEW2P
+		if (driverId == 1)
+		{
+			lerpStartX = 0x1d0;
+			lerpEndX = 0x260;
+		}
+		#endif
 	}
 	else
 	{
 		lerpStartX = hud[5].x;
 		lerpStartY = hud[5].y;
 		lerpEndX = 0x78;
+		
+		#ifdef USE_NEW2P
+		if (driverId == 1)
+			lerpEndX = 0x1d0;
+		#endif
 	}
 
 	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, endFrame);
@@ -671,13 +703,11 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		currFrame = framesElapsed + param_2 - FPS_DOUBLE(300);
 		endFrame = FPS_DOUBLE(0xf);
 		
-		lerpStartX =
-			gGT->tileView[driverId].rect.x +
-			gGT->tileView[driverId].rect.w >> 1;
+		lerpStartX = gGT->tileView[driverId].rect.x + 0x70;
 		
-		lerpEndX = 0x218;
+		lerpEndX = 0x268;
 		if (driverId == 0)
-			lerpEndX = -0x40;
+			lerpEndX = -0x90;
 	}
 	
 	else
@@ -685,13 +715,11 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		currFrame = framesElapsed;
 		endFrame = FPS_DOUBLE(0x1e);
 		
-		lerpStartX = 0x218;
+		lerpStartX = 0x268;
 		if (driverId == 0)
-			lerpStartX = -0x40;
+			lerpStartX = -0x90;
 
-		lerpEndX = 
-			gGT->tileView[driverId].rect.x +
-			gGT->tileView[driverId].rect.w >> 1;
+		lerpEndX = gGT->tileView[driverId].rect.x + 0x70;
 	}
 	
 	#endif
