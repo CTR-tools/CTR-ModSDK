@@ -65,14 +65,16 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 	// move to UI_VsWaitForX when that's done
 	#ifdef USE_NEW2P
 	if(numPlyr > 1)
-	for(i = 0; i < numPlyr; i++)
 	{
-		struct Instance* instFruitDisp = 
-			gGT->drivers[i]->instFruitDisp;
+		for(i = 0; i < numPlyr; i++)
+		{
+			struct Instance* instFruitDisp = 
+				gGT->drivers[i]->instFruitDisp;
 		
-		instFruitDisp->scale[0] = 0;
-		instFruitDisp->scale[1] = 0;
-		instFruitDisp->scale[2] = 0;
+			instFruitDisp->scale[0] = 0;
+			instFruitDisp->scale[1] = 0;
+			instFruitDisp->scale[2] = 0;
+		}
 	}
 	#endif
 
@@ -579,12 +581,15 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 
 	// === Draw BigNum ===
 
-	// Player 2, or Player 1
+	// Player 2
 	lerpEndY = 0x41;
-	#ifndef USE_NEW2P
-	if (driverId == 0)
-		lerpEndY = -0x3d;
+	
+	// Player 1
+	#ifdef USE_NEW2P
+	if(numPlyr == 1)
 	#endif
+		if (driverId == 0)
+			lerpEndY = -0x3d;
 
 	// If race ended more than 10 seconds ago.
 	if (tenseconds)
@@ -617,9 +622,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		
 		#ifdef USE_NEW2P
 		if(driverId == 1)
-		{
 			lerpEndX = 0xae;
-		}
 		#endif
 	}
 
@@ -636,12 +639,15 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 
 	// === Draw Suffix ===
 	
-	// Player 2, or Player 1
+	// Player 2
 	lerpEndY = 0x89;
-	#ifndef USE_NEW2P
-	if (driverId == 0)
-		lerpEndY = 9;
+	
+	// Player 1
+	#ifdef USE_NEW2P
+	if(numPlyr == 1)
 	#endif
+		if (driverId == 0)
+			lerpEndY = 9;
 
 	if (tenseconds)
 	{
@@ -675,53 +681,59 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	// === DrawRaceClock ===
 	
 	// default
-	#ifndef USE_NEW2P
-	
-	lerpEndY = 0xc3;
-	if (driverId == 0)
-		lerpEndY = 0x3e;
-	
-	if (tenseconds)
+	#ifdef USE_NEW2P
+	if(numPlyr == 1)
 	{
-		lerpStartX = 0x150;
-		lerpEndX = 0x27c;
-	}
-
-	else
-	{
-		lerpStartX = 0x218;
-		lerpEndX = 0x150;
-	}
+	#endif
+	
+		lerpEndY = 0xc3;
+		if (driverId == 0)
+			lerpEndY = 0x3e;
+		
+		if (tenseconds)
+		{
+			lerpStartX = 0x150;
+			lerpEndX = 0x27c;
+		}
+	
+		else
+		{
+			lerpStartX = 0x218;
+			lerpEndX = 0x150;
+		}
 	
 	// new
-	#else
-		
-	lerpEndY = 0x3e;
-	
-	if (tenseconds)
-	{
-		currFrame = framesElapsed + param_2 - FPS_DOUBLE(300);
-		endFrame = FPS_DOUBLE(0xf);
-		
-		lerpStartX = gGT->tileView[driverId].rect.x + 0x70;
-		
-		lerpEndX = 0x268;
-		if (driverId == 0)
-			lerpEndX = -0x90;
+	#ifdef USE_NEW2P
 	}
 	
 	else
 	{
-		currFrame = framesElapsed;
-		endFrame = FPS_DOUBLE(0x1e);
+		lerpEndY = 0x3e;
 		
-		lerpStartX = 0x268;
-		if (driverId == 0)
-			lerpStartX = -0x90;
-
-		lerpEndX = gGT->tileView[driverId].rect.x + 0x70;
-	}
+		if (tenseconds)
+		{
+			currFrame = framesElapsed + param_2 - FPS_DOUBLE(300);
+			endFrame = FPS_DOUBLE(0xf);
+			
+			lerpStartX = gGT->tileView[driverId].rect.x + 0x70;
+			
+			lerpEndX = 0x268;
+			if (driverId == 0)
+				lerpEndX = -0x90;
+		}
+		
+		else
+		{
+			currFrame = framesElapsed;
+			endFrame = FPS_DOUBLE(0x1e);
+			
+			lerpStartX = 0x268;
+			if (driverId == 0)
+				lerpStartX = -0x90;
 	
+			lerpEndX = gGT->tileView[driverId].rect.x + 0x70;
+		}
+	}
 	#endif
 	
 	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpEndY, lerpEndX, lerpEndY, currFrame, endFrame);
