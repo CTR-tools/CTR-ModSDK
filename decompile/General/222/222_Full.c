@@ -677,57 +677,58 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *);
 
 struct MenuRow menuRows222_arcade[5] =
+{
+	// Retry
 	{
-		// Retry
-		{
-			.stringIndex = 4,
-			.rowOnPressUp = 0,
-			.rowOnPressDown = 1,
-			.rowOnPressLeft = 0,
-			.rowOnPressRight = 0,
-		},
-		// Change Level
-		{
-			.stringIndex = 6,
-			.rowOnPressUp = 0,
-			.rowOnPressDown = 2,
-			.rowOnPressLeft = 1,
-			.rowOnPressRight = 1,
-		},
-		// Change Character
-		{
-			.stringIndex = 5,
-			.rowOnPressUp = 1,
-			.rowOnPressDown = 3,
-			.rowOnPressLeft = 2,
-			.rowOnPressRight = 2,
-		},
-		// Quit
-		{
-			.stringIndex = 3,
-			.rowOnPressUp = 2,
-			.rowOnPressDown = 3,
-			.rowOnPressLeft = 3,
-			.rowOnPressRight = 3,
-		},
-		// NULL, end of menu
-		{
-			.stringIndex = 0xFFFF,
-			.rowOnPressUp = 0,
-			.rowOnPressDown = 0,
-			.rowOnPressLeft = 0,
-			.rowOnPressRight = 0,
-		}};
+		.stringIndex = 4,
+		.rowOnPressUp = 0,
+		.rowOnPressDown = 1,
+		.rowOnPressLeft = 0,
+		.rowOnPressRight = 0,
+	},
+	// Change Level
+	{
+		.stringIndex = 6,
+		.rowOnPressUp = 0,
+		.rowOnPressDown = 2,
+		.rowOnPressLeft = 1,
+		.rowOnPressRight = 1,
+	},
+	// Change Character
+	{
+		.stringIndex = 5,
+		.rowOnPressUp = 1,
+		.rowOnPressDown = 3,
+		.rowOnPressLeft = 2,
+		.rowOnPressRight = 2,
+	},
+	// Quit
+	{
+		.stringIndex = 3,
+		.rowOnPressUp = 2,
+		.rowOnPressDown = 3,
+		.rowOnPressLeft = 3,
+		.rowOnPressRight = 3,
+	},
+	// NULL, end of menu
+	{
+		.stringIndex = 0xFFFF,
+		.rowOnPressUp = 0,
+		.rowOnPressDown = 0,
+		.rowOnPressLeft = 0,
+		.rowOnPressRight = 0,
+	}
+};
 
 struct MenuBox menuBox222_arcade =
-	{
-		.stringIndexTitle = 0xFFFF,
-		.posX_curr = 256,
-		.posY_curr = 170,
-		.unk1 = 0,
-		.state = (0x800 | USE_SMALL_FONT | CENTER_ON_COORDS), // 0x883
-		.rows = menuRows222_arcade,
-		.funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
-		.drawStyle = 4,
-		// rest of variables all default zero
+{
+	.stringIndexTitle = 0xFFFF,
+	.posX_curr = 256,
+	.posY_curr = 170,
+	.unk1 = 0,
+	.state = (0x800 | USE_SMALL_FONT | CENTER_ON_COORDS), // 0x883
+	.rows = menuRows222_arcade,
+	.funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+	.drawStyle = 4,
+	// rest of variables all default zero
 };
