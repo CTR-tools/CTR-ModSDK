@@ -60,6 +60,7 @@
 #include "../decompile/General/DecalGlobal/DecalGlobal_Store.c"
 
 #include "../decompile/General/DecalHUD/DecalHUD_DrawPolyFT4.c"
+#include "../decompile/General/DecalHUD/DecalHUD_DrawWeapon.c"
 #include "../decompile/General/DecalHUD/DecalHUD_DrawPolyGT4.c"
 #include "../decompile/General/DecalHUD/DecalHUD_Arrow2D.c"
 
@@ -402,6 +403,8 @@
 #include "../decompile/General/UI/UI_Map_DrawGhosts.c"
 #include "../decompile/General/UI/UI_Map_DrawTracking.c"
 
+#include "../decompile/General/UI/UI_WeaponBG_DrawShine.c"
+
 #include "../decompile/General/UI/UI_DrawDriverIcon.c"
 
 #include "../decompile/General/UI/UI_Lerp2D_Angular.c"
@@ -413,6 +416,7 @@
 
 #include "../decompile/General/UI/UI_DrawPosSuffix.c"
 #include "../decompile/General/UI/UI_DrawLapCount.c"
+#include "../decompile/General/UI/UI_DrawBattleScores.c"
 
 #include "../decompile/General/UI/UI_AAA_BigBlock1.c"
 

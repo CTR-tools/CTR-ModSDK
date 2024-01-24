@@ -377,6 +377,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  	struct CheckpointNode* cn1 = &cn[tw->ptrNodeCurr->nextIndex_forward];
 	  	struct CheckpointNode* cn2 = &cn[cn1->nextIndex_forward];
 	  	
+#ifndef REBUILD_PC
 	  	short vec1[4];
 	  	vec1[0] = cn1->pos[0] - cn2->pos[0];
 	  	vec1[1] = cn1->pos[1] - cn2->pos[1];
@@ -398,6 +399,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  
 	  	// replace stMAC1
 	  	gte_stlvnl0(&iVar15);
+#endif
 	  
 	  	iVar3 = cn1->distToFinish * 8 + (iVar15 >> 0xc);
 	  	iVar15 = gGT->level1->ptr_restart_points[0].distToFinish * 8;

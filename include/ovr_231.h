@@ -155,6 +155,7 @@ struct Shield
 struct ShieldBomb
 {
 	// 0x58 bytes
+	int unk;
 };
 
 struct MineWeapon;
