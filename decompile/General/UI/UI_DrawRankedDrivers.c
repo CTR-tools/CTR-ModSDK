@@ -64,7 +64,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
     int absPosRank;
     int iVar8;
     short *puVar9;
-    short sVar10;
+    short numRacersFinished;
     u_short uVar11;
     int iVar12;
     short *psVar13;
@@ -91,7 +91,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
     if (gGT->numPlyrCurrGame == 1) 
 	{
       // Number of racers that have finished race
-      sVar10 = 0;
+      numRacersFinished = 0;
 
       // incremented when looping through player structures
 
@@ -111,7 +111,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
           ((gGT->drivers[iVar14]->actionsFlagSet&0x2000000) != 0)) 
 		{
           // count how many racers have finished
-          sVar10 = sVar10 + 1;
+          numRacersFinished++;
         }
       }
 
@@ -131,16 +131,13 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  // height to draw rank (this bitshifts later)
 	  iVar12 = 0x380000;
 	  
-	  // racer has finished the race
-	  bVar2 = 0 < (int)sVar10;
-	  
 	  for (iVar15 = 0; iVar15 < iVar14; iVar15++) 
 	  {
 		// make the text white by default
 		txtColor = 4;
 	  
 		// if racer has finished the race
-		if (bVar2) {
+		if (iVar15 < numRacersFinished) {
 			// make the text red
 			txtColor = 3;
 		}
@@ -151,10 +148,6 @@ void DECOMP_UI_DrawRankedDrivers(void)
 		
 		// add to Y, which mekes it lower on screen
 		iVar12 = iVar12 + 0x1b0000;
-		
-		// racer has not finished race
-		bVar2 = iVar15 < (int)sVar10;
-	  
 	  }
 
       for (iVar14 = 0; iVar14 < 8; iVar14++) 
