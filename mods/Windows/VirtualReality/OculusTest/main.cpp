@@ -11,6 +11,13 @@
 #include <math.h>
 #include <OVR_CAPI.h>
 
+#include <thread>
+
+void startVR()
+{
+	system("vr-screen-cap-CTR.exe");
+}
+
 int main()
 {
 	char* pBuf = 0;
@@ -40,7 +47,7 @@ int main()
 
 	char duckPath[1024];
 	printf("Drag DuckStation exe file into this window,\n");
-	printf("then press Enter to launch in VR mode.\n\n");
+	printf("then press Enter to continue.\n\n");
 
 	printf("DuckStation exe: ");
 	scanf_s("%s", &duckPath[0], 1024);
@@ -49,9 +56,27 @@ int main()
 
 
 
+	char romPath[1024];
+	printf("Drag CTR modded rom into this window,\n");
+	printf("then press Enter to launch in VR mode.\n\n");
+
+	printf("CTR modded rom: ");
+	scanf_s("%s", &romPath[0], 1024);
+	system("cls");
+
+	char cmdArgs[1024];
+	// to-do, think of a smarter way to get exe name, without assuming 
+	// duckstation-qt-x64-ReleaseLTCG.exe
+	sprintf(cmdArgs, "duckstation-qt-x64-ReleaseLTCG.exe %s", &romPath[0]);
+
+
 	wchar_t wName[1024];
 	mbstowcs(wName, duckPath, strlen(duckPath) + 1);//Plus null
 	LPWSTR ptrName = wName;
+
+	wchar_t wRom[1024];
+	mbstowcs(wRom, cmdArgs, strlen(cmdArgs) + 1);//Plus null
+	LPWSTR ptrRom = wRom;
 
 	// additional information
 	STARTUPINFO si;
@@ -65,7 +90,7 @@ int main()
 	// start the program up
 	CreateProcess(
 		ptrName,		// the path
-		NULL,			// Command line
+		ptrRom,			// Command line
 		NULL,           // Process handle not inheritable
 		NULL,           // Thread handle not inheritable
 		FALSE,          // Set handle inheritance to FALSE
@@ -147,44 +172,8 @@ int main()
 
 
 
-
-	printf("Drag vr-screen-cap-CTR exe file into this window,\n");
-	printf("this exe should be in the same folder as OculusTest,\n");
-	printf("then press Enter to play the game.\n\n");
-
-	printf("vr-screen-cap-CTR exe: ");
-	scanf_s("%s", &duckPath[0], 1024);
-	system("cls");
-
-
-
-
-	mbstowcs(wName, duckPath, strlen(duckPath) + 1);//Plus null
-	ptrName = wName;
-
-	// set the size of the structures
-	ZeroMemory(&si, sizeof(si));
-	si.cb = sizeof(si);
-	ZeroMemory(&pi, sizeof(pi));
-
-	// start the program up
-	CreateProcess(
-		wName,
-		NULL,			// Command line
-		NULL,           // Process handle not inheritable
-		NULL,           // Thread handle not inheritable
-		FALSE,          // Set handle inheritance to FALSE
-		0,              // No creation flags
-		NULL,           // Use parent's environment block
-		NULL,           // Use parent's starting directory 
-		&si,            // Pointer to STARTUPINFO structure
-		&pi             // Pointer to PROCESS_INFORMATION structure (removed extra parentheses)
-	);
-
-	if (pi.dwProcessId == 0)
-	{
-		while (1) printf("Error\n");
-	}
+	std::thread t1(startVR);
+	
 
 	float time = 0.0f;
 	short backupRot[9];
