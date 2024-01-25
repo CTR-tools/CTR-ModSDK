@@ -126,8 +126,9 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
     {
         if ((gGT->battleSetup.teamFlags & (1 << i)) == 0)
         {
-            // -500
-            gGT->battleSetup.pointsPerTeam[i] = 0xfffffe0c;
+			// otherwise, you get 4th place in a 2P battle
+			// if the game ends and one person has negative points
+            gGT->battleSetup.pointsPerTeam[i] = -500;
         }
         else
         {
