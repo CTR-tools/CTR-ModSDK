@@ -62,8 +62,11 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 	sdata->framesSinceRaceEnded = elapsedFrames;
 	
-	// move to UI_VsWaitForX when that's done
-	#ifdef USE_NEW2P
+	// Temporary:
+	// move to UI_VsWaitForX when that's done,
+	// this code is new cause multiplayer uses
+	// real 3D wumpa instead of DecalMP wumpa
+	#if 1
 	if(numPlyr > 1)
 	{
 		for(i = 0; i < numPlyr; i++)

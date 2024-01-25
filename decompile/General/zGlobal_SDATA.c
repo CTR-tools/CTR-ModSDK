@@ -421,8 +421,18 @@ struct sData sdata_static =
 	.Battle_EndOfRace =
 	{
 		.Flags_PressX = 0,
+		
+		// default
+		#ifndef USE_NEW2P
+		
 		.textFlags1_2P = 0x350100,
 		.textFlags2_2P = 0x430100,
+		
+		// split side-by-side
+		#else
+		.textFlags1_2P = 0x350080,
+		.textFlags2_2P = 0x430080,
+		#endif
 	},
 	
 	.numIconsEOR = 1,

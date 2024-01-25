@@ -68,8 +68,11 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
   numPlyr = gGT->numPlyrCurrGame;
   VsConfigIndex = numPlyr-2;
   
-  // move to UI_VsWaitForX when that's done
-  #ifdef USE_NEW2P
+  // Temporary:
+  // move to UI_VsWaitForX when that's done,
+  // this code is new cause multiplayer uses
+  // real 3D wumpa instead of DecalMP wumpa
+  #if 1
   for(iVar10 = 0; iVar10 < numPlyr; iVar10++)
   {
 	struct Instance* instFruitDisp = 

@@ -9,24 +9,17 @@ void DECOMP_UI_VsWaitForPressX(void)
   int iVar8;
   int string;
   int local_78;
-  int local_70;
-  int local_6c;
-  int local_68;
-  int local_64;
-  int local_60;
-  int local_5c;
+  short shortArr3P4P[2*4];
   char acStack88[8];
   short local_50;
   short local_4e;
-  RECT r;
   char *local_38;
   char *local_34;
-  local_70 = 0x350055;
-  local_6c = 0x3500aa;
-  local_68 = 0x430055;
-  local_64 = 0x4300aa;
-  local_60 = sdata->Battle_EndOfRace.textFlags1_2P;
-  local_5c = sdata->Battle_EndOfRace.textFlags2_2P;
+  
+  *(int*)&shortArr3P4P[0] = 0x350055;
+  *(int*)&shortArr3P4P[2] = 0x3500aa;
+  *(int*)&shortArr3P4P[4] = 0x430055;
+  *(int*)&shortArr3P4P[6] = 0x4300aa;
 
   struct Driver *currDriver;
   struct RECT *viewport;
@@ -127,15 +120,14 @@ void DECOMP_UI_VsWaitForPressX(void)
               // Get Battle Team of player
               sVar4 = (short)gGT->drivers[j]->BattleHUD.teamID;
 
-              // if not two screens
-              // use flags from registers
-              puVar6 = &local_70;
+			  short* shortArr;
 
-              // If numPlyrCurrGame is 2
+              // 3P4P
+              shortArr = &shortArr3P4P[0];
+
               if (numPlyr == 2)
               {
-                // use flags from ram, loaded to stack
-                puVar6 = &local_60;
+                shortArr = &sdata->Battle_EndOfRace.textFlags1_2P[0];
               }
 
               local_50 = puVar6[j];
@@ -171,10 +163,10 @@ void DECOMP_UI_VsWaitForPressX(void)
               DecalFont_DrawLine(acStack88,
 
                                  // midpoint between Start X and Size X
-                                 (viewport->x + viewport.w),
+                                 (viewport->x + shortArr[j*2+0]),
 
                                  // midpoint between Start Y and Size Y
-                                 (short)(viewport.y + viewport.h),
+                                 (viewport->y + shortArr[j*2+1]),
 
                                  2);
             }
