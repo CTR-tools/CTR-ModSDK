@@ -308,20 +308,20 @@ void DECOMP_UI_DrawRankedDrivers(void)
           uVar11 = uVar18;
         }
 
+		int posX = uVar11 + 5;
+		int posY = 0x66;
+		
+		#ifdef USE_NEW2P
+		if(totalNumPlyrs == 2)
+		{
+			posX = 0xF4;
+			posY = ((uVar11 + 5) * 0xd8) / 0x200;
+		}
+		#endif
+
         DECOMP_DecalHUD_DrawPolyGT4(
           gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[iVar14]].iconID],
-
-		  #ifdef USE_NEW2P
-		  
-		  // midpointX, swap X to Y
-		  0xF4, ((uVar11 + 5) * 0xd8) / 0x200,
-		  
-		  #else
-			  
-          // positionX, midpointY
-          uVar11 + 5, 0x66,
-		  
-		  #endif
+		  posX, posY,
 
           // pointer to PrimMem struct
           &gGT->backBuffer->primMem,
@@ -411,22 +411,22 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	  	if (iVar15 == 0) trap(0x1c00);
 	  	if ((iVar15 == -1) && (iVar12 == -0x80000000)) trap(0x1800);
 	  	#endif
+		
+		int posX = (iVar12 / iVar15) + 5;
+		int posY = 0x66;
+		
+		#ifdef USE_NEW2P
+		if(totalNumPlyrs == 2)
+		{
+			posX = 0xF4;
+			posY = (((iVar12 / iVar15) + 5) * 0xd8) / 0x200;
+		}
+		#endif
 	  
 	  	DECOMP_DecalHUD_DrawWeapon(
 	  	// warpball icon
 	  	gGT->ptrIcons[0xe],
-	  	
-	  	#ifdef USE_NEW2P
-	  	
-	  	// midpointX, swap X to Y
-	  	0xF4, (((iVar12 / iVar15) + 5) * 0xd8) / 0x200,
-	  	
-	  	#else
-	  		
-	  	// positionX, midpointY
-	  	(iVar12 / iVar15) + 5, 0x66,
-	  	
-	  	#endif
+	  	posX, posY,
 	  
 	  	// pointer to PrimMem struct
 	  	&gGT->backBuffer->primMem,
