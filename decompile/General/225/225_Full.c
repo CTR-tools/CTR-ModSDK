@@ -200,31 +200,30 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
         iVar10 = sVar1 * 0x1b0000;
         uStack112 = (sVar5 + (short)((iVar10 >> 0x10) - (iVar10 >> 0x1f) >> 1)) - 0xd;
 
+        // loop through all players
+        for (iVar10 = 0; iVar10 < numPlyr; iVar10++)
         {
-          // loop through all players
-          for (iVar10 = 0; iVar10 < numPlyr; iVar10++)
+          // player -> battleTeam == (teamID)
+          if (gGT->drivers[iVar10]->BattleHUD.teamID == gGT->battleSetup.unk1dc8[iVar11])
           {
-            // player -> battleTeam == (teamID)
-            if (gGT->drivers[iVar10]->BattleHUD.teamID == gGT->battleSetup.unk1dc8[iVar11])
-            {
-              iVar6 = sVar9;
-              sVar9 = sVar9 + 1;
+            iVar6 = sVar9;
+            sVar9 = sVar9 + 1;
 
-              DecalHUD_DrawPolyFT4(
-				gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[iVar10]->driverID]].iconID],
-                pos[0], sVar5 + iVar6 * 0x1b,
+            DecalHUD_DrawPolyFT4(
+			gGT->ptrIcons[data.MetaDataCharacters[data.characterIDs[gGT->drivers[iVar10]->driverID]].iconID],
+              pos[0], sVar5 + iVar6 * 0x1b,
 
-                // pointer to PrimMem struct
-                &gGT->backBuffer->primMem,
+              // pointer to PrimMem struct
+              &gGT->backBuffer->primMem,
 
-                // pointer to OT mem
-                gGT->tileView_UI.ptrOT,
+              // pointer to OT mem
+              gGT->tileView_UI.ptrOT,
 
-                1, 0x1000);
-            }
+              1, 0x1000);
           }
         }
-        iVar14 = sVar1 * 0x1b + iVar14 + 10;
+        
+		iVar14 = sVar1 * 0x1b + iVar14 + 10;
       }
 	  
       uStack88 = uStack88 + 1;
@@ -332,7 +331,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           // If there are two players
           (numPlyr == 2) &&
 
-          // something in camera buffer
           (0x100 < view->rect.w))
       {
         view->rect.w -= FPS_HALF(0xc);
@@ -345,7 +343,6 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
           // If there are two players
           (numPlyr == 2) &&
 
-          // something in camera buffer
           (0x6c < view->rect.h))
       {
         view->rect.h -= FPS_HALF(0x6);
@@ -383,13 +380,24 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
       // first tileView buffer is at 0x168,
       // so this is ~0x20 bytes into tileViews
 
-      if (0 < view->rect.w)
+      if (view->rect.w > 0)
       {
         view->rect.x += FPS_HALF(5);
         view->rect.y += FPS_HALF(3);
         view->rect.w -= FPS_HALF(10);
         view->rect.h -= FPS_HALF(6);
       }
+	  
+	  #ifdef USE_NEW2P
+	  // this is required cause rendering is stopped
+	  // if h<0, but not if w<0, and w reaches zero
+	  // faster than h because of the mod
+	  if (view->rect.w < 0)
+	  {
+        view->rect.w = 0;
+        view->rect.h = 0;
+	  }
+	  #endif
     }
   }
 	
@@ -408,123 +416,123 @@ void DECOMP_VB_EndEvent_DrawMenu(void)
 void UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *);
 
 struct MenuRow menuRows225_versus[5] =
+{
+    // Retry
     {
-        // Retry
-        {
-            .stringIndex = 4,
-            .rowOnPressUp = 0,
-            .rowOnPressDown = 1,
-            .rowOnPressLeft = 0,
-            .rowOnPressRight = 0,
-        },
-        // Change Level
-        {
-            .stringIndex = 6,
-            .rowOnPressUp = 0,
-            .rowOnPressDown = 2,
-            .rowOnPressLeft = 1,
-            .rowOnPressRight = 1,
-        },
-        // Change Character
-        {
-            .stringIndex = 5,
-            .rowOnPressUp = 1,
-            .rowOnPressDown = 3,
-            .rowOnPressLeft = 2,
-            .rowOnPressRight = 2,
-        },
-        // Quit
-        {
-            .stringIndex = 3,
-            .rowOnPressUp = 2,
-            .rowOnPressDown = 3,
-            .rowOnPressLeft = 3,
-            .rowOnPressRight = 3,
-        },
-        // NULL, end of menu
-        {
-            .stringIndex = 0xFFFF,
-            .rowOnPressUp = 0,
-            .rowOnPressDown = 0,
-            .rowOnPressLeft = 0,
-            .rowOnPressRight = 0,
-        }
-    };
+        .stringIndex = 4,
+        .rowOnPressUp = 0,
+        .rowOnPressDown = 1,
+        .rowOnPressLeft = 0,
+        .rowOnPressRight = 0,
+    },
+    // Change Level
+    {
+        .stringIndex = 6,
+        .rowOnPressUp = 0,
+        .rowOnPressDown = 2,
+        .rowOnPressLeft = 1,
+        .rowOnPressRight = 1,
+    },
+    // Change Character
+    {
+        .stringIndex = 5,
+        .rowOnPressUp = 1,
+        .rowOnPressDown = 3,
+        .rowOnPressLeft = 2,
+        .rowOnPressRight = 2,
+    },
+    // Quit
+    {
+        .stringIndex = 3,
+        .rowOnPressUp = 2,
+        .rowOnPressDown = 3,
+        .rowOnPressLeft = 3,
+        .rowOnPressRight = 3,
+    },
+    // NULL, end of menu
+    {
+        .stringIndex = 0xFFFF,
+        .rowOnPressUp = 0,
+        .rowOnPressDown = 0,
+        .rowOnPressLeft = 0,
+        .rowOnPressRight = 0,
+    }
+};
 
 struct MenuBox menuBox225_versus =
-    {
-        .stringIndexTitle = 0xFFFF,
-        .posX_curr = 143,
-        .posY_curr = 162,
-        .unk1 = 0,
-        .state = (0x800 | EXECUTE_FUNCPTR | USE_SMALL_FONT | CENTER_ON_COORDS), // 0xC83
-        .rows = menuRows225_versus,
-        .funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
-        .drawStyle = 4,
-        // rest of variables all default zero
+{
+    .stringIndexTitle = 0xFFFF,
+    .posX_curr = 143,
+    .posY_curr = 162,
+    .unk1 = 0,
+    .state = (0x800 | EXECUTE_FUNCPTR | USE_SMALL_FONT | CENTER_ON_COORDS), // 0xC83
+    .rows = menuRows225_versus,
+    .funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+    .drawStyle = 4,
+    // rest of variables all default zero
 };
 
 struct MenuRow menuRows225_battle[6] =
+{
+    // Retry
     {
-        // Retry
-        {
-            .stringIndex = 4,
-            .rowOnPressUp = 0,
-            .rowOnPressDown = 1,
-            .rowOnPressLeft = 0,
-            .rowOnPressRight = 0,
-        },
-        // Change Level
-        {
-            .stringIndex = 6,
-            .rowOnPressUp = 0,
-            .rowOnPressDown = 2,
-            .rowOnPressLeft = 1,
-            .rowOnPressRight = 1,
-        },
-        // Change Setup
-        {
-            .stringIndex = 10,
-            .rowOnPressUp = 1,
-            .rowOnPressDown = 3,
-            .rowOnPressLeft = 2,
-            .rowOnPressRight = 2,
-        },
-        // Change Character
-        {
-            .stringIndex = 5,
-            .rowOnPressUp = 2,
-            .rowOnPressDown = 4,
-            .rowOnPressLeft = 3,
-            .rowOnPressRight = 3,
-        },
-        // Quit
-        {
-            .stringIndex = 3,
-            .rowOnPressUp = 3,
-            .rowOnPressDown = 4,
-            .rowOnPressLeft = 4,
-            .rowOnPressRight = 4,
-        },
-        // NULL, end of menu
-        {
-            .stringIndex = 0xFFFF,
-            .rowOnPressUp = 0,
-            .rowOnPressDown = 0,
-            .rowOnPressLeft = 0,
-            .rowOnPressRight = 0,
-        }
-    };
+        .stringIndex = 4,
+        .rowOnPressUp = 0,
+        .rowOnPressDown = 1,
+        .rowOnPressLeft = 0,
+        .rowOnPressRight = 0,
+    },
+    // Change Level
+    {
+        .stringIndex = 6,
+        .rowOnPressUp = 0,
+        .rowOnPressDown = 2,
+        .rowOnPressLeft = 1,
+        .rowOnPressRight = 1,
+    },
+    // Change Setup
+    {
+        .stringIndex = 10,
+        .rowOnPressUp = 1,
+        .rowOnPressDown = 3,
+        .rowOnPressLeft = 2,
+        .rowOnPressRight = 2,
+    },
+    // Change Character
+    {
+        .stringIndex = 5,
+        .rowOnPressUp = 2,
+        .rowOnPressDown = 4,
+        .rowOnPressLeft = 3,
+        .rowOnPressRight = 3,
+    },
+    // Quit
+    {
+        .stringIndex = 3,
+        .rowOnPressUp = 3,
+        .rowOnPressDown = 4,
+        .rowOnPressLeft = 4,
+        .rowOnPressRight = 4,
+    },
+    // NULL, end of menu
+    {
+        .stringIndex = 0xFFFF,
+        .rowOnPressUp = 0,
+        .rowOnPressDown = 0,
+        .rowOnPressLeft = 0,
+        .rowOnPressRight = 0,
+    }
+};
 
 struct MenuBox menuBox225_battle =
-    {
-        .stringIndexTitle = 0xFFFF,
-        .posX_curr = 143,
-        .posY_curr = 166,
-        .unk1 = 0,
-        .state = (0x800 | EXECUTE_FUNCPTR | USE_SMALL_FONT | CENTER_ON_COORDS), // 0xC83
-        .rows = menuRows225_battle,
-        .funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
-        .drawStyle = 4,
-        // rest of variables all default zero
+{
+    .stringIndexTitle = 0xFFFF,
+    .posX_curr = 143,
+    .posY_curr = 166,
+    .unk1 = 0,
+    .state = (0x800 | EXECUTE_FUNCPTR | USE_SMALL_FONT | CENTER_ON_COORDS), // 0xC83
+    .rows = menuRows225_battle,
+    .funcPtr = UI_RaceEnd_MenuBoxFuncPtr,
+    .drawStyle = 4,
+    // rest of variables all default zero
 };
