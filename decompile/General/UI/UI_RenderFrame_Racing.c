@@ -44,9 +44,12 @@ void DECOMP_UI_RenderFrame_Racing()
 	
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
+	
+	int numPlyr = gGT->numPlyrCurrGame;
+	int gameMode1 = gGT->gameMode1;
 
 	// Get pointer to array of HUD structs
-	hudStructPtr = (struct UiElement2D*)data.hudStructPtr[gGT->numPlyrCurrGame - 1];
+	hudStructPtr = (struct UiElement2D*)data.hudStructPtr[numPlyr - 1];
 
 	levPtrMap = 0;
 
@@ -75,7 +78,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	}
 
 	// If not drawing intro-race cutscene
-	if ((gGT->gameMode1 & START_OF_RACE) == 0)
+	if ((gameMode1 & START_OF_RACE) == 0)
 	{
 		if ((gGT->hudFlags & 0x20) == 0)
 		{
@@ -98,7 +101,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	// numPlyrCurrGame is 0
 	if
 	(
-		(gGT->numPlyrCurrGame == '\0') &&
+		(numPlyr == '\0') &&
 
 		// If this is an AI and not a human
 		((gGT->drivers[0]->actionsFlagSet & 0x100000) != 0)
@@ -116,7 +119,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 	// If you are not in Relic Race, and not in battle mode,
 	// and not in time trial
-	if ((gGT->gameMode1 & (RELIC_RACE | TIME_TRIAL | BATTLE_MODE)) == 0)
+	if ((gameMode1 & (RELIC_RACE | TIME_TRIAL | BATTLE_MODE)) == 0)
 	{
 // cant run on PC yet, drivers dont initialize
 #ifndef REBUILD_PC
@@ -149,7 +152,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			{
 				LAB_80053260:
 				// If game is not paused
-				if ((gGT->gameMode1 & PAUSE_ALL) == 0)
+				if ((gameMode1 & PAUSE_ALL) == 0)
 				{
 					//execute Jump meter and landing boost processes
 					DECOMP_UI_JumpMeter_Update(playerStruct);
@@ -161,7 +164,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			else
 			{
 				// If game is not paused
-				if ((gGT->gameMode1 & PAUSE_ALL) == 0)
+				if ((gameMode1 & PAUSE_ALL) == 0)
 				{
 					// Player / AI structure + 0x4a shows driver index (0-7)
 					// This is a pointer to each player's tileView buffer
@@ -196,7 +199,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			if
 			(
 				// numPlyrCurrGame is less than 2 (1P mode)
-				(gGT->numPlyrCurrGame < 2) &&
+				(numPlyr < 2) &&
 
 				// if want to draw speedometer
 				((sdata->HudAndDebugFlags & 8) != 0)
@@ -219,27 +222,27 @@ void DECOMP_UI_RenderFrame_Racing()
 			if ((playerStruct->actionsFlagSet & 0x2000000) == 0)
 			{
 				// If you're not in Battle Mode
-				if ((gGT->gameMode1 & BATTLE_MODE) == 0)
+				if ((gameMode1 & BATTLE_MODE) == 0)
 				{
 					// Draw powerslide meter
 					DECOMP_UI_DrawSlideMeter(hudStructPtr[8].x, hudStructPtr[8].y, playerStruct);
 				}
 
 				// If you are not in Time Trial or Relic Race
-				if ((gGT->gameMode1 & (TIME_TRIAL | RELIC_RACE)) == 0)
+				if ((gameMode1 & (TIME_TRIAL | RELIC_RACE)) == 0)
 				{
 					DECOMP_UI_DrawNumWumpa(hudStructPtr[4].x, hudStructPtr[4].y, playerStruct);
 				}
 			}
 
 			// If you're in a Relic Race
-			if ((gGT->gameMode1 & RELIC_RACE) != 0)
+			if ((gameMode1 & RELIC_RACE) != 0)
 			{
 				DECOMP_UI_DrawNumTimebox(hudStructPtr[0x13].x, hudStructPtr[0x13].y, playerStruct);
 			}
 
 			// If game is not paused
-			if ((gGT->gameMode1 & PAUSE_ALL) == 0)
+			if ((gameMode1 & PAUSE_ALL) == 0)
 			{
 				if (playerStruct->PickupWumpaHUD.numCollected != 0)
 				{
@@ -262,7 +265,7 @@ void DECOMP_UI_RenderFrame_Racing()
 							(partTimeVariable1 != 0) &&
 
 							// If you're not in Adventure Arena
-							((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
+							((gameMode1 & ADVENTURE_ARENA) == 0)
 						)
 						{
 							RB_Player_ModifyWumpa(playerStruct, 1);
@@ -371,7 +374,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			}
 
 			// If you're not in a Relic Race
-			if ((gGT->gameMode1 & RELIC_RACE) == 0)
+			if ((gameMode1 & RELIC_RACE) == 0)
 			{
 				//if racer hasn't finished the race
 				if ((playerStruct->actionsFlagSet & 0x2000000) == 0)
@@ -414,7 +417,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 			// if you're in battle mode, while not paused
 			// and you do not have a life limit
-			if ((gGT->gameMode1 & (LIFE_LIMIT | BATTLE_MODE | PAUSE_ALL)) == BATTLE_MODE)
+			if ((gameMode1 & (LIFE_LIMIT | BATTLE_MODE | PAUSE_ALL)) == BATTLE_MODE)
 			{
 				// If the animation for adding points is over
 				if (playerStruct->BattleHUD.cooldown == 0)
@@ -430,7 +433,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					wumpaModel_Pos[1] = hudStructPtr[0xD].y;
 
 					// if you do not have life limit (battle)
-					if ((gGT->gameMode1 & LIFE_LIMIT) == 0)
+					if ((gameMode1 & LIFE_LIMIT) == 0)
 					{
 						// This is only with point limit,
 						// points can add or subtract
@@ -441,19 +444,16 @@ void DECOMP_UI_RenderFrame_Racing()
 						// Can't add 0, so it's +1 or -1
 
 						// if you are losing points
-						if (partTimeVariable1 < 1)
+						if (partTimeVariable1 < 0)
 						{
 							// print a minus sign with your change in score
 
 							// -%d
 							fmt = &sdata->s_subtractInt[0];
 
-							// Get own absolute value of the change
-							if (partTimeVariable1 < 0)
-							{
-								// Make a negative number positive
-								partTimeVariable1--;
-							}
+							// Make a negative number positive
+							partTimeVariable1 = -partTimeVariable1;
+							
 						}
 
 						else
@@ -501,7 +501,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			}
 
 			// If you're not in Battle Mode
-			if ((gGT->gameMode1 & BATTLE_MODE) == 0)
+			if ((gameMode1 & BATTLE_MODE) == 0)
 			{
 				//if racer hasn't finished the race
 				if ((playerStruct->actionsFlagSet & 0x2000000) == 0)
@@ -522,7 +522,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			if
 			(
 				// if you're in adventure mode or Arcade mode and
-				((gGT->gameMode1 & (ARCADE_MODE | ADVENTURE_MODE)) != 0) &&
+				((gameMode1 & (ARCADE_MODE | ADVENTURE_MODE)) != 0) &&
 
 				//racer finished the race
 				((playerStruct->actionsFlagSet & 0x2000000) != 0)
@@ -532,7 +532,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			}	
 #endif
 			
-			partTimeVariable5 = gGT->gameMode1;
+			partTimeVariable5 = gameMode1;
 
 			// If you are in Relic Race, and not in battle mode,
 			// and not in time trial
@@ -545,7 +545,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					(
 						(
 							// if numPlyrCurrGame is 2
-							gGT->numPlyrCurrGame == '\x02' &&
+							numPlyr == '\x02' &&
 
 							// AND
 
@@ -562,7 +562,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				{
 
 					// if numPlyrCurrGame is less than 3
-					if (gGT->numPlyrCurrGame < 3) goto LAB_80053af4;
+					if (numPlyr < 3) goto LAB_80053af4;
 
 					bVar3 = (gGT->timer & 1) == 0;
 					sVar17 = (u_short)bVar3 << 2;
@@ -573,8 +573,7 @@ void DECOMP_UI_RenderFrame_Racing()
 				sVar2 = hudStructPtr[5].y;
 				DECOMP_UI_DrawPosSuffix(sVar1, sVar2, playerStruct, (short)partTimeVariable5);
 
-				// if more than 2 players
-				if (2 < gGT->numPlyrCurrGame)
+				if (numPlyr > 2)
 				{
 					// Get Color Data
 					ptrColor = data.ptrColor[sVar17];
@@ -635,7 +634,7 @@ void DECOMP_UI_RenderFrame_Racing()
 			UI_TrackerSelf(playerStruct);
 
 			// If you're in Battle
-			if ((gGT->gameMode1 & BATTLE_MODE) != 0)
+			if ((gameMode1 & BATTLE_MODE) != 0)
 			{
 				// Draw arrows over the heads of other players (not AIs)
 				UI_BattleDrawHeadArrows(playerStruct);
@@ -680,8 +679,7 @@ void DECOMP_UI_RenderFrame_Racing()
 
 	sdata->framesDrivingSameDirection++;
 
-	// if numPlyrCurrGame is 1
-	if (gGT->numPlyrCurrGame == '\x01')
+	if (numPlyr == 1)
 	{
 		playerStruct = gGT->drivers[0];
 
@@ -867,75 +865,67 @@ void DECOMP_UI_RenderFrame_Racing()
 	{
 
 		// if you have a time limit (battle)
-		if ((gGT->gameMode1 & TIME_LIMIT) != 0)
+		if ((gameMode1 & TIME_LIMIT) != 0)
 		{
 			// draw countdown clock
 			DECOMP_UI_DrawLimitClock(0xd7,0x68,2);
 		}
 	}
 
-	if
-	(
-		(
-			(
-				// if numPlyrCurrGame is 1
-				(gGT->numPlyrCurrGame == '\x01') &&
-
-				// if ptr_map is valid
-				(levPtrMap != 0)
-			) &&
-			(
-				// if want to draw map, not speedometer
-				(sdata->HudAndDebugFlags & 8) == 0
-			)
-		) ||
-
-		(
-			(
-				// if numPlyrCurrGame is 3
-				gGT->numPlyrCurrGame == '\x03' &&
-
-				// if ptr_map is valid
-				(levPtrMap != 0)
-			)
-		)
+	if(
+		(levPtrMap != 0) &&
+		((gameMode1 & BATTLE_MODE) == 0)
 	)
 	{
-		local_30[0] = 0;
-
-		DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[PLAYER].thread, local_30);
-		DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[ROBOT].thread, local_30);
-		DECOMP_UI_Map_DrawGhosts	(levPtrMap, gGT->threadBuckets[GHOST].thread);
-		DECOMP_UI_Map_DrawTracking	(levPtrMap, gGT->threadBuckets[TRACKING].thread);
-
-		mapPosX = 500;
-		mapPosY = 195;
-
-		if (gGT->numPlyrCurrGame == 3)
-		{
-			mapPosX -= 60;
-			mapPosY += 10;
-		}
-
-		// Draw the map
-		DECOMP_UI_Map_DrawMap
+		if
 		(
-			// top half and bottom half
-			gGT->ptrIcons[3],
-			gGT->ptrIcons[4],
-			
-			// X and Y
-			mapPosX, mapPosY,
-
-			// Pointer to primary memory
-			&gGT->backBuffer->primMem,
-
-			// pointer to OT memory
-			gGT->tileView_UI.ptrOT,
-
-			// color, in this case white
-			1
-		);
+			(
+				(numPlyr == 1) &&
+	
+				// if want to draw map, not speedometer
+				(sdata->HudAndDebugFlags & 8) == 0
+				
+			) ||
+	
+			(numPlyr == 3)
+		)
+		{
+			local_30[0] = 0;
+	
+			DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[PLAYER].thread, local_30);
+			DECOMP_UI_Map_DrawDrivers	(levPtrMap, gGT->threadBuckets[ROBOT].thread, local_30);
+			DECOMP_UI_Map_DrawGhosts	(levPtrMap, gGT->threadBuckets[GHOST].thread);
+			DECOMP_UI_Map_DrawTracking	(levPtrMap, gGT->threadBuckets[TRACKING].thread);
+	
+			mapPosX = 500;
+			mapPosY = 195;
+	
+			if (numPlyr == 3)
+			{
+				mapPosX -= 60;
+				mapPosY += 10;
+			}
+	
+			// Draw the map
+			DECOMP_UI_Map_DrawMap
+			(
+				// top half and bottom half
+				gGT->ptrIcons[3],
+				gGT->ptrIcons[4],
+				
+				// X and Y
+				mapPosX, mapPosY,
+	
+				// Pointer to primary memory
+				&gGT->backBuffer->primMem,
+	
+				// pointer to OT memory
+				gGT->tileView_UI.ptrOT,
+	
+				// color, in this case white
+				1
+			);
+		}
 	}
 	
 	bVar3 = false;
@@ -944,7 +934,7 @@ void DECOMP_UI_RenderFrame_Racing()
 	i = 0;
 
 	// if numPlyrCurrGame is not 0
-	if (gGT->numPlyrCurrGame != '\0')
+	if (numPlyr != '\0')
 	{
 		// for(int i = 0; i < numPlyrCurrGame; i++)
 		do
@@ -962,7 +952,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					((playerStruct->actionsFlagSet & 0x2000000) != 0) &&
 
 					// If you're not in Arcade or Time Trial
-					((gGT->gameMode1 & (ARCADE_MODE | TIME_TRIAL)) == 0)
+					((gameMode1 & (ARCADE_MODE | TIME_TRIAL)) == 0)
 				) &&
 				(
 					(
@@ -983,10 +973,10 @@ void DECOMP_UI_RenderFrame_Racing()
 					// 0 = 1st place, 1 = 2nd place, 2 = 3rd place, etc
 
 					// Basically, out of all human players, if you did not come in last
-					((int)playerStruct->driverRank < (int)gGT->numPlyrCurrGame - 1) &&
+					((int)playerStruct->driverRank < (int)numPlyr - 1) &&
 
 					// If you're not in Battle Mode (winner of battle mode wont be in this function)
-					((gGT->gameMode1 & BATTLE_MODE) == 0)
+					((gameMode1 & BATTLE_MODE) == 0)
 				)
 				{
 
@@ -1028,7 +1018,7 @@ void DECOMP_UI_RenderFrame_Racing()
 					((sdata->gGamepads->gamepad[i].buttonsTapped & 0x1010) != 0) &&
 
 					// If you're in End-Of-Race menu
-					((gGT->gameMode1 & END_OF_RACE) != 0)
+					((gameMode1 & END_OF_RACE) != 0)
 				)
 				{
 					// make "Finished" and "Loser" disappear, start
@@ -1047,20 +1037,20 @@ void DECOMP_UI_RenderFrame_Racing()
 			i++;
 
 		// for(int i = 0; i < numPlyrCurrGame; i++)
-		} while (i < (int)gGT->numPlyrCurrGame);
+		} while (i < (int)numPlyr);
 	}
 	if
 	(
 		(
 			// If game is not paused
-			((gGT->gameMode1 & PAUSE_ALL) == 0) &&
+			((gameMode1 & PAUSE_ALL) == 0) &&
 			
 			//item roll is done
 			(!bVar3)
 		) &&
 
 		// If you're drawing Weapon Roulette (randomizing)
-		((gGT->gameMode1 & ROLLING_ITEM) != 0)
+		((gameMode1 & ROLLING_ITEM) != 0)
 	)
 	{
 		// stop weapon shuffle sound
@@ -1069,6 +1059,4 @@ void DECOMP_UI_RenderFrame_Racing()
 		// disable the randomizing effect in the HUD
 		gGT->gameMode1 &= ~ROLLING_ITEM;
 	}
-
-return;
 }
