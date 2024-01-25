@@ -163,11 +163,26 @@ void DECOMP_MM_CupSelect_MenuBox(struct MenuBox *mb)
         // loop through all four track icons in one cup
         for (trackIndex = 0; trackIndex < 4; trackIndex++)
         {
+			int posX = (startX + (trackIndex &1) * 0x54);
+			int posY = (startY + (trackIndex>>1) * 0x23);
+			
+			#ifdef USE_16BY9
+			if (trackIndex &1)
+			{
+				// right icons move 12% of 0x54, to the left
+				posX -= 10;
+			}
+			else
+			{				
+				// left icons move 12% of 0x54, to the right
+				posX += 10;
+			}
+			#endif
+			
             // Draw Icon of each track
             DECOMP_MENUBOX_DrawPolyGT4(
 				gGT->ptrIcons[data.ArcadeCups[cupIndex].CupTrack[trackIndex].iconID],
-				(startX + (trackIndex &1) * 0x54),
-				(startY + (trackIndex>>1) * 0x23),
+				posX, posY,
 				&gGT->backBuffer->primMem,
 				gGT->tileView_UI.ptrOT,
 				D230.cupSel_Color,
