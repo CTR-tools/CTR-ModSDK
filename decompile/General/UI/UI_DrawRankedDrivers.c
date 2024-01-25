@@ -57,7 +57,6 @@ void DECOMP_UI_DrawRankedDrivers(void)
     char bVar2;
     int iVar3;
     int iVar4;
-    int totalNumPlyrs;
     struct GameTracker *gGT;
     short txtColor;
     u_int uVar7;
@@ -86,9 +85,10 @@ void DECOMP_UI_DrawRankedDrivers(void)
     u_int local_2c;
 
     gGT = sdata->gGT;
+	
+	int numPlyr = gGT->numPlyrCurrGame;
 
-    // if numPlyrCurrGame is 1
-    if (gGT->numPlyrCurrGame == 1) 
+    if (numPlyr == 1) 
 	{
       // Number of racers that have finished race
       numRacersFinished = 0;
@@ -231,12 +231,13 @@ void DECOMP_UI_DrawRankedDrivers(void)
 	// if this is multiplayer
     else 
 	{
-      totalNumPlyrs = gGT->numPlyrCurrGame + gGT->numBotsNextGame;
-
       puVar16 = &data.rankIconsTransitionTimer[0];
       iVar15 = 0;
 
-      for (iVar14 = 0; iVar14 < totalNumPlyrs; iVar14++) 
+	  int totalNumDrivers;
+      totalNumDrivers = numPlyr + gGT->numBotsNextGame;
+
+      for (iVar14 = 0; iVar14 < totalNumDrivers; iVar14++) 
 	  {
         // puVar5 increases by 4 for each iteration
 
@@ -312,7 +313,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 		int posY = 0x66;
 		
 		#ifdef USE_NEW2P
-		if(totalNumPlyrs == 2)
+		if(numPlyr == 2)
 		{
 			posX = 0xF4;
 			posY = ((uVar11 + 5) * 0xd8) / 0x200;
@@ -416,7 +417,7 @@ void DECOMP_UI_DrawRankedDrivers(void)
 		int posY = 0x66;
 		
 		#ifdef USE_NEW2P
-		if(totalNumPlyrs == 2)
+		if(numPlyr == 2)
 		{
 			posX = 0xF4;
 			posY = (((iVar12 / iVar15) + 5) * 0xd8) / 0x200;
