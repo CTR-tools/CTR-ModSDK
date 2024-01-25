@@ -122,19 +122,19 @@ void DECOMP_MM_Battle_MenuBox(struct MenuBox* unused)
         }
     }
 
-    for (i = 0; i < 4; i++)
-    {
-        if ((gGT->battleSetup.teamFlags & (1 << i)) == 0)
-        {
-			// otherwise, you get 4th place in a 2P battle
-			// if the game ends and one person has negative points
-            gGT->battleSetup.pointsPerTeam[i] = -500;
-        }
-        else
-        {
-            gGT->battleSetup.pointsPerTeam[i] = 0;
-        }
-    }
+	// optimization, dont do this here, it's duplicated in the OG game
+	// in MainStats_RestartRaceCountLoss, which happens at the start of 
+	// battle, not just when you restart a race
+	#if 0
+	// Reset team points
+	for (int i = 0; i < 4; i++)
+	{
+		if ((gGT->battleSetup.teamFlags & (1 << i)) == 0)
+			gGT->battleSetup.pointsPerTeam[i] = -500;
+		else
+			gGT->battleSetup.pointsPerTeam[i] = 0;
+	}
+	#endif
 
     // Related to Battle mode
     if (

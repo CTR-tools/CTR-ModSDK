@@ -15,10 +15,14 @@ void DECOMP_MainStats_RestartRaceCountLoss(void)
   // Turn off HUD
   sdata->gGT->hudFlags &= 0xfe;
 
-  // Reset team points and check if someone is on each battle team
+  // Reset team points
   for (int i = 0; i < 4; i++)
   {
-    if (gGT->battleSetup.teamFlags & (1 << i) == 0)
+	// if team is inactive, give -500, so if somebody
+	// ends a battle with -1 points, they're not ranked
+	// 4th place in a 2P battle, cause of other inactive
+	// teams with zero points
+    if ((gGT->battleSetup.teamFlags & (1 << i)) == 0)
         gGT->battleSetup.pointsPerTeam[i] = -500;
     else
         gGT->battleSetup.pointsPerTeam[i] = 0;
