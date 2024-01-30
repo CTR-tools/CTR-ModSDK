@@ -35,11 +35,6 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
                 turn = (turn < 0) ? -turn : turn;
                 meterLeft -= MapToRange(turn, 0, 1080, 0, 48);
 
-                // slower fill if neutral or wide drift
-                // normal fill if you do a tight turn
-                // meterLeft -= (turn = (turn < 0) ? -turn : turn) > 800 ?
-                //             sdata->gGT->elapsedTimeMS : (sdata->gGT->elapsedTimeMS >> 1);
-
                 // if the bar is full or beyond
                 if (meterLeft <= 0)
                 {
@@ -77,7 +72,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
                     // turbo type
                     TURBO_PAD,
                     // fire level
-                    199 * turbo_level);
+                    167 * turbo_level);
                 // reset turbo_level
                 turbo_level = 0;
                 meterLeft = empty;
