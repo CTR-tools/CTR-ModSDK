@@ -23,8 +23,8 @@ int DECOMP_Player_GetBaseSpeed(struct Driver* driver)
     turboMultiplier = 5;
   }
 
-  int netSpeedStat = ((driver->const_SpeedometerScale_ClassStat - statAdditional) * 0x1000) / 5 + -1;
-  speedAdditional = (netWumpaFruitCount * netSpeedStat) / 10 + turboMultiplier * netSpeedStat >> 0xc;
+  int netSpeedStat = (((driver->const_SpeedometerScale_ClassStat - statAdditional) * 0x1000) / 5) - 1;
+  speedAdditional = (netWumpaFruitCount * netSpeedStat) / 10 + turboMultiplier * netSpeedStat >> 12;
 
   if ((driver->actionsFlagSet & 0x800000) != 0) {
     speedAdditional = speedAdditional + driver->const_MaskSpeed;
