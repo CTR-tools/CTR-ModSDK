@@ -2,26 +2,27 @@
 
 // OnCollide_Drivers
 // handle collision with turbo pads and robotcars
-void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)
+void DECOMP_OnCollide_Drivers(struct Thread* thread, struct Driver* driver)
 {
-	struct Instance* breadInstance;
+	struct Instance* inst;
 	u_int reservesIncrement;
+	int iVar1;
+	int iVar2;
 	int iVar3;
 	u_int fireLevel;
 	u_int stepFlagSet;
-	u_short posX;
-	u_short posY;
-	u_short posZ;
+	u_short pos[3];
 	struct Thread* collideThread;
 	int distance;
 	short driverHitRadius;
-
-	driver->velocityXYZ[1] -= driver->accelXYZ[1];
-	driver->velocityXYZ[0] -= driver->accelXYZ[0];
+	
 	stepFlagSet = driver->stepFlagSet;
+
+	driver->velocityXYZ[0] -= driver->accelXYZ[0];
+	driver->velocityXYZ[1] -= driver->accelXYZ[1];
 	driver->velocityXYZ[2] -= driver->accelXYZ[2];
 
-	if (stepFlagSet & 0x4000)
+	if ((stepFlagSet & 0x4000) != 0)
 	{
 		*(u_short*)&driver->fill18_postQuadBlock[6] |= 1;
 	}
@@ -68,32 +69,32 @@ LAB_8005ec70:
 	{
 		// thread -> instance -> flags
 		// instance is not in water or mud
-		bread->inst->flags &= 0xffffdfff;
+		thread->inst->flags &= ~(0x2000);
 	}
 
 	// if instance is in water or mud
 	else
 	{
 		// thread -> instance
-		breadInstance = bread->inst;
+		inst = thread->inst;
 
 		// set vertical split height
 		// (Y=0 for all water and mud)
-		breadInstance->vertSplit = 0;
+		inst->vertSplit = 0;
 
 		// instance -> flags
 		// split the instance
-		breadInstance->flags |= 0x2000;
+		inst->flags |= 0x2000;
 	}
 
 	// if collision is not disabled for this thread
-	if ((bread->flags & 0x1000) == 0)
+	if ((thread->flags & 0x1000) == 0)
 	{
 		// 40, 3e, 3c, 38, 34, allocated in that order
 
-		// position X and Y
-		posX = (u_short)((u_int)driver->posCurr[0] >> 8);
-		posY = (u_short)((u_int)driver->posCurr[1] >> 8);
+		// position X, Y and Z
+		for (char i = 0; i < 3; i++)
+			pos[i] = (u_short)((u_int)driver->posCurr[i] >> 8);
 
 		// distance between two objects
 		distance = 0x7fffffff;
@@ -101,50 +102,52 @@ LAB_8005ec70:
 		// thread you collide with
 		collideThread = 0;
 
-		// position Z
-		posZ = (u_short)((u_int)driver->posCurr[2] >> 8);
-
 		// check for collision with all sibling threads
-		THREAD_CollidePointWithBucket(bread->siblingThread, &posX);
+		THREAD_CollidePointWithBucket(thread->siblingThread, &pos);
 
 		// pointer to first robotcar thread
-		THREAD_CollidePointWithBucket(sdata->gGT->threadBuckets[ROBOT].thread, &posX);
-
-		if
-		(
-			// if there was a collision
-			(collideThread != 0) &&
+		THREAD_CollidePointWithBucket(sdata->gGT->threadBuckets[ROBOT].thread, &pos);
+		
+		// if there was a collision
+		if ((collideThread != 0) &&
 			(
-				// thread offset 0x42?
-				driverHitRadius = bread->driver_HitRadius + collideThread->driver_HitRadius,
-
+				driverHitRadius = thread->driver_HitRadius + collideThread->driver_HitRadius,
+				
+				// hitradius squared is bigger than max distance
 				distance < driverHitRadius * driverHitRadius
 			)
 		)
 		{
-			// pass the thread, collision data, and driver->88 is velocity?
-			DriverCrash_AnyTwoCars(bread, &posX, &driver->velocityXYZ[0]);
+			// pass the thread, collision data, and driver velocity
+			DriverCrash_AnyTwoCars(thread, &pos, &driver->velocityXYZ[0]);
 		}
 	}
-	if (*(u_short*)&driver->fill18_postQuadBlock[6] & 2) 
+	
+	// starts breaking below this section
+	
+	#if 0
+	// quadblock flags
+	if ((*(u_short*)&driver->fill18_postQuadBlock[6] & 2) != 0) 
 	{
-		iVar3 = (driver->posCurr[0] >> 8) - *(short*)&driver->fill18_postQuadBlock[8];
-		driverHitRadius = (driver->posCurr[2] >> 8) - *(short *)&driver->fill18_postQuadBlock[0xC];
+		// driver currQuadblock position?
+		iVar1 = pos[0] - *(short*)&driver->fill18_postQuadBlock[0x8];
+		iVar2 = pos[1] - *(short*)&driver->fill18_postQuadBlock[0xA];
+		iVar3 = pos[2] - *(short*)&driver->fill18_postQuadBlock[0xC];
 		
 		if
 		(
-			*(short*)&driver->fill18_postQuadBlock[0x10] * iVar3 + *(short*)&driver->fill18_postQuadBlock[0x12] * 
 			(
-				((driver->quadBlockHeight >> 8) - *(short *)&driver->fill18_postQuadBlock[0xA]) + 4
-			)
-			+ *(short*)&driver->fill18_postQuadBlock[0x14] * driverHitRadius < 0
+			(*(short*)&driver->fill18_postQuadBlock[0x10] * iVar1) + 
+			(*(short*)&driver->fill18_postQuadBlock[0x12] * (((driver->quadBlockHeight >> 8) - *(short *)&driver->fill18_postQuadBlock[0xA]) + 4)) +
+			(*(short*)&driver->fill18_postQuadBlock[0x14] * iVar3)
+			) < 0
 		) 
 		{
 			// calculate speed vector
-			driver->velocityXYZ[0] += iVar3 * 0x40;
-			driver->velocityXYZ[1] += ((driver->posCurr[1] >> 8) - *(short *)&driver->fill18_postQuadBlock[0xA]) * 0x40;
-			driver->velocityXYZ[2] += driverHitRadius * 0x40;
+			driver->velocityXYZ[0] += iVar1 * 0x40;
+			driver->velocityXYZ[1] += iVar2 * 0x40;
+			driver->velocityXYZ[2] += iVar3 * 0x40;
 		}
 	}
-	return;
+	#endif
 }
