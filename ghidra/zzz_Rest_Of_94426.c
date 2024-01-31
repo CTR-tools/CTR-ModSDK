@@ -30994,7 +30994,7 @@ LAB_8006462c:
 	// were hit by weapon while invincible, and therefore
 	// they take no damage
 
-	// Make driver talk
+	// Voiceline_RequestPlay
     FUN_8002cbe8(2,(int)(short)(&DAT_80086e84)[bVar2],0x10);
     return 0;
   }
@@ -31034,7 +31034,7 @@ LAB_8006462c:
 	  // squish sound
       FUN_80028494(0x5a,1,*(uint *)(param_1 + 0x2c8) >> 0x10 & 1);
 
-	  // Make driver talk
+	  // Voiceline_RequestPlay
       FUN_8002cbe8(4,(int)(short)(&DAT_80086e84)[*(byte *)(param_1 + 0x4a)],0x10);
     }
 
@@ -31081,7 +31081,7 @@ LAB_8006462c:
 
 LAB_800646f0:
 
-		// Make driver talk
+		// Voiceline_RequestPlay
 		FUN_8002cbe8(1,(int)(short)(&DAT_80086e84)[bVar2],0x10);
         goto LAB_800647d8;
       }

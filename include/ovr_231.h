@@ -544,9 +544,11 @@ struct Spider
 	short boolNearRoof; // 0 on ground, 1 near roof
 
 	// 0x8
+	short unused;
+	short padding;
 
 	// 0xC
-	struct Instance* inst;
+	struct Instance* shadowInst;
 
 	// end of struct, 8 bytes large
 };

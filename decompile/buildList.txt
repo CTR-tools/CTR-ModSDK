@@ -1,4 +1,4 @@
-// 537+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+16+1+1+2+4+2+4+1+2 = 693 rewritten so far
+// 537+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+16+1+1+2+4+2+4+1+2+3 = 693 rewritten so far
 // 537 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
@@ -82,12 +82,12 @@ common, 231, RB_FlameJet_Particles, 0x0, General/231/231_087_089_RB_FlameJet.c
 // skip Follower
 common, 231, RB_Fruit_ThTick, 0x0, General/231/231_093_096_RB_Fruit.c
 common, 231, RB_Minecart_ThTick, 0x0, General/231/231_097_098_RB_Minecart.c
-// skip Orca (unused)
+// skip Orca (unused, removed from decomp)
 common, 231, RB_Plant_ThTick_Eat, 0x0, General/231/231_102_107_RB_Plant.c
 common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_108_111_RB_Seal.c
 common, 231, RB_Snowball_ThTick, 0x0, General/231/231_112_113_RB_Snowball.c
-// skip Spider, 
-// skip StartText (unused) 
+common, 231, RB_Spider_DrawWebs, 0x0, General/231/231_114_117_RB_Spider.c
+// skip StartText (unused, removed from decomp) 
 common, 231, RB_Teeth_LInB, 0x0, General/231/231_120_124_RB_Teeth.c
 common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
 

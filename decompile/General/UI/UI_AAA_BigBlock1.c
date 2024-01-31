@@ -164,6 +164,7 @@ void NewCallback231()
 		// run thread at 30fps, in 60fps gameplay
 	}
 
+#if 0
 	// spider
 	{
 		// spawn cooldowns
@@ -186,6 +187,7 @@ void NewCallback231()
 		*(unsigned char*)0x800b994c = 0x4*2+1;
 		*(unsigned char*)0x800b9970 = 0x4*2+1;
 	}
+#endif
 
 	LOAD_Callback_Overlay_231();
 }

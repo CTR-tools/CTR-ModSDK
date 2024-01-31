@@ -21,7 +21,7 @@ void RB_Orca_LInB();
 //void DECOMP_RB_Baron_LInB();		-- DONE
 //void DECOMP_RB_Turtle_LInB();		-- DONE
 //void DECOMP_RB_Turtle_LInC();		-- DONE
-void RB_Spider_LInB();
+void DECOMP_RB_Spider_LInB();
 void DECOMP_RB_Fireball_LInB();
 void RB_Banner_LInB();
 void DECOMP_RB_CtrLetter_LInB();
@@ -59,7 +59,7 @@ void RB_Orca_LInB() {}
 //void DECOMP_RB_Baron_LInB() {}	-- DONE
 //void DECOMP_RB_Turtle_LInB() {}	-- DONE
 //void DECOMP_RB_Turtle_LInC() {}	-- DONE
-void RB_Spider_LInB() {}
+void DECOMP_RB_Spider_LInB() {}
 void DECOMP_RB_Fireball_LInB() {}
 void RB_Banner_LInB() {}
 void DECOMP_RB_CtrLetter_LInB() {}
@@ -833,7 +833,7 @@ struct Data data =
 		SET_MDM(0,DECOMP_RB_Turtle_LInB,DECOMP_RB_Turtle_LInC),
 		
 		// 0x52 - DYNAMIC_SPIDER (cortex castle)
-		SET_MDM(0,RB_Spider_LInB,0),
+		SET_MDM(0,DECOMP_RB_Spider_LInB,0),
 		
 		// 0x53 - DYNAMIC_SPIDERSHADOW
 		SET_MDM(0,0,0),

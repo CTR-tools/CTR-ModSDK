@@ -12699,6 +12699,11 @@ LAB_800b9aa8:
 	  // Play sound
       FUN_80028468(0x7b,1);
 	  
+	  // === Naughty Dog Bug ===
+	  // voiceline is already handled in RB_Hazard_HurtDriver,
+	  // which calls Player_ChangeState, which calls Voiceline_RequestPlay.
+	  // calling it here makes the driver talk twice
+	  
 	  // make driver talk
       FUN_8002cbe8(1,(int)(short)(&DAT_80086e84)[*(byte *)(iVar3 + 0x4a)],0x10);
     }
