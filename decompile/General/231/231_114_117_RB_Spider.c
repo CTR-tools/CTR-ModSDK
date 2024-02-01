@@ -178,123 +178,103 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
   spider->unused++;
 #endif
 
-  // If spider is on ground
-  if (spider->boolNearRoof == 0)
+  // beat 1000 bytes (exactly)
+
+  // Sitting Spider
+  if (spider->animLoopCount < 4)
   {
-    // if animation finished more than 4 times
-    if (spider->animLoopCount > 4)
-    {
-	  // === Spider Moving Up ===
-		
-      // Play animation backwards
-      spiderInst->animFrame--;
-	  sVar2 = spiderInst->animFrame;
-	  
-      if (sVar2 == 0)
-      {
-        // reset loop, near roof, WiggleLegsAndTeeth
-        spider->animLoopCount = 0;
-        spider->boolNearRoof = 1;
-        spiderInst->animIndex = 1;
-      }
-
-      // last frame of last animation
-      else if (sVar2 == 0xc)
-      {
-        // play sound: spider move up
-        PlaySound3D(0x79, spiderInst);
-      }
-
-      goto LAB_800b9a1c;
-    }
+	spiderInst->animFrame++;
+	iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 1);
 	
-	else
+	// if Sitting animation is done
+	if (iVar3 <= spiderInst->animFrame)
 	{
-		// === Spider Sitting ===
-
-		spiderInst->animFrame++;
-		iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 1);
+		spiderInst->animFrame = 0;
+		spider->animLoopCount++;
 	
-		// if animation is done
-		if (iVar3 <= spiderInst->animFrame)
+		// ghidra source code says 5, but it is 
+		// now 4, because of reordered logic
+		if (spider->animLoopCount == 4)
 		{
-			spiderInst->animFrame = 0;
-			spider->animLoopCount++;
-		
-			// if animation finishes 5 times
-			if (spider->animLoopCount == 5)
+			spiderInst->animIndex = 0;
+	
+			if (spider->boolNearRoof == 0)
 			{
-				spiderInst->animIndex = 0;
-		
-				sVar2 = INSTANCE_GetNumAnimFrames(spiderInst, 0);
-				spiderInst->animFrame = sVar2 + -1;
+				// start moving up (end of animation)
+				spiderInst->animFrame = 
+					INSTANCE_GetNumAnimFrames(spiderInst, 0) - 1;
 			}
-		}
-	}
-  }
-
-  // if spider is near ceiling
-  else
-  {
-    if (spider->animLoopCount > 4)
-    {
-	  // === Spider Moving Down ===
-		
-      spiderInst->animFrame++;
-      iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 0);
-
-      if (iVar3 <= spiderInst->animFrame)
-      {
-        // reset loop, not near roof, WiggleLegsAndTeeth
-        spider->animLoopCount = 0;
-        spider->boolNearRoof = 0;
-        spiderInst->animIndex = 1;
-      }
-	  
-	  LAB_800b9a1c:
-
-	  sVar2 = spiderInst->animFrame;
-
-	  short* arr = 0x800b9da4;
-      spiderInst->matrix.t[1] = (int)spiderInst->instDef->pos[1] + arr[sVar2];
-
-      // if animation frame is less than 11
-      if (sVar2 < 0xb)
-      {
-        // change spider scaleX and scaleZ based on animation frame
-        spider->shadowInst->scale[0] = (short)((sVar2 << 0xc) / 10) + 0x1800;
-        spider->shadowInst->scale[2] = (short)((sVar2 << 0xc) / 10) + 0x1800;
-      }
-    }
-	
-	else
-	{
-		// === Spider Sitting ===
-		
-		spiderInst->animFrame++;
-		iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 1);
-	
-		// if animation is finished
-		if (iVar3 <= spiderInst->animFrame)
-		{
-			spiderInst->animFrame = 0;
-			spider->animLoopCount++;
-		
-			// if animation finishes 5 times
-			if (spider->animLoopCount == 5)
+			
+			else
 			{
-				spiderInst->animIndex = 0;
+				// start moving down (start of animation)
 				spiderInst->animFrame = 0;
-		
-				// play sound: spider move down
+				
 				PlaySound3D(0x7a, spiderInst);
 			}
 		}
 	}
   }
-
-
-LAB_800b9aa8:
+  
+  // Moving Spider
+  else
+  {  
+	// If spider is on ground
+	if (spider->boolNearRoof == 0)
+	{
+		// === Spider Moving Up ===
+			
+		// Play animation backwards
+		spiderInst->animFrame--;
+		sVar2 = spiderInst->animFrame;
+		
+		if (sVar2 == 0)
+		{
+			// reset loop, near roof, WiggleLegsAndTeeth
+			spider->animLoopCount = 0;
+			spider->boolNearRoof = 1;
+			spiderInst->animIndex = 1;
+		}
+	
+		// last frame of last animation
+		else if (sVar2 == 0xc)
+		{
+			// play sound: spider move up
+			PlaySound3D(0x79, spiderInst);
+		}
+	}
+	
+	// if spider is near ceiling
+	else
+	{
+		// === Spider Moving Down ===
+			
+		spiderInst->animFrame++;
+		sVar2 = spiderInst->animFrame;
+		
+		iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 0);
+		if (iVar3 <= spiderInst->animFrame)
+		{
+			// reset loop, not near roof, WiggleLegsAndTeeth
+			spider->animLoopCount = 0;
+			spider->boolNearRoof = 0;
+			spiderInst->animIndex = 1;
+			spiderInst->animFrame = 0;
+		}
+	
+	}
+	
+	short* arr = 0x800b9da4;
+	spiderInst->matrix.t[1] = (int)spiderInst->instDef->pos[1] + arr[sVar2];
+	
+	// if animation frame is less than 11
+	if (sVar2 < 0xb)
+	{
+		// change spider scaleX and scaleZ based on animation frame
+		spider->shadowInst->scale[0] = (short)((sVar2 << 0xc) / 10) + 0x1800;
+		spider->shadowInst->scale[2] = (short)((sVar2 << 0xc) / 10) + 0x1800;
+	}	  
+  }
 
   Seal_CheckColl(spiderInst, t, 1, 0x9000, 0x7b);
 }
