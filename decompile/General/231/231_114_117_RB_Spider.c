@@ -1,5 +1,7 @@
 #include <common.h>
 
+void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
+
 void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 {
     struct GameTracker *gGT;
@@ -152,9 +154,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 	#endif
 }
 
-void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
-
-void DECOMP_RB_Spider_ThTick(struct Thread* spiderTh)
+void DECOMP_RB_Spider_ThTick(struct Thread* t)
 {
   short sVar2;
   int iVar3;
@@ -164,9 +164,8 @@ void DECOMP_RB_Spider_ThTick(struct Thread* spiderTh)
   struct Instance* coll;
   struct Spider* spider;
 
-  spider = spiderTh->object;
-
-  spiderInst = spiderTh->inst;
+  spider = t->object;
+  spiderInst = t->inst;
 
   // delay cycle by varying frames
   if (spider->delay != 0)
@@ -183,27 +182,24 @@ void DECOMP_RB_Spider_ThTick(struct Thread* spiderTh)
   if (spider->boolNearRoof == 0)
   {
     // if animation finished more than 4 times
-    if (4 < spider->animLoopCount)
+    if (spider->animLoopCount > 4)
     {
+	  // === Spider Moving Up ===
+		
       // Play animation backwards
-      sVar2 = spiderInst->animFrame + -1;
-
-      // if animation is at beginning
-      if (spiderInst->animFrame + -1 < 1)
+      spiderInst->animFrame--;
+	  sVar2 = spiderInst->animFrame;
+	  
+      if (sVar2 == 0)
       {
-        spiderInst->animFrame = 0;
+        // reset loop, near roof, WiggleLegsAndTeeth
         spider->animLoopCount = 0;
         spider->boolNearRoof = 1;
-
-        // set animation to WiggleLegsAndTeeth
-        goto LAB_800b9a14;
+        spiderInst->animIndex = 1;
       }
 
-      // set new animation frame
-      spiderInst->animFrame = sVar2;
-
       // last frame of last animation
-      if (sVar2 == 0xc)
+      else if (sVar2 == 0xc)
       {
         // play sound: spider move up
         PlaySound3D(0x79, spiderInst);
@@ -211,30 +207,30 @@ void DECOMP_RB_Spider_ThTick(struct Thread* spiderTh)
 
       goto LAB_800b9a1c;
     }
+	
+	else
+	{
+		// === Spider Sitting ===
 
-    sVar2 = spiderInst->animFrame;
-
-    iVar3 = INSTANCE_GetNumAnimFrames(spiderInst);
-
-    // if animation is done
-    if (iVar3 <= (int)sVar2 + 1)
-    {
-      spiderInst->animFrame = 0;
-      spider->animLoopCount++;
-
-      // if animation finishes 5 times
-      if (spider->animLoopCount == 5)
-      {
-        // set animation to zero
-        spiderInst->animIndex = 0;
-
-        sVar2 = INSTANCE_GetNumAnimFrames(spiderInst, 0);
-
-        // set animation frame to last frame
-        spiderInst->animFrame = sVar2 + -1;
-      }
-      goto LAB_800b9aa8;
-    }
+		spiderInst->animFrame++;
+		iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 1);
+	
+		// if animation is done
+		if (iVar3 <= spiderInst->animFrame)
+		{
+			spiderInst->animFrame = 0;
+			spider->animLoopCount++;
+		
+			// if animation finishes 5 times
+			if (spider->animLoopCount == 5)
+			{
+				spiderInst->animIndex = 0;
+		
+				sVar2 = INSTANCE_GetNumAnimFrames(spiderInst, 0);
+				spiderInst->animFrame = sVar2 + -1;
+			}
+		}
+	}
   }
 
   // if spider is near ceiling
@@ -242,141 +238,132 @@ void DECOMP_RB_Spider_ThTick(struct Thread* spiderTh)
   {
     if (spider->animLoopCount > 4)
     {
-      sVar2 = spiderInst->animFrame;
-
+	  // === Spider Moving Down ===
+		
+      spiderInst->animFrame++;
       iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 0);
 
-      // if animation is not done
-      if ((int)sVar2 < iVar3 - 1)
+      if (iVar3 <= spiderInst->animFrame)
       {
-        spiderInst->animFrame += 1;
-      }
-
-      // if animation finished
-      else
-      {
-        // reset animation counter
+        // reset loop, not near roof, WiggleLegsAndTeeth
         spider->animLoopCount = 0;
-
-        // move spider to ground
         spider->boolNearRoof = 0;
-      LAB_800b9a14:
-
-        // set animation to WiggleLegsAndTeeth
         spiderInst->animIndex = 1;
       }
-    LAB_800b9a1c:
+	  
+	  LAB_800b9a1c:
 
-      spiderInst->matrix.t[1] = (int)spiderInst->instDef->pos[1] + (int)((short *)0x800b9da4)[spiderInst->animFrame];
+	  sVar2 = spiderInst->animFrame;
+
+	  short* arr = 0x800b9da4;
+      spiderInst->matrix.t[1] = (int)spiderInst->instDef->pos[1] + arr[sVar2];
 
       // if animation frame is less than 11
-      if ((int)spiderInst->animFrame < 0xb)
+      if (sVar2 < 0xb)
       {
         // change spider scaleX and scaleZ based on animation frame
-
-        spider->shadowInst->scale[0] = (short)(((int)spiderInst->animFrame << 0xc) / 10) + 0x1800;
-        spider->shadowInst->scale[2] = (short)(((int)spiderInst->animFrame << 0xc) / 10) + 0x1800;
+        spider->shadowInst->scale[0] = (short)((sVar2 << 0xc) / 10) + 0x1800;
+        spider->shadowInst->scale[2] = (short)((sVar2 << 0xc) / 10) + 0x1800;
       }
-      goto LAB_800b9aa8;
     }
-
-    sVar2 = spiderInst->animFrame;
-
-    iVar3 = INSTANCE_GetNumAnimFrames(spiderInst);
-
-    // if animation is finished
-    if (iVar3 - 1 <= (int)sVar2)
-    {
-      // restart animation to frame zero
-      spiderInst->animFrame = 0;
-
-      // increment number of times animation finishes
-      sVar2 = spider->animLoopCount;
-      spider->animLoopCount = sVar2 + 1;
-
-      // if animation finishes 5 times
-      if ((short)(sVar2 + 1) == 5)
-      {
-        // set animation to ChangePosition
-        spiderInst->animIndex = 0;
-
-        // set animation frame to zero
-        spiderInst->animFrame = 0;
-
-        // play sound: spider move down
-        PlaySound3D(0x7a, spiderInst);
-      }
-      goto LAB_800b9aa8;
-    }
+	
+	else
+	{
+		// === Spider Sitting ===
+		
+		spiderInst->animFrame++;
+		iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 1);
+	
+		// if animation is finished
+		if (iVar3 <= spiderInst->animFrame)
+		{
+			spiderInst->animFrame = 0;
+			spider->animLoopCount++;
+		
+			// if animation finishes 5 times
+			if (spider->animLoopCount == 5)
+			{
+				spiderInst->animIndex = 0;
+				spiderInst->animFrame = 0;
+		
+				// play sound: spider move down
+				PlaySound3D(0x7a, spiderInst);
+			}
+		}
+	}
   }
 
-  // increment animation frame
-  spiderInst->animFrame += 1;
 
 LAB_800b9aa8:
 
-  Seal_CheckColl(spiderInst, spiderTh, 1, 0x9000, 0x7b);
+  Seal_CheckColl(spiderInst, t, 1, 0x9000, 0x7b);
 }
 
-void DECOMP_RB_Spider_LInB(struct Instance* spiderInst)
+void DECOMP_RB_Spider_LInB(struct Instance* inst)
 {
-  struct Thread* spiderTh;
-  struct Instance* inst;
   struct Spider* spider;
   short rot[3];
-  
-  if (spiderInst->thread != 0) return;
 
-  // 0x10 = size
-  // 0 = no relation to param4
-  // 0x300 = SmallStackPool
-  // 0xa = "spider" thread bucket
-  spiderTh = THREAD_BirthWithObject(0x10030a,DECOMP_RB_Spider_ThTick,0,0);
+  struct Thread* t = 
+	DECOMP_THREAD_BirthWithObject
+	(
+		SIZE_RELATIVE_POOL_BUCKET
+		(
+			sizeof(struct Spider),
+			NONE,
+			SMALL,
+			SPIDER
+		),
+		
+		DECOMP_RB_Spider_ThTick,0,0
+	);
   
-  if (spiderTh == NULL) return; 
-  spiderInst->thread = spiderTh;
-  spiderTh->inst = spiderInst;
+  if (t == NULL) return; 
+  inst->thread = t;
+  t->inst = inst;
   
-  spiderInst->animIndex = 1;
-  spiderInst->scale[0] = 0x1c00;
-  spiderInst->scale[1] = 0x1c00;
-  spiderInst->scale[2] = 0x1c00;
+  inst->animIndex = 1;
+  inst->scale[0] = 0x1c00;
+  inst->scale[1] = 0x1c00;
+  inst->scale[2] = 0x1c00;
   
-  spider = spiderTh->object;
+  spider = t->object;
   spider->boolNearRoof = 1;
   spider->animLoopCount = 0;
-  spider->spiderID = spiderInst->name[7] - '0';
+  spider->spiderID = inst->name[7] - '0';
   
   if (spider->spiderID == 3) {
-    spider->delay = 0x5b;
+    spider->delay = 91;
   }
   else if (spider->spiderID == 2) {
-    spider->delay = 0x45;
+    spider->delay = 69;
   }
   else {
     spider->delay = 0;
   }
   
-  inst = INSTANCE_Birth3D(sdata->gGT->modelPtr[0x53], 0, spiderTh);
-  spider->shadowInst = inst;
+  struct Instance* shadowInst = 
+	INSTANCE_Birth3D(sdata->gGT->modelPtr[0x53], 0, t);
   
-  *(int*)&inst->matrix.m[0][0] = *(int*)&spiderInst->matrix.m[0][0];
-  *(int*)&inst->matrix.m[0][2] = *(int*)&spiderInst->matrix.m[0][2];
-  *(int*)&inst->matrix.m[1][1] = *(int*)&spiderInst->matrix.m[1][1];
-  *(int*)&inst->matrix.m[2][0] = *(int*)&spiderInst->matrix.m[2][0];
-  inst->matrix.m[2][2] = spiderInst->matrix.m[2][2];
+  spider->shadowInst = shadowInst;
   
-  inst->matrix.t[0] = spiderInst->matrix.t[0];
-  inst->matrix.t[1] = spiderInst->matrix.t[1] - 8;
-  inst->matrix.t[2] = spiderInst->matrix.t[2];
-  spiderInst->matrix.t[1] += 0x4c0;
+  *(int*)&shadowInst->matrix.m[0][0] = *(int*)&inst->matrix.m[0][0];
+  *(int*)&shadowInst->matrix.m[0][2] = *(int*)&inst->matrix.m[0][2];
+  *(int*)&shadowInst->matrix.m[1][1] = *(int*)&inst->matrix.m[1][1];
+  *(int*)&shadowInst->matrix.m[2][0] = *(int*)&inst->matrix.m[2][0];
+  shadowInst->matrix.m[2][2] = inst->matrix.m[2][2];
   
-  inst->scale[0] = 0x2000;
-  inst->scale[1] = 0x2000;
-  inst->scale[2] = 0x2000;
+  shadowInst->matrix.t[0] = inst->matrix.t[0];
+  shadowInst->matrix.t[1] = inst->matrix.t[1] - 8;
+  shadowInst->matrix.t[2] = inst->matrix.t[2];
+  inst->matrix.t[1] += 0x4c0;
+  
+  shadowInst->scale[0] = 0x2000;
+  shadowInst->scale[1] = 0x2000;
+  shadowInst->scale[2] = 0x2000;
   
   rot[0] = 0;
   rot[1] = 0x200;
   rot[2] = 0;
-  ConvertRotToMatrix(&inst->matrix,&rot);
+  ConvertRotToMatrix(&shadowInst->matrix,&rot);
 }
