@@ -47,18 +47,20 @@ void RB_Minecart_CheckColl(struct Instance* minecartInst, struct Thread* minecar
 }
 
 void RB_Minecart_NewPoint(
+	struct Instance* minecartInst,
 	struct Minecart* minecartObj,
 	struct SpawnType2* spawnType2)
 {
-	int startIndex = minecartObj->posIndex * 3;
+	int pointIndex = minecartObj->posIndex * 3;
 	
-	minecartObj->posEnd[0] = spawnType2->posCoords[startIndex];
-	minecartObj->posEnd[1] = spawnType2->posCoords[startIndex+1];
-	minecartObj->posEnd[2] = spawnType2->posCoords[startIndex+2];
-	
-	minecartObj->dir[0] = minecartObj->posStart[0] - minecartObj->posEnd[0];
-	minecartObj->dir[1] = minecartObj->posStart[1] - minecartObj->posEnd[1];
-	minecartObj->dir[2] = minecartObj->posStart[2] - minecartObj->posEnd[2];
+	for(int i = 0; i < 3; i++)
+	{
+		int start = spawnType2->posCoords[pointIndex+i-3];
+		int end = spawnType2->posCoords[pointIndex+i];
+		
+		minecartInst->matrix.t[i] = start;
+		minecartObj->dir[i] = start - end;
+	}
 	
 	minecartObj->rotDesired[0] =
 		ratan2(
@@ -134,26 +136,15 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 		if(minecartObj->posIndex+1 < numCoords)
 		{
 			minecartObj->posIndex++;
-			
-			minecartObj->posStart[0] = minecartObj->posEnd[0];
-			minecartObj->posStart[1] = minecartObj->posEnd[1];
-			minecartObj->posStart[2] = minecartObj->posEnd[2];
 		}
 		
 		// end of path, reset
 		else
 		{
 			minecartObj->posIndex = 1;
-			
-			for(i = 0; i < 3; i++)
-			{
-				pos[i] = spawnType2->posCoords[i];
-				minecartObj->posStart[i] = pos[i];
-				minecartInst->matrix.t[i] = pos[i];
-			}
 		}
 		
-		RB_Minecart_NewPoint(minecartObj, spawnType2);
+		RB_Minecart_NewPoint(minecartInst, minecartObj, spawnType2);
 		
 		if(minecartObj->posIndex == 1)
 		{
@@ -164,8 +155,10 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 			#endif
 			
 			for(i = 0; i < 3; i++)
+			{
 				minecartObj->rotCurr[i] = 
-				minecartObj->rotDesired[i];			
+				minecartObj->rotDesired[i];
+			}			
 		}		
 	}
 	
@@ -176,16 +169,9 @@ void DECOMP_RB_Minecart_ThTick(struct Thread* t)
 	for(i = 0; i < 3; i++)
 	{
 		// skip safety tests, assume no division by zero
-		minecartInst->matrix.t[i] = 
-			minecartObj->posStart[i] -
-			(
-				(
-					minecartObj->betweenPoints_currFrame *
-					minecartObj->dir[i]
-				)
-			
-				/ minecartObj->betweenPoints_numFrames
-			);
+		minecartInst->matrix.t[i] -=
+			minecartObj->dir[i]
+			/ minecartObj->betweenPoints_numFrames;
 	}
 		
 	minecartObj->rotCurr[0] =
@@ -290,11 +276,7 @@ void DECOMP_RB_Minecart_LInB(struct Instance* inst)
 	minecartObj->posIndex = startIndex;
 	startIndex *= 3;
 	
-	minecartObj->posStart[0] = spawnType2->posCoords[startIndex-3];
-	minecartObj->posStart[1] = spawnType2->posCoords[startIndex-2];
-	minecartObj->posStart[2] = spawnType2->posCoords[startIndex-1];
-	
-	RB_Minecart_NewPoint(minecartObj, spawnType2);
+	RB_Minecart_NewPoint(inst, minecartObj, spawnType2);
 	
 	return;
 }

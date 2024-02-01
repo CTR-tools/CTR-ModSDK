@@ -386,12 +386,14 @@ struct Fruit
 struct Minecart
 {
 	// 0x0
+	// removed in decomp optimizations
 	short posStart[3];
 
 	// 0x6
 	short betweenPoints_currFrame;
 
 	// 0x8
+	// removed in decomp optimizations
 	short posEnd[3];
 
 	// 0xe
