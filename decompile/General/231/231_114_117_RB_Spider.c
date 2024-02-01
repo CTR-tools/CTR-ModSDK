@@ -1,8 +1,5 @@
 #include <common.h>
 
-// 0872/1424 bytes (552 under, not counting webs)
-// 1396/2012 bytes (616 under, with webs)
-
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
 
 void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
@@ -181,17 +178,6 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
   spider = t->object;
   spiderInst = t->inst;
 
-  // delay cycle by varying frames
-  if (spider->delay != 0)
-  {
-    spider->delay--;
-    return;
-  }
-
-#if 0
-  spider->unused++;
-#endif
-
   // Sitting Spider
   if (spider->animLoopCount < 4)
   {
@@ -324,14 +310,13 @@ void DECOMP_RB_Spider_LInB(struct Instance* inst)
   spider->animLoopCount = 0;
   spider->spiderID = inst->name[7] - '0';
   
-  if (spider->spiderID == 3) {
-    spider->delay = 91;
+  if (spider->spiderID == 3) 
+  {
+    t->cooldownFrameCount = FPS_DOUBLE(91);
   }
-  else if (spider->spiderID == 2) {
-    spider->delay = 69;
-  }
-  else {
-    spider->delay = 0;
+  else if (spider->spiderID == 2) 
+  {
+    t->cooldownFrameCount = FPS_DOUBLE(69);
   }
   
   struct Instance* shadowInst = 

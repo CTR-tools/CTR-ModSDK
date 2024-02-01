@@ -538,6 +538,7 @@ struct Spider
 	short spiderID;
 
 	// 0x4
+	// unused, use t->cooldownFrameCount instead
 	short delay;
 
 	// 0x6
