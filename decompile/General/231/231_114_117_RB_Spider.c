@@ -88,10 +88,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 
         // loop through spiders
         for(j = 0; j < numSpiders; j++)
-        {	
-			// printf is required to prevent crashing?
-			printf("%d\n", j);
-	
+        {		
 			#if 0
             // point0
             gte_ldVXY0(iVar11);
