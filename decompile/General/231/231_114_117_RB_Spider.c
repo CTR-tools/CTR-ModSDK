@@ -26,8 +26,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
     u_int *ot;
     int depth;
     u_int *puVar8;
-    u_int *piVar9;
-    u_int *scratchpad;
+    short *scratchpad;
     int iVar11;
     int numSpiders;
     int iVar13;
@@ -42,7 +41,6 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
     if (t == NULL) return;
 	
     scratchpad = (u_int *)0x1f800000;
-    piVar9 = (int *)0x1f800000;
 
     // all threads
     for (numSpiders = 0; t != NULL; numSpiders++)
@@ -51,15 +49,19 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 		struct InstDef* instDef = inst->instDef;
 		
         uVar2 = instDef->pos[0];
-        iVar3 = instDef->pos[1];
         sVar1 = instDef->pos[2];
 
-        iVar4 = t->inst->matrix.t[1];
-
-        scratchpad[0] = (u_int)uVar2 | (iVar3 + 0x540) * 0x10000;
-        scratchpad[1] = (u_int)uVar2 | (iVar4 + 0x60) * 0x10000;
+        scratchpad[0] = uVar2;
+        scratchpad[1] = instDef->pos[1] + 0x540;
         scratchpad[2] = (int)sVar1;
-        scratchpad += 3;
+		scratchpad[3] = 0;
+		
+        scratchpad[4] = uVar2;
+        scratchpad[5] = t->inst->matrix.t[1] + 0x60;
+        scratchpad[6] = (int)sVar1;
+		scratchpad[7] = 0;
+
+        scratchpad += 8;
 
         t = t->siblingThread;
     }
@@ -74,8 +76,6 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 
     iVar4 = 0x1200;
 
-    iVar11 = 0x1f800000;
-
     // loop through all players
     for (i = 0; i < numPlyr; i++)
     {
@@ -85,40 +85,35 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
         // store on GTE
         gte_SetRotMatrix(m);
         gte_SetTransMatrix(m);
+		
+		scratchpad = 0x1f800000;
 
         // loop through spiders
         for(j = 0; j < numSpiders; j++)
-        {		
-			#if 0
-            // point0
-            gte_ldVXY0(iVar11);
-            gte_ldVZ0(iVar11 + 8);
-
-            // point1
-            gte_ldVXY1(iVar11 + 4);
-            gte_ldVZ1(iVar11 + 8);
-
-            // advance scratchpad
-            iVar11 = iVar11 + 0xc;
-
-            // perspective projection
-            gte_rtpt();
+        {	
+			// why fail?
+			// this is also in Model/Level code
 			
-			// this writes two XY0 and XY1 together
-            gte_stsxy01c(&p->f2.x0);
+            //gte_ldv01(&scratchpad[0], &scratchpad[4]);
+            //gte_rtpt();
+            //gte_stsxy01(&p->f2.x0, &p->f2.x1);
 
-            // depth of vertex on screen
-            depth = gte_stSZ1();
+			gte_ldv0(&scratchpad[0]);
+			gte_rtps();
+			gte_stsxy(&p->f2.x0);
 			
-			#else
-				
-			depth = 10;
-			p->f2.x0 = (20 + (10 * j));
-			p->f2.x1 = (20 + (10 * j));
-			p->f2.y0 = (20 + (10 * 1));
-			p->f2.y1 = (20 + (10 * 9));
+			gte_ldv0(&scratchpad[4]);
+			gte_rtps();
+			gte_stsxy(&p->f2.x1);
+
+			scratchpad += 8;
+
+			// depth of vertex on screen
+            gte_avsz3();
+			gte_stotz(&depth);
 			
-			#endif
+			// removing this, makes driver model explode?
+			if(j == 0) printf("");
 
             // color (gray)
             lineColor = 0x3f;

@@ -122,6 +122,8 @@ void TEST_226(
 		posBSP[2] = bsp->box.min[2];
 		gte_ldv0(&posBSP[0]);
 		gte_rtps();
+		// edit: did I forget gte_avsz3(); the last time I tested?
+		// Is that why the test gave no improvement?
 		gte_stotz(&otZ_block);
 		gte_stsxy(&posScreen1[0]);
 		if (posScreen1[0] > 0) goto PassFrustumBSP;
