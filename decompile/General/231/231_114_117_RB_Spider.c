@@ -64,7 +64,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
         t = t->siblingThread;
     }
 	
-	int i;
+	int i, j;
 	int numPlyr;
     p = primMem->curr;	
 	numPlyr = gGT->numPlyrCurrGame;
@@ -77,11 +77,7 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
     iVar11 = 0x1f800000;
 
     // loop through all players
-    for (
-			i = numPlyr - 1; 
-			i > -1; 
-			i--
-		)
+    for (i = 0; i < numPlyr; i++)
     {
 		view = &gGT->tileView[i];
         m = &view->matrix_ViewProj;
@@ -91,11 +87,11 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
         gte_SetTransMatrix(m);
 
         // loop through spiders
-        for (; numSpiders > -1; numSpiders--)
-        {
-			// printf prevents crashing???
-			printf("%d\n", numSpiders);
-			
+        for(j = 0; j < numSpiders; j++)
+        {	
+			// printf is required to prevent crashing?
+			printf("%d\n", j);
+	
 			#if 0
             // point0
             gte_ldVXY0(iVar11);
@@ -120,10 +116,10 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 			#else
 				
 			depth = 10;
-			p->f2.x0 = 10 * numSpiders;
-			p->f2.x1 = 10 * numSpiders;
-			p->f2.y0 = 10 * 1;
-			p->f2.y1 = 10 * 9;
+			p->f2.x0 = (20 + (10 * j));
+			p->f2.x1 = (20 + (10 * j));
+			p->f2.y0 = (20 + (10 * 1));
+			p->f2.y1 = (20 + (10 * 9));
 			
 			#endif
 
