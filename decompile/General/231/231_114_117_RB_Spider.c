@@ -1,5 +1,7 @@
 #include <common.h>
 
+// 872/1424 bytes (not counting webs)
+
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
 
 void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
@@ -177,8 +179,6 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 #if 0
   spider->unused++;
 #endif
-
-  // beat 1000 bytes (exactly)
 
   // Sitting Spider
   if (spider->animLoopCount < 4)
