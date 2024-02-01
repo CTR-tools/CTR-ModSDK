@@ -1,6 +1,7 @@
 #include <common.h>
 
-// 872/1424 bytes (not counting webs)
+// 0872/1424 bytes (552 under, not counting webs)
+// 1396/2012 bytes (616 under, with webs)
 
 void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage, int radius, int sound);
 
@@ -90,30 +91,38 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 
         // loop through spiders
         for(j = 0; j < numSpiders; j++)
-        {	
-			// why fail?
-			// this is also in Model/Level code
+        {
 			
-            //gte_ldv01(&scratchpad[0], &scratchpad[4]);
-            //gte_rtpt();
-            //gte_stsxy01(&p->f2.x0, &p->f2.x1);
-
-			gte_ldv0(&scratchpad[0]);
-			gte_rtps();
-			gte_stsxy(&p->f2.x0);
+			// optimal code, but invalid depth,
+			// makes the web look darker
+#if 0
+			// depth of each vertex
+			//__asm__ ("swc2 $17, 0( %0 );" : : "r"(ptr)); SZ1
+			//__asm__ ("swc2 $18, 0( %0 );" : : "r"(ptr)); SZ2
+			//__asm__ ("swc2 $19, 0( %0 );" : : "r"(ptr)); SZ3
 			
-			gte_ldv0(&scratchpad[4]);
-			gte_rtps();
-			gte_stsxy(&p->f2.x1);
-
+			// Need this in Level/Model code,
+			// rtps is "single", rtpt is "triple"
+            gte_ldv01(&scratchpad[0], &scratchpad[4]);
+            gte_rtpt();
+            gte_stsxy01(&p->f2.x0, &p->f2.x1);
+			
+			// depth of 2nd vertex
+			__asm__ ("swc2 $18, 0( %0 );" : : "r"(&depth));
+#else
+            gte_ldv0(&scratchpad[0]);
+            gte_rtps();
+            gte_stsxy(&p->f2.x0);
+			
+            gte_ldv0(&scratchpad[4]);
+            gte_rtps();
+            gte_stsxy(&p->f2.x1);
+			
+			// rtps (single) writes depth to stsz,
+			// no need for averaging with avsz3 or stotz
+			gte_stsz(&depth);
+#endif	
 			scratchpad += 8;
-
-			// depth of vertex on screen
-            gte_avsz3();
-			gte_stotz(&depth);
-			
-			// removing this, makes driver model explode?
-			if(j == 0) printf("");
 
             // color (gray)
             lineColor = 0x3f;
@@ -135,14 +144,14 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
                     }
                 }
 
-                *(int*)&p->f2.r0 = (lineColor | lineColor << 8 | lineColor << 0x10);
+                p->f2.r0 = lineColor;
+                p->f2.g0 = lineColor;
+                p->f2.b0 = lineColor;
                 p->f2.code = 0x42;
 
                 depth = depth >> 6;
                 if (depth > 0x3ff)
-                {
                     depth = 0x3ff;
-                }
 
                 // tileView 0xf4, ptrOT
                 ot = &view->ptrOT[depth];
