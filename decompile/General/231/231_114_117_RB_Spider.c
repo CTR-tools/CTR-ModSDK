@@ -6,10 +6,17 @@ void Seal_CheckColl(struct Instance* sealInst, struct Thread* sealTh, int damage
 
 void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 {
+	typedef struct
+	{
+		u_int tag;
+		u_int tpage;
+		LINE_F2 f2;
+	} multiCmdPacket;
+
     struct GameTracker *gGT;
     struct PrimMem *primMem;
     MATRIX *m;
-    LINE_F2 *p;
+    multiCmdPacket *p;
 
     short sVar1;
     u_short uVar2;
@@ -57,18 +64,15 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
         t = t->siblingThread;
     }
 	
-	#if 0
 	int i;
 	int numPlyr;
-    p = (LINE_F2 *)primMem->curr;	
+    p = primMem->curr;	
 	numPlyr = gGT->numPlyrCurrGame;
 
     if (p + (numSpiders * numPlyr) >= primMem->endMin100)
 		return;
 
     iVar4 = 0x1200;
-
-    uVar17 = 0xe1000a20;
 
     iVar11 = 0x1f800000;
 
@@ -86,12 +90,13 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
         gte_SetRotMatrix(m);
         gte_SetTransMatrix(m);
 
-        // primMem offset 0xC
-        puVar8 = p + 3;
-
         // loop through spiders
         for (; numSpiders > -1; numSpiders--)
         {
+			// printf prevents crashing???
+			printf("%d\n", numSpiders);
+			
+			#if 0
             // point0
             gte_ldVXY0(iVar11);
             gte_ldVZ0(iVar11 + 8);
@@ -100,12 +105,27 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
             gte_ldVXY1(iVar11 + 4);
             gte_ldVZ1(iVar11 + 8);
 
+            // advance scratchpad
+            iVar11 = iVar11 + 0xc;
+
             // perspective projection
             gte_rtpt();
-            gte_stsxy01c((long *)(p + 4));
+			
+			// this writes two XY0 and XY1 together
+            gte_stsxy01c(&p->f2.x0);
 
             // depth of vertex on screen
             depth = gte_stSZ1();
+			
+			#else
+				
+			depth = 10;
+			p->f2.x0 = 10 * numSpiders;
+			p->f2.x1 = 10 * numSpiders;
+			p->f2.y0 = 10 * 1;
+			p->f2.y1 = 10 * 9;
+			
+			#endif
 
             // color (gray)
             lineColor = 0x3f;
@@ -114,25 +134,24 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
             // to be seen, then generate primitives
             if (depth - 1U < 0x11ff)
             {
-                p->r0 = uVar17;
-                p->g0 = 0;
-                if (0xa00 < depth)
+				p->tpage = 0xe1000a20;
+                p->f2.tag = 0;
+				
+                if (depth > 0xa00)
                 {
                     iVar19 = (iVar4 - depth) * 0x3f;
                     lineColor = iVar19 >> 0xb;
                     if (iVar19 < 0)
                     {
-                        lineColor = iVar19 + 0x7ff >> 0xb;
+                        lineColor = (iVar19 + 0x7ff) >> 0xb;
                     }
                 }
 
-                // prim offset 0x4,
-                // R,G,B,code(0x42) LINE_F2
-                p->code = 0x42;
-                p->b0 = (lineColor | lineColor << 8 | lineColor << 0x10);
+                *(int*)&p->f2.r0 = (lineColor | lineColor << 8 | lineColor << 0x10);
+                p->f2.code = 0x42;
 
                 depth = depth >> 6;
-                if (0x3ff < depth)
+                if (depth > 0x3ff)
                 {
                     depth = 0x3ff;
                 }
@@ -146,14 +165,10 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 
                 p = p + 1;
             }
-
-            // advance scratchpad
-            iVar11 = iVar11 + 0xc;
         }
     }
 
     primMem->curr = p;
-	#endif
 }
 
 void DECOMP_RB_Spider_ThTick(struct Thread* t)
