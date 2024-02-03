@@ -29,7 +29,7 @@ void CAM_ClearScreen(struct GameTracker* gGT);
 void CAM_Init(struct CameraDC* cDC, int cameraID, struct Driver* d, struct TileView* tileView);
 void CAM_FindClosestQuadblock(short* scratchpad, struct CameraDC* cDC, struct Driver* d, short* param_4);
 int CAM_Path_GetNumPoints();
-u_int CAM_Path_Move(int frame, u_short* param_2, u_short* param_3, u_short* param_4);
+u_int CAM_Path_Move(int frame, u_short* pos, u_short* rot, u_short* getPath);
 void CAM_StartOfRace(struct CameraDC* cDC);
 void CAM_EndOfRace_Battle(struct CameraDC* cDC, struct Driver* d);
 void CAM_EndOfRace(struct CameraDC* cDC, struct Driver* d);
