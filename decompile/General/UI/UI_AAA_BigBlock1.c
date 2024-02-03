@@ -164,31 +164,6 @@ void NewCallback231()
 		// run thread at 30fps, in 60fps gameplay
 	}
 
-#if 0
-	// spider
-	{
-		// spawn cooldowns
-		*(unsigned char*)0x800b9c84 = 0x5B*2;
-		*(unsigned char*)0x800b9c98 = 0x45*2;
-		
-		// animation logic
-		*(unsigned char*)0x800b9a40 = 0xb*2;
-		*(unsigned int*)0x800b9a54 = 0x512c0;
-		*(unsigned int*)0x800b9a80 = 0x512c0;
-		
-		// remove v0<<1 with v0&0xfe,
-		// already increasing twice as fast
-		*(unsigned int*)0x800b9a28 = 0x304200fe;
-		
-		// play animations 2x as many times,
-		// can't do frame interpolation cause it's already used
-		*(unsigned char*)0x800b98a0 = 0x4*2+1;
-		*(unsigned char*)0x800b98c4 = 0x4*2+1;
-		*(unsigned char*)0x800b994c = 0x4*2+1;
-		*(unsigned char*)0x800b9970 = 0x4*2+1;
-	}
-#endif
-
 	LOAD_Callback_Overlay_231();
 }
 
