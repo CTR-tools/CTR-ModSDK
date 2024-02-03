@@ -297,7 +297,7 @@ struct ModelAnim
 {
 	char name[0x10];
 
-	short numFrames;
+	unsigned short numFrames;
 	short frameSize;
 
 	// 0x14

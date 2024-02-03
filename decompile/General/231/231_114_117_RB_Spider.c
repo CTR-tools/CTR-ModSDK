@@ -181,7 +181,11 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
   // Sitting Spider
   if (spider->animLoopCount < 4)
   {
-	spiderInst->animFrame++;
+	#ifdef USE_60FPS
+	if(sdata->gGT->timer & 1)
+	#endif
+		spiderInst->animFrame++;
+	
 	iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 1);
 	
 	// if Sitting animation is done
@@ -223,7 +227,12 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 		// === Spider Moving Up ===
 			
 		// Play animation backwards
-		spiderInst->animFrame--;
+		
+		#ifdef USE_60FPS
+		if(sdata->gGT->timer & 1)
+		#endif
+			spiderInst->animFrame--;
+		
 		sVar2 = spiderInst->animFrame;
 		
 		if (sVar2 == 0)
@@ -247,7 +256,11 @@ void DECOMP_RB_Spider_ThTick(struct Thread* t)
 	{
 		// === Spider Moving Down ===
 			
-		spiderInst->animFrame++;
+		#ifdef USE_60FPS
+		if(sdata->gGT->timer & 1)
+		#endif
+			spiderInst->animFrame++;
+		
 		sVar2 = spiderInst->animFrame;
 		
 		iVar3 = INSTANCE_GetNumAnimFrames(spiderInst, 0);
