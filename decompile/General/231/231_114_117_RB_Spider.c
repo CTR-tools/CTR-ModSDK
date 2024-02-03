@@ -49,12 +49,12 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 
         scratchpad[0] = uVar2;
         scratchpad[1] = instDef->pos[1] + 0x540;
-        scratchpad[2] = (int)sVar1;
+        scratchpad[2] = sVar1;
 		scratchpad[3] = 0;
 		
         scratchpad[4] = uVar2;
         scratchpad[5] = t->inst->matrix.t[1] + 0x60;
-        scratchpad[6] = (int)sVar1;
+        scratchpad[6] = sVar1;
 		scratchpad[7] = 0;
 
         scratchpad += 8;
@@ -64,10 +64,11 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 	
 	int i, j;
 	int numPlyr;
-    p = primMem->curr;	
 	numPlyr = gGT->numPlyrCurrGame;
 
-    if (p + (numSpiders * numPlyr) >= primMem->endMin100)
+	p = primMem->curr;	
+	p = p + (numSpiders * numPlyr);
+    if (p >= primMem->endMin100)
 		return;
 
     // loop through all players
@@ -81,6 +82,9 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
         gte_SetTransMatrix(m);
 		
 		scratchpad = 0x1f800000;
+		
+		// 0x10 * numSpiders
+		short* output = 0x1F800050;
 
         // loop through spiders
         for(j = 0; j < numSpiders; j++)
@@ -98,12 +102,11 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 			// rtps is "single", rtpt is "triple"
             gte_ldv01(&scratchpad[0], &scratchpad[4]);
             gte_rtpt();
-            gte_stsxy01(&p->f2.x0, &p->f2.x1);
+            gte_stsxy01(&output[0], &output[2]);
 			
 			// depth of 2nd vertex
 			__asm__ ("swc2 $18, 0( %0 );" : : "r"(&depth));
 #else
-			short output[4];
 
             gte_ldv0(&scratchpad[0]);
             gte_rtps();
@@ -124,6 +127,9 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
             // to be seen, then generate primitives
             if ((unsigned int)(depth-1) < (0x1200-1))
             {
+				p = primMem->curr;	
+				primMem->curr = p+1;
+				
 				p->tpage = 0xe1000a20;
                 p->f2.tag = 0;
 				
@@ -151,13 +157,10 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
                 // prim header, OT and prim len
                 *(int *)p = *ot | 0x5000000;
                 *ot = (u_int)p & 0xffffff;
-
-                p = p + 1;
             }
         }
     }
 
-    primMem->curr = p;
 }
 
 void DECOMP_RB_Spider_ThTick(struct Thread* t)
