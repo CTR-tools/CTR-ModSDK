@@ -45,6 +45,10 @@ void DECOMP_TileView_FadeOneWindow(struct TileView *view)
       fadeStrength = currValue - 0x1000;
     }
 
+	#ifdef REBUILD_PC
+	p->tpage |= 0x400; // set dfe=1
+	#endif
+
     // strength of fade
     fadeStrength = fadeStrength >> 4;
 

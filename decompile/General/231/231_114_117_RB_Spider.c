@@ -19,7 +19,6 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
     short sVar1;
     u_short uVar2;
     int iVar3;
-    int iVar4;
     u_int lineColor;
     u_int *ot;
     int depth;
@@ -30,7 +29,6 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
     int iVar13;
     int iVar16;
     u_int uVar17;
-    int iVar19;
 
     gGT = sdata->gGT;
     primMem = &gGT->backBuffer->primMem;
@@ -72,8 +70,6 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
     if (p + (numSpiders * numPlyr) >= primMem->endMin100)
 		return;
 
-    iVar4 = 0x1200;
-
     // loop through all players
     for (i = 0; i < numPlyr; i++)
     {
@@ -107,13 +103,15 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 			// depth of 2nd vertex
 			__asm__ ("swc2 $18, 0( %0 );" : : "r"(&depth));
 #else
+			short output[4];
+
             gte_ldv0(&scratchpad[0]);
             gte_rtps();
-            gte_stsxy(&p->f2.x0);
+            gte_stsxy(&output[0]);
 			
             gte_ldv0(&scratchpad[4]);
             gte_rtps();
-            gte_stsxy(&p->f2.x1);
+            gte_stsxy(&output[2]);
 			
 			// rtps (single) writes depth to stsz,
 			// no need for averaging with avsz3 or stotz
@@ -121,24 +119,21 @@ void DECOMP_RB_Spider_DrawWebs(struct Thread *t, struct TileView *view)
 #endif	
 			scratchpad += 8;
 
-            // color (gray)
-            lineColor = 0x3f;
 
             // if line is close enough to the screen
             // to be seen, then generate primitives
-            if (depth - 1U < 0x11ff)
+            if ((unsigned int)(depth-1) < (0x1200-1))
             {
 				p->tpage = 0xe1000a20;
                 p->f2.tag = 0;
 				
+				*(int*)&p->f2.x0 = *(int*)&output[0];
+				*(int*)&p->f2.x1 = *(int*)&output[2];
+				
+				lineColor = 0x3f;
                 if (depth > 0xa00)
                 {
-                    iVar19 = (iVar4 - depth) * 0x3f;
-                    lineColor = iVar19 >> 0xb;
-                    if (iVar19 < 0)
-                    {
-                        lineColor = (iVar19 + 0x7ff) >> 0xb;
-                    }
+                    lineColor = ((0x1200 - depth) * 0x3f) >> 0xb;
                 }
 
                 p->f2.r0 = lineColor;
