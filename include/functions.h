@@ -268,10 +268,7 @@ void CseqMusic_StopAll();
 
 	// howl
 
-	//howl_InstrumentPitch()
-	void howl_InitGlobals(char* howlFilepath);
-	//howl_ParseHeader()
-	//howl_ParseCseqHeader()
+
 	//howl_LoadHeader()
 	//howl_SetSong()
 	//howl_LoadSong()
@@ -329,10 +326,6 @@ void CseqMusic_StopAll();
 
 	// not even the last of howl
 
-	short howl_VolumeGet(int volumeType);
-	void howl_VolumeSet(int volumeType, unsigned char volume);
-	char howl_ModeGet();
-	void howl_ModeSet(char volumeMode);
 
 	// OptionsMenu...
 
@@ -361,14 +354,6 @@ void CseqMusic_StopAll();
 	void Cutscene_VolumeRestore();
 
 	// this is the last of ho- got em
-
-	void howl_PlayAudio_Update();
-	void howl_InitChannelAttr_EngineFX(struct ChannelStats* channel, struct ChannelAttr* attr, int volume, int LR, int distortion);
-	void howl_InitChannelAttr_OtherFX(char* ptrCseq, struct ChannelAttr* attr, int volume, int param_4, int distortion);
-	void howl_PauseAudio();
-	//howl_UnPauseChannel()
-	void howl_UnPauseAudio();
-	void howl_StopAudio(int clearBackupStats, int bool_DestroyMusic, int bool_DestroyAllSFX);
 
 	// Voiceline
 

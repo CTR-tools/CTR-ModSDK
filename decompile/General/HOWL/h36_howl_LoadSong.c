@@ -1,7 +1,7 @@
 #include <common.h>
 
 // similar to h23_Bank_AssignSpuAddrs, and h34_howl_LoadHeader
-int DECOMP_howl_loadSong()
+int DECOMP_howl_LoadSong()
 {
 	int ret;
 	

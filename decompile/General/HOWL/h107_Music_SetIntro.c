@@ -11,7 +11,7 @@ void DECOMP_Music_SetIntro(void)
 
     while(DECOMP_Bank_AssignSpuAddrs() == 0) {}
 	
-    DECOMP_howl_SetSong(28);
+    howl_SetSong(28);
     
-	while(DECOMP_howl_loadSong() == 0) {}
+	while(howl_LoadSong() == 0) {}
 }

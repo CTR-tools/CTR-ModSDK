@@ -2013,7 +2013,7 @@ undefined4 FUN_80029c40(uint param_1)
 }
 
 
-//howl_loadSong
+//howl_LoadSong
 uint FUN_80029ca4(void)
 
 {
