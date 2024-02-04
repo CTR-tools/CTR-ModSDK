@@ -1,3 +1,8 @@
 changed some headers < .h> to <psn00bsdk/include/ .h>
+
 changed #if 0 to #if 1 for SpuVolume
+
 changed psxgpu.h to use "NikoFakeDrEnv" in DRAWENV
+
+changed hwregs_c.h 0xBFxxxxxx to 0x1Fxxxxxx, because psyq does that, 
+	and because PSP Popsloader + ePSXe wont recognize 0xBFxxxxxx

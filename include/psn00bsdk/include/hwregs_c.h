@@ -16,8 +16,8 @@
 
 /* Constants */
 
-#define IOBASE				0xbf800000
-#define EXP1BASE			0xbf000000
+#define IOBASE				0x1f800000
+#define EXP1BASE			0x1f000000
 
 #define F_CPU				33868800L
 #define F_GPU				53222400L
