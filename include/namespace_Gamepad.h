@@ -221,8 +221,8 @@ struct GamepadBuffer
 	char unk43;
 	
 	// 0x44
-	char unk44;
-	char unk45;
+	char unk44; // 2A
+	char unk45; // 2A
 	
 	// elapsedTim timers
 	short unk46; // vib1 2A
