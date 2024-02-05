@@ -21766,10 +21766,22 @@ LAB_8005a9d8:
     }
     uVar14 = 0x100;
   }
-  else {
-    if (*(short *)(param_2 + 0x3fc) < 0x80) {
+  else 
+  {
+    // low jump landing boost
+	if (*(short *)(param_2 + 0x3fc) < 0x80) 
+	{
       uVar19 = 0x12;
-      if ((*(char *)(param_2 + 0x4b) < '\0') || (uVar19 = 0x22, '\0' < *(char *)(param_2 + 0x4b))) 
+      if (
+			// steer left
+			(*(char *)(param_2 + 0x4b) < '\0') || 
+			
+			(
+				// steer right
+				uVar19 = 0x22, 
+				'\0' < *(char *)(param_2 + 0x4b)
+			)
+		) 
 	  {
 		 // GAMEPAD_Vib_1
          FUN_800263a0(param_2,uVar19,0x20);
