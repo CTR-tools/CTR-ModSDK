@@ -1018,14 +1018,29 @@ void FUN_80025e18(int param_1)
         if (*(char *)(*(int *)(iVar5 + 0x20) + 1) == -0x1d)
 		{
           bVar1 = 0x40;
-          if (*(char *)(iVar5 + 0x44) == '\0') {
-            if ((int)*(short *)(iVar5 + 0x46) == 0) {
-              if ((*(byte *)(iVar5 + 0x43) < *(byte *)(iVar5 + 0x42)) ||
-                 (bVar1 = *(byte *)(iVar5 + 0x43) >> 4, *(short *)(iVar5 + 0x48) != 0)) {
+          if (*(char *)(iVar5 + 0x44) == '\0') 
+		  {
+            if ((int)*(short *)(iVar5 + 0x46) == 0) 
+			{
+              if (
+					(*(byte *)(iVar5 + 0x43) < *(byte *)(iVar5 + 0x42)) ||
+					(
+						bVar1 = *(byte *)(iVar5 + 0x43) >> 4, 
+						*(short *)(iVar5 + 0x48) != 0
+					)
+				  ) 
+			  {
                 uVar6 = (uint)*(byte *)(iVar5 + 0x42);
                 bVar1 = (byte)((int)uVar6 >> 4);
-                if (((*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & uVar6 & 0xf) != 0) &&
-                   (bVar1 = (byte)((int)(uVar6 - 0x10) >> 4), (int)(uVar6 - 0x10) < 0)) {
+                
+				if (
+						((*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & uVar6 & 0xf) != 0) &&
+						(
+							bVar1 = (byte)((int)(uVar6 - 0x10) >> 4), 
+							(int)(uVar6 - 0x10) < 0
+						)
+					) 
+				{
                   bVar1 = 0;
                 }
               }
