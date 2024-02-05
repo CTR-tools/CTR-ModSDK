@@ -33,59 +33,50 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
         maxPadsPerPort = 4;
     }
 
-    // If there are gamepad ports that
-    // gameplay cares about (always > 0)
-    if (numPorts > 0)
+
+	pad = &gGamepads->gamepad[0];
+
+    // loop through all gamepad ports
+    // that gameplay cares about. Either
+    // 1 or 2, main ports on console
+    for (port = 0; port < numPorts; port++)
     {
-        // loop through all gamepad ports
-        // that gameplay cares about. Either
-        // 1 or 2, main ports on console
-        for (port = 0; port < numPorts; port++)
-        {
-            // if max number of gamepad ports is not zero,
-            // which will always be true no matter what
-            if (maxPadsPerPort != 0)
+        // loop through all gamepads that can connect
+        // to this gamepad port. 1 for no mtap, 4 for mtap
+        for (char i = 0; i < maxPadsPerPort; i++)
+        {	
+            // if this is not a multitap,
+            // skip next block, and just start
+            // if-body with ptrPadBuff
+            if
+            (
+                (gGamepads->slotBuffer[port].controllerData == (PAD_ID_MULTITAP << 4)) &&
+
+                // assuming this is a multitap
+                (gGamepads->slotBuffer[port].isControllerConnected != 0) ||
+
+                (gGamepads->slotBuffer[port].controllers[0].isControllerConnected != 0)
+            )
             {
-
-                // loop through all gamepads that can connect
-                // to this gamepad port. 1 for no mtap, 4 for mtap
-                for (char i = 0; i < maxPadsPerPort; i++)
-                {
-                    pad = &gGamepads->gamepad[i];
-					
-                    // if this is not a multitap,
-                    // skip next block, and just start
-                    // if-body with ptrPadBuff
-                    if
-                    (
-                        (gGamepads->slotBuffer[port].controllerData == (PAD_ID_MULTITAP << 4)) &&
-
-                        // assuming this is a multitap
-                        (gGamepads->slotBuffer[port].isControllerConnected != 0) ||
-
-                        (gGamepads->slotBuffer[port].controllers[0].isControllerConnected != 0)
-                    )
-                    {
-                        // no analog sticks found
-                        pad->gamepadType = 0;
-                    }
-                    else
-                    {
-                        uVar4 = (port << 4) | i;
-
-                        // according to libref
-                        // 0 - PadStateDisCon
-                        // 1 - PadStateFindPad
-                        // and many more...
-                        uVar2 = PadGetState(uVar4);
-
-                        DECOMP_GAMEPAD_ProcessState(pad, uVar2, uVar4);
-					}
-
-                    // increment gamepad counter
-                    numConnected++;
-                }
+                // no analog sticks found
+                pad->gamepadType = 0;
             }
+            else
+            {
+                uVar4 = (port << 4) | i;
+
+                // according to libref
+                // 0 - PadStateDisCon
+                // 1 - PadStateFindPad
+                // and many more...
+                uVar2 = PadGetState(uVar4);
+
+                DECOMP_GAMEPAD_ProcessState(pad, uVar2, uVar4);
+			}
+
+            // increment gamepad counter
+            numConnected++;
+			pad++;
         }
     }
 
