@@ -1014,8 +1014,8 @@ void FUN_80025e18(int param_1)
         iVar2 = FUN_80043f44();
         if (iVar2 != 0) goto LAB_80026074;
 
-		// If this is not NPC-105 gamepad
-        if (*(char *)(*(int *)(iVar5 + 0x20) + 1) == -0x1d)
+		// If this is NPC-105 gamepad
+        if (*(char *)(*(int *)(iVar5 + 0x20) + 1) == 0xE3)
 		{
           bVar1 = 0x40;
           if (*(char *)(iVar5 + 0x44) == '\0') 
@@ -1082,21 +1082,39 @@ LAB_80026030:
           *(undefined *)(iVar5 + 0x2b) = 0;
         }
 
-		// If this is NPC-105 gamepad
-		else {
-          if (*(int *)(iVar5 + 0x30) == 0) {
+		// If this is not NPC-105 gamepad
+		else 
+		{
+		  // vib3 frame timer
+          if (*(int *)(iVar5 + 0x30) == 0) 
+		  {
+			// no vibration
             *(undefined *)(iVar5 + 0x2a) = 0;
           }
-          else {
+		  
+          else 
+		  {
+			// change vibration depending on
+			// vib3 frame frequency
+			
+			// This solves the fact that motors can't use
+			// variable strength, only "on" or "off" so 
+			// vibrate on different number of frames instead
+			  
             uVar4 = 0;
             if ((*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & *(uint *)(iVar5 + 0x3c)) == 0) {
               uVar4 = 0xff;
             }
+			
+			// set desired
             *(undefined *)(iVar5 + 0x2a) = uVar4;
           }
-          if (*(int *)(iVar5 + 0x34) == 0) {
+          
+		  if (*(int *)(iVar5 + 0x34) == 0) 
+		  {
             *(undefined *)(iVar5 + 0x40) = 0;
-            if (*(int *)(iVar5 + 0x38) == 0) {
+            if (*(int *)(iVar5 + 0x38) == 0) 
+			{
               *(undefined *)(iVar5 + 0x41) = 0;
               goto LAB_80026030;
             }
@@ -1107,9 +1125,11 @@ LAB_80026030:
           }
         }
         
+		// vib3 frame timer
 		if (*(int *)(iVar5 + 0x30) != 0) {
           *(int *)(iVar5 + 0x30) = *(int *)(iVar5 + 0x30) + -1;
         }
+		
         if (*(int *)(iVar5 + 0x34) != 0) {
           *(int *)(iVar5 + 0x34) = *(int *)(iVar5 + 0x34) + -1;
         }
@@ -1124,7 +1144,7 @@ LAB_80026074:
 					(*(int *)(iVar5 + 0x20) == 0) ||
 
 					// If this is not NPC-105 gamepad
-					(*(char *)(*(int *)(iVar5 + 0x20) + 1) != -0x1d)
+					(*(char *)(*(int *)(iVar5 + 0x20) + 1) != 0xE3)
 				) ||
 				(*(char *)(iVar5 + 0x44) == '\0')
 			)

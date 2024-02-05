@@ -78,7 +78,7 @@ void DECOMP_MainFreeze_MenuPtrOptions(struct GameTracker* gGT)
 		do
 		{
 			psVar9 = sdata->gGamepads->gamepad[iVar7 >> 0x10].ptrControllerPacket;
-			if (((psVar9 == (short *)0x0) || (*(char *)psVar9 != 0)) || ((*(char *)((int)psVar9 + 1) != -0x1d && (*(char *)((int)psVar9 + 1) != '#'))))
+			if (((psVar9 == (short *)0x0) || (*(char *)psVar9 != 0)) || ((*(char *)((int)psVar9 + 1) != 0xE3 && (*(char *)((int)psVar9 + 1) != '#'))))
 			{
 				uVar13 = (u_int)numRacingWheels;
 				numRacingWheels = numRacingWheels + 1;

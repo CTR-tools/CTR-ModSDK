@@ -4116,7 +4116,7 @@ void FUN_80037da0(void)
   }
 
   // If this is NPC-105 gamepad
-  bVar1 = pcVar6[1] == -0x1d;
+  bVar1 = pcVar6[1] == 0xE3;
 
   // make a copy
   uVar8 = (uint)bVar1;
@@ -4805,7 +4805,7 @@ void FUN_80038b5c(int param_1)
 
 				(
 					// If this is not NPC-105 gamepad
-					pcVar8[1] != -0x1d &&
+					pcVar8[1] != 0xE3 &&
 
 					// If this is not madcatz racing wheel
 					(pcVar8[1] != '#')
