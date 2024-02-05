@@ -199,6 +199,10 @@ struct GamepadBuffer
 	// desired can be nullified
 	// before submission, if power is not
 	// within the 60-unit hardware budget
+	
+	// The two values are NOT left/right,
+	// both sides of the controller have 2 each,
+	// one large motor and one small motor
 
 	// 0x2A
 	char motorDesired[2];
