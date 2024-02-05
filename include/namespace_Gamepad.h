@@ -208,18 +208,22 @@ struct GamepadBuffer
 	// 0x30
 	// probably all these are in
 	// FUN_80025e18, and FUN_800252a0
-	char data14[0x14];
-
+	int unk30;
+	int unk34;
+	int unk38;
+	int unk3c;
+	
+	// 0x40
+	char unk40[4];
+	
 	// 0x44
-	char unk_44_countdown;
-
-	// vibration (again?)
-	char unk_45;
-	char unk_46;
-	char unk_47;
-
+	char unk44;
+	char unk45;
+	short unk46;
+	
 	// 0x48
-	char data4[4];
+	short unk48;
+	short padding;
 
 	// 0x4c
 	struct RacingWheelData* rwd;

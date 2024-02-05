@@ -90,7 +90,7 @@ void DECOMP_MainFreeze_ConfigSetupEntry()
 				}
 				else
 	{
-					sdata_gGamepads->gamepad[iVar9].unk_44_countdown = '\x04';
+					sdata_gGamepads->gamepad[iVar9].unk44 = '\x04';
 					data_rwd[sdata_gamepad_ID_ThatOpenedRaceWheelConfig].gamepadCenter = 0x80;
 				}
 				MENUBOX_ClearInput();

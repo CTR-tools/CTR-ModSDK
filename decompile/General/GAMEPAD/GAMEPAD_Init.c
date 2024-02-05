@@ -14,7 +14,7 @@ void DECOMP_GAMEPAD_Init(struct GamepadSystem* gGamepads)
 	
 	// no analog sticks detected
     pad->gamepadType = 0;
-    pad->unk_44_countdown = 0;
+    pad->unk44 = 0;
   }
   
   gGamepads->gamepadsConnectedByFlag = 0xffffffff;
