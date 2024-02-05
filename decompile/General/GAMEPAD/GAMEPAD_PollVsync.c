@@ -82,15 +82,9 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
 
     // if there are less than 8 gamepads connected,
     // write to buffers of all Unplugged gamepads
-    if (numConnected < 8)
+    while (pad < &gGamepads->gamepad[8])
     {
-        for (;
-             numConnected < 8;
-             numConnected++)
-        {
-            pad = &gGamepads->gamepad[numConnected];
-            // no analog sticks found
-            pad->gamepadType = 0;
-        }
+        pad->gamepadType = 0;
+		pad++;
     }
 }
