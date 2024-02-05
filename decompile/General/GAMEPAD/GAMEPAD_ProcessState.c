@@ -42,9 +42,9 @@ void DECOMP_GAMEPAD_ProcessState(struct GamepadBuffer* pad, int padState, short 
             pad->motorStepRate[iVar3] = uVar1;
         }
 
-        PadSetAct(id, &pad->motorPrev[0], 2);
+        PadSetAct(id, &pad->motorPrev[0], sizeof(pad->motorPrev));
 
-        if (PadSetActAlign(&sdata->unkPadSetActAlign) != 0) 
+        if (PadSetActAlign(id, &sdata->unkPadSetActAlign) != 0) 
 		{
           pad->gamepadType = 2;
         }

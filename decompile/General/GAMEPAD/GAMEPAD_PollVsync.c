@@ -12,27 +12,17 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
 
     numConnected = 0;
 
-    // number of ports that gameplay cares about,
-    // 2 by default, no multitaps, 2 gamepads
+    // 2 players, no multitap
     numPorts = 2;
-
-    // number of gamepads per gamepad port,
-    // set to 1 if there is no multitap (default)
     maxPadsPerPort = 1;
 
     // If there is a multitap present
     if ((gGamepads->slotBuffer[0].isControllerConnected == 0) && gGamepads->slotBuffer[0].controllerData == (PAD_ID_MULTITAP << 4))
     {
-        // Gameplay now only cares about one gamepad port,
-        // Port 1, which has the multitap. However, the gamepad
-        // system still processes input for port 2, Gameshark can
-        // be programmed with button input from all 8 gamepads
+        // 4 players, with multitap
         numPorts = 1;
-
-        // There can now be 4 gamepads in one port
         maxPadsPerPort = 4;
     }
-
 
 	pad = &gGamepads->gamepad[0];
 
@@ -50,12 +40,14 @@ void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem *gGamepads)
             // if-body with ptrPadBuff
             if
             (
-                (gGamepads->slotBuffer[port].controllerData == (PAD_ID_MULTITAP << 4)) &&
-
-                // assuming this is a multitap
-                (gGamepads->slotBuffer[port].isControllerConnected != 0) ||
-
-                (gGamepads->slotBuffer[port].controllers[0].isControllerConnected != 0)
+				(
+					// multitap here, and controller connected
+					(gGamepads->slotBuffer[port].controllerData == (PAD_ID_MULTITAP << 4)) &&
+					(gGamepads->slotBuffer[port].controllers[i].isControllerConnected != 0)
+				) ||
+				
+				// controller connected
+				(gGamepads->slotBuffer[port].isControllerConnected != 0)
             )
             {
                 // no analog sticks found
