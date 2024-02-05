@@ -1,7 +1,4 @@
 
-// called "GAMEPAD" out of basic 
-// asumption, no direct proof
-
 // GAMEPAD_Init
 void FUN_800251ac(int param_1)
 
