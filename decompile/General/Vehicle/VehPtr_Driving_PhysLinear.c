@@ -77,7 +77,7 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	)
 	{
 		// increment timer by (speed * time)
-		driver->distanceDriven += (driver->speedApprox * gGT->elapsedTimeMS >> 8);
+		driver->distanceDriven += (driver->speedApprox * gGT->elapsedTimeMS) >> 8;
 	}
 
 	for(i = 0; i < 14; i++)
@@ -786,7 +786,7 @@ CheckJumpButtons:
 			
 			driverSpeedOrSmth = driverBaseSpeed * driverSpeedOrSmth;
 			driverSpeedSmth2 = driverSpeedOrSmth >> 7;
-			if (driverSpeedOrSmth < 0) driverSpeedSmth2 = driverSpeedOrSmth + 0x7f >> 7;
+			if (driverSpeedOrSmth < 0) driverSpeedSmth2 = (driverSpeedOrSmth + 0x7f) >> 7;
 			
 			// remove flag for reversing
 			goto LAB_8006253c;
@@ -842,7 +842,7 @@ CheckJumpButtons:
 				{
 					driverSpeedOrSmth = driver->const_BackwardSpeed * -driverSpeedOrSmth;
 					driverSpeedSmth2 = driverSpeedOrSmth >> 8;
-					if (driverSpeedOrSmth < 0) driverSpeedSmth2 = driverSpeedOrSmth + 0xff >> 8;
+					if (driverSpeedOrSmth < 0) driverSpeedSmth2 = (driverSpeedOrSmth + 0xff) >> 8;
 					
 					// reversing, and gas+break
 					goto LAB_8006248c;
@@ -868,7 +868,7 @@ CheckJumpButtons:
 		}
 		driverSpeedOrSmth = driver->const_BackwardSpeed * -3;
 		driverSpeedSmth2 = driverSpeedOrSmth >> 2;
-		if (driverSpeedOrSmth < 0) 	driverSpeedSmth2 = driverSpeedOrSmth + 3 >> 2;
+		if (driverSpeedOrSmth < 0) 	driverSpeedSmth2 = (driverSpeedOrSmth + 3) >> 2;
 		LAB_8006248c:
 		actionsFlagSetCopy |= 0x20020;
 		LAB_80062548:
@@ -967,7 +967,7 @@ CheckJumpButtons:
 		if (driverSpeedOrSmth != 0x100)
 		{
 			//Base Speed = 0xB4 (at Cove water) * Base Speed >> 8
-			approximateSpeed2 = driverSpeedOrSmth * approximateSpeed2 >> 8;
+			approximateSpeed2 = (driverSpeedOrSmth * approximateSpeed2) >> 8;
 			driverBaseSpeedUshort = (u_short)((u_int)(driverSpeedOrSmth * driverBaseSpeed) >> 8);
 		}
 	}
@@ -1097,7 +1097,7 @@ SkipSetSteer:
 		driverSpeedOrSmth = driverSpeedOrSmth + approximateSpeed >> 1;
 	}
 
-	sVar13 = (driverSpeedOrSmth * 0x89 + driver->unkSpeedValue2 * 0x177) * 8 >> 0xc;
+	sVar13 = ((driverSpeedOrSmth * 0x89 + driver->unkSpeedValue2 * 0x177) * 8) >> 0xc;
 	driver->unkSpeedValue2 = sVar13;
 
 	if ((driver->actionsFlagSetPrevFrame & 8) == 0)
