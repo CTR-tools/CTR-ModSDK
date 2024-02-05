@@ -28869,6 +28869,8 @@ LAB_800625c4:
           if (iVar8 < 0) {
             iVar23 = iVar8 + 0xff >> 8;
           }
+		  
+		  // reversing, and gas+break
           goto LAB_8006248c;
         }
         uVar22 = uVar22 | 8;
