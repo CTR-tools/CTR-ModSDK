@@ -196,14 +196,18 @@ struct GamepadBuffer
 	// 0x28
 	unsigned short framesSinceLastInput;
 
+	// desired can be nullified
+	// before submission, if power is not
+	// within the 60-unit hardware budget
+
 	// 0x2A
-	char motorCurr[2];
+	char motorDesired[2];
 	
 	// 0x2C
-	char motorStepRate[2];
+	char motorPower[2];
 
 	// 0x2E
-	char motorPrev[2];
+	char motorSubmit[2];
 
 	// 0x30
 	// All frame-based counters

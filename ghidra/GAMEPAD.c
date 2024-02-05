@@ -1048,7 +1048,7 @@ void FUN_80025e18(int param_1)
               goto LAB_80025f74;
             }
 			
-			// motorCurr
+			// motorDesired
             *(undefined *)(iVar5 + 0x2a) = *(undefined *)(iVar5 + 0x45);
 
 			// timer 	-= 		elapsed milliseconds per frame, ~32
@@ -1161,17 +1161,17 @@ LAB_800260ac:
   if (0 < *(int *)(param_1 + 0x314)) {
     do {
       
-	  // motorCurr
+	  // motorDesired
 	  if (*(char *)(iVar5 + 0x2a) != '\0') 
 	  {
-		// motorStep
+		// motorPower
         iVar8 = iVar8 + (uint)*(byte *)(iVar5 + 0x2c);
       }
       
-	  // motorCurr
+	  // motorDesired
 	  if (*(char *)(iVar5 + 0x2b) != '\0') 
 	  {
-		// motorStep
+		// motorPower
         iVar8 = iVar8 + (uint)*(byte *)(iVar5 + 0x2d);
       }
       
@@ -1180,7 +1180,9 @@ LAB_800260ac:
     } while (iVar2 < *(int *)(param_1 + 0x314));
   }
 
-  if (0x3c < iVar8)
+  // PlayStation can not exceed 60 units
+  // of electrical power, in either 1 of 2 ports
+  if (iVar8 > 60)
   {
 	// number of gamepads connected
     uVar6 = *(uint *)(param_1 + 0x314);
@@ -1197,21 +1199,24 @@ LAB_800260ac:
     if ((int)uVar10 < (int)(uVar6 + uVar10)) {
       iVar5 = uVar10 * 0x50;
       uVar9 = uVar10;
+	  
+	  // cut off vibrations until
+	  // power is within 60 units
       do {
-        if (iVar8 < 0x3d) break;
+        if (iVar8 <= 60) break;
         iVar2 = iVar5;
         if ((int)uVar6 <= (int)uVar9) {
           iVar2 = (uVar9 - uVar6) * 0x50;
         }
         iVar2 = param_1 + iVar2;
         
-		// motorCurr
+		// motorDesired
 		if (*(char *)(iVar2 + 0x2b) != '\0') 
 		{
-		  // motorCurr
+		  // motorDesired
           *(undefined *)(iVar2 + 0x2b) = 0;
           
-		  // motorStep
+		  // motorPower
 		  iVar8 = iVar8 - (uint)*(byte *)(iVar2 + 0x2d);
         }
 		
@@ -1225,20 +1230,20 @@ LAB_800260ac:
     if ((int)uVar10 < iVar5) {
       iVar2 = uVar10 * 0x50;
       do {
-        if (iVar8 < 0x3d) break;
+        if (iVar8 <= 60) break;
         iVar7 = iVar2;
         if ((int)uVar6 <= (int)uVar10) {
           iVar7 = (uVar10 - uVar6) * 0x50;
         }
         iVar7 = param_1 + iVar7;
         
-		// motorCurr
+		// motorDesired
 		if (*(char *)(iVar7 + 0x2a) != '\0') 
 		{
-		  // motorCurr
+		  // motorDesired
           *(undefined *)(iVar7 + 0x2a) = 0;
           
-		  // motorStepRate
+		  // motorPower
 		  iVar8 = iVar8 - (uint)*(byte *)(iVar7 + 0x2c);
         }
 
@@ -1262,7 +1267,7 @@ LAB_800260ac:
 	  // index counter
       iVar8 = iVar8 + 1;
 
-	  // motorPrev = motorCurr
+	  // motorSubmit = motorDesired
       *(undefined *)(iVar5 + 0x2e) = *(undefined *)(iVar5 + 0x2a);
       *(undefined *)(iVar5 + 0x2f) = *(undefined *)(iVar5 + 0x2b);
 
