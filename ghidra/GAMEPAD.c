@@ -1062,16 +1062,18 @@ void FUN_80025e18(int param_1)
               *(undefined2 *)(iVar5 + 0x46) = (short)iVar2;
             }
           }
-          else {
+          else 
+		  {
 LAB_80025f74:
             *(byte *)(iVar5 + 0x2a) = bVar1;
           }
           if ((int)*(short *)(iVar5 + 0x48) != 0)
 		  {
-													// elapsed milliseconds per frame, ~32
+			// timer	-=		elapsed milliseconds per frame, ~32
             iVar2 = (int)*(short *)(iVar5 + 0x48) - *(int *)(PTR_DAT_8008d2ac + 0x1d04);
             uVar3 = (undefined2)iVar2;
-            if (iVar2 != 0) {
+            
+			if (iVar2 != 0) {
               uVar3 = 0;
             }
             *(undefined2 *)(iVar5 + 0x48) = uVar3;
