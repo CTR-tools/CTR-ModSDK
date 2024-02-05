@@ -21631,24 +21631,56 @@ LAB_8005a858:
   }
   
   // else if "player"???
-  else {
-    if ((*(char *)(param_2 + 0x4fe) == '\x02') ||
-       ((uVar13 = (uint)(byte)PTR_DAT_8008d2ac[0x1ca8], 1 < uVar13 &&
-         (((uVar13 != 2 ||
-           (uVar13 = (uint)*(byte *)(param_2 + 0x4a),
-           (*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 1) != uVar13)) &&
-          (uVar13 = (uint)*(byte *)(param_2 + 0x4a),
-          (*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 3) != uVar13)))))) goto LAB_8005a9d8;
+  else 
+  {
+    if (
+			// engineRevState
+			(*(char *)(param_2 + 0x4fe) == '\x02') ||
+			
+			(
+				(
+					// do not use GOTO in 1P mode
+					uVar13 = (uint)(byte)PTR_DAT_8008d2ac[0x1ca8], 1 < uVar13 &&
+         
+					(
+						(
+							(
+								// in 2P, alternate on every 2 frames
+								uVar13 != 2 ||
+								(
+									uVar13 = (uint)*(byte *)(param_2 + 0x4a),
+           
+									(*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 1) != uVar13
+								)
+							) &&
+          
+							// in 4P, alternate on every 4 frames
+							(
+								uVar13 = (uint)*(byte *)(param_2 + 0x4a),
+								(*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 3) != uVar13
+							)
+						)
+					)
+				)
+			)
+		) goto LAB_8005a9d8;
+		
     puVar12 = PTR_DAT_8008d2ac;
-    if (*(char *)(param_2 + 0x381) == '\0') {
+    if (*(char *)(param_2 + 0x381) == '\0') 
+	{
       uVar13 = (uint)*(short *)(param_2 + 0x3dc);
-      if (((int)uVar13 < 0x81) || ((int)((*(byte *)(param_2 + 0x477) + 2) * 0x20) < (int)uVar13)) {
+      
+	  if (((int)uVar13 < 0x81) || ((int)((*(byte *)(param_2 + 0x477) + 2) * 0x20) < (int)uVar13)) 
+	  {
          puVar12 = *(undefined **)(*(int *)(puVar21 + 0x68) + 0x14);
+		 
+		 // THREAD_SearchForModel (turbo)
          uVar29 = FUN_80042394(puVar12,0x2c);
          uVar13 = (uint)((ulonglong)uVar29 >> 0x20);
          if ((int)uVar29 != 0) goto LAB_8005a9d8;
       }
-      goto LAB_8005a858;
+      
+	  goto LAB_8005a858;
     }
 LAB_8005a868:
     *(char *)(param_2 + 0x381) = *(char *)(param_2 + 0x381) + -1;
