@@ -216,14 +216,13 @@ struct GamepadBuffer
 	// All frame-based counters
 	// FUN_80025e18, and FUN_800252a0
 	int unk30; // vib3 frame timer
-	int unk34; // vib4
-	int unk38; // vib5
+	int unk34; // vib4 frame timer
+	int unk38; // vib5 frame timer
 	
 	int unk3c; // vib3 frame frequency
-	
-	// 0x40
 	char unk40; // vib4 2B
 	char unk41; // vib5 2B
+	
 	char unk42;
 	char unk43;
 	

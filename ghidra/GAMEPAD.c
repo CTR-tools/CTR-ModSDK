@@ -1094,12 +1094,8 @@ LAB_80026030:
 		  
           else 
 		  {
-			// change vibration depending on
-			// vib3 frame frequency
-			
-			// This solves the fact that motors can't use
-			// variable strength, only "on" or "off" so 
-			// vibrate on different number of frames instead
+			// Left motor is 100% strength,
+			// on interweaving frames
 			  
             uVar4 = 0;
             if ((*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & *(uint *)(iVar5 + 0x3c)) == 0) {
@@ -1109,6 +1105,12 @@ LAB_80026030:
 			// set desired
             *(undefined *)(iVar5 + 0x2a) = uVar4;
           }
+		  
+		  // Right motor is variable-strength,
+		  // on every frame
+		  
+		  // Motors on separate patterns makes 
+		  // vibrations feel more random
           
 		  if (*(int *)(iVar5 + 0x34) == 0) 
 		  {
