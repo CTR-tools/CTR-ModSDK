@@ -733,9 +733,8 @@ CheckJumpButtons:
 		actionsFlagSetCopy &= 0x9fffffff;
 	}
 	approximateSpeed2 = 0;
-	// Racer's Base Speed (4s)
+	
 	driverBaseSpeed = Player_GetBaseSpeed(driver);
-	// Racer's Base Speed (2u)
 	driverBaseSpeedUshort = driverBaseSpeed;
 
 	// If you are not holding Square

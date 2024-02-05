@@ -28774,10 +28774,11 @@ LAB_8006222c:
   if (iVar21 < 0x300) {
     uVar22 = uVar22 & 0x9fffffff;
   }
+  
   iVar21 = 0;
-  //iVar10 = Racer's Base Speed (4s)
+  
+  // Player_GetBaseSpeed
   iVar10 = FUN_80061488(param_2);
-  //uVar7 = Racer's Base Speed (2u)
   uVar7 = (undefined2)iVar10;
 
   // If you are not holding Square
