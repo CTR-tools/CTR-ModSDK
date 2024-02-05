@@ -28862,9 +28862,13 @@ LAB_800625c4:
             iVar23 = iVar23 + 0xff;
           }
           iVar23 = iVar23 >> 8;
+		  
+		  // gas and breaks together
           uVar22 = uVar22 | 0x20;
+		  
           goto LAB_80062548;
         }
+		
         if (0 < iVar8) {
           iVar8 = (int)*(short *)(param_2 + 0x434) * -iVar8;
           iVar23 = iVar8 >> 8;
