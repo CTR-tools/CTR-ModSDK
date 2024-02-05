@@ -190,7 +190,7 @@ int GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessHold(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessSticks(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessTapRelease(struct GamepadSystem* gGamepads);
-void GAMEPAD_ProcessForceFeedback(struct GamepadSystem* gGamepads);
+void GAMEPAD_ProcessMotors(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads);
 void GAMEPAD_JogCon1(struct Driver* driver, char param_2, u_short param_3);
 void GAMEPAD_JogCon2(struct Driver* driver, char param_2, u_short param_3);

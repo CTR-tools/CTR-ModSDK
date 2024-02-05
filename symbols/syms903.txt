@@ -181,7 +181,7 @@
 80025778 GAMEPAD_ProcessHold
 800258b4 GAMEPAD_ProcessSticks
 80025d74 GAMEPAD_ProcessTapRelease
-80025e7c GAMEPAD_ProcessForceFeedback
+80025e7c GAMEPAD_ProcessMotors
 800260a8 GAMEPAD_ProcessAnyoneVars
 
 80026178 GAMEPAD_JogCon1

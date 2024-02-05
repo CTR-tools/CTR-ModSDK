@@ -977,8 +977,7 @@ LAB_80025dbc:
   }
 }
 
-// noping this disables force feedback completely
-// GAMEPAD_ProcessForceFeedback
+// GAMEPAD_ProcessMotors
 void FUN_80025e18(int param_1)
 
 {
@@ -1318,7 +1317,7 @@ void FUN_800262d0(int param_1)
   // for Tap and Release, based on Hold
   uVar2 = FUN_80025d10(param_1);
 
-  // GAMEPAD_ProcessForceFeedback
+  // GAMEPAD_ProcessMotors
   FUN_80025e18(param_1);
 
   // loop counter

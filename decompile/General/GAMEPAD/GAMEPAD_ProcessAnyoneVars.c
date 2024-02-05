@@ -22,7 +22,7 @@ void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads)
   DECOMP_GAMEPAD_ProcessTapRelease(gGamepads);
 
 #ifndef REBUILD_PS1
-  GAMEPAD_ProcessForceFeedback(gGamepads);
+  GAMEPAD_ProcessMotors(gGamepads);
 #endif
 
   // These are used to see if any button is pressed by anyone

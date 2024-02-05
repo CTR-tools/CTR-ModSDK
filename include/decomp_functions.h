@@ -41,7 +41,7 @@ int DECOMP_GAMEPAD_GetNumConnected(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_ProcessHold(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem* gGamepads);
-void DECOMP_GAMEPAD_ProcessForceFeedback(struct GamepadSystem* gGamepads);
+void DECOMP_GAMEPAD_ProcessMotors(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_ProcessState(struct GamepadBuffer* pad, int padState, short id);
 
