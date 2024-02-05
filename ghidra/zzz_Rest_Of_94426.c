@@ -28757,7 +28757,9 @@ LAB_8006222c:
   iVar19 = 0x80;
 
   // If you're not in End-Of-Race menu
-  if ((*(uint *)PTR_DAT_8008d2ac & 0x200000) == 0) {
+  if ((*(uint *)PTR_DAT_8008d2ac & 0x200000) == 0) 
+  {
+	// gamepadBuffer -> stickLY
     iVar19 = (int)*(short *)(puVar24 + 6);
   }
 
