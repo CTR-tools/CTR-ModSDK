@@ -206,23 +206,28 @@ struct GamepadBuffer
 	char motorPrev[2];
 
 	// 0x30
-	// probably all these are in
+	// All frame-based counters
 	// FUN_80025e18, and FUN_800252a0
-	int unk30;
-	int unk34;
-	int unk38;
-	int unk3c;
+	int unk30; // vib3
+	int unk34; // vib4
+	int unk38; // vib5
+	
+	int unk3c; // vib3 2A
 	
 	// 0x40
-	char unk40[4];
+	char unk40; // vib4 2B
+	char unk41; // vib5 2B
+	char unk42;
+	char unk43;
 	
 	// 0x44
 	char unk44;
 	char unk45;
-	short unk46;
 	
-	// 0x48
-	short unk48;
+	// elapsedTim timers
+	short unk46; // vib1 2A
+	short unk48; // vib2 2A
+	
 	short padding;
 
 	// 0x4c

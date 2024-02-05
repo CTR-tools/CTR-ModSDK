@@ -1106,7 +1106,8 @@ LAB_80026030:
             *(undefined *)(iVar5 + 0x2b) = *(undefined *)(iVar5 + 0x40);
           }
         }
-        if (*(int *)(iVar5 + 0x30) != 0) {
+        
+		if (*(int *)(iVar5 + 0x30) != 0) {
           *(int *)(iVar5 + 0x30) = *(int *)(iVar5 + 0x30) + -1;
         }
         if (*(int *)(iVar5 + 0x34) != 0) {
