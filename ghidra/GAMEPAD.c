@@ -1140,13 +1140,22 @@ LAB_800260ac:
   // if gamepads are connected
   if (0 < *(int *)(param_1 + 0x314)) {
     do {
-      if (*(char *)(iVar5 + 0x2a) != '\0') {
+      
+	  // motorCurr
+	  if (*(char *)(iVar5 + 0x2a) != '\0') 
+	  {
+		// motorStep
         iVar8 = iVar8 + (uint)*(byte *)(iVar5 + 0x2c);
       }
-      if (*(char *)(iVar5 + 0x2b) != '\0') {
+      
+	  // motorCurr
+	  if (*(char *)(iVar5 + 0x2b) != '\0') 
+	  {
+		// motorStep
         iVar8 = iVar8 + (uint)*(byte *)(iVar5 + 0x2d);
       }
-      iVar2 = iVar2 + 1;
+      
+	  iVar2 = iVar2 + 1;
       iVar5 = iVar5 + 0x50;
     } while (iVar2 < *(int *)(param_1 + 0x314));
   }
@@ -1163,6 +1172,8 @@ LAB_800260ac:
     if (uVar6 == 0) {
       trap(0x1c00);
     }
+	
+	// motor1
     if ((int)uVar10 < (int)(uVar6 + uVar10)) {
       iVar5 = uVar10 * 0x50;
       uVar9 = uVar10;
@@ -1173,15 +1184,24 @@ LAB_800260ac:
           iVar2 = (uVar9 - uVar6) * 0x50;
         }
         iVar2 = param_1 + iVar2;
-        if (*(char *)(iVar2 + 0x2b) != '\0') {
+        
+		// motorCurr
+		if (*(char *)(iVar2 + 0x2b) != '\0') 
+		{
+		  // motorCurr
           *(undefined *)(iVar2 + 0x2b) = 0;
-          iVar8 = iVar8 - (uint)*(byte *)(iVar2 + 0x2d);
+          
+		  // motorStep
+		  iVar8 = iVar8 - (uint)*(byte *)(iVar2 + 0x2d);
         }
+		
         uVar9 = uVar9 + 1;
         iVar5 = iVar5 + 0x50;
       } while ((int)uVar9 < (int)(uVar6 + uVar10));
     }
     iVar5 = uVar6 + uVar10;
+	
+	// motor2
     if ((int)uVar10 < iVar5) {
       iVar2 = uVar10 * 0x50;
       do {
@@ -1191,9 +1211,15 @@ LAB_800260ac:
           iVar7 = (uVar10 - uVar6) * 0x50;
         }
         iVar7 = param_1 + iVar7;
-        if (*(char *)(iVar7 + 0x2a) != '\0') {
+        
+		// motorCurr
+		if (*(char *)(iVar7 + 0x2a) != '\0') 
+		{
+		  // motorCurr
           *(undefined *)(iVar7 + 0x2a) = 0;
-          iVar8 = iVar8 - (uint)*(byte *)(iVar7 + 0x2c);
+          
+		  // motorStepRate
+		  iVar8 = iVar8 - (uint)*(byte *)(iVar7 + 0x2c);
         }
 
 		// loop counter
@@ -1216,7 +1242,7 @@ LAB_800260ac:
 	  // index counter
       iVar8 = iVar8 + 1;
 
-	  // vibration
+	  // motorPrev = motorCurr
       *(undefined *)(iVar5 + 0x2e) = *(undefined *)(iVar5 + 0x2a);
       *(undefined *)(iVar5 + 0x2f) = *(undefined *)(iVar5 + 0x2b);
 
