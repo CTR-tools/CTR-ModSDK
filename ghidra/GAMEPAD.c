@@ -1032,9 +1032,11 @@ void FUN_80025e18(int param_1)
               bVar1 = bVar1 | 0x30;
               goto LAB_80025f74;
             }
+			
+			// motorCurr
             *(undefined *)(iVar5 + 0x2a) = *(undefined *)(iVar5 + 0x45);
 
-													// elapsed milliseconds per frame, ~32
+			// timer 	-= 		elapsed milliseconds per frame, ~32
             iVar2 = (int)*(short *)(iVar5 + 0x46) - *(int *)(PTR_DAT_8008d2ac + 0x1d04);
 
             if (iVar2 < 1) {
