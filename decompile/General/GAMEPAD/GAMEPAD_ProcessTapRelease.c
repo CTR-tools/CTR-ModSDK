@@ -40,12 +40,9 @@ void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
                     pad->buttonsHeldCurrFrame |= BTN_LEFT;
                 }
 
-                else
+                else if (0xe0 < pad->stickLX)
                 {
-                    if (0xe0 < pad->stickLX)
-                    {
-                        pad->buttonsHeldCurrFrame |= BTN_RIGHT;
-                    }
+                    pad->buttonsHeldCurrFrame |= BTN_RIGHT;
                 }
 
                 if (pad->stickLY < 0x20)
@@ -53,12 +50,9 @@ void DECOMP_GAMEPAD_ProcessTapRelease(struct GamepadSystem *gGamepads)
                     pad->buttonsHeldCurrFrame |= BTN_UP;
                 }
 
-                else
+                else if (pad->stickLY > 0xe1)
                 {
-                    if (pad->stickLY > 0xe1)
-                    {
-                        pad->buttonsHeldCurrFrame |= BTN_DOWN;
-                    }
+                    pad->buttonsHeldCurrFrame |= BTN_DOWN;
                 }
             }
 
