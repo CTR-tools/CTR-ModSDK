@@ -1424,6 +1424,7 @@ void FUN_80026440(int param_1,int param_2,undefined4 param_3)
 				// Get pointer to this player's 0x50-byte gamepad buffer
 				puVar1 = PTR_DAT_8008d2b0 + (uint)*(byte *)(param_1 + 0x4a) * 0x50,
 
+				// last input was less than 10 seconds ago
 				*(ushort *)(puVar1 + 0x28) < 0x385
 			)
 		) &&
@@ -1455,6 +1456,7 @@ void FUN_800264c0(int param_1,undefined4 param_2,int param_3)
 				// Get pointer to this player's 0x50-byte gamepad buffer
 				puVar1 = PTR_DAT_8008d2b0 + (uint)*(byte *)(param_1 + 0x4a) * 0x50,
 
+				// last input was less than 10 seconds ago
 				*(ushort *)(puVar1 + 0x28) < 0x385
 			)
 		) &&
@@ -1486,6 +1488,7 @@ void FUN_80026540(int param_1,undefined4 param_2,int param_3)
 				// Get pointer to this player's 0x50-byte gamepad buffer
 				puVar1 = PTR_DAT_8008d2b0 + (uint)*(byte *)(param_1 + 0x4a) * 0x50,
 
+				// last input was less than 10 seconds ago
 				*(ushort *)(puVar1 + 0x28) < 0x385
 			)
 		) &&
