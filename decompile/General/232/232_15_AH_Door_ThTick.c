@@ -394,7 +394,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
     DECOMP_CAM_SetDesiredPosRot(&gGT->cameraDC[0], &desiredPos[0], &desiredRot[0]);
 
 #ifndef REBUILD_PS1
-    GAMEPAD_Vib_2(driver, 0, 0);
+    GAMEPAD_JogCon2(driver, 0, 0);
 #endif
 
     // start camera out transition (in "else" below)

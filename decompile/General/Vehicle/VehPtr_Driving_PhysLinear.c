@@ -307,7 +307,7 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 				if (approximateSpeed2 > 0x20) approximateSpeed2 = 0x20;
 
 				// gamepad vibration
-				GAMEPAD_Vib_4(driver, 4, driverTimer + (approxTrig >> 5) + approximateSpeed2 + 0x18);
+				GAMEPAD_ShockForce1(driver, 4, driverTimer + (approxTrig >> 5) + approximateSpeed2 + 0x18);
 
 				driverTimerNegativeFinal = driverTimerNegativePrelim | 1;
 			}

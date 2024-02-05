@@ -124,8 +124,8 @@ void VehParticle_DriverMain(struct Thread *t, struct Driver *d, undefined *param
       if (0x200 < approxSpeed)
       {
         // both gamepad vibration
-        GAMEPAD_Vib_3(d, terrain->vibrationData[0], terrain->vibrationData[1]);
-        GAMEPAD_Vib_5(d, terrain->vibrationData[2], terrain->vibrationData[3]);
+        GAMEPAD_ShockFreq(d, terrain->vibrationData[0], terrain->vibrationData[1]);
+        GAMEPAD_ShockForce2(d, terrain->vibrationData[2], terrain->vibrationData[3]);
       }
 
       // if racer started touching the ground in this frame
@@ -141,7 +141,7 @@ void VehParticle_DriverMain(struct Thread *t, struct Driver *d, undefined *param
         if (0x1600 < iVar18)
         {
           // gamepad vibration
-          GAMEPAD_Vib_4(d, 3, 0xFF);
+          GAMEPAD_ShockForce1(d, 3, 0xFF);
         }
       }
     }
@@ -780,7 +780,7 @@ LAB_8005a9d8:
   // if racer is being mask grabbed or repositioned, or is on the ground
   if ((d->kartState - 4 < 2) || ((d->actionsFlagSet & 1) != 0))
   {
-    GAMEPAD_Vib_2(d, 0x27, 0);
+    GAMEPAD_JogCon2(d, 0x27, 0);
 
     if (d->unk3D4 == 0)
     {
@@ -803,11 +803,11 @@ LAB_8005a9d8:
       uVar19 = 0x12;
       if ((d->simpTurnState < 0) || (uVar19 = 0x22, 0 < d->simpTurnState))
       {
-        GAMEPAD_Vib_1(d, uVar19, 0x20);
+        GAMEPAD_JogCon1(d, uVar19, 0x20);
       }
     }
     uVar19 = 0;
     uVar14 = uVar19;
   }
-  GAMEPAD_Vib_2(d, uVar19, uVar14);
+  GAMEPAD_JogCon2(d, uVar19, uVar14);
 }

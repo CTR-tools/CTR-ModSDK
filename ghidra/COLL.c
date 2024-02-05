@@ -3890,7 +3890,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
             uVar4 = 0x2f;
           }
 
-		  // GAMEPAD_Vib_1
+		  // GAMEPAD_JogCon1
           FUN_800263a0(param_1,uVar4,0x60);
         }
 

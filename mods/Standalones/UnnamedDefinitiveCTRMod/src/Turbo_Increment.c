@@ -342,6 +342,6 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		sdata->gGT->cameraDC[driver->driverID].flags |= 0x80;
 
 		// gamepad vibration
-		GAMEPAD_Vib_4(driver, 8, 0x7f);
+		GAMEPAD_ShockForce1(driver, 8, 0x7f);
 	}
 }

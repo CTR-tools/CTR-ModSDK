@@ -4169,7 +4169,7 @@ joined_r0x800b06ec:
 	// set desired position and rotation for CamerDC transition
 	FUN_8001a054(PTR_DAT_8008d2ac + 0x1498,&local_60,&local_58);
     
-	// GAMEPAD_Vib_2
+	// GAMEPAD_JogCon2
 	FUN_800263fc(iVar17,0,0);
 	
 	// start camera out transition (in "else" below)

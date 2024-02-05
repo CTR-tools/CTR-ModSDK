@@ -20793,7 +20793,7 @@ LAB_800597d0:
 	// if time against wall is less than 15 seconds
     if (*(short *)(param_1 + 0x50) < 0x1c2) 
 	{
-	  // GAMEPAD_Vib_3 and GAMEPAD_Vib_4
+	  // GAMEPAD_ShockFreq and GAMEPAD_ShockForce1
       FUN_80026440(param_1, 8, 0);
       FUN_800264c0(param_1, 8, 0x7f);
 	  
@@ -21003,7 +21003,7 @@ void FUN_80059a18(int param_1,int param_2,undefined *param_3,uint param_4)
 	  // if speed high enough
       if (0x200 < iVar18) 
 	  {
-		// GAMEPAD_Vib_3 and GAMEPAD_Vib_5
+		// GAMEPAD_ShockFreq and GAMEPAD_ShockForce2
         FUN_80026440(param_2,(uint)*(byte *)(iVar22 + 0x2c),(uint)*(byte *)(iVar22 + 0x2d));
         FUN_80026540(param_2,(uint)*(byte *)(iVar22 + 0x2e),(uint)*(byte *)(iVar22 + 0x2f));
       }
@@ -21011,15 +21011,16 @@ void FUN_80059a18(int param_1,int param_2,undefined *param_3,uint param_4)
       //if racer started touching the ground in this frame
 	  if ((*(uint *)(param_2 + 0x2c8) & 2) != 0) 
 	  {
-		// absolute value
+		// jumpHeightPrev
         iVar18 = (int)*(short *)(param_2 + 0x392);
         if (iVar18 < 0) {
           iVar18 = -iVar18;
         }
         
+		// jumpHeightPrev
 		if (0x1600 < iVar18) 
 		{
-		  // GAMEPAD_Vib_4
+		  // GAMEPAD_ShockForce1
           FUN_800264c0(param_2,3,0xFF);
         }
       }
@@ -21752,7 +21753,7 @@ LAB_8005a9d8:
   //if racer is being mask grabbed or repositioned, or is on the ground
   if ((*(byte *)(param_2 + 0x376) - 4 < 2) || ((*(uint *)(param_2 + 0x2c8) & 1) != 0)) 
   {
-	// GAMEPAD_Vib_2
+	// GAMEPAD_JogCon2
     FUN_800263fc(param_2,0x27,0);
 	
     if (*(short *)(param_2 + 0x3d4) == 0) {
@@ -21783,7 +21784,7 @@ LAB_8005a9d8:
 			)
 		) 
 	  {
-		 // GAMEPAD_Vib_1
+		 // GAMEPAD_JogCon1
          FUN_800263a0(param_2,uVar19,0x20);
       }
     }
@@ -21791,7 +21792,7 @@ LAB_8005a9d8:
     uVar14 = uVar19;
   }
  
-  // GAMEPAD_Vib_2
+  // GAMEPAD_JogCon2
   FUN_800263fc(param_2,uVar19,uVar14);
   return;
 }
@@ -22231,7 +22232,7 @@ LAB_8005af38:
     *(uint *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0xdc + 0x1508) =
          *(uint *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0xdc + 0x1508) | 0x80;
 
-	// GAMEPAD_Vib_4
+	// GAMEPAD_ShockForce1
     FUN_800264c0(param_1,8,0x7f);
   }
   return;
@@ -24148,7 +24149,7 @@ void FUN_8005d404(int param_1,int param_2,int *param_3)
           }
         }
 
-		// GAMEPAD_Vib_3 and GAMEPAD_Vib_4
+		// GAMEPAD_ShockFreq and GAMEPAD_ShockForce1
 		FUN_80026440(iVar8,8,0);
         FUN_800264c0(iVar8,8,0x7f);
 
@@ -24159,10 +24160,10 @@ void FUN_8005d404(int param_1,int param_2,int *param_3)
           uVar9 = 0x29;
         }
 
-		// GAMEPAD_Vib_1
+		// GAMEPAD_JogCon1
         FUN_800263a0(iVar8,uVar9,0x60);
 		
-		// GAMEPAD_Vib_3 and GAMEPAD_Vib_4
+		// GAMEPAD_ShockFreq and GAMEPAD_ShockForce1
         FUN_80026440(iVar5,8,0);
         FUN_800264c0(iVar5,8,0x7f);
 
@@ -24173,7 +24174,7 @@ void FUN_8005d404(int param_1,int param_2,int *param_3)
           uVar9 = 0x29;
         }
 
-		// GAMEPAD_Vib_1
+		// GAMEPAD_JogCon1
         FUN_800263a0(iVar5,uVar9,0x60);
 
 		// flag used in 80062e04
@@ -24783,7 +24784,7 @@ void FUN_8005e214(int param_1,VECTOR *param_2)
       if (0 < (int)uVar11) {
         uVar10 = uVar10 | 0x1800;
 		
-		// GAMEPAD_Vib_3 and GAMEPAD_Vib_4
+		// GAMEPAD_ShockFreq and GAMEPAD_ShockForce1
         FUN_800264c0(param_1,4,0x7f);
         FUN_80026440(param_1,4,0);
       }
@@ -27006,7 +27007,7 @@ LAB_800608fc:
 	// If you're "blasted", flipping around after hit by missile, bomb, etc
     if (*(char *)(param_2 + 0x376) == '\x06')
 	{
-	  // GAMEPAD_Vib_3 and GAMEPAD_Vib_4
+	  // GAMEPAD_ShockFreq and GAMEPAD_ShockForce1
       FUN_80026440(param_2,8,0);
       FUN_800264c0(param_2,8,0x7f);
     }
@@ -28278,7 +28279,7 @@ LAB_80061cf8:
           iVar21 = 0x20;
         }
 
-		// GAMEPAD_Vib_4
+		// GAMEPAD_ShockForce1
 		FUN_800264c0(param_2,4,iVar19 + (iVar8 >> 5) + iVar21 + 0x18);
 
         uVar6 = uVar18 | 1;
@@ -30586,7 +30587,7 @@ void FUN_80063ec0(undefined4 param_1,int param_2)
     uVar2 = 0x29;
   }
 
-  // GAMEPAD_Vib_1
+  // GAMEPAD_JogCon1
   FUN_800263a0(param_2,uVar2,0x60);
 
   return;
@@ -31248,7 +31249,7 @@ LAB_800647d8:
   *(undefined *)(param_1 + 0x4c) = 0;
   *(undefined *)(param_1 + 0x4d) = 0;
 
-  // GAMEPAD_Vib_3 and GAMEPAD_Vib_4
+  // GAMEPAD_ShockFreq and GAMEPAD_ShockForce1
   FUN_80026440(param_1,8,0);
   FUN_800264c0(param_1,8,0x7f);
 
@@ -31986,7 +31987,7 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
 	// increment number of missiles that are on screen
     *(int *)(PTR_DAT_8008d2ac + 0x1ec0) = *(int *)(PTR_DAT_8008d2ac + 0x1ec0) + 1;
 
-	// GAMEPAD_Vib_3 and GAMEPAD_Vib_4
+	// GAMEPAD_ShockFreq and GAMEPAD_ShockForce1
     FUN_80026440(param_1,8,0);
     FUN_800264c0(param_1,8,0x7f);
 
@@ -32912,7 +32913,7 @@ LAB_800659ec:
   // if weapon ID is warp ball
   case 9:
 
-    // GAMEPAD_Vib_3 and GAMEPAD_Vib_4
+    // GAMEPAD_ShockFreq and GAMEPAD_ShockForce1
     FUN_80026440(param_1,8,0);
     FUN_800264c0(param_1,8,0x7f);
 
@@ -34931,7 +34932,7 @@ void FUN_800682a4(undefined4 param_1,int param_2)
     uVar4 = 0x29;
   }
 
-  // GAMEPAD_Vib_1
+  // GAMEPAD_JogCon1
   FUN_800263a0(param_2,uVar4,0x60);
 
   return;
@@ -36008,7 +36009,7 @@ void FUN_800693c8(int param_1)
 
 	if (*(ushort *)(iVar11 + 0x22) < 2500)
 	{
-	  // GAMEPAD_Vib_3
+	  // GAMEPAD_ShockFreq
       FUN_80026440(iVar12,4,4);
     }
 

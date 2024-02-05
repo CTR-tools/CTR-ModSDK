@@ -158,7 +158,7 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 	if (instance->alphaScale < 2500)
 	{
 		// gamepad vibration
-		GAMEPAD_Vib_3(driver, 4, 4);
+		GAMEPAD_ShockFreq(driver, 4, 4);
 	}
 	
 	// set new model pointer, one of seven

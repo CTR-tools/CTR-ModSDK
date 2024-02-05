@@ -4231,7 +4231,7 @@ LAB_800173e4:
 	  // BOTS_SetRotation
 	  FUN_80013444(param_1,0);
 
-	  // GAMEPAD_Vib_2
+	  // GAMEPAD_JogCon2
       FUN_800263fc(param_1,0,0);
 
       //uVar6 = actions flag set

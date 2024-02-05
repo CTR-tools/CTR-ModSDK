@@ -318,8 +318,8 @@ void VehParticle_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emSet)
         if (d->timeSpentAgainstWall < 450)
         {
             // both gamepad vibration
-            GAMEPAD_Vib_3(d, 8, 0);
-            GAMEPAD_Vib_4(d, 8, 0x7f);
+            GAMEPAD_ShockFreq(d, 8, 0);
+            GAMEPAD_ShockForce1(d, 8, 0x7f);
 
             // increment time against wall
             d->timeSpentAgainstWall++;

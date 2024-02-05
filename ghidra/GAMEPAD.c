@@ -1094,8 +1094,7 @@ LAB_80026030:
 		  
           else 
 		  {
-			// Left motor is 100% strength,
-			// on interweaving frames
+			// Frequency control (on/off)
 			  
             uVar4 = 0;
             if ((*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & *(uint *)(iVar5 + 0x3c)) == 0) {
@@ -1106,11 +1105,7 @@ LAB_80026030:
             *(undefined *)(iVar5 + 0x2a) = uVar4;
           }
 		  
-		  // Right motor is variable-strength,
-		  // on every frame
-		  
-		  // Motors on separate patterns makes 
-		  // vibrations feel more random
+		  // Strength control (percentage)
           
 		  if (*(int *)(iVar5 + 0x34) == 0) 
 		  {
@@ -1368,7 +1363,7 @@ void FUN_800262d0(int param_1)
 }
 
 
-// GAMEPAD_Vib_1 (when blasted, plus other times)
+// GAMEPAD_JogCon1 (when blasted, spinout, etc)
 void FUN_800263a0(int param_1,byte param_2,undefined2 param_3)
 
 {
@@ -1390,7 +1385,7 @@ void FUN_800263a0(int param_1,byte param_2,undefined2 param_3)
 }
 
 // called from 232, and in EXE near skidmark code
-// GAMEPAD_Vib_2
+// GAMEPAD_JogCon2
 void FUN_800263fc(int param_1,undefined param_2,undefined2 param_3)
 
 {
@@ -1409,7 +1404,7 @@ void FUN_800263fc(int param_1,undefined param_2,undefined2 param_3)
 }
 
 
-// GAMEPAD_Vib_3
+// GAMEPAD_ShockFreq
 void FUN_80026440(int param_1,int param_2,undefined4 param_3)
 
 {
@@ -1440,7 +1435,7 @@ void FUN_80026440(int param_1,int param_2,undefined4 param_3)
 }
 
 
-// GAMEPAD_Vib_4
+// GAMEPAD_ShockForce1
 void FUN_800264c0(int param_1,undefined4 param_2,int param_3)
 
 {
@@ -1472,7 +1467,7 @@ void FUN_800264c0(int param_1,undefined4 param_2,int param_3)
 }
 
 
-// GAMEPAD_Vib_5
+// GAMEPAD_ShockForce2
 void FUN_80026540(int param_1,undefined4 param_2,int param_3)
 
 {

@@ -68,12 +68,11 @@ void VehPtr_Blasted_Init(struct Thread *thread, struct Driver *driver)
 	{
 		bVar3 = 0x29;
 	}
-	GAMEPAD_Vib_1(driver, bVar3, 0x60);
 	
 	for(i = 0; i < 0xD; i++)
 	{
 		driver->funcPtrs[i] = PlayerBlastedFuncTable[i];
 	}
 	
-	return;
+	GAMEPAD_JogCon1(driver, bVar3, 0x60);
 }

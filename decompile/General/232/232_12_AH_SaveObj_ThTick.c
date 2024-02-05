@@ -95,7 +95,7 @@ void DECOMP_AH_SaveObj_ThTick(struct Thread* t)
                 DECOMP_CAM_SetDesiredPosRot(gGT->cameraDC, &desiredPos, &desiredRot);
 
 #ifndef REBUILD_PS1
-                GAMEPAD_Vib_2(driver, 0, 0);
+                GAMEPAD_JogCon2(driver, 0, 0);
 #endif
 
                 save->flags |= 1;

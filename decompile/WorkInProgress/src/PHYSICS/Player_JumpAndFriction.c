@@ -336,8 +336,8 @@ void DECOMP_Player_JumpAndFriction(struct Thread *t, struct Driver *d)
     // If you're "blasted", flipping around after hit by missile, bomb, etc
     if (d->kartState == KS_BLASTED)
     {
-      GAMEPAD_Vib_3(d, 8, 0);
-      GAMEPAD_Vib_4(d, 8, 0x7f);
+      GAMEPAD_ShockFreq(d, 8, 0);
+      GAMEPAD_ShockForce1(d, 8, 0x7f);
     }
   }
 

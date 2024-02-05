@@ -212,6 +212,8 @@ struct GamepadBuffer
 	// Vib1, Vib2, for NPC-105 "jogcon"
 	// Vib3, Vib4, vib5, for DualShock
 
+	// ==== DualShock ====
+
 	// 0x30
 	// All frame-based counters
 	// FUN_80025e18, and FUN_800252a0
@@ -222,6 +224,8 @@ struct GamepadBuffer
 	int unk3c; // vib3 frame frequency
 	char unk40; // vib4 2B
 	char unk41; // vib5 2B
+	
+	// ==== JogCon ====
 	
 	char unk42;
 	char unk43;

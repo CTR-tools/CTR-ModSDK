@@ -192,10 +192,10 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessTapRelease(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessForceFeedback(struct GamepadSystem* gGamepads);
 void GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads);
-void GAMEPAD_Vib_1(struct Driver* driver, char param_2, u_short param_3);
-void GAMEPAD_Vib_2(struct Driver* driver, char param_2, u_short param_3);
-void GAMEPAD_Vib_3(struct Driver* driver, char param_2, u_short param_3);
-void GAMEPAD_Vib_4(struct Driver* driver, char param_2, u_short param_3);
+void GAMEPAD_JogCon1(struct Driver* driver, char param_2, u_short param_3);
+void GAMEPAD_JogCon2(struct Driver* driver, char param_2, u_short param_3);
+void GAMEPAD_ShockFreq(struct Driver* driver, char param_2, u_short param_3);
+void GAMEPAD_ShockForce1(struct Driver* driver, char param_2, u_short param_3);
 
 // GAMEPROG
 

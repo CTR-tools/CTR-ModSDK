@@ -62,12 +62,12 @@ void DECOMP_VehPtr_Spinning_Init(struct Thread* t, struct Driver* d)
 		i = 0x29;
 	}
 	
-	GAMEPAD_Vib_1(d, i, 0x60);
-	
 	for(i = 0; i < 0xD; i++)
 	{
 		d->funcPtrs[i] = PlayerSpinningFuncTable[i];
 	}
+	
+	GAMEPAD_JogCon1(d, i, 0x60);
 }
 
 // all other Spinning functions should execute for one frame,

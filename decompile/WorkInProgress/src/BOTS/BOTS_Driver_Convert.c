@@ -89,7 +89,7 @@ void DECOMP_BOTS_Driver_Convert(struct Driver *d)
 
     BOTS_SetRotation(d, 0);
 
-    GAMEPAD_Vib_2(d, 0, 0);
+    GAMEPAD_JogCon2(d, 0, 0);
 
     actionFlag = d->actionsFlagSet;
 

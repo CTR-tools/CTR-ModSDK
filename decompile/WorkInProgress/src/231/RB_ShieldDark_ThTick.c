@@ -243,8 +243,8 @@ void RB_ShieldDark_ThTick(struct Thread *th)
   player->instBubbleHold = NULL;
   player->numTimesMissileLaunched++;
 
-  GAMEPAD_Vib_3(player, 8, 0);
-  GAMEPAD_Vib_4(player, 8, 0x7f);
+  GAMEPAD_ShockFreq(player, 8, 0);
+  GAMEPAD_ShockForce1(player, 8, 0x7f);
 
   // green shield
   u_char model = 0x5e;
