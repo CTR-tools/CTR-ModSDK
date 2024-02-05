@@ -80,15 +80,21 @@ void FUN_800252a0(int param_1,int param_2,undefined4 param_3)
       }
     }
     else {
-      if (param_2 == 6) {
-        if (*(short *)(param_1 + 0x26) == 0) {
+      if (param_2 == 6) 
+	  {
+		// gamepadType
+        if (*(short *)(param_1 + 0x26) == 0) 
+		{
           iVar2 = PadSetMainMode(param_3,1,0);
           if (iVar2 != 0) {
             *(undefined2 *)(param_1 + 0x26) = 1;
           }
         }
-        else {
-          if (*(short *)(param_1 + 0x26) == 1) {
+        else 
+		{
+		  // gamepadType
+          if (*(short *)(param_1 + 0x26) == 1) 
+		  {
             iVar2 = PadInfoAct(param_3,0xffffffff,0);
             if (2 < iVar2) {
               iVar2 = 2;
@@ -500,7 +506,9 @@ void FUN_80025718(int param_1)
 
 	// if pointer is valid
     else {
-      if (*pcVar3 == '\0') {
+      if (*pcVar3 == '\0') 
+	  {
+		// endian flip
         uVar4 = (uint)CONCAT11(pcVar3[2],pcVar3[3]) ^ 0xffff;
         uVar5 = 0;
 
