@@ -171,6 +171,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 
 				// lev swap will be needed
 				gGT->gameMode2 |= LEV_SWAP;
+				
+				#ifdef USE_GPU1P
+				// get CurrGame from main menu's NextGame
+				gGT->numPlyrCurrGame = gGT->numPlyrNextGame;
+				boolDefault1P = 0;
+				#endif
 			}
 			
 			// driving track
@@ -261,7 +267,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 		}
 		case 2:
 		{
+			#ifdef USE_GPU1P
+			DECOMP_LOAD_OvrLOD(1);
+			#else
 			DECOMP_LOAD_OvrLOD(gGT->numPlyrCurrGame);
+			#endif
 			break;
 		}	
 		case 3:

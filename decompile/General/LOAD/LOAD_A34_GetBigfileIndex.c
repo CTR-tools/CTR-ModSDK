@@ -4,6 +4,10 @@ int DECOMP_LOAD_GetBigfileIndex(unsigned int levelID, int lod, int fileType)
 {
 	// === Wow we need a bigfile enum ===
 
+#ifdef USE_GPU1P
+	lod = 1;
+#endif
+
 	// race tracks
 	if(levelID <= LAB_BASEMENT)
 		return 0x0 + levelID*8 + sdata->levBigLodIndex[lod-1] + fileType;

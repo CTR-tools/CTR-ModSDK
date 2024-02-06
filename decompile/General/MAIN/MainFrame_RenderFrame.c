@@ -163,8 +163,18 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	DrawFinalLap(gGT);
 	ElimBG_HandleState(gGT);
 	
+	#ifdef USE_GPU1P
+	int backup = gGT->numPlyrCurrGame;
+	gGT->numPlyrCurrGame = 1;
+	#endif
+	
 	if((gGT->renderFlags & 0x21) != 0)
 		MainFrame_VisMemFullFrame(gGT, gGT->level1);
+	
+	#ifdef USE_GPU1P
+	gGT->numPlyrCurrGame = backup;
+	#endif
+	
 #endif
 	
 	if((gGT->renderFlags & 1) != 0)
@@ -1006,6 +1016,142 @@ void RenderAllHeatParticles(struct GameTracker* gGT)
 		gGT->swapchainIndex * 0x128);
 }
 
+#ifdef USE_GPU1P
+
+void RenderAllLevelGeometry(struct GameTracker* gGT)
+{
+	int i;
+	int distToScreen;
+	int numPlyrCurrGame;
+	struct Level* level1;
+	struct TileView* tileView;
+	struct mesh_info* ptr_mesh_info;
+	
+	level1 = gGT->level1;
+	if(level1 == 0) return;
+	
+	ptr_mesh_info = level1->ptr_mesh_info;
+	if(ptr_mesh_info == 0) return;
+	
+	numPlyrCurrGame = gGT->numPlyrCurrGame;
+	
+	CTR_ClearRenderLists_1P2P(gGT, 1);
+	
+	// === Temporary 60FPS macros ===
+	// Emulate 30fps on 60fps for SCVert and OVert
+	
+	// if no SCVert
+	if((level1->configFlags & 4) == 0)
+	{
+		// assume OVert (no primitives generated here)
+		AnimateWater1P(FPS_HALF(gGT->timer), level1->numWaterVertices,
+			level1->ptr_water, level1->ptr_tex_waterEnvMap,
+			gGT->visMem1->visOVertList[0]);
+	}
+	
+	// if SCVert
+	else
+	{
+		// draw SCVert (no primitives generated here
+		AnimateQuad(gGT->timer << FPS_LEFTSHIFT(7), 
+			level1->numSCVert, level1->ptrSCVert,
+			gGT->visMem1->visSCVertList[0]);
+	}
+	
+	if(
+		// adv character selection screen
+		(gGT->levelID == ADVENTURE_CHARACTER_SELECT) ||
+		
+		// cutscene that's not Crash Bandicoot intro
+		// where he's sleeping and snoring on a hill
+		(
+			((gGT->gameMode1 & GAME_CUTSCENE) != 0) &&
+			(gGT->levelID != INTRO_CRASH)
+		)
+	)
+	{	
+		// relationship between near-clip and far-clip,
+		// for each RenderList LOD set in the level
+		*(int*)0x1f800014 = 0x1e00;
+		*(int*)0x1f800018 = 0x640;
+		*(int*)0x1f80001c = 0x640;
+		*(int*)0x1f800020 = 0x500;
+		*(int*)0x1f800024 = 0x280;
+		*(int*)0x1f800028 = 0x140;
+		*(int*)0x1f80002c = 0x640+0x140;
+	}
+	
+	// every non-cutscene,
+	// except for Crash Bandicoot intro
+	else
+	{
+		// 0x1c2 in 1P mode
+		distToScreen = gGT->tileView[0].distanceToScreen_PREV;
+		
+		// int and unsigned int have specific purposes
+		*(unsigned int*)0x1f800014 = distToScreen * 0x2080;
+		if(*(int*)0x1f800014 < 0) *(int*)0x1f800014 = *(int*)0x1f800014 + 0xff;
+		*(int*)0x1f800014 = *(int*)0x1f800014 >> 8; // 0x3921
+		
+		*(int*)0x1f800018 = distToScreen * 0x1a;	// 0x2DB4
+		*(int*)0x1f80001c = distToScreen * 0x18;	// 0x2A30
+		*(int*)0x1f800020 = distToScreen * 0xc;		// 0x1518
+		*(int*)0x1f800024 = distToScreen * 7;		// 0xC4E
+		*(int*)0x1f80002c = *(int*)0x1f800018 + 0x140; // 0x2EF4
+		
+		// int and unsigned int have specific purposes
+		*(unsigned int*)0x1f800028 = distToScreen * 0x380;
+		if(*(int*)0x1f800028 < 0) *(int*)0x1f800028 = *(int*)0x1f800028 + 0xff;
+		*(int*)0x1f800028 = *(int*)0x1f800028 >> 8; // 0x627
+	}
+	
+	RenderLists_PreInit();
+	gGT->bspLeafsDrawn = 0;
+	
+	// make this happen for each player,
+	// after I duplicate the lists
+	tileView = &gGT->tileView[0];
+	gGT->bspLeafsDrawn += 
+	RenderLists_Init1P2P(
+		ptr_mesh_info->bspRoot,
+		level1->visMem->visLeafList[0],
+		tileView,
+		&gGT->LevRenderLists[0],
+		level1->visMem->bspList[0],
+		numPlyrCurrGame);
+	
+	for(int i = 0; i < numPlyrCurrGame; i++)
+	{
+		tileView = &gGT->tileView[i];
+					
+		// 226-229
+		DrawLevelOvr1P(
+			&gGT->LevRenderLists[0],
+			tileView,
+			ptr_mesh_info,
+			&gGT->backBuffer->primMem,
+			gGT->visMem1->visFaceList[0],
+			level1->ptr_tex_waterEnvMap); // waterEnvMap?
+			
+		DrawSky_Full(
+			level1->ptr_skybox,
+			tileView,
+			&gGT->backBuffer->primMem);
+			
+		// skybox gradient
+		if((level1->configFlags & 1) != 0)
+		{
+			CAM_SkyboxGlow(
+				&level1->glowGradient[0],
+				tileView,
+				&gGT->backBuffer->primMem,
+				&tileView->ptrOT[0x3ff]);
+		}
+	}
+}
+
+#else
+
 void RenderAllLevelGeometry(struct GameTracker* gGT)
 {
 	int i;
@@ -1108,7 +1254,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 			tileView,
 			&gGT->LevRenderLists[0],
 			level1->visMem->bspList[0],
-			gGT->numPlyrCurrGame);
+			numPlyrCurrGame);
 			
 		// 226-229
 		DrawLevelOvr1P(
@@ -1159,7 +1305,7 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 				&gGT->tileView[i],
 				&gGT->LevRenderLists[i],
 				level1->visMem->bspList[i],
-				gGT->numPlyrCurrGame);
+				numPlyrCurrGame);
 		}
 		
 		// 226-229
@@ -1261,7 +1407,10 @@ SkyboxGlow:
 	
 	return;
 }
-#endif
+
+#endif // USE_GPU1P
+
+#endif // Rebuild_PS1
 
 void MultiplayerWumpaHUD(struct GameTracker* gGT)
 {

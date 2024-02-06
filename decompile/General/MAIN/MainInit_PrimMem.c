@@ -61,6 +61,11 @@ void DECOMP_MainInit_PrimMem(struct GameTracker* gGT)
 	size = data.primMem_SizePerLEV_4P[levelID] << 10;
 	
 EndFunc:
+
+#ifdef USE_GPU1P
+	size = 0x200000;
+#endif
+
 	DECOMP_MainDB_PrimMem(&gGT->db[0].primMem, size);
 	DECOMP_MainDB_PrimMem(&gGT->db[1].primMem, size);
 }
@@ -103,6 +108,11 @@ void DECOMP_MainInit_OTMem(struct GameTracker* gGT)
 	size = 0x3000;
 	
 EndFunc:
+
+#ifdef USE_GPU1P
+	size = 0x20000;
+#endif
+
 	DECOMP_MainDB_OTMem(&gGT->db[0].otMem, size);
 	DECOMP_MainDB_OTMem(&gGT->db[1].otMem, size);
 	

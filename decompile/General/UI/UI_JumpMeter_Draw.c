@@ -14,9 +14,7 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	int iVar10;
 	int iVar11;
 	RECT box;
-	u_int auStack64 [2];
 	RECT box2;
-	u_int auStack48 [2];
 	int jumpMeterHeight;
 	int whateverThisIs;
 	
@@ -40,9 +38,8 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	box.h = 10;
 	box.x = sVar9;
 	box.y = jumpMeter;
-	memset(auStack64, 0, 4);
 
-	DECOMP_CTR_Box_DrawWireBox(&box, auStack64, gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
+	DECOMP_CTR_Box_DrawWireBox(&box, &data.colors[21], gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
 
 	backDB = gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
@@ -78,9 +75,8 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 		box2.w = WIDE_34(0xc);
 		box2.h = 0x26;
 		box2.x = posX;
-		memset(auStack48, 0, 4);
 
-		DECOMP_CTR_Box_DrawWireBox(&box2, auStack48, gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
+		DECOMP_CTR_Box_DrawWireBox(&box2, &data.colors[21], gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
 
 		backDB = gGT->backBuffer;
 		primmemCurr = backDB->primMem.curr;

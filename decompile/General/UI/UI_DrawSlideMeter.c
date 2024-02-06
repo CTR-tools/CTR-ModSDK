@@ -11,7 +11,6 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	short meterHeight;
 	short meterLength;
 	RECT box;
-	u_int auStack40 [2];
 	int currentRoomRemaining;
 	
 	gGT = sdata->gGT;
@@ -56,9 +55,8 @@ void DECOMP_UI_DrawSlideMeter(short posX, short posY, struct Driver* driver)
 	box.y = posY - meterHeight;
 	box.w = WIDE_PICK(0x31, 0x25);
 	box.h = meterHeight;
-	memset(auStack40, 0, 4);
 
-	DECOMP_CTR_Box_DrawWireBox(&box, auStack40, gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
+	DECOMP_CTR_Box_DrawWireBox(&box, &data.colors[21], gGT->tileView_UI.ptrOT, &gGT->backBuffer->primMem);
 
 	backDB = gGT->backBuffer;
 	primmemCurr = backDB->primMem.curr;
