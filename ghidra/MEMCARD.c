@@ -1114,7 +1114,7 @@ undefined4 FUN_8003e51c(long param_1)
   return uVar3;
 }
 
-
+// MEMCARD_IsFile
 // param1 slotIndex
 // param2 saveName
 undefined4 FUN_8003e59c(undefined4 param_1,undefined4 param_2)

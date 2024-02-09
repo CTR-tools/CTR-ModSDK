@@ -1,6 +1,6 @@
 #include <common.h>
 
-uint8_t DECOMP_MEMCARD_IsFile(int slotIdx, char *save_name)
+int DECOMP_MEMCARD_IsFile(int slotIdx, char *save_name)
 {
     char name[64];
 
@@ -13,10 +13,8 @@ uint8_t DECOMP_MEMCARD_IsFile(int slotIdx, char *save_name)
 
     if (sdata->memcard_fd == -1)
         return 6;
-    else
-    {
-        close(sdata->memcard_fd);
-        sdata->memcard_fd = -1;
-        return 0;
-    }
+
+    close(sdata->memcard_fd);
+    sdata->memcard_fd = -1;
+    return 0;
 }
