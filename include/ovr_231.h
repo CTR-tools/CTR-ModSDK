@@ -214,7 +214,8 @@ struct MineWeapon
 	// number of frames that mine can't hurt parent
 	short frameCount_DontHurtParent;
 	
-	short unk26;
+	// 0x26
+	short tntSpinY;
 
 	// 0x28
 	// 1 - red beaker

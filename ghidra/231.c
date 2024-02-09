@@ -1160,14 +1160,25 @@ void FUN_800aca50(int param_1)
 	  // Get Instance attached to player
       puVar3[1] = *(undefined4 *)(*(int *)(puVar1 + 0x24ec) + 0x1c);
 	  
+	  // velocity[x,y,z] = 0
       *(undefined2 *)(puVar3 + 3) = 0;
       *(undefined2 *)((int)puVar3 + 0xe) = 0;
       *(undefined2 *)(puVar3 + 4) = 0;
+	  
+	  // frameCount_DontHurtParent
       *(undefined2 *)(puVar3 + 9) = 0;
+	  
+	  // boolDestroyed
       *(undefined2 *)(puVar3 + 5) = 0;
+	  
+	  // unk
       *(undefined2 *)((int)puVar3 + 0x26) = 0;
+	  
+	  // no target, no parent
       *puVar3 = 0;
       puVar3[2] = 0;
+	  
+	  // extraFlags
       *(undefined2 *)(puVar3 + 10) = 0;
       
 	  // RB_MinePool_Add
@@ -1497,7 +1508,7 @@ LAB_800ad174:
 		// DAT_800ab9fc
 		// "tnt1"
 		
-		// create thread for TNT, get an Instance
+		// INSTANCE_BirthWithThread
 		// ThTick = RB_GenericMine_ThTick, but set later to RB_TNT_ThTick_ThrowOnHead
 		// 0x300 flag = SmallStackPool
 		// 4 = "mine" thread bucket
@@ -1537,11 +1548,20 @@ LAB_800ad174:
 		// mineWeapon->instParent
         piVar11[1] = *(int *)(iVar5 + 0x1c);
 		
+		// frameCount_DontHurtParent
         *(undefined2 *)(piVar11 + 9) = 10;
+		
+		// boolDestroyed
         *(undefined2 *)(piVar11 + 5) = 0;
+		
+		// unk
         *(undefined2 *)((int)piVar11 + 0x26) = 0;
+		
+		// crateInst
         piVar11[2] = 0;
-        *(undefined2 *)(piVar11 + 10) = 0;
+        
+		// extraFlags
+		*(undefined2 *)(piVar11 + 10) = 0;
 		
 		// get posY
         uVar3 = *(undefined2 *)(iVar12 + 0x48);
@@ -1997,7 +2017,7 @@ void FUN_800ad710(int param_1)
   // Delta: TNT -> 0x1c (position relative to driver)
   FUN_800313c8(iVar3,*(undefined4 *)(*piVar2 + 0x1c),piVar2 + 7);
   
-  // rotation
+  // rotation (tntSpinY)
   local_38 = 0;
   local_36 = *(undefined2 *)((int)piVar2 + 0x26);
   local_34 = 0;
@@ -2017,7 +2037,7 @@ void FUN_800ad710(int param_1)
     *(undefined2 *)((int)piVar2 + 0xe) = 0xffa0;
   }
   
-  // rotation
+  // rotation (tntSpinY)
   *(short *)((int)piVar2 + 0x26) = *(short *)((int)piVar2 + 0x26) + 0x100;
   
   // if scale is small

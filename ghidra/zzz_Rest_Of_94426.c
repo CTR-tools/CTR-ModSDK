@@ -32404,17 +32404,21 @@ LAB_800659ec:
       FUN_8002cbe8(0xf,(int)(short)(&DAT_80086e84)[*(byte *)(param_1 + 0x4a)],0x10);
     }
 
-	// instance -> thread -> object
+	// instance -> thread -> object (mw)
     puVar16 = *(undefined4 **)(*(int *)(iVar5 + 0x6c) + 0x30);
 
-	// save the driver that dropped the weapon
+	// mw->instParent
     puVar16[1] = *(undefined4 *)(param_1 + 0x1c);
 
+	// mw->velocity (x,y,z)
     *(undefined2 *)(puVar16 + 3) = 0;
     *(undefined2 *)((int)puVar16 + 0xe) = 0;
     *(undefined2 *)(puVar16 + 4) = 0;
-    *(undefined2 *)(puVar16 + 9) = 10;
-    *(undefined2 *)(puVar16 + 5) = 0;
+    
+	// mw->frameCount_DontHurtParent
+	*(undefined2 *)(puVar16 + 9) = 10;
+    
+	*(undefined2 *)(puVar16 + 5) = 0;
     *(undefined2 *)((int)puVar16 + 0x26) = 0;
     *puVar16 = 0;
     puVar16[2] = 0;

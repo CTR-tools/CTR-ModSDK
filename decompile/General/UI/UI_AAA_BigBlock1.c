@@ -163,6 +163,11 @@ void NewCallback231()
 		// set thread->cooldown to 1 frame,
 		// run thread at 30fps, in 60fps gameplay
 	}
+	
+	// follower
+	{
+		*(char*)0x800b7010 = 7*2;
+	}
 
 	LOAD_Callback_Overlay_231();
 }
@@ -294,6 +299,11 @@ void ui60_entryHook()
 		// beeping sound
 		*(unsigned char*)0x8004FFC4 = 5*2;
 		*(unsigned char*)0x8004FFC8 = 10*2;
+	}
+	
+	// TNT, frameCount_DontHurtParent
+	{
+		*(char*)0x8006607c = 10*2;
 	}
 
 	#if 0

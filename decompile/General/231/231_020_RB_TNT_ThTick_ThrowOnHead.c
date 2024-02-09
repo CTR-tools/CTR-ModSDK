@@ -68,7 +68,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
   
   // rotation
   rot[0] = 0;
-  rot[1] = *(short *)((unsigned int)mw + 0x26);
+  rot[1] = mw->tntSpinY;
   rot[2] = 0;
   
    // convert 3 rotation shorts into rotation matrix
@@ -83,7 +83,7 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
 	if(mw->velocity[1] < -0x60) mw->velocity[1] = -0x60;
   
   // rotation
-  *(short *)((unsigned int)mw + 0x26) += FPS_HALF(0x100);
+  mw->tntSpinY += FPS_HALF(0x100);
   
   // if scale is small
   if (inst->scale[0] < 0x801) 

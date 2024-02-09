@@ -199,7 +199,7 @@ LAB_800ad174:
       d->instTntRecv->scale[2] = 0;
 	  
 	  // make invisible
-     d->instTntRecv->flags |= 0x80;
+	  d->instTntRecv->flags |= 0x80;
       
 	  // this thread is now dead
       d->instTntRecv->thread->flags |= 0x800;
@@ -293,7 +293,7 @@ LAB_800ad174:
         instCrate->matrix.m[2][1] = inst->matrix.m[2][1];
         
 		// X, Y, Z positions of TNT instanece
-		    instCrate->matrix.t[0] = inst->matrix.t[0];
+		instCrate->matrix.t[0] = inst->matrix.t[0];
         instCrate->matrix.t[1] = inst->matrix.t[1];
         instCrate->matrix.t[2] = inst->matrix.t[2];
 		
@@ -308,7 +308,7 @@ LAB_800ad174:
 		
         tnt->frameCount_DontHurtParent = FPS_DOUBLE(10);
         tnt->boolDestroyed = 0;
-        *(short *)((unsigned int)tnt + 0x26) = 0;
+        tnt->tntSpinY = 0;
         tnt->crateInst= 0;
         tnt->extraFlags = 0;
         
