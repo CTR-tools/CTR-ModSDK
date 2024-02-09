@@ -9878,7 +9878,7 @@ void FUN_800b6d58(int param_1)
 		// instance
         iVar5 = *(int *)(param_1 + 0x34);
         
-		// driver ID attached
+		// follower->driver->driverID
 		uVar4 = (uint)*(byte *)(*(int *)(iVar6 + 4) + 0x4a);
         
 		uVar3 = 0;
@@ -9896,6 +9896,8 @@ void FUN_800b6d58(int param_1)
             iVar5 = iVar5 + 0x88;
           } while ((int)uVar3 < (int)(uint)(byte)puVar2[0x1ca9]);
         }
+		
+		// follower->mineTh->instance->idpp
         iVar5 = *(int *)(*(int *)(iVar6 + 8) + 0x34) + uVar4 * 0x88;
         *(uint *)(iVar5 + 0xb8) = *(uint *)(iVar5 + 0xb8) & 0xffffffbf;
       }
@@ -9919,29 +9921,32 @@ void FUN_800b6e10(int param_1)
   // thread -> object
   piVar3 = *(int **)(param_1 + 0x30);
   
-  // pointer to driver
+  // follower->driver
   iVar4 = piVar3[1];
   
-  // something from object
+  // frame count
   iVar2 = *piVar3;
   
   // driver state
   cVar1 = *(char *)(iVar4 + 0x376);
   
-  // reduce life by one frame
+  // subtract one frame
   *piVar3 = iVar2 + -1;
   
   if (
 		(
 			(0 < iVar2 + -1) &&
 			((
-				// driver state
+				// driver state (normal, or drifting)
 				(cVar1 == '\0' || (cVar1 == '\x02')) && 
 				
-				// aren't these always equal?
+				// mineTh->timesDestroyed == obj->backup,
+				// determines if mine was destroyed
 				(*(int *)(piVar3[2] + 0x20) == piVar3[3])
 			))
 		) &&
+		
+		// if driving forward
 		(-1 < *(short *)(iVar4 + 0x38e))
 	  ) 
   {
@@ -10042,16 +10047,16 @@ void FUN_800b6f00(int param_1,int param_2)
 	  // get the object attached to the thread
 	  puVar2 = *(undefined4 **)(iVar1 + 0x30);
 	  
-	  // thread lasts 7 frames
+	  // obj->frameCount
       *puVar2 = 7;
 	  
-	  // driver
+	  // obj->driver
       puVar2[1] = param_1;
 	  
-	  // thread
+	  // obj->mineTh
       puVar2[2] = param_2;
 	  
-	  // thread -> timesDestroyed (it's used???)
+	  // obj->backup = mineTh->timesDestroyed
       puVar2[3] = *(undefined4 *)(param_2 + 0x20);
 	  
 	  // save position of driver
