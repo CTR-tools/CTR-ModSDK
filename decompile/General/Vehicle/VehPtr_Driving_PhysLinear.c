@@ -1047,7 +1047,7 @@ UseTurnRate:
 	// no desired steer
 	if (-iVar14 == 0) 
 	{
-		*(u_short*)&driver->numFramesSpentSteering = 10000;
+		driver->numFramesSpentSteering = 10000;
 	}
 	
 	// desired steer

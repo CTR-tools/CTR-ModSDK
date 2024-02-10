@@ -46,7 +46,7 @@ void DECOMP_VehPtr_Driving_PhysAngular(struct Thread* thread, struct Driver* dri
 	}
 	rotCurrW_interp = InterpBySpeed((int)(driver->rotPrev).w, FPS_HALF(8), destinedRot);
 	(driver->rotPrev).w = (short)rotCurrW_interp;
-	rotCurrW_interp = InterpBySpeed(rotCurrW_original, rotCurrW_interp * elapsedTimeMS >> 5, 0);
+	rotCurrW_interp = InterpBySpeed(rotCurrW_original, (rotCurrW_interp * elapsedTimeMS) >> 5, 0);
 	actionsFlagSet = driver->actionsFlagSet;
 	forwardDir = driver->forwardDir;
 	simpTurnState = driver->simpTurnState;
@@ -215,7 +215,7 @@ LAB_8005fee4:
 	{
 		classSpeed_halved = terrain->unk_0x20[1] * classSpeed_halved >> 8;
 	}
-	driftAngleCurr_Final = (int)driftAngleCurr_og + (classSpeed_halved * elapsedTimeMS >> 5);
+	driftAngleCurr_Final = (int)driftAngleCurr_og + ((classSpeed_halved * elapsedTimeMS) >> 5);
 	driver->turnAngleCurr = (short)driftAngleCurr_Final;
 	turnResistMinBitshift = rotCurrW_original;
 	if ((0x2ff < speedApprox) && ((actionsFlagSet & 1) != 0))
@@ -352,7 +352,7 @@ LAB_80060284:
 	driver->unk3D4[0] = forwardDir;
 	driver->unk3D4[1] = (short)rotCurrW_original;
 	rotCurrW_interp = MapToRange(speedApprox, 0, 0x600, classSpeed_halved, 0);
-	rotCurrW_original = rotCurrW_interp * elapsedTimeMS >> 5;
+	rotCurrW_original = (rotCurrW_interp * elapsedTimeMS) >> 5;
 	rotCurrW_interp = rotCurrW_original;
 	if (rotCurrW_original < 0)
 	{
