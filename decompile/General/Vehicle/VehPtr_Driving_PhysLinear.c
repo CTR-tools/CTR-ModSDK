@@ -704,7 +704,7 @@ CheckJumpButtons:
 	}
 	
 	
-	// === Gas/Break section ===
+	// === Gas/Brake section ===
 	
 
 	unk0x80 = 0x80;
@@ -831,7 +831,7 @@ CheckJumpButtons:
 					if (driverSpeedSmth2 < 0) driverSpeedSmth2 = driverSpeedSmth2 + 0xff;
 					driverSpeedSmth2 = driverSpeedSmth2 >> 8;
 					
-					// gas and breaks together
+					// gas and brake together
 					actionsFlagSetCopy |= 0x20;
 					
 					goto LAB_80062548;
@@ -843,14 +843,14 @@ CheckJumpButtons:
 					driverSpeedSmth2 = driverSpeedOrSmth >> 8;
 					if (driverSpeedOrSmth < 0) driverSpeedSmth2 = (driverSpeedOrSmth + 0xff) >> 8;
 					
-					// reversing, and gas+break
+					// reversing, and gas+brake
 					goto LAB_8006248c;
 				}
 				
 				// driverSpeedOrSmth == 0,
-				// no gas, only breaks
+				// no gas, only brake
 				
-				// using the breaks
+				// using the brake
 				actionsFlagSetCopy |= 8;
 				
 				driverSpeedSmth2 = approximateSpeed2;
@@ -858,7 +858,7 @@ CheckJumpButtons:
 			// If you are holding cross, or you have Reserves
 			else
 			{
-				// gas and breaks together
+				// gas and brake together
 				actionsFlagSetCopy |= 0x20;
 				
 				driverSpeedSmth2 = driverBaseSpeed / 2;
@@ -889,7 +889,7 @@ CheckJumpButtons:
 			// if Racer is moving
 			if (0 < approximateSpeed2)
 			{
-				// not holding breaks
+				// not holding brake
 				if ((uVar20 & 0x400020) == 0) 
 				{
 					driver->actionsFlagSet = uVar20;

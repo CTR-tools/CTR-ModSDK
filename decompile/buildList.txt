@@ -654,7 +654,7 @@ common, exe, VehInit_GetModelByName, 0x0, General/Vehicle/VehInit_GetModelByName
 
 common, exe, VehPtr_Driving_PhysAngular, 0x0, General/Vehicle/VehPtr_Driving_PhysAngular.c
 // more
-//common, exe, VehPtr_Driving_PhysLinear, 0x0, General/Vehicle/VehPtr_Driving_PhysLinear.c
+common, exe, VehPtr_Driving_PhysLinear, 0x0, General/Vehicle/VehPtr_Driving_PhysLinear.c
 // Driving_Audio
 common, exe, VehPtr_Driving_Update, 0x0, General/Vehicle/VehPtr_Driving_Update.c
 common, exe, VehPtr_Driving_Init, 0x0, General/Vehicle/VehPtr_Driving_Init.c
