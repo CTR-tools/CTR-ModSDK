@@ -220,11 +220,11 @@ LAB_8005fee4:
 	turnResistMinBitshift = rotCurrW_original;
 	if ((0x2ff < speedApprox) && ((actionsFlagSet & 1) != 0))
 	{
-		forwardDir = driver->numFramesSpentSteering;
 		turnResistMaxBitshift =
 		Player_SteerAccel
 		(
-			(int)forwardDir, (int)driver->const_SteerAccel_Stage2_FirstFrame, 
+			FPS_HALF(driver->numFramesSpentSteering), 
+			(int)driver->const_SteerAccel_Stage2_FirstFrame, 
 			(int)driver->const_SteerAccel_Stage2_FrameLength, 
 			(int)driver->const_SteerAccel_Stage4_FirstFrame, 
 			(int)driver->const_SteerAccel_Stage1_MinSteer, 
@@ -238,7 +238,7 @@ LAB_8005fee4:
 		// driver->unk44e is const val 0x80
 		turnResistMinBitshift = driver->unk44e * turnResistMinBitshift >> 8;
 
-		driver->numFramesSpentSteering = forwardDir + 1;
+		driver->numFramesSpentSteering++;
 
 		// the higher the value of turnResistMaxBitshift the more steering is "locked up"
 		// try setting mov r3, xxxx at 80060170 for proof
