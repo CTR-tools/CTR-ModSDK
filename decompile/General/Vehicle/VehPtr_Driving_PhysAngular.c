@@ -380,7 +380,7 @@ LAB_80060284:
 	}
 	driver->axisRotationX = driver->axisRotationX + (short)(turnResistMinBitshift * elapsedTimeMS >> 0xd) & 0xfff;
 
-	// bottom of Driving_PhysLinear.c
+	// Located in Drifting_FuncPtrs.c
 	void PhysAngularFooter(struct Driver* driver);
 	PhysAngularFooter(driver);
 }

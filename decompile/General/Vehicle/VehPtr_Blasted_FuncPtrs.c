@@ -12,7 +12,7 @@ void DECOMP_VehPtr_Blasted_Update(struct Thread *thread, struct Driver *driver)
 	VehPtr_Driving_Init(thread, driver);
 }
 
-void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver);
+void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver);
 void DECOMP_VehPtr_Blasted_PhysLinear(struct Thread *thread, struct Driver *driver)
 {
 	int NoInputTimer;
@@ -21,7 +21,7 @@ void DECOMP_VehPtr_Blasted_PhysLinear(struct Thread *thread, struct Driver *driv
 	if (driver->NoInputTimer < 0)
 		driver->NoInputTimer = 0;
 	
-	DECOMP_VehPtr_Driving_PhysLinear(thread, driver);
+	VehPtr_Driving_PhysLinear(thread, driver);
 	
 	driver->jump_ForcedMS = 0x60;
 	driver->baseSpeed = 0;

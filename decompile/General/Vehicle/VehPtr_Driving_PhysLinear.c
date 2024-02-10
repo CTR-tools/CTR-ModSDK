@@ -6,7 +6,7 @@
 // see the bottom of this file
 extern short PhysLinear_DriverOffsets[14];
 
-void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
+void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 {
 	struct GameTracker* gGT;
 	int gameMode2;
@@ -1155,11 +1155,3 @@ short PhysLinear_DriverOffsets[14] =
 	DriverPhysLinear_OFFSETOF(struct Driver, mashingXMakesItBig),
 	DriverPhysLinear_OFFSETOF(struct Driver, invincibleTimer)
 };
-
-void PhysAngularFooter(struct Driver* driver)
-{
-	Rot_AxisAngle(&driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
-	gte_SetRotMatrix(&driver->matrix310);
-
-	CameraSlack_PhysAngular(driver);
-}

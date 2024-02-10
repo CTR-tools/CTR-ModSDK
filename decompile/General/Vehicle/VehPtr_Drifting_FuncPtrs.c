@@ -400,9 +400,17 @@ LAB_800632cc:
 	if (driver->KartStates.Drifting.driftTotalTimeMS > (int)((u_int)driver->unk462 << 5))
 		driver->KartStates.Drifting.driftTotalTimeMS = (u_short)driver->unk462 << 5;
 	
-	// bottom of Driving_PhysLinear.c
+	// Located in Drifting_FuncPtrs.c
 	void PhysAngularFooter(struct Driver* driver);
 	PhysAngularFooter(driver);
+}
+
+void PhysAngularFooter(struct Driver* driver)
+{
+	Rot_AxisAngle(&driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
+	gte_SetRotMatrix(&driver->matrix310);
+
+	CameraSlack_PhysAngular(driver);
 }
 
 void DECOMP_VehPtr_Drifting_Finalize(struct Thread* t, struct Driver* d)
