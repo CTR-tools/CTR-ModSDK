@@ -767,10 +767,11 @@ CheckJumpButtons:
 					(
 						unk0x80 = Player_StickReturnToRest(unk0x80, 0x80, 0), 
 						
-						unk0x80 > 99 ||
+						(unk0x80 > 99) ||
 
 						(
-							(unk0x80 > 0 && ((actionsFlagSetCopy & 0x20000) != 0))
+							(unk0x80 > 0) && 
+							((actionsFlagSetCopy & 0x20000) != 0)
 						)
 					)
 				)
