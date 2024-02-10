@@ -869,8 +869,11 @@ CheckJumpButtons:
 		driverSpeedOrSmth = driver->const_BackwardSpeed * -3;
 		driverSpeedSmth2 = driverSpeedOrSmth >> 2;
 		if (driverSpeedOrSmth < 0) 	driverSpeedSmth2 = (driverSpeedOrSmth + 3) >> 2;
+		
 		LAB_8006248c:
+		// reversing engine, and brakes
 		actionsFlagSetCopy |= 0x20020;
+		
 		LAB_80062548:
 		uVar20 = actionsFlagSetCopy & 0x9fffffff;
 		approximateSpeed2 = driverSpeedSmth2;
@@ -909,8 +912,8 @@ CheckJumpButtons:
 		}
 	}
 
+	// if accel prevention (hold square)
 	actionsFlagSetCopy = uVar20 & 8;
-
 	if (actionsFlagSetCopy != 0)
 	{		
 		// high speed
@@ -958,6 +961,8 @@ CheckJumpButtons:
 		//Racer struct + 0x39E = Racer's Base Speed
 		*(u_short*)&driver->fireSpeed = approximateSpeed2;
 	}
+	
+	// brakes
 	if ((uVar20 & 0x800020) == 0)
 	{
 		driverSpeedOrSmth = driver->terrainMeta2->unk_0x8;
@@ -1010,7 +1015,7 @@ CheckJumpButtons:
 	// === not rubbing on wall now, or recently ===
 
 	// if not holding Square (& 0x8)
-	// or holding Square + Cross (& 0x20)
+	// or not using brakes (& 0x20)
 	if ((uVar20 & 0x28) == 0)
 	{
 		// use const_TurnRate + turnConst<<1/5

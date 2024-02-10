@@ -465,8 +465,8 @@ struct Driver
 	// 0x00000002 - started touching quadblock this frame
 	// 0x00000004 - holding L1 or R1
 	// 0x00000008 - accel prevention (holding square)
-	// 0x00000010 - ?
-	// 0x00000020 - ?
+	// 0x00000010 - ? steering
+	// 0x00000020 - ? brakes
 	// 0x00000040 - ? COLL-related (ghost)
 	// 0x00000080 - ? OnRender-related, turbo-related
 	// 0x00000100 - driving wrong way
