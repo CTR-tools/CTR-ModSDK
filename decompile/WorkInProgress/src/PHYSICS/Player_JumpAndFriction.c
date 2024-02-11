@@ -261,7 +261,7 @@ void DECOMP_Player_JumpAndFriction(struct Thread *t, struct Driver *d)
               // if driver is not using mask weapon
               ((d->actionsFlagSet & 0x800000) == 0))
           {
-            accel = iVar2 * accel >> 8;
+            accel = (accel * iVar2) >> 8;
           }
         }
         else
@@ -279,7 +279,7 @@ void DECOMP_Player_JumpAndFriction(struct Thread *t, struct Driver *d)
       accel = 8000;
     }
   PROCESS_ACCEL:
-    accel = accel * gGT->elapsedTimeMS >> 5;
+    accel = (accel * gGT->elapsedTimeMS) >> 5;
 
     gte_ldVXY0(0);
     gte_ldVZ0(accel & 0xffff);
