@@ -966,14 +966,12 @@ CheckJumpButtons:
 	if ((uVar20 & 0x800020) == 0)
 	{
 		driverSpeedOrSmth = driver->terrainMeta2->unk_0x8;
-		//if racer is out of normal driving conditions?
-		//for example, 0x35C[0x8] is 0xB4 when in water at Cove
-		//and the value of 0x39C fits the result perfectly
+
 		if (driverSpeedOrSmth != 0x100)
 		{
 			//Base Speed = 0xB4 (at Cove water) * Base Speed >> 8
-			approximateSpeed2 = (driverSpeedOrSmth * approximateSpeed2) >> 8;
-			driverBaseSpeedUshort = (u_short)((u_int)(driverSpeedOrSmth * driverBaseSpeed) >> 8);
+			approximateSpeed2 = 	(driverSpeedOrSmth * approximateSpeed2) >> 8;
+			driverBaseSpeedUshort = (driverSpeedOrSmth * driverBaseSpeed) >> 8);
 		}
 	}
 	*(u_short*)&driver->unknowndriverBaseSpeed = driverBaseSpeedUshort;
