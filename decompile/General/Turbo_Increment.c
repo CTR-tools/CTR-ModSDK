@@ -141,8 +141,8 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// make flame disappear after
 			// 	- powerslide: two frames (quick death)
 			//	- all others: 255 frames (slowly die out)
-			if (type & 2)	count = 2;
-			else					count = 0xff;
+			if (type & 2)	count = FPS_DOUBLE(2);
+			else			count = FPS_DOUBLE(0xff);
 			turboObj->fireDisappearCountdown = count;
 	
 			// if modelIndex == "player" of any kind
@@ -216,7 +216,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			#endif
 		}
 	
-		turboObj->fireDisappearCountdown = 0xff;
+		turboObj->fireDisappearCountdown = FPS_DOUBLE(0xff);
 		turboInst1->alphaScale = 0;
 		turboInst2->alphaScale = 0;
 	
