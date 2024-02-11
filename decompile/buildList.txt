@@ -79,7 +79,11 @@ common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c
 common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_080_083_RB_Armadillo.c
 common, 231, RB_Fireball_ThTick, 0x0, General/231/231_084_086_RB_Fireball.c
 common, 231, RB_FlameJet_Particles, 0x0, General/231/231_087_089_RB_FlameJet.c
-// skip Follower
+
+// skip Follower, it's fully rewritten, but 
+// we need Weapon_Shoot_Now rewritten so that we can relocate Follower_Init
+//ommon, 231, RB_Follower_ProcessBucket, 0x0, General/231/231_090_092_RB_Follower.c
+
 common, 231, RB_Fruit_ThTick, 0x0, General/231/231_093_096_RB_Fruit.c
 common, 231, RB_Minecart_ThTick, 0x0, General/231/231_097_098_RB_Minecart.c
 // skip Orca (unused, removed from decomp)
