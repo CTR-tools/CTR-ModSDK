@@ -24,7 +24,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	if
 	(
 		// if this is a turbo pad
-		(type & 4) &&
+		((type & 4) != 0) &&
 		
 		// racer is in accel prevention (holding square)
 		((driver->actionsFlagSet & 8) != 0)
