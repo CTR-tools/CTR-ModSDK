@@ -186,7 +186,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		turboThread->flags &= 0xfffff7ff;
 	
 		// turbo pad
-		if (type & 4)
+		if ((type & 4) != 0)
 		{
 			// only increase counter on the first frame of turbo pad
 			
@@ -246,8 +246,16 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		(
 			fireLevel * 
 			
+			#if 1
+			
+			8
+			
+			#else
+				
 			// this can all be simplified to: 8
 			((int)driver->const_SacredFireSpeed - (int)driver->const_SingleTurboSpeed) >> 8
+			
+			#endif
 		);
 
 	if
