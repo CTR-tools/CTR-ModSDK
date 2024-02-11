@@ -971,7 +971,7 @@ CheckJumpButtons:
 		{
 			//Base Speed = 0xB4 (at Cove water) * Base Speed >> 8
 			approximateSpeed2 = 	(driverSpeedOrSmth * approximateSpeed2) >> 8;
-			driverBaseSpeedUshort = (driverSpeedOrSmth * driverBaseSpeed) >> 8);
+			driverBaseSpeedUshort = (driverSpeedOrSmth * driverBaseSpeed) >> 8;
 		}
 	}
 	*(u_short*)&driver->unknowndriverBaseSpeed = driverBaseSpeedUshort;
