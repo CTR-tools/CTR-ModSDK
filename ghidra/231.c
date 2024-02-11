@@ -9984,8 +9984,7 @@ void FUN_800b6e10(int param_1)
 	
 	// Change X, Y, Z, of mine, to the 
 	// midpoint between the current driver position,
-	// and the position where the driver "was" at time of firing weapon
-	
+	// and the "realPos" of mine. This reduces motion sickness
     *(int *)(iVar2 + 0x44) = (int)*(short *)((int)piVar3 + 0x10) + (*(int *)(iVar4 + 0x2d4) >> 8) >> 1;
     *(int *)(iVar2 + 0x48) = (int)*(short *)((int)piVar3 + 0x12) + (*(int *)(iVar4 + 0x2d8) >> 8) >> 1;
     *(int *)(iVar2 + 0x4c) = (int)*(short *)((int)piVar3 + 0x14) + (*(int *)(iVar4 + 0x2dc) >> 8) >> 1;
@@ -10079,7 +10078,7 @@ void FUN_800b6f00(int param_1,int param_2)
 	  // obj->backup = mineTh->timesDestroyed
       puVar2[3] = *(undefined4 *)(param_2 + 0x20);
 	  
-	  // save position of driver
+	  // save "real" position of mine
       *(undefined2 *)((int)puVar2 + 0x10) = *(undefined2 *)(iVar3 + 0x44);
       *(undefined2 *)((int)puVar2 + 0x12) = *(undefined2 *)(iVar3 + 0x48);
       *(undefined2 *)((int)puVar2 + 0x14) = *(undefined2 *)(iVar3 + 0x4c);

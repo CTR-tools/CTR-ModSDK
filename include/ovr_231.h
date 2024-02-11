@@ -377,6 +377,16 @@ struct FlameJet
 	// 0x14 bytes large
 };
 
+struct Follower
+{
+	int frameCount;
+	struct Driver* driver;
+	struct Thread* mineTh;
+	int backupTimesDestroyed;
+	
+	short realPos[4];
+};
+
 #if 0
 struct Fruit
 {
