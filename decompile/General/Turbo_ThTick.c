@@ -175,7 +175,7 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 	// if higher than 7, back to zero
 	turbo->fireAnimIndex &= 7;
 	
-	if ('\0' < turbo->fireDisappearCountdown)
+	if (turbo->fireDisappearCountdown > 0)
 	{
 		turbo->fireDisappearCountdown--;
 	}
