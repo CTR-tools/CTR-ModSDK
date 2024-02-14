@@ -163,8 +163,11 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	DrawFinalLap(gGT);
 	ElimBG_HandleState(gGT);
 	
+	#ifndef USE_GPU1P
 	if((gGT->renderFlags & 0x21) != 0)
-		MainFrame_VisMemFullFrame(gGT, gGT->level1);	
+		MainFrame_VisMemFullFrame(gGT, gGT->level1);
+	#endif
+		
 #endif
 	
 	if((gGT->renderFlags & 1) != 0)
