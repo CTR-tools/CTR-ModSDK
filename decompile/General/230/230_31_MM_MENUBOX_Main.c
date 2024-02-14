@@ -4,7 +4,7 @@
 // 840/1108
 
 #ifdef USE_GPU1P
-extern struct MenuRow rows_OnlyVsBattle[2];
+extern struct MenuRow rows_OnlyVsBattle[3];
 #endif
 
 void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
@@ -225,7 +225,7 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 }
 
 #ifdef USE_GPU1P
-struct MenuRow rows_OnlyVsBattle[2] =
+struct MenuRow rows_OnlyVsBattle[3] =
 {
 	{0x4F, 0,1,0,0},
 	{0x50, 0,1,1,1},
