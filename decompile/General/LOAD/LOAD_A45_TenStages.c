@@ -173,9 +173,12 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				gGT->gameMode2 |= LEV_SWAP;
 				
 				#ifdef USE_GPU1P
-				// get CurrGame from main menu's NextGame
-				gGT->numPlyrCurrGame = gGT->numPlyrNextGame;
-				boolDefault1P = 0;
+				if(gGT->gGT->podiumRewardID == 0)
+				{
+					// get CurrGame from main menu's NextGame
+					gGT->numPlyrCurrGame = gGT->numPlyrNextGame;
+					boolDefault1P = 0;
+				}
 				#endif
 			}
 			
