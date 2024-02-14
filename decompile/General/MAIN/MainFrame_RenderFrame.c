@@ -163,18 +163,8 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	DrawFinalLap(gGT);
 	ElimBG_HandleState(gGT);
 	
-	#ifdef USE_GPU1P
-	int backup = gGT->numPlyrCurrGame;
-	gGT->numPlyrCurrGame = 1;
-	#endif
-	
 	if((gGT->renderFlags & 0x21) != 0)
-		MainFrame_VisMemFullFrame(gGT, gGT->level1);
-	
-	#ifdef USE_GPU1P
-	gGT->numPlyrCurrGame = backup;
-	#endif
-	
+		MainFrame_VisMemFullFrame(gGT, gGT->level1);	
 #endif
 	
 	if((gGT->renderFlags & 1) != 0)
@@ -1035,8 +1025,6 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 	
 	numPlyrCurrGame = gGT->numPlyrCurrGame;
 	
-	CTR_ClearRenderLists_1P2P(gGT, 1);
-	
 	// === Temporary 60FPS macros ===
 	// Emulate 30fps on 60fps for SCVert and OVert
 	
@@ -1105,25 +1093,38 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		*(int*)0x1f800028 = *(int*)0x1f800028 >> 8; // 0x627
 	}
 	
-	RenderLists_PreInit();
-	gGT->bspLeafsDrawn = 0;
-	
-	// make this happen for each player,
-	// after I duplicate the lists
-	tileView = &gGT->tileView[0];
-	gGT->bspLeafsDrawn += 
-	RenderLists_Init1P2P(
-		ptr_mesh_info->bspRoot,
-		level1->visMem->visLeafList[0],
-		tileView,
-		&gGT->LevRenderLists[0],
-		level1->visMem->bspList[0],
-		numPlyrCurrGame);
+	// backup
+	struct Driver* d0 = gGT->drivers[0];
+	struct CameraDC dc0;
+	memcpy(&dc0, &gGT->cameraDC[0], sizeof(struct CameraDC));
 	
 	for(int i = 0; i < numPlyrCurrGame; i++)
 	{
 		tileView = &gGT->tileView[i];
-					
+
+		CTR_ClearRenderLists_1P2P(gGT, 1);
+		RenderLists_PreInit();
+	
+		if(i != 0)
+		{
+			gGT->drivers[0] = gGT->drivers[i];
+			memcpy(&gGT->cameraDC[0], &gGT->cameraDC[i], sizeof(struct CameraDC));
+		}
+	
+		int backup = gGT->numPlyrCurrGame;
+		gGT->numPlyrCurrGame = 1;
+		if((gGT->renderFlags & 0x21) != 0)
+			MainFrame_VisMemFullFrame(gGT, gGT->level1);
+		gGT->numPlyrCurrGame = backup;
+	
+		RenderLists_Init1P2P(
+			ptr_mesh_info->bspRoot,
+			level1->visMem->visLeafList[0],
+			tileView,
+			&gGT->LevRenderLists[0],
+			level1->visMem->bspList[0],
+			numPlyrCurrGame);
+		
 		// 226-229
 		DrawLevelOvr1P(
 			&gGT->LevRenderLists[0],
@@ -1148,6 +1149,10 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 				&tileView->ptrOT[0x3ff]);
 		}
 	}
+	
+	// restore
+	gGT->drivers[0] = d0;
+	memcpy(&gGT->cameraDC[0], &dc0, sizeof(struct CameraDC));
 }
 
 #else
