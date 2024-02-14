@@ -15,7 +15,7 @@ void DECOMP_AH_Map_Main(void)
   
   local_20 = 0;
   advDriver = gGT->drivers[0];
-  ptrHudData = data.hudStructPtr[gGT->numPlyrCurrGame - 1];
+  ptrHudData = data.hudStructPtr[0];
   
   iVar1 = DECOMP_TitleFlag_GetCanDraw();
   if (iVar1 == 0) 
@@ -34,6 +34,11 @@ void DECOMP_AH_Map_Main(void)
 	// Welcome to Adventure Arena
     DECOMP_MainFrame_RequestMaskHint(0,0);
   }
+  
+  #ifdef USE_GPU1P
+  if (gGT->numPlyrCurrGame != 1)
+  return;
+  #endif
   
   // in the OG code, is this even possible?
 #if 0

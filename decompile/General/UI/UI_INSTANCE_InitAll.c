@@ -30,6 +30,11 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 	// If you're in Adventure Arena
     if ((gameMode1 & ADVENTURE_ARENA) != 0)
 	{
+	  #ifdef USE_GPU1P
+	  if(gGT->numPlyrCurrGame != 1)
+		  return;
+	  #endif
+		
       DECOMP_UI_INSTANCE_BirthWithThread(0x61,	DECOMP_UI_ThTick_Reward,0xe,1,0,/*sdata->s_relic1*/0);
       DECOMP_UI_INSTANCE_BirthWithThread(99,	DECOMP_UI_ThTick_Reward,0xf,1,0,/*sdata->s_key1*/0);
       DECOMP_UI_INSTANCE_BirthWithThread(0x62,	DECOMP_UI_ThTick_Reward,0x10,0,0,/*sdata->s_trophy1*/0);
