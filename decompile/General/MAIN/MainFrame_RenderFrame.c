@@ -301,6 +301,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
 		
+		// We just draw full wumpa geometry instead
 		#if 0
 		MultiplayerWumpaHUD(gGT);
 		#endif
