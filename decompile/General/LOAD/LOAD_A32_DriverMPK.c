@@ -17,6 +17,8 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	if(levelLOD - 3U < 2)
 	{
 		#ifdef USE_GPU1P
+		// 2P braks in adventure cause it loads BOTS MPK
+		// which does not contain necessary Adv stuff
 		
 		for(i = 0; i < 3; i++)
 		{
