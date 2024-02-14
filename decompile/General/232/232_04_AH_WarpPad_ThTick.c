@@ -403,10 +403,6 @@ void DECOMP_AH_WarpPad_ThTick(struct Thread* t)
 	if(dist > 0x900000*2)
 	{
 		rewardScale = 0;
-		
-		#ifdef USE_GPU1P
-		rewardScale = 0x10;
-		#endif
 	}
 	
 	else if(dist > 0x900000)
