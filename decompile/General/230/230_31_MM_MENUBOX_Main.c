@@ -16,6 +16,10 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
     mainMenu->rows = &D230.rows_mainMenu_WithScrapbook[0];
 
+  #ifdef USE_GPU1P
+  mainMenu->rows = &rows_OnlyVsBattle[0];
+  #endif
+
   DECOMP_MM_ParseCheatCodes();
   DECOMP_MM_ToggleRows_Difficulty();
   DECOMP_MM_ToggleRows_PlayerCount();
