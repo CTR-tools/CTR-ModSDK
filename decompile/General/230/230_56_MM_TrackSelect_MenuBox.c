@@ -132,13 +132,6 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	selectMenu = &D230.arcadeTracks[0];
 	numTracks = 18;
 
-	// if you are in battle mode
-	if ((gGT->gameMode1 & BATTLE_MODE) != 0)
-	{
-		selectMenu = &D230.battleTracks[0];
-		numTracks = 7;
-	}
-	
 	#ifdef USE_GPU1P
 	numTracks = 23;
 	D230.battleTracks[0].levID = 0x19;
@@ -147,6 +140,21 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 	D230.battleTracks[3].levID = 0x1c;
 	D230.battleTracks[4].levID = 0x1d;
 	#endif
+
+	// if you are in battle mode
+	if ((gGT->gameMode1 & BATTLE_MODE) != 0)
+	{
+		selectMenu = &D230.battleTracks[0];
+		numTracks = 7;
+		
+		#ifdef USE_GPU1P
+		D230.battleTracks[0].levID = 18;
+		D230.battleTracks[1].levID = 19;
+		D230.battleTracks[2].levID = 20;
+		D230.battleTracks[3].levID = 21;
+		D230.battleTracks[4].levID = 22;
+		#endif
+	}
 
 	currTrack = mb->rowSelected;
 	sdata->trackSelBackup = currTrack;
