@@ -1,5 +1,6 @@
 #include <common.h>
 
+
 void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 {
 	int i;
@@ -16,26 +17,6 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	// 3P/4P
 	if(levelLOD - 3U < 2)
 	{
-		#ifdef USE_GPU1P
-		// 2P braks in adventure cause it loads BOTS MPK
-		// which does not contain necessary Adv stuff
-		
-		for(i = 0; i < 3; i++)
-		{
-			// high LOD models
-			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-				data.characterIDs[i] + (base-0xf2)+0xf2,
-				&data.driverModel_lowLOD[i],0xfffffffe);
-		}
-
-		// Time Trial MPK (with high LOD weapons),
-		// dont use adv mpk, it has no weapons
-		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			data.characterIDs[i] + (base-0xf2)+0x124,
-			0,param_3);
-			
-		#else
-
 		for(i = 0; i < 3; i++)
 		{
 			// low lod CTR model
@@ -48,8 +29,6 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 			data.characterIDs[i] + (base-0xf2)+0x15c,
 			0,param_3);
-			
-		#endif
 
 		return;
 	}
@@ -128,9 +107,10 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 
 	if(levelLOD == 2)
 	{
+		// med models
 		for(i = 0; i < 2; i++)
 		{
-			// med lod CTR model
+			// low lod CTR model
 			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
 				data.characterIDs[i] + (base-0xf2)+0x134,
 				&data.driverModel_lowLOD[i],0xfffffffe);

@@ -395,9 +395,15 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			}
 			// == banks are done parsing ===
 			
+			#ifdef USE_GPU1P
+			#define NUM_EXTRA 7
+			#else
+			#define NUM_EXTRA 3
+			#endif
+			
 			// loop through models
 			piVar15 = &data.driverModel_lowLOD[0];
-			for (iVar9 = 0; iVar9 < 3; iVar9++, piVar15++)
+			for (iVar9 = 0; iVar9 < NUM_EXTRA; iVar9++, piVar15++)
 			{
 				// increment pointer by 4,
 				// change pointer to file (starting at pointer map)
