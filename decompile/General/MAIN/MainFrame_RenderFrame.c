@@ -300,7 +300,10 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		
 		
 		RenderDispEnv_World(gGT); // == RenderDispEnv_World ==
+		
+		#if 0
 		MultiplayerWumpaHUD(gGT);
+		#endif
 		
 		#if 0
 		// Multiplayer Pixel LOD Part 3
@@ -1119,6 +1122,10 @@ void RenderAllLevelGeometry(struct GameTracker* gGT)
 		if((gGT->renderFlags & 0x21) != 0)
 			MainFrame_VisMemFullFrame(gGT, gGT->level1);
 		gGT->numPlyrCurrGame = backup;
+	
+		// patch RenderLists_Init1P2P to have max LOD
+		*(short*)0x80070090 = 0;
+		*(short*)0x80070092 = 0x3408;
 	
 		RenderLists_Init1P2P(
 			ptr_mesh_info->bspRoot,
