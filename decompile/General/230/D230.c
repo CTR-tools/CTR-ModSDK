@@ -639,14 +639,8 @@ struct OverlayDATA_230 D230 =
 
 	.arcadeTracks = 
 	{
-		#ifndef USE_GPU1P
 		// CRASH_COVE
 		{3, 0x51, 0x6a, 0xFFFF, 0x1e4, 0x258},
-		#else
-		// CRASH_COVE
-		{0x1a, 0x51, 0x6a, 0xFFFF, 0x1e4, 0x258},		
-		#endif
-		
 		// ROO_TUBES
 		{6, 0x5b, 0x7e, 0xFFFF, 0x1fa, 0x283},
 		// TIGER_TEMPLE

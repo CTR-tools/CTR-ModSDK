@@ -19,7 +19,14 @@ char DECOMP_MM_TrackSelect_boolTrackOpen(struct MainMenu_LevelRow* menuSelect)
 		) ||
 		
 		// track has requirements AND requirements is met
-		(flag >= -1 && (sdata->gameProgress.unlocks[flag >> 5] >> flag) & 1))
+		(
+			flag >= -1 
+			
+			#ifndef USE_GPU1P
+			&& ((sdata->gameProgress.unlocks[flag >> 5] >> flag) & 1)
+			#endif
+		)
+	   )
 	{
 		// unlock track
 		unlocked = true;

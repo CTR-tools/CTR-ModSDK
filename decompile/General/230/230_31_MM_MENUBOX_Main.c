@@ -3,6 +3,10 @@
 // byte budget
 // 840/1108
 
+#ifdef USE_GPU1P
+extern struct MenuRow rows_OnlyVS[2];
+#endif
+
 void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
 {
   short choose;
@@ -11,6 +15,12 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
   // if scrapbook is unlocked, change "rows" to extended array
   if ((sdata->gameProgress.unlocks[1] & 0x10) != 0)
     mainMenu->rows = &D230.rows_mainMenu_WithScrapbook[0];
+
+#ifdef USE_GPU1P
+  mainMenu->rows = &rows_OnlyVS[0];
+  D230.rows_raceType[0].rowOnPressDown = 0;
+  D230.rows_raceType[1].stringIndex = -1;
+#endif
 
   DECOMP_MM_ParseCheatCodes();
   DECOMP_MM_ToggleRows_Difficulty();
@@ -215,3 +225,11 @@ void DECOMP_MM_MENUBOX_Main(struct MenuBox *mainMenu)
     return;
   }
 }
+
+#ifdef USE_GPU1P
+struct MenuRow rows_OnlyVS[2] =
+{
+	{0x4F, 0,0,0,0},
+	{-1},
+};
+#endif

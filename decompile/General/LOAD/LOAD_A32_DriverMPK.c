@@ -11,8 +11,29 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	#elif BUILD >= UsaRetail
 	int base = 0xf2;
 	#endif
+	
+#ifdef USE_GPU1P
+	
+	for(i = 0; i < 3; i++)
+	{
+		// high lod CTR model
+		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+			data.characterIDs[i] + (base-0xf2)+0xf2,
+			&data.driverModel_lowLOD[i],0xfffffffe);
+	}
 
-	gameMode1 = sdata->gGT->gameMode1;
+	// Tim Trial MPK
+	DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
+		data.characterIDs[i] + (base-0xf2)+0x124,
+		0,param_3);
+
+	return;
+		
+#endif
+	
+	struct GameTracker* gGT = sdata->gGT;
+
+	gameMode1 = gGT->gameMode1;
 
 	// 3P/4P
 	if(levelLOD - 3U < 2)
@@ -39,7 +60,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		||
 
 		// credits
-		((sdata->gGT->gameMode2 & CREDITS) != 0)
+		((gGT->gameMode2 & CREDITS) != 0)
 	  )
 	{
 		// adv mpk
@@ -50,7 +71,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		return;
 	}
 
-	if((sdata->gGT->gameMode1 & (ADVENTURE_BOSS | RELIC_RACE | TIME_TRIAL)) != 0)
+	if((gGT->gameMode1 & (ADVENTURE_BOSS | RELIC_RACE | TIME_TRIAL)) != 0)
 	{
 		// high lod model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
@@ -70,7 +91,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 			((gameMode1 & ADVENTURE_CUP) != 0) &&
 
 			// purple gem cup
-			(sdata->gGT->cup.cupID == 4)
+			(gGT->cup.cupID == 4)
 		)
 	{
 		// high lod model
