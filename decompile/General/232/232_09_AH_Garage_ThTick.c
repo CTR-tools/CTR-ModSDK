@@ -38,6 +38,7 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
         if (garage->cooldown == 0)
         {
             inst->flags |= 0x1000;
+			inst->flags &= 0xffcfdfff;
         }
 
         // if door is not fully closed
@@ -64,8 +65,6 @@ void DECOMP_AH_Garage_ThTick(struct Thread *t)
 
             inst->flags &= 0xffffff7f;
         }
-		
-		inst->flags &= 0xffcfdfff;
     }
     // if door is opening or closing
     else
