@@ -4,7 +4,6 @@ void RB_TNT_ThTick_SitOnHead();
 
 void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
 {
-  short rng;
   struct MineWeapon* mw;
   struct Instance* inst;
   short* array;
@@ -47,10 +46,8 @@ void DECOMP_RB_TNT_ThTick_ThrowOnHead(struct Thread* t)
 	  // Set TNT timer to 0, it blows up at 0x5a
       mw->numFramesOnHead = 0;
 	  
-      rng = (short)DECOMP_MixRNG_Scramble();
-      
-	  // Set number of required jumps to 8, with some RNG to mix it up
-	  mw->jumpsRemaining = 8 - (rng + (rng / 2) * -2);
+	  // number of jumps is 7 or 8
+	  mw->jumpsRemaining = 8 - (DECOMP_MixRNG_Scramble() & 1);
 	  
 	  // play sound that you hit a TNT
       PlaySound3D(0x51,inst);

@@ -196,13 +196,8 @@ struct GamepadBuffer
 	// 0x28
 	unsigned short framesSinceLastInput;
 
-	// desired can be nullified
-	// before submission, if power is not
-	// within the 60-unit hardware budget
-	
-	// The two values are NOT left/right,
-	// both sides of the controller have 2 each,
-	// one large motor and one small motor
+	// desired can be nullified before submission, 
+	// if power is above the 60-unit hardware budget
 
 	// 0x2A
 	char motorDesired[2];
