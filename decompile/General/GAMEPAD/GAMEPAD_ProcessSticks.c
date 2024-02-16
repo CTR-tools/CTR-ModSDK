@@ -62,18 +62,15 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 					pad->rwd = rwd;
 				}
 				iVar4 = packet->jogcon.jog_rot;
+				sVar8 = iVar4;
 				if (iVar4 < 0)
 				{
 					iVar7 = ((-10 - iVar4) - rwd->deadZone) * 8;
 					uVar5 = iVar7;
-					if (iVar7 < 0)
-					{
-						uVar5 = 0;
-					}
-					if (0xff < iVar7)
-					{
-						uVar5 = 0xff;
-					}
+					
+					if (iVar7 < 0) uVar5 = 0;
+					if (iVar7 > 0xff) uVar5 = 0xff;
+					
 					sVar8 += 0x80;
 					if (iVar4 < -0x80)
 					{
@@ -85,14 +82,10 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 				{
 					iVar7 = ((iVar4 - 10) - rwd->deadZone) * 8;
 					uVar5 = iVar7;
-					if (iVar7 < 0)
-					{
-						uVar5 = 0;
-					}
-					if (0xff < iVar7)
-					{
-						uVar5 = 0xff;
-					}
+					
+					if (iVar7 < 0) uVar5 = 0;
+					if (iVar7 > 0xff) uVar5 = 0xff;
+					
 					sVar8 += 0x80;
 					if (0x7f < iVar4)
 					{
