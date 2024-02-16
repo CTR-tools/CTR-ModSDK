@@ -825,12 +825,11 @@ CheckJumpButtons:
 				// Player_StickReturnToRest
 				driverSpeedOrSmth = Player_StickReturnToRest(joystickStrength, 0x80, 0);
 
-				driverSpeedSmth2 = driverBaseSpeed * -driverSpeedOrSmth;
-				
 				if (driverSpeedOrSmth < 0)
 				{
-					if (driverSpeedSmth2 < 0) driverSpeedSmth2 = driverSpeedSmth2 + 0xff;
-					driverSpeedSmth2 = driverSpeedSmth2 >> 8;
+					driverSpeedOrSmth = driverBaseSpeed * -driverSpeedOrSmth;
+					if (driverSpeedOrSmth < 0) driverSpeedOrSmth += 0xff;
+					driverSpeedSmth2 = driverSpeedOrSmth >> 8;
 					
 					// gas and brake together
 					actionsFlagSetCopy |= 0x20;
@@ -841,8 +840,8 @@ CheckJumpButtons:
 				if (0 < driverSpeedOrSmth)
 				{
 					driverSpeedOrSmth = driver->const_BackwardSpeed * -driverSpeedOrSmth;
+					if (driverSpeedOrSmth < 0) driverSpeedOrSmth += 0xff;
 					driverSpeedSmth2 = driverSpeedOrSmth >> 8;
-					if (driverSpeedOrSmth < 0) driverSpeedSmth2 = (driverSpeedOrSmth + 0xff) >> 8;
 					
 					// reversing, and gas+brake
 					goto LAB_8006248c;
