@@ -260,7 +260,7 @@ struct sData sdata_static =
 	// one for RaceWheel, one for Namco
 	.unk_drawingRaceWheelRects = {0x3C, 0x64},
 	
-	.posY_MultiLine = {0x92, 0xA0},
+	.posY_MultiLine = {0x92, 0xA0, 0x81, 0x8F},
 	
 	.posY_Arrows = {0x81, 0x8F},
 	

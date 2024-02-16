@@ -2,7 +2,7 @@
 
 void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 {
-    char bVar1;
+    unsigned char bVar1;
     u_char bVar2;
     short uVar3;
     int iVar4;
@@ -54,7 +54,7 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
             }
 
             else if (bVar1 == ((PAD_ID_JOGCON << 4) | 3))
-            {
+            {	
 				if (i < 4)
 				{
 					// racingwheel data
