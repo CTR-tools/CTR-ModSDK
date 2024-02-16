@@ -1,5 +1,5 @@
-// 538+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+16+1+1+2+4+2+4+1+2+3 = 697 rewritten so far
-// 538 for every 'common' and ','
+// 543+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+16+1+1+2+4+2+4+1+2+3 = 702 rewritten so far
+// 543 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
 // 14 for 230_Block2
@@ -220,7 +220,8 @@ common, exe, GAMEPAD_ProcessSticks, 0x0, General/GAMEPAD/GAMEPAD_ProcessSticks.c
 common, exe, GAMEPAD_ProcessTapRelease, 0x0, General/GAMEPAD/GAMEPAD_ProcessTapRelease.c
 common, exe, GAMEPAD_ProcessMotors, 0x0, General/GAMEPAD/GAMEPAD_ProcessMotors.c
 common, exe, GAMEPAD_ProcessAnyoneVars, 0x0, General/GAMEPAD/GAMEPAD_ProcessAnyoneVars.c
-// JogCon1, JogCon2,
+common, exe, GAMEPAD_JogCon1, 0x0, General/GAMEPAD/GAMEPAD_JogCon1.c
+common, exe, GAMEPAD_JogCon2, 0x0, General/GAMEPAD/GAMEPAD_JogCon2.c
 // Shock (3 functions)
 
 // GAMEPROG (done)
