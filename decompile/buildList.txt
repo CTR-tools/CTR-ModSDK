@@ -211,7 +211,7 @@ common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c
 
 // GAMEPAD
 common, exe, GAMEPAD_Init, 0x0, General/GAMEPAD/GAMEPAD_Init.c
-// SetMainMode
+common, exe, GAMEPAD_SetMainMode, 0x0, General/GAMEPAD/GAMEPAD_SetMainMode.c
 common, exe, GAMEPAD_ProcessState, 0x0, General/GAMEPAD/GAMEPAD_ProcessState.c
 common, exe, GAMEPAD_PollVsync, 0x0, General/GAMEPAD/GAMEPAD_PollVsync.c
 common, exe, GAMEPAD_GetNumConnected, 0x0, General/GAMEPAD/GAMEPAD_GetNumConnected.c
