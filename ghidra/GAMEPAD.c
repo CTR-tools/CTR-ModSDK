@@ -681,34 +681,43 @@ LAB_80025998:
 			  // racingwheel data
               *(undefined4 **)(param_1 + 0x4c) = puVar9;
             }
-            sVar8 = *(short *)(*(int *)(param_1 + 0x20) + 4);
+            
+			sVar8 = *(short *)(*(int *)(param_1 + 0x20) + 4);
             iVar4 = (int)sVar8;
-            if (iVar4 < 0) {
+			
+            if (iVar4 < 0) 
+			{
               iVar7 = ((-10 - iVar4) - (int)*(short *)(puVar9 + 1)) * 8;
               uVar5 = (undefined)iVar7;
+			  
               if (iVar7 < 0) {
                 uVar5 = 0;
               }
               if (0xff < iVar7) {
                 uVar5 = 0xff;
               }
-              sVar8 = sVar8 + 0x80;
+              
+			  sVar8 = sVar8 + 0x80;
               if (iVar4 < -0x80) {
                 sVar8 = -0x80;
 LAB_8002595c:
                 sVar8 = sVar8 + 0x80;
               }
             }
-            else {
+            
+			else 
+			{
               iVar7 = ((iVar4 + -10) - (int)*(short *)(puVar9 + 1)) * 8;
               uVar5 = (undefined)iVar7;
-              if (iVar7 < 0) {
+              
+			  if (iVar7 < 0) {
                 uVar5 = 0;
               }
               if (0xff < iVar7) {
                 uVar5 = 0xff;
               }
-              sVar8 = sVar8 + 0x80;
+              
+			  sVar8 = sVar8 + 0x80;
               if (0x7f < iVar4) {
                 sVar8 = 0x7f;
                 goto LAB_8002595c;

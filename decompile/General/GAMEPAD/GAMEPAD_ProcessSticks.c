@@ -61,8 +61,10 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 					// racingwheel data
 					pad->rwd = rwd;
 				}
-				iVar4 = packet->jogcon.jog_rot;
-				sVar8 = iVar4;
+				
+				sVar8 = packet->jogcon.jog_rot;
+				iVar4 = (int)sVar8;
+				
 				if (iVar4 < 0)
 				{
 					iVar7 = ((-10 - iVar4) - rwd->deadZone) * 8;
