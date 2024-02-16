@@ -6,7 +6,6 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
     u_char bVar2;
     short uVar3;
     int iVar4;
-    char uVar5;
     int iVar7;
     short sVar8;
 
@@ -68,10 +67,8 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 				if (iVar4 < 0)
 				{
 					iVar7 = ((-10 - iVar4) - rwd->deadZone) * 8;
-					uVar5 = iVar7;
-					
-					if (iVar7 < 0) uVar5 = 0;
-					if (iVar7 > 0xff) uVar5 = 0xff;
+					if (iVar7 < 0) iVar7 = 0;
+					if (iVar7 > 0xff) iVar7 = 0xff;
 					
 					sVar8 += 0x80;
 					if (iVar4 < -0x80)
@@ -83,10 +80,8 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 				else
 				{
 					iVar7 = ((iVar4 - 10) - rwd->deadZone) * 8;
-					uVar5 = iVar7;
-					
-					if (iVar7 < 0) uVar5 = 0;
-					if (iVar7 > 0xff) uVar5 = 0xff;
+					if (iVar7 < 0) iVar7 = 0;
+					if (iVar7 > 0xff) iVar7 = 0xff;
 					
 					sVar8 += 0x80;
 					if (0x7f < iVar4)
@@ -95,7 +90,7 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 						sVar8 += 0x80;
 					}
 				}
-				pad->unk43 = uVar5;
+				pad->unk43 = (char)iVar7;
 				pad->stickLX_dontUse1 = sVar8;
 			}
         }
@@ -116,18 +111,8 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
         if (iVar4 < 0) iVar4 = -iVar4;
         if (0x30 < iVar4) pad->framesSinceLastInput = 0;
 
-		bVar1 = packet->controllerData;
-		
-        if (
-				(bVar1 == ((PAD_ID_ANALOG_STICK << 4) | 3)) ||
-				(bVar1 == ((PAD_ID_ANALOG << 4) | 3)) ||
-				(bVar1 == ((PAD_ID_NEGCON << 4) | 3)) ||
-				(bVar1 == ((PAD_ID_JOGCON << 4) | 3))
-			)
-        {
-			pad->stickLX = pad->stickLX_dontUse1;
-			pad->stickLY = pad->stickLY_dontUse1;
-        }
+		pad->stickLX = pad->stickLX_dontUse1;
+		pad->stickLY = pad->stickLY_dontUse1;
 
         // In this order: Up, Down, Left, Right
         if ((pad->buttonsHeldCurrFrame & 1) != 0) pad->stickLY = 0;
