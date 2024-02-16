@@ -51,7 +51,7 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
                     // racingwheel data
                     pad->rwd = rwd;
                 }
-                pad->stickLX_dontUse1 = packet->analog.rightX;
+                pad->stickLX_dontUse1 = packet->neGcon.twist;
             }
 
             else if (bVar1 == ((PAD_ID_JOGCON << 4) | 3))
@@ -61,7 +61,7 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 					// racingwheel data
 					pad->rwd = rwd;
 				}
-				iVar4 = packet->analog.rightX;
+				iVar4 = packet->jogcon.jog_rot;
 				if (iVar4 < 0)
 				{
 					iVar7 = ((-10 - iVar4) - rwd->deadZone) * 8;
@@ -78,7 +78,6 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 					if (iVar4 < -0x80)
 					{
 						sVar8 = -0x80;
-					LAB_8002595c:
 						sVar8 += 0x80;
 					}
 				}
@@ -98,7 +97,7 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 					if (0x7f < iVar4)
 					{
 						sVar8 = 0x7f;
-						goto LAB_8002595c;
+						sVar8 += 0x80;
 					}
 				}
 				pad->unk43 = uVar5;

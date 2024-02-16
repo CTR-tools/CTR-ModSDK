@@ -627,7 +627,10 @@ void FUN_80025854(int param_1)
 	{
       if (*pcVar6 == '\0') {
         bVar1 = pcVar6[1];
-        if (bVar1 == 0x53) {
+		
+		// PAD_ID_ANALOG_STICK
+        if (bVar1 == 0x53) 
+		{
 LAB_80025998:
           *(ushort *)(param_1 + 8) = (ushort)*(byte *)(*(int *)(param_1 + 0x20) + 6);
           bVar1 = *(byte *)(*(int *)(param_1 + 0x20) + 7);
@@ -642,7 +645,9 @@ LAB_80025998:
           *(ushort *)(param_1 + 0xe) = (ushort)*(byte *)(*(int *)(param_1 + 0x20) + 5);
         }
         else {
-          if (bVar1 < 0x54) {
+          if (bVar1 < 0x54) 
+		  {
+			// PAD_ID_NEGCON
             if (bVar1 == 0x23) {
               if (iVar10 < 4)
 			  {
@@ -658,12 +663,19 @@ LAB_80025998:
             }
             *(undefined2 *)(param_1 + 8) = 0x80;
           }
-          else {
+          else 
+		  {
+			// PAD_ID_ANALOG
             if (bVar1 == 0x73) goto LAB_80025998;
+			
+			// PAD_ID_JOGCON
             if (bVar1 != 0xe3) {
               *(undefined2 *)(param_1 + 8) = 0x80;
               goto LAB_80025a00;
             }
+			
+			// === PAD_ID_JOGCON ===
+			
             if (iVar10 < 4)
 			{
 			  // racingwheel data
