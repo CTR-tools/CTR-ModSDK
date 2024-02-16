@@ -39,16 +39,7 @@ void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 				)
             {
                 pad->stickLX_dontUse1 = packet->analog.leftX;
-                bVar1 = packet->analog.rightX;
-                if ((bVar1 == 0xff) && (pad->unk_1 != bVar1))
-                {
-                    pad->stickLY_dontUse1 = pad->unk_1;
-                }
-                else
-                {
-                    pad->stickLY_dontUse1 = bVar1;
-                }
-                pad->unk_1 = bVar1;
+                pad->stickLY_dontUse1 = packet->analog.leftY;
                 pad->stickRX = packet->analog.rightX;
                 pad->stickRY = packet->analog.rightY;
             }
