@@ -1141,28 +1141,32 @@ LAB_80026030:
             *(undefined *)(iVar5 + 0x2b) = *(undefined *)(iVar5 + 0x40);
           }
         }
-        
-		// vib3 frame timer
+        		
+		// shockFrameFreq
 		if (*(int *)(iVar5 + 0x30) != 0) {
           *(int *)(iVar5 + 0x30) = *(int *)(iVar5 + 0x30) + -1;
         }
 		
+		// shockFrameForce1
         if (*(int *)(iVar5 + 0x34) != 0) {
           *(int *)(iVar5 + 0x34) = *(int *)(iVar5 + 0x34) + -1;
         }
+		
+		// shockFrameForce2
         if (*(int *)(iVar5 + 0x38) != 0) {
           *(int *)(iVar5 + 0x38) = *(int *)(iVar5 + 0x38) + -1;
         }
       }
-      else {
+      
+	  else 
+	  {
 LAB_80026074:
         if (
-				(
-					(*(int *)(iVar5 + 0x20) == 0) ||
+				(*(int *)(iVar5 + 0x20) == 0) ||
 
-					// If this is not NPC-105 gamepad
-					(*(char *)(*(int *)(iVar5 + 0x20) + 1) != 0xE3)
-				) ||
+				// If this is not NPC-105 gamepad
+				(*(char *)(*(int *)(iVar5 + 0x20) + 1) != 0xE3) ||
+				
 				(*(char *)(iVar5 + 0x44) == '\0')
 			)
 		{
@@ -1218,7 +1222,7 @@ LAB_800260ac:
   }
 
   // PlayStation can not exceed 60 units
-  // of electrical power, in either 1 of 2 ports
+  // of electrical power, in port 1 or 2
   if (iVar8 > 60)
   {
 	// number of gamepads connected

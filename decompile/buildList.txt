@@ -218,7 +218,7 @@ common, exe, GAMEPAD_GetNumConnected, 0x0, General/GAMEPAD/GAMEPAD_GetNumConnect
 common, exe, GAMEPAD_ProcessHold, 0x0, General/GAMEPAD/GAMEPAD_ProcessHold.c
 common, exe, GAMEPAD_ProcessSticks, 0x0, General/GAMEPAD/GAMEPAD_ProcessSticks.c
 common, exe, GAMEPAD_ProcessTapRelease, 0x0, General/GAMEPAD/GAMEPAD_ProcessTapRelease.c
-// ProcessMotors
+common, exe, GAMEPAD_ProcessMotors, 0x0, General/GAMEPAD/GAMEPAD_ProcessMotors.c
 common, exe, GAMEPAD_ProcessAnyoneVars, 0x0, General/GAMEPAD/GAMEPAD_ProcessAnyoneVars.c
 // JogCon1, JogCon2,
 // Shock (3 functions)
