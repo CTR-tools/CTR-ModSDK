@@ -216,7 +216,7 @@ common, exe, GAMEPAD_ProcessState, 0x0, General/GAMEPAD/GAMEPAD_ProcessState.c
 common, exe, GAMEPAD_PollVsync, 0x0, General/GAMEPAD/GAMEPAD_PollVsync.c
 common, exe, GAMEPAD_GetNumConnected, 0x0, General/GAMEPAD/GAMEPAD_GetNumConnected.c
 common, exe, GAMEPAD_ProcessHold, 0x0, General/GAMEPAD/GAMEPAD_ProcessHold.c
-// ProcessSticks
+common, exe, GAMEPAD_ProcessSticks, 0x0, General/GAMEPAD/GAMEPAD_ProcessSticks.c
 common, exe, GAMEPAD_ProcessTapRelease, 0x0, General/GAMEPAD/GAMEPAD_ProcessTapRelease.c
 // ProcessMotors
 common, exe, GAMEPAD_ProcessAnyoneVars, 0x0, General/GAMEPAD/GAMEPAD_ProcessAnyoneVars.c
