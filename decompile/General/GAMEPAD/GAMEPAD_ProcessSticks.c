@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
+void DECOMP_GAMEPAD_ProcessSticks(struct GamepadSystem *gGS)
 {
     unsigned char bVar1;
     u_char bVar2;
