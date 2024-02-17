@@ -250,13 +250,13 @@ u_int DECOMP_Music_AsyncParseBanks(void)
         
 		else break;
 		
-        howl_SetSong(index);
+        DECOMP_howl_SetSong(index);
         break;
 
 	// Finish Level Song Bank
     case 4:
 
-        if (howl_LoadSong() == 0)
+        if (DECOMP_howl_LoadSong() == 0)
             goto PARSE_FINISH;
 
 		// go to next stage
