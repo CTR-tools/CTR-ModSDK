@@ -4,6 +4,8 @@ void RB_MovingExplosive_ThTick(struct Thread* t);
 void RB_Hazard_ThCollide_Missile(struct Thread* t);
 void RB_GenericMine_ThTick(struct Thread* t);
 void RB_Hazard_ThCollide_Generic(struct Thread* t);
+void RB_ShieldDark_ThTick_Grow(struct Thread* t);
+void RB_Warpball_ThTick(struct Thread* t);
 
 void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 {
@@ -11,6 +13,7 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 	struct Thread* weaponTh;
 	struct Instance* weaponInst;
 	struct MineWeapon* mw;
+	struct TrackerWeapon* tw;
 	struct GameTracker* gGT = sdata->gGT;
 	int modelID;
 	
@@ -131,7 +134,7 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 			weaponTh->funcThDestroy = THREAD_DestroyTracker;
 			weaponTh->funcThCollide = RB_Hazard_ThCollide_Missile;
 			
-			struct TrackerWeapon* tw = weaponTh->object;
+			tw = weaponTh->object;
 			tw->flags = 0;
 			tw->unk54 = 0;
 			tw->audioPtr = 0;
@@ -174,8 +177,8 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 			tw->vel[1] = 0;
 			tw->rotY = d->rotCurr.y;
 			
-			tw->vel[0] = weaponInst->matrix.m[0][2] >> FPS_RIGHTSHIFT(7);
-			tw->vel[2] = weaponInst->matrix.m[2][2] >> FPS_RIGHTSHIFT(7);
+			tw->vel[0] = (weaponInst->matrix.m[0][2] * 3) >> FPS_RIGHTSHIFT(7);
+			tw->vel[2] = (weaponInst->matrix.m[2][2] * 3) >> FPS_RIGHTSHIFT(7);
 			
 			if(d->numWumpas >= 10)
 			{
@@ -208,8 +211,8 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 			{
 				if(d->numWumpas < 10)
 				{
-					tw->vel[0] /= 2;
-					tw->vel[2] /= 2;
+					tw->vel[0] = (weaponInst->matrix.m[0][2] * 5) >> FPS_RIGHTSHIFT(8);
+					tw->vel[2] = (weaponInst->matrix.m[2][2] * 5) >> FPS_RIGHTSHIFT(8);
 				}
 			}
 			
@@ -433,7 +436,59 @@ RunMineCOLL:
 		
 		// Shield Bubble
 		case 6:
-		
+			
+			weaponInst =
+				INSTANCE_BirthWithThread(
+					0x5a, 0, MEDIUM, OTHER, 
+					RB_ShieldDark_ThTick_Grow,
+					sizeof(struct Shield), 
+					d->instSelf->thread);
+					
+			d->instBubbleHold = weaponInst;
+					
+			weaponTh = weaponInst->thread;
+			weaponTh->funcThDestroy = THREAD_DestroyInstance;
+			
+			modelID = 0x5e;
+			if(d->numWumpas >= 10)
+				modelID = 0x56;
+			
+			struct Instance* instColor = 
+				INSTANCE_Birth3D(gGT->modelPtr[modelID], 0, 0);
+				
+			struct Instance* instHighlight = 
+				INSTANCE_Birth3D(gGT->modelPtr[0x5D], 0, weaponTh);
+
+			weaponInst->alphaScale = 0x400;
+
+			weaponInst->scale[0] = 0x700;
+			weaponInst->scale[1] = 0x700;
+			weaponInst->scale[2] = 0x700;
+			
+			instColor->scale[0] = 0x700;
+			instColor->scale[1] = 0x700;
+			instColor->scale[2] = 0x700;
+			
+			instHighlight->scale[0] = 0x700;
+			instHighlight->scale[1] = 0x700;
+			instHighlight->scale[2] = 0x700;
+			
+			struct Shield* shieldObj = weaponTh->object;
+			shieldObj->animFrame = 0;
+			shieldObj->flags = 0;
+			shieldObj->duration = 0x2d00;
+			shieldObj->instColor = instColor;
+			shieldObj->instHighlight = instHighlight;
+			shieldObj->highlightRot[0] = 0;
+			shieldObj->highlightRot[1] = 0xc00;
+			shieldObj->highlightRot[2] = 0;
+			shieldObj->highlightTimer = 0;
+			
+			if(d->numWumpas >= 10)
+				shieldObj->flags = 4;
+			
+			OtherFX_Play(0x57, 1);
+			break;
 		
 		// Mask
 		case 7:
@@ -443,10 +498,146 @@ RunMineCOLL:
 		// Clock
 		case 8:
 		
+			d->numTimesClockWeaponUsed++;
+			d->clockSend = FPS_DOUBLE(0x1e);
+			
+			OtherFX_Play(0x44, 1);
+		
+			// if human and not AI (AIs can not use Clock)
+			// if((d->actionsFlagSet & 0x100000) == 0)
+			{
+				Voiceline_RequestPlay(0xe, data.characterIDs[d->driverID], 0x10);
+			}
+			
+			int hurtVal = 0x1e00;
+			if(d->numWumpas >= 10)
+				hurtVal = 0x2d00;
+			
+			struct Driver** dptr;
+			
+			for(
+					dptr = &gGT->drivers[0];
+					dptr < &gGT->drivers[7];
+					dptr++
+				)
+			{
+				struct Driver* victim = *dptr;
+				
+				if(victim == 0) continue;
+				if(victim == d) continue;
+				
+				// if spin out driver
+				if(RB_Hazard_HurtDriver(victim, 1, 0, 0) != 0)
+				{
+					victim->clockReceive = hurtVal;
+				}
+			}
+			break;
 		
 		// Warpball
 		case 9:
 		
+			dInst = d->instSelf;
+			GAMEPAD_ShockFreq(d, 8, 0);
+			GAMEPAD_ShockForce1(d, 8, 0x7f);
+			
+			// MEDIUM
+			weaponInst =
+				INSTANCE_BirthWithThread(
+					modelID, 0, MEDIUM, TRACKING, 
+					RB_Warpball_ThTick,
+					sizeof(struct TrackerWeapon), 
+					parentTh);
+					
+			*(int*)&weaponInst->matrix.m[0][0] = 0x1000;
+			*(int*)&weaponInst->matrix.m[0][2] = 0;
+			*(int*)&weaponInst->matrix.m[1][1] = 0x1000;
+			*(int*)&weaponInst->matrix.m[2][0] = 0;
+			weaponInst->matrix.m[2][2] = 0x1000;
+			
+			weaponInst->matrix.t[0] = dInst->matrix.t[0];
+			weaponInst->matrix.t[1] = dInst->matrix.t[1];
+			weaponInst->matrix.t[2] = dInst->matrix.t[2];
+		
+			weaponTh = weaponInst->thread;
+			weaponTh->funcThDestroy = THREAD_DestroyInstance;
+			
+			PlaySound3D(0x4d, weaponInst);
+			
+			// if human and not AI (AIs can not use Warpball)
+			// if((d->actionsFlagSet & 0x100000) == 0)
+			{
+				Voiceline_RequestPlay(0xc, data.characterIDs[d->driverID], 0x10);
+			}
+			
+			// used by RB_Warpball_SeekDriver
+			victim = 0;
+			int rank = d->driverRank;
+			if(rank != 0)
+			{
+				victim = gGT->driversInRaceOrder[rank-1];
+			}
+			
+			tw = weaponTh->object;
+			tw->flags = 8;
+			tw->audioPtr = 0;
+			tw->ptrNodeNext = 0;
+			tw->respawnPointIndex = 0;
+			tw->driverParent = d;
+			tw->driverTarget = victim;
+			tw->instParent = dInst;
+			
+			if(d->numWumpas >= 10)
+				tw->flags |= 1;
+			
+			// sets nodeCurrIndex
+			RB_Warpball_SeekDriver(tw, d->unknown_lap_related[1], d);
+			
+			struct CheckpointNode* cn = gGT->level1->ptr_restart_points;
+			tw->nodeNextIndex = tw->nodeCurrIndex;
+			tw->ptrNodeCurr = &cn[tw->nodeCurrIndex];
+			
+			// make this driver invincible
+			tw->driversHit = 1 << d->driverID;
+
+			victim = 0;
+			if(rank != 0)
+			{
+				victim = RB_Warpball_GetDriverTarget(tw, weaponInst);
+			}
+			tw->driverTarget = victim;
+			
+			if(victim != 0)
+			{
+				RB_Warpball_SetTargetDriver(tw);
+			}
+			
+			if((tw->flags & 4) == 0)
+			{
+				RB_Warpball_Start(tw);
+			}
+			else
+			{
+				tw->flags &= 0xfff7;
+			}
+			
+			tw->ptrNodeNext = RB_Warpball_NewPathNode(tw->ptrNodeCurr, victim);
+			
+			tw->vel[1] = 0;
+			tw->rotY = d->rotCurr.y;
+			
+			tw->vel[0] = (weaponInst->matrix.m[0][2] * 7) >> FPS_RIGHTSHIFT(8);
+			tw->vel[2] = (weaponInst->matrix.m[2][2] * 7) >> FPS_RIGHTSHIFT(8);
+			
+			struct Particle* p = 
+				Particle_CreateInstance(0, gGT->iconGroup[0], &data.emSet_Warpball[0]);
+				
+			tw->ptrParticle = p;
+			
+			if(p != 0)
+				p->unk18 = 250;
+			
+			break;
 		
 		// invisibility
 		case 0xc:

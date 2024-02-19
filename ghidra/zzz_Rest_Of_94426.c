@@ -32385,9 +32385,7 @@ LAB_800659ec:
 	// set funcThCollide function
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x28) = 0x800ac4b8;
 
-	// Play potion sound,
-	// volume depends on distance
-	// between instance and nearest tileView
+	// PlaySound3D
     FUN_8002f0dc(0x52,iVar5);
 
 	// If this is human and not AI
@@ -32617,9 +32615,7 @@ LAB_800659ec:
 	// save the driver who placed the weapon
     *(undefined4 *)(iVar8 + 4) = uVar7;
 
-	// Play potion sound,
-	// volume depends on distance
-	// between instance and nearest tileView
+	// PlaySound3D
     FUN_8002f0dc(0x52,iVar5);
 
 	// If this is human and not AI
@@ -32947,9 +32943,7 @@ LAB_800659ec:
 	// set funcThDestroy to remove instance from instance pool
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x24) = 0x80041dfc;
 
-	// Play warpball spawn sound,
-	// volume depends on distance
-	// between instance and nearest tileView
+	// PlaySound3D
     FUN_8002f0dc(0x4d,iVar5);
 
 	// If this is human and not AI
@@ -32994,7 +32988,7 @@ LAB_800659ec:
 	// respawnPointIndex
     piVar15[0xb] = 0;
 	
-	// pathNodeStart = lev->respawnPoint[pathIndexStart]
+	// ptrNodeCurr = lev->respawnPoint[pathIndexStart]
     piVar15[0xf] = iVar8 + (uint)*(byte *)(piVar15 + 0x11) * 0xc;
 
 	// if 9 < wumpa
@@ -33074,7 +33068,7 @@ LAB_800659ec:
 	// get rotation of driver inst
 	sVar2 = *(short *)(*(int *)(param_1 + 0x1c) + 0x40);
 
-	// frameCount_DontHurtParent
+	// frameCount_DontHurtParent (useless)
 	*(undefined2 *)(piVar15 + 8) = 10;
 
 	// velZ

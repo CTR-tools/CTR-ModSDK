@@ -28,7 +28,7 @@ void DECOMP_RB_Warpball_SeekDriver(struct TrackerWeapon* tw,unsigned int param_2
     }
 	
 	// path index = pathPtr2 - pathPtr1
-    *(char *)(tw + 0x11) = (char)((iVar1 - sdata->gGT->level1->ptr_restart_points[0]) * -0x55555555 >> 2);
+    tw->nodeCurrIndex = (char)((iVar1 - sdata->gGT->level1->ptr_restart_points[0]) * -0x55555555 >> 2);
   }
   return;
 }
