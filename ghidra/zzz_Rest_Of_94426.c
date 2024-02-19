@@ -31780,29 +31780,31 @@ int FUN_80064f94(int param_1)
       gte_rtps();
 
       gte_stsxy(r0);
-      gte_stflg((long *)(puVar9 + 100));
+      gte_stflg((long *)(puVar9 + 0x64));
 
       if (
 			(
-				((*(uint *)(puVar9 + 100) & 0x40000) == 0) &&
+				// if driver is in front of camera view?
+				((*(uint *)(puVar9 + 0x64) & 0x40000) == 0) &&
+			
+				// pixW > 30
 				(0x1e < *(short *)(puVar9 + 0x60))
 			) &&
 			(
 				(
+					// pixW < tileView[driverID]->rect.w - 30
 					(int)*(short *)(puVar9 + 0x60) <
-
-					// tileView[driverID]->0x20 (rect.w)
 					*(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0x110 + 0x188) + -0x1e &&
 
 					(
 						(
 							(
+								// pixH > 20
 								0x14 < *(short *)((int)r0 + 2) &&
 
 								(
+									// pixH < tileView[driverID]->rect.h - 20
 									(int)*(short *)((int)r0 + 2) <
-
-									// tileView[driverID]->0x22 (rect.h)
 									*(short *)(PTR_DAT_8008d2ac + (uint)*(byte *)(param_1 + 0x4a) * 0x110 + 0x18a) + -0x14
 								)
 							) &&
@@ -31947,11 +31949,6 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
   short local_26;
   undefined2 local_24;
 
-  // This function definitely handles the firing
-  // of the weapons. I set the first instruction
-  // of this function to "jr ra" to leave, and it
-  // disabled the firing of all weapons
-
   // param1 is weapon ID
   switch(param_2)
   {
@@ -31976,7 +31973,7 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
 
 	break;
 
-  // If your weapon is Missile
+  // Shared code for Bomb and Missile
   case 2:
 
 	// If there are more than 11 missiles on screen
@@ -32104,14 +32101,14 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
     }
 
     if (
-			// if weapon is bomb
-			(*(char *)(param_1 + 0x36) == '\x02') ||
+			// if weapon is 1 missile
+			(*(char *)(param_1 + 0x36) == 2) ||
 			(
-				// bomb model
+				// not missile, use bomb model
 				uVar7 = 0x3b,
 
 				// if weapon is three missiles
-				*(char *)(param_1 + 0x36) == '\v'
+				*(char *)(param_1 + 0x36) == 11
 			)
 		)
     {
@@ -32131,7 +32128,7 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
 	  // "bomb1"
       pcVar10 = s_bomb1_8008d634;
 
-	  // driver -> instane -> thread
+	  // driver -> instance -> thread
       local_48 = *(undefined4 *)(*(int *)(param_1 + 0x1c) + 0x6c);
 
 	  // 0xd = "other" thread bucket
@@ -32188,7 +32185,7 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
     piVar15[9] = 0;
 
 	// if weapon is one bowling bomb or three bowling bombs
-    if ((*(char *)(param_1 + 0x36) == '\x01') || (*(char *)(param_1 + 0x36) == '\n'))
+    if ((*(char *)(param_1 + 0x36) == 1) || (*(char *)(param_1 + 0x36) == 10))
 	{
 	  // CTR_MatrixToRot
 	  // iVar5+0x30 is weapon inst->matrix
@@ -32208,9 +32205,7 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
 
       *(int *)(param_1 + 0x10) = iVar5;
 
-	  // play sound of shooting bomb,
-	  // the audio depends on distance
-	  // from bomb to any human player
+	  // PlaySound3D
       FUN_8002f0dc(0x47,iVar5);
 
 	  // get flags of driver that shot bombs
@@ -32219,10 +32214,10 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
 	  uVar7 = 10;
     }
 
-	// if weapon is missile (should be every time)
+	// if weapon is missile
     else
 	{
-	  // RB_Hazard_ThCollide_Missile, remove 2D target being drawn on them
+	  // RB_Hazard_ThCollide_Missile
       *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x28) = 0x800ac42c;
 
 	  // if missile does not have a target
@@ -32249,9 +32244,7 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
         }
       }
 
-	  // play sound of shooting missile,
-	  // the audio depends on distance
-	  // from missile to any human player
+	  // PlaySound3D
 	  FUN_8002f0dc(0x4a,iVar5);
 
 	  // get flags of the driver who shot the missile
@@ -32387,13 +32380,13 @@ LAB_800659ec:
     *(undefined2 *)(iVar5 + 0x20) = 0;
 
 	// set funcThDestroy to remove instance from instance pool
-    *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x24) = 0x80041dfc
+    *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x24) = 0x80041dfc;
 
 	// set funcThCollide function
     *(undefined4 *)(*(int *)(iVar5 + 0x6c) + 0x28) = 0x800ac4b8;
 
 	// Play potion sound,
-	// volume depends on disatnce
+	// volume depends on distance
 	// between instance and nearest tileView
     FUN_8002f0dc(0x52,iVar5);
 
@@ -33202,8 +33195,8 @@ void FUN_800666e4(int param_1)
       uVar1 = (uint)*(byte *)(param_1 + 0x36);
     }
 
-	// whaat???
-	// If weapon is bomb, change to missile?????
+	// If weapon is bomb, change to missile,
+	// this is because bomb and missile share code
     if (uVar1 == 1) {
       uVar1 = 2;
     }

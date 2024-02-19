@@ -11,13 +11,10 @@ void DECOMP_GAMEPAD_ProcessMotors(struct GamepadSystem *gGS)
         struct ControllerPacket *packet = pad->ptrControllerPacket;
 		
 		if(
-			(
-				((gGT->gameMode1 & 0xf) == 0) &&
-				(gGT->boolDemoMode == 0)
-			) ||
-			
-			(TitleFlag_IsTransitioning() == 0) ||
-			(packet == 0)
+			(packet != 0) &&
+			(gGT->boolDemoMode == 0) &&
+			((gGT->gameMode1 & 0xf) == 0) &&
+			(TitleFlag_IsTransitioning() == 0)
 		  )
 		{
 			if (packet->controllerData == ((PAD_ID_JOGCON << 4) | 3))

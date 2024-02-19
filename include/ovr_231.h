@@ -55,17 +55,18 @@ struct TrackerWeapon
 
 	// 0x16
 	// & 1 - used 10 wumpa fruit
+	// & 0x20 - bomb backwards
 	u_short flags;
 
 	// 0x18
 	short dir[3];
-
+	
 	// 0x1e
+	short rotY;
 
 	// 0x20
-	// frameCount_DontHurtParent
-	// set to 10?
-	char data4[0x4];
+	short frameCount_DontHurtParent;
+	short unk22;
 
 	// 0x24
 	int audioPtr;
@@ -108,8 +109,18 @@ struct TrackerWeapon
 	
 	// 0x48
 	int timeAlive;
-
-	// 0x52 - turnAround count
+	
+	// 0x4c
+	int unk4c;
+	
+	// 0x50
+	short unk50;
+	
+	// 0x52
+	short turnAround;
+	
+	// 0x54
+	int unk54;
 
 	// 0x58 bytes large
 };

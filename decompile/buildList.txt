@@ -698,6 +698,7 @@ common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
 common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
 common, exe, Turbo_Audio, 0x0, General/Turbo_Audio.c
 common, exe, Weapon_Mask_boolGoodGuy, 0x0, General/Weapon_Mask_boolGoodGuy.c
+common, exe, Weapon_Shoot_Now, 0x0, General/Weapon_Shoot_Now.c
 
 common, exe, Tawna_Init, 0x0, General/Tawna_Init.c
 
