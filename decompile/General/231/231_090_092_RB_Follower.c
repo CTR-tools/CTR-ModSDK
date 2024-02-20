@@ -42,6 +42,7 @@ void DECOMP_RB_Follower_ThTick(struct Thread* t)
 	struct Follower* fObj;
 	struct Instance* inst;
 	
+	inst = t->inst;
 	fObj = t->object;
 	d = fObj->driver;
 	kartState = d->kartState;
@@ -62,8 +63,6 @@ void DECOMP_RB_Follower_ThTick(struct Thread* t)
 			(d->speedApprox > -1)
 		)
 	{
-		inst = t->inst;
-		
 		if(inst->scale[0] < 0x800)
 		{
 			inst->scale[0] = inst->scale[0] << 1;
@@ -89,54 +88,52 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* t)
   struct Follower* fObj;
   struct Instance* iVar3;
   
-  if (
-		(0x1e00 < d->speedApprox) && 
-			
-		// if driver is not an AI
-		((d->actionsFlagSet & 0x100000) == 0) &&
-		
-		(((sdata->gGT->cameraDC[d->driverID].flags) & 0x10000) == 0)
-	) 
-  {	 
-	// create a thread and an Instance
-    iVar1 = INSTANCE_BirthWithThread(
-		t->modelIndex, 0, SMALL, FOLLOWER, 
-		DECOMP_RB_Follower_ThTick, sizeof(struct Follower), 0);
-    
-	if (iVar1 == NULL) return; 
+  // disable for slow speed
+  if (d->speedApprox <= 0x1e00) return;
+  
+  // disable for AI
+  if ((d->actionsFlagSet & 0x100000) != 0) return;
 
-	// set the scale
-    iVar1->scale[0] = 0x200;
-    iVar1->scale[1] = 0x200;
-    iVar1->scale[2] = 0x200;
-	
-	// get instance from thread
-    iVar3 = t->inst;
-	
-	// copy position and rotation from one instance to another 
-    *(int*)&iVar1->matrix.m[0][0] = *(int*)&iVar3->matrix.m[0][0];
-    *(int*)&iVar1->matrix.m[0][2] = *(int*)&iVar3->matrix.m[0][2];
-    *(int*)&iVar1->matrix.m[1][1] = *(int*)&iVar3->matrix.m[1][1];
-    *(int*)&iVar1->matrix.m[2][0] = *(int*)&iVar3->matrix.m[2][0];
-    iVar1->matrix.m[2][2] = iVar3->matrix.m[2][2];
-    
-    iVar1->matrix.t[0] = iVar3->matrix.t[0];
-    iVar1->matrix.t[1] = iVar3->matrix.t[1];
-    iVar1->matrix.t[2] = iVar3->matrix.t[2];
-	
-	// Get the thread
-    t = iVar1->thread;
-	t->funcThDestroy = THREAD_DestroyInstance;
-    
-	fObj = t->object;
-    fObj->frameCount = FPS_DOUBLE(7);
-    fObj->driver = d;
-    fObj->mineTh = t;
-    fObj->backupTimesDestroyed = t->timesDestroyed;
-	
-	// save mine position
-	fObj->realPos[0] = iVar3->matrix.t[0];
-	fObj->realPos[1] = iVar3->matrix.t[1];
-	fObj->realPos[2] = iVar3->matrix.t[2];
+  // disable for airborne camera
+  if (((sdata->gGT->cameraDC[d->driverID].flags) & 0x10000) != 0) return;
+  
+  // create a thread and an Instance
+  iVar1 = INSTANCE_BirthWithThread(
+  	t->modelIndex, 0, SMALL, FOLLOWER, 
+  	DECOMP_RB_Follower_ThTick, sizeof(struct Follower), 0);
+  
+  if (iVar1 == NULL) return; 
+  
+  // set the scale
+  iVar1->scale[0] = 0x200;
+  iVar1->scale[1] = 0x200;
+  iVar1->scale[2] = 0x200;
+  
+  // get instance from thread
+  iVar3 = t->inst;
+  
+  // copy position and rotation from one instance to another 
+  *(int*)&iVar1->matrix.m[0][0] = *(int*)&iVar3->matrix.m[0][0];
+  *(int*)&iVar1->matrix.m[0][2] = *(int*)&iVar3->matrix.m[0][2];
+  *(int*)&iVar1->matrix.m[1][1] = *(int*)&iVar3->matrix.m[1][1];
+  *(int*)&iVar1->matrix.m[2][0] = *(int*)&iVar3->matrix.m[2][0];
+  iVar1->matrix.m[2][2] = iVar3->matrix.m[2][2];
+  	
+  // Get the thread
+  t = iVar1->thread;
+  t->funcThDestroy = THREAD_DestroyInstance;
+  
+  fObj = t->object;
+  fObj->frameCount = FPS_DOUBLE(7);
+  fObj->driver = d;
+  fObj->mineTh = t;
+  fObj->backupTimesDestroyed = t->timesDestroyed;
+  
+  // backup original position
+  for(int i = 0; i < 3; i++)
+  {
+  	int pos = iVar3->matrix.t[i];
+  	iVar1->matrix.t[i] = pos;
+  	fObj->realPos[i] = pos;
   }
 }
