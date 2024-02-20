@@ -182,6 +182,8 @@ void DECOMP_GAMEPAD_ProcessMotors(struct GamepadSystem *gGS)
 				pad->motorDesired[1] = 0;
 				totalPower -= pad->motorPower[1];
 			}
+			
+			skipIndex++;
 		}
 	}
 	
