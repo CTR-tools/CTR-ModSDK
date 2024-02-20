@@ -929,8 +929,9 @@ void RenderAllFlag0x40(struct GameTracker* gGT)
 		RB_Player_ToggleFlicker();
 		RB_Burst_ProcessBucket(gGT->threadBuckets[BURST].thread);
 		RB_Blowup_ProcessBucket(gGT->threadBuckets[BLOWUP].thread);
-		RB_Spider_DrawWebs(gGT->threadBuckets[SPIDER].thread, &gGT->tileView[0]);
-		RB_Follower_ProcessBucket(gGT->threadBuckets[FOLLOWER].thread);
+		
+		DECOMP_RB_Spider_DrawWebs(gGT->threadBuckets[SPIDER].thread, &gGT->tileView[0]);
+		DECOMP_RB_Follower_ProcessBucket(gGT->threadBuckets[FOLLOWER].thread);
 		
 		// skipping RB_StartText_ProcessBucket, it's empty in 231
 	}

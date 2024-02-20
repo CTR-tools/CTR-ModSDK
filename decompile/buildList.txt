@@ -1,16 +1,26 @@
-// 548+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+16+1+1+2+4+2+4+1+2+3+2 = 709 rewritten so far
-// 548 for every 'common' and ','
+// 533+38+14+18+16+16+1+1+2+2+1+3+2+4+2+2+2+16+3+47 = 723 rewritten so far
+// 533 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
 // 14 for 230_Block2
 // 18 for 230_Block3
 // 16 for 232 adv hub
-// most others for 231 or VehPtr
 // 16 for the 13 UI functions
+// most others for 231 or VehPtr
 // +1 for DebugFont
 // +1 for 222
 // +2 for 223
 // +2 for 224
+// +1 for VehPtr_AntiVShift
+// +3 for VehPtr_Blasted
+// +2 for VehPtr_Crashing
+// +4 for VehPtr_Driving
+// +2 for VehPtr_EngineRevving
+// +2 for VehPtr_LastSpin
+// +2 for VehPtr_Spinning
+// +16 for RB_Block1
+// +3 for RB_CtrLetter
+// +47 for RB_Block2
 // Divide it all by 1190 (1181 functions + 9 DATA regions)
 
 // functions bigger than their originals
@@ -58,38 +68,21 @@ common, 231, RB_GenericMine_ThDestroy, 0x0, General/231/231_017_RB_GenericMine_T
 common, 231, RB_TNT_ThTick_ThrowOffHead, 0x0, General/231/231_018_RB_TNT_ThTick_ThrowOffHead.c
 common, 231, RB_TNT_ThTick_SitOnHead, 0x0, General/231/231_019_RB_TNT_ThTick_SitOnHead.c
 common, 231, RB_TNT_ThTick_ThrowOnHead, 0x0, General/231/231_020_RB_TNT_ThTick_ThrowOnHead.c
-
+// skip 3 functions
 common, 231, RB_Hazard_InterpolateValue, 0x0, General/231/231_023_RB_Hazard_InterpolateValue.c
-
+// skip 10 functions (warpball)
 common, 231, RB_ShieldDark_ThTick_Pop, 0x0, General/231/231_037_RB_ShieldDark_ThTick_Pop.c
 // rb_38_shieldgrow
 common, 231, RB_Player_ToggleInvisible, 0x0, General/231/231_039_RB_Player_ToggleInvisible.c
 common, 231, RB_Player_ToggleFlicker, 0x0, General/231/231_040_RB_Player_ToggleFlicker.c
-
+// skip raincloud, explosion, blowup, burst, 
 common, 231, RB_Burst_CollLevInst, 0x0, General/231/231_050_RB_Burst_CollLevInst.c
-
-common, 231, RB_Baron_ThTick, 0x0, General/231/231_054_055_RB_Baron.c
-common, 231, RB_Blade_ThTick, 0x0, General/231/231_056_057_RB_Blade.c
-common, 231, RB_Bubbles_RoosTubes, 0x0, General/231/231_058_RB_Bubbles_RoosTubes.c
-common, 231, RB_CrateAny_ThTick_Explode, 0x0, General/231/231_059_066_RB_Crate.c
-common, 231, RB_Crystal_ThCollide, 0x0, General/231/231_067_070_RB_Crystal.c
+// skip burst
+common, 231, RB_Baron_ThTick, 0x0, General/231/231_GROUP_54_70.c
 common, 231, RB_Default_LInB, 0x0, General/231/231_071_RB_Default_LInB.c
 common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c
 // skip Banner
-common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_080_083_RB_Armadillo.c
-common, 231, RB_Fireball_ThTick, 0x0, General/231/231_084_086_RB_Fireball.c
-common, 231, RB_FlameJet_Particles, 0x0, General/231/231_087_089_RB_FlameJet.c
-common, 231, RB_Follower_ProcessBucket, 0x0, General/231/231_090_092_RB_Follower.c
-common, 231, RB_Fruit_ThTick, 0x0, General/231/231_093_096_RB_Fruit.c
-common, 231, RB_Minecart_ThTick, 0x0, General/231/231_097_098_RB_Minecart.c
-// skip Orca (unused, removed from decomp)
-common, 231, RB_Plant_ThTick_Eat, 0x0, General/231/231_102_107_RB_Plant.c
-common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_108_111_RB_Seal.c
-common, 231, RB_Snowball_ThTick, 0x0, General/231/231_112_113_RB_Snowball.c
-common, 231, RB_Spider_DrawWebs, 0x0, General/231/231_114_117_RB_Spider.c
-// skip StartText (unused, removed from decomp) 
-common, 231, RB_Teeth_LInB, 0x0, General/231/231_120_124_RB_Teeth.c
-common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
+common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_GROUP_80_127.c
 
 // 232 (incomplete)
 common, 232, R232, 0x0, General/232/R232.c

@@ -294,7 +294,7 @@ LAB_80035098:
 	{
 		if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 		{
-			RB_Bubbles_RoosTubes();
+			DECOMP_RB_Bubbles_RoosTubes();
 		}
 		if (gGT->threadBuckets[BURST].thread != 0)
 		{

@@ -13,7 +13,7 @@ void DECOMP_RB_Follower_ProcessBucket(struct Thread* t)
 	numPlyr = gGT->numPlyrNextGame;
 	
 	for(/**/; t != 0; t = t->siblingThread)
-	{
+	{	
 		// skip dead threads
 		if((t->flags & 0x800) != 0) continue;
 		
@@ -58,7 +58,7 @@ void DECOMP_RB_Follower_ThTick(struct Thread* t)
 			
 			// terrible way of checking if mineTh was destroyed
 			// before the follower thread was destroyed
-			(t->timesDestroyed == fObj->backupTimesDestroyed) &&
+			(fObj->mineTh->timesDestroyed == fObj->backupTimesDestroyed) &&
 			
 			(d->speedApprox > -1)
 		)
@@ -82,8 +82,9 @@ void DECOMP_RB_Follower_ThTick(struct Thread* t)
 	t->flags |= 0x800;
 }
 
-void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* t)
+void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* mineTh)
 {
+  struct Thread* t;
   struct Instance* iVar1;
   struct Follower* fObj;
   struct Instance* iVar3;
@@ -99,18 +100,18 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* t)
   
   // create a thread and an Instance
   iVar1 = INSTANCE_BirthWithThread(
-  	t->modelIndex, 0, SMALL, FOLLOWER, 
+  	mineTh->modelIndex, 0, SMALL, FOLLOWER, 
   	DECOMP_RB_Follower_ThTick, sizeof(struct Follower), 0);
   
   if (iVar1 == NULL) return; 
   
-  // set the scale
+  // followerInst scale
   iVar1->scale[0] = 0x200;
   iVar1->scale[1] = 0x200;
   iVar1->scale[2] = 0x200;
   
-  // get instance from thread
-  iVar3 = t->inst;
+  // mineInst
+  iVar3 = mineTh->inst;
   
   // copy position and rotation from one instance to another 
   *(int*)&iVar1->matrix.m[0][0] = *(int*)&iVar3->matrix.m[0][0];
@@ -118,16 +119,15 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* t)
   *(int*)&iVar1->matrix.m[1][1] = *(int*)&iVar3->matrix.m[1][1];
   *(int*)&iVar1->matrix.m[2][0] = *(int*)&iVar3->matrix.m[2][0];
   iVar1->matrix.m[2][2] = iVar3->matrix.m[2][2];
-  	
-  // Get the thread
+
   t = iVar1->thread;
   t->funcThDestroy = THREAD_DestroyInstance;
   
   fObj = t->object;
   fObj->frameCount = FPS_DOUBLE(7);
   fObj->driver = d;
-  fObj->mineTh = t;
-  fObj->backupTimesDestroyed = t->timesDestroyed;
+  fObj->mineTh = mineTh;
+  fObj->backupTimesDestroyed = mineTh->timesDestroyed;
   
   // backup original position
   for(int i = 0; i < 3; i++)
