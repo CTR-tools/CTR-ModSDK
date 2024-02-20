@@ -201,8 +201,8 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 				{
 					tw->flags |= 0x20;
 					
-					tw->vel[0] = (((tw->vel[0] / 2) * 3) / 5);
-					tw->vel[2] = (((tw->vel[2] / 2) * 3) / 5);
+					tw->vel[0] = (((-tw->vel[0] / 2) * 3) / 5);
+					tw->vel[2] = (((-tw->vel[2] / 2) * 3) / 5);
 				}
 			}
 			
@@ -280,8 +280,8 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 			
 RunMineCOLL:
 			
-			int pos1[3];
-			int pos2[3];
+			short pos1[3];
+			short pos2[3];
 			
 			pos1[0] = weaponInst->matrix.t[0];
 			pos1[1] = weaponInst->matrix.t[1] - 400;
@@ -341,6 +341,7 @@ RunMineCOLL:
 				rotPtr[0] = 0;
 				rotPtr[1] = 0x1000;
 				rotPtr[2] = 0;
+				rotPtr[3] = 0;
 				
 				mw->stopFallAtY = weaponInst->matrix.t[1];
 			}
