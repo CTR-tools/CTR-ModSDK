@@ -26,12 +26,12 @@ void DECOMP_RB_Follower_ProcessBucket(struct Thread* t)
 		// make Follower invisible to all other players
 		for(i = 0; i < numPlyr; i++)
 			if(i != driverID)
-				idpp[i]->unkb8 &= ~(0x40);
+				idpp[i].unkb8[0] &= ~(0x40);
 		
 		// make Mine invisible to this player
-		inst = fObj->mineTh->instance;
+		inst = fObj->mineTh->inst;
 		idpp = INST_GETIDPP(inst);
-		idpp[driverID]->unkb8 &= ~(0x40);
+		idpp[driverID].unkb8[0] &= ~(0x40);
 	}
 }
 
@@ -86,7 +86,6 @@ void DECOMP_RB_Follower_ThTick(struct Thread* t)
 void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* t)
 {
   struct Instance* iVar1;
-  struct Thread* t;
   struct Follower* fObj;
   struct Instance* iVar3;
   
@@ -136,8 +135,8 @@ void DECOMP_RB_Follower_Init(struct Driver* d, struct Thread* t)
     fObj->backupTimesDestroyed = t->timesDestroyed;
 	
 	// save mine position
-	fobj->realPos[0] = iVar3->matrix.t[0];
-	fobj->realPos[1] = iVar3->matrix.t[1];
-	fobj->realPos[2] = iVar3->matrix.t[2];
+	fObj->realPos[0] = iVar3->matrix.t[0];
+	fObj->realPos[1] = iVar3->matrix.t[1];
+	fObj->realPos[2] = iVar3->matrix.t[2];
   }
 }

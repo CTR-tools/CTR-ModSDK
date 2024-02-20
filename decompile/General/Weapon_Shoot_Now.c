@@ -364,7 +364,7 @@ RunMineCOLL:
 			
 			if(flags == 0)
 			{
-				RB_Follower_Init(d, weaponTh);
+				DECOMP_RB_Follower_Init(d, weaponTh);
 			}
 			break;
 		

@@ -1,5 +1,5 @@
-// 546+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+16+1+1+2+4+2+4+1+2+3 = 705 rewritten so far
-// 546 for every 'common' and ','
+// 548+38+14+18+16+1+1+7+3+3+3+2+2+3+1+5+3+1+2+16+1+1+2+4+2+4+1+2+3+2 = 709 rewritten so far
+// 548 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
 // 14 for 230_Block2
@@ -79,11 +79,7 @@ common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c
 common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_080_083_RB_Armadillo.c
 common, 231, RB_Fireball_ThTick, 0x0, General/231/231_084_086_RB_Fireball.c
 common, 231, RB_FlameJet_Particles, 0x0, General/231/231_087_089_RB_FlameJet.c
-
-// skip Follower, it's fully rewritten, but 
-// we need Weapon_Shoot_Now rewritten so that we can relocate Follower_Init
-//ommon, 231, RB_Follower_ProcessBucket, 0x0, General/231/231_090_092_RB_Follower.c
-
+common, 231, RB_Follower_ProcessBucket, 0x0, General/231/231_090_092_RB_Follower.c
 common, 231, RB_Fruit_ThTick, 0x0, General/231/231_093_096_RB_Fruit.c
 common, 231, RB_Minecart_ThTick, 0x0, General/231/231_097_098_RB_Minecart.c
 // skip Orca (unused, removed from decomp)
