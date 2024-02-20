@@ -151,7 +151,14 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 				talk = 10;
 				d->instBombThrow = weaponInst;
 				
-				CTR_MatrixToRot(&tw->dir, &weaponInst->matrix, 0x11);
+				short rot[3];
+				CTR_MatrixToRot(&rot[0], &weaponInst->matrix, 0x11);
+				
+				// not a typo, required like this
+				tw->dir[0] = rot[1];
+				tw->dir[1] = rot[0];
+				tw->dir[2] = rot[2];
+				
 				PlaySound3D(0x47, weaponInst);
 			}
 			

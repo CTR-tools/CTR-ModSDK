@@ -32197,12 +32197,13 @@ void FUN_8006540c(int param_1,undefined4 param_2,uint param_3)
 	  // missile->dir[y]
       *(undefined2 *)((int)piVar15 + 0x1a) = local_40;
 
-	  // record "driver" pointer that bomb is chasing
+	  // tw->driverTarget
 	  *piVar15 = iVar8;
 
 	  // 7*4 = 0x1C, missile->dir[z]
       *(undefined2 *)(piVar15 + 7) = local_3c;
 
+	  // d->instBombThrow
       *(int *)(param_1 + 0x10) = iVar5;
 
 	  // PlaySound3D
