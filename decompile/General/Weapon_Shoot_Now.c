@@ -189,7 +189,7 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 			if(modelID == 0x3b)
 			{					
 				struct GamepadBuffer* gb =
-					&sdata->gGamepads[d->driverID].gamepad;
+					&sdata->gGamepads->gamepad[d->driverID];
 				
 				if(
 					// hold d-pad DOWN
@@ -409,7 +409,7 @@ RunMineCOLL:
 			mw->extraFlags = (modelID == 0x46);
 						
 			struct GamepadBuffer* gb =
-				&sdata->gGamepads[d->driverID].gamepad;
+				&sdata->gGamepads->gamepad[d->driverID];
 			
 			// throw potion forward
 			if ((gb->buttonsHeldCurrFrame & BTN_UP) != 0)
