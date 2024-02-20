@@ -545,7 +545,7 @@ RunMineCOLL:
 			// MEDIUM
 			weaponInst =
 				INSTANCE_BirthWithThread(
-					modelID, 0, MEDIUM, TRACKING, 
+					0x36, 0, MEDIUM, TRACKING, 
 					RB_Warpball_ThTick,
 					sizeof(struct TrackerWeapon), 
 					parentTh);

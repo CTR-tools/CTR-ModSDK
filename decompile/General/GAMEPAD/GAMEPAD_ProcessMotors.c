@@ -81,7 +81,6 @@ void DECOMP_GAMEPAD_ProcessMotors(struct GamepadSystem *gGS)
 			else
 			{
 				// Frequency Control (on/off)
-				
 				pad->motorDesired[0] = 0;
 				
 				if(pad->shockFrameFreq != 0)
@@ -89,7 +88,8 @@ void DECOMP_GAMEPAD_ProcessMotors(struct GamepadSystem *gGS)
 						pad->motorDesired[0] = 0xff;
 					
 				// Strength Control (percentage)
-					
+				pad->motorDesired[1] = 0;
+				
 				if(pad->shockFrameForce1 != 0)
 				{
 					pad->motorDesired[1] = pad->shockValForce1;

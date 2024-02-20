@@ -300,11 +300,6 @@ void ui60_entryHook()
 		*(unsigned char*)0x8004FFC4 = 5*2;
 		*(unsigned char*)0x8004FFC8 = 10*2;
 	}
-	
-	// TNT, frameCount_DontHurtParent
-	{
-		*(char*)0x8006607c = 10*2;
-	}
 
 	#if 0
 	// Boss cooldown
