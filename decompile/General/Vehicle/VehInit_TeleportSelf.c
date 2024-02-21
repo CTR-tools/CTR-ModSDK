@@ -174,7 +174,7 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
             if (boolSpawnAtBossDoor)
             {
                 // position outside boss door
-                posRot = level1->ptrSpawnType2_PosRot[3].posCoords;
+                posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[6];
                 posBottom[0] = posRot->pos[0];
                 posBottom[1] = posRot->pos[1];
                 posBottom[2] = posRot->pos[2];
@@ -332,7 +332,8 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
         {
 #ifndef REBUILD_PS1
             // get desired rotation of driver when leaving portal, or spawning at startline
-			angle = level1->ptrSpawnType2_PosRot[3].posCoords[7] & 0xfff;
+			posRot = &level1->ptrSpawnType2_PosRot[1].posCoords[6];
+			angle = posRot->rot[1] & 0xfff;
 #else
             angle = 0;
 #endif
