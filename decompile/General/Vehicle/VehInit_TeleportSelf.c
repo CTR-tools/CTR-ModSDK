@@ -296,10 +296,10 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
     // if it was found
     else
     {
-        d->AxisAngle3_normalVec[0] = (short)sps->unk4C[0x24];
-        d->AxisAngle3_normalVec[1] = (short)sps->unk4C[0x26];
-        d->AxisAngle3_normalVec[2] = (short)sps->unk4C[0x28];
-        d->lastValid = (struct Quadblock*)sps->unk4C[0x34];
+        d->AxisAngle3_normalVec[0] = *(short*)&sps->unk4C[0x24];
+        d->AxisAngle3_normalVec[1] = *(short*)&sps->unk4C[0x26];
+        d->AxisAngle3_normalVec[2] = *(short*)&sps->unk4C[0x28];
+        d->lastValid = *(int*)&sps->unk4C[0x34];
     }
 
     // set all normal vectors to spawn
