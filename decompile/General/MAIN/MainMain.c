@@ -693,6 +693,17 @@ void StateZero()
 	// Get CD Position fo BIGFILE
 	sdata->ptrBigfile1 = DECOMP_LOAD_ReadDirectory(BIGPATH);
 	
+	// Defrag to save heap space,
+	// required because MEMPACK_Init moves heap
+	#ifndef REBUILD_PC
+	void RB_NewEndFile();
+	void OVR_Region3();
+	
+	// Dont load full overlay file, cut off the end
+	struct BigEntry* firstEntry = BIG_GETENTRY(sdata->ptrBigfile1);
+	firstEntry[231].size = (u_int)RB_NewEndFile - (u_int)OVR_Region3;
+	#endif
+	
 	#ifndef FastBoot
 	// English=1
 	// PAL SCES02105 calls it multiple times

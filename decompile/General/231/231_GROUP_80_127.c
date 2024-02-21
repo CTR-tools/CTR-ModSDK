@@ -10,3 +10,9 @@
 #include "231_114_117_RB_Spider.c"
 #include "231_120_124_RB_Teeth.c"
 #include "231_125_127_RB_Turtle.c"
+
+// leave empty, see MEMPACK_Init
+void RB_NewEndFile()
+{
+	
+}
