@@ -11,6 +11,227 @@ struct HitboxDesc fjBoxDesc =
 
 short fjLightDir[4] = { 0x8B8, 0xD6A, 0, 0 };
 
+struct ParticleEmitter emSet_fjHeat[0xb] =
+{
+	[0] =
+	{
+		.flags = 1,
+		
+		// invalid axis, assume FuncInit
+		.initOffset = 0xC,
+		
+		.InitTypes.FuncInit =
+		{	
+			.particle_funcPtr = 0,
+			.particle_colorFlags = 0xA1,
+			.particle_lifespan = 6,
+			.particle_Type = 1,
+		}
+		
+		// last 0x10 bytes are blank
+	},
+
+	[1] =
+	{
+		.flags = 0x1b,
+		
+		// posX
+		.initOffset = 0,
+		
+		.InitTypes.AxisInit.baseValue.startVal = -0x40,
+		.InitTypes.AxisInit.baseValue.velocity = -0x320,
+		
+		.InitTypes.AxisInit.rngSeed.startVal = 0x80,
+		.InitTypes.AxisInit.rngSeed.velocity = 0x640,
+	},	
+	
+	[2] =
+	{
+		.flags = 0x1b,
+		
+		// posZ
+		.initOffset = 2,
+		
+		.InitTypes.AxisInit.baseValue.startVal = -0x40,
+		.InitTypes.AxisInit.baseValue.velocity = -0x320,
+		
+		.InitTypes.AxisInit.rngSeed.startVal = 0x80,
+		.InitTypes.AxisInit.rngSeed.velocity = 0x640,
+	},
+	
+	[3] =
+	{
+		.flags = 5,
+		
+		// posY
+		.initOffset = 1,
+		
+		.InitTypes.AxisInit.baseValue.startVal = -0x40,
+		.InitTypes.AxisInit.baseValue.accel = 1,
+	},
+	
+	[4] =
+	{
+		.flags = 0xb,
+		
+		.initOffset = 3,
+		
+		.InitTypes.AxisInit.baseValue.startVal = 0x1200,
+		.InitTypes.AxisInit.baseValue.velocity = 1,
+		
+		.InitTypes.AxisInit.rngSeed.startVal = 0x1000,
+	},
+	
+	[5] =
+	{
+		.flags = 3,
+		
+		.initOffset = 4,
+		
+		.InitTypes.AxisInit.baseValue.startVal = 1,
+		.InitTypes.AxisInit.baseValue.velocity = 1,
+	},
+	
+	[6] =
+	{
+		.flags = 3,
+		
+		.initOffset = 5,
+		
+		.InitTypes.AxisInit.baseValue.startVal = 1,
+		.InitTypes.AxisInit.baseValue.velocity = 1,
+	},
+	
+	[7] =
+	{
+		.flags = 1,
+		
+		.initOffset = 7,
+		
+		.InitTypes.AxisInit.baseValue.startVal = 0x8000,
+	},
+	
+	[8] =
+	{
+		.flags = 1,
+		
+		.initOffset = 8,
+		
+		.InitTypes.AxisInit.baseValue.startVal = 0x8000,
+	},
+	
+	[9] =
+	{
+		.flags = 1,
+		
+		.initOffset = 9,
+		
+		.InitTypes.AxisInit.baseValue.startVal = 0x8000,
+	},
+	
+	// null terminator
+	{}
+};
+
+struct ParticleEmitter emSet_fjFire[0x8] =
+{
+	[0] =
+	{
+		.flags = 1,
+		
+		// invalid axis, assume FuncInit
+		.initOffset = 0xC,
+		
+		.InitTypes.FuncInit =
+		{	
+			.particle_funcPtr = 0,
+			.particle_colorFlags = 0xA1,
+			.particle_lifespan = 7,
+			.particle_Type = 0,
+		}
+		
+		// last 0x10 bytes are blank
+	},
+	
+	[1] =
+	{
+		.flags = 0x1b,
+		
+		// posX
+		.initOffset = 0,
+		
+		.InitTypes.AxisInit.baseValue.startVal = -0x40,
+		.InitTypes.AxisInit.baseValue.velocity = -0x320,
+		
+		.InitTypes.AxisInit.rngSeed.startVal = 0x80,
+		.InitTypes.AxisInit.rngSeed.velocity = 0x640,
+	},	
+	
+	[2] =
+	{
+		.flags = 0x1b,
+		
+		// posZ
+		.initOffset = 2,
+		
+		.InitTypes.AxisInit.baseValue.startVal = -0x40,
+		.InitTypes.AxisInit.baseValue.velocity = -0x320,
+		
+		.InitTypes.AxisInit.rngSeed.startVal = 0x80,
+		.InitTypes.AxisInit.rngSeed.velocity = 0x640,
+	},
+	
+	[3] =
+	{
+		.flags = 5,
+		
+		// posY
+		.initOffset = 1,
+		
+		.InitTypes.AxisInit.baseValue.startVal = -0x40,
+		.InitTypes.AxisInit.baseValue.accel = 1,
+	},
+	
+	[4] =
+	{
+		.flags = 0x1a,
+		
+		.initOffset = 4,
+		
+		.InitTypes.AxisInit.baseValue.velocity = 0x10,
+		
+		.InitTypes.AxisInit.rngSeed.startVal = 0x800,
+		.InitTypes.AxisInit.rngSeed.velocity = 0x10,
+	},
+	
+	[5] =
+	{
+		.flags = 0xb,
+		
+		.initOffset = 5,
+		
+		.InitTypes.AxisInit.baseValue.startVal = 0x4e2,
+		.InitTypes.AxisInit.baseValue.velocity = 0x100,
+		
+		.InitTypes.AxisInit.rngSeed.startVal = 0x80,
+	},
+	
+	[6] =
+	{
+		.flags = 0xd,
+		
+		.initOffset = 7,
+		
+		.InitTypes.AxisInit.baseValue.startVal = 0x8000,
+		.InitTypes.AxisInit.baseValue.accel = -0x800,
+		
+		.InitTypes.AxisInit.rngSeed.startVal = 0x5f00,
+	},
+	
+	// null terminator
+	{}
+};
+
 void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 {
 	int result;
@@ -21,7 +242,7 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 	particle1 = 
 		Particle_CreateInstance(
 			0, gGT->iconGroup[0xA], 
-			0x800b6c20);
+			&emSet_fjFire[0]);
 	
 	// fire particle
 	if(particle1 != 0)
@@ -54,7 +275,7 @@ void DECOMP_RB_FlameJet_Particles(struct Instance* inst, struct FlameJet* fjObj)
 	particle2 = 
 		Particle_CreateInstance(
 			0, gGT->ptrSparkle, 
-			0x800b6a94);
+			&emSet_fjHeat[0]);
 			
 	// heat particle
 	if(particle2 != 0)
