@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Weapon_Shoot_OnCirclePress(struct Driver *d)
+void DECOMP_Weapon_Shoot_OnCirclePress(struct Driver *d)
 {
     u_char weapon;
 
@@ -16,29 +16,18 @@ void Weapon_Shoot_OnCirclePress(struct Driver *d)
     // Remove the request to fire a weapon, since we will fire it now
     d->actionsFlagSet &= ~(0x8000);
 
-    // Set weapon to one bomb
-    weapon = 1;
+	weapon = d->heldItemID;
 
-    // If this weapon is not 3 bombs
-    if ((d->heldItemID != 10) &&
-
-        (
-            // Set weapon to missile
-            weapon = 2,
-
-            // if this weapon is not 3 missiles
-            d->heldItemID != 11))
-    {
-        // Set to the original weapon the player has
-        weapon = d->heldItemID;
-    }
-
-    // whaat???
-    // If weapon is bomb, change to missile?????
-    if (weapon == 1)
-    {
-        weapon = 2;
-    }
+	// Missiles and Bombs share code,
+	// Change Bomb1x, Bomb3x, Missile3x, to Missile1x	
+	if(
+		(weapon == 1) ||
+		(weapon == 10) ||
+		(weapon == 11)
+	  )
+	{
+		weapon = 2;
+	}
     
     Weapon_Shoot_Now(d, weapon, 0);
 }
