@@ -410,7 +410,9 @@ RunMineCOLL:
 			}
 			
 			mw = weaponTh->object;
+			mw->driverTarget = 0;
 			mw->instParent = dInst;
+			mw->crateInst = 0;
 			mw->boolDestroyed = 0;
 			mw->frameCount_DontHurtParent = FPS_DOUBLE(10);
 			mw->extraFlags = (modelID == 0x46);
