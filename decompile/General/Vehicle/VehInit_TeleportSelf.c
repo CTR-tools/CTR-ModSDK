@@ -55,7 +55,7 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
     {
         return;
     }
-
+	
     // ground and wall quadblock flags
     sps->Union.QuadBlockColl.searchFlags = 0x3000;
 
@@ -79,7 +79,7 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
     // if you are spawning into the world for the first time,
     // could be startline, or adv hub spawn in several places
     else
-    {
+    {	
         // spawn in front of hub door, beach-to-gemstone
         if (
             // If you are at podium after winning a Key
@@ -166,7 +166,7 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
             // spawn outside boss door
             boolSpawnAtBossDoor = true;
         }
-
+		
         // if not spawning at hub door (door not found)
         if (levInstDef == NULL)
         {
@@ -276,11 +276,11 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
     posTop[1] = posBottom[1] - 0x100;
     posTop[2] = posBottom[2];
 
-#if 1
+#ifdef REBUILD_PS1
 
-    d->posCurr[0] = posTop[0] << 8;
-    d->posCurr[1] = (posTop[1] + spawnPosY) * 0x100;
-    d->posCurr[2] = posTop[2] << 8;
+    d->posCurr[0] = posBottom[0] << 8;
+    d->posCurr[1] = (posBottom[1] + spawnPosY) * 0x100;
+    d->posCurr[2] = posBottom[2] << 8;
 	
 #else
 	
@@ -480,9 +480,9 @@ LAB_80058568:
 #endif
 
     // Set Scale (x, y, z)
-    d->instSelf->scale[0] = 3276;
-    d->instSelf->scale[1] = 3276;
-    d->instSelf->scale[2] = 3276;
+    d->instSelf->scale[0] = 0xCCC;
+    d->instSelf->scale[1] = 0xCCC;
+    d->instSelf->scale[2] = 0xCCC;
 
     d->matrixArray = 0;
     d->matrixIndex = 0;
@@ -509,13 +509,6 @@ LAB_80058568:
 
     if (d->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
     {
-        // erase 12 (0xC) function pointers from
-        // driver struct, 0x54 - 0x84 (0x30 bytes)
-        for (i = 0; i < 12; i++)
-        {
-            d->funcPtrs[i] = NULL;
-        }
-
 #ifndef REBUILD_PS1
         CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
 
