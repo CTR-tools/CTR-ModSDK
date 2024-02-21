@@ -50,4 +50,14 @@ void AH_WarpPad_SetNumModelData(struct Instance* inst, struct ModelHeader* mh)
 	idpp[0].ptrColorLayout = 	mh->ptrColors;
 	idpp[0].ptrTexLayout = 		mh->ptrTexLayout;
 	idpp[0].ptrCurrFrame = 		mh->ptrFrameData;
+	
+	#ifdef USE_GPU1P
+	for(int i = 1; i < sdata->gGT->numPlyrCurrGame; i++)
+	{
+		idpp[i].ptrCommandList = idpp[0].ptrCommandList;
+		idpp[i].ptrColorLayout = idpp[0].ptrColorLayout;
+		idpp[i].ptrTexLayout = idpp[0].ptrTexLayout;
+		idpp[i].ptrCurrFrame = idpp[0].ptrCurrFrame;
+	}
+	#endif
 }
