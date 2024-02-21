@@ -264,6 +264,10 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// default VS/Battle overlay if no mode found
 			else 
 				ovrRegion1 = 4;
+			
+			#ifdef USE_GPU1P
+			ovrRegion1 = 4;
+			#endif
 		
 			DECOMP_LOAD_OvrEndRace(ovrRegion1);
 			break;
