@@ -275,14 +275,6 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
     posTop[0] = posBottom[0];
     posTop[1] = posBottom[1] - 0x100;
     posTop[2] = posBottom[2];
-
-#ifdef REBUILD_PS1
-
-    d->posCurr[0] = posBottom[0] << 8;
-    d->posCurr[1] = (posBottom[1] + spawnPosY) * 0x100;
-    d->posCurr[2] = posBottom[2] << 8;
-	
-#else
 	
     COLL_SearchTree_FindQuadblock_Touching(&posTop[0], &posBottom[0], sps, 0);
 
@@ -331,8 +323,6 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
 
     // save quadblock height
     d->quadBlockHeight = (int) sps->Union.QuadBlockColl.hitPos[1] << 8;
-	
-#endif
 
     // if you are spawning into the world for the first time,
     // could be startline, or adv hub spawn in several places
