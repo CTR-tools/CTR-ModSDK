@@ -1,16 +1,13 @@
 #include <common.h>
 
-void CS_Podium_ThTick(struct Thread *);
+void DECOMP_CS_Podium_Stand_ThTick(struct Thread *);
 
-void CS_Podium_Stand_Init(short *podiumData)
+void DECOMP_CS_Podium_Stand_Init(short *podiumData)
 {
   struct Instance *inst = 
-  INSTANCE_BirthWithThread(
-      0xa8,
-      OVR_233.s_podium,
-      SMALL,
-      OTHER,
-      CS_Podium_ThTick,
+	INSTANCE_BirthWithThread(
+      0xa8, 0, SMALL, OTHER,
+      DECOMP_CS_Podium_Stand_ThTick,
       0, 0);
 
   // if the instance was built

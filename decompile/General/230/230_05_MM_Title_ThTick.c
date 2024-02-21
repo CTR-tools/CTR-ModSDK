@@ -14,7 +14,6 @@ void DECOMP_MM_Title_ThTick(struct Thread *title)
   int cops[6];
   short direction[3];
   short rot[3];
-  struct InstDrawPerPlayer* idpp;
 
   // frame counters
   timer = D230.timerInTitle;

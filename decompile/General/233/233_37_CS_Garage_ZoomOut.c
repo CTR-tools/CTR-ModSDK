@@ -9,8 +9,9 @@ void DECOMP_CS_Garage_ZoomOut(char zoomState)
         // just use default zoomed out position
         *(short *)0x800b863c = 0;
 
-        Garage_Init();
+        DECOMP_CS_Garage_Init();
 
+		// howl
         Garage_Enter(sdata->advCharSelectIndex_curr);
 
         DECOMP_Audio_SetState_Safe(8);

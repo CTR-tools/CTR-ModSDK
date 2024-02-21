@@ -6,34 +6,22 @@ int DECOMP_CS_Instance_GetNumAnimFrames(struct Instance *modelInst, int animInde
   struct ModelHeader* header;
   struct ModelAnim* anim;
 
-  // if instance exists
-  if ((modelInst != NULL) &&
-      //  get instance -> model
-      (model = modelInst->model, model != NULL) &&
+  if (modelInst == NULL) 
+	  return 0;
+  
+  model = modelInst->model;
+  if (model == NULL) 
+	  return 0;
+  
+  if (LOD >= model->numHeaders) 
+	  return 0;
+  
+  if (animIndex >= header->numAnimations)
+	  return 0;
 
-      // lod is less than numHeaders
-      (LOD < model->numHeaders) &&
-
-      // get header, use lod number as index
-      (header = &model->headers[LOD], header != 0) &&
-
-      // animIndex is less than numAnimations
-      (animIndex < header->numAnimations))
-  {
-    // if header->ptrAnim is valid
-    if ((header->ptrAnimations) != NULL)
-    {
-      // get animation
-      anim = header->ptrAnimations[animIndex];
-
-      // if animation is valid
-      if (anim != NULL)
-      {
-        // return number of frames in animation
-        return (anim->numFrames & 0x7fff);
-      }
-      return 0;
-    }
-  }
-  return 0;
+  anim = header->ptrAnimations[animIndex];
+  if (anim == NULL)
+	  return 0;
+  
+  return (anim->numFrames & 0x7fff);
 }

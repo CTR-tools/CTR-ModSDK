@@ -3329,7 +3329,7 @@ void FUN_800af7c0(int param_1,int param_2)
   sVar2 = *(short *)(param_2 + 0x20);
   *(short *)(param_2 + 0x20) = sVar2 + 0x3f;
   
-  // pointer incrementation, offset 0x180, not 0x60
+  // if ((gGS->gamepad[1].buttonsHeldCurrFrame & BTN_L1) != 0)
   if ((*(uint *)(puVar1 + 0x60) & 0x800) != 0) 
   {
     *(short *)(param_2 + 0x20) = sVar2;
@@ -3906,6 +3906,7 @@ switchD_800affe8_caseD_39:
   return;
 }
 
+// 800b021c CS_Podium_Stand_ThTick
 
 // CS_Podium_Stand_Init
 void FUN_800b0248(short *param_1)

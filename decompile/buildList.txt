@@ -1,5 +1,5 @@
-// 533+38+14+18+16+16+1+1+2+2+1+3+2+4+2+2+2+16+3+47 = 723 rewritten so far
-// 533 for every 'common' and ','
+// 545+38+14+18+16+16+1+1+2+2+1+3+2+4+2+2+2+16+3+47-12 = 723 rewritten so far
+// 545 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 38 for 230_Block1
 // 14 for 230_Block2
@@ -21,6 +21,7 @@
 // +16 for RB_Block1
 // +3 for RB_CtrLetter
 // +47 for RB_Block2
+// -12 cause Block2 is not unified, it is 12 separate lines, can't relocate RB_Teeth
 // Divide it all by 1190 (1181 functions + 9 DATA regions)
 
 // functions bigger than their originals
@@ -82,7 +83,24 @@ common, 231, RB_Baron_ThTick, 0x0, General/231/231_GROUP_54_70.c
 common, 231, RB_Default_LInB, 0x0, General/231/231_071_RB_Default_LInB.c
 common, 231, RB_CtrLetter_ThCollide, 0x0, General/231/231_072_075_RB_CtrLetter.c
 // skip Banner
-common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_GROUP_80_127.c
+
+// Defrag isn't ready, can't relocate RB_Teeth
+//ommon, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_GROUP_80_127.c
+
+common, 231, RB_Armadillo_ThTick_TurnAround, 0x0, General/231/231_080_083_RB_Armadillo.c
+common, 231, RB_Fireball_ThTick, 0x0, General/231/231_084_086_RB_Fireball.c
+common, 231, RB_FlameJet_Particles, 0x0, General/231/231_087_089_RB_FlameJet.c
+common, 231, RB_Follower_ProcessBucket, 0x0, General/231/231_090_092_RB_Follower.c
+common, 231, RB_Fruit_ThTick, 0x0, General/231/231_093_096_RB_Fruit.c
+common, 231, RB_Minecart_ThTick, 0x0, General/231/231_097_098_RB_Minecart.c
+// skip Orca (unused, removed from decomp)
+common, 231, RB_Plant_ThTick_Eat, 0x0, General/231/231_102_107_RB_Plant.c
+common, 231, RB_Seal_ThTick_TurnAround, 0x0, General/231/231_108_111_RB_Seal.c
+common, 231, RB_Snowball_ThTick, 0x0, General/231/231_112_113_RB_Snowball.c
+common, 231, RB_Spider_DrawWebs, 0x0, General/231/231_114_117_RB_Spider.c
+// skip StartText (unused, removed from decomp) 
+common, 231, RB_Teeth_LInB, 0x0, General/231/231_120_124_RB_Teeth.c
+common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
 
 // 232 (incomplete)
 common, 232, R232, 0x0, General/232/R232.c
@@ -92,11 +110,26 @@ common, 232, AH_Map_Main, 0x0, General/232/232_24_AH_Map_Main.c
 common, 232, AH_MaskHint_boolCanSpawn, 0x0, General/232/232_99_AH_MaskHint_boolCanSpawn.c
 
 // 233
-common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_32_CS_Podium_FullScene_Init.c
-common, 233, CS_Garage_MenuBoxFuncPtr, 0x0, General/233/233_37_CS_Garage_MenuBoxFuncPtr.c
-common, 233, CS_Credits_Init, 0x0, General/233/233_46_CS_Credits_Init.c
-common, 233, CS_Credits_NewDancer, 0x0, General/233/233_48_CS_Credits_NewDancer.c
-common, 233, CS_Credits_End, 0x0, General/233/233_50_CS_Credits_End.c
+//ommon, 233, CS_Instance_GetNumAnimFrames, 0x0, General/233/233_10_CS_Instance_GetNumAnimFrames.c
+//ommon, 233, CS_Instance_SafeCheckAnimFrame, 0x0, General/233/233_11_CS_Instance_SafeCheckAnimFrame.c
+//ommon, 233, CS_Instance_BoolPlaySound, 0x0, General/233/233_12_CS_Instance_BoolPlaySound.c
+//ommon, 233, CS_DestroyPodium_StartDriving, 0x0, General/233/233_13_CS_DestroyPodium_StartDriving.c
+// Skip CS_Thread (14-18)
+// Skip Boss (19-22)
+// Skip Podium (23-29)
+//ommon, 233, CS_Podium_Prize_ThDestroy, 0x0, General/233/233_29_CS_Podium_Prize_ThDestroy.c
+//ommon, 233, CS_Podium_Stand_ThTick, 0x0, General/233/233_31_CS_Podium_Stand_ThTick.c
+//ommon, 233, CS_Podium_Stand_Init, 0x0, General/233/233_32_CS_Podium_Stand_Init.c
+common, 233, CS_Podium_FullScene_Init, 0x0, General/233/233_33_CS_Podium_FullScene_Init.c
+// skip BoxScene (34-36)
+//ommon, 233, CS_Garage_ZoomOut, 0x0, General/233/233_37_CS_Garage_ZoomOut.c
+common, 233, CS_Garage_MenuBoxFuncPtr, 0x0, General/233/233_38_CS_Garage_MenuBoxFuncPtr.c
+//ommon, 233, CS_Garage_GetMenuBox, 0x0, General/233/233_39_CS_Garage_GetMenuBox.c
+//ommon, 233, CS_Garage_Init, 0x0, General/233/233_40_CS_Garage_Init.c
+// skip credits (41-46)
+common, 233, CS_Credits_Init, 0x0, General/233/233_47_CS_Credits_Init.c
+common, 233, CS_Credits_NewDancer, 0x0, General/233/233_49_CS_Credits_NewDancer.c
+common, 233, CS_Credits_End, 0x0, General/233/233_51_CS_Credits_End.c
 
 // exe globals
 common, exe, data, 0x0, General/zGlobal_DATA.c

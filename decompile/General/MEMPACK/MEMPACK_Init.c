@@ -30,6 +30,7 @@ void DECOMP_MEMPACK_Init(int ramSize)
 
 #else
 	
+	// === Not Ready === Can't relocate RB_Teeth
 	// Defragmentation requires a lower overlay size in bigfile,
 	// which we dont have for 231, so we cheat by setting size
 	// manually in MainMain after call to DECOMP_LOAD_ReadDirectory
@@ -40,7 +41,7 @@ void DECOMP_MEMPACK_Init(int ramSize)
 	// CS_EndOfFile		800b97fc	28 sectors (original game, current largest size)
 
 	// Use current largest
-	#define END231 CS_EndOfFile
+	#define END231 RB_EndOfFile
 	
 	u_int Aligned231 = (((u_int)(END231-OVR_Region3) + 0x7ff) & ~(0x7ff));
 	//printf("\nMEMPACK_Init: %d sectors in 231\n\n", Aligned231/0x800);

@@ -1,6 +1,7 @@
 #include <common.h>
 
 void DECOMP_CS_Podium_Prize_ThDestroy(struct Thread*);
+void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d);
 
 void DECOMP_CS_DestroyPodium_StartDriving(void)
 {
@@ -24,20 +25,14 @@ void DECOMP_CS_DestroyPodium_StartDriving(void)
     t = t->siblingThread;
   }
 
-  // pointer to P1 structure
   d = gGT->drivers[0];
-
-  inst = d->instSelf;
-  
-  // enable collisions for this thread
-  inst->thread->flags &= ~(0x1000);
-
-  // driver Flags  make visible
-  inst->flags &= ~(HIDE_MODEL);
-
-  d->kartState = KS_ENGINE_REVVING;
-
   d->funcPtrs[0] = DECOMP_VehPtr_Driving_Init;
+
+  // enable collisions for thread,
+  // and make instance visible
+  inst = d->instSelf;
+  inst->thread->flags &= ~(0x1000);
+  inst->flags &= ~(HIDE_MODEL);
 
   // if cutscene changed audio, restore backup
   if (OVR_233.CutsceneManipulatesAudio != 0)
@@ -50,7 +45,6 @@ void DECOMP_CS_DestroyPodium_StartDriving(void)
 
   // cam mode be zero to follow you
   gGT->cameraDC[0].cameraMode = 0;
-
   gGT->tileView[0].distanceToScreen_PREV = 0x100;
   gGT->tileView[0].distanceToScreen_CURR = 0x100;
 }

@@ -43,7 +43,6 @@ void RB_Player_ToggleInvisible();
 void RB_Player_ToggleFlicker();
 void RB_Burst_ProcessBucket(struct Thread* thread);
 void RB_Blowup_ProcessBucket(struct Thread* thread);
-void RB_Spider_DrawWebs(struct Thread* thread, struct TileView* tileView);
 void RB_Follower_ProcessBucket(struct Thread* thread);
 void RB_StartText_ProcessBucket(struct Thread* thread);
 void DECOMP_AH_WarpPad_AllWarppadNum();

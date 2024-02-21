@@ -1705,7 +1705,7 @@
 800ae2b8 CS_Thread_AnimateScale
 800ae318 CS_Thread_InterpolateFramesMS
 800ae54c CS_Thread_ThTick
-// small func here?
+800ae81c CS_Boss_Init_Callback
 800ae834 CS_Boss_Init
 800ae9a8 CS_Boss_ThTick
 800aed48 CS_Boss_BoolShouldStart
@@ -1717,6 +1717,7 @@
 800afcc4 CS_Podium_Prize_ThTick1
 800afe58 CS_Podium_Prize_ThDestroy // not in sep3
 800afe90 CS_Podium_Prize_Init
+800b021c CS_Podium_Stand_ThTick
 800b0248 CS_Podium_Stand_Init
 800b0300 CS_Podium_FullScene_Init
 800b06ac CS_LevThread_LInB

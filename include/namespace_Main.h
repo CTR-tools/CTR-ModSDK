@@ -40,18 +40,12 @@ enum GameMode2
 	// & 1 - spawn outside boss door
 	// & 4 - can't move (see VehPtr_Driving_PhysLinear)
 	
-	// & 8 - token race
-	TOKEN_RACE = 8,
+	TOKEN_RACE 		= 0x8,
+	CUP_ANY_KIND 	= 0x10,
+	LEV_SWAP 		= 0x20,
+	// 0x40?
+	CREDITS 		= 0x80,
 	
-	// & 0x10 - arcade/vs/adv cup
-	CUP_ANY_KIND = 0x10,
-	
-	// & 0x20 - lev swap
-	LEV_SWAP = 0x20,
-	// & 0x80 - CREDITS
-	CREDITS = 0x80,
-	
-	// & 0x100 - DISABLE_LEV_INSTANCES
 	DISABLE_LEV_INSTANCE = 0x100,
 	
 	CHEAT_WUMPA 	= 0x200,
@@ -71,12 +65,10 @@ enum GameMode2
 	CHEAT_SUPERHARD	= 0x200000,
 	CHEAT_BOMBS		= 0x400000,
 	CHEAT_ONELAP	= 0x800000,
-	
-	// & 0x1000000 - INC_RELIC
-	// & 0x2000000 - INC_KEY
-	// & 0x4000000 - INC_TROPHY
-	
-	CHEAT_TURBOCOUNT = 0x8000000
+	INC_RELIC		= 0x1000000,
+	INC_KEY			= 0x2000000,
+	INC_TROPHY		= 0x4000000,
+	CHEAT_TURBOCOUNT= 0x8000000
 	// & 0x10000000 - LNG_CHANGE (EurRetail Only)
 };
 

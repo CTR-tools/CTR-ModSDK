@@ -335,7 +335,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					case 2:	DECOMP_MM_JumpTo_TrackSelect();		break;
 					case 3:	DECOMP_MM_JumpTo_BattleSetup();		break;
 					#ifndef REBUILD_PS1
-					case 4:	CS_Garage_Init();					break;
+					case 4:	CS_Garage_Init();			break;
 					#else
 					case 4:	sdata->ptrActiveMenuBox = 0;		break;
 					#endif

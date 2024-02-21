@@ -67,9 +67,8 @@ void CS_Podium_Prize_ThTick1(struct Thread *th)
 
         // execute, then assign per-frame funcPtr to thread
         ThTick_SetAndExec(th, CS_Podium_Prize_ThTick2);
+		return;
     }
-    else
-    {
-        CS_Podium_Prize_Spin(inst, prize);
-    }
+    
+	CS_Podium_Prize_Spin(inst, prize);
 }
