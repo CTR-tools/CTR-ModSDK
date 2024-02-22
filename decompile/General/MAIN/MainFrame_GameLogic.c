@@ -199,12 +199,6 @@ LAB_80035098:
 					}
 #endif
 					
-					// rig collisions to high-poly
-					#ifdef USE_GPU1P
-					int backupPlyrCount = gGT->numPlyrCurrGame;
-					gGT->numPlyrCurrGame = 1;
-					#endif
-					
 					// run all driver funcPtrs,
 					// all drivers must run the same stage (1-13)
 					// at the same time, that's why the stages exist
@@ -224,7 +218,18 @@ LAB_80035098:
 							{
 								pcVar5(psVar12, psVar9);
 							}
-						}	
+						}
+						
+						// rig collisions to high-poly,
+						// wait until Stage 2 finishes, cause PhysLinear
+						// uses gGT->numPlyrCurrGame for Player_SetHeldItem
+						#ifdef USE_GPU1P
+						if(iVar1 == 2)
+						{
+							int backupPlyrCount = gGT->numPlyrCurrGame;
+							gGT->numPlyrCurrGame = 1;
+						}
+						#endif
 					}
 					
 					#ifdef USE_GPU1P
