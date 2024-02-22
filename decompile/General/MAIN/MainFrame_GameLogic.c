@@ -192,12 +192,17 @@ LAB_80035098:
 			{
 				if (iVar4 == 0)
 				{
-#ifndef REBUILD_PS1
+
 					for(psVar12 = gGT->threadBuckets[iVar4].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 					{
+						#ifndef REBUILD_PS1
 						Weapon_Shoot_OnCirclePress((struct Driver*)psVar12->object);
+						#endif
 					}
-#endif
+
+					#ifdef USE_GPU1P
+					int backupPlyrCount;
+					#endif
 					
 					// run all driver funcPtrs,
 					// all drivers must run the same stage (1-13)
@@ -224,9 +229,9 @@ LAB_80035098:
 						// wait until Stage 2 finishes, cause PhysLinear
 						// uses gGT->numPlyrCurrGame for Player_SetHeldItem
 						#ifdef USE_GPU1P
-						if(iVar1 == 2)
+						if(iVar11 == 2)
 						{
-							int backupPlyrCount = gGT->numPlyrCurrGame;
+							backupPlyrCount = gGT->numPlyrCurrGame;
 							gGT->numPlyrCurrGame = 1;
 						}
 						#endif
