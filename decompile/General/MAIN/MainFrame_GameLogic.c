@@ -199,6 +199,12 @@ LAB_80035098:
 					}
 #endif
 					
+					// rig collisions to high-poly
+					#ifdef USE_GPU1P
+					int backupPlyrCount = gGT->numPlyrCurrGame;
+					gGT->numPlyrCurrGame = 1;
+					#endif
+					
 					// run all driver funcPtrs,
 					// all drivers must run the same stage (1-13)
 					// at the same time, that's why the stages exist
@@ -220,6 +226,10 @@ LAB_80035098:
 							}
 						}	
 					}
+					
+					#ifdef USE_GPU1P
+					gGT->numPlyrCurrGame = backupPlyrCount;
+					#endif
 				}
 #ifndef REBUILD_PS1
 				ThTick_RunBucket(gGT->threadBuckets[iVar4].thread);
