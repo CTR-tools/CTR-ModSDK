@@ -10,6 +10,7 @@ void Mods2_EndOfFile();
 void Mods3_EndOfFile();
 void Mods4_EndOfFile();
 void Mods5_EndOfFile();
+void Mods6_EndOfFile();
 
 void ModsMain()
 {
@@ -21,20 +22,31 @@ void ModsMain()
 	
 	printf("\n\nMods:\n");
 	
-	// UI defrag Block1
-	printf("1.c: %d\n", (int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile);
+	int modSizes[6] =
+	{
+		// UI defrag Block1
+		(int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile,
+		
+		// UI defrag Block2
+		(int)UI_BattleDrawHeadArrows - (int)Mods2_EndOfFile,
+		
+		// GAMEPAD defrag Block1
+		(int)GAMEPAD_JogCon1 - (int)Mods3_EndOfFile,
+		
+		// HOWL defrag Block1
+		(int)howl_VolumeGet - (int)Mods4_EndOfFile,
+		
+		// LOAD defrag Block1
+		(int)LOAD_AppendQueue - (int)Mods5_EndOfFile,
+		
+		// UI defrag Block3
+		(int)UI_Map_GetIconPos - (int)Mods6_EndOfFile
+	};
 	
-	// UI defrag Block2
-	printf("2.c: %d\n", (int)UI_BattleDrawHeadArrows - (int)Mods2_EndOfFile);
-	
-	// GAMEPAD defrag Block1
-	printf("3.c: %d\n", (int)GAMEPAD_JogCon1 - (int)Mods3_EndOfFile);
-	
-	// HOWL defrag Block1
-	printf("4.c: %d\n", (int)howl_VolumeGet - (int)Mods4_EndOfFile);
-	
-	// LOAD defrag Block1
-	printf("5.c: %d\n", (int)LOAD_AppendQueue - (int)Mods5_EndOfFile);
+	for(int i = 0; i < 6; i++)
+	{
+		printf("Mods%d.c: %d\n", i+1, modSizes[i]);
+	}
 	
 	// MultiplayerWumpaHUD is never called, therefore
 	// TileView_SetDrawEnv_DecalMP can be taken

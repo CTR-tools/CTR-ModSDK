@@ -568,17 +568,12 @@ common, exe, RCNT_Destroy, 0x0, General/RCNT/RCNT_Destroy.c
 
 // UI
 common, exe, UI_SaveLapTime, 0x0, General/UI/UI_SaveLapTime.c
-common, exe, UI_ThTick_CountPickup, 0x0, General/UI/UI_ThTick_CountPickup.c
-common, exe, UI_ThTick_Reward, 0x0, General/UI/UI_ThTick_Reward.c
-common, exe, UI_ThTick_CtrLetters, 0x0, General/UI/UI_ThTick_CtrLetters.c
-common, exe, UI_ThTick_big1, 0x0, General/UI/UI_ThTick_big1.c
-common, exe, UI_ConvertX_2, 0x0, General/UI/UI_ConvertX_2.c
-common, exe, UI_ConvertY_2, 0x0, General/UI/UI_ConvertY_2.c
-common, exe, UI_INSTANCE_BirthWithThread, 0x0, General/UI/UI_INSTANCE_BirthWithThread.c
-common, exe, UI_INSTANCE_InitAll, 0x0, General/UI/UI_INSTANCE_InitAll.c
+
+// everything between UI_SaveLapTime and UI_Map_GetIconPos
+common, exe, UI_ThTick_CountPickup, 0x0, General/UI/UI_AAA_BigBlock3.c
+
 common, exe, UI_Map_GetIconPos, 0x0, General/UI/UI_Map_GetIconPos.c
 common, exe, UI_Map_DrawAdvPlayer, 0x0, General/UI/UI_Map_DrawAdvPlayer.c
-common, exe, UI_Map_DrawMap, 0x0, General/UI/UI_Map_DrawMap.c
 common, exe, UI_Map_DrawRawIcon, 0x0, General/UI/UI_Map_DrawRawIcon.c
 common, exe, UI_Map_DrawDrivers, 0x0, General/UI/UI_Map_DrawDrivers.c
 common, exe, UI_Map_DrawGhosts, 0x0, General/UI/UI_Map_DrawGhosts.c
