@@ -556,7 +556,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
         // Set amount of NoInput
         d->NoInputTimer = noInputTime;
 
-        VehPtr_Spinning_Init(t, d);
+        DECOMP_VehPtr_Spinning_Init(t, d);
     }
 
     // if you aren't spinning out

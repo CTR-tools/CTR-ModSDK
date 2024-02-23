@@ -19,7 +19,7 @@ void DECOMP_VehPtr_Spinning_Update(struct Thread* t, struct Driver* d)
 	
 	// if speed has slown to near-halt,
 	// or if NoInputTimer ran out
-	VehPtr_LastSpin_Init(t,d);
+	DECOMP_VehPtr_LastSpin_Init(t,d);
 }
 
 void DECOMP_VehPtr_Spinning_PhysLinear(struct Thread* t, struct Driver* d)

@@ -15,7 +15,7 @@ void DECOMP_VehPtr_LastSpin_Update(struct Thread* t, struct Driver* d)
 		)
 	{
 		// stop spin
-		VehPtr_StopSpin_Init(t, d);
+		DECOMP_VehPtr_StopSpin_Init(t, d);
 	}
 }
 
