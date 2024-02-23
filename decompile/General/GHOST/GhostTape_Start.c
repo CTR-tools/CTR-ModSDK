@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GhostTape_Start(void)
+void DECOMP_GhostTape_Start(void)
 {
   struct GhostHeader* gh;
   struct Driver* d;

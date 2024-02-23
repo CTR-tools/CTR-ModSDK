@@ -20,7 +20,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
         BOTS_Adv_AdjustDifficulty();
     }
 
-    GhostReplay_Init1();
+    DECOMP_GhostReplay_Init1();
 
     if (LOAD_IsOpen_RacingOrBattle())
     {
@@ -172,9 +172,9 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
     // basically, if you're in time trial gameplay
     if ((gameMode & 0x20022000) == TIME_TRIAL)
     {
-        GhostReplay_Init2();
+        DECOMP_GhostReplay_Init2();
 
-        GhostTape_Start();
+        DECOMP_GhostTape_Start();
 		
 		#ifdef REBUILD_PS1
 		#error Do Something For instSelf->model

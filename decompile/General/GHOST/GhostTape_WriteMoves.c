@@ -36,7 +36,7 @@ void GhostTape_WriteMoves(short raceFinished)
 	// If you're in End-Of-Race menu
     if ((gameMode & 0x200000) != 0)
 	{
-      GhostTape_End();
+      DECOMP_GhostTape_End();
       return;
     }
   }

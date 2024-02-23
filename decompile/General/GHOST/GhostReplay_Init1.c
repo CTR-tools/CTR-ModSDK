@@ -2,7 +2,7 @@
 
 void GhostReplay_ThTick(struct Thread *);
 
-void GhostReplay_Init1(void)
+void DECOMP_GhostReplay_Init1(void)
 {
 	char i;
 	u_short uVar1;
