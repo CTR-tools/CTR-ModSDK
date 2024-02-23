@@ -354,6 +354,7 @@ undefined4 CDSYS_SetXAToLang(int param_1)
                 *(char *)(*(int *)(pbVar7 + 4) + (uint)*pbVar7) = cVar1 + '0';
                 *(char *)(*(int *)(pbVar7 + 4) + (uint)pbVar7[1]) = (char)iVar6 + cVar1 * -10 + '0';
 
+				// CDSYS_GetFilePosInt
 				// get cd position of param1, store position into param2
 				iVar4 = FUN_8001c420(*(undefined4 *)(pbVar7 + 4),
                                      DAT_8008d718 + *(int *)(iVar8 + (int)DAT_8008d71c) + iVar6);
