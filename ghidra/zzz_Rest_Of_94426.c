@@ -12229,7 +12229,7 @@ LAB_8004fe8c:
 }
 
 
-// Draw the "st", "nd", "rd" suffix after "1st, 2nd, 3rd, etc"
+// UI_DrawPosSuffix
 void FUN_8005045c(short param_1,short param_2,int param_3,short param_4)
 
 {
@@ -12267,7 +12267,7 @@ void FUN_8005045c(short param_1,short param_2,int param_3,short param_4)
 }
 
 
-// Draw which lap the racer is on
+// UI_DrawLapCount
 void FUN_80050528(short param_1,int param_2,undefined4 param_3,int param_4)
 
 {
@@ -14827,7 +14827,7 @@ LAB_80053584:
 		    //if racer hasn't finished the race
         if ((*(uint *)(iVar19 + 0x2c8) & 0x2000000) == 0)
 		{
-		  // Draw which lap they are on (1/3, 2/3, 3/3, etc)
+		  // UI_DrawLapCount
           FUN_80050528((int)psVar20[4],(int)psVar20[5],(int)psVar20[7],iVar19);
         }
       }
@@ -14891,7 +14891,7 @@ LAB_80053584:
           uVar9 = ((uint)bVar3 << 0x12) >> 0x10;
         }
 
-		// Draw the "st", "nd", "rd" suffix after "1st, 2nd, 3rd, etc"
+		// UI_DrawPosSuffix
         FUN_8005045c((int)sVar1,(int)sVar2,iVar19,uVar9);
 
 		// if more than 2 players
@@ -14962,7 +14962,7 @@ LAB_80053aec:
 		{
           uVar9 = (uint)((*(uint *)(PTR_DAT_8008d2ac + 0x1cec) & 1) == 0);
 
-		  // Draw the "st", "nd", "rd" suffix after "1st, 2nd, 3rd, etc"
+		  // UI_DrawPosSuffix
           FUN_8005045c((int)psVar20[0x14],(int)psVar20[0x15],iVar19,uVar9 << 2);
 
           sVar1 = psVar20[8];

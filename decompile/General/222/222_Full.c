@@ -679,7 +679,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	}
 
 	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpStartY, lerpEndX, lerpEndY, currFrame, endFrame);
-	UI_DrawPosSuffix(posXY[0], posXY[1], driver, 0);
+	
+	DECOMP_UI_DrawPosSuffix(posXY[0], posXY[1], driver, 0);
 
 	// === DrawRaceClock ===
 	

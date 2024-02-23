@@ -930,6 +930,7 @@ void FUN_800a06f8(ushort param_1,short param_2)
   // interoplate fly-in
   FUN_8004ecd4(&local_30,iVar4,local_44,local_40,iVar8,iVar3,uVar10);
   
+  // UI_DrawPosSuffix
   FUN_8005045c((int)local_30,(int)local_2e,iVar6,0);
   
   // If race ended more than 300 frames ago
