@@ -780,6 +780,7 @@
 
 8004f9d8 UI_BattleDrawHeadArrows
 8004fd34 UI_TrackerSelf
+
 8005045c UI_DrawPosSuffix
 80050528 UI_DrawLapCount
 80050654 UI_DrawBattleScores

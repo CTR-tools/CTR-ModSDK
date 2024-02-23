@@ -1,5 +1,8 @@
 #include <common.h>
 
+#include "UI_DrawPosSuffix.c"
+#include "UI_DrawLapCount.c"
+#include "UI_DrawBattleScores.c"
 #include "UI_Weapon_DrawSelf.c"
 #include "UI_Weapon_DrawBG.c"
 #include "UI_DrawNumWumpa.c"
