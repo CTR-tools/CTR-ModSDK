@@ -1240,7 +1240,7 @@
 800771f4 InterruptCallback
 80077224 DMACallback
 80077254 VSyncCallback
-// unknown 80077288 ------ 
+80077288 StopCallback
 // unknown 800772b8 ------ 
 // unknown 800772c8 ------ called by lib funcs
 // unknown 800772e0 ------ called by lib funcs

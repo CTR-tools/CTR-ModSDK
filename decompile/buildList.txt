@@ -505,6 +505,8 @@ common, exe, MainInit_Drivers, 0x0, General/MAIN/MainInit_Drivers.c
 common, exe, MainInit_FinalizeInit, 0x0, General/MAIN/MainInit_FinalizeInit.c
 common, exe, MainInit_VRAMClear, 0x0, General/MAIN/MainInit_VRAMClear.c
 common, exe, MainInit_VRAMDisplay, 0x0, General/MAIN/MainInit_VRAMDisplay.c
+common, exe, MainKillGame_StopCTR, 0x0, General/MAIN/MainKillGame_StopCTR.c
+common, exe, MainKillGame_LaunchSpyro2, 0x0, General/MAIN/MainKillGame_LaunchSpyro2.c
 common, exe, main, 0x0, General/MAIN/MainMain.c
 common, exe, MainRaceTrack_RequestLoad, 0x0, General/MAIN/MainRaceTrack_RequestLoad.c
 common, exe, MainRaceTrack_StartLoad, 0x0, General/MAIN/MainRaceTrack_StartLoad.c

@@ -926,6 +926,7 @@ ResetCallback = 0x800771c4;
 InterruptCallback = 0x800771f4;
 DMACallback = 0x80077224;
 VSyncCallback = 0x80077254;
+StopCallback = 0x80077288;
 LoadExec = 0x8007780c;
 SetGeomScreen = 0x8007781c;
 SetGeomOffset = 0x8007782c;
