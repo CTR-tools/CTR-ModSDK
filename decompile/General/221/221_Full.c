@@ -16,8 +16,8 @@ const short hub[8] =
 extern struct MenuRow menuRows221[3];
 extern struct MenuBox menuBox221;
 	
-int UI_ConvertX_2(int x, int const_0x200);
-int UI_ConvertY_2(int y, int const_0x200);
+int DECOMP_UI_ConvertX_2(int x, int const_0x200);
+int DECOMP_UI_ConvertY_2(int y, int const_0x200);
 void DECOMP_UI_DrawNumCrystal(short x, short y, struct Driver* d);
 void MENUBOX_ClearInput();
 void MENUBOX_Show(struct MenuBox*);
@@ -74,8 +74,8 @@ void DECOMP_CC_EndEvent_DrawMenu()
 			sdata->framesSinceRaceEnded,
 			FPS_DOUBLE(0x14));
 	
-		sdata->ptrMenuCrystal->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
-		sdata->ptrMenuCrystal->matrix.t[1] = UI_ConvertY_2(posXY[1], 0x200);
+		sdata->ptrMenuCrystal->matrix.t[0] = DECOMP_UI_ConvertX_2(posXY[0], 0x200);
+		sdata->ptrMenuCrystal->matrix.t[1] = DECOMP_UI_ConvertY_2(posXY[1], 0x200);
 	
 		DECOMP_UI_DrawNumCrystal(posXY[0]+0xf, posXY[1]-0x10, driver);
 	
@@ -163,8 +163,8 @@ void DECOMP_CC_EndEvent_DrawMenu()
 	// make token visible
 	tokenInst->flags &= ~(HIDE_MODEL);
 
-	tokenInst->matrix.t[0] = UI_ConvertX_2(posXY[0], 0x200);
-	tokenInst->matrix.t[1] = UI_ConvertY_2(0xA2-0x18, 0x200);
+	tokenInst->matrix.t[0] = DECOMP_UI_ConvertX_2(posXY[0], 0x200);
+	tokenInst->matrix.t[1] = DECOMP_UI_ConvertY_2(0xA2-0x18, 0x200);
 
 	// play unlock sound after exactly 1 second
 	if(sdata->framesSinceRaceEnded == FPS_DOUBLE(30))

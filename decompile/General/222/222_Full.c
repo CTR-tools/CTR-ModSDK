@@ -176,7 +176,7 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 
 				hudToken->flags &= ~HIDE_MODEL;
 				hudToken->matrix.t[0] = hudT->matrix.t[0];
-				hudToken->matrix.t[1] = UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
+				hudToken->matrix.t[1] = DECOMP_UI_ConvertY_2(letterPos[1] + 0x18, 0x200);
 				
 				// variable reuse, frame timers
 				lerpStartY = 120;
@@ -208,8 +208,8 @@ void DECOMP_AA_EndEvent_DrawMenu(void)
 			
 			for (i = 0; i < 3; i++)
 			{
-				hudLetters[i]->matrix.t[0] = UI_ConvertX_2(letterPos[0] + (scaleDown * (i * 12)) + (i * 29), 0x200);
-				hudLetters[i]->matrix.t[1] = UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
+				hudLetters[i]->matrix.t[0] = DECOMP_UI_ConvertX_2(letterPos[0] + (scaleDown * (i * 12)) + (i * 29), 0x200);
+				hudLetters[i]->matrix.t[1] = DECOMP_UI_ConvertY_2(letterPos[1] - (i & 1), 0x200);
 			}
 		}
 		
@@ -601,7 +601,7 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		endFrame = FPS_DOUBLE(0xf);
 		
 		lerpStartX = -0xae;
-		lerpEndX = UI_ConvertX_2(-100, hud[2].z);
+		lerpEndX = DECOMP_UI_ConvertX_2(-100, hud[2].z);
 		lerpStartY = lerpEndY;
 		
 		#ifdef USE_NEW2P
@@ -619,8 +619,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 		currFrame = framesElapsed;
 		endFrame = FPS_DOUBLE(0x1e);
 		
-		lerpStartX = UI_ConvertX_2(hud[2].x, hud[2].z);
-		lerpStartY = UI_ConvertY_2(hud[2].y, hud[2].z);
+		lerpStartX = DECOMP_UI_ConvertX_2(hud[2].x, hud[2].z);
+		lerpStartY = DECOMP_UI_ConvertY_2(hud[2].y, hud[2].z);
 		lerpEndX = -0xae;
 		
 		#ifdef USE_NEW2P

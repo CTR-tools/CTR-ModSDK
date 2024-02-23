@@ -232,17 +232,17 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 				relic->scale[1] += FPS_HALF(0x80);
 				relic->scale[2] += FPS_HALF(0x80);
 			}
-			startX = UI_ConvertX_2(0x100, 0x100);
-			endX = UI_ConvertX_2(0x100, 0x100);
+			startX = DECOMP_UI_ConvertX_2(0x100, 0x100);
+			endX = DECOMP_UI_ConvertX_2(0x100, 0x100);
 			startFrame = framesElapsed - FPS_DOUBLE(250);
 		}
 		else
 		{
-			startX = UI_ConvertX_2(0x100, 0x100);
-			endX = UI_ConvertX_2(-0x64, 0x100);
+			startX = DECOMP_UI_ConvertX_2(0x100, 0x100);
+			endX = DECOMP_UI_ConvertX_2(-0x64, 0x100);
 			startFrame = framesElapsed - FPS_DOUBLE(490);
 		}
-		startY = UI_ConvertY_2(0xa2, 0x100);
+		startY = DECOMP_UI_ConvertY_2(0xa2, 0x100);
 
 		UI_Lerp2D_Linear(&pos[0], startX, startY, endX, startY, startFrame, FPS_DOUBLE(0x14));
 	}
@@ -286,8 +286,8 @@ LAB_800a0594:
 	// interpolate fly-in
 	UI_Lerp2D_Linear(&pos[0], 200, 0x79, endX, 0x79, startFrame, FPS_DOUBLE(0x14));
 
-	sdata->ptrTimebox1->matrix.t[0] = UI_ConvertX_2(pos[0], 0x100);
-	sdata->ptrTimebox1->matrix.t[1] = UI_ConvertY_2(pos[1], 0x100);
+	sdata->ptrTimebox1->matrix.t[0] = DECOMP_UI_ConvertX_2(pos[0], 0x100);
+	sdata->ptrTimebox1->matrix.t[1] = DECOMP_UI_ConvertY_2(pos[1], 0x100);
 
 	// Draw 'x' before number of crates
 	DecalFont_DrawLine("x", pos[0] + 0x14, pos[1] - 10, 2, 0);
