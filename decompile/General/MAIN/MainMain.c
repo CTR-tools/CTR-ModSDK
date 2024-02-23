@@ -6,8 +6,6 @@ void StateZero();
 
 u_int DECOMP_main()
 {	
-	struct GameTracker* gGT;
-	
 	u_int AddBitsConfig0;
 	u_int RemBitsConfig0;
 	u_int AddBitsConfig8;
@@ -17,7 +15,11 @@ u_int DECOMP_main()
 	u_int gameMode2;
 	u_int uVar12;
 	
+	struct GameTracker* gGT;
 	gGT = sdata->gGT;
+	
+	struct GamepadSystem* gGS;
+	gGS = sdata->gGamepads;
 	
 #ifndef REBUILD_PS1	
 	__main();
@@ -75,7 +77,7 @@ u_int DECOMP_main()
 
 				DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 				DECOMP_MainInit_FinalizeInit(gGT);
-				DECOMP_GAMEPAD_GetNumConnected(sdata->gGamepads);
+				DECOMP_GAMEPAD_GetNumConnected(gGS);
 				
 #ifndef REBUILD_PS1				
 				sdata->boolSoundPaused = 0;
@@ -294,7 +296,7 @@ FinishLoading:
 				sdata->frameCounter++;
 
 				// Process all gamepad input
-				DECOMP_GAMEPAD_ProcessAnyoneVars(sdata->gGamepads);
+				DECOMP_GAMEPAD_ProcessAnyoneVars(gGS);
 
 				#ifdef FastBoot
 				// disable spawn
@@ -309,7 +311,7 @@ FinishLoading:
 					(sdata->gGT->elapsedEventTime == 0) ||
 					
 					// L2 tap
-					(sdata->gGamepads->gamepad[0].buttonsTapped & BTN_L2)
+					(gGS->gamepad[0].buttonsTapped & BTN_L2)
 					)
 				{
 					gGT->drivers[0]->posCurr[0] = 0xE1700;
@@ -357,7 +359,7 @@ FinishLoading:
 					else
 					{
 						// if any button is pressed by anyone
-						if (sdata->gGamepads->anyoneHeldCurr != 0)
+						if (gGS->anyoneHeldCurr != 0)
 						{
 							// leave demo mode
 							gGT->boolDemoMode = 0;
@@ -385,7 +387,7 @@ FinishLoading:
 				
 				if ((gGT->gameMode1 & LOADING) == 0)
 				{
-					DECOMP_MainFrame_GameLogic(gGT, sdata->gGamepads);
+					DECOMP_MainFrame_GameLogic(gGT, gGS);
 				}
 				
 				// If you are in demo mode
@@ -472,7 +474,7 @@ FinishLoading:
 						sdata->XA_State = 0;
 					}
 
-					int held = sdata->gGamepads->gamepad[0].buttonsHeldCurrFrame;
+					int held = gGS->gamepad[0].buttonsHeldCurrFrame;
 
 					if ((held & BTN_UP) != 0)
 					{
@@ -531,7 +533,7 @@ FinishLoading:
 #ifdef REBUILD_PC
 				PsyX_BeginScene();
 #endif
-				DECOMP_MainFrame_RenderFrame(gGT, sdata->gGamepads);
+				DECOMP_MainFrame_RenderFrame(gGT, gGS);
 #ifdef REBUILD_PC
 				PsyX_EndScene();
 				int NikoCalcFPS();
@@ -567,7 +569,7 @@ FinishLoading:
 				Bank_DestroyAll();
 				howl_Disable();
 
-				DECOMP_GAMEPAD_SetMainMode(sdata->gGamepads);
+				DECOMP_GAMEPAD_SetMainMode(gGS);
 
 				// Set vsync to 2 FPS
 				VSync(30);
@@ -600,7 +602,13 @@ void StateZero()
 	struct GameTracker* gGT;
 	gGT = sdata->gGT;
 	
+	struct GamepadSystem* gGS;
+	gGS = sdata->gGamepads;
+	
+	// already zero, part of BSS
+	#if 0
 	memset(gGT, 0, sizeof(struct GameTracker));
+	#endif
 	
 	// for modding
 	void ModsMain();
@@ -681,9 +689,9 @@ void StateZero()
 	
 	DECOMP_MEMCARD_InitCard();
 	VSync(0);
-	DECOMP_GAMEPAD_Init(sdata->gGamepads);
+	DECOMP_GAMEPAD_Init(gGS);
 	VSync(0);
-	DECOMP_GAMEPAD_GetNumConnected(sdata->gGamepads);
+	DECOMP_GAMEPAD_GetNumConnected(gGS);
 
 #ifndef REBUILD_PC
 #define BIGPATH rdata.s_PathTo_Bigfile
