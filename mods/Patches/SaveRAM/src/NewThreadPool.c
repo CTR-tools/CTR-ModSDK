@@ -49,7 +49,7 @@ void ClearThreadPool(struct JitPool* p)
 	
 	arr[1-1] = 0;
 	arr[2-1] = (unsigned int)MEMPACK_Init;
-	arr[3-1] = (unsigned int)&data.memcardIcon_PsyqHand[0];
+	arr[3-1] = (unsigned int)&data.memcardIcon_PsyqHand[0]; // This is NOT safe
 	arr[4-1] = (unsigned int)howl_InitGlobals;
 	arr[5-1] = (unsigned int)MEMCARD_InitCard;
 	arr[6-1] = (unsigned int)RDATA_1; // can be 11, but must skip index 7
