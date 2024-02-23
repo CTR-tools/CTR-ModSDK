@@ -47,6 +47,8 @@ void ModsMain()
 	
 	// count ModsMain, and MainStateZero, free to overwrite after runtime
 	printf("ModsMain: %d\n", (int)MainRaceTrack_StartLoad - (int)ModsMain);
+	
+	printf("RDATA: 4096 (after fixing rdataPauseData)\n"); 
 	// add more...
 	
 	printf("\n\n");
