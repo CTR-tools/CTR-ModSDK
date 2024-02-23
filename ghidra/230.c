@@ -5794,8 +5794,12 @@ LAB_800b1d7c:
   
   FUN_80045db0(&DAT_800b56c8,(int)(((uint)DAT_800b5646 + 0x9c) * 0x10000) >> 0x10,
                (int)(((uint)DAT_800b5648 + 0x24) * 0x10000) >> 0x10,0x134);
+  
   local_38 = 0xd;
+  
+  // MENUBOX_GetHeight
   FUN_80045b1c(&DAT_800b56c8,&local_38,0);
+  
   sVar6 = local_38 + 0x20;
   
   // _DAT_8008d878 + 0x254
@@ -5831,10 +5835,17 @@ LAB_800b1d7c:
         FUN_80045db0(&DAT_800b57d8,
                      (int)(((uint)DAT_800b565a + 0x142) * 0x10000) >> 0x10,
                      (int)(short)(DAT_800b565c + sVar6 + 4),0x8e);
-        local_38 = 0xd;
-        FUN_80045b1c(&DAT_800b570c,&local_38,0);
-        local_36[0] = 0xd;
+        
+		local_38 = 0xd;
+        
+		// MENUBOX_GetHeight
+		FUN_80045b1c(&DAT_800b570c,&local_38,0);
+        
+		local_36[0] = 0xd;
+		
+		// MENUBOX_GetHeight
         FUN_80045b1c(&DAT_800b57d8,local_36,0);
+		
         sVar20 = local_36[0] + sVar6;
         if (local_36[0] < local_38) {
           sVar20 = local_38 + sVar6;
@@ -5857,7 +5868,10 @@ LAB_800b1d7c:
   FUN_80045db0(puVar19,(int)(((uint)DAT_800b565a + 0x9c) * 0x10000) >> 0x10,
                (int)(short)(DAT_800b565c + sVar6 + 4),0x134);
   local_38 = 0xd;
+  
+  // MENUBOX_GetHeight
   FUN_80045b1c(puVar19,&local_38,0);
+  
   sVar20 = local_38 + sVar6;
 LAB_800b25f0:
   iVar8 = 0x9f;
@@ -6088,6 +6102,8 @@ LAB_800b25f0:
     FUN_80045db0(&DAT_800b5810,(int)(((uint)DAT_800b5696 + 0x9c) * 0x10000) >> 0x10,
                  (int)(short)(DAT_800b5698 + sVar20 + 0x78),0x134);
     local_38 = 0xd;
+	
+	// MENUBOX_GetHeight
     FUN_80045b1c(&DAT_800b5810,&local_38,0);
   }
   

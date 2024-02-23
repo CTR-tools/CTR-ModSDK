@@ -3278,13 +3278,14 @@ LAB_80045bd0:
 		((*(uint *)(param_1 + 4) & 0x10) != 0)
 	 )
   {
+	// MENUBOX_GetHeight
 	// recursively check height from submenus
     FUN_80045b1c(*(undefined4 *)(param_1 + 0x12),param_2,1);
   }
   return;
 }
 
-// get width of menubox
+// MENUBOX_GetWidth
 // param_1 MenuBox
 // param_2 return value
 // param_3 bool check submenus
@@ -3363,6 +3364,7 @@ void FUN_80045c50(short *param_1,short *param_2,short param_3)
 		// if submenu will be drawn
 		((*(uint *)(param_1 + 4) & 0x10) != 0))
   {
+	// MENUBOX_GetWidth
 	// recursively check submenus for width
     FUN_80045c50(*(undefined4 *)(param_1 + 0x12),param_2,1);
   }
@@ -3474,7 +3476,7 @@ LAB_80045e94:
   param_1[0xb] = param_1[1];
   param_1[0xc] = param_1[2];
 
-  // get height of menubox
+  // MENUBOX_GetHeight
   FUN_80045b1c(param_1,&local_60,0);
 
   uVar2 = *(uint *)(param_1 + 4);
@@ -3489,7 +3491,10 @@ LAB_80045e94:
 
   if ((uVar2 & 2) != 0) {
     local_5e[0] = 0;
+	
+	// MENUBOX_GetHeight
     FUN_80045b1c(param_1,local_5e,1);
+	
     local_38 = (short)((uint)(-(int)local_5e[0] - (-(int)local_5e[0] >> 0x1f)) >> 1);
   }
   uVar2 = *(uint *)(param_1 + 4);
@@ -4105,7 +4110,7 @@ void FUN_8004680c(void)
 	  // set width to zero
       local_10[0] = 0;
 
-	  // get width of menubox
+	  // MENUBOX_GetWidth
 	  FUN_80045c50(DAT_8008d908,local_10,1);
 
 	  // draw menubox
@@ -7203,7 +7208,7 @@ LAB_800499e4:
 		  // set menubox width to zero
           local_56[0] = 0;
 
-		  // get width of menubox
+		  // MENUBOX_GetWidth
           FUN_80045c50(&DAT_80085d5c,local_56,1);
 
 		  // draw menubox
@@ -7274,7 +7279,7 @@ LAB_800499e4:
 
 		  // Open "Overwrite" menuBox
 
-		  // get width of menuBox
+		  // MENUBOX_GetWidth
 		  FUN_80045c50(&DAT_80085d30,&local_58,1);
 
 		  // draw menuBox
