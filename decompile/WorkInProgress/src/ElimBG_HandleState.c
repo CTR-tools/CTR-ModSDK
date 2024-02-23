@@ -18,27 +18,29 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
   // if this is last frame of pause
   if (sdata->pause_state == 3)
   {
-  local_30[0] = 0x200;
-  local_30[1] = 0x1000040;
-  local_28[0] = 0x240;
-  local_28[1] = 0x1000040;
-
-  // load from RAM, back to VRAM
-  LoadImage(&local_30, sdata->pause_VRAM_Backup_PrimMem[0]);
-  LoadImage(&local_28, sdata->pause_VRAM_Backup_PrimMem[1]);
-
-  DrawSync(0);
-
-  // restore gGT->DB[0,1].primMem.end
-  gGT->db[0].otMem.start = sdata->pause_VRAM_Backup_PrimMem[0] + 0x8000;
-  gGT->db[1].otMem.start = sdata->pause_VRAM_Backup_PrimMem[1] + 0x8000;
-
-  // Enable all instances
-  DECOMP_ElimBG_ToggleAllInstances(gGT, 0);
-
-  // game is not paused anymore
-  sdata->pause_state = 0;
+	// rdataPauseData
+	local_30[0] = 0x200;
+	local_30[1] = 0x1000040;
+	local_28[0] = 0x240;
+	local_28[1] = 0x1000040;
+	
+	// load from RAM, back to VRAM
+	LoadImage(&local_30, sdata->pause_VRAM_Backup_PrimMem[0]);
+	LoadImage(&local_28, sdata->pause_VRAM_Backup_PrimMem[1]);
+	
+	DrawSync(0);
+	
+	// restore gGT->DB[0,1].primMem.end
+	gGT->db[0].otMem.start = sdata->pause_VRAM_Backup_PrimMem[0] + 0x8000;
+	gGT->db[1].otMem.start = sdata->pause_VRAM_Backup_PrimMem[1] + 0x8000;
+	
+	// Enable all instances
+	DECOMP_ElimBG_ToggleAllInstances(gGT, 0);
+	
+	// game is not paused anymore
+	sdata->pause_state = 0;
   }
+  
   // if this is not last frame of paus
   // if game is paused at all
   else if (sdata->pause_state != 0)

@@ -55,6 +55,8 @@ void FUN_8002459c(int param_1)
   undefined2 local_2a;
 
   iVar4 = 0;
+  
+  // rdataPauseData
   local_48 = 0x200;
   local_44 = 0x1000040;
   local_40 = 0x240;
@@ -281,7 +283,9 @@ void FUN_80024974(int param_1)
   puVar3 = PTR_DAT_8008d2ac;
 
   // if this is last frame of pause
-  if (DAT_8008d036 == 3) {
+  if (DAT_8008d036 == 3) 
+  {
+	// rdataPauseData
     local_30 = 0x200;
     local_2c = 0x1000040;
     local_28 = 0x240;

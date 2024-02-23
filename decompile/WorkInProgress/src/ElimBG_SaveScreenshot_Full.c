@@ -13,6 +13,8 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
   RECT local_30;
 
   iVar4 = 0;
+  
+  // rdataPauseData
   local_48[0] = 0x200;
   local_48[1] = 0x1000040;
   local_40[0] = 0x240;

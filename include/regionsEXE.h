@@ -879,7 +879,7 @@ struct rData
 
 	// 80011064
 	// for pause screenshot
-	char unk10[0x10];
+	char rdataPauseData[0x10];
 
 	// 80011074
 	char s_lensflare[0xC];
