@@ -23,7 +23,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 	// Aug 5
 	// ptrintf("SWAPPING 2...\n");
 	
-	LOAD_HubSwapPtrs(gGT);
+	DECOMP_LOAD_HubSwapPtrs(gGT);
 	
 	// 0,1,2
 	gGT->activeMempackIndex = 3 - gGT->activeMempackIndex;
@@ -48,7 +48,7 @@ void DECOMP_LOAD_Hub_SwapNow()
 	
 	if(sdata->PLYROBJECTLIST != 0)
 	{
-		LOAD_GlobalModelPtrs_MPK();
+		DECOMP_LOAD_GlobalModelPtrs_MPK();
 	}
 	
 	level1 = gGT->level1;

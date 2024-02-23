@@ -1,6 +1,6 @@
 #include <common.h>
 
-void LOAD_Callback_MaskHints3D();
+void DECOMP_LOAD_Callback_MaskHints3D();
 
 void DECOMP_LOAD_TalkingMask(int packID, int maskID)
 {
@@ -17,5 +17,5 @@ void DECOMP_LOAD_TalkingMask(int packID, int maskID)
 	
 	LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_VRAM, offset+0x1b6, 0, 0);
 	
-	LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_DRAM, offset+0x1b7, 0, LOAD_Callback_MaskHints3D);
+	LOAD_AppendQueue(sdata->ptrBigfileCdPos_2, LT_DRAM, offset+0x1b7, 0, DECOMP_LOAD_Callback_MaskHints3D);
 }

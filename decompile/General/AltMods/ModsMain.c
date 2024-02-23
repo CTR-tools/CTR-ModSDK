@@ -9,6 +9,7 @@ void Mods1_EndOfFile();
 void Mods2_EndOfFile();
 void Mods3_EndOfFile();
 void Mods4_EndOfFile();
+void Mods5_EndOfFile();
 
 void ModsMain()
 {
@@ -32,6 +33,10 @@ void ModsMain()
 	
 	// HOWL defrag Block1
 	printf("Mods4: %d\n", (int)howl_VolumeGet - (int)Mods4_EndOfFile);
+	
+	// LOAD defrag Block1
+	printf("Mods5: %d\n", (int)LOAD_AppendQueue - (int)Mods5_EndOfFile);
+	
 	// add more...
 	
 	

@@ -1,7 +1,8 @@
-// 491+43+38+14+18+16+19+1+9+1+1+2+2+1+3+2+4+2+2+2+16+3+47-12 = 725 rewritten so far
-// 491 for every 'common' and ','
+// 458+43+33+38+14+18+16+19+1+9+1+1+2+2+1+3+2+4+2+2+2+16+3+47-12 = 725 rewritten so far
+// 458 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
+// 33 for LOAD block
 // 38 for 230_Block1
 // 14 for 230_Block2
 // 18 for 230_Block3
@@ -389,40 +390,10 @@ common, exe, LinkedCollide_Radius, 0x0, General/LinkedCollide_Radius.c
 common, exe, LinkedCollide_Hitbox_Desc, 0x0, General/LinkedCollide_Hitbox_Desc.c
 
 // LOAD
-common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_A01_Callback_Overlay_Generic.c
-common, exe, LOAD_Callback_Overlay_230, 0x0, General/LOAD/LOAD_A02_Callback_Overlay_230.c
-common, exe, LOAD_Callback_Overlay_231, 0x0, General/LOAD/LOAD_A03_Callback_Overlay_231.c
-common, exe, LOAD_Callback_Overlay_232, 0x0, General/LOAD/LOAD_A04_Callback_Overlay_232.c
-common, exe, LOAD_Callback_Overlay_233, 0x0, General/LOAD/LOAD_A05_Callback_Overlay_233.c
-common, exe, LOAD_Callback_MaskHints3D, 0x0, General/LOAD/LOAD_A06_Callback_MaskHints3D.c
-common, exe, LOAD_Callback_Podiums, 0x0, General/LOAD/LOAD_A07_Callback_Podiums.c
-common, exe, LOAD_Callback_LEV, 0x0, General/LOAD/LOAD_A08_Callback_LEV.c
-common, exe, LOAD_Callback_LEV_Adv, 0x0, General/LOAD/LOAD_A09_Callback_LEV_Adv.c
-common, exe, LOAD_Callback_DriverModels, 0x0, General/LOAD/LOAD_A10_Callback_DriverModels.c
-common, exe, LOAD_HubCallback, 0x0, General/LOAD/LOAD_A11_HubCallback.c
-common, exe, LOAD_GlobalModelPtrs_MPK, 0x0, General/LOAD/LOAD_A12_GlobalModelPtrs_MPK.c
-common, exe, LOAD_HubSwapPtrs, 0x0, General/LOAD/LOAD_A13_HubSwapPtrs.c
-common, exe, LOAD_StringToUpper, 0x0, General/LOAD/LOAD_A14_StringToUpper.c
-common, exe, LOAD_InitCD, 0x0, General/LOAD/LOAD_A15_InitCD.c
-common, exe, LOAD_ReadDirectory, 0x0, General/LOAD/LOAD_A16_ReadDirectory.c
-common, exe, LOAD_DramFileCallback, 0x0, General/LOAD/LOAD_A17_DramFileCallback.c
-common, exe, LOAD_DramFile, 0x0, General/LOAD/LOAD_A18_DramFile.c
-common, exe, LOAD_VramFileCallback, 0x0, General/LOAD/LOAD_A19_VramFileCallback.c
-common, exe, LOAD_VramFile, 0x0, General/LOAD/LOAD_A20_VramFile.c
-common, exe, LOAD_ReadFileASyncCallback, 0x0, General/LOAD/LOAD_A21_ReadFileASyncCallback.c
-common, exe, LOAD_ReadFile, 0x0, General/LOAD/LOAD_A22_ReadFile.c
-common, exe, LOAD_ReadFile_NoCallback, 0x0, General/LOAD/LOAD_A23_ReadFile_NoCallback.c
-common, exe, LOAD_FindFile, 0x0, General/LOAD/LOAD_A24_FindFile.c
-common, exe, LOAD_HowlHeaderSectors, 0x0, General/LOAD/LOAD_A25_HowlHeaderSectors.c
-common, exe, LOAD_HowlCallback, 0x0, General/LOAD/LOAD_A26_HowlCallback.c
-common, exe, LOAD_HowlSectorChainStart, 0x0, General/LOAD/LOAD_A27_HowlSectorChainStart.c
-common, exe, LOAD_HowlSectorChainEnd, 0x0, General/LOAD/LOAD_A28_HowlSectorChainEnd.c
-common, exe, LOAD_RunPtrMap, 0x0, General/LOAD/LOAD_A29_RunPtrMap.c
-common, exe, LOAD_Robots2P, 0x0, General/LOAD/LOAD_A30_Robots2P.c
-common, exe, LOAD_Robots1P, 0x0, General/LOAD/LOAD_A31_Robots1P.c
-common, exe, LOAD_DriverMPK, 0x0, General/LOAD/LOAD_A32_DriverMPK.c
-common, exe, LOAD_LangFile, 0x0, General/LOAD/LOAD_A33_LangFile.c
-common, exe, LOAD_GetBigfileIndex, 0x0, General/LOAD/LOAD_A34_GetBigfileIndex.c
+
+// A01 to A34
+common, exe, LOAD_Callback_Overlay_Generic, 0x0, General/LOAD/LOAD_A00_BIGBLOCK.c
+
 common, exe, LOAD_AppendQueue, 0x0, General/LOAD/LOAD_A35_AppendQueue.c
 common, exe, LOAD_CDRequestCallback, 0x0, General/LOAD/LOAD_A36_CDRequestCallback.c
 common, exe, LOAD_NextQueuedFile, 0x0, General/LOAD/LOAD_A37_NextQueuedFile.c
