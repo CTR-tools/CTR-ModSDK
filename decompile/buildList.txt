@@ -1,6 +1,7 @@
-// 534+38+14+18+16+19+1+9+1+1+2+2+1+3+2+4+2+2+2+16+3+47-12 = 725 rewritten so far
-// 534 for every 'common' and ','
+// 491+43+38+14+18+16+19+1+9+1+1+2+2+1+3+2+4+2+2+2+16+3+47-12 = 725 rewritten so far
+// 491 for every 'common' and ','
 // additions for every file that has multiple functions,
+// 43 for HOWL block
 // 38 for 230_Block1
 // 14 for 230_Block2
 // 18 for 230_Block3
