@@ -357,7 +357,7 @@ FinishLoading:
 					else
 					{
 						// if any button is pressed by anyone
-						if (*(int *)(&((char*)sdata->gGamepads)[0x290]) != 0)
+						if (sdata->gGamepads->anyoneHeldCurr != 0)
 						{
 							// leave demo mode
 							gGT->boolDemoMode = 0;
