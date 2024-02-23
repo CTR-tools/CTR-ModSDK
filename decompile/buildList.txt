@@ -1,5 +1,5 @@
-// 458+43+33+38+14+18+16+19+1+9+1+1+2+2+1+3+2+4+2+2+2+16+3+47-12 = 725 rewritten so far
-// 458 for every 'common' and ','
+// 452+43+33+38+14+18+16+19+1+8+9+1+1+2+2+1+3+2+4+2+2+2+16+3+47-12 = 727 rewritten so far
+// 452 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -9,6 +9,7 @@
 // 16 for 232 adv hub
 // 19 for the 20 UI Block #1
 // +1 for UI Block #2
+// +8 for UI Block #3
 // +9 for GAMEPAD Block #1
 // +1 for DebugFont
 // +1 for 222
@@ -439,6 +440,8 @@ common, exe, MainInit_VRAMClear, 0x0, General/MAIN/MainInit_VRAMClear.c
 common, exe, MainInit_VRAMDisplay, 0x0, General/MAIN/MainInit_VRAMDisplay.c
 common, exe, MainKillGame_StopCTR, 0x0, General/MAIN/MainKillGame_StopCTR.c
 common, exe, MainKillGame_LaunchSpyro2, 0x0, General/MAIN/MainKillGame_LaunchSpyro2.c
+common, exe, MainLoadVLC_Callback, 0x0, General/MAIN/MainLoadVLC_Callback.c
+common, exe, MainLoadVLC, 0x0, General/MAIN/MainLoadVLC.c
 common, exe, main, 0x0, General/MAIN/MainMain.c
 common, exe, MainRaceTrack_RequestLoad, 0x0, General/MAIN/MainRaceTrack_RequestLoad.c
 common, exe, MainRaceTrack_StartLoad, 0x0, General/MAIN/MainRaceTrack_StartLoad.c

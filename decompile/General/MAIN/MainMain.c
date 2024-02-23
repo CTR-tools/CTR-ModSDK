@@ -220,21 +220,19 @@ u_int DECOMP_main()
 						// If just finished loading stage 9
 						if (sdata->Loading.stage == -2)
 						{
-							#ifndef REBUILD_PS1
 							if
 							(
 								(gGT->levelID == MAIN_MENU_LEVEL) ||
 								(gGT->levelID == SCRAPBOOK)
 							)
 							{
-								MainLoadVLC();
+								DECOMP_MainLoadVLC();
 								
 								// start loading VLC (scroll up to iVar8 == -6)
 								sdata->Loading.stage = -6;
 								break;
 							}
-							#endif
-							
+
 FinishLoading:
 							// loading is finished,
 							// initialize world and pools,
