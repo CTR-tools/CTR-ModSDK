@@ -523,26 +523,33 @@ common, exe, MainStats_RestartRaceCountLoss, 0x0, General/MAIN/MainStats_Restart
 common, exe, MATH_Cos, 0x0, General/MATH/MATH_Cos.c
 
 // MEMCARD
-common, exe, MEMCARD_InitCard, 0x0, General/MEMCARD/MEMCARD_InitCard.c
 common, exe, MEMCARD_SetIcon, 0x0, General/MEMCARD/MEMCARD_SetIcon.c
 common, exe, MEMCARD_CRC16, 0x0, General/MEMCARD/MEMCARD_CRC16.c
 common, exe, MEMCARD_ChecksumSave, 0x0, General/MEMCARD/MEMCARD_ChecksumSave.c
 common, exe, MEMCARD_ChecksumLoad, 0x0, General/MEMCARD/MEMCARD_ChecksumLoad.c
 common, exe, MEMCARD_StringInit, 0x0, General/MEMCARD/MEMCARD_StringInit.c
 common, exe, MEMCARD_StringSet, 0x0, General/MEMCARD/MEMCARD_StringSet.c
-common, exe, MEMCARD_GetFreeBytes, 0x0, General/MEMCARD/MEMCARD_GetFreeBytes.c
+common, exe, MEMCARD_InitCard, 0x0, General/MEMCARD/MEMCARD_InitCard.c
+common, exe, MEMCARD_CloseCard, 0x0, General/MEMCARD/MEMCARD_CloseCard.c 
+common, exe, MEMCARD_GetNextSwEvent, 0x0, General/MEMCARD/MEMCARD_GetNextSwEvent.c
+common, exe, MEMCARD_GetNextHwEvent, 0x0, General/MEMCARD/MEMCARD_GetNextHwEvent.c
+common, exe, MEMCARD_WaitForHwEvent, 0x0, General/MEMCARD/MEMCARD_WaitForHwEvent.c
+common, exe, MEMCARD_SkipEvents, 0x0, General/MEMCARD/MEMCARD_SkipEvents.c
+common, exe, MEMCARD_NewTask, 0x0, General/MEMCARD/MEMCARD_NewTask.c
 common, exe, MEMCARD_CloseFile, 0x0, General/MEMCARD/MEMCARD_CloseFile.c
 common, exe, MEMCARD_ReadFile, 0x0, General/MEMCARD/MEMCARD_ReadFile.c
-common, exe, MEMCARD_NewTask, 0x0, General/MEMCARD/MEMCARD_NewTask.c
-common, exe, MEMCARD_GetNextSwEvent, 0x0, General/MEMCARD/MEMCARD_GetNextSwEvent.c
-common, exe, MEMCARD_CloseCard, 0x0, General/MEMCARD/MEMCARD_CloseCard.c 
-common, exe, MEMCARD_GetNextHwEvent, 0x0, General/MEMCARD/MEMCARD_GetNextHwEvent.c
-common, exe, MEMCARD_Format, 0x0, General/MEMCARD/MEMCARD_Format.c
-common, exe, MEMCARD_EraseFile, 0x0, General/MEMCARD/MEMCARD_EraseFile.c
-common, exe, MEMCARD_SkipEvents, 0x0, General/MEMCARD/MEMCARD_SkipEvents.c
-common, exe, MEMCARD_IsFile, 0x0, General/MEMCARD/MEMCARD_IsFile.c
-common, exe, MEMCARD_WaitForHwEvent, 0x0, General/MEMCARD/MEMCARD_WaitForHwEvent.c
 common, exe, MEMCARD_WriteFile, 0x0, General/MEMCARD/MEMCARD_WriteFile.c
+common, exe, MEMCARD_GetFreeBytes, 0x0, General/MEMCARD/MEMCARD_GetFreeBytes.c
+// unknown 8003ddac
+// GetInfo
+// Load
+// Save
+common, exe, MEMCARD_Format, 0x0, General/MEMCARD/MEMCARD_Format.c
+common, exe, MEMCARD_IsFile, 0x0, General/MEMCARD/MEMCARD_IsFile.c
+// FindFirstGhost
+// FindNextGhost
+common, exe, MEMCARD_EraseFile, 0x0, General/MEMCARD/MEMCARD_EraseFile.c
+
 
 // MEMPACK (done)
 common, exe, MEMPACK_Init, 0x0, General/MEMPACK/MEMPACK_Init.c
