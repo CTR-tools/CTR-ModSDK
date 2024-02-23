@@ -741,7 +741,8 @@ void DECOMP_AA_EndEvent_DisplayTime(short driverId, short param_2)
 	#endif
 	
 	UI_Lerp2D_Linear(&posXY[0], lerpStartX, lerpEndY, lerpEndX, lerpEndY, currFrame, endFrame);
-	UI_DrawRaceClock(posXY[0], posXY[1], 1, driver);
+	
+	DECOMP_UI_DrawRaceClock(posXY[0], posXY[1], 1, driver);
 
 	// "TOTAL"
 	width = DecalFont_GetLineWidth(sdata->lngStrings[0xc4], 1);

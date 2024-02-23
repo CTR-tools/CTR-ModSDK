@@ -19,7 +19,6 @@ extern struct MenuBox menuBox221;
 int UI_ConvertX_2(int x, int const_0x200);
 int UI_ConvertY_2(int y, int const_0x200);
 void DECOMP_UI_DrawNumCrystal(short x, short y, struct Driver* d);
-void UI_DrawLimitClock(short x, short y, short fontSize);
 void MENUBOX_ClearInput();
 void MENUBOX_Show(struct MenuBox*);
 
@@ -109,7 +108,7 @@ void DECOMP_CC_EndEvent_DrawMenu()
 			posXY[0], posXY[1],
 			FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 			
-		UI_DrawLimitClock(posXY[0]-0x33, posXY[1]+0x11, FONT_BIG);
+		DECOMP_UI_DrawLimitClock(posXY[0]-0x33, posXY[1]+0x11, FONT_BIG);
 	}
 		
 	

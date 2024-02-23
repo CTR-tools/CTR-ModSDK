@@ -206,7 +206,8 @@ void DECOMP_RR_EndEvent_DrawMenu(void)
 	// interpolate fly-in
 	UI_Lerp2D_Linear(&pos[0], startX, 0x32, 0x100, endY, startFrame, FPS_DOUBLE(0x14));
 
-	UI_DrawRaceClock(pos[0], pos[1] - 8, 1, d);
+	DECOMP_UI_DrawRaceClock(pos[0], pos[1] - 8, 1, d);
+	
 	if ((gGT->unknownFlags_1d44 & 0x2000000) != 0)
 	{
 		// if race ended less than 491 frames ago

@@ -1,7 +1,10 @@
 #include <common.h>
 
 void UI_VsQuipReadDriver();
+void UI_BattleDrawHeadArrows();
+
 void Mods1_EndOfFile();
+void Mods2_EndOfFile();
 
 void ModsMain()
 {
@@ -14,8 +17,11 @@ void ModsMain()
 	printf("\n\n");
 	printf("Bytes Free for Mods\n");
 	
-	// UI defrag
+	// UI defrag Block1
 	printf("Mods1: %d\n", (int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile);
+	
+	// UI defrag Block2
+	printf("Mods2: %d\n", (int)UI_BattleDrawHeadArrows - (int)Mods2_EndOfFile);
 	// add more...
 	
 	

@@ -67,7 +67,7 @@ void FUN_8009f710(void)
   FUN_80022878(*(undefined4 *)(DAT_8008d878 + 0x5b4),(int)(short)uStack64,(int)(short)uStack62,1,
                0xffff8000);
   
-  // Draw the Countdown Clock. First two params are PosX and PosY
+  // UI_DrawLimitClock
   FUN_8004f894((int)(((uint)uStack64 - 0x33) * 0x10000) >> 0x10,
                (int)(((uint)uStack62 + 0x11) * 0x10000) >> 0x10,1);
   

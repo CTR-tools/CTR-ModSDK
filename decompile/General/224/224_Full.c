@@ -73,7 +73,8 @@ AddStuff:
 		
 		// draw race clock in top-left corner
         UI_Lerp2D_Linear(&pos[0], 0x14, 8, startX_also_strFlags, 8, framesSinceRaceEnded, FPS_DOUBLE(0x14));
-        UI_DrawRaceClock((int)pos[0], (int)pos[1], 0, gGT->drivers[0]);
+        
+		DECOMP_UI_DrawRaceClock((int)pos[0], (int)pos[1], 0, gGT->drivers[0]);
 		
 		return;
     }
@@ -276,7 +277,7 @@ void DECOMP_TT_EndEvent_DisplayTime(int paramX, short paramY, u_int UI_DrawRaceC
 	// "YOUR TIME"
 	DecalFont_DrawLine(sdata->lngStrings[197], paramX, ((u_int)pos[1] - 0x4c), FONT_BIG, (JUSTIFY_CENTER | ORANGE));
 
-	UI_DrawRaceClock(pos[0], pos[1], UI_DrawRaceClockFlags, d);
+	DECOMP_UI_DrawRaceClock(pos[0], pos[1], UI_DrawRaceClockFlags, d);
 
 	rectangle.x = (pos[0] - textWidth) - 6;
 	rectangle.y = pos[1] - 0x50;

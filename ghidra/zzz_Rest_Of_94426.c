@@ -11588,7 +11588,7 @@ LAB_8004f378:
 }
 
 
-// countdown clock, used for Battle Mode and Crystal Challenge
+// UI_DrawLimitClock (battle + crystal challenge)
 // param1: X coordinate on the screen
 // param2: Y coordinate on the screen
 // param3: text size
@@ -15253,7 +15253,7 @@ LAB_80053c98:
 	// if you have a time limit (battle)
     if ((*(uint *)PTR_DAT_8008d2ac & 0x10000) != 0)
 	{
-	  // draw countdown clock
+	  // UI_DrawLimitClock
       FUN_8004f894(0xd7,0x68,2);
     }
   }
@@ -15582,14 +15582,8 @@ void FUN_8005435c(void)
   // TIME
   FUN_80022878(*(undefined4 *)(DAT_8008d878 + 0x48),0x14,8,2,0);
 
-  // "TIME" and the actual time are printed at the same
-  // X-coordinate, so we know 0x14 is the X, which only
-  // leaves the next parameter as the only possible value for
-  // the Y-coordinate.
-
-  // draw countdown clock
+  // UI_DrawLimitClock
   FUN_8004f894(0x14,0x10,1);
-
 
   // If game is paused
   if ((*(uint *)PTR_DAT_8008d2ac & 0xf) != 0) {
