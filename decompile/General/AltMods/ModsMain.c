@@ -3,10 +3,12 @@
 void UI_VsQuipReadDriver();
 void UI_BattleDrawHeadArrows();
 void GAMEPAD_JogCon1(struct Driver* driver, char param_2, u_short param_3);
+void howl_VolumeGet();
 
 void Mods1_EndOfFile();
 void Mods2_EndOfFile();
 void Mods3_EndOfFile();
+void Mods4_EndOfFile();
 
 void ModsMain()
 {
@@ -27,6 +29,9 @@ void ModsMain()
 	
 	// GAMEPAD defrag Block1
 	printf("Mods3: %d\n", (int)GAMEPAD_JogCon1 - (int)Mods3_EndOfFile);
+	
+	// HOWL defrag Block1
+	printf("Mods4: %d\n", (int)howl_VolumeGet - (int)Mods4_EndOfFile);
 	// add more...
 	
 	
