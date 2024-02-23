@@ -587,6 +587,9 @@ int GetSongTime()
 }
 #endif
 
+// for modding
+#include "../AltMods/ModsMain.c"
+
 // by separating this, it can be 
 // overwritten dynamically (oxide fix)
 void StateZero()
@@ -599,11 +602,9 @@ void StateZero()
 	
 	memset(gGT, 0, sizeof(struct GameTracker));
 	
-	#ifndef REBUILD_PC
-	#ifdef USE_60FPS
-	void ui60_entryHook(); ui60_entryHook();
-	#endif
-	#endif
+	// for modding
+	void ModsMain();
+	ModsMain();
 	
 	// Set Video Mode to NTSC
 	SetVideoMode(0);

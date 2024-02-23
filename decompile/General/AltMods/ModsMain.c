@@ -1,0 +1,32 @@
+#include <common.h>
+
+void UI_VsQuipReadDriver();
+void Mods1_EndOfFile();
+
+void ModsMain()
+{
+	#ifndef REBUILD_PC
+	#ifdef USE_60FPS
+	void ui60_entryHook(); ui60_entryHook();
+	#endif
+	#endif
+	
+	printf("\n\n");
+	printf("Bytes Free for Mods\n");
+	
+	// UI defrag
+	printf("Mods1: %d\n", (int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile);
+	// add more...
+	
+	
+	// For Oxide Fix when we get to it,
+	// these Heap spaces will have thread or instance
+	printf("\n\n");
+	printf("Bytes Free for Heap\n");
+	
+	// count ModsMain, and MainStateZero, free to overwrite after runtime
+	printf("ModsMain: %d\n", (int)MainRaceTrack_StartLoad - (int)ModsMain);
+	// add more...
+	
+	printf("\n\n");
+}
