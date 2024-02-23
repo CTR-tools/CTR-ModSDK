@@ -501,6 +501,7 @@
 
 8003af84 MainInit_VisMem
 8003b008 MainInit_RainBuffer
+
 8003b0f0 MainInit_PrimMem
 8003b2d4 MainInit_JitPoolsReset
 8003b334 MainInit_OTMem
@@ -510,10 +511,8 @@
 8003c1d4 MainInit_StringToLevID // unused
 8003c248 MainInit_VRAMClear
 8003c310 MainInit_VRAMDisplay
-
 8003c41c MainKillGame_StopCTR
 8003c480 MainKillGame_LaunchSpyro2
-
 8003c508 MainLoadVLC_Callback
 8003c518 MainLoadVLC // whatever that is
 8003c58c main

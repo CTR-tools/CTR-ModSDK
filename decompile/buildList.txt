@@ -430,19 +430,11 @@ common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDra
 common, exe, MainGameStart_Initialize, 0x0, General/MAIN/MainGameStart_Initialize.c
 
 common, exe, MainInit_VisMem, 0x0, General/MAIN/MainInit_VisMem.c
-common, exe, MainInit_PrimMem, 0x0, General/MAIN/MainInit_PrimMem.c
-common, exe, MainInit_JitPoolsReset, 0x0, General/MAIN/MainInit_JitPoolsReset.c
-common, exe, MainInit_OTMem, 0x0, General/MAIN/MainInit_OTMem.c
-common, exe, MainInit_JitPoolsNew, 0x0, General/MAIN/MainInit_JitPoolsNew.c
-common, exe, MainInit_Drivers, 0x0, General/MAIN/MainInit_Drivers.c
-common, exe, MainInit_FinalizeInit, 0x0, General/MAIN/MainInit_FinalizeInit.c
-common, exe, MainInit_VRAMClear, 0x0, General/MAIN/MainInit_VRAMClear.c
-common, exe, MainInit_VRAMDisplay, 0x0, General/MAIN/MainInit_VRAMDisplay.c
-common, exe, MainKillGame_StopCTR, 0x0, General/MAIN/MainKillGame_StopCTR.c
-common, exe, MainKillGame_LaunchSpyro2, 0x0, General/MAIN/MainKillGame_LaunchSpyro2.c
-common, exe, MainLoadVLC_Callback, 0x0, General/MAIN/MainLoadVLC_Callback.c
-common, exe, MainLoadVLC, 0x0, General/MAIN/MainLoadVLC.c
-common, exe, main, 0x0, General/MAIN/MainMain.c
+// MainInit_RainBuffer
+
+// everything between MainInit_RainBuffer and MainRaceTrack_RequestLoad
+common, exe, MainInit_PrimMem, 0x0, General/MAIN/MAIN_AAA_BigBlock1.c
+
 common, exe, MainRaceTrack_RequestLoad, 0x0, General/MAIN/MainRaceTrack_RequestLoad.c
 common, exe, MainRaceTrack_StartLoad, 0x0, General/MAIN/MainRaceTrack_StartLoad.c
 common, exe, MainStats_ClearBattleVS, 0x0, General/MAIN/MainStats_ClearBattleVS.c

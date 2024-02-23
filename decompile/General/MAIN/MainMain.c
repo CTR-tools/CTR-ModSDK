@@ -587,9 +587,6 @@ int GetSongTime()
 }
 #endif
 
-// for modding
-#include "../AltMods/ModsMain.c"
-
 // by separating this, it can be 
 // overwritten dynamically (oxide fix)
 void StateZero()

@@ -527,7 +527,7 @@ void DECOMP_MM_ParseCheatCodes()
 		if(cheat == &cheats[0])
 		{	
 			#ifndef REBUILD_PS1
-			MainKillGame_LaunchSpyro2();
+			DECOMP_MainKillGame_LaunchSpyro2();
 			#endif
 			
 			return;

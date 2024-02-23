@@ -4,6 +4,7 @@ void UI_VsQuipReadDriver();
 void UI_BattleDrawHeadArrows();
 void GAMEPAD_JogCon1(struct Driver* driver, char param_2, u_short param_3);
 void howl_VolumeGet();
+void StateZero(); // MainMain.c
 
 void Mods1_EndOfFile();
 void Mods2_EndOfFile();
@@ -59,7 +60,7 @@ void ModsMain()
 	// these Heap spaces will have thread or instance
 	
 	// count ModsMain, and MainStateZero, free to overwrite after runtime
-	printf("\n\nHeap:\nModsMain: %d\n", (int)MainRaceTrack_StartLoad - (int)ModsMain);
+	printf("\n\nHeap:\nModsMain: %d\n", (int)MainRaceTrack_StartLoad - (int)StateZero);
 	printf("VBMT: %d\n", 0x80057c44-0x80057884);
 	
 	// Can't use the full 4096 until fixing rdataPauseData
