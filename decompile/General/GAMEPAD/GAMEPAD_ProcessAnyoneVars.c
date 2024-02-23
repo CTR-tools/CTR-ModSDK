@@ -7,23 +7,10 @@ void DECOMP_GAMEPAD_ProcessAnyoneVars(struct GamepadSystem* gGamepads)
   unsigned int uVar2;
   struct GamepadBuffer* pad;
 
-  // determine which buttons are held this frame,
-  // store a backup of "currFrame" into "lastFrame"
   DECOMP_GAMEPAD_ProcessHold(gGamepads);
-
-#ifndef REBUILD_PS1
-  // handle mapping of D-Pad and
-  // analog stick values onto each other
-  GAMEPAD_ProcessSticks(gGamepads);
-#endif
-
-  // Writes all gamepad variables
-  // for Tap and Release, based on Hold
+  DECOMP_GAMEPAD_ProcessSticks(gGamepads);
   DECOMP_GAMEPAD_ProcessTapRelease(gGamepads);
-
-#ifndef REBUILD_PS1
-  GAMEPAD_ProcessMotors(gGamepads);
-#endif
+  DECOMP_GAMEPAD_ProcessMotors(gGamepads);
 
   // These are used to see if any button is pressed by anyone
   // during this frame. Reset them all to zero

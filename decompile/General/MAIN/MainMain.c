@@ -567,7 +567,7 @@ FinishLoading:
 				Bank_DestroyAll();
 				howl_Disable();
 
-				GAMEPAD_SetMainMode(sdata->gGamepads);
+				DECOMP_GAMEPAD_SetMainMode(sdata->gGamepads);
 
 				// Set vsync to 2 FPS
 				VSync(30);

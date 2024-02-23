@@ -739,7 +739,7 @@ LAB_80035098:
   puVar9 = PTR_DAT_8008d2b0;
   param_1[1] = *param_1;
 
-  // Check for change in the amount of gamepads connected
+  // GAMEPAD_GetNumConnected
   iVar10 = FUN_800255b4(puVar9);
 
 
@@ -8788,7 +8788,7 @@ undefined4 main(void)
 
       VSync(0);
 
-	  // check number of gamepads connected
+	  // GAMEPAD_GetNumConnected
 	  FUN_800255b4(PTR_DAT_8008d2b0);
 
 	  // Get CD Position fo BIGFILE
@@ -8985,7 +8985,7 @@ LAB_8003ca68:
 	  // initialize all threadBuckets
       FUN_8003b934(PTR_DAT_8008d2ac);
 
-	  // get number of gamepads connected
+	  // GAMEPAD_GetNumConnected
       FUN_800255b4(PTR_DAT_8008d2b0);
 
 	  // set sound to unpaused
