@@ -48,6 +48,7 @@ void ModsMain()
 		printf("Mods%d.c: %d\n", i+1, modSizes[i]);
 	}
 	
+	// New block for TileView?
 	// MultiplayerWumpaHUD is never called, therefore
 	// TileView_SetDrawEnv_DecalMP can be taken
 	
@@ -56,12 +57,13 @@ void ModsMain()
 	
 	// For Oxide Fix when we get to it,
 	// these Heap spaces will have thread or instance
-	printf("\n\nHeap:\n");
 	
 	// count ModsMain, and MainStateZero, free to overwrite after runtime
-	printf("ModsMain: %d\n", (int)MainRaceTrack_StartLoad - (int)ModsMain);
+	printf("\n\nHeap:\nModsMain: %d\n", (int)MainRaceTrack_StartLoad - (int)ModsMain);
 	printf("VBMT: %d\n", 0x80057c44-0x80057884);
-	printf("RDATA: 4096, after fixing rdataPauseData\n\n");
+	
+	// Can't use the full 4096 until fixing rdataPauseData
+	printf("RDATA: 4096\n$sp: TBD\n\n");
 	
 	
 	// add more...
