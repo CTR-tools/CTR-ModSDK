@@ -541,7 +541,7 @@ void FUN_8003f590(int param_1,int *param_2)
   uint uVar26;
 
   // TileView_SetPsyqGeom
-  FUN_80042910();
+  FUN_80042910(param_1);
 
   // tileView -> 0x28 (matrix)
   DAT_1f800000 = *(undefined4 *)(param_1 + 0x28);

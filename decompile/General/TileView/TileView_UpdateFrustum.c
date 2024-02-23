@@ -55,7 +55,7 @@ void DECOMP_TileView_UpdateFrustum(struct TileView* tileView)
 	"mfc2   %2, $27;"  \
 	: : "r"(r0), "r"(r1), "r"(r2))
 
-  TileView_SetMatrixVP(tileView);
+  DECOMP_TileView_SetMatrixVP(tileView);
 
   // disable the rest of the function by setting
   // 80043124 to 0x08010E3E (j 0x800438f8),
