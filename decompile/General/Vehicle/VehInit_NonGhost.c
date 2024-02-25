@@ -24,6 +24,13 @@ void DECOMP_VehInit_NonGhost(struct Thread* t, int index)
 		id = data.characterIDs[index];
 	}
 	
+	// My bad, this wasn't safe to relocate -- Niko
+	// Patch call to VehPtr_Crashing_Init from COLL
+	#ifndef REBUILD_PS1
+	#define JAL(dest) (((unsigned long)dest & 0x3FFFFFF) >> 2 | 0xC000000)
+	*(int*)0x800214bc = JAL(DECOMP_VehPtr_Crashing_Init);
+	#endif
+	
 #ifndef REBUILD_PS1
 	struct Model* m = VehInit_GetModelByName(data.MetaDataCharacters[id].name_Debug);
 #else
