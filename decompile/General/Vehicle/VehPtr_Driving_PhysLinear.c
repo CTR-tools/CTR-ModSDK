@@ -41,7 +41,8 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	short driverRankItemValue;
 	u_int itemSound;
 	u_int uVar20;
-	int joystickStrength;
+	int stickLY;
+	int stickRY;
 	int driverSpeedOrSmth = 0;
 	struct Thread* driverItemThread;
 	struct Shield* shield;
@@ -658,13 +659,13 @@ CheckJumpButtons:
 	}
 
 	// assume normal gas pedal
-	joystickStrength = 0x80;
+	stickRY = 0x80;
 
 	// If you're not in End-Of-Race menu
 	if ((gGT->gameMode1 & END_OF_RACE) == 0)
 	{
 		// gamepadBuffer -> stickRY (for gas or reverse)
-		joystickStrength = (int)ptrgamepad->stickRY;
+		stickRY = (int)ptrgamepad->stickRY;
 	}
 
 	if
@@ -678,7 +679,7 @@ CheckJumpButtons:
 		// If you are not holding Cross
 		if(cross == 0)
 		{
-			unk0x80 = Player_StickReturnToRest(joystickStrength, 0x80, 0); 
+			unk0x80 = Player_StickReturnToRest(stickRY, 0x80, 0); 
 			
 			if(unk0x80 > -1)
 			{
@@ -709,12 +710,12 @@ CheckJumpButtons:
 	// === Gas/Brake section ===
 	
 
-	unk0x80 = 0x80;
+	stickLY = 0x80;
 
 	// If you're not in End-Of-Race menu
 	if ((gGT->gameMode1 & END_OF_RACE) == 0) 
 	{
-		unk0x80 = ptrgamepad->stickLY;
+		stickLY = ptrgamepad->stickLY;
 	}
 	
 	if
@@ -767,7 +768,7 @@ CheckJumpButtons:
 		// driverSpeedSmth2 is replaced
 
 		// Player_StickReturnToRest
-		driverSpeedSmth2 = Player_StickReturnToRest(joystickStrength, 0x80, 0);
+		driverSpeedSmth2 = Player_StickReturnToRest(stickRY, 0x80, 0);
 
 		driverSpeedOrSmth = -driverSpeedSmth2;
 		if (driverSpeedSmth2 < 1)
@@ -777,7 +778,7 @@ CheckJumpButtons:
 				(driverSpeedOrSmth == 0) &&
 				(
 					(
-						unk0x80 = Player_StickReturnToRest(unk0x80, 0x80, 0), 
+						unk0x80 = Player_StickReturnToRest(stickLY, 0x80, 0), 
 						
 						(unk0x80 > 99) ||
 
@@ -827,7 +828,7 @@ CheckJumpButtons:
 	// If you are holding Square
 	else
 	{
-		unk0x80 = Player_StickReturnToRest(unk0x80, 0x80, 0);
+		unk0x80 = Player_StickReturnToRest(stickLY, 0x80, 0);
 
 		if ((unk0x80 < 100) && ((unk0x80 < 1 || ((actionsFlagSetCopy & 0x20000) == 0))))
 		{
@@ -835,7 +836,7 @@ CheckJumpButtons:
 			if (cross == 0)
 			{
 				// Player_StickReturnToRest
-				driverSpeedOrSmth = Player_StickReturnToRest(joystickStrength, 0x80, 0);
+				driverSpeedOrSmth = Player_StickReturnToRest(stickRY, 0x80, 0);
 
 				if (driverSpeedOrSmth < 0)
 				{
