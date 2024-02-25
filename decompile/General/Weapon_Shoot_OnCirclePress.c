@@ -6,7 +6,7 @@ void DECOMP_Weapon_Shoot_OnCirclePress(struct Driver *d)
 
     if (d->ChangeState_param2 != 0)
     {
-        Player_ChangeState(d, d->ChangeState_param2, d->ChangeState_param3, d->ChangeState_param4);
+        DECOMP_Player_ChangeState(d, d->ChangeState_param2, d->ChangeState_param3, d->ChangeState_param4);
     }
 
     // If you want to fire a weapon
@@ -29,5 +29,5 @@ void DECOMP_Weapon_Shoot_OnCirclePress(struct Driver *d)
 		weapon = 2;
 	}
     
-    Weapon_Shoot_Now(d, weapon, 0);
+    DECOMP_Weapon_Shoot_Now(d, weapon, 0);
 }

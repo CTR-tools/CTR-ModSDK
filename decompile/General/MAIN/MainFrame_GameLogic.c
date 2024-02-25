@@ -195,9 +195,7 @@ LAB_80035098:
 
 					for(psVar12 = gGT->threadBuckets[iVar4].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 					{
-						#ifndef REBUILD_PS1
-						Weapon_Shoot_OnCirclePress((struct Driver*)psVar12->object);
-						#endif
+						DECOMP_Weapon_Shoot_OnCirclePress((struct Driver*)psVar12->object);
 					}
 
 					#ifdef USE_GPU1P
