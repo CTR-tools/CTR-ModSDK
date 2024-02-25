@@ -44,7 +44,7 @@ int DECOMP_Player_GetBaseSpeed(struct Driver* driver)
   
   #endif
   
-  speedAdditional = (netWumpaFruitCount * netSpeedStat) / 10 + turboMultiplier * netSpeedStat >> 12;
+  speedAdditional = ((netWumpaFruitCount * netSpeedStat) / 10) + ((turboMultiplier * netSpeedStat) >> 12);
 
   if ((driver->actionsFlagSet & 0x800000) != 0) 
   {
@@ -59,7 +59,34 @@ int DECOMP_Player_GetBaseSpeed(struct Driver* driver)
     }
   }
 
-  netSpeed = statAdditional + speedAdditional - driver->const_DamagedSpeed;
+  int subtract = 0;
+  
+  if(driver->instTntRecv != 0)
+	  subtract = driver->const_DamagedSpeed/2;
+  
+  if(
+		// burn, squish, or raincloud
+		(driver->burnTimer != 0) ||
+		(driver->squishTimer != 0) || 
+		(driver->driverRankItemValue == 0)
+	)
+  {
+	  subtract = driver->const_DamagedSpeed;
+  }
+  
+  if(driver->clockRecv != 0)
+  {
+	  // if in 1st place, DamagedSpeed
+	  // if in 8th place, zero
+	  int clockEffect = 
+		driver->const_DamagedSpeed *
+		((0x14 - driver->driverRank) >> 4);
+		
+	  if(subtract < clockEffect)
+		  subtract = clockEffect;
+  }
+
+  netSpeed = statAdditional + speedAdditional - subtract;
 
   if (0x6400 < netSpeed) {
     netSpeed = 0x6400;

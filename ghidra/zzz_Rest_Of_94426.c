@@ -27568,8 +27568,7 @@ int FUN_80061488(int param_1)
 
   //if racer has TNT over them
   if (*(int *)(param_1 + 0x18) != 0) {
-    //iVar4 = (Damaged speed Constant u<< 0x10) s>> 0x11
-    //iVar4 = (0x1000 u<< 0x10) s>> 0x11 = 0x10000000 s>> 0x11 = 0x800
+    //iVar4 = Damaged speed Constant/2
     iVar4 = (int)((uint)*(ushort *)(param_1 + 0x438) << 0x10) >> 0x11;
   }
 
