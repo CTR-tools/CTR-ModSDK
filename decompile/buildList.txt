@@ -630,7 +630,7 @@ common, exe, VehPtr_Blasted_Init, 0x0, General/Vehicle/VehPtr_Blasted_Init.c
 
 // VEH (other)
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
-//common, exe, Player_GetBaseSpeed, 0x0, General/Player_GetBaseSpeed.c
+common, exe, Player_GetBaseSpeed, 0x0, General/Player_GetBaseSpeed.c
 common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
 common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
 common, exe, Turbo_ThDestroy, 0x0, General/Turbo_ThDestroy.c

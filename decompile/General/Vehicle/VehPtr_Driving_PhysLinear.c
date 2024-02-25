@@ -737,12 +737,15 @@ CheckJumpButtons:
 	}
 	approximateSpeed2 = 0;
 	
-	// buggy, experimental (9044 in rewrite, 13140 in original)
+	// with zero wumpa, should be const_Speed_ClassStat (13140 for Crash Bandicoot)
+	// this works for both decomp and original
+	
 	// with one wumpa, (25600 in rewrite, 13169 in original) 
 	
 	#ifdef REBUILD_PC
 	// buggy, experimental
-	driverBaseSpeed = DECOMP_Player_GetBaseSpeed(driver);
+	//driverBaseSpeed = DECOMP_Player_GetBaseSpeed(driver);
+	driverBaseSpeed = driver->const_Speed_ClassStat;
 	#else
 	// original, for decomp
 	driverBaseSpeed = Player_GetBaseSpeed(driver);

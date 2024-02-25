@@ -74,7 +74,7 @@ int DECOMP_Player_GetBaseSpeed(struct Driver* driver)
 	  subtract = driver->const_DamagedSpeed;
   }
   
-  if(driver->clockRecv != 0)
+  if(driver->clockReceive != 0)
   {
 	  // if in 1st place, DamagedSpeed
 	  // if in 8th place, zero
