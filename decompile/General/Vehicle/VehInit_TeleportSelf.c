@@ -283,22 +283,18 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
 
     // rotation data of all 8 drivers on starting line
     d->rotCurr.x = posRot->rot[0];
-    d->rotCurr.y = posRot->rot[1];
+    d->rotCurr.y = posRot->rot[1] + 0x400;
     d->rotCurr.z = posRot->rot[2];
 	
-    d->posCurr[0] = posRot->pos[0];
-    d->posCurr[1] = posRot->pos[1];
-    d->posCurr[2] = posRot->pos[2];
-	
-	*(int*)&d->instSelf->matrix.m[0][0] = 0x1000;
-	*(int*)&d->instSelf->matrix.m[0][2] = 0;
-	*(int*)&d->instSelf->matrix.m[1][1] = 0x1000;
-	*(int*)&d->instSelf->matrix.m[2][0] = 0;
-	d->instSelf->matrix.m[2][2] = 0x1000;
+    d->posCurr[0] = posRot->pos[0] << 8;
+    d->posCurr[1] = posRot->pos[1] << 8;
+    d->posCurr[2] = posRot->pos[2] << 8;
 	
 	d->instSelf->matrix.t[0] = d->posCurr[0] >> 8;
 	d->instSelf->matrix.t[1] = d->posCurr[1] >> 8;
 	d->instSelf->matrix.t[2] = d->posCurr[2] >> 8;
+
+    TEST_ConvertRotToMatrix(&d->instSelf->matrix.m, &d->rotCurr.x);
 	
 	#else
 		
