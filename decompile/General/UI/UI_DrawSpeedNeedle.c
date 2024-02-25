@@ -42,7 +42,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
 #ifndef REBUILD_PC
   // Map value from [oldMin, oldMax] to [newMin, newMax]
   // inverting newMin and newMax will give an inverse range mapping
-  needle = MapToRange(((speed >> 0x18) * 0x1a5e0) / 64000, minScale, (maxScale * 0x1a5e0) / 64000, minRange, maxRange);
+  needle = VehMath_MapToRange(((speed >> 0x18) * 0x1a5e0) / 64000, minScale, (maxScale * 0x1a5e0) / 64000, minRange, maxRange);
 #else
   needle = 0;
 #endif

@@ -50,7 +50,7 @@ int Player_Driving_LerpToForwards(struct Driver *d, int param_2, int param_3, in
   }
 
   // Interpolate rotation by speed
-  iVar3 = InterpBySpeed(param_3, d->unk45a, iVar3);
+  iVar3 = VehMath_InterpBySpeed(param_3, d->unk45a, iVar3);
   if (bVar1)
   {
     iVar3 = -iVar3;

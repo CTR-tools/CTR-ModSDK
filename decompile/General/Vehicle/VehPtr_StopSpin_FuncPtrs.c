@@ -66,7 +66,7 @@ void DECOMP_VehPtr_StopSpin_Animate(struct Thread* t, struct Driver* d)
 	#endif
 
 	// increment by two frames until reaching midpoint
-	inst->animFrame = InterpBySpeed(inst->animFrame, 2, numFrames);
+	inst->animFrame = VehMath_InterpBySpeed(inst->animFrame, 2, numFrames);
 	
 	// quit function until midpoint is reached
 	if(inst->animFrame != numFrames)

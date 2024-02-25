@@ -64,7 +64,7 @@ void DECOMP_VehPtr_Blasted_PhysAngular(struct Thread *thread, struct Driver *dri
 		driver->unk3D4[0] + driver->angle + driver->turnAngleCurr;
 	
 	(driver->rotCurr).w = 
-		InterpBySpeed((int)(driver->rotCurr).w, (elapsedTimeMS << 5) >> 5, 0);
+		VehMath_InterpBySpeed((int)(driver->rotCurr).w, (elapsedTimeMS << 5) >> 5, 0);
 	
 	#ifndef REBUILD_PS1
 	Rot_AxisAngle(&driver->matrix310, driver->AxisAngle1_normalVec, driver->angle);

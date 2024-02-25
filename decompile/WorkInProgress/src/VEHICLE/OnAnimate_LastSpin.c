@@ -40,7 +40,7 @@ void OnAnimate_LastSpin(struct Thread *t, struct Driver* d)
             }
 
             // Interpolate animation frame by speed
-            interp = InterpBySpeed(inst->animFrame, 3, startFrame);
+            interp = VehMath_InterpBySpeed(inst->animFrame, 3, startFrame);
 
             // set animation frame
             inst->animFrame = interp;

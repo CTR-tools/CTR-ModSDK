@@ -1049,7 +1049,7 @@ CheckJumpButtons:
 
 	// As speed increases, turn rate decreases
 	iVar14 =
-	MapToRange
+	VehMath_MapToRange
 	(
 		driverSpeedCopy, 
 		0x300,	driver->const_Speed_ClassStat / 2, 
@@ -1098,7 +1098,7 @@ SkipSetSteer:
 
 	// Change wheel rotation based on StickLX
 	driverSpeedOrSmth = Player_StickGetStrengthAbsolute(driverSpeedOrSmth, 0x40, ptrgamepad->rwd);
-	driverBaseSpeedUshort = InterpBySpeed((int)driver->wheelRotation, FPS_HALF(0x18), -driverSpeedOrSmth);
+	driverBaseSpeedUshort = VehMath_InterpBySpeed((int)driver->wheelRotation, FPS_HALF(0x18), -driverSpeedOrSmth);
 	*(u_short*)&driver->wheelRotation = driverBaseSpeedUshort;
 
 	driverSpeedOrSmth = (int)driver->fireSpeed;

@@ -893,10 +893,10 @@
 80057b14 VehInit_NonGhost
 80057ca8 VehInit_Player
 
-80057d3c InterpBySpeed
-80057d84 MapToRange
-80057df4 Player_SteerAccel
-80057e58 FastSqrt
+80057d3c VehMath_InterpBySpeed
+80057d84 VehMath_MapToRange
+80057df4 VehMath_SteerAccel
+80057e58 VehMath_FastSqrt
 
 80057ee8 VehParticle_Exhaust
 8005812c VehParticle_Sparks_Ground

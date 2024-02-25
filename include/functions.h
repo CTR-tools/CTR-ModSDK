@@ -952,10 +952,10 @@ struct Driver* VehInit_Player(int index);
 
 // uncategorized
 
-int InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
-int MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
-int Player_SteerAccel(int param_1, int param_2, int param_3, u_int param_4, u_int param_5, u_int param_6);
-//FastSqrt()
+int VehMath_InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
+int VehMath_MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
+int VehMath_SteerAccel(int param_1, int param_2, int param_3, u_int param_4, u_int param_5, u_int param_6);
+//VehMath_FastSqrt()
 
 // VehParticle
 

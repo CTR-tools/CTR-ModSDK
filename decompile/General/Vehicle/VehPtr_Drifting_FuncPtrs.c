@@ -80,14 +80,14 @@ void DECOMP_VehPtr_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 
 	// Interpolate rotation by speed
 	driver->rotPrev.w =
-		InterpBySpeed(
+		VehMath_InterpBySpeed(
 			(int)driver->rotPrev.w, 
 			FPS_HALF(8), 
 			uVar10);
 
 	// Interpolate rotation by speed
 	driver->rotCurr.w =
-		InterpBySpeed(
+		VehMath_InterpBySpeed(
 			(int)driver->rotCurr.w, 
 			(int)driver->rotPrev.w * gGT->elapsedTimeMS >> 5, 
 			iVar13);
@@ -147,7 +147,7 @@ void DECOMP_VehPtr_Drifting_PhysAngular(struct Thread* th, struct Driver* driver
 	}
 
 	// Map "simpTurnState" from [0, const_TurnRate] to [0, driftDirection]
-	iVar13 = MapToRange(iVar13, 0, ((u_int)driver->const_TurnRate + ((int)driver->turnConst << 1) / 5) * 0x100, 0, iVar9 << 8);
+	iVar13 = VehMath_MapToRange(iVar13, 0, ((u_int)driver->const_TurnRate + ((int)driver->turnConst << 1) / 5) * 0x100, 0, iVar9 << 8);
 								 
 	if
 	(
@@ -199,7 +199,7 @@ LAB_80063244:
 
 		// Interpolate by 1 unit, until zero
 		driver->KartStates.Drifting.numFramesDrifting =
-			InterpBySpeed((int)driver->KartStates.Drifting.numFramesDrifting, 1, 0);
+			VehMath_InterpBySpeed((int)driver->KartStates.Drifting.numFramesDrifting, 1, 0);
 	}
 	
 	// if holding a drift
@@ -239,7 +239,7 @@ LAB_80063244:
 
 	// Map value from [oldMin, oldMax] to [newMin, newMax]
 	// inverting newMin and newMax will give an inverse range mapping
-	iVar13 = MapToRange((int)driver->KartStates.Drifting.driftTotalTimeMS, 0, (u_int)driver->unk462 << 5, (int)driver->unk461 * (int)driver->multDrift >> 8, iVar15);
+	iVar13 = VehMath_MapToRange((int)driver->KartStates.Drifting.driftTotalTimeMS, 0, (u_int)driver->unk462 << 5, (int)driver->unk461 * (int)driver->multDrift >> 8, iVar15);
 	if (-1 < iVar13)
 	{
 		if (iVar12_D < -iVar13)
@@ -265,7 +265,7 @@ LAB_800632cc:
 
 	// Map value from [oldMin, oldMax] to [newMin, newMax]
 	// inverting newMin and newMax will give an inverse range mapping
-	iVar12_D = MapToRange(iVar12_D, 0, (int)driver->unk460 + ((int)driver->turnConst << 2) / 5, 0, (int)driver->unk474);
+	iVar12_D = VehMath_MapToRange(iVar12_D, 0, (int)driver->unk460 + ((int)driver->turnConst << 2) / 5, 0, (int)driver->unk474);
 	
 	iVar15 = iVar9;
 	
@@ -292,7 +292,7 @@ LAB_800632cc:
 
 	// Map value from [oldMin, oldMax] to [newMin, newMax]
 	// inverting newMin and newMax will give an inverse range mapping
-	iVar15 = MapToRange(iVar15, 0, iVar11 << 8, 0, iVar8);
+	iVar15 = VehMath_MapToRange(iVar15, 0, iVar11 << 8, 0, iVar8);
 	iVar12_D = (iVar12_D + iVar15) - driver->turnAngleCurr;
 	iVar15 = iVar12_D >> 3;
 	sVar5 = (short)iVar15;
@@ -359,7 +359,7 @@ LAB_800632cc:
 		}
 
 		// Interpolate rotation by speed
-		sVar5 = InterpBySpeed(driver->unk3D4[0], iVar12_E, 0);
+		sVar5 = VehMath_InterpBySpeed(driver->unk3D4[0], iVar12_E, 0);
 	}
 	else
 	{
@@ -494,7 +494,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
                 // the more room remaining to fill, the less boost you get
                 // old minMax: [zero -> const_turboLowRoomWarning]
                 // new minMax: [const_turboFullBarReserveGain, -> zero]
-                incrementReserves = MapToRange(meterLeft, 0, highMeter, d->const_turboFullBarReserveGain << 5, 0);
+                incrementReserves = VehMath_MapToRange(meterLeft, 0, highMeter, d->const_turboFullBarReserveGain << 5, 0);
 
                 DECOMP_Turbo_Increment(
 

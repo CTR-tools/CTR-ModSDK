@@ -210,10 +210,11 @@ LAB_800af72c:
             // if distance is large
             if (300 < iVar7)
             {
-                // calculate volume based on distance,
-                // mapping perentage between min-max distance,
-                // to a volume 0 - 0xff
-                uVar6 = MapToRange(iVar7, 300, 6000, 0xff, 0);	
+                // Map the distance 
+				//	[300, 6000] (close, far)
+				// to volume
+				//	[0xff, 0] (loud, soft)
+                uVar6 = VehMath_MapToRange(iVar7, 300, 6000, 0xff, 0);	
             }
 
             // Play save/load screen sound

@@ -94,11 +94,11 @@ void VehParticle_DriverMain(struct Thread *t, struct Driver *d, undefined *param
 
     // volume
     // Map value from [minSpeed, maxSpeed] to [minVol, maxVol]
-    vol = MapToRange(approxSpeed, 0, 5000, 0, 200);
+    vol = VehMath_MapToRange(approxSpeed, 0, 5000, 0, 200);
 
     // distortion
     // Map value from [minSpeed, maxSpeed] to [minDistort, maxDistort]
-    distort = MapToRange(approxSpeed, 0, 12000, 0x6c, 0xd2);
+    distort = VehMath_MapToRange(approxSpeed, 0, 12000, 0x6c, 0xd2);
     distort = iVar11 << 8;
 
     // if echo is required
@@ -347,11 +347,11 @@ void VehParticle_DriverMain(struct Thread *t, struct Driver *d, undefined *param
 
       // Map value from [oldMin, oldMax] to [newMin, newMax]
       // inverting newMin and newMax will give an inverse range mapping
-      iVar11 = MapToRange(approxSpeed, 2000, 12000, 0x14, 0xaa);
+      iVar11 = VehMath_MapToRange(approxSpeed, 2000, 12000, 0x14, 0xaa);
 
       // Map value from [oldMin, oldMax] to [newMin, newMax]
       // inverting newMin and newMax will give an inverse range mapping
-      iVar15 = MapToRange(approxSpeed, 2000, 12000, 0x92, 0x78);
+      iVar15 = VehMath_MapToRange(approxSpeed, 2000, 12000, 0x92, 0x78);
 
       // or you are sliding
       if (d->kartState == KS_DRIFTING)

@@ -88,7 +88,7 @@ PLAY_AUDIO:
     else
     {
         // Map value from [oldMin, oldMax] to [newMin, newMax]
-        volume = MapToRange(distance, 300, 9000, 0xff, 0);
+        volume = VehMath_MapToRange(distance, 300, 9000, 0xff, 0);
     }
 
     OtherFX_Play_LowLevel(sound & 0xffff, 1,

@@ -28,11 +28,11 @@ void EngineSound_Player(struct Driver *driver)
 
         // Map value from [oldMin, oldMax] to [newMin, newMax]
         // inverting newMin and newMax will give an inverse range mapping
-        vol = MapToRange(driver->fill_3B6[0], 0, driver->const_SpeedometerScale_ClassStat, 0, 0xe6);
+        vol = VehMath_MapToRange(driver->fill_3B6[0], 0, driver->const_SpeedometerScale_ClassStat, 0, 0xe6);
 
         // Map value from [oldMin, oldMax] to [newMin, newMax]
         // inverting newMin and newMax will give an inverse range mapping
-        distort = MapToRange(driver->fill_3B6[1], 0, driver->const_SpeedometerScale_ClassStat, 0x3c, 200);
+        distort = VehMath_MapToRange(driver->fill_3B6[1], 0, driver->const_SpeedometerScale_ClassStat, 0x3c, 200);
 
         // Left/Right
         LR = 0x80 - ((int)((u_int) * (u_short *)(driver + 6) << 0x10) >> 0x13);
@@ -78,11 +78,11 @@ void EngineSound_Player(struct Driver *driver)
 
             // Map value from [oldMin, oldMax] to [newMin, newMax]
             // inverting newMin and newMax will give an inverse range mapping
-            vol = MapToRange(driver->fill_3B6[0], 0, driver->const_SpeedometerScale_ClassStat, 0x82, 0xe6);
+            vol = VehMath_MapToRange(driver->fill_3B6[0], 0, driver->const_SpeedometerScale_ClassStat, 0x82, 0xe6);
 
             // Map value from [oldMin, oldMax] to [newMin, newMax]
             // inverting newMin and newMax will give an inverse range mapping
-            distort = MapToRange(driver->fill_3B6[1], 0, driver->const_SpeedometerScale_ClassStat, 0x3c, 200);
+            distort = VehMath_MapToRange(driver->fill_3B6[1], 0, driver->const_SpeedometerScale_ClassStat, 0x3c, 200);
 
             // left/right
             LR = 0x80 - ((int)((u_int) * (u_short *)(driver + 6) << 0x10) >> 0x13);
@@ -217,7 +217,7 @@ void EngineSound_Player(struct Driver *driver)
 
             // Map value from [oldMin, oldMax] to [newMin, newMax]
             // inverting newMin and newMax will give an inverse range mapping
-            vol = MapToRange(sVar4, 0, sVar2, 0x82, uVar9);
+            vol = VehMath_MapToRange(sVar4, 0, sVar2, 0x82, uVar9);
 
             // if racer is not drifting and not in accel prevention
             if ((driver->kartState != KS_DRIFTING) && ((driver->actionsFlagSet & 8) == 0))
@@ -245,7 +245,7 @@ void EngineSound_Player(struct Driver *driver)
 
             // Map value from [oldMin, oldMax] to [newMin, newMax]
             // inverting newMin and newMax will give an inverse range mapping
-            iVar12 = MapToRange(sVar4, 0, sVar2 + sVar3 + 0xf00, 0x3c, uVar9);
+            iVar12 = VehMath_MapToRange(sVar4, 0, sVar2 + sVar3 + 0xf00, 0x3c, uVar9);
 
             // If this is human and not AI
             if ((driver->actionsFlagSet & 0x100000) == 0)

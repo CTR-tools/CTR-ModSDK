@@ -73,7 +73,7 @@ void OnAnimate_Driving(struct Thread *t, struct Driver *d)
             }
 
             // curr frame, animation moving speed per frame, starting frame
-            interp = InterpBySpeed(inst->animFrame, animSpeed, startFrame);
+            interp = VehMath_InterpBySpeed(inst->animFrame, animSpeed, startFrame);
             inst->animFrame = (short)interp;
 
             // if not quite at the start
@@ -131,7 +131,7 @@ void OnAnimate_Driving(struct Thread *t, struct Driver *d)
                         iVar7 = d->ampTurnState;
                     }
                     // seems like iVar9 gets set to 0 if you're turning, or to last frame index if you're not
-                    iVar9 = MapToRange(-(iVar7), iVar9, animType, 0, (numFrames - 1));
+                    iVar9 = VehMath_MapToRange(-(iVar7), iVar9, animType, 0, (numFrames - 1));
                 }
                 else
                 {
@@ -153,7 +153,7 @@ void OnAnimate_Driving(struct Thread *t, struct Driver *d)
             // jump animation
             if (animType == 3)
             {
-                interp = InterpBySpeed(inst->animFrame, 1, numFrames - 1);
+                interp = VehMath_InterpBySpeed(inst->animFrame, 1, numFrames - 1);
                 inst->animFrame = interp;
 
                 if (d->kartState == KS_MASK_GRABBED) return;                
@@ -183,7 +183,7 @@ void OnAnimate_Driving(struct Thread *t, struct Driver *d)
             // last frame
             iVar9 = numFrames - 1;
         }
-        interp = InterpBySpeed(inst->animFrame, 1, iVar9);
+        interp = VehMath_InterpBySpeed(inst->animFrame, 1, iVar9);
         inst->animFrame = interp;
     }
 }

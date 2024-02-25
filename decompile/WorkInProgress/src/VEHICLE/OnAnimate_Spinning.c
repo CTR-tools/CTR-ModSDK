@@ -62,7 +62,7 @@ void OnAnimate_Spinning(struct Thread *t, struct Driver *d)
 ANIM_SPIN:
 
     // Interpolate animation frame by speed
-    interp = InterpBySpeed(inst->animFrame, 4, startFrame);
+    interp = VehMath_InterpBySpeed(inst->animFrame, 4, startFrame);
 
     // set animation frame
     inst->animFrame = interp;

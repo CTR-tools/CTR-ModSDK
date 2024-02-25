@@ -49,7 +49,7 @@ void DECOMP_Player_JumpAndFriction(struct Thread *t, struct Driver *d)
 
     // Map value from [oldMin, oldMax] to [newMin, newMax]
     // inverting newMin and newMax will give an inverse range mapping
-    int turnSpeed = MapToRange(ampTurnState, 0, d->const_BackwardTurnRate, 0, d->const_TurnDecreaseRate);
+    int turnSpeed = VehMath_MapToRange(ampTurnState, 0, d->const_BackwardTurnRate, 0, d->const_TurnDecreaseRate);
     if (baseSpeed < 0)
     {
       baseSpeed = -baseSpeed;
@@ -308,7 +308,7 @@ void DECOMP_Player_JumpAndFriction(struct Thread *t, struct Driver *d)
     movement.vx += iVar3;
 
     // sqrt(x2+y2+z2 << 0x10)
-    iVar11 = FastSqrt(movement.vx * movement.vx + movement.vy * movement.vy + movement.vz * movement.vz, 0x10);
+    iVar11 = VehMath_FastSqrt(movement.vx * movement.vx + movement.vy * movement.vy + movement.vz * movement.vz, 0x10);
 
     iVar11 = (iVar11 >> 8) - baseSpeed;
     bVar1 = (accel < iVar11);
@@ -379,7 +379,7 @@ PROCESS_JUMP:
   // are rendered, and the last byte is sub-pixel percision
 
   // iVar2 = sqrt(ramp+jump*jump)
-  iVar2 = FastSqrt(ramp + (d->jump_InitialVelY * d->jump_InitialVelY) , 0);
+  iVar2 = VehMath_FastSqrt(ramp + (d->jump_InitialVelY * d->jump_InitialVelY) , 0);
 
   // zero in all arcade maps, idk adv, battle, cutscene, or credits
   uVar9 = gGT->level1->unk_18C << 8;

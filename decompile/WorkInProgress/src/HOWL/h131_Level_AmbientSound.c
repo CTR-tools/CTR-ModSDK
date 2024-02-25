@@ -185,7 +185,7 @@ void Level_AmbientSound(void)
 
                                 // Map value from [oldMin, oldMax] to [newMin, newMax]
                                 // inverting newMin and newMax will give an inverse range mapping
-                                uVar6 = MapToRange(uVar6, 300, 6000, 0xff, 0);
+                                uVar6 = VehMath_MapToRange(uVar6, 300, 6000, 0xff, 0);
                                 puVar10 = &sdata->SoundFadeInput[0].unk;
                                 uVar11 = 0x86;
                             LAB_8002f048:
@@ -203,7 +203,7 @@ void Level_AmbientSound(void)
 
                                 // Map value from [oldMin, oldMax] to [newMin, newMax]
                                 // inverting newMin and newMax will give an inverse range mapping
-                                uVar6 = MapToRange(uVar6, 300, 6000, 0xff, 0);
+                                uVar6 = VehMath_MapToRange(uVar6, 300, 6000, 0xff, 0);
                                 puVar10 = &sdata->SoundFadeInput[1].unk;
                                 uVar11 = 0x85;
                                 goto LAB_8002f048;

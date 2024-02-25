@@ -33,7 +33,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
             {
                 short turn = d->turnAngleCurr;
                 turn = (turn < 0) ? -turn : turn;
-                meterLeft -= MapToRange(turn, 0, 1080, 0, 48);
+                meterLeft -= VehMath_MapToRange(turn, 0, 1080, 0, 48);
 
                 // if the bar is full or beyond
                 if (meterLeft <= 0)

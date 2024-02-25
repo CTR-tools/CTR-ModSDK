@@ -219,15 +219,24 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 		case 8:
 		case 14:
 			cDC->driverOffset_CamEyePos[0] = *psVar19;
-			sVar6 = cDC->driverOffset_CamEyePos[0];
 			cDC->driverOffset_CamEyePos[1] = psVar21[2];
-			sVar5 = cDC->driverOffset_CamEyePos[1];
 			cDC->driverOffset_CamEyePos[2] = psVar21[3];
-			sVar1 = cDC->driverOffset_CamEyePos[2];
+			
 			cDC->driverOffset_CamLookAtPos[0] = psVar21[4];
 			cDC->driverOffset_CamLookAtPos[1] = psVar21[5];
 			cDC->driverOffset_CamLookAtPos[2] = psVar21[6];
-			iVar7 = MapToRange((int)sVar6 * (int)sVar6 + (int)sVar5 * (int)sVar5 + (int)sVar1 * (int)sVar1, 0x10000, 0x190000, 0x80, 0xf0);
+			
+			// driverOffset_CamEyePos
+			sVar6 = *psVar19;
+			sVar5 = psVar21[2];
+			sVar1 = psVar21[3];
+			
+			iVar7 = VehMath_MapToRange(
+				(int)sVar6 * (int)sVar6 + 
+				(int)sVar5 * (int)sVar5 + 
+				(int)sVar1 * (int)sVar1, 
+				0x10000, 0x190000, 0x80, 0xf0);
+			
 			cDC->unk7A = (short)iVar7;
 			break;
 		case 9:

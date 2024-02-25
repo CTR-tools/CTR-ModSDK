@@ -68,7 +68,7 @@ void DECOMP_VehPtr_Warp_PhysAngular(struct Thread *th, struct Driver *d)
         // car is wide and short
 
         for (char i = 0 ; i < 3;i++)
-            inst->scale[i] = InterpBySpeed(inst->scale[i], 120, 4800 >> (i & 1));
+            inst->scale[i] = VehMath_InterpBySpeed(inst->scale[i], 120, 4800 >> (i & 1));
 
         uVar1 = d->posCurr[2] + 0x800;
 
@@ -86,7 +86,7 @@ void DECOMP_VehPtr_Warp_PhysAngular(struct Thread *th, struct Driver *d)
         // car is tall and thin
 
         for (char i = 0 ; i < 3;i++)
-            inst->scale[i] = InterpBySpeed(inst->scale[i], (i == 1) ? 3200 : 600, 24000 * (i & 1));
+            inst->scale[i] = VehMath_InterpBySpeed(inst->scale[i], (i == 1) ? 3200 : 600, 24000 * (i & 1));
 
         // if scale shrinks to zero
         if (inst.scale[0] == 0)

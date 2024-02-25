@@ -1,7 +1,7 @@
 #include <common.h>
 
 // Interpolate anything really
-int DECOMP_InterpBySpeed(int current, int interpSpeed, int desired)
+int DECOMP_VehMath_InterpBySpeed(int current, int interpSpeed, int desired)
 {
 	int iVar1;
 	int newCurrent;

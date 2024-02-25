@@ -20262,7 +20262,7 @@ int FUN_80058f54(int param_1,int param_2,int param_3)
   return iVar2;
 }
 
-// MapToRange
+// VehMath_MapToRange
 // Map value from [oldMin, oldMax] to [newMin, newMax]
 // inverting newMin and newMax will give an inverse range mapping
 int FUN_80058f9c(int param_1,int param_2,int param_3,int param_4,int param_5)
@@ -20303,7 +20303,7 @@ int FUN_80058f9c(int param_1,int param_2,int param_3,int param_4,int param_5)
 }
 
 
-// Player_SteerAccel
+// VehMath_SteerAccel
 undefined4
 FUN_8005900c(int param_1,int param_2,int param_3,undefined4 param_4,undefined4 param_5,
             undefined4 param_6)
@@ -20361,7 +20361,7 @@ FUN_8005900c(int param_1,int param_2,int param_3,undefined4 param_4,undefined4 p
 // https://en.wikipedia.org/wiki/Integer_square_root#Digit-by-digit_algorithm
 
 // f(n, i) = sqrt(n<<i)
-// FastSqrt(n, i)
+// VehMath_FastSqrt(n, i)
 uint FUN_80059070(uint param_1,uint param_2)
 /*
   f(n, 0) will always output the sqrt(n)
@@ -26208,7 +26208,7 @@ LAB_8005fee4:
     uVar3 = (undefined2)(iVar5 - iVar8);
 
     // map [0-0x140] to [0-???]
-    // deltaRotation = Misc.MapToRange(timeUntilDriftSpinout,0,0x140,0,previousFrameMultDrift);
+    // deltaRotation = VehMath_MapToRange(timeUntilDriftSpinout,0,0x140,0,previousFrameMultDrift);
     iVar6 = FUN_80058f9c(iVar5,0,0x140,0,(int)*(short *)(param_2 + 0x3ea));
     
 	// rotationSpinRate = rotationSpinRate + deltaRotation;
@@ -26352,7 +26352,7 @@ LAB_8005fee4:
 	// number of frames spent steering
     sVar4 = *(short *)(param_2 + 0x3e6);
 
-	// Player_SteerAccel
+	// VehMath_SteerAccel
 	// all these offsets are MetaPhys, and each one is only used here
     iVar18 = FUN_8005900c(
 

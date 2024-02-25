@@ -844,10 +844,10 @@
 80058ec0 VehInit_Player
 
 // VehMath
-80058f54 InterpBySpeed
-80058f9c MapToRange
-8005900c Player_SteerAccel
-80059070 FastSqrt
+80058f54 VehMath_InterpBySpeed
+80058f9c VehMath_MapToRange
+8005900c VehMath_SteerAccel
+80059070 VehMath_FastSqrt
 
 // VehParticle
 80059100 VehParticle_Exhaust

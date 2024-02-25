@@ -151,7 +151,7 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
             iVar7 = 0x100;
         }
 
-        iVar4 = InterpBySpeed(
+        iVar4 = VehMath_InterpBySpeed(
 				d->KartStates.EngineRevving.engineRevFire, 
 				FPS_HALF(iVar7), 
 				d->KartStates.EngineRevving.engineRevBoostMeter);
@@ -202,7 +202,7 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
     {
         d->KartStates.EngineRevving.unk[0] = 0;
 
-        uVar6 = InterpBySpeed(
+        uVar6 = VehMath_InterpBySpeed(
 				d->KartStates.EngineRevving.engineRevBoostMeter, 
 				FPS_HALF(d->const_SacredFireSpeed / 3 + 3),
 				d->const_SacredFireSpeed + d->const_SpeedometerScale_ClassStat);
@@ -338,7 +338,7 @@ LAB_80067dec:
         iVar9 = iVar4 + d->const_SacredFireSpeed;
     }
 
-    uVar3 = MapToRange(
+    uVar3 = VehMath_MapToRange(
 				d->KartStates.EngineRevving.engineRevFire, 
 				iVar7, iVar9, 
 				(u_int)bVar1 << 5, local_18

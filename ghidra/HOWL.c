@@ -8082,9 +8082,9 @@ LAB_8002f088:
 }
 
 
+// PlaySound3D
 // param1 - sound effect
 // param2 - instance creating sound
-// Play 3D Audio
 // volume depends on distance from Instance
 // to the nearest player's camera
 void FUN_8002f0dc(uint param_1,int param_2)
