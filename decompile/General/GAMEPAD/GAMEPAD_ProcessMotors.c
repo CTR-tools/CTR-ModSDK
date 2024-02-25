@@ -14,7 +14,7 @@ void DECOMP_GAMEPAD_ProcessMotors(struct GamepadSystem *gGS)
 			(packet != 0) &&
 			(gGT->boolDemoMode == 0) &&
 			((gGT->gameMode1 & 0xf) == 0) &&
-			(TitleFlag_IsTransitioning() == 0)
+			(DECOMP_TitleFlag_IsTransitioning() == 0)
 		  )
 		{
 			if (packet->controllerData == ((PAD_ID_JOGCON << 4) | 3))

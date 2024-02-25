@@ -9,11 +9,13 @@ void DECOMP_MainKillGame_StopCTR(void)
 
   StopCallback();
 
+  #ifndef REBUILD_PC
   MEMCARD_CloseCard();
+  #endif
 
   PadStopCom();
   ResetGraph(3);
   VSyncCallback(0);
 
-  RCNT_Destroy();
+  DECOMP_RCNT_Destroy();
 }

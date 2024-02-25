@@ -11,7 +11,7 @@
 #include "TEST_ThTickRunBucket.c"
 #include "TEST_ThTickSetAndExec.c"
 
-#include "../decompile/General/MAIN/MainMain.c"
+#include "../decompile/General/MAIN/MAIN_AAA_BigBlock1.c"
 
 #include "../decompile/General/CAMERA/CAM_01_ClearScreen.c"
 #include "../decompile/General/CAMERA/CAM_04_Path_GetNumPoints.c"
@@ -68,13 +68,12 @@
 
 #include "../decompile/General/DotLights/DotLights.c"
 
-#include "../decompile/General/GAMEPAD/GAMEPAD_Init.c"
-#include "../decompile/General/GAMEPAD/GAMEPAD_PollVsync.c"
-#include "../decompile/General/GAMEPAD/GAMEPAD_GetNumConnected.c"
-#include "../decompile/General/GAMEPAD/GAMEPAD_ProcessAnyoneVars.c"
-#include "../decompile/General/GAMEPAD/GAMEPAD_ProcessTapRelease.c"
-#include "../decompile/General/GAMEPAD/GAMEPAD_ProcessHold.c"
-#include "../decompile/General/GAMEPAD/GAMEPAD_ProcessState.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_AAA_Block1.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_JogCon1.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_JogCon2.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_ShockFreq.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_ShockForce1.c"
+#include "../decompile/General/GAMEPAD/GAMEPAD_ShockForce2.c"
 
 #include "../decompile/General/GAMEPROG/GAMEPROG_ResetHighScores.c"
 #include "../decompile/General/GAMEPROG/GAMEPROG_CheckGhostsBeaten.c"
@@ -289,14 +288,6 @@
 
 #include "../decompile/General/MAIN/MainGameStart_Initialize.c"
 
-#include "../decompile/General/MAIN/MainInit_Drivers.c"
-#include "../decompile/General/MAIN/MainInit_JitPoolsNew.c"
-#include "../decompile/General/MAIN/MainInit_JitPoolsReset.c"
-#include "../decompile/General/MAIN/MainInit_OTMem.c"
-#include "../decompile/General/MAIN/MainInit_PrimMem.c"
-#include "../decompile/General/MAIN/MainInit_FinalizeInit.c"
-#include "../decompile/General/MAIN/MainInit_VRAMClear.c" 
-#include "../decompile/General/MAIN/MainInit_VRAMDisplay.c" 
 #include "../decompile/General/MAIN/MainRaceTrack_StartLoad.c"
 #include "../decompile/General/MAIN/MainRaceTrack_RequestLoad.c"
 
@@ -380,6 +371,7 @@
 
 // RCNT (watch namespace, not alphabetical)
 #include "../decompile/General/RCNT/RCNT_Init.c"
+#include "../decompile/General/RCNT/RCNT_Destroy.c"
 
 // UI
 #include "../decompile/General/UI/UI_SaveLapTime.c"
@@ -413,10 +405,6 @@
 
 #include "../decompile/General/UI/UI_DrawRaceClock.c"
 #include "../decompile/General/UI/UI_DrawLimitClock.c"
-
-#include "../decompile/General/UI/UI_DrawPosSuffix.c"
-#include "../decompile/General/UI/UI_DrawLapCount.c"
-#include "../decompile/General/UI/UI_DrawBattleScores.c"
 
 #include "../decompile/General/UI/UI_AAA_BigBlock1.c"
 

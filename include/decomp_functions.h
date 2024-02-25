@@ -258,6 +258,9 @@ void DECOMP_LOAD_LangFile(int bigfilePtr, int lang);
 void DECOMP_LOAD_AppendQueue(int bigfile, int type, int fileIndex, void* destinationPtr, void* callback);
 void DECOMP_LOAD_NextQueuedFile();
 
+void DECOMP_MainDB_OTMem(struct OTMem* otMem, u_int size);
+void DECOMP_MainDB_PrimMem(struct PrimMem* primMem, u_int size);
+
 void DECOMP_MainDrawCb_Vsync();
 void DECOMP_MainDrawCb_DrawSync();
 
@@ -353,8 +356,10 @@ void DECOMP_TitleFlag_BeginTransition(int direction);
 void DECOMP_TitleFlag_SetFullyOnScreen();
 void DECOMP_TitleFlag_SetFullyOffScreen();
 void DECOMP_TitleFlag_ResetTextAnim();
-void DECOMP_RCNT_Init();
 void DECOMP_TitleFlag_DrawSelf();
+
+void DECOMP_RCNT_Init();
+void DECOMP_RCNT_Destroy();
 
 // UI
 void DECOMP_UI_ThTick_CountPickup(struct Thread * bucket);
@@ -387,6 +392,7 @@ void DECOMP_UI_DrawRankedDrivers(void);
 void DECOMP_UI_RenderFrame_AdvHub(void);
 void DECOMP_UI_RenderFrame_Racing();
 
+void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY);
 void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);
 
 // VEH

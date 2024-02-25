@@ -15,12 +15,15 @@ void Mods6_EndOfFile();
 
 void ModsMain()
 {
+	// PC port can't do mips asm injection
 	#ifndef REBUILD_PC
 	#ifdef USE_60FPS
 	void ui60_entryHook(); ui60_entryHook();
 	#endif
 	#endif
 	
+// PC port has unlimited byte budget
+#ifndef REBUILD_PC
 	printf("\n\nMods:\n");
 	
 	int modSizes[6] =
@@ -41,7 +44,7 @@ void ModsMain()
 		(int)LOAD_AppendQueue - (int)Mods5_EndOfFile,
 		
 		// UI defrag Block3
-		(int)UI_Map_GetIconPos - (int)Mods6_EndOfFile
+		(int)DECOMP_UI_Map_GetIconPos - (int)Mods6_EndOfFile
 	};
 	
 	for(int i = 0; i < 6; i++)
@@ -60,12 +63,11 @@ void ModsMain()
 	// these Heap spaces will have thread or instance
 	
 	// count ModsMain, and MainStateZero, free to overwrite after runtime
-	printf("\n\nHeap:\nModsMain: %d\n", (int)MainRaceTrack_StartLoad - (int)StateZero);
+	printf("\n\nHeap:\nModsMain: %d\n", (int)DECOMP_MainRaceTrack_StartLoad - (int)StateZero);
 	printf("VBMT: %d\n", 0x80057c44-0x80057884);
 	
 	// Can't use the full 4096 until fixing rdataPauseData
 	printf("RDATA: 4096\n$sp: TBD\n\n");
-	
-	
 	// add more...
+#endif
 }

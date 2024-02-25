@@ -17,8 +17,17 @@ void DECOMP_MainKillGame_LaunchSpyro2(void)
 
   DECOMP_MainKillGame_StopCTR();
 
+#ifdef REBUILD_PC
+
+  while (1) {}
+
+#else
+
   _96_remove();
   _96_init();
 
   LoadExec(&rdata.s_PathTo_SpyroExe[0],0x801fff00,0);
+
+#endif
+
 }
