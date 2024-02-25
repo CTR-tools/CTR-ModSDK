@@ -401,6 +401,8 @@ void DECOMP_VehInit_NonGhost(struct Thread* t, int index);
 void DECOMP_VehInit_TeleportAll(struct GameTracker *gGT, u_int spawnFlags);
 void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPosY);
 
+void DECOMP_Weapon_Shoot_OnCirclePress(struct Driver *d);
+
 // 230
 void DECOMP_MM_Battle_DrawIcon_Character(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);
 unsigned char DECOMP_MM_TransitionInOut(struct TransitionMeta* meta, int framesPassed, int numFrames);

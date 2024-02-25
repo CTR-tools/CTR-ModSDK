@@ -6,8 +6,10 @@ void DECOMP_Weapon_Shoot_OnCirclePress(struct Driver *d)
 
     if (d->ChangeState_param2 != 0)
     {
+		#ifndef REBUILD_PS1
         DECOMP_Player_ChangeState(d, d->ChangeState_param2, d->ChangeState_param3, d->ChangeState_param4);
-    }
+		#endif
+	}
 
     // If you want to fire a weapon
     if ((d->actionsFlagSet & 0x8000) == 0)
@@ -29,5 +31,7 @@ void DECOMP_Weapon_Shoot_OnCirclePress(struct Driver *d)
 		weapon = 2;
 	}
     
+	#ifndef REBUILD_PS1
     DECOMP_Weapon_Shoot_Now(d, weapon, 0);
+	#endif
 }

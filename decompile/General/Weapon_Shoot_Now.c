@@ -131,7 +131,7 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 			Rot_AxisAngle(&weaponInst->matrix, &d->AxisAngle1_normalVec, d->rotCurr.y);
 					
 			weaponTh = weaponInst->thread;
-			weaponTh->funcThDestroy = THREAD_DestroyTracker;
+			weaponTh->funcThDestroy = DECOMP_THREAD_DestroyTracker;
 			weaponTh->funcThCollide = RB_Hazard_ThCollide_Missile;
 			
 			tw = weaponTh->object;
@@ -260,7 +260,7 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 			weaponInst->scale[2] = 0;
 			
 			weaponTh = weaponInst->thread;
-			weaponTh->funcThDestroy = THREAD_DestroyInstance;
+			weaponTh->funcThDestroy = DECOMP_THREAD_DestroyInstance;
 			weaponTh->funcThCollide = RB_Hazard_ThCollide_Generic;
 			
 			PlaySound3D(0x52, weaponInst);
@@ -398,7 +398,7 @@ RunMineCOLL:
 			weaponInst->model->headers[0].flags |= 2;
 			
 			weaponTh = weaponInst->thread;
-			weaponTh->funcThDestroy = THREAD_DestroyInstance;
+			weaponTh->funcThDestroy = DECOMP_THREAD_DestroyInstance;
 			weaponTh->funcThCollide = RB_Hazard_ThCollide_Generic;
 			
 			PlaySound3D(0x52, weaponInst);
@@ -457,7 +457,7 @@ RunMineCOLL:
 			d->instBubbleHold = weaponInst;
 					
 			weaponTh = weaponInst->thread;
-			weaponTh->funcThDestroy = THREAD_DestroyInstance;
+			weaponTh->funcThDestroy = DECOMP_THREAD_DestroyInstance;
 			
 			modelID = 0x5e;
 			if(d->numWumpas >= 10)
@@ -570,7 +570,7 @@ RunMineCOLL:
 			weaponInst->matrix.t[2] = dInst->matrix.t[2];
 		
 			weaponTh = weaponInst->thread;
-			weaponTh->funcThDestroy = THREAD_DestroyInstance;
+			weaponTh->funcThDestroy = DECOMP_THREAD_DestroyInstance;
 			
 			PlaySound3D(0x4d, weaponInst);
 			

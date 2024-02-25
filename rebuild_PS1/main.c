@@ -414,6 +414,9 @@
 //#include "../decompile/General/Vehicle/VehInit_TeleportSelf.c"
 #include "../decompile/General/Vehicle/VehInit_TeleportAll.c"
 
+#include "../decompile/General/Weapon_Shoot_OnCirclePress.c"
+
+
 // 230
 // only put these in the EXE for REBUILD_PC,
 // REBUILD_PS1 puts them on BuildList.txt,
