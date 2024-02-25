@@ -4,7 +4,7 @@ int DECOMP_VehMath_InterpBySpeed(int val, int speed, int desired)
 {
 	if(val > desired)
 	{
-		val -= desired;
+		val -= speed;
 		
 		if(val < desired)
 			return desired;
@@ -12,7 +12,7 @@ int DECOMP_VehMath_InterpBySpeed(int val, int speed, int desired)
 	
 	else
 	{
-		val += desired;
+		val += speed;
 		
 		if(val > desired)
 			return desired;
