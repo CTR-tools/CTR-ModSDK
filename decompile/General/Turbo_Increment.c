@@ -42,11 +42,13 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		(driver->driverID == '\0') &&
 
 		// if modelIndex == "player" of any kind
-		(*(short *)&driver->instSelf->thread->modelIndex == 0x18)
+		(driver->instSelf->thread->modelIndex == 0x18)
 	)
 	{
+		#ifndef REBUILD_PS1
 		// Add Reserves to ghost buffer
 		GhostTape_WriteBoosts(reserves, (u_char)type, fireLevel);
+		#endif
 	}
 
 	kartState = driver->kartState;
@@ -105,12 +107,13 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 
 		#endif
 		
+#ifndef REBUILD_PS1
 		turboInst1 = INSTANCE_BirthWithThread(
 			0x2c, 				// modelID
 			&sdata->s_turbo1[0],	// name
 			0x300, 				// SmallStackPool
 			TURBO, 				// ThreadBucket
-			Turbo_ThTick,	// func
+			DECOMP_Turbo_ThTick,	// func
 			0x10, 				// object size
 			0					// no parent thread
 		);
@@ -122,7 +125,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// get thread, ignore all collisions
 			turboThread = turboInst1->thread;
 			turboThread->flags |= 0x1000;
-			turboThread->funcThDestroy = Turbo_ThDestroy;
+			turboThread->funcThDestroy = DECOMP_Turbo_ThDestroy;
 			
 			// turbo #2
 			turboInst2 = INSTANCE_Birth3D(
@@ -146,13 +149,13 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			turboObj->fireDisappearCountdown = count;
 	
 			// if modelIndex == "player" of any kind
-			if (*(short *)&driver->instSelf->thread->modelIndex == 0x18)
+			if (driver->instSelf->thread->modelIndex == 0x18)
 			{
 				turboObj->fireAudioDistort = 0;
 				
 				if(driver->kartState != KS_CRASHING)
 				{
-					Turbo_Audio(driver, fireLevel);
+					DECOMP_Turbo_Audio(driver, fireLevel);
 				}
 			}
 	
@@ -170,6 +173,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			turboInst1->flags = turboInst1->flags | addFlags | 0x1040080;
 			turboInst2->flags = turboInst2->flags | addFlags | 0x1040080;
 		}
+#endif
 	}
 
 	// if turbo exists, modify it
@@ -233,7 +237,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			
 			{
 				turboObj->fireAudioDistort = 0;
-				Turbo_Audio(driver, fireLevel);
+				DECOMP_Turbo_Audio(driver, fireLevel);
 			}
 		}
 	}
@@ -336,12 +340,12 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 	}
 
 	// if modelIndex == "player" of any kind
-	if (*(short *)&driver->instSelf->thread->modelIndex == 0x18)
+	if (driver->instSelf->thread->modelIndex == 0x18)
 	{
 		// CameraDC flag
 		gGT->cameraDC[driver->driverID].flags |= 0x80;
 
 		// gamepad vibration
-		GAMEPAD_ShockForce1(driver, 8, 0x7f);
+		DECOMP_GAMEPAD_ShockForce1(driver, 8, 0x7f);
 	}
 }

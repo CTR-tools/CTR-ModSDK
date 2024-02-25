@@ -128,10 +128,9 @@ struct Thread
 	// only for driver collisions
 	short driver_HitRadius;
 
-	// only needs to be a char,
-	// but padding makes it an int
 	// 0x44
-	int modelIndex;
+	short modelIndex;
+	short padding;
 
 	// this struct is 0x48 bytes large
 };

@@ -28,9 +28,7 @@ void DECOMP_MainFrame_RequestMaskHint(short hintId, char interruptWarpPad)
   {
     sdata->AkuAkuHintState = 1;
 
-#ifndef REBUILD_PS1
-    gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
-#endif
+    gGT->drivers[0]->funcPtrs[0] = DECOMP_VehPtr_Freeze_Init;
 
 	sdata->AkuHint_RequestedHint = hintId;
 	sdata->AkuHint_boolInterruptWarppad = interruptWarpPad;

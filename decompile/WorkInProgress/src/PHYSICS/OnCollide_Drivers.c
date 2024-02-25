@@ -60,9 +60,8 @@ LAB_8005ec50:
 		fireLevel = 0x800;
 	}
 
-	// Turbo_Increment
 	// add reserves and speed of turbo pad
-	Turbo_Increment(driver, reservesIncrement, (TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD), fireLevel);
+	DECOMP_Turbo_Increment(driver, reservesIncrement, (TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD), fireLevel);
 
 LAB_8005ec70:
 	if ((stepFlagSet & 0x8000) == 0)

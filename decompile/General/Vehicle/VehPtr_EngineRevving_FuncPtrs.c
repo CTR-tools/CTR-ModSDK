@@ -56,14 +56,14 @@ void DECOMP_VehPtr_EngineRevving_Update(struct Thread *t, struct Driver *d)
         }
 
         // one full second of reserves
-        Turbo_Increment(d, 960, 0, revFireLevel);
+        DECOMP_Turbo_Increment(d, 960, 0, revFireLevel);
     }
 
     // full meter
     d->turbo_MeterRoomLeft = 0;
     d->engineRevState = 0;
 
-    VehPtr_Driving_Init(t, d);
+    DECOMP_VehPtr_Driving_Init(t, d);
 }
 
 void DECOMP_VehPtr_EngineRevving_PhysLinear(struct Thread *t, struct Driver *d)
@@ -82,7 +82,7 @@ void DECOMP_VehPtr_EngineRevving_PhysLinear(struct Thread *t, struct Driver *d)
     if (unkTimer * 0x10000 < 0) unkTimer = 0;
     d->KartStates.EngineRevving.unk590 = unkTimer;
 
-    VehPtr_Driving_PhysLinear(t, d);
+    DECOMP_VehPtr_Driving_PhysLinear(t, d);
 
     // if race already started
     if (d->KartStates.EngineRevving.boolEngineRevMaskGrab != 0)
@@ -178,7 +178,7 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
                 d->KartStates.EngineRevving.unk[0] = 0;
                 d->KartStates.EngineRevving.unk[1] |= 3;
 
-                OtherFX_Play_Echo(0xf, 1, (d->actionsFlagSet & 1));
+                DECOMP_OtherFX_Play_Echo(0xf, 1, (d->actionsFlagSet & 1));
             }
         }
         goto LAB_80067dec;

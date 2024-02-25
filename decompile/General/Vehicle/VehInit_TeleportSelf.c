@@ -526,12 +526,15 @@ LAB_80058568:
     {
 #ifndef REBUILD_PS1
         CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
+#endif
 
         d->instSelf->thread->funcThTick = ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) ? NULL : Veh_NullThread;
 
         // set OnInit function
-        d->funcPtrs[0] = ((gGT->gameMode1 & ADVENTURE_ARENA) == 0) ? VehPtr_EngineRevving_Init : VehPtr_Driving_Init;
-#endif
+        d->funcPtrs[0] = 
+			((gGT->gameMode1 & ADVENTURE_ARENA) == 0) 
+				? DECOMP_VehPtr_EngineRevving_Init 
+				: DECOMP_VehPtr_Driving_Init;
 	}
 
     d->lapIndex = 0;

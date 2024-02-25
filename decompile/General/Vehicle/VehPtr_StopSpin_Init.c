@@ -1,7 +1,5 @@
 #include <common.h>
 
-void DECOMP_VehPtr_Crashing_PhysLinear(); // not a mistake, use Crashing
-void DECOMP_VehPtr_Crashing_PhysAngular(); // not a mistake, use Crashing
 void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
 void COLL_StartSearch_Player();
@@ -12,8 +10,10 @@ void* PlayerStopSpinFuncTable[0xD] =
 	0,
 	0,
 	DECOMP_VehPtr_Crashing_PhysLinear,	// not a mistake, use Crashing
-	VehPtr_Driving_Audio,
+	DECOMP_VehPtr_Driving_Audio,
 	DECOMP_VehPtr_Crashing_PhysAngular, // not a mistake, use Crashing
+	
+	#ifndef REBUILD_PS1
 	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
@@ -22,6 +22,7 @@ void* PlayerStopSpinFuncTable[0xD] =
 	OnRender,
 	DECOMP_VehPtr_StopSpin_Animate,
 	VehParticle_DriverMain,
+	#endif
 };
 
 void DECOMP_VehPtr_StopSpin_Init(struct Thread* t, struct Driver* d)

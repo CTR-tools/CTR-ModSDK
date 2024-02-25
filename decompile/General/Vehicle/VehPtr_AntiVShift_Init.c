@@ -25,9 +25,11 @@ void *PlayerAntiVShiftFuncTable[13] =
 {
 	NULL,
 	DECOMP_VehPtr_AntiVShift_Update,
-	VehPtr_Driving_PhysLinear,
-	VehPtr_Driving_Audio,
-	VehPtr_Driving_PhysAngular,
+	DECOMP_VehPtr_Driving_PhysLinear,
+	DECOMP_VehPtr_Driving_Audio,
+	DECOMP_VehPtr_Driving_PhysAngular,
+	
+	#ifndef REBUILD_PS1
 	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
@@ -36,4 +38,5 @@ void *PlayerAntiVShiftFuncTable[13] =
 	OnRender,
 	OnAnimate_Driving,
 	VehParticle_DriverMain
+	#endif
 };

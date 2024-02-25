@@ -29,7 +29,7 @@ void DECOMP_VehPtr_Spinning_PhysLinear(struct Thread* t, struct Driver* d)
 	d->NoInputTimer -= elapsedTimeMS;
 	if(d->NoInputTimer < 0) d->NoInputTimer = 0;
 	
-	VehPtr_Driving_PhysLinear(t,d);
+	DECOMP_VehPtr_Driving_PhysLinear(t,d);
 	
 	// baseSpeed and fireSpeed
 	// set both "shorts" in one "int"
@@ -81,5 +81,7 @@ void DECOMP_VehPtr_Spinning_PhysAngular(struct Thread* t, struct Driver* d)
 			0
 		);
 		
+	#ifndef REBUILD_PS1
 	Rot_AxisAngle(&d->matrix310, &d->AxisAngle1_normalVec[0], d->angle);
+	#endif
 }

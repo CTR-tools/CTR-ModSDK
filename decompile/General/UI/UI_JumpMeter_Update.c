@@ -1,6 +1,5 @@
 #include <common.h>
 
-void Turbo_Increment(struct Driver * , int, u_int, int);
 void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
 
    //if player is not in the air
@@ -39,7 +38,6 @@ void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
             d->highestJump = d->jumpMeter;
          }
 
-		 #ifndef REBUILD_PS1
          if (d->jumpMeter >= 640) 
 		 {
             int param = 0;
@@ -47,10 +45,8 @@ void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
 			if (d->jumpMeter >= 1440) param = 0x100;
 
 			// add one second reserves
-			Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, param);
+			DECOMP_Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, param);
          }
-
-		 #endif
       }
    }
 

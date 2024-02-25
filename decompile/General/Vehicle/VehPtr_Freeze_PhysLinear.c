@@ -2,7 +2,7 @@
 
 void DECOMP_VehPtr_Freeze_PhysLinear(struct Thread *t, struct Driver *d)
 {
-    VehPtr_Driving_PhysLinear(t, d);
+    DECOMP_VehPtr_Driving_PhysLinear(t, d);
 
     d->simpTurnState = 0;
     d->wheelRotation = 0;

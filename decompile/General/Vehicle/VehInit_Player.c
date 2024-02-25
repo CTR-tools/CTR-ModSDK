@@ -1,7 +1,5 @@
 #include <common.h>
 
-void VehPtr_Driving_Init();
-
 struct Driver* DECOMP_VehInit_Player(int index)
 {
 	struct Thread* t =
@@ -12,9 +10,7 @@ struct Driver* DECOMP_VehInit_Player(int index)
 	
 	DECOMP_VehInit_NonGhost(t, index);
 	
-	#ifndef REBUILD_PS1
-	d->funcPtrs[0] = VehPtr_Driving_Init;
-	#endif
+	d->funcPtrs[0] = DECOMP_VehPtr_Driving_Init;
 	
 	d->BattleHUD.teamID = 
 		sdata->gGT->battleSetup.teamOfEachPlayer[index];

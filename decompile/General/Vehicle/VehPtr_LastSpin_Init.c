@@ -1,8 +1,5 @@
 #include <common.h>
 
-void DECOMP_VehPtr_LastSpin_Update();
-void DECOMP_VehPtr_LastSpin_PhysLinear();
-void DECOMP_VehPtr_LastSpin_PhysAngular();
 void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
 void COLL_StartSearch_Player();
@@ -12,8 +9,10 @@ void* PlayerLastSpinFuncTable[0xD] =
 	0,
 	DECOMP_VehPtr_LastSpin_Update,
 	DECOMP_VehPtr_LastSpin_PhysLinear,
-	VehPtr_Driving_Audio,
+	DECOMP_VehPtr_Driving_Audio,
 	DECOMP_VehPtr_LastSpin_PhysAngular,
+	
+	#ifndef REBUILD_PS1
 	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
@@ -22,6 +21,7 @@ void* PlayerLastSpinFuncTable[0xD] =
 	OnRender,
 	OnAnimate_LastSpin,
 	VehParticle_DriverMain,
+	#endif
 };
 
 void DECOMP_VehPtr_LastSpin_Init(struct Thread* t, struct Driver* d)

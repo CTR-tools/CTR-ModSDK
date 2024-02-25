@@ -15,6 +15,7 @@ void DECOMP_VehPtr_EngineRevving_Init(struct Thread *t, struct Driver *d)
     d->KartStates.EngineRevving.maskObj = NULL;
     d->KartStates.EngineRevving.engineRevFire = 0;
 
+#ifndef REBUILD_PS1
     // if this is a mask grab
     if (d->quadBlockHeight + 0x1000 < d->posCurr[1])
     {
@@ -28,6 +29,7 @@ void DECOMP_VehPtr_EngineRevving_Init(struct Thread *t, struct Driver *d)
         // CameraDC flag
         sdata->gGT->cameraDC[d->driverID].flags |= 8;
     }
+#endif
 
     for (char i = 0; i < 13; i++)
     {
@@ -46,23 +48,22 @@ void DECOMP_VehPtr_EngineRevving_Init(struct Thread *t, struct Driver *d)
 		d->const_SpeedometerScale_ClassStat + d->const_SpeedometerScale_ClassStat / 3;
 }
 
-void DECOMP_VehPtr_EngineRevving_Update();
-void DECOMP_VehPtr_EngineRevving_PhysLinear();
-void DECOMP_VehPtr_EngineRevving_Animate();
-
 void *PlayerEngineRevFuncTable[13] =
 {
 	NULL,
 	DECOMP_VehPtr_EngineRevving_Update,
 	DECOMP_VehPtr_EngineRevving_PhysLinear,
-	VehPtr_Driving_Audio,
+	DECOMP_VehPtr_Driving_Audio,
 	NULL,
 	NULL,
 	NULL,
 	NULL,
 	NULL,
 	NULL,
+	
+	#ifndef REBUILD_PS1
 	OnRender,
 	DECOMP_VehPtr_EngineRevving_Animate,
 	VehParticle_DriverMain,
+	#endif
 };

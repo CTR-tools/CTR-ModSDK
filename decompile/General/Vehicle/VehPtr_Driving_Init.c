@@ -7,10 +7,14 @@ void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d)
     struct GameTracker *gGT = sdata->gGT;
 
     if (
-			(gGT->levelID < GEM_STONE_VALLEY) ||
+			(gGT->levelID < GEM_STONE_VALLEY)
 			
+			// can I use gGT->podiumID==0 instead?
+			// (levelID >= GEMSTONE && gGT->podium!=0) guarantees fail?
+			#ifndef REBUILD_PS1
 			// AdvHub + 232, so 233 podium wont work
-			LOAD_IsOpen_AdvHub()
+			|| LOAD_IsOpen_AdvHub()
+			#endif
 		)
     {
         // Turbo meter = full
@@ -43,10 +47,12 @@ void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d)
 void *PlayerDrivingFuncTable[13] =
 {
     NULL,
-    VehPtr_Driving_Update,
-    VehPtr_Driving_PhysLinear,
-    VehPtr_Driving_Audio,
-    VehPtr_Driving_PhysAngular,
+    DECOMP_VehPtr_Driving_Update,
+    DECOMP_VehPtr_Driving_PhysLinear,
+    DECOMP_VehPtr_Driving_Audio,
+    DECOMP_VehPtr_Driving_PhysAngular,
+	
+	#ifndef REBUILD_PS1
     OnApplyForces,
     COLL_StartSearch_NearPlayer,
     OnCollide_Drivers,
@@ -55,4 +61,5 @@ void *PlayerDrivingFuncTable[13] =
     OnRender,
     OnAnimate_Driving,
     VehParticle_DriverMain
+	#endif
 };

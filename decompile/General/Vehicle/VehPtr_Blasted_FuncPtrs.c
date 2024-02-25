@@ -9,10 +9,9 @@ void DECOMP_VehPtr_Blasted_Update(struct Thread *thread, struct Driver *driver)
 	
 	driver->matrixArray = 0;
 	driver->matrixIndex = 0;
-	VehPtr_Driving_Init(thread, driver);
+	DECOMP_VehPtr_Driving_Init(thread, driver);
 }
 
-void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver);
 void DECOMP_VehPtr_Blasted_PhysLinear(struct Thread *thread, struct Driver *driver)
 {
 	int NoInputTimer;
@@ -21,7 +20,7 @@ void DECOMP_VehPtr_Blasted_PhysLinear(struct Thread *thread, struct Driver *driv
 	if (driver->NoInputTimer < 0)
 		driver->NoInputTimer = 0;
 	
-	VehPtr_Driving_PhysLinear(thread, driver);
+	DECOMP_VehPtr_Driving_PhysLinear(thread, driver);
 	
 	driver->jump_ForcedMS = 0x60;
 	driver->baseSpeed = 0;
@@ -67,7 +66,9 @@ void DECOMP_VehPtr_Blasted_PhysAngular(struct Thread *thread, struct Driver *dri
 	(driver->rotCurr).w = 
 		InterpBySpeed((int)(driver->rotCurr).w, (elapsedTimeMS << 5) >> 5, 0);
 	
+	#ifndef REBUILD_PS1
 	Rot_AxisAngle(&driver->matrix310, driver->AxisAngle1_normalVec, driver->angle);
+	#endif
 	
 	return;
 }

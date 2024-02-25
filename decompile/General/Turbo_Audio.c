@@ -19,8 +19,9 @@ void DECOMP_Turbo_Audio(struct Driver* driver, int speed_cap)
         // distort
         distortion = 0x6c << 8;
 
-        // Make driver talk
+#ifndef REBUILD_PS1
         Voiceline_RequestPlay(0x10,data.characterIDs[driver->driverID],0x10);
+#endif
 		
 		goto Skip;
     }
@@ -56,7 +57,7 @@ Skip:
 
     // 0xD = Turbo Boost Sound
     // 0x80 = balance L/R
-    OtherFX_Play_LowLevel(0xd,1, volume | distortion | 0x80);
+    DECOMP_OtherFX_Play_LowLevel(0xd,1, volume | distortion | 0x80);
 
     // turbo audio cooldown 0.24s
     driver->turbo_audioCooldown = 0xf0;

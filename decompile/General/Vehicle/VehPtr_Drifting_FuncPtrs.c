@@ -407,10 +407,12 @@ LAB_800632cc:
 
 void PhysAngularFooter(struct Driver* driver)
 {
+	#ifndef REBUILD_PS1
 	Rot_AxisAngle(&driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
 	gte_SetRotMatrix(&driver->matrix310);
 
 	CameraSlack_PhysAngular(driver);
+	#endif
 }
 
 void DECOMP_VehPtr_Drifting_Finalize(struct Thread* t, struct Driver* d)
@@ -460,7 +462,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
             if (meterLeft == 0)
             {
                 // Make a sound
-                OtherFX_Play_Echo(0xf, 1, ((d->actionsFlagSet & 0x10000) != 0));
+                DECOMP_OtherFX_Play_Echo(0xf, 1, ((d->actionsFlagSet & 0x10000) != 0));
 
                 // Add to your number of boost attempts, this makes it
                 // so you can't attempt to boost again until you release L1 + R1
@@ -494,7 +496,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
                 // new minMax: [const_turboFullBarReserveGain, -> zero]
                 incrementReserves = MapToRange(meterLeft, 0, highMeter, d->const_turboFullBarReserveGain << 5, 0);
 
-                Turbo_Increment(
+                DECOMP_Turbo_Increment(
 
                     // driver
                     d,
@@ -578,14 +580,14 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
         {
             // Stop drifting, just drive
             DECOMP_VehPtr_Drifting_Finalize(t, d);
-            VehPtr_Driving_Init(t, d);
+            DECOMP_VehPtr_Driving_Init(t, d);
         }
     }
 }
 
 void DECOMP_VehPtr_Drifting_PhysLinear(struct Thread *thread, struct Driver *driver)
 {
-	VehPtr_Driving_PhysLinear(thread, driver);
+	DECOMP_VehPtr_Driving_PhysLinear(thread, driver);
 	driver->actionsFlagSet |= 0x1800;
 	driver->timeSpentDrifting += sdata->gGT->elapsedTimeMS;
 }

@@ -21,7 +21,7 @@ void DECOMP_VehPtr_LastSpin_Update(struct Thread* t, struct Driver* d)
 
 void DECOMP_VehPtr_LastSpin_PhysLinear(struct Thread* t, struct Driver* d)
 {
-	VehPtr_Driving_PhysLinear(t,d);
+	DECOMP_VehPtr_Driving_PhysLinear(t,d);
 	
 	// baseSpeed and fireSpeed
 	// set both "shorts" in one "int"

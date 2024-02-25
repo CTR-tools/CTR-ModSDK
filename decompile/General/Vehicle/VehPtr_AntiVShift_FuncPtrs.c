@@ -16,12 +16,14 @@ void DECOMP_VehPtr_AntiVShift_Update(struct Thread *t, struct Driver *d)
 		return;
     }
 
-	VehPtr_Driving_Init(t, d);
+	DECOMP_VehPtr_Driving_Init(t, d);
 }
 
 void DECOMP_VehPtr_AntiVShift_ReverseOneFrame(struct Thread *t, struct Driver *d)
 {
+	#ifndef REBUILD_PS1
     Player_JumpAndFriction();
+	#endif
 
 	int actionFlagSet = d->actionsFlagSet;
 
@@ -47,5 +49,5 @@ void DECOMP_VehPtr_AntiVShift_ReverseOneFrame(struct Thread *t, struct Driver *d
 		return;
     }
 
-	VehPtr_Driving_Init(t, d);
+	DECOMP_VehPtr_Driving_Init(t, d);
 }

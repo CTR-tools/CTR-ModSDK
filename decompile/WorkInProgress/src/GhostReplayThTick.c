@@ -320,7 +320,7 @@ void GhostReplay_ThTick(struct Thread *t) {
         if (gGT->trafficLightsTimer < 1 &&
             (gGT->gameMode1 & START_OF_RACE) == 0 &&
             TitleFlag_IsFullyOnScreen() == 0) {
-          Turbo_Increment(d, (int)(buffer[1] << 8 | buffer[2]), buffer[3],
+          DECOMP_Turbo_Increment(d, (int)(buffer[1] << 8 | buffer[2]), buffer[3],
                           (int)(buffer[4] << 8 | buffer[5]));
         }
         buffer += 6;

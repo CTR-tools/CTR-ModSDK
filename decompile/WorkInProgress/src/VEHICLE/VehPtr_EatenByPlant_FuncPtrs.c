@@ -176,14 +176,15 @@ void DECOMP_VehPtr_EatenByPlant_Init(struct Thread *t, struct Driver *d)
         d->thCloud = NULL;
     }
 
-    // Check if 231 dll is loaded
-    if ((LOAD_IsOpen_RacingOrBattle() != 0) &&
-
-        // If you're not in Adventure Arena
-        (!(sdata->gGT->gameMode1 & ADVENTURE_ARENA)))
+#ifndef REBUILD_PS1
+    if (
+			(LOAD_IsOpen_RacingOrBattle() != 0) &&
+			((sdata->gGT->gameMode1 & ADVENTURE_ARENA) == 0)
+		)
     {
         RB_Player_ModifyWumpa(d, -2);
     }
+#endif
 
     // allow this thread to ignore all collisions
     t->flags |= 0x1000;

@@ -414,6 +414,28 @@
 #include "../decompile/General/Vehicle/VehInit_TeleportSelf.c"
 #include "../decompile/General/Vehicle/VehInit_TeleportAll.c"
 
+#include "../decompile/General/Vehicle/VehPtr_Driving_PhysAngular.c"
+// more
+#include "../decompile/General/Vehicle/VehPtr_Driving_PhysLinear.c"
+#include "../decompile/General/Vehicle/VehPtr_Driving_Audio.c"
+#include "../decompile/General/Vehicle/VehPtr_Driving_Update.c"
+#include "../decompile/General/Vehicle/VehPtr_Driving_Init.c"
+
+#include "../decompile/General/Vehicle/VehPtr_Freeze_PhysLinear.c"
+#include "../decompile/General/Vehicle/VehPtr_Freeze_Init.c"
+
+// everything between VehPtr_Freeze_Init and Player_ChangeState
+#include "../decompile/General/Vehicle/VehPtr_AAA_BigBlock1.c"
+
+#include "../decompile/General/Vehicle/VehPtr_EngineRevving_FuncPtrs.c"
+#include "../decompile/General/Vehicle/VehPtr_EngineRevving_Init.c"
+#include "../decompile/General/Vehicle/VehPtr_Blasted_FuncPtrs.c"
+#include "../decompile/General/Vehicle/VehPtr_Blasted_Init.c"
+
+// VEH (other)
+#include "../decompile/General/Player_SetHeldItem.c"
+#include "../decompile/General/Turbo_Increment.c"
+#include "../decompile/General/Turbo_Audio.c"
 #include "../decompile/General/Weapon_Shoot_OnCirclePress.c"
 
 

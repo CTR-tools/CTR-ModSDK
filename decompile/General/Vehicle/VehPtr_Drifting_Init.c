@@ -41,17 +41,15 @@ void DECOMP_VehPtr_Drifting_Init(struct Thread *t, struct Driver *d)
     }
 }
 
-void DECOMP_VehPtr_Drifting_InitSetUpdate();
-void DECOMP_VehPtr_Drifting_PhysLinear();
-void DECOMP_VehPtr_Drifting_PhysAngular();
-
 void *PlayerDriftingFuncTable[13] =
 {
     DECOMP_VehPtr_Drifting_InitSetUpdate,
     NULL,
     DECOMP_VehPtr_Drifting_PhysLinear,
-    VehPtr_Driving_Audio,
+    DECOMP_VehPtr_Driving_Audio,
     DECOMP_VehPtr_Drifting_PhysAngular,
+	
+	#ifndef REBUILD_PS1
     OnApplyForces,
     COLL_StartSearch_NearPlayer,
     OnCollide_Drivers,
@@ -60,4 +58,5 @@ void *PlayerDriftingFuncTable[13] =
     OnRender,
     OnAnimate_Driving,
     VehParticle_DriverMain
+	#endif
 };

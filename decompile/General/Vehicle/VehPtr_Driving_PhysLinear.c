@@ -6,7 +6,7 @@
 // see the bottom of this file
 extern short PhysLinear_DriverOffsets[14];
 
-void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
+void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 {
 	struct GameTracker* gGT;
 	int gameMode2;
@@ -119,7 +119,7 @@ void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 			driver->invisibleTimer = 0;
 			driver->instSelf->flags = driver->instFlagsBackup;
 			driver->instSelf->alphaScale = 0;
-			OtherFX_Play(0x62, 1);
+			DECOMP_OtherFX_Play(0x62, 1);
 		}
 	}
 
@@ -306,8 +306,10 @@ void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 
 				if (approximateSpeed2 > 0x20) approximateSpeed2 = 0x20;
 
+#ifndef REBUILD_PS1
 				// gamepad vibration
 				GAMEPAD_ShockForce1(driver, 4, driverTimer + (approxTrig >> 5) + approximateSpeed2 + 0x18);
+#endif
 
 				driverTimerNegativeFinal = driverTimerNegativePrelim | 1;
 			}
@@ -327,7 +329,7 @@ void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 		if (driver->itemRollTimer == 0)
 		{
 			// Select a random weapon for driver
-			Player_SetHeldItem(driver);
+			DECOMP_Player_SetHeldItem(driver);
 
 			// if 9 < number of wumpa
 			// if wumpa is 10
@@ -345,8 +347,8 @@ void VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driver)
 				itemSound = 0x41;
 			}
 
-			// OtherFX_Play of getting weapon
-			OtherFX_Play(itemSound, isNumWumpas10);
+			// sound of getting weapon
+			DECOMP_OtherFX_Play(itemSound, isNumWumpas10);
 		}
 
 		//if Item roll is not done
@@ -903,7 +905,7 @@ CheckJumpButtons:
 						superEngineFireLevel = 0x100;
 
 					// add 0.12s reserves
-					Turbo_Increment(driver, 120, (TURBO_PAD | SUPER_ENGINE), superEngineFireLevel);
+					DECOMP_Turbo_Increment(driver, 120, (TURBO_PAD | SUPER_ENGINE), superEngineFireLevel);
 
 					uVar20 = driver->actionsFlagSet;
 				}

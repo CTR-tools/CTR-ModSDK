@@ -74,12 +74,12 @@ void DECOMP_UI_RenderFrame_CrystChall(void)
 	// if you have enough crystals to win the race
     if (gGT->numCrystalsInLEV <= player->numCrystals)
 	{
-#ifndef REBUILD_PS1
-      player->funcPtrs[0] = VehPtr_Freeze_Init;
+      player->funcPtrs[0] = DECOMP_VehPtr_Freeze_Init;
 
       //turn on 26th bit of Actions Flag set (means racer finished the race)
       player->actionsFlagSet |= 0x2000000;
 
+#ifndef REBUILD_PS1
       MainGameEnd_Initialize();
 #endif
 	}

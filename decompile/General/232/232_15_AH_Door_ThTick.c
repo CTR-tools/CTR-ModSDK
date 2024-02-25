@@ -3,9 +3,6 @@
 // current 2208
 // budget 3276
 
-void VehPtr_Freeze_Init(struct Thread *, struct Driver *);
-void VehPtr_Driving_Init(struct Thread *, struct Driver *);
-
 void DECOMP_AH_Door_ThTick(struct Thread* t)
 {
   char doorIsOpen;
@@ -199,9 +196,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
 
     // If you are here, game must not be paused
 
-#ifndef REBUILD_PS1
-    driver->funcPtrs[0] = VehPtr_Freeze_Init;
-#endif
+    driver->funcPtrs[0] = DECOMP_VehPtr_Freeze_Init;
 
     door->camFlags |= WdCam_CutscenePlaying;
 
@@ -511,9 +506,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   	
   cDC->flags |= 0x400;
   
-#ifndef REBUILD_PS1
-  driver->funcPtrs[0] = VehPtr_Driving_Init;
-#endif
+  driver->funcPtrs[0] = DECOMP_VehPtr_Driving_Init;
   
   // cutscene over
   door->camFlags &= ~(0x10);

@@ -330,14 +330,16 @@ void VehPtr_MaskGrab_Init(struct Thread* t, struct Driver *d)
 
     d->actionsFlagSet &= 0xfff7ffbf;
 
-    // If 231 dll is loaded
-    if ((LOAD_IsOpen_RacingOrBattle() != 0) &&
 
-        // If you're not in Adventure Arena
-        ((gGT->gameMode1 & ADVENTURE_ARENA) == 0))
+#ifndef REBUILD_PS1
+    if (
+			(LOAD_IsOpen_RacingOrBattle() != 0) &&
+			((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
+		)
     {
         RB_Player_ModifyWumpa(d, -2);
     }
+#endif
 
     // if stored quadblock height + 0x8000 < posCurr.y
     if (d->quadBlockHeight + 0x8000 < d->posCurr[1])

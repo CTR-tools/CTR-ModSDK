@@ -26,7 +26,7 @@ void DECOMP_Weapon_Shoot_Now(struct Driver* d, int weaponID, int flags)
 			if(d->numWumpas >= 10)
 				boost = 0x100;
 			
-			Turbo_Increment(d, 0x960, 9, boost);
+			DECOMP_Turbo_Increment(d, 0x960, 9, boost);
 			break;
 			
 		// Shared code for Bomb and Missile
@@ -497,7 +497,7 @@ RunMineCOLL:
 			if(d->numWumpas >= 10)
 				shieldObj->flags = 4;
 			
-			OtherFX_Play(0x57, 1);
+			DECOMP_OtherFX_Play(0x57, 1);
 			break;
 		
 		// Mask
@@ -511,7 +511,7 @@ RunMineCOLL:
 			d->numTimesClockWeaponUsed++;
 			d->clockSend = FPS_DOUBLE(0x1e);
 			
-			OtherFX_Play(0x44, 1);
+			DECOMP_OtherFX_Play(0x44, 1);
 		
 			// if human and not AI (AIs can not use Clock)
 			// if((d->actionsFlagSet & 0x100000) == 0)
@@ -659,7 +659,7 @@ RunMineCOLL:
 				d->instSelf->flags =
 				(d->instSelf->flags & 0xfff8ffff) | 0x60000;
 				
-				OtherFX_Play(0x61, 1);
+				DECOMP_OtherFX_Play(0x61, 1);
 			}
 		
 			int time = 0x1e00;

@@ -4,7 +4,7 @@
 
 void DECOMP_VehPtr_Crashing_PhysLinear(struct Thread* t, struct Driver* d)
 {	
-	VehPtr_Driving_PhysLinear(t,d);
+	DECOMP_VehPtr_Driving_PhysLinear(t,d);
 	
 	// baseSpeed and fireSpeed
 	// set both "shorts" in one "int"
@@ -31,7 +31,9 @@ void DECOMP_VehPtr_Crashing_PhysAngular(struct Thread* t, struct Driver* d)
 			0
 		);
 		
+	#ifndef REBUILD_PS1
 	Rot_AxisAngle(&d->matrix310, &d->AxisAngle1_normalVec[0], d->angle);
+	#endif
 }
 
 void DECOMP_VehPtr_Crashing_Animate(struct Thread* t, struct Driver* d)
@@ -74,6 +76,5 @@ void DECOMP_VehPtr_Crashing_Animate(struct Thread* t, struct Driver* d)
 			)
 		);
 		
-	void VehPtr_Driving_Init(struct Thread* t, struct Driver* d);
-	d->funcPtrs[0] = VehPtr_Driving_Init;
+	d->funcPtrs[0] = DECOMP_VehPtr_Driving_Init;
 }

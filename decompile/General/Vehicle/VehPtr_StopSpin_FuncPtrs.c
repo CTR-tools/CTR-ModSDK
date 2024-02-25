@@ -72,6 +72,5 @@ void DECOMP_VehPtr_StopSpin_Animate(struct Thread* t, struct Driver* d)
 	
 	
 	// if you are facing forward
-	void VehPtr_Driving_Init(struct Thread* t, struct Driver* d);
-	d->funcPtrs[0] = VehPtr_Driving_Init;
+	d->funcPtrs[0] = DECOMP_VehPtr_Driving_Init;
 }
