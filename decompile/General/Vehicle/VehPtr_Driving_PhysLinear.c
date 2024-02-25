@@ -767,7 +767,6 @@ CheckJumpButtons:
 		// if you are not holding cross, or have no Reserves...
 		// driverSpeedSmth2 is replaced
 
-		// Player_StickReturnToRest
 		driverSpeedSmth2 = Player_StickReturnToRest(stickRY, 0x80, 0);
 
 		driverSpeedOrSmth = -driverSpeedSmth2;
@@ -835,7 +834,6 @@ CheckJumpButtons:
 			// if you are not holding cross, and you have no Reserves
 			if (cross == 0)
 			{
-				// Player_StickReturnToRest
 				driverSpeedOrSmth = Player_StickReturnToRest(stickRY, 0x80, 0);
 
 				if (driverSpeedOrSmth < 0)
