@@ -1,5 +1,6 @@
 #include <common.h>
 
+void Player_ChangeState();
 void UI_VsQuipReadDriver();
 void UI_BattleDrawHeadArrows();
 void GAMEPAD_JogCon1(struct Driver* driver, char param_2, u_short param_3);
@@ -12,6 +13,7 @@ void Mods3_EndOfFile();
 void Mods4_EndOfFile();
 void Mods5_EndOfFile();
 void Mods6_EndOfFile();
+void Mods7_EndOfFile();
 
 void ModsMain()
 {
@@ -26,7 +28,7 @@ void ModsMain()
 #ifndef REBUILD_PC
 	printf("\n\nMods:\n");
 	
-	int modSizes[6] =
+	int modSizes[7] =
 	{
 		// UI defrag Block1
 		(int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile,
@@ -44,10 +46,13 @@ void ModsMain()
 		(int)LOAD_AppendQueue - (int)Mods5_EndOfFile,
 		
 		// UI defrag Block3
-		(int)DECOMP_UI_Map_GetIconPos - (int)Mods6_EndOfFile
+		(int)DECOMP_UI_Map_GetIconPos - (int)Mods6_EndOfFile,
+		
+		// VehPtr defrag Block1
+		(int)Player_ChangeState - (int)Mods7_EndOfFile
 	};
 	
-	for(int i = 0; i < 6; i++)
+	for(int i = 0; i < 7; i++)
 	{
 		printf("Mods%d.c: %d\n", i+1, modSizes[i]);
 	}

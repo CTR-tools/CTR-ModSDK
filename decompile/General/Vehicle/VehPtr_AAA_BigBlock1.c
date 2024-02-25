@@ -12,3 +12,10 @@
 #include "VehPtr_LastSpin_Init.c"
 #include "VehPtr_StopSpin_FuncPtrs.c"
 #include "VehPtr_StopSpin_Init.c"
+
+#include "../AltMods/Mods7.c"
+
+void Mods7_EndOfFile()
+{
+	// leave empty
+}
