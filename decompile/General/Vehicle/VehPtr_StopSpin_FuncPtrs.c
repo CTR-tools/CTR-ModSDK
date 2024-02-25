@@ -8,7 +8,11 @@ void DECOMP_VehPtr_StopSpin_Animate(struct Thread* t, struct Driver* d)
 	struct Instance* inst;
 	inst = t->inst;
 	
+	#if 0
 	numFrames = VehAnim_Instance_GetNumAnimFrames(inst, inst->animIndex);
+	#else
+	numFrames = 21;
+	#endif
 	
 	// if you are spinning right
 	if(d->KartStates.Spinning.spinDir == -1)
@@ -60,9 +64,7 @@ void DECOMP_VehPtr_StopSpin_Animate(struct Thread* t, struct Driver* d)
 			)
 		);
 	#endif
-		
-	printf("frame: %d\n", numFrames);
-		
+
 	// increment by two frames until reaching midpoint
 	inst->animFrame = InterpBySpeed(inst->animFrame, 2, numFrames);
 	

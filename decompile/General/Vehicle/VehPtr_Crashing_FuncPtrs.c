@@ -50,8 +50,16 @@ void DECOMP_VehPtr_Crashing_Animate(struct Thread* t, struct Driver* d)
 	
 	// If crashing animation is not finished, quit function
 	if(
-		(inst->animFrame+1) <
-		VehAnim_Instance_GetNumAnimFrames(inst, inst->animIndex)
+		// oxide has no animation
+		(data.characterIDs[d->driverID] != 0xF) &&
+		
+		// animation is not over
+		((inst->animFrame+1) < 15)
+		
+		#if 0
+		// except for Oxide, who has zero frames
+		15 == VehAnim_Instance_GetNumAnimFrames(inst, inst->animIndex)
+		#endif
 	  )
 	{
 		return;
