@@ -1,5 +1,5 @@
-// 452+43+33+38+14+18+16+19+1+8+9+1+1+2+2+1+3+2+4+2+2+2+16+3+47-12 = 727 rewritten so far
-// 452 for every 'common' and ','
+// 441+43+33+38+14+18+16+19+12+1+8+9+1+1+2+2+1+3+2+4+2+2+2+16+3+47-12 = 728 rewritten so far
+// 441 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -8,6 +8,7 @@
 // 18 for 230_Block3
 // 16 for 232 adv hub
 // 19 for the 20 UI Block #1
+// 12 for MAIN block
 // +1 for UI Block #2
 // +8 for UI Block #3
 // +9 for GAMEPAD Block #1
