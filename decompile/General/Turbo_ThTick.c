@@ -18,18 +18,10 @@ void DECOMP_Turbo_ThTick(struct Thread* turboThread)
 	short elapsedTime;
 	struct GameTracker* gGT = sdata->gGT;
 
-	// get object attached to thread
 	turbo = (struct Turbo*)turboThread->object;
-
-	// turbo -> driver
 	driver = turbo->driver;
-
-	// get instance
 	instance = turboThread->inst;
-
-	// driver -> instSelf
 	instanceDriver = driver->instSelf;
-
 
 	if
 	(

@@ -27499,7 +27499,7 @@ LAB_800613a4:
 
 
 
-//returns Base Speed for specified Racer
+// Player_GetBaseSpeed
 int FUN_80061488(int param_1)
 //param_1 = Racer struct Pointer
 {

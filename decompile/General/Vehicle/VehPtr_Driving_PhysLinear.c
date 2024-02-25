@@ -736,7 +736,7 @@ CheckJumpButtons:
 	}
 	approximateSpeed2 = 0;
 	
-	driverBaseSpeed = Player_GetBaseSpeed(driver);
+	driverBaseSpeed = DECOMP_Player_GetBaseSpeed(driver);
 	driverBaseSpeedUshort = driverBaseSpeed;
 
 	// If you are not holding Square

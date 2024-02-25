@@ -454,6 +454,13 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver);
 void DECOMP_Weapon_Shoot_OnCirclePress(struct Driver *d);
 void DECOMP_Turbo_Audio(struct Driver* driver, int speed_cap);
 void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
+void DECOMP_Turbo_ThTick(struct Thread* t);
+void DECOMP_Turbo_ThDestroy(struct Thread* t);
+
+void DECOMP_VehPtr_Blasted_Update(struct Thread *thread, struct Driver *driver);
+void DECOMP_VehPtr_Blasted_PhysLinear(struct Thread *thread, struct Driver *driver);
+void DECOMP_VehPtr_Blasted_PhysAngular(struct Thread *thread, struct Driver *driver);
+void DECOMP_VehPtr_Blasted_Animate(struct Thread *thread,struct Driver *driver);
 
 // 230
 void DECOMP_MM_Battle_DrawIcon_Character(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);

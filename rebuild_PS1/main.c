@@ -434,6 +434,7 @@
 
 // VEH (other)
 #include "../decompile/General/Player_SetHeldItem.c"
+#include "../decompile/General/Player_GetBaseSpeed.c"
 #include "../decompile/General/Turbo_Increment.c"
 #include "../decompile/General/Turbo_Audio.c"
 #include "../decompile/General/Weapon_Shoot_OnCirclePress.c"

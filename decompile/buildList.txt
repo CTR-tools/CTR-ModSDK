@@ -1,5 +1,5 @@
-// 431+43+33+27+38+14+18+16+19+12+1+8+9+1+1+2+2+3+2+4+16+3+47-12 = 738 rewritten so far
-// 431 for every 'common' and ','
+// 433+43+33+27+38+14+18+16+19+12+1+8+9+1+1+2+2+3+2+4+16+3+47-12 = 740 rewritten so far
+// 433 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -615,7 +615,7 @@ common, exe, VehPtr_Freeze_Init, 0x0, General/Vehicle/VehPtr_Freeze_Init.c
 // everything between VehPtr_Freeze_Init and Player_ChangeState
 common, exe, VehPtr_AntiVShift_Update, 0x0, General/Vehicle/VehPtr_AAA_BigBlock1.c
 
-common, exe, Player_ChangeState, 0x0, General/Vehicle/Player_ChangeState.c
+common, exe, Player_ChangeState, 0x0, General/Player_ChangeState.c
 
 // Weapon
 // VehPtr_MaskGrab
@@ -630,8 +630,10 @@ common, exe, VehPtr_Blasted_Init, 0x0, General/Vehicle/VehPtr_Blasted_Init.c
 
 // VEH (other)
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
+common, exe, Player_GetBaseSpeed, 0x0, General/Player_GetBaseSpeed.c
 common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
 common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
+common, exe, Turbo_ThDestroy, 0x0, General/Turbo_ThDestroy.c
 common, exe, Turbo_Audio, 0x0, General/Turbo_Audio.c
 common, exe, Weapon_Mask_boolGoodGuy, 0x0, General/Weapon_Mask_boolGoodGuy.c
 common, exe, Weapon_Shoot_Now, 0x0, General/Weapon_Shoot_Now.c

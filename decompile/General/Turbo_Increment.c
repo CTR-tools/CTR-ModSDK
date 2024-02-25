@@ -109,13 +109,9 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 		
 #ifndef REBUILD_PS1
 		turboInst1 = INSTANCE_BirthWithThread(
-			0x2c, 				// modelID
-			&sdata->s_turbo1[0],	// name
-			0x300, 				// SmallStackPool
-			TURBO, 				// ThreadBucket
-			DECOMP_Turbo_ThTick,	// func
-			0x10, 				// object size
-			0					// no parent thread
+			0x2c, 0, SMALL, TURBO, 
+			DECOMP_Turbo_ThTick,
+			sizeof(struct Turbo), 0
 		);
 	
 		turboObj = 0;
