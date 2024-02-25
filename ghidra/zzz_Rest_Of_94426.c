@@ -20204,10 +20204,10 @@ struct Driver* FUN_80058ec0(int param_1)
 }
 
 
+// VehMath_InterpBySpeed
 // param1 is current rotation
 // param2 is speed of rotation
 // param3 is desired rotation
-// Rotation Interpolation
 int FUN_80058f54(int param_1,int param_2,int param_3)
 
 {

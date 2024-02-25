@@ -131,7 +131,7 @@ void OnAnimate_Driving(struct Thread *t, struct Driver *d)
                         iVar7 = d->ampTurnState;
                     }
                     // seems like iVar9 gets set to 0 if you're turning, or to last frame index if you're not
-                    iVar9 = VehMath_MapToRange(-(iVar7), iVar9, animType, 0, (numFrames - 1));
+                    iVar9 = DECOMP_VehMath_MapToRange(-(iVar7), iVar9, animType, 0, (numFrames - 1));
                 }
                 else
                 {

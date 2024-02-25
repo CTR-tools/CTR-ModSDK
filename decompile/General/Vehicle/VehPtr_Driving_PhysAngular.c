@@ -44,9 +44,11 @@ void DECOMP_VehPtr_Driving_PhysAngular(struct Thread* thread, struct Driver* dri
 	{
 		destinedRot = (u_int)(u_char)driver->unk46a;
 	}
-	rotCurrW_interp = VehMath_InterpBySpeed((int)(driver->rotPrev).w, FPS_HALF(8), destinedRot);
+	
+	rotCurrW_interp = DECOMP_VehMath_InterpBySpeed((int)(driver->rotPrev).w, FPS_HALF(8), destinedRot);
 	(driver->rotPrev).w = (short)rotCurrW_interp;
-	rotCurrW_interp = VehMath_InterpBySpeed(rotCurrW_original, (rotCurrW_interp * elapsedTimeMS) >> 5, 0);
+	
+	rotCurrW_interp = DECOMP_VehMath_InterpBySpeed(rotCurrW_original, (rotCurrW_interp * elapsedTimeMS) >> 5, 0);
 	actionsFlagSet = driver->actionsFlagSet;
 	forwardDir = driver->forwardDir;
 	simpTurnState = driver->simpTurnState;
@@ -82,7 +84,7 @@ LAB_8005fd74:
 	}
 	if (((actionsFlagSet & 1) != 0) && ((driver->stepFlagSet & 3) == 0))
 	{
-		rotCurrW_interp = VehMath_MapToRange(speedApprox, 0x10, 0x300, 0, rotCurrW_interp);
+		rotCurrW_interp = DECOMP_VehMath_MapToRange(speedApprox, 0x10, 0x300, 0, rotCurrW_interp);
 	}
 	terrain = driver->terrainMeta1;
 	rotCurrW_original = (int)driver->rotationSpinRate;
@@ -90,7 +92,7 @@ LAB_8005fd74:
 	{
 		int rate = ((int)driver->const_TurnInputDelay + driver->turnConst * 0x32) * terrain->friction >> 8;
 		
-		rotCurrW_interp = VehMath_InterpBySpeed(rotCurrW_original, FPS_HALF(rate), 0);
+		rotCurrW_interp = DECOMP_VehMath_InterpBySpeed(rotCurrW_original, FPS_HALF(rate), 0);
 			
 		forwardDir = (short)rotCurrW_interp;
 	}
@@ -131,7 +133,7 @@ LAB_8005fee4:
 	if (rotCurrW_interp != 0)
 	{
 		classSpeed_halved = rotCurrW_interp - elapsedTimeMS;
-		rotCurrW_interp = VehMath_MapToRange(rotCurrW_interp, 0, 0x140, 0, (int)driver->previousFrameMultDrift);
+		rotCurrW_interp = DECOMP_VehMath_MapToRange(rotCurrW_interp, 0, 0x140, 0, (int)driver->previousFrameMultDrift);
 		rotCurrW_original = rotCurrW_original + rotCurrW_interp;
 		if (classSpeed_halved < 0)
 		{
@@ -171,7 +173,7 @@ LAB_8005fee4:
 			}
 			// Rotating the model to exaggerate the steering animation
 	  		// only do this if driver speed is more than 0x300
-			rotCurrW_interp = VehMath_MapToRange(turnResistMax, 0x300, classSpeed_halved >> 0x11, (int)driver->const_modelRotVelMin, rotCurrW_interp);
+			rotCurrW_interp = DECOMP_VehMath_MapToRange(turnResistMax, 0x300, classSpeed_halved >> 0x11, (int)driver->const_modelRotVelMin, rotCurrW_interp);
 		}
 	}
 	driverSpeed = (int)driver->speed;
@@ -182,7 +184,7 @@ LAB_8005fee4:
 	
 	// this prevents you from steering sharp at low speeds
 	turnResistMin = ((u_int)(u_char)driver->const_TurnRate + ((int)driver->turnConst << 1) / 5) * 0x100;
-	turnResistMax = VehMath_MapToRange(driverSpeed, turnResistMinBitshift, turnResistMaxBitshift, turnResistMin, 0);
+	turnResistMax = DECOMP_VehMath_MapToRange(driverSpeed, turnResistMinBitshift, turnResistMaxBitshift, turnResistMin, 0);
 	
 	classSpeed_halved = 0;
 	if (turnResistMinBitshift <= speedApprox)
@@ -199,8 +201,8 @@ LAB_8005fee4:
 			{
 				classSpeed_halved = -classSpeed_halved;
 			}
-			classSpeed_halved = VehMath_MapToRange(classSpeed_halved, turnResistMinBitshift, turnResistMaxBitshift, 0, rotCurrW_interp);
-			classSpeed_halved = VehMath_MapToRange(iVar1, turnResistMax, turnResistMin, 0, classSpeed_halved);
+			classSpeed_halved = DECOMP_VehMath_MapToRange(classSpeed_halved, turnResistMinBitshift, turnResistMaxBitshift, 0, rotCurrW_interp);
+			classSpeed_halved = DECOMP_VehMath_MapToRange(iVar1, turnResistMax, turnResistMin, 0, classSpeed_halved);
 			if (rotCurrW_original < 0)
 			{
 				classSpeed_halved = -classSpeed_halved;
@@ -221,7 +223,7 @@ LAB_8005fee4:
 	if ((0x2ff < speedApprox) && ((actionsFlagSet & 1) != 0))
 	{
 		turnResistMaxBitshift =
-		VehMath_SteerAccel
+		DECOMP_VehMath_SteerAccel
 		(
 			FPS_HALF(driver->numFramesSpentSteering), 
 			(int)driver->const_SteerAccel_Stage2_FirstFrame, 
@@ -339,7 +341,7 @@ LAB_80060284:
 		{
 			rotCurrW_interp = -rotCurrW_original;
 		}
-		rotCurrW_interp = VehMath_InterpBySpeed(turnResistMax, FPS_HALF(rotCurrW_interp), 0);
+		rotCurrW_interp = DECOMP_VehMath_InterpBySpeed(turnResistMax, FPS_HALF(rotCurrW_interp), 0);
 		forwardDir = (short)rotCurrW_interp;
 	}
 	else
@@ -351,7 +353,7 @@ LAB_80060284:
 	driver->unk3D4[2] = (short)turnResistMaxBitshift;
 	driver->unk3D4[0] = forwardDir;
 	driver->unk3D4[1] = (short)rotCurrW_original;
-	rotCurrW_interp = VehMath_MapToRange(speedApprox, 0, 0x600, classSpeed_halved, 0);
+	rotCurrW_interp = DECOMP_VehMath_MapToRange(speedApprox, 0, 0x600, classSpeed_halved, 0);
 	rotCurrW_original = (rotCurrW_interp * elapsedTimeMS) >> 5;
 	rotCurrW_interp = rotCurrW_original;
 	if (rotCurrW_original < 0)

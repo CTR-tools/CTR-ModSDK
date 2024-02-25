@@ -408,12 +408,18 @@
 
 #include "../decompile/General/UI/UI_AAA_BigBlock1.c"
 
-// VEH
+// VEH Init
 #include "../decompile/General/Vehicle/VehInit_Player.c"
 #include "../decompile/General/Vehicle/VehInit_NonGhost.c"
 #include "../decompile/General/Vehicle/VehInit_TeleportSelf.c"
 #include "../decompile/General/Vehicle/VehInit_TeleportAll.c"
 
+// VEH MATH
+#include "../decompile/General/Vehicle/VehMath_InterpBySpeed.c"
+#include "../decompile/General/Vehicle/VehMath_MapToRange.c"
+#include "../decompile/General/Vehicle/VehMath_SteerAccel.c"
+
+// VEH PTR
 #include "../decompile/General/Vehicle/VehPtr_Driving_PhysAngular.c"
 // more
 #include "../decompile/General/Vehicle/VehPtr_Driving_PhysLinear.c"

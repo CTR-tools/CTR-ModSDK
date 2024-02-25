@@ -231,7 +231,7 @@ void DECOMP_CAM_ThTick(struct Thread *t)
 			sVar5 = psVar21[2];
 			sVar1 = psVar21[3];
 			
-			iVar7 = VehMath_MapToRange(
+			iVar7 = DECOMP_VehMath_MapToRange(
 				(int)sVar6 * (int)sVar6 + 
 				(int)sVar5 * (int)sVar5 + 
 				(int)sVar1 * (int)sVar1, 

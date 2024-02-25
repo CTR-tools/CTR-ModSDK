@@ -214,7 +214,7 @@ LAB_800af72c:
 				//	[300, 6000] (close, far)
 				// to volume
 				//	[0xff, 0] (loud, soft)
-                uVar6 = VehMath_MapToRange(iVar7, 300, 6000, 0xff, 0);	
+                uVar6 = DECOMP_VehMath_MapToRange(iVar7, 300, 6000, 0xff, 0);	
             }
 
             // Play save/load screen sound

@@ -19,9 +19,9 @@ void CS_Podium_Prize_ThTick1(struct Thread *th)
             // Make visible
             inst->flags &= ~(HIDE_MODEL);
         }
-        interp = VehMath_InterpBySpeed(prize[0x12], 0x14, 0);
+        interp = DECOMP_VehMath_InterpBySpeed(prize[0x12], 0x14, 0);
         prize[0x12] = interp;
-        interp = VehMath_InterpBySpeed(prize[0x11], 1, 0);
+        interp = DECOMP_VehMath_InterpBySpeed(prize[0x11], 1, 0);
         prize[0x11] = interp;
     }
 

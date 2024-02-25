@@ -74,7 +74,7 @@ void DECOMP_VehPtr_Spinning_PhysAngular(struct Thread* t, struct Driver* d)
 	d->rotCurr.y = d->unk3D4[0] + d->angle + d->turnAngleCurr;
 	
 	d->rotCurr.w = 
-		VehMath_InterpBySpeed
+		DECOMP_VehMath_InterpBySpeed
 		(
 			d->rotCurr.w,
 			(elapsedTimeMS << 5) >> 5,

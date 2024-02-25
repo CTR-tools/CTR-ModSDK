@@ -88,20 +88,21 @@ PLAY_AUDIO:
     else
     {
         // Map value from [oldMin, oldMax] to [newMin, newMax]
-        volume = VehMath_MapToRange(distance, 300, 9000, 0xff, 0);
+        volume = DECOMP_VehMath_MapToRange(distance, 300, 9000, 0xff, 0);
     }
 
-    OtherFX_Play_LowLevel(sound & 0xffff, 1,
+    OtherFX_Play_LowLevel(
+		sound & 0xffff, 1,
 
-                          // if quadblock under camera is able to make an echo
-                          ((gGT->cameraDC[currIndex].ptrQuadBlock->quadFlags & 0x80) << 0x18)
+        // if quadblock under camera is able to make an echo
+        ((gGT->cameraDC[currIndex].ptrQuadBlock->quadFlags & 0x80) << 0x18)
 
-                              // volume
-                              | ((volume & 0xff) << 0x10)
-
-                              // Left/Right
-                              | (balance & 0xff)
-
-                              // distortion
-                              | 0x8000);
+			// volume
+			| ((volume & 0xff) << 0x10)
+	
+			// Left/Right
+			| (balance & 0xff)
+	
+			// distortion
+			| 0x8000);
 }

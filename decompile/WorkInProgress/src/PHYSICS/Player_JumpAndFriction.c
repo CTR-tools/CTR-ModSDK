@@ -49,7 +49,7 @@ void DECOMP_Player_JumpAndFriction(struct Thread *t, struct Driver *d)
 
     // Map value from [oldMin, oldMax] to [newMin, newMax]
     // inverting newMin and newMax will give an inverse range mapping
-    int turnSpeed = VehMath_MapToRange(ampTurnState, 0, d->const_BackwardTurnRate, 0, d->const_TurnDecreaseRate);
+    int turnSpeed = DECOMP_VehMath_MapToRange(ampTurnState, 0, d->const_BackwardTurnRate, 0, d->const_TurnDecreaseRate);
     if (baseSpeed < 0)
     {
       baseSpeed = -baseSpeed;
