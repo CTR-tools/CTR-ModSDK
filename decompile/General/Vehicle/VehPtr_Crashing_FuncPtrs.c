@@ -64,8 +64,8 @@ void DECOMP_VehPtr_Crashing_Animate(struct Thread* t, struct Driver* d)
 	inst->animIndex = 0;
 	
 	// start halfway into steer animation
-	inst->animFrame = 
-		
+	inst->animFrame = 10;
+	#if 0 // 10 =
 		VehAnim_Instance_GetStartFrame(
 			
 			0, // midpoint
@@ -75,6 +75,7 @@ void DECOMP_VehPtr_Crashing_Animate(struct Thread* t, struct Driver* d)
 				0	  // anim #0, steer
 			)
 		);
+	#endif
 		
 	d->funcPtrs[0] = DECOMP_VehPtr_Driving_Init;
 }

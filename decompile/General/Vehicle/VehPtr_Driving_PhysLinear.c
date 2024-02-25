@@ -736,7 +736,14 @@ CheckJumpButtons:
 	}
 	approximateSpeed2 = 0;
 	
+	#ifdef REBUILD_PC
+	// buggy, experimental
 	driverBaseSpeed = DECOMP_Player_GetBaseSpeed(driver);
+	#else
+	// original, for decomp
+	driverBaseSpeed = Player_GetBaseSpeed(driver);
+	#endif
+	
 	driverBaseSpeedUshort = driverBaseSpeed;
 
 	// If you are not holding Square

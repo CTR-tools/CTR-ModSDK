@@ -485,14 +485,19 @@ LAB_80058568:
     // set animation to zero
     d->instSelf->animIndex = 0;
 
-#ifndef REBUILD_PS1
-    // get number of frames in animation and set it to driver instance
-    d->instSelf->animFrame = 
+    // halfway
+    d->instSelf->animFrame = 10;
+	#if 0 // 10 =
 		VehAnim_Instance_GetStartFrame(
-        0, VehAnim_Instance_GetNumAnimFrames(d->instSelf, 0));
-#else
-	d->instSelf->animFrame = 0;
-#endif
+			
+			0, // midpoint
+			
+			VehAnim_Instance_GetNumAnimFrames(
+				d->instSelf, 	// driver instance
+				0				// anim #0, steer
+			)
+		);
+	#endif
 
     // Set Scale (x, y, z)
     d->instSelf->scale[0] = 0xCCC;

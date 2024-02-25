@@ -53,9 +53,21 @@ void DECOMP_VehPtr_Blasted_Init(struct Thread *thread, struct Driver *driver)
 #endif
 	
 	driver->instSelf->animIndex = 0;
-	iVar2 = VehAnim_Instance_GetNumAnimFrames(driver->instSelf, 0);
-	iVar2 = VehAnim_Instance_GetStartFrame(0, iVar2);
-	driver->instSelf->vertSplit = (short)iVar2;
+	
+	iVar2 = 10;
+	#if 0 // 10 =
+		VehAnim_Instance_GetStartFrame(
+			
+			0, // midpoint
+			
+			VehAnim_Instance_GetNumAnimFrames(
+				driver->instSelf, 	// driver instance
+				0					// anim #0, steer
+			)
+		);
+	#endif
+	
+	driver->instSelf->animFrame = (short)iVar2;
 	
 	iVar2 = DECOMP_MixRNG_Scramble();
 	driver->KartStates.Blasted.boolPlayBackwards = iVar2 & 4;

@@ -46,13 +46,10 @@ void DECOMP_VehPtr_StopSpin_Animate(struct Thread* t, struct Driver* d)
 	
 	
 	// === spinning has stopped ===
-	
-	// return driver to center steering 
-	// animation frame
-	
-	// desired halfway into steer animation
-	numFrames = 
 		
+	// desired halfway into steer animation
+	numFrames = 10;
+	#if 0 // 10 =
 		VehAnim_Instance_GetStartFrame(
 			
 			0, // midpoint
@@ -62,6 +59,9 @@ void DECOMP_VehPtr_StopSpin_Animate(struct Thread* t, struct Driver* d)
 				0	  // anim #0, steer
 			)
 		);
+	#endif
+		
+	printf("frame: %d\n", numFrames);
 		
 	// increment by two frames until reaching midpoint
 	inst->animFrame = InterpBySpeed(inst->animFrame, 2, numFrames);
