@@ -20262,7 +20262,7 @@ int FUN_80058f54(int param_1,int param_2,int param_3)
   return iVar2;
 }
 
-
+// MapToRange
 // Map value from [oldMin, oldMax] to [newMin, newMax]
 // inverting newMin and newMax will give an inverse range mapping
 int FUN_80058f9c(int param_1,int param_2,int param_3,int param_4,int param_5)
