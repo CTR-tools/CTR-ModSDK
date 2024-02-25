@@ -168,11 +168,11 @@ LAB_80035098:
 			((psVar8 != 0) && (psVar9 != 0)) &&
 			(
 				iVar4 = (u_int)(u_char)psVar9->numTimesAttacking - (u_int)(u_char)psVar8->numTimesAttacking, 
-				*(short*)(&psVar8->unk_4F0_4F8[2]) < iVar4
+				psVar8->quip2 < iVar4
 			)
 		)
 		{
-			*(short*)(&psVar8->unk_4F0_4F8[2]) = (short)iVar4;
+			psVar8->quip2 = (short)iVar4;
 		}
 		for (iVar4 = 0; iVar4 < NUM_BUCKETS; iVar4++)
 		{

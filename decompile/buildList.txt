@@ -610,8 +610,10 @@ common, exe, VehPtr_Driving_PhysLinear, 0x0, General/Vehicle/VehPtr_Driving_Phys
 common, exe, VehPtr_Driving_Audio, 0x0, General/Vehicle/VehPtr_Driving_Audio.c
 common, exe, VehPtr_Driving_Update, 0x0, General/Vehicle/VehPtr_Driving_Update.c
 common, exe, VehPtr_Driving_Init, 0x0, General/Vehicle/VehPtr_Driving_Init.c
+
 common, exe, VehPtr_Freeze_PhysLinear, 0x0, General/Vehicle/VehPtr_Freeze_PhysLinear.c
 common, exe, VehPtr_Freeze_Init, 0x0, General/Vehicle/VehPtr_Freeze_Init.c
+
 common, exe, VehPtr_AntiVShift_Update, 0x0, General/Vehicle/VehPtr_AntiVShift_FuncPtrs.c
 common, exe, VehPtr_AntiVShift_Init, 0x0, General/Vehicle/VehPtr_AntiVShift_Init.c
 common, exe, VehPtr_Drifting_PhysAngular, 0x0, General/Vehicle/VehPtr_Drifting_FuncPtrs.c
@@ -625,7 +627,8 @@ common, exe, VehPtr_LastSpin_Init, 0x0, General/Vehicle/VehPtr_LastSpin_Init.c
 common, exe, VehPtr_StopSpin_Update, 0x0, General/Vehicle/VehPtr_StopSpin_FuncPtrs.c
 common, exe, VehPtr_StopSpin_Init, 0x0, General/Vehicle/VehPtr_StopSpin_Init.c
 
-// ChangeState
+common, exe, Player_ChangeState, 0x0, General/Vehicle/Player_ChangeState.c
+
 // Weapon
 // VehPtr_MaskGrab
 // VehPtr_EatenByPlant

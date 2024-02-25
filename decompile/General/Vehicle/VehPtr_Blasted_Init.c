@@ -32,7 +32,7 @@ void* PlayerBlastedFuncTable[0xD] =
 	VehParticle_DriverMain
 };
 
-void VehPtr_Blasted_Init(struct Thread *thread, struct Driver *driver)
+void DECOMP_VehPtr_Blasted_Init(struct Thread *thread, struct Driver *driver)
 {
 	int i;
 	u_int IsOpen_RacingOrBattle;

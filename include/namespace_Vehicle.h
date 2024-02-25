@@ -1101,19 +1101,17 @@ struct Driver
 	int framesSinceRaceEnded_forThisDriver;
 
 	// 0x4f0
-	// two-byte quip
+	// naughty dog bug
+	short quip1;
 
 	// 0x4f2
-	// two-byte quip
+	short quip2;
 
 	// 0x4f4
-	// two-byte quip
+	short quip3;
 
 	// 0x4f6
-	// two-byte quip
-
-	// 0x4f0
-	char unk_4F0_4F8[8];
+	short quip4;
 
 	// 0x4f8
 	struct Instance* wakeInst;

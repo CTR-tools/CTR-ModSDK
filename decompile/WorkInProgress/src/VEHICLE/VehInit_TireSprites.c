@@ -42,6 +42,6 @@ void VehInit_TireSprites(struct Thread *t)
     d->BattleHUD.numLives = gGT->battleLifeLimit;
     d->BattleHUD.teamID = d->driverID;
 
-    *(short*)&d->unk_4F0_4F8[0] = 0xffff;
-    *(short*)&d->unk_4F0_4F8[4] = 0xffff;
+    d->quip1 = 0xffff;
+    d->quip3 = 0xffff;
 }

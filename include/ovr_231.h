@@ -144,6 +144,7 @@ struct Shield
 	short duration;
 	
 	// 0x6
+	// & 1 - popped by Player_ChangeState
 	// & 2 - shooting
 	// & 4 - blue shield
 	// & ??? - shooting

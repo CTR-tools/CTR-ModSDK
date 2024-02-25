@@ -31310,7 +31310,8 @@ LAB_800647d8:
 	  // RB_Player_KillPlayer
       FUN_800abbb4(param_3,param_1);
 
-	  // If you're in End-Of-Race menu
+	  // === Naughty Dog Bug ===
+	  // If you're in End-Of-Race menu (impossible)
       if ((*(uint *)PTR_DAT_8008d2ac & 0x200000) != 0) 
 	  {
 		// save something in the player that got the kill,
