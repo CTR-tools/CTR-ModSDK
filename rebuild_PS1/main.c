@@ -411,7 +411,7 @@
 // VEH
 #include "../decompile/General/Vehicle/VehInit_Player.c"
 #include "../decompile/General/Vehicle/VehInit_NonGhost.c"
-//#include "../decompile/General/Vehicle/VehInit_TeleportSelf.c"
+#include "../decompile/General/Vehicle/VehInit_TeleportSelf.c"
 #include "../decompile/General/Vehicle/VehInit_TeleportAll.c"
 
 #include "../decompile/General/Weapon_Shoot_OnCirclePress.c"

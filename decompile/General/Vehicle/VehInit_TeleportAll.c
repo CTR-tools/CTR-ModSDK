@@ -22,7 +22,15 @@ void DECOMP_VehInit_TeleportAll(struct GameTracker *gGT, u_int spawnFlags)
     else
     {
 		#ifndef REBUILD_PS1
+		
+		// original function for decomp or mods
         VehInit_TeleportSelf(d, spawnFlags | 1, 0);
+		
+		#else
+		
+		// experimental buggy rewrite for PC port
+		DECOMP_VehInit_TeleportSelf(d, spawnFlags | 1, 0);
+		
 		#endif
     }
 	
