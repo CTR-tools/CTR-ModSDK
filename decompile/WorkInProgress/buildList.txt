@@ -1,5 +1,4 @@
-common, exe, CAM_ThTick, 0x0, src/CAM_ThTick_Hook.s
-common, exe, rdata_free, 0x0, src/CAM_ThTick_ghidra.c
+common, exe, rdata_free, 0x0, src/DecalGlobal_Find.c
 
 //common, exe, MainFreeze_MenuPtrOptions, 0x0, ../General/MAIN/MainFreeze_MenuPtrOptions.c
 
