@@ -679,7 +679,7 @@ CheckJumpButtons:
 		// If you are not holding Cross
 		if(cross == 0)
 		{
-			unk0x80 = Player_StickReturnToRest(stickRY, 0x80, 0); 
+			unk0x80 = DECOMP_Player_StickReturnToRest(stickRY, 0x80, 0); 
 			
 			if(unk0x80 > -1)
 			{
@@ -770,7 +770,7 @@ CheckJumpButtons:
 		// if you are not holding cross, or have no Reserves...
 		// driverSpeedSmth2 is replaced
 
-		driverSpeedSmth2 = Player_StickReturnToRest(stickRY, 0x80, 0);
+		driverSpeedSmth2 = DECOMP_Player_StickReturnToRest(stickRY, 0x80, 0);
 
 		driverSpeedOrSmth = -driverSpeedSmth2;
 		if (driverSpeedSmth2 < 1)
@@ -780,7 +780,7 @@ CheckJumpButtons:
 				(driverSpeedOrSmth == 0) &&
 				(
 					(
-						unk0x80 = Player_StickReturnToRest(stickLY, 0x80, 0), 
+						unk0x80 = DECOMP_Player_StickReturnToRest(stickLY, 0x80, 0), 
 						
 						(unk0x80 > 99) ||
 
@@ -830,14 +830,14 @@ CheckJumpButtons:
 	// If you are holding Square
 	else
 	{
-		unk0x80 = Player_StickReturnToRest(stickLY, 0x80, 0);
+		unk0x80 = DECOMP_Player_StickReturnToRest(stickLY, 0x80, 0);
 
 		if ((unk0x80 < 100) && ((unk0x80 < 1 || ((actionsFlagSetCopy & 0x20000) == 0))))
 		{
 			// if you are not holding cross, and you have no Reserves
 			if (cross == 0)
 			{
-				driverSpeedOrSmth = Player_StickReturnToRest(stickRY, 0x80, 0);
+				driverSpeedOrSmth = DECOMP_Player_StickReturnToRest(stickRY, 0x80, 0);
 
 				if (driverSpeedOrSmth < 0)
 				{
@@ -1058,7 +1058,7 @@ CheckJumpButtons:
 UseTurnRate:
 
 	// Steer, based on strength, and LeftStickX
-	iVar14 = Player_StickGetStrengthAbsolute(driverSpeedOrSmth, iVar14, ptrgamepad->rwd);
+	iVar14 = DECOMP_Player_StickGetStrengthAbsolute(driverSpeedOrSmth, iVar14, ptrgamepad->rwd);
 
 	// no desired steer
 	if (-iVar14 == 0) 
@@ -1096,7 +1096,7 @@ SkipSetSteer:
 	*(u_char*)&driver->simpTurnState = (char)-iVar14;
 
 	// Change wheel rotation based on StickLX
-	driverSpeedOrSmth = Player_StickGetStrengthAbsolute(driverSpeedOrSmth, 0x40, ptrgamepad->rwd);
+	driverSpeedOrSmth = DECOMP_Player_StickGetStrengthAbsolute(driverSpeedOrSmth, 0x40, ptrgamepad->rwd);
 	driverBaseSpeedUshort = DECOMP_VehMath_InterpBySpeed((int)driver->wheelRotation, FPS_HALF(0x18), -driverSpeedOrSmth);
 	*(u_short*)&driver->wheelRotation = driverBaseSpeedUshort;
 

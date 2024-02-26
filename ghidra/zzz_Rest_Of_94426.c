@@ -27646,9 +27646,9 @@ int FUN_8006163c(int param_1,undefined4 param_2,short *param_3)
   {
 	// map value
     iVar1 = FUN_80058f9c(
-				-param_1,iVar2, // [stickVal, deadzone]
-				iVar3,0,		// [range, 0]
-				param_2			// const 0x80 (halfway lerp)
+				-param_1, 		// [stickVal]
+				iVar2, iVar3,	// [deadzone, range]
+				0, param_2		// [0, const 0x80 (halfway lerp)]
 			);
     iVar1 = -iVar1;
   }
@@ -27658,9 +27658,9 @@ int FUN_8006163c(int param_1,undefined4 param_2,short *param_3)
   {
 	// map value
     iVar1 = FUN_80058f9c(
-				param_1,iVar2, 	// [stickVal, deadzone]
-				iVar3,0,		// [range, 0]
-				param_2			// const 0x80 (halfway lerp)
+				param_1, 		// [stickVal]
+				iVar2,iVar3,	// [deadzone, range]
+				0, param_2		// [0, const 0x80 (halfway lerp)]
 			);
   }
   return iVar1;
