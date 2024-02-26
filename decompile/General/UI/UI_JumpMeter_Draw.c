@@ -124,7 +124,11 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 			p->y0 = jumpMeter;
 			p->y1 = jumpMeter;
 
+#ifdef REBUILD_PC
+			primmemCurr = &gGT->tileView[0].ptrOT[0];
+#else
 			primmemCurr = gGT->tileView_UI.ptrOT;
+#endif
 
 			*(int*)p = *primmemCurr | 0x5000000;
 			*primmemCurr = (u_int)p & 0xffffff;
