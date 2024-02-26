@@ -888,6 +888,7 @@ void FUN_8001d944(int param_1,int param_2)
   // driver -> quadBlock (just touched)
   iVar13 = *(int *)(param_2 + 0xa0);
 
+  // backup velocityXYZ
   *(undefined4 *)(param_2 + 0x3a0) = *(undefined4 *)(param_2 + 0x88);
   *(undefined4 *)(param_2 + 0x3a4) = *(undefined4 *)(param_2 + 0x8c);
   *(undefined4 *)(param_2 + 0x3a8) = *(undefined4 *)(param_2 + 0x90);
