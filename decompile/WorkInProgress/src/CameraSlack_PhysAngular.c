@@ -48,6 +48,7 @@ void CameraSlack_PhysAngular(struct Driver *driver)
 
 			angle = MATH_Sin(angle);
 
+			// FORWARD DIR matrix
 			// before this function is called, there is always
 			// gte_SetRotMatrix(driver->matrix310)
 
@@ -62,7 +63,8 @@ void CameraSlack_PhysAngular(struct Driver *driver)
 			gte_ldVZ0(0);
 			gte_rtv0();
 
-			// new acceleration vector
+			// new acceleration vector,
+			// based on FORWARD DIR of kart
 			gte_stlvnl0(accel);
 			driver->accelXYZ[0] = accel;
 			gte_stlvnl1(accel);
