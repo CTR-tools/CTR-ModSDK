@@ -24,7 +24,6 @@
 #define textDuration 3 * 30
 #define numSpeedColor 10
 #define jump 0x2500
-#define levelMainMenu 0x27
 #if BUILD == EurRetail
 #define msFrame 38
 #else
@@ -34,9 +33,8 @@
 struct P_ROM
 {
 
-// should default to 4,
-// temporary change
 int engine;
+u_char swappedEngine;
 
 // Save state variables
 int * firstInstance;
@@ -73,7 +71,7 @@ char * slotString;
 
 // Strings positions
 // x
-#define x_speed 0x1BA - 15
+#define x_speed 0x190 - 15
 #define x_reserves 0x1AA - 15
 #define x_checkpointStr 0x14
 #define x_checkpoint 0x50
@@ -95,7 +93,7 @@ char * slotString;
 #define y_progress 0xBF + 0x14
 #define y_engine 0xB6 + 0x14
 #else
-#define y_speed 0x8C
+#define y_speed 0xAD
 #define y_reserves 0xBF
 #define y_checkpointStr 0xC8
 #define y_checkpoint 0xC8
