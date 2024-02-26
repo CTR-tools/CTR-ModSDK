@@ -210,7 +210,7 @@ LAB_8005fee4:
 		}
 	}
 	driftAngleCurr_og = driver->turnAngleCurr;
-	classSpeed_halved = Player_Driving_LerpToForwards(driver, (int)driftAngleCurr_og, (int)forwardDir, classSpeed_halved);
+	classSpeed_halved = DECOMP_Player_Driving_LerpToForwards(driver, (int)driftAngleCurr_og, (int)forwardDir, classSpeed_halved);
 	driver->unk_LerpToForwards = (short)classSpeed_halved;
 	classSpeed_halved = (int)(short)classSpeed_halved;
 	if (terrain->unk_0x20[1] != 0x100)

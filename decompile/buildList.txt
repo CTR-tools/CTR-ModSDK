@@ -633,6 +633,8 @@ common, exe, VehPtr_Blasted_Init, 0x0, General/Vehicle/VehPtr_Blasted_Init.c
 
 // VEH (other)
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
+common, exe, Player_Driving_LerpToForwards, 0x0, General/Player_Driving_LerpToForwards.c
+common, exe, Player_Driving_LerpQuarterStrength, 0x0, General/Player_Driving_LerpQuarterStrength.c
 //ommon, exe, Player_GetBaseSpeed, 0x0, General/Player_GetBaseSpeed.c
 common, exe, Player_StickReturnToRest, 0x0, General/Player_StickReturnToRest.c
 common, exe, Player_StickGetStrength, 0x0, General/Player_StickGetStrength.c

@@ -978,6 +978,13 @@ CheckJumpButtons:
 	// brakes
 	if ((uVar20 & 0x800020) == 0)
 	{
+#ifdef REBUILD_PC
+		// no collision, no "found" quadblock, no "known" 
+		// terrain, so for now, assume asphalt
+		driver->terrainMeta1 = &data.MetaDataTerrain[0];
+		driver->terrainMeta2 = &data.MetaDataTerrain[0];
+#endif
+
 		driverSpeedOrSmth = driver->terrainMeta2->unk_0x8;
 
 		if (driverSpeedOrSmth != 0x100)

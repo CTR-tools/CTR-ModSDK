@@ -440,6 +440,8 @@
 
 // VEH (other)
 #include "../decompile/General/Player_SetHeldItem.c"
+#include "../decompile/General/Player_Driving_LerpToForwards.c"
+#include "../decompile/General/Player_Driving_LerpQuarterStrength.c"
 #include "../decompile/General/Player_GetBaseSpeed.c"
 #include "../decompile/General/Player_StickReturnToRest.c"
 #include "../decompile/General/Player_StickGetStrength.c"

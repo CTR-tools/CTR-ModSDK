@@ -1,9 +1,9 @@
 #include <common.h>
 
-int Player_Driving_LerpToForwards(struct Driver *d, int param_2, int param_3, int param_4)
+int DECOMP_Player_Driving_LerpToForwards(struct Driver *d, int param_2, int param_3, int param_4)
 {
   bool bVar1;
-  uint uVar2;
+  u_int uVar2;
   int iVar3;
 
   bVar1 = false;
@@ -29,7 +29,7 @@ int Player_Driving_LerpToForwards(struct Driver *d, int param_2, int param_3, in
       {
         uVar2 = d->unk458;
       }
-      iVar3 = Player_Driving_LerpQuarterStrength(uVar2, param_2 - param_4, 0);
+      iVar3 = DECOMP_Player_Driving_LerpQuarterStrength(uVar2, param_2 - param_4, 0);
       iVar3 = -iVar3;
     }
     else
@@ -38,11 +38,11 @@ int Player_Driving_LerpToForwards(struct Driver *d, int param_2, int param_3, in
       {
         if (param_2 < 0)
         {
-          iVar3 = Player_Driving_LerpQuarterStrength(d->unk459, param_4 -param_2, 0);
+          iVar3 = DECOMP_Player_Driving_LerpQuarterStrength(d->unk459, param_4 -param_2, 0);
         }
         else
         {
-          iVar3 = Player_Driving_LerpQuarterStrength(d->unk457, param_4 -param_2, 0);
+          iVar3 = DECOMP_Player_Driving_LerpQuarterStrength(d->unk457, param_4 -param_2, 0);
           d->unk3CA = (short)param_4;
         }
       }

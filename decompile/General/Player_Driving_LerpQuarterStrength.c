@@ -1,5 +1,6 @@
 #include <common.h>
-int Player_Driving_LerpQuarterStrength(int current, int desired)
+
+int DECOMP_Player_Driving_LerpQuarterStrength(int current, int desired)
 {
     if (desired != 0)
     {

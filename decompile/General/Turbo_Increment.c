@@ -169,6 +169,9 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			turboInst1->flags = turboInst1->flags | addFlags | 0x1040080;
 			turboInst2->flags = turboInst2->flags | addFlags | 0x1040080;
 		}
+#else
+		turboObj = 0;
+		turboInst1 = 0;
 #endif
 	}
 
