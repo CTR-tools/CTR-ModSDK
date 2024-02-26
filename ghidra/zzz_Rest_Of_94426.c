@@ -25362,7 +25362,7 @@ LAB_8005ef64:
     }
   }
   
-  // Rot_AxisAngle
+  // Rot_AxisAngle (matrixFacingDir)
   FUN_8005f89c(param_2 + 0x330,param_2 + 0x368,(int)*(short *)(param_2 + 0x2ee));
   
   if (
