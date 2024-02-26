@@ -529,9 +529,7 @@ LAB_80058568:
 
     if (d->instSelf->thread->modelIndex == DYNAMIC_PLAYER)
     {
-#ifndef REBUILD_PS1
-        CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
-#endif
+        DECOMP_CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
 
         d->instSelf->thread->funcThTick = ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) ? NULL : Veh_NullThread;
 

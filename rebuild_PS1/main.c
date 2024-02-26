@@ -16,6 +16,7 @@
 #include "../decompile/General/CAMERA/CAM_01_ClearScreen.c"
 #include "../decompile/General/CAMERA/CAM_04_Path_GetNumPoints.c"
 #include "../decompile/General/CAMERA/CAM_05_Path_Move.c"
+#include "../decompile/General/CAMERA/CAM_06_StartOfRace.c"
 #include "../decompile/General/CAMERA/CAM_16_SetDesiredPosRot.c"
 
 #include "../decompile/General/COLL/COLL_00_LevModelMeta.c"
