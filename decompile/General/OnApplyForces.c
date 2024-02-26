@@ -20,9 +20,9 @@ void DECOMP_OnApplyForces(struct Thread *t, struct Driver *d)
     gte_ldVXY0(0x190000);
     gte_ldVZ0(0);
     gte_lcv0();
-    gte_stlvnl0((long *)d->vec3_originToCenter[0]);
-    gte_stlvnl1((long *)d->vec3_originToCenter[1]);
-    gte_stlvnl2((long *)d->vec3_originToCenter[2]);
+    gte_stlvnl0((long *)&d->vec3_originToCenter[0]);
+    gte_stlvnl1((long *)&d->vec3_originToCenter[1]);
+    gte_stlvnl2((long *)&d->vec3_originToCenter[2]);
 	#endif
 
     DECOMP_Driver_ConvertSpeedToVectors(d);
