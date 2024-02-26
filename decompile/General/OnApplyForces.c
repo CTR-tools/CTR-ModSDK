@@ -71,7 +71,19 @@ void DECOMP_OnApplyForces(struct Thread *t, struct Driver *d)
     // driver quadblock flags?
     *(u_short *)&d->fill18_postQuadBlock[6] = 0;
 
+	#ifdef REBUILD_PC
+	d->accelXYZ[1] = 1; // move upward
+	#endif
+	
     // increase velocity by acceleration
     for (char i = 0; i < 3; i++)
         d->velocityXYZ[i] += d->accelXYZ[i];
+	
+	#ifdef REBUILD_PC
+	for (char i = 0; i < 3; i++)
+	{
+		d->posCurr[i] += d->velocityXYZ[i];
+		d->instSelf->matrix.t[i] = d->posCurr[i] >> 8;
+	}
+	#endif
 }
