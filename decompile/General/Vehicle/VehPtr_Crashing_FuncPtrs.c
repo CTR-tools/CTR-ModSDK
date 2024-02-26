@@ -32,7 +32,7 @@ void DECOMP_VehPtr_Crashing_PhysAngular(struct Thread* t, struct Driver* d)
 		);
 		
 	#ifndef REBUILD_PS1
-	Rot_AxisAngle(&d->matrix310, &d->AxisAngle1_normalVec[0], d->angle);
+	Rot_AxisAngle(&d->matrixMovingDir, &d->AxisAngle1_normalVec[0], d->angle);
 	#endif
 }
 

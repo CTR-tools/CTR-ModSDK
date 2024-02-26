@@ -58,7 +58,7 @@ void DECOMP_Driver_AccelTerrainSlope(struct Driver *driver)
 
 			// FORWARD DIR matrix
 			// before this function is called, there is always
-			// gte_SetRotMatrix(driver->matrix310)
+			// gte_SetRotMatrix(driver->matrixMovingDir)
 
 			#define gte_ldVXY0(r0) __asm__ volatile("mtc2   %0, $0" \
 										:               \
@@ -67,6 +67,7 @@ void DECOMP_Driver_AccelTerrainSlope(struct Driver *driver)
 									   :               \
 									   : "r"(r0))
 
+			// {X=??, Y=0, Z=0}
 			gte_ldVXY0(((((terrain_meta * -8000) >> 8) * angle) >> 12) & 0xffff);
 			gte_ldVZ0(0);
 			gte_rtv0();

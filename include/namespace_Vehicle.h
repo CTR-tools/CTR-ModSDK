@@ -540,10 +540,10 @@ struct Driver
 	void* driverAudioPtrs[4];
 
 	// 0x310
-	MATRIX matrix310;
+	MATRIX matrixMovingDir;
 
 	// 0x330
-	MATRIX matrix330;
+	MATRIX matrixFacingDir;
 
 	// 0x350
 	// continues updating while driver is airborne,

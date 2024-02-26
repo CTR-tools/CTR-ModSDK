@@ -16,7 +16,7 @@ void DECOMP_OnApplyForces(struct Thread *t, struct Driver *d)
     // origin of driver model is center-bottom of kart,
     // use orientation matrix, and half-radius {0, 0x19, 0},
 	// to find the "true" center of the 3D model
-    gte_SetColorMatrix(&d->matrix330.m[0][0]);
+    gte_SetColorMatrix(&d->matrixFacingDir.m[0][0]);
     gte_ldVXY0(0x190000);
     gte_ldVZ0(0);
     gte_lcv0();

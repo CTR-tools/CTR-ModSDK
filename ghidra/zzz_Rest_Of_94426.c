@@ -25503,7 +25503,7 @@ LAB_8005f354:
     
 	// MatrixRotate(
 	//	output = instMatrix, 
-	//	input1 = driver->matrix330
+	//	input1 = driver->matrixFacingDir
 	//	input2 = animated matrix orientation set);
 	FUN_8006c3b0(iVar14 + 0x30,r0,piVar12 + 2);
 	

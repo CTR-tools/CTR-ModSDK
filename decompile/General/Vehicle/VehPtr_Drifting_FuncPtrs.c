@@ -409,8 +409,8 @@ LAB_800632cc:
 void PhysTerrainSlope(struct Driver* driver)
 {
 	#ifndef REBUILD_PS1
-	Rot_AxisAngle(&driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
-	gte_SetRotMatrix(&driver->matrix310);
+	Rot_AxisAngle(&driver->matrixMovingDir, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
+	gte_SetRotMatrix(&driver->matrixMovingDir);
 	#endif
 
 	DECOMP_Driver_AccelTerrainSlope(driver);

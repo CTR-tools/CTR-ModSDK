@@ -30,7 +30,7 @@ void DECOMP_Player_JumpAndFriction(struct Thread *t, struct Driver *d)
   struct GameTracker *gGT = sdata->gGT;
   short approxSpd = d->speedApprox;
   short baseSpeed = d->baseSpeed;
-  gte_SetRotMatrix(&d->matrix310.m[0][0]);
+  gte_SetRotMatrix(&d->matrixMovingDir.m[0][0]);
 
   // if driver is not drifting
   if (((d->kartState != KS_DRIFTING) &&
