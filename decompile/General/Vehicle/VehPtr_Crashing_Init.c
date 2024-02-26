@@ -1,6 +1,5 @@
 #include <common.h>
 
-void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
 void COLL_StartSearch_Player();
 void DECOMP_VehPtr_Crashing_Animate();
@@ -14,9 +13,9 @@ void* PlayerCrashingFuncTable[13] =
 	DECOMP_VehPtr_Crashing_PhysLinear,
 	DECOMP_VehPtr_Driving_Audio,
 	DECOMP_VehPtr_Crashing_PhysAngular,
+	DECOMP_OnApplyForces,
 	
 	#ifndef REBUILD_PS1
-	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
 	COLL_StartSearch_Player,

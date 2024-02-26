@@ -1,6 +1,5 @@
 #include <common.h>
 
-void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
 void COLL_StartSearch_Player();
 void DECOMP_VehPtr_StopSpin_Animate();
@@ -12,9 +11,9 @@ void* PlayerStopSpinFuncTable[0xD] =
 	DECOMP_VehPtr_Crashing_PhysLinear,	// not a mistake, use Crashing
 	DECOMP_VehPtr_Driving_Audio,
 	DECOMP_VehPtr_Crashing_PhysAngular, // not a mistake, use Crashing
+	DECOMP_OnApplyForces,
 	
 	#ifndef REBUILD_PS1
-	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
 	COLL_StartSearch_Player,

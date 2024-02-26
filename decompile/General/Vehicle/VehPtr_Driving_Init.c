@@ -51,9 +51,9 @@ void *PlayerDrivingFuncTable[13] =
     DECOMP_VehPtr_Driving_PhysLinear,
     DECOMP_VehPtr_Driving_Audio,
     DECOMP_VehPtr_Driving_PhysAngular,
+    DECOMP_OnApplyForces,
 	
 	#ifndef REBUILD_PS1
-    OnApplyForces,
     COLL_StartSearch_NearPlayer,
     OnCollide_Drivers,
     COLL_StartSearch_Player,

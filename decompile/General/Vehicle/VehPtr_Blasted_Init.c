@@ -3,7 +3,6 @@
 int LOAD_IsOpen_RacingOrBattle();
 void RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
 
-void OnApplyForces(struct Thread* thread, struct Driver* driver);
 void COLL_StartSearch_NearPlayer(struct Thread* thread, struct Driver* driver);
 void OnCollide_Drivers(struct Thread* thread, struct Driver* driver);
 void COLL_StartSearch_Player(struct Thread* thread, struct Driver* driver);
@@ -18,9 +17,9 @@ void* PlayerBlastedFuncTable[0xD] =
 	DECOMP_VehPtr_Blasted_PhysLinear,
 	DECOMP_VehPtr_Driving_Audio,
 	DECOMP_VehPtr_Blasted_PhysAngular,
+	DECOMP_OnApplyForces,
 	
 	#ifndef REBUILD_PS1
-	OnApplyForces,
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
 	COLL_StartSearch_Player,

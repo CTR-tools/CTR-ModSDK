@@ -1,6 +1,5 @@
 #include <common.h>
 
-void OnApplyForces();
 void COLL_StartSearch_NearPlayer();
 void COLL_StartSearch_Player();
 
@@ -11,9 +10,9 @@ void* PlayerSpinningFuncTable[0xD] =
 	DECOMP_VehPtr_Spinning_PhysLinear,
 	DECOMP_VehPtr_Driving_Audio,
 	DECOMP_VehPtr_Spinning_PhysAngular,
+	DECOMP_OnApplyForces,
 	
-	#ifndef REBUILD_PC
-	OnApplyForces,
+	#ifndef REBUILD_PS1
 	COLL_StartSearch_NearPlayer,
 	OnCollide_Drivers,
 	COLL_StartSearch_Player,
