@@ -457,12 +457,17 @@ FinishLoading:
 						for(int k = 0; k < gGT->numPlyrCurrGame; k++)
 						{
 							gGT->tileView[k].pos[0] = gGT->level1->DriverSpawn[k].pos[0];
-							gGT->tileView[k].pos[1] = gGT->level1->DriverSpawn[k].pos[1] + 0x100;
+							gGT->tileView[k].pos[1] = gGT->level1->DriverSpawn[k].pos[1] + 0x20;
 							gGT->tileView[k].pos[2] = gGT->level1->DriverSpawn[k].pos[2];
 										  
 							gGT->tileView[k].rot[0] = gGT->level1->DriverSpawn[k].rot[0] + 0x800;
 							gGT->tileView[k].rot[1] = gGT->level1->DriverSpawn[k].rot[1] - 0x400;
 							gGT->tileView[k].rot[2] = 0; // required
+							
+							// move backwards a little
+							gGT->tileView[k].pos[2] += (0xc0 * DECOMP_MATH_Cos(gGT->tileView[k].rot[1])) >> 0xC;
+							gGT->tileView[k].pos[0] += (0xc0 * DECOMP_MATH_Sin(gGT->tileView[k].rot[1])) >> 0xC;
+							
 						}
 					}
 					else

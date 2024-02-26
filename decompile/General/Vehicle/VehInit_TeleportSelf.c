@@ -278,6 +278,9 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
 	
 	#ifdef REBUILD_PC
 	
+	for(int i = 0; i < 7; i++)
+		sdata->kartSpawnOrderArray[i] = i;
+	
     // position index on starting line
     posRot = &level1->DriverSpawn[sdata->kartSpawnOrderArray[d->driverID]];
 
@@ -287,12 +290,12 @@ void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPo
     d->rotCurr.z = posRot->rot[2];
 	
     d->posCurr[0] = posRot->pos[0] << 8;
-    d->posCurr[1] = posRot->pos[1] << 8;
+    d->posCurr[1] = (posRot->pos[1]-0x40) << 8;
     d->posCurr[2] = posRot->pos[2] << 8;
 	
-	d->instSelf->matrix.t[0] = d->posCurr[0] >> 8;
-	d->instSelf->matrix.t[1] = d->posCurr[1] >> 8;
-	d->instSelf->matrix.t[2] = d->posCurr[2] >> 8;
+	d->instSelf->matrix.t[0] = posRot->pos[0];
+	d->instSelf->matrix.t[1] = (posRot->pos[1]-0x40);
+	d->instSelf->matrix.t[2] = posRot->pos[2];
 
     TEST_ConvertRotToMatrix(&d->instSelf->matrix.m, &d->rotCurr.x);
 	
