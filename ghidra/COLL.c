@@ -876,6 +876,7 @@ void FUN_8001d944(int param_1,int param_2)
 		(*(char *)(param_2 + 0x376) != '\x05')
 	  )
   {
+	// driver->velocityXYZ
     *(int *)(param_2 + 0x88) =
          *(int *)(param_2 + 0x88) + ((int)((uint)*(ushort *)(param_2 + 0x360) << 0x10) >> 0x11);
     *(int *)(param_2 + 0x8c) =
