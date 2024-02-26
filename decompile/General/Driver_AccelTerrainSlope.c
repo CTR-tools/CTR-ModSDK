@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_Driver_AccelForwardDir(struct Driver *driver)
+void DECOMP_Driver_AccelTerrainSlope(struct Driver *driver)
 {
 	u_int terrain_meta;
 	int angleLimit;

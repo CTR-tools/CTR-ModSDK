@@ -991,7 +991,7 @@ void OnApplyForces(struct Thread* t, struct Driver* d);
 void OnCollide_Drivers(struct Thread* t, struct Driver* d);
 void OnRender();
 void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
-void Driver_AccelForwardDir(struct Driver* d);
+void Driver_AccelTerrainSlope(struct Driver* d);
 
 // "VehPtr"
 void Veh_NullThread();

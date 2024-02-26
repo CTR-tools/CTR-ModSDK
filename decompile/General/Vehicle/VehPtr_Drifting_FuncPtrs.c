@@ -413,7 +413,7 @@ void PhysAngularFooter(struct Driver* driver)
 	gte_SetRotMatrix(&driver->matrix310);
 	#endif
 
-	DECOMP_Driver_AccelForwardDir(driver);
+	DECOMP_Driver_AccelTerrainSlope(driver);
 }
 
 void DECOMP_VehPtr_Drifting_Finalize(struct Thread* t, struct Driver* d)

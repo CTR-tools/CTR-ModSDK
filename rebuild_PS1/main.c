@@ -441,7 +441,7 @@
 
 // VEH (other)
 #include "../decompile/General/Driver_ConvertSpeedToVectors.c"
-#include "../decompile/General/Driver_AccelForwardDir.c"
+#include "../decompile/General/Driver_AccelTerrainSlope.c"
 #include "../decompile/General/OnApplyForces.c"
 #include "../decompile/General/Player_SetHeldItem.c"
 #include "../decompile/General/Player_Driving_LerpToForwards.c"
