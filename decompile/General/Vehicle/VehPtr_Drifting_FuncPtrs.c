@@ -402,11 +402,11 @@ LAB_800632cc:
 		driver->KartStates.Drifting.driftTotalTimeMS = (u_short)driver->unk462 << 5;
 	
 	// Located in Drifting_FuncPtrs.c
-	void PhysAngularFooter(struct Driver* driver);
-	PhysAngularFooter(driver);
+	void PhysTerrainSlope(struct Driver* driver);
+	PhysTerrainSlope(driver);
 }
 
-void PhysAngularFooter(struct Driver* driver)
+void PhysTerrainSlope(struct Driver* driver)
 {
 	#ifndef REBUILD_PS1
 	Rot_AxisAngle(&driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
