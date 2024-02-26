@@ -25,9 +25,7 @@ void DECOMP_OnApplyForces(struct Thread *t, struct Driver *d)
     gte_stlvnl2((long *)d->vec3_originToCenter[2]);
 	#endif
 
-	#ifndef REBUILD_PC
-    Driver_ConvertSpeedToVectors(d, &d->velocityXYZ[0], 0);
-	#endif
+    DECOMP_Driver_ConvertSpeedToVectors(d);
 
     if (
 			// if under-quadblock exists
@@ -77,13 +75,15 @@ void DECOMP_OnApplyForces(struct Thread *t, struct Driver *d)
 	
     // increase velocity by acceleration
     for (char i = 0; i < 3; i++)
-        d->velocityXYZ[i] += d->accelXYZ[i];
-	
-	#ifdef REBUILD_PC
-	for (char i = 0; i < 3; i++)
 	{
+        d->velocityXYZ[i] += d->accelXYZ[i];
+		
+		// temporary replacement to
+		// COLL (which does velocity) and
+		// OnRender (which does matrix)
+		#ifdef REBUILD_PC
 		d->posCurr[i] += d->velocityXYZ[i];
 		d->instSelf->matrix.t[i] = d->posCurr[i] >> 8;
+		#endif
 	}
-	#endif
 }

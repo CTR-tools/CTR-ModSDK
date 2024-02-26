@@ -450,6 +450,7 @@ void DECOMP_VehPtr_EngineRevving_PhysLinear(struct Thread *t, struct Driver *d);
 void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d);
 void DECOMP_VehPtr_EngineRevving_Init(struct Thread *t, struct Driver *d);
 
+void DECOMP_Driver_ConvertSpeedToVectors(struct Driver* driver);
 void DECOMP_OnApplyForces(struct Thread *t, struct Driver *d);
 void DECOMP_Player_SetHeldItem(struct Driver* driver);
 void DECOMP_Weapon_Shoot_OnCirclePress(struct Driver *d);

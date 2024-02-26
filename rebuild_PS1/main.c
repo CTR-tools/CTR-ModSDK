@@ -440,6 +440,7 @@
 #include "../decompile/General/Vehicle/VehPtr_Blasted_Init.c"
 
 // VEH (other)
+#include "../decompile/General/Driver_ConvertSpeedToVectors.c"
 #include "../decompile/General/OnApplyForces.c"
 #include "../decompile/General/Player_SetHeldItem.c"
 #include "../decompile/General/Player_Driving_LerpToForwards.c"
