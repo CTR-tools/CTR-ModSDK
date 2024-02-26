@@ -633,6 +633,7 @@ common, exe, VehPtr_Blasted_Init, 0x0, General/Vehicle/VehPtr_Blasted_Init.c
 
 // VEH (other)
 common, exe, Driver_ConvertSpeedToVectors, 0x0, General/Driver_ConvertSpeedToVectors.c
+common, exe, Driver_AccelForwardDir, 0x0, General/Driver_AccelForwardDir.c
 common, exe, OnApplyForces, 0x0, General/OnApplyForces.c
 common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
 common, exe, Player_Driving_LerpToForwards, 0x0, General/Player_Driving_LerpToForwards.c

@@ -411,9 +411,9 @@ void PhysAngularFooter(struct Driver* driver)
 	#ifndef REBUILD_PS1
 	Rot_AxisAngle(&driver->matrix310, &driver->AxisAngle1_normalVec[0], (int)driver->angle);
 	gte_SetRotMatrix(&driver->matrix310);
-
-	CameraSlack_PhysAngular(driver);
 	#endif
+
+	DECOMP_Driver_AccelForwardDir(driver);
 }
 
 void DECOMP_VehPtr_Drifting_Finalize(struct Thread* t, struct Driver* d)

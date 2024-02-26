@@ -690,7 +690,7 @@ struct Driver
 
 	// 0x3C6 0x3C8
 	// in VehPtr_Driving_PhysLinear, 
-	// and CameraSlack_PhysAngular, 
+	// and Driver_AccelForwardDir, 
 	// and VehPtr_LastSpin_Update
 	short turnAngleCurr;
 	short turnAnglePrev;

@@ -25889,7 +25889,7 @@ void FUN_8005f89c(undefined2 *param_1,short *param_2,uint param_3)
 }
 
 
-// CameraSlack_PhysAngular
+// Driver_AccelForwardDir
 // param1 - driver object
 // called from:
 //		VehPtr_Driving_PhysAngular
@@ -26515,7 +26515,7 @@ LAB_80060284:
   FUN_8005f89c((undefined4 *)(param_2 + 0x310),param_2 + 0x360,uVar10);
   gte_SetRotMatrix((MATRIX *)(param_2 + 0x310));
 
-  // CameraSlack_PhysAngular
+  // Driver_AccelForwardDir
   FUN_8005fb4c(param_2);
   return;
 }
@@ -29902,7 +29902,7 @@ LAB_800632cc:
   FUN_8005f89c((undefined4 *)(param_2 + 0x310),param_2 + 0x360,(int)*(short *)(param_2 + 0x39a));
   gte_SetRotMatrix((MATRIX *)(param_2 + 0x310));
 
-  // CameraSlack_PhysAngular
+  // Driver_AccelForwardDir
   FUN_8005fb4c(param_2);
   return;
 }
