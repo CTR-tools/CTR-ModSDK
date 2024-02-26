@@ -65,5 +65,9 @@ void *PlayerEngineRevFuncTable[13] =
 	OnRender,
 	DECOMP_VehPtr_EngineRevving_Animate,
 	VehParticle_DriverMain,
-	#endif
+	#else
+    0,
+    DECOMP_VehPtr_EngineRevving_Animate,
+    0
+    #endif
 };

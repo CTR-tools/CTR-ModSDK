@@ -56,7 +56,10 @@ VictimLaugh:
 		victimDriver->NoInputTimer = 0x3c0;
 		
 		if(victimState != 3)
+		{
+SPINOUT:
 			victimDriver->funcPtrs[0] = DECOMP_VehPtr_Spinning_Init;	
+		}
 	}
 	
 	// blasted
@@ -98,6 +101,8 @@ VictimLaugh:
 		victimDriver->NoInputTimer = 0xf0;
 		
 		victimDriver->squishTimer = 0xf00;
+		
+		goto SPINOUT;
 	}
 	
 	// burned
@@ -114,6 +119,8 @@ VictimLaugh:
 		victimDriver->NoInputTimer = 0x780;
 		
 		victimDriver->burnTimer = 0xf00;
+		
+		goto SPINOUT;
 	}
 	
 	// mask grab
