@@ -76,6 +76,7 @@ void DECOMP_OnApplyForces(struct Thread *t, struct Driver *d)
     // increase velocity by acceleration
     for (char i = 0; i < 3; i++)
 	{
+		// comes from Driver_AccesTerrainSlope called previously
         d->velocityXYZ[i] += d->accelXYZ[i];
 		
 		// temporary replacement to
