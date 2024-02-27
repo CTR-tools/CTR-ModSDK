@@ -147,7 +147,7 @@ struct ChannelStats* DECOMP_Channel_AllocSlot(
 struct ChannelStats* DECOMP_Channel_SearchFX_EditAttr(
 	int type, int soundID, int updateFlags, 
 	struct ChannelAttr* attr);
-struct ChannelStats* DECOMP_Channel_SearchFX_Destroy(
+void DECOMP_Channel_SearchFX_Destroy(
 	int type, int soundID, int flags);
 void DECOMP_Channel_DestroyAll_LowLevel(int opt1, int boolKeepMusic, char type);
 void DECOMP_Channel_ParseSongToChannels();

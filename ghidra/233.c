@@ -3687,7 +3687,7 @@ void FUN_800afcc4(int param_1)
     *(undefined **)(iVar6 + 0x74) = puVar2 + 5000;
     *(int *)(iVar6 + 0x4c) = (int)psVar5[10];
 	
-	// OtherFX_Stop2
+	// OtherFX_Stop2 (ngin sfx)
     FUN_80028844(0xaf);
     FUN_80028844(0xae);
 	

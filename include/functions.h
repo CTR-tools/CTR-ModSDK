@@ -343,7 +343,7 @@ void CseqMusic_StopAll();
 	struct ChannelStats* Channel_AllocSlot_AntiSpam(short soundID, char boolUseAntiSpam, int flags, struct ChannelAttr* attr);
 	struct ChannelStats* Channel_AllocSlot(int flags, struct ChannelAttr* attr);
 	struct ChannelStats* Channel_SearchFX_EditAttr(int type, int soundID, int updateFlags, struct ChannelAttr* attr);
-	struct ChannelStats* Channel_SearchFX_Destroy(int type, int soundID, int flags);
+	void Channel_SearchFX_Destroy(int type, int soundID, int flags);
 	void Channel_DestroyAll_LowLevel(int opt1, int boolKeepMusic, char type);
 	//Channel_ParseSongToChannels()
 	//Channel_UpdateChannels()
