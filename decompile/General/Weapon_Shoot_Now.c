@@ -534,6 +534,9 @@ RunMineCOLL:
 				struct Driver* victim = *dptr;
 				
 				if(victim == 0) continue;
+				
+				victim->clockFlash = FPS_DOUBLE(4);
+				
 				if(victim == d) continue;
 				
 				// if spin out driver

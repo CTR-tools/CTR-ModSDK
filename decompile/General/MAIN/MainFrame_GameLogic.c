@@ -32,7 +32,7 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 			{
 				psVar9->clockSend--;
 			}
-			uVar3 = psVar9->unk367;
+			uVar3 = psVar9->clockFlash;
 			if (uVar3 == 0)
 			{
 				if (psVar9->clockReceive == 0)
@@ -62,7 +62,7 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 #ifndef REBUILD_PS1
 				DISPLAY_Blur_Main(tileView, -uVar3);
 #endif
-				psVar9->unk367--;
+				psVar9->clockFlash--;
 			}
 LAB_80034e74:
 			tileView = tileView + 1;
