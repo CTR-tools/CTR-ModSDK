@@ -109,13 +109,13 @@ void DECOMP_VehPtr_Driving_PhysLinear(struct Thread* thread, struct Driver* driv
 	if
 	(
 		(driver->invisibleTimer != 0) &&
-		(!(gameMode2 & CHEAT_INVISIBLE))
+		((gameMode2 & CHEAT_INVISIBLE) == 0)
 	)
 	{		
 		driver->invisibleTimer -= msPerFrame;
 		
 		// if newly visible
-		if(driver->invisibleTimer < 0) 
+		if(driver->invisibleTimer <= 0) 
 		{
 			driver->invisibleTimer = 0;
 			driver->instSelf->flags = driver->instFlagsBackup;
