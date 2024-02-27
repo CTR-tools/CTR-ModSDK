@@ -123,20 +123,20 @@ void DECOMP_VehPtr_EatenByPlant_Animate(struct Thread *t, struct Driver *d)
 }
 
 void *PlayerEatenFuncTable[13] =
-    {
-        NULL,
-        VehPtr_EatenByPlant_Update,
-        VehPtr_EatenByPlant_PhysLinear,
-        VehPtr_Driving_Audio,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        OnRender,
-        VehPtr_EatenByPlant_Animate,
-        NULL,
+{
+    NULL,
+    VehPtr_EatenByPlant_Update,
+    VehPtr_EatenByPlant_PhysLinear,
+    VehPtr_Driving_Audio,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    OnRender,
+    VehPtr_EatenByPlant_Animate,
+    NULL,
 };
 
 void RB_RainCloud_FadeAway(struct Thread *t);
@@ -202,10 +202,3 @@ void DECOMP_VehPtr_EatenByPlant_Init(struct Thread *t, struct Driver *d)
         d->funcPtrs[i] = PlayerEatenFuncTable[i];
 }
 
-void DECOMP_VehPtr_Dead_Init(struct Thread *t, struct Driver *d)
-{
-    VehPtr_EatenByPlant_Init(t, d);
-    d->invisibleTimer = 0;
-    d->funcPtrs[1] = NULL;
-    d->funcPtrs[11] = NULL;
-}

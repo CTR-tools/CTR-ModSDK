@@ -1,5 +1,5 @@
-// 442+43+33+27+38+14+18+16+19+12+1+8+9+1+1+2+2+3+2+4+16+3+47-12 = 749 rewritten so far
-// 442 for every 'common' and ','
+// 443+43+33+27+38+14+18+16+19+12+1+8+9+1+1+2+2+3+2+4+16+3+47-12 = 750 rewritten so far
+// 443 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -623,8 +623,8 @@ common, exe, Player_ChangeState, 0x0, General/Player_ChangeState.c
 // Weapon
 // VehPtr_MaskGrab
 // VehPtr_EatenByPlant
-// VehPtr_Dead
 
+common, exe, VehPtr_Dead_Init, 0x0, General/Vehicle/VehPtr_Dead_Init.c
 common, exe, VehPtr_EngineRevving_Update, 0x0, General/Vehicle/VehPtr_EngineRevving_FuncPtrs.c
 common, exe, VehPtr_EngineRevving_Init, 0x0, General/Vehicle/VehPtr_EngineRevving_Init.c
 common, exe, VehPtr_Blasted_Update, 0x0, General/Vehicle/VehPtr_Blasted_FuncPtrs.c
