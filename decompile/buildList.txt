@@ -630,9 +630,12 @@ common, exe, VehPtr_AntiVShift_Update, 0x0, General/Vehicle/VehPtr_AAA_BigBlock1
 common, exe, Player_ChangeState, 0x0, General/Player_ChangeState.c
 
 // Weapon
-// VehPtr_MaskGrab
-// VehPtr_EatenByPlant
 
+// VehPtr_MaskGrab_FindDestPos still needed
+common, exe, VehPtr_MaskGrab_Particles, 0x0, General/Vehicle/VehPtr_MaskGrab_FuncPtrs.c
+common, exe, VehPtr_MaskGrab_Init, 0x0, General/Vehicle/VehPtr_MaskGrab_Init.c
+common, exe, VehPtr_EatenByPlant_Update, 0x0, General/Vehicle/VehPtr_EatenByPlant_FuncPtrs.c
+common, exe, VehPtr_EatenByPlant_Init, 0x0, General/Vehicle/VehPtr_EatenByPlant_Init.c
 common, exe, VehPtr_Dead_Init, 0x0, General/Vehicle/VehPtr_Dead_Init.c
 common, exe, VehPtr_EngineRevving_Update, 0x0, General/Vehicle/VehPtr_EngineRevving_FuncPtrs.c
 common, exe, VehPtr_EngineRevving_Init, 0x0, General/Vehicle/VehPtr_EngineRevving_Init.c

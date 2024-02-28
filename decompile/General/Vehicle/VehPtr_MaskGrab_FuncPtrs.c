@@ -1,6 +1,6 @@
 #include <common.h>
 
-void VehPtr_MaskGrab_Particles(struct Driver *d)
+void DECOMP_VehPtr_MaskGrab_Particles(struct Driver *d)
 {
     struct Particle *p;
 
@@ -13,13 +13,13 @@ void VehPtr_MaskGrab_Particles(struct Driver *d)
             return;
 
         // position variables
-        p->axis[0] += d->posCurr[0];
-        p->axis[1] += d->posCurr[1];
-        p->axis[2] += d->posCurr[2];
+        p->axis[0].startVal += d->posCurr[0];
+        p->axis[1].startVal += d->posCurr[1];
+        p->axis[2].startVal += d->posCurr[2];
     }
 }
 
-void VehPtr_MaskGrab_Update(struct Thread *t, struct Driver *d)
+void DECOMP_VehPtr_MaskGrab_Update(struct Thread *t, struct Driver *d)
 {
     struct GameTracker *gGT = sdata->gGT;
 
@@ -62,9 +62,9 @@ void VehPtr_MaskGrab_Update(struct Thread *t, struct Driver *d)
     VehPtr_EngineRevving_Init(t, d);
 }
 
-void VehPtr_MaskGrab_PhysLinear(struct Thread *t, struct Driver *d)
+void DECOMP_VehPtr_MaskGrab_PhysLinear(struct Thread *t, struct Driver *d)
 {
-    VehPtr_Driving_PhysLinear(t, d);
+    DECOMP_VehPtr_Driving_PhysLinear(t, d);
 
     d->baseSpeed = 0;
     d->fireSpeed = 0;
@@ -76,12 +76,10 @@ void VehPtr_MaskGrab_PhysLinear(struct Thread *t, struct Driver *d)
     d->actionsFlagSet = ((d->actionsFlagSet & 0xfffdffdb) | 8);
 }
 
-// param1 = thread, param2 = driver
-void VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
+void DECOMP_VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
 {
     char frame;
     short sVar2;
-    ushort uVar3;
     short midFrame;
     int numFrames;
     struct GameTracker *gGT = sdata->gGT;
@@ -95,10 +93,10 @@ void VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
         inst->animIndex = 0;
 
         // (instance, anim#0)
-        numFrames = Instance_GetNumAnimFrames(inst, 0);
+        numFrames = VehAnim_Instance_GetNumAnimFrames(inst, 0);
 
         // (midpoint, numFrames)
-        midFrame = Instance_GetStartFrame(0, numFrames);
+        midFrame = VehAnim_Instance_GetStartFrame(0, numFrames);
 
         inst->animFrame = midFrame;
 
@@ -166,19 +164,16 @@ void VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
 
             if (d->NoInputTimer < 0x3c1)
             {
-                uVar3 = d->jumpSquishStretch - 800;
-                d->jumpSquishStretch = uVar3;
-                if ((uVar3 << 0x10) < 0)
-                {
+                d->jumpSquishStretch -= 800;
+                if (d->jumpSquishStretch < 0)
                     d->jumpSquishStretch = 0;
-                }
             }
             else
             {
                 // if particles are not spawned
-                if (->KartStates.MaskGrab.boolParticlesSpawned == false)
+                if (d->KartStates.MaskGrab.boolParticlesSpawned == false)
                 {
-                    VehPtr_MaskGrab_Particles(d);
+                    DECOMP_VehPtr_MaskGrab_Particles(d);
 
                     // now they are spawned
                     d->KartStates.MaskGrab.boolParticlesSpawned = true;
@@ -269,163 +264,4 @@ void VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
             mask->scale = 0;
         }
     }
-}
-
-void *PlayerMaskGrabFuncTable[13] =
-{
-    NULL,
-    VehPtr_MaskGrab_Update,
-    VehPtr_MaskGrab_PhysLinear,
-    VehPtr_Driving_Audio,
-    VehPtr_Driving_PhysAngular,
-    OnApplyForces,
-    COLL_StartSearch_NearPlayer
-    OnCollide_Drivers,
-    COLL_StartSearch_Player
-    Player_JumpAndFriction,
-    OnRender,
-    VehPtr_MaskGrab_Animate,
-    VehParticle_DriverMain
-    
-};
-
-// when falling off track
-void VehPtr_MaskGrab_Init(struct Thread* t, struct Driver *d)
-{
-    // When this function executes,
-    // mask comes down to catch you
-
-    struct GameTracker* gGT = sdata->gGT;
-
-    char i;
-    int p;
-
-    struct Instance* inst = t->inst;
-
-    // now being mask grabbed
-    d->kartState = KS_MASK_GRABBED;
-
-    d->KartStates.MaskGrab.boolParticlesSpawned = false;
-    d->KartStates.MaskGrab.AngleAxis_NormalVec[0] = 0;
-    d->KartStates.MaskGrab.boolLiftingPlayer = false;
-
-    // reset whistle bool
-    d->KartStates.MaskGrab.boolWhistle = false;
-
-    // reset stillFalling bool
-    d->KartStates.MaskGrab.boolStillFalling = false;
-
-    // Mask Object
-    d->KartStates.MaskGrab.maskObj = Weapon_Mask_UseWeapon(d, 1);
-    
-    d->matrixArray = 0;
-    d->matrixIndex = 0;
-
-    d->turbo_MeterRoomLeft = 0;
-    d->turbo_outsideTimer = 0;
-    d->reserves = 0;
-    
-    // 1.44s until spawned back over track
-    d->NoInputTimer = 1440;
-
-    d->actionsFlagSet &= 0xfff7ffbf;
-
-
-#ifndef REBUILD_PS1
-    if (
-			(LOAD_IsOpen_RacingOrBattle() != 0) &&
-			((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
-		)
-    {
-        RB_Player_ModifyWumpa(d, -2);
-    }
-#endif
-
-    // if stored quadblock height + 0x8000 < posCurr.y
-    if (d->quadBlockHeight + 0x8000 < d->posCurr[1])
-    {
-        // mask grab count (for end of race comments)
-        d->numTimesMaskGrab++;
-
-        // if driver touched surface before mask grab
-        if (
-            // if height is low
-            // like splashing water on coco park happens on low height,
-            // not high height when you're on the grass
-            (d->posCurr[1] < -0x8000) &&
-
-            // if mask should grab you when underwater
-            ((gGT->level1->configFlags & 2) != 0))
-        {
-            // AngleAxis normalVec
-            d->KartStates.MaskGrab.AngleAxis_NormalVec[0] = d->AxisAngle2_normalVec[0];
-            d->KartStates.MaskGrab.AngleAxis_NormalVec[1] = d->AxisAngle2_normalVec[1];
-            d->KartStates.MaskGrab.AngleAxis_NormalVec[2] = d->AxisAngle2_normalVec[2];
-
-            // spawn particles
-            for (i = 10; i > 0; i--)
-            {
-                // 0x2138 = "falling",
-                // like splashing in water on coco park
-
-                // Create instance in particle pool
-                struct Particle* p = Particle_CreateInstance(0, gGT->iconGroup[9], &data.emSet_Falling[0]);
-                
-                if (p == NULL) continue;
-
-                // if particle exists
-                
-                p->unk18 = d->instSelf->unk50;
-
-                p->driverInst = d->instSelf;
-
-                // driverID
-                p->unk19 = d->driverID;
-            }
-        }
-
-        // if driver did not touch surface (and is still falling)
-        else
-        {
-            // save result in a bool
-            d->KartStates.MaskGrab.boolStillFalling = true;
-        }
-    }
-    else
-    {
-        // AngleAxis normalVec
-        d->KartStates.MaskGrab.AngleAxis_NormalVec[0] = d->AxisAngle2_normalVec[0];
-        d->KartStates.MaskGrab.AngleAxis_NormalVec[1] = d->AxisAngle2_normalVec[1];
-        d->KartStates.MaskGrab.AngleAxis_NormalVec[2] = d->AxisAngle2_normalVec[2];
-    }
-
-    // edits position
-    d->posCurr[0] = inst->matrix.t[0] << 8;
-    d->posCurr[1] = inst->matrix.t[1] << 8;
-    d->posCurr[2] = inst->matrix.t[2] << 8;
-
-    // set previous frame velocity to the same as current frame velocity
-    d->posCurr[0] = d->posPrev[0];
-    d->posCurr[1] = d->posPrev[1];
-    d->posCurr[2] = d->posPrev[2];
-
-    for (i = 0; i < 13; i++)
-        d->funcPtrs[i] = PlayerMaskGrabFuncTable[i];
-
-    struct MaskHeadWeapon *mask = d->KartStates.MaskGrab.maskObj;
-
-    // if maskObj
-    if (mask == NULL)
-        return;
-
-    mask->rot[2] |= 1;
-
-    // maskX = driverX
-    mask->pos[0] = d->posCurr[0] >> 8;
-
-    // maskY = driverY
-    mask->pos[1] = d->posCurr[2] >> 8 + 0x140;
-
-    // maskZ = driverZ
-    mask->pos[1] = d->posCurr[2] >> 8;
 }
