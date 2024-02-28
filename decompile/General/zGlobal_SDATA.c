@@ -68,7 +68,7 @@ struct sData sdata_static =
 	
 	.trafficLightsTimer_prevFrame = 0,
 	
-	//.pause_VRAM_Backup_PrimMem = {},
+	//.PausePtrsVRAM = {},
 	.pause_backup_renderFlags = 0,
 	.pause_state = 0,
 	

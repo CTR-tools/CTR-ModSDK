@@ -22,22 +22,22 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
 
   // vram copy, then overwrite vram with pause image
 
-  sdata->pause_VRAM_Backup_PrimMem[4] = gGT->db[0].otMem.end;
-  sdata->pause_VRAM_Backup_PrimMem[0] = sdata->pause_VRAM_Backup_PrimMem[4] - 0x8000;
-  sdata->pause_VRAM_Backup_PrimMem[2] = sdata->pause_VRAM_Backup_PrimMem[4] - 0xc000;
+  sdata->PausePtrsVRAM[4] = gGT->db[0].otMem.end;
+  sdata->PausePtrsVRAM[0] = sdata->PausePtrsVRAM[4] - 0x8000;
+  sdata->PausePtrsVRAM[2] = sdata->PausePtrsVRAM[4] - 0xc000;
 
-  sdata->pause_VRAM_Backup_PrimMem[5] = gGT->db[1].otMem.end;
-  sdata->pause_VRAM_Backup_PrimMem[4] = sdata->pause_VRAM_Backup_PrimMem[4] - 0xc800;
-  sdata->pause_VRAM_Backup_PrimMem[1] = sdata->pause_VRAM_Backup_PrimMem[5] - 0x8000;
-  sdata->pause_VRAM_Backup_PrimMem[3] = sdata->pause_VRAM_Backup_PrimMem[5] - 0xc000;
-  sdata->pause_VRAM_Backup_PrimMem[5] = sdata->pause_VRAM_Backup_PrimMem[5] - 0xc800;
+  sdata->PausePtrsVRAM[5] = gGT->db[1].otMem.end;
+  sdata->PausePtrsVRAM[4] = sdata->PausePtrsVRAM[4] - 0xc800;
+  sdata->PausePtrsVRAM[1] = sdata->PausePtrsVRAM[5] - 0x8000;
+  sdata->PausePtrsVRAM[3] = sdata->PausePtrsVRAM[5] - 0xc000;
+  sdata->PausePtrsVRAM[5] = sdata->PausePtrsVRAM[5] - 0xc800;
 
-  gGT->db[0].otMem.end = sdata->pause_VRAM_Backup_PrimMem[4];
-  gGT->db[1].otMem.end = sdata->pause_VRAM_Backup_PrimMem[5];
+  gGT->db[0].otMem.end = sdata->PausePtrsVRAM[4];
+  gGT->db[1].otMem.end = sdata->PausePtrsVRAM[5];
 
   // copy vram into PrimMem
-  StoreImage(&local_48,sdata->pause_VRAM_Backup_PrimMem[0]);
-  StoreImage(&local_40,sdata->pause_VRAM_Backup_PrimMem[1]);
+  StoreImage(&local_48[0],sdata->PausePtrsVRAM[0]);
+  StoreImage(&local_40[0],sdata->PausePtrsVRAM[1]);
 
   local_38.w = 0x200;
   local_38.x = 0;
@@ -46,7 +46,8 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
   // swapchain index * Y-offset of second swapchain image
   sVar5 = gGT->swapchainIndex * 0x128;
   local_38.y = sVar5;
-  StoreImage(&local_38,sdata->pause_VRAM_Backup_PrimMem[2]);
+  StoreImage(&local_38,sdata->PausePtrsVRAM[2]);
+  
   iVar2 = 0;
   do {
     iVar4 = 1 - iVar4;
@@ -55,11 +56,11 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
     local_38.w = 0x200;
     local_38.h = 8;
     DrawSync(0);
-    StoreImage(&local_38,sdata->pause_VRAM_Backup_PrimMem[2+iVar4]);
+    StoreImage(&local_38,sdata->PausePtrsVRAM[2+iVar4]);
 
     DECOMP_ElimBG_SaveScreenshot_Chunk(
-		sdata->pause_VRAM_Backup_PrimMem[4+(1-iVar4)],
-		sdata->pause_VRAM_Backup_PrimMem[2+(1-iVar4)],
+		sdata->PausePtrsVRAM[4+(1-iVar4)],
+		sdata->PausePtrsVRAM[2+(1-iVar4)],
 		0x1000);
 
 	local_30.x = 0x200;
@@ -67,24 +68,24 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
     local_30.h = 8;
     iVar3 = iVar2 + 8;
     local_30.y = iVar2;
-    LoadImage(&local_30,sdata->pause_VRAM_Backup_PrimMem[4+(1-iVar4)]);
+    LoadImage(&local_30,sdata->PausePtrsVRAM[4+(1-iVar4)]);
 
-	  iVar1 = iVar2 + 0x10;
+	iVar1 = iVar2 + 0x10;
     iVar2 = iVar3;
   } while (iVar1 < 0xd8);
 
   DrawSync(0);
 
   DECOMP_ElimBG_SaveScreenshot_Chunk(
-		sdata->pause_VRAM_Backup_PrimMem[4+(iVar4)],
-		sdata->pause_VRAM_Backup_PrimMem[2+(iVar4)],
+		sdata->PausePtrsVRAM[4+(iVar4)],
+		sdata->PausePtrsVRAM[2+(iVar4)],
 	0x1000);
 
   local_30.x = 0x200;
   local_30.y = iVar3;
   local_30.w = 0x80;
   local_30.h = 8;
-  LoadImage(&local_30,sdata->pause_VRAM_Backup_PrimMem[4+(iVar4)]);
+  LoadImage(&local_30,sdata->PausePtrsVRAM[4+(iVar4)]);
 
   local_30.y = 0xff;
   local_30.w = 0x10;

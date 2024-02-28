@@ -25,14 +25,14 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
 	local_28[1] = 0x1000040;
 	
 	// load from RAM, back to VRAM
-	LoadImage(&local_30, sdata->pause_VRAM_Backup_PrimMem[0]);
-	LoadImage(&local_28, sdata->pause_VRAM_Backup_PrimMem[1]);
+	LoadImage(&local_30, sdata->PausePtrsVRAM[0]);
+	LoadImage(&local_28, sdata->PausePtrsVRAM[1]);
 	
 	DrawSync(0);
 	
 	// restore gGT->DB[0,1].primMem.end
-	gGT->db[0].otMem.end = sdata->pause_VRAM_Backup_PrimMem[0] + 0x8000;
-	gGT->db[1].otMem.end = sdata->pause_VRAM_Backup_PrimMem[1] + 0x8000;
+	gGT->db[0].otMem.end = sdata->PausePtrsVRAM[0] + 0x8000;
+	gGT->db[1].otMem.end = sdata->PausePtrsVRAM[1] + 0x8000;
 	
 	// Enable all instances
 	DECOMP_ElimBG_ToggleAllInstances(gGT, 0);

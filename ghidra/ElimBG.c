@@ -93,6 +93,7 @@ void FUN_8002459c(int param_1)
   sVar5 = (short)*(undefined4 *)(param_1 + 0xc) * 0x128;
   local_36 = sVar5;
   StoreImage(&local_38,DAT_8008d020);
+  
   iVar2 = 0;
   do {
     iVar4 = 1 - iVar4;

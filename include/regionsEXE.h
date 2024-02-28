@@ -2664,7 +2664,7 @@ struct sData
 	// 8008d018
 	// 6 four-byte pointers for pause/unpause,
 	// all relative to gGT->DB[0,1].primMem.end
-	void* pause_VRAM_Backup_PrimMem[6];
+	void* PausePtrsVRAM[6];
 
 	// 8008d030
 	u_int pause_backup_renderFlags;
