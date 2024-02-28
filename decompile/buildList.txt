@@ -1,5 +1,5 @@
-// 450+43+33+27+38+14+18+16+19+12+1+8+9+1+1+2+2+3+2+4+16+3+47-12 = 757 rewritten so far
-// 450 for every 'common' and ','
+// 455+43+33+27+38+14+18+16+19+12+1+8+9+1+1+2+2+3+2+4+2+3+16+3+47-12 = 767 rewritten so far
+// 455 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -20,6 +20,8 @@
 // +3 for VehPtr_Blasted
 // +2 for VehPtr_EngineRevving
 // +4 for VehPtr_Driving
+// +2 for VehPtr_EatenByPlant
+// +3 for VehPtr_MaskGrab
 // +16 for RB_Block1
 // +3 for RB_CtrLetter
 // +47 for RB_Block2
