@@ -18,15 +18,15 @@ void DECOMP_ElimBG_ToggleAllInstances(struct GameTracker* gGT, int boolGameIsPau
 		inst = ptrInstDefs->ptrInstance;
 		
 		if (inst != 0)
-			ElimBG_ToggleInstance(inst, boolGameIsPaused);
+			DECOMP_ElimBG_ToggleInstance(inst, boolGameIsPaused);
 	}
 	
 	// Loop through all instances in Instance Pool
-	inst = LIST_GetFirstItem(&gGT->JitPools.instance.taken);
+	inst = DECOMP_LIST_GetFirstItem(&gGT->JitPools.instance.taken);
 	
 	while(inst != 0)
 	{
-		ElimBG_ToggleInstance(inst, boolGameIsPaused);
-		inst = LIST_GetNextItem(inst);
+		DECOMP_ElimBG_ToggleInstance(inst, boolGameIsPaused);
+		inst = DECOMP_LIST_GetNextItem(inst);
 	}
 }

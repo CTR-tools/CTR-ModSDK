@@ -51,7 +51,7 @@ u_int DECOMP_main()
 			
 #ifndef REBUILD_PS1
 				// deactivate pause
-				ElimBG_Deactivate(gGT);
+				DECOMP_ElimBG_Deactivate(gGT);
 				MainStats_RestartRaceCountLoss();
 				Voiceline_ClearTimeStamp();
 #endif

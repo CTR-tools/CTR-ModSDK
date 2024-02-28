@@ -354,7 +354,7 @@ LAB_80035098:
 					MainFrame_TogglePauseAudio(0);
 					DECOMP_OtherFX_Play(1, 1);
 					MainFreeze_SafeAdvDestroy();
-					ElimBG_Deactivate(gGT);
+					DECOMP_ElimBG_Deactivate(gGT);
 #endif
 
 					DECOMP_MENUBOX_Hide(sdata->ptrActiveMenuBox);

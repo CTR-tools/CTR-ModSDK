@@ -10,7 +10,7 @@ void DECOMP_MainRaceTrack_StartLoad(short levelID)
 
 #ifndef REBUILD_PS1
   // deactivate pause
-  ElimBG_Deactivate(sdata->gGT);
+  DECOMP_ElimBG_Deactivate(sdata->gGT);
 #endif
 
   DECOMP_LOAD_LevelFile(levelID);

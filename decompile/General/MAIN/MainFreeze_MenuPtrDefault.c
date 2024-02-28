@@ -120,7 +120,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 		case 2:
 
 			// unpause game
-			ElimBG_Deactivate(gGT);
+			DECOMP_ElimBG_Deactivate(gGT);
 
 			// unpause audio
 			MainFrame_TogglePauseAudio(0);

@@ -31,8 +31,8 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
 	DrawSync(0);
 	
 	// restore gGT->DB[0,1].primMem.end
-	gGT->db[0].otMem.start = sdata->pause_VRAM_Backup_PrimMem[0] + 0x8000;
-	gGT->db[1].otMem.start = sdata->pause_VRAM_Backup_PrimMem[1] + 0x8000;
+	gGT->db[0].otMem.end = sdata->pause_VRAM_Backup_PrimMem[0] + 0x8000;
+	gGT->db[1].otMem.end = sdata->pause_VRAM_Backup_PrimMem[1] + 0x8000;
 	
 	// Enable all instances
 	DECOMP_ElimBG_ToggleAllInstances(gGT, 0);
@@ -50,7 +50,8 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
       {
         // allow rendering of checkered flag, add rendering of RenderBucket,
         // so that Adv Pause instances can render, after non-pause instances are disabled
-        gGT->renderFlags &= 0x1000 | 0x20;
+        gGT->renderFlags &= 0x1000;
+		gGT->renderFlags |= 0x20;
 
         gGT->hudFlags &= 0xf6;
 
@@ -100,15 +101,17 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
           ((uVar9 & 0x100) >> 4) | (u_short)iVar5 | ((uVar9 & 0x200) << 2);
 
           // clut
-          setClut(p, 0x3fe0);
+          p->clut = 0x3fe0;
 
           iVar6 = (uVar7 + iVar5 * -0x40) * 4;
 
           // v0
-          p->v0 = (char)uVar9;
+		  cVar8 = (char)uVar9;
+          p->v0 = cVar8;
 
           // u0
-          p->u0 = (char)iVar6;
+		  cVar4 = (char)iVar6;
+          p->u0 = cVar4;
 
           if (iVar6 + 0x80 < 0x100)
           {
@@ -145,7 +148,8 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
           }
 
           // v3 = v0 + 0x10
-          p->v3 = (char) uVar9 + 0x10;
+		  uVar9 += 0x10;
+          p->v3 = (char)uVar9;
 
           // pointer to OT mem, and pointer to primitive
           AddPrim(&gGT->tileView_UI.ptrOT[3], p);

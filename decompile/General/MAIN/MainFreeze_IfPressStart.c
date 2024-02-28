@@ -38,6 +38,6 @@ void DECOMP_MainFreeze_IfPressStart(void)
         OtherFX_Play(1, 1);
 
         // Activate pause menu
-        ElimBG_Activate(gGT);
+        DECOMP_ElimBG_Activate(gGT);
     }
 }

@@ -876,7 +876,7 @@ LAB_800346b0:
 
 #ifndef REBUILD_PS1
 				// deactivate pause
-				ElimBG_Deactivate(gGT);
+				DECOMP_ElimBG_Deactivate(gGT);
 #endif
 
 				// signify end of load

@@ -160,7 +160,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 #ifndef REBUILD_PS1
 	DrawControllerError(gGT, gGamepads);
 	DrawFinalLap(gGT);
-	ElimBG_HandleState(gGT);
+	DECOMP_ElimBG_HandleState(gGT);
 	
 	#ifndef USE_GPU1P
 	if((gGT->renderFlags & 0x21) != 0)

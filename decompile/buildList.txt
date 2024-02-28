@@ -233,6 +233,15 @@ common, exe, DISPLAY_Swap, 0x0, General/Display/DISPLAY_Swap.c
 // DotLights (done)
 common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c
 
+// ElimBG
+common, exe, ElimBG_SaveScreenshot_Chunk, 0x0, General/ElimBG/ElimBG_SaveScreenshot_Chunk.c
+common, exe, ElimBG_SaveScreenshot_Full, 0x0, General/ElimBG/ElimBG_SaveScreenshot_Full.c
+common, exe, ElimBG_Activate, 0x0, General/ElimBG/ElimBG_Activate.c
+common, exe, ElimBG_ToggleInstance, 0x0, General/ElimBG/ElimBG_ToggleInstance.c
+common, exe, ElimBG_ToggleAllInstances, 0x0, General/ElimBG/ElimBG_ToggleAllInstances.c
+common, exe, ElimBG_HandleState, 0x0, General/ElimBG/ElimBG_HandleState.c
+common, exe, ElimBG_Deactivate, 0x0, General/ElimBG/ElimBG_Deactivate.c
+
 // GAMEPAD
 common, exe, GAMEPAD_Init, 0x0, General/GAMEPAD/GAMEPAD_AAA_Block1.c
 
