@@ -94,7 +94,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 	
 				// If not purple gem cup
 				(
-					((gameMode1 & ADVENTURE_CUP) == 0) ||
+					((uVar4 & ADVENTURE_CUP) == 0) ||
 					(gGT->cup.cupID != 4)
 				)
 				
@@ -121,7 +121,7 @@ u_int DECOMP_Music_AsyncParseBanks(void)
         if (level < GEM_STONE_VALLEY)
         {
 			// If you're not in Adventure Cup
-			if (((gameMode1 & ADVENTURE_CUP) == 0) ||
+			if (((gGT->gameMode1 & ADVENTURE_CUP) == 0) ||
 
               // If this is not the purple gem cup
               (gGT->cup.cupID != 4))

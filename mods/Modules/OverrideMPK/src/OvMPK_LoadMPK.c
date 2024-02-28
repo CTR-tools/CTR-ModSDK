@@ -32,7 +32,7 @@ void New_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_3)
 	// purple gem cup
 	else if(
 			// If you are in Adventure cup
-			((gameMode1 & ADVENTURE_CUP) != 0) &&
+			((gGT->gameMode1 & ADVENTURE_CUP) != 0) &&
 
 			// purple gem cup
 			(gGT->cup.cupID == 4)

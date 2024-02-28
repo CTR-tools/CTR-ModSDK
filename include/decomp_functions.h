@@ -87,7 +87,7 @@ void DECOMP_howl_ParseHeader(struct HowlHeader* hh);
 void DECOMP_howl_ParseCseqHeader(struct CseqHeader* ch);
 void DECOMP_howl_LoadHeader(char* filename);
 void DECOMP_howl_SetSong(int songID);
-int DECOMP_howl_loadSong();
+int DECOMP_howl_LoadSong();
 void DECOMP_howl_ErasePtrCseqHeader();
 char* DECOMP_howl_GetNextNote(char* currNote, int* noteLen);
 void DECOMP_cseq_opcode00_empty();

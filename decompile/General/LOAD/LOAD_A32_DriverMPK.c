@@ -65,7 +65,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		return;
 	}
 
-	if((gGT->gameMode1 & (ADVENTURE_BOSS | RELIC_RACE | TIME_TRIAL)) != 0)
+	if((gameMode1 & (ADVENTURE_BOSS | RELIC_RACE | TIME_TRIAL)) != 0)
 	{
 		// high lod model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,

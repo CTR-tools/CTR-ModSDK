@@ -64,7 +64,7 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 		else if(
 			
 			// If you are in Adventure cup
-			((gameMode1 & ADVENTURE_CUP) != 0) &&
+			((gameMode & ADVENTURE_CUP) != 0) &&
 
 			// purple gem cup
 			(gGT->cup.cupID == 4)
