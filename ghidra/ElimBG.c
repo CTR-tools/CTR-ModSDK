@@ -91,7 +91,10 @@ void FUN_8002459c(int param_1)
 
   // swapchain index * Y-offset of second swapchain image
   sVar5 = (short)*(undefined4 *)(param_1 + 0xc) * 0x128;
+  
   local_36 = sVar5;
+  
+  // start the first Store
   StoreImage(&local_38,DAT_8008d020);
   
   iVar2 = 0;
@@ -101,7 +104,11 @@ void FUN_8002459c(int param_1)
     local_38 = 0;
     local_34 = 0x200;
     local_32 = 8;
+	
+	// pause until Store is done
     DrawSync(0);
+	
+	// start next Store, while processing previous store
     StoreImage(&local_38,(&DAT_8008d020)[iVar4]);
 
 	// ElimBG_SaveScreenshot_Chunk
@@ -118,6 +125,7 @@ void FUN_8002459c(int param_1)
     iVar2 = iVar3;
   } while (iVar1 < 0xd8);
 
+  // wait for last Store
   DrawSync(0);
 
   // ElimBG_SaveScreenshot_Chunk
