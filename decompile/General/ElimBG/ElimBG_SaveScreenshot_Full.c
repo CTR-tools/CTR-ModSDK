@@ -50,6 +50,8 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
   // swapchain index * Y-offset of second swapchain image
   sVar5 = gGT->swapchainIndex * 0x128;
   local_38.y = sVar5;
+  
+  // start the first Store
   StoreImage(&local_38,sdata->PausePtrsVRAM[2]);
   
   iVar2 = 0;
@@ -58,7 +60,10 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
 	
     local_38.y = sVar5 + iVar2 + 8;
     
+	// pause until Store is done
 	DrawSync(0);
+	
+	// start next Store, while processing previous store
     StoreImage(&local_38,sdata->PausePtrsVRAM[2+iVar4]);
 
     DECOMP_ElimBG_SaveScreenshot_Chunk(
@@ -75,6 +80,7 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
     iVar2 = iVar3;
   } while (iVar1 < 0xd8);
 
+  // wait for last Store
   DrawSync(0);
 
   DECOMP_ElimBG_SaveScreenshot_Chunk(
