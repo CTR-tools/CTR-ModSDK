@@ -92,8 +92,11 @@ u_int DECOMP_Music_AsyncParseBanks(void)
 				// Or Crystal Challenge or Relic Race
 				((uVar4 & 0x8c100000) == 0) &&
 	
-				// If this is not the purple gem cup
-				(gGT->cup.cupID != 4)
+				// If not purple gem cup
+				(
+					((gameMode1 & ADVENTURE_CUP) == 0) ||
+					(gGT->cup.cupID != 4)
+				)
 				
 			) ||	
 			
@@ -117,8 +120,11 @@ u_int DECOMP_Music_AsyncParseBanks(void)
         // If you're on any Arcade or Battle map
         if (level < GEM_STONE_VALLEY)
         {
-            // if not purple gem cup
-            if (gGT->cup.cupID != 4)
+			// If you're not in Adventure Cup
+			if (((gameMode1 & ADVENTURE_CUP) == 0) ||
+
+              // If this is not the purple gem cup
+              (gGT->cup.cupID != 4))
             {
                 // numPlyrCurrGame
                 if (sdata->bankCount < gGT->numPlyrCurrGame)
