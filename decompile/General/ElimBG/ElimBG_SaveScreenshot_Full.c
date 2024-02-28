@@ -2,15 +2,11 @@
 
 void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
 {
-  int iVar1;
-  int iVar2;
-  int iVar3;
   int iVar4;
-  short sVar5;
   u_int local_48[2];
   u_int local_40[2];
-  RECT local_38;
-  RECT local_30;
+  RECT rSrc;
+  RECT rDst;
 
   iVar4 = 0;
   
@@ -35,50 +31,44 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
   gGT->db[0].otMem.end = sdata->PausePtrsVRAM[4];
   gGT->db[1].otMem.end = sdata->PausePtrsVRAM[5];
 
-  // copy vram into PrimMem
+  // copy texture vram into PrimMem
   StoreImage(&local_48[0],sdata->PausePtrsVRAM[0]);
   StoreImage(&local_40[0],sdata->PausePtrsVRAM[1]);
 
-  local_38.w = 0x200;
-  local_38.x = 0;
-  local_38.h = 8;
-  
-  local_30.x = 0x200;
-  local_30.w = 0x80;
-  local_30.h = 8;
+  // === copy screen into texture vram ===
 
-  // swapchain index * Y-offset of second swapchain image
-  sVar5 = gGT->swapchainIndex * 0x128;
-  local_38.y = sVar5;
+  rSrc.w = 0x200;
+  rSrc.x = 0;
+  rSrc.h = 8;
+  
+  rDst.x = 0x200;
+  rDst.w = 0x80;
+  rDst.h = 8;
+
+  // swapchain index * Y-offset of second swapchain image=
+  rSrc.y = gGT->swapchainIndex * 0x128;
   
   // start the first Store
-  StoreImage(&local_38,sdata->PausePtrsVRAM[2]);
+  StoreImage(&rSrc,sdata->PausePtrsVRAM[2]);
   
-  iVar2 = 0;
-  do {
+  for(rDst.y = 0; rDst.y < (0xd8-8); rDst.y += 8)
+  {
     iVar4 = 1 - iVar4;
 	
-    local_38.y = sVar5 + iVar2 + 8;
-    
 	// pause until Store is done
 	DrawSync(0);
 	
 	// start next Store, while processing previous store
-    StoreImage(&local_38,sdata->PausePtrsVRAM[2+iVar4]);
+    rSrc.y += 8;
+    StoreImage(&rSrc,sdata->PausePtrsVRAM[2+iVar4]);
 
     DECOMP_ElimBG_SaveScreenshot_Chunk(
 		sdata->PausePtrsVRAM[4+(1-iVar4)],
 		sdata->PausePtrsVRAM[2+(1-iVar4)],
 		0x1000);
 
-    iVar3 = iVar2 + 8;
-    local_30.y = iVar2;
-
-    LoadImage(&local_30,sdata->PausePtrsVRAM[4+(1-iVar4)]);
-
-	iVar1 = iVar2 + 0x10;
-    iVar2 = iVar3;
-  } while (iVar1 < 0xd8);
+    LoadImage(&rDst,sdata->PausePtrsVRAM[4+(1-iVar4)]);
+  }
 
   // wait for last Store
   DrawSync(0);
@@ -88,11 +78,10 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
 		sdata->PausePtrsVRAM[2+(iVar4)],
 	0x1000);
 
-  local_30.y = iVar3;
-  LoadImage(&local_30,sdata->PausePtrsVRAM[4+(iVar4)]);
+  LoadImage(&rDst,sdata->PausePtrsVRAM[4+(iVar4)]);
 
-  local_30.y = 0xff;
-  local_30.w = 0x10;
-  local_30.h = 1;
-  LoadImage(&local_30,&data.pauseScreenStrip[0]);
+  rDst.y = 0xff;
+  rDst.w = 0x10;
+  rDst.h = 1;
+  LoadImage(&rDst,&data.pauseScreenStrip[0]);
 }

@@ -468,7 +468,7 @@ common, exe, MEMCARD_NewTask, 0x0, General/MEMCARD/MEMCARD_NewTask.c
 common, exe, MEMCARD_CloseFile, 0x0, General/MEMCARD/MEMCARD_CloseFile.c
 common, exe, MEMCARD_ReadFile, 0x0, General/MEMCARD/MEMCARD_ReadFile.c
 common, exe, MEMCARD_WriteFile, 0x0, General/MEMCARD/MEMCARD_WriteFile.c
-// MEMCARD_GetFreeBytes (bugged)
+common, exe, MEMCARD_GetFreeBytes, 0x0, General/MEMCARD/MEMCARD_GetFreeBytes.c
 // unknown 8003ddac
 // GetInfo
 // Load

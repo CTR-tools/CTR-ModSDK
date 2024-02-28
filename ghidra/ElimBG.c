@@ -81,9 +81,11 @@ void FUN_8002459c(int param_1)
   *(int *)(param_1 + 0x94) = DAT_8008d028;
   *(int *)(param_1 + 0x138) = DAT_8008d02c;
 
-  // copy vram into PrimMem
+  // copy texture vram into PrimMem
   StoreImage(&local_48,DAT_8008d018);
   StoreImage(&local_40,DAT_8008d01c);
+  
+  // === copy screen into texture vram ===
 
   local_34 = 0x200;
   local_38 = 0;
