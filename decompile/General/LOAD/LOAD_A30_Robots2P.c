@@ -57,5 +57,6 @@ void DECOMP_LOAD_Robots2P(int bigfilePtr, int p1, int p2, int callback)
 	#endif
 	
 	//add to load queue from range 324=packs\2P_arcade\*.mpk
-	DECOMP_LOAD_AppendQueue(bigfilePtr, LT_DRAM, i + 0x144, 0, callback);
+	DECOMP_LOAD_AppendQueue(bigfilePtr, LT_DRAM, 
+		BI_2PARCADEPACK + i, 0, callback);
 }

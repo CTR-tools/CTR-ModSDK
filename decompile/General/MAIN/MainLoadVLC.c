@@ -9,10 +9,12 @@ void DECOMP_MainLoadVLC(void)
 
   struct BigHeader* bh = sdata->ptrBigfileCdPos_2;
   struct BigEntry* entry = BIG_GETENTRY(bh);
-  int size = entry[0x1e0].size;
+  int size = entry[BI_VLCTABLE].size;
 
   sdata->ptrVlcTable = DECOMP_MEMPACK_AllocMem(size);//,"VlcTable");
 
   // This table is passed as parameter to DecDCTvlc2
-  DECOMP_LOAD_AppendQueue(bh, LT_RAW ,0x1e0,sdata->ptrVlcTable, DECOMP_MainLoadVLC_Callback);
+  DECOMP_LOAD_AppendQueue(
+	bh, LT_RAW, BI_VLCTABLE, sdata->ptrVlcTable, 
+	DECOMP_MainLoadVLC_Callback);
 }

@@ -23,11 +23,11 @@ void DECOMP_LOAD_Hub_ReadFile(int bigfilePtr, int levID, int packID)
 	MEMPACK_ClearLowMem();
 	
 	iVar2 = DECOMP_LOAD_GetBigfileIndex(levID, 1, LVI_VRAM);
-	LOAD_AppendQueue(bigfilePtr, LT_VRAM, iVar2, 0, 0);
+	DECOMP_LOAD_AppendQueue(bigfilePtr, LT_VRAM, iVar2, 0, 0);
 	
 	iVar2 = DECOMP_LOAD_GetBigfileIndex(levID, 1, LVI_LEV);
-	LOAD_AppendQueue(bigfilePtr, LT_DRAM, iVar2, 0, DECOMP_LOAD_Callback_LEV);
+	DECOMP_LOAD_AppendQueue(bigfilePtr, LT_DRAM, iVar2, 0, DECOMP_LOAD_Callback_LEV);
 	
 	iVar2 = DECOMP_LOAD_GetBigfileIndex(levID, 1, LVI_PTR);
-	LOAD_AppendQueue(bigfilePtr, LT_RAW, iVar2, sdata->PatchMem_Ptr, DECOMP_LOAD_HubCallback);
+	DECOMP_LOAD_AppendQueue(bigfilePtr, LT_RAW, iVar2, sdata->PatchMem_Ptr, DECOMP_LOAD_HubCallback);
 }

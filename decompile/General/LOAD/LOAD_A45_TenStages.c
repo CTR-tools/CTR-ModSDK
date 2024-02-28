@@ -13,7 +13,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 	int iVar9;
 	struct Level* lev;
 	u_int gameMode1; //-- redundant
-	u_char modelFirst;
+	u_char podiumModel;
 	int iVar12;
 	char *levelNamePtr;
 	u_char* moremoredata; //-- redundant
@@ -639,7 +639,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				} while (iVar9 > -1);
 			
 				// Get Memory Allocation System Index
-				iVar9 = DECOMP_LOAD_GetAdvPackIndex();
+				iVar9 = DECOMP_LOAD_GetAdvPackIndex() - 1;
 
 				// change active allocation system
 				// Swap 1 and 2 while on adventure map
@@ -648,49 +648,76 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				// game is now loading
 				sdata->load_inProgress = 1;
 
-				// add vram to queue
-				DECOMP_LOAD_AppendQueue(bigfile, LT_VRAM, iVar9 + 0x16b, 0, 0);
+				// VRAM for podium and all related models
+				DECOMP_LOAD_AppendQueue(
+					bigfile, LT_VRAM, 
+					BI_PODIUMVRMS + iVar9, 
+					0, 0);
 
 				// podium first place
-				modelFirst = gGT->podium_modelIndex_First;
+				podiumModel = gGT->podium_modelIndex_First;
 
 				if
 				(
-					// if this exists
-					(modelFirst != 0) && 
+					(podiumModel != 0) && 
 				
 					// if not 0x7e + 0xF
 					// if not oxide
-					(modelFirst != 0x8d)
+					(podiumModel != 0x8d)
 			 	)
 				{
-					DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)modelFirst - 0x7e) * 2 + 0x16d, &data.podiumModel_firstPlace, 0xfffffffe);
+					DECOMP_LOAD_AppendQueue(
+						bigfile, LT_DRAM, 
+						BI_DANCEMODELWIN + iVar9 + (podiumModel - 0x7e) * 2, 
+						&data.podiumModel_firstPlace, 0xfffffffe);
 				}
 
 				// podium second place exists
-				if (gGT->podium_modelIndex_Second != 0)
+				podiumModel = gGT->podium_modelIndex_Second;
+
+				if (podiumModel != 0)
 				{
-					DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_Second - 0x7e) * 2 + 0x18d, &data.podiumModel_secondPlace, 0xfffffffe);
+					DECOMP_LOAD_AppendQueue(
+						bigfile, LT_DRAM, 
+						BI_DANCEMODELLOSE + iVar9 + (podiumModel - 0x7e) * 2, 
+						&data.podiumModel_secondPlace, 0xfffffffe);
 				}
 			
 				// podium third place exists
-				if (gGT->podium_modelIndex_Third != 0)
+				podiumModel = gGT->podium_modelIndex_Third;
+				
+				if (podiumModel != 0)
 				{
-					DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_Third - 0x7e) * 2 + 0x18d, &data.podiumModel_thirdPlace, 0xfffffffe);
+					DECOMP_LOAD_AppendQueue(
+						bigfile, LT_DRAM, 
+						BI_DANCEMODELLOSE + iVar9 + (podiumModel - 0x7e) * 2, 
+						&data.podiumModel_thirdPlace, 0xfffffffe);
 				}
+				
+				// TAWNA
+				podiumModel = gGT->podium_modelIndex_tawna;
 
 				// add TAWNA to loading queue
-				DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + ((u_int)(u_char)gGT->podium_modelIndex_tawna - 0x8f) * 2 + 0x1ad, &data.podiumModel_tawna, 0xfffffffe);
+				DECOMP_LOAD_AppendQueue(
+					bigfile, LT_DRAM, 
+					BI_DANCETAWNAGIRL + iVar9 + (podiumModel - 0x8f) * 2, 
+					&data.podiumModel_tawna, 0xfffffffe);
 
 				// if 0x7e+5 (dingo)
 				if (gGT->podium_modelIndex_First == 0x83)
 				{
 					// add "DingoFire" to loading queue
-					DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + 0x1bd, &data.podiumModel_dingoFire, 0xfffffffe);
+					DECOMP_LOAD_AppendQueue(
+						bigfile, LT_DRAM, 
+						BI_DINGOFIRE + iVar9, 
+						&data.podiumModel_dingoFire, 0xfffffffe);
 				}
 
 				// add Podium
-				DECOMP_LOAD_AppendQueue(bigfile, LT_DRAM, iVar9 + 0x1bf, 0, &DECOMP_LOAD_Callback_Podiums);
+				DECOMP_LOAD_AppendQueue(
+					bigfile, LT_DRAM, 
+					BI_PODIUM + iVar9, 
+					0, &DECOMP_LOAD_Callback_Podiums);
 
 				// Disable LEV instances on Adv Hub, for podium scene
 				gGT->gameMode2 = gGT->gameMode2 | 0x100;

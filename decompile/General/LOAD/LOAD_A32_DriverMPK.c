@@ -5,26 +5,20 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 {
 	int i;
 	int gameMode1;
-
-	#if BUILD == SepReview
-	int base = 0x110;
-	#elif BUILD >= UsaRetail
-	int base = 0xf2;
-	#endif
-	
+		
 #ifdef USE_GPU1P
 	
 	for(i = 0; i < 3; i++)
 	{
 		// high lod CTR model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			data.characterIDs[i] + (base-0xf2)+0xf2,
+			BI_RACERMODELHI + data.characterIDs[i],
 			&data.driverModel_lowLOD[i],0xfffffffe);
 	}
 
 	// Tim Trial MPK
 	DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-		data.characterIDs[i] + (base-0xf2)+0x124,
+		BI_TIMETRIALPACK + data.characterIDs[i],
 		0,param_3);
 
 	return;
@@ -42,13 +36,13 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		{
 			// low lod CTR model
 			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-				data.characterIDs[i] + (base-0xf2)+0x14c,
+				BI_RACERMODELLOW + data.characterIDs[i],
 				&data.driverModel_lowLOD[i],0xfffffffe);
 		}
 
 		// load 4P MPK of fourth player
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			data.characterIDs[i] + (base-0xf2)+0x15c,
+			BI_4PARCADEPACK + data.characterIDs[i],
 			0,param_3);
 
 		return;
@@ -65,7 +59,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	{
 		// adv mpk
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			data.characterIDs[0] + (base-0xf2)+0x114,
+			BI_ADVENTUREPACK + data.characterIDs[0],
 			0,param_3);
 
 		return;
@@ -75,12 +69,12 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	{
 		// high lod model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			data.characterIDs[0] + (base-0xf2)+0xf2,
+			BI_RACERMODELHI + data.characterIDs[0],
 			&data.driverModel_lowLOD[0],0xfffffffe);
 
 		// time trial mpk
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			data.characterIDs[1] + (base-0xf2)+0x124,
+			BI_TIMETRIALPACK + data.characterIDs[1],
 			0,param_3);
 
 		return;
@@ -96,12 +90,12 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 	{
 		// high lod model
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			data.characterIDs[0] + (base-0xf2)+0xf2,
+			BI_RACERMODELHI + data.characterIDs[0],
 			&data.driverModel_lowLOD[0],0xfffffffe);
 
 		// pack of four AIs with bosses
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			(base-0xf2)+0x14b,
+			BI_2PARCADEPACK + 7,
 			0,param_3);
 
 		data.characterIDs[1] = 0xA;
@@ -120,7 +114,7 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 
 		// arcade mpk
 		DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-			data.characterIDs[0] + (base-0xf2)+0x104,
+			BI_1PARCADEPACK + data.characterIDs[0],
 			0,param_3);
 
 		return;
@@ -131,9 +125,9 @@ void DECOMP_LOAD_DriverMPK(unsigned int param_1,int levelLOD,unsigned int param_
 		// med models
 		for(i = 0; i < 2; i++)
 		{
-			// low lod CTR model
+			// med lod CTR model
 			DECOMP_LOAD_AppendQueue(param_1,LT_DRAM,
-				data.characterIDs[i] + (base-0xf2)+0x134,
+				BI_RACERMODELMED + data.characterIDs[i],
 				&data.driverModel_lowLOD[i],0xfffffffe);
 		}
 
