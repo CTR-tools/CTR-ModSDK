@@ -254,9 +254,9 @@ void GhostReplay_ThTick(struct Thread *t) {
   vel[1] = (int)nextPacket->pos[1] - (int)currPacket->pos[1];
   vel[2] = (int)nextPacket->pos[2] - (int)currPacket->pos[2];
 
-  inst->matrix.t[0] = currPacket->pos[0] + ((velocity[0] * lerp4096) >> 0xC);
-  inst->matrix.t[1] = currPacket->pos[1] + ((velocity[1] * lerp4096) >> 0xC);
-  inst->matrix.t[2] = currPacket->pos[2] + ((velocity[2] * lerp4096) >> 0xC);
+  inst->matrix.t[0] = currPacket->pos[0] + ((vel[0] * lerp4096) >> 0xC);
+  inst->matrix.t[1] = currPacket->pos[1] + ((vel[1] * lerp4096) >> 0xC);
+  inst->matrix.t[2] = currPacket->pos[2] + ((vel[2] * lerp4096) >> 0xC);
 
   // Calculate delta + perform 12-bit wrapping and lerp
   delta = ((int)nextPacket->rot[0] - (int)currPacket->rot[0]) & 0xFFF;
