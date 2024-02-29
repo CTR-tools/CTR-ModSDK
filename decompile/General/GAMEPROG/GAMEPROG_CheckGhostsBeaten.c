@@ -4,7 +4,6 @@
 // 0 for N Tropy Open
 // 1 for N Tropy Beaten
 // 2 for N Oxide Beaten
-// GAMEPROG_CheckGhostsBeaten
 int DECOMP_GAMEPROG_CheckGhostsBeaten(int ghostID)
 {
 	int i;

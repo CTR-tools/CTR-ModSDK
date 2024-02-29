@@ -6424,7 +6424,7 @@ void FUN_8002d67c(void)
 		// If you just beat N Tropy in Time Trial
         else
 		{
-		  // Check if N Tropy has been beaten on all tracks
+		  // GAMEPROG_CheckGhostsBeaten(ntropy)
           uVar2 = FUN_80026ae4(1);
 
 		  // If there is a track where N Tropy has not been beaten

@@ -300,7 +300,7 @@ void FUN_8009fdc8(void)
 		((*(uint *)(PTR_DAT_8008d2ac + 0x1d44) & 0x10000000) != 0) &&
      
 		(
-			// Check to see if N Tropy was beaten on all tracks
+			// GAMEPROG_CheckGhostsBeaten(ntropy)
 			uVar1 = FUN_80026ae4(1), 
 			
 			// if N Tropy's Ghosts are beaten on all tracks

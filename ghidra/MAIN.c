@@ -6190,7 +6190,7 @@ void FUN_80039fa8(int param_1)
   *(uint *)(puVar3 + 0x1d44) = uVar8;
 LAB_8003a27c:
 
-  // Check if Oxide was beaten on all tracks
+  // GAMEPROG_CheckGhostsBeaten(oxide)
   uVar8 = FUN_80026ae4(2);
 
   // If Oxide was beaten on all tracks
