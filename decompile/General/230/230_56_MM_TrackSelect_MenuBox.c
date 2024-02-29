@@ -107,11 +107,11 @@ void DECOMP_MM_TrackSelect_MenuBox(struct MenuBox *mb)
 
 #ifndef REBUILD_PS1
 					LoadSave_ToggleMode(0x30);
-#endif
 
 					// open the ghost selection menu
 					sdata->ptrDesiredMenuBox = &data.menuBox_GhostSelection;
 					return;
+#endif
 				}
 
 				// passthrough MenuBox for the function

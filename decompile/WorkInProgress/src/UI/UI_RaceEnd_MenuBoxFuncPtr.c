@@ -37,7 +37,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
       if (option == 6)
       {
         // Erase ghost of previous race from RAM
-        GhostTape_Destroy();
+        DECOMP_GhostTape_Destroy();
 
         // go back to track selection
         sdata->mainMenuState = 2;
@@ -148,7 +148,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
             // If "Quit"...
 
             // Erase ghost of previous race from RAM
-            GhostTape_Destroy();
+            DECOMP_GhostTape_Destroy();
 
             // go back to main menu
             sdata->mainMenuState = 0;
@@ -159,7 +159,7 @@ void DECOMP_UI_RaceEnd_MenuBoxFuncPtr(struct MenuBox *menu)
           }
 
           // Erase ghost of previous race from RAM
-          GhostTape_Destroy();
+          DECOMP_GhostTape_Destroy();
 
           // go to character selection
           sdata->mainMenuState = 1;

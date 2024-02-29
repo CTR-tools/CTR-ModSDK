@@ -3656,7 +3656,7 @@ struct sData
 	int ghostOverflowTextTimer;
 
 	// 8008d74c
-	void* ptrGhostTape[2];
+	struct GhostTape* ptrGhostTape[2];
 
 	// 8008d754
 	struct GhostHeader* ptrGhostTapePlaying;

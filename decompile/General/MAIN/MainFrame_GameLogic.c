@@ -249,9 +249,12 @@ LAB_80035098:
 
 #ifndef REBUILD_PS1
 		BOTS_UpdateGlobals();
-		GhostTape_WriteMoves(0);
+#endif
+		DECOMP_GhostTape_WriteMoves(0);
 		gGT->unk1cc4[4] = (u_int)(gGT->unk1cc4[4] * 10000) / 0x147e;
 		
+#ifndef REBUILD_PS1
+
 		#ifdef USE_60FPS
 		
 		// This does not fix Underwater, or particles with function pointers
@@ -288,10 +291,11 @@ LAB_80035098:
 		//	p->axis[7].velocity = 0x30;
 		//}
 		
-		#endif
+		#endif // 60fps
 
 		Particle_UpdateAllParticles();
-#endif
+
+#endif // rebuildps1
 	}
 	else
 	{

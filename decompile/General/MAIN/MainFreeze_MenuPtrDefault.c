@@ -133,7 +133,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 		case 5:
 
 			// erase ghost of previous race from RAM
-			GhostTape_Destroy();
+			DECOMP_GhostTape_Destroy();
 
 			// set level ID to main menu
 			levID = MAIN_MENU_LEVEL;
@@ -149,7 +149,7 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 		case 6:
 
 			// erase ghost of previous race from RAM
-			GhostTape_Destroy();
+			DECOMP_GhostTape_Destroy();
 
 			// level ID of main mb
 			levID = MAIN_MENU_LEVEL;

@@ -1,7 +1,5 @@
 #include <common.h>
 
-void MEMPACK_ClearHighMem();
-
 void DECOMP_LOAD_Callback_LEV_Adv(struct LoadQueueSlot * lqs)
 {		
 	char* patchPtr;

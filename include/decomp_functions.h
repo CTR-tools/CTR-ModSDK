@@ -49,6 +49,16 @@ int DECOMP_GAMEPROG_CheckGhostsBeaten(int ghostID);
 void DECOMP_GAMEPROG_NewGame_OnBoot();
 void DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 
+// ghost
+void DECOMP_GhostReplay_Init1(void);
+void DECOMP_GhostReplay_Init2();
+void DECOMP_GhostReplay_ThTick(struct Thread *t);
+void DECOMP_GhostTape_Destroy();
+void DECOMP_GhostTape_End(void);
+void DECOMP_GhostTape_Start(void);
+void DECOMP_GhostTape_WriteBoosts(int addReserve,u_char type,int speedCap);
+void DECOMP_GhostTape_WriteMoves(short raceFinished);
+
 // howl
 int DECOMP_CountSounds();
 int DECOMP_OtherFX_Play(unsigned int soundID, int flags);

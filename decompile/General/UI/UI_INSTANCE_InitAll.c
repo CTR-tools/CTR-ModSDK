@@ -48,6 +48,9 @@ void DECOMP_UI_INSTANCE_InitAll(void)
 
     if ((gameMode1 & (RELIC_RACE | ADVENTURE_ARENA | TIME_TRIAL)) != 0) 
 	{
+
+// Mistake? Why would this happen if there's no icons in these modes?
+#if 0
 	  for (i = 0; i < 8; i++)
 	  {
         data.rankIconsCurr[i] = gGT->drivers[i]->driverRank;
@@ -57,6 +60,7 @@ void DECOMP_UI_INSTANCE_InitAll(void)
           data.rankIconsTransitionTimer[i] = 5;
         }
 	  }
+#endif
 
 	  // If you're not in a Relic Race
       if ((gameMode1 & RELIC_RACE) == 0) {

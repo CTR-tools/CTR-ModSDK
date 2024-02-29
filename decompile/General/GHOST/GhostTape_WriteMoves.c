@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GhostTape_WriteMoves(short raceFinished)
+void DECOMP_GhostTape_WriteMoves(short raceFinished)
 {
   char *pbVar1;
   int iVar3;

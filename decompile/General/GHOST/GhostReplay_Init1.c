@@ -1,6 +1,6 @@
 #include <common.h>
 
-void GhostReplay_ThTick(struct Thread *);
+void DECOMP_GhostReplay_ThTick(struct Thread *);
 
 void DECOMP_GhostReplay_Init1(void)
 {
@@ -33,7 +33,7 @@ void DECOMP_GhostReplay_Init1(void)
 	
 	// In the future, this can move to GhostTape_Start, when byte budget allows
 	
-	gh = MEMPACK_AllocMem(0x3e00/*, "ghost record buffer"*/);
+	gh = DECOMP_MEMPACK_AllocMem(0x3e00/*, "ghost record buffer"*/);
 	recordBuffer = GHOSTHEADER_GETRECORDBUFFER(gh);
 	sdata->GhostRecording.ptrGhost = gh;
 	sdata->GhostRecording.ptrStartOffset = &recordBuffer[0];
@@ -45,7 +45,7 @@ void DECOMP_GhostReplay_Init1(void)
 
 	for (i = 0; i < 2; i++)
 	{
-		tape = MEMPACK_AllocMem(0x268/*, "ghost tape"*/);
+		tape = DECOMP_MEMPACK_AllocMem(0x268/*, "ghost tape"*/);
 		sdata->ptrGhostTape[i] = tape;
 
 		// first ghost pointer is a ghost loaded by player
@@ -64,6 +64,11 @@ void DECOMP_GhostReplay_Init1(void)
 		else
 		{
 			timeTrialFlags = sdata->gameProgress.highScoreTracks[gGT->levelID].timeTrialFlags;
+			
+			#ifdef REBUILD_PC
+			// 1 for n tropy, 3 for oxide
+			timeTrialFlags = 3;
+			#endif
 			
 			// if not opened N Tropy, skip this ghost
 			if ((timeTrialFlags & 1) == 0) continue;
@@ -108,18 +113,30 @@ void DECOMP_GhostReplay_Init1(void)
 
 		// characterID and model
 		charID = data.characterIDs[charID];
+		
+// set in MainInit_Drivers for PC port
+#ifndef REBUILD_PS1
 		uVar3 = VehInit_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
+#else
+		uVar3 = 0;
+#endif
 
-		inst = INSTANCE_Birth3D(uVar3, 0, 0);
+		inst = DECOMP_INSTANCE_Birth3D(uVar3, 0, 0);
 		inst->unk51 = 0xc;
 		inst->flags = 7;
 
-		// "ghost"
-		// 0x4 = size
-		// 0 = no relation to param4
-		// 0x100 flag = LargeStackPool
-		// 0x2 = ghost thread bucket
-		t = THREAD_BirthWithObject(0x40102, GhostReplay_ThTick, 0, 0);
+		t = DECOMP_THREAD_BirthWithObject(
+			
+			// creation flags
+			SIZE_RELATIVE_POOL_BUCKET(
+				4, NONE, LARGE, GHOST
+			), 
+			
+			DECOMP_GhostReplay_ThTick, 
+			0, 
+			0
+		);
+		
 		t->modelIndex = 0x4b;	// ghost
 		t->flags |= 0x1000;		// ignore collisions
 		
@@ -143,7 +160,7 @@ void DECOMP_GhostReplay_Init1(void)
 		// if "Wake" model exists
 		if (wake)
 		{
-			wakeInst = INSTANCE_Birth3D(wake, 0, 0);
+			wakeInst = DECOMP_INSTANCE_Birth3D(wake, 0, 0);
 			ghostDriver->wakeInst = wakeInst;
 
 			if (wakeInst != 0)
@@ -153,8 +170,10 @@ void DECOMP_GhostReplay_Init1(void)
 			}
 		}
 
+#ifndef REBUILD_PS1
 		VehInit_TireSprites(t);
 		VehInit_SetConsts(ghostDriver);
+#endif
 		
 		if(charID == 0xF)
 			ghostDriver->wheelSize = 0;
@@ -164,7 +183,7 @@ void DECOMP_GhostReplay_Init1(void)
 		
 		// advance ghost by one frame,
 		// just so Oxide doesn't block your view
-		GhostReplay_ThTick(t);
+		DECOMP_GhostReplay_ThTick(t);
 	}
 		
 	return;

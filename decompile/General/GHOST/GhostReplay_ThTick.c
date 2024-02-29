@@ -1,13 +1,7 @@
 #include <common.h>
 
-// TODO: RENAME FILE TO GhostReplay_ThTick
-/**
- * @brief Byte Budget: 2068/2400
- * FUN_80026ed8
- *
- * @param t ptr to thread
- */
-void GhostReplay_ThTick(struct Thread *t) {
+void DECOMP_GhostReplay_ThTick(struct Thread *t)
+{
   struct GhostTape *tape;
   struct GameTracker *gGT;
   struct GhostHeader *gh;
@@ -42,19 +36,23 @@ void GhostReplay_ThTick(struct Thread *t) {
     }
 
     // GHOST DATA OVERFLOW
-    DecalFont_DrawLine(sdata->lngStrings[361], 0x100, 0x28, 2, color);
-
     // CAN NOT SAVE GHOST DATA
-    DecalFont_DrawLine(sdata->lngStrings[362], 0x100, 0x32, 2, color);
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[361], 0x100, 0x28, 2, color);
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[362], 0x100, 0x32, 2, color);
 
     sdata->ghostOverflowTextTimer--;
   }
 
   gGT = sdata->gGT;
 
-  if ((sdata->boolGhostsDrawing == 0) || (gGT->gameMode1 & PAUSE_THREADS) ||
-      // driver == nullptr
-      (d == 0) || (tape->ptrEnd == tape->ptrStart) || (d->ghostBoolInit == 0)) {
+  if (
+		(sdata->boolGhostsDrawing == 0) || 
+		((gGT->gameMode1 & PAUSE_THREADS) != 0) ||
+		(d == 0) || 
+		(tape->ptrEnd == tape->ptrStart) || 
+		(d->ghostBoolInit == 0)
+	) 
+  {
     inst->flags |= HIDE_MODEL;
     return;
   }
@@ -103,6 +101,14 @@ void GhostReplay_ThTick(struct Thread *t) {
         d->actionsFlagSet &= 0xffefffff; // driver is not AI anymore
         d->speedApprox = gh->speedApprox;
 
+		#ifdef REBUILD_PS1
+		
+		// kill thread, no AI yet
+		t->flags |= 0x800;
+		return;
+		
+		#else
+
         BOTS_Driver_Convert(d);
         BOTS_ThTick_Drive(t);
 
@@ -112,6 +118,8 @@ void GhostReplay_ThTick(struct Thread *t) {
         // allow this thread to ignore all collisions
         t->flags |= 0x1000;
         return;
+		
+		#endif
       }
 
       // if opcode is seen
@@ -274,7 +282,12 @@ void GhostReplay_ThTick(struct Thread *t) {
 #endif
   local_rot[2] = 0;
 
-  ConvertRotToMatrix(&inst->matrix, local_rot);
+  #ifndef REBUILD_PS1
+  ConvertRotToMatrix(
+  #else
+  TEST_ConvertRotToMatrix(
+  #endif
+	&inst->matrix, local_rot);
 
   d->posCurr[0] = inst->matrix.t[0] << 8;
   d->posCurr[1] = inst->matrix.t[1] << 8;
@@ -308,20 +321,33 @@ void GhostReplay_ThTick(struct Thread *t) {
         break;
 
       case 0x81: // Animation
-        int numAnimFrames = INSTANCE_GetNumAnimFrames(inst, buffer[1]);
+        int numAnimFrames = DECOMP_INSTANCE_GetNumAnimFrames(inst, buffer[1]);
         inst->animIndex = (numAnimFrames < 1) ? 0 : buffer[1];
         inst->animFrame = (buffer[2] == 0 || numAnimFrames <= buffer[2])
                               ? numAnimFrames
                               : buffer[2];
+		
+		// fix crashing
+		#ifdef REBUILD_PS1
+		inst->animIndex = 0;
+		inst->animFrame = 10;
+		#endif
+		
         buffer += 3;
         break;
 
       case 0x82: // Boost
-        if (gGT->trafficLightsTimer < 1 &&
-            (gGT->gameMode1 & START_OF_RACE) == 0 &&
-            TitleFlag_IsFullyOnScreen() == 0) {
-          DECOMP_Turbo_Increment(d, (int)(buffer[1] << 8 | buffer[2]), buffer[3],
-                          (int)(buffer[4] << 8 | buffer[5]));
+        if (
+				gGT->trafficLightsTimer < 1 &&
+				((gGT->gameMode1 & START_OF_RACE) == 0) &&
+				(DECOMP_TitleFlag_IsFullyOnScreen() == 0)
+			)
+		{
+          DECOMP_Turbo_Increment(d, 
+			(int)(buffer[1] << 8 | buffer[2]), // endian flip 
+			buffer[3],
+            (int)(buffer[4] << 8 | buffer[5]) // endian flip
+		  );
         }
         buffer += 6;
         break;

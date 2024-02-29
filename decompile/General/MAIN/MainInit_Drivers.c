@@ -19,9 +19,11 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
     {
         BOTS_Adv_AdjustDifficulty();
     }
+#endif
 
     DECOMP_GhostReplay_Init1();
 
+#ifndef REBUILD_PS1
     if (LOAD_IsOpen_RacingOrBattle())
     {
         RB_MinePool_Init();
@@ -162,7 +164,6 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 		gGT->drivers[driverID]->instSelf->model = sdata->PLYROBJECTLIST[i++];
 	}
 
-
 	// leave commented, or it crashes Adventure->New
 	#if 0
 	for(driverID = 0; driverID < 7; driverID++)
@@ -174,7 +175,6 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 	
 #endif
 
-#ifndef REBUILD_PS1
     // if you're in time trial, not main menu, not loading.
     // basically, if you're in time trial gameplay
     if ((gameMode & 0x20022000) == TIME_TRIAL)
@@ -184,8 +184,19 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
         DECOMP_GhostTape_Start();
 		
 		#ifdef REBUILD_PS1
-		#error Do Something For instSelf->model
+		
+		// 0: human ghost
+		// 1: n tropy / oxide
+		if(sdata->ptrGhostTape[1] != 0)
+		{
+			// N Tropy to Oxide	
+			void** pointers = ST1_GETPOINTERS(gGT->level1->ptrSpawnType1);
+			if(sdata->ptrGhostTape[1]->gh == pointers[ST1_NOXIDE])
+				i++;
+		}
+		
+		gGT->threadBuckets[GHOST].thread->inst->model = 
+			sdata->PLYROBJECTLIST[i++];
 		#endif
     }
-#endif
 }

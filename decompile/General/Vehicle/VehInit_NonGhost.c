@@ -89,5 +89,6 @@ void DECOMP_VehInit_NonGhost(struct Thread* t, int index)
 
 void Veh_NullThread()
 {
-	
+	// leave this empty
+	return;
 }

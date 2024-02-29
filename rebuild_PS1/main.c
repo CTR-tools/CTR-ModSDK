@@ -85,6 +85,15 @@
 #include "../decompile/General/GAMEPROG/GAMEPROG_NewGame_OnBoot.c"
 #include "../decompile/General/GAMEPROG/GAMEPROG_GetPtrHighScoreTrack.c"
 
+#include "../decompile/General/GHOST/GhostReplay_ThTick.c"
+#include "../decompile/General/GHOST/GhostReplay_Init1.c"
+#include "../decompile/General/GHOST/GhostReplay_Init2.c"
+#include "../decompile/General/GHOST/GhostTape_Start.c"
+#include "../decompile/General/GHOST/GhostTape_End.c"
+#include "../decompile/General/GHOST/GhostTape_WriteMoves.c"
+#include "../decompile/General/GHOST/GhostTape_WriteBoosts.c"
+#include "../decompile/General/GHOST/GhostTape_Destroy.c"
+
 #include "../decompile/General/HOWL/h01_CountSounds.c"
 #include "../decompile/General/HOWL/h02_OtherFX_Play.c"
 #include "../decompile/General/HOWL/h03_OtherFX_Play_Echo.c"
