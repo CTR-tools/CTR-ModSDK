@@ -475,56 +475,56 @@ FinishLoading:
 						// temporary workaround, cause XA IRQ doesn't happen,
 						// must be zero for level music to work
 						sdata->XA_State = 0;
-					}
 
-					int held = gGS->gamepad[0].buttonsHeldCurrFrame;
-
-					if ((held & BTN_UP) != 0)
-					{
-						gGT->tileView[0].pos[2] -= (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
-						gGT->tileView[0].pos[0] -= (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
-					}
-
-					if ((held & BTN_DOWN) != 0)
-					{
-						gGT->tileView[0].pos[2] += (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
-						gGT->tileView[0].pos[0] += (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
-					}
-
-					if ((held & BTN_LEFT) != 0)
-					{
-						gGT->tileView[0].rot[1] += FPS_HALF(0x20);
-					}
-
-					if ((held & BTN_RIGHT) != 0)
-					{
-						gGT->tileView[0].rot[1] -= FPS_HALF(0x20);
-					}
-
-					if ((held & BTN_CROSS) != 0)
-					{
-						gGT->tileView[0].pos[1] -= FPS_HALF(0x20);
-					}
-
-					if ((held & BTN_TRIANGLE) != 0)
-					{
-						gGT->tileView[0].pos[1] += FPS_HALF(0x20);
-					}
-					
-					if ((held & BTN_START) != 0)
-					{
-						if(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
+						int held = gGS->gamepad[0].buttonsHeldCurrFrame;
+	
+						if ((held & BTN_UP) != 0)
 						{
-							// N_SANITY_BEACH
-							// NAUGHTY_DOG_CRATE
-							DECOMP_MainRaceTrack_RequestLoad(N_SANITY_BEACH);
+							gGT->tileView[0].pos[2] -= (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
+							gGT->tileView[0].pos[0] -= (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
+						}
+	
+						if ((held & BTN_DOWN) != 0)
+						{
+							gGT->tileView[0].pos[2] += (FPS_HALF(0x40) * DECOMP_MATH_Cos(gGT->tileView[0].rot[1])) >> 0xC;
+							gGT->tileView[0].pos[0] += (FPS_HALF(0x40) * DECOMP_MATH_Sin(gGT->tileView[0].rot[1])) >> 0xC;
+						}
+	
+						if ((held & BTN_LEFT) != 0)
+						{
+							gGT->tileView[0].rot[1] += FPS_HALF(0x20);
+						}
+	
+						if ((held & BTN_RIGHT) != 0)
+						{
+							gGT->tileView[0].rot[1] -= FPS_HALF(0x20);
+						}
+	
+						if ((held & BTN_CROSS) != 0)
+						{
+							gGT->tileView[0].pos[1] -= FPS_HALF(0x20);
+						}
+	
+						if ((held & BTN_TRIANGLE) != 0)
+						{
+							gGT->tileView[0].pos[1] += FPS_HALF(0x20);
 						}
 						
-						else
+						if ((held & BTN_START) != 0)
 						{
-							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
-							sdata->mainMenuState = 2;
-							gGT->gameMode1 |= TIME_TRIAL;
+							if(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
+							{
+								// N_SANITY_BEACH
+								// NAUGHTY_DOG_CRATE
+								DECOMP_MainRaceTrack_RequestLoad(N_SANITY_BEACH);
+							}
+							
+							else
+							{
+								DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+								sdata->mainMenuState = 2;
+								gGT->gameMode1 |= TIME_TRIAL;
+							}
 						}
 					}
 				}

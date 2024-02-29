@@ -172,8 +172,9 @@ void DECOMP_GhostReplay_Init1(void)
 
 #ifndef REBUILD_PS1
 		VehInit_TireSprites(t);
-		VehInit_SetConsts(ghostDriver);
 #endif
+
+		DECOMP_VehInit_SetConsts(ghostDriver);
 		
 		if(charID == 0xF)
 			ghostDriver->wheelSize = 0;

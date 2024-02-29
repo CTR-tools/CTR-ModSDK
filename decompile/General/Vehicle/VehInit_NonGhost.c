@@ -75,8 +75,9 @@ void DECOMP_VehInit_NonGhost(struct Thread* t, int index)
 	
 #ifndef REBUILD_PS1
 	VehInit_TireSprites(t);
-	VehInit_SetConsts(d);
 #endif
+
+	DECOMP_VehInit_SetConsts(d);
 	
 	// if you are in cutscene or in main menu
 	if((gGT->gameMode1 & 0x20002000) != 0)
