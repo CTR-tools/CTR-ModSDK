@@ -152,7 +152,7 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
           p->v3 = (char)uVar9;
 
           // pointer to OT mem, and pointer to primitive
-          AddPrim(&gGT->tileView_UI.ptrOT[3], p);
+          AddPrim(&gGT->tileView_UI.ptrOT[4], p);
 
           // while v0 (tex coord Y) < screensize
         } while ((int)uVar9 < 0xd8);
