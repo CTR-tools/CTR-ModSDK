@@ -18,12 +18,12 @@ void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT)
 
   // vram copy, then overwrite vram with pause image
 
-  int start1 = (int)gGT->db[0].otMem.end;
-  int start2 = (int)gGT->db[1].otMem.end;
+  int start1 = (int)gGT->db[0].primMem.end;
+  int start2 = (int)gGT->db[1].primMem.end;
   start1 -= 0xc800;
   start2 -= 0xc800;
-  gGT->db[0].otMem.end = start1;
-  gGT->db[1].otMem.end = start2;
+  gGT->db[0].primMem.end = start1;
+  gGT->db[1].primMem.end = start2;
 
   // 0x800 byte hole
   sdata->PausePtrsVRAM[4] = start1;
