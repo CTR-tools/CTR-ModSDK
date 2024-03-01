@@ -1,5 +1,5 @@
-// 455+43+33+27+38+14+18+16+19+12+1+8+9+1+1+2+2+3+2+4+2+3+16+3+47-12 = 767 rewritten so far
-// 455 for every 'common' and ','
+// 450+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+2+2+3+2+4+2+3+16+3+47-12 = 768 rewritten so far
+// 450 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -10,6 +10,7 @@
 // 16 for 232 adv hub
 // 19 for the 20 UI Block #1
 // 12 for MAIN block
+// +6 for ElimBG
 // +1 for UI Block #2
 // +8 for UI Block #3
 // +9 for GAMEPAD Block #1
@@ -236,13 +237,7 @@ common, exe, DISPLAY_Swap, 0x0, General/Display/DISPLAY_Swap.c
 common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c
 
 // ElimBG
-common, exe, ElimBG_SaveScreenshot_Chunk, 0x0, General/ElimBG/ElimBG_SaveScreenshot_Chunk.c
-common, exe, ElimBG_SaveScreenshot_Full, 0x0, General/ElimBG/ElimBG_SaveScreenshot_Full.c
-common, exe, ElimBG_Activate, 0x0, General/ElimBG/ElimBG_Activate.c
-common, exe, ElimBG_ToggleInstance, 0x0, General/ElimBG/ElimBG_ToggleInstance.c
-common, exe, ElimBG_ToggleAllInstances, 0x0, General/ElimBG/ElimBG_ToggleAllInstances.c
-common, exe, ElimBG_HandleState, 0x0, General/ElimBG/ElimBG_HandleState.c
-common, exe, ElimBG_Deactivate, 0x0, General/ElimBG/ElimBG_Deactivate.c
+common, exe, ElimBG_SaveScreenshot_Chunk, 0x0, General/ElimBG/ElimBG_AAA_BigBlock1.c
 
 // GAMEPAD
 common, exe, GAMEPAD_Init, 0x0, General/GAMEPAD/GAMEPAD_AAA_Block1.c
@@ -435,6 +430,7 @@ common, exe, MainFrame_ResetDB, 0x0, General/MAIN/MainFrame_ResetDB.c
 common, exe, MainFrame_TogglePauseAudio, 0x0, General/MAIN/MainFrame_TogglePauseAudio.c
 common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefault.c
 common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
+common, exe, MainFreeze_IfPressStart, 0x0, General/MAIN/MainFreeze_IfPressStart.c
 
 common, exe, MainGameStart_Initialize, 0x0, General/MAIN/MainGameStart_Initialize.c
 

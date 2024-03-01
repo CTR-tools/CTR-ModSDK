@@ -402,7 +402,7 @@ LAB_80035098:
 						gGT->unknownFlags_1d44 = (gGT->gameMode1 & 0x3e0020) | PAUSE_1;
 						
 #ifndef REBUILD_PS1
-						MainFreeze_IfPressStart();
+						DECOMP_MainFreeze_IfPressStart();
 #endif
 
 						gGT->cooldownfromPauseUntilUnpause = 5;

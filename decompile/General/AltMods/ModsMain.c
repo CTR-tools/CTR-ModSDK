@@ -1,5 +1,6 @@
 #include <common.h>
 
+void FLARE_ThTick();
 void Player_ChangeState();
 void UI_VsQuipReadDriver();
 void UI_BattleDrawHeadArrows();
@@ -14,6 +15,7 @@ void Mods4_EndOfFile();
 void Mods5_EndOfFile();
 void Mods6_EndOfFile();
 void Mods7_EndOfFile();
+void Mods8_EndOfFile();
 
 void ModsMain()
 {
@@ -28,7 +30,7 @@ void ModsMain()
 #ifndef REBUILD_PC
 	printf("\n\nMods:\n");
 	
-	int modSizes[7] =
+	int modSizes[8] =
 	{
 		// UI defrag Block1
 		(int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile,
@@ -49,10 +51,13 @@ void ModsMain()
 		(int)DECOMP_UI_Map_GetIconPos - (int)Mods6_EndOfFile,
 		
 		// VehPtr defrag Block1
-		(int)Player_ChangeState - (int)Mods7_EndOfFile
+		(int)Player_ChangeState - (int)Mods7_EndOfFile,
+		
+		// ElimBG defrag Block1
+		(int)FLARE_ThTick - (int)Mods8_EndOfFile
 	};
 	
-	for(int i = 0; i < 7; i++)
+	for(int i = 0; i < 8; i++)
 	{
 		printf("Mods%d.c: %d\n", i+1, modSizes[i]);
 	}

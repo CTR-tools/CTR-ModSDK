@@ -3330,7 +3330,7 @@ LAB_800346b0:
       *(undefined4 *)(PTR_DAT_8008d2ac + 0x1cfc) = 0;
       *(undefined4 *)(puVar3 + 0x1d00) = 0;
 
-	  // deactivate pause
+	  // ElimBG_Deactivate
       FUN_80024c08();
 
 	  param_2 = -2;
