@@ -97,9 +97,8 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
           iVar5 = (int)(uVar7 & 0x3ff) >> 6;
 
           // tpage
-          p->tpage =
-          ((uVar9 & 0x100) >> 4) | (u_short)iVar5 | ((uVar9 & 0x200) << 2);
-
+          p->tpage = (u_short)iVar5;
+		  
           // clut
           p->clut = 0x3fe0;
 
