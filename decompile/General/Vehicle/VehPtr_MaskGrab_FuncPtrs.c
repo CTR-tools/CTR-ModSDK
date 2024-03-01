@@ -23,19 +23,12 @@ void DECOMP_VehPtr_MaskGrab_Update(struct Thread *t, struct Driver *d)
 {
     struct GameTracker *gGT = sdata->gGT;
 
-    // NoInput timer = NoInput timer - elapsed milliseconds per frame, ~32
-    int noInput = d->NoInputTimer - gGT->elapsedTimeMS;
+    d->NoInputTimer -= gGT->elapsedTimeMS;
 
-    // if negative
-    if (noInput < 0)
-    {
-        // set to zero
-        noInput = 0;
-    }
+    if (d->NoInputTimer < 0)
+		d->NoInputTimer = 0;
 
-    d->NoInputTimer = noInput;
-
-    if (noInput != 0)
+	if (d->NoInputTimer != 0)
         return;
 
     // when input is allowed,
@@ -45,8 +38,8 @@ void DECOMP_VehPtr_MaskGrab_Update(struct Thread *t, struct Driver *d)
 
     if (mask != NULL)
     {
-        // mask rotY
-        mask->rot[1] &= ~(1);
+        // mask rotZ
+        mask->rot[2] &= ~(1);
 
         // scale = 100%
         mask->scale = 0x1000;
@@ -73,7 +66,8 @@ void DECOMP_VehPtr_MaskGrab_PhysLinear(struct Thread *t, struct Driver *d)
     // reset turning state
     d->simpTurnState = 0;
 
-    d->actionsFlagSet = ((d->actionsFlagSet & 0xfffdffdb) | 8);
+    d->actionsFlagSet &= 0xfffdffdb;
+	d->actionsFlagSet |= 8;
 }
 
 void DECOMP_VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
@@ -125,21 +119,26 @@ void DECOMP_VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
         // Crashing
         d->matrixArray = 4;
 
-        d->matrixIndex = (d->KartStates.MaskGrab.animFrame < 3) ? 7 : d->KartStates.MaskGrab.animFrame + 5;
+		int maskGrabAnimFrame = d->KartStates.MaskGrab.animFrame;
+
+		if (maskGrabAnimFrame < 3)
+			d->matrixIndex = 7;
+		else
+			d->matrixIndex = maskGrabAnimFrame + 5;
 
         // change animation
         inst->animIndex = 2;
 
         frame = 7;
 
-        if (2 < d->KartStates.MaskGrab.animFrame)
+        if (2 < maskGrabAnimFrame)
         {
-            frame = d->KartStates.MaskGrab.animFrame + 5;
+            frame = maskGrabAnimFrame + 5;
         }
 
         inst->animFrame = frame;
 
-        frame = d->KartStates.MaskGrab.animFrame + 1;
+        frame = maskGrabAnimFrame + 1;
         
         if (7 < frame)
         {
@@ -178,12 +177,10 @@ void DECOMP_VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
                     // now they are spawned
                     d->KartStates.MaskGrab.boolParticlesSpawned = true;
                 }
-                sVar2 = d->jumpSquishStretch + 0x2d0;
-                d->jumpSquishStretch = sVar2;
-                if (8000 < sVar2)
-                {
+                
+				d->jumpSquishStretch += 0x2d0;
+                if (d->jumpSquishStretch > 8000)
                     d->jumpSquishStretch = 8000;
-                }
             }
         }
         else
@@ -202,66 +199,65 @@ void DECOMP_VehPtr_MaskGrab_Animate(struct Thread *t, struct Driver *d)
     struct MaskHeadWeapon *mask = d->KartStates.MaskGrab.maskObj;
 
     // if maskObj
-    if (mask != 0)
+    if (mask == 0)
+		return;
+
+    // set mask duration
+    mask->duration = 7680;
+
+    // less than 0.5s after player fell
+    if (d->NoInputTimer > 960)
+	{
+        // scale = 0%
+        mask->scale = 0;
+		return;
+	}
+
+    // if more than 0.5s after player fell
+
+    // if not lifting player
+    if (d->KartStates.MaskGrab.boolLiftingPlayer == false)
     {
-        // set mask duration
-        mask->duration = 7680;
+        // decrease mask posY by elapsed time
+        mask->pos[1] -= gGT->elapsedTimeMS;
+    }
 
-        // if more than 0.5s after player fell
-        if (d->NoInputTimer < 961)
-        {
-            // if not lifting player
-            if (d->KartStates.MaskGrab.boolLiftingPlayer == false)
-            {
-                // decrease mask posY by elapsed time
-                mask->pos[1] -= gGT->elapsedTimeMS;
-            }
+    // if lifting player (if driver isn't falling infinitely)
+    else
+    {
+        d->speed = 0;
 
-            // if lifting player (if driver isn't falling infinitely)
-            else
-            {
-                d->speed = 0;
+        // increase driver height, both posCurr and posPrev
+        d->posCurr[1] += (gGT->elapsedTimeMS * 0x80);
+        d->posPrev[1] = d->posCurr[1];
+    }
 
-                // increase driver height, both posCurr and posPrev
-                d->posCurr[1] = (gGT->elapsedTimeMS * 0x80);
-                d->posPrev[1] = d->posCurr[1];
-            }
+    // maskPosX = driverPosX
+    mask->pos[0] = (short)(d->posCurr[0] >> 8);
 
-            // maskPosX = driverPosX
-            mask->pos[0] = (short)(d->posCurr[0] >> 8);
+    // set mask posZ
+    mask->pos[2] = (short)(d->posCurr[2] >> 8);
 
-            // set mask posZ
-            mask->pos[2] = (short)(d->posCurr[2] >> 8);
+    // if mask posY < driver posY
+    if (mask->pos[1] < (short)(d->posCurr[1] >> 8))
+    {
+        // mask posY = driver posY
+        mask->pos[1] = (short)(d->posCurr[1] >> 8);
 
-            // if mask posY < driver posY
-            if (mask->pos[1] < d->posCurr[1] >> 8)
-            {
-                // mask posY = driver posY
-                mask->pos[1] = (short)(d->posCurr[1] >> 8);
+        d->KartStates.MaskGrab.boolLiftingPlayer = true;
+    }
 
-                d->KartStates.MaskGrab.boolLiftingPlayer = true;
-            }
+    // if more than halfway through mask pickup
+    if (d->NoInputTimer < 721)
+    {
+        // scale = 100%
+        mask->scale = 0x1000;
+    }
 
-            // if more than halfway through mask pickup
-            if (d->NoInputTimer < 721)
-            {
-                // scale = 100%
-                mask->scale = 0x1000;
-            }
-
-            // if less than half
-            else
-            {
-                // interpolate scale
-                mask->scale = (short)(((960 - d->NoInputTimer) * 0x1000) / 0xf0);
-            }
-        }
-
-        // less than 0.5s after player fell
-        else
-        {
-            // scale = 0%
-            mask->scale = 0;
-        }
+    // if less than half
+    else
+    {
+        // interpolate scale
+        mask->scale = (short)(((960 - d->NoInputTimer) * 0x1000) / 0xf0);
     }
 }
