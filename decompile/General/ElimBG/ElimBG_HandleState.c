@@ -31,8 +31,8 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
 	DrawSync(0);
 	
 	// restore gGT->DB[0,1].primMem.end
-	gGT->db[0].otMem.end = sdata->PausePtrsVRAM[0] + 0x8000;
-	gGT->db[1].otMem.end = sdata->PausePtrsVRAM[1] + 0x8000;
+	gGT->db[0].otMem.end = (int)gGT->db[0].otMem.end + 0xc800;
+	gGT->db[1].otMem.end = (int)gGT->db[1].otMem.end + 0xc800;
 	
 	// Enable all instances
 	DECOMP_ElimBG_ToggleAllInstances(gGT, 0);
