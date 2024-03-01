@@ -312,7 +312,7 @@ void FUN_80024974(int param_1)
     *(int *)(param_1 + 0x94) = DAT_8008d018 + 0x8000;
     *(int *)(param_1 + 0x138) = DAT_8008d01c + 0x8000;
 
-	// Enable all instances
+	// ElimBG_ToggleAllInstances
 	FUN_800248bc(param_1,0);
 
 	// game is not paused anymore
@@ -337,8 +337,7 @@ void FUN_80024974(int param_1)
 		// ElimBG_SaveScreenshot_Full
 		FUN_8002459c(param_1);
 
-		// Disable all instances
-		// (prevent PrimMem from overwriting VRAM backup)
+		// ElimBG_ToggleAllInstances
 		FUN_800248bc(param_1,1);
 
 		// you are now ready to draw the screenshot

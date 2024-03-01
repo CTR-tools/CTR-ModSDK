@@ -792,7 +792,7 @@ LAB_80035098:
 		  // MainFreeze_SafeAdvDestroy
           FUN_800399fc();
 
-		  // deactivate pause
+		  // ElimBG_Deactivate
           FUN_80024c08(PTR_DAT_8008d2ac);
 
 		  // make MenuBox invisible
@@ -5684,13 +5684,13 @@ void FUN_80039a44(int param_1)
   // String 0x2: "Resume"
   case 1:
 
-    // deactivate pause??
+    // ElimBG_Deactivate
     FUN_80024c08(PTR_DAT_8008d2ac);
 
 	// Unpause game
     *(uint *)PTR_DAT_8008d2ac = *(uint *)PTR_DAT_8008d2ac & 0xfffffffe;
 
-	// unpause audio
+	// MainFrame_TogglePauseAudio(unpause)
     FUN_80034b48(0);
 
 	// OtherFX_Play
@@ -5996,7 +5996,7 @@ void FUN_80039e98(void)
 	// OtherFX_Play to pause
     FUN_80028468(1,1);
 
-	// Activate pause menu
+	// ElimBG_Activate
     FUN_8002481c(PTR_DAT_8008d2ac);
   }
   return;
@@ -8924,10 +8924,10 @@ undefined4 main(void)
 	// Happens on first frame that loading ends
     case 1:
 
-	  // deactivate pause
+	  // ElimBG_Deactivate
       FUN_80024c08(PTR_DAT_8008d2ac);
 
-	  // count number of times you lost race
+	  // MainStats_RestartRaceCountLoss
       FUN_8003d068();
 
 	  // Voiceline_ClearTimeStamp
@@ -9446,7 +9446,7 @@ void FUN_8003cf7c(short param_1)
   // destroy "most" fx, let menu fx play to end
   FUN_8002c8a8(1,0,0);
 
-  // deactivate pause
+  // ElimBG_Deactivate
   FUN_80024c08(PTR_DAT_8008d2ac);
 
   // LOAD_LevelFile
