@@ -66,7 +66,7 @@ void DECOMP_VehPtr_MaskGrab_PhysLinear(struct Thread *t, struct Driver *d)
     // reset turning state
     d->simpTurnState = 0;
 
-    d->actionsFlagSet &= 0xfffdffdb;
+    d->actionsFlagSet &= ~(0x20024);
 	d->actionsFlagSet |= 8;
 }
 

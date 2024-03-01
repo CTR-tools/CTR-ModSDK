@@ -34109,10 +34109,10 @@ void FUN_800675c0(undefined4 param_1,int param_2)
 	// cameraX = cameraX - driverX
     local_30 = local_30 - *(int *)(iVar4 + 0x44);
 
-	// get tileView->rotX
+	// get tileView->posY
     sVar1 = *(short *)(puVar2 + (uint)*(byte *)(param_2 + 0x4a) * 0x110 + 0x16a);
 
-	// driverZ
+	// driverY
 	iVar3 = *(int *)(iVar4 + 0x48);
 
 	// cameraZ = cameraZ - driverZ
@@ -34127,7 +34127,7 @@ void FUN_800675c0(undefined4 param_1,int param_2)
 	// get distance between car and camera
 	x = SquareRoot0(local_30 * local_30 + local_28 * local_28);
 
-	// what???
+	// camPosY - driverY
     x = ratan2(sVar1 - iVar3,x);
 
     puVar2 = PTR_DAT_8008d2ac;

@@ -41,7 +41,8 @@ void DECOMP_VehPtr_EatenByPlant_PhysLinear(struct Thread *t, struct Driver *d)
 
     // acceleration prevention,
     // drop bits for jump button, 0x20?, reversing engine
-    d->actionsFlagSet = ((d->actionsFlagSet & ~(0x20000 | 0x20 | 4)) | 8);
+    d->actionsFlagSet &= ~(0x20024); 
+	d->actionsFlagSet |= 8;
 
     // increment time spent in mask grab
     d->timeSpentMaskGrabbed += sdata->gGT->elapsedTimeMS;
@@ -83,6 +84,12 @@ void DECOMP_VehPtr_EatenByPlant_Animate(struct Thread *t, struct Driver *d)
 
         SetTransMatrix(&inst->matrix);
 
+		camVec.vx = 0;
+		camVec.vy = 0;
+		camVec.vz = 0;
+		alStack32[0] = 0;
+		alStack32[1] = 0;
+		
         RotTrans(&plantVector, &camVec, alStack32);
 
         struct TileView * view = &gGT->tileView[d->driverID];
@@ -99,7 +106,7 @@ void DECOMP_VehPtr_EatenByPlant_Animate(struct Thread *t, struct Driver *d)
         // get distance between car and camera
         dist = SquareRoot0_stub(camX * camX + camZ * camZ);
 
-        view->rot[0] = (short) 0x800 - ratan2(view->rot[0] - inst->matrix.t[2], dist);
+        view->rot[0] = (short) 0x800 - ratan2(view->pos[1] - inst->matrix.t[1], dist);
 
         view->rot[2] = 0;
     }
