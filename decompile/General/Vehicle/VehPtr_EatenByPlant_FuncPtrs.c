@@ -106,7 +106,7 @@ void DECOMP_VehPtr_EatenByPlant_Animate(struct Thread *t, struct Driver *d)
         // get distance between car and camera
         dist = SquareRoot0_stub(camX * camX + camZ * camZ);
 
-        view->rot[0] = (short) 0x800 - ratan2(view->pos[1] - inst->matrix.t[1], dist);
+        view->rot[0] = (short)0x800 - ratan2(view->pos[1] - inst->matrix.t[1], dist);
 
         view->rot[2] = 0;
     }
