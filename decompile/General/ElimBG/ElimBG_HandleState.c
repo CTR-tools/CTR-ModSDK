@@ -104,9 +104,8 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
 
           iVar6 = (uVar7 + iVar5 * -0x40) * 4;
 
-          // v0
-		  cVar8 = (char)uVar9;
-          p->v0 = cVar8;
+          p->v0 = uVar9;
+          p->v1 = uVar9;
 
           // u0
 		  cVar4 = (char)iVar6;
@@ -126,12 +125,6 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
           // u2
           iVar5 = (uVar7 + iVar5 * -0x40) * 4;
 
-          // v2
-          p->v2 = cVar8 + 0x10;
-
-          // v1
-          p->v1 = cVar8;
-
           // u2
 		  cVar4 = (char)iVar5;
           p->u2 = cVar4;
@@ -149,6 +142,7 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
 
           // v3 = v0 + 0x10
 		  uVar9 += 0x10;
+          p->v2 = (char)uVar9;
           p->v3 = (char)uVar9;
 
           // pointer to OT mem, and pointer to primitive
