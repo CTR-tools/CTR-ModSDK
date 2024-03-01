@@ -134,7 +134,8 @@ void DECOMP_ElimBG_HandleState(struct GameTracker *gGT)
           p->v1 = cVar8;
 
           // u2
-          p->u2 = (char)iVar5;
+		  cVar4 = (char)iVar5;
+          p->u2 = cVar4;
 
           if (iVar5 + 0x80 < 0x100)
           {
