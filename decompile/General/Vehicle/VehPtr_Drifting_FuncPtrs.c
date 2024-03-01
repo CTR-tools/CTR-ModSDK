@@ -463,7 +463,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
             if (meterLeft == 0)
             {
                 // Make a sound
-                DECOMP_OtherFX_Play_Echo(0xf, 1, ((d->actionsFlagSet & 0x10000) != 0));
+                DECOMP_OtherFX_Play_Echo(0xf, 1,d->actionsFlagSet & 0x10000);
 
                 // Add to your number of boost attempts, this makes it
                 // so you can't attempt to boost again until you release L1 + R1

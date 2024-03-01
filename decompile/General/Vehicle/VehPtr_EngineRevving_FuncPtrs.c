@@ -178,7 +178,7 @@ void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d)
                 d->KartStates.EngineRevving.unk[0] = 0;
                 d->KartStates.EngineRevving.unk[1] |= 3;
 
-                DECOMP_OtherFX_Play_Echo(0xf, 1, (d->actionsFlagSet & 1));
+                DECOMP_OtherFX_Play_Echo(0xf, 1, d->actionsFlagSet & 0x10000);
             }
         }
         goto LAB_80067dec;

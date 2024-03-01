@@ -39,7 +39,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
                 if (meterLeft <= 0)
                 {
                     // Make a sound
-                    OtherFX_Play_Echo(0xf, 1, ((d->actionsFlagSet & 0x10000) != 0));
+                    OtherFX_Play_Echo(0xf, 1, d->actionsFlagSet & 0x10000);
                     // mini-turbo level up
                     turbo_level++;
                     // reset bar to beginning

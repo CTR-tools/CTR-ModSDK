@@ -91,7 +91,7 @@ SPINOUT:
 			// squish sound
 			OtherFX_Play_Echo(
 				0x5a, 1, 
-				(victimDriver->actionsFlagSet & 0x10000) != 0
+				victimDriver->actionsFlagSet & 0x10000
 			);
 			
 			voice = 4;
