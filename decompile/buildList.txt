@@ -205,7 +205,7 @@ common, exe, CTR_CycleTex_AllModels, 0x0, General/CTR_CycleTex_AllModels.c
 common, exe, CTR_CycleTex_Model, 0x0, General/CTR_CycleTex_Model.c
 
 // DebugFont
-common, exe, DebugFont_Init, 0x0, General/DebugFont/DebugFont_Init.c General/DebugFont/DebugFont_DrawNumbers, DebugFont.bin
+common, exe, DebugFont_Init, 0x0, General/DebugFont/DebugFont_Init.c General/DebugFont/DebugFont_DrawNumbers.c, DebugFont.bin
 
 // DecalFont
 common, exe, DecalFont_GetLineWidth, 0x0, General/DecalFont/DecalFont_GetLineWidth.c

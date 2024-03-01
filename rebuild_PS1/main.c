@@ -49,6 +49,9 @@
 #include "../decompile/General/CTR_CycleTex_AllModels.c"
 #include "../decompile/General/CTR_CycleTex_Model.c"
 
+#include "../decompile/General/DebugFont/DebugFont_Init.c"
+#include "../decompile/General/DebugFont/DebugFont_DrawNumbers.c"
+
 #include "../decompile/General/DecalFont/DecalFont_GetLineWidth.c"
 #include "../decompile/General/DecalFont/DecalFont_DrawLineStrlen.c"
 #include "../decompile/General/DecalFont/DecalFont_DrawLine.c"

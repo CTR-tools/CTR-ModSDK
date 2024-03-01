@@ -26,11 +26,9 @@ void DECOMP_UI_JumpMeter_Draw(short posX, short posY, struct Driver* driver)
 	iVar11 = (int)posX;
 	iVar8 = (int)posY + -0x2b;
 
-#ifndef REBUILD_PS1
 	DECOMP_DebugFont_DrawNumbers(iVar5, iVar11 - 0x10, iVar8);
 	DECOMP_DebugFont_DrawNumbers(iVar10, iVar11 + WIDE_PICK(-4, -6), iVar8);
 	DECOMP_DebugFont_DrawNumbers((((whateverThisIs + iVar10 * -0x60) * 100) / 0x3c0) * 0x10000 >> 0x10, iVar11 + WIDE_PICK(4, 0), iVar8);
-#endif
 
 	sVar9 = posX + -0x14;
 	jumpMeter = posY + -0x2d;

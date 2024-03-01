@@ -524,9 +524,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 				DECOMP_DecalGlobal_Store(gGT, gGT->level1->levTexLookup);
 			}
 
-#ifndef REBUILD_PS1
-			DebugFont_Init(gGT);
-#endif
+			DECOMP_DebugFont_Init(gGT);
 
 			// if level is not nullptr
 			if (lev != 0)
