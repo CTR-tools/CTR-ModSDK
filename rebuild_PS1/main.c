@@ -480,6 +480,8 @@
 #include "../decompile/General/Player_StickGetStrengthAbsolute.c"
 #include "../decompile/General/Turbo_Increment.c"
 #include "../decompile/General/Turbo_Audio.c"
+
+#include "../decompile/General/Weapon_Mask_boolGoodGuy.c"
 #include "../decompile/General/Weapon_Shoot_OnCirclePress.c"
 
 
