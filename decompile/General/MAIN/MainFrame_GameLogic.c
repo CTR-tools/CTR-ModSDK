@@ -354,12 +354,14 @@ LAB_80035098:
 					DECOMP_MENUBOX_ClearInput();
 					gGT->gameMode1 &= ~PAUSE_1;
 					
-#ifndef REBUILD_PS1
-					MainFrame_TogglePauseAudio(0);
+					DECOMP_MainFrame_TogglePauseAudio(0);
 					DECOMP_OtherFX_Play(1, 1);
+					
+#ifndef REBUILD_PS1
 					MainFreeze_SafeAdvDestroy();
-					DECOMP_ElimBG_Deactivate(gGT);
 #endif
+
+					DECOMP_ElimBG_Deactivate(gGT);
 
 					DECOMP_MENUBOX_Hide(sdata->ptrActiveMenuBox);
 					gGT->cooldownFromUnpauseUntilPause = 5;
@@ -401,9 +403,7 @@ LAB_80035098:
 					{
 						gGT->unknownFlags_1d44 = (gGT->gameMode1 & 0x3e0020) | PAUSE_1;
 						
-#ifndef REBUILD_PS1
 						DECOMP_MainFreeze_IfPressStart();
-#endif
 
 						gGT->cooldownfromPauseUntilUnpause = 5;
 					}

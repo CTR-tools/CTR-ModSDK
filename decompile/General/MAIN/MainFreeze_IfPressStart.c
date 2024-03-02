@@ -28,16 +28,13 @@ void DECOMP_MainFreeze_IfPressStart(void)
         struct MenuBox *mb = DECOMP_MainFreeze_GetMenuBox();
         mb->rowSelected = 0;
 
-        // make menu visible
-        MENUBOX_Show(mb);
+        DECOMP_MENUBOX_Show(mb);
 
         // pause audio
-        MainFrame_TogglePauseAudio(1);
+        DECOMP_MainFrame_TogglePauseAudio(1);
 
-        // OtherFX_Play to pause
-        OtherFX_Play(1, 1);
+        DECOMP_OtherFX_Play(1, 1);
 
-        // Activate pause menu
         DECOMP_ElimBG_Activate(gGT);
     }
 }

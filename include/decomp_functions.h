@@ -34,6 +34,12 @@ void DECOMP_DISPLAY_Swap(void);
 
 void DECOMP_DotLights(struct GameTracker* gGT);
 
+// ElimBG
+void DECOMP_ElimBG_Activate(struct GameTracker* gGT);
+void DECOMP_ElimBG_Deactivate(struct GameTracker *gGT);
+void DECOMP_ElimBG_HandleState(struct GameTracker *gGT);
+void DECOMP_ElimBG_SaveScreenshot_Full(struct GameTracker* gGT);
+
 // gamepad
 void DECOMP_GAMEPAD_Init(struct GamepadSystem* gGamepads);
 void DECOMP_GAMEPAD_PollVsync(struct GamepadSystem* gGamepads);
@@ -278,6 +284,11 @@ void DECOMP_MainFrame_GameLogic(struct GameTracker* gGT, struct GamepadSystem* g
 void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void DECOMP_MainFrame_ResetDB(struct GameTracker* gGT);
 void DECOMP_MainFrame_RequestMaskHint(short hintId, char interruptWarpPad);
+void DECOMP_MainFrame_TogglePauseAudio(int bool_pause);
+
+void DECOMP_MainFreeze_MenuPtrQuit(struct MenuBox *menu);
+void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox *menu);
+void DECOMP_MainFreeze_IfPressStart(void);
 
 void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio);
 

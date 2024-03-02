@@ -26,18 +26,13 @@ void DECOMP_MainFreeze_MenuPtrQuit(struct MenuBox *menu)
             gGT->gameMode1 &= ~1;
 
             // Level ID for main menu (39)
-            MainRaceTrack_RequestLoad(0x27);
+            DECOMP_MainRaceTrack_RequestLoad(0x27);
+			return;
         }
-        else
-        {
-            if (row != -1 || row != 1)
-            {
-                return;
-            }
+		
+		// row == 1
 
-            // Change active MenuBox to pause MenuBox
-            sdata->ptrActiveMenuBox = DECOMP_MainFreeze_GetMenuBox();
-        }
+        sdata->ptrActiveMenuBox = DECOMP_MainFreeze_GetMenuBox();
     }
     else
     {
@@ -49,7 +44,9 @@ void DECOMP_MainFreeze_MenuPtrQuit(struct MenuBox *menu)
             menu->drawStyle |= 0x100;
         }
 
+#ifndef REBUILD_PS1
         MainFreeze_SafeAdvDestroy();
-    }
+#endif
+	}
     return;
 }

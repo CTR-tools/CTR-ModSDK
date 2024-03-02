@@ -3601,7 +3601,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0x8C83,
 		.rows = &data.menuRow_quit[0],
-		.funcPtr = 0x80039908,
+		.funcPtr = DECOMP_MainFreeze_MenuPtrQuit,
 		.drawStyle = 4,
 		
 		// the rest initializes as zeros
@@ -3783,7 +3783,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0x8C83,
 		.rows = &data.menuRow_advHub[0],
-		.funcPtr = 0x80039a44,
+		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 4,
 	},
 	
@@ -3804,7 +3804,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0xc883,
 		.rows = &data.menuRow_advRace[0],
-		.funcPtr = 0x80039a44,
+		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 4,
 	},
 	
@@ -3824,7 +3824,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0xc883,
 		.rows = &data.menuRow_advCup[0],
-		.funcPtr = 0x80039a44,
+		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 6,
 	},
 	
@@ -3848,7 +3848,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0xcc83,
 		.rows = &data.menuRow_battle[0],
-		.funcPtr = 0x80039a44,
+		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 4,
 	},
 	
@@ -3868,7 +3868,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0xcc83,
 		.rows = &data.menuRow_arcadeCup[0],
-		.funcPtr = 0x80039a44,
+		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 4,
 	},
 	
@@ -3891,7 +3891,7 @@ struct Data data =
 		.unk1 = 0,
 		.state = 0xcc83,
 		.rows = &data.menuRow_arcadeRace[0],
-		.funcPtr = 0x80039a44,
+		.funcPtr = DECOMP_MainFreeze_MenuPtrDefault,
 		.drawStyle = 4,
 	},
 	

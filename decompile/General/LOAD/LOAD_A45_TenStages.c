@@ -327,6 +327,11 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 			// If in main menu (character selection, track selection, any part of it)
 			if ((gGT->gameMode1 & MAIN_MENU) != 0)
 			{
+				#ifdef REBUILD_PC
+				// reset value, emulate overlay reloading
+				D230.menubox_mainMenu.state = 0x403;
+				#endif
+				
 				// all these are 230, except for adv garage in 233
 				switch(sdata->mainMenuState)
 				{
@@ -872,10 +877,7 @@ LAB_800346b0:
 				gGT->framesInThisLEV = 0;
 				gGT->msInThisLEV = 0;
 
-#ifndef REBUILD_PS1
-				// deactivate pause
 				DECOMP_ElimBG_Deactivate(gGT);
-#endif
 
 				// signify end of load
 				return -2;

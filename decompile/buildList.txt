@@ -1,5 +1,5 @@
-// 450+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+2+2+3+2+4+2+3+16+3+47-12 = 768 rewritten so far
-// 450 for every 'common' and ','
+// 453+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+2+2+3+2+4+2+3+16+3+47-12 = 771 rewritten so far
+// 453 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -430,6 +430,7 @@ common, exe, MainFrame_ResetDB, 0x0, General/MAIN/MainFrame_ResetDB.c
 
 common, exe, MainFrame_TogglePauseAudio, 0x0, General/MAIN/MainFrame_TogglePauseAudio.c
 common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefault.c
+common, exe, MainFreeze_MenuPtrQuit, 0x0, General/MAIN/MainFreeze_MenuPtrQuit.c
 common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
 common, exe, MainFreeze_IfPressStart, 0x0, General/MAIN/MainFreeze_IfPressStart.c
 

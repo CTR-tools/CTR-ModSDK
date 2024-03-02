@@ -72,6 +72,14 @@
 
 #include "../decompile/General/DotLights/DotLights.c"
 
+#include "../decompile/General/ElimBG/ElimBG_SaveScreenshot_Chunk.c"
+#include "../decompile/General/ElimBG/ElimBG_SaveScreenshot_Full.c"
+#include "../decompile/General/ElimBG/ElimBG_Activate.c"
+#include "../decompile/General/ElimBG/ElimBG_ToggleInstance.c"
+#include "../decompile/General/ElimBG/ElimBG_ToggleAllInstances.c"
+#include "../decompile/General/ElimBG/ElimBG_HandleState.c"
+#include "../decompile/General/ElimBG/ElimBG_Deactivate.c"
+
 #include "../decompile/General/GAMEPAD/GAMEPAD_AAA_Block1.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_JogCon1.c"
 #include "../decompile/General/GAMEPAD/GAMEPAD_JogCon2.c"
@@ -294,10 +302,17 @@
 #include "../decompile/General/MAIN/MainDB_PrimMem.c"
 #include "../decompile/General/MAIN/MainDrawCb_DrawSync.c"
 #include "../decompile/General/MAIN/MainDrawCb_Vsync.c"
+
 #include "../decompile/General/MAIN/MainFrame_GameLogic.c"
 #include "../decompile/General/MAIN/MainFrame_RenderFrame.c"
 #include "../decompile/General/MAIN/MainFrame_ResetDB.c"
 #include "../decompile/General/MAIN/MainFrame_RequestMaskHint.c"
+#include "../decompile/General/MAIN/MainFrame_TogglePauseAudio.c"
+
+#include "../decompile/General/MAIN/MainFreeze_GetMenuBox.c"
+#include "../decompile/General/MAIN/MainFreeze_IfPressStart.c"
+#include "../decompile/General/MAIN/MainFreeze_MenuPtrDefault.c"
+#include "../decompile/General/MAIN/MainFreeze_MenuPtrQuit.c"
 
 #include "../decompile/General/MAIN/MainGameStart_Initialize.c"
 

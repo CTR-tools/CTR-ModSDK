@@ -49,9 +49,9 @@ u_int DECOMP_main()
 			// Happens on first frame that loading ends
 			case 1:
 			
-#ifndef REBUILD_PS1
-				// deactivate pause
 				DECOMP_ElimBG_Deactivate(gGT);
+				
+#ifndef REBUILD_PS1
 				MainStats_RestartRaceCountLoss();
 				Voiceline_ClearTimeStamp();
 #endif
@@ -452,8 +452,15 @@ FinishLoading:
 							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 					}
 
+					int held = gGS->gamepad[0].buttonsHeldCurrFrame;
+
 					if (gGT->trafficLightsTimer > 0)
 					{
+						// temporary workaround, cause if state
+						// is not zero, then loading screen breaks
+						// if we pause and quit
+						sdata->XA_State = 0;
+						
 						for(int k = 0; k < gGT->numPlyrCurrGame; k++)
 						{
 							gGT->tileView[k].pos[0] = gGT->level1->DriverSpawn[k].pos[0];
@@ -470,13 +477,12 @@ FinishLoading:
 							
 						}
 					}
-					else
+					
+					else if ((gGT->gameMode1 & PAUSE_ALL) != 0)
 					{
 						// temporary workaround, cause XA IRQ doesn't happen,
 						// must be zero for level music to work
 						sdata->XA_State = 0;
-
-						int held = gGS->gamepad[0].buttonsHeldCurrFrame;
 	
 						if ((held & BTN_UP) != 0)
 						{
@@ -509,21 +515,18 @@ FinishLoading:
 						{
 							gGT->tileView[0].pos[1] += FPS_HALF(0x20);
 						}
-						
-						if ((held & BTN_START) != 0)
+					}
+					
+					if ((held & BTN_START) != 0)
+					{	
+						if((gGT->gameMode1 & GAME_CUTSCENE) != 0)
 						{
-							if(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
-							{
-								// N_SANITY_BEACH
-								// NAUGHTY_DOG_CRATE
-								DECOMP_MainRaceTrack_RequestLoad(N_SANITY_BEACH);
-							}
-							
-							else
-							{
-								DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
-								sdata->mainMenuState = 2;
-							}
+							DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
+						}
+						
+						if(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
+						{
+							DECOMP_MainRaceTrack_RequestLoad(N_SANITY_BEACH);
 						}
 					}
 				}

@@ -26,7 +26,8 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 
 		if
 		(
-			!(gameMode & ADVENTURE_ARENA) ||
+			((gameMode & ADVENTURE_ARENA) == 0) ||
+			
 			// mb is closing
 			(mb->state & NEEDS_TO_CLOSE)
 		)
@@ -34,11 +35,13 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			return;
 		}
 
+#ifndef REBUILD_PS1
 		// quit adv hub if it's not loaded
 		if (LOAD_IsOpen_AdvHub() == 0)
 			return;
 
 		AH_Pause_Update();
+#endif
 
 		return;
 	}
@@ -80,12 +83,14 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 	gGT->cooldownFromUnpauseUntilPause = 5;
 
 	// hide MenuBox
-	MENUBOX_Hide(mb);
+	DECOMP_MENUBOX_Hide(mb);
 
 	// get rid of pause flag
 	gGT->gameMode1 &= ~PAUSE_1;
 
+#ifndef REBUILD_PS1
 	MainFreeze_SafeAdvDestroy();
+#endif
 
 	// careful, it's stringID MINUS one
 	switch (stringID)
@@ -99,10 +104,10 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			// restart race
 			sdata->Loading.stage = -5;
 
-			if (TitleFlag_IsFullyOffScreen() == 1)
+			if (DECOMP_TitleFlag_IsFullyOffScreen() == 1)
 			{
 				// checkered flag, begin transition on-screen
-				TitleFlag_BeginTransition(1);
+				DECOMP_TitleFlag_BeginTransition(1);
 			}
 
 			// if you are not showing a ghost during a race
@@ -123,10 +128,10 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			DECOMP_ElimBG_Deactivate(gGT);
 
 			// unpause audio
-			MainFrame_TogglePauseAudio(0);
+			DECOMP_MainFrame_TogglePauseAudio(0);
 
 			// play pause/unpause sound
-			OtherFX_Play(1, 1);
+			DECOMP_OtherFX_Play(1, 1);
 			return;
 
 		// stringID 5: "CHANGE CHARACTER"
@@ -224,7 +229,6 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			break;
 	}
 	
-	// load level ID
-	MainRaceTrack_RequestLoad(levID);
+	DECOMP_MainRaceTrack_RequestLoad(levID);
 	return;
 }
