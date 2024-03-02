@@ -612,7 +612,7 @@ LAB_800b821c:
 			
 			short pos2[3];
 			short rot2[3];
-			CAM_Path_Move((int)sVar4, &pos2[0], &rot2[0], &getPath);
+			DECOMP_CAM_Path_Move((int)sVar4, &pos2[0], &rot2[0], &getPath);
 		
 			pos[0] = (pos[0] + pos2[0]) / 2;
 			pos[1] = (pos[1] + pos2[1]) / 2;
