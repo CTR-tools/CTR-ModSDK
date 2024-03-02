@@ -340,7 +340,7 @@ LAB_800b38cc:
         MENUBOX_ClearInput();
 
         // set desired MenuBox to pause MenuBox
-        sdata->ptrDesiredMenuBox = DECOMP_MainFreeze_GetMenuBox();
+        sdata->ptrDesiredMenuBox = MainFreeze_GetMenuBox();
     }
     return;
 }

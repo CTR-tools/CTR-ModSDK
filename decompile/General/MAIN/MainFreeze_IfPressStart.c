@@ -25,7 +25,7 @@ void DECOMP_MainFreeze_IfPressStart(void)
         gGT->gameMode1 |= PAUSE_1;
 
         // set row selected to the top row
-        struct MenuBox *mb = DECOMP_MainFreeze_GetMenuBox();
+        struct MenuBox *mb = MainFreeze_GetMenuBox();
         mb->rowSelected = 0;
 
         // make menu visible

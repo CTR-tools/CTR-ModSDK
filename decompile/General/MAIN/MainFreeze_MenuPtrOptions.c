@@ -462,7 +462,7 @@ switchD_80038f90_caseD_9:
 		OtherFX_Play(1, 1);
 		OptionsMenu_TestSound(0, 0);
 		MENUBOX_ClearInput();
-		sdata->ptrDesiredMenuBox = DECOMP_MainFreeze_GetMenuBox();
+		sdata->ptrDesiredMenuBox = MainFreeze_GetMenuBox();
 	}
 	return;
 }
