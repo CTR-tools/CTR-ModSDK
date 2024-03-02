@@ -19,14 +19,13 @@ void DECOMP_MM_MENUBOX_SingleCup(struct MenuBox* mb)
   if ((unsigned char)row < 2)
   { 
     // disable Cup mode
-    gGT->gameMode2 &= 0xffffffef;
+    gGT->gameMode2 &= ~(CUP_ANY_KIND);
     
     // if you choose cup mode
     if (mb->rowSelected != 0) 
     {
   	  // enable cup mode
-      gGT->gameMode2 &= 0xffffffef; 
-	  gGT->gameMode2 |= 0x10;
+	  gGT->gameMode2 |= CUP_ANY_KIND;
     }
     
 	mb->state |= 0x14;

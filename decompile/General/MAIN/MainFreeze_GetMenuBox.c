@@ -1,55 +1,59 @@
 #include <common.h>
 
-struct MenuBox * DECOMP_MainFreeze_GetMenuBox(void)
+extern int mainFreezeFlags[5];
+extern struct MenuBox* mainFreezeBoxArr[5];
+
+struct MenuBox* DECOMP_MainFreeze_GetMenuBox(void)
 {
-    struct MenuBox * mb;
     struct GameTracker *gGT = sdata->gGT;
+	
+    // Set string to "Uka Uka Hints", 
+    // or if boolGoodGuy, then set "Aku Aku Hints"
+    int var1 = 0xc;
+    if (Weapon_Mask_boolGoodGuy(gGT->drivers[0]) != 0)
+		var1 = 0xb;
+	
+	data.menuRow_advHub[1].stringIndex = var1;
+
+	if ((gGT->gameMode2 & CUP_ANY_KIND) != 0)
+	{
+		return &data.menuBox_arcadeCup;
+	}
+
     u_int gameMode = gGT->gameMode1;
-
-	if ((gameMode & BATTLE_MODE) != 0)
+	int* flagPtr = &mainFreezeFlags[0]; 
+	struct MenuBox** mbPtrToPtr = &mainFreezeBoxArr[0];
+	
+	for(
+			/**/;
+			*flagPtr != 0;
+			
+			flagPtr++, mbPtrToPtr++
+		)
 	{
-		mb = &data.menuBox_battle;
+		if((gameMode & (*flagPtr)) != 0)
+			break;
 	}
 
-    else if ((gameMode & ADVENTURE_ARENA) != 0)
-    {
-        // use Uka as default.
-
-        // Set string to Uka Uka Hints
-        data.menuRow_advHub[1].stringIndex = 0xc;
-
-        // if you use aku
-        if ((Weapon_Mask_boolGoodGuy(gGT->drivers[0]) & 0xffff) != 0)
-        {
-            // Set string to Aku Aku Hints
-            data.menuRow_advHub[1].stringIndex = 0xb;
-        }
-
-        // Adventure Hub Pause
-        mb = &data.menuBox_advHub;
-    }
-	
-    else if((gameMode & ADVENTURE_MODE) != 0)
-    {
-        if ((gameMode & ADVENTURE_CUP) != 0)
-        {
-			mb = &data.menuBox_advCup;
-        }
-        else
-        {
-			mb = &data.menuBox_advRace;
-        }
-    }
-
-    else if ((gGT->gameMode2 & CUP_ANY_KIND) != 0)
-	{
-		mb = &data.menuBox_arcadeCup;
-	}
-	
-    else
-	{
-		mb = &data.menuBox_arcadeRace;
-    }
-
-    return mb;
+	// if nothing else,
+	// then menuBox_arcadeRace
+    return (*mbPtrToPtr);
 }
+
+extern int mainFreezeFlags[5] =
+{
+	BATTLE_MODE,
+	ADVENTURE_ARENA,
+	ADVENTURE_CUP,
+	ADVENTURE_MODE,
+	0 // null terminator
+};
+
+extern struct MenuBox* mainFreezeBoxArr[5] =
+{
+	&data.menuBox_battle,
+	&data.menuBox_advHub,
+	&data.menuBox_advCup,
+	&data.menuBox_advRace,
+	&data.menuBox_arcadeRace
+};

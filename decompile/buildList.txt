@@ -434,7 +434,7 @@ common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDra
 common, exe, MainFreeze_IfPressStart, 0x0, General/MAIN/MainFreeze_IfPressStart.c
 
 // Does not fit byte budget
-//ommon, exe, MainFreeze_GetMenuBox, 0x0, General/MAIN/MainFreeze_GetMenuBox.c
+common, exe, MainFreeze_GetMenuBox, 0x0, General/MAIN/MainFreeze_GetMenuBox.c
 
 common, exe, MainGameStart_Initialize, 0x0, General/MAIN/MainGameStart_Initialize.c
 
