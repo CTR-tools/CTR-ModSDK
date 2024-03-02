@@ -881,7 +881,7 @@ LAB_80035098:
 
               *(uint *)(PTR_DAT_8008d2ac + 0x1d44) = *(uint *)PTR_DAT_8008d2ac & 0x3e0020 | 1;
 
-			  // Pause the game
+			  // MainFreeze_IfPressStart
 			  FUN_80039e98();
 
 			  // wait 5 frames after pausing,
