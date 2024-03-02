@@ -33,8 +33,8 @@ void DECOMP_TitleOSK_MenuBoxFuncPtr(struct MenuBox *mb)
     if (selection < 0)
     {
       // Change active MenuBox back to Adv char select
-      sdata->ptrDesiredMenuBox = CS_Garage_GetMenuBox();
-      CS_Garage_ZoomOut(1);
+      sdata->ptrDesiredMenuBox = DECOMP_CS_Garage_GetMenuBox();
+      DECOMP_CS_Garage_ZoomOut(1);
     }
     else
     {

@@ -179,7 +179,7 @@ extern struct
 struct OVR233_Garage
 {
 	// 800b8598
-	struct MenuBox* mbGarage;
+	struct MenuBox mbGarage;
 	
 	// 800b85c4
 	int numFramesMax_GarageMove;
@@ -235,11 +235,7 @@ struct OVR233_Garage
 };
 
 #if 0
-800b8598 - last byte of garage func
-
-800b8598 - Garage MenuBox
-
-800b8640 - CREDITS RDATA
+800b8644 - CREDITS RDATA
 800b8668 - first byte of credits func (CREDITS TEXT)
 #endif
 

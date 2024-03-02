@@ -1,7 +1,5 @@
 #include <common.h>
 
-void CS_Garage_Init();
-
 int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigHeader* bigfile)
 {
 	u_char numPlyrNextGame;
@@ -339,11 +337,7 @@ int DECOMP_LOAD_TenStages(struct GameTracker* gGT, int loadingStage, struct BigH
 					case 1:	DECOMP_MM_JumpTo_Characters();		break;
 					case 2:	DECOMP_MM_JumpTo_TrackSelect();		break;
 					case 3:	DECOMP_MM_JumpTo_BattleSetup();		break;
-					#ifndef REBUILD_PS1
-					case 4:	CS_Garage_Init();			break;
-					#else
-					case 4:	sdata->ptrActiveMenuBox = 0;		break;
-					#endif
+					case 4:	DECOMP_CS_Garage_Init();			break;
 					case 5:	DECOMP_MM_JumpTo_Scrapbook();		break;
 				}
 			}
