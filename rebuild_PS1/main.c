@@ -509,6 +509,7 @@
 #include "../decompile/General/230/230_Block3.c"
 
 // 231
+#include "../decompile/General/231/231_002_RB_ModifyWumpa.c"
 #include "../decompile/General/231/231_023_RB_Hazard_InterpolateValue.c"
 #include "../decompile/General/231/231_054_055_RB_Baron.c"
 #include "../decompile/General/231/231_056_057_RB_Blade.c"

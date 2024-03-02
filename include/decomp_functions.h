@@ -548,6 +548,7 @@ void DECOMP_MM_JumpTo_Characters(void);
 void DECOMP_MM_JumpTo_Scrapbook(void);
 
 // 231 (undone)
+void DECOMP_RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
 int DECOMP_RB_Hazard_InterpolateValue(short currRot, short desiredRot, short rotSpeed);
 
 void DECOMP_RB_Baron_LInB(struct Instance* inst);

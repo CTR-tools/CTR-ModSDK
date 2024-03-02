@@ -1,7 +1,5 @@
 #include <common.h>
 
-void RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
-
 void COLL_StartSearch_NearPlayer(struct Thread* thread, struct Driver* driver);
 void OnCollide_Drivers(struct Thread* thread, struct Driver* driver);
 void COLL_StartSearch_Player(struct Thread* thread, struct Driver* driver);
@@ -45,9 +43,7 @@ void DECOMP_VehPtr_Blasted_Init(struct Thread *thread, struct Driver *driver)
 			((sdata->gGT->gameMode1 & ADVENTURE_ARENA) == 0)
 		)
 	{
-#ifndef REBUILD_PS1
-		RB_Player_ModifyWumpa(driver, -3);
-#endif
+		DECOMP_RB_Player_ModifyWumpa(driver, -3);
 	}
 	
 	driver->instSelf->animIndex = 0;

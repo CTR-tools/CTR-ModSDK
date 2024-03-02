@@ -49,9 +49,7 @@ void DECOMP_VehPtr_MaskGrab_Init(struct Thread* t, struct Driver *d)
 			((gGT->gameMode1 & ADVENTURE_ARENA) == 0)
 		)
     {
-#ifndef REBUILD_PS1
-        RB_Player_ModifyWumpa(d, -2);
-#endif
+        DECOMP_RB_Player_ModifyWumpa(d, -2);
 	}
 
     // if stored quadblock height + 0x8000 < posCurr.y

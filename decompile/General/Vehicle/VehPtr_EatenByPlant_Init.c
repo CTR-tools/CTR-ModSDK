@@ -42,9 +42,7 @@ void DECOMP_VehPtr_EatenByPlant_Init(struct Thread *t, struct Driver *d)
 			((sdata->gGT->gameMode1 & ADVENTURE_ARENA) == 0)
 		)
     {
-#ifndef REBUILD_PS1
-        RB_Player_ModifyWumpa(d, -2);
-#endif
+        DECOMP_RB_Player_ModifyWumpa(d, -2);
     }
 
     // allow this thread to ignore all collisions

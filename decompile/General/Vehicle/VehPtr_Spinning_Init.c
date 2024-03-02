@@ -34,9 +34,7 @@ void DECOMP_VehPtr_Spinning_Init(struct Thread* t, struct Driver* d)
 	
 	if(DECOMP_LOAD_IsOpen_RacingOrBattle())
 	{
-#ifndef REBUILD_PS1
-		RB_Player_ModifyWumpa(d, -1);
-#endif
+		DECOMP_RB_Player_ModifyWumpa(d, -1);
 	}
 
 #ifndef REBUILD_PS1	

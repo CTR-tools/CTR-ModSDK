@@ -1,7 +1,6 @@
 #include <common.h>
 
 // To do: add a header
-void RB_Player_ModifyWumpa(struct Driver*, int);
 void DECOMP_AA_EndEvent_DisplayTimeAA_EndEvent_DisplayTime(u_short, short);
 
 void DECOMP_UI_RenderFrame_Racing()
@@ -263,9 +262,7 @@ void DECOMP_UI_RenderFrame_Racing()
 							((gameMode1 & ADVENTURE_ARENA) == 0)
 						)
 						{
-#ifndef REBUILD_PS1
-							RB_Player_ModifyWumpa(playerStruct, 1);
-#endif
+							DECOMP_RB_Player_ModifyWumpa(playerStruct, 1);
 						}
 
 

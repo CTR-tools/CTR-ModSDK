@@ -55,7 +55,7 @@ void DECOMP_RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta)
 		)
 	{
 		// Play "juiced up" sound
-		OtherFX_Play(0x41, 1);
+		DECOMP_OtherFX_Play(0x41, 1);
 		
 		driver->BattleHUD.juicedUpCooldown = 10;
 	}
