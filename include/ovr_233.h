@@ -171,20 +171,45 @@ extern struct
 	int PodiumInitUnk3;
 	// 800b7774
 	int cutsceneState;
-	
-	#if BUILD == UsaRetail
-	char prefill_hasSelectedChar[0xec8];
-	#elif BUILD == EurRetail
-	char prefill_hasSelectedChar[0x12cc];
-	#elif BUILD == JpnRetail
-	char prefill_hasSelectedChar[0x114c];
-	#endif
 
-	// 0x800b8640 -- UsaRetail
-	// 0x8008be58 -- EurRetail
-	// 0x800bbe00 -- JpnRetail
-	u_char hasSelectedChar;
 } OVR_233;
+
+// starts at 800b8598,
+// last byte of Garage Functions
+struct OVR233_Garage
+{
+	// 800b8598
+	struct MenuBox* mbGarage;
+	
+	// 800b85c4
+	int numFramesMax_GarageMove;
+	int padding1;
+	
+	// 800b85cc
+	int numFramesMax_Zoom;
+	
+	// 800b85d0
+	int fovMin;
+	
+	// 800b85d4
+	int fovMax;
+	
+	// 800b85d8
+	short unusedArr_garageChars[8];
+	
+	// 800b85e8
+	// ...
+	
+	
+	
+	
+	
+	// 800b8638
+	int numFramesCurr_GarageMove;
+	
+	// 800b863c
+	int numFramesCurr_Zoom;
+};
 
 #if 0
 800b8598 - last byte of garage func
