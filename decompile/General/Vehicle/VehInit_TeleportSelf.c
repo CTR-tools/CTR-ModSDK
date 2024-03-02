@@ -489,7 +489,9 @@ LAB_80058568:
     d->instSelf->animIndex = 0;
 
     // halfway
+	// ghost needs doubling, human doesnt?
     d->instSelf->animFrame = 10;
+	
 	#if 0 // 10 =
 		VehAnim_Instance_GetStartFrame(
 			

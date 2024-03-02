@@ -197,6 +197,16 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 		
 		gGT->threadBuckets[GHOST].thread->inst->model = 
 			sdata->PLYROBJECTLIST[i++];
+			
+		struct Model** humanPlyrDriverModel =
+			&gGT->threadBuckets[PLAYER].thread->inst->model;
+			
+		// that's characterIDs[1] from the MPK
+		// humanGhost = *humanPlyrDriverModel,
+		
+		// then replace with intended P1 model
+		*humanPlyrDriverModel =
+			data.driverModel_lowLOD[0];
 		#endif
     }
 }

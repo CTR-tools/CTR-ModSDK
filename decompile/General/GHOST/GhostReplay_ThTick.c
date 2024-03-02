@@ -330,7 +330,10 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 		// fix crashing
 		#ifdef REBUILD_PS1
 		inst->animIndex = 0;
-		inst->animFrame = 10;
+		
+		// halfway
+		// ghost needs doubling, human doesnt?
+		inst->animFrame = FPS_DOUBLE(10);
 		#endif
 		
         buffer += 3;
