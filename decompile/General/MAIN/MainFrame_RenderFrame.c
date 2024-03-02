@@ -61,10 +61,8 @@ void PatchModel_60fps(struct Model* m)
 	// error check (yes, needed)
 	if(m == 0) return;
 
-#ifndef REBUILD_PC
 	// ignore ND box, intro models, oxide intro, podiums, etc
 	if(DECOMP_LOAD_IsOpen_Podiums()) return;
-#endif
 
 	// model header
 	h = m->headers;

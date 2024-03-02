@@ -454,7 +454,16 @@ FinishLoading:
 
 					int held = gGS->gamepad[0].buttonsHeldCurrFrame;
 
-					if (gGT->trafficLightsTimer > 0)
+					if (
+							// on adv hub, freeze camera for a few frames
+							(gGT->trafficLightsTimer > 3800) ||
+
+							// on race tracks, wait for full countdown
+							(
+								(gGT->trafficLightsTimer > 0) &&
+								(gGT->levelID < GEM_STONE_VALLEY)
+							)
+						)
 					{
 						// temporary workaround, cause if state
 						// is not zero, then loading screen breaks
@@ -478,7 +487,7 @@ FinishLoading:
 						}
 					}
 					
-					else if ((gGT->gameMode1 & PAUSE_ALL) != 0)
+					else if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 					{
 						// temporary workaround, cause XA IRQ doesn't happen,
 						// must be zero for level music to work
