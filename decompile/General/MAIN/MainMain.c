@@ -523,7 +523,6 @@ FinishLoading:
 							{
 								DECOMP_MainRaceTrack_RequestLoad(MAIN_MENU_LEVEL);
 								sdata->mainMenuState = 2;
-								gGT->gameMode1 |= TIME_TRIAL;
 							}
 						}
 					}
