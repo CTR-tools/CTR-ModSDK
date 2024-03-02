@@ -198,8 +198,14 @@ void DECOMP_Player_SetHeldItem(struct Driver* driver) {
 		if (gGT->levelID == DRAGON_MINES && driver->heldItemID == 0xb) driver->heldItemID = 0x2;
 	}
 
+#if 0
+	// === Removed ND Code ===
+	// Spring is not in the RNG anyway
+	
 	// Replace unused Spring item with Turbo
-	if (driver->heldItemID == 0x5) driver->heldItemID = 0x0;
+	if (driver->heldItemID == 0x5) 
+		driver->heldItemID = 0x0;
+#endif
 
 	// Make sure only 1 Warpball is instanced at once
 	if (driver->heldItemID == 0x9)
