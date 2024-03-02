@@ -310,10 +310,10 @@ LAB_80035098:
 		}
 	}
 	
-#ifndef REBUILD_PS1
-	uVar5 = LOAD_IsOpen_RacingOrBattle();
+	uVar5 = DECOMP_LOAD_IsOpen_RacingOrBattle();
 	if (uVar5 != 0)
 	{
+#ifndef REBUILD_PS1
 		if ((gGT->gameMode1 & PAUSE_ALL) == 0)
 		{
 			DECOMP_RB_Bubbles_RoosTubes();
@@ -322,8 +322,8 @@ LAB_80035098:
 		{
 			RB_Burst_DrawAll(gGT);
 		}
-	}
 #endif
+	}
 
 	DECOMP_THREAD_CheckAllForDead();
 

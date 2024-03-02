@@ -35,11 +35,11 @@ void DECOMP_MainFreeze_MenuPtrDefault(struct MenuBox* mb)
 			return;
 		}
 
-#ifndef REBUILD_PS1
 		// quit adv hub if it's not loaded
-		if (LOAD_IsOpen_AdvHub() == 0)
+		if (DECOMP_LOAD_IsOpen_AdvHub() == 0)
 			return;
 
+#ifndef REBUILD_PS1
 		AH_Pause_Update();
 #endif
 

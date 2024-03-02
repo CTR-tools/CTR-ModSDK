@@ -63,7 +63,7 @@ void PatchModel_60fps(struct Model* m)
 
 #ifndef REBUILD_PC
 	// ignore ND box, intro models, oxide intro, podiums, etc
-	if(LOAD_IsOpen_Podiums()) return;
+	if(DECOMP_LOAD_IsOpen_Podiums()) return;
 #endif
 
 	// model header
@@ -757,7 +757,7 @@ void RenderAllHUD(struct GameTracker* gGT)
 				}
 				
 				// if 233 is still loaded
-				if(LOAD_IsOpen_AdvHub() == 0)
+				if(DECOMP_LOAD_IsOpen_AdvHub() == 0)
 				{
 					// if any transition is over
 					if(gGT->tileView_UI.fadeFromBlack_currentValue > 0xfff)
@@ -837,7 +837,7 @@ void RenderAllBoxSceneSplitLines(struct GameTracker* gGT)
 {
 	// check 233 overlay, cause levelID is set
 	// and MainFrame_RenderFrame runs, before 233 loads
-	if(LOAD_IsOpen_Podiums() != 0)
+	if(DECOMP_LOAD_IsOpen_Podiums() != 0)
 	{
 		// ND Box Scene
 		if(gGT->levelID == NAUGHTY_DOG_CRATE)
@@ -925,7 +925,7 @@ void RenderAllFlag0x40(struct GameTracker* gGT)
 	
 	if((gGT->renderFlags & 0x40) == 0) return;
 	
-	if(LOAD_IsOpen_RacingOrBattle() != 0)
+	if(DECOMP_LOAD_IsOpen_RacingOrBattle() != 0)
 	{
 		RB_Player_ToggleInvisible();
 		RB_Player_ToggleFlicker();
@@ -938,7 +938,7 @@ void RenderAllFlag0x40(struct GameTracker* gGT)
 		// skipping RB_StartText_ProcessBucket, it's empty in 231
 	}
 	
-	if(LOAD_IsOpen_AdvHub() != 0)
+	if(DECOMP_LOAD_IsOpen_AdvHub() != 0)
 	{
 		if((gGT->gameMode1 & ADVENTURE_ARENA) != 0)
 		{
@@ -959,7 +959,7 @@ void RenderAllFlag0x40(struct GameTracker* gGT)
 void RenderAllTitleDPP(struct GameTracker* gGT)
 {
 	if((gGT->gameMode1 & MAIN_MENU) == 0) return;
-	if(LOAD_IsOpen_MainMenu() == 0) return;
+	if(DECOMP_LOAD_IsOpen_MainMenu() == 0) return;
 	DECOMP_MM_Title_SetTrophyDPP();
 }
 

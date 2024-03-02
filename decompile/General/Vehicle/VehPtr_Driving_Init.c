@@ -8,13 +8,14 @@ void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d)
 
     if (
 			(gGT->levelID < GEM_STONE_VALLEY)
+
 			
 			// can I use gGT->podiumID==0 instead?
 			// (levelID >= GEMSTONE && gGT->podium!=0) guarantees fail?
-			#ifndef REBUILD_PS1
+
+
 			// AdvHub + 232, so 233 podium wont work
-			|| LOAD_IsOpen_AdvHub()
-			#endif
+			|| DECOMP_LOAD_IsOpen_AdvHub()
 		)
     {
         // Turbo meter = full

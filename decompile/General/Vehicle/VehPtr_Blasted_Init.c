@@ -1,6 +1,5 @@
 #include <common.h>
 
-int LOAD_IsOpen_RacingOrBattle();
 void RB_Player_ModifyWumpa(struct Driver* driver, int wumpaDelta);
 
 void COLL_StartSearch_NearPlayer(struct Thread* thread, struct Driver* driver);
@@ -41,15 +40,15 @@ void DECOMP_VehPtr_Blasted_Init(struct Thread *thread, struct Driver *driver)
 	driver->kartState = KS_BLASTED;
 	driver->turbo_MeterRoomLeft = 0;
 	
-#ifndef REBUILD_PS1
 	if (
-			(LOAD_IsOpen_RacingOrBattle() != 0) && 
+			(DECOMP_LOAD_IsOpen_RacingOrBattle() != 0) && 
 			((sdata->gGT->gameMode1 & ADVENTURE_ARENA) == 0)
 		)
 	{
+#ifndef REBUILD_PS1
 		RB_Player_ModifyWumpa(driver, -3);
-	}
 #endif
+	}
 	
 	driver->instSelf->animIndex = 0;
 	

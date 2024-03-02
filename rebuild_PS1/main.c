@@ -296,6 +296,10 @@
 #include "../decompile/General/LOAD/LOAD_A45_TenStages.c"
 
 #include "../decompile/General/LOAD/LOAD_A47_LevelFile.c"
+#include "../decompile/General/LOAD/LOAD_A48_IsOpen_RacingOrBattle.c"
+#include "../decompile/General/LOAD/LOAD_A49_IsOpen_MainMenu.c"
+#include "../decompile/General/LOAD/LOAD_A50_IsOpen_AdvHub.c"
+#include "../decompile/General/LOAD/LOAD_A51_IsOpen_Podiums.c"
 
 #include "../decompile/General/MAIN/MainDB_GetClipSize.c"
 #include "../decompile/General/MAIN/MainDB_OTMem.c"

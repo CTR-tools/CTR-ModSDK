@@ -23,12 +23,12 @@ void DECOMP_MainInit_Drivers(struct GameTracker *gGT)
 
     DECOMP_GhostReplay_Init1();
 
-#ifndef REBUILD_PS1
-    if (LOAD_IsOpen_RacingOrBattle())
+    if (DECOMP_LOAD_IsOpen_RacingOrBattle())
     {
+#ifndef REBUILD_PS1
         RB_MinePool_Init();
-    }
 #endif
+    }
 
     // Spawn all players,
 	// This MUST be in reverse order,

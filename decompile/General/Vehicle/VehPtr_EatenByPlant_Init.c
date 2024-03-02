@@ -37,15 +37,15 @@ void DECOMP_VehPtr_EatenByPlant_Init(struct Thread *t, struct Driver *d)
 		d->thCloud = NULL;
     }
 
-#ifndef REBUILD_PS1
     if (
-			(LOAD_IsOpen_RacingOrBattle() != 0) &&
+			(DECOMP_LOAD_IsOpen_RacingOrBattle() != 0) &&
 			((sdata->gGT->gameMode1 & ADVENTURE_ARENA) == 0)
 		)
     {
+#ifndef REBUILD_PS1
         RB_Player_ModifyWumpa(d, -2);
-    }
 #endif
+    }
 
     // allow this thread to ignore all collisions
     t->flags |= 0x1000;

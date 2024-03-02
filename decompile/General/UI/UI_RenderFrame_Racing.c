@@ -255,22 +255,19 @@ void DECOMP_UI_RenderFrame_Racing()
 						// deduct from number of queued items to pick up
 						playerStruct->PickupWumpaHUD.numCollected--;
 
-#ifndef REBUILD_PS1
-						// Check if 231 dll is loaded
-						partTimeVariable1 = LOAD_IsOpen_RacingOrBattle();
-
-						// If it is loaded
 						if
 						(
-							(partTimeVariable1 != 0) &&
+							(DECOMP_LOAD_IsOpen_RacingOrBattle() != 0) &&
 
 							// If you're not in Adventure Arena
 							((gameMode1 & ADVENTURE_ARENA) == 0)
 						)
 						{
+#ifndef REBUILD_PS1
 							RB_Player_ModifyWumpa(playerStruct, 1);
-						}
 #endif
+						}
+
 
 						// OtherFX_Play to get wumpa fruit
 						DECOMP_OtherFX_Play(0x42, 1);

@@ -32,12 +32,14 @@ void DECOMP_VehPtr_Spinning_Init(struct Thread* t, struct Driver* d)
 	d->unk_LerpToForwards = 0;
 	d->turbo_MeterRoomLeft = 0;
 	
-#ifndef REBUILD_PS1
-	if(LOAD_IsOpen_RacingOrBattle())
+	if(DECOMP_LOAD_IsOpen_RacingOrBattle())
 	{
+#ifndef REBUILD_PS1
 		RB_Player_ModifyWumpa(d, -1);
+#endif
 	}
-	
+
+#ifndef REBUILD_PS1	
 	Voiceline_RequestPlay(3, data.characterIDs[d->driverID], 0x10);
 #endif
 	
