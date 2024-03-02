@@ -536,6 +536,8 @@ FinishLoading:
 						if(gGT->levelID == ADVENTURE_CHARACTER_SELECT)
 						{
 							DECOMP_MainRaceTrack_RequestLoad(N_SANITY_BEACH);
+							sdata->ptrActiveMenuBox = 0;
+							data.characterIDs[0] = sdata->advCharSelectIndex_curr;
 						}
 					}
 				}

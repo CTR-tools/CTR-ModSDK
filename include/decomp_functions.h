@@ -600,3 +600,9 @@ void DECOMP_AH_Door_ThTick(struct Thread* t);
 void DECOMP_AH_Door_LInB(struct Instance *inst);
 
 int DECOMP_AH_MaskHint_boolCanSpawn();
+
+// 233
+void DECOMP_CS_Garage_ZoomOut(char zoomState);
+void DECOMP_CS_Garage_MenuBoxFuncPtr(void);
+void DECOMP_CS_Garage_Init(void);
+struct MenuBox* DECOMP_CS_Garage_GetMenuBox(void);

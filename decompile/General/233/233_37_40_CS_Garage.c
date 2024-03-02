@@ -140,13 +140,13 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     }
 
     // "Speed"
-    DecalFont_DrawLine(sdata->lngStrings[0x245], uVar19, 0x1e, 1, 0x4022);
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x245], uVar19, 0x1e, 1, 0x4022);
 
     // "Accel"
-    DecalFont_DrawLine(sdata->lngStrings[0x246], uVar19, 0x2d, 1, 0x4021);
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x246], uVar19, 0x2d, 1, 0x4021);
 
     // "Turn"
-    DecalFont_DrawLine(sdata->lngStrings[0x247], uVar19, 0x3c, 1, 0x4020);
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x247], uVar19, 0x3c, 1, 0x4020);
 
 	int engineID = MDC->engineID;
 
@@ -172,7 +172,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 	#endif
 
     // Draw a string
-    DecalFont_DrawLine(sdata->lngStrings[0x248+iVar7], (u_int)local_40, 0xf, 1, 0xffff8000);
+    DECOMP_DecalFont_DrawLine(sdata->lngStrings[0x248+iVar7], (u_int)local_40, 0xf, 1, 0xffff8000);
 
     // bar length (animated)
     short* puVar20 = &gGarage.barLen[0];
@@ -188,7 +188,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
         //local_60 = *(int*)0x800b7780;
 		local_60 = 0xFFFFFF;
 
-        CTR_Box_DrawWireBox(
+        DECOMP_CTR_Box_DrawWireBox(
 			&r, &local_60,
 			gGT->tileView_UI.ptrOT, primMem);
 
@@ -200,7 +200,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 		// outline color black
 		local_60 = local_60 & 0xff000000;
 
-        CTR_Box_DrawWireBox(
+        DECOMP_CTR_Box_DrawWireBox(
 			&r, &local_60,
             gGT->tileView_UI.ptrOT, primMem);
 			
@@ -283,7 +283,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     } while (iVar17 < 3);
 
     // "Intermediate"
-    sVar4 = DecalFont_GetLineWidth(sdata->lngStrings[0x249], 1);
+    sVar4 = DECOMP_DecalFont_GetLineWidth(sdata->lngStrings[0x249], 1);
 
     r.x = (local_40 - (sVar4 >> 1)) + -6;
     r.y = 0xb;
@@ -291,7 +291,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     r.h = 0x44;
 
     // Draw 2D Menu rectangle background
-    MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
+    DECOMP_MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
 
 	#if 0
 	// Original game uses array at 800b85d8,
@@ -305,7 +305,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 
 	char* name = sdata->lngStrings[nameIndex];
 
-    DecalFont_DrawLine(name, 0x100, 0xb4, 1, 0xffff8000);
+    DECOMP_DecalFont_DrawLine(name, 0x100, 0xb4, 1, 0xffff8000);
     
 	iVar7 = 0;
     if ((sdata->frameCounter & FPS_DOUBLE(4)) == 0)
@@ -313,7 +313,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
         iVar7 = 3;
     }
 	
-    iVar17 = DecalFont_GetLineWidth(name, 1) >> 1;
+    iVar17 = DECOMP_DecalFont_GetLineWidth(name, 1) >> 1;
 
     // Color data
     ptrColor = data.ptrColor[iVar7];
@@ -322,7 +322,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 		ICONGROUP_GETICONS(gGT->iconGroup[4]);
 
     // Draw arrow pointing Left
-    DecalHUD_Arrow2D(
+    DECOMP_DecalHUD_Arrow2D(
         iconPtrArray[0x38],
         0xec - iVar17,
         0xbb,
@@ -336,7 +336,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 		0, 0x1000, 0x800);
 
     // Draw arrow pointing Right
-    DecalHUD_Arrow2D(
+    DECOMP_DecalHUD_Arrow2D(
         iconPtrArray[0x38],
         iVar17 + 0x112,
         0xbb,
@@ -374,7 +374,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
             if ((sdata->AnyPlayerTap & 0x40020) != 0)
             {
                 // Play Sound
-                OtherFX_Play(2, 1);
+                DECOMP_OtherFX_Play(2, 1);
 
                 sVar4 = gGarage.numFramesCurr_ZoomIn;
                 if (gGarage.boolSelected == 1)
@@ -392,10 +392,12 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
                     // return to main menu
                     sdata->mainMenuState = 0;
 
+#ifndef REBUILD_PS1
                     Garage_Leave();
+#endif
 
                     // load main menu LEV
-                    MainRaceTrack_RequestLoad(0x27);
+                    DECOMP_MainRaceTrack_RequestLoad(0x27);
                 }
             }
         }
@@ -427,10 +429,12 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
                     data.characterIDs[0] = sdata->advCharSelectIndex_curr;
                     sdata->advProgress.characterID = data.characterIDs[0];
 
+#ifndef REBUILD_PS1
                     TitleOSK_RestoreName(0);
+#endif
 
                     // Play Sound
-                    OtherFX_Play(1, 1);
+                    DECOMP_OtherFX_Play(1, 1);
                 }
             }
         }
@@ -450,7 +454,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
         } while (-1 < iVar7);
 
         // Play Sound
-        OtherFX_Play(0, 1);
+        DECOMP_OtherFX_Play(0, 1);
 
         // If you dont press Left
         if ((sdata->AnyPlayerHold & 4) == 0)
@@ -477,7 +481,9 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
 
             sdata->advCharSelectIndex_curr = uVar21;
 
+#ifndef REBUILD_PS1
             Garage_MoveLR(uVar21);
+#endif
         }
 		
 		// reset frame counter to max number of frames
@@ -493,7 +499,7 @@ void DECOMP_CS_Garage_MenuBoxFuncPtr(void)
     }
 
     // clear gamepad input (for menus)
-    MENUBOX_ClearInput();
+    DECOMP_MENUBOX_ClearInput();
 
     sVar4 = gGarage.numFramesCurr_GarageMove;
 LAB_800b821c:
@@ -524,11 +530,13 @@ LAB_800b821c:
 	
 			data.characterIDs[0] = sdata->advCharSelectIndex_curr;
 			sdata->advProgress.characterID = data.characterIDs[0];
-	
+
+#ifndef REBUILD_PS1
 			TitleOSK_RestoreName(0);
-	
+#endif
+
 			// Play Sound
-			OtherFX_Play(1, 1);
+			DECOMP_OtherFX_Play(1, 1);
 		}
 		
 		else
@@ -576,7 +584,7 @@ LAB_800b821c:
     int getPath;
 	short pos[3];
 	short rot[3];
-    CAM_Path_Move((int)sVar4, &pos[0], &rot[0], &getPath);
+    DECOMP_CAM_Path_Move((int)sVar4, &pos[0], &rot[0], &getPath);
 	
 	#ifdef USE_60FPS
 	
@@ -697,8 +705,7 @@ int CS_JunkFunc()
   CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
   CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
   CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  DECOMP_CS_Garage_ZoomOut(0);
+  CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
   DECOMP_CS_Garage_ZoomOut(0);
   DECOMP_CS_Garage_ZoomOut(0);
 
