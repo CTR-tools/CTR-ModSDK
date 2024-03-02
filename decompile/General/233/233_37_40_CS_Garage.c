@@ -763,7 +763,10 @@ struct OVR233_Garage gGarage =
 	.fovMin = 0x12c,
 	.fovMax = 0x190,
 	
-	// unusedArr_garageChars (ignore)
+	// only used for CS_Thread_UseOpcode,
+	// should remove later
+	.unusedArr_garageChars =
+	{0,1,2,3,4,5,6,7},
 	
 	// barLen is used, intended zero
 	
