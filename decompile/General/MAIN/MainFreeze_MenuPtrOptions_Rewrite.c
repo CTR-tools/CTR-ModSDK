@@ -164,7 +164,7 @@ force_inline void PROCESSINPUTS_MainFreeze_MenuPtrOptions(struct MenuBox* mb, GA
 		OtherFX_Play(1, 1);
 		OptionsMenu_TestSound(0, 0);
 		MENUBOX_ClearInput();
-		sdata->ptrDesiredMenuBox = MainFreeze_GetMenuBox();
+		sdata->ptrDesiredMenuBox = DECOMP_MainFreeze_GetMenuBox();
 	}
 }
 

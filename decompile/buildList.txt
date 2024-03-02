@@ -427,10 +427,14 @@ common, exe, MainFrame_GameLogic, 0x0, General/MAIN/MainFrame_GameLogic.c
 common, exe, MainFrame_RenderFrame, 0x0, General/MAIN/MainFrame_RenderFrame.c
 common, exe, MainFrame_RequestMaskHint, 0x0, General/MAIN/MainFrame_RequestMaskHint.c
 common, exe, MainFrame_ResetDB, 0x0, General/MAIN/MainFrame_ResetDB.c
+
 common, exe, MainFrame_TogglePauseAudio, 0x0, General/MAIN/MainFrame_TogglePauseAudio.c
 common, exe, MainFreeze_MenuPtrDefault, 0x0, General/MAIN/MainFreeze_MenuPtrDefault.c
 common, exe, MainFreeze_ConfigDrawArrows, 0x0, General/MAIN/MainFreeze_ConfigDrawArrows.c
 common, exe, MainFreeze_IfPressStart, 0x0, General/MAIN/MainFreeze_IfPressStart.c
+
+// Does not fit byte budget
+//ommon, exe, MainFreeze_GetMenuBox, 0x0, General/MAIN/MainFreeze_GetMenuBox.c
 
 common, exe, MainGameStart_Initialize, 0x0, General/MAIN/MainGameStart_Initialize.c
 

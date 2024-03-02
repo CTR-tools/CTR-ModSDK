@@ -11,13 +11,13 @@ void MenuBoxFuncPtr_Difficulty(struct MenuBox *mb)
     MainFreeze_SafeAdvDestroy();
     struct GameTracker *gGT = sdata->gGT;
     u_int gameMode = gGT->gameMode1;
-    struct MenuBox *pause = MainFreeze_GetMenuBox();
+    struct MenuBox *pause = DECOMP_MainFreeze_GetMenuBox();
 
     if (sdata->AnyPlayerTap & BTN_TRIANGLE)
     {
         if (!(gameMode & END_OF_RACE))
         {
-            sdata->ptrDesiredMenuBox = MainFreeze_GetMenuBox(pause);
+            sdata->ptrDesiredMenuBox = DECOMP_MainFreeze_GetMenuBox(pause);
             return;
         }
         struct MenuBox *endmenu;

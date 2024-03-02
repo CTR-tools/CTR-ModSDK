@@ -36,7 +36,7 @@ void DECOMP_MainFreeze_MenuPtrQuit(struct MenuBox *menu)
             }
 
             // Change active MenuBox to pause MenuBox
-            sdata->ptrActiveMenuBox = MainFreeze_GetMenuBox();
+            sdata->ptrActiveMenuBox = DECOMP_MainFreeze_GetMenuBox();
         }
     }
     else
