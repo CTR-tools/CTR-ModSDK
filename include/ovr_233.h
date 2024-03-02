@@ -177,7 +177,7 @@ extern struct
 // starts at 800b8598,
 // last byte of Garage Functions
 struct OVR233_Garage
-{
+{	
 	// 800b8598
 	struct MenuBox mbGarage;
 	

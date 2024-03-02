@@ -684,6 +684,7 @@ void DECOMP_CS_Garage_Init(void)
   DECOMP_CS_Garage_ZoomOut(0);
 }
 
+#ifndef REBUILD_PS1
 // until TitleOSK is rewritten,
 // cant relocate CS_Garage_GetMenuBox
 // address must be 0x800b854c
@@ -706,18 +707,38 @@ int CS_JunkFunc()
   CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
   CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
   CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC CSJUNKFUNC
-  DECOMP_CS_Garage_ZoomOut(0);
-  DECOMP_CS_Garage_ZoomOut(0);
-
+  asm(".word1: nop");
+  asm(".word2: nop");
+  asm(".word3: nop");
+  asm(".word4: nop");
 }
+#endif
 
 struct MenuBox* DECOMP_CS_Garage_GetMenuBox(void)
 {
   return &gGarage.mbGarage;
 }
 
-struct OVR233_Garage gGarage =
+#ifndef REBUILD_PS1
+// Globals must be 0x800b8598, for CS_Thread_UseOpcode
+int CS_JunkFunc2()
 {
+#define CSJUNKFUNC \
+  sdata->ptrActiveMenuBox = &gGarage.mbGarage; \
+  gGarage.mbGarage.state &= 0xfffffffb; \
+  DECOMP_CS_Garage_ZoomOut(0);
+  
+  // I know this sucks, I'll rewrite TitleOSK later
+  CSJUNKFUNC
+  
+  asm(".word9: nop");
+}
+#endif
+
+// must be 0x800b8598 because CS_Thread_UseOpcode
+// is referencing these globals for character select animations
+struct OVR233_Garage gGarage =
+{	
 	.mbGarage =
 	{
 		.stringIndexTitle = 0xFFFF,
