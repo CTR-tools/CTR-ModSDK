@@ -198,17 +198,40 @@ struct OVR233_Garage
 	short unusedArr_garageChars[8];
 	
 	// 800b85e8
-	// ...
+	short barLen[3];
 	
+	// 800b85ee
+	short unusedFrameCount;
 	
+	// 800b85f0
+	short unusedArr_lngIndex[4];
 	
+	// 800b85f8
+	short barStat[3 * 4];
+
+	// 800b8610
+	int unusedArr_Colors[3];
 	
-	
+	// 800b861c
+	int barColors[7];
+
 	// 800b8638
-	int numFramesCurr_GarageMove;
+	short numFramesCurr_GarageMove;
+	
+	// 800b863a
+	short numFramesCurr_ZoomIn;
 	
 	// 800b863c
-	int numFramesCurr_Zoom;
+	short numFramesCurr_ZoomOut;
+
+	// 800b863e
+	short delayOneSecond;
+
+	// 800b8640
+	int boolSelected;
+
+	// === End of Garage Data ===
+	// Credits RDATA starts next byte
 };
 
 #if 0
