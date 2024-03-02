@@ -16,6 +16,7 @@ void Mods5_EndOfFile();
 void Mods6_EndOfFile();
 void Mods7_EndOfFile();
 void Mods8_EndOfFile();
+void Mods9_EndOfFile();
 
 void ModsMain()
 {
@@ -30,7 +31,7 @@ void ModsMain()
 #ifndef REBUILD_PC
 	printf("\n\nMods:\n");
 	
-	int modSizes[8] =
+	int modSizes[9] =
 	{
 		// UI defrag Block1
 		(int)UI_VsQuipReadDriver - (int)Mods1_EndOfFile,
@@ -54,10 +55,13 @@ void ModsMain()
 		(int)Player_ChangeState - (int)Mods7_EndOfFile,
 		
 		// ElimBG defrag Block1
-		(int)FLARE_ThTick - (int)Mods8_EndOfFile
+		(int)FLARE_ThTick - (int)Mods8_EndOfFile,
+		
+		// RenderFrame defrag
+		(int)MainFreeze_ConfigDrawNPC105 - (int)Mods9_EndOfFile,
 	};
 	
-	for(int i = 0; i < 8; i++)
+	for(int i = 0; i < 9; i++)
 	{
 		printf("Mods%d.c: %d\n", i+1, modSizes[i]);
 	}
@@ -76,8 +80,8 @@ void ModsMain()
 	printf("\n\nHeap:\nModsMain: %d\n", (int)DECOMP_MainRaceTrack_StartLoad - (int)StateZero);
 	printf("VBMT: %d\n", 0x80057c44-0x80057884);
 	
-	// Can't use the full 4096 until fixing rdataPauseData
-	printf("RDATA: 4096\n$sp: TBD\n\n");
+	printf("RDATA: %d\n", (int)&rdata.jumpPointers2[0] - (int)&rdata.s_STATIC_GNORMALZ[0]);
+	printf("$sp: TBD\n\n");
 	// add more...
 #endif
 }

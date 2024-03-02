@@ -1699,3 +1699,10 @@ void RenderSubmit(struct GameTracker* gGT)
 	
 	gGT->frameTimer_notPaused = gGT->frameTimer_VsyncCallback;
 }
+
+#include "../AltMods/Mods9.c"
+
+void Mods9_EndOfFile()
+{
+	// leave empty
+}
