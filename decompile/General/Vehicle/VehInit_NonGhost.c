@@ -73,10 +73,7 @@ void DECOMP_VehInit_NonGhost(struct Thread* t, int index)
 	d->driverID = index;
 	d->instSelf = inst;
 	
-#ifndef REBUILD_PS1
-	VehInit_TireSprites(t);
-#endif
-
+	DECOMP_VehInit_TireSprites(t);
 	DECOMP_VehInit_SetConsts(d);
 	
 	// if you are in cutscene or in main menu

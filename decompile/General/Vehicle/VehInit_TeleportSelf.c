@@ -536,6 +536,7 @@ LAB_80058568:
     {
         DECOMP_CAM_StartOfRace(&gGT->cameraDC[d->driverID]);
 
+        void Veh_NullThread();
         d->instSelf->thread->funcThTick = ((gGT->gameMode1 & (GAME_CUTSCENE | MAIN_MENU)) == 0) ? NULL : Veh_NullThread;
 
         // set OnInit function

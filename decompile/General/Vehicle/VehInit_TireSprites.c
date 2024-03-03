@@ -1,22 +1,27 @@
 #include <common.h>
 
-void VehInit_TireSprites(struct Thread *t)
+void DECOMP_VehInit_TireSprites(struct Thread *t)
 {
     struct GameTracker *gGT = sdata->gGT;
     struct Driver *d = t->object;
     struct IconGroup *tireAnim = gGT->iconGroup[0];
-
-    // wheel scale
-    d->wheelSize = 0xccc;
-
+	int driverID = d->driverID;
+	
     struct Icon** tire = ICONGROUP_GETICONS(tireAnim);
-
     d->wheelSprites = tire;
+
+    d->wheelSize = 0xccc;    
     
-    
+	// compiler might reuse these registers in the IF,
+	// first set item to "none" and driverID, then 
+	// check for Oxide in characterIDs
+	
+	d->heldItemID = 0xf;
+    d->BattleHUD.teamID = driverID;
+	
     if (
 			// if character ID is oxide
-			(data.characterIDs[d->driverID] == 15) &&
+			(data.characterIDs[driverID] == 0xf) &&
 			(gGT->levelID != MAIN_MENU_LEVEL)
 		)
     {
@@ -26,9 +31,6 @@ void VehInit_TireSprites(struct Thread *t)
     d->tireColor = 0x2e808080;
     d->unkSpeedValue1 = 0xa00;
 
-    // item held to 0xF (nothing)
-    d->heldItemID = 0xf;
-
     // related to engine sound
     d->unk47B = 2;
 
@@ -37,10 +39,11 @@ void VehInit_TireSprites(struct Thread *t)
     d->unk412 = 0x600;
     d->numFramesSpentSteering = 10000;
 
+#ifndef REBUILD_PS1
     d->terrainMeta1 = VehGetTerrain(10);
-    
+#endif
+	
     d->BattleHUD.numLives = gGT->battleLifeLimit;
-    d->BattleHUD.teamID = d->driverID;
 
     d->quip1 = 0xffff;
     d->quip3 = 0xffff;

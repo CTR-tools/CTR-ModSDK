@@ -170,10 +170,7 @@ void DECOMP_GhostReplay_Init1(void)
 			}
 		}
 
-#ifndef REBUILD_PS1
-		VehInit_TireSprites(t);
-#endif
-
+		DECOMP_VehInit_TireSprites(t);
 		DECOMP_VehInit_SetConsts(ghostDriver);
 		
 		if(charID == 0xF)

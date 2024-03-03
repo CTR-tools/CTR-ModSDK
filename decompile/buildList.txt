@@ -602,12 +602,14 @@ common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
 
 // VEH Init
-common, exe, VehInit_Player, 0x0, General/Vehicle/VehInit_Player.c
-common, exe, VehInit_NonGhost, 0x0, General/Vehicle/VehInit_NonGhost.c
-common, exe, VehInit_SetConsts, 0x0, General/Vehicle/VehInit_SetConsts.c
 //ommon, exe, VehInit_TeleportSelf, 0x0, General/Vehicle/VehInit_TeleportSelf.c
 common, exe, VehInit_TeleportAll, 0x0, General/Vehicle/VehInit_TeleportAll.c
 common, exe, VehInit_GetModelByName, 0x0, General/Vehicle/VehInit_GetModelByName.c
+common, exe, VehInit_SetConsts, 0x0, General/Vehicle/VehInit_SetConsts.c
+common, exe, VehInit_EngineAudio_AllPlayers, 0x0, General/Vehicle/VehInit_EngineAudio_AllPlayers.c
+common, exe, VehInit_TireSprites, 0x0, General/Vehicle/VehInit_TireSprites.c
+common, exe, VehInit_NonGhost, 0x0, General/Vehicle/VehInit_NonGhost.c
+common, exe, VehInit_Player, 0x0, General/Vehicle/VehInit_Player.c
 
 // VEH Math
 common, exe, VehMath_InterpBySpeed, 0x0, General/Vehicle/VehMath_InterpBySpeed.c

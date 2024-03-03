@@ -78,11 +78,9 @@ u_int DECOMP_main()
 				DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 				DECOMP_MainInit_FinalizeInit(gGT);
 				DECOMP_GAMEPAD_GetNumConnected(gGS);
-				
-#ifndef REBUILD_PS1				
+						
 				sdata->boolSoundPaused = 0;
-				VehInit_EngineAudio_AllPlayers();
-#endif
+				DECOMP_VehInit_EngineAudio_AllPlayers();
 				
 				// 9 = intro cutscene
 				// 10 = traffic lights

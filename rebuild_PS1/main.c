@@ -441,11 +441,14 @@
 #include "../decompile/General/UI/UI_AAA_BigBlock1.c"
 
 // VEH Init
-#include "../decompile/General/Vehicle/VehInit_Player.c"
-#include "../decompile/General/Vehicle/VehInit_NonGhost.c"
-#include "../decompile/General/Vehicle/VehInit_SetConsts.c"
 #include "../decompile/General/Vehicle/VehInit_TeleportSelf.c"
 #include "../decompile/General/Vehicle/VehInit_TeleportAll.c"
+// VehInit_GetModelByName deprecated by better option
+#include "../decompile/General/Vehicle/VehInit_SetConsts.c"
+#include "../decompile/General/Vehicle/VehInit_EngineAudio_AllPlayers.c"
+#include "../decompile/General/Vehicle/VehInit_TireSprites.c"
+#include "../decompile/General/Vehicle/VehInit_NonGhost.c"
+#include "../decompile/General/Vehicle/VehInit_Player.c"
 
 // VEH MATH
 #include "../decompile/General/Vehicle/VehMath_InterpBySpeed.c"

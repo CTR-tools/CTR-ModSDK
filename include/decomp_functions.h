@@ -417,11 +417,13 @@ void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY);
 void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);
 
 // VEH
-struct Driver* DECOMP_VehInit_Player(int index);
-void DECOMP_VehInit_NonGhost(struct Thread* t, int index);
-void DECOMP_VehInit_SetConsts(struct Driver* driver);
-void DECOMP_VehInit_TeleportAll(struct GameTracker *gGT, u_int spawnFlags);
 void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPosY);
+void DECOMP_VehInit_TeleportAll(struct GameTracker *gGT, u_int spawnFlags);
+void DECOMP_VehInit_SetConsts(struct Driver* driver);
+void DECOMP_VehInit_EngineAudio_AllPlayers(void);
+void DECOMP_VehInit_TireSprites(struct Thread *t);
+void DECOMP_VehInit_NonGhost(struct Thread* t, int index);
+struct Driver* DECOMP_VehInit_Player(int index);
 
 void DECOMP_VehPtr_Driving_PhysAngular(struct Thread *t, struct Driver *d);
 
