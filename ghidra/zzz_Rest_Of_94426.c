@@ -35480,8 +35480,7 @@ void FUN_80068e04(undefined4 param_1,int param_2)
 }
 
 
-// Talking Mask (adventure hints)
-// param1 is thread
+// TalkingMask_ThTick
 void FUN_80068f90(int param_1)
 
 {
