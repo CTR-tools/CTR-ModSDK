@@ -189,20 +189,11 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		if(sdata->Loading.stage == -1)
 			DECOMP_MENUBOX_ProcessState();
 
-#ifndef REBUILD_PS1	
 	RainLogic(gGT);
-#endif
-
 	DECOMP_DropRain_MakeSound(gGT);
 	MenuHighlight();
 	
 #ifdef REBUILD_PS1
-
-	// This is temporary until RainLogic is done
-	DECOMP_TileView_SetMatrixVP(&gGT->tileView[0]);
-	DECOMP_TileView_SetMatrixVP(&gGT->tileView[1]);
-	DECOMP_TileView_SetMatrixVP(&gGT->tileView[2]);
-	DECOMP_TileView_SetMatrixVP(&gGT->tileView[3]);
 
 	// This is temporary until RenderBucket is done
 	if ((gGT->renderFlags & 0x20) != 0)
@@ -562,7 +553,12 @@ void RainLogic(struct GameTracker* gGT)
 	
 	for(i = 0; i < numPlyrCurrGame; i++)
 	{
+#ifndef REBUILD_PS1	
 		TileView_UpdateFrustum(&gGT->tileView[i]);
+#else
+		// temporary until TileView_UpdateFrustum is done
+		DECOMP_TileView_SetMatrixVP(&gGT->tileView[0]);
+#endif
 		
 		camQB = gGT->cameraDC[i].ptrQuadBlock;
 		
