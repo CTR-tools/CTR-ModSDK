@@ -2034,7 +2034,7 @@ void FUN_80035e70(uint *param_1)
   }
 
   // param1 is PTR_DAT_8008d2ac
-  // EffectSfxRain_MakeSound
+  // DropRain_MakeSound
   FUN_80024464(param_1);
 
   // frame timer for MenuBox row highlight
@@ -8976,7 +8976,7 @@ LAB_8003ca68:
         }
       }
 	  
-	  // EffectSfxRain_Reset
+	  // DropRain_Reset
       FUN_8002451c(PTR_DAT_8008d2ac);
 
 	  // GAMEPROG_GetPtrHighScoreTrack

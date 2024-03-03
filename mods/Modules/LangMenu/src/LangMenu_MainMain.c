@@ -215,7 +215,7 @@ u_int main()
 					TitleFlag_BeginTransition(2);
 			}
 
-			EffectSfxRain_Reset(gGT);
+			DropRain_Reset(gGT);
 			GAMEPROG_GetPtrHighScoreTrack();
 
 			MainInit_FinalizeInit(gGT);

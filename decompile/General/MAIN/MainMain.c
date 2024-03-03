@@ -71,10 +71,7 @@ u_int DECOMP_main()
 						DECOMP_TitleFlag_BeginTransition(2);
 				}
 				
-#ifndef REBUILD_PS1
-				EffectSfxRain_Reset(gGT);
-#endif
-
+				DECOMP_DropRain_Reset(gGT);
 				DECOMP_GAMEPROG_GetPtrHighScoreTrack();
 				DECOMP_MainInit_FinalizeInit(gGT);
 				DECOMP_GAMEPAD_GetNumConnected(gGS);

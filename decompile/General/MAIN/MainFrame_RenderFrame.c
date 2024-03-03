@@ -191,9 +191,9 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 
 #ifndef REBUILD_PS1	
 	RainLogic(gGT);
-	EffectSfxRain_MakeSound(gGT);
 #endif
 
+	DECOMP_DropRain_MakeSound(gGT);
 	MenuHighlight();
 	
 #ifdef REBUILD_PS1

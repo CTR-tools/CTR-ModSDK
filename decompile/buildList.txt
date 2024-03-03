@@ -1,4 +1,4 @@
-// 455+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 776 rewritten so far
+// 455+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 776 rewritten so far
 // 455 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
@@ -15,6 +15,7 @@
 // +8 for UI Block #3
 // +9 for GAMEPAD Block #1
 // +1 for DebugFont
+// +1 for DropRain
 // +1 for 222
 // +2 for 223
 // +2 for 224
@@ -233,6 +234,9 @@ common, exe, DISPLAY_Swap, 0x0, General/Display/DISPLAY_Swap.c
 
 // DotLights (done)
 common, exe, DotLights_Video, 0x0, General/DotLights/DotLights.c
+
+// DropRain (done)
+common, exe, DropRain_MakeSound, 0x0, General/DropRain/DropRain.c
 
 // ElimBG
 common, exe, ElimBG_SaveScreenshot_Chunk, 0x0, General/ElimBG/ElimBG_AAA_BigBlock1.c
@@ -678,8 +682,8 @@ common, exe, Tawna_Init, 0x0, General/Tawna_Init.c
 // rewritten psyq lib entry, not written by ND, needed for debugging
 926, exe, start, 0x0, General/psyq_start.c
 
-// Benchmarking, requires removing: MainFrame_RenderFrame, DotLights, EffectSfxRain_MakeSound,
+// Benchmarking, requires removing: MainFrame_RenderFrame, DotLights, DropRain_MakeSound,
 // and requires adding DF_Main to RDATA with the rest of decomp RDATA
 //926, exe, 0x800379b0, 0x0, ../mods/Tests/TenSecondBenchmark/src/DF_JalDrawOTag.s
-//926, exe, EffectSfxRain_Reset, -0x8, ../mods/Tests/TenSecondBenchmark/src/DF_JmpPrintText.s
+//926, exe, DropRain_Reset, -0x8, ../mods/Tests/TenSecondBenchmark/src/DF_JmpPrintText.s
 // add to RDATA: ../mods/Tests/TenSecondBenchmark/src/DF_main.c

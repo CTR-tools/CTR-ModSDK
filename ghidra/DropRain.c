@@ -1,7 +1,7 @@
 // called "EffectSfx" for no good reason,
 // but is related to rain sounds, no proof of name
 
-// EffectSfxRain_MakeSound
+// DropRain_MakeSound
 // handle rain on tiger temple and cortex castle
 void FUN_80024464(int param_1)
 
@@ -78,7 +78,7 @@ void FUN_80024464(int param_1)
 
 
 // param1 is PTR_DAT_8008d2ac
-// EffectSfxRain_Reset
+// DropRain_Reset
 void FUN_8002451c(int param_1)
 
 {

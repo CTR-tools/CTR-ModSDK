@@ -169,8 +169,8 @@
 80025984 DotLights_Video
 80025bd0 DotLights_AudioAndVideo
 
-80025d7c EffectSfxRain_MakeSound
-80025e34 EffectSfxRain_Reset
+80025d7c DropRain_MakeSound
+80025e34 DropRain_Reset
 
 80025e3c ElimBG_SaveScreenshot_Chunk
 80025eb4 ElimBG_SaveScreenshot_Full

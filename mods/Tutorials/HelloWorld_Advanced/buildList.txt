@@ -8,5 +8,5 @@ common, exe, rdata_free, 0x0, src/hello.c
 
 // Compile the ASM injection that will load our code
 // ASM injections for loading modded functions are typically done at the "jr ra" or "return" instruction of a function, which is 8 bytes away from the start of the function that follows it
-// Hooked at the end of EffectSfxRain_MakeSound, which will make the code run every frame at all times including the loading screen!
-common, exe, EffectSfxRain_Reset, -0x8, src/hookMidFrame.s
+// Hooked at the end of DropRain_MakeSound, which will make the code run every frame at all times including the loading screen!
+common, exe, DropRain_Reset, -0x8, src/hookMidFrame.s

@@ -627,7 +627,7 @@ struct GameTracker
 	// watch it change when you go into a room, it
 	// change to zero when rain stops, and gets a
 	// new value when no roof is over your head (rain)
-	int rainVariable;
+	int rainSoundID;
 
 	// 1ecc
 	// RedOff, RedOn, GreenOff, GreenOn

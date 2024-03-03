@@ -160,10 +160,10 @@ void DISPLAY_Blur_Main(struct TileView* tileView, int strength);
 //DotLights_Video()
 void DotLights_AudioAndVideo(struct GameTracker* gGT);
 
-// EffectSfxRain
+// DropRain
 
-void EffectSfxRain_MakeSound(struct GameTracker* gGT);
-void EffectSfxRain_Reset(struct GameTracker* gGT);
+void DropRain_MakeSound(struct GameTracker* gGT);
+void DropRain_Reset(struct GameTracker* gGT);
 
 // ElimBG
 
