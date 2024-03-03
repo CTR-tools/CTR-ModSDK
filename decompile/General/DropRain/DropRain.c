@@ -28,7 +28,7 @@ void DECOMP_DropRain_MakeSound(struct GameTracker *gGT)
   {
     // if there is no rain
     if (gGT->rainSoundID == 0) 
-      gGT->rainSoundID = OtherFX_Play(0x82, 0);
+      gGT->rainSoundID = DECOMP_OtherFX_Play(0x82, 0);
   }
   
   // if nobody is rained on
@@ -36,7 +36,7 @@ void DECOMP_DropRain_MakeSound(struct GameTracker *gGT)
   {
     if (gGT->rainSoundID != 0) 
 	{
-      OtherFX_Stop1(gGT->rainSoundID);
+      DECOMP_OtherFX_Stop1(gGT->rainSoundID);
       gGT->rainSoundID = 0;
     }
   }

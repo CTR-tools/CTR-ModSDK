@@ -34,6 +34,9 @@ void DECOMP_DISPLAY_Swap(void);
 
 void DECOMP_DotLights(struct GameTracker* gGT);
 
+void DECOMP_DropRain_MakeSound(struct GameTracker *gGT);
+void DECOMP_DropRain_Reset(struct GameTracker *gGT);
+
 // ElimBG
 void DECOMP_ElimBG_Activate(struct GameTracker* gGT);
 void DECOMP_ElimBG_Deactivate(struct GameTracker *gGT);
@@ -415,6 +418,8 @@ void DECOMP_UI_RenderFrame_Racing();
 
 void DECOMP_UI_Map_GetIconPos(short* m,int* posX,int* posY);
 void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short posX, short posY, struct PrimMem* primMem, u_long* otMem, u_int colorID);
+
+void DECOMP_UI_Lerp2D_Linear(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);
 
 // VEH
 void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPosY);

@@ -1,7 +1,7 @@
 #include <common.h>
 
 // all in this file
-void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
+void DrawUnpluggedMsg(struct GameTracker* gGT, struct GamepadSystem* gGamepads);
 void DrawFinalLap(struct GameTracker* gGT);
 void RainLogic(struct GameTracker* gGT);
 void MenuHighlight();
@@ -155,10 +155,8 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 		ScanInstances_60FPS(gGT);
 	#endif
 	
-#ifndef REBUILD_PS1
-	DrawControllerError(gGT, gGamepads);
+	DrawUnpluggedMsg(gGT, gGamepads);
 	DrawFinalLap(gGT);
-#endif
 
 	DECOMP_ElimBG_HandleState(gGT);
 	
@@ -380,8 +378,7 @@ void DECOMP_MainFrame_RenderFrame(struct GameTracker* gGT, struct GamepadSystem*
 	RenderSubmit(gGT);
 }
 
-#ifndef REBUILD_PS1
-void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
+void DrawUnpluggedMsg(struct GameTracker* gGT, struct GamepadSystem* gGamepads)
 {
 	int posY;
 	int lngArrStart;
@@ -392,7 +389,13 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	// or if no controllers are missing currently
 	if(gGT->boolDemoMode == 1) return;
 	if((gGT->gameMode1 & GAME_CUTSCENE) != 0) return;
+
+#ifndef REBUILD_PS1
 	if(MainFrame_HaveAllPads(gGT->numPlyrNextGame) == 1) return;
+#else
+	// assume all connected on PC
+	return;
+#endif
 	
 	// if main menu is open, assume 230 loaded,
 	// quit if menu is at highest level (no ptrNext to draw)
@@ -429,7 +432,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 		
 		// if controller is unplugged
 		
-		DecalFont_DrawLine(
+		DECOMP_DecalFont_DrawLine(
 			sdata->lngStrings
 			[
 				data.lngIndex_gamepadUnplugged[lngArrStart + i]
@@ -441,7 +444,7 @@ void DrawControllerError(struct GameTracker* gGT, struct GamepadSystem* gGamepad
 	}
 	
 	// PLEASE CONNECT A CONTROLLER
-	DecalFont_DrawLine(
+	DECOMP_DecalFont_DrawLine(
 		sdata->lngStrings[0xac/4],
 		0x100, posY + window.h, FONT_SMALL, (JUSTIFY_CENTER | ORANGE));
 		
@@ -529,11 +532,11 @@ void DrawFinalLap(struct GameTracker* gGT)
 		
 DrawFinalLapString:
 
-		UI_Lerp2D_Linear(&resultPos, startX, posY, endX, posY, textTimer, FPS_DOUBLE(10));
+		DECOMP_UI_Lerp2D_Linear(&resultPos, startX, posY, endX, posY, textTimer, FPS_DOUBLE(10));
 
 		// need to specify OT, or else "FINAL LAP" will draw on top of character icons,
 		// and by doing this, "FINAL LAP" draws under the character icons instead
-		DecalFont_DrawLineOT(
+		DECOMP_DecalFont_DrawLineOT(
 			sdata->lngStrings[0x8cc/4],
 			resultPos[0], resultPos[1],
 			FONT_BIG, (JUSTIFY_CENTER | ORANGE),
@@ -575,7 +578,6 @@ void RainLogic(struct GameTracker* gGT)
 			(camQB->weather_vanishRate << 2) / numPlyrCurrGame;
 	}
 }
-#endif
 
 void MenuHighlight()
 {

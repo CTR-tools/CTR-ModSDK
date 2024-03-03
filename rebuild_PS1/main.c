@@ -71,6 +71,7 @@
 #include "../decompile/General/DISPLAY/DISPLAY_Swap.c"
 
 #include "../decompile/General/DotLights/DotLights.c"
+#include "../decompile/General/DropRain/DropRain.c"
 
 #include "../decompile/General/ElimBG/ElimBG_SaveScreenshot_Chunk.c"
 #include "../decompile/General/ElimBG/ElimBG_SaveScreenshot_Full.c"
