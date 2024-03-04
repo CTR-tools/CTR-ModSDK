@@ -560,7 +560,7 @@ RunMineCOLL:
 					0x36, 0, MEDIUM, TRACKING, 
 					RB_Warpball_ThTick,
 					sizeof(struct TrackerWeapon), 
-					parentTh);
+					0);
 					
 			*(int*)&weaponInst->matrix.m[0][0] = 0x1000;
 			*(int*)&weaponInst->matrix.m[0][2] = 0;
