@@ -163,39 +163,51 @@ void DECOMP_CS_Podium_FullScene_Init()
 	}
 
 	// change victory music based on who is first in the podium
-	switch(gGT->podium_modelIndex_First)
+	switch(gGT->podium_modelIndex_First-0x7e)
 	{
-		case 0x7e:
-		case 0x81:
-		case 0x8c:
+		// Crash, Coco, Fake Crash
+		case 0:
+		case 3:
+		case 0xE:
 			// Crash's music
 			podiumMusic = 10;
 			break;
-		case 0x7f:
-		case 0x82:
-		case 0x8a:
+		
+		// Cortex, NGin, NTrophy
+		case 1:
+		case 4:
+		case 0xC:
 			// Cortex's music
 			podiumMusic = 8;
 			break;
+		
+		// Polar Pura
+		case 6:
+		case 7:
+			// Polar and Pura's music
+			podiumMusic = 7;
+			break;
+		
+		// pinstripe kjoe
+		case 8:
+		case 0xb:
+			// Pinstripe's music
+			podiumMusic = 0xb;
+			break;
+		
+		// papu, roo, penta
+		case 9:
+		case 10:
+		case 0xD:
+			// Ripper Roo's music
+			podiumMusic = 9;
+			break;
+		
+		// Tiny, Dingo, Oxide
 		default:
 			// Default music is Tiny Tiger's
 			podiumMusic = 0xc;
 			break;
-		case 0x84:
-		case 0x85:
-			// Polar and Pura's music
-			podiumMusic = 7;
-			break;
-		case 0x86:
-		case 0x89:
-			// Pinstripe's music
-			podiumMusic = 0xb;
-			break;
-		case 0x87:
-		case 0x88:
-		case 0x8b:
-			// Ripper Roo's music
-			podiumMusic = 9;
 	}
 
 	CDSYS_XAPlay(0, podiumMusic);
