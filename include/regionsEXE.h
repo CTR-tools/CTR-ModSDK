@@ -2446,7 +2446,7 @@ struct Data
 		// & 1
 		// & 2
 		// & 4 - dont count time rubbing on wall
-		// & 8
+		// & 8 - dont reset reserves
 		u_int flags;
 
 		// 0x8

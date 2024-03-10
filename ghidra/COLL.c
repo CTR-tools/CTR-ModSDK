@@ -3616,7 +3616,7 @@ LAB_800209b0:
 // param_1 driver ptr
 // param_2 driver thread
 // param_3 scratchpad address 1f800108
-// param_4 scrub meta
+// param_4 MetaDataScrub
 undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,int *param_5)
 
 {

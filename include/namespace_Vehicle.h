@@ -610,6 +610,8 @@ struct Driver
 
 	// 0x384
 	short posWallColl[3];
+	
+	// 0x38A
 	short scrubMeta8;
 
 	// 0x38C
