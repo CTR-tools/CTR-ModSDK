@@ -3481,7 +3481,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		*(undefined2 *)(param_2 + 0x364) = uVar2;
       }
 
-	  // scrubMeta
+	  // VehGetSurface
 	  uVar12 = FUN_80057c44(uVar12);
 
       uVar8 = DAT_1f800170;
@@ -3582,7 +3582,7 @@ LAB_800209b0:
         
 		iVar5 = 0;
 
-		// scrub meta
+		// VehGetSurface
         uVar8 = FUN_80057c44((uint)DAT_1f800150[1]);
 
         if ((DAT_1f800150[1] == 4) ||
