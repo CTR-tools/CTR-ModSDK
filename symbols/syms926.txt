@@ -885,13 +885,14 @@
 // wasted letters
 // lmnop
 
-// VehPhysCrash
+// (VehPhysCrash)
 8005cd1c Driver_ConvertVectorsToSpeed
 8005cf64 DriverCrash_BounceSelf
 8005d0d0 DriverCrash_AI
 8005d218 DriverCrash_Attack
 8005d404 DriverCrash_AnyTwoCars
 
+// (VehPhysForce)
 8005e104 Driver_ConvertSpeedToVectors
 8005e214 OnGravity
 8005ea60 OnApplyForces
@@ -900,6 +901,7 @@
 8005f89c Rot_AxisAngle
 8005fb4c Driver_AccelTerrainSlope
 
+// (VehPhysGeneral)
 8005fc8c VehPtr_Driving_PhysAngular
 80060458 Player_Driving_LerpQuarterStrength
 80060488 Player_Driving_LerpToForwards
@@ -908,19 +910,23 @@
 80060f0c Player_SetHeldItem
 80061488 Player_GetBaseSpeed
 
-// Player_Steer, way different in Sep3?
+// (VehPhysJoystick)
+// way different in sep3???
 8006163c Player_StickReturnToRest
 800616b0 Player_StickGetStrength
 800617cc Player_StickGetStrengthAbsolute
 
+// (VehPhysProc_Driving)
 8006181c VehPtr_Driving_PhysLinear
 80062a2c VehPtr_Driving_Audio
 80062a4c VehPtr_Driving_Update
 80062b74 VehPtr_Driving_Init
 
+// (VehPhysProc_EndEvent)
 80062ca8 VehPtr_Freeze_PhysLinear
 80062d04 VehPtr_Freeze_Init
 
+// (VehPhysProc_???
 80062db0 VehPtr_AntiVShift_Update
 80062e04 VehPtr_AntiVShift_ReverseOneFrame
 80062e94 VehPtr_AntiVShift_Init
@@ -955,8 +961,10 @@
 800643d4 VehPtr_StopSpin_Animate
 800644d0 VehPtr_StopSpin_Init
 
+// (VehPickState_NewState)
 80064568 Player_ChangeState
 
+// (VehPickupItem)
 80064be4 Weapon_Mask_boolGoodGuy
 80064c38 Weapon_Mask_UseWeapon
 80064f94 Weapon_Missile_GetTargetDriver
@@ -964,6 +972,10 @@
 8006540c Weapon_Shoot_Now
 800666e4 Weapon_Shoot_OnCirclePress
 
+// VehPickupItem to VehTalkMask
+// pqrst
+
+// (VehStuckProc_MaskGrab)
 8006677c VehPtr_MaskGrab_FindDestPos
 80066cb0 VehPtr_MaskGrab_Particles
 80066d4c VehPtr_MaskGrab_Update
@@ -971,24 +983,30 @@
 80066e8c VehPtr_MaskGrab_Animate
 800671b0 VehPtr_MaskGrab_Init
 
+// (VehStuckProc_PlantEaten)
 8006749c VehPtr_EatenByPlant_Update
 80067554 VehPtr_EatenByPlant_PhysLinear
 800675c0 VehPtr_EatenByPlant_Animate
 800677d0 VehPtr_EatenByPlant_Init
 
+// (VehStuckProc_RIP)
 80067930 VehPtr_Dead_Init // (tombstone sep3)
 
+// (VehStuckProc_RevEngine)
 80067960 VehPtr_EngineRevving_Update
 80067a74 VehPtr_EngineRevving_PhysLinear
 80067b7c VehPtr_EngineRevving_Animate
 80067f4c VehPtr_EngineRevving_Init
 
+// RSTUVW
+// (VehStuckProc_Tumble)
 8006809c VehPtr_Blasted_Update
 800680d0 VehPtr_Blasted_PhysLinear
 80068150 VehPtr_Blasted_PhysAngular
 80068244 VehPtr_Blasted_Animate
 800682a4 VehPtr_Blasted_Init
 
+// (VehStuckProc_Warp)
 800683f4 VehPtr_Warp_MoveDustPuff
 800685b0 VehPtr_Warp_AddDustPuff1
 80068644 VehPtr_Warp_AddDustPuff2
