@@ -876,11 +876,15 @@
 8005c278 DrawSkidMarks_Subset2
 8005c354 DrawSkidMarks_Main
 
+// ghijkl
+
 // (VehLap_UpdateProgress)
 8005ca24 Driver_UpdateLapProgress
 
-8005cd1c Driver_ConvertVectorsToSpeed
+// lmnop
 
+// VehPhysCrash
+8005cd1c Driver_ConvertVectorsToSpeed
 8005cf64 DriverCrash_BounceSelf
 8005d0d0 DriverCrash_AI
 8005d218 DriverCrash_Attack
@@ -992,15 +996,19 @@
 
 // extra here in sep3 (tombstone vibrate)
 
+// (VehTalkMask)
 80068f90 TalkingMask_ThTick
 80069178 TalkingMask_Init
 800691e4 TalkingMask_PlayXA
 8006924c TalkingMask_boolNotTalking
 8006925c TalkingMask_End
 
+// (VehTurbo)
 80069284 Turbo_ProcessBucket
 80069370 Turbo_ThDestroy
 800693c8 Turbo_ThTick
+
+// === WorldRender ===
 
 80069bb0 DrawSky_Full
 80069cc4 DrawSky_Piece
