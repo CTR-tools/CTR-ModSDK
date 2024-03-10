@@ -922,11 +922,11 @@
 80062a4c VehPtr_Driving_Update
 80062b74 VehPtr_Driving_Init
 
-// (VehPhysProc_EndEvent)
+// (VehPhysProc_FreezeEndEvent)
 80062ca8 VehPtr_Freeze_PhysLinear
 80062d04 VehPtr_Freeze_Init
 
-// (VehPhysProc_???
+// (VehPhysProc_FreezeVShift)
 80062db0 VehPtr_AntiVShift_Update
 80062e04 VehPtr_AntiVShift_ReverseOneFrame
 80062e94 VehPtr_AntiVShift_Init
