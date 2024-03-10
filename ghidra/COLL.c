@@ -847,7 +847,7 @@ void FUN_8001d944(int param_1,int param_2)
   // if driver is high above the quadblock
   if (*(int *)(param_2 + 0x2d0) + 0x8000 < *(int *)(param_2 + 0x2d8))
   {
-	// VehGetTerrain (air)
+	// VehColl_GetTerrain (air)
     uVar7 = FUN_80057c68(10);
     *(undefined4 *)(param_2 + 0x35c) = uVar7;
   }
@@ -910,7 +910,7 @@ LAB_8001e4d0:
       *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x40;
     }
 
-	// VehGetTerrain (air)
+	// VehColl_GetTerrain (air)
 	uVar7 = FUN_80057c68(10);
     *(undefined4 *)(param_2 + 0x358) = uVar7;
 
@@ -1126,7 +1126,7 @@ LAB_8001e340:
       *(byte *)(param_2 + 0xc2) = bVar4;
     }
 
-	// VehGetTerrain
+	// VehColl_GetTerrain
     uVar7 = FUN_80057c68(uVar6);
     *(undefined4 *)(param_2 + 0x358) = uVar7;
     *(undefined4 *)(param_2 + 0x35c) = uVar7;
@@ -3481,7 +3481,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		*(undefined2 *)(param_2 + 0x364) = uVar2;
       }
 
-	  // VehGetSurface
+	  // VehColl_GetSurface
 	  uVar12 = FUN_80057c44(uVar12);
 
       uVar8 = DAT_1f800170;
@@ -3582,7 +3582,7 @@ LAB_800209b0:
         
 		iVar5 = 0;
 
-		// VehGetSurface
+		// VehColl_GetSurface
         uVar8 = FUN_80057c44((uint)DAT_1f800150[1]);
 
         if ((DAT_1f800150[1] == 4) ||

@@ -869,8 +869,8 @@
 80057798 Vector_SpecLightNoSpin3D
 
 80057964 Vector_BakeMatrixTable
-80057d24 VehGetSurface
-80057d48 VehGetTerrain
+80057d24 VehColl_GetSurface
+80057d48 VehColl_GetTerrain
 
 80057d6c VehInit_TeleportSelf
 80058978 VehInit_TeleportAll

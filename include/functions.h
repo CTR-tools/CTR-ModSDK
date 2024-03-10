@@ -936,8 +936,8 @@ void Vector_BakeMatrixTable();
 
 // from this point onwards it's all vehicle stuff
 
-//VehGetSurface()
-//VehGetTerrain()
+//VehColl_GetSurface()
+//VehColl_GetTerrain()
 
 // VehInit
 

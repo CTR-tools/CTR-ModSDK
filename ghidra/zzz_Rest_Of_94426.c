@@ -18916,7 +18916,7 @@ void FUN_80057884(undefined *param_1)
 }
 
 
-// VehGetSurface
+// VehColl_GetSurface
 int FUN_80057c44(uint param_1)
 
 {
@@ -18930,7 +18930,7 @@ int FUN_80057c44(uint param_1)
 }
 
 
-// VehGetTerrain
+// VehColl_GetTerrain
 int FUN_80057c68(uint param_1)
 
 {
@@ -20023,7 +20023,7 @@ void FUN_80058c4c(int param_1)
   *(undefined2 *)((int)piVar3 + 0x412) = 0x600;
   *(undefined2 *)((int)piVar3 + 0x3e6) = 10000;
 
-  // VehGetTerrain (air)
+  // VehColl_GetTerrain (air)
   iVar2 = FUN_80057c68(10);
   piVar3[0xd6] = iVar2;
 

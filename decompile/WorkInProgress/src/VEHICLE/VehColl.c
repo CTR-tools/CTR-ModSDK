@@ -2,7 +2,7 @@
 
 // overbudget by 4 bytes each, how?
 
-void* DECOMP_VehGetSurface(u_int scrubId)
+void* DECOMP_VehColl_GetSurface(u_int scrubId)
 {
     if (6 < scrubId)
     {
@@ -11,7 +11,7 @@ void* DECOMP_VehGetSurface(u_int scrubId)
     return &data.MetaDataScrub[scrubId];
 }
 
-void* DECOMP_VehGetTerrain(u_char terrainType)
+void* DECOMP_VehColl_GetTerrain(u_char terrainType)
 {
     if (20 < terrainType)
     {
