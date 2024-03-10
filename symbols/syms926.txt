@@ -876,11 +876,13 @@
 8005c278 DrawSkidMarks_Subset2
 8005c354 DrawSkidMarks_Main
 
+// wasted letters
 // ghijkl
 
 // (VehLap_UpdateProgress)
 8005ca24 Driver_UpdateLapProgress
 
+// wasted letters
 // lmnop
 
 // VehPhysCrash
