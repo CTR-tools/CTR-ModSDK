@@ -870,6 +870,8 @@
 // VehShadow
 8005b6b8 DrawShadows_Subset1
 8005b720 DrawShadows_Main 
+
+// VehSkids
 8005c120 DrawSkidMarks_Subset1
 8005c278 DrawSkidMarks_Subset2
 8005c354 DrawSkidMarks_Main

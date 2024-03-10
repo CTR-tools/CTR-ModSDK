@@ -847,7 +847,7 @@ void FUN_8001d944(int param_1,int param_2)
   // if driver is high above the quadblock
   if (*(int *)(param_2 + 0x2d0) + 0x8000 < *(int *)(param_2 + 0x2d8))
   {
-	// terrain meta of "none" (air)
+	// VehGetTerrain (air)
     uVar7 = FUN_80057c68(10);
     *(undefined4 *)(param_2 + 0x35c) = uVar7;
   }
@@ -910,7 +910,7 @@ LAB_8001e4d0:
       *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x40;
     }
 
-	// terrain data of "none" (mid-air)
+	// VehGetTerrain (air)
 	uVar7 = FUN_80057c68(10);
     *(undefined4 *)(param_2 + 0x358) = uVar7;
 
@@ -1126,7 +1126,7 @@ LAB_8001e340:
       *(byte *)(param_2 + 0xc2) = bVar4;
     }
 
-	// terrain meta
+	// VehGetTerrain
     uVar7 = FUN_80057c68(uVar6);
     *(undefined4 *)(param_2 + 0x358) = uVar7;
     *(undefined4 *)(param_2 + 0x35c) = uVar7;

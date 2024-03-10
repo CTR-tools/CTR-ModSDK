@@ -20023,7 +20023,7 @@ void FUN_80058c4c(int param_1)
   *(undefined2 *)((int)piVar3 + 0x412) = 0x600;
   *(undefined2 *)((int)piVar3 + 0x3e6) = 10000;
 
-  // terrain meta
+  // VehGetTerrain (air)
   iVar2 = FUN_80057c68(10);
   piVar3[0xd6] = iVar2;
 
