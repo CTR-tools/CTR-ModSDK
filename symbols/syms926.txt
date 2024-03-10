@@ -849,7 +849,7 @@
 8005900c VehMath_SteerAccel
 80059070 VehMath_FastSqrt
 
-// VehParticle (Veh
+// VehParticle (VehEmitter)
 80059100 VehParticle_Exhaust
 80059344 VehParticle_Sparks_Ground
 80059558 VehParticle_Terrain_Ground
