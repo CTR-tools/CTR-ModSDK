@@ -860,23 +860,25 @@
 8005ab24 Turbo_Audio
 8005abfc Turbo_Increment
 
-// VehAnim (VehInst)
+// VehAnim (VehFrame)
 8005b0c4 VehAnim_Instance_GetStartFrame
 8005b0f4 VehAnim_Instance_GetNumAnimFrames
 8005b178 OnAnimate_Driving
 8005b510 OnAnimate_Spinning
 8005b5fc OnAnimate_LastSpin
 
-// VehShadow
+// VehShadow (VehGround_ShadowXXX)
 8005b6b8 DrawShadows_Subset1
 8005b720 DrawShadows_Main 
 
-// VehSkids
+// VehSkids (VehGround_SkidsXXX)
 8005c120 DrawSkidMarks_Subset1
 8005c278 DrawSkidMarks_Subset2
 8005c354 DrawSkidMarks_Main
 
+// (VehLap_UpdateProgress)
 8005ca24 Driver_UpdateLapProgress
+
 8005cd1c Driver_ConvertVectorsToSpeed
 
 8005cf64 DriverCrash_BounceSelf
