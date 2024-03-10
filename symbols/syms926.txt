@@ -829,7 +829,7 @@
 800576b8 Vector_SpecLightNoSpin3D
 80057884 Vector_BakeMatrixTable
 
-// VehColl (VehA-- ?? )
+// VehColl (VehAfterColl)
 80057c44 VehColl_GetSurface
 80057c68 VehColl_GetTerrain
 
@@ -931,6 +931,7 @@
 80062e04 VehPtr_AntiVShift_ReverseOneFrame
 80062e94 VehPtr_AntiVShift_Init
 
+// (VehPhysProc_PowerSlide)
 80062f4c VehPtr_Drifting_PhysAngular
 80063634 VehPtr_Drifting_Finalize
 8006364c VehPtr_Drifting_Update
@@ -938,23 +939,27 @@
 80063920 VehPtr_Drifting_InitSetUpdate
 80063934 VehPtr_Drifting_Init
 
+// (VehPhysProc_SlamWall)
 80063a44 VehPtr_Crashing_PhysAngular
 80063af8 VehPtr_Crashing_Update
 80063b00 VehPtr_Crashing_PhysLinear
 80063b2c VehPtr_Crashing_Animate
 80063bd4 VehPtr_Crashing_Init
 
+// (VehPhysProc_SpinFirst)
 80063cf4 VehPtr_Spinning_Update
 80063d44 VehPtr_Spinning_PhysLinear
 80063dc8 VehPtr_Spinning_PhysAngular
 80063eac VehPtr_Spinning_InitSetUpdate
 80063ec0 VehPtr_Spinning_Init
 
+// (VehPhysProc_SpinLast)
 8006402c VehPtr_LastSpin_Update
 8006406c VehPtr_LastSpin_PhysLinear
 800640a4 VehPtr_LastSpin_PhysAngular
 80064254 VehPtr_LastSpin_Init
 
+// (VehPhysProc_SpinStop)
 800642ec VehPtr_StopSpin_Update
 800642f4 VehPtr_StopSpin_PhysLinear
 80064320 VehPtr_StopSpin_PhysAngular
@@ -995,8 +1000,7 @@
 80067b7c VehPtr_EngineRevving_Animate
 80067f4c VehPtr_EngineRevving_Init
 
-// RSTUVW
-// (VehStuckProc_Tumble or TakeHit?)
+// (VehStuckProc_Tumble)
 8006809c VehPtr_Blasted_Update
 800680d0 VehPtr_Blasted_PhysLinear
 80068150 VehPtr_Blasted_PhysAngular
