@@ -996,7 +996,7 @@
 80067f4c VehPtr_EngineRevving_Init
 
 // RSTUVW
-// (VehStuckProc_Tumble)
+// (VehStuckProc_Tumble or TakeHit?)
 8006809c VehPtr_Blasted_Update
 800680d0 VehPtr_Blasted_PhysLinear
 80068150 VehPtr_Blasted_PhysAngular
