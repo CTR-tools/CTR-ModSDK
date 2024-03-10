@@ -860,9 +860,11 @@
 8005ab24 Turbo_Audio
 8005abfc Turbo_Increment
 
-// VehAnim (VehFrame)
+// VehAnim (VehFrameInst)
 8005b0c4 VehAnim_Instance_GetStartFrame
 8005b0f4 VehAnim_Instance_GetNumAnimFrames
+
+// (VehFrameProc)
 8005b178 OnAnimate_Driving
 8005b510 OnAnimate_Spinning
 8005b5fc OnAnimate_LastSpin
