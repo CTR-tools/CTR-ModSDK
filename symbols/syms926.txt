@@ -972,9 +972,6 @@
 8006540c Weapon_Shoot_Now
 800666e4 Weapon_Shoot_OnCirclePress
 
-// VehPickupItem to VehTalkMask
-// pqrst
-
 // (VehStuckProc_MaskGrab)
 8006677c VehPtr_MaskGrab_FindDestPos
 80066cb0 VehPtr_MaskGrab_Particles
