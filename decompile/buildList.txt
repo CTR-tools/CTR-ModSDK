@@ -1,5 +1,5 @@
-// 456+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 778 rewritten so far
-// 456 for every 'common' and ','
+// 458+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 780 rewritten so far
+// 458 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -20,11 +20,11 @@
 // +2 for 223
 // +2 for 224
 // +3 for CS_Garage
-// +3 for VehPtr_Blasted
-// +2 for VehPtr_EngineRevving
+// +3 for VehStuckProc_Tumble
+// +2 for VehStuckProc_RevEngine
 // +4 for VehPhysProc_Driving
 // +2 for VehStuckProc_PlantEaten
-// +3 for VehPtr_MaskGrab
+// +3 for VehStuckProc_MaskGrab
 // +16 for RB_Block1
 // +3 for RB_CtrLetter
 // +47 for RB_Block2
@@ -604,7 +604,8 @@ common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_AAA_BigBlock1.c
 common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
 
-// need VehAfterColl
+common, exe, VehAfterColl_GetSurface, 0x0, General/Vehicle/VehAfterColl_GetSurface.c
+common, exe, VehAfterColl_GetTerrain, 0x0, General/Vehicle/VehAfterColl_GetTerrain.c
 
 //ommon, exe, VehBirth_TeleportSelf, 0x0, General/Vehicle/VehBirth_TeleportSelf.c
 common, exe, VehBirth_TeleportAll, 0x0, General/Vehicle/VehBirth_TeleportAll.c

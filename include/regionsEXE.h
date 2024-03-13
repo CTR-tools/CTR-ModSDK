@@ -7,6 +7,30 @@ struct MatrixND
 	int t[3];
 };
 
+struct Scrub
+{
+	// see FUN_80020c58
+
+	// 0x0
+	char* name;
+
+	// 0x4
+	// & 1
+	// & 2
+	// & 4 - dont count time rubbing on wall
+	// & 8 - dont reset reserves
+	u_int flags;
+
+	// 0x8
+	int unk_0x8;
+
+	// 0xC
+	// given to trig table
+	int unk_angle;
+
+	// last valid index is 6, so 7 elements
+};
+
 struct Terrain
 {
 	// 0
@@ -2435,29 +2459,7 @@ struct Data
 	} bakedGteMath[0x14];
 	
 	// 0x80087f94
-	struct
-	{
-		// see FUN_80020c58
-
-		// 0x0
-		char* name;
-
-		// 0x4
-		// & 1
-		// & 2
-		// & 4 - dont count time rubbing on wall
-		// & 8 - dont reset reserves
-		u_int flags;
-
-		// 0x8
-		int unk_0x8;
-
-		// 0xC
-		// given to trig table
-		int unk_angle;
-
-		// last valid index is 6, so 7 elements
-	} MetaDataScrub[7];
+	struct Scrub MetaDataScrub[7];
 	
 	// 0x80088004
 	// MetaDataTerrain offset 0x18
