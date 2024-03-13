@@ -80,7 +80,7 @@ void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
             inst->animFrame = (short)interp;
 
             // if not quite at the start
-            if ((currAnimIndex - 2) > 1) return;
+            if ((unsigned int)(currAnimIndex - 2) > 1) return;
 
             currFrame = *(char *)&inst->animFrame;
             // kart animation frame
