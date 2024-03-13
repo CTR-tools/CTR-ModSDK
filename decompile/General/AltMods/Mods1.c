@@ -152,7 +152,7 @@ struct Particle* NewParticleCreateInstance(struct LinkedList* param_1)
 {
 	// do 2 instead of 1,
 	// that way timer & 1 works with SetLeft and SetRight,
-	// see VehParticle_DriverMain and call to VehParticle_Terrain_Ground
+	// see VehEmitter_DriverMain and call to VehEmitter_Terrain_Ground
 	
 	// This will break MaskGrab, and TireSpit effects
 	if(sdata->gGT->timer & 2) return 0;

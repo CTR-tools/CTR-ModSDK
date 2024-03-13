@@ -107,7 +107,7 @@ void DECOMP_RB_RainCloud_ThTick(struct Thread* t)
       parent->itemRollTimer = 0;
 	  
 	  // pick random weapon for driver
-      Player_SetHeldItem(parent,0x800b0000);
+      VehPhysGeneral_SetHeldItem(parent,0x800b0000);
     }
   }
   else {

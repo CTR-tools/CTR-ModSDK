@@ -462,12 +462,12 @@ void RunInitHook()
 	drivers = sdata->gGT->drivers;
 
 	// player[0] already exists
-	drivers[1] = VehInit_Player(1);
-	drivers[2] = VehInit_Player(2);
-	drivers[3] = VehInit_Player(3);
+	drivers[1] = VehBirth_Player(1);
+	drivers[2] = VehBirth_Player(2);
+	drivers[3] = VehBirth_Player(3);
 
 	// send to start line (corrects driver animations)
-	VehInit_TeleportAll(sdata->gGT, 2);
+	VehBirth_TeleportAll(sdata->gGT, 2);
 
 	// set where we want drivers, on the game grid
 	for(i = 0; i < 4; i++)

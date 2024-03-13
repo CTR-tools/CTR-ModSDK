@@ -74,7 +74,7 @@ void FUN_800414f4(void)
       // iVar8 = distance to finish
       iVar8 = *(int *)(iVar6 + 0x488);
 
-      // Driver_UpdateLapProgress (driver)
+      // VehLap_UpdateProgress (driver)
       FUN_8005ca24(iVar6);
 
       // iVar9 = distance driven backwards + (distToFinish_curr - distToFinish_prev)
@@ -633,7 +633,7 @@ LAB_80041910:
 				// In VS mode, this is what blows up the player in last place
 
 				// Make the player Blasted
-				// Player_ChangeState
+				// VehPickState_NewState
                 FUN_80064568(iVar9,2,iVar9,0);
 
 				// reduce counter for AttackingPlayer on yourself, 

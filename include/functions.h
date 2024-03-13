@@ -453,8 +453,8 @@ void INSTANCE_LevInitAll(struct InstDef* instDef, int num);
 void INSTANCE_LevDelayedLInBs(void* instDefs, u_int numInstances);
 
 // not really part of "INSTANCE" namespace
-int VehAnim_Instance_GetNumAnimFrames(struct Driver* driver, int param_2);
-int VehAnim_Instance_GetStartFrame(int midpoint, int numFrames);
+int VehFrameInst_GetNumAnimFrames(struct Driver* driver, int param_2);
+int VehFrameInst_GetStartFrame(int midpoint, int numFrames);
 
 // JitPool
 
@@ -936,161 +936,161 @@ void Vector_BakeMatrixTable();
 
 // from this point onwards it's all vehicle stuff
 
-//VehColl_GetSurface()
-//VehColl_GetTerrain()
+//VehAfterColl_GetSurface()
+//VehAfterColl_GetTerrain()
 
 // VehInit
 
-//VehInit_TeleportSelf()
-void VehInit_TeleportAll(struct GameTracker* gGT, int flag);
-//VehInit_GetModelByName()
-void VehInit_SetConsts(struct Driver * driver);
-//VehInit_EngineAudio_AllPlayers()
-//VehInit_TireSprites()
-//VehInit_NonGhost()
-struct Driver* VehInit_Player(int index);
+//VehBirth_TeleportSelf()
+void VehBirth_TeleportAll(struct GameTracker* gGT, int flag);
+//VehBirth_GetModelByName()
+void VehBirth_SetConsts(struct Driver * driver);
+//VehBirth_EngineAudio_AllPlayers()
+//VehBirth_TireSprites()
+//VehBirth_NonGhost()
+struct Driver* VehBirth_Player(int index);
 
 // uncategorized
 
-int VehMath_InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
-int VehMath_MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
-int VehMath_SteerAccel(int param_1, int param_2, int param_3, u_int param_4, u_int param_5, u_int param_6);
-//VehMath_FastSqrt()
+int VehCalc_InterpBySpeed(int currentRot, int rotSpeed, int destinedRot);
+int VehCalc_MapToRange(int param_1,int param_2,int param_3,int param_4,int param_5);
+int VehCalc_SteerAccel(int param_1, int param_2, int param_3, u_int param_4, u_int param_5, u_int param_6);
+//VehCalc_FastSqrt()
 
 // VehParticle
 
-//VehParticle_Exhaust()
-//VehParticle_Sparks_Ground()
-//VehParticle_Terrain_Ground()
-//VehParticle_Sparks_Wall()
-void VehParticle_DriverMain();
+//VehEmitter_Exhaust()
+//VehEmitter_Sparks_Ground()
+//VehEmitter_Terrain_Ground()
+//VehEmitter_Sparks_Wall()
+void VehEmitter_DriverMain();
 
 // more uncategorized vehicle stuff
 
-void Turbo_Audio(struct Driver* driver, int speed_cap);
-void Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
+void VehFire_Audio(struct Driver* driver, int speed_cap);
+void VehFire_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
 //Instance_GetStartFrame()
 //Instance_GetNumAnimFrames()
-void OnAnimate_Driving(struct Thread* t, struct Driver* d);
-void OnAnimate_Spinning();
-void OnAnimate_LastSpin();
-//DrawShadows_Subset1()
-void DrawShadows_Main();
-//DrawSkidMarks_Subset1()
-//DrawSkidMarks_Subset2()
-void DrawSkidMarks_Main(struct Thread* thread, struct TileView* tileView);
-//Driver_UpdateLapProgress()
-void Driver_ConvertVectorsToSpeed(struct Driver* d, int* v);
-//DriverCrash_BounceSelf()
-//DriverCrash_AI()
-//DriverCrash_Attack()
-void DriverCrash_AnyTwoCars(struct Thread* thread, u_short* param_2, int* param_3);
-//Driver_ConvertSpeedToVectors()
-//OnGravity()
-void OnApplyForces(struct Thread* t, struct Driver* d);
-void OnCollide_Drivers(struct Thread* t, struct Driver* d);
-void OnRender();
-void Rot_AxisAngle(MATRIX* m, short* normVec, short angle);
-void Driver_AccelTerrainSlope(struct Driver* d);
+void VehFrameProc_Driving(struct Thread* t, struct Driver* d);
+void VehFrameProc_Spinning();
+void VehFrameProc_LastSpin();
+//VehGroundShadow_Subset1()
+void VehGroundShadow_Main();
+//VehGroundSkids_Subset1()
+//VehGroundSkids_Subset2()
+void VehGroundSkids_Main(struct Thread* thread, struct TileView* tileView);
+//VehLap_UpdateProgress()
+void VehPhysCrash_ConvertVecToSpeed(struct Driver* d, int* v);
+//VehPhysCrash_BounceSelf()
+//VehPhysCrash_AI()
+//VehPhysCrash_Attack()
+void VehPhysCrash_AnyTwoCars(struct Thread* thread, u_short* param_2, int* param_3);
+//VehPhysForce_ConvertSpeedToVec()
+//VehPhysForce_OnGravity()
+void VehPhysForce_OnApplyForces(struct Thread* t, struct Driver* d);
+void VehPhysForce_CollideDrivers(struct Thread* t, struct Driver* d);
+void VehPhysForce_TranslateMatrix();
+void VehPhysForce_RotAxisAngle(MATRIX* m, short* normVec, short angle);
+void VehPhysForce_AccelTerrainSlope(struct Driver* d);
 
 // "VehPtr"
 void Veh_NullThread();
-void VehPtr_Driving_PhysAngular(struct Thread* thread, struct Driver* driver);
-//Player_Driving_LerpQuarterStrength()
-int Player_Driving_LerpToForwards(struct Driver* driver, int param_2, int param_3, int param_4);
-//Player_Jump_GetVelY()
-void Player_JumpAndFriction();
-void Player_SetHeldItem(struct Driver* driver);
-int Player_GetBaseSpeed(struct Driver* driver);
-int Player_StickReturnToRest(int param_1, u_int param_2, struct RacingWheelData* param_3);
-//void Player_StickGetStrength()
-int Player_StickGetStrengthAbsolute(int param_1, u_int param_2, struct RacingWheelData* param_3);
-void VehPtr_Driving_PhysLinear(struct Thread* t, struct Driver* d);
-void VehPtr_Driving_Audio(struct Thread* t, struct Driver* d);
-void VehPtr_Driving_Update(struct Thread* t, struct Driver* d);
-void VehPtr_Driving_Init(struct Thread* t, struct Driver* d);
-void VehPtr_Freeze_PhysLinear(struct Thread* t, struct Driver* d);
-void VehPtr_Freeze_Init(struct Thread *, struct Driver *);
-void VehPtr_AntiVShift_Update(struct Thread* t, struct Driver* d);
-void VehPtr_AntiVShift_ReverseOneFrame(struct Thread* t, struct Driver* d);
-void VehPtr_AntiVShift_Init(struct Thread* t, struct Driver* d);
-void VehPtr_Drifting_PhysAngular(struct Thread* th, struct Driver* driver);
-void VehPtr_Drifting_Finalize(struct Thread* t, struct Driver* d);
-void VehPtr_Drifting_Update(struct Thread* t, struct Driver* d);
-void VehPtr_Drifting_PhysLinear(struct Thread *thread, struct Driver *driver);
-void VehPtr_Drifting_InitSetUpdate(struct Thread* t, struct Driver* d);
-void VehPtr_Drifting_Init(struct Thread* t, struct Driver* d);
-void VehPtr_Crashing_PhysAngular(struct Thread* t, struct Driver* d);
-void VehPtr_Crashing_Update(struct Thread* t, struct Driver* d);
-void VehPtr_Crashing_PhysLinear(struct Thread* t, struct Driver* d);
-void VehPtr_Crashing_Animate(struct Thread* t, struct Driver* d);
-void VehPtr_Crashing_Init(struct Thread* t, struct Driver* d);
-void VehPtr_Spinning_Update(struct Thread* t, struct Driver* d);
-void VehPtr_Spinning_PhysLinear(struct Thread* t, struct Driver* d);
-void VehPtr_Spinning_PhysAngular(struct Thread* t, struct Driver* d);
-void VehPtr_Spinning_InitSetUpdate(struct Thread* t, struct Driver* d);
-void VehPtr_Spinning_Init(struct Thread* t, struct Driver* d);
-void VehPtr_LastSpin_Update(struct Thread* t, struct Driver* d);
-void VehPtr_LastSpin_PhysLinear(struct Thread* t, struct Driver* d);
-void VehPtr_LastSpin_PhysAngular(struct Thread* t, struct Driver* d);
-void VehPtr_LastSpin_Init(struct Thread* t, struct Driver* d);
-void VehPtr_StopSpin_Update(struct Thread* t, struct Driver* d);
-void VehPtr_StopSpin_PhysLinear(struct Thread* t, struct Driver* d);
-void VehPtr_StopSpin_PhysAngular(struct Thread* t, struct Driver* d);
-void VehPtr_StopSpin_Animate(struct Thread* t, struct Driver* d);
-void VehPtr_StopSpin_Init(struct Thread* t, struct Driver* d);
-//Player_ChangeState()
+void VehPhysGeneral_PhysAngular(struct Thread* thread, struct Driver* driver);
+//VehPhysGeneral_LerpQuarterStrength()
+int VehPhysGeneral_LerpToForwards(struct Driver* driver, int param_2, int param_3, int param_4);
+//VehPhysGeneral_JumpGetVelY()
+void VehPhysGeneral_JumpAndFriction();
+void VehPhysGeneral_SetHeldItem(struct Driver* driver);
+int VehPhysGeneral_GetBaseSpeed(struct Driver* driver);
+int VehPhysJoystick_ReturnToRest(int param_1, u_int param_2, struct RacingWheelData* param_3);
+//void VehPhysJoystick_GetStrength()
+int VehPhysJoystick_GetStrengthAbsolute(int param_1, u_int param_2, struct RacingWheelData* param_3);
+void VehPhysProc_Driving_PhysLinear(struct Thread* t, struct Driver* d);
+void VehPhysProc_Driving_Audio(struct Thread* t, struct Driver* d);
+void VehPhysProc_Driving_Update(struct Thread* t, struct Driver* d);
+void VehPhysProc_Driving_Init(struct Thread* t, struct Driver* d);
+void VehPhysProc_FreezeEndEvent_PhysLinear(struct Thread* t, struct Driver* d);
+void VehPhysProc_FreezeEndEvent_Init(struct Thread *, struct Driver *);
+void VehPhysProc_FreezeVShift_Update(struct Thread* t, struct Driver* d);
+void VehPhysProc_FreezeVShift_ReverseOneFrame(struct Thread* t, struct Driver* d);
+void VehPhysProc_FreezeVShift_Init(struct Thread* t, struct Driver* d);
+void VehPhysProc_PowerSlide_PhysAngular(struct Thread* th, struct Driver* driver);
+void VehPhysProc_PowerSlide_Finalize(struct Thread* t, struct Driver* d);
+void VehPhysProc_PowerSlide_Update(struct Thread* t, struct Driver* d);
+void VehPhysProc_PowerSlide_PhysLinear(struct Thread *thread, struct Driver *driver);
+void VehPhysProc_PowerSlide_InitSetUpdate(struct Thread* t, struct Driver* d);
+void VehPhysProc_PowerSlide_Init(struct Thread* t, struct Driver* d);
+void VehPhysProc_SlamWall_PhysAngular(struct Thread* t, struct Driver* d);
+void VehPhysProc_SlamWall_Update(struct Thread* t, struct Driver* d);
+void VehPhysProc_SlamWall_PhysLinear(struct Thread* t, struct Driver* d);
+void VehPhysProc_SlamWall_Animate(struct Thread* t, struct Driver* d);
+void VehPhysProc_SlamWall_Init(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinFirst_Update(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinFirst_PhysLinear(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinFirst_PhysAngular(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinFirst_InitSetUpdate(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinFirst_Init(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinLast_Update(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinLast_PhysLinear(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinLast_PhysAngular(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinLast_Init(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinStop_Update(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinStop_PhysLinear(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinStop_PhysAngular(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinStop_Animate(struct Thread* t, struct Driver* d);
+void VehPhysProc_SpinStop_Init(struct Thread* t, struct Driver* d);
+//VehPickState_NewState()
 
 // Weapon (?)
 
-//Weapon_Mask_boolGoodGuy()
-void * Weapon_Mask_UseWeapon(int param_1,int param_2);
-//Weapon_Missile_GetTargetDriver()
-//Weapon_Potion_Throw()
-//Weapon_Shoot_Now()
-void Weapon_Shoot_OnCirclePress(struct Driver* driver);
+//VehPickupItem_MaskBoolGoodGuy()
+void * VehPickupItem_MaskUseWeapon(int param_1,int param_2);
+//VehPickupItem_MissileGetTargetDriver()
+//VehPickupItem_PotionThrow()
+//VehPickupItem_ShootNow()
+void VehPickupItem_ShootOnCirclePress(struct Driver* driver);
 
 // More VehPtr
 
-void VehPtr_MaskGrab_FindDestPos(struct Thread* t, struct Driver* d);
-void VehPtr_MaskGrab_Particles(struct Thread* t, struct Driver* d);
-void VehPtr_MaskGrab_Update(struct Thread* t, struct Driver* d);
-void VehPtr_MaskGrab_PhysLinear(struct Thread* t, struct Driver* d);
-void VehPtr_MaskGrab_Animate(struct Thread* t, struct Driver* d);
-void VehPtr_MaskGrab_Init(struct Thread* t, struct Driver* d);
-void VehPtr_EatenByPlant_Update(struct Thread* t, struct Driver* d);
-void VehPtr_EatenByPlant_PhysLinear(struct Thread* t, struct Driver* d);
-void VehPtr_EatenByPlant_Animate(struct Thread* t, struct Driver* d);
-void VehPtr_EatenByPlant_Init(struct Thread* t, struct Driver* d);
-void VehPtr_Dead_Init(struct Thread* t, struct Driver* d);
-void VehPtr_EngineRevving_Update(struct Thread* t, struct Driver* d);
-void VehPtr_EngineRevving_PhysLinear(struct Thread* t, struct Driver* d);
-void VehPtr_EngineRevving_Animate(struct Thread* t, struct Driver* d);
-void VehPtr_EngineRevving_Init(struct Thread* t, struct Driver* d);
-void VehPtr_Blasted_Update(struct Thread* t, struct Driver* d);
-void VehPtr_Blasted_PhysLinear(struct Thread* t, struct Driver* d);
-void VehPtr_Blasted_PhysAngular(struct Thread* t, struct Driver* d);
-void VehPtr_Blasted_Animate(struct Thread* t, struct Driver* d);
-void VehPtr_Blasted_Init(struct Thread* t, struct Driver* d);
-void VehPtr_Warp_MoveDustPuff(struct Thread* t, struct Driver* d);
-void VehPtr_Warp_AddDustPuff1(struct Thread* t, struct Driver* d);
-void VehPtr_Warp_AddDustPuff2(struct Thread* t, struct Driver* d);
-void VehPtr_Warp_PhysAngular(struct Thread* t, struct Driver* d);
-void VehPtr_Warp_Init(struct Thread* t, struct Driver* d);
+void VehStuckProc_MaskGrab_FindDestPos(struct Thread* t, struct Driver* d);
+void VehStuckProc_MaskGrab_Particles(struct Thread* t, struct Driver* d);
+void VehStuckProc_MaskGrab_Update(struct Thread* t, struct Driver* d);
+void VehStuckProc_MaskGrab_PhysLinear(struct Thread* t, struct Driver* d);
+void VehStuckProc_MaskGrab_Animate(struct Thread* t, struct Driver* d);
+void VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver* d);
+void VehStuckProc_PlantEaten_Update(struct Thread* t, struct Driver* d);
+void VehStuckProc_PlantEaten_PhysLinear(struct Thread* t, struct Driver* d);
+void VehStuckProc_PlantEaten_Animate(struct Thread* t, struct Driver* d);
+void VehStuckProc_PlantEaten_Init(struct Thread* t, struct Driver* d);
+void VehStuckProc_RIP_Init(struct Thread* t, struct Driver* d);
+void VehStuckProc_RevEngine_Update(struct Thread* t, struct Driver* d);
+void VehStuckProc_RevEngine_PhysLinear(struct Thread* t, struct Driver* d);
+void VehStuckProc_RevEngine_Animate(struct Thread* t, struct Driver* d);
+void VehStuckProc_RevEngine_Init(struct Thread* t, struct Driver* d);
+void VehStuckProc_Tumble_Update(struct Thread* t, struct Driver* d);
+void VehStuckProc_Tumble_PhysLinear(struct Thread* t, struct Driver* d);
+void VehStuckProc_Tumble_PhysAngular(struct Thread* t, struct Driver* d);
+void VehStuckProc_Tumble_Animate(struct Thread* t, struct Driver* d);
+void VehStuckProc_Tumble_Init(struct Thread* t, struct Driver* d);
+void VehStuckProc_Warp_MoveDustPuff(struct Thread* t, struct Driver* d);
+void VehStuckProc_Warp_AddDustPuff1(struct Thread* t, struct Driver* d);
+void VehStuckProc_Warp_AddDustPuff2(struct Thread* t, struct Driver* d);
+void VehStuckProc_Warp_PhysAngular(struct Thread* t, struct Driver* d);
+void VehStuckProc_Warp_Init(struct Thread* t, struct Driver* d);
 
 // TalkingMask (?)
 
-//TalkingMask_ThTick()
-//TalkingMask_Init()
-//TalkingMask_PlayXA()
-//TalkingMask_boolNotTalking()
-//TalkingMask_End()
+//VehTalkMask_ThTick()
+//VehTalkMask_Init()
+//VehTalkMask_PlayXA()
+//VehTalkMask_boolNotTalking()
+//VehTalkMask_End()
 
 // More Turbo...
 
-void Turbo_ProcessBucket(struct Thread* turboThread);
-void Turbo_ThDestroy();
-void Turbo_ThTick(int param_1);
+void VehTurbo_ProcessBucket(struct Thread* turboThread);
+void VehTurbo_ThDestroy();
+void VehTurbo_ThTick(int param_1);
 
 // DrawSky (?)
 

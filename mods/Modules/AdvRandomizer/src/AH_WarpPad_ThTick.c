@@ -477,8 +477,8 @@ void AH_WarpPad_ThTick(struct Thread* t)
 	// warp back. Without this, Freeze causes mask-grab, which makes you drive.
 	// However, with this, state goes 0xA, then 0xB, then 0xA, and warp SFX
 	// plays a second time. Animation also plays twice but is invisible second time
-	void VehPtr_Warp_Init();
-	gGT->drivers[0]->funcPtrs[0] = VehPtr_Warp_Init;
+	void VehStuckProc_Warp_Init();
+	gGT->drivers[0]->funcPtrs[0] = VehStuckProc_Warp_Init;
 	
 	if (warppadObj->framesWarping < 0x400)
 		warppadObj->framesWarping++;

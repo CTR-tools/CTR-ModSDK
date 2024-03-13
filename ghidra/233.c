@@ -727,7 +727,7 @@ void FUN_800ac714(void)
   // did cutscene manipulate audio
   bVar1 = DAT_800b0b8c != 0;
   
-  // VehPtr_Driving_Init
+  // VehPhysProc_Driving_Init
   *(undefined4 *)(iVar4 + 0x54) = 0x80062b74;
   
   // if cutscene changed audio, restore backup
@@ -2711,7 +2711,7 @@ void FUN_800aedf8(int param_1)
   // if at podium, and driver needs to be hidden
   if (*puVar10 == 0) 
   {
-	// VehPtr_Dead_Init
+	// VehStuckProc_RIP_Init
     *(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x24ec) + 0x54) = 0x80067930;
   }
   
@@ -2917,7 +2917,7 @@ void FUN_800aedf8(int param_1)
           }
         }
         
-		// Weapon_Mask_boolGoodGuy
+		// VehPickupItem_MaskBoolGoodGuy
 		uVar6 = FUN_80064be4(*(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec));
 		
 		// if player uses uka
@@ -3543,7 +3543,7 @@ void FUN_800af994(int param_1)
     }
 	
 	// Request Aku Hint,
-	// also calls VehPtr_Freeze_Init
+	// also calls VehPhysProc_FreezeEndEvent_Init
     FUN_80035e20(uVar4,0);
   }
 
@@ -4010,7 +4010,7 @@ void FUN_800b0300(void)
   // Make invisible
   *(uint *)(iVar4 + 0x28) = *(uint *)(iVar4 + 0x28) | 0x80;
   
-  // VehPtr_Freeze_Init
+  // VehPhysProc_FreezeEndEvent_Init
   FUN_80062d04(*(undefined4 *)(iVar4 + 0x6c), *(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec));
   
   puVar2 = PTR_DAT_8008d2ac;

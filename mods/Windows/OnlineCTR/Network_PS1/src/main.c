@@ -38,7 +38,7 @@ void RunEntryHook()
 	*(unsigned int*)0x800526cc = 0;
 	*(unsigned int*)0x80052734 = 0;
 	
-	// Cancel VehInit_TeleportAll, cause it's done manually.
+	// Cancel VehBirth_TeleportAll, cause it's done manually.
 	// Manual spawn is required for battle map fixes
 	*(int*)0x80058898 = 0x3E00008;
 	*(int*)0x8005889C = 0;

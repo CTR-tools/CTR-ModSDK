@@ -196,7 +196,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
 
     // If you are here, game must not be paused
 
-    driver->funcPtrs[0] = DECOMP_VehPtr_Freeze_Init;
+    driver->funcPtrs[0] = DECOMP_VehPhysProc_FreezeEndEvent_Init;
 
     door->camFlags |= WdCam_CutscenePlaying;
 
@@ -506,7 +506,7 @@ void DECOMP_AH_Door_ThTick(struct Thread* t)
   	
   cDC->flags |= 0x400;
   
-  driver->funcPtrs[0] = DECOMP_VehPtr_Driving_Init;
+  driver->funcPtrs[0] = DECOMP_VehPhysProc_Driving_Init;
   
   // cutscene over
   door->camFlags &= ~(0x10);

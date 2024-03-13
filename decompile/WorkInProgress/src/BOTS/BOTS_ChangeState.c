@@ -199,7 +199,7 @@ u_char DECOMP_BOTS_ChangeState(
   }
 
   // === Count Statistics ===
-  // Exactly the same as Player_ChangeState
+  // Exactly the same as VehPickState_NewState
 
   if (damageType)
   {

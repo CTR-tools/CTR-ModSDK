@@ -10,7 +10,7 @@
 // param2 - reserves to add
 // param3 - add type
 // param4 - fire level
-void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel)
+void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel)
 {
 	char kartState;
 	u_char count;
@@ -115,7 +115,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			&sdata->s_turbo1[0],	// name
 			0x300, 				// SmallStackPool
 			TURBO, 				// ThreadBucket
-			Turbo_ThTick,	// func
+			VehTurbo_ThTick,	// func
 			0x10, 				// object size
 			0					// no parent thread
 		);
@@ -127,7 +127,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// get thread, ignore all collisions
 			turboThread = turboInst1->thread;
 			turboThread->flags |= 0x1000;
-			turboThread->funcThDestroy = Turbo_ThDestroy;
+			turboThread->funcThDestroy = VehTurbo_ThDestroy;
 			
 			// turbo #2
 			turboInst2 = INSTANCE_Birth3D(
@@ -158,7 +158,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 				//racer is not crashing
 				if(driver->kartState != '\x01')
 				{
-					Turbo_Audio(driver, fireLevel);
+					VehFire_Audio(driver, fireLevel);
 				}
 			}
 	
@@ -239,7 +239,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			
 			{
 				turboObj->fireAudioDistort = 0;
-				Turbo_Audio(driver, fireLevel);
+				VehFire_Audio(driver, fireLevel);
 			}
 		}
 	}

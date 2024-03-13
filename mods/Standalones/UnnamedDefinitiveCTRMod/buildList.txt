@@ -41,18 +41,18 @@ common, exe, BOTS_SetRotation, -0x8, ../../Modules/BlueFire/src/hookUpdate.s
 
 // Keep U-Turn reserves stuff
 // Erasing the original reserve cancelation if, so that we can run our own code
-926, exe, VehPtr_Driving_PhysLinear, 0xA30, src/Packaged_Mods/Retro-Fueled/hookReserveCancelation.s
-926, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
-1020, exe, VehPtr_Driving_PhysLinear, 0xA30, src/Packaged_Mods/Retro-Fueled/hookReserveCancelation.s
-1020, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
-1111, exe, VehPtr_Driving_PhysLinear, 0xA4C, src/Packaged_Mods/Retro-Fueled/hookReserveCancelation.s
-1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA30, src/Packaged_Mods/Retro-Fueled/hookReserveCancelation.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA30, src/Packaged_Mods/Retro-Fueled/hookReserveCancelation.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA4C, src/Packaged_Mods/Retro-Fueled/hookReserveCancelation.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA54, ../../../nop.s
 
-// Modify Turbo_Increment function to allow for USF stacking
-common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_Hook.s
+// Modify VehFire_Increment function to allow for USF stacking
+common, exe, VehFire_Increment, 0x0, src/VehFire_Increment_Hook.s
 
-// Modify OnCollide_Drivers function for enabling or disabling the STP cheat
-common, exe, OnCollide_Drivers, 0x0, src/Packaged_Mods/Retro-Fueled/OopsAllSuperTurboPads.c
+// Modify VehPhysForce_CollideDrivers function for enabling or disabling the STP cheat
+common, exe, VehPhysForce_CollideDrivers, 0x0, src/Packaged_Mods/Retro-Fueled/OopsAllSuperTurboPads.c
 
 ///////////// ExtraDifficulty /////////////
 
@@ -84,5 +84,5 @@ common, exe, LOAD_Hub_ReadFile, -0x8, src/Packaged_Mods/MirrorMode/hookRemap.s
 common, 230, MM_EndOfFile, 0x0, src/Race_Options/RaceOptions.c src/Race_Options/230_56_MM_TrackSelect_MenuBox.c src/Options_Menu/OptionsMenu_Insert.c src/Options_Menu/OptionsMenu.c src/Options_Menu/ControllerSFXOptions_TitleScreen.c src/Options_Menu/GameplayOptions.c src/Packaged_Mods/ExtraDifficulty/MM_ExtraDifficulty.c src/230_09_30_MM_CheatCodes.c
 
 // Compile code to empty spaces in RDATA //
-common, exe, rdata_free, 0x0, src/Globals.c src/Packaged_Mods/Retro-Fueled/KeepU-TurnReserves.c src/Packaged_Mods/Retro-Fueled/BlueFire.c src/Turbo_Increment.c src/Packaged_Mods/ReservesMeter/main.c src/BetterPentaIcon.c
+common, exe, rdata_free, 0x0, src/Globals.c src/Packaged_Mods/Retro-Fueled/KeepU-TurnReserves.c src/Packaged_Mods/Retro-Fueled/BlueFire.c src/VehFire_Increment.c src/Packaged_Mods/ReservesMeter/main.c src/BetterPentaIcon.c
 common, exe, Torch_Main, 0x0, src/Packaged_Mods/MirrorMode/MI_main.c src/Packaged_Mods/MirrorMode/pad_remap.c src/Packaged_Mods/MirrorMode/entry.c

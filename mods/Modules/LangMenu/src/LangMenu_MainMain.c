@@ -222,7 +222,7 @@ u_int main()
 
 			GAMEPAD_GetNumConnected(sdata->gGamepads);
 			sdata->boolSoundPaused = 0;
-			VehInit_EngineAudio_AllPlayers();
+			VehBirth_EngineAudio_AllPlayers();
 
 			// 9 = intro cutscene
 			// 10 = traffic lights

@@ -61,11 +61,11 @@ void RunInitHook()
 	for(i = 1; i < NUM_PLAYERS; i++)
 	{
 		// player[0] already exists
-		drivers[i] = VehInit_Player(i);
+		drivers[i] = VehBirth_Player(i);
 	}
 
 	// send to start line (corrects driver animations)
-	VehInit_TeleportAll(sdata->gGT, 2);
+	VehBirth_TeleportAll(sdata->gGT, 2);
 
 	// move drivers that are not P1
 	for(i = 1; i < NUM_PLAYERS; i++)

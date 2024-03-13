@@ -47,5 +47,5 @@ void DECOMP_MainGameStart_Initialize(struct GameTracker* gGT, char boolStopAudio
     DECOMP_howl_StopAudio(0,0,1);
   }
 
-  DECOMP_VehInit_TeleportAll(gGT,2);
+  DECOMP_VehBirth_TeleportAll(gGT,2);
 }

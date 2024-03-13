@@ -22,8 +22,8 @@
 // +3 for CS_Garage
 // +3 for VehPtr_Blasted
 // +2 for VehPtr_EngineRevving
-// +4 for VehPtr_Driving
-// +2 for VehPtr_EatenByPlant
+// +4 for VehPhysProc_Driving
+// +2 for VehStuckProc_PlantEaten
 // +3 for VehPtr_MaskGrab
 // +16 for RB_Block1
 // +3 for RB_CtrLetter
@@ -225,9 +225,6 @@ common, exe, DecalHUD_DrawPolyFT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyFT4.c
 common, exe, DecalHUD_DrawWeapon, 0x0, General/DecalHUD/DecalHUD_DrawWeapon.c
 common, exe, DecalHUD_DrawPolyGT4, 0x0, General/DecalHUD/DecalHUD_DrawPolyGT4.c
 common, exe, DecalHUD_Arrow2D, 0x0, General/DecalHUD/DecalHUD_Arrow2D.c
-
-// skidmarks
-common, exe, DrawSkidMarks_Subset2, 0x0, General/DrawSkidMarks_Subset2.c
 
 // Display
 common, exe, DISPLAY_Swap, 0x0, General/Display/DISPLAY_Swap.c
@@ -525,8 +522,7 @@ common, exe, MENUBOX_Show, 0x0, General/MenuBox/MENUBOX_Show.c
 common, exe, MENUBOX_Hide, 0x0, General/MenuBox/MENUBOX_Hide.c
 common, exe, MENUBOX_BoolHidden, 0x0, General/MenuBox/MENUBOX_BoolHidden.c
 
-// Title (?)
-common, exe, TitleOSK_DrawMenu, 0x0, General/TitleOSK_DrawMenu.c
+common, exe, Tawna_Init, 0x0, General/Tawna_Init.c
 
 // THREAD (need 3 more)
 common, exe, THREAD_DestroyTracker, 0x0, General/THREAD/THREAD_DestroyTracker.c
@@ -569,6 +565,9 @@ common, exe, TitleFlag_ResetTextAnim, 0x0, General/TitleFlag/TitleFlag_t12_Reset
 common, exe, TitleFlag_DrawLoadingString, 0x0, General/TitleFlag/TitleFlag_t13_DrawLoadingString.c
 common, exe, TitleFlag_DrawSelf, 0x0, General/TitleFlag/TitleFlag_t14_DrawSelf.c
 
+// Title (?)
+common, exe, TitleOSK_DrawMenu, 0x0, General/TitleOSK_DrawMenu.c
+
 // RCNT (watch out for namespace name, not alphabetical)
 common, exe, RCNT_Init, 0x0, General/RCNT/RCNT_Init.c
 common, exe, RCNT_Destroy, 0x0, General/RCNT/RCNT_Destroy.c
@@ -605,71 +604,68 @@ common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_AAA_BigBlock1.c
 common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
 
-// VEH Init
-//ommon, exe, VehInit_TeleportSelf, 0x0, General/Vehicle/VehInit_TeleportSelf.c
-common, exe, VehInit_TeleportAll, 0x0, General/Vehicle/VehInit_TeleportAll.c
-common, exe, VehInit_GetModelByName, 0x0, General/Vehicle/VehInit_GetModelByName.c
-common, exe, VehInit_SetConsts, 0x0, General/Vehicle/VehInit_SetConsts.c
-common, exe, VehInit_EngineAudio_AllPlayers, 0x0, General/Vehicle/VehInit_EngineAudio_AllPlayers.c
-common, exe, VehInit_TireSprites, 0x0, General/Vehicle/VehInit_TireSprites.c
-common, exe, VehInit_NonGhost, 0x0, General/Vehicle/VehInit_NonGhost.c
-common, exe, VehInit_Player, 0x0, General/Vehicle/VehInit_Player.c
+//ommon, exe, VehBirth_TeleportSelf, 0x0, General/Vehicle/VehBirth_TeleportSelf.c
+common, exe, VehBirth_TeleportAll, 0x0, General/Vehicle/VehBirth_TeleportAll.c
+common, exe, VehBirth_GetModelByName, 0x0, General/Vehicle/VehBirth_GetModelByName.c
+common, exe, VehBirth_SetConsts, 0x0, General/Vehicle/VehBirth_SetConsts.c
+common, exe, VehBirth_EngineAudio_AllPlayers, 0x0, General/Vehicle/VehBirth_EngineAudio_AllPlayers.c
+common, exe, VehBirth_TireSprites, 0x0, General/Vehicle/VehBirth_TireSprites.c
+common, exe, VehBirth_NonGhost, 0x0, General/Vehicle/VehBirth_NonGhost.c
+common, exe, VehBirth_Player, 0x0, General/Vehicle/VehBirth_Player.c
 
-// VEH Math
-common, exe, VehMath_InterpBySpeed, 0x0, General/Vehicle/VehMath_InterpBySpeed.c
-common, exe, VehMath_MapToRange, 0x0, General/Vehicle/VehMath_MapToRange.c
-common, exe, VehMath_SteerAccel, 0x0, General/Vehicle/VehMath_SteerAccel.c
+common, exe, VehCalc_InterpBySpeed, 0x0, General/Vehicle/VehCalc_InterpBySpeed.c
+common, exe, VehCalc_MapToRange, 0x0, General/Vehicle/VehCalc_MapToRange.c
+common, exe, VehCalc_SteerAccel, 0x0, General/Vehicle/VehCalc_SteerAccel.c
 
-// VEH PTR
-common, exe, VehPtr_Driving_PhysAngular, 0x0, General/Vehicle/VehPtr_Driving_PhysAngular.c
-// more
-common, exe, VehPtr_Driving_PhysLinear, 0x0, General/Vehicle/VehPtr_Driving_PhysLinear.c
-common, exe, VehPtr_Driving_Audio, 0x0, General/Vehicle/VehPtr_Driving_Audio.c
-common, exe, VehPtr_Driving_Update, 0x0, General/Vehicle/VehPtr_Driving_Update.c
-common, exe, VehPtr_Driving_Init, 0x0, General/Vehicle/VehPtr_Driving_Init.c
+common, exe, VehFire_Increment, 0x0, General/Vehicle/VehFire_Increment.c
+common, exe, VehFire_Audio, 0x0, General/Vehicle/VehFire_Audio.c
 
-common, exe, VehPtr_Freeze_PhysLinear, 0x0, General/Vehicle/VehPtr_Freeze_PhysLinear.c
-common, exe, VehPtr_Freeze_Init, 0x0, General/Vehicle/VehPtr_Freeze_Init.c
+common, exe, VehGroundSkids_Subset2, 0x0, General/Vehicle/VehGroundSkids_Subset2.c
 
-// everything between VehPtr_Freeze_Init and Player_ChangeState
-common, exe, VehPtr_AntiVShift_Update, 0x0, General/Vehicle/VehPtr_AAA_BigBlock1.c
+common, exe, VehPhysForce_ConvertSpeedToVec, 0x0, General/Vehicle/VehPhysForce_ConvertSpeedToVec.c
+common, exe, VehPhysForce_AccelTerrainSlope, 0x0, General/Vehicle/VehPhysForce_AccelTerrainSlope.c
+common, exe, VehPhysForce_OnApplyForces, 0x0, General/Vehicle/VehPhysForce_OnApplyForces.c
 
-common, exe, Player_ChangeState, 0x0, General/Player_ChangeState.c
+common, exe, VehPhysGeneral_PhysAngular, 0x0, General/Vehicle/VehPhysGeneral_PhysAngular.c
+common, exe, VehPhysGeneral_SetHeldItem, 0x0, General/Vehicle/VehPhysGeneral_SetHeldItem.c
+common, exe, VehPhysGeneral_LerpToForwards, 0x0, General/Vehicle/VehPhysGeneral_LerpToForwards.c
+common, exe, VehPhysGeneral_LerpQuarterStrength, 0x0, General/Vehicle/VehPhysGeneral_LerpQuarterStrength.c
+//ommon, exe, VehPhysGeneral_GetBaseSpeed, 0x0, General/Vehicle/VehPhysGeneral_GetBaseSpeed.c
 
-// Weapon
+common, exe, VehPhysJoystick_ReturnToRest, 0x0, General/Vehicle/VehPhysJoystick_ReturnToRest.c
+common, exe, VehPhysJoystick_GetStrength, 0x0, General/Vehicle/VehPhysJoystick_GetStrength.c
+common, exe, VehPhysJoystick_GetStrengthAbsolute, 0x0, General/Vehicle/VehPhysJoystick_GetStrengthAbsolute.c
 
-// VehPtr_MaskGrab_FindDestPos still needed
-common, exe, VehPtr_MaskGrab_Particles, 0x0, General/Vehicle/VehPtr_MaskGrab_FuncPtrs.c
-common, exe, VehPtr_MaskGrab_Init, 0x0, General/Vehicle/VehPtr_MaskGrab_Init.c
-common, exe, VehPtr_EatenByPlant_Update, 0x0, General/Vehicle/VehPtr_EatenByPlant_FuncPtrs.c
-common, exe, VehPtr_EatenByPlant_Init, 0x0, General/Vehicle/VehPtr_EatenByPlant_Init.c
-common, exe, VehPtr_Dead_Init, 0x0, General/Vehicle/VehPtr_Dead_Init.c
-common, exe, VehPtr_EngineRevving_Update, 0x0, General/Vehicle/VehPtr_EngineRevving_FuncPtrs.c
-common, exe, VehPtr_EngineRevving_Init, 0x0, General/Vehicle/VehPtr_EngineRevving_Init.c
-common, exe, VehPtr_Blasted_Update, 0x0, General/Vehicle/VehPtr_Blasted_FuncPtrs.c
-common, exe, VehPtr_Blasted_Init, 0x0, General/Vehicle/VehPtr_Blasted_Init.c
+common, exe, VehPhysProc_Driving_PhysLinear, 0x0, General/Vehicle/VehPhysProc_Driving_PhysLinear.c
+common, exe, VehPhysProc_Driving_Audio, 0x0, General/Vehicle/VehPhysProc_Driving_Audio.c
+common, exe, VehPhysProc_Driving_Update, 0x0, General/Vehicle/VehPhysProc_Driving_Update.c
+common, exe, VehPhysProc_Driving_Init, 0x0, General/Vehicle/VehPhysProc_Driving_Init.c
 
+common, exe, VehPhysProc_FreezeEndEvent_PhysLinear, 0x0, General/Vehicle/VehPhysProc_FreezeEndEvent_PhysLinear.c
+common, exe, VehPhysProc_FreezeEndEvent_Init, 0x0, General/Vehicle/VehPhysProc_FreezeEndEvent_Init.c
 
-// VEH (other)
-common, exe, Driver_ConvertSpeedToVectors, 0x0, General/Driver_ConvertSpeedToVectors.c
-common, exe, Driver_AccelTerrainSlope, 0x0, General/Driver_AccelTerrainSlope.c
-common, exe, OnApplyForces, 0x0, General/OnApplyForces.c
-common, exe, Player_SetHeldItem, 0x0, General/Player_SetHeldItem.c
-common, exe, Player_Driving_LerpToForwards, 0x0, General/Player_Driving_LerpToForwards.c
-common, exe, Player_Driving_LerpQuarterStrength, 0x0, General/Player_Driving_LerpQuarterStrength.c
-//ommon, exe, Player_GetBaseSpeed, 0x0, General/Player_GetBaseSpeed.c
-common, exe, Player_StickReturnToRest, 0x0, General/Player_StickReturnToRest.c
-common, exe, Player_StickGetStrength, 0x0, General/Player_StickGetStrength.c
-common, exe, Player_StickGetStrengthAbsolute, 0x0, General/Player_StickGetStrengthAbsolute.c
-common, exe, Turbo_Increment, 0x0, General/Turbo_Increment.c
-common, exe, Turbo_ThTick, 0x0, General/Turbo_ThTick.c
-common, exe, Turbo_ThDestroy, 0x0, General/Turbo_ThDestroy.c
-common, exe, Turbo_Audio, 0x0, General/Turbo_Audio.c
-common, exe, Weapon_Mask_boolGoodGuy, 0x0, General/Weapon_Mask_boolGoodGuy.c
-common, exe, Weapon_Shoot_Now, 0x0, General/Weapon_Shoot_Now.c
-common, exe, Weapon_Shoot_OnCirclePress, 0x0, General/Weapon_Shoot_OnCirclePress.c
+// everything between VehPhysProc_FreezeEndEvent_Init and VehPickState_NewState
+common, exe, VehPhysProc_FreezeVShift_Update, 0x0, General/Vehicle/VehPhysProc_AAA_BigBlock1.c
 
-common, exe, Tawna_Init, 0x0, General/Tawna_Init.c
+common, exe, VehPickState_NewState, 0x0, General/Vehicle/VehPickState_NewState.c
+
+common, exe, VehPickupItem_MaskBoolGoodGuy, 0x0, General/Vehicle/VehPickupItem_MaskBoolGoodGuy.c
+common, exe, VehPickupItem_ShootNow, 0x0, General/Vehicle/VehPickupItem_ShootNow.c
+common, exe, VehPickupItem_ShootOnCirclePress, 0x0, General/Vehicle/VehPickupItem_ShootOnCirclePress.c
+
+// VehStuckProc_MaskGrab_FindDestPos still needed
+common, exe, VehStuckProc_MaskGrab_Particles, 0x0, General/Vehicle/VehStuckProc_MaskGrab_FuncPtrs.c
+common, exe, VehStuckProc_MaskGrab_Init, 0x0, General/Vehicle/VehStuckProc_MaskGrab_Init.c
+common, exe, VehStuckProc_PlantEaten_Update, 0x0, General/Vehicle/VehStuckProc_PlantEaten_FuncPtrs.c
+common, exe, VehStuckProc_PlantEaten_Init, 0x0, General/Vehicle/VehStuckProc_PlantEaten_Init.c
+common, exe, VehStuckProc_RIP_Init, 0x0, General/Vehicle/VehStuckProc_RIP_Init.c
+common, exe, VehStuckProc_RevEngine_Update, 0x0, General/Vehicle/VehStuckProc_RevEngine_FuncPtrs.c
+common, exe, VehStuckProc_RevEngine_Init, 0x0, General/Vehicle/VehStuckProc_RevEngine_Init.c
+common, exe, VehStuckProc_Tumble_Update, 0x0, General/Vehicle/VehStuckProc_Tumble_FuncPtrs.c
+common, exe, VehStuckProc_Tumble_Init, 0x0, General/Vehicle/VehStuckProc_Tumble_Init.c
+
+common, exe, VehTurbo_ThTick, 0x0, General/Vehicle/VehTurbo_ThTick.c
+common, exe, VehTurbo_ThDestroy, 0x0, General/Vehicle/VehTurbo_ThDestroy.c
 
 // Japan
 

@@ -88,7 +88,7 @@ PLAY_AUDIO:
     else
     {
         // Map value from [oldMin, oldMax] to [newMin, newMax]
-        volume = DECOMP_VehMath_MapToRange(distance, 300, 9000, 0xff, 0);
+        volume = DECOMP_VehCalc_MapToRange(distance, 300, 9000, 0xff, 0);
     }
 
     OtherFX_Play_LowLevel(

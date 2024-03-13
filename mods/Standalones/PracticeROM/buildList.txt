@@ -16,7 +16,7 @@ common, exe, LOAD_Callback_Overlay_231, -0x8, src/MM_hookCallback230.s
 // Include USAUnlimitedPenta
 926, exe, 0x80086E54, 0x0, ../../Patches/USAUnlimitedPenta/assets/metadata.bin
 926, exe, 0x80088A0C, 0x0, ../../Patches/USAUnlimitedPenta/assets/stats.bin
-926, exe, VehInit_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
+926, exe, VehBirth_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
 
 // Compile code to empty spaces in RDATA
 common, exe, rdata_free, 0x0, src/p_rom.c

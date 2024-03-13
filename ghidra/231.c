@@ -122,7 +122,7 @@ void FUN_800abbb4(int param_1,int param_2)
 	
     sVar6 = 0;
 	
-	// VehPtr_Dead_Init
+	// VehStuckProc_RIP_Init
     *(undefined4 *)(param_2 + 0x54) = 0x80067930;
     
 	puVar1 = PTR_DAT_8008d2ac;
@@ -531,7 +531,7 @@ int FUN_800ac1b0(int param_1,undefined4 param_2, param_3, param_4)
   // if this driver is not an AI
   if ((*(uint *)(param_1 + 0x2c8) & 0x100000) == 0) 
   {
-	// Player_ChangeState
+	// VehPickState_NewState
     return FUN_80064568(param_1,param_2,param_3,param_4);
   }
   
@@ -998,7 +998,7 @@ void FUN_800ac6b4(int param_1)
   if (DAT_1f80014a == 0) {
     if (DAT_1f800146 != 0) 
 	{
-	  // Rot_AxisAngle
+	  // VehPhysForce_RotAxisAngle
       FUN_8005f89c(iVar6 + 0x30,&DAT_1f800178,0);
       
 	  // hitbox minY
@@ -2593,7 +2593,7 @@ LAB_800add14:
 	  // DYNAMIC_ROCKET
       if (*(short *)(*(int *)(iVar10 + 0x18) + 0x10) == 0x29) 
 	  {
-	    // Rot_AxisAngle
+	    // VehPhysForce_RotAxisAngle
         FUN_8005f89c(iVar10 + 0x30,&DAT_1f800178,(int)*(short *)((int)piVar9 + 0x1e));
       }
 	  
@@ -12725,7 +12725,7 @@ LAB_800b9aa8:
 	  
 	  // === Naughty Dog Bug ===
 	  // voiceline is already handled in RB_Hazard_HurtDriver,
-	  // which calls Player_ChangeState, which calls Voiceline_RequestPlay.
+	  // which calls VehPickState_NewState, which calls Voiceline_RequestPlay.
 	  // calling it here makes the driver talk twice
 	  
 	  // make driver talk

@@ -139,7 +139,7 @@ void DECOMP_CAM_FollowDriver_Normal(struct CameraDC *cDC, struct Driver *d, stru
     *(short *)(scratchpad + 0x20c) = 0;
     *(short *)(scratchpad + 0x20e) = 0;
 
-    uVar8 = DECOMP_VehMath_MapToRange
+    uVar8 = DECOMP_VehCalc_MapToRange
 	(
 		cDC->cameraMoveSpeed,
         (int)zoom->speedMin, (int)zoom->speedMax,

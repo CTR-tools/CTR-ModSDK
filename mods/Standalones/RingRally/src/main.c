@@ -46,7 +46,7 @@ void KillCrystals()
 void EndCrystalChallenge(void)
 {
 	// freeze driver
-	sdata->gGT->drivers[0]->funcPtrs[0] = VehPtr_Freeze_Init;
+	sdata->gGT->drivers[0]->funcPtrs[0] = VehPhysProc_FreezeEndEvent_Init;
 
 	// make invisible
 	KillCrystals();
@@ -74,25 +74,25 @@ void InjectRetroFueled()
 {
 	// port of Retro Fueled by TheRedhotbr
 
-	*(unsigned char*)(Turbo_Increment + 0x37A) = 0;
+	*(unsigned char*)(VehFire_Increment + 0x37A) = 0;
 
 	// Set pads to USF
-	*(unsigned char*)(OnCollide_Drivers + 0xB9) = 8;
+	*(unsigned char*)(VehPhysForce_CollideDrivers + 0xB9) = 8;
 
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA30) = 0x8200040D;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA34) = 0x30B80002;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA38) = 0x30B90020;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA3C) = 0x17000006;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA40) = 0x319C020;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA44) = 0x13200004;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA48) = 0;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA60) = 0x20190022;
-	*(unsigned char*)(VehPtr_Driving_PhysLinear + 0xA70) = 3;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA80) = 0x13190002;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA84) = 0;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA88) = 0x14400002;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA8C) = 0x24020006;
-	*(unsigned int* )(VehPtr_Driving_PhysLinear + 0xA90) = 0x1682001C;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA30) = 0x8200040D;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA34) = 0x30B80002;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA38) = 0x30B90020;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA3C) = 0x17000006;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA40) = 0x319C020;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA44) = 0x13200004;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA48) = 0;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA60) = 0x20190022;
+	*(unsigned char*)(VehPhysProc_Driving_PhysLinear + 0xA70) = 3;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA80) = 0x13190002;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA84) = 0;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA88) = 0x14400002;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA8C) = 0x24020006;
+	*(unsigned int* )(VehPhysProc_Driving_PhysLinear + 0xA90) = 0x1682001C;
 }
 
 // To do: finish collision for spinning ring (in PL test),

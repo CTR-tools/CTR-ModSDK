@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel)
+void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel)
 {
 	char kartState;
 	u_char count;
@@ -107,7 +107,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			&sdata->s_turbo1[0],	// name
 			SMALL, 				// SmallStackPool
 			TURBO, 				// ThreadBucket
-			Turbo_ThTick,	// func
+			VehTurbo_ThTick,	// func
 			0x10, 				// object size
 			0					// no parent thread
 		);
@@ -119,7 +119,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			// get thread, ignore all collisions
 			turboThread = turboInst1->thread;
 			turboThread->flags |= 0x1000;
-			turboThread->funcThDestroy = Turbo_ThDestroy;
+			turboThread->funcThDestroy = VehTurbo_ThDestroy;
 			
 			// turbo #2
 			turboInst2 = INSTANCE_Birth3D(
@@ -149,7 +149,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 				
 				if(driver->kartState != KS_CRASHING)
 				{
-					Turbo_Audio(driver, fireLevel);
+					VehFire_Audio(driver, fireLevel);
 				}
 			}
 	
@@ -230,7 +230,7 @@ void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int
 			
 			{
 				turboObj->fireAudioDistort = 0;
-				Turbo_Audio(driver, fireLevel);
+				VehFire_Audio(driver, fireLevel);
 			}
 		}
 	}

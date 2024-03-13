@@ -4,20 +4,20 @@
 common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
 
 // Erasing the original reserve cancelation if, so that we can run our own code
-926, exe, VehPtr_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-926, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
-1020, exe, VehPtr_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1020, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
-1111, exe, VehPtr_Driving_PhysLinear, 0xA4C, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA4C, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA54, ../../../nop.s
 
 // Binary edits
 // Turbo pad to STP
-common, exe, OnCollide_Drivers, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
+common, exe, VehPhysForce_CollideDrivers, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
 // Standardize turbo pad reserves
-common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
+common, exe, VehPhysForce_CollideDrivers, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
 
-// Modify Turbo_Increment function to allow for USF stacking
+// Modify VehFire_Increment function to allow for USF stacking
 926, exe, 0x8005AF76, 0x0, ../../../8bitnop.bin
 
 // Texture replacements
@@ -103,8 +103,8 @@ common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/Standard
 // Inject compiled code for Penta's stats into the executable
 926, exe, 0x80088A0C, 0x0, ../../Patches/USAUnlimitedPenta/assets/stats.bin
 
-// Compile modified VehInit_SetConsts
-926, exe, VehInit_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
+// Compile modified VehBirth_SetConsts
+926, exe, VehBirth_SetConsts, 0x0, ../../Patches/USAUnlimitedPenta/src/USAUnlimitedPenta.c
 
 // FixAdventureModeCharacterSelectArrows //
 // the same bug is also present here of course

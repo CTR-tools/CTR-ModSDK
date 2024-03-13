@@ -1,6 +1,6 @@
 #include <common.h>
 
-void VehPtr_Dead_Init(struct Thread*, struct Driver*);
+void VehStuckProc_RIP_Init(struct Thread*, struct Driver*);
 
 void DECOMP_RB_Player_KillPlayer(struct Driver* player_1, struct Driver* player_2)
 {
@@ -56,7 +56,7 @@ void DECOMP_RB_Player_KillPlayer(struct Driver* player_1, struct Driver* player_
 	
     teamsAlive = 0;
 	
-    player_2->funcPtrs[0] = VehPtr_Dead_Init;
+    player_2->funcPtrs[0] = VehStuckProc_RIP_Init;
 	
 	// set lives to zero
     player_2->BattleHUD.numLives = 0;

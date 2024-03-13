@@ -422,77 +422,77 @@ void DECOMP_UI_Map_DrawMap(struct Icon* mapTop, struct Icon* mapBottom, short po
 void DECOMP_UI_Lerp2D_Linear(short* ptrPos, short startX, short startY, short endX, short endY, int curFrame, short endFrame);
 
 // VEH
-void DECOMP_VehInit_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPosY);
-void DECOMP_VehInit_TeleportAll(struct GameTracker *gGT, u_int spawnFlags);
-void DECOMP_VehInit_SetConsts(struct Driver* driver);
-void DECOMP_VehInit_EngineAudio_AllPlayers(void);
-void DECOMP_VehInit_TireSprites(struct Thread *t);
-void DECOMP_VehInit_NonGhost(struct Thread* t, int index);
-struct Driver* DECOMP_VehInit_Player(int index);
+void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnPosY);
+void DECOMP_VehBirth_TeleportAll(struct GameTracker *gGT, u_int spawnFlags);
+void DECOMP_VehBirth_SetConsts(struct Driver* driver);
+void DECOMP_VehBirth_EngineAudio_AllPlayers(void);
+void DECOMP_VehBirth_TireSprites(struct Thread *t);
+void DECOMP_VehBirth_NonGhost(struct Thread* t, int index);
+struct Driver* DECOMP_VehBirth_Player(int index);
 
-void DECOMP_VehPtr_Driving_PhysAngular(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysGeneral_PhysAngular(struct Thread *t, struct Driver *d);
 
-void DECOMP_VehPtr_Driving_PhysLinear(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Driving_Audio(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Driving_Update(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_Driving_Audio(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_Driving_Update(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_Driving_Init(struct Thread *t, struct Driver *d);
 
-void DECOMP_VehPtr_Freeze_PhysLinear(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Freeze_Init(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_FreezeEndEvent_PhysLinear(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_FreezeEndEvent_Init(struct Thread *t, struct Driver *d);
 
-void DECOMP_VehPtr_AntiVShift_Update(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_AntiVShift_ReverseOneFrame(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_AntiVShift_Init(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_FreezeVShift_Update(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_FreezeVShift_ReverseOneFrame(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_FreezeVShift_Init(struct Thread *t, struct Driver *d);
 
-void DECOMP_VehPtr_Drifting_PhysAngular(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Drifting_Finalize(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Drifting_PhysLinear(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Drifting_InitSetUpdate(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Drifting_Init(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_PowerSlide_PhysAngular(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_PowerSlide_Finalize(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_PowerSlide_Update(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_PowerSlide_PhysLinear(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_PowerSlide_InitSetUpdate(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_PowerSlide_Init(struct Thread *t, struct Driver *d);
 
-void DECOMP_VehPtr_Crashing_PhysAngular(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Crashing_Update(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Crashing_PhysLinear(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Crashing_Animate(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Crashing_Init(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SlamWall_PhysAngular(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SlamWall_Update(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SlamWall_PhysLinear(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SlamWall_Animate(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SlamWall_Init(struct Thread *t, struct Driver *d);
 
-void DECOMP_VehPtr_Spinning_Update(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Spinning_PhysLinear(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Spinning_PhysAngular(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Spinning_InitSetUpdate(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_Spinning_Init(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinFirst_Update(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinFirst_PhysLinear(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinFirst_PhysAngular(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinFirst_InitSetUpdate(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinFirst_Init(struct Thread *t, struct Driver *d);
 
-void DECOMP_VehPtr_LastSpin_Update(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_LastSpin_PhysLinear(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_LastSpin_PhysAngular(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_LastSpin_Init(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinLast_Update(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinLast_PhysLinear(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinLast_PhysAngular(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinLast_Init(struct Thread *t, struct Driver *d);
 
-void DECOMP_VehPtr_StopSpin_Update(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_StopSpin_PhysLinear(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_StopSpin_PhysAngular(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_StopSpin_Animate(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_StopSpin_Init(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinStop_Update(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinStop_PhysLinear(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinStop_PhysAngular(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinStop_Animate(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_SpinStop_Init(struct Thread *t, struct Driver *d);
 
-void DECOMP_VehPtr_EngineRevving_Update(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_EngineRevving_PhysLinear(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_EngineRevving_Animate(struct Thread *t, struct Driver *d);
-void DECOMP_VehPtr_EngineRevving_Init(struct Thread *t, struct Driver *d);
+void DECOMP_VehStuckProc_RevEngine_Update(struct Thread *t, struct Driver *d);
+void DECOMP_VehStuckProc_RevEngine_PhysLinear(struct Thread *t, struct Driver *d);
+void DECOMP_VehStuckProc_RevEngine_Animate(struct Thread *t, struct Driver *d);
+void DECOMP_VehStuckProc_RevEngine_Init(struct Thread *t, struct Driver *d);
 
-void DECOMP_Driver_ConvertSpeedToVectors(struct Driver* driver);
-void DECOMP_Driver_AccelTerrainSlope(struct Driver *driver);
-void DECOMP_OnApplyForces(struct Thread *t, struct Driver *d);
-void DECOMP_Player_SetHeldItem(struct Driver* driver);
-void DECOMP_Weapon_Shoot_OnCirclePress(struct Driver *d);
-void DECOMP_Turbo_Audio(struct Driver* driver, int speed_cap);
-void DECOMP_Turbo_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
-void DECOMP_Turbo_ThTick(struct Thread* t);
-void DECOMP_Turbo_ThDestroy(struct Thread* t);
+void DECOMP_VehPhysForce_ConvertSpeedToVec(struct Driver* driver);
+void DECOMP_VehPhysForce_AccelTerrainSlope(struct Driver *driver);
+void DECOMP_VehPhysForce_OnApplyForces(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysGeneral_SetHeldItem(struct Driver* driver);
+void DECOMP_VehPickupItem_ShootOnCirclePress(struct Driver *d);
+void DECOMP_VehFire_Audio(struct Driver* driver, int speed_cap);
+void DECOMP_VehFire_Increment(struct Driver* driver, int reserves, u_int type, int fireLevel);
+void DECOMP_VehTurbo_ThTick(struct Thread* t);
+void DECOMP_VehTurbo_ThDestroy(struct Thread* t);
 
-void DECOMP_VehPtr_Blasted_Update(struct Thread *thread, struct Driver *driver);
-void DECOMP_VehPtr_Blasted_PhysLinear(struct Thread *thread, struct Driver *driver);
-void DECOMP_VehPtr_Blasted_PhysAngular(struct Thread *thread, struct Driver *driver);
-void DECOMP_VehPtr_Blasted_Animate(struct Thread *thread,struct Driver *driver);
+void DECOMP_VehStuckProc_Tumble_Update(struct Thread *thread, struct Driver *driver);
+void DECOMP_VehStuckProc_Tumble_PhysLinear(struct Thread *thread, struct Driver *driver);
+void DECOMP_VehStuckProc_Tumble_PhysAngular(struct Thread *thread, struct Driver *driver);
+void DECOMP_VehStuckProc_Tumble_Animate(struct Thread *thread,struct Driver *driver);
 
 // 230
 void DECOMP_MM_Battle_DrawIcon_Character(struct Icon* icon, int posX, int posY, struct PrimMem* primMem, u_long* ot, char transparency, short scale);

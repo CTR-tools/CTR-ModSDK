@@ -550,7 +550,7 @@ void RunUpdateHook()
 					// this only works when VelX and VelZ are non-zero,
 					// how do you make a jump happen, independently?
 					driver->velocityXYZ[1] = 0x100000;
-					Driver_ConvertVectorsToSpeed(driver, &driver->velocityXYZ[0]);
+					VehPhysCrash_ConvertVecToSpeed(driver, &driver->velocityXYZ[0]);
 					
 					// jump should go higher if you hold triangle
 					mgs->playerVars[playerIndex].jumpHold = 1;
@@ -652,7 +652,7 @@ void RunUpdateHook()
 			// move the driver
 			driver->velocityXYZ[0] = 0;
 			driver->velocityXYZ[2] = 0;
-			Driver_ConvertVectorsToSpeed(driver, &driver->velocityXYZ[0]);
+			VehPhysCrash_ConvertVecToSpeed(driver, &driver->velocityXYZ[0]);
 
 			if(dirLX != 0 || dirLZ != 0)
 			{
@@ -672,7 +672,7 @@ void RunUpdateHook()
 				// move the driver
 				driver->velocityXYZ[0] = (xx+xz) >> tempSpeedVar;
 				driver->velocityXYZ[2] = (zx+zz) >> tempSpeedVar;
-				Driver_ConvertVectorsToSpeed(driver, &driver->velocityXYZ[0]);
+				VehPhysCrash_ConvertVecToSpeed(driver, &driver->velocityXYZ[0]);
 
 				// forwardDir is supposed to be the direction
 				// the camera faces, but [now] it is the direction

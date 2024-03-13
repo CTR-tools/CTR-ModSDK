@@ -2,7 +2,7 @@
 
 void Particle_FuncPtr_ExhaustUnderwater(struct Particle *p);
 
-struct Particle *VehParticle_Exhaust(struct Driver *d, VECTOR *param_2, VECTOR *param_3)
+struct Particle *VehEmitter_Exhaust(struct Driver *d, VECTOR *param_2, VECTOR *param_3)
 {
     if (((d->instSelf->flags & SPLIT_LINE) != 0) && ((param_2->vy - param_3->vy) + d->posCurr[1] < 256))
     {

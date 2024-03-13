@@ -13,7 +13,7 @@ void RunInitHook()
 	for(i = 1; i < NUM_PLAYERS; i++)
 	{
 		// player[0] already exists
-		drivers[i] = VehInit_Player(i);
+		drivers[i] = VehBirth_Player(i);
 	}
 
 	// In EurRetail and JpnRetail, Parking Lot has
@@ -24,7 +24,7 @@ void RunInitHook()
 	drivers[7]->driverID = 3;
 
 	// send to start line (corrects driver animations)
-	VehInit_TeleportAll(sdata->gGT, 2);
+	VehBirth_TeleportAll(sdata->gGT, 2);
 
 	// and change it back
 	drivers[4]->driverID = 4;

@@ -36,7 +36,7 @@ void DECOMP_Voiceline_Update(void)
         {
 
             // if you use uka-uka
-            if (Weapon_Mask_boolGoodGuy(gGT->drivers[0]) == 0)
+            if (VehPickupItem_MaskBoolGoodGuy(gGT->drivers[0]) == 0)
             {
                 // CDSYS_XAPlay(CDSYS_XA_TYPE_EXTRA, SPEAK_UKA_39);
 

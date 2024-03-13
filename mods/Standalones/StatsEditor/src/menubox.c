@@ -95,7 +95,7 @@ force_inline void ProcessInputs(struct GameTracker* gGT, int* metaPhys, int* dri
 		{
 			if (buttonsTapped & (BTN_SELECT | BTN_START))
 			{
-				VehInit_SetConsts(gGT->drivers[0]); // needed so the stat edit and class switch can actually happen
+				VehBirth_SetConsts(gGT->drivers[0]); // needed so the stat edit and class switch can actually happen
 
 				if (buttonsTapped & BTN_SELECT)
 				{

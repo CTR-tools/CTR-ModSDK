@@ -24,7 +24,7 @@ void DECOMP_AH_MaskHint_Start(short hintId, u_short bool_interruptWarppad)
   // make a copy of hint index
   *(short*)0x800b5558 = hintId;
   
-  advDriver->funcPtrs[0] = &VehPtr_Freeze_Init;
+  advDriver->funcPtrs[0] = &VehPhysProc_FreezeEndEvent_Init;
   
   // 0x8fba4 is where the adventure profile (currently loaded) begins
   // unlock flag that says you've viewed this mask hint before.
@@ -47,7 +47,7 @@ void DECOMP_AH_MaskHint_Start(short hintId, u_short bool_interruptWarppad)
 	// get mempack index
     uVar2 = LOAD_GetAdvPackIndex();
 	
-    boolGoodGuy = Weapon_Mask_boolGoodGuy(advDriver);
+    boolGoodGuy = VehPickupItem_MaskBoolGoodGuy(advDriver);
     
 	LOAD_TalkingMask(uVar2,((boolGoodGuy & 0xffff) == 0));
 	

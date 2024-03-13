@@ -55,7 +55,7 @@ void DECOMP_StartLine_Update(void)
 		{
 			distToFinish_prev = currDriver->distanceToFinish_curr;
 
-			Driver_UpdateLapProgress(currDriver);
+			VehLap_UpdateProgress(currDriver);
 
 			distToFinish_curr = currDriver->distanceToFinish_curr;
 
@@ -453,7 +453,7 @@ void DECOMP_StartLine_Update(void)
 								// In VS mode, this is what blows up the player in last place
 
 								// Make the player Blasted
-								Player_ChangeState(currDriver, 2, currDriver, 0);
+								VehPickState_NewState(currDriver, 2, currDriver, 0);
 
 								// Reduce counters for AttackingPlayer and AttackedByPlayer
 								currDriver->numTimesAttackedByPlayer--;

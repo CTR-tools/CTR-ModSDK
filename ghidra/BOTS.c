@@ -949,13 +949,13 @@ void FUN_8001372c(int param_1)
       *(undefined2 *)(iVar1 + 0x10) = (short)((uint)*(undefined4 *)(iVar2 + 0x2dc) >> 8);
     }
 
-	// OnRender
+	// VehPhysForce_TranslateMatrix
     FUN_8005ee34(param_1,iVar2);
 
-	// OnAnimate_Driving
+	// VehFrameProc_Driving
     FUN_8005b178(param_1,iVar2);
 
-	// VehParticle_DriverMain
+	// VehEmitter_DriverMain
     FUN_80059a18(param_1,iVar2);
   }
 
@@ -1096,7 +1096,7 @@ void FUN_80013838(int param_1)
   // posY, plus height to be dropped from
   *(int *)(iVar7 + 0x2d8) = *(int *)(iVar7 + 0x5f4) + 0x10000;
 
-  // Weapon_Mask_UseWeapon
+  // VehPickupItem_MaskUseWeapon
   iVar4 = FUN_80064c38(iVar7,1);
 
   // Mask Object (620?)
@@ -1542,7 +1542,7 @@ LAB_80013fbc:
 	//local_60 = Z speed + value at 0x5E0
     local_60 = *(int *)(iVar17 + 0x3a8) + *(int *)(iVar17 + 0x5e0);
 
-	// DriverCrash_AnyTwoCars
+	// VehPhysCrash_AnyTwoCars
 	// pass the thread, collision data, and driver->88 is velocity?
     FUN_8005d404(param_1,&local_98,&local_68);
   }
@@ -1620,12 +1620,12 @@ LAB_80013fbc:
 	  {
 		// Start the race with a boost
 
-		// Turbo_Increment
+		// VehFire_Increment
 		// 0.72 seconds of reserve,
 		// 0x180 fire level
         FUN_8005abfc(iVar17,0x2d0,1,0x180);
 
-		// Turbo_Audio
+		// VehFire_Audio
 		FUN_8005ab24(iVar17,0x180);
       }
     }
@@ -2472,7 +2472,7 @@ LAB_8001509c:
 			//set Turbo Meter to max capacity
             *(undefined2 *)(iVar17 + 0x3dc) = 0;
 
-			// Turbo_Increment
+			// VehFire_Increment
 			// 0.24s reserves
             FUN_8005abfc(iVar17,0xf0,2,local_38 << 7);
           }
@@ -2483,7 +2483,7 @@ LAB_8001509c:
 		  //set Turbo Meter to max capacity
           *(undefined2 *)(iVar17 + 0x3dc) = 0;
 
-		  // Turbo_Increment
+		  // VehFire_Increment
 		  // 0.48s reserves
 		  FUN_8005abfc(iVar17,0x1e0,2,local_38 << 8);
         }
@@ -2502,7 +2502,7 @@ LAB_800153d0:
 	  //set Turbo Meter to max capacity
       *(undefined2 *)(iVar17 + 0x3dc) = 0;
 
-	  // Turbo_Increment
+	  // VehFire_Increment
 	  // 0.72s reserves
 	  FUN_8005abfc(iVar17,0x2d0,2,local_38 * 0x180);
     }
@@ -2510,7 +2510,7 @@ LAB_800153d0:
 
   if ((local_44 & 0x100) != 0)
   {
-	// Turbo_Increment
+	// VehFire_Increment
 	// 0.12s reserves
     FUN_8005abfc(iVar17,0x78,1,0x900);
 
@@ -2519,7 +2519,7 @@ LAB_800153d0:
 
   if ((local_44 & 1) != 0)
   {
-	// Turbo_Increment
+	// VehFire_Increment
 	// 0.72s reserves
     FUN_8005abfc(iVar17,0x2d0,1,0x180);
 
@@ -2710,7 +2710,7 @@ LAB_800156b0:
 	  // get checkpointIndex from quadblock (mask grab)
 	  *(undefined *)(iVar17 + 0x60a) = *(undefined *)(DAT_1f800188 + 0x3e);
 
-	  // Rot_AxisAngle
+	  // VehPhysForce_RotAxisAngle
 	  // rotate AI, given quadblock axis, and driver rotation
 	  FUN_8005f89c(iVar22 + 0x30,&DAT_1f800178,(int)*(short *)(iVar17 + 0x5fe));
 
@@ -2818,7 +2818,7 @@ LAB_800156b0:
             iVar4 = local_38 * 0xc0;
 LAB_80015b98:
 
-			// Turbo_Increment
+			// VehFire_Increment
 			// 0.72s reserves
             FUN_8005abfc(iVar17,0x2d0,2,iVar4);
           }
@@ -3480,13 +3480,13 @@ LAB_8001686c:
     *(uint *)(iVar22 + 0x28) = *(uint *)(iVar22 + 0x28) | 0x2000;
   }
   
-  // OnRender
+  // VehPhysForce_TranslateMatrix
   FUN_8005ee34(param_1,iVar17);
 
-  // Rot_AxisAngle
+  // VehPhysForce_RotAxisAngle
   FUN_8005f89c(iVar17 + 0x310,iVar17 + 0x368,(int)*(short *)(iVar17 + 0x39a));
 
-  // OnAnimate_Driving
+  // VehFrameProc_Driving
   FUN_8005b178(param_1,iVar17);
 
   if (
@@ -3522,7 +3522,7 @@ LAB_8001686c:
 
   if ((*(uint *)(iVar17 + 0x5b0) & 4) == 0)
   {
-	// VehParticle_DriverMain
+	// VehEmitter_DriverMain
     FUN_80059a18(param_1,iVar17);
   }
 
@@ -3794,7 +3794,7 @@ undefined4 FUN_80016b00(int param_1,int param_2,int param_3,int param_4)
   }
 
   // === Count Statistics ===
-  // Exactly the same as Player_ChangeState
+  // Exactly the same as VehPickState_NewState
 
   if ((param_3 != 0) && (param_2 != 0)) {
     *(char *)(param_3 + 0x559) = *(char *)(param_3 + 0x559) + '\x01';
@@ -3929,7 +3929,7 @@ void FUN_8001702c(int param_1)
 
   DAT_8008d698 = 0;
 
-  // VehInit_TeleportSelf (startline)
+  // VehBirth_TeleportSelf (startline)
   FUN_80057c8c(param_1,3,0);
 
   // get position where driver should spawn
@@ -4084,7 +4084,7 @@ LAB_80017218:
 	// robot Driver is 0x62c bytes large
     memset(iVar7,0,0x62c);
 
-	// VehInit_NonGhost
+	// VehBirth_NonGhost
     FUN_80058d2c(iVar3,param_1);
 
 	// pointer to structure of each player, given param1 car ID

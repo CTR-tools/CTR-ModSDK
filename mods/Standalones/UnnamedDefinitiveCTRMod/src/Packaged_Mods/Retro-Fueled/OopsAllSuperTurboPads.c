@@ -2,9 +2,9 @@
 
 extern u_int UDCTRM_RF_blueFireMode;
 
-// OnCollide_Drivers
+// VehPhysForce_CollideDrivers
 // handle collision with turbo pads and robotcars
-void DECOMP_OnCollide_Drivers(struct Thread* bread, struct Driver* driver)
+void DECOMP_VehPhysForce_CollideDrivers(struct Thread* bread, struct Driver* driver)
 {
 	struct Instance* breadInstance;
 	int iVar3;
@@ -48,9 +48,9 @@ MyGoto:
 		fireLevel = 0x800;
 	}
 
-	// Turbo_Increment
+	// VehFire_Increment
 	// add reserves and speed of turbo pad
-	Turbo_Increment(driver, 960, (TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD), fireLevel);
+	VehFire_Increment(driver, 960, (TURBO_PAD | FREEZE_RESERVES_ON_TURBO_PAD), fireLevel);
 	/////////////////////////// END OF CHANGES     ///////////////////////////
 
 LAB_8005ec70:
@@ -113,7 +113,7 @@ LAB_8005ec70:
 		)
 		{
 			// pass the thread, collision data, and driver->88 is velocity?
-			DriverCrash_AnyTwoCars(bread, &posX, &driver->velocityXYZ[0]);
+			VehPhysCrash_AnyTwoCars(bread, &posX, &driver->velocityXYZ[0]);
 		}
 	}
 	if (*(u_short*)&driver->fill18_postQuadBlock[6] & 2) 

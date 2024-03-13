@@ -71,7 +71,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	// Make kart model invisible
 	driverInstSelf->flags |= 0x80;
 	
-	DECOMP_VehPtr_Freeze_Init(driverInstSelf->thread, gGT->drivers[0]);
+	DECOMP_VehPhysProc_FreezeEndEvent_Init(driverInstSelf->thread, gGT->drivers[0]);
 	
 	// Number of Winners = 1
 	// this means Draw Confetti on one window

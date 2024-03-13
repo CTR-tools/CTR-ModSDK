@@ -37,7 +37,7 @@ common, exe, LOAD_CDRequestCallback, -0x8, ../../Modules/OxideFix/src/PodiumFix_
 1020, exe, 0x800342f8, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s
 1111, exe, 0x80035b5C, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s
 common, exe, LOAD_AppendQueue, 0x8, ../../Modules/OverrideMPK/src/numDriversPlusOne.s
-common, exe, VehInit_GetModelByName, 0x0, ../../Modules/OverrideMPK/src/OvMPK_StringSearch.c
+common, exe, VehBirth_GetModelByName, 0x0, ../../Modules/OverrideMPK/src/OvMPK_StringSearch.c
 common, exe, LOAD_DriverMPK, 0x0, ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.c
 
 common, exe, LOAD_Robots1P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_hook1P.s
@@ -47,6 +47,6 @@ common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_ho
 
 // Compile the ASM injection that will load our code
 common, exe, UI_RenderFrame_AdvHub, -0x8, ../../Modules/ReservesMeter/src/reserveshook.s
-common, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Hook.s
+common, exe, VehFire_Increment, 0x0, ../../Modules/ReservesMeter/src/VehFire_Increment_Hook.s
 
-common, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/Turbo_Increment.c
+common, exe, rdata_free, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_main.c ../../Modules/ReservesMeter/src/main.c ../../Modules/ReservesMeter/src/VehFire_Increment.c

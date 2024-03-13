@@ -1,7 +1,7 @@
 #include <common.h>
 
 void DECOMP_CS_Podium_Prize_ThDestroy(struct Thread*);
-void DECOMP_VehPtr_Driving_Init(struct Thread *t, struct Driver *d);
+void DECOMP_VehPhysProc_Driving_Init(struct Thread *t, struct Driver *d);
 
 void DECOMP_CS_DestroyPodium_StartDriving(void)
 {
@@ -26,7 +26,7 @@ void DECOMP_CS_DestroyPodium_StartDriving(void)
   }
 
   d = gGT->drivers[0];
-  d->funcPtrs[0] = DECOMP_VehPtr_Driving_Init;
+  d->funcPtrs[0] = DECOMP_VehPhysProc_Driving_Init;
 
   // enable collisions for thread,
   // and make instance visible

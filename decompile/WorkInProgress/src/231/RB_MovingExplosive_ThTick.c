@@ -354,7 +354,7 @@ LAB_800add14:
 	  // DYNAMIC_ROCKET
       if (inst->model->id == 0x29) 
 	  {
-        Rot_AxisAngle(&inst->matrix,&DAT_1f800178,(int)*(short *)((int)tw + 0x1e));
+        VehPhysForce_RotAxisAngle(&inst->matrix,&DAT_1f800178,(int)*(short *)((int)tw + 0x1e));
       }
 	  
 	  // position

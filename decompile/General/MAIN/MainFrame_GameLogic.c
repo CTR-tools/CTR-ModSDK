@@ -195,7 +195,7 @@ LAB_80035098:
 
 					for(psVar12 = gGT->threadBuckets[iVar4].thread; psVar12 != 0; psVar12 = psVar12->siblingThread)
 					{
-						DECOMP_Weapon_Shoot_OnCirclePress((struct Driver*)psVar12->object);
+						DECOMP_VehPickupItem_ShootOnCirclePress((struct Driver*)psVar12->object);
 					}
 
 					#ifdef USE_GPU1P
@@ -225,7 +225,7 @@ LAB_80035098:
 						
 						// rig collisions to high-poly,
 						// wait until Stage 2 finishes, cause PhysLinear
-						// uses gGT->numPlyrCurrGame for Player_SetHeldItem
+						// uses gGT->numPlyrCurrGame for VehPhysGeneral_SetHeldItem
 						#ifdef USE_GPU1P
 						if(iVar11 == 2)
 						{

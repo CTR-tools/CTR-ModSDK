@@ -6,18 +6,18 @@
 common, exe, BOTS_SetRotation, -0x8, src/hookUpdate.s
 
 // Erasing the original reserve cancelation if, so that we can run our own code
-926, exe, VehPtr_Driving_PhysLinear, 0xA30, src/hookReserveCancelation.s
-926, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
-1020, exe, VehPtr_Driving_PhysLinear, 0xA30, src/hookReserveCancelation.s
-1020, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
-1111, exe, VehPtr_Driving_PhysLinear, 0xA4C, src/hookReserveCancelation.s
-1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA30, src/hookReserveCancelation.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA30, src/hookReserveCancelation.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA4C, src/hookReserveCancelation.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA54, ../../../nop.s
 
 // Binary edits
 // Turbo pad to STP
-common, exe, OnCollide_Drivers, 0xB9, assets/TurboPadToSTP.bin
+common, exe, VehPhysForce_CollideDrivers, 0xB9, assets/TurboPadToSTP.bin
 // Standardize turbo pad reserves
-common, exe, OnCollide_Drivers, 0xA4, assets/StandardizeTurboPadReserves.bin
+common, exe, VehPhysForce_CollideDrivers, 0xA4, assets/StandardizeTurboPadReserves.bin
 
 // Texture replacements
 // Replacements are only for US and Europe, Japan has these textures either drastically or slightly altered and I can't be bothered
@@ -97,8 +97,8 @@ common, exe, OnCollide_Drivers, 0xA4, assets/StandardizeTurboPadReserves.bin
 1020, bigfilelevelstrackstemple2relicdatavrm, 0x0, 0x0, assets/banner/temple2relic.vrm
 1020, bigfilelevelstrackstube1relicdatavrm, 0x0, 0x0, assets/banner/tube1relic.vrm
 
-// Modify Turbo_Increment function to allow for USF stacking
-common, exe, Turbo_Increment, 0x0, src/Turbo_Increment_AllowUSFStacking.c
+// Modify VehFire_Increment function to allow for USF stacking
+common, exe, VehFire_Increment, 0x0, src/VehFire_Increment_AllowUSFStacking.c
 
 // Compile code to empty spaces in RDATA
 common, exe, rdata_free, 0x0, src/main.c

@@ -4,7 +4,7 @@
 short difficulty[] = {0, 0x50, 0xa0, 0xf0, 0x140, 0x280};
 extern struct MenuBox new_retryExitToMap;
 
-char Weapon_Mask_boolGoodGuy(struct Driver*);
+char VehPickupItem_MaskBoolGoodGuy(struct Driver*);
 
 void MenuBoxFuncPtr_Difficulty(struct MenuBox *mb)
 {
@@ -228,7 +228,7 @@ void GetMenuDifficulty(struct MenuBox *mb)
     struct GameTracker *gGT = sdata->gGT;
     u_int gamemode = gGT->gameMode1;
     if (mb == &data.menuBox_advHub)
-        new_advHub[1].stringIndex = (Weapon_Mask_boolGoodGuy(gGT->drivers[0]) & 1) ? 11 : 12;
+        new_advHub[1].stringIndex = (VehPickupItem_MaskBoolGoodGuy(gGT->drivers[0]) & 1) ? 11 : 12;
     if (mb == &data.menuBox_advRace)
         mb->rows = (gamemode & (RELIC_RACE | CRYSTAL_CHALLENGE)) ? &data.menuRow_advRace[0] : &new_advRace[0];
     if (mb == &data.menuBox_arcadeRace)

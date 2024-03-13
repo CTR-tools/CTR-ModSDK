@@ -16,7 +16,7 @@ struct Driver* BOTS_Driver_Init_custom(int slot, int bitFlag)
 	
 	dr = (struct Driver*)th->object;
 	
-	VehInit_NonGhost(th, slot);
+	VehBirth_NonGhost(th, slot);
 
 	// tag this thread as an AI
 	th->modelIndex = 0x3f;

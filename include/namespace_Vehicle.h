@@ -288,7 +288,7 @@ struct Turbo
    short fireSize;
 
    // 0xC
-   // Value that decreases every time Turbo_ThTick gets called
+   // Value that decreases every time VehTurbo_ThTick gets called
    // If it reaches 0 it makes the fire start disappearing
    char fireDisappearCountdown;
 
@@ -414,12 +414,12 @@ struct Driver
 	// 0x5C - OnPhysLinear
 	// 0x60 - OnAudio, engine sounds (always same)
 	// 0x64 - OnPhysAngular
-	// 0x68 - OnApplyForces
+	// 0x68 - VehPhysForce_OnApplyForces
 	// 0x6C - Coll_StartSearch_Player
-	// 0x70 - OnCollide_Drivers
+	// 0x70 - VehPhysForce_CollideDrivers
 	// 0x74 - Coll_StartSearch_NearPlayer
 	// 0x78 - OnWeapon (jump related?)
-	// 0x7C - OnRender (pos, rot, scale)
+	// 0x7C - VehPhysForce_TranslateMatrix (pos, rot, scale)
 	// 0x80 - OnAnimate
 	// 0x84 - OnParticles
 	void* funcPtrs[0xD];
@@ -468,7 +468,7 @@ struct Driver
 	// 0x00000010 - ? steering
 	// 0x00000020 - ? brakes+gas
 	// 0x00000040 - ? COLL-related (ghost)
-	// 0x00000080 - ? OnRender-related, turbo-related
+	// 0x00000080 - ? VehPhysForce_TranslateMatrix-related, turbo-related
 	// 0x00000100 - driving wrong way
 	// 0x00000200 - using turbo weapon
 	// 0x00000400 - started jump this frame
@@ -567,7 +567,7 @@ struct Driver
 	// variables sneaked in-between
 
 	// 0x360
-	// used in PhysLinear, reset in OnApplyForces, calculated in StartSearch,
+	// used in PhysLinear, reset in VehPhysForce_OnApplyForces, calculated in StartSearch,
 	// all three are funcPtrs in the driver struct, in that order of operation
 	short AxisAngle1_normalVec[3];
 
@@ -670,33 +670,33 @@ struct Driver
 	short fill_3B6[2];
 
 	// 0x3BA
-	// in japanese Turbo_Increment
+	// in japanese VehFire_Increment
 	short japanTurboUnknown;
 
 	// 0x3BC
-	// in VehPtr_Driving_PhysLinear
+	// in VehPhysProc_Driving_PhysLinear
 	short unkSpeedValue1;
 
 	// 0x3BE
-	// in VehPtr_Driving_PhysLinear
+	// in VehPhysProc_Driving_PhysLinear
 	short unkSpeedValue2;
 
 	// 0x3C0
-	// in VehPtr_Driving_PhysLinear
+	// in VehPhysProc_Driving_PhysLinear
 	short mashingXMakesItBig;
 
 	// 0x3C2
-	// in VehPtr_Driving_PhysLinear
+	// in VehPhysProc_Driving_PhysLinear
 	short mashXUnknown;
 
 	// 0x3C4
-	// in VehPtr_Driving_PhysLinear
+	// in VehPhysProc_Driving_PhysLinear
 	short unknowndriverBaseSpeed;
 
 	// 0x3C6 0x3C8
-	// in VehPtr_Driving_PhysLinear, 
-	// and Driver_AccelTerrainSlope, 
-	// and VehPtr_LastSpin_Update
+	// in VehPhysProc_Driving_PhysLinear, 
+	// and VehPhysForce_AccelTerrainSlope, 
+	// and VehPhysProc_SpinLast_Update
 	short turnAngleCurr;
 	short turnAnglePrev;
 	
@@ -704,7 +704,7 @@ struct Driver
 	short unk3CA;
 
 	// 0x3CC
-	// from OnCollide_Drivers
+	// from VehPhysForce_CollideDrivers
 	short accelXYZ[3];
 
 	// 0x3D2
@@ -726,7 +726,7 @@ struct Driver
 	short turbo_outsideTimer;
 
 	// 0x3E0
-	short turbo_audioCooldown;
+	short VehFire_AudioCooldown;
 
 	// 0x3E2
 	short reserves;
@@ -925,7 +925,7 @@ struct Driver
 	// byte of the short
 	char unusedPadding;
 	
-	// all related to Player_Driving_LerpToForwards
+	// all related to VehPhysGeneral_LerpToForwards
 	char unk457; // 0x22
 	char unk458; // 0x23
 	char unk459; // 0x24
@@ -944,8 +944,8 @@ struct Driver
 	char const_SteerVel_DriftSwitchWay;
 	char const_SteerVel_DriftStandard;
 	
-	// all VehPtr_Drifting_PhysAngular
-	// or VehPtr_Drifting_Finalize
+	// all VehPhysProc_PowerSlide_PhysAngular
+	// or VehPhysProc_PowerSlide_Finalize
 	char unk460; // 0x460 - 0x2A
 	char unk461; // 0x461 - 0x2B
 	char unk462; // 0x462 - 0x2C

@@ -41,7 +41,7 @@ void DECOMP_UI_DrawSpeedNeedle(short posX, short posY, struct Driver * driver)
 
   // Map value from [oldMin, oldMax] to [newMin, newMax]
   // inverting newMin and newMax will give an inverse range mapping
-  needle = DECOMP_VehMath_MapToRange(((speed >> 0x18) * 0x1a5e0) / 64000, minScale, (maxScale * 0x1a5e0) / 64000, minRange, maxRange);
+  needle = DECOMP_VehCalc_MapToRange(((speed >> 0x18) * 0x1a5e0) / 64000, minScale, (maxScale * 0x1a5e0) / 64000, minRange, maxRange);
 
   angle1 = needle;
   angle2 = angle1 + 0x400;

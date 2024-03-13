@@ -870,69 +870,69 @@
 800558dc Vector_SpecLightNoSpin3D
 
 80055aa8 Vector_BakeMatrixTable
-80055e68 VehColl_GetSurface
-80055e8c VehColl_GetTerrain
+80055e68 VehAfterColl_GetSurface
+80055e8c VehAfterColl_GetTerrain
 
-80055eb0 VehInit_TeleportSelf
-80056988 VehInit_TeleportAll
-80056a38 VehInit_GetModelByName
-80056b50 VehInit_SetConsts
+80055eb0 VehBirth_TeleportSelf
+80056988 VehBirth_TeleportAll
+80056a38 VehBirth_GetModelByName
+80056b50 VehBirth_SetConsts
 
-80056ce4 VehInit_EngineAudio_AllPlayers
-80056d8c VehInit_TireSprites
-80056e58 VehInit_NonGhost
-80057058 VehInit_Player
+80056ce4 VehBirth_EngineAudio_AllPlayers
+80056d8c VehBirth_TireSprites
+80056e58 VehBirth_NonGhost
+80057058 VehBirth_Player
 
-800570ec VehMath_InterpBySpeed
-80057134 VehMath_MapToRange
-800571a4 VehMath_SteerAccel
-80057208 VehMath_FastSqrt
+800570ec VehCalc_InterpBySpeed
+80057134 VehCalc_MapToRange
+800571a4 VehCalc_SteerAccel
+80057208 VehCalc_FastSqrt
 
-80057298 VehParticle_Exhaust
-800574b8 VehParticle_Sparks_Ground
-800576cc VehParticle_Terrain_Ground
-800578f4 VehParticle_Sparks_Wall
-80057b2c VehParticle_DriverMain
+80057298 VehEmitter_Exhaust
+800574b8 VehEmitter_Sparks_Ground
+800576cc VehEmitter_Terrain_Ground
+800578f4 VehEmitter_Sparks_Wall
+80057b2c VehEmitter_DriverMain
 
-80058be0 Turbo_Audio
-80058cb8 Turbo_Increment
+80058be0 VehFire_Audio
+80058cb8 VehFire_Increment
 80059180 Instance_GetStartFrame
 800591b0 Instance_GetNumAnimFrames
 
-80059234 OnAnimate_Driving
-800595cc OnAnimate_Spinning
-800596b8 OnAnimate_LastSpin
+80059234 VehFrameProc_Driving
+800595cc VehFrameProc_Spinning
+800596b8 VehFrameProc_LastSpin
 
-80059774 DrawShadows_Subset1
-800597dc DrawShadows_Main
-8005a1dc DrawSkidMarks_Subset1
-8005a334 DrawSkidMarks_Subset2
-8005a410 DrawSkidMarks_Main
+80059774 VehGroundShadow_Subset1
+800597dc VehGroundShadow_Main
+8005a1dc VehGroundSkids_Subset1
+8005a334 VehGroundSkids_Subset2
+8005a410 VehGroundSkids_Main
 
-8005aaac Driver_UpdateLapProgress
+8005aaac VehLap_UpdateProgress
 
 // unknown 8005ada4
-8005afec DriverCrash_BounceSelf
-8005b158 DriverCrash_AI
-8005b2a0 DriverCrash_Attack
-8005b470 DriverCrash_AnyTwoCars
+8005afec VehPhysCrash_BounceSelf
+8005b158 VehPhysCrash_AI
+8005b2a0 VehPhysCrash_Attack
+8005b470 VehPhysCrash_AnyTwoCars
 
 // unknown 8005c168 -- OnAccelerationForce?
-8005c278 OnGravity
-8005cac4 OnApplyForces
-8005cc10 OnCollide_Drivers
-8005ce78 OnRender
-8005d8e0 Rot_AxisAngle
+8005c278 VehPhysForce_OnGravity
+8005cac4 VehPhysForce_OnApplyForces
+8005cc10 VehPhysForce_CollideDrivers
+8005ce78 VehPhysForce_TranslateMatrix
+8005d8e0 VehPhysForce_RotAxisAngle
 
 // unknown 8005db90
 
-8005dcd0 VehPtr_Driving_PhysAngular
-8005e49c Player_Driving_LerpQuarterStrength
-8005e4cc Player_Driving_LerpToForwards
-8005e5e4 Player_Jump_GetVelY
-8005e674 Player_JumpAndFriction
-8005ef50 Player_SetHeldItem
-8005f564 Player_GetBaseSpeed
+8005dcd0 VehPhysGeneral_PhysAngular
+8005e49c VehPhysGeneral_LerpQuarterStrength
+8005e4cc VehPhysGeneral_LerpToForwards
+8005e5e4 VehPhysGeneral_JumpGetVelY
+8005e674 VehPhysGeneral_JumpAndFriction
+8005ef50 VehPhysGeneral_SetHeldItem
+8005f564 VehPhysGeneral_GetBaseSpeed
 
 // Player_Steer, way different in Sep3?
 // unknown 8005f718
@@ -940,100 +940,100 @@
 // unknown 8005f7a4
 // unknown 8005f874
 
-8005f8b0 VehPtr_Driving_PhysLinear
-800609f0 VehPtr_Driving_Audio
-80060a10 VehPtr_Driving_Update
-80060b38 VehPtr_Driving_Init
+8005f8b0 VehPhysProc_Driving_PhysLinear
+800609f0 VehPhysProc_Driving_Audio
+80060a10 VehPhysProc_Driving_Update
+80060b38 VehPhysProc_Driving_Init
 
-80060c24 VehPtr_Freeze_PhysLinear
-80060c80 VehPtr_Freeze_Init
+80060c24 VehPhysProc_FreezeEndEvent_PhysLinear
+80060c80 VehPhysProc_FreezeEndEvent_Init
 
-80060d2c VehPtr_AntiVShift_Update
-80060d80 VehPtr_AntiVShift_ReverseOneFrame
-80060de4 VehPtr_AntiVShift_Init
+80060d2c VehPhysProc_FreezeVShift_Update
+80060d80 VehPhysProc_FreezeVShift_ReverseOneFrame
+80060de4 VehPhysProc_FreezeVShift_Init
 
-80060e9c VehPtr_Drifting_PhysAngular
-80061584 VehPtr_Drifting_Finalize
-8006159c VehPtr_Drifting_Update
-80061824 VehPtr_Drifting_PhysLinear
-80061870 VehPtr_Drifting_InitSetUpdate
-80061884 VehPtr_Drifting_Init
+80060e9c VehPhysProc_PowerSlide_PhysAngular
+80061584 VehPhysProc_PowerSlide_Finalize
+8006159c VehPhysProc_PowerSlide_Update
+80061824 VehPhysProc_PowerSlide_PhysLinear
+80061870 VehPhysProc_PowerSlide_InitSetUpdate
+80061884 VehPhysProc_PowerSlide_Init
 
-80061994 VehPtr_Crashing_PhysAngular
-80061a48 VehPtr_Crashing_Update
-80061a50 VehPtr_Crashing_PhysLinear
-80061a7c VehPtr_Crashing_Animate
-80061b24 VehPtr_Crashing_Init
+80061994 VehPhysProc_SlamWall_PhysAngular
+80061a48 VehPhysProc_SlamWall_Update
+80061a50 VehPhysProc_SlamWall_PhysLinear
+80061a7c VehPhysProc_SlamWall_Animate
+80061b24 VehPhysProc_SlamWall_Init
 
-80061c44 VehPtr_Spinning_Update
-80061c94 VehPtr_Spinning_PhysLinear
-80061d18 VehPtr_Spinning_PhysAngular
-80061dfc VehPtr_Spinning_InitSetUpdate
-80061e10 VehPtr_Spinning_Init
+80061c44 VehPhysProc_SpinFirst_Update
+80061c94 VehPhysProc_SpinFirst_PhysLinear
+80061d18 VehPhysProc_SpinFirst_PhysAngular
+80061dfc VehPhysProc_SpinFirst_InitSetUpdate
+80061e10 VehPhysProc_SpinFirst_Init
 
-80061f7c VehPtr_LastSpin_Update
-80061fbc VehPtr_LastSpin_PhysLinear
-80061ff4 VehPtr_LastSpin_PhysAngular
-800621a4 VehPtr_LastSpin_Init
+80061f7c VehPhysProc_SpinLast_Update
+80061fbc VehPhysProc_SpinLast_PhysLinear
+80061ff4 VehPhysProc_SpinLast_PhysAngular
+800621a4 VehPhysProc_SpinLast_Init
 
-8006223c VehPtr_StopSpin_Update
-80062244 VehPtr_StopSpin_PhysLinear
-80062270 VehPtr_StopSpin_PhysAngular
-80062324 VehPtr_StopSpin_Animate
-80062420 VehPtr_StopSpin_Init
+8006223c VehPhysProc_SpinStop_Update
+80062244 VehPhysProc_SpinStop_PhysLinear
+80062270 VehPhysProc_SpinStop_PhysAngular
+80062324 VehPhysProc_SpinStop_Animate
+80062420 VehPhysProc_SpinStop_Init
 
-800624b8 Player_ChangeState
+800624b8 VehPickState_NewState
 
-80062b10 Weapon_Mask_boolGoodGuy
-80062b64 Weapon_Mask_UseWeapon
-80062ec0 Weapon_Missile_GetTargetDriver
-800631f4 Weapon_Potion_Throw
-80063338 Weapon_Shoot_Now
-800646b4 Weapon_Shoot_OnCirclePress
+80062b10 VehPickupItem_MaskBoolGoodGuy
+80062b64 VehPickupItem_MaskUseWeapon
+80062ec0 VehPickupItem_MissileGetTargetDriver
+800631f4 VehPickupItem_PotionThrow
+80063338 VehPickupItem_ShootNow
+800646b4 VehPickupItem_ShootOnCirclePress
 
-8006474c VehPtr_MaskGrab_FindDestPos
-80064c80 VehPtr_MaskGrab_Particles
-80064d1c VehPtr_MaskGrab_Update
-80064e0c VehPtr_MaskGrab_PhysLinear
-80064e5c VehPtr_MaskGrab_Animate
-80065180 VehPtr_MaskGrab_Init
+8006474c VehStuckProc_MaskGrab_FindDestPos
+80064c80 VehStuckProc_MaskGrab_Particles
+80064d1c VehStuckProc_MaskGrab_Update
+80064e0c VehStuckProc_MaskGrab_PhysLinear
+80064e5c VehStuckProc_MaskGrab_Animate
+80065180 VehStuckProc_MaskGrab_Init
 
-8006546c VehPtr_EatenByPlant_Update
-80065524 VehPtr_EatenByPlant_PhysLinear
-80065590 VehPtr_EatenByPlant_Animate
-800657a0 VehPtr_EatenByPlant_Init
+8006546c VehStuckProc_PlantEaten_Update
+80065524 VehStuckProc_PlantEaten_PhysLinear
+80065590 VehStuckProc_PlantEaten_Animate
+800657a0 VehStuckProc_PlantEaten_Init
 
-800658d4 VehPtr_Dead_Init // (tombstone sep3)
+800658d4 VehStuckProc_RIP_Init // (tombstone sep3)
 
-80065a58 VehPtr_EngineRevving_Update
-80065b6c VehPtr_EngineRevving_PhysLinear
-80065c74 VehPtr_EngineRevving_Animate
-80066044 VehPtr_EngineRevving_Init
+80065a58 VehStuckProc_RevEngine_Update
+80065b6c VehStuckProc_RevEngine_PhysLinear
+80065c74 VehStuckProc_RevEngine_Animate
+80066044 VehStuckProc_RevEngine_Init
 
-80066194 VehPtr_Blasted_Update
-800661c8 VehPtr_Blasted_PhysLinear
-80066248 VehPtr_Blasted_PhysAngular
-8006633c VehPtr_Blasted_Animate
-8006639c VehPtr_Blasted_Init
+80066194 VehStuckProc_Tumble_Update
+800661c8 VehStuckProc_Tumble_PhysLinear
+80066248 VehStuckProc_Tumble_PhysAngular
+8006633c VehStuckProc_Tumble_Animate
+8006639c VehStuckProc_Tumble_Init
 
-800664ec VehPtr_Warp_MoveDustPuff
-800666a8 VehPtr_Warp_AddDustPuff1
-8006673c VehPtr_Warp_AddDustPuff2
+800664ec VehStuckProc_Warp_MoveDustPuff
+800666a8 VehStuckProc_Warp_AddDustPuff1
+8006673c VehStuckProc_Warp_AddDustPuff2
 // extra here in Sep3
-80066de4 VehPtr_Warp_PhysAngular
-8006700c VehPtr_Warp_Init
+80066de4 VehStuckProc_Warp_PhysAngular
+8006700c VehStuckProc_Warp_Init
 
 // extra here in sep3 (tombstone vibrate)
 
-80067268 AdvHub_TalkingMask_ThTick
-80067450 AdvHub_TalkingMask_Init
-800674bc AdvHub_TalkingMask_PlayXA
-80067524 AdvHub_TalkingMask_boolNotTalking
-80067534 AdvHub_TalkingMask_End
+80067268 VehTalkMask_ThTick
+80067450 VehTalkMask_Init
+800674bc VehTalkMask_PlayXA
+80067524 VehTalkMask_boolNotTalking
+80067534 VehTalkMask_End
 
-8006755c Turbo_ProcessBucket
-80067648 Turbo_ThDestroy
-800676a0 Turbo_ThTick
+8006755c VehTurbo_ProcessBucket
+80067648 VehTurbo_ThDestroy
+800676a0 VehTurbo_ThTick
 
 80067e80 DrawSky_Full
 80067f94 DrawSky_Piece

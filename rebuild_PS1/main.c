@@ -441,56 +441,54 @@
 
 #include "../decompile/General/UI/UI_AAA_BigBlock1.c"
 
-// VEH Init
-#include "../decompile/General/Vehicle/VehInit_TeleportSelf.c"
-#include "../decompile/General/Vehicle/VehInit_TeleportAll.c"
-// VehInit_GetModelByName deprecated by better option
-#include "../decompile/General/Vehicle/VehInit_SetConsts.c"
-#include "../decompile/General/Vehicle/VehInit_EngineAudio_AllPlayers.c"
-#include "../decompile/General/Vehicle/VehInit_TireSprites.c"
-#include "../decompile/General/Vehicle/VehInit_NonGhost.c"
-#include "../decompile/General/Vehicle/VehInit_Player.c"
+#include "../decompile/General/Vehicle/VehBirth_TeleportSelf.c"
+#include "../decompile/General/Vehicle/VehBirth_TeleportAll.c"
+// VehBirth_GetModelByName deprecated by better option
+#include "../decompile/General/Vehicle/VehBirth_SetConsts.c"
+#include "../decompile/General/Vehicle/VehBirth_EngineAudio_AllPlayers.c"
+#include "../decompile/General/Vehicle/VehBirth_TireSprites.c"
+#include "../decompile/General/Vehicle/VehBirth_NonGhost.c"
+#include "../decompile/General/Vehicle/VehBirth_Player.c"
 
-// VEH MATH
-#include "../decompile/General/Vehicle/VehMath_InterpBySpeed.c"
-#include "../decompile/General/Vehicle/VehMath_MapToRange.c"
-#include "../decompile/General/Vehicle/VehMath_SteerAccel.c"
+#include "../decompile/General/Vehicle/VehCalc_InterpBySpeed.c"
+#include "../decompile/General/Vehicle/VehCalc_MapToRange.c"
+#include "../decompile/General/Vehicle/VehCalc_SteerAccel.c"
 
-// VEH PTR
-#include "../decompile/General/Vehicle/VehPtr_Driving_PhysAngular.c"
-// more
-#include "../decompile/General/Vehicle/VehPtr_Driving_PhysLinear.c"
-#include "../decompile/General/Vehicle/VehPtr_Driving_Audio.c"
-#include "../decompile/General/Vehicle/VehPtr_Driving_Update.c"
-#include "../decompile/General/Vehicle/VehPtr_Driving_Init.c"
+#include "../decompile/General/Vehicle/VehFire_Increment.c"
+#include "../decompile/General/Vehicle/VehFire_Audio.c"
 
-#include "../decompile/General/Vehicle/VehPtr_Freeze_PhysLinear.c"
-#include "../decompile/General/Vehicle/VehPtr_Freeze_Init.c"
+#include "../decompile/General/Vehicle/VehPhysForce_ConvertSpeedToVec.c"
+#include "../decompile/General/Vehicle/VehPhysForce_AccelTerrainSlope.c"
+#include "../decompile/General/Vehicle/VehPhysForce_OnApplyForces.c"
 
-// everything between VehPtr_Freeze_Init and Player_ChangeState
-#include "../decompile/General/Vehicle/VehPtr_AAA_BigBlock1.c"
+#include "../decompile/General/Vehicle/VehPhysGeneral_PhysAngular.c"
+#include "../decompile/General/Vehicle/VehPhysGeneral_SetHeldItem.c"
+#include "../decompile/General/Vehicle/VehPhysGeneral_LerpToForwards.c"
+#include "../decompile/General/Vehicle/VehPhysGeneral_LerpQuarterStrength.c"
+#include "../decompile/General/Vehicle/VehPhysGeneral_GetBaseSpeed.c"
 
-#include "../decompile/General/Vehicle/VehPtr_EngineRevving_FuncPtrs.c"
-#include "../decompile/General/Vehicle/VehPtr_EngineRevving_Init.c"
-#include "../decompile/General/Vehicle/VehPtr_Blasted_FuncPtrs.c"
-#include "../decompile/General/Vehicle/VehPtr_Blasted_Init.c"
+#include "../decompile/General/Vehicle/VehPhysJoystick_ReturnToRest.c"
+#include "../decompile/General/Vehicle/VehPhysJoystick_GetStrength.c"
+#include "../decompile/General/Vehicle/VehPhysJoystick_GetStrengthAbsolute.c"
 
-// VEH (other)
-#include "../decompile/General/Driver_ConvertSpeedToVectors.c"
-#include "../decompile/General/Driver_AccelTerrainSlope.c"
-#include "../decompile/General/OnApplyForces.c"
-#include "../decompile/General/Player_SetHeldItem.c"
-#include "../decompile/General/Player_Driving_LerpToForwards.c"
-#include "../decompile/General/Player_Driving_LerpQuarterStrength.c"
-#include "../decompile/General/Player_GetBaseSpeed.c"
-#include "../decompile/General/Player_StickReturnToRest.c"
-#include "../decompile/General/Player_StickGetStrength.c"
-#include "../decompile/General/Player_StickGetStrengthAbsolute.c"
-#include "../decompile/General/Turbo_Increment.c"
-#include "../decompile/General/Turbo_Audio.c"
+#include "../decompile/General/Vehicle/VehPhysProc_Driving_PhysLinear.c"
+#include "../decompile/General/Vehicle/VehPhysProc_Driving_Audio.c"
+#include "../decompile/General/Vehicle/VehPhysProc_Driving_Update.c"
+#include "../decompile/General/Vehicle/VehPhysProc_Driving_Init.c"
 
-#include "../decompile/General/Weapon_Mask_boolGoodGuy.c"
-#include "../decompile/General/Weapon_Shoot_OnCirclePress.c"
+#include "../decompile/General/Vehicle/VehPhysProc_FreezeEndEvent_PhysLinear.c"
+#include "../decompile/General/Vehicle/VehPhysProc_FreezeEndEvent_Init.c"
+
+// everything between VehPhysProc_FreezeEndEvent_Init and VehPickState_NewState
+#include "../decompile/General/Vehicle/VehPhysProc_AAA_BigBlock1.c"
+
+#include "../decompile/General/Vehicle/VehPickupItem_MaskBoolGoodGuy.c"
+#include "../decompile/General/Vehicle/VehPickupItem_ShootOnCirclePress.c"
+
+#include "../decompile/General/Vehicle/VehStuckProc_RevEngine_FuncPtrs.c"
+#include "../decompile/General/Vehicle/VehStuckProc_RevEngine_Init.c"
+#include "../decompile/General/Vehicle/VehStuckProc_Tumble_FuncPtrs.c"
+#include "../decompile/General/Vehicle/VehStuckProc_Tumble_Init.c"
 
 
 // 230

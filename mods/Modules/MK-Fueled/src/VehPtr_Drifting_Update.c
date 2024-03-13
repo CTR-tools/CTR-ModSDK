@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
+void DECOMP_VehPhysProc_PowerSlide_Update(struct Thread *t, struct Driver *d)
 {
     char turbo_level;
     int meterLeft;
@@ -26,14 +26,14 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
             //     struct ParticleEmitter *emset = (sdata->gGT->timer & 1) ? SparksR[turbo_level - 1] : SparksL[turbo_level - 1];
 
             //     // Tire Sparks
-            //     VehParticle_Terrain_Ground(d, emset);
+            //     VehEmitter_Terrain_Ground(d, emset);
             // }
 
             if (turbo_level < 3)
             {
                 short turn = d->turnAngleCurr;
                 turn = (turn < 0) ? -turn : turn;
-                meterLeft -= VehMath_MapToRange(turn, 0, 1080, 0, 48);
+                meterLeft -= VehCalc_MapToRange(turn, 0, 1080, 0, 48);
 
                 // if the bar is full or beyond
                 if (meterLeft <= 0)
@@ -64,7 +64,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
             else
             {
                 // Mini-Turbo
-                Turbo_Increment(
+                VehFire_Increment(
                     // driver
                     d,
                     // amount of reserves
@@ -102,7 +102,7 @@ void DECOMP_VehPtr_Drifting_Update(struct Thread *t, struct Driver *d)
             d->buttonUsedToStartDrift) == 0))))
     {
         // Stop drifting, just drive
-        VehPtr_Drifting_Finalize(t, d);
-        VehPtr_Driving_Init(t, d);
+        VehPhysProc_PowerSlide_Finalize(t, d);
+        VehPhysProc_Driving_Init(t, d);
     }
 }

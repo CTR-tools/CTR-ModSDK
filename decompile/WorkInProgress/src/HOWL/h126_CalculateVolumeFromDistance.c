@@ -23,7 +23,7 @@ void CalculateVolumeFromDistance(u_int *soundCount_ID, u_int soundID, int distan
         else
         {
             // Map distance from [close, far] to [loud, quiet]
-            volume = DECOMP_VehMath_MapToRange(distance, 300, 6000, 0xff, 0);
+            volume = DECOMP_VehCalc_MapToRange(distance, 300, 6000, 0xff, 0);
         }
 
         if (soundID != -1)

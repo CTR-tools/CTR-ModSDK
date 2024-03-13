@@ -5719,7 +5719,7 @@ void FUN_8002d0f8(void)
 			PTR_DAT_8008d2ac[0x1ca8] == '\x01')
 	   )
 	{
-	  // Weapon_Mask_boolGoodGuy
+	  // VehPickupItem_MaskBoolGoodGuy
       uVar3 = FUN_80064be4(*(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec));
 
 	  // if you use uka

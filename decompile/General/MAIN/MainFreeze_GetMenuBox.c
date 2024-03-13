@@ -10,7 +10,7 @@ struct MenuBox* DECOMP_MainFreeze_GetMenuBox(void)
     // Set string to "Uka Uka Hints", 
     // or if boolGoodGuy, then set "Aku Aku Hints"
     int var1 = 0xc;
-    if (DECOMP_Weapon_Mask_boolGoodGuy(gGT->drivers[0]) != 0)
+    if (DECOMP_VehPickupItem_MaskBoolGoodGuy(gGT->drivers[0]) != 0)
 		var1 = 0xb;
 	
 	data.menuRow_advHub[1].stringIndex = var1;

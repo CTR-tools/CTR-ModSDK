@@ -1294,7 +1294,7 @@ void FUN_80019128(int param_1,int param_2,int param_3,short *param_4,short *para
   // if camera is at the center of the driver (where driver collides with ground)
   if (*(short *)(param_1 + 0x9a) == 0xe)
   {
-	// Rot_AxisAngle
+	// VehPhysForce_RotAxisAngle
     FUN_8005f89c((MATRIX *)(param_3 + 0x220),param_2 + 0x368,(int)*(short *)(param_2 + 0x39a));
     gte_SetRotMatrix((MATRIX *)(param_3 + 0x220));
     puVar6 = puVar5;
@@ -1303,7 +1303,7 @@ void FUN_80019128(int param_1,int param_2,int param_3,short *param_4,short *para
   // if you have any other "normal" camera feature
   else
   {
-	// Rot_AxisAngle
+	// VehPhysForce_RotAxisAngle
     FUN_8005f89c((MATRIX *)(param_3 + 0x220),param_2 + 0x368,(int)*(short *)(param_2 + 0x2ee));
     gte_SetRotMatrix((MATRIX *)(param_3 + 0x220));
   }

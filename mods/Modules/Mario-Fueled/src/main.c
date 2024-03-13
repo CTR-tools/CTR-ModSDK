@@ -1,6 +1,6 @@
 #include <common.h>
 
-void Turbo_Audio(struct Driver *driver, int param_2);
+void VehFire_Audio(struct Driver *driver, int param_2);
 
 void Mini_Turbo()
 {
@@ -12,7 +12,7 @@ void Mini_Turbo()
 		short meterLeft = d->turbo_MeterRoomLeft;
 			if ((meterLeft < 100) && (meterLeft > 1))
 			{
-				Turbo_Increment(
+				VehFire_Increment(
 					// driver
 					d,
 					// amount of reserves

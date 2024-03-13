@@ -1,6 +1,6 @@
 #include <common.h>
 
-int DECOMP_Weapon_Mask_boolGoodGuy(struct Driver * d)
+int DECOMP_VehPickupItem_MaskBoolGoodGuy(struct Driver * d)
 
 {
   short charID;

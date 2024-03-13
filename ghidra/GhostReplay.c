@@ -530,7 +530,7 @@ LAB_80027658:
 				)
 			 )
 		  {
-			// Turbo_Increment
+			// VehFire_Increment
             FUN_8005abfc(iVar22,(int)CONCAT11(bVar1,bVar2),(uint)pbVar13[3],
                          (int)CONCAT11(bVar3,bVar4));
           }
@@ -736,7 +736,7 @@ void FUN_80027838(void)
 	  // Driver + 0x62C = ptr ghost tape
       piVar7[0x18b] = iVar4;
 
-	  // VehInit_GetModelByName
+	  // VehBirth_GetModelByName
       uVar3 = FUN_80058948((&PTR_s_crash_80086d84)[(int)(short)(&DAT_80086e84)[(int)sVar5 + 1] * 4])
       ;
 
@@ -780,10 +780,10 @@ void FUN_80027838(void)
 	  // driver -> instSelf
       piVar7[7] = iVar6;
 
-	  // VehInit_TireSprites
+	  // VehBirth_TireSprites
       FUN_80058c4c();
 
-	  // VehInit_SetConsts(driver*), based on driver class
+	  // VehBirth_SetConsts(driver*), based on driver class
       FUN_80058a60(piVar7);
 
 	  // loop counter
@@ -897,7 +897,7 @@ LAB_80027cfc:
 	  // character ID
       psVar6 = (short *)((int)&DAT_80086e84 + (iVar5 >> 0xf));
 
-	  // VehInit_GetModelByName
+	  // VehBirth_GetModelByName
       uVar2 = FUN_80058948((&PTR_s_crash_80086d84)[(int)*psVar6 * 4]);
 	  
 	  printf("%08x\n", uVar2);

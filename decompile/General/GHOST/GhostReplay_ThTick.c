@@ -346,7 +346,7 @@ void DECOMP_GhostReplay_ThTick(struct Thread *t)
 				(DECOMP_TitleFlag_IsFullyOnScreen() == 0)
 			)
 		{
-          DECOMP_Turbo_Increment(d, 
+          DECOMP_VehFire_Increment(d, 
 			(int)(buffer[1] << 8 | buffer[2]), // endian flip 
 			buffer[3],
             (int)(buffer[4] << 8 | buffer[5]) // endian flip

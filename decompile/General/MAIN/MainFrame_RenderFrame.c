@@ -942,13 +942,13 @@ void RenderAllFlag0x40(struct GameTracker* gGT)
 		}
 	}
 	
-	Turbo_ProcessBucket(gGT->threadBuckets[TURBO].thread);
+	VehTurbo_ProcessBucket(gGT->threadBuckets[TURBO].thread);
 
 	for(i = 0; i < gGT->numPlyrCurrGame; i++)
 	{
 		tileView = &gGT->tileView[i];
-		DrawSkidMarks_Main(gGT->threadBuckets[PLAYER].thread, tileView);
-		DrawSkidMarks_Main(gGT->threadBuckets[ROBOT].thread, tileView);
+		VehGroundSkids_Main(gGT->threadBuckets[PLAYER].thread, tileView);
+		VehGroundSkids_Main(gGT->threadBuckets[ROBOT].thread, tileView);
 	}
 }
 
@@ -997,7 +997,7 @@ void RenderAllTires(struct GameTracker* gGT)
 void RenderAllShadows(struct GameTracker* gGT)
 {
 	if((gGT->renderFlags & 0x200) == 0) return;
-	DrawShadows_Main();
+	VehGroundShadow_Main();
 }
 
 void RenderAllHeatParticles(struct GameTracker* gGT)

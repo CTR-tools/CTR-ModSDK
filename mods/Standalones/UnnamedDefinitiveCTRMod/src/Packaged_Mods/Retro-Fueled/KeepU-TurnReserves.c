@@ -1,9 +1,9 @@
 #include <common.h>
 
 #if BUILD < JpnRetail
-	char * holdingX_withReserves = (char *) ((u_int)VehPtr_Driving_PhysLinear + 0xAF8);
+	char * holdingX_withReserves = (char *) ((u_int)VehPhysProc_Driving_PhysLinear + 0xAF8);
 #else
-	char * holdingX_withReserves = (char *) ((u_int)VehPtr_Driving_PhysLinear + 0xB14);
+	char * holdingX_withReserves = (char *) ((u_int)VehPhysProc_Driving_PhysLinear + 0xB14);
 #endif
 
 // forward declaration of our functions

@@ -275,7 +275,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
             }
 
             // struct MetaDataScrub*
-            scrubMeta = VehColl_GetSurface(scrubId);
+            scrubMeta = VehAfterColl_GetSurface(scrubId);
 
             *(u_short *)&d->fill18_postQuadBlock[6] |= 2;
             *(u_int *)(d + 0xac) = *(u_int*)0x1f800170;
@@ -362,7 +362,7 @@ void DECOMP_COLL_StartSearch_NearPlayer(struct Thread *th, struct Driver *d)
                 uVar2 = 0;
 
                 // scrub meta
-                scrubMeta = VehColl_GetSurface(SPS->bspHitbox->id);
+                scrubMeta = VehAfterColl_GetSurface(SPS->bspHitbox->id);
 
                 if ((SPS->bspHitbox->id == 4) ||
                     (uVar2 = COLL_Scrub(d, th, &SPS->Input1.pos[0], scrubMeta, &d->velocityXYZ[0]), uVar2 == 0))

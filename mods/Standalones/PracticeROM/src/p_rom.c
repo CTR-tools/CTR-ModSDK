@@ -1,6 +1,6 @@
 #include "../p_rom.h"
 
-void VehInit_SetConsts(struct Driver *d);
+void VehBirth_SetConsts(struct Driver *d);
 
 #define NumbersToString Torch_Subset1
 #define SaveState Torch_Subset4
@@ -43,26 +43,26 @@ enum ButtonsExtra
 void BackupInstructions()
 {
 	// Saving the mask instructions for non TT purposes
-	p_rom->maskInstructions[0] = *(int *)(Weapon_Mask_UseWeapon);
-	p_rom->maskInstructions[1] = *(int *)(Weapon_Mask_UseWeapon + 0x4);
-	p_rom->maskInstructions[2] = *(int *)(Weapon_Mask_UseWeapon + 0x8);
+	p_rom->maskInstructions[0] = *(int *)(VehPickupItem_MaskUseWeapon);
+	p_rom->maskInstructions[1] = *(int *)(VehPickupItem_MaskUseWeapon + 0x4);
+	p_rom->maskInstructions[2] = *(int *)(VehPickupItem_MaskUseWeapon + 0x8);
 }
 
 void EnableMask()
 {
-	*(u_int *)(Weapon_Mask_UseWeapon) = p_rom->maskInstructions[0];
-	*(u_int *)(Weapon_Mask_UseWeapon + 0x4) = p_rom->maskInstructions[1];
-	*(u_int *)(Weapon_Mask_UseWeapon + 0x8) = p_rom->maskInstructions[2];
+	*(u_int *)(VehPickupItem_MaskUseWeapon) = p_rom->maskInstructions[0];
+	*(u_int *)(VehPickupItem_MaskUseWeapon + 0x4) = p_rom->maskInstructions[1];
+	*(u_int *)(VehPickupItem_MaskUseWeapon + 0x8) = p_rom->maskInstructions[2];
 }
 
 void DisableMask()
 {
 	// setting return value to null pointer (v0 = 0)
-	*(u_int *)(Weapon_Mask_UseWeapon) = 0x00001020;
+	*(u_int *)(VehPickupItem_MaskUseWeapon) = 0x00001020;
 	// jr ra
-	*(u_int *)(Weapon_Mask_UseWeapon + 0x4) = 0x03E00008;
+	*(u_int *)(VehPickupItem_MaskUseWeapon + 0x4) = 0x03E00008;
 	// NOP to avoid making any register dirty
-	*(u_int *)(Weapon_Mask_UseWeapon + 0x8) = 0x00000000;
+	*(u_int *)(VehPickupItem_MaskUseWeapon + 0x8) = 0x00000000;
 }
 
 // to do: should hook main(),
@@ -76,7 +76,7 @@ void RunInitHook()
 
 	p_rom->currEngine = &engineStrings[p_rom->engine][8];
 	data.MetaDataCharacters[data.characterIDs[0]].engineID = p_rom->engine;
-	VehInit_SetConsts(sdata->gameTracker.drivers[0]);
+	VehBirth_SetConsts(sdata->gameTracker.drivers[0]);
 
 	BackupInstructions();
 
@@ -392,7 +392,7 @@ void RunUpdateHook()
 			*prevEngine = swapEngine;
 
 			EngineAudio_InitOnce(swapEngine * 4, 0x8080);
-			VehInit_SetConsts(player);
+			VehBirth_SetConsts(player);
 		}
 
 		// Change Camera Cheat

@@ -68,14 +68,14 @@ void AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
         if (((sdata->buttonTapPerPlayer[0] & 0x40070) != 0) &&
 
             // if no XA is playing anymore
-            ((uVar6 = TalkingMask_boolNotTalking(), (uVar6 & 0xffff) != 0 || (*(short *)0x800b51ee == 0))))
+            ((uVar6 = VehTalkMask_boolNotTalking(), (uVar6 & 0xffff) != 0 || (*(short *)0x800b51ee == 0))))
         {
             // not viewing hint anymore
             *(char *)0x800b5660 = 0;
 
             MENUBOX_ClearInput();
 
-            TalkingMask_End();
+            VehTalkMask_End();
         }
         iVar11 = uVar2;
 
@@ -162,11 +162,11 @@ void AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
                     if ((sdata->load_inProgress == 0) && (sdata->XA_State == 0))
                     {
 
-                        sdata->instMaskHints3D = TalkingMask_Init();
+                        sdata->instMaskHints3D = VehTalkMask_Init();
 
                         *(short *)0x800b51ee = 0x1e;
 
-                        TalkingMask_PlayXA(sdata->instMaskHints3D,
+                        VehTalkMask_PlayXA(sdata->instMaskHints3D,
                                            (((int)(short)(&DAT_800b54f4)[local_70[mb->rowSelected]] + -0x17b) -
                                             ((int)(short)(&DAT_800b54f4)[local_70[mb->rowSelected]] + -0x17b >> 0x1f)) *
                                                    0x8000 >>
@@ -237,7 +237,7 @@ void AH_HintMenu_MenuBoxFuncPtr(struct MenuBox *mb)
 
 LAB_800b38cc:
 
-    uVar6 = Weapon_Mask_boolGoodGuy(gGT->drivers[0]);
+    uVar6 = VehPickupItem_MaskBoolGoodGuy(gGT->drivers[0]);
 
     // If they use Uka
     if ((uVar6 & 0xffff) == 0)

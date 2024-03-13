@@ -61,7 +61,7 @@ void RunUpdateHook()
 	// dont copy normalVec over network, copy
 	// quadblockID, then get normalVec from there,
 	// or run a BSP search to find quadblock without network,
-	Rot_AxisAngle(
+	VehPhysForce_RotAxisAngle(
 
 		// P2 matrix
 		&sdata->gGT->drivers[1]->instSelf->matrix,
@@ -137,7 +137,7 @@ void RunUpdateHook()
 
 	// this is a PLAYER function being run on a ROBOTCAR,
 	// how do ordinary AIs record skidmark buffer without this?
-	VehParticle_DriverMain(
+	VehEmitter_DriverMain(
 		sdata->gGT->drivers[1]->instSelf->thread,
 		sdata->gGT->drivers[1]);
 }

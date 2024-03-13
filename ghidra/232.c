@@ -880,7 +880,7 @@ LAB_800ac860:
 	  // increase frames spent warping
 	  *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 	  
-	  // VehPtr_Warp_Init
+	  // VehStuckProc_Warp_Init
       *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 	  
 	  // If [???] then DontLoadLevelYet
@@ -910,7 +910,7 @@ LAB_800ac860:
 		// increase frames warping
         *(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 		
-		// VehPtr_Warp_Init
+		// VehStuckProc_Warp_Init
         *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 		
 		// If [???] then DontLoadLevelYet
@@ -1049,7 +1049,7 @@ LAB_800ac860:
 			  // boolEnteredWarppad
               *(undefined2 *)(piVar19 + 0x1d) = 1;
 			  
-			  // VehPtr_Warp_Init
+			  // VehStuckProc_Warp_Init
               *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 			  
 			  // DontLoadLevelYet
@@ -1095,7 +1095,7 @@ LAB_800ace34:
 		// increment frames warping
 		*(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 		
-		// VehPtr_Warp_Init
+		// VehStuckProc_Warp_Init
         *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
 		
 		// If [???] then DontLoadLevelYet
@@ -1119,7 +1119,7 @@ LAB_800ace34:
 	// increment frames warping
 	*(short *)((int)piVar19 + 0x76) = *(short *)((int)piVar19 + 0x76) + 1;
 	
-	// VehPtr_Warp_Init
+	// VehStuckProc_Warp_Init
     *(undefined4 *)(iVar18 + 0x54) = 0x80068e04;
     
 	puVar12 = PTR_DAT_8008d2ac;
@@ -3893,7 +3893,7 @@ joined_r0x800b06ec:
 	
 	// If you are here, game must not be paused
 	
-	// VehPtr_Freeze_Init
+	// VehPhysProc_FreezeEndEvent_Init
     *(undefined4 *)(iVar17 + 0x54) = 0x80062d04;
     
 	*(ushort *)(piVar14 + 7) = *(ushort *)(piVar14 + 7) | 0x10;
@@ -4190,7 +4190,7 @@ joined_r0x800b06ec:
       goto LAB_800b0404;
     }
     
-	// VehPtr_Driving_Init
+	// VehPhysProc_Driving_Init
 	*(undefined4 *)(iVar17 + 0x54) = 0x80062b74;
 	
     uVar3 = *(ushort *)(piVar14 + 7) | 4;
@@ -4256,7 +4256,7 @@ LAB_800b0404:
     }
     *(uint *)(local_30 + 0x70) = *(uint *)(local_30 + 0x70) | 0x400;
 	
-	// VehPtr_Driving_Init
+	// VehPhysProc_Driving_Init
     *(undefined4 *)(iVar17 + 0x54) = 0x80062b74;
     
 	*(ushort *)(piVar14 + 7) = *(ushort *)(piVar14 + 7) & 0xffef | 4;
@@ -6513,7 +6513,7 @@ void FUN_800b3594(int param_1)
 	  // clear gamepad input (for menus)
 	  FUN_80046404();
 	  
-	  // TalkingMask_End
+	  // VehTalkMask_End
       FUN_8006925c();
     }
     iVar11 = (int)((uint)uVar2 << 0x10) >> 0xe;
@@ -6606,12 +6606,12 @@ LAB_800b38c0:
 		  // If there is no loading in progress
           if ((DAT_8008d0a4 == 0) && (DAT_8008d708 == 0)) {
             
-			// global maskInst = TalkingMask_Init
+			// global maskInst = VehTalkMask_Init
 			DAT_8008d860 = FUN_80069178();
             
 			DAT_800b51ee = 0x1e;
 			
-			// TalkingMask_PlayXA
+			// VehTalkMask_PlayXA
             FUN_800691e4(DAT_8008d860,
                          (((int)(short)(&DAT_800b54f4)[local_70[*(short *)(param_1 + 0x1a)]]
                           + -0x17b) -
@@ -6690,7 +6690,7 @@ LAB_800b38c0:
   
 LAB_800b38cc:
 
-  // Weapon_Mask_boolGoodGuy
+  // VehPickupItem_MaskBoolGoodGuy
   uVar6 = FUN_80064be4(*(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec));
   
   // If they use Uka
@@ -6831,7 +6831,7 @@ void FUN_800b3dd8(short param_1,uint param_2)
   // make a copy of hint index
   DAT_800b5558 = param_1;
   
-  // VehPtr_Freeze_Init
+  // VehPhysProc_FreezeEndEvent_Init
   *(undefined4 *)(iVar5 + 0x54) = 0x80062d04;
   
   // 0x8fba4 is where the adventure profile (currently loaded) begins
@@ -6855,7 +6855,7 @@ void FUN_800b3dd8(short param_1,uint param_2)
 	// get mempack index
     uVar2 = FUN_800335dc();
 	
-	// Weapon_Mask_boolGoodGuy
+	// VehPickupItem_MaskBoolGoodGuy
     uVar4 = FUN_80064be4(iVar5);
     
 	// LOAD_TalkingMask
@@ -7181,7 +7181,7 @@ void FUN_800b4470(void)
       return;
     }
 	
-	// TalkingMask_Init
+	// VehTalkMask_Init
     DAT_8008d860 = FUN_80069178();
 	
 	// CTR_MatrixToRot
@@ -7343,7 +7343,7 @@ LAB_800b48f8:
     }
     if (bVar8) 
 	{
-	  // Weapon_Mask_boolGoodGuy
+	  // VehPickupItem_MaskBoolGoodGuy
       sVar2 = FUN_80064be4(*(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec));
       
 	  // if bad guy

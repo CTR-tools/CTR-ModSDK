@@ -117,7 +117,7 @@ PLAY_AUDIO:
     {
         // Map value from [oldMin, oldMax] to [newMin, newMax]
         // inverting newMin and newMax will give an inverse range mapping
-        volume = DECOMP_VehMath_MapToRange(distance, 300, 9000, 0xff, 0);
+        volume = DECOMP_VehCalc_MapToRange(distance, 300, 9000, 0xff, 0);
     }
 
     // if sound hasn't played

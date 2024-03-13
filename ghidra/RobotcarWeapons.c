@@ -199,7 +199,7 @@ void FUN_800408b8(void)
               uVar10 = 3;
             }
 
-			// Weapon_Shoot_Now (Arcade/Adv)
+			// VehPickupItem_ShootNow (Arcade/Adv)
             FUN_8006540c(iVar4,uVar10,0);
 
 			// set wumpa to zero
@@ -236,7 +236,7 @@ LAB_8004128c:
                 FUN_8002cbe8(uVar10,(int)sVar11,(int)sVar2);
               }
 LAB_80041298:
-			  // Weapon_Shoot_Now (Arcade/Adv), Missile
+			  // VehPickupItem_ShootNow (Arcade/Adv), Missile
               FUN_8006540c(iVar4,2,0);
               goto LAB_800412a4;
             }
@@ -366,7 +366,7 @@ LAB_80041298:
                            (int)(short)(&DAT_80086e84)[*(byte *)(iVar14 + 0x4a)]);
             }
 
-			// Weapon_Shoot_Now (Arcade/Adv) Missile
+			// VehPickupItem_ShootNow (Arcade/Adv) Missile
             FUN_8006540c(iVar4,2,0);
 
 			// Get random number
@@ -744,7 +744,7 @@ LAB_80040da0:
 	{
 	  // Pinstripe or Oxide
 
-	  // Weapon_Shoot_Now (boss)
+	  // VehPickupItem_ShootNow (boss)
       FUN_8006540c(iVar13,2,(int)(short)uVar3);
     }
 
@@ -766,14 +766,14 @@ LAB_80040da0:
 			(*(int *)(PTR_DAT_8008d2ac + 0x1a10) == 0xd)
 		 )
 	  {
-		// Weapon_Shoot_Now (boss)
+		// VehPickupItem_ShootNow (boss)
 		// Fire two potions (see oxide boss challenge)
         FUN_8006540c(iVar13,(int)sVar11,1);
         FUN_8006540c(iVar13,(int)sVar11,1);
       }
       else
 	  {
-		// Weapon_Shoot_Now (boss)
+		// VehPickupItem_ShootNow (boss)
         FUN_8006540c(iVar13,(int)sVar11,(int)(short)uVar3);
 
 		if (

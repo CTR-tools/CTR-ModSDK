@@ -74,7 +74,7 @@ void DECOMP_RB_Potion_ThTick_InAir(struct Thread* t)
 	{
 		if (SPS->boolDidTouchQuadblock != 0) 
 		{
-			Rot_AxisAngle(&inst->matrix, &SPS->unk4C[0x24],0);
+			VehPhysForce_RotAxisAngle(&inst->matrix, &SPS->unk4C[0x24],0);
 
 			iVar4 = SPS->Union.QuadBlockColl.hitPos[1];
 			iVar5 = inst->matrix.t[1];

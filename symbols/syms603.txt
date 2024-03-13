@@ -67,4 +67,4 @@
 
 
 
-8004149c VehInit_TeleportSelf
+8004149c VehBirth_TeleportSelf

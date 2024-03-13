@@ -1,7 +1,7 @@
 #include <common.h>
 
 void FLARE_ThTick();
-void Player_ChangeState();
+void VehPickState_NewState();
 void UI_VsQuipReadDriver();
 void UI_BattleDrawHeadArrows();
 void GAMEPAD_JogCon1(struct Driver* driver, char param_2, u_short param_3);
@@ -52,7 +52,7 @@ void ModsMain()
 		(int)DECOMP_UI_Map_GetIconPos - (int)Mods6_EndOfFile,
 		
 		// VehPtr defrag Block1
-		(int)Player_ChangeState - (int)Mods7_EndOfFile,
+		(int)VehPickState_NewState - (int)Mods7_EndOfFile,
 		
 		// ElimBG defrag Block1
 		(int)FLARE_ThTick - (int)Mods8_EndOfFile,

@@ -86,13 +86,13 @@ void RunUpdateHook()
 	if((button & (BTN_SELECT|BTN_L1)) == (BTN_SELECT|BTN_L1))
 	{
 		// 0x100 for normal turbo pad
-		Turbo_Increment(d, 9000, 5, 0x100);
+		VehFire_Increment(d, 9000, 5, 0x100);
 	}
 	
 	else if((button & (BTN_SELECT|BTN_R1)) == (BTN_SELECT|BTN_R1))
 	{
 		// 0x800 for super turbo pad
-		Turbo_Increment(d, 9000, 5, 0x800);
+		VehFire_Increment(d, 9000, 5, 0x800);
 	}
 
 	// main menu

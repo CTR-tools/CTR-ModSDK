@@ -14,7 +14,7 @@ common, exe, __main, 0x68, src/hookEntry.s
 common, exe, MainInit_StringToLevID, -0x8, src/hookInit.s
 
 // modified from OvMPK
-common, exe, VehInit_GetModelByName, 0x0, src/OvMPK_StringSearch.c
+common, exe, VehBirth_GetModelByName, 0x0, src/OvMPK_StringSearch.c
 common, exe, LOAD_DriverMPK, 0x0, src/OvMPK_LoadMPK.c
 
 // new spawning

@@ -164,8 +164,8 @@ void DECOMP_RobotcarWeapons_Update(void)
 							uVar10 = 3;
 						}
 
-						// Weapon_Shoot_Now (Arcade/Adv)
-						Weapon_Shoot_Now(nextDriver, uVar10, 0);
+						// VehPickupItem_ShootNow (Arcade/Adv)
+						VehPickupItem_ShootNow(nextDriver, uVar10, 0);
 
 						// set wumpa to zero
 						nextDriver->numWumpas = 0;
@@ -201,7 +201,7 @@ void DECOMP_RobotcarWeapons_Update(void)
 								Voiceline_RequestPlay(uVar10, (int)sVar11, (int)sVar2);
 							}
 						LAB_80041298:
-							Weapon_Shoot_Now(nextDriver, 2, 0);
+							VehPickupItem_ShootNow(nextDriver, 2, 0);
 							goto LAB_800412a4;
 						}
 
@@ -310,7 +310,7 @@ void DECOMP_RobotcarWeapons_Update(void)
 						}
 
 						//  (Arcade/Adv) Missile
-						Weapon_Shoot_Now(nextDriver, 2, 0);
+						VehPickupItem_ShootNow(nextDriver, 2, 0);
 
 						// Get random number
 						uVar3 = MixRNG_Scramble();
@@ -679,8 +679,8 @@ LAB_80040da0:
 		{
 			// Pinstripe or Oxide
 
-			// Weapon_Shoot_Now (boss)
-			Weapon_Shoot_Now(nextDriver, 2, uVar3);
+			// VehPickupItem_ShootNow (boss)
+			VehPickupItem_ShootNow(nextDriver, 2, uVar3);
 		}
 
 		else
@@ -697,15 +697,15 @@ LAB_80040da0:
 				// If you are on oxide station
 				(gGT->levelID == 0xd))
 			{
-				// Weapon_Shoot_Now (boss)
+				// VehPickupItem_ShootNow (boss)
 				// Fire two potions (see oxide boss challenge)
-				Weapon_Shoot_Now(nextDriver, sVar11, 1);
-				Weapon_Shoot_Now(nextDriver,sVar11, 1);
+				VehPickupItem_ShootNow(nextDriver, sVar11, 1);
+				VehPickupItem_ShootNow(nextDriver,sVar11, 1);
 			}
 			else
 			{
-				// Weapon_Shoot_Now (boss)
-				Weapon_Shoot_Now(nextDriver, sVar11, uVar3);
+				// VehPickupItem_ShootNow (boss)
+				VehPickupItem_ShootNow(nextDriver, sVar11, uVar3);
 
 				if (// Roo, Joe, Oxide
 					(

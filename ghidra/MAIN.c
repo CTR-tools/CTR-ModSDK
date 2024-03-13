@@ -616,7 +616,7 @@ LAB_80035098:
 		  {
             // WARNING: Read-only address (ram,0x8008d874) is written
 
-			// Weapon_Shoot_OnCirclePress
+			// VehPickupItem_ShootOnCirclePress
             FUN_800666e4(*(undefined4 *)(iVar8 + 0x30));
 
 			// increment pointer to go to next player
@@ -1610,7 +1610,7 @@ void FUN_80035e20(short param_1,undefined2 param_2)
 
 	// 8008d2ac[0x93b] + 0x54
 	// 8009900C + 0x54
-	// driver funcPtrInit, VehPtr_Freeze_Init
+	// driver funcPtrInit, VehPhysProc_FreezeEndEvent_Init
     *(undefined **)(puGp00000340[0x93b] + 0x54) = &FUN_80062d04;
 
 	// 8008d2cc
@@ -5881,7 +5881,7 @@ undefined * FUN_80039dcc(void)
   // if you're in Adventure Arena
   else
   {
-	// Weapon_Mask_boolGoodGuy
+	// VehPickupItem_MaskBoolGoodGuy
     uVar2 = FUN_80064be4(*(undefined4 *)(PTR_DAT_8008d2ac + 0x24ec));
 
 	// if you use uka
@@ -6998,7 +6998,7 @@ void FUN_8003aee8(uint *param_1,int param_2)
     FUN_8002c8a8(0,0,1);
   }
 
-  // VehInit_TeleportAll
+  // VehBirth_TeleportAll
   FUN_80058898(param_1,2);
   return;
 }
@@ -8991,7 +8991,7 @@ LAB_8003ca68:
 	  // set sound to unpaused
       DAT_8008d8a4 = 0;
 
-	  // VehInit_EngineAudio_AllPlayers
+	  // VehBirth_EngineAudio_AllPlayers
       FUN_80058ba4();
 
 	  // This is in OnlineCTR

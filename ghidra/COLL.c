@@ -847,7 +847,7 @@ void FUN_8001d944(int param_1,int param_2)
   // if driver is high above the quadblock
   if (*(int *)(param_2 + 0x2d0) + 0x8000 < *(int *)(param_2 + 0x2d8))
   {
-	// VehColl_GetTerrain (air)
+	// VehAfterColl_GetTerrain (air)
     uVar7 = FUN_80057c68(10);
     *(undefined4 *)(param_2 + 0x35c) = uVar7;
   }
@@ -910,7 +910,7 @@ LAB_8001e4d0:
       *(uint *)(param_2 + 0x2c8) = *(uint *)(param_2 + 0x2c8) | 0x40;
     }
 
-	// VehColl_GetTerrain (air)
+	// VehAfterColl_GetTerrain (air)
 	uVar7 = FUN_80057c68(10);
     *(undefined4 *)(param_2 + 0x358) = uVar7;
 
@@ -1126,7 +1126,7 @@ LAB_8001e340:
       *(byte *)(param_2 + 0xc2) = bVar4;
     }
 
-	// VehColl_GetTerrain
+	// VehAfterColl_GetTerrain
     uVar7 = FUN_80057c68(uVar6);
     *(undefined4 *)(param_2 + 0x358) = uVar7;
     *(undefined4 *)(param_2 + 0x35c) = uVar7;
@@ -1450,7 +1450,7 @@ code_r0x8001e96c:
 	// NOP-ing this allows you to jump out of bounds,
 	// and not get mask-grabbbed when you hit kill planes
 
-	// VehPtr_MaskGrab_Init
+	// VehStuckProc_MaskGrab_Init
     FUN_800671b0(param_1,param_2);
   }
   return;
@@ -3481,7 +3481,7 @@ void FUN_80020410(undefined4 param_1,int param_2)
 		*(undefined2 *)(param_2 + 0x364) = uVar2;
       }
 
-	  // VehColl_GetSurface
+	  // VehAfterColl_GetSurface
 	  uVar12 = FUN_80057c44(uVar12);
 
       uVar8 = DAT_1f800170;
@@ -3582,7 +3582,7 @@ LAB_800209b0:
         
 		iVar5 = 0;
 
-		// VehColl_GetSurface
+		// VehAfterColl_GetSurface
         uVar8 = FUN_80057c44((uint)DAT_1f800150[1]);
 
         if ((DAT_1f800150[1] == 4) ||
@@ -3968,7 +3968,7 @@ undefined4 FUN_80020c58(int param_1,undefined4 param_2,int param_3,int param_4,i
           *(undefined *)(param_1 + 0x4c) = 4;
           *(undefined *)(param_1 + 0x4d) = 0;
 
-		  // VehPtr_Crashing_Init
+		  // VehPhysProc_SlamWall_Init
           FUN_80063bd4(param_2);
           return 2;
         }

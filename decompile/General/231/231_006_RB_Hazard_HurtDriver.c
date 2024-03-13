@@ -11,7 +11,7 @@ void RB_Hazard_HurtDriver(
 	// if not an AI
 	if ((driverVictim->actionsFlagSet & 0x100000) == 0)
 	{
-		Player_ChangeState(driverVictim, damageType, driverAttacker, reason);
+		VehPickState_NewState(driverVictim, damageType, driverAttacker, reason);
 		return;
 	}
 	

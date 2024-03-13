@@ -194,7 +194,7 @@ void RunUpdateHook()
 		{
 			k1->freecam_enable = 0;
 			sdata->gGT->cameraDC[0].tileView = &sdata->gGT->tileView[0];
-			VehPtr_Driving_Init(0, sdata->gGT->drivers[0]);
+			VehPhysProc_Driving_Init(0, sdata->gGT->drivers[0]);
 		}
 
 		else
@@ -222,7 +222,7 @@ void RunUpdateHook()
 	{
 		if(sdata->gGT->drivers[0]->kartState != 5)
 		{
-			VehPtr_MaskGrab_Init(sdata->gGT->drivers[0]->instSelf->thread, sdata->gGT->drivers[0]);
+			VehStuckProc_MaskGrab_Init(sdata->gGT->drivers[0]->instSelf->thread, sdata->gGT->drivers[0]);
 		}
 	}
 }

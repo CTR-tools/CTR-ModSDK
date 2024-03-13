@@ -144,7 +144,7 @@ void CS_Podium_Prize_ThTick3(struct Thread *th)
         }
 
         // Request Aku Hint,
-        // also calls VehPtr_Freeze_Init
+        // also calls VehPhysProc_FreezeEndEvent_Init
         MainFrame_RequestMaskHint(hintID, 0);
     }
 

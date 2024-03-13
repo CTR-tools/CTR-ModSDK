@@ -17,7 +17,7 @@ common, exe, UI_DrawRaceClock, 0x0, ../../../decompile/General/UI_DrawRaceClock.
 1020, exe, 0x800342f8, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s
 1111, exe, 0x80035b5C, 0x0, ../../Modules/OverrideMPK/src/numDrivers.s
 common, exe, LOAD_AppendQueue, 0x8, ../../Modules/OverrideMPK/src/numDriversPlusOne.s
-common, exe, VehInit_GetModelByName, 0x0, ../../Modules/OverrideMPK/src/OvMPK_StringSearch.c
+common, exe, VehBirth_GetModelByName, 0x0, ../../Modules/OverrideMPK/src/OvMPK_StringSearch.c
 common, exe, LOAD_DriverMPK, 0x0, ../../Modules/OverrideMPK/src/OvMPK_LoadMPK.c
 
 common, exe, LOAD_Robots1P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_hook1P.s
@@ -29,18 +29,18 @@ common, exe, LOAD_Robots2P, 0x0, ../../Modules/CharacterRandomizer/src/ChRand_ho
 common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
 
 // Erasing the original reserve cancelation if, so that we can run our own code
-926, exe, VehPtr_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-926, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
-1020, exe, VehPtr_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1020, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
-1111, exe, VehPtr_Driving_PhysLinear, 0xA4C, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA4C, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA54, ../../../nop.s
 
 // Binary edits
 // Turbo pad to STP
-common, exe, OnCollide_Drivers, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
+common, exe, VehPhysForce_CollideDrivers, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
 // Standardize turbo pad reserves
-common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
+common, exe, VehPhysForce_CollideDrivers, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
 
 // Texture replacements
 // Replacements are only for US and Europe, Japan has these textures either drastically or slightly altered and I can't be bothered
@@ -120,8 +120,8 @@ common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/Standard
 1020, bigfilelevelstrackstemple2relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/temple2relic.vrm
 1020, bigfilelevelstrackstube1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/tube1relic.vrm
 
-// Modify Turbo_Increment function to allow for USF stacking
-common, exe, Turbo_Increment, 0x0, ../../Modules/Retro-Fueled/src/Turbo_Increment_AllowUSFStacking.c
+// Modify VehFire_Increment function to allow for USF stacking
+common, exe, VehFire_Increment, 0x0, ../../Modules/Retro-Fueled/src/VehFire_Increment_AllowUSFStacking.c
 
 // Compile code to empty spaces in RDATA //
 common, exe, rdata_free, 0x0, ../../Modules/Retro-Fueled/src/main.c ../../Modules/CharacterRandomizer/src/ChRand_main.c

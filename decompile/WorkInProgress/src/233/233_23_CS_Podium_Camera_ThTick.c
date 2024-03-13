@@ -23,8 +23,8 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
   // if at podium, and driver needs to be hidden
   if (podium[0] == 0)
   {
-    // VehPtr_Dead_Init
-    gGT->drivers[0]->funcPtrs[0] = VehPtr_Dead_Init;
+    // VehStuckProc_RIP_Init
+    gGT->drivers[0]->funcPtrs[0] = VehStuckProc_RIP_Init;
   }
 
   // CameraDC, it must be zero to follow you
@@ -209,7 +209,7 @@ void CS_Podium_Camera_ThTick(struct Thread *th)
         }
 
         // if player uses uka
-        if ((Weapon_Mask_boolGoodGuy(gGT->drivers[0]) & 0xffff) == 0)
+        if ((VehPickupItem_MaskBoolGoodGuy(gGT->drivers[0]) & 0xffff) == 0)
         {
           // increment index to uka voices
           hintID += 0x1f;

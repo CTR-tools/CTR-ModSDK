@@ -3,5 +3,5 @@
 926, exe, 0x80086E60, 0x0, assets/engine_max.bin
 926, exe, 0x80086E54, 0x0, assets/metadata.bin
 
-// Compile modified VehInit_SetConsts
-926, exe, VehInit_SetConsts, 0x0, src/USAUnlimitedPenta.c
+// Compile modified VehBirth_SetConsts
+926, exe, VehBirth_SetConsts, 0x0, src/USAUnlimitedPenta.c

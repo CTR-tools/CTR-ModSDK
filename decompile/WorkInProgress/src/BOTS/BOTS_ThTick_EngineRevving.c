@@ -24,11 +24,11 @@ void DECOMP_BOTS_ThTick_EngineRevving(struct Thread* botThread)
       maskObj->pos[2] = (short)(bot->posCurr[2] >> 8);
     }
 
-    OnRender(botThread, bot);
+    VehPhysForce_TranslateMatrix(botThread, bot);
 
-    OnAnimate_Driving(botThread, bot);
+    VehFrameProc_Driving(botThread, bot);
 
-    VehParticle_DriverMain(botThread, bot);
+    VehEmitter_DriverMain(botThread, bot);
   }
   // if not mask grab
   else

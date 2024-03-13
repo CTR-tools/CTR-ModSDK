@@ -116,7 +116,7 @@ void DECOMP_GhostReplay_Init1(void)
 		
 // set in MainInit_Drivers for PC port
 #ifndef REBUILD_PS1
-		uVar3 = VehInit_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
+		uVar3 = VehBirth_GetModelByName(data.MetaDataCharacters[charID].name_Debug);
 #else
 		uVar3 = 0;
 #endif
@@ -170,8 +170,8 @@ void DECOMP_GhostReplay_Init1(void)
 			}
 		}
 
-		DECOMP_VehInit_TireSprites(t);
-		DECOMP_VehInit_SetConsts(ghostDriver);
+		DECOMP_VehBirth_TireSprites(t);
+		DECOMP_VehBirth_SetConsts(ghostDriver);
 		
 		if(charID == 0xF)
 			ghostDriver->wheelSize = 0;

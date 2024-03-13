@@ -77,7 +77,7 @@ u_int DECOMP_main()
 				DECOMP_GAMEPAD_GetNumConnected(gGS);
 						
 				sdata->boolSoundPaused = 0;
-				DECOMP_VehInit_EngineAudio_AllPlayers();
+				DECOMP_VehBirth_EngineAudio_AllPlayers();
 				
 				// 9 = intro cutscene
 				// 10 = traffic lights

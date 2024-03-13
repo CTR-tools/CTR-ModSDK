@@ -3,4 +3,4 @@
 1111, exe, 0x80012570, 0x0, ../../Patches/JpnModchips/src/jpnModchips.s
 1020, exe, 0x80031cc8, 0x0, ../../Patches/EurLibcrypt/src/libcrypt.s
 
-common, exe, Weapon_Mask_boolGoodGuy, 0x0, src/Weapon_Mask_Switch.c
+common, exe, VehPickupItem_MaskBoolGoodGuy, 0x0, src/VehPickupItem_MaskSwitch.c

@@ -45,7 +45,7 @@ void DECOMP_UI_JumpMeter_Update(struct Driver * d) {
 			if (d->jumpMeter >= 1440) param = 0x100;
 
 			// add one second reserves
-			DECOMP_Turbo_Increment(d, 960, POWER_SLIDE_HANG_TIME, param);
+			DECOMP_VehFire_Increment(d, 960, POWER_SLIDE_HANG_TIME, param);
          }
       }
    }

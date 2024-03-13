@@ -17,18 +17,18 @@
 common, exe, BOTS_SetRotation, -0x8, ../../Modules/Retro-Fueled/src/hookUpdate.s
 
 // Erasing the original reserve cancelation if, so that we can run our own code
-926, exe, VehPtr_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-926, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
-1020, exe, VehPtr_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1020, exe, VehPtr_Driving_PhysLinear, 0xA38, ../../../nop.s
-1111, exe, VehPtr_Driving_PhysLinear, 0xA4C, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
-1111, exe, VehPtr_Driving_PhysLinear, 0xA54, ../../../nop.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+926, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA30, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1020, exe, VehPhysProc_Driving_PhysLinear, 0xA38, ../../../nop.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA4C, ../../Modules/Retro-Fueled/src/hookReserveCancelation.s
+1111, exe, VehPhysProc_Driving_PhysLinear, 0xA54, ../../../nop.s
 
 // Binary edits
 // Turbo pad to STP
-common, exe, OnCollide_Drivers, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
+common, exe, VehPhysForce_CollideDrivers, 0xB9, ../../Modules/Retro-Fueled/assets/TurboPadToSTP.bin
 // Standardize turbo pad reserves
-common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
+common, exe, VehPhysForce_CollideDrivers, 0xA4, ../../Modules/Retro-Fueled/assets/StandardizeTurboPadReserves.bin
 
 // Texture replacements
 // Replacements are only for US and Europe, Japan has these textures either drastically or slightly altered and I can't be bothered
@@ -108,8 +108,8 @@ common, exe, OnCollide_Drivers, 0xA4, ../../Modules/Retro-Fueled/assets/Standard
 1020, bigfilelevelstrackstemple2relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/temple2relic.vrm
 1020, bigfilelevelstrackstube1relicdatavrm, 0x0, 0x0,  ../../Modules/Retro-Fueled/assets/banner/tube1relic.vrm
 
-// Modify Turbo_Increment function to allow for USF stacking, and also fix red fire
-common, exe, Turbo_Increment, 0x0, ../../Modules/ReservesMeter/src/Turbo_Increment_Retro-Fueled.c
+// Modify VehFire_Increment function to allow for USF stacking, and also fix red fire
+common, exe, VehFire_Increment, 0x0, ../../Modules/ReservesMeter/src/VehFire_Increment_Retro-Fueled.c
 
 // OxideFix //
 
