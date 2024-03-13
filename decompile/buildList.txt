@@ -626,7 +626,10 @@ common, exe, VehCalc_SteerAccel, 0x0, General/Vehicle/VehCalc_SteerAccel.c
 common, exe, VehFire_Increment, 0x0, General/Vehicle/VehFire_Increment.c
 common, exe, VehFire_Audio, 0x0, General/Vehicle/VehFire_Audio.c
 
-// need all of VehFrame (Inst/Proc) (in wip)
+common, exe, VehFrameInst_GetStartFrame, 0x0, General/Vehicle/VehFrameInst_GetStartFrame.c
+common, exe, VehFrameInst_GetNumAnimFrames, 0x0, General/Vehicle/VehFrameInst_GetNumAnimFrames.c
+
+// need all of VehFrameProc
 
 // need VehGround
 common, exe, VehGroundSkids_Subset2, 0x0, General/Vehicle/VehGroundSkids_Subset2.c
