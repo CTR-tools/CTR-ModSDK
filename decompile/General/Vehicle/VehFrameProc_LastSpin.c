@@ -1,6 +1,6 @@
 #include <common.h>
 
-void VehFrameProc_LastSpin(struct Thread *t, struct Driver* d)
+void DECOMP_VehFrameProc_LastSpin(struct Thread *t, struct Driver* d)
 {
     short sVar1;
     u_short interp;
@@ -47,5 +47,5 @@ void VehFrameProc_LastSpin(struct Thread *t, struct Driver* d)
         }
         return;
     }
-    VehFrameProc_Spinning(t,d);
+    DECOMP_VehFrameProc_Spinning(t,d);
 }

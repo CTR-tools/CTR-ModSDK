@@ -22328,10 +22328,12 @@ void FUN_8005b178(int param_1,int param_2)
 	  // (1) backwards
       uVar11 = (uint)(*(short *)(param_2 + 0x38e) < 1);
     }
-    if (((0x600 < *(short *)(param_2 + 0x390)) || (*(char *)(iVar10 + 0x52) == '\x03')) &&
+    if (
+		((0x600 < *(short *)(param_2 + 0x390)) || (*(char *)(iVar10 + 0x52) == '\x03')) &&
 
-	   // if player height is far from quadblock height
-	   (0x8000 < *(int *)(param_2 + 0x2d8) - *(int *)(param_2 + 0x2d0)))
+		// if player height is far from quadblock height
+		(0x8000 < *(int *)(param_2 + 0x2d8) - *(int *)(param_2 + 0x2d0))
+		)
 	{
 	  // jumping animation
       uVar11 = 3;

@@ -1,6 +1,6 @@
 #include <common.h>
 
-void VehFrameProc_Driving(struct Thread *t, struct Driver *d)
+void DECOMP_VehFrameProc_Driving(struct Thread *t, struct Driver *d)
 {
     int iVar7;
     int iVar9;
@@ -27,7 +27,10 @@ void VehFrameProc_Driving(struct Thread *t, struct Driver *d)
             animType = (d->baseSpeed < 1);
         }
         // if player height is far from quadblock height
-        if ((0x600 < d->jumpHeightCurr || inst->animIndex == 3) && (0x8000 < d->posCurr[1] - d->quadBlockHeight))
+        if (
+			(0x600 < d->jumpHeightCurr || inst->animIndex == 3) && 
+			(0x8000 < d->posCurr[1] - d->quadBlockHeight)
+			)
         {
             // jumping animation
             animType = 3;
@@ -46,8 +49,8 @@ void VehFrameProc_Driving(struct Thread *t, struct Driver *d)
         // crashing
         if (currAnimIndex == 2)
         {
-            /// start on the last frame
-            startFrame = VehFrameInst_GetNumAnimFrames(inst,0) - 1;
+            // start on the last frame
+            startFrame = VehFrameInst_GetNumAnimFrames(inst,2) - 1;
         }
         else
         {
@@ -121,8 +124,10 @@ void VehFrameProc_Driving(struct Thread *t, struct Driver *d)
                     if ((d->actionsFlagSet & 8) == 0)
                     {
                         iVar7 = d->simpTurnState;
+						
                         // negative character's turn stat
-                        iVar9 = -(d->const_TurnRate);
+                        animType = d->const_TurnRate;
+						iVar9 = -animType;
                     }
                     else
                     {

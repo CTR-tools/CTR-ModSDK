@@ -1,6 +1,6 @@
 #include <common.h>
 
-void VehFrameProc_Spinning(struct Thread *t, struct Driver *d)
+void DECOMP_VehFrameProc_Spinning(struct Thread *t, struct Driver *d)
 {
     u_short interp;
     char animIndex;

@@ -629,7 +629,9 @@ common, exe, VehFire_Audio, 0x0, General/Vehicle/VehFire_Audio.c
 common, exe, VehFrameInst_GetStartFrame, 0x0, General/Vehicle/VehFrameInst_GetStartFrame.c
 common, exe, VehFrameInst_GetNumAnimFrames, 0x0, General/Vehicle/VehFrameInst_GetNumAnimFrames.c
 
-// need all of VehFrameProc
+common, exe, VehFrameProc_Driving, 0x0, General/Vehicle/VehFrameProc_Driving.c
+common, exe, VehFrameProc_Spinning, 0x0, General/Vehicle/VehFrameProc_Spinning.c
+common, exe, VehFrameProc_LastSpin, 0x0, General/Vehicle/VehFrameProc_LastSpin.c
 
 // need VehGround
 common, exe, VehGroundSkids_Subset2, 0x0, General/Vehicle/VehGroundSkids_Subset2.c
