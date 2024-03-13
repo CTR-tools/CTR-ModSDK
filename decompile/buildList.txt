@@ -604,6 +604,8 @@ common, exe, UI_DrawPosSuffix, 0x0, General/UI/UI_AAA_BigBlock1.c
 common, exe, UI_RaceStart_IntroText1P, 0x0, General/UI/UI_RaceStart_IntroText1P.c
 common, exe, UI_RaceEnd_GetDriverClock, 0x0, General/UI/UI_RaceEnd_GetDriverClock.c
 
+// need VehAfterColl
+
 //ommon, exe, VehBirth_TeleportSelf, 0x0, General/Vehicle/VehBirth_TeleportSelf.c
 common, exe, VehBirth_TeleportAll, 0x0, General/Vehicle/VehBirth_TeleportAll.c
 common, exe, VehBirth_GetModelByName, 0x0, General/Vehicle/VehBirth_GetModelByName.c
@@ -616,16 +618,27 @@ common, exe, VehBirth_Player, 0x0, General/Vehicle/VehBirth_Player.c
 common, exe, VehCalc_InterpBySpeed, 0x0, General/Vehicle/VehCalc_InterpBySpeed.c
 common, exe, VehCalc_MapToRange, 0x0, General/Vehicle/VehCalc_MapToRange.c
 common, exe, VehCalc_SteerAccel, 0x0, General/Vehicle/VehCalc_SteerAccel.c
+// need VehCalc_FastSqrt
+
+// need all of VehEmitter
 
 common, exe, VehFire_Increment, 0x0, General/Vehicle/VehFire_Increment.c
 common, exe, VehFire_Audio, 0x0, General/Vehicle/VehFire_Audio.c
 
+// need all of VehFrame (Inst/Proc)
+
+// need VehGround
 common, exe, VehGroundSkids_Subset2, 0x0, General/Vehicle/VehGroundSkids_Subset2.c
 
+// need VehLap
+// need VehPhysCrash
+
+// need more of VehPhysForce
 common, exe, VehPhysForce_ConvertSpeedToVec, 0x0, General/Vehicle/VehPhysForce_ConvertSpeedToVec.c
 common, exe, VehPhysForce_AccelTerrainSlope, 0x0, General/Vehicle/VehPhysForce_AccelTerrainSlope.c
 common, exe, VehPhysForce_OnApplyForces, 0x0, General/Vehicle/VehPhysForce_OnApplyForces.c
 
+// need more of VehPhysGeneral
 common, exe, VehPhysGeneral_PhysAngular, 0x0, General/Vehicle/VehPhysGeneral_PhysAngular.c
 common, exe, VehPhysGeneral_SetHeldItem, 0x0, General/Vehicle/VehPhysGeneral_SetHeldItem.c
 common, exe, VehPhysGeneral_LerpToForwards, 0x0, General/Vehicle/VehPhysGeneral_LerpToForwards.c
@@ -663,6 +676,10 @@ common, exe, VehStuckProc_RevEngine_Update, 0x0, General/Vehicle/VehStuckProc_Re
 common, exe, VehStuckProc_RevEngine_Init, 0x0, General/Vehicle/VehStuckProc_RevEngine_Init.c
 common, exe, VehStuckProc_Tumble_Update, 0x0, General/Vehicle/VehStuckProc_Tumble_FuncPtrs.c
 common, exe, VehStuckProc_Tumble_Init, 0x0, General/Vehicle/VehStuckProc_Tumble_Init.c
+
+// need VehStuckProc_Warp
+
+// need VehTalkMask
 
 common, exe, VehTurbo_ThTick, 0x0, General/Vehicle/VehTurbo_ThTick.c
 common, exe, VehTurbo_ThDestroy, 0x0, General/Vehicle/VehTurbo_ThDestroy.c
