@@ -19487,7 +19487,7 @@ LAB_80058568:
   // get number of frames in animation
   uVar7 = FUN_8005b0f4(*(undefined4 *)(param_1 + 0x1c),0);
 
-  // Instance_GetStartFrame
+  // VehFrameInst_GetStartFrame
   uVar6 = FUN_8005b0c4(0,uVar7);
 
   // Animation frame
@@ -22245,7 +22245,7 @@ LAB_8005af38:
 // 3 - start
 // 4 - end
 
-// Instance_GetStartFrame
+// VehFrameInst_GetStartFrame
 int FUN_8005b0c4(int param_1,int param_2)
 {
   if (param_1 == 0) {
@@ -22261,6 +22261,8 @@ int FUN_8005b0c4(int param_1,int param_2)
 // get number of frames in animation
 // param1 - instance
 // param2 - animIndex
+
+// VehFrameInst_GetNumAnimFrames
 uint FUN_8005b0f4(int param_1,int param_2)
 {
   int iVar1;
@@ -22360,7 +22362,7 @@ void FUN_8005b178(int param_1,int param_2)
 
       else
 	  {
-		// Instance_GetStartFrame
+		// VehFrameInst_GetStartFrame
         iVar5 = FUN_8005b0c4((uint)bVar1,iVar5);
       }
 
@@ -22421,7 +22423,7 @@ void FUN_8005b178(int param_1,int param_2)
 	  // set animation
       *(undefined *)(iVar10 + 0x52) = (char)uVar11;
 
-	  // Instance_GetStartFrame
+	  // VehFrameInst_GetStartFrame
       uVar4 = FUN_8005b0c4(uVar11,iVar5);
 
 	  // set animation frame
@@ -22590,7 +22592,7 @@ void FUN_8005b510(int param_1,int param_2)
   // if animation is not zero
   if (*(byte *)(iVar4 + 0x52) != 0)
   {
-	// Instance_GetStartFrame
+	// VehFrameInst_GetStartFrame
     iVar3 = FUN_8005b0c4((uint)*(byte *)(iVar4 + 0x52),iVar2);
 
 	// If animation is negative
@@ -30300,7 +30302,7 @@ void FUN_80063b2c(int param_1,int param_2)
 	  // reset animation
       *(undefined *)(iVar4 + 0x52) = 0;
 
-	  // Instance_GetStartFrame(midpoint, numFrames)
+	  // VehFrameInst_GetStartFrame(midpoint, numFrames)
       uVar2 = FUN_8005b0c4(0,iVar3);
 
 	  // set animation
@@ -30940,7 +30942,7 @@ void FUN_800643d4(int param_1,int param_2)
 	// return driver to center steering 
 	// animation frame
 
-	// Instance_GetStartFrame(midpoint, numFrames)
+	// VehFrameInst_GetStartFrame(midpoint, numFrames)
     iVar3 = FUN_8005b0c4(0,iVar3);
 
 	// Interpolate rotation by speed
@@ -33594,7 +33596,7 @@ void FUN_80066e8c(int param_1,int param_2)
 	// Instance_GetNumAnimFrames(instance, anim#0)
     uVar5 = FUN_8005b0f4(iVar6,0);
 
-	// Instance_GetStartFrame(midpoint, numFrames)
+	// VehFrameInst_GetStartFrame(midpoint, numFrames)
     uVar4 = FUN_8005b0c4(0,uVar5);
 
     *(undefined2 *)(iVar6 + 0x54) = uVar4;
@@ -34893,7 +34895,7 @@ void FUN_800682a4(undefined4 param_1,int param_2)
   // Instance_GetNumAnimFrames(instance, anim#0)
   uVar4 = FUN_8005b0f4(*(undefined4 *)(param_2 + 0x1c),0);
 
-  // Instance_GetStartFrame(midpoint, numFrames)
+  // VehFrameInst_GetStartFrame(midpoint, numFrames)
   uVar2 = FUN_8005b0c4(0,uVar4);
 
   // set animation frame

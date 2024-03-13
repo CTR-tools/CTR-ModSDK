@@ -7,10 +7,10 @@ int DECOMP_VehFrameInst_GetStartFrame(int animIndex, int numFrames)
 	// midpoint
     case 0: return numFrames >> 1; 
     
-	// start
-	case 4: return 0;
-    
 	// end
-	default: return (numFrames - 1);
+	case 4: return (numFrames - 1);
+    
+	// start
+	default: return 0;
   }
 }
