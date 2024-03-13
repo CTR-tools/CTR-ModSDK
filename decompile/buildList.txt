@@ -621,12 +621,12 @@ common, exe, VehCalc_MapToRange, 0x0, General/Vehicle/VehCalc_MapToRange.c
 common, exe, VehCalc_SteerAccel, 0x0, General/Vehicle/VehCalc_SteerAccel.c
 // need VehCalc_FastSqrt
 
-// need all of VehEmitter
+// need all of VehEmitter (in wip)
 
 common, exe, VehFire_Increment, 0x0, General/Vehicle/VehFire_Increment.c
 common, exe, VehFire_Audio, 0x0, General/Vehicle/VehFire_Audio.c
 
-// need all of VehFrame (Inst/Proc)
+// need all of VehFrame (Inst/Proc) (in wip)
 
 // need VehGround
 common, exe, VehGroundSkids_Subset2, 0x0, General/Vehicle/VehGroundSkids_Subset2.c
@@ -682,6 +682,7 @@ common, exe, VehStuckProc_Tumble_Init, 0x0, General/Vehicle/VehStuckProc_Tumble_
 
 // need VehTalkMask
 
+// need VehTurbo_ProcessBucket (in wip)
 common, exe, VehTurbo_ThTick, 0x0, General/Vehicle/VehTurbo_ThTick.c
 common, exe, VehTurbo_ThDestroy, 0x0, General/Vehicle/VehTurbo_ThDestroy.c
 
