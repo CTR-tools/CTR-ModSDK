@@ -1,11 +1,11 @@
 #include <common.h>
 
-// over budget 720/664
+// over budget 664/664
 
-extern short frontTireLeftIN[4];
-extern short frontTireRightIN[4];
-extern short backTireLeftIN[4];
-extern short backTireRightIN[4];
+//short frontTireLeftIN[4] = {-0x2200, 0xa00, 0x2800, 0};
+//short frontTireRightIN[4] = {0x2200, 0xa00, 0x2800, 0};
+//short backTireLeftIN[4] = {-0x2200, 0xa00, -0x1400, 0};
+//short backTireRightIN[4] = {0x2200, 0xa00, -0x1400, 0};
 
 void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emSet)
 {
@@ -37,18 +37,6 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
     if (p == NULL)
         return;
 
-	short* leftIn = &backTireLeftIN[0];
-	short* rightIn = &backTireRightIN[0];
-
-    if (d->speedApprox > 0)
-    {
-		leftIn = &frontTireLeftIN[0];
-		rightIn = &frontTireRightIN[0];
-    }
-	
-    gte_ldv0(&leftIn[0]);
-    gte_ldv1(&rightIn[0]);
-
 	short* matrix = 0x1f800000;
 	int* TireLeftOutS32 = &matrix[0];
 	int* TireRightOutS32 = &matrix[6];
@@ -57,25 +45,54 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
 	short* distIn4 = &matrix[6];
 	int* distOut4 = &matrix[6];
 
+	// short[3] array
+	*(int*)&TireLeftOutS32[0] = 0xa00de00;
+	*(int*)&TireRightOutS32[0] = 0xa002200;
+	
+	int valZ = -0x1400;
+    if (d->speedApprox > 0)
+		valZ = 0x2800;
+	
+	// short[3] array
+	*(int*)&TireLeftOutS32[1] = valZ;
+	*(int*)&TireRightOutS32[1] = valZ;
+	
+    gte_ldv0(&TireLeftOutS32[0]);
     gte_rtv0();
 	gte_stlvnl(&TireLeftOutS32[0]);
 	
-    gte_rtv1();
+    gte_ldv0(&TireRightOutS32[0]);
+    gte_rtv0();
 	gte_stlvnl(&TireRightOutS32[0]);
 	
 	// this compresses TireLeft and TireRight from int to short,
 	// which then doubles in usage as a matrix (3x2)
 	for(int i = 0; i < 6; i++)
-		TireLeftOutS16[i] = (short)TireLeftOutS32[i];
+		TireLeftOutS16[i] = (unsigned short)TireLeftOutS32[i];
 
-// over budget by 44 bytes
+	#ifdef REBUILD_PC
+	
+		#define gte_SetLightMatrix3x2( r0 ) \
+			{	CTC2(*(uint*)((char*)(r0)), 8);\
+				CTC2(*(uint*)((char*)(r0)+4), 9);\
+				CTC2(*(uint*)((char*)(r0)+8), 10);}
+	
+	#else
+	
+		#define gte_SetLightMatrix3x2( r0 ) __asm__ volatile ( \
+			"lw		$t0, 0( %0 );"	\
+			"lw		$t1, 4( %0 );"	\
+			"lw		$t2, 8( %0 );"	\
+			"ctc2	$t0, $8;"		\
+			"ctc2	$t1, $9;"		\
+			"ctc2	$t2, $10;"		\
+			:						\
+			: "r"( r0 )				\
+			: "$t2" )
+	
+	#endif
 
-// This block is 144 bytes
-// if0 brings down to 568/664, from 708/664
-#if 1
-	// This is 48 bytes, and overflows scratchpad,
-	// only should be 3x2 matrix, not 3x3 matrix
-	gte_SetLightMatrix(&matrix[0]);
+	gte_SetLightMatrix3x2(&matrix[0]);
 
 	// dist4 is actual distance
 	distIn4[0] = d->posWallColl[0] - d->posCurr[0];
@@ -90,7 +107,6 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
     {
         TireLeftOutS16 = TireRightOutS16;
     }
-#endif
 
 	for(int i = 0; i < 3; i++)
 	{
@@ -109,8 +125,3 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
 
     p->driverInst = d->instSelf;
 }
-
-short frontTireLeftIN[4] = {-0x2200, 0xa00, 0x2800, 0};
-short frontTireRightIN[4] = {0x2200, 0xa00, 0x2800, 0};
-short backTireLeftIN[4] = {-0x2200, 0xa00, -0x1400, 0};
-short backTireRightIN[4] = {0x2200, 0xa00, -0x1400, 0};
