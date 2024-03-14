@@ -95,9 +95,9 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
 	gte_SetLightMatrix3x2(&matrix[0]);
 
 	// dist4 is actual distance
-	distIn4[0] = d->posWallColl[0] - d->posCurr[0];
-	distIn4[1] = d->posWallColl[1] - d->posCurr[1];
-	distIn4[2] = d->posWallColl[2] - d->posCurr[2];
+	distIn4[0] = (d->posWallColl[0] * 0x100) - d->posCurr[0];
+	distIn4[1] = (d->posWallColl[1] * 0x100) - d->posCurr[1];
+	distIn4[2] = (d->posWallColl[2] * 0x100) - d->posCurr[2];
 	
     gte_ldv0(&distIn4[0]);
     gte_llv0();
