@@ -68,11 +68,11 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
 	for(int i = 0; i < 6; i++)
 		TireLeftOutS16[i] = (short)TireLeftOutS32[i];
 
-// over budget by 56 bytes
+// over budget by 44 bytes
 
 // This block is 144 bytes
-// if0 brings down to 576/664, from 720/664
-#if 0
+// if0 brings down to 568/664, from 708/664
+#if 1
 	// This is 48 bytes, and overflows scratchpad,
 	// only should be 3x2 matrix, not 3x3 matrix
 	gte_SetLightMatrix(&matrix[0]);
@@ -92,13 +92,11 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
     }
 #endif
 
-	p->axis[0].startVal += TireLeftOutS16[0];
-	p->axis[1].startVal += TireLeftOutS16[1];
-	p->axis[2].startVal += TireLeftOutS16[2];
-	
-	distIn4[0] = p->axis[0].velocity;
-	distIn4[1] = p->axis[1].velocity;
-	distIn4[2] = p->axis[2].velocity;
+	for(int i = 0; i < 3; i++)
+	{
+		p->axis[i].startVal += TireLeftOutS16[i];
+		distIn4[i] = p->axis[i].velocity;
+	}
 
 	// dist4 now determines velocity
     gte_ldv0(&distIn4[0]);
