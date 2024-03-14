@@ -623,6 +623,8 @@ common, exe, VehCalc_SteerAccel, 0x0, General/Vehicle/VehCalc_SteerAccel.c
 
 // need all of VehEmitter (in wip)
 common, exe, VehEmitter_Exhaust, 0x0, General/Vehicle/VehEmitter_Exhaust.c
+// VehEmitter_Sparks_Ground
+common, exe, VehEmitter_Terrain_Ground, 0x0, General/Vehicle/VehEmitter_Terrain_Ground.c
 
 common, exe, VehFire_Increment, 0x0, General/Vehicle/VehFire_Increment.c
 common, exe, VehFire_Audio, 0x0, General/Vehicle/VehFire_Audio.c

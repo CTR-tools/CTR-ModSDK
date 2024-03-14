@@ -15,9 +15,9 @@
 
 void VehEmitter_Sparks_Ground(struct Driver *d, struct ParticleEmitter *emSet)
 {
-    int iVar4;
-    int iVar5;
-    int iVar6;
+    int posX;
+    int posY;
+    int posZ;
     u_int uVar8;
     u_int uVar9;
     u_int uVar10;
@@ -30,9 +30,9 @@ void VehEmitter_Sparks_Ground(struct Driver *d, struct ParticleEmitter *emSet)
     gte_ldVXY0(0);
     gte_ldVZ0(-0x1800);
     gte_rtv0();
-    gte_stlvnl0(iVar4);
-    gte_stlvnl1(iVar5);
-    gte_stlvnl2(iVar6);
+    gte_stlvnl0(posX);
+    gte_stlvnl1(posY);
+    gte_stlvnl2(posZ);
 
     gte_ldVXY0(0x1800);
     gte_ldVZ0(0);
@@ -44,7 +44,7 @@ void VehEmitter_Sparks_Ground(struct Driver *d, struct ParticleEmitter *emSet)
     gte_rtv0();
     read_mt(uVar10, uVar9, uVar8);
 
-    for (char i = 10; i > 0; i--)
+    for (int i = 0; i < 10; i++)
     {
         // Create instance in particle pool
         struct Particle *p = Particle_CreateInstance(0, gGT->iconGroup[0], emSet);
@@ -65,115 +65,16 @@ void VehEmitter_Sparks_Ground(struct Driver *d, struct ParticleEmitter *emSet)
         p->axis[2].velocity += (short)uVar8 + ((rng * iVar11) >> 12);
 
         // position variables
-        p->axis[0].startVal += iVar4 + p->axis[0].velocity;
-        p->axis[1].startVal += iVar5 + p->axis[1].velocity;
-        p->axis[2].startVal += iVar6 + p->axis[2].velocity;
+        p->axis[0].startVal += posX + p->axis[0].velocity;
+        p->axis[1].startVal += posY + p->axis[1].velocity;
+        p->axis[2].startVal += posZ + p->axis[2].velocity;
 
         p->driverInst = d->instSelf;
         p->unk18 = d->instSelf->unk50;
     }
 }
 
-void VehEmitter_Terrain_Ground(struct Driver *d, struct ParticleEmitter *emSet)
-{
-    int speed;
-    char numTires;
-    int velX;
-    int velY;
-    int velZ;
 
-    // touching quadblock
-    if ((((d->actionsFlagSet & 1) != 0) &&
-
-         // not in accel prevention (not holding square)
-         (d->actionsFlagSet & 8) == 0))
-    {
-        // abs fireSpeed
-        speed = d->fireSpeed;
-
-        // if backwards?
-        if (speed < 0)
-        {
-            speed = -speed;
-        }
-
-        if (speed < 0x300)
-        {
-            // abs speedApprox
-            speed = d->speedApprox;
-
-            // if backwards?
-            if (speed < 0)
-            {
-                speed = -speed;
-            }
-
-            // still too slow?
-            if (speed < 0x300)
-            {
-                return;
-            }
-        }
-
-        // if sliding, spawn on 4 tires, otherwise just 2
-        numTires = (d->kartStatev == KS_DRIFTING) ? 4 : 2;
-
-        // spawn particles on wheels
-        for (; numTires != 0; numTires--)
-        {
-            switch (numTires)
-            {
-            case 4:
-                // -0x1E, 0xA, 0x28
-                gte_ldVXY0(0xaffe2);
-                gte_ldVZ0(0x28);
-                break;
-
-            case 3:
-                // 0x1E, 0xA, 0x28
-                gte_ldVXY0(0xa001e);
-                gte_ldVZ0(0x28);
-                break;
-
-            case 2:
-                // -0x1E, 0xA, -0x14
-                gte_ldVXY0(0xaffe2);
-                gte_ldVZ0(0xffffffec);
-                break;
-
-            default:
-                // 0x1E, 0xA, -0x14
-                gte_ldVXY0(0xa001e);
-                gte_ldVZ0(0xffffffec);
-            }
-            gte_rtv0();
-            read_mt(velX, velY, velZ);
-
-            // spawn particle
-            struct Particle *p = Particle_CreateInstance(0, sdata->gGT->iconGroup[0], emSet);
-
-            if (p == NULL) continue;
-
-            // edit positions
-            p->axis[0].startVal += velX * 0x100;
-            p->axis[1].startVal += velY * 0x100;
-            p->axis[2].startVal += velZ * 0x100;
-
-            gte_ldVXY0((p->axis[1].velocity << 0x10) | p->axis[0].velocity);
-            gte_ldVZ0(p->axis[2].velocity);
-            gte_rtv0();
-            read_mt(velX, velY, velZ);
-
-            // edit velocity
-            p->axis[0].velocity = (short)velX;
-            p->axis[1].velocity = (short)velY;
-            p->axis[2].velocity = (short)velZ;
-
-            p->driverInst = d->instSelf;
-            p->unk18 = d->instSelf->unk50;
-        }
-    }
-}
 
 #define gte_ldVXY1(r0) __asm__ volatile("mtc2   %0, $2" : : "r"(r0))
 #define gte_ldVZ1(r0)  __asm__ volatile("mtc2   %0, $3" : : "r"(r0))
