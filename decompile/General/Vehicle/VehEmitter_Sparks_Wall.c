@@ -68,9 +68,12 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
 	for(int i = 0; i < 6; i++)
 		TireLeftOutS16[i] = (short)TireLeftOutS32[i];
 
-// brings down to 576/664, from 720/664
+// over budget by 56 bytes
+
+// This block is 144 bytes
+// if0 brings down to 576/664, from 720/664
 #if 0
-	// This is 100 bytes, and overflows scratchpad,
+	// This is 48 bytes, and overflows scratchpad,
 	// only should be 3x2 matrix, not 3x3 matrix
 	gte_SetLightMatrix(&matrix[0]);
 
