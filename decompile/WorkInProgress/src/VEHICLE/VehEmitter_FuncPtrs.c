@@ -40,7 +40,7 @@ void VehEmitter_Sparks_Ground(struct Driver *d, struct ParticleEmitter *emSet)
     read_mt(iVar13, iVar12, iVar11);
 
     gte_ldVXY0(0);
-    gte_ldVZ0(-0x1800);
+    gte_ldVZ0(-0x200);
     gte_rtv0();
     read_mt(uVar10, uVar9, uVar8);
 
@@ -52,7 +52,7 @@ void VehEmitter_Sparks_Ground(struct Driver *d, struct ParticleEmitter *emSet)
         if (p == NULL)
             continue;
 
-        u_int rng = RngDeadCoed(&gGT->deadcoed_struct.unk1) & 0x7fffU;
+        u_int rng = RngDeadCoed(&gGT->deadcoed_struct.unk1) & 0x7ff;
 
         if ((rng & 1) != 0)
         {

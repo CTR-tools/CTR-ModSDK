@@ -21,10 +21,6 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   uint view8;
   uint viewC;
 
-  int tx;
-  int ty;
-  int tz;
-
   #ifdef REBUILD_PC
   char* scratchpad;
   scratchpad = &buf[0];
@@ -76,13 +72,29 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   
 #endif
 
-  tx = tileView->pos[0];
-  ty = tileView->pos[1];
-  tz = tileView->pos[2];
+  short t[3];
+
+  // bit-hack, store two u16s as one u32
+  *(int*)&t[0] = *(int*)&tileView->pos[0];
+  t[2] = tileView->pos[2];
   
-  tileView->matrix_Camera.t[0] = tx;
-  tileView->matrix_Camera.t[1] = ty;
-  tileView->matrix_Camera.t[2] = tz;
+  tileView->matrix_Camera.t[0] = t[0];
+  tileView->matrix_Camera.t[1] = t[1];
+  tileView->matrix_Camera.t[2] = t[2];
+  
+  // bit-hack, negate two u16s as one u32
+  *(int*)&t[0] = -*(int*)&t[0]+0x10000;
+  t[2] = -t[2];
+  
+  // load inverted camera position
+#ifndef REBUILD_PC
+#define gte_ldVXY0(r0) 	__asm__ volatile("mtc2   %0, $0" : : "r"(r0))
+#define gte_ldVZ0(r0) 	__asm__ volatile("mtc2   %0, $1" : : "r"(r0))
+  gte_ldVXY0(*(int*)&t[0]);
+  gte_ldVZ0(t[2]);
+#else
+  gte_ldv0(&t[0]);
+#endif
   
 #ifndef REBUILD_PC
 
@@ -134,44 +146,12 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   gte_SetLightMatrix(&tileView->matrix_CameraTranspose);
 #endif
 
-  // load inverted camera position
-#ifndef REBUILD_PC
-#define gte_ldVXY0(r0) 	__asm__ volatile("mtc2   %0, $0" : : "r"(r0))
-#define gte_ldVZ0(r0) 	__asm__ volatile("mtc2   %0, $1" : : "r"(r0))
-  gte_ldVXY0(-tx & 0xffff | -ty * 0x10000);
-  gte_ldVZ0(-tz);
-#else
-  short negPos16[4];
-  negPos16[0] = -tx;
-  negPos16[1] = -ty;
-  negPos16[2] = -tz;
-  negPos16[3] = 0;
-  gte_ldv0(&negPos16[0]);
-#endif
-
   // multiply inverted camera position, 
   // by transpose camera matrix
   gte_llv0();
 
-  // get the result
-#ifndef REBUILD_PC
-#define read_mt(r0, r1, r2) 	__asm__ volatile( \
-	"mfc2   %0, $25;"  \
-	"mfc2   %1, $26;"  \
-	"mfc2   %2, $27;"  \
-	: : "r"(r0), "r"(r1), "r"(r2))
-  read_mt(tx,ty,tz);
-#else
-  int negPos32[4];
-  gte_stlvnl(&negPos32[0]);
-  tx = negPos32[0];
-  ty = negPos32[1];
-  tz = negPos32[2];
-#endif
-
-  tileView->matrix_CameraTranspose.t[0] = tx;
-  tileView->matrix_CameraTranspose.t[1] = ty;
-  tileView->matrix_CameraTranspose.t[2] = tz;
+  gte_stlvnl(&tileView->matrix_CameraTranspose.t[0]);
+  gte_stlvnl(&tileView->matrix_ViewProj.t[0]);
 
   // start with transpose camera matrix
   *(int*)((int)&tileView->matrix_ViewProj + 0x0) = view0;
@@ -203,15 +183,9 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   #define r600 0x600
 
   // scale position
-  tileView->matrix_ViewProj.t[0] = tx;
-  tileView->matrix_ViewProj.t[1] = (ty * r360) / r600;
-  tileView->matrix_ViewProj.t[2] = tz;
+  tileView->matrix_ViewProj.t[1] =
+  tileView->matrix_ViewProj.t[1] * r360 / r600;
   
-#ifdef USE_16BY9
-  void ui16by9_ViewProj(struct TileView* view);
-  ui16by9_ViewProj(tileView);
-#endif
-
   // scale Y axis (1)
   tileView->matrix_ViewProj.m[1][0] =
   tileView->matrix_ViewProj.m[1][0] * r360 / r600;
@@ -223,6 +197,11 @@ void DECOMP_TileView_SetMatrixVP(struct TileView* tileView)
   // scale Y axis (3)
   tileView->matrix_ViewProj.m[1][2] =
   tileView->matrix_ViewProj.m[1][2] * r360 / r600;
+  
+#ifdef USE_16BY9
+  void ui16by9_ViewProj(struct TileView* view);
+  ui16by9_ViewProj(tileView);
+#endif
 
   // store camera matrix,
   // otherwise oxide intro cutscene bugs out,

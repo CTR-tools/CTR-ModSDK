@@ -469,8 +469,8 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 		buttonsTapped = ptrgamepad->buttonsTapped;
 	}
 
-	cross = uVar20 & 0x10;
-	square = uVar20 & 0x20;
+	cross = uVar20 & BTN_CROSS;
+	square = uVar20 & BTN_SQUARE;
 
 	// state of kart
 	kartState = driver->kartState;
@@ -482,8 +482,7 @@ void DECOMP_VehPhysProc_Driving_PhysLinear(struct Thread* thread, struct Driver*
 	if
 	(
 		(
-			// If you press circle
-			((buttonsTapped & 0x40) != 0) &&
+			((buttonsTapped & BTN_CIRCLE) != 0) &&
 
 			(
 				(kartState == KS_NORMAL) ||

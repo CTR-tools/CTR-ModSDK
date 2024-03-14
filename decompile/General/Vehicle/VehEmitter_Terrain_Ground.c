@@ -2,7 +2,7 @@
 
 extern short terrainEmitterPos[4][4];
 
-void VehEmitter_Terrain_Ground(struct Driver *d, struct ParticleEmitter *emSet)
+void DECOMP_VehEmitter_Terrain_Ground(struct Driver *d, struct ParticleEmitter *emSet)
 {
     int speed;
     char numTires;
