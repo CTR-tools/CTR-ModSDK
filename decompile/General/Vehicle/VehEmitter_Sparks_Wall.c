@@ -1,6 +1,6 @@
 #include <common.h>
 
-// over budget 732/664
+// over budget 720/664
 
 extern short frontTireLeftIN[4];
 extern short frontTireRightIN[4];
@@ -37,19 +37,17 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
     if (p == NULL)
         return;
 
-	// front tires
+	short* leftIn = &backTireLeftIN[0];
+	short* rightIn = &backTireRightIN[0];
+
     if (d->speedApprox > 0)
     {
-        gte_ldv0(&frontTireLeftIN[0]);
-        gte_ldv1(&frontTireRightIN[0]);
+		leftIn = &frontTireLeftIN[0];
+		rightIn = &frontTireRightIN[0];
     }
 	
-	// back tires
-    else
-    {
-        gte_ldv0(&backTireLeftIN[0]);
-        gte_ldv1(&backTireRightIN[0]);
-    }
+    gte_ldv0(&leftIn[0]);
+    gte_ldv1(&rightIn[0]);
 
 	short* matrix = 0x1f800000;
 	int* TireLeftOutS32 = &matrix[0];
@@ -70,7 +68,7 @@ void DECOMP_VehEmitter_Sparks_Wall(struct Driver *d, struct ParticleEmitter *emS
 	for(int i = 0; i < 6; i++)
 		TireLeftOutS16[i] = (short)TireLeftOutS32[i];
 
-// brings down to 584/664, from 732/664
+// brings down to 576/664, from 720/664
 #if 0
 	// This is 100 bytes, and overflows scratchpad,
 	// only should be 3x2 matrix, not 3x3 matrix
