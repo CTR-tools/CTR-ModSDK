@@ -399,7 +399,7 @@ struct Driver
 	// 0x54 -- EurRetail, JpnRetail
 	short numTurbos;
 	// 0x50
-	unsigned short timeAgainstWall; // allocated in Sep3, does not function
+	unsigned short frameAgainstWall; // allocated in Sep3, does not function
 	#endif
 
 	#if BUILD < EurRetail

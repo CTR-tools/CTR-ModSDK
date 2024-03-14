@@ -247,8 +247,7 @@ void VehEmitter_DriverMain(struct Thread *t, struct Driver *d, undefined *param_
     {
       if (d->set_0xF0_OnWallRub == 0)
       {
-        // reset time against wall
-        d->timeSpentAgainstWall = 0;
+        d->frameAgainstWall = 0;
       }
 
       distort = 0x14;

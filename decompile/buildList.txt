@@ -624,7 +624,7 @@ common, exe, VehCalc_SteerAccel, 0x0, General/Vehicle/VehCalc_SteerAccel.c
 common, exe, VehEmitter_Exhaust, 0x0, General/Vehicle/VehEmitter_Exhaust.c
 common, exe, VehEmitter_Sparks_Ground, 0x0, General/Vehicle/VehEmitter_Sparks_Ground.c
 common, exe, VehEmitter_Terrain_Ground, 0x0, General/Vehicle/VehEmitter_Terrain_Ground.c
-// need VehEmitter_Sparks_Wall
+common, exe, VehEmitter_Sparks_Wall, 0x0, General/Vehicle/VehEmitter_Sparks_Wall.c
 // need VehEmitter_DriverMain
 
 common, exe, VehFire_Increment, 0x0, General/Vehicle/VehFire_Increment.c
