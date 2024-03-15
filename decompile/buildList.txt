@@ -1,5 +1,5 @@
-// 467+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 789 rewritten so far
-// 467 for every 'common' and ','
+// 472+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 794 rewritten so far
+// 472 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -689,7 +689,6 @@ common, exe, VehStuckProc_Tumble_Init, 0x0, General/Vehicle/VehStuckProc_Tumble_
 
 // need VehStuckProc_Warp
 
-// need VehTalkMask
 common, exe, VehTalkMask_ThTick, 0x0, General/Vehicle/VehTalkMask_ThTick.c
 common, exe, VehTalkMask_Init, 0x0, General/Vehicle/VehTalkMask_Init.c
 common, exe, VehTalkMask_PlayXA, 0x0, General/Vehicle/VehTalkMask_PlayXA.c
