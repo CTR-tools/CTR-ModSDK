@@ -176,7 +176,7 @@ struct AdvProgress
  		0x80000: BeatOxide1 (again?)
  		0x100000: BeatOxide2 (again?)
  		0x200000: ???
- 		0x400000: Hint - Map Information
+ 		0x400000: Hint - Welcome to Arena
  		0x800000: Hint - Using a Warp Pad
  		0x1000000: Accessing a track
  		0x2000000: Using a Boss Garage
