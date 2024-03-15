@@ -4660,26 +4660,42 @@ void FUN_800b0b98(undefined2 *param_1,undefined *param_2,undefined4 param_3,int 
 	*(undefined *)(uVar1 + 3) = 8;
     *(undefined *)(uVar1 + 7) = 0x38;
 	
+	// rgb0
     *(undefined *)(uVar1 + 4) = *param_2;
     *(undefined *)(uVar1 + 5) = param_2[1];
     *(undefined *)(uVar1 + 6) = param_2[2];
+	
+	// rgb1
     *(undefined *)(uVar1 + 0xc) = param_2[4];
     *(undefined *)(uVar1 + 0xd) = param_2[5];
     *(undefined *)(uVar1 + 0xe) = param_2[6];
+	
+	// rgb2
     *(undefined *)(uVar1 + 0x14) = param_2[8];
     *(undefined *)(uVar1 + 0x15) = param_2[9];
     *(undefined *)(uVar1 + 0x16) = param_2[10];
+	
+	// rgb3
     *(undefined *)(uVar1 + 0x1c) = param_2[0xc];
     *(undefined *)(uVar1 + 0x1d) = param_2[0xd];
     *(undefined *)(uVar1 + 0x1e) = param_2[0xe];
+	
+	// xy0
     *(undefined2 *)(uVar1 + 8) = *param_1;
     *(undefined2 *)(uVar1 + 10) = param_1[1];
+	
+	// xy1
     *(undefined2 *)(uVar1 + 0x10) = param_1[2];
     *(undefined2 *)(uVar1 + 0x12) = param_1[3];
+	
+	// xy2
     *(undefined2 *)(uVar1 + 0x18) = param_1[4];
     *(undefined2 *)(uVar1 + 0x1a) = param_1[5];
+	
+	// xy3
     *(undefined2 *)(uVar1 + 0x20) = param_1[6];
     *(undefined2 *)(uVar1 + 0x22) = param_1[7];
+	
     AddPrim(param_3);
   }
   return;
@@ -4702,8 +4718,8 @@ void FUN_800b0ce0
   short local_20 [8];
   
   // approximate trigonometry
-  iVar6 = *(int *)(&DAT_800845a0 + (param_6 & 0x3ff) * 4) >> 0x10;
-  sVar5 = (short)*(int *)(&DAT_800845a0 + (param_6 & 0x3ff) * 4);
+  iVar6 = *(int *)(&DAT_800845a0 + (param_6 & 0x3ff) * 4) >> 0x10; // SIN
+  sVar5 = (short)*(int *)(&DAT_800845a0 + (param_6 & 0x3ff) * 4); // COS
   
   if ((param_6 & 0x400) == 0) {
     iVar1 = (int)sVar5;
@@ -4733,10 +4749,12 @@ LAB_800b0d88:
          param_1 + (short)(((*psVar3 * iVar4 >> 0xc) + (psVar3[1] * iVar1 >> 0xc)) *
                            ((((int)((uint)param_5 << 0x10) >> 0xd) / 5) * 0x10000 >> 0x10) >> 0xc) +
                    6;
+				   
     iVar6 = iVar6 + 1;
     *(short *)((int)local_30 + iVar2 + 2) =
          param_2 + (short)(((psVar3[1] * iVar4 >> 0xc) - (*psVar3 * iVar1 >> 0xc)) *
                            (int)(short)param_5 >> 0xc) + 4;
+						   
   } while (iVar6 * 0x10000 >> 0x10 < 4);
   
   
@@ -5091,9 +5109,13 @@ LAB_800b17e4:
             if (3 < sVar1) {
               iVar5 = -0x10000;
               sVar8 = sVar8;
-              if (sVar1 == 100) {
+              if (sVar1 == 100) 
+			  {
+				// coordinates
                 local_40 = (int)*psVar10 + -0x200;
                 local_3c = (int)*psVar9 + -0x100;
+				
+				// UI_Map_GetIconPos
                 FUN_8004d8b4(param_1,&local_40,&local_3c);
 				
 				// AH_Map_LoadSave_Full

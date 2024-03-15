@@ -113,6 +113,10 @@ common, 231, RB_Turtle_ThTick, 0x0, General/231/231_125_127_RB_Turtle.c
 common, 232, R232, 0x0, General/232/R232.c
 common, 232, D232, 0x0, General/232/D232.c
 common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
+common, 232, AH_Map_LoadSave_Prim, 0x0, General/232/232_17_AH_Map_LoadSave_Prim.c
+
+common, 232, AH_Map_LoadSave_Full, 0x0, General/232/232_18_AH_Map_LoadSave_Full.c
+
 common, 232, AH_Map_Main, 0x0, General/232/232_24_AH_Map_Main.c
 common, 232, AH_MaskHint_boolCanSpawn, 0x0, General/232/232_99_AH_MaskHint_boolCanSpawn.c
 

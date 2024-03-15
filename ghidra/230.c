@@ -4411,8 +4411,8 @@ LAB_800b05b8:
     }
     
 	// approximate trigonometry
-	sVar7 = (short)*(int *)(&DAT_800845a0 + (uVar15 & 0x3ff) * 4);
-    iVar9 = *(int *)(&DAT_800845a0 + (uVar15 & 0x3ff) * 4) >> 0x10;
+	sVar7 = (short)*(int *)(&DAT_800845a0 + (uVar15 & 0x3ff) * 4);  // COS
+    iVar9 = *(int *)(&DAT_800845a0 + (uVar15 & 0x3ff) * 4) >> 0x10; // SIN
     
 	if ((uVar15 & 0x400) == 0) {
       iVar17 = (int)sVar7;
