@@ -1,3 +1,13 @@
+#include <common.h>
+
+struct MaskHint
+{
+	struct MaskHint* self; // why?
+	short scale;
+	
+	// end of struct
+};
+
 struct BossGarageDoor
 {
 	int direction; // 1, 0, -1

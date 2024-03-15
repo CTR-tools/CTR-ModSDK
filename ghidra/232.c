@@ -7296,6 +7296,7 @@ LAB_800b48dc:
 		  // AH_MaskHint_SpawnParticles
 		  FUN_800b42b4(0x18,&DAT_800b5384,0x1000);
 		  
+		  // VehTalkMask_PlayXA
           FUN_800691e4(DAT_8008d860,(int)DAT_800b5558);
 		  
 		  // If you're in Adventure Arena

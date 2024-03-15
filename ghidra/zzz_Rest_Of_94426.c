@@ -35682,6 +35682,7 @@ void FUN_80069178(void)
   // INSTANCE_BirthWithThread
   // 0x300 flag = SmallStackPool
   // 0xe = "aku aku" thread bucket
+  // 0x6 = sizeof(struct MaskHint)
   iVar1 = FUN_800309a4(0x39,&DAT_8008d660,0x300,0xe,FUN_80068f90,6,0);
 
   // get thread from instance
@@ -35692,7 +35693,8 @@ void FUN_80069178(void)
 
   // object -> 4
   *(undefined2 *)(*(int *)(iVar1 + 0x30) + 4) = 0;
-  return;
+  
+  return instance;
 }
 
 
