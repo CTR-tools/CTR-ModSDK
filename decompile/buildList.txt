@@ -1,5 +1,5 @@
-// 472+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 794 rewritten so far
-// 472 for every 'common' and ','
+// 474+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 796 rewritten so far
+// 474 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -114,11 +114,14 @@ common, 232, R232, 0x0, General/232/R232.c
 common, 232, D232, 0x0, General/232/D232.c
 common, 232, AH_WarpPad_GetSpawnPosRot, 0x0, General/232/232_Block1.c
 common, 232, AH_Map_LoadSave_Prim, 0x0, General/232/232_17_AH_Map_LoadSave_Prim.c
-
 common, 232, AH_Map_LoadSave_Full, 0x0, General/232/232_18_AH_Map_LoadSave_Full.c
+common, 232, AH_Map_HubArrow, 0x0, General/232/232_19_AH_Map_HubArrow.c
 
-common, 232, AH_Map_Main, 0x0, General/232/232_24_AH_Map_Main.c
-common, 232, AH_MaskHint_boolCanSpawn, 0x0, General/232/232_99_AH_MaskHint_boolCanSpawn.c
+common, 232, AH_Map_Main, 0x0, General/232/232_23_AH_Map_Main.c
+
+common, 232, AH_MaskHint_boolCanSpawn, 0x0, General/232/232_31_AH_MaskHint_boolCanSpawn.c
+
+common, 232, AH_MaskHint_SpawnParticles, 0x0, General/232/232_33_AH_MaskHint_SpawnParticles.c
 
 // 233
 //ommon, 233, CS_Instance_GetNumAnimFrames, 0x0, General/233/233_10_CS_Instance_GetNumAnimFrames.c
