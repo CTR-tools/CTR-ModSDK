@@ -6976,13 +6976,16 @@ void FUN_800b3f98(int param_1)
   setCopReg(2,0,CONCAT22(DAT_800b51f2,DAT_800b51f0));
   setCopReg(2,0x800,(uint)DAT_800b51f4);
   
+  // gte_rtv0?
   // rtv0tr   cop2 $0480012  v0 * rotmatrix + tr vector
   copFunction(2,0x480012);
   
-  // CAM_ProcessTransition
+  // gte_stlvnl 
   local_20 = getCopReg(2,0xc800);
   local_1c = getCopReg(2,0xd000);
   local_18 = getCopReg(2,0xd800);
+  
+  // camera position
   local_40 = (undefined2)local_20;
   local_3e = (undefined2)local_1c;
   local_3c = (undefined2)local_18;
