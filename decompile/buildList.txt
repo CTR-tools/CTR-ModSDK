@@ -690,7 +690,11 @@ common, exe, VehStuckProc_Tumble_Init, 0x0, General/Vehicle/VehStuckProc_Tumble_
 // need VehStuckProc_Warp
 
 // need VehTalkMask
-//ommon, exe, VehTalkMask_ThTick, 0x0, General/Vehicle/VehTalkMask_ThTick.c
+common, exe, VehTalkMask_ThTick, 0x0, General/Vehicle/VehTalkMask_ThTick.c
+common, exe, VehTalkMask_Init, 0x0, General/Vehicle/VehTalkMask_Init.c
+common, exe, VehTalkMask_PlayXA, 0x0, General/Vehicle/VehTalkMask_PlayXA.c
+common, exe, VehTalkMask_boolNoXA, 0x0, General/Vehicle/VehTalkMask_boolNoXA.c
+common, exe, VehTalkMask_End, 0x0, General/Vehicle/VehTalkMask_End.c
 
 // need VehTurbo_ProcessBucket (in wip)
 common, exe, VehTurbo_ThTick, 0x0, General/Vehicle/VehTurbo_ThTick.c

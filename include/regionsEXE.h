@@ -3424,6 +3424,7 @@ struct sData
 	char s_tnt1[8];
 	char s_beaker1[8];
 
+	// 8008d660
 	int boolIsMaskThreadAlive;
 
 	// 8008d660
@@ -4321,10 +4322,13 @@ struct sData
 
 	// 8008d9f4
 	// force of driver bounce?
-	int unk_bothIn94426_C_file[3];
+	int unk_8008d9f4[3];
+	
+	// 8008d9f8 and 8008d9fc,
+	// both talkMask variables
 
 	// 8008da00
-	int bool_shouldTalkingMaskDisappear;
+	int talkMask_boolDead;
 
 	// 8008da04
 	// return address, from entry() back to bios,

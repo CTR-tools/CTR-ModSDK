@@ -35742,10 +35742,10 @@ void FUN_8006925c(void)
   // CDSYS_XAPauseRequest
   FUN_8001cf98();
 
-  // mask is not talking (I think)
+  // sdata->boolIsMaskThreadAlive
   DAT_8008d65c = 0;
 
-  // talking mask needs to go away
+  // sdata->talkMask_boolDead
   DAT_8008da00 = 1;
 
   return;
