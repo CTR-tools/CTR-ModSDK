@@ -6969,8 +6969,8 @@ void FUN_800b3f98(int param_1)
   undefined4 local_1c;
   undefined4 local_18;
   
-  gte_SetRotMatrix((MATRIX *)(PTR_DAT_8008d2ac + 0x168 + 0x28));
-  gte_SetTransMatrix((MATRIX *)(PTR_DAT_8008d2ac + 0x168 + 0x28));
+  gte_SetRotMatrix((MATRIX *)(PTR_DAT_8008d2ac + 0x168 + 0x68));
+  gte_SetTransMatrix((MATRIX *)(PTR_DAT_8008d2ac + 0x168 + 0x68));
   
   // ldv0, some position
   setCopReg(2,0,CONCAT22(DAT_800b51f2,DAT_800b51f0));

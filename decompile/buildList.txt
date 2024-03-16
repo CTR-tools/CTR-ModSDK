@@ -1,5 +1,5 @@
-// 479+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 801 rewritten so far
-// 479 for every 'common' and ','
+// 480+43+33+27+38+14+18+16+19+12+6+1+8+9+1+1+1+2+2+3+3+2+4+2+3+16+3+47-12 = 802 rewritten so far
+// 480 for every 'common' and ','
 // additions for every file that has multiple functions,
 // 43 for HOWL block
 // 33 for LOAD block
@@ -123,12 +123,11 @@ common, 232, AH_HintMenu_MaskPosRot, 0x0, General/232/232_28_AH_HintMenu_MaskPos
 
 common, 232, AH_MaskHint_Start, 0x0, General/232/232_30_AH_MaskHint_Start.c
 common, 232, AH_MaskHint_boolCanSpawn, 0x0, General/232/232_31_AH_MaskHint_boolCanSpawn.c
-
-// Need To Finish
 common, 232, AH_MaskHint_EnterAnim, 0x0, General/232/232_32_AH_MaskHint_EnterAnim.c
-
 common, 232, AH_MaskHint_SpawnParticles, 0x0, General/232/232_33_AH_MaskHint_SpawnParticles.c
 common, 232, AH_MaskHint_End, 0x0, General/232/232_34_AH_MaskHint_End.c
+// AH_MaskHint_Update
+// AH_Sign_LInB
 
 // 233
 //ommon, 233, CS_Instance_GetNumAnimFrames, 0x0, General/233/233_10_CS_Instance_GetNumAnimFrames.c

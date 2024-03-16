@@ -6,28 +6,21 @@ void DECOMP_AH_MaskHint_EnterAnim(int param_1)
 	struct GameTracker* gGT = sdata->gGT;
 	struct TileView* tView = &gGT->tileView[0];
 	
-	m = &tView->matrix_ViewProj;
+	m = &tView->matrix_Camera;
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
 	
 	gte_ldv0(0x800b51f0);
-	
 	gte_rt();
 	
 	int posEndINT[3];
 	short posEnd[3];
+	
 	gte_stlvnl(&posEndINT[0]);
+	
 	posEnd[0] = posEndINT[0];
 	posEnd[1] = posEndINT[1];
 	posEnd[2] = posEndINT[2];
-	
-	// temporary
-	#if 1
-	// 800b402c
-	posEnd[0] = 0xFFFFBDE3;
-	posEnd[1] = 0xFFFFFFFD;
-	posEnd[2] = 0xFFFFF9D6;
-	#endif
 	
 	short rotEnd[3];
 	rotEnd[0] = tView->rot[0] - *(short*)0x800b51f8;
