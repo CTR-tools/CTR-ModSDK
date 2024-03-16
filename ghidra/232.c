@@ -7194,13 +7194,19 @@ void FUN_800b4470(void)
     if (0x31 < iVar9) {
       return;
     }
-    if ((DAT_800b5574 & 1) == 0) {
-      *(undefined2 *)(PTR_DAT_8008d2ac + 0x150c) = DAT_800b5520;
+    if ((DAT_800b5574 & 1) == 0) 
+	{
+      // CameraDC->0x74(eyePos)
+	  *(undefined2 *)(PTR_DAT_8008d2ac + 0x150c) = DAT_800b5520;
       *(undefined2 *)(puVar1 + 0x150e) = DAT_800b5522;
       *(undefined2 *)(puVar1 + 0x1510) = DAT_800b5524;
+	  
+      // CameraDC->0x7c(lookAtPos)
       *(undefined2 *)(puVar1 + 0x1514) = DAT_800b5528;
       *(undefined2 *)(puVar1 + 0x1516) = DAT_800b552a;
       *(undefined2 *)(puVar1 + 0x1518) = DAT_800b552c;
+	  
+	  // CameraDC->0x70(flags)
       *(uint *)(puVar1 + 0x1508) = *(uint *)(puVar1 + 0x1508) | 8;
 	  
 	  // CAM_FollowDriver_AngleAxis
