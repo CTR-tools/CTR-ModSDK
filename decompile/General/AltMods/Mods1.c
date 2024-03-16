@@ -169,9 +169,6 @@ void ui60_entryHook()
 	// replace call to LIST_RemoveFront inside Particle_CreateInstance
 	*(unsigned int*)0x80040348 = JAL(NewParticleCreateInstance);
 
-	// Mask Grab
-	*(unsigned int*)0x80067B58 = 0x2442FF00;
-
 	// Starting line
 	{
 		// Intro Camera Fly-in
