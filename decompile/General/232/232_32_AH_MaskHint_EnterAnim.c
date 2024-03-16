@@ -21,6 +21,14 @@ void DECOMP_AH_MaskHint_EnterAnim(int param_1)
 	posEnd[1] = posEndINT[1];
 	posEnd[2] = posEndINT[2];
 	
+	// temporary
+	#if 1
+	// 800b402c
+	posEnd[0] = 0xFFFFBDE3;
+	posEnd[1] = 0xFFFFFFFD;
+	posEnd[2] = 0xFFFFF9D6;
+	#endif
+	
 	short rotEnd[3];
 	rotEnd[0] = tView->rot[0] - *(short*)0x800b51f8;
 	rotEnd[1] = tView->rot[1] + *(short*)0x800b51fa;
@@ -29,21 +37,11 @@ void DECOMP_AH_MaskHint_EnterAnim(int param_1)
 	short posCurr[3];
 	short rotCurr[3];
 	CAM_ProcessTransition(
-		posCurr, rotCurr,
+		&posCurr[0], &rotCurr[0],
 		0x800b5560, 0x800b5568, // pos/rot Start
-		posEnd, rotEnd,
+		&posEnd[0], &rotEnd[0],
 		param_1);
-		
-	printf("%d\n", param_1);
-		
-#if 1
-	struct Instance* dInst = sdata->gGT->drivers[0]->instSelf;
-	
-	posCurr[0] = *(short*)0x800b5560;
-	posCurr[1] = *(short*)0x800b5562;
-	posCurr[2] = *(short*)0x800b5564;
-#endif
-		
+				
 	int rot = 0x1000;
 	if (*(short*)0x800b566c + -0x14 < *(short*)0x800b5218)
 	{
@@ -56,12 +54,12 @@ void DECOMP_AH_MaskHint_EnterAnim(int param_1)
 	int angle =  (param_1 << 0xf) >> 0xc;
 	*(short*)0x800b555c = angle;
 	
-	int cos = DECOMP_MATH_Cos(angle);
 	int sin = DECOMP_MATH_Sin(angle);
+	int cos = DECOMP_MATH_Cos(angle);
 	
 	struct Instance* mhInst = *(int*)0x8008d860;
-	mhInst->matrix.t[0] = posCurr[0] + (short)((cos*rot)>>0xc);
-	mhInst->matrix.t[2] = posCurr[2] + (short)((sin*rot)>>0xc);
+	mhInst->matrix.t[0] = posCurr[0] + (short)((sin*rot)>>0xc);
+	mhInst->matrix.t[2] = posCurr[2] + (short)((cos*rot)>>0xc);
 	
 	rotCurr[1] += angle;
 	ConvertRotToMatrix(&mhInst->matrix, rotCurr);
@@ -69,6 +67,6 @@ void DECOMP_AH_MaskHint_EnterAnim(int param_1)
 	((struct MaskHint*)mhInst->thread->object)->scale = param_1 * 4 - 1;
 	
 	angle = (sdata->frameCounter + sdata->gGT->timer) * 0x20;
-	cos = DECOMP_MATH_Sin(angle);
-	mhInst->matrix.t[1] = posCurr[1] + (short)(((cos << 4) >> 0xc) * param_1 >> 0xc);
+	sin = DECOMP_MATH_Sin(angle);
+	mhInst->matrix.t[1] = posCurr[1] + (short)(((sin << 4) >> 0xc) * param_1 >> 0xc);
 }
