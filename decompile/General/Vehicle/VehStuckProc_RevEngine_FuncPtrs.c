@@ -84,7 +84,6 @@ void DECOMP_VehStuckProc_RevEngine_PhysLinear(struct Thread *t, struct Driver *d
 
     DECOMP_VehPhysProc_Driving_PhysLinear(t, d);
 
-    // if race already started
     if (d->KartStates.EngineRevving.boolEngineRevMaskGrab != 0)
     {
         struct CameraDC *cDC = &gGT->cameraDC[d->driverID];
