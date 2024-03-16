@@ -76,6 +76,11 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
             d->KartStates.MaskGrab.AngleAxis_NormalVec[1] = d->AxisAngle2_normalVec[1];
             d->KartStates.MaskGrab.AngleAxis_NormalVec[2] = d->AxisAngle2_normalVec[2];
 
+			#ifdef USE_60FPS
+			// for particles
+			sdata->UnusedPadding1 = 1;
+			#endif
+
             // spawn particles
             for (i = 10; i > 0; i--)
             {
@@ -96,6 +101,11 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
                 // driverID
                 p->unk19 = d->driverID;
             }
+			
+			#ifdef USE_60FPS
+			// for particles
+			sdata->UnusedPadding1 = 0;
+			#endif
         }
 
         // if driver did not touch surface (and is still falling)

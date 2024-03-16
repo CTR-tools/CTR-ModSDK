@@ -120,6 +120,11 @@ PlayChewSound:
 					OtherFX_Play(0x6f, 0);
 				}
 				
+				#ifdef USE_60FPS
+				// for particles
+				sdata->UnusedPadding1 = 1;
+				#endif
+				
 				for(i = 0; i < 4; i++)
 				{
 					// spit tires
@@ -168,6 +173,11 @@ PlayChewSound:
 						) * 0x100;
 					}
 				}
+			
+				#ifdef USE_60FPS
+				// for particles
+				sdata->UnusedPadding1 = 0;
+				#endif
 			}
 		}
 		

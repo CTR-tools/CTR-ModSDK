@@ -36,9 +36,9 @@ void DECOMP_AH_MaskHint_EnterAnim(int param_1)
 		param_1);
 				
 	int rot = 0x1000;
-	if (*(short*)0x800b566c + -0x14 < *(short*)0x800b5218)
+	if (*(short*)0x800b566c - FPS_DOUBLE(20) < *(short*)0x800b5218)
 	{
-		rot = ((*(short*)0x800b566c - *(short*)0x800b5218) * rot) / 0x14;
+		rot = ((*(short*)0x800b566c - *(short*)0x800b5218) * rot) / FPS_DOUBLE(20);
 	}
 	
 	// 4096->50

@@ -36,14 +36,14 @@ void DECOMP_AH_MaskHint_Start(short hintId, u_short bool_interruptWarppad)
 	);
 	
 	// 3.0s to spawn mask
-    *(int*)0x800b566c = 90;
+    *(int*)0x800b566c = FPS_DOUBLE(90);
   }
   
   // if model is not nullptr
   else 
   {
 	// 0.667s to spawn mask
-    *(int*)0x800b566c = 20;
+    *(int*)0x800b566c = FPS_DOUBLE(20);
   }
   
   iVar3 = (bool_interruptWarppad & 1) * 3;

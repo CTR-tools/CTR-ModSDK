@@ -95,14 +95,8 @@ void NewCallback232()
 
 	// Mask Hints
 	{
-		// set mask duration
-		*(unsigned short*)0x800b3ebc = 0x5a*2;
-		*(unsigned short*)0x800b3ec0 = 0x14*2;
-
-		// EnterAnim
-		*(unsigned short*)0x800b40dc = -(0x14*2);
-		// missing a div 0x14 somewhere
-
+		// 800b4470 AH_MaskHint_Update
+		
 		// bne 0x14
 		*(unsigned short*)0x800b45f8 = 0x14*2;
 
@@ -150,12 +144,20 @@ void NewCallback233()
 
 struct Particle* NewParticleCreateInstance(struct LinkedList* param_1)
 {
-	// do 2 instead of 1,
-	// that way timer & 1 works with SetLeft and SetRight,
-	// see VehEmitter_DriverMain and call to VehEmitter_Terrain_Ground
+	// NOTE: Need to add workaround for RB_Explosion_InitPotion,
+	// VehEmitter_DriverMain, when those functions are rewritten,
+	// can't do VehEmitter_Sparks_Ground due to byte budget
 	
-	// This will break MaskGrab, and TireSpit effects
-	if(sdata->gGT->timer & 2) return 0;
+	// Workaround, use unused variable to force particles on "any"
+	// frame. This is required for effects that spawn 10x particles
+	// on the same frame (MaskGrab, AkuHints, TireSpit, VehEmitter)
+	if(sdata->UnusedPadding1 == 0)
+	{
+		// do 2 instead of 1,
+		// that way timer & 1 works with SetLeft and SetRight,
+		// see VehEmitter_DriverMain and call to VehEmitter_Terrain_Ground
+		if(sdata->gGT->timer & 2) return 0;
+	}
 	
 	return (struct Particle*)LIST_RemoveFront(param_1);
 }
