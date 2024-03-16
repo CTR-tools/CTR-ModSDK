@@ -1240,10 +1240,10 @@ void FUN_80018ec0(undefined2 *param_1)
 // CAM_ProcessTransition
 // param1 camera pos return value
 // param2 camera rot return value
-// param3 camera pos destination
-// param4 camera rot destination
-// param5 camera pos start
-// param6 camera rot start
+// param3 camera pos start
+// param4 camera rot start
+// param5 camera pos end
+// param6 camera rot end
 // param7 frame counter
 void FUN_80018fec(short *param_1,ushort *param_2,short *param_3,short *param_4,short *param_5,
                  short *param_6,int param_7)

@@ -12,29 +12,29 @@ void DECOMP_AH_MaskHint_EnterAnim(int param_1)
 	
 	gte_ldv0(0x800b51f0);
 	
-	//gte_llv0();
-	//gte_rtv0();
-	gte_rtv0tr();
+	gte_rt();
 	
-	int posStartINT[3];
-	short posStart[3];
-	gte_stlvnl(&posStartINT[0]);
-	posStart[0] = posStartINT[0];
-	posStart[1] = posStartINT[1];
-	posStart[2] = posStartINT[2];
+	int posEndINT[3];
+	short posEnd[3];
+	gte_stlvnl(&posEndINT[0]);
+	posEnd[0] = posEndINT[0];
+	posEnd[1] = posEndINT[1];
+	posEnd[2] = posEndINT[2];
 	
-	short rotStart[3];
-	rotStart[0] = tView->rot[0] - *(short*)0x800b51f8;
-	rotStart[1] = tView->rot[1] + *(short*)0x800b51fa;
-	rotStart[2] = tView->rot[2] - *(short*)0x800b51fc;
+	short rotEnd[3];
+	rotEnd[0] = tView->rot[0] - *(short*)0x800b51f8;
+	rotEnd[1] = tView->rot[1] + *(short*)0x800b51fa;
+	rotEnd[2] = tView->rot[2] - *(short*)0x800b51fc;
 	
 	short posCurr[3];
 	short rotCurr[3];
 	CAM_ProcessTransition(
 		posCurr, rotCurr,
-		0x800b5560, 0x800b5568, // pos/rot desired
-		posStart, rotStart,
+		0x800b5560, 0x800b5568, // pos/rot Start
+		posEnd, rotEnd,
 		param_1);
+		
+	printf("%d\n", param_1);
 		
 #if 1
 	struct Instance* dInst = sdata->gGT->drivers[0]->instSelf;
