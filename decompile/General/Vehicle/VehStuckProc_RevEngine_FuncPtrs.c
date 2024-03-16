@@ -92,8 +92,7 @@ void DECOMP_VehStuckProc_RevEngine_PhysLinear(struct Thread *t, struct Driver *d
         cDC->flags |= 0x10;
         cDC->unk98 = 0x40;
 
-        // Y pos -= 0x200
-        d->posCurr[1] -= 0x200;
+        d->posCurr[1] -= FPS_HALF(0x200);
 
         // if maskObj exists
         if (d->KartStates.EngineRevving.maskObj != 0)
