@@ -75,7 +75,7 @@ void NewCallback231()
 		*(char*)0x800b7010 = 7*2;
 	}
 
-	LOAD_Callback_Overlay_231();
+	DECOMP_LOAD_Callback_Overlay_231();
 }
 
 void NewCallback232()
@@ -130,7 +130,7 @@ void NewCallback232()
 	}
 	
 
-	LOAD_Callback_Overlay_232();
+	DECOMP_LOAD_Callback_Overlay_232();
 }
 
 void NewCallback233()
@@ -145,7 +145,7 @@ void NewCallback233()
 	// Adv Char Select arrows
 	*(unsigned char*)0x800b7e0c = 8;
 
-	LOAD_Callback_Overlay_233();
+	DECOMP_LOAD_Callback_Overlay_233();
 }
 
 struct Particle* NewParticleCreateInstance(struct LinkedList* param_1)

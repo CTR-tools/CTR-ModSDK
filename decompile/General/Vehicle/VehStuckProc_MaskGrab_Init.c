@@ -31,6 +31,9 @@ void DECOMP_VehStuckProc_MaskGrab_Init(struct Thread* t, struct Driver *d)
     // Mask Object
     d->KartStates.MaskGrab.maskObj = VehPickupItem_MaskUseWeapon(d, 1);
     
+	if(d->KartStates.MaskGrab.maskObj == 0)
+		printf("Error\n");
+	
     d->matrixArray = 0;
     d->matrixIndex = 0;
 
