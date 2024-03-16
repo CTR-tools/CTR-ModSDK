@@ -7160,13 +7160,18 @@ void FUN_800b4470(void)
   undefined4 uVar7;
   bool bVar8;
   int iVar9;
+  
+  // short rot[3]
   ushort uStack696;
   ushort uStack694;
   ushort uStack692;
+  
+  // RECT
   undefined2 uStack688;
   undefined2 uStack686;
   undefined2 uStack684;
   short sStack682;
+  
   undefined auStack32 [8];
   undefined auStack24 [8];
   
