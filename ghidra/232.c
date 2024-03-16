@@ -7015,8 +7015,8 @@ void FUN_800b3f98(int param_1)
   DAT_800b555c = (param_1 << 0xf) >> 0xc;
   
   // approximate trigonometry
-  sVar1 = (short)*(int *)(&DAT_800845a0 + (DAT_800b555c & 0x3ff) * 4);
-  iVar6 = *(int *)(&DAT_800845a0 + (DAT_800b555c & 0x3ff) * 4) >> 0x10;
+  sVar1 = (short)*(int *)(&DAT_800845a0 + (DAT_800b555c & 0x3ff) * 4); // cos
+  iVar6 = *(int *)(&DAT_800845a0 + (DAT_800b555c & 0x3ff) * 4) >> 0x10; // sin
   
   if ((DAT_800b555c & 0x400) == 0) {
     iVar3 = (int)sVar1;
@@ -7035,14 +7035,20 @@ void FUN_800b3f98(int param_1)
   iVar6 = iVar5;
 LAB_800b417c:
   iVar2 = iVar2 * 0x32 >> 0xc;
+  
+  // rotation
   local_26 = local_26 + (short)DAT_800b555c;
+  
+  // posCurr += trigonometry
   local_30 = local_30 + (short)(iVar3 * iVar2 >> 0xc);
   local_2c = local_2c + (short)(iVar6 * iVar2 >> 0xc);
   
    // convert 3 rotation shorts into rotation matrix
   FUN_8006c2a4(DAT_8008d860 + 0x30,auStack40);
   
+  // maskInst->thread->object->scale
   *(short *)(*(int *)(*(int *)(DAT_8008d860 + 0x6c) + 0x30) + 4) = (short)param_1 * 4 + -1;
+  
   iVar6 = DAT_8008d860;
   uVar4 = ((int)DAT_8008d970 + *(int *)(PTR_DAT_8008d2ac + 0x1cec)) * 0x20;
   
