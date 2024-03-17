@@ -175,11 +175,11 @@ void DECOMP_AH_MaskHint_Update()
 			
 			if(boolFound)
 			{
-				// === Naughty Dog Bug ===
-				// Why'd they replace LngIndex for subtitles
-				// with this generic text? Accident or intention?
+				// === Cut Content? ===
+				// Find LngIndex of subtitles, then dont use it,
+				// and instead use generic "press start to repeat"
 				
-				#if 0
+				#if 1
 				
 				// Code that shipped in 1999
 				if(VehPickupItem_MaskBoolGoodGuy(d))
@@ -189,8 +189,10 @@ void DECOMP_AH_MaskHint_Update()
 				
 				#else
 				
-				// Code that restores the effect
-				lngIndex = ptrLngID[0];
+				// Code that restores the effect,
+				// ptrLngID[0]+0 - Title of Hint
+				// ptrLngID[0]+1 - Words of Hint
+				lngIndex = ptrLngID[0]+0;
 				
 				#endif
 				
