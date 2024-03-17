@@ -92,27 +92,6 @@ void NewCallback232()
 
 		// transition in, is in EXE, already patched
 	}
-
-	// Mask Hints
-	{
-		// 800b4470 AH_MaskHint_Update
-		
-		// bne 0x14
-		*(unsigned short*)0x800b45f8 = 0x14*2;
-
-		// beq 0x5a
-		*(unsigned short*)0x800b46f0 = 0x5a*2;
-
-		// whoosh sounds
-		*(unsigned short*)0x800b46f8 = 0xa*2;
-		*(unsigned short*)0x800b4708 = 0x14*2;
-		*(unsigned short*)0x800b4724 = 0x19*2;
-		*(unsigned short*)0x800b4740 = 0x1e*2;
-
-		// check every instance of
-		// 800b566c and 800b5218,
-		// two mask frame timers
-	}
 	
 	// AdvPause
 	{

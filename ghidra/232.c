@@ -7120,7 +7120,7 @@ void FUN_800b42b4(short param_1,undefined4 param_2,int param_3)
 }
 
 
-// AH_MaskHint_End
+// AH_MaskHint_LerpVol
 void FUN_800b43cc(int param_1)
 
 {
@@ -7321,7 +7321,7 @@ LAB_800b477c:
 	// If there is no mask model
     if (DAT_8008d0f0 == 0) {
 LAB_800b48dc:
-      if (DAT_800b5218 < DAT_800b566c) goto LAB_800b48f8;
+      if (DAT_800b566c > DAT_800b5218) goto LAB_800b48f8;
     }
 	
 	// if the mask model exists
@@ -7332,7 +7332,7 @@ LAB_800b48dc:
 	  {
         if (((*(uint *)(puVar1 + 0x1508) & 0x800) != 0) || ((DAT_800b5574 & 1) != 0)) 
 		{
-		  // AH_MaskHint_End
+		  // AH_MaskHint_LerpVol
           FUN_800b43cc(0x1000);
           
 		  // AH_MaskHint_SpawnParticles
@@ -7346,6 +7346,8 @@ LAB_800b48dc:
              ((DAT_800b5558 != 0 && (DAT_800b5558 != 0x18)))) {
             PTR_DAT_8008d2ac[0x1d31] = PTR_DAT_8008d2ac[0x1d31] | 0x10;
           }
+		  
+		  // AkuHintState++, break;
           goto LAB_800b4b64;
         }
         goto LAB_800b48dc;
@@ -7362,7 +7364,7 @@ LAB_800b48f8:
       trap(0x1800);
     }
 	
-	// AH_MaskHint_End
+	// AH_MaskHint_LerpVol
 	// use timer to spin and move mask,
 	// divide by number of frames it should take to finish animation
     FUN_800b43cc((DAT_800b5218 << 0xc) / DAT_800b566c);
@@ -7377,13 +7379,22 @@ LAB_800b48f8:
       do {
         iVar4 = iVar9 << 0x10;
         iVar9 = iVar9 + 1;
+		
+		// Check maskHintID against array of "allowed" 
+		// maskHint LNG indices that can be printed (but aren't?)
         if ((int)DAT_800b5558 ==
-            (*(short *)((int)&DAT_800b54f4 + (iVar4 >> 0xf)) + -0x17b) / 2) {
+            (*(short *)((int)&DAT_800b54f4 + (iVar4 >> 0xf)) + -0x17b) / 2) 
+		{
+		  // mask hint is allowed,
+		  // basically all except for "Welcome to Adventure Arena"
           bVar8 = true;
           break;
         }
       } while (-1 < *(short *)((int)&DAT_800b54f4 + (iVar9 * 0x10000 >> 0xf)));
     }
+	
+	// If mask hint is allowed to be printed on-screen,
+	// print some generic text, but not the LNG index???
     if (bVar8) 
 	{
 	  // VehPickupItem_MaskBoolGoodGuy
@@ -7436,7 +7447,7 @@ LAB_800b48f8:
 				)
 			) &&
 			(
-				// finish speaking, start leaving
+				// AkuAkuHintState
 				DAT_8008d874 = DAT_8008d874 + 1, 
 				
 				// If you're in Adventure Arena
@@ -7471,7 +7482,7 @@ LAB_800b4b64:
 	
   case 6:
     
-	// AH_MaskHint_End
+	// AH_MaskHint_LerpVol
 	// 0x1524 is offset 0x8c of CameraDC (fly-in timer)
 	FUN_800b43cc(0x1000 - *(short *)(PTR_DAT_8008d2ac + 0x1524));
 	
@@ -7480,7 +7491,7 @@ LAB_800b4b64:
 	  // AH_MaskHint_EnterAnim, first frame
       FUN_800b3f98(0);
 	  
-	  // AH_MaskHint_End
+	  // AH_MaskHint_LerpVol
       FUN_800b43cc(0);
       
 	  DAT_800b5570 = 0;
@@ -7492,7 +7503,7 @@ LAB_800b4b64:
     break;
   case 7:
   
-    // AH_MaskHint_End
+    // AH_MaskHint_LerpVol
     FUN_800b43cc(0);
     
 	DAT_800b5570 = DAT_800b5570 - 1;

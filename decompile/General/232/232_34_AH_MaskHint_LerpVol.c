@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_AH_MaskHint_End(int param_1)
+void DECOMP_AH_MaskHint_LerpVol(int param_1)
 {
     int diff;
     int volume;

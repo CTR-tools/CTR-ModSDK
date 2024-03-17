@@ -1497,7 +1497,7 @@
 800b2f14 AH_MaskHint_boolCanSpawn
 800b2f24 AH_MaskHint_EnterAnim
 800b3240 AH_MaskHint_SpawnParticles
-800b3358 AH_MaskHint_End
+800b3358 AH_MaskHint_LerpVol
 800b33fc AH_MaskHint_Update
 800b3c0c AH_Sign_LInB // not in sep3
 
