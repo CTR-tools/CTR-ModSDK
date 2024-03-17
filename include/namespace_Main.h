@@ -38,8 +38,8 @@ enum GameMode1
 enum GameMode2
 {
 	// & 1 - spawn outside boss door
-	// & 4 - can't move (see VehPhysProc_Driving_PhysLinear)
 	
+	VEH_FREEZE_PODIUM = 4,
 	TOKEN_RACE 		= 0x8,
 	CUP_ANY_KIND 	= 0x10,
 	LEV_SWAP 		= 0x20,
@@ -54,8 +54,8 @@ enum GameMode2
 	
 	// & 0x1000 - FIRST_TIME_WIN_CUP
 	// & 0x2000 - FIRST_TIME_UNLOCK_BATTLE_MAP
-	// & 0x4000 - can't move (see VehPhysProc_Driving_PhysLinear)
 	
+	VEH_FREEZE_DOOR = 0x4000,
 	CHEAT_INVISIBLE	= 0x8000,
 	CHEAT_ENGINE	= 0x10000,
 	GARAGE_OSK		= 0x20000,

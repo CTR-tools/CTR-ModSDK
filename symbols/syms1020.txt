@@ -1523,7 +1523,7 @@
 800b39a4 AH_HintMenu_MenuBoxFuncPtr
 800b4284 AH_MaskHint_Start
 800b4434 AH_MaskHint_boolCanSpawn
-800b4444 AH_MaskHint_EnterAnim
+800b4444 AH_MaskHint_SetAnim
 800b4760 AH_MaskHint_SpawnParticles
 800b4878 AH_MaskHint_LerpVol
 800b491c AH_MaskHint_Update

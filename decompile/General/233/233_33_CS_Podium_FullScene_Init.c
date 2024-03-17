@@ -88,7 +88,7 @@ void DECOMP_CS_Podium_FullScene_Init()
 	// Draw Confetti
 	gGT->renderFlags |= 4;
 	
-	gGT->gameMode2 |= 4;
+	gGT->gameMode2 |= VEH_FREEZE_PODIUM;
 	
 	// position and rotation of podium scene
 	// Y coordinate (podiumPos[1]) has added height

@@ -248,8 +248,7 @@ void DECOMP_VehBirth_TeleportSelf(struct Driver *d, u_char spawnFlag, int spawnP
         else
         {
 #ifndef REBUILD_PS1
-            // Do not move
-            gameMode2 |= 0x4000;
+            gameMode2 |= VEH_FREEZE_DOOR;
             
             // do trigonometry to take hub door
             angle = levInstDef->rot[1];

@@ -6941,7 +6941,7 @@ uint FUN_800b3f88(void)
 
 // WARNING: Could not reconcile some variable overlaps
 
-// AH_MaskHint_EnterAnim
+// AH_MaskHint_SetAnim
 // param_1 is [0 to 0x1000],
 // 0x0000 is tiny and spinning,
 // 0x1000 is large and facing camera
@@ -7242,7 +7242,7 @@ void FUN_800b4470(void)
 	
     *(undefined2 *)(*(int *)(*(int *)(DAT_8008d860 + 0x6c) + 0x30) + 4) = 0;
     
-	// AH_MaskHint_EnterAnim, first frame
+	// AH_MaskHint_SetAnim, first frame
 	FUN_800b3f98(0);
     
 	DAT_800b5218 = 0;
@@ -7301,7 +7301,7 @@ LAB_800b477c:
       trap(0x1800);
     }
     
-	// AH_MaskHint_EnterAnim
+	// AH_MaskHint_SetAnim
 	// use timer to spin and move mask,
 	// divide by number of frames it should take to finish animation
 	FUN_800b3f98((DAT_800b5218 << 0xc) / DAT_800b566c);
@@ -7425,7 +7425,7 @@ LAB_800b48f8:
       FUN_800457b0(&uStack688,4,*(undefined4 *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0));
     }
     
-	// AH_MaskHint_EnterAnim, last frame, face camera
+	// AH_MaskHint_SetAnim, last frame, face camera
 	FUN_800b3f98(0x1000);
     
 	uVar3 = DAT_800b5570 - 1;
@@ -7465,9 +7465,10 @@ LAB_800b48f8:
     // AH_MaskHint_SpawnParticles
 	FUN_800b42b4(0x14,&DAT_800b5384,0x1000);
 	
-	// play vanishing sound
+	// OtherFX_Play vanishing
     FUN_80028468(0x101,1);
 	
+	// VehTalkMask_End
     FUN_8006925c();
 	
     if ((DAT_800b5574 & 1) == 0) 
@@ -7488,7 +7489,7 @@ LAB_800b4b64:
 	
     if (((*(uint *)(puVar1 + 0x1508) & 0x200) == 0) || ((DAT_800b5574 & 1) != 0)) 
 	{
-	  // AH_MaskHint_EnterAnim, first frame
+	  // AH_MaskHint_SetAnim
       FUN_800b3f98(0);
 	  
 	  // AH_MaskHint_LerpVol
@@ -7511,7 +7512,11 @@ LAB_800b4b64:
       FUN_80046404();
       DAT_8008d874 = 0;
       DAT_8008d888 = 0;
+	  
+	  // remove gGT->gameMode2 0x4000
       *(uint *)(PTR_DAT_8008d2ac + 8) = *(uint *)(PTR_DAT_8008d2ac + 8) & 0xffffbfff;
+	  
+	  // VehPhysProc_Driving_Init
       *(code **)(iVar9 + 0x54) = FUN_80062b74;
     }
   }

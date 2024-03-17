@@ -1,6 +1,6 @@
 #include <common.h>
 
-void DECOMP_AH_MaskHint_EnterAnim(int param_1)
+void DECOMP_AH_MaskHint_SetAnim(int scale)
 {
 	MATRIX* m;
 	struct GameTracker* gGT = sdata->gGT;
@@ -33,7 +33,7 @@ void DECOMP_AH_MaskHint_EnterAnim(int param_1)
 		&posCurr[0], &rotCurr[0],
 		0x800b5560, 0x800b5568, // pos/rot Start
 		&posEnd[0], &rotEnd[0],
-		param_1);
+		scale);
 				
 	int rot = 0x1000;
 	if (*(short*)0x800b566c - FPS_DOUBLE(20) < *(short*)0x800b5218)
@@ -44,7 +44,7 @@ void DECOMP_AH_MaskHint_EnterAnim(int param_1)
 	// 4096->50
 	rot = (rot * 50) >> 0xc;
 	
-	int angle =  (param_1 << 0xf) >> 0xc;
+	int angle =  (scale << 0xf) >> 0xc;
 	*(short*)0x800b555c = angle;
 	
 	int sin = DECOMP_MATH_Sin(angle);
@@ -57,9 +57,9 @@ void DECOMP_AH_MaskHint_EnterAnim(int param_1)
 	rotCurr[1] += angle;
 	ConvertRotToMatrix(&mhInst->matrix, rotCurr);
 	
-	((struct MaskHint*)mhInst->thread->object)->scale = param_1 * 4 - 1;
+	((struct MaskHint*)mhInst->thread->object)->scale = scale * 4 - 1;
 	
 	angle = (sdata->frameCounter + sdata->gGT->timer) * 0x20;
 	sin = DECOMP_MATH_Sin(angle);
-	mhInst->matrix.t[1] = posCurr[1] + (short)(((sin << 4) >> 0xc) * param_1 >> 0xc);
+	mhInst->matrix.t[1] = posCurr[1] + (short)(((sin << 4) >> 0xc) * scale >> 0xc);
 }

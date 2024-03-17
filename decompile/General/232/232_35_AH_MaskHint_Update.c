@@ -78,7 +78,7 @@ void DECOMP_AH_MaskHint_Update()
 			struct Instance* mhInst = *(int*)0x8008d860;
 			((struct MaskHint*)mhInst->thread->object)->scale = 0;
 			
-			AH_MaskHint_EnterAnim(0);
+			AH_MaskHint_SetAnim(0);
 			
 			*(int*)0x800b5218 = 0;
 			
@@ -110,7 +110,7 @@ void DECOMP_AH_MaskHint_Update()
 			int timer4096 = 
 				((*(int*)0x800b5218) << 0xc) / *(short*)0x800b566c;
 				
-			AH_MaskHint_EnterAnim(timer4096);
+			AH_MaskHint_SetAnim(timer4096);
 			AH_MaskHint_SpawnParticles(3, 0x800b521c, timer4096);
 			
 			// if not finished spawning
@@ -206,14 +206,15 @@ void DECOMP_AH_MaskHint_Update()
 				MENUBOX_DrawInnerRect(&r, 4, gGT->backBuffer->otMem.startPlusFour);
 			}
 			
-			AH_MaskHint_EnterAnim(0x1000);
+			AH_MaskHint_SetAnim(0x1000);
 		
+			int bVar8;
 			int uVar3 = *(short*)0x800b5570 - 1;
 			if (
 					(
 						(
 							(*(short*)0x800b5570 == 0) ||
-							(int bVar8 = *(short*)0x800b5570 == 1, *(short*)0x800b5570 = uVar3, bVar8)
+							(bVar8 = *(short*)0x800b5570 == 1, *(short*)0x800b5570 = uVar3, bVar8)
 						) &&
 						(
 							(
@@ -236,6 +237,60 @@ void DECOMP_AH_MaskHint_Update()
 			break;
 			
 		case 5:
+		
+			AH_MaskHint_SpawnParticles(20, 0x800b5384, 0x1000);
 			
+			// vanish sound
+			OtherFX_Play(0x101, 1);
+			
+			VehTalkMask_End();
+			
+			if((*(int*)0x800b5574 & 1) == 0)
+			{
+				// transition back to player
+				gGT->cameraDC[0].flags |= 0x400;
+			}
+			
+			sdata->AkuAkuHintState++;
+			break;
+			
+		case 6:
+		
+			AH_MaskHint_LerpVol(0x1000 - gGT->cameraDC[0].unk8C);
+			
+			if(
+				((gGT->cameraDC[0].flags & 0x200) == 0) ||
+				((*(int*)0x800b5574 & 1) != 0)
+			)
+			{
+				AH_MaskHint_SetAnim(0);
+				AH_MaskHint_LerpVol(0);
+				
+				*(short*)0x800b5570 = 0;
+				if((*(int*)0x800b5574 & 1) != 0)
+					*(short*)0x800b5570 = FPS_DOUBLE(30);
+				
+				sdata->AkuAkuHintState++;
+			}
+			break;
+		
+		case 7:
+		
+			AH_MaskHint_LerpVol(0);
+			
+			*(short*)0x800b5570 = *(short*)0x800b5570 - 1;
+			
+			if(*(short*)0x800b5570 < 1)
+			{
+				MENUBOX_ClearInput();
+				
+				sdata->AkuAkuHintState = 0;
+				sdata->boolDraw3D_AdvMask = 0;
+				
+				gGT->gameMode2 &= ~(VEH_FREEZE_DOOR);
+				d->funcPtrs[0] = VehPhysProc_Driving_Init;
+			}
+		
+			break;
 	}
 }
