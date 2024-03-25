@@ -175,7 +175,7 @@ void DECOMP_AH_Map_HubItems(undefined4 param_1, short *param_2)
           iVar5 = ((int)sVar7 * 2 + 1) * 3;
         }
 
-        AH_Map_HubArrow(local_38, local_34, &DAT_800b4fec, iVar5 * 4 + -0x7ff4b008, 0x800, (int)psVar9[1]);
+        AH_Map_HubArrow(local_38, local_34, &DAT_800b4fec, iVar5 * 4 + 0x800B4FF8, 0x800, (int)psVar9[1]);
       }
       if (-1 < sVar8)
       {

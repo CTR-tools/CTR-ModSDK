@@ -5556,13 +5556,20 @@ void FUN_800b1f78(int param_1,ushort param_2)
   int local_2c;
   
   iVar7 = (param_1 << 0x10) >> 0xd;
+  
+  // levelID of hub
   local_60 = (short *)(&DAT_800b5028 + iVar7);
+  
+  // string
   local_58 = *(ushort *)(&DAT_800b502a + iVar7);
+  
+  // if no provided string
   if (*(short *)(&DAT_800b502a + iVar7) < 0) 
   {
 	// MetaDataLEV
     local_58 = (&DAT_80083a88)[(int)*local_60 * 0xc];
   }
+  
   iVar7 = (int)((uint)local_58 << 0x10) >> 0xe;
   local_68 = param_2;
   

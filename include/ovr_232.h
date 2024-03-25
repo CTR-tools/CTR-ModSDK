@@ -247,7 +247,41 @@ struct OverlayDATA_232
 	// hubArrow pos
 	
 	// 800B4FF8
-	// hubArrow col
+	// set breakpoint on 800453e8, see this as $a1
+	// int hubArrowCol1[3]
+	
+	// 800b5004
+	// set breakpoint on 800453e8, see this as $a1
+	// int hubArrowCol2[3];
+	
+	// 800b5010
+	// int hubArrowGray1[3];
+	// int hubArrowGray2[3];
+	
+	#if 0
+	// 800b5028
+	// 8 bytes each
+	struct
+	{
+		// can be -1 if not hub page
+		short hubID;
+		
+		// can be -1 for hubs, which then
+		// get name from MetaDataLev
+		short titleLng;
+		
+		// 0: draw tracks
+		// 1: draw 5 tokens
+		// 2: draw relics
+		short type;
+	
+		short characterID_Boss;
+	} advPausePages[7];
+	#endif
+	
+	// 0x800B5060
+	// advPause modelID
+	
 	
 	
 	
@@ -291,6 +325,8 @@ struct OverlayDATA_232
 	// 800b5530
 	
 	// 800b5540
+	// set breakpoint on 800453e8, see this as $a1
+	// int unkCol[3];
 	
 	// 800b5558
 	
