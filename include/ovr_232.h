@@ -277,17 +277,46 @@ struct OverlayDATA_232
 	
 		short characterID_Boss;
 	} advPausePages[7];
-	#endif
 	
 	// 0x800B5060
-	// advPause modelID
+	// 0,1,2,3,4: Gems
+	// 5: Key (for all pages)
+	// 6,7,8: 3-Relic page
+	// 9,10,11,12,13: Tokens
+	// 14: Trophy
+	struct
+	{
+		// 0x0
+		short modelID;
+		short depth;
+		
+		// 0x4
+		int color;
+		
+		// 0x8
+		// same for all gems
+		int instFlags;
+		
+		// 0xC
+		// same for all gems
+		short specLight[4];
+		
+		
+		// 0x14 bytes each
+	} advPauseGems[5];
+	#endif
 	
+	// 0x800B518C
+	// struct MenuBox menuBoxAdvPause
 	
+	// 0x800B51B8
+	// FiveArrows pos
 	
+	// 0x800b51c4
+	// int FiveArrowCol1[3]
 	
-	// ======= hole =============
-	
-	
+	// 0x800b51d0
+	// int FiveArrowCol2[3]
 	
 	// 0x800b51dc short[4] translate
 	// 0x800b51e4 short[4] rot
