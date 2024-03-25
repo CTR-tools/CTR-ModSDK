@@ -81,4 +81,6 @@ struct OverlayDATA_232 D232 =
 	{
 		0x800, 0, 0
 	}
+	
+	// continue at 800b4eac
 };

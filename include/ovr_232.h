@@ -202,6 +202,58 @@ struct OverlayDATA_232
 
 	// 800b4ea4
 	short saveObjCameraOffset[4];
+
+#if 0	
+	// 800b4eac
+	short primOffsetXY_LoadSave[5*2];
+	
+	// 800b4ec0
+	short primOffsetXY_HubArrow[5*2];
+	
+	// 800b4ed4
+	short hubItemsXY_hub1[0x14];
+	
+	// 800b4efc
+	short hubItemsXY_hub2[0x14];
+	
+	// 800b4f24
+	short hubItemsXY_hub3[0x14];
+	
+	// 800b4f4c
+	short hubItemsXY_hub4[0x18];
+	
+	// 800b4f7c
+	short hubItemsXY_hub5[0x10];
+	
+	// 800b4f9c -- array of pointers:
+	//		800b4ed4 800b4efc 800b4f24
+	//		800b4f4c 800b4f7c
+	short* hubItemsXY_ptrArray[5];
+#endif
+	
+	// 800b4fb0
+	// hole
+	
+	// 0x800b51dc short[4] translate
+	// 0x800b51e4 short[4] rot
+	// 0x800b51ec short scale
+	// 0x800b51ee short padding1;
+	
+	// 0x800b51f0
+	// short maskOffsetPos[4];
+	
+	// 0x800b51f8
+	// short maskOffsetRot[4];
+	
+	// 0x800b5200
+	// short maskVars[12];
+	
+	// 0x800b5218
+	// int maskFrameCurr;
+	
+	// 0x800b521c
+	// short maskFrameLast;
+	// short padding2;
 };
 
 extern struct OverlayRDATA_232 R232;

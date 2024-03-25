@@ -5051,6 +5051,7 @@ void FUN_800b14f4(undefined4 param_1,short *param_2)
   int local_30;
   int local_2c;
   
+  // hubItemsXY_ptrArray
   psVar10 = (short *)(&PTR_DAT_800b4ed4_800b4f9c)
                      [*(int *)(PTR_DAT_8008d2ac + 0x1a10) + -0x19];
   if (*psVar10 != -1) {
