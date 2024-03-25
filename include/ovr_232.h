@@ -232,7 +232,28 @@ struct OverlayDATA_232
 #endif
 	
 	// 800b4fb0
-	// hole
+	// short hubArrowXY_Inner[2*3];
+	
+	// 800b4fbc
+	// short hubArrowXY_Outter[2*8];
+	
+	// 800b4fcc
+	// LoadSave pos
+	
+	// 800b4fdc
+	// LoadSave col
+	
+	// 800b4fec
+	// hubArrow pos
+	
+	// 800B4FF8
+	// hubArrow col
+	
+	
+	
+	// ======= hole =============
+	
+	
 	
 	// 0x800b51dc short[4] translate
 	// 0x800b51e4 short[4] rot
@@ -254,6 +275,34 @@ struct OverlayDATA_232
 	// 0x800b521c
 	// short maskFrameLast;
 	// short padding2;
+
+	
+	
+	// ======= hole =============
+	
+	
+	
+	// 800b5520
+	// eyePos
+	
+	// 800b5528
+	// lookAtPos
+	
+	// 800b5530
+	
+	// 800b5540
+	
+	// 800b5558
+	
+	
+	// ===== Lots More ======
+	
+	
+	
+	// 800b5668
+	// audio backup
+	
+	// 800b5670
 };
 
 extern struct OverlayRDATA_232 R232;

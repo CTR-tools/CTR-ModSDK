@@ -5204,7 +5204,7 @@ LAB_800b17e4:
 		// AH_Map_HubArrow
 		FUN_800b0f18
                   ((int)(short)local_38,(int)(short)local_34,&DAT_800b4fec,
-                   iVar5 * 4 + -0x7ff4b008,0x800,(int)psVar9[1]);
+                   iVar5 * 4 + 0x800B4FF8,0x800,(int)psVar9[1]);
       }
       if (-1 < sVar8) {
         local_50 = (int)*psVar10;
