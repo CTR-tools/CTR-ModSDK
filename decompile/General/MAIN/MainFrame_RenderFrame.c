@@ -560,7 +560,7 @@ void RainLogic(struct GameTracker* gGT)
 		TileView_UpdateFrustum(&gGT->tileView[i]);
 #else
 		// temporary until TileView_UpdateFrustum is done
-		DECOMP_TileView_SetMatrixVP(&gGT->tileView[0]);
+		DECOMP_TileView_SetMatrixVP(&gGT->tileView[i]);
 #endif
 		
 		camQB = gGT->cameraDC[i].ptrQuadBlock;
