@@ -35,7 +35,7 @@ void EngineSound_Player(struct Driver *driver)
         distort = DECOMP_VehCalc_MapToRange(driver->fill_3B6[1], 0, driver->const_SpeedometerScale_ClassStat, 0x3c, 200);
 
         // Left/Right
-        LR = 0x80 - ((int)((u_int) * (u_short *)(driver + 6) << 0x10) >> 0x13);
+        LR = 0x80 - ((int)((u_int) driver->wheelRotation << 0x10) >> 0x13);
 
         // farthest to the left possible
         if (LR < 0x40)
@@ -192,7 +192,7 @@ void EngineSound_Player(struct Driver *driver)
                     driver->fill_3B6[0] = 14000;
                 }
             }
-            iVar8 = (int)*(short *)(driver + 6);
+            iVar8 = driver->wheelRotation;
             driver->fill_3B6[1] = (short)((u_int)(iVar12 * 0x89 + driver->fill_3B6[1] * 0x177) >> 9);
             if (iVar8 < 0)
             {
@@ -302,7 +302,7 @@ void EngineSound_Player(struct Driver *driver)
             }
 
             // balance L/R
-            LR = 0x80 - ((int)((u_int) * (u_short *)(driver + 6) << 0x10) >> 0x13);
+            LR = 0x80 - ((int)((u_int) driver->wheelRotation << 0x10) >> 0x13);
 
             // farthest possible left
             if (LR < 0x40)
@@ -339,5 +339,5 @@ void EngineSound_Player(struct Driver *driver)
     }
     vol |= distort;
 RECALCULATE:
-    EngineAudio_Recalculate((engine * 4 + id & 0xffff), uVar6 | uVar10);
+    EngineAudio_Recalculate((engine * 4 + id & 0xffff), vol | LR);
 }
