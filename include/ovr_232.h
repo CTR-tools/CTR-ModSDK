@@ -347,6 +347,17 @@ struct OverlayDATA_232
 	
 	
 	
+	// 800b5384
+	// particles timer 
+	
+	
+	
+	
+	// ======= hole =============
+	
+	
+	
+	
 	// 800b5520
 	// eyePos
 	
