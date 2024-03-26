@@ -80,7 +80,25 @@ struct OverlayDATA_232 D232 =
 	.saveObjCameraOffset =
 	{
 		0x800, 0, 0
-	}
+	},
 	
-	// continue at 800b4eac
+	// 800b4eac
+	.primOffsetXY_LoadSave =
+	{
+		0, 0,
+		-2, 0,
+		2, 0,
+		0, -1,
+		0, 1
+	},
+	
+	// 800b4ec0
+	.primOffsetXY_HubArrow =
+	{
+		0, 0,
+		-2, 0,
+		2, 0,
+		0, -1,
+		0, 1
+	},
 };

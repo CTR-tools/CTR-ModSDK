@@ -203,13 +203,13 @@ struct OverlayDATA_232
 	// 800b4ea4
 	short saveObjCameraOffset[4];
 
-#if 0	
 	// 800b4eac
 	short primOffsetXY_LoadSave[5*2];
 	
 	// 800b4ec0
 	short primOffsetXY_HubArrow[5*2];
 	
+#if 0	
 	// 800b4ed4
 	short hubItemsXY_hub1[0x14];
 	
