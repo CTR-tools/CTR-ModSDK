@@ -209,21 +209,41 @@ struct OverlayDATA_232
 	// 800b4ec0
 	short primOffsetXY_HubArrow[5*2];
 	
-#if 0	
+#if 0
+
+	struct HubItem
+	{
+		// 0x0
+		short posX;
+		short posY;
+		
+		// 0x4
+		short angle;
+		
+		// 0x6
+		// 0x03 - boss
+		// 0x64 - saveload
+		// 0xFFFF - arrow
+		short iconType;
+		
+		// 0x8 -- size
+	};
+
 	// 800b4ed4
-	short hubItemsXY_hub1[0x14];
+	// 2 arrows, boss, save/load, null(0xFFFF)
+	struct HubItem hubItems_hub1[5];
 	
 	// 800b4efc
-	short hubItemsXY_hub2[0x14];
+	struct HubItem hubItems_hub2[5];
 	
 	// 800b4f24
-	short hubItemsXY_hub3[0x14];
+	struct HubItem hubItems_hub3[5];
 	
-	// 800b4f4c
-	short hubItemsXY_hub4[0x18];
+	// 800b4f4c (3 arrows)
+	struct HubItem hubItems_hub4[6];
 	
-	// 800b4f7c
-	short hubItemsXY_hub5[0x10];
+	// 800b4f7c (1 arrow)
+	struct HubItem hubItems_hub5[4];
 	
 	// 800b4f9c -- array of pointers:
 	//		800b4ed4 800b4efc 800b4f24
