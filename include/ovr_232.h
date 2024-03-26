@@ -349,35 +349,76 @@ struct OverlayDATA_232
 	// short hintMenu_lngIndexArr[22];
 	
 	// 800b5520
-	// eyePos
+	// short eyePos[4]
 	
 	// 800b5528
-	// lookAtPos
-	
-	
-	
-	// hole
-	
-	
-	
+	// short lookAtPos[4]
 	
 	// 800b5530
+	// int colorQuad[4];
 	
 	// 800b5540
-	// set breakpoint on 800453e8, see this as $a1
-	// int unkCol[3];
+	// int colorTri[3];
+	
+	// 800b554c
+	// short pauseDir;
+	
+	// 800b554e
+	// short pauseTimer;
+	
+	// 800b5550
+	// short pausePagePrev;
+	
+	// 800b5552
+	// short pausePageCurr;
+	
+	// 800b5554
+	// short pauseDir_dup;
+	// short padding3;
 	
 	// 800b5558
+	// int maskHintID;
 	
+	// 800b555c
+	// int maskAngle;
 	
-	// ===== Lots More ======
+	// 800b5560
+	// short maskCamPosStart[4];
 	
+	// 800b5568
+	// short maskCamRotStart[4];
 	
+	// 800b5570
+	// int maskWarppadDelayFrames;
 	
-	// 800b5668
-	// audio backup
+	// 800b5574
+	// int maskWarppadBoolInterrupt;
+	
+	// 800b5578
+	// pointer to 800b557c
+	
+	// 800b557c
+	#if 0
+	struct
+	{
+		// last offset (0xe0)
+		// struct Thread* t;
+		
+		// 0xe4 -- size
+	} PauseObject;
+	#endif
+	
+	// 800B5660
+	// int hintMenu_boolViewHint;
+	
+	// 800B5664
+	// int hintMenu_scrollIndex;
+	
+	// 800B5668
+	// short audioBackup[4];
 	
 	// 800b5670
+	// int unkModeHubItems;
 };
 
 extern struct OverlayRDATA_232 R232;
