@@ -5781,12 +5781,15 @@ void FUN_800b1f78(int param_1,ushort param_2)
           uVar1 = local_48;
           if (((int)(short)(&DAT_80083a80)[iVar11 * 0xc] == local_30) &&
              (uVar1 = uVar17, iVar11 < 0x12)) {
-            if (local_30 != 0) {
+            if (local_30 != 0) 
+			{
+			  // trophy
               *psVar16 = 0xe;
 			  
 			  // 0x8fba4 is where the adventure profile (currently loaded) begins
               if (((uint)(&DAT_8008fba4)[(int)(iVar11 + 6U) >> 5] >> (iVar11 + 6U & 0x1f) & 1) != 0)
               {
+				// unlockFlag
                 *(ushort *)((int)piVar14 + 6) = *(ushort *)((int)piVar14 + 6) | 1;
               }
 			  
@@ -5801,21 +5804,31 @@ void FUN_800b1f78(int param_1,ushort param_2)
 					
 			  // 0x8fba4 is where the adventure profile (currently loaded) begins
               if (((uint)(&DAT_8008fba4)[(int)(iVar11 + 0x28U) >> 5] >> (iVar11 + 0x28U & 0x1f) & 1)
-                  == 0) {
+                  == 0) 
+			  {
+				// relic
                 *psVar16 = 6;
 				
 				// 0x8fba4 is where the adventure profile (currently loaded) begins
                 if (((uint)(&DAT_8008fba4)[(int)(iVar11 + 0x16U) >> 5] >> (iVar11 + 0x16U & 0x1f) &
-                    1) != 0) {
+                    1) != 0) 
+				{
+				  // unlockFlag
                   *(ushort *)((int)piVar14 + 6) = *(ushort *)((int)piVar14 + 6) | 1;
                 }
               }
-              else {
+              else 
+			  {
+				// unlockFlag
                 *(ushort *)((int)piVar14 + 6) = *(ushort *)((int)piVar14 + 6) | 1;
-                *psVar16 = 7;
+                
+				// relic
+				*psVar16 = 7;
               }
             }
-            else {
+            else 
+			{
+			  // unlockFlag
               *(ushort *)((int)piVar14 + 6) = *(ushort *)((int)piVar14 + 6) | 1;
               *psVar16 = 8;
             }
@@ -6117,12 +6130,16 @@ void FUN_800b1f78(int param_1,ushort param_2)
   // Draw 2D Menu rectangle background
   FUN_800457b0(local_e0,4,*(int *)(*(int *)(PTR_DAT_8008d2ac + 0x10) + 0xa0) + 0xc);
   
+  // 800b5578->0x6
   psVar15 = DAT_800b5578 + 3;
+  
   psVar16 = DAT_800b5578;
   
   // loop through 14 instances, 
   // update render variables
-  do {
+  do 
+  {
+	// 800b5578->0xC
     iVar11 = *(int *)(psVar15 + 3);
 	
 	// if flags are 0xffff
@@ -6135,11 +6152,13 @@ void FUN_800b1f78(int param_1,ushort param_2)
 	// if model and color are valid
     else 
 	{
+	  // indexAdvPauseInst
       iVar9 = (int)*psVar16 * 0x14;
 	  
 	  // make visible
       uVar6 = *(uint *)(iVar11 + 0x28) & 0xfff8ff7f;
 	  
+	  // advPauseInst[index].instFlags
       *(uint *)(iVar11 + 0x28) = uVar6;
       *(uint *)(iVar11 + 0x28) = uVar6 | *(uint *)(&DAT_800b5068 + iVar9);
 	  

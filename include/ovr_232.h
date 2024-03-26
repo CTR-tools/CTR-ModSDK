@@ -303,7 +303,7 @@ struct OverlayDATA_232
 		
 		
 		// 0x14 bytes each
-	} advPauseGems[5];
+	} advPauseInst[15];
 	#endif
 	
 	// 0x800B518C
@@ -401,8 +401,24 @@ struct OverlayDATA_232
 	#if 0
 	struct
 	{
-		// last offset (0xe0)
-		// struct Thread* t;
+		// 0x0
+		struct
+		{
+			// 0x0
+			short indexAdvPauseInst;
+			short unlockFlag;
+			
+			// 0x4
+			short rot[4];
+			
+			// 0xC
+			struct Instance* inst;
+		
+			// 0x10 -- size
+		} PauseMember[0xe];
+		
+		// 0xE0
+		struct Thread* t;
 		
 		// 0xe4 -- size
 	} PauseObject;
