@@ -336,33 +336,30 @@ struct OverlayDATA_232
 	// int maskFrameCurr;
 	
 	// 0x800b521c
-	// short maskFrameLast;
-	// short padding2;
+	// struct ParticleEmitter emSet_maskSpawn[0xA];
 
+	// 0x800b5384
+	// struct ParticleEmitter emSet_maskLeave[0xA];
 	
+	// 0x800b54ec
+	// short maskAudioSettings[4];
 	
-	
-	// ======= hole =============
-	
-	
-	
-	
-	// 800b5384
-	// particles timer 
-	
-	
-	
-	
-	// ======= hole =============
-	
-	
-	
+	// 800b54f4
+	// 20 hints, last two entries are null
+	// short hintMenu_lngIndexArr[22];
 	
 	// 800b5520
 	// eyePos
 	
 	// 800b5528
 	// lookAtPos
+	
+	
+	
+	// hole
+	
+	
+	
 	
 	// 800b5530
 	

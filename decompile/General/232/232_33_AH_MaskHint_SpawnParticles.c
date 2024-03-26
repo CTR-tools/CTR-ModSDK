@@ -1,6 +1,7 @@
 #include <common.h>
 
-void DECOMP_AH_MaskHint_SpawnParticles(short numParticles,short param_2,int maskAnim)
+void DECOMP_AH_MaskHint_SpawnParticles(
+	short numParticles,struct ParticleEmitter* emSet,int maskAnim)
 
 {
   struct Particle* particle;
@@ -27,7 +28,7 @@ void DECOMP_AH_MaskHint_SpawnParticles(short numParticles,short param_2,int mask
   
   for (i = 0; i < numParticles; i++) 
   {
-    particle = Particle_CreateInstance(0,ig,param_2);
+    particle = Particle_CreateInstance(0,ig,emSet);
     if(particle == NULL) return;
 
 	for(j = 0; j < 3; j++)
