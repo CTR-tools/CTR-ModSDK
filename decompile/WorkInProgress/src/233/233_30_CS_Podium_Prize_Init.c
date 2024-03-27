@@ -103,7 +103,7 @@ void CS_Podium_Prize_Init(int prizeModel, char* prizeName, short *posOnScreen)
         prize[15] = 0x609;
 
         // specular lighting
-        inst->flags |= DISABLE_VCOLOR_USE_INSTCOLOR;
+        inst->flags |= USE_SPECULAR_LIGHT;
 
     default:
     GEMS_OR_NOTHING:
@@ -158,7 +158,7 @@ void CS_Podium_Prize_Init(int prizeModel, char* prizeName, short *posOnScreen)
         prize[15] = 0x670;
 
         // specular lighting
-        inst->flags |= DISABLE_VCOLOR_USE_INSTCOLOR;
+        inst->flags |= USE_SPECULAR_LIGHT;
 
         prizeFlag = INC_RELIC;
         break;
@@ -189,7 +189,7 @@ void CS_Podium_Prize_Init(int prizeModel, char* prizeName, short *posOnScreen)
         prize[15] = 0x54b;
 
         // specular lighting
-        inst->flags |= DISABLE_VCOLOR_USE_INSTCOLOR;
+        inst->flags |= USE_SPECULAR_LIGHT;
         prizeFlag = INC_KEY;
     }
 

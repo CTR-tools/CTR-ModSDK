@@ -19,7 +19,7 @@ void CS_Podium_Prize_Spin(struct Instance *inst, short* prize)
     gGS = sdata->gGamepads;
 
     // if no specular lighting, quit
-    if ((inst->flags & DISABLE_VCOLOR_USE_INSTCOLOR) == 0)
+    if ((inst->flags & USE_SPECULAR_LIGHT) == 0)
         return;
 
     sVar2 = prize[0x10];

@@ -273,7 +273,6 @@ struct OverlayDATA_232
 	int hubArrowGray1[3];
 	int hubArrowGray2[3];
 	
-	#if 0
 	// 800b5028
 	// 8 bytes each
 	struct
@@ -319,7 +318,6 @@ struct OverlayDATA_232
 		
 		// 0x14 bytes each
 	} advPauseInst[15];
-	#endif
 	
 	// 0x800B518C
 	// struct MenuBox menuBoxAdvPause
