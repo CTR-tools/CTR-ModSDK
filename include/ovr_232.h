@@ -209,8 +209,6 @@ struct OverlayDATA_232
 	// 800b4ec0
 	short primOffsetXY_HubArrow[5*2];
 	
-#if 0
-
 	struct HubItem
 	{
 		// 0x0
@@ -244,12 +242,11 @@ struct OverlayDATA_232
 	
 	// 800b4f7c (1 arrow)
 	struct HubItem hubItems_hub5[4];
-	
+
 	// 800b4f9c -- array of pointers:
 	//		800b4ed4 800b4efc 800b4f24
 	//		800b4f4c 800b4f7c
 	short* hubItemsXY_ptrArray[5];
-#endif
 	
 	// 800b4fb0
 	// short hubArrowXY_Inner[2*3];
