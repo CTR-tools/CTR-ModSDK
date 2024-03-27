@@ -159,5 +159,71 @@ struct OverlayDATA_232 D232 =
 		&D232.hubItems_hub3[0],
 		&D232.hubItems_hub4[0],
 		&D232.hubItems_hub5[0],
+	},
+	
+	.hubArrowXY_Inner =
+	{
+		3, 4,
+		6, 2,
+		5, 4
+	},
+	
+	.hubArrowXY_Outter =
+	{
+		0, 3,
+		-2, 1,
+		0, 0,
+		2, 1,
+	},
+	
+	.loadSave_pos =
+	{
+		-4, -2,
+		4, -2,
+		-4, 2,
+		4, 2,
+	},
+	
+	.loadSave_col =
+	{
+		0xBEFFBE,
+		0xFF00,
+		0xFF00,
+		0xBEFFBE,
+	},
+	
+	.hubArrow_pos =
+	{
+		0, 0xFFF8,
+		0xFFF8, 8,
+		8, 8
+	},
+	
+	.hubArrow_col1 =
+	{
+		0xFF00FF,
+		0xFF0000,
+		0xFF0000,
+	},
+	
+	.hubArrow_col2 =
+	{
+		0x80FFFF,
+		0xFF0000,
+		0xFF0000,
+	},
+	
+	.hubArrowGray1 =
+	{
+		0x808080,
+		0x808080,
+		0x808080,
+	},
+	
+	.hubArrowGray2 =
+	{
+		0x808080,
+		0x808080,
+		0x808080,
 	}
 };

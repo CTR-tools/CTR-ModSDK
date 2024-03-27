@@ -249,31 +249,29 @@ struct OverlayDATA_232
 	short* hubItemsXY_ptrArray[5];
 	
 	// 800b4fb0
-	// short hubArrowXY_Inner[2*3];
+	short hubArrowXY_Inner[2*3];
 	
 	// 800b4fbc
-	// short hubArrowXY_Outter[2*8];
+	short hubArrowXY_Outter[2*4];
 	
 	// 800b4fcc
-	// LoadSave pos
+	short loadSave_pos[2*4];
 	
 	// 800b4fdc
-	// LoadSave col
+	int loadSave_col[4];
 	
 	// 800b4fec
-	// hubArrow pos
+	short hubArrow_pos[2*3];
 	
 	// 800B4FF8
-	// set breakpoint on 800453e8, see this as $a1
-	// int hubArrowCol1[3]
+	int hubArrow_col1[3];
 	
 	// 800b5004
-	// set breakpoint on 800453e8, see this as $a1
-	// int hubArrowCol2[3];
+	int hubArrow_col2[3];
 	
 	// 800b5010
-	// int hubArrowGray1[3];
-	// int hubArrowGray2[3];
+	int hubArrowGray1[3];
+	int hubArrowGray2[3];
 	
 	#if 0
 	// 800b5028
