@@ -8,9 +8,9 @@ void DECOMP_AH_MaskHint_LerpVol(int param_1)
 	
     for (char i = 0; i < 3; i++)
     {
-		backup = ((u_char*)0x800b5668)[i];
+		backup = D232.audioBackup[i];
 		
-        diff = ((short*)0x800b54ec)[i] - backup;
+        diff = D232.maskAudioSettings[i] - backup;
         volume = backup + ((diff * param_1) >> 12);
         
         // restore backups of Volume settings,

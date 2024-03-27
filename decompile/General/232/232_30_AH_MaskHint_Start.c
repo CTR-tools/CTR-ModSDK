@@ -7,8 +7,8 @@ void DECOMP_AH_MaskHint_Start(short hintId, u_short bool_interruptWarppad)
   struct Driver* d;
   
   // copy parameters
-  *(short*)0x800b5574 = bool_interruptWarppad;
-  *(short*)0x800b5558 = hintId;
+  D232.maskWarppadBoolInterrupt = bool_interruptWarppad;
+  D232.maskHintID = hintId;
   
   sdata->boolDraw3D_AdvMask = 1;
     
@@ -36,34 +36,32 @@ void DECOMP_AH_MaskHint_Start(short hintId, u_short bool_interruptWarppad)
 	);
 	
 	// 3.0s to spawn mask
-    *(int*)0x800b566c = FPS_DOUBLE(90);
+    D232.maskSpawnFrame = FPS_DOUBLE(90);
   }
   
   // if model is not nullptr
   else 
   {
 	// 0.667s to spawn mask
-    *(int*)0x800b566c = FPS_DOUBLE(20);
+    D232.maskSpawnFrame = FPS_DOUBLE(20);
   }
   
   iVar3 = (bool_interruptWarppad & 1) * 3;
   
-  short* input = 0x800b5200;
+  short* input = &D232.maskVars[0];
   
-  // 800b5200-800b5206, and 800b5206-800b520c
-  *(short*)0x800b51f0 = input[iVar3 + 0];
-  *(short*)0x800b51f2 = input[iVar3 + 1];
-  *(short*)0x800b51f4 = input[iVar3 + 2];
+  D232.maskOffsetPos[0] = input[iVar3 + 0];
+  D232.maskOffsetPos[1] = input[iVar3 + 1];
+  D232.maskOffsetPos[2] = input[iVar3 + 2];
   
-  // 800b520c-800b5212, and 800b5212-800b5218
-  *(short*)0x800b51f8 = input[iVar3 + 6];
-  *(short*)0x800b51fa = input[iVar3 + 7];
-  *(short*)0x800b51fc = input[iVar3 + 8];
+  D232.maskOffsetRot[0] = input[iVar3 + 6];
+  D232.maskOffsetRot[1] = input[iVar3 + 7];
+  D232.maskOffsetRot[2] = input[iVar3 + 8];
   
   for (int i = 0; i < 3; i++)
   {
 	// 4 bytes for 4 volumes
-    ((char*)0x800b5668)[i] = 
+    D232.audioBackup[i] = 
 		DECOMP_howl_VolumeGet(i);
   } 
     

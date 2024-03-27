@@ -10,7 +10,7 @@ void DECOMP_AH_MaskHint_SetAnim(int scale)
     gte_SetRotMatrix(m);
     gte_SetTransMatrix(m);
 	
-	gte_ldv0(0x800b51f0);
+	gte_ldv0(&D232.maskOffsetPos[0]);
 	gte_rt();
 	
 	int posEndINT[3];
@@ -23,34 +23,34 @@ void DECOMP_AH_MaskHint_SetAnim(int scale)
 	posEnd[2] = posEndINT[2];
 	
 	short rotEnd[3];
-	rotEnd[0] = tView->rot[0] - *(short*)0x800b51f8;
-	rotEnd[1] = tView->rot[1] + *(short*)0x800b51fa;
-	rotEnd[2] = tView->rot[2] - *(short*)0x800b51fc;
+	rotEnd[0] = tView->rot[0] - D232.maskOffsetRot[0];
+	rotEnd[1] = tView->rot[1] + D232.maskOffsetRot[1];
+	rotEnd[2] = tView->rot[2] - D232.maskOffsetRot[2];
 	
 	short posCurr[3];
 	short rotCurr[3];
 	CAM_ProcessTransition(
 		&posCurr[0], &rotCurr[0],
-		0x800b5560, 0x800b5568, // pos/rot Start
+		&D232.maskCamPosStart[0], &D232.maskCamRotStart[0],
 		&posEnd[0], &rotEnd[0],
 		scale);
 				
 	int rot = 0x1000;
-	if (*(short*)0x800b566c - FPS_DOUBLE(20) < *(short*)0x800b5218)
+	if (D232.maskSpawnFrame - FPS_DOUBLE(20) < D232.maskFrameCurr)
 	{
-		rot = ((*(short*)0x800b566c - *(short*)0x800b5218) * rot) / FPS_DOUBLE(20);
+		rot = ((D232.maskSpawnFrame - D232.maskFrameCurr) * rot) / FPS_DOUBLE(20);
 	}
 	
 	// 4096->50
 	rot = (rot * 50) >> 0xc;
 	
 	int angle =  (scale << 0xf) >> 0xc;
-	*(short*)0x800b555c = angle;
+	D232.maskAngle = angle;
 	
 	int sin = DECOMP_MATH_Sin(angle);
 	int cos = DECOMP_MATH_Cos(angle);
 	
-	struct Instance* mhInst = *(int*)0x8008d860;
+	struct Instance* mhInst = sdata->instMaskHints3D;
 	mhInst->matrix.t[0] = posCurr[0] + (short)((sin*rot)>>0xc);
 	mhInst->matrix.t[2] = posCurr[2] + (short)((cos*rot)>>0xc);
 	

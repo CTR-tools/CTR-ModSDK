@@ -36,7 +36,7 @@ void DECOMP_AH_Map_HubArrow(
 			) >> 0xc);
 	}
 	
-	short* offset = 0x800b4ec0;
+	short* offset = &D232.primOffsetXY_HubArrow[0];
 	
 	for(int i = 0; i < 5; i++)
 	{
@@ -54,6 +54,6 @@ void DECOMP_AH_Map_HubArrow(
 			gGT->tileView_UI.ptrOT,
 			&gGT->backBuffer->primMem);
 		
-		vertCol = 0x800b5540;
+		vertCol = &D232.colorTri[0];
 	}
 }

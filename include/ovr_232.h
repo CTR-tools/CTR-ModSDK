@@ -447,7 +447,11 @@ struct OverlayDATA_232
 	int hintMenu_scrollIndex;
 	
 	// 800B5668
-	short audioBackup[4];
+	char audioBackup[4];
+	
+	// 800B566c
+	short maskSpawnFrame;
+	short padding4;
 	
 	// 800b5670
 	int unkModeHubItems;

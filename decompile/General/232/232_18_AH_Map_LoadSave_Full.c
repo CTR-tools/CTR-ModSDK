@@ -40,7 +40,7 @@ void DECOMP_AH_Map_LoadSave_Full(
 			) >> 0xc);
 	}
 	
-	short* offset = 0x800b4eac;
+	short* offset = &D232.primOffsetXY_LoadSave[0];
 	
 	for(int i = 0; i < 5; i++)
 	{
@@ -58,6 +58,6 @@ void DECOMP_AH_Map_LoadSave_Full(
 			gGT->tileView_UI.ptrOT,
 			&gGT->backBuffer->primMem);
 		
-		vertCol = 0x800b5530;
+		vertCol = &D232.colorQuad[0];
 	}
 }

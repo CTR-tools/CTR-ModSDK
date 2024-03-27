@@ -69,7 +69,8 @@ void DECOMP_AH_Map_Main(void)
   if ((gGT->hudFlags & 0x10) == 0) {
 
     local_1e[0] = 0;
-    *(int*)0x800b5670 = 0;
+	
+    D232.unkModeHubItems = 0;
 	
     DECOMP_UI_Map_DrawDrivers(hubPtrs,gGT->threadBuckets[0].thread,&local_20);
 

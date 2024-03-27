@@ -20,17 +20,17 @@ void DECOMP_AH_MaskHint_Update()
 			if(absSpeedApprox < 0) absSpeedApprox = -absSpeedApprox;
 			if(absSpeedApprox > 0x31) return;
 			
-			if((*(int*)0x800b5574 & 1) == 0)
+			if((D232.maskWarppadBoolInterrupt & 1) == 0)
 			{
 				struct CameraDC* cdc = &gGT->cameraDC[0];
 				
-				cdc->driverOffset_CamEyePos[0] = *(short*)0x800b5520;
-				cdc->driverOffset_CamEyePos[1] = *(short*)0x800b5522;
-				cdc->driverOffset_CamEyePos[2] = *(short*)0x800b5524;
+				cdc->driverOffset_CamEyePos[0] = D232.eyePos[0];
+				cdc->driverOffset_CamEyePos[1] = D232.eyePos[1];
+				cdc->driverOffset_CamEyePos[2] = D232.eyePos[2];
 				
-				cdc->driverOffset_CamLookAtPos[0] = *(short*)0x800b5528;
-				cdc->driverOffset_CamLookAtPos[1] = *(short*)0x800b552a;
-				cdc->driverOffset_CamLookAtPos[2] = *(short*)0x800b552c;
+				cdc->driverOffset_CamLookAtPos[0] = D232.lookAtPos[0];
+				cdc->driverOffset_CamLookAtPos[1] = D232.lookAtPos[1];
+				cdc->driverOffset_CamLookAtPos[2] = D232.lookAtPos[2];
 				
 				cdc->flags |= 8;
 				
@@ -45,7 +45,7 @@ void DECOMP_AH_MaskHint_Update()
 				CAM_SetDesiredPosRot(cdc,pos,rot);
 			}
 			
-			*(short*)0x800b5570 = FPS_DOUBLE(60);
+			D232.maskWarppadDelayFrames = FPS_DOUBLE(60);
 			
 			sdata->AkuAkuHintState++;
 			break;
@@ -53,34 +53,33 @@ void DECOMP_AH_MaskHint_Update()
 		case 2:
 		
 			if (
-				((*(int*)0x800b5574 & 1) == 0) && 
+				((D232.maskWarppadBoolInterrupt & 1) == 0) && 
 				((gGT->cameraDC[0].flags & 0x800) == 0) &&
-				(*(int*)0x800b566c != FPS_DOUBLE(20))
+				(D232.maskSpawnFrame != FPS_DOUBLE(20))
 			   ) 
 			{
 				return;
 			}
 			
-			*(int*)0x8008d860 = VehTalkMask_Init();
-			
 			struct Instance* dInst = d->instSelf;
 			CTR_MatrixToRot(rot, &dInst->matrix, 0x11);
 			
 			// not a typo
-			*(short*)0x800b5568 = rot[1] & 0xfff;
-			*(short*)0x800b556c = rot[2] & 0xfff;
-			*(short*)0x800b556a = rot[0] & 0xfff;
+			D232.maskCamRotStart[0] = rot[1] & 0xfff;
+			D232.maskCamRotStart[2] = rot[2] & 0xfff;
+			D232.maskCamRotStart[1] = rot[0] & 0xfff;
 			
-			*(short*)0x800b5560 = dInst->matrix.t[0];
-			*(short*)0x800b5562 = dInst->matrix.t[1];
-			*(short*)0x800b5564 = dInst->matrix.t[2];
+			D232.maskCamPosStart[0] = dInst->matrix.t[0];
+			D232.maskCamPosStart[1] = dInst->matrix.t[1];
+			D232.maskCamPosStart[2] = dInst->matrix.t[2];
 			
-			struct Instance* mhInst = *(int*)0x8008d860;
+			sdata->instMaskHints3D = VehTalkMask_Init();
+			struct Instance* mhInst = sdata->instMaskHints3D;
 			((struct MaskHint*)mhInst->thread->object)->scale = 0;
 			
 			AH_MaskHint_SetAnim(0);
 			
-			*(int*)0x800b5218 = 0;
+			D232.maskFrameCurr = 0;
 			
 			sdata->AkuAkuHintState++;
 			break;
@@ -88,38 +87,40 @@ void DECOMP_AH_MaskHint_Update()
 		case 3:
 		
 			// first frame "whoosh" sound
-			if(*(int*)0x800b5218 == 0)
+			if(D232.maskFrameCurr == 0)
 				OtherFX_Play_LowLevel(0x100,1,0xff8080);
 			
 			// if 3-second spawn, play more sounds
-			if(*(short*)0x800b566c == FPS_DOUBLE(0x5a))
+			if(D232.maskSpawnFrame == FPS_DOUBLE(0x5a))
 			{
-				if(*(int*)0x800b5218 == FPS_DOUBLE(10))
+				if(D232.maskFrameCurr == FPS_DOUBLE(10))
 					OtherFX_Play_LowLevel(0x100,0,0xd78a80);
 			
-				else if(*(int*)0x800b5218 == FPS_DOUBLE(20))
+				else if(D232.maskFrameCurr == FPS_DOUBLE(20))
 					OtherFX_Play_LowLevel(0x100,1,0xaf9480);
 			
-				else if(*(int*)0x800b5218 == FPS_DOUBLE(25))
+				else if(D232.maskFrameCurr == FPS_DOUBLE(25))
 					OtherFX_Play_LowLevel(0x100,0,0x879e80);
 			
-				else if(*(int*)0x800b5218 == FPS_DOUBLE(30))
+				else if(D232.maskFrameCurr == FPS_DOUBLE(30))
 					OtherFX_Play_LowLevel(0x100,1,0x5fa880);
 			}
 			
 			int timer4096 = 
-				((*(int*)0x800b5218) << 0xc) / *(short*)0x800b566c;
+				(D232.maskFrameCurr << 0xc) / D232.maskSpawnFrame;
 				
 			AH_MaskHint_SetAnim(timer4096);
-			AH_MaskHint_SpawnParticles(3, 0x800b521c, timer4096);
+			
+			AH_MaskHint_SpawnParticles(
+				3, &D232.emSet_maskSpawn[0], timer4096);
 			
 			// if not finished spawning
-			if (*(int*)0x800b5218 < *(short*)0x800b566c)
+			if (D232.maskFrameCurr < D232.maskSpawnFrame)
 			{
-				*(int*)0x800b5218 = *(int*)0x800b5218 + 1;
+				D232.maskFrameCurr++;
 				
 				timer4096 = 
-					((*(int*)0x800b5218) << 0xc) / *(short*)0x800b566c;
+					(D232.maskFrameCurr << 0xc) / D232.maskSpawnFrame;
 					
 				AH_MaskHint_LerpVol(timer4096);
 				break;
@@ -128,22 +129,25 @@ void DECOMP_AH_MaskHint_Update()
 			if (sdata->modelMaskHints3D != 0)
 			{
 				if(
-					((*(int*)0x800b5574 & 1) != 0) ||
+					((D232.maskWarppadBoolInterrupt & 1) != 0) ||
 					((gGT->cameraDC[0].flags & 0x800) != 0)
 				  )
 				{
 					AH_MaskHint_LerpVol(0x1000);
 					
-					AH_MaskHint_SpawnParticles(0x18,0x800b5384,0x1000);
+					AH_MaskHint_SpawnParticles
+						(0x18, &D232.emSet_maskLeave[0], 0x1000);
 					
-					VehTalkMask_PlayXA(*(int*)0x8008d860,*(int*)0x800b5558);
+					VehTalkMask_PlayXA(
+						sdata->modelMaskHints3D, 
+						D232.maskHintID);
 					
 					if (
 						((gGT->gameMode1 & ADVENTURE_ARENA) != 0) &&
 						
 						// Not "Welcome to Adventure" or "You need a Boss Key"
-						((int*)0x800b5558 != 0) &&
-						((int*)0x800b5558 != 0x18)
+						(D232.maskHintID != 0) &&
+						(D232.maskHintID != 0x18)
 					) 
 					{
 						// hide UI map
@@ -162,11 +166,11 @@ void DECOMP_AH_MaskHint_Update()
 		case 4:
 			int lngIndex = 0;
 			int boolFound = 0;
-			short* ptrLngID = 0x800b54f4;
+			short* ptrLngID = &D232.hintMenu_lngIndexArr[0];
 			
 			for(/**/; *ptrLngID > -1; ptrLngID++)
 			{
-				if(*(int*)0x800b5558 == (ptrLngID[0] - 0x17b)/2)
+				if (D232.maskHintID == (ptrLngID[0] - 0x17b)/2)
 				{
 					boolFound = 1;
 					break;
@@ -211,12 +215,16 @@ void DECOMP_AH_MaskHint_Update()
 			AH_MaskHint_SetAnim(0x1000);
 		
 			int bVar8;
-			int uVar3 = *(short*)0x800b5570 - 1;
+			int uVar3 = D232.maskWarppadDelayFrames - 1;
 			if (
 					(
 						(
-							(*(short*)0x800b5570 == 0) ||
-							(bVar8 = *(short*)0x800b5570 == 1, *(short*)0x800b5570 = uVar3, bVar8)
+							(D232.maskWarppadDelayFrames == 0) ||
+							(
+								bVar8 = D232.maskWarppadDelayFrames == 1, 
+								D232.maskWarppadDelayFrames = uVar3, 
+								bVar8
+							)
 						) &&
 						(
 							(
@@ -240,14 +248,14 @@ void DECOMP_AH_MaskHint_Update()
 			
 		case 5:
 		
-			AH_MaskHint_SpawnParticles(20, 0x800b5384, 0x1000);
+			AH_MaskHint_SpawnParticles(20, &D232.emSet_maskLeave[0], 0x1000);
 			
 			// vanish sound
 			OtherFX_Play(0x101, 1);
 			
 			VehTalkMask_End();
 			
-			if((*(int*)0x800b5574 & 1) == 0)
+			if((D232.maskWarppadBoolInterrupt & 1) == 0)
 			{
 				// transition back to player
 				gGT->cameraDC[0].flags |= 0x400;
@@ -262,15 +270,15 @@ void DECOMP_AH_MaskHint_Update()
 			
 			if(
 				((gGT->cameraDC[0].flags & 0x200) == 0) ||
-				((*(int*)0x800b5574 & 1) != 0)
+				((D232.maskWarppadBoolInterrupt & 1) != 0)
 			)
 			{
 				AH_MaskHint_SetAnim(0);
 				AH_MaskHint_LerpVol(0);
 				
-				*(short*)0x800b5570 = 0;
-				if((*(int*)0x800b5574 & 1) != 0)
-					*(short*)0x800b5570 = FPS_DOUBLE(30);
+				D232.maskWarppadDelayFrames = 0;
+				if((D232.maskWarppadBoolInterrupt & 1) != 0)
+					D232.maskWarppadDelayFrames = FPS_DOUBLE(30);
 				
 				sdata->AkuAkuHintState++;
 			}
@@ -280,9 +288,9 @@ void DECOMP_AH_MaskHint_Update()
 		
 			AH_MaskHint_LerpVol(0);
 			
-			*(short*)0x800b5570 = *(short*)0x800b5570 - 1;
+			D232.maskWarppadDelayFrames--;
 			
-			if(*(short*)0x800b5570 < 1)
+			if(D232.maskWarppadDelayFrames < 1)
 			{
 				MENUBOX_ClearInput();
 				

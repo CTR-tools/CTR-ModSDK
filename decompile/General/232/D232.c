@@ -696,4 +696,6 @@ struct OverlayDATA_232 D232 =
 	{
 		-0x2E5, -0x12D, -0xF1
 	}
+	
+	// the rest all initialize to zeros
 };
